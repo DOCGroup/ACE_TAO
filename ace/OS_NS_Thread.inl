@@ -590,6 +590,203 @@ ACE_OS::event_destroy (ACE_event_t *event)
 }
 
 ACE_INLINE int
+ACE_OS::mutex_init (ACE_mutex_t *m,
+                    int type,
+                    const char *name,
+                    ACE_mutexattr_t *attributes,
+                    LPSECURITY_ATTRIBUTES sa)
+{
+  // ACE_OS_TRACE ("ACE_OS::mutex_init");
+#if defined (ACE_HAS_THREADS)
+# if defined (ACE_HAS_PTHREADS)
+  ACE_UNUSED_ARG (name);
+  ACE_UNUSED_ARG (attributes);
+  ACE_UNUSED_ARG (sa);
+
+  pthread_mutexattr_t l_attributes;
+  if (attributes == 0)
+    attributes = &l_attributes;
+  int result = 0;
+  int attr_init = 0;  // have we initialized the local attributes.
+
+  // Only do these initializations if the <attributes> parameter
+  // wasn't originally set.
+  if (attributes == &l_attributes)
+    {
+#   if defined (ACE_HAS_PTHREADS_DRAFT4)
+      if (::pthread_mutexattr_create (attributes) == 0)
+#   elif defined (ACE_HAS_PTHREADS_DRAFT7) || defined (ACE_HAS_PTHREADS_STD)
+      if (ACE_ADAPT_RETVAL (::pthread_mutexattr_init (attributes), result) == 0)
+#   else /* draft 6 */
+      if (::pthread_mutexattr_init (attributes) == 0)
+#   endif /* ACE_HAS_PTHREADS_DRAFT4 */
+        {
+          result = 0;
+          attr_init = 1; // we have initialized these attributes
+        }
+      else
+        result = -1;        // ACE_ADAPT_RETVAL used it for intermediate status
+    }
+
+  if (result == 0)
+    {
+#   if defined (ACE_HAS_PTHREADS_DRAFT4)
+      if (
+#     if defined (ACE_HAS_PTHREAD_MUTEXATTR_SETKIND_NP)
+          ::pthread_mutexattr_setkind_np (attributes, type) == 0 &&
+#     endif /* ACE_HAS_PTHREAD_MUTEXATTR_SETKIND_NP */
+          ::pthread_mutex_init (m, *attributes) == 0)
+#   elif defined (ACE_HAS_PTHREADS_DRAFT7) || defined (ACE_HAS_PTHREADS_STD)
+      if (
+#     if defined (_POSIX_THREAD_PROCESS_SHARED) && !defined (ACE_LACKS_MUTEXATTR_PSHARED)
+           ACE_ADAPT_RETVAL (::pthread_mutexattr_setpshared (attributes, type),
+                             result) == 0 &&
+#     endif /* _POSIX_THREAD_PROCESS_SHARED && ! ACE_LACKS_MUTEXATTR_PSHARED */
+           ACE_ADAPT_RETVAL (::pthread_mutex_init (m, attributes), result) == 0)
+#   else
+        if (
+#     if !defined (ACE_LACKS_MUTEXATTR_PSHARED)
+            ::pthread_mutexattr_setpshared (attributes, type) == 0 &&
+#     endif /* ACE_LACKS_MUTEXATTR_PSHARED */
+#     if defined (ACE_HAS_PTHREAD_MUTEXATTR_SETKIND_NP)
+            ::pthread_mutexattr_setkind_np (attributes, type) == 0 &&
+#     endif /* ACE_HAS_PTHREAD_MUTEXATTR_SETKIND_NP */
+            ::pthread_mutex_init (m, attributes) == 0)
+#   endif /* ACE_HAS_PTHREADS_DRAFT4 */
+        result = 0;
+      else
+        result = -1;        // ACE_ADAPT_RETVAL used it for intermediate status
+    }
+
+#   if (!defined (ACE_HAS_PTHREAD_MUTEXATTR_SETKIND_NP) && !defined (_POSIX_THREAD_PROCESS_SHARED)  ||  defined (ACE_LACKS_MUTEXATTR_PSHARED)) \
+       || ((defined (ACE_HAS_PTHREADS_DRAFT7) || defined (ACE_HAS_PTHREADS_STD)) && !defined (_POSIX_THREAD_PROCESS_SHARED))
+  ACE_UNUSED_ARG (type);
+#   endif /* ! ACE_HAS_PTHREAD_MUTEXATTR_SETKIND_NP */
+
+  // Only do the deletions if the <attributes> parameter wasn't
+  // originally set.
+  if (attributes == &l_attributes && attr_init)
+#   if defined (ACE_HAS_PTHREADS_DRAFT4)
+    ::pthread_mutexattr_delete (&l_attributes);
+#   else
+    ::pthread_mutexattr_destroy (&l_attributes);
+#   endif /* ACE_HAS_PTHREADS_DRAFT4 */
+
+  return result;
+# elif defined (ACE_HAS_STHREADS)
+  ACE_UNUSED_ARG (name);
+  ACE_UNUSED_ARG (sa);
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::mutex_init (m, type, attributes),
+                                       ace_result_),
+                     int, -1);
+# elif defined (ACE_HAS_WTHREADS)
+  m->type_ = type;
+
+  switch (type)
+    {
+    case USYNC_PROCESS:
+#   if defined (ACE_HAS_WINCE)
+      // @@todo (brunsch) This idea should be moved into ACE_OS_Win32.
+      m->proc_mutex_ = ::CreateMutexW (ACE_OS::default_win32_security_attributes (sa),
+                                       FALSE,
+                                       ACE_Ascii_To_Wide (name).wchar_rep ());
+#   else /* ACE_HAS_WINCE */
+      m->proc_mutex_ = ::CreateMutexA (ACE_OS::default_win32_security_attributes (sa),
+                                       FALSE,
+                                       name);
+#   endif /* ACE_HAS_WINCE */
+      if (m->proc_mutex_ == 0)
+        ACE_FAIL_RETURN (-1);
+      else
+        {
+          // Make sure to set errno to ERROR_ALREADY_EXISTS if necessary.
+          ACE_OS::set_errno_to_last_error ();
+          return 0;
+        }
+    case USYNC_THREAD:
+      return ACE_OS::thread_mutex_init (&m->thr_mutex_,
+                                        type,
+                                        name,
+                                        attributes);
+    default:
+      errno = EINVAL;
+      return -1;
+    }
+  /* NOTREACHED */
+
+# elif defined (ACE_PSOS)
+  ACE_UNUSED_ARG (type);
+  ACE_UNUSED_ARG (attributes);
+  ACE_UNUSED_ARG (sa);
+#   if defined (ACE_PSOS_HAS_MUTEX)
+
+    u_long flags = MU_LOCAL;
+    u_long ceiling = 0;
+
+#     if defined (ACE_HAS_RECURSIVE_MUTEXES)
+    flags |= MU_RECURSIVE;
+#     else /* ! ACE_HAS_RECURSIVE_MUTEXES */
+    flags |= MU_NONRECURSIVE;
+#     endif /* ACE_HAS_RECURSIVE_MUTEXES */
+
+#     if defined (ACE_PSOS_HAS_PRIO_MUTEX)
+
+    flags |= MU_PRIOR;
+
+#       if defined (ACE_PSOS_HAS_PRIO_INHERIT_MUTEX)
+    flags |= MU_PRIO_INHERIT;
+#       elif defined (ACE_PSOS_HAS_PRIO_PROTECT_MUTEX)
+    ceiling =  PSOS_TASK_MAX_PRIORITY;
+    flags |= MU_PRIO_PROTECT;
+#       else
+    flags |= MU_PRIO_NONE;
+#       endif /* ACE_PSOS_HAS_PRIO_INHERIT_MUTEX */
+
+#     else /* ! ACE_PSOS_HAS_PRIO_MUTEX */
+
+    flags |= MU_FIFO | MU_PRIO_NONE;
+
+#     endif
+
+    // Fake a pSOS name - it can be any 4-byte value, not necessarily needing
+    // to be ASCII. So use the mutex pointer passed in. That should identify
+    // each one uniquely.
+    union { ACE_mutex_t *p; char n[4]; } m_name;
+    m_name.p = m;
+
+    ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::mu_create (m_name.n,
+                                                      flags,
+                                                      ceiling,
+                                                      m),
+                                         ace_result_),
+                       int, -1);
+
+#   else /* ! ACE_PSOS_HAS_MUTEX */
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sm_create ((char *) name,
+                                                    1,
+                                                    SM_LOCAL | SM_PRIOR,
+                                                    m),
+                                       ace_result_),
+                     int, -1);
+#   endif /* ACE_PSOS_HAS_MUTEX */
+# elif defined (VXWORKS)
+  ACE_UNUSED_ARG (name);
+  ACE_UNUSED_ARG (attributes);
+  ACE_UNUSED_ARG (sa);
+
+  return (*m = ::semMCreate (type)) == 0 ? -1 : 0;
+# endif /* ACE_HAS_PTHREADS */
+#else
+  ACE_UNUSED_ARG (m);
+  ACE_UNUSED_ARG (type);
+  ACE_UNUSED_ARG (name);
+  ACE_UNUSED_ARG (attributes);
+  ACE_UNUSED_ARG (sa);
+  ACE_NOTSUP_RETURN (-1);
+#endif /* ACE_HAS_THREADS */
+}
+
+ACE_INLINE int
 ACE_OS::event_init (ACE_event_t *event,
                     int manual_reset,
                     int initial_state,
@@ -1017,203 +1214,6 @@ ACE_OS::mutex_destroy (ACE_mutex_t *m)
 # endif /* Threads variety case */
 #else
   ACE_UNUSED_ARG (m);
-  ACE_NOTSUP_RETURN (-1);
-#endif /* ACE_HAS_THREADS */
-}
-
-ACE_INLINE int
-ACE_OS::mutex_init (ACE_mutex_t *m,
-                    int type,
-                    const char *name,
-                    ACE_mutexattr_t *attributes,
-                    LPSECURITY_ATTRIBUTES sa)
-{
-  // ACE_OS_TRACE ("ACE_OS::mutex_init");
-#if defined (ACE_HAS_THREADS)
-# if defined (ACE_HAS_PTHREADS)
-  ACE_UNUSED_ARG (name);
-  ACE_UNUSED_ARG (attributes);
-  ACE_UNUSED_ARG (sa);
-
-  pthread_mutexattr_t l_attributes;
-  if (attributes == 0)
-    attributes = &l_attributes;
-  int result = 0;
-  int attr_init = 0;  // have we initialized the local attributes.
-
-  // Only do these initializations if the <attributes> parameter
-  // wasn't originally set.
-  if (attributes == &l_attributes)
-    {
-#   if defined (ACE_HAS_PTHREADS_DRAFT4)
-      if (::pthread_mutexattr_create (attributes) == 0)
-#   elif defined (ACE_HAS_PTHREADS_DRAFT7) || defined (ACE_HAS_PTHREADS_STD)
-      if (ACE_ADAPT_RETVAL (::pthread_mutexattr_init (attributes), result) == 0)
-#   else /* draft 6 */
-      if (::pthread_mutexattr_init (attributes) == 0)
-#   endif /* ACE_HAS_PTHREADS_DRAFT4 */
-        {
-          result = 0;
-          attr_init = 1; // we have initialized these attributes
-        }
-      else
-        result = -1;        // ACE_ADAPT_RETVAL used it for intermediate status
-    }
-
-  if (result == 0)
-    {
-#   if defined (ACE_HAS_PTHREADS_DRAFT4)
-      if (
-#     if defined (ACE_HAS_PTHREAD_MUTEXATTR_SETKIND_NP)
-          ::pthread_mutexattr_setkind_np (attributes, type) == 0 &&
-#     endif /* ACE_HAS_PTHREAD_MUTEXATTR_SETKIND_NP */
-          ::pthread_mutex_init (m, *attributes) == 0)
-#   elif defined (ACE_HAS_PTHREADS_DRAFT7) || defined (ACE_HAS_PTHREADS_STD)
-      if (
-#     if defined (_POSIX_THREAD_PROCESS_SHARED) && !defined (ACE_LACKS_MUTEXATTR_PSHARED)
-           ACE_ADAPT_RETVAL (::pthread_mutexattr_setpshared (attributes, type),
-                             result) == 0 &&
-#     endif /* _POSIX_THREAD_PROCESS_SHARED && ! ACE_LACKS_MUTEXATTR_PSHARED */
-           ACE_ADAPT_RETVAL (::pthread_mutex_init (m, attributes), result) == 0)
-#   else
-        if (
-#     if !defined (ACE_LACKS_MUTEXATTR_PSHARED)
-            ::pthread_mutexattr_setpshared (attributes, type) == 0 &&
-#     endif /* ACE_LACKS_MUTEXATTR_PSHARED */
-#     if defined (ACE_HAS_PTHREAD_MUTEXATTR_SETKIND_NP)
-            ::pthread_mutexattr_setkind_np (attributes, type) == 0 &&
-#     endif /* ACE_HAS_PTHREAD_MUTEXATTR_SETKIND_NP */
-            ::pthread_mutex_init (m, attributes) == 0)
-#   endif /* ACE_HAS_PTHREADS_DRAFT4 */
-        result = 0;
-      else
-        result = -1;        // ACE_ADAPT_RETVAL used it for intermediate status
-    }
-
-#   if (!defined (ACE_HAS_PTHREAD_MUTEXATTR_SETKIND_NP) && !defined (_POSIX_THREAD_PROCESS_SHARED)  ||  defined (ACE_LACKS_MUTEXATTR_PSHARED)) \
-       || ((defined (ACE_HAS_PTHREADS_DRAFT7) || defined (ACE_HAS_PTHREADS_STD)) && !defined (_POSIX_THREAD_PROCESS_SHARED))
-  ACE_UNUSED_ARG (type);
-#   endif /* ! ACE_HAS_PTHREAD_MUTEXATTR_SETKIND_NP */
-
-  // Only do the deletions if the <attributes> parameter wasn't
-  // originally set.
-  if (attributes == &l_attributes && attr_init)
-#   if defined (ACE_HAS_PTHREADS_DRAFT4)
-    ::pthread_mutexattr_delete (&l_attributes);
-#   else
-    ::pthread_mutexattr_destroy (&l_attributes);
-#   endif /* ACE_HAS_PTHREADS_DRAFT4 */
-
-  return result;
-# elif defined (ACE_HAS_STHREADS)
-  ACE_UNUSED_ARG (name);
-  ACE_UNUSED_ARG (sa);
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::mutex_init (m, type, attributes),
-                                       ace_result_),
-                     int, -1);
-# elif defined (ACE_HAS_WTHREADS)
-  m->type_ = type;
-
-  switch (type)
-    {
-    case USYNC_PROCESS:
-#   if defined (ACE_HAS_WINCE)
-      // @@todo (brunsch) This idea should be moved into ACE_OS_Win32.
-      m->proc_mutex_ = ::CreateMutexW (ACE_OS::default_win32_security_attributes (sa),
-                                       FALSE,
-                                       ACE_Ascii_To_Wide (name).wchar_rep ());
-#   else /* ACE_HAS_WINCE */
-      m->proc_mutex_ = ::CreateMutexA (ACE_OS::default_win32_security_attributes (sa),
-                                       FALSE,
-                                       name);
-#   endif /* ACE_HAS_WINCE */
-      if (m->proc_mutex_ == 0)
-        ACE_FAIL_RETURN (-1);
-      else
-        {
-          // Make sure to set errno to ERROR_ALREADY_EXISTS if necessary.
-          ACE_OS::set_errno_to_last_error ();
-          return 0;
-        }
-    case USYNC_THREAD:
-      return ACE_OS::thread_mutex_init (&m->thr_mutex_,
-                                        type,
-                                        name,
-                                        attributes);
-    default:
-      errno = EINVAL;
-      return -1;
-    }
-  /* NOTREACHED */
-
-# elif defined (ACE_PSOS)
-  ACE_UNUSED_ARG (type);
-  ACE_UNUSED_ARG (attributes);
-  ACE_UNUSED_ARG (sa);
-#   if defined (ACE_PSOS_HAS_MUTEX)
-
-    u_long flags = MU_LOCAL;
-    u_long ceiling = 0;
-
-#     if defined (ACE_HAS_RECURSIVE_MUTEXES)
-    flags |= MU_RECURSIVE;
-#     else /* ! ACE_HAS_RECURSIVE_MUTEXES */
-    flags |= MU_NONRECURSIVE;
-#     endif /* ACE_HAS_RECURSIVE_MUTEXES */
-
-#     if defined (ACE_PSOS_HAS_PRIO_MUTEX)
-
-    flags |= MU_PRIOR;
-
-#       if defined (ACE_PSOS_HAS_PRIO_INHERIT_MUTEX)
-    flags |= MU_PRIO_INHERIT;
-#       elif defined (ACE_PSOS_HAS_PRIO_PROTECT_MUTEX)
-    ceiling =  PSOS_TASK_MAX_PRIORITY;
-    flags |= MU_PRIO_PROTECT;
-#       else
-    flags |= MU_PRIO_NONE;
-#       endif /* ACE_PSOS_HAS_PRIO_INHERIT_MUTEX */
-
-#     else /* ! ACE_PSOS_HAS_PRIO_MUTEX */
-
-    flags |= MU_FIFO | MU_PRIO_NONE;
-
-#     endif
-
-    // Fake a pSOS name - it can be any 4-byte value, not necessarily needing
-    // to be ASCII. So use the mutex pointer passed in. That should identify
-    // each one uniquely.
-    union { ACE_mutex_t *p; char n[4]; } m_name;
-    m_name.p = m;
-
-    ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::mu_create (m_name.n,
-                                                      flags,
-                                                      ceiling,
-                                                      m),
-                                         ace_result_),
-                       int, -1);
-
-#   else /* ! ACE_PSOS_HAS_MUTEX */
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sm_create ((char *) name,
-                                                    1,
-                                                    SM_LOCAL | SM_PRIOR,
-                                                    m),
-                                       ace_result_),
-                     int, -1);
-#   endif /* ACE_PSOS_HAS_MUTEX */
-# elif defined (VXWORKS)
-  ACE_UNUSED_ARG (name);
-  ACE_UNUSED_ARG (attributes);
-  ACE_UNUSED_ARG (sa);
-
-  return (*m = ::semMCreate (type)) == 0 ? -1 : 0;
-# endif /* ACE_HAS_PTHREADS */
-#else
-  ACE_UNUSED_ARG (m);
-  ACE_UNUSED_ARG (type);
-  ACE_UNUSED_ARG (name);
-  ACE_UNUSED_ARG (attributes);
-  ACE_UNUSED_ARG (sa);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_THREADS */
 }
