@@ -30,9 +30,9 @@ $def_port = 2809;
 @corbaloc_tests = ("corbaloc:rir:/NameService",
          "corbaloc:rir:/",
          "corbaloc:iiop:$TARGETHOSTNAME:$ns_orb_port[0]/NameService",
-         "corbaloc::$TARGETHOSTNAME/NameService",
          "corbaloc::$TARGETHOSTNAME:$ns_orb_port[0]/NameService",
          "corbaloc::1.0\@$TARGETHOSTNAME:$ns_orb_port[0]/NameService",
+	 "corbaloc::$TARGETHOSTNAME/NameService",
          "corbaloc::1.1\@$TARGETHOSTNAME:$ns_orb_port[0]/NameService",
          "corbaloc::1.2\@$TARGETHOSTNAME:$ns_orb_port[0]/NameService");
 
