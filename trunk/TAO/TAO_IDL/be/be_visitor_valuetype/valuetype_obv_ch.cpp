@@ -180,9 +180,10 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
                             -1);
         }
 
-      // If we inherit from both CORBA::ValueBase and CORBA::AbstractBase,
-      // we have to add this to avoid ambiguity.
-      if (node->supports_abstract ())
+      // If we inherit from CORBA::Object and/or CORBA::AbstractBase
+      // (in addition to CORBA::ValueBase) we have to add these 
+      // to avoid ambiguity.
+      if (node->n_supports () > 0)
         {
           *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
               << "// " << __FILE__ << ":" << __LINE__ ;
