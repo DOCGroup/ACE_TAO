@@ -1,3 +1,8 @@
+Mon Aug 17 15:16:13 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* docs/releasenotes/index.html: Removed some outdated notes 
+	on A/V streaming service.
+
 Mon Aug 17 11:07:09 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * orbsvcs/tests/Concurrency/CC_command.tab.cpp.diff:
