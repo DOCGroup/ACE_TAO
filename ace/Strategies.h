@@ -91,6 +91,24 @@ private:
   ACE_ReactorEx *reactorex_;
 };
 
+class ACE_Export ACE_Upcall_Strategy 
+  // = TITLE
+  //     Abstract class used for defining an upcall (callback)
+  //
+  // = DESCRIPTION
+  //     A vehicle for extending the behavior of ACE_Timer_Queue wrt
+  //     the upcall (callback) *without subclassing*.  Thus, it's an
+  //     example of the Bridge/Strategy patterns.
+{
+public:
+  ACE_Upcall_Strategy (void);
+  virtual ~ACE_Upcall_Strategy (void);
+
+  virtual void upcall (ACE_Event_Handler *handler,
+		       const void *arg,
+		       const ACE_Time_Value &cur_time) = 0;
+};
+
 // This needs to come here to avoid circular dependencies.
 #include "ace/Strategies_T.h"
 

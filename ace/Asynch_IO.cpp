@@ -35,6 +35,10 @@ ACE_Asynch_Result::ACE_Asynch_Result (ACE_Handler &handler,
   this->hEvent = event;
 }
 
+ACE_Asynch_Result::~ACE_Asynch_Result (void)
+{
+}
+
 u_long 
 ACE_Asynch_Result::bytes_transferred (void) const
 {
@@ -945,12 +949,13 @@ void
 ACE_Handler::handle_notify (const ACE_Asynch_Notify::Result &result)
 {
 }
+*/
 
-void 
-ACE_Handler::handle_timeout (const ACE_Asynch_Timeout::Result &result)
+void
+ACE_Handler::handle_timeout (const ACE_Time_Value &tv,
+			     const void *act)
 {
 }
-*/
 
 ACE_Proactor *
 ACE_Handler::proactor (void)

@@ -3,6 +3,7 @@
 #define ACE_BUILD_DLL
 
 #include "ace/Timer_List.h"
+#include "ace/Strategies.h"
 
 ACE_Timer_List_Iterator::ACE_Timer_List_Iterator (ACE_Timer_List &list)
   : timer_list_ (list)
@@ -34,8 +35,9 @@ ACE_Timer_List::iter (void)
 
 // Create an empty list.
 
-ACE_Timer_List::ACE_Timer_List (void)
-  : head_ (0),
+ACE_Timer_List::ACE_Timer_List (ACE_Upcall_Strategy *upcall_strategy)
+  : ACE_Timer_Queue (upcall_strategy),
+    head_ (0),
     iterator_ (*this),
     timer_id_ (0)
 {

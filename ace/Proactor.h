@@ -18,13 +18,15 @@
 #if !defined (ACE_PROACTOR_H)
 #define ACE_PROACTOR_H
 
-#include "ace/OS.h"
+#include "ace/Asynch_IO.h"
+#include "ace/Thread_Manager.h"
 
 #if defined (ACE_WIN32)
 // This only works on Win32 platforms
 
 class ACE_Timer_Queue;
 class ACE_Asynch_Result;
+class ACE_Proactor_Timer_Handler;
 
 class ACE_Export ACE_Proactor
   //     
@@ -36,6 +38,9 @@ class ACE_Export ACE_Proactor
   //     
   //     A manager for the I/O completion port.
 {
+  friend class ACE_Proactor_Timer_Handler;
+  // Timer Handler has special privileges
+
 public:
   ACE_Proactor (size_t number_of_threads = 0, 
 		ACE_Timer_Queue *tq = 0);
@@ -50,6 +55,44 @@ public:
   virtual int register_handle (ACE_HANDLE handle, 
 			       const void *completion_key);
   // This method adds the <handle> to the I/O completion port
+
+  // = Timer management. 
+  virtual int schedule_timer (ACE_Handler &handler, 
+			      const void *act,
+			      const ACE_Time_Value &time);
+  // Schedule a <handler> that will expire after <time>.  If it
+  // expires then <act> is passed in as the value to the <handler>'s
+  // <handle_timeout> callback method.  This method returns a
+  // <timer_id>. This <timer_id> can be used to cancel a timer before
+  // it expires.  The cancellation ensures that <timer_ids> are unique
+  // up to values of greater than 2 billion timers.  As long as timers
+  // don't stay around longer than this there should be no problems
+  // with accidentally deleting the wrong timer.  Returns -1 on
+  // failure (which is guaranteed never to be a valid <timer_id>.
+
+  virtual int schedule_repeating_timer (ACE_Handler &handler, 
+					const void *act,
+					const ACE_Time_Value &interval);  
+
+  // Same as above except <interval> it is used to reschedule the
+  // <handler> automatically.
+
+  int schedule_timer (ACE_Handler &handler, 
+		      const void *act,
+		      const ACE_Time_Value &time,
+		      const ACE_Time_Value &interval);
+  // This combines the above two methods into one. Mostly for backward
+  // compatibility.
+
+  virtual int cancel_timer (int timer_id, 
+			    const void **act = 0);
+  // Cancel the single <ACE_Handler> that matches the <timer_id> value
+  // (which was returned from the <schedule> method).  If <act> is
+  // non-NULL then it will be set to point to the ``magic cookie''
+  // argument passed in when the <Handler> was registered.  This makes
+  // it possible to free up the memory and avoid memory leaks.
+  // Returns 1 if cancellation succeeded and 0 if the <timer_id>
+  // wasn't found.
 
   virtual int handle_events (ACE_Time_Value &wait_time);
   // Dispatch a single set of events.  If <wait_time> elapses before
@@ -83,6 +126,10 @@ public:
   void number_of_threads (size_t threads);
   // Number of thread used as a parameter to CreatIoCompletionPort
 
+  ACE_Timer_Queue *timer_queue (void) const;
+  void timer_queue (ACE_Timer_Queue *);
+  // Get/Set timer queue
+
 protected:
 
   void application_specific_code (ACE_Asynch_Result *asynch_result,
@@ -93,8 +140,55 @@ protected:
   // Protect against structured exceptions caused by user code when
   // dispatching handles
 
+  virtual int handle_events (unsigned long milli_seconds);
+  // Dispatch a single set of events.  If <milli_seconds> elapses
+  // before any events occur, return.
+  
+  class ACE_Export Asynch_Timer : protected ACE_Asynch_Result
+    //     
+    // = TITLE
+    //
+    //     This class is posted to the completion port when a timer
+    //     expires. When the complete method of this object is called,
+    //     the <handler>'s handle_timeout method will be called.
+    // 
+    {
+      friend class ACE_Proactor_Timer_Handler;
+      // Timer Handler has special privileges
+
+    public:
+      Asynch_Timer (ACE_Handler &handler,
+		    const void *act,
+		    const ACE_Time_Value &tv);
+      
+    protected:
+      virtual void complete (u_long bytes_transferred,
+			     int success,
+			     const void *completion_key,
+			     u_long error = 0);  
+      // This method calls the <handler>'s handle_timeout method 
+
+      ACE_Time_Value time_;
+      // Time value requested by caller
+    };
+
   ACE_HANDLE completion_port_;
+  // Handle for the completion port
+
   size_t number_of_threads_;
+  // This number is passed to the CreatIOCompletionPort() system call
+
+  ACE_Timer_Queue *timer_queue_;
+  // Timer Queue 
+
+  int delete_timer_queue_;
+  // Flag on whether to delete the timer queue
+
+  ACE_Proactor_Timer_Handler *timer_handler_;
+  // Handles timeouts events
+
+  ACE_Thread_Manager thr_mgr_;
+  // This will manage the thread in the Timer_Handler
 };
 
 #if defined (__ACE_INLINE__)
