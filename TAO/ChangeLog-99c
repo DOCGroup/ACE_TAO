@@ -1,3 +1,8 @@
+Thu Jul  8 14:41:37 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* docs/configurations.html: Added some comments and enhanced this
+	  description.
+
 Thu Jul  8 14:36:20 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* docs/Options.html: Added 'default' values for the ORB
@@ -5,7 +10,6 @@ Thu Jul  8 14:36:20 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Xt_Stopwatch/run_test.pl: Added run_test.pl for spawning
 	  the server & client processes
-
 
 Thu Jul  8 14:23:52 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
