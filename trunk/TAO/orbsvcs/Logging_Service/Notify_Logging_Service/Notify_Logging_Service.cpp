@@ -33,6 +33,14 @@ Notify_Logging_Service::init_ORB (int& argc, char *argv []
                                 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
+  this->notify_service_ = ACE_Dynamic_Service<TAO_NS_Service>::instance (TAO_NS_COS_NOTIFICATION_SERVICE_NAME);
+
+  if (this->notify_service_ == 0)
+    {
+      ACE_DEBUG ((LM_DEBUG, "Notify Service not found! check conf. file\n"));
+      return -1;
+    }
+
   CORBA::Object_var poa_obj  =
     this->orb_->resolve_initial_references("RootPOA"
                                            ACE_ENV_ARG_PARAMETER);
@@ -67,6 +75,7 @@ Notify_Logging_Service::init (int argc, char *argv[]
                       ACE_ENV_ARG_PARAMETER) != 0)
   return -1;
 
+  this->notify_service_->init (this->orb_.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   // Resolve the naming service.
@@ -76,28 +85,20 @@ Notify_Logging_Service::init (int argc, char *argv[]
   ACE_DEBUG ((LM_DEBUG,
               "\nStarting up the Notification Logging Service...\n"));
 
-  TAO_NS_Service* notify_service = ACE_Dynamic_Service<TAO_NS_Service>::instance (TAO_NS_COS_NOTIFICATION_SERVICE_NAME);
-
-  if (notify_service == 0)
-    {
-      ACE_DEBUG ((LM_DEBUG, "Notify Service not found! check conf. file\n"));
-      return -1;
-    }
-
   // Activate the factory
   this->notify_factory_ =
-    notify_service->create (this->poa_.in ()
+    notify_service_->create (this->poa_.in ()
                             ACE_ENV_ARG_PARAMETER);
-
+  
   ACE_NEW_THROW_EX (this->notify_log_factory_,
                       TAO_NotifyLogFactory_i (this->notify_factory_.in ()),
                       CORBA::NO_MEMORY ());
-
+  
   DsNotifyLogAdmin::NotifyLogFactory_var obj =
     notify_log_factory_->activate (this->poa_.in () ACE_ENV_ARG_PARAMETER);
 
   ACE_CHECK_RETURN (-1);
-
+  
   // Register the Factory
   ACE_ASSERT (!CORBA::is_nil (this->naming_.in ()));
 

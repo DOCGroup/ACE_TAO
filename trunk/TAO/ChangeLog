@@ -1,3 +1,11 @@
+Fri Nov 29 11:55:41 2002  D A Hanvey  <d.hanvey@qub.ac.uk>
+
+	* orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.cpp:
+	* orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.h:
+
+	Fixed Segmentation fault.
+	
+
 Thu Nov 28 22:39:38 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	*
