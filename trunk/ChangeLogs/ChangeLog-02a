@@ -1,3 +1,21 @@
+Sat Apr 14 11:12:26 2001  Steve Huston  <shuston@riverace.com>
+
+        * tests/CLASSIX_Addr_Test.icc:
+        * tests/CLASSIX_CLD_Connector_Test.icc:
+        * tests/CLASSIX_Con_Acc_Test.icc:
+        * tests/CLASSIX_Group_Test.icc:
+        * tests/CLASSIX_Notify_Test.icc:
+        * tests/CLASSIX_OS_Test.icc:
+        * tests/CLASSIX_Reactor_Test.icc:
+        * tests/CLASSIX_Select_Reactor_Test.icc:
+        * tests/CLASSIX_Stream_Test.icc:
+          Removed these files. They were moved/copied to tests/CLASSIX some
+          time back and don't belong here.
+
+        * tests/t.icc: Removed. This is not used for anything.
+
+        * tests/Makefile.vac: Corrected 'realclean' actions.
+
 Sat Apr 14 09:17:32 2001  Steve Huston  <shuston@riverace.com>
 
         * examples/QOS/Change_Sender_TSpec/sender.dsp: Added extra level of
