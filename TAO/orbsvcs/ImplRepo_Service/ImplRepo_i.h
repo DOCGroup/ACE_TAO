@@ -149,14 +149,33 @@ public:
 
   int run (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
   // Runs the orb.
-
+/*
   char* get_forward_host (const char *server);
   // Returns the host of the server that needs to be forwarded to.
 
   CORBA::UShort get_forward_port (const char *server);
   // Returns the port of the server that needs to be forwarded to.
-
+*/
 private:
+  struct Endpoint
+  {
+    Endpoint ();
+    Endpoint (ACE_TString h, CORBA::UShort p);
+    Endpoint (Endpoint &);
+    void operator= (Endpoint &);
+    ACE_TString host;
+    CORBA::UShort port;
+  };
+  
+  Endpoint ImplRepo_i::activate_server_i (const char *server,
+                                          const int check_startup,
+                                          CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     ImplementationRepository::Administration::NotFound,
+                     ImplementationRepository::Administration::CannotActivate));
+  // Implementation of activate_server.  <check_startup> is a flag to check 
+  // the activation mode before attempting to start it.  
+
   IR_Forwarder *forwarder_impl_;
   // The class that handles the forwarding.
 
@@ -186,6 +205,8 @@ private:
 
   char **argv_;
   // The command line arguments.
+  
+  friend IR_Forwarder;
 };
 
 class IR_Forwarder: public PortableServer::DynamicImplementation

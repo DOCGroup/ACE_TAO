@@ -11,6 +11,59 @@
 #include "ace/Process.h"
 #include "ace/Auto_Ptr.h"
 
+// Conversion 
+ImplementationRepository::ActivationMode convert (Server_Info::ActivationMode mode)
+{
+  if (mode == Server_Info::NORMAL)
+    return ImplementationRepository::NORMAL;
+  if (mode == Server_Info::MANUAL)
+    return ImplementationRepository::MANUAL;
+  return ImplementationRepository::PER_CLIENT;
+}
+
+Server_Info::ActivationMode convert (ImplementationRepository::ActivationMode mode)
+{
+  if (mode == ImplementationRepository::NORMAL)
+    return Server_Info::NORMAL;
+  if (mode == ImplementationRepository::MANUAL)
+    return Server_Info::MANUAL;
+  return Server_Info::PER_CLIENT;
+}
+
+const char *convert_str (ImplementationRepository::ActivationMode mode)
+{
+  if (mode == ImplementationRepository::NORMAL)
+    return "NORMAL";
+  if (mode == ImplementationRepository::MANUAL)
+    return "MANUAL";
+  return "PER_CLIENT";
+}
+
+ImplRepo_i::Endpoint::Endpoint ()
+  : host (),
+    port (0)
+{
+}
+
+ImplRepo_i::Endpoint::Endpoint (ACE_TString h, CORBA::UShort p)
+  : host (h),
+    port (p)
+{
+}
+
+ImplRepo_i::Endpoint::Endpoint (ImplRepo_i::Endpoint &ep)
+  : host (ep.host),
+    port (ep.port)
+{
+}
+
+void
+ImplRepo_i::Endpoint::operator= (ImplRepo_i::Endpoint &ep)
+{
+  this->host = ep.host;
+  this->port = ep.port;
+}
+
 // Constructor
 
 ImplRepo_i::ImplRepo_i (void)
@@ -25,8 +78,22 @@ ImplRepo_i::ImplRepo_i (void)
 // not already started and if it can be started.
 
 void
-ImplRepo_i::activate_server (const char *server,
+ImplRepo_i::activate_server (const char *server,                               
                              CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     ImplementationRepository::Administration::NotFound,
+                     ImplementationRepository::Administration::CannotActivate))
+{
+  // Since this is called through the Admin interface, we should ignore some
+  // of the activation.  Ignore the return value.
+  this->activate_server_i (server, 0, ACE_TRY_ENV);
+}
+
+
+ImplRepo_i::Endpoint
+ImplRepo_i::activate_server_i (const char *server,
+                               const int check_startup,
+                               CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      ImplementationRepository::Administration::NotFound,
                      ImplementationRepository::Administration::CannotActivate))
@@ -37,6 +104,20 @@ ImplRepo_i::activate_server (const char *server,
 
   if (OPTIONS::instance()->debug () >= 1)
     ACE_DEBUG ((LM_DEBUG, "Activating Server: %s\n", server));
+
+  ACE_TString logical, startup, working;
+  Server_Info::ActivationMode activation;
+  if (this->repository_.get_startup_info (server, 
+                                          logical, 
+                                          startup, 
+                                          working, 
+                                          activation) != 0)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "Error: Cannot find startup info for server <%s>\n",
+                  server));
+      ACE_THROW(ImplementationRepository::Administration::NotFound ());
+    }
 
   // Find out if it is already running
   if (this->repository_.get_running_info (server, host, port, server_object_ior) != 0)
@@ -91,6 +172,13 @@ ImplRepo_i::activate_server (const char *server,
   // Start it up...
   if (start == 1)
     {
+      // Make sure the activation allows us to start it up.
+      if (activation == ImplementationRepository::MANUAL && check_startup)
+        ACE_THROW (CORBA::TRANSIENT (
+          CORBA_SystemException::_tao_minor_code (TAO_IMPLREPO_SERVER_MANUAL_ACTIVATION,
+          0),
+        CORBA::COMPLETED_NO));
+    
       // Check to see if it is already starting up
       int startup_val = this->repository_.starting_up (server, 1);
 
@@ -104,15 +192,6 @@ ImplRepo_i::activate_server (const char *server,
 
       if (startup_val == 0)
         {
-          ACE_TString logical, startup, working;
-          if (this->repository_.get_startup_info (server, logical, startup, working) != 0)
-            {
-              ACE_ERROR ((LM_ERROR,
-                          "Error: Cannot find startup info for server <%s>\n",
-                          server));
-              ACE_THROW(ImplementationRepository::Administration::NotFound ());
-            }
-
           if (startup.length () == 0)
             {
               // If there is no startup information, throw a transient exception
@@ -173,10 +252,24 @@ ImplRepo_i::activate_server (const char *server,
   if (this->repository_.get_running_info (server, host, port, server_object_ior) != 0)
     {
       ACE_ERROR ((LM_ERROR,
-                  "ImplRepo_i::activate_server: "
-                  "cannot resolve server <%s>\n",
+                  "ImplRepo_i::activate_server: cannot resolve server <%s>\n",
                   server));
     }
+
+  if (activation == ImplementationRepository::PER_CLIENT && check_startup)
+  {
+    if (this->repository_.update (server, "", 0, "") != 0)
+      {
+        ACE_ERROR ((LM_ERROR,
+                   "Error: Could not update information for server <%s>\n",
+                   server));
+        ACE_THROW (ImplementationRepository::Administration::NotFound ());
+      }
+  }
+
+  Endpoint endpoint(host, port);
+
+  return endpoint;
 }
 
 // Adds an entry to the Repository about this <server>
@@ -191,16 +284,19 @@ ImplRepo_i::register_server (const char *server,
   if (OPTIONS::instance()->debug () >= 2)
         ACE_DEBUG ((LM_DEBUG, "Server: %s\n"
                               "Command Line: %s\n"
-                              "Working Directory: %s\n\n",
+                              "Working Directory: %s\n"
+                              "Activation Mode: %s\n\n",
                               server,
                               options.command_line.in (),
-                              options.working_directory.in ()));
+                              options.working_directory.in (),
+                              convert_str (options.activation)));
 
   // Add the server
   int status = this->repository_.add (server,
                                       "",
                                       options.command_line.in (),
-                                      options.working_directory.in ());
+                                      options.working_directory.in (),
+                                      convert (options.activation));
 
   if (status == 1)
     {
@@ -218,10 +314,12 @@ ImplRepo_i::register_server (const char *server,
       if (OPTIONS::instance()->debug () >= 2)
         ACE_DEBUG ((LM_DEBUG, "Server: %s\n"
                               "Command Line: %s\n"
-                              "Working Directory: %s\n\n",
+                              "Working Directory: %s\n"
+                              "Activation Mode: %s\n\n",
                               server,
                               options.command_line.in (),
-                              options.working_directory.in ()));
+                              options.working_directory.in (),
+                              convert_str (options.activation)));
     }
 }
 
@@ -247,7 +345,8 @@ ImplRepo_i::reregister_server (const char *server,
   this->repository_.add (server,
                          "",
                          options.command_line.in (),
-                         options.working_directory.in ());
+                         options.working_directory.in (),
+                         convert (options.activation));
 
   // Set old starting up value, if there was one.
   if (starting_up != -1)
@@ -260,10 +359,12 @@ ImplRepo_i::reregister_server (const char *server,
   if (OPTIONS::instance()->debug () >= 2)
     ACE_DEBUG ((LM_DEBUG, "Server: %s\n"
                           "Command Line: %s\n"
-                          "Working Directory: %s\n\n",
+                          "Working Directory: %s\n"
+                          "Activation: %s\n\n",
                           server,
                           options.command_line.in (),
-                          options.working_directory.in ()));
+                          options.working_directory.in (),
+                          convert_str (options.activation)));
 }
 
 
@@ -562,6 +663,8 @@ ImplRepo_i::run (CORBA::Environment& env)
   return 0;
 }
 
+
+/*
 char*
 ImplRepo_i::get_forward_host (const char *server)
 {
@@ -574,6 +677,7 @@ ImplRepo_i::get_forward_host (const char *server)
   return CORBA::string_dup (host.c_str ());
 }
 
+
 CORBA::UShort
 ImplRepo_i::get_forward_port (const char *server)
 {
@@ -585,6 +689,7 @@ ImplRepo_i::get_forward_port (const char *server)
 
   return port;
 }
+*/
 
 ImplRepo_i::~ImplRepo_i (void)
 {
@@ -610,6 +715,7 @@ ImplRepo_i::find (const char * server,
 {
   ACE_TString logical, command_line, working_directory;
   ACE_TString host, server_object_ior;
+  Server_Info::ActivationMode activation;
   unsigned short port;
 
   ACE_NEW_THROW_EX (info,
@@ -621,7 +727,8 @@ ImplRepo_i::find (const char * server,
   if (this->repository_.get_startup_info (server,
                                           logical,
                                           command_line,
-                                          working_directory) != 0)
+                                          working_directory,
+                                          activation) != 0)
     ACE_THROW (ImplementationRepository::Administration::NotFound ());
 
   if (this->repository_.get_running_info (server, host, port, server_object_ior) != 0)
@@ -632,6 +739,7 @@ ImplRepo_i::find (const char * server,
   info->server = CORBA::string_dup (server);
   info->startup.command_line = CORBA::string_dup (command_line.c_str ());
   info->startup.working_directory = CORBA::string_dup (working_directory.c_str ());
+  info->startup.activation = convert (activation);
   info->location.host = CORBA::string_dup (host.c_str ());
   info->location.port = port;
 }
@@ -686,15 +794,17 @@ ImplRepo_i::list (CORBA::ULong how_many,
       server_iter->advance ();
 
       ACE_TString logical, server, command_line, working_directory, host, server_ior;
+      Server_Info::ActivationMode activation = Server_Info::NORMAL;
       unsigned short port;
 
       server_entry->int_id_->get_running_info (host, port, server_ior);
-      server_entry->int_id_->get_startup_info (logical, command_line, working_directory);
+      server_entry->int_id_->get_startup_info (logical, command_line, working_directory, activation);
 
       server_list[i].logical_server = CORBA::string_dup (logical.c_str ());
       server_list[i].server = CORBA::string_dup (server_entry->ext_id_.c_str ());
       server_list[i].startup.command_line = CORBA::string_dup (command_line.c_str ());
       server_list[i].startup.working_directory = CORBA::string_dup (working_directory.c_str ());
+      server_list[i].startup.activation = convert (activation);
       server_list[i].location.host = CORBA::string_dup (host.c_str ());
       server_list[i].location.port = port;
     }
@@ -920,12 +1030,15 @@ IR_Forwarder::invoke (CORBA::ServerRequest_ptr ,
   PortableServer::POA_ptr poa = poa_current_impl->get_POA (ACE_TRY_ENV);
   ACE_CHECK;
 
-  // Now FORWARD!!!
+  // Now activate.
+
+  ImplRepo_i::Endpoint ep;
 
   ACE_TRY
     {
-      this->ir_impl_->activate_server (poa->the_name (),
-                                       ACE_TRY_ENV);
+      ep = this->ir_impl_->activate_server_i (poa->the_name (),
+                                              1,
+                                              ACE_TRY_ENV);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -949,8 +1062,8 @@ IR_Forwarder::invoke (CORBA::ServerRequest_ptr ,
             ACE_dynamic_cast (TAO_IIOP_Profile *,
                               stub_obj->profile_in_use ());
 
-  iiop_pfile->port (this->ir_impl_->get_forward_port (poa->the_name ()));
-  iiop_pfile->host (this->ir_impl_->get_forward_host (poa->the_name ()));
+  iiop_pfile->host (ep.host.c_str ());
+  iiop_pfile->port (ep.port);
 
   if (!CORBA::is_nil (forward_object))
     ACE_THROW (PortableServer::ForwardRequest (forward_object));
@@ -1009,15 +1122,17 @@ IR_Iterator::next_n (CORBA::ULong how_many,
       this->iterator_->next (server_entry);
 
       ACE_TString logical, server, command_line, working_directory, host, server_ior;
+      Server_Info::ActivationMode activation = Server_Info::NORMAL;
       unsigned short port;
 
       server_entry->int_id_->get_running_info (host, port, server_ior);
-      server_entry->int_id_->get_startup_info (logical, command_line, working_directory);
+      server_entry->int_id_->get_startup_info (logical, command_line, working_directory, activation);
 
       server_list[i].logical_server = CORBA::string_dup (logical.c_str ());
       server_list[i].server = CORBA::string_dup (server_entry->ext_id_.c_str ());
       server_list[i].startup.command_line = CORBA::string_dup (command_line.c_str ());
       server_list[i].startup.working_directory = CORBA::string_dup (working_directory.c_str ());
+      server_list[i].startup.activation = convert (activation);
       server_list[i].location.host = CORBA::string_dup (host.c_str ());
       server_list[i].location.port = port;
 
