@@ -36,21 +36,23 @@ foreach $total_threads (sort {$a <=> $b} @total_threads) {
   open (FILE, "client-${total_threads}.log")  ||
     die "$0: unable to open \"client-${total_threads}.log\"\n";
   while (<FILE>) {
+    #### Add 0.5 to round instead of truncate.
+
     if (/^High priority client latency : ([\d\.]+) msec, jitter: ([\d\.]+)/) {
       #### For old versions of client.cpp that printed out in msec.
-      $high_latency = $1 * 1000;
-      $high_jitter = $2 * 1000;
+      $high_latency = ($1 + 0.5) * 1000;
+      $high_jitter = ($2 + 0.5) * 1000;
     } elsif (/^High priority client latency : ([\d\.]+) usec, jitter: ([\d\.]+)/) {
-      $high_latency = $1;
-      $high_jitter = $2
+      $high_latency = $1 + 0.5;
+      $high_jitter = $2 + 0.5;
     } elsif (/^Low priority client latency : ([\d\.]+) msec, jitter: ([\d\.]+)/) {
       #### For old versions of client.cpp that printed out in msec.
-      $low_latency = $1 * 1000;
-      $low_jitter = $2 * 1000;
+      $low_latency = ($1 + 0.5) * 1000;
+      $low_jitter = ($2 + 0.5) * 1000;
         last;
     } elsif (/^Low priority client latency : ([\d\.]+) usec, jitter: ([\d\.]+)/) {
-      $low_latency = $1;
-      $low_jitter = $2;
+      $low_latency = $1 + 0.5;;
+      $low_jitter = $2 + 0.5;;
         last;
     }
   }
