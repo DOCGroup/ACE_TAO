@@ -26,7 +26,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                    ACE_FILE_Addr (argv[1]),
 		   0,
                    ACE_Addr::sap_any, 0,
-		   O_RDWR|O_APPEND|O_CREAT, 0666) == -1)
+		   O_RDWR|O_APPEND|O_CREAT,
+                   ACE_DEFAULT_FILE_PERMS) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n to %s",
                        "connect",
