@@ -1,3 +1,5 @@
+// -*- C++ -*-
+
 // file      : ace/RMCast/Socket.h
 // author    : Boris Kolpackov <boris@kolpackov.net>
 // cvs-id    : $Id$
@@ -5,16 +7,19 @@
 #ifndef ACE_RMCAST_SOCKET_H
 #define ACE_RMCAST_SOCKET_H
 
-#include <ace/Unbounded_Queue.h>
+#include "ace/RMCast/Stack.h"
+#include "ace/RMCast/Protocol.h"
+#include "ace/RMCast/Bits.h"
 
-#include <ace/RMCast/Stack.h>
-#include <ace/RMCast/Protocol.h>
-#include <ace/RMCast/Bits.h>
+#include "ace/RMCast/Link.h"
+#include "ace/RMCast/Simulator.h"
+#include "ace/RMCast/Retransmit.h"
+#include "ace/RMCast/Acknowledge.h"
 
-#include <ace/RMCast/Link.h>
-#include <ace/RMCast/Simulator.h>
-#include <ace/RMCast/Retransmit.h>
-#include <ace/RMCast/Acknowledge.h>
+#include "ace/Unbounded_Queue.h"
+#include "ace/Thread_Mutex.h"
+#include "ace/Condition_T.h"
+
 
 namespace ACE_RMCast
 {

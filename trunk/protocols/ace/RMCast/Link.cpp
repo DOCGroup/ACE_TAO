@@ -9,7 +9,8 @@ namespace ACE_RMCast
   Link::
   Link (Address const& addr)
       : addr_ (addr),
-        ssock_ (Address ((unsigned short) (0), INADDR_ANY),
+        ssock_ (Address (static_cast<unsigned short> (0),
+                         static_cast<ACE_UINT32> (INADDR_ANY)),
                 AF_INET,
                 IPPROTO_UDP,
                 1)

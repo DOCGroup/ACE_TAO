@@ -7,16 +7,18 @@
 #ifndef ACE_RMCAST_PROTOCOL_H
 #define ACE_RMCAST_PROTOCOL_H
 
-#include <ace/Refcounted_Auto_Ptr.h>
+#include "ace/Refcounted_Auto_Ptr.h"
 
-#include <ace/Vector_T.h>
-#include <ace/Hash_Map_Manager.h>
+#include "ace/Vector_T.h"
+#include "ace/Hash_Map_Manager.h"
 
-#include <ace/OS.h>
-#include <ace/CDR_Stream.h>
-#include <ace/INET_Addr.h>
+//#include "ace/OS.h"
+#include "ace/CDR_Stream.h"
+#include "ace/INET_Addr.h"
+#include "ace/Null_Mutex.h"
 
-#include <ace/RMCast/Bits.h>
+
+#include "ace/RMCast/Bits.h"
 
 namespace ACE_RMCast
 {
