@@ -1,3 +1,17 @@
+Tue Nov 18 16:03:10 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        Thanks to Olli Savia <ops@iki.fi> for the following patches:
+        
+        * ace/OS_NS_sys_mman.inl:
+          Added #include OS_NS_sys_stat.h if __Lynx__ is defined.
+
+        * ace/RMCast/RMCast.h:
+          Added #include /**/ <bsd/mbuf.h> before #undef'ing MT_DATA if
+          __Lynx__ is defined, since it's MT_DATA is defined in this file.
+
+        * tests/Max_Default_Port_Test.cpp:
+          Changed NULL to 0 to fix compile problem on LynxOS.
+
 Tue Nov 18 15:01:49 2003  Simon McQueen  <sm@prismtechnologies.com>
 
         * ace/Log_Msg.h:
