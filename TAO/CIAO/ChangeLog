@@ -1,3 +1,11 @@
+Thu Oct 16 12:55:06 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
+
+	* CCF/CCF/IDL2/SyntaxTree/ElementsCtor.cpp:
+	* CCF/CCF/IDL2/SyntaxTree/InterfaceCtor.cpp:
+	* CCF/CCF/IDL2/SyntaxTree/ValueTypeCtor.cpp: Added fake ctor
+	  definition for some compilers (like MSVC) that insist it 
+	  should be defined (even though never used).
+
 Thu Oct 16 12:07:01 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
 	* CCF/CCF/IDL2/SemanticAction/Impl/Interface.hpp:
