@@ -33,16 +33,14 @@
 class TAO_Asynch_Reply_Dispatcher_Base;
 class TAO_Transport_Mux_Strategy;
 
+/**
+ * @class TAO_Asynch_Timeout_Handler
+ *
+ * @brief Handler registered with the reactor in case of AMI timeouts.
+ */
 class TAO_Messaging_Export TAO_Asynch_Timeout_Handler
   : public ACE_Event_Handler
 {
-  // = TITLE
-  //    TAO_Asynch_Timeout_Handler
-  //
-  // = DESCRIPTION
-  //    Handler registered with the reactor in case of AMI
-  //    timeouts.
-  //
 public:
   TAO_Asynch_Timeout_Handler (TAO_Asynch_Reply_Dispatcher_Base *rd,
                               ACE_Reactor *reactor);

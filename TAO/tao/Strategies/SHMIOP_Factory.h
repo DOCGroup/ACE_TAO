@@ -36,30 +36,41 @@ class TAO_Connector;
 class TAO_Strategies_Export TAO_SHMIOP_Protocol_Factory : public TAO_Protocol_Factory
 {
 public:
+  /// Constructor.
   TAO_SHMIOP_Protocol_Factory (void);
+
+  /// Destructor.
   virtual ~TAO_SHMIOP_Protocol_Factory (void);
 
   // = Service Configurator hooks.
+  /// Dynamic linking hook
   virtual int init (int argc, ACE_TCHAR* argv[]);
-  // Dynamic linking hook
 
+  /// Verify prefix is a match
   virtual int match_prefix (const ACE_CString &prefix);
-  // Verify prefix is a match
 
+  /// Returns the prefix used by the protocol.
   virtual const char *prefix (void) const;
-  // Returns the prefix used by the protocol.
 
+  /// Return the character used to mark where an endpoint ends and
+  /// where its options begin.
   virtual char options_delimiter (void) const;
-  // Return the character used to mark where an endpoint ends and
-  // where its options begin.
 
-  // = Check Protocol_Factory.h for a description of these methods.
+  /**
+   * @name Protocol factory methods
+   *
+   * Check Protocol_Factory.h for a description of these methods.
+   */
+  //@{
   virtual TAO_Acceptor  *make_acceptor (void);
   virtual TAO_Connector *make_connector  (void);
   virtual int requires_explicit_endpoint (void) const;
+  //@}
 
-  // = Set/get mmap file prefix
+  /// Set mmap file prefix
   void mmap_file_prefix (const ACE_TCHAR *prefix);
+
+  /// Get mmap file prefix
   const ACE_TCHAR *mmap_file_prefix (void);
 
 private:
@@ -68,11 +79,11 @@ private:
   // Changing the version number can be used to provide backwards
   // compatibility with old clients.
 
+  /// Specify the prefix (full path) for mmap files
   ACE_TCHAR *mmap_prefix_;
-  // Specify the prefix (full path) for mmap files
 
+  /// Minimum bytes of the mmap files.
   off_t min_bytes_;
-  // Minimum bytes of the mmap files.
 };
 
 ACE_STATIC_SVC_DECLARE (TAO_SHMIOP_Protocol_Factory)

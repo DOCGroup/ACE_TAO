@@ -47,8 +47,12 @@ public:
       IORTable::NotFound
     ));
 
-  // = The IORTable::Table methods, check the IORTable.pidl file for
-  // details.
+    /**
+     * @name The IORTable::Table methods
+     *
+     * Please check the IORTable.pidl file for details.
+     */
+    //@{
     virtual void bind (
         const char * object_key,
         const char * IOR
@@ -84,6 +88,7 @@ public:
       ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
+    //@}
 
 private:
   typedef ACE_Hash_Map_Manager<ACE_CString,ACE_CString,ACE_Null_Mutex> Map;

@@ -19,7 +19,7 @@
 #define TAO_UIOP_CONNECTOR_H
 #include "ace/pre.h"
 
-#include "tao/Transport_Connector.h"
+#include "tao/corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -29,6 +29,7 @@
 
 #include "ace/LSOCK_Connector.h"
 #include "ace/Connector.h"
+#include "tao/Transport_Connector.h"
 #include "UIOP_Connection_Handler.h"
 #include "tao/Resource_Factory.h"
 #include "tao/Connector_Impl.h"
@@ -60,7 +61,7 @@ public:
   /**
    * @name The TAO_Connector Methods
    *
-   * Please check the documentation in Pluggable.h.
+   * Please check the documentation in Pluggable.h for details.
    */
   //@{
   int open (TAO_ORB_Core *orb_core);

@@ -24,18 +24,18 @@
 
 #include "tao/Transport_Descriptor_Interface.h"
 
+/**
+ * @class TAO_Private_Transport_Descriptor
+ *
+ * @brief Concrete connection descriptor.
+ *
+ * Holds info necessary to identify private connections and
+ * store/look them up in the Transport Cache.  (For description
+ * of private connections see RTCORBA::PrivateTransportPolicy.)
+ */
 class TAO_RTCORBA_Export TAO_Private_Transport_Descriptor:
   public TAO_Transport_Descriptor_Interface
 {
-  // = TITLE
-  //   Concrete connection descriptor.
-  //
-  // = DESCRIPTION
-  //
-  //   Holds info necessary to identify private connections and
-  //   store/look them up in the Transport Cache.  (For description
-  //   of private connections see RTCORBA::PrivateTransportPolicy.)
-  //
 public:
 
   // = Initialization and termination methods.

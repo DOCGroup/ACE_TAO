@@ -34,30 +34,30 @@
 # pragma warning (disable:4250)
 #endif /* _MSC_VER */
 
+/**
+ * @class TAO_DynAny_i
+ *
+ * @brief Implementation of the basic Dynamic Any datatype.
+ */
 class TAO_DynamicAny_Export TAO_DynAny_i
   : public virtual DynamicAny::DynAny,
     public virtual TAO_DynCommon,
     public virtual TAO_Local_RefCounted_Object
 {
-  // = TITLE
-  //    TAO_DynAny_i
-  //
-  // = DESCRIPTION
-  //    Implementation of the basic Dynamic Any datatype.
 public:
+  /// Constructor.
   TAO_DynAny_i (void);
-  // Constructor.
 
+  /// Destructor.
   ~TAO_DynAny_i (void);
-  // Destructor.
 
+  /// Initialize using just a TypeCode
   void init (CORBA_TypeCode_ptr tc
              ACE_ENV_ARG_DECL);
-  // Initialize using just a TypeCode
 
+  /// Initialize using an Any.
   void init (const CORBA_Any& any
              ACE_ENV_ARG_DECL);
-  // Initialize using an Any.
 
   // = LocalObject methods.
   static TAO_DynAny_i *_narrow (
@@ -109,15 +109,15 @@ public:
       ));
 
 private:
-  // Check if the typecode is acceptable.
+  /// Check if the typecode is acceptable.
   void check_typecode (CORBA::TypeCode_ptr tc
                        ACE_ENV_ARG_DECL);
 
-  // Used when we are created from a typecode.
+  /// Used when we are created from a typecode.
   void set_to_default_value (CORBA::TypeCode_ptr tc
                              ACE_ENV_ARG_DECL);
 
-  // Called by both versions of init().
+  /// Called by both versions of init().
   void init_common (void);
 
   // Use copy() or assign() instead of these.

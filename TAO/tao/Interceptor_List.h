@@ -29,7 +29,8 @@
 /**
  * @class TAO_Interceptor_List
  *
- * @brief
+ * @brief Base class for portable interceptor lists.
+ *
  * Base class for the various portable interceptor lists used
  * internally by TAO.
  */

@@ -30,24 +30,24 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+/**
+ * @class TAO_Linear_Priority_Mapping
+ *
+ * @brief A simple implementation of the Priority_Mapping interface.
+ *
+ * This implementation uses linear mapping between the range of
+ * priorities for a given scheduling class (ACE_SCHED_OTHER,
+ * ACE_SCHED_FIFO, ACE_SCHED_RR) and the valid range of CORBA
+ * priorities (0...32767)
+ */
 class TAO_RTCORBA_Export TAO_Linear_Priority_Mapping : public TAO_Priority_Mapping
 {
-  //
-  // = TITLE
-  //   A simple implementation of the Priority_Mapping interface
-  //
-  // = DESCRIPTION
-  //   This implementation uses linear mapping between the range of
-  //   priorities for a given scheduling class (ACE_SCHED_OTHER,
-  //   ACE_SCHED_FIFO, ACE_SCHED_RR) and the valid range of CORBA
-  //   priorities (0...32767)
-  //
 public:
+  /// Default constructor
   TAO_Linear_Priority_Mapping (long policy);
-  // Default constructor
 
+  /// The destructor
   virtual ~TAO_Linear_Priority_Mapping (void);
-  // The destructor
 
   virtual CORBA::Boolean
       to_native (RTCORBA::Priority corba_priority,
@@ -57,12 +57,12 @@ public:
                 RTCORBA::Priority &corba_priority);
 
 private:
+  /// The scheduling policy
   long policy_;
-  // The scheduling policy
 
+  // The range
   int min_;
   int max_;
-  // The range
 };
 
 #if defined (__ACE_INLINE__)

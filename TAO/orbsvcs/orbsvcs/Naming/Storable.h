@@ -1,17 +1,13 @@
-// $Id$
-// ============================================================================
-//
-// = LIBRARY
-//    cos
-//
-// = FILENAME
-//   Storable.h
-//
-// = AUTHOR
-//    Bruce Trask <trask_b@ociweb.com>
-//    Chanaka Liyanaarachchi <chanaka@ociweb.com>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   Storable.h
+ *
+ *  $Id$
+ *
+ *  @author Bruce Trask <trask_b@ociweb.com> Chanaka Liyanaarachchi <chanaka@ociweb.com>
+ */
+//=============================================================================
+
 
 #ifndef STORABLE_H
 #define STORABLE_H
@@ -98,9 +94,9 @@ class TAO_Writer_Base
 
 
  public:
+  /// This is used to indicate to the Writer that the bindings map is now
+  /// empty and therefore now persistence resources are needed for it.
   int delete_bindings_;
-  // this is used to indicate to the Writer that the bindings map is now
-  // empty and therefore now persistence resources are needed for it.
 
 };
 
