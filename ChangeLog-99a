@@ -4983,9 +4983,9 @@ Tue Jun  8 22:44:18 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 Tue Jun  8 20:46:05 1999  Matthew J Braun  <mjb2@cs.wustl.edu>
 
-        * ace/Functor.i,h:
-          Migrated ACE_Hash template specializations to the ace type
-          wrappers (ACE_UINT16, etc).
+        * ace/Functor.i,h: Migrated ACE_Hash template specializations
+          from native types to ACE types (ACE_UINT16, etc).  This was
+          necessary since native types are not portable.
 
 Tue Jun  8 15:47:06 1999  Douglas C. Schmidt  <schmidt@danzon.cs.wustl.edu>
 
