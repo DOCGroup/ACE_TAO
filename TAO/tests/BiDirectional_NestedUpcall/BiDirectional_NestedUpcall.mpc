@@ -1,4 +1,4 @@
-project: server, minimum_corba {
+project(BiDirectional Nested Upcall Server): server, minimum_corba {
   depends += BiDir_GIOP
   libs    += TAO_BiDirGIOP
 
@@ -8,7 +8,7 @@ project: server, minimum_corba {
   }
 }
 
-project(client): server, minimum_corba {
+project(BiDirectional Nested Upcall Client): server, minimum_corba {
   depends += BiDir_GIOP
   libs    += TAO_BiDirGIOP
   exename  = client

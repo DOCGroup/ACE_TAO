@@ -1,11 +1,11 @@
-project: strategies, rt_server {
+project(RTCORBA Thread Pool Server): strategies, rt_server {
   Source_Files {
     test_i.cpp
     server.cpp
   }
 }
 
-project: strategies, rt_client {
+project(RTCORBA Thread Pool Client): strategies, rt_client {
   Source_Files {
     testC.cpp
     client.cpp

@@ -1,4 +1,4 @@
-project(alignment) : taoexe {
+project(CDR Alignment) : taoexe {
   exename  = alignment
 
   Source_Files {
@@ -6,7 +6,7 @@ project(alignment) : taoexe {
   }
 }
 
-project(allocator) : taoexe {
+project(CDR Allocator) : taoexe {
   exename  = allocator
 
   Source_Files {
@@ -14,7 +14,7 @@ project(allocator) : taoexe {
   }
 }
 
-project(basic types) : taoexe {
+project(CDR Basic Types) : taoexe {
   exename  = basic_types
 
   Source_Files {
@@ -22,7 +22,7 @@ project(basic types) : taoexe {
   }
 }
 
-project(growth) : taoexe {
+project(CDR Growth) : taoexe {
   exename  = growth
 
   Source_Files {
@@ -30,7 +30,7 @@ project(growth) : taoexe {
   }
 }
 
-project(octet sequence) : taoexe {
+project(CDR Octet Sequence) : taoexe {
   exename  = octet_sequence
 
   Source_Files {
@@ -38,7 +38,7 @@ project(octet sequence) : taoexe {
   }
 }
 
-project(tc) : taoexe {
+project(CDR Tc) : taoexe {
   exename  = tc
 
   Source_Files {

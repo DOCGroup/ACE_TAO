@@ -22,7 +22,7 @@ project(Collocation Diamond) : taolib_with_idl {
   }
 }
 
-project(Collocation) : strategies, server {
+project(Collocation Server) : strategies, server {
   depends += Collocation_Test_Stub Collocation_Diamond
   exename  = Collocation
   libs    += Collocation_Test_Stub Collocation_Diamond

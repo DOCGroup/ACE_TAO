@@ -1,4 +1,4 @@
-project(Test DLL): taolib_with_idl {
+project(Object Loader Test): taolib_with_idl {
   sharedname = Test_DLL
   depends   += PortableServer
   libs      += TAO_PortableServer TAO
@@ -11,7 +11,7 @@ project(Test DLL): taolib_with_idl {
   }
 }
 
-project(driver): server {
+project(Object Loader Driver): server {
   exename = driver
 
   Source_Files {

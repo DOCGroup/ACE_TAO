@@ -1,4 +1,4 @@
-project: server {
+project(Multiple Server): server {
   idlflags += -Gd
 
   Source_Files {
@@ -8,7 +8,7 @@ project: server {
   }
 }
 
-project(client): server {
+project(Multiple Client): server {
   exename   = client
   idlflags += -Gd
 

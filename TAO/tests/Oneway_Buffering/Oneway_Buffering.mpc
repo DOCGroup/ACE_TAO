@@ -1,11 +1,11 @@
-project: messaging, corba_messaging {
+project(Oneway Buffering Server): messaging, corba_messaging {
   Source_Files {
     Oneway_Buffering.cpp
     server.cpp
   }  
 }
  
-project(client): messaging, corba_messaging {
+project(Oneway Buffering Client): messaging, corba_messaging {
   exename   = client
 
   Source_Files {
@@ -14,7 +14,7 @@ project(client): messaging, corba_messaging {
   }  
 }
 
-project(admin): messaging, corba_messaging {
+project(Oneway Buffering Admin): messaging, corba_messaging {
   exename   = admin
 
   Source_Files {

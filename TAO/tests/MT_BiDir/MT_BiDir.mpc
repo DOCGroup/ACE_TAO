@@ -1,4 +1,4 @@
-project: server, minimum_corba {
+project(MT BiDir Server): server, minimum_corba {
   depends += BiDir_GIOP
   libs    += TAO_BiDirGIOP
   Source_Files {
@@ -11,7 +11,7 @@ project: server, minimum_corba {
   }
 }
 
-project(client): server, minimum_corba {
+project(MT BiDir Client): server, minimum_corba {
   depends += BiDir_GIOP
   libs    += TAO_BiDirGIOP
   exename  = client

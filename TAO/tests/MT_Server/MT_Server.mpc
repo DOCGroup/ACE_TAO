@@ -1,11 +1,11 @@
-project: server {
+project(MT Server Server): server {
   Source_Files {
     test_i.cpp
     server.cpp
   }
 }
 
-project: client {
+project(MT Server Client): client {
   Source_Files {
     testC.cpp
     client.cpp

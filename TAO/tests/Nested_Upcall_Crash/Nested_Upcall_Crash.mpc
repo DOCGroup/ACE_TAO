@@ -1,4 +1,4 @@
-project: messaging, corba_messaging {
+project(Nested Upcall Crash Server): messaging, corba_messaging {
   Source_Files {
     Clock_Ticks.cpp
     Server_Peer.cpp
@@ -6,7 +6,7 @@ project: messaging, corba_messaging {
   }
 }
 
-project(scavenger): messaging, corba_messaging {
+project(Nested Upcall Crash Scavenger): messaging, corba_messaging {
   exename = scavenger
 
   Source_Files {
@@ -14,7 +14,7 @@ project(scavenger): messaging, corba_messaging {
   }
 }
 
-project(client): messaging, corba_messaging {
+project(Nested Upcall Crash Client): messaging, corba_messaging {
   exename = client
 
   Source_Files {

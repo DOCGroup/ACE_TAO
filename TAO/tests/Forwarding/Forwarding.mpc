@@ -1,4 +1,4 @@
-project: server {
+project(Forwarding Server): server {
   depends += IORTable
   libs    += TAO_IORTable
 
@@ -8,7 +8,7 @@ project: server {
   }
 }
 
-project: client {
+project(Forwarding Client): client {
   Source_Files {
     testC.cpp
     client.cpp

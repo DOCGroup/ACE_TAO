@@ -1,4 +1,4 @@
-project: server {
+project(Xt Stopwatch Server): server {
   Source_Files {
     test_i.cpp
     Stopwatch_display.cpp
@@ -7,7 +7,7 @@ project: server {
   }
 }
 
-project: client {
+project(Xt Stopwatch Client): client {
   Source_Files {
     testC.cpp
     Control.cpp

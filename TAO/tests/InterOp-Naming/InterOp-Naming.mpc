@@ -1,4 +1,4 @@
-project: server {
+project(InterOp-Naming Server): server {
   depends += IORTable
   libs    += TAO_IORTable
   exename  = INS_test_server
@@ -10,7 +10,7 @@ project: server {
   }
 }
 
-project: client {
+project(InterOp-Naming Client): client {
   exename  = INS_test_client
 
   Source_Files {

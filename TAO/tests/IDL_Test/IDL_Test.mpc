@@ -1,4 +1,4 @@
-project(main): server {
+project(IDL Test Main): server {
   exename = main
 
   IDL_Files {
