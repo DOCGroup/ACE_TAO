@@ -249,10 +249,6 @@ TAO_IIOP_Endpoint::preferred_interfaces (TAO_ORB_Core *oc)
 
   while (pos != ACE_CString::npos)
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) Pos value is [%d] \n",
-                  pos));
-
       // Do we have a "," or an '\0'?
       ssize_t new_pos = tmp.find (",",
                                   pos + 1);

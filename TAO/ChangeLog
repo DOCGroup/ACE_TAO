@@ -1,3 +1,18 @@
+Wed Dec  1 17:19:39 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_visitor_interface/strategized_proxy_broker_ss.cpp:
+
+	  Added minor code while throwing BAD_OPERATION exception in
+	  conformance with the CORBA spec. 
+
+	* tao/IIOP_Endpoint.cpp:
+
+	  Removed a weird DEBUG statemnet. 
+	
+	* tao/SystemException.cpp:
+
+	  Added a minor code lookup table for BAD_OPERATION. 
+
 Wed Dec  1 16:30:00 UTC 2004  Simon Massey  <sma@prismtech.com>
 
         * TAO/TAO_IDL/util/utl_global.cpp
