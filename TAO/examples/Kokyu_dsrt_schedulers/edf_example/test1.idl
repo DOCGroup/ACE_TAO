@@ -1,0 +1,8 @@
+//$Id$
+
+interface Simple_Server1
+{
+  oneway void test_method (in long x, in long id, in long iter, in unsigned long long y);
+
+  void shutdown ();
+};

@@ -25,6 +25,7 @@ IDL_FILES = test1
 IDL_SRC = $(foreach ext, C.cpp S.cpp, $(foreach file, $(IDL_FILES), $(file)$(ext)))
 
 FILES = \
+  cpuload \
   test1C \
   test1S \
   test1_i \
@@ -84,7 +85,7 @@ ifeq ($(static_libs),1)
   endif
 endif
 
-CPPFLAGS += -DKOKYU_DSRT_LOGGING
+#CPPFLAGS += -DKOKYU_DSRT_LOGGING
 
 LDFLAGS      += -L../../../../lib -L$(DATASTREAM_ROOT)/lib
 
