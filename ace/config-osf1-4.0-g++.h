@@ -29,9 +29,6 @@
 // Compiler doesn't support static data member templates.
 #define ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
 
-// Define this file to keep /usr/include/memory.h from being included.
-#include <cstring>
-
 /////////////////////////////////////////////////////////////////////////////
 /
 
