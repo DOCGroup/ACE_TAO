@@ -1,3 +1,9 @@
+Sun Oct 14 17:05:14 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* examples/C++NPv1/Logging_Handler.{h,cpp}: Changed log_file_ from
+	  a reference to a pointer so that it can be initialized
+ 	  correctly.  Thanks to Kitty for reporting this.
+
 Fri Oct 12 14:54:58 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
         * ace/OS.i:
