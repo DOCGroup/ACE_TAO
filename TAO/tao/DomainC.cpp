@@ -113,6 +113,12 @@ CORBA::tao_DomainManager_cast::tao_upcast (
         CORBA::DomainManager,
         CORBA::tao_DomainManager_life
       >;
+template class TAO_Seq_Var_Base_T<CORBA::DomainManagerList,
+                                  TAO_Object_Manager<CORBA::DomainManager,
+                                                     TAO_Objref_Var_T<CORBA::DomainManager,
+                                                                      CORBA::tao_DomainManager_life>,
+                                                     CORBA::tao_DomainManager_life> >;
+
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 # pragma instantiate \
     TAO_Objref_Var_T< \
@@ -124,6 +130,12 @@ CORBA::tao_DomainManager_cast::tao_upcast (
         CORBA::DomainManager, \
         CORBA::tao_DomainManager_life \
       >
+
+#pragma instantiate TAO_Seq_Var_Base_T<CORBA::DomainManagerList,
+                                       TAO_Object_Manager<CORBA::DomainManager,
+                                       TAO_Objref_Var_T<CORBA::DomainManager, CORBA::tao_DomainManager_life>,
+                                       CORBA::tao_DomainManager_life> >
+
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 // TAO_IDL - Generated from
@@ -1603,9 +1615,13 @@ template class
           CORBA::tao_DomainManager_life
         >
     >;
+template class TAO_Unbounded_Object_Sequence<CORBA::DomainManager,
+                                             CORBA::DomainManager_var,
+                                             CORBA::tao_DomainManager_life,
+                                             CORBA::tao_DomainManager_cast>;
 
 template class
-  TAO_Seq_Out_T<
+  TAO_MngSeq_Out_T<
       CORBA::DomainManagerList,
       CORBA::DomainManagerList_var,
       TAO_Object_Manager<
@@ -1626,6 +1642,10 @@ template class
             CORBA::tao_DomainManager_life \
           > \
       >
+#pragma instantiate TAO_Unbounded_Object_Sequence<CORBA::DomainManager,
+                                                  CORBA::DomainManager_var,
+                                                  CORBA::tao_DomainManager_life,
+                                                  CORBA::tao_DomainManager_cast>
 
 # pragma instantiate \
     TAO_Seq_Out_T< \
@@ -1763,10 +1783,10 @@ template class
 
   #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
       defined (ACE_HAS_GNU_REPO)
-    template class TAO_Object_Manager<CORBA::DomainManager,CORBA::DomainManager_var>;
+    template class TAO_Object_Manager<CORBA::DomainManager,CORBA::DomainManager_var, CORBA::tao_DomainManager_life>;
     template class TAO::Any_Impl_T<CORBA::DomainManager>;
   #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-  # pragma instantiate TAO_Object_Manager<CORBA::DomainManager, CORBA::DomainManager_var>
+  # pragma instantiate TAO_Object_Manager<CORBA::DomainManager, CORBA::DomainManager_var, CORBA::tao_DomainManager_life>
   # pragma instantiate TAO::Any_Impl_T<CORBA::DomainManager>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -1817,10 +1837,10 @@ operator>>= (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-  template class TAO_Object_Manager<CORBA::ConstructionPolicy,CORBA::ConstructionPolicy_var>;
+  template class TAO_Object_Manager<CORBA::ConstructionPolicy,CORBA::ConstructionPolicy_var, CORBA::tao_ConstructionPolicy_life>;
   template class TAO::Any_Impl_T<CORBA::ConstructionPolicy>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO_Object_Manager<CORBA::ConstructionPolicy, CORBA::ConstructionPolicy_var>
+# pragma instantiate TAO_Object_Manager<CORBA::ConstructionPolicy, CORBA::ConstructionPolicy_var, CORBA::tao_ConstructionPolicy_life>
 # pragma instantiate TAO::Any_Impl_T<CORBA::ConstructionPolicy>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 

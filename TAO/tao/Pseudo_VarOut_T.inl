@@ -26,7 +26,7 @@ TAO_Pseudo_Var_T<T>::~TAO_Pseudo_Var_T (void)
 }
 
 template <typename T>
-ACE_INLINE 
+ACE_INLINE
 TAO_Pseudo_Var_T<T> &
 TAO_Pseudo_Var_T<T>::operator= (T * p)
 {
@@ -36,7 +36,7 @@ TAO_Pseudo_Var_T<T>::operator= (T * p)
 }
 
 template <typename T>
-ACE_INLINE 
+ACE_INLINE
 TAO_Pseudo_Var_T<T> &
 TAO_Pseudo_Var_T<T>::operator= (const TAO_Pseudo_Var_T<T> & p)
 {
@@ -53,7 +53,7 @@ template <typename T>
 ACE_INLINE
 TAO_Pseudo_Var_T<T>::operator const T *& () const
 {
-  return this->ptr_;
+  return ACE_const_cast (const T*, this->ptr_);
 }
 
 template <typename T>
@@ -64,7 +64,7 @@ TAO_Pseudo_Var_T<T>::operator T *& ()
 }
 
 template <typename T>
-ACE_INLINE 
+ACE_INLINE
 T *
 TAO_Pseudo_Var_T<T>::operator-> (void) const
 {
@@ -72,7 +72,7 @@ TAO_Pseudo_Var_T<T>::operator-> (void) const
 }
 
 template <typename T>
-ACE_INLINE 
+ACE_INLINE
 T *
 TAO_Pseudo_Var_T<T>::in (void) const
 {
@@ -80,7 +80,7 @@ TAO_Pseudo_Var_T<T>::in (void) const
 }
 
 template <typename T>
-ACE_INLINE 
+ACE_INLINE
 T *&
 TAO_Pseudo_Var_T<T>::inout (void)
 {
@@ -88,7 +88,7 @@ TAO_Pseudo_Var_T<T>::inout (void)
 }
 
 template <typename T>
-ACE_INLINE 
+ACE_INLINE
 T *&
 TAO_Pseudo_Var_T<T>::out (void)
 {
@@ -98,7 +98,7 @@ TAO_Pseudo_Var_T<T>::out (void)
 }
 
 template <typename T>
-ACE_INLINE 
+ACE_INLINE
 T *
 TAO_Pseudo_Var_T<T>::_retn (void)
 {
@@ -108,7 +108,7 @@ TAO_Pseudo_Var_T<T>::_retn (void)
 }
 
 template <typename T>
-ACE_INLINE 
+ACE_INLINE
 T *
 TAO_Pseudo_Var_T<T>::ptr (void) const
 {
@@ -143,7 +143,7 @@ TAO_Pseudo_Out_T<T,T_var>::TAO_Pseudo_Out_T (
 {}
 
 template <typename T, typename T_var>
-ACE_INLINE 
+ACE_INLINE
 TAO_Pseudo_Out_T<T,T_var> &
 TAO_Pseudo_Out_T<T,T_var>::operator= (const TAO_Pseudo_Out_T<T,T_var> & p)
 {
@@ -152,7 +152,7 @@ TAO_Pseudo_Out_T<T,T_var>::operator= (const TAO_Pseudo_Out_T<T,T_var> & p)
 }
 
 template <typename T, typename T_var>
-ACE_INLINE 
+ACE_INLINE
 TAO_Pseudo_Out_T<T,T_var> &
 TAO_Pseudo_Out_T<T,T_var>::operator= (T * p)
 {
@@ -168,7 +168,7 @@ TAO_Pseudo_Out_T<T,T_var>::operator T *& ()
 }
 
 template <typename T, typename T_var>
-ACE_INLINE 
+ACE_INLINE
 T *&
 TAO_Pseudo_Out_T<T,T_var>::ptr (void)
 {
@@ -176,7 +176,7 @@ TAO_Pseudo_Out_T<T,T_var>::ptr (void)
 }
 
 template <typename T, typename T_var>
-ACE_INLINE 
+ACE_INLINE
 T *
 TAO_Pseudo_Out_T<T,T_var>::operator-> (void)
 {

@@ -703,8 +703,18 @@ template class
         >
     >;
 
+template class TAO_Seq_Var_Base_T<PortableInterceptor::ObjectReferenceTemplateSeq,
+    TAO_Valuetype_Manager<PortableInterceptor::ObjectReferenceTemplate,
+                          TAO_Value_Var_T<PortableInterceptor::ObjectReferenceTemplate,
+                                          PortableInterceptor::tao_ObjectReferenceTemplate_life>,
+                          PortableInterceptor::tao_ObjectReferenceTemplate_life> >;
+template class TAO_Unbounded_Valuetype_Sequence<PortableInterceptor::ObjectReferenceTemplate,
+                                                TAO_Value_Var_T<PortableInterceptor::ObjectReferenceTemplate,
+                                                PortableInterceptor::tao_ObjectReferenceTemplate_life>,
+                                                PortableInterceptor::tao_ObjectReferenceTemplate_life>;
+
 template class
-  TAO_Seq_Out_T<
+  TAO_MngSeq_Out_T<
       PortableInterceptor::ObjectReferenceTemplateSeq,
       PortableInterceptor::ObjectReferenceTemplateSeq_var,
       TAO_Valuetype_Manager<
@@ -726,6 +736,11 @@ template class
         > \
     >
 
+#pragma instantiate TAO_Unbounded_Valuetype_Sequence<PortableInterceptor::ObjectReferenceTemplate,
+TAO_Value_Var_T<PortableInterceptor::ObjectReferenceTemplate,
+                PortableInterceptor::tao_ObjectReferenceTemplate_life>,
+                PortableInterceptor::tao_ObjectReferenceTemplate_life>;
+
 # pragma instantiate \
   TAO_Seq_Out_T< \
       PortableInterceptor::ObjectReferenceTemplateSeq, \
@@ -737,6 +752,11 @@ template class
         > \
     >
 
+#pragms instantiate TAO_Seq_Var_Base_T<PortableInterceptor::ObjectReferenceTemplateSeq,
+    TAO_Valuetype_Manager<PortableInterceptor::ObjectReferenceTemplate,
+                          TAO_Value_Var_T<PortableInterceptor::ObjectReferenceTemplate,
+                                          PortableInterceptor::tao_ObjectReferenceTemplate_life>,
+                          PortableInterceptor::tao_ObjectReferenceTemplate_life> >;
 #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 // TAO_IDL - Generated from
@@ -965,10 +985,10 @@ operator>>= (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-  template class TAO_Valuetype_Manager<PortableInterceptor::ObjectReferenceFactory, PortableInterceptor::ObjectReferenceFactory_var>;
+  template class TAO_Valuetype_Manager<PortableInterceptor::ObjectReferenceFactory, PortableInterceptor::ObjectReferenceFactory_var, PortableInterceptor::tao_ObjectReferenceFactory_life>;
   template class TAO::Any_Impl_T<PortableInterceptor::ObjectReferenceFactory>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  pragma instantiate TAO_Valuetype_Manager<PortableInterceptor::ObjectReferenceFactory, PortableInterceptor::ObjectReferenceFactory_var>
+#  pragma instantiate TAO_Valuetype_Manager<PortableInterceptor::ObjectReferenceFactory, PortableInterceptor::ObjectReferenceFactory_var, PortableInterceptor::tao_ObjectReferenceFactory_life>
 #  pragma instantiate TAO::Any_Impl_T<PortableInterceptor::ObjectReferenceFactory>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -1029,10 +1049,10 @@ TAO::Any_Impl_T<PortableInterceptor::ObjectReferenceTemplate>::to_value (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-  template class TAO_Valuetype_Manager<PortableInterceptor::ObjectReferenceTemplate, PortableInterceptor::ObjectReferenceTemplate_var>;
+  template class TAO_Valuetype_Manager<PortableInterceptor::ObjectReferenceTemplate, PortableInterceptor::ObjectReferenceTemplate_var, PortableInterceptor::tao_ObjectReferenceTemplate_life>;
   template class TAO::Any_Impl_T<PortableInterceptor::ObjectReferenceTemplate>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  pragma instantiate TAO_Valuetype_Manager<PortableInterceptor::ObjectReferenceTemplate, PortableInterceptor::ObjectReferenceTemplate_var>
+#  pragma instantiate TAO_Valuetype_Manager<PortableInterceptor::ObjectReferenceTemplate, PortableInterceptor::ObjectReferenceTemplate_var, PortableInterceptor::tao_ObjectReferenceTemplate_life>
 #  pragma instantiate TAO::Any_Impl_T<PortableInterceptor::ObjectReferenceTemplate>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 

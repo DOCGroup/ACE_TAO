@@ -1226,7 +1226,7 @@ template class
     >;
 
 template class
-  TAO_Seq_Out_T<
+  TAO_MngSeq_Out_T<
       TAO_IOP::TAO_IOR_Manipulation::IORList,
       TAO_IOP::TAO_IOR_Manipulation::IORList_var,
       TAO_Pseudo_Object_Manager<
@@ -1247,7 +1247,7 @@ template class
     >
 
 # pragma instantiate \
-  TAO_Seq_Out_T< \
+  TAO_MngSeq_Out_T< \
       TAO_IOP::TAO_IOR_Manipulation::IORList, \
       TAO_IOP::TAO_IOR_Manipulation::IORList_var, \
       TAO_Pseudo_Object_Manager< \
@@ -1729,10 +1729,10 @@ operator>>= (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-  template class TAO_Object_Manager<TAO_IOP::TAO_IOR_Property,TAO_IOP::TAO_IOR_Property_var>;
-  template class TAO::Any_Impl_T<TAO_IOP::TAO_IOR_Property>;
+template class TAO_Object_Manager<TAO_IOP::TAO_IOR_Property,TAO_IOP::TAO_IOR_Property_var,TAO_IOP::tao_TAO_IOR_Property_life>;
+template class TAO::Any_Impl_T<TAO_IOP::TAO_IOR_Property>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO_Object_Manager<TAO_IOP::TAO_IOR_Property, TAO_IOP::TAO_IOR_Property_var>
+# pragma instantiate TAO_Object_Manager<TAO_IOP::TAO_IOR_Property, TAO_IOP::TAO_IOR_Property_var,TAO_IOP::tao_TAO_IOR_Property_life>
 # pragma instantiate TAO::Any_Impl_T<TAO_IOP::TAO_IOR_Property>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -1783,9 +1783,9 @@ operator>>= (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-  template class TAO_Object_Manager<TAO_IOP::TAO_IOR_Manipulation,TAO_IOP::TAO_IOR_Manipulation_var>;
+  template class TAO_Object_Manager<TAO_IOP::TAO_IOR_Manipulation,TAO_IOP::TAO_IOR_Manipulation_var,TAO_IOP::tao_TAO_IOR_Manipulation_life>;
   template class TAO::Any_Impl_T<TAO_IOP::TAO_IOR_Manipulation>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO_Object_Manager<TAO_IOP::TAO_IOR_Manipulation, TAO_IOP::TAO_IOR_Manipulation_var>
+# pragma instantiate TAO_Object_Manager<TAO_IOP::TAO_IOR_Manipulation, TAO_IOP::TAO_IOR_Manipulation_var,TAO_IOP::tao_TAO_IOR_Manipulation_life>
 # pragma instantiate TAO::Any_Impl_T<TAO_IOP::TAO_IOR_Manipulation>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

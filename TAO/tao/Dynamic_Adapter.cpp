@@ -90,5 +90,3 @@ template class ACE_Dynamic_Service<TAO_Dynamic_Adapter>;
 #pragma instantiate ACE_Dynamic_Service<TAO_Dynamic_Adapter>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-

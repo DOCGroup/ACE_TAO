@@ -5397,26 +5397,26 @@ void CORBA::Contained::Description::_tao_any_destructor (void *_tao_void_pointer
 
 template class
   TAO_Var_Var_T<
-      Description
+      CORBA::Contained::Description
     >;
 
 template class
   TAO_Out_T<
-      Description,
-      Description_var
+      CORBA::Contained::Description,
+      CORBA::Contained::Description_var
     >;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 # pragma instantiate \
   TAO_Var_Var_T< \
-      Description \
+      CORBA::Contained::Description \
     >
 
 # pragma instantiate \
   TAO_Out_T< \
-      Description, \
-      Description_var \
+      CORBA::Contained::Description, \
+      CORBA::Contained::Description_var \
     >
 
 #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
@@ -5568,7 +5568,7 @@ template class
     >;
 
 template class
-  TAO_Seq_Out_T<
+  TAO_MngSeq_Out_T<
       CORBA::InterfaceDefSeq,
       CORBA::InterfaceDefSeq_var,
       TAO_Object_Manager<
@@ -5731,7 +5731,7 @@ template class
       >;
 
   template class
-    TAO_Seq_Out_T<
+    TAO_MngSeq_Out_T<
         CORBA::ValueDefSeq,
         CORBA::ValueDefSeq_var,
         TAO_Object_Manager<
@@ -5890,7 +5890,7 @@ template class
         >;
 
     template class
-      TAO_Seq_Out_T<
+      TAO_MngSeq_Out_T<
           CORBA::AbstractInterfaceDefSeq,
           CORBA::AbstractInterfaceDefSeq_var,
           TAO_Object_Manager<
@@ -6061,7 +6061,7 @@ template class
           >;
 
       template class
-        TAO_Seq_Out_T<
+        TAO_MngSeq_Out_T<
             CORBA::LocalInterfaceDefSeq,
             CORBA::LocalInterfaceDefSeq_var,
             TAO_Object_Manager<
@@ -6229,7 +6229,7 @@ template class
             >;
 
         template class
-          TAO_Seq_Out_T<
+          TAO_MngSeq_Out_T<
               CORBA::ExtInterfaceDefSeq,
               CORBA::ExtInterfaceDefSeq_var,
               TAO_Object_Manager<
@@ -6395,7 +6395,7 @@ template class
               >;
 
           template class
-            TAO_Seq_Out_T<
+            TAO_MngSeq_Out_T<
                 CORBA::ExtValueDefSeq,
                 CORBA::ExtValueDefSeq_var,
                 TAO_Object_Manager<
@@ -6418,7 +6418,7 @@ template class
                 >
 
           # pragma instantiate \
-              TAO_Seq_Out_T< \
+              TAO_MngSeq_Out_T< \
                   CORBA::ExtValueDefSeq, \
                   CORBA::ExtValueDefSeq_var, \
                   TAO_Object_Manager< \
@@ -6557,7 +6557,7 @@ template class
                 >;
 
             template class
-              TAO_Seq_Out_T<
+              TAO_MngSeq_Out_T<
                   CORBA::ExtAbstractInterfaceDefSeq,
                   CORBA::ExtAbstractInterfaceDefSeq_var,
                   TAO_Object_Manager<
@@ -6580,7 +6580,7 @@ template class
                   >
 
             # pragma instantiate \
-                TAO_Seq_Out_T< \
+                TAO_MngSeq_Out_T< \
                     CORBA::ExtAbstractInterfaceDefSeq, \
                     CORBA::ExtAbstractInterfaceDefSeq_var, \
                     TAO_Object_Manager< \
@@ -6731,7 +6731,7 @@ template class
                   >;
 
               template class
-                TAO_Seq_Out_T<
+                TAO_MngSeq_Out_T<
                     CORBA::ExtLocalInterfaceDefSeq,
                     CORBA::ExtLocalInterfaceDefSeq_var,
                     TAO_Object_Manager<
@@ -6754,7 +6754,7 @@ template class
                     >
 
               # pragma instantiate \
-                  TAO_Seq_Out_T< \
+                  TAO_MngSeq_Out_T< \
                       CORBA::ExtLocalInterfaceDefSeq, \
                       CORBA::ExtLocalInterfaceDefSeq_var, \
                       TAO_Object_Manager< \
@@ -6902,7 +6902,7 @@ template class
                     >;
 
                 template class
-                  TAO_Seq_Out_T<
+                  TAO_MngSeq_Out_T<
                       CORBA::ContainedSeq,
                       CORBA::ContainedSeq_var,
                       TAO_Object_Manager<
@@ -6925,7 +6925,7 @@ template class
                       >
 
                 # pragma instantiate \
-                    TAO_Seq_Out_T< \
+                    TAO_MngSeq_Out_T< \
                         CORBA::ContainedSeq, \
                         CORBA::ContainedSeq_var, \
                         TAO_Object_Manager< \
@@ -7104,26 +7104,26 @@ template class
 
                   template class
                     TAO_Var_Var_T<
-                        StructMember
+                        CORBA::StructMember
                       >;
 
                   template class
                     TAO_Out_T<
-                        StructMember,
-                        StructMember_var
+                        CORBA::StructMember,
+                        CORBA::StructMember_var
                       >;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
                   # pragma instantiate \
                     TAO_Var_Var_T< \
-                        StructMember \
+                        CORBA::StructMember \
                       >
 
                   # pragma instantiate \
                     TAO_Out_T< \
-                        StructMember, \
-                        StructMember_var \
+                        CORBA::StructMember, \
+                        CORBA::StructMember_var \
                       >
 
 #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
@@ -7173,14 +7173,14 @@ template class
 
                   template class
                     TAO_VarSeq_Var_T<
-                        StructMemberSeq,
+                        CORBA::StructMemberSeq,
                         CORBA::StructMember
                       >;
 
                   template class
                     TAO_Seq_Out_T<
-                        StructMemberSeq,
-                        StructMemberSeq_var,
+                        CORBA::StructMemberSeq,
+                        CORBA::StructMemberSeq_var,
                         CORBA::StructMember
                       >;
 
@@ -7188,14 +7188,14 @@ template class
 
                   # pragma instantiate \
                     TAO_VarSeq_Var_T< \
-                        StructMemberSeq, \
+                        CORBA::StructMemberSeq, \
                         CORBA::StructMember \
                       >
 
                   # pragma instantiate \
                     TAO_Seq_Out_T< \
-                        StructMemberSeq, \
-                        StructMemberSeq_var, \
+                        CORBA::StructMemberSeq, \
+                        CORBA::StructMemberSeq_var, \
                         CORBA::StructMember \
                       >
 
@@ -7472,26 +7472,26 @@ template class
 
                   template class
                     TAO_Var_Var_T<
-                        Initializer
+                        CORBA::Initializer
                       >;
 
                   template class
                     TAO_Out_T<
-                        Initializer,
-                        Initializer_var
+                        CORBA::Initializer,
+                        CORBA::Initializer_var
                       >;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
                   # pragma instantiate \
                     TAO_Var_Var_T< \
-                        Initializer \
+                        CORBA::Initializer \
                       >
 
                   # pragma instantiate \
                     TAO_Out_T< \
-                        Initializer, \
-                        Initializer_var \
+                        CORBA::Initializer, \
+                        CORBA::Initializer_var \
                       >
 
 #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
@@ -7541,14 +7541,14 @@ template class
 
                   template class
                     TAO_VarSeq_Var_T<
-                        InitializerSeq,
+                        CORBA::InitializerSeq,
                         CORBA::Initializer
                       >;
 
                   template class
                     TAO_Seq_Out_T<
-                        InitializerSeq,
-                        InitializerSeq_var,
+                        CORBA::InitializerSeq,
+                        CORBA::InitializerSeq_var,
                         CORBA::Initializer
                       >;
 
@@ -7556,14 +7556,14 @@ template class
 
                   # pragma instantiate \
                     TAO_VarSeq_Var_T< \
-                        InitializerSeq, \
+                        CORBA::InitializerSeq, \
                         CORBA::Initializer \
                       >
 
                   # pragma instantiate \
                     TAO_Seq_Out_T< \
-                        InitializerSeq, \
-                        InitializerSeq_var, \
+                        CORBA::InitializerSeq, \
+                        CORBA::InitializerSeq_var, \
                         CORBA::Initializer \
                       >
 
@@ -7876,26 +7876,26 @@ template class
 
                   template class
                     TAO_Var_Var_T<
-                        ExceptionDescription
+                        CORBA::ExceptionDescription
                       >;
 
                   template class
                     TAO_Out_T<
-                        ExceptionDescription,
-                        ExceptionDescription_var
+                        CORBA::ExceptionDescription,
+                        CORBA::ExceptionDescription_var
                       >;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
                   # pragma instantiate \
                     TAO_Var_Var_T< \
-                        ExceptionDescription \
+                        CORBA::ExceptionDescription \
                       >
 
                   # pragma instantiate \
                     TAO_Out_T< \
-                        ExceptionDescription, \
-                        ExceptionDescription_var \
+                        CORBA::ExceptionDescription, \
+                        CORBA::ExceptionDescription_var \
                       >
 
 #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
@@ -7945,14 +7945,14 @@ template class
 
                   template class
                     TAO_VarSeq_Var_T<
-                        ExcDescriptionSeq,
+                        CORBA::ExcDescriptionSeq,
                         CORBA::ExceptionDescription
                       >;
 
                   template class
                     TAO_Seq_Out_T<
-                        ExcDescriptionSeq,
-                        ExcDescriptionSeq_var,
+                        CORBA::ExcDescriptionSeq,
+                        CORBA::ExcDescriptionSeq_var,
                         CORBA::ExceptionDescription
                       >;
 
@@ -7960,14 +7960,14 @@ template class
 
                   # pragma instantiate \
                     TAO_VarSeq_Var_T< \
-                        ExcDescriptionSeq, \
+                        CORBA::ExcDescriptionSeq, \
                         CORBA::ExceptionDescription \
                       >
 
                   # pragma instantiate \
                     TAO_Seq_Out_T< \
-                        ExcDescriptionSeq, \
-                        ExcDescriptionSeq_var, \
+                        CORBA::ExcDescriptionSeq, \
+                        CORBA::ExcDescriptionSeq_var, \
                         CORBA::ExceptionDescription \
                       >
 
@@ -8399,26 +8399,26 @@ template class
 
                   template class
                     TAO_Var_Var_T<
-                        ExtInitializer
+                        CORBA::ExtInitializer
                       >;
 
                   template class
                     TAO_Out_T<
-                        ExtInitializer,
-                        ExtInitializer_var
+                        CORBA::ExtInitializer,
+                        CORBA::ExtInitializer_var
                       >;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
                   # pragma instantiate \
                     TAO_Var_Var_T< \
-                        ExtInitializer \
+                        CORBA::ExtInitializer \
                       >
 
                   # pragma instantiate \
                     TAO_Out_T< \
-                        ExtInitializer, \
-                        ExtInitializer_var \
+                        CORBA::ExtInitializer, \
+                        CORBA::ExtInitializer_var \
                       >
 
 #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
@@ -8468,14 +8468,14 @@ template class
 
                   template class
                     TAO_VarSeq_Var_T<
-                        ExtInitializerSeq,
+                        CORBA::ExtInitializerSeq,
                         CORBA::ExtInitializer
                       >;
 
                   template class
                     TAO_Seq_Out_T<
-                        ExtInitializerSeq,
-                        ExtInitializerSeq_var,
+                        CORBA::ExtInitializerSeq,
+                        CORBA::ExtInitializerSeq_var,
                         CORBA::ExtInitializer
                       >;
 
@@ -8483,14 +8483,14 @@ template class
 
                   # pragma instantiate \
                     TAO_VarSeq_Var_T< \
-                        ExtInitializerSeq, \
+                        CORBA::ExtInitializerSeq, \
                         CORBA::ExtInitializer \
                       >
 
                   # pragma instantiate \
                     TAO_Seq_Out_T< \
-                        ExtInitializerSeq, \
-                        ExtInitializerSeq_var, \
+                        CORBA::ExtInitializerSeq, \
+                        CORBA::ExtInitializerSeq_var, \
                         CORBA::ExtInitializer \
                       >
 
@@ -8890,26 +8890,26 @@ template class
 
                   template class
                     TAO_Var_Var_T<
-                        UnionMember
+                        CORBA::UnionMember
                       >;
 
                   template class
                     TAO_Out_T<
-                        UnionMember,
-                        UnionMember_var
+                        CORBA::UnionMember,
+                        CORBA::UnionMember_var
                       >;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
                   # pragma instantiate \
                     TAO_Var_Var_T< \
-                        UnionMember \
+                        CORBA::UnionMember \
                       >
 
                   # pragma instantiate \
                     TAO_Out_T< \
-                        UnionMember, \
-                        UnionMember_var \
+                        CORBA::UnionMember, \
+                        CORBA::UnionMember_var \
                       >
 
 #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
@@ -8959,14 +8959,14 @@ template class
 
                   template class
                     TAO_VarSeq_Var_T<
-                        UnionMemberSeq,
+                        CORBA::UnionMemberSeq,
                         CORBA::UnionMember
                       >;
 
                   template class
                     TAO_Seq_Out_T<
-                        UnionMemberSeq,
-                        UnionMemberSeq_var,
+                        CORBA::UnionMemberSeq,
+                        CORBA::UnionMemberSeq_var,
                         CORBA::UnionMember
                       >;
 
@@ -8974,14 +8974,14 @@ template class
 
                   # pragma instantiate \
                     TAO_VarSeq_Var_T< \
-                        UnionMemberSeq, \
+                        CORBA::UnionMemberSeq, \
                         CORBA::UnionMember \
                       >
 
                   # pragma instantiate \
                     TAO_Seq_Out_T< \
-                        UnionMemberSeq, \
-                        UnionMemberSeq_var, \
+                        CORBA::UnionMemberSeq, \
+                        CORBA::UnionMemberSeq_var, \
                         CORBA::UnionMember \
                       >
 
@@ -9149,7 +9149,7 @@ template class
                       >;
 
                   template class
-                    TAO_Seq_Out_T<
+                    TAO_MngSeq_Out_T<
                         CORBA::EnumMemberSeq,
                         CORBA::EnumMemberSeq_var,
                         TAO_SeqElem_String_Manager
@@ -9164,7 +9164,7 @@ template class
                       >
 
                   # pragma instantiate \
-                    TAO_Seq_Out_T< \
+                    TAO_MngSeq_Out_T< \
                         CORBA::EnumMemberSeq, \
                         CORBA::EnumMemberSeq_var, \
                         TAO_SeqElem_String_Manager \
@@ -16358,26 +16358,26 @@ void CORBA::Container::Description::_tao_any_destructor (void *_tao_void_pointer
 
 template class
   TAO_Var_Var_T<
-      Description
+      CORBA::Container::Description
     >;
 
 template class
   TAO_Out_T<
-      Description,
-      Description_var
+      CORBA::Container::Description,
+      CORBA::Container::Description_var
     >;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 # pragma instantiate \
   TAO_Var_Var_T< \
-      Description \
+      CORBA::Container::Description \
     >
 
 # pragma instantiate \
   TAO_Out_T< \
-      Description, \
-      Description_var \
+      CORBA::Container::Description, \
+      CORBA::Container::Description_var \
     >
 
 #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
@@ -16427,14 +16427,14 @@ void CORBA::Container::DescriptionSeq::_tao_any_destructor (void *_tao_void_poin
 
 template class
   TAO_VarSeq_Var_T<
-      DescriptionSeq,
+      CORBA::Container::DescriptionSeq,
       CORBA::Container::Description
     >;
 
 template class
   TAO_Seq_Out_T<
-      DescriptionSeq,
-      DescriptionSeq_var,
+      CORBA::Container::DescriptionSeq,
+      CORBA::Container::DescriptionSeq_var,
       CORBA::Container::Description
     >;
 
@@ -16442,14 +16442,14 @@ template class
 
 # pragma instantiate \
   TAO_VarSeq_Var_T< \
-      DescriptionSeq, \
+      CORBA::Container::DescriptionSeq, \
       CORBA::Container::Description \
     >
 
 # pragma instantiate \
   TAO_Seq_Out_T< \
-      DescriptionSeq, \
-      DescriptionSeq_var, \
+      CORBA::Container::DescriptionSeq, \
+      CORBA::Container::DescriptionSeq_var, \
       CORBA::Container::Description \
     >
 
@@ -18530,26 +18530,26 @@ void CORBA::TypeDescription::_tao_any_destructor (void *_tao_void_pointer)
 
 template class
   TAO_Var_Var_T<
-      TypeDescription
+      CORBA::TypeDescription
     >;
 
 template class
   TAO_Out_T<
-      TypeDescription,
-      TypeDescription_var
+      CORBA::TypeDescription,
+      CORBA::TypeDescription_var
     >;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 # pragma instantiate \
   TAO_Var_Var_T< \
-      TypeDescription \
+      CORBA::TypeDescription \
     >
 
 # pragma instantiate \
   TAO_Out_T< \
-      TypeDescription, \
-      TypeDescription_var \
+      CORBA::TypeDescription, \
+      CORBA::TypeDescription_var \
     >
 
 #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
@@ -18636,10 +18636,10 @@ operator>>= (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-  template class TAO_Object_Manager<CORBA::IRObject,CORBA::IRObject_var>;
+//  template class TAO_Object_Manager<CORBA::IRObject,CORBA::IRObject_var>;
   template class TAO::Any_Impl_T<CORBA::IRObject>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO_Object_Manager<CORBA::IRObject, CORBA::IRObject_var>
+// # pragma instantiate TAO_Object_Manager<CORBA::IRObject, CORBA::IRObject_var>
 # pragma instantiate TAO::Any_Impl_T<CORBA::IRObject>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -18690,10 +18690,10 @@ operator>>= (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-  template class TAO_Object_Manager<CORBA::Contained,CORBA::Contained_var>;
+//  template class TAO_Object_Manager<CORBA::Contained,CORBA::Contained_var>;
   template class TAO::Any_Impl_T<CORBA::Contained>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO_Object_Manager<CORBA::Contained, CORBA::Contained_var>
+// # pragma instantiate TAO_Object_Manager<CORBA::Contained, CORBA::Contained_var>
 # pragma instantiate TAO::Any_Impl_T<CORBA::Contained>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -20119,10 +20119,10 @@ TAO::Any_Impl_T<CORBA::Container>::to_object (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-  template class TAO_Object_Manager<CORBA::Container,CORBA::Container_var>;
+//  template class TAO_Object_Manager<CORBA::Container,CORBA::Container_var>;
   template class TAO::Any_Impl_T<CORBA::Container>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO_Object_Manager<CORBA::Container, CORBA::Container_var>
+// # pragma instantiate TAO_Object_Manager<CORBA::Container, CORBA::Container_var>
 # pragma instantiate TAO::Any_Impl_T<CORBA::Container>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -20303,10 +20303,10 @@ operator>>= (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-  template class TAO_Object_Manager<CORBA::IDLType,CORBA::IDLType_var>;
+//  template class TAO_Object_Manager<CORBA::IDLType,CORBA::IDLType_var>;
   template class TAO::Any_Impl_T<CORBA::IDLType>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO_Object_Manager<CORBA::IDLType, CORBA::IDLType_var>
+// # pragma instantiate TAO_Object_Manager<CORBA::IDLType, CORBA::IDLType_var>
 # pragma instantiate TAO::Any_Impl_T<CORBA::IDLType>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -20357,10 +20357,10 @@ operator>>= (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-  template class TAO_Object_Manager<CORBA::TypedefDef,CORBA::TypedefDef_var>;
+//   template class TAO_Object_Manager<CORBA::TypedefDef,CORBA::TypedefDef_var>;
   template class TAO::Any_Impl_T<CORBA::TypedefDef>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO_Object_Manager<CORBA::TypedefDef, CORBA::TypedefDef_var>
+// # pragma instantiate TAO_Object_Manager<CORBA::TypedefDef, CORBA::TypedefDef_var>
 # pragma instantiate TAO::Any_Impl_T<CORBA::TypedefDef>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 

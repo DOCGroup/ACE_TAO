@@ -68,7 +68,7 @@ TAO_Objref_Var_T<T, T_life>::operator-> (void) const
 template <typename T, typename T_life>
 TAO_Objref_Var_T<T, T_life>::operator const T *& () const
 {
-  return this->ptr_;
+  return ACE_const_cast (const T *, this->ptr_);
 }
 
 template <typename T, typename T_life>

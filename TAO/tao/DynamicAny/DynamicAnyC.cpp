@@ -778,26 +778,26 @@ DynamicAny::DynEnum::marshal (TAO_OutputCDR &)
 
 template class
   TAO_Var_Var_T<
-      NameValuePair
+      DynamicAny::NameValuePair
     >;
 
 template class
   TAO_Out_T<
-      NameValuePair,
-      NameValuePair_var
+      DynamicAny::NameValuePair,
+      DynamicAny::NameValuePair_var
     >;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 # pragma instantiate \
   TAO_Var_Var_T< \
-      NameValuePair \
+      DynamicAny::NameValuePair \
     >
 
 # pragma instantiate \
   TAO_Out_T< \
-      NameValuePair, \
-      NameValuePair_var \
+      DynamicAny::NameValuePair, \
+      DynamicAny::NameValuePair_var \
     >
 
 #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
@@ -843,14 +843,14 @@ DynamicAny::NameValuePairSeq::~NameValuePairSeq (void)
 
 template class
   TAO_VarSeq_Var_T<
-      NameValuePairSeq,
+      DynamicAny::NameValuePairSeq,
       DynamicAny::NameValuePair
     >;
 
 template class
   TAO_Seq_Out_T<
-      NameValuePairSeq,
-      NameValuePairSeq_var,
+      DynamicAny::NameValuePairSeq,
+      DynamicAny::NameValuePairSeq_var,
       DynamicAny::NameValuePair
     >;
 
@@ -858,14 +858,14 @@ template class
 
 # pragma instantiate \
   TAO_VarSeq_Var_T< \
-      NameValuePairSeq, \
+      DynamicAny::NameValuePairSeq, \
       DynamicAny::NameValuePair \
     >
 
 # pragma instantiate \
   TAO_Seq_Out_T< \
-      NameValuePairSeq, \
-      NameValuePairSeq_var, \
+      DynamicAny::NameValuePairSeq, \
+      DynamicAny::NameValuePairSeq_var, \
       DynamicAny::NameValuePair \
     >
 
@@ -883,26 +883,26 @@ template class
 
 template class
   TAO_Var_Var_T<
-      NameDynAnyPair
+      DynamicAny::NameDynAnyPair
     >;
 
 template class
   TAO_Out_T<
-      NameDynAnyPair,
-      NameDynAnyPair_var
+      DynamicAny::NameDynAnyPair,
+      DynamicAny::NameDynAnyPair_var
     >;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 # pragma instantiate \
   TAO_Var_Var_T< \
-      NameDynAnyPair \
+      DynamicAny::NameDynAnyPair \
     >
 
 # pragma instantiate \
   TAO_Out_T< \
-      NameDynAnyPair, \
-      NameDynAnyPair_var \
+      DynamicAny::NameDynAnyPair, \
+      DynamicAny::NameDynAnyPair_var \
     >
 
 #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
@@ -948,14 +948,14 @@ DynamicAny::NameDynAnyPairSeq::~NameDynAnyPairSeq (void)
 
 template class
   TAO_VarSeq_Var_T<
-      NameDynAnyPairSeq,
+      DynamicAny::NameDynAnyPairSeq,
       DynamicAny::NameDynAnyPair
     >;
 
 template class
   TAO_Seq_Out_T<
-      NameDynAnyPairSeq,
-      NameDynAnyPairSeq_var,
+      DynamicAny::NameDynAnyPairSeq,
+      DynamicAny::NameDynAnyPairSeq_var,
       DynamicAny::NameDynAnyPair
     >;
 
@@ -1395,14 +1395,14 @@ DynamicAny::AnySeq::~AnySeq (void)
 
 template class
   TAO_VarSeq_Var_T<
-      AnySeq,
+      DynamicAny::AnySeq,
       CORBA::Any
     >;
 
 template class
   TAO_Seq_Out_T<
-      AnySeq,
-      AnySeq_var,
+      DynamicAny::AnySeq,
+      DynamicAny::AnySeq_var,
       CORBA::Any
     >;
 
@@ -1410,14 +1410,14 @@ template class
 
 # pragma instantiate \
   TAO_VarSeq_Var_T< \
-      AnySeq, \
+      DynamicAny::AnySeq, \
       CORBA::Any \
     >
 
 # pragma instantiate \
   TAO_Seq_Out_T< \
-      AnySeq, \
-      AnySeq_var, \
+      DynamicAny::AnySeq, \
+      DynamicAny::AnySeq_var, \
       CORBA::Any \
     >
 
@@ -1500,7 +1500,7 @@ template class
     >;
 
 template class
-  TAO_Seq_Out_T<
+  TAO_MngSeq_Out_T<
       DynamicAny::DynAnySeq,
       DynamicAny::DynAnySeq_var,
       TAO_Object_Manager<

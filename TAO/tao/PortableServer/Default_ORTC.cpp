@@ -307,10 +307,10 @@ operator>>= (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-  template class TAO_Valuetype_Manager<TAO_Default_ORT::ObjectReferenceTemplate, TAO_Default_ORT::ObjectReferenceTemplate_var>;
-  template class TAO::Any_Impl_T<TAO_Default_ORT::ObjectReferenceTemplate>;
+template class TAO_Valuetype_Manager<TAO_Default_ORT::ObjectReferenceTemplate, TAO_Default_ORT::ObjectReferenceTemplate_var,TAO_Default_ORT::tao_ObjectReferenceTemplate_life>;
+template class TAO::Any_Impl_T<TAO_Default_ORT::ObjectReferenceTemplate>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  pragma instantiate TAO_Valuetype_Manager<TAO_Default_ORT::ObjectReferenceTemplate, TAO_Default_ORT::ObjectReferenceTemplate_var>
+#  pragma instantiate TAO_Valuetype_Manager<TAO_Default_ORT::ObjectReferenceTemplate, TAO_Default_ORT::ObjectReferenceTemplate_var,TAO_Default_ORT::tao_ObjectReferenceTemplate_life>
 #  pragma instantiate TAO::Any_Impl_T<TAO_Default_ORT::ObjectReferenceTemplate>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 

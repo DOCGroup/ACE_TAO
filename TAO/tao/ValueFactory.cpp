@@ -14,6 +14,12 @@ CORBA::ValueFactoryBase::~ValueFactoryBase (void)
 {
 }
 
+/*static*/ CORBA::ValueFactoryBase *
+CORBA::ValueFactoryBase::_nil (void)
+{
+  return 0;
+}
+
 // No-op. This should never be called, but it can't be pure virtual.
 CORBA::AbstractBase *
 CORBA::ValueFactoryBase::create_for_unmarshal_abstract (void)
@@ -32,4 +38,3 @@ CORBA::ValueFactoryBase::create_for_unmarshal_abstract (void)
 # pragma instantiate TAO_Pseudo_Value_Out_T<CORBA::ValueFactoryBase, CORBA::ValueFactoryBase_var>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
