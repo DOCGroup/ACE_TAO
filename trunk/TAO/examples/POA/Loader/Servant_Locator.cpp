@@ -66,9 +66,11 @@ PortableServer::Servant
 ServantLocator_i::preinvoke (const PortableServer::ObjectId &oid,
                              PortableServer::POA_ptr poa,
                              const char * /* operation */,
-                             PortableServer::ServantLocator::Cookie &cookie,
-                             CORBA::Environment &ACE_TRY_ENV)
+                             PortableServer::ServantLocator::Cookie &cookie
+                             TAO_ENV_ARG_DECL)
 {
+  TAO_ENV_ARG_DEFN;
+
   PortableServer::Servant servant =
     (*servant_supplier_) (oid,
                           poa,
@@ -95,8 +97,8 @@ ServantLocator_i::postinvoke (const PortableServer::ObjectId &oid,
                               PortableServer::POA_ptr poa ,
                               const char * /* operation */,
                               PortableServer::ServantLocator::Cookie cookie,
-                              PortableServer::Servant servant,
-                              CORBA::Environment &/* env */)
+                              PortableServer::Servant servant
+                              TAO_ENV_ARG_DECL_NOT_USED)
 {
   // Check the passed servant with the cookie.
   PortableServer::Servant my_servant =

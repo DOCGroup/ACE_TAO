@@ -790,9 +790,30 @@ TAO_NAMESPACE POA_PortableServer
     virtual void* _downcast (
                              const char* logical_type_id
                              );
-    virtual PortableServer::Servant incarnate (const PortableServer::ObjectId &oid, PortableServer::POA_ptr adapter,  CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()) = 0; // pure virtual
 
-    virtual void etherealize (const PortableServer::ObjectId &oid, PortableServer::POA_ptr adapter, PortableServer::Servant serv, CORBA::Boolean cleanup_in_progress, CORBA::Boolean remaining_activations,  CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()) = 0; // pure virtual
+#if defined(TAO_HAS_EXCEPTIONS)
+    virtual PortableServer::Servant incarnate (
+        const PortableServer::ObjectId &oid,
+        PortableServer::POA_ptr adapter) = 0;
+    virtual void etherealize (
+        const PortableServer::ObjectId &oid,
+        PortableServer::POA_ptr adapter,
+        PortableServer::Servant serv,
+        CORBA::Boolean cleanup_in_progress,
+        CORBA::Boolean remaining_activations) = 0;
+#else
+    virtual PortableServer::Servant incarnate (
+        const PortableServer::ObjectId &oid,
+        PortableServer::POA_ptr adapter,
+        CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()) = 0;
+    virtual void etherealize (
+        const PortableServer::ObjectId &oid,
+        PortableServer::POA_ptr adapter,
+        PortableServer::Servant serv,
+        CORBA::Boolean cleanup_in_progress,
+        CORBA::Boolean remaining_activations,
+        CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()) = 0;
+#endif /* TAO_HAS_EXCEPTIONS */
 
     PortableServer::ServantActivator *_this (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
     virtual const char* _interface_repository_id (void) const;
@@ -816,18 +837,18 @@ TAO_NAMESPACE POA_PortableServer
                                   CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
                                   );
     virtual PortableServer::Servant incarnate (
-                                               const PortableServer::ObjectId & oid,
-                                               PortableServer::POA_ptr  adapter,
-                                               CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
-                                               );
+        const PortableServer::ObjectId & oid,
+        PortableServer::POA_ptr  adapter,
+        CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
+        );
     virtual void etherealize (
-                              const PortableServer::ObjectId & oid,
-                              PortableServer::POA_ptr  adapter,
-                              PortableServer::Servant serv,
-                              CORBA::Boolean cleanup_in_progress,
-                              CORBA::Boolean remaining_activations,
-                              CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
-                              );
+        const PortableServer::ObjectId & oid,
+        PortableServer::POA_ptr  adapter,
+        PortableServer::Servant serv,
+        CORBA::Boolean cleanup_in_progress,
+        CORBA::Boolean remaining_activations,
+        CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
+        );
 
   private:
     ServantActivator_ptr servant_;
@@ -846,18 +867,38 @@ TAO_NAMESPACE POA_PortableServer
   public:
     virtual ~ServantLocator (void);
     virtual CORBA::Boolean _is_a (
-                                  const char* logical_type_id,
-                                  CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
+        const char* logical_type_id,
+        CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
     virtual void* _downcast (
-                             const char* logical_type_id
-                             );
-    virtual PortableServer::Servant preinvoke (const PortableServer::ObjectId &oid,
-                                               PortableServer::POA_ptr adapter,
-                                               const char *operation,
-                                               PortableServer::ServantLocator::Cookie & the_cookie,
-                                               CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()) = 0; // pure virtual
+        const char* logical_type_id);
 
-    virtual void postinvoke (const PortableServer::ObjectId &oid, PortableServer::POA_ptr adapter, const char *operation, PortableServer::ServantLocator::Cookie the_cookie, PortableServer::Servant the_servant,  CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()) = 0; // pure virtual
+#if defined(TAO_HAS_EXCEPTIONS)
+    virtual PortableServer::Servant preinvoke (
+        const PortableServer::ObjectId &oid,
+        PortableServer::POA_ptr adapter,
+        const char *operation,
+        PortableServer::ServantLocator::Cookie & the_cookie) = 0;
+    virtual void postinvoke (
+        const PortableServer::ObjectId &oid,
+        PortableServer::POA_ptr adapter,
+        const char *operation,
+        PortableServer::ServantLocator::Cookie the_cookie,
+        PortableServer::Servant the_servant) = 0;
+#else
+    virtual PortableServer::Servant preinvoke (
+        const PortableServer::ObjectId &oid,
+        PortableServer::POA_ptr adapter,
+        const char *operation,
+        PortableServer::ServantLocator::Cookie & the_cookie,
+        CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()) = 0;
+    virtual void postinvoke (
+        const PortableServer::ObjectId &oid,
+        PortableServer::POA_ptr adapter,
+        const char *operation,
+        PortableServer::ServantLocator::Cookie the_cookie,
+        PortableServer::Servant the_servant,
+        CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()) = 0;
+#endif /* TAO_HAS_EXCEPTIONS */
 
     PortableServer::ServantLocator *_this (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
     virtual const char* _interface_repository_id (void) const;
@@ -872,29 +913,29 @@ TAO_NAMESPACE POA_PortableServer
   {
   public:
     _tao_collocated_ServantLocator (
-                                    ServantLocator_ptr  servant,
-                                    TAO_Stub *stub
-                                    );
+        ServantLocator_ptr  servant,
+        TAO_Stub *stub
+        );
     ServantLocator_ptr _get_servant (void) const;
     virtual CORBA::Boolean _is_a (
-                                  const char *logical_type_id,
-                                  CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
-                                  );
+       const char *logical_type_id,
+       CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
+       );
     virtual PortableServer::Servant preinvoke (
-                                               const PortableServer::ObjectId & oid,
-                                               PortableServer::POA_ptr  adapter,
-                                               const char * operation,
-                                               PortableServer::ServantLocator::Cookie & the_cookie,
-                                               CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
-                                               );
+        const PortableServer::ObjectId & oid,
+        PortableServer::POA_ptr  adapter,
+        const char * operation,
+        PortableServer::ServantLocator::Cookie & the_cookie,
+        CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
+        );
     virtual void postinvoke (
-                             const PortableServer::ObjectId & oid,
-                             PortableServer::POA_ptr  adapter,
-                             const char * operation,
-                             PortableServer::ServantLocator::Cookie the_cookie,
-                             PortableServer::Servant the_servant,
-                             CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
-                             );
+        const PortableServer::ObjectId & oid,
+        PortableServer::POA_ptr  adapter,
+        const char * operation,
+        PortableServer::ServantLocator::Cookie the_cookie,
+        PortableServer::Servant the_servant,
+        CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
+        );
 
   private:
     ServantLocator_ptr servant_;
