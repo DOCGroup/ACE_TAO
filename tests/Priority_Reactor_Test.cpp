@@ -193,10 +193,7 @@ client (void *arg)
 	  // Let the new Svc_Handler to its job...
 	  writer->svc ();
 
-	  // Close the connection...
-	  writer->peer().close();
-
-	  // And free up the Svc_Handler
+	  // then close the connection and release the Svc_Handler.
 	  writer->destroy ();
 
 	  ACE_DEBUG ((LM_DEBUG, "(%P|%t) finishing client\n"));
