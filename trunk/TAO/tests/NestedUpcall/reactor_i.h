@@ -22,6 +22,12 @@ public:
   // Register (with nothing...it's an example!)
 
   virtual void set_value (CORBA::Environment &env);
+
+  virtual CORBA::UShort decrement (EventHandler_ptr eh,
+                                   CORBA::UShort num,
+                                   CORBA::Environment &env);
+  // deccrement <num> by calling decrement thru <eh> until zero is
+  // reached, then return.
 };
 
 #endif /* REACTOR_I_H */

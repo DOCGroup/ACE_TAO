@@ -19,6 +19,12 @@ public:
 
   virtual CORBA::Long peer (CORBA::Environment &env);
   // Return some value...doesn't matter what.
+
+  virtual CORBA::UShort decrement (Reactor_ptr eh,
+                                   CORBA::UShort num,
+                                   CORBA::Environment &env);
+  // deccrement <num> by calling decrement thru <eh> until zero is
+  // reached, then return.
 };
 
 #endif /* EVENTHANDLER_I_H */

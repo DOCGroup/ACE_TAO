@@ -1,3 +1,17 @@
+Thu Feb 26 14:52:20 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* tests/NestedUpcall/{eh_i,reactor_i}.{h,cpp}: Added
+ 	implementation for the new decrement operation.
+
+	* tests/NestedUpcall/client.cpp: Added calls to invoke the new
+ 	decrement operation.
+
+	* tests/NestedUpcall/Reactor.idl: Added a new operation,
+ 	decrement, to test multi-nested upcalls.
+
+	* tao/connect.cpp (send_request): Fixed to return appropriate
+ 	return values, especially in case of errors.
+
 Thu Feb 26 14:02:36 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/tao_util.cpp (activate_under_child_poa): Instead of
@@ -7,7 +21,7 @@ Thu Feb 26 14:02:36 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 Thu Feb 26 13:31:06 1998  David L. Levine  <levine@cs.wustl.edu>
 
-        * TAO_IDL/Makefile: added "all" target for CROSS-COMPILE platforms.
+	* TAO_IDL/Makefile: added "all" target for CROSS-COMPILE platforms.
 
 Thu Feb 26 05:39:43 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
