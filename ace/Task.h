@@ -65,9 +65,10 @@ public:
   virtual ~ACE_Task_Base (void);
   // Destructor.
 
-  // = Initialization and termination hooks
+  // = Initialization and termination hooks.
 
-  // Note that these methods *must* be defined by subclasses.
+  // These methods should be overridden by subclasses if you'd like to
+  // provide <Task>-specific initialization and termination behavior.
 
   virtual int open (void *args = 0);
   // Hook called to open a Task.  <args> can be used to pass arbitrary
@@ -92,6 +93,10 @@ public:
   // ACE_Task instance exits.
 
   // = Immediate and deferred processing methods, respectively.
+
+  // These methods should be overridden by subclasses if you'd like to
+  // provide <Task>-specific message processing behavior.
+
   virtual int put (ACE_Message_Block *, ACE_Time_Value * = 0);
   // Transfer msg into the queue to handle immediate processing.
 
