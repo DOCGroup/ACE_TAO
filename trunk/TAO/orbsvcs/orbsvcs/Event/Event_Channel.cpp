@@ -2755,7 +2755,9 @@ ACE_ES_Subscription_Module::subscribe_source (ACE_ES_Consumer_Rep *consumer,
       if (!((**proxy) == source))
         continue;
 
-      ACE_ES_WGUARD mon ((*proxy)->subscription_info ().lock_);
+      ACE_WRITE_GUARD_RETURN (ACE_ES_RW_LOCK, mon,
+                              (*proxy)->subscription_info ().lock_,
+                              -1);
 
       ACE_ES_Subscription_Info::Subscriber_Set &set =
         (*proxy)->subscription_info ().source_subscribers_;
@@ -2851,7 +2853,10 @@ ACE_ES_Subscription_Module::subscribe_type (ACE_ES_Consumer_Rep *consumer,
        iter.next (proxy) != 0;
        iter.advance ())
     {
-      ACE_ES_WGUARD mon ((*proxy)->subscription_info ().lock_);
+      ACE_WRITE_GUARD_RETURN (ACE_ES_RW_LOCK, mon,
+                              (*proxy)->subscription_info ().lock_,
+                              -1);
+
       // Insert the consumer to the supplier's subscription set for
       // the type.  If the supplier does not publish this type, the
       // operation will fail.  If this succeeds, dependency_info will
@@ -2912,7 +2917,9 @@ ACE_ES_Subscription_Module::subscribe_source_type (ACE_ES_Consumer_Rep *consumer
        iter.next (proxy) != 0;
        iter.advance ())
     {
-      ACE_ES_WGUARD mon ((*proxy)->subscription_info ().lock_);
+      ACE_WRITE_GUARD_RETURN (ACE_ES_RW_LOCK, mon,
+                              (*proxy)->subscription_info ().lock_,
+                              -1);
 
       if ((**proxy) == source)
         {
@@ -3104,7 +3111,9 @@ ACE_ES_Subscription_Module::unsubscribe_type (ACE_ES_Consumer_Rep *consumer,
        iter.next (proxy) != 0;
        iter.advance ())
     {
-      ACE_ES_WGUARD mon ((*proxy)->subscription_info ().lock_);
+      ACE_WRITE_GUARD_RETURN (ACE_ES_RW_LOCK, mon,
+                              (*proxy)->subscription_info ().lock_,
+                              -1);
 
       // This remove will be harmless if the supplier does not
       // generate <type>.
@@ -3125,7 +3134,9 @@ ACE_ES_Subscription_Module::unsubscribe_source (ACE_ES_Consumer_Rep *consumer,
        iter.next (proxy) != 0;
        iter.advance ())
     {
-      ACE_ES_WGUARD mon ((*proxy)->subscription_info ().lock_);
+      ACE_WRITE_GUARD_RETURN (ACE_ES_RW_LOCK, mon,
+                              (*proxy)->subscription_info ().lock_,
+                              -1);
 
       if ((**proxy) == source)
         {
@@ -3159,7 +3170,9 @@ ACE_ES_Subscription_Module::unsubscribe_source_type (ACE_ES_Consumer_Rep *consum
     // remove <consumer> from the proxy's <event.header.type> set.
     if ((**proxy) == source)
       {
-        ACE_ES_WGUARD mon ((*proxy)->subscription_info ().lock_);
+        ACE_WRITE_GUARD_RETURN (ACE_ES_RW_LOCK, mon,
+                                (*proxy)->subscription_info ().lock_,
+                                -1);
 
         // Continue in spite of errors.
         ACE_ES_Subscription_Info::remove ((*proxy)->subscription_info ().type_subscribers_,
