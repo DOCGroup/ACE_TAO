@@ -1,12 +1,11 @@
 Fri Nov 12 13:24:56 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Exception.cpp:
-	  Added #include "ace/streams.h". If 
-	  ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION is in the
-	  config.h file, the body of the ostream operator
-	  definition will cause 'operator ambiguous'
-	  errors. Thanks to Irfm for pointing this out and
-	  finding the solution.
+	  Added #include "ace/streams.h". If
+ 	  ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION is in the config.h file, the
+ 	  body of the ostream operator definition will cause 'operator
+ 	  ambiguous' errors. Thanks to Irfan for pointing this out and
+ 	  finding the solution.
 
 Fri Nov 12 00:30:41 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 

@@ -26,6 +26,7 @@ Mike Moran <mm4@cs.wustl.edu>
 Sumedh Mungee <sumedh@cs.wustl.edu>
 Balachandran Natarajan <bala@cs.wustl.edu>
 Kirthika Parameswaran <kirthika@cs.wustl.edu>
+Krishnakumar Pathayapura <krish@cs.wustl.edu>
 Carlos O'Ryan <coryan@cs.wustl.edu>
 Ossama Othman <othman@cs.wustl.edu>
 Jeff Parsons <parsons@cs.wustl.edu>
@@ -820,6 +821,7 @@ Paul Carreiro <pcarreir@bbn.com>
 Jovan Kilibarda <jovank@realtimeint.com>
 Derek Dominish <Derek.Dominish@Australia.Boeing.com>
 Devesh Kothari <dkothari@atdsprint.com>
+Stephen Moon <smoon@oxmol.co.uk>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson.  Paul devised the recursive Makefile scheme that
