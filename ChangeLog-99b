@@ -1,3 +1,8 @@
+Mon Apr  5 15:54:57 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+        * ace/Profile_Timer.i: Removed ACE_OS::gettimeofday ()
+          calls from start and stop.
+
 Mon Apr 05 15:09:49 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.h: removed second #include of netdb.h.  Thanks to
