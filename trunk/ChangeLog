@@ -1,3 +1,8 @@
+Thu Dec 2 15:06:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/Timeprobe_T.cpp:
+	  Fixed another compile problem (missing include for ACE_OS::memcpy).
+
 Thu Dec 2 14:26:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
 
         * ace/Timeprobe_T.cpp:
