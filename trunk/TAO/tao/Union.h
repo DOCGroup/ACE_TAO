@@ -35,6 +35,9 @@ public:
   virtual ~TAO_Base_Union (void);
   // destructor.
 
+  virtual void *_discriminant (void) = 0;
+  // return pointer to the discriminant
+
   virtual void *_access (CORBA::Boolean flag) = 0;
   // Provides access to the right data member at the right offset. If the flag
   // is TRUE, we allocate the necessary storage. This will be required for the

@@ -112,7 +112,7 @@ be_visitor_union_branch_public_reset_cs::visit_array (be_array *node)
                          ), -1);
     }
   os = this->ctx_->stream ();
-  *os << bt->name () << "_free (this->" << ub->local_name () << "_);" << be_nl;
+  *os << bt->name () << "_free (this->u_." << ub->local_name () << "_);" << be_nl;
   *os << "break;" << be_uidt_nl;
   return 0;
 }
@@ -172,7 +172,7 @@ be_visitor_union_branch_public_reset_cs::visit_interface (be_interface *node)
                          ), -1);
     }
   os = this->ctx_->stream ();
-  *os << "CORBA::release (this->" << ub->local_name () << "_);" << be_nl;
+  *os << "CORBA::release (this->u_." << ub->local_name () << "_);" << be_nl;
   *os << "break;" << be_uidt_nl;
 
   return 0;
@@ -203,7 +203,7 @@ be_visitor_union_branch_public_reset_cs::visit_interface_fwd (be_interface_fwd *
                          ), -1);
     }
   os = this->ctx_->stream ();
-  *os << "CORBA::release (this->" << ub->local_name () << "_);" << be_nl;
+  *os << "CORBA::release (this->u_." << ub->local_name () << "_);" << be_nl;
   *os << "break;" << be_uidt_nl;
 
   return 0;
@@ -238,11 +238,11 @@ be_visitor_union_branch_public_reset_cs::visit_predefined_type (be_predefined_ty
   switch (node->pt ())
     {
     case AST_PredefinedType::PT_pseudo:
-      *os << "CORBA::release (this->" << ub->local_name () << "_);" << be_nl;
+      *os << "CORBA::release (this->u_." << ub->local_name () << "_);" << be_nl;
       *os << "break;" << be_uidt_nl;
       break;
     case AST_PredefinedType::PT_any:
-      *os << "delete this->" << ub->local_name () << "_;" << be_nl;
+      *os << "delete this->u_." << ub->local_name () << "_;" << be_nl;
       *os << "break;" << be_uidt_nl;
       break;
     case AST_PredefinedType::PT_void:
@@ -278,7 +278,7 @@ be_visitor_union_branch_public_reset_cs::visit_sequence (be_sequence *node)
                          ), -1);
     }
   os = this->ctx_->stream ();
-  *os << "delete this->" << ub->local_name () << "_;" << be_nl;
+  *os << "delete this->u_." << ub->local_name () << "_;" << be_nl;
   *os << "break;" << be_uidt_nl;
 
   return 0;
@@ -309,7 +309,7 @@ be_visitor_union_branch_public_reset_cs::visit_string (be_string *node)
                          ), -1);
     }
   os = this->ctx_->stream ();
-  *os << "CORBA::string_free (this->" << ub->local_name () << "_);" << be_nl;
+  *os << "CORBA::string_free (this->u_." << ub->local_name () << "_);" << be_nl;
   *os << "break;" << be_uidt_nl;
 
   return 0;
@@ -342,7 +342,7 @@ be_visitor_union_branch_public_reset_cs::visit_structure (be_structure *node)
   os = this->ctx_->stream ();
   if (bt->size_type () == be_type::VARIABLE)
     {
-      *os << "delete this->" << ub->local_name () << "_;" << be_nl;
+      *os << "delete this->u_." << ub->local_name () << "_;" << be_nl;
     }
 
   *os << "break;" << be_uidt_nl;
@@ -399,7 +399,7 @@ be_visitor_union_branch_public_reset_cs::visit_union (be_union *node)
                          ), -1);
     }
   os = this->ctx_->stream ();
-  *os << "delete this->" << ub->local_name () << "_;" << be_nl;
+  *os << "delete this->u_." << ub->local_name () << "_;" << be_nl;
   *os << "break;" << be_uidt_nl;
 
   return 0;

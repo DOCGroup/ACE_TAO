@@ -163,13 +163,13 @@ be_visitor_union_branch_public_ci::visit_array (be_array *node)
       *os << "// set the value" << be_nl;
       *os << "// store current val in a _var so as to free it on an assignment"
           << be_nl;
-      *os << bt->name () << "_var " << ub->local_name () << "_var (this->"
+      *os << bt->name () << "_var " << ub->local_name () << "_var (this->u_."
           << ub->local_name () << "_);" << be_nl;
       *os << "// release old and make a deep copy" << be_nl;
       *os << ub->local_name () << "_var = " << bt->name ()
           << "_dup (val);" << be_nl;
       *os << "// the _var gives up ownership" << be_nl;
-      *os << "this->" << ub->local_name () << "_ = "
+      *os << "this->u_." << ub->local_name () << "_ = "
           << ub->local_name () << "_var._retn ();" << be_uidt_nl;
     }
   else
@@ -184,7 +184,7 @@ be_visitor_union_branch_public_ci::visit_array (be_array *node)
       << "ACE_INLINE " << bt->name () << "_slice *" << be_nl
       << bu->name () << "::" << ub->local_name () << " (void) const" << be_nl
       << "{" << be_idt_nl;
-  *os << "return this->" << ub->local_name () << "_;" << be_uidt_nl;
+  *os << "return this->u_." << ub->local_name () << "_;" << be_uidt_nl;
   *os << "}\n\n";
   return 0;
 }
@@ -244,7 +244,7 @@ be_visitor_union_branch_public_ci::visit_enum (be_enum *node)
             be_nl;
         }
       *os << "// set the value" << be_nl
-          << "this->" << ub->local_name () << "_ = val;\n";
+          << "this->u_." << ub->local_name () << "_ = val;\n";
     }
   else
     {
@@ -260,7 +260,7 @@ be_visitor_union_branch_public_ci::visit_enum (be_enum *node)
       << bu->name () << "::" << ub->local_name () << " (void) const" << be_nl
       << "{\n";
   os->incr_indent ();
-  *os << "return this->" << ub->local_name () << "_;\n";
+  *os << "return this->u_." << ub->local_name () << "_;\n";
   os->decr_indent ();
   *os << "}\n\n";
   return 0;
@@ -323,13 +323,13 @@ be_visitor_union_branch_public_ci::visit_interface (be_interface *node)
       *os << "// set the value" << be_nl;
       *os << "// store current val in a _var so as to free it on an assignment"
           << be_nl;
-      *os << bt->name () << "_var " << ub->local_name () << "_var (this->"
+      *os << bt->name () << "_var " << ub->local_name () << "_var (this->u_."
           << ub->local_name () << "_);" << be_nl;
       *os << "// release old storage and make a copy" << be_nl;
       *os << ub->local_name () << "_var = " << bt->name ()
           << "::_duplicate (val);" << be_nl;
       *os << "// the _var gives up ownership" << be_nl;
-      *os << "this->" << ub->local_name () << "_ = "
+      *os << "this->u_." << ub->local_name () << "_ = "
           << ub->local_name () << "_var._retn ();" << be_uidt_nl;
     }
   else
@@ -345,7 +345,7 @@ be_visitor_union_branch_public_ci::visit_interface (be_interface *node)
       << bu->name () << "::" << ub->local_name () << " (void) const" << be_nl
       << "{\n";
   os->incr_indent ();
-  *os << "return this->" << ub->local_name () << "_;\n";
+  *os << "return this->u_." << ub->local_name () << "_;\n";
   os->decr_indent ();
   *os << "}\n\n";
   return 0;
@@ -408,13 +408,13 @@ be_visitor_union_branch_public_ci::visit_interface_fwd (be_interface_fwd *node)
       *os << "// set the value" << be_nl;
       *os << "// store current val in a _var so as to free it on an assignment"
           << be_nl;
-      *os << bt->name () << "_var " << ub->local_name () << "_var (this->"
+      *os << bt->name () << "_var " << ub->local_name () << "_var (this->u_."
           << ub->local_name () << "_);" << be_nl;
       *os << "// release old storage and make a copy" << be_nl;
       *os << ub->local_name () << "_var = " << bt->name ()
           << "::_duplicate (val);" << be_nl;
       *os << "// the _var gives up ownership" << be_nl;
-      *os << "this->" << ub->local_name () << "_ = "
+      *os << "this->u_." << ub->local_name () << "_ = "
           << ub->local_name () << "_var._retn ();" << be_uidt_nl;
     }
   else
@@ -430,7 +430,7 @@ be_visitor_union_branch_public_ci::visit_interface_fwd (be_interface_fwd *node)
       << bu->name () << "::" << ub->local_name () << " (void) const" << be_nl
       << "{\n";
   os->incr_indent ();
-  *os << "return this->" << ub->local_name () << "_;\n";
+  *os << "return this->u_." << ub->local_name () << "_;\n";
   os->decr_indent ();
   *os << "}\n\n";
   return 0;
@@ -497,33 +497,33 @@ be_visitor_union_branch_public_ci::visit_predefined_type (be_predefined_type *no
           *os << "// set the value" << be_nl;
           *os << "// store current val in a _var so as to free it on an assignment"
               << be_nl;
-          *os << bt->name () << "_var " << ub->local_name () << "_var (this->"
+          *os << bt->name () << "_var " << ub->local_name () << "_var (this->u_."
               << ub->local_name () << "_);" << be_nl;
           *os << "// release old storage and make a copy" << be_nl;
           *os << ub->local_name () << "_var = " << bt->name ()
               << "::_duplicate (val);" << be_nl;
           *os << "// the _var gives up ownership" << be_nl;
-          *os << "this->" << ub->local_name () << "_ = "
+          *os << "this->u_." << ub->local_name () << "_ = "
               << ub->local_name () << "_var._retn ();" << be_uidt_nl;
           break;
         case AST_PredefinedType::PT_any:
           *os << "// set the value" << be_nl;
           *os << "// store current val in a _var so as to free it on an assignment"
               << be_nl;
-          *os << bt->name () << "_var " << ub->local_name () << "_var (this->"
+          *os << bt->name () << "_var " << ub->local_name () << "_var (this->u_."
               << ub->local_name () << "_);" << be_nl;
           *os << "// release old and make a deep copy" << be_nl;
           *os << ub->local_name () << "_var = new " << bt->name ()
               << " (val);" << be_nl;
           *os << "// the _var gives up ownership" << be_nl;
-          *os << "this->" << ub->local_name () << "_ = "
+          *os << "this->u_." << ub->local_name () << "_ = "
               << ub->local_name () << "_var._retn ();" << be_uidt_nl;
           break;
         case AST_PredefinedType::PT_void:
           break;
         default:
           *os << "// set the value" << be_nl
-              << "this->" << ub->local_name () << "_ = val;" << be_uidt_nl;
+              << "this->u_." << ub->local_name () << "_ = val;" << be_uidt_nl;
         }
     }
   else
@@ -542,7 +542,7 @@ be_visitor_union_branch_public_ci::visit_predefined_type (be_predefined_type *no
       *os << bu->name () << "::" << ub->local_name ()
           << " (void) const" << be_nl
           << "{" << be_idt_nl
-          << "return this->" << ub->local_name () << "_;" << be_uidt_nl
+          << "return this->u_." << ub->local_name () << "_;" << be_uidt_nl
           << "}\n\n";
       break;
     case AST_PredefinedType::PT_any:
@@ -552,7 +552,7 @@ be_visitor_union_branch_public_ci::visit_predefined_type (be_predefined_type *no
       *os << bu->name () << "::" << ub->local_name ()
           << " (void) const" << be_nl
           << "{" << be_idt_nl
-          << "return *this->" << ub->local_name () << "_;" << be_uidt_nl
+          << "return *this->u_." << ub->local_name () << "_;" << be_uidt_nl
           << "}" << be_nl;
 
       // get method with read/write access
@@ -561,7 +561,7 @@ be_visitor_union_branch_public_ci::visit_predefined_type (be_predefined_type *no
       *os << bu->name () << "::" << ub->local_name ()
           << " (void)" << be_nl
           << "{" << be_idt_nl
-          << "return *this->" << ub->local_name () << "_;" << be_uidt_nl
+          << "return *this->u_." << ub->local_name () << "_;" << be_uidt_nl
           << "}\n\n";
       break;
     case AST_PredefinedType::PT_void:
@@ -573,7 +573,7 @@ be_visitor_union_branch_public_ci::visit_predefined_type (be_predefined_type *no
       *os << bu->name () << "::" << ub->local_name ()
           << " (void) const" << be_nl
           << "{" << be_idt_nl
-          << "return this->" << ub->local_name () << "_;" << be_uidt_nl
+          << "return this->u_." << ub->local_name () << "_;" << be_uidt_nl
           << "}\n\n";
     }
   return 0;
@@ -635,13 +635,13 @@ be_visitor_union_branch_public_ci::visit_sequence (be_sequence *node)
       *os << "// set the value" << be_nl;
       *os << "// store current val in a _var so as to free it on an assignment"
           << be_nl;
-      *os << bt->name () << "_var " << ub->local_name () << "_var (this->"
+      *os << bt->name () << "_var " << ub->local_name () << "_var (this->u_."
           << ub->local_name () << "_);" << be_nl;
       *os << "// release old and make a deep copy" << be_nl;
       *os << ub->local_name () << "_var = new " << bt->name ()
           << " (val);" << be_nl;
       *os << "// the _var gives up ownership" << be_nl;
-      *os << "this->" << ub->local_name () << "_ = "
+      *os << "this->u_." << ub->local_name () << "_ = "
           << ub->local_name () << "_var._retn ();" << be_uidt_nl;
     }
   else
@@ -656,7 +656,7 @@ be_visitor_union_branch_public_ci::visit_sequence (be_sequence *node)
       << "ACE_INLINE const " << bt->name () << " &" << be_nl
       << bu->name () << "::" << ub->local_name () << " (void) const" << be_nl
       << "{" << be_idt_nl
-      << "return *this->" << ub->local_name () << "_;" << be_uidt_nl
+      << "return *this->u_." << ub->local_name () << "_;" << be_uidt_nl
       << "}" << be_nl;
 
   // read/write get method
@@ -664,7 +664,7 @@ be_visitor_union_branch_public_ci::visit_sequence (be_sequence *node)
       << "ACE_INLINE " << bt->name () << " &" << be_nl
       << bu->name () << "::" << ub->local_name () << " (void)" << be_nl
       << "{" << be_idt_nl
-      << "return *this->" << ub->local_name () << "_;" << be_uidt_nl
+      << "return *this->u_." << ub->local_name () << "_;" << be_uidt_nl
       << "}\n\n";
 
   return 0;
@@ -728,12 +728,12 @@ be_visitor_union_branch_public_ci::visit_string (be_string *node)
       *os << "// set the value" << be_nl;
       *os << "// store current val in a _var so as to free it on an assignment"
           << be_nl;
-      *os << bt->name () << "_var " << ub->local_name () << "_var (this->"
+      *os << bt->name () << "_var " << ub->local_name () << "_var (this->u_."
           << ub->local_name () << "_);" << be_nl;
       *os << "// release old and make a deep copy" << be_nl;
       *os << ub->local_name () << "_var = CORBA::string_dup (val);" << be_nl;
       *os << "// the _var gives up ownership" << be_nl;
-      *os << "this->" << ub->local_name () << "_ = "
+      *os << "this->u_." << ub->local_name () << "_ = "
           << ub->local_name () << "_var._retn ();" << be_uidt_nl;
    }
   else
@@ -773,7 +773,7 @@ be_visitor_union_branch_public_ci::visit_string (be_string *node)
       *os << "// set the value" << be_nl
           << bt->name () << "_var " << ub->local_name ()
           << "_var (val);" << be_nl
-          << "this->" << ub->local_name () << "_ = "
+          << "this->u_." << ub->local_name () << "_ = "
           << ub->local_name () << "_var._retn ();" << be_uidt_nl;
     }
   else
@@ -813,7 +813,7 @@ be_visitor_union_branch_public_ci::visit_string (be_string *node)
       *os << "// set the value" << be_nl
           << bt->name () << "_var " << ub->local_name ()
           << "_var = val;" << be_nl
-          << "this->" << ub->local_name () << "_ = "
+          << "this->u_." << ub->local_name () << "_ = "
           << ub->local_name () << "_var._retn ();" << be_uidt_nl;
     }
   else
@@ -828,7 +828,7 @@ be_visitor_union_branch_public_ci::visit_string (be_string *node)
       << bu->name () << "::" << ub->local_name ()
       << " (void) const // get method" << be_nl
       << "{" << be_idt_nl
-      << "return this->" << ub->local_name () << "_;" << be_uidt_nl
+      << "return this->u_." << ub->local_name () << "_;" << be_uidt_nl
       << "}\n\n";
   return 0;
 }
@@ -922,18 +922,18 @@ be_visitor_union_branch_public_ci::visit_structure (be_structure *node)
           *os << "// set the value" << be_nl;
           *os << "// store current val in a _var so as to free it on an assignment"
               << be_nl;
-          *os << bt->name () << "_var " << ub->local_name () << "_var (this->"
+          *os << bt->name () << "_var " << ub->local_name () << "_var (this->u_."
               << ub->local_name () << "_);" << be_nl;
           *os << "// release old and make a deep copy" << be_nl;
           *os << ub->local_name () << "_var = new " << bt->name ()
               << " (val);" << be_nl;
           *os << "// the _var gives up ownership" << be_nl;
-          *os << "this->" << ub->local_name () << "_ = "
+          *os << "this->u_." << ub->local_name () << "_ = "
               << ub->local_name () << "_var._retn ();" << be_uidt_nl;
         }
       else
         {
-          *os << "this->" << ub->local_name () << "_ = val;" << be_uidt_nl;
+          *os << "this->u_." << ub->local_name () << "_ = val;" << be_uidt_nl;
         }
     }
   else
@@ -949,9 +949,9 @@ be_visitor_union_branch_public_ci::visit_structure (be_structure *node)
       << bu->name () << "::" << ub->local_name () << " (void) const" << be_nl
       << "{" << be_idt_nl;
   if (bt->size_type () == be_type::VARIABLE)
-    *os << "return *this->" << ub->local_name () << "_;" << be_uidt_nl;
+    *os << "return *this->u_." << ub->local_name () << "_;" << be_uidt_nl;
   else
-    *os << "return this->" << ub->local_name () << "_;" << be_uidt_nl;
+    *os << "return this->u_." << ub->local_name () << "_;" << be_uidt_nl;
   *os << "}" << be_nl;
 
   // read/write get method
@@ -960,9 +960,9 @@ be_visitor_union_branch_public_ci::visit_structure (be_structure *node)
       << bu->name () << "::" << ub->local_name () << " (void)" << be_nl
       << "{" << be_idt_nl;
   if (bt->size_type () == be_type::VARIABLE)
-    *os << "return *this->" << ub->local_name () << "_;" << be_uidt_nl;
+    *os << "return *this->u_." << ub->local_name () << "_;" << be_uidt_nl;
   else
-    *os << "return this->" << ub->local_name () << "_;" << be_uidt_nl;
+    *os << "return this->u_." << ub->local_name () << "_;" << be_uidt_nl;
   *os << "}\n\n";
 
   return 0;
@@ -1078,13 +1078,13 @@ be_visitor_union_branch_public_ci::visit_union (be_union *node)
       *os << "// set the value" << be_nl;
       *os << "// store current val in a _var so as to free it on an assignment"
           << be_nl;
-      *os << bt->name () << "_var " << ub->local_name () << "_var (this->"
+      *os << bt->name () << "_var " << ub->local_name () << "_var (this->u_."
           << ub->local_name () << "_);" << be_nl;
       *os << "// release old and make a deep copy" << be_nl;
       *os << ub->local_name () << "_var = new " << bt->name ()
           << " (val);" << be_nl;
       *os << "// the _var gives up ownership" << be_nl;
-      *os << "this->" << ub->local_name () << "_ = "
+      *os << "this->u_." << ub->local_name () << "_ = "
           << ub->local_name () << "_var._retn ();" << be_uidt_nl;
     }
   else
@@ -1099,7 +1099,7 @@ be_visitor_union_branch_public_ci::visit_union (be_union *node)
       << "ACE_INLINE const " << bt->name () << " &" << be_nl
       << bu->name () << "::" << ub->local_name () << " (void) const" << be_nl
       << "{" << be_idt_nl
-      << "return *this->" << ub->local_name () << "_;" << be_uidt_nl
+      << "return *this->u_." << ub->local_name () << "_;" << be_uidt_nl
       << "}" << be_nl;
 
   // read/write get method
@@ -1107,7 +1107,7 @@ be_visitor_union_branch_public_ci::visit_union (be_union *node)
       << "ACE_INLINE " << bt->name () << " &" << be_nl
       << bu->name () << "::" << ub->local_name () << " (void)" << be_nl
       << "{" << be_idt_nl
-      << "return *this->" << ub->local_name () << "_;" << be_uidt_nl
+      << "return *this->u_." << ub->local_name () << "_;" << be_uidt_nl
       << "}\n\n";
 
   return 0;

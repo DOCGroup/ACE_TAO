@@ -1,3 +1,42 @@
+Thu Jun 25 06:57:43 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_union/union_ch.cpp: 
+	  Added a new virtual overridden method that returns a pointer to
+	  the discriminant.
+
+	  In addition, we now name the underlying private union as u_.
+
+	* TAO_IDL/be/be_visitor_union/union_ci.cpp: 
+	  
+	  In the default constructor, we were setting the entire class
+	  object to 0 which was making the virtual pointers 0. We now only
+	  initialize the union and the discriminant.
+
+	  Added the implementation of the virtual overridden _discriminant
+	  method. Also, the _reset method was moved here from the
+	  union_cs.cpp file.
+	
+	* TAO_IDL/be/be_visitor_union/union_cs.cpp: 
+ 	  Moved the _reset method to the union_ci.cpp file
+
+	* TAO_IDL/be/be_visitor_union_branch/{public_access_cs,
+	public_reset_cs, public_assign_cs, public_ci}.cpp:
+
+	The generated code now has to use the named underlying union. SO
+	every field must now be accessed as u_.<field>.
+
+	* tao/Union.h:
+
+	Added a pure virtual method returning pointer to void. This will
+	be overridden by subclasses and a pointer to the discriminant will
+	be returned. 
+
+	* tao/{encode, decode}.cpp (TAO_Marshal_Union::{encode, decode}):
+
+	We now use the _discriminant () method on the union class to
+	access the discriminant. This is much safer than simply casting
+	it.
+	
 Wed Jun 24 21:41:21 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
 	* tao/GIOP.cpp: Added a lock to 
