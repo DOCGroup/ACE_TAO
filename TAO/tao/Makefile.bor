@@ -9,6 +9,7 @@ OBJFILES = \
 	$(OBJDIR)\Active_Object_Map.obj \
 	$(OBJDIR)\Any.obj \
 	$(OBJDIR)\append.obj \
+	$(OBJDIR)\Asynch_Invocation.obj \
 	$(OBJDIR)\CDR.obj \
 	$(OBJDIR)\CDR_Interpreter.obj \
 	$(OBJDIR)\Client_Strategy_Factory.obj \
@@ -79,6 +80,8 @@ OBJFILES = \
 	$(OBJDIR)\Policy_Manager.obj \
 	$(OBJDIR)\PolicyC.obj \
 	$(OBJDIR)\PolicyS.obj \
+	$(OBJDIR)\PollableC.obj \
+	$(OBJDIR)\PollableS.obj \
 	$(OBJDIR)\Principal.obj \
 	$(OBJDIR)\Protocol_Factory.obj \
 	$(OBJDIR)\Reply_Dispatcher.obj \
@@ -99,6 +102,12 @@ OBJFILES = \
 	$(OBJDIR)\Transport_Mux_Strategy.obj \
 	$(OBJDIR)\Typecode.obj \
 	$(OBJDIR)\Typecode_Constants.obj \
+	$(OBJDIR)\UIOP_Acceptor.obj \
+	$(OBJDIR)\UIOP_Connect.obj \
+	$(OBJDIR)\UIOP_Connector.obj \
+	$(OBJDIR)\UIOP_Factory.obj \
+	$(OBJDIR)\UIOP_Profile.obj \
+	$(OBJDIR)\UIOP_Transport.obj \
 	$(OBJDIR)\Union.obj \
 	$(OBJDIR)\ValueBase.obj \
 	$(OBJDIR)\ValueFactory.obj \
