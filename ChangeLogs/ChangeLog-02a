@@ -1,3 +1,11 @@
+Tue Jan 15 17:24:53 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/SSL/SSL_Context.cpp (report_error()): Set ACE_OS::last_error()
+          to ERR_get_error() so the caller can get the error code later.
+
+        * ace/SSL/SSL_SOCK_Connector.cpp: If the SSL handshake phase of a
+          connection attempt fails, close the underlying socket.
+
 Tue Jan 15 15:35:41 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/SOCK_Connector.(h cpp):
