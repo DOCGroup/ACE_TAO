@@ -101,12 +101,14 @@ Test_Single_Lock_With_Mode::run (int times_to_run)
   TAO_TRY
     {
       cc_lock_set_->lock (mode_, TAO_TRY_ENV);
+      TAO_CHECK_ENV;
       ACE_DEBUG ((LM_DEBUG,
                   "%s lock set\n",
                   get_lock_mode_name (mode_)));
 
       lock_not_held = cc_lock_set_->try_lock (mode_,
                                               TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
       if (lock_not_held)
         {
@@ -128,6 +130,7 @@ Test_Single_Lock_With_Mode::run (int times_to_run)
 
       lock_not_held = cc_lock_set_->try_lock (mode_,
                                               TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
       if (lock_not_held)
         ACE_DEBUG ((LM_DEBUG,
@@ -174,11 +177,15 @@ Test_Setup_LockSet::run (int times_to_run)
         create_lock_set ();
       this->naming_service_->bind_name (my_name_, cc_lock_set_,
                                         TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
       ACE_DEBUG ((LM_DEBUG,
                   "Name bound\n"));
 
       cc_lock_set_->lock (CosConcurrencyControl::read,
                           TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
       ACE_DEBUG ((LM_DEBUG,
                   "Read lock set\n"));
     }
@@ -213,12 +220,17 @@ Test_Use_Already_Created_LockSet::run (int times_to_run)
         this->naming_service_->get_obj_from_name ("",
                                                   my_name_,
                                                   TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
       CosConcurrencyControl::LockSet_var ccls =
         CosConcurrencyControl::LockSet::_narrow (ccls_obj.in (),
                                                  TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
       ccls->lock (CosConcurrencyControl::read,
                   TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
     }
   TAO_CATCHANY
     {
@@ -250,12 +262,17 @@ Test_Unlock_Already_Created_LockSet::run (int times_to_run)
       CORBA::Object_var ccls_obj =
         this->naming_service_->get_obj_from_name ("", my_name_,
                                                  TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
       CosConcurrencyControl::LockSet_var ccls =
         CosConcurrencyControl::LockSet::_narrow (ccls_obj.in (),
                                                  TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
       ccls->unlock (CosConcurrencyControl::read,
                     TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
     }
   TAO_CATCHANY
     {
