@@ -61,5 +61,16 @@ project(Satellite_exec) : ciao_component {
   }
 }
 
+project (Satellite_controller) : ciao_client, valuetype {
+  exename = controller
+  after += Satellite_stub
+  libs += Satellite_stub BBN_UAV_stub
 
+  IDL_Files {
+  }
+
+  Source_Files {
+    controller.cpp
+  }
+}
 

@@ -144,6 +144,17 @@ namespace CAOC_Impl
     ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
     {
+
+      ACE_CString my_uuid = this->servant_->component_UUID (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK;
+      my_uuid += "_prepare_capture_publisher";
+
+      this->container_->push_event (ev,
+                                    my_uuid.c_str ()
+                                    ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+
+      /*
       ACE_Active_Map_Manager<
       ::BBN_UAV::PrepareCaptureConsumer_var>::iterator end =
       this->ciao_publishes_prepare_capture_map_.end ();
@@ -168,6 +179,7 @@ namespace CAOC_Impl
         ACE_ENV_ARG_PARAMETER);
         ACE_CHECK;
       }
+      */
     }
 
     ::Components::Cookie *
@@ -229,6 +241,17 @@ namespace CAOC_Impl
     ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
     {
+
+      ACE_CString my_uuid = this->servant_->component_UUID (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK;
+      my_uuid += "_prepare_engage_publisher";
+
+      this->container_->push_event (ev,
+                                    my_uuid.c_str ()
+                                    ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+
+      /*
       ACE_Active_Map_Manager<
       ::BBN_UAV::PrepareEngageConsumer_var>::iterator end =
       this->ciao_publishes_prepare_engage_map_.end ();
@@ -253,6 +276,7 @@ namespace CAOC_Impl
         ACE_ENV_ARG_PARAMETER);
         ACE_CHECK;
       }
+      */
     }
 
     ::Components::Cookie *

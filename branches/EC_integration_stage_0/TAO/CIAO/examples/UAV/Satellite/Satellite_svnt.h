@@ -172,6 +172,11 @@ namespace Satellite_Impl
 
       // Supported operations.
 
+      virtual void
+      alert (
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
       // Public port operations.
 
       virtual ::Components::Cookie *
@@ -434,7 +439,7 @@ namespace Satellite_Impl
 
       ::CIAO::Session_Container *
       container_;
-      
+
       ACE_CString component_UUID_;
     };
   }

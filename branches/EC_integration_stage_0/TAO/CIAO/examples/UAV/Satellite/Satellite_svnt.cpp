@@ -144,6 +144,18 @@ namespace Satellite_Impl
     ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
     {
+
+
+      ACE_CString my_uuid = this->servant_->component_UUID (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK;
+      my_uuid += "_target_located_publisher";
+
+      this->container_->push_event (ev,
+                                    my_uuid.c_str ()
+                                    ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+
+      /*
       ACE_Active_Map_Manager<
       ::BBN_UAV::TargetLocatedConsumer_var>::iterator end =
       this->ciao_publishes_target_located_map_.end ();
@@ -168,6 +180,7 @@ namespace Satellite_Impl
         ACE_ENV_ARG_PARAMETER);
         ACE_CHECK;
       }
+      */
     }
 
     ::Components::Cookie *
@@ -811,6 +824,15 @@ namespace Satellite_Impl
     }
 
     // Supported operations.
+
+    void
+    Satellite_Servant::alert (
+    ACE_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+    {
+      this->executor_->alert (
+      ACE_ENV_SINGLE_ARG_PARAMETER);
+    }
 
     // Component attribute operations.
   }

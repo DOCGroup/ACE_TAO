@@ -15,7 +15,12 @@
 
 module BBN_UAV
 {
-  component Satellite
+  interface trigger
+    {
+      void alert ();
+    };
+
+  component Satellite supports trigger
     {
       publishes TargetLocated target_located;
     };

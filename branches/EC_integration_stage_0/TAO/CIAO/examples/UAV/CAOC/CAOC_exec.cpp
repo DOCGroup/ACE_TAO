@@ -23,12 +23,12 @@ MyImpl::CAOC_exec_i::push_target_located (BBN_UAV::TargetLocated *ev
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Notify others
-  BBN_UAV::PrepareEngage_var event = new OBV_BBN_UAV::PrepareEngage;
+  BBN_UAV::PrepareCapture_var event = new OBV_BBN_UAV::PrepareCapture;
 
   ACE_DEBUG ((LM_DEBUG,
               "CAOC, received a TargetLocated from Satellite \n"));
 
-  this->context_->push_prepare_engage (event
+  this->context_->push_prepare_capture (event
                                        ACE_ENV_ARG_PARAMETER);
 }
 
