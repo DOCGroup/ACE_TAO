@@ -188,8 +188,8 @@ Svc_Handler::idle (u_long flags)
 // don't allow multiple threads/process to call accept() on the same
 // listen-mode port/socket.  Also, note that since timed accept is
 // implemented using select(), and we use timed accepts with threads,
-// we need a real lock even if the OS has thread-safe accept when
-// using timed accepts.
+// we need a real lock when using timed accepts even if the OS has
+// thread-safe accept.
 //
 #if defined (ACE_LACKS_FORK)
 #  if defined (ACE_HAS_THREADS)
