@@ -8,7 +8,7 @@
 // = FILENAME
 //    except.h
 //
-// = DESCRIPTION
+// = DESCRTION
 //     This file defines way in which CORBA exceptions are reported.
 //
 // = AUTHOR
@@ -69,7 +69,7 @@ private:
   // Serialize access to reference count.
 };
 
-class ACE_Svc_Export CORBA_UserException : public CORBA::Exception
+class ACE_Svc_Export CORBA_UserException : public CORBA_Exception
 {
   // = TITLE
   // User exceptions are those defined by application developers
@@ -82,7 +82,7 @@ protected:
   // Copy and assignment operators.
 };
 
-class ACE_Svc_Export CORBA_SystemException : public CORBA::Exception 
+class ACE_Svc_Export CORBA_SystemException : public CORBA_Exception 
 {
   // = TITLE
   // System exceptions are those defined in the CORBA spec; OMG-IDL

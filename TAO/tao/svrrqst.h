@@ -76,7 +76,7 @@ public:
   virtual CORBA::ORB_ptr __stdcall orb (void) = 0;
 };
 
-class ACE_Svc_Export IIOP_ServerRequest : public CORBA::ServerRequest
+class ACE_Svc_Export IIOP_ServerRequest : public CORBA_ServerRequest
 {
 public:
   // Constructor, destructor
