@@ -113,6 +113,10 @@ TAO_Interpretive_Visitor_Factory::make_visitor (be_visitor_context *ctx)
       return new be_visitor_interface_any_op_ch (new_ctx);
     case TAO_CodeGen::TAO_INTERFACE_ANY_OP_CS:
       return new be_visitor_interface_any_op_cs (new_ctx);
+    case TAO_CodeGen::TAO_INTERFACE_TIE_SH:
+      return new be_visitor_interface_tie_sh (new_ctx);
+    case TAO_CodeGen::TAO_INTERFACE_TIE_SI:
+      return new be_visitor_interface_tie_si (new_ctx);
 
     case TAO_CodeGen::TAO_INTERFACE_FWD_CH:
       return new be_visitor_interface_fwd_ch (new_ctx);
@@ -268,6 +272,10 @@ TAO_Interpretive_Visitor_Factory::make_visitor (be_visitor_context *ctx)
     case TAO_CodeGen::TAO_OPERATION_ARG_MARSHAL_SS:
     case TAO_CodeGen::TAO_OPERATION_ARG_POST_MARSHAL_SS:
       return new be_visitor_operation_argument (new_ctx);
+    case TAO_CodeGen::TAO_OPERATION_TIE_SH:
+      return new be_visitor_operation_tie_sh (new_ctx);
+    case TAO_CodeGen::TAO_OPERATION_TIE_SI:
+      return new be_visitor_operation_tie_si (new_ctx);
 
     case TAO_CodeGen::TAO_ARGUMENT_ARGLIST_CH:
     case TAO_CodeGen::TAO_ARGUMENT_ARGLIST_OTHERS:
@@ -296,6 +304,8 @@ TAO_Interpretive_Visitor_Factory::make_visitor (be_visitor_context *ctx)
     case TAO_CodeGen::TAO_ATTRIBUTE_CS:
     case TAO_CodeGen::TAO_ATTRIBUTE_SH:
     case TAO_CodeGen::TAO_ATTRIBUTE_SS:
+    case TAO_CodeGen::TAO_ATTRIBUTE_TIE_SH:
+    case TAO_CodeGen::TAO_ATTRIBUTE_TIE_SI:
     case TAO_CodeGen::TAO_ATTRIBUTE_COLLOCATED_SH:
     case TAO_CodeGen::TAO_ATTRIBUTE_COLLOCATED_SS:
       return new be_visitor_attribute (new_ctx);

@@ -298,4 +298,47 @@ public:
   // visit interface
 };
 
+class be_visitor_interface_tie_sh : public be_visitor_interface
+{
+  //
+  // = TITLE
+  //   be_visitor_interface_tie_sh
+  //
+  // = DESCRIPTION
+  //   This is a concrete visitor to generate the server header for the TIE class
+  //
+  //
+public:
+  be_visitor_interface_tie_sh (be_visitor_context *ctx);
+  // constructor
+
+  ~be_visitor_interface_tie_sh (void);
+  // destructor
+
+  virtual int visit_interface (be_interface *node);
+  // set the right context and make a visitor
+};
+
+class be_visitor_interface_tie_si : public be_visitor_interface
+{
+  //
+  // = TITLE
+  //   be_visitor_interface_tie_si
+  //
+  // = DESCRIPTION
+  //   This is a concrete visitor to generate the server inline for operations
+  //   of the TIE class
+  //
+  //
+public:
+  be_visitor_interface_tie_si (be_visitor_context *ctx);
+  // constructor
+
+  ~be_visitor_interface_tie_si (void);
+  // destructor
+
+  virtual int visit_interface (be_interface *node);
+  // set the right context and make a visitor
+};
+
 #endif // _BE_VISITOR_INTERFACE_H

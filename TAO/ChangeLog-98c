@@ -1,3 +1,39 @@
+Tue Jun  2 18:57:08 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+        * TAO_IDL/be/{be_visitor_enum, be_visitor_exception,
+        be_visitor_interface, be_visitor_sequence, be_visitor_structure,
+        be_visitor_typedef, be_visitor_union}.cpp:
+	Factored out some code that should have been placed inside the
+	TypeCode visitors.
+
+	* TAO_IDL/be/be_visitor_typecode.cpp: Added teh factored out code
+	mentioned above.
+
+	* TAO_IDL/be_include/be_codegen.h: Added a few more enumerations
+	that deal with generation of the TIE classes and code for
+	interfaces, operations and attributes.
+
+	* TAO_IDL/be/be_visitor_attribute.cpp: Added cases to deal with
+	attribute mapping inside a TIE class.
+
+	* TAO_IDL/be_include/be_visitor_interface.h
+	  TAO_IDL/be/be_visitor_interface.cpp:
+
+	Added 2 new visitors for generation of the TIE class and its code
+	in the server header and server inline file.
+
+	* TAO_IDL/be_include/be_visitor_operation.h
+	  TAO_IDL/be/be_visitor_operation.cpp:
+
+	Added 2 new visitors for generation of the operations and its code
+	inside the TIE class in the server header and server inline file.
+
+	* TAO_IDL/be/be_interpretive.cpp: Added cases for the TIE visitors
+	for interfaces, operations and attributes.
+
+	* docs/releasenotes.index.html: Updated to indicate support for
+	TIEs.
+
 Tue Jun 02 08:35:58 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Cubit/TAO/MT_Cubit/server.cpp: added cast to avoid

@@ -532,24 +532,6 @@ int be_visitor_union_cs::visit_union (be_union *node)
       os->decr_indent ();
       *os << "}\n\n";
 
-      os->indent ();
-      // generate the typecode information here
-      os->indent (); // start from current indentation level
-      *os << "static const CORBA::Long _oc_" << node->flatname () << "[] =" <<
-        be_nl;
-      *os << "{\n";
-      os->incr_indent (0);
-      if (node->gen_encapsulation () == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_union_cs"
-                             "visit_union - "
-                             "codegen for encapsulation failed\n"), -1);
-        }
-
-      os->decr_indent ();
-      *os << "};" << be_nl;
-
       // by using a visitor to declare and define the TypeCode, we have the
       // added advantage to conditionally not generate any code. This will be
       // based on the command line options. This is still TO-DO
