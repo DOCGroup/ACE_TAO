@@ -33,7 +33,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/ObjRefTemplate/ObjectReferenceTemplateC.h"
+#include "tao/ObjRefTemplate/ObjectReferenceTemplate.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
