@@ -1,3 +1,11 @@
+Tue Apr  3 22:54:48 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/PortableServer/PolicyS_T.h:
+        * tao/PortableServer/PolicyS_T.i:
+        * tao/PortableServer/PolicyS_T.cpp:
+          Add missing files, though empty it is simpler to keep them in
+          the repo.
+
 Tue Apr  3 20:56:48 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/DomainC.h:
