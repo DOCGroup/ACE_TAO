@@ -5,6 +5,14 @@ Sun Feb 01 12:09:11 1998  David L. Levine  <levine@cs.wustl.edu>
           deal with it.  It can in the class declaration in Containers.h,
           so I didn't change that.
 
+Fri Jan 30 15:35:30 1998  Chris Gill  <cdgill@cs.wustl.edu>
+
+	* ace/Containers.{cpp,h,i} : added class templates
+          ACE_Ordered_MultiSet and ACE_Ordered_MultiSet_Iterator
+          which respectively implement abstractions for containment
+          of and iteration over an ordered set that allows multiple
+          identical instances of a given item.
+          
 Fri Jan 30 02:42:30 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/OS.cpp (uname): Made it comform with Unicode.
