@@ -1,3 +1,12 @@
+Sun Aug 19 13:41:07 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tests/DLL_ORB/Test_i.cpp (shutdown):
+
+	  Do not wait for completion when shutting down the ORB since
+	  ORB::shutdown() is being called in the context of an upcall.
+	  Thanks to Craig Rodrigues <crodrigu@bbn.com> for finding the
+	  problem and providing the fix.
+
 Sat Aug 18 08:59:32 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/ORBInitInfo.cpp: Fixed a compiler error in the static
