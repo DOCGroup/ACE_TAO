@@ -1,3 +1,8 @@
+Tue Jan 20 18:02:19 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* ace/config-cygwin32.h:
+	  Made some small corrections.
+
 Tue Jan 20 17:05:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* include/makeinclude/compiler.bor:
