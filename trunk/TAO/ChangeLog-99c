@@ -1,3 +1,9 @@
+Sat Mar 20 13:38:23 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/Timeprobe.h:
+	  Left some macros uncommented which would lead to link
+	  errors when building TAO. Fixed.
+
 Sat Mar 20 11:06:16 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tao/ORB.cpp (multicast_query): Only print an error message if
