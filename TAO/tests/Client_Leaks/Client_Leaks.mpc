@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Server): taoexe, portableserver {
+project(*Server): taoserver {
   Source_Files {
     Process_Factory.cpp
     Startup_Callback.cpp
@@ -10,7 +10,7 @@ project(*Server): taoexe, portableserver {
   }
 }
 
-project(*Client): taoexe {
+project(*Client): taoclient {
   Source_Files {
     TestC.cpp
     Client_Task.cpp
