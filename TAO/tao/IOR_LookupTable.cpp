@@ -3,6 +3,7 @@
 #include "tao/IOR_LookupTable.h"
 #include "tao/ObjectIDList.h"
 #include "tao/Exception.h"
+#include "tao/Environment.h"
 #include "tao/debug.h"
 
 ACE_RCSID(tao, IOR_TableLookup, "$Id$")
@@ -64,7 +65,7 @@ TAO_IOR_LookupTable::find_ior (const ACE_CString &object_name,
 
   // @@ This debugging output should *NOT* be used since the
   //    object key string is not null terminated, nor can it
-  //    be null terminated without copying.  No copying should 
+  //    be null terminated without copying.  No copying should
   //    be done since performance is somewhat important here.
   //    So, just remove the debugging output entirely.
   //
