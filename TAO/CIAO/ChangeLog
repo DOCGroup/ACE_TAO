@@ -1,3 +1,11 @@
+Thu Jul 29 14:28:55 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* DAnCE/RepositoryManager/RepositoryManager_Impl.cpp
+	  (createPackage, deletePackage, findPackageByName):
+
+	  Fixed emulated exception macro usage.  Addresses compile-time
+	  problems in MSVC++ 6 builds.
+
 Tue Jul 27 14:48:10 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
 	* DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.h:
