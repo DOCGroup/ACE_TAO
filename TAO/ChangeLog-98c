@@ -1,3 +1,30 @@
+Thu Jun 18 18:33:34 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/GIOP.cpp: 
+	  Added a few more Timeprobes to the client side.
+	  Removed another memory allocation by using a buffer on the stack
+	  for the (initial) output CDR stream.
+
+	* tao/ORB.cpp: 
+	  No automatic printing of Timeprobes in the ORB anymore. The
+	  application is responsible of invoking the ACE_TIMEPROBE_PRINT
+	  macro as needed.
+
+	* tao/IIOP_Object.cpp: 
+	  Added more Timeprobes.
+
+	* tests/POA/Generic_Servant/Foo.idl: 
+	* tests/POA/Generic_Servant/MyFooServant.h: 
+	* tests/POA/Generic_Servant/MyFooServant.cpp: 
+	  Added methods to request a shutdown of the server.
+
+	* tests/POA/Generic_Servant/client.cpp: 
+	  Added an option (-x) to shutdown the server. Also added support
+	  for Timeprobe.
+
+	* tests/POA/Explicit_Activation/server.cpp: 
+	  Print the timeprobes at exit.
+
 Thu Jun 18 14:17:35 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Trader/Attributes_T.cpp:
