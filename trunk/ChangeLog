@@ -1,3 +1,10 @@
+Wed Nov 10 16:42:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
+
+	* include/makeinclude/platform_vxworks5.5.x.GNU:
+	  New platform configuration for VxWorks >= 5.5.1.
+	  This new file (should) work(s) for both the GNU and DIAB toolchains on
+          any host for any target:-)
+
 Wed Nov 10 16:38:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
 
 	* ace/config-vxworks5.x.h:
