@@ -1,3 +1,9 @@
+Fri May 26 19:26:34 2000  Ossama Othman  <ossama@uci.edu>
+
+	* netsvcs/clients/Logger/direct_logging.cpp:
+
+	  Added missing include of `ace/Log_Msg.h'.
+
 Fri May 26 18:14:47 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/OS_String.inl:
