@@ -187,7 +187,8 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
         node->traverse_supports_list_graphs (
             be_valuetype::abstract_supports_helper,
             os,
-            I_TRUE
+            I_TRUE,
+            I_FALSE
           );    
 
       if (status == -1)
@@ -256,7 +257,9 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
   status =
     node->traverse_supports_list_graphs (
         be_visitor_valuetype_ch::gen_supported_ops,
-        os
+        os,
+        I_FALSE,
+        I_TRUE
       );
 
   if (status == -1)
@@ -532,10 +535,11 @@ be_visitor_valuetype_ch::gen_supported_ops (be_interface *,
 {
   // We inherit from abstract supported interfaces, so no need
   // to declare their pure virtual operations again in our scope.
-  if (base->is_abstract ())
+  /*if (base->is_abstract ())
     {
       return 0;
     }
+   */
 
   AST_Decl *d = 0;
   be_visitor_context ctx;
