@@ -205,6 +205,7 @@ ACE_OS::netdb_release (void)
 ACE_EXIT_HOOK ACE_OS::exit_hook_ = 0;
 
 // Static constant representing `zero-time'.
+// Note: this object requires static construction.
 const ACE_Time_Value ACE_Time_Value::zero;
 
 // Constant for maximum time representable.  Note that this time
@@ -212,7 +213,7 @@ const ACE_Time_Value ACE_Time_Value::zero;
 // have *their own* implementation-specific maximum time representations.
 // Its primary use is in time computations such as those used by the
 // dynamic subpriority strategies in the ACE_Dynamic_Message_Queue class.
-
+// Note: this object requires static construction.
 const ACE_Time_Value ACE_Time_Value::max_time (LONG_MAX,
                                                ACE_ONE_SECOND_IN_USECS - 1);
 
@@ -253,7 +254,7 @@ void ACE_Time_Value::set (const FILETIME &file_time)
 
 ACE_Time_Value::operator FILETIME () const
 {
-  // ACE_TRACE ("ACE_Time_Value::operator FILETIME");
+  ACE_TRACE ("ACE_Time_Value::operator FILETIME");
   ULARGE_INTEGER _100ns;
   _100ns.QuadPart = (((DWORDLONG) this->tv_.tv_sec * (10000 * 1000) +
                       this->tv_.tv_usec * 10) +
@@ -300,7 +301,7 @@ ACE_Cleanup_Info::operator!= (const ACE_Cleanup_Info &o) const
 void
 ACE_Time_Value::dump (void) const
 {
-  // ACE_TRACE ("ACE_Time_Value::dump");
+  ACE_TRACE ("ACE_Time_Value::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\ntv_sec_ = %d"), this->tv_.tv_sec));
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\ntv_usec_ = %d\n"), this->tv_.tv_usec));
@@ -398,7 +399,7 @@ ACE_Countdown_Time::~ACE_Countdown_Time (void)
 void
 ACE_OS::readPPCTimeBase (u_long &most, u_long &least)
 {
-  // ACE_TRACE ("ACE_OS::readPPCTimeBase");
+  ACE_TRACE ("ACE_OS::readPPCTimeBase");
 
   // This function can't be inline because it depends on the arguments
   // being in particular registers (r3 and r4), in conformance with the
@@ -418,7 +419,7 @@ ACE_OS::readPPCTimeBase (u_long &most, u_long &least)
 void
 ACE_OS::readPPCTimeBase (u_long &most, u_long &least)
 {
-  // ACE_TRACE ("ACE_OS::readPPCTimeBase");
+  ACE_TRACE ("ACE_OS::readPPCTimeBase");
 
   // This function can't be inline because it defines a symbol,
   // aclock.  If there are multiple calls to the function in a
@@ -445,7 +446,7 @@ ACE_OS::readPPCTimeBase (u_long &most, u_long &least)
 int
 ACE_OS::uname (struct utsname *name)
 {
-  // ACE_TRACE ("ACE_OS::uname");
+  ACE_TRACE ("ACE_OS::uname");
 # if defined (ACE_WIN32)
   size_t maxnamelen = sizeof name->nodename;
   ACE_OS::strcpy (name->sysname, ACE_TEXT ("Win32"));
@@ -611,7 +612,7 @@ ACE_OS::uname (struct utsname *name)
 struct hostent *
 ACE_OS::gethostbyname (const char *name)
 {
-  // ACE_TRACE ("ACE_OS::gethostbyname");
+  ACE_TRACE ("ACE_OS::gethostbyname");
 
   // not thread safe!
   static hostent ret;
@@ -640,7 +641,7 @@ ACE_OS::gethostbyname (const char *name)
 struct hostent *
 ACE_OS::gethostbyaddr (const char *addr, int length, int type)
 {
-  // ACE_TRACE ("ACE_OS::gethostbyaddr");
+  ACE_TRACE ("ACE_OS::gethostbyaddr");
 
   if (length != 4 || type != AF_INET)
     {
@@ -679,7 +680,7 @@ ACE_OS::gethostbyaddr_r (const char *addr, int length, int type,
                          hostent *result, ACE_HOSTENT_DATA buffer,
                          int *h_errnop)
 {
-  // ACE_TRACE ("ACE_OS::gethostbyaddr_r");
+  ACE_TRACE ("ACE_OS::gethostbyaddr_r");
   if (length != 4 || type != AF_INET)
     {
       errno = EINVAL;
@@ -729,7 +730,7 @@ ACE_OS::gethostbyname_r (const char *name, hostent *result,
                          ACE_HOSTENT_DATA buffer,
                          int *h_errnop)
 {
-  // ACE_TRACE ("ACE_OS::gethostbyname_r");
+  ACE_TRACE ("ACE_OS::gethostbyname_r");
 
   if (ACE_OS::netdb_acquire ())
     return 0;
@@ -776,7 +777,7 @@ ACE_OS::gethostbyname_r (const char *name, hostent *result,
 void
 ACE_OS::ace_flock_t::dump (void) const
 {
-// ACE_TRACE ("ACE_OS::ace_flock_t::dump");
+ACE_TRACE ("ACE_OS::ace_flock_t::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("handle_ = %u"), this->handle_));
@@ -797,7 +798,7 @@ ACE_OS::ace_flock_t::dump (void) const
 void
 ACE_OS::mutex_lock_cleanup (void *mutex)
 {
-// ACE_TRACE ("ACE_OS::mutex_lock_cleanup");
+ACE_TRACE ("ACE_OS::mutex_lock_cleanup");
 #if defined (ACE_HAS_THREADS)
 # if defined (ACE_HAS_PTHREADS)
   ACE_mutex_t *p_lock = (ACE_mutex_t *) mutex;
@@ -817,7 +818,7 @@ ACE_OS::mutex_lock_cleanup (void *mutex)
 FILE *
 ACE_OS::fopen (const char *filename, const char *mode)
 {
-  // ACE_TRACE ("ACE_OS::fopen");
+  ACE_TRACE ("ACE_OS::fopen");
   int hmode = _O_TEXT;
 
   for (const char *mode_ptr = mode; *mode_ptr != 0; mode_ptr++)
@@ -845,7 +846,7 @@ ACE_OS::fopen (const char *filename, const char *mode)
 FILE *
 ACE_OS::fopen (const wchar_t *filename, const wchar_t *mode)
 {
-  // ACE_TRACE ("ACE_OS::fopen");
+  ACE_TRACE ("ACE_OS::fopen");
   int hmode = _O_TEXT;
 
   for (const wchar_t *mode_ptr = mode; *mode_ptr != 0; mode_ptr++)
@@ -877,7 +878,7 @@ ACE_OS::fopen (const wchar_t *filename, const wchar_t *mode)
 int
 ACE_OS::fprintf (FILE *fp, const char *format, ...)
 {
-  // ACE_TRACE ("ACE_OS::fprintf");
+  ACE_TRACE ("ACE_OS::fprintf");
   int result = 0;
   va_list ap;
   va_start (ap, format);
@@ -889,7 +890,7 @@ ACE_OS::fprintf (FILE *fp, const char *format, ...)
 int
 ACE_OS::printf (const char *format, ...)
 {
-  // ACE_TRACE ("ACE_OS::printf");
+  ACE_TRACE ("ACE_OS::printf");
   int result;
   va_list ap;
   va_start (ap, format);
@@ -902,6 +903,7 @@ int
 ACE_OS::sprintf (char *buf, const char *format, ...)
 {
   // ACE_TRACE ("ACE_OS::sprintf");
+
   int result;
   va_list ap;
   va_start (ap, format);
@@ -913,7 +915,7 @@ ACE_OS::sprintf (char *buf, const char *format, ...)
 char *
 ACE_OS::gets (char *str, int n)
 {
-  // ACE_TRACE ("ACE_OS::gets");
+  ACE_TRACE ("ACE_OS::gets");
   int c;
   char *s = str;
 
@@ -955,7 +957,7 @@ fprintf (FILE *fp, char *format, const char *msg)
 int
 ACE_OS::fprintf (FILE *fp, const wchar_t *format, ...)
 {
-  // ACE_TRACE ("ACE_OS::fprintf");
+  ACE_TRACE ("ACE_OS::fprintf");
 #   if defined (ACE_HAS_WINCE)
   ACE_NOTSUP_RETURN (-1);
 #   else
@@ -971,7 +973,7 @@ ACE_OS::fprintf (FILE *fp, const wchar_t *format, ...)
 int
 ACE_OS::sprintf (wchar_t *buf, const wchar_t *format, ...)
 {
-  // ACE_TRACE ("ACE_OS::sprintf");
+  ACE_TRACE ("ACE_OS::sprintf");
   int result;
   va_list ap;
   va_start (ap, format);
@@ -984,7 +986,7 @@ ACE_OS::sprintf (wchar_t *buf, const wchar_t *format, ...)
 int
 ACE_OS::sprintf (wchar_t *buf, const char *format, ...)
 {
-  // ACE_TRACE ("ACE_OS::sprintf");
+  ACE_TRACE ("ACE_OS::sprintf");
   const wchar_t *wide_format = ACE_WString (format).fast_rep ();
   int result;
   va_list ap;
@@ -1001,7 +1003,7 @@ ACE_OS::sprintf (wchar_t *buf, const char *format, ...)
 wchar_t *
 ACE_OS::mktemp (wchar_t *s)
 {
-  // ACE_TRACE ("ACE_OS::mktemp");
+  ACE_TRACE ("ACE_OS::mktemp");
   if (s == 0)
     // check for null template string failed!
     return 0;
@@ -1023,11 +1025,13 @@ ACE_OS::mktemp (wchar_t *s)
           // condition if multiple threads in a process use the same
           // template).  This appears to match the behavior of the
           // SunOS 5.5 mktemp().
-          ACE_OS::sprintf (xxxxxx, ACE_TEXT ("%05d%c"), getpid (), unique_letter);
+          ACE_OS::sprintf (xxxxxx, ACE_TEXT ("%05d%c"),
+                           ACE_OS::getpid (), unique_letter);
           while (ACE_OS::stat (s, &sb) >= 0)
             {
               if (++unique_letter <= L'z')
-                ACE_OS::sprintf (xxxxxx, ACE_TEXT ("%05d%c"), getpid (), unique_letter);
+                ACE_OS::sprintf (xxxxxx, ACE_TEXT ("%05d%c"),
+                                 ACE_OS::getpid (), unique_letter);
               else
                 {
                   // maximum of 26 unique files per template, per process
@@ -1045,7 +1049,7 @@ ACE_OS::mktemp (wchar_t *s)
 int
 ACE_OS::execl (const char * /* path */, const char * /* arg0 */, ...)
 {
-  // ACE_TRACE ("ACE_OS::execl");
+  ACE_TRACE ("ACE_OS::execl");
 #if defined (ACE_WIN32) || defined (VXWORKS)
   ACE_NOTSUP_RETURN (-1);
 #else
@@ -1058,7 +1062,7 @@ ACE_OS::execl (const char * /* path */, const char * /* arg0 */, ...)
 int
 ACE_OS::execle (const char * /* path */, const char * /* arg0 */, ...)
 {
-  // ACE_TRACE ("ACE_OS::execle");
+  ACE_TRACE ("ACE_OS::execle");
 #if defined (ACE_WIN32) || defined (VXWORKS)
   ACE_NOTSUP_RETURN (-1);
 #else
@@ -1071,7 +1075,7 @@ ACE_OS::execle (const char * /* path */, const char * /* arg0 */, ...)
 int
 ACE_OS::execlp (const char * /* file */, const char * /* arg0 */, ...)
 {
-  // ACE_TRACE ("ACE_OS::execlp");
+  ACE_TRACE ("ACE_OS::execlp");
 #if defined (ACE_WIN32) || defined (VXWORKS)
   ACE_NOTSUP_RETURN (-1);
 #else
@@ -1255,7 +1259,7 @@ int
 ACE_OS::sched_params (const ACE_Sched_Params &sched_params,
                       ACE_id_t id)
 {
-  // ACE_TRACE ("ACE_OS::sched_params");
+  ACE_TRACE ("ACE_OS::sched_params");
 # if defined (CHORUS)
   ACE_UNUSED_ARG (id);
   int result;
@@ -1390,6 +1394,7 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params,
 // ACE_thread_t, ACE_hthread_t, and ACE_thread_key_t are implemented
 // as structures...  Under no circumstances should these be given
 // initial values.
+// Note: these three objects require static construction.
 ACE_thread_t ACE_OS::NULL_thread;
 ACE_hthread_t ACE_OS::NULL_hthread;
 #if defined (ACE_HAS_TSS_EMULATION)
@@ -1421,19 +1426,19 @@ int ACE_OS::socket_initialized_;
 ACE_TSS_Ref::ACE_TSS_Ref (ACE_thread_t id)
   : tid_(id)
 {
-// ACE_TRACE ("ACE_TSS_Ref::ACE_TSS_Ref");
+ACE_TRACE ("ACE_TSS_Ref::ACE_TSS_Ref");
 }
 
 ACE_TSS_Ref::ACE_TSS_Ref (void)
 {
-// ACE_TRACE ("ACE_TSS_Ref::ACE_TSS_Ref");
+ACE_TRACE ("ACE_TSS_Ref::ACE_TSS_Ref");
 }
 
 // Check for equality.
 int
 ACE_TSS_Ref::operator== (const ACE_TSS_Ref &info) const
 {
-// ACE_TRACE ("ACE_TSS_Ref::operator==");
+ACE_TRACE ("ACE_TSS_Ref::operator==");
 
   return this->tid_ == info.tid_;
 }
@@ -1443,7 +1448,7 @@ inline
 int
 ACE_TSS_Ref::operator!= (const ACE_TSS_Ref &tss_ref) const
 {
-// ACE_TRACE ("ACE_TSS_Ref::operator==");
+ACE_TRACE ("ACE_TSS_Ref::operator==");
 
   return !(*this == tss_ref);
 }
@@ -1460,7 +1465,7 @@ ACE_TSS_Info::ACE_TSS_Info (ACE_thread_key_t key,
     tss_obj_ (tss_inst),
     thread_count_ (-1)
 {
-// ACE_TRACE ("ACE_TSS_Info::ACE_TSS_Info");
+ACE_TRACE ("ACE_TSS_Info::ACE_TSS_Info");
 }
 
 ACE_TSS_Info::ACE_TSS_Info (void)
@@ -1469,7 +1474,7 @@ ACE_TSS_Info::ACE_TSS_Info (void)
     tss_obj_ (0),
     thread_count_ (-1)
 {
-// ACE_TRACE ("ACE_TSS_Info::ACE_TSS_Info");
+ACE_TRACE ("ACE_TSS_Info::ACE_TSS_Info");
 }
 
 # if defined (ACE_HAS_NONSCALAR_THREAD_KEY_T)
@@ -1490,7 +1495,7 @@ ACE_TSS_Info::ACE_TSS_Info (void)
 int
 ACE_TSS_Info::operator== (const ACE_TSS_Info &info) const
 {
-// ACE_TRACE ("ACE_TSS_Info::operator==");
+ACE_TRACE ("ACE_TSS_Info::operator==");
 
   return this->key_ == info.key_;
 }
@@ -1499,7 +1504,7 @@ ACE_TSS_Info::operator== (const ACE_TSS_Info &info) const
 int
 ACE_TSS_Info::operator!= (const ACE_TSS_Info &info) const
 {
-// ACE_TRACE ("ACE_TSS_Info::operator==");
+ACE_TRACE ("ACE_TSS_Info::operator==");
 
   return !(*this == info);
 }
@@ -1655,7 +1660,7 @@ ACE_TSS_Cleanup::~ACE_TSS_Cleanup (void)
 void
 ACE_TSS_Cleanup::exit (void * /* status */)
 {
-  // ACE_TRACE ("ACE_TSS_Cleanup::exit");
+  ACE_TRACE ("ACE_TSS_Cleanup::exit");
 
   ACE_TSS_TABLE_ITERATOR key_info = table_;
   ACE_TSS_Info info_arr[ACE_DEFAULT_THREAD_KEYS];
@@ -1797,13 +1802,13 @@ ACE_TSS_Cleanup::ACE_TSS_Cleanup (void)
   , in_use_key_ (ACE_TSS_Emulation::total_keys ())
 #endif /* ACE_HAS_TSS_EMULATION */
 {
-  // ACE_TRACE ("ACE_TSS_Cleanup::ACE_TSS_Cleanup");
+  ACE_TRACE ("ACE_TSS_Cleanup::ACE_TSS_Cleanup");
 }
 
 ACE_TSS_Cleanup *
 ACE_TSS_Cleanup::instance (void)
 {
-  // ACE_TRACE ("ACE_TSS_Cleanup::instance");
+  ACE_TRACE ("ACE_TSS_Cleanup::instance");
 
   // Create and initialize thread-specific key.
   if (ACE_TSS_Cleanup::instance_ == 0)
@@ -1827,7 +1832,7 @@ ACE_TSS_Cleanup::insert (ACE_thread_key_t key,
                          void (*destructor)(void *),
                          void *inst)
 {
-// ACE_TRACE ("ACE_TSS_Cleanup::insert");
+ACE_TRACE ("ACE_TSS_Cleanup::insert");
   ACE_TSS_CLEANUP_GUARD
 
   ACE_KEY_INDEX (key_index, key);
@@ -1845,7 +1850,7 @@ ACE_TSS_Cleanup::insert (ACE_thread_key_t key,
 int
 ACE_TSS_Cleanup::remove (ACE_thread_key_t key)
 {
-  // ACE_TRACE ("ACE_TSS_Cleanup::remove");
+  ACE_TRACE ("ACE_TSS_Cleanup::remove");
   ACE_TSS_CLEANUP_GUARD
 
   ACE_KEY_INDEX (key_index, key);
@@ -2404,7 +2409,7 @@ ace_cleanup_destroyer (ACE_Cleanup *object, void *param)
 extern "C" void *
 ace_thread_adapter (void *args)
 {
-  // ACE_TRACE ("ace_thread_adapter");
+  ACE_TRACE ("ace_thread_adapter");
 
 #if defined (ACE_HAS_TSS_EMULATION)
   // As early as we can in the execution of the new thread, allocate
@@ -2452,7 +2457,7 @@ ACE_Thread_Adapter::ACE_Thread_Adapter (ACE_THR_FUNC user_func,
 # endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
 #endif /* ACE_THREADS_DONT_INHERIT_LOG_MSG */
 {
-// ACE_TRACE ("Ace_Thread_Adapter::Ace_Thread_Adapter");
+ACE_TRACE ("Ace_Thread_Adapter::Ace_Thread_Adapter");
 #if !defined (ACE_THREADS_DONT_INHERIT_LOG_MSG)  && \
     !defined (ACE_HAS_MINIMAL_ACE_OS)
   if (ACE_Log_Msg::exists ())
@@ -2482,7 +2487,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
                     size_t stacksize,
                     ACE_Thread_Adapter *thread_adapter)
 {
-  // ACE_TRACE ("ACE_OS::thr_create");
+  ACE_TRACE ("ACE_OS::thr_create");
 
   if (ACE_BIT_DISABLED (flags, THR_DETACHED) &&
       ACE_BIT_DISABLED (flags, THR_JOINABLE))
@@ -3319,7 +3324,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 void
 ACE_OS::thr_exit (void *status)
 {
-// ACE_TRACE ("ACE_OS::thr_exit");
+ACE_TRACE ("ACE_OS::thr_exit");
 # if defined (ACE_HAS_THREADS)
 #   if defined (ACE_HAS_PTHREADS)
     ::pthread_exit (status);
@@ -3461,7 +3466,7 @@ ACE_OS::lwp_setparams (const ACE_Sched_Params &sched_params)
 int
 ACE_OS::thr_setspecific (ACE_OS_thread_key_t key, void *data)
 {
-// ACE_TRACE ("ACE_OS::thr_setspecific");
+  // ACE_TRACE ("ACE_OS::thr_setspecific");
 #   if defined (ACE_HAS_THREADS)
 #     if defined (ACE_HAS_PTHREADS)
 #       if defined (ACE_HAS_FSU_PTHREADS)
@@ -3492,7 +3497,7 @@ ACE_OS::thr_setspecific (ACE_OS_thread_key_t key, void *data)
 int
 ACE_OS::thr_setspecific (ACE_thread_key_t key, void *data)
 {
-// ACE_TRACE ("ACE_OS::thr_setspecific");
+  // ACE_TRACE ("ACE_OS::thr_setspecific");
 # if defined (ACE_HAS_THREADS)
 #   if defined (ACE_HAS_TSS_EMULATION)
     ACE_KEY_INDEX (key_index, key);
@@ -3551,7 +3556,7 @@ ACE_OS::thr_setspecific (ACE_thread_key_t key, void *data)
 int
 ACE_OS::thr_keyfree (ACE_thread_key_t key)
 {
-// ACE_TRACE ("ACE_OS::thr_keyfree");
+ACE_TRACE ("ACE_OS::thr_keyfree");
 # if defined (ACE_HAS_THREADS)
 #   if defined (ACE_HAS_TSS_EMULATION)
     return ACE_TSS_Cleanup::instance ()->remove (key);
@@ -3590,7 +3595,7 @@ ACE_OS::thr_keycreate (ACE_OS_thread_key_t *key,
 #   endif /* ACE_HAS_THR_C_DEST */
                        void *inst)
 {
-// ACE_TRACE ("ACE_OS::thr_keycreate");
+    // ACE_TRACE ("ACE_OS::thr_keycreate");
 #   if defined (ACE_HAS_THREADS)
 #     if defined (ACE_HAS_PTHREADS)
     ACE_UNUSED_ARG (inst);
@@ -3644,7 +3649,7 @@ ACE_OS::thr_keycreate (ACE_thread_key_t *key,
 # endif /* ACE_HAS_THR_C_DEST */
                        void *inst)
 {
-// ACE_TRACE ("ACE_OS::thr_keycreate");
+  // ACE_TRACE ("ACE_OS::thr_keycreate");
 # if defined (ACE_HAS_THREADS)
 #   if defined (ACE_HAS_TSS_EMULATION)
     if (ACE_TSS_Emulation::next_key (*key) == 0)
@@ -4038,7 +4043,7 @@ ACE_OS::read_n (ACE_HANDLE handle,
                 void *buf,
                 size_t len)
 {
-  // ACE_TRACE ("ACE_OS::read_n");
+  ACE_TRACE ("ACE_OS::read_n");
 
   size_t bytes_read;
   ssize_t n;
@@ -4066,7 +4071,7 @@ ACE_OS::read_n (ACE_HANDLE handle,
 ssize_t
 ACE_OS::send_n (ACE_HANDLE handle, const void *buf, size_t len)
 {
-  // ACE_TRACE ("ACE_OS::send_n");
+  ACE_TRACE ("ACE_OS::send_n");
   size_t bytes_written;
   ssize_t n;
 
@@ -4103,7 +4108,7 @@ ACE_OS::write_n (ACE_HANDLE handle,
                  const void *buf,
                  size_t len)
 {
-  // ACE_TRACE ("ACE_OS::write_n");
+  ACE_TRACE ("ACE_OS::write_n");
 
   size_t bytes_written;
   ssize_t n;
@@ -4132,7 +4137,7 @@ ACE_OS::write_n (ACE_HANDLE handle,
 extern "C" int
 writev (ACE_HANDLE handle, ACE_WRITEV_TYPE iov[], int n)
 {
-  // ACE_TRACE ("::writev");
+  ACE_TRACE ("::writev");
 
   size_t length = 0;
   int i;
@@ -4178,7 +4183,7 @@ readv (ACE_HANDLE handle,
        ACE_READV_TYPE *iov,
        int n)
 {
-// ACE_TRACE ("readv");
+ACE_TRACE ("readv");
 
   ssize_t length = 0;
   int i;
@@ -4242,7 +4247,7 @@ ftruncate (ACE_HANDLE handle, long len)
 char *
 ACE_OS::mktemp (char *s)
 {
-  // ACE_TRACE ("ACE_OS::mktemp");
+  ACE_TRACE ("ACE_OS::mktemp");
   if (s == 0)
     // check for null template string failed!
     return 0;
@@ -4264,11 +4269,12 @@ ACE_OS::mktemp (char *s)
           // condition if multiple threads in a process use the same
           // template).  This appears to match the behavior of the
           // SunOS 5.5 mktemp().
-          ACE_OS::sprintf (xxxxxx, "%05d%c", getpid (), unique_letter);
+          ACE_OS::sprintf (xxxxxx, "%05d%c", ACE_OS::getpid (), unique_letter);
           while (ACE_OS::stat (s, &sb) >= 0)
             {
               if (++unique_letter <= 'z')
-                ACE_OS::sprintf (xxxxxx, "%05d%c", getpid (), unique_letter);
+                ACE_OS::sprintf (xxxxxx, "%05d%c", ACE_OS::getpid (),
+                                 unique_letter);
               else
                 {
                   // maximum of 26 unique files per template, per process
@@ -4434,7 +4440,7 @@ siginfo_t::siginfo_t (ACE_HANDLE *handles)
 pid_t
 ACE_OS::fork (const char *program_name)
 {
-  // ACE_TRACE ("ACE_OS::fork");
+  ACE_TRACE ("ACE_OS::fork");
 # if defined (ACE_LACKS_FORK)
   ACE_UNUSED_ARG (program_name);
   ACE_NOTSUP_RETURN (pid_t (-1));
@@ -4793,7 +4799,7 @@ ACE_OS::open (const char *filename,
               int perms,
               LPSECURITY_ATTRIBUTES sa)
 {
-  // ACE_TRACE ("ACE_OS::open");
+  ACE_TRACE ("ACE_OS::open");
 #if defined (ACE_HAS_WINCE)
   ACE_UNUSED_ARG (filename);
   ACE_UNUSED_ARG (mode);
@@ -4912,7 +4918,7 @@ ACE_OS::open (const wchar_t *filename,
               LPSECURITY_ATTRIBUTES sa)
 {
   ACE_UNUSED_ARG (perms);
-  // ACE_TRACE ("ACE_OS::open");
+  ACE_TRACE ("ACE_OS::open");
   // Warning: This function ignores _O_APPEND
   DWORD access = GENERIC_READ;
   if (ACE_BIT_ENABLED (mode, O_WRONLY))
@@ -5180,7 +5186,7 @@ ACE_OS::ctime_r (const time_t *clock,
 time_t
 ACE_OS::mktime (struct tm *t)
 {
-  // ACE_TRACE ("ACE_OS::mktime");
+  ACE_TRACE ("ACE_OS::mktime");
 #   if defined (ACE_PSOS) && ! defined (ACE_PSOS_HAS_TIME)
   ACE_UNUSED_ARG (t);
   ACE_NOTSUP_RETURN (-1);
@@ -5269,7 +5275,7 @@ ACE_OS::rwlock_init (ACE_rwlock_t *rw,
 int
 ACE_OS::cond_destroy (ACE_cond_t *cv)
 {
-  // ACE_TRACE ("ACE_OS::cond_destroy");
+  ACE_TRACE ("ACE_OS::cond_destroy");
 # if defined (ACE_HAS_THREADS)
 #   if defined (ACE_HAS_WTHREADS)
   ACE_OS::event_destroy (&cv->waiters_done_);
@@ -5287,7 +5293,7 @@ ACE_OS::cond_destroy (ACE_cond_t *cv)
 int
 ACE_OS::cond_init (ACE_cond_t *cv, int type, LPCTSTR name, void *arg)
 {
-// ACE_TRACE ("ACE_OS::cond_init");
+ACE_TRACE ("ACE_OS::cond_init");
 # if defined (ACE_HAS_THREADS)
   cv->waiters_ = 0;
   cv->was_broadcast_ = 0;
@@ -5316,7 +5322,7 @@ ACE_OS::cond_init (ACE_cond_t *cv, int type, LPCTSTR name, void *arg)
 int
 ACE_OS::cond_signal (ACE_cond_t *cv)
 {
-// ACE_TRACE ("ACE_OS::cond_signal");
+ACE_TRACE ("ACE_OS::cond_signal");
 # if defined (ACE_HAS_THREADS)
   // If there aren't any waiters, then this is a no-op.  Note that
   // this function *must* be called with the <external_mutex> held
@@ -5341,7 +5347,7 @@ ACE_OS::cond_signal (ACE_cond_t *cv)
 int
 ACE_OS::cond_broadcast (ACE_cond_t *cv)
 {
-// ACE_TRACE ("ACE_OS::cond_broadcast");
+ACE_TRACE ("ACE_OS::cond_broadcast");
 # if defined (ACE_HAS_THREADS)
   // The <external_mutex> must be locked before this call is made.
 
@@ -5389,7 +5395,7 @@ int
 ACE_OS::cond_wait (ACE_cond_t *cv,
                    ACE_mutex_t *external_mutex)
 {
-  // ACE_TRACE ("ACE_OS::cond_wait");
+  ACE_TRACE ("ACE_OS::cond_wait");
 # if defined (ACE_HAS_THREADS)
   // Prevent race conditions on the <waiters_> count.
   ACE_OS::thread_mutex_lock (&cv->waiters_lock_);
@@ -5484,7 +5490,7 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
                         ACE_mutex_t *external_mutex,
                         ACE_Time_Value *timeout)
 {
-  // ACE_TRACE ("ACE_OS::cond_timedwait");
+  ACE_TRACE ("ACE_OS::cond_timedwait");
 # if defined (ACE_HAS_THREADS)
   // Handle the easy case first.
   if (timeout == 0)
@@ -5664,7 +5670,7 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
                         ACE_thread_mutex_t *external_mutex,
                         ACE_Time_Value *timeout)
 {
-  // ACE_TRACE ("ACE_OS::cond_timedwait");
+  ACE_TRACE ("ACE_OS::cond_timedwait");
 #   if defined (ACE_HAS_THREADS)
   // Handle the easy case first.
   if (timeout == 0)
@@ -5753,7 +5759,7 @@ int
 ACE_OS::cond_wait (ACE_cond_t *cv,
                    ACE_thread_mutex_t *external_mutex)
 {
-  // ACE_TRACE ("ACE_OS::cond_wait");
+  ACE_TRACE ("ACE_OS::cond_wait");
 #   if defined (ACE_HAS_THREADS)
   ACE_OS::thread_mutex_lock (&cv->waiters_lock_);
   cv->waiters_++;
@@ -5820,7 +5826,7 @@ ACE_OS::cond_wait (ACE_cond_t *cv,
 void
 ACE_OS::exit (int status)
 {
-  // ACE_TRACE ("ACE_OS::exit");
+  ACE_TRACE ("ACE_OS::exit");
 
 #if defined (ACE_HAS_NONSTATIC_OBJECT_MANAGER) && !defined (ACE_HAS_WINCE) && !defined (ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER)
   // Shut down the ACE_Object_Manager, if it had registered its exit_hook.
