@@ -30,11 +30,13 @@ template <ACE_SYNCH_DECL> class ACE_Message_Queue_Reverse_Iterator;
 /**
  * @class ACE_Message_Queue_Base
  *
- * @brief Workaround HP/C++ compiler bug with enums in templates.
- *
- * The ever lamest HP/C++ compiler seems to fail if enums are
- * defined inside a template, hence we have to move them into a
- * base class.
+ * @brief Base class for <ACE_Message_Queue>, which is the central
+ * queueing facility for messages in the ACE framework.
+ * 
+ * For all the <ACE_Time_Value> pointer parameters the caller will
+ * block until action is possible if <timeout> == 0.  Otherwise, it
+ * will wait until the absolute time specified in *<timeout>
+ * elapses.  
  */
 class ACE_Export ACE_Message_Queue_Base
 {
@@ -62,14 +64,6 @@ public:
 
   // = Enqueue and dequeue methods.
 
-  // For the following enqueue and dequeue methods, the caller will
-  // block until action is possible if <timeout> == 0.  Otherwise, it
-  // will wait until the absolute time specified in *<timeout>
-  // elapses.  These calls will -1 when queue is closed, deactivated
-  // (in which case <errno> == <ESHUTDOWN>), when a signal occurs (in
-  // which case <errno> == <EINTR>, or if the time specified in
-  // timeout elapses (in which case <errno> == <EWOULDBLOCK>).
-
   /**
    * Retrieve the first <ACE_Message_Block> without removing it.  Note
    * that <timeout> uses <{absolute}> time rather than <{relative}>
@@ -85,10 +79,11 @@ public:
   /**
    * Enqueue a <ACE_Message_Block *> into the tail of the queue.
    * Returns number of items in queue if the call succeeds or -1
-   * otherwise.
-   * Enqueue a <ACE_Message_Block *> into the tail of the queue.
-   * Returns number of items in queue if the call succeeds or -1
-   * otherwise.
+   * otherwise.  These calls return -1 when queue is closed,
+   * deactivated (in which case <errno> == <ESHUTDOWN>), when a signal
+   * occurs (in which case <errno> == <EINTR>, or if the time
+   * specified in timeout elapses (in which case <errno> ==
+   * <EWOULDBLOCK>).
    */
   virtual int enqueue_tail (ACE_Message_Block *new_item,
                             ACE_Time_Value *timeout = 0) = 0;
@@ -98,10 +93,11 @@ public:
   /**
    * Dequeue and return the <ACE_Message_Block *> at the head of the
    * queue.  Returns number of items in queue if the call succeeds or
-   * -1 otherwise.
-   * Dequeue and return the <ACE_Message_Block *> at the head of the
-   * queue.  Returns number of items in queue if the call succeeds or
-   * -1 otherwise.
+   * -1 otherwise.  These calls return -1 when queue is closed,
+   * deactivated (in which case <errno> == <ESHUTDOWN>), when a signal
+   * occurs (in which case <errno> == <EINTR>, or if the time
+   * specified in timeout elapses (in which case <errno> ==
+   * <EWOULDBLOCK>).  
    */
   virtual int dequeue_head (ACE_Message_Block *&first_item,
                             ACE_Time_Value *timeout = 0) = 0;
@@ -115,26 +111,24 @@ public:
   virtual int is_empty (void) = 0;
 
   // = Queue statistic methods.
-  /**
-   * Number of total bytes on the queue, i.e., sum of the message
-   * block sizes.
-   * Number of total length on the queue, i.e., sum of the message
-   * block lengths.
-   * Number of total messages on the queue.
-   */
+
+  /// Number of total bytes on the queue, i.e., sum of the message
+  /// block sizes.
   virtual size_t message_bytes (void) = 0;
+
+  /// Number of total length on the queue, i.e., sum of the message
+  /// block lengths.
   virtual size_t message_length (void) = 0;
+
+  /// Number of total messages on the queue.
   virtual size_t message_count (void) = 0;
 
-  // = Manual changes to these stats (used when queued message blocks
-  // change size or lengths).
-  /**
-   * New value of the number of total bytes on the queue, i.e., sum of
-   * the message block sizes.
-   * New value of the number of total length on the queue, i.e., sum
-   * of the message block lengths.
-   */
+  /// New value of the number of total bytes on the queue, i.e., 
+  /// sum of the message block sizes.
   virtual void message_bytes (size_t new_size) = 0;
+
+  /// New value of the number of total length on the queue, i.e., 
+  /// sum of the message block lengths.
   virtual void message_length (size_t new_length) = 0;
 
   // = Activation control methods.
