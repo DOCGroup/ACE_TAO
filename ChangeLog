@@ -1,3 +1,10 @@
+Mon Aug 23 17:53:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_hpux_aCC.GNU:
+          Added support for itanium on HPUX 11iv2 (11.23). Different options
+          have to be passed when on itanium, so when version 11.23 is detected,
+          set itanium to 1 and dependent on that set different compiler options.
+
 Mon Aug 23 16:58:18 UTC 2004  Don Hinton  <don.hinton@vanderbilt.edu>
 
         * include/makeinclude/rules.local.GNU:
