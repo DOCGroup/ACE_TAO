@@ -148,6 +148,10 @@ CORBA_TypeCode::CORBA_TypeCode (CORBA::TCKind kind)
     case CORBA::tk_any:
       this->private_state_->tc_size_ = sizeof (CORBA::Any);
       break;
+    default:
+      // we should never be here
+      this->private_state_->tc_size_known_ = 0;
+      break;
     }
 }
 
