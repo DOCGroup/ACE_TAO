@@ -4,9 +4,8 @@
 // SSL_SOCK_Connector.i
 
 ASYS_INLINE
-ACE_SSL_SOCK_Connector::ACE_SSL_SOCK_Connector (ACE_Reactor *reactor)
-  : connector_ (),
-    reactor_ (reactor)
+ACE_SSL_SOCK_Connector::ACE_SSL_SOCK_Connector (void)
+  : connector_ ()
 {
   ACE_TRACE ("ACE_SSL_SOCK_Connector::ACE_SSL_SOCK_Connector");
 }
@@ -22,19 +21,5 @@ ASYS_INLINE void
 ACE_SSL_SOCK_Connector::dump (void) const
 {
   ACE_TRACE ("ACE_SSL_SOCK_Connector::dump");
-}
-
-ASYS_INLINE void
-ACE_SSL_SOCK_Connector::reactor (ACE_Reactor *r)
-{
-  // NOTE: Be careful not to change the Reactor in the middle of a
-  //       non-blocking connect().
-
-  this->reactor_ = r;
-}
-
-ASYS_INLINE ACE_Reactor *
-ACE_SSL_SOCK_Connector::reactor (void) const
-{
-  return this->reactor_;
+  this->connector_.dump ();
 }

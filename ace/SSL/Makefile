@@ -20,8 +20,6 @@ FILES = \
   SSL_SOCK_Acceptor \
   SSL_SOCK_Connector \
   SSL_SOCK_Stream \
-  SSL_Accept_Handler \
-  SSL_Connect_Handler \
   SSL_Asynch_Stream \
   SSL_Asynch_BIO
 

@@ -13,8 +13,6 @@ OBJFILES = \
 	$(OBJDIR)\SSL_SOCK_Acceptor.obj	\
 	$(OBJDIR)\SSL_SOCK_Connector.obj \
 	$(OBJDIR)\SSL_SOCK_Stream.obj \
-	$(OBJDIR)\SSL_Accept_Handler.obj \
-	$(OBJDIR)\SSL_Connect_Handler.obj \
 	$(OBJDIR)\SSL_Asynch_Stream.obj \
 	$(OBJDIR)\SSL_Asynch_BIO.obj
 
