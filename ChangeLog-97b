@@ -10,6 +10,10 @@ Mon Oct 20 07:49:54 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* Makefile (TIMESTAMP): moved chmod after cvs commit.
 
+	* include/makeinclude/platform_sunos{4,5}_sunc++*.GNU: don't
+	  create Templates.DB/Modules.DB, because that should have been
+	  Module.DB, and it's not needed anyways.
+
 Mon Oct 20 06:21:24 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/OS.h: Added a new special case for _KCC so that its
