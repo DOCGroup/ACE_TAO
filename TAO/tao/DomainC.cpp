@@ -2128,6 +2128,7 @@ operator>>= (
       );
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<CORBA::DomainManager>::to_object (
     CORBA::Object_ptr &_tao_elem
@@ -2191,6 +2192,7 @@ operator>>= (
       );
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<CORBA::ConstructionPolicy>::to_object (
     CORBA::Object_ptr &_tao_elem

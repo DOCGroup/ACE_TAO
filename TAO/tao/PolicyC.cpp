@@ -3002,6 +3002,7 @@ operator>>= (
       );
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<CORBA::Policy>::to_object (
     CORBA::Object_ptr &_tao_elem
@@ -3065,6 +3066,7 @@ operator>>= (
       );
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<CORBA::PolicyManager>::to_object (
     CORBA::Object_ptr &_tao_elem
@@ -3128,6 +3130,7 @@ operator>>= (
       );
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<CORBA::PolicyCurrent>::to_object (
     CORBA::Object_ptr &_tao_elem
@@ -3249,12 +3252,14 @@ CORBA::Boolean operator>> (
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:60
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<CORBA::PolicyManager>::marshal_value (TAO_OutputCDR &)
 {
   return 0;
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<CORBA::PolicyManager>::demarshal_value (TAO_InputCDR &)
 {
@@ -3264,12 +3269,14 @@ TAO::Any_Impl_T<CORBA::PolicyManager>::demarshal_value (TAO_InputCDR &)
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:60
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<CORBA::PolicyCurrent>::marshal_value (TAO_OutputCDR &)
 {
   return 0;
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<CORBA::PolicyCurrent>::demarshal_value (TAO_InputCDR &)
 {

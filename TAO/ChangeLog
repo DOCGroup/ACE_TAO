@@ -1,3 +1,44 @@
+Wed Mar 12 22:25:46 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_array/cdr_op_ci.cpp:
+        * TAO_IDL/be/be_visitor_exception/cdr_op_ci.cpp:
+        * TAO_IDL/be/be_visitor_interface/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_structure/cdr_op_ci.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/any_op_cs.cpp:
+
+	  Added 'template<>' declaration for generated
+	  template specializations. This is required by
+	  ANSI, but still optional with many compilers.
+
+        * tao/CurrentC.cpp:
+        * tao/DomainC.cpp:
+        * tao/Exception.cpp:
+        * tao/IOPC.cpp:
+        * tao/ObjectReferenceTemplateC.cpp:
+        * tao/PolicyC.cpp:
+        * tao/PortableInterceptorC.cpp:
+        * tao/tao/dsp
+        * tao/TAOC.cpp:
+        * tao/IFR_Client/IFR_BaseC.cpp:
+        * tao/IFR_Client/IFR_BasicC.cpp:
+        * tao/IFR_Client/IFR_ComponentsC.cpp:
+        * tao/IFR_Client/IFR_ExtendedC.cpp:
+        * tao/IORManipulation/IORC.cpp:
+        * tao/Messaging/MessagingC.cpp:
+        * tao/Messaging/Messaging_No_ImplC.cpp:
+        * tao/Messaging/Messaging_RT_PolicyC.cpp:
+        * tao/Messaging/Messaging_SyncScope_PolicyC.cpp:
+        * tao/Messaging/TAO_ExtC.cpp:
+        * tao/PortableServer/ImR_LocatorC.cpp:
+        * tao/PortableServer/PortableServerC.cpp:
+        * tao/RTCORBA/RTCORBAC.cpp:
+        * tao/RTPortableServer/RTPortableServerC.cpp:
+        * tao/TypeCodeFactory/TypeCodeFactoryC.cpp:
+
+	  Similar additions to hand-crafted files.
+
 Wed Mar 12 17:19:45 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Any_T.cpp:

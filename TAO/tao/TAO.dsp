@@ -2444,60 +2444,17 @@ SOURCE=.\tao.rc
 # Begin Source File
 
 SOURCE=.\Any_T.cpp
-
-!IF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
-
-# ADD CPP /GR
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
-
-# ADD CPP /GR
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
-
 # PROP Exclude_From_Build 1
-# ADD CPP /GR
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-# ADD CPP /GR
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Codeset_Translator_Factory_T.cpp
-
-!IF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
-
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\Sequence_T.cpp
-
-!IF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
-
 # PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ENDIF 
-
 # End Source File
 # End Group
 # End Target

@@ -21948,6 +21948,7 @@ operator>>= (
       );
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<CORBA::ComponentIR::EventDef>::to_object (
     CORBA::Object_ptr &_tao_elem
@@ -22011,6 +22012,7 @@ operator>>= (
       );
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<CORBA::ComponentIR::Container>::to_object (
     CORBA::Object_ptr &_tao_elem
@@ -22074,6 +22076,7 @@ operator>>= (
       );
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<CORBA::ComponentIR::ModuleDef>::to_object (
     CORBA::Object_ptr &_tao_elem
@@ -22137,6 +22140,7 @@ operator>>= (
       );
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<CORBA::ComponentIR::Repository>::to_object (
     CORBA::Object_ptr &_tao_elem
@@ -22200,6 +22204,7 @@ operator>>= (
       );
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<CORBA::ComponentIR::ProvidesDef>::to_object (
     CORBA::Object_ptr &_tao_elem
@@ -22328,6 +22333,7 @@ operator>>= (
       );
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<CORBA::ComponentIR::UsesDef>::to_object (
     CORBA::Object_ptr &_tao_elem
@@ -22456,6 +22462,7 @@ operator>>= (
       );
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<CORBA::ComponentIR::EventPortDef>::to_object (
     CORBA::Object_ptr &_tao_elem
@@ -22584,6 +22591,7 @@ operator>>= (
       );
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<CORBA::ComponentIR::EmitsDef>::to_object (
     CORBA::Object_ptr &_tao_elem
@@ -22647,6 +22655,7 @@ operator>>= (
       );
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<CORBA::ComponentIR::PublishesDef>::to_object (
     CORBA::Object_ptr &_tao_elem
@@ -22710,6 +22719,7 @@ operator>>= (
       );
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<CORBA::ComponentIR::ConsumesDef>::to_object (
     CORBA::Object_ptr &_tao_elem
@@ -22773,6 +22783,7 @@ operator>>= (
       );
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<CORBA::ComponentIR::ComponentDef>::to_object (
     CORBA::Object_ptr &_tao_elem
@@ -23075,6 +23086,7 @@ operator>>= (
       );
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<CORBA::ComponentIR::FactoryDef>::to_object (
     CORBA::Object_ptr &_tao_elem
@@ -23138,6 +23150,7 @@ operator>>= (
       );
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<CORBA::ComponentIR::FinderDef>::to_object (
     CORBA::Object_ptr &_tao_elem
@@ -23201,6 +23214,7 @@ operator>>= (
       );
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<CORBA::ComponentIR::HomeDef>::to_object (
     CORBA::Object_ptr &_tao_elem

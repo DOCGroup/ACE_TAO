@@ -42444,6 +42444,7 @@ operator>>= (
       );
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<CORBA::Repository>::to_object (
     CORBA::Object_ptr &_tao_elem
@@ -42507,6 +42508,7 @@ operator>>= (
       );
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<CORBA::ModuleDef>::to_object (
     CORBA::Object_ptr &_tao_elem
@@ -42635,6 +42637,7 @@ operator>>= (
       );
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<CORBA::ConstantDef>::to_object (
     CORBA::Object_ptr &_tao_elem
@@ -42763,6 +42766,7 @@ operator>>= (
       );
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<CORBA::StructDef>::to_object (
     CORBA::Object_ptr &_tao_elem
@@ -42826,6 +42830,7 @@ operator>>= (
       );
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<CORBA::UnionDef>::to_object (
     CORBA::Object_ptr &_tao_elem
@@ -42889,6 +42894,7 @@ operator>>= (
       );
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<CORBA::EnumDef>::to_object (
     CORBA::Object_ptr &_tao_elem
@@ -42952,6 +42958,7 @@ operator>>= (
       );
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<CORBA::AliasDef>::to_object (
     CORBA::Object_ptr &_tao_elem
@@ -43015,6 +43022,7 @@ operator>>= (
       );
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<CORBA::NativeDef>::to_object (
     CORBA::Object_ptr &_tao_elem
@@ -43078,6 +43086,7 @@ operator>>= (
       );
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<CORBA::PrimitiveDef>::to_object (
     CORBA::Object_ptr &_tao_elem
@@ -43141,6 +43150,7 @@ operator>>= (
       );
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<CORBA::StringDef>::to_object (
     CORBA::Object_ptr &_tao_elem
@@ -43204,6 +43214,7 @@ operator>>= (
       );
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<CORBA::WstringDef>::to_object (
     CORBA::Object_ptr &_tao_elem
@@ -43267,6 +43278,7 @@ operator>>= (
       );
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<CORBA::SequenceDef>::to_object (
     CORBA::Object_ptr &_tao_elem
@@ -43330,6 +43342,7 @@ operator>>= (
       );
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<CORBA::ArrayDef>::to_object (
     CORBA::Object_ptr &_tao_elem
@@ -43393,6 +43406,7 @@ operator>>= (
       );
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<CORBA::ExceptionDef>::to_object (
     CORBA::Object_ptr &_tao_elem
@@ -43549,6 +43563,7 @@ operator>>= (
       );
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<CORBA::AttributeDef>::to_object (
     CORBA::Object_ptr &_tao_elem
@@ -43742,6 +43757,7 @@ operator>>= (
       );
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<CORBA::ExtAttributeDef>::to_object (
     CORBA::Object_ptr &_tao_elem
@@ -44021,6 +44037,7 @@ operator>>= (
       );
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<CORBA::OperationDef>::to_object (
     CORBA::Object_ptr &_tao_elem
@@ -44684,6 +44701,7 @@ operator>>= (
       );
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<CORBA::ExtInterfaceDef>::to_object (
     CORBA::Object_ptr &_tao_elem
@@ -44747,6 +44765,7 @@ operator>>= (
       );
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<CORBA::AbstractInterfaceDef>::to_object (
     CORBA::Object_ptr &_tao_elem
@@ -44810,6 +44829,7 @@ operator>>= (
       );
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<CORBA::ExtAbstractInterfaceDef>::to_object (
     CORBA::Object_ptr &_tao_elem
@@ -44873,6 +44893,7 @@ operator>>= (
       );
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<CORBA::LocalInterfaceDef>::to_object (
     CORBA::Object_ptr &_tao_elem
@@ -44936,6 +44957,7 @@ operator>>= (
       );
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<CORBA::ExtLocalInterfaceDef>::to_object (
     CORBA::Object_ptr &_tao_elem
