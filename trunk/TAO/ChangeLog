@@ -1,3 +1,23 @@
+Thu Apr 22 20:02:19 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/TypeCodeFactory/TypeCodeFactory_i.cpp:
+        * tao/TypeCodeFactory/TypeCodeFactory_i.h:
+        
+          In create_union_tc(), replaced the call to insert_label_value()
+          with a call to marshal_value() on the Any_Impl contained in
+          the Any label member of the CORBA::UnionMember element of
+          the sequence passed as an argument to create_union_tc().
+          The insert_label_value() method called any->value(), which is
+          not implemented for the basic types legal for union discriminators.
+          Also removed insert_label_value() since it is not used
+          anywhere else. Thanks to Ramiro Peñataro <ramiro.penataro@iac.es>
+          for reporting the problem, which cropped up when trying to
+          create an operation in the Interface Repository with a complex
+          return type containing a union. In a routine check for the
+          error of a oneway operation with a non-void return type, a
+          call was made to the TypeCodeFactory to get the type code of
+          the operation's return type, and the call was failing.
+
 Thu Apr 22 18:40:05 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Load_Average_Monitor.cpp:
