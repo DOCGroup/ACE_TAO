@@ -65,7 +65,9 @@ recursive_worker (size_t nesting_level,
 static void *
 worker (void *arg)
 {
-  ACE_Recursive_Thread_Mutex *rm = (ACE_Recursive_Thread_Mutex *) arg;
+  ACE_Recursive_Thread_Mutex *rm =
+    ACE_reinterpret_cast (ACE_Recursive_Thread_Mutex *, 
+                          arg)
   recursive_worker (0, rm);
   return 0;
 }
@@ -80,8 +82,8 @@ main (int, ASYS_TCHAR *[])
 #if defined (ACE_HAS_THREADS)
   ACE_Recursive_Thread_Mutex rm;
   ACE_Thread_Manager::instance ()->spawn_n (n_threads,
-                                           ACE_THR_FUNC (worker),
-                                           (void *) &rm);
+                                            ACE_THR_FUNC (worker),
+                                            (void *) &rm);
   ACE_Thread_Manager::instance ()->wait ();
 #else
   ACE_ERROR ((LM_ERROR,
