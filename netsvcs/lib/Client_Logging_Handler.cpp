@@ -301,7 +301,7 @@ ACE_Client_Logging_Acceptor::info (char **strp, size_t length) const
 ACE_Client_Logging_Acceptor::ACE_Client_Logging_Acceptor (void)
   : server_host_ (ACE_DEFAULT_SERVER_HOST),
     server_port_ (ACE_DEFAULT_LOGGING_SERVER_PORT),
-    logger_key_ (DEFAULT_LOGGER_KEY),
+    logger_key_ (ACE_DEFAULT_LOGGER_KEY),
     handler_ (0)
 {
 }
