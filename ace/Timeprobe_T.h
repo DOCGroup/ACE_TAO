@@ -26,7 +26,7 @@
 #include "ace/Unbounded_Set.h"
 
 /**
- * @class ACE_Timeprobe
+ * @class ACE_Timeprobe_Ex
  *
  * @brief This class is used to instrument code.  This is accomplished
  * by inserting time probes at different location in the code.
@@ -74,19 +74,19 @@ public:
   typedef ACE_Unbounded_Set<ACE_Event_Descriptions>
           EVENT_DESCRIPTIONS;
 
-  /// Create Timeprobes with <size> slots
+  /// Create Timeprobes with @a size slots
   ACE_Timeprobe_Ex (u_long size = ACE_DEFAULT_TIMEPROBE_TABLE_SIZE);
 
-  /// Create Timeprobes with <size> slots
+  /// Create Timeprobes with @a size slots
   ACE_Timeprobe_Ex (ALLOCATOR *allocator,
                  u_long size = ACE_DEFAULT_TIMEPROBE_TABLE_SIZE);
   /// Destructor.
   ~ACE_Timeprobe_Ex (void);
 
-  /// Record a time. <event> is used to describe this time probe.
+  /// Record a time. @a event is used to describe this time probe.
   void timeprobe (u_long event);
 
-  /// Record a time. <id> is used to describe this time probe.
+  /// Record a time. @a id is used to describe this time probe.
   void timeprobe (const char *id);
 
   /// Record event descriptions.
@@ -157,7 +157,7 @@ protected:
   /// Current size of timestamp table
   u_long current_size_;
 
-  /// flag indicating the report buffer has filled up, and is now
+  /// Flag indicating the report buffer has filled up, and is now
   /// acting as a ring-buffer using modulus arithmetic: this saves the
   /// max_size_ most recent time stamps and loses earlier ones until
   /// drained.
