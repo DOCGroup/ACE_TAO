@@ -4,6 +4,11 @@
 #define ACE_BUILD_DLL
 #include "ace/Service_Types.h"
 #include "ace/Stream_Modules.h"
+#include "ace/Stream.h"
+
+typedef ACE_Stream<ACE_SYNCH> MT_Stream;
+typedef ACE_Module<ACE_SYNCH> MT_Module;
+typedef ACE_Task<ACE_SYNCH> MT_Task;
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Service_Types.i"
@@ -56,10 +61,10 @@ ACE_Service_Type_Impl::fini (void) const
   return 0;
 }
 
-ACE_Service_Object_Type::ACE_Service_Object_Type (ACE_Service_Object *so,
+ACE_Service_Object_Type::ACE_Service_Object_Type (const void *so,
 						  const char *s_name,
 						  unsigned int f)
-  : ACE_Service_Type_Impl ((const void *) so, s_name, f)
+  : ACE_Service_Type_Impl (so, s_name, f)
 {
   ACE_TRACE ("ACE_Service_Object_Type::ACE_Service_Object_Type");
 }
@@ -85,10 +90,10 @@ ACE_Module_Type::dump (void) const
   ACE_TRACE ("ACE_Module_Type::dump");
 }
 
-ACE_Module_Type::ACE_Module_Type (MT_Module *m,
+ACE_Module_Type::ACE_Module_Type (const void *m,
 				  const char *m_name,
 				  u_int f)
-  : ACE_Service_Type_Impl ((const void *) m, m_name, f)
+  : ACE_Service_Type_Impl (m, m_name, f)
 {
   ACE_TRACE ("ACE_Module_Type::ACE_Module_Type");
 }
@@ -229,10 +234,10 @@ ACE_Stream_Type::resume (void) const
   return 0;
 }
 
-ACE_Stream_Type::ACE_Stream_Type (MT_Stream *s,
+ACE_Stream_Type::ACE_Stream_Type (const void *s,
 				  const char *s_name,
 				  unsigned int f)
-  : ACE_Service_Type_Impl ((const void *) s, s_name, f),
+  : ACE_Service_Type_Impl (s, s_name, f),
     head_ (0)
 {
   ACE_TRACE ("ACE_Stream_Type::ACE_Stream_Type");

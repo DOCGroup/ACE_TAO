@@ -363,8 +363,10 @@ class ACE_Async_Timer_Queue_Adapter : public ACE_Event_Handler
 public:
   typedef TQ TIMER_QUEUE;
 
-  ACE_Async_Timer_Queue_Adapter (void);
-  // Register the SIGALRM handler.
+  ACE_Async_Timer_Queue_Adapter (ACE_Sig_Set *mask = 0);
+  // Register the SIGALRM handler.  If <mask> == 0 then block all
+  // signals when <SIGALRM> is run.  Otherwise, just block the signals
+  // indicated in <mask>.
 
   long schedule (ACE_Event_Handler *type,
 		 const void *act, 
@@ -374,23 +376,27 @@ public:
   // <ACE_Timer_List>.  However, this timer gets dispatched via a
   // signal, rather than by a user calling <expire>.
 
-  int cancel (long timer_id, const void **);
-  // Cancel the <timer_id>.
+  int cancel (long timer_id, const void **act = 0);
+  // Cancel the <timer_id> and pass back the <act> if an address is
+  // passed in.
 
   TQ &timer_queue (void);
   // Access the underlying <TIMER_QUEUE>.
 
 private:
   virtual int handle_signal (int signum, siginfo_t *, ucontext_t *);
-  // Called back by SIGALRM handler.
+  // Called back by <SIGALRM> handler.
 
   ACE_Sig_Handler sig_handler_;
-  // Handler for the SIGALRM signal, so that we can access our state
+  // Handler for the <SIGALRM> signal, so that we can access our state
   // without requiring global variables.
 
   TQ timer_queue_;
   // Implementation of the timer queue (e.g., <ACE_Timer_List>,
   // <ACE_Timer_Heap>, etc.).
+
+  ACE_Sig_Set mask_;
+  // Mask of signals to be blocked when we're servicing <SIGALRM>.
 };
 
 #if defined (__ACE_INLINE__)

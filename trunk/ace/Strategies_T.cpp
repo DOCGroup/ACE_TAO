@@ -150,12 +150,14 @@ template <class SVC_HANDLER> int
 ACE_DLL_Strategy<SVC_HANDLER>::make_svc_handler (SVC_HANDLER *&sh)
 {
   ACE_TRACE ("ACE_DLL_Strategy<SVC_HANDLER>::make_svc_handler");
+
   // Open the shared library.
   ACE_SHLIB_HANDLE handle = ACE_OS::dlopen (this->shared_library_);
 
   // Extract the factory function.
-  SVC_HANDLER *(*factory)(void) = (SVC_HANDLER *(*)(void)) ACE_OS::dlsym 
-    (handle, this->factory_function_);
+  SVC_HANDLER *(*factory)(void) =
+    (SVC_HANDLER *(*)(void)) ACE_OS::dlsym (handle,
+					    this->factory_function_);
   
   // Call the factory function to obtain the new SVC_Handler (should
   // use RTTI here when it becomes available...)
@@ -168,7 +170,7 @@ ACE_DLL_Strategy<SVC_HANDLER>::make_svc_handler (SVC_HANDLER *&sh)
       // Create an ACE_Service_Type containing the SVC_Handler and
       // insert into this->svc_rep_;
 
-      ACE_Service_Type_Impl stp =
+      ACE_Service_Type_Impl *stp =
 	new ACE_Service_Object_Type (svc_handler, this->svc_name_);
 
       if (stp == 0)

@@ -5,19 +5,36 @@
 
 ACE_INLINE
 ACE_Sig_Set::ACE_Sig_Set (sigset_t *ss)
-  : sigset_ (*ss) // Structure assignment
 {
   ACE_TRACE ("ACE_Sig_Set::ACE_Sig_Set");
+
+  if (ss == 0)
+    ACE_OS::sigfillset (&this->sigset_);
+  else
+    // Structure assignment.
+    this->sigset_ = *ss;
 }
 
 ACE_INLINE
 ACE_Sig_Set::ACE_Sig_Set (int fill)
 {
   ACE_TRACE ("ACE_Sig_Set::ACE_Sig_Set");
+
   if (fill)
     ACE_OS::sigfillset (&this->sigset_);
   else
     ACE_OS::sigemptyset (&this->sigset_);
+}
+
+ACE_INLINE
+ACE_Sig_Set::ACE_Sig_Set (ACE_Sig_Set *ss)
+{
+  ACE_TRACE ("ACE_Sig_Set::ACE_Sig_Set");
+
+  if (ss == 0)
+    ACE_OS::sigfillset (&this->sigset_);
+  else
+    this->sigset_ = ss->sigset_;
 }
 
 ACE_INLINE

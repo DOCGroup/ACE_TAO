@@ -1,3 +1,55 @@
+Sat Sep 13 12:11:50 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/Timer_Queue_T.cpp (schedule): Oops, must pass &this->mask_
+ 	  to ACE_Sig_Set rather than this->mask_.
+
+	* ace/Object_Manager.cpp: Changed #include
+ 	  "ace/Service_Repository.h" to #include "ace/Service_Config.h"
+ 	  since we now call ACE_Service_Config::close().
+
+	* ace/Service_Types: Removed a nasty circular dependency by simply
+ 	  having each of the ACE_Service_Type_Impl subclasses take const
+ 	  void *'s rather than their specific type (i.e., ACE_Stream or
+ 	  ACE_Module, etc.).  This turns out not to be a problem since we
+ 	  treated them as const void *'s internally anyhow...
+
+	* ace/Strategies_T.cpp: Fixed a bug in ACE_DLL_Strategy:
+
+	  ACE_Service_Type_Impl stp = new ACE_Service_Object_Type (svc_handler, this->svc_name_);
+
+	  should be
+
+	  ACE_Service_Type_Impl *stp = new ACE_Service_Object_Type (svc_handler, this->svc_name_)
+
+	  I wonder how this ever compiled?!
+
+Fri Sep 12 13:26:50 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Mem_Map.cpp (close): Removed the following code in the
+	  close() method that appears to be redundant with the code in 
+	  unmap():
+
+	      if (this->file_mapping_ != this->handle_
+	          && this->file_mapping_ != ACE_INVALID_HANDLE)
+		ACE_OS::close (this->file_mapping_);
+
+          Also cleaned up the close() code so that it doesn't try to close
+ 	  the handle multiple times, even if close() is called more than
+ 	  once.  Thanks to Beged-Dov <begeddov@proaxis.com> for reporting
+ 	  this.
+
+	* tests/Async_Timer_Queue_Test.cpp: Improved the structure of the
+ 	  program and finished implementing the new feature that makes it
+ 	  possible to avoid blocking SIGQUIT.
+
+	* ace/Timer_Queue_T: Added support for an ACE_Sig_Set that can be
+ 	  passed into the constructor of ACE_Async_Timer_Queue_Adapter.
+  	  This will enable us to selectively block only certain signals.
+
+	* ace/Signal: Added a new constructor for ACE_Sig_Set that takes
+ 	  ACE_Sig_Set * and also improved the documentation of the
+ 	  constructor interfaces.
+
 Fri Sep 12 13:46:04 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/OS.[hi],Log_Msg.h,config-lynxos.h,

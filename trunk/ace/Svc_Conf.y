@@ -184,7 +184,8 @@ svc_location
   : ACE_IDENT type svc_initializer status
     {
       u_int flags 
-	= ACE_Service_Type_Impl::DELETE_THIS | ($3->dispose () == 0 ? 0 : ACE_Service_Type_Impl::DELETE_OBJ);
+	= ACE_Service_Type::DELETE_THIS 
+	| ($3->dispose () == 0 ? 0 : ACE_Service_Type::DELETE_OBJ);
       const void *sym = $3->symbol ();
 
       if (sym != 0)
@@ -317,13 +318,19 @@ ace_create_service_type (const char *name,
   switch (type)
     {
     case ACE_SVC_OBJ_T:
-      stp = new ACE_Service_Object_Type ((ACE_Service_Object *) symbol, name, flags);
+      ACE_NEW_RETURN (stp,
+		      ACE_Service_Object_Type ((ACE_Service_Object *) symbol, name, flags), 
+		      0);
       break;
     case ACE_MODULE_T:
-      stp = new ACE_Module_Type ((MT_Module *) symbol, name, flags);
+      ACE_NEW_RETURN (stp,
+		      ACE_Module_Type (symbol, name, flags), 
+		      0);
       break;
     case ACE_STREAM_T:
-      stp = new ACE_Stream_Type ((MT_Stream *) symbol, name, flags);
+      ACE_NEW_RETURN (stp,
+		      ACE_Stream_Type (symbol, name, flags), 
+		      0);
       break;
     default:
       ACE_ERROR ((LM_ERROR, "unknown case\n"));

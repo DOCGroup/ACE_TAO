@@ -34,13 +34,11 @@ ACE_Mem_Map::close (void)
 
   this->unmap ();
 
-  if (this->file_mapping_ != this->handle_
-      && this->file_mapping_ != ACE_INVALID_HANDLE)
-    ACE_OS::close (this->file_mapping_);
-
   if (this->close_handle_)
-    return ACE_OS::close (this->handle_);
-
+    {
+      this->close_handle_ = 0;
+      return ACE_OS::close (this->handle_);
+    }
   return 0;
 }
 
