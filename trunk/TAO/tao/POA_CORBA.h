@@ -36,7 +36,7 @@ class TAO_Export  POA_CORBA
 public:
   class Policy;
   typedef Policy *Policy_ptr;
-  class TAO_Export  Policy :  public virtual PortableServer::ServantBase
+  class TAO_Export  Policy :  public virtual TAO_ServantBase
   {
   protected:
     Policy (void);
@@ -82,7 +82,7 @@ public:
 
     virtual void _dispatch (CORBA::ServerRequest &_tao_req, void *_tao_context, CORBA::Environment &_tao_env);
 
-    CORBA::Policy *_this (CORBA::Environment &_tao_environment);
+    ACE_CORBA_1(Policy) *_this (CORBA::Environment &_tao_environment);
     virtual const char* _interface_repository_id (void) const;
   };
 
@@ -127,7 +127,7 @@ public:
 
   class Current;
   typedef Current *Current_ptr;
-  class  Current :  public virtual PortableServer::ServantBase
+  class  Current :  public virtual TAO_ServantBase
   {
   protected:
     Current (void);
@@ -143,7 +143,7 @@ public:
 
     virtual void _dispatch (CORBA::ServerRequest &_tao_req, void *_tao_context, CORBA::Environment &_tao_env);
 
-    CORBA::Current *_this (CORBA::Environment &_tao_environment);
+    ACE_CORBA_1(Current) *_this (CORBA::Environment &_tao_environment);
     virtual const char* _interface_repository_id (void) const;
   };
 

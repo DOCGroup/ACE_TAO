@@ -550,7 +550,7 @@ public:
 
   class POAManager;
   typedef POAManager *POAManager_ptr;
-  class TAO_Export POAManager :  public virtual PortableServer::LocalServantBase
+  class TAO_Export POAManager :  public virtual TAO_Local_ServantBase
   {
   protected:
     POAManager (void);
@@ -621,7 +621,7 @@ public:
 
   class AdapterActivator;
   typedef AdapterActivator *AdapterActivator_ptr;
-  class TAO_Export AdapterActivator :  public virtual PortableServer::LocalServantBase
+  class TAO_Export AdapterActivator :  public virtual TAO_Local_ServantBase
   {
   protected:
     AdapterActivator (void);
@@ -675,7 +675,7 @@ public:
 
   class ServantManager;
   typedef ServantManager *ServantManager_ptr;
-  class TAO_Export ServantManager :  public virtual PortableServer::LocalServantBase
+  class TAO_Export ServantManager :  public virtual TAO_Local_ServantBase
   {
   protected:
     ServantManager (void);
@@ -858,7 +858,7 @@ public:
 
   class POA;
   typedef POA *POA_ptr;
-  class TAO_Export POA :  public virtual PortableServer::LocalServantBase
+  class TAO_Export POA :  public virtual TAO_Local_ServantBase
   {
   protected:
     POA (void);
