@@ -42,14 +42,14 @@ ACE_Client_Logging_Handler::open (void *)
   // clients send us logging records.  Note that since we're really a
   // Singleton, this->peer() will change after each connect, so we
   // need to grab the value now.
-  if (ACE_Reactor::instance ()->register_handler 
-      (this->peer ().get_handle (), 
+  if (ACE_Reactor::instance ()->register_handler
+      (this->peer ().get_handle (),
        this,
        ACE_Event_Handler::READ_MASK
        | ACE_Event_Handler::EXCEPT_MASK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%n: %p\n",
 		       "register_handler)"), -1);
-  
+
   // Figure out what remote port we're really bound to.
   if (this->peer ().get_remote_addr (server_addr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "get_remote_addr"), -1);
@@ -191,7 +191,11 @@ int
 ACE_Client_Logging_Handler::send (ACE_Log_Record &log_record)
 {
   if (this->logging_output_ == ACE_STDOUT)
-    log_record.print ("<localhost>", 0, stderr);
+    {
+      log_record.print ("<localhost>", 0, stderr);
+      ostream *orig_ostream = ACE_Log_Msg::instance ()->msg_ostream ();
+      log_record.print ("<localhost>", 0, (*orig_ostream) );
+    }
   else
     {
       long len = log_record.length ();
@@ -213,7 +217,7 @@ ACE_Client_Logging_Handler::send (ACE_Log_Record &log_record)
 class ACE_Client_Logging_Acceptor : public ACE_Acceptor<ACE_Client_Logging_Handler, LOGGING_ACCEPTOR>
   // = TITLE
   //     This factory creates connections with the
-  //     <Server_Logging_Acceptor>. 
+  //     <Server_Logging_Acceptor>.
   //
   // = DESCRIPTION
   //     This class contains the service-specific methods that can't
@@ -274,7 +278,7 @@ ACE_Client_Logging_Acceptor::fini (void)
   return 0;
 }
 
-int 
+int
 ACE_Client_Logging_Acceptor::make_svc_handler (ACE_Client_Logging_Handler *&sh)
 {
   // Always return a pointer to the Singleton handler.
@@ -379,7 +383,7 @@ ACE_Client_Logging_Acceptor::parse_args (int argc, char *argv[])
 	}
     }
 
-  if (this->server_addr_.set (this->server_port_, 
+  if (this->server_addr_.set (this->server_port_,
 			      this->server_host_) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "set"), -1);
 
@@ -413,4 +417,3 @@ template class ACE_Svc_Handler<LOGGING_STREAM, ACE_NULL_SYNCH>;
 #pragma instantiate ACE_Acceptor<ACE_Client_Logging_Handler, LOGGING_ACCEPTOR>
 #pragma instantiate ACE_Svc_Handler<LOGGING_STREAM, ACE_NULL_SYNCH>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
