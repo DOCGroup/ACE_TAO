@@ -102,20 +102,16 @@ namespace TAO
                          PortableServer::POA::ObjectNotActive,
                          PortableServer::POA::WrongPolicy));
 
-      virtual
-      TAO_SERVANT_LOCATION
-      servant_present (const PortableServer::ObjectId &system_id,
-                       PortableServer::Servant &servant
-                       ACE_ENV_ARG_DECL);
+      virtual TAO_SERVANT_LOCATION servant_present (
+        const PortableServer::ObjectId &system_id,
+        PortableServer::Servant &servant
+        ACE_ENV_ARG_DECL);
 
-      virtual
-      PortableServer::Servant
-      locate_servant (const char *operation,
-                      const PortableServer::ObjectId &system_id,
-                      TAO::Portable_Server::Servant_Upcall &servant_upcall,
-                      TAO::Portable_Server::POA_Current_Impl &poa_current_impl,
-                      int &wait_occurred_restart_call
-                      ACE_ENV_ARG_DECL);
+      virtual PortableServer::Servant find_servant (
+        const PortableServer::ObjectId &system_id,
+        TAO::Portable_Server::Servant_Upcall &servant_upcall,
+        TAO::Portable_Server::POA_Current_Impl &poa_current_impl
+        ACE_ENV_ARG_DECL);
 
       virtual
       void

@@ -1609,7 +1609,7 @@ TAO_POA::locate_servant_i (const char *operation,
                            int &wait_occurred_restart_call
                            ACE_ENV_ARG_DECL)
 {
-  return this->active_policy_strategies_.servant_retention_strategy()->
+  return this->active_policy_strategies_.request_processing_strategy()->
     locate_servant (operation, system_id, servant_upcall, poa_current_impl, wait_occurred_restart_call ACE_ENV_ARG_PARAMETER);
 }
 
@@ -2461,6 +2461,16 @@ TAO_POA::servant_present (const PortableServer::ObjectId &system_id,
           servant_present (system_id, servant ACE_ENV_ARG_PARAMETER);
 }
 
+PortableServer::Servant
+TAO_POA::find_servant (
+        const PortableServer::ObjectId &system_id,
+        TAO::Portable_Server::Servant_Upcall &servant_upcall,
+        TAO::Portable_Server::POA_Current_Impl &poa_current_impl
+        ACE_ENV_ARG_DECL)
+{
+  return this->active_policy_strategies_.servant_retention_strategy()->
+          find_servant (system_id, servant_upcall, poa_current_impl ACE_ENV_ARG_PARAMETER);
+}
 
 TAO::ORT_Adapter_Factory *
 TAO_POA::ORT_adapter_factory (void)

@@ -102,6 +102,19 @@ namespace TAO
       int &wait_occurred_restart_call
       ACE_ENV_ARG_DECL)
     {
+      PortableServer::Servant servant = 0;
+
+      servant = this->poa_->find_servant (system_id,
+                                          servant_upcall,
+                                          poa_current_impl
+                                          ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (0);
+
+      if (servant != 0)
+        {
+          return servant;
+        }
+
       // If the POA has the USE_SERVANT_MANAGER policy, a servant manager
       // has been associated with the POA so the POA will invoke incarnate
       // or preinvoke on it to find a servant that may handle the
@@ -124,7 +137,7 @@ namespace TAO
       this->validate_servant_manager (this->servant_activator_.in () ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
-      PortableServer::Servant servant =
+      servant =
         this->incarnate_servant (poa_current_impl.object_id () ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 

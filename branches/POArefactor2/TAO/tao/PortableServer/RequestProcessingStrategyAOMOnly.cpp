@@ -90,16 +90,27 @@ namespace TAO
     PortableServer::Servant
     AOM_Only_Request_Processing_Strategy::locate_servant (
       const char * /*operation*/,
-      const PortableServer::ObjectId & /*system_id*/,
-      TAO::Portable_Server::Servant_Upcall & /*servant_upcall*/,
-      TAO::Portable_Server::POA_Current_Impl & /*poa_current_impl*/,
+      const PortableServer::ObjectId &system_id,
+      TAO::Portable_Server::Servant_Upcall &servant_upcall,
+      TAO::Portable_Server::POA_Current_Impl &poa_current_impl,
       int & /*wait_occurred_restart_call*/
       ACE_ENV_ARG_DECL)
     {
-      // If the USE_ACTIVE_OBJECT_MAP_ONLY policy is in effect, the POA raises
-      // the OBJECT_NOT_EXIST system exception.
-      ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
-                        0);
+      PortableServer::Servant servant = 0;
+
+      servant = this->poa_->find_servant (system_id,
+                                          servant_upcall,
+                                          poa_current_impl
+                                          ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (0);
+
+      if (servant == 0)
+        {
+          ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
+                            0);
+        }
+
+      return servant;
     }
 
     PortableServer::Servant

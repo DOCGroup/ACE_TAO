@@ -1,3 +1,12 @@
+Mon Nov 22 13:11:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/POA.{h,cpp}:
+        * tao/PortableServer/ServantRetentionStrategy*.{h,cpp}:
+        * tao/PortableServer/RequestProcessingStrategy*.{h,cpp}:
+          Changed how the locate_servant is implemented that really uses the
+          servant. The POA calls now request processing, which can call
+          find_servant on the servant retention strategy.
+
 Mon Nov 22 12:33:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/POA.{h,cpp}:

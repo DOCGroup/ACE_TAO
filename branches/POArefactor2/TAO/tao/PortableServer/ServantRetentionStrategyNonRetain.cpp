@@ -160,13 +160,11 @@ namespace TAO
     }
 
     PortableServer::Servant
-    Non_Retain_Servant_Retention_Strategy::locate_servant (
-      const char *operation,
+    Non_Retain_Servant_Retention_Strategy::find_servant (
       const PortableServer::ObjectId &system_id,
       TAO::Portable_Server::Servant_Upcall &servant_upcall,
-      TAO::Portable_Server::POA_Current_Impl &poa_current_impl,
-      int &wait_occurred_restart_call
-      ACE_ENV_ARG_DECL)
+      TAO::Portable_Server::POA_Current_Impl &poa_current_impl
+      ACE_ENV_ARG_DECL_NOT_USED)
     {
       // We have the NON_RETAIN policy, user id is the system id.
 
@@ -176,26 +174,7 @@ namespace TAO
 
       servant_upcall.user_id (&system_id);
 
-      PortableServer::Servant servant = 0;
-
-      // Not found a servant, try the request processing strategy
-      servant = this->
-        request_processing_strategy_->locate_servant (operation,
-                                                      system_id,
-                                                      servant_upcall,
-                                                      poa_current_impl,
-                                                      wait_occurred_restart_call
-                                                      ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
-
-      if (servant == 0)
-      {
-        // Failure
-        ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
-                        0);
-      }
-
-      return servant;
+      return 0;
     }
 
     int

@@ -9,6 +9,7 @@
  */
 //=============================================================================
 
+#include "tao/ORB_Constants.h"
 #include "tao/PortableServer/RequestProcessingStrategyDefaultServant.h"
 #include "tao/PortableServer/Non_Servant_Upcall.h"
 #include "tao/PortableServer/POA.h"
@@ -132,28 +133,42 @@ namespace TAO
     PortableServer::Servant
     Default_Servant_Request_Processing_Strategy::locate_servant (
       const char * /*operation*/,
-      const PortableServer::ObjectId & /*system_id*/,
-      TAO::Portable_Server::Servant_Upcall & /*servant_upcall*/,
-      TAO::Portable_Server::POA_Current_Impl & /*poa_current_impl*/,
+      const PortableServer::ObjectId & system_id,
+      TAO::Portable_Server::Servant_Upcall &servant_upcall,
+      TAO::Portable_Server::POA_Current_Impl &poa_current_impl,
       int & /*wait_occurred_restart_call*/
       ACE_ENV_ARG_DECL)
     {
-      // If the POA has the USE_DEFAULT_SERVANT policy, a default servant
-      // has been associated with the POA so the POA will invoke the
-      // appropriate method on that servant. If no servant has been
-      // associated with the POA, the POA raises the OBJ_ADAPTER system
-      // exception.
-      PortableServer::Servant servant = this->default_servant_.in ();
+      PortableServer::Servant servant = 0;
+
+      servant = this->poa_->find_servant (system_id,
+                                          servant_upcall,
+                                          poa_current_impl
+                                          ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (0);
+
       if (servant == 0)
         {
-          ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
-                            0);
+          // If the POA has the USE_DEFAULT_SERVANT policy, a default servant
+          // has been associated with the POA so the POA will invoke the
+          // appropriate method on that servant. If no servant has been
+          // associated with the POA, the POA raises the OBJ_ADAPTER system
+          // exception.
+          PortableServer::Servant default_servant = this->default_servant_.in ();
+          if (default_servant == 0)
+            {
+              ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (CORBA::OMGVMCID | 3,
+                                                    CORBA::COMPLETED_NO),
+                                                    0);
+            }
+          else
+            {
+              // Success
+              servant = default_servant;
+            }
         }
-      else
-        {
-          // Success
-          return servant;
-        }
+
+        return servant;
     }
 
     void
