@@ -93,6 +93,13 @@ TAO_GIOP_Invocation::select_profile_based_on_policy
 (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+#if !defined (TAO_HAS_CORBA_MESSAGING)
+
+  this->profile_ = this->stub_->profile_in_use ();
+  return this->profile_;
+
+#else
+
   POA_TAO::ClientPriorityPolicy *policy =
     this->stub_->client_priority ();
 
@@ -168,6 +175,9 @@ TAO_GIOP_Invocation::select_profile_based_on_policy
       else
         return this->profile_;
     }
+
+#endif /* TAO_HAS_CORBA_MESSAGING */
+
 }
 
 // The public API involves creating an invocation, starting it, filling
@@ -346,7 +356,8 @@ TAO_GIOP_Invocation::invoke (CORBA::Boolean is_roundtrip,
   //    arrive, there are policies to control that.
   countdown.update ();
   int result =
-    this->transport_->send_request (this->orb_core_,
+    this->transport_->send_request (this->stub_,
+                                    this->orb_core_,
                                     this->out_stream_,
                                     is_roundtrip,
                                     this->max_wait_time_);
@@ -948,7 +959,8 @@ TAO_GIOP_Locate_Request_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
     }
 
   int result =
-    this->transport_->send_request (this->orb_core_,
+    this->transport_->send_request (this->stub_,
+                                    this->orb_core_,
                                     this->out_stream_,
                                     1,
                                     this->max_wait_time_);

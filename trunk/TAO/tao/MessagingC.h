@@ -81,6 +81,9 @@ TAO_NAMESPACE  Messaging
 
   TAO_NAMESPACE_STORAGE_CLASS const CORBA::Short SYNC_WITH_TARGET;
 
+  // = TAO specific extension.
+  TAO_NAMESPACE_STORAGE_CLASS const CORBA::Short SYNC_FLUSH;
+
   typedef CORBA::Short RoutingType;
   typedef CORBA::Short_out RoutingType_out;
     TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_RoutingType;
@@ -1561,7 +1564,7 @@ TAO_NAMESPACE  Messaging
   // valuetype class
   class ExceptionHolder;
   typedef ExceptionHolder *ExceptionHolder_ptr;
-  
+
 #if !defined (_MESSAGING_EXCEPTIONHOLDER___VAR_CH_)
 #define _MESSAGING_EXCEPTIONHOLDER___VAR_CH_
 
@@ -1573,14 +1576,14 @@ TAO_NAMESPACE  Messaging
     ExceptionHolder_var (const ExceptionHolder*); // (TAO extension)
     ExceptionHolder_var (const ExceptionHolder_var &); // copy constructor
     ~ExceptionHolder_var (void); // destructor
-    
+
     ExceptionHolder_var &operator= (ExceptionHolder*);
     ExceptionHolder_var &operator= (const ExceptionHolder_var &);
     ExceptionHolder* operator-> (void) const;
-    
+
     operator const ExceptionHolder* () const;
     operator ExceptionHolder* ();
-    // in, inout, out, _retn 
+    // in, inout, out, _retn
     ExceptionHolder* in (void) const;
     ExceptionHolder* &inout (void);
     ExceptionHolder* &out (void);
@@ -1610,7 +1613,7 @@ TAO_NAMESPACE  Messaging
     operator ExceptionHolder* &();
     ExceptionHolder* &ptr (void);
     ExceptionHolder* operator-> (void);
-    
+
   private:
     ExceptionHolder* &ptr_;
   };
@@ -1629,7 +1632,7 @@ TAO_NAMESPACE  Messaging
     virtual const char* tao_repository_id ();
 
     // create () goes here
-    
+
   };
 
 #endif /* end #if !defined */
@@ -1668,33 +1671,24 @@ TAO_NAMESPACE  Messaging
     // _tao_seq_Octet
     // *************************************************************
 
-    class _tao_seq_Octet;
-    class _tao_seq_Octet_var;
-    typedef _tao_seq_Octet* _tao_seq_Octet_ptr;    
-
-    class TAO_Export _tao_seq_Octet : public 
+    class TAO_Export _tao_seq_Octet : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
       TAO_Unbounded_Sequence<CORBA::Octet>
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
       TAO_Unbounded_Sequence<CORBA::Octet>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
     {
     public:
       _tao_seq_Octet (void); // default ctor
       _tao_seq_Octet (CORBA::ULong max); // uses max size
       _tao_seq_Octet (
-        CORBA::ULong max, 
-        CORBA::ULong length, 
-        CORBA::Octet *buffer, 
+        CORBA::ULong max,
+        CORBA::ULong length,
+        CORBA::Octet *buffer,
         CORBA::Boolean release=0
       );
       _tao_seq_Octet (const _tao_seq_Octet &); // copy ctor
       ~_tao_seq_Octet (void); // dtor
-
-#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
-    typedef _tao_seq_Octet_ptr _ptr_type;
-    typedef _tao_seq_Octet_var _var_type;
-#endif /* ! __GNUC__ || g++ >= 2.8 */
 
 #if defined(TAO_NO_COPY_OCTET_SEQUENCES)
       _tao_seq_Octet (
@@ -1705,6 +1699,7 @@ TAO_NAMESPACE  Messaging
 #endif /* TAO_NO_COPY_OCTET_SEQUENCE */
 
     };
+    typedef _tao_seq_Octet *_tao_seq_Octet_ptr;
 
 #endif /* end #if !defined */
 
@@ -1723,17 +1718,17 @@ TAO_NAMESPACE  Messaging
       _tao_seq_Octet_var (_tao_seq_Octet *);
       _tao_seq_Octet_var (const _tao_seq_Octet_var &); // copy constructor
       ~_tao_seq_Octet_var (void); // destructor
-      
+
       _tao_seq_Octet_var &operator= (_tao_seq_Octet *);
       _tao_seq_Octet_var &operator= (const _tao_seq_Octet_var &);
       _tao_seq_Octet *operator-> (void);
       const _tao_seq_Octet *operator-> (void) const;
-      
+
       operator const _tao_seq_Octet &() const;
       operator _tao_seq_Octet &();
       operator _tao_seq_Octet &() const;
       CORBA::Octet &operator[] (CORBA::ULong index);
-      // in, inout, out, _retn 
+      // in, inout, out, _retn
       const _tao_seq_Octet &in (void) const;
       _tao_seq_Octet &inout (void);
       _tao_seq_Octet *&out (void);
@@ -1763,7 +1758,7 @@ TAO_NAMESPACE  Messaging
       _tao_seq_Octet *&ptr (void);
       _tao_seq_Octet *operator-> (void);
       CORBA::Octet &operator[] (CORBA::ULong index);
-      
+
     private:
       _tao_seq_Octet *&ptr_;
       // assignment from T_var not allowed
@@ -1773,32 +1768,28 @@ TAO_NAMESPACE  Messaging
 
 #endif /* end #if !defined */
 
-#if !defined (__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
-    typedef _tao_seq_Octet _marshaled_exception_seq;
-#endif /* ! __GNUC__ || ACE_HAS_GNUG_PRE_2_8 */
-
     virtual void marshaled_exception (const _tao_seq_Octet &) = 0;    // set
     virtual const _tao_seq_Octet &marshaled_exception (void) const = 0;     // get method (read only)
     virtual _tao_seq_Octet &marshaled_exception (void) = 0;     // get method (read/write only)
 
 
   protected:
-    ExceptionHolder (void);           // default constructor
-    virtual ~ExceptionHolder (void);
+    ExceptionHolder (void) { };           // default constructor
+    virtual ~ExceptionHolder (void) { };
 
     // TAO internals
     virtual void *_tao_obv_narrow (ptr_arith_t);
     virtual CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &);
     virtual CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
-    
+
   private:
     ExceptionHolder (const ExceptionHolder &);
     void operator= (const ExceptionHolder &);
-    
+
   protected:
     virtual CORBA::Boolean _tao_marshal__Messaging_ExceptionHolder (TAO_OutputCDR &) = 0;
     virtual CORBA::Boolean _tao_unmarshal__Messaging_ExceptionHolder (TAO_InputCDR &) = 0;
-    
+
   };
 
 #endif /* end #if !defined */
@@ -2023,7 +2014,7 @@ TAO_NAMESPACE  OBV_Messaging
 #define _MESSAGING_EXCEPTIONHOLDER___OBV_CH_
 
   // OBV_ class
-  class TAO_Export ExceptionHolder : public virtual Messaging::ExceptionHolder
+  class ExceptionHolder : public virtual Messaging::ExceptionHolder
   {
   public:
     virtual void is_system_exception (CORBA::Boolean);    // set
@@ -2045,7 +2036,7 @@ TAO_NAMESPACE  OBV_Messaging
 
 
   private:
-    CORBA::Boolean _pd_is_system_exception;
+        CORBA::Boolean _pd_is_system_exception;
     CORBA::Boolean _pd_byte_order;
 #if !defined (__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
     typedef _tao_seq_Octet _marshaled_exception_seq;
@@ -2069,6 +2060,7 @@ class TAO_InputCDR;
 
 #if defined (TAO_HAS_AMI_CALLBACK)
 
+// @@ Michael: Addition
 
 enum TAO_AMI_Reply_Status
 {
@@ -2109,13 +2101,10 @@ void TAO_Export operator<<= (CORBA::Any &, Messaging::PolicyValueSeq*); // nonco
 CORBA::Boolean TAO_Export operator>>= (const CORBA::Any &, Messaging::PolicyValueSeq *&);
 
 #if defined (TAO_HAS_AMI_CALLBACK)
-extern  Messaging::ReplyHandler_ptr (*_TAO_collocation_Messaging_ReplyHandler_Stub_Factory_function_pointer) (
-    CORBA::Object_ptr obj
-  );
 // Any operators for interface Messaging::ReplyHandler
 void TAO_Export operator<<= (CORBA::Any &, Messaging::ReplyHandler_ptr);
 CORBA::Boolean TAO_Export operator>>= (const CORBA::Any &, Messaging::ReplyHandler *&);
-CORBA::Boolean  operator<< (TAO_OutputCDR &, const Messaging::ExceptionHolder *); // 
+CORBA::Boolean  operator<< (TAO_OutputCDR &, const Messaging::ExceptionHolder *); //
 CORBA::Boolean  operator>> (TAO_InputCDR &, Messaging::ExceptionHolder *&);
 #endif /* TAO_HAS_AMI_CALLBACK */
 

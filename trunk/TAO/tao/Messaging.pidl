@@ -41,6 +41,9 @@ module Messaging
   const SyncScope SYNC_WITH_SERVER    = 2;
   const SyncScope SYNC_WITH_TARGET    = 3;
 
+  // = TAO specific extension.
+  const SyncScope SYNC_FLUSH          = 4;
+
   typedef short RoutingType;
   const RoutingType ROUTE_NONE              = 0;
   const RoutingType ROUTE_FORWARD           = 1;

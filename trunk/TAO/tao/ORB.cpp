@@ -44,6 +44,7 @@
 #if defined (TAO_HAS_CORBA_MESSAGING)
 #include "tao/Messaging_Policy_i.h"
 #include "tao/Client_Priority_Policy.h"
+#include "tao/Buffering_Constraint_Policy.h"
 #endif /* TAO_HAS_CORBA_MESSAGING */
 
 #if defined (ACE_HAS_EXCEPTIONS)
@@ -454,7 +455,7 @@ CORBA_ORB::resolve_name_service (ACE_Time_Value *timeout,
   CORBA_Object_var return_value = CORBA_Object::_nil ();
 
   // By now, the table filled in with -ORBInitRef arguments has been
-  // checked.  We only get here if the table didn't contain an initial 
+  // checked.  We only get here if the table didn't contain an initial
   // reference for the Name Service.
 
   // Check to see if the user has an environment variable.
@@ -504,7 +505,7 @@ CORBA_ORB::resolve_trading_service (ACE_Time_Value *timeout,
   CORBA_Object_var return_value = CORBA_Object::_nil ();
 
   // By now, the table filled in with -ORBInitRef arguments has been
-  // checked.  We only get here if the table didn't contain an initial 
+  // checked.  We only get here if the table didn't contain an initial
   // reference for the Trading Service.
 
   // Check to see if the user has an environment variable.
@@ -551,7 +552,7 @@ CORBA_ORB::resolve_implrepo_service (ACE_Time_Value *timeout,
   CORBA_Object_var return_value = CORBA_Object::_nil ();
 
   // By now, the table filled in with -ORBInitRef arguments has been
-  // checked.  We only get here if the table didn't contain an initial 
+  // checked.  We only get here if the table didn't contain an initial
   // reference for the Implementation Repository.
 
   // Check to see if the user has an environment variable.
@@ -976,7 +977,7 @@ CORBA_ORB::check_shutdown (CORBA_Environment &ACE_TRY_ENV)
     }
   else
     {
-      // If the ORB_Core pointer is zero, assume that the ORB_Core has 
+      // If the ORB_Core pointer is zero, assume that the ORB_Core has
       // been destroyed.
 
       // As defined by the CORBA 2.3 specification, throw a
@@ -1043,18 +1044,18 @@ CORBA_ORB::create_dyn_enum      (CORBA_TypeCode_ptr tc,
 
 #if defined (TAO_HAS_INTERFACE_REPOSITORY)
 
-CORBA_TypeCode_ptr 
+CORBA_TypeCode_ptr
 CORBA_ORB::create_interface_tc (const char * id,
                                 const char * name,
                                 CORBA::Environment &ACE_TRY_ENV)
 {
   TAO_OutputCDR cdr;
-  
+
   // The piece of code that follows has been based on the code in the
-  // IDL compiler 
+  // IDL compiler
   cdr << TAO_ENCAP_BYTE_ORDER; // Byte Order
-  
-  // Use the overloaded operator from the TAO_Output CDR class 
+
+  // Use the overloaded operator from the TAO_Output CDR class
   cdr << id;
 
   // Send the name
@@ -1073,22 +1074,22 @@ CORBA_ORB::create_interface_tc (const char * id,
   return interface_typecode;
 }
 
-CORBA_TypeCode_ptr 
+CORBA_TypeCode_ptr
 CORBA_ORB::create_enum_tc (const char *id,
                            const char *name,
                            CORBA_EnumMemberSeq &members,
                            CORBA::Environment &ACE_TRY_ENV)
 {
   TAO_OutputCDR cdr;
-  
+
   // The piece of code that follows has been based on the code in the
-  // IDL compiler 
+  // IDL compiler
   cdr << TAO_ENCAP_BYTE_ORDER; // Byte Order
 
   cdr << id;
 
   cdr << name;
-  
+
   CORBA::ULong len = members.length ();
 
   cdr << len;
@@ -1096,7 +1097,7 @@ CORBA_ORB::create_enum_tc (const char *id,
   for (CORBA::ULong index = 0; index < len; index++)
     {
       cdr << members[index].in ();
-    } 
+    }
 
   CORBA_TypeCode_ptr interface_typecode = CORBA::TypeCode::_nil ();
   ACE_NEW_THROW_EX (interface_typecode,
@@ -1111,29 +1112,29 @@ CORBA_ORB::create_enum_tc (const char *id,
   return interface_typecode;
 }
 
-CORBA_TypeCode_ptr 
+CORBA_TypeCode_ptr
 CORBA_ORB::create_exception_tc (const char *id,
                                 const char *name,
                                 CORBA_StructMemberSeq &members,
                                 CORBA::Environment &ACE_TRY_ENV)
 {
   TAO_OutputCDR cdr;
-  
+
   // The piece of code that follows has been based on the code in the
-  // IDL compiler 
+  // IDL compiler
   cdr << TAO_ENCAP_BYTE_ORDER; // Byte Order
 
   cdr << id;
 
   cdr << name;
-  
+
   // Number of members..
   CORBA::ULong len = members.length ();
   cdr << len;
 
   for (CORBA::ULong index = 0; index < len; index++)
     {
-      // Get the first member which is a string.. 
+      // Get the first member which is a string..
       CORBA_StructMember struct_member = members[index];
 
       cdr << struct_member.name.in ();
@@ -1153,9 +1154,9 @@ CORBA_ORB::create_exception_tc (const char *id,
 
   return interface_typecode;
 }
-  
 
-CORBA_TypeCode_ptr 
+
+CORBA_TypeCode_ptr
 CORBA_ORB::create_alias_tc (const char *id,
                             const char *name,
                             const CORBA::TypeCode_ptr original_type,
@@ -1170,9 +1171,9 @@ CORBA_ORB::create_alias_tc (const char *id,
   cdr << name;
 
   cdr << original_type;
-  
+
   CORBA_TypeCode_ptr interface_typecode = CORBA::TypeCode::_nil ();
-  
+
   ACE_NEW_THROW_EX (interface_typecode,
                     CORBA_TypeCode (CORBA::tk_alias,
                                     cdr.total_length (),
@@ -1181,11 +1182,11 @@ CORBA_ORB::create_alias_tc (const char *id,
                                     0),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
-  
-  return interface_typecode;
-}                             
 
-CORBA_TypeCode_ptr 
+  return interface_typecode;
+}
+
+CORBA_TypeCode_ptr
 CORBA_ORB::create_struct_tc (const char *id,
                             const char *name,
                             CORBA_StructMemberSeq &members,
@@ -1202,14 +1203,14 @@ CORBA_ORB::create_struct_tc (const char *id,
   // Number of members..
   CORBA::ULong len = members.length ();
   cdr << len;
-  
+
   for (CORBA::ULong index = 0; index < len; index++)
     {
-      // Get the first member which is a string.. 
+      // Get the first member which is a string..
       CORBA_StructMember struct_member = members[index];
-      
+
       cdr << struct_member.name.in ();
-      
+
       cdr << struct_member.type.in ();
     }
 
@@ -1222,10 +1223,10 @@ CORBA_ORB::create_struct_tc (const char *id,
                                     0),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
-  
+
   return interface_typecode;
 }
-    
+
 #endif /*TAO_HAS_INTERFACE_REPOSITORY */
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
@@ -1506,7 +1507,7 @@ CORBA::ORB_init (int &argc,
         }
 
       return CORBA::ORB::_duplicate (oc->orb ());
-        
+
     }
 
   // @@ As part of the ORB re-architecture this will the point where
@@ -1721,18 +1722,27 @@ CORBA_ORB::create_policy (CORBA::PolicyType type,
 
   switch (type)
     {
-    case TAO_CLIENT_PRIORITY_POLICY_TYPE:
-      return TAO_Client_Priority_Policy::create (root_poa.in (),
-                                                 val,
-                                                 ACE_TRY_ENV);
-
     case TAO_MESSAGING_RELATIVE_RT_TIMEOUT_POLICY_TYPE:
       return TAO_RelativeRoundtripTimeoutPolicy_i::create (root_poa.in (),
                                                            val,
                                                            ACE_TRY_ENV);
 
-    case TAO_MESSAGING_REBIND_POLICY_TYPE:
+    case TAO_CLIENT_PRIORITY_POLICY_TYPE:
+      return TAO_Client_Priority_Policy::create (root_poa.in (),
+                                                 val,
+                                                 ACE_TRY_ENV);
+
     case TAO_MESSAGING_SYNC_SCOPE_POLICY_TYPE:
+      return TAO_Sync_Scope_Policy::create (root_poa.in (),
+                                            val,
+                                            ACE_TRY_ENV);
+
+    case TAO_BUFFERING_CONSTRAINT_POLICY_TYPE:
+      return TAO_Buffering_Constraint_Policy::create (root_poa.in (),
+                                                      val,
+                                                      ACE_TRY_ENV);
+
+    case TAO_MESSAGING_REBIND_POLICY_TYPE:
     case TAO_MESSAGING_REQUEST_PRIORITY_POLICY_TYPE:
     case TAO_MESSAGING_REPLY_PRIORITY_POLICY_TYPE:
     case TAO_MESSAGING_REQUEST_START_TIME_POLICY_TYPE:

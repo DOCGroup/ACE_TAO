@@ -419,7 +419,10 @@ and should not be set by the user. Please use TAO_HAS_REMOTE_POLICIES instead.
 
 // Define the policy types as literals, so they can be used in switch
 // statements
+
 #define TAO_CLIENT_PRIORITY_POLICY_TYPE 0x54410000
+#define TAO_BUFFERING_CONSTRAINT_POLICY_TYPE 0x54410001
+
 #define TAO_MESSAGING_REBIND_POLICY_TYPE 23
 #define TAO_MESSAGING_SYNC_SCOPE_POLICY_TYPE 24
 #define TAO_MESSAGING_REQUEST_PRIORITY_POLICY_TYPE 25

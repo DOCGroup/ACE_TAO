@@ -39,6 +39,30 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Buffered_Oneways Client"=.\Buffered_Oneways\client.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Buffered_Oneways Server"=.\Buffered_Oneways\server.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Event_Comm Consumer"=.\Event_Comm\Consumer.dsp - Package Owner=<4>
 
 Package=<5>
@@ -602,4 +626,3 @@ Package=<3>
 }}}
 
 ###############################################################################
-

@@ -64,4 +64,6 @@ module TimeBase
 
 };
 
+#pragma prefix ""
+
 #endif /* TIME_BASE_PIDL */

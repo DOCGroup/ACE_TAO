@@ -46,6 +46,10 @@ ACE_INLINE CORBA::Boolean
 CORBA_TypeCode::equal (const CORBA::TypeCode_ptr tc,
                        CORBA::Environment &ACE_TRY_ENV) const
 {
+  // Are the two pointers the same?
+  if (this == tc)
+    return 1;
+
   if (this->kind_ != tc->kind (ACE_TRY_ENV))
     // simple case
     return 0;

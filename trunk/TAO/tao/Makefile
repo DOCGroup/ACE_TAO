@@ -143,6 +143,7 @@ ORB_CORE_FILES = \
   params \
   Resource_Factory \
   Server_Strategy_Factory \
+  Sync_Strategies \
   TAO_Internal \
   Typecode_Constants \
   IOR_LookupTable \
@@ -174,9 +175,12 @@ ORB_CORE_FILES += \
   MessagingS \
   Policy_Manager \
   Messaging_Policy_i \
+# TAOC and TAOS should be moved outside the corba_messaging scope once
+# more classes have been added to the TAO module.
   TAOC \
   TAOS \
-  Client_Priority_Policy
+  Client_Priority_Policy \
+  Buffering_Constraint_Policy
 
 endif # corba_messaging
 
