@@ -1,9 +1,10 @@
 // $Id$
 
 #include "Options_Parser.h"
+#include "ace/Log_Msg.h"
 
-ACE_RCSID (lib, 
-           TAO_Options_Parser, 
+ACE_RCSID (lib,
+           TAO_Options_Parser,
            "$Id$")
 
 #include "tao/debug.h"
