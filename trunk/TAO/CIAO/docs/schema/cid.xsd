@@ -4,8 +4,46 @@
             xmlns:Deployment="http://www.omg.org/Deployment"
             targetNamespace="http://www.omg.org/Deployment">
 
-            <xsd:include schemaLocation="Deployment.xsd" />
+            <xsd:include schemaLocation="Basic_Deployment_Data.xsd" />
+            <xsd:include schemaLocation="cpd.xsd" />
+            <xsd:include schemaLocation="iad.xsd" />
 
+
+  <xsd:complexType name="SubcomponentInstantiationDescription">
+    <xsd:sequence>
+      <xsd:element name="name" type="xsd:string"/>
+      <xsd:element name="package" type="Deployment:ComponentPackageDescription"/>
+      <xsd:element name="configProperty" type="Deployment:Property" minOccurs="0"/>
+      <xsd:element name="selectRequirement" type="Deployment:Requirement" minOccurs="0"/>
+      <xsd:element name="reference" type="Deployment:ComponentPackageReference" minOccurs="0"/>
+    </xsd:sequence>
+    <xsd:attribute name="id" type="xsd:ID"/>
+  </xsd:complexType>
+
+
+  <xsd:complexType name="SubcomponentPropertyReference">
+    <xsd:sequence>
+      <xsd:element name="propertyName" type="xsd:string"/>
+      <xsd:element name="instance" type="Deployment:SubcomponentInstantiationDescription"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+
+  <xsd:complexType name="AssemblyPropertyMapping">
+    <xsd:sequence>
+      <xsd:element name="name" type="xsd:string"/>
+      <xsd:element name="externalName" type="xsd:string"/>
+      <xsd:element name="delegatesTo" type="Deployment:SubcomponentPropertyReference"/>      
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="ComponentAssemblyDescription">
+    <xsd:sequence>
+      <xsd:element name="instance" type="Deployment:SubcomponentInstantiationDescription" maxOccurs="unbounded"/>
+      <xsd:element name="connection" type="Deployment:AssemblyConnectionDescription" maxOccurs="unbounded"/>
+      <xsd:element name="externalProperty" type="Deployment:AssemblyPropertyMapping" minOccurs="0"/> 
+    </xsd:sequence>
+  </xsd:complexType>            
 
   <xsd:complexType name="MonolithicImplementationDescription">
     <xsd:sequence>

@@ -1,3 +1,10 @@
+Tue Aug  3 20:18:48 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* docs/schema/cid.xsd:
+	* docs/schema/Deployment.xsd:
+
+	  Added some tweaks.
+
 Tue Aug  3 14:25:44 2004  Will Otte <wotte@dre.vanderbilt.edu>
 
 	* IDL3/Components/ComplexComponent/Attributes/Attributes.idl:
