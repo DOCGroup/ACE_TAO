@@ -107,6 +107,7 @@ typedef size_t KEY;
 #define ACE_APPEND_LOG(NAME) \
   const char *program = NAME; \
   ACE_LOG_MSG->open (program, ACE_Log_Msg::OSTREAM); \
+  ace_file_stream.close (); \
   if (ace_file_stream.set_output (program, 1) != 0) \
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "set_output failed"), -1); \
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Starting %s test at %D\n", program));
