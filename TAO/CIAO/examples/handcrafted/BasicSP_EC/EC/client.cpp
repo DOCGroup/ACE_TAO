@@ -12,6 +12,7 @@
 //==============================================================
 
 #include "ECC.h"
+#include "ace/Streams.h"
 
 int
 main (int argc, char *argv[])

@@ -18,6 +18,7 @@
 #include "tao/LocalObject.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Task.h"
+#include "ORB_Core.h"
 
 namespace MyImpl
 {
