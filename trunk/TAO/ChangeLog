@@ -1,3 +1,31 @@
+Thu Oct 17 11:58:49 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
+
+        * TAO_IDL/be/be_valuetype.cpp:
+
+	  Fixed a bug in code generation of the inheritance list for
+	  valuetypes that support abstract interfaces.
+
+        * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
+
+	  Fixed a mistake in the changes made in
+
+	  Wed Oct 16 17:16:38 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
+ 
+	  and made the same changes to code generation for abstract
+	  interfaces.
+
+        * tao/ObjectReferenceTemplateC.cpp:
+        * tao/ObjectReferenceTemplateC.h:
+        * tao/Messaging/MessagingC.cpp:
+        * tao/Messaging/MessagingC.h:
+        * tao/PortableServer/Default_ORTC.cpp:
+        * tao/PortableServer/Default_ORTC.h:
+
+	  Modified hand-crafted code to correspond to the changes above.
+
 Thu Oct 17 10:47:32 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/Makefile:

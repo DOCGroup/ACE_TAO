@@ -306,6 +306,16 @@ TAO_Default_ORT::ObjectReferenceTemplate::_tao_obv_repository_id (void) const
   return this->_tao_obv_static_repository_id ();
 }
 
+#if defined (_MSC_VER)
+void *
+TAO_Default_ORT::ObjectReferenceTemplate::TAO_Default_ORT_ObjectReferenceTemplate_tao_obv_narrow (
+    ptr_arith_t type_id
+  )
+{
+  return this->_tao_obv_narrow (type_id);
+}
+#endif /* _MSC_VER */
+
 void *
 TAO_Default_ORT::ObjectReferenceTemplate::_tao_obv_narrow (ptr_arith_t type_id)
 {
@@ -318,7 +328,11 @@ TAO_Default_ORT::ObjectReferenceTemplate::_tao_obv_narrow (ptr_arith_t type_id)
 
   if (rval == 0)
     {
-      rval = ACE_NESTED_CLASS (PortableInterceptor,ObjectReferenceTemplate)::_tao_obv_narrow (type_id);
+#if defined (_MSC_VER)
+      rval = this->PortableInterceptor_ObjectReferenceTemplate_tao_obv_narrow (type_id);
+#else
+      rval = this->PortableInterceptor::ObjectReferenceTemplate::_tao_obv_narrow (type_id);
+#endif /* _MSC_VER */
     }
 
   return rval;

@@ -411,7 +411,15 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << be_uidt_nl
           << "}" << be_nl << be_nl;
 
-      *os << "void *" << be_nl
+      *os << "\n#if defined (_MSC_VER)" << be_nl
+          << "void *" << be_nl
+          << node->name () << "::" << node->flat_name ()
+          << "_tao_obv_narrow (ptr_arith_t type_id)" << be_nl
+          << "{" << be_idt_nl
+          << "return this->_tao_obv_narrow (type_id);" << be_uidt_nl
+          << "}"
+          << "\n#endif /* _MSC_VER */" << be_uidt_nl << be_nl
+          << "void *" << be_nl
           << node->full_name ()
           << "::_tao_obv_narrow (ptr_arith_t type_id)" << be_nl
           << "{" << be_idt_nl
@@ -419,7 +427,33 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << "{" << be_idt_nl
           << "return this;" << be_uidt_nl
           << "}" << be_uidt_nl << be_nl
-          << "return 0;" << be_uidt_nl
+          << "void *rval = 0;" << be_nl;
+
+      // Find the possible base classes.
+
+      int n_inherits_downcastable = 0;
+      AST_Interface *inherited = 0;
+
+      for (int i = 0; i < node->n_inherits (); ++i)
+        {
+          inherited = node->inherits ()[i];
+
+          ++n_inherits_downcastable;
+
+          *os << be_nl
+              << "if (rval == 0)" << be_idt_nl
+              << "{"
+              << "\n#if defined (_MSC_VER)" << be_idt_nl
+              << "rval = this->" << inherited->flat_name ()
+              << "_tao_obv_narrow (type_id);"
+              << "\n#else" << be_nl
+              << "rval = this->" << inherited->name () << "::"
+              << "_tao_obv_narrow (type_id);"
+              << "\n#endif /* _MSC_VER */" << be_uidt_nl
+              << "}" << be_uidt_nl;
+        }
+
+      *os << be_nl << "return rval;" << be_uidt_nl
           << "}" << be_nl << be_nl;
     }
 

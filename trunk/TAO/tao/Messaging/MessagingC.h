@@ -252,6 +252,9 @@ protected:
   
   // TAO internals
   virtual void *_tao_obv_narrow (ptr_arith_t);
+#if defined (_MSC_VER)
+  virtual void *Messaging_ExceptionHolder_tao_obv_narrow (ptr_arith_t);
+#endif /* _MSC_VER */
   virtual CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &);
   virtual CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
   
