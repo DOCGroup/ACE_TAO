@@ -143,7 +143,7 @@ sub Spawn ()
         return -1;
     }
 
-    if (!$self->{IGNOREEXESUBDIR} {
+    if ($self->{IGNOREEXESUBDIR} == 0) {
         if (!-f $self->Executable ()) {
             print STDERR "ERROR: Cannot Spawn: <", $self->Executable (), 
                          "> not found\n";
