@@ -1,3 +1,14 @@
+Mon Aug 21 11:53:52 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_sunsoft.cpp:
+
+	  Modified the print format string for an unsigned long long
+	  literal to use ACE_UINT64_FORMAT_SPECIFIER instead of "%u".
+	  If the rhs of a ulonglong constant declaration in an IDL
+	  file was an expression, we were getting uncompileable 
+	  output on Solaris and incorrect but compileable output on
+	  NT. Thanks to skelley@solers.com for reporting the bug.
+
 Mon Aug 21 11:21:34 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* Makefile's in orbsvcs. Updated the dependancies.
