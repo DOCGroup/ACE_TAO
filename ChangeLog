@@ -1,3 +1,12 @@
+Sat Jun  3 18:51:46 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * bin/msvc_auto_compile.pl:
+
+          Changed the way libraries were detected to remove false 
+          positives when the dsps are in a directory with DLL in 
+          its name.  Now it will search for " DLL " or " LIB " 
+          instead of "DLL" or "LIB".
+
 Sat Jun  3 17:00:11 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * bin/fuzz.pl:

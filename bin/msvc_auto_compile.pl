@@ -194,7 +194,7 @@ sub Build_All ()
         {
             my $Status = 0;
             $Status = Build_Config ($c)
-                if (($c =~ /Library/) || ($c =~ /DLL/) || ($c =~ /LIB/));
+                if (($c =~ /Library/) || ($c =~ / DLL /) || ($c =~ / LIB /));
             return if ($Status != 0 && !$Ignore_errors);
         }
     }

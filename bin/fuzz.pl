@@ -274,7 +274,10 @@ sub check_for_line_length ()
             print "Looking at file $file\n" if $opt_d;
             while (<FILE>) {
                 ++$line;
-                if (/.{80,}/) {
+
+                # Make sure to ignore ACE_RCSID lines, since they
+                # are difficult to get under 80 chars.
+                if (/.{80,}/ and !/^ACE_RCSID/) {
                     print_error ("Over 80 chars on line $line in $file");
                 }
             }
@@ -351,7 +354,7 @@ sub check_for_tchar
                     if (/ASYS_TEXT/) {
                         print_error ("ASYS_TEXT on line $line in $file");
                     }
-                    elsif (/TEXT/ and $` !~ /ACE_/) {
+                    elsif (/TEXT\s+\(/ and $` !~ /ACE_/) {
                         print_error ("TEXT found on line $line in $file");
                     }
                 }
