@@ -319,7 +319,7 @@ Mpeg_Server::set_signals ()
   setsignal(SIGBUS, int_handler);
   setsignal(SIGINT, int_handler);
   setsignal(SIGTERM, int_handler);
-  setsignal(SIGALRM, SIG_IGN);
+  //  setsignal(SIGALRM, SIG_IGN);
   return 0;
 }
 
@@ -393,8 +393,9 @@ Mpeg_Server::run ()
   if (this->acceptor_.open (this->server_control_addr_) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), -1);
 
+  ACE_Reactor::instance ()->run_event_loop ();
   // enter the reactor event loop
-  while (1)
+  /*  while (1)
     {
       ACE_Reactor::run_event_loop ();
       if (errno==EINTR)
@@ -402,19 +403,19 @@ Mpeg_Server::run ()
           // This is needed because he starts a timer and it
           // periodically interrupts us to send the video packets and
           // when the stop cmd comes the timer is stopped.
-          //          ACE_DEBUG((LM_DEBUG,"run_event_loop:EINTR\n"));
+          ACE_DEBUG((LM_DEBUG,"run_event_loop:EINTR\n"));
           result = play_send ();
           if (result < 0)
             break;
           else
-            continue;
+          continue;
         }
       else
         break;
-    }
+        }*/
 
-      ACE_DEBUG ((LM_DEBUG,
-                  "(%P)Mpeg_Server::run () came out of the (acceptor) event loop %p\n","run_event_loop\n"));
+  ACE_DEBUG ((LM_DEBUG,
+              "(%P)Mpeg_Server::run () came out of the (acceptor) event loop %p\n","run_event_loop\n"));
 }
 
 Mpeg_Server::~Mpeg_Server (void)

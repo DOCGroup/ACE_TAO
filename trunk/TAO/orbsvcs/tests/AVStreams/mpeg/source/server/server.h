@@ -117,6 +117,10 @@ private:
   Mpeg_Acceptor acceptor_;
   // the acceptor
 
+  Video_Sig_Handler vh_;
+  // signal handler for SIGALRM to periodically send the video frames
+  // to the client
+
   ACE_INET_Addr server_control_addr_;
   // Control (TCP) Address of this server.
 

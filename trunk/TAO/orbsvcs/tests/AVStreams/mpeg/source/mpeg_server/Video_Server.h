@@ -31,11 +31,18 @@ void GetFeedBack (void);
 int SendPicture (int *frame);
 int play_send (void);
 
-class Video_Time_Handler : public virtual ACE_Event_Handler
+class Video_Sig_Handler : public virtual ACE_Event_Handler
 {
 public:
-  virtual int handle_timeout (const ACE_Time_Value &tv,
-                              const void *arg);
+  Video_Sig_Handler (void);
+  virtual ACE_HANDLE get_handle (void) const;
+  virtual int shutdown (ACE_HANDLE, ACE_Reactor_Mask);
+  virtual int handle_input (ACE_HANDLE);
+  virtual int handle_signal (ACE_HANDLE signum,
+                             siginfo_t * = 0,
+                             ucontext_t* = 0);
+private:
+  ACE_HANDLE handle_;
 };
 
 
