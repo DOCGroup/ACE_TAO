@@ -30,6 +30,7 @@ project (Config_Handlers) : taolib {
     PCI_Handler.cpp
     Cap_Handler.cpp
     CompImplDesc_Handler.cpp
+    CPR_Handler.cpp
     IAD_Handler.cpp
     IR_Handler.cpp
     MID_Handler.cpp
@@ -39,6 +40,7 @@ project (Config_Handlers) : taolib {
     Plan_Handler.cpp
     DnC_Dump.cpp
     XercesString.cpp
+    Process_Element.cpp
     Config_Error_Handler.cpp
   }
 }
