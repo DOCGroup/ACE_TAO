@@ -1,4 +1,4 @@
 // $Id$
 
-#include "Video_ControlC.h"
+#include "Video_Control_i.h
 
