@@ -1,3 +1,10 @@
+Tue Mar  9 14:31:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* examples/Reactor/WFMO_Reactor/run_test.pl:
+	  Improved this test script so that it outputs an error when the
+	  executable cannot be found, instead of just trying to spawn a non
+	  existent executable.
+
 Tue Mar  9 08:01:20 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/ProjectCreator.pm:
