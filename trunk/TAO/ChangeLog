@@ -1,3 +1,8 @@
+Sat Jan 25 18:50:32 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/Transport_Cache_Manager.cpp (close_i): Avoid totally
+	  unaesthetic temporaries  in the for loop.
+
 Sat Jan 25 18:30:27 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* orbsvcs/tests/Security/MT_IIOP_SSL: A multi-threaded stress test
