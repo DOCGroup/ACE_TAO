@@ -15,7 +15,18 @@
 #ifndef TAO_HASHER_FACTORY_H
 #define TAO_HASHER_FACTORY_H
 
+#include "ace/config-all.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/Functor.h"
+#include "ace/Hash_Map_Manager_T.h"
+
 #include "orbsvcs/LoadBalancingS.h"
+
+#include "Hasher_i.h"
 
 /**
  * @class HasherFactory
@@ -45,28 +56,32 @@ public:
   /// Return a reference to a "Hasher" object.
   virtual CORBA::Object_ptr create_object (
       const char *type_id,
-      const TAO_LoadBalancing::Criteria &the_criteria,
-      TAO_LoadBalancing::GenericFactory::FactoryCreationId_out
+      const LoadBalancing::Criteria &the_criteria,
+      LoadBalancing::GenericFactory::FactoryCreationId_out
         factory_creation_id)
     ACE_THROW_SPEC ((CORBA::SystemException,
-                     TAO_LoadBalancing::NoFactory,
-                     TAO_LoadBalancing::ObjectNotCreated,
-                     TAO_LoadBalancing::InvalidCriteria,
-                     TAO_LoadBalancing::InvalidProperty,
-                     TAO_LoadBalancing::CannotMeetCriteria));
+                     LoadBalancing::NoFactory,
+                     LoadBalancing::ObjectNotCreated,
+                     LoadBalancing::InvalidCriteria,
+                     LoadBalancing::InvalidProperty,
+                     LoadBalancing::CannotMeetCriteria));
 
   /// Destroy a "Hasher" object created by this factory that
   /// corresponds to the given FactoryCreationId.
   virtual void delete_object (
-     const TAO_LoadBalancing::GenericFactory::FactoryCreationId
+     const LoadBalancing::GenericFactory::FactoryCreationId
        &factory_creation_id)
     ACE_THROW_SPEC ((CORBA::SystemException,
-                     TAO_LoadBalancing::ObjectNotFound));
+                     LoadBalancing::ObjectNotFound));
+
+  /// Return the RepositoryId of the type of object this Factory
+  /// creates.
+  static const char *replica_type_id (void);
 
   /// This Factory internally implements the FactoryCreationId as a
   /// CORBA::ULong for efficiency reasons.  Interactions with this
   /// Factory from objects is still done via the
-  /// TAO_LoadBalancer::GenericFactory::FactoryCreationId type.
+  /// LoadBalancing::GenericFactory::FactoryCreationId type.
   typedef CORBA::ULong FactoryCreationId;
 
   typedef ACE_Hash_Map_Manager_Ex<FactoryCreationId, PortableServer::ObjectId *, ACE_Hash<ACE_UINT32>, ACE_Equal_To<ACE_UINT32>, ACE_Null_Mutex> Table;
@@ -78,7 +93,7 @@ private:
   void init (CORBA::Environment &ACE_TRY_ENV);
 
   /// Helper method that parses any Criteria passed to this Factory.
-  void parse_criteria (const TAO_LoadBalancer::Criteria &criteria,
+  void parse_criteria (const LoadBalancing::Criteria &criteria,
                        CORBA::Environment &ACE_TRY_ENV);
 
   /// Generate a FactoryCreationId for the given ObjectId.
@@ -94,10 +109,6 @@ private:
   /// returned as an "out" argument.
   void unbind_fcid (FactoryCreationId &fcid,
                     PortableServer::ObjectId_out oid);
-
-  /// Return the RepositoryId of the type of object this Factory
-  /// creates.
-  static const char *replica_type_id (void) const;
 
 private:
 

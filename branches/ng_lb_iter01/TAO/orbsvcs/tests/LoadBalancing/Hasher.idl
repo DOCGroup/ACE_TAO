@@ -14,8 +14,8 @@ interface Hasher
 {
   /// Perform a simple hashing operation on the input string <str> and
   /// return the hash value.
-  unsigned long do_hash (in string str);
+  unsigned long hash_string (in string str);
 
   /// Shutdown the ORB.
-  oneway void shutdown ();
+  //oneway void shutdown ();
 };

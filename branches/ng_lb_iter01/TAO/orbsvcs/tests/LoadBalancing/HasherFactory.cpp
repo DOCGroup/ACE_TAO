@@ -252,7 +252,7 @@ HasherFactory::unbind_fcid (
 }
 
 const char *
-HasherFactory::replica_type_id (void) const
+HasherFactory::replica_type_id (void)
 {
   return "IDL:Hasher:1.0";
 }
