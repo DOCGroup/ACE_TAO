@@ -1,3 +1,8 @@
+Wed Apr 11 16:21:09 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* examples/PluggableUDP/DIOP/DIOP_Connector.cpp: Fixed template
+	  instantiations. 
+
 Wed Apr 11 09:57:41 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/Makefile:
