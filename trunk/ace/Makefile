@@ -224,6 +224,7 @@ TEMPLATE_FILES = \
            Future \
            Future_Set \
            Hash_Map_Manager_T \
+	   Hash_Map_With_Allocator_T \
            Hash_Cache_Map_Manager_T \
            IOStream_T \
            LOCK_SOCK_Acceptor \

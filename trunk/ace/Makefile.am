@@ -202,6 +202,7 @@ libACE_Demux_la_SOURCES = \
   Reactor.cpp \
   Select_Reactor.cpp \
   Select_Reactor_Base.cpp \
+  SUN_Proactor.cpp \
   TP_Reactor.cpp \
   TkReactor.cpp \
   WFMO_Reactor.cpp \
@@ -229,7 +230,6 @@ libACE_Sockets_la_SOURCES = \
   SOCK_Dgram.cpp \
   SOCK_Dgram_Bcast.cpp \
   SOCK_Dgram_Mcast.cpp \
-  SOCK_Dgram_Mcast_QoS.cpp \
   SOCK_IO.cpp \
   SOCK_Stream.cpp
 
@@ -334,9 +334,11 @@ libACE_Other_la_SOURCES = \
   Naming_Context.cpp \
   Registry_Name_Space.cpp \
   Remote_Name_Space.cpp \
+  SOCK_Dgram_Mcast_QoS.cpp \
   QoS_Session_Impl.cpp \
   QoS_Session_Factory.cpp \
-  QoS_Manager.cpp
+  QoS_Manager.cpp \
+  QoS_Decorator.cpp
 
 libACE_la_SOURCES = \
   $(libACE_OS_la_SOURCES) \
@@ -425,6 +427,7 @@ TEMPLATE_FILES = \
   Future.cpp \
   Future_Set.cpp \
   Hash_Map_Manager_T.cpp \
+  Hash_Map_With_Allocator_T.cpp \
   Hash_Cache_Map_Manager_T.cpp \
   IOStream_T.cpp \
   LOCK_SOCK_Acceptor.cpp \
@@ -554,6 +557,7 @@ HEADER_FILES = \
   Log_Msg.h \
   Log_Priority.h \
   Log_Record.h \
+  Logging_Strategy.h \
   MEM_Acceptor.h \
   MEM_Addr.h \
   MEM_Connector.h \
@@ -585,6 +589,11 @@ HEADER_FILES = \
   Name_Space.h \
   Naming_Context.h \
   OS.h \
+  OS_Dirent.h \
+  OS_Export.h \
+  OS_Memory.h \
+  OS_String.h \
+  OS_TLI.h \
   Object_Manager.h \
   Obstack.h \
   POSIX_Asynch_IO.h \
@@ -599,6 +608,7 @@ HEADER_FILES = \
   Process.h \
   Process_Manager.h \
   Profile_Timer.h \
+  QoS_Decorator.h \
   QoS_Manager.h \
   QoS_Session.h \
   QoS_Session_Factory.h \
@@ -628,6 +638,7 @@ HEADER_FILES = \
   SPIPE_Connector.h \
   SPIPE_Stream.h \
   SString.h \
+  SUN_Proactor.h \
   SV_Message.h \
   SV_Message_Queue.h \
   SV_Semaphore_Complex.h \
@@ -705,6 +716,7 @@ HEADER_FILES = \
   WIN32_Proactor.h \
   XTI_ATM_Mcast.h \
   XtReactor.h \
+  ace_wchar.h \
   config.h \
   config-all.h \
   iosfwd.h \
@@ -836,6 +848,7 @@ INLINE_FILES = \
   SPIPE_Connector.i \
   SPIPE_Stream.i \
   SString.i \
+  SUN_Proactor.i \
   SV_Message.i \
   SV_Message_Queue.i \
   SV_Semaphore_Complex.i \
@@ -883,7 +896,11 @@ INLINE_FILES = \
   UPIPE_Connector.i \
   UPIPE_Stream.i \
   WFMO_Reactor.i \
-  XTI_ATM_Mcast.i
+  XTI_ATM_Mcast.i \
+  OS_Dirent.inl \
+  OS_Memory.inl \
+  OS_String.inl \
+  OS_TLI.inl
 
 
 ## It would be good to remove pkgincludedir.  However, we want to install
