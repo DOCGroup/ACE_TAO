@@ -45,9 +45,9 @@ public:
   static CORBA::ORB_ptr _nil (void);
 
   virtual CORBA::Object_ptr string_to_object (CORBA::String str,
-                                             CORBA::Environment &env) = 0;
+					      CORBA::Environment &env) = 0;
   virtual CORBA::String object_to_string (CORBA::Object_ptr obj,
-                                         CORBA::Environment &env) = 0;
+					  CORBA::Environment &env) = 0;
 
   // similar for TypeCodes and Anys ... to/from octet sequences
 
@@ -124,9 +124,6 @@ public:
   // previously-specified port for requests.  Returns -1 on failure,
   // else 0.
 
-  TAO_CONNECTOR *connector (void);
-  // Accessor that returns the connector.
-
 protected:
   CORBA_ORB (void);
   virtual ~CORBA_ORB (void);
@@ -158,25 +155,6 @@ private:
 
   TAO_ACCEPTOR peer_acceptor_;
   // The acceptor passively listening for connection requests.
-
-  TAO_CONNECTOR peer_connector_;
-  // The connector actively initiating connection requests.
-
-#if defined (TAO_HAS_CLIENT_CONCURRENCY)
-  // @@ Chris, shouldn't this always be "potentially" the case, even
-  // if a client didn't want to use it?
-  // @@ Yes, but we don't support this right now...
-  CONCURRENCY_STRATEGY *concurrency_strategy_;
-#endif /* TAO_HAS_CLIENT_CONCURRENCY */
-
-  TAO_NULL_CREATION_STRATEGY null_creation_strategy_;
-  // This no-op creation strategy is necessary for using the
-  // <Strategy_Connector> with the <Cached_Connect_Strategy>.
-
-  TAO_CACHED_CONNECT_STRATEGY caching_connect_strategy_;
-  // This connection strategy maintain a cache of preconnected
-  // <TAO_Client_Connection_Handler>s.  The goal is to reduce latency
-  // and locking overhead.
 
   // = NON-PROVIDED METHODS
   CORBA_ORB (const CORBA_ORB &);
