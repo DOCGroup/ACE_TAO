@@ -11,7 +11,7 @@ use PerlACE::Run_Test;
 # The location of the implementation repository binaries
 $imr_bin_path  = "../../ImplRepo_Service";
 
-# The location of the tao_imr IMR utility 
+# The location of the tao_imr IMR utility
 $tao_imr_bin_path = "../../../../bin";
 
 # IOR file names
@@ -38,22 +38,22 @@ sub test_body
    # Start the IMR locator to generate an IOR file for the server to use...
    $LOCATOR->Arguments("-o $imr_ior_file -ORBEndpoint iiop://:$port");
    $LOCATOR->Spawn ();
-   
-   if (PerlACE::waitforfile_timed ($imr_ior_file, 10) == -1) 
+
+   if (PerlACE::waitforfile_timed ($imr_ior_file, 10) == -1)
    {
       print STDERR "ERROR: cannot find $imr_ior_file\n";
       $LOCATOR->Kill ();
       return 1;
    }
-   
+
    # Set the activator arguments
    $activator_arguments = "-o $activator_ior_file -ORBInitRef ImplRepoService=file://$imr_ior_file";
-   
+
    # Start up the activator
    $ACTIVATOR->Arguments ($activator_arguments);
    $ACTIVATOR->Spawn ();
-   
-   if (PerlACE::waitforfile_timed ($activator_ior_file, 10) == -1) 
+
+   if (PerlACE::waitforfile_timed ($activator_ior_file, 10) == -1)
    {
       print STDERR "ERROR: cannot find $activator_ior_file\n";
       $ACTIVATOR->Kill ();
@@ -62,7 +62,7 @@ sub test_body
    }
 
    # Redirect STDERR to a log file so that the ERROR
-   # message does not get printed to the terminal 
+   # message does not get printed to the terminal
    open(SAVEERR, '>&STDERR');
    open(STDERR, ">$log_file");
 
@@ -75,7 +75,7 @@ sub test_body
    open(STDERR, '>&SAVEERR');
 
    # If the add of an empty string failed, then
-   # the test of the tao_imr succeeded.   
+   # the test of the tao_imr succeeded.
    if ($result != 0) {
      $result = 0;
    }
@@ -87,13 +87,13 @@ sub test_body
    $ACTIVATOR->TerminateWaitKill (5);
    $LOCATOR->TerminateWaitKill (5);
    return $result;
-}   
+}
 
 # Run regression for bug #1437
-$test_result = test_body(); 
+$test_result = test_body();
 
 if ($test_result != 0)
-{   
+{
    print STDERR "ERROR: Regression test for Bug #1437 failed\n";
 }
 else
