@@ -587,6 +587,17 @@ ACE_Map_Iterator<EXT_ID, INT_ID, LOCK>::next (ACE_Map_Entry<EXT_ID, INT_ID> *&mm
     return 0;
 }
 
+template <class EXT_ID, class INT_ID, class LOCK> int 
+ACE_Map_Iterator<EXT_ID, INT_ID, LOCK>::done (void) const
+{
+  ACE_TRACE ("ACE_Map_Iterator<EXT_ID, INT_ID, LOCK>::done");
+  ACE_READ_GUARD_RETURN (LOCK, ace_mon, this->map_man_.lock_, -1);
+
+  return this->map_man_.search_structure_ == 0
+    // Note that this->next_ is never negative at this point...
+    || size_t (this->next_) >= this->map_man_.cur_size_;
+}
+
 template <class EXT_ID, class INT_ID, class LOCK> int
 ACE_Map_Iterator<EXT_ID, INT_ID, LOCK>::advance (void) 
 {
@@ -598,7 +609,7 @@ ACE_Map_Iterator<EXT_ID, INT_ID, LOCK>::advance (void)
        && this->map_man_.search_structure_[this->next_].is_free_;
        this->next_++)
     continue;
-  return this->next_;
+  return size_t (this->next_) < this->map_man_.cur_size_;
 }
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Map_Reverse_Iterator)
@@ -639,6 +650,15 @@ ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, LOCK>::next (ACE_Map_Entry<EXT_ID, INT_
     return 0;
 }
 
+template <class EXT_ID, class INT_ID, class LOCK> int 
+ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, LOCK>::done (void) const
+{
+  ACE_TRACE ("ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, LOCK>::done");
+  ACE_READ_GUARD_RETURN (LOCK, ace_mon, this->map_man_.lock_, -1);
+
+  return this->map_man_.search_structure_ == 0 || this->next_ < 0;
+}
+
 template <class EXT_ID, class INT_ID, class LOCK> int
 ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, LOCK>::advance (void) 
 {
@@ -650,7 +670,7 @@ ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, LOCK>::advance (void)
        && this->map_man_.search_structure_[this->next_].is_free_;
        this->next_--)
     continue;
-  return this->next_;
+  return size_t (this->next_) >= 0;
 }
 
 #endif /* ACE_MAP_MANAGER_C */

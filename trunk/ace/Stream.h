@@ -159,14 +159,29 @@ private:
 
 template <ACE_SYNCH_1>
 class ACE_Stream_Iterator
+  // = TITLE
+  //     Iterate through an <ACE_Stream>.
 {
 public:
+  // = Initialization method.
   ACE_Stream_Iterator (const ACE_Stream<ACE_SYNCH_2> &sr);
-  int next (const ACE_Module<ACE_SYNCH_2> *&mo);
+
+  // = Iteration methods.
+
+  int next (const ACE_Module<ACE_SYNCH_2> *&next_item);
+  // Pass back the <next_item> that hasn't been seen in the set.
+  // Returns 0 when all items have been seen, else 1.
+
+  int done (void) const;
+  // Returns 1 when all items have been seen, else 0.
+
   int advance (void);
+  // Move forward by one element in the set.  Returns 0 when all the
+  // items in the set have been seen, else 1.
 
 private:
   ACE_Module<ACE_SYNCH_2> *next_;
+  // Next <Module> that we haven't yet seen.
 };
 
 #if defined (__ACE_INLINE__)

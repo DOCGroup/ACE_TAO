@@ -1,7 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-
 // ============================================================================
 //
 // = LIBRARY
@@ -25,6 +24,7 @@ class ACE_Export ACE_Service_Repository
   //     Provide the abstract base class that supplies common server
   //     repository operations.
 {
+  friend class ACE_Service_Repository_Iterator;
 public:
   enum {DEFAULT_SIZE = 50};
   // = Initialization and termination methods.
@@ -95,21 +95,29 @@ private:
   ACE_Thread_Mutex lock_; 
   // Synchronization variable for the MT_SAFE Repository 
 #endif /* ACE_MT_SAFE */
-
-  friend class ACE_Service_Repository_Iterator;
 };
 
 class ACE_Export ACE_Service_Repository_Iterator
   // = TITLE
-  //
-  // = DESCRIPTION
-  //
+  //     Iterate through the <ACE_Service_Repository>.
 {
 public:
+  // = Initialization method.
   ACE_Service_Repository_Iterator (ACE_Service_Repository &sr, 
 				   int ignored_suspended = 1);
-  int next (const ACE_Service_Record *&so);
+
+  // = Iteration methods.
+
+  int next (const ACE_Service_Record *&next_item);
+  // Pass back the <next_item> that hasn't been seen in the set.
+  // Returns 0 when all items have been seen, else 1.
+
+  int done (void) const;
+  // Returns 1 when all items have been seen, else 0.
+
   int advance (void);
+  // Move forward by one element in the set.  Returns 0 when all the
+  // items in the set have been seen, else 1.
 
   void dump (void) const;
   // Dump the state of an object.
@@ -119,8 +127,13 @@ public:
 
 private:
   ACE_Service_Repository &svc_rep_;
+  // Reference to the Service Repository we are iterating over.
+
   int next_;
+  // Next index location that we haven't yet seen.
+
   int ignore_suspended_;
+  // Are we ignoring suspended services?
 };
 
 #if defined (__ACE_INLINE__)

@@ -39,6 +39,8 @@ class ACE_Export ACE_CString
   //   allocated new space.  Instead, its internal representation is set
   //   equal to a global empty string.
 {
+  friend ACE_CString operator+ (const ACE_CString &, const ACE_CString &);
+  friend ostream &operator << (ostream &, const ACE_CString &);
 public:
   ACE_CString (ACE_Allocator *allocator = 0);
   // Default constructor.
@@ -89,10 +91,13 @@ public:
   // bounds checking).
 
   int operator== (const ACE_CString &s) const;
-  // Comparison operator (must match entire string).
+  // Equality comparison operator (must match entire string).
 
   int operator!= (const ACE_CString &s) const;
-  // Comparison operator.
+  // Inequality comparison operator.
+
+  int compare (const ACE_CString &s) const;
+  // Performs a <strcmp>-style comparison.
 
   void dump (void) const;
   // Dump the state of an object.
@@ -113,6 +118,9 @@ private:
   static char NULL_CString_;
   // Represents the "NULL" string to simplify the internal logic.
 };
+
+ACE_CString operator+ (const ACE_CString &, const ACE_CString &);
+ostream &operator << (ostream &, const ACE_CString &);
 
 class ACE_Export ACE_SString
   // = TITLE
@@ -170,10 +178,13 @@ public:
   // bounds checking).
 
   int operator== (const ACE_SString &s) const;
-  // Comparison operator (must match entire string).
+  // Equality comparison operator (must match entire string).
 
   int operator!= (const ACE_SString &s) const;
-  // Comparison operator.
+  // Inequality comparison operator.
+
+  int compare (const ACE_SString &s) const;
+  // Performs a <strcmp>-style comparison.
 
   void dump (void) const;
   // Dump the state of an object.
@@ -182,7 +193,6 @@ public:
   // Declare the dynamic allocation hooks.
 
 private:
-
   ACE_Allocator *allocator_;
   // Pointer to a memory allocator.
 
@@ -202,11 +212,11 @@ class ACE_Export ACE_WString
   //   intended for use with applications that understand how it
   //   works.  Note that we need to use this class since the ACE
   //   ACE_Map_Manager requires an object that supports the operator==
-  //   and operator!=.
-  //   This class uses an ACE_Allocator to allocate memory
-  //   The user can make this a persistant class by providing an 
-  //   ACE_Allocator with a persistable memory pool
+  //   and operator!=.  This class uses an ACE_Allocator to allocate
+  //   memory The user can make this a persistant class by providing
+  //   an ACE_Allocator with a persistable memory pool
 {
+  friend ACE_WString operator+ (const ACE_WString &, const ACE_WString &);
 public:
   ACE_WString (ACE_Allocator *allocator = 0);
   // Default constructor.
@@ -261,10 +271,13 @@ public:
   // index of the first location that matches, else -1.
 
   int operator== (const ACE_WString &s) const;
-  // Comparison operator (must match entire string).
+  // Equality comparison operator (must match entire string).
 
   int operator!= (const ACE_WString &s) const;
-  // Comparison operator.
+  // Inequality comparison operator.
+
+  int compare (const ACE_WString &s) const;
+  // Performs a <strcmp>-style comparison.
 
   void dump (void) const;
   // Dump the state of an object.
@@ -291,6 +304,8 @@ private:
   ACE_USHORT16 *rep_;
   // Pointer to data.
 };
+
+ACE_WString operator+ (const ACE_WString &, const ACE_WString &);
 
 #if defined (__ACE_INLINE__)
 #include "ace/SString.i"

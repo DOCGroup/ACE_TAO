@@ -75,14 +75,6 @@ ACE_Stream<ACE_SYNCH_2>::push (ACE_Module<ACE_SYNCH_2> *new_top)
 }
 
 template <ACE_SYNCH_1> int
-ACE_Stream_Iterator<ACE_SYNCH_2>::advance (void)
-{
-  ACE_TRACE ("ACE_Stream_Iterator<ACE_SYNCH_2>::advance");
-  this->next_ = this->next_->next ();
-  return 0;
-}
-
-template <ACE_SYNCH_1> int
 ACE_Stream<ACE_SYNCH_2>::put (ACE_Message_Block *mb, ACE_Time_Value *tv)
 {
   ACE_TRACE ("ACE_Stream<ACE_SYNCH_2>::put");

@@ -14,6 +14,29 @@ ACE_ALLOC_HOOK_DEFINE(ACE_CString)
 
 char ACE_CString::NULL_CString_ = '\0';
 
+ostream &
+operator << (ostream &os, const ACE_CString &cs)
+{
+  os << cs.fast_rep ();
+  return os;
+}
+
+ACE_WString 
+operator+ (const ACE_WString &s, const ACE_WString &t)
+{
+  ACE_WString temp (s);
+  temp += t;
+  return temp;
+}
+
+ACE_CString
+operator+ (const ACE_CString &s, const ACE_CString &t)
+{
+  ACE_CString temp (s);
+  temp += t;
+  return temp;
+}
+
 // Copy constructor.
 
 ACE_CString::ACE_CString (const ACE_CString &s)

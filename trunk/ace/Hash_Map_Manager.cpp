@@ -475,6 +475,19 @@ ACE_Hash_Map_Iterator<EXT_ID, INT_ID, LOCK>::next (ACE_Hash_Map_Entry<EXT_ID, IN
     return 0;
 }
 
+template <class EXT_ID, class INT_ID, class LOCK>  int
+ACE_Hash_Map_Iterator<EXT_ID, INT_ID, LOCK>::done (void) const
+{
+  ACE_READ_GUARD_RETURN (LOCK, ace_mon, this->map_man_.lock_, -1);
+
+  if (this->map_man_.table_ != 0 
+      && this->index_ < this->map_man_.total_size_
+      && this->next_ != this->map_man_.sentinel_)
+    return 0;
+  else
+    return 1;
+}
+
 template <class EXT_ID, class INT_ID, class LOCK> int
 ACE_Hash_Map_Iterator<EXT_ID, INT_ID, LOCK>::advance (void) 
 {
@@ -490,7 +503,8 @@ ACE_Hash_Map_Iterator<EXT_ID, INT_ID, LOCK>::advance (void)
 	  break;
 	}
 
-  return 0;
+  return this->index_ < this->map_man_.total_size_
+    && this->next_ != this->map_man_.sentinel_;
 }
 
 #endif /* ACE_HASH_MAP_MANAGER_C */

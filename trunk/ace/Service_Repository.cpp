@@ -260,6 +260,14 @@ ACE_Service_Repository_Iterator::next (const ACE_Service_Record *&sr)
     return 0;
 }
 
+int 
+ACE_Service_Repository_Iterator::done (void) const
+{
+  ACE_TRACE ("ACE_Service_Repository_Iterator::done");
+
+  return this->next_ >= this->svc_rep_.current_size_;
+}
+
 // Advance the iterator by the proper amount.  If we are ignoring
 // suspended entries and the current entry is suspended, then we must
 // skip over this entry.  Otherwise, we must advance the NEXT index to
@@ -275,5 +283,5 @@ ACE_Service_Repository_Iterator::advance (void)
        && this->svc_rep_.service_vector_[this->next_]->active () == 0;
        this->next_++)
     continue;
-  return this->next_;
+  return this->next_ < this->svc_rep_.current_size_;
 }

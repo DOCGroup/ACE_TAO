@@ -13,6 +13,94 @@
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Message_Queue)
 
+template <ACE_SYNCH_1>
+ACE_Message_Queue_Iterator<ACE_SYNCH_2>::ACE_Message_Queue_Iterator (ACE_Message_Queue <ACE_SYNCH_2> &queue)
+  : queue_ (queue),
+    curr_ (queue_.head_)
+{
+}
+
+template <ACE_SYNCH_1> int 
+ACE_Message_Queue_Iterator<ACE_SYNCH_2>::next (ACE_Message_Block *&entry)
+{
+  ACE_Read_Guard<ACE_SYNCH_MUTEX_T> m (this->queue_.lock_);
+
+  if (this->curr_ != 0)
+    {
+      entry = this->curr_;
+      return 1;
+    }
+  else
+    return 0;
+}
+
+template <ACE_SYNCH_1> int 
+ACE_Message_Queue_Iterator<ACE_SYNCH_2>::done (void) const
+{
+  ACE_Read_Guard<ACE_SYNCH_MUTEX_T> m (this->queue_.lock_);
+
+  return this->curr_ == 0;
+}
+
+template <ACE_SYNCH_1> int
+ACE_Message_Queue_Iterator<ACE_SYNCH_2>::advance (void)
+{
+  ACE_Read_Guard<ACE_SYNCH_MUTEX_T> m (this->queue_.lock_);
+
+  this->curr_ = this->curr_->next ();
+  return this->curr_ != 0;
+}
+
+template <ACE_SYNCH_1> void 
+ACE_Message_Queue_Iterator<ACE_SYNCH_2>::dump (void) const
+{
+}
+
+ACE_ALLOC_HOOK_DEFINE(ACE_Message_Queue_Iterator)
+
+template <ACE_SYNCH_1>
+ACE_Message_Queue_Reverse_Iterator<ACE_SYNCH_2>::ACE_Message_Queue_Reverse_Iterator (ACE_Message_Queue <ACE_SYNCH_2> &queue)
+  : queue_ (queue),
+    curr_ (queue_.tail_)
+{
+}
+
+template <ACE_SYNCH_1> int 
+ACE_Message_Queue_Reverse_Iterator<ACE_SYNCH_2>::next (ACE_Message_Block *&entry)
+{
+  ACE_Read_Guard<ACE_SYNCH_MUTEX_T> m (this->queue_.lock_);
+
+  if (this->curr_ != 0)
+    {
+      entry = this->curr_;
+      return 1;
+    }
+  else
+    return 0;
+}
+
+template <ACE_SYNCH_1> int 
+ACE_Message_Queue_Reverse_Iterator<ACE_SYNCH_2>::done (void) const
+{
+  ACE_Read_Guard<ACE_SYNCH_MUTEX_T> m (this->queue_.lock_);
+
+  return this->curr_ == 0;
+}
+
+template <ACE_SYNCH_1> int
+ACE_Message_Queue_Reverse_Iterator<ACE_SYNCH_2>::advance (void)
+{
+  ACE_Read_Guard<ACE_SYNCH_MUTEX_T> m (this->queue_.lock_);
+
+  this->curr_ = this->curr_->prev ();
+  return this->curr_ != 0;
+}
+
+template <ACE_SYNCH_1> void 
+ACE_Message_Queue_Reverse_Iterator<ACE_SYNCH_2>::dump (void) const
+{
+}
+
 template <ACE_SYNCH_1> void
 ACE_Message_Queue<ACE_SYNCH_2>::dump (void) const
 {

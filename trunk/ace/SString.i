@@ -56,6 +56,7 @@ ACE_INLINE int
 ACE_CString::operator== (const ACE_CString &s) const
 {
   ACE_TRACE ("ACE_CString::operator==");
+
   return this->len_ == s.len_
     && ACE_OS::strcmp (this->rep_, s.rep_) == 0;
 }
@@ -67,6 +68,13 @@ ACE_CString::operator!= (const ACE_CString &s) const
 {
   ACE_TRACE ("ACE_CString::operator!=");
   return !(*this == s);
+}
+
+ACE_INLINE int 
+ACE_CString::compare (const ACE_CString &s) const
+{
+  ACE_TRACE ("ACE_CString::compare");
+  return ACE_OS::strcmp (this->rep_, s.rep_);
 }
 
 // Return the <index'th> character in the string.
@@ -106,6 +114,13 @@ ACE_SString::operator!= (const ACE_SString &s) const
   return !(*this == s);
 }
 
+ACE_INLINE int 
+ACE_SString::compare (const ACE_SString &s) const
+{
+  ACE_TRACE ("ACE_CString::compare");
+  return ACE_OS::strcmp (this->rep_, s.rep_);
+}
+
 // Get a copy of the underlying representation.
 
 ACE_INLINE ACE_USHORT16 *
@@ -142,8 +157,9 @@ ACE_WString::operator== (const ACE_WString &s) const
 {
   ACE_TRACE ("ACE_WString::operator==");
   return this->len_ == s.len_
-    && ACE_OS::memcmp ((const void *) this->rep_, (const void *) s.rep_,
-		 this->len_ * sizeof (ACE_USHORT16)) == 0;
+    && ACE_OS::memcmp ((const void *) this->rep_, 
+		       (const void *) s.rep_,
+		       this->len_ * sizeof (ACE_USHORT16)) == 0;
 }
 
 // Comparison operator.
@@ -153,6 +169,16 @@ ACE_WString::operator!= (const ACE_WString &s) const
 {
   ACE_TRACE ("ACE_WString::operator!=");
   return !(*this == s);
+}
+
+ACE_INLINE int 
+ACE_WString::compare (const ACE_WString &s) const
+{
+  ACE_TRACE ("ACE_WString::compare");
+
+  return ACE_OS::memcmp ((const void *) this->rep_, 
+			 (const void *) s.rep_,
+			 this->len_ * sizeof (ACE_USHORT16));
 }
 
 // Return the <index'th> character in the string.

@@ -41,7 +41,11 @@ public:
   // Returns 0 when all items have been seen, else 1.
 
   int advance (void);
-  // Move forward by one element in the set.
+  // Move forward by one element in the set.  Returns 0 when all the
+  // items in the set have been seen, else 1.
+
+  int done (void) const;
+  // Returns 1 when all items have been seen, else 0.
 
   void dump (void) const;
   // Dump the state of an object.
@@ -92,10 +96,6 @@ public:
   // Returns -1 if failures occur, 1 if item is already present, else
   // 0.
   
-  int insert_tail (const T &new_item);
-  // Insert <new_item> into the set at the tail.  Returns -1 if
-  // failures occur else 0.
-
   int remove (const T &item);
   // Remove first occurrence of <item> from the set.  Returns 1 if
   // it removes the item, 0 if it can't find the item, and -1 if a
@@ -105,12 +105,27 @@ public:
   // Return first occurrence of <item> from the set.
   // Returns 0 if can't find, else 1.
 
-  int find (T &item, size_t index) const;
-  // Find the <index>th element in the set.  Returns 0 if the element
-  // isn't in the range <0..size()>, else 1.
-  
   size_t size (void) const;
   // Size of the set.
+
+  // = Additional utility methods.
+
+  int get (T &item, size_t index) const;
+  // Get the <index>th element in the set.  Returns 0 if the element
+  // isn't in the range <0..size() - 1>, else 1.
+
+  int set (const T &item, size_t index);
+  // Set the <index>th element in the set.  Will pad out the set with
+  // empty nodes if <index> is beyond the range <0..size() - 1>.
+  // Returns -1 on failure, 0 if <index> isn't initially in range, and
+  // 1 otherwise.
+
+  int insert_tail (const T &new_item);
+  // Insert <new_item> into the set at the tail.  Returns -1 if
+  // failures occur else 0.
+
+  void reset (void);
+  // Reset the <ACE_Unbounded_Set> to be empty.
 
   void dump (void) const;
   // Dump the state of an object.
@@ -156,7 +171,11 @@ public:
   // Returns 0 when all items have been seen, else 1.
 
   int advance (void);
-  // Move forward by one element in the set.
+  // Move forward by one element in the set.  Returns 0 when all the
+  // items in the set have been seen, else 1.
+
+  int done (void) const;
+  // Returns 1 when all items have been seen, else 0.
 
   void dump (void) const;
   // Dump the state of an object.
@@ -214,10 +233,6 @@ public:
   // Return first occurrence of <item> from the set.
   // Returns 0 if can't find, else 1.
 
-  int find (T &item, size_t index) const;
-  // Find the <index>th element in the set.  Returns 0 if the element
-  // isn't in the range <0..size()>, else 1.
-
   size_t size (void) const;
   // Size of the set.
 
@@ -268,7 +283,11 @@ public:
   // Returns 0 when all items have been seen, else 1.
 
   int advance (void);
-  // Move forward by one element in the set.
+  // Move forward by one element in the set.  Returns 0 when all the
+  // items in the set have been seen, else 1.
+
+  int done (void) const;
+  // Returns 1 when all items have been seen, else 0.
 
   void dump (void) const;
   // Dump the state of an object.
@@ -331,10 +350,6 @@ public:
   int find (const T &item) const;
   // Return first occurrence of <item> from the set.
   // Returns 0 if can't find, else 1.
-
-  int find (T &item, size_t index) const;
-  // Find the <index>th element in the set.  Returns 0 if the element
-  // isn't in the range <0..size()>, else 1.
 
   size_t size (void) const;
   // Size of the set.

@@ -201,20 +201,26 @@ ACE_TPQ_Iterator::next (ACE_TPQ_Entry *&next_item)
 {
   ACE_TRACE ("ACE_TPQ_Iterator::next");
 
-  next_item = current_;
+  next_item = this->current_;
   
-  if (current_ == 0)
-    return 0;
+  return current_ != 0;
+}
 
-  return 1;
+int
+ACE_TPQ_Iterator::done (void) const
+{
+  ACE_TRACE ("ACE_TPQ_Iterator::done");
+
+  return this->current_ == 0;
 }
 
 void
 ACE_TPQ_Iterator::advance (void)
 {
   ACE_TRACE ("ACE_TPQ_Iterator::advance");
+
   if (current_ != 0)
-    current_ = current_->next_;
+    this->current_ = this->current_->next_;
 }
 
 void
@@ -223,8 +229,8 @@ ACE_TPQ_Iterator::dump (void) const
   ACE_TRACE ("ACE_TPQ_Iterator::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG, "ACE_TPQ_Iterator::dump:\n"
-			" current_ = %d\n",
-			(long) current_));
+	      " current_ = %d\n",
+	      (long) this->current_));
   ACE_DEBUG ((LM_DEBUG, "head_ and tail_\n"));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));    
 }
