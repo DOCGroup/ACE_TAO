@@ -26,11 +26,11 @@ Client_Group::consumer (void) const
 ACE_INLINE Loopback_Supplier *
 Client_Group::loopback_supplier (void) const
 {
-  return this->loopback_supplier_.in ();
+  return this->loopback_pair_.loopback_supplier ();
 }
 
 ACE_INLINE Loopback_Consumer *
 Client_Group::loopback_consumer (void) const
 {
-  return this->loopback_consumer_.in ();
+  return this->loopback_pair_.loopback_consumer ();
 }

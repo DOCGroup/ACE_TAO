@@ -24,10 +24,13 @@ public:
   /**
    * @param client The client
    */
-  ACE_EXPLICIT Auto_Disconnect (Client *s);
+  ACE_EXPLICIT Auto_Disconnect (Client *s = 0);
 
   /// Destructor
   ~Auto_Disconnect (void);
+
+  /// Assingment operator
+  Auto_Disconnect<Client>& operator= (Client *client);
 
   /// Release the client, i.e. the destructor does not call any
   /// methods.
