@@ -1480,7 +1480,9 @@ TAO_CodeGen::gen_stub_src_includes (void)
   if (ACE_BIT_ENABLED (idl_global->decls_seen_info_,
                        idl_global->decls_seen_masks.interface_seen_)
       || ACE_BIT_ENABLED (idl_global->decls_seen_info_,
-                          idl_global->decls_seen_masks.exception_seen_))
+                          idl_global->decls_seen_masks.exception_seen_)
+      || ACE_BIT_ENABLED (idl_global->decls_seen_info_,
+                          idl_global->decls_seen_masks.union_seen_))
     {
       // Needed for _narrow(), which is now template-based.
       this->gen_standard_include (this->client_stubs_,
