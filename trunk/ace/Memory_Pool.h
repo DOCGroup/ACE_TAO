@@ -434,7 +434,7 @@ protected:
   off_t minimum_bytes_;
   // What the minimum bytes of the initial segment should be.
 
-  TCHAR backing_store_name_[MAXPATHLEN];
+  TCHAR backing_store_name_[MAXPATHLEN + 1];
   // Name of the backing store where the shared memory pool is kept.
 
   int guess_on_fault_;

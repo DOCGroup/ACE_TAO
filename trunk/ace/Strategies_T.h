@@ -141,14 +141,14 @@ public:
 protected:
   typedef ACE_Creation_Strategy<SVC_HANDLER> inherited;
 
-  char dll_name_[MAXPATHLEN];
+  char dll_name_[MAXPATHLEN + 1];
   // Name of the DLL to dynamically link.
 
-  char factory_function_[MAXPATHLEN];
+  char factory_function_[MAXPATHLEN + 1];
   // Name of the factory function in the shared library to use to
   // obtain a pointer to the new SVC_HANDLER.
 
-  char svc_name_[MAXNAMELEN];
+  char svc_name_[MAXNAMELEN + 1];
   // Name of the service.
 
   ACE_Service_Repository *svc_rep_;

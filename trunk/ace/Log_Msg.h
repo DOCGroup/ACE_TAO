@@ -320,7 +320,7 @@ private:
   int linenum_;
   // Line number where the error occurred.
 
-  char file_[MAXNAMELEN];
+  char file_[MAXPATHLEN + 1];
   // File where the error occurred.
 
   char msg_[ACE_Log_Record::MAXLOGMSGLEN];

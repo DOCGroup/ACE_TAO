@@ -22,6 +22,11 @@
 // configuration file (e.g., config-sunos5-sunc++-4.x.h).  
 #include "ace/config.h"
 
+// The maximum length for a fully qualified Internet name.
+#if !defined(ACE_MAX_FULLY_QUALIFIED_NAME_LEN)
+#define ACE_MAX_FULLY_QUALIFIED_NAME_LEN 256
+#endif /* ACE_MAX_FULLY_QUALIFIED_NAME_LEN */
+
 #if defined (ACE_HAS_4_4BSD_SENDMSG_RECVMSG)
 // control message size to pass a file descriptor
 #define ACE_BSD_CONTROL_MSG_LEN sizeof (struct cmsghdr) + sizeof (ACE_HANDLE)

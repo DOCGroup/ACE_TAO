@@ -54,8 +54,8 @@ private:
   int unbind (char* key);
   int rebind (char* key, char* value, char* type = "");
 
-  char filename_[MAXPATHLEN];
-  char dump_filename_[MAXPATHLEN];
+  char filename_[MAXPATHLEN + 1];
+  char dump_filename_[MAXPATHLEN + 1];
 
   u_short port_;
   // port server is listening on

@@ -5603,12 +5603,16 @@ ACE_OS::dlsym (ACE_SHLIB_HANDLE handle, ACE_DL_TYPE symbolname)
 #if defined (ACE_LACKS_POSIX_PROTOTYPES)
   ACE_OSCALL_RETURN (::dlsym (handle, (char*) symbolname), void *, 0);
 #elif defined (ACE_USES_ASM_SYMBOL_IN_DLSYM)
-  char asm_symbolname [MAXPATHLEN] ;
-  if (strlen (symbolname) + 2 > sizeof asm_symbolname)
-    return 0 ;
+  int l = strlen(symbolname) + 2;
+  char* asm_symbolname;
+  ACE_NEW_RETURN(asm_symbolname, char[l], 0);
   ACE_OS::strcpy (asm_symbolname, "_") ;
   ACE_OS::strcpy (asm_symbolname + 1, symbolname) ;
-  ACE_OSCALL_RETURN (::dlsym (handle, asm_symbolname), void *, 0);
+  void* ace_result;
+  ACE_OSCALL (::dlsym (handle, asm_symbolname), void *, 0,
+	      ace_result);
+  delete[] asm_symbolname;
+  return ace_result;
 #else
   ACE_OSCALL_RETURN (::dlsym (handle, symbolname), void *, 0);
 #endif /* ACE_LACKS_POSIX_PROTOTYPES */

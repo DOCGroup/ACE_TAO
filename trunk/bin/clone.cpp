@@ -60,8 +60,8 @@ usage (void)
 static char *
 abspath (char *cwd, char *rel_pathname)
 {
-  static char cwd_buffer[MAXPATHLEN];
-  char abs_buffer[MAXPATHLEN];
+  static char cwd_buffer[MAXPATHLEN + 1];
+  char abs_buffer[MAXPATHLEN + 1];
   register char *endp;
   register char *p;
   register char *inp = abs_buffer;
@@ -201,7 +201,7 @@ remove_item (char* s_path, char* d_path)
 {
   struct stat dst_stat_buf;
   DIR* dirp;
-  char containing_dir[MAXPATHLEN];
+  char containing_dir[MAXPATHLEN + 1];
 
   if (lstat (d_path, &dst_stat_buf) == -1)
     {
@@ -452,7 +452,7 @@ static void
 symlink_SCCS (char* s_path, char* d_path)
 {
   struct stat dst_stat_buf;
-  char symlink_buf[MAXPATHLEN];
+  char symlink_buf[MAXPATHLEN + 1];
   int count;
 
   if (access (d_path, F_OK))			/* Does d_path exit? */
@@ -604,7 +604,7 @@ clone_dir (char* s_path, char* d_path)
       struct dirent* dir_entry_p;
       char* new_s_path;
       char* new_d_path;
-      char  symlink_buf[MAXPATHLEN];
+      char  symlink_buf[MAXPATHLEN + 1];
       int   len;
 
       if ((dir_entry_p = readdir (dirp)) == NULL)
@@ -632,7 +632,7 @@ clone_dir (char* s_path, char* d_path)
 static void
 clone_symbolic_link (char* s_path,char* d_path)
 {
-  char symlink_buf[MAXPATHLEN];
+  char symlink_buf[MAXPATHLEN + 1];
   int count;
 
   if ((count = readlink (s_path, symlink_buf, MAXPATHLEN)) == -1)

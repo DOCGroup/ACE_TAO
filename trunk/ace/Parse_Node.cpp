@@ -358,7 +358,7 @@ ACE_Location_Node::open_handle (void)
 {
   ACE_TRACE ("ACE_Location_Node::open_handle");
 
-  char dl_pathname[MAXPATHLEN];
+  char dl_pathname[MAXPATHLEN + 1];
 
   // Transform the pathname into the appropriate dynamic link library
   // by searching the ACE_LD_SEARCH_PATH.
