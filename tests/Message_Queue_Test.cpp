@@ -225,7 +225,7 @@ single_thread_performance_test (int queue_type = 0)
                                        MAX_MESSAGE_SIZE),
                     -1);
 
-  ACE_Message_Block **receive_block_p = 0x;
+  ACE_Message_Block **receive_block_p = 0;
   ACE_NEW_RETURN (receive_block_p,
                   ACE_Message_Block *[max_messages],
                   -1);

@@ -556,6 +556,7 @@ main (int, ASYS_TCHAR *[])
                   ASYS_TEXT ("ACE_Future<T>::Set followed by Ace_Future<T>::Get does ")
                   ASYS_TEXT ("not work, broken Ace_Future<> implementation.\n")));
   }
+
   {
     ACE_DEBUG ((LM_DEBUG,
                 ASYS_TEXT ("Checking if Ace_Future<T>::operator= is implemented ")
@@ -580,6 +581,8 @@ main (int, ASYS_TCHAR *[])
     // The stuff below might crash the process if the <operator=>
     // implementation was bad
     int value = 0;
+
+    ACE_Time_Value timeout (ACE_OS::gettimeofday () + ACE_Time_Value (10));
 
     f1.set (100);
     f1.get (value, &timeout);
