@@ -1,9 +1,30 @@
+Fri Dec  6 01:21:48 1996  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
+
+	* examples/Reactor/ReactorEx/test_reactorEx.cpp: Rewrote the
+ 	  example such that the test now uses the new Notification
+ 	  Strategy scheme in ACE.  This allows a message queue consumer to
+ 	  wait in ReactorEx without spawning a new thread, or creating
+ 	  extra Win32 events.  This make the example smaller and much
+ 	  cleaner.
+
+	* ace/Task_T.h: Added synchronization trait to Task.
+
+	* ace/Task_T.i (msg_queue): Added a check to delete the old
+ 	  message_queue if we had created it.
+
+	* ace/ReactorEx.cpp (remove_handler): Removed the call to set
+ 	  reactorEx of the event handler to zero becauses the event
+	  handler  may no longer be there after the handle_close()
+	  completes. 
+
 Thu Dec 05 21:18:49 1996  David L. Levine  <levine@cs.wustl.edu>
+
 	* ace/OS.cpp (thr_create): Oops, needed to add another check if
  	  thr_id == 0 before assigning *thr_handle = *thr_id, for systems
  	  such as Solaris 5.4 that don't have PTHREADS.
 
 Wed Dec  4 09:09:56 1996  David L. Levine  <levine@cs.wustl.edu>
+
 	* ace/Log_Msg.cpp (log):  added printout to stderr before call
  	  to exit().  Silent calls to exit() are bad :-}
 
