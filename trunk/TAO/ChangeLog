@@ -1,16 +1,59 @@
+Mon Apr 12 18:09:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/RTCORBA/RTCORBAC.{h,cpp,i}:
+        * tao/RTPortableServer/RTPortableServerA.cpp:
+        * tao/RTPortableServer/RTPortableServerC.{h,cpp,i}:
+        * tao/TypeCodeFactory/TypeCodeFactoryC.{h,cpp,i}:
+        * tao/DynamicAny/DynamicAnyC.{h,cpp,i}:
+        * tao/BooleanSeqA.cpp:
+        * tao/BooleanSeqC.{h,cpp,i}:
+        * tao/BoundsA.cpp:
+        * tao/BoundsC.{h,cpp,i}:
+        * tao/DynamicA.cpp:
+        * tao/DynamicC.{h,cpp,i}:
+        * tao/FloatSeqA.cpp:
+        * tao/FloatSeqC.{h,cpp,i}:
+        * tao/IOP_CodecA.cpp:
+        * tao/IOP_CodecC.{h,cpp,i}:
+        * tao/Messaging_PolicyValueA.cpp:
+        * tao/Messaging_PolicyValueC.{h,cpp,i}:
+        * tao/Object_KeyC.{h,cpp,i}:
+        * tao/Messaging_SyncScopeC.{h,cpp,i}:
+          Regenerated these files
+
+        * tao/RTPortableServer/RTPortableServer.pidl:
+        * tao/TypeCodeFactory/TypeCodeFactory.pidl:
+        * tao/DynamicAny/DynamicAny.pidl:
+        * tao/BooleanSeq.pidl:
+        * tao/Bounds.pidl:
+        * tao/Dynamic.pidl:
+        * tao/FloatSeq.pidl:
+        * tao/IOP_Codec.pidl:
+        * tao/Messaging_PolicyValue.pidl:
+        * tao/Messaging_SyncScope.pidl:
+        * tao/Object_Key.pidl:
+          Updated regeneration message
+
+        * tao/RTPortableServer/RTPortableServerA.h:
+        * tao/BoundsA.h:
+        * tao/DynamicA.h:
+        * tao/IOP_CodecA.h:
+        * tao/Messaging_PolicyValueA.h:
+          Removed these files
+
 Mon Apr 12 12:20:09 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_codegen.cpp:
         * TAO_IDL/include/idl_global.h:
         * TAO_IDL/util/utl_global.cpp:
         * TAO_IDL/util/utl_scope.cpp:
-        
+
           - To the logic for generation of ORB include files, added
             a special case for the occurrence of ValueBase, separating
             it from the occurrence of a valuetype declaration. This
             change allows us to avoid the inclusion of ValueFactory.h
             when all we have is a ValueBase member or parameter.
-            
+
           - Move the generation of the include of CDR.h to the stub
             source file. Now that all CDR operators are uninlined,
             this include no longer needs to appear in the stub header
