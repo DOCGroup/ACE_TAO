@@ -123,6 +123,9 @@ be_visitor_operation_ami_exception_holder_operation_cs::visit_operation (be_oper
 
   *os << this->gen_environment_var () << be_nl;
 
+  const char *exception_data_arg = "0";
+  const char *exception_count_arg = "0";
+
   // Don't do anything if the exception list is empty.
   if (node->exceptions ())
     {
@@ -160,147 +163,20 @@ be_visitor_operation_ami_exception_holder_operation_cs::visit_operation (be_oper
 
       os->indent ();
       *os << "CORBA::ULong exceptions_count = "
-          << excep_count << ";";
+          << excep_count << ";\n" << be_nl;
+
+      exception_data_arg = "exceptions_data";
+      exception_count_arg = "exceptions_count";
     }
 
-
-
-  *os << "// we have the is_system_exception boolean" << be_nl
-      << "// the byte_order boolean and" << be_nl
-      << "// the marshaled_exception sequence of octet" << be_nl
-      << " TAO_InputCDR _tao_in ((const char*) "
+  *os << "TAO_Messaging_Helper::exception_holder_raise (" << be_idt_nl
+      << exception_data_arg << "," << be_nl
+      << exception_count_arg << "," << be_nl
       << "this->marshaled_exception ().get_buffer ()," << be_nl
-      << "  this->marshaled_exception ().length ()," << be_nl
-      << "  this->byte_order ());" << be_nl << be_nl
-      << "CORBA::String_var type_id;" << be_nl << be_nl
-      << "if ((_tao_in >> type_id.inout ()) == 0)" << be_nl
-      << "  {" << be_nl
-      << "    // Could not demarshal the exception id, raise a local" << be_nl
-      << "    // CORBA::MARSHAL" << be_nl;
-
-  if (be_global->use_raw_throw ())
-    {
-      *os << "    throw CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE," << be_nl;
-      *os << "                          CORBA::COMPLETED_YES);" << be_nl;
-    }
-  else
-    {
-      *os << "    ACE_THROW (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE," << be_nl;
-      *os << "                               CORBA::COMPLETED_YES));" << be_nl;
-    }
-
-  *os << "  }" << be_nl << be_nl;
-
-  *os << "if (this->is_system_exception ())" << be_idt_nl
-      << "{" << be_idt_nl
-      << "CORBA::ULong minor = 0;" << be_nl
-      << "CORBA::ULong completion = 0;" << be_nl
-      << "if ((_tao_in >> minor) == 0 ||" << be_nl
-      << "  (_tao_in >> completion) == 0)" << be_idt_nl;
-
-  if (be_global->use_raw_throw ())
-    {
-      *os << "    throw CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE," << be_idt_nl;
-      *os << "                          CORBA::COMPLETED_MAYBE);"
-          << be_uidt << be_uidt_nl;
-    }
-  else
-    {
-      *os << "    ACE_THROW (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,"
-          << be_idt_nl;
-      *os << "                               CORBA::COMPLETED_MAYBE));"
-          << be_uidt << be_uidt_nl;
-    }
-
-  *os << "CORBA::SystemException* exception =" << be_idt_nl
-      << "TAO_Exceptions::create_system_exception (type_id.in ()" << be_idt_nl
-      << "TAO_ENV_ARG_PARAMETER);" << be_uidt_nl << be_uidt_nl
-      << "ACE_CHECK;" << be_nl << be_nl;
-  *os << "if (exception == 0)" << be_idt_nl
-      << " {" << be_idt_nl
-      << "// @@ We should raise a CORBA::NO_MEMORY, but we ran out" << be_nl
-      << "//    of memory already. We need a pre-allocated, TSS," << be_nl
-      << "//    CORBA::NO_MEMORY instance" << be_nl
-      << "ACE_NEW (exception, CORBA::UNKNOWN);" << be_uidt_nl
-      << "}"<< be_uidt_nl
-      << "exception->minor (minor);" << be_nl
-      << "exception->completed (CORBA::CompletionStatus (completion));" << be_nl
-      << be_nl
-      << "// Raise the exception." << be_nl
-      << "TAO_ENV_RAISE (exception);" << be_nl << be_nl
-      << "return;" << be_uidt_nl
-      << "}" << be_uidt << be_uidt_nl;
-
-  if (node->exceptions ())
-    {
-      *os << be_idt_nl
-          << "else  // it must be user exception" << be_idt_nl
-          << "{" << be_idt_nl
-          << "// Match the exception interface repository id with the" << be_nl
-          << "// exception in the exception list." << be_nl
-          << "// This is important to decode the exception." << be_nl
-
-          << "for (CORBA::ULong i = 0;" << be_nl
-          << "     i < exceptions_count;" << be_nl
-          << "     i++)" << be_idt_nl
-          << "{" << be_idt_nl;
-
-      *os << "if (ACE_OS::strcmp (type_id.in (), exceptions_data[i].id) != 0)" << be_idt_nl
-          << "continue;" << be_uidt_nl << be_nl
-
-          << "// match" << be_nl
-          << "CORBA::Exception *exception = exceptions_data[i].alloc ();"
-          << be_nl << be_nl
-
-          << "if (exception == 0)" << be_idt_nl;
-
-      if (be_global->use_raw_throw ())
-        {
-          *os << "throw CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE," << be_nl;
-          *os << "                        CORBA::COMPLETED_YES);"
-              << be_uidt_nl;
-        }
-      else
-        {
-          *os << "ACE_THROW (CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,"
-              << be_nl;
-          *os << "                             CORBA::COMPLETED_YES));"
-              << be_uidt_nl;
-        }
-
-      *os << "exception->_tao_decode (_tao_in TAO_ENV_ARG_PARAMETER);" << be_nl
-          << "ACE_CHECK;\n" << be_nl << be_nl;
-
-      *os << "// Raise the exception." << be_nl
-          << "TAO_ENV_RAISE (exception);" << be_nl << be_nl
-          << "return;" << be_uidt_nl
-          << "}" << be_uidt_nl << be_nl
-
-          << "// If we couldn't find the right exception, report it as"
-          << be_nl
-          << "// CORBA::UNKNOWN." << be_nl << be_nl;
-
-      *os << "// @@ It would seem like if the remote exception is a" << be_nl
-          << "//    UserException we can assume that the request was"
-          << be_nl
-          << "//    completed." << be_nl;
-
-      if (be_global->use_raw_throw ())
-        {
-          *os << "throw CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE," << be_nl;
-          *os << "                      CORBA::COMPLETED_YES);"
-              << be_uidt_nl;
-        }
-      else
-        {
-          *os << "ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE,"
-              << be_nl;
-          *os << "                           CORBA::COMPLETED_YES));"
-              << be_uidt_nl;
-        }
-
-      *os << "}" << be_uidt << be_uidt_nl;
-    }
+      << "this->marshaled_exception ().length ()," << be_nl
+      << "this->byte_order ()," << be_nl
+      << "this->is_system_exception ()" << be_nl
+      << "TAO_ENV_ARG_PARAMETER);" << be_uidt << be_uidt_nl;
 
   *os << "}\n\n";
   return 0;

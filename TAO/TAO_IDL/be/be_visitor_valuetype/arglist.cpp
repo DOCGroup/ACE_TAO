@@ -50,12 +50,7 @@ be_visitor_obv_operation_arglist::visit_operation (be_operation *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << " (";
-
-  if (node->argument_count () > 0)
-    {
-      *os << be_idt << be_idt_nl;
-    }
+  *os << " (" << be_idt << be_idt_nl;
 
   // All we do is hand over code generation to our scope.
   if (this->visit_scope (node) == -1)
@@ -81,42 +76,45 @@ be_visitor_obv_operation_arglist::visit_operation (be_operation *node)
         case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_OBV_CH:
         case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_IMPL_CH:
           // Last argument - is always TAO_ENV_ARG_DECL.
-          *os << env_decl << "_WITH_DEFAULTS" << be_nl
-              << be_uidt_nl << ")";
+          *os << env_decl << "_WITH_DEFAULTS" << be_uidt_nl;
           break;
         case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_IMPL_CS:
           // Last argument - is always TAO_ENV_ARG_DECL.
-          *os << env_decl << ")";
+          *os << env_decl << be_uidt_nl;
           break;
         default:
-          *os << env_decl << ")";
+          *os << env_decl << be_uidt_nl;
           break;
         }
     }
   else
     {
-      *os << ")";
+      *os << be_uidt_nl;
     }
+  *os << ")";
+
+  be_visitor_context ctx = *this->ctx_;
+  be_visitor_operation operation_visitor (&ctx);
+  if (operation_visitor.gen_throw_spec (node) == -1)
+    return -1;
 
   switch (this->ctx_->state ())
     {
     case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_CH:
       // Each method is pure virtual in the Valuetype class.
-      *os << " = 0;" << be_nl;
+      *os << " = 0;" << be_uidt_nl;
       break;
     case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_IH:
       break;
     case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_IS:
       break;
     case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_IMPL_CH:
-      *os << ";" << be_nl;
+      *os << ";" << be_uidt_nl;
+      break;
     case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_IMPL_CS:
     default:
-       *os << be_nl;
+       *os << be_uidt_nl;
     }
-
-  if (!this->ctx_->attribute ())    // hack to get a nice newline
-    *os << be_nl;
 
   return 0;
 }

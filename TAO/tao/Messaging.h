@@ -48,6 +48,27 @@ typedef void (*TAO_Reply_Handler_Skeleton)(
     TAO_ENV_ARG_DECL_NOT_USED
     );
 
+struct TAO_Exception_Data;
+
+/**
+ * @namespace TAO_Messaging_Helper
+ *
+ * @brief Define helper functions for the CORBA Messaging
+ * implementation in TAO.
+ */
+namespace TAO_Export TAO_Messaging_Helper
+{
+  /// Implement the code shared by all the ExceptionHolder::raise_*()
+  /// operations
+  void exception_holder_raise (TAO_Exception_Data *exception_data,
+                               CORBA::ULong exception_count,
+                               CORBA::Octet *marshaled_data,
+                               CORBA::ULong marshaled_data_length,
+                               CORBA::Boolean byte_order,
+                               CORBA::Boolean is_system_exception
+                               TAO_ENV_ARG_DECL);
+}
+
 #endif /* TAO_HAS_AMI_CALLBACK */
 
 #include "ace/post.h"

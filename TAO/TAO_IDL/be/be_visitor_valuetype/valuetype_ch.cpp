@@ -217,7 +217,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
       << "_tao_obv_static_repository_id ();" << be_nl << be_nl;
 
   // Ugly TAO any support routine
-  *os << "static void _tao_any_destructor (void *);" 
+  *os << "static void _tao_any_destructor (void *);"
       << be_nl << be_nl;
 
 
@@ -326,14 +326,14 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
     be_visitor_context ctx (*this->ctx_);
     ctx.state (TAO_CodeGen::TAO_TYPECODE_DECL);
     visitor = tao_cg->make_visitor (&ctx);
-    
+
     if (!visitor || (node->accept (visitor) == -1))
       {
         ACE_ERROR_RETURN ((LM_ERROR,
                            "(%N:%l) be_visitor_valuetype_ch::"
                            "visit_structure - "
                            "TypeCode declaration failed\n"
-                           ), 
+                           ),
                           -1);
       }
   }
@@ -422,8 +422,6 @@ be_visitor_valuetype_ch::visit_operation (be_operation *node)
     }
 
   delete visitor;
-
-  // @@ Michael: We need to put the exception throw spec here
 
   return 0;
 }
