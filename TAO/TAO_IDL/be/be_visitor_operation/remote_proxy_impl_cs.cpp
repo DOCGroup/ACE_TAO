@@ -372,22 +372,12 @@ be_visitor_operation_remote_proxy_impl_cs::gen_marshal_and_invoke (
 
   *os << "\n#endif  /* TAO_HAS_INTERCEPTORS */" << be_nl;
 
-  *os << be_nl 
+  *os << be_nl
       << "for (;;)" << be_idt_nl
       << "{" << be_idt_nl
       << "int _invoke_status = TAO_INVOKE_EXCEPTION;" << be_nl;
 
   *os << "\n#if TAO_HAS_INTERCEPTORS == 1" << be_nl;
-
-  // Obtain the scope.
-  // os->incr_indent ();
-  if (node->is_nested ())
-    {
-      be_decl *parent =
-        be_scope::narrow_from_scope (node->defined_in ())->decl ();
-
-      *os << parent->full_name () << "::";
-    }
 
   *os << "TAO_ClientRequestInfo_" << node->flat_name ();
 

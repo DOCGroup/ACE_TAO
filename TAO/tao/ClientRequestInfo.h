@@ -160,14 +160,13 @@ public:
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
      ACE_THROW_SPEC ((CORBA::SystemException));
 
-protected:
-  /// Helper method to get the request and response service contexts.
-  IOP::ServiceContext *get_service_context_i (
-      TAO_Service_Context &service_context_list,
-      IOP::ServiceId id,
-      CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
+  /** @name Stub helper methods
+   *
+   * The following methods are used in the implementation of the
+   * Stubs, they are not part of the ClientRequestInfo interface, but
+   * an extension used internally by TAO.
+   */
+  //@{
   /// Change the exception status.
   void exception (CORBA::Exception *exception);
 
@@ -182,6 +181,15 @@ protected:
   /// PortableInterceptor::ForwardRequest exception, and set the reply
   /// status flag accordingly.
   void forward_reference (PortableInterceptor::ForwardRequest &exc);
+  //@}
+
+protected:
+  /// Helper method to get the request and response service contexts.
+  IOP::ServiceContext *get_service_context_i (
+      TAO_Service_Context &service_context_list,
+      IOP::ServiceId id,
+      CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 protected:
 

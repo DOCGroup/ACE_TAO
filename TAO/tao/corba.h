@@ -72,8 +72,6 @@
 #include "tao/StringSeqC.h"
 #include "tao/OctetSeqC.h"
 
-#include "tao/ClientRequestInfo.h"
-
 #if !defined (ACE_NESTED_CLASS)
 #if defined (ACE_WIN32)
 #define ACE_NESTED_CLASS(SCOPE,CLASS) CLASS

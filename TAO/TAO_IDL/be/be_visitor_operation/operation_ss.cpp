@@ -146,7 +146,7 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
   os->indent ();
   // Get the right object implementation.
   *os << intf->full_skel_name () << " *_tao_impl = ("
-      << intf->full_skel_name () << " *)_tao_object_reference;" 
+      << intf->full_skel_name () << " *)_tao_object_reference;"
       << be_nl << be_nl;
 
   // Declare a return type variable.
@@ -228,15 +228,6 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
       << be_nl
       << "_tao_server_request.interceptor_count ()" << be_uidt_nl
       << ");" << be_uidt_nl << be_nl;
-
-  // Obtain the scope.
-  if (node->is_nested ())
-    {
-      be_decl *parent =
-        be_scope::narrow_from_scope (node->defined_in ())->decl ();
-
-      *os << "POA_" << parent->full_name () << "::";
-    }
 
   *os << "TAO_ServerRequestInfo_" << node->flat_name ();
 
@@ -354,7 +345,7 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
     }
 
   // Invoke the send_reply() or send_other() interception point, and
-  // check for exception. 
+  // check for exception.
   *os << "\n#if (TAO_HAS_INTERCEPTORS == 1)" << be_nl;
 
   // Grab the right visitor to generate the return type accessor if
@@ -650,7 +641,7 @@ be_visitor_operation_ss::gen_marshal_params (be_operation *node,
                         -1);
     }
 
-  *os << "TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();" 
+  *os << "TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();"
       << be_nl << be_nl;
   *os << "if (!(\n" << be_idt << be_idt;
 
