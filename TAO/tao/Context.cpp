@@ -41,34 +41,34 @@ CORBA_Context::_decr_refcnt (void)
 const char *
 CORBA_Context::context_name (CORBA::Environment &ACE_TRY_ENV) const
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE, 
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
                                          CORBA::COMPLETED_NO),
                     0);
 }
 
-CORBA_Context_ptr 
+CORBA_Context_ptr
 CORBA_Context::parent (CORBA::Environment &ACE_TRY_ENV) const
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE, 
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
                                          CORBA::COMPLETED_NO),
                     0);
 }
 
-void 
-CORBA_Context::create_child (const char *child_ctx_name, 
+void
+CORBA_Context::create_child (const char *child_ctx_name,
                              CORBA_Context_out child_ctx,
                              CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE, 
+  ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
                                   CORBA::COMPLETED_NO));
 }
 
-void 
-CORBA_Context::set_one_value (const char *propname, 
+void
+CORBA_Context::set_one_value (const char *propname,
                               const CORBA_Any &propvalue,
                               CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE, 
+  ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
                                   CORBA::COMPLETED_NO));
 }
 
@@ -76,26 +76,26 @@ void
 CORBA_Context::set_values (CORBA::NVList_ptr values,
                            CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE, 
+  ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
                                   CORBA::COMPLETED_NO));
 }
 
-void 
+void
 CORBA_Context::delete_values (const char *propname,
                               CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE, 
+  ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
                                   CORBA::COMPLETED_NO));
 }
 
-void 
+void
 CORBA_Context::get_values (const char *start_scope,
                            CORBA::Flags op_flags,
                            const char *pattern,
                            CORBA::NVList_ptr &values,
                            CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE, 
+  ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
                                   CORBA::COMPLETED_NO));
 }
 
@@ -145,7 +145,7 @@ CORBA_ContextList::item (CORBA::ULong index,
 }
 
 void
-CORBA_ContextList::remove (CORBA::ULong, 
+CORBA_ContextList::remove (CORBA::ULong,
                            CORBA::Environment &ACE_TRY_ENV)
 {
   // unimplemented
@@ -172,13 +172,11 @@ CORBA_ContextList::_destroy (void)
 template class ACE_Node<char *>;
 template class ACE_Unbounded_Queue<char *>;
 template class ACE_Unbounded_Queue_Iterator<char *>;
-template class ACE_Atomic_Op<ACE_SYNCH_MUTEX, CORBA::ULong>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate ACE_Node<char *>
 #pragma instantiate ACE_Unbounded_Queue<char *>
 #pragma instantiate ACE_Unbounded_Queue_Iterator<char *>
-#pragma instantiate ACE_Atomic_Op<ACE_SYNCH_MUTEX, CORBA::ULong>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
