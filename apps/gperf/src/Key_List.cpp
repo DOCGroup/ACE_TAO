@@ -523,7 +523,7 @@ Key_List::output_min_max (void)
 // location in the local static array.
 
 void
-Key_List::output_switch (void)
+Key_List::output_switch (int use_keyword_table)
 {
   if (!option[GLOBAL])
     {
@@ -567,7 +567,7 @@ Key_List::output_switch (void)
     }
   if (!option[OPTIMIZE])
     printf ("  if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)\n    {\n");
-  printf ("      int key = %s (str, len);\n\n", option.hash_name ());
+  printf ("      unsigned int key = %s (str, len);\n\n", option.hash_name ());
   if (!option[OPTIMIZE])
     printf ("      if (key <= MAX_HASH_VALUE && key >= MIN_HASH_VALUE)\n");
 
@@ -596,14 +596,14 @@ Key_List::output_switch (void)
       // Output each keyword as part of a switch statement indexed by
       // hash value.
 
-      if (option[POINTER] || option[DUP])
+      if (option[POINTER] || option[DUP] || use_keyword_table)
         {
           int i = 0;
 
           printf ("              %s%s *resword; %s\n\n",
                   option[CONSTANT] ? "const " : "",
                   pointer_and_type_enabled ? struct_tag : "char",
-                  option[LENTABLE] && !option[DUP] ? "int key_len;" : "");
+                  option[LENTABLE] && !option[DUP] ? "unsigned int key_len;" : "");
           if (total_switches == 1)
             {
               printf ("              switch (key)\n                {\n");
@@ -614,30 +614,40 @@ Key_List::output_switch (void)
 
           for (temp = curr; temp && ++i <= number_of_cases; temp = temp->next)
             {
-              printf ("                case %*d:", 
+              printf ("                case %*d:\n",
                       Key_List::field_width, 
                       temp->hash_value - lowest_case_value);
-              if (option[DEBUG])
-                printf (" /* hash value = %4d, keyword = \"%s\" */",
-                        temp->hash_value,
-                        temp->key);
-              putchar ('\n');
 
-              // Handle `natural links,' i.e., those that occur statically.
+              // Handle `static links,' i.e., those that occur during
+              // the initial preprocessing.
 
-              if (temp->link)
+              if (temp->link == 0)
+                {
+                  if (option[DEBUG])
+                    printf ("                  /* hash value = %4d, keyword = \"%s\" */\n",
+                            temp->hash_value,
+                            temp->key);
+                }
+              else
                 {
                   List_Node *links;
 
                   for (links = temp; links; links = links->link)
                     {
+                      if (option[DEBUG])
+                        printf ("                  /* hash value = %4d, keyword = \"%s\" */\n",
+                                temp->hash_value,
+                                links->key);
                       if (pointer_and_type_enabled)
                         printf ("                  resword = &wordlist[%d];\n", links->index);
+                      else if (use_keyword_table)
+                        printf ("                  resword = wordlist[%d];\n", links->index);
                       else
                         printf ("                  resword = \"%s\";\n", links->key);
                       printf ("                  if (%s) return resword;\n", comp_buffer);
                     }
                 }
+
               // Handle unresolved duplicate hash values.  These are
               // guaranteed to be adjacent since we sorted the keyword
               // list by increasing hash values.
@@ -649,12 +659,16 @@ Key_List::output_switch (void)
                     {
                       if (pointer_and_type_enabled)
                         printf ("                  resword = &wordlist[%d];\n", temp->index);
+                      else if (use_keyword_table)
+                        printf ("                  resword = wordlist[%d];", temp->index);
                       else
                         printf ("                  resword = \"%s\";\n", temp->key);
                       printf ("                  if (%s) return resword;\n", comp_buffer);
                     }
                   if (pointer_and_type_enabled)
                     printf ("                  resword = &wordlist[%d];\n", temp->index);
+                  else if (use_keyword_table)
+                    printf ("                  resword = wordlist[%d];", temp->index);
                   else
                     printf ("                  resword = \"%s\";\n", temp->key);
                   printf ("                  return %s ? resword : 0;\n", comp_buffer);
@@ -665,6 +679,8 @@ Key_List::output_switch (void)
                 {
                   if (pointer_and_type_enabled)
                     printf ("                  resword = &wordlist[%d];", temp->index);
+                  else if (use_keyword_table)
+                    printf ("                  resword = wordlist[%d];", temp->index);
                   else
                     printf ("                  resword = \"%s\";", temp->key);
                   if (option[LENTABLE] && !option[DUP])
@@ -865,7 +881,7 @@ Key_List::output_hash_function (void)
     printf ("%s::", option.class_name ());
 
   printf (option[ANSI]
-          ? "%s (const char *str, int len)\n{\n  static %sunsigned %s asso_values[] =\n    {"
+          ? "%s (const char *str, unsigned int len)\n{\n  static %sunsigned %s asso_values[] =\n    {"
           : "%s (str, len)\n     char *str;\n     unsigned int len;\n{\n  static %sunsigned %s asso_values[] =\n    {",
           option.hash_name (), option[CONSTANT] ? "const " : "",
           max_hash_value <= UCHAR_MAX ? "char" : (max_hash_value <= USHRT_MAX ? "short" : "int"));
@@ -1081,17 +1097,6 @@ Key_List::output_lookup_array (void)
             }
         }
 
-      if (option[DEBUG])
-        {
-          int j;
-          for (j = 0; j < max_hash_value + 1; j++)
-            ACE_DEBUG ((LM_DEBUG, "%4d", j));
-          ACE_DEBUG ((LM_DEBUG, "\n"));
-          for (j = 0; j < max_hash_value + 1; j++)
-            ACE_DEBUG ((LM_DEBUG, "%4d", lookup_array[j]));
-          ACE_DEBUG ((LM_DEBUG, "\n"));
-        }
-
       // Compute the values in the lookup array.
       while (--dup_ptr >= duplicates)
         {
@@ -1116,17 +1121,6 @@ Key_List::output_lookup_array (void)
                 break;
               }
 
-          if (option[DEBUG])
-            {
-              int j;
-              for (j = 0; j < max_hash_value + 1; j++)
-                ACE_DEBUG ((LM_DEBUG, "%4d", j));
-              ACE_DEBUG ((LM_DEBUG, "\n"));
-              for (j = 0; j < max_hash_value + 1; j++)
-                ACE_DEBUG ((LM_DEBUG, "%4d", lookup_array[j]));
-              ACE_DEBUG ((LM_DEBUG, "\n"));
-            }
-
           // If we didn't find it to the left look to the right
           // instead...
           if (i == 0)
@@ -1142,24 +1136,15 @@ Key_List::output_lookup_array (void)
                     break;
                   }
 
-              if (option[DEBUG])
-                {
-                  int j;
-                  for (j = 0; j < max_hash_value + 1; j++)
-                    ACE_DEBUG ((LM_DEBUG, "%4d", j));
-                  ACE_DEBUG ((LM_DEBUG, "\n"));
-                  for (j = 0; j < max_hash_value + 1; j++)
-                    ACE_DEBUG ((LM_DEBUG, "%4d", lookup_array[j]));
-                  ACE_DEBUG ((LM_DEBUG, "\n"));
-                }
-
               // If this happens, we can't use the output array scheme...
               if (i >= max_hash_value)
                 {
                   option = SWITCH;
                   ACE_DEBUG ((LM_DEBUG,
                               "Automatically changing to -S1 switch option\n"));
-                  output_switch ();
+                  // Since we've already generated the keyword table
+                  // we need to use it!
+                  this->output_switch (1); 
                   return 1; // 1 indicates that we've changed our mind...
                 }
             }
@@ -1215,7 +1200,7 @@ Key_List::output_lookup_function (void)
 {
   if (!option[OPTIMIZE])
     printf ("  if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)\n    {\n");
-  printf ("      int key = %s (str, len);\n\n", option.hash_name ());
+  printf ("      unsigned int key = %s (str, len);\n\n", option.hash_name ());
   if (!option[OPTIMIZE])
     printf ("      if (key <= MAX_HASH_VALUE && key >= MIN_HASH_VALUE)\n");
   printf ("        {\n");
@@ -1243,7 +1228,7 @@ Key_List::output_lookup_function (void)
                   "            return 0;\n");
         }
       printf ("          else\n            {\n"
-              "              int offset = key + index + (index > 0 ? -MAX_HASH_VALUE : MAX_HASH_VALUE);\n"
+              "              unsigned int offset = key + index + (index > 0 ? -MAX_HASH_VALUE : MAX_HASH_VALUE);\n"
               "              %s%s*base = &wordlist[-lookup[offset]];\n"
               "              %s%s*ptr = base + -lookup[offset + 1];\n\n"
               "              while (--ptr >= base)\n                ",
@@ -1379,8 +1364,8 @@ Key_List::output (void)
   // Class definition if -M is *not* enabled.
   if ((option[CPLUSPLUS]) && (!option[SKIPCLASS]))
     printf ("class %s\n{\nprivate:\n"
-            "  static unsigned int %s (const char *str, int len);\npublic:\n"
-            "  static %s%s%s (const char *str, int len);\n};\n\n",
+            "  static unsigned int %s (const char *str, unsigned int len);\npublic:\n"
+            "  static %s%s%s (const char *str, unsigned int len);\n};\n\n",
             option.class_name (),
             option.hash_name (),
             option[CONSTANT] ? "const " : "",
@@ -1418,7 +1403,7 @@ Key_List::output (void)
     printf ("%s::", option.class_name ());
 
   printf (option[ANSI]
-          ? "%s (const char *str, int len)\n{\n"
+          ? "%s (const char *str, unsigned int len)\n{\n"
           : "%s (str, len)\n     char *str;\n     unsigned int len;\n{\n",
           option.function_name ());
 

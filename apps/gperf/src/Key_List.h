@@ -89,7 +89,7 @@ private:
   // replaced by the use of the Strategy/Bridge pattern so that we can
   // easily add new languages.
   void output_min_max (void);
-  void output_switch (void);
+  void output_switch (int use_keyword_table = 0);
   void output_keyword_table (void);
   void output_keylength_table (void);
   void output_hash_function (void);
