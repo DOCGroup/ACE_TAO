@@ -335,11 +335,6 @@ ACE_HAS_GETRUSAGE_PROTO                 Platform has a getrusage ()
                                         prototype in sys/resource.h
                                         that differs from the one in
                                         ace/OS.i.
-ACE_HAS_GNUC_BROKEN_TEMPLATE_INLINE_FUNCTIONS   GNUC 2.7.3 mistakenly
-                                        takes the template definition
-                                        as the place where an inline
-                                        function of an argument class
-                                        is first used.
 ACE_HAS_BROKEN_EXTENDED_TEMPLATES       GNU CC < 2.8 is broken for
                                         template classes. This label
                                         shortens the template parameter

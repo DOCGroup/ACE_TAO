@@ -187,12 +187,6 @@
 #  define ACE_INLINE
 #endif /* __ACE_INLINE__ */
 
-# if !defined (ACE_HAS_GNUC_BROKEN_TEMPLATE_INLINE_FUNCTIONS)
-#   define ACE_INLINE_FOR_GNUC ACE_INLINE
-# else
-#   define ACE_INLINE_FOR_GNUC
-# endif /* ACE_HAS_GNUC_BROKEN_TEMPLATE_INLINE_FUNCTIONS */
-
 // Some ACE classes always use inline functions to maintain high
 // performance, but some platforms have buggy inline function support.
 // In this case, we don't use inline with them.
