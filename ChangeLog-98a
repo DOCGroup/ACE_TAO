@@ -1,3 +1,10 @@
+Mon Mar 16 13:04:58 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
+
+	* ace/OS.h:
+	Extended the ACE_HAS_STL_MAP_CONFLICT to include 'queue' as well
+	as 'map.' 'queue' is defined in sys/stream.h, which is included in 
+	OS.h by netinet/in.h and sys/timod.h.
+
 Mon Mar 16 00:22:40 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* CE-status: Updated CE port status.
