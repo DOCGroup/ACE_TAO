@@ -3532,14 +3532,14 @@ ACE_OS::recvmsg (ACE_HANDLE handle, struct msghdr *msg, int flags)
 }
 
 ACE_INLINE int 
-ACE_OS::sendmsg (ACE_HANDLE handle, ACE_SENDMSG_TYPE *msg, int flags)
+ACE_OS::sendmsg (ACE_HANDLE handle, const struct msghdr *msg, int flags)
 {
   // ACE_TRACE ("ACE_OS::sendmsg");
 #if !defined (ACE_LACKS_SENDMSG)
 #if defined (ACE_LACKS_POSIX_PROTO)
   ACE_OSCALL_RETURN (::sendmsg (handle, (struct msghdr *) msg, flags), int, -1);
 #else
-  ACE_OSCALL_RETURN (::sendmsg (handle, msg, flags), int, -1);
+  ACE_OSCALL_RETURN (::sendmsg (handle, (ACE_SENDMSG_TYPE *) msg, flags), int, -1);
 #endif /* ACE_LACKS_POSIX_PROTO */
 #else
   ACE_UNUSED_ARG (flags);
