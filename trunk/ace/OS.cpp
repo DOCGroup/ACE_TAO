@@ -2363,9 +2363,9 @@ ACE_Thread_Adapter::inherit_log_msg (void)
   // within thread-specific storage.
   ACE_Log_Msg *new_log = ACE_LOG_MSG;
 
-    // Note that we do not inherit the callback because this might
-    // have been allocated off of the stack of the original thread, in
-    // which case all hell would break loose...
+  // Note that we do not inherit the callback because this might have
+  // been allocated off of the stack of the original thread, in which
+  // case all hell would break loose...
 
   if (this->ostream_)
     {

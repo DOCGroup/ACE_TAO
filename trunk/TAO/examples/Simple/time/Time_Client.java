@@ -19,7 +19,7 @@
 import org.omg.CosNaming.*;
 import org.omg.CORBA.*;
 
-public class TimeClient 
+public class Time_Client 
 {
   public static void main (String args[])
   {

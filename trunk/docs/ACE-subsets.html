@@ -2,7 +2,7 @@
 
 <html>
   <head>
-    <title>ACE Subsets</title>
+    <title>ACE+TAO Subsetting</title>
     <link rev=made href="mailto:ace-users@cs.wustl.edu">
   </head>
 
@@ -12,6 +12,13 @@
       bgcolor="#ffffff">
 
 <hr><p>
+<H3>ACE+TAO Subsetting</H3>
+
+We are currently subsetting ACE+TAO to make them more flexible and to
+reduce their footprint for embedded systems.  This document describes
+what we're doing and how to leverage our efforts. <P>
+
+<HR><P>
 <font size=+2><strong>Contents</strong></font>
 <ol>
   <li><a href="#Motivation">Motivation for Splitting ACE into Multiple
@@ -467,6 +474,13 @@ flags</a>:
     debug=0 optimize=1 static_libs_only=1 DEFFLAGS=-DACE_USE_RCSID=0
 </code></pre><p>
 
+These options translate into:<P>
+
+(a) No debugging,<BR>
+(b) Optimization is set to -O2,<BR>
+(c) Static ACE and TAO libraries, and<BR>
+(d) Use of RCS Ids is turned off. <P>
+
 To build an ACE static library, if shared libraries are the default, use
 <code>make static_libs_only=1</code>.  If you're using recent versions
 of GNU GCC, you can use the <A
@@ -815,10 +829,9 @@ the <code>ACE_OS</code> member functions, ACE's
 <a href="../tests/Basic_Types_Test.cpp">Basic_Types_Test.cpp</a>
 for an example of usage.<p>
 
-<HR><P>
-
 <a name="minimumTAO"><!--#include virtual="../TAO/docs/minimumTAO.html" --></a>
 
+<P><HR><P>
 Back to the <A HREF="http://www.cs.wustl.edu/~schmidt/ACE.html">ACE</A>
 home page.
 

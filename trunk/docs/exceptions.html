@@ -1,30 +1,36 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
 <!-- $Id$ -->
 <html> <head>
-<title>Using ACE try macros for CORBA programming</title>
+<title>Using ACE try Macros to Enhance CORBA Portability</title>
 </head>
 
 <body text="#000000" link="#0000ff" vlink="#cc0000" bgcolor="#ffffff">
-<h1>Using ACE try macros for CORBA programming</h1>
+<Hr><P>
+<h3>Using ACE try Macros to Enhance CORBA Portability</h3>
 
-<P>We recommend you check out pages 307 through to 322 in the book,
-"Advanced Corba Programming with C++" by Michi Henning & Steve Vinoski
-before reading this document.
+<P>CORBA <CODE>Environment</CODE> arguments provide a way to handle
+exceptions when native c++ exception handling is unavailable or
+undesirable.  However, writing portable code using both native C++
+exception handling and <CODE>CORBA::Environment</CODE> objects is very
+hard.  If you plan to write portable code that must run on platforms
+that do not have native C++ exceptions, therefore, we recommend you
+use the ACE exception macros.  This document explains how these macros
+can help alleviate much of the accidental complexity.  However, keep
+in mind macros cannot solve all problems perfectly.  </P>
 
-<P>CORBA::Environment provides a way to handle exceptions when
-native c++ exception handling is unavailable or undesirable.
-However, writing portable code for both (with and without) native
-exception handling capability is very hairy.  If you plan to write
-portable code that must run on platforms that do not have native C++
-exceptions, we recommend you use the ACE exception macros.
-</P>
+<P>Before reading the rest of this document, we recommend you check
+out pages 307 through to 322 in the book, <A
+HREF="http://cseng.aw.com/bookdetail.qry?ISBN=0-201-37927-9&ptype=0">Advanced
+Corba Programming with C++</A> by <A
+HREF="http://www.triodia.com/staff/michi-henning.html">Michi
+Henning</A> & <A HREF="http://www.iona.com/hyplan/vinoski/">Steve
+Vinoski</A>.  Likewise, we recommend that you read chapter 6 from the
+<A
+HREF="http://www.theaceorb.com/TAO/Purchase_TAO/purchase_tao.html">TAO
+Developer's Guide</A>.
 
-<P>ACE provides a set of macros to help dealing with the chaos,
-but please keep in mind that no amount of macros is going to
-solve the problem perfectly.
-</P>
-
-<h3>What's in here?</h3>
+<P><HR><P>
+<h3>Table of Contents</h3>
 <ul>
   <li><a href="#nutshell">ACE Try Macros in a Nutshell</a>
   <li><a href="#examples">Examples</a>
@@ -34,6 +40,7 @@ solve the problem perfectly.
   <li><a href="#caveats">Some Caveats</a>
 </ul>
 
+<HR><P>
 <h3><a name="nutshell">ACE Try Macros in a Nutshell</h3>
 
 <P>This section explains some simple rules of writing programs for
@@ -223,6 +230,7 @@ try macros.
   </li>
 </ol>
 
+<HR><P>
 <h3>Examples</h3><a name="examples">
 
 Refer to <a href="../ace/CORBA_macros.h"><code>
@@ -367,6 +375,7 @@ macros discussed here.
   </li>
 </ul>
 
+<HR><P>
 <h3><a name="general">General Guidelines for Exception Handling</h3>
 <ul>
   <li><p>Don't catch an exception just to rethrow it.  Exceptions cost
@@ -413,6 +422,7 @@ macros discussed here.
   </li>
 </ul>
 
+<HR><P>
 <H3><a name="transition">Transition from TAO try macros to ACE try macros</h3>
 
 This list tries to give a comprehensive list of mapping between TAO
@@ -482,6 +492,7 @@ by no mean complete.
   </li>
 </ol>
 
+<HR><P>
 <H3><a name="caveats">Caveats</H3>
 
 <P>As we already mentioned no set of macros can cover all cases
