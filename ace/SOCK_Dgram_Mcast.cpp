@@ -1,4 +1,3 @@
-// SOCK_Dgram_Mcast.cpp
 // $Id$
 
 #define ACE_BUILD_DLL
@@ -28,16 +27,16 @@ ACE_SOCK_Dgram_Mcast::ACE_SOCK_Dgram_Mcast (void)
 
 int
 ACE_SOCK_Dgram_Mcast::subscribe (const ACE_INET_Addr &mcast_addr,
-				 int reuse_addr,
+                                 int reuse_addr,
 #if defined (ACE_PSOS)
-                                 // pSOS supports numbers, not 
+                                 // pSOS supports numbers, not
                                  // names for network interfaces
-		                 long net_if,
+                                 long net_if,
 #else
-				 const ASYS_TCHAR *net_if,
+                                 const ASYS_TCHAR *net_if,
 #endif /* defined (ACE_PSOS) */
-				 int protocol_family,
-				 int protocol)
+                                 int protocol_family,
+                                 int protocol)
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Mcast::subscribe");
 
@@ -48,12 +47,12 @@ ACE_SOCK_Dgram_Mcast::subscribe (const ACE_INET_Addr &mcast_addr,
   // previously.
   if (this->get_handle () == ACE_INVALID_HANDLE)
     {
-      if (ACE_SOCK::open (SOCK_DGRAM, protocol_family, 
-		      protocol, reuse_addr) == -1)
+      if (ACE_SOCK::open (SOCK_DGRAM, protocol_family,
+                      protocol, reuse_addr) == -1)
         return -1;
 
       int one = 1;
-      if (reuse_addr 
+      if (reuse_addr
           && this->ACE_SOCK::set_option (SOL_SOCKET,
                                          SO_REUSEADDR,
                                          &one,
@@ -68,9 +67,9 @@ ACE_SOCK_Dgram_Mcast::subscribe (const ACE_INET_Addr &mcast_addr,
 #endif /* SO_REUSEPORT */
 
       // Create an address to bind the socket to.
-  
+
       ACE_INET_Addr local;
-  
+
       if (local.set (this->mcast_addr_.get_port_number ()) == -1)
         return -1;
       else if (ACE_SOCK_Dgram::shared_open (local, protocol_family) == -1)
@@ -99,40 +98,40 @@ ACE_SOCK_Dgram_Mcast::subscribe (const ACE_INET_Addr &mcast_addr,
       size_t         if_cnt, nr_subscribed;
 
       if (ACE::get_ip_interfaces(if_cnt, if_addrs) != 0)
-	return -1;
+        return -1;
 
       nr_subscribed = 0;
 
       if (if_cnt < 2)
-	{
-	  if (this->subscribe(mcast_addr,
-			      reuse_addr,
-			      ASYS_WIDE_STRING ("0.0.0.0"),
-			      protocol_family,
-			      protocol) == 0)
-	    ++nr_subscribed;
-	}
+        {
+          if (this->subscribe(mcast_addr,
+                              reuse_addr,
+                              ASYS_WIDE_STRING ("0.0.0.0"),
+                              protocol_family,
+                              protocol) == 0)
+            ++nr_subscribed;
+        }
       else
-	while (if_cnt > 0)
-	  {
-	    --if_cnt;    // Convert to 0-based for indexing, next loop check
-	    if (if_addrs[if_cnt].get_ip_address() == INADDR_LOOPBACK)
-	      continue;
-	    if (this->subscribe(mcast_addr,
-				reuse_addr,
-				ASYS_WIDE_STRING (if_addrs[if_cnt].get_host_addr()),
-				protocol_family,
-				protocol) == 0)
-	      ++nr_subscribed;
-	  }
+        while (if_cnt > 0)
+          {
+            --if_cnt;    // Convert to 0-based for indexing, next loop check
+            if (if_addrs[if_cnt].get_ip_address() == INADDR_LOOPBACK)
+              continue;
+            if (this->subscribe(mcast_addr,
+                                reuse_addr,
+                                ASYS_WIDE_STRING (if_addrs[if_cnt].get_host_addr()),
+                                protocol_family,
+                                protocol) == 0)
+              ++nr_subscribed;
+          }
 
       delete [] if_addrs;
 
       if (nr_subscribed == 0)
-	{
-	  errno = ENODEV;
-	  return -1;
-	}
+        {
+          errno = ENODEV;
+          return -1;
+        }
       return 0;
     }
   // else do it like everyone else...
@@ -144,9 +143,9 @@ ACE_SOCK_Dgram_Mcast::subscribe (const ACE_INET_Addr &mcast_addr,
 
   // Tell network device driver to read datagrams with a
   // multicast_address address.
-  else if (this->ACE_SOCK::set_option (IPPROTO_IP, 
+  else if (this->ACE_SOCK::set_option (IPPROTO_IP,
                                        IP_ADD_MEMBERSHIP,
-                                       &multicast_address_, 
+                                       &multicast_address_,
                                        sizeof multicast_address_) == -1)
     return -1;
   return 0;
@@ -155,14 +154,14 @@ ACE_SOCK_Dgram_Mcast::subscribe (const ACE_INET_Addr &mcast_addr,
 int
 ACE_SOCK_Dgram_Mcast::unsubscribe (const ACE_INET_Addr &mcast_addr,
 #if defined (ACE_PSOS)
-				   // pSOS supports numbers, not 
-				   // names for network interfaces
-				   long net_if,
+                                   // pSOS supports numbers, not
+                                   // names for network interfaces
+                                   long net_if,
 #else
-				   const ASYS_TCHAR *net_if,
+                                   const ASYS_TCHAR *net_if,
 #endif /* defined (ACE_PSOS) */
-				   int protocol_family,
-				   int protocol)
+                                   int protocol_family,
+                                   int protocol)
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Mcast::subscribe");
 
@@ -189,42 +188,45 @@ ACE_SOCK_Dgram_Mcast::unsubscribe (const ACE_INET_Addr &mcast_addr,
       size_t         if_cnt;
 
       if (ACE::get_ip_interfaces(if_cnt, if_addrs) != 0)
-	return -1;
+        return -1;
 
       size_t nr_unsubscribed = 0;
 
       if (if_cnt < 2)
-	{
-	  if (this->unsubscribe (mcast_addr,
-				 ASYS_WIDE_STRING ("0.0.0.0"),
-				 protocol_family,
-				 protocol) == 0)
-	    ++nr_unsubscribed;
-	}
+        {
+          if (this->unsubscribe (mcast_addr,
+                                 ASYS_WIDE_STRING ("0.0.0.0"),
+                                 protocol_family,
+                                 protocol) == 0)
+            ++nr_unsubscribed;
+        }
       else
-	while (if_cnt > 0)
-	  {
-	    --if_cnt;    // Convert to 0-based for indexing, next loop check
-	    if (if_addrs[if_cnt].get_ip_address() == INADDR_LOOPBACK)
-	      continue;
-	    if (this->unsubscribe (mcast_addr,
-				   ASYS_WIDE_STRING (if_addrs[if_cnt].get_host_addr()),
-				   protocol_family,
-				   protocol) == 0)
-	      ++nr_unsubscribed;
-	  }
+        while (if_cnt > 0)
+          {
+            --if_cnt;    // Convert to 0-based for indexing, next loop check
+            if (if_addrs[if_cnt].get_ip_address() == INADDR_LOOPBACK)
+              continue;
+            if (this->unsubscribe (mcast_addr,
+                                   ASYS_WIDE_STRING (if_addrs[if_cnt].get_host_addr()),
+                                   protocol_family,
+                                   protocol) == 0)
+              ++nr_unsubscribed;
+          }
 
       delete [] if_addrs;
 
       if (nr_unsubscribed == 0)
-	{
-	  errno = ENODEV;
-	  return -1;
-	}
+        {
+          errno = ENODEV;
+          return -1;
+        }
       return 0;
     }
   // else do it like everyone else...
 #endif /* ACE_WIN32 */
+
+  ACE_UNUSED_ARG (protocol_family);
+  ACE_UNUSED_ARG (protocol);
 
   ip_mreq multicast_address;
   // Create multicast request.
@@ -233,7 +235,7 @@ ACE_SOCK_Dgram_Mcast::unsubscribe (const ACE_INET_Addr &mcast_addr,
 
   // Tell network device driver to read datagrams with a
   // multicast_address address.
-  else if (this->ACE_SOCK::set_option (IPPROTO_IP, 
+  else if (this->ACE_SOCK::set_option (IPPROTO_IP,
                                        IP_DROP_MEMBERSHIP,
                                        &multicast_address,
                                        sizeof multicast_address) == -1)
@@ -245,41 +247,41 @@ int
 ACE_SOCK_Dgram_Mcast::unsubscribe (void)
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Mcast::unsubscribe");
-  return this->ACE_SOCK::set_option (IPPROTO_IP, 
-				     IP_DROP_MEMBERSHIP,
-				     &multicast_address_, 
-				     sizeof multicast_address_);
+  return this->ACE_SOCK::set_option (IPPROTO_IP,
+                                     IP_DROP_MEMBERSHIP,
+                                     &multicast_address_,
+                                     sizeof multicast_address_);
 }
 
 int
 ACE_SOCK_Dgram_Mcast::make_multicast_address (const ACE_INET_Addr &mcast_addr,
 #if defined (ACE_PSOS)
-                                              // pSOS supports numbers, not 
+                                              // pSOS supports numbers, not
                                               // names for network interfaces
-	      	                              long net_if
+                                              long net_if
 #else
-					      const ASYS_TCHAR *net_if
+                                              const ASYS_TCHAR *net_if
 #endif /* defined (ACE_PSOS) */
                                              )
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Mcast::make_multicast_address");
 
   return this->make_multicast_address_i (mcast_addr,
-					 this->multicast_address_,
-					 net_if );
+                                         this->multicast_address_,
+                                         net_if );
 }
 
 int
 ACE_SOCK_Dgram_Mcast::make_multicast_address_i (const ACE_INET_Addr &mcast_addr,
-						ip_mreq &multicast_address ,
+                                                ip_mreq &multicast_address ,
 #if defined (ACE_PSOS)
-						// pSOS supports numbers, not 
-						// names for network interfaces
-						long net_if
+                                                // pSOS supports numbers, not
+                                                // names for network interfaces
+                                                long net_if
 #else
-						const ASYS_TCHAR *net_if
+                                                const ASYS_TCHAR *net_if
 #endif /* defined (ACE_PSOS) */
-						)
+                                                )
 {
   if (net_if != 0)
     {
@@ -294,29 +296,29 @@ ACE_SOCK_Dgram_Mcast::make_multicast_address_i (const ACE_INET_Addr &mcast_addr,
 #endif /* defined (ACE_PSOS) */
 
       if (ACE_OS::ioctl (this->get_handle (), SIOCGIFADDR, &if_address) == -1)
-	return -1;
+        return -1;
 
       struct sockaddr_in *socket_address;
       socket_address = ACE_reinterpret_cast(sockaddr_in *,
-					    &if_address.ifr_addr);
+                                            &if_address.ifr_addr);
       multicast_address.imr_interface.s_addr = socket_address->sin_addr.s_addr;
 #else
       // This port number is not necessary, just convenient
       ACE_INET_Addr interface_addr;
       if (interface_addr.set (mcast_addr.get_port_number (),
-			      net_if) == -1)
-	return -1;
-      multicast_address.imr_interface.s_addr = 
-	htonl (interface_addr.get_ip_address ());      
-#endif /* ACE_WIN32 */      
+                              net_if) == -1)
+        return -1;
+      multicast_address.imr_interface.s_addr =
+        htonl (interface_addr.get_ip_address ());
+#endif /* ACE_WIN32 */
     }
   else
     multicast_address.imr_interface.s_addr = INADDR_ANY;
-  
+
 #if defined (ACE_PSOS) && !defined (ACE_PSOS_TM)
   multicast_address.imr_mcastaddr.s_addr = htonl (mcast_addr.get_ip_address ());
 #else
   multicast_address.imr_multiaddr.s_addr = htonl (mcast_addr.get_ip_address ());
 #endif /* defined (ACE_PSOS) */
   return 0;
-}  
+}
