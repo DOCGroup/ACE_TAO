@@ -1,3 +1,11 @@
+Thu Apr 22 00:22:03 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* bin/fuzz.pl (check_for_non_bool_operators):
+
+	  New test that determines if equality, relational and logical
+	  operators return a type other than "bool".  A "bool" return type
+	  for such operators is the norm for modern C++ compilers.
+
 Thu Apr 22 07:12:22 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:
