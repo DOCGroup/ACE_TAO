@@ -24,6 +24,7 @@
 #include "orbsvcs/CosNotifyCommS.h"
 #include "orbsvcs/FT_NotifierC.h"
 #include "orbsvcs/FT_ReplicationManagerC.h"
+#include "orbsvcs/FT_ReplicationManager/FT_FaultEventDescriptor.h"
 
 namespace TAO
 {
@@ -92,13 +93,48 @@ namespace TAO
   private:
 
     /**
+    * Validate event type to make sure it is one we can handle.
+    */
+    int validate_event_type (
+      const CosNotification::StructuredEvent & event);
+
+    /**
+    * Analyze a fault event.
+    */
+    int analyze_fault_event (
+      const CosNotification::StructuredEvent & event,
+      TAO::FT_FaultEventDescriptor & fault_event_desc
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException, CosEventComm::Disconnected));
+
+    /// Helper functions for fault analysis.
+    char* extract_type_id (const CORBA::Any& val);
+    FT::ObjectGroupId extract_object_group_id (const CORBA::Any& val);
+
+    /**
+    * Set a new primary member on an object group.
+    */
+    int set_new_primary_on_object_group (
+      FT::ObjectGroup_ptr object_group,
+      const FT::Location & the_location
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+    )
+    ACE_THROW_SPEC ((
+      CORBA::SystemException
+      , PortableGroup::ObjectGroupNotFound
+      , PortableGroup::MemberNotFound
+      , FT::PrimaryNotSet
+      , FT::BadReplicationStyle
+    ));
+
+    /**
     * Extract the value of the MinimumNumberReplicas property from
     * the_criteria.
     */
     int get_minimum_number_replicas (
       const char * type_id,
       const PortableGroup::Criteria & the_criteria,
-      CORBA::UShort & minimum_number_replicas) const;
+      CORBA::UShort & minimum_number_replicas);
 
   public:
 
@@ -146,6 +182,9 @@ namespace TAO
 
     /// The POA with which we are activated.
     PortableServer::POA_var poa_;
+
+    /// The ObjectId from our activation in the POA.
+    PortableServer::ObjectId_var object_id_;
 
     /// The FaultNotifier's object reference.
     FT::FaultNotifier_var fault_notifier_;

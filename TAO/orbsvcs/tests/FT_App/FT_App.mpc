@@ -87,6 +87,7 @@ project(*FaultConsumer): taoserver, fault_tolerance, orbsvcsexe {
     FTApp_FaultConsumer_Main.cpp
     ReplicationManagerFaultConsumerAdapter.cpp
     ../../FT_ReplicationManager/FT_FaultConsumer.cpp
+    ../../FT_ReplicationManager/FT_FaultEventDescriptor.cpp
   }
 
   // explicitly omit IDL files

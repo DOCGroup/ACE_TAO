@@ -44,7 +44,7 @@ public:
   /**
    * Initialize this object
    */
-  int init (TAO_ORB_Manager & orbManager ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+  int init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   /**
    * Return a string to identify this object for logging/console message purposes.
