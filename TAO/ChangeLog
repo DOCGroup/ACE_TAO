@@ -1,3 +1,10 @@
+Mon Nov 22 12:53:42 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/AMI_Buffering/client.cpp:
+
+          Increased the amount of time allowed to elapse in all tests
+          to account for differences in OS schedulers.
+
 Mon Nov 22 18:46:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/ETCL/ETCL_Constraint.h:
