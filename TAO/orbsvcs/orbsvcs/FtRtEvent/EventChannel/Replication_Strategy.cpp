@@ -19,7 +19,7 @@ Replication_Strategy::~Replication_Strategy()
 
 
 void
-Replication_Strategy::check_validity(ACE_ENV_SINGLE_ARG_DECL)
+Replication_Strategy::check_validity(ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
 }
 

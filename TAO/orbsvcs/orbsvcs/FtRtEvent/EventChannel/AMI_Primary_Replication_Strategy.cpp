@@ -112,7 +112,8 @@ AMI_Primary_Replication_Strategy::replicate_request(
    bool success;
 
     FTRT::TransactionDepth transaction_depth =
-      Request_Context_Repository().get_transaction_depth();
+      Request_Context_Repository().get_transaction_depth(ACE_ENV_SINGLE_ARG_PARAMETER);
+   ACE_CHECK;
 
    const FtRtecEventChannelAdmin::EventChannelList& backups =
      GroupInfoPublisher::instance()->backups();
