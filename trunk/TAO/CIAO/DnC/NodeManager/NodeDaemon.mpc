@@ -1,10 +1,10 @@
 // -*- MPC -*-
 // $Id$
 
-project(Node_Daemon): ciao_server, iortable, naming {
-  libs += Deployment_svnt
+project(Node_Daemon): ciao_deployment_svnt, iortable, naming {
   requires += dnc
-  includes += $(CIAO_ROOT)/DnC
+  includes += $(CIAO_ROOT)/DnC/DomainApplicationManager
+  idlflags += -I ../Core
   exename = Node_Daemon
 
   IDL_Files {
