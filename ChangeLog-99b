@@ -1,3 +1,8 @@
+Thu Aug 19 15:31:58 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/OS.h (ACE_OSTREAM_TYPE): Removed the redundant trailing *
+	  for the defintion when ACE_LACKS_IOSTREAM_TOTALLY is defined.
+
 Thu Aug 19 14:16:37 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/rules.nested.GNU: added ACE_NESTED_COMMAND
