@@ -298,16 +298,6 @@ public:
   TAO::Connection_Role opened_as (void) const;
   void opened_as (TAO::Connection_Role);
 
-  /**
-   * Predicate that returns true if it is valid for this transport to act in a server
-   * role.  This would, for example, be true if opened_as() == TAO_SERVER_ROLE
-   * or bidirectional_flag() == 1.
-   *
-   * \return 0 cannot act in server role
-   * \return 1 can acts in server role
-   */
-  bool acts_as_server (void) const;
-
   /// Get and Set the purging order. The purging strategy uses the set
   /// version to set the purging order.
   unsigned long purging_order (void) const;

@@ -1,3 +1,37 @@
+Sun Oct  3 13:38:01 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Wait_Strategy.h:
+
+	  Added a new pure virtual method, can_process_upcalls ().  
+	
+	* tao/Wait_On_LF_No_Upcall.cpp:
+	* tao/Wait_On_LF_No_Upcall.h:
+	* tao/Wait_On_Leader_Follower.cpp:
+	* tao/Wait_On_Leader_Follower.h:
+	* tao/Wait_On_Reactor.cpp:
+	* tao/Wait_On_Reactor.h:
+	* tao/Wait_On_Read.cpp:
+	* tao/Wait_On_Read.h:
+
+	  Implementation for can_process_upcalls (). This method returns
+	  true for all the Wait strategies but for
+	  Wait_On_LF_No_Upcall. Only the Wait_On_LF_No_Upcall returns
+	  false since the semantics of the class are so. 
+	
+ 	* tao/Connection_Handler.cpp:
+
+	  Use the can_process_upcalls () in handle_input_eh () instead of
+	  the checks in place there. This check invariably resulted in a
+	  TSS access which seem to slow down things quite a bit. This was
+	  based on my profiler. I am not sure whether this is going to
+	  show up any conclusive results in our stat pages.
+	
+	* tao/Transport.h:
+	* tao/Transport.inl:
+
+	  Removed the acts_as_server () call since the functionality is
+	  replaced by the new pure virtual method in Wait_Strategy.
+
 Sat Oct  2 17:03:42 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/PortableServer/Default_Policy_Validator.cpp:
