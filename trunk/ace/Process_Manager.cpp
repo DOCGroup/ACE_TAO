@@ -28,6 +28,18 @@ ACE_Process_Manager::cleanup (void *, void *)
   ACE_Process_Manager::close_singleton ();
 }
 
+// This function acts as a signal handler for SIGCHLD. We don't really want
+// to do anything with the signal - it's just needed to interrupt a sleep.
+// See wait() for more info.
+#if !defined (ACE_WIN32)
+static void
+sigchld_nop (int, siginfo_t *, ucontext_t *)
+{
+  return;
+}
+#endif /* ACE_WIN32 */
+
+
 ACE_ALLOC_HOOK_DEFINE(ACE_Process_Manager)
 
 // Singleton instance.
@@ -806,70 +818,41 @@ ACE_Process_Manager::wait (pid_t pid,
         }
       else
         {
-          for (;;)
+          // Force generation of SIGCHLD, even though we don't want to
+          // catch it - just need it to interrupt the sleep below.
+          // If this object has a reactor set, assume it was given at
+          // open(), and there's already a SIGCHLD action set, so no
+          // action is needed here.
+          ACE_Sig_Action old_action;
+          if (this->reactor () == 0)
+            {
+              ACE_Sig_Action do_sigchld ((ACE_SignalHandler)sigchld_nop);
+              do_sigchld.register_action (SIGCHLD, &old_action);
+            }
+
+          ACE_Time_Value tmo (timeout);  // Need one we can change
+          for (ACE_Countdown_Time time_left (&tmo); ; time_left.update ())
             {
               pid = ACE_OS::waitpid (-1, status, WNOHANG);
-              if (pid > 0)
-                break;          // Got one - all done
-              if (pid == -1)
-                {
-                  if (errno == EINTR)
-                    continue;   // Try again
-                  break;        // Real error - give up
-                }
+              if (pid > 0 || pid == ACE_INVALID_PID)
+                break;          // Got a child or an error - all done
+
               // pid 0, nothing is ready yet, so wait.
-
-              ACE_Sig_Set wait_for_sigs;
-
-              wait_for_sigs.sig_add (SIGCHLD);
-
-#  if defined (ACE_HAS_SIGTIMEDWAIT)
-              // Block SIGCHLD then wait for it.
-              sigset_t orig_set;
-#    if defined (ACE_HAS_THREADS)
-              ACE_OS::thr_sigsetmask (SIG_BLOCK, wait_for_sigs, &orig_set);
-#    else
-              ACE_OS::sigprocmask (SIG_BLOCK, wait_for_sigs, &orig_set);
-#    endif
-              int status = ACE_OS::sigtimedwait (wait_for_sigs,
-                                                 0,
-                                                 &timeout);
-              {
-                ACE_Errno_Guard guard (errno);
-#    if defined (ACE_HAS_THREADS)
-                ACE_OS::thr_sigsetmask (SIG_BLOCK, wait_for_sigs, &orig_set);
-#    else
-                ACE_OS::sigprocmask (SIG_SETMASK, &orig_set, 0);
-#    endif
-              }
-              if (-1 != status || errno == EINTR)
-                continue;       // SIGCHLD ready; go waitpid again
-              // Here if there was a timeout or error. If timeout,
-              // it's not an error for our caller, just return 0.
-              pid = (errno == EAGAIN ? 0 : ACE_INVALID_PID);
+              // Do a sleep (only this thread sleeps) til something
+              // happens. This relies on SIGCHLD interrupting the sleep.
+              // If SIGCHLD isn't delivered, we'll need to do something
+              // with sigaction to force it.
+              if (-1 == ACE_OS::sleep (tmo) && errno == EINTR)
+                continue;
+              // Timed out
+              pid = 0;
               break;
-#  else
-              // Without sigtimedwait support, this can get hairy... we
-              // set an alarm to fire at the caller-specified future time.
-              // Then we wait for either SIGCHLD or SIGALRM. The problem with
-              // this is that once ualarm is enabled, the SIGALRM will fire
-              // whether we're still here waiting or not. On some platforms,
-              // this will cause a core dump on uncaught signal.
-              ACE_Time_Value time_left (timeout);
+            }
 
-              // if ACE_OS::ualarm doesn't have sub-second resolution:
-              time_left += ACE_Time_Value (0, 500000);
-              time_left.usec (0);
-
-              if (time_left <= ACE_Time_Value::zero) {
-                pid = 0;
-                break;
-              }
-
-              wait_for_sigs.sig_add (SIGALRM);
-              ACE_OS::ualarm (time_left);
-              ACE_OS::sigwait (wait_for_sigs);
-#  endif /* ACE_HAS_SIGTIMEDWAIT */
+          // Restore the previous SIGCHLD action if it was changed.
+          if (this->reactor () == 0)
+            {
+              old_action.register_action (SIGCHLD);
             }
         }
 #endif /* !defined (ACE_WIN32) */
