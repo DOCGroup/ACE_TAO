@@ -20,8 +20,6 @@
 #include "Policies.h"
 #include "Property_Evaluator.h"
 
-#include "stl.h"
-
 class TAO_Offer_Filter
 // = TITLE
 //    The purpose of this class is to ensure that offers that
@@ -81,12 +79,12 @@ public:
   
 private:
 
-  typedef set<string, less<string> > NAMES;
-  
-  NAMES mod_props_;
+  typedef ACE_Unbounded_Set<TAO_String_Hash_Key> Names;
+    
+  Names mod_props_;
   // The set of the name of modifiable properties.
 
-  NAMES limits_;
+  Names limits_;
   // Cardinality and property limitations applied.
   
   CORBA::ULong search_card_, match_card_, return_card_;
