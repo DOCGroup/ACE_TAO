@@ -150,7 +150,7 @@ TAO_IIOP_Client_Transport::client_handler (void)
 }
 
 void
-TAO_IIOP_Client_Transport::start_request (TAO_ORB_Core */*orb_core*/,
+TAO_IIOP_Client_Transport::start_request (TAO_ORB_Core * /*orb_core*/,
                                           TAO_Target_Specification & /*spec */,
                                           TAO_OutputCDR &output,
                                           CORBA::Environment &ACE_TRY_ENV)
@@ -168,13 +168,13 @@ TAO_IIOP_Client_Transport::start_request (TAO_ORB_Core */*orb_core*/,
                                output,
                                orb_core) == 0)*/
   if (this->client_mesg_factory_->write_protocol_header
-      (TAO_PLUGGABLE_MESSAGE_REQUEST, 
+      (TAO_PLUGGABLE_MESSAGE_REQUEST,
        output) == 0)
     ACE_THROW (CORBA::MARSHAL ());
 }
 
 void
-TAO_IIOP_Client_Transport::start_locate (TAO_ORB_Core */*orb_core*/,
+TAO_IIOP_Client_Transport::start_locate (TAO_ORB_Core * /*orb_core*/,
                                          TAO_Target_Specification &spec,
                                          TAO_Operation_Details &opdetails,
                                          TAO_OutputCDR &output,
@@ -182,14 +182,14 @@ TAO_IIOP_Client_Transport::start_locate (TAO_ORB_Core */*orb_core*/,
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // See this is GIOP way of doing this..But anyway IIOP will be tied
-  // up with GIOP. 
+  // up with GIOP.
   if (this->client_mesg_factory_->write_protocol_header
-      (TAO_PLUGGABLE_MESSAGE_LOCATEREQUEST, 
+      (TAO_PLUGGABLE_MESSAGE_LOCATEREQUEST,
        output) == 0)
     ACE_THROW (CORBA::MARSHAL ());
-  
+
   if (this->client_mesg_factory_->write_message_header (opdetails,
-                                                        TAO_PLUGGABLE_MESSAGE_LOCATE_REQUEST_HEADER,   
+                                                        TAO_PLUGGABLE_MESSAGE_LOCATE_REQUEST_HEADER,
                                                         spec,
                                                         output) == 0)
     ACE_THROW (CORBA::MARSHAL ());
@@ -316,7 +316,7 @@ TAO_IIOP_Client_Transport::register_handler (void)
 }
 
 int
-TAO_IIOP_Client_Transport::messaging_init (CORBA::Octet major, 
+TAO_IIOP_Client_Transport::messaging_init (CORBA::Octet major,
                                            CORBA::Octet minor)
 {
   if (this->client_mesg_factory_ == 0)
@@ -357,12 +357,12 @@ TAO_IIOP_Client_Transport::messaging_init (CORBA::Octet major,
           if (TAO_debug_level > 0)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
-                                 ASYS_TEXT ("(%N|%l|%p|%t) No matching major version number \n")), 
+                                 ASYS_TEXT ("(%N|%l|%p|%t) No matching major version number \n")),
                                 0);
             }
         }
     }
-  
+
   return 1;
 }
 
@@ -373,12 +373,12 @@ TAO_IIOP_Client_Transport::send_request_header (TAO_Operation_Details &opdetails
 {
   // We are going to pass on this request to the underlying messaging
   // layer. It should take care of this request
-    CORBA::Boolean retval = 
+    CORBA::Boolean retval =
       this->client_mesg_factory_->write_message_header (opdetails,
-                                                        TAO_PLUGGABLE_MESSAGE_REQUEST_HEADER,  
+                                                        TAO_PLUGGABLE_MESSAGE_REQUEST_HEADER,
                                                         spec,
                                                         msg);
-  
+
   return retval;
 }
 
@@ -454,7 +454,7 @@ TAO_IIOP_Transport::send_request (TAO_Stub *,
 }
 
 
-                                         
+
 CORBA::Boolean
 TAO_IIOP_Transport::send_request_header (TAO_Operation_Details & /**/,
                                          TAO_Target_Specification & /*spec */ ,
@@ -463,4 +463,3 @@ TAO_IIOP_Transport::send_request_header (TAO_Operation_Details & /**/,
   // We should never be here. So return an error.
   return 0;
 }
-
