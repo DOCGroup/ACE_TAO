@@ -236,6 +236,7 @@ namespace TAO
                                     T_forany>           in_arg_val;
     typedef Inout_Var_Array_Argument_T<T,T_forany>      inout_arg_val;
     typedef Out_Var_Array_Argument_T<T,
+                                     T_slice,
                                      T_var,
                                      T_out,
                                      T_forany>          out_arg_val;
