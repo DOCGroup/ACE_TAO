@@ -537,7 +537,7 @@ main (int argc, ACE_TCHAR *argv[])
               ACE_TEXT ("**** running features test\n")));
 
   // Test various features of the <ACE_Log_Msg>.
-  test_log_msg_features ((argc > 0 ? argv[0] : "program"));
+  test_log_msg_features ((argc > 0 ? argv[0] : ACE_TEXT ("program")));
 
   // Test the format specifiers
 
