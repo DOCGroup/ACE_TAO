@@ -21,4 +21,4 @@ Container::install_home (const UUID& id, const string& entrypt,
   ACE_THROW_SPEC ((UnknownImplId, ImplEntryPointNotFound,
                    InstallationFailure, InvalidConfiguration))
 {
-  if (COMP
+  if (COMP_SER
