@@ -1,5 +1,5 @@
 // -*- MPC -*-
-// ace_fltk.mpb,v
+// $Id$
 
 project : ace_x11, ace_gl {
   requires += fl

@@ -1,5 +1,5 @@
 // -*- MPC -*-
-// ace_gl.mpb,v
+// $Id$
 
 project : ace_x11 {
   requires += gl

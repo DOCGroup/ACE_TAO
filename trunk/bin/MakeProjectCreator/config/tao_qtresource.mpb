@@ -1,4 +1,5 @@
 // -*- MPC -*-
+// $Id$
 
 project : taolib, ace_qtreactor {
   requires += tao_qtresource

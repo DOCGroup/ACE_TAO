@@ -1,209 +1,217 @@
+
+Sun Jan 23 12:38:45 2005  Marek Brudka  <mbrudka@aster.pl>
+
+        * tao/XtResource.mpc (Message):
+        * tao/TkResource.mpc (Message):
+        * tao/QtResource.mpc (Message):
+        * tao/FlResource.mpc (Message):
+        Added missing Id strings.
+
 Sun Jan 23 11:56:27 2005  Marek Brudka  <mbrudka@aster.pl>
 
-	* tao/ORB_Core.cpp (Message):
-	Removed outdated remark.
+        * tao/ORB_Core.cpp (Message):
+        Removed outdated remark.
 
 Sun Jan 23 11:41:55 2005  Marek Brudka  <mbrudka@aster.pl>
 
-	* tao/ORB_Core.cpp (Module):
-	Added necessary include directive lost during merge.
+        * tao/ORB_Core.cpp (Module):
+        Added necessary include directive lost during merge.
 
 Sun Jan 23 01:52:50 2005  Marek Brudka  <mbrudka@aster.pl>
 
-	* tests/Xt_Stopwatch/timer.h:
-	* tests/Xt_Stopwatch/timer.cpp:
-	* tests/Xt_Stopwatch/test_i.h:
-	* tests/Xt_Stopwatch/test_i.cpp:
-	* tests/Xt_Stopwatch/svc.conf.xml:
-	* tests/Xt_Stopwatch/svc.conf:
-	* tests/Xt_Stopwatch/server.cpp:
-	* tests/Xt_Stopwatch/client.cpp:
-	* tests/Xt_Stopwatch/Xt_Stopwatch.mpc:
-	* tests/Xt_Stopwatch/Stopwatch_display.h:
-	* tests/Xt_Stopwatch/Stopwatch_display.cpp:
-	* tests/Xt_Stopwatch/README:
-	* tests/Xt_Stopwatch/Control.h:
-	* tests/Xt_Stopwatch/Control.cpp:
-	* tests/Xt_Stopwatch/Client.h:
-	* tests/QtTests/test_i.h:
-	* tests/QtTests/test_i.cpp:
-	* tests/QtTests/svc.conf.xml:
-	* tests/QtTests/svc.conf:
-	* tests/QtTests/server.cpp:
-	* tests/QtTests/client.h:
-	* tests/QtTests/client.cpp:
-	* tests/QtTests/README:
-	* tests/QtTests/QtTests.mpc:
-	* tests/FL_Cube/test_i.h:
-	* tests/FL_Cube/test_i.cpp:
-	* tests/FL_Cube/svc.conf.xml:
-	* tests/FL_Cube/svc.conf:
-	* tests/FL_Cube/server.cpp:
-	* tests/FL_Cube/client.cpp:
-	* tests/FL_Cube/FL_Cube.mpc:
-	* tao/Strategies/advanced_resource.h (Module):
-	* tao/Strategies/advanced_resource.cpp (Module):
-	* tao/xt_resource.i (Module):
-	* tao/xt_resource.h (Module):
-	* tao/xt_resource.cpp (Module):
-	* tao/tao.mpc (Module):
-	* tao/qt_resource.i (Module):
-	* tao/qt_resource.h (Module):
-	* tao/qt_resource.cpp (Module):
-	* tao/XtResource_Loader.h (Module):
-	* tao/XtResource_Loader.cpp (Module):
-	* tao/XtResource_Factory.h (Module):
-	* tao/XtResource_Factory.cpp (Module):
-	* tao/XtResource.mpc (Module):
-	* tao/TkResource_Loader.h (Module):
-	* tao/TkResource_Loader.cpp (Module):
-	* tao/TkResource_Factory.h (Module):
-	* tao/TkResource_Factory.cpp (Module):
-	* tao/TkResource.mpc (Module):
-	* tao/TSS_Resources.h (Module):
-	* tao/TSS_Resources.cpp (Module):
-	* tao/TAO_XtResource_Export.h (Module):
-	* tao/TAO_TkResource_Export.h (Module):
-	* tao/TAO_QtResource_Export.h (Module):
-	* tao/TAO_FlResource_Export.h (Module):
-	* tao/Strategies.mpc (Module):
-	* tao/QtResource_Loader.h (Module):
-	* tao/QtResource_Loader.cpp (Module):
-	* tao/QtResource_Factory.h (Module):
-	* tao/QtResource_Factory.cpp (Module):
-	* tao/QtResource.mpc (Module):
-	* tao/ORB_Core.h (Module):
-	* tao/ORB_Core.cpp (Module):
-	* tao/Leader_Follower.cpp (Module):
-	* tao/GUIResource_Factory.h (Module):
-	* tao/GUIResource_Factory.cpp (Module):
-	* tao/FlResource_Loader.h (Module):
-	* tao/FlResource_Loader.cpp (Module):
-	* tao/FlResource_Factory.h (Module):
-	* tao/FlResource_Factory.cpp (Module):
-	* tao/FlResource.mpc (Module):
-	* examples/AMI/FL_Callback/svc.conf.xml (Module):
-	* examples/AMI/FL_Callback/svc.conf (Module):
-	* examples/AMI/FL_Callback/progress.cpp (Module):
-	* examples/AMI/FL_Callback/README (Module):
-	* examples/AMI/FL_Callback/Progress_i.h (Module):
-	* examples/AMI/FL_Callback/Progress_i.cpp (Module):
-	* examples/AMI/FL_Callback/FL_Callback.mpc (Module):
-	* docs/Options.html (Module):
+        * tests/Xt_Stopwatch/timer.h:
+        * tests/Xt_Stopwatch/timer.cpp:
+        * tests/Xt_Stopwatch/test_i.h:
+        * tests/Xt_Stopwatch/test_i.cpp:
+        * tests/Xt_Stopwatch/svc.conf.xml:
+        * tests/Xt_Stopwatch/svc.conf:
+        * tests/Xt_Stopwatch/server.cpp:
+        * tests/Xt_Stopwatch/client.cpp:
+        * tests/Xt_Stopwatch/Xt_Stopwatch.mpc:
+        * tests/Xt_Stopwatch/Stopwatch_display.h:
+        * tests/Xt_Stopwatch/Stopwatch_display.cpp:
+        * tests/Xt_Stopwatch/README:
+        * tests/Xt_Stopwatch/Control.h:
+        * tests/Xt_Stopwatch/Control.cpp:
+        * tests/Xt_Stopwatch/Client.h:
+        * tests/QtTests/test_i.h:
+        * tests/QtTests/test_i.cpp:
+        * tests/QtTests/svc.conf.xml:
+        * tests/QtTests/svc.conf:
+        * tests/QtTests/server.cpp:
+        * tests/QtTests/client.h:
+        * tests/QtTests/client.cpp:
+        * tests/QtTests/README:
+        * tests/QtTests/QtTests.mpc:
+        * tests/FL_Cube/test_i.h:
+        * tests/FL_Cube/test_i.cpp:
+        * tests/FL_Cube/svc.conf.xml:
+        * tests/FL_Cube/svc.conf:
+        * tests/FL_Cube/server.cpp:
+        * tests/FL_Cube/client.cpp:
+        * tests/FL_Cube/FL_Cube.mpc:
+        * tao/Strategies/advanced_resource.h (Module):
+        * tao/Strategies/advanced_resource.cpp (Module):
+        * tao/xt_resource.i (Module):
+        * tao/xt_resource.h (Module):
+        * tao/xt_resource.cpp (Module):
+        * tao/tao.mpc (Module):
+        * tao/qt_resource.i (Module):
+        * tao/qt_resource.h (Module):
+        * tao/qt_resource.cpp (Module):
+        * tao/XtResource_Loader.h (Module):
+        * tao/XtResource_Loader.cpp (Module):
+        * tao/XtResource_Factory.h (Module):
+        * tao/XtResource_Factory.cpp (Module):
+        * tao/XtResource.mpc (Module):
+        * tao/TkResource_Loader.h (Module):
+        * tao/TkResource_Loader.cpp (Module):
+        * tao/TkResource_Factory.h (Module):
+        * tao/TkResource_Factory.cpp (Module):
+        * tao/TkResource.mpc (Module):
+        * tao/TSS_Resources.h (Module):
+        * tao/TSS_Resources.cpp (Module):
+        * tao/TAO_XtResource_Export.h (Module):
+        * tao/TAO_TkResource_Export.h (Module):
+        * tao/TAO_QtResource_Export.h (Module):
+        * tao/TAO_FlResource_Export.h (Module):
+        * tao/Strategies.mpc (Module):
+        * tao/QtResource_Loader.h (Module):
+        * tao/QtResource_Loader.cpp (Module):
+        * tao/QtResource_Factory.h (Module):
+        * tao/QtResource_Factory.cpp (Module):
+        * tao/QtResource.mpc (Module):
+        * tao/ORB_Core.h (Module):
+        * tao/ORB_Core.cpp (Module):
+        * tao/Leader_Follower.cpp (Module):
+        * tao/GUIResource_Factory.h (Module):
+        * tao/GUIResource_Factory.cpp (Module):
+        * tao/FlResource_Loader.h (Module):
+        * tao/FlResource_Loader.cpp (Module):
+        * tao/FlResource_Factory.h (Module):
+        * tao/FlResource_Factory.cpp (Module):
+        * tao/FlResource.mpc (Module):
+        * examples/AMI/FL_Callback/svc.conf.xml (Module):
+        * examples/AMI/FL_Callback/svc.conf (Module):
+        * examples/AMI/FL_Callback/progress.cpp (Module):
+        * examples/AMI/FL_Callback/README (Module):
+        * examples/AMI/FL_Callback/Progress_i.h (Module):
+        * examples/AMI/FL_Callback/Progress_i.cpp (Module):
+        * examples/AMI/FL_Callback/FL_Callback.mpc (Module):
+        * docs/Options.html (Module):
 
-	  Changes related with separation of GUI reactors. The additional
-	  information is avalaible in ChangeLog at REACTOR_SEPARATION
-	  branch (below).
+          Changes related with separation of GUI reactors. The additional
+          information is below.
 
-	* .cvsignore:
-	  To make cvs silent.
+        * .cvsignore:
+          To make cvs silent.
 
-Sat Jan 22 19:57:16 2005  Marek Brudka  <mbrudka@aster.pl>
+        Sat Jan 22 19:57:16 2005  Marek Brudka  <mbrudka@aster.pl>
 
-	* tao/XtResource_Loader.h (Module):
-	* tao/XtResource_Loader.cpp (Module):
-	* tao/XtResource_Factory.h (Module):
-	* tao/XtResource_Factory.cpp (Module):
-	* tao/TkResource_Loader.h (Module):
-	* tao/TkResource_Loader.cpp (Module):
-	* tao/TkResource_Factory.h (Module):
-	* tao/TkResource_Factory.cpp (Module):
-	* tao/QtResource_Loader.h (Module):
-	* tao/QtResource_Loader.cpp (Module):
-	* tao/QtResource_Factory.h (Module):
-	* tao/QtResource_Factory.cpp (Module):
-	* tao/GUIResource_Factory.h (Module):
-	* tao/GUIResource_Factory.cpp (Module):
-	* tao/FlResource_Loader.h (Module):
-	* tao/FlResource_Loader.cpp (Module):
-	* tao/FlResource_Factory.h (Module):
-	* tao/FlResource_Factory.cpp (Module):
-	Style changes, addedin internal locking in factory when creating reactor.
+        * tao/XtResource_Loader.h (Module):
+        * tao/XtResource_Loader.cpp (Module):
+        * tao/XtResource_Factory.h (Module):
+        * tao/XtResource_Factory.cpp (Module):
+        * tao/TkResource_Loader.h (Module):
+        * tao/TkResource_Loader.cpp (Module):
+        * tao/TkResource_Factory.h (Module):
+        * tao/TkResource_Factory.cpp (Module):
+        * tao/QtResource_Loader.h (Module):
+        * tao/QtResource_Loader.cpp (Module):
+        * tao/QtResource_Factory.h (Module):
+        * tao/QtResource_Factory.cpp (Module):
+        * tao/GUIResource_Factory.h (Module):
+        * tao/GUIResource_Factory.cpp (Module):
+        * tao/FlResource_Loader.h (Module):
+        * tao/FlResource_Loader.cpp (Module):
+        * tao/FlResource_Factory.h (Module):
+        * tao/FlResource_Factory.cpp (Module):
+        Style changes, addedin internal locking in factory when creating reactor.
 
-Wed Jan 19 22:52:34 2005  Marek Brudka  <mbrudka@aster.pl>
+        Wed Jan 19 22:52:34 2005  Marek Brudka  <mbrudka@aster.pl>
 
-      * tests/Xt_Stopwatch/server.cpp:
-      * tests/Xt_Stopwatch/client.cpp:
-      * tests/Xt_Stopwatch/Xt_Stopwatch.mpc:
-      * tests/Xt_Stopwatch/Client.h:
-      * tests/QtTests/test_i.h:
-      * tests/QtTests/server.cpp:
-      * tests/QtTests/client.h:
-      * tests/QtTests/client.cpp:
-      * tests/QtTests/QtTests.mpc:
-      * tests/FL_Cube/server.cpp:
-      * tests/FL_Cube/client.cpp:
-      * tests/FL_Cube/FL_Cube.mpc:
-      * tao/Strategies/advanced_resource.cpp:
-      * tao/xt_resource_loader.h:
-      * tao/xt_resource_loader.cpp:
-      * tao/xt_resource.i:
-      * tao/xt_resource.h:
-      * tao/xt_resource.cpp:
-      * tao/tk_resource_loader.h:
-      * tao/tk_resource_loader.cpp:
-      * tao/tk_resource.i:
-      * tao/tk_resource.h:
-      * tao/tk_resource.cpp:
-      * tao/tao_xtreactor.mpc:
-      * tao/tao_tkreactor.mpc:
-      * tao/tao_qtreactor.mpc:
-      * tao/tao_flreactor.mpc:
-      * tao/tao.mpc:
-      * tao/qt_resource_loader.h:
-      * tao/qt_resource_loader.cpp:
-      * tao/qt_resource.i:
-      * tao/qt_resource.h:
-      * tao/qt_resource.cpp:
-      * tao/fl_resource_loader.h:
-      * tao/fl_resource_loader.cpp:
-      * tao/fl_resource.i:
-      * tao/fl_resource.h:
-      * tao/fl_resource.cpp:
-      * tao/XtResource_Loader.h:
-      * tao/XtResource_Loader.cpp:
-      * tao/XtResource_Factory.h:
-      * tao/XtResource_Factory.cpp:
-      * tao/XtResource.mpc:
-      * tao/TkResource_Loader.h:
-      * tao/TkResource_Loader.cpp:
-      * tao/TkResource_Factory.h:
-      * tao/TkResource_Factory.cpp:
-      * tao/TkResource.mpc:
-      * tao/TSS_Resources.h:
-      * tao/TSS_Resources.cpp:
-      * tao/TAO_XtResource_Export.h:
-      * tao/TAO_XtReactor_export.h:
-      * tao/TAO_TkResource_Export.h:
-      * tao/TAO_TkReactor_export.h:
-      * tao/TAO_QtResource_Export.h:
-      * tao/TAO_QtReactor_export.h:
-      * tao/TAO_FlResource_Export.h:
-      * tao/TAO_FlReactor_export.h:
-      * tao/Qt_Resources_Export.h:
-      * tao/Qt_Resource_Factory.h:
-      * tao/Qt_Resource_Factory.cpp:
-      * tao/QtResource_Loader.h:
-      * tao/QtResource_Loader.cpp:
-      * tao/QtResource_Factory.h:
-      * tao/QtResource_Factory.cpp:
-      * tao/QtResource.mpc:
-      * tao/ORB_Core.h:
-      * tao/ORB_Core.cpp:
-      * tao/Leader_Follower.cpp:
-      * tao/GUI_Resource_Factory.h:
-      * tao/GUIResource_Factory.h:
-      * tao/GUIResource_Factory.cpp:
-      * tao/FlResource_Loader.h:
-      * tao/FlResource_Loader.cpp:
-      * tao/FlResource_Factory.h:
-      * tao/FlResource_Factory.cpp:
-      * tao/FlResource.mpc:
-      * examples/AMI/FL_Callback/progress.cpp (Module):
-      * examples/AMI/FL_Callback/FL_Callback.mpc (Module):
-      Naming more constistent and new GUIResources loading schema.
+        * tests/Xt_Stopwatch/server.cpp:
+        * tests/Xt_Stopwatch/client.cpp:
+        * tests/Xt_Stopwatch/Xt_Stopwatch.mpc:
+        * tests/Xt_Stopwatch/Client.h:
+        * tests/QtTests/test_i.h:
+        * tests/QtTests/server.cpp:
+        * tests/QtTests/client.h:
+        * tests/QtTests/client.cpp:
+        * tests/QtTests/QtTests.mpc:
+        * tests/FL_Cube/server.cpp:
+        * tests/FL_Cube/client.cpp:
+        * tests/FL_Cube/FL_Cube.mpc:
+        * tao/Strategies/advanced_resource.cpp:
+        * tao/xt_resource_loader.h:
+        * tao/xt_resource_loader.cpp:
+        * tao/xt_resource.i:
+        * tao/xt_resource.h:
+        * tao/xt_resource.cpp:
+        * tao/tk_resource_loader.h:
+        * tao/tk_resource_loader.cpp:
+        * tao/tk_resource.i:
+        * tao/tk_resource.h:
+        * tao/tk_resource.cpp:
+        * tao/tao_xtreactor.mpc:
+        * tao/tao_tkreactor.mpc:
+        * tao/tao_qtreactor.mpc:
+        * tao/tao_flreactor.mpc:
+        * tao/tao.mpc:
+        * tao/qt_resource_loader.h:
+        * tao/qt_resource_loader.cpp:
+        * tao/qt_resource.i:
+        * tao/qt_resource.h:
+        * tao/qt_resource.cpp:
+        * tao/fl_resource_loader.h:
+        * tao/fl_resource_loader.cpp:
+        * tao/fl_resource.i:
+        * tao/fl_resource.h:
+        * tao/fl_resource.cpp:
+        * tao/XtResource_Loader.h:
+        * tao/XtResource_Loader.cpp:
+        * tao/XtResource_Factory.h:
+        * tao/XtResource_Factory.cpp:
+        * tao/XtResource.mpc:
+        * tao/TkResource_Loader.h:
+        * tao/TkResource_Loader.cpp:
+        * tao/TkResource_Factory.h:
+        * tao/TkResource_Factory.cpp:
+        * tao/TkResource.mpc:
+        * tao/TSS_Resources.h:
+        * tao/TSS_Resources.cpp:
+        * tao/TAO_XtResource_Export.h:
+        * tao/TAO_XtReactor_export.h:
+        * tao/TAO_TkResource_Export.h:
+        * tao/TAO_TkReactor_export.h:
+        * tao/TAO_QtResource_Export.h:
+        * tao/TAO_QtReactor_export.h:
+        * tao/TAO_FlResource_Export.h:
+        * tao/TAO_FlReactor_export.h:
+        * tao/Qt_Resources_Export.h:
+        * tao/Qt_Resource_Factory.h:
+        * tao/Qt_Resource_Factory.cpp:
+        * tao/QtResource_Loader.h:
+        * tao/QtResource_Loader.cpp:
+        * tao/QtResource_Factory.h:
+        * tao/QtResource_Factory.cpp:
+        * tao/QtResource.mpc:
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.cpp:
+        * tao/Leader_Follower.cpp:
+        * tao/GUI_Resource_Factory.h:
+        * tao/GUIResource_Factory.h:
+        * tao/GUIResource_Factory.cpp:
+        * tao/FlResource_Loader.h:
+        * tao/FlResource_Loader.cpp:
+        * tao/FlResource_Factory.h:
+        * tao/FlResource_Factory.cpp:
+        * tao/FlResource.mpc:
+        * examples/AMI/FL_Callback/progress.cpp (Module):
+        * examples/AMI/FL_Callback/FL_Callback.mpc (Module):
+        Naming more constistent and new GUIResources loading schema.
 
-Sat Jan 15 00:19:04 2005  Marek Brudka  <mbrudka@aster.pl>
+        Sat Jan 15 00:19:04 2005  Marek Brudka  <mbrudka@aster.pl>
 
         * tao/tk_resource_loader.h (Module):
         * tao/tk_resource_loader.cpp (Module):
@@ -249,7 +257,7 @@ Sat Jan 15 00:19:04 2005  Marek Brudka  <mbrudka@aster.pl>
         Removed resouce_factory chain from Advanced_Resource_Factory.
         Adapted qt_resource_loader to new reactor creation schema. Some style changes.
 
-Tue Jan 11 23:39:37 2005  Marek Brudka  <mbrudka@aster.pl>
+        Tue Jan 11 23:39:37 2005  Marek Brudka  <mbrudka@aster.pl>
 
         * tao/Strategies/advanced_resource.h (Module):
         * tao/Strategies/advanced_resource.cpp (Module):
@@ -262,7 +270,7 @@ Tue Jan 11 23:39:37 2005  Marek Brudka  <mbrudka@aster.pl>
         Corrected loading of TAO_QtResource_Factory. Protected against multiple calls
         of create_reactor_impl.
 
-Sun Jan  9 22:58:24 2005  Marek Brudka  <mbrudka@aster.pl>
+        Sun Jan  9 22:58:24 2005  Marek Brudka  <mbrudka@aster.pl>
 
         * tests/QtTests/svc.conf.xml (Module):
         * tests/QtTests/svc.conf (Module):
@@ -274,7 +282,7 @@ Sun Jan  9 22:58:24 2005  Marek Brudka  <mbrudka@aster.pl>
         * tao/qt_resource_loader.cpp (Module):
         Create preliminary version of QtReasourceLoader class for static use of Qt resources in TAO servers.
 
-Sun Jan  9 01:20:25 2005  Marek Brudka  <mbrudka@aster.pl>
+        Sun Jan  9 01:20:25 2005  Marek Brudka  <mbrudka@aster.pl>
 
         * docs/Options.html (Module):
         Updated documentation.
@@ -295,30 +303,30 @@ Sun Jan  9 01:20:25 2005  Marek Brudka  <mbrudka@aster.pl>
         * tao/tao_flreactor.mpc (Module):
         Removed dependencies on features tao_qtreactor,tao_xtreactor,tao_flreactor,tao_tkreactor
 
-Mon Dec 13 19:17:29 2004  Marek Brudka  <mbrudka@aster.pl>
+        Mon Dec 13 19:17:29 2004  Marek Brudka  <mbrudka@aster.pl>
 
         * */.cvsignore (Module):
         Stopped cvs from complaining about unknown executables.
 
-Mon Dec 13 02:32:56 2004  Marek Brudka  <mbrudka@aster.pl>
+        Mon Dec 13 02:32:56 2004  Marek Brudka  <mbrudka@aster.pl>
 
         * tao/Strategies/advanced_resource.cpp (Message):
         Fix small bug related with missing plugin librar.
 
-Mon Dec 13 02:28:06 2004  Marek Brudka  <mbrudka@aster.pl>
+        Mon Dec 13 02:28:06 2004  Marek Brudka  <mbrudka@aster.pl>
 
         * tests/FL_Cube/FL_Cube.mpc (Module):
         * examples/AMI/FL_Callback/FL_Callback.mpc (Module):
         Dependence on tao_flreactor changed into ace_fl.
 
-Mon Dec 13 00:38:28 2004  Marek Brudka  <mbrudka@aster.pl>
+        Mon Dec 13 00:38:28 2004  Marek Brudka  <mbrudka@aster.pl>
 
         * tao/Strategies/advanced_resource.h (Module):
         * tao/Strategies/advanced_resource.cpp (Module):
         Removed ACE_HAS_TK macros. Removed static linkage with ACE_TkReactor. Applied
         for dynamic loading of reactor framework to TkReactor.
 
-Mon Dec 13 00:37:45 2004  Marek Brudka  <mbrudka@aster.pl>
+        Mon Dec 13 00:37:45 2004  Marek Brudka  <mbrudka@aster.pl>
 
         * tao/tk_resource.i (Module):
         * tao/tk_resource.h (Module):
@@ -334,12 +342,12 @@ Mon Dec 13 00:37:45 2004  Marek Brudka  <mbrudka@aster.pl>
         * tao/Strategies.mpc (Module):
         Removed explicite dependencies of TAO_Strategies on TAO_TkReactor.
 
-Sun Dec 12 23:38:40 2004  Marek Brudka  <mbrudka@aster.pl>
+        Sun Dec 12 23:38:40 2004  Marek Brudka  <mbrudka@aster.pl>
 
         * docs/Options.html (Message):
         Updated documentation on Advanced_Resource_Factory.
 
-Sun Dec 12 23:01:58 2004  Marek Brudka  <mbrudka@aster.pl>
+        Sun Dec 12 23:01:58 2004  Marek Brudka  <mbrudka@aster.pl>
 
         * tao/tao_flreactor.mpc (Module):
         Created project for build TAO_FlReactor library.
@@ -376,17 +384,17 @@ Sun Dec 12 23:01:58 2004  Marek Brudka  <mbrudka@aster.pl>
         * examples/AMI/FL_Callback/Progress_i.cpp (Module):
         Removed ACE_HAS_FL macros.
 
-Sun Dec 12 15:12:41 2004  Marek Brudka  <mbrudka@aster.pl>
+        Sun Dec 12 15:12:41 2004  Marek Brudka  <mbrudka@aster.pl>
 
         * .cvsignore (Module):
         To stop cvs from complaining about unknown files.
 
-Sun Dec 12 14:44:53 2004  Marek Brudka  <mbrudka@aster.pl>
+        Sun Dec 12 14:44:53 2004  Marek Brudka  <mbrudka@aster.pl>
 
         * TAOACE.mwc (Module):
         Temporarily disabled some projects as MPC is now buggy.
 
-Sun Dec 12 01:14:03 2004  Marek Brudka  <mbrudka@aster.pl>
+        Sun Dec 12 01:14:03 2004  Marek Brudka  <mbrudka@aster.pl>
 
         * tao/tao_xtreactor.mpc (Module):
         * tao/tao_qtreactor.mpc (Module):
@@ -406,12 +414,12 @@ Sun Dec 12 01:14:03 2004  Marek Brudka  <mbrudka@aster.pl>
         * examples/AMI/FL_Callback/FL_Callback.mpc (Module):
         Created dependence on tao_flreactor. To be removed when tao_flresource will be avalaible.
 
-Fri Dec 10 01:04:12 2004  Marek Brudka  <mbrudka@aster.pl>
+        Fri Dec 10 01:04:12 2004  Marek Brudka  <mbrudka@aster.pl>
 
         * tests/Xt_Stopwatch/.cvsignore (Module):
         Created few ignores to make cvs silent.
 
-Fri Dec 10 00:45:22 2004  Marek Brudka  <mbrudka@aster.pl>
+        Fri Dec 10 00:45:22 2004  Marek Brudka  <mbrudka@aster.pl>
 
         * tests/QtTests/.cvsignore (Module):
         * utils/catior/.cvsignore (Module):
@@ -445,7 +453,7 @@ Fri Dec 10 00:45:22 2004  Marek Brudka  <mbrudka@aster.pl>
         * tao/tao_xtreactor.mpc (Module):
         Derived tao_xtreactor from all needed base projects.
 
-Fri Dec 10 00:40:11 2004  Marek Brudka  <mbrudka@aster.pl>
+        Fri Dec 10 00:40:11 2004  Marek Brudka  <mbrudka@aster.pl>
 
         * tests/QtTests/README (Module):
         Described a problem with ORB shutdown.
@@ -459,18 +467,18 @@ Fri Dec 10 00:40:11 2004  Marek Brudka  <mbrudka@aster.pl>
         * tests/QtTests/client.cpp (Module):
         Removed silly mistake related with removing ACE_HAS_QT macros.
 
-Tue Dec  7 20:48:26 2004  Marek Brudka  <mbrudka@aster.pl>
+        Tue Dec  7 20:48:26 2004  Marek Brudka  <mbrudka@aster.pl>
         * tao/tao_qtreactor.mpc (Module):
         * tao/qt_resource.h (Module):
         * tao/TAO_QtReactor_export.h (Module):
         Created and applied export macros for TAO_QtReactor.
 
-Mon Dec  6 00:35:59 2004  Marek Brudka  <mbrudka@aster.pl>
+        Mon Dec  6 00:35:59 2004  Marek Brudka  <mbrudka@aster.pl>
 
         * TAO_IDL/.cvsignore (Module):
         To remove cvs warnings.
 
-Sun Dec  5 23:17:46 2004  Marek Brudka  <mbrudka@aster.pl>
+        Sun Dec  5 23:17:46 2004  Marek Brudka  <mbrudka@aster.pl>
 
         * tests/QtTests/test_i.h (Module):
         * tests/QtTests/test_i.cpp (Module):
@@ -484,7 +492,7 @@ Sun Dec  5 23:17:46 2004  Marek Brudka  <mbrudka@aster.pl>
         * tests/QtTests/QtTests.mpc (Module):
         Removed explicite dependencies on qt. They are managed now by qt based projects.
 
-Fri Dec  3 23:15:18 2004  Marek Brudka  <mbrudka@aster.pl>
+        Fri Dec  3 23:15:18 2004  Marek Brudka  <mbrudka@aster.pl>
 
         * tao/tao_xtreactor.mpc (Added):
         * tao/tao_qtreactor.mpc (Added):
@@ -503,18 +511,18 @@ Sat Jan 22 12:34:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Fri Jan 21 17:10:31 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/TAO_FTORB_Utils.pc.in:
-	* orbsvcs/orbsvcs/TAO_FT_ClientORB.pc.in:
-	* orbsvcs/orbsvcs/TAO_FT_ServerORB.pc.in:
-	* orbsvcs/orbsvcs/TAO_FaultTolerance.pc.in:
-	* orbsvcs/orbsvcs/TAO_PortableGroup.pc.in:
+        * orbsvcs/orbsvcs/TAO_FTORB_Utils.pc.in:
+        * orbsvcs/orbsvcs/TAO_FT_ClientORB.pc.in:
+        * orbsvcs/orbsvcs/TAO_FT_ServerORB.pc.in:
+        * orbsvcs/orbsvcs/TAO_FaultTolerance.pc.in:
+        * orbsvcs/orbsvcs/TAO_PortableGroup.pc.in:
 
           New files, pkg-config *.pc templates.
 
-	* orbsvcs/orbsvcs/FTORB.mpc:
-	* orbsvcs/orbsvcs/FaultTolerance.mpc:
-	* orbsvcs/orbsvcs/Makefile.am:
-	* orbsvcs/orbsvcs/PortableGroup.mpc:
+        * orbsvcs/orbsvcs/FTORB.mpc:
+        * orbsvcs/orbsvcs/FaultTolerance.mpc:
+        * orbsvcs/orbsvcs/Makefile.am:
+        * orbsvcs/orbsvcs/PortableGroup.mpc:
 
           Added Pkgconfig_Files definitions.
 
@@ -1045,11 +1053,11 @@ Fri Nov 26 09:43:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Fri Jan 21 08:42:19 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/ORB.cpp (ORB_init):
+        * tao/ORB.cpp (ORB_init):
 
-	  Reverted change that stored return value
-	  TAO_default_environment() in a reference to a
-	  CORBA::Environment.  MSVC++ 6 couldn't grok it.
+          Reverted change that stored return value
+          TAO_default_environment() in a reference to a
+          CORBA::Environment.  MSVC++ 6 couldn't grok it.
 
 Fri Jan 21 10:11:29 2005  Chad Elliott  <elliott_c@ociweb.com>
 

@@ -1,5 +1,5 @@
 // -*- MPC -*-
-// ace_x11.mpb,v
+// $Id$
 
 project {
   specific(vc6,vc7,vc71,vc8) {
