@@ -1,3 +1,12 @@
+Wed Jul 25 08:05:45 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/Thread_Pool_Reactor_Resume_Test.h:
+	* tests/Thread_Pool_Reactor_Resume_Test.cpp: Fixed a subtle race
+	  condition. This hardly showed up in many of our daily
+	  builds. The race condition had to be fixed to show the users of
+	  the cautious approach that one needs to take if they are
+	  resuming the handle in the application itself.
+
 Tue Jul 24 16:41:57 2001  Joe Hoffert  <joeh@cs.wustl.edu>
 
         * ace/Thread_Manager.cpp : 
