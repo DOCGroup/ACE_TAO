@@ -115,9 +115,9 @@ PMS_Ruser::handle_protocol_entries (char *buf_ptr,
                np->get_active_count ());
       buf_ptr += ACE_OS::strlen (buf_ptr);
 
-      buf_ptr = ACE::strecpy (ACE_OS::strecpy (buf_ptr,
-                                               np->get_login_name ()),
-                              np->get_real_name ());
+      buf_ptr = ACE_OS::strecpy (ACE_OS::strecpy (buf_ptr,
+                                                  np->get_login_name ()),
+                                 np->get_real_name ());
     }
 
   return buf_ptr;
