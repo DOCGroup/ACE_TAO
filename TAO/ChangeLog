@@ -1,3 +1,11 @@
+Wed Jan  5 19:21:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Runtime_Scheduler.{h,cpp,i}:
+          Removed i file, update h/cpp
+
+        * orbsvcs/orbsvcs/Makefile.am
+          Updated for change above
+
 Wed Jan  5 19:17:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Log/RTEventLogFactory_i.cpp:
