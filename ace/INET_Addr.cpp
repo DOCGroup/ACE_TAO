@@ -75,15 +75,9 @@ ACE_INET_Addr::operator == (const ACE_INET_Addr &sap) const
   ACE_TRACE ("ACE_INET_Addr::operator ==");
 
   return this->get_port_number() == sap.get_port_number()
-#if defined (ACE_HAS_IPV6)
-      && ACE_OS::memcmp ((void *) &this->inet_addr_.sin6_addr,
-                         (void *) &sap.inet_addr_.sin6_addr,
-                         sizeof (this->inet_addr_.sin6_addr)) == 0;
-#else
-      && ACE_OS::memcmp ((void *) &this->inet_addr_.sin_addr,
-                         (void *) &sap.inet_addr_.sin_addr,
-                         sizeof (this->inet_addr_.sin_addr)) == 0;
-#endif
+      && ACE_OS::memcmp ((void *) this->addr_pointer(),
+                         (void *) sap.addr_pointer(),
+                         this->addr_size()) == 0;
 }
 
 ACE_INET_Addr::ACE_INET_Addr (void)
@@ -202,17 +196,11 @@ ACE_INET_Addr::set (u_short port_number,
                     ACE_UINT32 ip_addr,
                     int encode)
 {
-  ACE_UNUSED_ARG (port_number);
-  ACE_UNUSED_ARG (ip_addr);
-  ACE_UNUSED_ARG (encode);
-
   if(ip_addr == INADDR_ANY)
     return this->set(port_number,ACE_INADDR_ANY);
 
-  struct sockaddr_in ipv4addr;
   if(encode)
     ip_addr = htonl(ip_addr);
-  ipv4addr.sin_addr.s_addr = ip_addr;
 
   char addr[INET_ADDRSTRLEN];
   if(0 == ACE_OS::inet_ntop (AF_INET, (const void*)&ip_addr, addr, INET_ADDRSTRLEN)) {
@@ -304,18 +292,20 @@ ACE_INET_Addr::set (u_short port_number,
 #if defined (ACE_HAS_IPV6)
   else if (ACE_OS::inet_pton (AF_INET6,
                               host_name,
-                              (void*)&addr) == 1)
+                              (void*)&addr) == 1) {
+    printf("Setting address from pton\n");
+
+    return this->set (port_number,
+                      addr,
+                      encode);
+  }
 #else
   else if (ACE_OS::inet_aton (host_name,
                               (struct in_addr *) &addr) == 1)
-#endif
     return this->set (port_number,
-#if defined (ACE_HAS_IPV6)
-                      addr,
-#else
                       encode ? ntohl (addr) : addr,
-#endif
                       encode);
+#endif
   else
     {
 #if defined (VXWORKS) || defined (CHORUS)
@@ -464,6 +454,7 @@ ACE_INET_Addr::ACE_INET_Addr (u_short port_number,
 int
 ACE_INET_Addr::set (const sockaddr_in *addr, int len)
 {
+  ACE_UNUSED_ARG (len);
   return this->set(addr->sin_port,addr->sin_addr.s_addr);
 }
 #endif
@@ -711,7 +702,16 @@ const char *
 ACE_INET_Addr::get_host_addr (char *dst, int size) const
 {
 #if defined (ACE_HAS_IPV6)
-  return ACE_OS::inet_ntop (AF_INET6, (const void*)&this->inet_addr_.sin6_addr,dst,size);
+  dst[0] = '[';
+  const char *ch = ACE_OS::inet_ntop (AF_INET6, (const void*)&this->inet_addr_.sin6_addr,dst+1,size-1);
+  if(ch == 0) {
+    dst[0] = '\0';
+    return 0;
+  }
+  int end = ACE_OS::strlen(dst);
+  dst[end] = ']';
+  dst[end+1] = '\0';
+  return dst;
 #else
   return ACE_OS::inet_ntop (AF_INET,  (const void*)&this->inet_addr_.sin_addr,dst,size);
 #endif

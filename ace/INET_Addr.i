@@ -54,6 +54,26 @@ ACE_INET_Addr::operator < (const ACE_INET_Addr &rhs) const
 #endif
 }
 
+ACE_INLINE void *
+ACE_INET_Addr::addr_pointer(void) const
+{
+#if defined (ACE_HAS_IPV6)
+  return (void*)&this->inet_addr_.sin6_addr;
+#else
+  return (void*)&this->inet_addr_.sin_addr;
+#endif
+}
+
+ACE_INLINE size_t
+ACE_INET_Addr::addr_size(void) const
+{
+#if defined (ACE_HAS_IPV6)
+  return sizeof this->inet_addr_.sin6_addr;
+#else
+  return sizeof this->inet_addr_.sin_addr;
+#endif
+}
+
 #if defined (ACE_HAS_WCHAR)
 ACE_INLINE int
 ACE_INET_Addr::set (u_short port_number,
