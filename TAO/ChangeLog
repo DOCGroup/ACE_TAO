@@ -1,3 +1,15 @@
+Thu Aug 28 04:24:24 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * orbsvcs/orbsvcs/.depend.Makefile.RT_Notification:
+        * orbsvcs/tests/Notify/Destroy/.depend.Makefile:
+        * orbsvcs/tests/Notify/Driver/.depend.Makefile:
+        * orbsvcs/tests/Notify/RT_lib/.depend.Makefile:
+        * orbsvcs/tests/Notify/Test_Filter/.depend.Makefile:
+        * orbsvcs/tests/Notify/lib/.depend.Makefile:
+          Removed these files since they should be generated dynamically
+          by the new MPC Makefiles (that will also be generated
+          dynamically).
+
 Wed Aug 27 21:13:21 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/IFRService/Options.cpp:
