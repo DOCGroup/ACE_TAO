@@ -44,7 +44,10 @@ public class LogRecord
    */
   public LogRecord()
   {
-    this(0, (int)new Date().getTime(), 0);
+    type(0);
+    timeStamp((int)new Date().getTime());
+    length(0);
+    pid(0);
   }
 
   /**
@@ -108,8 +111,9 @@ public class LogRecord
     // Order here must match layout order in the C++ class.
     // This, of course, is VERY fragile, and ought not be used as
     // a model for anything except how NOT to do anything.
-    type(dis.readInt());
+
     length(dis.readInt());
+    type(dis.readInt());
     this.timeStamp((long)dis.readInt() * 1000);
 
     // Skip smaller time resolution info since we're lucky if Java's
@@ -121,6 +125,7 @@ public class LogRecord
     // Does readFully() allocate space for the buffer?  Either
     // way, we won't have memory leaks :-)
     int dataLength = (int) (length_ - numIntMembers * sizeofIntInBytes);
+
     msgData_ = new byte[dataLength];
     dis.readFully(msgData_, 0, dataLength);
   }

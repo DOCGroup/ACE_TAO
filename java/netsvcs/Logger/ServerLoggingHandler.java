@@ -71,37 +71,19 @@ public class ServerLoggingHandler extends SvcHandler
 
     for (;;)
       {
-	// Messages arrive in the following format:
-	// o 4 byte length (network format)
-	// o message, in ACE.LogRecord format
+	// Messages arrive in the ACE.LogRecord format
 	//
 	// Hey!  We need exception catching in here too!
 	try
 	  {
 	    // Reconstitute a log message from the wire
 	    LogRecord rec = new LogRecord();
-
-	    // We don't really need this, because
-	    // the object already knows how to
-	    // extract itself properly.  However,
-	    // in order to interoperate with the
-	    // C++ version, this must be extracted.
-	    // Plus, it makes a convenient way to
-	    // check everything.
-	    int length = dis.readInt();
 	
 	    rec.streamInFrom(dis);
 	
-	    if (rec.length() == length)
-	      {
-		// Give the record to the log processor
-		this.receiver_.logRecord(this.hostName(),
-					   rec);
-	      }
-	    else
-	      {
-		ACE.ERROR(Thread.currentThread().getName() + ": Length error");
-	      }
+	    // Give the record to the log processor
+	    this.receiver_.logRecord(this.hostName(),
+				     rec);
 	  }
 	catch (EOFException eof)
 	  {
