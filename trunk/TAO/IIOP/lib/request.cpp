@@ -18,16 +18,16 @@
 DEFINE_GUID (IID_CORBA_Request,
 0x77420085, 0xf276, 0x11ce, 0x95, 0x98, 0x0, 0x0, 0xc0, 0x7c, 0xa8, 0x98);
 
-#ifdef	ACE_HAS_THREADS
+#ifdef	_POSIX_THREADS
 static pthread_mutex_t	refcnt_lock = PTHREAD_MUTEX_INITIALIZER;
-#endif	// ACE_HAS_THREADS
+#endif	// _POSIX_THREADS
 
  
 ULONG
 __stdcall
 CORBA_Request::AddRef ()
 {
-#ifdef  ACE_HAS_THREADS
+#ifdef  _POSIX_THREADS
     Critical            region (&refcnt_lock);
 #endif
  
@@ -38,7 +38,7 @@ ULONG
 __stdcall
 CORBA_Request::Release ()
 {
-#ifdef  ACE_HAS_THREADS
+#ifdef  _POSIX_THREADS
     Critical            region (&refcnt_lock);
 #endif
  

@@ -41,7 +41,7 @@
 #include	<initguid.h>
 
 
-#ifdef	ACE_HAS_THREADS
+#ifdef	_POSIX_THREADS
 //
 // If POSIX threads are available, set up lock covering refcounts.
 //
@@ -521,7 +521,7 @@ ULONG
 __stdcall
 CORBA_Any::AddRef ()
 {
-#ifdef	ACE_HAS_THREADS
+#ifdef	_POSIX_THREADS
     Critical		region (&any_lock);
 #endif
 
@@ -532,14 +532,14 @@ ULONG
 __stdcall
 CORBA_Any::Release ()
 {
-#ifdef	ACE_HAS_THREADS
+#ifdef	_POSIX_THREADS
     Critical		region (&any_lock);
 #endif
 
     if (--_refcnt != 0)
 	return _refcnt;
 
-#ifdef	ACE_HAS_THREADS
+#ifdef	_POSIX_THREADS
     region.leave ();
 #endif
 

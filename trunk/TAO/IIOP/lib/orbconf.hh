@@ -21,8 +21,15 @@
 
 #include <ace/OS.h>
 
+//
+// BC++ seems to have a different convention for detecting Win32 than VC++.
+//
+#if	defined (__WIN32__)
+#	define _WIN32
+#endif	// BC++ convention
+
 /* Define if you have the <widec.h> header file.  */
-#if !defined(linux)
+#if !defined(linux) && !defined(_WIN32)
 #  define HAVE_WIDEC_H 1
 #endif
 
@@ -31,12 +38,16 @@
 
 /* Define if your processor stores words with the most significant
    byte first (like Motorola and SPARC, unlike Intel and VAX).  */
-#if !defined(i386)
+#if   !defined (_WIN32)
 #  define WORDS_BIGENDIAN 1
 #endif
 
 /* The number of bytes in an int.  */
-#define SIZEOF_INT 4
+#	if defined(_WIN32) || defined(linux) || defined(VXWORKS)
+#		define	SIZEOF_INT	4
+#	else	// Win16
+#		define	SIZEOF_INT	2
+#	endif	// Win32/Win16
 
 /* The number of bytes in a long.  */
 #define SIZEOF_LONG 4
@@ -45,17 +56,28 @@
 #define SIZEOF_VOID_P 4
 
 /* The number of bytes in a long long.  */
+#if   !defined (_WIN32) && !defined (VXWORKS)
 #define SIZEOF_LONG_LONG 8
+#endif
 
 /* The number of bytes in a long double.  */
 #if defined(linux)
 #  define SIZEOF_LONG_DOUBLE 12
+#elif defined(_WIN32) || defined(VXWORKS)
+#  define SIZEOF_LONG_DOUBLE 8
 #else
 #  define SIZEOF_LONG_DOUBLE 16
 #endif
 
 /* The number of bytes in a bool.  */
 #define SIZEOF_BOOL 0
+
+// The number of bytes in a wchar_t
+#if defined (VXWORKS)
+#define SIZEOF_WCHAR_T 1
+#else
+#define SIZEOF_WCHAR_T 2
+#endif
 
 /* Define as the return type of signal handlers (int or void).  */
 #define RETSIGTYPE void
@@ -89,35 +111,22 @@
 /* #	undef	minor */
 #endif	// minor
 
-
-//
-// BC++ seems to have a different convention for detecting Win32 than VC++.
-//
-#if	defined (__WIN32__)
-#	define _WIN32
-#endif	// BC++ convention
-
 //
 // For Win16, near/far pointers reflect same/other segment addressing.
 //
-#if	defined (unix) || defined (_WIN32)
+#if	defined (unix) || defined (_WIN32) || defined(VXWORKS)
 #	define	_FAR
 #endif
 
 //
 // Assume DOS/Windows if "configure" didn't get run.
 //
-#if !defined(SIZEOF_LONG) || defined(i386)
-#	define SIZEOF_BOOL		0
-#	if defined(_WIN32) || defined(linux)
-#		define	SIZEOF_INT	4
-#	else	// Win16
-#		define	SIZEOF_INT	2
-#	endif	// Win32/Win16
-#	define SIZEOF_LONG		4
-#	define SIZEOF_VOID_P		4	// "large model" or Win32
-#	define SIZEOF_LONG_LONG		8
-#	define SIZEOF_LONGDOUBLE	12
+#if !defined(SIZEOF_LONG) || defined(_WIN32)
+//#	if defined(_WIN32) || defined(linux)
+//#		define	SIZEOF_INT	4
+//#	else	// Win16
+//#		define	SIZEOF_INT	2
+//#	endif	// Win32/Win16
 
 #	define DECLARED_ACCEPT
 #	define DECLARED_BIND
@@ -130,17 +139,15 @@
 #	define DECLARED_SETSOCKOPT
 #	define DECLARED_SHUTDOWN
 #	define DECLARED_SOCKET
-#	define DECLARED_STRERROR
 
 #	define HAVE_STRDUP
-#	define HAVE_VPRINTF
 
-#  if !defined(linux)
+#  if !defined(linux) && !defined(_WIN32)
 typedef	unsigned long pid_t;
 #  endif
 
 // "C4355: 'this' : used in base member initializer list"
-#  pragma warning(diable:4355) /* disable C4355 warning */
+#  pragma warning(disable:4355) /* disable C4355 warning */
 
 #endif
 

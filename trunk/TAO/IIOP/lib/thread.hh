@@ -21,7 +21,7 @@
 #include	<unistd.h>		// may define _POSIX_THREADS
 #endif	// unix
 
-#ifdef	ACE_HAS_THREADS
+#ifdef	_POSIX_THREADS
 #include	<pthread.h>
 
 //
@@ -43,6 +43,9 @@
 // XXX this is a temporary kluge; "autoconf" should kick in the
 // appropriate POSIX threads emulation when it's not native.
 //
+#if defined (sun) && !defined (_POSIX_THREADS) && !defined (FAKE_POSIX_THREADS) 
+#	define	FAKE_POSIX_THREADS
+#endif	// 2.2 <= "solaris version < 2.5
 
 
 #ifdef	FAKE_POSIX_THREADS
@@ -126,7 +129,7 @@ pthread_create (
 #endif	// FAKE_POSIX_THREADS
 
 
-#ifdef	ACE_HAS_THREADS
+#ifdef	_POSIX_THREADS
 //
 // Stick one of these at the beginning of a block that hosts a critical
 // section, passing it a pointer to the lock guarding that section.  The
@@ -177,6 +180,6 @@ class ForceSynchronousCancel {
 #endif	// PTHREAD_CANCEL_DEFERRED
 };
 
-#endif	// ACE_HAS_THREADS
+#endif	// _POSIX_THREADS
 
 #endif	// _THREAD_HH

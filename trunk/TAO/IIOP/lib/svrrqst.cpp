@@ -25,9 +25,9 @@ DEFINE_GUID(IID_CORBA_ServerRequest,
 
 
 
-#ifdef	ACE_HAS_THREADS
+#ifdef	_POSIX_THREADS
 static pthread_mutex_t	svrqst_lock = PTHREAD_MUTEX_INITIALIZER;
-#endif	// ACE_HAS_THREADS
+#endif	// _POSIX_THREADS
  
 
 IIOP_ServerRequest::~IIOP_ServerRequest ()
@@ -46,7 +46,7 @@ ULONG
 __stdcall
 IIOP_ServerRequest::AddRef ()
 {
-#ifdef  ACE_HAS_THREADS
+#ifdef  _POSIX_THREADS
     Critical            region (&svrqst_lock);
 #endif
  
@@ -58,7 +58,7 @@ ULONG
 __stdcall
 IIOP_ServerRequest::Release ()
 {
-#ifdef  ACE_HAS_THREADS
+#ifdef  _POSIX_THREADS
     Critical            region (&svrqst_lock);
 #endif
  
