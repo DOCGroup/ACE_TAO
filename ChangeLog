@@ -1,3 +1,9 @@
+Wed Jun 16 10:00:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/Service_Config.perl:
+          Zapped this file, it converts very old ACE code in a little bit
+          newer code and we don't need to do this anymore
+
 Wed Jun 16 09:59:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/rename-ace.pl:
