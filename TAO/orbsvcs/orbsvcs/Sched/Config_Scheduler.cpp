@@ -483,7 +483,7 @@ ACE_Config_Scheduler::last_scheduled_priority (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 
 void
 ACE_Config_Scheduler::get_config_infos (RtecScheduler::Config_Info_Set_out configs
-                                         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                         ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    RtecScheduler::SYNCHRONIZATION_FAILURE,
                    RtecScheduler::NOT_SCHEDULED))
