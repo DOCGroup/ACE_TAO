@@ -7,8 +7,8 @@ interface Receiver
   //    clients.The interface functions are called by the chat server.
 
   void message (in string msg);
-  // displays the message in the client application.
+  // Displays the message in the client application.
 
   oneway void shutdown ();
-  // called by the chat server before it goes away.
+  // Called by the chat server before it goes away.
 };
