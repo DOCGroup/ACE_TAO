@@ -1,0 +1,24 @@
+project: messaging, strategies {
+  idlflags -= -Sc
+  idlflags += -GC
+  requires += ami
+
+  Source_Files {
+    Roundtrip.cpp
+    Server_Task.cpp
+    server.cpp
+  }  
+}
+ 
+project(client): messaging, strategies {
+  exename   = client
+  idlflags -= -Sc
+  idlflags += -GC
+  requires += ami
+
+  Source_Files {
+    Roundtrip_Handler.cpp
+    client.cpp
+  }  
+}
+

@@ -1,0 +1,46 @@
+#
+# Makefile for building the BiDirectional client
+#
+
+NAME = client
+
+TAO_IDL = $(CORE_BINDIR)\tao_idl -g $(CORE_BINDIR)\gperf.exe -Ge 1
+
+OBJFILES = \
+	$(OBJDIR)\ReceiverC.obj \
+       	$(OBJDIR)\ReceiverS.obj \
+        $(OBJDIR)\Receiver_i.obj \
+        $(OBJDIR)\SenderC.obj \
+	$(OBJDIR)\Client_Task.obj \
+	$(OBJDIR)\client.obj
+
+CFLAGS = \
+	$(ACE_CFLAGS) \
+	$(TAO_CFLAGS) \
+        $(TAO_PORTABLESERVER_CFLAGS) \
+        $(TAO_BIDIRGIOP_CFLAGS)
+
+LIBFILES = \
+	$(ACE_LIB) \
+	$(TAO_LIB) \
+        $(TAO_PORTABLESERVER_LIB) \
+        $(TAO_BIDIRGIOP_LIB)
+
+IDLFILES = \
+        $(IDLDIR)\Receiver.idl \
+        $(IDLDIR)\Sender.idl
+
+CPPDIR = .
+
+IDLDIR = .
+
+!include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>
+
+#
+# IDL Build rules
+#
+$(IDLDIR)\ReceiverS.cpp $(IDLDIR)\ReceiverC.cpp: $(IDLDIR)\Receiver.idl
+	$(TAO_IDL) $**
+
+$(IDLDIR)\SenderS.cpp $(IDLDIR)\SenderC.cpp: $(IDLDIR)\Sender.idl
+        $(TAO_IDL) $**

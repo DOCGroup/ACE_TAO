@@ -1,0 +1,1433 @@
+Microsoft Developer Studio Workspace File, Format Version 6.00
+# WARNING: DO NOT EDIT OR DELETE THIS WORKSPACE FILE!
+
+###############################################################################
+
+Project: "ACE DLL"=..\ace\ace_dll.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "ACEXML DLL"=..\ACEXML\common\ACEXML.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ACE DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "ACEXML_Parser DLL"=..\ACEXML\parser\parser\ACEXML_Parser.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ACEXML DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "ACE_QoS DLL"=..\ace\QoS\ACE_QoS.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "ACE_SSL"=..\ace\SSL\ACE_SSL.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ACE DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "AV"=.\orbsvcs\orbsvcs\AV.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ACE_QoS DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_IDL Compiler
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name CosProperty
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name CosNaming
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name CosTrading
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name IORTable
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "BiDirGIOP"=.\tao\BiDir_GIOP\TAO_BiDir_GIOP.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Concurrency_Service"=.\orbsvcs\Concurrency_Service\Concurrency_Service.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name CosConcurrency
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name CosNaming
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "CosConcurrency"=.\orbsvcs\orbsvcs\CosConcurrency.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_IDL Compiler
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name PortableServer
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "CosEvent"=.\orbsvcs\orbsvcs\CosEvent.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_IDL Compiler
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name CosNaming
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Messaging
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "CosEvent_Service"=.\orbsvcs\CosEvent_Service\CosEvent_Service.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name CosEvent
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name CosNaming
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "CosLifeCycle"=.\orbsvcs\orbsvcs\CosLifeCycle.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_IDL Compiler
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name CosNaming
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "CosLoadBalancing"=.\orbsvcs\orbsvcs\CosLoadBalancing.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name PortableGroup
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Messaging
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "CosNaming"=.\orbsvcs\orbsvcs\CosNaming.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name Svc Utils
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name IORTable
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name PortableServer
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "CosNotification"=.\orbsvcs\orbsvcs\CosNotification.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name CosEvent
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ETCL DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name DynamicAny
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "CosProperty"=.\orbsvcs\orbsvcs\CosProperty.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_IDL Compiler
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name gperf
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name PortableServer
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "CosTime"=.\orbsvcs\orbsvcs\CosTime.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_IDL Compiler
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name CosNaming
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "CosTrading"=.\orbsvcs\orbsvcs\CosTrading.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_IDL Compiler
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name DynamicAny
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name PortableServer
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Svc Utils
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Domain"=.\tao\Domain\TAO_Domain.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name PortableServer
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name IFR_Client
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "DsEventLogAdmin"=.\orbsvcs\orbsvcs\DsEventLogAdmin.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name CosEvent
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name DsLogAdmin
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "DsLogAdmin"=.\orbsvcs\orbsvcs\DsLogAdmin.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name Svc Utils
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name DynamicAny
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ETCL DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "DsNotifyLogAdmin"=.\orbsvcs\orbsvcs\DsNotifyLogAdmin.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name CosNotification
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name DsEventLogAdmin
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Dump_Schedule"=.\orbsvcs\Dump_Schedule\Dump_Schedule.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name CosNaming
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name RTOLDEvent
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name RTSched
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "DynamicAny"=.\tao\DynamicAny\TAO_DynamicAny.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "DynamicInterface"=.\tao\DynamicInterface\TAO_DynamicInterface.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name PortableServer
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "ETCL DLL"=.\orbsvcs\orbsvcs\ETCL\ETCL.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Event_Service"=.\orbsvcs\Event_Service\Event_Service.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name CosNaming
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Messaging
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name RTEvent
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name RTOLDEvent
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name RTSched
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name RTSchedEvent
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "FT ORB"=.\orbsvcs\orbsvcs\FT_ORB.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ACE DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name IORManip
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name PortableServer
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Fault Tolerance"=.\orbsvcs\orbsvcs\Fault_Tolerance.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ACE DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name FT ORB
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name CosEvent
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name CosNaming
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name CosNotification
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name IORManip
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name PortableServer
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Svc Utils
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "IFRService"=.\orbsvcs\orbsvcs\IFRService.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name IORTable
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name PortableServer
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Svc Utils
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TypeCodeFactory
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "IFR_Client"=.\tao\IFR_Client\TAO_IFR_Client.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "IFR_Service"=.\orbsvcs\IFR_Service\IFR_Service.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name IFRService
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "IORInterceptor"=.\tao\IORInterceptor\TAO_IORInterceptor.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ObjRefTemplate
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "IORManip"=.\tao\IORManipulation\TAO_IORManip.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "IORTable"=.\tao\IORTable\TAO_IORTable.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "ImR_Activator"=.\orbsvcs\ImplRepo_Service\ImR_Activator.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ACEXML_Parser
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name IORTable
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Svc Utils
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "ImplRepo_Service"=.\orbsvcs\ImplRepo_Service\implrepo.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ACE DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Svc Utils
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name IORTable
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name DynamicInterface
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name PortableServer
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ACEXML_Parser DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "LifeCycle_Service"=.\orbsvcs\LifeCycle_Service\LifeCycle_Service.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name CosLifeCycle
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name CosNaming
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name CosTrading
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "LoadManager"=.\orbsvcs\LoadBalancer\LoadManager.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name CosLoadBalancing
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "LoadMonitor"=.\orbsvcs\LoadBalancer\LoadMonitor.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name CosLoadBalancing
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Messaging"=.\tao\Messaging\TAO_Messaging.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "NT_Naming_Service"=.\orbsvcs\Naming_Service\NT_Naming_Service.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name CosNaming
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Naming_Service"=.\orbsvcs\Naming_Service\Naming_Service.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name CosNaming
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Notify_Service"=.\orbsvcs\Notify_Service\Notify_Service.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name CosNaming
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name CosNotification
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "ObjRefTemplate"=.\tao\ObjRefTemplate\TAO_ObjRefTemplate.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Valuetype
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "PortableGroup"=.\orbsvcs\orbsvcs\PortableGroup.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name PortableServer
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name CosNaming
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Messaging
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "PortableServer"=.\tao\PortableServer\TAO_PortableServer.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name IORInterceptor
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ObjRefTemplate
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "RTCORBA"=.\tao\RTCORBA\TAO_RTCORBA.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "RTCORBAEvent"=.\orbsvcs\orbsvcs\RTCORBAEvent.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name RTCORBA
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name RTEvent
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name RTPortableServer
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Messaging
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "RTEvent"=.\orbsvcs\orbsvcs\RTEvent.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_IDL Compiler
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Svc Utils
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name CosNaming
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name RTSched
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Messaging
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "RTEventLog"=.\orbsvcs\orbsvcs\RTEventLog.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name CosEvent
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name DsLogAdmin
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name RTEvent
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "RTOLDEvent"=.\orbsvcs\orbsvcs\RTOLDEvent.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_IDL Compiler
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name RTEvent
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name RTSched
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "RTPortableServer"=.\tao\RTPortableServer\TAO_RTPortableServer.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name PortableServer
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name RTCORBA
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "RTSched"=.\orbsvcs\orbsvcs\RTSched.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_IDL Compiler
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name CosNaming
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Svc Utils
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "RTSchedEvent"=.\orbsvcs\orbsvcs\RTSchedEvent.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_IDL Compiler
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name RTEvent
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name RTSched
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "RT_Notification DLL"=.\orbsvcs\orbsvcs\RT_Notification.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name CosNotification
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name RTCORBA
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name RTPortableServer
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "SSLIOP"=.\orbsvcs\orbsvcs\SSLIOP.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ACE_SSL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Security
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Scheduling_Service"=.\orbsvcs\Scheduling_Service\Scheduling_Service.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name CosNaming
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name RTSched
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Security"=.\orbsvcs\orbsvcs\Security.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_IDL Compiler
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name PortableServer
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "SmartProxies"=.\tao\SmartProxies\SmartProxies.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Svc Utils"=.\orbsvcs\orbsvcs\Svc_Utils.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_IDL Compiler
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name PortableServer
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "TAO DLL"=.\tao\TAO.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ACE DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "TAO_IDL Compiler"=.\TAO_IDL\tao_idl.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO_IDL_BE_DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_IDL_FE_DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "TAO_IDL_BE_DLL"=.\TAO_IDL\TAO_IDL_BE_DLL.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO_IDL_FE_DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "TAO_IDL_FE_DLL"=.\TAO_IDL\TAO_IDL_FE_DLL.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ACE DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name gperf
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "TAO_IFR_BE_DLL"=.\orbsvcs\IFR_Service\TAO_IFR_BE_DLL.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name IFR_Service
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_IDL_FE_DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "TAO_Strategies"=.\tao\Strategies\TAO_Strategies.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Trading_Service"=.\orbsvcs\Trading_Service\Trading_Service.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name CosNaming
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name CosTrading
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Svc Utils
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "TypeCodeFactory"=.\tao\TypeCodeFactory\TypeCodeFactory.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name IFR_Client
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Valuetype"=.\tao\Valuetype\TAO_Valuetype.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "gperf"=..\apps\gperf\src\gperf.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name gperf_lib
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ACE DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "tao_ifr"=.\orbsvcs\IFR_Service\tao_ifr.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO_IDL_FE_DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_IFR_BE_DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "tao_imr"=.\orbsvcs\ImplRepo_Service\tao_imr.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Global:
+
+Package=<5>
+{{{
+}}}
+
+Package=<3>
+{{{
+}}}
+
+###############################################################################
+

@@ -1,0 +1,331 @@
+$Id$
+
+This directory contains a number of tests to validate that TAO is
+functioning correctly.  The individual directories contain READMEs on
+how to run the following tests:
+
+        . AMI
+
+          This is a simple test for AMI callback model.
+
+        . AMI_Buffering
+        
+          Test the buffering constraint policy when applied to AMI
+	  requests.
+
+        . AMI_Timeouts
+        
+          This is a simple test for AMI callback model in combination with
+          timeouts (relative roundtrip timeout policy).
+
+	. Big_Oneways
+
+	  Stress test non-blocking I/O features in the ORB.
+
+	. Big_Twoways
+
+	  More stress testing for the non-blocking I/O features in the
+	  ORB, this time also test receiving big blocks of data.
+
+	. Big_Requests_Muxing
+
+	  More stress testing for the non-blocking I/O features in the
+	  ORB, this time we send reliable and unreliable oneways
+	  through the same connection.
+
+        . Bidirectional
+
+          This is a test that exercises the birectional GIOP connection
+          implementation in TAO.
+
+        . Bidirectional_NestedUpcall
+
+          This test is similar to the $TAO_ROOT/tests/BiDirectional
+          test. The only difference is that, this test uses the
+          select_mt reactor, which helps the server to make calls to
+          client during the upcall.
+
+        . Blocking_Sync_None
+
+          A regression test for [BUGID:858], verifies that SYNC_NONE
+	  requests never block.
+
+        . CDR
+
+          This directory contains several tests for the CDR stream
+          class.
+
+	. Client_Leaks
+
+	  TAO-1.1.12 leaked handles, this test tries to verify that
+	  the problem does not happen any longer by connecting a
+	  client to 1000 servers. 
+
+        . Codec
+
+          This test verifies that CodecFactory and CDR encapsulation
+          Codec support is working properly.
+
+        . Collocation
+
+          This program performs a series of sanity check on the
+          collocation support in TAO.
+
+        . Connection_Purging
+
+          This is a test which stress tests the connection management
+          and checks whether cached handlers are purged effectively
+          when the process runs out of descriptors.
+
+	. Crashed_Callback
+
+	  A regression test for callbacks, sent as a reliable oneway,
+	  to a server that crashes.  The client used to hang on
+	  TAO-1.1.12.
+
+	. Crash_On_Write
+
+	  A regression test for bug number 678.  The ORB used to crash
+	  if an error was detected during a write() call.  Between
+	  betas 1.1.14 and 1.1.15 the ORB would not crash but would
+	  dead-lock.
+
+	. DLL_ORB
+
+	  Test that dynamically loads and unloads objects that
+	  implement client-side and server-side CORBA application
+	  code.  The primary client and server binaries are completely
+	  decoupled from the ORB.  If the test fails then it is likely
+	  that ORB resources were not reclaimed prior to dynamic
+	  unloading (i.e. finalization).
+
+        . DSI_Gateway
+                    
+          A simple test for the DSI/DII gateway support. TAO can
+          optimize some demarshaling/marshaling and data copying in
+          the implementation of DSI/DII based gateways.
+
+        . DynAny_Test
+
+          Tests TAO's DynAny feature, which allows composition and
+          decomposition of arbitrarily complex CORBA::Any values at
+          runtime, without requiring any compile-time knowledge of the
+          IDL.
+
+        . Endpoint_Per_Priority
+
+          A simple test that verifies of TAO's endpoint-per-priority
+          model works.
+
+        . Explicit_Event_Loop
+
+          This tests the methods work_pending() and perform_work()
+          methods of the orb.
+
+        . Exposed_Policies          
+          
+          This directory contains a test case used to verify that the
+          client exposed policies get embedded correctly in the IOR
+          and exposed to the client in the object reference.
+          
+        . FL_Cube
+
+          Test the integration of the FL toolkit and TAO.
+
+        . Faults
+
+          A little test to check the the ORB can handle server and
+          client crashes.
+
+        . Forwarding
+
+	  Regression test for LOCATION_FORWARD messages in the
+	  follower thread.
+
+	. Hello
+
+	  Extremely simple test to establish base line and serve as
+	  code base for other tests.
+
+        . IDL_Test
+
+          A collection of the IDL examples that have caused problems
+          in the past for the IDL compiler. Most files need only to
+          build cleanly, except pragma.idl, which generates pragma
+          prefixes. These prefixes are checked for correctness in
+          main.cpp.
+
+        . ior_corbaloc
+        
+          This is test to exercise the corbaname: style URL.
+
+        . IORManipulation
+
+          This program test the basic operation of TAO's
+          IORManipulation interface.
+
+        . InterOp-Naming
+
+          This service allows the ORB to be administratively
+          configured to return object references from
+          CORBA::ORB::resolve_initial_references () for non-locality
+          constrained objects.
+
+        . Leader_Followers
+
+          This is a test for server applications that have client
+          threads (threads making remote calls) starting before event
+          loop threads (threads running the event loop).
+
+        . LongUpcalls          
+          
+	  Regression test for bugs #175 and #575
+
+        . MProfile
+
+          This program tests fundamentals of TAO's ORB fault tolerance
+          by merging multiple profiles in a single object reference.
+
+        . MProfile_Forwarding
+
+          This test evalutes ORB fault tolerance support.
+
+        . MT_Client
+
+          This is a simple test for multi-threaded clients; it just
+          creates a simple server process and runs a client with
+          multiple thread sharing the same object reference.
+
+        . MT_Server
+
+          This is a simple test for a thread-pool server.  It creates
+          a server process with a variable number of threads, multiple
+          clients can send requests to it, the requests are handled in
+          different threads.
+
+        . MT_Timeout
+
+          Test the ORB timeouts in multithreaded configurations.
+
+        . Multiple
+                    
+          This test make sure that the collocation scheme works fine
+          in case of diamond shaped multiple inheritance.
+          
+        . Multiple_Inheritance
+
+          This test exercises IDL interfaces that inherit from
+          multiple interfaces.
+
+        . Muxing
+
+          Simple test for connection muxing.
+
+        . Native_Exceptions
+
+          Simple test to show (and verify) that TAO can generate code
+          for platforms with native exception support, including
+          passing the exception around.
+
+        . NestedUpcall
+
+          Tests TAO's nested upcall feature, which allows
+          single-threaded clients and servers to perform callbacks on
+          each other without deadlocking.
+
+        . Nested_Event_Loop
+
+          This is a test of invoking nested event loop calls from user
+          code, i.e., a call to perform_work() or run() from the
+          implementation of the servant.
+
+        . Oneway_Buffering
+
+          A regression test for the oneway buffering features in TAO.
+	  It verifies that flushing based on message count, message
+	  sizes and timeouts work correctly.
+
+        . ORB_destroy
+        
+          A simple ORB destruction test.
+                    
+        . ORB_init
+
+          The ORB_init test simply verifies that the CORBA::ORB_init()
+          call behaves as defined in the OMG CORBA specification.
+
+        . Object_Loader          
+          
+	  Regression test for the DLL-style IORs.
+
+        . OctetSeq
+
+          Measures the cost of marshaling and demarshaling of
+          sequences of octets of different sizes. NOTE: TAO optimizes
+          this so the cost should be constant!
+
+        . POA
+
+          Tests and illustates various Portable Object Adapter (POA)
+          interfaces and their usage scenarios.
+
+        . Param_Test
+
+          Tests all the features of TAO's protocol engine.
+
+        . Policies
+        
+          This is a stress test for the ORB's Policy interfaces.  
+                  
+        . Portable_Interceptors
+        
+          A series of tests for the Portable Interceptors feature.
+          
+        . QtTests
+
+          This example illustrates the usage of the QtReactor from TAO.
+
+        . Reliable_Oneways
+
+          A regression test for reliable oneways.  It is based on the
+	  fact that different SyncScope policies can detect different
+	  errors in a request.
+
+        . RTCORBA
+
+          A collection of tests exercising features from RTCORBA 1.0
+          specification. Tests exercising TAO-specific RT features
+          can be found in $TAO_ROOT/performance-tests/RTCorba.
+
+        . Single_Read
+        
+          This is a stress test for TAO's "single read" feature.
+
+        . Server_Leaks
+        
+          Try to make the server-side leak resources by connecting and
+	  disconnecting multiple clients.
+
+        . Smart Proxies
+
+          Tests the smart proxy feature which allows the user to
+          specify a proxy in plaec of the default proxy (stub).
+
+        . Strategies
+          
+          This test helps show the various ways in which the default
+          and advanced TAO strategies can be dynamically loaded.
+
+        . Timed_Buffered_Oneways
+
+          This is a test for oneways with buffering and timing
+          constraints.
+
+        . Timeout
+
+          A simple test for timeouts.
+
+        . Xt_Stopwatch
+
+          This example illustrates the usage of the XtReactor from
+          TAO.
