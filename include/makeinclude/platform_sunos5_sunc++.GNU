@@ -106,7 +106,6 @@ else  # ! 4.2
       else # ! 5.1
         inline = 1
         exceptions = 1
-        templates = "automatic"
       endif # 5.2 or greater
     endif #! 5.0
 
@@ -129,9 +128,7 @@ else  # ! 4.2
         CCFLAGS += -DACE_LACKS_RTTI
       endif # ! rtti
     else
-      #### Support RTTI by default.  And, use explicit template instantiation
-      #### because automatic instantiation appears to be broken, at least
-      #### with early releases of CC 5.0.  And, use old iostreams.
+      #### Support RTTI by default. And, use old iostreams.
       ifeq (C++ 5.0,$(findstring C++ 5.0,$(CC_VERSION)))
         ifeq (1,$(stdcpplib))
           CCFLAGS += -library=Cstd
@@ -163,18 +160,18 @@ endif # ! 4.2
 #
 ifeq ($(templates),)
   ifeq (Compilers 4.2,$(findstring Compilers 4.2,$(CC_VERSION)))
-    templates = "explicit"
+    templates = explicit
   else
     ifeq (C++ 5.0,$(findstring C++ 5.0,$(CC_VERSION)))
-      templates = "explicit"
+      templates = explicit
     else
       ifeq (C++ 5.1,$(findstring C++ 5.1,$(CC_VERSION)))
-        templates = "automatic"
+        templates = explicit
       else
         # Assume it's Forte Update 1 or later. Implicit template
         # instantiation seems to work.
         #
-        templates = "automatic"
+        templates = automatic
       endif
     endif
   endif
@@ -182,7 +179,7 @@ endif
 
 # Turn on the proper flags for explicit template instantiation.
 #
-ifeq ("$(templates)","explicit")
+ifeq ($(templates),explicit)
   ifeq ($(TEMPLATES_FLAG),) # Turn on flags if none is speficied.
     TEMPLATES_FLAG=-instances=explicit
   endif
