@@ -69,8 +69,6 @@ ACE_Object_Manager::~ACE_Object_Manager (void)
   // Delete the main thread's TSS.
   ACE_TSS_Emulation::tss_deallocate ();
 #endif /* ACE_HAS_TSS_EMULATION */
-
-  ACE_OS::fprintf (stderr, "~ACE_Object_Manager: leaving\n"); // ???? temporary
 }
 
 ACE_Object_Manager *
