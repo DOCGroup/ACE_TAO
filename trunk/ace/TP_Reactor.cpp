@@ -73,6 +73,8 @@ ACE_TP_Reactor::dispatch_io_set (int number_of_active_handles,
                                  ACE_Handle_Set& ready_mask,
                                  ACE_EH_PTMF callback)
 {
+  ACE_UNUSED_ARG (ready_mask);
+
   ACE_HANDLE handle;
 
   ACE_Handle_Set_Iterator handle_iter (dispatch_mask);
