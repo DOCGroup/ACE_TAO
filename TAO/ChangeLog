@@ -1,3 +1,10 @@
+Mon Feb  9 20:25:09 UTC 2004  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* tao/Strategies/SCIOP_Endpoint.cpp: 
+	  Add include of <ace/OS_NS_string.h> to
+	  fix build errors when TAO is configured with:
+	  inline=0 and sctp=lksctp
+	  
 Mon Feb  9 17:49:33 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* tests/ICMG_Any_Bug/Hello.mpc:
