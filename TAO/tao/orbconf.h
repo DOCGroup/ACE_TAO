@@ -174,8 +174,6 @@ const size_t TAO_DEFAULT_VALUE_FACTORY_TABLE_SIZE = 128;
 
 // This definition theoretically is not required. Just leaving it here
 // for backward compatibility
-#define TAO_NAMESPACE namespace
-#define TAO_NAMESPACE_CLOSE
 #define TAO_NAMESPACE_STORAGE_CLASS extern TAO_EXPORT_MACRO
 #define TAO_NAMESPACE_BEGIN(NS)  namespace NS {
 #define TAO_NAMESPACE_END  }
