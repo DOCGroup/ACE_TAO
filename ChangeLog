@@ -1,7 +1,14 @@
+Fri Nov  5 07:33:33 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/config/htbp.mpb:
+
+          Added an include path for $(ACE_ROOT)/protocols.  This will allow
+          everything that uses HTBP to compile.
+
 Fri Nov  5 10:30:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
 
-	* ace/OS_NS_stdlib.cpp:
-	  Fixed ACE_OS::mkstemp_emulation() for VxWorks because of 'max'
+        * ace/OS_NS_stdlib.cpp:
+          Fixed ACE_OS::mkstemp_emulation() for VxWorks because of 'max'
           macro clash with 'std::numeric_limits<char>::max ()'.
 
 Fri Nov  5 07:28:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
@@ -42,9 +49,9 @@ Thu Nov  4 22:08:40 2004  Phil Mesnier  <mesnier_p@ociweb.com>
 
 Thu Nov  4 18:47:22 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/config-WinCE.h: Added ACE_LACKS_WCTYPE_H for CE 3 and lower.
+        * ace/config-WinCE.h: Added ACE_LACKS_WCTYPE_H for CE 3 and lower.
 
-	* ace/OS_NS_sys_stat.inl: For CE, removed data truncation warnings.
+        * ace/OS_NS_sys_stat.inl: For CE, removed data truncation warnings.
 
 Thu Nov  4 17:06:08 CST 2004 Scott Harris <harris_s@ociweb.com>
 
@@ -70,19 +77,19 @@ Thu Nov  4 17:06:08 CST 2004 Scott Harris <harris_s@ociweb.com>
 
 Thu Nov  4 14:00:50 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ace/QoS/Makefile.am:
+        * ace/QoS/Makefile.am:
 
-	  Added includedir definition so that headers are installed
-	  in $prefix/include/ace/QoS.
+          Added includedir definition so that headers are installed
+          in $prefix/include/ace/QoS.
 
-	* configure.ac:
-	* ace/Makefile.am:
+        * configure.ac:
+        * ace/Makefile.am:
 
-	  Changed to configure/build HTBP protocol library.
+          Changed to configure/build HTBP protocol library.
 
-	* ace/HTBP/Makefile.am:
+        * ace/HTBP/Makefile.am:
 
-	  Added new file, automake support for HTBP protocol.
+          Added new file, automake support for HTBP protocol.
 
 Thu Nov  4 06:28:34 2004  Chad Elliott  <elliott_c@ociweb.com>
 
