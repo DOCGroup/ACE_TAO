@@ -173,6 +173,54 @@ SOURCE=.\miopC.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\PortableGroup\PG_Factory_Map.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\PortableGroup\PG_Factory_Set.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\PortableGroup\PG_GenericFactory.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\PortableGroup\PG_Location_Equal_To.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\PortableGroup\PG_Location_Hash.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\PortableGroup\PG_Location_Map.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\PortableGroup\PG_MemberInfo.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\PortableGroup\PG_ObjectGroup_Map.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\PortableGroup\PG_ObjectGroupManager.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\PortableGroup\PG_Operators.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\PortableGroup\PG_Property_Utils.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\PortableGroup\PG_PropertyManager.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\PortableGroup\POA_Hooks.cpp
 
 !IF  "$(CFG)" == "PortableGroup - Win32 Release"
@@ -276,6 +324,14 @@ SOURCE=.\PortableGroupC.cpp
 
 !ENDIF 
 
+# End Source File
+# Begin Source File
+
+SOURCE=.\PortableGroupS.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\PortableGroupS_T.cpp
 # End Source File
 # Begin Source File
 
@@ -403,7 +459,7 @@ SOURCE=.\PortableGroup\UIPMC_Wait_Never.cpp
 # End Group
 # Begin Group "Header Files"
 
-# PROP Default_Filter "h;hpp;hxx;hm;inl"
+# PROP Default_Filter "h;hpp;hxx;hm"
 # Begin Source File
 
 SOURCE=.\miopC.h
@@ -411,6 +467,58 @@ SOURCE=.\miopC.h
 # Begin Source File
 
 SOURCE=.\PortableGroup\miopconf.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\PortableGroup\PG_conf.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\PortableGroup\PG_Factory_Map.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\PortableGroup\PG_Factory_Set.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\PortableGroup\PG_GenericFactory.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\PortableGroup\PG_Location_Equal_To.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\PortableGroup\PG_Location_Hash.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\PortableGroup\PG_Location_Map.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\PortableGroup\PG_MemberInfo.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\PortableGroup\PG_ObjectGroup_Map.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\PortableGroup\PG_ObjectGroupManager.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\PortableGroup\PG_Operators.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\PortableGroup\PG_Property_Utils.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\PortableGroup\PG_PropertyManager.h
 # End Source File
 # Begin Source File
 
@@ -443,6 +551,14 @@ SOURCE=.\PortableGroup\PortableGroup_Request_Dispatcher.h
 # Begin Source File
 
 SOURCE=.\PortableGroupC.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\PortableGroupS.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\PortableGroupS_T.h
 # End Source File
 # Begin Source File
 
@@ -479,14 +595,30 @@ SOURCE=.\PortableGroup\UIPMC_Wait_Never.h
 # End Group
 # Begin Group "Inline Files"
 
-# PROP Default_Filter ".i"
+# PROP Default_Filter "i;inl"
 # Begin Source File
 
 SOURCE=.\miopC.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\PortableGroup\PG_Location_Equal_To.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\PortableGroup\PG_Location_Hash.inl
+# End Source File
+# Begin Source File
+
 SOURCE=.\PortableGroupC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\PortableGroupS.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\PortableGroupS_T.i
 # End Source File
 # Begin Source File
 
