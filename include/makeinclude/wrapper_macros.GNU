@@ -383,11 +383,11 @@ ifdef shared_libs
       OBJEXT        = so
       ifndef VXWORKS
         VDIR        = .shobj/
+        ifeq ($(BIN),)
+          #### No executables are being built, so don't create .obj/.
+          OBJDIRS     = .shobj
+        endif # BIN
       endif # ! VXWORKS
-      ifeq ($(BIN),)
-        #### No executables are being built, so don't create .obj/.
-        OBJDIRS     = .shobj
-      endif # BIN
     endif # ! SHLIB
   endif # ! static_libs
 
