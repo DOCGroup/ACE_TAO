@@ -2,7 +2,7 @@ Mon Nov 12 12:15:09 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp:
 	* tao/IIOP_Transport.cpp (get_listen_point): Removed some code
-	  that was there for more historic reasons. 
+	  that was there, more for historic reasons. 
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp: Added a
 	  debug statement.
