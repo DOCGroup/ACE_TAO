@@ -19,6 +19,8 @@
 # elif (__SUNPRO_CC >= 0x420)
 # define ACE_HAS_ANSI_CASTS
 # if (__SUNPRO_CC >= 0x500)
+// Sun C++ 5.0 supports the `using' keyword.
+#   define ACE_HAS_USING_KEYWORD
     /* Explicit instantiation requires the -instances=explicit
        CCFLAG.  It seems to work for the most part, except for:
        1) Static data members get instantiated multiple times.
