@@ -1,3 +1,13 @@
+Tue Jun 11 13:17:29 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/Cache_Map_Manager_T.h: 
+	* ace/Caching_Utility_T.h: 
+	* ace/Env_Value_T.h: Added #include "ace/Global_Macros.h".
+	  Thanks to Ty Tenait <tytenait@yahoo.com> for reporting this.
+	
+	* ace/Dirent_Selector.h: Added #include "ace/ACE_export.h".
+	  Thanks to Ty Tenait <tytenait@yahoo.com> for reporting this.
+
 Tue Jun 11 09:42:06 2002  Ossama Othman  <ossama@uci.edu>
 
 	* ace/SOCK_Dgram_Mcast_T.cpp (make_multicast_ifaddr):

@@ -21,6 +21,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Global_Macros.h"
 #include "ace/Cleanup_Strategies_T.h"
 
 // For linkers that cant grok long names.
