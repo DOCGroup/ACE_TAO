@@ -1,3 +1,17 @@
+Mon Apr 26 11:50:48 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * DnC/Config_Handlers/Bridge_Handler.h:
+        * DnC/Config_Handlers/Bridge_Handler.cpp:
+        * DnC/Config_Handlers/Domain_Handler.cpp:
+        * DnC/Config_Handlers/IC_Handler.cpp:
+        * DnC/Config_Handlers/IC_Handler.h:
+        * DnC/Config_Handlers/Node_Handler.h:
+        * DnC/Config_Handlers/Resource_Handler.cpp:
+        * DnC/Config_Handlers/Resource_Handler.h:
+        * DnC/Config_Handlers/SR_Handler.h:
+
+          Made changes to fix some compiler issues.
+
 Mon Apr 26 08:57:37 2004  Aniruddha Gokhale  <a.gokhale@vanderbilt.edu>
 
 	* DnC/Config_Handlers/Config_Handlers.mpc:
@@ -11,24 +25,24 @@ Mon Apr 26 08:57:37 2004  Aniruddha Gokhale  <a.gokhale@vanderbilt.edu>
 	* DnC/Config_handlers/SR_Handler.cpp:
 	  Included SP_Handler.h
 	  Fixed undefined variables and conversion from string to long
-	
+
 	* DnC/Config_handlers/Node_Handler.cpp:
 	  Fixed errors arising out of using same name for variables of
 	  different types in the same scope (one defined in the parameter
 	  and another as a loop variable).
 
 	  Fixed errors in type coversion.
-	
+
 	* DnC/Config_handlers/Resource_Handler.cpp:
 	  Fixed errors in type coversion.
-	
+
 	* DnC/Config_handlers/MID_Handler.cpp:
 	  Fixed an error due to incorrect number of parameters
-	
+
 	* DnC/Config_handlers/DP_Handler.cpp:
 	  Fixed an error due to incorrect number of parameters and
 	  incorrect file name inclusion.
-	
+
 
 Mon Apr 26 14:04:32 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
