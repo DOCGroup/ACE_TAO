@@ -145,9 +145,9 @@ main (int argc, char *argv[])
       
       // Set the database name using mktemp to generate a unique file name
       name_options->database (ACE_OS::mktemp (temp_file));
-      
-      ACE_ASSERT (ns_context->open (ACE_Naming_Context::PROC_LOCAL, 1) != -1);
     }
+
+  ACE_ASSERT (ns_context->open (ACE_Naming_Context::PROC_LOCAL, 1) != -1);
 
   // Add some bindings to the database
   bind (*ns_context);
