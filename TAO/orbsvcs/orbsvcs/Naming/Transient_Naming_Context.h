@@ -43,7 +43,7 @@ public:
   TAO_Transient_Bindings_Map (size_t hash_table_size);
   // Constructor.
 
-  ~TAO_Transient_Bindings_Map (void);
+  virtual ~TAO_Transient_Bindings_Map (void);
   // Destructor.
 
   // = Accessors.
