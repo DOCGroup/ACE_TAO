@@ -823,8 +823,7 @@ ACE::bind_port (ACE_HANDLE handle)
   sockaddr_in sin;
   // This should be a constant, so I hope they never change the number
   // of bits in a port number!
-  const u_short MAX_SHORT = 65535; 
-  static u_short upper_limit = MAX_SHORT;
+  static u_short upper_limit = ACE_MAX_DEFAULT_PORT;
   int lower_limit = IPPORT_RESERVED;
   int round_trip = upper_limit;
 
@@ -847,11 +846,11 @@ ACE::bind_port (ACE_HANDLE handle)
 	{
 	  upper_limit--;
 		  
-	  /* Wrap back around when we reach the bottom. */
+	  // Wrap back around when we reach the bottom.
 	  if (upper_limit <= lower_limit)
-	    upper_limit = MAX_SHORT;
+	    upper_limit = ACE_MAX_DEFAULT_PORT;
 		  
-	  /* See if we have already gone around once! */
+	  // See if we have already gone around once! 
 	  if (upper_limit == round_trip)
 	    {
 	      errno = EAGAIN;	

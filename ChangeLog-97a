@@ -1,9 +1,26 @@
+Sun May 25 11:36:22 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/Sched_Params.cpp (priority_max): Added another #ifdef for
+ 	  Chorus.  Thanks to Wei Chiang for reporting this.
+
+	* include/makeinclude/platform_sunos5_sunc++_orbix.GNU: added -l
+ 	  in front of orbixmt.  Thanks to Wei Chiang for pointing this
+ 	  out.
+
+	* ace/ACE.cpp: Changed the default port for NT so that it starts
+ 	  at 65279 rather than 65535.  Hopefully, this will fix that
+ 	  annoying bug that has been plaguing us on NT 4.0 for months.
+  	  Thanks to Goran Lowkrantz <Goran.Lowkrantz@Infologigruppen.se>
+ 	  for reporting this.
+
 Sat May 24 23:42:32 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* performance-tests/Misc/test_naming.cpp (do_testing): replaced
 	  strlen () calls in character array size with constant expression.
 
 Sat May 24 12:07:48 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* Released version 4.2.1 for testing.
 
 	* ace/Reactor.cpp (bind): Fixed a stupid typo where I was using
  	  the ACE_REACTOR_EVENT_HANDLER macro instead of the
