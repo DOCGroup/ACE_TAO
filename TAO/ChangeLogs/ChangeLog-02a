@@ -1,3 +1,10 @@
+Sat May 26 16:42:05 2001  Krishnakumar B  <kitty@cs.wustl.edu>
+
+	* examples/PluggableUDP/run_test.pl:
+
+	Removed the file from the repository as it was checked in without
+	execute permissions.
+
 Fri May 25 20:51:33 2001  Christopher Kohlhoff  <chris@kohlhoff.com>
 
         * examples/PluggableUDP/Makefile.bor:
@@ -60,8 +67,8 @@ Fri May 25 19:06:51 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 	  With POA::create_reference, we ask the linear or hash map to
 	  create us a key which we use as the system id; with
 	  POA::create_reference_with_id, we use the user id as the system
-	  id.  
-	
+	  id.
+
 Fri May 25 19:06:51 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/PortableServer/ImplRepo_i.cpp (ServerObject_i): Moved the
@@ -76,7 +83,7 @@ Fri May 25 19:06:51 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 	  <server_object>.  This change should fix bug 924.  Also, the
 	  ImplRepo tests should no longer crash.  Thanks to Greg Hall
 	  <greg.j.hall@boeing.com> for reporting this problem.
-	
+
 	* tao/PortableServer/Makefile
 	* tao/PortableServer/Makefile.bor
 	* tao/PortableServer/TAO_PortableServer.dsp
@@ -86,9 +93,9 @@ Fri May 25 19:06:51 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 Fri May 25 19:06:51 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/PortableServer/PortableServer.pidl: 
-	* tao/PortableServer/POA.h: 
-	* tao/PortableServer/POA.cpp: 
+	* tao/PortableServer/PortableServer.pidl:
+	* tao/PortableServer/POA.h:
+	* tao/PortableServer/POA.cpp:
 
 	  Added readonly attribute id which was recently introduced by
 	  the PortableInterceptor spec
@@ -115,8 +122,8 @@ Fri May 25 19:06:51 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 	  for exception when POA Manager is in holding state should be 1
 	  instead of 0.  Same for the discarding and inactive states.
 
-	* tao/Exception.cpp (_info): 
-	* tao/corbafwd.h (TAO_POA_INACTIVE): Added new constant.	
+	* tao/Exception.cpp (_info):
+	* tao/corbafwd.h (TAO_POA_INACTIVE): Added new constant.
 
 Fri May 25 19:06:51 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
@@ -125,7 +132,7 @@ Fri May 25 19:06:51 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 Fri May 25 19:06:51 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tests/Leader_Followers/run_test.pl: 
+	* tests/Leader_Followers/run_test.pl:
 
 	  - Renamed st_directive and tp_directive to
 	  select_reactor_directive and tpool_reactor_directive
@@ -135,7 +142,7 @@ Fri May 25 19:06:51 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 	  - Removed mt_conffile and st_conffile variables.
 
 	  - Changed "-ORBreactortype select_st" to "-ORBreactortype
-	  select_mt". 
+	  select_mt".
 
 	  - Moved the "-ORBsvcconfdirective" argument to the directive
 	  variable to make easier to read.
