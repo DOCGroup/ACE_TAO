@@ -8516,9 +8516,15 @@ ACE_OS_CString (ASCII_STRING).wchar_rep ()
 #endif /* ! ACE_LITTLE_ENDIAN */
 
 // Default constants for ACE CDR performance optimizations.
-#define ACE_DEFAULT_CDR_BUFSIZE 512
-#define ACE_DEFAULT_CDR_EXP_GROWTH_MAX 4096
-#define ACE_DEFAULT_CDR_LINEAR_GROWTH_CHUNK 4096
+#if !defined (ACE_DEFAULT_CDR_BUFSIZE)
+#  define ACE_DEFAULT_CDR_BUFSIZE 512
+#endif /* ACE_DEFAULT_CDR_BUFSIZE */
+#if !defined (ACE_DEFAULT_CDR_EXP_GROWTH_MAX)
+#  define ACE_DEFAULT_CDR_EXP_GROWTH_MAX 65536
+#endif /* ACE_DEFAULT_CDR_EXP_GROWTH_MAX */
+#if !defined (ACE_DEFAULT_CDR_LINEAR_GROWTH_CHUNK)
+#  define ACE_DEFAULT_CDR_LINEAR_GROWTH_CHUNK 65536
+#endif /* ACE_DEFAULT_CDR_LINEAR_GROWTH_CHUNK */
 // Even though the strategy above minimizes copies in some cases it is
 // more efficient just to copy the octet sequence, for instance, while
 // enconding a "small" octet sequence in a buffer that has enough
