@@ -158,14 +158,14 @@ main (int argc,
 
       server_var server = server::_narrow (object.in (),
                                            ACE_TRY_ENV);
-      ACE_TRY_ENV;
+      ACE_TRY_CHECK;
 
       // Create an client object to hand to the other side...
       client_i client_servant (quiet,
                                server.in ());
 
       client_var client_object = client_servant._this (ACE_TRY_ENV);
-      ACE_CHECK;
+      ACE_TRY_CHECK;
 
       Client_Task client_tasks (client_object.in (),
                                 server.in ());
@@ -184,7 +184,7 @@ main (int argc,
       if (shutdown_server)
         {
           server->shutdown (ACE_TRY_ENV);
-          ACE_CHECK;
+          ACE_TRY_CHECK;
         }
 
       root_poa->destroy (1,
