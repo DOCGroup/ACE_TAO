@@ -1,4 +1,4 @@
-/* $Id$ */
+// $Id$
 /* Copyright (c) 1995 Oregon Graduate Institute of Science and Technology
  * P.O.Box 91000-1000, Portland, OR 97291, USA;
  * 
@@ -60,6 +60,7 @@
 static int usr1_flag = 0;
 static int rtplay = 1;
 static int cmdSocket = -1;
+static int javaSocket = -1;
 static int CTRpid = -1, VBpid = -1, VDpid = -1, UIpid = -1;
 static int ABpid = -1;
 static int videoSocket = -1;
@@ -116,6 +117,32 @@ static void compute_sendPattern(void);
 
 int
 OurCmdRead(char *buf, int size)
+{
+  int val;
+  if (size == 0) return 0;
+  if (cmdBytes > 0)
+  {
+    memcpy(buf, cmdBuffer, size);
+    cmdBytes -= size;
+    cmdBuffer += size;
+    return 0;
+  }
+  while ((val = read(cmdSocket, (buf), (size))) <= 0)
+    {
+    if (val == -1 && errno == EINTR) return 1;
+    if (!val) {
+      perror("CTR error, EOF reached unexpected within CmdRead()");
+    }
+    else {
+      perror("CTR CmdRead() from UI through CmdSocket");
+    }
+    exit(1);
+  }
+  return 0;
+}
+
+int
+javaCmdRead(char *buf, int size)
 {
   int val;
   if (size == 0) return 0;
@@ -2623,24 +2650,24 @@ static void start_timer (void)
  
 static void stop_timer(void)
 {
-  struct itimerval val;
+//   struct itimerval val;
   
-  if (!timer_on)
-    return;
+//   if (!timer_on)
+//     return;
   
-  timer_on = 0;
+//   timer_on = 0;
  
-  //  setsignal(SIGALRM, SIG_IGN);
+//   //  setsignal(SIGALRM, SIG_IGN);
   
-  val.it_interval.tv_sec =  val.it_value.tv_sec = 0;
-  val.it_interval.tv_usec = val.it_value.tv_usec = 0;
-  setitimer(ITIMER_REAL, &val, NULL);
+//   val.it_interval.tv_sec =  val.it_value.tv_sec = 0;
+//   val.it_interval.tv_usec = val.it_value.tv_usec = 0;
+//   setitimer(ITIMER_REAL, &val, NULL);
   
-  fprintf(stderr, "CTR: timer stopped.\n");
+//   fprintf(stderr, "CTR: timer stopped.\n");
   
-  /*
-  usleep(200000);
-  */
+//   /*
+//   usleep(200000);
+//   */
 }
  
 static void timer_speed()
@@ -2984,14 +3011,14 @@ int CTRmain(int argc,
  
   // instantiate our command handler
   Command_Handler command_handler (cmdSocket);
-   if (command_handler.init (argc,argv) == -1)
+  if (command_handler.init (argc,argv) == -1)
      ACE_ERROR_RETURN ((LM_ERROR,
                         "(%P|%t) command_handler: init returned -1"),
                        -1);
  
   // .. and register it with the reactor.
   if (TAO_ORB_Core_instance ()->reactor ()->register_handler (&command_handler,
-                                                  ACE_Event_Handler::READ_MASK) == -1)
+                                                              ACE_Event_Handler::READ_MASK) == -1)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%P|%t) register_handler for command_handler failed\n"),
                         -1);
