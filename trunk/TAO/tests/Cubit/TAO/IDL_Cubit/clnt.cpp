@@ -462,11 +462,8 @@ Cubit_Client::run (void)
   for (i = 0; i < this->loop_count_; i++)
     {
       this->cube_short (i);
-
       this->cube_octet (i);
-
       this->cube_long (i);
-
       this->cube_struct (i);
     }
 
@@ -651,7 +648,8 @@ Cubit_Client::init (int argc, char **argv)
 		      -1);
 
   // Now retrieve the Cubit obj ref corresponding to the key.
-  this->cubit_ = this->factory_->make_cubit (this->cubit_key_, this->env_);
+  this->cubit_ = 
+    this->factory_->make_cubit (this->cubit_key_, this->env_);
 
   if (this->env_.exception () != 0)
     {
