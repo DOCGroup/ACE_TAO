@@ -1,3 +1,18 @@
+Thu Nov  9 10:14:06 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* include/makeinclude/ace_flags.bor:
+
+	  Added the line
+
+	  TAO_DYNAMICINTERFACE_LIB = 
+	    $(CORE_BINDIR)\TAO_DynamicInterface$(LIB_DECORATOR).lib
+
+	  that I had overlooked when doing the BCB makefile changes
+	  related to the DynamicInterface library. Thanks to
+	  Johnny Willemsen <Johnny.Willemsen@meco.nl> for sending
+	  in the patch.
+
+
 Wed Nov  8 16:11:11 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/RMCast/RMCast_Membership_Test.cpp:
