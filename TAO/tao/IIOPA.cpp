@@ -36,15 +36,14 @@
 #include "tao/Any_Dual_Impl_T.h"
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/struct_typecode.cpp:34
+// be/be_visitor_typecode/struct_typecode.cpp:34
 
-static TAO::TypeCode::Struct_Field<char const *> const _tao_fields_IIOP_ListenPoint[] =
+static TAO::TypeCode::Struct_Field<char const *> _tao_fields_IIOP_ListenPoint[] =
   {
     { "host", &CORBA::_tc_string },
     { "port", &CORBA::_tc_ushort }
     
   };
-
 static TAO::TypeCode::Struct<char const *,
                              TAO::TypeCode::Struct_Field<char const *> const *,
                              CORBA::tk_struct,
@@ -64,25 +63,35 @@ namespace IIOP
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/alias_typecode.cpp:31
+// be/be_visitor_typecode/alias_typecode.cpp:31
 
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:744
+// be/be_visitor_typecode/typecode_defn.cpp:743
 
-static TAO::TypeCode::Sequence<TAO::Null_RefCount_Policy>
-  _tao_tc_IIOP_ListenPointList_0 (
-    CORBA::tk_sequence,
-    &IIOP::_tc_ListenPoint,
-    0U);
-  
+namespace TAO
+{
+  namespace TypeCode
+  {
+    TAO::TypeCode::Sequence<TAO::Null_RefCount_Policy>
+      IIOP_ListenPointList_0 (
+        CORBA::tk_sequence,
+        &IIOP::_tc_ListenPoint,
+        0U);
+      
+    ::CORBA::TypeCode_ptr const tc_IIOP_ListenPointList_0 =
+      &IIOP_ListenPointList_0;
+    
+  }
+}
+
 static TAO::TypeCode::Alias<char const *,
                             TAO::Null_RefCount_Policy>
   _tao_tc_IIOP_ListenPointList (
     "IDL:omg.org/IIOP/ListenPointList:1.0",
     "ListenPointList",
-    &::_tao_tc_IIOP_ListenPointList_0);
+    &TAO::TypeCode::tc_IIOP_ListenPointList_0);
   
 namespace IIOP
 {
@@ -93,14 +102,13 @@ namespace IIOP
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/struct_typecode.cpp:34
+// be/be_visitor_typecode/struct_typecode.cpp:34
 
-static TAO::TypeCode::Struct_Field<char const *> const _tao_fields_IIOP_BiDirIIOPServiceContext[] =
+static TAO::TypeCode::Struct_Field<char const *> _tao_fields_IIOP_BiDirIIOPServiceContext[] =
   {
     { "listen_points", &IIOP::_tc_ListenPointList }
     
   };
-
 static TAO::TypeCode::Struct<char const *,
                              TAO::TypeCode::Struct_Field<char const *> const *,
                              CORBA::tk_struct,
@@ -120,7 +128,7 @@ namespace IIOP
 
 
 // TAO_IDL - Generated from 
-// be\be_visitor_structure/any_op_cs.cpp:54
+// be/be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
@@ -178,7 +186,7 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_sequence/any_op_cs.cpp:54
+// be/be_visitor_sequence/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
@@ -189,7 +197,7 @@ void operator<<= (
   TAO::Any_Dual_Impl_T<IIOP::ListenPointList>::insert_copy (
       _tao_any,
       IIOP::ListenPointList::_tao_any_destructor,
-      IIOP_ListenPointList_0,
+      TAO::TypeCode::tc_IIOP_ListenPointList_0,
       _tao_elem
     );
 }
@@ -203,7 +211,7 @@ void operator<<= (
   TAO::Any_Dual_Impl_T<IIOP::ListenPointList>::insert (
       _tao_any,
       IIOP::ListenPointList::_tao_any_destructor,
-      IIOP_ListenPointList_0,
+      TAO::TypeCode::tc_IIOP_ListenPointList_0,
       _tao_elem
     );
 }
@@ -230,13 +238,13 @@ CORBA::Boolean operator>>= (
     TAO::Any_Dual_Impl_T<IIOP::ListenPointList>::extract (
         _tao_any,
         IIOP::ListenPointList::_tao_any_destructor,
-        IIOP_ListenPointList_0,
+        TAO::TypeCode::tc_IIOP_ListenPointList_0,
         _tao_elem
       );
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_structure/any_op_cs.cpp:54
+// be/be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (

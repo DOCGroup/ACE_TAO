@@ -36,14 +36,14 @@
 #include "tao/Any_Dual_Impl_T.h"
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/alias_typecode.cpp:31
+// be/be_visitor_typecode/alias_typecode.cpp:31
 
 static TAO::TypeCode::Alias<char const *,
                             TAO::Null_RefCount_Policy>
   _tao_tc_GIOP_AddressingDisposition (
     "IDL:omg.org/GIOP/AddressingDisposition:1.0",
     "AddressingDisposition",
-    &::_tao_tc_CORBA::_tc_short);
+    &CORBA::_tc_short);
   
 namespace GIOP
 {
@@ -54,15 +54,14 @@ namespace GIOP
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/struct_typecode.cpp:34
+// be/be_visitor_typecode/struct_typecode.cpp:34
 
-static TAO::TypeCode::Struct_Field<char const *> const _tao_fields_GIOP_Version[] =
+static TAO::TypeCode::Struct_Field<char const *> _tao_fields_GIOP_Version[] =
   {
     { "major", &CORBA::_tc_octet },
     { "minor", &CORBA::_tc_octet }
     
   };
-
 static TAO::TypeCode::Struct<char const *,
                              TAO::TypeCode::Struct_Field<char const *> const *,
                              CORBA::tk_struct,
@@ -82,15 +81,14 @@ namespace GIOP
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/struct_typecode.cpp:34
+// be/be_visitor_typecode/struct_typecode.cpp:34
 
-static TAO::TypeCode::Struct_Field<char const *> const _tao_fields_GIOP_IORAddressingInfo[] =
+static TAO::TypeCode::Struct_Field<char const *> _tao_fields_GIOP_IORAddressingInfo[] =
   {
     { "selected_profile_index", &CORBA::_tc_ulong },
     { "ior", &IOP::_tc_IOR }
     
   };
-
 static TAO::TypeCode::Struct<char const *,
                              TAO::TypeCode::Struct_Field<char const *> const *,
                              CORBA::tk_struct,
@@ -110,7 +108,7 @@ namespace GIOP
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/union_typecode.cpp:33
+// be/be_visitor_typecode/union_typecode.cpp:33
 
 static TAO::TypeCode::Non_Default_Case<CORBA::Short, char const *> const _tao_cases_GIOP_TargetAddress[] =
   {
@@ -140,7 +138,7 @@ namespace GIOP
 
 
 // TAO_IDL - Generated from 
-// be\be_visitor_structure/any_op_cs.cpp:54
+// be/be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
@@ -198,7 +196,7 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_structure/any_op_cs.cpp:54
+// be/be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
@@ -256,7 +254,7 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_union/any_op_cs.cpp:54
+// be/be_visitor_union/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
