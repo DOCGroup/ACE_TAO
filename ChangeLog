@@ -1,3 +1,30 @@
+Wed Nov  5 19:02:51 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ace/CDR_Stream.cpp (clone_from):
+
+	  Fixed an alignment problem under the following conditions
+
+	  - The incoming CDR buffer has a message of size exactly 1024
+	    bytes.  
+	  
+	  - The data block within the message block in the destination CDR
+	    is not aligned on an 8 byte boundary. 
+
+	  This lead to improper copying. The problem was that the call
+	  clone () on the source data block returned exactly 1024 bytes
+	  and in addition could potentially (which is the destination)
+	  could be aligned on a 4 byte boundary. This made the destination
+	  buffer to get aligned on a 8 byte boundary and loose 4 bytes of 
+	  space which lead to improper copying of the source buffer. 
+
+	  The above problem now been fixed by doing an additional size
+	  increment on the cloned datablock. We have also added a small
+	  optimzation. We don't always clone the data block. We do it nly
+	  if the size of the source buffer is larger than the size of the
+	  destination buffer. This should lead to a small increase in
+	  performance since we are avoiding an allocation along the
+	  critical path.
+
 Wed Nov  5 18:52:01 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* ace/OS_NS_sys_socket.h:
