@@ -19,10 +19,13 @@
 // double and a long double.  So, we have to hard-code this.  Thanks
 // to Bob Laferriere <laferrie@gsao.med.ge.com> for figuring it out.
 #if defined (_MIPS_SIM)             /* 6.X System */
+# include <sgidefs.h>
 # if defined (_MIPS_SIM_NABI32) && (_MIPS_SIM == _MIPS_SIM_NABI32)
 #   define ACE_SIZEOF_LONG_DOUBLE 16
 # elif defined (_MIPS_SIM_ABI32) && (_MIPS_SIM == _MIPS_SIM_ABI32)
 #   define ACE_SIZEOF_LONG_DOUBLE 8
+# elif defined (_MIPS_SIM_ABI64) && (_MIPS_SIM == _MIPS_SIM_ABI64)
+#   define ACE_SIZEOF_LONG_DOUBLE 16
 # elif !defined (ACE_SIZEOF_LONG_DOUBLE)
 #   define ACE_SIZEOF_LONG_DOUBLE 8
 # endif
