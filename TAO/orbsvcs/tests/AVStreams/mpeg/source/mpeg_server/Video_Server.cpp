@@ -49,7 +49,7 @@ play_send (int debug)
       int sendStatus = -1;
       int frameStep = 1;
       if (debug)
-        cerr << " curgroup = " << curGroup << endl ;
+        cerr <<  " curgroup = " << curGroup << endl ;
       if (curGroup == 0)
         {
       
@@ -238,7 +238,8 @@ Video_Sig_Handler::handle_signal (int signum, siginfo_t *, ucontext_t *)
     case SIGALRM:
       // Handle the timeout
       Video_Timer_Global::timerHandler (SIGALRM);
-      // send the frame..
+      // send the frame
+      //      cerr << "current state = " << this->vch_->get_state ()->get_state ();
       switch (this->vch_->get_state ()->get_state ())
         {
         case Video_Control_State::VIDEO_PLAY:
@@ -303,9 +304,7 @@ Video_Data_Handler::handle_input (ACE_HANDLE handle)
 // Video_Control_Handler methods
 
 Video_Control_Handler::Video_Control_Handler (int control_fd)
-  : control_handle_ (control_fd),
-    state_  (VIDEO_CONTROL_WAITING_STATE::instance ())
-  // start off in the waiting state (i.e. waiting for commands)
+  : control_handle_ (control_fd)
 {
   VIDEO_CONTROL_HANDLER_INSTANCE::instance ()->set_video_control_handler (this);
 }
@@ -332,6 +331,9 @@ Video_Control_Handler::get_state (void)
 void
 Video_Control_Handler::change_state (Video_Control_State *state)
 {
+  ACE_DEBUG ((LM_DEBUG,
+              "Video_Control_Handler::Changing to state %d\n",
+              state->get_state ()));
   this->state_ = state;
 }
 
@@ -394,10 +396,6 @@ Video_Server::init (int ctr_fd,
                   Video_Control_Handler (ctr_fd),
                   -1);
 
-  // %% this->control_handler_->set_state 
-  //  (VIDEO_CONTROL_WAITING_STATE::instance ();
-  
-
   ACE_NEW_RETURN (this->data_handler_ ,
                   Video_Data_Handler (data_fd,
                                       this->control_handler_),
@@ -433,6 +431,10 @@ Video_Server::init (int ctr_fd,
   if (rttag) {
     if (SetRTpriority("VS", 0) == -1) rttag = 0;
   }
+  // sets the video control handler state to be waiting
+
+  this->control_handler_->change_state
+    (VIDEO_CONTROL_WAITING_STATE::instance ());
   return 0;
 }
 
@@ -527,7 +529,6 @@ Video_Server::init_play (void)
     return 0;
   }
   
-  
   fprintf(stderr, "VIDEO_SINGLETON::instance ()->VStimeAdvance from client: %d\n", VIDEO_SINGLETON::instance ()->VStimeAdvance);
   
   VIDEO_SINGLETON::instance ()->sendPatternGops = para.sendPatternGops;
@@ -547,7 +548,7 @@ Video_Server::init_play (void)
   Video_Timer_Global::StartTimer ();
 
   // Sends the first frame of the video...
-  result = play_send (1);
+  result = play_send (0);
   return 0;
 }
 
@@ -834,7 +835,7 @@ Video_Server::step_video()
 }
 
 int
-Video_Server::fast_video_play (void)
+Video_Server::init_fast_play (void)
 {
   int result;
   
@@ -870,13 +871,13 @@ Video_Server::fast_video_play (void)
 int
 Video_Server::fast_forward (void)
 {
-  return Video_Server::fast_video_play ();
+  return Video_Server::init_fast_play ();
 }
 
 int
 Video_Server::fast_backward (void)
 {
-  return Video_Server::fast_video_play ();
+  return Video_Server::init_fast_play ();
 }
 
 int
