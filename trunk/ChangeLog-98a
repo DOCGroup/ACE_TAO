@@ -1,3 +1,12 @@
+Sat Feb 28 12:20:57 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/Message_Queue.cpp: Fixed the implementation of
+ 	  wait_not_{full,empty}_cond() so that they utilize the
+ 	  ACE_Time_Value it's passed.  In addition, revised the
+ 	  implementation of peek_dequeue_head() so that it uses the new
+ 	  wait_not_empty_cond() implementation.  Thanks to Thanks to Tom
+ 	  Venturella <tventurell@mdc.com> for reporting this.
+
 Fri Feb 27 15:47:15 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ACE-INSTALL.html: added very useful information from
