@@ -56,10 +56,12 @@ class TAO_Export TAO_ClientRequest_Info
                             TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual Dynamic::ParameterList * arguments (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual Dynamic::ParameterList * arguments (CORBA::Environment &ACE_TRY_ENV =
+                                              TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual Dynamic::ExceptionList * exceptions (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual Dynamic::ExceptionList * exceptions (CORBA::Environment &ACE_TRY_ENV =
+                                               TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual Dynamic::ContextList * contexts (CORBA::Environment &ACE_TRY_ENV =
@@ -70,7 +72,8 @@ class TAO_Export TAO_ClientRequest_Info
                                                        TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA::Any * result (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual CORBA::Any * result (CORBA::Environment &ACE_TRY_ENV =
+                               TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::Boolean response_expected (CORBA::Environment &ACE_TRY_ENV =
@@ -195,10 +198,12 @@ class TAO_Export TAO_ServerRequest_Info
                             TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual Dynamic::ParameterList * arguments (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual Dynamic::ParameterList * arguments (CORBA::Environment &ACE_TRY_ENV =
+                                              TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual Dynamic::ExceptionList * exceptions (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual Dynamic::ExceptionList * exceptions (CORBA::Environment &ACE_TRY_ENV =
+                                               TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual Dynamic::ContextList * contexts (CORBA::Environment &ACE_TRY_ENV =
@@ -209,7 +214,8 @@ class TAO_Export TAO_ServerRequest_Info
                                                        TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA::Any * result (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual CORBA::Any * result (CORBA::Environment &ACE_TRY_ENV =
+                               TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::Boolean response_expected (CORBA::Environment &ACE_TRY_ENV =

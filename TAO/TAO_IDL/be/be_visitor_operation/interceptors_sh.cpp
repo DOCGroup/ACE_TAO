@@ -18,9 +18,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include        "idl.h"
+#include        "idl_extern.h"
+#include        "be.h"
 
 #include "be_visitor_operation.h"
 
@@ -49,7 +49,7 @@ be_visitor_operation_interceptors_sh::visit_operation (be_operation *node)
   be_visitor *visitor = tao_cg->make_visitor (&ctx);
   os = this->ctx_->stream ();
   this->ctx_->node (node); // save the node
-  
+
   // Generate the ServerRequest_Info object per operation to be used by the interecptors
   os->indent (); // start with the current indentation level
   *os << "class TAO_ServerRequest_Info_"<< node->flat_name ();
@@ -69,7 +69,7 @@ be_visitor_operation_interceptors_sh::visit_operation (be_operation *node)
                              "Bad return type\n"),
                             -1);
         }
-      
+
       // grab the right visitor to generate the return type if its not
       // void it means it is not the accessor.
       if (!this->void_return_type (bt))
@@ -81,13 +81,13 @@ be_visitor_operation_interceptors_sh::visit_operation (be_operation *node)
   *os << " : public TAO_ServerRequest_Info" << be_nl
       << "{" << be_nl
       << "public:"<< be_idt_nl
-    // Need to declare the stub as a friend so that it can access the 
+    // Need to declare the stub as a friend so that it can access the
     // private members of the Request Info class.
       << "friend class ";
   be_decl *parent =
     be_scope::narrow_from_scope (node->defined_in ())->decl ();
   *os << "POA_" << parent->full_name () << ";"<<be_nl;
-  *os << "TAO_ServerRequest_Info_"<< node->flat_name (); 
+  *os << "TAO_ServerRequest_Info_"<< node->flat_name ();
   // We need the interface node in which this operation was defined. However,
   // if this operation node was an attribute node in disguise, we get this
   // information from the context and add a "_get"/"_set" to the flat
@@ -104,7 +104,7 @@ be_visitor_operation_interceptors_sh::visit_operation (be_operation *node)
                              "Bad return type\n"),
                             -1);
         }
-      
+
       // grab the right visitor to generate the return type if its not
       // void it means it is not the accessor.
       if (!this->void_return_type (bt))
@@ -114,13 +114,13 @@ be_visitor_operation_interceptors_sh::visit_operation (be_operation *node)
     }
 
 
-  *os << " (" << be_idt_nl 
-      << "const char *  _tao_operation,"<< be_nl 
+  *os << " (" << be_idt_nl
+      << "const char *  _tao_operation,"<< be_nl
       << "IOP::ServiceContextList &_tao_service_context_list" << be_uidt;
 
   //generate the argument list with the appropriate mapping. For these
   // we grab a visitor that generates the parameter listing
-  
+
   ctx = *this->ctx_;
   ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARGLIST_SH);
   visitor = tao_cg->make_visitor (&ctx);
@@ -147,46 +147,27 @@ be_visitor_operation_interceptors_sh::visit_operation (be_operation *node)
 
   os->indent ();
   // Here I still need to generate the other methods + private args
-  *os << " virtual Dynamic::ParameterList * arguments (";
-    if (!be_global->exception_support ())
-      {
-        *os << be_idt_nl <<"CORBA::Environment &ACE_TRY_ENV =" 
-            <<be_idt_nl << " TAO_default_environment ())" 
-            << be_uidt<< be_uidt_nl;
-      }
-    else
-      *os << "void)" <<be_nl;
+  *os << " virtual Dynamic::ParameterList * arguments ("
+      << be_idt_nl <<"CORBA::Environment &ACE_TRY_ENV ="
+      <<be_idt_nl << " TAO_default_environment ())"
+      << be_uidt<< be_uidt_nl
+      << " ACE_THROW_SPEC ((CORBA::SystemException));"
+      << be_uidt_nl << be_nl;
 
-    *os << " ACE_THROW_SPEC ((CORBA::SystemException));" 
-        << be_uidt_nl << be_nl;
-  os->indent ();
-  *os << "virtual Dynamic::ExceptionList * exceptions ( ";
-    if (!be_global->exception_support ())
-      {
-        *os << be_idt_nl <<"CORBA::Environment &ACE_TRY_ENV =" 
-            <<be_idt_nl << " TAO_default_environment ())" 
-            << be_uidt<< be_uidt_nl;
-      }
-    else
-      *os << "void)" <<be_nl;
+  *os << "virtual Dynamic::ExceptionList * exceptions ( "
+      << be_idt_nl <<"CORBA::Environment &ACE_TRY_ENV ="
+      <<be_idt_nl << " TAO_default_environment ())"
+      << be_uidt<< be_uidt_nl
+      << " ACE_THROW_SPEC ((CORBA::SystemException));"
+      << be_uidt_nl << be_nl;
 
-    *os << " ACE_THROW_SPEC ((CORBA::SystemException));" 
-        << be_uidt_nl << be_nl;
-    os->indent ();
-    *os << "virtual CORBA::Any * result (";
-    if (!be_global->exception_support ())
-      {
-        *os << be_idt_nl <<"CORBA::Environment &ACE_TRY_ENV =" 
-            <<be_idt_nl << " TAO_default_environment ())" 
-            << be_uidt<< be_uidt_nl;
-      }
-    else
-      *os << "void)" <<be_nl;
+  *os << "virtual CORBA::Any * result ("
+      << be_idt_nl <<"CORBA::Environment &ACE_TRY_ENV ="
+      <<be_idt_nl << " TAO_default_environment ())"
+      << be_uidt<< be_uidt_nl
+      << " ACE_THROW_SPEC ((CORBA::SystemException));"
+      << be_uidt_nl << be_nl;
 
-    *os << " ACE_THROW_SPEC ((CORBA::SystemException));" 
-        << be_uidt_nl << be_nl;
-
-  os->indent ();
   *os << be_uidt_nl << "private:" <<be_nl;
 
   *os << "TAO_ServerRequest_Info_"<< node->flat_name () ;
@@ -206,7 +187,7 @@ be_visitor_operation_interceptors_sh::visit_operation (be_operation *node)
                              "Bad return type\n"),
                             -1);
         }
-      
+
       // grab the right visitor to generate the return type if its not
       // void it means it is not the accessor.
       if (!this->void_return_type (bt))
@@ -233,7 +214,7 @@ be_visitor_operation_interceptors_sh::visit_operation (be_operation *node)
                              "Bad return type\n"),
                             -1);
         }
-      
+
       // grab the right visitor to generate the return type if its not
       // void it means it is not the accessor.
       if (!this->void_return_type (bt))
@@ -243,7 +224,7 @@ be_visitor_operation_interceptors_sh::visit_operation (be_operation *node)
     }
 
 
-  *os << " &);" << be_nl 
+  *os << " &);" << be_nl
       << "void operator= (const "
       << "TAO_ServerRequest_Info_"<< node->flat_name ();
   // We need the interface node in which this operation was defined. However,
@@ -262,7 +243,7 @@ be_visitor_operation_interceptors_sh::visit_operation (be_operation *node)
                              "Bad return type\n"),
                             -1);
         }
-      
+
       // grab the right visitor to generate the return type if its not
       // void it means it is not the accessor.
       if (!this->void_return_type (bt))
@@ -277,7 +258,7 @@ be_visitor_operation_interceptors_sh::visit_operation (be_operation *node)
   //generate the member list with the appropriate mapping. For these
   // we grab a visitor that generates the parameter listing and
   // modify it to generate reference members.
-      
+
   ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_SH);
   visitor = tao_cg->make_visitor (&ctx);
   if (!visitor)
@@ -301,7 +282,7 @@ be_visitor_operation_interceptors_sh::visit_operation (be_operation *node)
   delete visitor;
 
   // Store the result for later use.
-  // generate the return type 
+  // generate the return type
   bt = be_type::narrow_from_decl (node->return_type ());
   if (!bt)
     {
@@ -311,7 +292,7 @@ be_visitor_operation_interceptors_sh::visit_operation (be_operation *node)
                          "Bad return type\n"),
                         -1);
     }
-      
+
   // grab the right visitor to generate the return type if its not
   // void since we cant have a private member to be of void type.
   if (!this->void_return_type (bt))
@@ -333,9 +314,9 @@ be_visitor_operation_interceptors_sh::visit_operation (be_operation *node)
       *os << "  result);" << be_uidt << be_uidt << be_uidt_nl
           << " // update the result " << be_nl;
     }
-      
+
   // Generate the result data member
-  // generate the return type 
+  // generate the return type
 
   bt = be_type::narrow_from_decl (node->return_type ());
   if (!bt)
@@ -346,7 +327,7 @@ be_visitor_operation_interceptors_sh::visit_operation (be_operation *node)
                          "Bad return type\n"),
                         -1);
     }
-      
+
   // grab the right visitor to generate the return type if its not
   // void since we cant have a private member to be of void type.
   if (!this->void_return_type (bt))
@@ -370,4 +351,3 @@ be_visitor_operation_interceptors_sh::visit_operation (be_operation *node)
   *os << "};\n\n";
   return 0;
 }
-
