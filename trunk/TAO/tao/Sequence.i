@@ -38,7 +38,6 @@ ACE_INLINE
 TAO_Base_Sequence::TAO_Base_Sequence (const TAO_Base_Sequence &rhs)
   : maximum_ (rhs.maximum_),
     length_ (rhs.length_),
-    buffer_ (0),
     release_ (1)
 {
 }
