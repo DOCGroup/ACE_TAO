@@ -133,7 +133,8 @@ TAO_Linear_ObjTable::TAO_Linear_ObjTable (CORBA::ULong size)
       size),
     counter_ (0)
 {
-  ACE_NEW (table_, TAO_Object_Table_Entry[this->tablesize_]);
+  ACE_NEW (table_,
+           TAO_Object_Table_Entry[this->tablesize_]);
 }
 
 int
