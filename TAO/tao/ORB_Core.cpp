@@ -185,9 +185,9 @@ TAO_ORB_Core::init (int &argc, char *argv[])
 
   // Use dotted decimal addresses
 #if defined (TAO_USE_DOTTED_DECIMAL_ADDRESSES)
-  int dotted_decimal_addresses = 1; 
+  int dotted_decimal_addresses = 1;
 #else
-  int dotted_decimal_addresses = 0; 
+  int dotted_decimal_addresses = 0;
 #endif /* TAO_USE_DOTTED_DECIMAL_ADDRESSES */
 
   while (arg_shifter.is_anything_left ())
@@ -430,7 +430,7 @@ TAO_ORB_Core::init (int &argc, char *argv[])
       else if (ACE_OS::strcmp (current_arg, "-ORBiioplite") == 0)
         {
           arg_shifter.consume_arg ();
-	  iiop_lite = 1;
+          iiop_lite = 1;
         }
       else
         arg_shifter.ignore_arg ();
@@ -1034,7 +1034,7 @@ TAO_ORB_Core::I_am_the_leader_thread (void)
   TAO_Leader_Follower_Info &lf_info = this->orb ()->leader_follower_info ();
   if (lf_info.leaders_)
     return ACE_OS::thr_equal (lf_info.leader_thread_ID_,
-			      ACE_Thread::self ());
+                              ACE_Thread::self ());
   return 0;
 }
 
@@ -1045,9 +1045,9 @@ TAO_ORB_Core::set_leader_thread (void)
 {
   TAO_Leader_Follower_Info &lf_info = this->orb ()->leader_follower_info ();
   ACE_ASSERT ((lf_info.leaders_ >= 1
-	       && ACE_OS::thr_equal (lf_info.leader_thread_ID_,
-				     ACE_Thread::self ()))
-	      || lf_info.leaders_ == 0);
+               && ACE_OS::thr_equal (lf_info.leader_thread_ID_,
+                                     ACE_Thread::self ()))
+              || lf_info.leaders_ == 0);
   lf_info.leaders_++;
   lf_info.leader_thread_ID_ = ACE_Thread::self ();
 }
@@ -1079,8 +1079,8 @@ TAO_ORB_Core::unset_leader_thread (void)
 {
   TAO_Leader_Follower_Info &lf_info = this->orb ()->leader_follower_info ();
   ACE_ASSERT ((lf_info.leaders_ > 1
-	       && ACE_OS::thr_equal (lf_info.leader_thread_ID_,
-				     ACE_Thread::self ()))
+               && ACE_OS::thr_equal (lf_info.leader_thread_ID_,
+                                     ACE_Thread::self ()))
               || lf_info.leaders_ == 1);
   lf_info.leaders_--;
 }
@@ -1138,7 +1138,7 @@ TAO_ORB_Core::input_cdr_dblock_allocator (void)
 {
   if (this->input_cdr_dblock_allocator_ == 0)
     {
-      this->input_cdr_dblock_allocator_ = 
+      this->input_cdr_dblock_allocator_ =
         this->resource_factory ()->input_cdr_dblock_allocator ();
     }
   return this->input_cdr_dblock_allocator_;
@@ -1149,7 +1149,7 @@ TAO_ORB_Core::input_cdr_buffer_allocator (void)
 {
   if (this->input_cdr_buffer_allocator_ == 0)
     {
-      this->input_cdr_buffer_allocator_ = 
+      this->input_cdr_buffer_allocator_ =
         this->resource_factory ()->input_cdr_buffer_allocator ();
     }
   return this->input_cdr_buffer_allocator_;
@@ -1399,7 +1399,7 @@ typedef ACE_Allocator_Adapter<TSS_MALLOC> TSS_ALLOCATOR;
 
 typedef ACE_Malloc<ACE_LOCAL_MEMORY_POOL,ACE_SYNCH_MUTEX> GBL_MALLOC;
 typedef ACE_Allocator_Adapter<GBL_MALLOC> GBL_ALLOCATOR;
-  
+
 // @@ TODO We may be changing the state of the global App_Allocated
 // structure, but without any locks? It seems to be done all over
 // the place.
@@ -1417,7 +1417,7 @@ TAO_Resource_Factory::input_cdr_dblock_allocator (void)
                           0);
         }
       return GLOBAL_APP_ALLOCATED::instance ()->input_cdr_dblock_allocator_;
-      break;
+      ACE_NOTREACHED (break);
     case TAO_TSS:
       if (TSS_APP_ALLOCATED::instance ()->input_cdr_dblock_allocator_ == 0)
         {
@@ -1426,7 +1426,7 @@ TAO_Resource_Factory::input_cdr_dblock_allocator (void)
                           0);
         }
       return TSS_APP_ALLOCATED::instance ()->input_cdr_dblock_allocator_;
-      break;
+      ACE_NOTREACHED (break);
     }
   return 0;
 }
