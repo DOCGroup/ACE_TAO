@@ -95,19 +95,17 @@ class ACE_Export ACE_Malloc_Header
   //    to keep track of each chunk of data when it's in the free
   //    list or in use.
 public:
-  class ACE_Malloc_Control_Block
-  {
-  public:
-    ACE_MALLOC_HEADER_PTR next_block_;
-    // Points to next block if on free list.
+  ACE_Malloc_Header (void);
 
-    size_t size_;
-    // Size of this block.
-  } s_;
+  ACE_MALLOC_HEADER_PTR next_block_;
+  // Points to next block if on free list.
+
+  size_t size_;
+  // Size of this header control block.
 
 #if (ACE_MALLOC_PADDING > 1)
 #define ACE_MALLOC_PADDING_SIZE ((ACE_MALLOC_PADDING - \
-                                  (sizeof (ACE_Malloc_Control_Block)) / sizeof (long)))
+                                  (sizeof (ACE_Malloc_Header)) / sizeof (long)))
   long padding_[ACE_MALLOC_PADDING_SIZE < 1 : ACE_MALLOC_PADDING_SIZE];
 #endif /* ACE_MALLOC_PADDING > 0 */
 
