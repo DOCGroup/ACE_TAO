@@ -69,6 +69,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include	"idl.h"
 #include	"idl_extern.h"
+#include        "ace/OS.h"
 
 ACE_RCSID(util, utl_global, "$Id$")
 
@@ -106,40 +107,22 @@ IDL_GlobalData::IDL_GlobalData()
       pd_idl_src_file (0),
       export_macro_ (0),
       export_include_ (0),
+      client_hdr_ending_ (ACE_OS::strnew ("C.h")),
+      client_stub_ending_ (ACE_OS::strnew ("C.cpp")),
+      client_inline_ending_ (ACE_OS::strnew ("C.i")),
+      server_hdr_ending_ (ACE_OS::strnew ("S.h")),
+      server_template_hdr_ending_ (ACE_OS::strnew ("S_T.h")),
+      server_skeleton_ending_ (ACE_OS::strnew ("S.cpp")),
+      server_template_skeleton_ending_ (ACE_OS::strnew ("S_T.cpp")),
+      server_inline_ending_ (ACE_OS::strnew ("S.i")),
+      server_template_inline_ending_ (ACE_OS::strnew ("S_T.i")),
+      perfect_hasher_ (0),
       output_dir_ (0)  
 {
-  // Assign the default values to the different filename endings. 
-  ACE_NEW (this->client_hdr_ending_, char [strlen ("C.h")]);
-  ACE_OS::strcpy (this->client_hdr_ending_, "C.h");
-  
-  ACE_NEW (this->client_stub_ending_, char [strlen ("C.cpp")]);
-  ACE_OS::strcpy (this->client_stub_ending_, "C.cpp");
-  
-  ACE_NEW (this->client_inline_ending_, char [strlen ("C.i")]);
-  ACE_OS::strcpy (this->client_inline_ending_, "C.i");
-  
-  ACE_NEW (this->server_hdr_ending_, char [strlen ("S.h")]);
-  ACE_OS::strcpy (this->server_hdr_ending_, "S.h");
-  
-  ACE_NEW (this->server_template_hdr_ending_, char [strlen ("S_T.h")]);
-  ACE_OS::strcpy (this->server_template_hdr_ending_, "S_T.h");
-  
-  ACE_NEW (this->server_skeleton_ending_, char [strlen ("S.cpp")]);
-  ACE_OS::strcpy (this->server_skeleton_ending_, "S.cpp");
-  
-  ACE_NEW (this->server_template_skeleton_ending_, char [strlen ("S_T.cpp")]);
-  ACE_OS::strcpy (this->server_template_skeleton_ending_, "S_T.cpp");
-  
-  ACE_NEW (this->server_inline_ending_, char [strlen ("S.i")]);
-  ACE_OS::strcpy (this->server_inline_ending_, "S.i");
-  
-  ACE_NEW (this->server_template_inline_ending_, char [strlen ("S_T.i")]);
-  ACE_OS::strcpy (this->server_template_inline_ending_, "S_T.i");
-  
   // Path for the perfect hash generator(gperf) program. Default
   // is $ACE_ROOT/bin/gperf.
   // Form the absolute pathname.
-  char *ace_root = ACE_OS::getenv ("ACE_ROOT");
+  char* ace_root = ACE_OS::getenv ("ACE_ROOT");
   if (ace_root == 0)
     // This may not cause any problem if -g option is used to specify
     // the correct path for the  gperf program. Let us ignore this
@@ -817,7 +800,7 @@ void
 IDL_GlobalData::client_hdr_ending (const char* s)
 {
   delete this->client_hdr_ending_;
-  this->client_hdr_ending_  = ACE_OS::strdup (s);
+  this->client_hdr_ending_ = ACE_OS::strnew (s);
 }
 
 // Get the client_hdr_ending.
@@ -831,7 +814,7 @@ void
 IDL_GlobalData::client_inline_ending  (const char* s)
 {
   delete this->client_inline_ending_;
-  this->client_inline_ending_  = ACE_OS::strdup (s);
+  this->client_inline_ending_ = ACE_OS::strnew (s);
 }
 
 const char*
@@ -845,7 +828,7 @@ void
 IDL_GlobalData::client_stub_ending (const char* s)
 {
   delete this->client_stub_ending_;
-  this->client_stub_ending_ = ACE_OS::strdup (s);
+  this->client_stub_ending_ = ACE_OS::strnew (s);
 }  
   
 const char*
@@ -858,7 +841,7 @@ void
 IDL_GlobalData::server_hdr_ending (const char* s)
 {
   delete this->server_hdr_ending_;
-  this->server_hdr_ending_ = ACE_OS::strdup (s);
+  this->server_hdr_ending_ = ACE_OS::strnew (s);
 }
 
 const char* 
@@ -871,7 +854,7 @@ void
 IDL_GlobalData::server_template_hdr_ending (const char* s)
 {
   delete this->server_template_hdr_ending_;
-  this->server_template_hdr_ending_ = ACE_OS::strdup (s);
+  this->server_template_hdr_ending_ = ACE_OS::strnew (s);
 }
   
 const char* 
@@ -884,7 +867,7 @@ void
 IDL_GlobalData::server_skeleton_ending (const char* s) 
 {
   delete this->server_skeleton_ending_;
-  this->server_skeleton_ending_ = ACE_OS::strdup (s);
+  this->server_skeleton_ending_ = ACE_OS::strnew (s);
 }
   
 const char* 
@@ -897,7 +880,7 @@ void
 IDL_GlobalData::server_template_skeleton_ending (const char* s)
 {
   delete this->server_template_skeleton_ending_;
-  this->server_template_skeleton_ending_ = ACE_OS::strdup (s);
+  this->server_template_skeleton_ending_ = ACE_OS::strnew (s);
 }
 
 const char*
@@ -910,7 +893,7 @@ void
 IDL_GlobalData::server_inline_ending (const char* s)
 {
   delete this->server_inline_ending_;
-  this->server_inline_ending_ = ACE_OS::strdup (s);
+  this->server_inline_ending_ = ACE_OS::strnew (s);
 }
 
 const char*
@@ -923,7 +906,7 @@ void
 IDL_GlobalData::server_template_inline_ending (const char* s)
 {
   delete this->server_template_inline_ending_;
-  this->server_template_inline_ending_ = ACE_OS::strdup (s);
+  this->server_template_inline_ending_ = ACE_OS::strnew (s);
 }
 
 const char*
@@ -936,9 +919,7 @@ void
 IDL_GlobalData::output_dir (const char* s)
 {
   delete this->output_dir_;
-  ACE_NEW (this->output_dir_,
-           char [ACE_OS::strlen (s)]);
-  ACE_OS::strcpy (this->output_dir_, s);
+  this->output_dir_ = ACE_OS::strnew (s);
 }
 
 const char*
@@ -951,9 +932,7 @@ void
 IDL_GlobalData::perfect_hasher (const char* s)
 {
   delete this->perfect_hasher_;
-  ACE_NEW (this->perfect_hasher_,
-           char [ACE_OS::strlen (s)]);
-  ACE_OS::strcpy (this->perfect_hasher_, s);
+  this->perfect_hasher_ = ACE_OS::strnew (s);
 }
 
 const char*
