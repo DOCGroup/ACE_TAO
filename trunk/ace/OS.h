@@ -6082,6 +6082,7 @@ public:
   static int mkfifo (const ACE_TCHAR *file,
                      mode_t mode = ACE_DEFAULT_FILE_PERMS);
   static ACE_TCHAR *mktemp (ACE_TCHAR *t);
+  static ACE_HANDLE mkstemp (ACE_TCHAR *t);
   static ACE_TCHAR *getcwd (ACE_TCHAR *, size_t);
   static int rename (const ACE_TCHAR *old_name,
                      const ACE_TCHAR *new_name,

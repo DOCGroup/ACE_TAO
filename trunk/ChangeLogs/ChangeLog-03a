@@ -1,3 +1,28 @@
+Sun Jul 08 11:26:23 2001  Ossama Othman  <ossama@uci.edu>
+
+	* ace/OS.h (mkstemp):
+	* ace/OS.i (mkstemp):
+
+	  New mkstemp() wrapper.  It is assumed to be available on the
+	  given platform, unless ACE_LACKS_MKSTEMP is defined.
+
+	* ace/FILE_Connector.h:
+
+	  Added O_EXCL to the default flags.  This is a security hole
+	  fix.
+
+	* ace/FILE_Connector.cpp (connect):
+
+	  If mkstemp() is available, then use it to create a temporary
+	  file rather than mktemp() (via ACE_FILE_Addr) since mktemp() is
+	  susceptible to a denial-of-service attack.
+
+	* ace/config-win32-common.h:
+	* ace/config-vxworks5.x.h:
+
+	  mkstemp() is not supported on MS Windows and VxWorks.  Define
+	  ACE_LACKS_MKSTEMP in these headers.
+
 Sun Jul  8 08:13:12 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* ace/Select_Reactor_Base.h: Added a comment explaining what
