@@ -352,7 +352,7 @@ TAO_IIOP_Acceptor::hostname (TAO_ORB_Core *orb_core,
                         ASYS_TEXT ("\n\nTAO (%P|%t) ")
                         ASYS_TEXT ("IIOP_Acceptor::hostname ")
                         ASYS_TEXT ("- %p\n\n"),
-                        ASYS_TEXT ("cannot cache hostname")));
+                        ASYS_TEXT ("cannot determine hostname")));
           return -1;
         }
 
@@ -364,16 +364,35 @@ TAO_IIOP_Acceptor::hostname (TAO_ORB_Core *orb_core,
       if (addr.get_host_name (tmp_host,
                               sizeof (tmp_host)) != 0)
         {
-          if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG,
-                        ASYS_TEXT ("\n\nTAO (%P|%t) ")
-                        ASYS_TEXT ("IIOP_Acceptor::hostname ")
-                        ASYS_TEXT ("- %p\n\n"),
-                        ASYS_TEXT ("cannot cache hostname")));
-          return -1;
-        }
+          // If hostname lookup fails, fall back on the IP address.
+          const char *tmp = addr.get_host_addr ();
 
-      host = tmp_host;
+          if (tmp == 0)
+            {
+              if (TAO_debug_level > 0)
+                ACE_DEBUG ((LM_DEBUG,
+                            ASYS_TEXT ("\n\nTAO (%P|%t) ")
+                            ASYS_TEXT ("IIOP_Acceptor::hostname ")
+                            ASYS_TEXT ("- %p\n\n"),
+                            ASYS_TEXT ("cannot determine hostname")));
+
+              return -1;
+            }
+          else
+            {
+              if (TAO_debug_level > 0)
+                ACE_DEBUG ((LM_DEBUG,
+                            ASYS_TEXT ("\n\nTAO (%P|%t) ")
+                            ASYS_TEXT ("IIOP_Acceptor::hostname ")
+                            ASYS_TEXT ("- %p\n\n"),
+                            ASYS_TEXT ("hostname lookup failed.\n")
+                            ASYS_TEXT ("Falling back on IP address")));
+
+              host = tmp;
+            }
+        }
+      else
+        host = tmp_host;
     }
 
   return 0;
