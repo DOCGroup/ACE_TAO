@@ -1,3 +1,7 @@
+Wed Jul 02 23:02:24 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* ACE version 4.2.15, released Wed Jul 02 23:02:24 1997.
+
 Wed Jul  2 22:23:49 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Service_Config.cpp: Used the new ACE_LACKS_UNIX_SIGNALS
