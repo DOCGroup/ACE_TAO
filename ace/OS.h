@@ -7374,7 +7374,8 @@ extern "C" ACE_OS_Export void ace_mutex_lock_cleanup_adapter (void *args);
 #   define ACE_PTHREAD_CLEANUP_PUSH(A) pthread_cleanup_push (ace_mutex_lock_cleanup_adapter, (void *) A);
 #   define ACE_PTHREAD_CLEANUP_POP(A) pthread_cleanup_pop(A)
 # elif defined (ACE_HAS_PTHREADS) && !defined (ACE_LACKS_PTHREAD_CLEANUP)
-#   define ACE_PTHREAD_CLEANUP_PUSH(A) pthread_cleanup_push (ACE_OS::mutex_lock_cleanup, (void *) A);
+extern "C" ACE_OS_Export void ace_mutex_lock_cleanup_adapter (void *args);
+#   define ACE_PTHREAD_CLEANUP_PUSH(A) pthread_cleanup_push (ace_mutex_lock_cleanup_adapter, (void *) A);
 #   define ACE_PTHREAD_CLEANUP_POP(A) pthread_cleanup_pop(A)
 # else
 #   define ACE_PTHREAD_CLEANUP_PUSH(A)
