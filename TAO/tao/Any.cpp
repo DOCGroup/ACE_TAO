@@ -408,6 +408,50 @@ CORBA_Any::operator>>= (CORBA::ULong &l) const
 }
 
 CORBA::Boolean
+CORBA_Any::operator>>= (CORBA::LongLong &l) const
+{
+  CORBA::Environment env;
+
+  if (this->type_->equal (CORBA::_tc_longlong, env))
+    {
+      if (this->any_owns_data_)
+        {
+          TAO_InputCDR stream (this->cdr_);
+          return stream.read_longlong (l);
+        }
+      else
+        {
+          l = *(CORBA::LongLong *) this->value_;
+          return CORBA::B_TRUE;
+        }
+    }
+  else
+    return CORBA::B_FALSE;
+}
+
+CORBA::Boolean
+CORBA_Any::operator>>= (CORBA::ULongLong &l) const
+{
+  CORBA::Environment env;
+
+  if (this->type_->equal (CORBA::_tc_ulonglong, env))
+    {
+      if (this->any_owns_data_)
+        {
+          TAO_InputCDR stream (this->cdr_);
+          return stream.read_ulonglong (l);
+        }
+      else
+        {
+          l = *(CORBA::ULongLong *) this->value_;
+          return CORBA::B_TRUE;
+        }
+    }
+  else
+    return CORBA::B_FALSE;
+}
+
+CORBA::Boolean
 CORBA_Any::operator>>= (CORBA::Float &f) const
 {
   CORBA::Environment env;
@@ -585,6 +629,28 @@ CORBA_Any::operator>>= (to_char c) const
       else
         {
           c.ref_ = *(CORBA::Char *) this->value_;
+          return CORBA::B_TRUE;
+        }
+    }
+  else
+    return CORBA::B_FALSE;
+}
+
+CORBA::Boolean
+CORBA_Any::operator>>= (to_wchar wc) const
+{
+  CORBA::Environment env;
+
+  if (this->type_->equal (CORBA::_tc_wchar, env))
+    {
+      if (this->any_owns_data_)
+        {
+          TAO_InputCDR stream ((ACE_Message_Block *) this->cdr_);
+          return stream.read_wchar (wc.ref_);
+        }
+      else
+        {
+          wc.ref_ = *(CORBA::WChar *) this->value_;
           return CORBA::B_TRUE;
         }
     }
