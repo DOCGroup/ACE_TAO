@@ -1,8 +1,8 @@
 // $Id$
 
-// This example tests the features of the ACE_SOCK_Acceptor and
-// ACE_SOCK_Stream classes.  If the platform supports threads it uses
-// a thread-per-connection concurrency model.
+// This example tests the features of the <ACE_SOCK_Acceptor> and
+// <ACE_SOCK_Stream> classes.  If the platform supports threads it
+// uses a thread-per-connection concurrency model.
 
 #include "ace/SOCK_Acceptor.h"
 #include "ace/Thread_Manager.h"
@@ -43,10 +43,10 @@ twoway_server (void *arg)
   size_t message_count = 0;
 
   void *buf;
-  ACE_UINT32 len;
+  ACE_INT32 len;
   
   if (new_stream.recv_n ((void *) &len,
-                         sizeof (ACE_UINT32)) != sizeof (ACE_UINT32))
+                         sizeof (ACE_INT32)) != sizeof (ACE_INT32))
     ACE_ERROR_RETURN ((LM_ERROR,
                        "(%P|%t) %p\n",
                        "recv_n failed"),
@@ -141,10 +141,10 @@ oneway_server (void *arg)
   size_t message_count = 0;
 
   void *buf;
-  ACE_UINT32 len;
+  ACE_INT32 len;
   
   if (new_stream.recv_n ((void *) &len,
-                         sizeof (ACE_UINT32)) != sizeof (ACE_UINT32))
+                         sizeof (ACE_INT32)) != sizeof (ACE_INT32))
     ACE_ERROR_RETURN ((LM_ERROR,
                        "(%P|%t) %p\n",
                        "recv_n failed"),

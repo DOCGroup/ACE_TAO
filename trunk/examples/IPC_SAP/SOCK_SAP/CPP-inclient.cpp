@@ -267,10 +267,10 @@ Options::oneway_client_test (void *)
                 remote_addr.get_host_name (),
                 remote_addr.get_port_number ()));
 
-  ACE_UINT32 len = htonl (options->message_len ());
+  ACE_INT32 len = htonl (options->message_len ());
 
   if (cli_stream.send_n ((void *) &len,
-                         sizeof (ACE_UINT32)) != sizeof (ACE_UINT32))
+                         sizeof (ACE_INT32)) != sizeof (ACE_INT32))
     ACE_ERROR_RETURN ((LM_ERROR,
                        "(%P|%t) %p\n",
                        "send_n failed"),
@@ -343,10 +343,10 @@ Options::twoway_client_test (void *)
                 remote_addr.get_host_name (),
                 remote_addr.get_port_number ()));
 
-  ACE_UINT32 len = htonl (options->message_len ());
+  ACE_INT32 len = htonl (options->message_len ());
 
   if (cli_stream.send_n ((void *) &len,
-                         sizeof (ACE_UINT32)) != sizeof (ACE_UINT32))
+                         sizeof (ACE_INT32)) != sizeof (ACE_INT32))
     ACE_ERROR_RETURN ((LM_ERROR,
                        "(%P|%t) %p\n",
                        "send_n failed"),
