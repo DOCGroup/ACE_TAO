@@ -5,16 +5,16 @@
 #include "helloEC.h"
 
 #if !defined (HELLO_EXECUTORS_H)
-#define (HELLO_EXECUTORS_H)
+#define HELLO_EXECUTORS_H
 
 class HelloWorld_Impl : public virtual CCM_HelloWorld
 {
 public:
   /// Default ctor.
-  HelloWorld ();
+  HelloWorld_Impl ();
 
   /// Default dtor.
-  ~HelloWorld ();
+  ~HelloWorld_Impl ();
 
   virtual char *sayHello (const char *username
                           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
@@ -27,10 +27,10 @@ class HelloHome_Impl : public virtual CCM_HelloHome
 {
 public:
   /// Default ctor.
-  HelloHome_impl ();
+  HelloHome_Impl ();
 
   /// Default dtor.
-  ~HelloHome_impl ();
+  ~HelloHome_Impl ();
 
   virtual ::Components::EnterpriseComponent_ptr
   create (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
