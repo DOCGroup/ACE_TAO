@@ -1,13 +1,14 @@
 ACKNOWLEDGEMENTS
 
 ACE and TAO have been deeply influenced and improved by the following
-members of my research group at Washington University:
+members of my research group at Washington University and at the
+University of California at Irvine.
 
 Everett Anderson <eea1@cec.wustl.edu>
 Alexander Babu Arulanthu <alex@cs.wustl.edu>
 Shawn Atkins <sma1@cs.wustl.edu>
 Matt Braun <mjb2@cs.wustl.edu>
-Darrell Brunsch <brunsch@cs.wustl.edu>
+Darrell Brunsch <brunsch@uci.edu>
 Chris Cleeland <chris@cs.wustl.edu>
 Mayur Deshpande <mayur@ics.uci.edu>
 Eric Ding <qnd1@cs.wustl.edu>
@@ -32,8 +33,8 @@ Sumedh Mungee <sumedh@cs.wustl.edu>
 Balachandran Natarajan <bala@cs.wustl.edu>
 Kirthika Parameswaran <kirthika@cs.wustl.edu>
 Krishnakumar Pathayapura <krish@cs.wustl.edu>
-Carlos O'Ryan <coryan@cs.wustl.edu>
-Ossama Othman <othman@cs.wustl.edu>
+Carlos O'Ryan <coryan@uci.edu>
+Ossama Othman <ossama@uci.edu>
 Jeff Parsons <parsons@cs.wustl.edu>
 Irfan Pyarali <irfan@cs.wustl.edu>
 Marina Spivak <marina@cs.wustl.edu>
@@ -1254,6 +1255,8 @@ Gil Rapaport <grapaport@comgates.co.il>
 Boris Temkin <borist@allcharge.com>
 Steve Perkins <steve@steveperkins.net>
 Heping He <heping@research.bell-labs.com>
+Andrew Finnell <Andrew.Finnell@esecurityinc.com>
+Dan Levi <DanL@webmap.com>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson in the early 1990's.  Paul devised the recursive Makefile
