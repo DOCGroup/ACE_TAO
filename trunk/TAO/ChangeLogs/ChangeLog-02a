@@ -1,3 +1,15 @@
+Tue Jun  4 16:00:46 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tao/CORBA_String.h:
+        * tao/CORBA_String.inl:
+
+          Added CORBA_String_out constructor from TAO_String_Manager.
+          This enables implicit conversion when for example a struct
+          member string is passed as an OUT parameter. Tested on
+          MSVC and gcc 2.95.3 20010315. Thanks to Stelios Sfakianakis 
+          <ssfak@ics.forth.gr> for reporting the problem and suggesting
+          the fix.
+
 Tue Jun  4 14:29:03 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * PortableServer/AMH_Response_Handler.cpp:
