@@ -104,15 +104,22 @@ ACE because CIAAO tracks changes to ACE and TAO very closely. <P>
 
   <LI>Use ACE Make uitility.<P>
       <UL>
-         <LI>Install <code>boost_filesystem</code>, <code>boost_regex</code> and <code>Utility Library</code>. For how to do that please see <a href="./CCF/Documentation/Build.html">Build.html</a>.<P>
+         <LI>Install <code>boost_filesystem</code>, <code>boost_regex</code> and <code>Utility Library</code>. For how to do that please see <a href="./CCF/Documentation/Build.html">Build.html</a>.
          <LI>Type <code>make</code> in <code>$CIAO_ROOT/CCF</code> and <code>$CIAO_ROOT/CIDLC</code>.<p>
       </UL>
-  <LI>Use MPC: (Not supported yet)
+  <LI>Use MPC:
+     <P>
+     <UL>
+        <LI>Install <code>boost_filesystem</code>, <code>boost_regex</code> and <code>Utility Library</code>. For how to do that please see <a href="./CCF/Documentation/Build.html">Build.html</a>.
+        <LI>2. In <code>$CIAO_ROOT/CIDLC</code> run <code>$ACE_ROOT/bin/mwc.pl CIDLC.mwc</code>
+        <LI>3. In <code>$CIAO_ROOT/CIDLC</code> run <code>make</code>.
+	<br>Note: The linking time is a bit long (more than 5 Minutes with an Intel XEON 1.90GHZ CPU, please be patient).
+     </UL>
 </OL>
 
-  <P>There are 2 ways to build CIDL compiler on <Strong>Windows</STRONG>:<P>
+  <P>There are 2 ways to build the CIDL compiler on <Strong>Windows</STRONG>:<P>
 <OL>
-  <LI>Use The Visual Studio solution/project file. For detail please see <a href="./CCF/Documentation/Build.html">Build.html</a><p>
+  <LI>Use the provided Visual Studio solution/project file. For detail please see <a href="./CCF/Documentation/Build.html">Build.html</a><p>
 
   <LI>Use MPC: (Not supported yet)
 </OL>
