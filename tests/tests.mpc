@@ -13,6 +13,7 @@ project(Framework Component DLL) : acelib {
 
 project(DLL Test Lib) : acelib {
   sharedname = DLL_Test
+  dllflags   = ACE_BUILD_SVC_DLL
 
   Source_Files {
     DLL_Test_Impl.cpp
