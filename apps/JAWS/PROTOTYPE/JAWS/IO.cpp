@@ -278,6 +278,8 @@ JAWS_Asynch_IO::read (JAWS_IO_Handler *ioh,
                       ACE_Message_Block* mb,
                       unsigned int size)
 {
+  JAWS_TRACE ("JAWS_Asynch_IO::read");
+
   JAWS_Asynch_IO_Handler *aioh =
     ACE_dynamic_cast (JAWS_Asynch_IO_Handler *, ioh);
 
