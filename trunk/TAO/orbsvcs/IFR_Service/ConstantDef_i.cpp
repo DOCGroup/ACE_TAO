@@ -218,7 +218,7 @@ TAO_ConstantDef_i::value_i (CORBA::Environment &ACE_TRY_ENV)
 
   char *data = ACE_static_cast (char *, ref);
 
-  auto_ptr<char> safety (data);
+  ACE_Auto_Basic_Ptr<char> safety (data);
 
   ACE_Message_Block mb (data, 
                         length);
