@@ -23,6 +23,29 @@ dnl MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 dnl miscellaneous macros
 
+dnl Prevent the configure script continuing any further if a CVS control
+dnl directory is found.  The idea is to prevent files generated during
+dnl configuration and build from be checked in to the CVS repository that
+dnl the sources are checked into.  This should only be an issue for
+dnl maintainers, not end-users.  Maintainers should configure and build in
+dnl a directory that doesn't contain any CVS controlled sources and files,
+dnl i.e. that doesn't contain a CVS directory.
+dnl
+dnl Usage: ACE_CHECK_FOR_CVS_DIR
+AC_DEFUN(ACE_CHECK_FOR_CVS_DIR,
+[
+ if test -d CVS; then
+   AC_MSG_ERROR(
+     [
+      This error is meant for maintainers:
+
+      Please configure and build in a non-CVS controlled directory.
+      Doing so will prevent accidentally committing automatically
+      generated files into the CVS repository and help ensure that
+      the generated files and build scheme are correct.
+     ])
+ fi
+])
 
 dnl Add compiler flags to the CXXFLAGS and CFLAGS variables when doing an
 dnl AC_TRY_COMPILE (not ACE_TRY_COMPILE).

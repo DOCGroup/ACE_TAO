@@ -1,3 +1,21 @@
+Mon Apr  5 19:42:11 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* configure.in:
+	* m4/acinclude.m4:
+
+	  Created the macro ACE_CHECK_FOR_CVS_DIR to prevent the configure
+	  script from continuing the configuration if the current
+	  configuration directory is in a CVS controlled directory.  The
+	  idea is to prevent automatically generated files from being
+	  checked into the repository.  This will prevent accidental
+	  overwrites of ACE's current Makefiles by the automatically
+	  generated ones, for example.
+
+	  In addition, this should ease the transition from the current
+	  Makefile scheme to the new Auto{conf,make}/libtool scheme since
+	  the current Makefiles can remain under CVS control without
+	  the generate Makefiles interfering with them.
+
 Mon Apr 05 17:02:46 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/High_Res_Timer.cpp (global_scale_factor ()): removed
