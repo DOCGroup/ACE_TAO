@@ -3,30 +3,23 @@ $Id$
 Use - for things to do, * for urgent things, and + for things that
 have been done.
 
+
+Bugs
+----
+
+- States problem -- pressing play twice screws up, position is not working
+- client blocks forever while exiting sometimes (often after the above)
+- vs, as don't die as a result of the above
+- server segfaults if addr is already in use
+
+
 Things to do
 ------------
 
 "Simple" things
 
-- Clear the semaphores on the client and the server!
-
-- Semaphore on the client side is exclusive ?! Sometimes one
-  client blocks forever when the server exits
-
-- rttag is enabled with -r
-  does it work ?
 
 - Make #define's into enums in common.h/globals.h
-
-+ Change handle_input to handle_connection in
-  Mpeg_Svc_Handler
-
-+ Video_Sig_Handler is in Mpeg_Server -- needs to be moved to Video_Server
-  -- done
-
-+ Split up VIDEO_FAST into two commands - VIDEO_FAST_{FORWARD,BACKWARD}
-
-+ create a helper class for video, and put FBread et al in that
 
 - try compiling ACE and the application with fast=1 to see if
   performance improves

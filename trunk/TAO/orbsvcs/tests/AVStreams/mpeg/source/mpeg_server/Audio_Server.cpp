@@ -32,7 +32,7 @@ int
 Audio_Global::CmdRead(char *buf, int psize)
 {
   int res = wait_read_bytes(serviceSocket, buf, psize);
-  if (res == 0) return (1);
+  if (res == 0) return (-1);
   if (res == -1) {
     fprintf(stderr, "AS error on read cmdSocket, size %d", psize);
     perror("");
@@ -810,7 +810,7 @@ Audio_Data_Handler::get_handle (void) const
 int
 Audio_Data_Handler::handle_input (ACE_HANDLE fd)
 {
-  ACE_DEBUG ((LM_DEBUG,"(%P|%t)Audio_Data_Handler::handle_input ()\n"));
+  ACE_DEBUG ((LM_DEBUG,"(%P|%t) Audio_Data_Handler::handle_input ()\n"));
   int bytes, len;
   for (;;) {
     if (this->audio_global_->conn_tag >= 0) {
@@ -941,14 +941,14 @@ Audio_Control_Handler::get_handle (void) const
 int
 Audio_Control_Handler::handle_input (ACE_HANDLE fd)
 {
-  ACE_DEBUG ((LM_DEBUG,"(%P|%t)Audio_Control_Handler::handle_input ()\n"));
+  ACE_DEBUG ((LM_DEBUG,"(%P|%t) Audio_Control_Handler::handle_input ()\n"));
   int result;
   switch (this->audio_global_->state)
     {
     case Audio_Global::AUDIO_WAITING:
       result = this->audio_global_->CmdRead((char *)&(this->audio_global_->cmd), 1);
       if (result != 0)
-        return result;
+        return -1;
       ACE_DEBUG ((LM_DEBUG,"(%P|%t)command %d received",this->audio_global_->cmd));
       switch (this->audio_global_->cmd)
         {
@@ -956,12 +956,12 @@ Audio_Control_Handler::handle_input (ACE_HANDLE fd)
           this->audio_global_->state = Audio_Global::AUDIO_PLAY;
           result = this->audio_global_->play_audio();
           if (result != 0)
-            return result;
+            return -1;
           break;
         case CmdCLOSE:
           ACE_DEBUG ((LM_DEBUG,"(%P|%t) A session closed\n"));
           ACE_Reactor::instance ()->end_event_loop ();
-          return(0);
+          return 0;
           break;
         default:
           fprintf(stderr, "audio channel command %d not recoganizeable\n", 
@@ -973,7 +973,7 @@ Audio_Control_Handler::handle_input (ACE_HANDLE fd)
       unsigned char tmp;
       result = this->audio_global_->CmdRead((char *)&tmp, 1);
       if (result != 0)
-        return result;
+        return -1;
       switch (tmp)
       {
       case CmdSPEED:
@@ -981,7 +981,7 @@ Audio_Control_Handler::handle_input (ACE_HANDLE fd)
 	  SPEEDaudioPara para;
 	  result = this->audio_global_->CmdRead((char *)&para, sizeof(para));
           if (result != 0)
-            return result;
+            return -1;
 #ifdef NeedByteOrderConversion
 	  para.sn = ntohl(para.sn);
 	  para.samplesPerSecond = ntohl(para.samplesPerSecond);
@@ -1010,7 +1010,7 @@ Audio_Control_Handler::handle_input (ACE_HANDLE fd)
           
 	  result = this->audio_global_->CmdRead((char *)&val, sizeof(int));
           if (result != 0)
-            return result;
+            return -1;
 	  /*
 	  CmdWrite(AUDIO_STOP_PATTERN, strlen(AUDIO_STOP_PATTERN));
 	  */
@@ -1018,7 +1018,7 @@ Audio_Control_Handler::handle_input (ACE_HANDLE fd)
 	    StopPlayLiveAudio();
 	  }
           this->audio_global_->state = Audio_Global::AUDIO_WAITING;
-	  return 0;
+          break;
 	}
       case CmdCLOSE:
 	if (this->audio_global_->live_source) {
@@ -1028,13 +1028,13 @@ Audio_Control_Handler::handle_input (ACE_HANDLE fd)
         // event loop.
 
         ACE_Reactor::instance ()->end_event_loop ();
-	return(1);  /* The whole AS session terminates */
+	return 0;  /* The whole AS session terminates */
       default:
 	if (this->audio_global_->live_source) {
 	  StopPlayLiveAudio();
 	}
 	fprintf(stderr, "AS error: cmd=%d while expects STOP/SPEED/CLOSE.\n", tmp);
-	return(-1);
+	return -1;
       }
       this->audio_global_->send_audio ();
       break;

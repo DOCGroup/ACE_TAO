@@ -182,6 +182,12 @@ public:
   static void on_exit_routine (void);
   // Routine called when this process exits.
 
+  static pid_t current_pid_;
+  // %% the pid the server is currently waiting on
+
+  static int done_;
+  // %% the done flag, set by the signal handler
+
   ~AV_Server (void);
   // Destructor
   //private:
