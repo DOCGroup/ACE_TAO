@@ -1078,7 +1078,7 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
 
               PortableServer::Servant servant = 0;
               PortableServer::ObjectId id ((*iterator).ext_id_);
-              
+
               int result = this->active_object_map ().unbind (id, servant);
               if (result != 0)
                 {
@@ -1086,7 +1086,7 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
                   env.exception (exception);
                   return;
                 }
-              
+
               CORBA::Boolean remaining_activations = CORBA::B_FALSE;
 
               if (this->policies ().id_uniqueness () == PortableServer::MULTIPLE_ID &&
@@ -1490,7 +1490,7 @@ TAO_POA::deactivate_object_i (const PortableServer::ObjectId &oid,
       PortableServer::POA_var self = this->_this (env);
       if (env.exception () != 0)
         return;
-  
+
       CORBA::Boolean remaining_activations = CORBA::B_FALSE;
 
       if (this->policies ().id_uniqueness () == PortableServer::MULTIPLE_ID &&
@@ -1851,7 +1851,7 @@ TAO_POA::id_to_reference_i (const PortableServer::ObjectId &oid,
   // activate the object is returned.
   PortableServer::Servant servant = 0;
   if (this->active_object_map ().find (oid, servant) != -1)
-    return this->create_reference_with_id (oid, 
+    return this->create_reference_with_id (oid,
                                            servant->_interface_repository_id (),
                                            env);
   else
@@ -2209,7 +2209,7 @@ TAO_POA::dispatch_servant_i (const TAO_ObjectKey &key,
   // Setup for upcall
   poa->pre_invoke (key,
                    id.in (),
-		   servant,
+                   servant,
                    env);
 
   servant->_dispatch (req,
@@ -2225,7 +2225,7 @@ TAO_POA::dispatch_servant_i (const TAO_ObjectKey &key,
 void
 TAO_POA::pre_invoke (const TAO_ObjectKey &key,
                      const PortableServer::ObjectId &id,
-		     PortableServer::Servant servant,
+                     PortableServer::Servant servant,
                      CORBA::Environment &env)
 {
   ACE_UNUSED_ARG (env);
@@ -2635,7 +2635,7 @@ TAO_POA::string_to_ObjectId (const char *id)
 }
 
 PortableServer::ObjectId *
-TAO_POA::wstring_to_ObjectId (const wchar_t *id)
+TAO_POA::wstring_to_ObjectId (const CORBA::WChar *id)
 {
   // Size of Id
   CORBA::ULong id_length = ACE_OS::strlen (id) + 1;
@@ -2653,7 +2653,7 @@ TAO_POA::wstring_to_ObjectId (const wchar_t *id)
                                        CORBA::B_TRUE);
 }
 
-wchar_t *
+CORBA::WChar *
 TAO_POA::ObjectId_to_wstring (const PortableServer::ObjectId &id)
 {
   // This method assumes that the id was initially placed in the octet
@@ -2666,7 +2666,7 @@ TAO_POA::ObjectId_to_wstring (const PortableServer::ObjectId &id)
   return CORBA::wstring_dup (id_buffer);
 }
 
-const wchar_t *
+const CORBA::WChar *
 TAO_POA::ObjectId_to_const_wstring (const PortableServer::ObjectId &id)
 {
   // This method assumes that the id was initially placed in the octet

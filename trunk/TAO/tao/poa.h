@@ -1,4 +1,5 @@
 // -*- C++ -*-
+// $Id$
 
 // ============================================================================
 //
@@ -321,11 +322,11 @@ public:
 
   static char *ObjectId_to_string (const PortableServer::ObjectId &id);
 
-  static wchar_t *ObjectId_to_wstring (const PortableServer::ObjectId &id);
+  static CORBA::WChar *ObjectId_to_wstring (const PortableServer::ObjectId &id);
 
   static PortableServer::ObjectId *string_to_ObjectId (const char *id);
 
-  static PortableServer::ObjectId *wstring_to_ObjectId (const wchar_t *id);
+  static PortableServer::ObjectId *wstring_to_ObjectId (const CORBA::WChar *id);
 
   TAO_POA (const String &adapter_name,
            TAO_POA_Manager &poa_manager,
@@ -508,7 +509,7 @@ protected:
 
   static const char *ObjectId_to_const_string (const PortableServer::ObjectId &id);
 
-  static const wchar_t *ObjectId_to_const_wstring (const PortableServer::ObjectId &id);
+  static const CORBA::WChar *ObjectId_to_const_wstring (const PortableServer::ObjectId &id);
 
   static const char *ObjectKey_to_const_string (const TAO_ObjectKey &key);
 
