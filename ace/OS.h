@@ -6149,6 +6149,9 @@ public:
   // success.  Returns 0 if local TSS had already been setup for this thread.
   // There is no corresponding tss_close () because it is not needed.
 
+  static void tss_close ();
+  // Shutdown TSS emulation.  For use only by ACE_OS::cleanup_tss ().
+
 private:
   // Global TSS structures.
   static u_int total_keys_;
