@@ -31,10 +31,6 @@ DEFINE_GUID (IID_STUB_Object,
 CORBA_ORB::CORBA_ORB (void)
   : refcount_ (1),
     open_called_(CORBA::B_FALSE),
-    client_factory_ (0),
-    client_factory_from_service_config_ (CORBA::B_FALSE),
-    server_factory_ (0),
-    server_factory_from_service_config_ (CORBA::B_FALSE),
     should_shutdown_(CORBA::B_FALSE),
     name_service_ (CORBA_Object::_nil ()),
     schedule_service_ (CORBA_Object::_nil ()),
@@ -45,12 +41,6 @@ CORBA_ORB::CORBA_ORB (void)
 CORBA_ORB::~CORBA_ORB (void)
 {
   TAO_ORB_Core_instance ()->fini ();
-
-  if (!this->client_factory_from_service_config_)
-    delete client_factory_;
-
-  if (!this->server_factory_from_service_config_)
-    delete server_factory_;
 
   // This assertion isn't valid because our ORB is a singleton
   // assert (refcount_ == 0);
@@ -65,10 +55,10 @@ CORBA_ORB::open (void)
 
   this->open_called_ = CORBA::B_TRUE;
 
-  TAO_Server_Strategy_Factory *f = this->server_factory ();
+  TAO_ORB_Core *ocp = TAO_ORB_Core_instance ();
+  TAO_Server_Strategy_Factory *f = ocp->server_factory ();
 
   // Initialize the endpoint ... or try!
-  TAO_ORB_Core *ocp = TAO_ORB_Core_instance ();
 
   if (ocp->acceptor ()->open (ocp->orb_params ()->addr (),
                               ocp->reactor(),
@@ -82,60 +72,9 @@ CORBA_ORB::open (void)
   if (ocp->acceptor ()->acceptor ().get_local_addr (ocp->addr ()) == -1)
     return -1;
 
+  ocp->orb_params ()->addr (ocp->addr ());
+  
   return 0;
-}
-
-TAO_Client_Strategy_Factory *
-CORBA_ORB::client_factory (void)
-{
-  if (this->client_factory_ == 0)
-    {
-      // Look in the service repository for an instance.
-      this->client_factory_ =
-        ACE_Dynamic_Service<TAO_Client_Strategy_Factory>::instance ("Client_Strategy_Factory");
-      this->client_factory_from_service_config_ = CORBA::B_TRUE;
-    }
-
-  if (this->client_factory_ == 0)
-    {
-      // Still don't have one, so let's allocate the default.  This
-      // will throw an exception if it fails on exception-throwing
-      // platforms.
-      ACE_NEW_RETURN (this->client_factory_, TAO_Default_Client_Strategy_Factory, 0);
-
-      this->client_factory_from_service_config_ = CORBA::B_FALSE;
-      // @@ At this point we need to register this with the
-      // Service_Repository in order to get it cleaned up properly.
-      // But, for now we let it leak.
-    }
-  return this->client_factory_;
-}
-
-TAO_Server_Strategy_Factory *
-CORBA_ORB::server_factory (void)
-{
-  if (this->server_factory_ == 0)
-    {
-      // Look in the service repository for an instance.
-      this->server_factory_ =
-        ACE_Dynamic_Service<TAO_Server_Strategy_Factory>::instance ("Server_Strategy_Factory");
-
-      this->server_factory_from_service_config_ = CORBA::B_TRUE;
-    }
-
-  if (this->server_factory_ == 0)
-    {
-      // Still don't have one, so let's allocate the default.  This
-      // will throw an exception if it fails on exception-throwing
-      // platforms.
-      ACE_NEW_RETURN (this->server_factory_, TAO_Default_Server_Strategy_Factory, 0);
-
-      this->server_factory_from_service_config_ = CORBA::B_FALSE;
-      // @@ At this point we need to register this with the
-      // Service_Repository in order to get it cleaned up properly.
-      // But, for now we let it leak.
-    }
-  return this->server_factory_;
 }
 
 ULONG __stdcall

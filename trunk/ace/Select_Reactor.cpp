@@ -1025,7 +1025,8 @@ ACE_Select_Reactor::ACE_Select_Reactor (ACE_Sig_Handler *sh,
   ACE_TRACE ("ACE_Select_Reactor::ACE_Select_Reactor");
 
   if (this->open (ACE_Select_Reactor::DEFAULT_SIZE, 0, sh, tq) == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n", "open failed"));
+    ACE_ERROR ((LM_ERROR, "%p\n",
+                "ACE_Select_Reactor::open failed inside ACE_Select_Reactor::CTOR"));
 }
 
 // Initialize ACE_Select_Reactor.
@@ -1050,7 +1051,8 @@ ACE_Select_Reactor::ACE_Select_Reactor (size_t size,
   ACE_TRACE ("ACE_Select_Reactor::ACE_Select_Reactor");
 
   if (this->open (size, rs, sh, tq) == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n", "open failed"));
+    ACE_ERROR ((LM_ERROR, "%p\n",
+                "ACE_Select_Reactor::open failed inside ACE_Select_Reactor::CTOR"));
 }
 
 // Close down the ACE_Select_Reactor instance, detaching any remaining

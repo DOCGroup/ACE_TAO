@@ -48,8 +48,8 @@ CORBA_POA::CORBA_POA (CORBA::ORB_ptr owning_orb,
     call_count_ (0),
     skeleton_ (0)
 {
-  TAO_Server_Strategy_Factory *f = orb_->server_factory ();
   TAO_ORB_Core* p = TAO_ORB_Core_instance ();
+  TAO_Server_Strategy_Factory *f = p->server_factory ();
 
   this->objtable_ = f->create_object_table ();
 
