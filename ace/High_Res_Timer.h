@@ -33,12 +33,13 @@ class ACE_Export ACE_High_Res_Timer
   //     added.  It returns 1 if high-resolution time (ACE_OS::gethrtime ())
   //     is supported on the platform, and 0 if not.
   //
-  //     The optional scale factor is required for platforms that have
-  //     high-resolution timers that return units other than nanoseconds,
-  //     such as clock ticks.  The member functions that return or print
-  //     times use this scale factor.  They divide the "time" that they
-  //     get from ACE_OS::gethrtime () by it to obtain the time in nanoseconds.
-  //     Its units are 1/second, possibly ticks/second.
+  //     The scale factor is required for platforms that have
+  //     high-resolution timers that return units other than
+  //     nanoseconds, such as clock ticks.  The member functions that
+  //     return or print times use this scale factor.  They divide the
+  //     "time" that they get from ACE_OS::gethrtime () by it to
+  //     obtain the time in nanoseconds.  Its units are 1/second,
+  //     possibly ticks/second.
   //
   //     NOTE:  the elapsed time calculations in the print methods use
   //     ACE_hrtime_t values.  If ACE_hrtime_t is not a 64-bit type
@@ -66,11 +67,16 @@ public:
   static ACE_Time_Value gettimeofday (void);
   // Calls ACE_High_Res_Timer::hrtime_to_tv passing ACE_OS::gethrtime
   // and global_scale_factor_.  This function can be used to
-  // parameterize objects such as ACE_Timer_Queue::gettimeofday.
+  // parameterize objects such as ACE_Timer_Queue::gettimeofday.  If
+  // global_scale_factor_ is not set, and we're on a platform that
+  // requires global_scale_factor_ (e.g., Win32), ACE_OS::gettimeofday
+  // will be used instead of ACE_OS::gethrtime.  This allows the
+  // scale_factor of 1 to still result in correct values.
 
-  ACE_High_Res_Timer (double scale_factor = 0);
+  ACE_High_Res_Timer (double scale_factor = 1);
   // Initialize the timer.  The <scale_factor> takes precedence to
-  // global_scale_factor_.
+  // global_scale_factor_.  A scale_factor of 1 is a noop.  A scale
+  // factor of 0 will cause division by zero exceptions.
 
   void reset (void);
   // Reinitialize the timer.
