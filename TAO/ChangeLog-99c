@@ -1,3 +1,14 @@
+Tue Jun 29 16:49:33 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ACE_wrappers/TAO/performance-tests/Cubit/TAO/IDL_Cubit/client.dsp
+	* ACE_wrappers/TAO/performance-tests/Cubit/TAO/IDL_Cubit/server.dsp
+	* ACE_wrappers/TAO/performance-tests/Cubit/TAO/MT_Cubit/client.dsp
+	* ACE_wrappers/TAO/performance-tests/Cubit/TAO/MT_Cubit/server.dsp
+
+	  Added user32.lib to static project settings.  Thanks to
+	  Guicheney Christophe <guichene@clrhp04.in2p3.fr> for reporting
+	  this.
+
 Tue Jun 28 17:22:20 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Makefile
