@@ -156,7 +156,7 @@ void operator<<= (CORBA::Any &_tao_any, const TAO::PrioritySpecification &_tao_e
 
 void TAO::PrioritySpecification::_tao_any_destructor (void *x)
 {
-  TAO::PrioritySpecification *tmp = ACE_const_cast(TAO::PrioritySpecification*,x);
+  TAO::PrioritySpecification *tmp = ACE_static_cast(TAO::PrioritySpecification*,x);
   delete tmp;
 }
 
@@ -276,7 +276,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const TAO::PrioritySpeci
 
 void TAO::ClientPriorityPolicy::_tao_any_destructor (void *x)
 {
-  TAO::ClientPriorityPolicy *tmp = ACE_const_cast(TAO::ClientPriorityPolicy*,x);
+  TAO::ClientPriorityPolicy *tmp = ACE_static_cast(TAO::ClientPriorityPolicy*,x);
   CORBA::release (tmp);
 }
 
@@ -498,7 +498,7 @@ void operator<<= (CORBA::Any &_tao_any, const TAO::BufferingConstraint &_tao_ele
 
 void TAO::BufferingConstraint::_tao_any_destructor (void *x)
 {
-  TAO::BufferingConstraint *tmp = ACE_const_cast(TAO::BufferingConstraint*,x);
+  TAO::BufferingConstraint *tmp = ACE_static_cast(TAO::BufferingConstraint*,x);
   delete tmp;
 }
 
@@ -618,7 +618,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const TAO::BufferingCons
 
 void TAO::BufferingConstraintPolicy::_tao_any_destructor (void *x)
 {
-  TAO::BufferingConstraintPolicy *tmp = ACE_const_cast(TAO::BufferingConstraintPolicy*,x);
+  TAO::BufferingConstraintPolicy *tmp = ACE_static_cast(TAO::BufferingConstraintPolicy*,x);
   CORBA::release (tmp);
 }
 

@@ -421,7 +421,7 @@ TAO_Common_Visitor_Factory::make_visitor (be_visitor_context *ctx)
     case TAO_CodeGen::TAO_ATTRIBUTE_DIRECT_COLLOCATED_SS:
     case TAO_CodeGen::TAO_ATTRIBUTE_SMART_PROXY_CH:
     case TAO_CodeGen::TAO_ATTRIBUTE_SMART_PROXY_CS:
-      
+
       return new be_visitor_attribute (new_ctx);
 
     case TAO_CodeGen::TAO_EXCEPTION_CH:
@@ -613,7 +613,7 @@ TAO_Compiled_Visitor_Factory::make_visitor (be_visitor_context *ctx)
 
     case TAO_CodeGen::TAO_AMI_SENDC_OPERATION_CH:
       return new be_visitor_operation_ami_ch (new_ctx);
-    
+
     case TAO_CodeGen::TAO_AMI_SENDC_OPERATION_CS:
       return new be_compiled_visitor_operation_ami_cs (new_ctx);
 

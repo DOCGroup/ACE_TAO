@@ -102,7 +102,6 @@ DEFAULT_RESOURCES_FILES = \
 
 INTERPRETIVE_MARSHALING_FILES = \
   append \
-  deep_free \
   CDR_Interpreter \
   Marshal \
   skip

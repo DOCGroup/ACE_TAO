@@ -621,7 +621,7 @@ void operator<<= (CORBA::Any &_tao_any, const CORBA::PolicyError &_tao_elem) // 
 
 void CORBA::PolicyError::_tao_any_destructor (void *x)
 {
-  CORBA::PolicyError *tmp = ACE_const_cast(CORBA::PolicyError*,x);
+  CORBA::PolicyError *tmp = ACE_static_cast(CORBA::PolicyError*,x);
   delete tmp;
 }
 
@@ -752,7 +752,7 @@ void operator<<= (CORBA::Any &_tao_any, const CORBA::InvalidPolicies &_tao_elem)
 
 void CORBA::InvalidPolicies::_tao_any_destructor (void *x)
 {
-  CORBA::InvalidPolicies *tmp = ACE_const_cast(CORBA::InvalidPolicies*,x);
+  CORBA::InvalidPolicies *tmp = ACE_static_cast(CORBA::InvalidPolicies*,x);
   delete tmp;
 }
 
@@ -872,7 +872,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const CORBA::InvalidPoli
 
 void CORBA::Policy::_tao_any_destructor (void *x)
 {
-  CORBA::Policy *tmp = ACE_const_cast(CORBA::Policy*,x);
+  CORBA::Policy *tmp = ACE_static_cast(CORBA::Policy*,x);
   CORBA::release (tmp);
 }
 
@@ -954,7 +954,7 @@ void operator<<= (
 
 void CORBA::PolicyList::_tao_any_destructor (void *x)
 {
-  CORBA::PolicyList *tmp = ACE_const_cast(CORBA::PolicyList*,x);
+  CORBA::PolicyList *tmp = ACE_static_cast(CORBA::PolicyList*,x);
   delete tmp;
 }
 
@@ -1090,7 +1090,7 @@ void operator<<= (
 
 void CORBA::PolicyTypeSeq::_tao_any_destructor (void *x)
 {
-  CORBA::PolicyTypeSeq *tmp = ACE_const_cast(CORBA::PolicyTypeSeq*,x);
+  CORBA::PolicyTypeSeq *tmp = ACE_static_cast(CORBA::PolicyTypeSeq*,x);
   delete tmp;
 }
 
@@ -1288,7 +1288,7 @@ operator>> (
 
 void CORBA::PolicyManager::_tao_any_destructor (void *x)
 {
-  CORBA::PolicyManager *tmp = ACE_const_cast(CORBA::PolicyManager*,x);
+  CORBA::PolicyManager *tmp = ACE_static_cast(CORBA::PolicyManager*,x);
   CORBA::release (tmp);
 }
 
@@ -1349,7 +1349,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::PolicyManager_ptr
 
 void CORBA::PolicyCurrent::_tao_any_destructor (void *x)
 {
-  CORBA::PolicyCurrent *tmp = ACE_const_cast(CORBA::PolicyCurrent*,x);
+  CORBA::PolicyCurrent *tmp = ACE_static_cast(CORBA::PolicyCurrent*,x);
   CORBA::release (tmp);
 }
 
