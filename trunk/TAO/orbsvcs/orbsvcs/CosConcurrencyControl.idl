@@ -82,9 +82,9 @@ module CosConcurrencyControl
       //     LockSet inteface to the concurrency service in implicit mode
       // = DESCRIPTION
       //     Clients operating in the implicit mode (i.e. non-transactional
-      //     mode acquire and release locks in lock sets throug this
+      //     mode) acquire and release locks in lock sets throug this
       //     interface. The interface only provides operations to acquire
-      //     release locks on behalf of the calling theread or transaction.
+      //     and release locks on behalf of the calling thread or transaction.
 
       void lock (in lock_mode mode);
       // Acquires a lock on the specified lock set in the specified mode.
