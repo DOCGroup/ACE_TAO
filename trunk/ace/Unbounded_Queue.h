@@ -73,6 +73,49 @@ private:
 };
 
 /**
+ * @class ACE_Unbounded_Queue_Const_Iterator
+ *
+ * @brief Implement an iterator over an const unbounded queue.
+ */
+template <class T>
+class ACE_Unbounded_Queue_Const_Iterator
+{
+public:
+  // = Initialization method.
+  ACE_Unbounded_Queue_Const_Iterator (const ACE_Unbounded_Queue<T> &q, int end = 0);
+
+  // = Iteration methods.
+
+  /// Pass back the <next_item> that hasn't been seen in the queue.
+  /// Returns 0 when all items have been seen, else 1.
+  int next (T *&next_item);
+
+  /// Move forward by one element in the set.  Returns 0 when all the
+  /// items in the queue have been seen, else 1.
+  int advance (void);
+
+  /// Move to the first element in the queue.  Returns 0 if the
+  /// queue is empty, else 1.
+  int first (void);
+
+  /// Returns 1 when all items have been seen, else 0.
+  int done (void) const;
+
+  /// Dump the state of an object.
+  void dump (void) const;
+
+  /// Declare the dynamic allocation hooks.
+  ACE_ALLOC_HOOK_DECLARE;
+
+private:
+  /// Pointer to the current node in the iteration.
+  ACE_Node<T> *current_;
+
+  /// Pointer to the queue we're iterating over.
+  const ACE_Unbounded_Queue<T> &queue_;
+};
+
+/**
  * @class ACE_Unbounded_Queue
  *
  * @brief A Queue of "infinite" length.
@@ -85,9 +128,11 @@ class ACE_Unbounded_Queue
 {
 public:
   friend class ACE_Unbounded_Queue_Iterator<T>;
+  friend class ACE_Unbounded_Queue_Const_Iterator<T>;
 
   // Trait definition.
   typedef ACE_Unbounded_Queue_Iterator<T> ITERATOR;
+  typedef ACE_Unbounded_Queue_Const_Iterator<T> CONST_ITERATOR;
 
   // = Initialization and termination methods.
   /// construction.  Use user specified allocation strategy
