@@ -1,3 +1,9 @@
+Sun Nov 30 15:53:49 2003  Huang-Ming Huang  <hh1@cse.wustl.edu>
+
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ClientORBInitializer.cpp:
+          Removed registering policy factory for HEARTBEAT_ENABLED_POLICY
+          which should be specific to FT server ORB.
+
 Sun Nov 30 12:15:45 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/client.cpp:
@@ -15,8 +21,8 @@ Sun Nov 30 12:15:45 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
         * performance-tests/Callback/server.dsp:
         * performance-tests/RTCorba/Oneways/Reliable/client.dsp:
 
-          Added link libraries, corrected link library names, added 
-          link include paths, and added or corrected IDL compiler 
+          Added link libraries, corrected link library names, added
+          link include paths, and added or corrected IDL compiler
           executable dependencies as needed.
 
         * orbsvcs/tests/Notify/Notify_Tests.dsw:
