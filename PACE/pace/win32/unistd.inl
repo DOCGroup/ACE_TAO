@@ -13,8 +13,10 @@
  *
  * ============================================================================= */
 
-#include <unistd.h>
 #include <stdarg.h>
+#include <io.h>
+#include <direct.h>
+#include <process.h>
 
 #if (PACE_HAS_POSIX_MP_UOF)
 PACE_INLINE
@@ -31,7 +33,7 @@ PACE_INLINE
 int
 pace_access (const char * path, int amode)
 {
-  return access (path, amode);
+  return _access (path, amode);
 }
 #endif /* PACE_HAS_POSIX_FS_UOF */
 
@@ -40,7 +42,7 @@ PACE_INLINE
 unsigned int
 pace_alarm (unsigned int seconds)
 {
-  return alarm (seconds);
+  PACE_ERRNO_NO_SUPPORT_RETURN (-1);
 }
 #endif /* PACE_HAS_POSIX_SIG_UOF */
 
@@ -49,7 +51,7 @@ PACE_INLINE
 int
 pace_chdir (const char * path)
 {
-  return chdir (path);
+  return _chdir (path);
 }
 #endif /* PACE_HAS_POSIX_FS_UOF */
 
@@ -58,34 +60,53 @@ PACE_INLINE
 int
 pace_chown (const char * path, uid_t owner, pace_gid_t group)
 {
-  return chown (path, owner, group);
+  PACE_ERRNO_NO_SUPPORT_RETURN (-1);  
 }
 #endif /* PACE_HAS_POSIX_FA_UOF */
 
 #if (PACE_HAS_POSIX_DI_UOF)
 PACE_INLINE
 int
-pace_close (int fildes)
+pace_close (PACE_HANDLE fildes)
 {
-  return close (fildes);
+  PACE_WIN32CALL_RETURN
+    (PACE_ADAPT_RETVAL
+     (CloseHandle (fildes), pace_result_), int, -1);
 }
 #endif /* PACE_HAS_POSIX_DI_UOF */
 
 #if (PACE_HAS_POSIX_FM_UOF)
 PACE_INLINE
-int
-pace_dup (int fildes)
+PACE_HANDLE
+pace_dup (PACE_HANDLE fildes)
 {
-  return dup (fildes);
+  PACE_HANDLE new_fd;
+  if (DuplicateHandle(GetCurrentProcess (),
+                      fildes,
+                      GetCurrentProcess(),
+                      &new_fd,
+                      0,
+                      TRUE,
+                      DUPLICATE_SAME_ACCESS))
+    {
+      return new_fd;
+    }
+  else
+    {
+      PACE_FAIL_RETURN (PACE_INVALID_HANDLE);
+    }
 }
 #endif /* PACE_HAS_POSIX_FM_UOF */
 
 #if (PACE_HAS_POSIX_FM_UOF)
 PACE_INLINE
-int
-pace_dup2 (int fildes, int fildes2)
+PACE_HANDLE
+pace_dup2 (PACE_HANDLE fildes, int fildes2)
 {
-  return dup2 (fildes, fildes2);
+  PACE_HANDLE retval = (void*)0;
+  PACE_UNUSED_ARG (fildes);
+  PACE_UNUSED_ARG (fildes2);
+  PACE_ERRNO_NO_SUPPORT_RETURN (retval);
 }
 #endif /* PACE_HAS_POSIX_FM_UOF */
 
@@ -95,7 +116,7 @@ int
 pace_execv (const char * path,
             char * const argv[])
 {
-  return execv (path, argv);
+  return _execv (path, (const char * const *) argv);
   /* if successful, this operation does NOT return */
 }
 #endif /* PACE_HAS_POSIX_MP_UOF */
@@ -107,7 +128,8 @@ pace_execve (const char * path,
              char * const argv[],
              char * const envp[])
 {
-  return execve (path, argv, envp);
+  return _execve (path, (const char *const *) argv,
+                  (const char *const *) envp);
   /* if successful, this operation does NOT return */
 }
 #endif /* PACE_HAS_POSIX_MP_UOF */
@@ -118,7 +140,7 @@ int
 pace_execvp (const char * file,
              char * const argv[])
 {
-  return execvp (file, argv);
+  return _execvp (file, (const char *const *) argv);
   /* if successful, this operation does NOT return */
 }
 #endif /* PACE_HAS_POSIX_MP_UOF */
@@ -126,9 +148,10 @@ pace_execvp (const char * file,
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
 PACE_INLINE
 int
-pace_fdatasync (int fildes)
+pace_fdatasync (PACE_HANDLE fildes)
 {
-  return fdatasync (fildes);
+  PACE_UNUSED_ARG (fildes);
+  PACE_ERRNO_NO_SUPPORT_RETURN (-1);
 }
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
@@ -137,34 +160,46 @@ PACE_INLINE
 pid_t
 pace_fork ()
 {
-  return fork ();
+  PACE_ERRNO_NO_SUPPORT_RETURN (-1);
 }
 #endif /* PACE_HAS_POSIX_MP_UOF */
 
 #if (PACE_HAS_POSIX_FS_UOF)
 PACE_INLINE
 long
-pace_fpathconf (int fildes, int name)
+pace_fpathconf (PACE_HANDLE fildes, int name)
 {
-  return fpathconf (fildes, name);
+  PACE_UNUSED_ARG (fildes);
+  PACE_UNUSED_ARG (name);
+  PACE_ERRNO_NO_SUPPORT_RETURN (-1);
 }
 #endif /* PACE_HAS_POSIX_FS_UOF */
 
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
 PACE_INLINE
 int
-pace_fsync (int fildes)
+pace_fsync (PACE_HANDLE fildes)
 {
-  return fildes;
+  PACE_UNUSED_ARG (fildes);
+  PACE_ERRNO_NO_SUPPORT_RETURN (-1);
 }
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
 PACE_INLINE
 int
-pace_ftruncate (int fildes, pace_off_t length)
+pace_ftruncate (PACE_HANDLE fildes, pace_off_t length)
 {
-  return ftruncate (fildes, length);
+  if (SetFilePointer (fildes, length, NULL, FILE_BEGIN) != (unsigned) -1)
+    {
+      PACE_WIN32CALL_RETURN
+        (PACE_ADAPT_RETVAL
+         (SetEndOfFile (fildes), pace_result_), int, -1);
+    }
+  else
+    {
+      PACE_FAIL_RETURN (-1);
+    }
 }
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
@@ -182,7 +217,7 @@ PACE_INLINE
 uid_t
 pace_getegid ()
 {
-  return getegid ();
+  PACE_ERRNO_NO_SUPPORT_RETURN (-1);
 }
 #endif /* PACE_HAS_POSIX_UG_UOF */
 
@@ -191,7 +226,7 @@ PACE_INLINE
 uid_t
 pace_geteuid ()
 {
-  return geteuid ();
+  PACE_ERRNO_NO_SUPPORT_RETURN (-1);
 }
 #endif /* PACE_HAS_POSIX_UG_UOF */
 
@@ -200,7 +235,9 @@ PACE_INLINE
 int
 pace_getgroups (int gidsetsize, pace_gid_t grouplist[])
 {
-  return getgroups (gidsetsize, grouplist);
+  PACE_UNUSED_ARG (gidsetsize);
+  PACE_UNUSED_ARG (grouplist);
+  PACE_ERRNO_NO_SUPPORT_RETURN (-1);
 }
 #endif /* PACE_HAS_POSIX_UG_UOF */
 
@@ -209,16 +246,18 @@ PACE_INLINE
 uid_t
 pace_getgid ()
 {
-  return getgid ();
+  uid_t retval = -1;
+  PACE_ERRNO_NO_SUPPORT_RETURN (retval);
 }
 #endif /* PACE_HAS_POSIX_UG_UOF */
 
 #if (PACE_HAS_POSIX_UG_UOF)
 PACE_INLINE
-char*
+char *
 pace_getlogin ()
 {
-  return getlogin ();
+  char * retval = (char*)0;
+  PACE_ERRNO_NO_SUPPORT_RETURN (retval);
 }
 #endif /* PACE_HAS_POSIX_UG_UOF */
 
@@ -227,13 +266,7 @@ PACE_INLINE
 int
 pace_getlogin_r (char * name, size_t namesize)
 {
-# if defined (PACE_HAS_POSIX_PTHREAD_SEMANTICS)
-  return getlogin_r (name, namesize);
-# else /* ! PACE_HAS_POSIX_PTHREAD_SEMANTICS */
-  PACE_UNUSED_ARG (name);
-  PACE_UNUSED_ARG (namesize);
   PACE_ERRNO_NO_SUPPORT_RETURN (-1);
-# endif /* ! PACE_HAS_POSIX_PTHREAD_SEMANTICS */
 }
 #endif /* PACE_HAS_POSIX_UGR_UOF */
 
@@ -242,7 +275,8 @@ PACE_INLINE
 pid_t
 pace_getpgrp ()
 {
-  return getpgrp ();
+  pid_t retval = -1;
+  PACE_ERRNO_NO_SUPPORT_RETURN (retval);
 }
 #endif /* PACE_HAS_POSIX_UG_UOF */
 
@@ -251,7 +285,7 @@ PACE_INLINE
 pid_t
 pace_getpid ()
 {
-  return getpid ();
+  return GetCurrentProcessId ();
 }
 #endif /* PACE_HAS_POSIX_MP_UOF */
 
@@ -260,7 +294,8 @@ PACE_INLINE
 pid_t
 pace_getppid ()
 {
-  return getppid ();
+  pid_t retval = -1;
+  PACE_ERRNO_NO_SUPPORT_RETURN (retval);
 }
 #endif /* PACE_HAS_POSIX_MP_UOF */
 
@@ -269,7 +304,8 @@ PACE_INLINE
 uid_t
 pace_getuid ()
 {
-  return getuid ();
+  uid_t retval = -1;
+  PACE_ERRNO_NO_SUPPORT_RETURN (retval);
 }
 #endif /* PACE_HAS_POSIX_UG_UOF */
 
@@ -278,7 +314,7 @@ PACE_INLINE
 int
 pace_isatty (int fildes)
 {
-  return isatty (fildes);
+  return _isatty (fildes);
 }
 #endif /* PACE_HAS_POSIX_DS_UOF */
 
@@ -287,14 +323,16 @@ PACE_INLINE
 int
 pace_link (const char * existing, const char * new_link)
 {
-  return link (existing, new_link);
+  PACE_UNUSED_ARG (existing);
+  PACE_UNUSED_ARG (new_link);
+  PACE_ERRNO_NO_SUPPORT_RETURN (-1);
 }
 #endif /* PACE_HAS_POSIX_FS_UOF */
 
 #if (PACE_HAS_POSIX_FM_UOF)
 PACE_INLINE
 pace_off_t
-pace_lseek (int fildes, pace_off_t offset, int whence)
+pace_lseek (PACE_HANDLE fildes, pace_off_t offset, int whence)
 {
   return lseek (fildes, offset, whence);
 }
@@ -321,7 +359,7 @@ pace_pause ()
 #if (PACE_HAS_POSIX_P_UOF)
 PACE_INLINE
 int
-pace_pipe (int fildes[2])
+pace_pipe (PACE_HANDLE fildes[2])
 {
   return pipe (fildes);
 }
@@ -330,7 +368,7 @@ pace_pipe (int fildes[2])
 #if (PACE_HAS_POSIX_DI_UOF)
 PACE_INLINE
 ssize_t
-pace_read (int fildes, void * buf, size_t nbyte)
+pace_read (PACE_HANDLE fildes, void * buf, size_t nbyte)
 {
   return read (fildes, buf, nbyte);
 }
@@ -402,7 +440,7 @@ pace_sysconf (int name)
 #if (PACE_HAS_POSIX_JC_UOF)
 PACE_INLINE
 pid_t
-pace_tcgetpgrp (int fildes)
+pace_tcgetpgrp (PACE_HANDLE fildes)
 {
   return tcgetpgrp (fldes);
 }
@@ -411,7 +449,7 @@ pace_tcgetpgrp (int fildes)
 #if (PACE_HAS_POSIX_JC_UOF)
 PACE_INLINE
 int
-pace_tcsetpgrp (int fildes, pid_t pgrp_id)
+pace_tcsetpgrp (PACE_HANDLE fildes, pid_t pgrp_id)
 {
   return tcsetpgrp (fildes, pgrp_id);
 }
@@ -420,7 +458,7 @@ pace_tcsetpgrp (int fildes, pid_t pgrp_id)
 #if (PACE_HAS_POSIX_DS_UOF)
 PACE_INLINE
 char *
-pace_ttyname (int fildes)
+pace_ttyname (PACE_HANDLE fildes)
 {
   return ttyname (fildes);
 }
@@ -429,7 +467,7 @@ pace_ttyname (int fildes)
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
 PACE_INLINE
 int
-pace_ttyname_r (int fildes,
+pace_ttyname_r (PACE_HANDLE fildes,
                 char * name,
                 size_t namesize)
 {
@@ -456,7 +494,7 @@ pace_unlink (const char * path)
 #if (PACE_HAS_POSIX_DI_UOF)
 PACE_INLINE
 ssize_t
-pace_write (int fildes, const void * buf, size_t nbyte)
+pace_write (PACE_HANDLE fildes, const void * buf, size_t nbyte)
 {
   return write (fildes, buf, nbyte);
 }

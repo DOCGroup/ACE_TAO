@@ -1,3 +1,9 @@
+Thu Jul 20 19:17:15 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* pace/win32/unistd.inl:
+
+	  Part of file fixed. Wanted to commit before I lose something.
+
 Thu Jul 20 19:19:28 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/unistd.h:
