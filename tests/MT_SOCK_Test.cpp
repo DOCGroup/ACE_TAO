@@ -223,7 +223,7 @@ server (void *arg)
                 }
               else if (r_bytes == -1)
                 {
-                  if (errno == EAGAIN || errno == EWOULDBLOCK)
+                  if (errno == EWOULDBLOCK || errno == EAGAIN)
                     ACE_DEBUG ((LM_DEBUG,
                                 ASYS_TEXT ("(%P|%t) no input available, going back to reading\n")));
                   else
@@ -236,7 +236,7 @@ server (void *arg)
         }
       if (result == -1)
         {
-          if (errno == EWOULDBLOCK || errno == EAGAIN)
+          if (errno == EWOULDBLOCK)
             ACE_DEBUG ((LM_DEBUG,
                         ASYS_TEXT ("(%P|%t) no connections available, going back to accepting\n")));
           else
