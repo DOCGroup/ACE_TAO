@@ -37,15 +37,16 @@ class TAO_Server_Connection_Handler;
 #endif /* ! __ACE_INLINE__ */
 
 class ACE_Svc_Export TAO_ORB_Parameters
-// = TITLE
-//    Parameters that are specific to the ORB.  These parameters can be
-//    for the client, the server, or for both.
-
-// NOTE: some of the functions have inline definitions in the class
-// header below.  Please do not move them back to the .i file.
-// cygnus-2.7.2-960126, distributed with Tornado 1.0.1, can't deal
-// with returing a const reference here.  It raises an internal
-// compiler error at ace/Svc_Handler.cpp:46, of all places.
+  // = TITLE
+  //    Parameters that are specific to the ORB.  These parameters can
+  //    be for the client, the server, or for both.
+  //
+  // = NOTE
+  // Some of the functions have inline definitions in the class header
+  // below.  Please do not move them back to the .i file.
+  // cygnus-2.7.2-960126, distributed with Tornado 1.0.1, can't deal
+  // with returing a const reference here.  It raises an internal
+  // compiler error at ace/Svc_Handler.cpp:46, of all places.
 {
 public:
   TAO_LOCAL_INLINE TAO_ORB_Parameters (void);
@@ -57,31 +58,19 @@ public:
   TAO_LOCAL_INLINE void addr (const ACE_INET_Addr &addr);
   // Set the address on which we're listening.
 
-  TAO_LOCAL_INLINE const ACE_INET_Addr &addr (void)
-  {
-    return this->addr_;
-  }
+  const ACE_INET_Addr &addr (void);
   // Get the address on which we're listening.
 
-  TAO_LOCAL_INLINE void name_service_ior (CORBA::String ns);
+  void name_service_ior (CORBA::String ns);
   // Set the IOR of our name service.
 
-  TAO_LOCAL_INLINE CORBA::String name_service_ior (void)
-  {
-    return this->name_service_ior_;
-  }
+  CORBA::String name_service_ior (void);
   // Get the IOR of our name service.
 
-  TAO_LOCAL_INLINE void name_service_port (CORBA::UShort port)
-  {
-    this->name_service_port_ = port;
-  }
+  void name_service_port (CORBA::UShort port);
   // Set the port of our name service.
 
-  TAO_LOCAL_INLINE CORBA::UShort name_service_port (void)
-  {
-    return this->name_service_port_;
-  }
+  CORBA::UShort name_service_port (void);
   // Get the port of our name service.
 
 private:

@@ -1,5 +1,49 @@
 #include "tao/corba.h"
 
+void
+TAO_ORB_Parameters::name_service_ior (CORBA::String ns)
+{
+  this->name_service_ior_ = ns;
+}
+
+// Get the address on which we're listening.
+
+const ACE_INET_Addr &
+TAO_ORB_Parameters::addr (void)
+{
+  return this->addr_;
+}
+
+void 
+TAO_ORB_Parameters::name_service_ior (CORBA::String ns)
+{
+  this->name_service_ior_ = ns;
+}
+
+// Set the IOR of our name service.
+
+CORBA::String 
+TAO_ORB_Parameters::name_service_ior (void)
+{
+  return this->name_service_ior_;
+}
+
+// Get the IOR of our name service.
+
+void 
+TAO_ORB_Parameters::name_service_port (CORBA::UShort port)
+{
+  this->name_service_port_ = port;
+}
+
+// Set the port of our name service.
+
+CORBA::UShort 
+TAO_ORB_Parameters::name_service_port (void)
+{
+  return this->name_service_port_;
+}
+
 void 
 TAO_OA_Parameters::demux_strategy (const char* strategy)
 {
