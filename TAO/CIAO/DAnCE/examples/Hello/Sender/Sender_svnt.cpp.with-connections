@@ -247,7 +247,6 @@ namespace Sender_Impl
     ::CORBA::SystemException,
     ::Components::ExceededConnectionLimit))
     {
-      ACE_DEBUG ((LM_DEBUG, " calling subscribe_click_out\n"));
       if (CORBA::is_nil (c))
       {
         ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);
@@ -648,10 +647,8 @@ namespace Sender_Impl
     ::Components::InvalidConnection,
     ::Components::ExceededConnectionLimit))
     {
-      ACE_DEBUG ((LM_DEBUG, "calling subscribe\n"));
       if (this->is_activated () == 0)
       {
-        ACE_DEBUG ((LM_DEBUG, "activating the servant\n"));
         this->ciao_preactivate (
                 ACE_ENV_SINGLE_ARG_PARAMETER);
 
