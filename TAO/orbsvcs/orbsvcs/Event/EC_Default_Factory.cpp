@@ -246,7 +246,8 @@ TAO_EC_Default_Factory::init (int argc, char* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              const char* opt = arg_shifter.get_current ();
+              const char *current_arg = arg_shifter.get_current();
+              char* opt = ACE_OS::strdup(current_arg);
               int collection_type = 0;
               int synch_type = 0;
               int iteration_type = 0;
@@ -278,6 +279,7 @@ TAO_EC_Default_Factory::init (int argc, char* argv[])
                                 "unknown collection modifier <%s>\n",
                                 arg));
                 }
+              ACE_OS::free(opt);
               this->supplier_collection_ =
                 (synch_type << 8) | (collection_type << 4) | iteration_type;
               arg_shifter.consume_arg ();

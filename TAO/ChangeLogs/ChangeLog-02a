@@ -1,3 +1,30 @@
+Sun Nov 11 11:02:23 2001  Craig Rodrigues  <crodrigu@bbn.com>
+ 
+	* orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
+	* tests/Exposed_Policies/Policy_Verifier.cpp:
+	* orbsvcs/Notify_Service/Notify_Service.cpp:
+	* orbsvcs/ImplRepo_Service/Options.h:
+	* orbsvcs/ImplRepo_Service/Options.cpp:
+	* orbsvcs/tests/Event/lib:
+	* orbsvcs/tests/Event/Basic/Observer.cpp:
+	* orbsvcs/tests/Event/Basic/BCast.cpp:
+	* orbsvcs/tests/Event/Basic/Random.cpp:
+	* orbsvcs/tests/Event/Performance/Connect.cpp:
+	* orbsvcs/tests/Event/Performance/Inversion.cpp:
+	* orbsvcs/tests/CosEvent/Basic/Random.cpp:
+	* orbsvcs/tests/Trading/TT_Info.cpp:
+	* orbsvcs/tests/Notify/Basic/LifeCycleTest.cpp:
+	* orbsvcs/tests/Notify/Basic/ConnectDisconnect.cpp:
+	* orbsvcs/tests/Notify/Basic/IdAssignment.cpp:
+	* orbsvcs/tests/Notify/Basic/Events_Test.cpp:
+	* orbsvcs/tests/Notify/Basic/AdminProperties_Test.cpp:
+	* orbsvcs/tests/Notify/Basic/Simple.cpp:
+	* orbsvcs/tests/Notify/Basic/Updates.cpp:
+	* orbsvcs/tests/Notify/performance-tests/RedGreen/RedGreen_Test.cpp:
+	* orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.cpp: 
+          More const char * fixes.
+
 Sat Nov 10 23:13:37 2001  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/tests/Security/Secure_Invocation/run_test.pl:

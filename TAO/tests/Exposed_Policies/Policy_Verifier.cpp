@@ -29,7 +29,7 @@ Policy_Verifier::init (int argc,
 
   while (arg_shifter.is_anything_left ())
     {
-      char *arg;
+      const char *arg = 0;
       // IOR File Name Option.
       if ((arg = arg_shifter.get_the_parameter ("-POAConfigFile")))
         {
