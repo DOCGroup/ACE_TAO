@@ -695,7 +695,7 @@ namespace
            << STRS[EXCP_AC] << "," << endl
            << STRS[EXCP_IC] << "))" << endl
            << "{"
-           << "if (! CORBA::is_nil (this->ciao_uses_"
+           << "if (CORBA::is_nil (this->ciao_uses_"
            << u.name () << "_.in ()))" << endl
            << "{"
            << "ACE_THROW (" << STRS[EXCP_AC] << " ());" << endl
