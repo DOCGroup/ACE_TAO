@@ -1,72 +1,83 @@
+Wed Jul 01 21:14:11 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/Param_Test/any.cpp: commented out unused static
+          any_table.
+
+        * tests/Param_Test/fixed_array.cpp (check_validity): commented
+          out unused local ret.
+
+        * tests/Param_Test/{bd,ub}_str_seq.cpp (init_parameters):
+          commented out unused local gen.
+
 Wed Jul  1 19:20:00 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
         * orbsvcs/LifeCycle_Service/Makefile: I hopefully
-	  fixed the complains of the DEC cxx compiler.
+          fixed the complains of the DEC cxx compiler.
 
 Wed Jul  1 15:50:00 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
-	* tao/ORB.cpp: Fixed a memory leak in the initial
-	  references code. The pointers (name_service_ and trading_service_)
-	  were not properly reused and not properly released.
-	
-	* tao/Operation_Table.h: Fixed a spelling problem with
-	  TAO_operation_db_entry.
+        * tao/ORB.cpp: Fixed a memory leak in the initial
+          references code. The pointers (name_service_ and trading_service_)
+          were not properly reused and not properly released.
+
+        * tao/Operation_Table.h: Fixed a spelling problem with
+          TAO_operation_db_entry.
 
 Wed Jul  1 13:59:30 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
-	* orbsvcs/LifeCycle_Service/Makefile: Removed STL flags.
+        * orbsvcs/LifeCycle_Service/Makefile: Removed STL flags.
 
-	* tao/TAO.{h,cpp}: Passing in argc to the TAO_ORB_Manager by
-	reference, since ORB_init takes argc by reference.
+        * tao/TAO.{h,cpp}: Passing in argc to the TAO_ORB_Manager by
+        reference, since ORB_init takes argc by reference.
 
-	* orbsvcs/Trading_Service/Trading_Service.{h,cpp}:
-	* orbsvcs/Trading_Service/Makefile:
-	Made Trading Service app resemble other orbsvcs apps. Accepts -TS* 
-	command line arguments. Has the ability to form a complete graph
-	federation with other traders on the same multicast network.
+        * orbsvcs/Trading_Service/Trading_Service.{h,cpp}:
+        * orbsvcs/Trading_Service/Makefile:
+        Made Trading Service app resemble other orbsvcs apps. Accepts -TS*
+        command line arguments. Has the ability to form a complete graph
+        federation with other traders on the same multicast network.
 
-	* orbsvcs/tests/Trading/Offer_Exporter.{h,cpp}:
-	* orbsvcs/tests/Trading/Offer_Importer.{h,cpp}:
-	* orbsvcs/tests/Trading/Service_Type_Exporter.{h,cpp}:
-	* orbsvcs/tests/Trading/export_test.cpp:
-	* orbsvcs/tests/Trading/Makfile:
-	export_test will now export service types and offers to all
-	traders linked to the multicast-enabled trader, so import_test
-	will test federated queries. 
-	
-	* orbsvcs/orbsvcs/IOR_Multicast.{h,cpp}: Added an init method for
-	initialization outside the constructor.
+        * orbsvcs/tests/Trading/Offer_Exporter.{h,cpp}:
+        * orbsvcs/tests/Trading/Offer_Importer.{h,cpp}:
+        * orbsvcs/tests/Trading/Service_Type_Exporter.{h,cpp}:
+        * orbsvcs/tests/Trading/export_test.cpp:
+        * orbsvcs/tests/Trading/Makfile:
+        export_test will now export service types and offers to all
+        traders linked to the multicast-enabled trader, so import_test
+        will test federated queries.
 
-	* orbsvcs/orbsvcs/Makefile: Changed macro name from
-	TAO_HAS_DYNAMIC_PROPERTY_BUG to TAO_HAS_OBJECT_IN_STRUCT_MARSHAL_BUG.
+        * orbsvcs/orbsvcs/IOR_Multicast.{h,cpp}: Added an init method for
+        initialization outside the constructor.
 
-	* orbsvcs/orbsvcs/Trader/*.*:
-	o  Hopefully fixed DEC cxx errors/warnings.
-	o  Added command-line configuration of trader policies, interfaces,
-	and multithreading support. 
-	o  Debugged link interface and federated queries.
-	o  Added explicit template specialization.
+        * orbsvcs/orbsvcs/Makefile: Changed macro name from
+        TAO_HAS_DYNAMIC_PROPERTY_BUG to TAO_HAS_OBJECT_IN_STRUCT_MARSHAL_BUG.
+
+        * orbsvcs/orbsvcs/Trader/*.*:
+        o  Hopefully fixed DEC cxx errors/warnings.
+        o  Added command-line configuration of trader policies, interfaces,
+        and multithreading support.
+        o  Debugged link interface and federated queries.
+        o  Added explicit template specialization.
 
 Wed Jul  1 1:55:23 1998 Jeff Parsons <jp4@cs.wustl.edu>
 
-	* TAO/tests/Cubit/TAO/DII_Cubit/Makefile: It works, at least with
-	SunCC. It builds the DII client and also the IDL server if
-	necessary (since we run it before running client.exe) -thanks
-	to David Levine for that.
-	* TAO/tests/Cubit/TAO/DII_Cubit/client.h, cpp: Now builds and
-	executes on Unix and NT. Also added some macros for the
-	environment checking inside the operations.
+        * TAO/tests/Cubit/TAO/DII_Cubit/Makefile: It works, at least with
+        SunCC. It builds the DII client and also the IDL server if
+        necessary (since we run it before running client.exe) -thanks
+        to David Levine for that.
+        * TAO/tests/Cubit/TAO/DII_Cubit/client.h, cpp: Now builds and
+        executes on Unix and NT. Also added some macros for the
+        environment checking inside the operations.
 
 Wed Jul  1 10:28:07 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* TAO_IDL/be_include/be_interface.h (be_type): Fixed the warnings
-	in g++.
+        * TAO_IDL/be_include/be_interface.h (be_type): Fixed the warnings
+        in g++.
 
 Wed Jul  1 06:36:11 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp: For the copying
-	version of the <<= operator, we were not doing a copy. Thanks to
-	Seth Widoff for pointing this out.
+        * TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp: For the copying
+        version of the <<= operator, we were not doing a copy. Thanks to
+        Seth Widoff for pointing this out.
 
 Tue Jun 30 22:08:38 1998  David L. Levine  <levine@cs.wustl.edu>
 
