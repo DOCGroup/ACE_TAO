@@ -208,8 +208,15 @@ protected:
   // Synchronization variable for the MT_SAFE <ACE_Map_Manager>.
 
 private:
-  int shared_find (const EXT_ID &ext_id, ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&);
+  int shared_find (const EXT_ID &ext_id,
+                   ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry,
+                   u_long &loc);
+  int shared_find (const EXT_ID &ext_id,
+                   ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry,
+                   ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&prev,
+                   u_long &loc);
   // Returns the <ACE_Hash_Map_Entry> that corresponds to <ext_id>.
+  // prev points to the previous entry.
 
   ACE_Hash_Map_Entry<EXT_ID, INT_ID> **table_;
   // Array of <ACE_Hash_Map_Entry> *s, each of which points to the
