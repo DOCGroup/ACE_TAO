@@ -88,6 +88,7 @@ class ACE_Log_Msg_Manager
 {
 public:
   static ACE_Log_Msg_Backend *log_backend_;
+  static ACE_Log_Msg_Backend *custom_backend_;
 
   static u_long log_backend_flags_;
 
@@ -104,6 +105,8 @@ private:
 };
 
 ACE_Log_Msg_Backend *ACE_Log_Msg_Manager::log_backend_ = 0;
+ACE_Log_Msg_Backend *ACE_Log_Msg_Manager::custom_backend_ = 0;
+
 u_long ACE_Log_Msg_Manager::log_backend_flags_ = 0;
 
 int ACE_Log_Msg_Manager::init_backend (const u_long *flags)
@@ -113,6 +116,13 @@ int ACE_Log_Msg_Manager::init_backend (const u_long *flags)
   // different type.
   if (flags)
     {
+      // Sanity check for custom backend.
+      if (ACE_BIT_ENABLED (*flags, ACE_Log_Msg::CUSTOM) &&
+          ACE_Log_Msg_Manager::custom_backend_ == 0)
+        {
+          return -1;
+        }
+
       if ((ACE_BIT_ENABLED (*flags, ACE_Log_Msg::SYSLOG)
             && ACE_BIT_DISABLED (ACE_Log_Msg_Manager::log_backend_flags_, ACE_Log_Msg::SYSLOG))
           || (ACE_BIT_DISABLED (*flags, ACE_Log_Msg::SYSLOG)
@@ -188,6 +198,9 @@ ACE_Log_Msg_Manager::close (void)
 
   delete ACE_Log_Msg_Manager::log_backend_;
   ACE_Log_Msg_Manager::log_backend_ = 0;
+
+  // we are never responsible for custom backend
+  ACE_Log_Msg_Manager::custom_backend_ = 0;
 }
 
 # if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || \
@@ -636,6 +649,10 @@ ACE_Log_Msg::~ACE_Log_Msg (void)
       if (ACE_Log_Msg_Manager::log_backend_ != 0)
         ACE_Log_Msg_Manager::log_backend_->close ();
 
+      // Close down custom backend
+      if (ACE_Log_Msg_Manager::custom_backend_ != 0)
+        ACE_Log_Msg_Manager::custom_backend_->close ();
+
 #     if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 #       if defined (ACE_HAS_TSS_EMULATION)
           ACE_Log_Msg_Manager::close ();
@@ -709,7 +726,11 @@ ACE_Log_Msg::open (const ACE_TCHAR *prog_name,
   ACE_MT (ACE_Log_Msg_Manager::init_backend (&flags));
 
   // Always close the current handle before doing anything else.
-  ACE_Log_Msg_Manager::log_backend_->reset ();
+  if (ACE_Log_Msg_Manager::log_backend_ != 0)
+    ACE_Log_Msg_Manager::log_backend_->reset ();
+
+  if (ACE_Log_Msg_Manager::custom_backend_ != 0)
+    ACE_Log_Msg_Manager::custom_backend_->reset ();
 
   // Note that if we fail to open the message queue the default action
   // is to use stderr (set via static initialization in the
@@ -738,6 +759,15 @@ ACE_Log_Msg::open (const ACE_TCHAR *prog_name,
       // If we are closing down logger, redirect logging to stderr.
       ACE_CLR_BITS (ACE_Log_Msg::flags_, ACE_Log_Msg::LOGGER);
       ACE_SET_BITS (ACE_Log_Msg::flags_, ACE_Log_Msg::STDERR);
+    }
+
+  if (ACE_BIT_ENABLED (flags, ACE_Log_Msg::CUSTOM))
+    {
+      status =
+        ACE_Log_Msg_Manager::custom_backend_->open (logger_key);
+
+      if (status == -1)
+        ACE_SET_BITS (ACE_Log_Msg::flags_, ACE_Log_Msg::CUSTOM);
     }
 
   // Remember, ACE_Log_Msg::STDERR bit is on by default...
@@ -805,9 +835,12 @@ ACE_Log_Msg::open (const ACE_TCHAR *prog_name,
 //   'D': print timestamp in month/day/year hour:minute:sec:usec format.
 //   't': print thread id (1 if single-threaded)
 //   'u': print as unsigned int
-//   'X', 'x': print as a hex number
+//   'x': print as a hex number
+//   'X': print as a hex number
 //   'w': print a wide character
 //   'W': print out a wide character string.
+//   'z': print an ACE_OS::WChar character
+//   'Z': print an ACE_OS::WChar character string
 //   '%': format a single percent sign, '%'
 
 ssize_t
@@ -1401,6 +1434,82 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
 #endif /* ACE_WIN32 */
                   break;
 
+                case 'z':              // ACE_OS::WChar character
+                  {
+                    wchar_t wtchar = va_arg (argp, ACE_OS::WChar);                  
+#if defined (ACE_WIN32)
+# if defined (ACE_USES_WCHAR)
+                    ACE_OS::strcpy (fp, ACE_LIB_TEXT ("c"));
+# else /* ACE_USES_WCHAR */
+                    ACE_OS::strcpy (fp, ACE_LIB_TEXT ("C"));
+# endif /* ACE_USES_WCHAR */
+                    ACE_OS::sprintf (bp, format, wtchar);
+#elif defined (ACE_USES_WCHAR)
+# if defined (HPUX)
+                    ACE_OS::strcpy (fp, ACE_LIB_TEXT ("C"));
+# else
+                    ACE_OS::strcpy (fp, ACE_LIB_TEXT ("lc"));
+# endif /* HPUX */
+                    ACE_OS::sprintf (bp, format, wtchar);
+#else /* ACE_WIN32 */
+                    ACE_OS::strcpy (fp, ACE_LIB_TEXT ("u"));
+                    ACE_OS::sprintf (bp, format, wtchar);
+#endif /* ACE_WIN32 */
+                  break;
+                  }
+                  
+                 case 'Z':              // ACE_OS::WChar character string
+                  {
+                    ACE_OS::WChar *wchar_str = va_arg (argp, ACE_OS::WChar*);
+                    if(wchar_str == 0)
+                      {
+                        break;
+                      }
+
+                    wchar_t *wchar_t_str = 0;
+                    if(sizeof(ACE_OS::WChar) != sizeof(wchar_t))
+                      {
+                        u_int len = ACE_OS::wslen (wchar_str) + 1;
+                        //@@ Bad, but there is no such ugly thing as 
+                        // ACE_NEW_BREAK and ACE_NEW has a return 
+                        // statement inside.
+                        ACE_NEW_RETURN(wchar_t_str, wchar_t[len], 0);
+                        if(wchar_t_str == 0)
+                          { 
+                            break;
+                          }
+                        for (u_int i = 0; i < len; i++)
+                          {
+                            wchar_t_str[i] = wchar_str[i];
+                          }
+                      }
+                    else
+                      {                                      
+                        wchar_t_str = ACE_reinterpret_cast(wchar_t*, 
+                                                           wchar_str);
+                      }                    
+#if defined (ACE_WIN32)
+# if defined (ACE_USES_WCHAR)
+                  ACE_OS::strcpy (fp, ACE_LIB_TEXT ("s"));
+# else /* ACE_USES_WCHAR */
+                  ACE_OS::strcpy (fp, ACE_LIB_TEXT ("S"));
+# endif /* ACE_USES_WCHAR */
+                  ACE_OS::sprintf (bp, format, wchar_t_str);
+#elif defined (ACE_HAS_WCHAR)
+# if defined (HPUX)
+                  ACE_OS::strcpy (fp, ACE_LIB_TEXT ("S"));
+# else
+                  ACE_OS::strcpy (fp, ACE_LIB_TEXT ("ls"));
+# endif /* HPUX */
+                  ACE_OS::sprintf (bp, format, wchar_t_str);
+#endif /* ACE_WIN32 / ACE_HAS_WCHAR */
+                  if(sizeof(ACE_OS::WChar) != sizeof(wchar_t))
+                    {
+                      delete wchar_t_str;
+                    }
+                  break;                  
+                  }
+
                 case 'c':
 #if defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
                   ACE_OS::strcpy (fp, ACE_LIB_TEXT ("C"));
@@ -1596,15 +1705,29 @@ ACE_Log_Msg::log (ACE_Log_Record &log_record,
       , stderr);
 #endif /* ACE_HAS_WINCE */
 
-      if (ACE_BIT_ENABLED (ACE_Log_Msg::flags_,
-                           ACE_Log_Msg::LOGGER))
+
+      if (ACE_BIT_ENABLED (ACE_Log_Msg::flags_, ACE_Log_Msg::CUSTOM) || 
+          ACE_BIT_ENABLED (ACE_Log_Msg::flags_, ACE_Log_Msg::LOGGER))
         {
           // Be sure that there is a message_queue_, with multiple threads.
           ACE_MT (ACE_Log_Msg_Manager::init_backend ());
+        }
+  
 
+      if (ACE_BIT_ENABLED (ACE_Log_Msg::flags_,
+                           ACE_Log_Msg::LOGGER))
+        {          
           result =
             ACE_Log_Msg_Manager::log_backend_->log (log_record);
         }
+
+      if (ACE_BIT_ENABLED (ACE_Log_Msg::flags_, ACE_Log_Msg::CUSTOM) &&
+          ACE_Log_Msg_Manager::custom_backend_ != 0)
+        {
+          result =
+            ACE_Log_Msg_Manager::custom_backend_->log (log_record);
+        }
+
 
       // This must come last, after the other two print operations
       // (see the <ACE_Log_Record::print> method for details).
@@ -1953,6 +2076,28 @@ ACE_Log_Msg::msg_callback (ACE_Log_Msg_Callback *c)
   ACE_Log_Msg_Callback *old = this->msg_callback_;
   this->msg_callback_ = c;
   return old;
+}
+
+ACE_Log_Msg_Backend *
+ACE_Log_Msg::msg_backend (ACE_Log_Msg_Backend *b)
+{
+  ACE_TRACE ("ACE_Log_Msg::msg_backend");
+  ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
+                            *ACE_Log_Msg_Manager::get_lock (), 0));
+
+  ACE_Log_Msg_Backend *tmp  = ACE_Log_Msg_Manager::custom_backend_;
+  ACE_Log_Msg_Manager::custom_backend_ = b;
+  return tmp;
+}
+
+ACE_Log_Msg_Backend *
+ACE_Log_Msg::msg_backend (void)
+{
+  ACE_TRACE ("ACE_Log_Msg::msg_backend");
+  ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
+                            *ACE_Log_Msg_Manager::get_lock (), 0));
+
+  return ACE_Log_Msg_Manager::custom_backend_;
 }
 
 ACE_OSTREAM_TYPE *

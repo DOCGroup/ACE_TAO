@@ -108,6 +108,7 @@
 #endif /* THREAD */
 
 class ACE_Log_Msg_Callback;
+class ACE_Log_Msg_Backend;
 
 // ****************************************************************
 
@@ -170,7 +171,9 @@ public:
     /// storage for later inspection).
     SILENT = 64,
     /// Write messages to the system's event log.
-    SYSLOG = 128
+    SYSLOG = 128,
+    /// Write messages to the user provided backend
+    CUSTOM = 256
  };
 
   // = Initialization and termination routines.
@@ -318,6 +321,19 @@ public:
   ACE_Log_Msg_Callback *msg_callback (ACE_Log_Msg_Callback *c);
   ACE_Log_Msg_Callback *msg_callback (void) const;
 
+  /**
+   * Set a new backend object and return the existing backend to 
+   * allow "chaining". Note that as opposit to <ACE_Log_Msg_Callback>
+   * <ACE_Log_Msg_Backend> is a per-process entity.
+   *
+   * Note: Be aware that because of the current architecture there is
+   * no guarantee that open (), reset () and close () will be called 
+   * on a backend object.
+   *
+   */
+  static ACE_Log_Msg_Backend *msg_backend (ACE_Log_Msg_Backend *b);
+  static ACE_Log_Msg_Backend *msg_backend (void);
+
   // = Nesting depth increment and decrement.
   int inc (void);
   int dec (void);
@@ -453,7 +469,10 @@ public:
    *  + 'u': print as unsigned int
    *  + 'w': prints a wide character
    *  + 'W': print a wide character string
-   *  + 'X', 'x': print as a hex number
+   *  + 'x': print as a hex number
+   *  + 'X': print as a hex number
+   *  + 'z': print an ACE_OS::WChar character
+   *  + 'Z': print an ACE_OS::WChar character string
    *  + '%': print out a single percent sign, '%'
    */
   ssize_t log (ACE_Log_Priority priority, const ACE_TCHAR *format, ...);
