@@ -1,3 +1,12 @@
+Tue Jun 18 10:09:45 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+
+	  In the gen_typecode (be_enum *node) method, removed an incorrect
+	  check for optimized typecode generation before inserting the enum
+	  into tc_queue_. Thanks to Shanliang Cheng <shanliang@huawei.com> 
+	  for pointing out the error.
+
 Mon Jun 17 21:19:50 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/TypeCode.cpp (private_member_type, private_member_count):
