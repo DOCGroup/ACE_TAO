@@ -35,6 +35,7 @@ USELIB("..\ace\aced.lib");
 
 #include "Thread_Manager_Test.h"
 
+#if defined (DIGITAL_UNIX)
 class ACE_Export ACE_Hash<ACE_hthread_t>
 {
   // = TITLE
@@ -49,6 +50,7 @@ ACE_Hash<ACE_hthread_t>::operator () (const ACE_hthread_t &t_id) const
   return ACE::hash_pjw (ACE_reinterpret_cast (const char *, &t_id),
                         sizeof t_id);
 }
+#endif /* DIGITAL_UNIX */
 
 // Each thread keeps track of whether it has been signalled by using a
 // global hash map.  See comment below about why it's allocated
