@@ -2,4 +2,18 @@ project : aceexe {
   macros += _AFXDLL
   pch_header = StdAfx.h
   pch_source = StdAfx.cpp
+
+  verbatim(gnuace, top) {
+    ifneq ($(MAKE),)
+    include $(ACE_ROOT)/include/makeinclude/macros.GNU
+    TARGETS_NESTED := $(TARGETS_NESTED:.nested=)
+    $(TARGETS_NESTED):
+    "	@echo Log_Msg_MFC will only build on Windows"
+    else
+  }
+
+  verbatim(gnuace, bottom) {
+    endif
+  }
+
 }

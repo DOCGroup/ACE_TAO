@@ -1,3 +1,16 @@
+Thu Jul 31 16:14:30 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * examples/C++NPv2/C++NPv2.mpc:
+        * examples/Log_Msg/Log_Msg_MFC/Log_Msg_MFC.mpc:
+        * examples/Reactor/WFMO_Reactor/WFMO_Reactor.mpc:
+        * examples/Registry/Registry.mpc:
+          Added a verbatim tag that ifdef's out the entire Makefile on
+          non-Windows systems.  This code can probably be factored out
+          into a platform specific template that Windows only project
+          inherite. Also, this will probably prevent these project from
+          being built with Cygwin and MinGW, since the only test for the
+          MAKE variable, not a Windows specific variable.
+
 Thu Jul 31 07:42:57 2003  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* apps/soreduce/Obj_Module.cpp (add_source): 
