@@ -1,10 +1,15 @@
+Tue Apr 03 13:45:02 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/MEM_IO.cpp: Fixed mismatched ACE_TRACE messages.  Thanks to
+	  the all mighty fuzzmaterd for reporting this.
+
 Tue Apr  3 11:40:42 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* examples/IPC_SAP/SSL_SAP/dummy.pem: 
-	* examples/IPC_SAP/SSL_SAP/key.pem: 
-	  The previous certificates expired. So, generated them 
+	* examples/IPC_SAP/SSL_SAP/dummy.pem:
+	* examples/IPC_SAP/SSL_SAP/key.pem:
+	  The previous certificates expired. So, generated them
 	  again.
-  
+
 Tue Apr 03 09:30:10 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/MEM_IO.cpp (write): Fixed a compilation error for Borland

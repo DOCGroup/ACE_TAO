@@ -32,7 +32,7 @@ ACE_Reactive_MEM_IO::init (ACE_HANDLE handle,
 int
 ACE_Reactive_MEM_IO::fini (int remove)
 {
-  ACE_TRACE ("ACE_Reactive_MEM_IO::init");
+  ACE_TRACE ("ACE_Reactive_MEM_IO::fini");
 
   return this->close_shm_malloc (remove);
 }
@@ -253,7 +253,7 @@ ACE_MT_MEM_IO::init (ACE_HANDLE handle,
 int
 ACE_MT_MEM_IO::fini (int remove)
 {
-  ACE_TRACE ("ACE_MT_MEM_IO::init");
+  ACE_TRACE ("ACE_MT_MEM_IO::fini");
 
   return this->close_shm_malloc (remove);
 }
