@@ -224,10 +224,6 @@ main(int argc, char *argv[])
    {
      ACE_PRINT_EXCEPTION (ex, "destroying admin object");
    }
-  ACE_CATCH(CosNotifyChannelAdmin::AdminNotFound, ex)
-   {
-     ACE_PRINT_EXCEPTION (ex, "destroying admin object");
-   }
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,

@@ -2120,10 +2120,7 @@ TAO_ORB_Core::set_default_policies (void)
                   TAO_ServerProtocolPolicy (protocols),
                   -1);
   this->default_policies_->server_protocol (server_protocol_policy);
-  return 0;
-
 #endif /* TAO_HAS_RT_CORBA == 1 */
-
   return 0;
 }
 

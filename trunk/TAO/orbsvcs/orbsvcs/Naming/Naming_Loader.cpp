@@ -1,6 +1,6 @@
 // $Id$
 
-//==============================================================================================
+// ================================================================
 // LIBRARY
 //   libTAO_CosNaming.so
 //
@@ -11,12 +11,12 @@
 // AUTHORS
 //   Priyanka Gontla <pgontla@ece.uci.edu>
 //   Carlos O'Ryan <coryan@uci.edu>
-//==============================================================================================
+// ================================================================
 
 #include "Naming_Loader.h"
 #include "ace/Dynamic_Service.h"
 
-ACE_RCSID (Naming, Naming_Loader, "$Id$");
+ACE_RCSID (Naming, Naming_Loader, "$Id$")
 
 TAO_Naming_Loader::TAO_Naming_Loader (void)
 {
