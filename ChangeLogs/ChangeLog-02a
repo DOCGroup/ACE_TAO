@@ -1,3 +1,14 @@
+Thu Jun 20 20:50:51 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-sunos5.5.h: Re-enable
+          ACE_HAS_STD_TEMPLATE_METHOD_SPECIALIZATION for Forte 6 Update 2.
+
+        * ace/Functor.i:
+        * ace/Synch.cpp: Commented out all the uses of
+          ACE_TEMPLATE_METHOD_SPECIALIZATION. The class specialization was
+          already declared such, and doing it on the methods is not right.
+          But they're only commented out for now, just in case...
+
 Thu Jun 20 20:29:31 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/Codecs.h (ACE_Base64): Added "friend class ace_dewarn_gplusplus"
