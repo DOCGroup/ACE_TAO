@@ -1,3 +1,4 @@
+// 	$Id$	
 // ============================================================================
 //
 // = LIBRARY
@@ -25,6 +26,13 @@
 
 #include "orbsvcs/CosNamingC.h"
 #include "cubitC.h"
+
+#if defined (ACE_LACKS_FLOATING_POINT)
+  #define double ACE_UINT32
+  #define fabs(X) ((X) < 0? (X):-(X))
+#endif /* ACE_LACKS_FLOATING_POINT */
+
+
 
 #if !defined (ACE_HAS_THREADS)
 class NOOP_ACE_Barrier
@@ -100,7 +108,7 @@ public:
   // this is the port at which the high priority servant is
   // listening.. lower priority ports begin at base_port_ + 1
 
-  char server_host_ [1024];
+  char * server_host_;
   // Server hostname
 
   double *latency_;
@@ -140,6 +148,10 @@ public:
 
   u_int use_name_service_;
   // flag that say if we are using the or not the name service.
+  
+  char *iors_ [50];
+
+  char * ior_file_;
 };
 
 class Client : public ACE_Task<ACE_SYNCH>

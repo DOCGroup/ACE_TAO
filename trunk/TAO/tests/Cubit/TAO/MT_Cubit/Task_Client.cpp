@@ -46,10 +46,11 @@ Task_State::Task_State (int argc, char **argv)
     factory_ior_ (0),
     shutdown_ (0),
     oneway_ (0),
-    use_name_service_ (1)
+    use_name_service_ (1),
+    ior_file_ (0)
 {
-  ACE_OS::strcpy (server_host_, "localhost");
-  ACE_Get_Opt opts (argc, argv, "sh:n:t:p:d:rk:xo");
+  server_host_ = ACE_OS::strdup ("localhost");
+  ACE_Get_Opt opts (argc, argv, "sh:n:t:p:d:rk:xof:1:2:3:");
   int c;
   int datatype;
 
@@ -60,6 +61,18 @@ Task_State::Task_State (int argc, char **argv)
       break; 
     case 'k':
       factory_ior_ = ACE_OS::strdup (opts.optarg);
+      break;
+    case 'f':
+      ior_file_ = ACE_OS::strdup (opts.optarg);
+      break;
+    case '1':
+      iors_[0] =  ACE_OS::strdup (opts.optarg);
+      break;
+    case '2':
+      iors_[1] =  ACE_OS::strdup (opts.optarg);
+      break;
+    case '3':
+      iors_[2] =  ACE_OS::strdup (opts.optarg);
       break;
     case 'o':
       oneway_ = 1;
@@ -114,14 +127,24 @@ Task_State::Task_State (int argc, char **argv)
                   " [-p server_port_num]"
                   " [-t num_threads]"
                   " [-k factory_ior_key]"
+                  " [-f ior_file]"
                   " [-x] // makes a call to servant to shutdown"
                   " [-o] // makes client use oneway calls instead"
                   " [-s] // makes client *NOT* use the name service"
                   "\n", argv [0]));
     }
+#if 0
+  FILE *iorFile = fopen (ior_file_, "r"); 
+  char buf[BUFSIZ];
+  int i = 0, j=0;
+  while (fgets (buf, BUFSIZ, iorFile) != 0) 
+    { j=ACE_OS::strlen(buf); buf[j-1]=0;iors_[i] = ACE_OS::strdup (buf); printf("ior[%d]=\"%s\"\n",i,iors_[i]); i++;  }
+  fclose (iorFile);
+#endif
+
   // thread_count_ + 1 because there is one utilization thread also
   // wanting to begin at the same time the clients begin..
-  ACE_NEW (barrier_, ACE_Barrier (thread_count_ + 1));
+  ACE_NEW (barrier_, ACE_Barrier (thread_count_ )); //+ 1));
   ACE_NEW (latency_, double [thread_count_]);
   ACE_NEW (global_jitter_array_, double *[thread_count_]);
   ACE_NEW (ave_latency_, int [thread_count_]);
@@ -159,7 +182,11 @@ Client::put_latency (double *jitter, double latency, u_int thread_id)
 #endif /* ACE_HAS_THREADS */
 
   ts_->latency_[thread_id] = latency;
+#if defined (ACE_LACKS_FLOATING_POINT)
+  ACE_DEBUG ((LM_DEBUG, "(%t) My latency was %u\n", latency));
+#else
   ACE_DEBUG ((LM_DEBUG, "(%t) My latency was %f\n", latency));
+#endif /* ! ACE_LACKS_FLOATING_POINT */
   ts_->global_jitter_array_ [thread_id] = jitter;
 
 #if defined (ACE_HAS_THREADS)
@@ -180,7 +207,7 @@ Client::get_low_priority_latency (void)
 
   for (u_int i = 1; i < ts_->start_count_; i++)
     l += (double) ts_->latency_[i];
-  return l / (double) (ts_->start_count_ - 1);
+  return ts_->start_count_ > 1? l / (double) (ts_->start_count_ - 1) : 0;
 }
 
 int
@@ -257,21 +284,21 @@ Client::svc (void)
       return -1;
     }
 
-if (ts_->use_name_service_ != 0)
-{
-  naming_obj =
-    orb->resolve_initial_references ("NameService");
-
-  if (CORBA::is_nil (naming_obj.in ()))
-    ACE_ERROR ((LM_ERROR,
-                       " (%P|%t) Unable to resolve the Name Service.\n"));
-  else
+  if (ts_->use_name_service_ != 0)
     {
-      this->naming_context_ =
-        CosNaming::NamingContext::_narrow (naming_obj.in (), env);
+      naming_obj =
+	orb->resolve_initial_references ("NameService");
+      
+      if (CORBA::is_nil (naming_obj.in ()))
+	ACE_ERROR ((LM_ERROR,
+		    " (%P|%t) Unable to resolve the Name Service.\n"));
+      else
+	{
+	  this->naming_context_ =
+	    CosNaming::NamingContext::_narrow (naming_obj.in (), env);
+	}
     }
- }
-
+  
   {
 #if defined (ACE_HAS_THREADS)
     ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, ts_->lock_, -1);
@@ -379,13 +406,9 @@ if (ts_->use_name_service_ != 0)
               }
           }
 
-        if (naming_success == CORBA::B_FALSE)
+        if ( (naming_success == CORBA::B_FALSE) && (ts_->factory_ior_ != 0) )
           {
             ACE_DEBUG ((LM_DEBUG, " (%t) ----- Using the factory IOR method to get cubit objects -----\n"));
-
-            if (ts_->factory_ior_ == 0)
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "Must specify valid factory ior key with -k option\n"), -1);
 
             objref =
               orb->string_to_object (ts_->factory_ior_, TAO_TRY_ENV);
@@ -399,7 +422,7 @@ if (ts_->use_name_service_ != 0)
 
             // Narrow the CORBA::Object reference to the stub object, checking
             // the type along the way using _is_a.
-            Cubit_Factory_ptr cb_factory = Cubit_Factory::_narrow (objref.in (), TAO_TRY_ENV);
+            Cubit_Factory_var cb_factory = Cubit_Factory::_narrow (objref.in (), TAO_TRY_ENV);
             TAO_CHECK_ENV;
 
             if (CORBA::is_nil (cb_factory))
@@ -411,6 +434,17 @@ if (ts_->use_name_service_ != 0)
             char * my_ior = ACE_OS::strdup (cb_factory->create_cubit (thread_id, TAO_TRY_ENV));
             TAO_CHECK_ENV;
 
+            objref = orb->string_to_object (my_ior,
+                                            TAO_TRY_ENV);
+            TAO_CHECK_ENV;
+	  }
+	else
+	  {
+            char * my_ior = ts_->iors_[thread_id];
+	    if (my_ior == 0)
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "Must specify valid factory ior key with -k option, naming service, or ior filename\n"), -1);
+	      
             objref = orb->string_to_object (my_ior,
                                             TAO_TRY_ENV);
             TAO_CHECK_ENV;
@@ -498,10 +532,14 @@ Client::run_tests (Cubit_ptr cb,
 
   for (i = 0; i < loop_count; i++)
     {
-      ACE_Profile_Timer timer;
+      //ACE_Profile_Timer timer; Use high resolution timer instead
+      ACE_High_Res_Timer timer_;
       ACE_Time_Value tv (0, (long int) (sleep_time - delta));
       ACE_OS::sleep (tv);
-      timer.start ();
+
+      ACE_Time_Value delta_t; /* elapsed time will be in microseconds */
+
+      timer_.start (); //ACE_OS::ACE_HRTIMER_START); not using sysBench when CHORUS defined
 
       if (ts_->oneway_ == 0)
 	{
@@ -516,7 +554,6 @@ Client::run_tests (Cubit_ptr cb,
 	    /* start recording quantify data from here */
 	    quantify_start_recording_data ();
 #endif
-
 		ret_octet = cb->cube_octet (arg_octet, env);
 
 #if defined (USE_QUANTIFY)
@@ -673,28 +710,55 @@ Client::run_tests (Cubit_ptr cb,
 	    }
 	}
 
-      timer.stop();
+      timer_.stop (); //ACE_OS::ACE_HRTIMER_STOP); not using sysBench when CHORUS defined
+      timer_.elapsed_time (delta_t);
+
       ACE_Profile_Timer::ACE_Elapsed_Time et;
-      timer.elapsed_time (et);
-      delta = ((0.4 * fabs (et.real_time * (1000 * 1000))) + (0.6 * delta)); // pow(10,6)
+
+      // Store the time in usecs.
+      et.real_time = delta_t.sec () * ACE_ONE_SECOND_IN_USECS  +
+	delta_t.usec ();
+
+      //      ACE_DEBUG ((LM_DEBUG, "   (%t) elapsed time= %u, latency=%u\n",et.real_time,latency)); 
+#if !defined (ACE_HAS_PRUSAGE_T) && !defined (ACE_HAS_GETRUSAGE) && defined (ACE_LACKS_FLOATING_POINT)
+      delta = ((40 * fabs (et.real_time) / 100) + (60 * delta / 100)); // pow(10,6)
+      latency += et.real_time;
+      my_jitter_array [i] = et.real_time; // in units of milliseconds.
+#else
+      delta = ((40 * fabs (et.real_time * (1000 * 1000)) / 100) + (60 * delta / 100)); // pow(10,6)
       latency += et.real_time;
       my_jitter_array [i] = et.real_time * 1000;
+#endif
     }
 
   if (call_count > 0)
     {
       if (error_count == 0)
         {
+#if defined (ACE_LACKS_FLOATING_POINT)
+	  double tmp = latency / ACE_ONE_SECOND_IN_USECS;
+	  //	  printf("latency=%u, tmp=%u, call_count=%u, \n", latency, tmp, call_count);
+	  double calls_per_second = call_count / tmp;
+#endif /* ACE_LACKS_FLOATING_POINT */
 
           latency /= call_count;
 
           if (latency > 0)
             {
-              ACE_DEBUG ((LM_DEBUG, "cube average call ACE_OS::time\t= %f msec, \t"
+#if defined (ACE_LACKS_FLOATING_POINT)
+              ACE_DEBUG ((LM_DEBUG, "(%P|%t) cube average call ACE_OS::time\t= %u usec, \t"
+                              "%u calls/second\n",
+                              latency,
+                              calls_per_second));
+
+              this->put_latency (my_jitter_array, latency, thread_id);
+#else
+              ACE_DEBUG ((LM_DEBUG, "(%P|%t) cube average call ACE_OS::time\t= %f msec, \t"
                               "%f calls/second\n",
                               latency * 1000,
                               1 / latency));
               this->put_latency (my_jitter_array, latency * 1000, thread_id);
+#endif /* ! ACE_LACKS_FLOATING_POINT */
             }
         }
       ACE_DEBUG ((LM_DEBUG, "%d calls, %d errors\n", call_count, error_count));
