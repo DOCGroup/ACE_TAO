@@ -1,243 +1,255 @@
+Mon Jan  5 10:47:51 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/cbx.mpd:
+        * bin/MakeProjectCreator/templates/em3vcp.mpd:
+        * bin/MakeProjectCreator/templates/nmake.mpd:
+        * bin/MakeProjectCreator/templates/vc6dsp.mpd:
+        * bin/MakeProjectCreator/templates/vc7.mpd:
+
+          Removed the .\ that preceded file names to allow users to put
+          absolute paths in MPC files (which isn't recommended for
+          portability reasons).
+
 Sun Jan  4 20:40:41 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* */Makefile*:
+        * */Makefile*:
 
-	  Release is fast approaching. Updates to the Makefile
-	  dependencies. 
+          Release is fast approaching. Updates to the Makefile
+          dependencies.
 
 Sun Jan  4 15:12:14 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* apps/JAWS3/jaws3/Asynch_IO.cpp:
-	* apps/JAWS3/jaws3/Concurrency.cpp:
-	* apps/JAWS3/jaws3/Config_File.cpp:
-	* apps/JAWS3/jaws3/Datagram.cpp:
-	* apps/JAWS3/jaws3/Event_Completer.cpp:
-	* apps/JAWS3/jaws3/Event_Dispatcher.cpp:
-	* apps/JAWS3/jaws3/FILE.cpp:
-	* apps/JAWS3/jaws3/IO.cpp:
-	* apps/JAWS3/jaws3/Makefile:
-	* apps/JAWS3/jaws3/Options.cpp:
-	* apps/JAWS3/jaws3/Protocol_Handler.cpp:
-	* apps/JAWS3/jaws3/Reactive_IO.cpp:
-	* apps/JAWS3/jaws3/Signal_Task.cpp:
-	* apps/JAWS3/jaws3/Symbol_Table.cpp:
-	* apps/JAWS3/jaws3/Synch_IO.cpp:
-	* apps/JAWS3/jaws3/THYBRID_Concurrency.cpp:
-	* apps/JAWS3/jaws3/TPOOL_Concurrency.cpp:
-	* apps/JAWS3/jaws3/TPR_Concurrency.cpp:
-	* apps/JAWS3/jaws3/Task_Timer.cpp:
-	* apps/JAWS3/jaws3/Templates.cpp:
-	* apps/JAWS3/jaws3/Timer.cpp:
-	* apps/JAWS3/jaws3/Timer_Helpers.cpp:
+        * apps/JAWS3/jaws3/Asynch_IO.cpp:
+        * apps/JAWS3/jaws3/Concurrency.cpp:
+        * apps/JAWS3/jaws3/Config_File.cpp:
+        * apps/JAWS3/jaws3/Datagram.cpp:
+        * apps/JAWS3/jaws3/Event_Completer.cpp:
+        * apps/JAWS3/jaws3/Event_Dispatcher.cpp:
+        * apps/JAWS3/jaws3/FILE.cpp:
+        * apps/JAWS3/jaws3/IO.cpp:
+        * apps/JAWS3/jaws3/Makefile:
+        * apps/JAWS3/jaws3/Options.cpp:
+        * apps/JAWS3/jaws3/Protocol_Handler.cpp:
+        * apps/JAWS3/jaws3/Reactive_IO.cpp:
+        * apps/JAWS3/jaws3/Signal_Task.cpp:
+        * apps/JAWS3/jaws3/Symbol_Table.cpp:
+        * apps/JAWS3/jaws3/Synch_IO.cpp:
+        * apps/JAWS3/jaws3/THYBRID_Concurrency.cpp:
+        * apps/JAWS3/jaws3/TPOOL_Concurrency.cpp:
+        * apps/JAWS3/jaws3/TPR_Concurrency.cpp:
+        * apps/JAWS3/jaws3/Task_Timer.cpp:
+        * apps/JAWS3/jaws3/Templates.cpp:
+        * apps/JAWS3/jaws3/Timer.cpp:
+        * apps/JAWS3/jaws3/Timer_Helpers.cpp:
 
-	  Fixed warnings in g++ due to redefinitions.
+          Fixed warnings in g++ due to redefinitions.
 
 Sun Jan  4 09:56:04 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* examples/APG/Makefile:
-	  
-	  Removed the Logging example from the builds. The macro
-	  definitions seem to pain a few compilers.
+        * examples/APG/Makefile:
+
+          Removed the Logging example from the builds. The macro
+          definitions seem to pain a few compilers.
 
 Sun Jan  4 11:59:46 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* bin/MakeProjectCreator/templates/bor.mpd:
-	  There is no need to pass the libpaths with the -j commandline option
-	  to the linker, the -L flags is only needed. The -j flag specifies
-	  where the object files are located, the -L flag the location of the
-	  lib files.
+        * bin/MakeProjectCreator/templates/bor.mpd:
+          There is no need to pass the libpaths with the -j commandline option
+          to the linker, the -L flags is only needed. The -j flag specifies
+          where the object files are located, the -L flag the location of the
+          lib files.
 
 Sun Jan  4 10:30:06 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* examples/APG/Makefile:
-	  Fixed directory name
+        * examples/APG/Makefile:
+          Fixed directory name
 
 Sun Jan  4 10:18:32 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* apps/JAWS3/jaws3/jaws3.mpc:
-	  Set correct dynamicflags. Instead of using ../ as includes, use ..
-	  Borland has problems with ../ and in other places we also use ..
+        * apps/JAWS3/jaws3/jaws3.mpc:
+          Set correct dynamicflags. Instead of using ../ as includes, use ..
+          Borland has problems with ../ and in other places we also use ..
 
 Sun Jan  4 08:59:43 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* examples/APG/ThreadPools/Futures.cpp:
-	* examples/APG/ThreadPools/ThreadPool.cpp:
-	  Changed return type of thread_id functions from int to ACE_thread_t
+        * examples/APG/ThreadPools/Futures.cpp:
+        * examples/APG/ThreadPools/ThreadPool.cpp:
+          Changed return type of thread_id functions from int to ACE_thread_t
 
-	* examples/APG/Signals/SigInfo.cpp:
-	  Cygwin doesn't have unix signals, so added #ifdef for the main to
-	  output an debug message that this example is not supported on this
-	  platform when no unix signals are available.
+        * examples/APG/Signals/SigInfo.cpp:
+          Cygwin doesn't have unix signals, so added #ifdef for the main to
+          output an debug message that this example is not supported on this
+          platform when no unix signals are available.
 
-	* examples/APG/Proactor/HA_Proactive_Status.{h,cpp}:
-	  With Cygwin we don't have aio, so added here also a main that
+        * examples/APG/Proactor/HA_Proactive_Status.{h,cpp}:
+          With Cygwin we don't have aio, so added here also a main that
           outputs not supported when this is not available.
 
 Sun Jan  4 08:28:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* examples/APG/Reactor/Timer_Cancel.cpp:
-	  Fixed unused variable warning
+        * examples/APG/Reactor/Timer_Cancel.cpp:
+          Fixed unused variable warning
 
 Sun Jan  4 08:19:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* examples/APG/Containers/containers.mpc:
+        * examples/APG/Containers/containers.mpc:
           Prefixed the project name Map Manager with the '*' operator to
           avoid project name conflicts. Added Id tag
 
 Sat Jan  3 23:45:38 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* examples/APG/Makefile:
+        * examples/APG/Makefile:
 
           Some tests/examples do need threads and synchronization. Instead
-	  of doing tricks and confusing the reader, let us be good on them
-	  and prevent compilation in single threaded builds.
+          of doing tricks and confusing the reader, let us be good on them
+          and prevent compilation in single threaded builds.
 
 Sat Jan  3 23:12:58 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* examples/Makefile:
+        * examples/Makefile:
 
-	  Added APG directory back in.
+          Added APG directory back in.
 
 Sat Jan  3 23:10:35 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* examples/APG/Proactor/HA_Proactive_Status.cpp:
-	* examples/APG/Processes/Spawn.cpp:
-	* examples/APG/Shared_Memory/Hash_Map.cpp:
-	* examples/APG/Signals/SigInfo.cpp:
-	* examples/APG/ThreadManagement/State.cpp:
-	* examples/APG/Threads/Activate.cpp:
-	* examples/APG/Timers/Alarm.cpp:
-	* examples/APG/Timers/CB.cpp:
-	* examples/APG/Timers/PCB.cpp:
-	* examples/APG/Timers/Task.cpp:
+        * examples/APG/Proactor/HA_Proactive_Status.cpp:
+        * examples/APG/Processes/Spawn.cpp:
+        * examples/APG/Shared_Memory/Hash_Map.cpp:
+        * examples/APG/Signals/SigInfo.cpp:
+        * examples/APG/ThreadManagement/State.cpp:
+        * examples/APG/Threads/Activate.cpp:
+        * examples/APG/Timers/Alarm.cpp:
+        * examples/APG/Timers/CB.cpp:
+        * examples/APG/Timers/PCB.cpp:
+        * examples/APG/Timers/Task.cpp:
 
-	  Fixed more unused variable warnings and #included files that
-	  were needed to compile on SuSE.
+          Fixed more unused variable warnings and #included files that
+          were needed to compile on SuSE.
 
 Sat Jan  3 19:31:59 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* examples/APG/Reactor/Timer_State_Data.cpp:
-	* examples/APG/Streams/Answerer.cpp:
-	* examples/APG/Streams/Util.h:
-	* examples/APG/ThreadManagement/Priorities.cpp:
-	* examples/APG/ThreadSafety/Mutex.cpp:
+        * examples/APG/Reactor/Timer_State_Data.cpp:
+        * examples/APG/Streams/Answerer.cpp:
+        * examples/APG/Streams/Util.h:
+        * examples/APG/ThreadManagement/Priorities.cpp:
+        * examples/APG/ThreadSafety/Mutex.cpp:
 
-	  Fixed more unused variable warnings.
+          Fixed more unused variable warnings.
 
 Sat Jan  3 17:26:39 2004  Steve Huston  <shuston@riverace.com>
 
-	* examples/APG/Naming/Temperature_Monitor2.cpp:
-	* examples/APG/Shared_Memory/Mem_Map.cpp:
-	* examples/APG/Streams/RecordingDevice_Text.cpp:
-	* examples/APG/Timers/Task.cpp:
-	* examples/APG/Timers/Timers.cpp: Fixed unused/uninitialized warnings.
+        * examples/APG/Naming/Temperature_Monitor2.cpp:
+        * examples/APG/Shared_Memory/Mem_Map.cpp:
+        * examples/APG/Streams/RecordingDevice_Text.cpp:
+        * examples/APG/Timers/Task.cpp:
+        * examples/APG/Timers/Timers.cpp: Fixed unused/uninitialized warnings.
 
-	* examples/APG/Timers/Upcall.{h cpp}: Changed to match new
-	  timer queue upcall handler API for ACE 5.4.
+        * examples/APG/Timers/Upcall.{h cpp}: Changed to match new
+          timer queue upcall handler API for ACE 5.4.
 
-	* examples/APG/ThreadSafety/Barrier.cpp: Get a random sleep time
-	  using ACE_OS::rand() instead of the thread ID. Thread ID is not
-	  an integral type on some platforms.
+        * examples/APG/ThreadSafety/Barrier.cpp: Get a random sleep time
+          using ACE_OS::rand() instead of the thread ID. Thread ID is not
+          an integral type on some platforms.
 
 Sat Jan  3 14:08:13 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* bin/tao_other_tests.lst:
+        * bin/tao_other_tests.lst:
 
-	  Added the ior_corbaloc test to be run in the daily builds.
+          Added the ior_corbaloc test to be run in the daily builds.
 
 Sat Jan  3 11:02:32 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* examples/Makefile:
+        * examples/Makefile:
 
-	  Removed ASG for the timebeing from the daily builds. I want to
-	  seperate the chaff from wheat and the noise form this is making
-	  things hard. Will let Steve know about this.
+          Removed ASG for the timebeing from the daily builds. I want to
+          seperate the chaff from wheat and the noise form this is making
+          things hard. Will let Steve know about this.
 
 Sat Jan  3 16:14:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* bin/MakeProjectCreator/templates/bor.mpd:
-	  Removed the usage of IDL_DIR. There where problems when generating
-	  Borland makefiles for projects where the idl file is in a different
-	  directory than the project file. In that case the IDL_DIR should
-	  not be . but the directory where the idl files are. Because this is
-	  a hard thing to do, just removed IDL_DIR and take the path of the
-	  IDL file that is in the MPC file. This way Borland works just like the
-	  other environments and this way we can also handle IDL files in
-	  other directories.
+        * bin/MakeProjectCreator/templates/bor.mpd:
+          Removed the usage of IDL_DIR. There where problems when generating
+          Borland makefiles for projects where the idl file is in a different
+          directory than the project file. In that case the IDL_DIR should
+          not be . but the directory where the idl files are. Because this is
+          a hard thing to do, just removed IDL_DIR and take the path of the
+          IDL file that is in the MPC file. This way Borland works just like the
+          other environments and this way we can also handle IDL files in
+          other directories.
 
 Sat Jan  3 13:11:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	Added needed includes to compile the APG examples using the Borland
-	compiler.
+        Added needed includes to compile the APG examples using the Borland
+        compiler.
 
-	* examples/APG/Config/ARGV_Example.cpp:
-	* examples/APG/Config/Get_Opt.cpp:
-	* examples/APG/Config/Get_Opt_Long.cpp:
-	  Added #include "ace/OS_NS_string.h" to get ACE_OS::strcmp and
-	  ACE_OS::strncmp.
+        * examples/APG/Config/ARGV_Example.cpp:
+        * examples/APG/Config/Get_Opt.cpp:
+        * examples/APG/Config/Get_Opt_Long.cpp:
+          Added #include "ace/OS_NS_string.h" to get ACE_OS::strcmp and
+          ACE_OS::strncmp.
 
-	* examples/APG/Naming/Naming_Context.h:
-	* examples/APG/Processes/Spawn.cpp:
-	* examples/APG/Shared_Memory/Malloc.cpp
-	  Added #include "ace/OS_NS_stdio.h" to get ACE_OS::sprintf.
+        * examples/APG/Naming/Naming_Context.h:
+        * examples/APG/Processes/Spawn.cpp:
+        * examples/APG/Shared_Memory/Malloc.cpp
+          Added #include "ace/OS_NS_stdio.h" to get ACE_OS::sprintf.
 
-	* examples/APG/Signals/SigAction.cpp:
-	* examples/APG/Signals/SigGuard.cpp:
-	* examples/APG/Signals/SigHandler.cpp:
-	* examples/APG/Signals/SigHandlers.cpp:
-	* examples/APG/ThreadManagement/Coop_Cancel.cpp:
-	* examples/APG/ThreadManagement/Signals.cpp:
-	* examples/APG/ThreadManagement/Signals2.cpp:
-	* examples/APG/Threads/Activate.cpp:
-	  Added #include "ace/OS_NS_unistd.h" to get ACE_OS::sleep and
-	  ACE_OS::getpid.
+        * examples/APG/Signals/SigAction.cpp:
+        * examples/APG/Signals/SigGuard.cpp:
+        * examples/APG/Signals/SigHandler.cpp:
+        * examples/APG/Signals/SigHandlers.cpp:
+        * examples/APG/ThreadManagement/Coop_Cancel.cpp:
+        * examples/APG/ThreadManagement/Signals.cpp:
+        * examples/APG/ThreadManagement/Signals2.cpp:
+        * examples/APG/Threads/Activate.cpp:
+          Added #include "ace/OS_NS_unistd.h" to get ACE_OS::sleep and
+          ACE_OS::getpid.
 
-	* examples/APG/Sockets/Basic_Robust.cpp:
-	* examples/APG/Sockets/Server.cpp:
-	  Added #include "ace/OS_NS_errno.h" to get ACE_OS::lasterrror.
+        * examples/APG/Sockets/Basic_Robust.cpp:
+        * examples/APG/Sockets/Server.cpp:
+          Added #include "ace/OS_NS_errno.h" to get ACE_OS::lasterrror.
 
 Fri Jan  2 18:07:31 2004  Steve Huston  <shuston@riverace.com>
 
-	* examples/APG/Active_Objects/AO.cpp:
-	* examples/APG/Active_Objects/AO2.cpp:
-	* examples/APG/Containers/Stacks.cpp:
-	* examples/APG/Containers/Queues.cpp:
-	* examples/APG/Containers/Array.cpp:
-	* examples/APG/Containers/Sets.cpp:
-	* examples/APG/Containers/Hash_Map_Hash.cpp:
-	* examples/APG/Containers/Allocator.cpp:
-	* examples/APG/Proactor/HA_Proactive_Status.cpp:
-	* examples/APG/Reactor/Client.cpp:
-	* examples/APG/Shared_Memory/Hash_Map.cpp:
-	* examples/APG/Shared_Memory/Pool_Growth.cpp:
-	* examples/APG/Threads/Condition_Variables.cpp:
-	* examples/APG/Threads/Message_Queue.cpp:
-	* examples/APG/ThreadManagement/Start_Hook.cpp:
-	* examples/APG/ThreadPools/Futures.cpp:
-	* examples/APG/ThreadPools/LF_ThreadPool.cpp:
-	* examples/APG/ThreadPools/ThreadPool.cpp: Added missing template
-	  instantiations. Corrected #pragma instantiate directives.
+        * examples/APG/Active_Objects/AO.cpp:
+        * examples/APG/Active_Objects/AO2.cpp:
+        * examples/APG/Containers/Stacks.cpp:
+        * examples/APG/Containers/Queues.cpp:
+        * examples/APG/Containers/Array.cpp:
+        * examples/APG/Containers/Sets.cpp:
+        * examples/APG/Containers/Hash_Map_Hash.cpp:
+        * examples/APG/Containers/Allocator.cpp:
+        * examples/APG/Proactor/HA_Proactive_Status.cpp:
+        * examples/APG/Reactor/Client.cpp:
+        * examples/APG/Shared_Memory/Hash_Map.cpp:
+        * examples/APG/Shared_Memory/Pool_Growth.cpp:
+        * examples/APG/Threads/Condition_Variables.cpp:
+        * examples/APG/Threads/Message_Queue.cpp:
+        * examples/APG/ThreadManagement/Start_Hook.cpp:
+        * examples/APG/ThreadPools/Futures.cpp:
+        * examples/APG/ThreadPools/LF_ThreadPool.cpp:
+        * examples/APG/ThreadPools/ThreadPool.cpp: Added missing template
+          instantiations. Corrected #pragma instantiate directives.
 
-	* examples/APG/Config/ARGV_Example.cpp:
-	* examples/APG/Reactor/HAStatus.cpp:
-	* examples/APG/Reactor/HAStatus-AC.cpp: Added #include
-	  "ace/os_include/os_netdb.h" to get MAXHOSTNAMELEN.
+        * examples/APG/Config/ARGV_Example.cpp:
+        * examples/APG/Reactor/HAStatus.cpp:
+        * examples/APG/Reactor/HAStatus-AC.cpp: Added #include
+          "ace/os_include/os_netdb.h" to get MAXHOSTNAMELEN.
 
-	* examples/APG/Naming/Graphable_Element.h: Corrected include for
-	  list<> to be <list>, not "list".
+        * examples/APG/Naming/Graphable_Element.h: Corrected include for
+          list<> to be <list>, not "list".
 
-	* examples/APG/Naming/Graphable_Element.cpp: Removed this file. It
-	  only had template instantiations in it, for list<> and friends.
-	  We're not even going to try this with explicit instantiation.
+        * examples/APG/Naming/Graphable_Element.cpp: Removed this file. It
+          only had template instantiations in it, for list<> and friends.
+          We're not even going to try this with explicit instantiation.
 
-	* examples/APG/Shared_Memory/Record.h: Changed #include "ace/OS.h"
-	  to "ace/OS_NS_string.h".
+        * examples/APG/Shared_Memory/Record.h: Changed #include "ace/OS.h"
+          to "ace/OS_NS_string.h".
 
-	* examples/APG/Signals/SigAction.cpp: Account for platforms that
-	  require the signal handler to be extern "C".
+        * examples/APG/Signals/SigAction.cpp: Account for platforms that
+          require the signal handler to be extern "C".
 
-	* examples/APG/Makefile: Only build the Naming directory if using
-	  implicit template instantiation. See above for rationale.
+        * examples/APG/Makefile: Only build the Naming directory if using
+          implicit template instantiation. See above for rationale.
 
 Fri Jan  2 13:00:20 2004  Chad Elliott  <elliott_c@ociweb.com>
 

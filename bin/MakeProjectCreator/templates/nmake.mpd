@@ -48,7 +48,7 @@ OUTDIR=<%libout%>
 <%endif%>
 INTDIR=<%intermediate_dir%>\<%noextension(project_file)%>
 
-ALL : <%if(idl_files)%>IDL_STUBS <%endif%><%if(exename)%><%if(install)%>"$(INSTALLDIR)" <%endif%><%endif%>"<%if(type_is_dynamic)%><%if(dllout)%><%dllout%><%else%><%libout%><%endif%>\<%sharedname%><%lib_modifier%>.dll<%endif%><%if(type_is_static)%>$(OUTDIR)\<%staticname%><%lib_modifier%>.lib<%endif%><%if(exename)%>$(INSTALLDIR)\<%exename%>.exe<%endif%>"<%foreach(custom_types)%><%foreach(custom_type->input_files)%><%foreach(custom_type->input_file->output_files)%> "<%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>\<%basename(custom_type->input_file->output_file)%><%else%>.\<%custom_type->input_file->output_file%><%endif%>"<%endfor%><%endfor%><%endfor%>
+ALL : <%if(idl_files)%>IDL_STUBS <%endif%><%if(exename)%><%if(install)%>"$(INSTALLDIR)" <%endif%><%endif%>"<%if(type_is_dynamic)%><%if(dllout)%><%dllout%><%else%><%libout%><%endif%>\<%sharedname%><%lib_modifier%>.dll<%endif%><%if(type_is_static)%>$(OUTDIR)\<%staticname%><%lib_modifier%>.lib<%endif%><%if(exename)%>$(INSTALLDIR)\<%exename%>.exe<%endif%>"<%foreach(custom_types)%><%foreach(custom_type->input_files)%><%foreach(custom_type->input_file->output_files)%> "<%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>\<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%>"<%endfor%><%endfor%><%endfor%>
 
 DEPEND :
 	<%depgen("perl $(ACE_ROOT)\\bin\\depgen.pl")%><%foreach(includes)%> -I"<%include%>"<%endfor%><%foreach(defines cpu_defines common_defines macros)%> -D<%define%><%endfor%><%if(type_is_dynamic)%><%foreach(dynamicflags)%> -D<%dynamicflag%><%endfor%><%endif%><%if(need_staticflags)%><%foreach(staticflags)%> -D<%staticflag%><%endfor%><%endif%><%if(pch_header)%><%foreach(pch_defines)%> -D<%pch_define%><%endfor%><%endif%> -f "<%noextension(project_file)%>.dep"<%foreach(source_files)%> <%source_file%><%endfor%>
@@ -193,7 +193,7 @@ LINK32_OBJS= \
 !IF <%foreach(platforms)%><%foreach(configurations)%>"$(CFG)" == "<%platform%> <%configuration%>" <%fornotlast("|| ")%><%endfor%><%endfor%>
 <%if(pch_source)%>
 <%if(pch_header)%>
-SOURCE=.\<%pch_source%>
+SOURCE=<%pch_source%>
 
 <%foreach(platforms)%>
 <%foreach(configurations)%>
@@ -214,7 +214,7 @@ CPP_SWITCHES=/nologo <%if(add_compile)%><%add_compile%> <%endif%><%if(optimize)%
 <%endif%>
 <%if(exename || sharedname || staticname)%>
 <%foreach(source_files)%>
-SOURCE=.\<%source_file%>
+SOURCE=<%source_file%>
 
 "$(INTDIR)\<%basenoextension(source_file)%>.obj" : $(SOURCE) "$(INTDIR)"
 <%if(basename_found)%>
@@ -224,7 +224,7 @@ SOURCE=.\<%source_file%>
 <%endfor%>
 <%endif%>
 <%foreach(template_files)%>
-SOURCE=.\<%template_file%>
+SOURCE=<%template_file%>
 <%endfor%>
 <%foreach(idl_files)%>
 SOURCE=<%idl_file%>
@@ -233,7 +233,7 @@ SOURCE=<%idl_file%>
 <%foreach(configurations)%>
 !<%fornotfirst("ELSE")%>IF  "$(CFG)" == "<%platform%> <%configuration%>"
 
-InputPath=.\<%idl_file%>
+InputPath=<%idl_file%>
 InputName=<%basenoextension(idl_file)%>
 InputDir=<%dirname(idl_file)%>
 
@@ -257,11 +257,11 @@ SOURCE=<%custom_type->input_file%>
 <%foreach(configurations)%>
 !<%fornotfirst("ELSE")%>IF  "$(CFG)" == "<%platform%> <%configuration%>"
 
-InputPath=.\<%custom_type->input_file%>
+InputPath=<%custom_type->input_file%>
 InputName=<%basenoextension(custom_type->input_file)%>
 InputDir=<%dirname(custom_type->input_file)%>
 
-<%foreach(custom_type->input_file->output_files)%>"<%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>\<%basename(custom_type->input_file->output_file)%><%else%>.\<%custom_type->input_file->output_file%><%endif%>" <%endfor%>: $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+<%foreach(custom_type->input_file->output_files)%>"<%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>\<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%>" <%endfor%>: $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
 	<<tempfile.bat
 	@echo off
 <%if(custom_type->libpath)%>
@@ -284,7 +284,7 @@ InputDir=<%dirname(custom_type->input_file)%>
 <%endfor%>
 <%endfor%>
 <%foreach(resource_files)%>
-SOURCE=.\<%resource_file%>
+SOURCE=<%resource_file%>
 
 "$(INTDIR)\<%basenoextension(resource_file)%>.res" : $(SOURCE) "$(INTDIR)"
 	$(RSC) $(RSC_PROJ) $(SOURCE)
