@@ -202,8 +202,6 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
   TAO_Transport *transport =
     svc_handler->transport ();
 
-  bool wait_result = true;
-
   if (result == -1 && errno == EWOULDBLOCK)
     {
       // Try to wait until connection completion. Incase we block, then we

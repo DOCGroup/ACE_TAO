@@ -1,3 +1,22 @@
+Wed Aug  4 09:31:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/IIOP_Connector.cpp:
+          Fixed typo in debug line
+
+        * tao/IIOP_Connector.h:
+          Added virtual to cancel_svc_handler() to show that this is a virtual
+          method.
+
+        * tao/Strategies/DIOP_Connection_Handler.cpp:
+        * tao/Strategies/SCIOP_Connection_Handler.cpp:
+        * tao/Strategies/SHMIOP_Connection_Handler.cpp:
+        * tao/Strategies/UIOP_Connection_Handler.cpp:
+        * tao/Strategies/DIOP_Connector.{h,cpp}:
+        * tao/Strategies/SCIOP_Connector.{h,cpp}:
+        * tao/Strategies/SHMIOP_Connector.{h,cpp}:
+        * tao/Strategies/UIOP_Connector.{h,cpp}:
+          Updated these protocols with all changes we did in the base classes
+
 Tue Aug  3 11:56:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
           An overview of the changes in the pluggable transport interface
