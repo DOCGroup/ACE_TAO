@@ -513,18 +513,18 @@ protected:
   /// Used to make threads sleep until the queue is no longer full.
   ACE_SYNCH_CONDITION_T not_full_cond_;
 
+  /// Keeps track of the Queue ID for using with DSUI
+  uint32_t queue_id_;
+
+  /// Keeps track if we are using DSUI in the queue (1 = enabled, 0 = disabled)
+  uint8_t enabled_dsui_;
+
 private:
 
   // = Disallow these operations.
   ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Message_Queue<ACE_SYNCH_USE> &))
   ACE_UNIMPLEMENTED_FUNC (ACE_Message_Queue (const ACE_Message_Queue<ACE_SYNCH_USE> &))
 
-
-  /// Keeps track if we are using DSUI in the queue (1 = enabled, 0 = disabled)
-  uint8_t enabled_dsui_;
-
-  /// Keeps track of the Queue ID for using with DSUI
-  uint32_t queue_id_;
 };
 
 // This typedef is used to get around a compiler bug in g++/vxworks.
@@ -683,7 +683,9 @@ public:
   ACE_Dynamic_Message_Queue (ACE_Dynamic_Message_Strategy & message_strategy,
                              size_t hwm = ACE_Message_Queue_Base::DEFAULT_HWM,
                              size_t lwm = ACE_Message_Queue_Base::DEFAULT_LWM,
-                             ACE_Notification_Strategy * = 0);
+                             ACE_Notification_Strategy * = 0,
+                             uint32_t enable_dsui = 0,
+                             uint32_t queue_id = 0);
 
   /// Close down the message queue and release all resources.
   virtual ~ACE_Dynamic_Message_Queue (void);

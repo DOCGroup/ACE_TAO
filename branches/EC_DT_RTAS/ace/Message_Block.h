@@ -149,7 +149,7 @@ public:
    */
   ACE_Message_Block (const char *data,
                      size_t size = 0,
-                     unsigned long priority = ACE_DEFAULT_MESSAGE_BLOCK_PRIORITY); 
+                     unsigned long priority = ACE_DEFAULT_MESSAGE_BLOCK_PRIORITY);
   /**
    * Create an initialized message of type <type> containing <size>
    * bytes.  The <cont> argument initializes the continuation field in

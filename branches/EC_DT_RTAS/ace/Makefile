@@ -19,29 +19,29 @@ else
 endif
 
 
-all: all.ACE all.TMCast all.RMCast
+all: all.ACE all.RMCast all.TMCast
 
-debug: debug.ACE debug.TMCast debug.RMCast
+debug: debug.ACE debug.RMCast debug.TMCast
 
-profile: profile.ACE profile.TMCast profile.RMCast
+profile: profile.ACE profile.RMCast profile.TMCast
 
-optimize: optimize.ACE optimize.TMCast optimize.RMCast
+optimize: optimize.ACE optimize.RMCast optimize.TMCast
 
-install: install.ACE install.TMCast install.RMCast
+install: install.ACE install.RMCast install.TMCast
 
-deinstall: deinstall.ACE deinstall.TMCast deinstall.RMCast
+deinstall: deinstall.ACE deinstall.RMCast deinstall.TMCast
 
-clean: clean.ACE clean.TMCast clean.RMCast
+clean: clean.ACE clean.RMCast clean.TMCast
 
-realclean: realclean.ACE realclean.TMCast realclean.RMCast
+realclean: realclean.ACE realclean.RMCast realclean.TMCast
 
-clobber: clobber.ACE clobber.TMCast clobber.RMCast
+clobber: clobber.ACE clobber.RMCast clobber.TMCast
 
-depend: depend.ACE depend.TMCast depend.RMCast
+depend: depend.ACE depend.RMCast depend.TMCast
 
-rcs_info: rcs_info.ACE rcs_info.TMCast rcs_info.RMCast
+rcs_info: rcs_info.ACE rcs_info.RMCast rcs_info.TMCast
 
-idl_stubs: idl_stubs.ACE idl_stubs.TMCast idl_stubs.RMCast
+idl_stubs: idl_stubs.ACE idl_stubs.RMCast idl_stubs.TMCast
 
 ACE: all.ACE
 .PHONY: ACE
@@ -51,16 +51,6 @@ ifeq ($(KEEP_GOING),1)
 	-@$(MAKE) -f Makefile.ACE -C . $(*);
 else
 	@$(MAKE) -f Makefile.ACE -C . $(*);
-endif
-
-TMCast: all.TMCast
-.PHONY: TMCast
-
-%.TMCast: %.ACE
-ifeq ($(KEEP_GOING),1)
-	-@$(MAKE) -f Makefile.TMCast -C TMCast $(*);
-else
-	@$(MAKE) -f Makefile.TMCast -C TMCast $(*);
 endif
 
 RMCast: all.RMCast
@@ -73,10 +63,20 @@ else
 	@$(MAKE) -f Makefile.RMCast -C RMCast $(*);
 endif
 
+TMCast: all.TMCast
+.PHONY: TMCast
 
-reverseclean: realclean.RMCast realclean.TMCast realclean.ACE
+%.TMCast: %.ACE
+ifeq ($(KEEP_GOING),1)
+	-@$(MAKE) -f Makefile.TMCast -C TMCast $(*);
+else
+	@$(MAKE) -f Makefile.TMCast -C TMCast $(*);
+endif
+
+
+reverseclean: realclean.TMCast realclean.RMCast realclean.ACE
 
 project_name_list:
 	@echo ACE
-	@echo TMCast
 	@echo RMCast
+	@echo TMCast

@@ -2,6 +2,10 @@
 <!DOCTYPE NAMESPACE SYSTEM "file:///usr/local/share/doc/kurt_filters/namespace.dtd">
 <NAMESPACE>
   <FAMILY name="MSG_QUEUE" id="10">
+    <EVENT name="AFTER_ENQUEUE_I_CALL" id="16"/>
+    <EVENT name="BEFORE_ENQUEUE_I_CALL" id="15"/>
+    <EVENT name="AFTER_ENQUEUE_PRIO_LOCK_ACQUIRE" id="14"/>
+    <EVENT name="BEFORE_ENQUEUE_PRIO_LOCK_ACQUIRE" id="13"/>
     <EVENT name="AFTER_DEQUEUE_HEAD_LOCK_ACQUIRE" id="12" />
     <EVENT name="BEFORE_DEQUEUE_HEAD_LOCK_ACQUIRE" id="11" />
     <EVENT name="AFTER_ENQUEUE_TAIL_LOCK_ACQUIRE" id="10" />

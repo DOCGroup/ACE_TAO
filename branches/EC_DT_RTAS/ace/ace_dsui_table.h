@@ -17,9 +17,13 @@
 
 
 
+
+
+
+
 extern int dsui_family_table;
 extern int ace_table_offset;
-extern family_t *ace_family_table[ace_NUM_FAMILIES];
+extern family_t *ace_family_table[NUM_FAMILIES];
 #define DSUI_INIT(identifier, enabled) dsui_init((identifier), (enabled))
 
 #endif
