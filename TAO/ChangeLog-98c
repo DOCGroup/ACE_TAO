@@ -1,6 +1,14 @@
+Fri Aug 28 19:43:36 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/orbconf.h (TAO_DEFAULT_RESOURCE_FACTORY_ARGS): Added
+	  "-ORBreactorlock null" as default resource factory args on
+	  platforms that require "fake_service_entries."  Notice that this
+	  options should not be used thread-per-connection concurrency
+	  strategy.
+
 Fri Aug 28 17:57:34 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Trader/Constraint_Interpreter.h: 
+	* orbsvcs/orbsvcs/Trader/Constraint_Interpreter.h:
 	  Moved some declarations out of the private section of
 	  TAO_Preference_Interpreter because that made some IRIX compilers
 	  really mad. Thanks to Margherita Vittone Wiersma
@@ -10,11 +18,11 @@ Fri Aug 28 13:49:10 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* rules.tao.GNU (TAO_IDL): Added suffixes Ser.* and Cli.* in
 	addition to the S.* and C.* to the set of the IDL generated
-	files. 
+	files.
 
 Fri Aug 28 12:25:36 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-	* utils/IorParser/ior-handler.[h,cpp]: Fixed some struct/class 
+	* utils/IorParser/ior-handler.[h,cpp]: Fixed some struct/class
 	  discrepancies and returning refs to a local variable error.
 
 	* utils/IorParser/IOR_Parser.[dsp,dsw]: Added these submitted
