@@ -622,35 +622,40 @@ Cubit_Client::cube_rti_data (int i, int numUpdates, int numAttrs)
   this->call_count_++;
 
   Cubit::RtiPacket input;
-  input.packetHeader.packetLength=1; // this is probably redundant
-  input.packetHeader.federationHandle=2;
-  input.packetHeader.channelHandle=3;
-  input.packetHeader.packetColor=4;
-  input.msgs.length(numUpdates);
-  for (int j=0; j<numUpdates; ++j) {
-    input.msgs[j].oumh(Cubit::RtiObjectUpdateMessageHeader());
-    Cubit::RtiObjectUpdateMessageHeader & oumh=input.msgs[j].oumh();
-    oumh.updateLength=2001; // redundant
-    oumh.updateTag=2002;
-    oumh.objectHandle=2003;
-    oumh.timestamp=3.14159;
-    oumh.eventRetractionHandle=2004;
-    oumh.classHandle=2005;
-    oumh.sendingFederateHandle=2006;
-    oumh.userTag=CORBA::string_dup("beefcake!");
-    oumh.regionData.length(0);
-    oumh.transportationHandle=1;
-    oumh.orderingHandle=1;
-    oumh.messagePayload.length(numAttrs);
-    for (int k=0; k<numAttrs; ++k) {
-      oumh.messagePayload[k]=Cubit::HandleValuePair();
-      Cubit::HandleValuePair & hvp=oumh.messagePayload[k];
-      hvp.handle=k*k;
-      char * d1="somedata";
-      hvp.data.length(strlen(d1));
-      strcpy((char*)hvp.data.get_buffer(),d1);
+  input.packetHeader.packetLength = 1; // this is probably redundant
+  input.packetHeader.federationHandle = 2;
+  input.packetHeader.channelHandle = 3;
+  input.packetHeader.packetColor = 4;
+
+  input.msgs.length (numUpdates);
+
+  for (int j = 0; j < numUpdates; ++j) 
+    {
+      input.msgs[j].oumh (Cubit::RtiObjectUpdateMessageHeader ());
+      Cubit::RtiObjectUpdateMessageHeader & oumh = input.msgs[j].oumh ();
+      oumh.updateLength = 2001; // redundant
+      oumh.updateTag = 2002;
+      oumh.objectHandle = 2003;
+      oumh.timestamp = 3.14159;
+      oumh.eventRetractionHandle = 2004;
+      oumh.classHandle = 2005;
+      oumh.sendingFederateHandle = 2006;
+      oumh.userTag = CORBA::string_dup ("beefcake!");
+      oumh.regionData.length(0);
+      oumh.transportationHandle = 1;
+      oumh.orderingHandle = 1;
+      oumh.messagePayload.length (numAttrs);
+
+      for (int k = 0; k < numAttrs; ++k) 
+        {
+          oumh.messagePayload[k] = Cubit::HandleValuePair ();
+          Cubit::HandleValuePair &hvp = oumh.messagePayload[k];
+          hvp.handle = k * k;
+          char *d1 = "somedata";
+          hvp.data.length (ACE_OS::strlen (d1));
+          ACE_OS::strcpy ((char *) hvp.data.get_buffer (), d1);
+        }
     }
-  }
 
   Cubit::RtiPacket_var output;
   Cubit::RtiPacket_out vout (output);
@@ -665,8 +670,7 @@ Cubit_Client::cube_rti_data (int i, int numUpdates, int numAttrs)
   cout << "output\n" <<  *vout << endl;
 
   ACE_DEBUG ((LM_DEBUG,
-	      "need to check whether cubing happened\n")
-	     );
+	      "need to check whether cubing happened\n"));
 }
 
 void
@@ -734,10 +738,7 @@ Cubit_Client::run (int testing_collocation)
   ACE_Profile_Timer::ACE_Elapsed_Time elapsed_time;
   //  ACE_Time_Value before;
 
-
-  //
   // Show the results one type at a time.
-  //
 
   // ONEWAY
   this->call_count_ = 0;
@@ -749,7 +750,6 @@ Cubit_Client::run (int testing_collocation)
   timer.elapsed_time (elapsed_time);
   this->print_stats ("cube_oneway", elapsed_time);
 
-#if 0 && RUN_RTI_TEST_ONLY
   // VOID
   this->call_count_ = 0;
   this->error_count_ = 0;
@@ -863,7 +863,6 @@ Cubit_Client::run (int testing_collocation)
   timer.stop ();
   timer.elapsed_time (elapsed_time);
   this->print_stats ("cube mixin (short/octet/long)", elapsed_time);
-#endif
 
   // RTI
   this->call_count_ = 0;
