@@ -1,3 +1,9 @@
+Fri Dec 10 09:39:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Dynamic.pidl:
+          Added include of orb.idl again, it is needed at this moment
+          to get CORBA::Typecode
+
 Fri Dec 10 09:18:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/Options.html:
