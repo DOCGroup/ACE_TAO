@@ -27,7 +27,7 @@
 ACE_STATIC_SVC_REQUIRE (Timer_Service_1)
 
 int
-main (int argc, char *argv[])
+main (int, char *argv[])
 {
   char *l_argv[6];
 
