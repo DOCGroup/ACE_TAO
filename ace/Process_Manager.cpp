@@ -729,6 +729,8 @@ ACE_Process_Manager::wait (pid_t pid,
   if (status == 0)
     status = &local_stat;
 
+  *status = 0;
+
   ssize_t idx = -1;
   ACE_Process *proc = 0;
 
@@ -855,17 +857,22 @@ ACE_Process_Manager::wait (pid_t pid,
         {
           idx = this->find_proc (pid);
           if (idx == -1)
-            // oops, reaped an unmanaged process!
-            ACE_DEBUG ((LM_DEBUG,
-                        ASYS_TEXT ("(%P|%t) oops, reaped unmanaged %d\n"),
-                        pid));
-          else
             {
-              this->notify_proc_handler (idx,
-                                         *status);
-              this->remove_proc (idx);
+              // oops, reaped an unmanaged process!
+              ACE_DEBUG ((LM_DEBUG,
+                          ASYS_TEXT ("(%P|%t) oops, reaped unmanaged %d\n"),
+                          pid));
+              return pid;
             }
+          else
+            proc = process_table_[idx].process_;
         }
+      else
+        ACE_ASSERT (pid == proc->getpid ());
+          
+      this->notify_proc_handler (idx,
+                                 *status);
+      this->remove_proc (idx);
     }
 
   return pid;
