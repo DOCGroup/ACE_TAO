@@ -1,3 +1,9 @@
+Thu Sep 16 08:28:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/os_include/os_limits.h:
+          Added special include for VxWorks, it defines _POSIX_TIMER_MAX
+          in time.h
+
 Thu Sep 16 08:20:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-cygwin32.h:
