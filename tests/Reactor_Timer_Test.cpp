@@ -38,6 +38,9 @@ static int odd = 0;
 class Time_Handler : public ACE_Event_Handler
 {
 public:
+  Time_Handler ();
+  // Default constructor
+
   virtual int handle_timeout (const ACE_Time_Value &tv,
                               const void *arg);
   // Handle the timeout.
@@ -56,6 +59,12 @@ private:
   long timer_id_;
   // Stores the id of this timer.
 };
+
+Time_Handler::Time_Handler ()
+: timer_id_ (-1)
+{
+  // Nothing
+}
 
 int 
 Time_Handler::handle_close (ACE_HANDLE handle,
