@@ -75,8 +75,10 @@
 // Compiler can't handle calls like foo->operator T *()
 #    define ACE_HAS_BROKEN_CONVERSIONS
 
-// Compiler supports C++ exception handling
-#    define ACE_HAS_EXCEPTIONS 1
+// Compiler supports C++ exception handling. However, the user can ask for this
+// to be turned off. If so (using make exceptions=0) then this def is not set.
+// By default, it is set in wrapper_macros.GNU.
+// #    define ACE_HAS_EXCEPTIONS 1
 
 // Compiler enforces the "One Definition Rule"
 #    define ACE_HAS_ONE_DEFINITION_RULE
@@ -98,8 +100,12 @@
 // this would change to be a #if against an appropriate value of __HP_aCC
 #    define ACE_LACKS_PLACEMENT_OPERATOR_DELETE
 
-// Compiler's 'new' throws exceptions on failure.
-#    define ACE_NEW_THROWS_EXCEPTIONS
+// Compiler's 'new' throws exceptions on failure. However, if the user
+// has explicitly turned off exception handling, we can't use the ACE_NEW_*
+// macro variants that do try/catch, so don't set this.
+#    if defined (ACE_HAS_EXCEPTIONS)
+#      define ACE_NEW_THROWS_EXCEPTIONS
+#    endif /* ACE_HAS_EXCEPTIONS */
 
 // Compiler's template mechanism must see source code (i.e., .C files).
 #    define ACE_TEMPLATES_REQUIRE_SOURCE
