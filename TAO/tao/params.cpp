@@ -13,6 +13,7 @@ ACE_RCSID(tao, params, "$Id$")
 TAO_ORB_Parameters::TAO_ORB_Parameters (void)
   : name_service_port_ (0),
     trading_service_port_ (0),
+    implrepo_service_port_ (0),
     ior_lookup_table_ (0),
     sock_rcvbuf_size_ (ACE_DEFAULT_MAX_SOCKET_BUFSIZ),
     sock_sndbuf_size_ (ACE_DEFAULT_MAX_SOCKET_BUFSIZ),
