@@ -67,12 +67,21 @@ be_state_sequence::gen_code (be_type *bt, be_decl *d, be_type *type)
     // base class of the typedef
     ACE_ASSERT (bt->node_type () == AST_Decl::NT_typedef);
 
-  // enclosing scope in which the sequence occurs
+  // enclosing scope in which the sequence element type occurs
   be_decl *scope;
-  if (bt->node_type () == AST_Decl::NT_typedef)
-    scope =  be_scope::narrow_from_scope (bt->defined_in ())->decl ();
-  else // no anonymous data types are allowed here
+  if (!bt->defined_in ()) // no outer scope for us
     scope = 0;
+  else
+    {
+      scope =  be_scope::narrow_from_scope (bt->defined_in ())->decl ();
+      if (!scope)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_state_sequence.cpp - "
+                             "bad scope for seq elem type\n"),
+                            -1);
+        }
+    }
 
   // for sequences, all we do is generate the type
   switch (type->node_type ())

@@ -1132,9 +1132,9 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
               case TAO_CodeGen::TAO_ARGUMENT_CH:
                 {
                   if (bt->node_type () == AST_Decl::NT_typedef)
-                    *os << bt->nested_type_name (bif);
+                    *os << bt->nested_type_name (bif, " &");
                   else
-                    *os << "char *";
+                    *os << "char *&";
                   *os << " " << arg->local_name () << ", ";
                 }
                 break;
@@ -1144,7 +1144,7 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                   if (bt->node_type () == AST_Decl::NT_typedef)
                     *os << bt->name ();
                   else
-                    *os << "char *";
+                    *os << "char *&";
                   *os << " " << arg->local_name () << ", ";
                 }
                 break;
