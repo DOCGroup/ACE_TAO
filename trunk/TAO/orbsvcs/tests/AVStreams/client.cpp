@@ -173,6 +173,7 @@ Client::run (CORBA::Environment &env)
 }
 
 // Bind to a remote mmdevice, as given by the command line arguments.
+
 int
 Client::bind_to_remote_mmdevice (int argc,
                                  char *argv[],
@@ -182,6 +183,9 @@ Client::bind_to_remote_mmdevice (int argc,
   int c;
   char *ior = 0;
   
+  // @@ Alex, can you please move this into a "parse_args()" helper
+  // method?
+
   // Parse the command line.
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -199,7 +203,8 @@ Client::bind_to_remote_mmdevice (int argc,
                            argv [0]),
                           -1);
       }
-  // We didnt get an IOR from the command line!
+
+  // We didn't get an IOR from the command line!
   if (ior == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s"

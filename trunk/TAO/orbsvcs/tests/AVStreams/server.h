@@ -23,8 +23,7 @@
 #include "orbsvcs/AV/AVStreams_i.h"
 #include "tao/tao_util.h"
 
-class Video_Server_StreamEndPoint
-  : public virtual TAO_Server_StreamEndPoint
+class Video_Server_StreamEndPoint : public virtual TAO_Server_StreamEndPoint
 {
   // = TITLE
   //    Server Stream Endpoint for A/V Streams demo.
@@ -33,6 +32,7 @@ class Video_Server_StreamEndPoint
   //    Encapsulates server side transport functionality.
 public:
   Video_Server_StreamEndPoint (void);
+  // Constructor.
   
   virtual void handle_stop (const AVStreams::flowSpec &the_spec,
                             CORBA::Environment &env);
