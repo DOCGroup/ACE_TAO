@@ -11282,25 +11282,23 @@ ACE_OS::sigaddset (sigset_t *s, int signum)
 {
   ACE_TRACE ("ACE_OS::sigaddset");
 #if defined (ACE_LACKS_SIGSET) || defined (ACE_LACKS_SIGSET_DEFINITIONS)
-  if (s == NULL) {
-    errno = EFAULT ;
-    return -1 ;
-  }
-  if (signum < 1 || signum >= ACE_NSIG) {
-    errno = EINVAL ;
-    return -1 ;                 // Invalid signum, return error
-  }
+  if (s == NULL) 
+    {
+      errno = EFAULT;
+      return -1;
+    }
+  else if (signum < 1 || signum >= ACE_NSIG) 
+    {
+      errno = EINVAL;
+      return -1;                 // Invalid signum, return error
+    }
 #   if defined (ACE_PSOS) && defined (__DIAB) && ! defined(ACE_PSOS_DIAB_MIPS) && !defined (ACE_PSOS_DIAB_PPC)
   // treat 0th u_long of sigset_t as high bits,
   // and 1st u_long of sigset_t as low bits.
   if (signum <= ACE_BITS_PER_ULONG)
-  {
-    s->s[1] |= (1 << (signum - 1)) ;
-  }
+    s->s[1] |= (1 << (signum - 1));
   else
-  {
-    s->s[0] |= (1 << (signum - ACE_BITS_PER_ULONG - 1)) ;
-  }
+    s->s[0] |= (1 << (signum - ACE_BITS_PER_ULONG - 1));
 #   else
   *s |= (1 << (signum - 1)) ;
 #   endif /* defined (ACE_PSOS) && defined (__DIAB) */
@@ -11314,29 +11312,27 @@ ACE_INLINE int
 ACE_OS::sigdelset (sigset_t *s, int signum)
 {
 #if defined (ACE_LACKS_SIGSET) || defined (ACE_LACKS_SIGSET_DEFINITIONS)
-  if (s == NULL) {
-    errno = EFAULT ;
-    return -1 ;
-  }
-  if (signum < 1 || signum >= ACE_NSIG) {
-    errno = EINVAL ;
-    return -1 ;                 // Invalid signum, return error
-  }
+  if (s == NULL) 
+    {
+      errno = EFAULT;
+      return -1;
+    }
+  else if (signum < 1 || signum >= ACE_NSIG) 
+    {
+      errno = EINVAL;
+      return -1;                 // Invalid signum, return error
+    }
 #   if defined (ACE_PSOS) && defined (__DIAB) && ! defined (ACE_PSOS_DIAB_MIPS) && !defined (ACE_PSOS_DIAB_PPC)
   // treat 0th u_long of sigset_t as high bits,
   // and 1st u_long of sigset_t as low bits.
   if (signum <= ACE_BITS_PER_ULONG)
-  {
-    s->s[1] &= ~(1 << (signum - 1)) ;
-  }
+    s->s[1] &= ~(1 << (signum - 1));
   else
-  {
-    s->s[0] &= ~(1 << (signum - ACE_BITS_PER_ULONG - 1)) ;
-  }
+    s->s[0] &= ~(1 << (signum - ACE_BITS_PER_ULONG - 1));
 #   else
   *s &= ~(1 << (signum - 1)) ;
 #   endif /* defined (ACE_PSOS) && defined (__DIAB) */
-  return 0 ;
+  return 0;
 #else
   ACE_OSCALL_RETURN (::sigdelset (s, signum), int, -1);
 #endif /* ACE_LACKS_SIGSET || ACE_LACKS_SIGSET_DEFINITIONS */
@@ -11346,13 +11342,14 @@ ACE_INLINE int
 ACE_OS::sigemptyset (sigset_t *s)
 {
 #if defined (ACE_LACKS_SIGSET) || defined (ACE_LACKS_SIGSET_DEFINITIONS)
-  if (s == NULL) {
-    errno = EFAULT ;
-    return -1 ;
-  }
+  if (s == NULL) 
+    {
+      errno = EFAULT;
+      return -1;
+    }
 #   if defined (ACE_PSOS) && defined (__DIAB) && ! defined (ACE_PSOS_DIAB_MIPS) && !defined (ACE_PSOS_DIAB_PPC)
-  s->s[0] = 0 ;
-  s->s[1] = 0 ;
+  s->s[0] = 0;
+  s->s[1] = 0;
 #   else
   *s = 0 ;
 #   endif /* defined (ACE_PSOS) && defined (__DIAB) */
@@ -11366,15 +11363,16 @@ ACE_INLINE int
 ACE_OS::sigfillset (sigset_t *s)
 {
 #if defined (ACE_LACKS_SIGSET) || defined (ACE_LACKS_SIGSET_DEFINITIONS)
-  if (s == NULL) {
-    errno = EFAULT ;
-    return -1 ;
-  }
+  if (s == NULL) 
+    {
+      errno = EFAULT;
+      return -1;
+    }
 #   if defined (ACE_PSOS) && defined (__DIAB) && ! defined (ACE_PSOS_DIAB_MIPS) && !defined (ACE_PSOS_DIAB_PPC)
-  s->s[0] = ~(u_long) 0 ;
-  s->s[1] = ~(u_long) 0 ;
+  s->s[0] = ~(u_long) 0;
+  s->s[1] = ~(u_long) 0;
 #   else
-  *s = ~(sigset_t) 0 ;
+  *s = ~(sigset_t) 0;
 #   endif /* defined (ACE_PSOS) && defined (__DIAB) */
   return 0 ;
 #else
@@ -11386,25 +11384,23 @@ ACE_INLINE int
 ACE_OS::sigismember (sigset_t *s, int signum)
 {
 #if defined (ACE_LACKS_SIGSET) || defined (ACE_LACKS_SIGSET_DEFINITIONS)
-  if (s == NULL) {
-    errno = EFAULT ;
-    return -1 ;
-  }
-  if (signum < 1 || signum >= ACE_NSIG) {
-    errno = EINVAL ;
-    return -1 ;                 // Invalid signum, return error
-  }
+  if (s == NULL) 
+    {
+      errno = EFAULT;
+      return -1;
+    }
+  else if (signum < 1 || signum >= ACE_NSIG) 
+    {
+      errno = EINVAL;
+      return -1;                 // Invalid signum, return error
+    }
 #   if defined (ACE_PSOS) && defined (__DIAB) && ! defined (ACE_PSOS_DIAB_MIPS) && !defined (ACE_PSOS_DIAB_PPC)
   // treat 0th u_long of sigset_t as high bits,
   // and 1st u_long of sigset_t as low bits.
   if (signum <= ACE_BITS_PER_ULONG)
-  {
-    return ((s->s[1] & (1 << (signum - 1))) != 0) ;
-  }
+    return ((s->s[1] & (1 << (signum - 1))) != 0);
   else
-  {
-    return ((s->s[0] & (1 << (signum - ACE_BITS_PER_ULONG - 1))) != 0) ;
-  }
+    return ((s->s[0] & (1 << (signum - ACE_BITS_PER_ULONG - 1))) != 0);
 #   else
   return ((*s & (1 << (signum - 1))) != 0) ;
 #   endif /* defined (ACE_PSOS) && defined (__DIAB) */
@@ -11412,8 +11408,8 @@ ACE_OS::sigismember (sigset_t *s, int signum)
 #  if defined (ACE_HAS_SIGISMEMBER_BUG)
   if (signum < 1 || signum >= ACE_NSIG)
     {
-      errno = EINVAL ;
-      return -1 ;                 // Invalid signum, return error
+      errno = EINVAL;
+      return -1;                 // Invalid signum, return error
     }
 #  endif /* ACE_HAS_SIGISMEMBER_BUG */
   ACE_OSCALL_RETURN (::sigismember (s, signum), int, -1);
