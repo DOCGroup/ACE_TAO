@@ -43,7 +43,7 @@ public:
 
   enum
   {
-    DEFAULT_SIZE = 50
+    DEFAULT_SIZE = ACE_DEFAULT_SERVICE_REPOSITORY_SIZE
   };
 
   // = Initialization and termination methods.

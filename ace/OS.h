@@ -52,6 +52,9 @@ enum ACE_Recyclable_State
   // Unknown state.
 };
 
+#if !defined (ACE_DEFAULT_SERVICE_REPOSITORY_SIZE)
+#define ACE_DEFAULT_SERVICE_REPOSITORY_SIZE 1024
+#endif /* ACE_DEFAULT_SERVICE_REPOSITORY_SIZE */
 
 // Do not change these values wantonly since GPERF depends on them..
 #define ACE_ASCII_SIZE 128

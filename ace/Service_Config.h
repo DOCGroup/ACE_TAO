@@ -102,7 +102,10 @@ class ACE_Export ACE_Service_Config
   //     not eliminated, by _not_ #defining
   //     ACE_HAS_NONSTATIC_OBJECT_MANAGER.
 public:
-  enum {MAX_SERVICES = ACE_DEFAULT_SELECT_REACTOR_SIZE};
+  enum 
+  {
+    MAX_SERVICES = ACE_DEFAULT_SERVICE_REPOSITORY_SIZE
+  };
 
   // = Initialization and termination methods.
 
