@@ -38,7 +38,7 @@ main (int argc, char **argv)
   // thus getting an object of type CORBA::Object
   CORBA::Object_var obj = orb->resolve_initial_references ("RootPOA");
 
-  //apply _narrow on the object of type CORBA::Object,
+  // apply _narrow on the object of type CORBA::Object,
   // to make it a POA class Object
   PortableServer::POA_var root_poa = PortableServer::POA::_narrow (obj.in (), env);
   if (env.exception () != 0)
@@ -47,7 +47,7 @@ main (int argc, char **argv)
       return -1;
     }
 
-  // Get the name of the RootPOA
+  // Get the name of the root POA
   CORBA::String_var poa_name = root_poa->the_name (env);
   if (env.exception () != 0)
     {
