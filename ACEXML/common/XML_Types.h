@@ -53,11 +53,12 @@ typedef char ACEXML_UTF8;
  * using the built-in conversion functions as they only perform simple
  * copy without any encoding conversion.
  */
+typedef ACE_TCHAR ACEXML_Char;
 # if defined (ACE_USES_WCHAR)
-typedef ACEXML_UTF16 ACEXML_Char;
+//typedef ACEXML_UTF16 ACEXML_Char;
 typedef ACE_WString ACEXML_String;
 # else
-typedef ACEXML_UTF8 ACEXML_Char;
+//typedef ACEXML_UTF8 ACEXML_Char;
 typedef ACE_CString ACEXML_String;
 # endif /* ACE_USES_WCHAR */
 
