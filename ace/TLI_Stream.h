@@ -55,27 +55,51 @@ public:
   // Return address of remotely connected peer.
 
   // =  timod bindings
-  ssize_t send (const void *buf, size_t n, int flags) const;
+  ssize_t send (const void *buf,
+                size_t n,
+                int flags,
+                const ACE_Time_Value *timeout = 0) const;
   // Send an n byte buffer to the connected socket (uses t_snd(3)).
-  ssize_t recv (void *buf, size_t n, int *flags) const;
+  ssize_t recv (void *buf,
+                size_t n,
+                int *flags,
+                const ACE_Time_Value *timeout = 0) const;
   // Recv an n byte buffer from the connected socket (uses t_rcv(3)).
 
-  ssize_t send_n (const void *buf, size_t n, int flags) const;
+  ssize_t send_n (const void *buf,
+                  size_t n,
+                  int flags,
+                  const ACE_Time_Value *timeout = 0,
+                  int error_on_eof = 1) const;
   // Send exactly n bytes to the connected socket (uses t_snd(3)).
-  ssize_t recv_n (void *buf, size_t n, int *flags) const;
+  ssize_t recv_n (void *buf,
+                  size_t n,
+                  int *flags,
+                  const ACE_Time_Value *timeout = 0,
+                  int error_on_eof = 1) const;
   // Recv exactly n bytes from the connected socket (uses t_rcv(3)).
 
   // = tirdwr bindings
-  ssize_t send (const void *buf, size_t n) const;
+  ssize_t send (const void *buf,
+                size_t n,
+                const ACE_Time_Value *timeout = 0) const;
   // Send an n byte buffer to the connected socket (uses write(2)).
 
-  ssize_t recv (void *buf, size_t n) const;
+  ssize_t recv (void *buf,
+                size_t n,
+                const ACE_Time_Value *timeout = 0) const;
   // Recv an n byte buffer from the connected socket (uses read(2)).
 
-  ssize_t send_n (const void *buf, size_t n) const;
+  ssize_t send_n (const void *buf,
+                  size_t n,
+                  const ACE_Time_Value *timeout = 0,
+                  int error_on_eof = 1) const;
   // Send n bytes, keep trying until n are sent (uses write(2)).
 
-  ssize_t recv_n (void *buf, size_t n) const;
+  ssize_t recv_n (void *buf,
+                  size_t n,
+                  const ACE_Time_Value *timeout = 0,
+                  int error_on_eof = 1) const;
   // Recv n bytes, keep trying until n are received (uses read (2)).
 
   // = Meta-type info

@@ -6,87 +6,122 @@
 #include "ace/TLI_Stream.h"
 
 inline ssize_t
-ACE_TLI_Stream::send (const void *buf, size_t n) const
+ACE_TLI_Stream::send (const void *buf,
+                      size_t n,
+                      const ACE_Time_Value *timeout) const
 {
   ACE_TRACE ("ACE_TLI_Stream::send");
-  return ACE_OS::write (this->get_handle (), (const char *) buf, n);
+  return ACE::send (this->get_handle (),
+                    buf,
+                    n,
+                    timeout);
 }
 
 inline ssize_t
-ACE_TLI_Stream::send (const void *buf, size_t n, int flags) const
+ACE_TLI_Stream::send (const void *buf,
+                      size_t n,
+                      int flags,
+                      const ACE_Time_Value *timeout) const
 {
   ACE_TRACE ("ACE_TLI_Stream::send");
-  return ACE_OS::t_snd (this->get_handle (), (char *) buf, n, flags);
+  return ACE::t_snd (this->get_handle (),
+                     buf,
+                     n,
+                     flags,
+                     timeout);
 }
 
 inline ssize_t
-ACE_TLI_Stream::recv (void *buf, size_t n) const
+ACE_TLI_Stream::recv (void *buf,
+                      size_t n,
+                      const ACE_Time_Value *timeout) const
 {
   ACE_TRACE ("ACE_TLI_Stream::recv");
-  return ACE_OS::read (this->get_handle (), (char *) buf, n);
+  return ACE::recv (this->get_handle (),
+                    buf,
+                    n,
+                    timeout);
 }
 
 inline ssize_t
-ACE_TLI_Stream::recv (void *buf, size_t n, int *flags) const
+ACE_TLI_Stream::recv (void *buf,
+                      size_t n,
+                      int *flags,
+                      const ACE_Time_Value *timeout) const
 {
   ACE_TRACE ("ACE_TLI_Stream::recv");
   int f = 0;
 
   if (flags == 0)
     flags = &f;
-  return ACE_OS::t_rcv (this->get_handle (), (char *) buf, n, flags);
+
+  return ACE::t_rcv (this->get_handle (),
+                     buf,
+                     n,
+                     flags,
+                     timeout);
 }
 
 inline ssize_t
-ACE_TLI_Stream::send_n (const void *buf, size_t n) const
+ACE_TLI_Stream::send_n (const void *buf,
+                        size_t n,
+                        const ACE_Time_Value *timeout,
+                        int error_on_eof) const
 {
   ACE_TRACE ("ACE_TLI_Stream::send_n");
-  return ACE::send_n (this->get_handle (), buf, n);
+  return ACE::send_n (this->get_handle (),
+                      buf,
+                      n,
+                      timeout,
+                      error_on_eof);
 }
 
 inline ssize_t
-ACE_TLI_Stream::send_n (const void *buf, size_t n, int flags) const
+ACE_TLI_Stream::send_n (const void *buf,
+                        size_t n,
+                        int flags,
+                        const ACE_Time_Value *timeout,
+                        int error_on_eof) const
 {
   ACE_TRACE ("ACE_TLI_Stream::send_n");
-  size_t b_sent;
-  ssize_t b_written = 0;
-  
-  for (b_sent = 0; b_sent < n; b_sent += b_written)
-    if ((b_written = ACE_OS::t_snd (this->get_handle (), 
-			      (char *) buf + b_sent, 
-			      n - b_sent, flags)) == -1)
-      return -1;
 
-  return b_sent;
+  return ACE::t_snd_n (this->get_handle (),
+                       buf,
+                       n,
+                       flags,
+                       timeout,
+                       error_on_eof);
 }
 
 inline ssize_t
-ACE_TLI_Stream::recv_n (void *buf, size_t n) const
+ACE_TLI_Stream::recv_n (void *buf,
+                        size_t n,
+                        const ACE_Time_Value *timeout,
+                        int error_on_eof) const
 {
   ACE_TRACE ("ACE_TLI_Stream::recv_n");
-  return ACE::recv_n (this->get_handle (), buf, n);
+  return ACE::recv_n (this->get_handle (),
+                      buf,
+                      n,
+                      timeout,
+                      error_on_eof);
 }
 
 inline ssize_t
-ACE_TLI_Stream::recv_n (void *buf, size_t n, int *flags) const
+ACE_TLI_Stream::recv_n (void *buf,
+                        size_t n,
+                        int *flags,
+                        const ACE_Time_Value *timeout,
+                        int error_on_eof) const
 {
   ACE_TRACE ("ACE_TLI_Stream::recv_n");
-  size_t b_read = 0;
-  ssize_t b_recv = 0;
-  int f = 0;
 
-  if (flags == 0)
-    flags = &f;
-
-  for (b_read = 0; b_read < n; b_read += b_recv)
-    if ((b_recv = ACE_OS::t_rcv (this->get_handle (), 
-				 (char *) buf + b_read, 
-				 n - b_read, flags)) == -1)
-      return -1;
-    else if (b_recv == 0)
-      break;
-
-  return b_read;      
+  return ACE::t_rcv_n (this->get_handle (),
+                       buf,
+                       n,
+                       flags,
+                       timeout,
+                       error_on_eof);
 }
 
 inline void
@@ -102,4 +137,3 @@ ACE_TLI_Stream::get_rwflag (void)
   ACE_TRACE ("ACE_TLI_Stream::get_rwflag");
   return this->rwflag_;
 }
-

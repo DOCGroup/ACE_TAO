@@ -6,17 +6,19 @@
 ASYS_INLINE ssize_t
 ACE::read_n (ACE_HANDLE handle,
              void *buf,
-             size_t len)
+             size_t len,
+             int error_on_eof)
 {
-  return ACE_OS::read_n (handle, buf, len);
+  return ACE_OS::read_n (handle, buf, len, error_on_eof);
 }
 
 ASYS_INLINE ssize_t
 ACE::write_n (ACE_HANDLE handle,
               const void *buf,
-              size_t len)
+              size_t len,
+              int error_on_eof)
 {
-  return ACE_OS::write_n (handle, buf, len);
+  return ACE_OS::write_n (handle, buf, len, error_on_eof);
 }
 
 ASYS_INLINE ssize_t
@@ -24,53 +26,89 @@ ACE::recv_n (ACE_HANDLE handle,
              void *buf,
              size_t len,
              int flags,
-             const ACE_Time_Value *timeout)
+             const ACE_Time_Value *timeout,
+             int error_on_eof)
 {
   if (timeout == 0)
     return ACE::recv_n_i (handle,
                           buf,
                           len,
-                          flags);
+                          flags,
+                          error_on_eof);
   else
     return ACE::recv_n_i (handle,
                           buf,
                           len,
                           flags,
-                          timeout);
+                          timeout,
+                          error_on_eof);
 }
+
+#if defined (ACE_HAS_TLI)
+
+ASYS_INLINE ssize_t
+ACE::t_rcv_n (ACE_HANDLE handle,
+              void *buf,
+              size_t len,
+              int *flags,
+              const ACE_Time_Value *timeout,
+              int error_on_eof)
+{
+  if (timeout == 0)
+    return ACE::t_rcv_n_i (handle,
+                           buf,
+                           len,
+                           flags,
+                           error_on_eof);
+  else
+    return ACE::t_rcv_n_i (handle,
+                           buf,
+                           len,
+                           flags,
+                           timeout,
+                           error_on_eof);
+}
+
+#endif /* ACE_HAS_TLI */
 
 ASYS_INLINE ssize_t
 ACE::recv_n (ACE_HANDLE handle,
              void *buf,
              size_t len,
-             const ACE_Time_Value *timeout)
+             const ACE_Time_Value *timeout,
+             int error_on_eof)
 {
   if (timeout == 0)
     return ACE::recv_n_i (handle,
                           buf,
-                          len);
+                          len,
+                          error_on_eof);
   else
     return ACE::recv_n_i (handle,
                           buf,
                           len,
-                          timeout);
+                          timeout,
+                          error_on_eof);
 }
 
 ASYS_INLINE ssize_t
 ACE::recvv_n (ACE_HANDLE handle,
               iovec *iov,
               int iovcnt,
-              const ACE_Time_Value *timeout)
+              const ACE_Time_Value *timeout,
+              int error_on_eof)
 {
   if (timeout == 0)
     return ACE::recvv_n_i (handle,
                            iov,
-                           iovcnt);
+                           iovcnt,
+                           error_on_eof);
   else
     return ACE::recvv_n_i (handle,
                            iov,
                            iovcnt,
-                           timeout);
+                           timeout,
+                           error_on_eof);
 }
 
 ASYS_INLINE ssize_t
@@ -78,53 +116,89 @@ ACE::send_n (ACE_HANDLE handle,
              const void *buf,
              size_t len,
              int flags,
-             const ACE_Time_Value *timeout)
+             const ACE_Time_Value *timeout,
+             int error_on_eof)
 {
   if (timeout == 0)
     return ACE::send_n_i (handle,
                           buf,
                           len,
-                          flags);
+                          flags,
+                          error_on_eof);
   else
     return ACE::send_n_i (handle,
                           buf,
                           len,
                           flags,
-                          timeout);
+                          timeout,
+                          error_on_eof);
 }
+
+#if defined (ACE_HAS_TLI)
+
+ASYS_INLINE ssize_t
+ACE::t_snd_n (ACE_HANDLE handle,
+              const void *buf,
+              size_t len,
+              int flags,
+              const ACE_Time_Value *timeout,
+              int error_on_eof)
+{
+  if (timeout == 0)
+    return ACE::t_snd_n_i (handle,
+                           buf,
+                           len,
+                           flags,
+                           error_on_eof);
+  else
+    return ACE::t_snd_n_i (handle,
+                           buf,
+                           len,
+                           flags,
+                           timeout,
+                           error_on_eof);
+}
+
+#endif /* ACE_HAS_TLI */
 
 ASYS_INLINE ssize_t
 ACE::send_n (ACE_HANDLE handle,
              const void *buf,
              size_t len,
-             const ACE_Time_Value *timeout)
+             const ACE_Time_Value *timeout,
+             int error_on_eof)
 {
   if (timeout == 0)
     return ACE::send_n_i (handle,
                           buf,
-                          len);
+                          len,
+                          error_on_eof);
   else
     return ACE::send_n_i (handle,
                           buf,
                           len,
-                          timeout);
+                          timeout,
+                          error_on_eof);
 }
 
 ASYS_INLINE ssize_t
 ACE::sendv_n (ACE_HANDLE handle,
               const iovec *iov,
               int iovcnt,
-              const ACE_Time_Value *timeout)
+              const ACE_Time_Value *timeout,
+              int error_on_eof)
 {
   if (timeout == 0)
     return ACE::sendv_n_i (handle,
                            iov,
-                           iovcnt);
+                           iovcnt,
+                           error_on_eof);
   else
     return ACE::sendv_n_i (handle,
                            iov,
                            iovcnt,
-                           timeout);
+                           timeout,
+                           error_on_eof);
 }
 
 ASYS_INLINE ssize_t
@@ -141,9 +215,9 @@ ASYS_INLINE ssize_t
 ACE::recv_i (ACE_HANDLE handle, void *buf, size_t len)
 {
 #if defined (ACE_WIN32) || defined (ACE_PSOS)
-    return ACE_OS::recv (handle, (char *) buf, len);
+  return ACE_OS::recv (handle, (char *) buf, len);
 #else
-    return ACE_OS::read (handle, (char *) buf, len);
+  return ACE_OS::read (handle, (char *) buf, len);
 #endif /* ACE_WIN32 */
 }
 
