@@ -1,3 +1,10 @@
+Wed Oct 25 08:23:34 2000  Chad Elliott  <elliott_c@ociweb.com>
+
+        * performance-tests/Cubit/TAO/MT_Cubit/Globals.h
+
+          Modified the SCHED_PRIORITY macro for HPUX only.  The original
+          priority was above the maximum and would cause a run-time failure.
+
 Wed Oct 25 00:32:59 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/PortableServer: POA::reference_to_servant() was missing the
