@@ -5,12 +5,12 @@ Wed Aug 18 23:09:29 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Credentials.inl:
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_OpenSSL_st_T.inl:
 
-	  Due MSVC++ 6's inability correctly deduce the correct function
+	  Due MSVC++ 6's inability to correctly deduce the function
 	  template specialization to use based on the function argument,
 	  resort to explicitly calling the type-specific
 	  TAO::SSLIOP::OpenSSL trait function instead.  Once we drop
 	  support for MSVC++ 6, we can go back to using the function
-	  templates to so that the code can once again be cleaner.
+	  templates so that the code can be cleaner once again.
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_EVP_PKEY.h:
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_SSL.h:
@@ -30,10 +30,10 @@ Wed Aug 18 23:09:29 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 Wed Aug 18 10:41:03 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_component/component.cpp:
-        
+
           Changed context state in switch case labels to correspond with
           changes in
-          
+
           Tue Aug 17 15:48:28 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Wed Aug 18 08:32:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
