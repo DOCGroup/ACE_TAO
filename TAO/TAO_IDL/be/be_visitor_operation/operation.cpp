@@ -845,16 +845,13 @@ be_visitor_operation::gen_marshal_and_invoke (
           << "))" << be_uidt_nl
           << "{" << be_idt_nl;
 
-      // If marshaling fails, raise exception.
-      if (this->gen_raise_interceptor_exception (bt, "CORBA::MARSHAL", "")
-            == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_operation_cs::"
-                             "gen_marshal_and invoke - "
-                             "codegen for return var failed\n"),
-                            -1);
-        }
+      // If marshaling fails, raise exception (codesetting has various minors)
+      *os << be_nl << be_nl
+          << "TAO_InputCDR::throw_stub_exception (errno "
+          << "ACE_ENV_ARG_PARAMETER); "
+          << be_nl << be_nl
+          << "TAO_INTERCEPTOR_CHECK_RETURN (_tao_retval);"
+          << be_nl << be_nl;
 
       *os << be_uidt_nl;
       *os << "}" << be_uidt_nl << be_nl;
@@ -995,8 +992,14 @@ be_visitor_operation::gen_marshal_and_invoke (
       // the response message.
       *os << be_nl << be_nl
           << "TAO_InputCDR &_tao_in = _tao_call.inp_stream ();"
-          << be_nl << be_nl
-          << "if (!(" << be_idt << be_idt;
+          << be_nl ;
+
+      //  Added so codeset translators may be used to decode reply
+      *os << "_tao_call.transport()->assign_translators (&_tao_in,0);"
+          << be_nl << be_nl;
+
+      // reply
+      *os << "if (!(" << be_idt << be_idt;
 
       if (!this->void_return_type (bt))
         {
@@ -1044,12 +1047,13 @@ be_visitor_operation::gen_marshal_and_invoke (
           << "))" << be_uidt_nl
           << "{" << be_idt_nl;
 
-      // If marshaling fails, raise exception.
-      int status = this->gen_raise_interceptor_exception (
-                             bt,
-                             "CORBA::MARSHAL",
-                             "TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES"
-                           );
+      // If marshaling fails, raise exception (codesetting has various minors)
+      *os << be_nl << be_nl
+          << "TAO_InputCDR::throw_stub_exception (errno "
+          << "ACE_ENV_ARG_PARAMETER); "
+          << be_nl << be_nl
+          << "TAO_INTERCEPTOR_CHECK_RETURN (_tao_retval);"
+          << be_nl << be_nl;
 
       if (status == -1)
         {

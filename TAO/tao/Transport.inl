@@ -119,6 +119,59 @@ TAO_Transport::check_event_handler_i (const char *caller)
   return 0;
 }
 
+//********************************************************************
+// codeset related methods
+
+
+ACE_INLINE TAO_Codeset_Translator_Factory *
+TAO_Transport::char_translator (void) const
+{
+  return this->char_translator_;
+}
+
+ACE_INLINE TAO_Codeset_Translator_Factory *
+TAO_Transport::wchar_translator (void) const
+{
+  return this->wchar_translator_;
+}
+
+ACE_INLINE void
+TAO_Transport::char_translator (TAO_Codeset_Translator_Factory *tf)
+{
+  this->char_translator_ = tf;
+  this->tcs_set_ = 1;
+}
+
+ACE_INLINE void
+TAO_Transport::wchar_translator (TAO_Codeset_Translator_Factory *tf)
+{
+  this->wchar_translator_ = tf;
+  if (tf)
+    this->wchar_allowed_ = 1;
+  this->tcs_set_ = 1;
+}
+
+ACE_INLINE void
+TAO_Transport::wchar_allowed (CORBA::Boolean allowed)
+{
+  this->wchar_allowed_ = allowed;
+}
+
+/// CodeSet negotiation
+ACE_INLINE CORBA::Boolean
+TAO_Transport::is_tcs_set(void) const
+{
+  return tcs_set_;
+}
+
+ACE_INLINE void
+TAO_Transport::first_request_sent (void)
+{
+  this->first_request_ = 0;
+}
+
+
+
 /*****************************************************/
 ACE_INLINE
 TAO_Transport_Refcount_Guard::TAO_Transport_Refcount_Guard (TAO_Transport *t)

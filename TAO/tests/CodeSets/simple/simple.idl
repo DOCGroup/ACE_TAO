@@ -1,0 +1,6 @@
+// $Id$
+
+interface simple
+{
+  string op1(in string name);
+};

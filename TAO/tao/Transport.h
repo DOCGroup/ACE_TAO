@@ -29,6 +29,9 @@
 #include "Incoming_Message_Queue.h"
 #include "Synch_Refcountable.h"
 
+#include "CONV_FRAMEC.h"
+#include "Codeset_Translator_Factory.h"
+
 class TAO_ORB_Core;
 class TAO_Target_Specification;
 class TAO_Operation_Details;
@@ -370,8 +373,6 @@ public:
   ssize_t recv (char *buffer,
                 size_t len,
                 const ACE_Time_Value *timeout = 0);
-
-
 
   /**
    * @name Control connection lifecycle
@@ -767,6 +768,38 @@ public:
   int handle_timeout (const ACE_Time_Value &current_time,
                       const void* act);
 
+  /// CodeSet Negotiation - Get the char codeset translator factory
+  ///
+  TAO_Codeset_Translator_Factory *char_translator (void) const;
+
+  /// CodeSet Negotiation - Get the wchar codeset translator factory
+  ///
+  TAO_Codeset_Translator_Factory *wchar_translator (void) const;
+
+  /// CodeSet negotiation - Set the char codeset translator factory
+  ///
+  void char_translator (TAO_Codeset_Translator_Factory *);
+
+  /// CodeSet negotiation - Set the wchar codeset translator factory
+  ///
+  void wchar_translator (TAO_Codeset_Translator_Factory *);
+
+  /// Inform the transport that wchar marshalling is allowed even if there is
+  /// no tranlator. It could be true that no translator is used because the
+  /// NCS-W for both sides match. But it is also true that no translator is
+  /// available because the other side did not define a codeset for wchars.
+  void wchar_allowed (CORBA::Boolean );
+
+  /// Use the Transport's codeset factories to set the translator for input
+  /// and output CDRs.
+  void assign_translators (TAO_InputCDR *, TAO_OutputCDR *);
+
+  /// Return true if the tcs has been set
+  ///
+  CORBA::Boolean is_tcs_set() const;
+
+  /// Set the state of the first_request_ flag to 0
+  void first_request_sent();
 private:
 
   /// Helper method that returns the Transport Cache Manager.
@@ -979,6 +1012,26 @@ protected:
 
   /// Used by the LRU, LFU and FIFO Connection Purging Strategies.
   unsigned long purging_order_;
+
+private:
+  /// Additional member values required to support codeset translation
+  TAO_Codeset_Translator_Factory *char_translator_;
+  TAO_Codeset_Translator_Factory *wchar_translator_;
+
+  /// The tcs_set_ flag indicates that negotiation has occured and so the
+  /// translators are correct, since a null translator is valid if both ends
+  /// are using the same codeset, whatever that codeset might be.
+  CORBA::Boolean tcs_set_;
+  /// First_request_ is true until the first request is sent or received. This
+  /// is necessary since codeset context information is necessary only on the
+  /// first request. After that, the translators are fixed for the life of the
+  /// connection.
+  CORBA::Boolean first_request_;
+  /// Wchar data is only permitted when both sides explicitly declare a wchar
+  /// codeset and a translator exists on one side or the other to convert
+  /// between them. Again, this is necessary since a null wchar_translator is
+  /// perfectly valid.
+  CORBA::Boolean wchar_allowed_;
 };
 
 /**

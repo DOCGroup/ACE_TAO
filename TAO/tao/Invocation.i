@@ -158,6 +158,7 @@ TAO_GIOP_Synch_Invocation::TAO_GIOP_Synch_Invocation (
 ACE_INLINE TAO_InputCDR &
 TAO_GIOP_Synch_Invocation::inp_stream (void)
 {
+  this->transport_->assign_translators(&this->rd_.reply_cdr(),0);
   return this->rd_.reply_cdr ();
 }
 

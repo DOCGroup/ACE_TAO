@@ -1625,17 +1625,18 @@ CORBA::ORB::object_to_string (CORBA::Object_ptr obj
       char buf [ACE_CDR::DEFAULT_BUFSIZE];
 #endif /* ACE_HAS_PURIFY */
 
-      TAO_OutputCDR cdr (buf,
-                         sizeof buf,
+      TAO_OutputCDR cdr (buf,  sizeof buf,
                          TAO_ENCAP_BYTE_ORDER,
                          this->orb_core_->output_cdr_buffer_allocator (),
                          this->orb_core_->output_cdr_dblock_allocator (),
                          this->orb_core_->output_cdr_msgblock_allocator (),
                          this->orb_core_->orb_params ()->cdr_memcpy_tradeoff (),
                          TAO_DEF_GIOP_MAJOR,
-                         TAO_DEF_GIOP_MINOR,
-                         this->orb_core_->to_iso8859 (),
-                         this->orb_core_->to_unicode ());
+                         TAO_DEF_GIOP_MINOR);
+
+      // There is no translator currently available for stringifying an object
+      // reference, since there is no transport with which to choose an NCS/TCS
+      // pair.
 
       // support limited oref ACE_OS::strcmp.
       (void) ACE_OS::memset (buf, 0, sizeof (buf));

@@ -24,6 +24,8 @@
 #include "ace/Message_Block.h"
 #include "ace/Reactor.h"
 
+#include "Codeset_Manager.h"
+
 #if !defined (__ACE_INLINE__)
 # include "Transport.inl"
 #endif /* __ACE_INLINE__ */
@@ -111,6 +113,11 @@ TAO_Transport::TAO_Transport (CORBA::ULong tag,
   , handler_lock_ (orb_core->resource_factory ()->create_cached_connection_lock ())
   , id_ ((long) this)
   , purging_order_ (0)
+  , char_translator_ (0)
+  , wchar_translator_ (0)
+  , tcs_set_ (0)
+  , first_request_ (1)
+  , wchar_allowed_ (0)
 {
   TAO_Client_Strategy_Factory *cf =
     this->orb_core_->client_factory ();
@@ -304,6 +311,12 @@ TAO_Transport::generate_request_header (
     TAO_Target_Specification &spec,
     TAO_OutputCDR &output)
 {
+  // codeset service context is only supposed to be sent in the first request
+  // on a particular connection.
+  if (this->first_request_)
+    this->orb_core()->codeset_manager()->
+      generate_service_context( opdetails, *this );
+
   if (this->messaging_object ()->generate_request_header (opdetails,
                                                           spec,
                                                           output) == -1)
@@ -2194,6 +2207,29 @@ TAO_Transport::transport_cache_manager (void)
 {
   return this->orb_core_->lane_resources ().transport_cache ();
 }
+
+
+ACE_INLINE void
+TAO_Transport::assign_translators (TAO_InputCDR *inp, TAO_OutputCDR *outp)
+{
+  if (this->char_translator_)
+    {
+      this->char_translator_->assign (inp);
+      this->char_translator_->assign (outp);
+    }
+  if (this->wchar_translator_)
+    {
+      this->wchar_translator_->assign (inp);
+      this->wchar_translator_->assign (outp);
+    }
+  else
+    {
+      if (inp) inp->wchar_allowed(this->wchar_allowed_);
+      if (outp) outp->wchar_allowed(this->wchar_allowed_);
+    }
+}
+
+
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
