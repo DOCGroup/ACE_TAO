@@ -1,12 +1,19 @@
+Mon Dec  2 14:13:44 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tests/Naming_Test.cpp (main): Added delete ns_context to close
+ 	  things down and free up the semaphores.  Thanks to David Levine
+ 	  for suggesting this.
+
+	* examples/Reactor/Misc/test_demuxing.cpp (handle_input): Fixed a
+ 	  "typo" where we were accessing mb->msg_priority() *after*
+ 	  deleting it!  Thanks to Matthias for finding this.
+
 Mon Dec  2 09:57:15 1996  David L. Levine  <levine@cs.wustl.edu>
+
 	* tests/run_tests.*: updated lists of tests to be run
 
 	* tests/*.cpp: removed trailing .cpp from argument to
  	  ACE_START_TEST because it would appear in the log file name
-
-	* tests/SV_Shared_Memory_Test.cpp: moved ACE_END_TEST into
- 	  child process case, so that it gets called before returning
- 	  from main()
 
 Mon Dec  2 00:08:51 1996  Douglas C. Schmidt  <schmidt@lambada.cs.wustl.edu>
 
