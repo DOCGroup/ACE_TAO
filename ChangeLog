@@ -1,3 +1,10 @@
+Mon Mar 24 06:54:55 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/config-linux-common.h: Change the ACE_DEFAULT_BASE_ADDR for
+	  the IA-64 from 0x8 to 0x0 so the Linux kernel can choose the
+ 	  right value.  Thanks to Sergei Pimenov
+ 	  <sergei.pimenov@intel.com> for reporting this.
+
 Mon Mar 24 13:16:29 CET 2003  Oliver Kellogg  <oliver.kellogg@sysde.eads.net>
 
 	* ace/Node.{h,cpp}:
