@@ -1,3 +1,24 @@
+Wed Nov 26 11:48:25 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/Scheduling_Service/Makefile:
+
+	  Check for RTSched instead of Sched before going ahead to build. 
+	
+	* orbsvcs/tests/ImplRepo/NameService/Makefile:
+	* orbsvcs/tests/Notify/Blocking/Makefile:
+	* orbsvcs/tests/Notify/Discarding/Makefile:
+	* orbsvcs/tests/Notify/MT_Dispatching/Makefile
+	* orbsvcs/tests/Notify/Ordering/Makefile:
+	* orbsvcs/tests/Notify/Sequence_Multi_Filter/Makefile:
+	* orbsvcs/tests/Notify/Structured_Filter/Makefile:
+	* orbsvcs/tests/Notify/Structured_Multi_Filter/Makefile:
+	* orbsvcs/tests/Sched/Makefile:
+	* orbsvcs/tests/ior_corbaname/Makefile:
+
+	  Do not build any of them if their service level libraries are
+	  not buit For example, if Notify is not built do not build any of
+	  the executables in the above tests.
+
 Wed Nov 26 17:46:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* orbsvcs/orbsvcs/FT_ORB.bor:

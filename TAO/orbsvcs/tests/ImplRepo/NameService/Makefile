@@ -31,9 +31,11 @@ include $(TAO_ROOT)/rules.tao.GNU
 
 TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
 ifeq (ImplRepo,$(findstring ImplRepo,$(TAO_ORBSVCS)))
-ifeq ($(minimum_corba),0)
-  BIN = $(BIN_UNCHECKED)
-endif # minimum_corba
+  ifeq (Naming,$(findstring Naming,$(TAO_ORBSVCS)))
+    ifeq ($(minimum_corba),0)
+      BIN = $(BIN_UNCHECKED)
+    endif # minimum_corba
+  endif #Naming
 endif # ImplRepo
 
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
