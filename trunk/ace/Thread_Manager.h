@@ -348,6 +348,12 @@ public:
   // array) to be destroyed.  "cleanup_hook", for example, may delete
   // the object (or array).
 
+  int acquire_release (void);
+  // Do nothing but to acquire the thread manager's lock and release.
+  // This is used mainly to get newly spawned thread in synch with
+  // thread manager and prevent it from accessing it thread descriptor
+  // before it gets fully built.
+
   void dump (void);
   // Dump the state of an object.
 
@@ -393,7 +399,8 @@ protected:
 		  ACE_Thread_State,
 		  int grp_id,
 		  ACE_Task_Base *task = 0,
-		  long flags = 0);
+		  long flags = 0,
+		  ACE_Thread_Descriptor *td = 0);
   // Append a thread in the table (adds at the end, growing the table
   // if necessary).
 
