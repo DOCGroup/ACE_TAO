@@ -1,3 +1,10 @@
+Wed Sep 30 10:16:56 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/ACE.cpp: Modified max_handles() so that it goes the right
+ 	  thing on platforms like AIX that don't have any predefined limit
+ 	  on the number of handles.  Thanks to Chris Lahey
+ 	  <CLahey@cccis.com> for reporting this.
+
 Wed Sep 30 01:56:54 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/Strategies_T:
