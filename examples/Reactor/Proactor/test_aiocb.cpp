@@ -95,7 +95,8 @@ Test_Aio::init (void)
   // Init the buffers.
   this->buffer_write_ = strdup ("Welcome to the world of AIO... AIO Rules !!!");
   cout << "The buffer : " << this->buffer_write_ << endl;
-  this->buffer_read_ = new char [strlen (this->buffer_write_)];
+  this->buffer_read_ = new char [strlen (this->buffer_write_) + 1];
+  return 0;
 }
 
 // Set the necessary things for the AIO stuff.
@@ -159,41 +160,49 @@ Test_Aio::do_aio (void)
       cerr << "Return value :" << return_val << endl;
 
       // Analyze return and error values.
-      if (aio_error (list_aiocb [0]) != EINPROGRESS)
+      if (list_aiocb[0] != 0)
         {
-          if (aio_return (list_aiocb [0]) == -1)
+          if (aio_error (list_aiocb [0]) != EINPROGRESS)
             {
-              perror ("aio_return");
-              return -1;
+              if (aio_return (list_aiocb [0]) == -1)
+                {
+                  perror ("aio_return");
+                  return -1;
+                }
+              else
+                {
+                  // Successful. Store the pointer somewhere and make the
+                  // entry NULL in the list.
+                  this->aiocb_write_ = list_aiocb [0];
+                  list_aiocb [0] = 0;
+                }
             }
           else
-            {
-              // Successful. Store the pointer somewhere and make the
-              // entry NULL in the list.
-              this->aiocb_write_ = list_aiocb [0];
-              list_aiocb [0] = 0;
-            }
+            cout << "AIO write in progress" << endl;
         }
-      else
-        cout << "AIO in progress" << endl;
 
-      if (aio_error (list_aiocb [1]) != EINPROGRESS)
+      if (list_aiocb[1] != 0)
         {
-          if (aio_return (list_aiocb [1]) == -1)
+          if (aio_error (list_aiocb [1]) != EINPROGRESS)
             {
-              perror ("aio_return");
-              return -1;
+              int read_return = aio_return (list_aiocb[1]);
+              if (read_return == -1)
+                {
+                  perror ("aio_return");
+                  return -1;
+                }
+              else
+                {
+                  // Successful. Store the pointer somewhere and make the
+                  // entry NULL in the list.
+                  this->aiocb_read_ = list_aiocb [1];
+                  list_aiocb [1] = 0;
+                  this->buffer_read_[read_return] = '\0';
+                }
             }
           else
-            {
-              // Successful. Store the pointer somewhere and make the
-              // entry NULL in the list.
-              this->aiocb_read_ = list_aiocb [1];
-              list_aiocb [1] = 0;
-            }
+            cout << "AIO read in progress" << endl;
         }
-      else
-        cout << "AIO in progress" << endl;
 
       // Is it done?
       if ((list_aiocb [0] == 0) && (list_aiocb [1] == 0))
