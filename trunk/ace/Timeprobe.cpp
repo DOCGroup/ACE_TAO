@@ -37,7 +37,7 @@ ACE_Timeprobe<ACE_LOCK>::ACE_Timeprobe (u_long size)
 template <class ACE_LOCK>
 ACE_Timeprobe<ACE_LOCK>::~ACE_Timeprobe (void)
 {
-  delete this->timeprobes_;
+  delete [] this->timeprobes_;
 }
 
 template <class ACE_LOCK> void
