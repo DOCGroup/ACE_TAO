@@ -8,6 +8,7 @@
 
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Null_Mutex.h"
+#include "ace/SString.h"
 
 class ACE_Reactor;
 
