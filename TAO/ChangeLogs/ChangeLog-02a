@@ -6,6 +6,7 @@ Tue Apr 30 14:46:26 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* tests/Connection_Timeout/Connection_Timeout.dsw:
 	* tests/Connection_Timeout/Test.idl:
 	* tests/Connection_Timeout/client.dsp: 
+	* tests/Connection_Timeout/client.bor:
 	* tests/Connection_Timeout/Makefile.bor: A simple test for
 	  connection timeouts. The client tries connecting to a
 	  non-existing server and times out based on the policy value
