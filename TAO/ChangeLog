@@ -1,3 +1,10 @@
+Thu Dec 16 09:41:35 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * examples/Simple/time-date/svc.conf:
+
+          Removed the ./ from the Time_Date library.  This caused problems
+          on Windows and with the run_test.pl it is not necessary.
+
 Wed Dec 15 14:14:22 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/IFR_Service/ifr_adding_visitor_structure.cpp:
