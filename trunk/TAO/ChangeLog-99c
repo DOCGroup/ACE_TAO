@@ -1,3 +1,11 @@
+Sat Jun 05 06:15:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Sched/Reconfig_Scheduler.cpp
+          orbsvcs/orbsvcs/RtecScheduler.idl: added locking guards to
+	  public methods, refactored some of them to allow sharing of
+	  lock-less private methods between public methods, added
+	  SYNCHRONIZATION_FAILURE user exception to module RtecScheduler.
+
 Sat Jun  5 03:54:27 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/Object_Adapter.{h,i,cpp}: Extracted the steps needed to
@@ -124,7 +132,7 @@ Fri Jun  4 18:57:02 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 Fri Jun 04 17:30:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
-        * orbsvcs/orbsvcs/Sched: Reconfig_Scheduler.{cpp, h}: completed
+        * orbsvcs/orbsvcs/Sched/Reconfig_Scheduler.{cpp, h}: completed
 	  most of the reconfigurable scheduler implementation.
 
 	* performance-tests/Cubit/TAO/IDL_Cubit/client.dsp
