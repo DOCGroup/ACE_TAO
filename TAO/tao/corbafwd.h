@@ -61,14 +61,6 @@
 # endif
 #endif /* _MSC_VER */
 
-// This number was assigned by the OMG do *NOT* change at random
-// The ASCII represetantion is TA0xxxx, close enough since they only
-// take 20 bits, the first 16 are TA, the next 4 are 0000.
-// Remember that we can only play with the last 12 bits,
-// TAO_MAX_MINOR_CODE is there to remind us of that.
-#define TAO_DEFAULT_MINOR_CODE 0x544F0000
-#define TAO_MAX_MINOR_CODE 0x544F0FFF
-
 // Forward declarations of some data types are needed.
 
 class CORBA_Any;
@@ -898,6 +890,32 @@ private:
   static ORB_ptr instance_;
   // Points to the "default ORB."
 };  // end of class (namespace) CORBA
+
+// ****************************************************************
+
+// This number was assigned by the OMG.  Do *NOT* change at random.
+// The ASCII represetantion is TA0xxxx, close enough since they only
+// take 20 bits, the first 16 are TA, the next 4 are 0000.  Remember
+// that we can only play with the last 12 bits, TAO_MAX_MINOR_CODE is
+// there to remind us of that.
+#define TAO_DEFAULT_MINOR_CODE 0x54410000
+#define TAO_MAX_MINOR_CODE 0x54410FFF
+
+// Minor code encoding.  Skip 4 bits, currently unused.  Then, encode
+// the location in 4 bits, and the errno in 4 bits:
+// 0x   0101 0100   0100 0001   0000   ____  ____     ____
+//          T           A        0      location      errno
+
+// Location encoding:  next-to-last 8 bits.
+#define TAO_INVOCATION_CONNECT_MINOR_CODE          (0x01u << 4)
+#define TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE (0x02u << 4)
+#define TAO_INVOCATION_SEND_REQUEST_MINOR_CODE     (0x03u << 4)
+
+// errno encoding:  bottom 4 bits.
+#define TAO_UNKNOWN_MINOR_CODE   0x00u
+#define TAO_ETIMEDOUT_MINOR_CODE 0x01u
+#define TAO_ENFILE_MINOR_CODE    0x02u
+#define TAO_EMFILE_MINOR_CODE    0x03u
 
 // ****************************************************************
 
