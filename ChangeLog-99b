@@ -1,3 +1,11 @@
+Tue Aug 24 16:23:07 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* bin/make_release:
+	  Use an explicit temporary file to create the ChangeLog, i had
+	  some problems with the previous scheme, but it could be my
+	  shell.
+	  When tagging TAO we have to change directories.
+
 Tue Aug 24 12:19:29 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tests/Makefile:
