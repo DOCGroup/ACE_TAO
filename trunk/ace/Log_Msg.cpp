@@ -59,7 +59,7 @@ extern "C"
 void
 ACE_TSS_cleanup (void *ptr)
 {
-  delete ptr;
+  delete (ACE_Log_Msg *) ptr;
 }
 #endif /* ACE_MT_SAFE */
 
@@ -293,6 +293,10 @@ ACE_Log_Msg::ACE_Log_Msg (void)
 		    | LM_EMERGENCY)
 {
   // ACE_TRACE ("ACE_Log_Msg::ACE_Log_Msg");
+}
+
+ACE_Log_Msg::~ACE_Log_Msg (void)
+{
 }
 
 // Open the sender-side of the Message ACE_Queue.
