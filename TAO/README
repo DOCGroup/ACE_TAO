@@ -1,26 +1,35 @@
-Welcome to TAO--The ACE ORB.  This is an implementation of a
-CORBA2-compliant ORB with support for real-time extensions.
+Welcome to the alpha release of The ACE ORB (TAO).  TAO is an
+implementation of a CORBA2-compliant ORB that will support real-time
+extensions.  Please see http://www.cs.wustl.edu/~schmidt/TAO.html for
+more information on TAO.
 
-As mentioned, TAO will eventually be a CORBA2-compliant ORB.  But
-right now it's not there.  Specifically, TAO contains the following:
-* an [optimized] ORB Core based on ACE components
-* an implementation of the Basic Object Adapter (BOA)
-* various sample applications illustrating how to use the ORB in its
-  current state
+The current alpha release of TAO contains the following:
 
-The current release of TAO DOES NOT contain the following:
-* an IDL compiler
-* an real-time version of the new Portable Object Adapter (POA)
-* a real-time scheduling service
+* An optimized ORB Core based on ACE components;
 
-Our current shedule will provide these remaining features throughout
-the summer of 1997.
+* An implementation of a Basic Object Adapter (BOA);
+
+* Various sample applications illustrating how to use the ORB in its
+  current state.
+
+This release of TAO does not yet contain the following:
+
+* An IDL compiler
+
+* An real-time version of the new Portable Object Adapter (POA)
+
+* The real-time scheduling service
+
+We plan to release these features throughout the summer of 1997.
 
 Please feel free to experiment with, dissect, repair, use, etc., TAO.
-We accept bug reports, appreciate bug fixes/enhancements, and quickly
-integrate correct bug fixes!  Just remember that we do not expect TAO
-to provide all the features of a real ORB at the moment, and that very
-important parts of TAO will be changing substantially in the
-not-so-distant future.  Thus, any development performed in the interim
-will require a little more effort, and will likely have to be
-completely re-written to work with newer releases.
+We gratefully accept bug reports, appreciate bug fixes/enhancements,
+and will strive to integrate correct bug fixes quickly!  Just remember
+that TAO does not provide all the features of a commercial ORB at the
+moment.  Moreover, key components in TAO (e.g., the Object Adapter)
+will change substantially over the summer.  Thus, any development
+performed in the interim will require additional effort (e.g., writing
+stubs and skeletons by hand), and applications may need to be
+re-written to work with new features in the forthcoming releases.
+
+Douglas C. Schmidt
