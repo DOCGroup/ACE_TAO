@@ -564,7 +564,7 @@ typedef int key_t;
 
 # if defined (ACE_PSOS)
 
-#   include <ace/sys_conf.h> /* system configuration file */
+#   include /**/ <ace/sys_conf.h> /* system configuration file */
 #   include /**/ <psos.h>         /* pSOS+ system calls                */
 #   include /**/ <pna.h>          /* pNA+ TCP/IP Network Manager calls */
 
