@@ -197,12 +197,12 @@ TAO_IIOP_Connection_Handler::handle_close (ACE_HANDLE handle,
   //    in turn take appropiate action (such as sending exceptions to
   //    all waiting reply handlers).
   if (TAO_debug_level)
-    ACE_DEBUG  ((LM_DEBUG,
-                 ACE_TEXT ("TAO (%P|%t) ")
-                 ACE_TEXT ("IIOP_Connection_Handler::handle_close ")
-                 ACE_TEXT ("(%d, %d)\n"),
-                 handle,
-                 rm));
+  ACE_DEBUG  ((LM_DEBUG,
+               ACE_TEXT ("TAO (%P|%t) ")
+               ACE_TEXT ("IIOP_Connection_Handler::handle_close ")
+               ACE_TEXT ("(%d, %d)\n"),
+               handle,
+               rm));
 
   --this->pending_upcalls_;
   if (this->pending_upcalls_ <= 0)

@@ -407,10 +407,10 @@ TAO_GIOP_Message_Base::consolidate_node (TAO_Queued_Data *qd,
       // TAO_GIOP_MESSAGE_HEADER_LEN here.  So copy that much of data
       // from the <incoming> into the message block in <qd>
       qd->msg_block_->copy (incoming.rd_ptr (),
-                            len - TAO_GIOP_MESSAGE_HEADER_LEN);
+                            TAO_GIOP_MESSAGE_HEADER_LEN - len);
 
       // Move the rd_ptr () in the incoming message block..
-      incoming.rd_ptr (len - TAO_GIOP_MESSAGE_HEADER_LEN);
+      incoming.rd_ptr (TAO_GIOP_MESSAGE_HEADER_LEN - len);
 
       TAO_GIOP_Message_State state (this->orb_core_,
                                     this);
@@ -441,6 +441,10 @@ TAO_GIOP_Message_Base::consolidate_node (TAO_Queued_Data *qd,
           // Set the actual possible copy_len that is available...
           copy_len = incoming.length ();
         }
+      else
+        {
+          qd->missing_data_ = 0;
+        }
 
       // ..now we are set to copy the right amount of data to the
       // node..
@@ -448,7 +452,7 @@ TAO_GIOP_Message_Base::consolidate_node (TAO_Queued_Data *qd,
                             copy_len);
 
       // Set the <rd_ptr> of the <incoming>..
-      qd->msg_block_->rd_ptr (copy_len);
+      incoming.rd_ptr (copy_len);
 
       // Get the other details...
       qd->byte_order_ = state.byte_order_;
@@ -478,7 +482,9 @@ TAO_GIOP_Message_Base::consolidate_node (TAO_Queued_Data *qd,
 
       // Set the <rd_ptr> of the <incoming>..
       qd->msg_block_->rd_ptr (copy_len);
+
     }
+
 
   return 0;
 }

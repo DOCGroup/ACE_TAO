@@ -1,3 +1,47 @@
+Mon Jul 02 20:28:03 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	This checkin fixes many problems with multiple calls being read in
+	a single read.
+
+	* tao/GIOP_Message_Base.cpp: Changed the way we calculate the
+	  remaining length that needs to be copied if the last read had
+	  left with a very small piece of message ie. less than 12 bytes
+	  in the queue.
+
+	* tao/GIOP_Message_State.cpp: Fixed a check condition before we go
+	  ahead to parse the header.
+
+	* tao/Incoming_Message_Queue.h:
+	* tao/Incoming_Message_Queue.cpp:
+	* tao/Incoming_Message_Queue.inl: Added a method set_flags
+	  (). Further the condition for resuming the handler has been
+	  relaxed. Clients of this class can decide not to resume handlers
+	  at all. This comes in handy at times. Also added a operator=
+	  method.
+
+	* tao/Transport.cpp:
+	* tao/Transport.h: One of the bigger problems have been
+	  solved. The way we now multiple oneways is like this
+
+	  - The leader thread uses the transport and reads more messages
+	  - It splits up the messages in to pieces and queues them up.
+	  - It just takes one message and processes (the head of the
+	    queue). The changes above makes sure that only one of the
+	    message is processed.
+	  - Before processing if it finds one more message it sends a
+	    notify () to the reactor. An important point is that it does
+	    this without resuming the handler.
+	  - The notify call processes one more message. Before processing
+	    if it finds one more complete message it just sends another
+	    notify to the reactor.
+	  - The thread that reads the last complete message from the queue
+	    resumes the handler before processing the message.
+
+	  By the above process we dont starve any thread and at the
+	  same time ensures concurrency within the ORB.
+
+	* tao/LIST_OF_TODO: Updated..
+
 Sun Jul 01 18:35:03 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Asynch_Reply_Dispatcher.h:
@@ -16,7 +60,7 @@ Sun Jul 01 18:05:03 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* tao/Synch_Reply_Dispatcher.cpp:
 	* tao/Pluggable_Messaging_Utils.h:
 	* tao/Pluggable_Messaging_Utils.cpp: Suspect optimisations added
-	  to create datablcoks on stack.
+	  to create datablocks on stack.
 
 	* tao/LIST_OF_TODO: Updated list..
 
