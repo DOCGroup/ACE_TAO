@@ -54,15 +54,20 @@ class ACE_Map_Reverse_Iterator;
 template <class EXT_ID, class INT_ID, class LOCK>
 class ACE_Map_Manager
   // = TITLE
-  //     Define a map abstraction (useful for managing connections and
-  //     sessions).
-  //     
+  //     Define a map abstraction that associates <EXT_ID>s with
+  //     <INT_ID>s.  
+  //
   // = DESCRIPTION
-  //     This implementation of a map uses an array.  It should
-  //     be enhanced to use a hash table...  
-  //     This class uses an ACE_Allocator to allocate memory
-  //     The user can make this a persistant class by providing an 
-  //     ACE_Allocator with a persistable memory pool
+  //     The <EXT_ID> must support <operator==> (this constraint can
+  //     be alleviated via template specialization).  The
+  //     <ACE_Map_Manager> class uses an <ACE_Allocator> to allocate
+  //     memory.  The user can make this a persistant class by
+  //     providing an <ACE_Allocator> with a persistable memory pool.
+  //
+  //     This implementation of a map uses an array, which is searched
+  //     linearly.  For more efficient searching you should use the
+  //     <ACE_Hash_Map_Manager>.
+
 {
 friend class ACE_Map_Iterator<EXT_ID, INT_ID, LOCK>;
 friend class ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, LOCK>;
@@ -204,6 +209,10 @@ protected:
 
   LOCK lock_; 
   // Synchronization variable for the MT_SAFE <ACE_Map_Manager>.
+
+  int equal (const EXT_ID &id1, const EXT_ID &id2);
+  // Returns 1 if <id1> == <id2>, else 0.  This is defined as a
+  // separate method to facilitate template specialization.
 
 private:
 

@@ -1,3 +1,39 @@
+Thu Apr 24 13:56:28 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* tests/Conn_Test.cpp: Changed from operator != to operator == to
+ 	  be consistent with what is required by the ACE_Hash_Map_Manager.
+
+	* ace/Hash_Map_Manager: Factored out the equality comparison into
+ 	  an equal() method in order to facilitate template
+ 	  specialization.  In addition, rather than using the != operator
+ 	  we now default to using the operator== operator and negating the
+ 	  result.  This is consistent with the behavior of the
+ 	  ACE_Map_Manager.
+
+	* ace/Map_Manager: Factored out the equality comparison into an
+ 	  equal() method in order to facilitate template specialization.
+
+	* ace/OS.i: Added a new #ifdef called ACE_LACKS_PTHREAD_CANCEL.
+	  I'm not sure which platforms should set this, but it fixes
+	  a bug with ACE_OS::thr_cancel().  Thanks to Eric Dean
+	  Russell <edrusse@somnet.sandia.gov> for reporting this.
+
+	* tests/Process_Strategy_Test.cpp (handle_input): We were
+ 	  comparing EOF to a char, which gets complaints on platforms
+ 	  where char is unsigned by default.  I added a cast of EOF to
+ 	  char to fix this.  Thanks to Amos Shapira <amos@dsi.co.il> for
+ 	  reporting this.
+
+	* apps/JAWS/server/HTTP_Helpers.cpp (instance): Changed the
+	  return type from const char * to const char **.  Thanks to
+	  Amos Shapira <amos@dsi.co.il> for reporting this.
+
+	* ace/OS.i (getpwnam_r): Added a missing #else.  Thanks to
+	  Amos Shapira <amos@dsi.co.il> for reporting this.
+
+	* ace/Timer_Heap: Made many minor enhancements to ACE_Timer_Heap
+ 	  in an effort to figure out why we're getting memory leaks.
+
 Thu Apr 24 09:33:53 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* Makefile: modified the TIMESTAMP macro to update the third
@@ -19,26 +55,6 @@ Thu Apr 24 09:33:53 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* tests/Timer_Queue_Test.cpp (main): added delete of timer_ids array
 	  to avoid memory leak.
-
-Thu Apr 24 07:24:19 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
-
-	* tests/Process_Strategy_Test.cpp (handle_input): We were
- 	  comparing EOF to a char, which gets complaints on platforms
- 	  where char is unsigned by default.  I added a cast of EOF to
- 	  char to fix this.  Thanks to Amos Shapira <amos@dsi.co.il> for
- 	  reporting this.
-
-	* apps/JAWS/server/HTTP_Helpers.cpp (instance): Changed the
-	  return type from const char * to const char **.  Thanks to
-	  Amos Shapira <amos@dsi.co.il> for reporting this.
-
-	* ace/OS.i (getpwnam_r): Added a missing #else.  Thanks to
-	  Amos Shapira <amos@dsi.co.il> for reporting this.
-
-Thu Apr 24 01:44:06 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
-
-	* ace/Timer_Heap: Made many minor enhancements to ACE_Timer_Heap
- 	  in an effort to figure out why we're getting memory leaks.
 
 Wed Apr 23 22:56:57 1997  Sumedh Mungee <sumedh@cs.wustl.edu>
 
