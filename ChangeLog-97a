@@ -1,3 +1,77 @@
+Sun Apr 06 22:51:02 1997    <irfan@TWOSTEP>
+
+	* ace/Proactor: Complete rewrite of Proactor that pushes all the
+ 	  differences in asynchronous I/O to the edges of the framework -
+ 	  i.e., into the new Asynch_IO classes. This allows the Proactor
+ 	  to easily support new asynchronous operations.
+
+	  Currently, the new Proactor supports minimal functionality. In
+ 	  the future, we will complete this.
+
+	  The Proactor is used in conjunction with the new Asynch_IO
+ 	  classes.  There is a different class for each operation. Please
+ 	  see Asynch_IO.h for details.
+
+	  There is also a new ACE_Asynch_Acceptor that uses AcceptEx.
+
+	  Example is in:
+ 	  ACE_wrappers/examples/Reactor/Proactor/test_proactor.cpp.  
+
+	  This example illustrates how the ACE_Proactor can be used to
+ 	  implement an application that does various asynchronous
+ 	  operations.
+
+	* apps/JAWS/server: Complete rewrite of JAWS. The new JAWS has
+ 	  support for Asynch-Thread-Pool (on WIN32), Synch-Thread-Pool,
+ 	  and Thread-per-Request. Different models can be configured using
+ 	  the svc.conf file.  The server now supports both GET and PUT
+ 	  commands.
+	  
+	  The HTTP_Handler class is a state based implementation of the
+ 	  HTTP protocol. Therefore, it can be used synchronously and
+ 	  asynchronously. It uses an abstract IO class to move between
+ 	  different HTTP protocol states. It is up to the IO class to
+ 	  decide on synchronous or asynchronous I/O.
+
+	* apps/JAWS/client: This is an example of the implementation of
+ 	  BlobStreaming in ACE. This version of BlobStreaming uses HTTP as
+ 	  a transport protocol. 
+
+	  Blobby :-) is a simple application written using the ACE_Blob
+ 	  class, which is capable of doing both file uploads and
+ 	  downloads.  If a file is downloaded, the downloaded data is sent
+ 	  to standard output, so that it can be piped as necessary.
+
+	* ace/Mem_Map.cpp (map_it): This method now uses ACE_OS::pwrite
+ 	  (if ACE_HAD_P_READ_WRITE is defined) instead of
+ 	  ACE_OS::lseek/ACE_OS::write to write the end-of-file byte. The
+ 	  old scheme does not work if the file is in OVERLAPPED mode.
+
+	* ace/OS: Added pread and pwrite to the OS class (if
+ 	  ACE_HAD_P_READ_WRITE is defined). On Win32, these functions use
+ 	  the OVERLAPPED structure to specify the offset. This
+ 	  implementation will block until the write/read completes (even
+ 	  if the file is in OVERLAPPED mode).
+
+	* ace/config: Added ACE_HAS_P_READ_WRITE to the following
+	  platforms that support pread() and pwrite() calls:
+	  config-sunos4-g++.h 
+	  config-sunos4-lucid3.2.h
+	  config-sunos4-sun3.x.h 
+	  config-sunos4-sun4.1.4.h
+	  config-sunos4-sun4.x-orbix.h 
+	  config-sunos4-sun4.x.h
+	  config-sunos5.4-centerline-2.x.h 
+	  config-sunos5.4-g++.h
+	  config-sunos5.4-sunc++-4.x-orbix.h
+	  config-sunos5.4-sunc++-4.x.h 
+	  config-sunos5.5-g++.h
+	  config-sunos5.5-sunc++-4.1.h	
+	  config-sunos5.5-sunc++-4.x-orbix.h
+	  config-sunos5.5-sunc++-4.x.h 
+	  config-sunx86-sunc++-4.x.h
+	  config-win32-common.h
+
 Sun Apr  6 14:16:18 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* tests/Timer_Queue_Test.cpp: Added tests to make sure that the
