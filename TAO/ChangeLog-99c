@@ -10,6 +10,10 @@ Thu Jan 21 10:57:25 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	  Added a new test to verify that the fix above worked, thanks to
 	  Dave for this test also.
 
+ 	* tests/CDR/CDR.dsw: 
+	* tests/CDR/octet_sequence.dsp: 
+	  Added a new project for the octet_sequence test.
+
 	* EC_ConsumerAdmin.cpp: 
 	* EC_ConsumerAdmin.h: 
 	* EC_ConsumerAdmin.i: 
