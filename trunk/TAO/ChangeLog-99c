@@ -1,3 +1,13 @@
+Fri Mar 19 19:15:56 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Stub.h:
+	* tao/IIOP_ORB.h:
+	* Benchmark/Marshal_Test/TAO/tao_marshal_impl.cpp:
+	* Benchmark/Marshal_Test/TAO/marshalS.cpp:
+	* orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
+	* utils/catior/catior.cpp:
+	  Removed last references to IIOP_Object.
+
 Fri Mar 19 17:55:47 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/CurrentC.h:

@@ -20,20 +20,20 @@ static const TAO_operation_db_entry Marshal_operations[] = {
 };
 
 TAO_Dynamic_Hash_OpTable tao_Marshal_optable(Marshal_operations, 10,
-					     // 9 + 1 operations on our 
-					     // interface 
+					     // 9 + 1 operations on our
+					     // interface
 					     20);
 // constructor
 _skel_Marshal::_skel_Marshal (const char *obj_name)
 {
   const CORBA_String repoID = "IDL:Marshal:1.0"; // repository ID
-  IIOP_Object *data;  // IIOP object 
+  STUB_Object *data;  // IIOP object
   CORBA_BOA_ptr oa = TAO_OA_PARAMS::instance()->oa(); // underlying BOA
   this->optable_ = &tao_Marshal_optable;     // operation database
   CORBA_Long i;
 
   // setup an IIOP object
-  data = new IIOP_Object (CORBA_string_dup (repoID));
+  data = new STUB_Object (CORBA_string_dup (repoID));
   data->profile.iiop_version.major = IIOP::MY_MAJOR;
   data->profile.iiop_version.minor = IIOP::MY_MINOR;
   data->profile.host = ACE_OS::strdup(oa->get_addr().get_host_name());
@@ -49,8 +49,8 @@ _skel_Marshal::_skel_Marshal (const char *obj_name)
 }
 
 // skeletons
-void _skel_Marshal::_Marshal_test_short_skel(CORBA_ServerRequest &req, 
-					     CORBA_Object_ptr obj, 
+void _skel_Marshal::_Marshal_test_short_skel(CORBA_ServerRequest &req,
+					     CORBA_Object_ptr obj,
 					     CORBA_Environment &env)
 {
 #if 0
@@ -85,50 +85,50 @@ void _skel_Marshal::_Marshal_test_short_skel(CORBA_ServerRequest &req,
   // byte_order, consume_buf = 0, instance of our marshal factory
 }
 
-void _skel_Marshal::_Marshal_test_long_skel(CORBA_ServerRequest &req, 
-					    CORBA_Object_ptr obj, 
+void _skel_Marshal::_Marshal_test_long_skel(CORBA_ServerRequest &req,
+					    CORBA_Object_ptr obj,
 					    CORBA_Environment &env)
 {
 }
 
-void _skel_Marshal::_Marshal_test_octet_skel(CORBA_ServerRequest &req, 
-					     CORBA_Object_ptr obj, 
+void _skel_Marshal::_Marshal_test_octet_skel(CORBA_ServerRequest &req,
+					     CORBA_Object_ptr obj,
 					     CORBA_Environment &env)
 {
 }
 
-void _skel_Marshal::_Marshal_test_char_skel(CORBA_ServerRequest &req, 
-					    CORBA_Object_ptr obj, 
+void _skel_Marshal::_Marshal_test_char_skel(CORBA_ServerRequest &req,
+					    CORBA_Object_ptr obj,
 					    CORBA_Environment &env)
 {
 }
 
-void _skel_Marshal::_Marshal_test_double_skel(CORBA_ServerRequest &req, 
-					      CORBA_Object_ptr obj, 
+void _skel_Marshal::_Marshal_test_double_skel(CORBA_ServerRequest &req,
+					      CORBA_Object_ptr obj,
 					      CORBA_Environment &env)
 {
 }
 
-void _skel_Marshal::_Marshal_test_struct_skel(CORBA_ServerRequest &req, 
-					      CORBA_Object_ptr obj, 
+void _skel_Marshal::_Marshal_test_struct_skel(CORBA_ServerRequest &req,
+					      CORBA_Object_ptr obj,
 					      CORBA_Environment &env)
 {
 }
 
-void _skel_Marshal::_Marshal_test_union_skel(CORBA_ServerRequest &req, 
-					     CORBA_Object_ptr obj, 
+void _skel_Marshal::_Marshal_test_union_skel(CORBA_ServerRequest &req,
+					     CORBA_Object_ptr obj,
 					     CORBA_Environment &env)
 {
 }
 
-void _skel_Marshal::_Marshal_test_any_skel(CORBA_ServerRequest &req, 
-					   CORBA_Object_ptr obj, 
+void _skel_Marshal::_Marshal_test_any_skel(CORBA_ServerRequest &req,
+					   CORBA_Object_ptr obj,
 					   CORBA_Environment &env)
 {
 }
 
-void _skel_Marshal::_Marshal_test_sequence_skel(CORBA_ServerRequest &req, 
-						CORBA_Object_ptr obj, 
+void _skel_Marshal::_Marshal_test_sequence_skel(CORBA_ServerRequest &req,
+						CORBA_Object_ptr obj,
 						CORBA_Environment &env)
 {
 }
@@ -169,4 +169,3 @@ void _skel_Marshal::_Marshal_is_a_skel (
   req.result (any, env);
   dexc (env, "_is_a, result");
 }
-

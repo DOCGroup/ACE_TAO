@@ -38,8 +38,6 @@
 class TAO_GIOP_Invocation;
 class TAO_ORB_Core;
 
-typedef STUB_Object IIOP_Object;
-
 // Descriptions of parameters.
 
 enum TAO_Param_Type
