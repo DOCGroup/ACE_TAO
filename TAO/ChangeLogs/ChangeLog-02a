@@ -1,7 +1,7 @@
 Wed Apr 19 20:16:42 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/Smart_Proxies/On_Demand/Makefile:
-          This directory shoul not be built unless smart proxies are
+          This directory should not be built unless smart proxies are
           enabled.
 
         * orbsvcs/tests/AVStreams/Full_Profile/Makefile:
