@@ -1,3 +1,9 @@
+Sun Dec  3 00:21:09 2000  Christopher Kohlhoff  <chris@kohlhoff.com>
+
+        * tao/Makefile.bor:
+
+          Removed reference to Smart_Proxies.obj.
+
 Sat Dec  2 22:55:38 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 	* tao/ORB_Core.cpp (set_default_policies):
