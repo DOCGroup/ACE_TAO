@@ -717,7 +717,8 @@ ACE::send_n (ACE_HANDLE handle, const void *buf, size_t len)
 
   for (bytes_written = 0; bytes_written < len; bytes_written += n)
     {
-      n = ACE::send (handle, (const char *) buf + bytes_written,
+      n = ACE::send (handle,
+                     (const char *) buf + bytes_written,
                      len - bytes_written);
       if (n == -1)
         {
