@@ -1,4 +1,4 @@
-Mon Jun 16 19:05:13 1997  Steve Huston <shuston@riverace.com>
+Mon Jun 16 22:25:18 1997  Steve Huston <shuston@riverace.com>
 
 	* ace/ACE.cpp: Fixed conditional compiles to compile the 
 	  interface counting code for HP - it reports 0 interfaces,
