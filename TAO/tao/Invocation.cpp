@@ -368,7 +368,7 @@ TAO_GIOP_Invocation::location_forward (TAO_InputCDR &inp_stream,
                          &(object_ptr),
                          0,
                          ACE_TRY_ENV);
-      ACE_CHECK_RETURN (TAO_GIOP_SYSTEM_EXCEPTION);
+      ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA_SystemException, ex)
     {
