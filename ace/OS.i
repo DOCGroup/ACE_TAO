@@ -912,6 +912,23 @@ ACE_OS::unlink (const char *path)
 #endif /* VXWORKS */
 }
 
+
+ACE_INLINE char *
+ACE_OS::tempnam (const char *dir, const char *pfx)
+{
+  // ACE_TRACE ("ACE_OS::tempnam");
+#if defined (VXWORKS) || defined (ACE_LACKS_TEMPNAM)
+  ACE_NOTSUP_RETURN (0);
+#else
+#if defined (WIN32)
+  ACE_OSCALL_RETURN (::_tempnam (dir, pfx), char *, 0);
+#else
+  ACE_OSCALL_RETURN (::tempnam (dir, pfx), char *, 0);
+#endif /* WIN32 */
+#endif /* VXWORKS */
+}
+
+
 ACE_INLINE LPTSTR
 ACE_OS::cuserid (LPTSTR user, size_t maxlen)
 {
@@ -5640,6 +5657,18 @@ ACE_OS::open (const char *filename,
   ACE_OSCALL_RETURN (::open (filename, mode, perms), ACE_HANDLE, -1);
 #endif /* ACE_WIN32 */
 }
+
+
+ACE_INLINE double
+ACE_OS::difftime (time_t t1, time_t t0)
+{
+#if defined (ACE_DIFFTIME)
+  return ACE_DIFFTIME(t1, t0);
+#else
+  return ::difftime (t1, t0);
+#endif /* ACE_DIFFTIME */
+}
+
 
 ACE_INLINE char *
 ACE_OS::ctime (const time_t *t)
