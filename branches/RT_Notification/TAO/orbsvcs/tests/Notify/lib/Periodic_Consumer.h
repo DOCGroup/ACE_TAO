@@ -91,6 +91,9 @@ protected:
 
   /// Client
   TAO_NS_Task_Callback* client_;
+
+  /// Flag to indicate if we want to check the expected priority.
+  int check_priority_;
 };
 
 #include "ace/post.h"

@@ -9,11 +9,13 @@
 #include "StructuredEvent.h"
 #include "Task_Stats.h"
 #include "Task_Callback.h"
+#include "LookupManager.h"
+#include "Priority_Mapping.h"
 
 ACE_RCSID(RT_Notify, TAO_NS_Periodic_Consumer, "$id$")
 
 TAO_NS_Periodic_Consumer::TAO_NS_Periodic_Consumer (void)
-  :count_ (0), max_count_ (-1), client_ (0)
+  :count_ (0), max_count_ (-1), client_ (0), check_priority_ (0)
 {
 }
 
@@ -50,10 +52,16 @@ TAO_NS_Periodic_Consumer::init_state (ACE_Arg_Shifter& arg_shifter)
               this->client_->done (this);
           }
         }
-      else
-        {
-          break;
-        }
+       else if (arg_shifter.cur_arg_strncasecmp ("-Check_Priority") == 0)
+         {
+          this->check_priority_ = 1;
+
+          arg_shifter.consume_arg ();
+         }
+       else
+         {
+           break;
+         }
     } /* while */
 
   return 0;
@@ -142,11 +150,70 @@ TAO_NS_Periodic_Consumer::push_structured_event (const CosNotification::Structur
       else if (this->max_count_ == -1 && ACE_OS::strcmp (prop_seq[i].name.in (), "MaxCount") == 0)
         {
           prop_seq[i].value >>= this->max_count_;
+
+          if (TAO_debug_level > 0)
+            ACE_DEBUG ((LM_DEBUG, "(%P, %t) Setting Maxcount = %d\n", this->max_count_));
         }
     }
 
     this->stats_.init (this->max_count_);
   }
+
+  if (this->check_priority_)
+    {
+      // Check if the event carries a Priority.
+      const CosNotification::PropertySeq& prop_seq = notification.header.variable_header;
+
+      int event_has_priority_set = 0;
+      CORBA::Short event_priority = 0;
+
+      for (CORBA::ULong i = 0; i < prop_seq.length (); ++i)
+        {
+          if (ACE_OS::strcmp (prop_seq[i].name.in (), CosNotification::Priority) == 0)
+            {
+              prop_seq[i].value >>= event_priority;
+
+              event_has_priority_set = 1;
+              break;
+            }
+        }
+
+      if (event_has_priority_set == 1)
+        {
+          // Confirm that the current thread is at the priority set in the event
+          ACE_hthread_t current;
+          ACE_Thread::self (current);
+
+          int priority;
+          if (ACE_Thread::getprio (current, priority) == -1)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("TAO (%P|%t) - ")
+                          ACE_TEXT (" ACE_Thread::get_prio\n")));
+
+              return ;
+            }
+
+          CORBA::Short native_priority = CORBA::Short (priority);
+
+          TAO_NS_Priority_Mapping* priority_mapping;
+          LOOKUP_MANAGER->resolve (priority_mapping);
+
+          CORBA::Short corba_priority;
+
+          priority_mapping->to_CORBA (native_priority, corba_priority);
+
+          if (TAO_debug_level > 0)
+            ACE_DEBUG ((LM_DEBUG,
+                        "Periodic Consumer expected priority = %d, received priority = %d\n",
+                        event_priority, corba_priority));
+
+          if (corba_priority != event_priority)
+            ACE_DEBUG ((LM_DEBUG,
+                        "Error: Periodic Consumer expected priority = %d, received priority = %d\n",
+                        event_priority, corba_priority));
+        }
+    }
 
   TimeBase::TimeT send_time, now;
   ACE_hrtime_t send_time_hrtime;
