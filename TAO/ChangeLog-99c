@@ -4,6 +4,7 @@ Sat May 01 03:03:47 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 	* orbsvcs/orbsvcs/CosEvent/ProxyPushConsumer_i.h:
 	* orbsvcs/orbsvcs/CosEvent/ProxyPushSupplier_i.h:
 	* orbsvcs/orbsvcs/CosEvent/SupplierAdmin_i.h:
+	* orbsvcs/orbsvcs/CosEvent/Event_Channel_i.h:
 	* orbsvcs/orbsvcs/Event/Event_Channel.h: Disable MSVC's warning
 	  4250.
 
