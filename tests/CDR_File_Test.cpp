@@ -49,7 +49,7 @@ public:
   CDR_Test (ACE_CDR::Char o,
             ACE_CDR::Short s,
             ACE_CDR::Long w,
-            ACE_CDR::LongLong lw,
+            ACE_CDR::ULongLong lw,
             ACE_CDR::Float f,
             ACE_CDR::Double d);
   // Constructor.
@@ -61,7 +61,7 @@ private:
   ACE_CDR::Char char_;
   ACE_CDR::Short word2_;
   ACE_CDR::Long word4_;
-  ACE_CDR::LongLong word8_;
+  ACE_CDR::ULongLong word8_;
   ACE_CDR::Float fpoint_;
   ACE_CDR::Double dprec_;
 };
@@ -74,13 +74,13 @@ operator << (ostream &os,
      << "Short:             " << t.word2_ << endl
      << "Long:              " << t.word4_ << endl
 #if !defined(_MSC_VER)
-     << "LongLong:          " << t.word8_ << endl
+     << "ULongLong:          " << t.word8_ << endl
 #else
-     << "LongLong 1st half: "
+     << "ULongLong 1st half: "
         << hex
         << ACE_reinterpret_cast(ACE_UINT32, (t.word8_ >> 32))
         << dec << endl
-     << "LongLong 2nd half: "
+     << "ULongLong 2nd half: "
         << hex
         << ACE_reinterpret_cast(ACE_UINT32, (t.word8_ & 0xffffffff))
         << dec << endl
@@ -103,7 +103,7 @@ CDR_Test::CDR_Test (void)
 CDR_Test::CDR_Test (ACE_CDR::Char o,
                     ACE_CDR::Short s,
                     ACE_CDR::Long w,
-                    ACE_CDR::LongLong lw,
+                    ACE_CDR::ULongLong lw,
                     ACE_CDR::Float f,
                     ACE_CDR::Double d)
   : char_ (o),
