@@ -1,3 +1,11 @@
+Tue Oct 28 12:39:01 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Any.cpp (operator>>): 
+
+	  Inspite of numerous compilations we seemed to have missed a
+	  warning. The fix is to use .in () on a Typecode_var while
+	  passing the pointer to another object.
+
 Tue Oct 28 12:02:47 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	This checkin is the revamping of the invocation code path
