@@ -51,10 +51,11 @@ FactoryCosEventChannel_i::init (PortableServer::POA_ptr poa,
   // @@ Pradeep: Please make sure that the POA policies are similar to
   //    the RootPOA, this is the POA used by the RTEC to activate its
   //    internal objects.
+  TAO_EC_Event_Channel_Attributes attr (this->poa_.in (),
+                                        this->poa_.in ());
   TAO_EC_Event_Channel* _ec_servant;
   ACE_NEW_RETURN (_ec_servant,
-                  TAO_EC_Event_Channel (this->poa_.in (),
-                                        this->poa_.in ()),
+                  TAO_EC_Event_Channel (attr),
                   -1);
   auto_ptr<TAO_EC_Event_Channel> auto_ec_servant_ (_ec_servant);
 

@@ -240,9 +240,10 @@ ECT_Throughput::run (int argc, char* argv[])
         }
       else
         {
+          TAO_EC_Event_Channel_Attributes attr (root_poa.in (),
+                                                root_poa.in ());
           TAO_EC_Event_Channel *ec =
-            new TAO_EC_Event_Channel (root_poa.in (),
-                                      root_poa.in ());
+            new TAO_EC_Event_Channel (attr);
           ec->consumer_admin ()->busy_hwm (this->ec_concurrency_hwm_);
 
           ec->activate (TAO_TRY_ENV);

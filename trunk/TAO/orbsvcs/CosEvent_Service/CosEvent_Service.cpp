@@ -179,7 +179,7 @@ CosEvent_Service::get_Rtec_viaNamingService (void)
 
       CORBA::Object_var rtEC_obj =
        this->naming_client_->resolve (rt_ref_name,
-				      ACE_TRY_ENV);
+                                      ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       // The CORBA::Object_var object is downcast to
@@ -271,10 +271,11 @@ CosEvent_Service::create_local_RtecService (void)
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
+      TAO_EC_Event_Channel_Attributes attr (this->root_poa_.in (),
+                                            this->root_poa_.in ());
       TAO_EC_Event_Channel* ec;
       ACE_NEW_RETURN (ec,
-                      TAO_EC_Event_Channel (this->root_poa_.in (),
-                                            this->root_poa_.in ()),
+                      TAO_EC_Event_Channel (attr),
                       1);
       this->ec_impl_ = ec;
       ec->activate (ACE_TRY_ENV);
@@ -505,7 +506,7 @@ CosEvent_Service::register_CosEC (void)
       CosNaming::Name ec_obj_name (1);
       ec_obj_name.length (1);
       ec_obj_name[0].id =
-	CORBA::string_dup (this->service_name);
+        CORBA::string_dup (this->service_name);
 
       // Now, attach the object name to the context.
       this->naming_client_->rebind (ec_obj_name,

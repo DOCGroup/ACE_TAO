@@ -1,5 +1,16 @@
 // $Id$
 
+ACE_INLINE
+TAO_EC_Event_Channel_Attributes::
+TAO_EC_Event_Channel_Attributes (PortableServer::POA_ptr s_poa,
+                                 PortableServer::POA_ptr c_poa)
+  :  consumer_reconnect (0),
+     supplier_reconnect (0),
+     supplier_poa (s_poa),
+     consumer_poa (c_poa)
+{
+}
+
 ACE_INLINE TAO_EC_Dispatching*
 TAO_EC_Event_Channel::dispatching (void) const
 {
@@ -130,4 +141,16 @@ ACE_INLINE void
 TAO_EC_Event_Channel::destroy_supplier_admin_lock (ACE_Lock* x)
 {
   this->factory_->destroy_supplier_admin_lock (x);
+}
+
+ACE_INLINE int
+TAO_EC_Event_Channel::consumer_reconnect (void) const
+{
+  return this->consumer_reconnect_;
+}
+
+ACE_INLINE int
+TAO_EC_Event_Channel::supplier_reconnect (void) const
+{
+  return this->consumer_reconnect_;
 }

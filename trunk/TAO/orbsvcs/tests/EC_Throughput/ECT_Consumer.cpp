@@ -174,20 +174,6 @@ Test_Consumer::push (const RtecEventComm::EventSet& events,
           const ACE_hrtime_t now = ACE_OS::gethrtime ();
           const ACE_hrtime_t elapsed = now - creation;
           this->latency_.sample (elapsed);
-
-#if 0
-          ACE_hrtime_t ec_recv;
-          ORBSVCS_Time::TimeT_to_hrtime (ec_recv,
-                                         e.header.ec_recv_time);
-
-          ACE_hrtime_t ec_send;
-          ORBSVCS_Time::TimeT_to_hrtime (ec_send,
-                                         e.header.ec_send_time);
-
-          this->driver_->supplier_to_ec (ec_recv - creation);
-          this->driver_->inside_ec (ec_send - ec_recv);
-          this->driver_->ec_to_consumer (now - ec_send);
-#endif /* 0 */
         }
     }
 }

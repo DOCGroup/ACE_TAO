@@ -96,7 +96,50 @@ TAO_EC_ProxyPushSupplier::connect_push_consumer (
     ACE_CHECK;
 
     if (this->is_connected_i ())
-      ACE_THROW (RtecEventChannelAdmin::AlreadyConnected ());
+      {
+        if (this->event_channel_->consumer_reconnect () == 0)
+          ACE_THROW (RtecEventChannelAdmin::AlreadyConnected ());
+
+        // Re-connections are allowed, go ahead and disconnect the
+        // consumer...
+        this->consumer_ =
+          RtecEventComm::PushConsumer::_nil ();
+
+        // @@ Why don't we have a destroy() method in the
+        // filter_builder?
+        delete this->child_;
+        this->child_ = 0;
+
+        // @@ Are there any race conditions here:
+        //   + The lock is released, but the object is marked as
+        //     disconnected already, so:
+        //     - No events will be pushed
+        //     - Any disconnects will just return
+        //   + But another thread could invoke connect_push_consumer()
+        //     again, notice that by the time the lock is acquired
+        //     again the connected() call may still be running.
+        //     It seems like we need delayed operations again, or
+        //     something similar to what the POA does in this
+        //     scenario.
+        //     Meanwhile we can tell the users: "if it hurts don't do
+        //     it".
+        //
+        TAO_EC_Unlock reverse_lock (*this->lock_);
+
+        {
+          ACE_GUARD_THROW_EX (
+              TAO_EC_Unlock, ace_mon, reverse_lock,
+              RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
+          ACE_CHECK;
+
+          this->event_channel_->disconnected (this, ACE_TRY_ENV);
+          ACE_CHECK;
+        }
+
+        // What if a second thread connected us after this?
+        if (this->is_connected_i ())
+          return;
+      }
 
     this->consumer_ =
       RtecEventComm::PushConsumer::_duplicate (push_consumer);

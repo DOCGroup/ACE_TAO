@@ -130,10 +130,11 @@ Event_Service::run (int argc, char* argv[])
         {
         case ES_NEW:
           {
+            TAO_EC_Event_Channel_Attributes attr (root_poa.in (),
+                                                  root_poa.in ());
             TAO_EC_Event_Channel* ec;
             ACE_NEW_RETURN (ec,
-                            TAO_EC_Event_Channel (root_poa.in (),
-                                                  root_poa.in ()),
+                            TAO_EC_Event_Channel (attr),
                             1);
             this->ec_impl_ = ec;
             ec->activate (ACE_TRY_ENV);
@@ -182,7 +183,7 @@ Event_Service::run (int argc, char* argv[])
         this->orb_->object_to_string (ec.in (), ACE_TRY_ENV);
 
       ACE_DEBUG ((LM_DEBUG,
-		  "The EC IOR is <%s>\n", str.in ()));
+                  "The EC IOR is <%s>\n", str.in ()));
 
       CosNaming::Name channel_name (1);
       channel_name.length (1);
@@ -201,10 +202,10 @@ Event_Service::run (int argc, char* argv[])
       ACE_TRY_CHECK;
 
       if (!CORBA::is_nil (scheduler.in ()))
-	{
-	  naming_context->unbind (schedule_name, ACE_TRY_ENV);
-	  ACE_TRY_CHECK;
-	}
+        {
+          naming_context->unbind (schedule_name, ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+        }
 
     }
   ACE_CATCHANY
@@ -234,10 +235,10 @@ Event_Service::parse_args (int argc, char *argv [])
           this->service_name_ = get_opt.optarg;
           break;
 
-	case 's':
-	  // It could be just a flag (i.e. no "global" or "local"
-	  // argument, but this is consistent with the EC_Multiple
-	  // test and also allows for a runtime scheduling service.
+        case 's':
+          // It could be just a flag (i.e. no "global" or "local"
+          // argument, but this is consistent with the EC_Multiple
+          // test and also allows for a runtime scheduling service.
 
           if (ACE_OS::strcasecmp (get_opt.optarg, "global") == 0)
             {

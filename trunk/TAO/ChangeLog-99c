@@ -1,3 +1,32 @@
+Mon May 10 17:21:52 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Event/EC_Event_Channel.h:
+	* orbsvcs/orbsvcs/Event/EC_Event_Channel.i:
+	* orbsvcs/orbsvcs/Event/EC_Event_Channel.cpp:
+	  New class TAO_EC_Event_Channel_Attributes used to initialize the
+	  event channel. This will close the interface for the EC
+	  constructor, yet will allow us to add more (optional or
+	  mandatory) arguments.
+
+	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
+	  The event channel can be configured to support multiple
+	  connect() calls to the same ProxyPushSupplier.
+
+	* orbsvcs/Event_Service/Event_Service.cpp:
+	* orbsvcs/CosEvent_Service/CosEvent_Service.cpp:
+	* orbsvcs/examples/CosEC/Factory/FactoryCosEventChannel_i.cpp:
+	* orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp:
+	* orbsvcs/tests/Event_Latency/Event_Latency.cpp:
+	* orbsvcs/tests/EC_Mcast/EC_Mcast.cpp:
+	  Use the TAO_EC_Event_Channel_Attributes class to initiliaze
+	  TAO_EC_Event_Channel
+
+	* orbsvcs/orbsvcs/Event/EC_Trivial_Supplier_Filter.cpp:
+	  Minor cosmetic fixes.
+
+	* orbsvcs/tests/EC_Throughput/ECT_Consumer.cpp:
+	  Removed dead code.
+
 Mon May 10 16:46:41 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* TAO-INSTALL.html (href): Added a link to Barry Hoggard's CORBA
