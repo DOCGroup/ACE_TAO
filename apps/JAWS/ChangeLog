@@ -1,4 +1,7 @@
-Mon Mar 15 23:51:52 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+Tue Mar 16 01:08:05 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* server/Makefile:
+	* server/jaws.dsp: Updated makefiles to build shared library.
 
 	* server/svc.conf: Added example settings for using HTTP_Server as
 	  a dynamic service.
