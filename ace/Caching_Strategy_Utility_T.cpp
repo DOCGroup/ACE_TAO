@@ -161,4 +161,30 @@ ACE_Handler_Caching_Strategy_Utility<KEY, VALUE, CONTAINER, ATTRIBUTES>::minimum
 
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+template <class KEY, class VALUE, class CONTAINER, class ATTRIBUTES> int
+ACE_Null_Caching_Strategy_Utility<KEY, VALUE, CONTAINER, ATTRIBUTES>::clear_cache (CONTAINER &container,
+                                                                                   ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_s,
+                                                                                   const unsigned int purge_percent,
+                                                                                   unsigned int &entries)
+{
+  ACE_UNUSED_ARG (container);
+  ACE_UNUSED_ARG (cleanup_s);
+  ACE_UNUSED_ARG (purge_percent);
+  ACE_UNUSED_ARG (entries);
+                
+  return 0;
+}
+
+template <class KEY, class VALUE, class CONTAINER, class ATTRIBUTES> void
+ACE_Null_Caching_Strategy_Utility<KEY, VALUE, CONTAINER, ATTRIBUTES>::minimum (CONTAINER &container,
+                                                                               KEY *&key,
+                                                                               VALUE *&value)
+{
+ ACE_UNUSED_ARG (container);
+ ACE_UNUSED_ARG (key);
+ ACE_UNUSED_ARG (value);
+}
+
 #endif /* CACHING_STRATEGY_UTILITY_T_C */
