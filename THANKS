@@ -877,6 +877,7 @@ Daniel Lang <dl@leo.org>
 Chris Leishman <chris_leishman@freeonline.com.au>
 Klemen Zagar <klemen.zagar@irj.si>
 Rick Ohnemus <rjohnemus@systemware-inc.com>
+Adamo, Vince <adamo@vignette.com>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson.  Paul devised the recursive Makefile scheme that

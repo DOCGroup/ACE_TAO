@@ -1,3 +1,10 @@
+Wed Jan 26 21:03:43 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/High_Res_Timer.cpp: Thanks to Adamo, Vince <adamo@vignette.com>
+          who noticed that global_scale_factor_ wasn't being set on ACE_WIN32
+          when QueryPerformanceFrequency () worked.  Now the code sets it
+          to one when that happens.
+
 Wed Jan 26 17:04:24 2000  Steve Huston  <shuston@riverace.com>
 
         * ace/Proactor.h: Changed some comments to work better with the
@@ -5,148 +12,148 @@ Wed Jan 26 17:04:24 2000  Steve Huston  <shuston@riverace.com>
 
 Tue Jan 25 16:23:52 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* examples/Shared_Malloc/test_position_independent_malloc.cpp: Updated
-	  this example to use the ACE_Malloc_T<> template with the
- 	  ACE_PI_Control_Block so that we get true "position-independent"
- 	  malloc behavior.  Thanks to Rick Ohnemus
- 	  <rjohnemus@systemware-inc.com> for reporting this.
+        * examples/Shared_Malloc/test_position_independent_malloc.cpp: Updated
+          this example to use the ACE_Malloc_T<> template with the
+          ACE_PI_Control_Block so that we get true "position-independent"
+          malloc behavior.  Thanks to Rick Ohnemus
+          <rjohnemus@systemware-inc.com> for reporting this.
 
 Tue Jan 25 14:05:42 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/Connector.cpp (connect_i): In addition to checking <sh_copy>
-	  for a zero value, <*sh_copy> should also be checked for a zero
-	  value.
+        * ace/Connector.cpp (connect_i): In addition to checking <sh_copy>
+          for a zero value, <*sh_copy> should also be checked for a zero
+          value.
 
 Mon Jan 24 12:09:14 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/Connector.cpp (connect_i):
-	* ace/Strategies_T.cpp (ACE_Cached_Connect_Strategy::connect_svc_handler):
+        * ace/Connector.cpp (connect_i):
+        * ace/Strategies_T.cpp (ACE_Cached_Connect_Strategy::connect_svc_handler):
 
-	  Cannot use <sh> after the connector lock has been released since
-	  other threads now have access to <sh> and can reset it.  We must
-	  use <sh_copy> instead (even when activating the newly connected
-	  svc_handler).  This should help with TAO/tests/MT_Client
-	  crashes.
+          Cannot use <sh> after the connector lock has been released since
+          other threads now have access to <sh> and can reset it.  We must
+          use <sh_copy> instead (even when activating the newly connected
+          svc_handler).  This should help with TAO/tests/MT_Client
+          crashes.
 
 Sun Jan 23 14:08:12 2000  Ossama Othman  <ossama@uci.edu>
 
-	* ace/OS.h (setgid):
+        * ace/OS.h (setgid):
 
-	  Added prototype for ACE_OS::setgid() method.
+          Added prototype for ACE_OS::setgid() method.
 
-	* ace/OS.i (setgid):
+        * ace/OS.i (setgid):
 
-	  Added wrapper for setgid() system call.
+          Added wrapper for setgid() system call.
 
-	  (getgid):
+          (getgid):
 
-	  Removed duplicate getgid() wrapper, and fixed it so that it
-	  returns with ENOTSUP on Win32 platforms, just like the getuid()
-	  wrapper.
+          Removed duplicate getgid() wrapper, and fixed it so that it
+          returns with ENOTSUP on Win32 platforms, just like the getuid()
+          wrapper.
 
 Sat Jan 22 21:10:49 2000  Ossama Othman  <ossama@uci.edu>
 
-	* configure.in:
+        * configure.in:
 
-	  Moved check for old GNU C++ to m4/compilers.m4.
+          Moved check for old GNU C++ to m4/compilers.m4.
 
-	* m4/acinclude.m4 (ACE_CONVERT_WARNINGS_TO_ERRORS):
+        * m4/acinclude.m4 (ACE_CONVERT_WARNINGS_TO_ERRORS):
 
-	  This macro depends on the compiler settings performed by the
-	  ACE_SET_COMPILER_FLAGS macro, so added an
-	  AC_REQUIRE([ACE_SET_COMPILER_FLAGS]).
+          This macro depends on the compiler settings performed by the
+          ACE_SET_COMPILER_FLAGS macro, so added an
+          AC_REQUIRE([ACE_SET_COMPILER_FLAGS]).
 
-	* m4/compiler.m4 (ACE_SET_COMPILER_FLAGS):
+        * m4/compiler.m4 (ACE_SET_COMPILER_FLAGS):
 
-	  Moved check for old GNU C++ from configure.in to here.
+          Moved check for old GNU C++ from configure.in to here.
 
 Sat Jan 22 15:27:39 2000  Douglas C. Schmidt  <schmidt@danzon.cs.wustl.edu>
 
-	* ace/Svc_Conf_l.cpp: Updated this file to use the new
-	  "warning-free" generated file.
+        * ace/Svc_Conf_l.cpp: Updated this file to use the new
+          "warning-free" generated file.
 
-	* etc/Svc_Conf_l.cpp.diff: Commented out a YY_BREAK macro that was
-	  causing an "unreached statement" warning on some C++ compilers.
-	  Thanks to David Levine for reporting this.
+        * etc/Svc_Conf_l.cpp.diff: Commented out a YY_BREAK macro that was
+          causing an "unreached statement" warning on some C++ compilers.
+          Thanks to David Levine for reporting this.
 
-	* tests/Thread_Pool_Test.cpp: In the method
-	  test_empty_message_shutdown() we don't need to allocate a new
-	  message block when sending a "null" message.  This removes
-	  another memory leak.  Thanks to David Levine for reporting this.
+        * tests/Thread_Pool_Test.cpp: In the method
+          test_empty_message_shutdown() we don't need to allocate a new
+          message block when sending a "null" message.  This removes
+          another memory leak.  Thanks to David Levine for reporting this.
 
 Sat Jan 21 12:30:33 2000  Ossama Othman  <ossama@uci.edu>
 
-	* ace/ACE.cpp:
-	* ace/Service_Config.cpp:
-	* ace/Template_Instantiations.cpp:
+        * ace/ACE.cpp:
+        * ace/Service_Config.cpp:
+        * ace/Template_Instantiations.cpp:
 
-	  Moved ACE_LOCAL_MEMORY_POOL/ACE_Null_Mutex related template
-	  instantions to ACE.cpp.  This fixes a single threaded build
-	  problem.
+          Moved ACE_LOCAL_MEMORY_POOL/ACE_Null_Mutex related template
+          instantions to ACE.cpp.  This fixes a single threaded build
+          problem.
 
 Thu Jan 20 09:15:50 2000  Ossama Othman  <ossama@uci.edu>
 
-	* bin/bootstrap:
+        * bin/bootstrap:
 
-	  Create NEWS file before automake is run.  Automake complains
-	  about missing NEWS file.
+          Create NEWS file before automake is run.  Automake complains
+          about missing NEWS file.
 
 Thu Jan 20 09:03:37 2000  Ossama Othman  <ossama@uci.edu>
 
-	* NEWS:
+        * NEWS:
 
-	  This file is currently generated during the autoconf support
-	  bootstrapping process.  As such, it shouldn't be placed under
-	  version control.  Removed this file from the repository.
+          This file is currently generated during the autoconf support
+          bootstrapping process.  As such, it shouldn't be placed under
+          version control.  Removed this file from the repository.
 
-	* configure.in:
+        * configure.in:
 
-	  Added thread related preprocessor flags to CPPFLAGS prior to
-	  running the tests that check for the pthread_cancel() strtok_r()
-	  prototypes in case such flags are needed on some platforms.
+          Added thread related preprocessor flags to CPPFLAGS prior to
+          running the tests that check for the pthread_cancel() strtok_r()
+          prototypes in case such flags are needed on some platforms.
 
-	  If the configure script determines that no usable thread library
-	  was found it then removes any thread related preprocessor flags
-	  from the CPPFLAGS preprocessor flags variable.
+          If the configure script determines that no usable thread library
+          was found it then removes any thread related preprocessor flags
+          from the CPPFLAGS preprocessor flags variable.
 
-	* ace/README:
+        * ace/README:
 
-	  Added description of ACE_HAS_ALT_CUSERID.
+          Added description of ACE_HAS_ALT_CUSERID.
 
-	* m4/threads.m4 (ACE_CHECK_THREADS):
+        * m4/threads.m4 (ACE_CHECK_THREADS):
 
-	  Remove any definitions of _REENTRANT and _THREAD_SAFE from the
-	  preprocessor flags prior to checking if the compiler defines
-	  either one, and prior to searching for compiler thread flags by
-	  using the sed stream editor.  This is done instead of using the
-	  "-U" preproccesor flag since using that flag may undefine the
-	  same preprocessor macros potentially defined by the thread flag
-	  being tested.
+          Remove any definitions of _REENTRANT and _THREAD_SAFE from the
+          preprocessor flags prior to checking if the compiler defines
+          either one, and prior to searching for compiler thread flags by
+          using the sed stream editor.  This is done instead of using the
+          "-U" preproccesor flag since using that flag may undefine the
+          same preprocessor macros potentially defined by the thread flag
+          being tested.
 
-	  Added "kthread" to the list of thread flags to be searched.
-	  FreeBSD uses "-kthread" to enable support for kernel threads.
+          Added "kthread" to the list of thread flags to be searched.
+          FreeBSD uses "-kthread" to enable support for kernel threads.
 
-	  (ACE_CHECK_THREAD_FLAGS):
+          (ACE_CHECK_THREAD_FLAGS):
 
-	  Relaxed criteria used to determine if compiler provides thread
-	  support by removing requirement that either _REENTRANT or
-	  _THREAD_SAFE should be defined.
+          Relaxed criteria used to determine if compiler provides thread
+          support by removing requirement that either _REENTRANT or
+          _THREAD_SAFE should be defined.
 
-	  (ACE_CHECK_THREAD_CPPFLAGS):
+          (ACE_CHECK_THREAD_CPPFLAGS):
 
-	  Added this test.  It checks if the compiler defines thread
-	  related preprocessor flags, such as _REENTRANT and
-	  _THREAD_SAFE.  The test is a compile-time test that is performed
-	  after the thread flag search test so that the thread flag (if
-	  any) is used during this test in case it defines any
-	  preprocessor flags.
+          Added this test.  It checks if the compiler defines thread
+          related preprocessor flags, such as _REENTRANT and
+          _THREAD_SAFE.  The test is a compile-time test that is performed
+          after the thread flag search test so that the thread flag (if
+          any) is used during this test in case it defines any
+          preprocessor flags.
 
 Wed Jan 19 23:21:07 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tests/Thread_Pool_Test.cpp (test_queue_deactivation_shutdown): Make
-	  sure to release the message block once we've decided to shutdown
- 	  the message queue to avoid a memory leak.  Thanks to David
- 	  Levine for reporting this.
+        * tests/Thread_Pool_Test.cpp (test_queue_deactivation_shutdown): Make
+          sure to release the message block once we've decided to shutdown
+          the message queue to avoid a memory leak.  Thanks to David
+          Levine for reporting this.
 
 Tue Jan 19 13:33:08 2000  Joe Hoffert  <joeh@cs.wustl.edu>
 
@@ -155,63 +162,63 @@ Tue Jan 19 13:33:08 2000  Joe Hoffert  <joeh@cs.wustl.edu>
 
 Tue Jan 18 20:56:58 2000  Ossama Othman  <ossama@uci.edu>
 
-	* THANKS:
+        * THANKS:
 
-	  Added Daniel Lang <dl@leo.org> to the list of contributors.
+          Added Daniel Lang <dl@leo.org> to the list of contributors.
 
-	* acconfig.h (ACE_HAS_ALT_CUSERID):
+        * acconfig.h (ACE_HAS_ALT_CUSERID):
 
-	  Added this ACE macro to the list of macros.
+          Added this ACE macro to the list of macros.
 
-	* configure.in:
+        * configure.in:
 
-	  Thanks to Daniel Lang <dl@leo.org> for motivating the following
-	  ACE+autoconf related FreeBSD 3.4 fixes.
+          Thanks to Daniel Lang <dl@leo.org> for motivating the following
+          ACE+autoconf related FreeBSD 3.4 fixes.
 
-	  (ACE_LACKS_SEMBUF_T):
+          (ACE_LACKS_SEMBUF_T):
 
-	  Improved the test for this macro by including <sys/types.h> and
-	  <sys/ipc.h> prior to <sys/sem.h>.   It incorrectly failed on
-	  FreeBSD.  Presumably this change should correct the problem.
+          Improved the test for this macro by including <sys/types.h> and
+          <sys/ipc.h> prior to <sys/sem.h>.   It incorrectly failed on
+          FreeBSD.  Presumably this change should correct the problem.
 
-	  (ACE_HAS_ALT_CUSERID):
+          (ACE_HAS_ALT_CUSERID):
 
-	  Added test for this macro.  It should get defined for platforms
-	  that lack support for or have deprecated support for the
-	  cuserid() function, and have POSIX password file functions.
+          Added test for this macro.  It should get defined for platforms
+          that lack support for or have deprecated support for the
+          cuserid() function, and have POSIX password file functions.
 
-	  (ACE_LACKS_PWD_FUNCTIONS):
+          (ACE_LACKS_PWD_FUNCTIONS):
 
-	  Added getpwuid() to list of functions necessary for
-	  ACE_LACKS_PWD_FUNCTIONS to *not* be defined.
+          Added getpwuid() to list of functions necessary for
+          ACE_LACKS_PWD_FUNCTIONS to *not* be defined.
 
-	  (ACE_LACKS_PTHREAD_CANCEL):
+          (ACE_LACKS_PTHREAD_CANCEL):
 
-	  Added check for the pthread_cancel() prototype.  If it doesn't
-	  exist then don't use pthread_cancel(), i.e. define
-	  ACE_LACKS_PTHREAD_CANCEL.  It it probably a bad idea to create a
-	  prototype for pthread_cancel in ACE, so just don't use
-	  pthread_cancel().  FreeBSD 3.4 appears to have the
-	  pthread_cancel() function but no prototype for it.
+          Added check for the pthread_cancel() prototype.  If it doesn't
+          exist then don't use pthread_cancel(), i.e. define
+          ACE_LACKS_PTHREAD_CANCEL.  It it probably a bad idea to create a
+          prototype for pthread_cancel in ACE, so just don't use
+          pthread_cancel().  FreeBSD 3.4 appears to have the
+          pthread_cancel() function but no prototype for it.
 
-	* ace/OS.i (cuserid):
+        * ace/OS.i (cuserid):
 
-	  Changed Linux implementation so that it can be used for other
-	  platforms by simply defining ACE_HAS_ALT_CUSERID.
+          Changed Linux implementation so that it can be used for other
+          platforms by simply defining ACE_HAS_ALT_CUSERID.
 
-	  Added preprocessor error if ACE_HAS_ALT_CUSERID and
-	  ACE_LACKS_PWD_FUNCTIONS are both defined.  ACE's alternate
-	  cuserid() implementation requires that password file related
-	  functions exist.
+          Added preprocessor error if ACE_HAS_ALT_CUSERID and
+          ACE_LACKS_PWD_FUNCTIONS are both defined.  ACE's alternate
+          cuserid() implementation requires that password file related
+          functions exist.
 
-	* ace/config-linux-common.h:
+        * ace/config-linux-common.h:
 
-	  Define ACE_HAS_ALT_CUSERID on glibc 2.1.x since the use of the
-	  system cuserid() is discouraged.
+          Define ACE_HAS_ALT_CUSERID on glibc 2.1.x since the use of the
+          system cuserid() is discouraged.
 
-	* m4/acinclude.m4:
+        * m4/acinclude.m4:
 
-	  Cosmetic updates.
+          Cosmetic updates.
 
 Tue Jan 18 22:53:18 2000  Toshio HORI <toshi@etl.go.jp>
 
