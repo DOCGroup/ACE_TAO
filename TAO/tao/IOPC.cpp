@@ -3400,6 +3400,13 @@ CORBA::Boolean operator>>= (
       );
 }
 
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
+    defined (ACE_HAS_GNU_REPO)
+  template class TAO::Any_Dual_Impl_T<IOP::MultipleComponentProfile>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate TAO::Any_Dual_Impl_T<IOP::MultipleComponentProfile>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
 // TAO_IDL - Generated from 
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/any_op_cs.cpp:54
 
@@ -3458,6 +3465,13 @@ CORBA::Boolean operator>>= (
       );
 }
 
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
+    defined (ACE_HAS_GNU_REPO)
+  template class TAO::Any_Dual_Impl_T<IOP::TaggedComponentList>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate TAO::Any_Dual_Impl_T<IOP::TaggedComponentList>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
 // TAO_IDL - Generated from 
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/any_op_cs.cpp:54
 
@@ -3515,6 +3529,13 @@ CORBA::Boolean operator>>= (
         _tao_elem
       );
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
+    defined (ACE_HAS_GNU_REPO)
+  template class TAO::Any_Dual_Impl_T<IOP::TaggedComponentSeq>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate TAO::Any_Dual_Impl_T<IOP::TaggedComponentSeq>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 // TAO_IDL - Generated from 
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/any_op_cs.cpp:54
@@ -3638,6 +3659,13 @@ CORBA::Boolean operator>>= (
         _tao_elem
       );
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
+    defined (ACE_HAS_GNU_REPO)
+  template class TAO::Any_Dual_Impl_T<IOP::ServiceContextList>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate TAO::Any_Dual_Impl_T<IOP::ServiceContextList>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/any_op_cs.cpp:52

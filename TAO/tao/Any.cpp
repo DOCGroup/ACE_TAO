@@ -1277,6 +1277,7 @@ template class TAO::Any_Basic_Impl_T<CORBA::LongLong>;
 template class TAO::Any_Basic_Impl_T<CORBA::ULongLong>;
 template class TAO::Any_Basic_Impl_T<CORBA::Float>;
 template class TAO::Any_Basic_Impl_T<CORBA::Double>;
+template class TAO::Any_Basic_Impl_T<CORBA::LongDouble>;
 template class TAO::Any_Dual_Impl_T<CORBA::Any>;
 template class TAO::Any_Impl_T<CORBA::TypeCode>;
 template class TAO::Any_Dual_Impl_T<CORBA::Exception>;
@@ -1333,6 +1334,7 @@ template class TAO::Any_Impl_T<CORBA::Any>;
 #pragma instantiate TAO::Any_Basic_Impl_T<CORBA::ULongLong>
 #pragma instantiate TAO::Any_Basic_Impl_T<CORBA::Float>
 #pragma instantiate TAO::Any_Basic_Impl_T<CORBA::Double>
+#pragma instantiate TAO::Any_Basic_Impl_T<CORBA::LongDouble>
 #pragma instantiate TAO::Any_Dual_Impl_T<CORBA::Any>
 #pragma instantiate TAO::Any_Impl_T<CORBA::TypeCode>
 #pragma instantiate TAO::Any_Dual_Impl_T<CORBA::Exception>
