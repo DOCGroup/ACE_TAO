@@ -63,7 +63,7 @@ public:
   void orb (CORBA::ORB_ptr orb);
   // Get the orb pointer.
 
-  virtual void shutdown (CORBA::Environment &);
+  virtual void shutdown (CORBA::Environment &env);
   // Shutdown the Notifier.
 
   // CONSUMER_MAP* get_consumer_map_ptr ();
@@ -83,7 +83,7 @@ public:
     // Comparison operator.
 
     Callback_Quoter::Consumer_var consumer_;
-    // Stores the client reference.
+    // Stores the consumer object reference.
 
     CORBA::Long desired_value_;
     // Stores the stock threshold value.
