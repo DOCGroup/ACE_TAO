@@ -99,9 +99,11 @@ ACE_TLI_Stream::close (void)
 
   this->set_handle (ACE_INVALID_HANDLE);
 
+#if !defined (ACE_WIN32)
   if (this->rwflag_)
     return ACE_OS::close (fd);
   else
+#endif /* ACE_WIN32 */
     return ACE_OS::t_close (fd);
 }
 
