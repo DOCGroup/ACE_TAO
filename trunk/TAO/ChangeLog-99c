@@ -1,3 +1,15 @@
+Sat Jan 16 22:54:14 1999  Ossama Othman  <othman@macarena.cs.wustl.edu>
+
+	* TAO_IDL/driver/drv_args.cpp (DRV_check_gperf):
+	  Added ability to check for a gperf program with a name other
+	  than "gperf."  This modification complements the change that
+	  was made to TAO_IDL/util/utl_global.cpp a few months ago that
+	  allowed TAO to use a gperf with a name besides "gperf."  As before,
+	  define the ACE_GPERF macro like so:
+	                 -DACE_GPERF=\"gperf-ace\"
+	  for example, to specify a perfect hash function generator called
+	  "gperf-ace."
+
 Sat Jan 16 11:49:45 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* TAO_IDL/util/utl_global.cpp (add_to_included_idl_files): 
