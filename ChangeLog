@@ -202,6 +202,7 @@ Wed Jul 16 08:00:10 2003  Chad Elliott  <elliott_c@ociweb.com>
           Now, to enable zzip use the -feature_file option to specify a file
           that has 'zzip=1' and 'zlib=1'.  For more information on the
           -feature_file option see the README.
+           (or use bin/MakeProjectCreator/config/default.features)
 
         * bin/MakeProjectCreator/config/zziplib.mpt:
 
@@ -1604,6 +1605,13 @@ Wed Jun 25 11:00:00 2003  Justin Michel  <michel_j@ociweb.com>
           Added the create_ace_build.pl script that is more MPC friendly and works
         on Windows.
           Removed unused nightly.mwc.
+          Note : The new MPC base projects will now output all library files to 
+        consistent locations across platforms. This is controlled by the three
+        files acelib.mpb, tao_output.mpb, and orbsvcs_output.mpb using the 
+        libout keyword. Currently all of these are set to output to $ACE_ROOT/lib. 
+        All libraries will be placed in this directory, including .dll files on
+        Windows. This means that Windows users will have to add %ACE_ROOT%\lib to 
+        their %PATH%. This is analogous to %LD_LIBRARY_PATH% on Unix.
 
 Wed Jun 25 10:20:15 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
