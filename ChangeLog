@@ -1,3 +1,14 @@
+Tue Feb 29 08:56:51 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * include/makeinclude/platform_vxworks5.x_g++.GNU:
+          reverted this change:
+
+          Mon Feb 28 20:42:17 2000  David L. Levine  <levine@cs.wustl.edu>
+
+          because it caused static constructors not to be called.
+          Thanks to Elias Sreih <sealstd1@nortelnetworks.com> for
+          reporting this.
+
 Mon Feb 28 20:04:23 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * tests/Time_Service_Test.cpp:  Missed a semicolon.
@@ -16,10 +27,10 @@ Mon Feb 28 17:34:00 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/ACE.h:
         * ace/ACE.cpp:
-          
-          The Unix and Win32 behavior for get_temp_dir () wasn't consistent.  
+
+          The Unix and Win32 behavior for get_temp_dir () wasn't consistent.
           Now both will return -1 if there is any problem such as the buffer
-          not being long enough.  
+          not being long enough.
 
 Mon Feb 28 09:20:27 2000  Darrell Brunsch <brunsch@uci.edu>
 
