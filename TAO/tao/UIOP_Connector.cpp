@@ -363,8 +363,7 @@ template class ACE_Hash_Map_Reverse_Iterator_Ex<UIOP_REFCOUNTED_HASH_RECYCLABLE_
 #pragma instantiate ACE_Connector<TAO_UIOP_Client_Connection_Handler, ACE_LSOCK_CONNECTOR>
 #pragma instantiate ACE_Connect_Strategy<TAO_UIOP_Client_Connection_Handler, ACE_LSOCK_CONNECTOR>
 #pragma instantiate ACE_Cached_Connect_Strategy<TAO_UIOP_Client_Connection_Handler, ACE_LSOCK_CONNECTOR, TAO_Cached_Connector_Lock>
-#pragma instantiate ACE_Strategy_Connector<TAO_UIOP_Client_Connection_Handler,
-                               ACE_LSOCK_CONNECTOR>
+#pragma instantiate ACE_Strategy_Connector<TAO_UIOP_Client_Connection_Handler, ACE_LSOCK_CONNECTOR>
 
 #pragma instantiate ACE_Concurrency_Strategy<TAO_UIOP_Client_Connection_Handler>
 #pragma instantiate ACE_Creation_Strategy<TAO_UIOP_Client_Connection_Handler>
