@@ -1,3 +1,14 @@
+Sat May 16 13:56:01 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Channel_Clients_T.h
+          (ACE_Push{Consumer,Supplier}_Adapter); added (private)
+          declarations of copy constructors.  g++ 2.7.2.3/Solaris
+          needs them, to avoid missing definitions of the copy
+          constructors when linking with orbsvcs/EC_Gateway.cpp.
+
+        * orbsvcs/orbsvcs/tmplinst-orbsvcs.cpp: added TAO_Object_Mnaager
+          instantiations.  g++/LynxOS 2.5.0 needs them.
+
 1998-05-15  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp
