@@ -245,17 +245,28 @@ query_aio_completions (void)
                            "%p:Invalid control block was send to <aio_return>\n"),
                           -1);
       if (number_of_compleions == 0)
-        // Print the buffer.
-        ACE_DEBUG ((LM_DEBUG,
-                    "\n Number of bytes transferred : %d\n The buffer : %s \n",
-                    nbytes,
-                    mb1.rd_ptr ()));
+        {
+          // Print the buffer.
+          ACE_DEBUG ((LM_DEBUG,
+                      "\n Number of bytes transferred : %d\n",
+                      nbytes));
+          // Note... the dumps of the buffers are disabled because they
+          // may easily overrun the ACE_Log_Msg output buffer. If you need
+          // to turn the on for some reason, be careful of this.
+#if 0
+          ACE_DEBUG ((LM_DEBUG, "The buffer : %s \n", mb1.rd_ptr ()));
+#endif /* 0 */
+        }
       else
-        // Print the buffer.
-        ACE_DEBUG ((LM_DEBUG,
-                    "\n Number of bytes transferred : %d\n The buffer : %s \n",
-                    nbytes,
-                    mb2.rd_ptr ()));
+        {
+          // Print the buffer.
+          ACE_DEBUG ((LM_DEBUG,
+                      "\n Number of bytes transferred : %d\n",
+                      nbytes));
+#if 0
+          ACE_DEBUG ((LM_DEBUG, "The buffer : %s \n", mb2.rd_ptr ()));
+#endif /* 0 */
+        }
     }
 
   return 0;
