@@ -4,6 +4,7 @@
 #include "../Utils/activate_with_id.h"
 #include "Request_Context_Repository.h"
 #include "Replication_Service.h"
+#include "../Utils/Log.h"
 
 ACE_RCSID (EventChannel,
            TAO_FTEC_ProxyPushSupplier,
