@@ -276,7 +276,6 @@ TAO_GIOP_Message_Handler::is_message_ready (void)
       size_t len = this->current_buffer_.length ();
 
       if (len == this->message_state_.message_size)
-
         {
           // If the buffer length is equal to the size of the payload we
           // have exactly one message. Check whether we have received
