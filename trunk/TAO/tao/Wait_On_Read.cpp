@@ -23,6 +23,10 @@ int
 TAO_Wait_On_Read::wait (ACE_Time_Value * max_wait_time,
                         TAO_Synch_Reply_Dispatcher &rd)
 {
+  // Start the count down timer to account for the time spent in this
+  // method.
+  ACE_Countdown_Time countdown (max_wait_time);
+
   rd.state_changed (TAO_LF_Event::LFS_ACTIVE);
 
   // Do the same sort of looping that is done in other wait

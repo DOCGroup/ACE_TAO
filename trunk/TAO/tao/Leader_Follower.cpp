@@ -176,6 +176,8 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
   // Obtain the lock.
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock (), -1);
 
+  ACE_Countdown_Time countdown (max_wait_time);
+
   // Optmize the first iteration [no access to errno]
   int result = 1;
 
@@ -196,8 +198,6 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
     // this->reset_client_thread () on destruction.
     TAO_LF_Client_Thread_Helper client_thread_helper (*this);
     ACE_UNUSED_ARG (client_thread_helper);
-
-    ACE_Countdown_Time countdown (max_wait_time);
 
     // Check if there is a leader.  Note that it cannot be us since we
     // gave up our leadership when we became a client.
