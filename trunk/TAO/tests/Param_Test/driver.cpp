@@ -29,17 +29,17 @@ int
 main (int argc, char **argv)
 {
   // get an instance of the driver object
-  Driver *drv = DRIVER::instance ();
+  Driver drv;
 
   // initialize the driver
-  if (drv->init (argc, argv) == -1)
+  if (drv.init (argc, argv) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "(%N:%l) driver.cpp - "
                        "Driver initialization failed\n"),
                       -1);
 
   // run various tests
-  if (drv->run () == -1)
+  if (drv.run () == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "(%N:%l) driver.cpp - "
                        "tests failed\n"),
@@ -458,7 +458,6 @@ Driver::run (void)
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Singleton<Driver, ACE_SYNCH_RECURSIVE_MUTEX>;
 template class Param_Test_Client<Test_Short>;
 template class Param_Test_Client<Test_ULongLong>;
 template class Param_Test_Client<Test_Unbounded_String>;
@@ -484,7 +483,6 @@ template class Param_Test_Client<Test_Fixed_Array>;
 template class Param_Test_Client<Test_Var_Array>;
 template class Param_Test_Client<Test_Exception>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Singleton<Driver, ACE_SYNCH_RECURSIVE_MUTEX>
 #pragma instantiate Param_Test_Client<Test_Short>
 #pragma instantiate Param_Test_Client<Test_ULongLong>
 #pragma instantiate Param_Test_Client<Test_Unbounded_String>
