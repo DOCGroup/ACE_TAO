@@ -107,17 +107,25 @@ public:
   // value is used for every I/O operation in the loop and the timeout
   // is not counted down.
   //
-  // Errors are reported by -1 and EOF are reported by 0 return
-  // values.  If the operation times out, -1 is returned with <errno
-  // == ETIME>.  If it succeeds the number of bytes transferred is
-  // returned.
+  // The return values for the "*_n()" methods match the return values
+  // from the non "_n" methods and are specified as follows:
   //
-  // Return values of the "_n" I/O methods are the same as the regular
-  // methods. <bytes_transferred> contain the actual number of bytes
-  // transferred.
+  // - On complete transfer, the number of bytes transferred is returned.
+  // - On timeout, -1 is returned, errno == ETIME.
+  // - On error, -1 is returned, errno is set to appropriate error.
+  // - On EOF, 0 is returned, errno is irrelevant.
+  //
+  // On partial transfers, i.e., if any data is transferred before
+  // timeout/error/EOF, <bytes_transferred> will contain the number of
+  // bytes transferred.
   //
   // Methods with <iovec> parameter are I/O vector variants of the I/O
   // operations.
+  //
+  // Methods with the extra <flags> argument will always result in
+  // <send> getting called. Methods without the extra <flags> argument
+  // will result in <send> getting called on Win32 platforms, and
+  // <write> getting called on non-Win32 platforms.
 
   static ssize_t recv (ACE_HANDLE handle,
                        void *buf,
