@@ -41,16 +41,21 @@ namespace TAO
     this->init_target_spec (tspec ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
 
+    TAO_OutputCDR &cdr =
+      this->resolver_.transport ()->messaging_object ()->out_stream ();
+
     Invocation_Status s = TAO_INVOKE_FAILURE;
 
-#if TAO_HAS_INTERCEPTORS == 1
-    s =
-      this->send_request_interception (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
 
-    if (s != TAO_INVOKE_SUCCESS)
-      return s;
-#endif /*TAO_HAS_INTERCEPTORS */
+    this->write_header (tspec,
+                        cdr
+                        ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK_RETURN (s);
+
+    this->marshal_data (cdr
+                        ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK_RETURN (s);
+
     // Register a reply dispatcher for this invocation. Use the
     // preallocated reply dispatcher.
     TAO_Bind_Dispatcher_Guard dispatch_guard (
@@ -77,23 +82,20 @@ namespace TAO
     // reply dispatcher.
     dispatch_guard.status (TAO_Bind_Dispatcher_Guard::NO_UNBIND);
 
-    TAO_OutputCDR &cdr =
-      this->resolver_.transport ()->messaging_object ()->out_stream ();
+#if TAO_HAS_INTERCEPTORS == 1
+    s =
+      this->send_request_interception (ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
+
+    if (s != TAO_INVOKE_SUCCESS)
+      return s;
+#endif /*TAO_HAS_INTERCEPTORS */
 
     // We have started the interception flow. We need to call the
     // ending interception flow if things go wrong. The purpose of the
     // try block is to take care of the cases when things go wrong.
     ACE_TRY
       {
-        this->write_header (tspec,
-                            cdr
-                            ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
-
-        this->marshal_data (cdr
-                            ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
-
         // Send it as a oneway request. It will make all the required
         // paraphernalia within the ORB to fire, like buffering if
         // send blocks etc.
