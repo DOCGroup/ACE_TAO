@@ -16,8 +16,6 @@ IDLFILES = \
 	$(IDLDIR)\RtecUDPAdmin.idl
 
 OBJFILES = \
-	$(OBJDIR)\BCU.obj \
-	$(OBJDIR)\Dispatching_Modules.obj \
 	$(OBJDIR)\EC_And_Filter.obj \
 	$(OBJDIR)\EC_Basic_Factory.obj \
 	$(OBJDIR)\EC_Basic_Filter_Builder.obj \
@@ -44,16 +42,12 @@ OBJFILES = \
 	$(OBJDIR)\EC_ObserverStrategy.obj \
 	$(OBJDIR)\EC_Per_Supplier_Filter.obj \
 	$(OBJDIR)\EC_Prefix_Filter_Builder.obj \
-	$(OBJDIR)\EC_Priority_Dispatching.obj \
-	$(OBJDIR)\EC_Priority_Scheduling.obj \
 	$(OBJDIR)\EC_ProxyConsumer.obj \
 	$(OBJDIR)\EC_ProxySupplier.obj \
 	$(OBJDIR)\EC_QOS_Info.obj \
 	$(OBJDIR)\EC_Reactive_ConsumerControl.obj \
 	$(OBJDIR)\EC_Reactive_SupplierControl.obj \
 	$(OBJDIR)\EC_Reactive_Timeout_Generator.obj \
-	$(OBJDIR)\EC_Sched_Filter.obj \
-	$(OBJDIR)\EC_Sched_Filter_Builder.obj \
 	$(OBJDIR)\EC_Scheduling_Strategy.obj \
 	$(OBJDIR)\EC_Supplier_Filter.obj \
 	$(OBJDIR)\EC_Supplier_Filter_Builder.obj \
@@ -64,15 +58,7 @@ OBJFILES = \
 	$(OBJDIR)\EC_Trivial_Supplier_Filter.obj \
 	$(OBJDIR)\EC_Type_Filter.obj \
 	$(OBJDIR)\EC_UDP_Admin.obj \
-	$(OBJDIR)\Event_Channel.obj \
-	$(OBJDIR)\Event_Manip.obj \
 	$(OBJDIR)\Event_Utilities.obj \
-	$(OBJDIR)\GPlot_File.obj \
-	$(OBJDIR)\Local_ESTypes.obj \
-	$(OBJDIR)\Memory_Pools.obj \
-	$(OBJDIR)\Module_Factory.obj \
-	$(OBJDIR)\ReactorTask.obj \
-	$(OBJDIR)\RT_Task.obj \
 	$(OBJDIR)\RtecDefaultEventDataC.obj \
 	$(OBJDIR)\RtecDefaultEventDataS.obj \
 	$(OBJDIR)\RtecEventChannelAdminC.obj \
@@ -80,18 +66,17 @@ OBJFILES = \
 	$(OBJDIR)\RtecEventCommC.obj \
 	$(OBJDIR)\RtecEventCommS.obj \
 	$(OBJDIR)\RtecUDPAdminC.obj \
-	$(OBJDIR)\RtecUDPAdminS.obj \
-	$(OBJDIR)\Timer_Module.obj
+	$(OBJDIR)\RtecUDPAdminS.obj
 
 RESOURCE = $(OBJDIR)\orbsvcs.res
 
 !ifdef STATIC
 CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) $(TAO_SVC_UTILS_CFLAGS) \
-  $(TAO_NAMING_CFLAGS) $(TAO_RTSCHED_CFLAGS) $(TAO_RTEVENT_CFLAGS)
+	$(TAO_NAMING_CFLAGS) $(TAO_RTSCHED_CFLAGS) $(TAO_RTEVENT_CFLAGS)
 !else
 CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) $(TAO_SVC_UTILS_CFLAGS) \
-  $(TAO_NAMING_CFLAGS) $(TAO_RTSCHED_CFLAGS) $(TAO_RTEVENT_CFLAGS) \
-  -DTAO_RTEVENT_BUILD_DLL
+	$(TAO_NAMING_CFLAGS) $(TAO_RTSCHED_CFLAGS) $(TAO_RTEVENT_CFLAGS) \
+	-DTAO_RTEVENT_BUILD_DLL
 !endif
 
 CPPDIR = .;Event
@@ -99,7 +84,7 @@ CPPDIR = .;Event
 IDLDIR = .
 
 LIBFILES = $(ACE_LIB) $(TAO_LIB) $(TAO_SVC_UTILS_LIB) $(TAO_NAMING_LIB) \
-  $(TAO_RTSCHED_LIB)
+	$(TAO_RTSCHED_LIB)
 
 all: idl_src_files rtevent_lib
 

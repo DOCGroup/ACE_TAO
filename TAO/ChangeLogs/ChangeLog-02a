@@ -1,3 +1,16 @@
+Tue Jun  6 09:42:39 2000  Chris Kohlhoff <chris@kohlhoff.com>
+
+        * orbsvcs/orbsvcs/Makefile.bor:
+	* orbsvcs/orbsvcs/RTEvent.bor:
+	* orbsvcs/orbsvcs/Svc_Utils.bor:
+	* orbsvcs/orbsvcs/RTSchedEvent.bor:
+	* orbsvcs/orbsvcs/RTOLDEvent.bor:
+	* orbsvcs/Event_Service/Makefile.bor:
+	  Added new orbsvcs libraries RTSchedEvent and RTOLDEvent.
+
+	* tests/Param_Test/client.bor:
+	  Added missing file small_union.cpp.
+
 Tue Jun 06 01:20:37 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/POA.cpp (client_exposed_policies): Some of the client
