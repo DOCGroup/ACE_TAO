@@ -1,3 +1,15 @@
+Thu Jun 27 14:55:08 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/IORTable/IOR_Table_Impl.h (TAO_IOR_Table_Impl):
+
+          Changed underlying hash map from ACE_Hash_Map_Manager to
+          ACE_Hash_Map_Manager_Ex.  The former requires three additional
+          template instantiations and used the latter under the hood
+          anyway.  This reduces the IORTable library footprint in addition
+	  to fixing a link error exhibi ted in builds that disable implicit
+	  template instantiation.  Thanks to Craig for pointing out the
+	  build errors.
+
 Thu Jun 27 16:47:36 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Endpoint.h:
