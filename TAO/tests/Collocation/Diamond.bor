@@ -2,7 +2,11 @@
 # Makefile for building	the Diamond library
 #
 
+!ifndef STATIC
 NAME = Diamond
+!else
+!undef NAME
+!endif
 
 TAO_IDL	= $(CORE_BINDIR)\tao_idl -g $(CORE_BINDIR)\gperf.exe -Ge 1 -Gd \
 	-Wb,skel_export_macro=Diamond_Export -Wb,stub_export_macro=MY_Stub_Export \
@@ -10,14 +14,15 @@ TAO_IDL	= $(CORE_BINDIR)\tao_idl -g $(CORE_BINDIR)\gperf.exe -Ge 1 -Gd \
 
 OBJFILES = \
 	$(OBJDIR)\DiamondS.obj \
-	$(OBJDIR)\Diamond_i.obj
+        $(OBJDIR)\Diamond_i.obj \
+        $(OBJDIR)\DiamondS_T.obj
 
 CFLAGS = \
 	$(ACE_CFLAGS) \
 	$(TAO_CFLAGS) \
 	$(TAO_PORTABLESERVER_CFLAGS) \
         -DDIAMOND_HAS_DLL=$(DLL_FLAG) \
-        -DDIAMOND_BUILD_DLL=$(DLL_FLAG)
+        -DDIAMOND_BUILD_DLL \
 
 LIBFILES = \
 	$(ACE_LIB) \
