@@ -529,7 +529,7 @@ Key_List::output_switch (int use_keyword_table)
     {
       if (option[LENTABLE] && option[DUP])
         output_keylength_table ();
-      if (option[POINTER] && option[TYPE])
+      if (option[POINTER] && option[TYPE] && use_keyword_table == 0) 
         output_keyword_table ();
     }
 
