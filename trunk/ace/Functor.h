@@ -86,12 +86,12 @@ template <class TYPE> class ACE_Hash;
 template <class TYPE> class ACE_Equal_To;
 template <class TYPE> class ACE_Less_Than;
 
-ACE_TEMPLATE_SPECIALIZATION
 /**
  * @class ACE_Hash<char>
  *
  * @brief Function object for hashing a char
  */
+template<>
 class ACE_Export ACE_Hash<char>
 {
 public:
@@ -99,12 +99,12 @@ public:
   unsigned long operator () (char t) const;
 };
 
-ACE_TEMPLATE_SPECIALIZATION
 /**
  * @class ACE_Hash<signed char>
  *
  * @brief Function object for hashing a signed char
  */
+template<>
 class ACE_Export ACE_Hash<signed char>
 {
 public:
@@ -112,12 +112,12 @@ public:
   unsigned long operator () (signed char t) const;
 };
 
-ACE_TEMPLATE_SPECIALIZATION
 /**
  * @class ACE_Hash<unsigned char>
  *
  * @brief Function object for hashing an unsigned char
  */
+template<>
 class ACE_Export ACE_Hash<unsigned char>
 {
 public:
@@ -127,12 +127,12 @@ public:
 
 // @@ ADD HASHES FOR ACE TYPES
 
-ACE_TEMPLATE_SPECIALIZATION
 /**
  * @class ACE_Hash<ACE_INT16>
  *
  * @brief Function object for hashing a 16-bit signed number
  */
+template<>
 class ACE_Export ACE_Hash<ACE_INT16>
 {
 public:
@@ -140,12 +140,12 @@ public:
   unsigned long operator () (ACE_INT16 t) const;
 };
 
-ACE_TEMPLATE_SPECIALIZATION
 /**
  * @class ACE_Hash<ACE_UINT16>
  *
  * @brief Function object for hashing a 16-bit unsigned number
  */
+template<>
 class ACE_Export ACE_Hash<ACE_UINT16>
 {
 public:
@@ -153,12 +153,12 @@ public:
   unsigned long operator () (ACE_UINT16 t) const;
 };
 
-ACE_TEMPLATE_SPECIALIZATION
 /**
  * @class ACE_Hash<ACE_INT32>
  *
  * @brief Function object for hashing a 32-bit signed number
  */
+template<>
 class ACE_Export ACE_Hash<ACE_INT32>
 {
 public:
@@ -166,12 +166,12 @@ public:
   unsigned long operator () (ACE_INT32 t) const;
 };
 
-ACE_TEMPLATE_SPECIALIZATION
 /**
  * @class ACE_Hash<ACE_UINT32>
  *
  * @brief Function object for hashing a 32-bit unsigned number
  */
+template<>
 class ACE_Export ACE_Hash<ACE_UINT32>
 {
 public:
@@ -179,12 +179,12 @@ public:
   unsigned long operator () (ACE_UINT32 t) const;
 };
 
-ACE_TEMPLATE_SPECIALIZATION
 /**
  * @class ACE_Hash<ACE_UINT64>
  *
  * @brief Function object for hashing a 64-bit unsigned number
  */
+template<>
 class ACE_Export ACE_Hash<ACE_UINT64>
 {
 public:
@@ -194,12 +194,12 @@ public:
 
 // @@ DONE ADDING HASHES FOR ACE TYPES
 
-ACE_TEMPLATE_SPECIALIZATION
 /**
  * @class ACE_Hash<const char *>
  *
  * @brief Function object for hashing a const string
  */
+template<>
 class ACE_Export ACE_Hash<const char *>
 {
 public:
@@ -207,12 +207,12 @@ public:
   unsigned long operator () (const char *t) const;
 };
 
-ACE_TEMPLATE_SPECIALIZATION
 /**
  * @class ACE_Hash<char *>
  *
  * @brief Function object for hashing a string
  */
+template<>
 class ACE_Export ACE_Hash<char *>
 {
 public:
@@ -220,24 +220,24 @@ public:
   unsigned long operator () (const char *t) const;
 };
 
-ACE_TEMPLATE_SPECIALIZATION
 /**
  * @class ACE_Hash<void *>
  *
  * @brief Function object for hashing a void *
  */
+template<>
 class ACE_Export ACE_Hash<void *>
 {
 public:
   unsigned long operator () (const void *) const;
 };
 
-ACE_TEMPLATE_SPECIALIZATION
 /**
  * @class ACE_Equal_To<const char *>
  *
  * @brief Function object for determining whether two const strings are equal.
  */
+template<>
 class ACE_Export ACE_Equal_To<const char *>
 {
 public:
@@ -246,13 +246,13 @@ public:
                    const char *rhs) const;
 };
 
-ACE_TEMPLATE_SPECIALIZATION
 /**
  * @class ACE_Equal_To<char *>
  *
  * @brief Function object for determining whether two non-const
  * strings are equal.
  */
+template<>
 class ACE_Export ACE_Equal_To<char *>
 {
 public:
@@ -261,13 +261,13 @@ public:
                    const char *rhs) const;
 };
 
-ACE_TEMPLATE_SPECIALIZATION
 /**
  * @class ACE_Equal_To<ACE_UINT16>
  *
  * @brief Function object for determining whether two unsigned
  * 16 bit ints are equal.
  */
+template<>
 class ACE_Export ACE_Equal_To<ACE_UINT16>
 {
 public:
@@ -276,13 +276,13 @@ public:
                    const ACE_UINT16 rhs) const;
 };
 
-ACE_TEMPLATE_SPECIALIZATION
 /**
  * @class ACE_Equal_To<ACE_INT16>
  *
  * @brief Function object for determining whether two
  * 16 bit ints are equal.
  */
+template<>
 class ACE_Export ACE_Equal_To<ACE_INT16>
 {
 public:
@@ -291,13 +291,13 @@ public:
                    const ACE_INT16 rhs) const;
 };
 
-ACE_TEMPLATE_SPECIALIZATION
 /**
  * @class ACE_Equal_To<ACE_UINT32>
  *
  * @brief Function object for determining whether two unsigned
  * 32 bit ints are equal.
  */
+template<>
 class ACE_Export ACE_Equal_To<ACE_UINT32>
 {
 public:
@@ -306,13 +306,13 @@ public:
                    const ACE_UINT32 rhs) const;
 };
 
-ACE_TEMPLATE_SPECIALIZATION
 /**
  * @class ACE_Equal_To<ACE_INT32>
  *
  * @brief Function object for determining whether two
  * 32 bit ints are equal.
  */
+template<>
 class ACE_Export ACE_Equal_To<ACE_INT32>
 {
 public:
@@ -321,13 +321,13 @@ public:
                    const ACE_INT32 rhs) const;
 };
 
-ACE_TEMPLATE_SPECIALIZATION
 /**
  * @class ACE_Equal_To<ACE_UINT64>
  *
  * @brief Function object for determining whether two unsigned
  * 64 bit ints are equal.
  */
+template<>
 class ACE_Export ACE_Equal_To<ACE_UINT64>
 {
 public:
@@ -336,14 +336,13 @@ public:
                    const ACE_UINT64 rhs) const;
 };
 
-
-ACE_TEMPLATE_SPECIALIZATION
 /**
  * @class ACE_Less_Than<const char*>
  *
  * @brief Function object for determining whether the first const string
  * is less than the second const string.
  */
+template<>
 class ACE_Export ACE_Less_Than<const char *>
 {
 public:
@@ -352,13 +351,13 @@ public:
                    const char *rhs) const;
 };
 
-ACE_TEMPLATE_SPECIALIZATION
 /**
  * @class ACE_Less_Than<char *>
  *
  * @brief Function object for determining whether the first string
  * is less than the second string.
  */
+template<>
 class ACE_Export ACE_Less_Than<char *>
 {
 public:
@@ -372,12 +371,12 @@ public:
 #  if defined (ACE_WSTRING_HAS_USHORT_SUPPORT)
 // MSVC uses ACE_UINT16 as wchar_t, and since there's a ACE_Hash<ACE_UINT16>,
 // there can't be a ACE_Hash<wchar_t>.
-ACE_TEMPLATE_SPECIALIZATION
 /**
  * @class ACE_Hash<wchar_t>
  *
  * @brief Function object for hashing a wchar_t
  */
+template<>
 class ACE_Export ACE_Hash<wchar_t>
 {
 public:
@@ -386,12 +385,12 @@ public:
 };
 #  endif /* ACE_WSTRING_HAS_USHORT_SUPPORT */
 
-ACE_TEMPLATE_SPECIALIZATION
 /**
  * @class ACE_Hash<const wchar_t *>
  *
  * @brief Function object for hashing a const string
  */
+template<>
 class ACE_Export ACE_Hash<const wchar_t *>
 {
 public:
@@ -399,12 +398,12 @@ public:
   unsigned long operator () (const wchar_t *t) const;
 };
 
-ACE_TEMPLATE_SPECIALIZATION
 /**
  * @class ACE_Hash<wchar_t *>
  *
  * @brief Function object for hashing a string
  */
+template<>
 class ACE_Export ACE_Hash<wchar_t *>
 {
 public:
@@ -412,12 +411,12 @@ public:
   unsigned long operator () (const wchar_t *t) const;
 };
 
-ACE_TEMPLATE_SPECIALIZATION
 /**
  * @class ACE_Equal_To<const wchar_t *>
  *
  * @brief Function object for determining whether two const strings are equal.
  */
+template<>
 class ACE_Export ACE_Equal_To<const wchar_t *>
 {
 public:
@@ -426,13 +425,13 @@ public:
                    const wchar_t *rhs) const;
 };
 
-ACE_TEMPLATE_SPECIALIZATION
 /**
  * @class ACE_Equal_To<wchar_t *>
  *
  * @brief Function object for determining whether two non-const
  * strings are equal.
  */
+template<>
 class ACE_Export ACE_Equal_To<wchar_t *>
 {
 public:
@@ -441,13 +440,13 @@ public:
                    const wchar_t *rhs) const;
 };
 
-ACE_TEMPLATE_SPECIALIZATION
 /**
  * @class ACE_Less_Than<const wchar_t *>
  *
  * @brief Function object for determining whether the first const string
  * is less than the second const string.
  */
+template<>
 class ACE_Export ACE_Less_Than<const wchar_t *>
 {
 public:
@@ -456,13 +455,13 @@ public:
                    const wchar_t *rhs) const;
 };
 
-ACE_TEMPLATE_SPECIALIZATION
 /**
  * @class ACE_Less_Than<wchar_t *>
  *
  * @brief Function object for determining whether the first string
  * is less than the second string.
  */
+template<>
 class ACE_Export ACE_Less_Than<wchar_t *>
 {
 public:

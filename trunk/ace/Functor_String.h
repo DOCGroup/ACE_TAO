@@ -38,13 +38,13 @@ template <class TYPE> class ACE_Hash;
 template <class TYPE> class ACE_Equal_To;
 template <class TYPE> class ACE_Less_Than;
 
-ACE_TEMPLATE_SPECIALIZATION
 /**
  * @class ACE_Equal_To<ACE_CString>
  *
  * @brief Function object for determining whether two ACE_CStrings are
  * equal.
  */
+template<>
 class ACE_Export ACE_Equal_To<ACE_CString>
 {
 public:
@@ -53,12 +53,12 @@ public:
 };
 
 
-ACE_TEMPLATE_SPECIALIZATION
 /**
  * @class ACE_Hash<ACE_CString>
  *
  * @brief Function object for hashing a ACE_CString
  */
+template<>
 class ACE_Export ACE_Hash<ACE_CString>
 {
 public:
@@ -67,13 +67,13 @@ public:
 };
 
 
-ACE_TEMPLATE_SPECIALIZATION
 /**
  * @class ACE_Less_Than<ACE_CString>
  *
  * @brief Function object for determining whether the first const string
  * is less than the second const string.
  */
+template<>
 class ACE_Export ACE_Less_Than<ACE_CString>
 {
 public:
@@ -85,13 +85,13 @@ public:
 
 #if defined (ACE_USES_WCHAR)
 
-ACE_TEMPLATE_SPECIALIZATION
 /**
  * @class ACE_Equal_To<ACE_WString>
  *
  * @brief Function object for determining whether two ACE_CStrings are
  * equal.
  */
+template<>
 class ACE_Export ACE_Equal_To<ACE_WString>
 {
 public:
@@ -100,12 +100,12 @@ public:
 };
 
 
-ACE_TEMPLATE_SPECIALIZATION
 /**
  * @class ACE_Hash<ACE_WString>
  *
  * @brief Function object for hashing a ACE_WString
  */
+template<>
 class ACE_Export ACE_Hash<ACE_WString>
 {
 public:
@@ -113,13 +113,13 @@ public:
   unsigned long operator () (const ACE_WString &lhs) const;
 };
 
-ACE_TEMPLATE_SPECIALIZATION
 /**
  * @class ACE_Less_Than<ACE_WString>
  *
  * @brief Function object for determining whether the first const string
  * is less than the second const string.
  */
+template<>
 class ACE_Export ACE_Less_Than<ACE_WString>
 {
 public:
