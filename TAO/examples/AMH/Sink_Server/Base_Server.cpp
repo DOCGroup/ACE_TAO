@@ -2,24 +2,27 @@
 
 #include "ace/Sched_Params.h"
 #include "ace/Get_Opt.h"
+
 #include "tao/Strategies/advanced_resource.h"
 #include "tao/ORB_Core.h"
-#include "Base_Server.h"
+
 #include "AMH_Servant.h"
+#include "Base_Server.h"
 
 #include "TestC.h"
 
+#if !defined (__ACE_INLINE__)
+# include "Base_Server.inl"
+#endif /* __ACE_INLINE__ */
 
-Base_Server::Base_Server (int* argc, char **argv)
+Base_Server::Base_Server (int& argc, char **argv)
   : argc_ (argc)
   , argv_ (argv)
+  , ior_output_file_ ("test.ior")
 {
-  this->ior_output_file_ = ACE_const_cast (char*, "test.ior");
 }
 
-// @@ Mayur, empty parameter lists should be denoted with "(void)",
-//    not "()".  Again, this is detailed in the guidelines.
-Base_Server::~Base_Server ()
+Base_Server::~Base_Server (void)
 {
   ACE_TRY_NEW_ENV
     {
@@ -38,11 +41,11 @@ Base_Server::~Base_Server ()
 }
 
 int
-Base_Server::parse_args ()
+Base_Server::parse_args (void)
 {
   // *** To get correct behaviour, set ** POSIXLY_CORECT=1 ** on Linux
   // systems!!! ***
-  ACE_Get_Opt get_opts (*(this->argc_), this->argv_, "o:");
+  ACE_Get_Opt get_opts (this->argc_, this->argv_, "o:");
   int c;
   int count_argv = 0;
 
@@ -58,13 +61,13 @@ Base_Server::parse_args ()
             // Remove the option '-o' from argv []
             // to avoid any confusion that might result.
             {
-              for (int i = count_argv; i <= *(this->argc_); ++i)
+              for (int i = count_argv; i <= this->argc_; ++i)
                 this->argv_ [i] = this->argv_ [i+2];
             }
 
             // Decrement the value of this->argc_ to reflect the removal
             // of '-o' option.
-            *(this->argc_) = *(this->argc_) - 2;
+            this->argc_ = this->argc_ - 2;
 
             return 1;
           }
@@ -92,7 +95,7 @@ Base_Server::try_RT_scheduling (void)
                                               priority,
                                               ACE_SCOPE_PROCESS)) != 0)
     {
-      if (ACE_OS::last_error () == EPERM)
+      if (errno == EPERM)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "server (%P|%t): user is not superuser, "
@@ -109,7 +112,7 @@ Base_Server::start_orb_and_poa (void)
 {
   ACE_TRY_NEW_ENV
     {
-      this->orb_ = CORBA::ORB_init (*(this->argc_),
+      this->orb_ = CORBA::ORB_init (this->argc_,
                                     this->argv_,
                                     "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -173,10 +176,9 @@ Base_Server::register_servant (AMH_Servant *servant)
   ACE_ENDTRY;
 }
 
-// @@ Mayur, empty parameter lists should be denoted with "(void)",
-//    not "()".  Again, this is detailed in the guidelines.
+
 void
-Base_Server::run_event_loop ()
+Base_Server::run_event_loop (void)
 {
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
@@ -186,36 +188,28 @@ Base_Server::run_event_loop ()
         {
           // @@ Mayur, where's the work_pending() call?
           //
-          // @@ Mayur, you're missing the ACE_ENV_ARG_PARAMETER macro
-          //    in the below perform_work() call.  The ACE_TRY_CHECK
-          //    below is useless without it.
-          this->orb_->perform_work (&period);
+          // Mayur: Nope. There is purposely no work_pending call. The
+          // reactor doesn't acknowledge expired timers as work. The
+          // reactor only thinks I/O events as work.  Thus, timers
+          // that have expired after all the client requests are made
+          // are never handled. This results in the server not sending
+          // (some) replies to the client and the client just ends up
+          // waiting (forever) for them.
+          this->orb_->perform_work (period ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
-      // @@ Mayur, why is this redundant ACE_TRY_CHECK here?
-      ACE_TRY_CHECK;
     }
-  // @@ Mayur, please put these on separate lines.  It's less
-  //    confusing, and is our convention.  Why don't you at least
-  //    print the exception?  You just ignore it.  For example:
-  //
-  //      ACE_CATCHANY
-  //        {
-  //           ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-  //                                "Caught exception");
-  //        }
-  //      ACE_ENDTRY;
-  ACE_CATCHANY {} ACE_ENDTRY;
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "Caught exceptionin Base_Server::run_event_loop");
+    }
+  ACE_ENDTRY;
 }
 
 int
-Base_Server::write_ior_to_file (CORBA::String_var ior)
+Base_Server::write_ior_to_file (const char * ior)
 {
-  // @@ Mayur, what use is there in passing the CORBA::String_var by
-  //    value?  It just needless incurs additional memory
-  //    allocations.  Just pass the contents of the String_var (a
-  //    const char *) via the ".in()" accessor.
-
   // If the ior_output_file exists, output the ior to it
   FILE *output_file =
     ACE_OS::fopen (this->ior_output_file_, "w");
@@ -228,7 +222,7 @@ Base_Server::write_ior_to_file (CORBA::String_var ior)
       return -1;
     }
 
-  ACE_OS::fprintf (output_file, "%s", ior.in ());
+  ACE_OS::fprintf (output_file, "%s", ior);
   ACE_OS::fclose (output_file);
   return 0;
 }

@@ -10,6 +10,7 @@ OBJFILES = \
         $(OBJDIR)\testC.obj \
         $(OBJDIR)\testS.obj \
         $(OBJDIR)\mt_server.obj \
+        $(OBJDIR)\MT_AMH_Server.obj \
         $(OBJDIR)\Base_Server.obj \
         $(OBJDIR)\AMH_Servant.obj \
         $(OBJDIR)\Timer_Handler.obj

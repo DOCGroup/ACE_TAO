@@ -7,6 +7,7 @@ NAME = client
 TAO_IDL = $(CORE_BINDIR)\tao_idl -g $(CORE_BINDIR)\gperf.exe -GH -Ge 1
 
 OBJFILES = \
+	$(OBJDIR)\Client_Task.obj \
 	$(OBJDIR)\testC.obj \
 	$(OBJDIR)\testS.obj \
 	$(OBJDIR)\client.obj
