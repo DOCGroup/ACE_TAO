@@ -29,7 +29,7 @@ BIN =   Aio_Platform_Test \
 	MT_SOCK_Test \
 	Message_Block_Test \
 	Message_Queue_Test \
-	Message_Queue_Notifications_Test.cpp \
+	Message_Queue_Notifications_Test \
 	Naming_Test \
 	Notify_Performance_Test \
 	Process_Mutex_Test \
