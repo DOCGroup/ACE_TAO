@@ -55,7 +55,7 @@ namespace Kokyu
 
   enum Importance_t
     // Defines the importance of the operation,
-    // which can be used by the Scheduler as a
+    // which can be used by the RtecScheduler as a
     // "tie-breaker" when other scheduling
     // parameters are equal.
     {
@@ -87,6 +87,11 @@ namespace Kokyu
     Importance_t importance_;
   };
 
+  struct DSRT_QoSDescriptor
+  {
+    short importance_;
+  };
+
   class Kokyu_Export Dispatch_Command
     {
     public:
@@ -111,21 +116,17 @@ namespace Kokyu
   class Dispatcher_Impl;
   class DSRT_Dispatcher_Impl;
 
-  enum DSRT_Sched_t {SCHED_MIF, SCHED_EDF};
-
   struct DSRT_ConfigInfo
   {
-    ACE_Sched_Params::Policy sched_policy_;
-    int sched_scope_;
   };
 
   typedef int guid_t;
   class Kokyu_Export DSRT_Dispatcher
   {
   public:
-    int schedule (guid_t guid, const QoSDescriptor&);
-    int update_schedule (guid_t guid, const QoSDescriptor&);
-    int cancel_schedule (guid_t guid, const QoSDescriptor&);
+    int schedule (guid_t guid, const DSRT_QoSDescriptor&);
+    int update_schedule (guid_t guid, const DSRT_QoSDescriptor&);
+    int cancel_schedule (guid_t guid, const DSRT_QoSDescriptor&);
     void implementation (DSRT_Dispatcher_Impl*);
 
   private:

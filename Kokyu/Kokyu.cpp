@@ -56,19 +56,19 @@ DSRT_Dispatcher::implementation (DSRT_Dispatcher_Impl* impl)
 }
 
 int
-DSRT_Dispatcher::schedule (guid_t guid, const QoSDescriptor& qos)
+DSRT_Dispatcher::schedule (guid_t guid, const DSRT_QoSDescriptor& qos)
 {
   return dispatcher_impl_->schedule (guid, qos);
 }
 
 ACE_INLINE int
-DSRT_Dispatcher::update_schedule (guid_t guid, const QoSDescriptor& qos)
+DSRT_Dispatcher::update_schedule (guid_t guid, const DSRT_QoSDescriptor& qos)
 {
   return dispatcher_impl_->update_schedule (guid, qos);
 }
 
 ACE_INLINE int
-DSRT_Dispatcher::cancel_schedule (guid_t guid, const QoSDescriptor& qos)
+DSRT_Dispatcher::cancel_schedule (guid_t guid, const DSRT_QoSDescriptor& qos)
 {
   return dispatcher_impl_->cancel_schedule (guid, qos);
 }
