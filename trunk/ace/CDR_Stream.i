@@ -151,7 +151,7 @@ ACE_INLINE void
 ACE_OutputCDR::reset (void)
 {
   this->current_ = &this->start_;
-  this->current_is_writable_ = 1;
+  this->current_is_writable_ = true;
   ACE_CDR::mb_align (&this->start_);
   this->current_alignment_ = 0;
 
@@ -287,7 +287,7 @@ ACE_OutputCDR::write_wchar_array (const ACE_CDR::WChar* x,
   if (ACE_OutputCDR::wchar_maxbytes_ == 0)
     {
       errno = EACCES;
-      return (ACE_CDR::Boolean) (this->good_bit_ = 0);
+      return (ACE_CDR::Boolean) (this->good_bit_ = false);
     }
   if (ACE_OutputCDR::wchar_maxbytes_ == sizeof (ACE_CDR::WChar))
     return this->write_array (x,
@@ -400,7 +400,7 @@ ACE_OutputCDR::write_longdouble_array (const ACE_CDR::LongDouble* x,
                             length);
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 ACE_OutputCDR::good_bit (void) const
 {
   return this->good_bit_;
@@ -414,7 +414,7 @@ ACE_OutputCDR::adjust (size_t size,
   if (!this->current_is_writable_)
     return this->grow_and_adjust (size, align, buf);
 
-  size_t offset =
+  const size_t offset =
     ACE_align_binary (this->current_alignment_, align)
     - this->current_alignment_;
 
@@ -492,7 +492,7 @@ ACE_OutputCDR::length (void) const
   return this->start_.length ();
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 ACE_OutputCDR::do_byte_swap (void) const
 {
   return this->do_byte_swap_;
@@ -559,7 +559,7 @@ ACE_InputCDR::read_boolean (ACE_CDR::Boolean& x)
 {
   ACE_CDR::Octet tmp;
   this->read_octet (tmp);
-  x = tmp ? (ACE_CDR::Boolean) 1 : (ACE_CDR::Boolean) 0;
+  x = tmp ? true : false;
   return (ACE_CDR::Boolean) this->good_bit_;
 }
 
@@ -643,10 +643,10 @@ ACE_InputCDR::read_char_array (ACE_CDR::Char* x,
 {
   // Make sure the length of the array isn't greater than the length of
   // the stream.
-  if (length > this->length())
+  if (length > this->length ())
     {
-      this->good_bit_ = 0;
-      return 0;
+      this->good_bit_ = false;
+      return false;
     }
 
   if (this->char_translator_ == 0)
@@ -663,10 +663,10 @@ ACE_InputCDR::read_wchar_array (ACE_CDR::WChar* x,
 {
   // Make sure the length of the array isn't greater than the length of
   // the stream.
-  if (length * ACE_OutputCDR::wchar_maxbytes_ > this->length())
+  if (length * ACE_OutputCDR::wchar_maxbytes_ > this->length ())
     {
-      this->good_bit_ = 0;
-      return 0;
+      this->good_bit_ = false;
+      return false;
     }
 
   if (this->wchar_translator_ != 0)
@@ -687,10 +687,10 @@ ACE_InputCDR::read_octet_array (ACE_CDR::Octet* x,
 {
   // Make sure the length of the array isn't greater than the length of
   // the stream.
-  if (length * ACE_CDR::OCTET_SIZE > this->length())
+  if (length * ACE_CDR::OCTET_SIZE > this->length ())
     {
-      this->good_bit_ = 0;
-      return 0;
+      this->good_bit_ = false;
+      return false;
     }
 
   return this->read_array (x,
@@ -705,10 +705,10 @@ ACE_InputCDR::read_short_array (ACE_CDR::Short *x,
 {
   // Make sure the length of the array isn't greater than the length of
   // the stream.
-  if (length * ACE_CDR::SHORT_SIZE > this->length())
+  if (length * ACE_CDR::SHORT_SIZE > this->length ())
     {
-      this->good_bit_ = 0;
-      return 0;
+      this->good_bit_ = false;
+      return false;
     }
 
   return this->read_array (x,
@@ -723,10 +723,10 @@ ACE_InputCDR::read_ushort_array (ACE_CDR::UShort *x,
 {
   // Make sure the length of the array isn't greater than the length of
   // the stream.
-  if (length * ACE_CDR::SHORT_SIZE > this->length())
+  if (length * ACE_CDR::SHORT_SIZE > this->length ())
     {
-      this->good_bit_ = 0;
-      return 0;
+      this->good_bit_ = false;
+      return false;
     }
 
   return this->read_array (x,
@@ -741,10 +741,10 @@ ACE_InputCDR::read_long_array (ACE_CDR::Long *x,
 {
   // Make sure the length of the array isn't greater than the length of
   // the stream.
-  if (length * ACE_CDR::LONG_SIZE > this->length())
+  if (length * ACE_CDR::LONG_SIZE > this->length ())
     {
-      this->good_bit_ = 0;
-      return 0;
+      this->good_bit_ = false;
+      return false;
     }
 
   return this->read_array (x,
@@ -759,10 +759,10 @@ ACE_InputCDR::read_ulong_array (ACE_CDR::ULong *x,
 {
   // Make sure the length of the array isn't greater than the length of
   // the stream.
-  if (length * ACE_CDR::LONG_SIZE > this->length())
+  if (length * ACE_CDR::LONG_SIZE > this->length ())
     {
-      this->good_bit_ = 0;
-      return 0;
+      this->good_bit_ = false;
+      return false;
     }
 
   return this->read_array (x,
@@ -777,10 +777,10 @@ ACE_InputCDR::read_longlong_array (ACE_CDR::LongLong *x,
 {
   // Make sure the length of the array isn't greater than the length of
   // the stream.
-  if (length * ACE_CDR::LONGLONG_SIZE > this->length())
+  if (length * ACE_CDR::LONGLONG_SIZE > this->length ())
     {
-      this->good_bit_ = 0;
-      return 0;
+      this->good_bit_ = false;
+      return false;
     }
 
   return this->read_array (x,
@@ -795,10 +795,10 @@ ACE_InputCDR::read_ulonglong_array (ACE_CDR::ULongLong *x,
 {
   // Make sure the length of the array isn't greater than the length of
   // the stream.
-  if (length * ACE_CDR::LONGLONG_SIZE > this->length())
+  if (length * ACE_CDR::LONGLONG_SIZE > this->length ())
     {
-      this->good_bit_ = 0;
-      return 0;
+      this->good_bit_ = false;
+      return false;
     }
 
   return this->read_array (x,
@@ -813,10 +813,10 @@ ACE_InputCDR::read_float_array (ACE_CDR::Float *x,
 {
   // Make sure the length of the array isn't greater than the length of
   // the stream.
-  if (length * ACE_CDR::LONG_SIZE > this->length())
+  if (length * ACE_CDR::LONG_SIZE > this->length ())
     {
-      this->good_bit_ = 0;
-      return 0;
+      this->good_bit_ = false;
+      return false;
     }
 
   return this->read_array (x,
@@ -832,10 +832,10 @@ ACE_InputCDR::read_double_array (ACE_CDR::Double *x,
 {
   // Make sure the length of the array isn't greater than the length of
   // the stream.
-  if (length * ACE_CDR::LONGLONG_SIZE > this->length())
+  if (length * ACE_CDR::LONGLONG_SIZE > this->length ())
     {
-      this->good_bit_ = 0;
-      return 0;
+      this->good_bit_ = false;
+      return false;
     }
 
   return this->read_array (x,
@@ -850,10 +850,10 @@ ACE_InputCDR::read_longdouble_array (ACE_CDR::LongDouble* x,
 {
   // Make sure the length of the array isn't greater than the length of
   // the stream.
-  if (length * ACE_CDR::LONGDOUBLE_SIZE > this->length())
+  if (length * ACE_CDR::LONGDOUBLE_SIZE > this->length ())
     {
-      this->good_bit_ = 0;
-      return 0;
+      this->good_bit_ = false;
+      return false;
     }
   return this->read_array (x,
                            ACE_CDR::LONGDOUBLE_SIZE,
@@ -985,7 +985,7 @@ ACE_InputCDR::adjust (size_t size,
       return 0;
     }
 
-  this->good_bit_ = 0;
+  this->good_bit_ = false;
   return -1;
 }
 
@@ -1002,7 +1002,7 @@ ACE_InputCDR::start (void) const
   return &this->start_;
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 ACE_InputCDR::good_bit (void) const
 {
   return this->good_bit_;
@@ -1299,99 +1299,99 @@ ACE_INLINE ACE_CDR::Boolean
 ACE_OutputCDR::append_boolean (ACE_InputCDR &stream)
 {
   ACE_CDR::Boolean x;
-  return stream.read_boolean (x) ? this->write_boolean (x) : (ACE_CDR::Boolean) 0;
+  return stream.read_boolean (x) ? this->write_boolean (x) : false;
 }
 
 ACE_INLINE ACE_CDR::Boolean
 ACE_OutputCDR::append_char (ACE_InputCDR &stream)
 {
   ACE_CDR::Char x;
-  return stream.read_char (x) ? this->write_char (x) : (ACE_CDR::Boolean) 0;
+  return stream.read_char (x) ? this->write_char (x) : false;
 }
 
 ACE_INLINE ACE_CDR::Boolean
 ACE_OutputCDR::append_wchar (ACE_InputCDR &stream)
 {
   ACE_CDR::WChar x;
-  return stream.read_wchar (x) ? this->write_wchar (x) : (ACE_CDR::Boolean) 0;
+  return stream.read_wchar (x) ? this->write_wchar (x) : false;
 }
 
 ACE_INLINE ACE_CDR::Boolean
 ACE_OutputCDR::append_octet (ACE_InputCDR &stream)
 {
   ACE_CDR::Octet x;
-  return stream.read_octet (x) ? this->write_octet (x) : (ACE_CDR::Boolean) 0;
+  return stream.read_octet (x) ? this->write_octet (x) : false;
 }
 
 ACE_INLINE ACE_CDR::Boolean
 ACE_OutputCDR::append_short (ACE_InputCDR &stream)
 {
   ACE_CDR::Short x;
-  return stream.read_short (x) ? this->write_short (x) : (ACE_CDR::Boolean) 0;
+  return stream.read_short (x) ? this->write_short (x) : false;
 }
 
 ACE_INLINE ACE_CDR::Boolean
 ACE_OutputCDR::append_ushort (ACE_InputCDR &stream)
 {
   ACE_CDR::UShort x;
-  return stream.read_ushort (x) ? this->write_ushort (x) : (ACE_CDR::Boolean) 0;
+  return stream.read_ushort (x) ? this->write_ushort (x) : false;
 }
 
 ACE_INLINE ACE_CDR::Boolean
 ACE_OutputCDR::append_long (ACE_InputCDR &stream)
 {
   ACE_CDR::Long x;
-  return stream.read_long (x) ? this->write_long (x) : (ACE_CDR::Boolean) 0;
+  return stream.read_long (x) ? this->write_long (x) : false;
 }
 
 ACE_INLINE ACE_CDR::Boolean
 ACE_OutputCDR::append_ulong (ACE_InputCDR &stream)
 {
   ACE_CDR::ULong x;
-  return stream.read_ulong (x) ? this->write_ulong (x) : (ACE_CDR::Boolean) 0;
+  return stream.read_ulong (x) ? this->write_ulong (x) : false;
 }
 
 ACE_INLINE ACE_CDR::Boolean
 ACE_OutputCDR::append_longlong (ACE_InputCDR &stream)
 {
   ACE_CDR::LongLong x;
-  return stream.read_longlong (x) ? this->write_longlong (x) : (ACE_CDR::Boolean) 0;
+  return stream.read_longlong (x) ? this->write_longlong (x) : false;
 }
 
 ACE_INLINE ACE_CDR::Boolean
 ACE_OutputCDR::append_ulonglong (ACE_InputCDR &stream)
 {
   ACE_CDR::ULongLong x;
-  return stream.read_ulonglong (x) ? this->write_ulonglong (x) : (ACE_CDR::Boolean) 0;
+  return stream.read_ulonglong (x) ? this->write_ulonglong (x) : false;
 }
 
 ACE_INLINE ACE_CDR::Boolean
 ACE_OutputCDR::append_float (ACE_InputCDR &stream)
 {
   ACE_CDR::Float x;
-  return stream.read_float (x) ? this->write_float (x) : (ACE_CDR::Boolean) 0;
+  return stream.read_float (x) ? this->write_float (x) : false;
 }
 
 ACE_INLINE ACE_CDR::Boolean
 ACE_OutputCDR::append_double (ACE_InputCDR &stream)
 {
   ACE_CDR::Double x;
-  return stream.read_double (x) ? this->write_double (x) : (ACE_CDR::Boolean) 0;
+  return stream.read_double (x) ? this->write_double (x) : false;
 }
 
 ACE_INLINE ACE_CDR::Boolean
 ACE_OutputCDR::append_longdouble (ACE_InputCDR &stream)
 {
   ACE_CDR::LongDouble x;
-  return stream.read_longdouble (x) ? this->write_longdouble (x) : (ACE_CDR::Boolean) 0;
+  return stream.read_longdouble (x) ? this->write_longdouble (x) : false;
 }
 
 ACE_INLINE ACE_CDR::Boolean
 ACE_OutputCDR::append_string (ACE_InputCDR &stream)
 {
   ACE_CDR::Char *x;
-  ACE_CDR::Boolean flag =
-    (stream.read_string (x) ? this->write_string (x) : (ACE_CDR::Boolean) 0);
+  const ACE_CDR::Boolean flag =
+    (stream.read_string (x) ? this->write_string (x) : false);
   delete [] x;
   return flag;
 }
@@ -1400,8 +1400,8 @@ ACE_INLINE ACE_CDR::Boolean
 ACE_OutputCDR::append_wstring (ACE_InputCDR &stream)
 {
   ACE_CDR::WChar *x;
-  ACE_CDR::Boolean flag =
-    (stream.read_wstring (x) ? this->write_wstring (x) : (ACE_CDR::Boolean) 0);
+  const ACE_CDR::Boolean flag =
+    (stream.read_wstring (x) ? this->write_wstring (x) : false);
   delete [] x;
   return flag;
 }
@@ -1412,7 +1412,7 @@ ACE_InputCDR::reset_byte_order (int byte_order)
   this->do_byte_swap_ = (byte_order != ACE_CDR_BYTE_ORDER);
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 ACE_InputCDR::do_byte_swap (void) const
 {
   return this->do_byte_swap_;
@@ -1421,10 +1421,7 @@ ACE_InputCDR::do_byte_swap (void) const
 ACE_INLINE int
 ACE_InputCDR::byte_order (void) const
 {
-  if (this->do_byte_swap ())
-    return !ACE_CDR_BYTE_ORDER;
-  else
-    return ACE_CDR_BYTE_ORDER;
+  return this->do_byte_swap () ? !ACE_CDR_BYTE_ORDER : ACE_CDR_BYTE_ORDER;
 }
 
 ACE_INLINE int
@@ -1439,7 +1436,7 @@ ACE_InputCDR::align_read_ptr (size_t alignment)
       return 0;
     }
 
-  this->good_bit_ = 0;
+  this->good_bit_ = false;
   return -1;
 }
 
@@ -1532,7 +1529,7 @@ ACE_Char_Codeset_Translator::adjust (ACE_OutputCDR& out,
 }
 
 ACE_INLINE void
-ACE_Char_Codeset_Translator::good_bit (ACE_OutputCDR& out, int bit)
+ACE_Char_Codeset_Translator::good_bit (ACE_OutputCDR& out, bool bit)
 {
   out.good_bit_ = bit;
 }
@@ -1635,7 +1632,7 @@ ACE_WChar_Codeset_Translator::adjust (ACE_OutputCDR& out,
 }
 
 ACE_INLINE void
-ACE_WChar_Codeset_Translator::good_bit (ACE_OutputCDR& out, int bit)
+ACE_WChar_Codeset_Translator::good_bit (ACE_OutputCDR& out, bool bit)
 {
   out.good_bit_ = bit;
 }
