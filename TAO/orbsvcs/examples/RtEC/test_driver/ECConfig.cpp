@@ -31,6 +31,12 @@
 
 namespace TestConfig {
 
+//data passed to spawned thread
+  struct spawn_data_t {
+    ACE_RW_Mutex *lock;
+    CORBA::ORB_var *orb;
+  };
+
 //TODO: Obviously, we can't just hardcode these!
 //And assuming only one supplier and consumer is bad, too.
 const char *supplierEC_iorfile =
@@ -47,7 +53,7 @@ const char *consumer_schedule =
   "consumer_schedule.out";
 const char *remote_inet_addr =
   "bhangra.doc.wustl.edu";
-int remote_inet_port = 424242;
+int remote_inet_port = 42424;
 
 template <class SCHED_STRAT>
 ECConfig<SCHED_STRAT>::ECConfig (void)
@@ -255,6 +261,9 @@ ECConfig<SCHED_STRAT>::configure (TCFG_SET_WPTR testconfigs)
 
           //now we block until the client writes its IOR
           this->barrier(true);
+
+          //block forever so I can debug effectively!
+          //this->barrier(true);
         }
 
       //CONSUMER writes IORs and blocks
@@ -389,12 +398,19 @@ ECConfig<SCHED_STRAT>::run (void)
   ACE_TRY
     {
       ACE_Thread_Manager *inst = ACE_Thread_Manager::instance();
-      ACE_Reactor *reactor = ACE_Reactor::instance();
+      //ACE_Reactor *reactor = ACE_Reactor::instance();
 
       // Spawn orb thread (which calls orb.run(), then terminates on return)
       ACE_DEBUG((LM_DEBUG,"SPAWNING ORB thread\n"));
       //int ret = inst->spawn(ECConfig<SCHED_STRAT>::run_orb,&(this->orb));
-      int ret = inst->spawn(ECConfig<SCHED_STRAT>::run_orb,this->test_done);
+      spawn_data_t *data = new spawn_data_t;
+      printf("data points to %p\n",(void*)(data));
+      printf("setting data->lock to %p\n",(void*)(this->test_done));
+      data->lock = this->test_done;
+      printf("data->lock = %p\n",(void*)(data->lock));
+      data->orb = &(this->orb);
+      printf("data->orb = %p\n",(void*)(data->orb));
+      int ret = inst->spawn(ECConfig<SCHED_STRAT>::run_orb,data);
       //int ret = inst->spawn(ECConfig<SCHED_STRAT>::run_orb,reactor);
       //no need for getting tid?
       if (ret == -1)
@@ -404,11 +420,10 @@ ECConfig<SCHED_STRAT>::run (void)
           return 1;
         }
 
-      /*
       orb->run();
       //this method returns when orb->shutdown() is called; then thread exits
-      */
 
+      /*
       //REACTOR CHANGE
       //orb->orb_core()->reactor()->run_reactor_event_loop();
       ACE_DEBUG((LM_DEBUG,"Starting Reactor loop; work? %d\n",
@@ -419,7 +434,7 @@ ECConfig<SCHED_STRAT>::run (void)
       reactor->run_reactor_event_loop();
       //this method returns when end_reactor_event_loop() is called; then thread exits
       ACE_CHECK;
-
+      */
       //REACTOR CHANGE END
 
       ACE_DEBUG((LM_DEBUG, "ORB thread: Shutdown\n"));
@@ -431,6 +446,8 @@ ECConfig<SCHED_STRAT>::run (void)
           return 1;
         }
 
+      delete data; //don't need it anymore
+      data = 0;
       //all Suppliers done, so stop EC and ORB
       //Shutdown EC
       //this->reset();
@@ -532,7 +549,7 @@ ECConfig<SCHED_STRAT>::make_federated (ACE_ENV_SINGLE_ARG_DECL)
   ACE_DEBUG((LM_DEBUG,"Creating gateway\n"));
   TAO_EC_Gateway_Sched *gateway = new TAO_EC_Gateway_Sched();
 
-  ACE_DEBUG((LM_DEBUG,"Supplier gateway init\n"));
+  ACE_DEBUG((LM_DEBUG,"Gateway init\n"));
   //for consumer, remote is supplier EC
   gateway->init (remote_ec.in (),
                  this->event_channel.in (),
@@ -542,6 +559,7 @@ ECConfig<SCHED_STRAT>::make_federated (ACE_ENV_SINGLE_ARG_DECL)
                  consumerEC_iorfile
                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
+  ACE_DEBUG((LM_DEBUG,"Gateway init returned; assigning\n"));
   this->gateway_impl = gateway;
   ACE_DEBUG((LM_DEBUG,"Gateway init completed\n"));
 
@@ -790,8 +808,12 @@ ECConfig<SCHED_STRAT>::barrier(bool is_supplier)
 template <class SCHED_STRAT> ACE_THR_FUNC_RETURN
 ECConfig<SCHED_STRAT>::run_orb(void *data)
 {
-  ACE_RW_Mutex *test_done = ACE_reinterpret_cast(ACE_RW_Mutex*,data);
-  printf("test_done: %p\n",test_done);
+  printf("data: %p\n",data);
+  spawn_data_t *data_ptr = ACE_reinterpret_cast(spawn_data_t*,data);
+  printf("data_ptr: %p\n",data_ptr);
+  printf("lock: %p\n",(void*)(data_ptr->lock));
+  printf("orb: %p\n",(void*)(data_ptr->orb));
+  //ACE_RW_Mutex *test_done = ACE_reinterpret_cast(ACE_RW_Mutex*,data);
   //test_done->dump();
   //const ACE_rwlock_t& lock = test_done->lock();
   //printf("Number of: readers=%d\twriters=%d\n",lock.num_waiting_readers_,lock.num_waiting_writers_);
@@ -801,7 +823,7 @@ ECConfig<SCHED_STRAT>::run_orb(void *data)
 
   //      Block waiting for consumers to finish
   //when can acquire write lock, all Suppliers are finished
-  int ret = test_done->acquire_write();
+  int ret = data_ptr->lock->acquire_write();
   if (ret == -1)
     {
       ACE_DEBUG((LM_DEBUG, "ERROR: could not acquire write lock for ECConfig: %s\n",
@@ -813,11 +835,13 @@ ECConfig<SCHED_STRAT>::run_orb(void *data)
 
   //REACTOR CHANGE
   // Shutdown ORB
-  //this->orb->shutdown(1); //argument is TRUE
+  (*(data_ptr->orb))->shutdown(1); //argument is TRUE so orb waits until work
+                              //done before shutting down
+  /*
   //orb->orb_core()->reactor()->end_reactor_event_loop();
   ACE_DEBUG((LM_DEBUG,"DONE; stopping reactor event loop\n"));
   ACE_Reactor::instance()->end_reactor_event_loop();
-
+  */
   ACE_DEBUG((LM_DEBUG,"ORB Thread exiting\n"));
   return 0;
 }
