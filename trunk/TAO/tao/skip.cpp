@@ -26,7 +26,9 @@
 #include "tao/ValueBase.h"
 #include "tao/debug.h"
 
-ACE_RCSID(tao, skip, "$Id$")
+ACE_RCSID (tao, 
+
+           skip, "$Id$")
 
 CORBA::TypeCode::traverse_status
 TAO_Marshal_Primitive::skip (CORBA::TypeCode_ptr  tc,
@@ -487,12 +489,36 @@ TAO_Marshal_Union::skip (CORBA::TypeCode_ptr  tc,
 
         case CORBA::tk_enum:
           {
-            const CORBA::ULong *d = 
-              ACE_reinterpret_cast (const CORBA::ULong *,
-                                    any->value ());
-            if (*d == enum_v)
+            ACE_Message_Block *mb = any->_tao_get_cdr ();
+
+            if (mb != 0)
               {
-                current_member = i;
+                CORBA::ULong d;
+                TAO_InputCDR cdr (mb->data_block (),
+                                  ACE_Message_Block::DONT_DELETE,
+                                  mb->rd_ptr () - mb->base (),
+                                  mb->wr_ptr () - mb->base (),
+                                  ACE_CDR_BYTE_ORDER,
+						                      TAO_DEF_GIOP_MAJOR,
+						                      TAO_DEF_GIOP_MINOR);
+
+                cdr.read_ulong (d);
+
+                if (d == enum_v)
+                  {
+                    current_member = i;
+                  }
+              }
+            else
+              {
+                const CORBA::ULong *d = 
+                  ACE_reinterpret_cast (const CORBA::ULong *,
+                                        any->value ());
+
+                if (*d == enum_v)
+                  {
+                    current_member = i;
+                  }
               }
           }
           break;
