@@ -3,6 +3,19 @@
 #include "JAWS/Data_Block.h"
 #include "JAWS/Policy.h"
 
+JAWS_Data_Block::JAWS_Data_Block (void)
+  : ACE_Message_Block (JAWS_DATA_BLOCK_SIZE),
+    io_handler_ (0),
+    policy_ (0),
+    task_ (0),
+    payload_ (0)
+{
+}
+
+JAWS_Data_Block::~JAWS_Data_Block (void)
+{
+}
+
 JAWS_Pipeline_Handler *
 JAWS_Data_Block::task (void)
 {
@@ -21,6 +34,12 @@ JAWS_Data_Block::policy (void)
   return this->policy_;
 }
 
+void *
+JAWS_Data_Block::payload (void)
+{
+  return this->payload_;
+}
+
 void
 JAWS_Data_Block::task (JAWS_Pipeline_Handler *taskp)
 {
@@ -37,4 +56,10 @@ void
 JAWS_Data_Block::policy (JAWS_Dispatch_Policy *policyp)
 {
   this->policy_ = policyp;
+}
+
+void
+JAWS_Data_Block::payload (void *payloadp)
+{
+  this->payload_ = payloadp;
 }

@@ -82,7 +82,13 @@ JAWS_Server::open (JAWS_Pipeline_Handler *protocol,
   if (policy == 0)
     policy = &this->policy_;
 
-  JAWS_Data_Block db;
+  JAWS_Data_Block *db = new JAWS_Data_Block;
+  if (db == 0)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%t) JAWS_Server::open, could not create Data_Block\n"));
+      return -1;
+    }
 
   ACE_INET_Addr inet_addr (this->port_);
   JAWS_IO_Synch_Acceptor_Singleton::instance ()->open (inet_addr);
@@ -90,20 +96,20 @@ JAWS_Server::open (JAWS_Pipeline_Handler *protocol,
 
   // initialize data block
 
-  db.task (JAWS_Pipeline_Accept_Task_Singleton::instance ());
-  db.policy (policy);
+  db->task (JAWS_Pipeline_Accept_Task_Singleton::instance ());
+  db->policy (policy);
 
-  db.task ()->next (protocol);
+  db->task ()->next (protocol);
 
   // The message block should contain an INET_Addr, and call the
   // io->accept (INET_Addr) method!
 
-  ACE_Message_Block mb (&db);
-
-  policy->concurrency ()->put (&mb);
+  policy->concurrency ()->put (db);
 
   while (ACE_OS::thr_join (0, NULL) != -1)
     ;
+
+  db->release ();
 
   return 0;
 }

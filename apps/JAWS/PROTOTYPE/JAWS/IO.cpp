@@ -1,5 +1,7 @@
 // $Id$
 
+#include "JAWS/JAWS.h"
+
 #include "JAWS/IO.h"
 #include "JAWS/IO_Handler.h"
 #include "JAWS/IO_Acceptor.h"
@@ -62,6 +64,7 @@ void
 JAWS_Synch_IO::accept (JAWS_IO_Handler *ioh)
 {
   ACE_SOCK_Stream new_stream;
+  new_stream.set_handle (ACE_INVALID_HANDLE);
   if (this->acceptor_->accept (new_stream) == -1)
     ioh->accept_error ();
   else
@@ -70,19 +73,22 @@ JAWS_Synch_IO::accept (JAWS_IO_Handler *ioh)
 
 void
 JAWS_Synch_IO::read (JAWS_IO_Handler *ioh,
-                     ACE_Message_Block &mb,
-                     int size)
+                     ACE_Message_Block *mb,
+                     unsigned int size)
 {
+  JAWS_TRACE ("JAWS_Synch_IO::read");
+
   ACE_SOCK_Stream stream;
 
   stream.set_handle (ioh->handle ());
-  int result = stream.recv (mb.wr_ptr (), size);
+  int result = stream.recv (mb->wr_ptr (), size);
 
   if (result <= 0)
     ioh->read_error ();
   else
     {
-      mb.wr_ptr (result);
+      JAWS_TRACE ("JAWS_Synch_IO::read success");
+      mb->wr_ptr (result);
       ioh->read_complete (mb);
     }
 }
@@ -91,8 +97,8 @@ void
 JAWS_Synch_IO::receive_file (JAWS_IO_Handler *ioh,
                              const char *filename,
                              void *initial_data,
-                             int initial_data_length,
-                             int entire_length)
+                             unsigned int initial_data_length,
+                             unsigned int entire_length)
 {
   ACE_Filecache_Handle handle (filename, entire_length);
 
@@ -125,9 +131,9 @@ void
 JAWS_Synch_IO::transmit_file (JAWS_IO_Handler *ioh,
                               const char *filename,
                               const char *header,
-                              int header_size,
+                              unsigned int header_size,
                               const char *trailer,
-                              int trailer_size)
+                              unsigned int trailer_size)
 {
   ACE_Filecache_Handle handle (filename);
 
@@ -183,7 +189,7 @@ JAWS_Synch_IO::transmit_file (JAWS_IO_Handler *ioh,
 void
 JAWS_Synch_IO::send_confirmation_message (JAWS_IO_Handler *ioh,
                                           const char *buffer,
-                                          int length)
+                                          unsigned int length)
 {
   this->send_message (ioh, buffer, length);
   ioh->confirmation_message_complete ();
@@ -192,7 +198,7 @@ JAWS_Synch_IO::send_confirmation_message (JAWS_IO_Handler *ioh,
 void
 JAWS_Synch_IO::send_error_message (JAWS_IO_Handler *ioh,
                                    const char *buffer,
-                                   int length)
+                                   unsigned int length)
 {
   this->send_message (ioh, buffer, length);
   ioh->error_message_complete ();
@@ -201,7 +207,7 @@ JAWS_Synch_IO::send_error_message (JAWS_IO_Handler *ioh,
 void
 JAWS_Synch_IO::send_message (JAWS_IO_Handler *ioh,
                              const char *buffer,
-                             int length)
+                             unsigned int length)
 {
   ACE_SOCK_Stream stream;
   stream.set_handle (ioh->handle ());

@@ -17,11 +17,11 @@
 class ACE_Proactor;
 class ACE_Reactor;
 
-#if defined (ACE_HAS_THREAD_SAFE_ACCEPT)
+#if defined (JAWS_HAS_THREAD_SAFE_ACCEPT)
 typedef ACE_LOCK_SOCK_Acceptor<ACE_SYNCH_NULL_MUTEX> JAWS_IO_SOCK_Acceptor;
 #else
 typedef ACE_LOCK_SOCK_Acceptor<ACE_SYNCH_MUTEX> JAWS_IO_SOCK_Acceptor;
-#endif /* ACE_HAS_THREAD_SAFE_ACCEPT */
+#endif /* JAWS_HAS_THREAD_SAFE_ACCEPT */
 
 class JAWS_IO_Acceptor
 {
