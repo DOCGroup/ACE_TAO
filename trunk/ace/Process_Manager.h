@@ -367,8 +367,8 @@ private:
   // down (we can only delete it safely if we created it!)
 
 #if defined (ACE_HAS_THREADS)
-  // = ACE_Thread_Mutex for access/ops on process_table_
-  ACE_Thread_Mutex lock_;
+  ACE_Recursive_Thread_Mutex lock_;
+  // This lock protects access/ops on <process_table_>.
 #endif /* ACE_HAS_THREADS */
 };
 

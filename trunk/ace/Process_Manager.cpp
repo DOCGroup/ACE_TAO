@@ -209,7 +209,7 @@ ACE_Process_Manager::open (size_t size,
 #endif  // !defined(ACE_WIN32) && !defined (ACE_PSOS)
     }
 
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
+  ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, this->lock_, -1));
 
   if (this->max_process_table_size_ < size)
     this->resize (size);
@@ -253,7 +253,7 @@ ACE_Process_Manager::close (void)
     }
 #endif /*  !ACE_WIN32  */
 
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
+  ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, this->lock_, -1));
 
   if (this->process_table_ != 0)
     {
@@ -327,7 +327,7 @@ ACE_Process_Manager::handle_signal (int,
       if (status != STILL_ACTIVE)
         {
           {
-            ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, lock_, -1));
+            ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, lock_, -1));
 
             ssize_t i = this->find_proc (proc);
             pid_t pid = i != -1
@@ -363,7 +363,7 @@ int
 ACE_Process_Manager::register_handler (ACE_Event_Handler *eh,
                                        pid_t pid)
 {
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
+  ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, this->lock_, -1));
 
   if (pid == ACE_INVALID_PID)
     {
@@ -422,7 +422,7 @@ ACE_Process_Manager::spawn (ACE_Process *process,
       || pid == 0)
     return pid;
 
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex,
+  ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex,
                             ace_mon, this->lock_, -1));
 
   if (this->append_proc (process) == -1)
@@ -522,7 +522,7 @@ ACE_Process_Manager::remove (pid_t pid)
 {
   ACE_TRACE ("ACE_Process_Manager::remove");
 
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
+  ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, this->lock_, -1));
 
   ssize_t i = this->find_proc (pid);
 
@@ -578,7 +578,7 @@ ACE_Process_Manager::terminate (pid_t pid)
 {
   ACE_TRACE ("ACE_Process_Manager::terminate");
 
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
+  ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, this->lock_, -1));
 
   // Check for duplicates and bail out if they're already
   // registered...
@@ -607,7 +607,7 @@ ACE_Process_Manager::terminate (pid_t pid,
 {
   ACE_TRACE ("ACE_Process_Manager::terminate");
 
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
+  ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, this->lock_, -1));
 
   // Check for duplicates and bail out if they're already
   // registered...
@@ -725,7 +725,7 @@ ACE_Process_Manager::wait (pid_t pid,
   ssize_t idx = -1;
   ACE_Process *proc = 0;
 
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
+  ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, this->lock_, -1));
 
   if (pid != 0)
     {
