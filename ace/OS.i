@@ -9929,7 +9929,7 @@ ACE_INLINE ACE_TCHAR *
 ACE_OS::ctime_r (const time_t *t, ACE_TCHAR *buf, int buflen)
 {
   ACE_TRACE ("ACE_OS::ctime_r");
-# if defined (ACE_HAS_REENTRANT_FUNCTIONS)
+# if defined (ACE_HAS_REENTRANT_FUNCTIONS) || defined (ACE_HAS_TIME_R)
 #   if defined (ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R)
   ACE_TCHAR *result;
 #     if defined (DIGITAL_UNIX)
@@ -10000,7 +10000,7 @@ ACE_INLINE struct tm *
 ACE_OS::gmtime_r (const time_t *t, struct tm *res)
 {
   ACE_TRACE ("ACE_OS::localtime_r");
-#if defined (ACE_HAS_REENTRANT_FUNCTIONS)
+#if defined (ACE_HAS_REENTRANT_FUNCTIONS) || defined (ACE_HAS_TIME_R)
 # if defined (DIGITAL_UNIX)
   ACE_OSCALL_RETURN (::_Pgmtime_r (t, res), struct tm *, 0);
 # elif defined (HPUX_10)
@@ -10040,7 +10040,7 @@ ACE_INLINE char *
 ACE_OS::asctime_r (const struct tm *t, char *buf, int buflen)
 {
   ACE_TRACE ("ACE_OS::asctime_r");
-#if defined (ACE_HAS_REENTRANT_FUNCTIONS)
+#if defined (ACE_HAS_REENTRANT_FUNCTIONS) || defined (ACE_HAS_TIME_R)
 # if defined (ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R)
   char *result;
 #   if defined (DIGITAL_UNIX)
