@@ -1,9 +1,16 @@
+Tue Dec 21 12:17:50 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/PerlACE/Process_Win32.pm:
+
+          Take into account the fact that installed binaries do not conform
+          to the -ExeSubDir option.
+
 Tue Dec 21 04:52:25 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* Release:
-	* bin/make_release:
+        * Release:
+        * bin/make_release:
 
-	  Udated them to add the correct versions of files.
+          Udated them to add the correct versions of files.
 
 Mon Dec 20 17:38:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -12,17 +19,17 @@ Mon Dec 20 17:38:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Dec 20 08:33:28 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* configure.ac:
+        * configure.ac:
 
-	  Added test for ACE_LACKS_UMASK.
+          Added test for ACE_LACKS_UMASK.
 
 Mon Dec 20 08:10:31 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* configure.ac:
-	* m4/config_h.m4:
+        * configure.ac:
+        * m4/config_h.m4:
 
-	  Replaced autoheader templates for type and size in config_h.m4
-	  with a third argument to AC_DEFINE in configure.ac.
+          Replaced autoheader templates for type and size in config_h.m4
+          with a third argument to AC_DEFINE in configure.ac.
 
 Mon Dec 20 09:40:22 2004  Chad Elliott  <elliott_c@ociweb.com>
 

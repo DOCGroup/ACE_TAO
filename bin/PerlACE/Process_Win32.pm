@@ -81,6 +81,11 @@ sub Normalize_Executable_Name
 
     $executable = $dirname.$PerlACE::Process::ExeSubDir.$basename.".EXE";
 
+    ## Installed executables do not conform to the ExeSubDir
+    if (! -x $executable && -x $dirname.$basename.'.EXE') {
+      $executable = $dirname.$basename.'.EXE';
+    }
+
     $executable =~ s/\//\\/g; # / <- # color coding issue in devenv
 
     return $executable;
@@ -98,18 +103,13 @@ sub Executable
     my $executable = $self->{EXECUTABLE};
 
     if ($self->{IGNOREEXESUBDIR} == 0) {
-
-      my $basename = basename ($executable);
-      my $dirname = dirname ($executable). '/';
-
-      $executable = $dirname.$PerlACE::Process::ExeSubDir.$basename.".EXE";
-
+      $executable = PerlACE::Process::Normalize_Executable_Name ($executable);
     }
     else {
       $executable = $executable.".EXE";
+      $executable =~ s/\//\\/g; # / <- # color coding issue in devenv
     }
 
-    $executable =~ s/\//\\/g; # / <- # color coding issue in devenv
     return $executable;
 }
 
