@@ -69,7 +69,7 @@ TAO_ServantBase::_default_POA (CORBA::Environment &ACE_TRY_ENV)
     TAO_ORB_Core_instance ()->root_poa (ACE_TRY_ENV);
   ACE_CHECK_RETURN (PortableServer::POA::_nil ());
 
-  return PortableServer::POA::_narrow (object.in (), 
+  return PortableServer::POA::_narrow (object.in (),
                                        ACE_TRY_ENV);
 }
 
@@ -121,7 +121,7 @@ TAO_ServantBase::_create_stub (CORBA_Environment &ACE_TRY_ENV)
 
   CORBA::ORB_ptr servant_orb = 0;
 
-  if (poa_current_impl != 0 
+  if (poa_current_impl != 0
       && this == poa_current_impl->servant ())
     {
       servant_orb = poa_current_impl->orb_core ().orb () ;

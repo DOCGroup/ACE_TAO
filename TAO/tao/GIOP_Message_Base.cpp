@@ -474,9 +474,9 @@ TAO_GIOP_Message_Base::generate_exception_reply (
 
   ACE_TRY
     {
-      // Make the GIOP & reply header. They are version specific.
-      this->generator_parser_->write_reply_header (cdr,
-                                                   params);
+      // Make the GIOP & reply header.
+      this->generate_reply_header (cdr,
+                                   params);
       x._tao_encode (cdr, ACE_TRY_ENV);
       ACE_TRY_CHECK;
     }
