@@ -1,3 +1,9 @@
+Sun Jul 29 20:00:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
+
+        * tao/PortableServer/ORB_Manager.h:
+
+          Improved comments and converted to doxygen format.
+
 Sun Jul 29 10:15:13 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/TAO_Internal.cpp (open_services_i):
