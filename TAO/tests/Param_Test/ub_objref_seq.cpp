@@ -67,39 +67,48 @@ int
 Test_ObjRef_Sequence::init_parameters (Param_Test_ptr objref,
                                        CORBA::Environment &ACE_TRY_ENV)
 {
-  Coffee::Desc desc;
-  Generator *gen = GENERATOR::instance (); // value generator
-
-  // get some sequence length (not more than 10)
-  CORBA::ULong len = (CORBA::ULong) (gen->gen_long () % 5) + 5;
-
-  // set the length of the sequence
-  this->in_.length (len);
-  // now set each individual element
-  for (CORBA::ULong i = 0; i < this->in_.length (); i++)
+  ACE_TRY
     {
-      // generate some arbitrary string to be filled into the ith location in
-      // the sequence
-      this->in_[i] = objref->make_coffee (ACE_TRY_ENV);
-      if (ACE_TRY_ENV.exception ())
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "make cofee \n"), -1);
-        }
-      // select a Coffee flavor at random
-      CORBA::ULong index = (CORBA::ULong) (gen->gen_long () % 6);
-      desc.name = Coffee_Flavor [index];
-      // set the attribute for the in object
-      Coffee_ptr tmp = this->in_[i];
-      tmp->description (desc, ACE_TRY_ENV);
+      Coffee::Desc desc;
+      Generator *gen = GENERATOR::instance (); // value generator
 
-      if (ACE_TRY_ENV.exception ())
+      // get some sequence length (not more than 10)
+      CORBA::ULong len = (CORBA::ULong) (gen->gen_long () % 5) + 5;
+
+      // set the length of the sequence
+      this->in_.length (len);
+      // now set each individual element
+
+      for (CORBA::ULong i = 0; i < this->in_.length (); i++)
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "set cofee attribute \n"), -1);
+          // generate some arbitrary string to be filled into the ith location in
+          // the sequence
+          this->in_[i] = objref->make_coffee (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+
+          // select a Coffee flavor at random
+          CORBA::ULong index = (CORBA::ULong) (gen->gen_long () % 6);
+
+          desc.name = Coffee_Flavor [index];
+          // set the attribute for the in object
+          Coffee_ptr tmp = this->in_[i];
+
+          tmp->description (desc, 
+                            ACE_TRY_ENV);
+          ACE_TRY_CHECK;
         }
+
+        return 0;
     }
-  return 0;
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "Test_ObjRef_Sequence::init_parameters\n");
+
+      return -1;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
 }
 
 int
@@ -115,14 +124,27 @@ int
 Test_ObjRef_Sequence::run_sii_test (Param_Test_ptr objref,
                                     CORBA::Environment &ACE_TRY_ENV)
 {
-  Param_Test::Coffee_Mix_out out (this->out_.out ());
-  // ACE_DEBUG ((LM_DEBUG, "test_coffe_mix (IN):\n"));
-  // this->print_sequence (this->in_);
-  this->ret_ = objref->test_coffe_mix (this->in_,
-                                       this->inout_.inout (),
-                                       out,
-                                       ACE_TRY_ENV);
-  return (ACE_TRY_ENV.exception () ? -1:0);
+  ACE_TRY
+    {
+      Param_Test::Coffee_Mix_out out (this->out_.out ());
+
+      this->ret_ = objref->test_coffe_mix (this->in_,
+                                           this->inout_.inout (),
+                                           out,
+                                           ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      return 0;
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "Test_ObjRef_Sequence::run_sii_test\n");
+
+      return -1;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
 }
 
 int
@@ -130,40 +152,60 @@ Test_ObjRef_Sequence::add_args (CORBA::NVList_ptr param_list,
                                 CORBA::NVList_ptr retval,
                                 CORBA::Environment &ACE_TRY_ENV)
 {
-  CORBA::Any in_arg (Param_Test::_tc_Coffee_Mix,
-                     (void *) &this->in_,
-                     0);
+  ACE_TRY
+    {
+      CORBA::Any in_arg (Param_Test::_tc_Coffee_Mix,
+                         &this->in_,
+                         0);
 
-  CORBA::Any inout_arg (Param_Test::_tc_Coffee_Mix,
-                        &this->inout_.inout (),
-                        0);
+      CORBA::Any inout_arg (Param_Test::_tc_Coffee_Mix,
+                            &this->inout_.inout (),
+                            0);
 
-  CORBA::Any out_arg (Param_Test::_tc_Coffee_Mix,
-                      &this->out_.inout (),
-                      0);
+      CORBA::Any out_arg (Param_Test::_tc_Coffee_Mix,
+                          &this->out_.inout (), // .out () causes crash
+                          0);
 
-  // add parameters
-  param_list->add_value ("s1",
-                         in_arg,
-                         CORBA::ARG_IN,
-                         ACE_TRY_ENV);
+      // add parameters
+      param_list->add_value ("s1",
+                             in_arg,
+                             CORBA::ARG_IN,
+                             ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
-  param_list->add_value ("s2",
-                         inout_arg,
-                         CORBA::ARG_INOUT,
-                         ACE_TRY_ENV);
+      param_list->add_value ("s2",
+                             inout_arg,
+                             CORBA::ARG_INOUT,
+                             ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
-  param_list->add_value ("s3",
-                         out_arg,
-                         CORBA::ARG_OUT,
-                         ACE_TRY_ENV);
+      param_list->add_value ("s3",
+                             out_arg,
+                             CORBA::ARG_OUT,
+                             ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
-  // add return value
-  retval->item (0, ACE_TRY_ENV)->value ()->replace (Param_Test::_tc_Coffee_Mix,
-                                                    &this->ret_.inout (),
-                                                    0, // does not own
-                                                    ACE_TRY_ENV);
-  return 0;
+      CORBA::NamedValue *item = retval->item (0,
+                                              ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      item->value ()->replace (Param_Test::_tc_Coffee_Mix,
+                               &this->ret_.inout (),
+                               0, // does not own
+                               ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      return 0;
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "Test_Objref_Sequence::add_args\n");
+
+      return -1;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
 }
 
 CORBA::Boolean
@@ -173,15 +215,6 @@ Test_ObjRef_Sequence::check_validity (void)
   
   ACE_TRY
     {
-      // ACE_DEBUG ((LM_DEBUG, "IN: \n"));
-      // this->print_sequence (this->in_);
-
-      // ACE_DEBUG ((LM_DEBUG, "INOUT: \n"));
-      // this->print_sequence (this->inout_.in ());
-
-      // ACE_DEBUG ((LM_DEBUG, "OUT: \n"));
-      // this->print_sequence (this->out_.in ());
-
       this->compare (this->in_,
                      this->inout_.in (),
                      ACE_TRY_ENV);
@@ -196,15 +229,18 @@ Test_ObjRef_Sequence::check_validity (void)
                      this->ret_.in (),
                      ACE_TRY_ENV);
       ACE_TRY_CHECK;
+
+      return 1;
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception caught");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, 
+                           "Test_ObjRef_Sequence::check_validity");
+
+      return 0;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
-
- return 1; 
 }
 
 CORBA::Boolean
@@ -240,39 +276,59 @@ Test_ObjRef_Sequence::compare (const Param_Test::Coffee_Mix &s1,
                                const Param_Test::Coffee_Mix &s2,
                                CORBA::Environment &ACE_TRY_ENV)
 {
-  if (s1.maximum () != s2.maximum ())
-      return 0;
-  if (s1.length () != s2.length ())
-    return 0;
-
-  for (CORBA::ULong i=0; i < s1.length (); i++)
+  ACE_TRY
     {
-      Coffee_ptr vs1 = s1[i];
-      Coffee_ptr vs2 = s2[i];
-
-      if (CORBA::is_nil (vs1) && CORBA::is_nil (vs2))
-        continue;
-
-      if (CORBA::is_nil (vs1) || CORBA::is_nil (vs2))
-        return 0;
-
-      CORBA::String_var n1 = vs1->description (ACE_TRY_ENV)->name.in ();
-      if (ACE_TRY_ENV.exception ())
+      if (s1.maximum () != s2.maximum ())
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "retrieving description for vs1"), 0);
+          return 0;
         }
-      CORBA::String_var n2 = vs2->description (ACE_TRY_ENV)->name.in ();
-      if (ACE_TRY_ENV.exception ())
+      if (s1.length () != s2.length ())
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "retrieving description for vs2"), 0);
+          return 0;
         }
-      if (ACE_OS::strcmp(n1.in (), n2.in ()) != 0)
-        return 0;
+
+      for (CORBA::ULong i=0; i < s1.length (); i++)
+        {
+          Coffee_ptr vs1 = s1[i];
+          Coffee_ptr vs2 = s2[i];
+
+          if (CORBA::is_nil (vs1) && CORBA::is_nil (vs2))
+            {
+              continue;
+            }
+
+          if (CORBA::is_nil (vs1) || CORBA::is_nil (vs2))
+            {
+              return 0;
+            }
+
+          Coffee::Desc *desc1 = vs1->description (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+
+          CORBA::String_var n1 = desc1->name.in ();
+
+          Coffee::Desc *desc2 = vs2->description (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+
+          CORBA::String_var n2 = desc2->name.in ();
+
+          if (ACE_OS::strcmp(n1.in (), n2.in ()) != 0)
+            {
+              return 0;
+            }
+        }
+
+      return 1; // success
     }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, 
+                           "Test_ObjRef_Sequence::compare");
 
-  return 1; // success
+      return 0;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
 }
 
 void

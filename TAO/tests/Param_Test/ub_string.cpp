@@ -99,12 +99,27 @@ int
 Test_Unbounded_String::run_sii_test (Param_Test_ptr objref,
                                      CORBA::Environment &ACE_TRY_ENV)
 {
-  CORBA::String_out str_out (this->out_);
-  this->ret_ = objref->test_unbounded_string (this->in_,
-                                              this->inout_,
-                                              str_out,
-                                              ACE_TRY_ENV);
-  return (ACE_TRY_ENV.exception () ? -1:0);
+  ACE_TRY
+    {
+      CORBA::String_out str_out (this->out_);
+
+      this->ret_ = objref->test_unbounded_string (this->in_,
+                                                  this->inout_,
+                                                  str_out,
+                                                  ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      return 0;
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "Test_Unbounded_String::run_sii_test\n");
+
+      return -1;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
 }
 
 int
@@ -112,41 +127,60 @@ Test_Unbounded_String::add_args (CORBA::NVList_ptr param_list,
 				 CORBA::NVList_ptr retval,
 				 CORBA::Environment &ACE_TRY_ENV)
 {
-  // create the parmaters
-  CORBA::Any in_arg (CORBA::_tc_string,
-                     &this->in_,
-                     0);
+  ACE_TRY
+    {
+      CORBA::Any in_arg (CORBA::_tc_string,
+                         &this->in_,
+                         0);
 
-  CORBA::Any inout_arg (CORBA::_tc_string,
-                        &this->inout_,
-                        0);
+      CORBA::Any inout_arg (CORBA::_tc_string,
+                            &this->inout_,
+                            0);
 
-  CORBA::Any out_arg (CORBA::_tc_string,
-                      &this->out_,
-                      0);
+      CORBA::Any out_arg (CORBA::_tc_string,
+                          &this->out_,
+                          0);
 
-  // add parameters
-  param_list->add_value ("s1",
-                         in_arg,
-                         CORBA::ARG_IN,
-                         ACE_TRY_ENV);
+      // add parameters
+      param_list->add_value ("s1",
+                             in_arg,
+                             CORBA::ARG_IN,
+                             ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
-  param_list->add_value ("s2",
-                         inout_arg,
-                         CORBA::ARG_INOUT,
-                         ACE_TRY_ENV);
+      param_list->add_value ("s2",
+                             inout_arg,
+                             CORBA::ARG_INOUT,
+                             ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
-  param_list->add_value ("s3",
-                         out_arg,
-                         CORBA::ARG_OUT,
-                         ACE_TRY_ENV);
+      param_list->add_value ("s3",
+                             out_arg,
+                             CORBA::ARG_OUT,
+                             ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
-  // add return value
-  retval->item (0, ACE_TRY_ENV)->value ()->replace (CORBA::_tc_string,
-                                                    &this->ret_,
-                                                    0, // does not own
-                                                    ACE_TRY_ENV);
-  return 0;
+      CORBA::NamedValue *item = retval->item (0,
+                                              ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      item->value ()->replace (CORBA::_tc_string,
+                               &this->ret_,
+                               0, // does not own
+                               ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      return 0;
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "Test_String_Sequence::add_args\n");
+
+      return -1;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
 }
 
 CORBA::Boolean
