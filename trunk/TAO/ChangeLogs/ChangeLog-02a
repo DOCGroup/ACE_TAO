@@ -1,6 +1,12 @@
+Fri Jul  6 07:38:44 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP.bor:
+	* orbsvcs/orbsvcs/SSLIOP.dsp: Added the new file
+	  IIOP_SSL_Transport.cpp  to the above files.
+
 Fri Jul  6 07:12:44 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Makefile.av: Generated dependencies again. Looks 
+	* orbsvcs/orbsvcs/Makefile.av: Generated dependencies again. Looks
 	  like the last dependency generation did not do a good job. This
 	  should fix all the compile errors seen in the builds.
 
