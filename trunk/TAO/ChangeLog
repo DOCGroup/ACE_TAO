@@ -1,3 +1,8 @@
+Sat Feb  7 14:09:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Runtime_Scheduler.cpp:
+          Fixed include path
+
 Fri Feb  6 18:56:21 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Connection_Handler.cpp (svc_i):
@@ -14,18 +19,18 @@ Fri Feb  6 18:56:21 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  another condition to check for exiting out of the loop. The new
 	  condition basically checks the status of read () call. If the
 	  read call fails (we have taken care of timeouts here), we exit
-	  out of the loop. 
-	
+	  out of the loop.
+
 	* tao/Thread_Per_Connection_Handler.cpp:
 
 	  Before we call remove_ref () on the transport, just make sure
 	  to call close_connection () on the connection handler. Reactive
 	  servers do that automatically through a call from the
-	  reactor. 
+	  reactor.
 
 	  These fixes should take care of the leak problems that Chris
 	  Reed <cr@apama.com> reported. Thanks to Chris for reporting
-	  this. 
+	  this.
 
 Fri Feb  6 22:55:30 UTC 2004  Craig Rodrigues  <crodrigu@bbn.com>
 
@@ -54,7 +59,7 @@ Fri Feb  6 16:16:41 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tests/Server_Port_Zero/server.cpp:
 
 	  New test for a bug that Craig Rpdrigues reported. This test just
-	  tries starting up a CORBA server on TCP port 0. 
+	  tries starting up a CORBA server on TCP port 0.
 
         * tests/Makefile:
 
@@ -66,13 +71,13 @@ Fri Feb  6 14:59:45 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
         * orbsvcs/orbsvcs/IFRService/ExtAbstactInterfaceDef_i.h:
         * orbsvcs/orbsvcs/IFRService/ExtLocalInterfaceDef_i.cpp:
         * orbsvcs/orbsvcs/IFRService/ExtLocalInterfaceDef_i.h:
-        
+
           Added destroy() method to disambiguate multiple inheritance.
 
 Fri Feb  6 10:48:07 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* performance-tests/Sequence_Latency/Thread_Per_Connection/Roundtrip.cpp: 
-	  The shutdown () on the ORB is invoked with a value of 1. 
+	* performance-tests/Sequence_Latency/Thread_Per_Connection/Roundtrip.cpp:
+	  The shutdown () on the ORB is invoked with a value of 1.
           This should fix the vague crash in one of the builds.
 
 Fri Feb  6 09:32:16 2004  Chad Elliott  <elliott_c@ociweb.com>
