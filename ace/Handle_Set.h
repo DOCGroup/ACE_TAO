@@ -53,11 +53,6 @@ public:
    */
   ACE_Handle_Set (const ACE_FD_SET_TYPE &mask);
 
-#if defined (ACE_HAS_WINCE)
-  /// Default dtor.
-  ~ACE_Handle_Set (void);
-#endif /* ACE_HAS_WINCE */
-
   // = Methods for manipulating bitsets.
   /// Initialize the bitmask to all 0s and reset the associated fields.
   void reset (void);

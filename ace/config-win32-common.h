@@ -175,10 +175,11 @@
 #if !defined (ACE_HAS_WINCE)
 // Platform supports pread() and pwrite()
 # define ACE_HAS_P_READ_WRITE
-# if !defined (__MINGW32__)
-#  define ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS
-# endif /* __MINGW32__ */
 #endif /* ! ACE_HAS_WINCE */
+
+#if !defined (__MINGW32__)
+# define ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS
+#endif /* __MINGW32__ */
 
 #define ACE_DEFAULT_THREAD_PRIORITY 0
 

@@ -2729,37 +2729,29 @@ typedef void (*ACE_SignalHandlerV)(...);
 
 #   define ACE_INVALID_SEM_KEY 0
 
-#   if defined (ACE_HAS_WINCE)
-// @@ WinCE probably doesn't have structural exception support
-//    But I need to double check to find this out
+#   if !defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
+#     define ACE_SEH_TRY if (1)
+#     define ACE_SEH_EXCEPT(X) while (0)
+#     define ACE_SEH_FINALLY if (1)
+#   elif defined(__BORLANDC__)
+#     if (__BORLANDC__ >= 0x0530) /* Borland C++ Builder 3.0 */
+#       define ACE_SEH_TRY try
+#       define ACE_SEH_EXCEPT(X) __except(X)
+#       define ACE_SEH_FINALLY __finally
+#     else
+#       define ACE_SEH_TRY if (1)
+#       define ACE_SEH_EXCEPT(X) while (0)
+#       define ACE_SEH_FINALLY if (1)
+#     endif
+#   elif defined (__IBMCPP__) && (__IBMCPP__ >= 400)
 #     define ACE_SEH_TRY if (1)
 #     define ACE_SEH_EXCEPT(X) while (0)
 #     define ACE_SEH_FINALLY if (1)
 #   else
-#     if !defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
-#       define ACE_SEH_TRY if (1)
-#       define ACE_SEH_EXCEPT(X) while (0)
-#       define ACE_SEH_FINALLY if (1)
-#     elif defined(__BORLANDC__)
-#       if (__BORLANDC__ >= 0x0530) /* Borland C++ Builder 3.0 */
-#         define ACE_SEH_TRY try
-#         define ACE_SEH_EXCEPT(X) __except(X)
-#         define ACE_SEH_FINALLY __finally
-#       else
-#         define ACE_SEH_TRY if (1)
-#         define ACE_SEH_EXCEPT(X) while (0)
-#         define ACE_SEH_FINALLY if (1)
-#       endif
-#     elif defined (__IBMCPP__) && (__IBMCPP__ >= 400)
-#         define ACE_SEH_TRY if (1)
-#         define ACE_SEH_EXCEPT(X) while (0)
-#         define ACE_SEH_FINALLY if (1)
-#     else
-#       define ACE_SEH_TRY __try
-#       define ACE_SEH_EXCEPT(X) __except(X)
-#       define ACE_SEH_FINALLY __finally
-#     endif /* __BORLANDC__ */
-#   endif /* ACE_HAS_WINCE */
+#     define ACE_SEH_TRY __try
+#     define ACE_SEH_EXCEPT(X) __except(X)
+#     define ACE_SEH_FINALLY __finally
+#   endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
 
 // The "null" device on Win32.
 #   define ACE_DEV_NULL "nul"
