@@ -112,7 +112,7 @@ TAO_Notify_Filter_i::add_constraints (
     CosNotifyFilter::InvalidConstraint
   ))
 {
-  int constraint_length = constraint_list.length ();
+  CORBA::ULong constraint_length = constraint_list.length ();
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG, "constraint_length = %d\n", constraint_length));
   // create the list that goes out.
