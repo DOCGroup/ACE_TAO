@@ -1,3 +1,9 @@
+Mon Jul 12 21:50:12 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/RTCORBA/Direct_Priority_Mapping.h:
+        * tao/RTCORBA/Linear_Network_Priority_Mapping.h:
+          Converted old style of documentation to doxygen style
+
 Sun Jul 11 20:15:17 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO-INSTALL.html:
