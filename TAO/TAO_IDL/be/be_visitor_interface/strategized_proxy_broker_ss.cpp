@@ -124,59 +124,58 @@ be_visitor_interface_strategized_proxy_broker_ss::visit_interface (
       << "switch (strategy)"
       << be_idt_nl // idt = 4
       << "{" << be_nl;
-      if (be_global->gen_thru_poa_collocation ())
-        {
-        *os << "case TAO_Collocation_Strategies::CS_THRU_POA_STRATEGY:"
-            << be_idt_nl // idt = 5
-            << "ACE_NEW_THROW_EX ("
-            << be_idt << be_idt_nl //idt = 7
-            << "this->proxy_cache_[strategy]," << be_nl
-            << node->full_thru_poa_proxy_impl_name () << "," << be_nl
-            << "CORBA::NO_MEMORY ()"
-            << be_uidt << be_uidt_nl // idt = 5
-            << ");" << be_nl
-            << "ACE_CHECK;" << be_nl
-            << "break;"
-            << be_nl << be_uidt_nl; // idt = 4
-          }
 
-      if (be_global->gen_direct_collocation ())
-        {
-          *os << "case TAO_Collocation_Strategies::CS_DIRECT_STRATEGY:"
-              << be_idt_nl // idt = 5
-              << "ACE_NEW_THROW_EX ("
-              << be_idt << be_idt_nl //idt = 7
-              << "this->proxy_cache_[strategy]," << be_nl
-              << node->full_direct_proxy_impl_name () << "," << be_nl
-              << "CORBA::NO_MEMORY ()"
-              << be_uidt << be_uidt_nl // idt = 5
-              << ");" << be_nl
-              << "ACE_CHECK;" << be_nl
-              << "break;"
-              << be_nl << be_uidt_nl; // idt = 4
-            }
+  if (be_global->gen_thru_poa_collocation ())
+    {
+    *os << "case TAO_Collocation_Strategies::CS_THRU_POA_STRATEGY:"
+        << be_idt_nl // idt = 5
+        << "ACE_NEW_THROW_EX ("
+        << be_idt << be_idt_nl //idt = 7
+        << "this->proxy_cache_[strategy]," << be_nl
+        << node->full_thru_poa_proxy_impl_name () << "," << be_nl
+        << "CORBA::NO_MEMORY ()"
+        << be_uidt << be_uidt_nl // idt = 5
+        << ");" << be_nl
+        << "ACE_CHECK;" << be_nl
+        << "break;"
+        << be_nl << be_uidt_nl; // idt = 4
+      }
 
-      *os << "case TAO_Collocation_Strategies::CS_REMOTE_STRATEGY:" << be_nl
-          << "default:"
+  if (be_global->gen_direct_collocation ())
+    {
+      *os << "case TAO_Collocation_Strategies::CS_DIRECT_STRATEGY:"
           << be_idt_nl // idt = 5
           << "ACE_NEW_THROW_EX ("
           << be_idt << be_idt_nl //idt = 7
           << "this->proxy_cache_[strategy]," << be_nl
-          << "::" << node->full_remote_proxy_impl_name () << "," << be_nl
+          << node->full_direct_proxy_impl_name () << "," << be_nl
           << "CORBA::NO_MEMORY ()"
           << be_uidt << be_uidt_nl // idt = 5
           << ");" << be_nl
           << "ACE_CHECK;" << be_nl
           << "break;"
-          << be_uidt_nl // idt = 4
-          << be_uidt_nl // idt = 3
+          << be_nl << be_uidt_nl; // idt = 4
+        }
 
+  *os << "case TAO_Collocation_Strategies::CS_REMOTE_STRATEGY:" << be_nl
+      << "default:"
+      << be_idt_nl // idt = 5
+      << "ACE_NEW_THROW_EX ("
+      << be_idt << be_idt_nl //idt = 7
+      << "this->proxy_cache_[strategy]," << be_nl
+      << "::" << node->full_remote_proxy_impl_name () << "," << be_nl
+      << "CORBA::NO_MEMORY ()"
+      << be_uidt << be_uidt_nl // idt = 5
+      << ");" << be_nl
+      << "ACE_CHECK;" << be_nl
+      << "break;"
+      << be_uidt_nl // idt = 4
+      << be_uidt_nl // idt = 3
       << "}"
       << be_uidt_nl // idt = 2
       << be_uidt_nl // idt = 1
       << "}"
       << be_uidt_nl // idt = 0
-
       << "}" << be_nl << be_nl;
 
   *os << be_nl

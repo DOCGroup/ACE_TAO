@@ -156,23 +156,6 @@ be_predefined_type::compute_tc_name (void)
   this->tc_name_->nconc (conc_name);
 }
 
-// Compute the size type of the node in question.
-int
-be_predefined_type::compute_size_type (void)
-{
-  if (this->pt () == AST_PredefinedType::PT_any
-      || this->pt () == AST_PredefinedType::PT_pseudo)
-    {
-      this->size_type (AST_Type::VARIABLE);
-    }
-  else
-    {
-      this->size_type (AST_Type::FIXED);
-    }
-
-  return 0;
-}
-
 void
 be_predefined_type::compute_repoID (void)
 {

@@ -326,7 +326,8 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_sequence_ch::"
                          "visit_sequence - "
-                         "failed creating name\n"), -1);
+                         "failed creating name\n"), 
+                        -1);
     }
 
   if (node->cli_hdr_gen () || node->imported ())
@@ -359,7 +360,8 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_sequence_ch::"
                          "visit_sequence - "
-                         "Bad element type\n"), -1);
+                         "Bad element type\n"), 
+                        -1);
     }
 
   *os << "class " << node->local_name () << ";" << be_nl;

@@ -40,64 +40,59 @@ be_visitor_valuetype_ch::~be_visitor_valuetype_ch (void)
 int
 be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
-
-  if (!node->cli_hdr_gen () && !node->imported ())
-    {
-      *os << be_nl << "// TAO_IDL - Generated from "
-          << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
-
-      *os << "// Valuetype class" << be_nl;
-
-      // == STEP 1: Generate the class name and class names we inherit ==
-
-      // Forward declaration.
-      *os << "class " << node->local_name () << ";" << be_nl;
-
-      os->gen_ifdef_macro (node->flat_name (), "_ptr");
-
-      *os << "typedef " << node->local_name ()
-          << " *" << node->local_name () << "_ptr;" << be_nl;
-
-      os->gen_endif ();
-
-      // Generate the ifdefined macro for the _var type.
-      os->gen_ifdef_macro (node->flat_name (), "_var");
-
-      // Generate the _var declaration.
-      if (node->gen_var_defn () == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_valuetype_ch::"
-                             "visit_valuetype - "
-                             "codegen for _var failed\n"),
-                            -1);
-        }
-
-      os->gen_endif ();
-
-        // Generate the ifdef macro for the _out class.
-      os->gen_ifdef_macro (node->flat_name (), 
-                           "_out");
-
-      // Generate the _out declaration.
-      if (node->gen_out_defn () == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_valuetype_ch::"
-                             "visit_valuetype - "
-                             "codegen for _out failed\n"), 
-                            -1);
-        }
-
-      // Generate the endif macro.
-      os->gen_endif ();
-    }
-
-  if (node->imported ())
+  if (node->cli_hdr_gen () || node->imported ())
     {
       return 0;
     }
+
+  TAO_OutStream *os = this->ctx_->stream ();
+
+  *os << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+
+  // == STEP 1: Generate the class name and class names we inherit ==
+
+  // Forward declaration.
+  *os << "class " << node->local_name () << ";" << be_nl;
+
+  os->gen_ifdef_macro (node->flat_name (), "_ptr");
+
+  *os << "typedef " << node->local_name ()
+      << " *" << node->local_name () << "_ptr;" << be_nl;
+
+  os->gen_endif ();
+
+  // Generate the ifdefined macro for the _var type.
+  os->gen_ifdef_macro (node->flat_name (), "_var");
+
+  // Generate the _var declaration.
+  if (node->gen_var_defn () == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_valuetype_ch::"
+                         "visit_valuetype - "
+                         "codegen for _var failed\n"),
+                        -1);
+    }
+
+  os->gen_endif ();
+
+    // Generate the ifdef macro for the _out class.
+  os->gen_ifdef_macro (node->flat_name (), 
+                       "_out");
+
+  // Generate the _out declaration.
+  if (node->gen_out_defn () == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_valuetype_ch::"
+                         "visit_valuetype - "
+                         "codegen for _out failed\n"), 
+                        -1);
+    }
+
+  // Generate the endif macro.
+  os->gen_endif ();
 
   // Now the valuetype definition itself.
   os->gen_ifdef_macro (node->flat_name ());
@@ -148,29 +143,34 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
           *os << "public virtual ";
           *os << inherited->nested_type_name (scope);
         }  // end of for loop
-
-      if (i > 0)
-        {
-          if (i > 1)
-            {
-              *os << be_uidt;
-            }
-
-          *os << be_uidt_nl;
-        }
     }
   else
     {
-      *os << "public virtual CORBA_ValueBase" << be_uidt_nl;
+      *os << "public virtual CORBA_ValueBase";
+    }
+
+  int status =
+    node->traverse_supports_list_graphs (
+        be_valuetype::abstract_supports_helper,
+        os,
+        I_TRUE
+      );    
+
+  if (status == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_valuetype_ch::"
+                         "visit_valuetype - "
+                         "traversal of supported interfaces failed\n"),
+                        -1);
     }
 
   // Generate the body.
-  *os << "{" << be_nl
+  *os << be_uidt << be_uidt_nl << "{" << be_nl
       << "public:" << be_idt_nl;
 
-      // Generate the _ptr_type and _var_type typedef.
-  *os << "typedef " << node->local_name () << "* _ptr_type;" << be_nl
-      << "typedef " << node->local_name () << "_var _var_type;" 
+      // Generate the _var_type typedef.
+  *os << "typedef " << node->local_name () << "_var _var_type;" 
       << be_nl << be_nl;
 
       // Generate the static _downcast operation.
@@ -185,10 +185,10 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
       << node->local_name () << " *&" << be_uidt_nl
       << ");" << be_uidt_nl
       << "virtual const char* "
-      << "_tao_obv_repository_id () const;"
+      << "_tao_obv_repository_id (void) const;"
       << be_nl
       << "static const char* "
-      << "_tao_obv_static_repository_id ();" << be_nl << be_nl;
+      << "_tao_obv_static_repository_id (void);" << be_nl << be_nl;
 
   *os << "static void _tao_any_destructor (void *);"
       << be_nl << be_nl;
@@ -204,14 +204,36 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
                         -1);
     }
 
-  // Protected member:
+  // Generate pure virtual declarations of the operations in our
+  // supported interfaces.
+  status =
+    node->traverse_supports_list_graphs (
+        be_visitor_valuetype_ch::gen_supported_ops,
+        os
+      );
+
+  if (status == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_valuetype_ch::"
+                         "visit_valuetype - "
+                         "traversal of supported interfaces failed\n"),
+                        -1);
+    }
+
+  // If we inherit from both CORBA::ValueBase and CORBA::AbstractBase,
+  // we have to add this to avoid ambiguity.
+  if (node->supports_abstract ())
+    {
+      *os << be_nl << "virtual void _add_ref (void) = 0;" << be_nl;
+    }
 
   // Generate the "protected" constructor so that users cannot
   // instantiate us.
   *os << be_uidt_nl << "protected:" << be_idt_nl
       << node->local_name ()
-      << " ();" << be_nl
-      << "virtual ~" << node->local_name () << " ();\n" << be_nl;
+      << " (void);" << be_nl
+      << "virtual ~" << node->local_name () << " (void);\n" << be_nl;
 
   *os << "// TAO internals" << be_nl
       << "virtual void *_tao_obv_narrow (ptr_arith_t);" << be_nl;
@@ -268,7 +290,6 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
   *os << be_uidt_nl << "};" << be_nl;
 
   os->gen_endif ();
-
 
   // Generate the _init -related declarations.
   be_visitor_context ctx (*this->ctx_);
@@ -374,9 +395,9 @@ be_visitor_valuetype_ch::visit_field (be_field *node)
       return -1;
     }
 
-  be_visitor_context* ctx = new be_visitor_context (*this->ctx_);
-  ctx->state (TAO_CodeGen::TAO_FIELD_OBV_CH);
-  be_visitor_valuetype_field_ch visitor (ctx);
+  be_visitor_context ctx (*this->ctx_);
+  ctx.state (TAO_CodeGen::TAO_FIELD_OBV_CH);
+  be_visitor_valuetype_field_ch visitor (&ctx);
 
   if (vt->opt_accessor ())
     {
@@ -414,3 +435,56 @@ be_visitor_valuetype_ch::begin_private (void)
 
   *os << be_uidt_nl << "protected:" << be_idt_nl;
 }
+
+int 
+be_visitor_valuetype_ch::gen_supported_ops (be_interface *,
+                                            be_interface *base,
+                                            TAO_OutStream *os)
+{
+  // We inherit from abstract supported interfaces, so no need
+  // to declare their pure virtual operations again in our scope.
+  if (base->is_abstract ())
+    {
+      return 0;
+    }
+
+  AST_Decl *d = 0;
+  be_visitor_context ctx;
+  ctx.stream (os);
+
+  for (UTL_ScopeActiveIterator si (base, UTL_Scope::IK_decls);
+       !si.is_done ();
+       si.next ())
+    {
+      d = si.item ();
+
+      if (d == 0)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_valuetype_ch::"
+                             "gen_supported_ops - "
+                             "bad node in this scope\n"),
+                            -1);
+        }
+
+      AST_Decl::NodeType nt = d->node_type ();
+      be_visitor_valuetype_ch visitor (&ctx);
+
+      if (nt == AST_Decl::NT_op)
+        {
+          be_operation *op = be_operation::narrow_from_decl (d);
+
+          if (visitor.visit_operation (op) == -1)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "(%N:%l) be_visitor_valuetype_ch::"
+                                 "gen_supported_ops - "
+                                 "failed to accept visitor\n"),
+                                -1);
+            }
+        }
+    }
+
+  return 0;
+}
+

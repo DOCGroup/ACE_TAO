@@ -38,11 +38,10 @@ be_visitor_valuetype_init_ch::~be_visitor_valuetype_init_ch (void)
 int
 be_visitor_valuetype_init_ch::visit_valuetype (be_valuetype *node)
 {
-
   if (node->is_abstract ())
-  {
-    return 0;
-  }
+    {
+      return 0;
+    }
 
   // There are three possible situations.
   // (1) If there is no initializers but at least one operation.

@@ -45,8 +45,6 @@ int be_visitor_operation_thru_poa_collocated_sh::visit_operation (
   TAO_OutStream *os = this->ctx_->stream ();
   this->ctx_->node (node);
 
-  os->indent ();
-
   *os << "virtual ";
 
   // STEP I: generate the return type.

@@ -154,6 +154,8 @@ error_string (UTL_Error::ErrorCode c)
       return "interface expected: ";
     case UTL_Error::EIDL_VALUETYPE_EXPECTED:
       return "value type expected: ";
+    case UTL_Error::EIDL_ABSTRACT_EXPECTED:
+      return "abstract type expected: ";
     case UTL_Error::EIDL_EVAL_ERROR:
       return "expression evaluation error: ";
     case UTL_Error::EIDL_NAME_CASE_ERROR:
@@ -951,6 +953,22 @@ void
 UTL_Error::valuetype_expected (AST_Decl *d)
 {
   idl_error_header (EIDL_VALUETYPE_EXPECTED,
+                    d->line (),
+                    d->file_name ());
+  d->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
+  ACE_ERROR ((LM_ERROR,
+              "\n"));
+  idl_global->set_err_count (idl_global->err_count () + 1);
+}
+
+// Report a situation where an abstract type was expected but we got
+// something else instead. This is the case in an inheritance
+// list where a concrete type appears after an abstract type, or
+// where a valuetype inherits more than one concrete valuetype.
+void 
+UTL_Error::abstract_expected (AST_Decl *d)
+{
+  idl_error_header (EIDL_ABSTRACT_EXPECTED,
                     d->line (),
                     d->file_name ());
   d->name ()->dump (*ACE_DEFAULT_LOG_STREAM);

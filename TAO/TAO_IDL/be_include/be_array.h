@@ -58,9 +58,6 @@ public:
   DEF_NARROW_FROM_DECL (be_array);
 
 protected:
-  virtual int compute_size_type (void);
-  // Compute the size type if it is unknown.
-
   virtual int create_name (void);
   // Create a name for us.
 };

@@ -56,17 +56,17 @@ be_visitor_interface_base_proxy_impl_ch::visit_interface (be_interface *node)
               continue;
             }
 
-          *os << "public virtual ";
-          *os << inherited->full_base_proxy_impl_name ();
-
-          has_concrete_parent = 1;
-
-          if (i < node->n_inherits () - 1)
+          if (has_concrete_parent == 1)
             {
                // Node is the case of multiple
                // inheritance, so put a comma.
               *os << ", " << be_nl;
             }
+
+          *os << "public virtual ";
+          *os << inherited->full_base_proxy_impl_name ();
+
+          has_concrete_parent = 1;
         }
 
       if (has_concrete_parent == 1)
@@ -111,3 +111,56 @@ be_visitor_interface_base_proxy_impl_ch::visit_interface (be_interface *node)
 
   return 0;
 }
+
+int 
+be_visitor_interface_base_proxy_impl_ch::gen_abstract_ops_helper (
+    be_interface *node,
+    be_interface *base,
+    TAO_OutStream *os
+  )
+{
+  if (node == base)
+    {
+      return 0;
+    }
+
+  AST_Decl *d = 0;
+  be_visitor_context ctx;
+  ctx.stream (os);
+
+  for (UTL_ScopeActiveIterator si (base, UTL_Scope::IK_decls);
+       !si.is_done ();
+       si.next ())
+    {
+      d = si.item ();
+
+      if (d == 0)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_interface_base_proxy_impl_ch"
+                             "::abstract_base_ops_helper - "
+                             "bad node in this scope\n"),
+                            -1);
+        }
+
+      if (d->node_type () == AST_Decl::NT_op)
+        {
+          UTL_ScopedName item_new_name (d->local_name (),
+                                        0);
+
+          AST_Operation *op = AST_Operation::narrow_from_decl (d);
+          be_operation new_op (op->return_type (),
+                               op->flags (),
+                               &item_new_name,
+                               op->is_local (),
+                               op->is_abstract ());
+
+          ctx.state (TAO_CodeGen::TAO_OPERATION_BASE_PROXY_IMPL_CH);
+          be_visitor_operation_base_proxy_impl_ch op_visitor (&ctx);
+          op_visitor.visit_operation (&new_op);
+        }
+    }
+
+  return 0;
+}
+

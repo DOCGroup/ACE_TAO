@@ -28,6 +28,10 @@ public:
   // This also calls the base class version.
   virtual void redefine (AST_Interface *from);
 
+  AST_Interface **supports (void) const;
+
+  long n_supports (void) const;
+
   AST_ValueType *inherits_concrete (void) const;
 
   AST_Interface *supports_concrete (void) const;

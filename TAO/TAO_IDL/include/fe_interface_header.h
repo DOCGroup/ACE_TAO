@@ -134,8 +134,8 @@ protected:
   void compile_one_inheritance (AST_Interface *i);
 
   // Called from compile_inheritance().
-  idl_bool check_inherit (AST_Interface *i,
-                          idl_bool for_valuetype);
+  int check_inherit (AST_Interface *i,
+                     idl_bool for_valuetype);
 };
 
 

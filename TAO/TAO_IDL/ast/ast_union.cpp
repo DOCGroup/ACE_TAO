@@ -1130,6 +1130,38 @@ AST_Union::dump (ACE_OSTREAM_TYPE &o)
   o << "}";
 }
 
+// Compute the size type of the node in question.
+int
+AST_Union::compute_size_type (void)
+{
+  for (UTL_ScopeActiveIterator si (this, UTL_Scope::IK_decls);
+       !si.is_done ();
+       si.next ())
+    {
+      // Get the next AST decl node.
+      AST_Decl *d = si.item ();
+      AST_Field *f = AST_Field::narrow_from_decl (d);
+
+      if (f != 0)
+        {
+          AST_Type *t = f->field_type ();
+          // Our sizetype depends on the sizetype of our members. Although
+          // previous value of sizetype may get overwritten, we are
+          // guaranteed by the "size_type" call that once the value reached
+          // be_decl::VARIABLE, nothing else can overwrite it.
+          this->size_type (t->size_type ());
+        }
+      else
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "WARNING (%N:%l) be_union::compute_size_type - "
+                      "narrow_from_decl returned 0\n"));
+        }
+    }
+
+  return 0;
+}
+
 int
 AST_Union::ast_accept (ast_visitor *visitor)
 {

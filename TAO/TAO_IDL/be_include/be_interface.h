@@ -32,6 +32,7 @@
 
 class TAO_OutStream;
 class TAO_IDL_Inheritance_Hierarchy_Worker;
+class be_visitor;
 
 // Forward declaration of the strategy
 class be_interface_strategy;
@@ -212,13 +213,19 @@ public:
 
   /// Iterate over the inheritance hierarchy and call the
   /// worker->emit() method for each interface on it.
-  virtual int traverse_inheritance_graph (TAO_IDL_Inheritance_Hierarchy_Worker &worker,
-                                          TAO_OutStream *os);
+  int traverse_inheritance_graph (
+      TAO_IDL_Inheritance_Hierarchy_Worker &worker,
+      TAO_OutStream *os,
+      idl_bool abstract_paths_only = I_FALSE
+    );
 
   /// Wrap the @c gen parameter and call the generic version of
   /// traverse_inheritance_graph()
-  virtual int traverse_inheritance_graph (tao_code_emitter gen,
-                                          TAO_OutStream *os);
+  int traverse_inheritance_graph (
+      tao_code_emitter gen,
+      TAO_OutStream *os,
+      idl_bool abstract_paths_only = I_FALSE
+    );
 
   int in_mult_inheritance (void);
   // Am I in some form of multiple inheritance
@@ -282,20 +289,25 @@ public:
   // Helper method to determine if the interface node is involved in some kind
   // of multiple inheritance or not. Required on the skeleton side.
 
-  static int gen_def_ctors_helper (be_interface* node,
-                                   be_interface* base,
+  static int gen_def_ctors_helper (be_interface *node,
+                                   be_interface *base,
                                    TAO_OutStream *os);
 
   // Helper method to generate a call to the default
   // constructors of all the base classes.
 
-  static int gen_copy_ctors_helper (be_interface* node,
-                                    be_interface* base,
+  static int gen_copy_ctors_helper (be_interface *node,
+                                    be_interface *base,
                                     TAO_OutStream *os);
 
   // Helper method to generate a call to the copy
   // constructors of all the base classes.
 
+  static int gen_abstract_init_helper (be_interface *node,
+                                       be_interface *base,
+                                       TAO_OutStream *os);
+  // Helper method to initialize the obj_ member of each generated abstract
+  // base class.
 
   int gen_operation_table (void);
   // Generate the operation table including entries for inherited interfaces.
@@ -339,10 +351,22 @@ public:
   idl_bool has_mixed_parentage (void) const;
   // Do we have both abstract and concrete parents?
 
-  ACE_Unbounded_Queue<AST_Interface *> abstract_parents_;
-  // List of all our abstract parents, and all our other ancestors
-  // that are abstract with no concrete parent in between. We must
-  // implement the operations of all these interfaces.
+protected:
+  // Queue data structure needed for breadth-first traversal of
+  // inheritance tree.
+  ACE_Unbounded_Queue<be_interface *> insert_queue;
+
+  // For a special case of a deeply nested inheritance graph and one specific
+  // way of inheritance in which a node that was already visited,
+  // but is not present in
+  // the queue, gets inserted at the tail. This situation arises when a node
+  // multiply inherits from two or more interfaces in which the first parent is
+  // higher up in the tree than the second parent. In addition, if the second
+  // parent turns out to be a child of the first .
+
+  // Queue of dequeued nodes to be searched for the above case.
+  ACE_Unbounded_Queue<be_interface *> del_queue;
+
 private:
   void gen_gperf_input_header (TAO_OutStream *ss);
   // Output the header (type declaration and %%) to the gperf's input
@@ -377,10 +401,6 @@ private:
 
   void gen_linear_search_instance (const char *flat_name);
   // Create an instance of the linear search optable.
-
-  void complete_abstract_paths (AST_Interface *ai);
-  // Recursively gather all abstract ancestors we have without a concrete
-  // ancestor in between.
 
   int skel_count_;
   // Number of static skeletons in the operation table.
@@ -426,7 +446,7 @@ public:
   /**
    * This is a no-op, simply put here to keep compilers happy.
    */
-  virtual ~TAO_IDL_Inheritance_Hierarchy_Worker ();
+  virtual ~TAO_IDL_Inheritance_Hierarchy_Worker (void);
 
   /// Define the method invoked during the inheritance traversal
   /**
@@ -446,6 +466,19 @@ public:
   virtual int emit (be_interface *derived_interface,
                     TAO_OutStream *output_stream,
                     be_interface *base_interface) = 0;
+};
+
+class be_code_emitter_wrapper : public TAO_IDL_Inheritance_Hierarchy_Worker
+{
+public:
+  be_code_emitter_wrapper (be_interface::tao_code_emitter emitter);
+
+  virtual int emit (be_interface *derived_interface,
+                    TAO_OutStream *output_stream,
+                    be_interface *base_interface);
+
+private:
+  be_interface::tao_code_emitter emitter_;
 };
 
 #endif  // if !defined

@@ -38,6 +38,29 @@ be_visitor_valuetype_init_ci::~be_visitor_valuetype_init_ci (void)
 int
 be_visitor_valuetype_init_ci::visit_valuetype (be_valuetype *node)
 {
+  if (node->is_abstract ())
+    {
+      return 0;
+    }
+
+  // There are three possible situations.
+  // (1) If there is no initializers but at least one operation.
+  //     In this case we don't need to bother about factory.
+  //
+  // (2) There are no (operations or initializers) (i.e. only state
+  //     members) then we need a concrete type-specific factory
+  //     class whose create_for_unmarshal creates OBV_ class.
+  //
+  // (3) There is at least one operation and at least one initializer.
+  //     In this case we need to generate abstract factory class.
+
+  FactoryStyle factory_style = determine_factory_style (node);
+
+  if (factory_style == FS_NO_FACTORY) // nothing to do
+    {
+      return 0; // bail out
+    }
+
   // Just generate the factory _var impl.
 
   // To hold the full and local _var names.

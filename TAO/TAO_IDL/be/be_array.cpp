@@ -196,26 +196,6 @@ be_array::gen_dimensions (TAO_OutStream *os,
   return 0;
 }
 
-// Compute the size type of the node in question.
-int
-be_array::compute_size_type (void)
-{
-  be_type *type = be_type::narrow_from_decl (this->base_type ());
-
-  if (!type)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_array::compute_size_type - "
-                         "bad base type\n"), 
-                        -1);
-    }
-
-  // Our size type is the same as our type.
-  this->size_type (type->size_type ());
-
-  return 0;
-}
-
 int
 be_array::accept (be_visitor *visitor)
 {

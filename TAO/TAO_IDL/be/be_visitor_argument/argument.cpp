@@ -45,7 +45,9 @@ be_visitor_args::type_name (be_type *node,
                             const char *suffix)
 {
   static char namebuf [NAMEBUFSIZE];
-  ACE_OS::memset (namebuf, '\0', NAMEBUFSIZE);
+  ACE_OS::memset (namebuf, 
+                  '\0', 
+                  NAMEBUFSIZE);
 
   be_type *bt;
 

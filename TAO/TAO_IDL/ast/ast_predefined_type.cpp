@@ -212,6 +212,23 @@ AST_PredefinedType::dump (ACE_OSTREAM_TYPE &o)
   AST_Decl::dump (o);
 }
 
+// Compute the size type of the node in question.
+int
+AST_PredefinedType::compute_size_type (void)
+{
+  if (this->pt () == AST_PredefinedType::PT_any
+      || this->pt () == AST_PredefinedType::PT_pseudo)
+    {
+      this->size_type (AST_Type::VARIABLE);
+    }
+  else
+    {
+      this->size_type (AST_Type::FIXED);
+    }
+
+  return 0;
+}
+
 int
 AST_PredefinedType::ast_accept (ast_visitor *visitor)
 {

@@ -56,11 +56,10 @@ be_visitor_valuetype_init_cs::visit_valuetype (be_valuetype *node)
 
   FactoryStyle factory_style = determine_factory_style (node);
 
-  if(factory_style == FS_NO_FACTORY) // nothing to do
+  if (factory_style == FS_NO_FACTORY) // nothing to do
     {
       return 0; // bail out
     }
-
 
   TAO_OutStream *os; // output stream
 

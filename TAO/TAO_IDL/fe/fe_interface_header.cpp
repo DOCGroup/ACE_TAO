@@ -264,6 +264,27 @@ FE_InterfaceHeader::FE_InterfaceHeader (UTL_ScopedName *n,
       this->compile_inheritance (inherits,
                                  I_FALSE);
     }
+
+  int abstract_parent_seen = 0;
+
+  if (this->pd_n_inherits > 0)
+    {
+      AST_Interface *iface = 0;
+
+      for (long i = 0; i < this->pd_n_inherits; ++i)
+        {
+          iface = this->pd_inherits[i];
+
+          if (iface->is_abstract ())
+            {
+              abstract_parent_seen = 1;
+            }
+          else if (abstract_parent_seen == 1)
+            {
+              idl_global->err ()->abstract_expected (iface);
+            }
+        }
+    }
 }
 
 FE_InterfaceHeader::~FE_InterfaceHeader (void)
@@ -339,7 +360,7 @@ FE_InterfaceHeader::compile_inheritance (UTL_NameList *ifaces,
   AST_Interface *i = 0;
   long j = 0;
   long k = 0;
-  idl_bool inh_err = 0;
+  int inh_err = 0;
 
   iused = 0;
   iused_flat = 0;
@@ -393,15 +414,15 @@ FE_InterfaceHeader::compile_inheritance (UTL_NameList *ifaces,
 
       if (i != 0)
         {
-          inh_err = !this->check_inherit (i,
-                                          for_valuetype);
+          inh_err = this->check_inherit (i,
+                                         for_valuetype);
         }
       else
         {
-          inh_err = 1;
+          inh_err = -1;
         }
 
-      if (inh_err)
+      if (inh_err == -1)
         {
           idl_global->err ()->interface_expected (d);
           break;
@@ -456,17 +477,20 @@ FE_InterfaceHeader::compile_inheritance (UTL_NameList *ifaces,
     }
 }
 
-idl_bool
+int
 FE_InterfaceHeader::check_inherit (AST_Interface *i,
                                    idl_bool for_valuetype)
 {
   idl_bool is_valuetype = (i->node_type () == AST_Decl::NT_valuetype);
 
-  if (i != 0
-      && !(for_valuetype ^ is_valuetype)
-      && (this->pd_is_local || !i->is_local ()))
+  if (
+      // Non-local interfaces may not inherit from local ones.
+      (! this->pd_is_local && i->is_local ())
+      // Both valuetype or both interface.
+      || (for_valuetype ^ is_valuetype)
+     )
     {
-      return 1;
+      return -1;
     }
   else
     {
@@ -531,8 +555,14 @@ FE_OBVHeader::FE_OBVHeader (UTL_ScopedName *n,
 
       if (!iface->is_abstract ())
         {
-          this->pd_inherits_concrete = 
-            AST_ValueType::narrow_from_decl (iface);
+          AST_ValueType *vt = AST_ValueType::narrow_from_decl (iface);
+
+          if (vt == 0)
+            {
+              idl_global->err ()->valuetype_expected (iface);
+            }
+
+          this->pd_inherits_concrete = vt;
         }
 
       for (long i = 1; i < this->pd_n_inherits; ++i)
@@ -541,10 +571,7 @@ FE_OBVHeader::FE_OBVHeader (UTL_ScopedName *n,
 
           if (!iface->is_abstract ())
             {
-              idl_global->err ()->abstract_inheritance_error (
-                                      this->name (),
-                                      iface->name ()
-                                    );
+              idl_global->err ()->abstract_expected (iface);
             }
         }
     }
@@ -646,9 +673,9 @@ FE_OBVHeader::compile_supports (UTL_NameList *supports)
         }
 
       // Remove typedefs, if any.
-      while (d->node_type () == AST_Decl::NT_typedef)
+      if (d->node_type () == AST_Decl::NT_typedef)
         {
-          d = AST_Typedef::narrow_from_decl (d)->base_type ();
+          d = AST_Typedef::narrow_from_decl (d)->primitive_base_type ();
         }
 
       if (d->node_type () == AST_Decl::NT_interface)
@@ -686,8 +713,7 @@ FE_OBVHeader::compile_supports (UTL_NameList *supports)
             }
           else
             {
-              idl_global->err ()->abstract_support_error (this->name (),
-                                                          iface->name ());
+              idl_global->err ()->abstract_expected (iface);
               continue;
             }
         }

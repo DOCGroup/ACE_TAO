@@ -293,24 +293,10 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
                   *os << be_nl
                       << "this->" << inherited->flat_name ()
                       << "_setup_collocation" << " (collocated);";
-
-                  if (i == n_parents - 1)
-                    {
-                      *os << be_uidt_nl;
-                    }
-                  else
-                    {
-                      *os << be_nl;
-                    }
                 }
             }
 
-          if (has_concrete_parent == 0)
-            {
-              *os << be_uidt_nl;
-            }
-
-          *os << "}" << be_nl << be_nl;
+          *os << be_uidt_nl << "}" << be_nl << be_nl;
         }
     }
 
@@ -554,10 +540,11 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
 
       *os << "if (" << be_idt << be_idt_nl;
 
-      if (node->traverse_inheritance_graph (
-                    be_interface::is_a_helper, 
-                    os
-                  ) == -1)
+      int status = 
+        node->traverse_inheritance_graph (be_interface::is_a_helper, 
+                                          os);
+
+      if (status == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_interface_cs::"
@@ -699,9 +686,8 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
                             -1);
         }
 
-
       // Smart Proxy classes.
-      if (! node->is_local () && ! node->is_abstract ())
+      if (! node->is_local ())
         {
           be_visitor_context ctx (*this->ctx_);
           be_visitor *visitor = 0;
@@ -738,3 +724,66 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
 
   return 0;
 }
+
+int 
+be_visitor_interface_cs::gen_abstract_ops_helper (be_interface *node,
+                                                  be_interface *base,
+                                                  TAO_OutStream *os)
+{
+  if (node == base)
+    {
+      return 0;
+    }
+
+  AST_Decl *d = 0;
+  be_visitor_context ctx;
+  ctx.stream (os);
+
+  for (UTL_ScopeActiveIterator si (base, UTL_Scope::IK_decls);
+       !si.is_done ();
+       si.next ())
+    {
+      d = si.item ();
+
+      if (d == 0)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_interface_cs::"
+                             "abstract_base_ops_helper - "
+                             "bad node in this scope\n"),
+                            -1);
+        }
+
+      if (d->node_type () == AST_Decl::NT_op)
+        {
+          UTL_ScopedName *item_new_name  = 0;
+          ACE_NEW_RETURN (item_new_name,
+                          UTL_ScopedName (d->local_name ()->copy (),
+                                          0),
+                          -1);
+
+          UTL_ScopedName *base = (UTL_ScopedName *)node->name ()->copy ();
+          base->nconc (item_new_name);
+
+          AST_Operation *op = AST_Operation::narrow_from_decl (d);
+          be_operation new_op (op->return_type (),
+                               op->flags (),
+                               0,
+                               op->is_local (),
+                               op->is_abstract ());
+
+          new_op.set_defined_in (node);
+          new_op.set_name (base);
+          ctx.state (TAO_CodeGen::TAO_OPERATION_CS);
+          be_visitor_operation_cs op_visitor (&ctx);
+          op_visitor.visit_operation (&new_op);
+
+          base->destroy ();
+          delete base;
+          base = 0;
+        }
+    }
+
+  return 0;
+}
+

@@ -122,7 +122,7 @@ be_visitor_operation_ami_exception_holder_operation_cs::visit_operation (
       *os << "ACE_ENV_SINGLE_ARG_DECL";
     }
 
-  *os << ")" << be_uidt;
+  *os << ")";
 
   // now generate the throw specs
   if (this->gen_throw_spec (node) == -1)

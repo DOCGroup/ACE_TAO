@@ -367,14 +367,6 @@ be_visitor_valuetype::visit_enum (be_enum *node)
   return 0;
 }
 
-
-int
-be_visitor_valuetype::visit_operation (be_operation *)
-{
-  // Is overridden in derived visitors.
-  return 0;
-}
-
 int
 be_visitor_valuetype::visit_exception (be_exception *node)
 {
@@ -976,10 +968,7 @@ be_visitor_valuetype::gen_field_pd (be_field *node)
   // will be modified based on what type of node we are visiting.
   be_visitor_context ctx (*this->ctx_);
   ctx.node (node);
-
-  ctx.sub_state (TAO_CodeGen::TAO_USE_FULL_NAME);
   ctx.state (TAO_CodeGen::TAO_FIELD_CH);
-
   be_visitor_field_ch visitor (&ctx);
 
   if (bt->accept(&visitor) == -1)
