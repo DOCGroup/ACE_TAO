@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:150
+// be\be_codegen.cpp:171
 
 #ifndef _TAO_IDL_ORIG_MESSAGINGC_H_
 #define _TAO_IDL_ORIG_MESSAGINGC_H_
@@ -82,37 +82,38 @@
 #pragma option push -w-rvl -w-rch -w-ccc -w-inl
 #endif /* __BORLANDC__ */
 
-// TAO_IDL - Generated from
-// be/be_visitor_root/root_ch.cpp:63
+// TAO_IDL - Generated from 
+// be\be_visitor_root/root_ch.cpp:63
 
 namespace TAO
 {
   class Collocation_Proxy_Broker;
-
+  
   template<typename T> class Narrow_Utils;
+  template<typename T> class AbstractBase_Narrow_Utils;
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_module/module_ch.cpp:48
+// be\be_visitor_module/module_ch.cpp:48
 
 namespace Messaging
 {
-
+  
   // TAO_IDL - Generated from
-  // be/be_valuetype.cpp:527
-
-
+  // be\be_valuetype.cpp:527
+  
+  
 
 #if !defined (_MESSAGING_EXCEPTIONHOLDER__VAR_OUT_CH_)
 #define _MESSAGING_EXCEPTIONHOLDER__VAR_OUT_CH_
-
+  
   class ExceptionHolder;
   typedef
     TAO_Value_Var_T<
         ExceptionHolder
       >
     ExceptionHolder_var;
-
+  
   typedef
     TAO_Value_Out_T<
         ExceptionHolder
@@ -120,71 +121,71 @@ namespace Messaging
     ExceptionHolder_out;
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
-  // be/be_visitor_valuetype/valuetype_ch.cpp:56
+  // be\be_visitor_valuetype/valuetype_ch.cpp:56
 
 #if !defined (_MESSAGING_EXCEPTIONHOLDER_CH_)
 #define _MESSAGING_EXCEPTIONHOLDER_CH_
-
+  
   class TAO_Messaging_Export ExceptionHolder
     : public virtual CORBA::ValueBase
   {
   public:
     typedef ExceptionHolder_var _var_type;
-
+    
     static ExceptionHolder* _downcast (CORBA::ValueBase *);
-
+    
     // (TAO extensions or internals)
     static CORBA::Boolean _tao_unmarshal (
         TAO_InputCDR &,
         ExceptionHolder *&
       );
-
+    
     virtual const char* _tao_obv_repository_id (void) const;
-
+    
     static const char* _tao_obv_static_repository_id (void);
-
+    
     static void _tao_any_destructor (void *);
-
+    
     // TAO_IDL - Generated from
-    // be/be_visitor_valuetype/field_ch.cpp:412
-
+    // be\be_visitor_valuetype/field_ch.cpp:412
+    
     virtual void is_system_exception (CORBA::Boolean) = 0;
     virtual CORBA::Boolean is_system_exception (void) const = 0;
-
+    
     // TAO_IDL - Generated from
-    // be/be_visitor_valuetype/field_ch.cpp:412
-
+    // be\be_visitor_valuetype/field_ch.cpp:412
+    
     virtual void byte_order (CORBA::Boolean) = 0;
     virtual CORBA::Boolean byte_order (void) const = 0;
-
+    
     // TAO_IDL - Generated from
-    // be/be_visitor_valuetype/field_ch.cpp:485
-
+    // be\be_visitor_valuetype/field_ch.cpp:485
+    
     virtual void marshaled_exception (const CORBA::OctetSeq &) = 0;
     virtual const CORBA::OctetSeq &marshaled_exception (void) const = 0;
     virtual CORBA::OctetSeq &marshaled_exception (void) = 0;
-
+    
     // TAO_IDL - Generated from
-    // be/be_visitor_valuetype/valuetype_ch.cpp:250
-
+    // be\be_visitor_valuetype/valuetype_ch.cpp:250
+  
   protected:
     ExceptionHolder (void);
-
+    
     virtual ~ExceptionHolder (void);
-
+    
     virtual CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &);
     virtual CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
-
+    
   private:
     ExceptionHolder (const ExceptionHolder &);
     void operator= (const ExceptionHolder &);
-
+    
   protected:
     virtual CORBA::Boolean
     _tao_marshal__Messaging_ExceptionHolder (TAO_OutputCDR &) = 0;
-
+    
     virtual CORBA::Boolean
     _tao_unmarshal__Messaging_ExceptionHolder (TAO_InputCDR &) = 0;
   };
@@ -193,49 +194,49 @@ namespace Messaging
 
 #if !defined (_MESSAGING_EXCEPTIONHOLDER___INIT_CH_)
 #define _MESSAGING_EXCEPTIONHOLDER___INIT_CH_
-
+  
   // TAO_IDL - Generated from
-  // be/be_visitor_valuetype/valuetype_init_ch.cpp:72
-
+  // be\be_visitor_valuetype/valuetype_init_ch.cpp:72
+  
   class TAO_Messaging_Export ExceptionHolder_init : public virtual CORBA::ValueFactoryBase
   {
   public:
     ExceptionHolder_init (void);
-
+    
     static ExceptionHolder_init* _downcast (CORBA::ValueFactoryBase *);
-
+    
     virtual CORBA::ValueBase *create_for_unmarshal (void);
-
+    
     // TAO-specific extensions
   public:
     virtual const char* tao_repository_id (void);
-
+  
   protected:
     virtual ~ExceptionHolder_init (void);
   };
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
-  // be/be_visitor_typecode/typecode_decl.cpp:44
-
+  // be\be_visitor_typecode/typecode_decl.cpp:44
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ExceptionHolder;
-
+  
   // TAO_IDL - Generated from
-  // be/be_interface.cpp:605
+  // be\be_interface.cpp:611
 
 #if !defined (_MESSAGING_REPLYHANDLER__VAR_OUT_CH_)
 #define _MESSAGING_REPLYHANDLER__VAR_OUT_CH_
-
+  
   class ReplyHandler;
   typedef ReplyHandler *ReplyHandler_ptr;
-
+  
   typedef
     TAO_Objref_Var_T<
         ReplyHandler
       >
     ReplyHandler_var;
-
+  
   typedef
     TAO_Objref_Out_T<
         ReplyHandler
@@ -243,13 +244,13 @@ namespace Messaging
     ReplyHandler_out;
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
-  // be/be_visitor_interface/interface_ch.cpp:54
+  // be\be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_MESSAGING_REPLYHANDLER_CH_)
 #define _MESSAGING_REPLYHANDLER_CH_
-
+  
   class TAO_Messaging_Export ReplyHandler
     : public virtual CORBA::Object
   {
@@ -257,49 +258,54 @@ namespace Messaging
     friend class TAO::Narrow_Utils<ReplyHandler>;
     typedef ReplyHandler_ptr _ptr_type;
     typedef ReplyHandler_var _var_type;
-
+    
     // The static operations.
     static ReplyHandler_ptr _duplicate (ReplyHandler_ptr obj);
-
+    
     static ReplyHandler_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
+    static ReplyHandler_ptr _unchecked_narrow (
+        CORBA::Object_ptr obj
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      );
+    
     static ReplyHandler_ptr _nil (void)
     {
       return (ReplyHandler_ptr)0;
     }
-
+    
     static void _tao_any_destructor (void *);
-
+    
     // TAO_IDL - Generated from
-    // be/be_visitor_interface/interface_ch.cpp:187
-
+    // be\be_visitor_interface/interface_ch.cpp:208
+    
     virtual CORBA::Boolean _is_a (
         const char *type_id
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     virtual const char* _interface_repository_id (void) const;
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
   private:
     TAO::Collocation_Proxy_Broker *the_TAO_ReplyHandler_Proxy_Broker_;
-
+  
   protected:
     // Concrete interface only.
     ReplyHandler (int collocated = 0);
-
+    
     // These methods travese the inheritance tree and set the
     // parents piece of the given class in the right mode.
     virtual void Messaging_ReplyHandler_setup_collocation (int collocated);
-
+    
     // Concrete non-local interface only.
     ReplyHandler (
         IOP::IOR *ior,
         TAO_ORB_Core *orb_core = 0
       );
-
+    
     // Non-local interface only.
     ReplyHandler (
         TAO_Stub *objref,
@@ -307,32 +313,32 @@ namespace Messaging
         TAO_Abstract_ServantBase *servant = 0,
         TAO_ORB_Core *orb_core = 0
       );
-
+    
     virtual ~ReplyHandler (void);
-
+  
   private:
     // Private and unimplemented for concrete interfaces.
     ReplyHandler (const ReplyHandler &);
-
+    
     void operator= (const ReplyHandler &);
   };
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
-  // be/be_visitor_typecode/typecode_decl.cpp:44
-
+  // be\be_visitor_typecode/typecode_decl.cpp:44
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ReplyHandler;
 
 // TAO_IDL - Generated from
-// be/be_visitor_module/module_ch.cpp:66
+// be\be_visitor_module/module_ch.cpp:66
 
 } // module Messaging
 
 // Proxy Broker Factory function pointer declarations.
 
 // TAO_IDL - Generated from
-// be/be_visitor_root/root.cpp:120
+// be\be_visitor_root/root.cpp:120
 
 extern TAO_Messaging_Export
 TAO::Collocation_Proxy_Broker *
@@ -341,17 +347,17 @@ TAO::Collocation_Proxy_Broker *
   );
 
 // TAO_IDL - Generated from
-// be/be_visitor_valuetype/obv_module.cpp:55
+// be\be_visitor_valuetype/obv_module.cpp:55
 
 namespace OBV_Messaging
 {
-
+  
   // TAO_IDL - Generated from
-  // be/be_visitor_valuetype/valuetype_obv_ch.cpp:58
+  // be\be_visitor_valuetype/valuetype_obv_ch.cpp:58
 
 #if !defined (_MESSAGING_EXCEPTIONHOLDER___OBV_CH_)
 #define _MESSAGING_EXCEPTIONHOLDER___OBV_CH_
-
+  
   // OBV_ class
   class TAO_Messaging_Export ExceptionHolder
     : public virtual Messaging::ExceptionHolder,
@@ -360,36 +366,36 @@ namespace OBV_Messaging
   public:
     ExceptionHolder (void);
     virtual ~ExceptionHolder (void);
-
+    
     // TAO_IDL - Generated from
-    // be/be_visitor_valuetype/field_ch.cpp:412
-
+    // be\be_visitor_valuetype/field_ch.cpp:412
+    
     virtual void is_system_exception (CORBA::Boolean);
     virtual CORBA::Boolean is_system_exception (void) const;
-
+    
     // TAO_IDL - Generated from
-    // be/be_visitor_valuetype/field_ch.cpp:412
-
+    // be\be_visitor_valuetype/field_ch.cpp:412
+    
     virtual void byte_order (CORBA::Boolean);
     virtual CORBA::Boolean byte_order (void) const;
-
+    
     // TAO_IDL - Generated from
-    // be/be_visitor_valuetype/field_ch.cpp:485
-
+    // be\be_visitor_valuetype/field_ch.cpp:485
+    
     virtual void marshaled_exception (const CORBA::OctetSeq &);
     virtual const CORBA::OctetSeq &marshaled_exception (void) const;
     virtual CORBA::OctetSeq &marshaled_exception (void);
-
+    
   protected:
     virtual CORBA::Boolean
     _tao_marshal__Messaging_ExceptionHolder (TAO_OutputCDR &);
-
+    
     virtual CORBA::Boolean
     _tao_unmarshal__Messaging_ExceptionHolder (TAO_InputCDR &);
-
+    
     CORBA::Boolean _tao_marshal_state (TAO_OutputCDR &);
     CORBA::Boolean _tao_unmarshal_state (TAO_InputCDR &);
-
+  
   private:
     CORBA::Boolean _pd_is_system_exception;
     CORBA::Boolean _pd_byte_order;
@@ -400,7 +406,7 @@ namespace OBV_Messaging
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_traits.cpp:48
+// be\be_visitor_traits.cpp:59
 
 // Traits specializations.
 namespace TAO
@@ -408,19 +414,20 @@ namespace TAO
 
 #if !defined (_MESSAGING_EXCEPTIONHOLDER__TRAITS_CH_)
 #define _MESSAGING_EXCEPTIONHOLDER__TRAITS_CH_
-
+  
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_Messaging_Export Value_Traits<Messaging::ExceptionHolder>
   {
     static void tao_add_ref (Messaging::ExceptionHolder *);
     static void tao_remove_ref (Messaging::ExceptionHolder *);
+    static void tao_release (Messaging::ExceptionHolder *);
   };
 
 #endif /* end #if !defined */
 
 #if !defined (_MESSAGING_REPLYHANDLER__TRAITS_CH_)
 #define _MESSAGING_REPLYHANDLER__TRAITS_CH_
-
+  
   ACE_TEMPLATE_SPECIALIZATION
   struct TAO_Messaging_Export Objref_Traits<Messaging::ReplyHandler>
   {
@@ -441,26 +448,21 @@ namespace TAO
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_valuetype/any_op_ch.cpp:54
+// be\be_visitor_valuetype/any_op_ch.cpp:54
 
 TAO_Messaging_Export void operator<<= (CORBA::Any &, Messaging::ExceptionHolder *); // copying
 TAO_Messaging_Export void operator<<= (CORBA::Any &, Messaging::ExceptionHolder **); // non-copying
 TAO_Messaging_Export CORBA::Boolean operator>>= (const CORBA::Any &, Messaging::ExceptionHolder *&);
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/any_op_ch.cpp:52
+// be\be_visitor_interface/any_op_ch.cpp:52
 
 TAO_Messaging_Export void operator<<= (CORBA::Any &, Messaging::ReplyHandler_ptr); // copying
 TAO_Messaging_Export void operator<<= (CORBA::Any &, Messaging::ReplyHandler_ptr *); // non-copying
 TAO_Messaging_Export CORBA::Boolean operator>>= (const CORBA::Any &, Messaging::ReplyHandler_ptr &);
 
 // TAO_IDL - Generated from
-// be/be_visitor_root/cdr_op.cpp:48
-
-#ifndef __ACE_INLINE__
-
-// TAO_IDL - Generated from
-// be/be_valuetype.cpp:434
+// be\be_valuetype.cpp:434
 
 namespace CORBA
 {
@@ -469,24 +471,19 @@ namespace CORBA
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_valuetype/cdr_op_ch.cpp:61
+// be\be_visitor_valuetype/cdr_op_ch.cpp:61
 
 TAO_Messaging_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const Messaging::ExceptionHolder *);
 TAO_Messaging_Export CORBA::Boolean operator>> (TAO_InputCDR &, Messaging::ExceptionHolder *&);
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/cdr_op_ch.cpp:55
+// be\be_visitor_interface/cdr_op_ch.cpp:55
 
 TAO_Messaging_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const Messaging::ReplyHandler_ptr );
 TAO_Messaging_Export CORBA::Boolean operator>> (TAO_InputCDR &, Messaging::ReplyHandler_ptr &);
 
 // TAO_IDL - Generated from
-// be/be_visitor_root/cdr_op.cpp:64
-
-#endif /* __ACE_INLINE__ */
-
-// TAO_IDL - Generated from
-// be/be_codegen.cpp:911
+// be\be_codegen.cpp:978
 
 #if defined (__ACE_INLINE__)
 #include "MessagingC.i"
@@ -503,3 +500,4 @@ TAO_Messaging_Export CORBA::Boolean operator>> (TAO_InputCDR &, Messaging::Reply
 #include /**/ "ace/post.h"
 
 #endif /* ifndef */
+
