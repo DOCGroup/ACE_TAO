@@ -8,6 +8,11 @@ Fri Jan 16 15:52:34 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 Fri Jan 16 01:42:52 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
+	* ace/OS.h: Changed the definition of ACE_CORBA_* macros so that
+ 	  on non-Win32 platforms, they will be expand to the nested
+ 	  classes. Thanks to Jonathan Reis <reis@minniemouse.cemax.com>
+ 	  for reporting this.
+
 	* ace/SString.h: Added the correct export macros.
 
 Thu Jan 15 15:45:48 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
