@@ -1,3 +1,13 @@
+Thu Dec 20 13:37:42 2001  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-all.h: Restructured the section for
+          ACE_NEW_THROWS_EXCEPTIONS so that if ACE_HAS_NEW_NOTHROW is defined,
+          the new(nothrow) version is used rather than setting up a try/catch.
+          (Previously, this was only done for HP aC++). Also, check for
+          __BORLANDC__ and set up the ACE_bad_alloc exception value properly.
+          Thanks to Johnny Willemsen <jwillemsen@remedy.nl> for reporting
+          this problem.
+
 Thu Dec 20 11:43:29 2001  Steve Huston  <shuston@riverace.com>
 
         * tests/SSL: New directory for ACE_SSL tests.
