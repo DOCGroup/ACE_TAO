@@ -27,6 +27,10 @@ namespace CCF
       template <typename T>
       struct InterfaceTemplate : ScopeTemplate<T>
       {
+        /* GCC#13590/DR#39
+        using ScopeTemplate<T>::edge_traverser;
+        */
+
         virtual void
         traverse (T&);
 

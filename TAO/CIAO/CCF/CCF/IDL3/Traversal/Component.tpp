@@ -15,7 +15,7 @@ namespace CCF
       void PortTemplate<T>::
       traverse (T& p)
       {
-        edge_traverser ().traverse (p.belongs ());
+        this->edge_traverser ().traverse (p.belongs ());
       }
 
 
@@ -129,7 +129,7 @@ namespace CCF
       void PortGetTemplate<T>::
       returns (T& p)
       {
-        PortAccessorTemplate<T>::returns (p, edge_traverser ());
+        PortAccessorTemplate<T>::returns (p, this->edge_traverser ());
       }
 
 
@@ -141,7 +141,7 @@ namespace CCF
       receives (T& p)
       {
         receives_pre (p);
-        PortAccessorTemplate<T>::receives (p, edge_traverser ());
+        PortAccessorTemplate<T>::receives (p, this->edge_traverser ());
         receives_post (p);
       }
 
@@ -176,7 +176,7 @@ namespace CCF
       void PortDataTemplate<T>::
       belongs (T& p)
       {
-        belongs (p, edge_traverser ());
+        belongs (p, this->edge_traverser ());
       }
 
       template <typename T>

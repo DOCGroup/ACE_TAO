@@ -85,10 +85,7 @@ namespace
     ScopedName scoped (d.scoped_name ());
     Name stripped (scoped.begin () + 1, scoped.end ());
 
-    string scope_name =
-      regex::perl_s (name_to_string (stripped),
-                     "%::%/%",
-                     '%');
+    string scope_name = regex::perl_s (name_to_string (stripped), "%::%/%");
 
     string repo_id = "IDL:" + prefix + scope_name + ":1.0";
 

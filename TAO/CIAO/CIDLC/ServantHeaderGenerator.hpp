@@ -5,6 +5,9 @@
 #ifndef SERVANT_HEADER_GENERATOR_HPP
 #define SERVANT_HEADER_GENERATOR_HPP
 
+#include <string>
+#include <iosfwd>
+
 #include "CCF/CodeGenerationKit/CommandLine.hpp"
 
 #include "CCF/CIDL/SemanticGraph.hpp"
@@ -15,7 +18,7 @@ class ServantHeaderEmitter
 public:
   ServantHeaderEmitter (std::ostream& os_,
                         CommandLine const& cl,
-                        string export_macro,
+                        std::string export_macro,
                         fs::path const& file);
                         
   virtual ~ServantHeaderEmitter () {}

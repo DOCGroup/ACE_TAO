@@ -154,6 +154,8 @@ namespace CL
   inline void
   print_text (std::ostream& os, Description const& d)
   {
+    using std::endl;
+
     os << d.command ();
 
     Description::OptionIterator ob = d.begin_option ();
@@ -183,7 +185,7 @@ namespace CL
          << (ob->optional () ? "]" : "")
          << endl;
 
-      os << "\t\t" << ob->description () << endl;
+      os << "\t\t" << ob->description () << endl << endl;
     }
 
   }
@@ -192,6 +194,8 @@ namespace CL
   inline void
   print_html (std::ostream& os, Description const& d)
   {
+    using std::endl;
+
     os << "<html>" << endl
        << "<body>" << endl
        << "<div align=\"center\">" << endl

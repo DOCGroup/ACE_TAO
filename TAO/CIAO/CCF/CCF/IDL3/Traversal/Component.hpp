@@ -17,6 +17,10 @@ namespace CCF
       template <typename T>
       struct PortTemplate : Node<T>
       {
+        /* GCC#13590/DR#39
+        using Node<T>::edge_traverser;
+        */
+
         virtual void
         traverse (T&);
       };
@@ -24,6 +28,10 @@ namespace CCF
       template <typename T>
       struct PortAccessorTemplate : Node<T>
       {
+        /* GCC#13590/DR#39
+        using Node<T>::edge_traverser;
+        */
+
         virtual void
         traverse (T&);
 
@@ -70,6 +78,10 @@ namespace CCF
       template <typename T>
       struct PortGetTemplate : PortAccessorTemplate<T>
       {
+        /* GCC#13590/DR#39
+        using Node<T>::edge_traverser;
+        */
+
         virtual void
         returns (T&);
       };
@@ -77,6 +89,10 @@ namespace CCF
       template <typename T>
       struct PortSetTemplate : PortAccessorTemplate<T>
       {
+        /* GCC#13590/DR#39
+        using Node<T>::edge_traverser;
+        */
+
         virtual void
         receives (T&);
       };
@@ -84,6 +100,10 @@ namespace CCF
       template <typename T>
       struct PortDataTemplate : Node<T>
       {
+        /* GCC#13590/DR#39
+        using Node<T>::edge_traverser;
+        */
+
         virtual void
         traverse (T&);
 

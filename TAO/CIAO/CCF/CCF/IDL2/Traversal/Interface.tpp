@@ -52,7 +52,7 @@ namespace CCF
           inherits_pre (i);
           iterate_and_traverse (b,
                                 e,
-                                edge_traverser (),
+                                this->edge_traverser (),
                                 *this,
                                 &InterfaceTemplate::comma,
                                 i);

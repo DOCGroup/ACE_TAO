@@ -11,10 +11,24 @@
 
 namespace Indentation
 {
-  class ToStreamBufAdapter : public std::streambuf
+  template <typename C>
+  class ToStreamBufAdapter : public std::basic_streambuf<C>
   {
   public:
-    ToStreamBufAdapter (Buffer& buffer)
+    typedef
+    typename std::basic_streambuf<C>::traits_type
+    traits_type;
+
+    typedef
+    typename std::basic_streambuf<C>::char_type
+    char_type;
+
+    typedef
+    typename std::basic_streambuf<C>::int_type
+    int_type;
+
+  public:
+    ToStreamBufAdapter (Buffer<C>& buffer)
         : buffer_ (buffer)
     {
     }
@@ -22,7 +36,7 @@ namespace Indentation
     virtual int_type
     overflow (int_type c)
     {
-      return buffer_.put (Buffer::traits_type::to_char_type (c));
+      return buffer_.put (traits_type::to_char_type (c));
     }
 
     virtual int
@@ -32,13 +46,31 @@ namespace Indentation
     }
 
   private:
-    Buffer& buffer_;
+    Buffer<C>& buffer_;
   };
 
-  class FromStreamBufAdapter : public Buffer
+  template <typename C>
+  class FromStreamBufAdapter : public Buffer<C>
   {
   public:
-    FromStreamBufAdapter (std::streambuf& buffer)
+    typedef
+    typename Buffer<C>::traits_type
+    traits_type;
+
+    typedef
+    typename Buffer<C>::char_type
+    char_type;
+
+    typedef
+    typename Buffer<C>::int_type
+    int_type;
+
+    typedef
+    typename Buffer<C>::Exception
+    Exception;
+
+  public:
+    FromStreamBufAdapter (std::basic_streambuf<C>& buffer)
         : buffer_ (buffer)
     {
     }
@@ -64,14 +96,14 @@ namespace Indentation
     }
 
   private:
-    std::streambuf& buffer_;
+    std::basic_streambuf<C>& buffer_;
   };
 
-  template <typename Buffer>
+  template <template <typename> class Buffer, typename C = char>
   class Implanter
   {
   public:
-    Implanter (std::ostream& os)
+    Implanter (std::basic_ostream<C>& os)
         : os_ (os),
           prev_ (os_.rdbuf ()),
           from_adapter_ (*prev_),
@@ -82,7 +114,7 @@ namespace Indentation
     }
 
     template <typename Arg0>
-    Implanter (std::ostream& os, Arg0 a0)
+    Implanter (std::basic_ostream<C>& os, Arg0 a0)
         : os_ (os),
           prev_ (os_.rdbuf ()),
           from_adapter_ (*prev_),
@@ -107,14 +139,14 @@ namespace Indentation
     }
 
   private:
-    std::ostream& os_;
-    std::streambuf* prev_;
+    std::basic_ostream<C>& os_;
+    std::basic_streambuf<C>* prev_;
 
-    FromStreamBufAdapter from_adapter_;
+    FromStreamBufAdapter<C> from_adapter_;
 
-    Buffer buffer_;
+    Buffer<C> buffer_;
 
-    ToStreamBufAdapter to_adapter_;
+    ToStreamBufAdapter<C> to_adapter_;
   };
 }
 

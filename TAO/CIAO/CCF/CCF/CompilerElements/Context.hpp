@@ -31,7 +31,7 @@ namespace CCF
       Map::size_type
       count (char const* key) const throw ()
       {
-        return map_.count (key) != 0;
+        return map_.count (key);
       }
 
       template <typename T>
@@ -86,6 +86,16 @@ namespace CCF
         {
           throw Typing ();
         }
+      }
+
+      void
+      remove (char const* key) throw (NotFound)
+      {
+        Map::iterator i (map_.find (key));
+
+        if (i == map_.end ()) throw NotFound ();
+
+        map_.erase (i);
       }
 
     private:
