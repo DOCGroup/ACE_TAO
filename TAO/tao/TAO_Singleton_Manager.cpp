@@ -14,7 +14,9 @@
 # include "tao/TAO_Singleton_Manager.inl"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID (tao, TAO_Singleton_Manager, "$Id$")
+ACE_RCSID (tao,
+           TAO_Singleton_Manager,
+           "$Id$")
 
 
 extern "C" void
@@ -94,9 +96,11 @@ TAO_Singleton_Manager::instance (void)
       ACE_ASSERT (instance_pointer == instance_);
 
       instance_pointer->dynamically_allocated_ = 1;
-    }
 
-  return instance_;
+      return instance_pointer;
+    }
+  else
+    return instance_;
 }
 
 int
@@ -147,8 +151,7 @@ TAO_Singleton_Manager::init (int register_with_object_manager)
   //    breaking things.  The fact things broke needs to be
   //    investigated further.
   if (this->registered_with_object_manager_ != -1
-      && register_with_object_manager
-      != this->registered_with_object_manager_)
+      && register_with_object_manager != this->registered_with_object_manager_)
     {
       // An attempt was made to register the TAO_Singleton_Manager
       // with a manager of a different type from the one it is
