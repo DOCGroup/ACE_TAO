@@ -1,3 +1,21 @@
+Wed Feb 14 20:59:00 2001  Pradeep Gore <pradeep@cs.wustl.edu>
+        
+		* orbsvcs/examples/notify/Notify_Examples.dsw:
+		* orbsvcs/examples/notify/Filter/Filter.dsp:
+        * orbsvcs/examples/notify/Subscribe/Subscribe.dsp:
+		* orbsvcs/tests/notify/Notify_Tests.dsw:
+        * orbsvcs/tests/notify/basic/AdminProperties_Test.dsp:
+        * orbsvcs/tests/notify/basic/ConnectDisconnect.dsp:
+		* orbsvcs/tests/notify/basic/Events_Test.dsp:
+		* orbsvcs/tests/notify/basic/IdAssignment.dsp:
+		* orbsvcs/tests/notify/basic/LifeCycleTest.dsp:
+		* orbsvcs/tests/notify/basic/Simple.dsp:
+		* orbsvcs/tests/notify/basic/Updates.dsp:
+		* orbsvcs/tests/notify/lib/TAO_NotifyTests.dsp:
+		* orbsvcs/tests/notify/performance-tests/Throughput/Throughput.dsp:
+		* orbsvcs/tests/notify/performance-tests/RedGreen/RedGreen.dsp:
+		  Added Notification tests and example project files for Windows.
+
 Wed Feb 14 16:30:23 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
         * tao/Muxed_TMS.cpp: Changed the return value in the case of a 
