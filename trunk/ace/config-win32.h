@@ -116,13 +116,16 @@
 	#define ACE_HAS_MT_ORBIX 0
 #endif
 
+// @@ MSVC doesn't seem to handle namespace correctly.  Don't set it
+//    by default.
+
 // By default, you will get the proper namespace usage for Orbix.  If
 // you don't like this, comment out the #define line or #undef
 // ACE_ORBIX_HAS_NAMESPACES in your config.h file after including this
 // file.
-#if !defined (ACE_ORBIX_HAS_NAMESPACES)
-#define ACE_ORBIX_HAS_NAMESPACES
-#endif /* ACE_ORBIX_HAS_NAMESPACES */
+// #if !defined (ACE_ORBIX_HAS_NAMESPACES)
+// #define ACE_ORBIX_HAS_NAMESPACES
+// #endif /* ACE_ORBIX_HAS_NAMESPACES */
 
 // By default, we disable the C++ casting because
 // it requires the RTTI support to be turned on which
