@@ -88,11 +88,11 @@ TAO_CodeGen::upcase (const char *str)
                   NAMEBUFSIZE);
 
   // Convert letters in str to upper case.
-  for (unsigned int i=0; i < ACE_OS::strlen (str); i++)
+  for (unsigned int i = 0; i < ACE_OS::strlen (str); ++i)
     {
       if (isalpha (str [i]))
         {
-          upcase_str[i] = (char) toupper (str [i]);
+          upcase_str[i] = (char) toupper (str[i]);
         }
       else
         {
