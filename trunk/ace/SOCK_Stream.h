@@ -128,8 +128,9 @@ public:
 
   // = Selectively close endpoints.
   /// Close down the reader.
-  /// Close down the writer.
   int close_reader (void);
+
+  /// Close down the writer.
   int close_writer (void);
 
   /**
