@@ -342,7 +342,6 @@ TAO_Wait_On_Leader_Follower::handle_input (void)
   // Receive any data that is available, without blocking...
   int result = this->transport_->handle_client_input (0);
 
-
   // Data was read, but there the reply has not been completely
   // received...
   if (result == 0)
