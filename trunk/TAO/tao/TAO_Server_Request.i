@@ -2,8 +2,6 @@
 //
 // $Id$
 
-#include "operation_details.h"
-
 ACE_INLINE TAO_ORB_Core *
 TAO_ServerRequest::orb_core (void) const
 {
@@ -88,39 +86,19 @@ TAO_ServerRequest::object_key (void)
 ACE_INLINE TAO_Service_Context &
 TAO_ServerRequest::request_service_context (void)
 {
-  if (!operation_details_)
-  {
-    return this->request_service_context_;
-  }
-  else
-  {
-    return const_cast <TAO_Operation_Details*> (this->operation_details_)->request_service_context ();
-  }
-}
-
-ACE_INLINE TAO_Service_Context &
-TAO_ServerRequest::reply_service_context (void)
-{
-  if (!operation_details_)
-  {
-    return this->reply_service_context_;
-  }
-  else
-  {
-    return const_cast <TAO_Operation_Details*> (this->operation_details_)->reply_service_context ();
-  }
-}
-
-ACE_INLINE IOP::ServiceContextList &
-TAO_ServerRequest::request_service_info (void)
-{
-  return this->request_service_context ().service_info ();
+  return this->request_service_context_;
 }
 
 ACE_INLINE IOP::ServiceContextList &
 TAO_ServerRequest::reply_service_info (void)
 {
   return this->reply_service_context ().service_info ();
+}
+
+ACE_INLINE IOP::ServiceContextList &
+TAO_ServerRequest::request_service_info (void)
+{
+  return this->request_service_context ().service_info ();
 }
 
 ACE_INLINE TAO_Transport *

@@ -147,21 +147,17 @@ public:
   /// Used with reliable oneway requests.
   void send_no_exception_reply (void);
 
-  // CORBA::Principal_ptr principal (void) const;
-
   TAO::ObjectKey &object_key (void);
 
-  /**
-   * @todo This two methods should go away.
-   */
-  //@{
-  IOP::ServiceContextList &request_service_info (void);
-  IOP::ServiceContextList &reply_service_info (void);
-  //@}
-
-  /// Return the TAO_Service_Context
+  /// Return the request TAO_Service_Context
   TAO_Service_Context &request_service_context (void);
+
+  /// Return the reply TAO_Service_Context
   TAO_Service_Context &reply_service_context (void);
+
+  IOP::ServiceContextList &reply_service_info (void);
+
+  IOP::ServiceContextList &request_service_info (void);
 
   /// Return the underlying transport
   TAO_Transport *transport ();
@@ -188,12 +184,6 @@ public:
 
   /// Set the exception type.
   void exception_type (CORBA::ULong except_type);
-
-  /// Set the requesting principal.
-  /**
-   * @note Deprecated in CORBA 2.4
-   */
-  // void requesting_principal (CORBA::Principal_ptr principal);
 
   /// Set the requesting principal
   void requesting_principal (const CORBA::OctetSeq & principal);
@@ -239,7 +229,7 @@ public:
   /// the current interceptor flow stack.
   /**
    * @note It is a reference since the Portable Interceptor flow stack
-   *       code  must be able to modify this value and use that value
+   *       code must be able to modify this value and use that value
    *       at a later time without being forced to use TSS.
    */
   size_t & interceptor_count (void);
@@ -252,7 +242,6 @@ public:
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
 private:
-
   TAO_Pluggable_Messaging *mesg_base_;
 
   /// Operation name.
