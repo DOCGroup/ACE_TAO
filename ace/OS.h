@@ -810,12 +810,12 @@ typedef int ACE_thread_t;
 typedef int ACE_hthread_t;
 typedef int ACE_thread_key_t;
 #endif /* ACE_HAS_THREADS */
-
 #include <sys/types.h>
 #include <assert.h>
 #include <sys/stat.h>
 #include <limits.h>
 #include <stdio.h>
+#include "ace/stdcpp.h"
 #include <new.h>
 #include <ctype.h>
 #include <signal.h>
