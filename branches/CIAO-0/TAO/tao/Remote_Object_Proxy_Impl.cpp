@@ -164,6 +164,73 @@ TAO_Remote_Object_Proxy_Impl::_non_existent (const CORBA::Object_ptr target
   return _tao_retval;
 }
 
+CORBA::Object_ptr
+TAO_Remote_Object_Proxy_Impl::_get_component (const CORBA::Object_ptr target
+                                             ACE_ENV_ARG_DECL)
+{
+  CORBA::Object_var _tao_retval (CORBA::Object::_nil ());
+
+  ACE_TRY
+    {
+      // Must catch exceptions, if the server raises a
+      // CORBA::OBJECT_NOT_EXIST then we must return 1, instead of
+      // propagating the exception.
+      TAO_Stub *istub = target->_stubobj ();
+      if (istub == 0)
+        ACE_THROW_RETURN (CORBA::INTERNAL (
+                            CORBA_SystemException::_tao_minor_code (
+                              TAO_DEFAULT_MINOR_CODE,
+                              EINVAL),
+                            CORBA::COMPLETED_NO),
+                          _tao_retval);
+
+      TAO_GIOP_Twoway_Invocation _tao_call (istub,
+                                            "_component",
+                                            10,
+                                            1,
+                                            istub->orb_core ());
+
+      // ACE_TRY_ENV.clear ();
+      for (;;)
+        {
+          _tao_call.start (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+
+          CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
+
+          _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag)
+                                     ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+
+          int _invoke_status =
+            _tao_call.invoke (0, 0 ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+
+          if (_invoke_status == TAO_INVOKE_RESTART)
+            continue;
+          ACE_ASSERT (_invoke_status != TAO_INVOKE_EXCEPTION);
+          if (_invoke_status != TAO_INVOKE_OK)
+            {
+              ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE,
+                                                CORBA::COMPLETED_YES),
+                                _tao_retval);
+            }
+          break;
+        }
+      TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
+      if (!(
+            (_tao_in >> _tao_retval.inout ())
+            ))
+        ACE_THROW_RETURN (CORBA::MARSHAL (), _tao_retval);
+    }
+  ACE_CATCHANY
+    {
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  return _tao_retval._retn ();
+}
+
 CORBA_InterfaceDef_ptr
 TAO_Remote_Object_Proxy_Impl::_get_interface (const CORBA::Object_ptr target
                                               ACE_ENV_ARG_DECL)

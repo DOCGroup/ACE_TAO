@@ -55,6 +55,8 @@ public:
     ACE_THROW_SPEC (());
 #if (TAO_HAS_MINIMUM_CORBA == 0)
   virtual CORBA::Boolean _non_existent (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+
+  virtual CORBA::Object_ptr _get_component (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 #endif /* TAO_HAS_MINIMUM_CORBA */
   virtual void *_tao_QueryInterface(ptr_arith_t type);
 

@@ -114,6 +114,12 @@ TAO_ServantBase::_get_interface (ACE_ENV_SINGLE_ARG_DECL)
                                  ACE_ENV_ARG_PARAMETER);
 }
 
+CORBA::Object_ptr
+TAO_ServantBase::_get_component (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+{
+  return CORBA::Object::_nil ();
+}
+
 int
 TAO_ServantBase::_find (const char *opname,
                         TAO_Skeleton& skelfunc,

@@ -47,6 +47,9 @@ public:
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     ) = 0;
 
+  /// Default <_get_component>: always returns nil.
+  virtual CORBA::Object_ptr _get_component (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS) = 0;
+
   //@{
   /// @name Reference counting hooks: no-ops by default.
   virtual void _add_ref (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);

@@ -50,7 +50,7 @@ int
 be_visitor_interface::is_amh_rh_node (be_interface *node)
 {
    //If, is implied-IDL
-  if (node->original_interface () != 0) 
+  if (node->original_interface () != 0)
   {
     // and the name starts with AMH
     if (ACE_OS::strncmp (node->local_name (), "AMH", 3) == 0)
@@ -95,18 +95,6 @@ be_visitor_interface::visit_attribute (be_attribute *node)
       break;
     case TAO_CodeGen::TAO_INTERFACE_IS:
       ctx.state (TAO_CodeGen::TAO_ATTRIBUTE_IS);
-      break;
-    case TAO_CodeGen::TAO_INTERFACE_THRU_POA_COLLOCATED_SH:
-      ctx.state (TAO_CodeGen::TAO_ATTRIBUTE_THRU_POA_COLLOCATED_SH);
-      break;
-    case TAO_CodeGen::TAO_INTERFACE_DIRECT_COLLOCATED_SH:
-      ctx.state (TAO_CodeGen::TAO_ATTRIBUTE_DIRECT_COLLOCATED_SH);
-      break;
-    case TAO_CodeGen::TAO_INTERFACE_THRU_POA_COLLOCATED_SS:
-      ctx.state (TAO_CodeGen::TAO_ATTRIBUTE_THRU_POA_COLLOCATED_SS);
-      break;
-    case TAO_CodeGen::TAO_INTERFACE_DIRECT_COLLOCATED_SS:
-      ctx.state (TAO_CodeGen::TAO_ATTRIBUTE_DIRECT_COLLOCATED_SS);
       break;
     case TAO_CodeGen::TAO_INTERFACE_SMART_PROXY_CH:
       ctx.state (TAO_CodeGen::TAO_ATTRIBUTE_SMART_PROXY_CH);
@@ -157,11 +145,11 @@ be_visitor_interface::visit_attribute (be_attribute *node)
 
       // AMH stuff
     case TAO_CodeGen::TAO_INTERFACE_AMH_RH_SH:
-		ctx.state (TAO_CodeGen::TAO_ATTRIBUTE_SH);
-		break;
+                ctx.state (TAO_CodeGen::TAO_ATTRIBUTE_SH);
+                break;
     case TAO_CodeGen::TAO_INTERFACE_AMH_RH_SS:
-		ctx.state (TAO_CodeGen::TAO_ATTRIBUTE_SS);
-		break;
+                ctx.state (TAO_CodeGen::TAO_ATTRIBUTE_SS);
+                break;
 
     case TAO_CodeGen::TAO_INTERFACE_PROXY_IMPLS_CH:
     case TAO_CodeGen::TAO_INTERFACE_PROXY_IMPLS_CS:
@@ -248,10 +236,6 @@ be_visitor_interface::visit_constant (be_constant *node)
     case TAO_CodeGen::TAO_INTERFACE_CDR_OP_CH:
     case TAO_CodeGen::TAO_INTERFACE_CDR_OP_CI:
     case TAO_CodeGen::TAO_INTERFACE_CDR_OP_CS:
-    case TAO_CodeGen::TAO_INTERFACE_THRU_POA_COLLOCATED_SH:
-    case TAO_CodeGen::TAO_INTERFACE_THRU_POA_COLLOCATED_SS:
-    case TAO_CodeGen::TAO_INTERFACE_DIRECT_COLLOCATED_SH:
-    case TAO_CodeGen::TAO_INTERFACE_DIRECT_COLLOCATED_SS:
     case TAO_CodeGen::TAO_INTERFACE_SMART_PROXY_CH:
     case TAO_CodeGen::TAO_INTERFACE_SMART_PROXY_CS:
     case TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_CH:
@@ -292,9 +276,9 @@ be_visitor_interface::visit_constant (be_constant *node)
 
     case TAO_CodeGen::TAO_INTERFACE_AMH_RH_SH:
     case TAO_CodeGen::TAO_INTERFACE_AMH_RH_SS:
-		return 0; // nothing to be done
+                return 0; // nothing to be done
 
-	default:
+        default:
       {
         ACE_ERROR_RETURN ((LM_ERROR,
                            "(%N:%l) be_visitor_interface::"
@@ -370,10 +354,6 @@ be_visitor_interface::visit_enum (be_enum *node)
     case TAO_CodeGen::TAO_INTERFACE_IS:
     case TAO_CodeGen::TAO_INTERFACE_SI:
     case TAO_CodeGen::TAO_INTERFACE_SS:
-    case TAO_CodeGen::TAO_INTERFACE_THRU_POA_COLLOCATED_SH:
-    case TAO_CodeGen::TAO_INTERFACE_THRU_POA_COLLOCATED_SS:
-    case TAO_CodeGen::TAO_INTERFACE_DIRECT_COLLOCATED_SH:
-    case TAO_CodeGen::TAO_INTERFACE_DIRECT_COLLOCATED_SS:
     case TAO_CodeGen::TAO_INTERFACE_SMART_PROXY_CH:
     case TAO_CodeGen::TAO_INTERFACE_SMART_PROXY_CS:
     case TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_CH:
@@ -408,7 +388,7 @@ be_visitor_interface::visit_enum (be_enum *node)
 
     case TAO_CodeGen::TAO_INTERFACE_AMH_RH_SH:
     case TAO_CodeGen::TAO_INTERFACE_AMH_RH_SS:
-		return 0; // nothing to be done
+                return 0; // nothing to be done
 
     default:
       {
@@ -487,10 +467,6 @@ be_visitor_interface::visit_exception (be_exception *node)
     case TAO_CodeGen::TAO_INTERFACE_IS:
     case TAO_CodeGen::TAO_INTERFACE_SI:
     case TAO_CodeGen::TAO_INTERFACE_SS:
-    case TAO_CodeGen::TAO_INTERFACE_THRU_POA_COLLOCATED_SH:
-    case TAO_CodeGen::TAO_INTERFACE_THRU_POA_COLLOCATED_SS:
-    case TAO_CodeGen::TAO_INTERFACE_DIRECT_COLLOCATED_SH:
-    case TAO_CodeGen::TAO_INTERFACE_DIRECT_COLLOCATED_SS:
     case TAO_CodeGen::TAO_INTERFACE_SMART_PROXY_CH:
     case TAO_CodeGen::TAO_INTERFACE_SMART_PROXY_CS:
     case TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_CH:
@@ -525,7 +501,7 @@ be_visitor_interface::visit_exception (be_exception *node)
 
     case TAO_CodeGen::TAO_INTERFACE_AMH_RH_SH:
     case TAO_CodeGen::TAO_INTERFACE_AMH_RH_SS:
-		return 0; // nothing to be done
+                return 0; // nothing to be done
 
     default:
       {
@@ -599,18 +575,6 @@ be_visitor_interface::visit_operation (be_operation *node)
       break;
     case TAO_CodeGen::TAO_INTERFACE_TIE_SI:
       ctx.state (TAO_CodeGen::TAO_OPERATION_TIE_SI);
-      break;
-    case TAO_CodeGen::TAO_INTERFACE_THRU_POA_COLLOCATED_SH:
-      ctx.state (TAO_CodeGen::TAO_OPERATION_THRU_POA_COLLOCATED_SH);
-      break;
-    case TAO_CodeGen::TAO_INTERFACE_THRU_POA_COLLOCATED_SS:
-      ctx.state (TAO_CodeGen::TAO_OPERATION_THRU_POA_COLLOCATED_SS);
-      break;
-    case TAO_CodeGen::TAO_INTERFACE_DIRECT_COLLOCATED_SH:
-      ctx.state (TAO_CodeGen::TAO_OPERATION_DIRECT_COLLOCATED_SH);
-      break;
-    case TAO_CodeGen::TAO_INTERFACE_DIRECT_COLLOCATED_SS:
-      ctx.state (TAO_CodeGen::TAO_OPERATION_DIRECT_COLLOCATED_SS);
       break;
     case TAO_CodeGen::TAO_INTERFACE_SMART_PROXY_CH:
       ctx.state (TAO_CodeGen::TAO_OPERATION_SMART_PROXY_CH);
@@ -783,10 +747,6 @@ be_visitor_interface::visit_structure (be_structure *node)
     case TAO_CodeGen::TAO_INTERFACE_IS:
     case TAO_CodeGen::TAO_INTERFACE_SI:
     case TAO_CodeGen::TAO_INTERFACE_SS:
-    case TAO_CodeGen::TAO_INTERFACE_THRU_POA_COLLOCATED_SH:
-    case TAO_CodeGen::TAO_INTERFACE_THRU_POA_COLLOCATED_SS:
-    case TAO_CodeGen::TAO_INTERFACE_DIRECT_COLLOCATED_SH:
-    case TAO_CodeGen::TAO_INTERFACE_DIRECT_COLLOCATED_SS:
     case TAO_CodeGen::TAO_INTERFACE_SMART_PROXY_CH:
     case TAO_CodeGen::TAO_INTERFACE_SMART_PROXY_CS:
     case TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_CH:
@@ -899,10 +859,6 @@ be_visitor_interface::visit_union (be_union *node)
     case TAO_CodeGen::TAO_INTERFACE_IS:
     case TAO_CodeGen::TAO_INTERFACE_SI:
     case TAO_CodeGen::TAO_INTERFACE_SS:
-    case TAO_CodeGen::TAO_INTERFACE_THRU_POA_COLLOCATED_SH:
-    case TAO_CodeGen::TAO_INTERFACE_THRU_POA_COLLOCATED_SS:
-    case TAO_CodeGen::TAO_INTERFACE_DIRECT_COLLOCATED_SH:
-    case TAO_CodeGen::TAO_INTERFACE_DIRECT_COLLOCATED_SS:
     case TAO_CodeGen::TAO_INTERFACE_SMART_PROXY_CH:
     case TAO_CodeGen::TAO_INTERFACE_SMART_PROXY_CS:
     case TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_CH:
@@ -937,7 +893,7 @@ be_visitor_interface::visit_union (be_union *node)
 
     case TAO_CodeGen::TAO_INTERFACE_AMH_RH_SH:
     case TAO_CodeGen::TAO_INTERFACE_AMH_RH_SS:
-		return 0; // nothing to be done
+                return 0; // nothing to be done
     default:
       {
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -1015,10 +971,6 @@ be_visitor_interface::visit_typedef (be_typedef *node)
     case TAO_CodeGen::TAO_INTERFACE_IS:
     case TAO_CodeGen::TAO_INTERFACE_SI:
     case TAO_CodeGen::TAO_INTERFACE_SS:
-    case TAO_CodeGen::TAO_INTERFACE_THRU_POA_COLLOCATED_SH:
-    case TAO_CodeGen::TAO_INTERFACE_THRU_POA_COLLOCATED_SS:
-    case TAO_CodeGen::TAO_INTERFACE_DIRECT_COLLOCATED_SH:
-    case TAO_CodeGen::TAO_INTERFACE_DIRECT_COLLOCATED_SS:
     case TAO_CodeGen::TAO_INTERFACE_SMART_PROXY_CH:
     case TAO_CodeGen::TAO_INTERFACE_SMART_PROXY_CS:
     case TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_CH:
@@ -1053,7 +1005,7 @@ be_visitor_interface::visit_typedef (be_typedef *node)
 
     case TAO_CodeGen::TAO_INTERFACE_AMH_RH_SH:
     case TAO_CodeGen::TAO_INTERFACE_AMH_RH_SS:
-		return 0; // nothing to be done
+                return 0; // nothing to be done
     default:
       {
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -1086,16 +1038,3 @@ be_visitor_interface::visit_typedef (be_typedef *node)
   delete visitor;
   return 0;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

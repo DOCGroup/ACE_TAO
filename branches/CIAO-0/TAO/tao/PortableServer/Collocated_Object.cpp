@@ -154,6 +154,52 @@ TAO_Collocated_Object::_non_existent (ACE_ENV_SINGLE_ARG_DECL)
   ACE_ENDTRY;
   return _tao_retval;
 }
+
+CORBA::Object_ptr
+TAO_Collocated_Object::_get_component (ACE_ENV_SINGLE_ARG_DECL)
+{
+  CORBA::Object_var _tao_retval (CORBA::Object::_nil ());
+
+  ACE_TRY
+    {
+      // If the object is collocated then try locally....
+      if (!this->_is_collocated ())
+        return this->CORBA_Object::_get_component (ACE_ENV_SINGLE_ARG_PARAMETER);
+
+      TAO_Stub *stub = this->_stubobj ();
+
+      // Which collocation strategy should we use?
+      if (stub != 0 &&
+          stub->servant_orb_var ()->orb_core ()
+          ->get_collocation_strategy () == TAO_ORB_Core::THRU_POA)
+        {
+          TAO_Object_Adapter::Servant_Upcall servant_upcall (
+              stub->servant_orb_var ()->orb_core ()
+            );
+
+          CORBA::Object_var forward_to;
+          servant_upcall.prepare_for_upcall (this->_object_key (),
+                                             "_component",
+                                             forward_to.out ()
+                                             ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+          return servant_upcall.servant ()->_get_component (ACE_ENV_SINGLE_ARG_PARAMETER);
+        }
+
+      // Direct collocation strategy is used.
+      if (this->servant_ != 0)
+        return this->servant_->_get_component (ACE_ENV_SINGLE_ARG_PARAMETER);
+
+      // @@ Maybe we want to change this exception...
+      ACE_THROW_RETURN (CORBA::INV_OBJREF (), 0);
+    }
+  ACE_CATCHANY
+    {
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  return _tao_retval._retn ();
+}
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
 void*
