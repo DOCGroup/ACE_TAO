@@ -154,7 +154,7 @@ main (int argc, char **argv)
       return -1;
     }
 
-  // Try to create a reference with user created ID in firstPOA which uses the MyFooServantManager
+  //  create a reference with user created ID  in firstPOA which uses the MyFooServantActivator
 
   PortableServer::ObjectId_var first_foo_oid = PortableServer::string_to_ObjectId ("firstFoo");
   CORBA::Object_var first_foo = first_poa->create_reference_with_id (first_foo_oid.in (), "IDL:Foo:1.0", env);
@@ -189,7 +189,7 @@ main (int argc, char **argv)
       return -1;
     }
 
-  // Invoke object_to_string on the objects created in firstPOA and secondPOA
+  // Invoke object_to_string on the references created in firstPOA and secondPOA
 
   CORBA::String_var first_foo_ior = orb->object_to_string (first_foo, env);
   if (env.exception () != 0)
@@ -205,7 +205,7 @@ main (int argc, char **argv)
       return -1;
     }
 
-  // Print the ior's
+  // Print the ior's of first_foo and second_foo
 
   cout << first_foo_ior.in () << endl;
   cout << second_foo_ior.in () << endl;
@@ -233,3 +233,4 @@ main (int argc, char **argv)
 
   return 0;
 }
+
