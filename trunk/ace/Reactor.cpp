@@ -1466,7 +1466,7 @@ ACE_Reactor::suspend_i (ACE_HANDLE handle)
   if (this->wait_set_.ex_mask_.is_set (handle))
     {
       this->suspend_set_.ex_mask_.set_bit (handle);
-      this->ex_mask_.clr_bit(handle);
+      this->wait_set_.ex_mask_.clr_bit(handle);
     }
   return 0;
 }
