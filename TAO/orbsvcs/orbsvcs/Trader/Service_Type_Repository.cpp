@@ -281,21 +281,15 @@ fully_describe_type (const char * name,
 		   CosTrading::UnknownServiceType))
 {
   if (! TAO_Trader_Base::is_valid_identifier_name (name))
-    TAO_THROW_RETURN
-      (CosTrading::IllegalServiceType (name),
-       (CosTradingRepos::ServiceTypeRepository::TypeStruct*) 0);
+    TAO_THROW_RETURN (CosTrading::IllegalServiceType (name), 0);
   
-  TAO_READ_GUARD_RETURN (ACE_Lock, 
-			 ace_mon, 
-			 *this->lock_,
-			 (CosTradingRepos::ServiceTypeRepository::TypeStruct*) 0);
+  TAO_READ_GUARD_RETURN (ACE_Lock, ace_mon, *this->lock_, 0);
   
   // make sure the type exists.
   TAO_String_Hash_Key type_name (name);
   Service_Type_Map::ENTRY* type_entry = 0;
   if (this->type_map_.find (type_name, type_entry) == -1)
-    TAO_THROW_RETURN (CosTrading::UnknownServiceType (name),
-		      (CosTradingRepos::ServiceTypeRepository::TypeStruct*) 0);
+    TAO_THROW_RETURN (CosTrading::UnknownServiceType (name), 0);
   
   // return appropriate information about the type.
   CosTradingRepos::ServiceTypeRepository::TypeStruct* descr = 0;
@@ -304,7 +298,7 @@ fully_describe_type (const char * name,
     type_entry->int_id_->type_struct_;
   
   // Aggregate the Properties of this type and all its supertypes.
-  // Computer the transitive closure of all supertypes.
+  // Compute the transitive closure of all supertypes.
   this->fully_describe_type_i (s, descr->props, descr->super_types);
   
   // We do the explicit copy, since otherwise we'd have excessive
