@@ -87,8 +87,7 @@ namespace CORBA
   public:
 
     // ORB_Core has special privileges
-    friend class TAO_ORB_Core;
-    //friend TAO_Export TAO_ORB_Core *TAO_ORB_Core_instance (void);
+    friend class ::TAO_ORB_Core;
 
     class TAO_Export InvalidName : public CORBA::UserException
     {
@@ -379,7 +378,7 @@ namespace CORBA
      * This operation performs an implementation-defined unit of work.
      * Note that the default behavior is to block if the unit of work
      * is not present; this behavior can be modified by passing an
-     * appropriate @c ACE_Time_Value as described in run(). 
+     * appropriate @c ACE_Time_Value as described in run().
      **/
     void perform_work (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
     void perform_work (ACE_Time_Value &

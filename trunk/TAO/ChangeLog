@@ -1,3 +1,16 @@
+Sat Feb 22 09:37:29 2003  Ossama Othman  <ossama@uci.edu>
+
+	* tao/ORB.h (ORB):
+
+	  Qualify the TAO_ORB_Core friend declaration with the global
+	  scope ("::") qualifier.  Addresses a problem where some
+	  compilers assume that the TAO_ORB_Core declaration actually
+	  resides in the CORBA namespace.
+
+	* tao/DynamicInterface/Makefile.bor (OBJFILES):
+
+	  Fixed syntax error.
+
 Sat Feb 22 09:06:45 2003  Ossama Othman  <ossama@uci.edu>
 
 	* tao/ValueFactory.h (TAO_OBV_CREATE_RETURN_TYPE):
