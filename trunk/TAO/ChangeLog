@@ -1,3 +1,12 @@
+Thu Feb 24 08:10:35 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_interface (gen_skel_helper):
+        
+          Cleaned up generated code for calls to base class *_skel()
+          methods, by changing C-style casts to static_cast<> and
+          by eliminating redundant casts. Thanks to Johnny Willemsen
+          <jwillemsen@remedy.nl> for reporting the problem.
+
 Thu Feb 24 12:39:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ORB.cpp:
