@@ -1,3 +1,8 @@
+Fri Mar  4 11:58:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_1482_Regression/test.mpc:
+          No need to set the exename for the server project
+
 Fri Mar  4 10:12:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Operation_Table.{h,cpp}:
