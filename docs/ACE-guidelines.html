@@ -119,7 +119,7 @@ bgcolor="#ffffff">
 
     <li>Be very careful with names of macros and enum values.  It's
         always best to prefix them with something like <code>ACE_</code>
-        or <code>TAO_<code>.  There are too many system headers out
+        or <code>TAO_</code>.  There are too many system headers out
         there that #define <code>OK</code>, <code>SUCCESS</code>,
         <code>ERROR</code>, and so on.<p>
   </ul>
@@ -552,6 +552,11 @@ bgcolor="#ffffff">
 <ul>
   <li>Always use <strong><code>ACE_OS</code></strong> (static)
       member functions instead of bare OS system calls.<p>
+
+  <li>As a general rule, the only functions that should go into the
+      <strong><code>ACE_OS</code></strong> class are ones that have
+      direct equivalents on some OS platform.  Functions that are
+      extensions should go in the <strong><code>ACE</code></strong> class.<p>
 
   <li>Use the <strong><code>ACE_SYNCH_MUTEX</code></strong> macro,
       instead of using one of the specific mutexes, such as
