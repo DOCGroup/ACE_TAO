@@ -1,12 +1,19 @@
+Sat May  8 14:50:26 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * DnC/Deployment.idl:
+
+          Added a missing structure member infoProperty
+          to the structure Domain.
+
 Fri May  7 20:38:15 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/ServantSourceGenerator.cpp:
-        
+
           A fix for generated code for inherited home factory operations.
           It makes use of the fact that a derived home must manage a
           component that is derived from the component its base home
           manages. This means that the corresponding executor classes
-          have the same inheritance relationships. When a call is 
+          have the same inheritance relationships. When a call is
           made to a base home factory operation on a derived home,
           the derived home's managed component will be returned as
           a base component reference. Operations called on this
@@ -19,7 +26,7 @@ Fri May  7 17:19:02 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/ServantHeaderGenerator.cpp:
         * CIDLC/ServantSourceGenerator.cpp:
-        
+
           Filled in some missing items in generation of facet, component
           and home servant classes, and of component context classes.
           These missing items included some cases of code generation for
