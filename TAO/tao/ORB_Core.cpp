@@ -90,6 +90,7 @@ TAO_ORB_Core::init (int& argc, char** argv)
   CORBA::String_var host = CORBA::string_dup ("");
   CORBA::UShort port = defport;
   CORBA::Boolean use_ior = CORBA::B_TRUE;
+  CORBA::Boolean opt_collocation = CORBA::B_TRUE;
   // The following things should be changed to use the ACE_Env_Value<>
   // template sometime.
 
@@ -260,6 +261,22 @@ TAO_ORB_Core::init (int& argc, char** argv)
               arg_shifter.consume_arg ();
             }
         }
+      else if (ACE_OS::strcmp (current_arg, "-ORBcollocation") == 0)
+        // Specify whether we want to optimize against collocation objects.
+        // Valid arguments are: "yes" and "no".  Default is yes.
+        {
+          arg_shifter.consume_arg ();
+          if (arg_shifter.is_parameter_next ())
+            {
+              char *opt = arg_shifter.get_current ();
+              if (ACE_OS::strcasecmp (opt, "YES") == 0)
+                opt_collocation = CORBA::B_TRUE;
+              else if (ACE_OS::strcasecmp (opt, "NO") == 0)
+                opt_collocation = CORBA::B_FALSE;
+
+              arg_shifter.consume_arg ();
+            }
+        }
       else if (ACE_OS::strcmp (current_arg, "-ORBpreconnect") == 0)
         {
           arg_shifter.consume_arg ();
@@ -380,7 +397,8 @@ TAO_ORB_Core::init (int& argc, char** argv)
 
   // This should probably move into the ORB Core someday rather then
   // being done at this level.
-  this_orb->use_omg_ior_format (use_ior);
+  this_orb->_use_omg_ior_format (use_ior);
+  this_orb->_optimize_collocation_objects (opt_collocation);
 
   // Set all kinds of orb parameters whose setting needed to be
   // deferred until after the service config entries had been
