@@ -41,7 +41,7 @@ TAO_CEC_Default_Factory::parse_collection_arg (char *opt)
   int synch_type = 0;
   int iteration_type = 0;
 
-  char* aux;
+  char* aux = 0;
   for (char* arg = ACE_OS::strtok_r (opt, ":", &aux);
        arg != 0;
        arg = ACE_OS::strtok_r (0, ":", &aux))
