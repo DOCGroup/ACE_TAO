@@ -1,6 +1,13 @@
 // $Id$
 
 #include "server.h"
+#include "ace/Get_Opt.h"
+#include "ace/High_Res_Timer.h"
+#include "ace/Stats.h"
+
+
+ACE_hrtime_t recv_base = 0;
+ACE_Throughput_Stats recv_latency;
 
 FTP_Server_StreamEndPoint::FTP_Server_StreamEndPoint (void)
 {
@@ -22,7 +29,7 @@ int
 FTP_Server_Callback::handle_stop (void)
 {
   ACE_DEBUG ((LM_DEBUG,"FTP_Server_Callback::stop"));
-  ACE_OS::fclose (SERVER::instance ()->file ());
+  ACE_OS::fclose (FTP_SERVER::instance ()->file ());
   return 0;
 }
 
@@ -34,12 +41,29 @@ FTP_Server_Callback::receive_frame (ACE_Message_Block *frame,
   ACE_DEBUG ((LM_DEBUG,"FTP_Server_Callback::receive_frame\n"));
   while (frame != 0)
     {
-      int result = ACE_OS::fwrite (frame->rd_ptr (),
-                                   frame->length (),
-                                   1,
-                                   SERVER::instance ()->file ());
-      if (result == 0)
-        ACE_ERROR_RETURN ((LM_ERROR,"FTP_Server_Flow_Handler::fwrite failed\n"),-1);
+      ACE_hrtime_t stamp;
+      //      int result = ACE_OS::fwrite (frame->rd_ptr (),
+      //                           frame->length (),
+      //                           1,
+      //                           FTP_SERVER::instance ()->file ());
+      if (frame->length () < sizeof(stamp))
+        return 0;
+      
+      ACE_OS::memcpy (&stamp, frame->rd_ptr (), sizeof(stamp));
+      
+      ACE_hrtime_t now = ACE_OS::gethrtime ();
+      if (recv_base == 0)
+        {
+          recv_base = now;
+        }
+      else
+        {
+          recv_latency.sample (now - recv_base,
+                               now - stamp);
+        }
+
+     //if (result == 0)
+  //    ACE_ERROR_RETURN ((LM_ERROR,"FTP_Server_Flow_Handler::fwrite failed\n"),-1);
       frame = frame->cont ();
     }
   return 0;
@@ -98,6 +122,7 @@ Server::init (int argc,
                            "the TAO_Naming_Client. \n"),
                           -1);
 
+      this->orb_manager_->activate_poa_manager (ACE_TRY_ENV);
       // Register the video mmdevice object with the ORB
       ACE_NEW_RETURN (this->mmdevice_,
                       TAO_MMDevice (&this->reactive_strategy_),
@@ -186,12 +211,17 @@ main (int argc,
       char **argv)
 {
   int result = 0;
-  result = SERVER::instance ()->init (argc,argv);
+  result = FTP_SERVER::instance ()->init (argc,argv);
   if (result < 0)
-    ACE_ERROR_RETURN ((LM_ERROR,"SERVER::init failed\n"),1);
-  result = SERVER::instance ()->run ();
+    ACE_ERROR_RETURN ((LM_ERROR,"FTP_SERVER::init failed\n"),1);
+  result = FTP_SERVER::instance ()->run ();
   if (result < 0)
-    ACE_ERROR_RETURN ((LM_ERROR,"SERVER::run failed\n"),1);
+    ACE_ERROR_RETURN ((LM_ERROR,"FTP_SERVER::run failed\n"),1);
+  ACE_DEBUG ((LM_DEBUG, "Calibrating scale factory . . . "));
+  ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
+  ACE_DEBUG ((LM_DEBUG, "done\n"));
+  
+  recv_latency.dump_results ("Receive", gsf);
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
