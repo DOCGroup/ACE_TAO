@@ -1140,7 +1140,8 @@ private:
  * @brief Implement a simple unordered set of <T> with maximum <ACE_SIZE>.
  *
  * This implementation of an unordered set uses a fixed array.
- * This implementation does not allow duplicates...
+ * It does not allow duplicate members.  The set provides linear insertion/deletion
+ * operations.  
  */
 template <class T, size_t ACE_SIZE>
 class ACE_Fixed_Set
@@ -1154,28 +1155,47 @@ public:
   typedef ACE_Fixed_Set_Iterator<T, ACE_SIZE> CONST_ITERATOR;
 
   // = Initialization and termination methods.
-  /// Constructor.
+  /// Default Constructor.
+  /**
+   * Creates an empy set 
+   */
   ACE_Fixed_Set (void);
 
   /// Copy constructor.
+  /**
+   * Initializes a set to be a copy of the set parameter. 
+   */
   ACE_Fixed_Set (const ACE_Fixed_Set<T, ACE_SIZE> &);
 
   /// Assignment operator.
+  /**
+   * Deep copy of one set to another. 
+   */
   void operator= (const ACE_Fixed_Set<T, ACE_SIZE> &);
 
   /// Destructor.
+  /** 
+   * Destroys a set. 
+   */
   ~ACE_Fixed_Set (void);
 
   // = Check boundary conditions.
 
   /// Returns 1 if the container is empty, otherwise returns 0.
+  /**
+   * Performs constant time check to determine if a set is empty. 
+   */
   int is_empty (void) const;
 
   /// Returns 1 if the container is full, otherwise returns 0.
+  /**
+   * Performs a constant time check to see if the set is full. 
+   */
   int is_full (void) const;
 
   // = Classic unordered set operations.
 
+  ///Linear time insertion of an item unique to the set. 
   /**
    * Insert <new_item> into the set (doesn't allow duplicates).
    * Returns -1 if failures occur, 1 if item is already present, else
@@ -1183,17 +1203,24 @@ public:
    */
   int insert (const T &new_item);
 
+  ///Linear time removal operation of an item. 
   /**
    * Remove first occurrence of <item> from the set.  Returns 0 if
    * it removes the item, -1 if it can't find the item, and -1 if a
-   * failure occurs.
+   * failure occurs.  Removal doesn't reclaim memory for the <item>.
    */
   int remove (const T &item);
 
   /// Finds if <item> occurs in the set.  Returns 0 if finds, else -1.
+  /**
+   * Performs a linear find operation for the specified <item>. 
+   */
   int find (const T &item) const;
 
   /// Size of the set.
+  /**
+   * Returns the current size of the set. 
+   */
   size_t size (void) const;
 
   /// Dump the state of an object.
