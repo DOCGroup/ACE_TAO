@@ -278,7 +278,8 @@ be_visitor_sequence_cs::gen_unbounded_obj_sequence (be_sequence *node)
         }
       else
         {
-          *os << "tao_" << pt->flat_name () << "_narrow (src, ACE_TRY_ENV);";
+          *os << "tao_" << pt->flat_name () 
+              << "_narrow (src, ACE_TRY_ENV);";
         }
 
       *os << be_nl
