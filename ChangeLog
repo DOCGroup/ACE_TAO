@@ -1,3 +1,15 @@
+Mon Apr 19 14:02:31 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/os_include/sys/os_msg.h:
+          Instead of defining an empty struct msqid_ds when
+          ACE_WIN32 is set, use the new ACE_LACKS_MSQID_DS_T define.
+
+        * ace/README:
+          Added ACE_LACKS_MSQID_DS_T description
+
+        * ace/config-win32-common.h:
+          Win32 doesn't have the struct msqid_ds, so added ACE_LACKS_MSQID_DS_T
+
 Fri Apr 16 12:34:29 2004  Steve Huston  <shuston@riverace.com>
 
 	* ace/ace.icp:
