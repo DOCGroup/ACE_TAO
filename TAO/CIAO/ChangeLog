@@ -1,3 +1,12 @@
+Tue Mar 22 13:08:32 2005  Will Otte <wotte@dre.vanderbilt.edu>
+	* DAnCE/ExecutionManager/Execution_Manager_Impl.h
+	* DAnCE/ciao/Swapping_Servant_Home_Impl_Base.h
+	* DAnCE/ciao/Swapping_Servant_Home_Impl_T.h
+	* DAnCE/examples/Swapping/Sender/Sender_exec_1.h
+	* DAnCE/examples/Swapping/Sender/Sender_exec_2.h
+
+	Silence some Fuzz errors.
+	
 Tue Mar 22 11:45:57 2005  Will Otte <wotte@dre.vanderbilt.edu>
 	
 	* DAnCE/Config_Handlers/ADD_Handler.cpp
