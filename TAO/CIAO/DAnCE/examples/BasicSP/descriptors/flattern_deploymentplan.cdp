@@ -158,7 +158,7 @@
 
   <instance id="BasicSP-BMClosedED-idd">
     <name>BasicSP-BMClosedED-idd</name>
-    <node>BMDisplay</node>
+    <node>AirFrameDevice</node>
     <source><!-- @@ What goes here --></source>
     <implementation>BasicSP-BMClosedED-mdd</implementation>
     <configProperty>
@@ -176,7 +176,7 @@
 
   <instance id="BasicSP-BMDevice-idd">
     <name>BasicSP-BMDevice-idd</name>
-    <node>BMDisplay</node>
+    <node>AirFrameDevice</node>
     <source><!-- @@ What goes here --></source>
     <implementation>BasicSP-BMDevice-mdd</implementation>
     <configProperty>
@@ -194,7 +194,7 @@
   
   <instance id="BasicSP-BMDisplay-idd">
     <name>BasicSP-BMDisplay-idd</name>
-    <node>BMDisplay</node>
+    <node>AirFrameDevice</node>
     <source><!-- @@ What goes here --></source>
     <implementation>BasicSP-BMDisplay-mdd</implementation>
     <configProperty>
@@ -212,7 +212,7 @@
   
   <instance id="BasicSP-EC-idd">
     <name>BasicSP-EC-idd</name>
-    <node>EC</node>
+    <node>TimerDevice</node>
     <source><!-- @@ What goes here --></source>
     <implementation>BasicSP-EC-mdd</implementation>
     <configProperty>
