@@ -1,4 +1,5 @@
-This application explains the usage scenario, where a new POAs will have to be created.
+This application explains the usage scenario, where new POAs will 
+have to be created.
 
 Run this example as follows.
 
@@ -7,12 +8,13 @@ Run this example as follows.
 Comments :
 =========
 
- - Creates the POA hierarchy as given in the header of the NewPOA.cpp file.
-
+ - Creates the POA hierarchy as given in the header of the NewPOA.cpp 
+   file.
+        
  - Prints out names of all the POAs.
 
- - It prints out two warning messages, since there is no Resource Factory  and Strategy Factory
-   found in the Service Repository.
+ - It prints out two warning messages, since there is no Resource Factory  
+   and Strategy Factory found in the Service Repository.
 
    It takes the default instances of the Resource and Strategy Factories.
 
