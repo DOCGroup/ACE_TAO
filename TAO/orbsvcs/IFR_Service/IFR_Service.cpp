@@ -6,6 +6,7 @@
 #include "Servant_Locator.h"
 #include "Options.h"
 #include "orbsvcs/IOR_Multicast.h"
+#include "tao/IORTable/IORTable.h"
 #include "ace/Auto_Ptr.h"
 
 ACE_RCSID(IFR_Service, IFR_Service, "$Id$")
@@ -344,16 +345,31 @@ IFR_Service::create_repository (CORBA::Environment &ACE_TRY_ENV)
 
   impl->repo_objref (this->repository_);
 
-  // Register with the INS.
-  this->orb_->_tao_add_to_IOR_table ("InterfaceRepository",
-                                     this->repository_);
-
   // Save and output the IOR string.
   this->ifr_ior_ =
     this->orb_->object_to_string (this->repository_,
                                   ACE_TRY_ENV);
 
   ACE_CHECK_RETURN (-1);
+
+  CORBA::Object_var table_object =
+    this->orb_->resolve_initial_references ("IORTable", ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+
+  IORTable::Table_var adapter =
+    IORTable::Table::_narrow (table_object.in (), ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+  if (CORBA::is_nil (adapter.in ()))
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "Nil IORTable\n"), -1);
+    }
+  else
+    {
+      adapter->bind ("InterfaceRepository",
+                     this->ifr_ior_.in (),
+                     ACE_TRY_ENV);
+      ACE_CHECK_RETURN (-1);
+    }
 
   FILE *output_file_ =
     ACE_OS::fopen (OPTIONS::instance()->ior_output_file (),
