@@ -1,3 +1,8 @@
+Sun Dec 08 22:44:07 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/Functor.h (void *): 
+	* ace/Functor.i: Added a template specialization for ACE_Hash <void *>. 
+
 Sun Dec 08 09:45:34 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Map_Manager.h:
