@@ -1,5 +1,10 @@
 Sun Nov  7 12:03:31 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/Svc_Handler: Added two new placement operator new() and
+ 	  delete() operations so that it is possible to allocate an
+ 	  ACE_Svc_Handler from a custom allocator.  Thanks to Edan Ayal
+ 	  <EdanA@cti2.com> for contributing this.
+
 	* tests/run_tests.lst: Added Auto_IncDec_Test to the tests.
 
 	* ace/Makefile,

@@ -123,6 +123,10 @@ public:
   // Overloaded new operator.  This method unobtrusively records if a
   // <Svc_Handler> is allocated dynamically.
 
+  void * operator new (size_t n,
+                       void *p);
+  // This operator permits "placement new" on a per-object basis.
+
   virtual void destroy (void);
   // Call this to free up dynamically allocated <Svc_Handlers>
   // (otherwise you will get memory leaks).  In general, you should
@@ -136,6 +140,10 @@ public:
   // to be a public new and a private delete.  It is a bad idea to
   // call this method directly, so use <destroy> instead, unless you
   // know for sure that you've allocated the object dynamically.
+
+  void operator delete (void *, void *);
+  // This operator is necessary to complement the class-specific
+  // operator new above.
 
   void shutdown (void);
   // Close down the descriptor and unregister from the Reactor
