@@ -61,7 +61,7 @@ protected:
   TAO_Base_Sequence (CORBA::ULong maximum,
 		     CORBA::ULong length,
 		     void* buffer,
-		     CORBA::Boolean release = 0);
+		     CORBA::Boolean release = CORBA::B_FALSE);
   // Constructor with control of ownership.
 
   TAO_Base_Sequence (CORBA::ULong maximum,
@@ -225,15 +225,14 @@ private:
   // control memory managment semantics.
 };
 
-class TAO_Unbounded_String_Sequence : public TAO_Unbounded_Base_Sequence
+class TAO_Export TAO_Unbounded_String_Sequence : public TAO_Unbounded_Base_Sequence
 {
   // =TITLE
-  //  Parametric sequence for types that require managers.
+  //  Unbounded sequence of strings.
   //
   // =DESCRIPTION
-  //  Some IDL types require that sequences on them have a "manager"
-  //  class, in charge of handling the object lifetime, examples are
-  //  pseudo objects, object references and strings.
+  //  IDL sequences of strings must automatically duplicate and
+  //  release their members based on some global <release> flag.
 
   // = SPEC
   // 16.8 Mapping for Structured Types 

@@ -40,7 +40,7 @@ Cubit_Client::Cubit_Client (void)
     call_count_ (0),
     error_count_ (0)
 {
-  ACE_Env_Value<unsigned long> defport(quote(TAO_DEFAULT_SERVER_PORT),
+  ACE_Env_Value<CORBA::UShort> defport(quote(TAO_DEFAULT_SERVER_PORT),
                                        TAO_DEFAULT_SERVER_PORT);
   portnum_ = defport;
 }
@@ -771,7 +771,8 @@ main (int argc, char **argv)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Env_Value<unsigned long>;
+template class ACE_Env_Value<unsigned short>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Env_Value<unsigned long>
+#pragma instantiate ACE_Env_Value<unsigned short>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-

@@ -71,6 +71,8 @@ class CORBA_NVList;
 //typedef class CORBA_NVList *CORBA_NVList_ptr;
 
 class CORBA_ORB;
+class CORBA_ORB_var;
+class CORBA_ORB_out;
 //typedef class CORBA_ORB *CORBA_ORB_ptr;
 
 class CORBA_Object;
@@ -451,7 +453,9 @@ public:
   typedef CORBA_Principal *Principal_ptr;
 
   typedef CORBA_ORB ORB;
-  typedef ORB *ORB_ptr;
+  typedef CORBA_ORB *ORB_ptr;
+  typedef CORBA_ORB_var ORB_var;
+  typedef CORBA_ORB_out ORB_out;
 
   typedef CORBA_Request Request;
   typedef Request *Request_ptr;

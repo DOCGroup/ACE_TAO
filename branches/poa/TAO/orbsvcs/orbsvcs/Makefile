@@ -24,6 +24,7 @@ FILES= $(IDL_FILES) \
 	Scheduler_Factory \
 	Runtime_Scheduler \
 	Scheduler_Utilities \
+	TAO_IDL_templates \
 
 DEFS    = $(addsuffix .h,$(FILES))
 LSRC	= $(addsuffix .cpp,$(FILES))

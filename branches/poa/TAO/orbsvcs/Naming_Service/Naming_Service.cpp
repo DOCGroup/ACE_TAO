@@ -1,7 +1,7 @@
 //
 // $Id$
 //
-#include <iostream.h>
+#include "ace/streams.h"
 
 #include "CosNaming_i.h"
 #include "Naming_Service.h"

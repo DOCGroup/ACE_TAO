@@ -888,8 +888,6 @@ TAO_GIOP_Invocation::invoke (CORBA::ExceptionList &exceptions,
       return TAO_GIOP_SYSTEM_EXCEPTION;
     }
 
-  delete [] reply_ctx.buffer;
-
   if (!this->stream_.get_ulong (request_id)
       || request_id != this->my_request_id_
       || !this->stream_.get_ulong (reply_status)
@@ -1102,14 +1100,11 @@ CORBA::Boolean
 TAO_GIOP_LocateRequestHeader::init (CDR &msg,
                                     CORBA::Environment &env)
 {
-  CORBA::Boolean hdr_status;
-
-  hdr_status = hdr_status && msg.get_ulong (this->request_id);
-  hdr_status = hdr_status && msg.decode (&TC_opaque,
-                                         &this->object_key,
-                                         0,
-                                         env);
-  return hdr_status;
+  return (   msg.get_ulong (this->request_id)
+          && msg.decode (&TC_opaque,
+                         &this->object_key,
+                         0,
+                         env));
 }
 
 // Initialize the request header from <msg>, setting <env> for errors.
@@ -1177,11 +1172,15 @@ TAO_GIOP::start_message (TAO_GIOP_MsgType type, CDR &msg)
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class CORBA_SEQUENCE<TAO_GIOP_ServiceContext>;
+template class TAO_Unbounded_Sequence<TAO_GIOP_ServiceContext>;
+template class TAO_Unbounded_Sequence<TAO_IOP_TaggedComponent>;
+template class TAO_Unbounded_Sequence<TAO_GIOP_ServiceContext>;
 template class CORBA_SEQUENCE<CORBA::Octet>;
 template class CORBA_SEQUENCE<CORBA::TypeCode*>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate CORBA_SEQUENCE<TAO_GIOP_ServiceContext>
+#pragma instantiate TAO_Unbounded_Sequence<TAO_GIOP_ServiceContext>
+#pragma instantiate TAO_Unbounded_Sequence<TAO_IOP_TaggedComponent>
+#pragma instantiate TAO_Unbounded_Sequence<TAO_GIOP_ServiceContext>
 #pragma instantiate CORBA_SEQUENCE<CORBA::Octet>
 #pragma instantiate CORBA_SEQUENCE<CORBA::TypeCode*>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

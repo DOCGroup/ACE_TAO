@@ -11,7 +11,6 @@ LSRC = 	\
 	CORBA_Utils_T.cpp \
 	Dispatching_Modules.cpp \
 	Event_Channel.cpp \
-	GPlot_File.cpp \
 	Local_ESTypes.cpp \
 	Memory_Pools.cpp \
 	RT_Task.cpp \

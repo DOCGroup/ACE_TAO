@@ -1,6 +1,8 @@
 #include "tao/corba.h"
 
 TAO_ServantBase::TAO_ServantBase (void)
+  :  optable_ (0),
+     parent_ (0)
 {
 }
 

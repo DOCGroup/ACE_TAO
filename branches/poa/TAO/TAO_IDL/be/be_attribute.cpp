@@ -158,13 +158,24 @@ be_attribute::gen_client_stubs (void)
   *cs << "{" << bt->tc_name () << ", PARAM_RETURN, ";
   // Are we returning a pointer to value? i.e., is the type variable? If it is,
   // we must tell the stub what is the size of the top level structure
-  if (bt->size_type () == be_decl::VARIABLE)
+  be_type *prim;
+  if (bt->node_type () == AST_Decl::NT_typedef)
     {
-      switch (bt->node_type ())
+      be_typedef *tdef = be_typedef::narrow_from_decl (bt);
+      prim = tdef->primitive_base_type ();
+    }
+  else
+    prim = bt;
+  if (prim->size_type () == be_decl::VARIABLE)
+    {
+      switch (prim->node_type ())
         {
         case AST_Decl::NT_interface:
         case AST_Decl::NT_interface_fwd:
         case AST_Decl::NT_string:
+        case AST_Decl::NT_sequence:
+        case AST_Decl::NT_struct:
+        case AST_Decl::NT_union:
           // no need of size here
           *cs << "0}";
           break;
@@ -264,7 +275,38 @@ be_attribute::gen_client_stubs (void)
 
   // call do_call with appropriate number of arguments
   *cs << "istub->do_call (env, &_get_" << this->flatname () <<
-    "_calldata, &retval);" << nl;
+    "_calldata";
+
+  if (bt->node_type () == AST_Decl::NT_typedef)
+    {
+      be_typedef *tdef = be_typedef::narrow_from_decl (bt);
+      prim = tdef->primitive_base_type ();
+    }
+  else
+    prim = bt;
+
+  if (prim->size_type () == be_decl::VARIABLE)
+    {
+      switch (prim->node_type ())
+        {
+        case AST_Decl::NT_interface:
+        case AST_Decl::NT_interface_fwd:
+        case AST_Decl::NT_string:
+          *cs << ", &retval";
+          break;
+        case AST_Decl::NT_sequence:
+        case AST_Decl::NT_struct:
+        case AST_Decl::NT_union:
+          *cs << ", retval";
+          break;
+        default:
+          *cs << ", &retval";
+        }
+    }
+  else
+    *cs << ", &retval";
+
+  *cs << ");" << nl;
 
   // return the retval
   cg->push (TAO_CodeGen::TAO_ATTRIBUTE_RETVAL_RETURN_CS);

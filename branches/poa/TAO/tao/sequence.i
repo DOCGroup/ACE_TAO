@@ -43,7 +43,7 @@ TAO_Base_Sequence::TAO_Base_Sequence (CORBA::ULong maximum,
   : maximum_ (maximum),
     length_ (0),
     buffer_ (data),
-    release_ (1)
+    release_ (CORBA::B_TRUE)
 {
 }
 
@@ -51,19 +51,16 @@ ACE_INLINE
 TAO_Base_Sequence::TAO_Base_Sequence (const TAO_Base_Sequence &rhs)
   : maximum_ (rhs.maximum_),
     length_ (rhs.length_),
-    release_ (1)
+    release_ (CORBA::B_TRUE)
 {
 }
 
 ACE_INLINE TAO_Base_Sequence &
 TAO_Base_Sequence::operator= (const TAO_Base_Sequence &rhs)
 {
-  if (this != &rhs)
-    {
-      this->maximum_ = rhs.maximum_;
-      this->length_ = rhs.length_;
-      this->release_ = CORBA::B_TRUE;
-    }
+  this->maximum_ = rhs.maximum_;
+  this->length_ = rhs.length_;
+  this->release_ = CORBA::B_TRUE;
   return *this;
 }
 
@@ -111,8 +108,9 @@ TAO_Unbounded_Base_Sequence::length (CORBA::ULong length)
     {
       this->_allocate_buffer (length);
       this->maximum_ = length;
+      this->release_ = CORBA::B_TRUE;
     }
-  else
+  else if (length < this->length_)
     {
       this->_shrink_buffer (length, this->length_);
     }
@@ -157,7 +155,7 @@ TAO_Bounded_Base_Sequence::length (CORBA::ULong length)
     {
       return;
     }
-  else
+  else if (length < this->length_)
     {
       this->_shrink_buffer (length, this->length_);
     }

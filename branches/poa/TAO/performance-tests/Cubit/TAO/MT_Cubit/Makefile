@@ -12,12 +12,17 @@
 LDLIBS     =  -lTAO
 
 IDL_SRC	= cubitC.cpp cubitS.cpp
-PROG_SRCS = server.cpp cubit_i.cpp Task_Client.cpp client.cpp Util_Thread.cpp
+PROG_SRCS = server.cpp \
+	cubit_i.cpp \
+	Task_Client.cpp \
+	client.cpp \
+	Util_Thread.cpp \
+	tmplinst.cpp
 
 LSRC = $(IDL_SRC) $(PROG_SRCS)
 
-CUBIT_SVR_OBJS = cubitC.o cubitS.o server.o cubit_i.o 
-CUBIT_CLIENT_OBJS = cubitC.o Task_Client.o client.o Util_Thread.o
+CUBIT_SVR_OBJS = cubitC.o cubitS.o server.o cubit_i.o tmplinst.o
+CUBIT_CLIENT_OBJS = cubitC.o Task_Client.o client.o Util_Thread.o tmplinst.o
 
 BIN = server client
 BUILD = $(BIN)

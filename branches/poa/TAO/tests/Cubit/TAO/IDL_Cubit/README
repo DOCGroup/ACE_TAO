@@ -17,7 +17,9 @@ The server cubit factory maintained num_of_cubit objects (default =
 
 When the server is started and you have used the -d flag, you should
 see as the first line of output something that looks like
-iiop:1.0//serverhost:10013/factory.
+	iiop:1.0//serverhost:10013/factory (using -ORBobjrefstyle url)
+or
+	IOR:000000000000001649444c3a43756269745... (using default -ORBobjrefstyle ior)
 
 Using -d turns on debugging messages.  It is additive, i.e., the more
 -d options provided, the more debugging you can get.  At the moment,
