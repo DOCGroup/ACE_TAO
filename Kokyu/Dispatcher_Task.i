@@ -6,24 +6,35 @@ ACE_INLINE
 Dispatcher_Task::Dispatcher_Task (const ConfigInfo& config_info,
                                   ACE_Thread_Manager* thr_manager)
   :  ACE_Task<ACE_SYNCH> (thr_manager),
-     allocator_ (ACE_Allocator::instance ()),
      curr_config_info_ (config_info),
-        deadline_msg_strategy_ (0, 0, 0x7FFFFFFFUL, 0x08000000UL ),
-        //bits for static priority = 0
-        //max dynamic prio = 2^31 - 1
-        //pending offset = 15/16th of the dynamic prio range
-        //which means that the LATE population will be in the
-        //1/16th part of the range.
-        laxity_msg_strategy_ (0, 0, 0x7FFFFFFFUL, 0x08000000UL )
+     allocator_ (config_info.allocator_),
+     own_allocator_ (0),
+     deadline_msg_strategy_ (config_info.reordering_flags_.static_bit_field_mask_,
+                             config_info.reordering_flags_.static_bit_field_shift_,
+                             config_info.reordering_flags_.dynamic_priority_max_,
+                             config_info.reordering_flags_.dynamic_priority_offset_),
+     laxity_msg_strategy_ (config_info.reordering_flags_.static_bit_field_mask_,
+                           config_info.reordering_flags_.static_bit_field_shift_,
+                           config_info.reordering_flags_.dynamic_priority_max_,
+                           config_info.reordering_flags_.dynamic_priority_offset_)
 {
    this->initialize();
+}
+
+ACE_INLINE
+Dispatcher_Task::~Dispatcher_Task ()
+{
+   if (own_allocator_)
+   {
+      delete allocator_;
+   }
 }
 
 ACE_INLINE
 Priority_t
 Dispatcher_Task::preemption_priority() const
 {
-        return curr_config_info_.preemption_priority_;
+    return curr_config_info_.preemption_priority_;
 }
 
 
@@ -51,8 +62,8 @@ Dispatch_Queue_Item::Dispatch_Queue_Item (
         int flags,
         ACE_Allocator* mb_allocator)
  : ACE_Message_Block (data_block, 
-        flags, 
-        mb_allocator),
+                      flags, 
+                      mb_allocator),
    command_ (cmd), qos_info_ (qos_info)
 
 {
