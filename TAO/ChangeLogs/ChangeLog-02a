@@ -1,6 +1,7 @@
 Fri Mar 01 07:40:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/DynamicInterface/Makefile.bor:
+        * orbsvcs/orbsvcs/RTEvent.bor:
           Added TAO_Messaging library
 
 Thu Feb 28 20:25:00 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
