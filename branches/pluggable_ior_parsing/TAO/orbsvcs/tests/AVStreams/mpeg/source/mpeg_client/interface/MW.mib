@@ -1,0 +1,229 @@
+static char MainMib[] = "\
+TotalWidgets: 12\n\
+Ref: 1\n\
+Widget: \"RootForm\"\n\
+Children: 2 3 4 5 6 7 8 9 10 11 12\n\
+Parent: 1\n\
+Public-\n\
+Name: \"Root\"\n\
+Xmwidth: 364\n\
+Xmheight: 216\n\
+XmtopAttachment: 1\n\
+XmbottomAttachment: 1\n\
+XmleftAttachment: 1\n\
+XmrightAttachment: 1\n\
+XmtopOffset: 0\n\
+XmbottomOffset: 0\n\
+XmleftOffset: 0\n\
+XmrightOffset: 0\n\
+Private-\n\
+EndWidget.\n\
+Ref: 2\n\
+Widget: \"Button\"\n\
+Children: X\n\
+Parent: 1\n\
+Public-\n\
+Name: \"Info\"\n\
+Xmwidth: 41\n\
+Xmheight: 28\n\
+XmtopAttachment: 0\n\
+XmbottomAttachment: 1\n\
+XmleftAttachment: 0\n\
+XmrightAttachment: 1\n\
+XmtopOffset: 179\n\
+XmbottomOffset: 9\n\
+XmleftOffset: 200\n\
+XmrightOffset: 123\n\
+Private-\n\
+label: \"Info\"\n\
+EndWidget.\n\
+Ref: 3\n\
+Widget: \"Button\"\n\
+Children: X\n\
+Parent: 1\n\
+Public-\n\
+Name: \"Loop\"\n\
+Xmwidth: 28\n\
+Xmheight: 28\n\
+XmtopAttachment: 0\n\
+XmbottomAttachment: 1\n\
+XmleftAttachment: 1\n\
+XmrightAttachment: 0\n\
+XmtopOffset: 179\n\
+XmbottomOffset: 9\n\
+XmleftOffset: 140\n\
+XmrightOffset: 196\n\
+Private-\n\
+label: \"Loop\"\n\
+EndWidget.\n\
+Ref: 4\n\
+Widget: \"Button\"\n\
+Children: X\n\
+Parent: 1\n\
+Public-\n\
+Name: \"Step\"\n\
+Xmwidth: 28\n\
+Xmheight: 28\n\
+XmtopAttachment: 0\n\
+XmbottomAttachment: 1\n\
+XmleftAttachment: 1\n\
+XmrightAttachment: 0\n\
+XmtopOffset: 179\n\
+XmbottomOffset: 9\n\
+XmleftOffset: 74\n\
+XmrightOffset: 262\n\
+Private-\n\
+label: \"Step\"\n\
+EndWidget.\n\
+Ref: 5\n\
+Widget: \"Button\"\n\
+Children: X\n\
+Parent: 1\n\
+Public-\n\
+Name: \"Exit\"\n\
+Xmwidth: 41\n\
+Xmheight: 28\n\
+XmtopAttachment: 0\n\
+XmbottomAttachment: 1\n\
+XmleftAttachment: 0\n\
+XmrightAttachment: 1\n\
+XmtopOffset: 179\n\
+XmbottomOffset: 9\n\
+XmleftOffset: 314\n\
+XmrightOffset: 9\n\
+Private-\n\
+label: \"Exit\"\n\
+EndWidget.\n\
+Ref: 6\n\
+Widget: \"TextBox\"\n\
+Children: X\n\
+Parent: 1\n\
+Public-\n\
+Name: \"FrameText\"\n\
+Xmwidth: 65\n\
+Xmheight: 29\n\
+XmtopAttachment: 0\n\
+XmbottomAttachment: 1\n\
+XmleftAttachment: 0\n\
+XmrightAttachment: 1\n\
+XmtopOffset: 179\n\
+XmbottomOffset: 8\n\
+XmleftOffset: 245\n\
+XmrightOffset: 54\n\
+Private-\n\
+EndWidget.\n\
+Ref: 7\n\
+Widget: \"Button\"\n\
+Children: X\n\
+Parent: 1\n\
+Public-\n\
+Name: \"Rewind\"\n\
+Xmwidth: 28\n\
+Xmheight: 28\n\
+XmtopAttachment: 0\n\
+XmbottomAttachment: 1\n\
+XmleftAttachment: 1\n\
+XmrightAttachment: 0\n\
+XmtopOffset: 179\n\
+XmbottomOffset: 9\n\
+XmleftOffset: 8\n\
+XmrightOffset: 328\n\
+Private-\n\
+label: \"Rew\"\n\
+EndWidget.\n\
+Ref: 8\n\
+Widget: \"Button\"\n\
+Children: X\n\
+Parent: 1\n\
+Public-\n\
+Name: \"Play\"\n\
+Xmwidth: 28\n\
+Xmheight: 28\n\
+XmtopAttachment: 0\n\
+XmbottomAttachment: 1\n\
+XmleftAttachment: 1\n\
+XmrightAttachment: 0\n\
+XmtopOffset: 179\n\
+XmbottomOffset: 9\n\
+XmleftOffset: 107\n\
+XmrightOffset: 229\n\
+Private-\n\
+label: \"Play\"\n\
+EndWidget.\n\
+Ref: 9\n\
+Widget: \"Button\"\n\
+Children: X\n\
+Parent: 1\n\
+Public-\n\
+Name: \"Stop\"\n\
+Xmwidth: 28\n\
+Xmheight: 28\n\
+XmtopAttachment: 0\n\
+XmbottomAttachment: 1\n\
+XmleftAttachment: 1\n\
+XmrightAttachment: 0\n\
+XmtopOffset: 179\n\
+XmbottomOffset: 9\n\
+XmleftOffset: 41\n\
+XmrightOffset: 295\n\
+Private-\n\
+label: \"Stop\"\n\
+EndWidget.\n\
+Ref: 10\n\
+Widget: \"DrawingArea\"\n\
+Children: X\n\
+Parent: 1\n\
+Public-\n\
+Name: \"Monitor\"\n\
+Xmwidth: 336\n\
+Xmheight: 157\n\
+XmtopAttachment: 1\n\
+XmbottomAttachment: 1\n\
+XmleftAttachment: 1\n\
+XmrightAttachment: 1\n\
+XmtopOffset: 13\n\
+XmbottomOffset: 46\n\
+XmleftOffset: 13\n\
+XmrightOffset: 15\n\
+Private-\n\
+EndWidget.\n\
+Ref: 11\n\
+Widget: \"Frame\"\n\
+Children: X\n\
+Parent: 1\n\
+Public-\n\
+Name: \"InFrame\"\n\
+Xmwidth: 347\n\
+Xmheight: 167\n\
+XmtopAttachment: 1\n\
+XmbottomAttachment: 1\n\
+XmleftAttachment: 1\n\
+XmrightAttachment: 1\n\
+XmtopOffset: 8\n\
+XmbottomOffset: 41\n\
+XmleftOffset: 8\n\
+XmrightOffset: 9\n\
+Private-\n\
+shadowtype: 0\n\
+EndWidget.\n\
+Ref: 12\n\
+Widget: \"Frame\"\n\
+Children: X\n\
+Parent: 1\n\
+Public-\n\
+Name: \"OutFrame\"\n\
+Xmwidth: 362\n\
+Xmheight: 215\n\
+XmtopAttachment: 1\n\
+XmbottomAttachment: 1\n\
+XmleftAttachment: 1\n\
+XmrightAttachment: 1\n\
+XmtopOffset: 0\n\
+XmbottomOffset: 1\n\
+XmleftOffset: 1\n\
+XmrightOffset: 1\n\
+Private-\n\
+shadowtype: 1\n\
+EndWidget.\n\
+END.\n\
+";

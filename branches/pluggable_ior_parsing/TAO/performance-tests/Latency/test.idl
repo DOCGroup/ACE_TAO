@@ -1,0 +1,10 @@
+//
+// $Id$
+//
+
+interface Test
+{
+  unsigned long long test_method (in unsigned long long stamp);
+
+  oneway void shutdown ();
+};
