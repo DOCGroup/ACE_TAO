@@ -341,6 +341,7 @@ project(ACE) : acedefaults, aceversion, core, qt_reactor, other, codecs, token, 
       Functor_T.cpp
       Future.cpp
       Future_Set.cpp
+      Guard_T.cpp
       Hash_Cache_Map_Manager_T.cpp
       Hash_Map_Manager_T.cpp
       Hash_Map_With_Allocator_T.cpp
@@ -393,6 +394,7 @@ project(ACE) : acedefaults, aceversion, core, qt_reactor, other, codecs, token, 
   Inline_Files {
     Bound_Ptr.inl
     Condition_T.inl
+    Guard_T.inl
     Handle_Gobbler.inl
     Lock_Adapter_T.inl
     OS.inl
@@ -415,8 +417,10 @@ project(ACE) : acedefaults, aceversion, core, qt_reactor, other, codecs, token, 
     Default_Constants.h
     Exception_Macros.h
     Global_Macros.h
+    Guard_T.h
     Handle_Gobbler.h
     If_Then_Else.h
+    IO_Cntl_Msg.h
     Lock_Adapter_T.h
     Log_Priority.h
     Malloc_Base.h
