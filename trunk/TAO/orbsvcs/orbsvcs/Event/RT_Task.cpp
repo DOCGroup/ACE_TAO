@@ -15,15 +15,15 @@
 
 #if defined (ACE_ENABLE_TIMEPROBES)
 
-static const char *TAO_RT_Task_Timeprobe_Description[] = 
-{ 
+static const char *TAO_RT_Task_Timeprobe_Description[] =
+{
   "RT_Task - start execute",
   "RT_Task - end execute",
   "synch_threads - priority requested",
   "synch_threads - priority obtained"
 };
 
-enum 
+enum
 {
   TAO_RT_TASK_START_EXECUTE = 5200,
   TAO_RT_TASK_END_EXECUTE,
@@ -34,7 +34,7 @@ enum
 #endif /* ACE_ENABLE_TIMEPROBES */
 
 // Setup Timeprobes
-ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_RT_Task_Timeprobe_Description, 
+ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_RT_Task_Timeprobe_Description,
                                   TAO_RT_TASK_START_EXECUTE);
 
 class ACE_RT_Task_Shutdown : public ACE_RT_Task_Command
@@ -90,8 +90,8 @@ ACE_RT_Task::svc (void)
 
 #if 0
       static char* const argv[] = {
-	"task",
-	"-ORBport", "0",
+        "task",
+        "-ORBport", "0",
       };
       int argc = sizeof (argv)/sizeof (argv[0]);
       CORBA::ORB_var orb =
@@ -104,17 +104,24 @@ ACE_RT_Task::svc (void)
       RtecScheduler::Preemption_Priority preemption_priority;
 
       ACE_Scheduler_Factory::server ()->priority
-	(this->rt_info_,
-	 thread_priority,
-	 subpriority,
-	 preemption_priority, TAO_TRY_ENV);
+        (this->rt_info_,
+         thread_priority,
+         subpriority,
+         preemption_priority, TAO_TRY_ENV);
       TAO_CHECK_ENV;
       if (ACE_OS::thr_setprio (thread_priority) == -1)
-	{
-	  ACE_ERROR ((LM_ERROR,
-		      "(%P|%t) RT_Task thr_setprio failed, "
-		      "this is OK if you don't want RT threads\n"));
-	}
+        {
+#if defined (ACE_HAS_STHREADS)
+          if (thread_priority != 0  ||  ACE_OS::getuid () == 0)
+            // Solaris 2.5.1 doesn't allow setting a thread priority to 0
+            // in Time Shared scheduling class.  Maybe other priorities
+            // as well?
+#endif /* ACE_HAS_STHREADS */
+            ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n",
+                        "RT_Task thr_setprio failed, "
+                        "this is OK if you don't want RT threads\n"));
+
+        }
 
       int done = 0;
 
@@ -123,17 +130,20 @@ ACE_RT_Task::svc (void)
 
       int priority;
       if (ACE_OS::thr_getprio (self, priority) == 0)
-	ACE_DEBUG ((LM_DEBUG, "(%t) new thread priority = %d.\n", priority));
+        ACE_DEBUG ((LM_DEBUG, "(%t) new thread priority = %d.\n", priority));
 
       // Initialize channel thread-specific data.
       ACE_ES_Memory_Pools::thr_init ();
 
+      // Update the Scheduler's concept of this thread's rate group.
+      ACE_Scheduler_Factory::set_preemption_priority (preemption_priority);
+
       done = this->svc_hook (priority);
 
       while (!done)
-	{
-	  done = this->svc_one ();
-	}
+        {
+          done = this->svc_one ();
+        }
 
       ACE_DEBUG ((LM_DEBUG, "(%t) thread exiting.\n"));
     }
