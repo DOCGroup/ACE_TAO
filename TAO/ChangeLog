@@ -1,3 +1,13 @@
+Thu Sep  9 16:16:48 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+	
+	* tao/ORB.cpp:
+	* tao/TAO_Singleton_Manager.h:
+	* tao/TAO_Singleton_Manager.cpp:
+
+	  Reintroduced TAO's unexpected exception handler.  It will be
+	  removed once again once the skeleton refactoring work is
+	  committed.
+
 Thu Sep  9 15:57:30 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/DLL_ORB.h:
