@@ -1,3 +1,13 @@
+Fri Apr  5 19:20:39 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/Proactor.h: Add #include "ace/OS.h" in the "non-AIO" section
+          to get the ACE_Time_Value class needed for the stubbed-out class.
+
+        * ace/config-aix-4.x.h: Add some commentary about ACE_HAS_AIO_CALLS.
+
+        * ace/Service_Manager.cpp: Added #include "ace/Log_Msg.h" to fix a
+          compile problem on AIX.
+
 Fri Apr  5 11:30:00 2002  Justin Michel  <michel_j@ociweb.com>
         
         * ace/OS.i:

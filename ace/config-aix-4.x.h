@@ -117,6 +117,13 @@
 #  define ACE_HAS_4_4BSD_SENDMSG_RECVMSG
 #endif /* ACE_AIX_VERS < 402 */
 
+#if (ACE_AIX_VERS >= 403)
+// AIX has AIO, but the functions don't match those of other AIO-enabled
+// platforms. If this is to work, it'll require some significant work,
+// maybe moving the OS-abstraction stuff to an OS_AIO or some such thing.
+//#  define ACE_HAS_AIO_CALLS
+#endif /* ACE_AIX_VERS >= 403 */
+
 #define ACE_HAS_AIX_HI_RES_TIMER
 #define ACE_HAS_ALLOCA
 
