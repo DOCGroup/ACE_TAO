@@ -46,7 +46,8 @@ TAO_Notify_Admin::init (TAO_Notify_EventChannel *ec ACE_ENV_ARG_DECL)
 
   this->ec_->_incr_refcnt ();
 
-  this->TAO_Notify::Topology_Object::init (ec);
+  // this-> on the following line confuses VC6
+  TAO_Notify::Topology_Parent::init (ec);
 
   ACE_NEW_THROW_EX (this->proxy_container_,
                     TAO_Notify_Proxy_Container (),

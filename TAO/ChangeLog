@@ -1,3 +1,13 @@
+Mon Nov 22 09:44:07 2004  Dale Wilson  <wilson_d@ociweb.com>
+
+        * orbsvcs/orbsvcs/Notify/Admin.cpp:
+        * orbsvcs/orbsvcs/Notify/EventChannel.cpp:
+        * orbsvcs/orbsvcs/Notify/ProxyConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/ProxySupplier.cpp:
+          Derived class explicitly calling base class method confuses
+          VC6 when namespace is involved.
+          "Reword" the calls in hopes of unconfusing it.
+
 Mon Nov 22 15:37:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/tutorials/Quoter/RT_Event_Service/client.cpp:
