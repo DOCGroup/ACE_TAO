@@ -81,7 +81,7 @@ TAO_Cache_ExtId::TAO_Cache_ExtId (void)
 }
 
 ACE_INLINE
-TAO_Cache_ExtId::TAO_Cache_ExtId (TAO_Base_Connection_Property *prop)
+TAO_Cache_ExtId::TAO_Cache_ExtId (TAO_Connection_Descriptor_Interface *prop)
   : connection_property_ (prop),
     is_delete_ (0),
     index_ (0)
@@ -119,15 +119,18 @@ TAO_Cache_ExtId::operator= (const TAO_Cache_ExtId &rhs)
 ACE_INLINE int
 TAO_Cache_ExtId::operator== (const TAO_Cache_ExtId &rhs) const
 {
-  return (*this->connection_property_ == *rhs.connection_property_ &&
+  return (this->connection_property_->is_equivalent (rhs.connection_property_) &&
             this->index_ == rhs.index_);
 }
 
 ACE_INLINE int
 TAO_Cache_ExtId::operator!= (const TAO_Cache_ExtId &rhs) const
 {
-  return (*this->connection_property_ != *rhs.connection_property_ ||
-          this->index_ != rhs.index_);
+  if (this->connection_property_->is_equivalent (rhs.connection_property_) &&
+      this->index_ == rhs.index_)
+  return 0;
+
+  return 1;
 }
 
 ACE_INLINE u_long
@@ -139,7 +142,7 @@ TAO_Cache_ExtId::hash (void) const
 ACE_INLINE void
 TAO_Cache_ExtId::duplicate (void)
 {
-  TAO_Base_Connection_Property *prop = 0;
+  TAO_Connection_Descriptor_Interface *prop = 0;
 
   // Make a deep copy
   prop = this->connection_property_->duplicate ();
@@ -173,7 +176,7 @@ TAO_Cache_ExtId::index (CORBA::ULong index)
   this->index_ = index;
 }
 
-ACE_INLINE TAO_Base_Connection_Property *
+ACE_INLINE TAO_Connection_Descriptor_Interface *
 TAO_Cache_ExtId::property (void) const
 {
   return this->connection_property_;

@@ -79,13 +79,13 @@ public:
   virtual ~TAO_Connection_Cache_Manager (void);
   // Destructor
 
-  int cache_handler (TAO_Base_Connection_Property *prop,
+  int cache_handler (TAO_Connection_Descriptor_Interface *prop,
                      TAO_Connection_Handler *handler);
   // Add the handler to the cache. The handler has the property
   // definition based on which caching can be done
 
 
-  int find_handler (TAO_Base_Connection_Property *prop,
+  int find_handler (TAO_Connection_Descriptor_Interface *prop,
                     TAO_Connection_Handler *&handler);
   // Check the Connection Cache to check whether the connection exists
   // in the Cache and return the connection

@@ -68,7 +68,7 @@ public:
   virtual TAO_Endpoint *duplicate (void);
   // Returns a copy of <this>
 
-    CORBA::Boolean is_equivalent (const TAO_Endpoint *other_endpoint);
+  CORBA::Boolean is_equivalent (const TAO_Endpoint *other_endpoint);
   // Return true if this endpoint is equivalent to <other_endpoint>.  Two
   // endpoints are equivalent iff their rendezvous points are the same.
 
