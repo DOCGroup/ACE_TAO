@@ -86,7 +86,7 @@ Client_Impl::parse_args (void)
   return 0;
 }
 
-// Compute the time on a remote machine.
+// Compute the time on a server.
 
 void
 Client_Impl::time (void)
