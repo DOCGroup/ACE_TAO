@@ -18,8 +18,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_typecode, 
-           typecode_defn, 
+ACE_RCSID (be_visitor_typecode,
+           typecode_defn,
            "$Id$")
 
 // This is an implementation of C++ "scoped lock" idiom in order to
@@ -157,7 +157,7 @@ be_visitor_typecode_defn::visit_members (be_valuetype *node)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_typecode_defn::visit_members - "
-                             "bad node in this scope\n"), 
+                             "bad node in this scope\n"),
                             -1);
         }
 
@@ -186,7 +186,7 @@ be_visitor_typecode_defn::visit_members (be_valuetype *node)
                              "(%N:%l) be_visitor_typecode_defn::"
                              "visit_members - "
                              "pre processing failed\n"
-                             ), 
+                             ),
                             -1);
         }
 
@@ -395,7 +395,7 @@ be_visitor_typecode_defn::visit_type (be_type *node)
         }
 
       *os << "TAO_NAMESPACE_DEFINE (" << be_idt << be_idt_nl
-          << "::CORBA::TypeCode_ptr," << be_nl 
+          << "::CORBA::TypeCode_ptr," << be_nl
           << "_tc_";
 
       // Local name generation.
@@ -1127,8 +1127,6 @@ be_visitor_typecode_defn::gen_encapsulation (be_enum *node)
 int
 be_visitor_typecode_defn::gen_encapsulation (be_enum_val *node)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // output stream
-
   // generate name
   this->gen_name (node);
 
@@ -3457,8 +3455,8 @@ be_visitor_typecode_defn::gen_name (be_decl *node)
       *os << (ACE_OS::strlen (node->original_local_name ()->get_string ()) + 1)
           << "," << be_nl;
 
-      (void) this->tc_name2long (node->original_local_name ()->get_string (), 
-                                 arr, 
+      (void) this->tc_name2long (node->original_local_name ()->get_string (),
+                                 arr,
                                  arrlen);
 
       for (i = 0; i < arrlen; i++)
@@ -3618,7 +3616,7 @@ be_visitor_typecode_defn::pop (ACE_CDR::Long &val)
 const be_visitor_typecode_defn::QNode *
 be_visitor_typecode_defn::queue_insert (
     ACE_Unbounded_Queue <be_visitor_typecode_defn::QNode *> &queue,
-    be_type *node, 
+    be_type *node,
     ACE_CDR::Long offset
   )
 {
@@ -3647,7 +3645,7 @@ be_visitor_typecode_defn::queue_lookup (
     be_type *node
   )
 {
-  for (ACE_Unbounded_Queue_Iterator<be_visitor_typecode_defn::QNode *> 
+  for (ACE_Unbounded_Queue_Iterator<be_visitor_typecode_defn::QNode *>
          iter (queue);
        !iter.done ();
        iter.advance ())

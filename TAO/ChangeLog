@@ -1,3 +1,10 @@
+Thu Sep 26 17:38:30 2002  Ossama Othman  <ossama@uci.edu>
+
+	* TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp
+	  (gen_encapsulation):
+
+	  Fixed "unused variable" warning.
+
 Thu Sep 26 18:23:11 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_module/module_ch.cpp:
