@@ -2,38 +2,35 @@ $Id$
 
 Description:
 
-Test combines and tests several RT policies in different ways.
+This is a test for the Linear Priority mapping in TAO.  In addition,
+this test combines and tests several RT policies in different ways.
+This test can also be used for testing the different scheduling
+policies (e.g., FIFO, RR, OTHER) by using the ORBSchedPolicy and
+ORBScopePolicy options in svc.conf file.
 
-- The IDL interface has two methods: method() and
-  prioritized_method().
+- The server can be setup to use bands or no bands and thread lanes or
+  no lanes.
 
-- The client sets its thread to the default priority, calls method()
-  which returns a priority.  If the priority returned is different
-  from <TAO_INVALID_PRIORITY>, the client sets its thread to the
-  priority returned by the server and calls prioritized_method()
+- The client can be setup to use bands or no bands and different
+  invocation priorities.  It creates a thread for each invocation
+  priority and issues multiple requests to the server from each
+  thread.
 
-- The servant returns the <client_priority_> member in method().  In
-  prioritized_method(), it makes sure that the thread running the
-  upcall is at priority <server_priority_>.  These two members allow
-  several different policies to be tested with the same code.
+- The following policy combinations are tested in this example:
+  __________________________________________________
 
-- In addition to testing servants in the RootPOA and in a simple child
-  POA, the following policy combinations are tested in this example:
-  ________________________________________
+  Server-side   Thread   Client-side  Multi-priority
+     Bands       Lanes      Bands        Clients
+  __________________________________________________
 
-  Thread-pool    BANDS   PRIORITY MODEL
-  ________________________________________
-
-  Default Pool     NO   CLIENT_PROPAGATED
-  Default Pool     NO   SERVER_DECLARED
-  Without Lanes    NO   CLIENT_PROPAGATED
-  Without Lanes    NO   SERVER_DECLARED
-  With Lanes       NO   CLIENT_PROPAGATED
-  With Lanes       NO   SERVER_DECLARED
-  Default Pool    YES   CLIENT_PROPAGATED
-  Default Pool    YES   SERVER_DECLARED
-  Without Lanes   YES   CLIENT_PROPAGATED
-  Without Lanes   YES   SERVER_DECLARED
-  With Lanes      YES   CLIENT_PROPAGATED
-  With Lanes      YES   SERVER_DECLARED
-
+      NO          NO          NO           NO
+      YES         NO          NO           NO
+      NO          YES         NO           NO
+      YES         YES         NO           NO
+      NO          NO          YES          NO
+      NO          YES         YES          NO
+      NO          NO          NO           YES
+      YES         NO          NO           YES
+      YES         YES         NO           YES      
+      NO          NO          YES          YES
+      NO          YES         YES          YES
