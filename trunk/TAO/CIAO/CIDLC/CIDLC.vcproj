@@ -131,6 +131,15 @@
 				RelativePath=".\DescriptorGenerator.cpp">
 			</File>
 			<File
+				RelativePath=".\ExecImplGenerator.cpp">
+			</File>
+			<File
+				RelativePath=".\ExecImplHeaderGenerator.cpp">
+			</File>
+			<File
+				RelativePath=".\ExecImplSourceGenerator.cpp">
+			</File>
+			<File
 				RelativePath=".\ExecutorMappingGenerator.cpp">
 			</File>
 			<File
@@ -176,6 +185,15 @@
 			</File>
 			<File
 				RelativePath=".\DescriptorGenerator.hpp">
+			</File>
+			<File
+				RelativePath=".\ExecImplGenerator.hpp">
+			</File>
+			<File
+				RelativePath=".\ExecImplHeaderGenerator.hpp">
+			</File>
+			<File
+				RelativePath=".\ExecImplSourceGenerator.hpp">
 			</File>
 			<File
 				RelativePath=".\ExecutorMappingGenerator.hpp">
