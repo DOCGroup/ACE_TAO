@@ -1,3 +1,9 @@
+Fri Mar 11 12:24:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/*.pidl:
+          Added -SS to the regeneration instructions for the pidl files
+          that have an empty S.h file
+
 Fri Mar 11 12:00:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/PSS/PSDL_Scope.cpp:
