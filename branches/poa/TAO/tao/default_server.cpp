@@ -91,7 +91,7 @@ TAO_Default_Server_Strategy_Factory::create_poa_lock (void)
     {
     case TAO_THREAD_LOCK:
       ACE_NEW_RETURN (thelock,
-                      ACE_Lock_Adapter<ACE_Thread_Mutex> (),
+                      ACE_Lock_Adapter<ACE_Recursive_Thread_Mutex> (),
                       0);
       break;
     case TAO_NULL_LOCK:

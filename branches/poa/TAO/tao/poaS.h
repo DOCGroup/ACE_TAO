@@ -602,7 +602,7 @@ public:
 
   class AdapterActivator;
   typedef AdapterActivator *AdapterActivator_ptr;
-  class AdapterActivator :  public virtual PortableServer::LocalServantBase
+  class TAO_Export AdapterActivator :  public virtual PortableServer::LocalServantBase
   {
   protected:
     AdapterActivator (void);
@@ -657,7 +657,7 @@ public:
 
   class ServantManager;
   typedef ServantManager *ServantManager_ptr;
-  class ServantManager :  public virtual PortableServer::LocalServantBase
+  class TAO_Export ServantManager :  public virtual PortableServer::LocalServantBase
   {
   protected:
     ServantManager (void);
@@ -704,7 +704,7 @@ public:
 
   class ServantActivator;
   typedef ServantActivator *ServantActivator_ptr;
-  class ServantActivator : public virtual ServantManager
+  class TAO_Export ServantActivator : public virtual ServantManager
   {
   protected:
     ServantActivator (void);
@@ -771,7 +771,7 @@ public:
 
   class ServantLocator;
   typedef ServantLocator *ServantLocator_ptr;
-  class ServantLocator : public virtual ServantManager
+  class TAO_Export ServantLocator : public virtual ServantManager
   {
   protected:
     ServantLocator (void);
@@ -1053,12 +1053,12 @@ public:
         CORBA::Environment &_tao_environment
       );
     virtual CORBA::Object_ptr create_reference (
-        const PortableServer::RepositoryId intf,
+        const char *intf,
         CORBA::Environment &_tao_environment
       );
     virtual CORBA::Object_ptr create_reference_with_id (
         const PortableServer::ObjectId & oid,
-        const PortableServer::RepositoryId intf,
+        const char *intf,
         CORBA::Environment &_tao_environment
       );
     virtual PortableServer::ObjectId * servant_to_id (

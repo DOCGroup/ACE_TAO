@@ -520,6 +520,9 @@ TAO_POA::TAO_POA (const TAO_POA::String &adapter_name,
     counter_ (0)
 {
   this->set_complete_name ();
+  
+  // Register self with manager
+  this->poa_manager_.register_poa (this, env);
 }
 
 TAO_POA::TAO_POA (const TAO_POA::String &adapter_name,
@@ -544,6 +547,9 @@ TAO_POA::TAO_POA (const TAO_POA::String &adapter_name,
     counter_ (0)
 {
   this->set_complete_name ();
+
+  // Register self with manager
+  this->poa_manager_.register_poa (this, env);
 }
 
 TAO_POA *
@@ -580,6 +586,14 @@ TAO_POA::~TAO_POA (void)
 {
   if (this->delete_active_object_table_)
     delete active_object_table_;
+
+  // Remove POA from the POAManager 
+  // 
+  // Note: Errors are ignored here since there is nothing we can do
+  // about them
+  //
+  CORBA::Environment env;
+  this->poa_manager_.remove_poa (this, env);
 }
 
 ACE_Lock &
@@ -622,7 +636,6 @@ TAO_POA::create_POA (const char *adapter_name,
           CORBA::Exception *exception = new CORBA::OBJ_ADAPTER (CORBA::COMPLETED_NO);
           env.exception (exception);
           return PortableServer::POA::_nil ();
-
         }
          
       poa_manager_impl = ACE_dynamic_cast (TAO_POA_Manager *, servant);
@@ -670,12 +683,16 @@ TAO_POA::create_POA_i (const TAO_POA::String &adapter_name,
       int result = this->children_.find (adapter_name);
 
       // Child was found
-      if (result == 0)
+      if (result != -1)
         {
           CORBA::Exception *exception = new PortableServer::POA::AdapterAlreadyExists;
           env.exception (exception);
           return 0;
         }
+      
+      //
+      // Child was not found
+      //
 
       // The specified policy objects are associated with the POA and used
       // to control its behavior. The policy objects are effectively
@@ -710,13 +727,6 @@ TAO_POA::create_POA_i (const TAO_POA::String &adapter_name,
       // initialized, the application can initialize the POA by invoking
       // find_POA with a TRUE activate parameter.
 
-      this->poa_manager_.register_poa (new_poa.get (), env);
-      if (env.exception () != 0)
-        {
-          // @@ Remove new POA from parent list
-          return 0;
-        }
-
       // Everything is fine
       // Don't let the auto_ptr delete the implementation
       return new_poa.release ();
@@ -735,11 +745,24 @@ TAO_POA::create_POA_i (const TAO_POA::String &adapter_name,
       if (env.exception () != 0)
         return 0;
 
+      // If we are the topmost poa, let's create the tail
+      if (topmost_poa_name == this->name_)
+        {
+          return this->create_POA_i (tail_poa_name,
+                                     poa_manager,
+                                     policies,
+                                     env);
+        }          
+      
+      //
+      // We are not the topmost POA
+      //
+
       // Try to find the topmost child
       TAO_POA *child_poa = 0;
       int result = this->children_.find (topmost_poa_name, child_poa);
 
-      // Child was not found
+      // Child was not found or the topmost is us
       if (result != 0)
         {
           child_poa = this->create_POA_i (topmost_poa_name,
@@ -821,35 +844,44 @@ TAO_POA::find_POA_i_optimized (const TAO_POA::String &adapter_name,
       // is returned.
       TAO_POA *child_poa = 0;
       int result = this->children_.find (adapter_name, child_poa);      
+      
+      // Child was found
+      if (result != -1)
+        return child_poa;
 
+      //
       // Child was not found
-      if (result != 0)
+      //
+      
+      // If a child POA with the specified name does not exist and the
+      // value of the activate_it parameter is TRUE, the target POA's
+      // AdapterActivator, if one exists, is invoked, and, if it
+      // successfully activates the child POA, that child POA is
+      // returned.
+      if (activate_it && !CORBA::is_nil (this->adapter_activator_))
         {
-          // If a child POA with the specified name does not exist and
-          // the value of the activate_it parameter is TRUE, the
-          // target POA's AdapterActivator, if one exists, is invoked,
-          // and, if it successfully activates the child POA, that
-          // child POA is returned.
-          if (activate_it && !CORBA::is_nil (this->the_activator (env)))
+          PortableServer::POA_var self = this->_this (env);
+          // Check for exceptions
+          if (env.exception () != 0)
+            return 0;
+          
+          CORBA::Boolean success =
+            this->adapter_activator_->unknown_adapter (self.in (),
+                                                       adapter_name.c_str (),
+                                                       env);
+          // Check for exceptions
+          if (env.exception () != 0)
+            return 0;
+          
+          // On success
+          if (success)
             {
-              CORBA::Boolean success =
-                this->the_activator (env)->unknown_adapter (this->_this (env),
-                                                            adapter_name.c_str (),
-                                                            env);
-              // Check for exceptions
-              if (env.exception () != 0)
-                return 0;
-                
-              // On success
-              if (success)
-                {
-                  // Search the children table again
-                  result = this->children_.find (adapter_name, child_poa);      
-
-                  // Child was found
-                  if (result == 0)
-                    return child_poa;
-                }
+              // Search the children table again
+              result = this->children_.find (adapter_name, child_poa);      
+              
+              // Child was found
+              if (result != -1)
+                return child_poa;
             }
         }
       
@@ -873,9 +905,21 @@ TAO_POA::find_POA_i_optimized (const TAO_POA::String &adapter_name,
       if (env.exception () != 0)
         return 0;
 
+      // If we are the topmost poa, let's create the tail
+      if (topmost_poa_name == this->name_)
+        {
+          return this->find_POA_i (tail_poa_name,
+                                   activate_it,
+                                   env);
+        }          
+      
+      //
+      // We are not the topmost POA
+      //
+
       // Try to find the topmost child
       TAO_POA *child_poa;
-      int result = this->children_.find (adapter_name, child_poa);      
+      int result = this->children_.find (topmost_poa_name, child_poa);      
 
       // Child was not found
       if (result != 0)
@@ -922,20 +966,15 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
   // re-creation of its associated POA in the same process.)
 
   // Remove POA from the parent
-  this->parent_->delete_child (this->name_, env);
-
-  if (env.exception () != 0)
-    return;
-
-  // Remove POA from the POAManager
-  this->poa_manager_.remove_poa (this, env);
+  if (this->parent_ != 0)
+    this->parent_->delete_child (this->name_, env);
 
   if (env.exception () != 0)
     return;
 
   // Remove all children POAs
   for (CHILDREN::iterator iterator = this->children_.begin ();
-       iterator != this->children_.end () && env.exception () != 0;
+       iterator != this->children_.end () && env.exception () == 0;
        iterator++)
     {
       TAO_POA *child_poa = (*iterator).int_id_;
@@ -970,11 +1009,15 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
           !CORBA::is_nil (this->servant_activator_))
         {
           for (TAO_Object_Table::iterator iterator = this->active_object_table ().begin ();
-               iterator != this->active_object_table ().end () && env.exception () != 0;
+               iterator != this->active_object_table ().end () && env.exception () == 0;
                iterator++)
             {
+              PortableServer::POA_var self = this->_this (env);
+              if (env.exception () != 0)
+                return;
+
               this->servant_activator_->etherealize ((*iterator).ext_id_,
-                                                     this->_this (env),
+                                                     self.in (),
                                                      (*iterator).int_id_,
                                                      CORBA::B_TRUE,
                                                      CORBA::B_FALSE,
@@ -999,27 +1042,27 @@ void
 TAO_POA::delete_child (const TAO_POA::String &child,
                        CORBA::Environment &env)
 {
-  // No locks are necessary if we are closing down
-  if (this->closing_down_)
-    {
-      this->delete_child_i (child,
-                            env);
-    }
-  else
-    {
+  // If we are not closing down, we must remove this child from our
+  // collection.  
+  if (!this->closing_down_)
+    {      
       // Lock access to the POA for the duration of this transaction
       TAO_POA_WRITE_GUARD (ACE_Lock, monitor, this->lock (), env);
       
       this->delete_child_i (child,
                             env);
     }
+
+  // If we are closing down, we are currently iterating over our
+  // children and there is not need to remove this child from our
+  // collection.
 }
 
 void
 TAO_POA::delete_child_i (const TAO_POA::String &child,
                          CORBA::Environment &env)
 {
-  if (this->children_.unbind (child) == 0)
+  if (this->children_.unbind (child) != 0)
     {
       CORBA::Exception *exception = new CORBA::OBJ_ADAPTER (CORBA::COMPLETED_NO);
       env.exception (exception);
@@ -1365,9 +1408,13 @@ TAO_POA::deactivate_object_i (const PortableServer::ObjectId& oid,
   // deactivated. It is the responsibility of the object
   // implementation to refrain from destroying the servant while it is
   // active with any Id.
+  PortableServer::POA_var self = this->_this (env);
+  if (env.exception () != 0)
+    return;
+
   if (!CORBA::is_nil (this->servant_activator_))
     this->servant_activator_->etherealize (oid,
-                                           this->_this (env),
+                                           self.in (),
                                            servant,
                                            0,
                                            CORBA::B_FALSE,
@@ -1696,7 +1743,10 @@ TAO_POA::id_to_reference (const PortableServer::ObjectId &oid,
 PortableServer::POA_ptr
 TAO_POA::the_parent (CORBA::Environment &env)
 {
-  return this->parent_->_this (env);
+  if (this->parent_ != 0)
+    return this->parent_->_this (env);
+  else
+    return PortableServer::POA::_nil ();
 }
 
 PortableServer::POAManager_ptr
@@ -1806,7 +1856,10 @@ TAO_POA::parse_key (const TAO::ObjectKey &key,
 
   // Take the substring from 0 to first_token_position for the
   // object_key_type.
-  TAO_POA::String object_key_type = object_key.substr (0, first_token_position);
+  int starting_at = 0;
+  int now_many = first_token_position - starting_at;
+  TAO_POA::String object_key_type = object_key.substr (starting_at, 
+                                                       now_many);
   if (object_key_type == this->persistent_key_type ())
     persistent = 1;
   else if (object_key_type == this->transient_key_type ())
@@ -1817,14 +1870,18 @@ TAO_POA::parse_key (const TAO::ObjectKey &key,
 
   // Take the substring from (first_token_position + separator_length)
   // to second_token_position for the POA name
-  poa_name = object_key.substr (first_token_position + TAO_POA::name_separator_length (),
-                                second_token_position);
+  starting_at = first_token_position + TAO_POA::name_separator_length ();
+  now_many = second_token_position - starting_at;
+  poa_name = object_key.substr (starting_at,
+                                now_many);
 
   // Take the substring from (second_token_position +
   // separator_length) to length for the objectId
 
-  TAO_POA::String objectId = object_key.substr (second_token_position + TAO_POA::name_separator_length (), 
-                                                object_key.length ());
+  starting_at = second_token_position + TAO_POA::name_separator_length ();
+  now_many = object_key.length () - starting_at;
+  TAO_POA::String objectId = object_key.substr (starting_at, 
+                                                now_many);
       
   id = TAO_POA::string_to_ObjectId (objectId.c_str ());
 
@@ -1835,7 +1892,7 @@ TAO_POA::parse_key (const TAO::ObjectKey &key,
 CORBA::Boolean
 TAO_POA::persistent (void)
 {
-  return this->policies ().lifespan () == PortableServer::TRANSIENT;
+  return this->policies ().lifespan () == PortableServer::PERSISTENT;
 }
 
 const TAO_POA::String &
@@ -1995,25 +2052,17 @@ TAO_POA::parse_poa_name (const TAO_POA::String &adapter_name,
   else
     {
       // If found, take the substring from 0 to token_position
-      topmost_poa_name = adapter_name.substr (0, token_position);
-    }
+      int starting_at = 0;
+      int now_many = token_position - starting_at;
+      topmost_poa_name = adapter_name.substr (starting_at, 
+                                              now_many);
 
-  // Try to find the name separator
-  token_position = adapter_name.rfind (TAO_POA::name_separator ());
-  
-  // If not found, the name was a leaf, throw exception
-  if (token_position == TAO_POA::String::npos)
-    {
-      CORBA::Exception *exception = new CORBA::OBJ_ADAPTER (CORBA::COMPLETED_NO);
-      env.exception (exception);
-      return;
-    }
-  else
-    {
-      // If found, take the substring from (token_position +
-      // separator_length) to length
-      tail_poa_name = adapter_name.substr (token_position + TAO_POA::name_separator_length (), 
-                                           adapter_name.length ());
+      // Take the substring from (token_position + separator_length)
+      // to length
+      starting_at = token_position + TAO_POA::name_separator_length ();
+      now_many = adapter_name.length () - starting_at;
+      tail_poa_name = adapter_name.substr (starting_at, 
+                                           now_many);
     }
 }
 
@@ -2279,42 +2328,41 @@ TAO_Adapter_Activator::unknown_adapter (PortableServer::POA_ptr parent,
                                         const char *name,
                                         CORBA::Environment &env)
 {  
-  PortableServer::Servant servant = parent->_servant ();
-  if (servant == 0)
-    {
-      CORBA::Exception *exception = new CORBA::OBJ_ADAPTER (CORBA::COMPLETED_NO);
-      env.exception (exception);
-      return CORBA::B_FALSE;
-    }
-         
-  TAO_POA *parent_impl = ACE_dynamic_cast (TAO_POA *, servant);
+  // Default policies
+  PortableServer::PolicyList default_policies;
 
-  return this->unknown_adapter_i (parent_impl,
-                                  name,
-                                  env);
-}
-
-CORBA::Boolean 
-TAO_Adapter_Activator::unknown_adapter_i (TAO_POA *parent,
-                                          const TAO_POA::String &name,
-                                          CORBA::Environment &env)
-{
-  // Use default policies
-  TAO_POA_Policies default_policies;
-  
-  // New poa manager
-  TAO_POA_Manager *poa_manager = parent->poa_manager_.clone ();
-
-  // This assumes that the lock on the parent is already held
-  parent->create_POA_i (name,
-                        *poa_manager,
-                        default_policies,
-                        env);
+  // This assumes that the lock on the parent is recursive
+  PortableServer::POA_var child = parent->create_POA (name,
+                                                      PortableServer::POAManager::_nil (),
+                                                      default_policies,
+                                                      env);
 
   if (env.exception () != 0)
     return CORBA::B_FALSE;
   else
-    return CORBA::B_TRUE;
+    {
+      PortableServer::AdapterActivator_var activator = this->_this (env);
+      if (env.exception () != 0)
+        {
+          child->destroy (CORBA::B_FALSE, 
+                          CORBA::B_FALSE, 
+                          env);
+          return CORBA::B_FALSE;
+        }
+
+      child->the_activator (activator, env);
+
+      if (env.exception () != 0)
+        {
+          child->destroy (CORBA::B_FALSE, 
+                          CORBA::B_FALSE, 
+                          env);
+          return CORBA::B_FALSE;
+        }
+
+      // Finally everything is fine
+      return CORBA::B_TRUE;
+    }
 }
 
 TAO_POA_Manager::TAO_POA_Manager (void)
@@ -2458,7 +2506,7 @@ TAO_POA_Manager::deactivate (CORBA::Boolean etherealize_objects,
   // crisis (for example, unrecoverable error) situation.
 
   for (POA_COLLECTION::iterator iterator = this->poa_collection_.begin ();
-       iterator != this->poa_collection_.end () && env.exception () != 0;
+       iterator != this->poa_collection_.end () && env.exception () == 0;
        iterator++)
     {
       TAO_POA *poa = *iterator;
@@ -2497,19 +2545,20 @@ void
 TAO_POA_Manager::remove_poa (TAO_POA *poa, 
                              CORBA::Environment &env)
 {
-  if (this->closing_down_)
+  // If we are not closing down, we must remove this poa from our
+  // collection.  
+  if (!this->closing_down_)
     {      
-      this->remove_poa_i (poa, 
-                          env);
-    }
-  else
-    {
       // Lock access to the POAManager for the duration of this transaction
       TAO_POA_WRITE_GUARD (ACE_Lock, monitor, this->lock (), env);
 
       this->remove_poa_i (poa, 
                           env);
     }
+
+  // If we are closing down, we are currently iterating over our poa
+  // collection and there is not need to remove this poa from our
+  // collection.
 }
 
 void
