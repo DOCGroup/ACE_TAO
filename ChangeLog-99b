@@ -1,3 +1,10 @@
+Wed Dec 22 08:44:56 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tests/Log_Msg_Test.cpp: Conditionally compiled the iostream
+	  print statements so that the test builds correctly if
+ 	  ACE_LACKS_IOSTREAM_TOTALLY is defined.  Thanks to David Levine
+ 	  for reporting this.
+
 Wed Dec 22 08:22:24 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/CDR_File_Test.cpp: disabled with

@@ -94,11 +94,13 @@ Logger::log (ACE_Log_Record &log_record)
         ACE_DEBUG ((LM_DEBUG, 
                     ASYS_TEXT ("Logger::log->%s\n"),
                     log_record.msg_data ()));
+#if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
       else
         *ace_file_stream::instance ()->output_file ()
           << "Recursive Logger callback = "
           << log_record.msg_data ()
           << endl;
+#endif /* ACE_LACKS_IOSTREAM_TOTALLY */
     }
   else
     {
@@ -112,11 +114,13 @@ Logger::log (ACE_Log_Record &log_record)
             ACE_DEBUG ((LM_DEBUG, 
                         ASYS_TEXT ("Logger::log->%s\n"),
                         verbose_msg));
+#if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
           else
             *ace_file_stream::instance ()->output_file ()
               << "Recursive Logger callback = "
               << log_record.msg_data ()
               << endl;
+#endif /* ACE_LACKS_IOSTREAM_TOTALLY */
         }
     }
 
