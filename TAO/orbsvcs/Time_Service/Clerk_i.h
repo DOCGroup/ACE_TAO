@@ -33,6 +33,13 @@ class Clerk_i
   //   A CORBA server that initializes the TimeService clerk
   //   implementation and the ORB.
 public:
+
+  enum {
+    // Pre-allocate slots for this many servers. The capacity grows on
+    // demand.
+    DEFAULT_SERVER_COUNT = 8
+  };
+
   // = Initialization and termination methods.
   Clerk_i (void);
   // Constructor.
@@ -40,8 +47,7 @@ public:
   ~Clerk_i (void);
   // Destructor.
 
-  typedef ACE_Unbounded_Set<CosTime::TimeService_var>
-  IORS;
+  typedef ACE_Array_Base<CosTime::TimeService_var> IORS;
   // Set of available Time servers.
 
   int init (int argc,
@@ -51,6 +57,10 @@ public:
 
   int run (CORBA::Environment &env);
   // Run the orb.
+
+private:
+  void insert_server (CosTime::TimeService_ptr server);
+  // Insert a server in the internal data structure (servers_).
 
 private:
 
