@@ -15,7 +15,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/orbsvcs/CosNamingS.h"
+#include "orbsvcs/CosNamingS.h"
 
 #include "naming_export.h"
 #include "ace/Null_Mutex.h"

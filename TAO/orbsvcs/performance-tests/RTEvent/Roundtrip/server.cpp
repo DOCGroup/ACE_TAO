@@ -9,8 +9,8 @@
 #include "ORB_Task.h"
 #include "ORB_Task_Activator.h"
 
-#include "orbsvcs/orbsvcs/Event/EC_Event_Channel.h"
-#include "orbsvcs/orbsvcs/Event/EC_Default_Factory.h"
+#include "orbsvcs/Event/EC_Event_Channel.h"
+#include "orbsvcs/Event/EC_Default_Factory.h"
 
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/RTPortableServer/RTPortableServer.h"

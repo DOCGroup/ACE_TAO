@@ -1,7 +1,7 @@
 // $Id$
 
 #include "ace/Sched_Params.h"
-#include "orbsvcs/orbsvcs/Scheduler_Factory.h"
+#include "orbsvcs/Scheduler_Factory.h"
 #include "RT_Task.h"
 #include "Debug_Macros.h"
 #include "Event_Channel.h"

@@ -14,7 +14,7 @@ ACE_RCSID (lib,
 #include "Name.h"
 #include "LookupManager.h"
 #include "Options_Parser.h"
-#include "orbsvcs/orbsvcs/NotifyExtC.h"
+#include "orbsvcs/NotifyExtC.h"
 
 TAO_Notify_Tests_Peer::TAO_Notify_Tests_Peer (void)
   : poa_name_ (TAO_Notify_Tests_Name::root_poa)

@@ -12,8 +12,8 @@ ACE_RCSID (Security,
 #include "SL3_ContextEstablishmentPolicy.h"
 #include "SL3_ObjectCredentialsPolicy.h"
 
-#include "orbsvcs/orbsvcs/SecurityLevel2C.h"
-#include "orbsvcs/orbsvcs/SecurityLevel3C.h"
+#include "orbsvcs/SecurityLevel2C.h"
+#include "orbsvcs/SecurityLevel3C.h"
 
 
 #include "tao/ORB_Constants.h"

@@ -1,8 +1,8 @@
 #include "ORBInitializer.h"
 #include "ServerRequestInterceptor.h"
 
-#include "orbsvcs/orbsvcs/LoadBalancing/LB_ServerRequestInterceptor.h"
-#include "orbsvcs/orbsvcs/CosLoadBalancingC.h"
+#include "orbsvcs/LoadBalancing/LB_ServerRequestInterceptor.h"
+#include "orbsvcs/CosLoadBalancingC.h"
 
 #include "tao/ORB_Constants.h"
 

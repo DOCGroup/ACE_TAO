@@ -1,6 +1,6 @@
 // $Id$
 
-#include "orbsvcs/orbsvcs/Event/EC_UDP_Admin.h"
+#include "orbsvcs/Event/EC_UDP_Admin.h"
 
 ACE_RCSID (Event, 
            EC_UDP_Admin, 

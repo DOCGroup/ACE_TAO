@@ -30,8 +30,8 @@
 #include "SSLIOP_Connection_Handler.h"
 #include "SSLIOP_Accept_Strategy.h"
 
-#include "orbsvcs/orbsvcs/SSLIOPC.h"  /* CSIv1 */
-#include "orbsvcs/orbsvcs/CSIIOPC.h"  /* CSIv2 */
+#include "orbsvcs/SSLIOPC.h"  /* CSIv1 */
+#include "orbsvcs/CSIIOPC.h"  /* CSIv2 */
 
 namespace TAO
 {

@@ -15,8 +15,8 @@
 
 #include "tao/RTCORBA/RTCORBA.h"
 #include "tao/PortableServer/PortableServer.h"
-#include "orbsvcs/orbsvcs/NotifyExtC.h"
-#include "orbsvcs/orbsvcs/CosNamingC.h"
+#include "orbsvcs/NotifyExtC.h"
+#include "orbsvcs/CosNamingC.h"
 
 /**
  * @class TAO_Notify_ORB_Objects

@@ -6,7 +6,7 @@
 #include "tao/DynamicC.h"
 #include "tao/Typecode.h"
 #include "tao/CDR.h"
-#include "orbsvcs/orbsvcs/FT_CORBA_ORBC.h"
+#include "orbsvcs/FT_CORBA_ORBC.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_string.h"
 

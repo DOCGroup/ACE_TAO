@@ -1,6 +1,6 @@
 #include "RTEvent_Supplier.h"
-#include "orbsvcs/orbsvcs/RtecEventChannelAdminC.h"
-#include "orbsvcs/orbsvcs/Event_Service_Constants.h"
+#include "orbsvcs/RtecEventChannelAdminC.h"
+#include "orbsvcs/Event_Service_Constants.h"
 #include "ace/OS_main.h"
 #include "ace/OS_NS_unistd.h"
 

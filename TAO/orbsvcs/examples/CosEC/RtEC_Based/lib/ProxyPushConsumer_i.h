@@ -22,8 +22,8 @@
 #define _PROXYPUSHCONSUMER_I_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/orbsvcs/RtecEventChannelAdminS.h"
-#include "orbsvcs/orbsvcs/CosEventChannelAdminS.h"
+#include "orbsvcs/RtecEventChannelAdminS.h"
+#include "orbsvcs/CosEventChannelAdminS.h"
 #include "rtec_cosec_export.h"
 
 #if defined(_MSC_VER)

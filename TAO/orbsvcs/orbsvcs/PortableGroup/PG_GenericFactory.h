@@ -25,7 +25,7 @@
 #include "PG_Factory_Map.h"
 #include "portablegroup_export.h"
 #include "tao/PortableServer/PortableServerC.h"
-#include "orbsvcs/orbsvcs/PortableGroupC.h"
+#include "orbsvcs/PortableGroupC.h"
 #include "ace/Null_Mutex.h"
 
 

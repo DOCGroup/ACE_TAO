@@ -1,9 +1,9 @@
 // $Id$
 
 #include "Consumer.h"
-#include "orbsvcs/orbsvcs/RtecEventChannelAdminC.h"
-#include "orbsvcs/orbsvcs/Event_Service_Constants.h"
-#include "orbsvcs/orbsvcs/CosNamingC.h"
+#include "orbsvcs/RtecEventChannelAdminC.h"
+#include "orbsvcs/Event_Service_Constants.h"
+#include "orbsvcs/CosNamingC.h"
 
 ACE_RCSID (EC_Examples, 
            Consumer, 

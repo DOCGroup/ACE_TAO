@@ -16,7 +16,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/orbsvcs/CosEventCommC.h"
+#include "orbsvcs/CosEventCommC.h"
 
 #include "event_export.h"
 

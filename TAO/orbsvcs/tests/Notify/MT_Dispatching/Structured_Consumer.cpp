@@ -6,8 +6,8 @@
 
 #include "ace/Get_Opt.h"
 
-#include "orbsvcs/orbsvcs/CosNotifyCommC.h"
-#include "orbsvcs/orbsvcs/CosNamingC.h"
+#include "orbsvcs/CosNotifyCommC.h"
+#include "orbsvcs/CosNamingC.h"
 #include "Notify_Structured_Push_Consumer.h"
 #include "goC.h"
 #include "ace/OS_NS_sys_time.h"

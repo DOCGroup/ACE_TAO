@@ -21,10 +21,10 @@
 #define TAO_COSEVENT_UTILITIES_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/orbsvcs/RtecBaseC.h"
-#include "orbsvcs/orbsvcs/RtecEventChannelAdminS.h"
-#include "orbsvcs/orbsvcs/CosEventChannelAdminS.h"
-#include "orbsvcs/orbsvcs/Event_Utilities.h"
+#include "orbsvcs/RtecBaseC.h"
+#include "orbsvcs/RtecEventChannelAdminS.h"
+#include "orbsvcs/CosEventChannelAdminS.h"
+#include "orbsvcs/Event_Utilities.h"
 #include "rtec_cosec_export.h"
 
 #if defined(_MSC_VER)

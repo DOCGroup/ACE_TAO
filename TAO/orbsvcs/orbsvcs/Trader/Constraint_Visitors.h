@@ -15,8 +15,8 @@
 #define TAO_CONSTRAINT_VISITOR_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/orbsvcs/Trader/Interpreter_Utils.h"
-#include "orbsvcs/orbsvcs/Trader/trading_export.h"
+#include "orbsvcs/Trader/Interpreter_Utils.h"
+#include "orbsvcs/Trader/trading_export.h"
 #include "ace/Containers.h"
 
 class TAO_DynSequence_i;
@@ -85,7 +85,7 @@ public:
   virtual int visit_property (TAO_Property_Constraint* literal) = 0;
 };
 
-#include "orbsvcs/orbsvcs/Trader/Constraint_Nodes.h"
+#include "orbsvcs/Trader/Constraint_Nodes.h"
 
 /**
  * @class TAO_Constraint_Validator

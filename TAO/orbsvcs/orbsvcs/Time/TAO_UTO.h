@@ -18,7 +18,7 @@
 #define TAO_UTO_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/orbsvcs/TimeServiceS.h"
+#include "orbsvcs/TimeServiceS.h"
 #include "time_export.h"
 
 /**

@@ -25,7 +25,7 @@
 #include "server.h"
 #include <algorithm>
 #include "icp.h"
-#include "orbsvcs/orbsvcs/CosNamingC.h"
+#include "orbsvcs/CosNamingC.h"
 
 const char * Controller_oid = "Controller";
 const unsigned int           DeviceLocator_impl::MAX_EQ_SIZE = 100;

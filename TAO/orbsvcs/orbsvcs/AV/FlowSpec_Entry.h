@@ -16,7 +16,7 @@
 #define TAO_AV_FLOWSPEC_ENTRY_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/orbsvcs/AV/AV_export.h"
+#include "orbsvcs/AV/AV_export.h"
 #include "AV_Core.h"
 #include "ace/Addr.h"
 #include "ace/Containers.h"

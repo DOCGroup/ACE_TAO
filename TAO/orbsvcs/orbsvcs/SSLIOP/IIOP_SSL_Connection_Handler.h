@@ -24,7 +24,7 @@
 
 #include "SSLIOP_Current.h"
 
-#include "orbsvcs/orbsvcs/SSLIOPC.h"
+#include "orbsvcs/SSLIOPC.h"
 #include "tao/IIOP_Connection_Handler.h"
 
 

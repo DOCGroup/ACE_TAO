@@ -7,7 +7,7 @@
 #include "INS_Locator.h"
 #include "Adapter_Activator.h"
 
-#include "orbsvcs/orbsvcs/IOR_Multicast.h"
+#include "orbsvcs/IOR_Multicast.h"
 
 #include "tao/IORTable/IORTable.h"
 #include "tao/PortableServer/POA.h"

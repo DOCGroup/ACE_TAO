@@ -11,7 +11,7 @@
 #include "IOGR_Maker.h"
 #include "Replication_Service.h"
 #include "../Utils/Safe_InputCDR.h"
-#include "orbsvcs/orbsvcs/FtRtecEventCommC.h"
+#include "orbsvcs/FtRtecEventCommC.h"
 
 
 ACE_RCSID (EventChannel,

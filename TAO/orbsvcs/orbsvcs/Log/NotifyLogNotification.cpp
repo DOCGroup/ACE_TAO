@@ -1,6 +1,6 @@
-#include "orbsvcs/orbsvcs/Log/LogNotification.h"
-#include "orbsvcs/orbsvcs/Log/NotifyLogNotification.h"
-#include "orbsvcs/orbsvcs/Time_Utilities.h"
+#include "orbsvcs/Log/LogNotification.h"
+#include "orbsvcs/Log/NotifyLogNotification.h"
+#include "orbsvcs/Time_Utilities.h"
 #include "tao/debug.h"
 
 ACE_RCSID (Log,

@@ -18,8 +18,8 @@
 //
 // ============================================================================
 
-#include "orbsvcs/orbsvcs/TimeServiceC.h"
-#include "orbsvcs/orbsvcs/Naming/Naming_Utils.h"
+#include "orbsvcs/TimeServiceC.h"
+#include "orbsvcs/Naming/Naming_Utils.h"
 
 class Client_i
 {

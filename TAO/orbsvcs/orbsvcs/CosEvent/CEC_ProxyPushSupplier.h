@@ -16,10 +16,10 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/orbsvcs/CosEventChannelAdminS.h"
+#include "orbsvcs/CosEventChannelAdminS.h"
 
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
-#include "orbsvcs/orbsvcs/CosTypedEventChannelAdminS.h"
+#include "orbsvcs/CosTypedEventChannelAdminS.h"
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
 #include "event_export.h"

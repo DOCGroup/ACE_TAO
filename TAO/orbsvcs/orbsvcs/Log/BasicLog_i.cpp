@@ -1,6 +1,6 @@
-#include "orbsvcs/orbsvcs/Log/BasicLog_i.h"
+#include "orbsvcs/Log/BasicLog_i.h"
 
-#include "orbsvcs/orbsvcs/Log/LogMgr_i.h"
+#include "orbsvcs/Log/LogMgr_i.h"
 
 ACE_RCSID (Log,
            BasicLog_i,

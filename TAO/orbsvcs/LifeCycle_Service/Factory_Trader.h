@@ -17,9 +17,9 @@
 #ifndef FACTORY_TRADER_H
 #define FACTORY_TRADER_H
 
-#include "orbsvcs/orbsvcs/Trader/Trader.h"
-#include "orbsvcs/orbsvcs/Trader/Service_Type_Repository.h"
-#include "orbsvcs/orbsvcs/CosLifeCycleC.h"
+#include "orbsvcs/Trader/Trader.h"
+#include "orbsvcs/Trader/Service_Type_Repository.h"
+#include "orbsvcs/CosLifeCycleC.h"
 
 
 class Factory_Trader

@@ -7,7 +7,7 @@
 #include "tao/RTScheduling/RTScheduler_Manager.h"
 #include "testC.h"
 #include "MUF_Scheduler.h"
-#include "orbsvcs/orbsvcs/Time_Utilities.h"
+#include "orbsvcs/Time_Utilities.h"
 
 ACE_RCSID(MT_Server, client, "$Id$")
 

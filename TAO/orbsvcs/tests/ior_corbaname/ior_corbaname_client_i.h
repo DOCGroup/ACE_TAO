@@ -24,7 +24,7 @@
 #define IOR_CORBANAME_CLIENT_I_H
 
 #include "corbanameC.h"
-#include "orbsvcs/orbsvcs/CosNamingC.h"
+#include "orbsvcs/CosNamingC.h"
 
 class IOR_corbaname_Client_i
 {

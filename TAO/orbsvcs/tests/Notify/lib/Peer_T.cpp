@@ -17,7 +17,7 @@ ACE_RCSID (Notify,
 #include "Name.h"
 #include "LookupManager.h"
 #include "Options_Parser.h"
-#include "orbsvcs/orbsvcs/NotifyExtC.h"
+#include "orbsvcs/NotifyExtC.h"
 
 template <class Peer_Traits>
 TAO_Notify_Tests_Peer_T<Peer_Traits>::TAO_Notify_Tests_Peer_T (void)

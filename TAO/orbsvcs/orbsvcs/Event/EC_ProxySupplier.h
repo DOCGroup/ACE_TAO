@@ -17,7 +17,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/orbsvcs/RtecEventChannelAdminS.h"
+#include "orbsvcs/RtecEventChannelAdminS.h"
 
 #include "EC_Filter.h"
 

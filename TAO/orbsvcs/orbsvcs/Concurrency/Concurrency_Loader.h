@@ -23,7 +23,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/orbsvcs/Concurrency/Concurrency_Utils.h"
+#include "orbsvcs/Concurrency/Concurrency_Utils.h"
 
 class TAO_Concurrency_Export TAO_Concurrency_Loader : public TAO_Object_Loader
 {

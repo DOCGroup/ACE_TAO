@@ -6,7 +6,7 @@
 #define FACTORY_H
 
 #include "Factory_Map.h"
-#include "orbsvcs/orbsvcs/PortableGroupS.h"
+#include "orbsvcs/PortableGroupS.h"
 #include "ace/Null_Mutex.h"
 
 #if defined (_MSC_VER)

@@ -1,6 +1,6 @@
 // $Id$
 
-#include "orbsvcs/orbsvcs/Event/EC_Gateway.h"
+#include "orbsvcs/Event/EC_Gateway.h"
 
 ACE_RCSID (Event, 
            EC_Gateway, 

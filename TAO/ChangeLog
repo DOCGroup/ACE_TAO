@@ -1,3 +1,13 @@
+Mon Aug 16 16:45:06 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* examples/Kokyu_dsrt_schedulers/muf_example/muf_example.mpc:
+
+	  Changed muf_client project to inherit from svc_utils.
+	
+	* {docs,examples,orbsvcs,performance-tests,utils}/.../*.{cpp,h,idl}:
+	
+	  Changed #include "orbsvcs/orbsvcs/..." to #include "orbsvcs/...".
+
 Mon Aug 16 18:14:53 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_interface.cpp (gen_stub_ctor):

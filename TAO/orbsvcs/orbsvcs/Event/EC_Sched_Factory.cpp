@@ -5,7 +5,7 @@
 #include "EC_Priority_Scheduling.h"
 #include "EC_Sched_Filter_Builder.h"
 #include "EC_Event_Channel_Base.h"
-#include "orbsvcs/orbsvcs/RtecSchedulerC.h"
+#include "orbsvcs/RtecSchedulerC.h"
 
 #include "ace/Arg_Shifter.h"
 #include "ace/Sched_Params.h"

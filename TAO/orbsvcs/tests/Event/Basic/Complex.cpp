@@ -2,10 +2,10 @@
 
 #include "Counting_Consumer.h"
 #include "Counting_Supplier.h"
-#include "orbsvcs/orbsvcs/Time_Utilities.h"
-#include "orbsvcs/orbsvcs/Event_Utilities.h"
-#include "orbsvcs/orbsvcs/Event/EC_Event_Channel.h"
-#include "orbsvcs/orbsvcs/Event/EC_Default_Factory.h"
+#include "orbsvcs/Time_Utilities.h"
+#include "orbsvcs/Event_Utilities.h"
+#include "orbsvcs/Event/EC_Event_Channel.h"
+#include "orbsvcs/Event/EC_Default_Factory.h"
 
 ACE_RCSID (EC_Tests, 
            Complex, 

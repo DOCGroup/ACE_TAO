@@ -2,7 +2,7 @@
 
 #include "ace/Functor.h"
 
-#include "orbsvcs/orbsvcs/Scheduler_Factory.h"
+#include "orbsvcs/Scheduler_Factory.h"
 #include "ReactorTask.h"
 #include "Timer_Module.h"
 

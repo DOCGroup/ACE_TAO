@@ -9,7 +9,7 @@
 #include "ECG_Mcast_EH.h"
 #include "ECG_UDP_EH.h"
 
-#include "orbsvcs/orbsvcs/Event_Utilities.h"
+#include "orbsvcs/Event_Utilities.h"
 
 #include "ace/Dynamic_Service.h"
 #include "ace/Arg_Shifter.h"

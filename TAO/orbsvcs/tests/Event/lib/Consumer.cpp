@@ -1,8 +1,8 @@
 // $Id$
 
 #include "Consumer.h"
-#include "orbsvcs/orbsvcs/Event_Service_Constants.h"
-#include "orbsvcs/orbsvcs/Time_Utilities.h"
+#include "orbsvcs/Event_Service_Constants.h"
+#include "orbsvcs/Time_Utilities.h"
 
 #include "tao/debug.h"
 

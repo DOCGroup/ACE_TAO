@@ -12,7 +12,7 @@ ACE_RCSID (Security,
 #include "SL3_CredentialsCurator.h"
 #include "SL3_SecurityManager.h"
 
-#include "orbsvcs/orbsvcs/SecurityC.h"
+#include "orbsvcs/SecurityC.h"
 
 #include "tao/ORBInitInfo.h"
 #include "tao/ORB_Constants.h"

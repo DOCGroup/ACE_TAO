@@ -4,10 +4,10 @@
 #include "Consumer.h"
 #include "Supplier.h"
 
-#include "orbsvcs/orbsvcs/Event_Service_Constants.h"
-#include "orbsvcs/orbsvcs/Event_Utilities.h"
-#include "orbsvcs/orbsvcs/Event/EC_Default_Factory.h"
-#include "orbsvcs/orbsvcs/Event/EC_Event_Channel.h"
+#include "orbsvcs/Event_Service_Constants.h"
+#include "orbsvcs/Event_Utilities.h"
+#include "orbsvcs/Event/EC_Default_Factory.h"
+#include "orbsvcs/Event/EC_Event_Channel.h"
 
 #include "tao/ORB_Constants.h"
 

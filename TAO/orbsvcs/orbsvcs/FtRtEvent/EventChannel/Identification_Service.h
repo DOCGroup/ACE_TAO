@@ -14,9 +14,9 @@
 #define IDENTIFICATION_SERVICE_H
 
 #include "ace/Service_Object.h"
-#include "orbsvcs/orbsvcs/CosNamingC.h"
-#include "orbsvcs/orbsvcs/FTRTC.h"
-#include "orbsvcs/orbsvcs/FtRtecEventCommC.h"
+#include "orbsvcs/CosNamingC.h"
+#include "orbsvcs/FTRTC.h"
+#include "orbsvcs/FtRtecEventCommC.h"
 #include "ftrtec_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

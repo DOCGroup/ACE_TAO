@@ -23,7 +23,7 @@
 
 #include "SSLIOP_X509.h"
 #include "SSLIOP_EVP_PKEY.h"
-#include "orbsvcs/orbsvcs/SecurityLevel3C.h"
+#include "orbsvcs/SecurityLevel3C.h"
 #include "tao/LocalObject.h"
 
 namespace TAO

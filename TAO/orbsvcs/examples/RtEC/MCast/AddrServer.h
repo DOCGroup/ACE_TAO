@@ -18,7 +18,7 @@
 #define ADDRSERVER_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/orbsvcs/RtecUDPAdminS.h"
+#include "orbsvcs/RtecUDPAdminS.h"
 
 class AddrServer : public POA_RtecUDPAdmin::AddrServer
 {

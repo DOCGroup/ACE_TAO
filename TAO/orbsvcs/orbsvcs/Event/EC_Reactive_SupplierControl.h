@@ -19,7 +19,7 @@
 
 #include "EC_SupplierControl.h"
 
-#include "orbsvcs/orbsvcs/ESF/ESF_Worker.h"
+#include "orbsvcs/ESF/ESF_Worker.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

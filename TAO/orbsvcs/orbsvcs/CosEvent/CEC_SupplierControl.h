@@ -28,7 +28,7 @@
 
 #include "tao/Objref_VarOut_T.h"
 
-#include "orbsvcs/orbsvcs/CosEvent/event_export.h"
+#include "orbsvcs/CosEvent/event_export.h"
 
 class TAO_CEC_EventChannel;
 class TAO_CEC_ProxyPushConsumer;

@@ -15,8 +15,8 @@
 
 #include "ORB_Objects.h"
 #include "tao/RTCORBA/RTCORBA.h"
-#include "orbsvcs/orbsvcs/CosNotifyChannelAdminS.h"
-#include "orbsvcs/orbsvcs/CosNotifyCommC.h"
+#include "orbsvcs/CosNotifyChannelAdminS.h"
+#include "orbsvcs/CosNotifyCommC.h"
 #include "ace/SString.h"
 #include "ace/Condition_Thread_Mutex.h"
 

@@ -13,7 +13,7 @@ ACE_RCSID (Notify,
            TAO_Notify_Event_Map_Entry_T, 
            "$Id$")
 
-#include "orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.h"
+#include "orbsvcs/ESF/ESF_Proxy_Collection.h"
 #include "Properties.h"
 #include "Factory.h"
 

@@ -18,9 +18,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/orbsvcs/Channel_Clients_T.h"
-#include "orbsvcs/orbsvcs/RtecEventChannelAdminC.h"
-#include "orbsvcs/orbsvcs/RtecSchedulerC.h"
+#include "orbsvcs/Channel_Clients_T.h"
+#include "orbsvcs/RtecEventChannelAdminC.h"
+#include "orbsvcs/RtecSchedulerC.h"
 #include "ace/Task.h"
 
 class Test_Supplier : public ACE_Task<ACE_SYNCH>

@@ -19,13 +19,13 @@
 #define TAO_LOG_RECORD_STORE_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/orbsvcs/DsLogAdminS.h"
+#include "orbsvcs/DsLogAdminS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/orbsvcs/DsLogAdminC.h"
+#include "orbsvcs/DsLogAdminC.h"
 #include "ace/Containers.h"
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Null_Mutex.h"

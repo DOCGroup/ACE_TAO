@@ -3,7 +3,7 @@
 #include "ace/OS_NS_fcntl.h"
 #include "ace/OS_NS_sys_time.h"
 
-#include "orbsvcs/orbsvcs/Time_Utilities.h"
+#include "orbsvcs/Time_Utilities.h"
 #include "ace/OS_NS_fcntl.h"
 #include "ace/OS_NS_sys_time.h"
 

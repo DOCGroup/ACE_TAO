@@ -5,7 +5,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/Argv_Type_Converter.h"
-#include "orbsvcs/orbsvcs/CosNamingC.h"
+#include "orbsvcs/CosNamingC.h"
 #include "ace/OS_main.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_strings.h"
