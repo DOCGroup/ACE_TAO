@@ -1,3 +1,17 @@
+Fri Dec 14 18:32:45 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * orbsvcs/IFR_Service/drv_preproc_ifr.cpp:
+
+          Removed the preprocessor definition -DIDL, since 'IDL'
+          is a legal identifier. Also added format string to
+          instances of ACE_DEBUG and ACE_ERROR. Finally, added
+          code to enable BCB to send preprocessor output to
+          a specified file, similar to the change sent in by
+          Johnny Willemsen <johnny.willemsen@meco.nl> for
+          drv_preproc.cpp in the IDL compiler executable. Thanks
+          to Marvin Greenberg <mgreenberg@dctd.saic.com> for
+          reporting the problem with the 'IDL' identifier.
+
 Fri Dec 14 16:12:42 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_union/union_ch.cpp:
