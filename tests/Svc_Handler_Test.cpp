@@ -54,10 +54,10 @@ run_test (SVC_HANDLER &svc_handler,
       mb->copy ("hello ",
                 ACE_OS::strlen ("hello "));
       cb1->copy ("there ",
-                ACE_OS::strlen ("there "));
+                 ACE_OS::strlen ("there "));
+      mb->cont (cb1);
       cb2->copy ("doug\n",
                 ACE_OS::strlen ("doug\n"));
-      mb->cont (cb1);
       cb1->cont (cb2);
       
       // Note that this is a buffered call!

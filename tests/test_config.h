@@ -224,7 +224,6 @@ ACE_Test_Output::ACE_Test_Output (void)
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
   this->output_file_ = new OFSTREAM;
 #endif /* ACE_LACKS_IOSTREAM_TOTALLY */
-
 }
 
 ACE_Test_Output::~ACE_Test_Output (void)
