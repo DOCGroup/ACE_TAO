@@ -1,3 +1,9 @@
+Tue Jun 29 10:54:15 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/OS.i:
+	  Sun/CC was not pleased with a cast from "void* const" to "const
+	  char*", and rightly so.
+
 Tue Jun 29 09:21:06 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* ace/OS.h:
