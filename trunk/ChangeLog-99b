@@ -1,11 +1,11 @@
 Tue Mar  2 22:50:18 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* ace/POSIX_Asynch_IO.h: 
-	* ace/POSIX_Proactor.cpp:
-	Added forward declaration for ACE_Proactor_Impl. Using static cast
-	to down cast from <aiocb *> to 
-	<ACE_POSIX_Asynch_Result *>. Thanks to John.Mulhern@lawson.com for
-	reporting the warnings in HP UX. 
+        * ace/POSIX_Asynch_IO.h:
+        * ace/POSIX_Proactor.cpp:
+        Added forward declaration for ACE_Proactor_Impl. Using static cast
+        to down cast from <aiocb *> to
+        <ACE_POSIX_Asynch_Result *>. Thanks to John.Mulhern@lawson.com for
+        reporting the warnings in HP UX.
 
 Tue Mar 02 21:17:19 1999  David L. Levine  <levine@cs.wustl.edu>
 
@@ -25,6 +25,9 @@ Tue Mar 02 21:17:19 1999  David L. Levine  <levine@cs.wustl.edu>
           Thanks to James CE Johnson <jcej@lads.com> for reporting
           this, and to Andrew Hobson <ahobson@eng.mindspring.net> for
           diagnosing the problem.
+
+        * ace/OS.i (thr_getspecific): added #else clause w/ACE_NOTSUP_RETURN
+          to support ACE_HAS_MINIMAL_ACE_OS.
 
 Tue Mar 02 14:43:29 1999  Steve Huston  <shuston@riverace.com>
 
