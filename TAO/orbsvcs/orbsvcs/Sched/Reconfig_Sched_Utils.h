@@ -272,6 +272,57 @@ public:
   // on the operation characteristics of a representative scheduling entry.
 };
 
+class TAO_RTSched_Export TAO_RMS_Reconfig_Sched_Strategy
+  // = TITLE
+  //   A scheduling strategy that implements the Maximum
+  //   Urgency First scheduling algorithm.
+  //
+  // = DESCRIPTION
+  //   The strategy assigns static thread and global priority according
+  //   to operation criticality, assigns static subpriority according to
+  //   importance and then topological order, and assigns a dispatching
+  //   configuration with a minimum laxity dispatching queue for each
+  //   distinct criticality level.
+{
+public:
+
+  static int comp_entry_finish_times (const void *first, const void *second);
+  // Ordering function to compare the DFS finish times of
+  // two task entries, so qsort orders these in topological
+  // order, with the higher times *first*.
+
+  static int total_priority_comp (const void *, const void *);
+  // Ordering function used to qsort an array of
+  // TAO_Reconfig_Scheduler_Entry pointers into a total <priority,
+  // subpriority> ordering.  Returns -1 if the first one is higher, 0
+  // if they're the same, and 1 if the second one is higher.
+
+  static int compare_priority (TAO_Reconfig_Scheduler_Entry &,
+                               TAO_Reconfig_Scheduler_Entry &);
+  // Compares two entries by priority alone.  Returns -1 if the
+  // first one is higher, 0 if they're the same, and 1 if the second one is higher.
+
+
+  static int compare_subpriority (TAO_Reconfig_Scheduler_Entry &,
+                                  TAO_Reconfig_Scheduler_Entry &);
+  // Compares two entries by subpriority alone.  Returns -1 if the
+  // first one is higher, 0 if they're the same, and 1 if the second one is higher.
+
+  static int priority_diff (RtecScheduler::RT_Info &s,
+                            RtecScheduler::RT_Info &t);
+  // Compares two RT_Infos by priority alone.  Returns -1 if the
+  // first one is higher, 0 if they're the same, and 1 if the second one is higher.
+
+  static int is_critical (TAO_Reconfig_Scheduler_Entry &rse);
+  // Determines whether or not an entry is critical, based on operation characteristics.
+  // returns 1 if critical, 0 if not
+
+  static int assign_config (RtecScheduler::Config_Info &,
+                            TAO_Reconfig_Scheduler_Entry &);
+  // Fills in a static dispatch configuration for a priority level, based
+  // on the operation characteristics of a representative scheduling entry.
+};
+
 
 #if defined (__ACE_INLINE__)
 #include "Reconfig_Sched_Utils.i"
