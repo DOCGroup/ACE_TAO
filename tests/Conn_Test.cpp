@@ -434,35 +434,48 @@ static void
 spawn_processes (ACCEPTOR *acceptor, 
 		 ACE_INET_Addr *server_addr)
 {
-  // Register a signal handler to close down the child.
-  ACE_Sig_Action sa ((ACE_SignalHandler) handler, SIGHUP);
-  ACE_UNUSED_ARG (sa);
+#if defined (ACE_HAS_THREAD_SAFE_ACCEPT)
+  const int max_servers = MAX_SERVERS;
+#else
+  const int max_servers = 1;
+#endif /* ACE_HAS_THREAD_SAFE_ACCEPT */
+
+  pid_t children[max_servers];
+  int i;
 
   // Spawn off a number of server processes all of which will listen
   // on the same port number for clients to connect.
-  for (int i = 0; i < MAX_SERVERS; i++)
-    switch (ACE_OS::fork ("child"))
-      {
-      case -1:
-	ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n%a", "fork failed"));
-	ACE_OS::exit (-1);
-	/* NOTREACHED */
-      case 0:
+  for (i = 0; i < max_servers; i++)
+    {
+      pid_t pid = ACE_OS::fork ("child");
+      switch (pid)
 	{
-	  // In the child.
-	  server ((void *) acceptor);
-	  return;
+	case -1:
+	  ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n%a", "fork failed"));
+	  ACE_OS::exit (-1);
 	  /* NOTREACHED */
+	case 0: 	    // In the child.
+	  {
+	    // Register a signal handler to close down the child.
+	    ACE_Sig_Action sa ((ACE_SignalHandler) handler, SIGTERM);
+	    ACE_UNUSED_ARG (sa);
+
+	    server ((void *) acceptor);
+	    return;
+	    /* NOTREACHED */
+	  }
+	default:	  // In the parent.
+	  children[i] = pid;
+	  break;
 	}
-      default:
-	// In the parent.
-	break;
-      }
+    }
 
   client ((void *) server_addr);
 
-  // Shutdown ourself and the servers.
-  ACE_OS::kill (0, SIGHUP);
+  for (i = 0; i < max_servers; i++)
+    // Shutdown the servers.
+    if (ACE_OS::kill (children[i], SIGTERM) == -1)
+      ACE_ERROR ((LM_ERROR, "(%P|%t) %p for %d\n", children[i]));
 
   pid_t child;
 
