@@ -26,6 +26,7 @@
 #if !defined (_PORTABLESERVER_THREADPOLICY___CI_)
 #define _PORTABLESERVER_THREADPOLICY___CI_
 
+#if (TAO_HAS_MINIMUM_POA == 0)
 template<>
 ACE_INLINE
 CORBA::Boolean
@@ -52,6 +53,7 @@ TAO::Any_Impl_T<PortableServer::ThreadPolicy>::demarshal_value (TAO_InputCDR &)
 {
   return 0;
 }
+#endif /*TAO_HAS_MINIMUM_POA*/
 
 #endif /* end #if !defined */
 
@@ -158,9 +160,9 @@ TAO::Any_Impl_T<PortableServer::IdAssignmentPolicy>::demarshal_value (TAO_InputC
 
 #endif /* end #if !defined */
 
+#if (TAO_HAS_MINIMUM_POA == 0)
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
-
 #if !defined (_PORTABLESERVER_IMPLICITACTIVATIONPOLICY___CI_)
 #define _PORTABLESERVER_IMPLICITACTIVATIONPOLICY___CI_
 template<>
@@ -189,6 +191,7 @@ TAO::Any_Impl_T<PortableServer::ImplicitActivationPolicy>::demarshal_value (TAO_
 {
   return 0;
 }
+
 
 #endif /* end #if !defined */
 
@@ -227,6 +230,7 @@ TAO::Any_Impl_T<PortableServer::ServantRetentionPolicy>::demarshal_value (TAO_In
 
 #endif /* end #if !defined */
 
+
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
 
@@ -260,6 +264,8 @@ TAO::Any_Impl_T<PortableServer::RequestProcessingPolicy>::demarshal_value (TAO_I
 }
 
 #endif /* end #if !defined */
+
+#endif /*TAO_HAS_MINIMUM_POA == 0 */
 
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
@@ -296,6 +302,7 @@ TAO::Any_Impl_T<PortableServer::POAManager>::demarshal_value (TAO_InputCDR &)
 
 #endif /* end #if !defined */
 
+#if (TAO_HAS_MINIMUM_POA == 0)
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
 
@@ -434,6 +441,7 @@ TAO::Any_Impl_T<PortableServer::ServantLocator>::demarshal_value (TAO_InputCDR &
 
 #endif /* end #if !defined */
 
+#endif /*TAO_HAS_MINIMUM_POA == 0*/
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
 

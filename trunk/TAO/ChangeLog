@@ -1,3 +1,9 @@
+Fri Apr 25 07:06:21 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/PortableServer/PortableServerC.i: Added #if
+	  (TAO_HAS_MINIMUM_POA == 0) guards in a few places to get the
+	  file compiling cleanly in minimum builds.
+
 Fri Apr 25 06:27:06 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/PortableServer/ObjectReferenceTemplate.cpp: Fixed a compile
