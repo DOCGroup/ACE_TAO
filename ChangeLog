@@ -27,7 +27,6 @@ Wed Aug 21 20:40:20 2002  Krishnakumar B  <kitty@cs.wustl.edu>
           Use ACE_TEXT instead of ACE_LIB_TEXT. It results in reducing
           vertical space and the wchar.txt document also encourages it.
 
-
 Wed Aug 21 17:02:44 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/OS_String.cpp: Changed to enabled wchar version of
