@@ -33,6 +33,7 @@
 
 class TAO_ServerRequest;
 class TAO_Stub;
+class TAO_Abstract_ServantBase;
 
 namespace CORBA
 {
@@ -62,8 +63,7 @@ typedef void (*TAO_Skeleton)(
   );
 
 typedef void (*TAO_Collocated_Skeleton)(
-    CORBA::Object_ptr,
-    CORBA::Object_out,
+    TAO_Abstract_ServantBase *,
     TAO::Argument **,
     int
 #if !defined (TAO_HAS_EXCEPTIONS) || defined (ACE_ENV_BKWD_COMPAT)

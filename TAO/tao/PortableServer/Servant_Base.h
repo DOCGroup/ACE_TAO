@@ -87,6 +87,16 @@ public:
                           void *servant_upcall
                           ACE_ENV_ARG_DECL) = 0;
 
+  /// Please see documentation in tao/Abstract_Servant_Base.h for
+  /// details.
+  virtual int _find (const char *opname,
+                     TAO_Skeleton &skelfunc,
+                     const unsigned int length = 0);
+
+  virtual int _find (const char *opname,
+                     TAO_Collocated_Skeleton &skelfunc,
+                     TAO::Collocation_Strategy st,
+                     const unsigned int length = 0);
 protected:
 
   /// Default constructor, only derived classes can be created.
@@ -109,16 +119,6 @@ protected:
                                              void *derived_this
                                              ACE_ENV_ARG_DECL);
 
-  /// Please see documentation in tao/Abstract_Servant_Base.h for
-  /// details.
-  virtual int _find (const char *opname,
-                     TAO_Skeleton &skelfunc,
-                     const unsigned int length = 0);
-
-  virtual int _find (const char *opname,
-                     TAO_Collocated_Skeleton &skelfunc,
-                     TAO::Collocation_Strategy st,
-                     const unsigned int length = 0);
 
   /// Register a CORBA IDL operation name.
   /*virtual int _bind (const char *opname,
