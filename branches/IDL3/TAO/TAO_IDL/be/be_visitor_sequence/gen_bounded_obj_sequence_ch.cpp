@@ -101,11 +101,12 @@ be_visitor_sequence_ch::gen_bounded_obj_sequence (be_sequence *node)
   *os << "// = Accessors." << be_nl;
 
   be_predefined_type *prim = be_predefined_type::narrow_from_decl (pt);
+
   int is_pseudo_object =
     pt->node_type () == AST_Decl::NT_pre_defined
-    && prim && prim->pt () == AST_PredefinedType::PT_pseudo
-    && ACE_OS::strcmp (prim->local_name ()->get_string (),
-                       "Object") != 0;
+    && prim 
+    && prim->pt () == AST_PredefinedType::PT_object;
+
   int is_valuetype = 0;
 
   // operator[]
@@ -116,13 +117,19 @@ be_visitor_sequence_ch::gen_bounded_obj_sequence (be_sequence *node)
   else
     {
       be_interface *bf = be_interface::narrow_from_decl (pt);
+
       if (bf != 0)
-        is_valuetype = bf->is_valuetype ();
+        {
+          is_valuetype = bf->is_valuetype ();
+        }
       else
         {
           be_interface_fwd *bff = be_interface_fwd::narrow_from_decl (pt);
+
           if (bff != 0)
-            is_valuetype = bff->is_valuetype ();
+            {
+              is_valuetype = bff->is_valuetype ();
+            }
         }
 
       if (is_valuetype)

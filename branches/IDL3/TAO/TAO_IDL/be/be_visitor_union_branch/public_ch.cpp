@@ -386,6 +386,7 @@ be_visitor_union_branch_public_ch::visit_predefined_type (be_predefined_type *no
   switch (node->pt ())
     {
     case AST_PredefinedType::PT_pseudo:
+    case AST_PredefinedType::PT_object:
       *os << "void " << ub->local_name () << " ("
           << bt->nested_type_name (bu, "_ptr") << ");" << be_nl;
       *os << bt->nested_type_name (bu, "_ptr") << " " << ub->local_name ()

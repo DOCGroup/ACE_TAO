@@ -1100,18 +1100,16 @@ UTL_Scope::lookup_pseudo (Identifier *e)
 AST_Decl *
 UTL_Scope::lookup_primitive_type (AST_Expression::ExprType et)
 {
-  AST_Decl *as_decl = 0;
-  UTL_Scope *ancestor = 0;
-  AST_PredefinedType *t = 0;
   AST_PredefinedType::PredefinedType pdt;
 
-  as_decl = ScopeAsDecl (this);
+  AST_Decl *as_decl = ScopeAsDecl (this);
 
   if (as_decl == 0)
     {
       return 0;
     }
-  ancestor = as_decl->defined_in ();
+
+  UTL_Scope *ancestor = as_decl->defined_in ();
 
   if (ancestor != 0)
     {
@@ -1162,15 +1160,21 @@ UTL_Scope::lookup_primitive_type (AST_Expression::ExprType et)
     case AST_Expression::EV_any:
       pdt = AST_PredefinedType::PT_any;
       break;
+    case AST_Expression::EV_object:
+      pdt = AST_PredefinedType::PT_object;
+      break;
     case AST_Expression::EV_void:
       pdt = AST_PredefinedType::PT_void;
       break;
+    case AST_Expression::EV_enum:
     case AST_Expression::EV_string:
     case AST_Expression::EV_wstring:
     case AST_Expression::EV_none:
     default:
       return 0;
     }
+
+  AST_PredefinedType *t = 0;
 
   for (UTL_ScopeActiveIterator i (this, UTL_Scope::IK_decls);
        !i.is_done();
@@ -1182,7 +1186,7 @@ UTL_Scope::lookup_primitive_type (AST_Expression::ExprType et)
         {
           t = AST_PredefinedType::narrow_from_decl (as_decl);
 
-          if (t == NULL)
+          if (t == 0)
             {
               continue;
             }

@@ -2085,7 +2085,7 @@ be_visitor_typecode_defn::gen_encapsulation (be_union_branch *node)
             this->tc_offset_ += sizeof (ACE_CDR::ULong);
             break;
 
-          case AST_Expression::EV_any:
+          case AST_Expression::EV_enum:
             // enum
             os->print ("0x%08.8x", (unsigned long)ev->u.eval);
             // size of any aligned to 4 bytes
@@ -2168,7 +2168,7 @@ be_visitor_typecode_defn::gen_encapsulation (be_union_branch *node)
             this->tc_offset_ += sizeof (ACE_CDR::ULong);
             break;
 
-          case AST_Expression::EV_any:
+          case AST_Expression::EV_enum:
             // enum
             os->print ("0x%08.8x", (unsigned long)dv.u.enum_val);
             // size of short/wchar aligned to 4 bytes

@@ -54,7 +54,6 @@ be_visitor_exception_cdr_op_cs::visit_exception (be_exception *node)
                         -1);
     }
 
-
   node->cli_stub_cdr_op_gen (1);
   return 0;
 }

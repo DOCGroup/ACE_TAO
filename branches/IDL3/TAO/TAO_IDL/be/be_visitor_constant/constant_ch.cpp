@@ -50,7 +50,7 @@ be_visitor_constant_ch::visit_constant (be_constant *node)
 
       if (be_global->gen_inline_constants ())
         {
-          if (node->et () == AST_Expression::EV_any)
+          if (node->et () == AST_Expression::EV_enum)
             {
               *os << node->enum_full_name ();
             }
@@ -81,7 +81,7 @@ be_visitor_constant_ch::visit_constant (be_constant *node)
 
           *os << "const ";
 
-          if (node->et () == AST_Expression::EV_any)
+          if (node->et () == AST_Expression::EV_enum)
             {
               *os << node->enum_full_name ();
             }

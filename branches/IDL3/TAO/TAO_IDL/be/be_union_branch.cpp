@@ -146,7 +146,7 @@ be_union_branch::gen_default_label_value (TAO_OutStream *os,
       case AST_Expression::EV_bool:
         *os << dv.u.bool_val;
         break;
-      case AST_Expression::EV_any:
+      case AST_Expression::EV_enum:
         // The discriminant is an enum. Some compilers will
         // not accept a numeric value assigned to this
         // discriminant, so we must generate the string name.

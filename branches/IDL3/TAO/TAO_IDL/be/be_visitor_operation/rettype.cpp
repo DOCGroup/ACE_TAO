@@ -162,9 +162,10 @@ be_visitor_operation_rettype::visit_predefined_type (be_predefined_type *node)
   switch (node->pt ())
     {
     case AST_PredefinedType::PT_pseudo:
+    case AST_PredefinedType::PT_object:
       *os << bt->name ();
 
-      // If it's not TCKind, it's either TypeCode or ValueBase.
+      // If it's not TCKind, it's either Object, TypeCode or ValueBase.
       if (ACE_OS::strcmp (bt->local_name ()->get_string (), "TCKind") != 0)
         {
           *os << "_ptr";

@@ -138,6 +138,7 @@ visit_predefined_type (be_predefined_type *node)
   switch (node->pt ())
     {
     case AST_PredefinedType::PT_pseudo:
+    case AST_PredefinedType::PT_object:
       *os << bt->name () << "_var _tao_retval;\n";
       break;
     case AST_PredefinedType::PT_any:

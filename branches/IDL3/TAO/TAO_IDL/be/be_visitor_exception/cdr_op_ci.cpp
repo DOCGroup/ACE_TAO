@@ -55,15 +55,16 @@ be_visitor_exception_cdr_op_ci::visit_exception (be_exception *node)
   // because the inlined code for our children must be available before we use
   // it in our parent
 
-  // set the substate as generating code for the types defined in our scope
+  // Set the substate as generating code for the types defined in our scope.
   this->ctx_->sub_state(TAO_CodeGen::TAO_CDR_SCOPE);
-  // all we have to do is to visit the scope and generate code
+
   if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_exception_cdr_op_ci"
                          "::visit_exception - "
-                         "codegen for scope failed\n"), -1);
+                         "codegen for scope failed\n"), 
+                        -1);
     }
 
   //  set the sub state as generating code for the output operator
@@ -74,9 +75,8 @@ be_visitor_exception_cdr_op_ci::visit_exception (be_exception *node)
   // do we have any members?
   if (node->nmembers () > 0)
     {
-      be_visitor_context* new_ctx =
-        new be_visitor_context (*this->ctx_);
-      be_visitor_cdr_op_field_decl field_decl (new_ctx);
+      be_visitor_context new_ctx (*this->ctx_);
+      be_visitor_cdr_op_field_decl field_decl (&new_ctx);
       field_decl.visit_scope (node);
 
       // some members
@@ -86,14 +86,15 @@ be_visitor_exception_cdr_op_ci::visit_exception (be_exception *node)
           << "// now marshal the members (if any)" << be_nl
           << "if (" << be_idt_nl;
 
-      // all we have to do is to visit the scope and generate code
       if (this->visit_scope (node) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_exception_cdr_op_ci::"
                              "visit_exception - "
-                             "codegen for scope failed\n"), -1);
+                             "codegen for scope failed\n"), 
+                            -1);
         }
+
       *os << be_uidt_nl << ")"
           << be_idt_nl
           << "return 1;" << be_uidt_nl
@@ -105,17 +106,19 @@ be_visitor_exception_cdr_op_ci::visit_exception (be_exception *node)
     }
   else
     {
-      // no members
+      // No members.
       *os << "// first marshal the repository ID" << be_nl
           << "if (strm << _tao_aggregate._id ())" << be_idt_nl
           << "return 1;" << be_uidt_nl
           << "else" << be_idt_nl
           << "return 0;" << be_uidt << be_uidt_nl;
     }
+
   *os << "}\n\n";
 
-  // set the substate as generating code for the input operator
+  // Set the substate as generating code for the input operator.
   this->ctx_->sub_state(TAO_CodeGen::TAO_CDR_INPUT);
+
   *os << "ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &";
 
   if (node->nmembers () > 0)
@@ -137,25 +140,24 @@ be_visitor_exception_cdr_op_ci::visit_exception (be_exception *node)
   // caller, and they invoke this method only to demarshal the
   // members.  While the marshaling method encodes both...
 
-  // do we have any members?
+  // Do we have any members?
   if (node->nmembers () > 0)
     {
-      be_visitor_context* new_ctx =
-        new be_visitor_context (*this->ctx_);
-      be_visitor_cdr_op_field_decl field_decl (new_ctx);
+      be_visitor_context new_ctx (*this->ctx_);
+      be_visitor_cdr_op_field_decl field_decl (&new_ctx);
       field_decl.visit_scope (node);
 
-      // some members
+      // Some members.
       *os << "// now marshal the members" << be_nl
           << "if (" << be_idt_nl;
 
-      // all we have to do is to visit the scope and generate code
       if (this->visit_scope (node) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_exception_cdr_op_ci::"
                              "visit_exception - "
-                             "codegen for scope failed\n"), -1);
+                             "codegen for scope failed\n"), 
+                            -1);
         }
       *os << be_uidt_nl << ")"
           << be_idt_nl
@@ -167,6 +169,7 @@ be_visitor_exception_cdr_op_ci::visit_exception (be_exception *node)
     {
       *os << "return 1;" << be_uidt_nl;
     }
+
   *os << "}\n\n";
 
   node->cli_inline_cdr_op_gen (1);
@@ -191,5 +194,6 @@ be_visitor_exception_cdr_op_ci::post_process (be_decl *bd)
           break;
         };
     }
+
   return 0;
 }

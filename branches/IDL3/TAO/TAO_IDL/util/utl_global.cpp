@@ -725,7 +725,7 @@ IDL_GlobalData::PredefinedTypeToExprType(AST_PredefinedType::PredefinedType pt)
   case AST_PredefinedType::PT_void:
     return AST_Expression::EV_void;
   default:
-    return AST_Expression::EV_any;
+    return AST_Expression::EV_enum;
   }
 }
 

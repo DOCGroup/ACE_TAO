@@ -28,6 +28,7 @@ ACE_RCSID (be_visitor_exception,
 // ***************************************************************************
 // For client stubs.
 // ***************************************************************************
+
 be_visitor_exception_cs::be_visitor_exception_cs (be_visitor_context *ctx)
   : be_visitor_exception (ctx)
 {

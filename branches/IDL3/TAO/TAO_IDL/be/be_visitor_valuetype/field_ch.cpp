@@ -399,6 +399,7 @@ be_visitor_valuetype_field_ch::visit_predefined_type (be_predefined_type *node)
   switch (node->pt ())
     {
     case AST_PredefinedType::PT_pseudo:
+    case AST_PredefinedType::PT_object:
       // Set method.
       *os << pre_op () << "void " << ub->local_name () << " ("
           << bt->name () << "_ptr)"

@@ -466,7 +466,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
         case AST_Expression::EV_longdouble:
         case AST_Expression::EV_string:
         case AST_Expression::EV_wstring:
-        case AST_Expression::EV_any:
+        case AST_Expression::EV_enum:
         case AST_Expression::EV_void:
         case AST_Expression::EV_none:
           return 0;
@@ -575,7 +575,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
         case AST_Expression::EV_longdouble:
         case AST_Expression::EV_wstring:
         case AST_Expression::EV_string:
-        case AST_Expression::EV_any:
+        case AST_Expression::EV_enum:
         case AST_Expression::EV_void:
         case AST_Expression::EV_none:
           return 0;
@@ -667,7 +667,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
         case AST_Expression::EV_longdouble:
         case AST_Expression::EV_wstring:
         case AST_Expression::EV_string:
-        case AST_Expression::EV_any:
+        case AST_Expression::EV_enum:
         case AST_Expression::EV_void:
         case AST_Expression::EV_none:
           return 0;
@@ -769,7 +769,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
         case AST_Expression::EV_longdouble:
         case AST_Expression::EV_wstring:
         case AST_Expression::EV_string:
-        case AST_Expression::EV_any:
+        case AST_Expression::EV_enum:
         case AST_Expression::EV_void:
         case AST_Expression::EV_none:
           return 0;
@@ -844,7 +844,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
         case AST_Expression::EV_longdouble:
         case AST_Expression::EV_wstring:
         case AST_Expression::EV_string:
-        case AST_Expression::EV_any:
+        case AST_Expression::EV_enum:
         case AST_Expression::EV_void:
         case AST_Expression::EV_none:
           return 0;
@@ -937,7 +937,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
         case AST_Expression::EV_longdouble:
         case AST_Expression::EV_wstring:
         case AST_Expression::EV_string:
-        case AST_Expression::EV_any:
+        case AST_Expression::EV_enum:
         case AST_Expression::EV_void:
         case AST_Expression::EV_none:
           return 0;
@@ -1005,7 +1005,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
         case AST_Expression::EV_longdouble:
         case AST_Expression::EV_wstring:
         case AST_Expression::EV_string:
-        case AST_Expression::EV_any:
+        case AST_Expression::EV_enum:
         case AST_Expression::EV_void:
         case AST_Expression::EV_none:
           return 0;
@@ -1089,7 +1089,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
         case AST_Expression::EV_longdouble:
         case AST_Expression::EV_wstring:
         case AST_Expression::EV_string:
-        case AST_Expression::EV_any:
+        case AST_Expression::EV_enum:
         case AST_Expression::EV_void:
         case AST_Expression::EV_none:
           return 0;
@@ -1161,7 +1161,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
         case AST_Expression::EV_longdouble:
         case AST_Expression::EV_wstring:
         case AST_Expression::EV_string:
-        case AST_Expression::EV_any:
+        case AST_Expression::EV_enum:
         case AST_Expression::EV_void:
         case AST_Expression::EV_none:
           return 0;
@@ -1281,7 +1281,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
         case AST_Expression::EV_longdouble:
         case AST_Expression::EV_wstring:
         case AST_Expression::EV_string:
-        case AST_Expression::EV_any:
+        case AST_Expression::EV_enum:
         case AST_Expression::EV_void:
         case AST_Expression::EV_none:
           return 0;
@@ -1390,7 +1390,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
         case AST_Expression::EV_longdouble:
         case AST_Expression::EV_wstring:
         case AST_Expression::EV_string:
-        case AST_Expression::EV_any:
+        case AST_Expression::EV_enum:
         case AST_Expression::EV_void:
         case AST_Expression::EV_none:
           return 0;
@@ -1510,15 +1510,15 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
         case AST_Expression::EV_longdouble:
         case AST_Expression::EV_wstring:
         case AST_Expression::EV_string:
-        case AST_Expression::EV_any:
+        case AST_Expression::EV_enum:
         case AST_Expression::EV_void:
         case AST_Expression::EV_none:
           return 0;
         }
-    case AST_Expression::EV_any:
+    case AST_Expression::EV_enum:
       switch (ev->et)
         {
-        case AST_Expression::EV_any:
+        case AST_Expression::EV_enum:
         case AST_Expression::EV_ulong:
           return ev;
         default:
@@ -1997,7 +1997,7 @@ AST_Expression::coerce (AST_Expression::ExprType t)
     case EV_longdouble:
     case EV_void:
     case EV_none:
-    case EV_any:
+    case EV_enum:
       return 0;
     case EV_short:
       copy->u.sval = this->pd_ev->u.sval;
@@ -2214,7 +2214,7 @@ AST_Expression::operator== (AST_Expression *vc)
 #endif /* ! defined (ACE_LACKS_LONGLONG_T) */
     case EV_longdouble:
     case EV_wstring:
-    case EV_any:
+    case EV_enum:
     case EV_void:
     case EV_none:
       return I_FALSE;
@@ -2301,7 +2301,7 @@ AST_Expression::compare (AST_Expression *vc)
 #endif /* ! defined (ACE_LACKS_LONGLONG_T) */
     case EV_longdouble:
     case EV_wstring:
-    case EV_any:
+    case EV_enum:
     case EV_void:
     case EV_none:
       return I_FALSE;
@@ -2394,7 +2394,7 @@ dump_expr_val (ACE_OSTREAM_TYPE &o,
       break;
     case AST_Expression::EV_longdouble:
     case AST_Expression::EV_wstring:
-    case AST_Expression::EV_any:
+    case AST_Expression::EV_enum:
     case AST_Expression::EV_none:
     case AST_Expression::EV_void:
       break;

@@ -118,45 +118,49 @@ int be_visitor_args_post_marshal_ss::visit_interface_fwd (be_interface_fwd *)
   return 0;
 }
 
-int be_visitor_args_post_marshal_ss::visit_predefined_type (be_predefined_type *node)
+int be_visitor_args_post_marshal_ss::visit_predefined_type (
+    be_predefined_type *node
+  )
 {
-  // check if the type is an any
-  if (node->pt () == AST_PredefinedType::PT_any)
+  AST_PredefinedType::PredefinedType pt = node->pt ();
+
+  if pt == AST_PredefinedType::PT_any)
     {
       switch (this->direction ())
-	{
-	case AST_Argument::dir_IN:
-	  break;
-	case AST_Argument::dir_INOUT:
-	  break;
-	case AST_Argument::dir_OUT:
-	  break;
-	} // end switch direction
-    } // end of if
-  else if (node->pt () == AST_PredefinedType::PT_pseudo) // e.g., CORBA::Object
+	    {
+	    case AST_Argument::dir_IN:
+	      break;
+	    case AST_Argument::dir_INOUT:
+	      break;
+	    case AST_Argument::dir_OUT:
+	      break;
+	    }
+    }
+  else if (pt == AST_PredefinedType::PT_pseudo
+           || pt == AST_PredefinedType::PT_object)
     {
       switch (this->direction ())
-	{
-	case AST_Argument::dir_IN:
-	  break;
-	case AST_Argument::dir_INOUT:
-	  break;
-	case AST_Argument::dir_OUT:
-	  break;
-	} // end switch direction
-    } // end else if
-  else // simple predefined types
+	    {
+	    case AST_Argument::dir_IN:
+	      break;
+	    case AST_Argument::dir_INOUT:
+	      break;
+	    case AST_Argument::dir_OUT:
+	      break;
+	    }
+    }
+  else
     {
       switch (this->direction ())
-	{
-	case AST_Argument::dir_IN:
-	  break;
-	case AST_Argument::dir_INOUT:
-	  break;
-	case AST_Argument::dir_OUT:
-	  break;
-	} // end switch direction
-    } // end of else
+	    {
+	    case AST_Argument::dir_IN:
+	      break;
+	    case AST_Argument::dir_INOUT:
+	      break;
+	    case AST_Argument::dir_OUT:
+	      break;
+	    }
+    }
 
   return 0;
 }

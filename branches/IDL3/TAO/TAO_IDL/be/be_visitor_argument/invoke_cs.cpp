@@ -422,6 +422,7 @@ int be_visitor_args_invoke_cs::visit_predefined_type (be_predefined_type *node)
           switch (node->pt ())
             {
             case AST_PredefinedType::PT_pseudo:
+            case AST_PredefinedType::PT_object:
             case AST_PredefinedType::PT_any:
             case AST_PredefinedType::PT_long:
             case AST_PredefinedType::PT_ulong:
@@ -468,6 +469,7 @@ int be_visitor_args_invoke_cs::visit_predefined_type (be_predefined_type *node)
           switch (node->pt ())
             {
             case AST_PredefinedType::PT_pseudo:
+            case AST_PredefinedType::PT_object:
             case AST_PredefinedType::PT_any:
             case AST_PredefinedType::PT_long:
             case AST_PredefinedType::PT_ulong:
@@ -504,6 +506,7 @@ int be_visitor_args_invoke_cs::visit_predefined_type (be_predefined_type *node)
           switch (node->pt ())
             {
             case AST_PredefinedType::PT_pseudo:
+            case AST_PredefinedType::PT_object:
               *os << arg->local_name () << ".ptr ()";
               break;
             case AST_PredefinedType::PT_any:

@@ -658,7 +658,8 @@ be_visitor_sequence_ch::gen_var_defn (be_sequence *node)
       && nt != AST_Decl::NT_interface
       && nt != AST_Decl::NT_interface_fwd
       && nt != AST_Decl::NT_array
-      && pdt != AST_PredefinedType::PT_pseudo)
+      && pdt != AST_PredefinedType::PT_pseudo
+      && pdt != AST_PredefinedType::PT_object)
     {
       *os << "const ";
 

@@ -390,10 +390,12 @@ int be_visitor_args_marshal_ss::visit_valuetype_fwd (be_valuetype_fwd *)
   return 0;
 }
 
-int be_visitor_args_marshal_ss::visit_predefined_type (be_predefined_type *node)
+int be_visitor_args_marshal_ss::visit_predefined_type (
+    be_predefined_type *node
+  )
 {
-  TAO_OutStream *os = this->ctx_->stream (); // get output stream
-  be_argument *arg = this->ctx_->be_node_as_argument (); // get argument node
+  TAO_OutStream *os = this->ctx_->stream ();
+  be_argument *arg = this->ctx_->be_node_as_argument ();
 
   if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_INPUT)
     {
@@ -404,6 +406,7 @@ int be_visitor_args_marshal_ss::visit_predefined_type (be_predefined_type *node)
           switch (node->pt ())
             {
             case AST_PredefinedType::PT_pseudo:
+            case AST_PredefinedType::PT_object:
               *os << arg->local_name () << ".out ()";
               break;
             case AST_PredefinedType::PT_any:
@@ -452,6 +455,7 @@ int be_visitor_args_marshal_ss::visit_predefined_type (be_predefined_type *node)
           switch (node->pt ())
             {
             case AST_PredefinedType::PT_pseudo:
+            case AST_PredefinedType::PT_object:
               *os << arg->local_name () << ".in ()";
               break;
             case AST_PredefinedType::PT_any:
@@ -492,6 +496,7 @@ int be_visitor_args_marshal_ss::visit_predefined_type (be_predefined_type *node)
           switch (node->pt ())
             {
             case AST_PredefinedType::PT_pseudo:
+            case AST_PredefinedType::PT_object:
               *os << arg->local_name () << ".in ()";
               break;
             case AST_PredefinedType::PT_any:

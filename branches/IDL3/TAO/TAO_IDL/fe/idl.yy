@@ -28,21 +28,21 @@ This license is effective until terminated by Sun for failure to comply
 with this license.  Upon termination, you shall destroy or return all code
 and documentation for the Interface Definition Language CFE.
 
-IDL_INTERFACE DEFINITION LANGUAGE CFE IS PROVIDED AS IS WITH NO WARRANTIES OF
-IDL_ANY KIND INCLUDING THE WARRANTIES OF DESIGN, MERCHANTIBILITY AND FITNESS
+INTERFACE DEFINITION LANGUAGE CFE IS PROVIDED AS IS WITH NO WARRANTIES OF
+ANY KIND INCLUDING THE WARRANTIES OF DESIGN, MERCHANTIBILITY AND FITNESS
 FOR A PARTICULAR PURPOSE, NONINFRINGEMENT, OR ARISING FROM A COURSE OF
 DEALING, USAGE OR TRADE PRACTICE.
 
-IDL_INTERFACE DEFINITION LANGUAGE CFE IS PROVIDED WITH NO SUPPORT AND WITHOUT
-IDL_ANY OBLIGATION ON THE PART OF Sun OR IDL_ANY OF ITS SUBSIDIARIES OR AFFILIATES
-TO ASSIST IDL_IN ITS USE, CORRECTION, MODIFICATION OR ENHANCEMENT.
+INTERFACE DEFINITION LANGUAGE CFE IS PROVIDED WITH NO SUPPORT AND WITHOUT
+ANY OBLIGATION ON THE PART OF Sun OR ANY OF ITS SUBSIDIARIES OR AFFILIATES
+TO ASSIST IN ITS USE, CORRECTION, MODIFICATION OR ENHANCEMENT.
 
-SUN OR IDL_ANY OF ITS SUBSIDIARIES OR AFFILIATES SHALL HAVE NO LIABILITY WITH
-RESPECT TO THE INFRINGEMENT OF COPYRIGHTS, TRADE SECRETS OR IDL_ANY PATENTS BY
-IDL_INTERFACE DEFINITION LANGUAGE CFE OR IDL_ANY PART THEREOF.
+SUN OR ANY OF ITS SUBSIDIARIES OR AFFILIATES SHALL HAVE NO LIABILITY WITH
+RESPECT TO THE INFRINGEMENT OF COPYRIGHTS, TRADE SECRETS OR ANY PATENTS BY
+INTERFACE DEFINITION LANGUAGE CFE OR ANY PART THEREOF.
 
-IDL_IN NO EVENT WILL SUN OR IDL_ANY OF ITS SUBSIDIARIES OR AFFILIATES BE LIABLE FOR
-IDL_ANY LOST REVENUE OR PROFITS OR OTHER SPECIAL, INDIRECT AND CONSEQUENTIAL
+IN NO EVENT WILL SUN OR ANY OF ITS SUBSIDIARIES OR AFFILIATES BE LIABLE FOR
+ANY LOST REVENUE OR PROFITS OR OTHER SPECIAL, INDIRECT AND CONSEQUENTIAL
 DAMAGES, EVEN IF SUN HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 
 Use, duplication, or disclosure by the government is subject to
@@ -175,6 +175,7 @@ extern int yyleng;
 %token          IDL_BOOLEAN
 %token          IDL_FIXED
 %token          IDL_ANY
+%token          IDL_OBJECT
 %token          IDL_STRUCT
 %token          IDL_UNION
 %token          IDL_SWITCH
@@ -276,8 +277,8 @@ extern int yyleng;
 %type <ffval>   element_spec
 
 %type <etval>   const_type integer_type char_type boolean_type
-%type <etval>   floating_pt_type any_type fixed_type signed_int
-%type <etval>   unsigned_int base_type_spec octet_type
+%type <etval>   floating_pt_type fixed_type any_type signed_int
+%type <etval>   unsigned_int base_type_spec octet_type object_type
 
 %type <dival>   direction
 
@@ -1288,7 +1289,7 @@ const_type
 
               if (d == 0)
                 {
-                  $$ = AST_Expression::EV_any;
+                  $$ = AST_Expression::EV_enum;
                 }
               else if (d->node_type () == AST_Decl::NT_pre_defined) 
                 {
@@ -1300,7 +1301,7 @@ const_type
                     } 
                   else 
                     {
-                      $$ = AST_Expression::EV_any;
+                      $$ = AST_Expression::EV_enum;
                     }
                 } 
               else if (d->node_type () == AST_Decl::NT_string) 
@@ -1313,12 +1314,12 @@ const_type
                 } 
               else
                 {
-                  $$ = AST_Expression::EV_any;
+                  $$ = AST_Expression::EV_enum;
                 }
             } 
           else
             {
-              $$ = AST_Expression::EV_any;
+              $$ = AST_Expression::EV_enum;
             }
         }
         ;
@@ -1802,6 +1803,7 @@ base_type_spec
         | octet_type
         | fixed_type
         | any_type
+        | object_type
         ;
 
 template_type_spec
@@ -2065,6 +2067,14 @@ any_type
         {
 // any_type : IDL_ANY
           $$ = AST_Expression::EV_any;
+        }
+        ;
+
+object_type
+        : IDL_OBJECT
+        {
+// object_type : IDL_OBJECT
+          $$ = AST_Expression::EV_object;
         }
         ;
 
@@ -2333,7 +2343,10 @@ switch_type_spec :
         integer_type
         {
 // switch_type_spec : integer_type
-          $$ = idl_global->scopes ().bottom ()->lookup_primitive_type ($1);
+          $$ = 
+            idl_global->scopes ().bottom ()->lookup_primitive_type (
+                                                 $1
+                                               );
         }
         | char_type
         {
@@ -2354,12 +2367,18 @@ switch_type_spec :
 //      | octet_type
           /* octets are not allowed. */
           idl_global->err ()->error0 (UTL_Error::EIDL_DISC_TYPE);
-          $$ = idl_global->scopes ().bottom ()->lookup_primitive_type ($1);
+          $$ = 
+            idl_global->scopes ().bottom ()->lookup_primitive_type (
+                                                 $1
+                                               );
         }
         | boolean_type
         {
 //      | boolean_type
-          $$ = idl_global->scopes ().bottom ()->lookup_primitive_type ($1);
+          $$ = 
+            idl_global->scopes ().bottom ()->lookup_primitive_type (
+                                                 $1
+                                               );
         }
         | enum_type
         | scoped_name
@@ -3658,7 +3677,10 @@ param_type_spec
         : base_type_spec
         {
 // param_type_spec : base_type_spec
-          $$ = idl_global->scopes ().bottom ()->lookup_primitive_type ($1);
+          $$ = 
+            idl_global->scopes ().bottom ()->lookup_primitive_type (
+                                                 $1
+                                               );
         }
         | string_type_spec
         | wstring_type_spec
@@ -3678,7 +3700,7 @@ param_type_spec
 
           if (d == 0)
             {
-              idl_global->err ()->lookup_error (tao_yyvsp[0].idlist);
+              idl_global->err ()->lookup_error ($1);
             }
           else
             {

@@ -108,8 +108,8 @@ exprtype_to_string (AST_Expression::ExprType et)
       return "boolean";
     case AST_Expression::EV_string:
       return "string";
-    case AST_Expression::EV_any:
-      return "any";
+    case AST_Expression::EV_enum:
+      return "enum";
     case AST_Expression::EV_void:
       return "void";
     case AST_Expression::EV_none:
@@ -173,7 +173,7 @@ AST_Constant::AST_Constant (AST_Expression::ExprType t,
     }
   // Allows the enum value string name to be used in generating the
   // rhs of the constant assignment.
-  else if (t == AST_Expression::EV_any)
+  else if (t == AST_Expression::EV_enum)
     {
       this->pd_constant_value->ev ()->et = t;
     }

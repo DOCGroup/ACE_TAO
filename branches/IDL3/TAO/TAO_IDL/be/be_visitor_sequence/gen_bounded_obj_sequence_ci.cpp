@@ -420,9 +420,9 @@ be_visitor_sequence_ci::gen_bounded_obj_sequence (be_sequence *node)
 
   int is_pseudo_object =
     pt->node_type () == AST_Decl::NT_pre_defined
-    && prim && prim->pt () == AST_PredefinedType::PT_pseudo
-    && ACE_OS::strcmp (prim->local_name ()->get_string (),
-                       "Object") != 0;
+    && prim 
+    && prim->pt () == AST_PredefinedType::PT_object;
+
   // operator[].
   if (is_pseudo_object)
     {

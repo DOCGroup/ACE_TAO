@@ -81,7 +81,7 @@ be_constant::exprtype_to_string (void)
     case AST_Expression::EV_wstring:
       return "CORBA::WChar *const";
     case AST_Expression::EV_longdouble:
-    case AST_Expression::EV_any:
+    case AST_Expression::EV_enum:
       return 0;
     }
 
@@ -91,7 +91,7 @@ be_constant::exprtype_to_string (void)
 UTL_ScopedName *
 be_constant::enum_full_name (void)
 {
-  if (this->pd_et == AST_Expression::EV_any)
+  if (this->pd_et == AST_Expression::EV_enum)
     {
       UTL_Scope *s = this->defined_in ();
       AST_Decl *d = s->lookup_by_name (this->pd_constant_value->n (),

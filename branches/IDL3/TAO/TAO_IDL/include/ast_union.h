@@ -148,7 +148,7 @@ private:
 
   AST_Expression::ExprType pd_udisc_type;
   // Its expression type.
-  // Convention: udisc_type == EV_any denotes an enum value.
+  // Convention: udisc_type == EV_enum denotes an enum value.
 
   // Operations.
 

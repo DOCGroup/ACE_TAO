@@ -129,6 +129,10 @@ be_predefined_type::compute_tc_name (void)
       ACE_NEW (id,
                Identifier ("_tc_any"));
     break;
+    case AST_PredefinedType::PT_object:
+      ACE_NEW (id,
+               Identifier ("_tc_Object"));
+    break;
     case AST_PredefinedType::PT_pseudo:
       {
         char tcname [100];

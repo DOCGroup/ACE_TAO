@@ -117,6 +117,7 @@ visit_predefined_type (be_predefined_type *node)
     case AST_PredefinedType::PT_void:
       break;
     case AST_PredefinedType::PT_pseudo:
+    case AST_PredefinedType::PT_object:
     case AST_PredefinedType::PT_any:
     default:
       *os << "_tao_retval = ";

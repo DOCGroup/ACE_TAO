@@ -166,7 +166,7 @@ AST_Union::AST_Union (AST_ConcreteType *dt,
     }
   else if (dt->node_type() == AST_Decl::NT_enum)
     {
-      this->pd_udisc_type = AST_Expression::EV_any;
+      this->pd_udisc_type = AST_Expression::EV_enum;
       this->pd_disc_type = dt;
     }
   else
@@ -436,7 +436,7 @@ AST_Union::lookup_branch (AST_UnionBranch *branch)
           return lookup_default ();
         }
 
-      if (this->pd_udisc_type == AST_Expression::EV_any)
+      if (this->pd_udisc_type == AST_Expression::EV_enum)
         {
           // CONVENTION: indicates enum discriminant.
           return lookup_enum (branch);
@@ -562,7 +562,7 @@ AST_Union::compute_default_value (void)
         }
 
       break;
-    case AST_Expression::EV_any:
+    case AST_Expression::EV_enum:
       // Has to be enum.
       {
         AST_Decl *d = AST_Decl::narrow_from_decl (this->disc_type ());
@@ -658,7 +658,7 @@ AST_Union::compute_default_value (void)
     case AST_Expression::EV_bool:
       this->default_value_.u.bool_val = 0;
       break;
-    case AST_Expression::EV_any:
+    case AST_Expression::EV_enum:
       this->default_value_.u.enum_val = 0;
       break;
     case AST_Expression::EV_longlong:
@@ -777,7 +777,7 @@ AST_Union::compute_default_value (void)
                             }
 
                           break;
-                        case AST_Expression::EV_any:
+                        case AST_Expression::EV_enum:
                           // this is the case of enums. We maintain
                           // evaluated values which always start with 0
                           if (this->default_value_.u.enum_val

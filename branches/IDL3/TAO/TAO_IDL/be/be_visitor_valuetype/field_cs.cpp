@@ -622,7 +622,10 @@ be_visitor_valuetype_field_cs::visit_predefined_type (be_predefined_type *node)
   *os << "::" << ub->local_name ()
       << " (" << bt->name ();
 
-  if (node->pt () == AST_PredefinedType::PT_pseudo)
+  AST_PredefinedType::PredefinedType pt = node->pt ();
+
+  if (pt == AST_PredefinedType::PT_pseudo
+      || pt == AST_PredefinedType::PT_object)
     {
       *os << "_ptr";
     }
@@ -630,30 +633,32 @@ be_visitor_valuetype_field_cs::visit_predefined_type (be_predefined_type *node)
   *os << " val)" << be_nl
       << "{" << be_idt_nl;
 
-  switch (node->pt ())
+  switch (pt)
   {
     case AST_PredefinedType::PT_pseudo:
+    case AST_PredefinedType::PT_object:
       *os << "this->" << bu->field_pd_prefix () << ub->local_name ()
           << bu->field_pd_postfix () << " = "
           << bt->name () << "::_duplicate (val);" << be_uidt_nl;
-      break;
 
+      break;
     case AST_PredefinedType::PT_any:
       *os << "ACE_NEW (" << be_idt << be_idt_nl
           << "this->" << bu->field_pd_prefix () << ub->local_name ()
           << bu->field_pd_postfix () << "," << be_nl
           << bt->name () << " (val)" << be_uidt_nl
           << ");" << be_uidt << be_uidt_nl;
-      break;
 
+      break;
     case AST_PredefinedType::PT_void:
       break;
-
     default:
       *os << "// Set the value." << be_nl
           << "this->" << bu->field_pd_prefix () << ub->local_name ()
           << bu->field_pd_postfix ()
           << " = val;" << be_uidt_nl;
+
+      break;
   }
 
   *os << "}" << be_nl;
@@ -661,6 +666,7 @@ be_visitor_valuetype_field_cs::visit_predefined_type (be_predefined_type *node)
   switch (node->pt ())
   {
     case AST_PredefinedType::PT_pseudo:
+    case AST_PredefinedType::PT_object:
       *os << "// Retrieve the member" << be_nl
           << this->pre_op () << bt->name () << "_ptr" << be_nl;
 
@@ -675,6 +681,7 @@ be_visitor_valuetype_field_cs::visit_predefined_type (be_predefined_type *node)
           << bu->field_pd_postfix ()
           << ";" << be_uidt_nl
           << "}\n\n";
+
       break;
     case AST_PredefinedType::PT_any:
       *os << "// Retrieve the member." << be_nl
@@ -706,6 +713,7 @@ be_visitor_valuetype_field_cs::visit_predefined_type (be_predefined_type *node)
           << bu->field_pd_postfix ()
           << ";" << be_uidt_nl
           << "}\n\n";
+
       break;
     case AST_PredefinedType::PT_void:
       break;
@@ -724,6 +732,8 @@ be_visitor_valuetype_field_cs::visit_predefined_type (be_predefined_type *node)
           << bu->field_pd_postfix ()
           << ";" << be_uidt_nl
           << "}\n\n";
+
+      break;
   }
 
   return 0;

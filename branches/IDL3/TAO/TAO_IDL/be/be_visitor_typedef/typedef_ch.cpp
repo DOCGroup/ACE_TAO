@@ -326,8 +326,11 @@ be_visitor_typedef_ch::visit_predefined_type (be_predefined_type *node)
   *os << "typedef " << bt->nested_type_name (scope)
       << " " << tdef->nested_type_name (scope) << ";" << be_nl;
 
-  if ((node->pt () == AST_PredefinedType::PT_pseudo) ||
-      (node->pt () == AST_PredefinedType::PT_any))
+  AST_PredefinedType::PredefinedType pt = node->pt ();
+
+  if (pt == AST_PredefinedType::PT_pseudo
+      || pt == AST_PredefinedType::PT_any
+      || pt == AST_PredefinedType::PT_object)
     {
       // Typedef the _ptr and _var.
       *os << "typedef " << bt->nested_type_name (scope, "_ptr")
