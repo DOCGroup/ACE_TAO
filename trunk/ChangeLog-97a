@@ -81,6 +81,44 @@ Tue Mar 11 14:30:12 1997  David L. Levine  <levine@cs.wustl.edu>
 	* netsvcs/clients/Logger/indirect_logging.cpp (main): declare loop
 	  index as signed int to avoid signed/unsigned comparison.
 
+Tue Mar 11 07:34:04 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tests/Timer_Queue_Test.cpp: Added some code to illustrate how
+ 	  the new handle_close() hook for ACE_Timer_{Heap,List} work.
+
+	* ace/Timer_Heap.cpp (cancel): Modified the Timer_Heap and
+ 	  Timer_Queue so that it will call the handle_close() hook when
+ 	  Event_Handler's are cancelled.  This is necessary to reclaim
+ 	  resources.  Thanks to Hamutal Yanay
+ 	  <Hamutal_Yanay@mail.icomverse.com> for suggesting this.
+
+	* ace/Event_Handler.h (signal): Added a TIMER_MASK, which is
+ 	  passed to handle_close() when a timer is cancelled.
+
+	* ace/Log_Msg.cpp (log): Fixed a bug by setting LPTSTR lpMsgBuf =
+ 	  0 on line 524.  Thanks to Mark Wright <markw@odi.com.au> for
+ 	  reporting this.
+
+Sun Mar  10 13:06:04 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+        * examples/Mem_Map/IO-tests: Fixed a small bug in "IO_Test.cpp"
+ 	  file.  In the "int Mmap1_Test::run_test" method I inserted an
+ 	  lseek to rewind the output file.  With this correction the speed
+ 	  go up due to IO cache.  Thanks to Sandro Doro
+ 	  <alex@aureus.sublink.org> for reporting this.
+
+Sun Mar  9 13:06:04 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Reactor: Fixed an evil bug where the expression
+	
+	  if (handle >= 0 || handle < this->max_handlep1_)
+	  
+	  should be
+	  
+	  if (handle >= 0 && handle < this->max_handlep1_)
+
+	  Thanks to Mark Wright <markw@odi.com.au> for reporting this.
+
 Sun Mar  9 13:06:04 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* apps/Gateway: Updated the Peer and Gateway applications so that
