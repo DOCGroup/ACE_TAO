@@ -44,6 +44,17 @@
 #include "ace/SString.h"
 #include "ace/Message_Block.h"
 
+
+// Stuff used by the ACE CDR classes.
+#if defined ACE_LITTLE_ENDIAN
+#  define ACE_CDR_BYTE_ORDER 1
+// little endian encapsulation byte order has value = 1
+#else  /* ! ACE_LITTLE_ENDIAN */
+#  define ACE_CDR_BYTE_ORDER 0
+// big endian encapsulation byte order has value = 0
+#endif /* ! ACE_LITTLE_ENDIAN */
+
+
 class ACE_Char_Codeset_Translator;
 class ACE_WChar_Codeset_Translator;
 

@@ -16,7 +16,7 @@
 
 template <class EXT_ID, class INT_ID>
 ACE_Hash_Map_With_Allocator<EXT_ID, INT_ID>::ACE_Hash_Map_With_Allocator (ACE_Allocator *alloc)
-  : ACE_Hash_Map_Manager<EXT_ID, INT_ID, ACE_Null_Mutex> (alloc)
+  : ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, ACE_Hash<EXT_ID>, ACE_Equal_To<EXT_ID>, ACE_Null_Mutex> (alloc)
 {
   ACE_TRACE ("ACE_Hash_Map_With_Allocator<EXT_ID, INT_ID>::ACE_Hash_Map_With_Allocator");
 }
@@ -24,7 +24,7 @@ ACE_Hash_Map_With_Allocator<EXT_ID, INT_ID>::ACE_Hash_Map_With_Allocator (ACE_Al
 template <class EXT_ID, class INT_ID>
 ACE_Hash_Map_With_Allocator<EXT_ID, INT_ID>::ACE_Hash_Map_With_Allocator (size_t size,
                                                                           ACE_Allocator *alloc)
-  : ACE_Hash_Map_Manager<EXT_ID, INT_ID, ACE_Null_Mutex> (size, alloc)
+  : ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, ACE_Hash<EXT_ID>, ACE_Equal_To<EXT_ID>, ACE_Null_Mutex> (size, alloc)
 {
   ACE_TRACE ("ACE_Hash_Map_With_Allocator<EXT_ID, INT_ID>::ACE_Hash_Map_With_Allocator");
 }

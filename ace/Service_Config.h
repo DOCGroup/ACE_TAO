@@ -21,15 +21,17 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Service_Types.h"
-#include "ace/Signal.h"
 #include "ace/Unbounded_Queue.h"
 #include "ace/Unbounded_Set.h"
 #include "ace/SString.h"
 #include "ace/XML_Svc_Conf.h"
 
+
 // Forward decl.
+class ACE_Service_Type;
+class ACE_Service_Type_Impl;
 class ACE_Service_Repository;
+class ACE_Sig_Adapter;
 class ACE_Allocator;
 class ACE_Reactor;
 class ACE_Thread_Manager;

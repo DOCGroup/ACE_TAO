@@ -16,7 +16,7 @@
 
 #include "ace/Pair_T.h"
 #include "ace/Map_Manager.h"
-#include "ace/Hash_Map_Manager.h"
+#include "ace/Hash_Map_Manager_T.h"
 #include "ace/Active_Map_Manager.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

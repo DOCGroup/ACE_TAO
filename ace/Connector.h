@@ -15,16 +15,16 @@
 
 #include "ace/pre.h"
 
-#include "ace/Service_Config.h"
+#include "ace/Service_Object.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Service_Object.h"
 #include "ace/Map_Manager.h"
-#include "ace/Svc_Handler.h"
 #include "ace/Strategies_T.h"
+#include "ace/Synch_Options.h"
+
 
 /**
  * @class ACE_Svc_Tuple

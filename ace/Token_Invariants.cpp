@@ -1,11 +1,13 @@
-// $Id$
-
 #include "ace/Token_Invariants.h"
 #include "ace/Object_Manager.h"
 
 #if defined (ACE_HAS_TOKENS_LIBRARY)
 
-ACE_RCSID(ace, Token_Invariants, "$Id$")
+
+ACE_RCSID (ace,
+           Token_Invariants,
+           "$Id$")
+
 
 ACE_Token_Invariant_Manager *ACE_Token_Invariant_Manager::instance_ = 0;
 
@@ -203,16 +205,17 @@ ACE_Token_Invariant_Manager::get_rwlock (const ACE_TCHAR *token_name,
 ACE_Token_Invariant_Manager::~ACE_Token_Invariant_Manager (void)
 {
   ACE_TRACE ("ACE_Token_Invariant_Manager::~ACE_Token_Invariant_Manager");
-  MUTEX_COLLECTION_ITERATOR iterator (mutex_collection_);
 
-  for (MUTEX_COLLECTION_ENTRY *temp = 0;
+  MUTEX_COLLECTION::ITERATOR iterator (mutex_collection_);
+
+  for (MUTEX_COLLECTION::ENTRY *temp = 0;
        iterator.next (temp) != 0;
        iterator.advance ())
     delete temp->int_id_;
 
-  RWLOCK_COLLECTION_ITERATOR iterator2 (rwlock_collection_);
+  RWLOCK_COLLECTION::ITERATOR iterator2 (rwlock_collection_);
 
-  for (RWLOCK_COLLECTION_ENTRY *temp2 = 0;
+  for (RWLOCK_COLLECTION::ENTRY *temp2 = 0;
        iterator2.next (temp2) != 0;
        iterator2.advance ())
     delete temp2->int_id_;

@@ -554,7 +554,7 @@ ACE_SSL_SOCK_Stream::get_remote_addr (ACE_Addr &addr) const
   // get_remote_addr() would be misleading.
 
   if (SSL_is_init_finished (this->ssl_))
-    return this->ACE_SOCK::get_remote_addr (addr);
+    return this->ACE_SSL_SOCK::get_remote_addr (addr);
 
   if (this->get_handle () == ACE_INVALID_HANDLE)
     errno = EBADF;

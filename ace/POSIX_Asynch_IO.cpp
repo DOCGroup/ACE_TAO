@@ -1,6 +1,3 @@
-/* -*- C++ -*- */
-// $Id$
-
 #include "ace/POSIX_Asynch_IO.h"
 
 #if defined (ACE_HAS_AIO_CALLS)
@@ -14,6 +11,12 @@
 #if !defined (__ACE_INLINE__)
 #include "ace/POSIX_Asynch_IO.i"
 #endif /* __ACE_INLINE__ */
+
+
+ACE_RCSID (ace,
+           POSIX_Asynch_IO,
+           "$Id$")
+
 
 size_t
 ACE_POSIX_Asynch_Result::bytes_transferred (void) const
@@ -1580,8 +1583,8 @@ ACE_POSIX_Asynch_Connect::cancel_uncompleted (int flg_notify,
 
   int retval = 0;
 
-  MAP_ITERATOR  iter (result_map_);
-  MAP_ENTRY *   me = 0;
+  MAP_MANAGER::ITERATOR  iter (result_map_);
+  MAP_MANAGER::ENTRY *   me = 0;
 
   set.reset ();
 

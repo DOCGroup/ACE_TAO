@@ -227,9 +227,6 @@ template class ACE_TSS_Singleton<ACE_Dynamic, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Entry<ACE_NS_String, ACE_NS_Internal>;
 template class ACE_Hash<ACE_NS_String>;
 template class ACE_Equal_To<ACE_NS_String>;
-template class ACE_Hash_Map_Manager<ACE_NS_String, ACE_NS_Internal, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator<ACE_NS_String, ACE_NS_Internal, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator<ACE_NS_String, ACE_NS_Internal, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Manager_Ex<ACE_NS_String, ACE_NS_Internal, ACE_Hash<ACE_NS_String>, ACE_Equal_To<ACE_NS_String>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator_Ex<ACE_NS_String, ACE_NS_Internal, ACE_Hash<ACE_NS_String>, ACE_Equal_To<ACE_NS_String>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_NS_String, ACE_NS_Internal, ACE_Hash<ACE_NS_String>, ACE_Equal_To<ACE_NS_String>, ACE_Null_Mutex>;
@@ -245,9 +242,6 @@ template class ACE_Map_Iterator_Base<ACE_NS_String, ACE_NS_Internal, ACE_Null_Mu
 // from Filecache.cpp
 #if defined (ACE_HAS_TEMPLATE_SPECIALIZATION)
 template class ACE_Hash_Map_Entry<const char *, ACE_Filecache_Object *>;
-template class ACE_Hash_Map_Manager<const char *, ACE_Filecache_Object *, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator<const char *, ACE_Filecache_Object *, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator<const char *, ACE_Filecache_Object *, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Manager_Ex<const char *, ACE_Filecache_Object *, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator_Base_Ex<const char *, ACE_Filecache_Object *, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator_Ex<const char *, ACE_Filecache_Object *, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Null_Mutex>;
@@ -256,9 +250,6 @@ template class ACE_Hash_Map_Reverse_Iterator_Ex<const char *, ACE_Filecache_Obje
 template class ACE_Hash_Map_Entry<ACE_TString, ACE_Filecache_Object *>;
 template class ACE_Hash<ACE_TString>;
 template class ACE_Equal_To<ACE_TString>;
-template class ACE_Hash_Map_Manager<ACE_TString, ACE_Filecache_Object *, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator<ACE_TString, ACE_Filecache_Object *, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator<ACE_TString, ACE_Filecache_Object *, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Manager_Ex<ACE_TString, ACE_Filecache_Object *, ACE_Hash<ACE_TString>, ACE_Equal_To<ACE_TString>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator_Base_Ex<ACE_TString, ACE_Filecache_Object *, ACE_Hash<ACE_TString>, ACE_Equal_To<ACE_TString>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator_Ex<ACE_TString, ACE_Filecache_Object *, ACE_Hash<ACE_TString>, ACE_Equal_To<ACE_TString>, ACE_Null_Mutex>;

@@ -276,6 +276,52 @@ typedef unsigned char ACE_Byte;
 # error "Can't find a suitable type for doing pointer arithmetic."
 #endif /* ACE_SIZEOF_VOID_P */
 
+// Byte-order (endian-ness) determination.
+# if defined (BYTE_ORDER)
+#   if (BYTE_ORDER == LITTLE_ENDIAN)
+#     define ACE_LITTLE_ENDIAN 0x0123
+#     define ACE_BYTE_ORDER ACE_LITTLE_ENDIAN
+#   elif (BYTE_ORDER == BIG_ENDIAN)
+#     define ACE_BIG_ENDIAN 0x3210
+#     define ACE_BYTE_ORDER ACE_BIG_ENDIAN
+#   else
+#     error: unknown BYTE_ORDER!
+#   endif /* BYTE_ORDER */
+# elif defined (_BYTE_ORDER)
+#   if (_BYTE_ORDER == _LITTLE_ENDIAN)
+#     define ACE_LITTLE_ENDIAN 0x0123
+#     define ACE_BYTE_ORDER ACE_LITTLE_ENDIAN
+#   elif (_BYTE_ORDER == _BIG_ENDIAN)
+#     define ACE_BIG_ENDIAN 0x3210
+#     define ACE_BYTE_ORDER ACE_BIG_ENDIAN
+#   else
+#     error: unknown _BYTE_ORDER!
+#   endif /* _BYTE_ORDER */
+# elif defined (__BYTE_ORDER)
+#   if (__BYTE_ORDER == __LITTLE_ENDIAN)
+#     define ACE_LITTLE_ENDIAN 0x0123
+#     define ACE_BYTE_ORDER ACE_LITTLE_ENDIAN
+#   elif (__BYTE_ORDER == __BIG_ENDIAN)
+#     define ACE_BIG_ENDIAN 0x3210
+#     define ACE_BYTE_ORDER ACE_BIG_ENDIAN
+#   else
+#     error: unknown __BYTE_ORDER!
+#   endif /* __BYTE_ORDER */
+# else /* ! BYTE_ORDER && ! __BYTE_ORDER */
+  // We weren't explicitly told, so we have to figure it out . . .
+#   if defined (i386) || defined (__i386__) || defined (_M_IX86) || \
+     defined (vax) || defined (__alpha) || defined (__LITTLE_ENDIAN__) ||\
+     defined (ARM) || defined (_M_IA64)
+    // We know these are little endian.
+#     define ACE_LITTLE_ENDIAN 0x0123
+#     define ACE_BYTE_ORDER ACE_LITTLE_ENDIAN
+#   else
+    // Otherwise, we assume big endian.
+#     define ACE_BIG_ENDIAN 0x3210
+#     define ACE_BYTE_ORDER ACE_BIG_ENDIAN
+#   endif
+# endif /* ! BYTE_ORDER && ! __BYTE_ORDER */
+
 #if defined (ACE_LACKS_LONGLONG_T)
   // This throws away the high 32 bits.  It's very unlikely that a
   // pointer will be more than 32 bits wide if the platform does not
@@ -318,6 +364,8 @@ typedef unsigned char ACE_Byte;
     ACE_U_LongLong (const ACE_UINT32 lo = 0x0, const ACE_UINT32 hi = 0x0);
     ACE_U_LongLong (const ACE_U_LongLong &);
     ACE_U_LongLong &operator= (const ACE_U_LongLong &);
+    ACE_U_LongLong &operator= (const ACE_INT32 &);
+    ACE_U_LongLong &operator= (const ACE_UINT32 &);
     ~ACE_U_LongLong (void);
 
     // = Overloaded relation operators.
@@ -354,6 +402,8 @@ typedef unsigned char ACE_Byte;
     ACE_U_LongLong &operator-= (const ACE_UINT32);
     ACE_U_LongLong &operator++ ();
     ACE_U_LongLong &operator-- ();
+    ACE_U_LongLong operator++ (int);
+    ACE_U_LongLong operator-- (int);
     ACE_U_LongLong &operator|= (const ACE_U_LongLong);
     ACE_U_LongLong &operator|= (const ACE_UINT32);
     ACE_U_LongLong &operator&= (const ACE_U_LongLong);
@@ -404,18 +454,28 @@ typedef unsigned char ACE_Byte;
       {
         struct
           {
+#     if defined (ACE_BIG_ENDIAN)
+            /// High 32 bits.
             ACE_UINT32 hi_;
-            // High 32 bits.
 
+            /// Low 32 bits.
             ACE_UINT32 lo_;
-            // Low 32 bits.
-          } data_;
-        // To ensure alignment on 8-byte boundary.
+#     else
+            /// Low 32 bits.
+            ACE_UINT32 lo_;
 
-        // double isn't usually usable with ACE_LACKS_FLOATING_POINT,
-        // but this seems OK.
+            /// High 32 bits.
+            ACE_UINT32 hi_;
+#     endif /* ! ACE_BIG_ENDIAN */
+
+          } data_;
+
+        /// To ensure alignment on 8-byte boundary.
+        /**
+         * @note "double" isn't usually usable with
+         *       ACE_LACKS_FLOATING_POINT, but this seems OK.
+         */
         double for_alignment_;
-        // To ensure alignment on 8-byte boundary.
       };
 
     // NOTE:  the following four accessors are inlined here in
@@ -591,52 +651,6 @@ typedef unsigned char ACE_Byte;
 // These use ANSI/IEEE format.
 #define ACE_FLT_MAX 3.402823466e+38F
 #define ACE_DBL_MAX 1.7976931348623158e+308
-
-// Byte-order (endian-ness) determination.
-# if defined (BYTE_ORDER)
-#   if (BYTE_ORDER == LITTLE_ENDIAN)
-#     define ACE_LITTLE_ENDIAN 0x0123
-#     define ACE_BYTE_ORDER ACE_LITTLE_ENDIAN
-#   elif (BYTE_ORDER == BIG_ENDIAN)
-#     define ACE_BIG_ENDIAN 0x3210
-#     define ACE_BYTE_ORDER ACE_BIG_ENDIAN
-#   else
-#     error: unknown BYTE_ORDER!
-#   endif /* BYTE_ORDER */
-# elif defined (_BYTE_ORDER)
-#   if (_BYTE_ORDER == _LITTLE_ENDIAN)
-#     define ACE_LITTLE_ENDIAN 0x0123
-#     define ACE_BYTE_ORDER ACE_LITTLE_ENDIAN
-#   elif (_BYTE_ORDER == _BIG_ENDIAN)
-#     define ACE_BIG_ENDIAN 0x3210
-#     define ACE_BYTE_ORDER ACE_BIG_ENDIAN
-#   else
-#     error: unknown _BYTE_ORDER!
-#   endif /* _BYTE_ORDER */
-# elif defined (__BYTE_ORDER)
-#   if (__BYTE_ORDER == __LITTLE_ENDIAN)
-#     define ACE_LITTLE_ENDIAN 0x0123
-#     define ACE_BYTE_ORDER ACE_LITTLE_ENDIAN
-#   elif (__BYTE_ORDER == __BIG_ENDIAN)
-#     define ACE_BIG_ENDIAN 0x3210
-#     define ACE_BYTE_ORDER ACE_BIG_ENDIAN
-#   else
-#     error: unknown __BYTE_ORDER!
-#   endif /* __BYTE_ORDER */
-# else /* ! BYTE_ORDER && ! __BYTE_ORDER */
-  // We weren't explicitly told, so we have to figure it out . . .
-#   if defined (i386) || defined (__i386__) || defined (_M_IX86) || \
-     defined (vax) || defined (__alpha) || defined (__LITTLE_ENDIAN__) ||\
-     defined (ARM) || defined (_M_IA64)
-    // We know these are little endian.
-#     define ACE_LITTLE_ENDIAN 0x0123
-#     define ACE_BYTE_ORDER ACE_LITTLE_ENDIAN
-#   else
-    // Otherwise, we assume big endian.
-#     define ACE_BIG_ENDIAN 0x3210
-#     define ACE_BYTE_ORDER ACE_BIG_ENDIAN
-#   endif
-# endif /* ! BYTE_ORDER && ! __BYTE_ORDER */
 
 #if !defined (ACE_HAS_SSIZE_T)
 #  if defined (ACE_WIN64)
