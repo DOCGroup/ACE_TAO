@@ -10,6 +10,10 @@ Mon Oct 12 11:30:38 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	  Added a comparison operator for the TAO_EC_Event class, this is
 	  needed to complete the instantiation of ACE_Array<TAO_EC_Event>.
 
+	* orbsvcs/orbsvcs/Event/Event_Manip.h: 
+	  The constructor was private, making some g++ variants very
+	  angry.
+
 Mon Oct 12 10:31:35 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Naming/CosNaming_i: Removed the need to allocate
