@@ -47,7 +47,7 @@ main (int, ASYS_TCHAR *argv[])
   l_argv[7] = ASYS_TEXT ("-fsvc.conf");
   l_argv[8] = 0;
 
-  if (ACE_Service_Config::open (8, l_argv) == -1 && errno != ENOENT)
+  if (ACE_Service_Config::open (8, l_argv, ACE_DEFAULT_LOGGER_KEY, 0) == -1 && errno != ENOENT)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ASYS_TEXT ("%p\n"),
                        ASYS_TEXT ("open")),
