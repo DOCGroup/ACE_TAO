@@ -2,7 +2,7 @@
  
 .SUFFIXES: .java .class
 
-JACE_WRAPPER = ../..
+JACE_WRAPPER = ..
 CLASSDIR = $(JACE_WRAPPER)/classes
 DOCDIR = $(JACE_WRAPPER)/doc
 
