@@ -1,0 +1,423 @@
+#!/bin/sh
+# This is a shell archive (produced by GNU sharutils 4.2).
+# To extract the files from this archive, save it to some FILE, remove
+# everything before the `!/bin/sh' line above, then type `sh FILE'.
+#
+# Made on 2000-03-19 15:00 EST by <jcej@chiroptera.tragus.org>.
+# Source directory was `/home/jcej/projects/ACE_wrappers/docs/tutorials/005'.
+#
+# Existing files will *not* be overwritten unless `-c' is specified.
+#
+# This shar contains:
+# length mode       name
+# ------ ---------- ------------------------------------------
+#    598 -rw-rw-r-- hdr
+#     97 -rw-rw-r-- bodies
+#    628 -rw-rw-r-- page01.pre
+#    515 -rw-rw-r-- page02.pre
+#    685 -rw-rw-r-- page03.pre
+#    464 -rw-rw-r-- page04.pre
+#    218 -rw-rw-r-- page05.pre
+#     98 -rw-rw-r-- page06.pre
+#    172 -rw-rw-r-- page07.pre
+#    715 -rw-rw-r-- page08.pre
+#
+save_IFS="${IFS}"
+IFS="${IFS}:"
+gettext_dir=FAILED
+locale_dir=FAILED
+first_param="$1"
+for dir in $PATH
+do
+  if test "$gettext_dir" = FAILED && test -f $dir/gettext \
+     && ($dir/gettext --version >/dev/null 2>&1)
+  then
+    set `$dir/gettext --version 2>&1`
+    if test "$3" = GNU
+    then
+      gettext_dir=$dir
+    fi
+  fi
+  if test "$locale_dir" = FAILED && test -f $dir/shar \
+     && ($dir/shar --print-text-domain-dir >/dev/null 2>&1)
+  then
+    locale_dir=`$dir/shar --print-text-domain-dir`
+  fi
+done
+IFS="$save_IFS"
+if test "$locale_dir" = FAILED || test "$gettext_dir" = FAILED
+then
+  echo=echo
+else
+  TEXTDOMAINDIR=$locale_dir
+  export TEXTDOMAINDIR
+  TEXTDOMAIN=sharutils
+  export TEXTDOMAIN
+  echo="$gettext_dir/gettext -s"
+fi
+touch -am 1231235999 $$.touch >/dev/null 2>&1
+if test ! -f 1231235999 && test -f $$.touch; then
+  shar_touch=touch
+else
+  shar_touch=:
+  echo
+  $echo 'WARNING: not restoring timestamps.  Consider getting and'
+  $echo "installing GNU \`touch', distributed in GNU File Utilities..."
+  echo
+fi
+rm -f 1231235999 $$.touch
+#
+if mkdir _sh32383; then
+  $echo 'x -' 'creating lock directory'
+else
+  $echo 'failed to create lock directory'
+  exit 1
+fi
+# ============= hdr ==============
+if test -f 'hdr' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'hdr' '(file already exists)'
+else
+  $echo 'x -' extracting 'hdr' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'hdr' &&
+<HTML>
+<HEAD>
+X   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+X   <META NAME="GENERATOR" CONTENT="Mozilla/4.04 [en] (X11; I; Linux 2.0.32 i486) [Netscape]">
+X   <META NAME="Author" CONTENT="Billy Quinn">
+X   <META NAME="Description" CONTENT="A first step towards using ACE productively">
+X   <TITLE>ACE Tutorial 005</TITLE>
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#000FFF" VLINK="#FF0F0F">
+X
+<CENTER><B><FONT SIZE=+2>ACE Tutorial 005</FONT></B></CENTER>
+X
+<CENTER><B><FONT SIZE=+2>On the road to a multithreaded server</FONT></B></CENTER>
+X
+X
+<P>
+<HR WIDTH="100%">
+SHAR_EOF
+  $shar_touch -am 03191459100 'hdr' &&
+  chmod 0664 'hdr' ||
+  $echo 'restore of' 'hdr' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'hdr:' 'MD5 check failed'
+197a3d789965f9c046d4d84ee137ace9  hdr
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'hdr'`"
+    test 598 -eq "$shar_count" ||
+    $echo 'hdr:' 'original size' '598,' 'current size' "$shar_count!"
+  fi
+fi
+# ============= bodies ==============
+if test -f 'bodies' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'bodies' '(file already exists)'
+else
+  $echo 'x -' extracting 'bodies' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'bodies' &&
+PAGE=2
+server.cpp
+client_acceptor.h
+client_handler.h
+client_handler.cpp
+Makefile
+X../fix.Makefile
+SHAR_EOF
+  $shar_touch -am 0117143799 'bodies' &&
+  chmod 0664 'bodies' ||
+  $echo 'restore of' 'bodies' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'bodies:' 'MD5 check failed'
+dcbb8d7d85345e022a122f4f7fa10fb9  bodies
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'bodies'`"
+    test 97 -eq "$shar_count" ||
+    $echo 'bodies:' 'original size' '97,' 'current size' "$shar_count!"
+  fi
+fi
+# ============= page01.pre ==============
+if test -f 'page01.pre' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'page01.pre' '(file already exists)'
+else
+  $echo 'x -' extracting 'page01.pre' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'page01.pre' &&
+X
+<P>In this tutorial, we're going to flash-back to the simple server we
+created a while back.&nbsp; We'll create a very simple server where everything
+takes place in one thread.&nbsp; Once we have a solid understanding there,
+we'll move on to the next tutorial where we begin to introduce concurrency
+concepts.
+X
+<P>There are four C++&nbsp;source files in this tutorial:&nbsp; server.cpp,
+client_acceptor.h, client_handler.h and client_handler.cpp.&nbsp; I'll
+talk about each of these in turn with the usual color commentary as we
+go.&nbsp; In addition, I'll briefly discuss the Makefile and a short perl
+script I've added.
+X
+<P>
+SHAR_EOF
+  $shar_touch -am 03191459100 'page01.pre' &&
+  chmod 0664 'page01.pre' ||
+  $echo 'restore of' 'page01.pre' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'page01.pre:' 'MD5 check failed'
+b819665dcbed1ef2efe12bdc8d8710c5  page01.pre
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page01.pre'`"
+    test 628 -eq "$shar_count" ||
+    $echo 'page01.pre:' 'original size' '628,' 'current size' "$shar_count!"
+  fi
+fi
+# ============= page02.pre ==============
+if test -f 'page02.pre' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'page02.pre' '(file already exists)'
+else
+  $echo 'x -' extracting 'page02.pre' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'page02.pre' &&
+X
+<P>We begin with <I><A HREF="server.cpp">server.cpp</A></I>.
+<P>
+Abstraction by Kirthika:
+<UL>
+This tutorial is a re-cap of the client-server hookup tutorial with much
+X cleaner code (for instance: use of destroy() to delete objects and
+process() which does the task of reading in data from the client).
+<P>
+We again enroll the services of the ACE_Reactor to handle events. Everything
+occurs in a single thread.
+<P>
+This tutorial is a stepping stone towards a mutithreaded server model.
+</ul>
+<P>
+<HR WIDTH="100%">
+SHAR_EOF
+  $shar_touch -am 03191459100 'page02.pre' &&
+  chmod 0664 'page02.pre' ||
+  $echo 'restore of' 'page02.pre' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'page02.pre:' 'MD5 check failed'
+94844c847ed36aa6bc7c7b98aafb7bbc  page02.pre
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page02.pre'`"
+    test 515 -eq "$shar_count" ||
+    $echo 'page02.pre:' 'original size' '515,' 'current size' "$shar_count!"
+  fi
+fi
+# ============= page03.pre ==============
+if test -f 'page03.pre' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'page03.pre' '(file already exists)'
+else
+  $echo 'x -' extracting 'page03.pre' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'page03.pre' &&
+X
+<P>Now, let's take a look at <I><A HREF="client_acceptor.h">client_acceptor.h</A></I>.&nbsp;
+Since I went on about how it does all the work of letting clients connect
+to us, it must be rather complex.&nbsp; Right?&nbsp; Wrong.
+X
+<P>The more you use ACE, the more you'll find that they've already taken
+care of most details for you.&nbsp; With respect to the acceptance of client
+connections:&nbsp; there just aren't that many ways to do it!&nbsp; The
+ACE team has chosen an approach and created a C++&nbsp;template that does
+all of the work for you.&nbsp; All you're required to do is provide it
+with an object type to instantiate when a new connection arrives.
+X
+<P>
+<HR WIDTH="100%">
+SHAR_EOF
+  $shar_touch -am 03191459100 'page03.pre' &&
+  chmod 0664 'page03.pre' ||
+  $echo 'restore of' 'page03.pre' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'page03.pre:' 'MD5 check failed'
+edb44ba6e3033259e60b4a83d0675b03  page03.pre
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page03.pre'`"
+    test 685 -eq "$shar_count" ||
+    $echo 'page03.pre:' 'original size' '685,' 'current size' "$shar_count!"
+  fi
+fi
+# ============= page04.pre ==============
+if test -f 'page04.pre' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'page04.pre' '(file already exists)'
+else
+  $echo 'x -' extracting 'page04.pre' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'page04.pre' &&
+X
+<P>Ok, so we've got a main() loop that sets up the acceptor and we've seen
+how easy it is to create the acceptor object.&nbsp; So far, we've hardly
+written any code at all.&nbsp; Well, that's just about to change...
+X
+<P>First, we look at <I><A HREF="client_handler.h">client_handler.h</A></I>
+for the declaration of the Client_Handler object.&nbsp; Then we look at
+the definition where all of the real work of the application takes place.
+X
+<P>
+<HR WIDTH="100%">
+X
+SHAR_EOF
+  $shar_touch -am 03191459100 'page04.pre' &&
+  chmod 0664 'page04.pre' ||
+  $echo 'restore of' 'page04.pre' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'page04.pre:' 'MD5 check failed'
+3a0e0d0c79318ca18dd5920dd97ca834  page04.pre
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page04.pre'`"
+    test 464 -eq "$shar_count" ||
+    $echo 'page04.pre:' 'original size' '464,' 'current size' "$shar_count!"
+  fi
+fi
+# ============= page05.pre ==============
+if test -f 'page05.pre' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'page05.pre' '(file already exists)'
+else
+  $echo 'x -' extracting 'page05.pre' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'page05.pre' &&
+X
+<P>Now we're finally at <I><A HREF="client_handler.cpp">client_handler.cpp</A></I>
+where we have to write some code.&nbsp; This file has more code than the
+rest of the application all together.
+X
+<P>
+<HR WIDTH="100%">
+SHAR_EOF
+  $shar_touch -am 03191459100 'page05.pre' &&
+  chmod 0664 'page05.pre' ||
+  $echo 'restore of' 'page05.pre' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'page05.pre:' 'MD5 check failed'
+d5fa96547c3b94abc387c8b87f2f3c92  page05.pre
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page05.pre'`"
+    test 218 -eq "$shar_count" ||
+    $echo 'page05.pre:' 'original size' '218,' 'current size' "$shar_count!"
+  fi
+fi
+# ============= page06.pre ==============
+if test -f 'page06.pre' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'page06.pre' '(file already exists)'
+else
+  $echo 'x -' extracting 'page06.pre' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'page06.pre' &&
+X
+<P>Before we go, I wanted you to see the <A HREF="Makefile">Makefile</A>.
+X
+<P>
+<HR WIDTH="100%">
+SHAR_EOF
+  $shar_touch -am 03191459100 'page06.pre' &&
+  chmod 0664 'page06.pre' ||
+  $echo 'restore of' 'page06.pre' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'page06.pre:' 'MD5 check failed'
+b8a35eb354a8e5c90155dd728a8bfa4e  page06.pre
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page06.pre'`"
+    test 98 -eq "$shar_count" ||
+    $echo 'page06.pre:' 'original size' '98,' 'current size' "$shar_count!"
+  fi
+fi
+# ============= page07.pre ==============
+if test -f 'page07.pre' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'page07.pre' '(file already exists)'
+else
+  $echo 'x -' extracting 'page07.pre' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'page07.pre' &&
+X
+<P>And last (and probably least) is the <A HREF="../fix.Makefile">perl script</A>
+that pulls the dependency stuff out of Makefile and into .depend.
+X
+<P>
+<HR WIDTH="100%">
+SHAR_EOF
+  $shar_touch -am 03191459100 'page07.pre' &&
+  chmod 0664 'page07.pre' ||
+  $echo 'restore of' 'page07.pre' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'page07.pre:' 'MD5 check failed'
+7f896dc992a365d4d095d0a6d3b9eb47  page07.pre
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page07.pre'`"
+    test 172 -eq "$shar_count" ||
+    $echo 'page07.pre:' 'original size' '172,' 'current size' "$shar_count!"
+  fi
+fi
+# ============= page08.pre ==============
+if test -f 'page08.pre' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'page08.pre' '(file already exists)'
+else
+  $echo 'x -' extracting 'page08.pre' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'page08.pre' &&
+X
+<P>That's it for Tutorial 5.&nbsp; In this tutorial we've built a single-threaded
+reactor-based server.&nbsp; We've done a couple of things that aren't exactly
+necessary for such an implementation but I&nbsp;plan to build on that as
+we explore two other concurrency strategies:&nbsp; thread per connection
+and thread pool.
+X
+<P>For reference, here's the file list again:
+<UL>
+<LI>
+<A HREF="Makefile">Makefile</A></LI>
+X
+<LI>
+<A HREF="client_acceptor.h">client_acceptor.h</A></LI>
+X
+<LI>
+<A HREF="client_handler.cpp">client_handler.cpp</A></LI>
+X
+<LI>
+<A HREF="client_handler.h">client_handler.h</A></LI>
+X
+<LI>
+<A HREF="server.cpp">server.cpp</A></LI>
+X
+<LI>
+<A HREF="../fix.Makefile">fix.Makefile</A></LI>
+</UL>
+&nbsp;
+SHAR_EOF
+  $shar_touch -am 03191459100 'page08.pre' &&
+  chmod 0664 'page08.pre' ||
+  $echo 'restore of' 'page08.pre' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'page08.pre:' 'MD5 check failed'
+678ef0c3162d2a2739d0efdcfeac5cb9  page08.pre
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page08.pre'`"
+    test 715 -eq "$shar_count" ||
+    $echo 'page08.pre:' 'original size' '715,' 'current size' "$shar_count!"
+  fi
+fi
+rm -fr _sh32383
+exit 0
