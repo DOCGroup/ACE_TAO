@@ -239,21 +239,22 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
       // Purge connections (if necessary)
       tcm.purge ();
 
-      TAO_Transport* result = this->make_connection (r,
-                                                     *desc,
-                                                     timeout);
-      if (result == 0)
-        {
-          r->transport ()->opened_as (TAO::TAO_CLIENT_ROLE);
+      TAO_Transport* t = this->make_connection (r,
+                                                *desc,
+                                                timeout);
 
-          if (TAO_debug_level > 4)
-            ACE_DEBUG ((LM_DEBUG,
-                        "TAO (%P|%t) - Transport_Connector::connect, "
-                        "opening Transport[%d] in TAO_CLIENT_ROLE\n",
-                        r->transport ()->id ()));
-        }
+      if (t == 0)
+        return t;
 
-      return result;
+      t->opened_as (TAO::TAO_CLIENT_ROLE);
+
+      if (TAO_debug_level > 4)
+        ACE_DEBUG ((LM_DEBUG,
+                    "TAO (%P|%t) - Transport_Connector::connect, "
+                    "opening Transport[%d] in TAO_CLIENT_ROLE\n",
+                    t->id ()));
+
+      return t;
     }
 
   if (TAO_debug_level > 4)

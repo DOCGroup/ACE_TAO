@@ -1,3 +1,11 @@
+Mon Aug 23 20:36:59 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* tao/Transport_Connector.cpp:
+
+	  A simple programmatic error while trying to set the type of role
+	  on the client caused a bunch of tests to fail. Many tests should be
+	  going strong after this change.
+
 Mon Aug 23 06:40:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.cpp:
