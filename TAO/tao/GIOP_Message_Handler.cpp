@@ -374,6 +374,19 @@ TAO_GIOP_Message_Handler::more_messages (void)
 
           return this->get_message ();
         }
+      else
+        {
+          // We have smaller than the header size left here. We
+          // just copy the rest of the stuff and reset things so that
+          // we can read the rest of the stuff from the socket.
+          this->current_buffer_.copy (
+              this->supp_buffer_.rd_ptr (),
+              len);
+
+          // Reset the supp buffer now
+          this->supp_buffer_.reset ();
+          this->message_status_ = TAO_GIOP_WAITING_FOR_HEADER;
+        }
 
     }
 
