@@ -34,10 +34,10 @@
 #define ACE_HAS_UNICODE 1
 
 // Only DLL version is supported on CE.
-#if defined (ACE_HAS_DLL)
-# undef ACE_HAS_DLL
-#endif  // ACE_HAS_DLL
-#define ACE_HAS_DLL 1
+//#if defined (ACE_HAS_DLL)
+//# undef ACE_HAS_DLL
+//#endif  // ACE_HAS_DLL
+//#define ACE_HAS_DLL 1
 
 // Need to define LD search path explicitly on CE because
 // CE doesn't have environment variables and we can't get

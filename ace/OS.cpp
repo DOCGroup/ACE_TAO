@@ -1028,6 +1028,36 @@ ACE_OS::mutex_lock_cleanup (void *mutex)
 # endif /* ACE_HAS_PACE && !ACE_WIN32 */
 }
 
+#if defined (ACE_USES_WCHAR)
+void ACE_OS::checkUnicodeFormat (FILE* fp)
+{
+    if (fp != NULL)
+    {
+        // Due to the ACE_TCHAR definition, all default input files, such as
+        // svc.conf, have to be in Unicode format (small endian) on WinCE
+        // because ACE has all 'char' converted into ACE_TCHAR.
+        // However, for TAO, ASCII files, such as IOR file, can still be read and
+        // be written without any error since given buffers are all in 'char' type
+        // instead of ACE_TCHAR.  Therefore, it is user's reponsibility to select
+        // correct buffer type.
+
+        // At this point, check if the file is Unicode or not.
+        WORD first_two_bytes;
+        int numRead = ACE_OS::fread(&first_two_bytes, sizeof(WORD), 1, fp);
+
+        if (numRead == 1)
+        {
+            if ((first_two_bytes != 0xFFFE) &&  // not a small endian Unicode file
+                (first_two_bytes != 0xFEFF))    // not a big endian Unicode file
+            {
+                ACE_OS::fseek(fp, 0, FILE_BEGIN);  // set file pointer back to the beginning
+            }
+        }
+        // if it is a Unicode file, file pointer will be right next to the first two-bytes
+    }
+}
+#endif  // ACE_USES_WCHAR
+
 #if defined (ACE_WIN32)
 FILE *
 ACE_OS::fopen (const ACE_TCHAR *filename,
@@ -1046,30 +1076,7 @@ ACE_OS::fopen (const ACE_TCHAR *filename,
       FILE *fp = ::_wfdopen (handle, mode);
       if (fp != NULL)
       {
-          // Currently, there is no distinction between functions for Unicode files
-          // and ASCII text files in the ACE level function.  Due to the ACE_TCHAR
-          // definition, all default input files, such as svc.conf, have to be in
-          // Unicode format (small endian) on WinCE because ACE has all 'char' converted
-          // into ACE_TCHAR.
-          // However, for TAO, ASCII files, such as IOR file, can still be read and
-          // be written without any error since given buffers are all in 'char' type
-          // instead of ACE_TCHAR.  Therefore, it is user's reponsibility to select
-          // correct buffer type.
-
-        // At this point, check if the file is Unicode or not.
-        WORD first_two_bytes;
-        int numRead = ACE_OS::fread(&first_two_bytes, sizeof(WORD), 1, fp);
-
-        if (numRead == 1)
-        {
-            if ((first_two_bytes != 0xFFFE) &&  // not a small endian Unicode file
-                (first_two_bytes != 0xFEFF))    // not a big endian Unicode file
-            {
-                ACE_OS::fseek(fp, 0, FILE_BEGIN);  // set file pointer back to the beginning
-            }
-        }
-        // if it is a Unicode file, file pointer will be right next to the first two-bytes
-
+        checkUnicodeFormat(fp);
         return fp;
       }
 # else
@@ -1087,7 +1094,12 @@ ACE_OS::fopen (const ACE_TCHAR *filename,
           FILE *fp = ::fdopen (fd, mode);
 #   endif /* defined(__BORLANDC__) && !defined (ACE_USES_WCHAR)) */
           if (fp != NULL)
+          {
+#   if defined (ACE_USES_WCHAR)
+            checkUnicodeFormat(fp);
+#   endif  // ACE_USES_WCHAR
             return fp;
+          }
           _close (fd);
         }
 # endif  // ACE_HAS_WINCE
