@@ -406,6 +406,10 @@ SOURCE=.\Hash_Map_Manager.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Hash_Map_Manager_rt.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Hashable.cpp
 # End Source File
 # Begin Source File
@@ -1439,6 +1443,10 @@ SOURCE=.\Hash_Cache_Map_Manager_T.h
 # Begin Source File
 
 SOURCE=.\Hash_Map_Manager.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Hash_Map_Manager_rt.h
 # End Source File
 # Begin Source File
 
@@ -2547,6 +2555,10 @@ SOURCE=.\Hash_Cache_Map_Manager_T.i
 # Begin Source File
 
 SOURCE=.\Hash_Map_Manager.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Hash_Map_Manager_rt.i
 # End Source File
 # Begin Source File
 
