@@ -11,7 +11,7 @@
 #include "tao/RTScheduling/Current.h"
 
 
-//long guid_counter;
+long guid_counter = 0;
 
 int
 DT_Creator::dt_task_init (ACE_Arg_Shifter& arg_shifter)
@@ -465,93 +465,92 @@ DT_Creator::create_distributable_threads (RTScheduling::Current_ptr current
 
   //  if (dt_count_ > 0)
   // {
-      //        ACE_NEW (barrier_,
-      //  	       ACE_Barrier (this->dt_count_ + 1));
+  //        ACE_NEW (barrier_,
+  //  	       ACE_Barrier (this->dt_count_ + 1));
 
 
-      current_ = RTScheduling::Current::_duplicate (current);
+  current_ = RTScheduling::Current::_duplicate (current);
 
-      long flags;
-      flags = THR_NEW_LWP | THR_JOINABLE;
-      flags |=
-	orb_->orb_core ()->orb_params ()->scope_policy () |
-	orb_->orb_core ()->orb_params ()->sched_policy ();
+  long flags;
+  flags = THR_NEW_LWP | THR_JOINABLE;
+  flags |=
+    orb_->orb_core ()->orb_params ()->scope_policy () |
+    orb_->orb_core ()->orb_params ()->sched_policy ();
 
-      CORBA::Policy_var sched_param;
-      sched_param = CORBA::Policy::_duplicate (this->sched_param (100));
-      const char * name = 0;
-      //CORBA::Policy_ptr implicit_sched_param = sched_param.in ();
-      current_->begin_scheduling_segment (name,
-					  sched_param.in (),
-					  sched_param.in ()
-					  ACE_ENV_ARG_PARAMETER);
+ while (!this->synch ()->synched ())
+ {
+     if (TAO_debug_level > 0)
+	ACE_DEBUG ((LM_DEBUG,
+		    "Waiting to Synch\n"));
+
+      this->orb_->perform_work (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+  }
+
+  CORBA::Policy_var sched_param;
+  sched_param = CORBA::Policy::_duplicate (this->sched_param (100));
+  const char * name = 0;
+  //CORBA::Policy_ptr implicit_sched_param = sched_param.in ();
+  current_->begin_scheduling_segment (name,
+				      sched_param.in (),
+				      sched_param.in ()
+				      ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+
+  ACE_NEW (base_time_,
+	   ACE_Time_Value (*(this->synch ()->base_time ())));
+
+  base_hr_time_ = ACE_OS::gethrtime ();
+
+  for (int i = 0; i < this->dt_count_; i++)
+    {
+      ACE_Time_Value now (ACE_OS::gettimeofday ());
+
+      ACE_Time_Value elapsed_time =  now - *base_time_;
+
+      char buf [BUFSIZ];
+      ACE_OS::sprintf (buf, "elapsed time = %d\n now = %d\n base_time_ = %d\n",
+		       (int) elapsed_time.sec (),
+		       (int) now.sec (),
+		       (int) base_time_->sec());
+
+      log [log_index++] = ACE_OS::strdup (buf) ;
+
+      ACE_hthread_t curr_thr;
+      ACE_Thread::self (curr_thr);
+
+      if (dt_list_ [i]->start_time () != 0 && (elapsed_time.sec () < dt_list_[i]->start_time ()))
+	{
+	  int suspension_time = dt_list_[i]->start_time () - elapsed_time.sec ();
+	  ACE_OS::sprintf (buf,"suspension_tome = %d\n",
+			   suspension_time);
+	  log [log_index++] = ACE_OS::strdup (buf);
+	  yield (suspension_time,
+		 dt_list_[i]);
+	}
+
+      sched_param = CORBA::Policy::_duplicate (this->sched_param (dt_list_ [i]->importance ()));
+      dt_list_ [i]->activate_task (current,
+				   sched_param.in (),
+				   flags,
+				   base_time_,
+				   base_hr_time_,
+				   barrier_
+				   ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
-      while (!this->synch ()->synched ())
-	{
-	  if (TAO_debug_level > 0)
-	    ACE_DEBUG ((LM_DEBUG,
-			"Waiting to Synch\n"));
-
-	  this->orb_->perform_work (ACE_ENV_SINGLE_ARG_PARAMETER);
-	  ACE_TRY_CHECK;
-	}
-
-      ACE_NEW (base_time_,
-	       ACE_Time_Value (*(this->synch ()->base_time ())));
-
-      base_hr_time_ = ACE_OS::gethrtime ();
-
-      for (int i = 0; i < this->dt_count_; i++)
-	{
-	  ACE_Time_Value now (ACE_OS::gettimeofday ());
-
-	  ACE_Time_Value elapsed_time =  now - *base_time_;
-
-	  char buf [BUFSIZ];
-	  ACE_OS::sprintf (buf, "elapsed time = %d\n now = %d\n base_time_ = %d\n",
-			   (int) elapsed_time.sec (),
-			   (int) now.sec (),
-			   (int) base_time_->sec());
-
-	  log [log_index++] = ACE_OS::strdup (buf) ;
-
-	  ACE_hthread_t curr_thr;
-	  ACE_Thread::self (curr_thr);
-
-	  if (dt_list_ [i]->start_time () != 0 && (elapsed_time.sec () < dt_list_[i]->start_time ()))
-	    {
-	      int suspension_time = dt_list_[i]->start_time () - elapsed_time.sec ();
-	      ACE_OS::sprintf (buf,"suspension_tome = %d\n",
-			       suspension_time);
-	      log [log_index++] = ACE_OS::strdup (buf);
-	      yield (suspension_time,
-		     dt_list_[i]);
-	    }
-
-	  sched_param = CORBA::Policy::_duplicate (this->sched_param (dt_list_ [i]->importance ()));
-	  dt_list_ [i]->activate_task (current,
-				       sched_param.in (),
-				       flags,
-				       base_time_,
-				       base_hr_time_,
-				       barrier_
-				       ACE_ENV_ARG_PARAMETER);
-	  ACE_CHECK;
-
-	}
-
-      /*
-      while (active_dt_count_ > 0 || active_job_count_ > 0)
-	{
-	  yield(1,0);
-	}
-      */
-
-    current_->end_scheduling_segment (name
-					ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
-      //    }
+    }
+  /*
+  while (active_dt_count_ > 0 || active_job_count_ > 0)
+    {
+      yield(1,0);
+    }
+  */
+  current_->end_scheduling_segment (name
+				    ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+  //    }
 }
 
 void
