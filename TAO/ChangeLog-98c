@@ -1,3 +1,9 @@
+Fri Nov 14 00:29:09 1997  David L. Levine  <levine@cs.wustl.edu>
+
+        * TAO_IDL/fe/lex.yy.cpp: set RCS -ko option so that the Id keyword
+          won't get expanded on checkout.  That was causing CVS to think
+          that a merge was needed.
+
 Thu Nov 13 19:11:36 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* TAO/tests/Cubit/TAO/IDL_Cubit/svr.cpp (parse_args): Assume for
@@ -9,7 +15,7 @@ Thu Nov 13 16:18:32 1997    <nw1@CHA-CHA>
 
 	* tao/TAO.mak:
 	* tao/TAO.dsp:  Replaced ACE_BUILD_SVC_DLL with TAO_BUILD_DLL.
-	
+
 	* tao/corba.h: Added TAO_Export definition.
 
 	* tao/*.h:  Replaced ACE_Svc_Export with TAO_Export.  Added
