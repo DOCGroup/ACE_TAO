@@ -191,8 +191,13 @@ main (int argc, char* argv[])
 
       // ****************************************************************
 
-      negation_consumer.dump_results (200, 5);
-      regular_consumer.dump_results (100, 5);
+      CORBA::ULong expected =
+        third_supplier.event_count
+        + second_supplier.event_count;
+      negation_consumer.dump_results (expected, 5);
+      expected =
+        first_supplier.event_count;
+      regular_consumer.dump_results (expected, 5);
 
       orb->destroy (ACE_TRY_ENV);
       ACE_TRY_CHECK;
