@@ -75,6 +75,15 @@ pace_dup2 (int fildes, int fildes2)
 
 PACE_INLINE
 int
+pace_execv (const char * path,
+            char * const argv[])
+{
+  return execv (path, argv);
+  /* if successful, this operation does NOT return */
+}
+
+PACE_BROKEN_INLINE
+int
 pace_execl (const char* path, const char* arg, ...)
 {
   int result = 0;
@@ -87,14 +96,15 @@ pace_execl (const char* path, const char* arg, ...)
 
 PACE_INLINE
 int
-pace_execv (const char * path,
-            char * const argv[])
+pace_execve (const char * path,
+             char * const argv[],
+             char * const envp[])
 {
-  return execv (path, argv);
+  return execve (path, argv, envp);
   /* if successful, this operation does NOT return */
 }
 
-PACE_INLINE
+PACE_BROKEN_INLINE
 int
 pace_execle (const char* path, const char* arg, ...)
 {
@@ -115,7 +125,7 @@ pace_execvp (const char * file,
   /* if successful, this operation does NOT return */
 }
 
-PACE_INLINE
+PACE_BROKEN_INLINE
 int
 pace_execlp (const char* file, const char* arg,  ...)
 {
@@ -125,16 +135,6 @@ pace_execlp (const char* file, const char* arg,  ...)
   result = pace_execvp (file, (char*const*)ap);
   va_end (ap);
   return result;
-}
-
-PACE_INLINE
-int
-pace_execve (const char * path,
-             char * const argv[],
-             char * const envp[])
-{
-  return execve (path, argv, envp);
-  /* if successful, this operation does NOT return */
 }
 
 PACE_INLINE

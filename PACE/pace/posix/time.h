@@ -16,11 +16,12 @@
 #ifndef PACE_TIME_H_POSIX
 #define PACE_TIME_H_POSIX
 
-#include <time.h>
-#include "pace/signal.h"
 #if PACE_LINUX
 # include "pace/emulation/time.h"
 #endif /* PACE_LINUX */
+
+#include <time.h>
+#include "pace/signal.h"
 
 #if defined (PACE_HAS_CPLUSPLUS)
 extern "C" {
@@ -34,7 +35,7 @@ extern "C" {
 
 #ifndef PACE_CLOCKID_T
 #define PACE_CLOCKID_T
-# if PACE_LINUX
+# if defined PACE_EMU_CLOCKID_T
   typedef pace_emu_clockid_t pace_clockid_t;
 # else
   typedef clockid_t pace_clockid_t;
@@ -53,7 +54,7 @@ extern "C" {
 
 #ifndef PACE_TIMER_T
 #define PACE_TIMER_T
-# if PACE_LINUX
+# if defined PACE_EMU_TIMER_T
   typedef pace_emu_timer_t pace_timer_t;
 # else
   typedef timer_t pace_timer_t;

@@ -14,6 +14,7 @@ endif # static_libs_only
 # If we are inlining the PACE functions then we don't want to include
 # the PACE library (and we need to define PACE_HAS_INLINE). If we're not
 # inlining then we need to include the PACE library. Inlining is the default.
+LIBS += -L$(PACE_ROOT)/pace -lPACE
 ifndef inline
   CFLAGS += -DPACE_HAS_INLINE
 else
@@ -29,7 +30,8 @@ LIBS += -L$(PACE_ROOT)/pace -lPACE
 #----------------------------------------------------------------------------
 
 BIN =   Stdio_Test \
-        Posix_SP_Test
+        Posix_SP_Test \
+	mqueue_test
 
 #### If the PACE library wasn't built with all components, don't
 #### try to build certain tests.
