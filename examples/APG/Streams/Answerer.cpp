@@ -113,7 +113,7 @@ protected:
   ACE_FILE_Addr get_incoming_message_queue (void)
   {
     // Exclude 24
-    return ACE_FILE_Addr ("/tmp/incoming_message");
+    return ACE_FILE_Addr (ACE_TEXT ("/tmp/incoming_message"));
     // Exclude 24
   }
 };
@@ -157,7 +157,7 @@ protected:
   ACE_FILE_Addr get_message_destination (Message *)
   {
     // Exclude 26
-    return ACE_FILE_Addr ("/tmp/encoded_message");
+    return ACE_FILE_Addr (ACE_TEXT ("/tmp/encoded_message"));
     // Exclude 26
   }
 };
@@ -171,8 +171,8 @@ protected:
   {
     ACE_TRACE (ACE_TEXT ("SaveMetaData::process()"));
 
-    ACE_CString path (message->addr ().get_path_name ());
-    path += ".xml";
+    ACE_TString path (message->addr ().get_path_name ());
+    path += ACE_TEXT (".xml");
 
     ACE_FILE_Connector connector;
     ACE_FILE_IO file;
@@ -239,7 +239,7 @@ public:
   {
     if (tail == 0)
       ACE_NEW_RETURN (tail,
-                      Module ("End Module", new EndTask ()),
+                      Module (ACE_TEXT ("End Module"), new EndTask ()),
                       -1);
     this->inherited::open (arg, head, tail);
     // Listing 1000
@@ -247,50 +247,50 @@ public:
     // Listing 1001 code/ch18
     Module *answerIncomingCallModule;
     ACE_NEW_RETURN (answerIncomingCallModule,
-                    Module ("Answer Incoming Call",
+                    Module (ACE_TEXT ("Answer Incoming Call"),
                             new AnswerIncomingCall ()),
                     -1);
 
     // Listing 11 code/ch18
     Module *getCallerIdModule;
     ACE_NEW_RETURN (getCallerIdModule,
-                    Module ("Get Caller ID", new GetCallerId ()),
+                    Module (ACE_TEXT ("Get Caller ID"), new GetCallerId ()),
                     -1);
     // Listing 11
 
     Module *playOGMModule;
     ACE_NEW_RETURN (playOGMModule,
-                    Module ("Play Outgoing Message",
+                    Module (ACE_TEXT ("Play Outgoing Message"),
                             new PlayOutgoingMessage ()),
                     -1);
 
     Module *recordModule;
     ACE_NEW_RETURN (recordModule,
-                    Module ("Record Incoming Message",
+                    Module (ACE_TEXT ("Record Incoming Message"),
                             new RecordIncomingMessage ()),
                     -1);
 
     Module *releaseModule;
     ACE_NEW_RETURN (releaseModule,
-                    Module ("Release Device",
+                    Module (ACE_TEXT ("Release Device"),
                             new ReleaseDevice ()),
                     -1);
 
     Module *conversionModule;
     ACE_NEW_RETURN (conversionModule,
-                    Module ("Encode Message",
+                    Module (ACE_TEXT ("Encode Message"),
                             new EncodeMessage ()),
                     -1);
 
     Module *saveMetaDataModule;
     ACE_NEW_RETURN (saveMetaDataModule,
-                    Module ("Save Meta-Data",
+                    Module (ACE_TEXT ("Save Meta-Data"),
                             new SaveMetaData ()),
                     -1);
 
     Module *notificationModule;
     ACE_NEW_RETURN (notificationModule,
-                    Module ("Notify Someone",
+                    Module (ACE_TEXT ("Notify Someone"),
                             new NotifySomeone ()),
                     -1);
     // Listing 1001

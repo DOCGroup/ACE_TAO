@@ -24,10 +24,10 @@ Options::Options (void)
 		   iterations_ (100000),
 		   debugging_ (0),
 		   verbosity_ (0),
-		   consumer_port_ ("-p 10000"),
-		   supplier_port_ ("-p 10001"),
-		   consumer_file_ ("-f/tmp/conupipe"),
-		   supplier_file_ ("-f/tmp/supupipe")
+		   consumer_port_ (ACE_TEXT ("-p 10000")),
+		   supplier_port_ (ACE_TEXT ("-p 10001")),
+		   consumer_file_ (ACE_TEXT ("-f/tmp/conupipe")),
+		   supplier_file_ (ACE_TEXT ("-f/tmp/supupipe"))
 {
 }
 
@@ -94,11 +94,11 @@ void Options::print_results (void)
 Options options;
 
 void
-Options::parse_args (int argc, char *argv[])
+Options::parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_LOG_MSG->open (argv[0]);
 
-  ACE_Get_Opt getopt (argc, argv, "C:c:bdH:i:L:l:M:nS:s:t:T:v");
+  ACE_Get_Opt getopt (argc, argv, ACE_TEXT ("C:c:bdH:i:L:l:M:nS:s:t:T:v"));
   int c;
 
   while ((c = getopt ()) != -1)
@@ -142,9 +142,9 @@ Options::parse_args (int argc, char *argv[])
 	break;
       case 'T':
 #if defined (ACE_HAS_TRACE)
-	if (ACE_OS::strcasecmp (getopt.opt_arg (), "ON") == 0)
+	if (ACE_OS::strcasecmp (getopt.opt_arg (), ACE_TEXT ("ON")) == 0)
 	  ACE_Trace::start_tracing ();
-	else if (ACE_OS::strcasecmp (getopt.opt_arg (), "OFF") == 0)
+	else if (ACE_OS::strcasecmp (getopt.opt_arg (), ACE_TEXT ("OFF")) == 0)
 	  ACE_Trace::stop_tracing ();
 #endif /* ACE_HAS_TRACE */
 	break;
@@ -170,12 +170,19 @@ Options::parse_args (int argc, char *argv[])
 		   "\t[-s supplier port]\n"
 		   "\t[-t number of threads]\n"
 		   "\t[-v] (verbose) \n",
-		   argv[0]);
+		   ACE_TEXT_ALWAYS_CHAR (argv[0]));
 	::exit (1);
 	/* NOTREACHED */
 	break;
       }
 
+  // HACK! This needs to be done to avoid the mismatch from ACE_LIB_TEXT
+  // in ACE_SIZE_T_FORMAT_SPECIFIER to narrow-char on wide-char builds.
+  // It only works because it's at the end of the file.
+# if defined (ACE_LIB_TEXT)
+#  undef ACE_LIB_TEXT
+# endif
+# define ACE_LIB_TEXT(X) X
   if (this->verbose ())
     ACE_OS::printf ("%8d = initial concurrency hint\n"
 	      ACE_SIZE_T_FORMAT_SPECIFIER " = total iterations\n"

@@ -97,7 +97,7 @@ MessageType *TextListenerAcceptor::record_message (ACE_FILE_Addr &addr)
 TextListener::TextListener (TextListenerAcceptor *acceptor)
   : acceptor_(acceptor)
 {
-  ACE_TRACE (ACE_TEXT ("TextListener ctor"));
+  ACE_TRACE ("TextListener ctor");
 
   ACE_NEW (this->command_stream_, CommandStream (&(this->peer_)));
   this->command_stream_->open (0);

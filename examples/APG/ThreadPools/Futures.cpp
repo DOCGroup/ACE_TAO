@@ -42,7 +42,7 @@ public:
     ACE_OS::sleep (1);
 
     char buf[1024];
-    ACE_OS::strcpy (buf, ACE_TEXT ("Completed assigned task\n"));
+    ACE_OS::strcpy (buf, "Completed assigned task\n");
     ACE_CString *msg;
     ACE_NEW_RETURN
       (msg, ACE_CString (buf, ACE_OS::strlen (buf) + 1), -1);

@@ -9,48 +9,48 @@
 
 
 inline void   
-Options::supplier_port (const char *port)
+Options::supplier_port (const ACE_TCHAR *port)
 {
   this->supplier_port_ = port;
 }
 
-inline const char *
+inline const ACE_TCHAR *
 Options::supplier_port (void)
 {
   return this->supplier_port_;
 }
 
 inline void   
-Options::supplier_file (const char *file)
+Options::supplier_file (const ACE_TCHAR *file)
 {
   this->supplier_file_ = file;
 }
 
-inline const char *
+inline const ACE_TCHAR *
 Options::supplier_file (void)
 {
   return this->supplier_file_;
 }
 
 inline void   
-Options::consumer_file (const char *file)
+Options::consumer_file (const ACE_TCHAR *file)
 {
   this->consumer_file_ = file;
 }
 
-inline const char *
+inline const ACE_TCHAR *
 Options::consumer_file (void)
 {
   return this->consumer_file_;
 }
 
 inline void   
-Options::consumer_port (const char *port)
+Options::consumer_port (const ACE_TCHAR *port)
 {
   this->consumer_port_ = port;
 }
 
-inline const char *
+inline const ACE_TCHAR *
 Options::consumer_port (void)
 {
   return this->consumer_port_;
