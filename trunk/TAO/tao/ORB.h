@@ -436,12 +436,13 @@ private:
   // Resolve the Initial reference according to the commandline
   // option -ORBInitRef <ObjectID>:<IOR>
 
-  CORBA_Object_ptr resolve_name_service (ACE_Time_Value *timeout);
-  // Resolve the name service object reference.
-
+  CORBA_Object_ptr resolve_service (CORBA::String service_name,
+				    ACE_Time_Value *timeout);
+  // Resolve the service name.
+  
   CORBA_Object_ptr resolve_trading_service (ACE_Time_Value *timeout);
   // Resolve the trading object reference.
-
+  
   int multicast_query (char *buf,
 		       const char *service_name,
 		       u_short port,
