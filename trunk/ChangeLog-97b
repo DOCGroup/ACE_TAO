@@ -1,3 +1,7 @@
+Tue Sep 16 08:30:28 1997  Steve Huston  <shuston@riverace.com>
+
+	* ace/OS.i: Changed a couple of ACE_UNUSED(arg) to ACE_UNUSED_ARG(arg)
+	
 Mon Sep 15 12:08:38 1997    <irfan@TWOSTEP>
 
 	* ace/Reactor (register_handler): Originally this interface was
