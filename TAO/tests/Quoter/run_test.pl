@@ -18,12 +18,35 @@ $num_threads = 4;
 
 $sleeptime = 1;
 
+# Get the userid (or ip on NT)
+
+if ($^O eq "MSWin32")
+{
+  system ("ipconfig | find \"Address\">ipnum");
+
+  open (IPNUM, "ipnum");
+
+  read (IPNUM, $line, 80);
+
+  ($junk, $ip1, $ip2, $ip3, $ip4) = split (/: (\d+)\.(\d+)\.(\d+)\.(\d+)/, $line);
+
+  close IPNUM;
+
+  system ("del /q ipnum");
+
+  $uid = $ip4;
+}
+else
+{
+  $uid = getpwnam (getlogin ());
+}
+
 # variables for parameters
 
-$nsport = 20002;
-$clport = 20003;
-$svport = 20004;
-$ffport = 20005;
+$nsport = 20000 + $uid;
+$clport = 2 ;
+$svport = 20510 + $uid;
+$ffport = 20255 + $uid;
 $gfport = 0;
 
 # other variables
@@ -111,7 +134,7 @@ sub client
 for ($i = 0; $i <= $#ARGV; $i++)
 {
 	SWITCH: {
-		if ($ARGV[i] eq "-h" || $ARGV[i] eq "-?")
+		if ($ARGV[$i] eq "-h" || $ARGV[$i] eq "-?")
 		{
 			print "run_test [-n num] [-leave] [-d] [-h] [-cm] [-sm] [-ns|sv|ff|cl|gf]\n";
 			print "\n";
@@ -124,62 +147,62 @@ for ($i = 0; $i <= $#ARGV; $i++)
 			print "-ns -sv -ff -cl -gf -- runs only one of the executables\n";
 			exit;
 		}
-		if ($ARGV[i] eq "-n")
+		if ($ARGV[$i] eq "-n")
 		{
 			$n = $ARGV[i + 1];
 			$i++;
 			last SWITCH;
 		}
-		if ($ARGV[i] eq "-d")
+		if ($ARGV[$i] eq "-d")
 		{
 			$debug = $debug." -d";
 			last SWITCH;
 		}
-		if ($ARGV[i] eq "-cm")
+		if ($ARGV[$i] eq "-cm")
 		{
 			$cm = "-m";
 			last SWITCH;
 		}
-		if ($ARGV[i] eq "-sm")
+		if ($ARGV[$i] eq "-sm")
 		{
 			$sm = "-n ".$num_threads;
 			last SWITCH;
 		}
-		if ($ARGV[i] eq "-leave")
+		if ($ARGV[$i] eq "-leave")
 		{
 			$leave = 0;
 			last SWITCH;
 		}
-		if ($ARGV[i] eq "-ns")
+		if ($ARGV[$i] eq "-ns")
 		{
 			name_server ();
 			exit;
 		}
-		if ($ARGV[i] eq "-sv")
+		if ($ARGV[$i] eq "-sv")
 		{
 			read_nsior ();
 			server ();
 			exit;
 		}
-		if ($ARGV[i] eq "-ff")
+		if ($ARGV[$i] eq "-ff")
 		{
 			read_nsior ();
 			factory_finder ();
 			exit;
 		}
-		if ($ARGV[i] eq "-gf")
+		if ($ARGV[$i] eq "-gf")
 		{
 			read_nsior ();
 			generic_factory ();
 			exit;
 		}
-		if ($ARGV[i] eq "-cl")
+		if ($ARGV[$i] eq "-cl")
 		{
 			read_nsior ();
 			client ();
 			exit;
 		}
-		$other = $other." ".$ARGV[i];
+		$other = $other." ".$ARGV[$i];
 	}
 }
 
@@ -206,4 +229,16 @@ if ($leave)
 	$FF->Kill ();
 	$SV->Kill ();
 	$NS->Kill ();
+}
+
+
+exit ();
+
+if ($^O eq "MSWin32")
+{
+	system ("del ".$nsiorfile);
+}
+else
+{
+	system ("rm ".$nsiorfile);
 }
