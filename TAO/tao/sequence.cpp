@@ -4,6 +4,10 @@
 
 #include "tao/corba.h"
 
+#if !defined (__ACE_INLINE__)
+#include "tao/sequence.i"
+#endif /* __ACE_INLINE__ */
+
 // *************************************************************
 // Operations for class TAO_Base_Sequence
 // *************************************************************
