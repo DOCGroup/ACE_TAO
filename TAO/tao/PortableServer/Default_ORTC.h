@@ -41,6 +41,7 @@
 
 #include "portableserver_export.h"
 
+
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif

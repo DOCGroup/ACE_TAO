@@ -190,7 +190,7 @@ TAO::Objref_Traits<ImplementationRepository::ServerObject>::tao_marshal (
     TAO_OutputCDR & cdr
   )
 {
-  return p->marshal (cdr);
+  return CORBA::Object::marshal (p, cdr);
 }
 
 // Function pointer for collocation factory initialization.
@@ -391,7 +391,7 @@ ImplementationRepository::ServerObject::marshal (TAO_OutputCDR &cdr)
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:290
 
 static const CORBA::Long _oc_ImplementationRepository_ServerObject[] =
 {
@@ -542,7 +542,7 @@ CORBA::TypeCode_ptr ImplementationRepository::AlreadyRegistered::_type (void) co
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:290
 
 static const CORBA::Long _oc_ImplementationRepository_AlreadyRegistered[] =
 {
@@ -714,7 +714,7 @@ CORBA::TypeCode_ptr ImplementationRepository::CannotActivate::_type (void) const
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:290
 
 static const CORBA::Long _oc_ImplementationRepository_CannotActivate[] =
 {
@@ -871,7 +871,7 @@ CORBA::TypeCode_ptr ImplementationRepository::NotFound::_type (void) const
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:290
 
 static const CORBA::Long _oc_ImplementationRepository_NotFound[] =
 {
@@ -910,7 +910,7 @@ namespace ImplementationRepository
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:290
 
 static const CORBA::Long _oc_ImplementationRepository_EnvironmentVariable[] =
 {
@@ -977,7 +977,7 @@ ImplementationRepository::EnvironmentVariable::_tao_any_destructor (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:290
 
 static const CORBA::Long _oc_ImplementationRepository_Address[] =
 {
@@ -1069,7 +1069,7 @@ void ImplementationRepository::EnvironmentList::_tao_any_destructor (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:290
 
 static const CORBA::Long _oc_ImplementationRepository_EnvironmentList[] =
 {
@@ -1151,7 +1151,7 @@ namespace ImplementationRepository
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:290
 
 static const CORBA::Long _oc_ImplementationRepository_ActivationMode[] =
 {
@@ -1206,7 +1206,7 @@ namespace ImplementationRepository
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:290
 
 static const CORBA::Long _oc_ImplementationRepository_StartupOptions[] =
 {
@@ -1390,7 +1390,7 @@ ImplementationRepository::StartupOptions::_tao_any_destructor (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:290
 
 static const CORBA::Long _oc_ImplementationRepository_ServerInformation[] =
 {
@@ -1692,7 +1692,7 @@ void ImplementationRepository::ServerInformationList::_tao_any_destructor (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:290
 
 static const CORBA::Long _oc_ImplementationRepository_ServerInformationList[] =
 {
@@ -1995,7 +1995,7 @@ TAO::Objref_Traits<ImplementationRepository::Administration>::tao_marshal (
     TAO_OutputCDR & cdr
   )
 {
-  return p->marshal (cdr);
+  return CORBA::Object::marshal (p, cdr);
 }
 
 // Function pointer for collocation factory initialization.
@@ -2813,7 +2813,7 @@ ImplementationRepository::Administration::marshal (TAO_OutputCDR &cdr)
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:290
 
 static const CORBA::Long _oc_ImplementationRepository_Administration[] =
 {
@@ -2889,7 +2889,7 @@ TAO::Objref_Traits<ImplementationRepository::ServerInformationIterator>::tao_mar
     TAO_OutputCDR & cdr
   )
 {
-  return p->marshal (cdr);
+  return CORBA::Object::marshal (p, cdr);
 }
 
 // Function pointer for collocation factory initialization.
@@ -3098,7 +3098,7 @@ ImplementationRepository::ServerInformationIterator::marshal (TAO_OutputCDR &cdr
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:290
 
 static const CORBA::Long _oc_ImplementationRepository_ServerInformationIterator[] =
 {
@@ -4336,7 +4336,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1633
+// be\be_visitor_root/root.cpp:1628
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

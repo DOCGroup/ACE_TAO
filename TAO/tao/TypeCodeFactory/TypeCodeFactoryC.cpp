@@ -30,6 +30,7 @@
 
 
 #include "TypeCodeFactoryC.h"
+#include "tao/CDR.h"
 #include "tao/Any_Impl_T.h"
 #include "tao/Basic_Arguments.h"
 #include "tao/Object_Argument_T.h"
@@ -439,7 +440,7 @@ TAO::Objref_Traits<CORBA::TypeCodeFactory>::tao_marshal (
     TAO_OutputCDR & cdr
   )
 {
-  return p->marshal (cdr);
+  return CORBA::Object::marshal (p, cdr);
 }
 
 // Function pointer for collocation factory initialization.
@@ -548,7 +549,7 @@ CORBA::TypeCodeFactory::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:290
 
 static const CORBA::Long _oc_CORBA_TypeCodeFactory[] =
 {
@@ -655,7 +656,7 @@ operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1633
+// be\be_visitor_root/root.cpp:1628
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

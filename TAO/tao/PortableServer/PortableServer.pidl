@@ -2,14 +2,14 @@
  * @file PortableServer.pidl
  *
  * $Id$
- *   
+ *
  * @brief Pre-compiled IDL source for the PortableServer module.
  *
  * This file was used to generate the code in
  * PortableServerC.{h,i,cpp}, using the following command:
  *
  * tao_idl.exe \
- *     -o orig -Gp -Gd -Ge 1 -GT
+ *     -o orig -Gp -Gd -Ge 1 -GT -Sc -GA
  *          -Wb,export_macro=TAO_PortableServer_Export \
  *          -Wb,export_include="portableserver_export.h" \
  *          -Wb,pre_include="ace/pre.h" \
@@ -50,7 +50,7 @@
 
 #pragma prefix "omg.org"
 
-module PortableServer 
+module PortableServer
 {
 # pragma version PortableServer 2.3
 
@@ -59,7 +59,7 @@ module PortableServer
   native Servant;
   typedef CORBA::OctetSeq ObjectId;
 
-  exception ForwardRequest 
+  exception ForwardRequest
   {
     Object forward_reference;
   };
@@ -81,98 +81,98 @@ module PortableServer
   const CORBA::PolicyType SERVANT_RETENTION_POLICY_ID     = 21;
   const CORBA::PolicyType REQUEST_PROCESSING_POLICY_ID    = 22;
 
-  enum ThreadPolicyValue 
+  enum ThreadPolicyValue
   {
     ORB_CTRL_MODEL,
     SINGLE_THREAD_MODEL
   };
 
-  local interface ThreadPolicy : CORBA::Policy 
+  local interface ThreadPolicy : CORBA::Policy
   {
     readonly attribute ThreadPolicyValue value;
   };
 
-  enum LifespanPolicyValue 
+  enum LifespanPolicyValue
   {
     TRANSIENT,
     PERSISTENT
   };
 
-  local interface LifespanPolicy : CORBA::Policy 
+  local interface LifespanPolicy : CORBA::Policy
   {
     readonly attribute LifespanPolicyValue value;
   };
 
-  enum IdUniquenessPolicyValue 
+  enum IdUniquenessPolicyValue
   {
     UNIQUE_ID,
     MULTIPLE_ID
   };
 
-  local interface IdUniquenessPolicy : CORBA::Policy 
+  local interface IdUniquenessPolicy : CORBA::Policy
   {
     readonly attribute IdUniquenessPolicyValue value;
   };
 
-  enum IdAssignmentPolicyValue 
+  enum IdAssignmentPolicyValue
   {
     USER_ID,
     SYSTEM_ID
   };
 
-  local interface IdAssignmentPolicy : CORBA::Policy 
+  local interface IdAssignmentPolicy : CORBA::Policy
   {
     readonly attribute IdAssignmentPolicyValue value;
   };
 
-  enum ImplicitActivationPolicyValue 
+  enum ImplicitActivationPolicyValue
   {
     IMPLICIT_ACTIVATION,
     NO_IMPLICIT_ACTIVATION
   };
 
-  local interface ImplicitActivationPolicy : CORBA::Policy 
+  local interface ImplicitActivationPolicy : CORBA::Policy
   {
     readonly attribute ImplicitActivationPolicyValue value;
   };
 
-  enum ServantRetentionPolicyValue 
+  enum ServantRetentionPolicyValue
   {
     RETAIN,
     NON_RETAIN
   };
 
-  local interface ServantRetentionPolicy : CORBA::Policy 
+  local interface ServantRetentionPolicy : CORBA::Policy
   {
     readonly attribute ServantRetentionPolicyValue value;
   };
 
-  enum RequestProcessingPolicyValue 
+  enum RequestProcessingPolicyValue
   {
     USE_ACTIVE_OBJECT_MAP_ONLY,
     USE_DEFAULT_SERVANT,
     USE_SERVANT_MANAGER
   };
 
-  local interface RequestProcessingPolicy : CORBA::Policy 
+  local interface RequestProcessingPolicy : CORBA::Policy
   {
     readonly attribute RequestProcessingPolicyValue value;
   };
 
   // POAManager interface
-  local interface POAManager 
+  local interface POAManager
   {
     exception AdapterInactive {};
 
-    enum State 
+    enum State
     {
-      HOLDING, 
-      ACTIVE, 
-      DISCARDING, 
+      HOLDING,
+      ACTIVE,
+      DISCARDING,
       INACTIVE
     };
 
-    void activate ()             
+    void activate ()
       raises(AdapterInactive);
 
     void hold_requests (in boolean wait_for_completion)
@@ -189,7 +189,7 @@ module PortableServer
   };
 
   // AdapterActivator interface.
-  local interface AdapterActivator 
+  local interface AdapterActivator
   {
 #   pragma version AdapterActivator 2.3
 
