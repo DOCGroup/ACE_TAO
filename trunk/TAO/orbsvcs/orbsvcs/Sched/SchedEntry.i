@@ -310,28 +310,28 @@ TimeLine_Entry::dispatch_entry () const
 
 
 // accessor for time slice start time (100 nanoseconds)
-ACE_INLINE u_long
+ACE_INLINE RtecScheduler::Time
 TimeLine_Entry::start () const
 {
   return start_;
 }
 
 // accessor for time slice stop time (100 nanoseconds)
-ACE_INLINE u_long
+ACE_INLINE RtecScheduler::Time
 TimeLine_Entry::stop () const
 {
   return stop_;
 }
 
 // accessor for time slice stop time (100 nanoseconds)
-ACE_INLINE u_long
+ACE_INLINE RtecScheduler::Time
 TimeLine_Entry::arrival () const
 {
   return arrival_;
 }
 
 // accessor for time slice stop time (100 nanoseconds)
-ACE_INLINE u_long
+ACE_INLINE RtecScheduler::Time
 TimeLine_Entry::deadline () const
 {
   return deadline_;

@@ -341,10 +341,10 @@ Task_Entry::conjunctive_merge (
   int more_dispatches = (conj_set_iter.done ()) ? 0 : 1;
   while (more_dispatches)
   {
-    u_long arrival = 0;
-    u_long deadline = 0;
-    long priority = 0;
-    long OS_priority = 0;
+    Time arrival = 0;
+    Time deadline = 0;
+    Preemption_Priority priority = 0;
+    OS_Priority OS_priority = 0;
 
     for (conj_set_iter.first ();
          conj_set_iter.done () == 0;
@@ -651,9 +651,9 @@ Dispatch_Entry::operator < (const Dispatch_Entry &d) const
   // lowest laxity (highest dynamic sub-priority) third
   // Just use low 32 bits of worst_case_execution_time.  This will
   // have to change when CosTimeBase.idl is finalized.
-  ACE_INT32 /* Time */ this_laxity = deadline_ -
+  Time this_laxity = deadline_ -
                      task_entry ().rt_info ()->worst_case_execution_time;
-  ACE_INT32 /* Time */ that_laxity = d.deadline_ -
+  Time that_laxity = d.deadline_ -
                      d.task_entry ().rt_info ()->worst_case_execution_time;
   if (this_laxity != that_laxity)
   {
@@ -833,7 +833,7 @@ Dispatch_Proxy_Iterator::retreat ()
   // frame, returns 1 if it could position the iterator
   // correctly, 0 if not, and -1 if an error occurred.
 
-u_long
+RtecScheduler::Time
 Dispatch_Proxy_Iterator::arrival () const
 {
   Dispatch_Entry_Link *link;
@@ -848,7 +848,7 @@ Dispatch_Proxy_Iterator::arrival () const
 }
   // returns the adjusted arrival time of the virtual entry
 
-u_long
+RtecScheduler::Time
 Dispatch_Proxy_Iterator::deadline () const
 {
   Dispatch_Entry_Link *link;
@@ -897,8 +897,8 @@ Dispatch_Proxy_Iterator::OS_priority () const
 
     // time slice constructor
 TimeLine_Entry::TimeLine_Entry (Dispatch_Entry &dispatch_entry,
-                                u_long start, u_long stop,
-                                u_long arrival, u_long deadline,
+                                Time start, Time stop,
+                                Time arrival, Time deadline,
                                 TimeLine_Entry *next,
                                 TimeLine_Entry *prev)
   : dispatch_entry_ (dispatch_entry)

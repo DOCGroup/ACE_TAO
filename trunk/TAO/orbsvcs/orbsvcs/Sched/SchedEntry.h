@@ -457,10 +457,10 @@ public:
   // proxy interface //
   /////////////////////
 
-  u_long arrival () const;
+  Time arrival () const;
     // returns the adjusted arrival time of the virtual entry
 
-  u_long deadline () const;
+  Time deadline () const;
     // returns the adjusted deadline time of the virtual entry
 
   Preemption_Priority priority () const;
@@ -510,10 +510,10 @@ public:
 
   // time slice constructor
   TimeLine_Entry (Dispatch_Entry &dispatch_entry,
-                  u_long start,
-                  u_long stop,
-                  u_long arrival,
-                  u_long deadline,
+                  Time start,
+                  Time stop,
+                  Time arrival,
+                  Time deadline,
                   TimeLine_Entry *next = 0,
                   TimeLine_Entry *prev = 0);
 
@@ -521,10 +521,10 @@ public:
   Dispatch_Entry &dispatch_entry () const;
 
   // accessors for time slice start and stop times (100 nanoseconds)
-  u_long start () const;
-  u_long stop () const;
-  u_long arrival () const;
-  u_long deadline () const;
+  Time start () const;
+  Time stop () const;
+  Time arrival () const;
+  Time deadline () const;
 
   // accessor and mutator for next and prev slices for this dispatch
   TimeLine_Entry *next (void) const;
@@ -540,10 +540,10 @@ private:
   Dispatch_Entry &dispatch_entry_;
 
   // priority time slice times (100 nanoseconds)
-  u_long start_;
-  u_long stop_;
-  u_long arrival_;
-  u_long deadline_;
+  Time start_;
+  Time stop_;
+  Time arrival_;
+  Time deadline_;
 
   // next and previous priority time slices for this dispatch entry
   TimeLine_Entry *next_;

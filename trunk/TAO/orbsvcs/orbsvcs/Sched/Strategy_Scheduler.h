@@ -140,7 +140,7 @@ public:
     //   second Dispatch_Entry is greater in the order
 
     virtual long dynamic_subpriority (Dispatch_Entry &entry,
-                                      u_long current_time) = 0;
+                                      RtecScheduler::Time current_time) = 0;
     // = returns a dynamic subpriority value
     //   for the given timeline entry at the current time
 
@@ -213,7 +213,7 @@ public:
 protected:
 
     virtual long dynamic_subpriority (Dispatch_Entry &entry,
-                                      u_long current_time);
+                                      RtecScheduler::Time current_time);
     // = returns a dynamic subpriority value at the current time for
     //   the given timeline entry: if the operation has
     //   non-negative laxity, then the value is positive, and a lower
@@ -276,7 +276,7 @@ public:
 protected:
 
     virtual long dynamic_subpriority (Dispatch_Entry &entry,
-                                      u_long current_time);
+                                      RtecScheduler::Time current_time);
     // = just returns 0: all operations have
     //   the same dynamic subpriority value
 
@@ -334,7 +334,7 @@ public:
 protected:
 
     virtual long dynamic_subpriority (Dispatch_Entry &entry,
-                                    u_long current_time);
+                                      RtecScheduler::Time current_time);
     // = returns a dynamic subpriority value at the current time for
     //   the given timeline entry: if the operation has
     //   non-negative laxity, then the value is positive, and a lower
@@ -393,7 +393,7 @@ public:
 protected:
 
     virtual long dynamic_subpriority (Dispatch_Entry &entry,
-                                      u_long current_time);
+                                      RtecScheduler::Time current_time);
     // = returns a dynamic subpriority value at the current time for the
     //   given timeline entry: if the operation has non-negative
     //   time to deadline, then value is positive, and a shorter time to
@@ -458,7 +458,7 @@ public:
 protected:
 
     virtual long dynamic_subpriority (Dispatch_Entry &entry,
-                                      u_long current_time);
+                                      RtecScheduler::Time current_time);
     // = returns a dynamic subpriority value at the current time for the
     //   given timeline entry: if the operation is in the
     //   critical set, the dynamic subpriority value is always 0; if the
