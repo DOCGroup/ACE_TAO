@@ -124,6 +124,15 @@ TAO::TypeCode::Value<StringType,
     {
       Field<StringType> const & lhs_field = this->fields_[i];
 
+      CORBA::Visibility const lhs_visibility = lhs_field.visibility;
+      CORBA::Visibility const rhs_visibility =
+        tc->member_visibility_i (i
+                                 ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (0);
+
+      if (lhs_visibility != rhs_visibility)
+        return 0;
+
       char const * const lhs_name = lhs_field.get_name ();
       char const * const rhs_name = tc->member_name (i
                                                      ACE_ENV_ARG_PARAMETER);
@@ -144,15 +153,6 @@ TAO::TypeCode::Value<StringType,
       ACE_CHECK_RETURN (0);
 
       if (!equal_members)
-        return 0;
-
-      CORBA::Visibility const lhs_visibility = lhs_field.visibility;
-      CORBA::Visibility const rhs_visibility =
-        tc->member_visibility_i (i
-                                 ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
-
-      if (lhs_visibility != rhs_visibility)
         return 0;
     }
 
@@ -220,8 +220,10 @@ TAO::TypeCode::Value<StringType,
 
       for (CORBA::ULong i = 0; i < this->nfields_; ++i)
         {
+          Field<StringType> const & lhs_field = this->fields_[i];
+
           CORBA::Visibility const lhs_visibility =
-            this->fields_[i].visibility;
+            lhs_field.visibility;
           CORBA::Visibility const rhs_visibility =
             tc->member_visibility (i
                                    ACE_ENV_ARG_PARAMETER);
@@ -230,7 +232,7 @@ TAO::TypeCode::Value<StringType,
           if (lhs_visibility != rhs_visibility)
             return 0;
 
-          CORBA::TypeCode_ptr const lhs_tc = *(this->fields_[i].type);
+          CORBA::TypeCode_ptr const lhs_tc = *(lhs_field.type);
           CORBA::TypeCode_var const rhs_tc =
             tc->member_type (i
                              ACE_ENV_ARG_PARAMETER);
