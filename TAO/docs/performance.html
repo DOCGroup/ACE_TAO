@@ -42,8 +42,33 @@
       making assumptions about how applications are designed.
     </p>
 
-    <!-- Ossama, can you please add a brief outline of what's
-      described in the document below?! -->
+    <p>
+      This document is organized as follows:
+    </p>
+    <ul>
+      <li>
+	<a href="#throughput">Optimizing Throughput</a>
+	<ul>
+	  <li>
+	    <a href="#client_throughput">Optimizing Client Throughput</a>
+	  </li>
+	  <li>
+	    <a href="#server_throughput">Optimizing Server Throughput</a>
+	  </li>
+	</ul>
+      </li>
+      <li>
+	<a href="#scalability">Optimizing Scalability</a>
+	<ul>
+	  <li>
+	    <a href="#client_scalability">Optimizing Client Scalability</a>
+	  </li>
+	  <li>
+	    <a href="#server_scalability">Optimizing Server Scalability</a>
+	  </li>
+	</ul>
+      </li>
+    </ul>
       
     <p><hr><p>
     <a name="throughput"></a>
@@ -241,7 +266,7 @@
       example, a non-scalable configuration will perform poorly as the
       number of pending CORBA requests on the client increases from
       <code>10</code> to <code>1,000</code>, and similarly on the
-      server.  ORB scalability is particular important on the server
+      server.  ORB scalability is particularly important on the server
       since it must often handle many requests from multiple clients.
     </p>
 
@@ -386,7 +411,7 @@
     <address><a href="mailto:ossama@uci.edu">Ossama Othman</a></address>
 <!-- Created: Mon Nov 26 13:22:00 PST 2001 -->
 <!-- hhmts start -->
-Last modified: Sun Dec 16 09:55:51 Pacific Standard Time 2001
+Last modified: Sun Dec 16 10:01:50 Pacific Standard Time 2001
 <!-- hhmts end -->
   </body>
 </html>
