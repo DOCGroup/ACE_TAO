@@ -30,7 +30,7 @@ class Supplier : public POA_RtecEventComm::PushSupplier
   //
   // = DESCRIPTION
   //   This class is a supplier of events.
-  //   It simply register for two event typesone event type
+  //   It simply register for one event type
   //   The class is just a helper to simplify common tasks in EC
   //   tests, such as subscribing for a range of events, disconnecting
   //   from the EC, informing the driver of shutdown messages, etc.

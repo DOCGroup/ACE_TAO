@@ -1,3 +1,8 @@
+Mon Apr 24 13:16:23 2000  Shawn Hannan  <hannan@tango.cs.wustl.edu>
+
+	* orbsvcs/examples/RtEC/Simple/Supplier.h: 
+	* orbsvcs/examples/RtEC/Simple/Consumer.h:  Fixed minor typos
+
 Sun Apr 23 16:15:16 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * orbsvcs/orbsvcs/Naming/Persistent_Context_Index.cpp:

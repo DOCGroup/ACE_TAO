@@ -30,7 +30,7 @@ class Consumer : public POA_RtecEventComm::PushConsumer
   //
   // = DESCRIPTION
   //   This class is a consumer of events.
-  //   It simply register for two event typesone event type
+  //   It simply register for two event types
   //   The class is just a helper to simplify common tasks in EC
   //   tests, such as subscribing for a range of events, disconnecting
   //   from the EC, informing the driver of shutdown messages, etc.
