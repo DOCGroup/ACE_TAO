@@ -3,6 +3,13 @@ Sun Jun  4 13:33:43 2000  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 	* orbsvcs/tests/Notify/Basic/Updates.cpp:
 	  renamed #defines to fix compile errors on Compaq Tru64 UNIX.
 
+	
+Sun Jun  4 11:07:50 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
+
+	* tao/RT_Policy_i.cpp
+	Removed (temporarily) unused argument.	
+
+	
 Sat Jun  3 20:56:46 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * orbsvcs/orbsvcs/AV/MCast.cpp:
