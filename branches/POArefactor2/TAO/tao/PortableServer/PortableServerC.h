@@ -40,10 +40,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#ifndef TAO_PORTABLESERVER_SAFE_INCLUDE
-#error "You should not include PortableServerC.h directly, use PortableServer.h"
-#endif /* !TAO_PORTABLESERVER_SAFE_INCLUDE */
-
 #include "portableserver_export.h"
 #include "tao/ORB.h"
 #include "tao/SystemException.h"
