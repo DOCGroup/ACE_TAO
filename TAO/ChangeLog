@@ -1,3 +1,9 @@
+Sat Aug  9 14:05:13 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Event/EC_Kokyu_Dispatching.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Kokyu_Filter.cpp:
+	  Fixed unused parameters compiler warnings in Debian_Full_Reactors build.
+
 Sat Aug  9 13:38:27 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* orbsvcs/Event_Service/Event_Service.cpp:
