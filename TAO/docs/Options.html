@@ -85,7 +85,7 @@ The following environment variables are supported by TAO:
   <TR>
     <TD><CODE>ImplRepoServicePort</CODE> <EM>which</EM></TD>
     <TD>
-        Specifies which port the Implementation Repository is listening on for 
+        Specifies which port the Implementation Repository is listening on for
         multicast requests.
     </TD>
   </TR>
@@ -518,8 +518,8 @@ The default is <code>select_mt</code></TD>
   <TD><a name="-ORBSchedPolicy"></a>
       Specify the scheduling policy used for the priority mapping
       computations.
-      Priority mappings map the CORBA priority range (from 0 to 32767) 
-      into the native OS priority range, but in some operating systems 
+      Priority mappings map the CORBA priority range (from 0 to 32767)
+      into the native OS priority range, but in some operating systems
       the range depends on the scheduling policy used.
       Using this option the user can set the scheduling policy, valid
       values as <B>SCHED_OTHER</B>, <B>SCHED_FIFO</B> and
@@ -538,7 +538,7 @@ The default is <code>select_mt</code></TD>
       The <B>direct</B> mapping maps the first <B>n</B> CORBA
       priorities to the range of native priorities,
       where <B>n</B> is the number of native priorities.
-      In all the operating systems where TAO is supported the range of 
+      In all the operating systems where TAO is supported the range of
       CORBA priorities is larger than the native set.
   </TD>
 </TR>
@@ -627,11 +627,16 @@ The default is <code>select_mt</code></TD>
 
     <TD><CODE>-ORBSystemidPolicyDemuxStrategy</CODE> <EM>system id policy
         based demultiplexing strategy</EM></TD>
-    <TD>Specify the demultiplexing
-        lookup strategy to be used with the system id policy. The
-        <EM>demultiplexing strategy</EM> can be one of <CODE>dynamic</CODE>,
-        <CODE>linear</CODE>, or <CODE>active</CODE>. This option defaults to
-        use the <CODE>active</CODE> strategy. </TD>
+
+    <TD>Specify the demultiplexing lookup strategy to be used with the
+        system id policy. The <EM>demultiplexing strategy</EM> can be
+        one of <CODE>dynamic</CODE>, <CODE>linear</CODE>, or
+        <CODE>active</CODE>. This option defaults to use the
+        <CODE>dynamic</CODE> strategy when
+        <CODE>-ORBAllowReactivationOfSystemids</CODE> is true, and to
+        <CODE>active</CODE> strategy when
+        <CODE>-ORBAllowReactivationOfSystemids</CODE> is false. </TD>
+
   </TR>
   <TR>
 
