@@ -68,7 +68,7 @@ ImplRepo_i::activate_server (const char *server,
             {
               ACE_ERROR ((LM_ERROR,
                           "Error: Invalid ServerObject IOR: <%s>\n",
-                          server_object_ior));
+                          server_object_ior.c_str ()));
               ACE_THROW (ImplementationRepository::Administration::NotFound ());
             }
 
@@ -571,7 +571,7 @@ ImplRepo_i::list (CORBA::ULong how_many,
   ACE_CHECK;
 
   // Get a new iterator
-  auto_ptr<Server_Repository::HASH_IR_ITER> server_iter = this->repository_.new_iterator ();
+  auto_ptr<Server_Repository::HASH_IR_ITER> server_iter (this->repository_.new_iterator ());
 
   // Check for a memory error.
   if (server_iter.get () == 0)
@@ -637,7 +637,7 @@ ImplRepo_i::list (CORBA::ULong how_many,
       ACE_TRY
         {
           CORBA::String_var str =
-            this->orb_manager_.activate (ir_iter, ACE_TRY_ENV)
+            this->orb_manager_.activate (ir_iter, ACE_TRY_ENV);
           ACE_TRY_CHECK;
           server_iterator = ir_iter->_this (ACE_TRY_ENV);
           ACE_TRY_CHECK;
