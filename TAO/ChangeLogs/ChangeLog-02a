@@ -1,3 +1,20 @@
+Wed Apr  4 13:43:50 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * orbsvcs/IFR_Service/AbstractInterfaceDef_i.cpp:
+        * orbsvcs/IFR_Service/AbstractInterfaceDef_i.h:
+        * orbsvcs/IFR_Service/InterfaceDef_i.cpp:
+        * orbsvcs/IFR_Service/InterfaceDef_i.h:
+        * orbsvcs/IFR_Service/LocalInterfaceDef_i.cpp:
+        * orbsvcs/IFR_Service/LocalInterfaceDef_i.h:
+        * orbsvcs/IFR_Service/ValueDef_i.cpp:
+
+          Added some new behavior introduced in CORBA 2.4.2.
+
+        * orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
+        * orbsvcs/IFR_Service/Repository_i.cpp:
+
+          Cosmetic changes.
+
 Wed Apr  4 12:58:05 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/Dump_Schedule/Dump_Schedule.cpp:
