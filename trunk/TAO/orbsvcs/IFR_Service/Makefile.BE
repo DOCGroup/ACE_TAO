@@ -12,7 +12,7 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
 
-LDLIBS += -lTAO_IDL_FE_DLL -lTAO
+LDLIBS += -lTAO_IFR_Client -lTAO_IDL_FE_DLL -lTAO
 ACE_SHLIBS += -lTAO_IDL_FE_DLL -lACE
 
 VPATH = .
@@ -20,8 +20,8 @@ VPATH = .
 MAKEFILE=Makefile.BE
 
 LIBNAME = libTAO_IFR_BE_DLL
-LIB_UNCHECKED = $(LIBNAME).a
-SHLIB_UNCHECKED = $(LIBNAME).$(SOEXT)
+LIB = $(LIBNAME).a
+SHLIB = $(LIBNAME).$(SOEXT)
 
 FILES = be_global \
         be_produce \
@@ -42,12 +42,6 @@ LSRC = $(addsuffix .cpp,$(FILES))
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
-
-ifeq ($(interface_repo),1)
-  LIB = $(LIB_UNCHECKED)
-  SHLIB = $(SHLIB_UNCHECKED)
-endif # interface_repo
-
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU

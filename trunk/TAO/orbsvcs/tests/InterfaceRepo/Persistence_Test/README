@@ -8,11 +8,9 @@ two functions: populate() and query().
 
 To build this test, the TAO library, the TypeCodeFactory
 library, the Interface Repository (the last two found in
-TAO/orbsvcs/IFR_Service), must be previously built, and all
-either with the compiler option 'interface_repo=1' or (for
-MSVC users) the line #define TAO_HAS_INTERFACE_REPOSITORY 1
-uncommented in TAO/tao/orbconf.h. In addition, the Interface
-Repository requires the TAO_Svc_Utils library in TAO/orbsvcs/orbsvcs.
+TAO/orbsvcs/IFR_Service), must be previously built. In addition, 
+the Interface Repository requires the TAO_Svc_Utils library in 
+TAO/orbsvcs/orbsvcs.
 
 It is far easier to run the test with the provided Perl script
 run_test.pl, but to do it by hand, first start the IFR with

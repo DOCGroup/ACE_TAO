@@ -12,7 +12,8 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif
 
-LDLIBS = -lTypeCodeFactory_DLL -lTAO_Svc_Utils -lTAO_IORTable -lTAO_PortableServer -lTAO
+LDLIBS = -lTypeCodeFactory_DLL -lTAO_Svc_Utils -lTAO_IFR_Client \
+         -lTAO_IORTable -lTAO_PortableServer -lTAO -lACE
 
 PROG_SRCS = \
         AliasDef_i.cpp \
@@ -110,7 +111,7 @@ IFR_SVR_OBJS = \
 	ValueMemberDef_i.o \
 	WstringDef_i.o
 
-BIN_UNCHECKED = IFR_Service
+BIN = IFR_Service
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
@@ -119,12 +120,6 @@ BIN_UNCHECKED = IFR_Service
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
-
-ifeq ($(interface_repo),1)
-  BIN = $(BIN_UNCHECKED)
-  ARG = interface_repo=1
-endif # interface_repo
-
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU

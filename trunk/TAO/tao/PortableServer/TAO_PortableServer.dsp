@@ -172,10 +172,6 @@ SOURCE=.\Direct_Object_Proxy_Impl.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\DomainS.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\ImplRepoC.cpp
 # End Source File
 # Begin Source File
@@ -268,10 +264,6 @@ SOURCE=.\Direct_Object_Proxy_Impl.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\DomainS.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\ImplRepoC.h
 # End Source File
 # Begin Source File
@@ -312,15 +304,15 @@ SOURCE=.\POA.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\POA_CORBA.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\poa_macros.h
 # End Source File
 # Begin Source File
 
 SOURCE=.\POAManager.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\PolicyS.h
 # End Source File
 # Begin Source File
 
@@ -369,10 +361,6 @@ SOURCE=.\Active_Object_Map.i
 # Begin Source File
 
 SOURCE=.\Collocated_Object.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\DomainS.i
 # End Source File
 # Begin Source File
 

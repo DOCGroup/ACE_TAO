@@ -20,11 +20,16 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 #include "InterfaceC.h"
-
-#if (TAO_HAS_INTERFACE_REPOSITORY == 1)
-
 #include "tao/Stub.h"
 #include "tao/Invocation.h"
+
+#if TAO_HAS_INTERCEPTORS == 1
+#include "tao/RequestInfo_Util.h"
+#endif  /* TAO_HAS_INTERCEPTORS == 1 */
+
+#if defined (__BORLANDC__)
+#pragma option -w-rvl -w-rch -w-ccc -w-aus
+#endif /* __BORLANDC__ */
 
 #if !defined (__ACE_INLINE__)
 #include "InterfaceC.i"
@@ -421,39 +426,6 @@ void CORBA_IRObject::destroy (
       ACE_TRY_ENV
     );
 }
-
-static const CORBA::Long _oc_CORBA_IRObject[] =
-{
-  TAO_ENCAP_BYTE_ORDER, // byte order
-  31, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x434f5242), ACE_NTOHL (0x412f4952), ACE_NTOHL (0x4f626a65), ACE_NTOHL (0x63743a31), ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/IRObject:1.0
-  9, ACE_NTOHL (0x49524f62), ACE_NTOHL (0x6a656374), ACE_NTOHL (0x0),  // name = CORBA_IRObject
-};
-static CORBA::TypeCode _tc_TAO_tc_CORBA_IRObject (CORBA::tk_objref, sizeof (_oc_CORBA_IRObject), (char *) &_oc_CORBA_IRObject, 0, sizeof (CORBA_IRObject));
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (CORBA)
-TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_IRObject, &_tc_TAO_tc_CORBA_IRObject)
-TAO_NAMESPACE_END
-static const CORBA::Long _oc_CORBA_Visibility[] =
-{
-  TAO_ENCAP_BYTE_ORDER, // byte order
-  33, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x434f5242), ACE_NTOHL (0x412f5669), ACE_NTOHL (0x73696269), ACE_NTOHL (0x6c697479), ACE_NTOHL (0x3a312e30), ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/CORBA/Visibility:1.0
-  11, ACE_NTOHL (0x56697369), ACE_NTOHL (0x62696c69), ACE_NTOHL (0x74790000),  // name = Visibility
-  CORBA::tk_short,
-
-};
-static CORBA::TypeCode _tc_TAO_tc_CORBA_Visibility (CORBA::tk_alias, sizeof (_oc_CORBA_Visibility), (char *) &_oc_CORBA_Visibility, 0, sizeof (CORBA::Visibility));
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (CORBA)
-TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_Visibility, &_tc_TAO_tc_CORBA_Visibility)
-TAO_NAMESPACE_END
-TAO_NAMESPACE_TYPE (const CORBA::Short)
-TAO_NAMESPACE_BEGIN (CORBA)
-TAO_NAMESPACE_DEFINE (const CORBA::Short, PRIVATE_MEMBER, 0)
-TAO_NAMESPACE_END
-TAO_NAMESPACE_TYPE (const CORBA::Short)
-TAO_NAMESPACE_BEGIN (CORBA)
-TAO_NAMESPACE_DEFINE (const CORBA::Short, PUBLIC_MEMBER, 1)
-TAO_NAMESPACE_END
 
 static const CORBA::Long _oc_IR_Identifier[] =
 {
@@ -38302,4 +38274,3 @@ CORBA::Boolean operator>> (
   return 0; // error
 }
 
-#endif /* TAO_HAS_INTERFACE_REPOSITORY */

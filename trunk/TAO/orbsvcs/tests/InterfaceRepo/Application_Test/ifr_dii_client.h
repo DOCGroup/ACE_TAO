@@ -11,7 +11,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/NVList.h"
-#include "tao/InterfaceC.h"
+#include "tao/IFR_Client/InterfaceC.h"
 #include "tao/DynamicInterface/Request.h"
 
 class IFR_DII_Client

@@ -40,6 +40,8 @@ RSC=rc.exe
 # PROP Output_Dir ""
 # PROP Intermediate_Dir "LIB\Release"
 # PROP Target_Dir ""
+LINK32=link.exe -lib
+MTL=midl.exe
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /YX /FD /c
 # ADD CPP /nologo /MD /W3 /GX /O2 /I "../../" /I "../" /D "_WINDOWS" /D "_CONSOLE" /D "NDEBUG" /D "WIN32" /D "TAO_AS_STATIC_LIBS" /D "ACE_AS_STATIC_LIBS" /FD /c
 # SUBTRACT CPP /YX
@@ -64,6 +66,8 @@ LIB32=link.exe -lib
 # PROP Output_Dir ""
 # PROP Intermediate_Dir "LIB\Debug"
 # PROP Target_Dir ""
+LINK32=link.exe -lib
+MTL=midl.exe
 # ADD BASE CPP /nologo /W3 /GX /Z7 /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /YX /FD /c
 # ADD CPP /nologo /MDd /W3 /GX /Zi /Od /I "../../" /I "../" /D "_WINDOWS" /D "_CONSOLE" /D "_DEBUG" /D "WIN32" /D "ACE_AS_STATIC_LIBS" /D "TAO_AS_STATIC_LIBS" /FD /c
 # SUBTRACT CPP /YX
@@ -347,7 +351,7 @@ SOURCE=.\GIOPC.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\ifrfwd.h
+SOURCE=.\IFR_Client_Adapter.h
 # End Source File
 # Begin Source File
 
@@ -392,10 +396,6 @@ SOURCE=.\IIOPC.h
 # Begin Source File
 
 SOURCE=.\Interceptor_List.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\InterfaceC.h
 # End Source File
 # Begin Source File
 
@@ -1123,10 +1123,6 @@ SOURCE=.\Interceptor_List.inl
 # End Source File
 # Begin Source File
 
-SOURCE=.\InterfaceC.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\Invocation.i
 # End Source File
 # Begin Source File
@@ -1727,6 +1723,14 @@ SOURCE=.\GIOPC.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\IFR_Client_Adapter.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\IFR_TypeCodes.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\IIOP_Acceptor.cpp
 # End Source File
 # Begin Source File
@@ -1768,10 +1772,6 @@ SOURCE=.\IIOPC.cpp
 # Begin Source File
 
 SOURCE=.\Interceptor_List.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\InterfaceC.cpp
 # End Source File
 # Begin Source File
 

@@ -122,15 +122,6 @@ else  # corba_messaging
   # CPPFLAGS += -DTAO_HAS_CORBA_MESSAGING=1
 endif # corba_messaging
 
-ifeq ($(smart_proxies),1)
-  CPPFLAGS += -DTAO_HAS_SMART_PROXIES=1
-else  # smart_proxies
-  override smart_proxies = 0
-  # The following line is not needed,
-  # the $TAO_ROOT/tao/orbconf.h file defines it by default
-  # CPPFLAGS += -DTAO_HAS_SMART_PROXIES=0
-endif # smart_proxies
-
 ifeq ($(interceptors),0)
   CPPFLAGS += -DTAO_HAS_INTERCEPTORS=0
 else  # interceptors
@@ -145,10 +136,6 @@ else
 ifeq (1,$(ACE_HAS_GNUG_PRE_2_8))
 endif # ! ACE_HAS_GNUG_PRE_2_8
 endif # ! CROSS-COMPILE
-
-ifeq ($(interface_repo),1)
-  CPPFLAGS += -DTAO_HAS_INTERFACE_REPOSITORY=1
-endif # interface_repo
 
 ####
 #### Event Channel customization.

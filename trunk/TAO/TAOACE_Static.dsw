@@ -183,6 +183,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Domain_static"=.\tao\Domain\TAO_Domain_Static.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "DsLogAdmin_Static"=.\orbsvcs\orbsvcs\DsLogAdmin_Static.dsp - Package Owner=<4>
 
 Package=<5>
@@ -201,7 +213,31 @@ Package=<4>
 
 ###############################################################################
 
+Project: "DynamicInterface_Static"=.\TAO\DYNAMICINTERFACE\TAO_DynamicInterface_Static.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Event_Service_static"=.\orbsvcs\Event_Service\Event_Service_static.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "IFR_Client_Static"=.\tao\IFR_Client\TAO_IFR_Client_Static.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -373,18 +409,6 @@ Package=<4>
 ###############################################################################
 
 Project: "TAO LIB"=.\tao\TAO_Static.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "TAO_DynamicInterface_Static"=.\TAO\DYNAMICINTERFACE\TAO_DynamicInterface_Static.dsp - Package Owner=<4>
 
 Package=<5>
 {{{

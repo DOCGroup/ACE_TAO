@@ -9,7 +9,6 @@ OBJFILES = \
 	$(OBJDIR)\Collocated_Object.obj \
 	$(OBJDIR)\Default_Acceptor_Filter.obj \
 	$(OBJDIR)\Direct_Object_Proxy_Impl.obj \
-	$(OBJDIR)\DomainS.obj \
 	$(OBJDIR)\ImplRepoC.obj \
 	$(OBJDIR)\ImplRepoS.obj \
 	$(OBJDIR)\Key_Adapters.obj \

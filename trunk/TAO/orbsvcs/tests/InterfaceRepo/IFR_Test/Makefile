@@ -20,7 +20,7 @@ SRC = $(PROG_SRCS)
 
 IFR_TEST_OBJS = client.o Admin_Client.o
 
-BIN_UNCHECKED = IFR_Test
+BIN = IFR_Test
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
@@ -29,11 +29,6 @@ BIN_UNCHECKED = IFR_Test
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
-
-ifeq ($(interface_repo),1)
-  BIN=$(BIN_UNCHECKED)
-endif # interface_repo
-
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU

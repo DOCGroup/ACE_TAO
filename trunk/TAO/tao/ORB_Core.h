@@ -402,6 +402,12 @@ public:
   /// Gets the value of TAO_ORB_Core::dynamic_adapter_name_.
   static const char *dynamic_adapter_name (void);
 
+  /// Sets the value of TAO_ORB_Core::ifr_client_adapter_name_.
+  static void ifr_client_adapter_name (const char *name);
+
+  /// Gets the value of TAO_ORB_Core::ifr_client_adapter_name_.
+  static const char *ifr_client_adapter_name (void);
+
   /// See if we have a collocated address, if yes, return the POA
   /// associated with the address.
   int is_collocated (const TAO_MProfile& mprofile);
@@ -1005,6 +1011,12 @@ protected:
   // TAO_DynamicInterface is linked, dynamic_adapter_name() will be
   // called to set the value to "Concrete_Dynamic_Adapter".
   static const char *dynamic_adapter_name_;
+
+  // Name of the service object for functions that make calls on
+  // the Interface Repository. The default value is "IFR_Client_Adaper".
+  // If TAO_IFR_CLient is linked, ifr_client_adapter_name() will be
+  // called to set the value to "Concrete_IFR_Client_Adapter".
+  static const char *ifr_client_adapter_name_;
 
   // @@ This is not needed since the default resource factory
   //    is staticaly added to the service configurator.

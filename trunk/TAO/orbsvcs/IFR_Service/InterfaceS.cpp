@@ -23,7 +23,15 @@
 #include "tao/PortableServer/Object_Adapter.h"
 #include "tao/PortableServer/Operation_Table.h"
 
-ACE_RCSID(IFR_Service, IFR_skel, "$Id$")
+ACE_RCSID(IFR_Service, InterfaceS, "$Id$")
+
+#if TAO_HAS_INTERCEPTORS == 1
+#include "tao/RequestInfo_Util.h"
+#endif  /* TAO_HAS_INTERCEPTORS == 1 */
+
+#if defined (__BORLANDC__)
+#pragma option -w-rvl -w-rch -w-ccc -w-aus
+#endif /* __BORLANDC__ */
 
 #if !defined (__ACE_INLINE__)
 #include "InterfaceS.i"
@@ -107,12 +115,12 @@ TAO_CORBA_IRObject_Perfect_Hash_OpTable::lookup (const char *str, unsigned int l
   static const class TAO_operation_db_entry  wordlist[] =
     {
       {"",0},{"",0},{"",0},{"",0},{"",0},
-      {"_is_a",  &POA_CORBA::IRObject::_is_a_skel},
+      {"_is_a",  &POA_CORBA_IRObject::_is_a_skel},
       {"",0},
-      {"destroy",       &POA_CORBA::IRObject::destroy_skel},
+      {"destroy",       &POA_CORBA_IRObject::destroy_skel},
       {"",0},{"",0},{"",0},{"",0},{"",0},
-      {"_get_def_kind",         &POA_CORBA::IRObject::_get_def_kind_skel},
-      {"_non_existent",  &POA_CORBA::IRObject::_non_existent_skel},
+      {"_get_def_kind",         &POA_CORBA_IRObject::_get_def_kind_skel},
+      {"_non_existent",  &POA_CORBA_IRObject::_non_existent_skel},
     };
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
@@ -137,21 +145,21 @@ static TAO_CORBA_IRObject_Perfect_Hash_OpTable tao_CORBA_IRObject_optable;
 //
 
 // Factory function Implementation.
-POA_CORBA::_TAO_IRObject_Strategized_Proxy_Broker *
-POA_CORBA::_TAO_IRObject_Strategized_Proxy_Broker::the_TAO_IRObject_Strategized_Proxy_Broker (void)
+_TAO_IRObject_Strategized_Proxy_Broker *
+_TAO_IRObject_Strategized_Proxy_Broker::the_TAO_IRObject_Strategized_Proxy_Broker (void)
 {
-  static POA_CORBA::_TAO_IRObject_Strategized_Proxy_Broker strategized_proxy_broker;
+  static _TAO_IRObject_Strategized_Proxy_Broker strategized_proxy_broker;
   return &strategized_proxy_broker;
 }
 
-POA_CORBA::_TAO_IRObject_Strategized_Proxy_Broker::_TAO_IRObject_Strategized_Proxy_Broker (void)
+_TAO_IRObject_Strategized_Proxy_Broker::_TAO_IRObject_Strategized_Proxy_Broker (void)
 {
   for (int i = 0; i < TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM; ++i)
     this->proxy_cache_[i] = 0;
   
 }
 
-POA_CORBA::_TAO_IRObject_Strategized_Proxy_Broker::~_TAO_IRObject_Strategized_Proxy_Broker (void)
+_TAO_IRObject_Strategized_Proxy_Broker::~_TAO_IRObject_Strategized_Proxy_Broker (void)
 {
   for (int i = 0; i < TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM; ++i)
     delete this->proxy_cache_[i];
@@ -159,7 +167,7 @@ POA_CORBA::_TAO_IRObject_Strategized_Proxy_Broker::~_TAO_IRObject_Strategized_Pr
 }
 
 _TAO_IRObject_Proxy_Impl&
-POA_CORBA::_TAO_IRObject_Strategized_Proxy_Broker::select_proxy (
+_TAO_IRObject_Strategized_Proxy_Broker::select_proxy (
     ::CORBA::IRObject *object,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -178,7 +186,7 @@ POA_CORBA::_TAO_IRObject_Strategized_Proxy_Broker::select_proxy (
 }
 
 void 
-POA_CORBA::_TAO_IRObject_Strategized_Proxy_Broker::create_proxy (
+_TAO_IRObject_Strategized_Proxy_Broker::create_proxy (
     TAO_ORB_Core::TAO_Collocation_Strategies strategy,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -223,7 +231,7 @@ _TAO_IRObject_Proxy_Broker *
 _TAO_IRObject_Proxy_Broker_Factory_function (CORBA::Object_ptr obj)
 {
   ACE_UNUSED_ARG (obj);
-  return POA_CORBA::_TAO_IRObject_Strategized_Proxy_Broker::the_TAO_IRObject_Strategized_Proxy_Broker();
+  return _TAO_IRObject_Strategized_Proxy_Broker::the_TAO_IRObject_Strategized_Proxy_Broker();
 }
 
 int
@@ -245,16 +253,16 @@ static int _TAO_IRObject_Proxy_Broker_Stub_Factory_Initializer_Scarecrow =
 //                 ThruPOA Proxy  Implementation
 //
 
-POA_CORBA::_TAO_IRObject_ThruPOA_Proxy_Impl::_TAO_IRObject_ThruPOA_Proxy_Impl (void)
+_TAO_IRObject_ThruPOA_Proxy_Impl::_TAO_IRObject_ThruPOA_Proxy_Impl (void)
 {}
 
-POA_CORBA::_TAO_IRObject_ThruPOA_Proxy_Impl::~_TAO_IRObject_ThruPOA_Proxy_Impl (void)
+_TAO_IRObject_ThruPOA_Proxy_Impl::~_TAO_IRObject_ThruPOA_Proxy_Impl (void)
 {}
 
 // ThruPOA Implementation of the IDL interface methods
 
 IR_DefinitionKind 
-POA_CORBA::_TAO_IRObject_ThruPOA_Proxy_Impl::def_kind (
+_TAO_IRObject_ThruPOA_Proxy_Impl::def_kind (
     CORBA_Object *_collocated_tao_target_,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -276,7 +284,7 @@ POA_CORBA::_TAO_IRObject_ThruPOA_Proxy_Impl::def_kind (
     );
       ACE_CHECK_RETURN  (_tao_retval);
     return ACE_reinterpret_cast (
-      POA_CORBA::IRObject_ptr,
+      POA_CORBA_IRObject_ptr,
       servant_upcall.servant ()->_downcast (
           "IDL:omg.org/CORBA/IRObject:1.0"
         )
@@ -286,7 +294,7 @@ POA_CORBA::_TAO_IRObject_ThruPOA_Proxy_Impl::def_kind (
 }
 
 void 
-POA_CORBA::_TAO_IRObject_ThruPOA_Proxy_Impl::destroy (
+_TAO_IRObject_ThruPOA_Proxy_Impl::destroy (
     CORBA_Object *_collocated_tao_target_,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -306,7 +314,7 @@ POA_CORBA::_TAO_IRObject_ThruPOA_Proxy_Impl::destroy (
     );
       ACE_CHECK;
     ACE_reinterpret_cast (
-      POA_CORBA::IRObject_ptr,
+      POA_CORBA_IRObject_ptr,
       servant_upcall.servant ()->_downcast (
           "IDL:omg.org/CORBA/IRObject:1.0"
         )
@@ -321,29 +329,29 @@ POA_CORBA::_TAO_IRObject_ThruPOA_Proxy_Impl::destroy (
 ///////////////////////////////////////////////////////////////////////
 
 // skeleton constructor
-POA_CORBA::IRObject::IRObject (void)
+POA_CORBA_IRObject::POA_CORBA_IRObject (void)
 {
   this->optable_ = &tao_CORBA_IRObject_optable;
 }
 
 // copy ctor
-POA_CORBA::IRObject::IRObject (const IRObject& rhs)
+POA_CORBA_IRObject::POA_CORBA_IRObject (const POA_CORBA_IRObject& rhs)
   :   TAO_ServantBase (rhs)
 {}
 
 // skeleton destructor
-POA_CORBA::IRObject::~IRObject (void)
+POA_CORBA_IRObject::~POA_CORBA_IRObject (void)
 {
 }
 
-void POA_CORBA::IRObject::_get_def_kind_skel (
+void POA_CORBA_IRObject::_get_def_kind_skel (
     TAO_ServerRequest &_tao_server_request,
     void *_tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  POA_CORBA::IRObject *_tao_impl = (POA_CORBA::IRObject *)_tao_object_reference;
+  POA_CORBA_IRObject *_tao_impl = (POA_CORBA_IRObject *)_tao_object_reference;
 
   IR_DefinitionKind _tao_retval;
 
@@ -361,14 +369,14 @@ void POA_CORBA::IRObject::_get_def_kind_skel (
     ACE_THROW (CORBA::MARSHAL () );
 }
 
-void POA_CORBA::IRObject::destroy_skel (
+void POA_CORBA_IRObject::destroy_skel (
     TAO_ServerRequest &_tao_server_request,
     void *_tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
 )
 {
-  POA_CORBA::IRObject *_tao_impl = (POA_CORBA::IRObject *)_tao_object_reference;
+  POA_CORBA_IRObject *_tao_impl = (POA_CORBA_IRObject *)_tao_object_reference;
 
   _tao_impl->destroy (
       ACE_TRY_ENV
@@ -379,7 +387,7 @@ void POA_CORBA::IRObject::destroy_skel (
   _tao_server_request.init_reply ();
 }
 
-void POA_CORBA::IRObject::_is_a_skel (
+void POA_CORBA_IRObject::_is_a_skel (
     TAO_ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
@@ -387,7 +395,7 @@ void POA_CORBA::IRObject::_is_a_skel (
   )
 {
   TAO_InputCDR &_tao_in = _tao_server_request.incoming ();
-  POA_CORBA::IRObject *_tao_impl = (POA_CORBA::IRObject *) _tao_object_reference;
+  POA_CORBA_IRObject *_tao_impl = (POA_CORBA_IRObject *) _tao_object_reference;
   CORBA::Boolean _tao_retval = 0;
   CORBA::String_var value;
   if (!((_tao_in >> value.out ())))
@@ -402,14 +410,14 @@ void POA_CORBA::IRObject::_is_a_skel (
     ACE_THROW (CORBA::MARSHAL ());
 }
 
-void POA_CORBA::IRObject::_non_existent_skel (
+void POA_CORBA_IRObject::_non_existent_skel (
     TAO_ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* context */,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  POA_CORBA::IRObject *_tao_impl = (POA_CORBA::IRObject *) _tao_object_reference;
+  POA_CORBA_IRObject *_tao_impl = (POA_CORBA_IRObject *) _tao_object_reference;
   CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
   ACE_CHECK;
 
@@ -419,7 +427,7 @@ void POA_CORBA::IRObject::_non_existent_skel (
     ACE_THROW (CORBA::MARSHAL ());
 }
 
-CORBA::Boolean POA_CORBA::IRObject::_is_a (
+CORBA::Boolean POA_CORBA_IRObject::_is_a (
     const char* value,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -432,29 +440,29 @@ CORBA::Boolean POA_CORBA::IRObject::_is_a (
       return 0;
 }
 
-void* POA_CORBA::IRObject::_downcast (
+void* POA_CORBA_IRObject::_downcast (
     const char* logical_type_id
   )
 {
 if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/IRObject:1.0") == 0)
-    return ACE_static_cast (POA_CORBA::IRObject_ptr, this);
+    return ACE_static_cast (POA_CORBA_IRObject_ptr, this);
     if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/Object:1.0") == 0)
     return ACE_static_cast(PortableServer::Servant, this);
   return 0;
 }
 
-void POA_CORBA::IRObject::_dispatch (TAO_ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
+void POA_CORBA_IRObject::_dispatch (TAO_ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
 {
   this->synchronous_upcall_dispatch(req, context, this, ACE_TRY_ENV);
 }
 
-const char* POA_CORBA::IRObject::_interface_repository_id (void) const
+const char* POA_CORBA_IRObject::_interface_repository_id (void) const
 {
   return "IDL:omg.org/CORBA/IRObject:1.0";
 }
 
 CORBA::IRObject*
-POA_CORBA::IRObject::_this (CORBA_Environment &ACE_TRY_ENV)
+POA_CORBA_IRObject::_this (CORBA_Environment &ACE_TRY_ENV)
 {
   TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
@@ -1087,7 +1095,7 @@ POA_IR::Contained::Contained (void)
 
 // copy ctor
 POA_IR::Contained::Contained (const Contained& rhs)
-  :   ACE_NESTED_CLASS (POA_CORBA,IRObject) (rhs),
+  : POA_CORBA_IRObject (rhs),
     TAO_ServantBase (rhs)
 {}
 
@@ -1442,7 +1450,7 @@ void* POA_IR::Contained::_downcast (
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/IR/Contained:1.0") == 0)
     return ACE_static_cast (POA_IR::Contained_ptr, this);
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/IRObject:1.0") == 0)
-    return ACE_static_cast (POA_CORBA::IRObject_ptr, this);
+    return ACE_static_cast (POA_CORBA_IRObject_ptr, this);
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/Object:1.0") == 0)
     return ACE_static_cast(PortableServer::Servant, this);
   return 0;
@@ -2336,7 +2344,7 @@ POA_IR::Container::Container (void)
 
 // copy ctor
 POA_IR::Container::Container (const Container& rhs)
-  :   ACE_NESTED_CLASS (POA_CORBA,IRObject) (rhs),
+  : POA_CORBA_IRObject (rhs),
     TAO_ServantBase (rhs)
 {}
 
@@ -3027,7 +3035,7 @@ void* POA_IR::Container::_downcast (
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/IR/Container:1.0") == 0)
     return ACE_static_cast (POA_IR::Container_ptr, this);
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/IRObject:1.0") == 0)
-    return ACE_static_cast (POA_CORBA::IRObject_ptr, this);
+    return ACE_static_cast (POA_CORBA_IRObject_ptr, this);
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/Object:1.0") == 0)
     return ACE_static_cast(PortableServer::Servant, this);
   return 0;
@@ -3329,7 +3337,7 @@ POA_IR::IDLType::IDLType (void)
 
 // copy ctor
 POA_IR::IDLType::IDLType (const IDLType& rhs)
-  :   ACE_NESTED_CLASS (POA_CORBA,IRObject) (rhs),
+  : POA_CORBA_IRObject (rhs),
     TAO_ServantBase (rhs)
 {}
 
@@ -3424,7 +3432,7 @@ void* POA_IR::IDLType::_downcast (
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/IR/IDLType:1.0") == 0)
     return ACE_static_cast (POA_IR::IDLType_ptr, this);
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/IRObject:1.0") == 0)
-    return ACE_static_cast (POA_CORBA::IRObject_ptr, this);
+    return ACE_static_cast (POA_CORBA_IRObject_ptr, this);
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/Object:1.0") == 0)
     return ACE_static_cast(PortableServer::Servant, this);
   return 0;
@@ -4011,7 +4019,7 @@ POA_IR::Repository::Repository (void)
 // copy ctor
 POA_IR::Repository::Repository (const Repository& rhs)
   :   ACE_NESTED_CLASS (POA_IR,Container) (rhs),
-    ACE_NESTED_CLASS (POA_CORBA,IRObject) (rhs),
+  POA_CORBA_IRObject (rhs),
     TAO_ServantBase (rhs)
 {}
 
@@ -4349,7 +4357,7 @@ void* POA_IR::Repository::_downcast (
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/IR/Container:1.0") == 0)
     return ACE_static_cast (POA_IR::Container_ptr, this);
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/IRObject:1.0") == 0)
-    return ACE_static_cast (POA_CORBA::IRObject_ptr, this);
+    return ACE_static_cast (POA_CORBA_IRObject_ptr, this);
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/Object:1.0") == 0)
     return ACE_static_cast(PortableServer::Servant, this);
   return 0;
@@ -4751,7 +4759,7 @@ POA_IR::ComponentRepository::ComponentRepository (void)
 POA_IR::ComponentRepository::ComponentRepository (const ComponentRepository& rhs)
   :   ACE_NESTED_CLASS (POA_IR,Repository) (rhs),
     ACE_NESTED_CLASS (POA_IR,Container) (rhs),
-    ACE_NESTED_CLASS (POA_CORBA,IRObject) (rhs),
+  POA_CORBA_IRObject (rhs),
     TAO_ServantBase (rhs)
 {}
 
@@ -4918,7 +4926,7 @@ void* POA_IR::ComponentRepository::_downcast (
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/IR/Container:1.0") == 0)
     return ACE_static_cast (POA_IR::Container_ptr, this);
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/IRObject:1.0") == 0)
-    return ACE_static_cast (POA_CORBA::IRObject_ptr, this);
+    return ACE_static_cast (POA_CORBA_IRObject_ptr, this);
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/Object:1.0") == 0)
     return ACE_static_cast(PortableServer::Servant, this);
   return 0;
@@ -5237,7 +5245,7 @@ POA_IR::ModuleDef::ModuleDef (void)
 POA_IR::ModuleDef::ModuleDef (const ModuleDef& rhs)
   :   ACE_NESTED_CLASS (POA_IR,Container) (rhs),
     ACE_NESTED_CLASS (POA_IR,Contained) (rhs),
-    ACE_NESTED_CLASS (POA_CORBA,IRObject) (rhs),
+  POA_CORBA_IRObject (rhs),
     TAO_ServantBase (rhs)
 {}
 
@@ -5313,7 +5321,7 @@ void* POA_IR::ModuleDef::_downcast (
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/IR/Contained:1.0") == 0)
     return ACE_static_cast (POA_IR::Contained_ptr, this);
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/IRObject:1.0") == 0)
-    return ACE_static_cast (POA_CORBA::IRObject_ptr, this);
+    return ACE_static_cast (POA_CORBA_IRObject_ptr, this);
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/Object:1.0") == 0)
     return ACE_static_cast(PortableServer::Servant, this);
   return 0;
@@ -5777,7 +5785,7 @@ POA_IR::ConstantDef::ConstantDef (void)
 // copy ctor
 POA_IR::ConstantDef::ConstantDef (const ConstantDef& rhs)
   :   ACE_NESTED_CLASS (POA_IR,Contained) (rhs),
-    ACE_NESTED_CLASS (POA_CORBA,IRObject) (rhs),
+  POA_CORBA_IRObject (rhs),
     TAO_ServantBase (rhs)
 {}
 
@@ -5977,7 +5985,7 @@ void* POA_IR::ConstantDef::_downcast (
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/IR/Contained:1.0") == 0)
     return ACE_static_cast (POA_IR::Contained_ptr, this);
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/IRObject:1.0") == 0)
-    return ACE_static_cast (POA_CORBA::IRObject_ptr, this);
+    return ACE_static_cast (POA_CORBA_IRObject_ptr, this);
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/Object:1.0") == 0)
     return ACE_static_cast(PortableServer::Servant, this);
   return 0;
@@ -6281,7 +6289,7 @@ POA_IR::TypedefDef::TypedefDef (void)
 POA_IR::TypedefDef::TypedefDef (const TypedefDef& rhs)
   :   ACE_NESTED_CLASS (POA_IR,Contained) (rhs),
     ACE_NESTED_CLASS (POA_IR,IDLType) (rhs),
-    ACE_NESTED_CLASS (POA_CORBA,IRObject) (rhs),
+  POA_CORBA_IRObject (rhs),
     TAO_ServantBase (rhs)
 {}
 
@@ -6357,7 +6365,7 @@ void* POA_IR::TypedefDef::_downcast (
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/IR/IDLType:1.0") == 0)
     return ACE_static_cast (POA_IR::IDLType_ptr, this);
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/IRObject:1.0") == 0)
-    return ACE_static_cast (POA_CORBA::IRObject_ptr, this);
+    return ACE_static_cast (POA_CORBA_IRObject_ptr, this);
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/Object:1.0") == 0)
     return ACE_static_cast(PortableServer::Servant, this);
   return 0;
@@ -6744,7 +6752,7 @@ POA_IR::StructDef::StructDef (const StructDef& rhs)
     ACE_NESTED_CLASS (POA_IR,Container) (rhs),
     ACE_NESTED_CLASS (POA_IR,Contained) (rhs),
     ACE_NESTED_CLASS (POA_IR,IDLType) (rhs),
-    ACE_NESTED_CLASS (POA_CORBA,IRObject) (rhs),
+  POA_CORBA_IRObject (rhs),
     TAO_ServantBase (rhs)
 {}
 
@@ -6877,7 +6885,7 @@ void* POA_IR::StructDef::_downcast (
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/IR/IDLType:1.0") == 0)
     return ACE_static_cast (POA_IR::IDLType_ptr, this);
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/IRObject:1.0") == 0)
-    return ACE_static_cast (POA_CORBA::IRObject_ptr, this);
+    return ACE_static_cast (POA_CORBA_IRObject_ptr, this);
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/Object:1.0") == 0)
     return ACE_static_cast(PortableServer::Servant, this);
   return 0;
@@ -7362,7 +7370,7 @@ POA_IR::UnionDef::UnionDef (const UnionDef& rhs)
     ACE_NESTED_CLASS (POA_IR,Container) (rhs),
     ACE_NESTED_CLASS (POA_IR,Contained) (rhs),
     ACE_NESTED_CLASS (POA_IR,IDLType) (rhs),
-    ACE_NESTED_CLASS (POA_CORBA,IRObject) (rhs),
+  POA_CORBA_IRObject (rhs),
     TAO_ServantBase (rhs)
 {}
 
@@ -7571,7 +7579,7 @@ void* POA_IR::UnionDef::_downcast (
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/IR/IDLType:1.0") == 0)
     return ACE_static_cast (POA_IR::IDLType_ptr, this);
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/IRObject:1.0") == 0)
-    return ACE_static_cast (POA_CORBA::IRObject_ptr, this);
+    return ACE_static_cast (POA_CORBA_IRObject_ptr, this);
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/Object:1.0") == 0)
     return ACE_static_cast(PortableServer::Servant, this);
   return 0;
@@ -7941,7 +7949,7 @@ POA_IR::EnumDef::EnumDef (const EnumDef& rhs)
   :   ACE_NESTED_CLASS (POA_IR,TypedefDef) (rhs),
     ACE_NESTED_CLASS (POA_IR,Contained) (rhs),
     ACE_NESTED_CLASS (POA_IR,IDLType) (rhs),
-    ACE_NESTED_CLASS (POA_CORBA,IRObject) (rhs),
+  POA_CORBA_IRObject (rhs),
     TAO_ServantBase (rhs)
 {}
 
@@ -8071,7 +8079,7 @@ void* POA_IR::EnumDef::_downcast (
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/IR/IDLType:1.0") == 0)
     return ACE_static_cast (POA_IR::IDLType_ptr, this);
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/IRObject:1.0") == 0)
-    return ACE_static_cast (POA_CORBA::IRObject_ptr, this);
+    return ACE_static_cast (POA_CORBA_IRObject_ptr, this);
    if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/Object:1.0") == 0)
     return ACE_static_cast(PortableServer::Servant, this);
   return 0;
@@ -8441,7 +8449,7 @@ POA_IR::AliasDef::AliasDef (const AliasDef& rhs)
   :   ACE_NESTED_CLASS (POA_IR,TypedefDef) (rhs),
     ACE_NESTED_CLASS (POA_IR,Contained) (rhs),
     ACE_NESTED_CLASS (POA_IR,IDLType) (rhs),
-    ACE_NESTED_CLASS (POA_CORBA,IRObject) (rhs),
+  POA_CORBA_IRObject (rhs),
     TAO_ServantBase (rhs)
 {}
 
@@ -8571,7 +8579,7 @@ void* POA_IR::AliasDef::_downcast (
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/IR/IDLType:1.0") == 0)
     return ACE_static_cast (POA_IR::IDLType_ptr, this);
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/IRObject:1.0") == 0)
-    return ACE_static_cast (POA_CORBA::IRObject_ptr, this);
+    return ACE_static_cast (POA_CORBA_IRObject_ptr, this);
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/Object:1.0") == 0)
     return ACE_static_cast(PortableServer::Servant, this);
   return 0;
@@ -8876,7 +8884,7 @@ POA_IR::NativeDef::NativeDef (const NativeDef& rhs)
   :   ACE_NESTED_CLASS (POA_IR,TypedefDef) (rhs),
     ACE_NESTED_CLASS (POA_IR,Contained) (rhs),
     ACE_NESTED_CLASS (POA_IR,IDLType) (rhs),
-    ACE_NESTED_CLASS (POA_CORBA,IRObject) (rhs),
+  POA_CORBA_IRObject (rhs),
     TAO_ServantBase (rhs)
 {}
 
@@ -8955,7 +8963,7 @@ void* POA_IR::NativeDef::_downcast (
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/IR/IDLType:1.0") == 0)
     return ACE_static_cast (POA_IR::IDLType_ptr, this);
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/IRObject:1.0") == 0)
-    return ACE_static_cast (POA_CORBA::IRObject_ptr, this);
+    return ACE_static_cast (POA_CORBA_IRObject_ptr, this);
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/Object:1.0") == 0)
     return ACE_static_cast(PortableServer::Servant, this);
   return 0;
@@ -9259,7 +9267,7 @@ POA_IR::PrimitiveDef::PrimitiveDef (void)
 // copy ctor
 POA_IR::PrimitiveDef::PrimitiveDef (const PrimitiveDef& rhs)
   :   ACE_NESTED_CLASS (POA_IR,IDLType) (rhs),
-    ACE_NESTED_CLASS (POA_CORBA,IRObject) (rhs),
+  POA_CORBA_IRObject (rhs),
     TAO_ServantBase (rhs)
 {}
 
@@ -9357,7 +9365,7 @@ void* POA_IR::PrimitiveDef::_downcast (
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/IR/IDLType:1.0") == 0)
     return ACE_static_cast (POA_IR::IDLType_ptr, this);
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/IRObject:1.0") == 0)
-    return ACE_static_cast (POA_CORBA::IRObject_ptr, this);
+    return ACE_static_cast (POA_CORBA_IRObject_ptr, this);
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/Object:1.0") == 0)
     return ACE_static_cast(PortableServer::Servant, this);
   return 0;
@@ -9713,7 +9721,7 @@ POA_IR::StringDef::StringDef (void)
 // copy ctor
 POA_IR::StringDef::StringDef (const StringDef& rhs)
   :   ACE_NESTED_CLASS (POA_IR,IDLType) (rhs),
-    ACE_NESTED_CLASS (POA_CORBA,IRObject) (rhs),
+  POA_CORBA_IRObject (rhs),
     TAO_ServantBase (rhs)
 {}
 
@@ -9837,7 +9845,7 @@ void* POA_IR::StringDef::_downcast (
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/IR/IDLType:1.0") == 0)
     return ACE_static_cast (POA_IR::IDLType_ptr, this);
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/IRObject:1.0") == 0)
-    return ACE_static_cast (POA_CORBA::IRObject_ptr, this);
+    return ACE_static_cast (POA_CORBA_IRObject_ptr, this);
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/Object:1.0") == 0)
     return ACE_static_cast(PortableServer::Servant, this);
   return 0;
@@ -10193,7 +10201,7 @@ POA_IR::WstringDef::WstringDef (void)
 // copy ctor
 POA_IR::WstringDef::WstringDef (const WstringDef& rhs)
   :   ACE_NESTED_CLASS (POA_IR,IDLType) (rhs),
-    ACE_NESTED_CLASS (POA_CORBA,IRObject) (rhs),
+  POA_CORBA_IRObject (rhs),
     TAO_ServantBase (rhs)
 {}
 
@@ -10317,7 +10325,7 @@ void* POA_IR::WstringDef::_downcast (
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/IR/IDLType:1.0") == 0)
     return ACE_static_cast (POA_IR::IDLType_ptr, this);
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/IRObject:1.0") == 0)
-    return ACE_static_cast (POA_CORBA::IRObject_ptr, this);
+    return ACE_static_cast (POA_CORBA_IRObject_ptr, this);
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/Object:1.0") == 0)
     return ACE_static_cast(PortableServer::Servant, this);
   return 0;
@@ -10738,7 +10746,7 @@ POA_IR::FixedDef::FixedDef (void)
 // copy ctor
 POA_IR::FixedDef::FixedDef (const FixedDef& rhs)
   :   ACE_NESTED_CLASS (POA_IR,IDLType) (rhs),
-    ACE_NESTED_CLASS (POA_CORBA,IRObject) (rhs),
+  POA_CORBA_IRObject (rhs),
     TAO_ServantBase (rhs)
 {}
 
@@ -10913,7 +10921,7 @@ void* POA_IR::FixedDef::_downcast (
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/IR/IDLType:1.0") == 0)
     return ACE_static_cast (POA_IR::IDLType_ptr, this);
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/IRObject:1.0") == 0)
-    return ACE_static_cast (POA_CORBA::IRObject_ptr, this);
+    return ACE_static_cast (POA_CORBA_IRObject_ptr, this);
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/Object:1.0") == 0)
     return ACE_static_cast(PortableServer::Servant, this);
   return 0;
@@ -11366,7 +11374,7 @@ POA_IR::SequenceDef::SequenceDef (void)
 // copy ctor
 POA_IR::SequenceDef::SequenceDef (const SequenceDef& rhs)
   :   ACE_NESTED_CLASS (POA_IR,IDLType) (rhs),
-    ACE_NESTED_CLASS (POA_CORBA,IRObject) (rhs),
+  POA_CORBA_IRObject (rhs),
     TAO_ServantBase (rhs)
 {}
 
@@ -11566,7 +11574,7 @@ void* POA_IR::SequenceDef::_downcast (
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/IR/IDLType:1.0") == 0)
     return ACE_static_cast (POA_IR::IDLType_ptr, this);
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/IRObject:1.0") == 0)
-    return ACE_static_cast (POA_CORBA::IRObject_ptr, this);
+    return ACE_static_cast (POA_CORBA_IRObject_ptr, this);
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/Object:1.0") == 0)
     return ACE_static_cast(PortableServer::Servant, this);
   return 0;
@@ -12019,7 +12027,7 @@ POA_IR::ArrayDef::ArrayDef (void)
 // copy ctor
 POA_IR::ArrayDef::ArrayDef (const ArrayDef& rhs)
   :   ACE_NESTED_CLASS (POA_IR,IDLType) (rhs),
-    ACE_NESTED_CLASS (POA_CORBA,IRObject) (rhs),
+  POA_CORBA_IRObject (rhs),
     TAO_ServantBase (rhs)
 {}
 
@@ -12219,7 +12227,7 @@ void* POA_IR::ArrayDef::_downcast (
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/IR/IDLType:1.0") == 0)
     return ACE_static_cast (POA_IR::IDLType_ptr, this);
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/IRObject:1.0") == 0)
-    return ACE_static_cast (POA_CORBA::IRObject_ptr, this);
+    return ACE_static_cast (POA_CORBA_IRObject_ptr, this);
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/Object:1.0") == 0)
     return ACE_static_cast(PortableServer::Servant, this);
   return 0;
@@ -12635,7 +12643,7 @@ POA_IR::ExceptionDef::ExceptionDef (void)
 POA_IR::ExceptionDef::ExceptionDef (const ExceptionDef& rhs)
   :   ACE_NESTED_CLASS (POA_IR,Contained) (rhs),
     ACE_NESTED_CLASS (POA_IR,Container) (rhs),
-    ACE_NESTED_CLASS (POA_CORBA,IRObject) (rhs),
+  POA_CORBA_IRObject (rhs),
     TAO_ServantBase (rhs)
 {}
 
@@ -12787,7 +12795,7 @@ void* POA_IR::ExceptionDef::_downcast (
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/IR/Container:1.0") == 0)
     return ACE_static_cast (POA_IR::Container_ptr, this);
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/IRObject:1.0") == 0)
-    return ACE_static_cast (POA_CORBA::IRObject_ptr, this);
+    return ACE_static_cast (POA_CORBA_IRObject_ptr, this);
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/Object:1.0") == 0)
     return ACE_static_cast(PortableServer::Servant, this);
   return 0;
@@ -13234,7 +13242,7 @@ POA_IR::AttributeDef::AttributeDef (void)
 // copy ctor
 POA_IR::AttributeDef::AttributeDef (const AttributeDef& rhs)
   :   ACE_NESTED_CLASS (POA_IR,Contained) (rhs),
-    ACE_NESTED_CLASS (POA_CORBA,IRObject) (rhs),
+  POA_CORBA_IRObject (rhs),
     TAO_ServantBase (rhs)
 {}
 
@@ -13435,7 +13443,7 @@ void* POA_IR::AttributeDef::_downcast (
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/IR/Contained:1.0") == 0)
     return ACE_static_cast (POA_IR::Contained_ptr, this);
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/IRObject:1.0") == 0)
-    return ACE_static_cast (POA_CORBA::IRObject_ptr, this);
+    return ACE_static_cast (POA_CORBA_IRObject_ptr, this);
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/Object:1.0") == 0)
     return ACE_static_cast(PortableServer::Servant, this);
   return 0;
@@ -14143,7 +14151,7 @@ POA_IR::OperationDef::OperationDef (void)
 // copy ctor
 POA_IR::OperationDef::OperationDef (const OperationDef& rhs)
   :   ACE_NESTED_CLASS (POA_IR,Contained) (rhs),
-    ACE_NESTED_CLASS (POA_CORBA,IRObject) (rhs),
+  POA_CORBA_IRObject (rhs),
     TAO_ServantBase (rhs)
 {}
 
@@ -14496,7 +14504,7 @@ void* POA_IR::OperationDef::_downcast (
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/IR/Contained:1.0") == 0)
     return ACE_static_cast (POA_IR::Contained_ptr, this);
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/IRObject:1.0") == 0)
-    return ACE_static_cast (POA_CORBA::IRObject_ptr, this);
+    return ACE_static_cast (POA_CORBA_IRObject_ptr, this);
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/Object:1.0") == 0)
     return ACE_static_cast(PortableServer::Servant, this);
   return 0;
@@ -15141,7 +15149,7 @@ POA_IR::InterfaceDef::InterfaceDef (const InterfaceDef& rhs)
   :   ACE_NESTED_CLASS (POA_IR,Container) (rhs),
     ACE_NESTED_CLASS (POA_IR,Contained) (rhs),
     ACE_NESTED_CLASS (POA_IR,IDLType) (rhs),
-    ACE_NESTED_CLASS (POA_CORBA,IRObject) (rhs),
+  POA_CORBA_IRObject (rhs),
     TAO_ServantBase (rhs)
 {}
 
@@ -15508,7 +15516,7 @@ void* POA_IR::InterfaceDef::_downcast (
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/IR/IDLType:1.0") == 0)
     return ACE_static_cast (POA_IR::IDLType_ptr, this);
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/IRObject:1.0") == 0)
-    return ACE_static_cast (POA_CORBA::IRObject_ptr, this);
+    return ACE_static_cast (POA_CORBA_IRObject_ptr, this);
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/Object:1.0") == 0)
     return ACE_static_cast(PortableServer::Servant, this);
   return 0;
@@ -15972,7 +15980,7 @@ POA_IR::ValueMemberDef::ValueMemberDef (void)
 // copy ctor
 POA_IR::ValueMemberDef::ValueMemberDef (const ValueMemberDef& rhs)
   :   ACE_NESTED_CLASS (POA_IR,Contained) (rhs),
-    ACE_NESTED_CLASS (POA_CORBA,IRObject) (rhs),
+  POA_CORBA_IRObject (rhs),
     TAO_ServantBase (rhs)
 {}
 
@@ -16172,7 +16180,7 @@ void* POA_IR::ValueMemberDef::_downcast (
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/IR/Contained:1.0") == 0)
     return ACE_static_cast (POA_IR::Contained_ptr, this);
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/IRObject:1.0") == 0)
-    return ACE_static_cast (POA_CORBA::IRObject_ptr, this);
+    return ACE_static_cast (POA_CORBA_IRObject_ptr, this);
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/Object:1.0") == 0)
     return ACE_static_cast(PortableServer::Servant, this);
   return 0;
@@ -17121,7 +17129,7 @@ POA_IR::ValueDef::ValueDef (const ValueDef& rhs)
   :   ACE_NESTED_CLASS (POA_IR,Container) (rhs),
     ACE_NESTED_CLASS (POA_IR,Contained) (rhs),
     ACE_NESTED_CLASS (POA_IR,IDLType) (rhs),
-    ACE_NESTED_CLASS (POA_CORBA,IRObject) (rhs),
+  POA_CORBA_IRObject (rhs),
     TAO_ServantBase (rhs)
 {}
 
@@ -17736,7 +17744,7 @@ void* POA_IR::ValueDef::_downcast (
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/IR/IDLType:1.0") == 0)
     return ACE_static_cast (POA_IR::IDLType_ptr, this);
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/IRObject:1.0") == 0)
-    return ACE_static_cast (POA_CORBA::IRObject_ptr, this);
+    return ACE_static_cast (POA_CORBA_IRObject_ptr, this);
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/Object:1.0") == 0)
     return ACE_static_cast(PortableServer::Servant, this);
   return 0;
@@ -18106,7 +18114,7 @@ POA_IR::ValueBoxDef::ValueBoxDef (const ValueBoxDef& rhs)
   :   ACE_NESTED_CLASS (POA_IR,TypedefDef) (rhs),
     ACE_NESTED_CLASS (POA_IR,Contained) (rhs),
     ACE_NESTED_CLASS (POA_IR,IDLType) (rhs),
-    ACE_NESTED_CLASS (POA_CORBA,IRObject) (rhs),
+  POA_CORBA_IRObject (rhs),
     TAO_ServantBase (rhs)
 {}
 
@@ -18236,7 +18244,7 @@ void* POA_IR::ValueBoxDef::_downcast (
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/IR/IDLType:1.0") == 0)
     return ACE_static_cast (POA_IR::IDLType_ptr, this);
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/IRObject:1.0") == 0)
-    return ACE_static_cast (POA_CORBA::IRObject_ptr, this);
+    return ACE_static_cast (POA_CORBA_IRObject_ptr, this);
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/Object:1.0") == 0)
     return ACE_static_cast(PortableServer::Servant, this);
   return 0;
@@ -18570,7 +18578,7 @@ POA_IR::ProvidesDef::ProvidesDef (void)
 // copy ctor
 POA_IR::ProvidesDef::ProvidesDef (const ProvidesDef& rhs)
   :   ACE_NESTED_CLASS (POA_IR,Contained) (rhs),
-    ACE_NESTED_CLASS (POA_CORBA,IRObject) (rhs),
+  POA_CORBA_IRObject (rhs),
     TAO_ServantBase (rhs)
 {}
 
@@ -18668,7 +18676,7 @@ void* POA_IR::ProvidesDef::_downcast (
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/IR/Contained:1.0") == 0)
     return ACE_static_cast (POA_IR::Contained_ptr, this);
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/IRObject:1.0") == 0)
-    return ACE_static_cast (POA_CORBA::IRObject_ptr, this);
+    return ACE_static_cast (POA_CORBA_IRObject_ptr, this);
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/Object:1.0") == 0)
     return ACE_static_cast(PortableServer::Servant, this);
   return 0;
@@ -19034,7 +19042,7 @@ POA_IR::UsesDef::UsesDef (void)
 // copy ctor
 POA_IR::UsesDef::UsesDef (const UsesDef& rhs)
   :   ACE_NESTED_CLASS (POA_IR,Contained) (rhs),
-    ACE_NESTED_CLASS (POA_CORBA,IRObject) (rhs),
+  POA_CORBA_IRObject (rhs),
     TAO_ServantBase (rhs)
 {}
 
@@ -19157,7 +19165,7 @@ void* POA_IR::UsesDef::_downcast (
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/IR/Contained:1.0") == 0)
     return ACE_static_cast (POA_IR::Contained_ptr, this);
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/IRObject:1.0") == 0)
-    return ACE_static_cast (POA_CORBA::IRObject_ptr, this);
+    return ACE_static_cast (POA_CORBA_IRObject_ptr, this);
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/Object:1.0") == 0)
     return ACE_static_cast(PortableServer::Servant, this);
   return 0;
@@ -19525,7 +19533,7 @@ POA_IR::EventDef::EventDef (void)
 // copy ctor
 POA_IR::EventDef::EventDef (const EventDef& rhs)
   :   ACE_NESTED_CLASS (POA_IR,Contained) (rhs),
-    ACE_NESTED_CLASS (POA_CORBA,IRObject) (rhs),
+  POA_CORBA_IRObject (rhs),
     TAO_ServantBase (rhs)
 {}
 
@@ -19655,7 +19663,7 @@ void* POA_IR::EventDef::_downcast (
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/IR/Contained:1.0") == 0)
     return ACE_static_cast (POA_IR::Contained_ptr, this);
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/IRObject:1.0") == 0)
-    return ACE_static_cast (POA_CORBA::IRObject_ptr, this);
+    return ACE_static_cast (POA_CORBA_IRObject_ptr, this);
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/Object:1.0") == 0)
     return ACE_static_cast(PortableServer::Servant, this);
   return 0;
@@ -19960,7 +19968,7 @@ POA_IR::EmitsDef::EmitsDef (void)
 POA_IR::EmitsDef::EmitsDef (const EmitsDef& rhs)
   :   ACE_NESTED_CLASS (POA_IR,EventDef) (rhs),
     ACE_NESTED_CLASS (POA_IR,Contained) (rhs),
-    ACE_NESTED_CLASS (POA_CORBA,IRObject) (rhs),
+  POA_CORBA_IRObject (rhs),
     TAO_ServantBase (rhs)
 {}
 
@@ -20036,7 +20044,7 @@ void* POA_IR::EmitsDef::_downcast (
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/IR/Contained:1.0") == 0)
     return ACE_static_cast (POA_IR::Contained_ptr, this);
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/IRObject:1.0") == 0)
-    return ACE_static_cast (POA_CORBA::IRObject_ptr, this);
+    return ACE_static_cast (POA_CORBA_IRObject_ptr, this);
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/Object:1.0") == 0)
     return ACE_static_cast(PortableServer::Servant, this);
   return 0;
@@ -20341,7 +20349,7 @@ POA_IR::PublishesDef::PublishesDef (void)
 POA_IR::PublishesDef::PublishesDef (const PublishesDef& rhs)
   :   ACE_NESTED_CLASS (POA_IR,EventDef) (rhs),
     ACE_NESTED_CLASS (POA_IR,Contained) (rhs),
-    ACE_NESTED_CLASS (POA_CORBA,IRObject) (rhs),
+  POA_CORBA_IRObject (rhs),
     TAO_ServantBase (rhs)
 {}
 
@@ -20417,7 +20425,7 @@ void* POA_IR::PublishesDef::_downcast (
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/IR/Contained:1.0") == 0)
     return ACE_static_cast (POA_IR::Contained_ptr, this);
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/IRObject:1.0") == 0)
-    return ACE_static_cast (POA_CORBA::IRObject_ptr, this);
+    return ACE_static_cast (POA_CORBA_IRObject_ptr, this);
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/Object:1.0") == 0)
     return ACE_static_cast(PortableServer::Servant, this);
   return 0;
@@ -20722,7 +20730,7 @@ POA_IR::ConsumesDef::ConsumesDef (void)
 POA_IR::ConsumesDef::ConsumesDef (const ConsumesDef& rhs)
   :   ACE_NESTED_CLASS (POA_IR,EventDef) (rhs),
     ACE_NESTED_CLASS (POA_IR,Contained) (rhs),
-    ACE_NESTED_CLASS (POA_CORBA,IRObject) (rhs),
+  POA_CORBA_IRObject (rhs),
     TAO_ServantBase (rhs)
 {}
 
@@ -20798,7 +20806,7 @@ void* POA_IR::ConsumesDef::_downcast (
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/IR/Contained:1.0") == 0)
     return ACE_static_cast (POA_IR::Contained_ptr, this);
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/IRObject:1.0") == 0)
-    return ACE_static_cast (POA_CORBA::IRObject_ptr, this);
+    return ACE_static_cast (POA_CORBA_IRObject_ptr, this);
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/Object:1.0") == 0)
     return ACE_static_cast(PortableServer::Servant, this);
   return 0;
@@ -21622,7 +21630,7 @@ POA_IR::ComponentDef::ComponentDef (const ComponentDef& rhs)
     ACE_NESTED_CLASS (POA_IR,Container) (rhs),
     ACE_NESTED_CLASS (POA_IR,Contained) (rhs),
     ACE_NESTED_CLASS (POA_IR,IDLType) (rhs),
-    ACE_NESTED_CLASS (POA_CORBA,IRObject) (rhs),
+  POA_CORBA_IRObject (rhs),
     TAO_ServantBase (rhs)
 {}
 
@@ -22138,7 +22146,7 @@ void* POA_IR::ComponentDef::_downcast (
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/IR/IDLType:1.0") == 0)
     return ACE_static_cast (POA_IR::IDLType_ptr, this);
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/IRObject:1.0") == 0)
-    return ACE_static_cast (POA_CORBA::IRObject_ptr, this);
+    return ACE_static_cast (POA_CORBA_IRObject_ptr, this);
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/Object:1.0") == 0)
     return ACE_static_cast(PortableServer::Servant, this);
   return 0;
@@ -22506,7 +22514,7 @@ POA_IR::PrimaryKeyDef::PrimaryKeyDef (void)
 // copy ctor
 POA_IR::PrimaryKeyDef::PrimaryKeyDef (const PrimaryKeyDef& rhs)
   :   ACE_NESTED_CLASS (POA_IR,Contained) (rhs),
-    ACE_NESTED_CLASS (POA_CORBA,IRObject) (rhs),
+  POA_CORBA_IRObject (rhs),
     TAO_ServantBase (rhs)
 {}
 
@@ -22636,7 +22644,7 @@ void* POA_IR::PrimaryKeyDef::_downcast (
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/IR/Contained:1.0") == 0)
     return ACE_static_cast (POA_IR::Contained_ptr, this);
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/IRObject:1.0") == 0)
-    return ACE_static_cast (POA_CORBA::IRObject_ptr, this);
+    return ACE_static_cast (POA_CORBA_IRObject_ptr, this);
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/Object:1.0") == 0)
     return ACE_static_cast(PortableServer::Servant, this);
   return 0;
@@ -22999,7 +23007,7 @@ POA_IR::FactoryDef::FactoryDef (void)
 POA_IR::FactoryDef::FactoryDef (const FactoryDef& rhs)
   :   ACE_NESTED_CLASS (POA_IR,OperationDef) (rhs),
     ACE_NESTED_CLASS (POA_IR,Contained) (rhs),
-    ACE_NESTED_CLASS (POA_CORBA,IRObject) (rhs),
+  POA_CORBA_IRObject (rhs),
     TAO_ServantBase (rhs)
 {}
 
@@ -23075,7 +23083,7 @@ void* POA_IR::FactoryDef::_downcast (
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/IR/Contained:1.0") == 0)
     return ACE_static_cast (POA_IR::Contained_ptr, this);
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/IRObject:1.0") == 0)
-    return ACE_static_cast (POA_CORBA::IRObject_ptr, this);
+    return ACE_static_cast (POA_CORBA_IRObject_ptr, this);
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/Object:1.0") == 0)
     return ACE_static_cast(PortableServer::Servant, this);
   return 0;
@@ -23438,7 +23446,7 @@ POA_IR::FinderDef::FinderDef (void)
 POA_IR::FinderDef::FinderDef (const FinderDef& rhs)
   :   ACE_NESTED_CLASS (POA_IR,OperationDef) (rhs),
     ACE_NESTED_CLASS (POA_IR,Contained) (rhs),
-    ACE_NESTED_CLASS (POA_CORBA,IRObject) (rhs),
+  POA_CORBA_IRObject (rhs),
     TAO_ServantBase (rhs)
 {}
 
@@ -23514,7 +23522,7 @@ void* POA_IR::FinderDef::_downcast (
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/IR/Contained:1.0") == 0)
     return ACE_static_cast (POA_IR::Contained_ptr, this);
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/IRObject:1.0") == 0)
-    return ACE_static_cast (POA_CORBA::IRObject_ptr, this);
+    return ACE_static_cast (POA_CORBA_IRObject_ptr, this);
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/Object:1.0") == 0)
     return ACE_static_cast(PortableServer::Servant, this);
   return 0;
@@ -24164,7 +24172,7 @@ POA_IR::HomeDef::HomeDef (const HomeDef& rhs)
     ACE_NESTED_CLASS (POA_IR,Container) (rhs),
     ACE_NESTED_CLASS (POA_IR,Contained) (rhs),
     ACE_NESTED_CLASS (POA_IR,IDLType) (rhs),
-    ACE_NESTED_CLASS (POA_CORBA,IRObject) (rhs),
+  POA_CORBA_IRObject (rhs),
     TAO_ServantBase (rhs)
 {}
 
@@ -24525,7 +24533,7 @@ void* POA_IR::HomeDef::_downcast (
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/IR/IDLType:1.0") == 0)
     return ACE_static_cast (POA_IR::IDLType_ptr, this);
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/IRObject:1.0") == 0)
-    return ACE_static_cast (POA_CORBA::IRObject_ptr, this);
+    return ACE_static_cast (POA_CORBA_IRObject_ptr, this);
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/Object:1.0") == 0)
     return ACE_static_cast(PortableServer::Servant, this);
   return 0;

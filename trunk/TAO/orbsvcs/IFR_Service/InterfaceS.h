@@ -23,7 +23,7 @@
 #define TAO_IDL_INTERFACES_H
 #include "ace/pre.h"
 
-#include "tao/PortableServer/POA_CORBA.h"
+#include "tao/IFR_Client/InterfaceC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -31,6 +31,7 @@
 
 #include "tao/PortableServer/Operation_Table.h"
 #include "tao/PortableServer/Object_Adapter.h"
+#include "tao/PortableServer/ThruPOA_Object_Proxy_Impl.h"
 #include "tao/Stub.h"
 #include "tao/ORB_Core.h"
 #include "tao/TAO_Server_Request.h"
@@ -42,6 +43,181 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+#if defined (__BORLANDC__)
+#pragma option push -w-rvl -w-rch -w-ccc -w-inl
+#endif /* __BORLANDC__ */
+
+class POA_CORBA_IRObject;
+typedef POA_CORBA_IRObject *POA_CORBA_IRObject_ptr;
+// Forward Classes Declaration
+class _TAO_IRObject_ThruPOA_Proxy_Impl;
+class _TAO_IRObject_Strategized_Proxy_Broker;
+
+class POA_CORBA_IRObject : public virtual PortableServer::ServantBase
+{
+protected:
+  POA_CORBA_IRObject (void);
+
+public:
+  POA_CORBA_IRObject (const POA_CORBA_IRObject& rhs);
+  virtual ~POA_CORBA_IRObject (void);
+
+  virtual CORBA::Boolean _is_a (
+      const char* logical_type_id,
+      CORBA::Environment &ACE_TRY_ENV =
+        TAO_default_environment ()
+    );
+
+  virtual void* _downcast (
+      const char* logical_type_id
+    );
+
+  static void _is_a_skel (
+      TAO_ServerRequest &req,
+      void *obj,
+      void *context,
+      CORBA::Environment &ACE_TRY_ENV =
+        TAO_default_environment ()
+    );
+
+  static void _non_existent_skel (
+      TAO_ServerRequest &req,
+      void *obj,
+      void *context,
+      CORBA::Environment &ACE_TRY_ENV =
+        TAO_default_environment ()
+    );
+
+  virtual void _dispatch (
+      TAO_ServerRequest &_tao_req,
+      void *_tao_context,
+      CORBA::Environment &ACE_TRY_ENV =
+        TAO_default_environment ()
+    );
+
+  ::CORBA::IRObject *_this (
+      CORBA::Environment &ACE_TRY_ENV =
+        TAO_default_environment ()
+    );
+
+  virtual const char* _interface_repository_id (void) const;
+
+  virtual IR_DefinitionKind def_kind (
+      CORBA::Environment &ACE_TRY_ENV =
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((
+      CORBA::SystemException
+    )) = 0;
+
+  static void _get_def_kind_skel (
+      TAO_ServerRequest &_tao_req,
+      void *_tao_obj,
+      void *_tao_context,
+      CORBA::Environment &ACE_TRY_ENV =
+        TAO_default_environment ()
+    );
+
+  virtual void destroy (
+      CORBA::Environment &ACE_TRY_ENV =
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((
+      CORBA::SystemException
+    )) = 0;
+
+  static void destroy_skel (
+      TAO_ServerRequest &_tao_req,
+      void *_tao_obj,
+      void *_tao_context,
+      CORBA::Environment &ACE_TRY_ENV =
+        TAO_default_environment ()
+    );
+};
+
+///////////////////////////////////////////////////////////////////////
+//               Strategized Proxy Broker Declaration 
+//
+
+class _TAO_IRObject_Strategized_Proxy_Broker 
+  : public virtual _TAO_IRObject_Proxy_Broker
+{
+public: 
+  _TAO_IRObject_Strategized_Proxy_Broker (void);
+
+  virtual ~_TAO_IRObject_Strategized_Proxy_Broker (void);
+
+  virtual _TAO_IRObject_Proxy_Impl &select_proxy (
+    CORBA_IRObject *object,
+    CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
+  );
+
+private:
+
+// Helper methods that takes care to create the proxy
+// as soon as their use is necessary.
+  void create_proxy (
+    TAO_ORB_Core::TAO_Collocation_Strategies strategy,
+    CORBA::Environment &ACE_TRY_ENV
+  );
+
+private:
+
+  // Caches the proxy implementations. The proxy implementation
+  // are totally stateless, and those can be shared by all the
+  // instances of a given IDL interface type.
+  _TAO_IRObject_Proxy_Impl *proxy_cache_[TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM];
+
+  ACE_SYNCH_MUTEX mutex_;
+// This funxtion is used to get an handle to the unique instance
+// of the Strategized Proxy Broker that is available for a given
+// interface.
+
+public:
+  static _TAO_IRObject_Strategized_Proxy_Broker *the_TAO_IRObject_Strategized_Proxy_Broker (void);
+};
+
+
+//
+//            End Strategized Proxy Broker Declaration 
+///////////////////////////////////////////////////////////////////////
+
+
+///////////////////////////////////////////////////////////////////////
+//                    ThruPOA  Impl. Declaration
+//
+
+class _TAO_IRObject_ThruPOA_Proxy_Impl 
+  : public virtual _TAO_IRObject_Proxy_Impl,
+    public virtual TAO_ThruPOA_Object_Proxy_Impl
+{
+public:
+  _TAO_IRObject_ThruPOA_Proxy_Impl (void);
+
+  virtual ~_TAO_IRObject_ThruPOA_Proxy_Impl (void);
+
+    virtual IR_DefinitionKind def_kind (
+      CORBA_Object *_collocated_tao_target_,
+      CORBA::Environment &ACE_TRY_ENV
+    )
+    ACE_THROW_SPEC ((
+      CORBA::SystemException
+    ));
+
+  virtual void destroy (
+      CORBA_Object *_collocated_tao_target_,
+      CORBA::Environment &ACE_TRY_ENV
+    )
+    ACE_THROW_SPEC ((
+      CORBA::SystemException
+    ));
+
+};
+
+//
+//                ThruPOA  Proxy Impl. Declaration
+///////////////////////////////////////////////////////////////////////
+
 TAO_NAMESPACE  POA_IR
 {
   class Contained;
@@ -50,7 +226,7 @@ TAO_NAMESPACE  POA_IR
   class _TAO_Contained_ThruPOA_Proxy_Impl;
   class _TAO_Contained_Strategized_Proxy_Broker;
   
-  class Contained : public virtual POA_CORBA::IRObject
+  class Contained : public virtual POA_CORBA_IRObject
   {
   protected:
     Contained (void);
@@ -352,7 +528,7 @@ public:
 class _TAO_Contained_ThruPOA_Proxy_Impl : 
   public virtual _TAO_Contained_Proxy_Impl,
   public virtual TAO_ThruPOA_Object_Proxy_Impl,
-  public virtual ::POA_CORBA::_TAO_IRObject_ThruPOA_Proxy_Impl
+  public virtual _TAO_IRObject_ThruPOA_Proxy_Impl
   
 {
 public:
@@ -623,7 +799,7 @@ private:
   class _TAO_Container_ThruPOA_Proxy_Impl;
   class _TAO_Container_Strategized_Proxy_Broker;
 
-  class Container : public virtual POA_CORBA::IRObject
+  class Container : public virtual POA_CORBA_IRObject
   {
   protected:
     Container (void);
@@ -1046,7 +1222,7 @@ public:
 class _TAO_Container_ThruPOA_Proxy_Impl : 
   public virtual _TAO_Container_Proxy_Impl,
   public virtual TAO_ThruPOA_Object_Proxy_Impl,
-  public virtual ::POA_CORBA::_TAO_IRObject_ThruPOA_Proxy_Impl
+  public virtual _TAO_IRObject_ThruPOA_Proxy_Impl
   
 {
 public:
@@ -1493,7 +1669,7 @@ private:
   class _TAO_IDLType_ThruPOA_Proxy_Impl;
   class _TAO_IDLType_Strategized_Proxy_Broker;
 
-  class IDLType : public virtual POA_CORBA::IRObject
+  class IDLType : public virtual POA_CORBA_IRObject
   {
   protected:
     IDLType (void);
@@ -1632,7 +1808,7 @@ public:
 class _TAO_IDLType_ThruPOA_Proxy_Impl : 
   public virtual _TAO_IDLType_Proxy_Impl,
   public virtual TAO_ThruPOA_Object_Proxy_Impl,
-  public virtual ::POA_CORBA::_TAO_IRObject_ThruPOA_Proxy_Impl
+  public virtual _TAO_IRObject_ThruPOA_Proxy_Impl
   
 {
 public:
@@ -22130,6 +22306,10 @@ TAO_NAMESPACE_CLOSE
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
 #pragma warning(pop)
 #endif /* _MSC_VER */
+
+#if defined (__BORLANDC__)
+#pragma option pop
+#endif /* __BORLANDC__ */
 
 #include "ace/post.h"
 #endif /* ifndef TAO_IDL_INTERFACES_H */

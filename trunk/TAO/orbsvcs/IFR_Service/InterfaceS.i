@@ -15,10 +15,10 @@ ACE_INLINE void POA_IR::Contained::_get_def_kind_skel (
     CORBA::Environment &env
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_IR::Contained_ptr) obj;
-  POA_CORBA::IRObject::_get_def_kind_skel (
+  POA_CORBA_IRObject_ptr impl = (POA_IR::Contained_ptr) obj;
+  POA_CORBA_IRObject::_get_def_kind_skel (
       req,
-      (POA_CORBA::IRObject_ptr) impl,
+      (POA_CORBA_IRObject_ptr) impl,
       context,
       env
     );
@@ -30,10 +30,10 @@ ACE_INLINE void POA_IR::Contained::destroy_skel (
     CORBA::Environment &env
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_IR::Contained_ptr) obj;
-  POA_CORBA::IRObject::destroy_skel (
+  POA_CORBA_IRObject_ptr impl = (POA_IR::Contained_ptr) obj;
+  POA_CORBA_IRObject::destroy_skel (
       req,
-      (POA_CORBA::IRObject_ptr) impl,
+      (POA_CORBA_IRObject_ptr) impl,
       context,
        env
     );
@@ -45,10 +45,10 @@ ACE_INLINE void POA_IR::Container::_get_def_kind_skel (
     CORBA::Environment &env
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_IR::Container_ptr) obj;
-  POA_CORBA::IRObject::_get_def_kind_skel (
+  POA_CORBA_IRObject_ptr impl = (POA_IR::Container_ptr) obj;
+  POA_CORBA_IRObject::_get_def_kind_skel (
       req,
-      (POA_CORBA::IRObject_ptr) impl,
+      (POA_CORBA_IRObject_ptr) impl,
       context,
       env
     );
@@ -60,10 +60,10 @@ ACE_INLINE void POA_IR::Container::destroy_skel (
     CORBA::Environment &env
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_IR::Container_ptr) obj;
-  POA_CORBA::IRObject::destroy_skel (
+  POA_CORBA_IRObject_ptr impl = (POA_IR::Container_ptr) obj;
+  POA_CORBA_IRObject::destroy_skel (
       req,
-      (POA_CORBA::IRObject_ptr) impl,
+      (POA_CORBA_IRObject_ptr) impl,
       context,
        env
     );
@@ -75,10 +75,10 @@ ACE_INLINE void POA_IR::IDLType::_get_def_kind_skel (
     CORBA::Environment &env
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_IR::IDLType_ptr) obj;
-  POA_CORBA::IRObject::_get_def_kind_skel (
+  POA_CORBA_IRObject_ptr impl = (POA_IR::IDLType_ptr) obj;
+  POA_CORBA_IRObject::_get_def_kind_skel (
       req,
-      (POA_CORBA::IRObject_ptr) impl,
+      (POA_CORBA_IRObject_ptr) impl,
       context,
       env
     );
@@ -90,10 +90,10 @@ ACE_INLINE void POA_IR::IDLType::destroy_skel (
     CORBA::Environment &env
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_IR::IDLType_ptr) obj;
-  POA_CORBA::IRObject::destroy_skel (
+  POA_CORBA_IRObject_ptr impl = (POA_IR::IDLType_ptr) obj;
+  POA_CORBA_IRObject::destroy_skel (
       req,
-      (POA_CORBA::IRObject_ptr) impl,
+      (POA_CORBA_IRObject_ptr) impl,
       context,
        env
     );
@@ -330,10 +330,10 @@ ACE_INLINE void POA_IR::Repository::_get_def_kind_skel (
     CORBA::Environment &env
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_IR::Repository_ptr) obj;
-  POA_CORBA::IRObject::_get_def_kind_skel (
+  POA_CORBA_IRObject_ptr impl = (POA_IR::Repository_ptr) obj;
+  POA_CORBA_IRObject::_get_def_kind_skel (
       req,
-      (POA_CORBA::IRObject_ptr) impl,
+      (POA_CORBA_IRObject_ptr) impl,
       context,
       env
     );
@@ -345,10 +345,10 @@ ACE_INLINE void POA_IR::Repository::destroy_skel (
     CORBA::Environment &env
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_IR::Repository_ptr) obj;
-  POA_CORBA::IRObject::destroy_skel (
+  POA_CORBA_IRObject_ptr impl = (POA_IR::Repository_ptr) obj;
+  POA_CORBA_IRObject::destroy_skel (
       req,
-      (POA_CORBA::IRObject_ptr) impl,
+      (POA_CORBA_IRObject_ptr) impl,
       context,
        env
     );
@@ -705,10 +705,10 @@ ACE_INLINE void POA_IR::ComponentRepository::_get_def_kind_skel (
     CORBA::Environment &env
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_IR::ComponentRepository_ptr) obj;
-  POA_CORBA::IRObject::_get_def_kind_skel (
+  POA_CORBA_IRObject_ptr impl = (POA_IR::ComponentRepository_ptr) obj;
+  POA_CORBA_IRObject::_get_def_kind_skel (
       req,
-      (POA_CORBA::IRObject_ptr) impl,
+      (POA_CORBA_IRObject_ptr) impl,
       context,
       env
     );
@@ -720,10 +720,10 @@ ACE_INLINE void POA_IR::ComponentRepository::destroy_skel (
     CORBA::Environment &env
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_IR::ComponentRepository_ptr) obj;
-  POA_CORBA::IRObject::destroy_skel (
+  POA_CORBA_IRObject_ptr impl = (POA_IR::ComponentRepository_ptr) obj;
+  POA_CORBA_IRObject::destroy_skel (
       req,
-      (POA_CORBA::IRObject_ptr) impl,
+      (POA_CORBA_IRObject_ptr) impl,
       context,
        env
     );
@@ -1125,10 +1125,10 @@ ACE_INLINE void POA_IR::ModuleDef::_get_def_kind_skel (
     CORBA::Environment &env
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_IR::ModuleDef_ptr) obj;
-  POA_CORBA::IRObject::_get_def_kind_skel (
+  POA_CORBA_IRObject_ptr impl = (POA_IR::ModuleDef_ptr) obj;
+  POA_CORBA_IRObject::_get_def_kind_skel (
       req,
-      (POA_CORBA::IRObject_ptr) impl,
+      (POA_CORBA_IRObject_ptr) impl,
       context,
       env
     );
@@ -1140,10 +1140,10 @@ ACE_INLINE void POA_IR::ModuleDef::destroy_skel (
     CORBA::Environment &env
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_IR::ModuleDef_ptr) obj;
-  POA_CORBA::IRObject::destroy_skel (
+  POA_CORBA_IRObject_ptr impl = (POA_IR::ModuleDef_ptr) obj;
+  POA_CORBA_IRObject::destroy_skel (
       req,
-      (POA_CORBA::IRObject_ptr) impl,
+      (POA_CORBA_IRObject_ptr) impl,
       context,
        env
     );
@@ -1320,10 +1320,10 @@ ACE_INLINE void POA_IR::ConstantDef::_get_def_kind_skel (
     CORBA::Environment &env
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_IR::ConstantDef_ptr) obj;
-  POA_CORBA::IRObject::_get_def_kind_skel (
+  POA_CORBA_IRObject_ptr impl = (POA_IR::ConstantDef_ptr) obj;
+  POA_CORBA_IRObject::_get_def_kind_skel (
       req,
-      (POA_CORBA::IRObject_ptr) impl,
+      (POA_CORBA_IRObject_ptr) impl,
       context,
       env
     );
@@ -1335,10 +1335,10 @@ ACE_INLINE void POA_IR::ConstantDef::destroy_skel (
     CORBA::Environment &env
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_IR::ConstantDef_ptr) obj;
-  POA_CORBA::IRObject::destroy_skel (
+  POA_CORBA_IRObject_ptr impl = (POA_IR::ConstantDef_ptr) obj;
+  POA_CORBA_IRObject::destroy_skel (
       req,
-      (POA_CORBA::IRObject_ptr) impl,
+      (POA_CORBA_IRObject_ptr) impl,
       context,
        env
     );
@@ -1530,10 +1530,10 @@ ACE_INLINE void POA_IR::TypedefDef::_get_def_kind_skel (
     CORBA::Environment &env
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_IR::TypedefDef_ptr) obj;
-  POA_CORBA::IRObject::_get_def_kind_skel (
+  POA_CORBA_IRObject_ptr impl = (POA_IR::TypedefDef_ptr) obj;
+  POA_CORBA_IRObject::_get_def_kind_skel (
       req,
-      (POA_CORBA::IRObject_ptr) impl,
+      (POA_CORBA_IRObject_ptr) impl,
       context,
       env
     );
@@ -1545,10 +1545,10 @@ ACE_INLINE void POA_IR::TypedefDef::destroy_skel (
     CORBA::Environment &env
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_IR::TypedefDef_ptr) obj;
-  POA_CORBA::IRObject::destroy_skel (
+  POA_CORBA_IRObject_ptr impl = (POA_IR::TypedefDef_ptr) obj;
+  POA_CORBA_IRObject::destroy_skel (
       req,
-      (POA_CORBA::IRObject_ptr) impl,
+      (POA_CORBA_IRObject_ptr) impl,
       context,
        env
     );
@@ -1965,10 +1965,10 @@ ACE_INLINE void POA_IR::StructDef::_get_def_kind_skel (
     CORBA::Environment &env
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_IR::StructDef_ptr) obj;
-  POA_CORBA::IRObject::_get_def_kind_skel (
+  POA_CORBA_IRObject_ptr impl = (POA_IR::StructDef_ptr) obj;
+  POA_CORBA_IRObject::_get_def_kind_skel (
       req,
-      (POA_CORBA::IRObject_ptr) impl,
+      (POA_CORBA_IRObject_ptr) impl,
       context,
       env
     );
@@ -1980,10 +1980,10 @@ ACE_INLINE void POA_IR::StructDef::destroy_skel (
     CORBA::Environment &env
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_IR::StructDef_ptr) obj;
-  POA_CORBA::IRObject::destroy_skel (
+  POA_CORBA_IRObject_ptr impl = (POA_IR::StructDef_ptr) obj;
+  POA_CORBA_IRObject::destroy_skel (
       req,
-      (POA_CORBA::IRObject_ptr) impl,
+      (POA_CORBA_IRObject_ptr) impl,
       context,
        env
     );
@@ -2400,10 +2400,10 @@ ACE_INLINE void POA_IR::UnionDef::_get_def_kind_skel (
     CORBA::Environment &env
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_IR::UnionDef_ptr) obj;
-  POA_CORBA::IRObject::_get_def_kind_skel (
+  POA_CORBA_IRObject_ptr impl = (POA_IR::UnionDef_ptr) obj;
+  POA_CORBA_IRObject::_get_def_kind_skel (
       req,
-      (POA_CORBA::IRObject_ptr) impl,
+      (POA_CORBA_IRObject_ptr) impl,
       context,
       env
     );
@@ -2415,10 +2415,10 @@ ACE_INLINE void POA_IR::UnionDef::destroy_skel (
     CORBA::Environment &env
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_IR::UnionDef_ptr) obj;
-  POA_CORBA::IRObject::destroy_skel (
+  POA_CORBA_IRObject_ptr impl = (POA_IR::UnionDef_ptr) obj;
+  POA_CORBA_IRObject::destroy_skel (
       req,
-      (POA_CORBA::IRObject_ptr) impl,
+      (POA_CORBA_IRObject_ptr) impl,
       context,
        env
     );
@@ -2610,10 +2610,10 @@ ACE_INLINE void POA_IR::EnumDef::_get_def_kind_skel (
     CORBA::Environment &env
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_IR::EnumDef_ptr) obj;
-  POA_CORBA::IRObject::_get_def_kind_skel (
+  POA_CORBA_IRObject_ptr impl = (POA_IR::EnumDef_ptr) obj;
+  POA_CORBA_IRObject::_get_def_kind_skel (
       req,
-      (POA_CORBA::IRObject_ptr) impl,
+      (POA_CORBA_IRObject_ptr) impl,
       context,
       env
     );
@@ -2625,10 +2625,10 @@ ACE_INLINE void POA_IR::EnumDef::destroy_skel (
     CORBA::Environment &env
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_IR::EnumDef_ptr) obj;
-  POA_CORBA::IRObject::destroy_skel (
+  POA_CORBA_IRObject_ptr impl = (POA_IR::EnumDef_ptr) obj;
+  POA_CORBA_IRObject::destroy_skel (
       req,
-      (POA_CORBA::IRObject_ptr) impl,
+      (POA_CORBA_IRObject_ptr) impl,
       context,
        env
     );
@@ -2820,10 +2820,10 @@ ACE_INLINE void POA_IR::AliasDef::_get_def_kind_skel (
     CORBA::Environment &env
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_IR::AliasDef_ptr) obj;
-  POA_CORBA::IRObject::_get_def_kind_skel (
+  POA_CORBA_IRObject_ptr impl = (POA_IR::AliasDef_ptr) obj;
+  POA_CORBA_IRObject::_get_def_kind_skel (
       req,
-      (POA_CORBA::IRObject_ptr) impl,
+      (POA_CORBA_IRObject_ptr) impl,
       context,
       env
     );
@@ -2835,10 +2835,10 @@ ACE_INLINE void POA_IR::AliasDef::destroy_skel (
     CORBA::Environment &env
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_IR::AliasDef_ptr) obj;
-  POA_CORBA::IRObject::destroy_skel (
+  POA_CORBA_IRObject_ptr impl = (POA_IR::AliasDef_ptr) obj;
+  POA_CORBA_IRObject::destroy_skel (
       req,
-      (POA_CORBA::IRObject_ptr) impl,
+      (POA_CORBA_IRObject_ptr) impl,
       context,
        env
     );
@@ -3030,10 +3030,10 @@ ACE_INLINE void POA_IR::NativeDef::_get_def_kind_skel (
     CORBA::Environment &env
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_IR::NativeDef_ptr) obj;
-  POA_CORBA::IRObject::_get_def_kind_skel (
+  POA_CORBA_IRObject_ptr impl = (POA_IR::NativeDef_ptr) obj;
+  POA_CORBA_IRObject::_get_def_kind_skel (
       req,
-      (POA_CORBA::IRObject_ptr) impl,
+      (POA_CORBA_IRObject_ptr) impl,
       context,
       env
     );
@@ -3045,10 +3045,10 @@ ACE_INLINE void POA_IR::NativeDef::destroy_skel (
     CORBA::Environment &env
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_IR::NativeDef_ptr) obj;
-  POA_CORBA::IRObject::destroy_skel (
+  POA_CORBA_IRObject_ptr impl = (POA_IR::NativeDef_ptr) obj;
+  POA_CORBA_IRObject::destroy_skel (
       req,
-      (POA_CORBA::IRObject_ptr) impl,
+      (POA_CORBA_IRObject_ptr) impl,
       context,
        env
     );
@@ -3075,10 +3075,10 @@ ACE_INLINE void POA_IR::PrimitiveDef::_get_def_kind_skel (
     CORBA::Environment &env
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_IR::PrimitiveDef_ptr) obj;
-  POA_CORBA::IRObject::_get_def_kind_skel (
+  POA_CORBA_IRObject_ptr impl = (POA_IR::PrimitiveDef_ptr) obj;
+  POA_CORBA_IRObject::_get_def_kind_skel (
       req,
-      (POA_CORBA::IRObject_ptr) impl,
+      (POA_CORBA_IRObject_ptr) impl,
       context,
       env
     );
@@ -3090,10 +3090,10 @@ ACE_INLINE void POA_IR::PrimitiveDef::destroy_skel (
     CORBA::Environment &env
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_IR::PrimitiveDef_ptr) obj;
-  POA_CORBA::IRObject::destroy_skel (
+  POA_CORBA_IRObject_ptr impl = (POA_IR::PrimitiveDef_ptr) obj;
+  POA_CORBA_IRObject::destroy_skel (
       req,
-      (POA_CORBA::IRObject_ptr) impl,
+      (POA_CORBA_IRObject_ptr) impl,
       context,
        env
     );
@@ -3120,10 +3120,10 @@ ACE_INLINE void POA_IR::StringDef::_get_def_kind_skel (
     CORBA::Environment &env
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_IR::StringDef_ptr) obj;
-  POA_CORBA::IRObject::_get_def_kind_skel (
+  POA_CORBA_IRObject_ptr impl = (POA_IR::StringDef_ptr) obj;
+  POA_CORBA_IRObject::_get_def_kind_skel (
       req,
-      (POA_CORBA::IRObject_ptr) impl,
+      (POA_CORBA_IRObject_ptr) impl,
       context,
       env
     );
@@ -3135,10 +3135,10 @@ ACE_INLINE void POA_IR::StringDef::destroy_skel (
     CORBA::Environment &env
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_IR::StringDef_ptr) obj;
-  POA_CORBA::IRObject::destroy_skel (
+  POA_CORBA_IRObject_ptr impl = (POA_IR::StringDef_ptr) obj;
+  POA_CORBA_IRObject::destroy_skel (
       req,
-      (POA_CORBA::IRObject_ptr) impl,
+      (POA_CORBA_IRObject_ptr) impl,
       context,
        env
     );
@@ -3165,10 +3165,10 @@ ACE_INLINE void POA_IR::WstringDef::_get_def_kind_skel (
     CORBA::Environment &env
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_IR::WstringDef_ptr) obj;
-  POA_CORBA::IRObject::_get_def_kind_skel (
+  POA_CORBA_IRObject_ptr impl = (POA_IR::WstringDef_ptr) obj;
+  POA_CORBA_IRObject::_get_def_kind_skel (
       req,
-      (POA_CORBA::IRObject_ptr) impl,
+      (POA_CORBA_IRObject_ptr) impl,
       context,
       env
     );
@@ -3180,10 +3180,10 @@ ACE_INLINE void POA_IR::WstringDef::destroy_skel (
     CORBA::Environment &env
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_IR::WstringDef_ptr) obj;
-  POA_CORBA::IRObject::destroy_skel (
+  POA_CORBA_IRObject_ptr impl = (POA_IR::WstringDef_ptr) obj;
+  POA_CORBA_IRObject::destroy_skel (
       req,
-      (POA_CORBA::IRObject_ptr) impl,
+      (POA_CORBA_IRObject_ptr) impl,
       context,
        env
     );
@@ -3210,10 +3210,10 @@ ACE_INLINE void POA_IR::FixedDef::_get_def_kind_skel (
     CORBA::Environment &env
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_IR::FixedDef_ptr) obj;
-  POA_CORBA::IRObject::_get_def_kind_skel (
+  POA_CORBA_IRObject_ptr impl = (POA_IR::FixedDef_ptr) obj;
+  POA_CORBA_IRObject::_get_def_kind_skel (
       req,
-      (POA_CORBA::IRObject_ptr) impl,
+      (POA_CORBA_IRObject_ptr) impl,
       context,
       env
     );
@@ -3225,10 +3225,10 @@ ACE_INLINE void POA_IR::FixedDef::destroy_skel (
     CORBA::Environment &env
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_IR::FixedDef_ptr) obj;
-  POA_CORBA::IRObject::destroy_skel (
+  POA_CORBA_IRObject_ptr impl = (POA_IR::FixedDef_ptr) obj;
+  POA_CORBA_IRObject::destroy_skel (
       req,
-      (POA_CORBA::IRObject_ptr) impl,
+      (POA_CORBA_IRObject_ptr) impl,
       context,
        env
     );
@@ -3255,10 +3255,10 @@ ACE_INLINE void POA_IR::SequenceDef::_get_def_kind_skel (
     CORBA::Environment &env
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_IR::SequenceDef_ptr) obj;
-  POA_CORBA::IRObject::_get_def_kind_skel (
+  POA_CORBA_IRObject_ptr impl = (POA_IR::SequenceDef_ptr) obj;
+  POA_CORBA_IRObject::_get_def_kind_skel (
       req,
-      (POA_CORBA::IRObject_ptr) impl,
+      (POA_CORBA_IRObject_ptr) impl,
       context,
       env
     );
@@ -3270,10 +3270,10 @@ ACE_INLINE void POA_IR::SequenceDef::destroy_skel (
     CORBA::Environment &env
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_IR::SequenceDef_ptr) obj;
-  POA_CORBA::IRObject::destroy_skel (
+  POA_CORBA_IRObject_ptr impl = (POA_IR::SequenceDef_ptr) obj;
+  POA_CORBA_IRObject::destroy_skel (
       req,
-      (POA_CORBA::IRObject_ptr) impl,
+      (POA_CORBA_IRObject_ptr) impl,
       context,
        env
     );
@@ -3300,10 +3300,10 @@ ACE_INLINE void POA_IR::ArrayDef::_get_def_kind_skel (
     CORBA::Environment &env
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_IR::ArrayDef_ptr) obj;
-  POA_CORBA::IRObject::_get_def_kind_skel (
+  POA_CORBA_IRObject_ptr impl = (POA_IR::ArrayDef_ptr) obj;
+  POA_CORBA_IRObject::_get_def_kind_skel (
       req,
-      (POA_CORBA::IRObject_ptr) impl,
+      (POA_CORBA_IRObject_ptr) impl,
       context,
       env
     );
@@ -3315,10 +3315,10 @@ ACE_INLINE void POA_IR::ArrayDef::destroy_skel (
     CORBA::Environment &env
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_IR::ArrayDef_ptr) obj;
-  POA_CORBA::IRObject::destroy_skel (
+  POA_CORBA_IRObject_ptr impl = (POA_IR::ArrayDef_ptr) obj;
+  POA_CORBA_IRObject::destroy_skel (
       req,
-      (POA_CORBA::IRObject_ptr) impl,
+      (POA_CORBA_IRObject_ptr) impl,
       context,
        env
     );
@@ -3720,10 +3720,10 @@ ACE_INLINE void POA_IR::ExceptionDef::_get_def_kind_skel (
     CORBA::Environment &env
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_IR::ExceptionDef_ptr) obj;
-  POA_CORBA::IRObject::_get_def_kind_skel (
+  POA_CORBA_IRObject_ptr impl = (POA_IR::ExceptionDef_ptr) obj;
+  POA_CORBA_IRObject::_get_def_kind_skel (
       req,
-      (POA_CORBA::IRObject_ptr) impl,
+      (POA_CORBA_IRObject_ptr) impl,
       context,
       env
     );
@@ -3735,10 +3735,10 @@ ACE_INLINE void POA_IR::ExceptionDef::destroy_skel (
     CORBA::Environment &env
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_IR::ExceptionDef_ptr) obj;
-  POA_CORBA::IRObject::destroy_skel (
+  POA_CORBA_IRObject_ptr impl = (POA_IR::ExceptionDef_ptr) obj;
+  POA_CORBA_IRObject::destroy_skel (
       req,
-      (POA_CORBA::IRObject_ptr) impl,
+      (POA_CORBA_IRObject_ptr) impl,
       context,
        env
     );
@@ -3915,10 +3915,10 @@ ACE_INLINE void POA_IR::AttributeDef::_get_def_kind_skel (
     CORBA::Environment &env
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_IR::AttributeDef_ptr) obj;
-  POA_CORBA::IRObject::_get_def_kind_skel (
+  POA_CORBA_IRObject_ptr impl = (POA_IR::AttributeDef_ptr) obj;
+  POA_CORBA_IRObject::_get_def_kind_skel (
       req,
-      (POA_CORBA::IRObject_ptr) impl,
+      (POA_CORBA_IRObject_ptr) impl,
       context,
       env
     );
@@ -3930,10 +3930,10 @@ ACE_INLINE void POA_IR::AttributeDef::destroy_skel (
     CORBA::Environment &env
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_IR::AttributeDef_ptr) obj;
-  POA_CORBA::IRObject::destroy_skel (
+  POA_CORBA_IRObject_ptr impl = (POA_IR::AttributeDef_ptr) obj;
+  POA_CORBA_IRObject::destroy_skel (
       req,
-      (POA_CORBA::IRObject_ptr) impl,
+      (POA_CORBA_IRObject_ptr) impl,
       context,
        env
     );
@@ -4110,10 +4110,10 @@ ACE_INLINE void POA_IR::OperationDef::_get_def_kind_skel (
     CORBA::Environment &env
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_IR::OperationDef_ptr) obj;
-  POA_CORBA::IRObject::_get_def_kind_skel (
+  POA_CORBA_IRObject_ptr impl = (POA_IR::OperationDef_ptr) obj;
+  POA_CORBA_IRObject::_get_def_kind_skel (
       req,
-      (POA_CORBA::IRObject_ptr) impl,
+      (POA_CORBA_IRObject_ptr) impl,
       context,
       env
     );
@@ -4125,10 +4125,10 @@ ACE_INLINE void POA_IR::OperationDef::destroy_skel (
     CORBA::Environment &env
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_IR::OperationDef_ptr) obj;
-  POA_CORBA::IRObject::destroy_skel (
+  POA_CORBA_IRObject_ptr impl = (POA_IR::OperationDef_ptr) obj;
+  POA_CORBA_IRObject::destroy_skel (
       req,
-      (POA_CORBA::IRObject_ptr) impl,
+      (POA_CORBA_IRObject_ptr) impl,
       context,
        env
     );
@@ -4545,10 +4545,10 @@ ACE_INLINE void POA_IR::InterfaceDef::_get_def_kind_skel (
     CORBA::Environment &env
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_IR::InterfaceDef_ptr) obj;
-  POA_CORBA::IRObject::_get_def_kind_skel (
+  POA_CORBA_IRObject_ptr impl = (POA_IR::InterfaceDef_ptr) obj;
+  POA_CORBA_IRObject::_get_def_kind_skel (
       req,
-      (POA_CORBA::IRObject_ptr) impl,
+      (POA_CORBA_IRObject_ptr) impl,
       context,
       env
     );
@@ -4560,10 +4560,10 @@ ACE_INLINE void POA_IR::InterfaceDef::destroy_skel (
     CORBA::Environment &env
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_IR::InterfaceDef_ptr) obj;
-  POA_CORBA::IRObject::destroy_skel (
+  POA_CORBA_IRObject_ptr impl = (POA_IR::InterfaceDef_ptr) obj;
+  POA_CORBA_IRObject::destroy_skel (
       req,
-      (POA_CORBA::IRObject_ptr) impl,
+      (POA_CORBA_IRObject_ptr) impl,
       context,
        env
     );
@@ -4740,10 +4740,10 @@ ACE_INLINE void POA_IR::ValueMemberDef::_get_def_kind_skel (
     CORBA::Environment &env
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_IR::ValueMemberDef_ptr) obj;
-  POA_CORBA::IRObject::_get_def_kind_skel (
+  POA_CORBA_IRObject_ptr impl = (POA_IR::ValueMemberDef_ptr) obj;
+  POA_CORBA_IRObject::_get_def_kind_skel (
       req,
-      (POA_CORBA::IRObject_ptr) impl,
+      (POA_CORBA_IRObject_ptr) impl,
       context,
       env
     );
@@ -4755,10 +4755,10 @@ ACE_INLINE void POA_IR::ValueMemberDef::destroy_skel (
     CORBA::Environment &env
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_IR::ValueMemberDef_ptr) obj;
-  POA_CORBA::IRObject::destroy_skel (
+  POA_CORBA_IRObject_ptr impl = (POA_IR::ValueMemberDef_ptr) obj;
+  POA_CORBA_IRObject::destroy_skel (
       req,
-      (POA_CORBA::IRObject_ptr) impl,
+      (POA_CORBA_IRObject_ptr) impl,
       context,
        env
     );
@@ -5175,10 +5175,10 @@ ACE_INLINE void POA_IR::ValueDef::_get_def_kind_skel (
     CORBA::Environment &env
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_IR::ValueDef_ptr) obj;
-  POA_CORBA::IRObject::_get_def_kind_skel (
+  POA_CORBA_IRObject_ptr impl = (POA_IR::ValueDef_ptr) obj;
+  POA_CORBA_IRObject::_get_def_kind_skel (
       req,
-      (POA_CORBA::IRObject_ptr) impl,
+      (POA_CORBA_IRObject_ptr) impl,
       context,
       env
     );
@@ -5190,10 +5190,10 @@ ACE_INLINE void POA_IR::ValueDef::destroy_skel (
     CORBA::Environment &env
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_IR::ValueDef_ptr) obj;
-  POA_CORBA::IRObject::destroy_skel (
+  POA_CORBA_IRObject_ptr impl = (POA_IR::ValueDef_ptr) obj;
+  POA_CORBA_IRObject::destroy_skel (
       req,
-      (POA_CORBA::IRObject_ptr) impl,
+      (POA_CORBA_IRObject_ptr) impl,
       context,
        env
     );
@@ -5385,10 +5385,10 @@ ACE_INLINE void POA_IR::ValueBoxDef::_get_def_kind_skel (
     CORBA::Environment &env
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_IR::ValueBoxDef_ptr) obj;
-  POA_CORBA::IRObject::_get_def_kind_skel (
+  POA_CORBA_IRObject_ptr impl = (POA_IR::ValueBoxDef_ptr) obj;
+  POA_CORBA_IRObject::_get_def_kind_skel (
       req,
-      (POA_CORBA::IRObject_ptr) impl,
+      (POA_CORBA_IRObject_ptr) impl,
       context,
       env
     );
@@ -5400,10 +5400,10 @@ ACE_INLINE void POA_IR::ValueBoxDef::destroy_skel (
     CORBA::Environment &env
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_IR::ValueBoxDef_ptr) obj;
-  POA_CORBA::IRObject::destroy_skel (
+  POA_CORBA_IRObject_ptr impl = (POA_IR::ValueBoxDef_ptr) obj;
+  POA_CORBA_IRObject::destroy_skel (
       req,
-      (POA_CORBA::IRObject_ptr) impl,
+      (POA_CORBA_IRObject_ptr) impl,
       context,
        env
     );
@@ -5580,10 +5580,10 @@ ACE_INLINE void POA_IR::ProvidesDef::_get_def_kind_skel (
     CORBA::Environment &env
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_IR::ProvidesDef_ptr) obj;
-  POA_CORBA::IRObject::_get_def_kind_skel (
+  POA_CORBA_IRObject_ptr impl = (POA_IR::ProvidesDef_ptr) obj;
+  POA_CORBA_IRObject::_get_def_kind_skel (
       req,
-      (POA_CORBA::IRObject_ptr) impl,
+      (POA_CORBA_IRObject_ptr) impl,
       context,
       env
     );
@@ -5595,10 +5595,10 @@ ACE_INLINE void POA_IR::ProvidesDef::destroy_skel (
     CORBA::Environment &env
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_IR::ProvidesDef_ptr) obj;
-  POA_CORBA::IRObject::destroy_skel (
+  POA_CORBA_IRObject_ptr impl = (POA_IR::ProvidesDef_ptr) obj;
+  POA_CORBA_IRObject::destroy_skel (
       req,
-      (POA_CORBA::IRObject_ptr) impl,
+      (POA_CORBA_IRObject_ptr) impl,
       context,
        env
     );
@@ -5775,10 +5775,10 @@ ACE_INLINE void POA_IR::UsesDef::_get_def_kind_skel (
     CORBA::Environment &env
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_IR::UsesDef_ptr) obj;
-  POA_CORBA::IRObject::_get_def_kind_skel (
+  POA_CORBA_IRObject_ptr impl = (POA_IR::UsesDef_ptr) obj;
+  POA_CORBA_IRObject::_get_def_kind_skel (
       req,
-      (POA_CORBA::IRObject_ptr) impl,
+      (POA_CORBA_IRObject_ptr) impl,
       context,
       env
     );
@@ -5790,10 +5790,10 @@ ACE_INLINE void POA_IR::UsesDef::destroy_skel (
     CORBA::Environment &env
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_IR::UsesDef_ptr) obj;
-  POA_CORBA::IRObject::destroy_skel (
+  POA_CORBA_IRObject_ptr impl = (POA_IR::UsesDef_ptr) obj;
+  POA_CORBA_IRObject::destroy_skel (
       req,
-      (POA_CORBA::IRObject_ptr) impl,
+      (POA_CORBA_IRObject_ptr) impl,
       context,
        env
     );
@@ -5970,10 +5970,10 @@ ACE_INLINE void POA_IR::EventDef::_get_def_kind_skel (
     CORBA::Environment &env
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_IR::EventDef_ptr) obj;
-  POA_CORBA::IRObject::_get_def_kind_skel (
+  POA_CORBA_IRObject_ptr impl = (POA_IR::EventDef_ptr) obj;
+  POA_CORBA_IRObject::_get_def_kind_skel (
       req,
-      (POA_CORBA::IRObject_ptr) impl,
+      (POA_CORBA_IRObject_ptr) impl,
       context,
       env
     );
@@ -5985,10 +5985,10 @@ ACE_INLINE void POA_IR::EventDef::destroy_skel (
     CORBA::Environment &env
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_IR::EventDef_ptr) obj;
-  POA_CORBA::IRObject::destroy_skel (
+  POA_CORBA_IRObject_ptr impl = (POA_IR::EventDef_ptr) obj;
+  POA_CORBA_IRObject::destroy_skel (
       req,
-      (POA_CORBA::IRObject_ptr) impl,
+      (POA_CORBA_IRObject_ptr) impl,
       context,
        env
     );
@@ -6195,10 +6195,10 @@ ACE_INLINE void POA_IR::EmitsDef::_get_def_kind_skel (
     CORBA::Environment &env
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_IR::EmitsDef_ptr) obj;
-  POA_CORBA::IRObject::_get_def_kind_skel (
+  POA_CORBA_IRObject_ptr impl = (POA_IR::EmitsDef_ptr) obj;
+  POA_CORBA_IRObject::_get_def_kind_skel (
       req,
-      (POA_CORBA::IRObject_ptr) impl,
+      (POA_CORBA_IRObject_ptr) impl,
       context,
       env
     );
@@ -6210,10 +6210,10 @@ ACE_INLINE void POA_IR::EmitsDef::destroy_skel (
     CORBA::Environment &env
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_IR::EmitsDef_ptr) obj;
-  POA_CORBA::IRObject::destroy_skel (
+  POA_CORBA_IRObject_ptr impl = (POA_IR::EmitsDef_ptr) obj;
+  POA_CORBA_IRObject::destroy_skel (
       req,
-      (POA_CORBA::IRObject_ptr) impl,
+      (POA_CORBA_IRObject_ptr) impl,
       context,
        env
     );
@@ -6420,10 +6420,10 @@ ACE_INLINE void POA_IR::PublishesDef::_get_def_kind_skel (
     CORBA::Environment &env
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_IR::PublishesDef_ptr) obj;
-  POA_CORBA::IRObject::_get_def_kind_skel (
+  POA_CORBA_IRObject_ptr impl = (POA_IR::PublishesDef_ptr) obj;
+  POA_CORBA_IRObject::_get_def_kind_skel (
       req,
-      (POA_CORBA::IRObject_ptr) impl,
+      (POA_CORBA_IRObject_ptr) impl,
       context,
       env
     );
@@ -6435,10 +6435,10 @@ ACE_INLINE void POA_IR::PublishesDef::destroy_skel (
     CORBA::Environment &env
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_IR::PublishesDef_ptr) obj;
-  POA_CORBA::IRObject::destroy_skel (
+  POA_CORBA_IRObject_ptr impl = (POA_IR::PublishesDef_ptr) obj;
+  POA_CORBA_IRObject::destroy_skel (
       req,
-      (POA_CORBA::IRObject_ptr) impl,
+      (POA_CORBA_IRObject_ptr) impl,
       context,
        env
     );
@@ -6645,10 +6645,10 @@ ACE_INLINE void POA_IR::ConsumesDef::_get_def_kind_skel (
     CORBA::Environment &env
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_IR::ConsumesDef_ptr) obj;
-  POA_CORBA::IRObject::_get_def_kind_skel (
+  POA_CORBA_IRObject_ptr impl = (POA_IR::ConsumesDef_ptr) obj;
+  POA_CORBA_IRObject::_get_def_kind_skel (
       req,
-      (POA_CORBA::IRObject_ptr) impl,
+      (POA_CORBA_IRObject_ptr) impl,
       context,
       env
     );
@@ -6660,10 +6660,10 @@ ACE_INLINE void POA_IR::ConsumesDef::destroy_skel (
     CORBA::Environment &env
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_IR::ConsumesDef_ptr) obj;
-  POA_CORBA::IRObject::destroy_skel (
+  POA_CORBA_IRObject_ptr impl = (POA_IR::ConsumesDef_ptr) obj;
+  POA_CORBA_IRObject::destroy_skel (
       req,
-      (POA_CORBA::IRObject_ptr) impl,
+      (POA_CORBA_IRObject_ptr) impl,
       context,
        env
     );
@@ -7215,10 +7215,10 @@ ACE_INLINE void POA_IR::ComponentDef::_get_def_kind_skel (
     CORBA::Environment &env
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_IR::ComponentDef_ptr) obj;
-  POA_CORBA::IRObject::_get_def_kind_skel (
+  POA_CORBA_IRObject_ptr impl = (POA_IR::ComponentDef_ptr) obj;
+  POA_CORBA_IRObject::_get_def_kind_skel (
       req,
-      (POA_CORBA::IRObject_ptr) impl,
+      (POA_CORBA_IRObject_ptr) impl,
       context,
       env
     );
@@ -7230,10 +7230,10 @@ ACE_INLINE void POA_IR::ComponentDef::destroy_skel (
     CORBA::Environment &env
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_IR::ComponentDef_ptr) obj;
-  POA_CORBA::IRObject::destroy_skel (
+  POA_CORBA_IRObject_ptr impl = (POA_IR::ComponentDef_ptr) obj;
+  POA_CORBA_IRObject::destroy_skel (
       req,
-      (POA_CORBA::IRObject_ptr) impl,
+      (POA_CORBA_IRObject_ptr) impl,
       context,
        env
     );
@@ -7410,10 +7410,10 @@ ACE_INLINE void POA_IR::PrimaryKeyDef::_get_def_kind_skel (
     CORBA::Environment &env
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_IR::PrimaryKeyDef_ptr) obj;
-  POA_CORBA::IRObject::_get_def_kind_skel (
+  POA_CORBA_IRObject_ptr impl = (POA_IR::PrimaryKeyDef_ptr) obj;
+  POA_CORBA_IRObject::_get_def_kind_skel (
       req,
-      (POA_CORBA::IRObject_ptr) impl,
+      (POA_CORBA_IRObject_ptr) impl,
       context,
       env
     );
@@ -7425,10 +7425,10 @@ ACE_INLINE void POA_IR::PrimaryKeyDef::destroy_skel (
     CORBA::Environment &env
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_IR::PrimaryKeyDef_ptr) obj;
-  POA_CORBA::IRObject::destroy_skel (
+  POA_CORBA_IRObject_ptr impl = (POA_IR::PrimaryKeyDef_ptr) obj;
+  POA_CORBA_IRObject::destroy_skel (
       req,
-      (POA_CORBA::IRObject_ptr) impl,
+      (POA_CORBA_IRObject_ptr) impl,
       context,
        env
     );
@@ -7770,10 +7770,10 @@ ACE_INLINE void POA_IR::FactoryDef::_get_def_kind_skel (
     CORBA::Environment &env
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_IR::FactoryDef_ptr) obj;
-  POA_CORBA::IRObject::_get_def_kind_skel (
+  POA_CORBA_IRObject_ptr impl = (POA_IR::FactoryDef_ptr) obj;
+  POA_CORBA_IRObject::_get_def_kind_skel (
       req,
-      (POA_CORBA::IRObject_ptr) impl,
+      (POA_CORBA_IRObject_ptr) impl,
       context,
       env
     );
@@ -7785,10 +7785,10 @@ ACE_INLINE void POA_IR::FactoryDef::destroy_skel (
     CORBA::Environment &env
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_IR::FactoryDef_ptr) obj;
-  POA_CORBA::IRObject::destroy_skel (
+  POA_CORBA_IRObject_ptr impl = (POA_IR::FactoryDef_ptr) obj;
+  POA_CORBA_IRObject::destroy_skel (
       req,
-      (POA_CORBA::IRObject_ptr) impl,
+      (POA_CORBA_IRObject_ptr) impl,
       context,
        env
     );
@@ -8130,10 +8130,10 @@ ACE_INLINE void POA_IR::FinderDef::_get_def_kind_skel (
     CORBA::Environment &env
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_IR::FinderDef_ptr) obj;
-  POA_CORBA::IRObject::_get_def_kind_skel (
+  POA_CORBA_IRObject_ptr impl = (POA_IR::FinderDef_ptr) obj;
+  POA_CORBA_IRObject::_get_def_kind_skel (
       req,
-      (POA_CORBA::IRObject_ptr) impl,
+      (POA_CORBA_IRObject_ptr) impl,
       context,
       env
     );
@@ -8145,10 +8145,10 @@ ACE_INLINE void POA_IR::FinderDef::destroy_skel (
     CORBA::Environment &env
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_IR::FinderDef_ptr) obj;
-  POA_CORBA::IRObject::destroy_skel (
+  POA_CORBA_IRObject_ptr impl = (POA_IR::FinderDef_ptr) obj;
+  POA_CORBA_IRObject::destroy_skel (
       req,
-      (POA_CORBA::IRObject_ptr) impl,
+      (POA_CORBA_IRObject_ptr) impl,
       context,
        env
     );
@@ -8700,10 +8700,10 @@ ACE_INLINE void POA_IR::HomeDef::_get_def_kind_skel (
     CORBA::Environment &env
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_IR::HomeDef_ptr) obj;
-  POA_CORBA::IRObject::_get_def_kind_skel (
+  POA_CORBA_IRObject_ptr impl = (POA_IR::HomeDef_ptr) obj;
+  POA_CORBA_IRObject::_get_def_kind_skel (
       req,
-      (POA_CORBA::IRObject_ptr) impl,
+      (POA_CORBA_IRObject_ptr) impl,
       context,
       env
     );
@@ -8715,10 +8715,10 @@ ACE_INLINE void POA_IR::HomeDef::destroy_skel (
     CORBA::Environment &env
   )
 {
-  POA_CORBA::IRObject_ptr impl = (POA_IR::HomeDef_ptr) obj;
-  POA_CORBA::IRObject::destroy_skel (
+  POA_CORBA_IRObject_ptr impl = (POA_IR::HomeDef_ptr) obj;
+  POA_CORBA_IRObject::destroy_skel (
       req,
-      (POA_CORBA::IRObject_ptr) impl,
+      (POA_CORBA_IRObject_ptr) impl,
       context,
        env
     );

@@ -50,7 +50,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
-# ADD LINK32 TAO_IFR_BE_DLL.lib TAO.lib TAO_IDL_FE_DLL.lib ace.lib /nologo /subsystem:console /machine:I386 /out:"..\..\..\bin/Release\tao_ifr.exe" /libpath:"..\..\tao" /libpath:"..\..\TAO_IDL" /libpath:"..\..\..\ace"
+# ADD LINK32 TAO_IFR_Client.lib TAO_IFR_BE_DLL.lib TAO.lib TAO_IDL_FE_DLL.lib ace.lib /nologo /subsystem:console /machine:I386 /out:"..\..\..\bin/Release\tao_ifr.exe" /libpath:"..\..\tao\IFR_Client" /libpath:"..\..\tao" /libpath:"..\..\TAO_IDL" /libpath:"..\..\..\ace"
 
 !ELSEIF  "$(CFG)" == "tao_ifr - Win32 Debug"
 
@@ -74,7 +74,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 TAO_IFR_BE_DLLd.lib TAOd.lib TAO_IDL_FE_DLLd.lib aced.lib /nologo /subsystem:console /debug /machine:I386 /out:"../../../bin/tao_ifr.exe" /pdbtype:sept /libpath:"..\..\tao" /libpath:"..\..\TAO_IDL" /libpath:"..\..\..\ace"
+# ADD LINK32 TAO_IFR_Clientd.lib TAO_IFR_BE_DLLd.lib TAOd.lib TAO_IDL_FE_DLLd.lib aced.lib /nologo /subsystem:console /debug /machine:I386 /out:"../../../bin/tao_ifr.exe" /pdbtype:sept /libpath:"..\..\tao\IFR_Client" /libpath:"..\..\tao" /libpath:"..\..\TAO_IDL" /libpath:"..\..\..\ace"
 
 !ENDIF 
 

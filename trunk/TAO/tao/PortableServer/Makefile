@@ -37,7 +37,6 @@ CPP_SRCS += \
   Direct_Object_Proxy_Impl \
   Strategized_Object_Proxy_Broker \
   Collocated_Object \
-  DomainS \
   PolicyS \
   ORB_Manager \
   ServerRequestInfo

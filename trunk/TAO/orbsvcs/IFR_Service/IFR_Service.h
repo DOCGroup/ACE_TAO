@@ -18,7 +18,7 @@
 
 #include "tao/PortableServer/PortableServerC.h"
 #include "tao/ORB.h"
-#include "tao/ifrfwd.h"
+#include "tao/IFR_Client/ifrfwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

@@ -12,7 +12,7 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
 
-LDLIBS += -lTAO_IFR_BE_DLL -lTAO -lTAO_IDL_FE_DLL 
+LDLIBS += -lTAO_IFR_BE_DLL -lTAO_IFR_Client -lTAO -lTAO_IDL_FE_DLL 
 
 
 VPATH = .
@@ -26,6 +26,7 @@ FILES = tao_ifr \
         drv_preproc_ifr
 
 SRC = $(addsuffix .cpp,$(FILES))
+BIN = tao_ifr
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
@@ -34,11 +35,6 @@ SRC = $(addsuffix .cpp,$(FILES))
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
-
-ifeq ($(interface_repo),1)
-  BIN = tao_ifr
-endif # interface_repo
-
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU

@@ -782,18 +782,6 @@ enum MCAST_SERVICEID
             TAO_HAS_CORBA_MESSAGING == 0 */
 #endif  /* !TAO_HAS_AMI_CALLBACK */
 
-// INTERFACE_REPOSITORY support is disabled by default, irrespective
-// of whether TAO is configured for minimum CORBA.
-// To explicitly enable INTERFACE_REPOSITORY support uncomment the following
-// #define TAO_HAS_INTERFACE_REPOSITORY 1
-// To explicitly disable INTERFACE_REPOSITORY support uncomment the following
-// #define TAO_HAS_INTERFACE_REPOSITORY 0
-
-// Default INTERFACE_REPOSITORY settings
-#if !defined (TAO_HAS_INTERFACE_REPOSITORY)
-#  define TAO_HAS_INTERFACE_REPOSITORY 0
-#endif  /* !TAO_HAS_INTERFACE_REPOSITORY */
-
 // Interceptors is supported by default if we are not building for
 // MinimumCORBA.
 #if !defined (TAO_HAS_INTERCEPTORS)
