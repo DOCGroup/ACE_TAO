@@ -1,3 +1,12 @@
+Thu May  2 10:15:22 UTC 2002  Don Hinton  <dhinton@ieee.org>
+
+	* ace/OS.h:
+
+	  Removed commented out/unneeded includes.  Removed ACE_HAS_BROKEN_IF_HEADER
+	  ifafilt struct declaration that didn't seem to be used.
+
+	  OS.h is now under 2000 lines!  It may get below 1500 before its all over!
+
 Thu May  2 09:11:17 UTC 2002  Don Hinton  <dhinton@ieee.org>
 
 	* ace/Init_ACE.cpp:
