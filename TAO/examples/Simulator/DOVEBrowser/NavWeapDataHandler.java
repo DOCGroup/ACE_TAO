@@ -160,7 +160,7 @@ public class NavWeapDataHandler implements DataHandler {
   }
   
   
-  public void update (RtecEventComm.Event event) {
+  public synchronized void update (RtecEventComm.Event event) {
 
     Any any_value = event.data.any_value;
 
@@ -187,6 +187,10 @@ public class NavWeapDataHandler implements DataHandler {
 	jobs.updateJitter (navigation_.completion_time,
 			   navigation_.computation_time,
 			   navigation_.arrival_time);
+	JitterObservable njobs = (JitterObservable)ObservablesTable.get ("Navigation Latency Jitter (100 ns)");
+	njobs.updateJitter (navigation_.completion_time,
+			    navigation_.computation_time,
+			    navigation_.arrival_time);
 	DeadlinesObservable dobs = (DeadlinesObservable)ObservablesTable.get ("Missed Deadlines");
 	dobs.updateDeadlines (navigation_.deadline_time,
 			      navigation_.completion_time);
@@ -199,6 +203,10 @@ public class NavWeapDataHandler implements DataHandler {
 	lobs.updateLatency (navigation_.completion_time,
 			    navigation_.computation_time,
 			    navigation_.arrival_time);
+	LatencyObservable nlobs = (LatencyObservable)ObservablesTable.get ("Navigation Latency (100 ns)");
+	nlobs.updateLatency (navigation_.completion_time,
+                             navigation_.computation_time,
+                             navigation_.arrival_time);
 	received_events_++;
       }
     else if (any_value.type().equal (WeaponsHelper.type()))
@@ -224,6 +232,10 @@ public class NavWeapDataHandler implements DataHandler {
 	jobs.updateJitter (weapons_.completion_time,
 			   weapons_.computation_time,
 			   weapons_.arrival_time);
+	JitterObservable wjobs = (JitterObservable)ObservablesTable.get ("Weapons Latency Jitter (100 ns)");
+	wjobs.updateJitter (weapons_.completion_time,
+		 	    weapons_.computation_time,
+			    weapons_.arrival_time);
 	DeadlinesObservable dobs = (DeadlinesObservable)ObservablesTable.get ("Missed Deadlines");
 	dobs.updateDeadlines (weapons_.deadline_time,
 			      weapons_.completion_time);
@@ -235,9 +247,14 @@ public class NavWeapDataHandler implements DataHandler {
 	lobs.updateLatency (weapons_.completion_time,
 			    weapons_.computation_time,
 			    weapons_.arrival_time);
+	LatencyObservable wlobs = (LatencyObservable)ObservablesTable.get ("Weapons Latency (100 ns)");
+	wlobs.updateLatency (weapons_.completion_time,
+                             weapons_.computation_time,
+                             weapons_.arrival_time);
 	received_events_++;
       }
-	else 
+    else 
+      {
 	System.out.println ("Received wrong type information");
   
 	System.out.println ("Received any_value.type (): [" +
@@ -248,6 +265,7 @@ public class NavWeapDataHandler implements DataHandler {
 
 	System.out.println ("OR WeaponsHelper.type (): [" +
                             WeaponsHelper.type() + "]");
+      }
   }
   
   NavWeapDataHandler () {
@@ -258,9 +276,13 @@ public class NavWeapDataHandler implements DataHandler {
     ObservablesTable.put ("CPU Usage", new Cpu_UsageObservable());
     ObservablesTable.put ("Overhead", new OverheadObservable());
     ObservablesTable.put ("Latency Jitter (100 ns)", new JitterObservable());
+    ObservablesTable.put ("Navigation Latency Jitter (100 ns)", new JitterObservable());
+    ObservablesTable.put ("Weapons Latency Jitter (100 ns)", new JitterObservable());
     ObservablesTable.put ("Missed Deadlines", new DeadlinesObservable());
     ObservablesTable.put ("Missed Critical Deadlines", new CriticalDeadlinesObservable());
     ObservablesTable.put ("Latency (100 ns)", new LatencyObservable()); 
+    ObservablesTable.put ("Weapons Latency (100 ns)", new LatencyObservable()); 
+    ObservablesTable.put ("Navigation Latency (100 ns)", new LatencyObservable()); 
   }
   
   public java.util.Enumeration getObservablesList () {
@@ -276,7 +298,6 @@ public class NavWeapDataHandler implements DataHandler {
     return obs.getProperty ();
   }
 }
-
 
     
     
