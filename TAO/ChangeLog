@@ -1,3 +1,11 @@
+Fri Mar 18 09:26:32 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/Faults/client.cpp:
+
+	  Added an additional check to omit COMM_FAILURE exceptions when
+	  doing a self shutdown test. This shodl address test failures in
+	  our daily builds.
+
 Fri Mar 18 10:53:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/EC_MT_Mcast/Consumer.cpp:

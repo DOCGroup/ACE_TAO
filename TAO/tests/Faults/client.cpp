@@ -188,6 +188,14 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
     }
+  ACE_CATCH (CORBA::COMM_FAILURE, x)
+    {
+      // For other case this is expected.
+      if (do_self_shutdown == 0)
+        {
+          x._tao_print_exception ("ERROR: Unexpected exception \n");
+        }
+    }
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
