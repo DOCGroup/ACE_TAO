@@ -1,5 +1,8 @@
 Sun Oct 26 15:07:18 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
+	* tao/params.h: Eliminated forward decls of the now-defunct ROA
+ 	class.
+
 	* tao/orb_core.h (TAO_DEFAULT_PORT): Added manifest constant for
  	default port.
 
