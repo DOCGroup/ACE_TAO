@@ -41,7 +41,8 @@ RSC=rc.exe
 # PROP Intermediate_Dir "Release"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GX /O2 /I "..\..\.." /I "..\.." /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
+# ADD CPP /nologo /MD /W3 /GX /O2 /I "..\..\.." /I "..\.." /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /FD /c
+# SUBTRACT CPP /YX
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
 BSC32=bscmake.exe
@@ -64,7 +65,8 @@ LINK32=link.exe
 # PROP Intermediate_Dir "Debug"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\.." /I "..\.." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\.." /I "..\.." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /FD /c
+# SUBTRACT CPP /YX
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -89,11 +91,7 @@ SOURCE=.\driver.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\TestCli.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\TestSer.cpp
+SOURCE=.\TestC.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -101,11 +99,7 @@ SOURCE=.\TestSer.cpp
 # PROP Default_Filter "h"
 # Begin Source File
 
-SOURCE=.\TestCli.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\TestSer.h
+SOURCE=.\TestC.h
 # End Source File
 # End Group
 # Begin Group "IDL Files"
@@ -162,7 +156,7 @@ InputPath=.\Test.idl
 InputName=Test
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -Ge 1 -hc Cli.h -cs Cli.cpp -ci Cli.i -hs Ser.h -ss Ser.cpp -si Ser.i -hT Ser_T.h -sT Ser_T.cpp -st Ser_T.i  $(InputName).idl
+	..\..\..\bin\tao_idl -Ge 1 $(InputName).idl
 
 "$(InputName)Cli.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -201,7 +195,7 @@ BuildCmds= \
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=.\TestCli.i
+SOURCE=.\TestC.i
 # End Source File
 # End Group
 # End Target
