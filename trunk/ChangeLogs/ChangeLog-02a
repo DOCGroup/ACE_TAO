@@ -5,7 +5,7 @@ Sat Dec 29 12:54:45 2001  Johnny Willemsen <jwillemsen@remedy.nl>
         * examples/Mem_Map/file-reverse/file-reverse.cpp:
         * examples/Reactor/Multicast/Log_Wrapper.cpp:
         * examples/Reactor/Multicast/server.cpp:
-        Made these files compiling when ACE_USES_WCHAR is set
+          Made these files compiling when ACE_USES_WCHAR is set
 
 Sat Dec 29 10:42:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
