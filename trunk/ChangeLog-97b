@@ -1,11 +1,10 @@
-Wed Oct 29 22:17:03 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
-
-	* ace/config-hpux-10.x-hpc++.h (ACE_HAS_TEMPLATE_SPECIALIZATION):
-	  Moved to C++ section.  Restored ACE_TEMPLATE_REQUIRE_SOURCE in
-	  C++ section.  Thanks to Stephen Coy <stevec@magna.com.au> for
-	  providing the fix (patiently.)
-
 Wed Oct 29 21:12:55 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/README: Added a new macro called ACE_LACKS_SOCKET_BUFSIZ,
+	  which is enabled on VxWorks.
+
+	* ace/OS.h: Added a new macro called
+	  ACE_DEFAULT_MAX_SOCKET_BUFSIZ, which is set to 65536.
 
 	* ace/OS: Changed the tolower() method to to_lower() so that it
  	  won't conflict if there's a macro with the same name.
@@ -39,6 +38,13 @@ Wed Oct 29 21:12:55 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
           ACE_LACKS_POSIX_PROTOTYPES_FOR_SOME_FUNCTIONS.  Thanks to
           Kirill.Rybaltchenko <Kirill.Rybaltchenko@cern.ch> for reporting
           this.
+
+Wed Oct 29 22:17:03 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
+
+	* ace/config-hpux-10.x-hpc++.h (ACE_HAS_TEMPLATE_SPECIALIZATION):
+	  Moved to C++ section.  Restored ACE_TEMPLATE_REQUIRE_SOURCE in
+	  C++ section.  Thanks to Stephen Coy <stevec@magna.com.au> for
+	  providing the fix (patiently.)
 
 Wed Oct 29 20:30:55 1997  James C Hu  <jxh@lambada.cs.wustl.edu>
 

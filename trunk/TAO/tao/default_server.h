@@ -77,11 +77,11 @@ private:
   // The type of lookup/demultiplexing strategy being used
 
   // = Strategies Used.
-  ACE_Reactive_Strategy<TAO_OA_Connection_Handler> reactive_strategy_;
+  ACE_Reactive_Strategy<TAO_Server_Connection_Handler> reactive_strategy_;
   // A strategy for passively establishing connections which utilizes
   // the Reactor.
 
-  ACE_Thread_Strategy<TAO_OA_Connection_Handler> threaded_strategy_;
+  ACE_Thread_Strategy<TAO_Server_Connection_Handler> threaded_strategy_;
   // The threaded strategy used for passively establishing
   // connections.
   

@@ -25,7 +25,10 @@
 // Forward Decls
 class TAO_OA_Parameters;
 
-class TAO_Client_Connection_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
+typedef ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> 
+        TAO_SVC_HANDLER;
+
+class TAO_Client_Connection_Handler : public TAO_SVC_HANDLER
   // = TITLE
   //      <Svc_Handler> used on the client side and returned by the
   //      <TAO_CONNECTOR>.  
@@ -41,16 +44,12 @@ public:
   // Initialization hook
 };
 
-// @@ Is this really an *OA* connection handler anymore?  Seems like
-// connections are really associated with ORBs in the POA-based
-// architecture.
-class TAO_OA_Connection_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
+class TAO_Server_Connection_Handler : public TAO_SVC_HANDLER
   // = TITLE
   //    Handles requests on a single connection in a server.
-  //
 {
 public:
-  TAO_OA_Connection_Handler (ACE_Thread_Manager *t = ACE_Thread_Manager::instance ());
+  TAO_Server_Connection_Handler (ACE_Thread_Manager *t = ACE_Thread_Manager::instance ());
   // Constructor.
   
   virtual int open (void *);
@@ -86,13 +85,10 @@ protected:
   virtual int handle_input (ACE_HANDLE = ACE_INVALID_HANDLE);
   virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask);
 
-private:
-  typedef ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> SUPERCLASS;
-
   TAO_OA_Parameters *params_;
 };
 
-typedef ACE_Strategy_Acceptor<TAO_OA_Connection_Handler, ACE_SOCK_ACCEPTOR> 
+typedef ACE_Strategy_Acceptor<TAO_Server_Connection_Handler, ACE_SOCK_ACCEPTOR> 
 	TAO_ACCEPTOR;
 
 // Declare that these two functions should be specialized.

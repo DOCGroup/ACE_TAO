@@ -184,11 +184,11 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, char *argv[])
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Reactive_Strategy<TAO_OA_Connection_Handler>;
-template class ACE_Thread_Strategy<TAO_OA_Connection_Handler>;
+template class ACE_Reactive_Strategy<TAO_Server_Connection_Handler>;
+template class ACE_Thread_Strategy<TAO_Server_Connection_Handler>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Reactive_Strategy<TAO_OA_Connection_Handler>
-#pragma instantiate ACE_Thread_Strategy<TAO_OA_Connection_Handler>
+#pragma instantiate ACE_Reactive_Strategy<TAO_Server_Connection_Handler>
+#pragma instantiate ACE_Thread_Strategy<TAO_Server_Connection_Handler>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 ACE_SVC_FACTORY_DEFINE (TAO_Default_Server_Strategy_Factory)

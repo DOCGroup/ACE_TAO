@@ -1,3 +1,16 @@
+Wed Oct 29 22:26:10 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* tao/connect.cpp (open): Revised the code to use the new
+ 	ACE_LACKS_SOCKET_BUFSIZ to detect when this feature isn't
+ 	supported.
+
+	* tao/{giop,connect}: Added a nifty typedef called TAO_SVC_HANDLER
+ 	to remove the drudgery of expanding the template each time.
+
+	* tao: Changed the name of TAO_OA_Connection_Handler to
+ 	TAO_Server_Connection_Handler to be compliant with the
+ 	TAO_Client_Connection_Handler.
+
 Wed Oct 29 20:47:47 1997  Sergio Flores  <sergio@polka.cs.wustl.edu>
 
 	* tests/IDL_Cubit/clnt.cpp: 

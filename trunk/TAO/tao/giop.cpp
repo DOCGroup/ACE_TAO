@@ -121,7 +121,7 @@ dump_msg (const char *label,
 }
 
 CORBA::Boolean
-TAO_GIOP::send_request (ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> *&handler,
+TAO_GIOP::send_request (TAO_SVC_HANDLER *&handler,
                         CDR &stream)
 {
   char *buf = (char *) stream.buffer;
@@ -326,7 +326,7 @@ read_buffer (ACE_SOCK_Stream &peer,
 // buffering.  How fast could it be with both optimizations applied?
 
 TAO_GIOP_MsgType
-TAO_GIOP::recv_request (ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> *&handler,
+TAO_GIOP::recv_request (TAO_SVC_HANDLER *&handler,
                         CDR &msg,
                         CORBA::Environment &env)
 {
@@ -517,7 +517,7 @@ TAO_GIOP_Invocation::TAO_GIOP_Invocation (IIOP_Object *data,
 TAO_GIOP_Invocation::~TAO_GIOP_Invocation (void)
 {
   if (this->handler_ != 0)
-    handler_->idle ();
+    this->handler_->idle ();
 }
 
 // Octet codes for the parameters of the "Opaque" (sequence of octet)
@@ -672,7 +672,7 @@ TAO_GIOP_Invocation::start (CORBA::Environment &env)
   // @@ Must reset handler, otherwise, ACE_Cached_Connect_Strategy will complain.
 
   // Establish the connection and get back a Client_Connection_Handler
-  if (con->connect (handler_, server_addr) == -1)
+  if (con->connect (this->handler_, server_addr) == -1)
     // @@ Need to figure out which exception to set...this one is
     // pretty vague.
     env.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_NO));
@@ -764,7 +764,9 @@ TAO_GIOP_Invocation::invoke (CORBA::ExceptionList &exceptions,
 {
   // Send Request, return on error or if we're done
 
-  if (! TAO_GIOP::send_request (handler_, stream))
+  TAO_SVC_HANDLER *handler = this->handler_;
+
+  if (TAO_GIOP::send_request (handler, this->stream_) == 0)
     {
       // send_request () closed the connection; we just release it here.
       //
@@ -821,8 +823,8 @@ TAO_GIOP_Invocation::invoke (CORBA::ExceptionList &exceptions,
   // according to POSIX, all C stack frames must also have their
   // (explicitly coded) handlers called.  We assume a POSIX.1c/C/C++
   // environment.
-  //
-  switch (TAO_GIOP::recv_request (handler_, this->stream_, env))
+
+  switch (TAO_GIOP::recv_request (handler, this->stream_, env))
     {
     case TAO_GIOP_Reply:
       // handle reply ... must be right one etc
@@ -846,8 +848,8 @@ TAO_GIOP_Invocation::invoke (CORBA::ExceptionList &exceptions,
         IIOP::ProfileBody *old = data_->fwd_profile_i (0);
 	delete old;
 
-        handler_->close ();
-        handler_ = 0;
+        this->handler_->close ();
+        this->handler_ = 0;
 	return TAO_GIOP_LOCATION_FORWARD;
       }
 
@@ -868,7 +870,7 @@ TAO_GIOP_Invocation::invoke (CORBA::ExceptionList &exceptions,
       // Couldn't read it for some reason ... exception's set already,
       // so just tell the other end about the trouble (closing the
       // connection) and return.
-      send_error (handler_);
+      send_error (this->handler_);
       return TAO_GIOP_SYSTEM_EXCEPTION;
     }
 
@@ -903,7 +905,7 @@ TAO_GIOP_Invocation::invoke (CORBA::ExceptionList &exceptions,
   if (this->stream_.decode (&TC_ServiceContextList, &reply_ctx, 0, env)
       != CORBA::TypeCode::TRAVERSE_CONTINUE)
     {
-      send_error (handler_);
+      send_error (this->handler_);
       return TAO_GIOP_SYSTEM_EXCEPTION;
     }
 
@@ -914,7 +916,7 @@ TAO_GIOP_Invocation::invoke (CORBA::ExceptionList &exceptions,
       || !this->stream_.get_ulong (reply_status)
       || reply_status > TAO_GIOP_LOCATION_FORWARD)
     {
-      send_error (handler_);
+      send_error (this->handler_);
       env.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_MAYBE));
       ACE_DEBUG ((LM_DEBUG, " (%P|%t) bad Response header\n"));
       return TAO_GIOP_SYSTEM_EXCEPTION;
@@ -957,7 +959,7 @@ TAO_GIOP_Invocation::invoke (CORBA::ExceptionList &exceptions,
 	  if (this->stream_.get_ulong (len) != CORBA::B_TRUE
 	      || len > this->stream_.remaining)
 	    {
-	      send_error (handler_);
+	      send_error (this->handler_);
 	      env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_YES));
 	      return TAO_GIOP_SYSTEM_EXCEPTION;
 	    }
@@ -991,7 +993,7 @@ TAO_GIOP_Invocation::invoke (CORBA::ExceptionList &exceptions,
 	    if (env.exception () != 0)
 	      {
 		dexc (env, "invoke (), get exception ID");
-		send_error (handler_);
+		send_error (this->handler_);
 		return TAO_GIOP_SYSTEM_EXCEPTION;
 	      }
 
@@ -1004,7 +1006,7 @@ TAO_GIOP_Invocation::invoke (CORBA::ExceptionList &exceptions,
 		if (env.exception () != 0)
 		  {
 		    dexc (env, "invoke (), get exception size");
-		    send_error (handler_);
+		    send_error (this->handler_);
 		    return TAO_GIOP_SYSTEM_EXCEPTION;
 		  }
 
@@ -1022,7 +1024,7 @@ TAO_GIOP_Invocation::invoke (CORBA::ExceptionList &exceptions,
 		    ACE_DEBUG ((LM_ERROR, " (%P|%t) invoke, unmarshal %s exception %s\n",
 				(reply_status == TAO_GIOP_USER_EXCEPTION) ? "user" : "system",
                                exception_id));
-		    send_error (handler_);
+		    send_error (this->handler_);
 		    return TAO_GIOP_SYSTEM_EXCEPTION;
 		  }
 		env.exception (exception);
@@ -1064,7 +1066,7 @@ TAO_GIOP_Invocation::invoke (CORBA::ExceptionList &exceptions,
                                     (void **) &obj2) != NOERROR)
 	  {
 	    dexc (env, "invoke, location forward");
-	    send_error (handler_);
+	    send_error (this->handler_);
 	    return TAO_GIOP_SYSTEM_EXCEPTION;
 	  }
 	CORBA::release (obj);
@@ -1091,8 +1093,8 @@ TAO_GIOP_Invocation::invoke (CORBA::ExceptionList &exceptions,
 	env.clear ();
 
 	// Make sure a new connection is used next time.
-	handler_->close ();
-	handler_ = 0; // @@ not sure this is correct!
+	this->handler_->close ();
+	this->handler_ = 0; // @@ not sure this is correct!
         // @@ We shouldn't need to do this b/c TAO_GIOP_Invocations
         // get created on a per-call basis.  Must check on this.
       }
