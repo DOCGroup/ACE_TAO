@@ -7,10 +7,10 @@
   <label>Hello Deployment Plan</label>
   <instance xmi:id="Sender_Instance">
     <name>Sender_Instance</name>
-    <node>Sender</node>
+    <node>SenderNode</node>
   </instance>
   <instance xmi:id="Receiver_Instance">
     <name>Receiver_Instance</name>
-    <node>Receiver</node>
+    <node>ReceiverNode</node>
   </instance>
 </Deployment:DeploymentPlan>

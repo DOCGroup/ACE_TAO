@@ -1,3 +1,19 @@
+Mon Mar 03 09:37:23 2005  Gan Deng  <gan.deng@vanderbilt.edu>
+
+	* DAnCE/examples/Hello/descriptors/Hello.cdp
+	* DAnCE/examples/Hello/descriptors/hello.dat
+
+	  Remove these two files because the file name is bad.
+
+	* DAnCE/examples/Hello/descriptors/DeploymentPlan.cdp
+	* DAnCE/examples/Hello/descriptors/NodeManagerMap.dat
+
+	  Added these two files.
+
+	* DAnCE/examples/Hello/step-by-step.html
+
+	  Fixed this page to reflex the above change.
+	  
 Mon Mar 03 08:59:23 2005  Gan Deng  <gan.deng@vanderbilt.edu>
 
 	* DAnCE/examples/Hello/Hello_Base/Hello_Base.mpc
@@ -20,12 +36,11 @@ Mon Mar 02 18:30:25 2005  Gan Deng  <gan.deng@vanderbilt.edu>
 	* examples/Hello/step-by-step.html
 	* DAnCE/examples/Hello/step-by-step.html
 
-          Modified these two documentation page to fix some errors.
-
+	  Modified these two documentation page to fix some errors.
 
 	* DAnCE/examples/Hello/Hello_Base/Hello_Base.mpc
 
-          Fixed wrong shared library names and project names.
+	  Fixed wrong shared library names and project names.
 
 Sat Feb 26 14:38:46 2005  Arvind S. Krishna  <arvindk@tango.dre.vanderbilt.edu>
 
