@@ -1,3 +1,11 @@
+Thu Aug 19 16:09:45 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* DAnCE/ciao/Container_Base.h:
+	* ciao/Container_Base.h:
+
+	  Fixed a compilation error reported by  Roland Schimmack <Roland
+	  dot Schimmack at gmx dot de>
+
 Thu Aug 19 08:44:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * PROBLEM-REPORT-FORM:
