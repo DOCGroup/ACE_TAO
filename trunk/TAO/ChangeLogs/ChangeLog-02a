@@ -1,3 +1,20 @@
+Mon Jun 19 14:42:13 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* tao/Invocation.cpp (start):
+
+	  Added client portion of the RTCORBA::CLIENT_PROPAGATED priority
+	  model support.
+
+	* tao/Profile.cpp
+	* tao/RT_Policy_i.cpp:
+
+	  Added @@ comments regarding bugs in the code for Angelo.
+
+	* tao/RT_Policy_i.h
+	* tao/RT_Policy_i.i:
+	  Added TAO_PriorityModelPolicy::get_priority_model () efficient
+	  accessor.
+
 Mon Jun 19 13:29:22 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* examples/Load_Balancing_persistent/README (Usage): Updated the
@@ -16,7 +33,7 @@ Mon Jun 19 03:27:47 2000  Ossama Othman  <ossama@uci.edu>
 
 Mon Jun 19 03:21:20 2000  Ossama Othman  <ossama@uci.edu>
 
-	* examples/Content_Server/AMI_Iterator/Callback.cpp: 
+	* examples/Content_Server/AMI_Iterator/Callback.cpp:
         * examples/Content_Server/AMI_Iterator/Callback.h:
 
 	  Removed these files.  They didn't belong in this example.
