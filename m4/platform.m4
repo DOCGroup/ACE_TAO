@@ -141,7 +141,6 @@ dnl FIXME: "FSU" isn't a platform!  We need to move this somewhere.
     ;;
   *linux*)
     AC_DEFINE(ACE_DEFAULT_MAX_SOCKET_BUFSIZ, 65535)
-    AC_DEFINE(ACE_DEFAULT_SELECT_REACTOR_SIZE, 256)
     AC_DEFINE(ACE_DEFAULT_BASE_ADDR, ((char *) 0x80000000))
     AC_DEFINE(ACE_HAS_BIG_FD_SET) dnl FIXME: We need a test for this!
     AC_DEFINE(ACE_UINT64_FORMAT_SPECIFIER, "%Lu")
