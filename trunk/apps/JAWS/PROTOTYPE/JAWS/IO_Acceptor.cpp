@@ -133,6 +133,7 @@ JAWS_IO_Asynch_Acceptor::open (const ACE_INET_Addr &address, int backlog)
                        "%p\n",
                        "ACE_OS::listen"), -1);
 
+  return 0;
 #else
   ACE_UNUSED_ARG (address);
   return -1;
