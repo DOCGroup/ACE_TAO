@@ -1,3 +1,8 @@
+Tue Apr 17 07:23:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * examples/POA/Default_Servant/*.bor
+          Added BCB makefiles for this test
+
 Mon Apr 16 16:45:19 2001  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
 	* tests/RTCORBA/Client_Protocol/client.cpp:
