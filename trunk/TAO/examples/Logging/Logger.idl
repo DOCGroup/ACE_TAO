@@ -23,27 +23,27 @@ interface Logger
     LM_SHUTDOWN,
     // Shutdown the logger
 
-    LM_TRACE,    
+    LM_TRACE,
     // Messages indicating function-calling sequence
 
-    LM_DEBUG,    
+    LM_DEBUG,
     // Messages that contain information normally of use only when
     // debugging a program
 
-    LM_INFO,	    
+    LM_INFO,
     // Informational messages
 
-    LM_NOTICE,   
+    LM_NOTICE,
     // Conditions that are not error conditions, but that may require
     // special handling
 
-    LM_WARNING,  
+    LM_WARNING,
     // Warning messages
 
-    LM_STARTUP,  
+    LM_STARTUP,
     // Initialize the logger
 
-    LM_ERROR,    
+    LM_ERROR,
     // Error messages
 
     LM_CRITICAL,
@@ -88,19 +88,19 @@ interface Logger
   oneway void log (in Log_Record log_rec);
   // Transmit a Log_Record to the logging server.
 
-  oneway void logv (in Log_Record log_rec, 
+  oneway void logv (in Log_Record log_rec,
 		    in Verbosity_Level level);
   // Log a message with a specific Verbosity level which may be
-  // differeny from the <verbosity_level> 
+  // differeny from the <verbosity_level>
 
-  void log2 (in Log_Record log_rec);
+  void log_twoway (in Log_Record log_rec);
   // Like log (), but twoway such that applications will block until
   // log messages are recieved by the logger
 
-  void logv2 (in Log_Record log_rec, 
+  void logv_twoway (in Log_Record log_rec,
 		    in Verbosity_Level level);
-  // Like logv (), but twoway for the same reason as log2 ()
-  
+  // Like logv (), but twoway for the same reason as logv_twoway ()
+
   oneway void verbosity (in Verbosity_Level level);
   // Change the state of the <verbosity_level>.  This controls how
   // much logging information is displayed by the server.
