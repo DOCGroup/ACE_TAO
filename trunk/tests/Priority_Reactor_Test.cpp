@@ -38,7 +38,7 @@
 
 // The number of children to run, it can be changed using the -c
 // option.
-static int opt_nchildren = 20;
+static int opt_nchildren = 10;
 
 // The number of loops per children, it can be changed using the -l
 // option.
@@ -47,6 +47,9 @@ static int opt_nloops = 200;
 // If not set use the normal reactor, it can be changed using the -d
 // option.
 static int opt_priority_reactor = 1;
+
+// Maximum time to wait for the test termination (-t)
+static int opt_max_duration = 60;
 
 // Maximum number of retries to connect, it can be changed using the
 // -m option.
@@ -64,6 +67,12 @@ void
 Read_Handler::set_countdown (int nchildren)
 {
   Read_Handler::waiting_ = nchildren;
+}
+
+int 
+Read_Handler::get_countdown (void)
+{
+  return Read_Handler::waiting_;
 }
 
 int 
@@ -212,7 +221,7 @@ main (int argc, char *argv[])
 {
   ACE_START_TEST ("Priority_Reactor_Test");
 
-  ACE_Get_Opt getopt (argc, argv, "dc:l:m:", 1);
+  ACE_Get_Opt getopt (argc, argv, "dc:l:m:t:", 1);
 
   for (int c; (c = getopt ()) != -1; )
     switch (c)
@@ -229,6 +238,18 @@ main (int argc, char *argv[])
       case 'm':
 	max_retries = atoi (getopt.optarg);
 	break;
+      case 't':
+	opt_max_duration = atoi (getopt.optarg);
+	break;
+      case '?':
+      default:
+	ACE_ERROR_RETURN ((LM_ERROR, "Usage: Priority_Reactor_Test "
+			   "   [-d] (disable priority reactor)\n"
+			   "   [-c nchildren] (number of threads/processes)\n"
+			   "   [-l loops] (number of loops per child)\n"
+			   "   [-m maxretries] (attempts to connect)\n"
+			   "   [-t max_time] (limits test duration)\n"), -1);
+	ACE_NOTREACHED (break);
       }
 
   // Manage memory automagically.
@@ -301,9 +322,18 @@ main (int argc, char *argv[])
 	      "(%P|%t) only one thread may be run in a process on this platform\n%a", 1));
 #endif /* ACE_HAS_THREADS */
 
+  ACE_Time_Value tv (opt_max_duration);
+
   ACE_Reactor::instance()->register_handler
     (&acceptor, ACE_Event_Handler::READ_MASK);
-  ACE_Reactor::instance()->run_event_loop ();
+  ACE_Reactor::instance()->run_event_loop (tv);
+
+  if (Read_Handler::get_countdown () != 0)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+		  "(%P|%t) running out of time, "
+		  "probably due to failed connections."));
+    }
 
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) waiting for the children...\n"));
 
