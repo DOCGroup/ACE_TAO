@@ -1,3 +1,11 @@
+Thu Jan 06 15:20:39 2000  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/TAO.dsp:
+
+	  Removed UlongSeqS.cpp and UShortSeqS.cpp from the project file
+	  since including them would necessitate inclusion of the POA
+	  library. 
+
 Tue Mar 16 01:28:26 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tests/Portable_Interceptors/PICurrent/ClientRequestInterceptor.cpp:
