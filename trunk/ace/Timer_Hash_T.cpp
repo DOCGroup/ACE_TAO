@@ -205,8 +205,6 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, LOCK, BUCKET>::ACE_Timer_Hash_T (size_t table_si
       this->table_[i] = new BUCKET (&this->table_functor_, this->free_list_);
       this->table_[i]->gettimeofday (ACE_High_Res_Timer::gettimeofday);
     }
-
-  this->table_functor_;
 }
 
 
@@ -230,8 +228,6 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, LOCK, BUCKET>::ACE_Timer_Hash_T (FUNCTOR *upcall
       this->table_[i] = new BUCKET (&this->table_functor_, this->free_list_);
       this->table_[i]->gettimeofday (ACE_High_Res_Timer::gettimeofday);
     }
-
-  this->table_functor_;
 }
 
 
@@ -385,7 +381,8 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, LOCK, BUCKET>::cancel (const TYPE &type,
     {
       ACE_Timer_Queue_Iterator_T<TYPE, ACE_Timer_Hash_Upcall<TYPE, FUNCTOR, LOCK>, ACE_Null_Mutex> &iter = this->table_[i]->iter ();
       for (iter.first (); !iter.isdone (); iter.next ())
-        timer_ids[pos++] = (Hash_Token *)iter.item ()->get_act ();
+        if (iter.item ()->get_type () == type)
+          timer_ids[pos++] = (Hash_Token *)iter.item ()->get_act ();
     }
 
   ACE_ASSERT (pos <= this->size_);
