@@ -98,6 +98,7 @@ be_visitor_interface_interceptors_ss::gen_abstract_ops_helper (
   AST_Decl *d = 0;
   be_visitor_context ctx;
   ctx.stream (os);
+  ctx.state (TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_SS);
 
   for (UTL_ScopeActiveIterator si (base, UTL_Scope::IK_decls);
        !si.is_done ();
@@ -114,17 +115,17 @@ be_visitor_interface_interceptors_ss::gen_abstract_ops_helper (
                             -1);
         }
 
+      UTL_ScopedName *item_new_name  = 0;
+      ACE_NEW_RETURN (item_new_name,
+                      UTL_ScopedName (d->local_name ()->copy (),
+                                      0),
+                      -1);
+
+      UTL_ScopedName *base = (UTL_ScopedName *)node->name ()->copy ();
+      base->nconc (item_new_name);
+
       if (d->node_type () == AST_Decl::NT_op)
         {
-          UTL_ScopedName *item_new_name  = 0;
-          ACE_NEW_RETURN (item_new_name,
-                          UTL_ScopedName (d->local_name ()->copy (),
-                                          0),
-                          -1);
-
-          UTL_ScopedName *base = (UTL_ScopedName *)node->name ()->copy ();
-          base->nconc (item_new_name);
-
           AST_Operation *op = AST_Operation::narrow_from_decl (d);
           be_operation new_op (op->return_type (),
                                op->flags (),
@@ -137,11 +138,27 @@ be_visitor_interface_interceptors_ss::gen_abstract_ops_helper (
           new_op.set_name (base);
           be_visitor_operation_interceptors_ss op_visitor (&ctx);
           op_visitor.visit_operation (&new_op);
-
-          base->destroy ();
-          delete base;
-          base = 0;
         }
+      else if (d->node_type () == AST_Decl::NT_attr)
+        {
+          AST_Attribute *attr = AST_Attribute::narrow_from_decl (d);
+          be_attribute new_attr (attr->readonly (),
+                                 attr->field_type (),
+                                 0,
+                                 attr->is_local (),
+                                 attr->is_abstract ());
+          new_attr.set_defined_in (node);
+          new_attr.set_name (base);
+          new_attr.be_add_get_exceptions (attr->get_get_exceptions ());
+          new_attr.be_add_set_exceptions (attr->get_set_exceptions ());
+          be_visitor_attribute attr_visitor (&ctx);
+          attr_visitor.visit_attribute (&new_attr);
+          ctx.attribute (0);
+        }
+
+      base->destroy ();
+      delete base;
+      base = 0;
     }
 
   return 0;

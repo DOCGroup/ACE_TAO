@@ -141,6 +141,7 @@ be_visitor_interface_thru_poa_proxy_impl_sh::gen_abstract_ops_helper (
   AST_Decl *d = 0;
   be_visitor_context ctx;
   ctx.stream (os);
+  ctx.state (TAO_CodeGen::TAO_INTERFACE_THRU_POA_PROXY_IMPL_SH);
 
   for (UTL_ScopeActiveIterator si (base, UTL_Scope::IK_decls);
        !si.is_done ();
@@ -157,11 +158,11 @@ be_visitor_interface_thru_poa_proxy_impl_sh::gen_abstract_ops_helper (
                             -1);
         }
 
+      UTL_ScopedName item_new_name (d->local_name (),
+                                    0);
+
       if (d->node_type () == AST_Decl::NT_op)
         {
-          UTL_ScopedName item_new_name (d->local_name (),
-                                        0);
-
           AST_Operation *op = AST_Operation::narrow_from_decl (d);
           be_operation new_op (op->return_type (),
                                op->flags (),
@@ -173,6 +174,21 @@ be_visitor_interface_thru_poa_proxy_impl_sh::gen_abstract_ops_helper (
                                                       new_op);
           be_visitor_operation_proxy_impl_xh op_visitor (&ctx);
           op_visitor.visit_operation (&new_op);
+        }
+      else if (d->node_type () == AST_Decl::NT_attr)
+        {
+          AST_Attribute *attr = AST_Attribute::narrow_from_decl (d);
+          be_attribute new_attr (attr->readonly (),
+                                 attr->field_type (),
+                                 &item_new_name,
+                                 attr->is_local (),
+                                 attr->is_abstract ());
+          new_attr.set_defined_in (node);
+          new_attr.be_add_get_exceptions (attr->get_get_exceptions ());
+          new_attr.be_add_set_exceptions (attr->get_set_exceptions ());
+          be_visitor_attribute attr_visitor (&ctx);
+          attr_visitor.visit_attribute (&new_attr);
+          ctx.attribute (0);
         }
     }
 
