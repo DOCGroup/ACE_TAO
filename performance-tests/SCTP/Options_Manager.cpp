@@ -8,6 +8,7 @@ extern "C" {
 
 #include "ace/Get_Opt.h"
 #include "ace/os_include/netinet/os_in.h"
+#include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_string.h"
 
 // make sure that the code compiles cleanly even if SCTP is not
