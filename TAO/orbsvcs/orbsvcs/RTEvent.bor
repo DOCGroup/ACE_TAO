@@ -50,6 +50,7 @@ OBJFILES = \
    $(OBJDIR)\ECG_Address_Server_Base.obj \
    $(OBJDIR)\ECG_CDR_Message_Receiver.obj \
    $(OBJDIR)\ECG_CDR_Message_Sender.obj \
+   $(OBJDIR)\CRC.obj \
    $(OBJDIR)\ECG_Complex_Address_Server.obj \
    $(OBJDIR)\ECG_Mcast_Gateway.obj \
    $(OBJDIR)\ECG_Simple_Address_Server.obj \
