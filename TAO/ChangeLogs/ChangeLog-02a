@@ -1,3 +1,9 @@
+Tue Apr 10 16:35:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+
+	* examples/PluggableUDP/DIOP/DIOP_Connector.cpp:
+
+          Removed old, unnecessary explicit template instantiations.
+
 Tue Apr 10 14:27:57 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/Invocation.h (generate_request_id):
