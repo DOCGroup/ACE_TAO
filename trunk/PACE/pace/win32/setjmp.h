@@ -22,7 +22,11 @@
 extern "C" {
 #endif /* PACE_HAS_CPLUSPLUS */
 
+  PACE_INLINE int pace_setjmp (jmp_buf env);
+
   PACE_INLINE int pace_sigsetjmp (sigjmp_buf env, int savemask);
+
+  PACE_INLINE void pace_longjmp (jmp_buf env, int val);
 
   PACE_INLINE void pace_siglongjmp (sigjmp_buf env, int val);
 
