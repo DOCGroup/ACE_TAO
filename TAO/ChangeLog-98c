@@ -1,3 +1,7 @@
+Wed Nov 19 22:11:28 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* TAO version 0.0.39, released Wed Nov 19 22:11:28 1997.
+
 Wed Nov 19 20:48:01 1997  James C Hu  <jxh@cs.wustl.edu>
 
 	* tests/Thruput_test/server.cpp: Commented out some unreachable
