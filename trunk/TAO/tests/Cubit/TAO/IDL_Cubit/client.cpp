@@ -731,10 +731,12 @@ Cubit_Client::init_naming_service (void)
     {
       CORBA::Object_var naming_obj =
         this->orb_->resolve_initial_references ("NameService");
+
       if (CORBA::is_nil (naming_obj.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to resolve the Name Service.\n"),
                           -1);
+
       CosNaming::NamingContext_var naming_context =
         CosNaming::NamingContext::_narrow (naming_obj.in (),
                                            TAO_TRY_ENV);
