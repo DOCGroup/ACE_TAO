@@ -297,7 +297,7 @@ ACE_Configuration::export_section (const ACE_Configuration_Section_Key& section,
                   {
                     line += ACE_TEXT (",");
                   }
-                  ACE_OS::sprintf(ACE_TEXT (bin_value), "%02x", *ptr);
+                  ACE_OS::sprintf(bin_value, ACE_TEXT ("%02x"), *ptr);
                   line += bin_value;
                   --binary_length;
                   ++ptr;
@@ -410,7 +410,7 @@ ACE_Configuration::import_config (const ACE_TCHAR* filename)
             if (set_string_value (section, name, end))
               return -4;
           }
-        else if (ACE_OS::strncmp(end, "dword:", 6) == 0)
+        else if (ACE_OS::strncmp(end, ACE_TEXT ("dword:"), 6) == 0)
           {
             // number type
             ACE_TCHAR* endptr = 0;
@@ -418,7 +418,7 @@ ACE_Configuration::import_config (const ACE_TCHAR* filename)
             if (set_integer_value (section, name, value))
               return -4;
           }
-        else if(ACE_OS::strncmp(end, "hex:", 4) == 0)
+        else if(ACE_OS::strncmp(end, ACE_TEXT ("hex:"), 4) == 0)
           {
             // binary type
             u_int string_length = ACE_OS::strlen(end+4);
@@ -860,12 +860,12 @@ int ACE_Configuration_Win32Registry::find_value(const ACE_Configuration_Section_
   unsigned char buffer[ACE_DEFAULT_BUFSIZE];
   DWORD buffer_length = ACE_DEFAULT_BUFSIZE;
   DWORD type;
-  if (::RegQueryValueEx (base_key, 
-                         name, 
-                         NULL, 
-                         &type, 
-                         (BYTE*)&buffer, 
-                         &buffer_length) != ERROR_SUCCESS)
+  if (ACE_TEXT_RegQueryValueEx (base_key, 
+                                name, 
+                                NULL, 
+                                &type, 
+                                (BYTE*)&buffer, 
+                                &buffer_length) != ERROR_SUCCESS)
     return -1;
 
   switch(type)
