@@ -118,7 +118,7 @@ AST_Sequence::in_recursion (AST_Type *node)
 {
   if (node == 0)
     {
-      // There has to be a parameter
+      // There has to be a parameter.
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("(%N:%l) AST_Sequence::")
                          ACE_TEXT ("in_recursion - ")
