@@ -1,3 +1,10 @@
+Wed Apr 28 06:19:32 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_stdio.cpp (DllMain):
+          Replaced check for ACE_OS_HAS_DLL with ACE_HAS_DLL. ACE_OS_HAS_DLL
+          is deprecated and will be removed in the near future. Thanks to
+          Felix Wyss <FelixW@inin.com> for reporting this.
+
 Wed Apr 28 06:13:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Pipe_Test.cpp:
