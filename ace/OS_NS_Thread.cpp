@@ -3293,7 +3293,8 @@ ACE_OS::thr_keycreate (ACE_thread_key_t *key,
 # if defined (ACE_HAS_TSS_EMULATION)
     if (ACE_TSS_Emulation::next_key (*key) == 0)
       {
-        ACE_TSS_Emulation::tss_destructor (*key, dest);
+        ACE_TSS_Emulation::tss_destructor (*key, 
+                                           (ACE_TSS_DESTRUCTOR) dest);
 
         // Extract out the thread-specific table instance and stash away
         // the key and destructor so that we can free it up later on...

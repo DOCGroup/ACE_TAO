@@ -1,3 +1,10 @@
+Tue Jun  1 16:37:30 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* ace/OS_NS_Thread.cpp: Added a cast for (ACE_TSS_DESTRUCTOR)
+	  so the code will compile properly on Solaris when
+ 	  ACE_HAS_TSS_EMULATION is enabled.  Thanks to Kevin Christian
+ 	  <khchristian@att.com> for reporting this.
+
 Tue Jun  1 16:56:39 2004  Steve Huston  <shuston@riverace.com>
 
 	* tests/MT_Reference_Counted_Event_Handler_Test.cpp: Changed use of
