@@ -1,3 +1,15 @@
+Thu Feb 11 11:23:05 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/IIOP_Interpreter.cpp: 
+	  The GreenHills compiler (at least versions 1.8.8 and 1.8.9 of
+	  it) gets really confused by some template forward
+	  declarations. We had to re-arrange the includes to match the
+	  compiler liking.
+
+	* tao/TAO_Internal.cpp: 
+	  Need to include ORB_Core.h in platforms that do not support
+	  svc.conf or when tao is using a static services.
+
 Thu Feb 11 10:34:41 1999 Fred Kuhns <fredk@cs.wustl.edu>
         * Use of PHandle in MProfile.{h,cpp} create a name conflict.  
 	  Added TAO_ to fix this.
