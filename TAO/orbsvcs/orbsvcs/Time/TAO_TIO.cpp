@@ -119,8 +119,6 @@ TAO_TIO::spans (CosTime::UTO_ptr uto,
 	  overlap = tio->_this ();
 
 	}
-
-      return CosTime::OTNoOverlap;
     }
   TAO_CATCHANY
     {
@@ -128,6 +126,7 @@ TAO_TIO::spans (CosTime::UTO_ptr uto,
     }
   TAO_ENDTRY;
 
+  return CosTime::OTNoOverlap;
 }
 
 // This operation returns a value of type OverlapType depending on how
@@ -226,14 +225,14 @@ TAO_TIO::overlaps (CosTime::TIO_ptr tio,
 	  overlap = tio_i->_this ();
 
 	}
-
-      return CosTime::OTNoOverlap;
     }
   TAO_CATCHANY
     {
       TAO_TRY_ENV.print_exception ("Exception:");
     }
   TAO_ENDTRY;
+
+  return CosTime::OTNoOverlap;
 }
 
 CosTime::UTO_ptr
@@ -251,11 +250,12 @@ TAO_TIO::time (CORBA::Environment &_env)
 				     0),
 			    CORBA::NO_MEMORY (CORBA::COMPLETED_NO),
 			    CosTime::UTO::_nil ());
-      return uto->_this ();
     }
   TAO_CATCHANY
     {
       TAO_TRY_ENV.print_exception ("Exception:");
+      return CosTime::UTO::_nil ();
     }
   TAO_ENDTRY;
+  return uto->_this ();
 }
