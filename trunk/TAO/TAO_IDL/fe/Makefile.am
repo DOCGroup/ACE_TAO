@@ -37,7 +37,7 @@ fe_lookup.cpp: keywords.dat
 	echo "#include	\"idl.h\"" >> fe_lookup.cpp
 	echo "#include	\"idl_extern.h\"" >> fe_lookup.cpp
 	echo "#include	\"fe_private.h\"" >> fe_lookup.cpp
-	$(GPERF) -M -J -c -C -D -E -T -f 0 -a -o -t -p -K keyword_  \
+	$(GPERF) -M -J -c -C -D -E -T -F 0 -f 0 -a -o -t -p -K keyword_  \
 			-L C++ -Z TAO_IDL_CPP_Keyword_Table -N lookup -k1,2,$$ keywords.dat \
 			 >> fe_lookup.cpp
 
