@@ -1,3 +1,12 @@
+Sat Jan  5 20:00:21 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/Connection_Handler.inl (TAO_Connection_Handler):
+
+	  Initialize "pending_upcalls_" and "pending_upcall_lock_" in the
+	  base member initializer list.  Although this constructor is not
+	  used, it is best to ensure that proper initialization is
+	  performed in the event this constructor is used in the future.
+
 Sat Jan  5 19:30:08 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/orbconf.h:
