@@ -1,3 +1,9 @@
+Mon Jul 22 15:13:38 2002  Carlos O'Ryan  <coryan@atdesk.com>
+
+	* ace/Atomic_Op.h:
+	* ace/Atomic_Op.i:
+	  Fixed bug 1253, add missing copy constructor.
+
 Mon Jul 22 13:25:29 2002  Stephen Torri <storri@cs.wustl.edu>
 
 	* ace/streams.h: Fixed _MSC_VER compiler warning messages stating
