@@ -1,8 +1,31 @@
+Sat Apr 14 12:59:39 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Block_Flushing_Strategy.h:
+        * tao/Block_Flushing_Strategy.cpp:
+        * tao/Flushing_Strategy.h:
+        * tao/Flushing_Strategy.cpp:
+        * tao/Message_Sent_Callback.h:
+        * tao/Message_Sent_Callback.inl:
+        * tao/Message_Sent_Callback.cpp:
+        * tao/Queued_Message.h:
+        * tao/Queued_Message.inl:
+        * tao/Queued_Message.cpp:
+        * tao/Reactive_Flushing_Strategy.h:
+        * tao/Reactive_Flushing_Strategy.cpp:
+          Add files lost during merge
+
+        * tao/IIOP_Transport.cpp:
+          Solve merging problems.
+
+        * tests/Big_Oneways/Makefile:
+        * tests/Big_Twoways/Makefile:
+          Update dependencies
+
 Sat Apr 14 10:33:47 2001  Carlos O'Ryan  <coryan@uci.edu>
 
-	* Another merge for the bug 132 fixes.
+        * Another merge for the bug 132 fixes.
 
-	Fri Apr 13 18:49:32 2001  Carlos O'Ryan  <coryan@uci.edu>
+        Fri Apr 13 18:49:32 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/Flushing_Strategy.h:
         * tao/Block_Flushing_Strategy.h:
@@ -23,7 +46,7 @@ Sat Apr 14 10:33:47 2001  Carlos O'Ryan  <coryan@uci.edu>
         * tao/Synch_Queued_Message.cpp:
           Add accessor to obtain the current message block.
 
-	Thu Apr 12 20:15:22 2001  Carlos O'Ryan  <coryan@uci.edu>
+        Thu Apr 12 20:15:22 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/Sync_Strategies.h:
         * tao/Sync_Strategies.cpp:
@@ -37,7 +60,7 @@ Sat Apr 14 10:33:47 2001  Carlos O'Ryan  <coryan@uci.edu>
           implement TAO::BUFFER_MESSAGE_COUNT and the TAO::BUFFER_SIZE
           buffering constraint policies.
 
-	Wed Apr 11 10:21:35 2001  Carlos O'Ryan  <coryan@uci.edu>
+        Wed Apr 11 10:21:35 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * With the following changes the semantics of oneways are
           bug-compatible with the main trunk.
@@ -59,7 +82,7 @@ Sat Apr 14 10:33:47 2001  Carlos O'Ryan  <coryan@uci.edu>
         * tao/Transport.h:
           Remove old code that was commented out anyway.
 
-	Mon Apr 09 00:41:20 2001  Carlos O'Ryan  <coryan@uci.edu>
+        Mon Apr 09 00:41:20 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/Invocation.cpp:
           The default scope should be SYNC_WITH_TRANSPORT, but was
@@ -72,7 +95,7 @@ Sat Apr 14 10:33:47 2001  Carlos O'Ryan  <coryan@uci.edu>
           Initialize byte_count to zero before calling send(), add more
           ACE_ASSERT() calls to debug the system.
 
-	Sat Apr  7 21:13:48 2001  Carlos O'Ryan  <coryan@uci.edu>
+        Sat Apr  7 21:13:48 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/Transport.cpp:
           Separate the path for synchronous and asynchronous requests more
@@ -102,7 +125,7 @@ Sat Apr 14 10:33:47 2001  Carlos O'Ryan  <coryan@uci.edu>
           Fill up the messages with a repeating pattern, this is useful
           during debugging.
 
-	Thu Apr 05 10:36:57 2001  Carlos O'Ryan  <coryan@uci.edu>
+        Thu Apr 05 10:36:57 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/Queued_Message.h:
           Remove the declaration of the done() method, the semantics were
@@ -129,7 +152,7 @@ Sat Apr 14 10:33:47 2001  Carlos O'Ryan  <coryan@uci.edu>
           Increase timeout for initial session registration.  Important
           for manual executions.
 
-	Wed Apr  4 10:53:27 2001  Carlos O'Ryan  <coryan@uci.edu>
+        Wed Apr  4 10:53:27 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/Transport.h:
         * tao/Transport.cpp:
@@ -153,7 +176,7 @@ Sat Apr 14 10:33:47 2001  Carlos O'Ryan  <coryan@uci.edu>
         * tao/Invocation.cpp:
           Improved debugging messages for timeouts
 
-	Sun Apr 01 15:34:32 2001  Carlos O'Ryan  <coryan@uci.edu>
+        Sun Apr 01 15:34:32 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/Makefile:
         * tao/TAO.dsp:
@@ -191,7 +214,7 @@ Sat Apr 14 10:33:47 2001  Carlos O'Ryan  <coryan@uci.edu>
           This is used to validate the session during startup, i.e. ensure
           that enough connections are available for all the threads.
 
-	Sat Mar 31 14:56:37 2001  Carlos O'Ryan  <coryan@uci.edu>
+        Sat Mar 31 14:56:37 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/Transport.cpp:
           Fixed memory management and synchronization problems.
@@ -215,7 +238,7 @@ Sat Apr 14 10:33:47 2001  Carlos O'Ryan  <coryan@uci.edu>
         * tests/Big_Request_Muxing/server.dsp:
           Add MSVC project files
 
-	Fri Mar 30 17:06:33 2001  Carlos O'Ryan  <coryan@uci.edu>
+        Fri Mar 30 17:06:33 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/README:
         * tests/Big_Request_Muxing/README:
@@ -262,7 +285,7 @@ Sat Apr 14 10:33:47 2001  Carlos O'Ryan  <coryan@uci.edu>
           Verify that at least some of the messages timeout and others
           complete the test successfully.
 
-	Thu Mar 29 08:38:42 2001  Carlos O'Ryan  <coryan@uci.edu>
+        Thu Mar 29 08:38:42 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/IIOP_Transport.cpp:
         * tao/Strategies/SHMIOP_Transport.cpp:
@@ -271,7 +294,7 @@ Sat Apr 14 10:33:47 2001  Carlos O'Ryan  <coryan@uci.edu>
           Do not close the connection if it sends 0 bytes.  This is
           perfectly possible when using non-blocking I/O.
 
-	Wed Mar 28 10:42:12 2001  Carlos O'Ryan  <coryan@uci.edu>
+        Wed Mar 28 10:42:12 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * Another merge for the branch fixing bug 132
 
