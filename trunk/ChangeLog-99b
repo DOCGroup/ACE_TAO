@@ -1,3 +1,18 @@
+Tue Apr 20 13:55:34 1999  Joe Hoffert <joeh@cs.wustl.edu>
+
+	* ace/OS.i: Fixed ACE_OS::t_free to free memory if pointer is not
+          null.
+
+	* ace/TLI.h: Added default ACE_XTI_ATM_DEVICE.
+
+        * ace/TLI_Connector.cpp: Disabled non-blocking connects for XTI/ATM
+          since FORE's drivers have problems with this.
+
+        * ace/ATM_Addr.cpp: Added code formatting change.
+
+        * examples/IPC_SAP/TLI_SAP/CPP-ATM-{server,client}.cpp: Added
+          the use of ACE_XTI_ATM_DEVICE
+
 Tue Apr 20 13:30:51 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/ace.icc: Added a configuration file for creating a shared
