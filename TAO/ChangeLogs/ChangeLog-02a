@@ -1,3 +1,17 @@
+Tue Dec 26 14:55:27 2000  Ossama Othman  <ossama@uci.edu>
+
+	* tao/PortableInterceptor.i (receive_request):
+
+	  Removed unnecessary use of "ACE_UNUSED_ARG" macro.  The
+	  CORBA::Environment argument is actually used by the recently
+	  added run-time integrity check.
+
+	* tests/Portable_Interceptors/IORInterceptor/
+	  FOO_ClientRequestInterceptor.cpp (send_poll, receive_reply,
+	  receive_exception, receive_other):
+
+	  Fixed unused argument warnings.
+
 Tue Dec 26 13:40:50 2000  Ossama Othman  <ossama@uci.edu>
 
 	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp
