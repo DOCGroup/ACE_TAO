@@ -230,10 +230,10 @@ JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
   result = this->MAKE (data, size, obj);
   if (result == -1)
     {
-      if (obj)
-        this->DROP_i (obj);
-      else
+      if (size/1024 <= this->maxobjsize_)
         cerr << "MAKE failed.  Bummer!" << endl;
+      else
+        this->DROP_i (obj);
       return -1;
     }
 
@@ -267,10 +267,6 @@ JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
       this->DROP_i (obj);
       return -1;
     }
-
-#ifdef ENTERA_VERBOSE_TRACE
-  cerr << "*** bound: " << key << endl;
-#endif
 
   this->waterlevel_ += size;
 
@@ -386,7 +382,6 @@ JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
 #else
       // The above is a little tricky to implement.  Think about it
       // some more.
-      cerr << "*** " << size << " is too large to cache" << endl;
       obj = this->factory_->create (data, size);
       return -1;
 

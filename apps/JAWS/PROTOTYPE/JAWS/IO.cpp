@@ -10,6 +10,7 @@
 #include "JAWS/IO.h"
 #include "JAWS/IO_Handler.h"
 #include "JAWS/IO_Acceptor.h"
+#include "JAWS/Filecache.h"
 
 // #include "HTTP_Helpers.h"
 
@@ -67,7 +68,7 @@ JAWS_Synch_IO::~JAWS_Synch_IO (void)
 void
 JAWS_Synch_IO::accept (JAWS_IO_Handler *ioh,
                        ACE_Message_Block *,
-                       unsigned int size)
+                       unsigned int)
 {
   ACE_SOCK_Stream new_stream;
   new_stream.set_handle (ACE_INVALID_HANDLE);
@@ -107,7 +108,7 @@ JAWS_Synch_IO::receive_file (JAWS_IO_Handler *ioh,
                              unsigned int entire_length)
 {
   ACE_Filecache_Handle handle (filename, 
-                               ACE_reinterpret_cast(int, entire_length));
+                               (int) entire_length);
 
   int result = handle.error ();
 
@@ -187,11 +188,17 @@ JAWS_Synch_IO::transmit_file (JAWS_IO_Handler *ioh,
                               const char *trailer,
                               unsigned int trailer_size)
 {
-  ACE_Filecache_Handle handle (filename);
+  int result = 0;
 
-  int result = handle.error ();
+  if (filename == 0)
+    {
+      ioh->transmit_file_error (-1);
+      return;
+    }
 
-  if (result == ACE_Filecache_Handle::ACE_SUCCESS)
+  JAWS_Cached_FILE cf (filename);
+
+  if (cf.file ()->get_handle () != ACE_INVALID_HANDLE)
     {
 #if defined (ACE_JAWS_BASELINE) || defined (ACE_WIN32)
       ACE_SOCK_Stream stream;
@@ -215,10 +222,13 @@ JAWS_Synch_IO::transmit_file (JAWS_IO_Handler *ioh,
           iov[iovcnt].iov_len =  header_size;
           iovcnt++;
         }
-      if (handle.size () > 0)
+
+      ACE_FILE_Info info;
+      cf.file ()->get_info (info);
+      if (cf.file ()->get_info (info) == 0 && info.size_ > 0)
         {
-          iov[iovcnt].iov_base = ACE_reinterpret_cast(char*,handle.address ());
-          iov[iovcnt].iov_len = handle.size ();
+          iov[iovcnt].iov_base = (char *) cf.mmap ()->addr ();
+          iov[iovcnt].iov_len = info.size_;
           iovcnt++;
         }
       if (trailer_size > 0)
@@ -234,7 +244,7 @@ JAWS_Synch_IO::transmit_file (JAWS_IO_Handler *ioh,
 #endif /* ACE_JAWS_BASELINE */
     }
 
-  if (result != ACE_Filecache_Handle::ACE_SUCCESS)
+  if (result != 0)
     ioh->transmit_file_error (result);
 }
 
@@ -434,6 +444,8 @@ JAWS_Asynch_IO::transmit_file (JAWS_IO_Handler *ioh,
                                const char *trailer,
                                unsigned int trailer_size)
 {
+  int result = 0;
+
   JAWS_TRACE ("JAWS_Asynch_IO::transmit_file");
 
   ioh->idle ();
@@ -442,11 +454,9 @@ JAWS_Asynch_IO::transmit_file (JAWS_IO_Handler *ioh,
     ACE_dynamic_cast (JAWS_Asynch_IO_Handler *, ioh);
 
   ACE_Asynch_Transmit_File::Header_And_Trailer *header_and_trailer = 0;
-  ACE_Filecache_Handle *handle = new ACE_Filecache_Handle (filename, ACE_NOMAP);
+  JAWS_Cached_FILE *cf = new JAWS_Cached_FILE (filename);
 
-  int result = handle->error ();
-
-  if (result == ACE_Filecache_Handle::ACE_SUCCESS)
+  if (cf->file ()->get_handle () != ACE_INVALID_HANDLE)
     {
       ACE_Message_Block hdr_mb (header, header_size);
       ACE_Message_Block trl_mb (trailer, trailer_size);
@@ -457,23 +467,23 @@ JAWS_Asynch_IO::transmit_file (JAWS_IO_Handler *ioh,
       ACE_Asynch_Transmit_File tf;
 
       if (tf.open (*(aioh->handler ()), aioh->handle ()) == -1
-          || tf.transmit_file (handle->handle (), // file handle
+          || tf.transmit_file (cf->file ()->get_handle (), // file handle
                                header_and_trailer, // header and trailer data
                                0,  // bytes_to_write
                                0,  // offset
                                0,  // offset_high
                                0,  // bytes_per_send
                                0,  // flags
-                               handle // act
+                               cf // act
                                ) == -1)
         result = -1;
     }
 
-  if (result != ACE_Filecache_Handle::ACE_SUCCESS)
+  if (result != 0)
     {
       ioh->transmit_file_error (result);
       delete header_and_trailer;
-      delete handle;
+      delete cf;
     }
 }
 
