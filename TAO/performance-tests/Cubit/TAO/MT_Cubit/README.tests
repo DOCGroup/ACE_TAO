@@ -2,24 +2,24 @@
 
 Note: this file is in very rough version.  Updates are coming soon.
 
-Server Utilization Test
+ORB/OS CPU processing Overhead Test
 -----------------------
-on the server side:
-   ./server -s -f /project/doc/sergio/ior -U
+1. Execute the following command to obtain latency for CORBA requests:
 
-on the client side:
-   ./client -s -f /project/doc/sergio/ior -U 60
+   ./client -u 10000000 
 
-Client Utilization Test
------------------------
-on the server side:
-   ./server -s -f /project/doc/sergio/ior -t 1
+NOTE:  This runs a copy of the server in the same process as the client
+and executes 10,000,000 CORBA requests.  Take a note of the total latency (L1).
 
-on the client side:
-   ./client -s -f /project/doc/sergio/ior -u 60 
+2. Execute the following command to obtain latency for collocated calls:
 
-NOTE: before running the client side, edit the ior file and replace
-the ip address to make it have it's numeric form.
+   ./client -u 10000000 -l
+
+NOTE:  The total latency is L2.
+
+The percentage of overhead is calculated in the following way:
+
+% Overhead = ( (L1 - L2) / L1 ) * 100
 
 
 Latency Test
@@ -40,3 +40,5 @@ Context Switch Test
 -------------------
 Use the same arguments as the latency test, and add "-c"
 
+NOTE: For Windows NT use a tool like Microsoft Spy that is installed with 
+MS Visual C++ to obtain the context switch data.
