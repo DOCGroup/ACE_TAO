@@ -5,6 +5,10 @@ Wed Dec 13 10:52:55 2000  Darrell Brunsch <brunsch@uci.edu>
 
           AV now compiles.
 
+        * orbsvcs/orbsvcs/Makefile.av:
+
+          Updated dependencies.
+
 Wed Dec 13 10:25:00 2000  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Av.bor:
