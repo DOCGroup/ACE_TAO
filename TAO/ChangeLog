@@ -1,3 +1,15 @@
+Sat Jul 13 13:22:19 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/Stack_Recursion/Makefile:
+	* tests/Stack_Recursion/Makefile.bor:
+	* tests/Stack_Recursion/server.bor:
+	* tests/Stack_Recursion/client.bor: Makefiles for different
+	  platforms.  
+
+	* tests/Stack_Recursion/run_test.pl: The core files should be
+	  cleaned up when program exits, else the test could fill up the
+	  file system and prevent other tests from running. 
+
 Sat Jul 13 09:26:53 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Stack_Recursion/client.cpp:
