@@ -587,6 +587,7 @@ TAO_NAMESPACE CORBA
   typedef CORBA_Object_out Object_out;
 
   class LocalObject;
+  typedef LocalObject *LocalObject_ptr;
   class LocalObject_var;
   class LocalObject_out;
 

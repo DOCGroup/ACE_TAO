@@ -6,7 +6,7 @@ ACE_INLINE CORBA::LocalObject_ptr
 CORBA::LocalObject::_duplicate (CORBA::LocalObject_ptr obj)
 {
   if (obj)
-    obj->_incr_refcnt ();
+    obj->_add_ref ();
   return obj;
 }
 
@@ -21,6 +21,7 @@ CORBA::LocalObject::_nil (void)
 ACE_INLINE CORBA::LocalObject_ptr
 CORBA::LocalObject::_narrow (CORBA_Object_ptr obj, CORBA::Environment&)
 {
+   (!ACE_OS::strcmp (, "IDL:omg.org/CORBA/LocalObject:1.0"))
   return CORBA::LocalObject::_duplicate (obj);
 }
 

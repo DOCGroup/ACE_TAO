@@ -374,6 +374,10 @@ SOURCE=.\Linear_Priority_Mapping.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\LocalObject.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Managed_Types.cpp
 # End Source File
 # Begin Source File
@@ -950,6 +954,10 @@ SOURCE=.\Linear_Priority_Mapping.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\LocalObject.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Managed_Types.h
 # End Source File
 # Begin Source File
@@ -1419,6 +1427,10 @@ SOURCE=.\Leader_Follower.i
 # Begin Source File
 
 SOURCE=.\Linear_Priority_Mapping.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\LocalObject.i
 # End Source File
 # Begin Source File
 

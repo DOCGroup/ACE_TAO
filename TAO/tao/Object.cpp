@@ -51,13 +51,13 @@ CORBA_Object::CORBA_Object (TAO_Stub *protocol_proxy,
 void
 CORBA_Object::_add_ref (void)
 {
-  this->incr_refcnt ();
+  this->_incr_refcnt ();
 }
 
 void
 CORBA_Object::_remove_ref (void)
 {
-  this->decr_refcnt ();
+  this->_decr_refcnt ();
 }
 
 void

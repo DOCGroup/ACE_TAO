@@ -17,7 +17,7 @@ ACE_INLINE CORBA_Pollable_ptr
 CORBA_Pollable::_duplicate (CORBA_Pollable_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->_incr_refcnt ();
+    obj->_add_ref ();
   return obj;
 }
 
@@ -204,7 +204,7 @@ ACE_INLINE CORBA_DIIPollable_ptr
 CORBA_DIIPollable::_duplicate (CORBA_DIIPollable_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->_incr_refcnt ();
+    obj->_add_ref ();
   return obj;
 }
 
@@ -392,7 +392,7 @@ ACE_INLINE CORBA_PollableSet_ptr
 CORBA_PollableSet::_duplicate (CORBA_PollableSet_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->_incr_refcnt ();
+    obj->_add_ref ();
   return obj;
 }
 

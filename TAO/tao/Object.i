@@ -27,7 +27,7 @@ ACE_INLINE CORBA_Object_ptr
 CORBA_Object::_duplicate (CORBA_Object_ptr obj)
 {
   if (obj)
-    obj->_incr_refcnt ();
+    obj->_add_ref ();
   return obj;
 }
 

@@ -89,7 +89,7 @@ CORBA_DomainManager_ptr
 CORBA_DomainManager::_duplicate (CORBA_DomainManager_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->_incr_refcnt ();
+    obj->_add_ref ();
   return obj;
 }
 
@@ -222,7 +222,7 @@ CORBA::ConstructionPolicy_ptr
 CORBA::ConstructionPolicy::_duplicate (CORBA::ConstructionPolicy_ptr obj)
 {
   if (!CORBA::is_nil (obj))
-    obj->_incr_refcnt ();
+    obj->_add_ref ();
   return obj;
 }
 

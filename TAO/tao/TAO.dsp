@@ -1601,6 +1601,25 @@ SOURCE=.\Linear_Priority_Mapping.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\LocalObject.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\Managed_Types.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Release"
@@ -3358,6 +3377,10 @@ SOURCE=.\Linear_Priority_Mapping.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\LocalObject.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Managed_Types.h
 # End Source File
 # Begin Source File
@@ -3835,6 +3858,10 @@ SOURCE=.\Leader_Follower.i
 # Begin Source File
 
 SOURCE=.\Linear_Priority_Mapping.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\LocalObject.i
 # End Source File
 # Begin Source File
 

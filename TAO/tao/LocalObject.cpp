@@ -12,6 +12,7 @@
 #include "tao/Request.h"
 #include "tao/varout.h"
 #include "tao/ORB_Core.h"
+#include "tao/Invocation.h"
 #include "tao/Connector_Registry.h"
 #include "tao/debug.h"
 
@@ -22,12 +23,12 @@
 #include "ace/Auto_Ptr.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/Object.i"
+# include "tao/LocalObject.i"
 #endif /* ! __ACE_INLINE__ */
 
 ACE_RCSID(tao, Object, "$Id$")
 
-CORBA::LocalObject::~CORBA::LocalObject (void)
+CORBA::LocalObject::~LocalObject (void)
 {
 }
 
@@ -87,7 +88,7 @@ CORBA::LocalObject::_is_equivalent (CORBA::LocalObject_ptr other_obj,
 // TAO's extensions
 
 TAO_ObjectKey *
-CORBA::LObject::_key (CORBA::Environment &ACE_TRY_ENV)
+CORBA::LocalObject::_key (CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_ERROR((LM_ERROR, ASYS_TEXT ("(%P|%t) Cannot get _key froma LocalObject!!!\n")));
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
@@ -141,13 +142,13 @@ CORBA::LocalObject::_request (const CORBA::Char *,
 CORBA::InterfaceDef_ptr
 CORBA::LocalObject::_get_interface (CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), CORBA::InterfaceDef::_nil ());
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
 
 CORBA::ImplementationDef_ptr
 CORBA::LocalObject::_get_implementation (CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), CORBA::ImplementationDef::_nil ());
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
