@@ -1,3 +1,9 @@
+Wed Nov 26 12:15:22 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* bin/tao_other_tests.lst:
+
+	  Blocked a number of tests from running in if messaging is disabled.
+
 Wed Nov 26 17:41:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* include/makeinclude/ace_flags.bor:
