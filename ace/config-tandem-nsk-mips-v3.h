@@ -2,13 +2,14 @@
 //
 // $Id$
 
+
 #ifndef ACE_CONFIG_NSK_H
 #define ACE_CONFIG_NSK_H
 
 #include /**/ "ace/pre.h"
 
 // The following configuration file contains defines for Tandem NSK
-// platform, MIPS processor, version 2 C++ compiler.
+// platform, MIPS processor, version 3 C++ compiler.
 
 
 //=========================================================================
@@ -240,6 +241,9 @@ typedef enum CMA_T_SCHED_POLICY {
 // Platform limits the maximum socket message size.
 #define ACE_HAS_SSIZE_MAX
 
+// Platform has strptime()
+#define ACE_HAS_STRPTIME
+
 // hrtime_t is a basic type that doesn't require ACE_U64_TO_U32 conversion
 #define ACE_HRTIME_T_IS_BASIC_TYPE
 
@@ -378,7 +382,7 @@ extern int cma_sigwait  (sigset_t *);
 #define ACE_HAS_SSIZE_T
 
 // Platform/compiler supports Standard C++ Library
-#define ACE_HAS_STANDARD_CPP_LIBRARY 0
+#define ACE_HAS_STANDARD_CPP_LIBRARY 1
 
 // Compiler uses the template<> syntax
 #define ACE_HAS_STD_TEMPLATE_SPECIALIZATION
@@ -395,6 +399,10 @@ extern int cma_sigwait  (sigset_t *);
 // of classes used as formal arguments to a template class.
 #define ACE_HAS_TEMPLATE_TYPEDEFS
 
+// Platform/Compiler supports a String class 
+#define ACE_HAS_STRING_CLASS 
+#define ACE_HAS_STDCPP_STL_INCLUDES
+
 // Platform has its standard c++ library in the namespace std.
 #define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
 
@@ -407,6 +415,30 @@ extern int cma_sigwait  (sigset_t *);
 
 // Compiler supports the new using keyword for C++ namespaces.
 #define ACE_HAS_USING_KEYWORD 
+
+// Compiler supports the typename keyword for templates
+#define ACE_HAS_TYPENAME_KEYWORD
+
+
+//=========================================================================
+// C++ version3 import/export macros
+//=========================================================================
+
+// Define the export macros needed to export symbols outside a DLL
+// The ACE_IMPORT_SINGLETON_DECLARE macro has been modified to not explicitly
+// instantiate the class template.
+#if defined(USE_EXPLICIT_EXPORT)
+#define ACE_LACKS_INLINE_FUNCTIONS
+
+#define ACE_HAS_CUSTOM_EXPORT_MACROS
+#define ACE_Proper_Export_Flag export$
+#define ACE_Proper_Import_Flag import$
+#define ACE_EXPORT_SINGLETON_DECLARATION(T) template class export$ T
+#define ACE_EXPORT_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK) template class export$ SINGLETON_TYPE<CLASS, LOCK>;
+#define ACE_IMPORT_SINGLETON_DECLARATION(T) template class import$ T
+#define ACE_IMPORT_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK) template class import$ SINGLETON_TYPE <CLASS, LOCK>;
+#endif
+
 
 //=========================================================================
 // Build options
@@ -427,6 +459,11 @@ extern int cma_sigwait  (sigset_t *);
 
 // Uncomment the following if tokens library is needed.
 //#define ACE_HAS_TOKENS_LIBRARY
+
+// NonStop CORBA uses the XML Service Configurator
+#define ACE_HAS_XML_SVC_CONF
+
+#define ACE_LD_SEARCH_PATH "_RLD_LIB_PATH"
 
 #include /**/ "ace/post.h"
 
