@@ -1,3 +1,9 @@
+Wed Aug 20 17:19:52 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * CIDLC/cidlc.mpc:
+        
+          Added new and missing files.
+
 Wed Aug 20 17:09:18 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CCF/CCF/CodeGenerationKit/CodeGenerationKit.vcproj:
