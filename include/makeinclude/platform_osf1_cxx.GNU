@@ -15,9 +15,9 @@ ifeq (4.,$(findstring 4.,$(ACE_DU_VERSION)))
   include $(ACE_ROOT)/include/makeinclude/platform_osf1_4.0.GNU
 
   ifeq (4.0f,$(findstring 4.,$(shell /usr/sbin/sizer -v)))
-    CFLAGS += -DDIGITAL_UNIX=0x4F
+    CFLAGS += -DDIGITAL_UNIX=0x40F
   else  # ! 4.0F
-    CFLAGS += -DDIGITAL_UNIX=0x40
+    CFLAGS += -DDIGITAL_UNIX=0x400
   endif # ! 4.0F
 
   ifneq ($(CXX_VER),CXX_5)
@@ -28,7 +28,7 @@ ifeq (4.,$(findstring 4.,$(ACE_DU_VERSION)))
 else # ! 4.x
 ifeq (5.,$(findstring 5.,$(ACE_DU_VERSION)))
   include $(ACE_ROOT)/include/makeinclude/platform_osf1_4.0.GNU
-  CFLAGS += -DDIGITAL_UNIX=0x50
+  CFLAGS += -DDIGITAL_UNIX=0x500
   SOFLAGS = -shared -use_ld_input $(ACELIB)
 
 endif # 5.x
