@@ -254,7 +254,7 @@ ACE_Capabilities::getval (const ACE_TCHAR *keyname, ACE_TString &val)
     return -1;
 
   ACE_StringCapEntry *scap =
-    ACE_dynamic_cast (ACE_StringCapEntry *, cap);
+    dynamic_cast<ACE_StringCapEntry *> (cap);
   if (scap == 0)
     return -1;
 
@@ -270,7 +270,7 @@ ACE_Capabilities::getval (const ACE_TCHAR *keyname, int &val)
     return -1;
 
   ACE_IntCapEntry *icap =
-    ACE_dynamic_cast (ACE_IntCapEntry *, cap);
+    dynamic_cast<ACE_IntCapEntry *> (cap);
   if (icap != 0)
     {
       val = icap->getval ();
@@ -278,7 +278,7 @@ ACE_Capabilities::getval (const ACE_TCHAR *keyname, int &val)
     }
 
   ACE_BoolCapEntry *bcap =
-    ACE_dynamic_cast (ACE_BoolCapEntry *, cap);
+    dynamic_cast<ACE_BoolCapEntry *> (cap);
 
   if (bcap == 0)
     return -1;
@@ -357,19 +357,10 @@ template class ACE_Hash_Map_Manager_Ex<ACE_TString,ACE_CapEntry*,ACE_Hash<ACE_TS
 template class ACE_Hash_Map_Iterator_Base_Ex<ACE_TString,ACE_CapEntry*,ACE_Hash<ACE_TString>,ACE_Equal_To<ACE_TString>,ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator_Ex<ACE_TString,ACE_CapEntry*,ACE_Hash<ACE_TString>,ACE_Equal_To<ACE_TString>,ACE_Null_Mutex>;
 template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_TString,ACE_CapEntry*,ACE_Hash<ACE_TString>,ACE_Equal_To<ACE_TString>,ACE_Null_Mutex>;
-// I'm not sure that these instantiations are necessary for any
-// platform.  But it definitely won't compile on VxWorks due to a
-// conflict with the template specializations in Functor_String.h
-#if !defined(VXWORKS)
-template class ACE_Hash<ACE_TString>;
-template class ACE_Equal_To<ACE_TString>;
-#endif /* VXWORKS */
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Hash_Map_Entry<ACE_TString,ACE_CapEntry*>
 #pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_TString,ACE_CapEntry*,ACE_Hash<ACE_TString>,ACE_Equal_To<ACE_TString>,ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_TString,ACE_CapEntry*,ACE_Hash<ACE_TString>,ACE_Equal_To<ACE_TString>,ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_TString,ACE_CapEntry*,ACE_Hash<ACE_TString>,ACE_Equal_To<ACE_TString>,ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_TString,ACE_CapEntry*,ACE_Hash<ACE_TString>,ACE_Equal_To<ACE_TString>,ACE_Null_Mutex>
-#pragma instantiate ACE_Hash<ACE_TString>
-#pragma instantiate ACE_Equal_To<ACE_TString>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

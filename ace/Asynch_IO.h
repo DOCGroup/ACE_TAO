@@ -573,8 +573,8 @@ public:
    */
   int read (ACE_Message_Block &message_block,
             size_t bytes_to_read,
-            u_long offset = 0,
-            u_long offset_high = 0,
+            unsigned long offset = 0,
+            unsigned long offset_high = 0,
             const void *act = 0,
             int priority = 0,
             int signal_number = ACE_SIGRTMIN);
@@ -588,8 +588,8 @@ public:
   */
   int readv (ACE_Message_Block &message_block,
              size_t bytes_to_read,
-             u_long offset = 0,
-             u_long offset_high = 0,
+             unsigned long offset = 0,
+             unsigned long offset_high = 0,
              const void *act = 0,
              int priority = 0,
              int signal_number = ACE_SIGRTMIN);
@@ -707,8 +707,8 @@ public:
    */
   int write (ACE_Message_Block &message_block,
              size_t bytes_to_write,
-             u_long offset = 0,
-             u_long offset_high = 0,
+             unsigned long offset = 0,
+             unsigned long offset_high = 0,
              const void *act = 0,
              int priority = 0,
              int signal_number = ACE_SIGRTMIN);
@@ -722,8 +722,8 @@ public:
   */
   int writev (ACE_Message_Block &message_block,
               size_t bytes_to_write,
-              u_long offset = 0,
-              u_long offset_high = 0,
+              unsigned long offset = 0,
+              unsigned long offset_high = 0,
               const void *act = 0,
               int priority = 0,
               int signal_number = ACE_SIGRTMIN);
@@ -1067,10 +1067,10 @@ public:
   int transmit_file (ACE_HANDLE file,
                      Header_And_Trailer *header_and_trailer = 0,
                      size_t bytes_to_write = 0,
-                     u_long offset = 0,
-                     u_long offset_high = 0,
+                     unsigned long offset = 0,
+                     unsigned long offset_high = 0,
                      size_t bytes_per_send = 0,
-                     u_long flags = 0,
+                     unsigned long flags = 0,
                      const void *act = 0,
                      int priority = 0,
                      int signal_number = ACE_SIGRTMIN);

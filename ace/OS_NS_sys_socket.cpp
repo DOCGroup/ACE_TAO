@@ -55,7 +55,7 @@ ACE_OS::connect (ACE_HANDLE handle,
 # else
   ACE_UNUSED_ARG (qos_params);
   return ACE_OS::connect (handle,
-                          (sockaddr *) addr,
+                          const_cast <sockaddr *> (addr),
                           addrlen);
 # endif /* ACE_HAS_WINSOCK2 */
 }

@@ -6,6 +6,9 @@
 
 #include "ace/INET_Addr.h"
 #include "ace/Log_Msg.h"
+#include "ace/OS_NS_string.h"
+#include "ace/OS_NS_sys_time.h"
+#include "ace/OS_NS_sys_socket.h"
 
 #if !defined (__ACE_INLINE__)
 # include "ace/Ping_Socket.inl"

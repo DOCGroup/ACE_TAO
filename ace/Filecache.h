@@ -23,7 +23,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Hash_Map_Manager_T.h"
-#include "ace/SString.h"
 #include "ace/Null_Mutex.h"
 #include "ace/Synch_Traits.h"
 #include "ace/RW_Thread_Mutex.h"
@@ -148,22 +147,10 @@ private:
   int mapit_;
 };
 
-#if defined (ACE_HAS_TEMPLATE_SPECIALIZATION)
-
 typedef ACE_Hash_Map_Manager_Ex<const ACE_TCHAR *, ACE_Filecache_Object *, ACE_Hash<const ACE_TCHAR *>, ACE_Equal_To<const ACE_TCHAR *>, ACE_Null_Mutex>
         ACE_Filecache_Hash;
 
 typedef ACE_Hash_Map_Entry<const ACE_TCHAR *, ACE_Filecache_Object *> ACE_Filecache_Hash_Entry;
-
-#else
-
-typedef ACE_Hash_Map_Manager_Ex<ACE_TString, ACE_Filecache_Object *, ACE_Hash<ACE_TString>, ACE_Equal_To<ACE_TString>, ACE_Null_Mutex>
-        ACE_Filecache_Hash;
-
-typedef ACE_Filecache_Hash::ENTRY ACE_Filecache_Hash_Entry;
-
-#endif /* ACE_HAS_TEMPLATE_SPECIALIZATION */
-
 
 /**
  * @class ACE_Filecache

@@ -1,9 +1,12 @@
-// -*- C++ -*-
 // $Id$
 
 #include "ace/OS_NS_stdio.h"
 
-ACE_RCSID(ace, OS_NS_stdio, "$Id$")
+
+ACE_RCSID (ace,
+           OS_NS_stdio,
+           "$Id$")
+
 
 #if !defined (ACE_HAS_INLINED_OSCALLS)
 # include "ace/OS_NS_stdio.inl"
@@ -131,9 +134,9 @@ ACE_OS::fopen (const char *filename,
       if (fd != -1)
         {
 #   if defined (__BORLANDC__) && !defined (ACE_USES_WCHAR)
-          FILE *fp = ::_fdopen (fd, ACE_const_cast (char *, mode));
+          FILE *fp = ::_fdopen (fd, const_cast<char *> (mode));
 #   elif defined (__BORLANDC__) && defined (ACE_USES_WCHAR)
-          FILE *fp = ::_wfdopen (fd, ACE_const_cast (wchar_t *, mode));
+          FILE *fp = ::_wfdopen (fd, const_cast<wchar_t *> (mode));
 #   elif defined (ACE_USES_WCHAR)
           FILE *fp = ::_wfdopen (fd, mode);
 #   else
@@ -186,9 +189,9 @@ ACE_OS::fopen (const wchar_t *filename,
       if (fd != -1)
         {
 #   if defined (__BORLANDC__) && !defined (ACE_USES_WCHAR)
-          FILE *fp = ::_fdopen (fd, ACE_const_cast (char *, mode));
+          FILE *fp = ::_fdopen (fd, const_cast<char *> (mode));
 #   elif defined (__BORLANDC__) && defined (ACE_USES_WCHAR)
-          FILE *fp = ::_wfdopen (fd, ACE_const_cast (wchar_t *, mode));
+          FILE *fp = ::_wfdopen (fd, const_cast<wchar_t *> (mode));
 #   elif defined (ACE_USES_WCHAR)
           FILE *fp = ::_wfdopen (fd, mode);
 #   else
@@ -248,45 +251,6 @@ ACE_OS::fprintf (FILE *fp, const wchar_t *format, ...)
 }
 #endif /* ACE_HAS_WCHAR */
 
-char *
-ACE_OS::gets (char *str, int n)
-{
-  ACE_OS_TRACE ("ACE_OS::gets");
-  int c;
-  char *s = str;
-
-  if (str == 0 || n < 0) n = 0;
-  if (n == 0) str = 0;
-  else n--;
-
-#   if defined (DIGITAL_UNIX)
-  // On Tru64 getchar is a macro which calls fgetc, in that case we must explicit
-  // use the global namespace, because fgetc is also in the ACE_OS namespace
-  while ((c = ::getchar ()) != '\n')
-#   else
-  while ((c = getchar ()) != '\n')
-#   endif
-    {
-
-      if (c == EOF && errno == EINTR)
-        {
-#   if defined (ACE_HAS_SIGNAL_SAFE_OS_CALLS)
-          continue;
-#   else
-          break;
-#   endif /* ACE_HAS_SIGNAL_SAFE_OS_CALLS */
-        }
-
-      if (c == EOF)
-        break;
-
-      if (n > 0)
-        n--, *s++ = c;
-    }
-  if (s) *s = '\0';
-
-  return (c == EOF) ? 0 : str;
-}
 
 // The following *printf functions aren't inline because
 // they use varargs.

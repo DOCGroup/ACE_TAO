@@ -22,9 +22,7 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#if defined (ACE_HAS_XT)
-
+#include "ace/ACE_XtReactor_export.h"
 #include "ace/Select_Reactor.h"
 
 //#define String XtString
@@ -37,7 +35,7 @@
  * @brief This little class is necessary due to the way that Microsoft
  * implements sockets to be pointers rather than indices.
  */
-class ACE_Export ACE_XtReactorID
+class ACE_XtReactor_Export ACE_XtReactorID
 {
 public:
   /// Magic cookie.
@@ -56,7 +54,7 @@ public:
  * @brief An object-oriented event demultiplexor and event handler
  * dispatcher that uses the X Toolkit functions.
  */
-class ACE_Export ACE_XtReactor : public ACE_Select_Reactor
+class ACE_XtReactor_Export ACE_XtReactor : public ACE_Select_Reactor
 {
 public:
   // = Initialization and termination methods.
@@ -132,7 +130,6 @@ private:
   ACE_XtReactor (const ACE_XtReactor &);
   ACE_XtReactor &operator = (const ACE_XtReactor &);
 };
-#endif /* ACE_HAS_XT */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_XTREACTOR_H */

@@ -58,13 +58,6 @@
 /// Enable support for the SSL wrappers
 #define ACE_HAS_SSL 1
 
-/// Several GUI Reactors that are only enabled in some platforms.
-#define ACE_HAS_XT
-#define ACE_HAS_FL
-#define ACE_HAS_QT
-#define ACE_HAS_TK
-#define ACE_HAS_GTK
-
 /// Enable exceptions
 #define ACE_HAS_EXCEPTIONS
 
@@ -109,6 +102,9 @@
 
 /// Doxygen is capable of parsing using
 #define ACE_HAS_USING_KEYWORD
+
+/// Generate icmp documentation
+#define ACE_HAS_ICMP_SUPPORT 1
 
 /// Parse some ACE_SSL classes that depend on recent versions of
 /// OpenSSL.

@@ -120,8 +120,7 @@ ACE_OS::ioctl (ACE_HANDLE socket,
                                         char [dwBufferLen],
                                         -1);
 
-        QOS *qos = ACE_reinterpret_cast (QOS*,
-                                                                         qos_buf);
+        QOS *qos = reinterpret_cast<QOS*> (qos_buf);
 
         result = ::WSAIoctl ((ACE_SOCKET) socket,
                                    io_control_code,

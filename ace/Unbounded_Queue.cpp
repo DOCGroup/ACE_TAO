@@ -166,8 +166,7 @@ ACE_Unbounded_Queue<T>::enqueue_head (const T &new_item)
 
   // Create a new node that points to the original head.
   ACE_NEW_MALLOC_RETURN (temp,
-                         ACE_static_cast(ACE_Node<T> *,
-                           this->allocator_->malloc (sizeof (ACE_Node<T>))),
+                         static_cast<ACE_Node<T> *> (this->allocator_->malloc (sizeof (ACE_Node<T>))),
                          ACE_Node<T> (new_item, this->head_->next_),
                          -1);
   // Link this pointer into the front of the list.  Note that the
@@ -193,8 +192,7 @@ ACE_Unbounded_Queue<T>::enqueue_tail (const T &new_item)
 
   // Create a new dummy node.
   ACE_NEW_MALLOC_RETURN (temp,
-                         ACE_static_cast(ACE_Node<T> *,
-                           this->allocator_->malloc (sizeof (ACE_Node<T>))),
+                         static_cast<ACE_Node<T> *> (this->allocator_->malloc (sizeof (ACE_Node<T>))),
                          ACE_Node<T> (this->head_->next_),
                          -1);
   // Link this dummy pointer into the list.

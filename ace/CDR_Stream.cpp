@@ -1616,6 +1616,12 @@ ACE_InputCDR::reset_contents (void)
 
 // --------------------------------------------------------------
 
+ACE_WChar_Codeset_Translator::~ACE_WChar_Codeset_Translator (void)
+{
+}
+
+// --------------------------------------------------------------
+
 ACE_CDR::Boolean
 operator<< (ACE_OutputCDR &os, const ACE_CString &x)
 {

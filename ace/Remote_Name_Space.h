@@ -22,9 +22,11 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/SString.h"
 #include "ace/Name_Proxy.h"
 #include "ace/Name_Space.h"
+
+
+class ACE_NS_WString;
 
 typedef ACE_Unbounded_Set<ACE_NS_WString> ACE_WSTRING_SET;
 

@@ -24,8 +24,7 @@
 
 #include "ace/Unbounded_Queue.h"
 #include "ace/Unbounded_Set.h"
-#include "ace/SString.h"
-#include "ace/XML_Svc_Conf.h"
+#include "ace/SStringfwd.h"
 #include "ace/OS_NS_signal.h"
 
 // Forward decl.
@@ -41,7 +40,9 @@ class ACE_DLL;
 
 #if (ACE_USES_CLASSIC_SVC_CONF == 1)
 class ACE_Svc_Conf_Param;
-#endif /* ACE_USES_CLASSIC_SVC_CONF ==1 */
+#else
+class ACE_XML_Svc_Conf;
+#endif /* ACE_USES_CLASSIC_SVC_CONF == 1 */
 
 extern "C"
 {
@@ -156,15 +157,15 @@ public:
 
   /**
    * Performs an open without parsing command-line arguments.  The
-   * <logger_key> indicates where to write the logging output, which
+   * @a logger_key indicates where to write the logging output, which
    * is typically either a STREAM pipe or a socket address.  If
-   * <ignore_static_svcs> is 1 then static services are not loaded,
-   * otherwise, they are loaded.  If <ignore_default_svc_conf_file> is
+   * @a ignore_static_svcs is 1 then static services are not loaded,
+   * otherwise, they are loaded.  If @a ignore_default_svc_conf_file is
    * non-0 then the <svc.conf> configuration file will be ignored.
    * Returns zero upon success, -1 if the file is not found or cannot
    * be opened (errno is set accordingly), otherwise returns the
    * number of errors encountered loading the services in the
-   * specified svc.conf configuration file.  If <ignore_debug_flag> is
+   * specified svc.conf configuration file.  If @a ignore_debug_flag is
    * non-0 then the application is responsible for setting the
    * <ACE_Log_Msg::priority_mask> appropriately.
    */
@@ -218,7 +219,7 @@ public:
    *                          for setting the @c ACE_Log_Msg::priority_mask
    *                          appropriately.
    *
-   * @retval -1   the configuration file is not found or cannot
+   * @retval -1   The configuration file is not found or cannot
    *              be opened (errno is set accordingly).
    * @retval  0   Success.
    * @retval  >0  The number of errors encountered while processing
@@ -452,11 +453,6 @@ private:
 #include "ace/Service_Config.inl"
 #endif /* __ACE_INLINE__ */
 
-// These must go here to avoid circular includes...  (only left here
-// for to not break applications which rely on this - no real need any
-// longer)
-#include "ace/Reactor.h"
-#include "ace/Svc_Conf_Tokens.h"
 
 #include /**/ "ace/post.h"
 

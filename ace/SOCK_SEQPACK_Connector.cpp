@@ -93,8 +93,7 @@ ACE_SOCK_SEQPACK_Connector::shared_connect_start (ACE_SOCK_SEQPACK_Association &
 
   if (local_sap != ACE_Addr::sap_any)
     {
-      sockaddr *laddr = ACE_reinterpret_cast (sockaddr *,
-                                              local_sap.get_addr ());
+      sockaddr *laddr = reinterpret_cast<sockaddr *> (local_sap.get_addr ());
       int size = local_sap.get_size ();
 
       if (ACE_OS::bind (new_association.get_handle (),
@@ -149,8 +148,7 @@ ACE_SOCK_SEQPACK_Connector::shared_connect_start (ACE_SOCK_SEQPACK_Association &
 
       // bind to the primary addr first
       if (ACE_OS::bind(new_association.get_handle (),
-                       ACE_reinterpret_cast(sockaddr *,
-                       &(local_inet_addrs[0])),
+                       reinterpret_cast<sockaddr *> (&(local_inet_addrs[0])),
                        sizeof(sockaddr)))
       {
         ACE_Errno_Guard error (errno);
@@ -167,8 +165,7 @@ ACE_SOCK_SEQPACK_Connector::shared_connect_start (ACE_SOCK_SEQPACK_Association &
 
         // get sockaddr_in for the local handle
         if (ACE_OS::getsockname(new_association.get_handle (),
-                                ACE_reinterpret_cast(sockaddr *,
-                                                     &portst),
+                                reinterpret_cast<sockaddr *> (&portst),
 		                                     &sn))
         {
           ACE_Errno_Guard error (errno);
@@ -192,7 +189,7 @@ ACE_SOCK_SEQPACK_Connector::shared_connect_start (ACE_SOCK_SEQPACK_Association &
 
         // bind other ifaces
         if (sctp_bindx(new_association.get_handle(),
-                       ACE_reinterpret_cast(sockaddr *, local_sockaddr),
+                       reinterpret_cast<sockaddr *> (local_sockaddr),
                        num_addresses - 1,
                        SCTP_BINDX_ADD_ADDR))
         {
@@ -208,9 +205,8 @@ ACE_SOCK_SEQPACK_Connector::shared_connect_start (ACE_SOCK_SEQPACK_Association &
       // Call bind
       size_t name_len = (sizeof (sockaddr_in)) * num_addresses;
       if (ACE_OS::bind (new_association.get_handle (),
-                        ACE_reinterpret_cast (sockaddr *,
-                                              local_inet_addrs),
-                        ACE_static_cast (int, name_len)) == -1)
+                        reinterpret_cast<sockaddr *> (local_inet_addrs),
+                        static_cast<int> (name_len)) == -1)
         {
           // Save/restore errno.
           ACE_Errno_Guard error (errno);
@@ -295,8 +291,7 @@ ACE_SOCK_SEQPACK_Connector::connect (ACE_SOCK_SEQPACK_Association &new_associati
     return -1;
 
   int result = ACE_OS::connect (new_association.get_handle (),
-                                ACE_reinterpret_cast (sockaddr *,
-                                                      remote_sap.get_addr ()),
+                                reinterpret_cast<sockaddr *> (remote_sap.get_addr ()),
                                 remote_sap.get_size ());
 
   return this->shared_connect_finish (new_association,
@@ -328,8 +323,7 @@ ACE_SOCK_SEQPACK_Connector::connect (ACE_SOCK_SEQPACK_Association &new_associati
     return -1;
 
   int result = ACE_OS::connect (new_association.get_handle (),
-                                ACE_reinterpret_cast (sockaddr *,
-                                                      remote_sap.get_addr ()),
+                                reinterpret_cast<sockaddr *> (remote_sap.get_addr ()),
                                 remote_sap.get_size ());
 
   return this->shared_connect_finish (new_association,
@@ -374,8 +368,7 @@ ACE_SOCK_SEQPACK_Connector::complete (ACE_SOCK_SEQPACK_Association &new_associat
   if (remote_sap != 0)
     {
       int len = remote_sap->get_size ();
-      sockaddr *addr = ACE_reinterpret_cast (sockaddr *,
-                                             remote_sap->get_addr ());
+      sockaddr *addr = reinterpret_cast<sockaddr *> (remote_sap->get_addr ());
       if (ACE_OS::getpeername (h,
                                addr,
                                &len) == -1)

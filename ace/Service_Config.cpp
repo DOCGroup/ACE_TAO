@@ -18,8 +18,9 @@
 #include "ace/Reactor.h"
 #include "ace/Thread_Manager.h"
 #include "ace/DLL.h"
-#include "ace/OS_NS_stdio.h"
 #include "ace/XML_Svc_Conf.h"
+#include "ace/SString.h"
+#include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_sys_stat.h"
@@ -687,7 +688,7 @@ ACE_Service_Config::open_i (const ACE_TCHAR program_name[],
         {
           ACE_OS::fprintf (pidf,
                            "%ld\n",
-                           ACE_static_cast(long, ACE_OS::getpid()));
+                           static_cast<long> (ACE_OS::getpid()));
           ACE_OS::fclose (pidf);
         }
     }

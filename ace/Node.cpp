@@ -23,16 +23,14 @@ ACE_Node<T>::~ACE_Node (void)
 template <class T>
 ACE_Node<T>::ACE_Node (const T &i, ACE_Node<T> *n)
   : next_ (n),
-    item_ (i),
-    deleted_ (false)
+    item_ (i)
 {
   // ACE_TRACE ("ACE_Node<T>::ACE_Node");
 }
 
 template <class T>
 ACE_Node<T>::ACE_Node (ACE_Node<T> *n, int)
-  : next_ (n),
-    deleted_ (false)
+  : next_ (n)
 {
   // ACE_TRACE ("ACE_Node<T>::ACE_Node");
 }
@@ -40,8 +38,7 @@ ACE_Node<T>::ACE_Node (ACE_Node<T> *n, int)
 template <class T>
 ACE_Node<T>::ACE_Node (const ACE_Node<T> &s)
   : next_ (s.next_),
-    item_ (s.item_),
-    deleted_ (false)
+    item_ (s.item_)
 {
   // ACE_TRACE ("ACE_Node<T>::ACE_Node");
 }

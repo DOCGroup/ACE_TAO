@@ -49,8 +49,10 @@ ACE_Name_Proxy::open (const ACE_INET_Addr &remote_addr,
 
 // Establish binding with the ACE_Name Server at remote_addr.
 
-ACE_Name_Proxy::ACE_Name_Proxy (const ACE_INET_Addr &remote_addr,
-				ACE_Synch_Options& options)
+ACE_Name_Proxy::ACE_Name_Proxy (
+  const ACE_INET_Addr &remote_addr,
+  ACE_Synch_Options& options)
+   : reactor_ (0)
 {
   ACE_TRACE ("ACE_Name_Proxy::ACE_Name_Proxy");
   if (this->open (remote_addr, options) == -1

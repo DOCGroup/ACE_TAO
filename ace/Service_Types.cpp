@@ -46,7 +46,7 @@ ACE_Service_Type_Impl::~ACE_Service_Type_Impl (void)
 
   // It's ok to call this, even though we may have already deleted it
   // in the fini() method since it would then be NULL.
-  delete [] (ACE_TCHAR *) this->name_;
+  delete [] const_cast <ACE_TCHAR *> (this->name_);
 }
 
 int
@@ -59,8 +59,8 @@ ACE_Service_Type_Impl::fini (void) const
                 this->name_,
                 this->flags_));
 
-  delete [] (ACE_TCHAR *) this->name_;
-  ((ACE_Service_Type_Impl *) this)->name_ = 0;
+  delete [] const_cast <ACE_TCHAR *> (this->name_);
+  (const_cast <ACE_Service_Type_Impl *> (this))->name_ = 0;
 
   if (ACE_BIT_ENABLED (this->flags_,
                        ACE_Service_Type::DELETE_OBJ))
@@ -74,7 +74,7 @@ ACE_Service_Type_Impl::fini (void) const
 
   if (ACE_BIT_ENABLED (this->flags_,
                        ACE_Service_Type::DELETE_THIS))
-    delete (ACE_Service_Type_Impl *) this;
+    delete const_cast <ACE_Service_Type_Impl *> (this);
 
   return 0;
 }

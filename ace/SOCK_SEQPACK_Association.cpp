@@ -57,7 +57,7 @@ ACE_SOCK_SEQPACK_Association::abort (void)
   if (-1 == ACE_OS::setsockopt (this->get_handle (),
                                 SOL_SOCKET,
                                 SO_LINGER,
-                                ACE_reinterpret_cast (const char *, &slinger),
+                                reinterpret_cast<const char *> (&slinger),
                                 sizeof (linger)))
   {
     return -1;
@@ -177,20 +177,19 @@ ACE_SOCK_SEQPACK_Association::get_local_addrs (ACE_INET_Addr *addrs, size_t &siz
   ** the number of bytes written to addr_structs.
   ** Use name_size to get the data types right across the call.
   */
-  int name_size = ACE_static_cast (int, physical_size);
+  int name_size = static_cast<int> (physical_size);
   if (ACE_OS::getsockname (this->get_handle (),
-                           ACE_reinterpret_cast (sockaddr *,
-                                                 addr_structs.get()),
+                           reinterpret_cast<sockaddr *> (addr_structs.get()),
                            &name_size) == -1)
     return -1;
 
   /* Calculate the NEW physical size of the array */
   name_size /= sizeof (sockaddr_in);
-  size = ACE_static_cast (size_t, name_size);
+  size = static_cast<size_t> (name_size);
 
   /* Copy each sockaddr_in to the address structure of an ACE_Addr from
      the passed-in array */
-  const int addrlen (ACE_static_cast (int, sizeof (sockaddr_in)));
+  const int addrlen (static_cast<int> (sizeof (sockaddr_in)));
   for (int i = 0; i < name_size; ++i)
     {
       addrs[i].set_addr (&(addr_structs[i]), addrlen);
@@ -312,20 +311,19 @@ ACE_SOCK_SEQPACK_Association::get_remote_addrs (ACE_INET_Addr *addrs, size_t &si
   ** the number of bytes written to addr_structs.
   ** Use name_size to get the data types right across the call.
   */
-  int name_size = ACE_static_cast (int, physical_size);
+  int name_size = static_cast<int> (physical_size);
   if (ACE_OS::getpeername (this->get_handle (),
-                           ACE_reinterpret_cast (sockaddr *,
-                                                 addr_structs.get()),
+                           reinterpret_cast<sockaddr *> (addr_structs.get()),
                            &name_size) == -1)
     return -1;
 
   /* Calculate the NEW physical size of the array */
   name_size /= sizeof (sockaddr_in);
-  size = ACE_static_cast (size_t, name_size);
+  size = static_cast<size_t> (name_size);
 
   /* Copy each sockaddr_in to the address structure of an ACE_Addr from
      the passed-in array */
-  const int addrlen (ACE_static_cast (int, sizeof (sockaddr_in)));
+  const int addrlen (static_cast<int> (sizeof (sockaddr_in)));
   for (int i = 0; i < name_size; ++i)
     {
       addrs[i].set_addr (&(addr_structs[i]), addrlen);

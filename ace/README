@@ -407,8 +407,6 @@ ACE_HAS_NONCONST_CHDIR                  Platform uses non-const char *
                                         in call to chdir
 ACE_HAS_NONCONST_OPENDIR                Platform uses non-const char *
                                         in call to opendir
-ACE_HAS_NONCONST_RMDIR                  Platform uses non-const char *
-                                        in call to rmdir
 ACE_HAS_NONCONST_UNLINK                 Platform uses non-const char *
                                         in call to unlink
 ACE_HAS_NONCONST_GETBY                  Platform uses non-const char *
@@ -510,6 +508,9 @@ ACE_HAS_PTHREAD_PROCESS_ENUM            pthread.h declares an enum with
                                         PTHREAD_PROCESS_PRIVATE and
                                         PTHREAD_PROCESS_SHARED values.
 ACE_HAS_PTHREAD_SETSTACK                Platform has pthread_attr_setstack().
+ACE_HAS_PTHREAD_NP_H                    Platform has <pthread_np.h>  FreeBSD
+                                        declares non-portable (*_np) pthread
+                                        functions in this header.
 ACE_HAS_PURIFY                          Purify'ing.  Set by wrapper_macros.GNU.
 ACE_HAS_QUANTIFY                        Quantify'ing.  Set by wrapper_macros.GNU.
 ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS    Platform will recurse
@@ -722,7 +723,6 @@ ACE_HAS_WINSOCK2                        The Win32 platform supports
                                         WinSock 2.0
 ACE_HAS_XLI                             Platform has the XLI version
                                         of TLI
-ACE_HAS_XT                              Platform has Xt and Motif
 ACE_HAS_XTI                             Platform has XTI
                                         (X/Open-standardized superset
                                         of TLI).  Implies ACE_HAS_TLI
@@ -1099,6 +1099,11 @@ ACE_HAS_BROKEN_PREALLOCATED_OBJECTS_AFTER_FORK
 
 ACE_LACKS_MEMBER_TEMPLATES              Compiler does not support
                                         member template feature.
+
+ACE_LACKS_DEPRECATED_MACROS             When this define is set, macros which
+                                        are deprecated are not defined. Usefull
+                                        to check whether deprecated macros are
+                                        not used anymore.
 
 ----------------------------------------
 
@@ -1705,18 +1710,6 @@ ACE_USES_GPROF:
     When using gprof mainly on Linux, #define ACE_USES_GPROF
     will add calls to getitimer/setitimer in order to initialize profile
     timer and overcome the problem of gprof with multithreaded applications.
-ACE_HAS_QT:
-----------------------------
-  Used in:
-    ace/QtReactor.cpp
-    ace/QtReactor.h
-    tests/QtReactor_Test.cpp
-    tests/QtReactor_Test.h
-    TAO/tao/qt_resource.h
-    TAO/tao/qt_resource.cpp
-    TAO/tests/QtTests/*
-  Notes:
-    Turns on integration with Qt.
 
 ACE_QTREACTOR_CLEAR_PENDING_EVENTS:
 ----------------------------

@@ -25,6 +25,7 @@
 #if defined (ACE_HAS_ICMP_SUPPORT) && (ACE_HAS_ICMP_SUPPORT == 1)
 
 #include "ace/SOCK.h"
+#include "ace/Time_Value.h"
 #include "ace/os_include/netinet/os_in.h"
 
 namespace ACE

@@ -32,6 +32,7 @@
 #include "ace/Service_Config.h"
 #include "ace/Synch_Options.h"
 #include "ace/Name_Request_Reply.h"
+#include "ace/Event_Handler.h"
 
 /**
  * @class ACE_Name_Proxy
@@ -85,6 +86,11 @@ private:
 
   /// Pointer to ACE_Reactor (used if we are run in "reactive-mode").
   ACE_Reactor *reactor_;
+
+private:
+  // Prevent copying
+  ACE_Name_Proxy (const ACE_Name_Proxy &);
+  ACE_Name_Proxy &operator= (const ACE_Name_Proxy &);
 };
 
 #include /**/ "ace/post.h"

@@ -403,6 +403,22 @@ ACE_TSS_Emulation::release_key (ACE_thread_key_t key)
   return 1;
 }
 
+int
+ACE_TSS_Emulation::is_key (ACE_thread_key_t key)
+{
+  ACE_OS_Recursive_Thread_Mutex_Guard (
+    *static_cast <ACE_recursive_thread_mutex_t *>
+                      (ACE_OS_Object_Manager::preallocated_object[
+                        ACE_OS_Object_Manager::ACE_TSS_KEY_LOCK]));
+
+  if (tss_keys_used_ != 0 &&
+      tss_keys_used_->is_set (key) == 1)
+  {
+    return 1;
+  }
+  return 0;
+}
+
 void *
 ACE_TSS_Emulation::tss_open (void *ts_storage[ACE_TSS_THREAD_KEYS_MAX])
 {
@@ -620,7 +636,7 @@ ACE_TSS_Keys::test_and_clear (const ACE_thread_key_t key)
   u_int word, bit;
   find (key_index, word, bit);
 
-  if (ACE_BIT_ENABLED (key_bit_words_[word], 1 << bit))
+  if (word < ACE_WORDS && ACE_BIT_ENABLED (key_bit_words_[word], 1 << bit))
     {
       ACE_CLR_BITS (key_bit_words_[word], 1 << bit);
       return 0;
@@ -638,7 +654,7 @@ ACE_TSS_Keys::is_set (const ACE_thread_key_t key) const
   u_int word, bit;
   find (key_index, word, bit);
 
-  return ACE_BIT_ENABLED (key_bit_words_[word], 1 << bit);
+  return word < ACE_WORDS ? ACE_BIT_ENABLED (key_bit_words_[word], 1 << bit) : 0;
 }
 
 /*****************************************************************************/
@@ -3515,9 +3531,7 @@ ACE_OS::thr_setspecific (ACE_thread_key_t key, void *data)
   // ACE_OS_TRACE ("ACE_OS::thr_setspecific");
 #if defined (ACE_HAS_THREADS)
 #   if defined (ACE_HAS_TSS_EMULATION)
-    ACE_KEY_INDEX (key_index, key);
-
-    if (key_index >= ACE_TSS_Emulation::total_keys ())
+    if (ACE_TSS_Emulation::is_key (key) == 0)
       {
         errno = EINVAL;
         data = 0;
