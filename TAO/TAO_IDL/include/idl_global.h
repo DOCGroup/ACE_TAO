@@ -429,6 +429,9 @@ public:
   ACE_Unbounded_Stack<char *> & pragma_prefixes (void);
   // Accessor for the pragma prefix container.
 
+  void update_prefix (char *filename);
+  // Do repo id prefix bookkeeping when the file changes.
+
   UTL_ScopedName *string_to_scoped_name (char *s);
   // Parses a string with double colons.
 
@@ -517,6 +520,9 @@ private:
 
   ACE_Unbounded_Stack<char *> pragma_prefixes_;
   // Container for all the #pragma prefix declarations.
+
+  ACE_Hash_Map_Manager<ACE_CString, ACE_CString, ACE_Null_Mutex> file_prefixes_;
+  // Remembers the prefixes associated with files, if any.
 
   long last_seen_index_;
   // The index (not zero-based!) of the last seen included file.

@@ -440,6 +440,7 @@ idl_parse_line_and_file (char *buf)
       ACE_NEW (tmp,
                UTL_String (h));
       idl_global->set_filename (tmp);
+      idl_global->update_prefix (tmp->get_string ());
     }
 
   UTL_String *fname = idl_global->filename ();
@@ -472,16 +473,6 @@ idl_parse_line_and_file (char *buf)
 
       // This call also manages the #pragma prefix.
       idl_global->store_include_file_name (nm);
-    }
-  else if (is_main_filename 
-           && idl_global->pragma_prefixes ().size () > 1
-           && idl_global->scopes ().depth () == 1)
-    {
-      // If we're here, we have come to the end of an included file, so we
-      // pop its prefix.
-      char *trash = 0;
-      idl_global->pragma_prefixes ().pop (trash);
-      delete [] trash;
     }
 }
 
