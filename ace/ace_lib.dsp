@@ -18,16 +18,16 @@ CFG=ACE LIB - Win32 Debug
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "ACE LIB - Win32 Debug" (based on "Win32 (x86) Static Library")
-!MESSAGE "ACE LIB - Win32 Release" (based on "Win32 (x86) Static Library")
-!MESSAGE "ACE LIB - Win32 Unicode Debug" (based on "Win32 (x86) Static Library")
 !MESSAGE "ACE LIB - Win32 Unicode Release" (based on "Win32 (x86) Static Library")
-!MESSAGE "ACE LIB - Win32 Alpha Debug" (based on "Win32 (ALPHA) Static Library")
+!MESSAGE "ACE LIB - Win32 Unicode Debug" (based on "Win32 (x86) Static Library")
 !MESSAGE "ACE LIB - Win32 Alpha Release" (based on "Win32 (ALPHA) Static Library")
-!MESSAGE "ACE LIB - Win32 Alpha Unicode Debug" (based on "Win32 (ALPHA) Static Library")
+!MESSAGE "ACE LIB - Win32 Alpha Debug" (based on "Win32 (ALPHA) Static Library")
 !MESSAGE "ACE LIB - Win32 Alpha Unicode Release" (based on "Win32 (ALPHA) Static Library")
-!MESSAGE "ACE LIB - Win32 PharLap ETS Debug" (based on "Win32 (x86) Static Library")
+!MESSAGE "ACE LIB - Win32 Alpha Unicode Debug" (based on "Win32 (ALPHA) Static Library")
 !MESSAGE "ACE LIB - Win32 PharLap ETS Release" (based on "Win32 (x86) Static Library")
+!MESSAGE "ACE LIB - Win32 PharLap ETS Debug" (based on "Win32 (x86) Static Library")
+!MESSAGE "ACE LIB - Win32 Release" (based on "Win32 (x86) Static Library")
+!MESSAGE "ACE LIB - Win32 Debug" (based on "Win32 (x86) Static Library")
 !MESSAGE 
 
 # Begin Project

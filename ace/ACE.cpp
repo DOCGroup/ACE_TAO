@@ -671,11 +671,13 @@ ACE::ldfind (const ASYS_TCHAR filename[],
 #if !defined (ACE_HAS_MOSTLY_UNICODE_APIS)
   if (::ExpandEnvironmentStringsA (filename,
                                    expanded_filename,
-                                   sizeof expanded_filename))
+                                   (sizeof expanded_filename 
+                                     / sizeof (ASYS_TCHAR))))
 #else
   if (::ExpandEnvironmentStringsW (filename,
                                    expanded_filename,
-                                   sizeof expanded_filename))
+                                   (sizeof expanded_filename 
+                                     / sizeof (ASYS_TCHAR))))
 #endif /* ACE_HAS_MOSTLY_UNICODE_APIS */
     filename = expanded_filename;
 #endif /* ACE_WIN32 && !ACE_HAS_WINCE && !ACE_HAS_PHARLAP */

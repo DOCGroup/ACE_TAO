@@ -187,7 +187,8 @@ Options::parse_args (int argc, char *argv[])
         case 'C': // Use a different proxy config filename.
           ACE_OS::strncpy (this->consumer_config_file_,
                            get_opt.optarg,
-                           sizeof this->consumer_config_file_);
+                           sizeof this->consumer_config_file_ 
+                             / sizeof (ASYS_TCHAR));
           break;
         case 'c':
           {

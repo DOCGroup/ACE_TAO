@@ -18,12 +18,10 @@ CFG=gperf - Win32 Debug
 !MESSAGE
 !MESSAGE Possible choices for configuration are:
 !MESSAGE
+!MESSAGE "gperf - Win32 Alpha Release" (based on "Win32 (ALPHA) Console Application")
+!MESSAGE "gperf - Win32 Alpha Debug" (based on "Win32 (ALPHA) Console Application")
 !MESSAGE "gperf - Win32 Release" (based on "Win32 (x86) Console Application")
 !MESSAGE "gperf - Win32 Debug" (based on "Win32 (x86) Console Application")
-!MESSAGE "gperf - Win32 Alpha Debug" (based on\
- "Win32 (ALPHA) Console Application")
-!MESSAGE "gperf - Win32 Alpha Release" (based on\
- "Win32 (ALPHA) Console Application")
 !MESSAGE
 
 # Begin Project
