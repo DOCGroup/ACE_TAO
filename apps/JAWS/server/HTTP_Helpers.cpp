@@ -353,6 +353,9 @@ HTTP_Helper::fixyear (int year)
 	  if (tms.tm_year % 100 == year)
 	    year = tms.tm_year;
 
+          // The last two cases check boundary conditions, in case the
+          // year just changed at the moment we checked to see if we
+          // need to fix it.
 	  if ((year+1) % 100 == tms.tm_year % 100)
 	    year = tms.tm_year - 1;
 
