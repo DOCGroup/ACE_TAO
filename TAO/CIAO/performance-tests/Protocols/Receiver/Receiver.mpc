@@ -3,6 +3,7 @@
 
 project(Protocols_Receiver_stub): ciao_client {
   libs += Protocols_stub
+  requires += exceptions
   after += Protocols_stub
   sharedname = Protocols_Receiver_stub
   idlflags += -Wb,stub_export_macro=RECEIVER_STUB_Export -Wb,stub_export_include=Receiver_stub_export.h -Wb,skel_export_macro=RECEIVER_SVNT_Export -Wb,skel_export_include=Receiver_svnt_export.h
@@ -21,7 +22,7 @@ project(Protocols_Receiver_svnt) : ciao_servant {
   after += Protocols_svnt Protocols_Receiver_stub
   sharedname  = Protocols_Receiver_svnt
   libs    += Protocols_Receiver_stub Protocols_stub Protocols_svnt
-  
+  requires += exceptions
   idlflags  +=  -Wb,export_macro=RECEIVER_SVNT_Export -Wb,export_include=Receiver_svnt_export.h
   dynamicflags = RECEIVER_SVNT_BUILD_DLL
 
@@ -45,16 +46,14 @@ project(Protocols_Receiver_exec) : ciao_component {
   after   += Protocols_Receiver_svnt
   sharedname = Protocols_Receiver_exec
   libs      += Protocols_Receiver_stub Protocols_Receiver_svnt Protocols_stub Protocols_svnt
-  
+  requires += exceptions
   idlflags  +=  -Wb,export_macro=RECEIVER_EXEC_Export -Wb,export_include=Receiver_exec_export.h
   dynamicflags   = RECEIVER_EXEC_BUILD_DLL
 
   IDL_Files {
-    
   }
 
   Source_Files {
-    
     Receiver_exec.cpp
   }
 }

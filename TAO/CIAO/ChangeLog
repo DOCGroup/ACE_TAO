@@ -1,3 +1,16 @@
+Thu Nov 11 09:46:58 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * performance-tests/Protocols/Receiver/Receiver.mpc:
+        * performance-tests/Protocols/Sender/Sender.mpc:
+        * tests/RTCCM/DiffServ/Controller/Controller.mpc:
+
+          Added requires += exceptions for these projects.
+
+        * performance-tests/Protocols/Sender/Sender_exec.cpp:
+
+          Removed ACE_CHECK's which caused compilation errors when
+          exceptions=0 was set.
+
 Thu Nov 11 14:40:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/ciao/Servant_Activator.cpp:
