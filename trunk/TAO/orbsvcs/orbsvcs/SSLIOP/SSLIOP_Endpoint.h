@@ -26,9 +26,10 @@
 
 #include "ace/INET_Addr.h"
 
-#include "tao/ORB.h"
 #include "tao/IIOP_Endpoint.h"
 #include "orbsvcs/SSLIOPC.h"
+
+#include "SSLIOP_Credentials.h"
 
 /// Tag for storing multiple ssl endpoints within a single profile.
 #define TAO_TAG_SSL_ENDPOINTS 0x54414f01U
@@ -113,7 +114,18 @@ public:
 
   /// Get the establishment of trust settings for this endpoint.
   Security::EstablishTrust trust (void) const;
-    
+
+  /// Set the establishment of trust settings for this endpoint.
+  void credentials (TAO_SSLIOP_Credentials_ptr creds);
+
+  /// Get the establishment of trust settings for this endpoint.
+  /**
+   * @note This method does not follow C++ mapping memory management
+   *       rules.  Specifically, no duplication or reference counting
+   *       occurs in this method.  This is so that no additional locks
+   *       occur when checking the transport cache.
+   */
+  TAO_SSLIOP_Credentials * credentials (void) const;
   //@}
 
 private:
@@ -147,6 +159,9 @@ private:
 
   /// Establishment of trust settings for this endpoint object.
   Security::EstablishTrust trust_;
+
+  /// SSLIOP-specific credentials for this endpoint object.
+  TAO_SSLIOP_Credentials_var credentials_;
 
 };
 

@@ -483,6 +483,12 @@ TAO_SSLIOP_Connector::ssliop_connect (TAO_SSLIOP_Endpoint *ssl_endpoint,
           ACE_THROW_RETURN (CORBA::INV_POLICY (), -1);
         }
 
+      TAO_SSLIOP_Credentials_var credentials =
+        this->retrieve_credentials (invocation->stub (),
+                                    svc_handler->peer ().ssl ()
+                                    TAO_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (-1);
+
       svc_handler = safe_handler.release ();
 
       // @@ This needs to change in the next round when we implement
@@ -534,6 +540,10 @@ TAO_SSLIOP_Connector::ssliop_connect (TAO_SSLIOP_Endpoint *ssl_endpoint,
 
       base_transport = TAO_Transport::_duplicate (svc_handler->transport ());
 
+      ssl_endpoint->qop (qop);
+      ssl_endpoint->trust (trust);
+      ssl_endpoint->credentials (credentials);
+
       // Add the handler to Cache
       int retval =
         this->orb_core ()->lane_resources ().transport_cache ().cache_transport (
@@ -556,7 +566,7 @@ TAO_SSLIOP_Connector::ssliop_connect (TAO_SSLIOP_Endpoint *ssl_endpoint,
   return 0;
 }
 
-int
+TAO_SSLIOP_Credentials *
 TAO_SSLIOP_Connector::retrieve_credentials (TAO_Stub *stub,
                                             SSL *ssl
                                             TAO_ENV_ARG_DECL)
@@ -571,7 +581,9 @@ TAO_SSLIOP_Connector::retrieve_credentials (TAO_Stub *stub,
     SecurityLevel2::InvocationCredentialsPolicy::_narrow (
       policy.in ()
       TAO_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  ACE_CHECK_RETURN (TAO_SSLIOP_Credentials::_nil ());
+
+  TAO_SSLIOP_Credentials_var ssliop_credentials;
 
   // Set the Credentials (X.509 certificates and corresponding private
   // keys) to be used for this invocation.
@@ -579,7 +591,7 @@ TAO_SSLIOP_Connector::retrieve_credentials (TAO_Stub *stub,
     {
       SecurityLevel2::CredentialsList_var creds_list =
         creds_policy->creds (TAO_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+      ACE_CHECK_RETURN (TAO_SSLIOP_Credentials::_nil ());
 
       if (creds_list->length () > 0)
         {
@@ -589,16 +601,16 @@ TAO_SSLIOP_Connector::retrieve_credentials (TAO_Stub *stub,
           SecurityLevel2::Credentials_ptr credentials =
             creds_list[(CORBA::ULong) 0];
 
-          TAO_SSLIOP_Credentials_var ssliop_credentials =
+          ssliop_credentials =
             TAO_SSLIOP_Credentials::_narrow (credentials
                                              TAO_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (-1);
+          ACE_CHECK_RETURN (TAO_SSLIOP_Credentials::_nil ());
 
           if (!CORBA::is_nil (ssliop_credentials.in ()))
             {
               TAO_SSLIOP_X509_var x509 = ssliop_credentials->x509 ();
               if (::SSL_use_certificate (ssl, x509.in ()) != 1)
-                return -1;
+                return TAO_SSLIOP_Credentials::_nil ();
 
 #ifndef NO_RSA
               TAO_SSLIOP_RSA_var rsa = ssliop_credentials->rsa ();
@@ -607,7 +619,7 @@ TAO_SSLIOP_Connector::retrieve_credentials (TAO_Stub *stub,
                 {
                   // Invalidate the certificate we just set.
                   (void) ::SSL_use_certificate (ssl, 0);
-                  return -1;
+                  return TAO_SSLIOP_Credentials::_nil ();
                 }
 #endif  /* NO_RSA */
 
@@ -625,5 +637,5 @@ TAO_SSLIOP_Connector::retrieve_credentials (TAO_Stub *stub,
         }
     }
 
-  return 0;
+  return ssliop_credentials._retn ();
 }
