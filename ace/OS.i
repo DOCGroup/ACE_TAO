@@ -7688,9 +7688,14 @@ ACE_OS::dlerror (void)
 }
 
 ACE_INLINE ACE_SHLIB_HANDLE
-ACE_OS::dlopen (ACE_DL_TYPE filename, int mode)
+ACE_OS::dlopen (const char *fname,
+                int mode)
 {
   ACE_TRACE ("ACE_OS::dlopen");
+
+  // Get the correct OS type.
+  ACE_DL_TYPE filename = ACE_const_cast (ACE_DL_TYPE, fname);
+
 # if defined (ACE_HAS_SVR4_DYNAMIC_LINKING)
   void *handle;
 #   if defined (ACE_HAS_SGIDLADD)
@@ -7736,9 +7741,14 @@ ACE_OS::dlopen (ACE_DL_TYPE filename, int mode)
 }
 
 ACE_INLINE void *
-ACE_OS::dlsym (ACE_SHLIB_HANDLE handle, ACE_DL_TYPE symbolname)
+ACE_OS::dlsym (ACE_SHLIB_HANDLE handle,
+               const char *sname)
 {
   ACE_TRACE ("ACE_OS::dlsym");
+
+  // Get the correct OS type.
+  ACE_DL_TYPE symbolname = ACE_const_cast (ACE_DL_TYPE, sname);
+
 # if defined (ACE_HAS_SVR4_DYNAMIC_LINKING)
 #   if defined (ACE_LACKS_POSIX_PROTOTYPES)
   ACE_OSCALL_RETURN (::dlsym (handle, (char*) symbolname), void *, 0);
@@ -7771,20 +7781,6 @@ ACE_OS::dlsym (ACE_SHLIB_HANDLE handle, ACE_DL_TYPE symbolname)
   ACE_UNUSED_ARG (symbolname);
   ACE_NOTSUP_RETURN (0);
 # endif /* ACE_HAS_SVR4_DYNAMIC_LINKING */
-}
-#else /* !ACE_HAS_WINCE */
-// UNDER_CE
-ACE_INLINE wchar_t *
-ACE_OS::dlerror (void)
-{
-  ACE_NOTSUP_RETURN (0);
-}
-
-ACE_INLINE void *
-ACE_OS::dlsym (ACE_SHLIB_HANDLE handle, ACE_WIDE_DL_TYPE symbolname)
-{
-  ACE_TRACE ("ACE_OS::dlsym");
-  ACE_WIN32CALL_RETURN (::GetProcAddress (handle, symbolname), void *, 0);
 }
 #endif /* ACE_HAS_WINCE */
 
@@ -10487,15 +10483,6 @@ ACE_OS::unlink (const wchar_t *path)
   ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::DeleteFile (path), ace_result_),
                         int, -1);
 #   endif /* ACE_HAS_WINCE */
-}
-
-ACE_INLINE ACE_SHLIB_HANDLE
-ACE_OS::dlopen (ACE_WIDE_DL_TYPE filename, int mode)
-{
-  ACE_TRACE ("ACE_OS::dlopen");
-  ACE_UNUSED_ARG (mode);
-
-  ACE_WIN32CALL_RETURN (::LoadLibraryW (filename), ACE_SHLIB_HANDLE, 0);
 }
 
 ACE_INLINE wchar_t *

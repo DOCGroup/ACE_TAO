@@ -1,3 +1,16 @@
+Wed Jun 16 22:03:29 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/OS.h (ACE_OS): Removed ACE_WIDE_DL_TYPE and the wide char
+	  versions of dlopen(), dlsym(), and dlerror().  Even Win32
+	  doesn't support them.
+
+	  Also changed the argument type of ACE_OS::dlopen(),
+	  ACE_OS::dlsym(), ACE_DLL::ACE_DLL(), ACE_DLL::open(), and
+	  ACE_DLL::symbol() from ACE_DL_TYPE to const char *.  Now the
+	  ACE_OS wrappers do the correct const cast before calling the OS
+	  function.  Note that since this change is only adding constness
+	  to the argument, the change is backward compatible.
+
 Wed Jun 16 20:47:27 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* bin/Process_Win32.pm:
@@ -33,7 +46,7 @@ Mon Jun 14 22:52:48 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* ace/Caching_Strategy_Utility_T.{h.cpp}: Removed math.h from the
 	  include list since it caused problems when native exceptions were
-	  enabled. 
+	  enabled.
 
 Mon Jun 14 21:41:40 1999  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
 
@@ -47,7 +60,7 @@ Mon Jun 14 20:54:09 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 	* ace/Synch.cpp: Declared template definitions for
 	  ACE_Read_Mutex<ACE_Thread_Mutex> to get around compiler errors
 	  while building $ACE_ROOT/tests. Thanks to Dr.Schmidt for
-	  suggesting this. 
+	  suggesting this.
 
 Mon Jun 14 19:33:04 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
