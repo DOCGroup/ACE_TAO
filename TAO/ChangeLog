@@ -1,3 +1,11 @@
+Sun Jun 20 18:03:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Smart_Proxies/On_Demand/Smart_Test_Factory.h:
+        * orbsvcs/tests/Notify/Test_Filter/RT_Test_FilterFactory.h:
+        * orbsvcs/tests/FtRtEvent/PushSupplier.h:
+          Don't mix virtual and non-virtual bases. This fixes warnings
+          from the HP aCC compiler.
+
 Sun Jun 20 17:52:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Acceptor_Registry.cpp:
