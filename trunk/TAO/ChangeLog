@@ -3,6 +3,9 @@ Wed Aug 13 08:42:19 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
         * orbsvcs/ImplRepo_Service/ImR_Locator_i.h:
           Added #include SString.h needed due to recent subsetting.
 
+        * orbsvcs/Notify_Service/NT_Notify_Service.cpp:
+          Added #include Reactor.h needed due to recent subsetting.
+
 Wed Aug 13 08:25:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/EC_Throughput/run_test.pl:
