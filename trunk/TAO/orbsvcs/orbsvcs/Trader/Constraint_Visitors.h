@@ -298,7 +298,7 @@ public:
 
 private:
 
-  class Operand_Queue :
+  class TAO_Trading_Export Operand_Queue :
     public ACE_Unbounded_Queue <TAO_Literal_Constraint>
   // = TITLE
   // A queue adapter with methods to setting and getting operands

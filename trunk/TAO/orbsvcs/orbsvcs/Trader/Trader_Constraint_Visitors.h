@@ -22,7 +22,7 @@
 #include "Trader_Utils.h"
 #include "orbsvcs/CosTradingC.h"
 
-class TAO_Trader_Constraint_Validator : public TAO_Constraint_Validator
+class TAO_Trading_Export TAO_Trader_Constraint_Validator : public TAO_Constraint_Validator
 {
  public:
   TAO_Trader_Constraint_Validator (const CosTradingRepos::ServiceTypeRepository::TypeStruct&
@@ -39,7 +39,7 @@ class TAO_Trader_Constraint_Validator : public TAO_Constraint_Validator
 
 };
 
-class TAO_Trader_Constraint_Evaluator : public TAO_Constraint_Evaluator
+class TAO_Trading_Export TAO_Trader_Constraint_Evaluator : public TAO_Constraint_Evaluator
 {
  public:
   TAO_Trader_Constraint_Evaluator (CosTrading::Offer* offer,

@@ -58,7 +58,7 @@ public:
   virtual ~TAO_Constraint (void) {}
 };
 
-class TAO_Noop_Constraint : public TAO_Constraint
+class TAO_Trading_Export TAO_Noop_Constraint : public TAO_Constraint
 // = TITLE
 //   A node that represents an operation with no operands.
 {
@@ -77,7 +77,7 @@ private:
   TAO_Expression_Type type_;
 };
 
-class TAO_Binary_Constraint : public TAO_Constraint
+class TAO_Tradng_Export TAO_Binary_Constraint : public TAO_Constraint
 //
 // = TITLE
 //      TAO_Binary_Constraint represents an operation with left
@@ -134,7 +134,7 @@ private:
   // The operands of the expression
 };
 
-class TAO_Unary_Constraint : public TAO_Constraint
+class TAO_Trading_Export TAO_Unary_Constraint : public TAO_Constraint
 //
 // = TITLE
 //      TAO_Unary_Constraint represents an operation with only
