@@ -111,6 +111,12 @@ public:
   /// Set the source port for this session.
   virtual void source_port (const u_short &source_port);
 
+  //Set the source host
+  virtual ACE_INET_Addr* source_addr (void) const;
+  
+  /// Set the source port for this session.
+  virtual void source_addr (ACE_INET_Addr* source_addr);
+
   /// RAPI version. Returned value = 100 * major-version + minor-version.
   virtual int version ();
 
@@ -206,6 +212,12 @@ public:
 
   /// Set the source port for this session.
   virtual void source_port (const u_short &source_port);
+
+  //Set the source host
+  virtual ACE_INET_Addr* source_addr (void) const;
+  
+  /// Set the source port for this session.
+  virtual void source_addr (ACE_INET_Addr* source_addr);
 
   /// Get the GQoS session id.
   virtual int session_id (void) const;

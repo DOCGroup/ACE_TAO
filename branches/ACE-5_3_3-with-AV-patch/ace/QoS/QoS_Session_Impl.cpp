@@ -237,7 +237,9 @@ rsvp_callback (rapi_sid_t sid,
 ACE_RAPI_Session::ACE_RAPI_Session (void)
 {
   ACE_TRACE ("ACE_RAPI_Session::ACE_RAPI_Session");
-  this->source_port (DEFAULT_SOURCE_SENDER_PORT);
+  //this->source_port (DEFAULT_SOURCE_SENDER_PORT);
+  ACE_NEW (this->src_addr_,
+	   ACE_INET_Addr ("0")); 
 }
 
 // Open a RAPI QoS session [dest IP, dest port, Protocol ID].
@@ -245,8 +247,12 @@ int
 ACE_RAPI_Session::open (ACE_INET_Addr dest_addr,
                         ACE_Protocol_ID protocol_id)
 {
+  char buf [BUFSIZ];
+  dest_addr.addr_to_string (buf,
+			     BUFSIZ);
   ACE_DEBUG ((LM_DEBUG,
-	      "In RAPI SESSION OPEN\n"));
+	      "In RAPI SESSION OPEN %s\n",
+	      buf));
 
   this->dest_addr_ = dest_addr;
   this->protocol_id_ = protocol_id;
@@ -390,13 +396,24 @@ ACE_RAPI_Session::sending_qos (const ACE_QoS &ace_qos)
               sending_flowspec->ttl ()));
   
   // This the source sender port.
-  ACE_INET_Addr sender_addr (this->source_port ());
+  //  ACE_INET_Addr sender_addr (this->source_port ());
 
   ACE_DEBUG ((LM_DEBUG,
               "Making the rapi_sender () call\n"));
 
   // Set the Sender TSpec for this QoS session.
 
+
+  int result = rapi_sender(this->session_id_,
+			   0,
+			   (sockaddr *) this->src_addr_->get_addr (),
+			   NULL,
+			   t_spec,
+			   NULL,
+			   NULL,
+			   sending_flowspec->ttl ()) ;
+  
+  /*
   int result = rapi_sender(this->session_id_,
 			   0,
 			   (sockaddr *) sender_addr.get_addr (),
@@ -405,7 +422,7 @@ ACE_RAPI_Session::sending_qos (const ACE_QoS &ace_qos)
 			   NULL,
 			   NULL,
 			   sending_flowspec->ttl ()) ;
-  
+  */
   if(result!= 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "(%N|%l) rapi_sender error %d:\n\tPATH Generation can't be started\n",
