@@ -207,8 +207,14 @@ TAO_DIOP_Acceptor::is_collocated (const TAO_Endpoint *endpoint)
 int
 TAO_DIOP_Acceptor::close (void)
 {
-  delete this->connection_handler_;
-  this->connection_handler_ = 0;
+  if (this->connection_handler_)
+    {
+      // This will trigger that the connection handler gets deleted.
+      this->orb_core_->reactor ()->remove_handler (this->connection_handler_,
+                                                   ACE_Event_Handler::READ_MASK);
+
+      this->connection_handler_ = 0;
+    }
   return 0;
 }
 

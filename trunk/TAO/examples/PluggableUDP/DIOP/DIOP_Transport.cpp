@@ -70,14 +70,19 @@ TAO_DIOP_Transport::messaging_object (void)
 ssize_t
 TAO_DIOP_Transport::send_i (iovec *iov, int iovcnt,
                             size_t &bytes_transferred,
-                            const ACE_Time_Value *max_wait_time)
+                            const ACE_Time_Value *)
 {
-  ssize_t retval = this->connection_handler_->peer ().sendv (iov, iovcnt,
-                                                             max_wait_time);
+  const ACE_INET_Addr &addr = this->connection_handler_->addr ();
+  ssize_t retval = this->connection_handler_->dgram ().send (iov, 
+                                                             iovcnt,
+                                                             addr);
   if (retval > 0)
     bytes_transferred = retval;
 
-  return retval;
+  // @@ Michael:
+  // Always return a positive number of bytes sent, as we do
+  // not handle sending errors in DIOP.
+  return 1;
 }
 
 ssize_t
