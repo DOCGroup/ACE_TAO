@@ -71,6 +71,7 @@ main (int, char *[])
 
   // Register a signal handler.
   ACE_Sig_Action sa ((ACE_SignalHandler) handler, SIGINT);
+  ACE_UNUSED_ARG (sa);
 
   int n_threads = DEFAULT_THREADS;
   int n_iterations = DEFAULT_ITERATIONS;
