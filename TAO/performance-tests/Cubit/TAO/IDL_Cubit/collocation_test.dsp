@@ -125,7 +125,7 @@ SOURCE=.\Cubit_Client.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Cubit_Client.h
+SOURCE=.\Cubit_i.h
 # End Source File
 # Begin Source File
 
