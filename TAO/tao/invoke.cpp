@@ -6,7 +6,7 @@
 //
 // This file holds DII support, and an analagous interpreter that let
 // static stubs be very small.  It's specific to objrefs with
-// IIOP::ProfileBody.
+// IIOP::Profile.
 //
 // NOTE: this may someday be moved within an IIOP class so that the
 // public stub interface is completely independent of ORB/protocol

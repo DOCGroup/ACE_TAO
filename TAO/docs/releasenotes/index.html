@@ -56,7 +56,7 @@ release of <A HREF="TAO.html">TAO</A>:
     <H3><A NAME="idl"></A>IDL Compiler</H3>
     Point of contact: <A HREF="mailto:gokhale@cs.wustl.edu">Andy Gokhale</A>
 
-    <P> Features </P>
+    <P> Current status:
     <UL>
       <LI> Many IDL constructs supported including primitive types,
           typedefs, sequences, structures, and unions. </LI>
@@ -70,7 +70,7 @@ release of <A HREF="TAO.html">TAO</A>:
 
     </UL>
 
-  <P> Unsupported/buggy Features </P>
+  <P> Known bugs:
   <UL>
 	<LI>Works for <I>most</I> IDL constructs. Some of the known
             bugs/incomplete tasks are:
@@ -95,7 +95,7 @@ release of <A HREF="TAO.html">TAO</A>:
         </LI>
       </UL>
 
-      Upcoming tasks:
+      Future work:
       <UL>
 
 	<LI>Improve IDL compiler to support complete IDL-to-C++ mapping.</LI>
@@ -247,9 +247,6 @@ Point of contact: <A HREF="mailto:sergio@cs.wustl.edu">Sergio
 Flores-Gaitan</A> and <A HREF="mailto:marina@cs.wustl.edu">Marina
 Spivak</A><P>
 
-The Naming Service is a non-persistent implementation of the OMG Naming
-Service specification.
-
 <P>Current status:
 <UL>
 <LI>
@@ -263,49 +260,15 @@ marshalling of Name.  After that is fixed, it should run ok.
 </LI>
 </UL>
 
-<HR>
-<H3>
-<A NAME="tservices"></A>CORBA Trader Service</H3>
-Point of contact: <A HREF="mailto:sbw1@cs.wustl.edu">Seth Widoff</A> <P>
-
-The Trading Service is an implementation conforming to OMG Trading
-Service specification.
-
-<P>Current status:
-<UL>
-<LI>
-This is a simple trader (registers/withdraws/describes offers and does
-constraint based lookup for those offers) working on VisiBroker 2.0 v1.51.</LI>
-</UL>
-Future work:
-<UL>
-<LI>
-Port to TAO.</LI>
-
-<LI>
-Implement Type Repository and Admin Interfaces for Trading Service.</LI>
-</UL>
-
+<!--#include virtual="/~schmidt/ACE_wrappers/TAO/docs/releasenotes/trader.html" -->
 <HR>
 <H3>
 <A NAME="ace"></A>ORB-related ACE Changes</H3>
 Points of contact: <A HREF="mailto:cleeland@cs.wustl.edu">Chris Cleeland</A> and <A HREF="mailto:irfan@cs.wustl.edu">Irfan Pyrarli</A>
 
-      <P>Task List:
+      <P>Future work:
 
       <ul>
-	<li>Insure that the Reactor_Performance_Test portion that
-	tests <code>connect_n</code> adequately tests for failures.  I
-	don't think it's doing that right now, so the newly-added code
-	doesn't address it.</li>
-
-	<li>Insure that the interface for <code>connect_n</code> works
-	with the Cached Connector.  Perhaps Irfan can try this in the
-	Connect Test?</li>
-
-	<li>Fix <code>strsplit_r()</code> (waiting on response from
-	user having problems).</li>
-
 	<li>The current caching connector does not behave properly in
 	the face of a non-blocking connect request.  The "fix" is
 	simply to not support non-blocking connects through the cache.
