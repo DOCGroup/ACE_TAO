@@ -571,10 +571,6 @@ SOURCE=.\request.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Request_Info.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Resource_Factory.h
 # End Source File
 # Begin Source File
