@@ -1,3 +1,8 @@
+Fri Aug 20 07:32:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Container_Base.h:
+          Fixed compile errors
+
 Thu Aug 19 17:13:22 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/Literals.cpp:
@@ -6,7 +11,7 @@ Thu Aug 19 17:13:22 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
         * CIDLC/ServantSourceGenerator.cpp:
         * CIDLC/TypeNameEmitter.cpp:
         * CIDLC/TypeNameEmitter.hpp:
-        
+
           Added code generation for the set_attributes() method called
           on the servant by the deployer.
 
