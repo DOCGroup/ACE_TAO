@@ -36,8 +36,8 @@ class ACE_Streambuf_T : public ACE_Streambuf
 {
 public:
   ACE_Streambuf_T (STREAM *peer,
-		   u_int streambuf_size = ACE_STREAMBUF_SIZE,
-		   int io_mode = ios::in | ios::out);
+                   u_int streambuf_size = ACE_STREAMBUF_SIZE,
+                   int io_mode = ios::in | ios::out);
   // We will be given a STREAM by the iostream object which creates
   // us.  See the ACE_IOStream template for how that works.  Like
   // other streambuf objects, we can be input-only, output-only or
@@ -46,18 +46,18 @@ public:
   virtual ssize_t send (char *buf, ssize_t len);
 
   virtual ssize_t recv (char *buf,
-			ssize_t len,
-			ACE_Time_Value *tv = NULL);
+                        ssize_t len,
+                        ACE_Time_Value *tv = NULL);
 
   virtual ssize_t recv (char *buf,
-			ssize_t len,
-			int flags,
-			ACE_Time_Value * tv = NULL);
+                        ssize_t len,
+                        int flags,
+                        ACE_Time_Value * tv = NULL);
 
-  virtual ssize_t recv_n (char *buf, 
-			  ssize_t len,
-			  int flags = 0,
-			  ACE_Time_Value *tv = NULL);
+  virtual ssize_t recv_n (char *buf,
+                          ssize_t len,
+                          int flags = 0,
+                          ACE_Time_Value *tv = NULL);
 
 protected:
   virtual ACE_HANDLE get_handle (void);
@@ -103,7 +103,7 @@ class ACE_IOStream : public iostream, public STREAM
 public:
   // = Initialization and termination methods.
   ACE_IOStream (STREAM &stream,
-		  u_int streambuf_size = ACE_STREAMBUF_SIZE);
+                  u_int streambuf_size = ACE_STREAMBUF_SIZE);
 
   ACE_IOStream (u_int streambuf_size = ACE_STREAMBUF_SIZE);
   // The default constructor.  This will initiailze your STREAM and
@@ -153,7 +153,9 @@ public:
           if (good())
               return (1);
         }
+#if !defined (ACE_WIN32) /* MS VC++ 5.0 doesn't declare setstate */
       setstate(failbit);
+#endif /* !ACE_WIN32 */
       return (0);
     }
   virtual int ipfx0(void)         {  return ipfx (0); }  // Optimized ipfx(0)
@@ -166,7 +168,9 @@ public:
           if (good())
               return (1);
         }
+#if !defined (ACE_WIN32) /* MS VC++ 5.0 doesn't declare setstate */
       setstate(failbit);
+#endif /* !ACE_WIN32 */
       return (0);
     }
   virtual void isfx (void)        {  return; }
@@ -231,19 +235,19 @@ class ACE_SOCK_Dgram_SC : public STREAM
 public:
   ACE_SOCK_Dgram_SC (void);
   ACE_SOCK_Dgram_SC (STREAM &source,
-		     ACE_INET_Addr &dest);
+                     ACE_INET_Addr &dest);
   ssize_t send_n (char *buf, ssize_t len);
   ssize_t recv  (char *buf,
-		 ssize_t len,
-		 ACE_Time_Value *tv = NULL);
-  ssize_t recv (char *buf, 
-		ssize_t len,
-		int flags,
-		ACE_Time_Value *tv = NULL);
+                 ssize_t len,
+                 ACE_Time_Value *tv = NULL);
+  ssize_t recv (char *buf,
+                ssize_t len,
+                int flags,
+                ACE_Time_Value *tv = NULL);
   ssize_t recv_n (char *buf,
-		  ssize_t len,
-		  int flags = 0,
-		  ACE_Time_Value *tv = NULL);
+                  ssize_t len,
+                  int flags = 0,
+                  ACE_Time_Value *tv = NULL);
   int get_remote_addr (ACE_INET_Addr &addr) const;
 
 protected:
