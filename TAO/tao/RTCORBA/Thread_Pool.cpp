@@ -17,11 +17,6 @@ ACE_RCSID (RTCORBA,
 #include "tao/Leader_Follower.h"
 #include "ace/Auto_Ptr.h"
 
-#if !defined (__ACE_INLINE__)
-# include "Thread_Pool.i"
-#endif /* ! __ACE_INLINE__ */
-
-
 TAO_RT_New_Leader_Generator::TAO_RT_New_Leader_Generator (
   TAO_Thread_Lane &lane)
   : lane_ (lane)

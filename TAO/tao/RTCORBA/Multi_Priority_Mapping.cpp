@@ -10,9 +10,9 @@
 #include "ace/Log_Msg.h"
 #include "ace/Sched_Params.h"
 
-#if !defined (__ACE_INLINE__)
-# include "tao/RTCORBA/Multi_Priority_Mapping.i"
-#endif /* ! __ACE_INLINE__ */
+ACE_RCSID (RTCORBA,
+           Multi_Priority_Mapping,
+           "$Id$")
 
 TAO_Multi_Priority_Mapping::TAO_Multi_Priority_Mapping (int base_native_priority,
                                                         int base_corba_priority,

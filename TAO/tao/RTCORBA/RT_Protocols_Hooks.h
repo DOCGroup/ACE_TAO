@@ -183,10 +183,6 @@ protected:
   RTCORBA::Current_var current_;
 };
 
-#if defined (__ACE_INLINE__)
-#include "RT_Protocols_Hooks.i"
-#endif /* __ACE_INLINE__ */
-
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_RTCORBA, TAO_RT_Protocols_Hooks)
 ACE_FACTORY_DECLARE (TAO_RTCORBA, TAO_RT_Protocols_Hooks)
 

@@ -896,10 +896,6 @@ protected:
   TAO_Protocol_Properties_Factory (void);
 };
 
-#if defined (__ACE_INLINE__)
-#include "RT_Policy_i.i"
-#endif /* __ACE_INLINE__ */
-
 #if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */

@@ -1,7 +1,5 @@
 // $Id$
 
-#include "RT_Transport_Descriptor.h"
-
 ACE_INLINE
 TAO_RT_Transport_Descriptor::TAO_RT_Transport_Descriptor (TAO_Endpoint *endpoint,
                                                           CORBA::Boolean flag)
