@@ -214,7 +214,7 @@ ACE_Multihomed_INET_Addr::get_addresses(sockaddr_in6 *addrs,
     {
       addrs[i+1] =
         *ACE_reinterpret_cast (sockaddr_in6*,
-                               this->secondaries[i].get_addr());
+                               this->secondaries_[i].get_addr());
     }
 }
 #endif /* ACE_HAS_IPV6 */
