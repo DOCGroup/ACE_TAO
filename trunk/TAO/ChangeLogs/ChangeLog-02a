@@ -1,3 +1,10 @@
+Thu Oct 05 00:49:42 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
+
+	* test/Exposed_Policies/RT_Properties.cpp:
+
+	  Removed ".cpp" from a field in the ACE_RCSID that
+	  a couple of compiler were disliking.
+
 Wed Oct  4 17:41:53 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* tao/ior_corbaname_export.h:
