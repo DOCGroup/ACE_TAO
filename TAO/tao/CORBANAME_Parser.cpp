@@ -1,7 +1,6 @@
 // $Id$
 
 #include "CORBANAME_Parser.h"
-#include "Invocation.h"
 #include "Stub.h"
 #include "debug.h"
 
@@ -32,6 +31,7 @@ parse_string_dynamic_request_helper (CORBA::Object_ptr naming_context,
                                      ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+#if 0
   CORBA::Object_ptr _tao_retval = CORBA::Object::_nil ();
 
   CORBA::Object_var _tao_safe_retval (_tao_retval);
@@ -121,6 +121,7 @@ parse_string_dynamic_request_helper (CORBA::Object_ptr naming_context,
     }
 
   return _tao_safe_retval._retn ();
+#endif /*if 0*/
 }
 
 CORBA::Object_ptr

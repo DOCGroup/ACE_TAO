@@ -60,7 +60,6 @@ class TAO_RT_ORB;
 class TAO_RT_Current;
 class TAO_MProfile;
 class TAO_Profile;
-class TAO_GIOP_Invocation;
 
 class TAO_Endpoint_Selector_Factory;
 class TAO_Message_State_Factory;
@@ -854,12 +853,15 @@ public:
   /// Return a reference to the Fault Tolerant service object.
   TAO_Fault_Tolerance_Service &fault_tolerance_service (void);
 
+#if 0
   /// Raise a comm failure exception if a service is not loaded, else
   /// delegate to the service to see what the service has to do for
   /// this case.
   int service_raise_comm_failure (TAO_GIOP_Invocation *invoke,
                                   TAO_Profile *profile
                                   ACE_ENV_ARG_DECL);
+
+
 
   /// Raise a transient failure exception if a service is not loaded,
   /// else delegate to the service to see what the service has to do
@@ -868,6 +870,7 @@ public:
                                        TAO_Profile *profile
                                        ACE_ENV_ARG_DECL);
   //@}
+#endif /*if 0*/
 
   /**
    * @name Portable Interceptor Related Methods

@@ -23,14 +23,6 @@ TAO_Default_Endpoint_Selector_Factory::~TAO_Default_Endpoint_Selector_Factory (v
 
 
 TAO_Invocation_Endpoint_Selector *
-TAO_Default_Endpoint_Selector_Factory::get_selector (TAO_GIOP_Invocation *
-                                                     ACE_ENV_ARG_DECL_NOT_USED)
-{
-  // Trivial endpoint selector.  Just return the default selector.
-  return this->default_endpoint_selector_;
-}
-
-TAO_Invocation_Endpoint_Selector *
 TAO_Default_Endpoint_Selector_Factory::get_selector (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   // Trivial endpoint selector.  Just return the default selector.

@@ -21,7 +21,6 @@
 #include "ObjectIdListC.h"
 
 #include "Services_Activate.h"
-#include "Invocation.h"
 #include "BiDir_Adapter.h"
 
 
@@ -1406,6 +1405,7 @@ TAO_ORB_Core::services_callbacks_init (void)
   // @@ Other service callbacks can be added here
 }
 
+#if 0
 int
 TAO_ORB_Core::service_raise_comm_failure (TAO_GIOP_Invocation *invoke,
                                           TAO_Profile *profile
@@ -1429,6 +1429,7 @@ TAO_ORB_Core::service_raise_comm_failure (TAO_GIOP_Invocation *invoke,
       TAO_INVOKE_EXCEPTION);
 }
 
+
 int
 TAO_ORB_Core::service_raise_transient_failure (TAO_GIOP_Invocation *invoke,
                                                TAO_Profile *profile
@@ -1450,7 +1451,7 @@ TAO_ORB_Core::service_raise_transient_failure (TAO_GIOP_Invocation *invoke,
         TAO_INVOKE_EXCEPTION);
 }
 
-
+#endif /*if 0*/
 void
 TAO_ORB_Core::service_context_list (
     TAO_Stub *stub,

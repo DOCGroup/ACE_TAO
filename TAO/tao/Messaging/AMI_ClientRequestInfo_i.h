@@ -20,10 +20,14 @@
 #include "messaging_export.h"
 #include "tao/ClientRequestInfo_i.h"
 
+////////////////////////////////////////////
+// With the new stes of things this class is NOT needed
+///////////////////////////////////////////
+
 #if (TAO_HAS_INTERCEPTORS == 1)
 
 class TAO_GIOP_Twoway_Asynch_Invocation;
-
+class TAO_GIOP_Twoway_Asynch_Invocation;
 
 class TAO_Messaging_Export TAO_AMI_ClientRequestInfo_i
   : public TAO_ClientRequestInfo_i

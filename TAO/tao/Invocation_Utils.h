@@ -33,8 +33,8 @@ namespace TAO
   /// Enums for invocation types
   enum Invocation_Type {
     TAO_ONEWAY_INVOCATION,
-    TAO_TWOWAY_INVOCATION
-    // , TAO_LOCATEREQUEST_INVOCATION
+    TAO_TWOWAY_INVOCATION,
+    TAO_LOCATEREQUEST_INVOCATION
   };
 
   /// Enum for invocation modes

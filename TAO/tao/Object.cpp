@@ -10,7 +10,6 @@
 #include "Stub.h"
 #include "Profile.h"
 #include "ORB_Core.h"
-#include "Invocation.h"
 #include "Connector_Registry.h"
 #include "debug.h"
 #include "Dynamic_Adapter.h"
