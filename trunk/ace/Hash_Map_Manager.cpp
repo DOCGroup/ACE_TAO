@@ -105,6 +105,10 @@ ACE_Hash_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::open (size_t size,
   // to be ACE_DEFAULT_MAP_SIZE, but instead was defined to be 0.
   ACE_ASSERT (size != 0);
 
+  // Calling this->close_i () to ensure we release previous allocated
+  // memory before allocating new one.
+  this->close_i ();
+
   return this->create_buckets (size);
 }
 
