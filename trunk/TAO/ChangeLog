@@ -1,3 +1,9 @@
+Mon Jun 14 17:07:12 2004  UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_EH.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_Simple_Mcast_EH.cpp:
+          Added needed includes
+
 Mon Jun 14 16:50:12 2004  UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Strategies/UIOP_Acceptor.cpp:
