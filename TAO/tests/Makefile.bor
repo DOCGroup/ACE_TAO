@@ -16,6 +16,7 @@ DIRS = \
 	IORManipulation \
 	MProfile \
 	Param_Test \
+	RTCORBA \
 	Timeout
 
 !include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
