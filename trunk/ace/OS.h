@@ -1815,6 +1815,12 @@ struct stat
 #   define ACE_THROW_SPEC(X)
 # endif /* ! ACE_HAS_EXCEPTIONS */
 
+#if defined (ACE_HAS_PRIOCNTL)
+  // Need to #include these before #defining USYNC_PROCESS on SunOS 5.x.
+# include /**/ <sys/rtpriocntl.h>
+# include /**/ <sys/tspriocntl.h>
+#endif /* ACE_HAS_PRIOCNTL */
+
 # if defined (ACE_HAS_THREADS)
 
 #   if defined (ACE_HAS_STHREADS)
@@ -2187,7 +2193,8 @@ struct sockaddr_un {
 #     define VX_UNBREAKABLE        0x0002  /* breakpoints ignored */
 #     define VX_FP_TASK            0x0008  /* floating point coprocessor */
 #     define VX_PRIVATE_ENV        0x0080  /* private environment support */
-#     define VX_NO_STACK_FILL      0x0100  /* do not stack fill for checkstack () */
+#     define VX_NO_STACK_FILL      0x0100  /* do not stack fill for
+                                              checkstack () */
 
 #     define THR_CANCEL_DISABLE      0
 #     define THR_CANCEL_ENABLE       0
@@ -2203,8 +2210,8 @@ struct sockaddr_un {
 #     define THR_SCHED_RR            0
 #     define THR_SCHED_DEFAULT       0
 #     define USYNC_THREAD            0
-#     define USYNC_PROCESS           1 /* it's all global on VxWorks (without MMU
-                                     option) */
+#     define USYNC_PROCESS           1 /* It's all global on VxWorks
+                                          (without MMU option). */
 
 #     if !defined (ACE_DEFAULT_SYNCH_TYPE)
  // Types include these options: SEM_Q_PRIORITY, SEM_Q_FIFO,
@@ -2214,7 +2221,8 @@ struct sockaddr_un {
 #     endif /* ! ACE_DEFAULT_SYNCH_TYPE */
 
 typedef SEM_ID ACE_mutex_t;
-// implement ACE_thread_mutex_t with ACE_mutex_t sinces there's just one process . . .
+// Implement ACE_thread_mutex_t with ACE_mutex_t because there's just
+// one process . . .
 typedef ACE_mutex_t ACE_thread_mutex_t;
 #     if !defined (ACE_HAS_POSIX_SEM)
 // Use VxWorks semaphores, wrapped . . .
@@ -2466,8 +2474,12 @@ public:
 #   define THR_SCHED_FIFO          0
 #   define THR_SCHED_RR            0
 #   define THR_SCHED_DEFAULT       0
-#   define USYNC_THREAD 0
-#   define USYNC_PROCESS 0
+#   if !defined (USYNC_THREAD)
+#     define USYNC_THREAD 0
+#   endif /* ! USYNC_THREAD */
+#   if !defined (USYNC_PROCESS)
+#     define USYNC_PROCESS 0
+#   endif /* ! USYNC_PROCESS */
 // These are dummies needed for class OS.h
 typedef int ACE_cond_t;
 typedef int ACE_mutex_t;

@@ -24,11 +24,6 @@
 #include "ace/Sched_Params.i"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_HAS_PRIOCNTL) && defined (ACE_HAS_STHREADS)
-# include /**/ <sys/rtpriocntl.h>
-# include /**/ <sys/tspriocntl.h>
-#endif /* ACE_HAS_PRIOCNTL && defined (ACE_HAS_STHREADS) */
-
 ACE_RCSID(ace, Sched_Params, "$Id$")
 
 int

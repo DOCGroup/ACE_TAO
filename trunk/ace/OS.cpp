@@ -1085,11 +1085,6 @@ ACE_OS::execlp (const char * /* file */, const char * /* arg0 */, ...)
 #endif /* ACE_WIN32 */
 }
 
-#if defined (ACE_HAS_PRIOCNTL)
-# include /**/ <sys/rtpriocntl.h>
-# include /**/ <sys/tspriocntl.h>
-#endif /* ACE_HAS_PRIOCNTL */
-
 int
 ACE_OS::scheduling_class (const char *class_name, ACE_id_t &id)
 {
