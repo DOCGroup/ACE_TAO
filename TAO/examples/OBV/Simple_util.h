@@ -167,7 +167,7 @@ protected:
 #include "Simple_util.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation "Simple_util.cpp"
+#pragma implementation ("Simple_util.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #endif /* TAO_UTIL_H */
