@@ -210,7 +210,13 @@ typedef ACE_UINT16 ACE_USHORT16;
 // that unsigned versions of a type are the same size as the signed
 // version of the same type.
 #if ACE_SIZEOF_VOID_P == ACE_SIZEOF_INT
-  typedef u_int ptr_arith_t;
+# if defined (__SUNPRO_CC)
+    // For unknown reasons, Sun CC 5.0 won't allow a reintepret cast
+    // of a 64-bit pointer to a 64-bit int.
+    typedef u_long ptr_arith_t;
+# else  /* ! __SUNPRO_CC */
+    typedef u_int ptr_arith_t;
+# endif /* ! __SUNPRO_CC */
 #elif ACE_SIZEOF_VOID_P == ACE_SIZEOF_LONG
   typedef u_long ptr_arith_t;
 #elif ACE_SIZEOF_VOID_P == ACE_SIZEOF_LONG_LONG
