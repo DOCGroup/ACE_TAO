@@ -645,7 +645,7 @@ template class ACE_Auto_Basic_Ptr<TAO_MProfile>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate TAO_Object_Field_T<CORBA_Object>
-#pragma instantiate auto_ptr<TAO_MProfile>;
-#pragma instantiate ACE_Auto_Basic_Ptr<TAO_MProfile>;
+#pragma instantiate auto_ptr<TAO_MProfile>
+#pragma instantiate ACE_Auto_Basic_Ptr<TAO_MProfile>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
