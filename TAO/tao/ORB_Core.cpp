@@ -1196,7 +1196,7 @@ TAO_ORB_Core::create_and_set_root_poa (const char *adapter_name,
           if (poa_manager == 0)
             {
               ACE_NEW_THROW_EX (poa_manager,
-                                TAO_POA_Manager (*this->object_adapter ()),
+                                TAO_POA_Manager (*this->object_adapter_i ()),
                                 CORBA::NO_MEMORY ());
               ACE_CHECK;
             }
@@ -1216,8 +1216,8 @@ TAO_ORB_Core::create_and_set_root_poa (const char *adapter_name,
                                      *poa_manager,
                                      *policies,
                                      0,
-                                     this->object_adapter ()->lock (),
-                                     this->object_adapter ()->thread_lock (),
+                                     this->object_adapter_i ()->lock (),
+                                     this->object_adapter_i ()->thread_lock (),
                                      *this,
                                      ACE_TRY_ENV),
                             CORBA::NO_MEMORY ());
@@ -1237,15 +1237,22 @@ TAO_ORB_Core::object_adapter (void)
     {
       // Double checked locking
       ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, 0);
-      if (this->object_adapter_ == 0)
-        {
-          ACE_NEW_RETURN (this->object_adapter_,
-                          TAO_Object_Adapter (this->server_factory ()->active_object_map_creation_parameters (),
-                                              *this),
-                          0);
-        }
+      (void) this->object_adapter_i ();
     }
 
+  return this->object_adapter_;
+}
+
+TAO_Object_Adapter *
+TAO_ORB_Core::object_adapter_i (void)
+{
+  if (this->object_adapter_ == 0)
+    {
+      ACE_NEW_RETURN (this->object_adapter_,
+                      TAO_Object_Adapter (this->server_factory ()->active_object_map_creation_parameters (),
+                                          *this),
+                      0);
+    }
   return this->object_adapter_;
 }
 
