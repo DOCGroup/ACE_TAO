@@ -1,3 +1,9 @@
+Thu Jun 26 08:36:37 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* performance-tests/Misc/context_switch_time.cpp: use same priority
+	  values on Win32 platforms as on Solaris, because thread priority
+	  increases with increasing priority values on both of those platforms.
+
 Thu Jun 26 01:34:46 1997  Nanbor Wang  <nw1@lambada.cs.wustl.edu>
 
 	* performance-tests/Misc/misc.{mak,mdp}: Added makefile for NT.
