@@ -1,3 +1,13 @@
+Wed Oct 21 17:51:52 1998  Steve Huston  <shuston@riverace.com>
+
+        * ace/ACE.cpp (get_ip_interfaces): If compiling on Win32 w/ Winsock 2,
+          use WSAIoctl(SIO_GET_INTERFACE_LIST) to get the interfaces from the
+          kernel rather than trying to fish through the registry.  This should
+          help TAO's naming service be somewhat more reliable on Win32, as
+          well as solve some other nasties that plagued this thing.
+
+        * ace/ws2tcpip.h: Filled out necessary pieces for the above change.
+
 Wed Oct 21 14:19:11 EDT 1998  James CE Johnson  <jcej@chiroptera.tragus.org>
 
         * docs/tutorials/007/thread_pool.cpp
