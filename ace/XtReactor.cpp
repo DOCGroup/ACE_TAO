@@ -87,7 +87,7 @@ ACE_XtReactor::wait_for_multiple_events (ACE_Select_Reactor_Handle_Set &handle_s
 }
 
 void
-ACE_XtReactor::TimerCallbackProc (XtPointer closure, XtIntervalId *id)
+ACE_XtReactor::TimerCallbackProc (XtPointer closure, XtIntervalId * /* id */)
 {
   ACE_XtReactor *self = (ACE_XtReactor *) closure;
   self->timeout_ = 0;
