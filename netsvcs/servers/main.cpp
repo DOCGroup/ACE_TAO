@@ -40,7 +40,8 @@ main (int argc, char *argv[])
       else // Use static linking.
         {
           if (ACE::debug () == 0)
-            ACE_Log_Msg::disable_debug_messages ();
+            ACE_LOG_MSG->priority_mask (~LM_DEBUG,
+                                        ACE_Log_Msg::PROCESS);
 
           // Calling ACE_SVC_INVOKE to create a new Service_Object.
           // Stash the newly created Service_Object into an
@@ -141,7 +142,8 @@ main (int argc, char *argv[])
   else // Use dynamic linking.
     {
       if (ACE::debug () == 0)
-        ACE_Log_Msg::disable_debug_messages ();
+        ACE_LOG_MSG->priority_mask (~LM_DEBUG,
+                                    ACE_Log_Msg::PROCESS);
 
       // Run forever, performing the configured services until we are
       // shut down by a SIGINT/SIGQUIT signal.
