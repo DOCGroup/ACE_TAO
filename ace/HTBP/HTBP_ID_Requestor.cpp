@@ -12,7 +12,7 @@ ACE_RCSID(HTBP,
           "$Id$")
 
 ACE_CString ACE::HTBP::ID_Requestor::htid_;
-ACE_Thread_Mutex ACE::HTBP::ID_Requestor::htid_lock_;
+ACE_SYNCH_MUTEX ACE::HTBP::ID_Requestor::htid_lock_;
 
 ACE::HTBP::ID_Requestor::ID_Requestor (ACE::HTBP::Environment *env)
   : port_ (0),
@@ -94,7 +94,7 @@ ACE::HTBP::ID_Requestor::get_HTID ()
   if (ACE::HTBP::ID_Requestor::htid_.length() != 0)
     return ACE::HTBP::ID_Requestor::htid_.rep();
 
-  ACE_Guard<ACE_Thread_Mutex> guard (ACE::HTBP::ID_Requestor::htid_lock_);
+  ACE_Guard<ACE_SYNCH_MUTEX> guard (ACE::HTBP::ID_Requestor::htid_lock_);
 
   if (ACE::HTBP::ID_Requestor::htid_.length() != 0)
     return ACE::HTBP::ID_Requestor::htid_.rep();

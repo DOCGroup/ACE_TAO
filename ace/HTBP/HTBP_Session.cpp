@@ -17,13 +17,13 @@ ACE_RCSID(HTBP,ACE_HTBP_Session," $");
 
 ACE::HTBP::Session::Session_Map ACE::HTBP::Session::session_map_;
 ACE_UINT32 ACE::HTBP::Session::last_session_id_ = 0;
-ACE_Thread_Mutex ACE::HTBP::Session::session_id_lock_;
+ACE_SYNCH_MUTEX ACE::HTBP::Session::session_id_lock_;
 
 /// Static method definitions
 ACE_UINT32
 ACE::HTBP::Session::next_session_id ()
 {
-  ACE_Guard<ACE_Thread_Mutex> g(ACE::HTBP::Session::session_id_lock_);
+  ACE_Guard<ACE_SYNCH_MUTEX> g(ACE::HTBP::Session::session_id_lock_);
   return ++last_session_id_;
 }
 
@@ -285,15 +285,15 @@ ACE::HTBP::Session::stream (ACE::HTBP::Stream *s)
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Hash_Map_Manager_Ex<ACE::HTBP::Session_Id_t, ACE::HTBP::Session*, ACE_Hash<ACE::HTBP::Session_Id_t>,ACE_Equal_To<ACE::HTBP::Session_Id_t>,ACE_Thread_Mutex>;
-template class ACE_Hash_Map_Manager<ACE::HTBP::Session_Id_t, ACE::HTBP::Session*, ACE_Thread_Mutex>;
+template class ACE_Hash_Map_Manager_Ex<ACE::HTBP::Session_Id_t, ACE::HTBP::Session*, ACE_Hash<ACE::HTBP::Session_Id_t>,ACE_Equal_To<ACE::HTBP::Session_Id_t>,ACE_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Manager<ACE::HTBP::Session_Id_t, ACE::HTBP::Session*, ACE_SYNCH_MUTEX>;
 template class ACE_Hash_Map_Entry<ACE::HTBP::Session_Id_t, ACE::HTBP::Session*>;
 template class ACE_Hash<ACE::HTBP::Session_Id_t>;
 template class ACE_Equal_To<ACE::HTBP::Session_Id_t>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE::HTBP::Session_Id_t, ACE::HTBP::Session*, ACE_Hash<ACE::HTBP::Session_Id_t>,ACE_Equal_To<ACE::HTBP::Session_Id_t>,ACE_Thread_Mutex>
-#pragma instantiate ACE_Hash_Map_Manager <ACE::HTBP::Session_Id_t, ACE::HTBP::Session*, ACE_Thread_Mutex>
+#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE::HTBP::Session_Id_t, ACE::HTBP::Session*, ACE_Hash<ACE::HTBP::Session_Id_t>,ACE_Equal_To<ACE::HTBP::Session_Id_t>,ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Manager <ACE::HTBP::Session_Id_t, ACE::HTBP::Session*, ACE_SYNCH_MUTEX>
 #pragma instantiate ACE_Hash_Map_Entry <ACE::HTBP::Session_Id_t, ACE::HTBP::Session*>
 #pragma instantiate ACE_Hash<ACE::HTBP::Session_Id_t>;
 
