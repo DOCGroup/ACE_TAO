@@ -1,3 +1,13 @@
+Mon Apr 16 02:15:49 2001  Christopher Kohlhoff  <chris@kohlhoff.com>
+
+        * tao/Domain/Makefile.bor:
+        * tao/IFR_Client/Makefile.bor:
+        * tao/IORManipulation/Makefile.bor:
+        * tao/IORTable/Makefile.bor:
+        * tao/SmartProxies/Makefile.bor:
+          Fixed definitions of INCDIR_NAME to use backslash, as
+          forward slash is interpreted as an option by copy on Win32.
+
 Sun Apr 15 17:16:33 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/MT_Timeout/Client_Task.cpp (one_iteration):
