@@ -87,8 +87,8 @@ ACE_IPC_SAP::enable (int signum) const
     default:
       return -1;
     }
-  return 0;
 #endif /* ! ACE_WIN32 && ! VXWORKS */
+  return 0;
 }
 
 // Restore the IPC_SAPet by turning off synchronous I/O or urgent
@@ -146,6 +146,6 @@ ACE_IPC_SAP::disable (int signum) const
     default:
       return -1;
     }
-  return 0;
 #endif /* ! ACE_WIN32 && ! VXWORKS */
+  return 0;
 }
