@@ -164,6 +164,9 @@ Test_Supplier::svc ()
               else
                 event[0].header.type = this->event_b_;
 
+              ACE_hrtime_t now = ACE_OS::gethrtime ();
+              ORBSVCS_Time::hrtime_to_TimeT (event[0].header.creation_time,
+                                             now);
               // ACE_DEBUG ((LM_DEBUG, "(%t) supplier push event\n"));
               this->consumer_proxy ()->push (event, TAO_TRY_ENV);
 

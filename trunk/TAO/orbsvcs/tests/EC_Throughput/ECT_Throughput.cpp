@@ -375,6 +375,7 @@ ECT_Throughput::dump_results (void)
 
       this->suppliers_[i]->dump_results (buf);
     }
+  this->dump_latency_results ("Latency");
 }
 
 int

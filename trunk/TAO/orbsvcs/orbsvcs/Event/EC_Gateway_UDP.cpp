@@ -72,6 +72,7 @@ TAO_ECG_UDP_Sender::mtu (CORBA::ULong new_mtu)
       || new_mtu >= TAO_ECG_UDP_Sender::ECG_MAX_MTU)
     return -1;
   this->mtu_ = new_mtu;
+  return 0;
 }
 
 void
@@ -406,7 +407,7 @@ TAO_ECG_UDP_Sender::compute_fragment_count (const ACE_Message_Block* begin,
 
   CORBA::ULong fragment_size = 0;
   // Reserve the first iovec for the header...
-  CORBA::ULong iovcnt = 1;
+  int iovcnt = 1;
   for (const ACE_Message_Block* b = begin;
        b != end;
        b = b->cont ())
@@ -509,7 +510,7 @@ TAO_ECG_UDP_Request_Entry (CORBA::Boolean byte_order,
       this->own_received_fragments_ = 1;
     }
 
-  for (int i = 0; i < this->received_fragments_size_; ++i)
+  for (CORBA::ULong i = 0; i < this->received_fragments_size_; ++i)
     this->received_fragments_[i] = 0;
   CORBA::ULong idx = this->fragment_count_ / bits_per_ulong;
   CORBA::ULong bit = this->fragment_count_ % bits_per_ulong;
@@ -620,7 +621,7 @@ TAO_ECG_UDP_Receiver::init (RtecEventChannelAdmin::EventChannel_ptr lcl_ec,
 			    RtecUDPAdmin::AddrServer_ptr addr_server,
                             ACE_Reactor *reactor,
                             const ACE_Time_Value &expire_interval,
-                            CORBA::ULong max_timeout, 
+                            int max_timeout, 
                             CORBA::Environment &_env)
 {
   this->ignore_from_ = ignore_from;

@@ -227,6 +227,7 @@ ECT_Consumer_Driver::dump_results (void)
 
       this->consumers_[i]->dump_results (buf);
     }
+  this->dump_latency_results ("Latency");
 }
 
 void

@@ -156,7 +156,7 @@ Test_Consumer::push (const RtecEventComm::EventSet& events,
           // ACE_DEBUG ((LM_DEBUG, "No data in event[%d]\n", i));
           // continue;
         }
-      if (events[i].header.type == ACE_ES_EVENT_SHUTDOWN)
+      if (e.header.type == ACE_ES_EVENT_SHUTDOWN)
         {
           this->shutdown_count_++;
           if (this->shutdown_count_ >= this->n_suppliers_)
@@ -166,6 +166,27 @@ Test_Consumer::push (const RtecEventComm::EventSet& events,
               this->timer_.stop ();
               this->driver_->shutdown_consumer (this->cookie_, _env);
             }
+        }
+      else
+        {
+          ACE_hrtime_t creation;
+          ORBSVCS_Time::TimeT_to_hrtime (creation,
+                                         e.header.creation_time);
+          
+          ACE_hrtime_t ec_recv;
+          ORBSVCS_Time::TimeT_to_hrtime (ec_recv,
+                                         e.header.ec_recv_time);
+
+          ACE_hrtime_t ec_send;
+          ORBSVCS_Time::TimeT_to_hrtime (ec_send,
+                                         e.header.ec_send_time);
+
+          const ACE_hrtime_t now = ACE_OS::gethrtime ();
+          const ACE_hrtime_t elapsed = now - creation;
+          this->driver_->end_to_end (elapsed);
+          this->driver_->supplier_to_ec (ec_recv - creation);
+          this->driver_->inside_ec (ec_send - ec_recv);
+          this->driver_->ec_to_consumer (now - ec_send);
         }
     }
 }

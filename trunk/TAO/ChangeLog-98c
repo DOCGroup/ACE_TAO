@@ -1,7 +1,19 @@
 Fri Dec 18 09:34:14 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
+	* orbsvcs/tests/EC_Throughput/ECT_Driver.h: 
+	* orbsvcs/tests/EC_Throughput/ECT_Driver.i: 
+	* orbsvcs/tests/EC_Throughput/ECT_Driver.cpp: 
+	* orbsvcs/tests/EC_Throughput/ECT_Consumer_Driver.cpp: 
+	* orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp: 
+	* orbsvcs/tests/EC_Throughput/ECT_Consumer.cpp: 
+	* orbsvcs/tests/EC_Throughput/ECT_Supplier.cpp: 
+	  The test can easily measure latency as well as throughput, so I
+	  added the necessary methods in the ECT_Driver class.
+
+
 	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp: 
 	  Added missing template instantiations.
+	  Fixed warnings reported by g++ 2.7.2.3
 
 Thu Dec 17 16:11:58 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 

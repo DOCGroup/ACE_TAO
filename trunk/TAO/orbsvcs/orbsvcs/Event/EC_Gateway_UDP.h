@@ -419,7 +419,7 @@ public:
              RtecUDPAdmin::AddrServer_ptr addr_server,
              ACE_Reactor *reactor,
              const ACE_Time_Value &expire_interval,
-             CORBA::ULong max_timeout,
+             int max_timeout,
              CORBA::Environment &_env);
   // To do its job this class requires to know the local EC it will
   // connect to; it also requires to build an RT_Info for the local
@@ -489,7 +489,7 @@ private:
   ACE_Reactor* reactor_;
   // The reactor we are using for the timeout handler...
 
-  CORBA::ULong max_timeout_;
+  int max_timeout_;
   // How many timeouts before we expire a message...
 };
 
