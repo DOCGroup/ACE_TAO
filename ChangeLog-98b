@@ -1,4 +1,12 @@
-Fri Aug 21 20:00:00 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+Fri Aug 21 20:23:44 1998  Douglas C. Schmidt  <schmidt@cumbia.cs.wustl.edu>
+
+	* examples/IPC_SAP/UPIPE_SAP/ex[123].cpp: Updated these programs
+ 	  to use the ACE_Auto_Basic_Ptr instead of the bizarre
+ 	  auto_builtin_ptr.h file, which has been removed...  Also
+ 	  replaced the global thr_mgr with the ACE_Thread_Manager
+ 	  Singleton and moved the <fstream.h> include file until AFTER the
+ 	  ACE includes to avoid problems with HP/UX 11's C++ compiler.
+  	  Thanks to John Mulhern for motivating these fixes.
 
 	* ace/config-hpux-10.x.h: Added a check so that if threading is
  	  disabled, then timespec_t does not get defined.  This seems to
