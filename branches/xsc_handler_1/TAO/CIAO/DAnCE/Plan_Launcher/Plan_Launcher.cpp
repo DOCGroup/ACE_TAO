@@ -140,7 +140,7 @@ namespace CIAO
 
           if (CIAO::debug_level () > 10)
             ACE_DEBUG ((LM_DEBUG,
-                        "(%P|%t) CIAO_Executor: Obtained Execution"
+                        "(%P|%t) CIAO_PlanLauncher: Obtained Execution"
                         " Manager ref \n"));
 
           CIAO::Config_Handlers::XML_File_Intf intf (package_url);
@@ -155,14 +155,14 @@ namespace CIAO
           if (CORBA::is_nil (dapp_mgr.in ()))
             {
               ACE_DEBUG ((LM_DEBUG,
-                          "(%P|%t) CIAO_Executor:preparePlan call failed:nil "
+                          "(%P|%t) CIAO_PlanLauncher:preparePlan call failed:nil "
                           "DomainApplicationManager reference\n"));
               return -1;
             }
 
           if (CIAO::debug_level () > 10)
             ACE_DEBUG ((LM_DEBUG,
-                        "CIAO_Executor: Obtained DAM ref \n"));
+                        "CIAO_PlanLauncher: Obtained DAM ref \n"));
 
           // == BALA check some bogus things here..
           // Create a dummy set of properties and start the
@@ -173,7 +173,7 @@ namespace CIAO
                           1);
           if (CIAO::debug_level ())
             ACE_DEBUG ((LM_DEBUG,
-                        "CIAO_Executor: start Launch application....."));
+                        "CIAO_PlanLauncher: start Launch application....."));
 
           // Start the Application immediately
           int start = 1;
@@ -181,12 +181,12 @@ namespace CIAO
           dapp_mgr->startLaunch (properties.in (), start);
           ACE_DEBUG ((LM_DEBUG, "[success]\n"));
 
-          ACE_DEBUG ((LM_DEBUG, "CIAO_Executor: finish Launch application....."));
+          ACE_DEBUG ((LM_DEBUG, "CIAO_PlanLauncher: finish Launch application....."));
           // Call finish Launch to complete the connections
           dapp_mgr->finishLaunch (start);
           ACE_DEBUG ((LM_DEBUG, "[success]\n"));
 
-          ACE_DEBUG ((LM_DEBUG, "CIAO_Executor: Application Deployed successfully \n"));
+          ACE_DEBUG ((LM_DEBUG, "CIAO_PlanLauncher: Application Deployed successfully \n"));
           ACE_DEBUG ((LM_DEBUG, "Press <Enter> to tear down application \n"));
 
           char dummy [256];
@@ -194,13 +194,13 @@ namespace CIAO
           // Tear down the assembly
 
           ACE_DEBUG ((LM_DEBUG,
-                      "CIAO_Executor: destroy the application....."));
+                      "CIAO_PlanLauncher: destroy the application....."));
           dapp_mgr->destroyApplication ();
 
           ACE_DEBUG ((LM_DEBUG, "[success]\n"));
 
           ACE_DEBUG ((LM_DEBUG,
-                      "CIAO_Executor: destroy the manager....."));
+                      "CIAO_PlanLauncher: destroy the manager....."));
 
           exec_mgr->destroyManager (dapp_mgr.in ());
           ACE_DEBUG ((LM_DEBUG, "[success]\n"));
