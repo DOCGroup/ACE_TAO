@@ -1,8 +1,14 @@
+Fri Sep  3 10:17:32 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* tao/Makefile.am:
+
+	  Updated to account for Ossama's Exception refactor.
+
 Fri Sep  3 19:01:59 2004  Olli Savia  <ops@iki.fi>
 
         * TAO_IDL/be/be_tmplinst.cpp:
           LynxOS 3.x needs explicit template instantiation.
-        
+
         * TAO_IDL/include/idl_defines.h:
           Added #include "ace/os_include/os_limits.h" to pick NFILES
           on LynxOS 3.x
