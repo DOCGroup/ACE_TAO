@@ -1,3 +1,9 @@
+Wed Jun 16 14:00:53 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+	  Commented out an unused variable that was causing a
+	  compiler warning reported by Carlos.
+
 Wed Jun 16 13:47:54 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp: 
