@@ -697,9 +697,23 @@ DRV_parse_args (long ac, char **av)
               // Path for the perfect hash generator(gperf) program. Default
               // is $ACE_ROOT/bin/gperf.
             case 'g':
-              idl_global->append_idl_flag (av[i+1]);
-              idl_global->gperf_path (av[i+1]);
-              i++;
+              if (av[i][2] == '\0')
+                {
+                  idl_global->append_idl_flag (av[i+1]);
+                  idl_global->gperf_path (av[i+1]);
+                  i++;
+                }
+              else
+                {
+                  ACE_ERROR ((
+                      LM_ERROR,
+                      ACE_TEXT ("IDL: I don't understand")
+                      ACE_TEXT (" the '%s' option\n"),
+                      av[i]
+                    ));
+
+                  ACE_OS::exit (99);
+                }
               break;
 
               // Option to generate the features regarding the
@@ -709,16 +723,44 @@ DRV_parse_args (long ac, char **av)
               // be kept. Default is the current directory from which the
               // <tao_idl> is called.
             case 'o':
-              idl_global->append_idl_flag (av[i+1]);
-              be_global->output_dir (av [i+1]);
-              i++;
+              if (av[i][2] == '\0')
+                {
+                  idl_global->append_idl_flag (av[i+1]);
+                  be_global->output_dir (av [i+1]);
+                  i++;
+                }
+              else
+                {
+                  ACE_ERROR ((
+                      LM_ERROR,
+                      ACE_TEXT ("IDL: I don't understand")
+                      ACE_TEXT (" the '%s' option\n"),
+                      av[i]
+                    ));
+
+                  ACE_OS::exit (99);
+                }
               break;
 
               // Temp directory for the IDL compiler to keep its files.
             case 't':
-              idl_global->append_idl_flag (av[i+1]);
-              idl_global->temp_dir (av [i+1]);
-              i++;
+              if (av[i][2] == '\0')
+                {
+                  idl_global->append_idl_flag (av[i+1]);
+                  idl_global->temp_dir (av [i+1]);
+                  i++;
+                }
+              else
+                {
+                  ACE_ERROR ((
+                      LM_ERROR,
+                      ACE_TEXT ("IDL: I don't understand")
+                      ACE_TEXT (" the '%s' option\n"),
+                      av[i]
+                    ));
+
+                  ACE_OS::exit (99);
+                }
               break;
 
             case 'D':
