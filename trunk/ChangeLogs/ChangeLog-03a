@@ -1,3 +1,9 @@
+Thu Apr 12 17:31:36 2001  Steve Huston  <shuston@riverace.com>
+
+        * examples/IOStream/server/iostream_server.h: Wrap the guts of this
+          in #if !defined (ACE_LACKS_ACE_IOSTREAM) to build clean on platforms
+          that can't handle ACE_IOStream.
+
 Thu Apr 12 17:02:41 2001  Steve Huston  <shuston@riverace.com>
 
         * examples/QOS/Change_Sender_TSpec/sender.dsp:
