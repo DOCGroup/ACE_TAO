@@ -1,3 +1,14 @@
+Tue Mar 26 07:26:00 2002  Si Mong Park  <spark@ociweb.com>
+
+        * TAO/tao/Services.cpp:
+        * TAO/tao/Services.i:
+          Moved _tao_seq_Octet's Dtor back to cpp as eVC (WinCE) does not complain
+          unresolved symbol linker error anymore.  Inline Dtor was causing compiler
+          error on Tru64, although it was okay on WinCE, NT, Solaris, and etc.
+          (thanks to Craig Rodrigues for report)  In the future, if this causes a
+          problem again on WinCE, then preprocessor for WinCE, such as ACE_HAS_WINCE,
+          may be used to make inline Dtor specific for WinCE.
+
 Mon Mar 25 16:00:00 2002  Si Mong Park  <spark@ociweb.com>
 
         * TAO/orbsvcs/orbsvcs/Naming/Flat_File_Persistence.cpp: 
