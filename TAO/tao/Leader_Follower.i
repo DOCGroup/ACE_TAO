@@ -131,51 +131,6 @@ TAO_Leader_Follower::leader_available (void) const
 }
 
 ACE_INLINE void
-TAO_Leader_Follower::set_client_thread (void)
-{
-  // If we were a leader thread or an event loop thread, give up
-  // leadership.
-  TAO_ORB_Core_TSS_Resources *tss = this->get_tss_resources ();
-  if (tss->event_loop_thread_ ||
-      tss->client_leader_thread_)
-    {
-      --this->leaders_;
-    }
-
-  if (this->clients_ == 0 &&
-      this->orb_core_->has_shutdown ())
-    {
-      // The ORB has shutdown and we are the first client after
-      // that. This means that the reactor is disabled, we must
-      // re-enable it if we want to receive any replys...
-      this->orb_core_->reactor ()->reset_reactor_event_loop ();
-    }
-  this->clients_++;
-}
-
-ACE_INLINE void
-TAO_Leader_Follower::reset_client_thread (void)
-{
-  // If we were a leader thread or an event loop thread, take back
-  // leadership.
-  TAO_ORB_Core_TSS_Resources *tss = this->get_tss_resources ();
-  if (tss->event_loop_thread_ ||
-      tss->client_leader_thread_)
-    {
-      ++this->leaders_;
-    }
-
-  this->clients_--;
-  if (this->clients_ == 0 && this->orb_core_->has_shutdown ())
-    {
-      // The ORB has shutdown and we are the last client thread, we
-      // must stop the reactor to ensure that any server threads go
-      // away.
-      this->orb_core_->reactor ()->end_reactor_event_loop ();
-    }
-}
-
-ACE_INLINE void
 TAO_Leader_Follower::set_client_leader_thread (void)
 {
   TAO_ORB_Core_TSS_Resources *tss = this->get_tss_resources ();

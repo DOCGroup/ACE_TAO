@@ -1,3 +1,12 @@
+Tue Jan 23 11:15:59 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Leader_Follower.i:
+        * tao/Leader_Follower.cpp:
+          Moved use of the ACE_Reactor class from the .i to the .cpp file,
+          the methods were too complex to be inlined anyway.
+          This should fix the problems with the SunOS/SunCC 4.2 and Tru64
+          builds.
+
 Tue Jan 23 13:15:03 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/*Makefile:
@@ -140,7 +149,7 @@ Tue Jan 23 11:08:00 2001  Jeff Parsons <parsons@cs.wustl.edu>
           dynamic service object containing hook methods for
           use by TAO classes that interact with the IFR. This
           library also enables the removal of the compile-time
-          options 'TAO_HAS_INTERFACE_REPOSITORY' and 
+          options 'TAO_HAS_INTERFACE_REPOSITORY' and
           'interface_repo'. Also, in IFR_Client_Adapter_Impl.cpp,
           the method _get_interface() (found in CORBA::Object and
           LocalObject and required by CorbaScript) is implemented.
@@ -208,9 +217,9 @@ Tue Jan 23 11:08:00 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Mon Jan 22 17:04:59 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/Strategies/SHMIOP_Connector.cpp: Corrected several
-	  references to IIOP.  Thanks to Johnny Willemsen
-	  <jwillemsen@meco.nl> for pointing this out.
+        * tao/Strategies/SHMIOP_Connector.cpp: Corrected several
+          references to IIOP.  Thanks to Johnny Willemsen
+          <jwillemsen@meco.nl> for pointing this out.
 
 Mon Jan 22 12:49:25 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -234,8 +243,8 @@ Sat Jan 20 13:27:01 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 Sat Jan 20 09:29:34 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* examples/Advanced/ch_21:
-  	* examples/Advanced/ch_8_and_10:
+        * examples/Advanced/ch_21:
+        * examples/Advanced/ch_8_and_10:
         * examples/Advanced/ch_18/server.cpp: Made several fixes so
           these examples will compile correctly.  Thanks to Craig Rodrigues
           <rodrigc@mediaone.net> for reporting this.
