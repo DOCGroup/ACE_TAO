@@ -33,7 +33,6 @@
 
 # define ACE_LACKS_MODE_MASKS 1
 # define ACE_WSTRING_HAS_USHORT_SUPPORT 1
-# define ACE_HAS_ITOA 1
 # define ACE_HAS_DIRENT
 
 #ifdef ACE_USES_STD_NAMESPACE_FOR_STDC_LIB
@@ -90,6 +89,7 @@
 # define ACE_WCSDUP_EQUIVALENT ::_wcsdup
 # define ACE_STRCASECMP_EQUIVALENT ::stricmp
 # define ACE_STRNCASECMP_EQUIVALENT ::strnicmp
+# define ACE_HAS_ITOA 1
 #endif
 
 #include /**/ "ace/post.h"
