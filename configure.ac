@@ -29,7 +29,7 @@ AC_PREREQ([2.58])
 
 AC_CONFIG_SRCDIR([ace/ACE.cpp])
 
-AC_CONFIG_AUX_DIR([autotools])
+AC_CONFIG_AUX_DIR([aux_config])
 AC_CONFIG_MACRO_DIR([m4])
 
 dnl Check what platform we are running on.
