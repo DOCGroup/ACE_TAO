@@ -12,7 +12,9 @@ Mon Jun 14 15:56:27 1999  David L. Levine  <levine@cs.wustl.edu>
           the usual suspects, such as Conn_Test, don't.)
 
         * ace/config-qnx-neutrino.h: don't need ACE_HAS_PENTIUM here,
-          because it's in config-g++-common.h.
+          because it's in config-g++-common.h.  Removed
+          ACE_HAS_USING_KEYWORD, because g++ 2.8.1 doesn't support
+          namespaces.
 
 Mon Jun 14 14:33:29 1999  David L. Levine  <levine@cs.wustl.edu>
 
