@@ -1,3 +1,11 @@
+Wed Mar 24 07:36:38 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* orbsvcs/orbsvcs/Notify/ProxySupplier_T.cpp:
+
+	  Fixed warnings with g++ 3.2.3 which is available in RH
+	  advanced server edition. This doesn't seem to show up
+	  elsewhere. 
+
 Wed Mar 24 07:18:53 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* orbsvcs/performance-tests/RTEvent/Federated_Roundtrip/server.cpp:
