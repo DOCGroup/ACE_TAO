@@ -2408,14 +2408,22 @@ ACE_Array_Base<T>::max_size (size_t new_size)
                              (T *) this->allocator_->malloc (new_size * sizeof (T)),
                              T,
                              -1);
-      for (size_t i = 0; i < cur_size_; ++i)
+
+      for (size_t i = 0; i < this->cur_size_; ++i)
          new (&tmp[i]) T (this->array_[i]);
 
+      // Initialize the new portion of the array that exceeds the
+      // previously allocated section.
+      for (size_t j = this->cur_size_; j < new_size; j++)
+        new (&tmp[j]) T;
+      
       ACE_DES_FREE (this->array_,
                     this->allocator_->free,
                     T);
+
       this->array_ = tmp;
       this->max_size_ = new_size;
+      this->cur_size_ = new_size;
     }
 
   return 0;
