@@ -75,7 +75,7 @@ ECM_Driver::run (int argc, char* argv[])
       ACE_DEBUG ((LM_DEBUG,
                   "Execution parameters:\n"
                   "  lcl name = <%s>\n"
-		  "  short circuit = <%d>\n"
+                  "  short circuit = <%d>\n"
                   "  suppliers = <%d>\n"
                   "  consumers = <%d>\n"
                   "  workload = <%d> (iterations)\n"
@@ -90,7 +90,7 @@ ECM_Driver::run (int argc, char* argv[])
                   "  schedule_file = <%s>\n"
                   "  pid file name = <%s>\n",
                   this->lcl_name_?this->lcl_name_:"nil",
-		  this->short_circuit_,
+                  this->short_circuit_,
 
                   this->n_suppliers_,
                   this->n_consumers_,
@@ -152,7 +152,7 @@ ECM_Driver::run (int argc, char* argv[])
 
       ACE_Config_Scheduler scheduler_impl;
       RtecScheduler::Scheduler_var scheduler =
-	scheduler_impl._this (TAO_TRY_ENV);
+        scheduler_impl._this (TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       // We use this buffer to generate the names of the local
@@ -161,10 +161,10 @@ ECM_Driver::run (int argc, char* argv[])
       char buf[bufsize];
 
       CORBA::String_var str =
-	orb->object_to_string (scheduler.in (), TAO_TRY_ENV);
+        orb->object_to_string (scheduler.in (), TAO_TRY_ENV);
       TAO_CHECK_ENV;
       ACE_DEBUG ((LM_DEBUG, "The (local) scheduler IOR is <%s>\n",
-		  str.in ()));
+                  str.in ()));
 
       ACE_OS::strcpy (buf, "ScheduleService@");
       ACE_OS::strcat (buf, this->lcl_name_);
@@ -177,8 +177,8 @@ ECM_Driver::run (int argc, char* argv[])
       TAO_CHECK_ENV;
 
       if (ACE_Scheduler_Factory::use_config (naming_context.in (),
-					     buf) == -1)
-	return -1;
+                                             buf) == -1)
+        return -1;
 
       // Create the EventService implementation, but don't start its
       // internal threads.
@@ -218,7 +218,7 @@ ECM_Driver::run (int argc, char* argv[])
 
       ACE_DEBUG ((LM_DEBUG, "located local EC\n"));
 
-      this->connect_ecg (local_ec, TAO_TRY_ENV);
+      this->connect_ecg (local_ec.in (), TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       this->connect_suppliers (local_ec.in (), TAO_TRY_ENV);
@@ -250,7 +250,7 @@ ECM_Driver::run (int argc, char* argv[])
 
       // Create the EC internal threads
       ec_impl.activate ();
-      
+
       ACE_DEBUG ((LM_DEBUG, "running the test\n"));
       if (orb->run () == -1)
         ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "orb->run"), -1);
@@ -276,7 +276,7 @@ ECM_Driver::run (int argc, char* argv[])
       TAO_CHECK_ENV;
       this->disconnect_suppliers (TAO_TRY_ENV);
       TAO_CHECK_ENV;
-      
+
       ACE_DEBUG ((LM_DEBUG, "shutdown grace period\n"));
       tv.set (5, 0);
       if (orb->run (&tv) == -1)
@@ -322,7 +322,7 @@ ECM_Driver::run (int argc, char* argv[])
 #endif /* ! __SUNPRO_CC */
 
           TAO_CHECK_ENV;
-          ACE_Scheduler_Factory::dump_schedule (infos.in (), 
+          ACE_Scheduler_Factory::dump_schedule (infos.in (),
                                                 configs.in (),
                                                 this->schedule_file_);
         }
@@ -463,7 +463,7 @@ ECM_Driver::connect_consumers (RtecEventChannelAdmin::EventChannel_ptr local_ec,
 
 void
 ECM_Driver::connect_ecg (RtecEventChannelAdmin::EventChannel_ptr local_ec,
-			 CORBA::Environment &_env)
+                         CORBA::Environment &_env)
 {
   TAO_TRY
     {
@@ -480,12 +480,12 @@ ECM_Driver::connect_ecg (RtecEventChannelAdmin::EventChannel_ptr local_ec,
       ACE_OS::strcat (mcast_name, this->lcl_name_);
 
       this->sender_.init (local_ec,
-			  local_sch,
-			  mcast_name,
-			  this->send_mcast_group_,
-			  TAO_TRY_ENV);
+                          local_sch,
+                          mcast_name,
+                          this->send_mcast_group_,
+                          TAO_TRY_ENV);
       TAO_CHECK_ENV;
-      
+
       ACE_INET_Addr ignore_from;
       this->sender_.get_local_addr (ignore_from);
 
@@ -495,10 +495,10 @@ ECM_Driver::connect_ecg (RtecEventChannelAdmin::EventChannel_ptr local_ec,
       ACE_OS::strcat (recv_name, this->lcl_name_);
 
       this->receiver_.init (local_ec,
-			    local_sch,
-			    recv_name,
-			    ignore_from,
-			    TAO_TRY_ENV);
+                            local_sch,
+                            recv_name,
+                            ignore_from,
+                            TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       this->mcast_eh_.reactor (TAO_ORB_Core_instance ()->reactor ());
@@ -530,14 +530,14 @@ ECM_Driver::connect_ecg (RtecEventChannelAdmin::EventChannel_ptr local_ec,
       receiver_qos.publications[0].event.source_ = 0;
       receiver_qos.publications[0].event.creation_time_ = ORBSVCS_Time::zero;
       receiver_qos.publications[0].dependency_info.dependency_type =
-	RtecScheduler::TWO_WAY_CALL;
+        RtecScheduler::TWO_WAY_CALL;
       receiver_qos.publications[0].dependency_info.number_of_calls = 1;
       receiver_qos.publications[0].dependency_info.rt_info = 0;
       receiver_qos.publications[1].event.type_ = this->r_event_b_;
       receiver_qos.publications[1].event.source_ = 0;
       receiver_qos.publications[1].event.creation_time_ = ORBSVCS_Time::zero;
       receiver_qos.publications[1].dependency_info.dependency_type =
-	RtecScheduler::TWO_WAY_CALL;
+        RtecScheduler::TWO_WAY_CALL;
       receiver_qos.publications[1].dependency_info.number_of_calls = 1;
       receiver_qos.publications[1].dependency_info.rt_info = 0;
 
@@ -704,6 +704,8 @@ ECM_Driver::shutdown_consumer (int id)
 int
 ECM_Driver::shutdown (CORBA::Environment& _env)
 {
+  ACE_UNUSED_ARG (_env);
+
   ACE_DEBUG ((LM_DEBUG, "Shutting down the multiple EC test\n"));
 
   TAO_ORB_Core_instance ()->orb ()->shutdown ();
@@ -782,9 +784,9 @@ ECM_Driver::parse_args (int argc, char *argv [])
           this->short_circuit_ = 1;
           break;
 
-	case 'l':
-	  this->lcl_name_ = get_opt.optarg;
-	  break;
+        case 'l':
+          this->lcl_name_ = get_opt.optarg;
+          break;
 
         case 'h':
           {
@@ -823,13 +825,13 @@ ECM_Driver::parse_args (int argc, char *argv [])
           this->schedule_file_ = get_opt.optarg;
           break;
 
-	case 's':
-	  this->send_mcast_group_.set (get_opt.optarg);
-	  break;
+        case 's':
+          this->send_mcast_group_.set (get_opt.optarg);
+          break;
 
-	case 'r':
-	  this->recv_mcast_group_.set (get_opt.optarg);
-	  break;
+        case 'r':
+          this->recv_mcast_group_.set (get_opt.optarg);
+          break;
 
         case '?':
         default:
@@ -840,8 +842,8 @@ ECM_Driver::parse_args (int argc, char *argv [])
                       "-h <high priority args> "
                       "-p <pid file name> "
                       "-d <schedule file name> "
-		      "-s <send_mcast group> "
-		      "-r <recv_mcast group> "
+                      "-s <send_mcast group> "
+                      "-r <recv_mcast group> "
                       "\n",
                       argv[0]));
           return -1;
