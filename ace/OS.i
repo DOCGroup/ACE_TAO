@@ -3309,7 +3309,8 @@ ACE_OS::rw_unlock (ACE_rwlock_t *rw)
   else if (rw->ref_count_ == -1) // Releasing a writer.
     rw->ref_count_ = 0;
   else
-    ACE_ASSERT (!"count should not be 0!\n");
+    return -1; // @@ ACE_ASSERT (!"count should not be 0!\n");
+  
 
   int result;
   int error = 0;
