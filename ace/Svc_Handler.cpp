@@ -6,7 +6,6 @@
 
 #define ACE_BUILD_DLL
 #include "ace/Svc_Handler.h"
-#include "ace/Dynamic.h"
 #include "ace/Object_Manager.h"
 #include "ace/Strategies.h"
 
@@ -17,67 +16,13 @@
 #define PR_ST_1 ACE_PEER_STREAM_1
 #define PR_ST_2 ACE_PEER_STREAM_2
 
-#if defined (ACE_HAS_SIG_C_FUNC)
-extern "C" void
-ACE_Svc_Handler_cleanup (void *object, void *)
-{
-  ACE_TRACE ("ACE_Svc_Handler_cleanup");
-
-  // This won't call the object's destructor, but it will deallocate
-  // its storage.  That's better than nothing.
-  // (This function is only used if ACE_HAS_SIG_C_FUNC, e.g., on MVS.)
-  delete object;
-}
-#endif /* ACE_HAS_SIG_C_FUNC */
-
-template <PR_ST_1, ACE_SYNCH_DECL> void
-ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::cleanup (void *object, void *)
-{
-  ACE_TRACE ("ACE_Svc_Handler::cleanup");
-
-  delete (ACE_TSS_TYPE (ACE_Dynamic) *) object;
-}
-
-template <PR_ST_1, ACE_SYNCH_DECL> ACE_Dynamic *
-ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::instance (void)
-{
-  ACE_TRACE ("ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::allocated");
-
-  static ACE_TSS_TYPE (ACE_Dynamic) *instance_;
-  // Determines if we were dynamically allocated.  Note that this
-  // should be inside of ACE_Svc_Handler, but G++ is too lame to
-  // support this...
-
-  // Implement the Double Check pattern.
-
-  if (instance_ == 0)
-    {
-      ACE_MT (ACE_Thread_Mutex *lock =
-        ACE_Managed_Object<ACE_Thread_Mutex>::get_preallocated_object
-          (ACE_Object_Manager::ACE_SVC_HANDLER_LOCK);
-        ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *lock, 0));
-
-      if (instance_ == 0)
-        ACE_NEW_RETURN (instance_, ACE_TSS_TYPE (ACE_Dynamic), 0);
-
-      // Register for destruction with ACE_Object_Manager.
-#if defined (ACE_HAS_SIG_C_FUNC)
-      ACE_Object_Manager::at_exit (instance_, ACE_Svc_Handler_cleanup, 0);
-#else
-      ACE_Object_Manager::at_exit (instance_, cleanup, 0);
-#endif /* ACE_HAS_SIG_C_FUNC */
-    }
-
-  return ACE_TSS_GET (instance_, ACE_Dynamic);
-}
-
 template <PR_ST_1, ACE_SYNCH_DECL> void *
 ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::operator new (size_t n)
 {
   ACE_TRACE ("ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::operator new");
   // Allocate the memory and store it (usually in thread-specific
   // storage, depending on config flags).
-  ACE_Svc_Handler<ACE_PEER_STREAM_2, ACE_SYNCH_USE>::instance ()->set ();
+  DYNAMIC::instance ()->set ();
   return ::new char[n];
 }
 
@@ -110,8 +55,8 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::operator delete (void *obj)
 
 template <PR_ST_1, ACE_SYNCH_DECL> 
 ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::ACE_Svc_Handler (ACE_Thread_Manager *tm,
-                                                        ACE_Message_Queue<ACE_SYNCH_USE> *mq,
-                                                        ACE_Reactor *reactor)
+                                                          ACE_Message_Queue<ACE_SYNCH_USE> *mq,
+                                                          ACE_Reactor *reactor)
   : ACE_Task<ACE_SYNCH_USE> (tm, mq),
     closing_ (0),
     recycler_ (0),
@@ -128,11 +73,10 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::ACE_Svc_Handler (ACE_Thread_Manager *tm
   // in the April '96 issue of the C++ Report.  We've spruced it up to
   // work correctly in multi-threaded programs by using our ACE_TSS
   // class.
-  this->dynamic_ = 
-    ACE_Svc_Handler<ACE_PEER_STREAM_2, ACE_SYNCH_USE>::instance()->is_dynamic ();
+  this->dynamic_ = DYNAMIC::instance ()->is_dynamic ();
   if (this->dynamic_)
     // Make sure to reset the flag
-    ACE_Svc_Handler<ACE_PEER_STREAM_2, ACE_SYNCH_USE>::instance()->reset ();
+    DYNAMIC::instance ()->reset ();
 }
 
 // Default behavior for a ACE_Svc_Handler object is to be registered with
@@ -151,16 +95,16 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::open (void *)
     
   if (client_addr.addr_to_string (buf, sizeof buf) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", 
-                      "can't obtain peer's address"), -1);
+                       "can't obtain peer's address"), -1);
 
   ACE_DEBUG ((LM_DEBUG, "connected to %s on fd %d\n", 
-             buf, this->peer_.get_handle ()));
+              buf, this->peer_.get_handle ()));
 #endif /* DEBUGGING */
   if (this->reactor () 
       && this->reactor ()->register_handler 
-          (this, ACE_Event_Handler::READ_MASK) == -1)
+      (this, ACE_Event_Handler::READ_MASK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p", 
-                      "unable to register client handler"), -1);
+                       "unable to register client handler"), -1);
   return 0;
 }
 
@@ -175,7 +119,7 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::shutdown (void)
   if (this->reactor ())
     {
       ACE_Reactor_Mask mask = ACE_Event_Handler::ALL_EVENTS_MASK |
-                              ACE_Event_Handler::DONT_CALL;
+        ACE_Event_Handler::DONT_CALL;
 
       // Make sure there are no timers.
       this->reactor ()->cancel_timer (this);
@@ -240,7 +184,7 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::~ACE_Svc_Handler (void)
 
 template <PR_ST_1, ACE_SYNCH_DECL> int
 ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::handle_close (ACE_HANDLE, 
-                                                     ACE_Reactor_Mask)
+                                                       ACE_Reactor_Mask)
 {
   ACE_TRACE ("ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::handle_close");
 
@@ -250,7 +194,7 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::handle_close (ACE_HANDLE,
 
 template <PR_ST_1, ACE_SYNCH_DECL> int
 ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::handle_timeout (const ACE_Time_Value &,
-                                                       const void *)
+                                                         const void *)
 {
   ACE_TRACE ("ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::handle_timeout");
   return this->handle_close ();
@@ -295,7 +239,7 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::idle (u_long flags)
 
 template <PR_ST_1, ACE_SYNCH_DECL> void 
 ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::recycler (ACE_Connection_Recycling_Strategy *recycler, 
-                                                 const void *recycling_act)
+                                                   const void *recycling_act)
 {
   ACE_TRACE ("ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::recycler");
   this->recycler_ = recycler;
