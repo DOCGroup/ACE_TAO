@@ -1588,7 +1588,7 @@ ACE::count_interfaces (ACE_HANDLE handle,
 
   ACE_OS::close (handle);
 
-  int if_count = 0;
+  int if_count = 0, i ;
 
   // get if address out of ifreq buffers.
   for (i = 0; i < num_ifs; p_ifs++, i++) 
@@ -1600,7 +1600,7 @@ ACE::count_interfaces (ACE_HANDLE handle,
       if (addr == 0) 
 	{		// no more addr's found
 	  ACE_OS::free (ifcfg.ifc_req);
-	  return count;
+	  return if_count;
 	}
       if_count++;
     }
