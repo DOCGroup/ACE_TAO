@@ -1,3 +1,9 @@
+Wed May 19 10:19:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/Options.html:
+          Added documentation of -ORBVerboseLogging. Thanks to
+          Cyrille Chépélov <cyrille@softek.fr> for supplying this.
+
 Wed May 19 09:20:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * utils/NamingViewer/BindNewContext.h:
