@@ -154,25 +154,58 @@ TAO_GIOP_Invocation::start (CORBA::Boolean is_roundtrip,
 
   // Establish the connection and get back a
   // <Client_Connection_Handler>.
-  if (con->connect (this->handler_,
-                    *server_addr_p) == -1)
+#if defined (TAO_ARL_USES_SAME_CONNECTOR_PORT)
+  if (TAO_ORB_Core_instance ()->arl_same_port_connect ())
     {
-      // Give users a clue to the problem.
-      ACE_DEBUG ((LM_ERROR, "(%P|%t) %s:%u, connection to "
-                            "%s (%s):%hu failed (%p)\n",
-                  __FILE__,
-                  __LINE__,
-                  server_addr_p->get_host_name (),
-                  server_addr_p->get_host_addr (),
-                  server_addr_p->get_port_number (),
-                  "errno"));
+      ACE_INET_Addr local_addr;
+      local_addr.set_port_number (server_addr_p->get_port_number ());
+      // Set the local port number to use.
 
-      // There might be a better exception to set, but it's unclear
-      // which one should be used.  This one applies, even if it's
-      // vague.
-      env.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_NO));
-      return;
+      if (con->connect (this->handler_,
+                        *server_addr_p,
+                        0,
+                        local_addr,
+                        1) == -1)
+        {
+          // Give users a clue to the problem.
+          ACE_DEBUG ((LM_ERROR, "(%P|%t) %s:%u, connection to "
+                      "%s (%s):%hu failed (%p) (using local port #: %d)\n",
+                      __FILE__,
+                      __LINE__,
+                      server_addr_p->get_host_name (),
+                      server_addr_p->get_host_addr (),
+                      server_addr_p->get_port_number (),
+                      local_addr.get_port_number (),
+                      "errno"));
+
+          // There might be a better exception to set, but it's unclear
+          // which one should be used.  This one applies, even if it's
+          // vague.
+          env.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_NO));
+          return;
+        }
     }
+  else
+#endif /* TAO_ARL_USES_SAME_CONNECTOR_PORT */
+    if (con->connect (this->handler_,
+                      *server_addr_p) == -1)
+      {
+        // Give users a clue to the problem.
+        ACE_DEBUG ((LM_ERROR, "(%P|%t) %s:%u, connection to "
+                    "%s (%s):%hu failed (%p)\n",
+                    __FILE__,
+                    __LINE__,
+                    server_addr_p->get_host_name (),
+                    server_addr_p->get_host_addr (),
+                    server_addr_p->get_port_number (),
+                    "errno"));
+
+        // There might be a better exception to set, but it's unclear
+        // which one should be used.  This one applies, even if it's
+        // vague.
+        env.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_NO));
+        return;
+      }
 
   ACE_TIMEPROBE (TAO_GIOP_INVOCATION_START_CONNECT);
 
