@@ -1,3 +1,11 @@
+Thu Jul 23 15:30:41 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Token.{h,i,cpp}: On platforms that support timed acquire
+	  semaphores, changed to use semaphores for signaling mechanism
+	  for better performance.
+	  (shared_acquire,renew): Give priority to acquire_write over
+	  acquire_read.
+
 Thu Jul 23 14:05:20 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * performance-tests/Misc/context_switch_test.cpp:
