@@ -16,6 +16,8 @@
 // DEC's CXX supports explicit template specialization.
 #define ACE_HAS_TEMPLATE_SPECIALIZATION
 
+#define ACE_DEFAULT_BASE_ADDR ((char *) 0x80000000)
+
 // Optimize ACE_Handle_Set for select().
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
 
@@ -153,6 +155,7 @@
 #define ACE_HAS_SVR4_SIGNAL_T
 #if __DECCXX_VER >= 60090006
 # define ACE_HAS_SIGWAIT
+# define ACE_HAS_ONEARG_SIGWAIT
 #endif /* __DECCXX_VER >= 60090006 */
 
 // Compiler/platform has strerror().
