@@ -1,3 +1,9 @@
+Mon Sep 14 17:47:41 1998  Chris Gill <cdgill@cs.wustl.edu>
+
+	* orbsvcs/tests/Simulator/DOVEBrowser/PushConsumer.java: 
+	  converted nested struct memberwise initializations into 
+	  new calls to nested class ctors.
+
 Mon Sep 14 14:33:41 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 	* TAOACE.dsw: Added gperf to the projects here.
