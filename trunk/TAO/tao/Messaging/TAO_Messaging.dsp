@@ -188,6 +188,10 @@ SOURCE=.\MessagingS.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\TAO_ExtC.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Twoway_Asynch_Invocation.cpp
 # End Source File
 # End Group
@@ -236,6 +240,10 @@ SOURCE=.\MessagingS_T.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\TAO_ExtC.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Twoway_Asynch_Invocation.h
 # End Source File
 # End Group
@@ -261,6 +269,10 @@ SOURCE=.\MessagingS.i
 # Begin Source File
 
 SOURCE=.\MessagingS_T.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\TAO_ExtC.i
 # End Source File
 # Begin Source File
 
