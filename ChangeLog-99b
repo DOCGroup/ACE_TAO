@@ -1,40 +1,46 @@
+Thu Dec 09 07:30:12 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * Makefile (CONTROLLED_FILES): added ChangeLog-99a.  Thanks
+          to Pierre Oberson <oberson@nagra-kudelski.ch> for reporting
+          that it was missing.
+
 Wed Dec  8 13:36:59 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* configure.in (ACE_SYS_RESTARTABLE_SYSCALLS):
+        * configure.in (ACE_SYS_RESTARTABLE_SYSCALLS):
 
-	  Disabled ACE_SYS_RESTARTABLE_SYSCALLS test.  On platforms where
-	  it detects restartable system calls, it defines
-	  ACE_HAS_SIGNAL_SAFE_OS_CALLS.  This causes the ACE_OSCALL*
-	  macros in OS.h to use "ACE_LOG_MSG->restart()" before
-	  ace/Log_Msg.h is included, ending up in ACE_LOG_MSG being an
-	  unknown macro.  Currently, none of ACE's supported platforms
-	  actually define ACE_HAS_SIGNAL_SAFE_OS_CALLS so disabling this
-	  test okay for now.
-	
-	* ace/OS.i (ioctl):
+          Disabled ACE_SYS_RESTARTABLE_SYSCALLS test.  On platforms where
+          it detects restartable system calls, it defines
+          ACE_HAS_SIGNAL_SAFE_OS_CALLS.  This causes the ACE_OSCALL*
+          macros in OS.h to use "ACE_LOG_MSG->restart()" before
+          ace/Log_Msg.h is included, ending up in ACE_LOG_MSG being an
+          unknown macro.  Currently, none of ACE's supported platforms
+          actually define ACE_HAS_SIGNAL_SAFE_OS_CALLS so disabling this
+          test okay for now.
 
-	  Commented out ACE_DEBUG call.  ACE_OS should not depend on
-	  ACE_Log_Msg in any way.
+        * ace/OS.i (ioctl):
+
+          Commented out ACE_DEBUG call.  ACE_OS should not depend on
+          ACE_Log_Msg in any way.
 
 Wed Dec  8 10:15:20 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* bin/clone.cpp: The definition of mk_symbolic_link() was
-	  missing the third argument 'int level'.  Thanks to Jerry De
- 	  Master <jdemaste@ipdinc.com> for reporting this.
+        * bin/clone.cpp: The definition of mk_symbolic_link() was
+          missing the third argument 'int level'.  Thanks to Jerry De
+          Master <jdemaste@ipdinc.com> for reporting this.
 
-	* ace/Synch.h: Added comments to ACE_Thread_Mutex_Guard and
-	  ACE_Null_Mutex_Guard explaining that they were obsolete and
- 	  should be replaced by ACE_Guard<ACE_Thread_Mutex> and
- 	  ACE_Guard<ACE_Null_Mutex>, respectively.  Thanks to Pierre
- 	  Oberson for reporting this.
+        * ace/Synch.h: Added comments to ACE_Thread_Mutex_Guard and
+          ACE_Null_Mutex_Guard explaining that they were obsolete and
+          should be replaced by ACE_Guard<ACE_Thread_Mutex> and
+          ACE_Guard<ACE_Null_Mutex>, respectively.  Thanks to Pierre
+          Oberson for reporting this.
 
 Tue Dec  7 22:53:01 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* netsvcs/lib/Client_Logging_Handler.cpp (send): Clarified that
-	  *someday* we'll improve the implementation to queue data when a
- 	  connection is lost and automagically reinitiate the connection.
-  	  Thanks to David X Callaway <david.x.callaway@intel.com> for
- 	  motivating this.
+        * netsvcs/lib/Client_Logging_Handler.cpp (send): Clarified that
+          *someday* we'll improve the implementation to queue data when a
+          connection is lost and automagically reinitiate the connection.
+          Thanks to David X Callaway <david.x.callaway@intel.com> for
+          motivating this.
 
 Tue Dec 07 22:14:15 1999  David L. Levine  <levine@cs.wustl.edu>
 
@@ -43,25 +49,25 @@ Tue Dec 07 22:14:15 1999  David L. Levine  <levine@cs.wustl.edu>
 
 Tue Dec  7 21:39:42 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/OS.i: Fixed the definition of ACE_NETDBCALL_RETURN so that
-  
-	  memcpy (TARGET,ace_result_,SIZE); 
-  
+        * ace/OS.i: Fixed the definition of ACE_NETDBCALL_RETURN so that
+
+          memcpy (TARGET,ace_result_,SIZE);
+
           is changed to
-	  
-	  memcpy (TARGET,ace_result_,
-		  SIZE < sizeof(TYPE) ? SIZE : sizeof(TYPE));
-  
+
+          memcpy (TARGET,ace_result_,
+                  SIZE < sizeof(TYPE) ? SIZE : sizeof(TYPE));
+
           This fixes a bug with UnixWare.  Thanks to Phil Mesnier
- 	  <mesnier_p@ociweb.com> for reporting this.
+          <mesnier_p@ociweb.com> for reporting this.
 
 Tue Dec 07 21:20:37 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/ace_dll.dsp:
-	* ace/ace_lib.dsp: Added ace.rc to project files.  One can use
-	  GetFileVersionInfo on Win32 to get the ACE library version info
-	  now.  Thanks to David Hauck <davidh@realtimeint.com> for
-	  suggesting this.
+        * ace/ace_dll.dsp:
+        * ace/ace_lib.dsp: Added ace.rc to project files.  One can use
+          GetFileVersionInfo on Win32 to get the ACE library version info
+          now.  Thanks to David Hauck <davidh@realtimeint.com> for
+          suggesting this.
 
 Tue Dec 07 15:27:24 1999  David L. Levine  <levine@cs.wustl.edu>
 
