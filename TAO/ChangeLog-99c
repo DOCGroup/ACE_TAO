@@ -11,6 +11,9 @@ Thu Jul  1 10:45:24 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* orbsvcs/Trading_Service/Trading_Service.cpp:
 	  The POA manager was not activated
 
+	* orbsvcs/orbsvcs/Naming/Persistent_Naming_Context.cpp:
+	  Fixed some more typos that i missed last time.
+
 Thu Jul 01 00:45:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
         * examples/Simulator/DOVEMIB/AnyAnalyser.cpp
