@@ -1,7 +1,13 @@
 Wed Jun 17 17:07:12 1998  Sergio Flores  <sergio@polka.cs.wustl.edu>
 
-	* tests/Cubit/TAO/MT_Cubit/README:
+	* tests/Cubit/TAO/MT_Cubit/README: added new options with
+ 	explanations.
+	
 	* tests/Cubit/TAO/MT_Cubit/Task_Client.cpp:
+	* tests/Cubit/TAO/MT_Cubit/Task_Client.h:	
+	* tests/Cubit/TAO/MT_Cubit/client.cpp: Changed the utilization
+ 	test to bound the test by time instead of by number of requests.
+	
 	* tests/Cubit/TAO/MT_Cubit/Util_Thread.cpp:
 	* tests/Cubit/TAO/MT_Cubit/client.cpp:	
 	* tests/Cubit/TAO/MT_Cubit/server.cpp:Minor changes to cleanup

@@ -610,7 +610,7 @@ do_thread_per_rate_test (ACE_Thread_Manager *thread_manager,
 	      priority));
   if (CB_20Hz_client.activate (THR_BOUND | ACE_SCHED_FIFO, 1, 1, priority) == -1)
     ACE_ERROR ((LM_ERROR,
-		"%p\n",
+		"%p\n"
 		"activate failed"));
 
   priority = ACE_Sched_Params::previous_priority (ACE_SCHED_FIFO,
@@ -625,7 +625,7 @@ do_thread_per_rate_test (ACE_Thread_Manager *thread_manager,
 	      priority));
   if (CB_10Hz_client.activate (THR_BOUND | ACE_SCHED_FIFO, 1, 1, priority) == -1)
     ACE_ERROR ((LM_ERROR,
-		"%p\n",
+		"%p\n"
 		"activate failed"));
 
   priority = ACE_Sched_Params::previous_priority (ACE_SCHED_FIFO,
@@ -636,7 +636,7 @@ do_thread_per_rate_test (ACE_Thread_Manager *thread_manager,
 	      priority));
   if (CB_5Hz_client.activate (THR_BOUND | ACE_SCHED_FIFO, 1, 1, priority) == -1)
     ACE_ERROR ((LM_ERROR,
-		"%p\n",
+		"%p\n"
 		"activate failed"));
 
   priority = ACE_Sched_Params::previous_priority (ACE_SCHED_FIFO,
@@ -647,7 +647,7 @@ do_thread_per_rate_test (ACE_Thread_Manager *thread_manager,
 	      priority));
   if (CB_1Hz_client.activate (THR_BOUND | ACE_SCHED_FIFO, 1, 1, priority) == -1)
     ACE_ERROR ((LM_ERROR,
-		"%p\n",
+		"%p\n"
 		"activate failed"));
 
   // Wait for all the threads to exit.

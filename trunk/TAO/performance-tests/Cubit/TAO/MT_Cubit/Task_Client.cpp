@@ -27,9 +27,10 @@ Task_State::Task_State (int argc, char **argv)
     high_priority_loop_count_ (0),
     use_multiple_priority_ (0),
     utilization_task_started_ (0),
-    run_server_utilization_test_ (0)
+    run_server_utilization_test_ (0),
+    util_time_ (0)
 {
-  ACE_Get_Opt opts (argc, argv, "Umusn:t:d:rxof:g:1c");
+  ACE_Get_Opt opts (argc, argv, "Umu:sn:t:d:rxof:g:1c");
   int c;
   int datatype;
 
@@ -54,6 +55,7 @@ Task_State::Task_State (int argc, char **argv)
       break;
     case 'u':
       use_utilization_test_ = 1;
+      util_time_ = ACE_OS::atoi (opts.optarg);
       break;
     case 's':
       use_name_service_ = 0;
@@ -646,6 +648,9 @@ Client::run_tests (Cubit_ptr cb,
   double sleep_time = (1 / frequency) * ACE_ONE_SECOND_IN_USECS * ts_->granularity_; // usec
   double delta = 0;
 
+  ACE_Time_Value max_wait_time (ts_->util_time_, 0);
+  ACE_Countdown_Time countdown (&max_wait_time);
+
 #if defined (CHORUS)
   int pstartTime = 0;
   int pstopTime = 0;
@@ -664,7 +669,9 @@ Client::run_tests (Cubit_ptr cb,
 	 (id_ == 0 && ts_->thread_count_ > 1) ||
 	 // keep running if test is thread_per_rate and we're not the
 	 // lowest frequency thread.
-	 (ts_->thread_per_rate_ == 1 && id_ < (ts_->thread_count_ - 1)); 
+	 (ts_->thread_per_rate_ == 1 && id_ < (ts_->thread_count_ - 1)) ||
+	 // continous loop if we are running the utilization test
+	 (ts_->use_utilization_test_ == 1); 
        i++)
     {
       // Elapsed time will be in microseconds.
@@ -943,7 +950,15 @@ Client::run_tests (Cubit_ptr cb,
 		  break;
 	      }
 	  }
-    }
+	  
+      if (ts_->use_utilization_test_ == 1)
+	{
+	  countdown.update ();
+	  if (max_wait_time == 0)
+	    break;
+	}
+
+    } /* end of for () */
 
   if (id_ == 0)
     ts_->high_priority_loop_count_ = call_count;
