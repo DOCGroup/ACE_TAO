@@ -167,7 +167,7 @@ main (int argc, char* argv[])
 {
   //TAO_EC_Default_Factory::init_svcs ();
 #ifdef ACE_HAS_DSUI
-  ds_control* ds_cntl = new ds_control ("Federated_Test_Supplier","supplier_enabled.dsui");
+  ds_control* ds_cntl = new ds_control ("Chain_Test_Supplier","supplier_enabled.dsui");
 #endif //ACE_HAS_DSUI
 
   TAO_EC_Kokyu_Factory::init_svcs ();
@@ -221,7 +221,7 @@ main (int argc, char* argv[])
 
       supplier_ec.init_gateway(orb.in(),
                                poa.in(),
-                               "file://consumer_ec.ior" ACE_ENV_ARG_PARAMETER);
+                               "file://consumer_supplier_ec.ior" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // ****************************************************************

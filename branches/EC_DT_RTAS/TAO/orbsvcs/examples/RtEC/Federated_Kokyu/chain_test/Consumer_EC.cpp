@@ -281,7 +281,7 @@ main (int argc, char* argv[])
 {
   //TAO_EC_Default_Factory::init_svcs ();
 #ifdef ACE_HAS_DSUI
-  ds_control* ds_cntl = new ds_control ("Federated_Test_Consumer","consumer_enabled.dsui");
+  ds_control* ds_cntl = new ds_control ("Chain_Test_Consumer","consumer_enabled.dsui");
 #endif // ACE_HAS_DSUI
 
   TAO_EC_Kokyu_Factory::init_svcs ();
