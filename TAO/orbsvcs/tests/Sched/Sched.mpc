@@ -1,3 +1,0 @@
-project: taoserver, namingexe, rtsched {
-  exename  = Sched
-}

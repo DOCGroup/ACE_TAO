@@ -1,5 +1,0 @@
-project: qt, zzip, openssl {
-  staticflags += ACE_AS_STATIC_LIBS
-  includes    += $(ACE_ROOT)
-  libpaths    += $(ACE_ROOT)/lib
-}

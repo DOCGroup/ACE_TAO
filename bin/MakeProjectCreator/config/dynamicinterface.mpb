@@ -1,4 +1,0 @@
-project : portableserver {
-  after    += DynamicInterface
-  libs     += TAO_DynamicInterface
-}

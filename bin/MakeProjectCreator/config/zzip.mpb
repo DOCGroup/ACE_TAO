@@ -1,6 +1,0 @@
-feature(zzip) {
-  includes += $(ZZIP_ROOT)/include
-  macros   += ACEXML_HAS_ZZIPLIB
-  lit_libs += zzlib
-  libpaths += $(ZZIP_ROOT)/lib
-}

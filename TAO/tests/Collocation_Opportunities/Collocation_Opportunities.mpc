@@ -1,3 +1,0 @@
-project(Collocation Opportunities): taoserver {
-  exename = Collocation_Opportunities
-}

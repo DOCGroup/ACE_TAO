@@ -1,8 +1,0 @@
-project {
-  // We tested with all tao libs going to $(TAO_ROOT)/lib, but
-  // decided that it was easier to deal with all libs in one place. 
-  libout        = $(ACE_ROOT)/lib 
-  libpaths     += $(ACE_ROOT)/lib
-  staticflags  += TAO_AS_STATIC_LIBS
-}
-

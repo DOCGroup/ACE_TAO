@@ -1,7 +1,0 @@
-project: taoclient, typecodefactory, ifr_client {
-  exename  = create_tc
-  Source_Files {
-    testC.cpp
-    main.cpp
-  }
-}
