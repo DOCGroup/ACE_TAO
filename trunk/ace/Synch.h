@@ -1388,8 +1388,8 @@ public:
                         LPCTSTR name = 0,
                         void * = 0,
                         int max = 0x7FFFFFFF);
-  // Initialize the semaphore, with an initial value of <count> and a
-  // maximum value of <max>.
+  // Initialize the semaphore, with an initial value of <count>,
+  // maximum value of <max>, and unlocked by default.
 
   ~ACE_Thread_Semaphore (void);
   // Default dtor.
