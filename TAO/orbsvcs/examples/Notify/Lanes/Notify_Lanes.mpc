@@ -1,4 +1,4 @@
-project(Supplier): notify, rtcorba, rtnotify {
+project(*Supplier): notify, rtcorba, rtnotify {
   exename = Supplier
   Source_Files {
     Supplier.cpp
@@ -8,7 +8,7 @@ project(Supplier): notify, rtcorba, rtnotify {
   }
 }
 
-project(Consumer): notifytest, rtcorba, rtnotify {
+project(*Consumer): notifytest, rtcorba, rtnotify {
   exename = Consumer
   Source_Files {
     Consumer.cpp

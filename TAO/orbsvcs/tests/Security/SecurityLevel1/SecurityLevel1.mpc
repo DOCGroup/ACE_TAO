@@ -1,5 +1,4 @@
 project(*security server): taoserver, orbsvcsexe, ssl, security {
-  ssl       = 1
   Source_Files {
     SLevel1_Test_i.cpp
     server.cpp

@@ -73,6 +73,30 @@ TAO_CEC_Dispatching_Task::push (TAO_CEC_ProxyPushSupplier *proxy,
   this->putq (mb);
 }
 
+#if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
+void
+TAO_CEC_Dispatching_Task::invoke (TAO_CEC_ProxyPushSupplier *proxy,
+                                  TAO_CEC_TypedEvent& typed_event
+                                  ACE_ENV_ARG_DECL)
+{
+  if (this->allocator_ == 0)
+    this->allocator_ = ACE_Allocator::instance ();
+
+  void* buf = this->allocator_->malloc (sizeof (TAO_CEC_Invoke_Command));
+
+  if (buf == 0)
+    ACE_THROW (CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
+                                 CORBA::COMPLETED_NO));
+
+  ACE_Message_Block *mb =
+    new (buf) TAO_CEC_Invoke_Command (proxy,
+                                      typed_event,
+                                      this->data_block_.duplicate (),
+                                      this->allocator_);
+  this->putq (mb);
+}
+#endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
+
 // ****************************************************************
 
 TAO_CEC_Dispatch_Command::~TAO_CEC_Dispatch_Command (void)
@@ -101,6 +125,23 @@ TAO_CEC_Push_Command::execute (ACE_ENV_SINGLE_ARG_DECL)
   ACE_CHECK_RETURN (-1);
   return 0;
 }
+
+// ****************************************************************
+
+#if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
+TAO_CEC_Invoke_Command::~TAO_CEC_Invoke_Command (void)
+{
+  this->proxy_->_decr_refcnt ();
+}
+
+int
+TAO_CEC_Invoke_Command::execute (ACE_ENV_SINGLE_ARG_DECL)
+{
+  this->proxy_->invoke_to_consumer (this->typed_event_ ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
+  return 0;
+}
+#endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

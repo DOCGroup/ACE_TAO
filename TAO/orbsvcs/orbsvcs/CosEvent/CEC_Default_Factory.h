@@ -1,3 +1,4 @@
+// $Id$
 /* -*- C++ -*- */
 //=============================================================================
 /**
@@ -115,6 +116,35 @@ public:
       create_supplier_control (TAO_CEC_EventChannel*);
   virtual void
       destroy_supplier_control (TAO_CEC_SupplierControl*);
+
+#if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
+  virtual TAO_CEC_Dispatching*
+      create_dispatching (TAO_CEC_TypedEventChannel*);
+  virtual TAO_CEC_TypedConsumerAdmin*
+      create_consumer_admin (TAO_CEC_TypedEventChannel*);
+  virtual void
+      destroy_consumer_admin (TAO_CEC_TypedConsumerAdmin*);
+  virtual TAO_CEC_TypedSupplierAdmin*
+      create_supplier_admin (TAO_CEC_TypedEventChannel*);
+  virtual void
+      destroy_supplier_admin (TAO_CEC_TypedSupplierAdmin*);
+  virtual TAO_CEC_ProxyPushSupplier*
+      create_proxy_push_supplier (TAO_CEC_TypedEventChannel*);
+  virtual TAO_CEC_ProxyPushSupplier_Collection*
+      create_proxy_push_supplier_collection (TAO_CEC_TypedEventChannel*);
+  virtual TAO_CEC_TypedProxyPushConsumer*
+      create_proxy_push_consumer (TAO_CEC_TypedEventChannel*);
+  virtual void
+      destroy_proxy_push_consumer (TAO_CEC_TypedProxyPushConsumer*);
+  virtual TAO_CEC_TypedProxyPushConsumer_Collection*
+      create_proxy_push_consumer_collection (TAO_CEC_TypedEventChannel*);
+  virtual void
+      destroy_proxy_push_consumer_collection (TAO_CEC_TypedProxyPushConsumer_Collection*);
+  virtual TAO_CEC_ConsumerControl*
+      create_consumer_control (TAO_CEC_TypedEventChannel*);
+  virtual TAO_CEC_SupplierControl*
+      create_supplier_control (TAO_CEC_TypedEventChannel*);
+#endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
 private:
   /// Parse an argument to set the type of collections used.

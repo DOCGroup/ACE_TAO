@@ -46,6 +46,10 @@ sub pre_workspace {
             $crlf;
 }
 
+sub allow_duplicates {
+  my($self) = shift;
+  return 0;
+}
 
 sub write_comps {
   my($self)     = shift;
@@ -53,19 +57,10 @@ sub write_comps {
   my($projects) = $self->get_projects();
   my($pjs)      = $self->get_project_info();
   my($crlf)     = $self->crlf();
-  my(%names)    = ();
-  my($dupfound) = 0;
 
   foreach my $project (@$projects) {
     my($name) = $$pjs{$project}->[0];
     my($deps) = $self->get_validated_ordering($project);
-    if (defined $names{$name}) {
-      ## Having duplicate project names is an error in a VC6 Workspace.
-      ++$dupfound;
-    }
-    else {
-      $names{$name} = 1;
-    }
 
     print $fh "###############################################################################$crlf" .
               $crlf .
@@ -94,11 +89,6 @@ sub write_comps {
     print $fh "}}}$crlf$crlf";
   }
 
-  if ($dupfound > 0) {
-    print "WARNING: $dupfound duplicate project" .
-          ($dupfound == 1 ? '' : 's') .
-          " found.  This workspace will not load properly.\n";
-  }
 }
 
 

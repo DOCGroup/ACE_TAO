@@ -38,19 +38,22 @@ sub print_inner_project {
   my($gen)   = shift;
   my($pguid) = shift;
   my($deps)  = shift;
+  my($project_name) = shift;
+  my($name_to_guid_map) = shift;
 
-  if (defined $deps && $deps ne '') {
-    my($crlf) = $self->crlf();
-    print $fh "\tProjectSection(ProjectDependencies) = postProject$crlf";
-    my($darr) = $self->create_array($deps);
-    foreach my $dep (@$darr) {
-      my($val) = $gen->specific_lookup($dep);
-      if (defined $val && $pguid ne $val) {
-        print $fh "\t\t{$val} = {$val}$crlf";
+  my($crlf) = $self->crlf();
+  print $fh "\tProjectSection(ProjectDependencies) = postProject$crlf";
+  my($darr) = $self->create_array($deps);
+  foreach my $dep (@$darr) {
+    ## Avoid cirular dependencies
+    if ($project_name ne $dep) {
+      my($guid) = $name_to_guid_map->{$dep};
+      if (defined $guid) {
+        print $fh "\t\t{$guid} = {$guid}$crlf";
       }
     }
-    print $fh "\tEndProjectSection$crlf";
   }
+  print $fh "\tEndProjectSection$crlf";
 }
 
 
@@ -66,12 +69,6 @@ sub print_configs {
 
 
 sub print_dependencies {
-  #my($self) = shift;
-  #my($fh)   = shift;
-  #my($gen)  = shift;
-  #my($list) = shift;
-  #my($pjs)  = shift;
-
   ## These are done in the print_inner_project method
 }
 

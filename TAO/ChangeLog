@@ -1,3 +1,89 @@
+Fri Aug 22 20:10:41 UTC 2003  Justin Michel <michel_j@ociweb.com>
+
+        * TAOACE.mwc
+        
+          Was picking up Kokyu tests directory.
+          
+        * TAO_IDL/tao_idl.mpc
+        
+          Renamed gperf_exe to gperf. We used to have a hack for vc6 that
+        required all exe projects to be named _exe. 
+        
+        * orbsvcs/examples/Notify/Lanes/Lanes.mpc
+        * orbsvcs/examples/Notify/Lanes/Notify_Lanes.mpc
+        * orbsvcs/examples/Notify/ThreadPool/Notify_ThreadPool.mpc
+        * orbsvcs/examples/Notify/ThreadPool/ThreadPool.mpc
+        * orbsvcs/examples/RtEC/IIOPGateway/Gateway.mpc
+        * orbsvcs/examples/RtEC/IIOPGateway/RtEC_IIOPGateway.mpc
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/AVStreams_Simple_Two_Stage_With_QoS.mpc
+        * orbsvcs/tests/Security/Secure_Invocation/Secure_Invocation.mpc
+        * orbsvcs/tests/Security/SecurityLevel1/SecurityLevel1.mpc
+        
+          Fixes to mpc files to avoid duplicate names, and to use 
+        inheritance to get base project info instead of hard-coding libs.
+
+        * orbsvcs/CosEvent_Service/CosEvent_Service.cpp
+        * orbsvcs/examples/CosEC/TypedSimple/Consumer.cpp
+        * orbsvcs/examples/CosEC/TypedSimple/CosEC_TypedSimple.mpc
+        * orbsvcs/examples/CosEC/TypedSimple/Country.idl
+        * orbsvcs/examples/CosEC/TypedSimple/Country.idl.for_ifr
+        * orbsvcs/examples/CosEC/TypedSimple/Country_i.cpp
+        * orbsvcs/examples/CosEC/TypedSimple/Country_i.h
+        * orbsvcs/examples/CosEC/TypedSimple/README
+        * orbsvcs/examples/CosEC/TypedSimple/Supplier.cpp
+        * orbsvcs/orbsvcs/CosEvent.mpb
+        * orbsvcs/orbsvcs/CosEvent.mpc
+        * orbsvcs/orbsvcs/CosTypedEventChannelAdmin.idl
+        * orbsvcs/orbsvcs/CosTypedEventComm.idl
+        * orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.cpp
+        * orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.h
+        * orbsvcs/orbsvcs/CosEvent/CEC_Dispatching.cpp
+        * orbsvcs/orbsvcs/CosEvent/CEC_Dispatching.h
+        * orbsvcs/orbsvcs/CosEvent/CEC_Dispatching_Task.cpp
+        * orbsvcs/orbsvcs/CosEvent/CEC_Dispatching_Task.h
+        * orbsvcs/orbsvcs/CosEvent/CEC_Dispatching_Task.i
+        * orbsvcs/orbsvcs/CosEvent/CEC_DynamicImplementation.cpp
+        * orbsvcs/orbsvcs/CosEvent/CEC_DynamicImplementation.h
+        * orbsvcs/orbsvcs/CosEvent/CEC_DynamicImplementation.i
+        * orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.cpp
+        * orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.h
+        * orbsvcs/orbsvcs/CosEvent/CEC_Factory.h
+        * orbsvcs/orbsvcs/CosEvent/CEC_MT_Dispatching.cpp
+        * orbsvcs/orbsvcs/CosEvent/CEC_MT_Dispatching.h
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushSupplier.cpp
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushSupplier.h
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushSupplier.i
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_ConsumerControl.cpp
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_ConsumerControl.h
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_SupplierControl.cpp
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_SupplierControl.h
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_SupplierControl.i
+        * orbsvcs/orbsvcs/CosEvent/CEC_SupplierControl.cpp
+        * orbsvcs/orbsvcs/CosEvent/CEC_SupplierControl.h
+        * orbsvcs/orbsvcs/CosEvent/CEC_TypedConsumerAdmin.cpp
+        * orbsvcs/orbsvcs/CosEvent/CEC_TypedConsumerAdmin.h
+        * orbsvcs/orbsvcs/CosEvent/CEC_TypedConsumerAdmin.i
+        * orbsvcs/orbsvcs/CosEvent/CEC_TypedEvent.cpp
+        * orbsvcs/orbsvcs/CosEvent/CEC_TypedEvent.h
+        * orbsvcs/orbsvcs/CosEvent/CEC_TypedEvent.i
+        * orbsvcs/orbsvcs/CosEvent/CEC_TypedEventChannel.cpp
+        * orbsvcs/orbsvcs/CosEvent/CEC_TypedEventChannel.h
+        * orbsvcs/orbsvcs/CosEvent/CEC_TypedEventChannel.i
+        * orbsvcs/orbsvcs/CosEvent/CEC_TypedProxyPushConsumer.cpp
+        * orbsvcs/orbsvcs/CosEvent/CEC_TypedProxyPushConsumer.h
+        * orbsvcs/orbsvcs/CosEvent/CEC_TypedProxyPushConsumer.i
+        * orbsvcs/orbsvcs/CosEvent/CEC_TypedSupplierAdmin.cpp
+        * orbsvcs/orbsvcs/CosEvent/CEC_TypedSupplierAdmin.h
+        * orbsvcs/orbsvcs/CosEvent/CEC_TypedSupplierAdmin.i
+        
+          Added support for typed events to CosEvent. This was submitted by
+        Jonathan Astle <JNASTLE@qinetiq.com>. I modified the code to use mpc, and
+        added a new feature. Set ec_typed_event=0 to disable use of typed events. This
+        works by setting a macro which Jon used throughout the new code. There are actually
+        now two CosEvent projects in CosEvent.mpc. One uses the avoids keyword and the other
+        the requires keyword. This could be used as a pattern for similar situations.
+
+
 Fri Aug 22 15:58:41 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * tests/ICMG_Any_Bug/Hello.mpc:
