@@ -1,3 +1,8 @@
+Fri Aug 22 15:58:41 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * tests/ICMG_Any_Bug/Hello.mpc:
+          Renamed projects to avoid a MSVC6 problem with duplicate names.
+
 Fri Aug 22 15:28:34 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * TAO.mwc:
