@@ -1,3 +1,39 @@
+Thu Sep 28 01:49:36 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+        * tao/Endpoint.h
+	* tao/IIOP_Acceptor.cpp
+	* tao/IIOP_Acceptor.h
+	* tao/IIOP_Connector.cpp
+	* tao/IIOP_Endpoint.h
+	* tao/IIOP_Profile.cpp
+	* tao/IIOP_Profile.h
+	* tao/Pluggable.h
+	* tao/Profile.h
+	* tao/SHMIOP_Acceptor.cpp
+	* tao/SHMIOP_Acceptor.h
+	* tao/SHMIOP_Connector.cpp
+	* tao/SHMIOP_Endpoint.h
+	* tao/SHMIOP_Profile.cpp
+	* tao/SHMIOP_Profile.h
+	* tao/UIOP_Acceptor.cpp
+	* tao/UIOP_Acceptor.h
+	* tao/UIOP_Connector.cpp
+	* tao/UIOP_Endpoint.h
+	* tao/UIOP_Profile.cpp
+	* tao/UIOP_Profile.h
+	* tao/iiop_endpoints.pidl
+	* tao/uiop_endpoints.pidl
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.h
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.cpp	
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.h
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.cpp
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.h
+	* orbsvcs/orbsvcs/SSLIOP/ssl_endpoints.pidl:
+
+	  Added thorough comments for all recent changes related to
+	  addition of the Endpoint interface to TAO PP Framework.
+
 Wed Sep 27 18:54:29 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
