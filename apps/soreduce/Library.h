@@ -13,69 +13,68 @@
 // library. It is used to manipulate the list of unresolved references by 
 // removing those that are resolved and adding those brought in by new modules
 // that are required to resolve references.  The Library is responsible 
-// for outputting a specialized makefile build the reduce footprint library.
+// for outputting a specialized mpc file to build the reduce footprint library.
 
 #include "Obj_Module.h"
 
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
 
-// The Makefile generator class serves as the base class used to output the
-// custom makefiles (or in the future, project files) used to build the 
-// subsetted libraries.
+// The MPC generator class serves as the base class used to output the
+// custom mpc files used to build the subsetted libraries.
 // The base class will make libACE_subset.so
 
-class Makefile_Generator
+class MPC_Generator
 {
 public:
-  Makefile_Generator (const ACE_CString&  );
-  virtual ~Makefile_Generator();
+  MPC_Generator (const ACE_CString& libname);
+  virtual ~MPC_Generator();
 
   void write_prolog (const ACE_CString& );
   void write_file (const ACE_CString& );
   void write_epilog ();
 
 protected:
-  virtual void write_libdeps();
-  virtual void write_initial_rules();
-  virtual void write_final_rules();
+  virtual void write_baseprojects();
+  virtual void write_projectinfo();
 
-  ofstream makefile_;
+  ofstream mpcfile_;
   ACE_CString libname_;
-  ACE_CString makefilename_;
+  ACE_CString mpcfilename_;
 };
 
-// Generate makefiles for  libraries dependant on ACE, that are not TAO.
-class Make_ACE_Dep_Lib : public Makefile_Generator
+// Generate mpc files for libraries dependant on ACE, that are not TAO.
+class MPC_ACE_Dep_Lib : public MPC_Generator
 {
 public:
-  Make_ACE_Dep_Lib (const ACE_CString& );
+  MPC_ACE_Dep_Lib (const ACE_CString& libname);
 
 protected:
-  virtual void write_libdeps();
+  virtual void write_baseprojects();
+  virtual void write_projectinfo();
 };
 
-// Generates makefiles for libTAO_subset.so
-class Make_TAO_Lib : public Make_ACE_Dep_Lib
+// Generates mpc files for libTAO_subset.so
+class MPC_TAO_Lib : public MPC_ACE_Dep_Lib
 {
 public:
-  Make_TAO_Lib (const ACE_CString& );
+  MPC_TAO_Lib (const ACE_CString& libname);
 
 protected:
-  virtual void write_libdeps();
-  virtual void write_initial_rules();
-  virtual void write_final_rules();
+  virtual void write_baseprojects();
+  virtual void write_projectinfo();
 };
 
 // Generates makefiles for libs dependant on TAO.  This has a problem when
 // building libraries in the orbsvcs tree. 
-class Make_TAO_Dep_Lib : public Make_TAO_Lib
+class MPC_TAO_Dep_Lib : public MPC_TAO_Lib
 {
 public:
-  Make_TAO_Dep_Lib (const ACE_CString& );
+  MPC_TAO_Dep_Lib (const ACE_CString& );
 
 protected:
-  virtual void write_libdeps();
+  virtual void write_baseprojects();
+  virtual void write_projectinfo();
 };
 
 //----------------------------------------------------------------------------
@@ -84,7 +83,7 @@ class Library
 {
 public:
 
-  Library (const char *name = 0 ); 
+  Library (const ACE_TCHAR *name = 0 ); 
   /// Constructor is responsible for loading all of the modules related to the
   /// library
   ~Library ();
@@ -96,13 +95,13 @@ public:
   // as exported, and its unresolved symbols are added to the undef list.
   void resolve (Sig_List &undefs);
 
-  // Outputs a list of files suitable for inclusion in a makefile to produce
+  // Outputs a list of files suitable for inclusion in an mpc file to produce
   // a subsetted library. If the argument is non-zero, reference countes for
   // each module are also listed.
   void write_export_list ( int );
 
   // set the path to find the .so files
-  void set_path (const char *p );
+  void set_path (const ACE_TCHAR *p );
 
   // Load the actual .so files from the path.
   void load_modules();
@@ -123,7 +122,7 @@ private:
  
   Obj_Module **modules_;
   Sig_List exported_;
-  Makefile_Generator *makefile_;
+  MPC_Generator *mpcfile_;
 };
 
 #endif /* _LIBRARY_H_ */

@@ -6,7 +6,7 @@
 // Author: Phil Mesnier
 
 // This file contains the implementation of the classes responsible for
-// generating specialized makefiles for individual libraries, as well as
+// generating specialized mpc files for individual libraries, as well as
 // outputting usage metrics for the various object modules contained in the
 // library.
 
@@ -15,174 +15,147 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_sys_stat.h"
+#include "ace/OS_NS_ctype.h"
 #include "ace/Log_Msg.h"
 
 #include "Library.h"
 
 ACE_RCSID(src, Library, "$Id$")
 
-Makefile_Generator::Makefile_Generator (const ACE_CString& libname)
-  : makefile_(),
+MPC_Generator::MPC_Generator (const ACE_CString& libname)
+  : mpcfile_(),
     libname_(libname),
-    makefilename_()
+    mpcfilename_()
 {
-  makefilename_ = "Makefile." + libname_ + "_subset";
+  mpcfilename_ = libname_ + "_subset.mpc";
 }
 
-Makefile_Generator::~Makefile_Generator ()
+MPC_Generator::~MPC_Generator ()
 {
-}
-
-void
-Makefile_Generator::write_file (const ACE_CString& file)
-{
-  makefile_ << " \\\n\t" << file << flush;
 }
 
 void
-Makefile_Generator::write_prolog (const ACE_CString& path)
+MPC_Generator::write_file (const ACE_CString& file)
 {
-  ACE_CString fname (path + "/" + makefilename_);
+  mpcfile_ << "    " << file << ".cpp" << endl;
+}
+
+void
+MPC_Generator::write_prolog (const ACE_CString& path)
+{
+  ACE_CString fname (path + "/" + mpcfilename_);
   ACE_DEBUG ((LM_DEBUG, "writing file %s\n",fname.c_str()));
-  makefile_.open(fname.c_str());
-  if (!makefile_)
-    ACE_DEBUG ((LM_DEBUG,"makefile open failed\n"));
+  mpcfile_.open(fname.c_str());
+  if (!mpcfile_)
+    ACE_DEBUG ((LM_DEBUG,"mpc file open failed\n"));
 
-  makefile_
-    << "#--------------------------------------------------------------------"
-    << endl;
-  makefile_
-    << "# Generated makefile for producing a subset of the "
-    << libname_ << " library " << endl;
-  makefile_
-    << "#--------------------------------------------------------------------"
-    << endl;
+  mpcfile_ 
+    << "// Generated mpc file for producing a subset of the " 
+    << libname_ << " library " << endl << endl
+    << "project(" << libname_ << "_subset)";
 
-  makefile_ << "\nMAKEFILE = " << makefilename_ << endl;
-  makefile_ << "LIB      = lib" << libname_ << "_subset.a" << endl;
-  makefile_ << "SHLIB    = lib" << libname_ << "_subset.$(SOEXT)" << endl;
-  makefile_ << "\nFILES  =" << flush;
+  this->write_baseprojects ();
+
+  mpcfile_
+    << " {" << endl
+    << "  sharedname   = " << libname_ << "_subset" << endl
+    << "  pch_header   = " << endl
+    << "  pch_source   = " << endl;
+
+  this->write_projectinfo ();
+
+  mpcfile_ << endl
+           << "  Source_Files {" << endl;
 }
 
 void
-Makefile_Generator::write_epilog ()
+MPC_Generator::write_epilog ()
 {
-  makefile_ << "\n" << endl;
-  this->write_libdeps();
-  makefile_
-    << "#--------------------------------------------------------" << endl;
-  makefile_
-    << "#             Include macros and targets" << endl;
-  makefile_
-    << "#--------------------------------------------------------" << endl;
-  makefile_
-    << "include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU" << endl;
-
-  this->write_initial_rules();
-
-  makefile_
-    << "\nLSRC  = $(addsuffix .cpp,$(FILES))\n" << endl;
-
-  makefile_
-    << "include $(ACE_ROOT)/include/makeinclude/macros.GNU" << endl;
-  makefile_
-    << "include $(ACE_ROOT)/include/makeinclude/rules.common.GNU" << endl;
-  makefile_
-    << "include $(ACE_ROOT)/include/makeinclude/rules.nested.GNU" << endl;
-  makefile_
-    << "include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU" << endl;
-  makefile_
-    << "include $(ACE_ROOT)/include/makeinclude/rules.local.GNU" << endl;
-
-  this->write_final_rules();
-
-  makefile_ << "\n" << endl;
-
-  makefile_
-    << "#-----------------------------------------------------------" << endl;
-  makefile_
-    << "#       Dependencies" << endl;
-  makefile_
-    << "#-----------------------------------------------------------" << endl;
-  makefile_
-    << "# DO NOT DELETE THIS LINE -- g++dep uses it." << endl;
-  makefile_
-    << "# DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY." << endl;
-  makefile_
-    << "# IF YOU PUT ANYTHING HERE IT WILL GO AWAY" << endl;
-
-  makefile_.close();
+  mpcfile_ << "  }" << endl
+           << "}" << endl;
+  mpcfile_.close();
 }
 
 void
-Makefile_Generator::write_libdeps()
+MPC_Generator::write_baseprojects()
 {
-  // nothing to do
+  mpcfile_ << ": acedefaults, aceversion, core";
 }
 
 void
-Makefile_Generator::write_initial_rules()
+MPC_Generator::write_projectinfo()
 {
-  // nothing to do
-}
-
-void
-Makefile_Generator::write_final_rules()
-{
-  // nothing to do
+  mpcfile_ << "  libout       = $(ACE_ROOT)/lib" << endl
+           << "  dynamicflags = ACE_BUILD_DLL ACE_OS_BUILD_DLL" << endl;
 }
 
 //-----------------------------------------------------------------------------
-Make_ACE_Dep_Lib::Make_ACE_Dep_Lib (const ACE_CString& libname)
-  : Makefile_Generator(libname)
+MPC_ACE_Dep_Lib::MPC_ACE_Dep_Lib (const ACE_CString& libname)
+  : MPC_Generator(libname)
 {}
 
 void
-Make_ACE_Dep_Lib::write_libdeps()
+MPC_ACE_Dep_Lib::write_baseprojects()
 {
-  makefile_ << "ACE_SHLIBS = -lACE_subset" << endl;
+  mpcfile_ << ": acedefaults, aceversion";
+}
+
+void
+MPC_ACE_Dep_Lib::write_projectinfo()
+{
+  mpcfile_ << "  libout       = $(ACE_ROOT)/lib" << endl
+           << "  libs        += ACE_subset" << endl
+           << "  after       += ACE_subset" << endl;
 }
 
 //-----------------------------------------------------------------------------
-Make_TAO_Lib::Make_TAO_Lib (const ACE_CString& libname)
-  : Make_ACE_Dep_Lib(libname)
+MPC_TAO_Lib::MPC_TAO_Lib (const ACE_CString& libname)
+  : MPC_ACE_Dep_Lib(libname)
 {}
 
 void
-Make_TAO_Lib::write_libdeps()
+MPC_TAO_Lib::write_baseprojects()
 {
-  makefile_ << "ifndef TAO_ROOT" << endl;
-  makefile_ << "TAO_ROOT = $(ACE_ROOT)/TAO" << endl;
-  makefile_ << "endif" << endl;
-
-  makefile_ << "ACE_SHLIBS = -lACE_subset" << endl;
+  MPC_ACE_Dep_Lib::write_baseprojects ();
+  mpcfile_ << ", taoversion, core, tao_output, taodefaults";
 }
 
 void
-Make_TAO_Lib::write_initial_rules()
+MPC_TAO_Lib::write_projectinfo()
 {
-    makefile_ << "include $(TAO_ROOT)/rules.tao.GNU" << endl;
-}
-
-void
-Make_TAO_Lib::write_final_rules()
-{
-  makefile_ << "include $(TAO_ROOT)/taoconfig.mk" << endl;
+  MPC_ACE_Dep_Lib::write_projectinfo();
+  mpcfile_ << "  dynamicflags = TAO_BUILD_DLL" << endl;
 }
 
 //-----------------------------------------------------------------------------
-Make_TAO_Dep_Lib::Make_TAO_Dep_Lib (const ACE_CString& libname)
-  : Make_TAO_Lib(libname)
+MPC_TAO_Dep_Lib::MPC_TAO_Dep_Lib (const ACE_CString& libname)
+  : MPC_TAO_Lib(libname)
 {}
 
 void
-Make_TAO_Dep_Lib::write_libdeps()
+MPC_TAO_Dep_Lib::write_baseprojects()
 {
-  makefile_ << "ifndef TAO_ROOT" << endl;
-  makefile_ << "TAO_ROOT = $(ACE_ROOT)/TAO" << endl;
-  makefile_ << "endif" << endl;
+  MPC_TAO_Lib::write_baseprojects ();
+  mpcfile_ << ", taoidldefaults";
+}
 
-  makefile_ << "ACE_SHLIBS = -lTAO_subset -lACE_subset" << endl;
+void
+MPC_TAO_Dep_Lib::write_projectinfo()
+{
+  // Try our best to generate the dynamicflags
+  ACE_CString dflags;
+  for(size_t i = 0; i < this->libname_.length (); ++i) {
+    dflags += static_cast<char>(ACE_OS::ace_toupper (this->libname_[i]));
+  }
+  dflags += "_BUILD_DLL";
+
+  MPC_ACE_Dep_Lib::write_projectinfo();
+  mpcfile_ << "  dynamicflags = " << dflags.c_str () << endl
+           << "  libs        += TAO_subset" << endl
+           << "  after       += TAO_subset" << endl
+           << "  includes    += $(TAO_ROOT)/orbsvcs" << endl
+           << "  idlflags    += -I$(TAO_ROOT)/orbsvcs" << endl;
+             
 }
 
 //-----------------------------------------------------------------------------
@@ -195,21 +168,21 @@ Library::Library (const char *name)
     num_extrefs_(0),
     modules_(0),
     exported_(0),
-    makefile_(0)
+    mpcfile_(0)
 {
   if (name_ == "ACE")
-    makefile_ = new Makefile_Generator(name_);
+    mpcfile_ = new MPC_Generator(name_);
   else if (name_.find ("ACE_") == 0)
-    makefile_ = new Make_ACE_Dep_Lib (name_);
+    mpcfile_ = new MPC_ACE_Dep_Lib (name_);
   else if (name_ == "TAO")
-    makefile_ = new Make_TAO_Lib (name_);
+    mpcfile_ = new MPC_TAO_Lib (name_);
   else
-    makefile_ = new Make_TAO_Dep_Lib (name_);
+    mpcfile_ = new MPC_TAO_Dep_Lib (name_);
 }
 
 Library::~Library ()
 {
-  delete makefile_;
+  delete mpcfile_;
   int i;
   for (i = 0; i < num_modules_; delete modules_[i++]);
   delete [] modules_;
@@ -330,14 +303,15 @@ Library::write_export_list (int show_ref_counts)
 
   if (show_ref_counts) {
     ACE_DEBUG ((LM_DEBUG, "Making directory %s\n",rcpath.c_str()));
-    if (ACE_OS::mkdir(ACE_TEXT_CHAR_TO_TCHAR (rcpath.c_str())) == -1)
+    if (ACE_OS::mkdir(ACE_TEXT_CHAR_TO_TCHAR (rcpath.c_str())) == -1 &&
+        errno != EEXIST)
       ACE_ERROR ((LM_ERROR, "%p\n", "mkdir"));
   }
 
   ACE_DEBUG ((LM_DEBUG,"%s: %d out of %d modules required\n",
               name_.c_str(), num_extrefs_, num_modules_));
 
-  makefile_->write_prolog(path_);
+  mpcfile_->write_prolog(path_);
 
   for (int i = 0; i < num_modules_ ; i++)
     if (modules_[i]->extref()) {
@@ -358,7 +332,7 @@ Library::write_export_list (int show_ref_counts)
              n_sig = modules_[i]->imports().next())
           countfile << n_sig->name() << endl;
       }
-      makefile_->write_file(modules_[i]->name().substring(0,modules_[i]->name().length()-2));
+      mpcfile_->write_file(modules_[i]->name().substring(0,modules_[i]->name().length()-2));
     } else {
       //      const char * modname = modules_[i]->name().c_str();
       exclusions
@@ -366,5 +340,5 @@ Library::write_export_list (int show_ref_counts)
         << endl;
     }
 
-  makefile_->write_epilog();
+  mpcfile_->write_epilog();
 }
