@@ -75,13 +75,18 @@ TAO_Acceptor_Registry::is_collocated (const TAO_MProfile &mprofile)
 
           // Check all endpoints for address equality.
           if ((*i)->tag () == pf->tag ())
-            for (TAO_Endpoint *endp = pf->endpoint ();
-                 endp != 0;
-                 endp = endp->next ())
-              {
-                if ((*i)->is_collocated (pf->endpoint ()))
-                  return 1;
-              }
+            {
+              // @note This can be a potentially expensive (O(n^2))
+              //       operation if the below is_collocated() call
+              //       also executes a loop.
+              for (TAO_Endpoint *endp = pf->endpoint ();
+                   endp != 0;
+                   endp = endp->next ())
+                {
+                  if ((*i)->is_collocated (endp))
+                    return 1;
+                }
+            }
         }
     }
 
@@ -91,10 +96,8 @@ TAO_Acceptor_Registry::is_collocated (const TAO_MProfile &mprofile)
 TAO_Acceptor*
 TAO_Acceptor_Registry::get_acceptor (CORBA::ULong tag)
 {
-  TAO_AcceptorSetIterator end =
-    this->end ();
-  TAO_AcceptorSetIterator acceptor =
-    this->begin ();
+  TAO_AcceptorSetIterator end = this->end ();
+  TAO_AcceptorSetIterator acceptor = this->begin ();
 
   for (;
        acceptor != end ;
@@ -129,7 +132,7 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
                               reactor,
                               0) == -1)
         ACE_THROW_RETURN (CORBA::INTERNAL (
-                            CORBA_SystemException::_tao_minor_code (
+                            CORBA::SystemException::_tao_minor_code (
                               TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE,
                               0),
                             CORBA::COMPLETED_NO),
@@ -154,12 +157,12 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
         {
           if (TAO_debug_level > 0)
             ACE_ERROR ((LM_ERROR,
-                        ACE_LIB_TEXT ("(%P|%t) Invalid endpoint specification: ")
-                        ACE_LIB_TEXT ("<%s>.\n"),
-                        ACE_TEXT_CHAR_TO_TCHAR(iop.c_str ())));
+                        ACE_LIB_TEXT ("(%P|%t) Invalid endpoint ")
+                        ACE_LIB_TEXT ("specification: <%s>.\n"),
+                        ACE_TEXT_CHAR_TO_TCHAR (iop.c_str ())));
 
           ACE_THROW_RETURN (CORBA::BAD_PARAM (
-              CORBA_SystemException::_tao_minor_code (
+              CORBA::SystemException::_tao_minor_code (
                 TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE,
                 EINVAL),
               CORBA::COMPLETED_NO),
@@ -189,7 +192,7 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
       ACE_NEW_THROW_EX (this->acceptors_,
                         TAO_Acceptor *[acceptor_count],
                         CORBA::NO_MEMORY (
-                          CORBA_SystemException::_tao_minor_code (
+                          CORBA::SystemException::_tao_minor_code (
                             TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE,
                             ENOMEM),
                           CORBA::COMPLETED_NO));
@@ -211,12 +214,12 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
         {
           if (TAO_debug_level > 0)
             ACE_ERROR ((LM_ERROR,
-                        ACE_LIB_TEXT ("(%P|%t) Invalid endpoint specification: ")
-                        ACE_LIB_TEXT ("<%s>.\n"),
-                        ACE_TEXT_CHAR_TO_TCHAR(iop.c_str ())));
+                        ACE_LIB_TEXT ("(%P|%t) Invalid endpoint ")
+                        ACE_LIB_TEXT ("specification: <%s>.\n"),
+                        ACE_TEXT_CHAR_TO_TCHAR (iop.c_str ())));
 
           ACE_THROW_RETURN (CORBA::BAD_PARAM (
-              CORBA_SystemException::_tao_minor_code (
+              CORBA::SystemException::_tao_minor_code (
                 TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE,
                 EINVAL),
               CORBA::COMPLETED_NO),
@@ -273,7 +276,7 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
                       ACE_LIB_TEXT ("was found.\n")));
 
           ACE_THROW_RETURN (CORBA::BAD_PARAM (
-              CORBA_SystemException::_tao_minor_code (
+              CORBA::SystemException::_tao_minor_code (
                 TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE,
                 EINVAL),
               CORBA::COMPLETED_NO),
@@ -344,7 +347,8 @@ int TAO_Acceptor_Registry::open_default (TAO_ORB_Core *orb_core,
                       ACE_LIB_TEXT ("TAO (%P|%t) No default endpoints ")
                       ACE_LIB_TEXT ("opened.\n")
                       ACE_LIB_TEXT ("Please specify one or more using ")
-                      ACE_LIB_TEXT ("the \"-ORBEndpoint\" option.\n")));
+                      ACE_LIB_TEXT ("the \"-ORBListenEndpoints\" ")
+                      ACE_LIB_TEXT ("option.\n")));
         }
 
       return -1;
@@ -376,7 +380,7 @@ TAO_Acceptor_Registry::open_default (TAO_ORB_Core *orb_core,
         ACE_ERROR ((LM_ERROR,
                     ACE_LIB_TEXT ("TAO (%P|%t) unable to create ")
                     ACE_LIB_TEXT ("an acceptor for <%s>\n"),
-                    ACE_TEXT_CHAR_TO_TCHAR((*factory)->protocol_name ().c_str ())));
+                    ACE_TEXT_CHAR_TO_TCHAR ((*factory)->protocol_name ().c_str ())));
 
       return -1;
     }
@@ -394,7 +398,7 @@ TAO_Acceptor_Registry::open_default (TAO_ORB_Core *orb_core,
         ACE_ERROR ((LM_ERROR,
                     ACE_LIB_TEXT ("TAO (%P|%t) unable to open ")
                     ACE_LIB_TEXT ("default acceptor for <%s>%p\n"),
-                    ACE_TEXT_CHAR_TO_TCHAR((*factory)->protocol_name ().c_str ()),
+                    ACE_TEXT_CHAR_TO_TCHAR ((*factory)->protocol_name ().c_str ()),
                     ACE_LIB_TEXT ("")));
 
       return -1;
@@ -534,7 +538,7 @@ TAO_Acceptor_Registry::open_i (TAO_ORB_Core *orb_core,
               // one.
               else
                 ACE_THROW_RETURN (CORBA::INTERNAL (
-                    CORBA_SystemException::_tao_minor_code (
+                    CORBA::SystemException::_tao_minor_code (
                       TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE,
                       0),
                     CORBA::COMPLETED_NO),
@@ -559,11 +563,11 @@ TAO_Acceptor_Registry::open_i (TAO_ORB_Core *orb_core,
                             ACE_LIB_TEXT ("TAO (%P|%t) ")
                             ACE_LIB_TEXT ("unable to open acceptor ")
                             ACE_LIB_TEXT ("for <%s>%p\n"),
-                            ACE_TEXT_CHAR_TO_TCHAR(address.c_str ()),
+                            ACE_TEXT_CHAR_TO_TCHAR (address.c_str ()),
                             ACE_LIB_TEXT ("")));
 
               ACE_THROW_RETURN (CORBA::BAD_PARAM (
-                  CORBA_SystemException::_tao_minor_code (
+                  CORBA::SystemException::_tao_minor_code (
                     TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE,
                     errno_value),
                   CORBA::COMPLETED_NO),
@@ -579,10 +583,10 @@ TAO_Acceptor_Registry::open_i (TAO_ORB_Core *orb_core,
             ACE_ERROR ((LM_ERROR,
                         ACE_LIB_TEXT ("TAO (%P|%t) unable to create ")
                         ACE_LIB_TEXT ("an acceptor for <%s>.\n"),
-                        ACE_TEXT_CHAR_TO_TCHAR(address.c_str ())));
+                        ACE_TEXT_CHAR_TO_TCHAR (address.c_str ())));
 
           ACE_THROW_RETURN (CORBA::NO_MEMORY (
-              CORBA_SystemException::_tao_minor_code (
+              CORBA::SystemException::_tao_minor_code (
                 TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE,
                 ENOMEM),
               CORBA::COMPLETED_NO),
