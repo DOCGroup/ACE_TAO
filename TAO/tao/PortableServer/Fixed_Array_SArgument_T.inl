@@ -1,49 +1,59 @@
+// -*- C++ -*-
+//
 // $Id$
 
-template<typename S, typename S_forany>
+template<typename S, typename S_slice, typename S_forany>
 ACE_INLINE
-TAO::In_Fixed_Array_SArgument_T<S,S_forany>::In_Fixed_Array_SArgument_T (void)
+TAO::In_Fixed_Array_SArgument_T<S,
+                                S_slice,
+                                S_forany>::In_Fixed_Array_SArgument_T (void)
 {}
 
-template<typename S, typename S_forany>
+template<typename S, typename S_slice, typename S_forany>
 ACE_INLINE
-const S &
-TAO::In_Fixed_Array_SArgument_T<S,S_forany>::arg (void) const
+S_slice const *
+TAO::In_Fixed_Array_SArgument_T<S, S_slice, S_forany>::arg (void) const
 {
-  return this->x_;
+  return this->x_.in ();
 }
 
 // ===========================================================================
 
-template<typename S, typename S_forany>
+template<typename S, typename S_slice, typename S_forany>
 ACE_INLINE
-TAO::Inout_Fixed_Array_SArgument_T<S,S_forany>::
+TAO::Inout_Fixed_Array_SArgument_T<S,
+                                   S_slice,
+                                   S_forany>::
 Inout_Fixed_Array_SArgument_T (void)
 {}
 
-template<typename S, typename S_forany>
+template<typename S, typename S_slice, typename S_forany>
 ACE_INLINE
-S &
-TAO::Inout_Fixed_Array_SArgument_T<S,S_forany>::arg (void)
+S_slice *
+TAO::Inout_Fixed_Array_SArgument_T<S,
+                                   S_slice,
+                                   S_forany>::arg (void)
 {
-  return this->x_;
+  return this->x_.inout ();
 }
 
 // ===========================================================================
 
-template<typename S, typename S_forany>
+template<typename S, typename S_slice, typename S_forany>
 ACE_INLINE
-TAO::Out_Fixed_Array_SArgument_T<S,S_forany>::Out_Fixed_Array_SArgument_T (
-    void
-  )
+TAO::Out_Fixed_Array_SArgument_T<S,
+                                 S_slice,
+                                 S_forany>::Out_Fixed_Array_SArgument_T (void)
 {}
 
-template<typename S, typename S_forany>
+template<typename S, typename S_slice, typename S_forany>
 ACE_INLINE
-S &
-TAO::Out_Fixed_Array_SArgument_T<S,S_forany>::arg (void)
+S_slice *&
+TAO::Out_Fixed_Array_SArgument_T<S,
+                                 S_slice,
+                                 S_forany>::arg (void)
 {
-  return this->x_;
+  return this->x_.out ();
 }
 
 // ===========================================================================

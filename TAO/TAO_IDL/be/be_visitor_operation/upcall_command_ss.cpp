@@ -80,8 +80,12 @@ be_visitor_operation_upcall_command_ss::visit_operation (be_operation * node)
   // has no arguments.
   if (!node->void_return_type () || node->argument_count () > 0)
     {
-      os << "," << be_nl
-         << "TAO::Argument * const args[])" << be_nl;
+      os << "," << be_nl;
+
+      if (be_global->gen_thru_poa_collocation ())
+        os << "TAO_Operation_Details const * operation_details," << be_nl;
+
+      os << "TAO::Argument * const args[])" << be_nl;
     }
   else
     {
@@ -94,8 +98,12 @@ be_visitor_operation_upcall_command_ss::visit_operation (be_operation * node)
   // initializer for the class argument array member/attribute.
   if (!node->void_return_type () || node->argument_count () > 0)
     {
-      os << be_nl
-         << ", args_ (args)";
+      os << be_nl;
+
+      if (be_global->gen_thru_poa_collocation ())
+        os << ", operation_details_ (operation_details)" << be_nl;
+
+      os << ", args_ (args)";
     }
 
   os << be_uidt_nl;
@@ -109,13 +117,39 @@ be_visitor_operation_upcall_command_ss::visit_operation (be_operation * node)
 
   if (!node->void_return_type ())
     {
-      os << "static_cast<TAO::SArg_Traits< ";
+      os << "TAO::SArg_Traits< ";
+
 
       this->gen_arg_template_param_name (node,
                                          node->return_type (),
                                          &os);
 
-      os << ">::ret_base *> (this->args_[0])->arg () =" << be_idt_nl;
+      os << ">::ret_arg_type retval =" << be_idt_nl;
+
+      if (be_global->gen_thru_poa_collocation ())
+        {
+          os << "get_ret_arg< ";
+          
+          this->gen_arg_template_param_name (node,
+                                             node->return_type (),
+                                             &os);
+
+          os << "> (" << be_idt_nl
+             << "this->operation_details_," << be_nl
+             << "this->args_);" << be_uidt;
+        }
+      else
+        {
+          os << "static_cast<TAO::SArg_Traits< ";
+
+          this->gen_arg_template_param_name (node,
+                                             node->return_type (),
+                                             &os);
+
+          os << ">::ret_val *> (this->args_[0])->arg ();";
+        }
+
+      os << be_uidt_nl << be_nl;
     }
 
   if (this->gen_upcall (node) == -1)
@@ -148,8 +182,13 @@ be_visitor_operation_upcall_command_ss::visit_operation (be_operation * node)
   // operation has no arguments.
   if (!node->void_return_type () || node->argument_count () > 0)
     {
-      os << be_nl
-         << "TAO::Argument * const * const args_;";
+      os << be_nl;
+
+      if (be_global->gen_thru_poa_collocation ())
+        os << "TAO_Operation_Details const * const operation_details_;" << be_nl;
+
+
+      os << "TAO::Argument * const * const args_;";
     }
 
   os << be_uidt_nl
@@ -161,35 +200,19 @@ be_visitor_operation_upcall_command_ss::visit_operation (be_operation * node)
 int
 be_visitor_operation_upcall_command_ss::gen_upcall (be_operation * node)
 {
-  // @@ Based on
-  //    be_visitor_operation_thru_poa_proxy_impl_ss::gen_invoke().
-
   TAO_OutStream & os = *this->ctx_->stream ();
-
-  os << "this->servant_->" << node->local_name () << " ("
-      << be_idt;
 
   UTL_ScopeActiveIterator si (node,
                               UTL_Scope::IK_decls);
 
-  if (si.is_done ())
-    {
-      os << be_nl
-         << "ACE_ENV_SINGLE_ARG_PARAMETER" << be_uidt_nl
-         << ");";
-
-      return 0;
-    }
-
-  int index = 1;
+  unsigned int index = 1;
 
   for (; !si.is_done (); si.next (), ++index)
     {
       AST_Argument * const arg =
         AST_Argument::narrow_from_decl (si.item ());
 
-      os << (index == 1 ? "" : ",") << be_nl
-         << "static_cast<TAO::SArg_Traits< ";
+      os << "TAO::SArg_Traits< ";
 
       this->gen_arg_template_param_name (arg,
                                          arg->field_type (),
@@ -211,13 +234,118 @@ be_visitor_operation_upcall_command_ss::gen_upcall (be_operation * node)
           break;
         }
 
-      os << "_arg_base *> (this->args_[" << index << "])->arg ()";
+      os << "_arg_type arg_" << index << " =" << be_idt_nl;
+
+      if (be_global->gen_thru_poa_collocation ())
+        {
+          os << "get_";
+
+          switch (arg->direction ())
+            {
+            case AST_Argument::dir_IN:
+              os << "in";
+              break;
+            case AST_Argument::dir_INOUT:
+              os << "inout";
+              break;
+            case AST_Argument::dir_OUT:
+              os << "out";
+            default:
+              break;
+            }
+
+          os << "_arg< ";
+          
+          this->gen_arg_template_param_name (arg,
+                                             arg->field_type (),
+                                             &os);
+
+          os << "> (" << be_idt_nl
+             << "this->operation_details_," << be_nl
+             << "this->args_," << be_nl
+             << index << ");" << be_uidt_nl;
+        }
+      else
+        {
+          os << "static_cast<TAO::SArg_Traits< ";
+
+          this->gen_arg_template_param_name (arg,
+                                             arg->field_type (),
+                                             &os);
+
+          os << ">::ret_val *> (this->args_[" << index << "])->arg ();"
+             << be_nl;
+        }
+
+      os << be_uidt_nl;
+      
     }
 
-  // End the upcall
-  os << be_nl
-     << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
-     << ");";
+
+
+  if (!node->void_return_type ())
+    {
+      os << be_nl
+         << "retval =" << be_idt_nl;
+    }
+
+  os << "this->servant_->" << node->local_name () << " ("
+     << be_idt_nl;
+
+  size_t const count = node->argument_count ();
+
+  for (unsigned int i = 0; i < count; ++i)
+    os << (i == 0 ? "" : ", ") << "arg_" << i + 1 << be_nl;
+
+  if (count > 0)
+    os << "ACE_ENV_ARG_PARAMETER);" << be_uidt_nl;
+  else
+    os << "ACE_ENV_SINGLE_ARG_PARAMETER);" << be_uidt_nl;
+
+//   UTL_ScopeActiveIterator si (node,
+//                               UTL_Scope::IK_decls);
+
+//   if (si.is_done ())
+//     {
+//       os << be_nl
+//          << "ACE_ENV_SINGLE_ARG_PARAMETER" << be_uidt_nl
+//          << ");";
+
+//       return 0;
+//     }
+
+//   int index = 1;
+
+//   for (; !si.is_done (); si.next (), ++index)
+//     {
+//       AST_Argument * const arg =
+//         AST_Argument::narrow_from_decl (si.item ());
+
+//       os << (index == 1 ? "" : ",") << be_nl
+//          << "static_cast<TAO::SArg_Traits< ";
+
+//       this->gen_arg_template_param_name (arg,
+//                                          arg->field_type (),
+//                                          &os);
+
+//       os << ">::";
+
+//       switch (arg->direction ())
+//         {
+//         case AST_Argument::dir_IN:
+//           os << "in";
+//           break;
+//         case AST_Argument::dir_INOUT:
+//           os << "inout";
+//           break;
+//         case AST_Argument::dir_OUT:
+//           os << "out";
+//         default:
+//           break;
+//         }
+
+//       os << "_arg_val *> (this->args_[" << index << "])->arg ()";
+//     }
 
   return 0;
 }

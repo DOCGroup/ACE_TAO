@@ -94,10 +94,10 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
       << "_ptr;" << be_nl << be_nl;
 
   // Forward class declarations.
-  if (be_global->gen_thru_poa_collocation ())
-    {
-      *os << "class " << node->thru_poa_proxy_impl_name () << ";" << be_nl;
-    }
+//   if (be_global->gen_thru_poa_collocation ())
+//     {
+//       *os << "class " << node->thru_poa_proxy_impl_name () << ";" << be_nl;
+//     }
 
   if (be_global->gen_direct_collocation ())
     {
@@ -270,7 +270,7 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
               LM_ERROR,
               "be_visitor_interface_sh::"
               "visit_interface - "
-              "codegen for thru_poa_collocated class failed\n"
+              "codegen for strategized proxy broker class failed\n"
             ),
             -1
           );
@@ -280,21 +280,21 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
   ctx = *this->ctx_;
 
   // Generate the collocated class.
-  if (be_global->gen_thru_poa_collocation ())
-    {
-      ctx = *this->ctx_;
-      ctx.state (TAO_CodeGen::TAO_INTERFACE_THRU_POA_PROXY_IMPL_SH);
-      be_visitor_interface_thru_poa_proxy_impl_sh itppi_visitor (&ctx);
+//   if (be_global->gen_thru_poa_collocation ())
+//     {
+//       ctx = *this->ctx_;
+//       ctx.state (TAO_CodeGen::TAO_INTERFACE_THRU_POA_PROXY_IMPL_SH);
+//       be_visitor_interface_thru_poa_proxy_impl_sh itppi_visitor (&ctx);
 
-      if (node->accept (&itppi_visitor) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "be_visitor_interface_sh::"
-                             "visit_interface - "
-                             "codegen for thru_poa_collocated class failed\n"),
-                            -1);
-        }
-    }
+//       if (node->accept (&itppi_visitor) == -1)
+//         {
+//           ACE_ERROR_RETURN ((LM_ERROR,
+//                              "be_visitor_interface_sh::"
+//                              "visit_interface - "
+//                              "codegen for thru_poa_collocated class failed\n"),
+//                             -1);
+//         }
+//     }
 
   ctx = *this->ctx_;
 
@@ -310,7 +310,7 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
               LM_ERROR,
               "be_visitor_interface_sh::"
               "visit_interface - "
-              "codegen for thru_poa_collocated class failed\n"
+              "codegen for direct collocated class failed\n"
             ),
             -1
           );

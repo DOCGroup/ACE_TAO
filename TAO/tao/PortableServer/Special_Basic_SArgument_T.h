@@ -31,7 +31,7 @@ namespace TAO
    *
    */
   template<typename S, typename to_S, typename from_S>
-  class In_Special_Basic_SArgument_T : public Const_Argument_T<S const &>
+  class In_Special_Basic_SArgument_T : public Argument
   {
   public:
     In_Special_Basic_SArgument_T (void);
@@ -40,7 +40,7 @@ namespace TAO
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_param (Dynamic::Parameter &);
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    virtual S const & arg (void) const;
+    S const & arg (void) const;
 
   private:
     S x_;
@@ -53,7 +53,7 @@ namespace TAO
    *
    */
   template<typename S, typename to_S, typename from_S>
-  class Inout_Special_Basic_SArgument_T : public Mutable_Argument_T<S &>
+  class Inout_Special_Basic_SArgument_T : public Argument
   {
   public:
     Inout_Special_Basic_SArgument_T (void);
@@ -63,7 +63,7 @@ namespace TAO
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_param (Dynamic::Parameter &);
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    virtual S & arg (void);
+    S & arg (void);
 
   private:
     S x_;
@@ -76,7 +76,7 @@ namespace TAO
    *
    */
   template<typename S, typename to_S, typename from_S>
-  class Out_Special_Basic_SArgument_T : public Mutable_Argument_T<S &>
+  class Out_Special_Basic_SArgument_T : public Argument
   {
   public:
     Out_Special_Basic_SArgument_T (void);
@@ -85,7 +85,7 @@ namespace TAO
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_param (Dynamic::Parameter &);
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    virtual S & arg (void);
+    S & arg (void);
 
   private:
     S x_;
@@ -98,7 +98,7 @@ namespace TAO
    *
    */
   template<typename S, typename to_S, typename from_S>
-  class Ret_Special_Basic_SArgument_T : public Mutable_Argument_T<S &>
+  class Ret_Special_Basic_SArgument_T : public Argument
   {
   public:
     Ret_Special_Basic_SArgument_T (void);
@@ -107,7 +107,7 @@ namespace TAO
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_result (CORBA::Any *);
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    virtual S & arg (void);
+    S & arg (void);
 
   private:
     S x_;
@@ -133,10 +133,12 @@ namespace TAO
     typedef Out_Special_Basic_SArgument_T<T,to_T,from_T>    out_arg_val;
     typedef Ret_Special_Basic_SArgument_T<T,to_T,from_T>    ret_val;
 
-    typedef Const_Argument_T<T const &>                     in_arg_base;
-    typedef Mutable_Argument_T<inout_type>                  inout_arg_base;
-    typedef Mutable_Argument_T<out_type>                    out_arg_base;
-    typedef Mutable_Argument_T<out_type>                    ret_base;
+    // Typedefs corresponding to return value of arg() method in both
+    // the client and server side argument class templates.
+    typedef T const &                                       in_arg_type;
+    typedef inout_type                                      inout_arg_type;
+    typedef out_type                                        out_arg_type;
+    typedef out_type                                        ret_arg_type;
 
   };
 };

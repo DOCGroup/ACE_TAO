@@ -1905,6 +1905,19 @@ TAO_CodeGen::gen_skel_arg_file_includes (TAO_OutStream * stream)
                               "tao/PortableServer/TypeCode_SArg_Traits.h");
   this->gen_standard_include (stream,
                               "tao/PortableServer/Object_SArg_Traits.h");
+
+  if (be_global->gen_thru_poa_collocation ())
+    {
+      // We need the stub side argument templates when thru-POA
+      // collocation is enabled for type resolution.
+      // this->gen_stub_arg_file_includes (stream);
+
+      // Always needed for CORBA::Boolean handling in _is_a() skeleton
+      // code when an unconstrained (non-local) IDL interface is defined.
+      this->gen_cond_file_include (idl_global->non_local_iface_seen_,
+                                   "tao/Special_Basic_Arguments.h",
+                                   stream);
+    }
 }
 
 void

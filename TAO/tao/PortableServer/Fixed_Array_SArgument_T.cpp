@@ -1,7 +1,7 @@
 // $Id$
 
-#ifndef TAO_FIXED_ARRAY_SARGUMENT_T_C
-#define TAO_FIXED_ARRAY_SARGUMENT_T_C
+#ifndef TAO_FIXED_ARRAY_SARGUMENT_T_CPP
+#define TAO_FIXED_ARRAY_SARGUMENT_T_CPP
 
 #include "tao/PortableServer/Fixed_Array_SArgument_T.h"
 #include "tao/Dynamic_ParameterC.h"
@@ -10,13 +10,12 @@
 #include "tao/PortableServer/Fixed_Array_SArgument_T.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (PortableServer,
-           Fixed_Array_SArgument_T,
-           "$Id$")
 
-template<typename S, typename S_forany>
+template<typename S, typename S_slice, typename S_forany>
 CORBA::Boolean
-TAO::In_Fixed_Array_SArgument_T<S,S_forany>::demarshal (TAO_InputCDR &cdr)
+TAO::In_Fixed_Array_SArgument_T<S,
+                                S_slice,
+                                S_forany>::demarshal (TAO_InputCDR &cdr)
 {
   S_forany tmp (this->x_);
   return cdr >> tmp;
@@ -24,9 +23,11 @@ TAO::In_Fixed_Array_SArgument_T<S,S_forany>::demarshal (TAO_InputCDR &cdr)
 
 #if TAO_HAS_INTERCEPTORS == 1
 
-template<typename S, typename S_forany>
+template<typename S, typename S_slice, typename S_forany>
 void
-TAO::In_Fixed_Array_SArgument_T<S,S_forany>::interceptor_param (
+TAO::In_Fixed_Array_SArgument_T<S,
+                                S_slice,
+                                S_forany>::interceptor_param (
     Dynamic::Parameter & p
   )
 {
@@ -38,16 +39,20 @@ TAO::In_Fixed_Array_SArgument_T<S,S_forany>::interceptor_param (
 
 // ===========================================================
 
-template<typename S, typename S_forany>
+template<typename S, typename S_slice, typename S_forany>
 CORBA::Boolean
-TAO::Inout_Fixed_Array_SArgument_T<S,S_forany>::marshal (TAO_OutputCDR & cdr)
+TAO::Inout_Fixed_Array_SArgument_T<S,
+                                   S_slice,
+                                   S_forany>::marshal (TAO_OutputCDR & cdr)
 {
   return cdr << S_forany (this->x_);
 }
 
-template<typename S, typename S_forany>
+template<typename S, typename S_slice, typename S_forany>
 CORBA::Boolean
-TAO::Inout_Fixed_Array_SArgument_T<S,S_forany>::demarshal (TAO_InputCDR & cdr)
+TAO::Inout_Fixed_Array_SArgument_T<S,
+                                   S_slice,
+                                   S_forany>::demarshal (TAO_InputCDR & cdr)
 {
   S_forany tmp (this->x_);
   return cdr >> tmp;
@@ -55,9 +60,11 @@ TAO::Inout_Fixed_Array_SArgument_T<S,S_forany>::demarshal (TAO_InputCDR & cdr)
 
 #if TAO_HAS_INTERCEPTORS == 1
 
-template<typename S, typename S_forany>
+template<typename S, typename S_slice, typename S_forany>
 void
-TAO::Inout_Fixed_Array_SArgument_T<S,S_forany>::interceptor_param (
+TAO::Inout_Fixed_Array_SArgument_T<S,
+                                   S_slice,
+                                   S_forany>::interceptor_param (
     Dynamic::Parameter & p
   )
 {
@@ -69,20 +76,23 @@ TAO::Inout_Fixed_Array_SArgument_T<S,S_forany>::interceptor_param (
 
 // ==============================================================
 
-template<typename S, typename S_forany>
+template<typename S, typename S_slice, typename S_forany>
 CORBA::Boolean
-TAO::Out_Fixed_Array_SArgument_T<S,S_forany>::marshal (TAO_OutputCDR &cdr)
+TAO::Out_Fixed_Array_SArgument_T<S,
+                                 S_slice,
+                                 S_forany>::marshal (TAO_OutputCDR &cdr)
 {
   return cdr << S_forany (this->x_);
 }
 
 #if TAO_HAS_INTERCEPTORS == 1
 
-template<typename S, typename S_forany>
+template<typename S, typename S_slice, typename S_forany>
 void
-TAO::Out_Fixed_Array_SArgument_T<S,S_forany>::interceptor_param (
-    Dynamic::Parameter & p
-  )
+TAO::Out_Fixed_Array_SArgument_T<S,
+                                 S_slice,
+                                 S_forany>::interceptor_param (
+    Dynamic::Parameter & p)
 {
   p.argument <<= S_forany (this->x_);
   p.mode = CORBA::PARAM_OUT;
@@ -114,4 +124,4 @@ TAO::Ret_Fixed_Array_SArgument_T<S_slice,S_var,S_forany>::interceptor_result (
 
 #endif /* TAO_HAS_INTERCEPTORS */
 
-#endif /* TAO_FIXED_ARRAY_SARGUMENT_T_C */
+#endif /* TAO_FIXED_ARRAY_SARGUMENT_T_CPP */

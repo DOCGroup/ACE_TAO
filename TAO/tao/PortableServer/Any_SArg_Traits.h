@@ -12,8 +12,8 @@
 //=============================================================================
 
 
-#ifndef TAO_ANY_ARG_TRAITS_H
-#define TAO_ANY_ARG_TRAITS_H
+#ifndef TAO_ANY_SARG_TRAITS_H
+#define TAO_ANY_SARG_TRAITS_H
 
 #include /**/ "ace/pre.h"
 
@@ -23,8 +23,6 @@
 
 #include "tao/PortableServer/Var_Size_SArgument_T.h"
 #include "tao/PortableServer/portableserver_export.h"
-
-#include "tao/Arg_Traits_T.h"
 
 namespace CORBA
 {

@@ -1,7 +1,7 @@
 // $Id$
 
-#ifndef TAO_UB_STRING_SARGUMENT_T_C
-#define TAO_UB_STRING_SARGUMENT_T_C
+#ifndef TAO_UB_STRING_SARGUMENT_T_CPP
+#define TAO_UB_STRING_SARGUMENT_T_CPP
 
 #include "tao/PortableServer/UB_String_SArgument_T.h"
 #include "tao/Dynamic_ParameterC.h"
@@ -10,9 +10,6 @@
 #include "tao/PortableServer/UB_String_SArgument_T.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (PortableServer,
-           UB_String_SArgument_T,
-           "$Id$")
 
 template<typename S, typename S_var>
 CORBA::Boolean
@@ -108,4 +105,4 @@ TAO::Ret_UB_String_SArgument_T<S,S_var>::interceptor_result (CORBA::Any * any)
 
 #endif /* TAO_HAS_INTERCEPTORS */
 
-#endif /* TAO_UB_STRING_SARGUMENT_T_C */
+#endif /* TAO_UB_STRING_SARGUMENT_T_CPP */

@@ -36,7 +36,7 @@ namespace TAO
    *
    */
   template<typename S_ptr>
-  class In_Object_Argument_T : public Const_Argument_T<S_ptr>
+  class In_Object_Argument_T : public Argument
   {
   public:
     In_Object_Argument_T (S_ptr x);
@@ -45,7 +45,7 @@ namespace TAO
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_param (Dynamic::Parameter &);
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    virtual S_ptr arg (void) const;
+    S_ptr arg (void) const;
 
   private:
     S_ptr x_;
@@ -58,7 +58,7 @@ namespace TAO
    *
    */
   template<typename S_ptr, typename S_traits>
-  class Inout_Object_Argument_T : public Mutable_Argument_T<S_ptr &>
+  class Inout_Object_Argument_T : public Argument
   {
   public:
     Inout_Object_Argument_T (S_ptr & x);
@@ -68,7 +68,7 @@ namespace TAO
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_param (Dynamic::Parameter &);
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    virtual S_ptr & arg (void);
+    S_ptr & arg (void);
 
   private:
     S_ptr & x_;
@@ -81,7 +81,7 @@ namespace TAO
    *
    */
   template<typename S_ptr, typename S_out>
-  class Out_Object_Argument_T : public Mutable_Argument_T<S_out>
+  class Out_Object_Argument_T : public Argument
   {
   public:
     Out_Object_Argument_T (S_out & x);
@@ -90,7 +90,7 @@ namespace TAO
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_param (Dynamic::Parameter &);
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    virtual S_out arg (void);
+    S_out arg (void);
 
   private:
     S_ptr & x_;
@@ -103,7 +103,7 @@ namespace TAO
    *
    */
   template<typename S_ptr, typename S_var>
-  class Ret_Object_Argument_T : public Mutable_Argument_T<S_ptr &>
+  class Ret_Object_Argument_T : public Argument
   {
   public:
 
@@ -113,7 +113,7 @@ namespace TAO
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_result (CORBA::Any *);
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    virtual S_ptr & arg (void);
+    S_ptr & arg (void);
 
     S_ptr excp (void);
     S_ptr retn (void);

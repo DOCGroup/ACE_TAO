@@ -1,7 +1,7 @@
 // $Id$
 
-#ifndef TAO_BASIC_SARGUMENT_T_C
-#define TAO_BASIC_SARGUMENT_T_C
+#ifndef TAO_BASIC_SARGUMENT_T_CPP
+#define TAO_BASIC_SARGUMENT_T_CPP
 
 #include "tao/PortableServer/Basic_SArgument_T.h"
 #include "tao/Dynamic_ParameterC.h"
@@ -10,9 +10,6 @@
 #include "tao/PortableServer/Basic_SArgument_T.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (PortableServer,
-           Basic_SArgument_T,
-           "$Id$")
 
 template<typename S>
 CORBA::Boolean
@@ -102,4 +99,4 @@ TAO::Ret_Basic_SArgument_T<S>::interceptor_result (CORBA::Any * any)
 
 #endif /* TAO_HAS_INTERCEPTORS */
 
-#endif /* TAO_BASIC_SARGUMENT_T_C */
+#endif /* TAO_BASIC_SARGUMENT_T_CPP */
