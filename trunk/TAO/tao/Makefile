@@ -40,6 +40,7 @@ ORBCORE_SRCS = \
 	POA \
 	POAC \
 	POAS \
+	POAManager \
 	PolicyC \
 	PolicyS \
 	Principal \

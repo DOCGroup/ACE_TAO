@@ -26,6 +26,7 @@
 #include "tao/IIOP_Acceptor.h"
 #include "tao/POAC.h"
 #include "tao/POA.h"
+#include "tao/POAManager.h"
 
 #include "tao/params.h"
 
@@ -600,7 +601,7 @@ public:
 
     TAO_IIOP_Connector c_;
     // The Connector, HACK to create the first connector which happens to be
-    // IIOP.  
+    // IIOP.
 
     TAO_CACHED_CONNECT_STRATEGY cached_connect_strategy_;
     // The Cached Connect Strategy
