@@ -458,7 +458,6 @@ public:
   static CORBA::TypeCode_ptr _tc_InconsistentTypeCode;
 
   // Dynamic Any factory functions.
-  // @@EXC@@ Add the ACE_THROW_SPEC for these functions...
 
   CORBA_DynAny_ptr       create_dyn_any       (const CORBA_Any& any,
                                                CORBA::Environment &ACE_TRY_ENV
@@ -525,16 +524,14 @@ public:
 
   // = ORB event loop methods.
 
-  int run (CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  int run (CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
   // Instructs the ORB to initialize itself and run its event loop in
   // the current thread, not returning until the ORB has shut down.
   // If an error occurs during initialization or a run-time this
   // method will return -1.
 
   int run (ACE_Time_Value &tv,
-           CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+           CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
   // Instructs the ORB to initialize itself and run its event loop in
   // the current thread, not returning until the ORB has shut down.
   // If an error occurs during initialization or a run-time this
@@ -545,8 +542,7 @@ public:
   // is returned.
 
   int run (ACE_Time_Value *tv,
-           CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+           CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
   // Instructs the ORB to initialize itself and run its event loop in
   // the current thread, not returning until the ORB has shut down.
   // If an error occurs during initialization or a run-time this
@@ -557,8 +553,7 @@ public:
   // the value of 1 is returned.
 
   void shutdown (CORBA::Boolean wait_for_completion = 0,
-                 CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                 CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
   // This operation instructs the ORB to shut down. Shutting down the
   // ORB causes all Object Adapters to be shut down. If
   // <wait_for_completion> parameter is TRUE, this operation blocks
@@ -566,26 +561,25 @@ public:
   // deactivation or other operations associated with object adapters)
   // has completed.
 
-  void destroy (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
+  void destroy (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
+  // Destroy the ORB, releasing any resources.  Notice that TAO *cannot*
+  // release the resources even if you have destroyed all the
+  // references to a particular ORB.  CORBA::ORB_init() is required to
+  // return the same pointer if called with the same ORBid, only after
+  // ORB::destroy() is called it may return a new one.
 
   CORBA::Boolean work_pending (CORBA_Environment &ACE_TRY_ENV =
-                               TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                               TAO_default_environment ());
   // Returns an indication of whether the ORB needs to perform some
   // work.
 
   int perform_work (const ACE_Time_Value & = ACE_Time_Value::zero,
                     CORBA_Environment &ACE_TRY_ENV =
-                    TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                    TAO_default_environment ());
   // This operation performs an implementation-defined unit of
   // work. Note that the default behavior is not to block; this
   // behavior can be modified by passing an appropriate
   // <ACE_Time_Value>.
-
-  // @@EXC@@ Add the ACE_THROW_SPEC for these two functions
 
   CORBA_Object_ptr resolve_initial_references (const char *name,
                                                CORBA_Environment &ACE_TRY_ENV =
@@ -617,8 +611,7 @@ public:
   CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
                                    const CORBA::Any& val,
                                    CORBA_Environment &ACE_TRY_ENV =
-                                       TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException, CORBA::PolicyError));
+                                       TAO_default_environment ());
 #endif /* TAO_HAS_CORBA_MESSAGING */
 
   // ----------------------------------------------------------------
@@ -737,8 +730,7 @@ protected:
 
   int run (ACE_Time_Value *tv,
            int break_on_timeouts,
-           CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+           CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
   // Implements the run routine
 
 private:
