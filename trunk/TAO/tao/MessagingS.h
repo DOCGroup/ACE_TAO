@@ -1654,7 +1654,7 @@ private:
   };
 
 
-  class  _tao_thru_poa_collocated_ReplyHandler     : public virtual Messaging::ReplyHandler
+  class TAO_Export _tao_thru_poa_collocated_ReplyHandler     : public virtual Messaging::ReplyHandler
   {
   public:
     _tao_thru_poa_collocated_ReplyHandler (
@@ -1672,7 +1672,7 @@ private:
   };
 
 
-  class  _tao_direct_collocated_ReplyHandler     : public virtual Messaging::ReplyHandler
+  class TAO_Export _tao_direct_collocated_ReplyHandler     : public virtual Messaging::ReplyHandler
   {
   public:
     _tao_direct_collocated_ReplyHandler (
