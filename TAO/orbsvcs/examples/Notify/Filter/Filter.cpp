@@ -12,7 +12,7 @@ ACE_RCSID(Filter, Filter, "$Id$")
 #define EVENTS_TO_SEND 30
 #define EVENTS_EXPECTED_TO_RECEIVE 9*4  // 2 consumers get the same events from 2 suppliers
 
-  ACE_Atomic_Op <ACE_SYNCH_MUTEX, int> g_result_count = 0; 
+  ACE_Atomic_Op <ACE_SYNCH_MUTEX, int> g_result_count = 0;
 
 FilterClient::FilterClient (void)
 {
@@ -60,10 +60,11 @@ FilterClient::run (CORBA::Environment &ACE_TRY_ENV)
   send_events (ACE_TRY_ENV);
   ACE_CHECK;
 
-  this->orb_->run ();
+  if (g_result_count != EVENTS_EXPECTED_TO_RECEIVE)
+    this->orb_->run ();// if we still need to wait for events, run the orb.
 }
 
-void 
+void
 FilterClient::done (void)
 {
   this->orb_->shutdown ();
@@ -227,7 +228,7 @@ FilterClient:: create_consumeradmin (CORBA::Environment &ACE_TRY_ENV)
   consumer_admin_->add_filter (ca_filter.in (), ACE_TRY_ENV);
   ACE_CHECK;
 
-  // Setup the CA to receive all type of events 
+  // Setup the CA to receive all type of events
   CosNotification::EventTypeSeq added(1);
   CosNotification::EventTypeSeq removed (0);
   added.length (1);
@@ -314,7 +315,21 @@ FilterClient::send_events (CORBA::Environment &ACE_TRY_ENV)
   event.filterable_data[2].name = CORBA::string_dup("pressure");
   event.filterable_data[2].value <<= (CORBA::Long)80;
 
-  for (int i = 0; i < EVENTS_TO_SEND; i++)
+  event.filterable_data[0].value <<= (CORBA::Long)4;
+
+  // any
+  event.remainder_of_body <<= (CORBA::Long)4;
+
+  supplier_1->send_event (event, ACE_TRY_ENV);
+  ACE_CHECK;
+
+  supplier_1->disconnect (ACE_TRY_ENV);
+  ACE_CHECK;
+
+  supplier_1->send_event (event, ACE_TRY_ENV);
+  ACE_CHECK;
+
+  /*  for (int i = 0; i < EVENTS_TO_SEND; i++)
     {
       event.filterable_data[0].value <<= (CORBA::Long)i;
 
@@ -327,6 +342,7 @@ FilterClient::send_events (CORBA::Environment &ACE_TRY_ENV)
       supplier_2->send_event (event, ACE_TRY_ENV);
       ACE_CHECK;
     }
+  */
 }
 
 
@@ -401,12 +417,12 @@ Filter_StructuredPushConsumer::push_structured_event (const CosNotification::Str
     // number of expected and sent events to verify that things work
     // correctly in an automatic way...
 
-    
+
     ACE_DEBUG ((LM_DEBUG,
                 "%s received event, %d\n", my_name_.fast_rep (), val));
-    
+
     ACE_DEBUG ((LM_DEBUG,"event count %d\n", g_result_count.value ()));
-    
+
     if (++g_result_count == EVENTS_EXPECTED_TO_RECEIVE)
       this->filter_->done (); // all events received, we're done.
 }
@@ -508,6 +524,3 @@ template class  ACE_Atomic_Op<ACE_SYNCH_MUTEX, int>;
 #pragma instantiate ACE_Atomic_Op<ACE_SYNCH_MUTEX, int>
 
 #endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-
-

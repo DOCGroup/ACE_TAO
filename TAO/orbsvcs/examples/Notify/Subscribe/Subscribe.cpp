@@ -15,7 +15,7 @@ ACE_RCSID(Notify, Subscribe, "$Id$")
 #define TYPE_C "type_c"
 
 #define EVENT_COUNT 4 // number of events we expect the consumer to get from the EC
-  
+
   ACE_Atomic_Op <ACE_SYNCH_MUTEX, int> g_result_count = 0; // we wait for 4 events.
 
 Subscribe::Subscribe (void)
@@ -56,10 +56,11 @@ Subscribe::run (CORBA::Environment &ACE_TRY_ENV)
   this->send_events (ACE_TRY_ENV);
   ACE_CHECK;
 
-  this->orb_->run (ACE_TRY_ENV);
+  if (g_result_count != EVENT_COUNT) // if we still need to wait for events, run the orb.
+    this->orb_->run (ACE_TRY_ENV);
 }
 
-void 
+void
 Subscribe::done (void)
 {
   this->orb_->shutdown ();
