@@ -1,3 +1,16 @@
+Sun Jan 16 07:05:06 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/GIOP_Mesage_Base.cpp:
+	* tao/GIOP_Message_Handler.cpp:
+	* tao/GIOP_Message_Handler.h:
+	* tao/GIOP_Message_Handler.inl: Made changes to the way multiple
+	  messages that are read from the stream are handled. Initially,
+	  every message was split and put into a seperate buffer for
+	  processing. Now, we dump the whole message in to a new buffer and
+	  keep reading from that buffer for processing. This fixes some
+	  bizzare problems that we saw in a test which will be checked in
+	  next.
+
 Mon Jan 15 19:28:20 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be_global.cpp:
@@ -9,7 +22,7 @@ Mon Jan 15 19:28:20 2001  Jeff Parsons <parsons@cs.wustl.edu>
             Mon Jan 15 14:04:18 2001  Jeff Parsons <parsons@cs.wustl.edu>
           doesn't work for interfaces defined inside a module or nested
           modules, since the proxy broker factory function pointers
-          must be declared globally. The above changes move the 
+          must be declared globally. The above changes move the
           declaration(s) to a point in the client header file just
           after the close of any namespace(s) that may have been declared
           in the IDL file.
@@ -20,10 +33,10 @@ Mon Jan 15 19:28:20 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Mon Jan 15 19:26:30 2001  Priyanka Gontla <pgontla@ece.uci.edu>
 
-	* tao/ORB_Core.cpp: 
-	  Added correct if-def guards to get ORB_Core.cpp compiled when 
+	* tao/ORB_Core.cpp:
+	  Added correct if-def guards to get ORB_Core.cpp compiled when
 	  TAO_HAS_RT_CORBA==0
-	
+
 	  Thanks to David Allen <dallen@storm.com> for reporting this.
 
 Mon Jan 15 16:02:59 2001  Christopher Kohlhoff <chris@kohlhoff.com>
@@ -48,7 +61,7 @@ Mon Jan 15 14:04:18 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
           Moved code generation for declaration and initialization of
           xxx_Proxy_Broker_Factory_function_pointer from the any_op
-          visitor to the corresponding proxy broker visitor. The 
+          visitor to the corresponding proxy broker visitor. The
           original intention was to prevent the declaration of this
           function pointer for local interfaces, in which case,
           generation of the Any operatiors would be skipped. However,
@@ -58,13 +71,13 @@ Mon Jan 15 14:04:18 2001  Jeff Parsons <parsons@cs.wustl.edu>
           The proxy broker visitors above are also skipped if the
           interface is local, so the condition is still enforced, while
           no longer making the generation of the function pointer
-          dependent on the generation of the Any operators. Thanks to 
+          dependent on the generation of the Any operators. Thanks to
           Max Khon <fjoe@iclub.nsu.ru> for reporting this bug.
 
 Sun Jan 14 07:05:06 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/IIOP_Transport.cpp : A stupid typo that was giving errors
-	  with g++ :( 
+	  with g++ :(
 
 Sat Jan 13 18:25:47 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 

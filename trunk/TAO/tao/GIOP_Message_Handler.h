@@ -123,9 +123,9 @@ private:
   /// Extract a CORBA::ULong from the <current_buffer_>
   CORBA::ULong read_ulong (const char *buf);
 
-  /// Align the left over info in the <current_buffer_> to the start
-  /// of the message block.
-  void align_left_info (void);
+  /// Get the next message from the <supp_buffer_> in to the
+  /// <current_buffer_>
+  int get_message (void);
 
 private:
 
