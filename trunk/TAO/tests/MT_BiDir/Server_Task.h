@@ -1,9 +1,10 @@
+// -*- C++ -*-
 //
 // $Id$
-//
 
 #ifndef MT_BIDIR_SERVER_TASK_H
 #define MT_BIDIR_SERVER_TASK_H
+
 #include /**/ "ace/pre.h"
 
 #include "ace/Task.h"
@@ -11,9 +12,11 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "tao/ORB.h"
 
 class Sender_i;
+class ACE_Manual_Event;
 
 /// Implement a Task to run the experiments using multiple threads.
 class Server_Task : public ACE_Task_Base
@@ -44,4 +47,5 @@ private:
 };
 
 #include /**/ "ace/post.h"
+
 #endif /* MT_BIDIR_SERVER_TASK_H */

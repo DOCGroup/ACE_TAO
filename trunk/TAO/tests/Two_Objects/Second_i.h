@@ -7,6 +7,8 @@
 
 #include "Two_ObjectsS.h"
 
+class ACE_Auto_Event;
+
 /// Implement the POA_Two_Objects_Test::Second interface
 class Second_i
   : public virtual POA_Two_Objects_Test::Second

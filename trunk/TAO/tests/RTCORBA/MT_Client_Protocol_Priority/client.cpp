@@ -5,6 +5,7 @@
 #include "tao/RTCORBA/Priority_Mapping_Manager.h"
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
+#include "ace/Barrier.h"
 #include "tao/ORB_Core.h"
 #include "../check_supported_priorities.cpp"
 #include "tao/Strategies/advanced_resource.h"

@@ -1,9 +1,10 @@
+// -*- C++ -*-
 //
 // $Id$
-//
 
 #ifndef COLLOCATED_SERVER_TASK_H
 #define COLLOCATED_SERVER_TASK_H
+
 #include /**/ "ace/pre.h"
 
 #include "ace/Task.h"
@@ -13,6 +14,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/ORB.h"
+
+class ACE_Manual_Event;
 
 /// Implement a Task to run the server in a single thread
 class Server_Task : public ACE_Task_Base
@@ -39,4 +42,5 @@ private:
 };
 
 #include /**/ "ace/post.h"
-#endif /* COLLOCATED_SERVER_TASK_H */
+
+#endif  /* COLLOCATED_SERVER_TASK_H */
