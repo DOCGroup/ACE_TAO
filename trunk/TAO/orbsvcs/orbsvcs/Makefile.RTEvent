@@ -103,7 +103,6 @@ CPP_SRCS += \
         Event/ECG_UDP_EH \
         Event/ECG_Mcast_EH \
         Event/ECG_UDP_Receiver \
-	Event/CRC \
         Event/ECG_CDR_Message_Sender 
 
 IDL_SRC = \
