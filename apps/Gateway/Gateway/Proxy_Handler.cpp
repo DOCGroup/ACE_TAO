@@ -41,7 +41,7 @@ Proxy_Handler::Proxy_Handler (const Proxy_Config_Info &pci)
     state_ (Proxy_Handler::IDLE),
     timeout_ (1),
     max_timeout_ (pci.max_retry_timeout_),
-    event_channel_ (*pci.event_channel_)
+    event_channel_ (pci.event_channel_)
 {
   // Set the priority of the Proxy.
   this->priority (int (pci.priority_));
@@ -117,7 +117,7 @@ Proxy_Handler::handle_timeout (const ACE_Time_Value &,
              this->id (), this->timeout_));
 
   // Delegate the re-connection attempt to the Event Channel.
-  return this->event_channel_.initiate_proxy_connection 
+  return this->event_channel_->initiate_proxy_connection 
     (this, ACE_Synch_Options::asynch);
 }
 
@@ -132,7 +132,7 @@ Proxy_Handler::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
 	      this->id (), this->get_handle ()));
   
   // Restart the connection, if possible.
-  return this->event_channel_.reinitiate_proxy_connection (this);
+  return this->event_channel_->reinitiate_proxy_connection (this);
 }
 
 // Set the state of the Proxy.
@@ -158,7 +158,7 @@ Proxy_Handler::open (void *)
     ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "enable"), -1);
 
   // Call back to the <Event_Channel> to complete our initialization.
-  else if (this->event_channel_.complete_proxy_connection (this) == -1)
+  else if (this->event_channel_->complete_proxy_connection (this) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "complete_proxy_connection"), -1);
 
   // Register ourselves to receive input events.
