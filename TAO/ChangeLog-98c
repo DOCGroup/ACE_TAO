@@ -1,3 +1,8 @@
+Thu May 14 14:34:40 1998  Michael Kircher  <mk1@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Makefile: CosLifeCycle is now compiled
+	  by default.
+
 Thu May 14 14:10:40 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
 	* tests/Quoter/{Factory_Trader.cpp, Factory_Trader.h 
