@@ -109,8 +109,9 @@ public: // Should be protected:
 
   // = Pointers to next ACE_Task_Base (if ACE is part of an ACE_Stream).
   /// Get next Task pointer.
-  /// Set next Task pointer.
   ACE_Task<ACE_SYNCH_USE> *next (void);
+
+  /// Set next Task pointer.
   void next (ACE_Task<ACE_SYNCH_USE> *);
 
   /// Return the Task's sibling if there's one associated with the
@@ -121,7 +122,7 @@ public: // Should be protected:
   ACE_Module<ACE_SYNCH_USE> *module (void) const;
 
   /**
-   * Flush the queue, i.e., close it down and free all of the enqueued 
+   * Flush the queue, i.e., close it down and free all of the enqueued
    * message blocks and releases any threads blocked on the queue.
    * Note that if this conflicts with the C++ iostream <flush>
    * function, just rewrite the iostream function as ::<flush>.

@@ -134,18 +134,18 @@ private:
 
   struct Tuple
   {
+    /// Pointer to the object that is registered.
     const void *this_;
-    // Pointer to the object that is registered.
 
+    /// Smart pointer to the ACE_Dumpable object associated with this_.
+    /// This uses an ACE_Dumpable_Ptr, instead of a bare pointer, to
+    /// cope with hierarchies of dumpable classes.  In such cases we
+    /// typically want only one dump, corresponding to the most derived
+    /// instance. To achieve this, the handle registered for the
+    /// subobject corresponding to the base class is destroyed (hence
+    /// on destruction of the subobject its handle won't exist anymore
+    /// and we'll have to check for that).
     const ACE_Dumpable_Ptr dumper_;
-    // Smart pointer to the ACE_Dumpable object associated with this_.
-    // This uses an ACE_Dumpable_Ptr, instead of a bare pointer, to
-    // cope with hierarchies of dumpable classes.  In such cases we
-    // typically want only one dump, corresponding to the most derived
-    // instance. To achieve this, the handle registered for the
-    // subobject corresponding to the base class is destroyed (hence
-    // on destruction of the subobject its handle won't exist anymore
-    // and we'll have to check for that).
 
     Tuple (void) : dumper_(0) {}
   };

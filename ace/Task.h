@@ -189,8 +189,8 @@ public:
   // since they are inherently error-prone to use.  They are only here
   // for (the rare) applications that know how to use them correctly.
   /// Suspend a task.
-  /// Resume a suspended task.
   virtual int suspend (void);
+  /// Resume a suspended task.
   virtual int resume (void);
 
   /// Get the current group id.
