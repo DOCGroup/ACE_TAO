@@ -64,7 +64,7 @@ CORBA::Object_ptr
 TAO_Naming_Loader::create_object (CORBA::ORB_ptr orb,
                                   int argc, char *argv[],
                                   CORBA::Environment &)
-   ACE_THROW_SPEC (())
+   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   int result;
 

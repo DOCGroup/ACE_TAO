@@ -13,7 +13,7 @@ void
 AddrServer::get_addr (const RtecEventComm::EventHeader&,
                       RtecUDPAdmin::UDP_Addr_out addr,
                       CORBA::Environment&)
-    ACE_THROW_SPEC (())
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   addr = this->addr_;
 }
