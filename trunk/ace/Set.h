@@ -22,7 +22,7 @@
 // Forward declarations.
 template <class T> class ACE_Unbounded_Set;
 
-// "Cheshire cat"
+// "Cheshire cat" forward decl.
 template <class T> class ACE_Set_Node;
 
 template <class T>

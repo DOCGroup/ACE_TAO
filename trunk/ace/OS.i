@@ -5948,8 +5948,8 @@ ACE_OS::gethrtime (void)
 #elif defined (ACE_HAS_POWERPC) && defined (ghs)
   // PowerPC w/ GreenHills compiler on VxWorks
 
-  unsigned long most;
-  unsigned long least;
+  u_long most;
+  u_long least;
   return ACE_OS::readPPCTimeBase (most, least);
 
 #elif defined (ACE_HAS_CLOCK_GETTIME)
@@ -6202,15 +6202,18 @@ ACE_OS::nanosleep (const struct timespec *requested,
 {
   // ACE_TRACE ("ACE_OS::nanosleep");
 #if defined (ACE_HAS_CLOCK_GETTIME)
-  // ::nanosleep () is POSIX 1003.1b.  So is ::clock_gettime ().
-  // So, if ACE_HAS_CLOCK_GETTIME is defined, then ::nanosleep ()
-  // should be available on the platform.  On Solaris 2.x, both
-  // functions require linking with -lposix4.
+  // ::nanosleep () is POSIX 1003.1b.  So is ::clock_gettime ().  So,
+  // if ACE_HAS_CLOCK_GETTIME is defined, then ::nanosleep () should
+  // be available on the platform.  On Solaris 2.x, both functions
+  // require linking with -lposix4.
   return ::nanosleep (requested, remaining);
 #else
-  ACE_UNUSED_ARG (requested);
   ACE_UNUSED_ARG (remaining);
-  ACE_NOTSUP_RETURN (-1);
+
+  // Convert into seconds and microseconds.
+  ACE_Time_Value tv (requested->tv_sec, 
+		     requested->tv_nsec * 1000);
+  return ACE_OS::sleep (tv);
 #endif /* ACE_HAS_CLOCK_GETTIME */
 }
 
