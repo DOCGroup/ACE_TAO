@@ -1,8 +1,9 @@
 Fri Jun 25 22:30:24 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * docs/ACE-guidelines.html: always test on egcs before
-          commiting.  It catches real problems that some of
-          the other compilers we use miss.
+          commiting.  It catches real problems that are missed
+          by some of the other compilers we (well, some of us :-)
+          use.
 
 Fri Jun 25 22:20:16 1999  David L. Levine  <levine@cs.wustl.edu>
 
