@@ -1,10 +1,15 @@
+Thu Nov  6 07:04:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Queued_Message.h:
+          Added #include ace/os_include/os_stddef.h to get size_t
+
 Wed Nov  5 19:19:08 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/PollableC.cpp:
 	* tao/PollableC.h:
 	* tao/PollableC.i:
 
-	  Regenerated the code. 
+	  Regenerated the code.
 
 	* tao/Synch_Reply_Dispatcher.cpp:
 	* tao/DynamicInterface/DII_Reply_Dispatcher.cpp:
@@ -28,13 +33,13 @@ Wed Nov  5 19:19:08 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 Wed Nov 5 16:03:08 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
-	* orbsvcs/orbsvcs/AV/SCTP_SEQ.h: 	
-	* orbsvcs/orbsvcs/AV/SCTP_SEQ.cpp: 
+	* orbsvcs/orbsvcs/AV/SCTP_SEQ.h:
+	* orbsvcs/orbsvcs/AV/SCTP_SEQ.cpp:
 
 	  Added the change_qos (...) method to
 	  TAO_AV_SCTP_SEQ_Flow_Handler in order to set the specified
 	  Diffserv Codepoint on the data packets sent.
-	
+
 Wed Nov  5 09:56:26 2003  Chris Cleeland  <cleeland_c@ociweb.com>
 
 	* tao/ORB_Core.cpp (run): Removed 'int' declaration to prevent
@@ -51,9 +56,9 @@ Wed Nov  5 09:56:26 2003  Chris Cleeland  <cleeland_c@ociweb.com>
 
 Wed Nov  5 09:21:38 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* TAO_IDL/be/be_union.cpp: 
+	* TAO_IDL/be/be_union.cpp:
 
-	  Set the aggregate_seen_ bit inaddition to the union_seen_ bit. 
+	  Set the aggregate_seen_ bit inaddition to the union_seen_ bit.
 
 Wed Nov  5 05:33:44 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
@@ -70,14 +75,14 @@ Tue Nov  4 22:14:18 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* TAO_IDL/util/utl_global.cpp:
 
 	  Added a new bit union_seen_ to keep track of unions.
-	
+
 	* TAO_IDL/be/be_codegen.cpp:
 
 	  Generate OS_NS_string.h even when you see a union.
-	
+
 	* TAO_IDL/be/be_union.cpp:
 
-	  Set the union_seen_ bit within the visitor's constructor. 
+	  Set the union_seen_ bit within the visitor's constructor.
 
 Wed Nov  5 04:08:36 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
@@ -111,12 +116,12 @@ Wed Nov  5 04:08:36 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 Tue Nov  4 21:08:53 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_argument.cpp:
-	  
+
 	  Removed the check for !dcl->imported () in the constructor
 	  before setting the bits. This was required to get the right
 	  Valuetype includes within the generated code. The inclusion is
-	  necessary for eventtype {} declarations to work. 
-	  
+	  necessary for eventtype {} declarations to work.
+
 	* TAO_IDL/be/be_home.cpp:
 
 	  Within the constructor narrow the AST_Component to a
@@ -129,22 +134,22 @@ Tue Nov  4 21:08:53 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	  Added two new methods visit_component () and visit_component_fwd
 	  () that delegates to the visit_interface () and
-	  visit_interface_fwd () call. 
-	
+	  visit_interface_fwd () call.
+
 	* TAO_IDL/be/be_visitor_component/component_ch.cpp:
 	* TAO_IDL/be/be_visitor_component/component_cs.cpp:
 
 	  Bunch of changes to these files. The changes include
 
 	  - Generating and initializing the right collocated factory
-	    function pointer  
+	    function pointer
 	  - Generating the right implementation for the setup_collocation
-	    () call 
+	    () call
 	  - Generating the right implementation for the _narrow () call.
 	  - Removal of the old _unchecked_narrow () generation.
 	  - Removal of the tao_QueryInterface () call
-	
-	  With the above changes CIAO examples seem to compile fine. 
+
+	  With the above changes CIAO examples seem to compile fine.
 
 Tue Nov 04 19:36:46 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
