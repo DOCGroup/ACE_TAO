@@ -305,7 +305,7 @@ TAO_IIOP_Connector::make_profile (const char *endpoint,
 {
   // The endpoint should be of the form:
   //
-  //    N.n//host:port/object_key
+  //    //N.n@host:port/object_key
   //
   // or:
   //
