@@ -416,8 +416,10 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::grow_heap (void)
            (ACE_Timer_Node_T<TYPE> *[new_size]));
 #endif /* defined (__IBMCPP__) && (__IBMCPP__ >= 400) */
 
-  ACE_NEW (new_heap, (ACE_Timer_Node_T<TYPE> *[new_size]));
-  ACE_OS::memcpy (new_heap, this->heap_,
+  ACE_NEW (new_heap,
+           (ACE_Timer_Node_T<TYPE> *[new_size]));
+  ACE_OS::memcpy (new_heap,
+                  this->heap_,
                   max_size_ * sizeof *new_heap);
   delete [] this->heap_;
   this->heap_ = new_heap;
