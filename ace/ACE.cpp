@@ -111,9 +111,9 @@ ACE::unique_name (const void *object,
   // <object>.
   TCHAR temp_name[ACE_UNIQUE_NAME_LEN];
   ACE_OS::sprintf (temp_name,
-                   __TEXT ("%d %d"),
-                   ACE_OS::getpid (),
-                   object);
+                   __TEXT ("%x%d"),
+                   object,
+                   ACE_OS::getpid ());
   ACE_OS::strncpy (name,
                    temp_name,
                    length);
