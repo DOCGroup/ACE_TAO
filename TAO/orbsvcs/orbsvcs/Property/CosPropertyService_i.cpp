@@ -1053,7 +1053,9 @@ TAO_PropertySet::delete_properties (const CosPropertyService::PropertyNames &pro
   size_t sequence_length = property_names.length ();
 
   // Declare multiple exceptions' objecct.
-  CosPropertyService::MultipleExceptions multi_ex;
+  CosPropertyService::MultipleExceptions *multi_ex = 0;
+  ACE_NEW (multi_ex,
+           CosPropertyService::MultipleExceptions);
 
   for (size_t pi = 0; pi < sequence_length; pi++)
     {
@@ -1069,11 +1071,11 @@ TAO_PropertySet::delete_properties (const CosPropertyService::PropertyNames &pro
           TAO_TRY_ENV.print_exception ("InvalidPropertyName");
 
           // Put this exception in the multiple exception.
-          size_t len = multi_ex.exceptions.length ();
-          multi_ex.exceptions.length (len + 1);
-          multi_ex.exceptions[len].reason =
+          size_t len = multi_ex->exceptions.length ();
+          multi_ex->exceptions.length (len + 1);
+          multi_ex->exceptions[len].reason =
             CosPropertyService::invalid_property_name;
-          multi_ex.exceptions[len].failing_property_name =
+          multi_ex->exceptions[len].failing_property_name =
             property_names[pi];
         }
       TAO_CATCH (CosPropertyService::PropertyNotFound, ex)
@@ -1081,11 +1083,11 @@ TAO_PropertySet::delete_properties (const CosPropertyService::PropertyNames &pro
           TAO_TRY_ENV.print_exception ("PropertyNotFound");
 
           // Put this exception in the multiple exception.
-          size_t len = multi_ex.exceptions.length ();
-          multi_ex.exceptions.length (len + 1);
-          multi_ex.exceptions[len].reason =
+          size_t len = multi_ex->exceptions.length ();
+          multi_ex->exceptions.length (len + 1);
+          multi_ex->exceptions[len].reason =
             CosPropertyService::property_not_found;
-          multi_ex.exceptions[len].failing_property_name =
+          multi_ex->exceptions[len].failing_property_name =
             property_names[pi];
         }
       TAO_CATCH (CosPropertyService::FixedProperty, ex)
@@ -1093,11 +1095,11 @@ TAO_PropertySet::delete_properties (const CosPropertyService::PropertyNames &pro
           TAO_TRY_ENV.print_exception ("FixedProperty");
 
           // Put this exception in the multiple exception.
-          size_t len = multi_ex.exceptions.length ();
-          multi_ex.exceptions.length (len + 1);
-          multi_ex.exceptions[len].reason =
+          size_t len = multi_ex->exceptions.length ();
+          multi_ex->exceptions.length (len + 1);
+          multi_ex->exceptions[len].reason =
             CosPropertyService::fixed_property;
-          multi_ex.exceptions[len].failing_property_name =
+          multi_ex->exceptions[len].failing_property_name =
             property_names[pi];
         }
       TAO_CATCH (CORBA::SystemException, sysex)
@@ -1111,8 +1113,8 @@ TAO_PropertySet::delete_properties (const CosPropertyService::PropertyNames &pro
     }
 
   // Raise the multiple exceptions if there are any.
-  if (multi_ex.exceptions.length () > 0)
-    TAO_THROW (CosPropertyService::MultipleExceptions (multi_ex));
+  if (multi_ex->exceptions.length () > 0)
+    TAO_THROW (CosPropertyService::MultipleExceptions (*multi_ex));
 
   ACE_DEBUG ((LM_DEBUG, "delete_properties done\n"));
 
