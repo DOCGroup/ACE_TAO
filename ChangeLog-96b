@@ -1,5 +1,7 @@
 Tue Dec 10 00:33:08 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* Put out what is hopefully the final beta release of 4.0.33.
+
 	* ace/Message_Queue: Added the enqueue() method again to maintain
  	  backwards compatibility.  Thanks to Karlheinz for pointing out
  	  the need for this.
