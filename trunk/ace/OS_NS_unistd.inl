@@ -857,8 +857,23 @@ ACE_OS::read (ACE_HANDLE handle, void *buf, size_t len)
 # else
   ACE_OSCALL (::read (handle, buf, len), ssize_t, -1, result);
 # endif /* ACE_LACKS_POSIX_PROTOTYPES */
-  if (result == -1 && errno == EAGAIN)
-    errno = EWOULDBLOCK;
+
+# if !(defined (EAGAIN) && defined (EWOULDBLOCK) && EAGAIN == EWOULDBLOCK)
+  // Optimize this code out if we can detect that EAGAIN ==
+  // EWOULDBLOCK at compile time.  If we cannot detect equality at
+  // compile-time (e.g. if EAGAIN or EWOULDBLOCK are not preprocessor
+  // macros) perform the check at run-time.  The goal is to avoid two
+  // TSS accesses in the _REENTRANT case when EAGAIN == EWOULDBLOCK.
+  if (result == -1
+#  if !defined (EAGAIN) || !defined (EWOULDBLOCK)
+      && EAGAIN != EWOULDBLOCK
+#  endif  /* !EAGAIN || !EWOULDBLOCK */
+      && errno == EAGAIN)
+    {
+      errno = EWOULDBLOCK;
+    }
+# endif /* EAGAIN != EWOULDBLOCK*/
+
   return result;
 #endif /* ACE_WIN32 */
 }
