@@ -1,10 +1,10 @@
-# Microsoft Developer Studio Project File - Name="Structured_Filter_Consumer" - Package Owner=<4>
+# Microsoft Developer Studio Project File - Name="Filter Structured Consumer" - Package Owner=<4>
 # Microsoft Developer Studio Generated Build File, Format Version 6.00
 # ** DO NOT EDIT **
 
 # TARGTYPE "Win32 (x86) Console Application" 0x0103
 
-CFG=Structured_Filter_Consumer - Win32 Debug
+CFG=Filter Structured Consumer - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
@@ -13,12 +13,12 @@ CFG=Structured_Filter_Consumer - Win32 Debug
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "Structured_Filter_Consumer.mak" CFG="Structured_Filter_Consumer - Win32 Debug"
+!MESSAGE NMAKE /f "Structured_Filter_Consumer.mak" CFG="Filter Structured Consumer - Win32 Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "Structured_Filter_Consumer - Win32 Release" (based on "Win32 (x86) Console Application")
-!MESSAGE "Structured_Filter_Consumer - Win32 Debug" (based on "Win32 (x86) Console Application")
+!MESSAGE "Filter Structured Consumer - Win32 Release" (based on "Win32 (x86) Console Application")
+!MESSAGE "Filter Structured Consumer - Win32 Debug" (based on "Win32 (x86) Console Application")
 !MESSAGE 
 
 # Begin Project
@@ -28,7 +28,7 @@ CFG=Structured_Filter_Consumer - Win32 Debug
 CPP=cl.exe
 RSC=rc.exe
 
-!IF  "$(CFG)" == "Structured_Filter_Consumer - Win32 Release"
+!IF  "$(CFG)" == "Filter Structured Consumer - Win32 Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
@@ -53,7 +53,7 @@ LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
 # ADD LINK32 TAO_NotifyTests.lib TAO_CosNotification.lib TAO_CosNaming.lib TAO_Svc_Utils.lib TAO_PortableServer.lib TAO.lib ace.lib /nologo /subsystem:console /machine:I386 /out:"Release/Consumer.exe" /libpath:"..\lib" /libpath:"..\..\..\orbsvcs" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\tao\PortableServer" /libpath:"..\..\..\..\..\ace"
 
-!ELSEIF  "$(CFG)" == "Structured_Filter_Consumer - Win32 Debug"
+!ELSEIF  "$(CFG)" == "Filter Structured Consumer - Win32 Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -82,8 +82,8 @@ LINK32=link.exe
 
 # Begin Target
 
-# Name "Structured_Filter_Consumer - Win32 Release"
-# Name "Structured_Filter_Consumer - Win32 Debug"
+# Name "Filter Structured Consumer - Win32 Release"
+# Name "Filter Structured Consumer - Win32 Debug"
 # Begin Group "Source Files"
 
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
@@ -139,7 +139,7 @@ SOURCE=.\controlS.i
 
 SOURCE=.\control.idl
 
-!IF  "$(CFG)" == "Structured_Filter_Consumer - Win32 Release"
+!IF  "$(CFG)" == "Filter Structured Consumer - Win32 Release"
 
 USERDEP__CONTR="..\..\..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO IDL Compiler on $(InputPath)
@@ -151,7 +151,7 @@ InputName=control
 
 # End Custom Build
 
-!ELSEIF  "$(CFG)" == "Structured_Filter_Consumer - Win32 Debug"
+!ELSEIF  "$(CFG)" == "Filter Structured Consumer - Win32 Debug"
 
 USERDEP__CONTR="..\..\..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO IDL Compiler on $(InputPath)

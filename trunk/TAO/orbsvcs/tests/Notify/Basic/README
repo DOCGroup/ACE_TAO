@@ -21,7 +21,7 @@ Command line parameters:
 "-consumers <number_of_consumers>",
 "-suppliers <number_of_suppliers>",
 
-LifeCycleTest:
+LifeCycle:
 -------------
 Creates and destroys EC and Admin objects.
 
@@ -42,7 +42,7 @@ Command line parameters:
 "-sa_count <count>\n", count is number of supplier admin (sa) objects to create 
 
 
-AdminProperties_Test
+AdminProperties
 --------------------
 Tests out the EC Admin QoSproperties:
 
@@ -56,10 +56,10 @@ command line parameters:
 -suppliers [suppliers]
 -event_count [event_count]
 
-Events_Test:
+Events:
 ----------
 (Under construction)
 
-Priority_Test:
+Priority:
 ------------
 (Under construction)

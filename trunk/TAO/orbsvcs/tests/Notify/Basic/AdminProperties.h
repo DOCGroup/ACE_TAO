@@ -3,7 +3,7 @@
 // ==========================================================================
 //
 // = FILENAME
-//   AdminProperties_Test.h
+//   AdminProperties.h
 //
 // = DESCRIPTION
 //   Test for EC Admin QoS properties.
@@ -13,15 +13,15 @@
 //
 // ==========================================================================
 
-#ifndef ADMINPROPERTIES_TEST
-#define ADMINPROPERTIES_TEST
+#ifndef ADMINPROPERTIES
+#define ADMINPROPERTIES
 
 #include "Notify_Test_Client.h"
 
-class AdminProperties_Test : public Notify_Test_Client
+class AdminProperties : public Notify_Test_Client
 {
   // = TITLE
-  //   AdminProperties_Test
+  //   AdminProperties
   //
   // = DESCRIPTION
   //   Test for Notify EC properties -
@@ -31,8 +31,8 @@ class AdminProperties_Test : public Notify_Test_Client
   //   reject_new_events
   //
 public:
-  AdminProperties_Test (void);
-  ~AdminProperties_Test (void);
+  AdminProperties (void);
+  ~AdminProperties (void);
 
   int parse_args (int argc,
                   char *argv[]) ;
@@ -74,4 +74,4 @@ protected:
   // Number of events to send to the channel.
 };
 
-#endif /* ADMINPROPERTIES_TEST */
+#endif /* ADMINPROPERTIES */

@@ -1,24 +1,24 @@
-# Microsoft Developer Studio Project File - Name="LifeCycleTest" - Package Owner=<4>
+# Microsoft Developer Studio Project File - Name="Basic AdminProperties" - Package Owner=<4>
 # Microsoft Developer Studio Generated Build File, Format Version 6.00
 # ** DO NOT EDIT **
 
 # TARGTYPE "Win32 (x86) Console Application" 0x0103
 
-CFG=LifeCycleTest - Win32 Debug
+CFG=Basic AdminProperties - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
-!MESSAGE NMAKE /f "LifeCycleTest.mak".
+!MESSAGE NMAKE /f "AdminProperties.mak".
 !MESSAGE 
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "LifeCycleTest.mak" CFG="LifeCycleTest - Win32 Debug"
+!MESSAGE NMAKE /f "AdminProperties.mak" CFG="Basic AdminProperties - Win32 Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "LifeCycleTest - Win32 Release" (based on "Win32 (x86) Console Application")
-!MESSAGE "LifeCycleTest - Win32 Debug" (based on "Win32 (x86) Console Application")
+!MESSAGE "Basic AdminProperties - Win32 Release" (based on "Win32 (x86) Console Application")
+!MESSAGE "Basic AdminProperties - Win32 Debug" (based on "Win32 (x86) Console Application")
 !MESSAGE 
 
 # Begin Project
@@ -28,7 +28,7 @@ CFG=LifeCycleTest - Win32 Debug
 CPP=cl.exe
 RSC=rc.exe
 
-!IF  "$(CFG)" == "LifeCycleTest - Win32 Release"
+!IF  "$(CFG)" == "Basic AdminProperties - Win32 Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
@@ -51,15 +51,15 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
-# ADD LINK32 ace.lib TAO.lib TAO_PortableServer.lib TAO_ETCL.lib TAO_CosNotification.lib TAO_CosNaming.lib TAO_NotifyTests.lib /nologo /subsystem:console /pdb:"LifeCycleTest.pdb" /machine:I386 /pdbtype:sept /libpath:"..\lib" /libpath:"..\..\..\orbsvcs" /libpath:"..\..\..\orbsvcs\ETCL" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\tao\PortableServer" /libpath:"..\..\..\..\..\ace"
-# SUBTRACT LINK32 /pdb:none /incremental:yes /map /debug
+# ADD LINK32 ace.lib TAO.lib TAO_PortableServer.lib TAO_ETCL.lib TAO_CosNotification.lib TAO_CosNaming.lib TAO_NotifyTests.lib /nologo /subsystem:console /machine:IX86 /libpath:"..\lib" /libpath:"..\..\..\orbsvcs" /libpath:"..\..\..\orbsvcs\ETCL" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\tao\PortableServer" /libpath:"..\..\..\..\..\ace"
+# SUBTRACT LINK32 /incremental:yes /map
 
-!ELSEIF  "$(CFG)" == "LifeCycleTest - Win32 Debug"
+!ELSEIF  "$(CFG)" == "Basic AdminProperties - Win32 Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "LifeCycleTest___Win32_Debug"
-# PROP BASE Intermediate_Dir "LifeCycleTest___Win32_Debug"
+# PROP BASE Output_Dir "Basic AdminProperties___Win32_Debug"
+# PROP BASE Intermediate_Dir "Basic AdminProperties___Win32_Debug"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
@@ -68,7 +68,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\..\..\\" /I "..\..\..\..\..\\" /I "..\lib" /I "..\..\..\\" /D "_DEBUG" /D "WIN32" /D "_CONSOLE" /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\..\\" /I "..\..\..\..\\" /I "..\..\..\..\..\\" /I "..\lib" /D "_DEBUG" /D "WIN32" /D "_CONSOLE" /FD /c
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -76,21 +76,21 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 aced.lib TAOd.lib TAO_PortableServerd.lib TAO_ETCLd.lib TAO_CosNotificationd.lib TAO_CosNamingd.lib TAO_NotifyTestsd.lib /nologo /subsystem:console /pdb:"LifeCycleTest.pdb" /map:"Debug/LifeCycleTest.map" /debug /machine:I386 /pdbtype:sept /libpath:"..\lib" /libpath:"..\..\..\orbsvcs" /libpath:"..\..\..\orbsvcs\ETCL" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\tao\PortableServer" /libpath:"..\..\..\..\..\ace"
+# ADD LINK32 aced.lib TAOd.lib TAO_PortableServerd.lib TAO_ETCLd.lib TAO_CosNotificationd.lib TAO_CosNamingd.lib TAO_NotifyTestsd.lib /nologo /subsystem:console /pdb:"Basic AdminProperties.pdb" /map:"Debug/Basic AdminProperties.map" /debug /machine:I386 /pdbtype:sept /libpath:"..\lib" /libpath:"..\..\..\orbsvcs" /libpath:"..\..\..\orbsvcs\ETCL" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\tao\PortableServer" /libpath:"..\..\..\..\..\ace"
 # SUBTRACT LINK32 /pdb:none
 
 !ENDIF 
 
 # Begin Target
 
-# Name "LifeCycleTest - Win32 Release"
-# Name "LifeCycleTest - Win32 Debug"
+# Name "Basic AdminProperties - Win32 Release"
+# Name "Basic AdminProperties - Win32 Debug"
 # Begin Group "Source Files"
 
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 # Begin Source File
 
-SOURCE=.\LifeCycleTest.cpp
+SOURCE=.\AdminProperties.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -98,7 +98,7 @@ SOURCE=.\LifeCycleTest.cpp
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
 # Begin Source File
 
-SOURCE=.\LifeCycleTest.h
+SOURCE=.\AdminProperties.h
 # End Source File
 # End Group
 # Begin Group "Resource Files"

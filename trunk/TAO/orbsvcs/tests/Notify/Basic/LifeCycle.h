@@ -3,7 +3,7 @@
 // ==========================================================================
 //
 // = FILENAME
-//   LifeCycleTest.h
+//   LifeCycle.h
 //
 // = DESCRIPTION
 //   Test to check it ec and admin objects are destroyed.
@@ -16,11 +16,11 @@
 #ifndef NOTIFY_LIFECYCLETST_H
 #define NOTIFY_LIFECYCLETST_H
 
-class LifeCycleTest
+class LifeCycle
 {
 public:
-  LifeCycleTest (void);
-  ~LifeCycleTest (void);
+  LifeCycle (void);
+  ~LifeCycle (void);
 
   void init (int argc,
              char *argv[]

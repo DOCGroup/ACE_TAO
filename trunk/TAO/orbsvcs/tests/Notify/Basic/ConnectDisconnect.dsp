@@ -1,10 +1,10 @@
-# Microsoft Developer Studio Project File - Name="ConnectDisconnect" - Package Owner=<4>
+# Microsoft Developer Studio Project File - Name="Basic ConnectDisconnect" - Package Owner=<4>
 # Microsoft Developer Studio Generated Build File, Format Version 6.00
 # ** DO NOT EDIT **
 
 # TARGTYPE "Win32 (x86) Console Application" 0x0103
 
-CFG=ConnectDisconnect - Win32 Debug
+CFG=Basic ConnectDisconnect - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
@@ -13,12 +13,12 @@ CFG=ConnectDisconnect - Win32 Debug
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "ConnectDisconnect.mak" CFG="ConnectDisconnect - Win32 Debug"
+!MESSAGE NMAKE /f "ConnectDisconnect.mak" CFG="Basic ConnectDisconnect - Win32 Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "ConnectDisconnect - Win32 Release" (based on "Win32 (x86) Console Application")
-!MESSAGE "ConnectDisconnect - Win32 Debug" (based on "Win32 (x86) Console Application")
+!MESSAGE "Basic ConnectDisconnect - Win32 Release" (based on "Win32 (x86) Console Application")
+!MESSAGE "Basic ConnectDisconnect - Win32 Debug" (based on "Win32 (x86) Console Application")
 !MESSAGE 
 
 # Begin Project
@@ -28,7 +28,7 @@ CFG=ConnectDisconnect - Win32 Debug
 CPP=cl.exe
 RSC=rc.exe
 
-!IF  "$(CFG)" == "ConnectDisconnect - Win32 Release"
+!IF  "$(CFG)" == "Basic ConnectDisconnect - Win32 Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
@@ -51,15 +51,15 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
-# ADD LINK32 ace.lib TAO.lib TAO_PortableServer.lib TAO_ETCL.lib TAO_CosNotification.lib TAO_CosNaming.lib TAO_NotifyTests.lib TAO_CosEvent.lib /nologo /subsystem:console /pdb:"ConnectDisconnect.pdb" /machine:IX86 /libpath:"..\lib" /libpath:"..\..\..\orbsvcs" /libpath:"..\..\..\orbsvcs\ETCL" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\tao\PortableServer" /libpath:"..\..\..\..\..\ace"
+# ADD LINK32 ace.lib TAO.lib TAO_PortableServer.lib TAO_ETCL.lib TAO_CosNotification.lib TAO_CosNaming.lib TAO_NotifyTests.lib TAO_CosEvent.lib /nologo /subsystem:console /pdb:"Basic ConnectDisconnect.pdb" /machine:IX86 /libpath:"..\lib" /libpath:"..\..\..\orbsvcs" /libpath:"..\..\..\orbsvcs\ETCL" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\tao\PortableServer" /libpath:"..\..\..\..\..\ace"
 # SUBTRACT LINK32 /pdb:none /incremental:yes /map
 
-!ELSEIF  "$(CFG)" == "ConnectDisconnect - Win32 Debug"
+!ELSEIF  "$(CFG)" == "Basic ConnectDisconnect - Win32 Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "ConnectDisconnect___Win32_Debug"
-# PROP BASE Intermediate_Dir "ConnectDisconnect___Win32_Debug"
+# PROP BASE Output_Dir "Basic ConnectDisconnect___Win32_Debug"
+# PROP BASE Intermediate_Dir "Basic ConnectDisconnect___Win32_Debug"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
@@ -83,8 +83,8 @@ LINK32=link.exe
 
 # Begin Target
 
-# Name "ConnectDisconnect - Win32 Release"
-# Name "ConnectDisconnect - Win32 Debug"
+# Name "Basic ConnectDisconnect - Win32 Release"
+# Name "Basic ConnectDisconnect - Win32 Debug"
 # Begin Group "Source Files"
 
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"

@@ -2,13 +2,14 @@
 
 #include "ace/Arg_Shifter.h"
 #include "ace/Get_Opt.h"
-#include "Events_Test.h"
+#include "tao/debug.h"
+#include "Events.h"
 
-ACE_RCSID (Notify_Tests, Events_Test, "$Id$")
+ACE_RCSID (Notify_Tests, Events, "$Id$")
 
 /***************************************************************************/
 
-Event_StructuredPushConsumer::Event_StructuredPushConsumer (Events_Test *test_client)
+Event_StructuredPushConsumer::Event_StructuredPushConsumer (Events *test_client)
   : test_client_ (test_client)
 {
 }
@@ -24,9 +25,10 @@ Event_StructuredPushConsumer::push_structured_event (
   int event_num;
   notification.filterable_data[0].value >>= event_num;
 
-  ACE_DEBUG((LM_DEBUG,
-             "Received event# %d\n",
-             event_num));
+  if (TAO_debug_level)
+    ACE_DEBUG ((LM_DEBUG,
+                "Received event# %d\n",
+                event_num));
 
   this->test_client_->on_event_received ();
 }
@@ -34,7 +36,7 @@ Event_StructuredPushConsumer::push_structured_event (
 /***************************************************************************/
 
 Event_StructuredPushSupplier::Event_StructuredPushSupplier (
-    Events_Test* test_client
+    Events* test_client
   )
   : test_client_ (test_client)
 {
@@ -45,17 +47,17 @@ Event_StructuredPushSupplier::~Event_StructuredPushSupplier (void)
 }
 
 /***************************************************************************/
-Events_Test::Events_Test (void)
+Events::Events (void)
   : event_count_ (5)
 {
 }
 
-Events_Test::~Events_Test (void)
+Events::~Events (void)
 {
 }
 
 int
-Events_Test::init (int argc,
+Events::init (int argc,
                    char* argv []
                    ACE_ENV_ARG_DECL)
 {
@@ -123,7 +125,7 @@ Events_Test::init (int argc,
 }
 
 int
-Events_Test::parse_args (int argc,
+Events::parse_args (int argc,
                          char *argv[])
 {
     ACE_Arg_Shifter arg_shifter (argc,
@@ -159,7 +161,7 @@ Events_Test::parse_args (int argc,
 }
 
 void
-Events_Test::create_EC (ACE_ENV_SINGLE_ARG_DECL)
+Events::create_EC (ACE_ENV_SINGLE_ARG_DECL)
 {
   CosNotifyChannelAdmin::ChannelID id;
 
@@ -192,13 +194,14 @@ Events_Test::create_EC (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-Events_Test::on_event_received (void)
+Events::on_event_received (void)
 {
   ++this->result_count_;
 
-  ACE_DEBUG ((LM_DEBUG,
-              "event count = #%d\n",
-              this->result_count_.value ()));
+  if (TAO_debug_level)
+    ACE_DEBUG ((LM_DEBUG,
+                "event count = #%d\n",
+                this->result_count_.value ()));
 
   if (this->result_count_ == 2 * this->event_count_)
     {
@@ -209,7 +212,7 @@ Events_Test::on_event_received (void)
 }
 
 void
-Events_Test::run_test (ACE_ENV_SINGLE_ARG_DECL)
+Events::run_test (ACE_ENV_SINGLE_ARG_DECL)
 {
   // operations:
   CosNotification::StructuredEvent event;
@@ -262,13 +265,13 @@ Events_Test::run_test (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-Events_Test::end_test (ACE_ENV_SINGLE_ARG_DECL)
+Events::end_test (ACE_ENV_SINGLE_ARG_DECL)
 {
   this->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 int
-Events_Test::check_results (void)
+Events::check_results (void)
 {
   // Destroy the channel.
   ACE_DECLARE_NEW_CORBA_ENV;
@@ -294,7 +297,7 @@ Events_Test::check_results (void)
 int
 main (int argc, char* argv[])
 {
-  Events_Test events;
+  Events events;
 
   if (events.parse_args (argc, argv) == -1)
     {

@@ -13,10 +13,10 @@ ifndef TAO_ROOT
 endif # ! TAO_ROOT
 
 BIN2 =  ConnectDisconnect \
-	LifeCycleTest \
+	LifeCycle \
 	IdAssignment \
-	Events_Test \
-	AdminProperties_Test \
+	Events \
+	AdminProperties \
 	Simple
 
 #### If the orbsvcs library wasn't built with all components, don't

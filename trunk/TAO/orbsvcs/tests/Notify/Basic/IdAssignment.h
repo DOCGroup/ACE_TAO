@@ -3,7 +3,7 @@
 // ==========================================================================
 //
 // = FILENAME
-//   LifeCycleTest.h
+//   IdAssignment.h
 //
 // = DESCRIPTION
 //   Test to check if ec, admin  are assigned id's correctly.
