@@ -194,7 +194,7 @@ class ACE_Export ACE_Sig_Handler
   //    <ACE_Event_Handler> is invoked automatically.
 public:
   ACE_Sig_Handler (void);
-  ~ACE_Sig_Handler (void);
+  virtual ~ACE_Sig_Handler (void);
   // Default ctor/dtor.
 
   // = Registration and removal methods.
