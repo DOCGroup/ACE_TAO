@@ -1,73 +1,77 @@
+Mon Jul 20 19:06:57 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/Invocation.cpp (invoke): wrapped final return statement
+          with ACE_NOTREACHED.
 
 Mon Jul 20 18:17:02 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* docs/releasenotes/index.html: Updated the IDL compiler entry
-	(GPERF-IDL integration).
+        * docs/releasenotes/index.html: Updated the IDL compiler entry
+        (GPERF-IDL integration).
 
 Mon Jul 20 17:51:01 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Trader/Offer_Iterators.h:
-	* orbsvcs/orbsvcs/Trader/Trader_Utils.h:
-	* orbsvcd/tests/Trading/import_test.cpp:
-	  Fixed another g++ linker error and one compile-time error.
+        * orbsvcs/orbsvcs/Trader/Offer_Iterators.h:
+        * orbsvcs/orbsvcs/Trader/Trader_Utils.h:
+        * orbsvcd/tests/Trading/import_test.cpp:
+          Fixed another g++ linker error and one compile-time error.
 
 Mon Jul 20 17:30:49 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* TAO_IDL/be/be_interface.cpp (gen_perfect_hash_methods): Changed
-	the absolute path for gperf to $ACE/bin. 
+        * TAO_IDL/be/be_interface.cpp (gen_perfect_hash_methods): Changed
+        the absolute path for gperf to $ACE/bin.
 
 Mon Jul 20 16:55:54 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
-	* TAO_IDL/be/be_interface.cpp (copy_ctor_helper):
-	* TAO_IDL/be/be_visitor_interface/interface_sh.cpp (visit_interface):
-	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp (visit_interface):
-	* TAO_IDL/be_include/be_interface.h (copy_ctor_helper):
-	  To alleviate the g++ linker's confusion in the face of profuse
-	  virtual inheritence in the skeletons, the IDL compiler now
-	  explicitly generates a copy constructor in each skeleton
-	  class. The copy constructor calls the copy constructor of each
-	  superclass in the skeleton's inheritence hierarchy.
-	
+        * TAO_IDL/be/be_interface.cpp (copy_ctor_helper):
+        * TAO_IDL/be/be_visitor_interface/interface_sh.cpp (visit_interface):
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp (visit_interface):
+        * TAO_IDL/be_include/be_interface.h (copy_ctor_helper):
+          To alleviate the g++ linker's confusion in the face of profuse
+          virtual inheritence in the skeletons, the IDL compiler now
+          explicitly generates a copy constructor in each skeleton
+          class. The copy constructor calls the copy constructor of each
+          superclass in the skeleton's inheritence hierarchy.
+
 Mon Jul 20 15:08:11 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* TAO_IDL/driver/drv_args.cpp (DRV_parse_args):  Added a "#if
-	!defined (ACE_HAS_GPERF)" so that IDL Compiler will use Dynamic
-	Hashing if gperf is not found but -P option is specified.
+        * TAO_IDL/driver/drv_args.cpp (DRV_parse_args):  Added a "#if
+        !defined (ACE_HAS_GPERF)" so that IDL Compiler will use Dynamic
+        Hashing if gperf is not found but -P option is specified.
 
-	* TAO_IDL/be/be_interface.cpp (gen_perfect_hash_methods): Fixed
-	the ACE_Process' command line to use absolute path
-	<$ACE/apps/gperf/src/gperf>.
+        * TAO_IDL/be/be_interface.cpp (gen_perfect_hash_methods): Fixed
+        the ACE_Process' command line to use absolute path
+        <$ACE/apps/gperf/src/gperf>.
 
 Mon Jul 20 13:00:41 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/Cubit/TAO/IDL_Cubit/Makefile: 
-	* tests/Cubit/TAO/IDL_Cubit/client_i.h: 
-	* tests/Cubit/TAO/IDL_Cubit/client_i.cpp: 
-	  Added options to just run the VOID or the ONEWAY test.
+        * tests/Cubit/TAO/IDL_Cubit/Makefile:
+        * tests/Cubit/TAO/IDL_Cubit/client_i.h:
+        * tests/Cubit/TAO/IDL_Cubit/client_i.cpp:
+          Added options to just run the VOID or the ONEWAY test.
 
 Mon Jul 20 12:27:29 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
-	* docs/releasenotes/index.html:
-	  Added a reference to trader.html in the Trading Service portion
-	  of the releasenotes. 
+        * docs/releasenotes/index.html:
+          Added a reference to trader.html in the Trading Service portion
+          of the releasenotes.
 
-	* docs/releasenotes/trader.html:
-	  Minor editorial changes to the trader documentation.
+        * docs/releasenotes/trader.html:
+          Minor editorial changes to the trader documentation.
 
 Mon Jul 20 11:46:04 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/corba.h: 
-	  TAO_THROW_SPEC is a little different than ACE_THROW_SPEC, not
-	  only we need support for exceptions in the platform, we also
-	  would need them in the IDL compiler.
-	  Plus it gives a lot of warnings in MSVC++ 5.0
+        * tao/corba.h:
+          TAO_THROW_SPEC is a little different than ACE_THROW_SPEC, not
+          only we need support for exceptions in the platform, we also
+          would need them in the IDL compiler.
+          Plus it gives a lot of warnings in MSVC++ 5.0
 
 Mon Jul 20 11:15:52 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Trader/Trader.cpp:
-          Eliminated superfluous template instantiation  
-	  ACE_Unbounded_Queue<CosTrading::Admin::OctetSeq>.
-	
+        * orbsvcs/orbsvcs/Trader/Trader.cpp:
+          Eliminated superfluous template instantiation
+          ACE_Unbounded_Queue<CosTrading::Admin::OctetSeq>.
+
 Mon Jul 20 10:57:00 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
       * tao/Connect.cpp: Changed the handle_locate method completely
@@ -79,8 +83,8 @@ Mon Jul 20 10:57:00 1998  Michael Kircher  <mk1@cs.wustl.edu>
         exception we will forward the call.
 
       * tao/IIOP_Object.{h,i,cpp}: Added code to branch to do a conditonal
-        locate request, depending on two flags. One tells to 
-        use it at all the other tells if it is the first call- 
+        locate request, depending on two flags. One tells to
+        use it at all the other tells if it is the first call-
         because we want to do it only on the first call.
 
       * tao/Invocation.{h,i,cpp}: Added code to the start method,
@@ -102,7 +106,7 @@ Mon Jul 20 10:57:00 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
       * TAO_IDL/be/be_visitor_interface/interface_ss.cpp: Changed
         the code generation of the non_existent method. It accepts
-        only one parameter, not two. So I changed the param_count 
+        only one parameter, not two. So I changed the param_count
         from 2 to 1.
 
 
