@@ -1,3 +1,13 @@
+Thu Jul 25 14:35:36 2002  Irfan Pyarali  <irfan@oomworks.com>
+
+	* performance-tests\RTCorba\Thread_Pool\server.cpp: 
+	* performance-tests\RTCorba\Thread_Pool\client.cpp: 
+
+	  Removed old reference to
+	  tests/RTCORBA/Linear_Priority/readers.cpp and replaced it with
+	  new file tests/RTCORBA/common_args.cpp.  Thanks to Bala for
+	  pointing this out.	
+
 Thu Jul 25 11:13:07 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* tao/ObjectReferenceTemplateC.cpp (_tao_unmarshal): 

@@ -11,7 +11,7 @@
 #include "tao/RTCORBA/RTCORBA.h"
 #include "tao/RTCORBA/Priority_Mapping_Manager.h"
 #include "testC.h"
-#include "tests/RTCORBA/Linear_Priority/readers.cpp"
+#include "tests/RTCORBA/common_args.cpp"
 #include "fudge_priorities.cpp"
 
 ACE_RCSID(Thread_Pool, client, "$Id$")
@@ -952,21 +952,23 @@ main (int argc, char *argv[])
       RTCORBA::PriorityMapping &priority_mapping =
         *mapping_manager->mapping ();
 
-      Short_Array rates;
+      ULong_Array rates;
       result =
         get_values ("client",
                     rates_file,
                     "rates",
-                    rates);
+                    rates,
+                    1);
       if (result != 0)
         return result;
 
-      Short_Array invocation_priorities;
+      ULong_Array invocation_priorities;
       result =
         get_values ("client",
                     invocation_priorities_file,
                     "invocation priorities",
-                    invocation_priorities);
+                    invocation_priorities,
+                    1);
       if (result != 0)
         return result;
 
