@@ -15,7 +15,6 @@
 // Data Section
 // ******************************************************************
 
-static const int max_events = 100;
 static CORBA::Boolean go = 0;
 static CORBA::Short n_events = 1;
 static const char* ior_file = "supplier.ior";
