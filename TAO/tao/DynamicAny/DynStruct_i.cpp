@@ -311,12 +311,25 @@ TAO_DynStruct_i::get_members (ACE_ENV_SINGLE_ARG_DECL)
 
   DynamicAny::NameValuePairSeq_var safe_retval = members;
   CORBA::Any_var temp;
+  CORBA::TypeCode_var unaliased_tc;
+  
+  if (this->type_->kind_ == CORBA::tk_alias)
+    { 
+      unaliased_tc =
+        TAO_DynAnyFactory::strip_alias (this->type_.in ()
+                                        ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (0);
+    }
+  else
+    {
+      unaliased_tc = CORBA::TypeCode::_duplicate (this->type_.in ());
+    }
 
   // Assign name and value to each pearl on the string.
   for (CORBA::ULong i = 0; i < this->component_count_; ++i)
     {
       safe_retval[i].id =
-        CORBA::string_dup (this->type_.in ()->member_name (i));
+        CORBA::string_dup (unaliased_tc->member_name (i));
 
       temp = this->da_members_[i]->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
