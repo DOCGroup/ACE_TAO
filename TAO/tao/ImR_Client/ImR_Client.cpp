@@ -150,7 +150,9 @@ namespace TAO
       ACE_TRY_NEW_ENV
         {
           if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG, "Notifing IMR of Shutdown server:%s\n", poa->the_name()));
+            ACE_DEBUG ((LM_DEBUG,
+                        "Notifying IMR of Shutdown server:%s\n",
+                        poa->the_name()));
 
           // ATTENTION: Trick locking here, see class header for details
           TAO::Portable_Server::Non_Servant_Upcall non_servant_upcall (*poa);
@@ -161,7 +163,8 @@ namespace TAO
             ImplementationRepository::Administration::_narrow (imr.in () ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-          imr_locator->server_is_shutting_down (poa->name().c_str () ACE_ENV_ARG_PARAMETER);
+          imr_locator->server_is_shutting_down (poa->name().c_str ()
+                                                ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
       ACE_CATCH (CORBA::COMM_FAILURE, ex)
@@ -173,7 +176,8 @@ namespace TAO
         }
       ACE_CATCHANY
         {
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "POA::imr_notify_shutdown()");
+          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                               "ImR_Client_Adapter_Impl::imr_notify_shutdown()");
           // Ignore exceptions
         }
       ACE_ENDTRY;
