@@ -19,20 +19,20 @@
 //
 // ============================================================================
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
+#include	"idl.h"
+#include	"idl_extern.h"
+#include	"be.h"
 
 #include "be_visitor_operation.h"
 
 ACE_RCSID(be_visitor_operation, rettype_vardecl_ss, "$Id$")
 
 
-// ************************************************************************
+// ********************************************************************************
 //    be_visitor_operation_rettype_vardecl_ss
 //    This visitor generates code for variable declaration and initialization
 //    of the return type.
-// ************************************************************************
+// ********************************************************************************
 
 be_visitor_operation_rettype_vardecl_ss::be_visitor_operation_rettype_vardecl_ss
 (be_visitor_context *ctx)
@@ -57,7 +57,11 @@ be_visitor_operation_rettype_vardecl_ss::visit_array (be_array *node)
     bt = node;
 
   os->indent ();
-  *os << bt->name () << "_var _tao_retval;\n\n";
+#if 0 /* ASG */
+  *os << bt->name () << "_var _tao_retval;" << be_nl;
+  *os << bt->name () << "_slice *&_tao_ptr_retval = _tao_retval.out ();\n";
+#endif
+  *os << bt->name () << "_var _tao_retval;\n";
   return 0;
 }
 
@@ -113,31 +117,6 @@ visit_interface_fwd (be_interface_fwd *)
   *os << "CORBA::Object_var _tao_retval = CORBA::Object::_nil ();" << be_nl;
   return 0;
 }
-
-#ifdef IDL_HAS_VALUETYPE
-// like be_compiled_visitor_operation_rettype_vardecl_ss
-int
-be_visitor_operation_rettype_vardecl_ss::visit_valuetype (be_valuetype *node)
-{
-  TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
-
-  os->indent ();
-  *os << node->name () << "_var _tao_retval;\n";
-  return 0;
-}
-
-int
-be_visitor_operation_rettype_vardecl_ss::
-visit_valuetype_fwd (be_valuetype_fwd *node)
-{
-  TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
-
-  os->indent ();
-  *os << node->name () << "_var _tao_retval;\n";
-  return 0;
-}
-
-#endif /* IDL_HAS_VALUETYPE */
 
 int
 be_visitor_operation_rettype_vardecl_ss::
@@ -324,3 +303,4 @@ visit_interface_fwd (be_interface_fwd *node)
   *os << node->name () << "_var _tao_retval;\n";
   return 0;
 }
+

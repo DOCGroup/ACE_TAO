@@ -49,12 +49,13 @@ TAO_Offer_Iterator::destroy (CORBA::Environment &)
       TAO_CHECK_ENV;
       
       poa->deactivate_object (id.in (), TAO_TRY_ENV);
-      TAO_CHECK_ENV;      
     }
   TAO_CATCHANY
     {      
     }
   TAO_ENDTRY;
+  
+  delete this;  
 }
 
   // *************************************************************
@@ -241,6 +242,8 @@ TAO_Offer_Iterator_Collection::destroy (CORBA::Environment& TAO_IN_ENV)
     {      
     }
   TAO_ENDTRY;
+  
+  delete this;  
 }
 
 CORBA::ULong
@@ -302,18 +305,19 @@ TAO_Offer_Id_Iterator::destroy (CORBA::Environment &)
       TAO_CHECK_ENV;
       
       poa->deactivate_object (id.in (), TAO_TRY_ENV);
-      TAO_CHECK_ENV;
     }
   TAO_CATCHANY
     {      
     }
   TAO_ENDTRY;
+  
+  delete this;  
 }
 
 CORBA::Boolean
 TAO_Offer_Id_Iterator::next_n (CORBA::ULong n,
-                               CosTrading::OfferIdSeq_out _ids,
-                               CORBA::Environment &)
+			                         CosTrading::OfferIdSeq_out _ids,
+			                         CORBA::Environment &)
   TAO_THROW_SPEC ((CORBA::SystemException))
 {
   // Calculate the number of Ids to be returned in this.

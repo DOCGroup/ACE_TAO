@@ -34,8 +34,7 @@ public:
   typedef ACE_Hash_Map_Manager<TAO_ExtId, TAO_IntId, ACE_Null_Mutex> HASH_MAP;
 
   // = Initialization and termination methods.
-  TAO_Hash_Naming_Context (TAO_Naming_Context *interface,
-                           PortableServer::POA_ptr poa,
+  TAO_Hash_Naming_Context (PortableServer::POA_ptr poa,
                            const char *poa_id,
                            size_t default_hash_table_size = ACE_DEFAULT_MAP_SIZE,
                            int root = 0);
@@ -48,40 +47,45 @@ public:
   // = CosNaming::NamingContext idl interface methods.
   virtual void bind (const CosNaming::Name &n,
                      CORBA::Object_ptr obj,
-                     CORBA::Environment &ACE_TRY_ENV);
+                     CORBA::Environment &IT_env);
 
   virtual void rebind (const CosNaming::Name &n,
                        CORBA::Object_ptr obj,
-                       CORBA::Environment &ACE_TRY_ENV);
+                       CORBA::Environment &IT_env);
 
   virtual void bind_context (const CosNaming::Name &n,
                              CosNaming::NamingContext_ptr nc,
-                             CORBA::Environment &ACE_TRY_ENV);
+                             CORBA::Environment &IT_env);
 
   virtual void rebind_context (const CosNaming::Name &n,
                                CosNaming::NamingContext_ptr nc,
-                               CORBA::Environment &ACE_TRY_ENV);
+                               CORBA::Environment &IT_env);
 
   virtual CORBA::Object_ptr resolve (const CosNaming::Name &n,
-                                     CORBA::Environment &ACE_TRY_ENV);
+                                     CORBA::Environment &IT_env);
 
   virtual void unbind (const CosNaming::Name &n,
-                       CORBA::Environment &ACE_TRY_ENV);
+                       CORBA::Environment &IT_env);
 
-  virtual CosNaming::NamingContext_ptr new_context (CORBA::Environment &ACE_TRY_ENV);
+  virtual CosNaming::NamingContext_ptr new_context (CORBA::Environment &IT_env);
 
   virtual CosNaming::NamingContext_ptr bind_new_context (const CosNaming::Name &n,
-                                                         CORBA::Environment &ACE_TRY_ENV);
+                                                         CORBA::Environment &IT_env);
 
-  virtual void destroy (CORBA::Environment &ACE_TRY_ENV);
+  virtual void destroy (CORBA::Environment &IT_env);
 
   virtual void list (CORBA::ULong how_many,
                      CosNaming::BindingList_out &bl,
                      CosNaming::BindingIterator_out &bi,
-                     CORBA::Environment &ACE_TRY_ENV);
+                     CORBA::Environment &IT_env);
 
   virtual PortableServer::POA_ptr _default_POA (void);
   // Returns the Default POA of this Servant object
+
+  void interface (TAO_Naming_Context *i);
+  // Set the pointer to the 'interface' that forwards calls invoked by
+  // CORBA clients to us.  See data member description for the reason
+  // why we need this pointer.
 
   // = Helper functions.
   static int populate_binding (TAO_Hash_Naming_Context::HASH_MAP::ENTRY *hash_entry,
@@ -164,16 +168,16 @@ public:
   virtual PortableServer::POA_ptr _default_POA (CORBA::Environment &env);
 
   CORBA::Boolean next_one (CosNaming::Binding_out b,
-                           CORBA::Environment &ACE_TRY_ENV);
+                           CORBA::Environment &IT_env);
   // This operation returns the next binding.  If there are no more
   // bindings false is returned.
 
   CORBA::Boolean next_n (CORBA::ULong how_many,
                          CosNaming::BindingList_out bl,
-                         CORBA::Environment &ACE_TRY_ENV);
+                         CORBA::Environment &IT_env);
   // This operation returns at most the requested number of bindings.
 
-  void destroy (CORBA::Environment &ACE_TRY_ENV);
+  void destroy (CORBA::Environment &IT_env);
   // This operation destroys the iterator.
 
 private:

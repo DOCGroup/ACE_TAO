@@ -49,16 +49,6 @@ TAO_EC_ProxyPushSupplier_Set_Immediate<ACE_LOCK>::disconnected (
   this->disconnected_i (supplier, ACE_TRY_ENV);
 }
 
-template<class ACE_LOCK> void
-TAO_EC_ProxyPushSupplier_Set_Immediate<ACE_LOCK>::shutdown (
-      CORBA::Environment& ACE_TRY_ENV)
-{
-  ACE_GUARD_THROW_EX (ACE_LOCK, ace_mon, this->lock_,
-      RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
-  ACE_CHECK;
-  this->shutdown_i (ACE_TRY_ENV);
-}
-
 // ****************************************************************
 
 template<ACE_SYNCH_DECL>int
@@ -111,6 +101,11 @@ TAO_EC_ProxyPushSupplier_Set_Delayed<ACE_SYNCH_USE>::connected (
       ACE_NEW (command,
                TAO_EC_ProxyPushSupplier_Set::Connected_Command (this,
                                                         supplier));
+
+      ACE_DEBUG ((LM_DEBUG,
+                  "EC (%P|%t) Delayed connection command = %x\n",
+                  command));
+
       this->command_queue_.enqueue_tail (command);
       this->write_delay_++;
     }
@@ -136,32 +131,8 @@ TAO_EC_ProxyPushSupplier_Set_Delayed<ACE_SYNCH_USE>::disconnected (
       ACE_NEW (command,
                TAO_EC_ProxyPushSupplier_Set::Disconnected_Command (this,
                                                            supplier));
-
-      this->command_queue_.enqueue_tail (command);
-      this->write_delay_++;
-    }
-}
-
-template<ACE_SYNCH_DECL> void
-TAO_EC_ProxyPushSupplier_Set_Delayed<ACE_SYNCH_USE>::shutdown (
-      CORBA::Environment& ACE_TRY_ENV)
-{
-  ACE_GUARD_THROW_EX (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_,
-      RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
-  ACE_CHECK;
-
-  if (this->busy_count_ == 0)
-    {
-      // We can remove the object immediately
-      this->shutdown_i (ACE_TRY_ENV);
-    }
-  else
-    {
-      ACE_Command_Base* command;
-      ACE_NEW (command,
-               TAO_EC_ProxyPushSupplier_Set::Shutdown_Command (this));
       ACE_DEBUG ((LM_DEBUG,
-                  "EC (%P|%t) Delayed shutdown command = %x\n",
+                  "EC (%P|%t) Delayed disconnection command = %x\n",
                   command));
 
       this->command_queue_.enqueue_tail (command);
@@ -179,6 +150,10 @@ TAO_EC_ProxyPushSupplier_Set_Delayed<ACE_SYNCH_USE>::execute_delayed_operations 
       this->command_queue_.dequeue_head (command);
 
       command->execute ();
+
+      ACE_DEBUG ((LM_DEBUG,
+                  "EC (%P|%t) Executed delayed command = %x\n",
+                  command));
 
       delete command;
     }

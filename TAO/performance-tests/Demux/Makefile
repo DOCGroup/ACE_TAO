@@ -1,11 +1,11 @@
 #----------------------------------------------------------------------------
-#       $Id$
+#	$Id$
 #
-#       Top-level Makefile for the Demux_Test test example
+#	Top-level Makefile for the Demux_Test test example
 #----------------------------------------------------------------------------
 
 #----------------------------------------------------------------------------
-#       Local macros
+#	Local macros
 #----------------------------------------------------------------------------
 
 ifndef TAO_ROOT
@@ -15,38 +15,32 @@ endif # ! TAO_ROOT
 LDLIBS   = -lTAO -lorbsvcs
 LDFLAGS += -L$(TAO_ROOT)/tao
 
-IDL_HDR = demux_testC.h demux_testS.h
-IDL_SRC = demux_testC.cpp demux_testS.cpp
+IDL_HDR	= demux_testC.h demux_testS.h
+IDL_SRC	= demux_testC.cpp demux_testS.cpp
 
-SVR_FILES = demux_testC       \
-            demux_testS       \
-            demux_test_server \
-            demux_test_i      \
-            server
+SVR_FILES =	demux_testC	\
+		demux_testS	\
+		demux_test_server		\
+		demux_test_i	\
+		server
 
-CLI_FILES = demux_testC       \
-            demux_testS       \
-            demux_test_client \
-            client
+CLI_FILES =	demux_testC	\
+		demux_testS	\
+		demux_test_client \
+		client
 
 DEMUX_TEST_SVR_OBJS = $(addsuffix .o,$(SVR_FILES))
 DEMUX_TEST_CLT_OBJS = $(addsuffix .o,$(CLI_FILES))
-SRC = $(addsuffix .cpp,$(SVR_FILES)) \
-      $(addsuffix .cpp,$(CLI_FILES))
+SRC	= $(addsuffix .cpp,$(SVR_FILES)) \
+	  $(addsuffix .cpp,$(CLI_FILES))
 
+BIN = server client
+BUILD = $(BIN)
 VLDLIBS = $(LDLIBS:%=%$(VAR))
-
-BIN2 = server client
-
-#### If the TAO orbsvcs library wasn't built with sufficient components,
-#### don't try to build here.
-TAO_ORBSVCS := $(shell $(ACE_ROOT)/bin/ace_components --orbsvcs)
-ifeq (Naming,$(findstring Naming,$(TAO_ORBSVCS)))
-  BIN = $(BIN2)
-endif # Naming
+VBIN = $(BIN:%=%$(VAR))
 
 #----------------------------------------------------------------------------
-#       Include macros and targets
+#	Include macros and targets
 #----------------------------------------------------------------------------
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
@@ -62,24 +56,20 @@ CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs $(TSS_ORB_FLAG)
 
 .PRECIOUS: $(IDL_HDR) $(IDL_SRC)
 
-server: $(addprefix $(VDIR),$(DEMUX_TEST_SVR_OBJS))
+server:	$(addprefix $(VDIR),$(DEMUX_TEST_SVR_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
-client: $(addprefix $(VDIR),$(DEMUX_TEST_CLT_OBJS))
+client:	$(addprefix $(VDIR),$(DEMUX_TEST_CLT_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 clean:
-	-$(RM) -r $(VDIR)/*.o obj.* core Templates.DB .make.state
+	-/bin/rm -rf $(VDIR)/*.o $(BIN) obj.* core Templates.DB .make.state
 
 realclean: clean
 	cd CodeGen; $(MAKE) realclean
-	-$(RM) demux_testC.* demux_testS.* demux_testS_T.* \
-               demux_test_i.* demux_test.idl *.dat \
-               demux_test_client.i
-
-#----------------------------------------------------------------------------
-#       Dependencies
-#----------------------------------------------------------------------------
+	-/bin/rm -rf demux_testC.* demux_testS.* demux_testS_T.* \
+		     demux_test_i.* demux_test.idl *.dat \
+		     demux_test_client.i
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.

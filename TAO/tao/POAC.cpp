@@ -208,34 +208,6 @@ TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (PortableServer)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ForwardRequest, &_tc_TAO_tc_PortableServer_ForwardRequest)
 TAO_NAMESPACE_END
-TAO_NAMESPACE_TYPE (const CORBA::ULong)
-TAO_NAMESPACE_BEGIN (PortableServer)
-TAO_NAMESPACE_DEFINE (const CORBA::ULong, THREAD_POLICY_ID, 16)
-TAO_NAMESPACE_END
-TAO_NAMESPACE_TYPE (const CORBA::ULong)
-TAO_NAMESPACE_BEGIN (PortableServer)
-TAO_NAMESPACE_DEFINE (const CORBA::ULong, LIFESPAN_POLICY_ID, 17)
-TAO_NAMESPACE_END
-TAO_NAMESPACE_TYPE (const CORBA::ULong)
-TAO_NAMESPACE_BEGIN (PortableServer)
-TAO_NAMESPACE_DEFINE (const CORBA::ULong, ID_UNIQUENESS_POLICY_ID, 18)
-TAO_NAMESPACE_END
-TAO_NAMESPACE_TYPE (const CORBA::ULong)
-TAO_NAMESPACE_BEGIN (PortableServer)
-TAO_NAMESPACE_DEFINE (const CORBA::ULong, ID_ASSIGNMENT_POLICY_ID, 19)
-TAO_NAMESPACE_END
-TAO_NAMESPACE_TYPE (const CORBA::ULong)
-TAO_NAMESPACE_BEGIN (PortableServer)
-TAO_NAMESPACE_DEFINE (const CORBA::ULong, IMPLICIT_ACTIVATION_POLICY_ID, 20)
-TAO_NAMESPACE_END
-TAO_NAMESPACE_TYPE (const CORBA::ULong)
-TAO_NAMESPACE_BEGIN (PortableServer)
-TAO_NAMESPACE_DEFINE (const CORBA::ULong, SERVANT_RETENTION_POLICY_ID, 21)
-TAO_NAMESPACE_END
-TAO_NAMESPACE_TYPE (const CORBA::ULong)
-TAO_NAMESPACE_BEGIN (PortableServer)
-TAO_NAMESPACE_DEFINE (const CORBA::ULong, REQUEST_PROCESSING_POLICY_ID, 22)
-TAO_NAMESPACE_END
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 
@@ -268,39 +240,33 @@ PortableServer::ThreadPolicy_ptr PortableServer::ThreadPolicy::_duplicate (Porta
 
 PortableServer::ThreadPolicy_ptr PortableServer::ThreadPolicy::_narrow (
                                                                         CORBA::Object_ptr obj,
-                                                                        CORBA::Environment &ACE_TRY_ENV
+                                                                        CORBA::Environment &env
                                                                         )
 {
   if (CORBA::is_nil (obj))
     return PortableServer::ThreadPolicy::_nil ();
-  if (!obj->_is_a ("IDL:omg.org/PortableServer/ThreadPolicy:1.0", ACE_TRY_ENV))
+  if (!obj->_is_a ("IDL:omg.org/PortableServer/ThreadPolicy:1.0", env))
     return PortableServer::ThreadPolicy::_nil ();
   TAO_Stub* stub = obj->_stubobj ();
   stub->_incr_refcnt ();
   void* servant = 0;
   if (obj->_is_collocated () && obj->_servant() != 0)
     servant = obj->_servant()->_downcast ("IDL:omg.org/PortableServer/ThreadPolicy:1.0");
-#if defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
-  else
-    ACE_THROW_RETURN (CORBA::MARSHAL (), PortableServer::ThreadPolicy::_nil ());
-#else
   if (servant == 0)
     return new PortableServer::ThreadPolicy(stub);
-#endif /* TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
   return new POA_PortableServer::_tao_collocated_ThreadPolicy(
       ACE_reinterpret_cast(POA_PortableServer::ThreadPolicy_ptr, servant),
       stub
     );
 }
 
-#if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
 PortableServer::ThreadPolicyValue PortableServer::ThreadPolicy::value(CORBA::Environment &ACE_TRY_ENV)
 {
     PortableServer::ThreadPolicyValue _tao_retval = (PortableServer::ThreadPolicyValue)0;
 
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INV_OBJREF (), _tao_retval);
+    ACE_THROW_RETURN (CORBA::INV_OBJREF (CORBA::COMPLETED_NO), _tao_retval);
 
 
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -326,7 +292,7 @@ PortableServer::ThreadPolicyValue PortableServer::ThreadPolicy::value(CORBA::Env
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA::UNKNOWN (CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -334,10 +300,9 @@ PortableServer::ThreadPolicyValue PortableServer::ThreadPolicy::value(CORBA::Env
   }
   TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
   if (! (_tao_in >> _tao_retval))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
-#endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
 
 CORBA::Boolean PortableServer::ThreadPolicy::_is_a (const CORBA::Char *value, CORBA::Environment &_tao_environment)
 {
@@ -403,39 +368,33 @@ PortableServer::LifespanPolicy_ptr PortableServer::LifespanPolicy::_duplicate (P
 
 PortableServer::LifespanPolicy_ptr PortableServer::LifespanPolicy::_narrow (
                                                                             CORBA::Object_ptr obj,
-                                                                            CORBA::Environment &ACE_TRY_ENV
+                                                                            CORBA::Environment &env
                                                                             )
 {
   if (CORBA::is_nil (obj))
     return PortableServer::LifespanPolicy::_nil ();
-  if (!obj->_is_a ("IDL:omg.org/PortableServer/LifespanPolicy:1.0", ACE_TRY_ENV))
+  if (!obj->_is_a ("IDL:omg.org/PortableServer/LifespanPolicy:1.0", env))
     return PortableServer::LifespanPolicy::_nil ();
   TAO_Stub* stub = obj->_stubobj ();
   stub->_incr_refcnt ();
   void* servant = 0;
   if (obj->_is_collocated () && obj->_servant() != 0)
     servant = obj->_servant()->_downcast ("IDL:omg.org/PortableServer/LifespanPolicy:1.0");
-#if defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
-  else
-    ACE_THROW_RETURN (CORBA::MARSHAL (), PortableServer::LifespanPolicy::_nil ());
-#else
   if (servant == 0)
     return new PortableServer::LifespanPolicy(stub);
-#endif /* TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
   return new POA_PortableServer::_tao_collocated_LifespanPolicy(
       ACE_reinterpret_cast(POA_PortableServer::LifespanPolicy_ptr, servant),
       stub
     );
 }
 
-#if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
 PortableServer::LifespanPolicyValue PortableServer::LifespanPolicy::value(CORBA::Environment &ACE_TRY_ENV)
 {
     PortableServer::LifespanPolicyValue _tao_retval = (PortableServer::LifespanPolicyValue)0;
 
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INV_OBJREF (), _tao_retval);
+    ACE_THROW_RETURN (CORBA::INV_OBJREF (CORBA::COMPLETED_NO), _tao_retval);
 
 
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -461,7 +420,7 @@ PortableServer::LifespanPolicyValue PortableServer::LifespanPolicy::value(CORBA:
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA::UNKNOWN (CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -471,10 +430,9 @@ PortableServer::LifespanPolicyValue PortableServer::LifespanPolicy::value(CORBA:
   if (!(
         (_tao_in >> _tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
-#endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
 
 CORBA::Boolean PortableServer::LifespanPolicy::_is_a (const CORBA::Char *value, CORBA::Environment &_tao_environment)
 {
@@ -538,39 +496,33 @@ PortableServer::IdUniquenessPolicy_ptr PortableServer::IdUniquenessPolicy::_dupl
 
 PortableServer::IdUniquenessPolicy_ptr PortableServer::IdUniquenessPolicy::_narrow (
                                                                                     CORBA::Object_ptr obj,
-                                                                                    CORBA::Environment &ACE_TRY_ENV
+                                                                                    CORBA::Environment &env
                                                                                     )
 {
   if (CORBA::is_nil (obj))
     return PortableServer::IdUniquenessPolicy::_nil ();
-  if (!obj->_is_a ("IDL:omg.org/PortableServer/IdUniquenessPolicy:1.0", ACE_TRY_ENV))
+  if (!obj->_is_a ("IDL:omg.org/PortableServer/IdUniquenessPolicy:1.0", env))
     return PortableServer::IdUniquenessPolicy::_nil ();
   TAO_Stub* stub = obj->_stubobj ();
   stub->_incr_refcnt ();
   void* servant = 0;
   if (obj->_is_collocated () && obj->_servant() != 0)
     servant = obj->_servant()->_downcast ("IDL:omg.org/PortableServer/IdUniquenessPolicy:1.0");
-#if defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
-  else
-    ACE_THROW_RETURN (CORBA::MARSHAL (), PortableServer::IdUniquenessPolicy::_nil ());
-#else
   if (servant == 0)
     return new PortableServer::IdUniquenessPolicy(stub);
-#endif /* TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
   return new POA_PortableServer::_tao_collocated_IdUniquenessPolicy(
       ACE_reinterpret_cast(POA_PortableServer::IdUniquenessPolicy_ptr, servant),
       stub
     );
 }
 
-#if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
 PortableServer::IdUniquenessPolicyValue PortableServer::IdUniquenessPolicy::value(CORBA::Environment &ACE_TRY_ENV)
 {
     PortableServer::IdUniquenessPolicyValue _tao_retval = (PortableServer::IdUniquenessPolicyValue)0;
 
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INV_OBJREF (), _tao_retval);
+    ACE_THROW_RETURN (CORBA::INV_OBJREF (CORBA::COMPLETED_NO), _tao_retval);
 
 
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -596,7 +548,7 @@ PortableServer::IdUniquenessPolicyValue PortableServer::IdUniquenessPolicy::valu
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA::UNKNOWN (CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -606,10 +558,9 @@ PortableServer::IdUniquenessPolicyValue PortableServer::IdUniquenessPolicy::valu
   if (!(
         (_tao_in >> _tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
-#endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
 
 CORBA::Boolean PortableServer::IdUniquenessPolicy::_is_a (const CORBA::Char *value, CORBA::Environment &_tao_environment)
 {
@@ -672,39 +623,33 @@ PortableServer::IdAssignmentPolicy_ptr PortableServer::IdAssignmentPolicy::_dupl
 
 PortableServer::IdAssignmentPolicy_ptr PortableServer::IdAssignmentPolicy::_narrow (
                                                                                     CORBA::Object_ptr obj,
-                                                                                    CORBA::Environment &ACE_TRY_ENV
+                                                                                    CORBA::Environment &env
                                                                                     )
 {
   if (CORBA::is_nil (obj))
     return PortableServer::IdAssignmentPolicy::_nil ();
-  if (!obj->_is_a ("IDL:omg.org/PortableServer/IdAssignmentPolicy:1.0", ACE_TRY_ENV))
+  if (!obj->_is_a ("IDL:omg.org/PortableServer/IdAssignmentPolicy:1.0", env))
     return PortableServer::IdAssignmentPolicy::_nil ();
   TAO_Stub* stub = obj->_stubobj ();
   stub->_incr_refcnt ();
   void* servant = 0;
   if (obj->_is_collocated () && obj->_servant() != 0)
     servant = obj->_servant()->_downcast ("IDL:omg.org/PortableServer/IdAssignmentPolicy:1.0");
-#if defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
-  else
-    ACE_THROW_RETURN (CORBA::MARSHAL (), PortableServer::IdAssignmentPolicy::_nil ());
-#else
   if (servant == 0)
     return new PortableServer::IdAssignmentPolicy(stub);
-#endif /* TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
   return new POA_PortableServer::_tao_collocated_IdAssignmentPolicy(
       ACE_reinterpret_cast(POA_PortableServer::IdAssignmentPolicy_ptr, servant),
       stub
     );
 }
 
-#if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
 PortableServer::IdAssignmentPolicyValue PortableServer::IdAssignmentPolicy::value(CORBA::Environment &ACE_TRY_ENV)
 {
     PortableServer::IdAssignmentPolicyValue _tao_retval = (PortableServer::IdAssignmentPolicyValue)0;
 
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INV_OBJREF (), _tao_retval);
+    ACE_THROW_RETURN (CORBA::INV_OBJREF (CORBA::COMPLETED_NO), _tao_retval);
 
 
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -730,7 +675,7 @@ PortableServer::IdAssignmentPolicyValue PortableServer::IdAssignmentPolicy::valu
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA::UNKNOWN (CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -740,10 +685,9 @@ PortableServer::IdAssignmentPolicyValue PortableServer::IdAssignmentPolicy::valu
   if (!(
         (_tao_in >> _tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
-#endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
 
 CORBA::Boolean PortableServer::IdAssignmentPolicy::_is_a (const CORBA::Char *value, CORBA::Environment &_tao_environment)
 {
@@ -809,39 +753,33 @@ PortableServer::ImplicitActivationPolicy_ptr PortableServer::ImplicitActivationP
 
 PortableServer::ImplicitActivationPolicy_ptr PortableServer::ImplicitActivationPolicy::_narrow (
                                                                                                 CORBA::Object_ptr obj,
-                                                                                                CORBA::Environment &ACE_TRY_ENV
+                                                                                                CORBA::Environment &env
                                                                                                 )
 {
   if (CORBA::is_nil (obj))
     return PortableServer::ImplicitActivationPolicy::_nil ();
-  if (!obj->_is_a ("IDL:omg.org/PortableServer/ImplicitActivationPolicy:1.0", ACE_TRY_ENV))
+  if (!obj->_is_a ("IDL:omg.org/PortableServer/ImplicitActivationPolicy:1.0", env))
     return PortableServer::ImplicitActivationPolicy::_nil ();
   TAO_Stub* stub = obj->_stubobj ();
   stub->_incr_refcnt ();
   void* servant = 0;
   if (obj->_is_collocated () && obj->_servant() != 0)
     servant = obj->_servant()->_downcast ("IDL:omg.org/PortableServer/ImplicitActivationPolicy:1.0");
-#if defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
-  else
-    ACE_THROW_RETURN (CORBA::MARSHAL (), PortableServer::ImplicitActivationPolicy::_nil ());
-#else
   if (servant == 0)
     return new PortableServer::ImplicitActivationPolicy(stub);
-#endif /* TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
   return new POA_PortableServer::_tao_collocated_ImplicitActivationPolicy(
       ACE_reinterpret_cast(POA_PortableServer::ImplicitActivationPolicy_ptr, servant),
       stub
     );
 }
 
-#if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
 PortableServer::ImplicitActivationPolicyValue PortableServer::ImplicitActivationPolicy::value(CORBA::Environment &ACE_TRY_ENV)
 {
     PortableServer::ImplicitActivationPolicyValue _tao_retval = (PortableServer::ImplicitActivationPolicyValue)0;
 
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INV_OBJREF (), _tao_retval);
+    ACE_THROW_RETURN (CORBA::INV_OBJREF (CORBA::COMPLETED_NO), _tao_retval);
 
 
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -867,7 +805,7 @@ PortableServer::ImplicitActivationPolicyValue PortableServer::ImplicitActivation
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA::UNKNOWN (CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -877,10 +815,9 @@ PortableServer::ImplicitActivationPolicyValue PortableServer::ImplicitActivation
   if (!(
         (_tao_in >> _tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
-#endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
 
 CORBA::Boolean PortableServer::ImplicitActivationPolicy::_is_a (const CORBA::Char *value, CORBA::Environment &_tao_environment)
 {
@@ -944,39 +881,33 @@ PortableServer::ServantRetentionPolicy_ptr PortableServer::ServantRetentionPolic
 
 PortableServer::ServantRetentionPolicy_ptr PortableServer::ServantRetentionPolicy::_narrow (
                                                                                             CORBA::Object_ptr obj,
-                                                                                            CORBA::Environment &ACE_TRY_ENV
+                                                                                            CORBA::Environment &env
                                                                                             )
 {
   if (CORBA::is_nil (obj))
     return PortableServer::ServantRetentionPolicy::_nil ();
-  if (!obj->_is_a ("IDL:omg.org/PortableServer/ServantRetentionPolicy:1.0", ACE_TRY_ENV))
+  if (!obj->_is_a ("IDL:omg.org/PortableServer/ServantRetentionPolicy:1.0", env))
     return PortableServer::ServantRetentionPolicy::_nil ();
   TAO_Stub* stub = obj->_stubobj ();
   stub->_incr_refcnt ();
   void* servant = 0;
   if (obj->_is_collocated () && obj->_servant() != 0)
     servant = obj->_servant()->_downcast ("IDL:omg.org/PortableServer/ServantRetentionPolicy:1.0");
-#if defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
-  else
-    ACE_THROW_RETURN (CORBA::MARSHAL (), PortableServer::ServantRetentionPolicy::_nil ());
-#else
   if (servant == 0)
     return new PortableServer::ServantRetentionPolicy(stub);
-#endif /* TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
   return new POA_PortableServer::_tao_collocated_ServantRetentionPolicy(
       ACE_reinterpret_cast(POA_PortableServer::ServantRetentionPolicy_ptr, servant),
       stub
     );
 }
 
-#if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
 PortableServer::ServantRetentionPolicyValue PortableServer::ServantRetentionPolicy::value(CORBA::Environment &ACE_TRY_ENV)
 {
     PortableServer::ServantRetentionPolicyValue _tao_retval = (PortableServer::ServantRetentionPolicyValue)0;
 
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INV_OBJREF (), _tao_retval);
+    ACE_THROW_RETURN (CORBA::INV_OBJREF (CORBA::COMPLETED_NO), _tao_retval);
 
 
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -1002,7 +933,7 @@ PortableServer::ServantRetentionPolicyValue PortableServer::ServantRetentionPoli
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA::UNKNOWN (CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -1012,10 +943,9 @@ PortableServer::ServantRetentionPolicyValue PortableServer::ServantRetentionPoli
   if (!(
         (_tao_in >> _tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
-#endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
 
 CORBA::Boolean PortableServer::ServantRetentionPolicy::_is_a (const CORBA::Char *value, CORBA::Environment &_tao_environment)
 {
@@ -1079,39 +1009,33 @@ PortableServer::RequestProcessingPolicy_ptr PortableServer::RequestProcessingPol
 
 PortableServer::RequestProcessingPolicy_ptr PortableServer::RequestProcessingPolicy::_narrow (
                                                                                               CORBA::Object_ptr obj,
-                                                                                              CORBA::Environment &ACE_TRY_ENV
+                                                                                              CORBA::Environment &env
                                                                                               )
 {
   if (CORBA::is_nil (obj))
     return PortableServer::RequestProcessingPolicy::_nil ();
-  if (!obj->_is_a ("IDL:omg.org/PortableServer/RequestProcessingPolicy:1.0", ACE_TRY_ENV))
+  if (!obj->_is_a ("IDL:omg.org/PortableServer/RequestProcessingPolicy:1.0", env))
     return PortableServer::RequestProcessingPolicy::_nil ();
   TAO_Stub* stub = obj->_stubobj ();
   stub->_incr_refcnt ();
   void* servant = 0;
   if (obj->_is_collocated () && obj->_servant() != 0)
     servant = obj->_servant()->_downcast ("IDL:omg.org/PortableServer/RequestProcessingPolicy:1.0");
-#if defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
-  else
-    ACE_THROW_RETURN (CORBA::MARSHAL (), PortableServer::RequestProcessingPolicy::_nil ());
-#else
   if (servant == 0)
     return new PortableServer::RequestProcessingPolicy(stub);
-#endif /* TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
   return new POA_PortableServer::_tao_collocated_RequestProcessingPolicy(
       ACE_reinterpret_cast(POA_PortableServer::RequestProcessingPolicy_ptr, servant),
       stub
     );
 }
 
-#if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
 PortableServer::RequestProcessingPolicyValue PortableServer::RequestProcessingPolicy::value(CORBA::Environment &ACE_TRY_ENV)
 {
     PortableServer::RequestProcessingPolicyValue _tao_retval = (PortableServer::RequestProcessingPolicyValue)0;
 
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INV_OBJREF (), _tao_retval);
+    ACE_THROW_RETURN (CORBA::INV_OBJREF (CORBA::COMPLETED_NO), _tao_retval);
 
 
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -1137,7 +1061,7 @@ PortableServer::RequestProcessingPolicyValue PortableServer::RequestProcessingPo
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA::UNKNOWN (CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -1147,10 +1071,9 @@ PortableServer::RequestProcessingPolicyValue PortableServer::RequestProcessingPo
   if (!(
         (_tao_in >> _tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
-#endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
 
 CORBA::Boolean PortableServer::RequestProcessingPolicy::_is_a (const CORBA::Char *value, CORBA::Environment &_tao_environment)
 {
@@ -1205,7 +1128,7 @@ PortableServer::POAManager_ptr PortableServer::POAManager::_narrow (
     return PortableServer::POAManager::_nil ();
   if (!obj->_is_collocated () || !obj->_servant())
       // This can only be colocated
-      ACE_THROW_RETURN (CORBA::MARSHAL (), PortableServer::POAManager::_nil ());
+      ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_NO), PortableServer::POAManager::_nil ());
 
   TAO_Stub *stub = obj->_stubobj ();
   stub->_incr_refcnt ();
@@ -1392,7 +1315,7 @@ PortableServer::AdapterActivator_ptr PortableServer::AdapterActivator::_narrow (
     return PortableServer::AdapterActivator::_nil ();
   if (!obj->_is_collocated () || !obj->_servant())
       // This can only be colocated
-      ACE_THROW_RETURN (CORBA::MARSHAL (), PortableServer::AdapterActivator::_nil ());
+      ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_NO), PortableServer::AdapterActivator::_nil ());
 
   TAO_Stub *stub = obj->_stubobj ();
   stub->_incr_refcnt ();
@@ -1453,7 +1376,7 @@ PortableServer::ServantManager_ptr PortableServer::ServantManager::_narrow (
     return PortableServer::ServantManager::_nil ();
   if (!obj->_is_collocated () || !obj->_servant())
     // This can only be colocated
-    ACE_THROW_RETURN (CORBA::MARSHAL (), PortableServer::ServantManager::_nil ());
+    ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_NO), PortableServer::ServantManager::_nil ());
 
   TAO_Stub *stub = obj->_stubobj ();
   stub->_incr_refcnt ();
@@ -1514,7 +1437,7 @@ PortableServer::ServantActivator_ptr PortableServer::ServantActivator::_narrow (
     return PortableServer::ServantActivator::_nil ();
   if (!obj->_is_collocated () || !obj->_servant())
       // This can only be colocated
-    ACE_THROW_RETURN (CORBA::MARSHAL (), PortableServer::ServantActivator::_nil ());
+    ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_NO), PortableServer::ServantActivator::_nil ());
 
   TAO_Stub *stub = obj->_stubobj ();
   stub->_incr_refcnt ();
@@ -1576,7 +1499,7 @@ PortableServer::ServantLocator_ptr PortableServer::ServantLocator::_narrow (
     return PortableServer::ServantLocator::_nil ();
   if (!obj->_is_collocated () || !obj->_servant())
     // This can only be colocated
-    ACE_THROW_RETURN (CORBA::MARSHAL (), PortableServer::ServantLocator::_nil ());
+    ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_NO), PortableServer::ServantLocator::_nil ());
 
   TAO_Stub *stub = obj->_stubobj ();
   stub->_incr_refcnt ();
@@ -1640,7 +1563,7 @@ PortableServer::POA_ptr PortableServer::POA::_narrow (
     return PortableServer::POA::_nil ();
   if (!obj->_is_collocated () || !obj->_servant())
     // This can only be colocated
-    ACE_THROW_RETURN (CORBA::MARSHAL (), PortableServer::POA::_nil ());
+    ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_NO), PortableServer::POA::_nil ());
 
   TAO_Stub *stub = obj->_stubobj ();
   stub->_incr_refcnt ();
@@ -3224,7 +3147,7 @@ CORBA::TypeCode_ptr PortableServer::Current::_tc_NoContext = &_tc_TAO_tc_Portabl
 
 PortableServer::POA_ptr  PortableServer::Current::get_POA (CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_THROW_RETURN (CORBA::MARSHAL (), PortableServer::POA::_nil ());
+  ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_NO), PortableServer::POA::_nil ());
 }
 
 PortableServer::ObjectId * PortableServer::Current::get_object_id (CORBA::Environment &ACE_TRY_ENV)
@@ -3238,7 +3161,7 @@ PortableServer::ObjectId * PortableServer::Current::get_object_id (CORBA::Enviro
 
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INV_OBJREF (), _tao_retval);
+    ACE_THROW_RETURN (CORBA::INV_OBJREF (CORBA::COMPLETED_NO), _tao_retval);
 
 
   ACE_NEW_RETURN (_tao_retval, PortableServer::ObjectId, _tao_retval);
@@ -3265,7 +3188,7 @@ PortableServer::ObjectId * PortableServer::Current::get_object_id (CORBA::Enviro
       // cannot happen
     if (_invoke_status != TAO_INVOKE_OK)
     {
-      ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+      ACE_THROW_RETURN (CORBA::UNKNOWN (CORBA::COMPLETED_YES), _tao_retval);
 
     }
     break;
@@ -3275,7 +3198,7 @@ PortableServer::ObjectId * PortableServer::Current::get_object_id (CORBA::Enviro
   if (!(
         (_tao_in >> *_tao_retval)
     ))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+    ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_YES), _tao_retval);
   return _tao_retval;
 }
 

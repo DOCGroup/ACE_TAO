@@ -52,13 +52,10 @@ public:
   // destructor...
 
   // = The TAO_EC_Filter_Builder methods...
-  TAO_EC_Filter* build (TAO_EC_ProxyPushSupplier *supplier,
-                        RtecEventChannelAdmin::ConsumerQOS& qos,
-                        CORBA::Environment &env) const;
+  TAO_EC_Filter* build (RtecEventChannelAdmin::ConsumerQOS& qos) const;
 
 private:
-  TAO_EC_Filter* recursive_build (TAO_EC_ProxyPushSupplier *supplier,
-                                  RtecEventChannelAdmin::ConsumerQOS& qos,
+  TAO_EC_Filter* recursive_build (RtecEventChannelAdmin::ConsumerQOS& qos,
                                   CORBA::ULong& pos) const;
   // Recursively build the filter tree.
 

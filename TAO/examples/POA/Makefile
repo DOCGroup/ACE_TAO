@@ -10,20 +10,15 @@
 #	Local macros
 #----------------------------------------------------------------------------
 
-DIRS  = Generic_Servant \
-	Adapter_Activator \
-	DSI \
-	Default_Servant \
-	Explicit_Activation \
+DIRS  = Default_Servant \
 	FindPOA \
 	Forwarding \
-	Identity \
-	Loader \
+	Generic_Servant \
+	Explicit_Activation \
 	NewPOA \
 	On_Demand_Activation \
-	On_Demand_Loading \
 	RootPOA \
-	Reference_Counted_Servant \
+	Identity \
 	TIE
 
 # The following test hasn't been updated yet

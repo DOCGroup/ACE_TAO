@@ -24,7 +24,6 @@
 
 class TAO_Active_Object_Map_Impl;
 class TAO_Reverse_Active_Object_Map_Impl;
-class TAO_ORB_Core;
 
 class TAO_Server_Strategy_Factory : public ACE_Service_Object
 {
@@ -40,7 +39,7 @@ public:
     Active_Object_Map_Creation_Parameters (void);
     // Constructor.
 
-    CORBA::ULong active_object_map_size_;
+    u_long active_object_map_size_;
     // Default size of object lookup table.
 
     TAO_Demux_Strategy object_lookup_strategy_for_user_id_policy_;
@@ -63,14 +62,6 @@ public:
     // Flag to indicate whether reactivations of servants was required
     // (under the system id policy).  If not, certain resources may
     // not be required.
-
-    CORBA::ULong poa_map_size_;
-
-    TAO_Demux_Strategy poa_lookup_strategy_for_transient_id_policy_;
-
-    TAO_Demux_Strategy poa_lookup_strategy_for_persistent_id_policy_;
-
-    int use_active_hint_in_poa_names_;
   };
 
   // = Initialization and termination methods.
@@ -80,7 +71,7 @@ public:
   virtual ~TAO_Server_Strategy_Factory(void);
   // Destructor.
 
-  virtual int open (TAO_ORB_Core* orb_core);
+  virtual int open (void);
   // Call <open> on various strategies.  This is not performed in
   // <init> so that the other portions of the ORB have a chance to
   // "settle" in their initialization since the streategies herein
@@ -110,8 +101,11 @@ public:
   virtual SCHEDULING_STRATEGY *scheduling_strategy (void);
   // Return the scheduling strategy used.
 
-  virtual int enable_poa_locking (void);
-  // Enable POA locking?
+  virtual ACE_Lock *create_poa_lock (void);
+  // Return a new lock for use in locking the POA.
+
+  virtual ACE_Lock *create_poa_mgr_lock (void);
+  // Return a new lock for use in locking the POA Manager.
 
   virtual ACE_Lock *create_servant_lock (void);
   // Return a new lock for use in locking the servant.

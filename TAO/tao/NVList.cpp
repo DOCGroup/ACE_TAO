@@ -153,6 +153,7 @@ CORBA_NVList::add_value (const char *name,
             {
               nv->any_._tao_replace (value.type_,
                                      value.cdr_,
+                                     0,
                                      env);
             }
         }
@@ -225,7 +226,7 @@ CORBA_NVList::add_element (CORBA::Flags flags, CORBA::Environment &env)
   if (ACE_BIT_DISABLED (flags,
                         CORBA::ARG_IN | CORBA::ARG_OUT | CORBA::ARG_INOUT))
     {
-      env.exception (new CORBA::BAD_PARAM ());
+      env.exception (new CORBA::BAD_PARAM (CORBA::COMPLETED_NO));
       return 0;
     }
 

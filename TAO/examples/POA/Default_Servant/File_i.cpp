@@ -51,13 +51,11 @@ FileImpl::System::open (const char *file_name,
 
   if (file_descriptor == ACE_INVALID_HANDLE)
     {
-      //CORBA::Exception exception = File::IOError (errno);
-      ACE_THROW_RETURN (File::IOError (), 0);
-
-      /*      ACE_NEW_THROW_EX (exception,
+      CORBA::Exception *exception;
+      ACE_NEW_THROW_EX (exception,
                         File::IOError (errno),
-                        exception);
-                        ACE_CHECK_RETURN (0);*/
+                        File::IOError);
+      ACE_CHECK_RETURN (0);
     }
 
   char file_descriptor_buffer[BUFSIZ];
@@ -141,8 +139,15 @@ FileImpl::Descriptor::write (const File::Descriptor::DataBuffer &buffer,
                                buffer.length ());
   if (len > 0)
     return len;
-
-  ACE_THROW_RETURN (File::IOError (), 0);
+  else
+    {
+      CORBA::Exception *exception;
+      ACE_NEW_THROW_EX (exception,
+                        File::IOError (errno),
+                        File::IOError);
+      ACE_CHECK_RETURN (0);
+    }
+  return 0; // Not needed
 }
 
 File::Descriptor::DataBuffer *
@@ -160,9 +165,16 @@ FileImpl::Descriptor::read (CORBA::Long num_bytes,
                                              length,
                                              buffer,
                                              1);
-
-  File::Descriptor::DataBuffer::freebuf (buffer);
-  ACE_THROW_RETURN (File::IOError (), 0);
+  else
+    {
+      File::Descriptor::DataBuffer::freebuf (buffer);
+      CORBA::Exception *exception;
+      ACE_NEW_THROW_EX (exception,
+                        File::IOError (errno),
+                        File::IOError);
+      ACE_CHECK_RETURN (0);
+    }
+  return 0;
 }
 
 CORBA::ULong
@@ -177,9 +189,16 @@ FileImpl::Descriptor::lseek (CORBA::ULong offset,
                                                     offset,
                                                     whence);
   if (result == -1)
-    ACE_THROW_RETURN (File::IOError (), 0);
-
-  return (CORBA::ULong) result;
+    {
+      CORBA::Exception *exception;
+      ACE_NEW_THROW_EX (exception,
+                        File::IOError (errno),
+                        File::IOError);
+      ACE_CHECK_RETURN (0);
+    }
+  else
+    return (CORBA::ULong) result;
+  return 0;
 }
 
 void
@@ -194,6 +213,10 @@ FileImpl::Descriptor::destroy (CORBA::Environment &ACE_TRY_ENV)
 
   if (result != 0)
     {
-      ACE_THROW (File::IOError ());
+      CORBA::Exception *exception;
+      ACE_NEW_THROW_EX (exception,
+                        File::IOError (errno),
+                        File::IOError);
+      ACE_CHECK;
     }
 }

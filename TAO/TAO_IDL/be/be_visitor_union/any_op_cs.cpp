@@ -62,7 +62,7 @@ be_visitor_union_any_op_cs::visit_union (be_union *node)
       << be_nl
       << "ACE_TRY_NEW_ENV" << be_nl
       << "{" << be_idt_nl;
-
+      
   if (this->gen_insertion (os, node) != 0)
     return -1;
 
@@ -113,17 +113,17 @@ be_visitor_union_any_op_cs::visit_union (be_union *node)
       << "ACE_NEW_RETURN (_tao_elem, " << node->name () << ", 0);"
       << be_nl
       << "TAO_InputCDR stream (_tao_any._tao_get_cdr ());" << be_nl;
-
+  
   if (this->gen_extraction (os, node) != 0)
     return -1;
-
-  *os << be_nl
-      << "return 1;" << be_uidt_nl
+    
+  *os << "return 1;" << be_uidt_nl
       << "}" << be_uidt_nl
       << "}" << be_nl
       << "ACE_CATCHANY" << be_nl
       << "{" << be_idt_nl
-      << "delete _tao_elem;" << be_uidt_nl
+      << "delete _tao_elem;" << be_nl
+      << "return 0; " << be_uidt_nl
       << "}" << be_nl
       << "ACE_ENDTRY;" << be_nl
       << "return 0;" << be_uidt_nl
@@ -186,7 +186,7 @@ gen_insertion (TAO_OutStream *os,
       << "stream << *_any_val;" << be_nl
       << "_tao_any._tao_replace (" << be_idt << be_idt_nl
       << node->tc_name () << "," << be_nl
-      << "stream.begin ()," << be_nl
+      << "stream.begin ()->clone ()," << be_nl
       << "1," << be_nl
       << "_any_val," << be_nl
       << "ACE_TRY_ENV" << be_uidt_nl
@@ -204,7 +204,7 @@ gen_insertion_nocopy (TAO_OutStream *os,
       << "stream << *_tao_elem;" << be_nl
       << "_tao_any._tao_replace (" << be_idt << be_idt_nl
       << node->tc_name () << "," << be_nl
-      << "stream.begin ()," << be_nl
+      << "stream.begin ()->clone ()," << be_nl
       << "1," << be_nl
       << "_tao_elem," << be_nl
       << "ACE_TRY_ENV" << be_uidt_nl
@@ -222,7 +222,7 @@ gen_extraction (TAO_OutStream *os,
       << "((CORBA::Any *)&_tao_any)->_tao_replace (" << be_idt << be_idt_nl
       << node->tc_name () << "," << be_nl
       << "1," << be_nl
-      << "ACE_reinterpret_cast(void*,_tao_elem)," << be_nl
+      << "ACE_static_cast(void*,_tao_elem)," << be_nl
       << "ACE_TRY_ENV" << be_uidt_nl
       << ");" << be_uidt_nl
       << "ACE_TRY_CHECK;" << be_nl;

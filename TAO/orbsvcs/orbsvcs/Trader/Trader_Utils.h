@@ -14,7 +14,7 @@
 //
 // Client Utils:
 //   TAO_Dynamic_Property
-//   TAO_Policy_Creator
+//   TAO_Policy_Manager
 //   TAO_Property_Evaluator
 //   TAO_Property_Evaluator_By_Name
 //
@@ -179,8 +179,7 @@ private:
   // *************************************************************
 
 class TAO_ORBSVCS_Export TAO_Dynamic_Property :
-  public virtual POA_CosTradingDynamic::DynamicPropEval,
-  public virtual PortableServer::RefCountServantBase
+  public POA_CosTradingDynamic::DynamicPropEval
 // = TITLE
 //   Little helper class that you can extend to have your dynamic
 //   property handler construct CosTradingDynamic::DynamicProp structs.
@@ -193,8 +192,6 @@ public:
 
   virtual ~TAO_Dynamic_Property (void);
 
-  void destroy (void);
-  
   virtual CORBA::Any* evalDP(const char* name,
                              CORBA::TypeCode_ptr returned_type,
                              const CORBA::Any& extra_info,
@@ -209,10 +206,6 @@ public:
                             const CORBA::Any& extra_info);
   // Method to construct a dynamic property structure suitable for
   // exporting in a CosTrading::PropertyStruct to the Trading Service.
-
- private:
-
-  CosTradingDynamic::DynamicPropEval_var prop_;
 };
 
 
@@ -488,19 +481,19 @@ private:
 };
 
   // *************************************************************
-  // TAO_Policy_Creator
+  // TAO_Policy_Manager
   // *************************************************************
 
-class TAO_ORBSVCS_Export TAO_Policy_Creator
+class TAO_ORBSVCS_Export TAO_Policy_Manager
+// = TITLE
+//
+// This class is a utility for clients using the CosTrading::Lookup
+// interface that helps them build a policy sequence without violating
+// syntax rules and having to mess with typecodes.
 {
-  // = TITLE
-  //
-  // This class is a utility for clients using the CosTrading::Lookup
-  // interface that helps them build a policy sequence without violating
-  // syntax rules and having to mess with typecodes.
 public:
 
-  TAO_Policy_Creator (int num_policies = 0);
+  TAO_Policy_Manager (int num_policies = 0);
 
   // = Routines to set policies.
 
@@ -554,8 +547,8 @@ public:
 
 private:
 
-  TAO_Policy_Creator (const TAO_Policy_Creator&);
-  TAO_Policy_Creator& operator= (const TAO_Policy_Creator&);
+  TAO_Policy_Manager (const TAO_Policy_Manager&);
+  TAO_Policy_Manager& operator= (const TAO_Policy_Manager&);
 
   CosTrading::Policy& fetch_next_policy (TAO_Policies::POLICY_TYPE pol_type);
   // Method to prepare the next slot in the policies_ sequence for

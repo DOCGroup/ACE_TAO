@@ -4,7 +4,7 @@
 #include "ace/Task.h"
 #include "testC.h"
 
-ACE_RCSID(MT_Client, client, "$Id$")
+ACE_RCSID(MT_Client, server, "$Id$")
 
 const char *ior = "file://test.ior";
 int nthreads = 5;
@@ -110,8 +110,7 @@ main (int argc, char *argv[])
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Catched exception:");
+      ACE_TRY_ENV.print_exception ("Catched exception:");
       return 1;
     }
   ACE_ENDTRY;
@@ -133,20 +132,10 @@ Client::svc (void)
 {
   ACE_TRY_NEW_ENV
     {
-      // If we are using a global ORB this is a nop, otherwise it
-      // initializes the ORB resources for this thread.
-      int argc = 0;
-      char* argv[] = { "" };
-      CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
       for (int i = 0; i < this->niterations_; ++i)
         {
           this->server_->test_method (ACE_TRY_ENV);
           ACE_TRY_CHECK;
-          if (TAO_debug_level > 0 && i % 100 == 0)
-            ACE_DEBUG ((LM_DEBUG, "(%P|%t) iteration = %d\n", i));
         }
     }
   ACE_CATCHANY

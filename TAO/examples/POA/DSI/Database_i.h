@@ -18,7 +18,6 @@ public:
   {
   public:
     Simpler_Malloc (void);
-    ~Simpler_Malloc (void);
   };
 
   typedef ACE_Singleton<Simpler_Malloc, ACE_Null_Mutex> DATABASE;
@@ -29,8 +28,7 @@ public:
   {
   public:
     Entry (CORBA::ORB_ptr orb,
-           PortableServer::POA_ptr poa,
-           CORBA::Environment &);
+           PortableServer::POA_ptr poa);
     ~Entry (void);
 
     virtual void invoke (CORBA::ServerRequest_ptr request,
@@ -49,7 +47,7 @@ public:
     virtual PortableServer::POA_ptr _default_POA (CORBA::Environment &env);
     // Returns the default POA for this servant.
 
-    virtual void is_a (CORBA::ServerRequest_ptr request,
+    virtual void _is_a (CORBA::ServerRequest_ptr request,
                         CORBA::Environment &env);
     // Handles the _is_a call
 
@@ -59,17 +57,13 @@ public:
 
     PortableServer::POA_var poa_;
     // Default POA
-
-    PortableServer::Current_var poa_current_;
-    // POA Current.
   };
 
   class Agent : public POA_Database::Agent
   {
   public:
     Agent (CORBA::ORB_ptr orb,
-           PortableServer::POA_ptr poa,
-           CORBA::Environment &);
+           PortableServer::POA_ptr poa);
     ~Agent (void);
 
     virtual Database::Entry_ptr create_entry (const char *key,
@@ -84,8 +78,6 @@ public:
     virtual void destroy_entry (const char *key,
                                 const char *entry_type,
                                 CORBA::Environment &env);
-
-    virtual void shutdown (CORBA::Environment &env);
 
     virtual PortableServer::POA_ptr _default_POA (CORBA::Environment &env);
     // Returns the default POA for this servant.

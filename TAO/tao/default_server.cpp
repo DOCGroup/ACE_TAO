@@ -45,17 +45,53 @@ TAO_Default_Server_Strategy_Factory::concurrency_strategy (void)
     return this->concurrency_strategy_;
 }
 
-int
-TAO_Default_Server_Strategy_Factory::enable_poa_locking (void)
+ACE_Lock *
+TAO_Default_Server_Strategy_Factory::create_poa_lock (void)
 {
+  ACE_Lock *the_lock = 0;
+
   switch (this->poa_lock_type_)
     {
-    case TAO_NULL_LOCK:
-      return 0;
     case TAO_THREAD_LOCK:
+#if defined (ACE_HAS_THREADS)
+      ACE_NEW_RETURN (the_lock,
+                      ACE_Lock_Adapter<ACE_Recursive_Thread_Mutex> (),
+                      0);
+      break;
+#endif /* ACE_HAS_THREADS */
     default:
-      return 1;
+      ACE_NEW_RETURN (the_lock,
+                      ACE_Lock_Adapter<ACE_Null_Mutex> (),
+                      0);
+      break;
     }
+
+  return the_lock;// Just to make sure we return something
+}
+
+ACE_Lock *
+TAO_Default_Server_Strategy_Factory::create_poa_mgr_lock (void)
+{
+  ACE_Lock *the_lock = 0;
+
+  switch (this->poa_mgr_lock_type_)
+    {
+    case TAO_THREAD_LOCK:
+#if defined (ACE_HAS_THREADS)
+      ACE_NEW_RETURN (the_lock,
+                      ACE_Lock_Adapter<ACE_Thread_Mutex> (),
+                      0);
+      break;
+#endif /* ACE_HAS_THREADS */
+    default:
+      ACE_NEW_RETURN (the_lock,
+                      ACE_Lock_Adapter<ACE_Null_Mutex> (),
+                      0);
+      break;
+    }
+
+  // Just to make sure we return something.
+  return the_lock;
 }
 
 ACE_Lock *
@@ -162,8 +198,10 @@ TAO_Default_Server_Strategy_Factory::init (int argc, char *argv[])
 }
 
 int
-TAO_Default_Server_Strategy_Factory::open (TAO_ORB_Core* orb_core)
+TAO_Default_Server_Strategy_Factory::open (void)
 {
+  TAO_ORB_Core *orb_core = TAO_ORB_Core_instance ();
+
   if (reactive_strategy_.open (orb_core->reactor ()) == 0
       && threaded_strategy_.open (orb_core->thr_mgr (),
                                   this->thread_flags_) == 0)
@@ -193,18 +231,11 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, char *argv[])
               this->concurrency_strategy_ = &threaded_strategy_;
           }
       }
-    else if (ACE_OS::strcmp (argv[curarg], "-ORBtablesize") == 0 ||
-             ACE_OS::strcmp (argv[curarg], "-ORBactiveobjectmapsize") == 0)
+    else if (ACE_OS::strcmp (argv[curarg], "-ORBtablesize") == 0)
       {
         curarg++;
         if (curarg < argc)
           this->active_object_map_creation_parameters_.active_object_map_size_ = ACE_OS::strtoul (argv[curarg], 0, 10);
-      }
-    else if (ACE_OS::strcmp (argv[curarg], "-ORBpoamapsize") == 0)
-      {
-        curarg++;
-        if (curarg < argc)
-          this->active_object_map_creation_parameters_.poa_map_size_ = ACE_OS::strtoul (argv[curarg], 0, 10);
       }
     else if (ACE_OS::strcmp (argv[curarg], "-ORBactivehintinids") == 0)
       {
@@ -214,16 +245,6 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, char *argv[])
             char *value = argv[curarg];
 
             this->active_object_map_creation_parameters_.use_active_hint_in_ids_ = ACE_OS::atoi (value);
-          }
-      }
-    else if (ACE_OS::strcmp (argv[curarg], "-ORBactivehintinpoanames") == 0)
-      {
-        curarg++;
-        if (curarg < argc)
-          {
-            char *value = argv[curarg];
-
-            this->active_object_map_creation_parameters_.use_active_hint_in_poa_names_ = ACE_OS::atoi (value);
           }
       }
     else if (ACE_OS::strcmp (argv[curarg], "-ORBallowreactivationofsystemids") == 0)
@@ -265,35 +286,6 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, char *argv[])
               this->active_object_map_creation_parameters_.object_lookup_strategy_for_system_id_policy_ = TAO_ACTIVE_DEMUX;
           }
       }
-    else if (ACE_OS::strcmp (argv[curarg], "-ORBpersistentidpolicydemuxstrategy") == 0)
-      {
-        curarg++;
-        if (curarg < argc)
-          {
-            char *name = argv[curarg];
-
-            // Active demux not supported with user id policy
-            if (ACE_OS::strcasecmp (name, "dynamic") == 0)
-              this->active_object_map_creation_parameters_.poa_lookup_strategy_for_persistent_id_policy_ = TAO_DYNAMIC_HASH;
-            else if (ACE_OS::strcasecmp (name, "linear") == 0)
-              this->active_object_map_creation_parameters_.poa_lookup_strategy_for_persistent_id_policy_ = TAO_LINEAR;
-          }
-      }
-    else if (ACE_OS::strcmp (argv[curarg], "-ORBtransientidpolicydemuxstrategy") == 0)
-      {
-        curarg++;
-        if (curarg < argc)
-          {
-            char *name = argv[curarg];
-
-            if (ACE_OS::strcasecmp (name, "dynamic") == 0)
-              this->active_object_map_creation_parameters_.poa_lookup_strategy_for_transient_id_policy_ = TAO_DYNAMIC_HASH;
-            else if (ACE_OS::strcasecmp (name, "linear") == 0)
-              this->active_object_map_creation_parameters_.poa_lookup_strategy_for_transient_id_policy_ = TAO_LINEAR;
-            else if (ACE_OS::strcasecmp (name, "active") == 0)
-              this->active_object_map_creation_parameters_.poa_lookup_strategy_for_transient_id_policy_ = TAO_ACTIVE_DEMUX;
-          }
-      }
     else if (ACE_OS::strcmp (argv[curarg], "-ORBuniqueidpolicyreversedemuxstrategy") == 0)
       {
         curarg++;
@@ -303,8 +295,8 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, char *argv[])
 
             if (ACE_OS::strcasecmp (name, "dynamic") == 0)
               this->active_object_map_creation_parameters_.reverse_object_lookup_strategy_for_unique_id_policy_ = TAO_DYNAMIC_HASH;
-            else if (ACE_OS::strcasecmp (name, "linear") == 0)
-              this->active_object_map_creation_parameters_.reverse_object_lookup_strategy_for_unique_id_policy_ = TAO_LINEAR;
+            else if (ACE_OS::strcasecmp (name, "user") == 0)
+              this->active_object_map_creation_parameters_.reverse_object_lookup_strategy_for_unique_id_policy_ = TAO_USER_DEFINED;
           }
       }
     else if (ACE_OS::strcmp (argv[curarg], "-ORBdemuxstrategy") == 0)
@@ -325,6 +317,19 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, char *argv[])
               this->poa_lock_type_ = TAO_THREAD_LOCK;
             else if (ACE_OS::strcasecmp (name, "null") == 0)
               this->poa_lock_type_ = TAO_NULL_LOCK;
+          }
+      }
+    else if (ACE_OS::strcmp (argv[curarg], "-ORBpoamgrlock") == 0)
+      {
+        curarg++;
+        if (curarg < argc)
+          {
+            char *name = argv[curarg];
+
+            if (ACE_OS::strcasecmp (name, "thread") == 0)
+              this->poa_mgr_lock_type_ = TAO_THREAD_LOCK;
+            else if (ACE_OS::strcasecmp (name, "null") == 0)
+              this->poa_mgr_lock_type_ = TAO_NULL_LOCK;
           }
       }
     else if (ACE_OS::strcmp (argv[curarg], "-ORBeventlock") == 0)
@@ -415,4 +420,5 @@ ACE_STATIC_SVC_DEFINE (TAO_Default_Server_Strategy_Factory,
                        &ACE_SVC_NAME (TAO_Default_Server_Strategy_Factory),
 		       ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
                        0)
+ACE_STATIC_SVC_REQUIRE (TAO_Default_Server_Strategy_Factory)
 ACE_FACTORY_DEFINE (TAO, TAO_Default_Server_Strategy_Factory)
