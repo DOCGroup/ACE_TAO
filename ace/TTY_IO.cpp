@@ -183,8 +183,8 @@ ACE_TTY_IO::control (Control_Mode cmd,
   switch (cmd)
     {
     case SETPARAMS:
-      DCB dcb ;
-      dcb.DCBlength = sizeof dcb ;
+      DCB dcb;
+      dcb.DCBlength = sizeof dcb;
       ::GetCommState (this->get_handle (), &dcb);
 
       switch (arg->baudrate)
@@ -222,48 +222,49 @@ ACE_TTY_IO::control (Control_Mode cmd,
         {
         case 1:
           dcb.StopBits = ONESTOPBIT;
-          break ;
+          break;
         case 2:
           dcb.StopBits = TWOSTOPBITS;
-          break ;
+          break;
         default:
           return -1;
         }
 
       if (arg->parityenb)
         {
-          dcb.fParity = TRUE ;
+          dcb.fParity = TRUE;
           if (ACE_OS::strcmp ((char *) arg->paritymode, "ODD") == 0
               || ACE_OS::strcmp ((char *) arg->paritymode, "odd") == 0)
-            dcb.Parity = ODDPARITY ;
+            dcb.Parity = ODDPARITY;
           else if (ACE_OS::strcmp ((char *) arg->paritymode, "EVEN") == 0
                    || ACE_OS::strcmp ((char *) arg->paritymode, "even") == 0)
-            dcb.Parity = EVENPARITY ;
+            dcb.Parity = EVENPARITY;
         }
       else
         {
-          dcb.fParity = FALSE ;
-          dcb.Parity = NOPARITY ;
+          dcb.fParity = FALSE;
+          dcb.Parity = NOPARITY;
         }
 
       if (arg->ctsenb) // enable CTS/RTS protocol.
         {
-          dcb.fOutxCtsFlow = TRUE ;
-          dcb.fRtsControl = RTS_CONTROL_HANDSHAKE ;
+          dcb.fOutxCtsFlow = TRUE;
+          dcb.fRtsControl = RTS_CONTROL_HANDSHAKE;
         }
       else
         {
-          dcb.fOutxCtsFlow = FALSE ;
-          dcb.fRtsControl = RTS_CONTROL_DISABLE ;
+          dcb.fOutxCtsFlow = FALSE;
+          dcb.fRtsControl = RTS_CONTROL_DISABLE;
         }
-      dcb.fBinary = TRUE ;
+      dcb.fDtrControl = DTR_CONTROL_ENABLE;
+      dcb.fBinary = TRUE;
     ::SetCommState (this->get_handle (), &dcb);
 
     // 2/13/97 BWF added drop out timer
     COMMTIMEOUTS timeouts;
-    ::GetCommTimeouts (this->get_handle(), &timeouts) ;
-    timeouts.ReadIntervalTimeout = arg->readtimeoutmsec ;
-    return ::SetCommTimeouts (this->get_handle (), &timeouts) ;
+    ::GetCommTimeouts (this->get_handle(), &timeouts);
+    timeouts.ReadIntervalTimeout = arg->readtimeoutmsec;
+    return ::SetCommTimeouts (this->get_handle (), &timeouts);
 
     case GETPARAMS:
       ACE_NOTSUP_RETURN (-1); // Not yet implemented.
