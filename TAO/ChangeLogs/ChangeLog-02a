@@ -1,10 +1,25 @@
+Mon Nov 27 13:05:59 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_ci.cpp:
+	* TAO_IDL/be/be_visitor_interface_fwd/interface_fwd_ci.cpp:
+
+	  Renamed name of generated member function from
+	  <setup_collocation> to <_tao_setup_collocation>.
+
+	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+
+	  Same as above, plus fixed "typo bug" in the fragment of
+	  code that generate the code for _tao_setup_collocation
+	  for not nested interface.
+
 Mon Nov 27 12:33:23 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 
 	* orbsvcs/Trading_Service/Trading_Service.cpp:
 	* orbsvcs/orbsvcs/Trader/Trading_Loader.cpp:
 	  Removed auto_ptr and ACE_Auto_Basic_Ptr from Trading_Service.cpp
 	  and added it back to Trading_Loader.cpp.
-	
+
 Sun Nov 26 19:47:25 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Invocation.cpp (start): Reset the reply_received field in
@@ -16,7 +31,7 @@ Sun Nov 26 19:47:25 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  invocation. All this is fine. But the reply_received field needs
 	  to be reset in the intermediate period.  If not stale values
 	  would be passed on to the next invocation and making tests like
-	  Forwarding fail. 
+	  Forwarding fail.
 
 Sun Nov 26 19:07:48 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 
@@ -24,22 +39,22 @@ Sun Nov 26 19:07:48 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 	* orbsvcs/orbsvcs/Naming/Persistent_Context_Index.cpp:
 	* orbsvcs/orbsvcs/Trader/Trading_Loader.cpp:
 	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
-	* orbsvcs/orbsvcs/AV/sfp.cpp:	
+	* orbsvcs/orbsvcs/AV/sfp.cpp:
 
 	  Removed extraneous explicit template instantiation declarations causing
 	  "multiply defined" warnings on VxWorks and LynxOS.
-	
+
 Sun Nov 26 16:52:50 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Bind_Dispatcher_Guard.i:
 	* tao/Bind_Dispatcher_Guard.h: Return the reference to the status_
-	  in the status () method. 
-	
+	  in the status () method.
+
 	* tao/Invocation.cpp (invoke_i): If there is an error and if the
 	  connection is closed, we set the status in the
 	  Bind_Dispatcher_Guard to -1. This should fix a problem that
 	  caused the client ORB to dump a core if the server shutsdown
-	  suddenly. 
+	  suddenly.
 
 Sun Nov 26 13:34:40 2000  Carlos O'Ryan  <coryan@uci.edu>
 
