@@ -659,16 +659,21 @@ namespace TAO
     const CORBA::Octet response_flags =
        this->details_.response_flags ();
 
+    Invocation_Status s = TAO_INVOKE_FAILURE;
+
     if (response_flags == CORBA::Octet (Messaging::SYNC_WITH_SERVER) ||
         response_flags == CORBA::Octet (Messaging::SYNC_WITH_TARGET))
-      return Synch_Twoway_Invocation::remote_twoway (max_wait_time
-                                                     ACE_ENV_ARG_PARAMETER);
+      {
+        s = Synch_Twoway_Invocation::remote_twoway (max_wait_time
+                                                    ACE_ENV_ARG_PARAMETER);
+        ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
+
+        return s;
+      }
 
     TAO_Target_Specification tspec;
     this->init_target_spec (tspec ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
-
-    Invocation_Status s = TAO_INVOKE_FAILURE;
 
 #if TAO_HAS_INTERCEPTORS == 1
     s = this->send_request_interception (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -678,9 +683,11 @@ namespace TAO
       return s;
 #endif /*TAO_HAS_INTERCEPTORS */
 
-// can the following line work when transport not connected?
+    TAO_Transport* transport =
+      this->resolver_.transport ();
+
     TAO_OutputCDR &cdr =
-      this->resolver_.transport ()->messaging_object ()->out_stream ();
+      transport->messaging_object ()->out_stream ();
 
     ACE_TRY
       {
@@ -695,33 +702,19 @@ namespace TAO
 
         countdown.update ();
 
-        if (response_flags == CORBA::Octet (Messaging::SYNC_WITH_TRANSPORT))
+        if (transport->is_connected())
           {
+            // We have a connected transport so we can send the message
             s = this->send_message (cdr,
-                                    TAO_Transport::TAO_TWOWAY_REQUEST,
+                                    TAO_Transport::TAO_ONEWAY_REQUEST,
                                     max_wait_time
                                     ACE_ENV_ARG_PARAMETER);
             ACE_TRY_CHECK;
           }
         else
           {
- //      if (this->resolver_.transport ()->is_connected())
-//     {
-// buffer when transport not connected
- //  this is now handled in TAO_Transport::send_message_shared_i, we buffer
-// there if not connected, what todo with interceptors
-            s = this->send_message (cdr,
-                                    TAO_Transport::TAO_ONEWAY_REQUEST,
-                                    max_wait_time
-                                    ACE_ENV_ARG_PARAMETER);
-            ACE_TRY_CHECK;
-//     }
-//     else
-			{
-//       this->resolver_.transport ()->queue_message(cdr.begin());
-                  //buffer
-
-			}
+            // The transport is not connected yet, so queue the message
+            transport->queue_message(cdr.begin());
           }
 
 #if TAO_HAS_INTERCEPTORS == 1

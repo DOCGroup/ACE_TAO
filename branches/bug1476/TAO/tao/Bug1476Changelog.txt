@@ -1,3 +1,26 @@
+
+
+Wed Jun 30 10:19:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Synch_Invocation (remote_oneway):
+          At the top of the method we check for sync with server or sync with
+          target. In case of this we do a twoway. I don't see any reason why
+          lower in the method we check another time for sync with server, so
+          removed that check. Changed the calling of
+          Synch_Twoway_Invocation::remote_twoway(), so that we check for
+          exceptions in case of emulated exception macros. Add transport local
+          variable, so that we don't need to get it several times in one
+          method call.
+
+        * tao/Transport.cpp (send_message_shared_i):
+          Removed queueing, it should be here, added some comments that the
+          code checking for twoways or replies should go out of here. This
+          class also got the new methods queue_message and queue_message_i
+          when it was created as branch.
+
+
+Initial comments
+
 In onderstaande method kan worden gebufferd.
 
 int
@@ -45,4 +68,7 @@ makkelijker in een helper method
                                       int message_semantics,
                                       const ACE_Message_Block *message_block,
                                       ACE_Time_Value *max_wait_time)
+
+
+
 

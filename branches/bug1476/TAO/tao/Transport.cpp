@@ -987,6 +987,9 @@ TAO_Transport::send_message_shared_i (TAO_Stub *stub,
                                       const ACE_Message_Block *message_block,
                                       ACE_Time_Value *max_wait_time)
 {
+
+// This has to go out here
+// {
   if (message_semantics == TAO_Transport::TAO_TWOWAY_REQUEST)
     {
       return this->send_synchronous_message_i (message_block,
@@ -997,6 +1000,7 @@ TAO_Transport::send_message_shared_i (TAO_Stub *stub,
       return this->send_reply_message_i (message_block,
                                          max_wait_time);
     }
+ // }
 
   // Let's figure out if the message should be queued without trying
   // to send first:
@@ -1012,11 +1016,6 @@ TAO_Transport::send_message_shared_i (TAO_Stub *stub,
     {
       try_sending_first = 0;
     }
-  else if (!this->is_connected_)
-  {
-      // If we are not connected, then we can't just send data, so queue
-      try_sending_first = 0;
-  }
 
   ssize_t n;
 
@@ -1129,12 +1128,12 @@ TAO_Transport::send_message_shared_i (TAO_Stub *stub,
   // sent.... Plus, when we use the blocking flushing strategy the
   // queue is flushed as a side-effect of 'schedule_output()'
 
-  if ((constraints_reached || try_sending_first) && this->is_connected_)
+  if (constraints_reached || try_sending_first)
     {
       (void) flushing_strategy->schedule_output (this);
     }
 
-  if (must_flush && this->is_connected_)
+  if (must_flush)
     {
       typedef ACE_Reverse_Lock<ACE_Lock> TAO_REVERSE_LOCK;
       TAO_REVERSE_LOCK reverse (*this->handler_lock_);
