@@ -7,17 +7,18 @@
 #include "ace/Svc_Conf.h"
 #include "ace/Svc_Conf_Tokens.h"
 
-ACE_RCSID(ace, Svc_Conf_l, "$Id$")
+ACE_RCSID (ace,
+	   Svc_Conf_l,
+	   "$Id$")
 
 // Keeps track of the current line for debugging output.
 int yylineno = 1;
 
-// Keeps track of the number of errors encountered so far.
-int yyerrno = 0;
+// Array that implements the underlying lexer buffer stack.
+YY_BUFFER_STATE yybuffer_stack[ACE_SERVICE_DIRECTIVE_STACK_DEPTH];
 
-// Used to parse service configurator directives from a string rather
-// than from a svc.conf file.
-const ACE_TCHAR *yydirective = 0;
+// Array index of the buffer currently in use.
+int yy_stack_index = 0;
 
 #define token(x)  x
 %}
@@ -69,14 +70,14 @@ inactive	      { return token (ACE_INACTIVE); }
                         // single quotes.
                         *s = '\0';
 			yyleng -= 1;
-                        yylval.ident_ = ace_obstack->copy (yytext + 1, yyleng);
+                        yylval->ident_ = ace_obstack->copy (yytext + 1, yyleng);
 			return token (ACE_STRING); }
 {ident}		      {
-		        yylval.ident_ = ace_obstack->copy (yytext, yyleng);
+		        yylval->ident_ = ace_obstack->copy (yytext, yyleng);
 			return token (ACE_IDENT);
 		      }
 {pathname}	      {
-		        yylval.ident_ = ace_obstack->copy (yytext, yyleng);
+		        yylval->ident_ = ace_obstack->copy (yytext, yyleng);
 			return token (ACE_PATHNAME);
 		      }
 {white_space}+	      ; /* EMPTY */
@@ -88,7 +89,7 @@ inactive	      { return token (ACE_INACTIVE); }
                           ACE_ERROR ((LM_ERROR, ACE_LIB_TEXT ("|%c"), *yytext));
                         ACE_ERROR ((LM_ERROR, ACE_LIB_TEXT (")\n")));
                       }
-<<EOF>>               { YY_NEW_FILE; yyterminate(); }
+<<EOF>>               { yyterminate(); }
 %%
 int
 yywrap (void)
@@ -97,18 +98,66 @@ yywrap (void)
   yytext[0] = '#';
   yyleng = 0;
 
-  // This needs to be freed to prevent a memory leak.
-  yy_delete_parse_buffer ();
-
   return 1;
 }
 
 void
-yy_delete_parse_buffer (void)
+yy_push_buffer (FILE *file)
 {
-  if (yy_current_buffer != 0) 
+  // External synchronization is required.
+
+  if (yy_stack_index >= ACE_SERVICE_DIRECTIVE_STACK_DEPTH)
     {
-      yy_delete_buffer (yy_current_buffer);
-      yy_current_buffer = 0;
+      ACE_ERROR ((LM_ERROR,
+                  "(%P|%t) Service Configurator directive nesting "
+                  "is too deep.\n"
+                  "(%P|%t) Consider increasing value of "
+                  "ACE_SERVICE_DIRECTIVE_STACK_DEPTH.\n"));
+
+      // Not much we can do, so resort to flushing the current buffer
+      // and switch to the supplied stream.
+      yyrestart (file);
+    }
+  else
+    {
+      yybuffer_stack[yy_stack_index++] = YY_CURRENT_BUFFER;
+      yy_switch_to_buffer (yy_create_buffer (file, YY_BUF_SIZE));
+    }
+}
+
+void
+yy_push_buffer (const char *directive)
+{
+  // External synchronization is required.
+
+  if (yy_stack_index >= ACE_SERVICE_DIRECTIVE_STACK_DEPTH)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "(%P|%t) Service Configurator directive nesting "
+                  "is too deep.\n"
+                  "(%P|%t) Consider increasing value of "
+                  "ACE_SERVICE_DIRECTIVE_STACK_DEPTH.\n"));
+
+      // Not much we can do.
+    }
+  else
+    {
+      yybuffer_stack[yy_stack_index++] = YY_CURRENT_BUFFER;
+
+      // yy_scan_string() already switches the buffer so setting
+      // YY_CURRENT_BUFFER here is a bit redundant.  No biggy.
+      YY_CURRENT_BUFFER = yy_scan_string (directive);
+    }
+}
+
+void
+yy_pop_buffer (void)
+{
+  // External synchronization is required.
+
+  if (--yy_stack_index >= 0)
+    {
+      yy_delete_buffer (YY_CURRENT_BUFFER);
+      yy_switch_to_buffer (yybuffer_stack[yy_stack_index]);
     }
 }
