@@ -134,13 +134,14 @@ Kokyu_EC::register_consumer (
   ACE_CHECK;
 
   ACE_ConsumerQOS_Factory consumer_qos1;
+  consumer_qos1.start_disjunction_group(types.size());
 
   for(EventType_Vector::Iterator iter(types);
       !iter.done(); iter.advance())
     {
       EventType_Vector::TYPE *type; //would rather const to ensure we don't change it, but not supported!
       iter.next(type);
-      //ACE_DEBUG((LM_DEBUG,"Kokyu_EC register_consumer() registering event type %d\n",*type));
+      ACE_DEBUG((LM_DEBUG,"Kokyu_EC register_consumer() registering event type %d\n",*type));
       if (*type != ACE_ES_EVENT_INTERVAL_TIMEOUT)
         {
           consumer_qos1.insert_type (*type,  consumer1_rt_info);
@@ -151,7 +152,7 @@ Kokyu_EC::register_consumer (
                                      info.period, //in 100s of nanosec
                                      consumer1_rt_info);
         }
-      //ACE_DEBUG((LM_DEBUG,"Kokyu_EC register_consumer() registered event type\n"));
+      ACE_DEBUG((LM_DEBUG,"Kokyu_EC register_consumer() registered event type\n"));
     }
 
   proxy_supplier =
@@ -263,6 +264,12 @@ Kokyu_EC::start (ACE_ENV_SINGLE_ARG_DECL)
       ec_impl_->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
+      ACE_Scheduler_Factory::dump_schedule (infos.in (),
+                                            dependencies.in (),
+                                            configs.in (),
+                                            anomalies.in (),
+                                            "schedule.out");
+
       //@BT: EC activated is roughly equivalent to having the DT scheduler ready to run
       //DSTRM_EVENT (MAIN_GROUP_FAM, SCHEDULER_STARTED, 1, 0, NULL);
       ACE_DEBUG((LM_DEBUG,"Kokyu_EC thread %t SCHEDULER_STARTED at %u\n",ACE_OS::gettimeofday().msec()));
@@ -351,7 +358,7 @@ Kokyu_EC::add_timeout_consumer(
   ACE_CHECK;
   //don't need to save supplier_timeout_consumer_rt_info because only used to set dependency here:
 
-  for(Supplier::RT_Info_Vector::Iterator iter(supplier_impl->all_rt_infos());
+  for(Supplier::RT_Info_Vector::Iterator iter(supplier_impl->rt_info());
       !iter.done(); iter.advance())
     {
       Supplier::RT_Info_Vector::TYPE *info; //would rather const to ensure we don't change it, but not supported!
@@ -394,9 +401,10 @@ Kokyu_EC::add_supplier(
   supplier = supplier_impl->_this(ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  EventType_Vector one_type(1);
   Supplier::RT_Info_Vector rt_infos(types.size());
   Supplier::PushConsumer_Vector proxies(types.size());
+  /*
+  EventType_Vector one_type(1);
   for(EventType_Vector::Iterator iter(types);
       !iter.done(); iter.advance())
     {
@@ -409,25 +417,26 @@ Kokyu_EC::add_supplier(
       entry << entry_point << ":" << *type;
 
       ACE_DEBUG((LM_DEBUG,"Kokyu_EC add_supplier() registering supplier for type %d\n",*type));
-
+  */
       RtecScheduler::handle_t supplier_rt_info =
-        this->register_supplier(entry.str().c_str(),
+        this->register_supplier(entry_point,//entry.str().c_str(),
                                 supplier_id,
-                                one_type,
+                                types,//one_type,
                                 supplier.in(),
                                 consumer_proxy.out()
                                 ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
-      ACE_DEBUG((LM_DEBUG,"Kokyu_EC add_supplier() consumer_proxy: %@ with RT_Info %s [%d]\n",consumer_proxy.in(),entry.str().c_str(),supplier_rt_info));
+      //ACE_DEBUG((LM_DEBUG,"Kokyu_EC add_supplier() consumer_proxy: %@ with RT_Info %s [%d]\n",consumer_proxy.in(),entry.str().c_str(),supplier_rt_info));
 
       rt_infos.push_back(supplier_rt_info);
       proxies.push_back(consumer_proxy); //proxies has a _var ref to  Consumer_Proxy so won't be deleted on return
 
-      supplier_impl->set_consumer_proxies(*type,rt_infos,proxies);
-    }
+      //supplier_impl->set_consumer_proxies(*type,rt_infos,proxies);
+      supplier_impl->set_consumer_proxy(proxies);
+      //}
 
-  //supplier_impl->rt_info(rt_infos);
+  supplier_impl->rt_info(rt_infos);
 
   this->suppliers_.push_back(supplier_impl);
 } //add_supplier()
@@ -465,7 +474,7 @@ Kokyu_EC::add_consumer_with_supplier(
       Consumer::RT_Info_Vector::TYPE *cons_info;
       citer.next(cons_info);
 
-      for(Supplier::RT_Info_Vector::Iterator iter(supplier_impl->all_rt_infos());
+      for(Supplier::RT_Info_Vector::Iterator iter(supplier_impl->rt_info());
           !iter.done(); iter.advance())
         {
           Supplier::RT_Info_Vector::TYPE *supp_info;
@@ -514,8 +523,9 @@ Kokyu_EC::add_consumer(
   info.threads = 0;
   info.info_type = RtecScheduler::OPERATION;
 
-  EventType_Vector one_type(1);
   Consumer::RT_Info_Vector rt_infos(types.size());
+  /*
+  EventType_Vector one_type(1);
   for(EventType_Vector::Iterator iter(types);
       !iter.done(); iter.advance())
     {
@@ -528,20 +538,20 @@ Kokyu_EC::add_consumer(
       entry << entry_point << ":" << *type;
 
       ACE_DEBUG((LM_DEBUG,"Kokyu_EC add_consumer() registering consumer for type %d\n",*type));
-
+  */
       RtecScheduler::handle_t consumer_rt_info =
-        this->register_consumer(entry.str().c_str(),
+        this->register_consumer(entry_point,//entry.str().c_str(),
                                 info,
-                                one_type,
+                                types,//one_type,
                                 consumer.in(),
                                 proxy_supplier.out()
                                 ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
-      ACE_DEBUG((LM_DEBUG,"Kokyu_EC add_consumer() registered consumer with RT_Info %s [%d]\n",entry.str().c_str(),consumer_rt_info));
+      //ACE_DEBUG((LM_DEBUG,"Kokyu_EC add_consumer() registered consumer with RT_Info %s [%d]\n",entry.str().c_str(),consumer_rt_info));
 
       rt_infos.push_back(consumer_rt_info);
-    }
+      //}
 
   //ACE_DEBUG((LM_DEBUG,"Kokyu_EC add_consumer() setting RT_Infos and storing consumer_impl\n"));
 

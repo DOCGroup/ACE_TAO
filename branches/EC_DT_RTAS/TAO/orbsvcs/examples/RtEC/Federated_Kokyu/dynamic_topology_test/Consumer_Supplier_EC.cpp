@@ -246,22 +246,22 @@ main (int argc, char* argv[])
 
       // ****************************************************************
 
-      Consumer_Supplier_EC supplier_ec;
-      if (supplier_ec.init(sched_type.c_str(), poa.in()) == -1)
+      Consumer_Supplier_EC cons_supp_ec;
+      if (cons_supp_ec.init(sched_type.c_str(), poa.in()) == -1)
         {
           ACE_ERROR_RETURN((LM_ERROR, "Unable to initialize Kokyu_EC"), 1);
         }
 
-      supplier_ec.init_gateway(orb.in(),
+      cons_supp_ec.init_gateway(orb.in(),
                                poa.in(),
                                "file://consumer_ec.ior" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       // ****************************************************************
-      RtEventChannelAdmin::RtSchedEventChannel_var supplier_ec_ior =
-        supplier_ec._this(ACE_ENV_SINGLE_ARG_PARAMETER);
+      RtEventChannelAdmin::RtSchedEventChannel_var cons_supp_ec_ior =
+        cons_supp_ec._this(ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      CORBA::String_var ior = orb->object_to_string(supplier_ec_ior.in()
+      CORBA::String_var ior = orb->object_to_string(cons_supp_ec_ior.in()
                                                     ACE_ENV_ARG_PARAMETER);
 
       ACE_OS::fprintf(ior_output_file, ior.in());
@@ -274,9 +274,9 @@ main (int argc, char* argv[])
       int prio = ACE_Sched_Params::priority_max (ACE_SCHED_FIFO);
       ACE_OS::thr_setprio (thr_handle, prio);
 
-      supplier_ec.set_up_supp_and_cons(ACE_ENV_SINGLE_ARG_PARAMETER);
+      cons_supp_ec.set_up_supp_and_cons(ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      //supplier_ec.start(ACE_ENV_SINGLE_ARG_PARAMETER);
+      //cons_supp_ec.start(ACE_ENV_SINGLE_ARG_PARAMETER);
       //ACE_TRY_CHECK;
 
       //@BT: Timeouts start when orb starts, similar to starting the DT worker thread

@@ -275,8 +275,8 @@ main (int argc, char* argv[])
 
       // The schedule is returned in this variables....
 
-      consumer_ec.start(ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      //consumer_ec.start(ACE_ENV_SINGLE_ARG_PARAMETER);
+      //ACE_TRY_CHECK;
 
       // ****************************************************************
 

@@ -33,29 +33,10 @@ Supplier::~Supplier (void)
 {
 }
 
-//void
-//Supplier::set_consumer_proxy(PushConsumer_Vector consumer_proxies)
 void
-Supplier::set_consumer_proxies(RtecEventComm::EventType type, RT_Info_Vector& rt_infos,
-                               PushConsumer_Vector& consumer_proxies)
+Supplier::set_consumer_proxy(PushConsumer_Vector consumer_proxies)
 {
-  PushConsumer_Vector *push_consumers;
-  RT_Info_Vector *infos;
-
-  if (type == this->ft_type_)
-    {
-      push_consumers = &(this->ft_consumer_proxies_);
-      infos = &(this->ft_rt_infos_);
-    }
-  else //NORMAL
-    {
-      push_consumers = &(this->normal_consumer_proxies_);
-      infos = &(this->normal_rt_infos_);
-    }
-
-  this->all_rt_infos_.clear();
-  infos->clear();
-  push_consumers->clear();
+  this->consumer_proxy_.clear();
 
   for(PushConsumer_Vector::Iterator iter(consumer_proxies);
       !iter.done(); iter.advance())
@@ -63,41 +44,20 @@ Supplier::set_consumer_proxies(RtecEventComm::EventType type, RT_Info_Vector& rt
       PushConsumer_Vector::TYPE *proxy; //would rather const to ensure we don't change it, but not supported!
       iter.next(proxy);
 
-      push_consumers->push_back(*proxy);
-    }
-  for(RT_Info_Vector::Iterator iter(rt_infos);
-      !iter.done(); iter.advance())
-    {
-      RT_Info_Vector::TYPE *info; //would rather const to ensure we don't change it, but not supported!
-      iter.next(info);
-
-      infos->push_back(*info);
-      this->all_rt_infos_.push_back(*info);
+      this->consumer_proxy_.push_back(*proxy);
     }
 }
-/*
+
 void
 Supplier::rt_info(RT_Info_Vector& supplier_rt_info)
 {
   this->rt_info_ = supplier_rt_info;
 }
-*/
-Supplier::RT_Info_Vector&
-Supplier::normal_rt_infos(void)
-{
-  return this->normal_rt_infos_;
-}
 
 Supplier::RT_Info_Vector&
-Supplier::ft_rt_infos(void)
+Supplier::rt_info(void)
 {
-  return this->ft_rt_infos_;
-}
-
-Supplier::RT_Info_Vector&
-Supplier::all_rt_infos(void)
-{
-  return this->all_rt_infos_;
+  return this->rt_info_;
 }
 
 void
@@ -110,8 +70,6 @@ Supplier::timeout_occured (ACE_ENV_SINGLE_ARG_DECL)
       ACE_DEBUG((LM_DEBUG,"Supplier (%P|%t) handle_service_start() DONE\n"));
     }
 
-  PushConsumer_Vector *proxies = 0;
-
   RtecEventComm::EventSet event (1);
   event.length (1);
   event[0].header.source = id_;
@@ -120,13 +78,11 @@ Supplier::timeout_occured (ACE_ENV_SINGLE_ARG_DECL)
   case FAULT_TOLERANT:
     {
       event[0].header.type   = this->ft_type_;
-      proxies = &(this->ft_consumer_proxies_);
       break;
     }
   default: //NORMAL
     {
       event[0].header.type   = this->norm_type_;
-      proxies = &(this->normal_consumer_proxies_);
       break;
     }
   }
@@ -147,7 +103,7 @@ Supplier::timeout_occured (ACE_ENV_SINGLE_ARG_DECL)
   ACE_DEBUG((LM_DEBUG,"Supplier (id %d) in thread %t ONE_WAY_CALL_START at %u\n",this->id_,ACE_OS::gettimeofday().msec()));
   DSTRM_EVENT (WORKER_GROUP_FAM, ONE_WAY_CALL_START, 0, sizeof(Object_ID), (char*)&oid);
 
-  for(PushConsumer_Vector::Iterator iter(*proxies);
+  for(PushConsumer_Vector::Iterator iter(this->consumer_proxy_);
       !iter.done(); iter.advance())
     {
       PushConsumer_Vector::TYPE *proxy; //would rather const to ensure we don't change it, but not supported!
