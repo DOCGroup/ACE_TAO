@@ -872,6 +872,7 @@ void UIprocess(int cmdSock)
       if (argc_share > i + 1) {
 	i ++;
 	vh = argv_share[i];
+        cerr << "vh = " << vh << endl;
       }
       else break;
     }
@@ -879,6 +880,7 @@ void UIprocess(int cmdSock)
       if (argc_share > i + 1) {
 	i ++;
 	ah = argv_share[i];
+        cerr << "ah = " << ah << endl;
       }
       else break;
     }
@@ -891,6 +893,7 @@ void UIprocess(int cmdSock)
   }
 
   if (title != NULL) { /* the init program is supplied by -l */
+    cerr << "title is not null \n";
     FILE * fp;
     char buf[PATH_SIZE];
     char vh[PATH_SIZE];
@@ -957,11 +960,11 @@ void UIprocess(int cmdSock)
       else {
 	vf = vh;
 	vh = "";
-	vb = (char *)malloc(BUFSIZE);
-	if (vb != NULL) {
-	  get_full_path(vf, vb, BUFSIZE);
-	  vf = vb;
-	}
+	// vb = (char *)malloc(BUFSIZE);
+// 	if (vb != NULL) {
+// 	  get_full_path(vf, vb, BUFSIZE);
+// 	  vf = vb;
+//	}
       }
     }
     else vh = vf = "";
@@ -975,16 +978,16 @@ void UIprocess(int cmdSock)
       else {
 	af = ah;
 	ah = "";
-	ab = (char *)malloc(BUFSIZE);
-	if (ab != NULL) {
-	  get_full_path(af, ab, BUFSIZE);
-	  af = ab;
-	}
+// 	ab = (char *)malloc(BUFSIZE);
+// 	if (ab != NULL) {
+// 	  get_full_path(af, ab, BUFSIZE);
+// 	  af = ab;
+// 	}
       }
     }
     else ah = af = "";
 
-    Fprintf(stderr, "Init program: title %s, vh %s, vf %s, ah %s, af %s\n",
+    fprintf(stderr, "Init program: title %s, vh %s, vf %s, ah %s, af %s\n",
 	    title, vh, vf, ah, af);
     StartProgram(title, vh, vf, ah, af);
     free(title);
