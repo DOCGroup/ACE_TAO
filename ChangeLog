@@ -1,3 +1,9 @@
+Fri Feb  6 11:48:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/rules.local.GNU:
+          Fixed typo in this file which caused build problems when .rc are
+          used (Cygwin and MinGW do this).
+
 Thu Feb  5 13:38:15 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/templates/bmake.mpd:
