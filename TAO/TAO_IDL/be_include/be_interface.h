@@ -257,12 +257,6 @@ public:
   // Helper method passed to the template method that generates code for the
   // downcast.
 
-  static int gen_optable_helper (be_interface *,
-                                 be_interface *,
-                                 TAO_OutStream *os);
-  // Helper method passed to the template method to generate code for the
-  // operation table.
-
   static int ami_handler_gen_optable_helper (be_interface *,
                                              be_interface *,
                                              TAO_OutStream *os);
@@ -311,7 +305,8 @@ public:
   // skeleton names as arguments.  Useful in the generation of closely
   // related classes, such as the AMH skeleton.
 
-  int gen_optable_entries (be_interface *);
+  int gen_optable_entries (const char *full_skeleton_name,
+                           TAO_OutStream *os);
   // generate the operation table entries.
 
   TAO_CodeGen::CG_STATE next_state (TAO_CodeGen::CG_STATE current_state,

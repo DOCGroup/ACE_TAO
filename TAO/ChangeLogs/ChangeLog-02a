@@ -1,3 +1,20 @@
+Thu Jan 24 11:48:01 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* TAO_IDL/be/be_interface.cpp:
+	* TAO_IDL/be_include/be_interface.h:
+	  Use the new class-based version traverse_inheritance_graph() to
+	  generate the operation table.  The name of the derived class is
+	  computed by the caller and pass through the Worker class down to
+	  the code generation routines.  This was useful to factor out the
+	  common code between the AMH-class (where the base class name is
+	  not obtainable via a simple method call) and the regular
+	  (non-AMH) skeletons.
+	  Also use stack-allocate iterators, it makes no sense in the
+	  world to allocate an object from the head only to delete when we
+	  return from the function!
+	  Change some while() loops to for() loops because the latter
+	  document the intent better.
+
 Thu Jan 24 12:35:17 2002  Boris Kolpackov  <bosk@ipmce.ru>
 
 	* TAO_IDL/be_include/be_visitor_typecode/typecode_defn.cpp:
