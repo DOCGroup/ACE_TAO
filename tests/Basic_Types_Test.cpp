@@ -20,10 +20,6 @@
 #include "ace/Log_Msg.h"
 #include "ace/Basic_Types.h"
 
-#if defined (sun)
-  extern "C" int getpagesize (void);
-#endif /* sun */
-
 static
 u_int
 check (const char *message, u_int i, u_int j)
@@ -99,9 +95,7 @@ main (int, char *[])
   ACE_ERROR ((LM_ERROR, "assertion failed: no ACE_*_ENDIAN definition!\n"));
 #endif /* ACE_LITTLE_ENDIAN */
 
-#if !defined (VXWORKS)
-  ACE_DEBUG ((LM_DEBUG, "OS page size: %u\n", getpagesize ()));
-#endif /* VXWORKS */
+  ACE_DEBUG ((LM_DEBUG, "OS page size: %u\n", ACE_OS::getpagesize ()));
 
 #if defined (_SC_PAGESIZE)
   ACE_DEBUG ((LM_DEBUG, "sysconf page size: %d\n",

@@ -381,7 +381,6 @@ DEP_CPP_ACE_C=\
 	".\Signal.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\SV_Semaphore_Complex.h"\
 	".\SV_Semaphore_Complex.i"\
 	".\SV_Semaphore_Simple.h"\
@@ -402,6 +401,9 @@ DEP_CPP_ACE_C=\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_ACE_C=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -492,7 +494,6 @@ DEP_CPP_ACTIV=\
 	".\Signal.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\Strategies.h"\
 	".\Strategies_T.cpp"\
 	".\Strategies_T.h"\
@@ -520,6 +521,9 @@ DEP_CPP_ACTIV=\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_ACTIV=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -569,10 +573,12 @@ DEP_CPP_ADDR_=\
 	".\OS.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_ADDR_=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -642,7 +648,6 @@ DEP_CPP_ARGV_=\
 	".\Signal.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\SV_Semaphore_Complex.h"\
 	".\SV_Semaphore_Complex.i"\
 	".\SV_Semaphore_Simple.h"\
@@ -657,6 +662,9 @@ DEP_CPP_ARGV_=\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_ARGV_=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -706,10 +714,12 @@ DEP_CPP_ARRAY=\
 	".\OS.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_ARRAY=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -787,7 +797,6 @@ DEP_CPP_ASYNC=\
 	".\Signal.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\SV_Semaphore_Complex.h"\
 	".\SV_Semaphore_Complex.i"\
 	".\SV_Semaphore_Simple.h"\
@@ -802,6 +811,9 @@ DEP_CPP_ASYNC=\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_ASYNC=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -892,7 +904,6 @@ DEP_CPP_ASYNCH=\
 	".\Signal.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\SV_Semaphore_Complex.h"\
 	".\SV_Semaphore_Complex.i"\
 	".\SV_Semaphore_Simple.h"\
@@ -924,6 +935,32 @@ DEP_CPP_ASYNCH=\
 	".\Version.h"\
 	".\ws2tcpip.h"\
 	
+NODEP_CPP_ASYNCH=\
+	".\stdcpp.h"\
+	
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Basic_Types.cpp
+
+!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
 
@@ -1021,7 +1058,6 @@ DEP_CPP_CONNE=\
 	".\Signal.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\Strategies.h"\
 	".\Strategies_T.cpp"\
 	".\Strategies_T.h"\
@@ -1060,6 +1096,9 @@ DEP_CPP_CONNE=\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_CONNE=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -1142,7 +1181,6 @@ DEP_CPP_CORBA=\
 	".\Signal.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\SV_Semaphore_Complex.h"\
 	".\SV_Semaphore_Complex.i"\
 	".\SV_Semaphore_Simple.h"\
@@ -1164,6 +1202,9 @@ DEP_CPP_CORBA=\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_CORBA=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -1213,10 +1254,12 @@ DEP_CPP_CORBA_=\
 	".\OS.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_CORBA_=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -1266,10 +1309,12 @@ DEP_CPP_DATE_=\
 	".\OS.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_DATE_=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -1325,10 +1370,12 @@ DEP_CPP_DEV_C=\
 	".\OS.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_DEV_C=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -1380,10 +1427,12 @@ DEP_CPP_DEV_A=\
 	".\OS.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_DEV_A=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -1443,10 +1492,12 @@ DEP_CPP_DEV_CO=\
 	".\OS.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_DEV_CO=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -1504,10 +1555,12 @@ DEP_CPP_DEV_I=\
 	".\OS.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_DEV_I=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -1561,7 +1614,6 @@ DEP_CPP_DUMP_=\
 	".\OS.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\SV_Semaphore_Complex.h"\
 	".\SV_Semaphore_Complex.i"\
 	".\SV_Semaphore_Simple.h"\
@@ -1576,6 +1628,9 @@ DEP_CPP_DUMP_=\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_DUMP_=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -1625,10 +1680,12 @@ DEP_CPP_DYNAM=\
 	".\OS.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_DYNAM=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -1712,7 +1769,6 @@ DEP_CPP_DYNAMI=\
 	".\Signal.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\SV_Semaphore_Complex.h"\
 	".\SV_Semaphore_Complex.i"\
 	".\SV_Semaphore_Simple.h"\
@@ -1732,6 +1788,9 @@ DEP_CPP_DYNAMI=\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_DYNAMI=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -1801,7 +1860,6 @@ DEP_CPP_EVENT=\
 	".\Signal.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\SV_Semaphore_Complex.h"\
 	".\SV_Semaphore_Complex.i"\
 	".\SV_Semaphore_Simple.h"\
@@ -1816,6 +1874,9 @@ DEP_CPP_EVENT=\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_EVENT=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -1867,10 +1928,12 @@ DEP_CPP_EVENT_=\
 	".\OS.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_EVENT_=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -1922,10 +1985,12 @@ DEP_CPP_FIFO_=\
 	".\OS.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_FIFO_=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -1979,10 +2044,12 @@ DEP_CPP_FIFO_R=\
 	".\OS.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_FIFO_R=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -2038,10 +2105,12 @@ DEP_CPP_FIFO_RE=\
 	".\OS.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_FIFO_RE=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -2095,10 +2164,12 @@ DEP_CPP_FIFO_S=\
 	".\OS.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_FIFO_S=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -2154,10 +2225,12 @@ DEP_CPP_FIFO_SE=\
 	".\OS.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_FIFO_SE=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -2213,10 +2286,12 @@ DEP_CPP_FILE_=\
 	".\OS.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_FILE_=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -2268,10 +2343,12 @@ DEP_CPP_FILE_A=\
 	".\OS.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_FILE_A=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -2331,10 +2408,12 @@ DEP_CPP_FILE_C=\
 	".\OS.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_FILE_C=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -2392,10 +2471,12 @@ DEP_CPP_FILE_I=\
 	".\OS.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_FILE_I=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -2477,7 +2558,6 @@ DEP_CPP_FILEC=\
 	".\Signal.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\SV_Semaphore_Complex.h"\
 	".\SV_Semaphore_Complex.i"\
 	".\SV_Semaphore_Simple.h"\
@@ -2497,6 +2577,9 @@ DEP_CPP_FILEC=\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_FILEC=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -2548,7 +2631,6 @@ DEP_CPP_FUTUR=\
 	".\OS.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\SV_Semaphore_Complex.h"\
 	".\SV_Semaphore_Complex.i"\
 	".\SV_Semaphore_Simple.h"\
@@ -2563,6 +2645,9 @@ DEP_CPP_FUTUR=\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_FUTUR=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -2612,10 +2697,12 @@ DEP_CPP_GET_O=\
 	".\OS.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_GET_O=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -2665,10 +2752,12 @@ DEP_CPP_HANDL=\
 	".\OS.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_HANDL=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -2718,10 +2807,12 @@ DEP_CPP_HIGH_=\
 	".\OS.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_HIGH_=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -2773,10 +2864,12 @@ DEP_CPP_INET_=\
 	".\OS.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_INET_=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -2849,10 +2942,12 @@ DEP_CPP_IO_SA=\
 	".\OS.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_IO_SA=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -2910,10 +3005,12 @@ DEP_CPP_IOSTR=\
 	".\OS.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_IOSTR=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -2963,10 +3060,12 @@ DEP_CPP_IPC_S=\
 	".\OS.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_IPC_S=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -3071,7 +3170,6 @@ DEP_CPP_LOCAL=\
 	".\SOCK_Stream.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\SV_Semaphore_Complex.h"\
 	".\SV_Semaphore_Complex.i"\
 	".\SV_Semaphore_Simple.h"\
@@ -3093,6 +3191,9 @@ DEP_CPP_LOCAL=\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_LOCAL=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -3176,7 +3277,6 @@ DEP_CPP_LOCAL_=\
 	".\Signal.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\SV_Semaphore_Complex.h"\
 	".\SV_Semaphore_Complex.i"\
 	".\SV_Semaphore_Simple.h"\
@@ -3199,6 +3299,9 @@ DEP_CPP_LOCAL_=\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_LOCAL_=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -3288,7 +3391,6 @@ DEP_CPP_LOG_M=\
 	".\SPIPE_Stream.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\SV_Semaphore_Complex.h"\
 	".\SV_Semaphore_Complex.i"\
 	".\SV_Semaphore_Simple.h"\
@@ -3306,6 +3408,9 @@ DEP_CPP_LOG_M=\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_LOG_M=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -3353,10 +3458,12 @@ DEP_CPP_LOG_R=\
 	".\OS.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_LOG_R=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -3412,10 +3519,12 @@ DEP_CPP_LSOCK=\
 	".\SOCK.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_LSOCK=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -3483,13 +3592,15 @@ DEP_CPP_LSOCK_=\
 	".\SOCK_Stream.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\Time_Value.h"\
 	".\Trace.h"\
 	".\UNIX_Addr.h"\
 	".\UNIX_Addr.i"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_LSOCK_=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -3551,10 +3662,12 @@ DEP_CPP_LSOCK_C=\
 	".\SOCK_IO.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_LSOCK_C=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -3622,13 +3735,15 @@ DEP_CPP_LSOCK_CO=\
 	".\SOCK_Stream.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\Time_Value.h"\
 	".\Trace.h"\
 	".\UNIX_Addr.h"\
 	".\UNIX_Addr.i"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_LSOCK_CO=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -3688,10 +3803,12 @@ DEP_CPP_LSOCK_D=\
 	".\SOCK_Dgram.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_LSOCK_D=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -3755,12 +3872,14 @@ DEP_CPP_LSOCK_S=\
 	".\SOCK_Stream.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\Trace.h"\
 	".\UNIX_Addr.h"\
 	".\UNIX_Addr.i"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_LSOCK_S=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -3828,7 +3947,6 @@ DEP_CPP_MALLO=\
 	".\Signal.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\SV_Semaphore_Complex.h"\
 	".\SV_Semaphore_Complex.i"\
 	".\SV_Semaphore_Simple.h"\
@@ -3843,6 +3961,9 @@ DEP_CPP_MALLO=\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_MALLO=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -3892,10 +4013,12 @@ DEP_CPP_MEM_M=\
 	".\OS.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_MEM_M=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -3963,7 +4086,6 @@ DEP_CPP_MEMOR=\
 	".\Signal.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\SV_Semaphore_Complex.h"\
 	".\SV_Semaphore_Complex.i"\
 	".\SV_Semaphore_Simple.h"\
@@ -3978,6 +4100,9 @@ DEP_CPP_MEMOR=\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_MEMOR=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -4047,7 +4172,6 @@ DEP_CPP_MESSA=\
 	".\Signal.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\SV_Semaphore_Complex.h"\
 	".\SV_Semaphore_Complex.i"\
 	".\SV_Semaphore_Simple.h"\
@@ -4062,6 +4186,9 @@ DEP_CPP_MESSA=\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_MESSA=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -4110,10 +4237,12 @@ DEP_CPP_METHO=\
 	".\OS.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_METHO=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -4210,7 +4339,6 @@ DEP_CPP_MULTI=\
 	".\Signal.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\Strategies.h"\
 	".\Strategies_T.cpp"\
 	".\Strategies_T.h"\
@@ -4246,6 +4374,9 @@ DEP_CPP_MULTI=\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_MULTI=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -4340,7 +4471,6 @@ DEP_CPP_NAME_=\
 	".\SOCK_Stream.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\SV_Semaphore_Complex.h"\
 	".\SV_Semaphore_Complex.i"\
 	".\SV_Semaphore_Simple.h"\
@@ -4362,6 +4492,9 @@ DEP_CPP_NAME_=\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_NAME_=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -4410,11 +4543,13 @@ DEP_CPP_NAME_R=\
 	".\OS.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\Time_Value.h"\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_NAME_R=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -4510,7 +4645,6 @@ DEP_CPP_NAME_S=\
 	".\SOCK_Stream.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\SV_Semaphore_Complex.h"\
 	".\SV_Semaphore_Complex.i"\
 	".\SV_Semaphore_Simple.h"\
@@ -4532,6 +4666,9 @@ DEP_CPP_NAME_S=\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_NAME_S=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -4649,7 +4786,6 @@ DEP_CPP_NAMIN=\
 	".\SOCK_Stream.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\Stream.h"\
 	".\SV_Semaphore_Complex.h"\
 	".\SV_Semaphore_Complex.i"\
@@ -4672,6 +4808,9 @@ DEP_CPP_NAMIN=\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_NAMIN=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -4758,7 +4897,6 @@ DEP_CPP_OBJEC=\
 	".\Signal.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\SV_Semaphore_Complex.h"\
 	".\SV_Semaphore_Complex.i"\
 	".\SV_Semaphore_Simple.h"\
@@ -4781,6 +4919,9 @@ DEP_CPP_OBJEC=\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_OBJEC=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -4829,10 +4970,12 @@ DEP_CPP_OBSTA=\
 	".\OS.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_OBSTA=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -4907,7 +5050,6 @@ DEP_CPP_OS_CP=\
 	".\Signal.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\SV_Semaphore_Complex.h"\
 	".\SV_Semaphore_Complex.i"\
 	".\SV_Semaphore_Simple.h"\
@@ -4922,6 +5064,9 @@ DEP_CPP_OS_CP=\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_OS_CP=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -5017,7 +5162,6 @@ DEP_CPP_PARSE=\
 	".\Signal.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\Strategies.h"\
 	".\Strategies_T.cpp"\
 	".\Strategies_T.h"\
@@ -5053,6 +5197,9 @@ DEP_CPP_PARSE=\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_PARSE=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -5118,11 +5265,13 @@ DEP_CPP_PIPE_=\
 	".\SOCK_Stream.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\Time_Value.h"\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_PIPE_=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -5212,7 +5361,6 @@ DEP_CPP_PRIOR=\
 	".\Signal.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\SV_Semaphore_Complex.h"\
 	".\SV_Semaphore_Complex.i"\
 	".\SV_Semaphore_Simple.h"\
@@ -5235,6 +5383,9 @@ DEP_CPP_PRIOR=\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_PRIOR=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -5332,7 +5483,6 @@ DEP_CPP_PROAC=\
 	".\Signal.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\Strategies.h"\
 	".\Strategies_T.cpp"\
 	".\Strategies_T.h"\
@@ -5377,6 +5527,9 @@ DEP_CPP_PROAC=\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_PROAC=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -5448,7 +5601,6 @@ DEP_CPP_PROCE=\
 	".\Signal.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\SV_Semaphore_Complex.h"\
 	".\SV_Semaphore_Complex.i"\
 	".\SV_Semaphore_Simple.h"\
@@ -5463,6 +5615,9 @@ DEP_CPP_PROCE=\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_PROCE=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -5517,7 +5672,6 @@ DEP_CPP_PROCES=\
 	".\Process_Manager.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\SV_Semaphore_Complex.h"\
 	".\SV_Semaphore_Complex.i"\
 	".\SV_Semaphore_Simple.h"\
@@ -5532,6 +5686,9 @@ DEP_CPP_PROCES=\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_PROCES=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -5583,11 +5740,13 @@ DEP_CPP_PROFI=\
 	".\Profile_Timer.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\Time_Value.h"\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_PROFI=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -5685,7 +5844,6 @@ DEP_CPP_REACT=\
 	".\Signal.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\Strategies.h"\
 	".\Strategies_T.cpp"\
 	".\Strategies_T.h"\
@@ -5715,6 +5873,9 @@ DEP_CPP_REACT=\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_REACT=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -5795,7 +5956,6 @@ DEP_CPP_READ_=\
 	".\Signal.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\SV_Semaphore_Complex.h"\
 	".\SV_Semaphore_Complex.i"\
 	".\SV_Semaphore_Simple.h"\
@@ -5815,6 +5975,9 @@ DEP_CPP_READ_=\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_READ_=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -5871,11 +6034,13 @@ DEP_CPP_REGIS=\
 	".\Registry.h"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\Stream.h"\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_REGIS=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -5982,7 +6147,6 @@ DEP_CPP_REGIST=\
 	".\SOCK_Stream.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\Stream.h"\
 	".\SV_Semaphore_Complex.h"\
 	".\SV_Semaphore_Complex.i"\
@@ -6005,6 +6169,9 @@ DEP_CPP_REGIST=\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_REGIST=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -6101,7 +6268,6 @@ DEP_CPP_REMOT=\
 	".\SOCK_Stream.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\SV_Semaphore_Complex.h"\
 	".\SV_Semaphore_Complex.i"\
 	".\SV_Semaphore_Simple.h"\
@@ -6123,6 +6289,9 @@ DEP_CPP_REMOT=\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_REMOT=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -6225,7 +6394,6 @@ DEP_CPP_REMOTE=\
 	".\SOCK_Stream.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\SV_Semaphore_Complex.h"\
 	".\SV_Semaphore_Complex.i"\
 	".\SV_Semaphore_Simple.h"\
@@ -6249,6 +6417,9 @@ DEP_CPP_REMOTE=\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_REMOTE=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -6298,10 +6469,12 @@ DEP_CPP_SCHED=\
 	".\Sched_Params.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SCHED=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -6405,7 +6578,6 @@ DEP_CPP_SELEC=\
 	".\SOCK_Stream.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\SV_Semaphore_Complex.h"\
 	".\SV_Semaphore_Complex.i"\
 	".\SV_Semaphore_Simple.h"\
@@ -6432,6 +6604,9 @@ DEP_CPP_SELEC=\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SELEC=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -6543,7 +6718,6 @@ DEP_CPP_SERVI=\
 	".\SOCK_Stream.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\SV_Semaphore_Complex.h"\
 	".\SV_Semaphore_Complex.i"\
 	".\SV_Semaphore_Simple.h"\
@@ -6576,6 +6750,9 @@ DEP_CPP_SERVI=\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SERVI=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -6654,7 +6831,6 @@ DEP_CPP_SERVIC=\
 	".\Signal.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\SV_Semaphore_Complex.h"\
 	".\SV_Semaphore_Complex.i"\
 	".\SV_Semaphore_Simple.h"\
@@ -6674,6 +6850,9 @@ DEP_CPP_SERVIC=\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SERVIC=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -6782,7 +6961,6 @@ DEP_CPP_SERVICE=\
 	".\SOCK_Stream.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\Strategies.h"\
 	".\Strategies_T.cpp"\
 	".\Strategies_T.h"\
@@ -6811,6 +6989,9 @@ DEP_CPP_SERVICE=\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SERVICE=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -6867,7 +7048,6 @@ DEP_CPP_SERVICE_=\
 	".\Shared_Object.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\SV_Semaphore_Complex.h"\
 	".\SV_Semaphore_Complex.i"\
 	".\SV_Semaphore_Simple.h"\
@@ -6882,6 +7062,9 @@ DEP_CPP_SERVICE_=\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SERVICE_=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -6940,7 +7123,6 @@ DEP_CPP_SERVICE_R=\
 	".\Shared_Object.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\SV_Semaphore_Complex.h"\
 	".\SV_Semaphore_Complex.i"\
 	".\SV_Semaphore_Simple.h"\
@@ -6955,6 +7137,9 @@ DEP_CPP_SERVICE_R=\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SERVICE_R=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -7046,7 +7231,6 @@ DEP_CPP_SERVICE_T=\
 	".\Signal.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\Strategies.h"\
 	".\Strategies_T.cpp"\
 	".\Strategies_T.h"\
@@ -7086,6 +7270,9 @@ DEP_CPP_SERVICE_T=\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SERVICE_T=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -7138,10 +7325,12 @@ DEP_CPP_SHARE=\
 	".\Shared_Memory_MM.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SHARE=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -7192,12 +7381,14 @@ DEP_CPP_SHARED=\
 	".\Shared_Memory_SV.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\SV_Shared_Memory.h"\
 	".\SV_Shared_Memory.i"\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SHARED=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -7247,10 +7438,12 @@ DEP_CPP_SHARED_=\
 	".\Shared_Object.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SHARED_=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -7318,7 +7511,6 @@ DEP_CPP_SIGNA=\
 	".\Signal.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\SV_Semaphore_Complex.h"\
 	".\SV_Semaphore_Complex.i"\
 	".\SV_Semaphore_Simple.h"\
@@ -7333,6 +7525,9 @@ DEP_CPP_SIGNA=\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SIGNA=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -7386,10 +7581,12 @@ DEP_CPP_SOCK_=\
 	".\SOCK.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SOCK_=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -7454,7 +7651,6 @@ DEP_CPP_SOCK_A=\
 	".\SOCK_Stream.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\SV_Semaphore_Complex.h"\
 	".\SV_Semaphore_Complex.i"\
 	".\SV_Semaphore_Simple.h"\
@@ -7470,6 +7666,9 @@ DEP_CPP_SOCK_A=\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SOCK_A=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -7527,10 +7726,12 @@ DEP_CPP_SOCK_C=\
 	".\SOCK_IO.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SOCK_C=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -7594,11 +7795,13 @@ DEP_CPP_SOCK_CO=\
 	".\SOCK_Stream.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\Time_Value.h"\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SOCK_CO=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -7659,7 +7862,6 @@ DEP_CPP_SOCK_D=\
 	".\SOCK_Dgram.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\SV_Semaphore_Complex.h"\
 	".\SV_Semaphore_Complex.i"\
 	".\SV_Semaphore_Simple.h"\
@@ -7674,6 +7876,9 @@ DEP_CPP_SOCK_D=\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SOCK_D=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -7733,10 +7938,12 @@ DEP_CPP_SOCK_DG=\
 	".\SOCK_Dgram_Bcast.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SOCK_DG=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -7796,10 +8003,12 @@ DEP_CPP_SOCK_DGR=\
 	".\SOCK_Dgram_Mcast.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SOCK_DGR=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -7855,10 +8064,12 @@ DEP_CPP_SOCK_I=\
 	".\SOCK_IO.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SOCK_I=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -7918,10 +8129,12 @@ DEP_CPP_SOCK_S=\
 	".\SOCK_Stream.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SOCK_S=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -7977,10 +8190,12 @@ DEP_CPP_SPIPE=\
 	".\SPIPE_Addr.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SPIPE=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -8039,10 +8254,12 @@ DEP_CPP_SPIPE_=\
 	".\SPIPE_Stream.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SPIPE_=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -8094,10 +8311,12 @@ DEP_CPP_SPIPE_A=\
 	".\SPIPE_Addr.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SPIPE_A=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -8157,10 +8376,12 @@ DEP_CPP_SPIPE_C=\
 	".\SPIPE_Stream.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SPIPE_C=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -8218,10 +8439,12 @@ DEP_CPP_SPIPE_S=\
 	".\SPIPE_Stream.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SPIPE_S=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -8300,7 +8523,6 @@ DEP_CPP_SSTRI=\
 	".\Signal.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\SV_Semaphore_Complex.h"\
 	".\SV_Semaphore_Complex.i"\
 	".\SV_Semaphore_Simple.h"\
@@ -8320,6 +8542,9 @@ DEP_CPP_SSTRI=\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SSTRI=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -8408,7 +8633,6 @@ DEP_CPP_STRAT=\
 	".\Signal.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\Strategies.h"\
 	".\Strategies_T.cpp"\
 	".\Strategies_T.h"\
@@ -8436,6 +8660,9 @@ DEP_CPP_STRAT=\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_STRAT=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -8483,12 +8710,14 @@ DEP_CPP_SV_ME=\
 	".\OS.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\SV_Message.h"\
 	".\SV_Message.i"\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SV_ME=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -8536,7 +8765,6 @@ DEP_CPP_SV_MES=\
 	".\OS.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\SV_Message.h"\
 	".\SV_Message.i"\
 	".\SV_Message_Queue.h"\
@@ -8544,6 +8772,9 @@ DEP_CPP_SV_MES=\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SV_MES=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -8591,7 +8822,6 @@ DEP_CPP_SV_SE=\
 	".\OS.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\SV_Semaphore_Complex.h"\
 	".\SV_Semaphore_Complex.i"\
 	".\SV_Semaphore_Simple.h"\
@@ -8599,6 +8829,9 @@ DEP_CPP_SV_SE=\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SV_SE=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -8646,12 +8879,14 @@ DEP_CPP_SV_SEM=\
 	".\OS.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\SV_Semaphore_Simple.h"\
 	".\SV_Semaphore_Simple.i"\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SV_SEM=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -8699,12 +8934,14 @@ DEP_CPP_SV_SH=\
 	".\OS.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\SV_Shared_Memory.h"\
 	".\SV_Shared_Memory.i"\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SV_SH=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -8788,7 +9025,6 @@ DEP_CPP_SVC_C=\
 	".\Signal.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\SV_Semaphore_Complex.h"\
 	".\SV_Semaphore_Complex.i"\
 	".\SV_Semaphore_Simple.h"\
@@ -8809,6 +9045,9 @@ DEP_CPP_SVC_C=\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SVC_C=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -8905,7 +9144,6 @@ DEP_CPP_SVC_CO=\
 	".\Signal.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\Strategies.h"\
 	".\Strategies_T.cpp"\
 	".\Strategies_T.h"\
@@ -8946,6 +9184,9 @@ DEP_CPP_SVC_CO=\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SVC_CO=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -9039,7 +9280,6 @@ DEP_CPP_SVC_H=\
 	".\Signal.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\Strategies.h"\
 	".\Strategies_T.cpp"\
 	".\Strategies_T.h"\
@@ -9077,6 +9317,9 @@ DEP_CPP_SVC_H=\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SVC_H=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -9127,7 +9370,6 @@ DEP_CPP_SYNCH=\
 	".\OS.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\SV_Semaphore_Complex.h"\
 	".\SV_Semaphore_Complex.i"\
 	".\SV_Semaphore_Simple.h"\
@@ -9142,6 +9384,9 @@ DEP_CPP_SYNCH=\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SYNCH=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -9189,11 +9434,13 @@ DEP_CPP_SYNCH_=\
 	".\OS.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\Synch_Options.h"\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SYNCH_=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -9261,7 +9508,6 @@ DEP_CPP_SYSTE=\
 	".\Signal.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\SV_Semaphore_Complex.h"\
 	".\SV_Semaphore_Complex.i"\
 	".\SV_Semaphore_Simple.h"\
@@ -9277,6 +9523,9 @@ DEP_CPP_SYSTE=\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SYSTE=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -9368,7 +9617,6 @@ DEP_CPP_TASK_=\
 	".\Signal.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\Strategies.h"\
 	".\Strategies_T.cpp"\
 	".\Strategies_T.h"\
@@ -9404,6 +9652,9 @@ DEP_CPP_TASK_=\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_TASK_=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -9451,12 +9702,14 @@ DEP_CPP_THREA=\
 	".\OS.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_THREA=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -9526,7 +9779,6 @@ DEP_CPP_THREAD=\
 	".\Signal.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\SV_Semaphore_Complex.h"\
 	".\SV_Semaphore_Complex.i"\
 	".\SV_Semaphore_Simple.h"\
@@ -9543,6 +9795,9 @@ DEP_CPP_THREAD=\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_THREAD=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -9590,12 +9845,14 @@ DEP_CPP_TIME_=\
 	".\OS.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\Time_Request_Reply.h"\
 	".\Time_Value.h"\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_TIME_=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -9665,7 +9922,6 @@ DEP_CPP_TIMER=\
 	".\Signal.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\SV_Semaphore_Complex.h"\
 	".\SV_Semaphore_Complex.i"\
 	".\SV_Semaphore_Simple.h"\
@@ -9690,6 +9946,9 @@ DEP_CPP_TIMER=\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_TIMER=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -9757,7 +10016,6 @@ DEP_CPP_TIMER_=\
 	".\Signal.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\SV_Semaphore_Complex.h"\
 	".\SV_Semaphore_Complex.i"\
 	".\SV_Semaphore_Simple.h"\
@@ -9778,6 +10036,9 @@ DEP_CPP_TIMER_=\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_TIMER_=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -9845,7 +10106,6 @@ DEP_CPP_TIMER_L=\
 	".\Signal.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\SV_Semaphore_Complex.h"\
 	".\SV_Semaphore_Complex.i"\
 	".\SV_Semaphore_Simple.h"\
@@ -9866,6 +10126,9 @@ DEP_CPP_TIMER_L=\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_TIMER_L=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -9933,7 +10196,6 @@ DEP_CPP_TIMER_Q=\
 	".\Signal.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\SV_Semaphore_Complex.h"\
 	".\SV_Semaphore_Complex.i"\
 	".\SV_Semaphore_Simple.h"\
@@ -9952,6 +10214,9 @@ DEP_CPP_TIMER_Q=\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_TIMER_Q=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -10043,7 +10308,6 @@ DEP_CPP_TIMER_QU=\
 	".\Signal.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\Strategies.h"\
 	".\Strategies_T.cpp"\
 	".\Strategies_T.h"\
@@ -10081,6 +10345,9 @@ DEP_CPP_TIMER_QU=\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_TIMER_QU=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -10150,7 +10417,6 @@ DEP_CPP_TIMER_W=\
 	".\Signal.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\SV_Semaphore_Complex.h"\
 	".\SV_Semaphore_Complex.i"\
 	".\SV_Semaphore_Simple.h"\
@@ -10171,6 +10437,9 @@ DEP_CPP_TIMER_W=\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_TIMER_W=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -10222,12 +10491,14 @@ DEP_CPP_TLI_C=\
 	".\OS.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\TLI.h"\
 	".\TLI.i"\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_TLI_C=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -10281,7 +10552,6 @@ DEP_CPP_TLI_A=\
 	".\OS.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\Time_Value.h"\
 	".\TLI.h"\
 	".\TLI.i"\
@@ -10292,6 +10562,9 @@ DEP_CPP_TLI_A=\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_TLI_A=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -10347,7 +10620,6 @@ DEP_CPP_TLI_CO=\
 	".\OS.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\TLI.h"\
 	".\TLI.i"\
 	".\TLI_Connector.h"\
@@ -10357,6 +10629,9 @@ DEP_CPP_TLI_CO=\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_TLI_CO=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -10410,7 +10685,6 @@ DEP_CPP_TLI_S=\
 	".\OS.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\TLI.h"\
 	".\TLI.i"\
 	".\TLI_Stream.h"\
@@ -10418,6 +10692,9 @@ DEP_CPP_TLI_S=\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_TLI_S=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -10468,7 +10745,6 @@ DEP_CPP_TOKEN=\
 	".\OS.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\SV_Semaphore_Complex.h"\
 	".\SV_Semaphore_Complex.i"\
 	".\SV_Semaphore_Simple.h"\
@@ -10485,6 +10761,9 @@ DEP_CPP_TOKEN=\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_TOKEN=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -10568,7 +10847,6 @@ DEP_CPP_TOKEN_=\
 	".\Signal.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\SV_Semaphore_Complex.h"\
 	".\SV_Semaphore_Complex.i"\
 	".\SV_Semaphore_Simple.h"\
@@ -10591,6 +10869,9 @@ DEP_CPP_TOKEN_=\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_TOKEN_=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -10674,7 +10955,6 @@ DEP_CPP_TOKEN_I=\
 	".\Signal.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\SV_Semaphore_Complex.h"\
 	".\SV_Semaphore_Complex.i"\
 	".\SV_Semaphore_Simple.h"\
@@ -10697,6 +10977,9 @@ DEP_CPP_TOKEN_I=\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_TOKEN_I=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -10780,7 +11063,6 @@ DEP_CPP_TOKEN_M=\
 	".\Signal.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\SV_Semaphore_Complex.h"\
 	".\SV_Semaphore_Complex.i"\
 	".\SV_Semaphore_Simple.h"\
@@ -10803,6 +11085,9 @@ DEP_CPP_TOKEN_M=\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_TOKEN_M=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -10886,7 +11171,6 @@ DEP_CPP_TOKEN_R=\
 	".\Signal.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\SV_Semaphore_Complex.h"\
 	".\SV_Semaphore_Complex.i"\
 	".\SV_Semaphore_Simple.h"\
@@ -10910,6 +11194,9 @@ DEP_CPP_TOKEN_R=\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_TOKEN_R=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -10957,11 +11244,13 @@ DEP_CPP_TRACE=\
 	".\OS.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\Trace.h"\
 	".\Trace.i"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_TRACE=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -11021,11 +11310,13 @@ DEP_CPP_TTY_I=\
 	".\OS.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\Trace.h"\
 	".\TTY_IO.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_TTY_I=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -11073,12 +11364,14 @@ DEP_CPP_TYPED=\
 	".\OS.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\Trace.h"\
 	".\Typed_SV_Message.h"\
 	".\Typed_SV_Message.i"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_TYPED=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -11126,7 +11419,6 @@ DEP_CPP_TYPED_=\
 	".\OS.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\SV_Message.h"\
 	".\SV_Message.i"\
 	".\SV_Message_Queue.h"\
@@ -11139,6 +11431,9 @@ DEP_CPP_TYPED_=\
 	".\Typed_SV_Message_Queue.i"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_TYPED_=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -11188,12 +11483,14 @@ DEP_CPP_UNIX_=\
 	".\OS.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\Trace.h"\
 	".\UNIX_Addr.h"\
 	".\UNIX_Addr.i"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_UNIX_=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -11296,7 +11593,6 @@ DEP_CPP_UPIPE=\
 	".\SPIPE_Stream.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\Strategies.h"\
 	".\Strategies_T.cpp"\
 	".\Strategies_T.h"\
@@ -11341,6 +11637,9 @@ DEP_CPP_UPIPE=\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_UPIPE=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -11442,7 +11741,6 @@ DEP_CPP_UPIPE_=\
 	".\SPIPE_Stream.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\Strategies.h"\
 	".\Strategies_T.cpp"\
 	".\Strategies_T.h"\
@@ -11487,6 +11785,9 @@ DEP_CPP_UPIPE_=\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_UPIPE_=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -11586,7 +11887,6 @@ DEP_CPP_UPIPE_S=\
 	".\SPIPE_Addr.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\Strategies.h"\
 	".\Strategies_T.cpp"\
 	".\Strategies_T.h"\
@@ -11629,6 +11929,9 @@ DEP_CPP_UPIPE_S=\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_UPIPE_S=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -11717,7 +12020,6 @@ DEP_CPP_WFMO_=\
 	".\Signal.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\Strategies.h"\
 	".\Strategies_T.cpp"\
 	".\Strategies_T.h"\
@@ -11748,6 +12050,9 @@ DEP_CPP_WFMO_=\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_WFMO_=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -11851,7 +12156,6 @@ DEP_CPP_XTREA=\
 	".\SOCK_Stream.i"\
 	".\SString.h"\
 	".\SString.i"\
-	".\stdcpp.h"\
 	".\SV_Semaphore_Complex.h"\
 	".\SV_Semaphore_Complex.i"\
 	".\SV_Semaphore_Simple.h"\
@@ -11876,6 +12180,9 @@ DEP_CPP_XTREA=\
 	".\Version.h"\
 	".\ws2tcpip.h"\
 	".\XtReactor.h"\
+	
+NODEP_CPP_XTREA=\
+	".\stdcpp.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
@@ -11926,6 +12233,10 @@ SOURCE=.\Asynch_IO.h
 # Begin Source File
 
 SOURCE=.\Auto_Ptr.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Basic_Types.h
 # End Source File
 # Begin Source File
 
@@ -12610,6 +12921,10 @@ SOURCE=.\Atomic_Op.i
 # Begin Source File
 
 SOURCE=.\Auto_Ptr.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Basic_Types.i
 # End Source File
 # Begin Source File
 
