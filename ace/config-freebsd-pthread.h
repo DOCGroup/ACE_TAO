@@ -212,8 +212,8 @@ extern "C" { char * cuserid (char *s); }
 /* POSIX Realtime signals are not fully implemented in FreeBSD.
    When they are implemented, then _POSIX_REALTIME_SIGNALS will be
    defined, as specified in the POSIX standard.
-   Refer to e-mail thread on freebsd-hackers mailing list, March 2002. */
-#ifdef _POSIX_REALTIME_SIGNALS
+   Refer to e-mail thread on freebsd-hackers mailing list, October 2002. */
+#if defined (_POSIX_REALTIME_SIGNALS) && (_POSIX_REALTIME_SIGNALS > 0)
 #    define ACE_HAS_AIO_CALLS
 #    ifndef SIGRTMIN
 #       define SIGRTMIN 32
