@@ -32,8 +32,8 @@ lookup_name (ACE_HANDLE handle)
         {127, "Rush Limbaugh"},
         {128, "Michael Jackson"},
         {129, "George Burns"},
-	{130, "Paula Jones"},
-	{0, ""}
+        {130, "Paula Jones"},
+        {0, ""}
       };
 
   int n;
@@ -58,8 +58,8 @@ lookup_name (ACE_HANDLE handle)
   for (index = 0; found == 0 && employee_db[index].emp_id; index++)
     if (employee_id == employee_db[index].emp_id)
       {
-	found = 1;
-	n = ACE_OS::sprintf (sendline, "%s", employee_db[index].emp_name);
+        found = 1;
+        n = ACE_OS::sprintf (sendline, "%s", employee_db[index].emp_name);
       }
 
   if (found == 0)
@@ -91,14 +91,15 @@ main (int argc, char *argv[])
   for (;;)
     {
       if (server.accept (new_stream) == -1)
-	::t_error ("server.accept error");
+        ::t_error ("server.accept error");
 
       if (thr_mgr.spawn (ACE_THR_FUNC (lookup_name),
-			 (void *) new_stream.get_handle (), 
-			 THR_DETACHED) == -1)
-	ACE_DEBUG ((LM_ERROR, "server: can't create worker thread %d\n"));
+                         (void *) new_stream.get_handle (), 
+                         THR_DETACHED) == -1)
+        ACE_DEBUG ((LM_ERROR, "server: can't create worker thread %d\n"));
     }
-  return 0;
+
+  ACE_NOTREACHED (return 0);
 }
 #else
 #include <stdio.h>
