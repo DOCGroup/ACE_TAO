@@ -27,19 +27,19 @@ ACE_RCSID (Strategies, UIOP_Transport, "$Id$")
 
 TAO_UIOP_Transport::TAO_UIOP_Transport (TAO_UIOP_Connection_Handler *handler,
                                         TAO_ORB_Core *orb_core,
-                                        CORBA::Boolean /*flag*/)
+                                        CORBA::Boolean flag)
   : TAO_Transport (TAO_TAG_UIOP_PROFILE,
                    orb_core)
   , connection_handler_ (handler)
   , messaging_object_ (0)
 {
-  /*  if (flag)
+  if (flag)
     {
       // Use the lite version of the protocol
       ACE_NEW (this->messaging_object_,
                TAO_GIOP_Message_Lite (orb_core));
     }
-    else*/
+  else
     {
       // Use the normal GIOP object
       ACE_NEW (this->messaging_object_,

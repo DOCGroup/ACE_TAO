@@ -134,6 +134,10 @@ public:
   virtual int consolidate_node (TAO_Queued_Data *qd,
                                 ACE_Message_Block &incoming) = 0;
 
+  /// @@Bala:Docu??
+  virtual int consolidate_fragments (TAO_Queued_Data *dqd,
+                                     const TAO_Queued_Data *sqd) = 0;
+
   /// Parse the request message, make an upcall and send the reply back
   /// to the "request initiator"
   virtual int process_request_message (TAO_Transport *transport,
@@ -158,7 +162,7 @@ public:
   virtual int is_ready_for_bidirectional (void) = 0;
 
   /// Reset the messaging the object
-  virtual void reset (int reset_flag = 1) = 0;
+  virtual void reset (void) = 0;
 };
 
 #if defined (__ACE_INLINE__)
