@@ -404,6 +404,8 @@ typedef long      id_t;
 // Win32 (in the moment).
 # if defined (ACE_WIN32)
 
+#define ACE_MAX_USERID 32
+
 // This is necessary to work around bugs with Win32 non-blocking
 // connects...
 #   if !defined (ACE_NON_BLOCKING_BUG_DELAY)
@@ -427,6 +429,7 @@ private:
 #   endif /* _DEBUG */
 # else /* !ACE_WIN32 */
 #   define ACE_NO_HEAP_CHECK
+#define ACE_MAX_USERID L_cuserid
 # endif /* ACE_WIN32 */
 
 // Turn a number into a string.
@@ -450,7 +453,6 @@ private:
 
 // include the ACE min()/max() functions.
 # include "ace/Min_Max.h"
-
 
 # if !defined (ACE_ENDLESS_LOOP)
 #  define ACE_ENDLESS_LOOP
@@ -4968,11 +4970,11 @@ public:
 
   // = A set of wrappers for determining config info.
   static char *cuserid (char *user,
-                        size_t maxlen = 32);
+                        size_t maxlen = ACE_MAX_USERID);
 
 # if defined (ACE_HAS_WCHAR)
   static wchar_t *cuserid (wchar_t *user,
-                           size_t maxlen = 32);
+                           size_t maxlen = ACE_MAX_USERID);
 # endif /* ACE_HAS_WCHAR */
 
   static int uname (struct utsname *name);

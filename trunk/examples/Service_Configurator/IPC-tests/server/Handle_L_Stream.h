@@ -1,8 +1,7 @@
 /* -*- C++ -*- */
 // $Id$
 
-
-/* Handle connections from local UNIX domain sockets. */
+// Handle connections from local UNIX domain sockets. 
 
 #ifndef _HANDLE_L_STREAM_H
 #define _HANDLE_L_STREAM_H
@@ -35,8 +34,9 @@ private:
   virtual int handle_close (ACE_HANDLE fd, ACE_Reactor_Mask);
 
   char rendezvous[MAXPATHLEN + 1];
-  static char *login_name;
   static const char *DEFAULT_RENDEZVOUS;
+  static char *login_name;
+  static char login[ACE_MAX_USERID];
 };
 
 extern ACE_Service_Object_Type ls;
