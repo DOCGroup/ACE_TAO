@@ -23,7 +23,7 @@ public:
 
   void   start_timer (void);
   void   stop_timer (void);
-  
+
   void   thr_count (size_t count);
   size_t thr_count (void);
 
@@ -121,6 +121,6 @@ private:
 // Make this available to any code that wants to see it!
 extern ACE_Svc_Export Options options;
 
-#include "Options.i"
+#include "Performance_Test_Options.i"
 #endif /* ACE_HAS_THREADS */
 #endif /* _OPTIONS_H */
