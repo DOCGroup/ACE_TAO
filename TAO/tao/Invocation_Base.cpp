@@ -60,6 +60,7 @@ namespace TAO
   {
     return this->details_.reply_service_context ();
   }
+
 #if TAO_HAS_INTERCEPTORS == 1
 
   char *
@@ -133,9 +134,6 @@ namespace TAO
   Invocation_Base::send_request_interception (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
-    PortableInterceptor::ReplyStatus status =
-      PortableInterceptor::SUCCESSFUL;
-
     ACE_TRY
       {
         this->adapter_.send_request (&this->req_info_
@@ -144,26 +142,31 @@ namespace TAO
       }
     ACE_CATCHANY
       {
-        status =
-          this->handle_any_exception (&ACE_ANY_EXCEPTION
-                                      ACE_ENV_ARG_PARAMETER);
+        (void) this->handle_any_exception (&ACE_ANY_EXCEPTION
+                                           ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
+
+        // This is a begin interception point
+        ACE_RE_THROW;
       }
 # if defined (ACE_HAS_EXCEPTIONS) \
      && defined (ACE_HAS_BROKEN_UNEXPECTED_EXCEPTIONS)
     ACE_CATCHALL
       {
-        status =
-          this->handle_all_exception (ACE_ENV_SINGLE_ARG_PARAMETER);
+        (void) this->handle_all_exception (ACE_ENV_SINGLE_ARG_PARAMETER);
         ACE_TRY_CHECK;
+
+        // This is a begin interception point
+        ACE_RE_THROW;
       }
 # endif  /* ACE_HAS_EXCEPTIONS && ACE_HAS_BROKEN_UNEXPECTED_EXCEPTIONS */
     ACE_ENDTRY;
     ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
 
-    if (status == PortableInterceptor::LOCATION_FORWARD)
+    if (this->forwarded_to_.in ())
       return TAO_INVOKE_RESTART;
 
+    // What are the other cases??
     return TAO_INVOKE_SUCCESS;
   }
 
@@ -171,9 +174,6 @@ namespace TAO
   Invocation_Base::receive_reply_interception (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
-    PortableInterceptor::ReplyStatus status =
-      PortableInterceptor::SUCCESSFUL;
-
     ACE_TRY
       {
         this->adapter_.receive_reply (&this->req_info_
@@ -182,26 +182,27 @@ namespace TAO
       }
     ACE_CATCHANY
       {
-        status =
-          this->handle_any_exception (&ACE_ANY_EXCEPTION
-                                       ACE_ENV_ARG_PARAMETER);
+        (void) this->handle_any_exception (&ACE_ANY_EXCEPTION
+                                           ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
 
-        if (status == PortableInterceptor::SYSTEM_EXCEPTION
-            || status == PortableInterceptor::USER_EXCEPTION)
-          ACE_RE_THROW;
+        ACE_RE_THROW;
       }
 # if defined (ACE_HAS_EXCEPTIONS) \
      && defined (ACE_HAS_BROKEN_UNEXPECTED_EXCEPTIONS)
     ACE_CATCHALL
       {
-        status =
-          this->handle_all_exception (ACE_ENV_SINGLE_ARG_PARAMETER);
+        (void) this->handle_all_exception (ACE_ENV_SINGLE_ARG_PARAMETER);
         ACE_TRY_CHECK;
+
+        ACE_RE_THROW;
       }
 # endif  /* ACE_HAS_EXCEPTIONS && ACE_HAS_BROKEN_UNEXPECTED_EXCEPTIONS */
     ACE_ENDTRY;
     ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
+
+    PortableInterceptor::ReplyStatus status =
+      this->req_info_.reply_status ();
 
     if (status == PortableInterceptor::LOCATION_FORWARD ||
         status == PortableInterceptor::TRANSPORT_RETRY)
@@ -215,9 +216,6 @@ namespace TAO
   Invocation_Base::receive_other_interception (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
-    PortableInterceptor::ReplyStatus status =
-      PortableInterceptor::SUCCESSFUL;
-
     ACE_TRY
       {
         this->adapter_.receive_other (&this->req_info_
@@ -226,22 +224,27 @@ namespace TAO
       }
     ACE_CATCHANY
       {
-        status =
-          this->handle_any_exception (&ACE_ANY_EXCEPTION
-                                       ACE_ENV_ARG_PARAMETER);
+        (void) this->handle_any_exception (&ACE_ANY_EXCEPTION
+                                           ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
+
+        ACE_RE_THROW;
       }
 # if defined (ACE_HAS_EXCEPTIONS) \
      && defined (ACE_HAS_BROKEN_UNEXPECTED_EXCEPTIONS)
     ACE_CATCHALL
       {
-        status =
-          this->handle_all_exception (ACE_ENV_SINGLE_ARG_PARAMETER);
+        (void) this->handle_all_exception (ACE_ENV_SINGLE_ARG_PARAMETER);
         ACE_TRY_CHECK;
+
+        ACE_RE_THROW;
       }
 # endif  /* ACE_HAS_EXCEPTIONS && ACE_HAS_BROKEN_UNEXPECTED_EXCEPTIONS */
     ACE_ENDTRY;
     ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
+
+    if (this->forwarded_to_.in ())
+      return TAO_INVOKE_RESTART;
 
     return TAO_INVOKE_SUCCESS;
   }
@@ -252,14 +255,11 @@ namespace TAO
   {
     this->req_info_.exception (ex);
 
-    PortableInterceptor::ReplyStatus status =
-      PortableInterceptor::UNKNOWN;
-
     this->adapter_.receive_exception (&this->req_info_
                                       ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (status);
+    ACE_CHECK;
 
-    status =
+    PortableInterceptor::ReplyStatus status =
       this->req_info_.reply_status (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK_RETURN (status);
 
@@ -273,24 +273,16 @@ namespace TAO
 
     this->req_info_.exception (&ex);
 
-    PortableInterceptor::ReplyStatus status =
-      PortableInterceptor::UNKNOWN;
-
     this->adapter_.receive_exception (&this->req_info_
                                       ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (status);
 
-    status =
+    PortableInterceptor::ReplyStatus status =
       this->req_info_.reply_status (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK_RETURN (status);
 
-    if (status == PortableInterceptor::SYSTEM_EXCEPTION)
-      ACE_THROW_RETURN (CORBA::UNKNOWN (),
-                        status);
-
     return status;
   }
-
 
 #endif /*TAO_HAS_INTERCEPTORS == 1*/
 }

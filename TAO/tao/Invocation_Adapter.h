@@ -201,6 +201,11 @@ namespace TAO
     /// Helper method that extracts TAO_Stub from the target object.
     TAO_Stub *get_stub (ACE_ENV_SINGLE_ARG_DECL) const;
 
+    /// Helper method that takes care of setting the profiles within
+    /// the stub object if the target gets forwarded
+    void object_forwarded (CORBA::Object *&effective_target,
+                           TAO_Stub *stub
+                           ACE_ENV_ARG_DECL);
   protected:
 
     /// The target object on which this invocation is carried out.

@@ -390,7 +390,9 @@ namespace TAO
                     ACE_TEXT ("being handled \n")));
       }
 
-    if ((inp_stream >> this->forwarded_to_.out ()) == 0)
+    CORBA::Object_var fwd;
+
+    if ((inp_stream >> fwd) == 0)
       {
         ACE_THROW_RETURN (CORBA::MARSHAL (
             CORBA::SystemException::_tao_minor_code (
@@ -400,29 +402,7 @@ namespace TAO
                           TAO_INVOKE_FAILURE);
       }
 
-    // The object pointer has to be changed to a TAO_Stub pointer
-    // in order to obtain the profiles.
-    TAO_Stub *stubobj =
-      this->forwarded_to_->_stubobj ();
-
-    if (stubobj == 0)
-      ACE_THROW_RETURN (CORBA::INTERNAL (
-          CORBA::SystemException::_tao_minor_code (
-            TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE,
-            errno),
-          CORBA::COMPLETED_NO),
-                        TAO_INVOKE_FAILURE);
-
-    // Reset the profile in the stubs
-    this->resolver_.stub ()->add_forward_profiles (stubobj->base_profiles ());
-
-    if (this->resolver_.stub ()->next_profile () == 0)
-      ACE_THROW_RETURN (CORBA::TRANSIENT (
-        CORBA::SystemException::_tao_minor_code (
-          TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE,
-          errno),
-        CORBA::COMPLETED_NO),
-                        TAO_INVOKE_FAILURE);
+    this->forwarded_reference (fwd.in ());
 
     mon.set_status (TAO_INVOKE_RESTART);
 

@@ -1,3 +1,22 @@
+Fri Oct 10 21:35:40 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Invocation_Adapter.cpp:
+	* tao/Invocation_Adapter.h: Added a new method, object_forwarded ()
+	  which takes care of doing the grunt work that needs to be done
+	  when a target object got forwarded. 
+
+	* tao/Invocation_Base.cpp: Fixed a number of problems with
+	  propagating exceptions from PI.
+
+	* tao/Synch_Invocation.cpp (location_forward): Refactored some of
+	  the code from this class to Invocation_Adapter.cpp
+
+	* tao/DynamicAny/DynCommon.cpp (set_flag): Removed all the
+	  remove_ref's since they are not needed. 
+
+	* tao/PortableServer/AMH_Response_Handler.cpp: Fix for [BUG
+	  1572]. Please see bugzilla entry for more details. 
+
 Fri Oct 10 11:12:54 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Invocation_Adapter.cpp: Cosmetic fix. 
