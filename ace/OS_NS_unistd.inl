@@ -962,7 +962,7 @@ ACE_OS::sbrk (int brk)
   ACE_NOTSUP_RETURN (0);
 #else
   ACE_OSCALL_RETURN (::sbrk (brk), void *, 0);
-#endif /* VXWORKS */
+#endif /* ACE_LACKS_SBRK */
 }
 
 ACE_INLINE int
@@ -1262,13 +1262,13 @@ ACE_INLINE int
 ACE_OS::unlink (const char *path)
 {
   ACE_OS_TRACE ("ACE_OS::unlink");
-# if defined (VXWORKS)
+# if defined (ACE_HAS_NONCONST_UNLINK)
   ACE_OSCALL_RETURN (::unlink (const_cast<char *> (path)), int, -1);
 # elif defined (ACE_PSOS) && ! defined (ACE_PSOS_LACKS_PHILE)
-  ACE_OSCALL_RETURN (::remove_f ((char *) path), int , -1);
+  ACE_OSCALL_RETURN (::remove_f (const_char <char *> (path)), int , -1);
 # elif defined (ACE_PSOS) && defined (ACE_PSOS_HAS_C_LIBRARY)
   int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::remove ((char *) path),
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::remove (const_char <char *> (path)),
                                        result),
                      int, -1);
 # elif defined (ACE_HAS_WINCE)
@@ -1280,7 +1280,7 @@ ACE_OS::unlink (const char *path)
   ACE_NOTSUP_RETURN (-1);
 # else
   ACE_OSCALL_RETURN (::unlink (path), int, -1);
-# endif /* VXWORKS */
+# endif /* ACE_HAS_NONCONST_UNLINK */
 }
 
 #if defined (ACE_HAS_WCHAR)
