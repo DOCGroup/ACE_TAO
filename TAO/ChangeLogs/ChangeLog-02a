@@ -1,3 +1,14 @@
+Sat Mar 25 19:55:24 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* orbsvcs/tests/LoadBalancing/Hash_Replica_i.cpp:
+	  Use explicit cast to generate floating point numbers in the
+	  load.
+
+	* orbsvcs/tests/LoadBalancing/LoadBalancing.dsw:
+	* orbsvcs/tests/LoadBalancing/client.dsp:
+	* orbsvcs/tests/LoadBalancing/server.dsp:
+	  Add project files for MSVC
+
 Sat Mar 25 17:52:59 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 	* orbsvcs/LoadBalancer/Makefile:
