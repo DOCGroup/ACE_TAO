@@ -56,7 +56,8 @@ FILES = \
   PortableGroup/UIPMC_Endpoint \
   PortableGroup/UIPMC_Factory \
   PortableGroup/UIPMC_Profile \
-  PortableGroup/UIPMC_Transport
+  PortableGroup/UIPMC_Transport \
+  PortableGroup/UIPMC_Wait_Never
 
 DEFS  = $(addsuffix .h,$(FILES))
 

@@ -6,6 +6,7 @@
 #include "UIPMC_Connection_Handler.h"
 #include "UIPMC_Acceptor.h"
 #include "UIPMC_Profile.h"
+#include "UIPMC_Wait_Never.h"
 #include "tao/Acceptor_Registry.h"
 #include "tao/operation_details.h"
 #include "tao/Timeprobe.h"
@@ -38,6 +39,12 @@ TAO_UIPMC_Transport::TAO_UIPMC_Transport (TAO_UIPMC_Connection_Handler *handler,
   ACE_NEW (this->messaging_object_,
            TAO_GIOP_Message_Base (orb_core,
                                   ACE_MAX_DGRAM_SIZE));
+
+  // Replace the default wait strategy with our own 
+  // since we don't support waiting on anything.
+  delete this->ws_;
+  ACE_NEW (this->ws_,
+           TAO_UIPMC_Wait_Never (this));
 }
 
 TAO_UIPMC_Transport::~TAO_UIPMC_Transport (void)

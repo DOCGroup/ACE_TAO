@@ -30,7 +30,8 @@ OBJFILES = \
         $(OBJDIR)\UIPMC_Endpoint.obj \
         $(OBJDIR)\UIPMC_Factory.obj \
         $(OBJDIR)\UIPMC_Profile.obj \
-        $(OBJDIR)\UIPMC_Transport.obj
+        $(OBJDIR)\UIPMC_Transport.obj \
+        $(OBJDIR)\UIPMC_Wait_Never.obj
 
 RESOURCE = $(OBJDIR)\PortableGroup.res
 
