@@ -140,8 +140,9 @@ public:
 
   // = Identify the module
   /// Get the module name.
-  /// Set the module name.
   const ACE_TCHAR *name (void) const;
+
+  /// Set the module name.
   void name (const ACE_TCHAR *);
 
   // = Argument to the Tasks.

@@ -169,23 +169,32 @@ public:
   // These are low level tweaking methods
   //
 
-  /// Set and get flag that indicates if parsing and passing of
-  /// addresses to the service_handler is necessary.
+  /// Get flag that indicates if parsing and passing of addresses to
+  /// the service_handler is necessary.
   virtual int pass_addresses (void) const;
+
+  /// Set flag that indicates if parsing and passing of addresses to
+  /// the service_handler is necessary.
   virtual void pass_addresses (int new_value);
 
-  /// Set and get flag that indicates if address validation is
-  /// required.
+  /// Get flag that indicates if address validation is required.
   virtual int validate_new_connection (void) const;
+
+  /// Set flag that indicates if address validation is required.
   virtual void validate_new_connection (int new_value);
 
-  /// Set and get flag that indicates if a new accept should be
-  /// reissued when a accept completes.
+  /// Get flag that indicates if a new accept should be reissued when a accept
+  /// completes.
   virtual int reissue_accept (void) const;
+
+  /// Set flag that indicates if a new accept should be reissued when a accept
+  /// completes.
   virtual void reissue_accept (int new_value);
 
-  /// Set and get bytes to be read with the <accept> call.
+  /// Get bytes to be read with the <accept> call.
   virtual int bytes_to_read (void) const;
+
+  /// Set bytes to be read with the <accept> call.
   virtual void bytes_to_read (int new_value);
 
   /// This is required by the AcceptEx call.
