@@ -1,3 +1,8 @@
+Sat Mar 18 12:56:55 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Makefile: Updated dependencies. Thanks to
+	  Dr.Levine for reporting this.
+
 Sat Mar 18 07:30:20 2000  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/LifeCycle_Service/Factory_Trader.cpp: changed
