@@ -13,7 +13,7 @@ Thu Oct  7 11:39:46 2004  Chad Elliott  <elliott_c@ociweb.com>
            typedef string MyString;
            typedef MyString ArrayOfString[15];
 
-          In the early 1.3.x, the tao_idl compiler would not generate
+          In the early 1.3.x days, the tao_idl compiler would not generate
           correct CDR operators that took into account the primitive base
           type of the array.
 
