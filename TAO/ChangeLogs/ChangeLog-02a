@@ -1,3 +1,10 @@
+Tue Apr 16 07:26:18 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.cpp (create_object): 
+	  Added the ":" to the "-r" option.  Thanks to Bharathi
+ 	  Kangatharan <bharathi.kangatharan@baesystems.com> for reporting
+ 	  this.
+
 Tue Apr 16 09:31:19 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* orbsvcs/tests/Security/Big_Request/Makefile: 
