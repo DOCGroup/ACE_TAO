@@ -38,7 +38,7 @@ public:
   // Deactivate the object.
 
   // = ServantBase operations
-  PortableServer::POA_ptr _default_POA (CORBA::Environment &env);
+  virtual PortableServer::POA_ptr _default_POA (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
   CosNotifyChannelAdmin::ProxyID my_id_;
   // This supplier's id.
