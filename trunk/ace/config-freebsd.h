@@ -26,6 +26,8 @@
 # include "ace/config-g++-common.h"
 #endif /* __GNUG__ */
 
+#define ACE_HAS_GPERF
+
 // Platform specific directives
 #define ACE_LACKS_GETPGID
 #define ACE_LACKS_RWLOCK_T
