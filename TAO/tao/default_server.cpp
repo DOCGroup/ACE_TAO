@@ -340,19 +340,6 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, char *argv[])
               this->poa_lock_type_ = TAO_NULL_LOCK;
           }
       }
-    else if (ACE_OS::strcmp (argv[curarg], "-ORBpoamgrlock") == 0)
-      {
-        curarg++;
-        if (curarg < argc)
-          {
-            char *name = argv[curarg];
-
-            if (ACE_OS::strcasecmp (name, "thread") == 0)
-              this->poa_mgr_lock_type_ = TAO_THREAD_LOCK;
-            else if (ACE_OS::strcasecmp (name, "null") == 0)
-              this->poa_mgr_lock_type_ = TAO_NULL_LOCK;
-          }
-      }
     else if (ACE_OS::strcmp (argv[curarg], "-ORBeventlock") == 0)
       {
         curarg++;
