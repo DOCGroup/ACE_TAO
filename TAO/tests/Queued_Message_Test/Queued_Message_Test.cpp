@@ -78,7 +78,7 @@ static void del_message (TAO_Queued_Message *&head,
 }
 
 int
-main (int, ACE_TCHAR *[])
+main (int, char *[])
 {
 
   // Initialize a random seed to get better coverage.
