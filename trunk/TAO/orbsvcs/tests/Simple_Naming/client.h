@@ -21,6 +21,7 @@
 #include "tao/TAO.h"
 #include "orbsvcs/Naming/Naming_Utils.h"
 #include "orbsvcs/CosNamingC.h"
+#include "test_objectS.h"
 
 class Naming_Test
 {
@@ -51,6 +52,69 @@ class Simple_Test : public Naming_Test
 public:
   virtual int execute (TAO_Naming_Client &root_context);
   // Execute the simple test code.
+};
+
+class Loop_Test : public Naming_Test
+{
+  // = TITLE
+  //    This class implements a loop Naming Service test.
+  //
+  // = DESCRIPTION
+  //    The test binds(), resolves(), and unbinds() an object
+  //    reference in a loop, ignoring AlreadyBound and NotFound
+  //    exceptions.  This is useful for a script that spawns multiple
+  //    client processes, each executing the loop test, using the same
+  //    name for the object reference.
+public:
+  virtual int execute (TAO_Naming_Client &root_context);
+  // Execute the loop test code.
+};
+
+class MT_Test : public Naming_Test, public ACE_Task_Base
+{
+  // = TITLE
+  //    This class implements a simple Multithreaded (multiclient) Naming Service test.
+  //
+  // = DESCRIPTION
+  //    The test spawns multiple threads: each attempts to
+  //    bind(), resolve(), and unbind() an object
+  //    reference using the same name, and the same Naming Context.
+public:
+  // = Initialization and termination methods.
+
+  MT_Test (CORBA::ORB_ptr orb,
+           int size = 10);
+  // Constructor.  Takes in an orb pointer and number of threads to spawn.
+
+  virtual int execute (TAO_Naming_Client &root_context);
+  // Execute the MT test code.
+
+  virtual int svc (void);
+  // This code is executed by each thread.
+
+private:
+  int size_;
+  // Number of threads to spawn.  By default is set to 10.
+
+  CORBA::ORB_ptr orb_;
+  // A pointer to our ORB.
+
+  char* name_service_ior_;
+  // IOR in the string format for Naming Service we are to deal with.
+  // Each thread will use string_to_object() and this IOR to create
+  // its own NamingContext stub for invoking operations on the
+  // Naming Service.  If all threads try to use the same stub, bad things
+  // happen...
+
+  // This can be replaced with CORBA::String_var when <string_to_object>
+  // is fixed - this will clean up the memory properly.
+
+  CosNaming::Name test_name_;
+  // Holds name used for registering the object with Naming Service.
+
+  Test_Object_var test_ref_;
+  // Holds object to be registered with the Naming Service by each thread.
+
 };
 
 class Tree_Test : public Naming_Test

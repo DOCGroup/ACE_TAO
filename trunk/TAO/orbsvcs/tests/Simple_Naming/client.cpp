@@ -20,7 +20,6 @@
 
 #include "client.h"
 #include "ace/Get_Opt.h"
-#include "test_objectS.h"
 
 ACE_RCSID(Simple_Naming, client, "$Id$")
 
@@ -81,7 +80,7 @@ CosNaming_Client::CosNaming_Client (void)
 int
 CosNaming_Client::parse_args (void)
 {
-  ACE_Get_Opt get_opts (argc_, argv_, "dstiey");
+  ACE_Get_Opt get_opts (argc_, argv_, "dstieylm:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -95,6 +94,25 @@ CosNaming_Client::parse_args (void)
           ACE_NEW_RETURN (this->test_,
                           Simple_Test,
                           -1);
+        break;
+      case 'l':
+        if (this->test_ == 0)
+          ACE_NEW_RETURN (this->test_,
+                          Loop_Test,
+                          -1);
+        break;
+      case 'm':
+        if (this->test_ == 0)
+          {
+            int size = ACE_OS::atoi (get_opts.optarg);
+            if (size <= 0)
+              size = 10;
+
+            ACE_NEW_RETURN (this->test_,
+                            MT_Test (this->orbmgr_.orb (), size),
+                            -1);
+          }
+
         break;
       case 't':
         if (this->test_ == 0)
@@ -180,6 +198,296 @@ CosNaming_Client::init (int argc, char **argv)
   TAO_ENDTRY_RETURN (0);
 }
 
+MT_Test::MT_Test (CORBA::ORB_ptr orb,
+                  int size)
+   :size_ (size),
+    orb_ (orb),
+    name_service_ior_ (0)
+{
+}
+
+int
+MT_Test::svc (void)
+{
+  // Obtain object reference to the Naming Service (create new stub.)
+  TAO_TRY_EX (SETUP)
+    {
+      CORBA::Object_var name_service_obj =
+        orb_->string_to_object (name_service_ior_, TAO_TRY_ENV);
+      TAO_CHECK_ENV_EX (SETUP);
+
+      CosNaming::NamingContext_var name_service =
+        CosNaming::NamingContext::_narrow (name_service_obj.in (),
+                                           TAO_TRY_ENV);
+      TAO_CHECK_ENV_EX (SETUP);
+    }
+  TAO_CATCHANY
+    {
+      TAO_TRY_ENV.print_exception ("Unexpected exception in MT test");
+      return -1;
+    }
+  TAO_ENDTRY;
+
+  // Bind the object.
+  TAO_TRY_EX (BIND)
+    {
+      name_service->bind (test_name_,
+                          test_ref_.in (),
+                          TAO_TRY_ENV);
+      TAO_CHECK_ENV_EX (BIND);
+      ACE_DEBUG ((LM_DEBUG,
+                  "Bound name OK in thread %8.8x \n",
+                  ACE_OS::thr_self ()));
+    }
+  TAO_CATCH (CosNaming::NamingContext::AlreadyBound, ex)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Unable to bind in thread %8.8x \n",
+                  ACE_OS::thr_self ()));
+
+      TAO_TRY_ENV.clear ();
+    }
+  TAO_CATCHANY
+    {
+      TAO_TRY_ENV.print_exception ("Unexpected exception in MT test");
+      return -1;
+    }
+  TAO_ENDTRY;
+
+  // Resolve the object from the Naming Context.
+  TAO_TRY_EX (RESOLVE)
+    {
+      CORBA::Object_var result_obj_ref =
+        name_service->resolve (test_name_,
+                               TAO_TRY_ENV);
+      TAO_CHECK_ENV_EX (RESOLVE);
+
+      Test_Object_var result_object =
+        Test_Object::_narrow (result_obj_ref.in (),
+                              TAO_TRY_ENV);
+      TAO_CHECK_ENV_EX (RESOLVE);
+
+      if (!CORBA::is_nil (result_object.in ())
+          && result_object->id (TAO_TRY_ENV) == CosNaming_Client::OBJ1_ID)
+      TAO_CHECK_ENV_EX (RESOLVE);
+      ACE_DEBUG ((LM_DEBUG,
+                  "Resolved name OK in thread %8.8x \n",
+                  ACE_OS::thr_self ()));
+    }
+  TAO_CATCH (CosNaming::NamingContext::NotFound, ex)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Unable to resolve in thread %8.8x \n",
+                  ACE_OS::thr_self ()));
+
+      TAO_TRY_ENV.clear ();
+    }
+  TAO_CATCHANY
+    {
+      TAO_TRY_ENV.print_exception ("Unexpected exception in MT test");
+      return -1;
+    }
+  TAO_ENDTRY;
+
+  // Unbind the object from the Naming Context.
+  TAO_TRY_EX (UNBIND)
+    {
+      name_service->unbind (test_name_,
+                            TAO_TRY_ENV);
+      TAO_CHECK_ENV_EX (UNBIND);
+      ACE_DEBUG ((LM_DEBUG,
+                  "Unbound name OK in thread %8.8x \n",
+                  ACE_OS::thr_self ()));
+    }
+  TAO_CATCH (CosNaming::NamingContext::NotFound, ex)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Unable to unbind in thread %8.8x \n",
+                  ACE_OS::thr_self ()));
+
+      TAO_TRY_ENV.clear ();
+    }
+  TAO_CATCHANY
+    {
+      TAO_TRY_ENV.print_exception ("Unexpected exception in MT test");
+      return -1;
+    }
+  TAO_ENDTRY;
+
+  return 0;
+}
+
+int
+MT_Test::execute (TAO_Naming_Client &root_context)
+{
+  // if we weren't given the orb pointer - cannot proceed.
+  if (orb_ == 0)
+    return -1;
+
+  // Create data which will be used by all threads.
+
+  // Dummy object instantiation.
+  My_Test_Object test_obj_impl (CosNaming_Client::OBJ1_ID);
+
+  TAO_TRY
+    {
+      test_ref_ =
+        test_obj_impl._this (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
+      // Get the IOR for the Naming Service.  Each thread
+      // can use it in <string_to_object> to create its own stub for
+      // the Naming Service.  This 'trick' is necessary, because
+      // multiple threads cannot be using the same stub - bad things
+      // happen...  This is just a way to give each thread its own stub.
+
+      name_service_ior_ =
+        orb_->object_to_string (root_context.get_context (),
+                                TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
+    }
+  TAO_CATCHANY
+    {
+      TAO_TRY_ENV.print_exception ("Unexpected exception while instantiating dummy");
+      return -1;
+    }
+  TAO_ENDTRY;
+
+  // Create a name for dummy.
+  test_name_.length (1);
+  test_name_[0].id = CORBA::string_dup ("Foo");
+
+  // Spawn threads, each of which will be executing svc ().
+  int status = this->activate (THR_NEW_LWP | THR_JOINABLE,
+                               size_);
+  if (status == -1)
+    return -1;
+  else
+    return this->wait ();
+}
+
+
+int
+Loop_Test::execute (TAO_Naming_Client &root_context)
+{
+  // Create a dummy object.
+  My_Test_Object test_obj_impl (CosNaming_Client::OBJ1_ID);
+  Test_Object_var test_ref;
+
+  TAO_TRY_EX (SETUP)
+    {
+      test_ref =
+        test_obj_impl._this (TAO_TRY_ENV);
+      TAO_CHECK_ENV_EX (SETUP);
+    }
+  TAO_CATCHANY
+    {
+      TAO_TRY_ENV.print_exception ("Unexpected exception while instantiating dummy");
+      return -1;
+    }
+  TAO_ENDTRY;
+
+  // Create a name for dummy.
+  CosNaming::Name test_name;
+  test_name.length (1);
+  test_name[0].id = CORBA::string_dup ("Foo");
+
+  // Perform bind, resolve, and unbind operations on the dummy in a
+  // loop.  CosNaming::NamingContext::AlreadyBound and
+  // CosNaming::NamingContext::NotFound exceptions are ignored (i.e.,
+  // we move on to performing the next operation in a loop).
+  for (int i = 0; i < 200; i++)
+    {
+      // Bind the object.
+      TAO_TRY_EX (BIND)
+        {
+          root_context->bind (test_name,
+                              test_ref.in (),
+                              TAO_TRY_ENV);
+          TAO_CHECK_ENV_EX (BIND);
+          ACE_DEBUG ((LM_DEBUG,
+                      "Bound name OK in process %8.8x \n",
+                      ACE_OS::getpid ()));
+        }
+      TAO_CATCH (CosNaming::NamingContext::AlreadyBound, ex)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "Unable to bind in process %8.8x \n",
+                      ACE_OS::getpid ()));
+
+          TAO_TRY_ENV.clear ();
+        }
+      TAO_CATCHANY
+        {
+          TAO_TRY_ENV.print_exception ("Unexpected exception in Loop test");
+          return -1;
+        }
+      TAO_ENDTRY;
+
+      // Resolve the object from the Naming Context.
+      TAO_TRY_EX (RESOLVE)
+        {
+          CORBA::Object_var result_obj_ref =
+            root_context->resolve (test_name,
+                                   TAO_TRY_ENV);
+          TAO_CHECK_ENV_EX (RESOLVE);
+
+          Test_Object_var result_object =
+            Test_Object::_narrow (result_obj_ref.in (),
+                                  TAO_TRY_ENV);
+          TAO_CHECK_ENV_EX (RESOLVE);
+
+          if (!CORBA::is_nil (result_object.in ())
+              && result_object->id (TAO_TRY_ENV) == CosNaming_Client::OBJ1_ID)
+            TAO_CHECK_ENV_EX (RESOLVE);
+          ACE_DEBUG ((LM_DEBUG,
+                      "Resolved name OK in process %8.8x \n",
+                      ACE_OS::getpid ()));
+        }
+      TAO_CATCH (CosNaming::NamingContext::NotFound, ex)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "Unable to resolve in process %8.8x \n",
+                      ACE_OS::getpid ()));
+          TAO_TRY_ENV.clear ();
+        }
+      TAO_CATCHANY
+        {
+          TAO_TRY_ENV.print_exception ("Unexpected exception in Loop test");
+          return -1;
+        }
+      TAO_ENDTRY;
+
+
+      // Unbind the object from the Naming Context.
+      TAO_TRY_EX (UNBIND)
+        {
+          root_context->unbind (test_name,
+                                TAO_TRY_ENV);
+          TAO_CHECK_ENV_EX (UNBIND);
+          ACE_DEBUG ((LM_DEBUG,
+                      "Unbound name OK in process %8.8x \n",
+                      ACE_OS::getpid ()));
+        }
+      TAO_CATCH (CosNaming::NamingContext::NotFound, ex)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "Unable to unbind in process %8.8x \n",
+                      ACE_OS::getpid ()));
+          TAO_TRY_ENV.clear ();
+        }
+      TAO_CATCHANY
+        {
+          TAO_TRY_ENV.print_exception ("Unexpected exception in Loop test");
+          return -1;
+        }
+
+      TAO_ENDTRY;
+    }
+  return 0;
+}
+
 int
 Simple_Test::execute (TAO_Naming_Client &root_context)
 {
@@ -230,6 +538,7 @@ Simple_Test::execute (TAO_Naming_Client &root_context)
       return -1;
     }
   TAO_ENDTRY;
+
   return 0;
 }
 
