@@ -11,7 +11,7 @@ CIAO::Config_Handlers::BaseTypes_Handler::~BaseTypes_Handler()
 ///<XMLSchema::string> and stores the value from
 ///the <XMLSchema::string> in the <CORBA::string>.
 CORBA::String_var& 
-CIAO::Config_Handlers::get_string (CORBA::String_var& str, 
+CIAO::Config_Handlers::BaseTypes_Handler::get_string (CORBA::String_var& str, 
                                    XMLSchema::string<char>& desc)
 {
     //Convert duplicate the XMLSchema::string and
