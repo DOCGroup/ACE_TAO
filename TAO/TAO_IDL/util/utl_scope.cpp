@@ -964,7 +964,8 @@ UTL_Scope::lookup_pseudo (Identifier *e)
   UTL_ScopeActiveIterator *i = 0;
   char *name_string = e->get_string ();
 
-  if (ACE_OS::strcmp (name_string, "Object") == 0)
+  if (ACE_OS::strcmp (name_string, "Object") == 0
+      || ACE_OS::strcmp (name_string, "ValueBase") == 0)
     {
       // Iterate over the global scope.
       UTL_ScopeActiveIterator global_iter (idl_global->scopes ()->bottom (),
