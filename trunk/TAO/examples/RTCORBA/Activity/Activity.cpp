@@ -121,8 +121,8 @@ Activity::init (int& argc, char *argv []
   ACE_CHECK_RETURN (-1);
 
   object = this->orb_->resolve_initial_references ("PriorityMappingManager"
-                                                 ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+                                                   ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
   RTCORBA::PriorityMappingManager_var mapping_manager =
     RTCORBA::PriorityMappingManager::_narrow (object.in ()
                                               ACE_ENV_ARG_PARAMETER);
@@ -462,7 +462,8 @@ Activity::run (int argc, char *argv[] ACE_ENV_ARG_DECL)
   this->activate_schedule (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  this->create_started_flag_file (argc, argv ACE_ENV_ARG_PARAMETER);
+  this->create_started_flag_file (argc, argv);
+
 
   orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
@@ -473,7 +474,7 @@ Activity::run (int argc, char *argv[] ACE_ENV_ARG_DECL)
 }
 
 void
-Activity::create_started_flag_file (int argc, char *argv[] ACE_ENV_ARG_DECL)
+Activity::create_started_flag_file (int argc, char *argv[])
 {
   ACE_Arg_Shifter arg_shifter (argc, argv);
 
