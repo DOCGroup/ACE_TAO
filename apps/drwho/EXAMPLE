@@ -1,0 +1,311 @@
+Hi,
+
+	I'm in the finishing stages of writing a program called
+'drwho' (short for "Distributed RWHO"), that gets around certain rwho
+limitations, adds functionality, and also prints a much prettier
+listing of who's logged in around a network.  Here's a short blurb
+describing the program if you'd like to try it out (don't worry, no
+Trojan horses... ;-)).
+
+	The C++ source is in ~schmidt/languages/C++/drwho.  It is a
+tour de force of Object-Oriented Design and Programming!!!
+
+	Hope you like it!
+	
+		Doug
+
+----------------------------------------
+p.s.  Here are some samples.  If you'd like to find out who's logged
+in around here, try the following commands:
+
+# Prints out the help file
+
+% ~schmidt/bin/sun4/drwho -r -h
+usage: drwho 
+-?       prints a short usage message
+-A       append the following hostname to the list of predefined hostnames.
+-a       return information on *all* users remotely logged in (uses yp passwd).
+-b       run the server in the background (i.e., as a daemon).
+-d       turn on debugging.
+-F       use the following file contents to initialize the host list.
+-f       use the following file contents to initialize the friends database.
+-H       use the following hostname as part of the new list of hostnames.
+         this option overwrites the existing default names).
+-h       print a long usage message.
+-L	 print the login name rather than the real name (which is the default).
+-l	 print information in long format (works for all protocols).
+-p       set the port number (server must correspond).
+-R       print info using the rusers format.
+-r       do the remote lookups (i.e., local operations are the default).
+-t       set the amount of time we wait for servers to timeout.
+-w       return information on just one user.
+----------------------------------------	 
+
+# Find out where a particular person is logged in:
+
+% ~schmidt/bin/sun4/drwho -r -w brodbeck
+chateau
+
+This is useful for remote commands that require a hostname, e.g.:
+
+% talk brodbeck@`drwho -r -w brodbeck`
+
+or
+
+% rsh `drwho-client -w brodbeck` "ps -aux | egrep -v 'root|schmidt'"
+USER       PID %CPU %MEM   SZ  RSS TT STAT START  TIME COMMAND
+brodbeck 21991  0.0  0.0  108    0 co IW   Nov  8  0:10 /usr/bin/X11R4/xclock -r
+bin         46  0.0  0.0   36    0 ?  IW   Oct 15  0:01 ypbind
+brodbeck 21907  0.0  0.0  216    0 co IW   Nov  8  0:00 -tcsh (tcsh)
+brodbeck 22000  0.0  0.0  224    0 p1 IW   Nov  8  0:01 -csh (tcsh)
+brodbeck 21973  0.0  1.9  864  360 co S    Nov  8  2:42 /usr/bin/X11R4/Xsun :0 -
+brodbeck 21998  0.0  0.0  212    0 p0 IW   Nov  8  0:00 -csh (tcsh)
+brodbeck 22001  0.0  0.0  224    0 p3 IW   Nov  8  0:02 -csh (tcsh)
+brodbeck 22783  0.0  1.4  200  264 p3 S    14:07   0:00 vi one_page_summary
+brodbeck 21972  0.0  0.0   40    0 co IW   Nov  8  0:00 /usr/bin/X11/xinit -- -l
+brodbeck 22803  0.0  0.0   40    0 p1 IW   14:12   0:00 more inbox/37
+brodbeck 21979  0.0  0.0  112    0 co IW   Nov  8  0:00 olwm -3 -f
+brodbeck 21992  0.0  0.5  108   96 co S    Nov  8  0:23 /usr/bin/X11R4/xbiff -bg
+brodbeck 21999  0.0  0.0  212    0 p2 IW   Nov  8  0:00 -csh (tcsh)
+
+or
+
+% foreach host (`drwho -r -l -w brodbeck`)
+? echo $host
+? rsh $host w | egrep brodbeck
+? end
+----------------------------------------
+
+# Find out which friends are logged in (* means currently active)
+
+% drwho -r -f ~schmidt/.friends.dta
+remote friends logged on
+------------------------
+ Delectable Debi     [chateau]
+ Chang-Kai Chek      [hera]
+ Gary Gershwin       [wagram paris buckaroo ics sherlock]
+ Andrew Harrison     [buckaroo laguna ics cthulu]
+ Holly Hocs          [jourdain]
+ Dr. Dave            [laguna broadway]
+ Sam Horrocks        [brochant paris buckaroo liege laguna ics bonnie john-bigboote]
+ Well Hung           [net5]
+ Kari Knees          [st-michel]
+ Ionas Rex           [ics]
+ Dr. Ray             [bonnie pan clipperton]
+ Frank Marino        [bonnie]
+ David "fine" Levine [trinite dinsdale segur]
+ Clark Kent Madsen   [pasteur]
+ Jo Jo Starbuck      [segur]
+ Owen O'Palley       [dinsdale porte-de-st-ouen]
+ Tim Morgan          [glacier buckaroo ics john-parker]
+ Too Thieu           [valentine]
+ Alex Nicolau        [ics ck7]
+ Golden Bear         [zola bear]
+ David Ruby          [ics ocean steppingstone]
+ Elke Summers        [aardvark]
+*Doug O'las          [pasteur beaver* net6*(2) net4]
+ Karl Marx Schwamb   [abp]
+ Rick Selby          [louvre]
+ this->self          [pasteur bugfix]
+ Sheba               [cardinal]
+ Tatsuda             [valentine]
+ Cindy Twiddle       [alexandre-dumas]
+*Vanessa Redgrave    [bonnie*(2)]
+ Zippy Ziv           [pigalle trinite]
+------------------------
+friends: 5      users: 168
+
+----------------------------------------
+
+# Find out everyone who is logged in everywhere!
+
+% drwho -r -a 
+remote users logged on
+------------------------
+ Barbara Weisenfluh          [sunshine]
+ Jon Krause                  [laguna]
+ David Kramer                [olympus]
+ Cindy Tittle Moore          [alexandre-dumas]
+ Karl Schwamb                [abp]
+*Anh Hoang Tran              [bonnie*]
+ Adam Uthcritam              [buckaroo]
+ Harry Yessayan              [chapelle]
+ Girish Kotmire              [legion]
+*Udhw68k                     [ics*]
+ Ruben Ernesto Ortega        [simplon]
+ Jeanne Pickering            [poisson]
+ Hai-Geng Wang               [ics buckaroo esp cy4]
+ Keith A. Marino             [bonnie]
+ cinouye                     [bonnie]
+ Mark Rentmeesters           [laguna siam]
+ Heping He                   [crimee monceau]
+*David Kakichi Kauahao Nitta [bonnie*]
+ Umesh Krishnaswamy          [calliope]
+ David Kolson                [purple]
+ Eddie Schwalb               [cliff ocean broadway]
+ Phillip Raymond Colline     [bonnie]
+ Scott Erickson              [ics paris wagram buckaroo sherlock]
+ Doris Tonne                 [bonnie]
+ Alan Keren                  [brooks]
+ Debra Brodbeck              [chateau]
+*Uocsqnt                     [ics*]
+ Chung Ng                    [liege trocadero]
+*John Romine                 [bonnie ics london woolamaloo paris buckaroo*(1) philosophy yoyodyne beaver]
+ Lisa Tellier                [coyote]
+ Merri Naka                  [perfect-tommy]
+ David Eppstein              [wormwood]
+ Heather Ross                [bonnie ics paris john-yaya]
+*Gary Hiromi Nakamura        [bonnie*]
+ James Kipps                 [ocean]
+ Kamal Ali                   [pan ci4 focl]
+ Xiping Song                 [berault]
+*Up4tusti                    [ics*]
+ Robert Allen Monroe         [bonnie]
+ Craig Snider                [gobelins]
+ Jose C. Barrios             [chatelet]
+ Lynn Stauffer               [cg3]
+*Alastair Milne              [ics*]
+ David Levine                [trinite dinsdale segur]
+ Operator                    [laguna bonnie ics woolamaloo paris rome cecil buckaroo beanie philosophy]
+ Mary Franks                 [john-starbird]
+ Roni Potasman               [esp enterprise]
+*jli1                        [bonnie*]
+ Wendy Lasher                [voltaire]
+ John King                   [ics]
+*skeung                      [bonnie*]
+ David Harnick-Shapiro       [laguna bonnie ics woolamaloo glacier paris buckaroo beanie john-littlejohn john-yaya esp valentine]
+ Dennis Kibler               [turing]
+*Vanessa Yun-Yin Yuan        [bonnie*(2)]
+ Tedd Hadley                 [etoile]
+ Hung Huang                  [net5]
+ George S. Lueker            [john-wood]
+ Rina Dechter                [john-grim]
+ Elke A. Rundensteiner       [aardvark]
+ Richard Selby               [louvre]
+ Thanh Lan Vu                [bonnie]
+*Steven Lafayette Smith      [bonnie*]
+ Owen O'Malley               [dinsdale porte-de-st-ouen]
+*Dennis Troup                [sainte-denis*(1)]
+ Alex Odyniec                [ics]
+ Patrick Young               [elysees]
+ Lubomir Bic                 [cj2]
+*ryoshii                     [ics*]
+ Carmen Mendoza              [anniebell]
+ Gregory Alan Bolcer         [liege javel crimee]
+*El Fattah                   [trix*(1)]
+*Mei-Fan Chou                [bonnie*]
+ X-MAN                       [net1]
+ Fei York Yee                [bonnie]
+ Nikil Dutt                  [ics synthesis]
+ Sam Horrocks                [laguna liege bonnie ics paris buckaroo brochant john-bigboote]
+ Alfred Bork                 [idyllwild]
+*M i n h                     [bonnie*]
+ Ray Klefstad                [bonnie pan clipperton]
+ Thieu Q. Nguyen             [valentine]
+ Debra Richardson            [zola bear]
+*sjalali                     [bonnie*]
+ R. Kent Madsen              [pasteur]
+*Donna Rae Love              [bonnie*]
+ Brian Christopher Pitterle  [fdr]
+*Shilpa V. Shukla            [bonnie*]
+ Earl Wayne Jr. Hood         [bonnie]
+ Young Kim                   [myrtle]
+ Stephanie Leif Aha          [cardinal]
+*Steven Daniel Wallace       [bonnie*]
+ Szu-Ching Wang              [bonnie]
+ Patrick Murphy              [focl]
+ Paul O'Rorke                [ci2]
+ Craig Alan Macfarlane       [liege chateau-rouge]
+ Mats Heimdahl               [duroc]
+ CF Engineer                 [ics]
+*dialup                      [ics*]
+ Ki C. Kim                   [cy2]
+ Hadar Ziv                   [pigalle trinite]
+ Software Testing group      [liege siam]
+ David Ruby                  [ics ocean steppingstone]
+*Stephen Te-Lung Chen        [bonnie*]
+ Michael Dillencourt         [cubes]
+*hlin1                       [bonnie*]
+ Andrew Harrison             [laguna ics buckaroo cthulu]
+ Ken Anderson                [mabillon]
+ Alex Nicolau                [ics ck7]
+*John Richard Place          [bonnie*(2)]
+*Douglas C. Schmidt          [pasteur beaver* net6*(2) net4]
+ Holly Hildreth              [jourdain]
+ Kari Forester               [st-michel]
+ Joy Schuler                 [scooter]
+ Michael Pazzani             [pan]
+ Kazushige Shimono           [valentine]
+ Joan Mahoney                [segur]
+ John Self                   [pasteur bugfix]
+ Steve Morris                [tweezer]
+ Isaac D Scherson            [zeus]
+*Dongpei Zhuo                [bonnie*(2)]
+ Pat Harris                  [surrey]
+*Robert Steven Zucker        [siam*]
+ Tatsuya Suda                [valentine]
+ Jeff Erickson               [madeleine]
+ David A. Honig              [laguna broadway]
+ Chi-Kai Chien               [hera]
+ Dan Gajski                  [ics]
+*Steven Novack               [snowball*(1)]
+*Chung Tak Wong              [bonnie*(1)]
+ Tim Morgan                  [ics glacier buckaroo john-parker]
+*Stephen James Martin        [bonnie*]
+ Billie Bozarth              [etoile jasmin]
+ You have new mail.          [liege dinsdale ternes]
+*Chiharu Sano                [bonnie*]
+ Fran Paz                    [willis]
+------------------------
+friends: 37	users: 163
+----------------------------------------
+
+# Print out all machines and who is logged into each one
+
+% drwho -R -l
+drwho-client -R -L
+beanie           operator
+crimee           harrison hhe
+siam             mrentme
+alexandre-dumas  tittle
+avron            heimdahl
+cecil            operator
+elysees          pyoung
+pasteur          madsen*(1)
+sainte-denis     troup
+gobelins         snider
+bugfix           self
+mabillon         kanderso*(3)
+buckaroo         operator david sam authcrit wang harrison jromine morgan yin
+rome             operator sam
+paris            operator jromine sam david heather
+chateau          brodbeck*(1)
+wagram           sam
+simplon          rortega
+jourdain         hildreth
+javel            gbolcer
+bastille         self schmidt*(1)
+monceau          hhe
+glacier          hhe david morgan
+porte-de-st-ouen omalley
+berault          song
+laguna           operator harrison sam david jromine jkrause mrentme kanderso*(1)
+jasmin           bozarth
+chateau-rouge    cmacfarl
+zola             sam omalley
+invalides        mrentme
+london           operator jromine
+brochant         gbolcer
+rennes           steph
+pigalle          ziv
+aardvark         rundenst
+chapelle         yessayan
+cad              jianl*(1)
+liege            cmacfarl kari aporter yessayan rzucker sam
+woolamaloo       operator
+st-michel        kari
+segur            jmahoney
+philosophy       operator
+sablon           rundenst
+dinsdale         cmacfarl yessayan sam
+----------------------------------------
