@@ -146,7 +146,8 @@ ACE_TP_Reactor::handle_events (ACE_Time_Value *max_wait_time)
            dispatch_info.event_handler_->resume_handler ();
         }
 
-      if (dispatch_info.event_handler_ != this->notify_handler_ &&
+      if (dispatch_info.handle_ != ACE_INVALID_HANDLE &&
+          dispatch_info.event_handler_ != this->notify_handler_ &&
           flag == 0)
         this->resume_handler (dispatch_info.handle_);
     }
@@ -423,6 +424,8 @@ ACE_TP_Reactor::notify_handle (ACE_EH_Dispatch_Info &dispatch_info)
 
       // As the handler is no longer valid, invalidate the handle
       dispatch_info.event_handler_ = 0;
+      dispatch_info.handle_ = ACE_INVALID_HANDLE;
+
       return retval;
     }
 
