@@ -4,7 +4,7 @@ template <class T> ACE_INLINE int
 ACE_Active_Map_Manager<T>::bind (ACE_Active_Map_Manager_Key &key,
                                  T *&internal_value)
 {
-  size_t slot_index;
+  ACE_UINT32 slot_index;
   int result = this->next_free (slot_index);
 
   if (result == 0)
@@ -57,8 +57,8 @@ template <class T> ACE_INLINE int
 ACE_Active_Map_Manager<T>::find (const ACE_Active_Map_Manager_Key &key,
                                  T *&internal_value) const
 {
-  size_t slot_index = key.slot_index ();
-  size_t slot_generation = key.slot_generation ();
+  ACE_UINT32 slot_index = key.slot_index ();
+  ACE_UINT32 slot_generation = key.slot_generation ();
 
   if (slot_index > this->total_size_ ||
 #if defined (ACE_HAS_LAZY_MAP_MANAGER)
@@ -166,7 +166,7 @@ ACE_Active_Map_Manager<T>::unbind (const ACE_Active_Map_Manager_Key &key,
 
   if (result == 0)
     {
-      size_t slot_index = key.slot_index ();
+      ACE_UINT32 slot_index = key.slot_index ();
 
 #if defined (ACE_HAS_LAZY_MAP_MANAGER)
 
