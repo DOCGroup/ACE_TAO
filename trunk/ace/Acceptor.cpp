@@ -860,7 +860,7 @@ ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::shared_accept
                                         ) == -1)
     {
       // Check whether we just timed out or whether we failed...
-      if (!(errno == EWOULDBLOCK || errno == ETIMEDOUT))
+      if (!(errno == EWOULDBLOCK || errno == ETIME))
         // Close down handler to avoid memory leaks.
         svc_handler->close (0); 
       return -1;
