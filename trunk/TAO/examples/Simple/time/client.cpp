@@ -1,22 +1,23 @@
-// $Id$
+//$Id$
+# include "Time_Client_i.h"
 
-#include "Client_i.h"
 
-ACE_RCSID(Time, client, "$Id$")
-
-// This function runs the time and date test.
+// The client program for the application.
 
 int
 main (int argc, char **argv)
 {
-  Client_i client;
+  Time_Client_i client;
+  
 
   ACE_DEBUG ((LM_DEBUG,
               "\n\ttime and date client\n\n"));
 
-  if (client.init (argc, argv) == -1)
-    return -1;
+  if (client.run (argc, argv) == -1)
+    return -1; 
   else
-    return client.run ();
+    return 0;
+   
 }
 
+                                 
