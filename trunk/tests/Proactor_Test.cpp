@@ -247,6 +247,7 @@ MyTask::create_proactor (ProactorType type_proactor, size_t max_op)
       break;
 #  endif /* sun */
 
+#  if !defined(__Lynx__)
     case CB:
       ACE_NEW_RETURN (proactor_impl,
                       ACE_POSIX_CB_Proactor (max_op),
@@ -254,6 +255,7 @@ MyTask::create_proactor (ProactorType type_proactor, size_t max_op)
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%t) Create Proactor Type = CB\n")));
       break;
+#  endif /* __Lynx__ */
 
     default:
       ACE_DEBUG ((LM_DEBUG,
@@ -1715,11 +1717,11 @@ set_proactor_type (const ACE_TCHAR *ptype)
       proactor_type = SUN;
       return 1;
 #endif /* sun */
-#if defined (__sgi)
+#if !defined (__Lynx__)
      case 'C':
        proactor_type = CB;
        return 1;
-#endif /* __sgi */
+#endif /* __Lynx__ */
     default:
       break;
     }

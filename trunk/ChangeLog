@@ -1,3 +1,36 @@
+Wed Mar 17 17:55:49 2004  Steve Huston  <shuston@riverace.com>
+
+	* ace/Proactor.cpp (ctor): Change the default proactor implementation
+	  to favor CB, then SIG, then AIOCB. The CB proactor works best on
+	  many platforms, avoiding multithread issues with aio_suspend() on
+	  most platforms other than HP-UX, and avoiding signal/thread mixes
+	  on as many platforms as possible because it raises so many problems.
+
+	* ace/POSIX_CB_Proactor.{h cpp}: Remove __sun as a condition that
+	  prevents compilation of ACE_POSIX_CB_Proactor. Sun can do this
+	  proactor type just fine. Added an 'extern "C"' variant of the
+	  aio completion function for platforms (such as Solaris 8) that
+	  have ACE_HAS_SIG_C_FUNC.
+
+	* ace/config-sunos5.7.h: For Solaris 7 and later, use the default
+	  proactor, ACE_POSIX_CB_Proactor.
+
+	* ace/config-linux-common.h: Remove ACE_POSIX_AIOCB_PROACTOR setting.
+	  The AIOCB proactor doesn't work with multiple threads since the
+	  aio_suspend() call isn't multi-thread safe and ACE doesn't protect
+	  the aiocb list. The SIG proactor doesn't work before the 2.6 kernel
+	  because signals can't be queued across threads. CB works everywhere.
+	  Note though, that even at the 2.6 kernel, read/write to sockets (and
+	  some other things, I believe) get converted to blocking regardless of
+	  what the application does. Thus, the only way to use aio on Linux
+	  at this time is by ping-ponging, like the half-duplex mode in
+	  Proactor_Test. Not terribly useful...
+
+	* tests/Proactor_Test.cpp:
+	* tests/Proactor_Test_IPV6.cpp: Only allow the CB-type proactor for
+	  !__Lynx__. Lynx is the only remaining AIO-enabled platform for
+	  which this proactor type is not valid.
+
 Wed Mar 17 13:54:41 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* ace/Logging_Strategy.cpp:
