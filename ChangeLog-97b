@@ -1,5 +1,8 @@
 Fri Nov 21 17:12:48 1997    <nw1@CHA-CHA>
 
+	* ace/Thread_Manager.cpp (close): Deactivated automatic wait on
+ 	  close for now.  It doesn't seem to work on Solaris.
+
 	* ace/Thread_Manager.{h,cpp} (wait): Added codes to remove detached
  	  threads.  This function can be activated selectively.  I added
  	  this so we can ignore detached threads when closing down the
