@@ -438,6 +438,9 @@ TAO_Marshal_Sequence::deep_free (CORBA::TypeCode_ptr  tc,
                                  const void *dest,
                                  CORBA::Environment &env)
 {
+  ACE_UNUSED_ARG (env);
+  ACE_UNUSED_ARG (dest);
+
   // TAO implements sequences using inheritance from a base
   // class. That class allocate  and deallocates the buffer, using
   // virtual methods.
