@@ -170,6 +170,9 @@ FactoryClient::create_channel (const char *channel_id,
                             CosEventChannelFactory::ChannelFactory_ptr factory,
                               CORBA::Environment &ACE_TRY_ENV)
 {
+  ACE_DEBUG ((LM_DEBUG,
+              "Trying to create channel %s\n", channel_id));
+
   CosEventChannelAdmin::EventChannel_var ec =
     CosEventChannelAdmin::EventChannel::_nil ();
 
