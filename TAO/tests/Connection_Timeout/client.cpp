@@ -130,7 +130,7 @@ main (int argc, char *argv[])
       // Give a 30% error margin for handling exceptions etc. It is a
       // high margin, though!. But the timeout is too small and wider
       // range would help.
-#if (ACE_HAS_FLOATING_POINT == 1)
+#if defined (ACE_LACKS_FLOATING_POINT) && (ACE_LACKS_FLOATING_POINT != 0)
       // The elapsed time is in usecs
       if (el.real_time > 200000)
         {
@@ -140,17 +140,16 @@ main (int argc, char *argv[])
           return 1;
         }
 #else
-
       // The elapsed time is in secs
       if (el.real_time > 0.200)
         {
           ACE_ERROR ((LM_ERROR,
-                      "(%P|%t)ERROR: Too long to timeout \n"));
+                      "(%P|%t) ERROR: Too long to timeout \n"));
 
           return 1;
         }
+#endif /* ACE_LACKS_FLOATING_POINT == 1*/
 
-#endif/*ACE_HAS_FLOATING_POINT == 1*/
       return 0;
     }
   ACE_ENDTRY;
