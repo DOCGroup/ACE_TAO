@@ -1,3 +1,8 @@
+Sun Jan 18 08:52:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* ASNMP/asnmp/ctr64.h:
+	  Added include of ace/Basic_Types.h to get ACE_UINT64 definition.
+
 Sun Jan 18 08:45:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* tests/Tests.bor:
