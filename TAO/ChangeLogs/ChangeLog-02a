@@ -9,6 +9,12 @@ Tue Jan 29 11:20:36 2002  Johnny Willemsen <jwillemsen@remedy.nl>
         * orbsvcs/tests/Notify/performance-tests/Filter/*.bor:
           Added new BCB makefiles to build these tests
 
+        * orbsvcs/tests/Notify/Makefile.bor:
+          Added Ordering directory
+
+        * orbsvcs/tests/Notify/Ordering/*.bor:
+          Added new BCB makefiles to build these tests
+
 Tue Jan 29 09:10:17 2002  Johnny Willemsen <jwillemsen@remedy.nl>
 
 	* tao/Messaging.h:

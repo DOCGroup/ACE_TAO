@@ -6,6 +6,7 @@
 DIRS = \
         lib \
         Basic \
+        Ordering \
         performance-tests
 
 !include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
