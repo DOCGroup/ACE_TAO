@@ -157,7 +157,8 @@ Test_DynUnion::run_test (void)
     }
   ACE_CATCHANY
     {
-      ACE_TRY_ENV.print_exception ("test_dynunion::run_test");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "test_dynunion::run_test");
       return -1;
     }
   ACE_ENDTRY;
