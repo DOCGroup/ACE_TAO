@@ -99,7 +99,7 @@ template class
       OctetSeq, \
       CORBA::Octet \
     >
-#pragma TAO_Seq_Var_Base_T<CORBA::OctetSeq, CORBA::Octet>
+#pragma instantiate TAO_Seq_Var_Base_T<CORBA::OctetSeq, CORBA::Octet>
 
 # pragma instantiate \
   TAO_Seq_Out_T< \
