@@ -1756,20 +1756,22 @@ int be_visitor_interface_collocated_ss::visit_interface (be_interface *node)
   os->decr_indent (0);
 
   os->incr_indent ();
-#if defined (ACE_WIN32)
-  // @@ TODO MSVC++ compiler has some kind of issue (read
-  // *bug*) wrt nested classes in constructors, if the fully
-  // qualified name is used it gets all confused. Quite to my
-  // dismay the work around is to use a non-qualified name for
-  // the base class!
-  // I wish I never have to know why the symbol table for
-  // MSVC++ can get so confused ;-) (coryan)
-  *os << ": " << node->local_name ()
-      << " (stub, servant, CORBA::B_TRUE)," << be_nl;
-#else
-  *os << ": " << node->name ()
-      << " (stub, servant, CORBA::B_TRUE)," << be_nl;
-#endif /* ACE_WIN32 */
+
+  if (node->defined_in ())
+    {
+      be_decl* scope = 
+	be_scope::narrow_from_scope (node->defined_in())->decl ();
+
+      *os << ": ACE_NESTED_CLASS ("
+	  << scope->name () << ","
+	  << node->local_name ()
+	  << ") (servant, stub, CORBA::B_TRUE)," << be_nl;
+    }
+  else
+    {
+      *os << ": " << node->name ()
+	  << " (servant, stub, CORBA::B_TRUE)," << be_nl;
+    }
 
   // @@ We should call the constructor for all base classes, since we
   // are using multiple inheritance.
@@ -1780,20 +1782,21 @@ int be_visitor_interface_collocated_ss::visit_interface (be_interface *node)
         {
           be_interface* parent =
             be_interface::narrow_from_decl (node->inherits()[i]);
-#if defined (ACE_WIN32)
-          // @@ TODO MSVC++ compiler has some kind of issue (read
-          // *bug*) wrt nested classes in constructors, if the fully
-          // qualified name is used it gets all confused. Quite to my
-          // dismay the work around is to use a non-qualified name for
-          // the base class!
-          // I wish I never have to know why the symbol table for
-          // MSVC++ can get so confused ;-) (coryan)
-          *os << "  " << parent->local_coll_name () << " (servant, stub),"
-              << be_nl;
-#else
-          *os << "  " << parent->full_coll_name () << " (servant, stub),"
-              << be_nl;
-#endif /* ACE_WIN32 */
+	  if (parent->defined_in ())
+	    {
+	      be_decl* scope = 
+		be_scope::narrow_from_scope (parent->defined_in())->decl ();
+
+	      *os << "  ACE_NESTED_CLASS ("
+		  << scope->name () << ","
+		  << parent->local_coll_name ()
+		  << ") (servant, stub)," << be_nl;
+	    }
+	  else
+	    {
+	      *os << "  " << parent->full_coll_name ()
+		  << " (servant, stub)," << be_nl;
+	    }
         }
     }
 
