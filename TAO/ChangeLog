@@ -1,3 +1,8 @@
+Mon Nov  4 14:18:15 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tests/Bug_1020_Basic_Regression/README: Added information about
+	  the motivation and purpose of this test.
+
 Mon Nov  4 13:44:48 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tests/Bug_1020_Basic_Regression: A new regression test for BUG
