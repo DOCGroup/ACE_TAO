@@ -1,3 +1,11 @@
+Fri Feb  6 13:30:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Advanced/ch_18/server.cpp:
+        * docs/tutorials/Quoter/Naming_Service/server.cpp:
+        * docs/tutorials/Quoter/RT_Event_Service/server.cpp:
+        * docs/tutorials/Quoter/Event_Service/server.cpp:
+          Fixed include path
+
 Fri Feb  6 12:58:33 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Runtime_Scheduler.h:
