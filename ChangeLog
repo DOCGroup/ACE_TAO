@@ -1,3 +1,29 @@
+Mon Jan 12 23:26:28 UTC 2004  Don Hinton  <dhinton@dre.vanderbilt.edu>
+
+        * include/makeinclude/wrapper_macros.GNU:
+          Added new commandline flag, static_link.  It defaults to 0, but
+          can be set =1 to force static linking, e.g., uses "-static" when
+          linking with GNU ld.  It's turned off by default since using it
+          causes the footprint to go up by almost 1 MB, due to linking all
+          the system and compiler .a files.  This way the user can decide
+          if that what they really want.  Thanks to Bala for helping to
+          formulate this policy, which matches what users expect, while
+          adding the capability to do real static linking if you want to.
+
+        * include/makeinclude/rules.bin.GNU:
+        * include/makeinclude/rules.local.GNU:
+          Moved the assignment of the STATIC_LINK_FLAG from rules.bin to
+          rules.local so that it will get picked up even if rules.bin is
+          not included (MPC and some Makefiles with multiple targets don't
+          include rules.bin).  Only add the STATIC_LINK_FLAG to LDFLAGS
+          if static_libs_only=1.
+
+        * include/makeinclude/platform_sunos5_g++.GNU:
+          Removed default assignment of STATIC_LINK_FLAG to empty, since
+          it's now controlled with the new static_link flag above.  It
+          still won't work on Solaris, but at least users wanting to use
+          it will get an error instead of us silently not adding "-static".
+
 Mon Jan 12 17:52:17 2004  Steve Huston  <shuston@riverace.com>
 
 	* ACE-INSTALL.html: Add a section for using GNU autoconf.
