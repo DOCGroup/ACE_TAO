@@ -39,6 +39,7 @@
 # define ACE_SIZEOF_LONG_DOUBLE 8   /* 5.3 System */
 #endif
 
+#define ACE_HAS_SGIDLADD
 #define ACE_HAS_P_READ_WRITE
 #define ACE_LACKS_LINEBUFFERED_STREAMBUF
 #define ACE_HAS_SETOWN
