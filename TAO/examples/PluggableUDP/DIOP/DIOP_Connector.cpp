@@ -351,7 +351,6 @@ TAO_DIOP_Connector::preconnect (const char *preconnects)
       num_connections = dests.size ();
       ACE_INET_Addr *remote_addrs = 0;
       TAO_DIOP_Connection_Handler **handlers = 0;
-      char *failures = 0;
 
       ACE_NEW_RETURN (remote_addrs,
                       ACE_INET_Addr[num_connections],
@@ -366,6 +365,7 @@ TAO_DIOP_Connector::preconnect (const char *preconnects)
       ACE_Auto_Basic_Array_Ptr<TAO_DIOP_Connection_Handler*>
         safe_handlers (handlers);
 
+      char *failures;
       ACE_NEW_RETURN (failures,
                       char[num_connections],
                       -1);
