@@ -255,10 +255,440 @@ Command_Handler::handle_input (ACE_HANDLE fd)
 CORBA::Boolean 
 Command_Handler::init_video (void)
 {
-  ::init ();
+
+  :: init ();
+  return 0;
+
+  int i, j;
+
+  /* try to stop and close previous playing */
+  if (audioSocket >= 0 || videoSocket >= 0)
+    {
+      unsigned char tmp = CmdCLOSE;
+      int result = 
+        this->stop_playing();
+      if (result < 0)
+        return result;
+    
+      if (audioSocket >= 0)
+        {
+          if (ABpid > 0) {
+            kill(ABpid, SIGUSR1);
+            ABpid = -1;
+          }
+          usleep(10000);
+          AudioWrite(&tmp, 1);
+          ComCloseConn(audioSocket);
+          audioSocket = -1;
+        }
+    
+      if (videoSocket >= 0)
+        {
+          if (VBpid > 0) {
+            kill(VBpid, SIGUSR1);
+            VBpid = -1;
+          }
+          usleep(10000);
+          VideoWrite(&tmp, 1);
+          ComCloseConn(videoSocket);
+          videoSocket = -1;
+          while ((!VBbufEmpty()) || !VDbufEmpty()) {
+            while (VDpeekMsg() != NULL) {
+              VDreclaimMsg(VDgetMsg());
+            }
+            usleep(10000);
+          }
+          usleep(10000);
+        }
+    }
+
+  /* read in video/audio files */
+  NewCmd(CmdINIT);
+  CmdRead((char*)&i, 4);
+  CmdRead(vh, i);
+  vh[i] = 0;
+  CmdRead((char*)&i, 4);
+  CmdRead(vf, i);
+  vf[i] = 0;
+  CmdRead((char*)&i, 4);
+  CmdRead(ah, i);
+  ah[i] = 0;
+  CmdRead((char*)&i, 4);
+  CmdRead(af, i);
+  af[i] = 0;
+  /*
+    fprintf(stderr, "INIT: vh-%s, vf-%s, ah-%s, af-%s\n", vh, vf, ah, af);
+  */
+
+  shared->live = 0;
+  shared->audioMaxPktSize = !shared->config.audioConn;
+  shared->videoMaxPktSize = !shared->config.videoConn;
+  
+  if (af[0] != 0)
+    {
+      if (InitAudioChannel(ah, af))
+        {
+          audioSocket = -1;
+          shared->totalSamples = 0;
+        }
+      else
+        {
+          shared->nextSample = 0;
+          if (shared->config.maxSPS < shared->audioPara.samplesPerSecond)
+            shared->config.maxSPS < shared->audioPara.samplesPerSecond;
+        }
+    }
+  else
+    {
+      shared->totalSamples = 0;
+      audioSocket = -1;
+    }
+  if (vf[0] != 0)
+    {
+
+      if (this->init_video_channel(vh, vf))
+        {
+          shared->totalFrames = 0;      /* disable video channel */
+          videoSocket = -1;
+        }
+      else
+        {
+          shared->nextFrame = 1;
+          shared->nextGroup = 0;
+          shared->currentFrame = shared->currentGroup = shared->currentDisplay = 0;
+          if (shared->config.maxFPS < shared->framesPerSecond)
+            shared->config.maxFPS = shared->framesPerSecond;
+        }
+    }
+  else
+    {
+      videoSocket = -1;
+      shared->totalFrames = 0;  /* disable video channel */
+    }
+  if (audioSocket < 0 && videoSocket < 0)  /* none of video/audio channels is setup */
+    {
+      unsigned char tmp = CmdFAIL;
+      CmdWrite(&tmp, 1);
+      /*
+        fprintf(stderr, "CTR initialization failed.\n");
+      */
+      return 0;
+    }
+  else
+    {
+      unsigned char tmp = CmdDONE;
+      set_speed();
+      if (videoSocket >= 0)
+        wait_display();
+      CmdWrite(&tmp, 1);
+      if (videoSocket < 0)
+        {
+          tmp = CmdVPclearScreen;
+          CmdWrite(&tmp, 1);
+        }
+      return 0;
+    }
   return 0;
 }
 
+int
+Command_Handler::init_video_channel (char *phostname, char *videofile)
+{  int dataSocket = -1;
+
+ if (ComOpenConnPair(phostname, &videoSocket,
+                     &dataSocket, &shared->videoMaxPktSize) == -1) {
+   return -1;
+ }
+
+ // Write the CmdINITvideo to tell the server that this is a video
+ // client.
+ unsigned char tmp;
+ tmp = CmdINITvideo;
+ VideoWrite(&tmp, 1);
+
+ /* Initialize with VS */
+ {
+   Video_Control::INITvideoPara_var  para (new Video_Control::INITvideoPara);
+   Video_Control::INITvideoReply_var reply (new Video_Control::INITvideoReply);
+
+   para->sn = shared->cmdsn;
+   para->version = VERSION;
+   para->videofile.length (strlen(videofile));
+
+   // string to sequence <char>    
+   for (int i=0;i<para->videofile.length ();i++)
+     para->videofile [i] = videofile [i];
+
+   // CORBA call
+   TAO_TRY
+     {
+       CORBA::Boolean result;
+       result = this->video_control_->init_video (para.in (),
+                                                  reply.out (),
+                                                  TAO_TRY_ENV);
+       TAO_CHECK_ENV;
+       if (result == (CORBA::B_FALSE))
+         return -1;
+       else
+         ACE_DEBUG ((LM_DEBUG,"(%P|%t) init_video success \n"));
+     }
+   TAO_CATCHANY
+     {
+       TAO_TRY_ENV.print_exception ("video_control_->init_video (..)");
+       return -1;
+     }
+   TAO_ENDTRY;
+   shared->live += reply->live;
+   shared->videoFormat = reply->format;
+   shared->totalHeaders = reply->totalHeaders;
+   shared->totalFrames = reply->totalFrames;
+   shared->totalGroups = reply->totalGroups;
+   shared->averageFrameSize = reply->averageFrameSize;
+   shared->horizontalSize = reply->horizontalSize;
+   shared->verticalSize = reply->verticalSize;
+   shared->pelAspectRatio = reply->pelAspectRatio;
+   shared->pictureRate = ((double)reply->pictureRate1000) / 1000.0;
+   shared->vbvBufferSize = reply->vbvBufferSize;
+   shared->firstGopFrames = reply->firstGopFrames;
+   shared->patternSize = reply->pattern.length ();
+   if (shared->patternSize == 0) {
+	
+     Fprintf(stderr, "CTR warning: patternsize %d\n", shared->patternSize);
+	
+     shared->patternSize = 1;
+     shared->pattern[0]  = 'I';
+     shared->pattern[1] = 0;
+     shared->IframeGap = 1;
+   }
+   else if (shared->patternSize < PATTERN_SIZE)
+     {
+       int i;
+       char * ptr = shared->pattern + shared->patternSize;
+       //       strncpy(shared->pattern, reply->pattern, shared->patternSize);
+       for (i=0;i<shared->patternSize;i++)
+         shared->pattern[i] = reply->pattern [i];
+       for (i = 1; i < PATTERN_SIZE / shared->patternSize; i ++) {
+         //         memcpy(ptr, shared->pattern, shared->patternSize);
+         for (int j=0; j < shared->patternSize ;j++)
+           ptr [j] = shared->pattern [j];
+         ptr += shared->patternSize;
+       }
+       shared->IframeGap = 1;
+       while (shared->IframeGap < shared->patternSize)
+         {
+           if (shared->pattern[shared->IframeGap] == 'I')
+             break;
+           else
+             shared->IframeGap ++;
+         }
+     }
+   else
+     {
+       fprintf(stderr, "CTR Error: patternSize %d greater than PATTERN_SIZE %d.\n",
+               shared->patternSize, PATTERN_SIZE);
+       exit(1);
+     }
+   fprintf(stderr, "Video: %s, %s\n",
+           shared->videoFormat == VIDEO_SIF ? "SIF" :
+           shared->videoFormat == VIDEO_JPEG ? "JPEG" :
+           shared->videoFormat == VIDEO_MPEG1 ? "MPEG1" :
+           shared->videoFormat == VIDEO_MPEG2 ? "MPEG2" : "UNKOWN format",
+           reply->live ? "live source" : "stored source");
+	      
+   fprintf(stderr, "Video: numS-%d, numG-%d, numF-%d, aveFrameSize-%d\n",
+           reply->totalHeaders, reply->totalGroups, reply->totalFrames,
+           reply->averageFrameSize);
+   fprintf(stderr, "Video: maxS-%d, maxG-%d, maxI-%d, maxP-%d, maxB-%d\n",
+           reply->sizeSystemHeader, reply->sizeGop,
+           reply->sizeIFrame, reply->sizePFrame, reply->sizeBFrame);
+   fprintf(stderr,
+           "Video: SHinfo: hsize-%d, vsize-%d, pelAspect-%d, rate-%f, vbv-%d.\n",
+           reply->horizontalSize, reply->verticalSize, reply->pelAspectRatio,
+           shared->pictureRate, reply->vbvBufferSize);
+   shared->pattern[shared->patternSize] = 0;
+   fprintf(stderr, "Video: firstGopFrames %d, IframeGap %d\n",
+           reply->firstGopFrames,  shared->IframeGap);
+   shared->pattern[shared->patternSize] = 'I';
+   if (reply->totalFrames > MAX_FRAMES && (!shared->live))
+     {
+       fprintf(stderr,
+               "Error: totalFrames %d > MAX_FRAMES %d, needs change and recompile.\n",
+               reply->totalFrames, MAX_FRAMES);
+       ComCloseConn(dataSocket);
+       ComCloseConn(videoSocket);
+       videoSocket = -1;
+       return -1;
+     }
+  
+   /* create VB, and put INIT frame to VB*/
+   {
+     int sp[2];  /* sp[0] is for CTR and sp[1] is for VB */
+      
+     /* create command socket pair for sending INIT frame to VB, the pipe
+        should be discard/non-discard in consistent with videoSocket*/
+     if (socketpair(AF_UNIX,
+                    shared->videoMaxPktSize >= 0 ? SOCK_STREAM :
+                    SOCK_DGRAM, 0, sp) == -1)
+       {
+         perror("CTR error on open CTR-VB socketpair");
+         exit(1);
+       }
+      
+     switch (VBpid = fork())
+       {
+       case -1:
+         perror("CTR error on forking VB process");
+         exit(1);
+         break;
+       case 0:
+         if (realTimeFlag) {
+           SetRTpriority("VB", -1);
+         }
+         free(vh);
+         free(videofile);
+         free(ah);
+         free(af);
+         ::close(sp[0]);
+         ComCloseFd(videoSocket);
+         if (audioSocket >= 0)
+           ComCloseFd(audioSocket);
+         ABdeleteBuf();
+         VDdeleteBuf();
+         if (cmdSocket >= 0)
+           ::close(cmdSocket);
+         if (realTimeFlag >= 2) {
+#ifdef __svr4__
+           if (SetRTpriority("VB", 0)) realTimeFlag = 0;
+#elif defined(_HPUX_SOURCE)
+           if (SetRTpriority("VB", 1)) realTimeFlag = 0;
+#endif
+         }
+         VBprocess(sp[1], dataSocket);
+         break;
+       default:
+         ::close(sp[1]);
+         ComCloseFd(dataSocket);
+         {
+           int bytes, res;
+           /* passing all messages of INIT frame to VB here. */
+           char * buf = (char *)malloc(INET_SOCKET_BUFFER_SIZE);
+           VideoMessage *msg = (VideoMessage *)buf;
+           int pkts = 1, msgo = 0, msgs = 0;
+	  
+           if (buf == NULL) {
+             perror("CTR error on malloc() for INIT frame");
+             exit(1);
+           }
+           while (msgo + msgs < pkts) {
+             VideoRead(buf, sizeof(*msg));
+             pkts = ntohl(msg->packetSize);
+             msgo = ntohl(msg->msgOffset);
+             msgs = ntohl(msg->msgSize);
+             if (shared->videoMaxPktSize >= 0) {  /* non-discard mode */
+               write_bytes(sp[0], buf, sizeof(*msg));
+               bytes = msgs;
+               while (bytes > 0) {
+                 int size = min(bytes, INET_SOCKET_BUFFER_SIZE);
+                 VideoRead(buf, size);
+                 write_bytes(sp[0], buf, size);
+                 bytes -= size;
+               }
+             }
+             else {
+               VideoRead(buf + sizeof(*msg), msgs);
+               bytes = sizeof(*msg) + msgs;
+               while ((res = write(sp[0], buf, bytes)) == -1) {
+                 if (errno == EINTR || errno == ENOBUFS) continue;
+                 perror("CTR error on sending INIT frame to VB");
+                 exit(1);
+               }
+               if (res < bytes) {
+                 fprintf(stderr, "CTR warn: send() res %dB < bytes %dB\n", res, bytes);
+               }
+               /*
+		 Fprintf(stderr,
+                 "CTR transferred INIT frame to VB: pkts %d, msgo %d, msgs %d\n",
+                 pkts, msgo, msgs);
+               */
+             }
+           }
+           read(sp[0], buf, 1); /* read a garbage byte, to sync with VB */
+           ::close(sp[0]);
+           free(buf);
+         }
+         break;
+       }
+   }
+ }
+#ifdef STAT
+ if (shared->config.collectFrameInfo && (!shared->live))
+   {
+     int i;
+     int count = 0;
+     char ch;
+     char buf[100];
+     FILE *fp;
+    
+     for (;;)
+       {
+         sprintf(buf, "struct.%d", count++);
+         if (access(buf, 0))
+           break;
+         if (count > 10000)
+           {
+             fprintf(stderr, "CTR generating struct file, weired thing happened.\n");
+             exit(1);
+           }
+       }
+     fprintf(stderr, "MPEG info collected to %s. . .", buf);
+     fp = fopen(buf, "w");
+     if (fp == NULL)
+       {
+         fprintf(stderr, "CTR failed to open %s for write.\n", buf);
+         perror("");
+         exit(1);
+       }
+     {
+       time_t val = time(NULL);
+       get_hostname(buf, 100);
+       buf[99] = 0;
+       fprintf(fp, "ClientHost: %s\n", buf);
+       fprintf(fp, "Date: %s\n", ctime(&val));
+     }
+     fprintf(fp, "VideoHost: %s\nVideoFile: %s\n", vh, videofile);
+     fprintf(fp, "AudioHost: %s\nAudioFile: %s\n\n", ah, af);
+     fprintf(fp, "TotalFrames: %d\nTotalGroups: %d\n",
+             shared->totalFrames, shared->totalGroups);
+     fprintf(fp, "TotalHeaders: %d\n", shared->totalHeaders);
+     fprintf(fp, "PictureRate: %f\nPictureSize: %d x %d\n",
+             shared->pictureRate, shared->horizontalSize, shared->verticalSize);
+     fprintf(fp, "AverageFrameSize: %d\n", shared->averageFrameSize);
+     shared->pattern[shared->patternSize] = 0;
+     fprintf(fp, "Pattern(%d frames): %s\n\n", shared->patternSize, shared->pattern);
+     shared->pattern[shared->patternSize] = 'I';
+     {
+       fprintf(fp, "FrameInfo:\n      ");
+       for (i = 0; i < 10; i++)
+         fprintf(fp, " %-6d", i);
+       fprintf(fp, "\n      ----------------------------------------------------");
+       ch = CmdSTATstream;
+       VideoWrite(&ch, 1);
+       for (i = 0; i < shared->totalFrames; i++)
+         {
+           short size;
+           VideoRead(&ch, 1);
+           VideoRead((char*)&size, 2);
+           size = ntohs(size);
+           if (i % 10 == 0)
+             fprintf(fp, "\n%4d: ", i / 10);
+           fprintf(fp, "%c%-6d", ch, (int)size);
+         }
+     }
+   }
+#endif
+
+ return 0;
+}
 
 CORBA::Boolean 
 Command_Handler::stat_stream (CORBA::Char_out ch,
@@ -550,8 +980,74 @@ CORBA::Boolean
 Command_Handler::speed (void)
                         
 {
+  /*
   ::speed ();
   return 0;
+  */
+  unsigned char tmp;
+  CmdRead((char *)&shared->speedPosition, 4);
+  set_speed();
+  if (!shared->live && shared->cmd == CmdPLAY)
+    {
+      if (videoSocket >= 0) {
+        Video_Control::SPEEDpara_var para;
+        para->sn = shared->cmdsn;
+        para->usecPerFrame = shared->usecPerFrame;
+        para->framesPerSecond = shared->framesPerSecond;
+        para->frameRateLimit1000 =
+          (long)(shared->frameRateLimit * 1000.0);
+        {
+          int i = shared->config.maxSPframes;
+          i = (int) ((double)i * (1000000.0 / (double)shared->usecPerFrame) /
+                     shared->pictureRate);
+          shared->sendPatternGops = max(min(i, PATTERN_SIZE) / shared->patternSize, 1);
+        }
+        compute_sendPattern();
+        para->sendPatternGops = shared->sendPatternGops;
+        
+        //        memcpy(para.sendPattern, shared->sendPattern, PATTERN_SIZE);
+        para->sendPattern.length (PATTERN_SIZE);
+        for (int i=0; i< PATTERN_SIZE ; i++)
+          para->sendPattern[i]=shared->sendPattern[i];
+        // CORBA call
+        TAO_TRY
+          {
+            CORBA::Boolean result =
+              this->video_control_->speed (para.in (),TAO_TRY_ENV);
+            TAO_CHECK_ENV;
+            if (result == (CORBA::B_FALSE))
+              // ~~ what about audio if video fails
+              // ~~ Eventually audio will have a separate audio command handler and 
+              // hence this shouldn't be a problem.
+              return -1;
+          }
+        TAO_CATCHANY
+          {
+            TAO_TRY_ENV.print_exception ("video_control->speed ()");
+            return -1;
+          }
+        TAO_ENDTRY;
+
+        if (fbstate) {
+          maxrate = (double)minupf / (double)max(shared->usecPerFrame, minupf);
+          adjstep = ((double)minupf / (double)shared->usecPerFrame) /
+	    (double)max(shared->patternSize * shared->sendPatternGops, 5);
+          fbstate = 1;
+        }
+      }
+      if (audioSocket >= 0) {
+        SPEEDaudioPara para;
+        para.sn = htonl(shared->cmdsn);
+        para.samplesPerSecond = htonl(shared->samplesPerSecond);
+        para.samplesPerPacket = htonl(1024 / shared->audioPara.bytesPerSample);
+        para.spslimit = htonl(32000);
+        tmp = CmdSPEED;
+        AudioWrite(&tmp, 1);
+        AudioWrite(&para, sizeof(para));
+      }
+    }
+  return 0;
+
 }
 
 
@@ -559,8 +1055,322 @@ CORBA::Boolean
 Command_Handler::stop (void)
                        
 {
+  /*
   ::stop ();
   return 0;
+  */
+#ifdef STAT
+  unsigned char preCmd = shared->cmd;
+#endif
+  unsigned char tmp = CmdDONE;
+  /*
+    fprintf(stderr, "CTR: STOP . . .\n");
+  */
+  stop_playing();
+
+  if (shared->live && videoSocket >= 0) {
+    Fprintf(stderr, "CTR live video stat: average disp frame rate: %5.2f fps\n",
+	    shared->pictureRate * displayedFrames / shared->nextFrame);
+  }
+  CmdWrite(&tmp, 1);
+  
+#ifdef STAT
+  if (shared->collectStat && preCmd == CmdPLAY && videoSocket >= 0)
+    {
+      int i;
+      int count = 0;
+      char ch;
+      char buf[100];
+      FILE *fp;
+    
+      for (;;)
+        {
+          sprintf(buf, "stat.%02d", count++);
+          if (access(buf, 0))
+            break;
+          if (count > 10000)
+            {
+              fprintf(stderr, "CTR generating stat file, weired thing happened.\n");
+              exit(1);
+            }
+        }
+      fprintf(stderr, "Statistics is being collected to file %s. . .", buf);
+      fp = fopen(buf, "w");
+      if (fp == NULL)
+        {
+          fprintf(stderr, "CTR failed to open %s for write.\n", buf);
+          perror("");
+          exit(1);
+        }
+      {
+        time_t val = time(NULL);
+        get_hostname(buf, 100);
+        buf[99] = 0;
+        fprintf(fp, "ClientHost: %s\n", buf);
+        fprintf(fp, "Date: %s\n", ctime(&val));
+      }
+      fprintf(fp, "VideoHost: %s\nVideoFile: %s\n", vh, vf);
+      fprintf(fp, "AudioHost: %s\nAudioFile: %s\n\n", ah, af);
+      fprintf(fp, "TotalFrames: %d\nTotalGroups: %d\n",
+              shared->totalFrames, shared->totalGroups);
+      fprintf(fp, "TotalHeaders: %d\n", shared->totalHeaders);
+      fprintf(fp, "PictureRate: %f\nPictureSize: %d x %d\n",
+              shared->pictureRate, shared->horizontalSize, shared->verticalSize);
+      fprintf(fp, "AverageFrameSize: %d\n", shared->averageFrameSize);
+      shared->pattern[shared->patternSize] = 0;
+      fprintf(fp, "Pattern(%d frames): %s\n", shared->patternSize, shared->pattern);
+      shared->pattern[shared->patternSize] = 'I';
+
+      fprintf(fp, "\nStartPlayRoundTripDelay: %d (millisec)\n",
+              shared->playRoundTripDelay);
+      fprintf(fp, "VBmaxBytes: %d\nVBdroppedFrames: %d\n",
+              shared->stat.VBmaxBytes, shared->stat.VBdroppedFrames);
+      fprintf(fp, "VBemptyTimes: %d\nVDlastFrameDecoded: %d\n",
+              shared->stat.VBemptyTimes, shared->stat.VDlastFrameDecoded);
+    
+      fprintf(fp, "\nVDframesDroppedWithoutReference: %d\n",
+              shared->stat.VDnoRef);
+      fprintf(fp, "VDframesDroppedAgainstSendPattern: %d\n",
+              shared->stat.VDagainstSendPattern);
+      fprintf(fp, "VDIframesDroppedTooLate: %d\n",
+              shared->stat.VDtooLateI);
+      fprintf(fp, "VDPframesDroppedTooLate: %d\n",
+              shared->stat.VDtooLateP);
+      fprintf(fp, "VDBframesDroppedTooLate: %d\n",
+              shared->stat.VDtooLateB);
+
+      fprintf(fp, "CTRframesDisplayedOnTime: %d\n", shared->stat.CTRdispOnTime);
+      fprintf(fp, "CTRframesDisplayedLate:   %d\n", shared->stat.CTRdispLate);
+      fprintf(fp, "CTRframesDroppedOutOrder: %d\n", shared->stat.CTRdropOutOrder);
+      fprintf(fp, "CTRframesDroppedLate:     %d\n", shared->stat.CTRdropLate);
+    
+      fprintf(fp,
+              "\nSpeedChangeHistory:\n(frameId, UPF, FPS, frameRateLimit, frames, dropped):\n");
+      for (i = 0; i < min(speedPtr, SPEEDHIST_SIZE); i ++)
+        fprintf(fp, "%-4d %-6d %6.2f %6.2f %-4d %d\n",
+                speedHistory[i].frameId, speedHistory[i].usecPerFrame,
+                1000000.0 / (double)speedHistory[i].usecPerFrame,
+                speedHistory[i].frameRateLimit,
+                speedHistory[i].frames, speedHistory[i].framesDropped);
+      if (speedPtr > SPEEDHIST_SIZE)
+        fprintf(fp, "Actual speed change times: %d (>%d)\n",
+                speedPtr, SPEEDHIST_SIZE);
+
+      fprintf(fp, "\nVDbufferFillLevel:\n(frames, times):\n");
+      for (i = 0; i < MAX_VDQUEUE_SIZE; i ++) {
+        if (shared->stat.VDqueue[i]) {
+          fprintf(fp, "%-6d %d\n", i, shared->stat.VDqueue[i]);
+        }
+      }
+
+      fprintf(fp, "\nVBmessageGap:\n(width, times):\n");
+      {
+        for (i = 0; i <= MSGGAP_MAX  - MSGGAP_MIN; i ++) {
+          if (shared->stat.VBmsgGaps[i]) {
+            fprintf(fp, "%-6d %d\n", i + MSGGAP_MIN, shared->stat.VBmsgGaps[i]);
+          }
+        }
+      }
+    
+      if (shared->stat.fbPacketNumber > 0)
+        {
+          fprintf(fp,
+                  "\nFeedbackPackets:\n(fId,addUPF,addf,rateLimit,frames,fdropped,advance):\n");
+          for (i = 0; i < min(shared->stat.fbPacketNumber, MAX_FB_PACKETS); i++)
+            fprintf(fp, "%-6d %-6d %-6d %6.2f %4d %4d %d\n",
+                    shared->stat.fbPackets[i].frameId,
+                    shared->stat.fbPackets[i].addUsecPerFrame,
+                    shared->stat.fbPackets[i].addFrames,
+                    shared->stat.fbPackets[i].frameRateLimit,
+                    shared->stat.fbPackets[i].frames,
+                    shared->stat.fbPackets[i].framesDropped,
+                    shared->stat.fbPackets[i].advance);
+          if (shared->stat.fbPacketNumber > MAX_FB_PACKETS)
+            fprintf(fp, "Actual # of FB packets: %d\n", shared->stat.fbPacketNumber);
+        }
+
+      ch = CmdSTATsent;
+      VideoWrite(&ch, 1);
+      fprintf(fp, "\n\nVSFramesSent:\n       ");
+      for (i = 0; i < 8; i++)
+        fprintf(fp, "%-10d", i * 10);
+      fprintf(fp, "\n       -----------------------------------------------------");
+      count = 0;
+      for (i = 0; i < (shared->totalFrames + 7)/8; i ++)
+        {
+          int j;
+          VideoRead(&ch, 1);
+          if (i % 10 == 0)
+            fprintf(fp, "\n%5d: ", i * 8);
+          for (j = 0; j < 8; j++)
+            {
+              if (ch & (1 << j))
+                {
+                  count ++;
+                  fputc('x', fp);
+                }
+              else
+                fputc('-', fp);
+            }
+        }
+      fprintf(fp, "\nVSTotalFramesSent: %d\n", count);
+      fprintf(fp, "\nVBFramesReceived:\n       ");
+      for (i = 0; i < 8; i++)
+        fprintf(fp, "%-10d", i * 10);
+      fprintf(fp, "\n       -----------------------------------------------------");
+      count = 0;
+      for (i = 0; i < (shared->totalFrames + 7)/8; i ++)
+        {
+          int j;
+          if (i % 10 == 0)
+            fprintf(fp, "\n%5d: ", i * 8);
+          for (j = 0; j < 8; j++)
+            {
+              if (shared->stat.VBframesReceived[i] & (1 << j))
+                {
+                  count ++;
+                  fputc('x', fp);
+                }
+              else
+                fputc('-', fp);
+            }
+        }
+      fprintf(fp, "\nVBTotalFramesReceived: %d\n", count);
+      fprintf(fp, "\nVDFramesDecoded:\n       ");
+      for (i = 0; i < 8; i++)
+        fprintf(fp, "%-10d", i * 10);
+      fprintf(fp, "\n       -----------------------------------------------------");
+      count = 0;
+      for (i = 0; i < (shared->totalFrames + 7)/8; i ++)
+        {
+          int j;
+          if (i % 10 == 0)
+            fprintf(fp, "\n%5d: ", i * 8);
+          for (j = 0; j < 8; j++)
+            {
+              if (shared->stat.VDframesDecoded[i] & (1 << j))
+                {
+                  count ++;
+                  fputc('x', fp);
+                }
+              else
+                fputc('-', fp);
+            }
+        }
+      fprintf(fp, "\nVDTotalFramesDecoded: %d\n", count);
+      fprintf(fp, "\nVPFramesDisplayed:\n       ");
+      for (i = 0; i < 8; i++)
+        fprintf(fp, "%-10d", i * 10);
+      fprintf(fp, "\n       -----------------------------------------------------");
+      count = 0;
+      for (i = 0; i < (shared->totalFrames + 7)/8; i ++)
+        {
+          int j;
+          if (i % 10 == 0)
+            fprintf(fp, "\n%5d: ", i * 8);
+          for (j = 0; j < 8; j++)
+            {
+              if (shared->stat.VPframesDisplayed[i] & (1 << j))
+                {
+                  count ++;
+                  fputc('x', fp);
+                }
+              else
+                fputc('-', fp);
+            }
+        }
+      fprintf(fp, "\nVPTotalFramesDisplayed: %d\n", count);
+
+      fprintf(fp, "\nVBBufferFillLevelHistory:\n       ");
+      for (i = 0; i < 10; i ++)
+        fprintf(fp, "%-7d", i);
+      fprintf(fp, "\n       -----------------------------------------------------");
+      for (i = 0; i < shared->totalFrames; i++)
+        {
+          if (i % 10 == 0)
+            fprintf(fp, "\n%5d: ", i / 10);
+          if (shared->stat.VBfillLevel[i] == SHRT_MIN)
+            fprintf(fp, "x      ");
+          else
+            fprintf(fp, "%-7d", shared->stat.VBfillLevel[i]);
+        }
+      fprintf(fp, "\nHistoryEnd\n");
+      fclose(fp);
+      fprintf(stderr, "Statistics collecting done.\n");
+    }
+#endif
+  
+  return 0;
+
+}
+
+int
+Command_Handler::stop_playing (void)
+{
+  unsigned char precmd = shared->cmd;
+  
+  if (precmd == CmdFF || precmd == CmdFB || precmd == CmdPLAY)
+    {
+      unsigned char tmp = CmdSTOP;
+      NewCmd(CmdSTOP);
+    
+      /* notify AS and/or VS */
+      if (audioSocket >= 0 && precmd == CmdPLAY && rtplay)
+        {
+          int cmdsn = htonl(shared->cmdsn);
+          AudioWrite(&tmp, 1);
+          AudioWrite(&cmdsn, 4);
+        }
+      if (videoSocket >= 0)
+        {
+          // CORBA call
+          if (precmd == CmdPLAY)
+            {
+              TAO_TRY
+                {
+                  CORBA::Boolean result =
+                    this->video_control_->stop (shared->cmdsn,
+                                                TAO_TRY_ENV);
+                  if (result == (CORBA::B_FALSE))
+                    return -1;
+                }
+              TAO_CATCHANY
+                {
+                  TAO_TRY_ENV.print_exception ("video_control_->stop(..)");
+                  return -1;
+                }
+              TAO_ENDTRY;
+            }
+          else
+            {
+              int cmdsn = htonl(shared->cmdsn);
+              VideoWrite(&tmp, 1);
+              VideoWrite(&cmdsn, 4);
+            }
+        }
+    
+      /* stop timer and sleep for a while */
+      stop_timer();
+      usleep(100000);
+
+      /* purge VDbuf and audio channel from AS*/
+      if (videoSocket >= 0)
+        {
+          while (VDpeekMsg() != NULL)
+            VDreclaimMsg(VDgetMsg());
+          /*
+            Fprintf(stderr, "CTR: VDbuf purged.\n");
+          */
+          fbstate = 0;
+      
+        }
+    
+      /* adjust some info */
+      if (precmd == CmdPLAY && videoSocket >= 0)
+        shared->nextFrame = shared->currentFrame+1;
+      else
+        shared->nextGroup = shared->currentGroup + 1;
+    }
 }
 
 // ----------------------------------------------------------------------

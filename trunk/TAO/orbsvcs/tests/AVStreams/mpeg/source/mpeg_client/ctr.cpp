@@ -1656,6 +1656,7 @@ static void stop_playing(void)
     }
     if (videoSocket >= 0)
     {
+      // CORBA call
       int cmdsn = htonl(shared->cmdsn);
       VideoWrite(&tmp, 1);
       VideoWrite(&cmdsn, 4);

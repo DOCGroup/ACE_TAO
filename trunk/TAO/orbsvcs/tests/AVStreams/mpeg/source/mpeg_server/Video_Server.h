@@ -70,6 +70,7 @@ public:
   // Used to change the state
 
   virtual CORBA::Boolean init_video (const Video_Control::INITvideoPara &para,
+                                     Video_Control::INITvideoReply_out reply,
                                      CORBA::Environment &_tao_environment);
   
   virtual CORBA::Boolean stat_stream (CORBA::Char_out ch,

@@ -67,7 +67,8 @@ public:
   void set_state (Video_States state);
   // sets the state
 
-  virtual CORBA::Boolean init_video (const Video_Control::INITvideoPara &para) ;
+  virtual CORBA::Boolean init_video (const Video_Control::INITvideoPara &para,
+                                     Video_Control::INITvideoReply_out reply) ;
   
   virtual CORBA::Boolean stat_stream (CORBA::Char_out ch,
                                       CORBA::Long_out size) ;
@@ -111,7 +112,7 @@ public:
   virtual int handle_input (ACE_HANDLE h = 0);
   // Called by the Video_Control_handler when control events occur in
   // the waiting state  
-  virtual CORBA::Boolean init_video (const Video_Control::INITvideoPara &para);
+  //  virtual CORBA::Boolean init_video (const Video_Control::INITvideoPara &para);
   
   virtual CORBA::Boolean stat_stream (CORBA::Char_out ch,
                                       CORBA::Long_out size);
@@ -149,6 +150,10 @@ public:
   virtual int handle_input (ACE_HANDLE h = 0);
   // Called by the Video_Control_handler when control events occur in
   // the playing state  
+
+  virtual CORBA::Boolean stop (CORBA::Long cmdsn);
+
+  virtual CORBA::Boolean speed (Video_Control::SPEEDpara &para);
 };
 
 class Video_Control_Fast_Forward_State : public virtual Video_Control_State
