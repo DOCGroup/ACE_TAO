@@ -5,6 +5,11 @@ Mon Jun 19 20:35:46 2000  Carlos O'Ryan  <coryan@uci.edu>
         * orbsvcs/tests/Interoperable_Naming/client.dsp:
           Add the project files to the new Interoperable Naming test.
 
+        * orbsvcs/tests/Interoperable_Naming/ncontextext_client_i.cpp:
+	  The order to catch some exceptions was wrong.
+	  Fixed runaway strings literals that continued after the end of
+	  the line.
+
 Mon Jun 19 19:26:14 2000  Ossama Othman  <ossama@uci.edu>
 
         * examples/Content_Server/Makefile:
