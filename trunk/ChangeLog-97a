@@ -1,3 +1,9 @@
+Thu May  8 18:04:14 1997  James C Hu  <jxh@polka.cs.wustl.edu>
+
+	* include/makeinclude/platform_irix6.2_sgic++.GNU:  Moved SGI C++
+	  options out of CPPFLAGS into CCFLAGS so that gcc won't emit
+	  diagnostics during a make depend.
+
 Thu May  8 12:51:18 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/Timer_Queue_T.cpp: Added #include "ace/Synch.h" to keep the
