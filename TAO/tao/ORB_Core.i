@@ -129,7 +129,7 @@ TAO_ORB_Core::get_default_policy (
   return this->default_policies_->get_policy (policy, ACE_TRY_ENV);
 }
 
-ACE_INLINE TAO_RelativeRoundtripTimeoutPolicy_i *
+ACE_INLINE TAO_RelativeRoundtripTimeoutPolicy *
 TAO_ORB_Core::default_relative_roundtrip_timeout (void) const
 {
   return this->default_policies_->relative_roundtrip_timeout ();
@@ -194,7 +194,7 @@ TAO_ORB_Core::orbid (void) const
   return this->orbid_;
 }
 
-ACE_INLINE void 
+ACE_INLINE void
 TAO_ORB_Core::implrepo_service (const CORBA::Object_ptr ir)
 {
   this->implrepo_service_ = ir;
@@ -208,12 +208,6 @@ ACE_INLINE TAO_None_Sync_Strategy &
 TAO_ORB_Core::none_sync_strategy (void)
 {
   return *this->none_sync_strategy_;
-}
-
-ACE_INLINE TAO_Flush_Sync_Strategy &
-TAO_ORB_Core::flush_sync_strategy (void)
-{
-  return *this->flush_sync_strategy_;
 }
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
@@ -352,4 +346,3 @@ TAO_ORB_Table::first_orb (void)
 {
   return this->first_orb_;
 }
-

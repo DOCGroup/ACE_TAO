@@ -55,12 +55,12 @@ module TAO
   // Buffering constraint.
   //
   typedef unsigned short BufferingConstraintMode;
-  const BufferingConstraintMode BUFFER_NONE          = 0x00;
+  const BufferingConstraintMode BUFFER_FLUSH         = 0x00;
 
   // Note that timeout, message_count, and message_bytes can be or'd.
   const BufferingConstraintMode BUFFER_TIMEOUT       = 0x01;
   const BufferingConstraintMode BUFFER_MESSAGE_COUNT = 0x02;
-  const BufferingConstraintMode BUFFER_MESSAGE_BYTES  = 0x04;
+  const BufferingConstraintMode BUFFER_MESSAGE_BYTES = 0x04;
 
   struct BufferingConstraint
   {

@@ -191,6 +191,13 @@ protected:
   void reset_queued_message (ACE_Message_Block *message_block,
                              size_t bytes_delivered);
 
+  void reset_sent_message (ACE_Message_Block *message_block,
+                           size_t bytes_delivered);
+
+  void reset_message (ACE_Message_Block *message_block,
+                      size_t bytes_delivered,
+                      int queued_message);
+
   CORBA::ULong tag_;
   // IOP protocol tag.
 

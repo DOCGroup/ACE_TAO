@@ -223,7 +223,7 @@ class TAO_Export ClientPriorityPolicy: public virtual CORBA::Policy
   typedef CORBA::UShort_out BufferingConstraintMode_out;
     TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_BufferingConstraintMode;
 
-  TAO_NAMESPACE_STORAGE_CLASS const CORBA::UShort BUFFER_NONE;
+  TAO_NAMESPACE_STORAGE_CLASS const CORBA::UShort BUFFER_FLUSH;
 
   TAO_NAMESPACE_STORAGE_CLASS const CORBA::UShort BUFFER_TIMEOUT;
 
@@ -410,8 +410,6 @@ class TAO_Export BufferingConstraintPolicy: public virtual CORBA::Policy
   TAO_NAMESPACE_STORAGE_CLASS const CORBA::Short SYNC_WITH_SERVER;
 
   TAO_NAMESPACE_STORAGE_CLASS const CORBA::Short SYNC_WITH_TARGET;
-
-  TAO_NAMESPACE_STORAGE_CLASS const CORBA::Short SYNC_FLUSH;
 }
 TAO_NAMESPACE_CLOSE // module TAO
 

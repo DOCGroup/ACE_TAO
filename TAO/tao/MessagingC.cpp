@@ -77,11 +77,6 @@ TAO_NAMESPACE_TYPE (const CORBA::Short)
 TAO_NAMESPACE_BEGIN (Messaging)
 TAO_NAMESPACE_DEFINE (const CORBA::Short, SYNC_WITH_TARGET, 3)
 TAO_NAMESPACE_END
-// = TAO specific extension.
-TAO_NAMESPACE_TYPE (const CORBA::Short)
-TAO_NAMESPACE_BEGIN (Messaging)
-TAO_NAMESPACE_DEFINE (const CORBA::Short, SYNC_FLUSH, 4)
-TAO_NAMESPACE_END
 static const CORBA::Long _oc_Messaging_RoutingType[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order

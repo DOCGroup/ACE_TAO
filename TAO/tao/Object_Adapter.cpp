@@ -331,7 +331,7 @@ TAO_Object_Adapter::activate_poa (const poa_name &folded_name,
 {
   int result = -1;
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_POA == 0)
 
   // A recursive thread lock without using a recursive thread lock.
   // Non_Servant_Upcall has a magic constructor and destructor.  We
@@ -374,7 +374,7 @@ TAO_Object_Adapter::activate_poa (const poa_name &folded_name,
   ACE_UNUSED_ARG (folded_name);
   ACE_UNUSED_ARG (poa);
   ACE_UNUSED_ARG (ACE_TRY_ENV);
-#endif /* !TAO_HAS_MINIMUM_CORBA */
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
   return result;
 }
@@ -748,10 +748,10 @@ TAO_Object_Adapter::Servant_Upcall::Servant_Upcall (TAO_Object_Adapter &object_a
     state_ (INITIAL_STAGE),
     id_ (),
     current_context_ (),
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_POA == 0)
     cookie_ (0),
     operation_ (0),
-#endif /* TAO_HAS_MINIMUM_CORBA */
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
     active_object_map_entry_ (0),
     using_servant_locator_ (0)
 {
@@ -906,7 +906,7 @@ TAO_Object_Adapter::Servant_Upcall::wait_for_non_servant_upcalls_to_complete (CO
 void
 TAO_Object_Adapter::Servant_Upcall::servant_locator_cleanup (void)
 {
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_POA == 0)
 
   if (this->using_servant_locator_)
     {
@@ -940,13 +940,13 @@ TAO_Object_Adapter::Servant_Upcall::servant_locator_cleanup (void)
       ACE_ENDTRY;
     }
 
-#endif /* TAO_HAS_MINIMUM_CORBA */
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 }
 
 void
 TAO_Object_Adapter::Servant_Upcall::single_threaded_poa_setup (CORBA::Environment &ACE_TRY_ENV)
 {
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_POA == 0)
 
   // Lock servant (if necessary).
   //
@@ -966,17 +966,17 @@ TAO_Object_Adapter::Servant_Upcall::single_threaded_poa_setup (CORBA::Environmen
     }
 #else
   ACE_UNUSED_ARG (ACE_TRY_ENV);
-#endif /* !TAO_HAS_MINIMUM_CORBA */
+#endif /* !TAO_HAS_MINIMUM_POA == 0 */
 }
 
 void
 TAO_Object_Adapter::Servant_Upcall::single_threaded_poa_cleanup (void)
 {
   // Since the servant lock was acquired, we must release it.
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_POA == 0)
   if (this->poa_->policies ().thread () == PortableServer::SINGLE_THREAD_MODEL)
     this->servant_->_single_threaded_poa_lock ().release ();
-#endif /* TAO_HAS_MINIMUM_CORBA */
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 }
 
 void

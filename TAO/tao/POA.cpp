@@ -11,7 +11,9 @@
 #include "tao/Exception.h"
 #include "tao/debug.h"
 
-// ImplRepo stuff
+//
+// ImplRepo related.
+//
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 # include "tao/ImplRepoC.h"
 # include "tao/ImplRepoS.h"
@@ -19,6 +21,9 @@
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
 
+//
+// ImplRepo related.
+//
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 
 // This is to remove "inherits via dominance" warnings from MSVC.
@@ -100,12 +105,20 @@ TAO_POA::TAO_POA (const TAO_POA::String &name,
     parent_ (parent),
     active_object_map_ (0),
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_POA == 0)
 
     adapter_activator_ (),
     servant_activator_ (),
     servant_locator_ (),
     default_servant_ (),
+
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
+
+//
+// ImplRepo related.
+//
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
     server_object_ (0),
     use_imr_ (1),
 
@@ -171,6 +184,9 @@ TAO_POA::TAO_POA (const TAO_POA::String &name,
   // from the auto pointer.
   this->active_object_map_ = new_active_object_map.release ();
 
+//
+// ImplRepo related.
+//
 #if !defined (TAO_HAS_MINIMUM_CORBA)
   if (this->policies_.lifespan () == PortableServer::PERSISTENT)
     {
@@ -390,7 +406,7 @@ TAO_POA::find_POA_i (const ACE_CString &child_name,
   int result = this->children_.find (child_name,
                                      child);
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_POA == 0)
 
   if (result != 0)
     {
@@ -433,7 +449,7 @@ TAO_POA::find_POA_i (const ACE_CString &child_name,
     }
 #else
   ACE_UNUSED_ARG (activate_it);
-#endif /* !TAO_HAS_MINIMUM_CORBA */
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
   if (result == 0)
     {
@@ -488,6 +504,9 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
     }
 
 
+//
+// ImplRepo related.
+//
 #if !defined (TAO_HAS_MINIMUM_CORBA)
   if (this->policies_.lifespan () == PortableServer::PERSISTENT)
   {
@@ -567,7 +586,7 @@ TAO_POA::delete_child (const TAO_POA::String &child)
   return result;
 }
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_POA == 0)
 
 PortableServer::ServantManager_ptr
 TAO_POA::get_servant_manager_i (CORBA::Environment &ACE_TRY_ENV)
@@ -694,7 +713,7 @@ TAO_POA::set_servant_i (PortableServer::Servant servant,
     }
 }
 
-#endif /* TAO_HAS_MINIMUM_CORBA */
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 int
 TAO_POA::is_servant_in_map (PortableServer::Servant servant)
@@ -1078,7 +1097,7 @@ TAO_POA::cleanup_servant (TAO_Active_Object_Map::Map_Entry *active_object_map_en
       //
       this->teardown_servant_lock (active_object_map_entry->servant_);
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_POA == 0)
 
       if (this->etherealize_objects_ &&
           this->policies ().request_processing () == PortableServer::USE_SERVANT_MANAGER &&
@@ -1117,7 +1136,7 @@ TAO_POA::cleanup_servant (TAO_Active_Object_Map::Map_Entry *active_object_map_en
         }
       else
 
-#endif /* TAO_HAS_MINIMUM_CORBA */
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
         {
           active_object_map_entry->servant_->_remove_ref (ACE_TRY_ENV);
@@ -1578,7 +1597,7 @@ TAO_POA::reference_to_servant (CORBA::Object_ptr reference,
         }
     }
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_POA == 0)
 
   // Otherwise, if the POA has the USE_DEFAULT_SERVANT policy and a
   // default servant has been registered with the POA, this operation
@@ -1612,7 +1631,7 @@ TAO_POA::reference_to_servant (CORBA::Object_ptr reference,
         }
     }
 
-#endif /* TAO_HAS_MINIMUM_CORBA */
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
   // Not reached
   return 0;
@@ -1767,6 +1786,9 @@ TAO_POA::id_to_reference_i (const PortableServer::ObjectId &id,
     }
 }
 
+//
+// Forwarding related.
+//
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 
 void
@@ -1846,7 +1868,7 @@ TAO_POA::locate_servant_i (const PortableServer::ObjectId &system_id,
       return TAO_SERVANT_NOT_FOUND;
     }
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_POA == 0)
 
   // If the POA has the USE_DEFAULT_SERVANT policy, a default servant
   // has been associated with the POA, return TAO_DEFAULT_SERVANT. If
@@ -1883,7 +1905,7 @@ TAO_POA::locate_servant_i (const PortableServer::ObjectId &system_id,
         }
     }
 
-#endif /* TAO_HAS_MINIMUM_CORBA */
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
   // Failure
   return TAO_SERVANT_NOT_FOUND;
@@ -1954,7 +1976,7 @@ TAO_POA::locate_servant_i (const char *operation,
                         0);
     }
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_POA == 0)
 
   // If the POA has the USE_DEFAULT_SERVANT policy, a default servant
   // has been associated with the POA so the POA will invoke the
@@ -2142,7 +2164,7 @@ TAO_POA::locate_servant_i (const char *operation,
     }
 #else
   ACE_UNUSED_ARG (operation);
-#endif /* !TAO_HAS_MINIMUM_CORBA */
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
   // Failure
   ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
@@ -2665,7 +2687,7 @@ TAO_POA::decode_string_to_sequence (TAO_Unbounded_Sequence<CORBA::Octet> &seq,
   seq.length (i);
 }
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_POA == 0)
 
 PortableServer::ThreadPolicy_ptr
 TAO_POA::create_thread_policy (PortableServer::ThreadPolicyValue value,
@@ -2694,7 +2716,7 @@ TAO_POA::create_thread_policy (PortableServer::ThreadPolicyValue value,
   return result._retn ();
 }
 
-#endif /* TAO_HAS_MINIMUM_CORBA */
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 PortableServer::LifespanPolicy_ptr
 TAO_POA::create_lifespan_policy (PortableServer::LifespanPolicyValue value,
@@ -2777,7 +2799,7 @@ TAO_POA::create_id_assignment_policy (PortableServer::IdAssignmentPolicyValue va
   return result._retn ();
 }
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_POA == 0)
 
 PortableServer::ImplicitActivationPolicy_ptr
 TAO_POA::create_implicit_activation_policy (PortableServer::ImplicitActivationPolicyValue value,
@@ -2860,9 +2882,9 @@ TAO_POA::create_request_processing_policy (PortableServer::RequestProcessingPoli
   return result._retn ();
 }
 
-#endif /* TAO_HAS_MINIMUM_CORBA */
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_POA == 0)
 
 TAO_Thread_Policy::TAO_Thread_Policy (PortableServer::ThreadPolicyValue value,
                                       PortableServer::POA_ptr poa)
@@ -2934,7 +2956,7 @@ TAO_Thread_Policy::_default_POA (CORBA::Environment & /* ACE_TRY_ENV */)
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
 
-#endif /* TAO_HAS_MINIMUM_CORBA */
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 TAO_Lifespan_Policy::TAO_Lifespan_Policy (PortableServer::LifespanPolicyValue value,
                                           PortableServer::POA_ptr poa)
@@ -3146,7 +3168,7 @@ TAO_Id_Assignment_Policy::_default_POA (CORBA::Environment & /* ACE_TRY_ENV */)
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_POA == 0)
 
 TAO_Implicit_Activation_Policy::TAO_Implicit_Activation_Policy (PortableServer::ImplicitActivationPolicyValue value,
                                                                 PortableServer::POA_ptr poa)
@@ -3358,7 +3380,7 @@ TAO_Request_Processing_Policy::_default_POA (CORBA::Environment & /* ACE_TRY_ENV
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
 
-#endif /* TAO_HAS_MINIMUM_CORBA */
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 TAO_POA_Policies::TAO_POA_Policies (void)
   :  thread_ (PortableServer::ORB_CTRL_MODEL),
@@ -3424,7 +3446,7 @@ TAO_POA_Policies::parse_policy (const CORBA::Policy_ptr policy,
                                 CORBA::Environment &ACE_TRY_ENV)
 {
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_POA == 0)
 
   PortableServer::ThreadPolicy_var thread
     = PortableServer::ThreadPolicy::_narrow (policy,
@@ -3439,7 +3461,7 @@ TAO_POA_Policies::parse_policy (const CORBA::Policy_ptr policy,
       return;
     }
 
-#endif /* TAO_HAS_MINIMUM_CORBA */
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
   PortableServer::LifespanPolicy_var lifespan
     = PortableServer::LifespanPolicy::_narrow (policy,
@@ -3480,7 +3502,7 @@ TAO_POA_Policies::parse_policy (const CORBA::Policy_ptr policy,
       return;
     }
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_POA == 0)
 
   PortableServer::ImplicitActivationPolicy_var implicit_activation
     = PortableServer::ImplicitActivationPolicy::_narrow (policy,
@@ -3521,12 +3543,12 @@ TAO_POA_Policies::parse_policy (const CORBA::Policy_ptr policy,
       return;
     }
 
-#endif /* TAO_HAS_MINIMUM_CORBA */
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
   ACE_THROW (PortableServer::POA::InvalidPolicy ());
 }
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_POA == 0)
 
 TAO_Adapter_Activator::TAO_Adapter_Activator (PortableServer::POAManager_ptr poa_manager)
   : poa_manager_ (PortableServer::POAManager::_duplicate (poa_manager))
@@ -3571,7 +3593,7 @@ TAO_Adapter_Activator::unknown_adapter (PortableServer::POA_ptr parent,
   return 1;
 }
 
-#endif /* TAO_HAS_MINIMUM_CORBA */
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 CORBA::Object_ptr
 TAO_POA::key_to_object (const TAO_ObjectKey &key,
@@ -3582,6 +3604,9 @@ TAO_POA::key_to_object (const TAO_ObjectKey &key,
 {
   CORBA::Object_ptr obj = CORBA::Object::_nil ();
 
+//
+// ImplRepo related.
+//
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 
   if (this->use_imr_
@@ -3652,6 +3677,9 @@ orbkey:
   return obj;
 }
 
+//
+// ImplRepo related.
+//
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 
 void
@@ -3774,9 +3802,13 @@ TAO_POA::imr_notify_shutdown (void)
 template class ACE_Array<PortableServer::ObjectId>;
 template class ACE_Array_Base<PortableServer::ObjectId>;
 
+//
+// Forwarding related.
+//
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 
 template class ACE_Auto_Basic_Ptr<TAO_Forwarding_Servant>;
+template class auto_ptr<TAO_Forwarding_Servant>;
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
@@ -3801,12 +3833,6 @@ template class ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, TAO_POA *, ACE_Hash<AC
 template class ACE_Write_Guard<ACE_Lock>;
 template class ACE_Read_Guard<ACE_Lock>;
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
-
-template class auto_ptr<TAO_Forwarding_Servant>;
-
-#endif /* TAO_HAS_MINIMUM_CORBA */
-
 //template class auto_ptr<TAO_Active_Object_Map_Iterator_Impl>;
 template class auto_ptr<TAO_POA>;
 template class auto_ptr<TAO_Active_Object_Map>;
@@ -3818,9 +3844,13 @@ template class ACE_Node<TAO_POA *>;
 #pragma instantiate ACE_Array<PortableServer::ObjectId>
 #pragma instantiate ACE_Array_Base<PortableServer::ObjectId>
 
+//
+// Forwarding related.
+//
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 
 #pragma instantiate ACE_Auto_Basic_Ptr<TAO_Forwarding_Servant>
+#pragma instantiate auto_ptr<TAO_Forwarding_Servant>
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
@@ -3844,12 +3874,6 @@ template class ACE_Node<TAO_POA *>;
 #pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, TAO_POA *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
 #pragma instantiate ACE_Write_Guard<ACE_Lock>
 #pragma instantiate ACE_Read_Guard<ACE_Lock>
-
-#if !defined (TAO_HAS_MINIMUM_CORBA)
-
-#pragma instantiate auto_ptr<TAO_Forwarding_Servant>
-
-#endif /* TAO_HAS_MINIMUM_CORBA */
 
 //#pragma instantiate auto_ptr<TAO_Active_Object_Map_Iterator_Impl>
 #pragma instantiate auto_ptr<TAO_POA>

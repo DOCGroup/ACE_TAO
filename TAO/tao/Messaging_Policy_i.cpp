@@ -4,21 +4,22 @@
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
+#include "tao/debug.h"
+
 #if ! defined (__ACE_INLINE__)
 #include "tao/Messaging_Policy_i.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(TAO, Messaging_Policy_i, "$Id$")
 
-TAO_RelativeRoundtripTimeoutPolicy_i::TAO_RelativeRoundtripTimeoutPolicy_i (
-    PortableServer::POA_ptr poa,
-    const TimeBase::TimeT& relative_expiry)
+TAO_RelativeRoundtripTimeoutPolicy::TAO_RelativeRoundtripTimeoutPolicy (PortableServer::POA_ptr poa,
+                                                                        const TimeBase::TimeT& relative_expiry)
   :  poa_ (PortableServer::POA::_duplicate (poa)),
      relative_expiry_ (relative_expiry)
 {
 }
 
-TAO_RelativeRoundtripTimeoutPolicy_i::TAO_RelativeRoundtripTimeoutPolicy_i (const TAO_RelativeRoundtripTimeoutPolicy_i &rhs)
+TAO_RelativeRoundtripTimeoutPolicy::TAO_RelativeRoundtripTimeoutPolicy (const TAO_RelativeRoundtripTimeoutPolicy &rhs)
   : TAO_RefCountServantBase (rhs),
     POA_Messaging::RelativeRoundtripTimeoutPolicy (rhs),
     poa_ (rhs.poa_),
@@ -27,17 +28,19 @@ TAO_RelativeRoundtripTimeoutPolicy_i::TAO_RelativeRoundtripTimeoutPolicy_i (cons
 }
 
 TimeBase::TimeT
-TAO_RelativeRoundtripTimeoutPolicy_i::relative_expiry (
-      CORBA::Environment &
-    )
+TAO_RelativeRoundtripTimeoutPolicy::relative_expiry (CORBA::Environment &)
+{
+  return this->relative_expiry_;
+}
+
+TimeBase::TimeT
+TAO_RelativeRoundtripTimeoutPolicy::relative_expiry (void)
 {
   return this->relative_expiry_;
 }
 
 CORBA::PolicyType
-TAO_RelativeRoundtripTimeoutPolicy_i::policy_type (
-      CORBA_Environment &
-    )
+TAO_RelativeRoundtripTimeoutPolicy::policy_type (CORBA_Environment &)
 {
   // Future policy implementors: notice how this minimizes the
   // footprint of the class.
@@ -45,11 +48,9 @@ TAO_RelativeRoundtripTimeoutPolicy_i::policy_type (
 }
 
 CORBA::Policy_ptr
-TAO_RelativeRoundtripTimeoutPolicy_i::create (
-      PortableServer::POA_ptr poa,
-      const CORBA::Any& val,
-      CORBA::Environment &ACE_TRY_ENV
-    )
+TAO_RelativeRoundtripTimeoutPolicy::create (PortableServer::POA_ptr poa,
+                                            const CORBA::Any& val,
+                                            CORBA::Environment &ACE_TRY_ENV)
 {
   // Future policy implementors: notice how the following code is
   // exception safe!
@@ -59,9 +60,9 @@ TAO_RelativeRoundtripTimeoutPolicy_i::create (
     ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_TYPE),
                       CORBA::Policy::_nil ());
 
-  TAO_RelativeRoundtripTimeoutPolicy_i *tmp;
+  TAO_RelativeRoundtripTimeoutPolicy *tmp;
   ACE_NEW_THROW_EX (tmp,
-                    TAO_RelativeRoundtripTimeoutPolicy_i (poa,
+                    TAO_RelativeRoundtripTimeoutPolicy (poa,
                                                         value),
                     CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
                                       CORBA::COMPLETED_NO));
@@ -75,26 +76,24 @@ TAO_RelativeRoundtripTimeoutPolicy_i::create (
   return result._retn ();
 }
 
-TAO_RelativeRoundtripTimeoutPolicy_i *
-TAO_RelativeRoundtripTimeoutPolicy_i::clone (void) const
+TAO_RelativeRoundtripTimeoutPolicy *
+TAO_RelativeRoundtripTimeoutPolicy::clone (void) const
 {
-  TAO_RelativeRoundtripTimeoutPolicy_i *copy = 0;
+  TAO_RelativeRoundtripTimeoutPolicy *copy = 0;
   ACE_NEW_RETURN (copy,
-                  TAO_RelativeRoundtripTimeoutPolicy_i (*this),
+                  TAO_RelativeRoundtripTimeoutPolicy (*this),
                   0);
   return copy;
 }
 
 CORBA::Policy_ptr
-TAO_RelativeRoundtripTimeoutPolicy_i::copy (
-      CORBA_Environment &ACE_TRY_ENV
-    )
+TAO_RelativeRoundtripTimeoutPolicy::copy (CORBA_Environment &ACE_TRY_ENV)
 {
   // Future policy implementors: notice how the following code is
   // exception safe!
 
-  TAO_RelativeRoundtripTimeoutPolicy_i* tmp;
-  ACE_NEW_THROW_EX (tmp, TAO_RelativeRoundtripTimeoutPolicy_i (*this),
+  TAO_RelativeRoundtripTimeoutPolicy* tmp;
+  ACE_NEW_THROW_EX (tmp, TAO_RelativeRoundtripTimeoutPolicy (*this),
                     CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
                                       CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (CORBA::Policy::_nil ());
@@ -108,9 +107,7 @@ TAO_RelativeRoundtripTimeoutPolicy_i::copy (
 }
 
 void
-TAO_RelativeRoundtripTimeoutPolicy_i::destroy (
-      CORBA_Environment &ACE_TRY_ENV
-    )
+TAO_RelativeRoundtripTimeoutPolicy::destroy (CORBA_Environment &ACE_TRY_ENV)
 {
   PortableServer::ObjectId_var id =
     this->poa_->servant_to_id (this, ACE_TRY_ENV);
@@ -120,11 +117,28 @@ TAO_RelativeRoundtripTimeoutPolicy_i::destroy (
 }
 
 PortableServer::POA_ptr
-TAO_RelativeRoundtripTimeoutPolicy_i::_default_POA (
-      CORBA_Environment &
-    )
+TAO_RelativeRoundtripTimeoutPolicy::_default_POA (CORBA_Environment &)
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
+}
+
+void
+TAO_RelativeRoundtripTimeoutPolicy::set_time_value (ACE_Time_Value &time_value)
+{
+  TimeBase::TimeT t = this->relative_expiry ();
+  TimeBase::TimeT seconds = t / 10000000u;
+  TimeBase::TimeT microseconds = (t % 10000000u) / 10;
+  time_value.set (ACE_U64_TO_U32 (seconds),
+                  ACE_U64_TO_U32 (microseconds));
+
+  if (TAO_debug_level > 0)
+    {
+      CORBA::ULong msecs =
+        ACE_static_cast(CORBA::ULong, microseconds / 1000);
+      ACE_DEBUG ((LM_DEBUG,
+                  ASYS_TEXT ("TAO (%P|%t) Timeout is <%u>\n"),
+                  msecs));
+    }
 }
 
 ////////////////////////////////////////////////////////////////////////////////

@@ -166,7 +166,7 @@ TAO_Object_Adapter::Servant_Upcall::id (void) const
   return this->id_;
 }
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_POA == 0)
 
 ACE_INLINE PortableServer::ServantLocator::Cookie
 TAO_Object_Adapter::Servant_Upcall::locator_cookie (void) const
@@ -192,7 +192,7 @@ TAO_Object_Adapter::Servant_Upcall::operation (const char *name)
   this->operation_ = name;
 }
 
-#endif /* TAO_HAS_MINIMUM_CORBA */
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 ACE_INLINE void
 TAO_Object_Adapter::Servant_Upcall::active_object_map_entry (TAO_Active_Object_Map::Map_Entry *entry)

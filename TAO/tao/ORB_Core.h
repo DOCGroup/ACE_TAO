@@ -56,7 +56,6 @@ class TAO_Priority_Mapping;
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
 class TAO_None_Sync_Strategy;
-class TAO_Flush_Sync_Strategy;
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
@@ -307,6 +306,7 @@ public:
   // tradeoffs and take a decision.
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
+
   TAO_Policy_Manager *policy_manager (void);
   // Return the Policy_Manager for this ORB.
 
@@ -323,7 +323,7 @@ public:
   // type.
   // If there is no default policy it returns CORBA::Policy::_nil ()
 
-  TAO_RelativeRoundtripTimeoutPolicy_i *default_relative_roundtrip_timeout (void) const;
+  TAO_RelativeRoundtripTimeoutPolicy *default_relative_roundtrip_timeout (void) const;
 
   TAO_Client_Priority_Policy *default_client_priority (void) const;
 
@@ -331,15 +331,13 @@ public:
 
   TAO_Buffering_Constraint_Policy *default_buffering_constraint (void) const;
 
-#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
-
-#if (TAO_HAS_CORBA_MESSAGING == 1)
-
   TAO_None_Sync_Strategy &none_sync_strategy (void);
   // This strategy will buffer messages.
 
-  TAO_Flush_Sync_Strategy &flush_sync_strategy (void);
-  // This strategy will flush any buffered messages.
+  TAO_RelativeRoundtripTimeoutPolicy *stubless_relative_roundtrip_timeout (void);
+  // Access to the RoundtripTimeoutPolicy policy set on the thread or
+  // on the ORB.  In this method, we do not consider the stub since we
+  // do not have access to it.
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
@@ -595,9 +593,6 @@ protected:
 
   TAO_None_Sync_Strategy *none_sync_strategy_;
   // This strategy will buffer messages.
-
-  TAO_Flush_Sync_Strategy *flush_sync_strategy_;
-  // This strategy will flush any buffered messages.
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 

@@ -86,7 +86,7 @@ TAO_None_Sync_Strategy::buffering_constraints_reached (TAO_Transport &transport,
   this->timer_check (transport,
                      buffering_constraint);
 
-  if (buffering_constraint.mode == TAO::BUFFER_NONE)
+  if (buffering_constraint.mode == TAO::BUFFER_FLUSH)
     return 1;
 
   if (ACE_BIT_ENABLED (buffering_constraint.mode,
@@ -168,15 +168,6 @@ TAO_None_Sync_Strategy::time_conversion (const TimeBase::TimeT &time)
   TimeBase::TimeT microseconds = (time % 10000000u) / 10;
   return ACE_Time_Value (ACE_U64_TO_U32 (seconds),
                          ACE_U64_TO_U32 (microseconds));
-}
-
-int
-TAO_Flush_Sync_Strategy::buffering_constraints_reached (TAO_Transport &,
-                                                        TAO_Stub &,
-                                                        TAO_Transport_Buffering_Queue &)
-{
-  // Always yes.
-  return 1;
 }
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */

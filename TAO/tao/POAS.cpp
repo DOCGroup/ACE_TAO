@@ -19,7 +19,7 @@
 
 ACE_RCSID(tao, POAS, "$Id$")
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_POA == 0)
 
 #if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
 class TAO_PortableServer_ThreadPolicy_Perfect_Hash_OpTable : public TAO_Perfect_Hash_OpTable
@@ -314,7 +314,7 @@ POA_PortableServer::ThreadPolicy::_this (CORBA_Environment &ACE_TRY_ENV)
   return retval;
 }
 
-#endif /* TAO_HAS_MINIMUM_CORBA */
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 #if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
 class TAO_PortableServer_LifespanPolicy_Perfect_Hash_OpTable : public TAO_Perfect_Hash_OpTable
@@ -1200,7 +1200,7 @@ POA_PortableServer::IdAssignmentPolicy::_this (CORBA_Environment &ACE_TRY_ENV)
   return retval;
 }
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_POA == 0)
 
 #if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
 class TAO_PortableServer_ImplicitActivationPolicy_Perfect_Hash_OpTable : public TAO_Perfect_Hash_OpTable
@@ -2087,7 +2087,7 @@ POA_PortableServer::RequestProcessingPolicy::_this (CORBA_Environment &ACE_TRY_E
   return retval;
 }
 
-#endif /* TAO_HAS_MINIMUM_CORBA */
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 // skeleton constructor
 POA_PortableServer::POAManager::POAManager (void)
@@ -2158,7 +2158,7 @@ void POA_PortableServer::_tao_collocated_POAManager::activate (
                             );
 }
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_POA == 0)
 
 void POA_PortableServer::_tao_collocated_POAManager::hold_requests (
                                                                     CORBA::Boolean wait_for_completion,
@@ -2195,7 +2195,7 @@ void POA_PortableServer::_tao_collocated_POAManager::deactivate (
                               );
 }
 
-#endif /* TAO_HAS_MINIMUM_CORBA */
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 PortableServer::POAManager::State
 POA_PortableServer::_tao_collocated_POAManager:: get_state(CORBA::Environment &ACE_TRY_ENV)
@@ -2218,7 +2218,7 @@ POA_PortableServer::POAManager::_this (CORBA_Environment &)
   return retval;
 }
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_POA == 0)
 
 // skeleton constructor
 POA_PortableServer::AdapterActivator::AdapterActivator (void)
@@ -2613,7 +2613,7 @@ POA_PortableServer::ServantLocator::_this (CORBA_Environment &)
   return retval;
 }
 
-#endif /* TAO_HAS_MINIMUM_CORBA */
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 // skeleton constructor
 POA_PortableServer::POA::POA (void)
@@ -2716,7 +2716,7 @@ void POA_PortableServer::_tao_collocated_POA::destroy (
                            );
 }
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_POA == 0)
 
 PortableServer::ThreadPolicy_ptr POA_PortableServer::_tao_collocated_POA::create_thread_policy (
                                                                                                 PortableServer::ThreadPolicyValue value,
@@ -2729,7 +2729,7 @@ PortableServer::ThreadPolicy_ptr POA_PortableServer::_tao_collocated_POA::create
                                                );
 }
 
-#endif /* TAO_HAS_MINIMUM_CORBA */
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 PortableServer::LifespanPolicy_ptr POA_PortableServer::_tao_collocated_POA::create_lifespan_policy (
                                                                                                     PortableServer::LifespanPolicyValue value,
@@ -2764,7 +2764,7 @@ PortableServer::IdAssignmentPolicy_ptr POA_PortableServer::_tao_collocated_POA::
                                                       );
 }
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_POA == 0)
 
 PortableServer::ImplicitActivationPolicy_ptr POA_PortableServer::_tao_collocated_POA::create_implicit_activation_policy (
                                                                                                                          PortableServer::ImplicitActivationPolicyValue value,
@@ -2799,7 +2799,7 @@ PortableServer::RequestProcessingPolicy_ptr POA_PortableServer::_tao_collocated_
                                                            );
 }
 
-#endif /* TAO_HAS_MINIMUM_CORBA */
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 char*
 POA_PortableServer::_tao_collocated_POA::the_name (
@@ -2823,7 +2823,7 @@ POA_PortableServer::_tao_collocated_POA::the_POAManager (
   return this->servant_->the_POAManager(ACE_TRY_ENV);
 }
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_POA == 0)
 
 PortableServer::AdapterActivator_ptr
 POA_PortableServer::_tao_collocated_POA::the_activator (
@@ -2884,7 +2884,7 @@ void POA_PortableServer::_tao_collocated_POA::set_servant (
                                );
 }
 
-#endif /* TAO_HAS_MINIMUM_CORBA */
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 PortableServer::ObjectId * POA_PortableServer::_tao_collocated_POA::activate_object (
                                                                                      PortableServer::Servant p_servant,
