@@ -429,6 +429,27 @@ extern int t_errno;
 #endif /* ACE_NEW_THROWS_EXCEPTIONS */
 
 // ============================================================================
+// ACE_ALLOC_HOOK* macros
+//
+// Macros to declare and define class-specific allocation operators.
+// ============================================================================
+
+# if defined (ACE_HAS_ALLOC_HOOKS)
+#   define ACE_ALLOC_HOOK_DECLARE \
+  void *operator new (size_t bytes); \
+  void operator delete (void *ptr);
+
+  // Note that these are just place holders for now.  Some day they
+  // may be be replaced by <ACE_Malloc>.
+#   define ACE_ALLOC_HOOK_DEFINE(CLASS) \
+  void *CLASS::operator new (size_t bytes) { return ::new char[bytes]; } \
+  void CLASS::operator delete (void *ptr) { delete [] ((char *) ptr); }
+# else
+#   define ACE_ALLOC_HOOK_DECLARE struct __Ace {} /* Just need a dummy... */
+#   define ACE_ALLOC_HOOK_DEFINE(CLASS)
+# endif /* ACE_HAS_ALLOC_HOOKS */
+
+// ============================================================================
 // ACE_OSCALL_* macros
 //
 // The following two macros ensure that system calls are properly
