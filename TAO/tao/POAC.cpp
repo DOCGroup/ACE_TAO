@@ -317,7 +317,6 @@ PortableServer::ThreadPolicyValue PortableServer::ThreadPolicy::value(CORBA::Env
 
   for (;;)
   {
-    ACE_TRY_ENV.clear ();
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
 
@@ -452,7 +451,6 @@ PortableServer::LifespanPolicyValue PortableServer::LifespanPolicy::value(CORBA:
 
   for (;;)
   {
-    ACE_TRY_ENV.clear ();
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
 
@@ -587,7 +585,6 @@ PortableServer::IdUniquenessPolicyValue PortableServer::IdUniquenessPolicy::valu
 
   for (;;)
   {
-    ACE_TRY_ENV.clear ();
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
 
@@ -721,7 +718,6 @@ PortableServer::IdAssignmentPolicyValue PortableServer::IdAssignmentPolicy::valu
 
   for (;;)
   {
-    ACE_TRY_ENV.clear ();
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
 
@@ -858,7 +854,6 @@ PortableServer::ImplicitActivationPolicyValue PortableServer::ImplicitActivation
 
   for (;;)
   {
-    ACE_TRY_ENV.clear ();
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
 
@@ -993,7 +988,6 @@ PortableServer::ServantRetentionPolicyValue PortableServer::ServantRetentionPoli
 
   for (;;)
   {
-    ACE_TRY_ENV.clear ();
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
 
@@ -1128,7 +1122,6 @@ PortableServer::RequestProcessingPolicyValue PortableServer::RequestProcessingPo
 
   for (;;)
   {
-    ACE_TRY_ENV.clear ();
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
 
@@ -3259,7 +3252,6 @@ PortableServer::ObjectId * PortableServer::Current::get_object_id (CORBA::Enviro
 
   for (;;)
   {
-    ACE_TRY_ENV.clear ();
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
 

@@ -799,8 +799,6 @@ CORBA_ExceptionList::item (CORBA::ULong slot,
 {
   CORBA::TypeCode_ptr *tc;
 
-  //  ACE_TRY_ENV.clear ();
-
   if (this->tc_list_.get (tc,
                           slot) == -1)
     ACE_THROW_RETURN (CORBA::TypeCode::Bounds (), 0);
@@ -812,7 +810,7 @@ void
 CORBA_ExceptionList::remove (CORBA::ULong, CORBA::Environment &env)
 {
   // unimplemented
-  env.clear ();
+  //  env.clear ();
 }
 
 CORBA_ExceptionList_ptr
