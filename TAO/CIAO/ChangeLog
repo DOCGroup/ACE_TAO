@@ -1,8 +1,15 @@
+Mon Mar 15 10:14:16 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
+
+	* CIDLC/cidlc.cpp:
+
+	  Temporary fix for the wrong return code in CIDL compiler.
+	  Thanks to Gary Duzan <gduzan@bbn.com> for reporting this.
+
 Fri Mar 12 11:03:38 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/TypeNameEmitter.cpp:
         * CIDLC/TypeNameEmitter.hpp:
-        
+
           Added missing operations to generate enum type names. Thanks to
           Jessica Pistole <Jessica.Pistole@jhuapl.edu> for reporting
           the missing type names in generated servant glue code.
@@ -17,11 +24,11 @@ Thu Mar 11 16:30:45 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 	* CCF/CCF/IDL2/SemanticAction/Impl/Typedef.hpp:
 
 	  Added support for bounded string and wstring.
-	
+
 	* CCF/Documentation/TODO:
 
 	  Reflected new achievement.
-	
+
 	* CIDLC/cidlc.cpp:
 
 	  Cosmetic changes.
