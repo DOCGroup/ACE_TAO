@@ -30,6 +30,7 @@
 #----------------------------------------------------------------------------
 
 INFO    = README \
+          THANKS \
           VERSION
 
 DIRS    = ace \
@@ -37,7 +38,8 @@ DIRS    = ace \
           tests \
           apps \
           examples \
-          performance-tests
+          performance-tests \
+          websvcs
 
 CLONE   = Makefile \
           ace \
@@ -49,7 +51,8 @@ CLONE   = Makefile \
           netsvcs \
           performance-tests \
           TAO \
-          tests
+          tests \
+          websvcs
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
@@ -76,6 +79,7 @@ CONTROLLED_FILES = \
         ACE-INSTALL.html \
         ACE-install.sh \
         ASNMP \
+        AUTHORS \
         BIBLIOGRAPHY \
         COPYING \
         ChangeLog \
@@ -94,18 +98,34 @@ CONTROLLED_FILES = \
         README \
         THANKS \
         VERSION \
+        WindozeCE \
+        acconfig.h \
+        aclocal.m4 \
         ace \
+        ace-config.1.in \
+        ace-config.in \
+        aceConf.sh.in \
         apps \
         bin \
+        config.guess \
+        config.sub \
+        configure \
+        configure.in \
         docs \
         etc \
         examples \
         include \
+        install-sh \
+        ltconfig \
+        ltmain.sh \
+        m4 \
+        missing \
+        mkinstalldirs \
         netsvcs \
         os-patches \
         performance-tests \
         tests \
-        WindozeCE
+        websvcs
 
 RELEASE_FILES = \
         $(addprefix ACE_wrappers/,$(CONTROLLED_FILES)) \
@@ -122,8 +142,10 @@ RELEASE_LIB_FILES = \
         ACE_wrappers/bin \
         ACE_wrappers/etc \
         ACE_wrappers/include \
+        ACE_wrappers/m4 \
         ACE_wrappers/netsvcs \
-        ACE_wrappers/tests
+        ACE_wrappers/tests \
+        ACE_wrappers/websvcs
 
 .PHONY: release releasetao releaseall
 
@@ -156,3 +178,5 @@ releaseall: release
 
 ACE-INSTALL: ACE-INSTALL.html
 	@lynx -dump $< > $@
+
+INSTALL: ACE-INSTALL
