@@ -1,3 +1,8 @@
+Tue Jun 23 18:59:31 1998  Steve Huston  <shuston@riverace.com>
+
+	* ace/Acceptor.cpp (ACE_Strategy_Acceptor<>::resume()): Don't
+	  suspend() the object; resume() it - looked like a cut/paste error.
+
 Tue Jun 23 16:41:35 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Synch.{h,cpp} (class ACE_Adaptive_Lock): Added the new Lock
