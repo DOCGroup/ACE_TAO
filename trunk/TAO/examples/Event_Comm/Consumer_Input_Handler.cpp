@@ -15,7 +15,7 @@ Consumer_Input_Handler::Consumer_Input_Handler (void)
 
 Consumer_Input_Handler::~Consumer_Input_Handler (void)
 {
-  //this->close ();
+  // No-Op.
 }
 
 int
@@ -44,7 +44,7 @@ Consumer_Input_Handler::close (void)
   if (this->consumer_initiated_shutdown ())
     {
       // Only try to unsubscribe if the Consumer initiated the
-      // shutdown.  Otherwise, the Supplier initiated it and it has
+      // shutdown.  Otherwise, the Notifier initiated it and it has
       // probably gone away by now!
       TAO_TRY
         {
@@ -114,6 +114,7 @@ Consumer_Input_Handler::handle_input (ACE_HANDLE h)
       ACE_OS::strcpy (buf, "quit");
       ACE_DEBUG ((LM_DEBUG,
                   "shutting down Input_Handler\n"));
+      return 0;
     }
 
   Event_Comm::Notifier *notifier =
@@ -121,13 +122,13 @@ Consumer_Input_Handler::handle_input (ACE_HANDLE h)
 
   ACE_ASSERT (notifier != 0);
 
-  if (ACE_OS::strcmp (buf, "quit") == 0)
+  if (ACE_OS::strncmp (buf, "quit", 4) == 0)
     {
       // Consumer wants to shutdown.
       this->consumer_initiated_shutdown (1);
 
       // Tell the main event loop to shutdown.
-       this->receiver_handler_->close ();
+       this->receiver_handler_->shutdown ();
     }
   else
     {

@@ -6,7 +6,8 @@ ACE_RCSID(Consumer, Consumer_Handler, "$Id$")
 
 Consumer_Handler::Consumer_Handler (void)
   : receiver_ (0),
-    notifier_ (0)
+    notifier_ (0),
+    consumershutdown (0)
 {
   // No-Op.
 }
@@ -19,7 +20,7 @@ Consumer_Handler::~Consumer_Handler (void)
 int
 Consumer_Handler::init (int argc,
                         char *argv[],
-                        ConsumerShutdown *consumershutdown)
+                        ConsumerShutdown *_consumershutdown)
 {
   char *filtering_criteria = "";
 
@@ -40,8 +41,10 @@ Consumer_Handler::init (int argc,
 				    TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      // set the ConsumerShutdown callback object.
-      this->receiver_i_.set (consumershutdown);
+      // Save the Shutdown callback.
+      this->consumershutdown = _consumershutdown; 
+      // Set the ConsumerShutdown callback object.
+      this->receiver_i_.set (_consumershutdown);
 
       // Start the servant.
       this->receiver_ =
@@ -112,6 +115,14 @@ void
 Consumer_Handler::close (void)
 {
   this->orb_->shutdown ();
+}
+
+void
+Consumer_Handler::shutdown (void)
+{
+  ACE_ASSERT (this->consumershutdown != 0);
+
+  this->consumershutdown->close ();
 }
 
 int

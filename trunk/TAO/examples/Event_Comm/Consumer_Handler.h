@@ -53,6 +53,9 @@ public:
   void close (void);
   // shutdown the orb.
 
+  void shutdown (void);
+  // called to shutdown the consumer application.
+
   // = Accessors
   Event_Comm::Consumer *receiver (void);
   Event_Comm::Notifier *notifier (void);
@@ -79,6 +82,9 @@ private:
 
   CORBA::ORB_var orb_;
   // Remember our orb.
+
+  ConsumerShutdown* consumershutdown;
+  // The Shutdown callback used to shutdown the consumer application.
 };
 
 #define NOTIFIER_BIND_NAME "Notifier"
