@@ -1,3 +1,27 @@
+Mon Mar 04 11:20:45 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* ace/Copy_Disabled.h:
+	* ace/Copy_Disabled.cpp:
+	  Add new helper class to disable copy constructors and assignment
+	  operators.  I simply got sick of writing this repetitive code:
+
+	  // private & undefined
+	  Foo (const Foo &);
+	  Foo &operator= (const Foo&);
+
+	  The new class makes life *much* easier, simply say:
+
+	  class Foo : private ACE_Copy_Disabled
+
+	  Isn't that cool?
+	  
+	* ace/Makefile:
+	* ace/Makefile.am:
+	* ace/Makefile.bor:
+	* ace/ace_dll.dsp:
+	* ace/ace_lib.dsp:
+	  Add new file to the project files and Makefiles.
+
 Mon Mar  4 07:36:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Token_Strategy_Test.cpp:
