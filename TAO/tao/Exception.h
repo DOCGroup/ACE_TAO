@@ -13,7 +13,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_EXCEPTION_H
 #define TAO_EXCEPTION_H
 #include "ace/pre.h"
