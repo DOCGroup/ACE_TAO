@@ -2,12 +2,12 @@
 
 #include "Consumer.h"
 
-ACE_RCSID(Notify, TAO_Notify_Consumer, "$id$")
+ACE_RCSID(Notify, TAO_Notify_ThreadPool_Consumer, "$id$")
 
 #include "ace/High_Res_Timer.h"
 #include "ace/Stats.h"
 
-TAO_Notify_Consumer::TAO_Notify_Consumer (TAO_Notify_ORB_Objects& orb_objects)
+TAO_Notify_ThreadPool_Consumer::TAO_Notify_ThreadPool_Consumer (TAO_Notify_ORB_Objects& orb_objects)
   : orb_objects_ (orb_objects)
     , proxy_supplier_thread_count_ (0)
     , max_events_ (10)
@@ -17,12 +17,12 @@ TAO_Notify_Consumer::TAO_Notify_Consumer (TAO_Notify_ORB_Objects& orb_objects)
 {
 }
 
-TAO_Notify_Consumer::~TAO_Notify_Consumer (void)
+TAO_Notify_ThreadPool_Consumer::~TAO_Notify_ThreadPool_Consumer (void)
 {
 }
 
 void
-TAO_Notify_Consumer::init (PortableServer::POA_var& poa, CosNotifyChannelAdmin::ConsumerAdmin_var& admin,
+TAO_Notify_ThreadPool_Consumer::init (PortableServer::POA_var& poa, CosNotifyChannelAdmin::ConsumerAdmin_var& admin,
                        int proxy_supplier_thread_count, int max_events, long delay ACE_ENV_ARG_DECL)
 {
   this->default_POA_ = poa;
@@ -37,19 +37,19 @@ TAO_Notify_Consumer::init (PortableServer::POA_var& poa, CosNotifyChannelAdmin::
 }
 
 PortableServer::POA_ptr
-TAO_Notify_Consumer::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Notify_ThreadPool_Consumer::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   return PortableServer::POA::_duplicate (this->default_POA_.in ());
 }
 
 void
-TAO_Notify_Consumer::run (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Notify_ThreadPool_Consumer::run (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   // Nothing to do.
 }
 
 void
-TAO_Notify_Consumer::connect (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_ThreadPool_Consumer::connect (ACE_ENV_SINGLE_ARG_DECL)
 {
   // Activate the consumer with the default_POA_
   CosNotifyComm::StructuredPushConsumer_var objref = this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -117,14 +117,14 @@ TAO_Notify_Consumer::connect (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_Notify_Consumer::disconnect (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_ThreadPool_Consumer::disconnect (ACE_ENV_SINGLE_ARG_DECL)
 {
   this->proxy_supplier_->disconnect_structured_push_supplier(ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
-TAO_Notify_Consumer::offer_change (const CosNotification::EventTypeSeq & /*added*/,
+TAO_Notify_ThreadPool_Consumer::offer_change (const CosNotification::EventTypeSeq & /*added*/,
                                const CosNotification::EventTypeSeq & /*removed*/
                                ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((
@@ -136,7 +136,7 @@ TAO_Notify_Consumer::offer_change (const CosNotification::EventTypeSeq & /*added
 }
 
 void
-TAO_Notify_Consumer::push_structured_event (const CosNotification::StructuredEvent & /*notification*/
+TAO_Notify_ThreadPool_Consumer::push_structured_event (const CosNotification::StructuredEvent & /*notification*/
                                             ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException,
@@ -177,7 +177,7 @@ TAO_Notify_Consumer::push_structured_event (const CosNotification::StructuredEve
 }
 
 void
-TAO_Notify_Consumer::dump_throughput (void)
+TAO_Notify_ThreadPool_Consumer::dump_throughput (void)
 {
   ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
 
@@ -189,7 +189,7 @@ TAO_Notify_Consumer::dump_throughput (void)
 }
 
 void
-TAO_Notify_Consumer::deactivate (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_ThreadPool_Consumer::deactivate (ACE_ENV_SINGLE_ARG_DECL)
 {
   PortableServer::POA_var poa (this->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER));
   ACE_CHECK;
@@ -204,7 +204,7 @@ TAO_Notify_Consumer::deactivate (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_Notify_Consumer::disconnect_structured_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_ThreadPool_Consumer::disconnect_structured_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))

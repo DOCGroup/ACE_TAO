@@ -19,22 +19,22 @@
 #include "tao/RTCORBA/RTCORBA.h"
 #include "ace/SString.h"
 
-class TAO_Notify_Consumer;
+class TAO_Notify_ThreadPool_Consumer;
 
 /**
- * @class TAO_Notify_Consumer_Client
+ * @class TAO_Notify_ThreadPool_Consumer_Client
  *
  * @brief
  *
  */
-class TAO_Notify_Consumer_Client  : public ACE_Task_Base
+class TAO_Notify_ThreadPool_Consumer_Client  : public ACE_Task_Base
 {
 public:
   /// Constuctor
-  TAO_Notify_Consumer_Client (TAO_Notify_ORB_Objects& orb_objects);
+  TAO_Notify_ThreadPool_Consumer_Client (TAO_Notify_ORB_Objects& orb_objects);
 
   /// Destructor
-  ~TAO_Notify_Consumer_Client ();
+  ~TAO_Notify_ThreadPool_Consumer_Client ();
 
   /// Init
   void init (ACE_ENV_SINGLE_ARG_DECL);
@@ -65,7 +65,7 @@ protected:
   int consumer_done_count_;
 
   /// The Consumer.
-  TAO_Notify_Consumer* consumer_;
+  TAO_Notify_ThreadPool_Consumer* consumer_;
 
   /// ProxySuppler Thread count.
   int proxy_supplier_thread_count_;
