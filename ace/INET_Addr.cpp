@@ -399,6 +399,9 @@ ACE_INET_Addr::get_host_name (ASYS_TCHAR hostname[], size_t len) const
       hostent *hp = ACE_OS::gethostbyaddr ((char *) &this->inet_addr_.sin_addr,
                                            a_len,
                                            this->addr_type_);
+      if (!hp)
+        error = errno;  // So that the errno gets propagated back; it is
+                        // loaded from error below.
 #else
       hostent hentry;
       ACE_HOSTENT_DATA buf;
