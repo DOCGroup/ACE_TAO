@@ -167,7 +167,7 @@ try to help you fix the problems.
       functions in shared libraries, even though the manual claims
       that these functions are called!  In particular, this means
       that the tests in the directory
-      $(ACE_ROOT)/tests/Service_Configurator/IPC-tests/server/
+      $ACE_ROOT/tests/Service_Configurator/IPC-tests/server/
       will not work for statically linked services.<P>
 
       Some versions of SunOS 4.1.x do not contain the
@@ -799,14 +799,21 @@ need to do:<P>
       % make
       </code></pre><P>
 
-      at the root of the ACE source tree.  This will build the ACE library,
-      tests, the examples, and the sample applications.  Building the entire
-      ACE release can take a long time, however.  Therefore, you might
-      consider cd'ing into the $ACE_ROOT/ace/ directory and running
-      <CODE>make</CODE> there to build just the ACE library.  As a sanity
-      check, you might also want to build and run the automated <A
-      HREF="tests/README">``one-button'' tests</A> in
-      $ACE_ROOT/tests/.<P>
+      at the root of the ACE source tree.  This will build the ACE
+      library, tests, the examples, and the sample applications.
+      Building the entire ACE release can take a long time and consume
+      lots of disk space, however.  Therefore, you might consider
+      cd'ing into the <A HREF="ace">$ACE_ROOT/ace/</a> directory and
+      running <CODE>make</CODE> there to build just the ACE library.
+      As a sanity check, you might also want to build and run the
+      automated <A HREF="tests/README">``one-button'' tests</A> in <A
+      HREF="tests/">$ACE_ROOT/tests/</a>.  Finally, if you're also
+      planning on building <A
+      HREF="http://www.cs.wustl.edu/~schmidt/TAO.html">TAO</A>, you
+      should build the <A
+      HREF="http://www.cs.wustl.edu/~schmidt/gperf.ps.gz">gperf</A>
+      perfect hash function generator application in <A
+      HREF="apps/gperf">$ACE_ROOT/apps/gperf/</A>.<P>
 
   <LI>If you need to regenerate the Svc_Conf_y.cpp file, you'll need to
       get <A HREF="http://www.cs.wustl.edu/~schmidt/byacc.tar.gz">Berkeley
