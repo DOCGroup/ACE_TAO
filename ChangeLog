@@ -1,3 +1,8 @@
+Thu Dec 16 14:07:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-lite.h:
+          Removed commected out typedef in VxWorks part
+
 Thu Dec 16 13:49:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/QOS/Simple/QoS_Util.{h,cpp}:
