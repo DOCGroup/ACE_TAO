@@ -1,3 +1,9 @@
+Wed Aug 18 13:29:00 UTC 2004  Martin Corino <mcorino@remedy.nl>
+
+        * bin/msvc_mpc_auto_compile.pl:
+
+        Added support for building VC8 projects.
+
 Wed Aug 18 08:50:00 UTC 2004  Simon Massey  <simon.massey@prismtechnologies.com>
         * ace/Asynch_Connector.h
         * ace/Asynch_Connector.cpp
