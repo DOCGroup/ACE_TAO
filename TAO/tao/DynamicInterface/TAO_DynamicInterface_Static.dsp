@@ -95,6 +95,10 @@ SOURCE=.\Context.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\DII_ClientRequestInfo.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\DII_Invocation.cpp
 # End Source File
 # Begin Source File
@@ -132,6 +136,10 @@ SOURCE=.\Unknown_User_Exception.cpp
 # Begin Source File
 
 SOURCE=.\Context.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\DII_ClientRequestInfo.h
 # End Source File
 # Begin Source File
 
