@@ -909,14 +909,15 @@ ACE_Data_Block::clone (ACE_Message_Block::Message_Flags mask) const
 {
   ACE_TRACE ("ACE_Data_Block::clone");
 
-  ACE_Data_Block *nb;
-
-  ACE_NEW_RETURN (nb, this->clone_nocopy (mask), 0);
+  ACE_Data_Block *nb = this->clone_nocopy (mask);
 
   // Copy all of the payload memory into the new object.
-  ACE_OS::memcpy (nb->base_,
-                  this->base_,
-                  this->max_size_);
+  if (nb != 0)
+    {
+      ACE_OS::memcpy (nb->base_,
+                      this->base_,
+                      this->max_size_);
+    }
 
   return nb;
 }
