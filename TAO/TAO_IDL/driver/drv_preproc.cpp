@@ -361,6 +361,7 @@ DRV_cpp_init (void)
 
           DRV_cpp_putarg (option);
           idl_global->add_include_path (ACE::strnew (option + 2));
+          idl_global->tao_root (option + 2);
         }
     }
 
@@ -500,10 +501,38 @@ DRV_check_for_include (const char* buf)
 
   // Store in the idl_global, unless it's "orb.idl" -
   // we don't want to generate header includes for that.
-  if (ACE_OS::strcmp (file_name, "orb.idl"))
+  if (ACE_OS::strcmp (file_name, "orb.idl") == 0)
+    {
+      DRV_get_orb_idl_includes ();
+    }
+  else
     {
       idl_global->add_to_included_idl_files (file_name);
     }
+}
+
+void
+DRV_get_orb_idl_includes (void)
+{
+  ACE_CString orb_idl_path (idl_global->tao_root ());
+  orb_idl_path += "/orb.idl";
+  FILE *fd = ACE_OS::fopen (orb_idl_path.fast_rep (), "r");
+  
+  static char buf[LINEBUF_SIZE + 1];
+  char *s = 0;
+  
+//  while ((s = fgets (buf, LINEBUF_SIZE, fd)) && !feof (fd))
+  while (DRV_get_line (fd))
+    {
+      // We really need to know whether this line is a "#include
+      // ...". If so, we would like to separate the "file name" and
+      // keep that in the idl_global. We need them to produce
+      // "#include's in the stubs and skeletons.
+//      DRV_check_for_include (buf);
+      DRV_check_for_include (drv_line);
+    }
+    
+  ACE_OS::fclose (fd);
 }
 
 // Copy from stdin to a file
@@ -566,16 +595,16 @@ DRV_copy_input (FILE *fin,
 
   while (DRV_get_line (fin))
     {
+      // Print the line to the temp file.
+      ACE_OS::fprintf (f,
+                       "%s\n",
+                       drv_line);
+
       // We really need to know whether this line is a "#include
       // ...". If so, we would like to separate the "file name" and
       // keep that in the idl_global. We need them to produce
       // "#include's in the stubs and skeletons.
       DRV_check_for_include (drv_line);
-
-      // Print the line to the temp file.
-      ACE_OS::fprintf (f,
-                       "%s\n",
-                       drv_line);
     }
 
   // Close the temp file.
