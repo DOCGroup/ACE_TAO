@@ -1,3 +1,13 @@
+Fri Jun 04 17:30:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Sched: Reconfig_Scheduler.{cpp, h}: completed
+	  most of the reconfigurable scheduler implementation.
+
+	* performance-tests/Cubit/TAO/IDL_Cubit/client.dsp
+          performance-tests/Cubit/TAO/IDL_Cubit/collocation_test.dsp
+          performance-tests/Cubit/TAO/IDL_Cubit/server.dsp: added
+          relative paths to projects.
+	
 Fri Jun 04 16:11:30 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* Context.{i,cpp}:
