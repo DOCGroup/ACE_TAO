@@ -1,3 +1,13 @@
+Tue Apr 20 11:56:25 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_decl.cpp:
+        
+          Fixed mistake in accessor method for one of the 'visited'
+          flags that was causing the #pragma instantiate directive
+          for argument helper class templates to not get generated.
+          Thanks to Johnny Willemsen <jwillemsen@remedy.nl> for
+          reporting the problem.
+
 Tue Apr 20 12:31:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Replication_Service.cpp:
