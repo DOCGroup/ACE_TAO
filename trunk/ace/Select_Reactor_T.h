@@ -590,7 +590,10 @@ private:
   // Deny access since member-wise won't work...
 };
 
-#if defined (__ACE_INLINE__)
+// @@ The latest version of SunCC can't grok the code if we put inline
+// function here.  Therefore, we temporarily disable the code here.
+// We shall turn this back on once we know the problem gets fixed.
+#if 0 // defined (__ACE_INLINE__)
 #include "ace/Select_Reactor_T.i"
 #endif /* __ACE_INLINE__ */
 
