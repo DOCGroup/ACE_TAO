@@ -2800,7 +2800,10 @@ ACE_OS::recursive_mutex_init (ACE_recursive_thread_mutex_t *m,
 #else
   if (ACE_OS::thread_mutex_init (&m->nesting_mutex_, 0, name, arg) == -1)
     return -1;
-  else if (ACE_OS::cond_init (&m->lock_available_, USYNC_THREAD, name, arg) == -1)
+  else if (ACE_OS::cond_init (&m->lock_available_,
+                              (short) USYNC_THREAD,
+                              name,
+                              arg) == -1)
     return -1;
   else
     {

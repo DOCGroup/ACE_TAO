@@ -749,8 +749,12 @@ ACE_Condition_Thread_Mutex::ACE_Condition_Thread_Mutex (const ACE_Thread_Mutex &
 #endif  /*  ACE_HAS_FSU_PTHREADS */
 
 // ACE_TRACE ("ACE_Condition_Thread_Mutex::ACE_Condition_Thread_Mutex");
-  if (ACE_OS::cond_init (&this->cond_, USYNC_THREAD, name, arg) != 0)
-    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("%p\n"),
+  if (ACE_OS::cond_init (&this->cond_,
+                         (short) USYNC_THREAD,
+                         name,
+                         arg) != 0)
+    ACE_ERROR ((LM_ERROR,
+                ASYS_TEXT ("%p\n"),
                 ASYS_TEXT ("ACE_Condition_Thread_Mutex::ACE_Condition_Thread_Mutex")));
 }
 
