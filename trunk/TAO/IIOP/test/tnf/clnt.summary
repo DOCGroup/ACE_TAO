@@ -1,0 +1,44 @@
+                                     Profile for 100 calls
+
+Function name         %      self+desc.          mean     max      min     std.
+                     time       ms       calls  ms/call ms/call  ms/call   err
+________________________________________________________________________________
+mutex_lock           0.41        1.002    290    0.003    0.153    0.002   0.001
+mutex_unlock         0.37        0.912    296    0.003    0.029    0.003   0.000
+rw_rdlock            0.27        0.656    106    0.006    0.034    0.005   0.000
+rw_unlock            0.21        0.507    109    0.005    0.032    0.003   0.000
+rw_wrlock            0.02        0.043      3    0.014    0.033    0.004   0.008
+
+                                     Profile for 200 calls
+
+Function name         %      self+desc.          mean     max      min     std.
+                     time       ms       calls  ms/call ms/call  ms/call   err
+________________________________________________________________________________
+rw_rdlock            0.34        1.412    206    0.007    0.176    0.005   0.001
+mutex_lock           0.28        1.151    315    0.004    0.157    0.002   0.000
+rw_unlock            0.25        1.056    209    0.005    0.031    0.004   0.000
+mutex_unlock         0.21        0.867    321    0.003    0.028    0.002   0.000
+rw_wrlock            0.01        0.044      3    0.015    0.033    0.004   0.008
+
+                                     Profile for 300 calls
+
+Function name         %      self+desc.          mean     max      min     std.
+                     time       ms       calls  ms/call ms/call  ms/call   err
+________________________________________________________________________________
+rw_rdlock            0.36        2.357    306    0.008    0.165    0.005   0.001
+rw_unlock            0.22        1.406    309    0.005    0.033    0.004   0.000
+mutex_lock           0.20        1.273    340    0.004    0.154    0.002   0.000
+mutex_unlock         0.16        1.047    346    0.003    0.030    0.003   0.000
+rw_wrlock            0.01        0.045      3    0.015    0.034    0.004   0.008
+
+                                     Profile for 400 calls
+
+Function name         %      self+desc.          mean     max      min     std.
+                     time       ms       calls  ms/call ms/call  ms/call   err
+________________________________________________________________________________
+rw_rdlock            1.33       10.414    406    0.026    7.388    0.005   0.018
+mutex_lock           0.37        2.882    365    0.008    1.428    0.002   0.004
+rw_unlock            0.23        1.832    409    0.004    0.032    0.004   0.000
+mutex_unlock         0.13        1.033    371    0.003    0.048    0.002   0.000
+rw_wrlock            0.01        0.043      3    0.014    0.033    0.004   0.007
+
