@@ -1,9 +1,12 @@
 Tue Feb 10 09:34:27 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/INET_Addr.cpp (get_host_name): moved declaration of local
-          "hentry" so that it's not seen on CHORUS.
+          "hentry" so that it's not seen on Chorus.
 
         * ace/OS.i (getprotoby{name,number}{,_r}): not supported on Chorus.
+
+        * Timer_Queue_Adapters.{h,i} (activate): added stack and stack_size
+          parameters to match declaration in ACE_Task_Base.
 
 Mon Feb 09 18:10:37 1998  Chris Gill <cdgill@cs.wustl.edu>
 
