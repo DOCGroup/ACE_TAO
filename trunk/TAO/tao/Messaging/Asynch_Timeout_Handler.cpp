@@ -18,12 +18,18 @@ TAO_Asynch_Timeout_Handler::TAO_Asynch_Timeout_Handler (
     request_id_ (0),
     reactor_ (reactor)
 {
+  // Enable reference counting on the event handler.
+  this->reference_counting_policy ().value (
+    ACE_Event_Handler::Reference_Counting_Policy::ENABLED);
 
+  // We own a reference
+  (void) this->rd_->incr_refcount ();
 }
 
 TAO_Asynch_Timeout_Handler::~TAO_Asynch_Timeout_Handler ()
 {
-
+  // Forget rd's reference
+  (void) this->rd_->decr_refcount ();
 }
 
 
@@ -65,4 +71,3 @@ TAO_Asynch_Timeout_Handler::cancel ()
       this->reactor_->cancel_timer (this);
     }
 }
-

@@ -30,9 +30,15 @@ TAO_Asynch_Reply_Dispatcher_Base::TAO_Asynch_Reply_Dispatcher_Base (
                 TAO_ENCAP_BYTE_ORDER,
                 TAO_DEF_GIOP_MAJOR,
                 TAO_DEF_GIOP_MINOR,
-                orb_core),
-    transport_ (0)
+                orb_core)
+  , transport_ (0)
+  , lock_ (0)
+  , refcount_ (1)
+  , is_reply_dispatched_ (false)
 {
+  // @@ NOTE: Need a seperate option for this..
+  this->lock_ =
+    orb_core->resource_factory ()->create_cached_connection_lock ();
 }
 
 // Destructor.
@@ -41,6 +47,9 @@ TAO_Asynch_Reply_Dispatcher_Base::~TAO_Asynch_Reply_Dispatcher_Base (void)
   // Release the transport that we own
   if (this->transport_ != 0)
     this->transport_->remove_reference ();
+
+  if (this->lock_)
+    delete this->lock_;
 }
 
 void
@@ -50,6 +59,7 @@ TAO_Asynch_Reply_Dispatcher_Base::transport (TAO_Transport *t)
     this->transport_->remove_reference ();
 
   this->transport_ = t;
+
   this->transport_->add_reference ();
 }
 
@@ -79,4 +89,56 @@ TAO_Asynch_Reply_Dispatcher_Base::schedule_timer (
   )
 {
   return 0;
+}
+
+long
+TAO_Asynch_Reply_Dispatcher_Base::incr_refcount (void)
+{
+  ACE_GUARD_RETURN (ACE_Lock,
+                    mutex,
+                    *this->lock_,
+                    -1);
+  return ++this->refcount_;
+}
+
+long
+TAO_Asynch_Reply_Dispatcher_Base::decr_refcount (void)
+{
+  {
+    ACE_GUARD_RETURN (ACE_Lock,
+                      mutex,
+                      *this->lock_,
+                      -1);
+    --this->refcount_;
+
+    if (this->refcount_ > 0)
+      return this->refcount_;
+  }
+
+  delete this;
+
+  return 0;
+}
+
+bool
+TAO_Asynch_Reply_Dispatcher_Base::try_dispatch_reply (void)
+{
+  if (this->is_reply_dispatched_)
+    return false;
+
+  if (!this->is_reply_dispatched_)
+    {
+      ACE_GUARD_RETURN (ACE_Lock,
+                        mutex,
+                        *this->lock_,
+                        false);
+
+      if (!this->is_reply_dispatched_)
+        {
+          this->is_reply_dispatched_ = true;
+          return true;
+        }
+    }
+
+  return false;
 }

@@ -151,7 +151,6 @@ namespace TAO
         this->rd_,
         this->request_);
 
-
     Invocation_Status status =
       synch.remote_invocation (max_wait_time
                                ACE_ENV_ARG_PARAMETER);

@@ -20,21 +20,8 @@ ACE_RCSID(DynamicInterface,
 TAO_DII_Deferred_Reply_Dispatcher::TAO_DII_Deferred_Reply_Dispatcher (
     const CORBA::Request_ptr req,
     TAO_ORB_Core *orb_core)
-  : TAO_Asynch_Reply_Dispatcher_Base (orb_core),
-    db_ (sizeof buf_,
-         ACE_Message_Block::MB_DATA,
-         this->buf_,
-         orb_core->input_cdr_buffer_allocator (),
-         orb_core->locking_strategy (),
-         ACE_Message_Block::DONT_DELETE,
-         orb_core->input_cdr_dblock_allocator ()),
-    reply_cdr_ (&db_,
-                ACE_Message_Block::DONT_DELETE,
-                TAO_ENCAP_BYTE_ORDER,
-                TAO_DEF_GIOP_MAJOR,
-                TAO_DEF_GIOP_MINOR,
-                orb_core),
-    req_ (req)
+  : TAO_Asynch_Reply_Dispatcher_Base (orb_core)
+  , req_ (req)
 {
 }
 
@@ -109,9 +96,8 @@ TAO_DII_Deferred_Reply_Dispatcher::dispatch_reply (
     }
   ACE_ENDTRY;
 
-  // This was dynamically allocated. Now the job is done. Commit
-  // suicide here.
-  delete this;
+  // This was dynamically allocated. Now the job is done.
+  (void) this->decr_refcount ();
 
   return 1;
 }
@@ -150,4 +136,7 @@ TAO_DII_Deferred_Reply_Dispatcher::connection_closed (void)
         }
     }
   ACE_ENDTRY;
+  ACE_CHECK;
+
+  (void) this->decr_refcount ();
 }

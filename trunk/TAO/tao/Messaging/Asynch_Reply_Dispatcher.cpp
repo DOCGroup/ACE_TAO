@@ -8,6 +8,8 @@
 #include "tao/ORB_Core.h"
 #include "tao/Transport.h"
 
+#include "ace/CORBA_macros.h"
+
 #if !defined (__ACE_INLINE__)
 #include "Asynch_Reply_Dispatcher.i"
 #endif /* __ACE_INLINE__ */
@@ -21,10 +23,10 @@ TAO_Asynch_Reply_Dispatcher::TAO_Asynch_Reply_Dispatcher (
     Messaging::ReplyHandler_ptr reply_handler,
     TAO_ORB_Core *orb_core
   )
-  :TAO_Asynch_Reply_Dispatcher_Base (orb_core),
-   reply_handler_skel_ (reply_handler_skel),
-   reply_handler_ (Messaging::ReplyHandler::_duplicate (reply_handler)),
-   timeout_handler_ (this, orb_core->reactor ())
+  :TAO_Asynch_Reply_Dispatcher_Base (orb_core)
+  , reply_handler_skel_ (reply_handler_skel)
+  , reply_handler_ (Messaging::ReplyHandler::_duplicate (reply_handler))
+  , timeout_handler_ (0)
 {
 }
 
@@ -42,10 +44,17 @@ TAO_Asynch_Reply_Dispatcher::dispatch_reply (
   if (params.input_cdr_ == 0)
     return -1;
 
-  // AMI Timeout Handling Begin
-  timeout_handler_.cancel ();
 
-  // AMI Timeout Handling End
+  if (this->timeout_handler_)
+    {
+      // If we had registered timeout handlers just cancel them and
+      // loose ownership of the handlers
+      this->timeout_handler_->cancel ();
+      this->timeout_handler_->remove_reference ();
+      this->timeout_handler_ = 0;
+      // AMI Timeout Handling End
+    }
+
 
   this->reply_status_ = params.reply_status_;
 
@@ -86,6 +95,9 @@ TAO_Asynch_Reply_Dispatcher::dispatch_reply (
                   ACE_TEXT ("TAO_Messaging (%P|%t) - Asynch_Reply_Dispatcher::")
                   ACE_TEXT ("dispatch_reply\n")));
     }
+
+  if (!this->try_dispatch_reply ())
+    return 0;
 
   CORBA::ULong reply_error = TAO_AMI_REPLY_NOT_OK;
   switch (this->reply_status_)
@@ -129,9 +141,7 @@ TAO_Asynch_Reply_Dispatcher::dispatch_reply (
       ACE_ENDTRY;
     }
 
-  // This was dynamically allocated. Now the job is done. Commit
-  // suicide here.
-  delete this;
+  this->decr_refcount ();
 
   return 1;
 }
@@ -141,9 +151,14 @@ TAO_Asynch_Reply_Dispatcher::connection_closed (void)
 {
   ACE_TRY_NEW_ENV
     {
-      // AMI Timeout Handling Begin
-
-      timeout_handler_.cancel ();
+      if (this->timeout_handler_)
+        {
+          // If we had registered timeout handlers just cancel them and
+          // loose ownership of the handlers
+          this->timeout_handler_->cancel ();
+          this->timeout_handler_->remove_reference ();
+          this->timeout_handler_ = 0;
+        }
 
       // AMI Timeout Handling End
 
@@ -179,8 +194,7 @@ TAO_Asynch_Reply_Dispatcher::connection_closed (void)
     }
   ACE_ENDTRY;
 
-  // Commit suicide.
-  delete this;
+  (void) this->decr_refcount ();
 }
 
 // AMI Timeout Handling Begin
@@ -201,6 +215,9 @@ TAO_Asynch_Reply_Dispatcher::reply_timed_out (void)
 
       timeout_failure._tao_encode (out_cdr ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
+
+      if (!this->try_dispatch_reply ())
+        return;
 
       // Turn into an output CDR
       TAO_InputCDR cdr (out_cdr);
@@ -224,17 +241,28 @@ TAO_Asynch_Reply_Dispatcher::reply_timed_out (void)
 
     }
   ACE_ENDTRY;
+  ACE_CHECK;
 
-  // This was dynamically allocated. Now the job is done. Commit
-  // suicide here.
-  delete this;
+  (void) this->decr_refcount ();
 }
 
 long
 TAO_Asynch_Reply_Dispatcher::schedule_timer (CORBA::ULong request_id,
-                                             const ACE_Time_Value &max_wait_time)
+                                             const ACE_Time_Value &max_wait_time
+                                             ACE_ENV_ARG_DECL)
 {
-  return this->timeout_handler_.schedule_timer (this->transport_->tms (),
-                                                request_id,
-                                                max_wait_time);
+  if (this->timeout_handler_ == 0)
+    {
+      // @@ Need to use the pool for this..
+      ACE_NEW_THROW_EX (this->timeout_handler_,
+                        TAO_Asynch_Timeout_Handler (
+                          this,
+                          this->transport_->orb_core ()->reactor ()),
+                        CORBA::NO_MEMORY ());
+    }
+
+  return this->timeout_handler_->schedule_timer (
+      this->transport_->tms (),
+      request_id,
+      max_wait_time);
 }
