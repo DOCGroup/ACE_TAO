@@ -1,3 +1,14 @@
+Mon Jul 23 13:48:26 2001  Ossama Othman  <ossama@uci.edu>
+
+	* ace/MEM_Connector.cpp (connect):
+
+	  Disable non-blocking on the stream after its handle has been
+	  set.  Previously, non-blocking was disabled on an uninitialized
+	  MEM_Stream, after which the handle was set (i.e. initializing
+	  the stream).  In order to properly disable non-blocking on a
+	  stream, its handle must be set first since ioctl() operations
+	  are typically performed on the underlying stream handle.
+
 Mon Jul 23 13:06:39 2001  Steve Huston  <shuston@riverace.com>
 
         * ace/WFMO_Reactor.cpp (event_handling): Corrected the loop check
