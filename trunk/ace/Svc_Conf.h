@@ -41,6 +41,9 @@
 void ace_yyrestart (FILE *);
 // Restart input file parsing
 
+void ace_yy_delete_parse_buffer (void);
+// Delete the lexer's parse buffer
+
 int ace_yyparse (void);
 // Performs the parsing
 

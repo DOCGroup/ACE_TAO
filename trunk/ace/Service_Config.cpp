@@ -727,6 +727,9 @@ ACE_Service_Config::close (void)
   delete ACE_Service_Config::static_svcs_;
   ACE_Service_Config::static_svcs_ = 0;
 
+  // We've prepared a buffer that we no longer need. Delete it.
+  ace_yy_delete_parse_buffer ();
+
   return 0;
 }
 
