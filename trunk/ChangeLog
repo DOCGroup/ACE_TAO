@@ -1,10 +1,17 @@
+Fri May  9 12:49:42 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+
+          Fixed a bug with project names with special characters not being
+          matched witht the proper resource file.
+
 Fri May  9 10:17:11 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* bin/fuzz.pl (check_for_ptr_arith_t):
+        * bin/fuzz.pl (check_for_ptr_arith_t):
 
-	  New check for ptr_arith_t usage in source files.  Steve Huston
-	  points out that we should be using the portable/standard
-	  ptrdiff_t type instead.
+          New check for ptr_arith_t usage in source files.  Steve Huston
+          points out that we should be using the portable/standard
+          ptrdiff_t type instead.
 
 Fri May  9 12:12:51 2003  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -14,17 +21,17 @@ Fri May  9 12:12:51 2003  Chad Elliott  <elliott_c@ociweb.com>
 
 Fri May  9 11:58:57 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* THANKS: Added Ira Burton to the hall of fame.
+        * THANKS: Added Ira Burton to the hall of fame.
 
 Fri May 09 11:04:44 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Thread_Manager.h:
-	* ace/Thread_Manager.cpp: Applied a patch that expose the
-	  Thread_Manager internal freelists, and the thread startup sync
-	  mutex in Thread_Descriptor.  These changes allow users to derive
-	  their own Thread_Manager and spawn threads using a third party
-	  library, such as that of Sybase's Open Server.   Thanks to Caleb
-	  Epstein <cae@bklyn.org> for submitting the patch.
+        * ace/Thread_Manager.h:
+        * ace/Thread_Manager.cpp: Applied a patch that expose the
+          Thread_Manager internal freelists, and the thread startup sync
+          mutex in Thread_Descriptor.  These changes allow users to derive
+          their own Thread_Manager and spawn threads using a third party
+          library, such as that of Sybase's Open Server.   Thanks to Caleb
+          Epstein <cae@bklyn.org> for submitting the patch.
 
 Fri May  9 08:45:12 2003  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -110,9 +117,9 @@ Wed May  7 18:32:45 2003  Steve Huston  <shuston@riverace.com>
 Wed May  7 17:02:44 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 <<<<<<< ChangeLog
-	* bin/MakeProjectCreator/config/ciao_component.mpb: Added the
-	  required libraries to build the server. This was necessitated by
-	  the recent subsetting in TAO.
+        * bin/MakeProjectCreator/config/ciao_component.mpb: Added the
+          required libraries to build the server. This was necessitated by
+          the recent subsetting in TAO.
 
 =======
         * bin/MakeProjectCreator/config/ciao_component.mpb: Added the
@@ -133,10 +140,10 @@ Wed May  7 14:00:31 2003  Steve Huston  <shuston@riverace.com>
 Wed May  7 12:03:28 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 <<<<<<< ChangeLog
-	* bin/topinfo_iorsize_stats.sh (FILES): Removed the memory
-	  tracking on the client side since its of no use. Added code to
-	  collect the actual size of the server growth once data is
-	  marshalled.
+        * bin/topinfo_iorsize_stats.sh (FILES): Removed the memory
+          tracking on the client side since its of no use. Added code to
+          collect the actual size of the server growth once data is
+          marshalled.
 =======
         * bin/topinfo_iorsize_stats.sh (FILES): Removed the memory
           tracking on the client side since its of no use. Added code to
