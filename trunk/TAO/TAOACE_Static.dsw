@@ -96,6 +96,24 @@ Package=<4>
 
 ###############################################################################
 
+Project: "CosLoadBalancing_Static"=.\orbsvcs\orbsvcs\CosLoadBalancing_Static.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name Messaging_Static
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name PortableGroup_Static
+    End Project Dependency
+}}}
+
+###############################################################################
+
 Project: "CosNaming_Static"=.\orbsvcs\orbsvcs\CosNaming_Static.dsp - Package Owner=<4>
 
 Package=<5>
@@ -204,7 +222,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Domain_Static"=.\tao\Domain\TAO_Domain_Static.dsp - Package Owner=<4>
+Project: "Domain_static"=.\tao\Domain\TAO_Domain_Static.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -321,6 +339,36 @@ Package=<4>
 
 ###############################################################################
 
+Project: "LoadManager_Static"=.\orbsvcs\LoadBalancer\LoadManager_Static.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name CosLoadBalancing_Static
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "LoadMonitor_Static"=.\orbsvcs\LoadBalancer\LoadMonitor_Static.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name CosLoadBalancing_Static
+    End Project Dependency
+}}}
+
+###############################################################################
+
 Project: "Messaging_Static"=.\tao\Messaging\TAO_Messaging_Static.dsp - Package Owner=<4>
 
 Package=<5>
@@ -364,6 +412,21 @@ Package=<4>
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name IORTable_Static
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "PortableGroup_Static"=.\orbsvcs\orbsvcs\PortableGroup_Static.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name CosNaming_Static
     End Project Dependency
 }}}
 
