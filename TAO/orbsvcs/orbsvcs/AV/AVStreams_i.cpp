@@ -1805,7 +1805,7 @@ TAO_StreamEndPoint::connect (AVStreams::StreamEndPoint_ptr responder,
 
 
       if (result < 0)
-        ACE_ERROR_RETURN ((LM_ERROR, "TAO_AV_Core::init_forward_flows failed\n"), 0);
+        ACE_ERROR_RETURN ((LM_ERROR, "%N:%l TAO_AV_Core::init_forward_flows failed\n"), 0);
 
 
       AVStreams::StreamEndPoint_var streamendpoint = this->_this (ACE_TRY_ENV);
@@ -1819,7 +1819,7 @@ TAO_StreamEndPoint::connect (AVStreams::StreamEndPoint_ptr responder,
       ACE_TRY_CHECK;
       
       ACE_DEBUG ((LM_DEBUG,
-		  "The return value is %d\n",
+		  "%N:%l The return value is %d\n",
 		  retv));
 
       if (retv == 0)
@@ -2124,8 +2124,16 @@ TAO_StreamEndPoint::request_connection (AVStreams::StreamEndPoint_ptr /*initiato
           ACE_NEW_RETURN (entry,
                           TAO_Forward_FlowSpec_Entry,
                           0);
+
+	  if(TAO_debug_level > 0);
+	     ACE_DEBUG(( LM_DEBUG, "%N:%l Parsing flow spec: %s\n", flow_spec[i].in() ));
+
           if (entry->parse (flow_spec[i]) == -1)
+	  {
+            if(TAO_debug_level > 0); 
+              ACE_DEBUG((LM_DEBUG, "%N:%l Error parsing flow_spec: %s\n", flow_spec[i].in() ));
             return 0;
+	  }
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG, 
 			"TAO_StreamEndPoint::request_connection Flow Spec %s", 

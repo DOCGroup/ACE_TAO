@@ -17,6 +17,7 @@ int
 TAO_AV_UDP_QoS_Flow_Handler::open (ACE_Addr &address)
 {
   //    return this->qos_sock_dgram_.open (address);
+  ACE_UNUSED_ARG( address );
   return 0;
 }
 
