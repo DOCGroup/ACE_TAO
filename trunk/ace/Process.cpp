@@ -275,10 +275,19 @@ ACE_Process::spawn (ACE_Process_Options &options)
 	  result = ACE_OS::execvp (options.command_line_argv ()[0],
 				   options.command_line_argv ());
 	else
-          // command-line args and environment variables
-	  result = ACE_OS::execve (options.command_line_argv ()[0],
-				   options.command_line_argv (),
-				   options.env_argv ());
+          {
+#if defined( ghs )
+	    // GreenHills 1.8.8 (for VxWorks 5.3.x) can't compile
+	    // this code.  Processes aren't supported on VxWorks
+	    // anyways.
+	    ACE_NOTSUP_RETURN (-1);
+#else
+	    // command-line args and environment variables
+	    result = ACE_OS::execve (options.command_line_argv ()[0],
+				     options.command_line_argv (),
+				     options.env_argv ());
+#endif /* ghs */
+          }
 
 	if (result == -1)
 	  // If the execv fails, this child needs to exit.
