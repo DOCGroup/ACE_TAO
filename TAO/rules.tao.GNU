@@ -57,31 +57,31 @@ else  # minimum_corba
   override minimum_corba = 0
 endif # minimum_corba
 
-ifeq ($(ami),1)
+ifeq ($(ami),0)
+  CPPFLAGS += -DTAO_HAS_AMI=0
+else
+  override ami = 1
+  # CPPFLAGS += -DTAO_HAS_AMI=1
   ifndef ami_callback
     ami_callback = 1
   endif # ! ami_callback
   ifndef ami_poller
     ami_poller = 1
   endif # ! ami_poller
-  CPPFLAGS += -DTAO_HAS_AMI=1
-else  # ami
-  override ami = 0
-  # CPPFLAGS += -DTAO_HAS_AMI=0
 endif # ami
 
-ifeq ($(ami_poller),1)
-  CPPFLAGS += -DTAO_HAS_AMI_POLLER=1
+ifeq ($(ami_poller),0)
+  CPPFLAGS += -DTAO_HAS_AMI_POLLER=0
 else  # ami_poller
-  override ami_poller = 0
-  # CPPFLAGS += -DTAO_HAS_AMI_POLLER=0
+  override ami_poller = 1
+  # CPPFLAGS += -DTAO_HAS_AMI_POLLER=1
 endif # ami_poller
 
-ifeq ($(ami_callback),1)
-  CPPFLAGS += -DTAO_HAS_AMI_CALLBACK=1
+ifeq ($(ami_callback),0)
+  CPPFLAGS += -DTAO_HAS_AMI_CALLBACK=0
 else  # ami_callback
-  override ami_callback = 0
-  # CPPFLAGS += -DTAO_HAS_AMI_CALLBACK=0
+  override ami_callback = 1
+  # CPPFLAGS += -DTAO_HAS_AMI_CALLBACK=1
 endif # ami_callback
 
 ifeq ($(rt_corba),0)
