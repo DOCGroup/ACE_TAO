@@ -23,7 +23,6 @@ module CORBA
     SYSTEM_EXCEPTION
   };
 
-  typedef sequence<Request_ptr> RequestSeq;
 };
 
 #pragma prefix ""
