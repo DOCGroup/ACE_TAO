@@ -94,7 +94,7 @@ int main (int argc, char* argv[])
       try
       {
         file_path = fs::path (*i, fs::native);
-        ifs.open (file_path);
+        ifs.open (file_path, std::ios_base::in);
       }
       catch (fs::filesystem_error const&)
       {
@@ -113,7 +113,9 @@ int main (int argc, char* argv[])
     //   get after eof.
     ifs.exceptions (ios_base::iostate (0));
 
-    std::istream& is = ifs.is_open () ? ifs : std::cin;
+    std::istream& is = ifs.is_open () 
+    ? static_cast<std::istream&> (ifs) 
+    : static_cast<std::istream&> (std::cin);
 
     InputStreamAdapter isa (is);
     Preprocessor pp (isa);

@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="7.10"
 	Name="CIDLC"
-	ProjectGUID="{2AA9F186-AEB2-4B78-9783-322182479BBB}"
+	ProjectGUID="{8F2A74C0-C995-4BE2-8FD7-538F64BF98FD}"
 	Keyword="Win32Proj">
 	<Platforms>
 		<Platform
@@ -13,13 +13,14 @@
 		<Configuration
 			Name="Debug|Win32"
 			OutputDirectory="$(ProjectDir)"
-			IntermediateDirectory="Debug"
+			IntermediateDirectory="$(ProjectDir)/Debug"
 			ConfigurationType="1"
 			CharacterSet="2">
 			<Tool
 				Name="VCCLCompilerTool"
+				AdditionalOptions="/wd4290 /wd4800 /wd4250 /wd4355"
 				Optimization="0"
-				AdditionalIncludeDirectories="../CCF;../CCF/External/Utility"
+				AdditionalIncludeDirectories="../CCF"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
 				MinimalRebuild="TRUE"
 				BasicRuntimeChecks="3"
@@ -34,10 +35,10 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="IDL2.lib IDL3.lib CIDL.lib CodeGenerationKit.lib libboost_regex_debug.lib libboost_filesystem_debug.lib"
-				OutputFile="$(CIAO_ROOT)\bin\cidlc.exe"
+				AdditionalDependencies="CompilerElements.lib CodeGenerationKit.lib IDL2.lib IDL3.lib CIDL.lib libboost_filesystem_debug.lib libboost_regex_debug.lib"
+				OutputFile="$(OutDir)/cidlc.exe"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="../CCF/CCF/IDL2;../CCF/CCF/IDL3;../CCF/CCF/CIDL;../CCF/CCF/CodeGenerationKit"
+				AdditionalLibraryDirectories="../CCF/CCF/CompilerElements;../CCF/CCF/CodeGenerationKit;../CCF/CCF/IDL2;../CCF/CCF/IDL3;../CCF/CCF/CIDL"
 				GenerateDebugInformation="TRUE"
 				ProgramDatabaseFile="$(OutDir)/CIDLC.pdb"
 				SubSystem="1"
@@ -65,14 +66,18 @@
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="Release"
-			IntermediateDirectory="Release"
+			OutputDirectory="$(ProjectDir)"
+			IntermediateDirectory="$(ProjectDir)/Release"
 			ConfigurationType="1"
 			CharacterSet="2">
 			<Tool
 				Name="VCCLCompilerTool"
+				AdditionalOptions="/wd4290 /wd4800 /wd4250 /wd4355"
+				AdditionalIncludeDirectories="../CCF"
 				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
 				RuntimeLibrary="4"
+				ForceConformanceInForLoopScope="TRUE"
+				RuntimeTypeInfo="TRUE"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				Detect64BitPortabilityProblems="TRUE"
@@ -81,8 +86,10 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="CompilerElements.lib CodeGenerationKit.lib IDL2.lib IDL3.lib CIDL.lib"
 				OutputFile="$(OutDir)/CIDLC.exe"
 				LinkIncremental="1"
+				AdditionalLibraryDirectories="../CCF/CCF/CompilerElements;../CCF/CCF/CodeGenerationKit;../CCF/CCF/IDL2;../CCF/CCF/IDL3;../CCF/CCF/CIDL"
 				GenerateDebugInformation="TRUE"
 				SubSystem="1"
 				OptimizeReferences="2"
@@ -138,6 +145,9 @@
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
 			<File
+				RelativePath=".\Collectors.hpp">
+			</File>
+			<File
 				RelativePath=".\ExecutorMappingGenerator.hpp">
 			</File>
 			<File
@@ -152,11 +162,6 @@
 			<File
 				RelativePath=".\ServantSourceGenerator.hpp">
 			</File>
-		</Filter>
-		<Filter
-			Name="Resource Files"
-			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx"
-			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}">
 		</Filter>
 	</Files>
 	<Globals>

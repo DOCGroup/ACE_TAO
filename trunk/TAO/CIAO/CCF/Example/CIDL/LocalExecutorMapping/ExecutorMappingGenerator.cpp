@@ -920,7 +920,7 @@ generate (CommandLine const& cl,
 
     fs::path lem_file_path (lem_file_name);
 
-    ofs.open (lem_file_path);
+    ofs.open (lem_file_path, std::ios_base::out);
 
     if (!ofs.is_open ())
     {
@@ -930,7 +930,9 @@ generate (CommandLine const& cl,
     }
   }
 
-  std::ostream& os = ofs.is_open () ? ofs : std::cout;
+  std::ostream& os = ofs.is_open () 
+    ? static_cast<std::ostream&> (ofs) 
+    : static_cast<std::ostream&> (std::cout);
 
   // Set auto-indentation for os
   Indentation::Implanter<Indentation::IDL> guard (os);
@@ -939,8 +941,8 @@ generate (CommandLine const& cl,
 
   if (cl.get_value ("lem-force-all", false))
   {
-    InterfaceCollector interface (declarations);
-    Traversal::ProvidesDecl provides (&interface);
+    InterfaceCollector iface (declarations);
+    Traversal::ProvidesDecl provides (&iface);
 
     ComponentCollector component (declarations);
     component.add_scope_delegate (&provides);
@@ -952,7 +954,7 @@ generate (CommandLine const& cl,
     // delegate to InterfaceDecl.
     //
     Traversal::UnconstrainedInterfaceDef interface_def;
-    interface_def.add_delegate (&interface);
+    interface_def.add_delegate (&iface);
 
     Traversal::Module module;
     module.add_scope_delegate (&home);
@@ -974,8 +976,8 @@ generate (CommandLine const& cl,
   }
   else
   {
-    InterfaceCollector interface (declarations);
-    Traversal::ProvidesDecl provides (&interface);
+    InterfaceCollector iface (declarations);
+    Traversal::ProvidesDecl provides (&iface);
 
     ComponentCollector component (declarations);
     component.add_scope_delegate (&provides);
@@ -1025,12 +1027,12 @@ generate (CommandLine const& cl,
     home.add_delegate (&home_explicit);
     home.add_delegate (&home_main);
 
-    InterfaceEmitter interface (os, declarations);
+    InterfaceEmitter iface (os, declarations);
     CompositionEmitter composition (os, declarations);
 
     ModuleEmitter module (os, declarations);
 
-    module.add_scope_delegate (&interface);
+    module.add_scope_delegate (&iface);
     module.add_scope_delegate (&component);
     module.add_scope_delegate (&home);
     module.add_scope_delegate (&composition);
@@ -1038,7 +1040,7 @@ generate (CommandLine const& cl,
 
     Traversal::FileScope file_scope;
     file_scope.add_scope_delegate (&module);
-    file_scope.add_scope_delegate (&interface);
+    file_scope.add_scope_delegate (&iface);
     file_scope.add_scope_delegate (&component);
     file_scope.add_scope_delegate (&home);
     file_scope.add_scope_delegate (&composition);
