@@ -109,6 +109,7 @@
 
 # define ACE_LACKS_MODE_MASKS
 # define ACE_LACKS_STRRECVFD
+# define ACE_HAS_LLSEEK
 
 // Compiler/platform has correctly prototyped header files.
 # define ACE_HAS_CPLUSPLUS_HEADERS
