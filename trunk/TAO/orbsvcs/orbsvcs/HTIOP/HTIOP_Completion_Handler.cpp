@@ -41,12 +41,10 @@ TAO::HTIOP::Completion_Handler::Completion_Handler (ACE_Thread_Manager *t)
 }
 
 TAO::HTIOP::Completion_Handler::Completion_Handler (TAO_ORB_Core *orb_core,
-                                                    CORBA::Boolean ,
-                                                    void *arg)
+                                                    CORBA::Boolean )
   :  TAO::HTIOP::COMPLETION_BASE(orb_core->thr_mgr(),0,0),
      orb_core_ (orb_core),
      channel_(0),
-     arg_ (arg),
      concurrency_strategy_ (0)
 {
 }
@@ -161,7 +159,7 @@ TAO::HTIOP::Completion_Handler::make_svc_handler (TAO::HTIOP::Connection_Handler
       this->orb_core_->lane_resources ().transport_cache ().purge ();
       ACE_NEW_RETURN (sh,
                       TAO::HTIOP::Connection_Handler (this->orb_core_,
-                                                    this->arg_),
+                                                      0),
                       -1);
     }
 

@@ -58,8 +58,7 @@ namespace TAO
       /// Constructor. <arg> parameter is used by the Acceptor to pass the
       /// protocol configuration properties for this connection.
       Completion_Handler (TAO_ORB_Core *orb_core,
-                          CORBA::Boolean = 0 ,
-                          void *arg = 0);
+                          CORBA::Boolean = 0 );
 
       /// Destructor.
       ~Completion_Handler (void);
@@ -86,7 +85,6 @@ namespace TAO
 
       TAO_ORB_Core *orb_core_;
       ACE::HTBP::Channel *channel_;
-      void *arg_;
 
       CONCURRENCY_STRATEGY2 *concurrency_strategy_;
     };
