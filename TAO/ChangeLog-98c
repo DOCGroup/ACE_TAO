@@ -1,3 +1,12 @@
+Tue Aug  4 18:10:16 1998  Jeff Parsons <jp4@cs.wustl.edu>
+
+	* Param_Test/ub_short_seq.{h,cpp}:
+	  Param_Test/ub_long_seq.{h.cpp}:
+	  Param_Test/ub_str_seq.{h,cpp}:
+	  Param_Test/ub_struct_seq.{h,cpp}:
+	  Added non-_var members for DII OUT args and
+	  return values. Tests now work for DII and SII.
+
 Tue Aug  4 17:32:30 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 
 	* orbsvcs/tests/Logger/Logging_Test_i.cpp: 
