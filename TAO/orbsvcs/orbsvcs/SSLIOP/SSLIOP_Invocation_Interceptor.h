@@ -61,6 +61,9 @@ public:
   virtual char * name (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  virtual void destroy (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
   virtual void receive_request_service_contexts (
       PortableInterceptor::ServerRequestInfo_ptr ri
       TAO_ENV_ARG_DECL_WITH_DEFAULTS)
