@@ -10,14 +10,14 @@ u_long
 IorHandler::getOctet8Field (char *readPtr, int *hexCharsRead)
 {
   char octet8Holder[8];
- 
+
   for (int i = 0; i < 8; i++)
     octet8Holder[i] = readPtr[i];
 
   hexCharsRead[0] = 8;
 
-  u_long value = 
-    16 * ACE::hex2byte (octet8Holder[6]) 
+  u_long value =
+    16 * ACE::hex2byte (octet8Holder[6])
     + ACE::hex2byte (octet8Holder[7]);
 
   return value;
@@ -34,9 +34,9 @@ IorHandler::getOctet4Field (char *readPtr, int *hexCharsRead)
   hexCharsRead[0] = 4;
 
   u_long value =
-    16 * 16 * 16 * ACE::hex2byte (octet4Holder[0]) 
-    + 16 * 16 * ACE::hex2byte (octet4Holder[1]) 
-    + 16 * ACE::hex2byte (octet4Holder[2]) 
+    16 * 16 * 16 * ACE::hex2byte (octet4Holder[0])
+    + 16 * 16 * ACE::hex2byte (octet4Holder[1])
+    + 16 * ACE::hex2byte (octet4Holder[2])
     + ACE::hex2byte (octet4Holder[3]);
 
   return value;
@@ -52,8 +52,8 @@ IorHandler::getOctet2Field (char *readPtr, int *hexCharsRead)
 
   hexCharsRead[0] = 2;
 
-  u_long value = 
-    16 * ACE::hex2byte (octet2Holder[0]) 
+  u_long value =
+    16 * ACE::hex2byte (octet2Holder[0])
     + ACE::hex2byte (octet2Holder[1]);
 
   return value;
@@ -76,9 +76,9 @@ IorHandler::skipNullOctets (char *readPtr, int *hexCharsRead)
       nullOctet[0] = readPtr[offset];
       nullOctet[1] = readPtr[offset + 1];
       if (nullOctet[0] == '0' && nullOctet[1] == '0')
-	offset += 2;  
+        offset += 2;
       else
-	break;
+        break;
     }
 
   hexCharsRead[0] = offset;
@@ -89,7 +89,7 @@ IorHandler::getString (char *readPtr, int givenLen)
 {
   char parsedStr[MAX_IOR_FIELD_LEN];
   int j = 0;
- 
+
   // i indexes hexChars while j indexes octet pairs
 
   for (int i = 0;
@@ -100,8 +100,8 @@ IorHandler::getString (char *readPtr, int givenLen)
       octetPair[0] = readPtr[i];
       octetPair[1] = readPtr[i + 1];
 
-      int intEquiv = 
-        16 * ACE::hex2byte (octetPair[0]) 
+      int intEquiv =
+        16 * ACE::hex2byte (octetPair[0])
         + ACE::hex2byte (octetPair[1]);
 
       char parsedOctetPair[2];
@@ -110,7 +110,7 @@ IorHandler::getString (char *readPtr, int givenLen)
                intEquiv);
 
       parsedStr[j] = parsedOctetPair[0];
-      j++;      
+      j++;
     }
 
   return parsedStr;
@@ -152,9 +152,8 @@ void
 IorHandler::interpretIor (char *thisIor, struct IOR *thisIorInfo)
 {
   int numCharsToSkip;
-  char nullOctet[2];
 
-  // Skip the prefix "IOR:" 
+  // Skip the prefix "IOR:"
   int numHexCharsRead = 4;
 
   skipNullOctets ((char *) (thisIor + numHexCharsRead), &numCharsToSkip);
@@ -176,7 +175,7 @@ IorHandler::interpretIor (char *thisIor, struct IOR *thisIorInfo)
   thisIorInfo->typeIdLen = ulongValue;
 
   // Read the type_id and store it
-  ACE_OS::strncpy (thisIorInfo->typeId, 
+  ACE_OS::strncpy (thisIorInfo->typeId,
                    getString ((char *) (thisIor + numHexCharsRead),
                               2 * thisIorInfo->typeIdLen),
                    thisIorInfo->typeIdLen);
@@ -207,7 +206,7 @@ IorHandler::interpretIor (char *thisIor, struct IOR *thisIorInfo)
                   numHexCharsRead));
       ACE_OS::exit (1);
     }
-  numHexCharsRead += numCharsToSkip;  
+  numHexCharsRead += numCharsToSkip;
 
   ulongValue = getOctet8Field ((char *) (thisIor + numHexCharsRead),
                                &numCharsToSkip);
@@ -221,12 +220,12 @@ IorHandler::interpretIor (char *thisIor, struct IOR *thisIorInfo)
                   numHexCharsRead));
       ACE_OS::exit (1);
     }
-  numHexCharsRead += numCharsToSkip;  
+  numHexCharsRead += numCharsToSkip;
 
   skipNullOctets ((char *) (thisIor + numHexCharsRead),
                   &numCharsToSkip);
   numHexCharsRead += numCharsToSkip;
- 
+
   // Since the object_key and the hostname are part of the ProfileBody
   // field of the IOR, and this is the part that needs to be changed,
   // the IOR should be cut here typically if we want to fake it.
@@ -244,7 +243,7 @@ IorHandler::interpretIor (char *thisIor, struct IOR *thisIorInfo)
       ACE_OS::exit (1);
     }
 
-  numHexCharsRead += numCharsToSkip;  
+  numHexCharsRead += numCharsToSkip;
   thisIorInfo->profileBodyLen = ulongValue;
 
   ACE_DEBUG ((LM_DEBUG,
@@ -261,7 +260,7 @@ IorHandler::interpretIor (char *thisIor, struct IOR *thisIorInfo)
                   numHexCharsRead));
       ACE_OS::exit (1);
     }
-  numHexCharsRead += numCharsToSkip;    
+  numHexCharsRead += numCharsToSkip;
 
   skipNullOctets ((char *) (thisIor + numHexCharsRead), &numCharsToSkip);
   numHexCharsRead += numCharsToSkip;
@@ -277,15 +276,15 @@ IorHandler::interpretIor (char *thisIor, struct IOR *thisIorInfo)
                   numHexCharsRead));
       ACE_OS::exit (1);
     }
-  numHexCharsRead += numCharsToSkip;  
-  thisIorInfo->hostLen = ulongValue;  
+  numHexCharsRead += numCharsToSkip;
+  thisIorInfo->hostLen = ulongValue;
 
   // Read the hostname and store it
-  ACE_OS::strncpy (thisIorInfo->HostName, 
+  ACE_OS::strncpy (thisIorInfo->HostName,
                    getString ((char *) (thisIor + numHexCharsRead),
                               2 * thisIorInfo->hostLen),
                    thisIorInfo->hostLen);
-  numHexCharsRead += 2 * thisIorInfo->hostLen;  
+  numHexCharsRead += 2 * thisIorInfo->hostLen;
 
   ACE_DEBUG ((LM_DEBUG,
               "    HostName   : %s\n",
@@ -294,7 +293,7 @@ IorHandler::interpretIor (char *thisIor, struct IOR *thisIorInfo)
   skipNullOctets ((char *) (thisIor + numHexCharsRead),
                   &numCharsToSkip);
   numHexCharsRead += numCharsToSkip;
-  
+
   ulongValue = getOctet4Field ((char *) (thisIor + numHexCharsRead),
                                &numCharsToSkip);
 
@@ -306,8 +305,8 @@ IorHandler::interpretIor (char *thisIor, struct IOR *thisIorInfo)
                   numHexCharsRead));
       ACE_OS::exit (1);
     }
-  numHexCharsRead += numCharsToSkip;  
-  thisIorInfo->portNum = ulongValue;  
+  numHexCharsRead += numCharsToSkip;
+  thisIorInfo->portNum = ulongValue;
   ACE_DEBUG ((LM_DEBUG,
               "    Port Number: %d\n",
               thisIorInfo->portNum));
@@ -327,13 +326,13 @@ IorHandler::interpretIor (char *thisIor, struct IOR *thisIorInfo)
                   numHexCharsRead));
       ACE_OS::exit (1);
     }
-  numHexCharsRead += numCharsToSkip;  
-  thisIorInfo->objectKeyLen = ulongValue;  
+  numHexCharsRead += numCharsToSkip;
+  thisIorInfo->objectKeyLen = ulongValue;
 
   // Read the object_key and store it
-  ACE_OS::strncpy (thisIorInfo->objectKey, 
+  ACE_OS::strncpy (thisIorInfo->objectKey,
                    getString ((char *) (thisIor + numHexCharsRead),
-                              2 * thisIorInfo->objectKeyLen), 
+                              2 * thisIorInfo->objectKeyLen),
                    thisIorInfo->objectKeyLen);
   numHexCharsRead += 2 * thisIorInfo->objectKeyLen;
 
@@ -381,7 +380,7 @@ IorHandler::getIdlInterface (char *typeId)
                    readStart + 1,
                    lenInterface);
   idlInterface[lenInterface] = '\0';
-  
+
   return (char *) idlInterface;
 }
 
