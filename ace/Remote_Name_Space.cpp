@@ -5,7 +5,7 @@
 #include "ace/Remote_Name_Space.h"
 
 int
-ACE_Remote_Name_Space::open (const char *servername, int port)
+ACE_Remote_Name_Space::open (const char *servername, u_short port)
 {
   ACE_TRACE ("ACE_Remote_Name_Space::open");
   ACE_INET_Addr servaddr;
@@ -26,7 +26,8 @@ ACE_Remote_Name_Space::ACE_Remote_Name_Space (void)
   ACE_TRACE ("ACE_Remote_Name_Space::ACE_Remote_Name_Space");
 }
 
-ACE_Remote_Name_Space::ACE_Remote_Name_Space (const char *hostname, int port)
+ACE_Remote_Name_Space::ACE_Remote_Name_Space (const char *hostname, 
+					      u_short port)
 {
   ACE_TRACE ("ACE_Remote_Name_Space::ACE_Remote_Name_Space");
   if (this->open (hostname, port) == -1)

@@ -90,7 +90,7 @@ ACE_Service_Manager::init (int argc, char *argv[])
 	 this->debug_ = 1;
 	 break;
        case 'p': 
-	 local_addr.set (ACE_OS::atoi (getopt.optarg));
+	 local_addr.set ((u_short) ACE_OS::atoi (getopt.optarg));
 	 break;
        case 's':
 	 this->signum_ = ACE_OS::atoi (getopt.optarg);

@@ -62,19 +62,19 @@ public:
   ACE_SV_Semaphore_Complex (key_t key,
 			    int create = ACE_SV_Semaphore_Complex::ACE_CREATE,
 			    int initial_value = 1, 
-			    int nsems = 1, 
+			    u_short nsems = 1, 
 			    int perms = ACE_DEFAULT_FILE_PERMS);
   ACE_SV_Semaphore_Complex (const char *name, 
 			    int create = ACE_SV_Semaphore_Complex::ACE_CREATE, 
 			    int initial_value = 1, 
-			    int nsems = 1, 
+			    u_short nsems = 1, 
 			    int perms = ACE_DEFAULT_FILE_PERMS);
   ~ACE_SV_Semaphore_Complex (void);
 
   int open (const char *name, 
 	    int flags = ACE_SV_Semaphore_Simple::ACE_CREATE, 
 	    int initial_value = 1, 
-	    int nsems = 1, 
+	    u_short nsems = 1, 
 	    int perms = ACE_DEFAULT_FILE_PERMS);
   // Open or create an array of SV_Semaphores.  We return 0 if all is
   // OK, else -1.
@@ -82,7 +82,7 @@ public:
   int open (key_t key, 
 	    int flags = ACE_SV_Semaphore_Simple::ACE_CREATE, 
 	    int initial_value = 1, 
-	    int nsems = 1, 
+	    u_short nsems = 1, 
 	    int perms = ACE_DEFAULT_FILE_PERMS);
   // Open or create an array of SV_Semaphores.  We return 0 if all is
   // OK, else -1.
@@ -96,34 +96,34 @@ public:
 
   // = Semaphore acquire and release methods.
 
-  int acquire (int n = 0, int flags = 0) const;
+  int acquire (u_short n = 0, int flags = 0) const;
   // Acquire the semaphore.
 
-  int acquire_read (int n = 0, int flags = 0) const;
+  int acquire_read (u_short n = 0, int flags = 0) const;
   // Acquire a semaphore for reading.
 
-  int acquire_write (int n = 0, int flags = 0) const;
+  int acquire_write (u_short n = 0, int flags = 0) const;
   // Acquire a semaphore for writing
 
-  int tryacquire (int n = 0, int flags = 0) const;
+  int tryacquire (u_short n = 0, int flags = 0) const;
   // Try to acquire the semaphore.
 
-  int tryacquire_read (int n = 0, int flags = 0) const;
+  int tryacquire_read (u_short n = 0, int flags = 0) const;
   // Try to acquire the semaphore for reading.
 
-  int tryacquire_write (int n = 0, int flags = 0) const;
+  int tryacquire_write (u_short n = 0, int flags = 0) const;
   // Try to acquire the semaphore for writing.
 
-  int release (int n = 0, int flags = 0) const;
+  int release (u_short n = 0, int flags = 0) const;
   // Release the semaphore.
 
   // = Semaphore operation methods.
-  int op (int val, int n = 0, int flags = 0) const;
-  int op (sembuf op_vec[], int n) const;
+  int op (int val, u_short n = 0, int flags = 0) const;
+  int op (sembuf op_vec[], u_short n) const;
 
   // = Semaphore control methods.
-  int control (int cmd, semun arg, int n = 0) const;
-  int control (int cmd, int value = 0, int n = 0) const;
+  int control (int cmd, semun arg, u_short n = 0) const;
+  int control (int cmd, int value = 0, u_short n = 0) const;
 
   // = Upgrade access control...
   ACE_USING ACE_SV_Semaphore_Simple::get_id;

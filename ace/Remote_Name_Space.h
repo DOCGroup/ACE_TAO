@@ -45,12 +45,12 @@ public:
   ACE_Remote_Name_Space (void);
   // "Do-nothing" constructor.
 
-  ACE_Remote_Name_Space (const char *hostname, int port);
+  ACE_Remote_Name_Space (const char *hostname, u_short port);
   // Specifies the scope of this namespace, opens and memory-maps the
   // associated file (if accessible) or contacts the dedicated name
   // server process for NET_LOCAL namespace.
 
-  int open (const char *servername, int port);
+  int open (const char *servername, u_short port);
   // Specifies the scope of this namespace, opens and memory-maps the
   // associated file (if accessible) or contacts the dedicated name
   // server process for NET_LOCAL namespace.

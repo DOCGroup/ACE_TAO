@@ -21,6 +21,7 @@ ACE::register_stdin_handler (ACE_Event_Handler *eh,
   // Keep compilers happy.
   flags = flags;
   thr_mgr = thr_mgr;
+  reactor = reactor;
   return reactor->register_handler (ACE_STDIN, eh, ACE_Event_Handler::READ_MASK);
 #endif /* ACE_WIN32 */
 }
@@ -656,8 +657,8 @@ ACE::bind_port (ACE_HANDLE handle)
   sockaddr_in sin;
   // This should be a constant, so I hope they never change the number
   // of bits in a port number!
-  const int MAX_SHORT = 65535; 
-  static int upper_limit = MAX_SHORT;
+  const u_short MAX_SHORT = 65535; 
+  static u_short upper_limit = MAX_SHORT;
   int lower_limit = IPPORT_RESERVED;
   int round_trip = upper_limit;
 
@@ -757,6 +758,7 @@ ACE::set_handle_limit (int new_limit)
 
   return ACE_OS::setrlimit (RLIMIT_NOFILE, &rl);
 #else
+  new_limit = new_limit;
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_WIN32 */
 }

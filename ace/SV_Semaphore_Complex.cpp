@@ -58,7 +58,7 @@ int
 ACE_SV_Semaphore_Complex::open (key_t k, 
 				int create, 
 				int initial_value, 
-				int nsems, 
+				u_short nsems, 
 				int perms)
 {
   ACE_TRACE ("ACE_SV_Semaphore_Complex::open");
@@ -148,7 +148,7 @@ int
 ACE_SV_Semaphore_Complex::open (const char *name, 
 				int flags, 
 				int initial_value, 
-				int nsems, 
+				u_short nsems, 
 				int perms)
 {
   ACE_TRACE ("ACE_SV_Semaphore_Complex::open");
@@ -202,7 +202,7 @@ ACE_SV_Semaphore_Complex::close (void)
 ACE_SV_Semaphore_Complex::ACE_SV_Semaphore_Complex (key_t k, 
 						    int flags, 
 						    int initial_value, 
-						    int nsems, 
+						    u_short nsems, 
 						    int perms)
 {
   ACE_TRACE ("ACE_SV_Semaphore_Complex::ACE_SV_Semaphore_Complex");
@@ -213,7 +213,7 @@ ACE_SV_Semaphore_Complex::ACE_SV_Semaphore_Complex (key_t k,
 ACE_SV_Semaphore_Complex::ACE_SV_Semaphore_Complex (const char *name, 
 						    int flags, 
 						    int initial_value, 
-						    int nsems, 
+						    u_short nsems, 
 						    int perms)
 {
   ACE_TRACE ("ACE_SV_Semaphore_Complex::ACE_SV_Semaphore_Complex");
