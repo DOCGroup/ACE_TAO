@@ -60,8 +60,8 @@ Fri Oct 29 19:53:59 1999  Ossama Othman  <othman@cs.wustl.edu>
 	  ACE_LACKS_PREAD_PROTOTYPE that is used to enable make both
 	  pread() and pwrite() protypes.
 	
-	  Recent glibc libraries have pread and pwrite but only enable the
-	  prototypes if _XOPEN_SOURCE=500 is defined (Single Unix
+	  Recent glibc libraries have pread() and pwrite() but only enable
+	  the prototypes if _XOPEN_SOURCE=500 is defined (Single Unix
 	  specification).  Now define ACE_HAS_P_READ_WRITE and
 	  ACE_LACKS_PREAD_PROTOTYPE on Linux.
 
