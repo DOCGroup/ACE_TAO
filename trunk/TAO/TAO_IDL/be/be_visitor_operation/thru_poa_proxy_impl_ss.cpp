@@ -153,17 +153,49 @@ be_visitor_operation_thru_poa_proxy_impl_ss::visit_operation (
 
   // Check if there is an exception.
   if (!be_global->exception_support ())
-    if (this->gen_check_exception (bt) == -1)
-      {
-        ACE_ERROR_RETURN ((
-            LM_ERROR,
-            "(%N:%l) be_visitor_operation_thru_poa_collocated_ss::"
-            "visit_operation - "
-            "codegen for checking exception failed\n"
-          ),
-          -1
-        );
-      }
+    {
+      if (this->gen_check_exception (bt) == -1)
+        {
+          ACE_ERROR_RETURN ((
+              LM_ERROR,
+              "(%N:%l) be_visitor_operation_thru_poa_collocated_ss::"
+              "visit_operation - "
+              "codegen for checking exception failed\n"
+            ),
+            -1
+          );
+        }
+    }
+
+  *os << be_nl
+      << "servant_upcall.pre_invoke_collocated_request (";
+
+  if (!be_global->exception_support ())
+    {
+      *os << be_idt << be_idt_nl
+          << "ACE_ENV_SINGLE_ARG_PARAMETER" << be_uidt_nl
+          << ");" << be_uidt_nl;
+    }
+  else
+    {
+      *os << ");" << be_nl;
+    }
+
+  // check if there is an exception
+  if (!be_global->exception_support ())
+    {
+      if (this->gen_check_exception (bt) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_operation_thru_"
+                             " poa_collocated_ss::"
+                             "visit_operation - "
+                             "codegen for checking exception failed\n"),
+                            -1);
+        }
+    }
+
+  *os << be_nl;
 
   if (!this->void_return_type (bt))
     {
