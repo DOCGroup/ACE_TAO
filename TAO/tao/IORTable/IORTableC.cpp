@@ -177,6 +177,8 @@ CORBA::Exception *IORTable::NotFound::_alloc (void)
   return retval;
 }
 
+int IORTable::Table::_tao_class_id = 0;
+
 // *************************************************************
 // Operations for class IORTable::Table_var
 // *************************************************************
@@ -266,25 +268,25 @@ IORTable::Table_var::_retn (void)
 }
 
 ::IORTable::Table_ptr
-IORTable::Table_var::duplicate (Table_ptr p)
+IORTable::Table_var::tao_duplicate (Table_ptr p)
 {
   return ::IORTable::Table::_duplicate (p);
 }
 
 void
-IORTable::Table_var::release (Table_ptr p)
+IORTable::Table_var::tao_release (Table_ptr p)
 {
   CORBA::release (p);
 }
 
 ::IORTable::Table_ptr
-IORTable::Table_var::nil (void)
+IORTable::Table_var::tao_nil (void)
 {
   return ::IORTable::Table::_nil ();
 }
 
 ::IORTable::Table_ptr
-IORTable::Table_var::narrow (
+IORTable::Table_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -293,7 +295,7 @@ IORTable::Table_var::narrow (
 }
 
 CORBA::Object *
-IORTable::Table_var::upcast (void *src)
+IORTable::Table_var::tao_upcast (void *src)
 {
   Table **tmp =
     ACE_static_cast (Table **, src);
@@ -393,7 +395,7 @@ IORTable::Table_ptr IORTable::Table::_unchecked_narrow (
                 ACE_reinterpret_cast
                   (
                     ptr_arith_t,
-                    &Table::_narrow
+                    &Table::_tao_class_id
                   )
               )
         );
@@ -412,9 +414,9 @@ void *IORTable::Table::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::IORTable, Table)::_narrow))
+      &ACE_NESTED_CLASS (::IORTable, Table)::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
     
@@ -427,6 +429,8 @@ const char* IORTable::Table::_interface_repository_id (void) const
 {
   return "IDL:IORTable/Table:1.0";
 }
+
+int IORTable::Locator::_tao_class_id = 0;
 
 // *************************************************************
 // Operations for class IORTable::Locator_var
@@ -517,25 +521,25 @@ IORTable::Locator_var::_retn (void)
 }
 
 ::IORTable::Locator_ptr
-IORTable::Locator_var::duplicate (Locator_ptr p)
+IORTable::Locator_var::tao_duplicate (Locator_ptr p)
 {
   return ::IORTable::Locator::_duplicate (p);
 }
 
 void
-IORTable::Locator_var::release (Locator_ptr p)
+IORTable::Locator_var::tao_release (Locator_ptr p)
 {
   CORBA::release (p);
 }
 
 ::IORTable::Locator_ptr
-IORTable::Locator_var::nil (void)
+IORTable::Locator_var::tao_nil (void)
 {
   return ::IORTable::Locator::_nil ();
 }
 
 ::IORTable::Locator_ptr
-IORTable::Locator_var::narrow (
+IORTable::Locator_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -544,7 +548,7 @@ IORTable::Locator_var::narrow (
 }
 
 CORBA::Object *
-IORTable::Locator_var::upcast (void *src)
+IORTable::Locator_var::tao_upcast (void *src)
 {
   Locator **tmp =
     ACE_static_cast (Locator **, src);
@@ -644,7 +648,7 @@ IORTable::Locator_ptr IORTable::Locator::_unchecked_narrow (
                 ACE_reinterpret_cast
                   (
                     ptr_arith_t,
-                    &Locator::_narrow
+                    &Locator::_tao_class_id
                   )
               )
         );
@@ -663,9 +667,9 @@ void *IORTable::Locator::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::IORTable, Locator)::_narrow))
+      &ACE_NESTED_CLASS (::IORTable, Locator)::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
     

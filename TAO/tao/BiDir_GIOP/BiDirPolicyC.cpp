@@ -83,6 +83,9 @@ TAO_NAMESPACE_TYPE (const CORBA::ULong)
 TAO_NAMESPACE_BEGIN (BiDirPolicy)
 TAO_NAMESPACE_DEFINE (const CORBA::ULong, BIDIRECTIONAL_POLICY_TYPE, 37U)
 TAO_NAMESPACE_END
+
+int BiDirPolicy::BidirectionalPolicy::_tao_class_id = 0;
+
 // *************************************************************
 // Operations for class BiDirPolicy::BidirectionalPolicy_var
 // *************************************************************
@@ -172,25 +175,25 @@ BiDirPolicy::BidirectionalPolicy_var::_retn (void)
 }
 
 ::BiDirPolicy::BidirectionalPolicy_ptr
-BiDirPolicy::BidirectionalPolicy_var::duplicate (BidirectionalPolicy_ptr p)
+BiDirPolicy::BidirectionalPolicy_var::tao_duplicate (BidirectionalPolicy_ptr p)
 {
   return ::BiDirPolicy::BidirectionalPolicy::_duplicate (p);
 }
 
 void
-BiDirPolicy::BidirectionalPolicy_var::release (BidirectionalPolicy_ptr p)
+BiDirPolicy::BidirectionalPolicy_var::tao_release (BidirectionalPolicy_ptr p)
 {
   CORBA::release (p);
 }
 
 ::BiDirPolicy::BidirectionalPolicy_ptr
-BiDirPolicy::BidirectionalPolicy_var::nil (void)
+BiDirPolicy::BidirectionalPolicy_var::tao_nil (void)
 {
   return ::BiDirPolicy::BidirectionalPolicy::_nil ();
 }
 
 ::BiDirPolicy::BidirectionalPolicy_ptr
-BiDirPolicy::BidirectionalPolicy_var::narrow (
+BiDirPolicy::BidirectionalPolicy_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -199,7 +202,7 @@ BiDirPolicy::BidirectionalPolicy_var::narrow (
 }
 
 CORBA::Object *
-BiDirPolicy::BidirectionalPolicy_var::upcast (void *src)
+BiDirPolicy::BidirectionalPolicy_var::tao_upcast (void *src)
 {
   BidirectionalPolicy **tmp =
     ACE_static_cast (BidirectionalPolicy **, src);
@@ -299,7 +302,7 @@ BiDirPolicy::BidirectionalPolicy_ptr BiDirPolicy::BidirectionalPolicy::_unchecke
                 ACE_reinterpret_cast
                   (
                     ptr_arith_t,
-                    &BidirectionalPolicy::_narrow
+                    &BidirectionalPolicy::_tao_class_id
                   )
               )
         );
@@ -318,11 +321,11 @@ void *BiDirPolicy::BidirectionalPolicy::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::BiDirPolicy, BidirectionalPolicy)::_narrow))
+      &ACE_NESTED_CLASS (::BiDirPolicy, BidirectionalPolicy)::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &::CORBA::Policy::_narrow))
+      &::CORBA::Policy::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -332,7 +335,7 @@ void *BiDirPolicy::BidirectionalPolicy::_tao_QueryInterface (ptr_arith_t type)
             this
           )
       );
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
     

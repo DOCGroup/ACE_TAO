@@ -173,11 +173,11 @@ TAO_NAMESPACE  TAO
 
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
-    static BufferingConstraintPolicy_ptr duplicate (BufferingConstraintPolicy_ptr);
-    static void release (BufferingConstraintPolicy_ptr);
-    static BufferingConstraintPolicy_ptr nil (void);
-    static BufferingConstraintPolicy_ptr narrow (CORBA::Object *, CORBA::Environment &);
-    static CORBA::Object * upcast (void *);
+    static BufferingConstraintPolicy_ptr tao_duplicate (BufferingConstraintPolicy_ptr);
+    static void tao_release (BufferingConstraintPolicy_ptr);
+    static BufferingConstraintPolicy_ptr tao_nil (void);
+    static BufferingConstraintPolicy_ptr tao_narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * tao_upcast (void *);
 
   private:
     BufferingConstraintPolicy_ptr ptr_;
@@ -224,6 +224,8 @@ class TAO_Export BufferingConstraintPolicy: public virtual CORBA::Policy
     typedef BufferingConstraintPolicy_ptr _ptr_type;
     typedef BufferingConstraintPolicy_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  static int _tao_class_id;
 
     // the static operations
     static BufferingConstraintPolicy_ptr _duplicate (BufferingConstraintPolicy_ptr obj);

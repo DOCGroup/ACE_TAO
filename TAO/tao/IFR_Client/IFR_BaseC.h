@@ -89,14 +89,14 @@ public:
 
   // Hooks used by template sequence and object manager classes
   // for non-defined forward declared interfaces.
-  static CORBA_IRObject_ptr duplicate (CORBA_IRObject_ptr);
-  static void release (CORBA_IRObject_ptr);
-  static CORBA_IRObject_ptr nil (void);
-  static CORBA_IRObject_ptr narrow (
+  static CORBA_IRObject_ptr tao_duplicate (CORBA_IRObject_ptr);
+  static void tao_release (CORBA_IRObject_ptr);
+  static CORBA_IRObject_ptr tao_nil (void);
+  static CORBA_IRObject_ptr tao_narrow (
       CORBA::Object *,
       CORBA::Environment &
     );
-  static CORBA::Object * upcast (void *);
+  static CORBA::Object * tao_upcast (void *);
 
 private:
   CORBA_IRObject_ptr ptr_;
@@ -150,6 +150,8 @@ public:
   typedef CORBA_IRObject_ptr _ptr_type;
   typedef CORBA_IRObject_var _var_type;
 #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  static int _tao_class_id;
 
   // the static operations
   static CORBA_IRObject_ptr _duplicate (CORBA_IRObject_ptr obj);
@@ -392,14 +394,14 @@ public:
 
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
-    static CORBA_Repository_ptr duplicate (CORBA_Repository_ptr);
-    static void release (CORBA_Repository_ptr);
-    static CORBA_Repository_ptr nil (void);
-    static CORBA_Repository_ptr narrow (
+    static CORBA_Repository_ptr tao_duplicate (CORBA_Repository_ptr);
+    static void tao_release (CORBA_Repository_ptr);
+    static CORBA_Repository_ptr tao_nil (void);
+    static CORBA_Repository_ptr tao_narrow (
         CORBA::Object *,
         CORBA::Environment &
       );
-    static CORBA::Object * upcast (void *);
+    static CORBA::Object * tao_upcast (void *);
 
   private:
     CORBA_Repository_ptr ptr_;
@@ -471,14 +473,14 @@ public:
 
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
-    static CORBA_Container_ptr duplicate (CORBA_Container_ptr);
-    static void release (CORBA_Container_ptr);
-    static CORBA_Container_ptr nil (void);
-    static CORBA_Container_ptr narrow (
+    static CORBA_Container_ptr tao_duplicate (CORBA_Container_ptr);
+    static void tao_release (CORBA_Container_ptr);
+    static CORBA_Container_ptr tao_nil (void);
+    static CORBA_Container_ptr tao_narrow (
         CORBA::Object *,
         CORBA::Environment &
       );
-    static CORBA::Object * upcast (void *);
+    static CORBA::Object * tao_upcast (void *);
 
   private:
     CORBA_Container_ptr ptr_;
@@ -550,14 +552,14 @@ public:
 
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
-    static CORBA_Contained_ptr duplicate (CORBA_Contained_ptr);
-    static void release (CORBA_Contained_ptr);
-    static CORBA_Contained_ptr nil (void);
-    static CORBA_Contained_ptr narrow (
+    static CORBA_Contained_ptr tao_duplicate (CORBA_Contained_ptr);
+    static void tao_release (CORBA_Contained_ptr);
+    static CORBA_Contained_ptr tao_nil (void);
+    static CORBA_Contained_ptr tao_narrow (
         CORBA::Object *,
         CORBA::Environment &
       );
-    static CORBA::Object * upcast (void *);
+    static CORBA::Object * tao_upcast (void *);
 
   private:
     CORBA_Contained_ptr ptr_;
@@ -611,6 +613,8 @@ public:
     typedef CORBA_Contained_ptr _ptr_type;
     typedef CORBA_Contained_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  static int _tao_class_id;
 
     // the static operations
     static CORBA_Contained_ptr _duplicate (CORBA_Contained_ptr obj);
@@ -1328,14 +1332,14 @@ public:
 
       // Hooks used by template sequence and object manager classes
       // for non-defined forward declared interfaces.
-      static CORBA_ModuleDef_ptr duplicate (CORBA_ModuleDef_ptr);
-      static void release (CORBA_ModuleDef_ptr);
-      static CORBA_ModuleDef_ptr nil (void);
-      static CORBA_ModuleDef_ptr narrow (
+      static CORBA_ModuleDef_ptr tao_duplicate (CORBA_ModuleDef_ptr);
+      static void tao_release (CORBA_ModuleDef_ptr);
+      static CORBA_ModuleDef_ptr tao_nil (void);
+      static CORBA_ModuleDef_ptr tao_narrow (
           CORBA::Object *,
           CORBA::Environment &
         );
-      static CORBA::Object * upcast (void *);
+      static CORBA::Object * tao_upcast (void *);
 
     private:
       CORBA_ModuleDef_ptr ptr_;
@@ -1407,14 +1411,14 @@ public:
 
       // Hooks used by template sequence and object manager classes
       // for non-defined forward declared interfaces.
-      static CORBA_ConstantDef_ptr duplicate (CORBA_ConstantDef_ptr);
-      static void release (CORBA_ConstantDef_ptr);
-      static CORBA_ConstantDef_ptr nil (void);
-      static CORBA_ConstantDef_ptr narrow (
+      static CORBA_ConstantDef_ptr tao_duplicate (CORBA_ConstantDef_ptr);
+      static void tao_release (CORBA_ConstantDef_ptr);
+      static CORBA_ConstantDef_ptr tao_nil (void);
+      static CORBA_ConstantDef_ptr tao_narrow (
           CORBA::Object *,
           CORBA::Environment &
         );
-      static CORBA::Object * upcast (void *);
+      static CORBA::Object * tao_upcast (void *);
 
     private:
       CORBA_ConstantDef_ptr ptr_;
@@ -1486,14 +1490,14 @@ public:
 
       // Hooks used by template sequence and object manager classes
       // for non-defined forward declared interfaces.
-      static CORBA_IDLType_ptr duplicate (CORBA_IDLType_ptr);
-      static void release (CORBA_IDLType_ptr);
-      static CORBA_IDLType_ptr nil (void);
-      static CORBA_IDLType_ptr narrow (
+      static CORBA_IDLType_ptr tao_duplicate (CORBA_IDLType_ptr);
+      static void tao_release (CORBA_IDLType_ptr);
+      static CORBA_IDLType_ptr tao_nil (void);
+      static CORBA_IDLType_ptr tao_narrow (
           CORBA::Object *,
           CORBA::Environment &
         );
-      static CORBA::Object * upcast (void *);
+      static CORBA::Object * tao_upcast (void *);
 
     private:
       CORBA_IDLType_ptr ptr_;
@@ -1565,14 +1569,14 @@ public:
 
       // Hooks used by template sequence and object manager classes
       // for non-defined forward declared interfaces.
-      static CORBA_StructDef_ptr duplicate (CORBA_StructDef_ptr);
-      static void release (CORBA_StructDef_ptr);
-      static CORBA_StructDef_ptr nil (void);
-      static CORBA_StructDef_ptr narrow (
+      static CORBA_StructDef_ptr tao_duplicate (CORBA_StructDef_ptr);
+      static void tao_release (CORBA_StructDef_ptr);
+      static CORBA_StructDef_ptr tao_nil (void);
+      static CORBA_StructDef_ptr tao_narrow (
           CORBA::Object *,
           CORBA::Environment &
         );
-      static CORBA::Object * upcast (void *);
+      static CORBA::Object * tao_upcast (void *);
 
     private:
       CORBA_StructDef_ptr ptr_;
@@ -1644,14 +1648,14 @@ public:
 
       // Hooks used by template sequence and object manager classes
       // for non-defined forward declared interfaces.
-      static CORBA_UnionDef_ptr duplicate (CORBA_UnionDef_ptr);
-      static void release (CORBA_UnionDef_ptr);
-      static CORBA_UnionDef_ptr nil (void);
-      static CORBA_UnionDef_ptr narrow (
+      static CORBA_UnionDef_ptr tao_duplicate (CORBA_UnionDef_ptr);
+      static void tao_release (CORBA_UnionDef_ptr);
+      static CORBA_UnionDef_ptr tao_nil (void);
+      static CORBA_UnionDef_ptr tao_narrow (
           CORBA::Object *,
           CORBA::Environment &
         );
-      static CORBA::Object * upcast (void *);
+      static CORBA::Object * tao_upcast (void *);
 
     private:
       CORBA_UnionDef_ptr ptr_;
@@ -1723,14 +1727,14 @@ public:
 
       // Hooks used by template sequence and object manager classes
       // for non-defined forward declared interfaces.
-      static CORBA_EnumDef_ptr duplicate (CORBA_EnumDef_ptr);
-      static void release (CORBA_EnumDef_ptr);
-      static CORBA_EnumDef_ptr nil (void);
-      static CORBA_EnumDef_ptr narrow (
+      static CORBA_EnumDef_ptr tao_duplicate (CORBA_EnumDef_ptr);
+      static void tao_release (CORBA_EnumDef_ptr);
+      static CORBA_EnumDef_ptr tao_nil (void);
+      static CORBA_EnumDef_ptr tao_narrow (
           CORBA::Object *,
           CORBA::Environment &
         );
-      static CORBA::Object * upcast (void *);
+      static CORBA::Object * tao_upcast (void *);
 
     private:
       CORBA_EnumDef_ptr ptr_;
@@ -1802,14 +1806,14 @@ public:
 
       // Hooks used by template sequence and object manager classes
       // for non-defined forward declared interfaces.
-      static CORBA_AliasDef_ptr duplicate (CORBA_AliasDef_ptr);
-      static void release (CORBA_AliasDef_ptr);
-      static CORBA_AliasDef_ptr nil (void);
-      static CORBA_AliasDef_ptr narrow (
+      static CORBA_AliasDef_ptr tao_duplicate (CORBA_AliasDef_ptr);
+      static void tao_release (CORBA_AliasDef_ptr);
+      static CORBA_AliasDef_ptr tao_nil (void);
+      static CORBA_AliasDef_ptr tao_narrow (
           CORBA::Object *,
           CORBA::Environment &
         );
-      static CORBA::Object * upcast (void *);
+      static CORBA::Object * tao_upcast (void *);
 
     private:
       CORBA_AliasDef_ptr ptr_;
@@ -1881,14 +1885,14 @@ public:
 
       // Hooks used by template sequence and object manager classes
       // for non-defined forward declared interfaces.
-      static CORBA_InterfaceDef_ptr duplicate (CORBA_InterfaceDef_ptr);
-      static void release (CORBA_InterfaceDef_ptr);
-      static CORBA_InterfaceDef_ptr nil (void);
-      static CORBA_InterfaceDef_ptr narrow (
+      static CORBA_InterfaceDef_ptr tao_duplicate (CORBA_InterfaceDef_ptr);
+      static void tao_release (CORBA_InterfaceDef_ptr);
+      static CORBA_InterfaceDef_ptr tao_nil (void);
+      static CORBA_InterfaceDef_ptr tao_narrow (
           CORBA::Object *,
           CORBA::Environment &
         );
-      static CORBA::Object * upcast (void *);
+      static CORBA::Object * tao_upcast (void *);
 
     private:
       CORBA_InterfaceDef_ptr ptr_;
@@ -2125,14 +2129,14 @@ public:
 
       // Hooks used by template sequence and object manager classes
       // for non-defined forward declared interfaces.
-      static CORBA_ExceptionDef_ptr duplicate (CORBA_ExceptionDef_ptr);
-      static void release (CORBA_ExceptionDef_ptr);
-      static CORBA_ExceptionDef_ptr nil (void);
-      static CORBA_ExceptionDef_ptr narrow (
+      static CORBA_ExceptionDef_ptr tao_duplicate (CORBA_ExceptionDef_ptr);
+      static void tao_release (CORBA_ExceptionDef_ptr);
+      static CORBA_ExceptionDef_ptr tao_nil (void);
+      static CORBA_ExceptionDef_ptr tao_narrow (
           CORBA::Object *,
           CORBA::Environment &
         );
-      static CORBA::Object * upcast (void *);
+      static CORBA::Object * tao_upcast (void *);
 
     private:
       CORBA_ExceptionDef_ptr ptr_;
@@ -2204,14 +2208,14 @@ public:
 
       // Hooks used by template sequence and object manager classes
       // for non-defined forward declared interfaces.
-      static CORBA_NativeDef_ptr duplicate (CORBA_NativeDef_ptr);
-      static void release (CORBA_NativeDef_ptr);
-      static CORBA_NativeDef_ptr nil (void);
-      static CORBA_NativeDef_ptr narrow (
+      static CORBA_NativeDef_ptr tao_duplicate (CORBA_NativeDef_ptr);
+      static void tao_release (CORBA_NativeDef_ptr);
+      static CORBA_NativeDef_ptr tao_nil (void);
+      static CORBA_NativeDef_ptr tao_narrow (
           CORBA::Object *,
           CORBA::Environment &
         );
-      static CORBA::Object * upcast (void *);
+      static CORBA::Object * tao_upcast (void *);
 
     private:
       CORBA_NativeDef_ptr ptr_;
@@ -2283,14 +2287,14 @@ public:
 
       // Hooks used by template sequence and object manager classes
       // for non-defined forward declared interfaces.
-      static CORBA_ValueDef_ptr duplicate (CORBA_ValueDef_ptr);
-      static void release (CORBA_ValueDef_ptr);
-      static CORBA_ValueDef_ptr nil (void);
-      static CORBA_ValueDef_ptr narrow (
+      static CORBA_ValueDef_ptr tao_duplicate (CORBA_ValueDef_ptr);
+      static void tao_release (CORBA_ValueDef_ptr);
+      static CORBA_ValueDef_ptr tao_nil (void);
+      static CORBA_ValueDef_ptr tao_narrow (
           CORBA::Object *,
           CORBA::Environment &
         );
-      static CORBA::Object * upcast (void *);
+      static CORBA::Object * tao_upcast (void *);
 
     private:
       CORBA_ValueDef_ptr ptr_;
@@ -2527,14 +2531,14 @@ public:
 
       // Hooks used by template sequence and object manager classes
       // for non-defined forward declared interfaces.
-      static CORBA_ValueBoxDef_ptr duplicate (CORBA_ValueBoxDef_ptr);
-      static void release (CORBA_ValueBoxDef_ptr);
-      static CORBA_ValueBoxDef_ptr nil (void);
-      static CORBA_ValueBoxDef_ptr narrow (
+      static CORBA_ValueBoxDef_ptr tao_duplicate (CORBA_ValueBoxDef_ptr);
+      static void tao_release (CORBA_ValueBoxDef_ptr);
+      static CORBA_ValueBoxDef_ptr tao_nil (void);
+      static CORBA_ValueBoxDef_ptr tao_narrow (
           CORBA::Object *,
           CORBA::Environment &
         );
-      static CORBA::Object * upcast (void *);
+      static CORBA::Object * tao_upcast (void *);
 
     private:
       CORBA_ValueBoxDef_ptr ptr_;
@@ -2606,14 +2610,14 @@ public:
 
       // Hooks used by template sequence and object manager classes
       // for non-defined forward declared interfaces.
-      static CORBA_AbstractInterfaceDef_ptr duplicate (CORBA_AbstractInterfaceDef_ptr);
-      static void release (CORBA_AbstractInterfaceDef_ptr);
-      static CORBA_AbstractInterfaceDef_ptr nil (void);
-      static CORBA_AbstractInterfaceDef_ptr narrow (
+      static CORBA_AbstractInterfaceDef_ptr tao_duplicate (CORBA_AbstractInterfaceDef_ptr);
+      static void tao_release (CORBA_AbstractInterfaceDef_ptr);
+      static CORBA_AbstractInterfaceDef_ptr tao_nil (void);
+      static CORBA_AbstractInterfaceDef_ptr tao_narrow (
           CORBA::Object *,
           CORBA::Environment &
         );
-      static CORBA::Object * upcast (void *);
+      static CORBA::Object * tao_upcast (void *);
 
     private:
       CORBA_AbstractInterfaceDef_ptr ptr_;
@@ -2850,14 +2854,14 @@ public:
 
       // Hooks used by template sequence and object manager classes
       // for non-defined forward declared interfaces.
-      static CORBA_LocalInterfaceDef_ptr duplicate (CORBA_LocalInterfaceDef_ptr);
-      static void release (CORBA_LocalInterfaceDef_ptr);
-      static CORBA_LocalInterfaceDef_ptr nil (void);
-      static CORBA_LocalInterfaceDef_ptr narrow (
+      static CORBA_LocalInterfaceDef_ptr tao_duplicate (CORBA_LocalInterfaceDef_ptr);
+      static void tao_release (CORBA_LocalInterfaceDef_ptr);
+      static CORBA_LocalInterfaceDef_ptr tao_nil (void);
+      static CORBA_LocalInterfaceDef_ptr tao_narrow (
           CORBA::Object *,
           CORBA::Environment &
         );
-      static CORBA::Object * upcast (void *);
+      static CORBA::Object * tao_upcast (void *);
 
     private:
       CORBA_LocalInterfaceDef_ptr ptr_;
@@ -3865,6 +3869,8 @@ public:
       typedef CORBA_Container_ptr _ptr_type;
       typedef CORBA_Container_var _var_type;
     #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  static int _tao_class_id;
 
       // the static operations
       static CORBA_Container_ptr _duplicate (CORBA_Container_ptr obj);
@@ -4893,6 +4899,8 @@ public:
         typedef CORBA_IDLType_var _var_type;
       #endif /* ! __GNUC__ || g++ >= 2.8 */
 
+  static int _tao_class_id;
+
         // the static operations
         static CORBA_IDLType_ptr _duplicate (CORBA_IDLType_ptr obj);
 
@@ -5119,14 +5127,14 @@ public:
 
           // Hooks used by template sequence and object manager classes
           // for non-defined forward declared interfaces.
-          static CORBA_TypedefDef_ptr duplicate (CORBA_TypedefDef_ptr);
-          static void release (CORBA_TypedefDef_ptr);
-          static CORBA_TypedefDef_ptr nil (void);
-          static CORBA_TypedefDef_ptr narrow (
+          static CORBA_TypedefDef_ptr tao_duplicate (CORBA_TypedefDef_ptr);
+          static void tao_release (CORBA_TypedefDef_ptr);
+          static CORBA_TypedefDef_ptr tao_nil (void);
+          static CORBA_TypedefDef_ptr tao_narrow (
               CORBA::Object *,
               CORBA::Environment &
             );
-          static CORBA::Object * upcast (void *);
+          static CORBA::Object * tao_upcast (void *);
 
         private:
           CORBA_TypedefDef_ptr ptr_;
@@ -5181,6 +5189,8 @@ public:
           typedef CORBA_TypedefDef_ptr _ptr_type;
           typedef CORBA_TypedefDef_var _var_type;
         #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  static int _tao_class_id;
 
           // the static operations
           static CORBA_TypedefDef_ptr _duplicate (CORBA_TypedefDef_ptr obj);

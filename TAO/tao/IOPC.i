@@ -2559,48 +2559,6 @@ IOP::ServiceContextList_out::operator[] (CORBA::ULong index)
 #if !defined (_IOP_CODEC___CI_)
 #define _IOP_CODEC___CI_
 
-ACE_INLINE IOP::Codec_ptr
-tao_IOP_Codec_duplicate (
-    IOP::Codec_ptr p
-  )
-{
-  return IOP::Codec::_duplicate (p);
-}
-
-ACE_INLINE void
-tao_IOP_Codec_release (
-    IOP::Codec_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-ACE_INLINE IOP::Codec_ptr
-tao_IOP_Codec_nil (
-    void
-  )
-{
-  return IOP::Codec::_nil ();
-}
-
-ACE_INLINE IOP::Codec_ptr
-tao_IOP_Codec_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
-  )
-{
-  return IOP::Codec::_narrow (p, ACE_TRY_ENV);
-}
-
-ACE_INLINE CORBA::Object *
-tao_IOP_Codec_upcast (
-    void *src
-  )
-{
-  IOP::Codec **tmp =
-    ACE_static_cast (IOP::Codec **, src);
-  return *tmp;
-}
 
 
 #endif /* end #if !defined */
@@ -2757,50 +2715,6 @@ IOP::Encoding_var::ptr (void) const
 
 #if !defined (_IOP_CODECFACTORY___CI_)
 #define _IOP_CODECFACTORY___CI_
-
-ACE_INLINE IOP::CodecFactory_ptr
-tao_IOP_CodecFactory_duplicate (
-    IOP::CodecFactory_ptr p
-  )
-{
-  return IOP::CodecFactory::_duplicate (p);
-}
-
-ACE_INLINE void
-tao_IOP_CodecFactory_release (
-    IOP::CodecFactory_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-ACE_INLINE IOP::CodecFactory_ptr
-tao_IOP_CodecFactory_nil (
-    void
-  )
-{
-  return IOP::CodecFactory::_nil ();
-}
-
-ACE_INLINE IOP::CodecFactory_ptr
-tao_IOP_CodecFactory_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
-  )
-{
-  return IOP::CodecFactory::_narrow (p, ACE_TRY_ENV);
-}
-
-ACE_INLINE CORBA::Object *
-tao_IOP_CodecFactory_upcast (
-    void *src
-  )
-{
-  IOP::CodecFactory **tmp =
-    ACE_static_cast (IOP::CodecFactory **, src);
-  return *tmp;
-}
-
 
 #endif /* end #if !defined */
 

@@ -362,14 +362,14 @@ TAO_NAMESPACE  RTCORBA
 
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
-    static PriorityModelPolicy_ptr duplicate (PriorityModelPolicy_ptr);
-    static void release (PriorityModelPolicy_ptr);
-    static PriorityModelPolicy_ptr nil (void);
-    static PriorityModelPolicy_ptr narrow (
+    static PriorityModelPolicy_ptr tao_duplicate (PriorityModelPolicy_ptr);
+    static void tao_release (PriorityModelPolicy_ptr);
+    static PriorityModelPolicy_ptr tao_nil (void);
+    static PriorityModelPolicy_ptr tao_narrow (
         CORBA::Object *,
         CORBA::Environment &
       );
-    static CORBA::Object * upcast (void *);
+    static CORBA::Object * tao_upcast (void *);
   
   private:
     PriorityModelPolicy_ptr ptr_;
@@ -417,6 +417,8 @@ TAO_NAMESPACE  RTCORBA
     typedef PriorityModelPolicy_ptr _ptr_type;
     typedef PriorityModelPolicy_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  static int _tao_class_id;
 
     // the static operations
     static PriorityModelPolicy_ptr _duplicate (PriorityModelPolicy_ptr obj);
@@ -509,14 +511,14 @@ TAO_NAMESPACE  RTCORBA
 
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
-    static ThreadpoolPolicy_ptr duplicate (ThreadpoolPolicy_ptr);
-    static void release (ThreadpoolPolicy_ptr);
-    static ThreadpoolPolicy_ptr nil (void);
-    static ThreadpoolPolicy_ptr narrow (
+    static ThreadpoolPolicy_ptr tao_duplicate (ThreadpoolPolicy_ptr);
+    static void tao_release (ThreadpoolPolicy_ptr);
+    static ThreadpoolPolicy_ptr tao_nil (void);
+    static ThreadpoolPolicy_ptr tao_narrow (
         CORBA::Object *,
         CORBA::Environment &
       );
-    static CORBA::Object * upcast (void *);
+    static CORBA::Object * tao_upcast (void *);
   
   private:
     ThreadpoolPolicy_ptr ptr_;
@@ -564,6 +566,8 @@ TAO_NAMESPACE  RTCORBA
     typedef ThreadpoolPolicy_ptr _ptr_type;
     typedef ThreadpoolPolicy_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  static int _tao_class_id;
 
     // the static operations
     static ThreadpoolPolicy_ptr _duplicate (ThreadpoolPolicy_ptr obj);
@@ -646,14 +650,14 @@ TAO_NAMESPACE  RTCORBA
 
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
-    static ProtocolProperties_ptr duplicate (ProtocolProperties_ptr);
-    static void release (ProtocolProperties_ptr);
-    static ProtocolProperties_ptr nil (void);
-    static ProtocolProperties_ptr narrow (
+    static ProtocolProperties_ptr tao_duplicate (ProtocolProperties_ptr);
+    static void tao_release (ProtocolProperties_ptr);
+    static ProtocolProperties_ptr tao_nil (void);
+    static ProtocolProperties_ptr tao_narrow (
         CORBA::Object *,
         CORBA::Environment &
       );
-    static CORBA::Object * upcast (void *);
+    static CORBA::Object * tao_upcast (void *);
   
   private:
     ProtocolProperties_ptr ptr_;
@@ -702,6 +706,8 @@ class TAO_RTCORBA_Export ProtocolProperties
     typedef ProtocolProperties_ptr _ptr_type;
     typedef ProtocolProperties_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  static int _tao_class_id;
 
     // the static operations
     static ProtocolProperties_ptr _duplicate (ProtocolProperties_ptr obj);
@@ -1008,14 +1014,14 @@ class TAO_RTCORBA_Export ProtocolProperties
 
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
-    static ServerProtocolPolicy_ptr duplicate (ServerProtocolPolicy_ptr);
-    static void release (ServerProtocolPolicy_ptr);
-    static ServerProtocolPolicy_ptr nil (void);
-    static ServerProtocolPolicy_ptr narrow (
+    static ServerProtocolPolicy_ptr tao_duplicate (ServerProtocolPolicy_ptr);
+    static void tao_release (ServerProtocolPolicy_ptr);
+    static ServerProtocolPolicy_ptr tao_nil (void);
+    static ServerProtocolPolicy_ptr tao_narrow (
         CORBA::Object *,
         CORBA::Environment &
       );
-    static CORBA::Object * upcast (void *);
+    static CORBA::Object * tao_upcast (void *);
   
   private:
     ServerProtocolPolicy_ptr ptr_;
@@ -1063,6 +1069,8 @@ class TAO_RTCORBA_Export ProtocolProperties
     typedef ServerProtocolPolicy_ptr _ptr_type;
     typedef ServerProtocolPolicy_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  static int _tao_class_id;
 
     // the static operations
     static ServerProtocolPolicy_ptr _duplicate (ServerProtocolPolicy_ptr obj);
@@ -1147,14 +1155,14 @@ class TAO_RTCORBA_Export ProtocolProperties
 
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
-    static ClientProtocolPolicy_ptr duplicate (ClientProtocolPolicy_ptr);
-    static void release (ClientProtocolPolicy_ptr);
-    static ClientProtocolPolicy_ptr nil (void);
-    static ClientProtocolPolicy_ptr narrow (
+    static ClientProtocolPolicy_ptr tao_duplicate (ClientProtocolPolicy_ptr);
+    static void tao_release (ClientProtocolPolicy_ptr);
+    static ClientProtocolPolicy_ptr tao_nil (void);
+    static ClientProtocolPolicy_ptr tao_narrow (
         CORBA::Object *,
         CORBA::Environment &
       );
-    static CORBA::Object * upcast (void *);
+    static CORBA::Object * tao_upcast (void *);
   
   private:
     ClientProtocolPolicy_ptr ptr_;
@@ -1202,6 +1210,8 @@ class TAO_RTCORBA_Export ProtocolProperties
     typedef ClientProtocolPolicy_ptr _ptr_type;
     typedef ClientProtocolPolicy_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  static int _tao_class_id;
 
     // the static operations
     static ClientProtocolPolicy_ptr _duplicate (ClientProtocolPolicy_ptr obj);
@@ -1286,14 +1296,14 @@ class TAO_RTCORBA_Export ProtocolProperties
 
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
-    static PrivateConnectionPolicy_ptr duplicate (PrivateConnectionPolicy_ptr);
-    static void release (PrivateConnectionPolicy_ptr);
-    static PrivateConnectionPolicy_ptr nil (void);
-    static PrivateConnectionPolicy_ptr narrow (
+    static PrivateConnectionPolicy_ptr tao_duplicate (PrivateConnectionPolicy_ptr);
+    static void tao_release (PrivateConnectionPolicy_ptr);
+    static PrivateConnectionPolicy_ptr tao_nil (void);
+    static PrivateConnectionPolicy_ptr tao_narrow (
         CORBA::Object *,
         CORBA::Environment &
       );
-    static CORBA::Object * upcast (void *);
+    static CORBA::Object * tao_upcast (void *);
   
   private:
     PrivateConnectionPolicy_ptr ptr_;
@@ -1341,6 +1351,8 @@ class TAO_RTCORBA_Export ProtocolProperties
     typedef PrivateConnectionPolicy_ptr _ptr_type;
     typedef PrivateConnectionPolicy_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  static int _tao_class_id;
 
     // the static operations
     static PrivateConnectionPolicy_ptr _duplicate (PrivateConnectionPolicy_ptr obj);
@@ -1415,14 +1427,14 @@ class TAO_RTCORBA_Export ProtocolProperties
 
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
-    static TCPProtocolProperties_ptr duplicate (TCPProtocolProperties_ptr);
-    static void release (TCPProtocolProperties_ptr);
-    static TCPProtocolProperties_ptr nil (void);
-    static TCPProtocolProperties_ptr narrow (
+    static TCPProtocolProperties_ptr tao_duplicate (TCPProtocolProperties_ptr);
+    static void tao_release (TCPProtocolProperties_ptr);
+    static TCPProtocolProperties_ptr tao_nil (void);
+    static TCPProtocolProperties_ptr tao_narrow (
         CORBA::Object *,
         CORBA::Environment &
       );
-    static CORBA::Object * upcast (void *);
+    static CORBA::Object * tao_upcast (void *);
   
   private:
     TCPProtocolProperties_ptr ptr_;
@@ -1470,6 +1482,8 @@ class TAO_RTCORBA_Export ProtocolProperties
     typedef TCPProtocolProperties_ptr _ptr_type;
     typedef TCPProtocolProperties_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  static int _tao_class_id;
 
     // the static operations
     static TCPProtocolProperties_ptr _duplicate (TCPProtocolProperties_ptr obj);
@@ -1629,14 +1643,14 @@ class TAO_RTCORBA_Export ProtocolProperties
 
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
-    static GIOPProtocolProperties_ptr duplicate (GIOPProtocolProperties_ptr);
-    static void release (GIOPProtocolProperties_ptr);
-    static GIOPProtocolProperties_ptr nil (void);
-    static GIOPProtocolProperties_ptr narrow (
+    static GIOPProtocolProperties_ptr tao_duplicate (GIOPProtocolProperties_ptr);
+    static void tao_release (GIOPProtocolProperties_ptr);
+    static GIOPProtocolProperties_ptr tao_nil (void);
+    static GIOPProtocolProperties_ptr tao_narrow (
         CORBA::Object *,
         CORBA::Environment &
       );
-    static CORBA::Object * upcast (void *);
+    static CORBA::Object * tao_upcast (void *);
   
   private:
     GIOPProtocolProperties_ptr ptr_;
@@ -1684,6 +1698,8 @@ class TAO_RTCORBA_Export ProtocolProperties
     typedef GIOPProtocolProperties_ptr _ptr_type;
     typedef GIOPProtocolProperties_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  static int _tao_class_id;
 
     // the static operations
     static GIOPProtocolProperties_ptr _duplicate (GIOPProtocolProperties_ptr obj);
@@ -1758,14 +1774,14 @@ class TAO_RTCORBA_Export ProtocolProperties
 
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
-    static UnixDomainProtocolProperties_ptr duplicate (UnixDomainProtocolProperties_ptr);
-    static void release (UnixDomainProtocolProperties_ptr);
-    static UnixDomainProtocolProperties_ptr nil (void);
-    static UnixDomainProtocolProperties_ptr narrow (
+    static UnixDomainProtocolProperties_ptr tao_duplicate (UnixDomainProtocolProperties_ptr);
+    static void tao_release (UnixDomainProtocolProperties_ptr);
+    static UnixDomainProtocolProperties_ptr tao_nil (void);
+    static UnixDomainProtocolProperties_ptr tao_narrow (
         CORBA::Object *,
         CORBA::Environment &
       );
-    static CORBA::Object * upcast (void *);
+    static CORBA::Object * tao_upcast (void *);
   
   private:
     UnixDomainProtocolProperties_ptr ptr_;
@@ -1813,6 +1829,8 @@ class TAO_RTCORBA_Export ProtocolProperties
     typedef UnixDomainProtocolProperties_ptr _ptr_type;
     typedef UnixDomainProtocolProperties_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  static int _tao_class_id;
 
     // the static operations
     static UnixDomainProtocolProperties_ptr _duplicate (UnixDomainProtocolProperties_ptr obj);
@@ -1921,14 +1939,14 @@ class TAO_RTCORBA_Export ProtocolProperties
 
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
-    static SharedMemoryProtocolProperties_ptr duplicate (SharedMemoryProtocolProperties_ptr);
-    static void release (SharedMemoryProtocolProperties_ptr);
-    static SharedMemoryProtocolProperties_ptr nil (void);
-    static SharedMemoryProtocolProperties_ptr narrow (
+    static SharedMemoryProtocolProperties_ptr tao_duplicate (SharedMemoryProtocolProperties_ptr);
+    static void tao_release (SharedMemoryProtocolProperties_ptr);
+    static SharedMemoryProtocolProperties_ptr tao_nil (void);
+    static SharedMemoryProtocolProperties_ptr tao_narrow (
         CORBA::Object *,
         CORBA::Environment &
       );
-    static CORBA::Object * upcast (void *);
+    static CORBA::Object * tao_upcast (void *);
   
   private:
     SharedMemoryProtocolProperties_ptr ptr_;
@@ -1976,6 +1994,8 @@ class TAO_RTCORBA_Export ProtocolProperties
     typedef SharedMemoryProtocolProperties_ptr _ptr_type;
     typedef SharedMemoryProtocolProperties_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  static int _tao_class_id;
 
     // the static operations
     static SharedMemoryProtocolProperties_ptr _duplicate (SharedMemoryProtocolProperties_ptr obj);
@@ -2322,14 +2342,14 @@ class TAO_RTCORBA_Export ProtocolProperties
 
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
-    static PriorityBandedConnectionPolicy_ptr duplicate (PriorityBandedConnectionPolicy_ptr);
-    static void release (PriorityBandedConnectionPolicy_ptr);
-    static PriorityBandedConnectionPolicy_ptr nil (void);
-    static PriorityBandedConnectionPolicy_ptr narrow (
+    static PriorityBandedConnectionPolicy_ptr tao_duplicate (PriorityBandedConnectionPolicy_ptr);
+    static void tao_release (PriorityBandedConnectionPolicy_ptr);
+    static PriorityBandedConnectionPolicy_ptr tao_nil (void);
+    static PriorityBandedConnectionPolicy_ptr tao_narrow (
         CORBA::Object *,
         CORBA::Environment &
       );
-    static CORBA::Object * upcast (void *);
+    static CORBA::Object * tao_upcast (void *);
   
   private:
     PriorityBandedConnectionPolicy_ptr ptr_;
@@ -2377,6 +2397,8 @@ class TAO_RTCORBA_Export ProtocolProperties
     typedef PriorityBandedConnectionPolicy_ptr _ptr_type;
     typedef PriorityBandedConnectionPolicy_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  static int _tao_class_id;
 
     // the static operations
     static PriorityBandedConnectionPolicy_ptr _duplicate (PriorityBandedConnectionPolicy_ptr obj);
@@ -2459,14 +2481,14 @@ class TAO_RTCORBA_Export ProtocolProperties
 
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
-    static Current_ptr duplicate (Current_ptr);
-    static void release (Current_ptr);
-    static Current_ptr nil (void);
-    static Current_ptr narrow (
+    static Current_ptr tao_duplicate (Current_ptr);
+    static void tao_release (Current_ptr);
+    static Current_ptr tao_nil (void);
+    static Current_ptr tao_narrow (
         CORBA::Object *,
         CORBA::Environment &
       );
-    static CORBA::Object * upcast (void *);
+    static CORBA::Object * tao_upcast (void *);
   
   private:
     Current_ptr ptr_;
@@ -2514,6 +2536,8 @@ class TAO_RTCORBA_Export ProtocolProperties
     typedef Current_ptr _ptr_type;
     typedef Current_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  static int _tao_class_id;
 
     // the static operations
     static Current_ptr _duplicate (Current_ptr obj);
@@ -2605,14 +2629,14 @@ class TAO_RTCORBA_Export ProtocolProperties
 
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
-    static Mutex_ptr duplicate (Mutex_ptr);
-    static void release (Mutex_ptr);
-    static Mutex_ptr nil (void);
-    static Mutex_ptr narrow (
+    static Mutex_ptr tao_duplicate (Mutex_ptr);
+    static void tao_release (Mutex_ptr);
+    static Mutex_ptr tao_nil (void);
+    static Mutex_ptr tao_narrow (
         CORBA::Object *,
         CORBA::Environment &
       );
-    static CORBA::Object * upcast (void *);
+    static CORBA::Object * tao_upcast (void *);
   
   private:
     Mutex_ptr ptr_;
@@ -2660,6 +2684,8 @@ class TAO_RTCORBA_Export ProtocolProperties
     typedef Mutex_ptr _ptr_type;
     typedef Mutex_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  static int _tao_class_id;
 
     // the static operations
     static Mutex_ptr _duplicate (Mutex_ptr obj);
@@ -2759,14 +2785,14 @@ class TAO_RTCORBA_Export ProtocolProperties
 
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
-    static RTORB_ptr duplicate (RTORB_ptr);
-    static void release (RTORB_ptr);
-    static RTORB_ptr nil (void);
-    static RTORB_ptr narrow (
+    static RTORB_ptr tao_duplicate (RTORB_ptr);
+    static void tao_release (RTORB_ptr);
+    static RTORB_ptr tao_nil (void);
+    static RTORB_ptr tao_narrow (
         CORBA::Object *,
         CORBA::Environment &
       );
-    static CORBA::Object * upcast (void *);
+    static CORBA::Object * tao_upcast (void *);
   
   private:
     RTORB_ptr ptr_;
@@ -2814,6 +2840,8 @@ class TAO_RTCORBA_Export ProtocolProperties
     typedef RTORB_ptr _ptr_type;
     typedef RTORB_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  static int _tao_class_id;
 
     // the static operations
     static RTORB_ptr _duplicate (RTORB_ptr obj);

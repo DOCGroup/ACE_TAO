@@ -210,15 +210,14 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       *os << " (int collocated)" << be_nl
           << "{" << be_idt_nl
           << "this->" << node->flat_name ()
-          << "_setup_collocation (collocated);" << be_uidt_nl;
+          << "_setup_collocation (collocated);" << be_uidt_nl
+          << be_uidt << "}" << be_nl << be_nl;
     }
   else
     {
-      *os << " ()" << be_nl
-          << "{" << be_idt_nl;
+      *os << " (void)" << be_nl
+          << "{}" << be_idt_nl;
     }
-
-  *os << be_uidt << "}" << be_nl << be_nl;
 
   *os << "// destructor" << be_nl;
   *os << node->name () << "::~" << node->local_name ()

@@ -334,6 +334,8 @@ TAO_NAMESPACE_BEGIN (Messaging)
 TAO_NAMESPACE_DEFINE (const CORBA::ULong, REBIND_POLICY_TYPE, 23U)
 TAO_NAMESPACE_END
 
+int Messaging::RebindPolicy::_tao_class_id = 0;
+
 // *************************************************************
 // Operations for class Messaging::RebindPolicy_var
 // *************************************************************
@@ -423,25 +425,25 @@ Messaging::RebindPolicy_var::_retn (void)
 }
 
 ::Messaging::RebindPolicy_ptr
-Messaging::RebindPolicy_var::duplicate (RebindPolicy_ptr p)
+Messaging::RebindPolicy_var::tao_duplicate (RebindPolicy_ptr p)
 {
   return ::Messaging::RebindPolicy::_duplicate (p);
 }
 
 void
-Messaging::RebindPolicy_var::release (RebindPolicy_ptr p)
+Messaging::RebindPolicy_var::tao_release (RebindPolicy_ptr p)
 {
   CORBA::release (p);
 }
 
 ::Messaging::RebindPolicy_ptr
-Messaging::RebindPolicy_var::nil (void)
+Messaging::RebindPolicy_var::tao_nil (void)
 {
   return ::Messaging::RebindPolicy::_nil ();
 }
 
 ::Messaging::RebindPolicy_ptr
-Messaging::RebindPolicy_var::narrow (
+Messaging::RebindPolicy_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -450,7 +452,7 @@ Messaging::RebindPolicy_var::narrow (
 }
 
 CORBA::Object *
-Messaging::RebindPolicy_var::upcast (void *src)
+Messaging::RebindPolicy_var::tao_upcast (void *src)
 {
   RebindPolicy **tmp =
     ACE_static_cast (RebindPolicy **, src);
@@ -550,7 +552,7 @@ Messaging::RebindPolicy_ptr Messaging::RebindPolicy::_unchecked_narrow (
                 ACE_reinterpret_cast
                   (
                     ptr_arith_t,
-                    &RebindPolicy::_narrow
+                    &RebindPolicy::_tao_class_id
                   )
               )
         );
@@ -569,11 +571,11 @@ void *Messaging::RebindPolicy::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::Messaging, RebindPolicy)::_narrow))
+      &ACE_NESTED_CLASS (::Messaging, RebindPolicy)::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &::CORBA::Policy::_narrow))
+      &::CORBA::Policy::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -583,7 +585,7 @@ void *Messaging::RebindPolicy::_tao_QueryInterface (ptr_arith_t type)
             this
           )
       );
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 
@@ -603,6 +605,8 @@ TAO_NAMESPACE_TYPE (const CORBA::ULong)
 TAO_NAMESPACE_BEGIN (Messaging)
 TAO_NAMESPACE_DEFINE (const CORBA::ULong, SYNC_SCOPE_POLICY_TYPE, 24U)
 TAO_NAMESPACE_END
+
+int Messaging::SyncScopePolicy::_tao_class_id = 0;
 
 // *************************************************************
 // Operations for class Messaging::SyncScopePolicy_var
@@ -695,25 +699,25 @@ Messaging::SyncScopePolicy_var::_retn (void)
 }
 
 ::Messaging::SyncScopePolicy_ptr
-Messaging::SyncScopePolicy_var::duplicate (SyncScopePolicy_ptr p)
+Messaging::SyncScopePolicy_var::tao_duplicate (SyncScopePolicy_ptr p)
 {
   return ::Messaging::SyncScopePolicy::_duplicate (p);
 }
 
 void
-Messaging::SyncScopePolicy_var::release (SyncScopePolicy_ptr p)
+Messaging::SyncScopePolicy_var::tao_release (SyncScopePolicy_ptr p)
 {
   CORBA::release (p);
 }
 
 ::Messaging::SyncScopePolicy_ptr
-Messaging::SyncScopePolicy_var::nil (void)
+Messaging::SyncScopePolicy_var::tao_nil (void)
 {
   return ::Messaging::SyncScopePolicy::_nil ();
 }
 
 ::Messaging::SyncScopePolicy_ptr
-Messaging::SyncScopePolicy_var::narrow (
+Messaging::SyncScopePolicy_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -722,7 +726,7 @@ Messaging::SyncScopePolicy_var::narrow (
 }
 
 CORBA::Object *
-Messaging::SyncScopePolicy_var::upcast (void *src)
+Messaging::SyncScopePolicy_var::tao_upcast (void *src)
 {
   SyncScopePolicy **tmp =
     ACE_static_cast (SyncScopePolicy **, src);
@@ -821,7 +825,7 @@ Messaging::SyncScopePolicy_ptr Messaging::SyncScopePolicy::_unchecked_narrow (
                 ACE_reinterpret_cast
                   (
                     ptr_arith_t,
-                    &SyncScopePolicy::_narrow
+                    &SyncScopePolicy::_tao_class_id
                   )
               )
         );
@@ -840,11 +844,11 @@ void *Messaging::SyncScopePolicy::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::Messaging, SyncScopePolicy)::_narrow))
+      &ACE_NESTED_CLASS (::Messaging, SyncScopePolicy)::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &::CORBA::Policy::_narrow))
+      &::CORBA::Policy::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -854,7 +858,7 @@ void *Messaging::SyncScopePolicy::_tao_QueryInterface (ptr_arith_t type)
             this
           )
       );
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 
@@ -962,6 +966,8 @@ void Messaging::PriorityRange::_tao_any_destructor (void *x)
 }
 
 
+int Messaging::RequestPriorityPolicy::_tao_class_id = 0;
+
 // *************************************************************
 // Operations for class Messaging::RequestPriorityPolicy_var
 // *************************************************************
@@ -1051,25 +1057,25 @@ Messaging::RequestPriorityPolicy_var::_retn (void)
 }
 
 ::Messaging::RequestPriorityPolicy_ptr
-Messaging::RequestPriorityPolicy_var::duplicate (RequestPriorityPolicy_ptr p)
+Messaging::RequestPriorityPolicy_var::tao_duplicate (RequestPriorityPolicy_ptr p)
 {
   return ::Messaging::RequestPriorityPolicy::_duplicate (p);
 }
 
 void
-Messaging::RequestPriorityPolicy_var::release (RequestPriorityPolicy_ptr p)
+Messaging::RequestPriorityPolicy_var::tao_release (RequestPriorityPolicy_ptr p)
 {
   CORBA::release (p);
 }
 
 ::Messaging::RequestPriorityPolicy_ptr
-Messaging::RequestPriorityPolicy_var::nil (void)
+Messaging::RequestPriorityPolicy_var::tao_nil (void)
 {
   return ::Messaging::RequestPriorityPolicy::_nil ();
 }
 
 ::Messaging::RequestPriorityPolicy_ptr
-Messaging::RequestPriorityPolicy_var::narrow (
+Messaging::RequestPriorityPolicy_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -1078,7 +1084,7 @@ Messaging::RequestPriorityPolicy_var::narrow (
 }
 
 CORBA::Object *
-Messaging::RequestPriorityPolicy_var::upcast (void *src)
+Messaging::RequestPriorityPolicy_var::tao_upcast (void *src)
 {
   RequestPriorityPolicy **tmp =
     ACE_static_cast (RequestPriorityPolicy **, src);
@@ -1178,7 +1184,7 @@ Messaging::RequestPriorityPolicy_ptr Messaging::RequestPriorityPolicy::_unchecke
                 ACE_reinterpret_cast
                   (
                     ptr_arith_t,
-                    &RequestPriorityPolicy::_narrow
+                    &RequestPriorityPolicy::_tao_class_id
                   )
               )
         );
@@ -1197,11 +1203,11 @@ void *Messaging::RequestPriorityPolicy::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::Messaging, RequestPriorityPolicy)::_narrow))
+      &ACE_NESTED_CLASS (::Messaging, RequestPriorityPolicy)::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &::CORBA::Policy::_narrow))
+      &::CORBA::Policy::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -1211,7 +1217,7 @@ void *Messaging::RequestPriorityPolicy::_tao_QueryInterface (ptr_arith_t type)
             this
           )
       );
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 
@@ -1229,6 +1235,8 @@ TAO_NAMESPACE_TYPE (const CORBA::ULong)
 TAO_NAMESPACE_BEGIN (Messaging)
 TAO_NAMESPACE_DEFINE (const CORBA::ULong, REPLY_PRIORITY_POLICY_TYPE, 26U)
 TAO_NAMESPACE_END
+
+int Messaging::ReplyPriorityPolicy::_tao_class_id = 0;
 
 // *************************************************************
 // Operations for class Messaging::ReplyPriorityPolicy_var
@@ -1319,25 +1327,25 @@ Messaging::ReplyPriorityPolicy_var::_retn (void)
 }
 
 ::Messaging::ReplyPriorityPolicy_ptr
-Messaging::ReplyPriorityPolicy_var::duplicate (ReplyPriorityPolicy_ptr p)
+Messaging::ReplyPriorityPolicy_var::tao_duplicate (ReplyPriorityPolicy_ptr p)
 {
   return ::Messaging::ReplyPriorityPolicy::_duplicate (p);
 }
 
 void
-Messaging::ReplyPriorityPolicy_var::release (ReplyPriorityPolicy_ptr p)
+Messaging::ReplyPriorityPolicy_var::tao_release (ReplyPriorityPolicy_ptr p)
 {
   CORBA::release (p);
 }
 
 ::Messaging::ReplyPriorityPolicy_ptr
-Messaging::ReplyPriorityPolicy_var::nil (void)
+Messaging::ReplyPriorityPolicy_var::tao_nil (void)
 {
   return ::Messaging::ReplyPriorityPolicy::_nil ();
 }
 
 ::Messaging::ReplyPriorityPolicy_ptr
-Messaging::ReplyPriorityPolicy_var::narrow (
+Messaging::ReplyPriorityPolicy_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -1346,7 +1354,7 @@ Messaging::ReplyPriorityPolicy_var::narrow (
 }
 
 CORBA::Object *
-Messaging::ReplyPriorityPolicy_var::upcast (void *src)
+Messaging::ReplyPriorityPolicy_var::tao_upcast (void *src)
 {
   ReplyPriorityPolicy **tmp =
     ACE_static_cast (ReplyPriorityPolicy **, src);
@@ -1446,7 +1454,7 @@ Messaging::ReplyPriorityPolicy_ptr Messaging::ReplyPriorityPolicy::_unchecked_na
                 ACE_reinterpret_cast
                   (
                     ptr_arith_t,
-                    &ReplyPriorityPolicy::_narrow
+                    &ReplyPriorityPolicy::_tao_class_id
                   )
               )
         );
@@ -1465,11 +1473,11 @@ void *Messaging::ReplyPriorityPolicy::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::Messaging, ReplyPriorityPolicy)::_narrow))
+      &ACE_NESTED_CLASS (::Messaging, ReplyPriorityPolicy)::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &::CORBA::Policy::_narrow))
+      &::CORBA::Policy::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -1479,7 +1487,7 @@ void *Messaging::ReplyPriorityPolicy::_tao_QueryInterface (ptr_arith_t type)
             this
           )
       );
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 
@@ -1501,6 +1509,8 @@ TAO_NAMESPACE_TYPE (const CORBA::ULong)
 TAO_NAMESPACE_BEGIN (Messaging)
 TAO_NAMESPACE_DEFINE (const CORBA::ULong, REQUEST_START_TIME_POLICY_TYPE, 27U)
 TAO_NAMESPACE_END
+
+int Messaging::RequestStartTimePolicy::_tao_class_id = 0;
 
 // *************************************************************
 // Operations for class Messaging::RequestStartTimePolicy_var
@@ -1591,25 +1601,25 @@ Messaging::RequestStartTimePolicy_var::_retn (void)
 }
 
 ::Messaging::RequestStartTimePolicy_ptr
-Messaging::RequestStartTimePolicy_var::duplicate (RequestStartTimePolicy_ptr p)
+Messaging::RequestStartTimePolicy_var::tao_duplicate (RequestStartTimePolicy_ptr p)
 {
   return ::Messaging::RequestStartTimePolicy::_duplicate (p);
 }
 
 void
-Messaging::RequestStartTimePolicy_var::release (RequestStartTimePolicy_ptr p)
+Messaging::RequestStartTimePolicy_var::tao_release (RequestStartTimePolicy_ptr p)
 {
   CORBA::release (p);
 }
 
 ::Messaging::RequestStartTimePolicy_ptr
-Messaging::RequestStartTimePolicy_var::nil (void)
+Messaging::RequestStartTimePolicy_var::tao_nil (void)
 {
   return ::Messaging::RequestStartTimePolicy::_nil ();
 }
 
 ::Messaging::RequestStartTimePolicy_ptr
-Messaging::RequestStartTimePolicy_var::narrow (
+Messaging::RequestStartTimePolicy_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -1618,7 +1628,7 @@ Messaging::RequestStartTimePolicy_var::narrow (
 }
 
 CORBA::Object *
-Messaging::RequestStartTimePolicy_var::upcast (void *src)
+Messaging::RequestStartTimePolicy_var::tao_upcast (void *src)
 {
   RequestStartTimePolicy **tmp =
     ACE_static_cast (RequestStartTimePolicy **, src);
@@ -1718,7 +1728,7 @@ Messaging::RequestStartTimePolicy_ptr Messaging::RequestStartTimePolicy::_unchec
                 ACE_reinterpret_cast
                   (
                     ptr_arith_t,
-                    &RequestStartTimePolicy::_narrow
+                    &RequestStartTimePolicy::_tao_class_id
                   )
               )
         );
@@ -1737,11 +1747,11 @@ void *Messaging::RequestStartTimePolicy::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::Messaging, RequestStartTimePolicy)::_narrow))
+      &ACE_NESTED_CLASS (::Messaging, RequestStartTimePolicy)::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &::CORBA::Policy::_narrow))
+      &::CORBA::Policy::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -1751,7 +1761,7 @@ void *Messaging::RequestStartTimePolicy::_tao_QueryInterface (ptr_arith_t type)
             this
           )
       );
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 
@@ -1773,6 +1783,8 @@ TAO_NAMESPACE_TYPE (const CORBA::ULong)
 TAO_NAMESPACE_BEGIN (Messaging)
 TAO_NAMESPACE_DEFINE (const CORBA::ULong, REQUEST_END_TIME_POLICY_TYPE, 28U)
 TAO_NAMESPACE_END
+
+int Messaging::RequestEndTimePolicy::_tao_class_id = 0;
 
 // *************************************************************
 // Operations for class Messaging::RequestEndTimePolicy_var
@@ -1863,25 +1875,25 @@ Messaging::RequestEndTimePolicy_var::_retn (void)
 }
 
 ::Messaging::RequestEndTimePolicy_ptr
-Messaging::RequestEndTimePolicy_var::duplicate (RequestEndTimePolicy_ptr p)
+Messaging::RequestEndTimePolicy_var::tao_duplicate (RequestEndTimePolicy_ptr p)
 {
   return ::Messaging::RequestEndTimePolicy::_duplicate (p);
 }
 
 void
-Messaging::RequestEndTimePolicy_var::release (RequestEndTimePolicy_ptr p)
+Messaging::RequestEndTimePolicy_var::tao_release (RequestEndTimePolicy_ptr p)
 {
   CORBA::release (p);
 }
 
 ::Messaging::RequestEndTimePolicy_ptr
-Messaging::RequestEndTimePolicy_var::nil (void)
+Messaging::RequestEndTimePolicy_var::tao_nil (void)
 {
   return ::Messaging::RequestEndTimePolicy::_nil ();
 }
 
 ::Messaging::RequestEndTimePolicy_ptr
-Messaging::RequestEndTimePolicy_var::narrow (
+Messaging::RequestEndTimePolicy_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -1890,7 +1902,7 @@ Messaging::RequestEndTimePolicy_var::narrow (
 }
 
 CORBA::Object *
-Messaging::RequestEndTimePolicy_var::upcast (void *src)
+Messaging::RequestEndTimePolicy_var::tao_upcast (void *src)
 {
   RequestEndTimePolicy **tmp =
     ACE_static_cast (RequestEndTimePolicy **, src);
@@ -1990,7 +2002,7 @@ Messaging::RequestEndTimePolicy_ptr Messaging::RequestEndTimePolicy::_unchecked_
                 ACE_reinterpret_cast
                   (
                     ptr_arith_t,
-                    &RequestEndTimePolicy::_narrow
+                    &RequestEndTimePolicy::_tao_class_id
                   )
               )
         );
@@ -2009,11 +2021,11 @@ void *Messaging::RequestEndTimePolicy::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::Messaging, RequestEndTimePolicy)::_narrow))
+      &ACE_NESTED_CLASS (::Messaging, RequestEndTimePolicy)::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &::CORBA::Policy::_narrow))
+      &::CORBA::Policy::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -2023,7 +2035,7 @@ void *Messaging::RequestEndTimePolicy::_tao_QueryInterface (ptr_arith_t type)
             this
           )
       );
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 
@@ -2045,6 +2057,8 @@ TAO_NAMESPACE_TYPE (const CORBA::ULong)
 TAO_NAMESPACE_BEGIN (Messaging)
 TAO_NAMESPACE_DEFINE (const CORBA::ULong, REPLY_START_TIME_POLICY_TYPE, 29U)
 TAO_NAMESPACE_END
+
+int Messaging::ReplyStartTimePolicy::_tao_class_id = 0;
 
 // *************************************************************
 // Operations for class Messaging::ReplyStartTimePolicy_var
@@ -2135,25 +2149,25 @@ Messaging::ReplyStartTimePolicy_var::_retn (void)
 }
 
 ::Messaging::ReplyStartTimePolicy_ptr
-Messaging::ReplyStartTimePolicy_var::duplicate (ReplyStartTimePolicy_ptr p)
+Messaging::ReplyStartTimePolicy_var::tao_duplicate (ReplyStartTimePolicy_ptr p)
 {
   return ::Messaging::ReplyStartTimePolicy::_duplicate (p);
 }
 
 void
-Messaging::ReplyStartTimePolicy_var::release (ReplyStartTimePolicy_ptr p)
+Messaging::ReplyStartTimePolicy_var::tao_release (ReplyStartTimePolicy_ptr p)
 {
   CORBA::release (p);
 }
 
 ::Messaging::ReplyStartTimePolicy_ptr
-Messaging::ReplyStartTimePolicy_var::nil (void)
+Messaging::ReplyStartTimePolicy_var::tao_nil (void)
 {
   return ::Messaging::ReplyStartTimePolicy::_nil ();
 }
 
 ::Messaging::ReplyStartTimePolicy_ptr
-Messaging::ReplyStartTimePolicy_var::narrow (
+Messaging::ReplyStartTimePolicy_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -2162,7 +2176,7 @@ Messaging::ReplyStartTimePolicy_var::narrow (
 }
 
 CORBA::Object *
-Messaging::ReplyStartTimePolicy_var::upcast (void *src)
+Messaging::ReplyStartTimePolicy_var::tao_upcast (void *src)
 {
   ReplyStartTimePolicy **tmp =
     ACE_static_cast (ReplyStartTimePolicy **, src);
@@ -2262,7 +2276,7 @@ Messaging::ReplyStartTimePolicy_ptr Messaging::ReplyStartTimePolicy::_unchecked_
                 ACE_reinterpret_cast
                   (
                     ptr_arith_t,
-                    &ReplyStartTimePolicy::_narrow
+                    &ReplyStartTimePolicy::_tao_class_id
                   )
               )
         );
@@ -2281,11 +2295,11 @@ void *Messaging::ReplyStartTimePolicy::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::Messaging, ReplyStartTimePolicy)::_narrow))
+      &ACE_NESTED_CLASS (::Messaging, ReplyStartTimePolicy)::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &::CORBA::Policy::_narrow))
+      &::CORBA::Policy::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -2295,7 +2309,7 @@ void *Messaging::ReplyStartTimePolicy::_tao_QueryInterface (ptr_arith_t type)
             this
           )
       );
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 
@@ -2317,6 +2331,8 @@ TAO_NAMESPACE_TYPE (const CORBA::ULong)
 TAO_NAMESPACE_BEGIN (Messaging)
 TAO_NAMESPACE_DEFINE (const CORBA::ULong, REPLY_END_TIME_POLICY_TYPE, 30U)
 TAO_NAMESPACE_END
+
+int Messaging::ReplyEndTimePolicy::_tao_class_id = 0;
 
 // *************************************************************
 // Operations for class Messaging::ReplyEndTimePolicy_var
@@ -2407,25 +2423,25 @@ Messaging::ReplyEndTimePolicy_var::_retn (void)
 }
 
 ::Messaging::ReplyEndTimePolicy_ptr
-Messaging::ReplyEndTimePolicy_var::duplicate (ReplyEndTimePolicy_ptr p)
+Messaging::ReplyEndTimePolicy_var::tao_duplicate (ReplyEndTimePolicy_ptr p)
 {
   return ::Messaging::ReplyEndTimePolicy::_duplicate (p);
 }
 
 void
-Messaging::ReplyEndTimePolicy_var::release (ReplyEndTimePolicy_ptr p)
+Messaging::ReplyEndTimePolicy_var::tao_release (ReplyEndTimePolicy_ptr p)
 {
   CORBA::release (p);
 }
 
 ::Messaging::ReplyEndTimePolicy_ptr
-Messaging::ReplyEndTimePolicy_var::nil (void)
+Messaging::ReplyEndTimePolicy_var::tao_nil (void)
 {
   return ::Messaging::ReplyEndTimePolicy::_nil ();
 }
 
 ::Messaging::ReplyEndTimePolicy_ptr
-Messaging::ReplyEndTimePolicy_var::narrow (
+Messaging::ReplyEndTimePolicy_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -2434,7 +2450,7 @@ Messaging::ReplyEndTimePolicy_var::narrow (
 }
 
 CORBA::Object *
-Messaging::ReplyEndTimePolicy_var::upcast (void *src)
+Messaging::ReplyEndTimePolicy_var::tao_upcast (void *src)
 {
   ReplyEndTimePolicy **tmp =
     ACE_static_cast (ReplyEndTimePolicy **, src);
@@ -2534,7 +2550,7 @@ Messaging::ReplyEndTimePolicy_ptr Messaging::ReplyEndTimePolicy::_unchecked_narr
                 ACE_reinterpret_cast
                   (
                     ptr_arith_t,
-                    &ReplyEndTimePolicy::_narrow
+                    &ReplyEndTimePolicy::_tao_class_id
                   )
               )
         );
@@ -2553,11 +2569,11 @@ void *Messaging::ReplyEndTimePolicy::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::Messaging, ReplyEndTimePolicy)::_narrow))
+      &ACE_NESTED_CLASS (::Messaging, ReplyEndTimePolicy)::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &::CORBA::Policy::_narrow))
+      &::CORBA::Policy::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -2567,7 +2583,7 @@ void *Messaging::ReplyEndTimePolicy::_tao_QueryInterface (ptr_arith_t type)
             this
           )
       );
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 
@@ -2589,6 +2605,8 @@ TAO_NAMESPACE_TYPE (const CORBA::ULong)
 TAO_NAMESPACE_BEGIN (Messaging)
 TAO_NAMESPACE_DEFINE (const CORBA::ULong, RELATIVE_REQ_TIMEOUT_POLICY_TYPE, 31U)
 TAO_NAMESPACE_END
+
+int Messaging::RelativeRequestTimeoutPolicy::_tao_class_id = 0;
 
 // *************************************************************
 // Operations for class Messaging::RelativeRequestTimeoutPolicy_var
@@ -2679,25 +2697,25 @@ Messaging::RelativeRequestTimeoutPolicy_var::_retn (void)
 }
 
 ::Messaging::RelativeRequestTimeoutPolicy_ptr
-Messaging::RelativeRequestTimeoutPolicy_var::duplicate (RelativeRequestTimeoutPolicy_ptr p)
+Messaging::RelativeRequestTimeoutPolicy_var::tao_duplicate (RelativeRequestTimeoutPolicy_ptr p)
 {
   return ::Messaging::RelativeRequestTimeoutPolicy::_duplicate (p);
 }
 
 void
-Messaging::RelativeRequestTimeoutPolicy_var::release (RelativeRequestTimeoutPolicy_ptr p)
+Messaging::RelativeRequestTimeoutPolicy_var::tao_release (RelativeRequestTimeoutPolicy_ptr p)
 {
   CORBA::release (p);
 }
 
 ::Messaging::RelativeRequestTimeoutPolicy_ptr
-Messaging::RelativeRequestTimeoutPolicy_var::nil (void)
+Messaging::RelativeRequestTimeoutPolicy_var::tao_nil (void)
 {
   return ::Messaging::RelativeRequestTimeoutPolicy::_nil ();
 }
 
 ::Messaging::RelativeRequestTimeoutPolicy_ptr
-Messaging::RelativeRequestTimeoutPolicy_var::narrow (
+Messaging::RelativeRequestTimeoutPolicy_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -2706,7 +2724,7 @@ Messaging::RelativeRequestTimeoutPolicy_var::narrow (
 }
 
 CORBA::Object *
-Messaging::RelativeRequestTimeoutPolicy_var::upcast (void *src)
+Messaging::RelativeRequestTimeoutPolicy_var::tao_upcast (void *src)
 {
   RelativeRequestTimeoutPolicy **tmp =
     ACE_static_cast (RelativeRequestTimeoutPolicy **, src);
@@ -2806,7 +2824,7 @@ Messaging::RelativeRequestTimeoutPolicy_ptr Messaging::RelativeRequestTimeoutPol
                 ACE_reinterpret_cast
                   (
                     ptr_arith_t,
-                    &RelativeRequestTimeoutPolicy::_narrow
+                    &RelativeRequestTimeoutPolicy::_tao_class_id
                   )
               )
         );
@@ -2825,11 +2843,11 @@ void *Messaging::RelativeRequestTimeoutPolicy::_tao_QueryInterface (ptr_arith_t 
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::Messaging, RelativeRequestTimeoutPolicy)::_narrow))
+      &ACE_NESTED_CLASS (::Messaging, RelativeRequestTimeoutPolicy)::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &::CORBA::Policy::_narrow))
+      &::CORBA::Policy::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -2839,7 +2857,7 @@ void *Messaging::RelativeRequestTimeoutPolicy::_tao_QueryInterface (ptr_arith_t 
             this
           )
       );
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 
@@ -2861,6 +2879,8 @@ TAO_NAMESPACE_TYPE (const CORBA::ULong)
 TAO_NAMESPACE_BEGIN (Messaging)
 TAO_NAMESPACE_DEFINE (const CORBA::ULong, RELATIVE_RT_TIMEOUT_POLICY_TYPE, 32U)
 TAO_NAMESPACE_END
+
+int Messaging::RelativeRoundtripTimeoutPolicy::_tao_class_id = 0;
 
 // *************************************************************
 // Operations for class Messaging::RelativeRoundtripTimeoutPolicy_var
@@ -2951,25 +2971,25 @@ Messaging::RelativeRoundtripTimeoutPolicy_var::_retn (void)
 }
 
 ::Messaging::RelativeRoundtripTimeoutPolicy_ptr
-Messaging::RelativeRoundtripTimeoutPolicy_var::duplicate (RelativeRoundtripTimeoutPolicy_ptr p)
+Messaging::RelativeRoundtripTimeoutPolicy_var::tao_duplicate (RelativeRoundtripTimeoutPolicy_ptr p)
 {
   return ::Messaging::RelativeRoundtripTimeoutPolicy::_duplicate (p);
 }
 
 void
-Messaging::RelativeRoundtripTimeoutPolicy_var::release (RelativeRoundtripTimeoutPolicy_ptr p)
+Messaging::RelativeRoundtripTimeoutPolicy_var::tao_release (RelativeRoundtripTimeoutPolicy_ptr p)
 {
   CORBA::release (p);
 }
 
 ::Messaging::RelativeRoundtripTimeoutPolicy_ptr
-Messaging::RelativeRoundtripTimeoutPolicy_var::nil (void)
+Messaging::RelativeRoundtripTimeoutPolicy_var::tao_nil (void)
 {
   return ::Messaging::RelativeRoundtripTimeoutPolicy::_nil ();
 }
 
 ::Messaging::RelativeRoundtripTimeoutPolicy_ptr
-Messaging::RelativeRoundtripTimeoutPolicy_var::narrow (
+Messaging::RelativeRoundtripTimeoutPolicy_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -2978,7 +2998,7 @@ Messaging::RelativeRoundtripTimeoutPolicy_var::narrow (
 }
 
 CORBA::Object *
-Messaging::RelativeRoundtripTimeoutPolicy_var::upcast (void *src)
+Messaging::RelativeRoundtripTimeoutPolicy_var::tao_upcast (void *src)
 {
   RelativeRoundtripTimeoutPolicy **tmp =
     ACE_static_cast (RelativeRoundtripTimeoutPolicy **, src);
@@ -3078,7 +3098,7 @@ Messaging::RelativeRoundtripTimeoutPolicy_ptr Messaging::RelativeRoundtripTimeou
                 ACE_reinterpret_cast
                   (
                     ptr_arith_t,
-                    &RelativeRoundtripTimeoutPolicy::_narrow
+                    &RelativeRoundtripTimeoutPolicy::_tao_class_id
                   )
               )
         );
@@ -3097,11 +3117,11 @@ void *Messaging::RelativeRoundtripTimeoutPolicy::_tao_QueryInterface (ptr_arith_
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::Messaging, RelativeRoundtripTimeoutPolicy)::_narrow))
+      &ACE_NESTED_CLASS (::Messaging, RelativeRoundtripTimeoutPolicy)::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &::CORBA::Policy::_narrow))
+      &::CORBA::Policy::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -3111,7 +3131,7 @@ void *Messaging::RelativeRoundtripTimeoutPolicy::_tao_QueryInterface (ptr_arith_
             this
           )
       );
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 
@@ -3223,6 +3243,8 @@ void Messaging::RoutingTypeRange::_tao_any_destructor (void *x)
 }
 
 
+int Messaging::RoutingPolicy::_tao_class_id = 0;
+
 // *************************************************************
 // Operations for class Messaging::RoutingPolicy_var
 // *************************************************************
@@ -3312,25 +3334,25 @@ Messaging::RoutingPolicy_var::_retn (void)
 }
 
 ::Messaging::RoutingPolicy_ptr
-Messaging::RoutingPolicy_var::duplicate (RoutingPolicy_ptr p)
+Messaging::RoutingPolicy_var::tao_duplicate (RoutingPolicy_ptr p)
 {
   return ::Messaging::RoutingPolicy::_duplicate (p);
 }
 
 void
-Messaging::RoutingPolicy_var::release (RoutingPolicy_ptr p)
+Messaging::RoutingPolicy_var::tao_release (RoutingPolicy_ptr p)
 {
   CORBA::release (p);
 }
 
 ::Messaging::RoutingPolicy_ptr
-Messaging::RoutingPolicy_var::nil (void)
+Messaging::RoutingPolicy_var::tao_nil (void)
 {
   return ::Messaging::RoutingPolicy::_nil ();
 }
 
 ::Messaging::RoutingPolicy_ptr
-Messaging::RoutingPolicy_var::narrow (
+Messaging::RoutingPolicy_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -3339,7 +3361,7 @@ Messaging::RoutingPolicy_var::narrow (
 }
 
 CORBA::Object *
-Messaging::RoutingPolicy_var::upcast (void *src)
+Messaging::RoutingPolicy_var::tao_upcast (void *src)
 {
   RoutingPolicy **tmp =
     ACE_static_cast (RoutingPolicy **, src);
@@ -3439,7 +3461,7 @@ Messaging::RoutingPolicy_ptr Messaging::RoutingPolicy::_unchecked_narrow (
                 ACE_reinterpret_cast
                   (
                     ptr_arith_t,
-                    &RoutingPolicy::_narrow
+                    &RoutingPolicy::_tao_class_id
                   )
               )
         );
@@ -3458,11 +3480,11 @@ void *Messaging::RoutingPolicy::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::Messaging, RoutingPolicy)::_narrow))
+      &ACE_NESTED_CLASS (::Messaging, RoutingPolicy)::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &::CORBA::Policy::_narrow))
+      &::CORBA::Policy::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -3472,7 +3494,7 @@ void *Messaging::RoutingPolicy::_tao_QueryInterface (ptr_arith_t type)
             this
           )
       );
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 
@@ -3494,6 +3516,8 @@ TAO_NAMESPACE_TYPE (const CORBA::ULong)
 TAO_NAMESPACE_BEGIN (Messaging)
 TAO_NAMESPACE_DEFINE (const CORBA::ULong, MAX_HOPS_POLICY_TYPE, 34U)
 TAO_NAMESPACE_END
+
+int Messaging::MaxHopsPolicy::_tao_class_id = 0;
 
 // *************************************************************
 // Operations for class Messaging::MaxHopsPolicy_var
@@ -3584,25 +3608,25 @@ Messaging::MaxHopsPolicy_var::_retn (void)
 }
 
 ::Messaging::MaxHopsPolicy_ptr
-Messaging::MaxHopsPolicy_var::duplicate (MaxHopsPolicy_ptr p)
+Messaging::MaxHopsPolicy_var::tao_duplicate (MaxHopsPolicy_ptr p)
 {
   return ::Messaging::MaxHopsPolicy::_duplicate (p);
 }
 
 void
-Messaging::MaxHopsPolicy_var::release (MaxHopsPolicy_ptr p)
+Messaging::MaxHopsPolicy_var::tao_release (MaxHopsPolicy_ptr p)
 {
   CORBA::release (p);
 }
 
 ::Messaging::MaxHopsPolicy_ptr
-Messaging::MaxHopsPolicy_var::nil (void)
+Messaging::MaxHopsPolicy_var::tao_nil (void)
 {
   return ::Messaging::MaxHopsPolicy::_nil ();
 }
 
 ::Messaging::MaxHopsPolicy_ptr
-Messaging::MaxHopsPolicy_var::narrow (
+Messaging::MaxHopsPolicy_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -3611,7 +3635,7 @@ Messaging::MaxHopsPolicy_var::narrow (
 }
 
 CORBA::Object *
-Messaging::MaxHopsPolicy_var::upcast (void *src)
+Messaging::MaxHopsPolicy_var::tao_upcast (void *src)
 {
   MaxHopsPolicy **tmp =
     ACE_static_cast (MaxHopsPolicy **, src);
@@ -3711,7 +3735,7 @@ Messaging::MaxHopsPolicy_ptr Messaging::MaxHopsPolicy::_unchecked_narrow (
                 ACE_reinterpret_cast
                   (
                     ptr_arith_t,
-                    &MaxHopsPolicy::_narrow
+                    &MaxHopsPolicy::_tao_class_id
                   )
               )
         );
@@ -3730,11 +3754,11 @@ void *Messaging::MaxHopsPolicy::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::Messaging, MaxHopsPolicy)::_narrow))
+      &ACE_NESTED_CLASS (::Messaging, MaxHopsPolicy)::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &::CORBA::Policy::_narrow))
+      &::CORBA::Policy::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -3744,7 +3768,7 @@ void *Messaging::MaxHopsPolicy::_tao_QueryInterface (ptr_arith_t type)
             this
           )
       );
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 
@@ -3766,6 +3790,8 @@ TAO_NAMESPACE_TYPE (const CORBA::ULong)
 TAO_NAMESPACE_BEGIN (Messaging)
 TAO_NAMESPACE_DEFINE (const CORBA::ULong, QUEUE_ORDER_POLICY_TYPE, 35U)
 TAO_NAMESPACE_END
+
+int Messaging::QueueOrderPolicy::_tao_class_id = 0;
 
 // *************************************************************
 // Operations for class Messaging::QueueOrderPolicy_var
@@ -3856,25 +3882,25 @@ Messaging::QueueOrderPolicy_var::_retn (void)
 }
 
 ::Messaging::QueueOrderPolicy_ptr
-Messaging::QueueOrderPolicy_var::duplicate (QueueOrderPolicy_ptr p)
+Messaging::QueueOrderPolicy_var::tao_duplicate (QueueOrderPolicy_ptr p)
 {
   return ::Messaging::QueueOrderPolicy::_duplicate (p);
 }
 
 void
-Messaging::QueueOrderPolicy_var::release (QueueOrderPolicy_ptr p)
+Messaging::QueueOrderPolicy_var::tao_release (QueueOrderPolicy_ptr p)
 {
   CORBA::release (p);
 }
 
 ::Messaging::QueueOrderPolicy_ptr
-Messaging::QueueOrderPolicy_var::nil (void)
+Messaging::QueueOrderPolicy_var::tao_nil (void)
 {
   return ::Messaging::QueueOrderPolicy::_nil ();
 }
 
 ::Messaging::QueueOrderPolicy_ptr
-Messaging::QueueOrderPolicy_var::narrow (
+Messaging::QueueOrderPolicy_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -3883,7 +3909,7 @@ Messaging::QueueOrderPolicy_var::narrow (
 }
 
 CORBA::Object *
-Messaging::QueueOrderPolicy_var::upcast (void *src)
+Messaging::QueueOrderPolicy_var::tao_upcast (void *src)
 {
   QueueOrderPolicy **tmp =
     ACE_static_cast (QueueOrderPolicy **, src);
@@ -3983,7 +4009,7 @@ Messaging::QueueOrderPolicy_ptr Messaging::QueueOrderPolicy::_unchecked_narrow (
                 ACE_reinterpret_cast
                   (
                     ptr_arith_t,
-                    &QueueOrderPolicy::_narrow
+                    &QueueOrderPolicy::_tao_class_id
                   )
               )
         );
@@ -4002,11 +4028,11 @@ void *Messaging::QueueOrderPolicy::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::Messaging, QueueOrderPolicy)::_narrow))
+      &ACE_NESTED_CLASS (::Messaging, QueueOrderPolicy)::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &::CORBA::Policy::_narrow))
+      &::CORBA::Policy::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -4016,7 +4042,7 @@ void *Messaging::QueueOrderPolicy::_tao_QueryInterface (ptr_arith_t type)
             this
           )
       );
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 
@@ -4427,6 +4453,8 @@ Messaging::ExceptionHolder_init::tao_repository_id (void)
 #endif /* end #if !defined */
 
 
+int Messaging::ReplyHandler::_tao_class_id = 0;
+
 // *************************************************************
 // Operations for class Messaging::ReplyHandler_var
 // *************************************************************
@@ -4516,25 +4544,25 @@ Messaging::ReplyHandler_var::_retn (void)
 }
 
 ::Messaging::ReplyHandler_ptr
-Messaging::ReplyHandler_var::duplicate (ReplyHandler_ptr p)
+Messaging::ReplyHandler_var::tao_duplicate (ReplyHandler_ptr p)
 {
   return ::Messaging::ReplyHandler::_duplicate (p);
 }
 
 void
-Messaging::ReplyHandler_var::release (ReplyHandler_ptr p)
+Messaging::ReplyHandler_var::tao_release (ReplyHandler_ptr p)
 {
   CORBA::release (p);
 }
 
 ::Messaging::ReplyHandler_ptr
-Messaging::ReplyHandler_var::nil (void)
+Messaging::ReplyHandler_var::tao_nil (void)
 {
   return ::Messaging::ReplyHandler::_nil ();
 }
 
 ::Messaging::ReplyHandler_ptr
-Messaging::ReplyHandler_var::narrow (
+Messaging::ReplyHandler_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -4543,7 +4571,7 @@ Messaging::ReplyHandler_var::narrow (
 }
 
 CORBA::Object *
-Messaging::ReplyHandler_var::upcast (void *src)
+Messaging::ReplyHandler_var::tao_upcast (void *src)
 {
   ReplyHandler **tmp =
     ACE_static_cast (ReplyHandler **, src);
@@ -4766,7 +4794,7 @@ Messaging::ReplyHandler_ptr Messaging::ReplyHandler::_unchecked_narrow (
                   ACE_reinterpret_cast
                     (
                       ptr_arith_t,
-                      &ReplyHandler::_narrow
+                      &ReplyHandler::_tao_class_id
                     )
                 )
           );
@@ -4795,9 +4823,9 @@ void *Messaging::ReplyHandler::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::Messaging, ReplyHandler)::_narrow))
+      &ACE_NESTED_CLASS (::Messaging, ReplyHandler)::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 

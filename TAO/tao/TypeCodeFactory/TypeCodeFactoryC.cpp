@@ -30,6 +30,8 @@
 #include "TypeCodeFactoryC.inl"
 #endif /* !defined INLINE */
 
+int CORBA_TypeCodeFactory::_tao_class_id = 0;
+
 // *************************************************************
 // Operations for class CORBA_TypeCodeFactory_var
 // *************************************************************
@@ -119,25 +121,25 @@ CORBA_TypeCodeFactory_var::_retn (void)
 }
 
 ::CORBA_TypeCodeFactory_ptr
-CORBA_TypeCodeFactory_var::duplicate (CORBA_TypeCodeFactory_ptr p)
+CORBA_TypeCodeFactory_var::tao_duplicate (CORBA_TypeCodeFactory_ptr p)
 {
   return ::CORBA_TypeCodeFactory::_duplicate (p);
 }
 
 void
-CORBA_TypeCodeFactory_var::release (CORBA_TypeCodeFactory_ptr p)
+CORBA_TypeCodeFactory_var::tao_release (CORBA_TypeCodeFactory_ptr p)
 {
   CORBA::release (p);
 }
 
 ::CORBA_TypeCodeFactory_ptr
-CORBA_TypeCodeFactory_var::nil (void)
+CORBA_TypeCodeFactory_var::tao_nil (void)
 {
   return ::CORBA_TypeCodeFactory::_nil ();
 }
 
 ::CORBA_TypeCodeFactory_ptr
-CORBA_TypeCodeFactory_var::narrow (
+CORBA_TypeCodeFactory_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -146,7 +148,7 @@ CORBA_TypeCodeFactory_var::narrow (
 }
 
 CORBA::Object *
-CORBA_TypeCodeFactory_var::upcast (void *src)
+CORBA_TypeCodeFactory_var::tao_upcast (void *src)
 {
   CORBA_TypeCodeFactory **tmp =
     ACE_static_cast (CORBA_TypeCodeFactory **, src);
@@ -246,7 +248,7 @@ CORBA_TypeCodeFactory_ptr CORBA_TypeCodeFactory::_unchecked_narrow (
                 ACE_reinterpret_cast
                   (
                     ptr_arith_t,
-                    &CORBA_TypeCodeFactory::_narrow
+                    &CORBA_TypeCodeFactory::_tao_class_id
                   )
               )
         );
@@ -265,9 +267,9 @@ void *CORBA_TypeCodeFactory::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_TypeCodeFactory::_narrow))
+      &CORBA_TypeCodeFactory::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
     

@@ -29,6 +29,8 @@
 #include "RTPortableServerC.i"
 #endif /* !defined INLINE */
 
+int RTPortableServer::POA::_tao_class_id = 0;
+
 // *************************************************************
 // Operations for class RTPortableServer::POA_var
 // *************************************************************
@@ -118,25 +120,25 @@ RTPortableServer::POA_var::_retn (void)
 }
 
 ::RTPortableServer::POA_ptr
-RTPortableServer::POA_var::duplicate (POA_ptr p)
+RTPortableServer::POA_var::tao_duplicate (POA_ptr p)
 {
   return ::RTPortableServer::POA::_duplicate (p);
 }
 
 void
-RTPortableServer::POA_var::release (POA_ptr p)
+RTPortableServer::POA_var::tao_release (POA_ptr p)
 {
   CORBA::release (p);
 }
 
 ::RTPortableServer::POA_ptr
-RTPortableServer::POA_var::nil (void)
+RTPortableServer::POA_var::tao_nil (void)
 {
   return ::RTPortableServer::POA::_nil ();
 }
 
 ::RTPortableServer::POA_ptr
-RTPortableServer::POA_var::narrow (
+RTPortableServer::POA_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -145,7 +147,7 @@ RTPortableServer::POA_var::narrow (
 }
 
 CORBA::Object *
-RTPortableServer::POA_var::upcast (void *src)
+RTPortableServer::POA_var::tao_upcast (void *src)
 {
   POA **tmp =
     ACE_static_cast (POA **, src);
@@ -245,7 +247,7 @@ RTPortableServer::POA_ptr RTPortableServer::POA::_unchecked_narrow (
                 ACE_reinterpret_cast
                   (
                     ptr_arith_t,
-                    &POA::_narrow
+                    &POA::_tao_class_id
                   )
               )
         );
@@ -264,11 +266,11 @@ void *RTPortableServer::POA::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::RTPortableServer, POA)::_narrow))
+      &ACE_NESTED_CLASS (::RTPortableServer, POA)::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &::PortableServer::POA::_narrow))
+      &::PortableServer::POA::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -278,7 +280,7 @@ void *RTPortableServer::POA::_tao_QueryInterface (ptr_arith_t type)
             this
           )
       );
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
     

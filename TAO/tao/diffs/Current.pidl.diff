@@ -1,5 +1,5 @@
---- Current.pidl	Fri Jun 23 23:25:45 2000
-+++ Current.pidl.mod	Fri Jun 23 23:33:00 2000
+--- Current.pidl	Mon Aug 20 22:55:38 2001
++++ orig/Current.pidl	Fri Apr 13 22:44:21 2001
 @@ -58,9 +58,6 @@
  
  #pragma prefix "omg.org"

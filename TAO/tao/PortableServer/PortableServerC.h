@@ -111,11 +111,11 @@ TAO_NAMESPACE  PortableServer
 
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
-    static POA_ptr duplicate (POA_ptr);
-    static void release (POA_ptr);
-    static POA_ptr nil (void);
-    static POA_ptr narrow (CORBA::Object *, CORBA::Environment &);
-    static CORBA::Object * upcast (void *);
+    static POA_ptr tao_duplicate (POA_ptr);
+    static void tao_release (POA_ptr);
+    static POA_ptr tao_nil (void);
+    static POA_ptr tao_narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * tao_upcast (void *);
 
   private:
     POA_ptr ptr_;
@@ -536,11 +536,11 @@ TAO_NAMESPACE  PortableServer
 
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
-    static ThreadPolicy_ptr duplicate (ThreadPolicy_ptr);
-    static void release (ThreadPolicy_ptr);
-    static ThreadPolicy_ptr nil (void);
-    static ThreadPolicy_ptr narrow (CORBA::Object *, CORBA::Environment &);
-    static CORBA::Object * upcast (void *);
+    static ThreadPolicy_ptr tao_duplicate (ThreadPolicy_ptr);
+    static void tao_release (ThreadPolicy_ptr);
+    static ThreadPolicy_ptr tao_nil (void);
+    static ThreadPolicy_ptr tao_narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * tao_upcast (void *);
 
   private:
     ThreadPolicy_ptr ptr_;
@@ -587,6 +587,8 @@ class TAO_PortableServer_Export ThreadPolicy: public virtual CORBA::Policy
     typedef ThreadPolicy_ptr _ptr_type;
     typedef ThreadPolicy_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  static int _tao_class_id;
 
     // the static operations
     static ThreadPolicy_ptr _duplicate (ThreadPolicy_ptr obj);
@@ -675,11 +677,11 @@ class TAO_PortableServer_Export ThreadPolicy: public virtual CORBA::Policy
 
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
-    static LifespanPolicy_ptr duplicate (LifespanPolicy_ptr);
-    static void release (LifespanPolicy_ptr);
-    static LifespanPolicy_ptr nil (void);
-    static LifespanPolicy_ptr narrow (CORBA::Object *, CORBA::Environment &);
-    static CORBA::Object * upcast (void *);
+    static LifespanPolicy_ptr tao_duplicate (LifespanPolicy_ptr);
+    static void tao_release (LifespanPolicy_ptr);
+    static LifespanPolicy_ptr tao_nil (void);
+    static LifespanPolicy_ptr tao_narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * tao_upcast (void *);
 
   private:
     LifespanPolicy_ptr ptr_;
@@ -726,6 +728,8 @@ class TAO_PortableServer_Export LifespanPolicy: public virtual CORBA::Policy
     typedef LifespanPolicy_ptr _ptr_type;
     typedef LifespanPolicy_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  static int _tao_class_id;
 
     // the static operations
     static LifespanPolicy_ptr _duplicate (LifespanPolicy_ptr obj);
@@ -812,11 +816,11 @@ class TAO_PortableServer_Export LifespanPolicy: public virtual CORBA::Policy
 
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
-    static IdUniquenessPolicy_ptr duplicate (IdUniquenessPolicy_ptr);
-    static void release (IdUniquenessPolicy_ptr);
-    static IdUniquenessPolicy_ptr nil (void);
-    static IdUniquenessPolicy_ptr narrow (CORBA::Object *, CORBA::Environment &);
-    static CORBA::Object * upcast (void *);
+    static IdUniquenessPolicy_ptr tao_duplicate (IdUniquenessPolicy_ptr);
+    static void tao_release (IdUniquenessPolicy_ptr);
+    static IdUniquenessPolicy_ptr tao_nil (void);
+    static IdUniquenessPolicy_ptr tao_narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * tao_upcast (void *);
 
   private:
     IdUniquenessPolicy_ptr ptr_;
@@ -863,6 +867,8 @@ class TAO_PortableServer_Export IdUniquenessPolicy: public virtual CORBA::Policy
     typedef IdUniquenessPolicy_ptr _ptr_type;
     typedef IdUniquenessPolicy_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  static int _tao_class_id;
 
     // the static operations
     static IdUniquenessPolicy_ptr _duplicate (IdUniquenessPolicy_ptr obj);
@@ -949,11 +955,11 @@ class TAO_PortableServer_Export IdUniquenessPolicy: public virtual CORBA::Policy
 
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
-    static IdAssignmentPolicy_ptr duplicate (IdAssignmentPolicy_ptr);
-    static void release (IdAssignmentPolicy_ptr);
-    static IdAssignmentPolicy_ptr nil (void);
-    static IdAssignmentPolicy_ptr narrow (CORBA::Object *, CORBA::Environment &);
-    static CORBA::Object * upcast (void *);
+    static IdAssignmentPolicy_ptr tao_duplicate (IdAssignmentPolicy_ptr);
+    static void tao_release (IdAssignmentPolicy_ptr);
+    static IdAssignmentPolicy_ptr tao_nil (void);
+    static IdAssignmentPolicy_ptr tao_narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * tao_upcast (void *);
 
   private:
     IdAssignmentPolicy_ptr ptr_;
@@ -1000,6 +1006,8 @@ class TAO_PortableServer_Export IdAssignmentPolicy: public virtual CORBA::Policy
     typedef IdAssignmentPolicy_ptr _ptr_type;
     typedef IdAssignmentPolicy_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  static int _tao_class_id;
 
     // the static operations
     static IdAssignmentPolicy_ptr _duplicate (IdAssignmentPolicy_ptr obj);
@@ -1089,11 +1097,11 @@ class TAO_PortableServer_Export IdAssignmentPolicy: public virtual CORBA::Policy
 
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
-    static ImplicitActivationPolicy_ptr duplicate (ImplicitActivationPolicy_ptr);
-    static void release (ImplicitActivationPolicy_ptr);
-    static ImplicitActivationPolicy_ptr nil (void);
-    static ImplicitActivationPolicy_ptr narrow (CORBA::Object *, CORBA::Environment &);
-    static CORBA::Object * upcast (void *);
+    static ImplicitActivationPolicy_ptr tao_duplicate (ImplicitActivationPolicy_ptr);
+    static void tao_release (ImplicitActivationPolicy_ptr);
+    static ImplicitActivationPolicy_ptr tao_nil (void);
+    static ImplicitActivationPolicy_ptr tao_narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * tao_upcast (void *);
 
   private:
     ImplicitActivationPolicy_ptr ptr_;
@@ -1140,6 +1148,8 @@ class TAO_PortableServer_Export ImplicitActivationPolicy: public virtual CORBA::
     typedef ImplicitActivationPolicy_ptr _ptr_type;
     typedef ImplicitActivationPolicy_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  static int _tao_class_id;
 
     // the static operations
     static ImplicitActivationPolicy_ptr _duplicate (ImplicitActivationPolicy_ptr obj);
@@ -1231,11 +1241,11 @@ class TAO_PortableServer_Export ImplicitActivationPolicy: public virtual CORBA::
 
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
-    static ServantRetentionPolicy_ptr duplicate (ServantRetentionPolicy_ptr);
-    static void release (ServantRetentionPolicy_ptr);
-    static ServantRetentionPolicy_ptr nil (void);
-    static ServantRetentionPolicy_ptr narrow (CORBA::Object *, CORBA::Environment &);
-    static CORBA::Object * upcast (void *);
+    static ServantRetentionPolicy_ptr tao_duplicate (ServantRetentionPolicy_ptr);
+    static void tao_release (ServantRetentionPolicy_ptr);
+    static ServantRetentionPolicy_ptr tao_nil (void);
+    static ServantRetentionPolicy_ptr tao_narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * tao_upcast (void *);
 
   private:
     ServantRetentionPolicy_ptr ptr_;
@@ -1282,6 +1292,8 @@ class TAO_PortableServer_Export ServantRetentionPolicy: public virtual CORBA::Po
     typedef ServantRetentionPolicy_ptr _ptr_type;
     typedef ServantRetentionPolicy_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  static int _tao_class_id;
 
     // the static operations
     static ServantRetentionPolicy_ptr _duplicate (ServantRetentionPolicy_ptr obj);
@@ -1374,11 +1386,11 @@ class TAO_PortableServer_Export ServantRetentionPolicy: public virtual CORBA::Po
 
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
-    static RequestProcessingPolicy_ptr duplicate (RequestProcessingPolicy_ptr);
-    static void release (RequestProcessingPolicy_ptr);
-    static RequestProcessingPolicy_ptr nil (void);
-    static RequestProcessingPolicy_ptr narrow (CORBA::Object *, CORBA::Environment &);
-    static CORBA::Object * upcast (void *);
+    static RequestProcessingPolicy_ptr tao_duplicate (RequestProcessingPolicy_ptr);
+    static void tao_release (RequestProcessingPolicy_ptr);
+    static RequestProcessingPolicy_ptr tao_nil (void);
+    static RequestProcessingPolicy_ptr tao_narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * tao_upcast (void *);
 
   private:
     RequestProcessingPolicy_ptr ptr_;
@@ -1425,6 +1437,8 @@ class TAO_PortableServer_Export RequestProcessingPolicy: public virtual CORBA::P
     typedef RequestProcessingPolicy_ptr _ptr_type;
     typedef RequestProcessingPolicy_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  static int _tao_class_id;
 
     // the static operations
     static RequestProcessingPolicy_ptr _duplicate (RequestProcessingPolicy_ptr obj);
@@ -1505,11 +1519,11 @@ class TAO_PortableServer_Export RequestProcessingPolicy: public virtual CORBA::P
 
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
-    static POAManager_ptr duplicate (POAManager_ptr);
-    static void release (POAManager_ptr);
-    static POAManager_ptr nil (void);
-    static POAManager_ptr narrow (CORBA::Object *, CORBA::Environment &);
-    static CORBA::Object * upcast (void *);
+    static POAManager_ptr tao_duplicate (POAManager_ptr);
+    static void tao_release (POAManager_ptr);
+    static POAManager_ptr tao_nil (void);
+    static POAManager_ptr tao_narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * tao_upcast (void *);
 
   private:
     POAManager_ptr ptr_;
@@ -1556,6 +1570,8 @@ class TAO_PortableServer_Export POAManager : public virtual CORBA_Object
     typedef POAManager_ptr _ptr_type;
     typedef POAManager_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  static int _tao_class_id;
 
     // the static operations
     static POAManager_ptr _duplicate (POAManager_ptr obj);
@@ -1729,11 +1745,11 @@ class TAO_PortableServer_Export POAManager : public virtual CORBA_Object
 
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
-    static AdapterActivator_ptr duplicate (AdapterActivator_ptr);
-    static void release (AdapterActivator_ptr);
-    static AdapterActivator_ptr nil (void);
-    static AdapterActivator_ptr narrow (CORBA::Object *, CORBA::Environment &);
-    static CORBA::Object * upcast (void *);
+    static AdapterActivator_ptr tao_duplicate (AdapterActivator_ptr);
+    static void tao_release (AdapterActivator_ptr);
+    static AdapterActivator_ptr tao_nil (void);
+    static AdapterActivator_ptr tao_narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * tao_upcast (void *);
 
   private:
     AdapterActivator_ptr ptr_;
@@ -1780,6 +1796,8 @@ class TAO_PortableServer_Export AdapterActivator : public virtual CORBA_Object
     typedef AdapterActivator_ptr _ptr_type;
     typedef AdapterActivator_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  static int _tao_class_id;
 
     // the static operations
     static AdapterActivator_ptr _duplicate (AdapterActivator_ptr obj);
@@ -1860,11 +1878,11 @@ class TAO_PortableServer_Export AdapterActivator : public virtual CORBA_Object
 
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
-    static ServantManager_ptr duplicate (ServantManager_ptr);
-    static void release (ServantManager_ptr);
-    static ServantManager_ptr nil (void);
-    static ServantManager_ptr narrow (CORBA::Object *, CORBA::Environment &);
-    static CORBA::Object * upcast (void *);
+    static ServantManager_ptr tao_duplicate (ServantManager_ptr);
+    static void tao_release (ServantManager_ptr);
+    static ServantManager_ptr tao_nil (void);
+    static ServantManager_ptr tao_narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * tao_upcast (void *);
 
   private:
     ServantManager_ptr ptr_;
@@ -1911,6 +1929,8 @@ class TAO_PortableServer_Export ServantManager : public virtual CORBA_Object
     typedef ServantManager_ptr _ptr_type;
     typedef ServantManager_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  static int _tao_class_id;
 
     // the static operations
     static ServantManager_ptr _duplicate (ServantManager_ptr obj);
@@ -1981,11 +2001,11 @@ class TAO_PortableServer_Export ServantManager : public virtual CORBA_Object
 
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
-    static ServantActivator_ptr duplicate (ServantActivator_ptr);
-    static void release (ServantActivator_ptr);
-    static ServantActivator_ptr nil (void);
-    static ServantActivator_ptr narrow (CORBA::Object *, CORBA::Environment &);
-    static CORBA::Object * upcast (void *);
+    static ServantActivator_ptr tao_duplicate (ServantActivator_ptr);
+    static void tao_release (ServantActivator_ptr);
+    static ServantActivator_ptr tao_nil (void);
+    static ServantActivator_ptr tao_narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * tao_upcast (void *);
 
   private:
     ServantActivator_ptr ptr_;
@@ -2032,6 +2052,8 @@ class TAO_PortableServer_Export ServantActivator: public virtual ServantManager
     typedef ServantActivator_ptr _ptr_type;
     typedef ServantActivator_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  static int _tao_class_id;
 
     // the static operations
     static ServantActivator_ptr _duplicate (ServantActivator_ptr obj);
@@ -2130,11 +2152,11 @@ class TAO_PortableServer_Export ServantActivator: public virtual ServantManager
 
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
-    static ServantLocator_ptr duplicate (ServantLocator_ptr);
-    static void release (ServantLocator_ptr);
-    static ServantLocator_ptr nil (void);
-    static ServantLocator_ptr narrow (CORBA::Object *, CORBA::Environment &);
-    static CORBA::Object * upcast (void *);
+    static ServantLocator_ptr tao_duplicate (ServantLocator_ptr);
+    static void tao_release (ServantLocator_ptr);
+    static ServantLocator_ptr tao_nil (void);
+    static ServantLocator_ptr tao_narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * tao_upcast (void *);
 
   private:
     ServantLocator_ptr ptr_;
@@ -2184,6 +2206,8 @@ class TAO_PortableServer_Export ServantLocator: public virtual ServantManager
     typedef ServantLocator_ptr _ptr_type;
     typedef ServantLocator_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  static int _tao_class_id;
 
     // the static operations
     static ServantLocator_ptr _duplicate (ServantLocator_ptr obj);
@@ -2262,6 +2286,8 @@ class TAO_PortableServer_Export POA : public virtual CORBA_Object
     typedef POA_ptr _ptr_type;
     typedef POA_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  static int _tao_class_id;
 
     // the static operations
     static POA_ptr _duplicate (POA_ptr obj);
@@ -3080,11 +3106,11 @@ class TAO_PortableServer_Export POA : public virtual CORBA_Object
 
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
-    static Current_ptr duplicate (Current_ptr);
-    static void release (Current_ptr);
-    static Current_ptr nil (void);
-    static Current_ptr narrow (CORBA::Object *, CORBA::Environment &);
-    static CORBA::Object * upcast (void *);
+    static Current_ptr tao_duplicate (Current_ptr);
+    static void tao_release (Current_ptr);
+    static Current_ptr tao_nil (void);
+    static Current_ptr tao_narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * tao_upcast (void *);
 
   private:
     Current_ptr ptr_;
@@ -3131,6 +3157,8 @@ class TAO_PortableServer_Export Current: public virtual CORBA::Current
     typedef Current_ptr _ptr_type;
     typedef Current_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  static int _tao_class_id;
 
     // the static operations
     static Current_ptr _duplicate (Current_ptr obj);
