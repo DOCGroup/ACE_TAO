@@ -142,7 +142,7 @@ void TAO_FTEC_Group_Manager::join_group (
   if (impl_->my_position == 0) {
     FTRTEC::Replication_Service* svc = FTRTEC::Replication_Service::instance();
     ACE_Write_Guard<FTRTEC::Replication_Service> lock(*svc);
-    add_member(info, IOGR_Maker::instance()->increment_ref_version()
+    add_member(info, IOGR_Maker::instance()->get_ref_version()+1
                ACE_ENV_ARG_PARAMETER);
   }
 }
@@ -188,6 +188,7 @@ void TAO_FTEC_Group_Manager::add_member (
       // update the info list again
       new_impl->info_list.length(new_impl->my_position+2);
       new_impl->info_list[new_impl->my_position+1] = info;
+      FTRT::ManagerInfo& tp = new_impl->info_list[new_impl->my_position+1];
 
       /// group_info = publisher->set_info(..) should be enough.
       /// However, GCC 2.96 is not happy with that.
@@ -290,7 +291,7 @@ void TAO_FTEC_Group_Manager::replica_crashed (
   TAO_FTRTEC::Log(1, "TAO_FTEC_Group_Manager::replica_crashed\n");
   FTRTEC::Replication_Service* svc = FTRTEC::Replication_Service::instance();
     ACE_Write_Guard<FTRTEC::Replication_Service> lock(*svc);
-    remove_member(location, IOGR_Maker::instance()->increment_ref_version()
+    remove_member(location, IOGR_Maker::instance()->get_ref_version()+1
                   ACE_ENV_ARG_PARAMETER);
 }
 
