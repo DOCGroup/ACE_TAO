@@ -9,7 +9,7 @@
 #----------------------------------------------------------------------------
 
 ifndef PACE_ROOT
-  PACE_ROOT = $(ACE_ROOT)/pace
+  PACE_ROOT = $(ACE_ROOT)/PACE
 endif # ! PACE_ROOT
 
 INFO  = README
