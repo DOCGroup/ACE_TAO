@@ -6902,7 +6902,7 @@ ACE_OS::gethrtime (void)
   return now.msec () * 1000000L /* nanoseconds/millsecond */;
 # endif /* i386 || __alpha */
 #elif defined (ACE_HAS_PENTIUM)
-  // for WIN32 only (see OS.cpp for the GCC version) . . .
+  // for WIN32 only.
   // Issue the RDTSC assembler instruction to get the number of clock
   // ticks since system boot.  RDTSC is only available on Pentiums and
   // higher.  Thanks to Wayne Vucenic <wvucenic@netgate.net> for
