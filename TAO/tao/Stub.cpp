@@ -887,7 +887,7 @@ TAO_Stub::get_policy_overrides (
 CORBA::Boolean
 TAO_Stub::validate_connection (
     CORBA::PolicyList_out inconsistent_policies,
-    CORBA::Environment &ACE_TRY_ENV)
+    CORBA::Environment &)
 {
   // @@ What is a good default value to return....
   inconsistent_policies = 0;

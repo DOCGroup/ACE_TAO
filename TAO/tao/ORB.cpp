@@ -306,9 +306,9 @@ CORBA_ORB::create_environment (CORBA::Environment_ptr &,
 }
 
 CORBA::Boolean
-CORBA_ORB::get_service_information (CORBA::ServiceType service_type,
-                                    CORBA::ServiceInformation_out service_information,
-                                    CORBA::Environment &ACE_TRY_ENV)
+CORBA_ORB::get_service_information (CORBA::ServiceType /* service_type */,
+                                    CORBA::ServiceInformation_out /* service_information */,
+                                    CORBA::Environment &)
 {
   return 0;
 }
@@ -1873,8 +1873,8 @@ CORBA_ORB::register_value_factory (
 }
 
 void
-CORBA_ORB::unregister_value_factory (const char * repository_id,
-                                     CORBA_Environment &ACE_TRY_ENV)
+CORBA_ORB::unregister_value_factory (const char * /* repository_id */,
+                                     CORBA_Environment &)
 {
   ACE_ERROR((LM_ERROR, "(%N:%l) function not implemented\n"));
   // %! TODO

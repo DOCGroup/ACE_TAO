@@ -282,7 +282,7 @@ TAO_Binary_Search_OpTable::~TAO_Binary_Search_OpTable (void)
 int
 TAO_Binary_Search_OpTable::find (const char *opname,
                                  TAO_Skeleton &skelfunc,
-                                 const unsigned int length)
+                                 const unsigned int /* length */)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_BINARY_SEARCH_OPTABLE_FIND_START);
 
