@@ -66,6 +66,10 @@ private:
 
   /// Flag to indicate whether validator has been loaded
   static int validator_loaded_;
+
+  /// Flag to indicate whether the BiDirGIOP library has been
+  /// activated.
+  static int is_activated_;
 };
 
 ACE_STATIC_SVC_DECLARE (TAO_BiDirGIOP_Loader)
