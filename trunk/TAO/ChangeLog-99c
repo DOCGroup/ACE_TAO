@@ -1,4 +1,11 @@
-Mon Jul 12 11:51:51 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+Mon Jul 12 12:25:53 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/orbsvcs.dsp:
+	* orbsvcs/orbsvcs/orbsvcs_static.dsp: Fixed some broken idl
+	  flags.  Added -I../../tao flag to when compiling all idl files
+	  so people won't have trouble compiling orbsvcs even when they
+	  don't have ACE_ROOT or TAO_ROOT defined.
+	  Thanks to John Morey <jmorey@tbi.com> for suggesting this.
 
 	* TAO-INSTALL.html:
 	* docs/compiler.html: Added more explanation about setting
