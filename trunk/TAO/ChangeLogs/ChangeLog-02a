@@ -1,3 +1,18 @@
+Mon Aug 14 18:07:41 2000  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/IFR_Service/Makefile (IFR_Service):
+
+	  The IFR_Service depends on the TypeCodeFactory.
+
+	  (all):
+
+	  Don't bother explicity setting this target.  Make can figure it
+	  out on its own.
+
+	* orbsvcs/IFR_Service/Makefile.TypeCodeFactory (LIBNAME, LSRC):
+
+	  Fixed variable assignment spacing.
+
 Mon Aug 14 15:42:45 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* orbsvcs/CosEvent_Service/CosEvent_Service_Native.cpp :
