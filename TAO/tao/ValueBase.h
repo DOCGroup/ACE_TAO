@@ -28,8 +28,8 @@
 
 namespace CORBA
 {
-  extern TAO_Export void add_ref (CORBA::ValueBase *val);
-  extern TAO_Export void remove_ref (CORBA::ValueBase *val);
+  TAO_NAMESPACE_INLINE_FUNCTION void add_ref (CORBA::ValueBase *val);
+  TAO_NAMESPACE_INLINE_FUNCTION void remove_ref (CORBA::ValueBase *val);
 
   /**
    * @class ValueBase
