@@ -27,15 +27,16 @@ CUBIT_CLT_OBJS = client.o
 CFLAGS += -I../IDL_Cubit
 
 BIN = client
-BUILD = $(BIN) ../IDL_Cubit/server
 VLDLIBS = $(LDLIBS:%=%$(VAR))
-VBIN = $(BIN:%=%$(VAR))
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
 #----------------------------------------------------------------------------
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+
+BUILD := ../IDL_Cubit/server $(BUILD)
+
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
