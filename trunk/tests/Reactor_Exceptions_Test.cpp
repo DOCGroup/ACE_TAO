@@ -68,7 +68,7 @@ MemoryEx::handle_input (ACE_HANDLE)
 #else
   throw Except ();
 #endif
-  return 0;
+  ACE_NOTREACHED(return 0);
 }
 
 class My_Reactor : public ACE_Reactor
@@ -103,7 +103,7 @@ worker (void)
     if (ACE_Reactor::instance()->handle_events () == -1)
       ACE_ERROR_RETURN ((LM_ERROR, "(%t) error return\n"), -1);
 
-  return 0;
+  ACE_NOTREACHED(return 0);
 }
 #endif /* ACE_HAS_EXCEPTIONS */
 

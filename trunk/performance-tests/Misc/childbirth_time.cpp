@@ -137,9 +137,10 @@ prof_fork (size_t iteration)
 	    {
 	    case -1:
 	      ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "process.spawn"), -1);
-	      break;
+	      /* NOTREACHED */
 	    case 0:
 	      exit (0);
+	      /* NOTREACHED */
 	      break;
 	    default:
 	      ptimer.stop ();

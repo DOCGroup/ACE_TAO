@@ -129,7 +129,7 @@ HTTP_Server::init (int argc, char *argv[])
     default:
       return this->synch_thread_pool ();
     }
-  return 0;
+  ACE_NOTREACHED(return 0);
 }
 
 int
@@ -205,14 +205,7 @@ Synch_Thread_Pool_Task::svc (void)
                   " (%t) in Synch_Thread_Pool_Task::svc, recycling\n"));
     }
 
-  // This stinks, because I am afraid that if I remove this line, some
-  // compiler will issue a warning that this routine could exit
-  // without returning a value.  But, leaving it in makes the VXWORKS
-  // compiler complain about an unreachable statement.
-
-#if ! defined(VXWORKS)
-  return 0;
-#endif /* VXWORKS */
+  ACE_NOTREACHED(return 0);
 }
 
 int
@@ -254,14 +247,7 @@ HTTP_Server::thread_per_request (void)
 	this->tm_.wait (&wait_time);
     }
 
-  // This stinks, because I am afraid that if I remove this line, some
-  // compiler will issue a warning that this routine could exit
-  // without returning a value.  But, leaving it in makes the VXWORKS
-  // compiler complain about an unreachable statement.
-
-#if ! defined(VXWORKS)
-  return 0;
-#endif /* VXWORKS */
+  ACE_NOTREACHED(return 0);
 }
 
 Thread_Per_Request_Task::Thread_Per_Request_Task (ACE_HANDLE handle,

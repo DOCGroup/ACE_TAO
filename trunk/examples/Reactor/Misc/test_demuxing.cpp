@@ -257,7 +257,7 @@ Message_Handler::svc (void)
 	}
     }
 
-  return 0;
+  ACE_NOTREACHED(return 0);
 }
 
 int

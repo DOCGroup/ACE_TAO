@@ -314,7 +314,7 @@ Dump_Restore::populate (Dump_Restore::Operation_Type op)
 	      break;
 	    default:
 	      ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "populate"), -1);
-	      break;
+	      /* NOTREACHED */
 	    }
 	}
       

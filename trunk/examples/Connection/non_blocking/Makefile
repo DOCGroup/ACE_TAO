@@ -27,7 +27,6 @@ LSRC  	= CPP-connector.cpp \
           CPP-acceptor.cpp
 
 LDLIBS 	= -lConn
-LIBS	= -lACE
 
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 

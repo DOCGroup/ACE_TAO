@@ -22,7 +22,6 @@ LOBJ   	= $(LSRC:%.cpp=$(VDIR)%.o)
 SHOBJ	= $(addsuffix .so,$(FILES))
 
 LDLIBS 	= -lDump_Restore
-LIBS	+= -lACE
  
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 

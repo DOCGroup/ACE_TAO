@@ -35,7 +35,6 @@ LOBJ   	= $(LSRC:%.cpp=$(VDIR)%.o)
 SHOBJ	= $(addsuffix .so,$(FILES))
 
 LDLIBS 	= -lSynch_Tests
-LIBS	+= -lACE 
 
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 

@@ -122,7 +122,7 @@ parse_args (int argc, char *argv[])
 			     "[-p <remote port>]\n"
 			     "[-n <iterations>]\n"
 			     "[-d debug]\n", 1), -1);
-	  break;
+	  /* NOTREACHED */
 	}
     }
 

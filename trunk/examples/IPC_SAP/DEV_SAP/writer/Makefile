@@ -18,8 +18,6 @@ LSRC   	= $(addsuffix .cpp,$(FILES))
 LOBJ    = $(addsuffix .o,$(FILES))
 SHOBJ   = $(addsuffix .so,$(FILES))
 
-LIBS	= -lACE
-
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 
 BUILD 	= $(VBIN)

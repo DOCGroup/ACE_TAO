@@ -28,7 +28,6 @@ LOBJ	= $(addsuffix .o,$(FILES))
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 
 LDLIBS  = -lJAWS
-LIBS    = -lACE
 
 BUILD 	= $(VOBJS) $(VLIB) $(VBIN)
 

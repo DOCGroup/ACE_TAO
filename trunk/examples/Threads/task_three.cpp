@@ -151,7 +151,7 @@ dispatch (void *arg)
 	ACE_DEBUG ((LM_DEBUG, "Dispatch: handle_events (): %d", result));
     }
 
-  return 0;
+  ACE_NOTREACHED(return 0);
 }
 
 extern "C" void 

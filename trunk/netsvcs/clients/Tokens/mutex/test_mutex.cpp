@@ -102,7 +102,7 @@ parse_args (int argc, char *argv[])
 			    "[-t <threads>]\n"
 			    "[-h <remote host>]\n"
 			    "[-p <remote port>]\n", 1), -1);
-	  break;
+	  /* NOTREACHED */
 	}
     }
 

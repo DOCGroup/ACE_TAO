@@ -591,7 +591,7 @@ Thr_Supplier_Proxy::svc (void)
 	  ACE_OS::sleep (tv);
 	}
     }
-  return 0;
+  ACE_NOTREACHED(return 0);
 }
 
 #endif /* ACE_HAS_THREADS */

@@ -217,7 +217,7 @@ main (int argc, char *)
       if (reactor.handle_events () == -1)
 	ACE_ERROR ((LM_ERROR, "%p\n", "handle_events"));
     }
-  return 0;
+  ACE_NOTREACHED(return 0);
 }
 #else
 int

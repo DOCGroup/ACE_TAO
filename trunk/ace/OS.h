@@ -326,6 +326,12 @@ private:
 #define ACE_UNUSED_ARG(a) (a)
 #endif /* ghs */
 
+#if defined(__sgi) || defined(VXWORKS)
+#define ACE_NOTREACHED(a)
+#else
+#define ACE_NOTREACHED(a) a
+#endif
+
 #if defined (ACE_REQUIRES_FUNC_DEFINITIONS)
   // Provide a null definition for the function.  Not pleasant.
 # define ACE_UNIMPLEMENTED_FUNC(f) f {}
