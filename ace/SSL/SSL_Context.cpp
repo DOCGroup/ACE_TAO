@@ -131,6 +131,7 @@ ACE_SSL_Context::ssl_library_fini (void)
       delete [] ACE_SSL_Context::lock_;
 #endif  /* ACE_HAS_THREADS */
 
+      ::ERR_free_strings ();
       ::EVP_cleanup ();
     }
 }
