@@ -24,6 +24,7 @@
 
 #include "orbsvcs/RtecSchedulerC.h"
 #include "sched_event_export.h"
+#include "ace/SString.h"
 
 /**
  * @class TAO_EC_Sched_Filter

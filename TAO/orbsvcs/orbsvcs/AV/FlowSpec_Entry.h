@@ -20,6 +20,7 @@
 #include "AV_Core.h"
 #include "ace/Addr.h"
 #include "ace/Containers.h"
+#include "ace/SString.h"
 
 /**
  * @class TAO_Tokenizer
