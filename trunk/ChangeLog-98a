@@ -1,3 +1,8 @@
+Wed Dec 03 18:02:09 1997    <irfan@TWOSTEP>
+
+	* performance-tests/Synch-Benchmarks/Benchmark.cpp: Added template
+ 	  instantiations for Atomic_Op.
+
 Wed Dec  3 10:29:58 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
 	* ace/ACE.cpp: 
