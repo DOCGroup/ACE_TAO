@@ -22,11 +22,11 @@ Legend:
 
 
 [11111 ] libTAO and TAO_IDL compile.
-    
+
 [11110 ] IDL_Cubit compiles
 [1x110x] 	svr runs
 [1x111x]	clnt runs
-     
+
 [1 11x ] POA/RootPOA compiles
 [1 11x ] 	POA/RootPOA runs
 [1 11x ] POA/FindPOA compiles
@@ -41,8 +41,17 @@ Legend:
 [  00  ] 	POA/Explicit_Activation runs
 [xxxxxx] POA/Default_Servant compiles
 [xxxxxx] 	POA/Default_Servant runs
-     
+
 [1x11xx] Param_Test compiles
+[xx1xxx] 	SII short
+[xx1xxx] 	SII ubstring
+[xx1xxx] 	SII fixed_struct
+[xxxxxx] 	SII strseq
+[xx0xxx] 	SII var_struct
+[xx0xxx] 	SII nested_struct
+[xx0xxx] 	SII struct_seq
+[xx0xxx] 	SII objref
+
 [xxxxxx] 	DII short
 [xxxxxx] 	DII ubstring
 [xxxxxx] 	DII fixed_struct
@@ -51,15 +60,6 @@ Legend:
 [xxxxxx] 	DII nested_struct
 [xxxxxx] 	DII struct_seq
 [xxxxxx] 	DII objref
-     
-[xxxxxx] 	SII short
-[xxxxxx] 	SII ubstring
-[xxxxxx] 	SII fixed_struct
-[xxxxxx] 	SII strseq
-[xxxxxx] 	SII var_struct
-[xxxxxx] 	SII nested_struct
-[xxxxxx] 	SII struct_seq
-[xxxxxx] 	SII objref
 
 [0x0x0x] Thruput/TAO compiles
 
@@ -74,13 +74,13 @@ Legend:
 [1 010 ] Dump_Schedule compiles
 [1x111x] Event_Latency compiles
 [xxx0xx] Event_Latency runs
-    
+
 [000100] MT_Cubit compiles
 [xxx0xx] 	runs for Octet
 [xxx0xx] 	runs for Short
 [xxx0xx] 	runs for Long
 [xxx0xx] 	runs for Struct
-    
+
 NOTES
 * Solaris/CC
 **orbsvcs/tests/Logger does not compile
