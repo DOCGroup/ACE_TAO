@@ -21,16 +21,18 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/CosNotifyChannelAdminS.h"
-
+#include "Topology_Object.h"
 #include "Object.h"
 
 class TAO_Notify_ConsumerAdmin;
 class TAO_Notify_SupplierAdmin;
 class TAO_Notify_EventChannelFactory;
+class TAO_Notify_ProxyConsumer;
+class TAO_Notify_ProxySupplier;
 template <class TYPE> class TAO_Notify_Container_T;
 
 #if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
+  #if (_MSC_VER >= 1200)
 #pragma warning(push)
 #endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
@@ -42,9 +44,9 @@ template <class TYPE> class TAO_Notify_Container_T;
  * @brief Implementation of CosNotifyChannelAdmin::EventChannel
  *
  */
-class TAO_Notify_Serv_Export TAO_Notify_EventChannel 
-  : public POA_CosNotifyChannelAdmin::EventChannel, 
-    public virtual TAO_Notify_Object
+class TAO_Notify_Serv_Export TAO_Notify_EventChannel
+  : public POA_CosNotifyChannelAdmin::EventChannel,
+    public TAO_Notify::Topology_Parent
 {
   friend class TAO_Notify_Builder;
 
@@ -64,6 +66,10 @@ public:
              , const CosNotification::AdminProperties & initial_admin
              ACE_ENV_ARG_DECL);
 
+  /// Init (for reload)
+  void init (TAO_Notify_EventChannelFactory* ecf
+             ACE_ENV_ARG_DECL);
+
   /// Remove ConsumerAdmin from its container.
   void remove (TAO_Notify_ConsumerAdmin* consumer_admin ACE_ENV_ARG_DECL);
 
@@ -74,11 +80,30 @@ public:
   virtual void _add_ref (ACE_ENV_SINGLE_ARG_DECL);
   virtual void _remove_ref (ACE_ENV_SINGLE_ARG_DECL);
 
+  // TAO_Notify::Topology_Parent
+
+  virtual void save_persistent (TAO_Notify::Topology_Saver& saver ACE_ENV_ARG_DECL);
+  virtual TAO_Notify::Topology_Object* load_child (const ACE_CString &type,
+                                                   CORBA::Long id,
+                                                   const TAO_Notify::NVPList& attrs
+                                                   ACE_ENV_ARG_DECL);
+  virtual void reconnect (ACE_ENV_SINGLE_ARG_DECL);
+
+  virtual TAO_Notify_Object::ID get_id () const {return id();}
+
+  TAO_Notify_ProxyConsumer * find_proxy_consumer (TAO_Notify::IdVec & id_path, size_t position  ACE_ENV_ARG_DECL);
+  TAO_Notify_ProxySupplier * find_proxy_supplier (TAO_Notify::IdVec & id_path, size_t position  ACE_ENV_ARG_DECL);
+
   /// Release
   virtual void release (void);
 
   /// Shutdown
   virtual int shutdown (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void load_attrs(const TAO_Notify::NVPList& attrs);
+
+
+protected:
+  virtual void save_attrs(TAO_Notify::NVPList& attrs);
 
 protected:
   typedef TAO_Notify_Container_T <TAO_Notify_ConsumerAdmin> TAO_Notify_ConsumerAdmin_Container;
@@ -93,6 +118,8 @@ protected:
 
   /// SupplierAdmin Container.
   TAO_Notify_SupplierAdmin_Container *sa_container_;
+
+  TAO_SYNCH_MUTEX default_admin_mutex_;
 
   // Default Consumer Admin
   CosNotifyChannelAdmin::ConsumerAdmin_var default_consumer_admin_;

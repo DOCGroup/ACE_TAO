@@ -37,7 +37,7 @@
  * @brief The AdminProperties per EventChannel.
  *
  */
-class TAO_Notify_Serv_Export TAO_Notify_AdminProperties 
+class TAO_Notify_Serv_Export TAO_Notify_AdminProperties
   : public TAO_Notify_PropertySeq
 {
 public:
@@ -50,11 +50,20 @@ public:
   // Init
   int init (const CosNotification::PropertySeq& prop_seq);
 
-  // = Accessors
+  // finish initialization after values are set by topology load
+  void init ();
+
+  // = Const Accessors
   const TAO_Notify_Property_Long& max_global_queue_length (void) const;
   const TAO_Notify_Property_Long& max_consumers (void) const;
   const TAO_Notify_Property_Long& max_suppliers (void) const;
   const TAO_Notify_Property_Boolean& reject_new_events (void) const;
+
+  // = Non-const accessors
+  TAO_Notify_Property_Long & max_global_queue_length (void);
+  TAO_Notify_Property_Long & max_consumers (void);
+  TAO_Notify_Property_Long & max_suppliers (void);
+  TAO_Notify_Property_Boolean & reject_new_events (void);
 
   CORBA::Long& global_queue_length (void);
   TAO_SYNCH_MUTEX& global_queue_lock (void);
@@ -109,8 +118,8 @@ protected:
   TAO_Notify_Atomic_Property_Long suppliers_;
 };
 
-typedef ACE_Refcounted_Auto_Ptr<TAO_Notify_AdminProperties, 
-                                TAO_SYNCH_MUTEX> 
+typedef ACE_Refcounted_Auto_Ptr<TAO_Notify_AdminProperties,
+                                TAO_SYNCH_MUTEX>
   TAO_Notify_AdminProperties_var;
 
 #if defined (__ACE_INLINE__)

@@ -29,7 +29,7 @@ class TAO_Notify_ThreadPool_Task;
  * @brief Shutdown message for the ThreadPool_Task
  *
  */
-class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Shutdown : public TAO_Notify_Method_Request
+class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Shutdown : public TAO_Notify_Method_Request_Queueable
 {
 public:
   /// Constuctor
@@ -39,7 +39,7 @@ public:
   ~TAO_Notify_Method_Request_Shutdown ();
 
   /// Create a copy of this object.
-  TAO_Notify_Method_Request* copy (void);
+  TAO_Notify_Method_Request_Queueable* copy (void);
 
   /// Execute the Request
   virtual int execute (ACE_ENV_SINGLE_ARG_DECL);

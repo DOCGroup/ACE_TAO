@@ -6,6 +6,14 @@
 #include "EventTypeSeq.inl"
 #endif /* __ACE_INLINE__ */
 
+#include "Topology_Saver.h"
+
+#include "tao/debug.h"
+//#define DEBUG_LEVEL 9
+#ifndef DEBUG_LEVEL
+# define DEBUG_LEVEL TAO_debug_level
+#endif //DEBUG_LEVEL
+
 ACE_RCSID(Notify, TAO_Notify_EventTypeSeq, "$Id$")
 
 TAO_Notify_EventTypeSeq::TAO_Notify_EventTypeSeq (void)
@@ -15,6 +23,19 @@ TAO_Notify_EventTypeSeq::TAO_Notify_EventTypeSeq (void)
 TAO_Notify_EventTypeSeq::TAO_Notify_EventTypeSeq (const CosNotification::EventTypeSeq& event_type_seq)
 {
   this->insert_seq (event_type_seq);
+}
+
+TAO_Notify_EventTypeSeq &
+TAO_Notify_EventTypeSeq::operator = (const TAO_Notify_EventTypeSeq & rhs)
+{
+  ACE_Unbounded_Set <TAO_Notify_EventType>::operator = (rhs);
+  return *this;
+}
+
+TAO_Notify_EventTypeSeq::TAO_Notify_EventTypeSeq (const TAO_Notify_EventTypeSeq & rhs)
+  : ACE_Unbounded_Set <TAO_Notify_EventType> (rhs)
+    , TAO_Notify::Topology_Object ()
+{
 }
 
 void
@@ -237,4 +258,59 @@ TAO_Notify_EventTypeSeq::dump (void) const
       event_type->dump ();
       ACE_DEBUG ((LM_DEBUG, ", "));
     }
+}
+
+  // TAO_Notify::Topology_Object
+void
+TAO_Notify_EventTypeSeq::save_persistent (TAO_Notify::Topology_Saver& saver ACE_ENV_ARG_DECL)
+{
+  bool changed = this->self_changed_;
+  this->self_changed_ = false;
+  this->children_changed_ = false;
+  TAO_Notify::NVPList attrs;
+
+  TAO_Notify_EventTypeSeq::ITERATOR iter (*this);
+  TAO_Notify_EventType* event_type;
+
+  if (this->size() != 0)
+  {
+    saver.begin_object(0, "subscriptions", attrs, changed ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+    for (iter.first (); iter.next (event_type) != 0; iter.advance ())
+    {
+      event_type->save_persistent(saver ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+    }
+// todo:
+//    for all deleted children
+//    {
+//      saver.delete_child(child_type, child_id);
+//    }
+    saver.end_object(0, "subscriptions" ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+  }
+}
+
+TAO_Notify::Topology_Object*
+TAO_Notify_EventTypeSeq::load_child (const ACE_CString &type, CORBA::Long id,
+  const TAO_Notify::NVPList& attrs ACE_ENV_ARG_DECL)
+{
+  ACE_UNUSED_ARG (id);
+  TAO_Notify::Topology_Object *result = this;
+  TAO_Notify_EventType et;
+
+  if ((type == "subscription") && et.init(attrs))
+  {
+    if (DEBUG_LEVEL) ACE_DEBUG ((LM_DEBUG,
+      ACE_TEXT ("(%P|%t) Event_Type reload subscription\n")
+      ));
+    inherited::insert(et);
+  }
+  return result;
+}
+
+void
+TAO_Notify_EventTypeSeq::release (void)
+{
+  delete this;
 }

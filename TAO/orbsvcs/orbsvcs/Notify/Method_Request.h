@@ -5,8 +5,6 @@
  *  $Id$
  *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_METHOD_REQUEST_H
@@ -26,41 +24,42 @@
 
 #include "Event.h"
 
-class TAO_Notify_Method_Request;
+class TAO_Notify_Method_Request_Queueable;
 
 /**
- * @class TAO_Notify_Method_Request_No_Copy
+ * @class TAO_Notify_Method_Request
  *
- * @brief Base class for Method Requests that do not copy the event.
+ * @brief Base class for Method Requests
  *
  */
-class TAO_Notify_Serv_Export TAO_Notify_Method_Request_No_Copy
+class TAO_Notify_Serv_Export TAO_Notify_Method_Request
 {
 public:
   /// Execute the Request
   virtual int execute (ACE_ENV_SINGLE_ARG_DECL) = 0;
-
-  /// Create a copy of this object.
-  virtual TAO_Notify_Method_Request* copy (ACE_ENV_SINGLE_ARG_DECL) = 0;
+  virtual TAO_Notify_Method_Request_Queueable* copy (ACE_ENV_SINGLE_ARG_DECL) = 0;
 };
 
 /***********************************************************************/
 
 /**
- * @class TAO_Notify_Method_Request
+ * @class TAO_Notify_Method_Request_Queueable
  *
  * @brief Interface for NS method Requests
  *
  */
-class TAO_Notify_Serv_Export TAO_Notify_Method_Request : public ACE_Message_Block
+class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Queueable
+  : public ACE_Message_Block
+  , public TAO_Notify_Method_Request
 {
 public:
   enum {PRIORITY_BASE = 32768};
 
-  void init (const TAO_Notify_Event_var& event);
+  TAO_Notify_Method_Request_Queueable();
+  TAO_Notify_Method_Request_Queueable(const TAO_Notify_Event * event);
 
-  /// Execute the Request
-  virtual int execute (ACE_ENV_SINGLE_ARG_DECL) = 0;
+  virtual TAO_Notify_Method_Request_Queueable* copy (ACE_ENV_SINGLE_ARG_DECL);
+  void init (const TAO_Notify_Event * event);
 };
 
 #if defined (__ACE_INLINE__)

@@ -14,7 +14,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "../notify_export.h"
+#include "../notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -40,6 +40,7 @@
 class TAO_Notify_Serv_Export TAO_Notify_StructuredProxyPushConsumer
   : public virtual TAO_Notify_ProxyConsumer_T <POA_CosNotifyChannelAdmin::StructuredProxyPushConsumer>
 {
+  typedef TAO_Notify_ProxyConsumer_T <POA_CosNotifyChannelAdmin::StructuredProxyPushConsumer> SuperClass;
   friend class TAO_Notify_Builder;
 
 public:
@@ -51,6 +52,8 @@ public:
 
   /// Release
   virtual void release (void);
+
+  virtual void load_attrs (const TAO_Notify::NVPList& attrs);
 
 protected:
 
@@ -69,14 +72,14 @@ protected:
     CosEventChannelAdmin::AlreadyConnected
   ));
 
-virtual void push_structured_event (
-    const CosNotification::StructuredEvent & notification
-    ACE_ENV_ARG_DECL
-  )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException,
-    CosEventComm::Disconnected
-  ));
+  virtual void push_structured_event (
+      const CosNotification::StructuredEvent & notification
+      ACE_ENV_ARG_DECL
+    )
+    ACE_THROW_SPEC ((
+      CORBA::SystemException,
+      CosEventComm::Disconnected
+    ));
 
   virtual void disconnect_structured_push_consumer (
     ACE_ENV_SINGLE_ARG_DECL
@@ -84,6 +87,8 @@ virtual void push_structured_event (
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ));
+
+  virtual const char * get_proxy_type_name (void) const;
 };
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)

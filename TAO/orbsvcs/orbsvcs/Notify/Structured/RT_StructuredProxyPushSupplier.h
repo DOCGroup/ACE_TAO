@@ -20,6 +20,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "StructuredProxyPushSupplier.h"
+class TAO_Notify_Method_Request;
 
 /**
  * @class TAO_Notify_RT_StructuredProxyPushSupplier
@@ -40,16 +41,10 @@ public:
   virtual CORBA::Object_ptr activate (PortableServer::Servant servant ACE_ENV_ARG_DECL);
 
   /// Dispatch Event to consumer
-  virtual void push (const TAO_Notify_Event* event ACE_ENV_ARG_DECL);
-
-  /// Dispatch Event to consumer
-  virtual void push (const TAO_Notify_Event_var& event ACE_ENV_ARG_DECL);
+  void deliver (TAO_Notify_Method_Request_Dispatch & request ACE_ENV_ARG_DECL);
 
   /// Dispatch Event to consumer, no filtering
   virtual void push_no_filtering (const TAO_Notify_Event* event ACE_ENV_ARG_DECL);
-
-  /// Dispatch Event to consumer, no filtering
-  virtual void push_no_filtering (const TAO_Notify_Event_var& event ACE_ENV_ARG_DECL);
 
 private:
   /// Our ref.

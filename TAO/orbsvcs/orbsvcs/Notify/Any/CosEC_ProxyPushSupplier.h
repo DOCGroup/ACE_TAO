@@ -14,7 +14,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "../notify_export.h"
+#include "../notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -55,6 +55,8 @@ public:
 
   /// Release
   virtual void release (void);
+
+  virtual const char * get_proxy_type_name (void) const;
 
   // = Interface methods
   virtual void connect_push_consumer (

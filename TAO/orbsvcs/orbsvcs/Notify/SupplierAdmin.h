@@ -24,6 +24,8 @@
 
 #include "Admin.h"
 
+class TAO_Notify_ProxyConsumer;
+
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
 #pragma warning(push)
@@ -37,8 +39,8 @@
  * @brief Implementation of CosNotifyChannelAdmin::SupplierAdmin
  *
  */
-class TAO_Notify_Serv_Export TAO_Notify_SupplierAdmin 
-  : public virtual POA_NotifyExt::SupplierAdmin, 
+class TAO_Notify_Serv_Export TAO_Notify_SupplierAdmin
+  : public virtual POA_NotifyExt::SupplierAdmin,
     public virtual TAO_Notify_Admin
 {
 public:
@@ -58,7 +60,26 @@ public:
   /// Release
   virtual void release (void);
 
+  virtual const char * get_admin_type_name () const;
+
+  virtual TAO_Notify::Topology_Object* load_child (
+    const ACE_CString &type,
+    CORBA::Long id,
+    const TAO_Notify::NVPList& attrs
+    ACE_ENV_ARG_DECL);
+
+  TAO_Notify_ProxyConsumer * find_proxy_consumer (
+      TAO_Notify::IdVec & id_path,
+      size_t position
+      ACE_ENV_ARG_DECL);
+
 protected:
+
+    TAO_Notify::Topology_Object *load_proxy (
+    CORBA::Long id,
+    CosNotifyChannelAdmin::ClientType ctype,
+    const TAO_Notify::NVPList& attrs
+    ACE_ENV_ARG_DECL);
 
   /// = NotifyExt::SupplierAdmin methods
   CosNotifyChannelAdmin::ProxyConsumer_ptr
@@ -103,7 +124,7 @@ protected:
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosNotifyChannelAdmin::ProxyNotFound));
 
-  virtual ::CosNotifyChannelAdmin::ProxyConsumer_ptr 
+  virtual ::CosNotifyChannelAdmin::ProxyConsumer_ptr
   obtain_notification_pull_consumer (
       CosNotifyChannelAdmin::ClientType ctype,
       CosNotifyChannelAdmin::ProxyID_out proxy_id
@@ -112,7 +133,7 @@ protected:
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosNotifyChannelAdmin::AdminLimitExceeded));
 
-  virtual ::CosNotifyChannelAdmin::ProxyConsumer_ptr 
+  virtual ::CosNotifyChannelAdmin::ProxyConsumer_ptr
   obtain_notification_push_consumer (
       CosNotifyChannelAdmin::ClientType ctype,
       CosNotifyChannelAdmin::ProxyID_out proxy_id
@@ -127,7 +148,7 @@ protected:
   virtual ::CosNotification::QoSProperties* get_qos (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void set_qos (const CosNotification::QoSProperties& qos 
+  virtual void set_qos (const CosNotification::QoSProperties& qos
                         ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosNotification::UnsupportedQoS));
@@ -160,7 +181,7 @@ protected:
                      CosNotifyFilter::FilterNotFound));
 
   virtual ::CosNotifyFilter::Filter_ptr get_filter (
-      CosNotifyFilter::FilterID filter 
+      CosNotifyFilter::FilterID filter
       ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((CORBA::SystemException,

@@ -10,6 +10,7 @@ ACE_RCSID (Notify, TAO_Notify_ProxyPushSupplier, "$Id$")
 
 #include "tao/debug.h"
 #include "PushConsumer.h"
+#include "../Properties.h"
 
 TAO_Notify_ProxyPushSupplier::TAO_Notify_ProxyPushSupplier (void)
 {
@@ -48,6 +49,8 @@ TAO_Notify_ProxyPushSupplier::connect_any_push_consumer (CosEventComm::PushConsu
   ACE_CHECK;
 
   this->connect (consumer ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+  this->self_change (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 void
@@ -57,6 +60,8 @@ TAO_Notify_ProxyPushSupplier::disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL)
                    ))
 {
   this->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+  this->self_change (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 CosNotifyChannelAdmin::ProxyType
@@ -66,4 +71,37 @@ TAO_Notify_ProxyPushSupplier::MyType (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
                    ))
 {
   return CosNotifyChannelAdmin::PUSH_ANY;
+}
+
+const char *
+TAO_Notify_ProxyPushSupplier::get_proxy_type_name (void) const
+{
+  return "proxy_push_supplier";
+}
+
+void
+TAO_Notify_ProxyPushSupplier::load_attrs (const TAO_Notify::NVPList& attrs)
+{
+  SuperClass::load_attrs(attrs);
+  ACE_CString ior;
+  if (attrs.load("PeerIOR", ior) && ior.length() > 0)
+  {
+    CORBA::ORB_var orb = TAO_Notify_PROPERTIES::instance()->orb();
+    ACE_DECLARE_NEW_CORBA_ENV;
+    ACE_TRY
+    {
+      CORBA::Object_var obj = orb->string_to_object(ior.c_str() ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      CosNotifyComm::PushConsumer_var pc =
+        CosNotifyComm::PushConsumer::_unchecked_narrow(obj.in() ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      this->connect_any_push_consumer(pc.in() ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+    }
+    ACE_CATCHANY
+    {
+      // if we can't reconnect, tough...
+    }
+    ACE_ENDTRY;
+  }
 }

@@ -13,7 +13,7 @@
 #define TAO_Notify_SEQUENCEPUSHSUPPLIER_H
 #include /**/ "ace/pre.h"
 
-#include "../notify_export.h"
+#include "../notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -44,6 +44,9 @@ public:
 
   /// TAO_Notify_Destroy_Callback methods
   virtual void release (void);
+
+  /// Retrieve the ior of this peer
+  virtual bool get_ior (ACE_CString & iorstr) const;
 
 protected:
   /// The Supplier
