@@ -53,9 +53,6 @@
 #  if defined (__IBMCPP__) && (__IBMCPP__ >= 400)
 #    define ACE_HAS_STD_TEMPLATE_SPECIALIZATION
 #    define ACE_HAS_TYPENAME_KEYWORD
-#    if (__IBMCPP__ < 600) /* VisualAge C++ 6 has registry implementation of templates (may still need to add option for it) */
-#      define ACE_TEMPLATES_REQUIRE_SOURCE
-#    endif /* __IBMCPP__ < 600 */
 #    undef WIFEXITED
 #    undef WEXITSTATUS
 #    if (__IBMCPP__ >= 500)  /* Visual Age C++ 5 */
