@@ -56,7 +56,6 @@ class TAO_Server_Strategy_Factory;
 class TAO_Transport_Cache_Manager;
 
 class TAO_TSS_Resources;
-class TAO_Reactor_Registry;
 class TAO_Leader_Follower;
 class TAO_LF_Strategy;
 class TAO_RT_ORB;
@@ -155,13 +154,6 @@ public:
   /// Lane for this thread.
   void *lane_;
 
-  /// The Reactor Holder that we should callback when destroying the
-  /// cookie.
-  TAO_Reactor_Registry *reactor_registry_;
-
-  /// A TSS magic cookie used by the Reactor_Registry
-  void *reactor_registry_cookie_;
-
   /// Generic container for thread-specific objects.
   ACE_Array_Base<void *> ts_objects_;
 
@@ -259,7 +251,6 @@ public:
 
   /// Wrappers that forward the request to the concurrency strategy.
   ACE_Reactor *reactor (void);
-  ACE_Reactor *reactor (TAO_Acceptor *acceptor);
 
   /// Get the ACE_Thread_Manager
   ACE_Thread_Manager *thr_mgr (void);
@@ -1211,13 +1202,6 @@ protected:
   /// If the resources are per-ORB (as opposed to per-ORB-per-thread)
   /// then they are stored here...
   TAO_ORB_Core_TSS_Resources orb_resources_;
-
-  /// The server concurrency strategy.
-  TAO_Reactor_Registry *reactor_registry_;
-
-  /// The reactor used for pure-clients, otherwise it comes from the
-  /// reactor_registry.
-  ACE_Reactor *reactor_;
 
   /// Flag which denotes that the ORB has been shutdown.
   int has_shutdown_;

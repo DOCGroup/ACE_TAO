@@ -22,6 +22,8 @@
 #include "tao/Thread_Lane_Resources_Manager.h"
 #include "ace/Service_Config.h"
 
+class TAO_Thread_Pool_Manager;
+
 /**
  * @class TAO_RT_Thread_Lane_Resources_Manager
  *
@@ -43,8 +45,10 @@ public:
   int open_default_resources (CORBA_Environment &ACE_TRY_ENV);
 
   TAO_Thread_Lane_Resources &lane_resources (void);
-
   TAO_Thread_Lane_Resources &default_lane_resources (void);
+  int shutdown_all_reactors (CORBA_Environment &ACE_TRY_ENV);
+
+protected:
 
   /// Mutual exclusion for calling open.
   TAO_SYNCH_MUTEX open_lock_;
@@ -54,8 +58,7 @@ public:
 
   TAO_Thread_Lane_Resources *default_lane_resources_;
 
-  /// ORB_Core related to this thread lane.
-  TAO_ORB_Core *orb_core_;
+  TAO_Thread_Pool_Manager *tp_manager_;
 };
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_RTCORBA, TAO_RT_Thread_Lane_Resources_Manager)

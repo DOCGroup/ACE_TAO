@@ -11,7 +11,6 @@
 #include "debug.h"
 #include "MProfile.h"
 #include "Stub.h"
-#include "Reactor_Registry.h"
 #include "Leader_Follower.h"
 #include "Connector_Registry.h"
 #include "Acceptor_Registry.h"
@@ -151,8 +150,6 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     use_tss_resources_ (0),
     tss_resources_ (),
     orb_resources_ (),
-    reactor_registry_ (0),
-    reactor_ (0),
     has_shutdown_ (1),
     thread_per_connection_use_timeout_ (1),
     endpoint_selector_factory_ (0),
@@ -907,10 +904,6 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
   else
     this->use_tss_resources_ = use_tss_resources;
 
-  this->reactor_registry_ =
-    trf->get_reactor_registry ();
-  this->reactor_registry_->open (this);
-
   // @@ ????
   // Make sure the reactor is initialized...
   ACE_Reactor *reactor = this->reactor ();
@@ -1144,17 +1137,11 @@ TAO_ORB_Core::fini (void)
   // Finalize lane resources.
   this->thread_lane_resources_manager ().finalize ();
 
-  // Pass reactor back to the resource factory.
-  if (this->resource_factory_ != 0)
-    this->resource_factory_->reclaim_reactor (this->reactor_);
-
   // Release the priority mapping manager here since it can be used when
   // shutting down the reactor above.
   CORBA::release (this->rt_priority_mapping_manager_);
 
   (void) TAO_Internal::close_services ();
-
-  delete this->reactor_registry_;
 
   if (this->message_block_dblock_allocator_)
     this->message_block_dblock_allocator_->remove ();
@@ -1685,30 +1672,6 @@ TAO_ORB_Core::inherit_from_parent_thread (
 
   if (tss_resources == 0)
     return -1;
-#if 0
-  if (tss_resources->reactor_ != 0)
-    {
-      // We'll use the spawning thread's reactor.
-      TAO_ORB_Core_TSS_Resources *tss = this->get_tss_resources ();
-      if (tss->reactor_ != 0 && TAO_debug_level > 0)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      "TAO (%P|%t) non nil reactor on thread startup!\n"));
-
-          if (tss == 0)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "(%P|%t) %p\n",
-                               "TAO_ORB_Core::inherit_from_parent_thread"
-                               " (); no more TSS keys"),
-                              -1);
-
-          if (/* tss->owns_resources_ != 0 && */ !tss->inherited_reactor_)
-            delete tss->reactor_;
-        }
-      tss->reactor_ = tss_resources->reactor_;
-      tss->inherited_reactor_ = 1;
-    }
-#endif /* 0 */
   return 0;
 }
 
@@ -1995,13 +1958,13 @@ TAO_ORB_Core::is_collocated (const TAO_MProfile& mprofile)
 TAO_Leader_Follower &
 TAO_ORB_Core::leader_follower (void)
 {
-  return this->reactor_registry_->leader_follower ();
+  return this->lane_resources ().leader_follower ();
 }
 
 TAO_LF_Strategy &
 TAO_ORB_Core::lf_strategy (void)
 {
-  return this->reactor_registry_->lf_strategy ();
+  return this->thread_lane_resources_manager ().lf_strategy ();
 }
 
 int
@@ -2109,14 +2072,18 @@ TAO_ORB_Core::shutdown (CORBA::Boolean wait_for_completion,
     {
       this->adapter_registry_.check_close (wait_for_completion,
                                            ACE_TRY_ENV);
+      ACE_CHECK;
+
       this->adapter_registry_.close (wait_for_completion,
                                      ACE_TRY_ENV);
+      ACE_CHECK;
 
       // Set the shutdown flag
       this->has_shutdown_ = 1;
 
       // Shutdown all the reactors....
-      this->reactor_registry_->shutdown_all ();
+      this->thread_lane_resources_manager ().shutdown_all_reactors (ACE_TRY_ENV);
+      ACE_CHECK;
 
       // Grab the thread manager
       ACE_Thread_Manager *tm = this->thr_mgr ();
@@ -2842,13 +2809,7 @@ TAO_ORB_Core::create_data_block_i (size_t size,
 ACE_Reactor *
 TAO_ORB_Core::reactor (void)
 {
-  return this->reactor_registry_->reactor ();
-}
-
-ACE_Reactor *
-TAO_ORB_Core::reactor (TAO_Acceptor *acceptor)
-{
-  return this->reactor_registry_->reactor (acceptor);
+  return this->leader_follower ().reactor ();
 }
 
 CORBA::Object_ptr
@@ -3055,8 +3016,6 @@ TAO_ORB_Core_TSS_Resources::TAO_ORB_Core_TSS_Resources (void)
     client_leader_thread_ (0),
     leader_follower_condition_variable_ (0),
     lane_ (0),
-    reactor_registry_ (0),
-    reactor_registry_cookie_ (0),
     ts_objects_ (),
     orb_core_ (0)
 {
@@ -3086,10 +3045,6 @@ TAO_ORB_Core_TSS_Resources::~TAO_ORB_Core_TSS_Resources (void)
 
   delete this->leader_follower_condition_variable_;
   this->leader_follower_condition_variable_ = 0;
-
-  if (this->reactor_registry_ != 0)
-    this->reactor_registry_->destroy_tss_cookie (
-      this->reactor_registry_cookie_);
 
   //@@ This is broken on platforms that use TSS emulation since this
   //   destructor is invoked after the ORB.  Since we're under

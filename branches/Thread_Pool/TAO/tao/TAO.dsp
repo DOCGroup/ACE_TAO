@@ -687,10 +687,6 @@ SOURCE=.\Reactive_Flushing_Strategy.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Reactor_Registry.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\Remote_Object_Proxy_Broker.cpp
 # End Source File
 # Begin Source File
@@ -732,10 +728,6 @@ SOURCE=.\Services.cpp
 # Begin Source File
 
 SOURCE=.\Services_Activate.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Single_Reactor.cpp
 # End Source File
 # Begin Source File
 
@@ -1479,10 +1471,6 @@ SOURCE=.\Reactive_Flushing_Strategy.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Reactor_Registry.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Remote_Object_Proxy_Broker.h
 # End Source File
 # Begin Source File
@@ -1528,10 +1516,6 @@ SOURCE=.\Services.h
 # Begin Source File
 
 SOURCE=.\Services_Activate.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Single_Reactor.h
 # End Source File
 # Begin Source File
 
@@ -2119,10 +2103,6 @@ SOURCE=.\Profile.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\Reactor_Registry.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\Reply_Dispatcher.i
 # End Source File
 # Begin Source File
@@ -2144,10 +2124,6 @@ SOURCE=.\Service_Context.inl
 # Begin Source File
 
 SOURCE=.\Services.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Single_Reactor.i
 # End Source File
 # Begin Source File
 

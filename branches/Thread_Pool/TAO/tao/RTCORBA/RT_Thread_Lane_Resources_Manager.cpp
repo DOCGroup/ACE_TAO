@@ -8,6 +8,7 @@ ACE_RCSID(RTCORBA, RT_Thread_Lane_Resources_Manager, "$Id$")
 #include "tao/Acceptor_Registry.h"
 #include "tao/Thread_Lane_Resources.h"
 #include "tao/RTCORBA/Thread_Pool.h"
+#include "tao/RTCORBA/RT_ORB.h"
 #include "tao/Leader_Follower.h"
 
 #if !defined (__ACE_INLINE__)
@@ -17,7 +18,7 @@ ACE_RCSID(RTCORBA, RT_Thread_Lane_Resources_Manager, "$Id$")
 TAO_RT_Thread_Lane_Resources_Manager::TAO_RT_Thread_Lane_Resources_Manager (void)
   : open_called_ (0),
     default_lane_resources_ (0),
-    orb_core_ (0)
+    tp_manager_ (0)
 {
 }
 
@@ -29,8 +30,11 @@ TAO_RT_Thread_Lane_Resources_Manager::~TAO_RT_Thread_Lane_Resources_Manager (voi
 int
 TAO_RT_Thread_Lane_Resources_Manager::initialize (TAO_ORB_Core &orb_core)
 {
-  this->orb_core_ =
-    &orb_core;
+  int result =
+    this->TAO_Thread_Lane_Resources_Manager::initialize (orb_core);
+
+  if (result != 0)
+    return result;
 
   ACE_NEW_RETURN (this->default_lane_resources_,
                   TAO_Thread_Lane_Resources (orb_core),
@@ -74,6 +78,30 @@ void
 TAO_RT_Thread_Lane_Resources_Manager::finalize (void)
 {
   this->default_lane_resources_->finalize ();
+
+  TAO_Thread_Pool_Manager::THREAD_POOLS &thread_pools =
+    this->tp_manager_->thread_pools ();
+
+  for (TAO_Thread_Pool_Manager::THREAD_POOLS::iterator pool_iterator =
+         thread_pools.begin ();
+       pool_iterator != thread_pools.end ();
+       ++pool_iterator)
+    {
+      TAO_Thread_Lane **lanes =
+        (*pool_iterator).int_id_->lanes ();
+      CORBA::ULong number_of_lanes =
+        (*pool_iterator).int_id_->number_of_lanes ();
+
+      for (CORBA::ULong lane = 0;
+           lane != number_of_lanes;
+           ++lane)
+        {
+          TAO_Thread_Lane_Resources &lane_resources =
+            lanes[lane]->resources ();
+
+          lane_resources.finalize ();
+        }
+    }
 }
 
 TAO_Thread_Lane_Resources &
@@ -97,6 +125,78 @@ TAO_Thread_Lane_Resources &
 TAO_RT_Thread_Lane_Resources_Manager::default_lane_resources (void)
 {
   return *this->default_lane_resources_;
+}
+
+int
+TAO_RT_Thread_Lane_Resources_Manager::shutdown_all_reactors (CORBA_Environment &ACE_TRY_ENV)
+{
+  // Get the RTORB.
+  CORBA::Object_var object =
+    this->orb_core_->resolve_rt_orb (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+
+  RTCORBA::RTORB_var rt_orb =
+    RTCORBA::RTORB::_narrow (object,
+                             ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+
+  TAO_RT_ORB *tao_rt_orb =
+    ACE_dynamic_cast (TAO_RT_ORB *,
+                      rt_orb.in ());
+
+  this->tp_manager_ =
+    &tao_rt_orb->tp_manager ();
+
+  TAO_Thread_Pool_Manager::THREAD_POOLS &thread_pools =
+    this->tp_manager_->thread_pools ();
+
+  for (TAO_Thread_Pool_Manager::THREAD_POOLS::iterator pool_iterator =
+         thread_pools.begin ();
+       pool_iterator != thread_pools.end ();
+       ++pool_iterator)
+    {
+      TAO_Thread_Lane **lanes =
+        (*pool_iterator).int_id_->lanes ();
+      CORBA::ULong number_of_lanes =
+        (*pool_iterator).int_id_->number_of_lanes ();
+
+      for (CORBA::ULong lane = 0;
+           lane != number_of_lanes;
+           ++lane)
+        {
+          TAO_Thread_Lane_Resources &lane_resources =
+            lanes[lane]->resources ();
+
+          TAO_Leader_Follower &leader_follower =
+            lane_resources.leader_follower ();
+
+          ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
+                            ace_mon,
+                            leader_follower.lock (),
+                            -1);
+
+          // Wakeup all the threads waiting blocked in the event loop,
+          // this does not guarantee that they will all go away, but
+          // reduces the load on the POA....
+          ACE_Reactor *reactor =
+            leader_follower.reactor ();
+
+          reactor->wakeup_all_threads ();
+
+          // If there are some client threads running we have to wait
+          // until they finish, when the last one does it will
+          // shutdown the reactor for us.  Meanwhile no new requests
+          // will be accepted because the POA will not process them.
+
+          if (!leader_follower.has_clients ())
+            {
+              // Wake up all waiting threads in the reactor.
+              reactor->end_reactor_event_loop ();
+            }
+        }
+    }
+
+  return 0;
 }
 
 ACE_STATIC_SVC_DEFINE (TAO_RT_Thread_Lane_Resources_Manager,
