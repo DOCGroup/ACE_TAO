@@ -37,7 +37,7 @@ Fri May  9 10:42:37 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
           In Any_var assignment operator from Any_var, and in the
           Any_var copy constructor from Any_var, added a
-          check for a null rhs ptr_ member. Thanks to 
+          check for a null rhs ptr_ member. Thanks to
           Huang-Ming Huang <hh1@cs.wustl.edu> for discovering
           the problem. Also un-inlined the above copy constructor.
 
@@ -114,7 +114,7 @@ Wed May 07 22:32:49 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
           change should fix problems with servers crashing if remote peers
           dissappears under thread-per-connection strategy.
 
-          Thanks to Ira Burton <imburton@micron.com> for reporting this 
+          Thanks to Ira Burton <imburton@micron.com> for reporting this
 	  problem.
 
 Wed May  7 17:56:08 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
@@ -195,7 +195,7 @@ Tue May  6 17:52:53 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
         * tests/Faults/ping.cpp:
         * tests/Faults/ping_i.h:
         * tests/Faults/test_i.h: Fixed servant memory management
-          problems. Thanks to Ira Burton <imburton@micron.com> for motivating 
+          problems. Thanks to Ira Burton <imburton@micron.com> for motivating
 	  to take a look.
 
 Tue May  6 15:52:42 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
