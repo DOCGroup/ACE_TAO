@@ -30,6 +30,28 @@ USELIB("..\ace\aced.lib");
 //---------------------------------------------------------------------------
 #endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
 
+// Determine if a host exists, is reachable, and is up.
+// Attempt a blocking connection to it; if it succeeds,
+// then the host exists, is reachable, and is up.
+
+static u_int
+host_is_up (ASYS_TCHAR hostname[])
+{
+  ACE_SOCK_Connector con;
+  ACE_SOCK_Stream sock;
+
+  // The ACE_INET_Addr construction causes gethostbyname_r
+  // to be called, so we need to copy the hostname.
+  ASYS_TCHAR test_host[MAXHOSTNAMELEN];
+  ACE_OS::strcpy (test_host, hostname);
+
+  ACE_INET_Addr another_host ((u_short) 7, test_host);
+  const int status = con.connect (sock, another_host, 0);
+
+  sock.close ();
+  return status == 0  ?  1  :  0;
+}
+
 // The original problem this program tested for was incorrectly saying
 // a non-blocking connect completed successfully when it didn't.  The
 // test doesn't always work when done to localhost
@@ -70,31 +92,15 @@ find_another_host (ASYS_TCHAR other_host[])
           if (ACE_OS::strcmp (h->h_name, "loopback") == 0)
             continue;
 
-          // If not me
+          // If not me.
           if (ACE_OS::strcmp (h->h_name, other_host) != 0 &&
               ACE_OS::strcmp (h->h_name, un.nodename) != 0 )
             {
-              // Make sure the other host exists and is up.  Do that
-              // by attempting a blocking connection.
-              ACE_SOCK_Connector con;
-              ACE_SOCK_Stream sock;
-
-              // The ACE_INET_Addr construction causes gethostbyname_r
-              // to be called, so we need to copy the hostname.
-              ASYS_TCHAR test_host[MAXHOSTNAMELEN];
-              ACE_OS::strcpy (test_host, h->h_name);
-
-              ACE_INET_Addr another_host ((u_short) 7, test_host);
-              const int status = con.connect (sock, another_host, 0);
-
-              if (status == 0  ||  errno != ETIMEDOUT)
+              if (host_is_up (h->h_name))
                 {
                   ACE_OS::strcpy (other_host, h->h_name);
-                  sock.close ();
                   break;
                 }
-              else
-                sock.close ();
              }
         }
 
@@ -120,7 +126,7 @@ fail_no_listener_nonblocking (void)
   ACE_Time_Value nonblock (0, 0);
 
   find_another_host (test_host);
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("Testing to host %s\n"), test_host));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("Testing to host \"%s\"\n"), test_host));
   nobody_home.set ((u_short) 42000, test_host);
   status = con.connect (sock, nobody_home, &nonblock);
 
@@ -144,15 +150,17 @@ fail_no_listener_nonblocking (void)
         }
       else
         {
-          ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("%p\n"), ASYS_TEXT ("Proper fail")));
+          ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("%p\n"),
+                      ASYS_TEXT ("Proper fail")));
           status = 0;
         }
     }
   else
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("Test not executed fully; expected EWOULDBLOCK, %p\n"),
-                  ASYS_TEXT ("not")));
+                  ASYS_TEXT ("Test not executed fully; "
+                             "expected EWOULDBLOCK, %p (%d)\n"),
+                  ASYS_TEXT ("not"), errno));
       status = -1;
     }
 
@@ -180,7 +188,7 @@ succeed_nonblocking (void)
   ACE_Time_Value nonblock (0, 0);
 
   find_another_host (test_host);
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("Testing to host %s\n"), test_host));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("Testing to host \"%s\"\n"), test_host));
   echo_server.set ((u_short) 7, test_host);
   status = con.connect (sock, echo_server, &nonblock);
 
