@@ -1,3 +1,10 @@
+Thu Jul  5 23:09:29 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/CDR_Stream.cpp (ACE_InputCDR): Fixed a long standing bug in
+	  the branch. This caused the DSI_Gateway test to fail. The
+	  problem was from setting the write pointer to a wrong position
+	  during the construction.
+
 Thu Jul  5 14:39:45 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	Merged with the main trunk and moved it to a new branch by name
