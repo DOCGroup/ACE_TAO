@@ -1,3 +1,15 @@
+Sun Jun  6 09:48:17 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* ace/SOCK_Dgram_Bcast.cpp (mk_broadcast): If there are
+	  no broadcastable interfaces found, mk_broadcast() now returns -1
+ 	  and sets errno to ENXIO ("no such device or address").  Thankjto
+ 	  Dave Craig for suggesting this fix.	
+  
+	* ace/SOCK_Dgram_Bcast.cpp (mk_broadcast): Only complain about
+	  broadcast not being enabled for an interface if host_name is non
+ 	  NULL.  Thanks to Dave Craig <dwcraig@qualcomm.com> for this fix,
+	  which resolves bugid 1831.
+
 Sat Jun  5 09:06:09 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* ace/RMCast/RMCast_IO_UDP.i: Added a fix so that the transmitter
