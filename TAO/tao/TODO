@@ -1,4 +1,3 @@
-
 . GIOP versions in the outbound stream within GIOP_Message_Base. 
 
 . Oneways and Asynch invocation (needs investigation)
@@ -40,8 +39,6 @@
 
 . Ask Jai to include a test for out parameters in Interceptors
 
-. Remove all workarounds for older SUNCC compilers.
-
 . Memory leaks with Transport, run valgrind in Param_Test
 
 . Move traits classes in the header file to the cpp file.
@@ -53,5 +50,7 @@
 . Real-time CORBA
 
 . Code set translators 
+
+. Collocation and generated code
 
 . Complete documentation
