@@ -1,3 +1,7 @@
+Tue Sep  3 15:16:03 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderbilt.edu>
+
+	* bin/auto_run_tests.lst: Fixed a typo!
+
 Mon Sep  2 16:48:29 2002  Steve Huston  <shuston@riverace.com>
 
         * tests/OS_Test.cpp (ctime_r_test): Corrected ACE_Log_Msg to use
