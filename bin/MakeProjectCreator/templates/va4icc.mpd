@@ -122,7 +122,7 @@ option
 <%endif%>
 
                        // Libraries needed during linking
-<%foreach(libs defaultlibs lit_libs)%>
+<%foreach(libs lit_libs)%>
                        source type (lib) "lib<%lib%>.a"
 <%endfor%>
 
