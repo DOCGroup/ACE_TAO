@@ -90,8 +90,25 @@ test_functionality (ACE_Timer_Queue *tq)
 
   ACE_ASSERT (tq->is_empty ());
   ACE_ASSERT (ACE_Time_Value::zero == ACE_Time_Value (0));
-  long timer_id; 
+  long timer_id, timer_id2; 
+ 
+  // Do a test on earliest_time
+
+  ACE_Time_Value earliest_time = tq->gettimeofday ();
+
+  timer_id = tq->schedule (&eh, (const void *) 1,
+                           earliest_time);
   
+  ACE_OS::sleep (ACE_Time_Value (1));
+    
+  timer_id2 = tq->schedule (&eh, (const void *) 1,
+                            tq->gettimeofday ());
+
+  ACE_ASSERT (tq->earliest_time () == earliest_time);
+
+  tq->cancel (timer_id);
+  tq->cancel (timer_id2);
+
   timer_id = tq->schedule (&eh, (const void *) 1, 
 			   tq->gettimeofday ());
   ACE_ASSERT (timer_id != -1);
