@@ -207,7 +207,7 @@ run_client (unsigned short port, ACE_MEM_IO::Signal_Strategy strategy)
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("connect_client, got echo %s\n"), buf));
     }
 
-  status = status == 0 ? stream.close () : status;
+  status = stream.close () == -1 ? -1 : status;
   return status;
 }
 
@@ -249,6 +249,8 @@ int test_reactive (const ACE_TCHAR *prog, ACE_MEM_Addr &server_addr)
   ACE_DEBUG ((LM_DEBUG, "Testing Reactive MEM_Stream\n\n"));
 
   int status = 0;
+
+  client_strategy = ACE_MEM_IO::Reactive;   // Echo_Handler uses this.
 
   ACE_Accept_Strategy<Echo_Handler, ACE_MEM_ACCEPTOR> accept_strategy;
   ACE_Creation_Strategy<Echo_Handler> create_strategy;
@@ -320,7 +322,8 @@ int test_multithreaded (const ACE_TCHAR *prog, ACE_MEM_Addr &server_addr)
 
   int status = 0;
 
-  client_strategy = ACE_MEM_IO::MT;
+  client_strategy = ACE_MEM_IO::MT;     // Echo_Handler uses this.
+
   ACE_Accept_Strategy<Echo_Handler, ACE_MEM_ACCEPTOR> accept_strategy;
   ACE_Creation_Strategy<Echo_Handler> create_strategy;
   ACE_Thread_Strategy<Echo_Handler> thr_strategy;
