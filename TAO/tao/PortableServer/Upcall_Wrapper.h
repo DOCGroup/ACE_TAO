@@ -38,6 +38,10 @@ namespace PortableServer
   typedef ::TAO_ServantBase ServantBase;
 }
 
+namespace CORBA
+{
+  class Environment;
+}
 
 namespace TAO
 {
