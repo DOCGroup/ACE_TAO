@@ -32,6 +32,13 @@ struct subtask_t
   ACE_Time_Value phase;
 }; //struct subtask_t
 
+struct task_trigger_t
+{
+  Supplier_Timeout_Handler *handler;
+  ACE_Time_Value period;
+  ACE_Time_Value phase;
+}; //struct task_trigger_t
+
 class Kokyu_EC : public POA_RtEventChannelAdmin::RtSchedEventChannel
 {
 public:
@@ -261,11 +268,13 @@ private:
   RtecScheduler::Scheduler_var scheduler_;
 
   ACE_Vector<Supplier*> suppliers_;
-  ACE_Vector<Supplier_Timeout_Handler*> timeout_handlers_;
+  //ACE_Vector<Supplier_Timeout_Handler*> timeout_handlers_;
   ACE_Vector<Consumer*> consumers_;
   ACE_Vector<RtecEventComm::PushConsumer_var> consumer_proxies_;
   ACE_Vector<RtecEventChannelAdmin::ProxyPushSupplier_var> push_suppliers_;
   ACE_Vector<RtecEventComm::PushSupplier_var> supplier_proxies_;
+
+  ACE_Vector<task_trigger_t> task_triggers_; //also keeps track of timeout_handlers
 
   ACE_Reactor *reactor_;
   ACE_Vector<long> timer_handles_;

@@ -92,12 +92,12 @@ int
 Supplier_Timeout_Handler::handle_timeout (const ACE_Time_Value &,
                                           const void *)
 {
-  ACE_DEBUG ((LM_DEBUG, "Supplier_Timeout_Handler (%t): timeout received\n"));
+  ACE_DEBUG ((LM_DEBUG, "Supplier_Timeout_Handler (%P|%t): timeout received\n"));
   //@BT INSTRUMENT with event ID: EVENT_TIMEOUT Measure time when
   //timeout occurs to trigger event push. Roughly equivalent to the
   //scheduling segments started for each one-way call of the DTs.
   //DSTRM_EVENT (WORKER_GROUP_FAM, BEGIN_SCHED_SEGMENT, 1, 0,NULL);
-  ACE_DEBUG((LM_DEBUG,"Supplier_Timeout_Handler (for Supplier id %d) in thread %t BEGIN_SCHED_SEGMENT (timeout occurred) at %u\n",
+  ACE_DEBUG((LM_DEBUG,"Supplier_Timeout_Handler (for Supplier id %d) (%P|%t) BEGIN_SCHED_SEGMENT (timeout occurred) at %u\n",
              this->supplier_impl_->get_id(),ACE_OS::gettimeofday().msec()));
 
   Object_ID oid;
