@@ -1,3 +1,17 @@
+Sun Sep 17 07:00:56 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.h:
+	* orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.cpp:
+	* orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.i:
+	* orbsvcs/orbsvcs/FaultTolerance/FT_Service_Activate.h:
+	* orbsvcs/orbsvcs/FaultTolerance/FT_Service_Activate.cpp:
+	* orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.h:
+	* orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.cpp:
+	* orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.i:
+	* orbsvcs/orbsvcs/FaultTolerance/fault_tol_export.h:  Files for FT
+	  support. We have support for IOGR in now. The library is loaded
+	  on demand in to the ORB_Core.
+
 Sun Sep 17 06:57:14 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Makefile: Added the new files in to the repo.
