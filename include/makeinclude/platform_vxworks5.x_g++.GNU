@@ -1,6 +1,6 @@
 # platform_vxworks5.x_g++.GNU,v 4.83 2001/05/16 07:41:05 mk1 Exp
 #
-# VxWorks 5.3.1 and later with GNU g++ that is distributed by Wind River.
+# VxWorks 5.5.1 with GNU g++ that is distributed by Wind River.
 
 #### Notes:
 #### 1) This file requires that the WIND_BASE and WIND_HOST_TYPE environment
@@ -30,6 +30,9 @@ endif # ! optimize
 ifndef rtti
   rtti = 1
 endif # ! rtti
+ifndef templates
+  templates = explicit
+endif # ! templates
 ifndef versioned_so
   versioned_so = 0
 endif # ! versioned_so
@@ -38,13 +41,6 @@ shared_libs =
 static_libs = 1
 # VxWorks doesn't have rwho
 rwho = 0
-
-# I (kitty) don't want to touch this file with regard to template
-# instantiation. If somebody has access to the platforms specified here,
-# they are welcome to check the instantiation problem. Overriding it to be
-# explicit.
-#
-templates = explicit
 
 ifeq (,$(WIND_BASE))
   default:
@@ -58,10 +54,13 @@ endif # WIND_HOST_TYPE
 
 HOST_DIR = $(WIND_BASE)/host/$(WIND_HOST_TYPE)
 
-ifeq (,$(findstring $(HOST_DIR)/bin,$(PATH)))
-  #### Use := instead of += because += inserts a space.
-  PATH := $(PATH):$(HOST_DIR)/bin
-endif # PATH
+#### Unconditionally add the path to the VxWorks installation
+#### to ensure that we pick up the right applications.
+#### We should be able to do this with explicit paths on the apps,
+#### but there is at least one app (munch) which references
+#### another (wtxtcl) without a path.
+#### Use := instead of += because += inserts a space.
+PATH := $(HOST_DIR)/bin:$(PATH)
 
 ifeq (,$(PERL_PATH))
   PERL_PATH = perl
@@ -83,8 +82,21 @@ endif # ! PERL_PATH
 ####
 ####  include $(ACE_ROOT)/include/makeinclude/platform_vxworks5.x_g++.GNU
 ####
-####  NOTE: VxWorks 5.4 uses cygnus-2.7.2-960126
-####        VxWorks 5.4.1 uses gcc-2.96
+####  NOTE: The Wind River release versioning is confusing.
+####  Tornado appears to have the following combinations shipped:
+####        Tornado 2.0 has VxWorks 5.4 and cygnus-2.7.2-960126
+####        Tornado 2.0.1 has VxWorks 5.4.1 and cygnus-2.7.2-960126
+####        Tornado 2.0.2 has VxWorks 5.4.2 and cygnus-2.7.2-960126
+####        Tornado 2.1.x has VxWorks 5.4.2 and gcc-2.96
+####        Tornado 2.2 has VxWorks 5.5.1 and gcc-2.96
+####        Tornado 2.2.1 has VxWorks 5.5.1 and gcc-2.96
+####  Since these combinations are not uniquely distinguishable,
+####  we will use the following conventions in ACE for ACE_VXWORKS
+####  (per J. Willemsen on the ACE mailing list):
+####        0x540 indicates Tornado 2.0
+####        0x541 indicates Tornado 2.0.1
+####        0x542 indicates Tornado 2.1.x (note inconsistancy with WRS)
+####        0x551 indicates Tornado 2.2.x
 ####
 #### 2) modify the code below to set CPU, or
 #### 3) set CPU on the command line, e.g., "make CPU=I80486"
@@ -100,7 +112,7 @@ endif # default GCC Version
 # flag is desired.
 ifeq ($(VXWORKS_VERSION_FLAG),)
    ifeq ($(GCC_VERSION),gcc-2.96)
-       VXWORKS_VERSION_FLAG = -DACE_VXWORKS=0x542
+       VXWORKS_VERSION_FLAG = -DACE_VXWORKS=0x551
    else
        VXWORKS_VERSION_FLAG = -DACE_VXWORKS=0x540
        VXWORKS_STDINC_FLAG = -nostdinc
@@ -139,9 +151,11 @@ ifeq ($(CPU),PPC403)
 else
 ifeq ($(CPU),PPC604)
   BINXSYM_NAME = xsym
-  CFLAGS += -B$(GCCLIB_DIR)/ -DCPU=PPC604 $(VXWORKS_VERSION_FLAG)
+  CFLAGS += -B$(GCCLIB_DIR)/ -DCPU=PPC604
   CCFLAGS += -mlongcall
   GCCLIB_DIR = $(HOST_DIR)/lib/gcc-lib/powerpc-wrs-vxworks/$(GCC_VERSION)
+  INCLDIRS += -I$(HOST_DIR)/powerpc-wrs-vxworks/include
+  INCLDIRS += -I$(HOST_DIR)/lib/gcc-lib/powerpc-wrs-vxworks/include
   TOOLENV = ppc
 else
 ifeq ($(CPU),PPC603)
@@ -162,8 +176,6 @@ ifeq ($(CPU),SIMNT)
   BINXSYM_NAME = xsym
   CFLAGS += -U__WINNT -UWIN32 -U__WINNT__ -UWINNT -U__MINGW32__ -U_WIN32 \
             -U__WIN32 -U__WIN32__ -U__WIN32 -B$(GCCLIB_DIR) -DCPU=SIMNT
-  GCCLIB_DIR = \
-    $(HOST_DIR)/lib/gcc-lib/powerpc-wrs-vxworks/$(GCC_VERSION)
   TOOLENV = simpc
 else
 ifeq ($(CPU),PENTIUMPRO)
@@ -206,28 +218,24 @@ ifeq ($(CPU),SPARC)
 else
 ifeq ($(CPU),MC68020)
   CFLAGS += -B$(GCCLIB_DIR)/ -DCPU=MC68020 -m68020 -m68881
-  CCFLAGS += $(VXWORKS_VERSION_FLAG)
   GCCLIB_DIR = $(HOST_DIR)/lib/gcc-lib/m68k-wrs-vxworks/$(GCC_VERSION)
   TOOLENV = 68k
 else
 ifeq ($(CPU),MC68030)
   BINXSYM_NAME = xsym
   CFLAGS += -B$(GCCLIB_DIR)/ -DCPU=MC68030 -m68030 -m68881
-  CCFLAGS += $(VXWORKS_VERSION_FLAG)
   GCCLIB_DIR = $(HOST_DIR)/lib/gcc-lib/m68k-wrs-vxworks/$(GCC_VERSION)
   TOOLENV = 68k
 else
 ifeq ($(CPU),MC68040)
   BINXSYM_NAME = xsym
   CFLAGS += -B$(GCCLIB_DIR)/ -DCPU=MC68040 -m68040 -m68881
-  CCFLAGS += $(VXWORKS_VERSION_FLAG)
   GCCLIB_DIR = $(HOST_DIR)/lib/gcc-lib/m68k-wrs-vxworks/$(GCC_VERSION)
   TOOLENV = 68k
 else
 ifeq ($(CPU),MC68060)
   BINXSYM_NAME = xsym
   CFLAGS += -B$(GCCLIB_DIR)/ -DCPU=MC68060 -m68040 -m68881
-  CCFLAGS += $(VXWORKS_VERSION_FLAG)
   GCCLIB_DIR = $(HOST_DIR)/lib/gcc-lib/m68k-wrs-vxworks/$(GCC_VERSION)
   TOOLENV = 68k
 else
@@ -256,16 +264,16 @@ endif # SH7700
 
 #### Set up Win32 vs. Unix host specific macros.
 ifeq ($(WIND_HOST_TYPE),x86-win32)
-  CXX      = cc$(TOOLENV)
+  CXX      = $(HOST_DIR)/bin/cc$(TOOLENV)
   ifeq (,$(pipes))
     pipes = 1
   endif # pipes
 else
 ifeq ($(TOOLENV),simso)
   #### vxsim needs to use ccsimso, not g++simso.
-  CXX      = cc$(TOOLENV)
+  CXX      = $(HOST_DIR)/bin/cc$(TOOLENV)
 else
-  CXX      = g++$(TOOLENV)
+  CXX      = $(HOST_DIR)/bin/g++$(TOOLENV)
   ifeq (,$(pipes))
     pipes = 1
   endif # pipes
@@ -286,16 +294,18 @@ ifeq ($(SHARED_LIBS),1)
 endif # shared_libs
 
 ifeq ($(static_libs),1)
-  AR              = ar$(TOOLENV)
+  AR              = $(HOST_DIR)/bin/ar$(TOOLENV)
   ARFLAGS         = rv
 else  # ! static_libs
   AR              = echo
   ARFLAGS         = "build shared lib only"
 endif # ! static_libs
 
-CC              = cc$(TOOLENV)
+CC            = $(HOST_DIR)/bin/cc$(TOOLENV)
 
-#### Tornado II uses egcs
+#### Tornado II 2.2.x uses gcc-2.96
+#### Linux cross-compiler uses full egcs
+#### Anything older is no longer supported by TAO
 ifndef ACE_CC
   ifndef COMSPEC
     ifdef ComSpec
@@ -311,41 +321,43 @@ ifndef ACE_CC
   else  # ! COMSPEC
     #### Don't use this on WIN32 host, because the shell there seems
     #### to have trouble exec'ing sed.
-    ACE_CC := $(shell PATH=${PATH} type $(CC) | sed -e 's/.* is //')
+    ACE_CC := $(shell type $(CC) | sed -e 's/.* is //')
   endif # ! COMSPEC
 endif # ! ACE_CC
 ifndef ACE_CC_VERSION
   ACE_CC_VERSION := $(shell $(ACE_CC) --version)
 endif # ! ACE_CC_VERSION
-ifeq (egcs,$(findstring egcs,$(ACE_CC_VERSION)))
-  ACE_HAS_GNUG_PRE_2_8 := 0
-  CFLAGS +=  $(VXWORKS_VERSION_FLAG)
-  ifeq ($(TOOLENV),386)
-    #### Tornado II should support -fno-implicit-templates for pc486.
-    CCFLAGS += $(TEMPLATES_FLAG)
-  endif # 386
-  ifneq (1,$(exceptions))
-    #### With exceptions, this is applied in wrapper_macros.GNU.
-    #### Without, we do it here.
-    CFLAGS += -Wno-uninitialized
-  endif # ! exceptions
-endif # egcs
+
+
+# explicit template flags are handled by platform_g++_common.GNU
+ifneq ($(templates),explicit)
+  TEMPLATES_FLAG += -fimplicit-templates -fmerge-templates
+endif
+
+ACE_HAS_GNUG_PRE_2_8 := 0
+CFLAGS +=  $(VXWORKS_VERSION_FLAG)
+ifneq (1,$(exceptions))
+  #### With exceptions, this is applied in wrapper_macros.GNU.
+  #### Without, we do it here.
+  CFLAGS += -Wno-uninitialized
+endif # ! exceptions
 
 CFLAGS          += -D_REENTRANT -ansi -fno-builtin -fno-defer-pop \
-                   -fvolatile $(VXWORKS_STDINC_FLAG) -nostdlib -W -Wall
+                   -fvolatile $(VXWORKS_STDINC_FLAG) -nostdlib -W -Wall \
+                   $(VXWORKS_VERSION_FLAG)
 CCFLAGS         += $(CFLAGS)
 ifeq (0,$(rtti))
-  #### Don't use RTTI even with egcs, because Tornado 1.0.x libraries
+  #### Don't use RTTI with Tornado 1.0.x since the Tornado libraries
   #### don't support it.
   CCFLAGS += -fno-rtti -DACE_LACKS_RTTI
 endif # rtti
 DCFLAGS         += -g
 DLD             = $(LD)
 INCLDIRS        += -I$(WIND_BASE)/target/h
-  #### Don't use -traditional with VxWorks 5.5
+INCLDIRS        += -I$(HOST_DIR)/include/g++-3
 LD              = $(PERL_PATH) $(ACE_ROOT)/bin/ace_ld \
-                  -o $(VDIR) -C $(COMPILE.c) -traditional -- \
-                  -m munch -n nm$(TOOLENV) ld$(TOOLENV)
+                  -o $(VDIR) -C $(COMPILE.c) -- \
+                  -m $(HOST_DIR)/bin/munch -n $(HOST_DIR)/bin/nm$(TOOLENV) $(HOST_DIR)/bin/ld$(TOOLENV)
 LDFLAGS         += -X -r
 #### WindRiver only recommends -O, not -O2, with some CPUs, including
 #### the i386 family.  And -O2 causes some compilation failures.
@@ -376,8 +388,10 @@ LINK.cc.override = $(LD)
 ## POSTLINK         = ; VX_CPU_FAMILY=$(TOOLENV) $(BINXSYM_NAME) < $@ > $@.sym
 
 ifeq (1,$(exceptions))
-  #### The VxWorks libraries don't support exceptions.  And, exceptions
-  #### give the (Tornado II) compiler fits, e.g., with
+  #### The VxWorks 1.0 libraries don't support exceptions.
+  #### And, exceptions give the Tornado 2.0 compiler fits, e.g., with
   #### ACE_wrappers/TAO/tao/IORManipulation.cpp.
-  CONFIGURATION_ERROR: exception_handling_is_not_supported_on_VxWorks!
+  #### But, Tornado 2.2.x handles exceptions, but with a memory bloat
+  #### of around a factor of 4.5. So beware of enabling them unless you
+  #### have lots of memory!
 endif # exceptions
