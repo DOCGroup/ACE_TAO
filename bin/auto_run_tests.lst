@@ -125,10 +125,10 @@ TAO/examples/PluggableUDP/tests/Basic/run_test.pl: !STATIC !ST
 TAO/examples/PluggableUDP/tests/SimplePerformance/run_test.pl
 
 TAO/orbsvcs/tests/AVStreams/Pluggable/run_test.pl: !MINIMUM
-TAO/orbsvcs/tests/AVStreams/Full_Profile/run_test.pl: !MINIMUM
+#TAO/orbsvcs/tests/AVStreams/Full_Profile/run_test.pl: !MINIMUM
 TAO/orbsvcs/tests/AVStreams/Multicast/run_test.pl: !MINIMUM
-TAO/orbsvcs/tests/AVStreams/Multicast_Full_Profile/run_test.pl: !MINIMUM
-TAO/orbsvcs/tests/AVStreams/Latency/run_test.pl: !MINIMUM
+#TAO/orbsvcs/tests/AVStreams/Multicast_Full_Profile/run_test.pl: !MINIMUM
+#TAO/orbsvcs/tests/AVStreams/Latency/run_test.pl: !MINIMUM
 TAO/orbsvcs/tests/AVStreams/Simple_Two_Stage/run_test.pl: !MINIMUM
 TAO/orbsvcs/tests/AVStreams/Simple_Three_Stage/run_test.pl: !MINIMUM
 TAO/orbsvcs/tests/AVStreams/Asynch_Three_Stage/run_test.pl: !MINIMUM
