@@ -14,13 +14,14 @@ DIRS  = Generic_Servant \
 	Default_Servant \
 	Explicit_Activation \
 	FindPOA \
-	Forwarding \
 	NewPOA \
 	On_Demand_Activation \
 	RootPOA
 
 # The following test hasn't been updated yet
 # Demux_Test
+
+#### Does not compile on UNIX:	Forwarding \
 
 #----------------------------------------------------------------------------
 #	Include macros and targets

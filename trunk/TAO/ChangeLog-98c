@@ -1,3 +1,12 @@
+Fri May 15 10:42:22 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tests/POA/Makefile: 
+	* tests/POA/Forwarding/Makefile: 
+	  Removed the Forwarding test because it only compiles on NT.
+
+	* tests/POA/Generic_Servant/Makefile: 
+	  Removed outdated comment.
+
 Fri May 15 09:33:47 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * TAO version 0.1.22 released.
