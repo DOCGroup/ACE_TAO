@@ -1,14 +1,16 @@
-/* -*- C++ -*- */
 // $Id$
 
 #include "ArrayDef_i.h"
 #include "Repository_i.h"
 #include "IFR_Service_Utils.h"
 #include "ace/Auto_Ptr.h"
+#include "ace/SString.h"
 
-ACE_RCSID (IFRService, 
-           ArrayDef_i, 
+
+ACE_RCSID (IFRService,
+           ArrayDef_i,
            "$Id$")
+
 
 TAO_ArrayDef_i::TAO_ArrayDef_i (TAO_Repository_i *repo)
   : TAO_IRObject_i (repo),
@@ -183,7 +185,7 @@ TAO_ArrayDef_i::element_type_def_i (ACE_ENV_SINGLE_ARG_DECL)
                                             "element_path",
                                             element_path);
 
-  CORBA::Object_var obj = 
+  CORBA::Object_var obj =
     TAO_IFR_Service_Utils::path_to_ir_object (element_path,
                                               this->repo_
                                               ACE_ENV_ARG_PARAMETER);
@@ -245,8 +247,8 @@ TAO_ArrayDef_i::destroy_element_type (
                                              "def_kind",
                                              kind);
 
-  CORBA::DefinitionKind def_kind = 
-    TAO_IFR_Service_Utils::path_to_def_kind (element_path, 
+  CORBA::DefinitionKind def_kind =
+    TAO_IFR_Service_Utils::path_to_def_kind (element_path,
                                              this->repo_);
 
   switch (def_kind)

@@ -1,13 +1,16 @@
-/* -*- C++ -*- */
 // $Id$
 
 #include "EnumDef_i.h"
 #include "Repository_i.h"
 #include "IFR_Service_Utils.h"
 
-ACE_RCSID (IFRService, 
-           EnumDef_i, 
+#include "ace/SString.h"
+
+
+ACE_RCSID (IFRService,
+           EnumDef_i,
            "$Id$")
+
 
 TAO_EnumDef_i::TAO_EnumDef_i (TAO_Repository_i *repo)
   : TAO_IRObject_i (repo),

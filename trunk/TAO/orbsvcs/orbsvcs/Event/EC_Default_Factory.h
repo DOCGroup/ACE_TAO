@@ -27,6 +27,7 @@
 
 #include "ace/Service_Config.h"
 #include "ace/SString.h"
+#include "ace/Time_Value.h"
 
 /**
  * @class TAO_EC_Default_Factory

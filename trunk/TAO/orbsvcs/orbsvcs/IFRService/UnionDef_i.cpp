@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 // $Id$
 
 #include "UnionDef_i.h"
@@ -10,10 +9,13 @@
 #include "tao/CDR.h"
 
 #include "ace/Auto_Ptr.h"
+#include "ace/SString.h"
+
 
 ACE_RCSID (IFRService,
            UnionDef_i,
            "$Id$")
+
 
 TAO_UnionDef_i::TAO_UnionDef_i (TAO_Repository_i *repo)
   : TAO_IRObject_i (repo),
@@ -381,7 +383,7 @@ TAO_UnionDef_i::members_i (const CORBA::UnionMemberSeq &members
                                                 "name",
                                                 members[i].name.in ());
 
-      member_path = 
+      member_path =
         TAO_IFR_Service_Utils::reference_to_path (members[i].type_def.in ());
 
       this->repo_->config ()->set_string_value (member_key,
@@ -417,7 +419,7 @@ TAO_UnionDef_i::fetch_label (const ACE_Configuration_Section_Key member_key,
                                              "label",
                                              value);
 
-  CORBA::TypeCode_var tc = 
+  CORBA::TypeCode_var tc =
     this->discriminator_type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
