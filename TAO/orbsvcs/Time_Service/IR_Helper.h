@@ -34,7 +34,9 @@ class IR_Helper
   //
 {
 public:
-  IR_Helper (char *server_name, PortableServer::POA_ptr poa, CORBA::ORB_ptr orb, int debug = 0);
+  IR_Helper (const char *server_name,
+             PortableServer::POA_ptr poa,
+             CORBA::ORB_ptr orb, int debug = 0);
   // Constructor
   ~IR_Helper ();
   // Destructor

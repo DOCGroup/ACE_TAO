@@ -23,11 +23,11 @@ INS_i::orb (CORBA::ORB_ptr o)
   this->orb_ = CORBA::ORB::_duplicate (o);
 }
 
-char * 
+char *
 INS_i::test_ins (CORBA::Environment &env)
 ACE_THROW_SPEC (( CORBA::SystemException ))
 {
   ACE_DEBUG ((LM_DEBUG,
               "Inside Operation\n"));
-  return ("Success");
+  return CORBA::string_dup ("Success");
 }
