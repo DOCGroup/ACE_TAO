@@ -105,84 +105,84 @@ main (int argc, char **argv)
       return -1;
     }
 
-  // Create first Foo_i
-  Foo_i first_foo_impl (27, first_poa.in ());
+  // Create A_i
+  A_i a_impl (27, first_poa.in ());
 
-  // Create second Foo_i
-  Outer_i::Foo_i second_foo_impl (28, first_poa.in ());
+  // Create B_i
+  Outer_i::B_i b_impl (28, first_poa.in ());
 
-  // Create third Foo_i
-  Outer_i::Inner_i::Foo_i third_foo_impl (29, first_poa.in ());
+  // Create C_i
+  Outer_i::Inner_i::C_i c_impl (29, first_poa.in ());
 
-  // Create forth Foo_i
-  Simple_Foo_i forth_foo_tie (30);
-  POA_Foo_tie <Simple_Foo_i> forth_foo_impl (forth_foo_tie, first_poa.in ());
+  // Create A tie
+  Tie_i a_tie_i (30);
+  POA_A_tie <Tie_i> a_tie_impl (a_tie_i, first_poa.in ());
 
 #if defined (ACE_HAS_USING_KEYWORD)
 
-  // Create fifth Foo_i
-  Simple_Foo_i fifth_foo_tie (31);
-  POA_Outer::Foo_tie <Simple_Foo_i> fifth_foo_impl (fifth_foo_tie, first_poa.in ());
+  // Create B tie
+  Tie_i b_tie_i (31);
+  POA_Outer::B_tie <Tie_i> b_tie_impl (b_tie_i, first_poa.in ());
 
-  // Create sixth Foo_i
-  Simple_Foo_i sixth_foo_tie (32);
-  POA_Outer::Inner::Foo_tie <Simple_Foo_i> sixth_foo_impl (sixth_foo_tie, first_poa.in ());
+  // Create C tie
+  Tie_i c_tie_i (32);
+  POA_Outer::Inner::C_tie <Tie_i> c_tie_impl (c_tie_i, first_poa.in ());
 
 #endif /* ACE_HAS_USING_KEYWORD */
 
-  // Get Object Reference for the first_foo_impl object.
-  Foo_var first_foo = first_foo_impl._this (env);
+  // Get Object Reference for the a_impl object.
+  A_var a = a_impl._this (env);
 
   if (env.exception () != 0)
     {
-      env.print_exception ("POA_Foo::_this");
+      env.print_exception ("POA_A::_this");
       return -1;
     }
 
-  // Get Object Reference for the second_foo_impl object.
-  Outer::Foo_var second_foo = second_foo_impl._this (env);
+  // Get Object Reference for the b_impl object.
+  Outer::B_var b = b_impl._this (env);
 
   if (env.exception () != 0)
     {
-      env.print_exception ("POA_Foo::_this");
+      env.print_exception ("POA_Outer::B::_this");
       return -1;
     }
 
-  // Get Object Reference for the third_foo_impl object.
-  Outer::Inner::Foo_var third_foo = third_foo_impl._this (env);
+  // Get Object Reference for the c_impl object.
+  Outer::Inner::C_var c = c_impl._this (env);
 
   if (env.exception () != 0)
     {
-      env.print_exception ("POA_Foo::_this");
+      env.print_exception ("POA_Outer::Inner::C::_this");
       return -1;
     }
 
-  // Get Object Reference for the forth_foo_impl object.
-  Foo_var forth_foo = forth_foo_impl._this (env);
+  // Get Object Reference for the a_tie_impl object.
+  A_var a_tie = a_tie_impl._this (env);
 
   if (env.exception () != 0)
     {
-      env.print_exception ("POA_Foo::_this");
+      env.print_exception ("POA_A::_this");
       return -1;
     }
 
 #if defined (ACE_HAS_USING_KEYWORD)
 
-  // Get Object Reference for the fifth_foo_impl object.
-  Outer::Foo_var fifth_foo = fifth_foo_impl._this (env);
+  // Get Object Reference for the a_tie_impl object.
+  Outer::B_var b_tie = b_tie_impl._this (env);
 
   if (env.exception () != 0)
     {
-      env.print_exception ("POA_Foo::_this");
+      env.print_exception ("POA_Outer::B::_this");
       return -1;
     }
 
-  // Get Object Reference for the sixth_foo_impl object.
-  Outer::Inner::Foo_var sixth_foo = sixth_foo_impl._this (env);
+  // Get Object Reference for the c_tie_impl object.
+  Outer::Inner::C_var c_tie = c_tie_impl._this (env);
 
   if (env.exception () != 0)
     {
-      env.print_exception ("POA_Foo::_this");
+      env.print_exception ("POA_Outer::Inner::C::_this");
       return -1;
     }
 
@@ -190,7 +190,7 @@ main (int argc, char **argv)
 
   // Stringyfy all the object references and print them out.
   CORBA::String_var first_ior =
-    orb->object_to_string (first_foo.in (), env);
+    orb->object_to_string (a.in (), env);
 
   if (env.exception () != 0)
     {
@@ -200,7 +200,7 @@ main (int argc, char **argv)
 
   // Stringyfy all the object references and print them out.
   CORBA::String_var second_ior =
-    orb->object_to_string (second_foo.in (), env);
+    orb->object_to_string (b.in (), env);
 
   if (env.exception () != 0)
     {
@@ -210,7 +210,7 @@ main (int argc, char **argv)
 
   // Stringyfy all the object references and print them out.
   CORBA::String_var third_ior =
-    orb->object_to_string (third_foo.in (), env);
+    orb->object_to_string (c.in (), env);
 
   if (env.exception () != 0)
     {
@@ -220,7 +220,7 @@ main (int argc, char **argv)
 
   // Stringyfy all the object references and print them out.
   CORBA::String_var forth_ior =
-    orb->object_to_string (forth_foo.in (), env);
+    orb->object_to_string (a_tie.in (), env);
 
   if (env.exception () != 0)
     {
@@ -232,7 +232,7 @@ main (int argc, char **argv)
 
   // Stringyfy all the object references and print them out.
   CORBA::String_var fifth_ior =
-    orb->object_to_string (fifth_foo.in (), env);
+    orb->object_to_string (b_tie.in (), env);
 
   if (env.exception () != 0)
     {
@@ -242,7 +242,7 @@ main (int argc, char **argv)
 
   // Stringyfy all the object references and print them out.
   CORBA::String_var sixth_ior =
-    orb->object_to_string (sixth_foo.in (), env);
+    orb->object_to_string (c_tie.in (), env);
 
   if (env.exception () != 0)
     {
@@ -292,11 +292,15 @@ main (int argc, char **argv)
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class POA_Foo_tie<Simple_Foo_i>;
-
+template class POA_A_tie<Tie_i>;
+#if defined (ACE_HAS_USING_KEYWORD)
+template class POA_Outer::B_tie <Tie_i>;
+template class POA_Outer::Inner::C_tie <Tie_i>;
+#endif /* ACE_HAS_USING_KEYWORD */
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate POA_Foo_tie<Simple_Foo_i>
-
+#pragma instantiate POA_A_tie<Tie_i>
+#if defined (ACE_HAS_USING_KEYWORD)
+#pragma instantiate POA_Outer::B_tie <Tie_i>
+#pragma instantiate POA_Outer::Inner::C_tie <Tie_i>
+#endif /* ACE_HAS_USING_KEYWORD */
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
