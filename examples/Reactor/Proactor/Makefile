@@ -8,7 +8,7 @@
 #	Local macros
 #----------------------------------------------------------------------------
 
-BIN   	= test_proactor test_aiosig_ace test_aiocb_ace test_timeout test_timeout_st test_posix_sig_proactor 
+BIN   	= test_proactor test_aiosig_ace test_aiocb_ace test_timeout test_timeout_st post_completions
 
 #----------------------------------------------------------------------------
 #	Include macros and targets
