@@ -15,15 +15,16 @@ CFLAGS          += -pthread
 #### They can be enabled on the gmake command line with CXX_VER=POST_5X,
 #### or by setting the CXX_VER environment variable to POST_5X.
 # WARNING_FLAGS +=
-# 9:   nested comment not allowed, but there's one in /usr/include/pdsc.h
+#   9: nested comment not allowed.  But there's one in /usr/include/pdsc.h!
 # 174: expr_has_no_effect
 # 193: zero used for undefined preprocessing identifier
 # 236: controlling expression is constant
 # 340: value copied to temporary, reference to temporary used
 # 401: base_class_with_nonvirtual_dtor
+# 610: nonoverriding_function_decl
 ifeq ($(CXX_VER),POST_5X)
   WARNING_FLAGS += -w0 -msg_display_number -msg_display_tag \
-                   -msg_disable 9,174,193,236,340,401
+                   -msg_disable 9,174,193,236,340,401,610
 endif
 
 CCFLAGS         += $(CFLAGS) -ptr ptrepository $(WARNING_FLAGS)
