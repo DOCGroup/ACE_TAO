@@ -1,3 +1,23 @@
+Thu Nov 16 18:21:23 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* tests/RTCORBA/Makefile
+	* tests/RTCORBA/Makefile.bor
+	* tests/RTCORBA/RTCORBA_tests.dsw
+	* tests/RTCORBA/Banded_Connections/client.cpp
+	* tests/RTCORBA/Banded_Connections/client.dsp
+	* tests/RTCORBA/Banded_Connections/client.bor
+	* tests/RTCORBA/Banded_Connections/server.cpp
+	* tests/RTCORBA/Banded_Connections/server.bor
+	* tests/RTCORBA/Banded_Connections/server.dsp
+	* tests/RTCORBA/Banded_Connections/server.conf
+	* tests/RTCORBA/Banded_Connections/Makefile
+	* tests/RTCORBA/Banded_Connections/Makefile.bor
+	* tests/RTCORBA/Banded_Connections/README
+	* tests/RTCORBA/Banded_Connections/run_test.pl
+	* tests/RTCORBA/Banded_Connections/test.idl:
+
+	  Added a test for RTCORBA::PriorityBandedConnectionPolicy.
+	
 Thu Nov 16 16:16:47 2000  Ossama Othman  <ossama@uci.edu>
 
 	* tao/TAO.dsp:
