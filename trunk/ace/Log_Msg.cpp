@@ -1896,7 +1896,7 @@ void
 ACE_Log_Msg::file (const char *s)
 {
   this->file_[0] = '\0';
-  ACE_OS::strncpy (this->file_, s, sizeof (this->file_) - 1);
+  ACE_OS::strncat (this->file_, s, sizeof (this->file_) - 1);
 }
 
 const ACE_TCHAR *
@@ -1908,8 +1908,8 @@ ACE_Log_Msg::msg (void)
 void
 ACE_Log_Msg::msg (const ACE_TCHAR *m)
 {
-  this->msg_[0] = '\0';
-  ACE_OS::strncpy (this->msg_, m,
+  this->msg_[0] = L'\0';
+  ACE_OS::strncat (this->msg_, m,
                    (sizeof this->msg_ / sizeof (ACE_TCHAR)) - 1);
 }
 
