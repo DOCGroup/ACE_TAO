@@ -1,3 +1,39 @@
+Fri Feb 12 17:12:33 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+        * TAO_IDL/util/utl_scope.cpp:
+	* TAO_IDL/be/be_visitor.cpp:
+	* TAO_IDL/be/be_visitor_argument/argument.cpp:
+	* TAO_IDL/be/be_visitor_argument/docall_cs.cpp:
+	* TAO_IDL/be/be_visitor_argument/post_marshal_ss.cpp:
+	* TAO_IDL/be/be_visitor_argument/post_upcall_ss.cpp:
+	* TAO_IDL/be/be_visitor_argument/pre_upcall_ss.cpp:
+	* TAO_IDL/be/be_visitor_argument/compiled_marshal_cs.cpp:
+	* TAO_IDL/be/be_visitor_argument/compiled_marshal_ss.cpp:
+	* TAO_IDL/be/be_visitor_argument/pre_invoke_cs.cpp:
+	* TAO_IDL/be/be_visitor_array/array.cpp:
+	* TAO_IDL/be/be_visitor_exception/exception.cpp:
+	* TAO_IDL/be/be_visitor_field/field_ch.cpp:
+	* TAO_IDL/be/be_visitor_field/cdr_op_cs.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface.cpp:
+	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
+	* TAO_IDL/be/be_visitor_operation/rettype_is.cpp:
+	* TAO_IDL/be/be_visitor_operation/rettype_post_upcall_ss.cpp:
+	* TAO_IDL/be/be_visitor_operation/rettype_return_cs.cpp:
+	* TAO_IDL/be/be_visitor_operation/compiled_marshal.cpp:
+	* TAO_IDL/be/be_visitor_structure/structure.cpp:
+	* TAO_IDL/be/be_visitor_typedef/typedef.cpp:
+	* TAO_IDL/be/be_visitor_typedef/typedef_ch.cpp:
+	* TAO_IDL/be/be_visitor_union/union.cpp:
+	* TAO_IDL/be/be_visitor_union_branch/private_ch.cpp:
+	* TAO_IDL/be/be_visitor_union_branch/public_assign_cs.cpp:
+	* TAO_IDL/be/be_visitor_union_branch/public_reset_cs.cpp:
+	* TAO_IDL/be/be_visitor_union_branch/public_access_cs.cpp:
+	* TAO_IDL/be/be_visitor_union_branch/public_ch.cpp:
+	* TAO_IDL/be/be_visitor_union_branch/public_ci.cpp:
+	* TAO_IDL/be/be_visitor_union_branch/public_cs.cpp:
+	* TAO_IDL/be/be_visitor_union_branch/cdr_op_cs.cpp:
+          Fixed g++ unused arg warnings.
+
 Fri Feb 12 16:16:19 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/POA.cpp: Added missing parens.
