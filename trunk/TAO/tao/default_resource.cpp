@@ -13,6 +13,8 @@
 
 #include "tao/Reactive_Flushing_Strategy.h"
 #include "tao/Block_Flushing_Strategy.h"
+#include "tao/Leader_Follower.h"
+
 
 #include "ace/TP_Reactor.h"
 #include "ace/Dynamic_Service.h"
@@ -741,6 +743,19 @@ TAO_Default_Resource_Factory::create_flushing_strategy (void)
     ACE_NEW_RETURN (strategy,
                     TAO_Block_Flushing_Strategy,
                     0);
+  return strategy;
+}
+
+
+TAO_LF_Strategy *
+TAO_Default_Resource_Factory::create_lf_strategy (void)
+{
+  TAO_LF_Strategy *strategy = 0;
+
+  ACE_NEW_RETURN (strategy,
+                  TAO_Complete_LF_Strategy,
+                  0);
+
   return strategy;
 }
 

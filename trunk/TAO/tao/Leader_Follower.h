@@ -217,11 +217,14 @@ private:
   TAO_Leader_Follower &leader_follower_;
 };
 
+class TAO_LF_Strategy;
+
 class TAO_Export TAO_LF_Event_Loop_Thread_Helper
 {
 public:
   /// Constructor
-  TAO_LF_Event_Loop_Thread_Helper (TAO_Leader_Follower &leader_follower);
+  TAO_LF_Event_Loop_Thread_Helper (TAO_Leader_Follower &leader_follower,
+                                   TAO_LF_Strategy &lf_strategy);
 
   /// Destructor
   ~TAO_LF_Event_Loop_Thread_Helper (void);
@@ -233,9 +236,59 @@ private:
   /// Reference to leader/followers object.
   TAO_Leader_Follower &leader_follower_;
 
+  TAO_LF_Strategy &lf_strategy_;
+
   /// Remembers whether we have to call the reset method in the
   /// destructor.
   int call_reset_;
+};
+
+class TAO_Export TAO_LF_Strategy
+{
+public:
+  TAO_LF_Strategy ();
+
+  virtual ~TAO_LF_Strategy ();
+
+  virtual void set_upcall_thread (TAO_Leader_Follower &leader_follower) = 0;
+
+  virtual int set_event_loop_thread (ACE_Time_Value *max_wait_time,
+                                     TAO_Leader_Follower &leader_follower) = 0;
+
+  virtual void reset_event_loop_thread_and_elect_new_leader (int call_reset,
+                                                             TAO_Leader_Follower &leader_follower) = 0;
+};
+
+class TAO_Export TAO_Complete_LF_Strategy : public TAO_LF_Strategy
+{
+public:
+  TAO_Complete_LF_Strategy ();
+
+  virtual ~TAO_Complete_LF_Strategy ();
+
+  virtual void set_upcall_thread (TAO_Leader_Follower &leader_follower);
+
+  virtual int set_event_loop_thread (ACE_Time_Value *max_wait_time,
+                                     TAO_Leader_Follower &leader_follower);
+
+  virtual void reset_event_loop_thread_and_elect_new_leader (int call_reset,
+                                                             TAO_Leader_Follower &leader_follower);
+};
+
+class TAO_Export TAO_Null_LF_Strategy : public TAO_LF_Strategy
+{
+public:
+  TAO_Null_LF_Strategy ();
+
+  virtual ~TAO_Null_LF_Strategy ();
+
+  virtual void set_upcall_thread (TAO_Leader_Follower &leader_follower);
+
+  virtual int set_event_loop_thread (ACE_Time_Value *max_wait_time,
+                                     TAO_Leader_Follower &leader_follower);
+
+  virtual void reset_event_loop_thread_and_elect_new_leader (int call_reset,
+                                                             TAO_Leader_Follower &leader_follower);
 };
 
 #if defined (__ACE_INLINE__)

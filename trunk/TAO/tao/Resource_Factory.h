@@ -33,6 +33,7 @@ class TAO_Reactor_Registry;
 class TAO_Priority_Mapping;
 
 class TAO_Flushing_Strategy;
+class TAO_LF_Strategy;
 
 // ****************************************************************
 
@@ -189,6 +190,10 @@ public:
   /// Creates the flushing strategy.  The new instance is owned by the
   /// caller.
   virtual TAO_Flushing_Strategy *create_flushing_strategy (void) = 0;
+
+  /// Creates the leader followers strategy.  The new instance is owned by the
+  /// caller.
+  virtual TAO_LF_Strategy *create_lf_strategy (void) = 0;
 
 protected:
   /**

@@ -86,6 +86,8 @@ public:
 
   virtual TAO_Priority_Mapping *get_priority_mapping (void);
 
+  virtual TAO_LF_Strategy *create_lf_strategy (void);
+
 protected:
 
   virtual ACE_Reactor_Impl *allocate_reactor_impl (void) const;

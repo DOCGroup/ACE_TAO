@@ -216,12 +216,13 @@ TAO_LF_Client_Leader_Thread_Helper::~TAO_LF_Client_Leader_Thread_Helper (void)
 ACE_INLINE int
 TAO_LF_Event_Loop_Thread_Helper::set_event_loop_thread (ACE_Time_Value *max_wait_time)
 {
-  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->leader_follower_.lock (), -1);
+  // @@ Michael:
+  // Does this method need to be in that helper? Shouldn't it's contents be invoked
+  // directly?
+  // Does call_reset_ need to be proteced by the mutex?
 
-  int result =
-    this->leader_follower_.set_event_loop_thread (max_wait_time);
+  int result = this->lf_strategy_.set_event_loop_thread (max_wait_time, leader_follower_);
 
-  // If successful, reset has to be called.
   if (result == 0)
     this->call_reset_ = 1;
 
@@ -229,24 +230,18 @@ TAO_LF_Event_Loop_Thread_Helper::set_event_loop_thread (ACE_Time_Value *max_wait
 }
 
 ACE_INLINE
-TAO_LF_Event_Loop_Thread_Helper::TAO_LF_Event_Loop_Thread_Helper (TAO_Leader_Follower &leader_follower)
+TAO_LF_Event_Loop_Thread_Helper::TAO_LF_Event_Loop_Thread_Helper (TAO_Leader_Follower &leader_follower,
+                                                                  TAO_LF_Strategy &lf_strategy)
   : leader_follower_ (leader_follower),
+    lf_strategy_ (lf_strategy),
     call_reset_ (0)
 {
 }
 
 ACE_INLINE
 TAO_LF_Event_Loop_Thread_Helper::~TAO_LF_Event_Loop_Thread_Helper (void)
-{
-  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->leader_follower_.lock ());
-
-  if (this->call_reset_)
-    this->leader_follower_.reset_event_loop_thread ();
-
-  int result = this->leader_follower_.elect_new_leader ();
-
-  if (result == -1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("TAO (%P|%t) Failed to wake up ")
-                ACE_TEXT ("a follower thread\n")));
+{ 
+  this->lf_strategy_.reset_event_loop_thread_and_elect_new_leader (this->call_reset_,
+                                                                    this->leader_follower_);
 }
+

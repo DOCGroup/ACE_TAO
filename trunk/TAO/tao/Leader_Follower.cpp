@@ -224,3 +224,78 @@ TAO_Leader_Follower::reset_client_thread (void)
       this->orb_core_->reactor ()->end_reactor_event_loop ();
     }
 }
+
+TAO_LF_Strategy::TAO_LF_Strategy ()
+{
+}
+
+TAO_LF_Strategy::~TAO_LF_Strategy ()
+{
+}
+
+TAO_Complete_LF_Strategy::TAO_Complete_LF_Strategy ()
+{
+}
+
+TAO_Complete_LF_Strategy::~TAO_Complete_LF_Strategy ()
+{
+}
+
+void
+TAO_Complete_LF_Strategy::set_upcall_thread (TAO_Leader_Follower &leader_follower)
+{
+  leader_follower.set_upcall_thread ();
+}
+
+int
+TAO_Complete_LF_Strategy::set_event_loop_thread (ACE_Time_Value *max_wait_time,
+                                                 TAO_Leader_Follower &leader_follower)
+{
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, leader_follower.lock (), -1);
+
+  return leader_follower.set_event_loop_thread (max_wait_time);
+}
+
+ACE_INLINE void
+TAO_Complete_LF_Strategy::reset_event_loop_thread_and_elect_new_leader (int call_reset,
+                                                                        TAO_Leader_Follower &leader_follower)
+{
+  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, leader_follower.lock ());
+
+  if (call_reset)
+    leader_follower.reset_event_loop_thread ();
+
+  int result = leader_follower.elect_new_leader ();
+
+  if (result == -1)
+    ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("TAO (%P|%t) Failed to wake up ")
+                ACE_TEXT ("a follower thread\n")));
+}
+
+TAO_Null_LF_Strategy::TAO_Null_LF_Strategy ()
+{
+}
+
+TAO_Null_LF_Strategy::~TAO_Null_LF_Strategy ()
+{
+}
+
+void
+TAO_Null_LF_Strategy::set_upcall_thread (TAO_Leader_Follower &)
+{
+}
+
+int
+TAO_Null_LF_Strategy::set_event_loop_thread (ACE_Time_Value *, 
+                                             TAO_Leader_Follower &)
+{
+  return 0;
+}
+
+void
+TAO_Null_LF_Strategy::reset_event_loop_thread_and_elect_new_leader (int,
+                                                                    TAO_Leader_Follower &)
+{
+}
+
