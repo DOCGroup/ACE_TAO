@@ -699,8 +699,24 @@ get_outgoing_connections_i (const char * instname,
                     retv.length (len+1);
                     retv[len].instanceName = instname;
                     retv[len].portName = endpoint.portName.in ();
-                    retv[len].kind = endpoint.kind;
+                    retv[len].kind = endpoint.kind; // either emitter/publisher or receptacle.
                     retv[len].endpoint = CORBA::Object::_duplicate(curr_rev_conn.endpoint.in ());
+
+                    // CIAO-specific fields below
+                    // If the component port type needs to use CIAO specific publish/subscribe
+                    // service, then we also need to set up the "consumer side component name"
+                    // and "consumer side port name".
+                    if (retv[len].kind == Deployment::rtecEventPublisher ||
+                        retv[len].kind == Deployment::rtecEventEmitter ||
+                        retv[len].kind == Deployment::cosEventPublisher ||
+                        retv[len].kind == Deployment::cosEventEmitter ||
+                        retv[len].kind == Deployment::nsEventPublisher ||
+                        retv[len].kind == Deployment::nsEventEmitter)
+                      {
+                        retv[len].consumerCompName = name.c_str ();
+                        retv[len].consumerPortName = port_name.c_str ();
+                      }
+
                     ++len;
                     found = true;
                     break;            // Since we know there is only 2 endpoints in a connection.
