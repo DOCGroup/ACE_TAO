@@ -44,7 +44,7 @@
 
 ACE_RCSID(tests, Multicast_Test, "$Id$")
 
-#if defined (ACE_HAS_IP_MULTICAST)
+#if defined (ACE_HAS_IP_MULTICAST) && defined (ACE_HAS_THREADS)
 
 /* 
  *  The 'finished' flag is used to break out of an infninite loop in the 
@@ -200,7 +200,7 @@ MCT_Config::open (int argc, ACE_TCHAR *argv[])
             // 224.255.0.0 to 238.255.255.255, but we only allow the 
             // administrative "site local" range, 239.255.0.0 to 
             // 239.255.255.255.
-            char *group = getopt.opt_arg ();
+            ACE_TCHAR *group = getopt.opt_arg ();
             if (this->group_start_.set (group) != 0)
               {
                 ACE_ERROR ((LM_ERROR, ACE_TEXT ("Bad group address:%s\n"), 
@@ -806,7 +806,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 template class ACE_Vector<ACE_CString *>;
 template class ACE_Array_Base<ACE_String_Base<char> *>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Vector<ACE_CString>
+#pragma instantiate ACE_Vector<ACE_CString *>
 #pragma instantiate ACE_Array_Base<ACE_String_Base<char> *>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -823,4 +823,4 @@ ACE_TMAIN (int, ACE_TCHAR *argv[])
   ACE_END_TEST;
   return 1;
 }
-#endif /* ACE_HAS_IP_MULTICAST */
+#endif /* ACE_HAS_IP_MULTICAST && ACE_HAS_THREADS */

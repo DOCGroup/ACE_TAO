@@ -69,7 +69,7 @@ MT_Reactor_Timer_Test: !VxWorks
 MT_Reactor_Upcall_Test: !VxWorks
 MT_SOCK_Test: !chorus
 Malloc_Test: !VxWorks
-Multicast_Test
+Multicast_Test: !ST
 Naming_Test: OTHER !chorus !LynxOS !Unicos !VxWorks
 New_Fail_Test: ALL !DISABLED
 Notify_Performance_Test
@@ -120,7 +120,7 @@ Timer_Queue_Test
 Timeprobe_Test
 Time_Service_Test: ALL !STATIC !DISABLED !missing_netsvcs TOKEN !chorus !Unicos
 Time_Value_Test
-Token_Strategy_Test
+Token_Strategy_Test: !ST
 Tokens_Test: ALL MSVC !DISABLED TOKEN !chorus !Unicos
 TP_Reactor_Test: ALL
 TSS_Test
