@@ -47,7 +47,7 @@ Content_Iterator_i::next_chunk (CORBA::ULong offset,
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("Error during lseek")),
                       0);
-  else if (offset != ACE_static_cast (CORBA::ULong, real_offset))
+  else if (offset != static_cast<CORBA::ULong> (real_offset))
     {
       // Didn't get the desired offset.
 

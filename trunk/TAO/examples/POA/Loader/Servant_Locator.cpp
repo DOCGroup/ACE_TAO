@@ -49,18 +49,18 @@ ServantLocator::ServantLocator (CORBA::ORB_ptr orb,
   // to long first.
   //
   void *symbol = this->dll_.symbol (factory_function);
-  long function = ACE_reinterpret_cast (long, symbol);
+  long function = reinterpret_cast<long> (symbol);
 
   servant_supplier_ =
-    ACE_reinterpret_cast (SERVANT_FACTORY, function);
+    reinterpret_cast<SERVANT_FACTORY> (function);
 
   // Obtain the symbol for the function which will destroy the
   // servant.
   symbol = this->dll_.symbol (garbage_collection_function);
-  function = ACE_reinterpret_cast (long, symbol);
+  function = reinterpret_cast<long> (symbol);
 
   servant_garbage_collector_ =
-    ACE_reinterpret_cast (SERVANT_GARBAGE_COLLECTOR, function);
+    reinterpret_cast<SERVANT_GARBAGE_COLLECTOR> (function);
 }
 
 // This method associates an servant with the ObjectID.
@@ -106,8 +106,7 @@ ServantLocator::postinvoke (const PortableServer::ObjectId &oid,
 {
   // Check the passed servant with the cookie.
   PortableServer::Servant my_servant =
-    ACE_reinterpret_cast (PortableServer::Servant,
-                          cookie);
+    reinterpret_cast<PortableServer::Servant> (cookie);
 
   ACE_ASSERT (servant == my_servant);
 

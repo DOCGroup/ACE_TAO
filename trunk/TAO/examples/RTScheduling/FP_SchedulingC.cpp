@@ -102,7 +102,7 @@ void
 FP_Scheduling::SegmentSchedulingParameterPolicy::_tao_any_destructor (void *_tao_void_pointer)
 {
   SegmentSchedulingParameterPolicy *_tao_tmp_pointer =
-    ACE_static_cast (SegmentSchedulingParameterPolicy *, _tao_void_pointer);
+    static_cast<SegmentSchedulingParameterPolicy *> (_tao_void_pointer);
   CORBA::release (_tao_tmp_pointer);
 }
 
@@ -277,7 +277,7 @@ void
 FP_Scheduling::FP_Scheduler::_tao_any_destructor (void *_tao_void_pointer)
 {
   FP_Scheduler *_tao_tmp_pointer =
-    ACE_static_cast (FP_Scheduler *, _tao_void_pointer);
+    static_cast<FP_Scheduler *> (_tao_void_pointer);
   CORBA::release (_tao_tmp_pointer);
 }
 

@@ -40,8 +40,7 @@ Checkpoint_Client_i::run (const char *name,
       ACE_DEBUG ((LM_DEBUG, "Send some random events:\n"));
 
       CORBA::Float temperature = random_number (29, 34);
-      Temperature_var t_e (ACE_static_cast(Temperature*,
-                                           new Temperature_impl (temperature)));
+      Temperature_var t_e (static_cast<Temperature*> (new Temperature_impl (temperature)));
       t_e->origin_id_ (KITCHEN);
       t_e->do_print ();
       checkpoint->put_event (t_e ACE_ENV_ARG_PARAMETER);
@@ -57,8 +56,7 @@ Checkpoint_Client_i::run (const char *name,
       Point point = { random_number (0,4),
                       random_number (0,4),
                       random_number (0,4)  };
-      Position_var p_e (ACE_static_cast(Position*,
-                                        new Position_impl (point)));
+      Position_var p_e (static_cast<Position*> (new Position_impl (point)));
       p_e->origin_id_ (JONAS);
       p_e->do_print ();
       checkpoint->put_event (p_e ACE_ENV_ARG_PARAMETER);
@@ -68,8 +66,7 @@ Checkpoint_Client_i::run (const char *name,
       int urgent = (random_number (0,2) > 1) ? 1 : 0;
       const char *a_text = (random_number (0,2) > 1) ? "Coffee is cold."
                                                      : "I want pasta.";
-      Log_Msg_var l_e (ACE_static_cast(Log_Msg*,
-                                       new Log_Msg_impl (urgent, a_text)));
+      Log_Msg_var l_e (static_cast<Log_Msg*> (new Log_Msg_impl (urgent, a_text)));
       l_e->origin_id_ (JONAS);
       l_e->do_print ();
       checkpoint->put_event (l_e ACE_ENV_ARG_PARAMETER);
@@ -119,7 +116,7 @@ Checkpoint_Client_i::~Checkpoint_Client_i (void)
 CORBA::Float random_number (double min, double max)
 {
   double range = max - min;
-  return ACE_static_cast (CORBA::Float, (min + (range * ACE_OS::rand () / (RAND_MAX + 1.0))));
+  return static_cast<CORBA::Float> ((min + (range * ACE_OS::rand () / (RAND_MAX + 1.0))));
 }
 
 

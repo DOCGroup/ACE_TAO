@@ -102,11 +102,11 @@ Progress_Window::sent_request (CORBA::Long id)
   if (id < 0 || id >= this->n_peers_)
     return;
   Fl_Slider *obj =
-    ACE_dynamic_cast (Fl_Slider*,this->request_progress_[id]);
+    dynamic_cast<Fl_Slider*> (this->request_progress_[id]);
   obj->value (obj->value () + 1);
   obj->redraw ();
 
-  int i = ACE_static_cast(int,obj->value ());
+  int i = static_cast<int> (obj->value ());
   if (i % 100 == 0)
     ACE_DEBUG ((LM_DEBUG, "Progress (%t) - recv reply %d\n", i));
 }
@@ -117,11 +117,11 @@ Progress_Window::recv_reply (CORBA::Long id)
   if (id < 0 || id >= this->n_peers_)
     return;
   Fl_Slider *obj =
-    ACE_dynamic_cast (Fl_Slider*,this->reply_progress_[id]);
+    dynamic_cast<Fl_Slider*> (this->reply_progress_[id]);
   obj->value (obj->value () + 1);
   obj->redraw ();
 
-  int i = ACE_static_cast(int,obj->value ());
+  int i = static_cast<int> (obj->value ());
   if (i % 100 == 0)
     ACE_DEBUG ((LM_DEBUG, "Progress (%t) - recv reply %d\n", i));
 }
@@ -141,7 +141,7 @@ void
 Progress_Window::start_callback (Fl_Widget* /* widget */,
                                  void *data)
 {
-  Progress_Window *self = ACE_static_cast (Progress_Window*, data);
+  Progress_Window *self = static_cast<Progress_Window*> (data);
   self->start ();
 }
 

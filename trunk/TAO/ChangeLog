@@ -1,3 +1,81 @@
+Fri Jan 28 07:18:10 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* examples/AMH/Sink_Server/AMH_Servant.cpp:
+	* examples/AMI/FL_Callback/Progress_i.cpp:
+	* examples/Content_Server/AMI_Iterator/Content_Iterator_i.cpp:
+	* examples/Content_Server/AMI_Iterator/Iterator_Factory_i.cpp:
+	* examples/Content_Server/AMI_Observer/Push_Iterator_Factory_i.cpp:
+	* examples/Content_Server/SMI_Iterator/Content_Iterator_i.cpp:
+	* examples/Content_Server/SMI_Iterator/Iterator_Factory_i.cpp:
+	* examples/Event_Comm/Event_Comm_i.cpp:
+	* examples/Kokyu_dsrt_schedulers/EDF_Scheduler.cpp:
+	* examples/Kokyu_dsrt_schedulers/EDF_SchedulingC.cpp:
+	* examples/Kokyu_dsrt_schedulers/FP_Scheduler.cpp:
+	* examples/Kokyu_dsrt_schedulers/MIF_Scheduler.cpp:
+	* examples/Kokyu_dsrt_schedulers/MUF_Scheduler.cpp:
+	* examples/Load_Balancing_persistent/Load_Balancer_i.cpp:
+	* examples/Logging/Logger_i.cpp:
+	* examples/Logging/Logging_Service_i.cpp:
+	* examples/Logging/Logging_Test_i.cpp:
+	* examples/OBV/Typed_Events/Client_i.cpp:
+	* examples/OBV/Typed_Events/Event_Types_impl.cpp:
+	* examples/OBV/Typed_Events/Server_i.cpp:
+	* examples/POA/DSI/Database_i.cpp:
+	* examples/POA/DSI/server.cpp:
+	* examples/POA/Generic_Servant/client.cpp:
+	* examples/POA/Loader/Servant_Activator.cpp:
+	* examples/POA/Loader/Servant_Locator.cpp:
+	* examples/POA/Loader/Server_Manager.cpp:
+	* examples/POA/On_Demand_Activation/server.cpp:
+	* examples/POA/On_Demand_Loading/Servant_Locator.cpp:
+	* examples/POA/On_Demand_Loading/Servant_Manager.cpp:
+	* examples/POA/On_Demand_Loading/Server_Manager.cpp:
+	* examples/Persistent_Grid/Grid_i.cpp:
+	* examples/PluggableUDP/tests/Basic/UDP_Client_i.cpp:
+	* examples/PluggableUDP/tests/Performance/UDP_PerformanceClient.cpp:
+	* examples/RTCORBA/Activity/Task_Stats.cpp:
+	* examples/RTScheduling/FP_SchedulingC.cpp:
+	* examples/RTScheduling/MIF_SchedulingC.cpp:
+	* examples/RTScheduling/MIF_Scheduler/MIF_Scheduler.cpp:
+	* examples/Simple/Simple_util.cpp:
+	* examples/Simple/time/Time_Client_i.cpp:
+	* examples/Simulator/Event_Supplier/DOVE_Supplier.cpp:
+	* examples/Simulator/Event_Supplier/DualEC_Sup.cpp:
+	* performance-tests/Cubit/TAO/IDL_Cubit/collocation_test.cpp:
+	* performance-tests/Cubit/TAO/MT_Cubit/Task_Client.cpp:
+	* performance-tests/Cubit/TAO/MT_Cubit/server.cpp:
+	* performance-tests/POA/Object_Creation_And_Registration/registration.cpp:
+	* performance-tests/RTCorba/Thread_Pool/client.cpp:
+	* tests/AMH_Exceptions/server.cpp:
+	* tests/AMH_Oneway/server.cpp:
+	* tests/CDR/allocator.cpp:
+	* tests/CDR/growth.cpp:
+	* tests/CDR/octet_sequence.cpp:
+	* tests/CodeSets/libs/IBM1047_ISO8859/Char_IBM1047_ISO8859_Translator.cpp:
+	* tests/CodeSets/libs/UCS4_UTF16/WUCS4_UTF16.cpp:
+	* tests/CodeSets/simple/client.cpp:
+	* tests/Codec/client.cpp:
+	* tests/Collocation_Opportunities/Collocation_Opportunities.cpp:
+	* tests/FL_Cube/client.cpp:
+	* tests/NestedUpcall/MT_Client_Test/client.cpp:
+	* tests/NestedUpcall/Simple/server.cpp:
+	* tests/OctetSeq/OctetSeq.cpp:
+	* tests/OctetSeq/client.cpp:
+	* tests/OctetSeq/test_i.cpp:
+	* tests/Policies/Manipulation.cpp:
+	* tests/Portable_Interceptors/Benchmark/interceptors.cpp:
+	* tests/Portable_Interceptors/Bug_1559/interceptors.cpp:
+	* tests/Portable_Interceptors/Collocated/Service_Context_Manipulation/interceptors.cpp:
+	* tests/Portable_Interceptors/Service_Context_Manipulation/interceptors.cpp:
+	* tests/RTCORBA/RTMutex/server.cpp:
+	* tests/RTScheduling/DT_Spawn/test.cpp:
+	* tests/Xt_Stopwatch/client.cpp:
+	* tests/Xt_Stopwatch/timer.cpp:
+	* utils/catior/catior.cpp:
+
+          Converted ACE_{static,dynamic,reinterpret,const}_cast macros
+          calls to their standard C++ counterparts.
+
 Thu Jan 27 20:01:21 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Messaging/Asynch_Reply_Dispatcher.cpp:
@@ -40,10 +118,10 @@ Wed Jan 26 17:20:05 2005  Huang-Ming Huang  <hh1@cse.wustul.edu>
         * orbsvcs/orbsvcs/FtRtEvent/EventChanel/IOGR_Maker.cpp
         * orbsvcs/orbsvcs/FtRtEvent/EventChanel/Replication_Service.cpp
         * orbsvcs/orbsvcs/FtRtEvent/EventChanel/FtEventServiceInterceptor
-          
-          Fixed incorrect object_group_ref_version problem. Thanks to 
+
+          Fixed incorrect object_group_ref_version problem. Thanks to
           Thia Chang Chao <tchangch@dso.org.sg> for reporting the problem.
-             
+
 Tue Jan 25 14:15:05 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * tao/Makefile.am:

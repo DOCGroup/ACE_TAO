@@ -148,8 +148,8 @@ test_named_mutex_simple (RTCORBA::RTORB_ptr rt_orb)
                             -1);
 
         // test the pointers...
-        if (ACE_reinterpret_cast (void *, larry_mutex1.in ())
-            != ACE_reinterpret_cast (void *, larry_mutex2.in ()))
+        if (reinterpret_cast<void *> (larry_mutex1.in ())
+            != reinterpret_cast<void *> (larry_mutex2.in ()))
           ACE_ERROR_RETURN ((LM_ERROR,
                              "ERROR: Should have gotten the same mutex, but didn't\n"),
                             -1);
@@ -169,8 +169,8 @@ test_named_mutex_simple (RTCORBA::RTORB_ptr rt_orb)
         ACE_TRY_CHECK;
 
         // test the pointers...
-        if (ACE_reinterpret_cast (void *,larry_mutex1.in ())
-            != ACE_reinterpret_cast (void *,larry_mutex3.in ()))
+        if (reinterpret_cast<void *> (larry_mutex1.in ())
+            != reinterpret_cast<void *> (larry_mutex3.in ()))
           ACE_ERROR_RETURN ((LM_ERROR,
                              "ERROR: Should have gotten the same mutex, but didn't\n"),
                             -1);
@@ -254,7 +254,7 @@ struct Mutex_Test_Data
 static void *
 mutex_test_thread (void *args)
 {
-  Mutex_Test_Data *data = ACE_reinterpret_cast (Mutex_Test_Data *, args);
+  Mutex_Test_Data *data = reinterpret_cast<Mutex_Test_Data *> (args);
 
   RTCORBA::Mutex_ptr mutex = data->mutex;
   int *shared_var = data->shared_var;
@@ -377,7 +377,7 @@ static void *
 mutex_test_try_lock_thread (void *args)
 {
   // test out try_lock() failure cases
-  Mutex_Test_Data *data = ACE_reinterpret_cast (Mutex_Test_Data *, args);
+  Mutex_Test_Data *data = reinterpret_cast<Mutex_Test_Data *> (args);
 
   RTCORBA::Mutex_ptr mutex = data->mutex;
   CORBA::Boolean result;

@@ -183,8 +183,8 @@ Server::activate_high_servant (void)
 
   char *high_second_argv[] =
     {orbendpoint,
-     ACE_const_cast (char *, "-ORBSndSock 32768 "),
-     ACE_const_cast (char *, "-ORBRcvSock 32768 "),
+     const_cast<char *> ("-ORBSndSock 32768 "),
+     const_cast<char *> ("-ORBRcvSock 32768 "),
      0};
   ACE_NEW_RETURN (this->high_argv_,
                   ACE_ARGV (this->argv_, high_second_argv),
@@ -227,7 +227,7 @@ Server::activate_high_servant (void)
 int
 Server::activate_low_servants (void)
 {
-  if (ACE_static_cast (int, this->num_low_priority_) > 0)
+  if (static_cast<int> (this->num_low_priority_) > 0)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Creating %d servants starting at priority %d\n",
@@ -271,8 +271,8 @@ Server::activate_low_servants (void)
     {
       char *low_second_argv[] =
         {random_endpoint,
-         ACE_const_cast (char *, "-ORBSndSock 32768 "),
-         ACE_const_cast (char *, "-ORBRcvSock 32768 "),
+         const_cast<char *> ("-ORBSndSock 32768 "),
+         const_cast<char *> ("-ORBRcvSock 32768 "),
          0};
       ACE_NEW_RETURN (this->low_argv_,
                       ACE_ARGV (this->argv_,

@@ -414,7 +414,7 @@ Client<INTERFACE_OBJECT, Var>::init (const char *name,
           // No IOR specified. Use the Naming Service
           ACE_DEBUG((LM_DEBUG,
                      "Using the Naming Service \n"));
-          this->name_ = ACE_const_cast (char *, name);
+          this->name_ = const_cast<char *> (name);
           int retv = this->obtain_initial_references (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
           if (retv ==-1)

@@ -243,8 +243,7 @@ DatabaseImpl::Agent::find_entry (const char *key,
   if (DATABASE::instance ()->find (key, temp) == 0)
     {
       Employee *employee =
-        ACE_reinterpret_cast (Employee *,
-                              temp);
+        reinterpret_cast<Employee *> (temp);
       ACE_DEBUG ((LM_DEBUG,
                   "Employee with key = %s found: name = %s and id = %d\n",
                   key,
@@ -296,8 +295,7 @@ DatabaseImpl::Agent::destroy_entry (const char *key,
   if (DATABASE::instance ()->unbind (key, temp) == 0)
     {
       Employee *employee =
-        ACE_reinterpret_cast (Employee *,
-                              temp);
+        reinterpret_cast<Employee *> (temp);
       ACE_DEBUG ((LM_DEBUG,
                   "Employee with key = %s will be removed from the database: "
                   "name = %s and id = %d \n",

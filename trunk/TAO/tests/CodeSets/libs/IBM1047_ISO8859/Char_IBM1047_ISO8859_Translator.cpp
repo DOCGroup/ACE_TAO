@@ -40,7 +40,7 @@ ACE_CDR::Boolean
 IBM1047_ISO8859::read_char (ACE_InputCDR &in,
                             ACE_CDR::Char &x)
 {
-  if (this->read_1 (in, ACE_reinterpret_cast (ACE_CDR::Octet*, &x)))
+  if (this->read_1 (in, reinterpret_cast<ACE_CDR::Octet*> (&x)))
     {
       x = to_IBM1047[(int) x];
       return 1;
@@ -100,8 +100,7 @@ IBM1047_ISO8859::write_char (ACE_OutputCDR& out,
                              ACE_CDR::Char x)
 {
   return this->write_1 (out,
-                        ACE_reinterpret_cast (const ACE_CDR::Octet*,
-                                              &from_IBM1047[(int) x]));
+                        reinterpret_cast<const ACE_CDR::Octet*> (&from_IBM1047[(int) x]));
 }
 
 ACE_CDR::Boolean
