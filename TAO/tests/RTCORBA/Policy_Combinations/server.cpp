@@ -165,6 +165,7 @@ write_iors_to_file (CORBA::Object_ptr object,
                      ior.in ());
 
   ACE_ASSERT (result == ACE_OS::strlen (ior.in ()));
+  ACE_UNUSED_ARG (result);
 
   ACE_OS::fclose (file);
 }

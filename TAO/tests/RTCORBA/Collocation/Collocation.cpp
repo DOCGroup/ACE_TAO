@@ -326,10 +326,10 @@ Server::create_servant_in_root_poa (CORBA::Environment &ACE_TRY_ENV)
   PortableServer::ServantBase_var safe_servant (servant);
 
   this->tests_.size (this->tests_.size () + 1);
-  this->tests_[this->tests_.size () - 1].object_ =
-    servant->_this (ACE_TRY_ENV);
   this->tests_[this->tests_.size () - 1].servant_ =
     servant;
+  this->tests_[this->tests_.size () - 1].object_ =
+    servant->_this (ACE_TRY_ENV);
   ACE_CHECK;
 }
 
@@ -387,10 +387,10 @@ Server::create_poa_and_servant_with_tp_policy (CORBA::Environment &ACE_TRY_ENV)
   PortableServer::ServantBase_var safe_servant (servant);
 
   this->tests_.size (this->tests_.size () + 1);
-  this->tests_[this->tests_.size () - 1].object_ =
-    servant->_this (ACE_TRY_ENV);
   this->tests_[this->tests_.size () - 1].servant_ =
     servant;
+  this->tests_[this->tests_.size () - 1].object_ =
+    servant->_this (ACE_TRY_ENV);
   ACE_CHECK;
 }
 

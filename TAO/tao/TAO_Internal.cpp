@@ -278,3 +278,13 @@ TAO_Internal::close_services (void)
   --service_open_count_;
   return 0;
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+template class ACE_Dynamic_Service<ACE_Service_Object>;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate ACE_Dynamic_Service<ACE_Service_Object>
+
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
