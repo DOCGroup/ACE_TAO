@@ -1,12 +1,17 @@
+Fri Jan 02 08:08:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* bin/MakeProjectCreator/templates/bor.mpd:
+	  Also overrule PASCALDIR and UNICODEDIR
+
 Thu Jan 01 20:25:22 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/TSS_Static_Test.dsp:
 
-	  A new project file for TSS_Static_Test. 
-	
+	  A new project file for TSS_Static_Test.
+
 	* tests/tests.dsw:
 
-	  Added the new dsp file into the project. 
+	  Added the new dsp file into the project.
 
 Thu Jan  1 17:56:31 2004  Steve Huston  <shuston@riverace.com>
 
