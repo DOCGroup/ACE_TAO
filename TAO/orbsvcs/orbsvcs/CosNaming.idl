@@ -14,6 +14,9 @@
 //
 // ============================================================================
 
+#ifndef TAO_NAMING_IDL
+#define TAO_NAMING_IDL
+
 #pragma prefix "omg.org"
 
 module CosNaming
@@ -230,3 +233,5 @@ module CosNaming
       // This operation destroys the iterator.
     };
 };
+
+#endif /* TAO_NAMING_IDL */

@@ -22,6 +22,9 @@
 //
 // ============================================================================
 
+#ifndef TAO_LIFECYCLE_IDL
+#define TAO_LIFECYCLE_IDL
+
 // OMG IDL for CosLifeCycle Module, page 6-10 in 
 // Includes the following interfaces:
 //   FactoryFinder, LifeCycleObject, GenericFactory
@@ -119,3 +122,5 @@ typedef struct NVP
 
 typedef sequence <NameValuePair> Criteria;
 */
+
+#endif /* TAO_LIFECYCLE_IDL */

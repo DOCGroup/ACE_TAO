@@ -1,5 +1,8 @@
 /* -*- C++ -*- */
-/* $Id$ */
+// $Id$
+
+#ifndef TAO_SFP_IDL
+#define TAO_SFP_IDL
 
 module flowProtocol
 {
@@ -111,6 +114,7 @@ module flowProtocol
     // "=",'C','R','E'
     unsigned long cred_num;
   };
-
   
 };
+
+#endif /* TAO_SFP_IDL */
