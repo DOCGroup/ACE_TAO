@@ -1,3 +1,11 @@
+Wed Mar 18 18:32:04 1998  Sergio Flores  <sergio@mambo.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Naming/CosNaming_i.cpp: 		
+	* orbsvcs/orbsvcs/Naming/CosNaming_i.h: Fixed some allocation
+ 	errors and added synchronization mechanism for static internal
+ 	data structures.  Also fixed an undefined symbol due to templates
+ 	not being instantiated.
+
 Wed Mar 18 17:22:40 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tao/sequence_T.h: Renamed buffer() to get_buffer() to confrom to
