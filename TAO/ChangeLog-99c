@@ -1,3 +1,10 @@
+Wed Jul 28 22:09:18 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* examples/Simple/bank/server.cpp: Fixed a typo where
+	  #pragma instantiate Server<Account_Manager_i> should be #pragma
+ 	  instantiate Server<AccountManager_i>.  Thanks to Bill Tovrea
+ 	  <gwtovrea@west.raytheon.com> for reporting this.
+
 Wed Jul 28 21:10:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
        * examples/Simulator/DOVEBrowser/NS_Resolve.java: fixed name
