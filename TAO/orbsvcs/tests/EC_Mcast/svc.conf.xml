@@ -2,5 +2,5 @@
 <!-- Converted from ./orbsvcs/tests/EC_Mcast/svc.conf by svcconf-convert.pl -->
 <ACE_Svc_Conf>
  <!--  $Id$ -->
- <static id="EC_Factory" params="-ECfiltering basic -ECproxyconsumerlock thread -ECproxysupplierlock thread -ECsupplierfiltering per-supplier -ECobserver basic"/>
+ <static id="EC_Factory" params="-ECfiltering basic -ECproxyconsumerlock thread -ECproxysupplierlock thread -ECsupplierfiltering per-supplier -ECObserver basic"/>
 </ACE_Svc_Conf>
