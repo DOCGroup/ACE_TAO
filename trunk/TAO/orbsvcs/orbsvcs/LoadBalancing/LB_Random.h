@@ -77,6 +77,17 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
   //@}
 
+  /// TAO-specific underlying implementation of this Random load
+  /// balancing strategy's next_member() method.
+  static CORBA::Object_ptr _tao_next_member (
+      PortableGroup::ObjectGroup_ptr object_group,
+      CosLoadBalancing::LoadManager_ptr load_manager,
+      const PortableGroup::Locations & locations
+      ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableGroup::ObjectGroupNotFound,
+                     PortableGroup::MemberNotFound));
+
 };
 
 
