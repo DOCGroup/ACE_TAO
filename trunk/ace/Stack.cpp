@@ -424,7 +424,7 @@ ACE_Unbounded_Queue<TYPE>::peek (const u_int index) const
   for (u_int i = 0; temp != 0 && i < index; temp = temp->next_, ++i)
     /* null */;
 
-  return temp == 0  ?  0  : &temp->head_->item_;
+  return temp == 0  ?  0  : &temp->item_;
 }
 
 template <class TYPE> int
