@@ -32,6 +32,7 @@
 #include "tao/String_TypeCode.h"
 #include "tao/Struct_TypeCode.h"
 #include "tao/TypeCode_Non_Default_Case.h"
+#include "tao/TypeCode_Default_Case.h"
 #include "tao/Union_TypeCode.h"
 #include "tao/CDR.h"
 #include "tao/Any.h"
@@ -112,9 +113,10 @@ namespace GIOP
 // TAO_IDL - Generated from
 // be/be_visitor_typecode/union_typecode.cpp:29
 
-static TAO::TypeCode::Non_Default_Case<CORBA::Short, char const *> const _tao_cases_GIOP_TargetAddress_0(0, "object_key", &CORBA::_tc_OctetSeq),
-static TAO::TypeCode::Non_Default_Case<CORBA::Short, char const *> const _tao_cases_GIOP_TargetAddress_1(1, "profile", &IOP::_tc_TaggedProfile),
-static TAO::TypeCode::Non_Default_Case<CORBA::Short, char const *> const _tao_cases_GIOP_TargetAddress_2(2, "ior", &GIOP::_tc_IORAddressingInfo)
+static TAO::TypeCode::Non_Default_Case<CORBA::Short, char const *> const _tao_cases_GIOP_TargetAddress_0 (0, "object_key", &CORBA::_tc_OctetSeq);
+static TAO::TypeCode::Non_Default_Case<CORBA::Short, char const *> const _tao_cases_GIOP_TargetAddress_1 (1, "profile", &IOP::_tc_TaggedProfile);
+static TAO::TypeCode::Non_Default_Case<CORBA::Short, char const *> const _tao_cases_GIOP_TargetAddress_2 (2, "ior", &GIOP::_tc_IORAddressingInfo);
+
 static TAO::TypeCode::Case<char const *> const * const _tao_cases_GIOP_TargetAddress[] =
   {
     &_tao_cases_GIOP_TargetAddress_0,
@@ -124,15 +126,14 @@ static TAO::TypeCode::Case<char const *> const * const _tao_cases_GIOP_TargetAdd
   };
 
 static TAO::TypeCode::Union<char const *,
-                            TAO::TypeCode::Case<char const *> const *,
+                            TAO::TypeCode::Case<char const *> const * const *,
                             TAO::Null_RefCount_Policy>
   _tao_tc_GIOP_TargetAddress (
     "IDL:omg.org/GIOP/TargetAddress:1.0",
     "TargetAddress",
     &CORBA::_tc_short,
     _tao_cases_GIOP_TargetAddress,
-    3,-1,
-    );
+    3, -1);
   
 namespace GIOP
 {
