@@ -61,6 +61,9 @@
 #define TAO_CHECK_ENV_RETURN(X, Y)
 #define TAO_CHECK_CONDITION_ENV_RETURN(X, COND, Y)
 
+#define TAO_TRY_THROW (EXCEPTION) throw EXCEPTION
+#define TAO_TRY_THROW_EX (EXCEPTION,LABEL) throw EXCEPTION
+
 #define TAO_THROW(EXCEPTION) throw EXCEPTION
 #define TAO_THROW_ENV(EXCEPTION, ENV) throw EXCEPTION
 #define TAO_RETHROW throw
@@ -81,7 +84,7 @@
   return RETURN; } while (0)
 #define TAO_RETHROW_RETURN(RETURN) throw; \
   return RETURN
-#define TAO_RETHROW_RETURN_VOID_SYS throw; \
+#define TAO_RETHROW_RETURN_VOID throw; \
   return
 
 #else
@@ -89,11 +92,12 @@
 #define TAO_THROW_RETURN(EXCEPTION, RETURN) throw EXCEPTION
 #define TAO_THROW_ENV_RETURN(EXCEPTION, ENV, RETURN) throw EXCEPTION
 #define TAO_RETHROW_RETURN(RETURN) throw
-#define TAO_RETHROW_RETURN_VOID_SYS throw
+#define TAO_RETHROW_RETURN_VOID throw
 
 #endif /* ACE_WIN32 */
 
-#define TAO_RETHROW_RETURN_SYS(RETURN) TAO_RETHROW_RETURN (RETURN)
+#define TAO_RETHROW_SAME_ENV_RETURN(RETURN) TAO_RETHROW_RETURN (RETURN)
+#define TAO_RETHROW_SAME_ENV_RETURN_VOID TAO_RETHROW_RETURN_VOID
 
 // #define TAO_THROW_SPEC(X) ACE_THROW_SPEC(X)
 #define TAO_THROW_SPEC(X)
@@ -145,6 +149,23 @@ int TAO_TRY_FLAG = 1; \
 TAO_TRY_LABEL ## LABEL: \
 if (TAO_TRY_FLAG) \
 do {
+
+// Throwing an exception within a try block must be treated differently
+// on platforms that don't support native exception because the exception
+// won't get caught by the catch clauses automatically.
+#define TAO_TRY_THROW(EXCEPTION) \
+{\
+  TAO_TRY_ENV.exception (new EXCEPTION); \
+  TAO_TRY_FLAG = 0; \
+  goto TAO_TRY_LABEL; \
+}
+
+#define TAO_TRY_THROW_EX (EXCEPTION,LABEL) \
+{\
+  TAO_TRY_ENV.exception (new EXCEPTION); \
+  TAO_TRY_FLAG = 0; \
+  goto TAO_TRY_LABEL ## LABEL; \
+}
 
 // Each CATCH statement ends the previous scope and starts a new one.
 // Since all CATCH statements can end the TAO_TRY macro, they must all
@@ -231,8 +252,8 @@ return
 _env.exception (TAO_TRY_ENV.exception ()); \
 return RETURN
 
-#define TAO_RETHROW_RETURN_SYS(RETURN) return RETURN
-#define TAO_RETHROW_RETURN_VOID_SYS return
+#define TAO_RETHROW_SAME_ENV_RETURN(RETURN) return RETURN
+#define TAO_RETHROW_SAME_ENV_RETURN_VOID return
 
 #define TAO_THROW_SPEC(X)
 
@@ -262,10 +283,6 @@ return RETURN
         ENV.print_exception (PRINT_STRING); \
         return; \
     }
-
-// Throwing an exception from within a TAO_TRY block has slightly
-// different semantics, we need to check that in the near future.
-# define TAO_TRY_THROW(EXCEPTION) TAO_THROW(EXCEPTION)
 
 // This macros are used to grab a lock using a Guard, test that the
 // lock was correctly grabbed and throw an exception on failure.
