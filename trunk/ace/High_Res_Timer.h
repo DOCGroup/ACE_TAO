@@ -74,7 +74,7 @@ public:
   // by zero exceptions.
 
   static ACE_UINT32 global_scale_factor ();
-  // Accesses the current global_scale_factor.
+  // Accesses the global_scale_factor.
 
   static int get_env_global_scale_factor (const char *env = "ACE_SCALE_FACTOR");
   // Sets the global_scale_factor to the value in the <env>
