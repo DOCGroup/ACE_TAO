@@ -25,7 +25,7 @@
 namespace TAO
 {
   class Any_Impl;
-};
+}
 
 namespace CORBA
 {
@@ -266,7 +266,7 @@ namespace CORBA
     /// Instance.
     Any *&ptr_;
   };
-};
+}
 
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA::Any &);
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::Any &);

@@ -29,7 +29,7 @@ namespace CORBA
   typedef Object *Object_ptr;
 
   class Environment;
-};
+}
 
 /**
  * @class TAO_Collocation_Resolver
@@ -47,7 +47,7 @@ public:
   /// Destructor.
   virtual ~TAO_Collocation_Resolver (void);
 
-  /// Is <object> collocated?
+  /// Is @a object collocated?
   virtual CORBA::Boolean is_collocated (CORBA::Object_ptr object
                                         ACE_ENV_ARG_DECL) const = 0;
 };

@@ -57,7 +57,7 @@ namespace CORBA
 
   class ImplementationDef;
   typedef ImplementationDef *ImplementationDef_ptr;
-  
+
   class Context;
   typedef Context *Context_ptr;
 
@@ -455,7 +455,7 @@ namespace TAO
   private:
     CORBA::Object_var x_;
   };
-};
+}
 
 
 /// This function pointer is set only when the Portable server
