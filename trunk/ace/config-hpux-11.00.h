@@ -320,6 +320,8 @@
 // Platform lacks a typedef for timespec_t, but has struct timespec
 #define ACE_LACKS_TIMESPEC_T
 
+// dlopen() takes a char* instead of const char*
+#define ACE_HAS_CHARPTR_DL
 
 // Shared library name/path components
 #define ACE_DLL_SUFFIX  ".sl"
