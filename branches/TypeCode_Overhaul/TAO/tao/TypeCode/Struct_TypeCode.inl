@@ -1,0 +1,35 @@
+// -*- C++ -*-
+//
+// $Id$
+
+template <typename StringType, class FieldArrayType, class RefCountPolicy>
+ACE_INLINE
+TAO::TypeCode::Struct<StringType, FieldArrayType, RefCountPolicy>::Struct (
+  char const * id,
+  char const * name,
+  Field<StringType> const * fields,
+  CORBA::ULong nfields)
+  : base_attributes_ (id, name),
+    fields_ (fields),
+    nfields_ (nfields)
+{
+}
+
+template <typename StringType, typename FieldArrayType, class RefCountPolicy>
+ACE_INLINE TAO::TypeCode::Field<StringType> const *
+TAO::TypeCode::Struct<StringType,
+                      FieldArrayType>::fields (void) const
+{
+  return this->fields_;
+}
+
+// -------------------------------------------------------------
+// Member specializations
+// -------------------------------------------------------------
+
+ACE_INLINE TAO::TypeCode::Field<CORBA::String_var> const *
+TAO::TypeCode::Struct<CORBA::String_var,
+                      ACE_Auto_Ptr_Array<Field const> >::fields (void) const
+{
+  return this->fields_.get ();
+}
