@@ -2075,6 +2075,14 @@ ACE_TSS_Emulation::tss_open (void *ts_storage[ACE_TSS_THREAD_KEYS_MAX])
 #   endif /* ! ACE_PSOS */
 }
 
+void
+ACE_TSS_Emulation::tss_close ()
+{
+#if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
+  ACE_OS::thr_keyfree (native_tss_key_);
+#endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE */
+}
+
 # endif /* ACE_HAS_TSS_EMULATION */
 
 # if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
@@ -2126,6 +2134,10 @@ ACE_OS::cleanup_tss (const u_int main_thread)
       // called by the ACE_Object_Manager.
       delete ACE_TSS_Cleanup::instance ();
 #endif /* WIN32 || ACE_HAS_TSS_EMULATION */
+
+#if defined (ACE_HAS_TSS_EMULATION)
+      ACE_TSS_Emulation::tss_close ();
+#endif /* ACE_HAS_TSS_EMULATION */
     }
 }
 
@@ -6203,12 +6215,6 @@ ACE_OS_Object_Manager::fini (void)
       instance_ = 0;
     }
 #endif /* ACE_HAS_NONSTATIC_OBJECT_MANAGER */
-
-#if defined (ACE_FINI_HOOK)
-  // ACE_FINI_HOOK can be defined in ace/config.h to do whatever
-  // you want.
-  ACE_FINI_HOOK;
-#endif /* ACE_FINI_HOOK */
 
   return 0;
 }
