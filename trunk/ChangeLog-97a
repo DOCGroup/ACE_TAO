@@ -1,3 +1,8 @@
+Wed May 28 16:02:53 1997  James C Hu  <jxh@lambada.cs.wustl.edu>
+
+	* ace/OS.i: Changes to strdup and getpid for CHORUS, as per Wei
+	  Chiang's suggestions.
+
 Tue May 27 18:26:51 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/config-hpux-10.x-decthreads.h: Added support for HP/UX 10.10
