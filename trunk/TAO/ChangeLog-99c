@@ -1,3 +1,8 @@
+Fri Apr 16 14:49:04 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
+
+	* tests/InterOp-Naming/Makefile (LDLIBS): 
+	  Removed the -lorbsvcs.
+
 Fri Apr 16 14:17:08 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be_include/be_visitor_field/cdr_op_cs.h:
