@@ -617,11 +617,9 @@ ImR_Locator_i::reregister_server (
               ACE_CHECK;
             }
         }
-      ACE_ERROR ((LM_ERROR,
+     ACE_ERROR ((LM_ERROR,
                   "Couldnt get a reference to an activator at %s\n",
                   next_entry->ext_id_.c_str ()));
-
-      ACE_THROW (ImplementationRepository::NotFound ());
     }
   else
     {
