@@ -15,7 +15,7 @@ module Test
     void more_data (in Payload the_payload)
        raises (Invalid_Payload);
 
-    /// Shudown the remote ORB
+    /// Shutdown the remote ORB
     oneway void shutdown ();
   };
 };
