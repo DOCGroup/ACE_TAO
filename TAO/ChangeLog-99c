@@ -1,3 +1,11 @@
+Sat Jul  3 09:30:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils_T.h
+          orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.h: Added
+	  #include "ace/inc_user_config.h" prior to conditional compilation
+          guard for old (pre 2.8) g++, in order to remove a precompiler
+	  warning by OSF1 cxx.
+
 Fri Jul 02 22:27:53 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/ORB_Core.cpp:
