@@ -77,6 +77,8 @@ public:
    * connection closed.
    * @param transport The transport attached to the event
    * @param max_wait_time Limit the time spent on the loop
+   * @param return Returns -1 on error, 0 or non-zero value
+   *  otherwise.
    *
    * @todo Document this better, split the Follower code to the
    * TAO_LF_Follower class, we probably don't need the transport
