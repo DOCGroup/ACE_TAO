@@ -32,16 +32,22 @@ int
 Clerk_i::read_ior (const char *filename)
 {
   // Open the file for reading.
-
-  // @@ Vishal, please make sure to check for invalid filenames, i.e.,
-  // if fopen() returns 0.
   this->ior_fp_ = ACE_OS::fopen (filename, "r");
+
+  if ((this->ior_fp_ = ACE_OS::fopen (filename, "r")) == 0)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Clerk_i::read_ior () "
+                         "Failed to open the IOR file for reading\n"),
+                        -1);
+    }
 
   // @@ Vishal, please sure you don't use magic numbers like 1024 *
   // 10.  Instead, add a const or an enum to the Clerk_i class.  Check
   // other applications in TAO that read IORs and see if there's a
   // default size for these things.  Please update Andy's stuff to
   // also use a const.
+
   char str[1024 * 10];
   ACE_OS::memset (str, 0, sizeof (str));
 
