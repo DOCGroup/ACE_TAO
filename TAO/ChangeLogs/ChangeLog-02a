@@ -1,7 +1,9 @@
 Thu May 10 15:31:56 2001  Jeff Parsons  <parsons@cs.wustli.edu>
 
         * tao/IFR_Client/IFR_ComponentsC.cpp:
-        * tao.IFR_CLient/diffs/IFR_ComponentsC.cpp.diff:
+        * tao/IFR_CLient/diffs/IFR_ComponentsC.cpp.diff:
+        * orbsvcs/IFR_Service/IFR_ComponentsS.cpp:
+        * orbsvcs/IFR_Service/diffs/IFR_ComponentsS.cpp.diff:
           
           Fixed repo ids of some base classes in _is_a
           functions, that had been overlooked in the hand-crafting
