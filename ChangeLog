@@ -1,3 +1,8 @@
+Wed Nov 26 14:52:43 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* examples/IPC_SAP/SSL_SAP/SSL-server.cpp:
+	  Corrected wrong include
+
 Tue Nov 25 16:24:18 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* bin/tao_orb_tests.lst:
@@ -7,51 +12,51 @@ Tue Nov 25 16:24:18 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 Tue Nov 25 23:41:21 2003  Kobi Cohen-Arazi  <kobi-co@barak-online.net>
 
 	* apps/JAWS3/jaws3/Concurrency.cpp:
-	
+
 	  Remove the unnecessary ACE_TEMPLATE_METHOD_SPECIALIZATION
 
 	* apps/JAWS3/jaws3/Config_File.cpp:
-	  
+
 	  Added #include "ace/Unbounded_Queue.h"
 
 	* apps/JAWS3/jaws3/Datagram.cpp:
-	  
+
 	  Remove unnecessary default values in cpp impl file.
 
 	* apps/JAWS3/jaws3/Event_Dispatcher.cpp:
 	  Use ACE_THR_FUNC_RETURN instead of void*
 
 	* apps/JAWS3/jaws3/IO.h:
-	  
+
 	  Added #include "ace/Singleton.h" and 	#include
-	  "ace/Synch_Traits.h"	  
+	  "ace/Synch_Traits.h"
 
 	* apps/JAWS3/jaws3/Reactive_IO.cpp:
-	  
+
 	  Added #include "ace/ACE.h"
 
 	* apps/JAWS3/jaws3/Signal_Task.cpp:
-	  
+
 	  Added #define JAWS_BUILD_DLL. Use ACE_THR_FUNC_RETURN instead of
 	  void*. Add if !defined (ACE_WIN32) for WIN32 because of SIGHUP
 
 	* apps/JAWS3/jaws3/Signal_Task.h:
 
 	  Added #include "jaws3/Export.h" and add JAWS_Export to
-	  JAWS_Signal_Task 
+	  JAWS_Signal_Task
 
 	* apps/JAWS3/jaws3/THYBRID_Concurrency.h:
 	* apps/JAWS3/jaws3/TPR_Concurrency.h:
-	
+
 	  Added #include "ace/Atomic_Op.h"
-	
+
 Tue Nov 25 23:35:27 2003  Kobi Cohen-Arazi  <kobi-co@barak-online.net>
 
 	* apps/JAWS3/jaws3.mwc:
-	* apps/JAWS3/jaws3/jaws3.mpc: 
+	* apps/JAWS3/jaws3/jaws3.mpc:
 
 	  Added To the repository
-	
+
 Tue Nov 25 15:01:28 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* bin/MakeProjectCreator/config/global.features:
@@ -71,11 +76,11 @@ Tue Nov 25 12:34:15 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  temporary. This created all sorts of problems once this "Sun Nov
 	  23 11:00:02 2003  Douglas C. Schmidt
 	  <schmidt@ace.cs.wustl.edu>" went through since it added a new
-	  constructor. 
+	  constructor.
 
 	  We have now fixed it by creating a temporary and forcing the
 	  compiler to use the right constructor of ACE_Service_Type. This
-	  shouldn't be harmful, since we were expecting just this. 
+	  shouldn't be harmful, since we were expecting just this.
 
 Tue Nov 25 11:14:09 2003  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -95,39 +100,39 @@ Tue Nov 25 14:13:24 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Tue Nov 25 10:08:12 2003  Kobi Cohen-Arazi  <kobi-co@barak-online.net>
 
-	* apps/JAWS3/jaws3/io.h: 
-	* apps/JAWS3/jaws3/io.cpp: 
-	* apps/JAWS3/jaws3/file.h: 
-	* apps/JAWS3/jaws3/file.cpp: 
+	* apps/JAWS3/jaws3/io.h:
+	* apps/JAWS3/jaws3/io.cpp:
+	* apps/JAWS3/jaws3/file.h:
+	* apps/JAWS3/jaws3/file.cpp:
 	  Removed.
-	
+
 
 Tue Nov 25 09:23:35 2003  Kobi Cohen-Arazi  <kobi-co@barak-online.net>
 
-	* apps/JAWS3/small/SS_Templates.cpp: 
-	* apps/JAWS3/jaws3/io.h: 
-	* apps/JAWS3/jaws3/io.cpp: 
-	* apps/JAWS3/jaws3/file.h: 
-	* apps/JAWS3/jaws3/file.cpp: 
-	* apps/JAWS3/jaws3/Timer_Helpers.h: 
-	* apps/JAWS3/jaws3/Timer_Helpers.cpp: 
-	* apps/JAWS3/jaws3/Templates.cpp: 
-	* apps/JAWS3/jaws3/Reactive_IO_Helpers.h: 
-	* apps/JAWS3/jaws3/Options.h: 
-	* apps/JAWS3/jaws3/Options.cpp: 
-	* apps/JAWS3/jaws3/Asynch_IO_Helpers.h: 
-	* apps/JAWS3/jaws3-todo/Reactive_Socket_Helpers.h: 
-	* apps/JAWS3/jaws3-todo/Reactive_Socket_Helpers.cpp: 
-	* apps/JAWS3/http/HTTP_States.h: 
-	* apps/JAWS3/contrib/john_at_lyris_dot_com/readme: 
-	* apps/JAWS3/contrib/jmills_at_tga_dot_com/readme: 
-	* apps/JAWS3/bench/rqfiles.cpp: 
-	* apps/JAWS3/bench/mkfiles.cpp: 
-	* apps/JAWS3/docs/web/images/jaws3_components.gif: 
-	* apps/JAWS3/docs/web/images/jaws3_components.fig: 
-	* apps/JAWS3/docs/web/images/jaws3_banner.png: 
+	* apps/JAWS3/small/SS_Templates.cpp:
+	* apps/JAWS3/jaws3/io.h:
+	* apps/JAWS3/jaws3/io.cpp:
+	* apps/JAWS3/jaws3/file.h:
+	* apps/JAWS3/jaws3/file.cpp:
+	* apps/JAWS3/jaws3/Timer_Helpers.h:
+	* apps/JAWS3/jaws3/Timer_Helpers.cpp:
+	* apps/JAWS3/jaws3/Templates.cpp:
+	* apps/JAWS3/jaws3/Reactive_IO_Helpers.h:
+	* apps/JAWS3/jaws3/Options.h:
+	* apps/JAWS3/jaws3/Options.cpp:
+	* apps/JAWS3/jaws3/Asynch_IO_Helpers.h:
+	* apps/JAWS3/jaws3-todo/Reactive_Socket_Helpers.h:
+	* apps/JAWS3/jaws3-todo/Reactive_Socket_Helpers.cpp:
+	* apps/JAWS3/http/HTTP_States.h:
+	* apps/JAWS3/contrib/john_at_lyris_dot_com/readme:
+	* apps/JAWS3/contrib/jmills_at_tga_dot_com/readme:
+	* apps/JAWS3/bench/rqfiles.cpp:
+	* apps/JAWS3/bench/mkfiles.cpp:
+	* apps/JAWS3/docs/web/images/jaws3_components.gif:
+	* apps/JAWS3/docs/web/images/jaws3_components.fig:
+	* apps/JAWS3/docs/web/images/jaws3_banner.png:
 	* apps/JAWS3/docs/web/images/jaws3_banner.gif:
-	
+
 	  Added to the repository
 
 Tue Nov 25 05:25:58 UTC 2003  Don Hinton  <dhinton@dresystems.com>
