@@ -32,10 +32,10 @@ all:
 	$(CXX) -g -o tao $(LIBS) -lthread
 
 tags:
-	rm -f TAO
-	etags include/*.h be_include/*.h \
-	ast/*.cpp util/*.cpp narrow/*.cpp driver/*.cpp fe/*.cpp be/*.cpp
-
+	rm -f TAGS
+	etags -C include/*.h be_include/*.h 
+	etags -a ast/*.cpp util/*.cpp narrow/*.cpp \
+		driver/*.cpp fe/*.cpp be/*.cpp
 clean:
 	rm -f tao
 
