@@ -1,3 +1,40 @@
+Sun Dec 12 23:01:58 2004  Marek Brudka  <mbrudka@aster.pl>
+
+	* tao/tao_flreactor.mpc (Module):
+	Created project for build TAO_FlReactor library.
+
+	* tao/xt_resource.h (Module):
+	* tao/xt_resource.cpp (Module):
+	* tao/qt_resource.h (Module):
+	* tao/qt_resource.cpp (Module):
+	Removed bug related with incorrect service class (was TAO, is TAO_QtReactor or TAO_XtReactor)
+	for exported Service_Objects and Factories.
+
+	* tao/fl_resource.i (Module):
+	* tao/fl_resource.h (Module):
+	* tao/fl_resource.cpp (Module):
+	* tao/TAO_FlReactor_export.h (Module):
+	Create TAO_FlResourceFactory for ACE_FlReactor similar to QtResourceFactory.
+
+	* tao/Strategies.mpc (Module):
+	Removed explicite dependence on tao_flreactor.
+
+	* tao/Strategies/advanced_resource.h (Module):
+	* tao/Strategies/advanced_resource.cpp (Module):
+	Removed ACE_HAS_FL macros. Removed static linkage with ACE_FlReactor. Created
+	framework for dynamic loading of GUI reactors using ACE_DLL. Applied this framework
+	for FlReactor. This framework is needed to preserve compatibility with previous
+	TAO_AdvancedResourceFactory.
+
+	* tests/FL_Cube/test_i.h (Module):
+	* tests/FL_Cube/test_i.cpp (Module):
+	* tests/FL_Cube/server.cpp (Module):
+	* tests/FL_Cube/client.cpp (Module):
+	* examples/AMI/FL_Callback/progress.cpp (Module):
+	* examples/AMI/FL_Callback/Progress_i.h (Module):
+	* examples/AMI/FL_Callback/Progress_i.cpp (Module):
+	Removed ACE_HAS_FL macros.
+
 Sun Dec 12 15:12:41 2004  Marek Brudka  <mbrudka@aster.pl>
 
 	* .cvsignore (Module):

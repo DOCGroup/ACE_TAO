@@ -18,8 +18,6 @@
 
 #include "testS.h"
 
-#if defined(ACE_HAS_FL)
-
 #include <FL/Fl_Box.h>
 
 class Progress_Window : public Fl_Box
@@ -94,7 +92,5 @@ private:
 #if defined(__ACE_INLINE__)
 #include "Progress_i.i"
 #endif /* __ACE_INLINE__ */
-
-#endif /* ACE_HAS_FL */
 
 #endif /* PROGRESS_I_H */

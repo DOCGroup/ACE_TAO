@@ -6,17 +6,6 @@
 
 ACE_RCSID(FL_Cube, client, "$Id$")
 
-#if !defined (ACE_HAS_FL)
-
-int main (int, char *[])
-{
-  ACE_ERROR ((LM_INFO,
-              "FL not supported on this platform\n"));
-  return 0;
-}
-
-#else
-
 #include <FL/Fl.h>
 #include <FL/Fl_Window.h>
 #include <FL/Fl_Roller.h>
@@ -207,4 +196,3 @@ Client::parse_args (int argc, char *argv[]
     Simple_Server::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
-#endif /* ACE_HAS_FL */

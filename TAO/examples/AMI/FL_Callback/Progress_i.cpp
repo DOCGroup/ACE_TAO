@@ -2,8 +2,6 @@
 
 #include "Progress_i.h"
 
-#if defined(ACE_HAS_FL)
-
 #include <FL/Fl_Slider.h>
 #include <FL/Fl_Button.h>
 
@@ -11,8 +9,8 @@
 #include "Progress_i.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (FL_Cube, 
-           test_i, 
+ACE_RCSID (FL_Cube,
+           test_i,
            "$Id$")
 
 Progress_i::Progress_i (Progress_Window *window)
@@ -174,6 +172,3 @@ Progress_Window::start ()
       ACE_ENDTRY;
     }
 }
-
-
-#endif /* ACE_HAS_FL */

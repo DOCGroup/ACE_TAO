@@ -6,17 +6,6 @@
 
 ACE_RCSID(FL_Cube, server, "$Id$")
 
-#if !defined (ACE_HAS_FL)
-
-int main (int, char *[])
-{
-  ACE_ERROR ((LM_INFO,
-              "FL not supported on this platform\n"));
-  return 0;
-}
-
-#else
-
 #include <FL/Fl.h>
 
 const char *ior_output_file = 0;
@@ -131,4 +120,3 @@ main (int argc, char *argv[])
   return 0;
 }
 
-#endif /* ACE_HAS_FL */

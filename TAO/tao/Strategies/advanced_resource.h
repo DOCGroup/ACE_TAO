@@ -132,6 +132,36 @@ protected:
 
   virtual int load_default_protocols (void);
 
+  /// type of factory method for creating reactor implementations
+  typedef ACE_Reactor_Impl *(*Reactor_Impl_Factory)( void );
+
+  /// Returns reactor factory implementation or 0 if error.
+  /// Load shared library using dll object
+  Reactor_Impl_Factory load_reactor_impl_factory( ACE_DLL &dll,
+                                                  const ACE_TCHAR *dll_name,
+                                                  const ACE_TCHAR *factory_name ) const;
+
+  /// auxiliary function, creates reactor implementation using dll
+  ACE_Reactor_Impl *create_reactor_impl_from_dll( ACE_DLL &dll,
+                                         const ACE_TCHAR *dll_name,
+                                         const ACE_TCHAR *factory_name ) const;
+
+  /// auxiliary function, tries to load specified factory method from dll
+  bool has_reactor_in_dll( const ACE_TCHAR *dll_name,
+                          const ACE_TCHAR *factory_name ) const;
+
+
+  /// creates ACE_FlReactor by loading and executing factory method from DLL
+  /// dll i DLL object responsible for loaded shared library
+  ACE_Reactor_Impl *create_flreactor( ACE_DLL &dll) const;
+
+  /// tries to load ACE_FlReactor by temporarily loading it from DLL
+  /// return true if suceed
+  bool has_flreactor( ) const;
+
+  /// DLL with factory method creating reactor implementations
+  ACE_DLL reactor_impl_factory_dll_;
+
 };
 
 #if defined (__ACE_INLINE__)

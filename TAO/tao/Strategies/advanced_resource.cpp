@@ -1,5 +1,5 @@
 // $Id$
-
+#include "ace/Service_Config.h"
 #include "advanced_resource.h"
 
 #if !defined (__ACE_INLINE__)
@@ -29,7 +29,6 @@
 #include "ace/Dynamic_Service.h"
 #include "ace/Service_Config.h"
 #include "ace/Select_Reactor.h"
-#include "ace/FlReactor.h"
 #include "ace/TkReactor.h"
 #include "ace/WFMO_Reactor.h"
 #include "ace/Msg_WFMO_Reactor.h"
@@ -40,6 +39,9 @@
 #include "ace/OS_NS_strings.h"
 
 ACE_RCSID(Strategies, advanced_resource, "$Id$")
+
+#define ACE_FLREACTOR_DLL_NAME     ACE_TEXT( "ACE_FlReactor" )
+#define ACE_FLREACTOR_FACTORY_NAME ACE_TEXT( "ACE_create_flreactor" )
 
 TAO_Resource_Factory_Changer::TAO_Resource_Factory_Changer (void)
 {
@@ -76,6 +78,7 @@ TAO_Advanced_Resource_Factory::TAO_Advanced_Resource_Factory (void)
 
 TAO_Advanced_Resource_Factory::~TAO_Advanced_Resource_Factory (void)
 {
+  reactor_impl_factory_dll_.close();
   // Destructor
   TAO_ProtocolFactorySetItor end = this->protocol_factories_.end ();
 
@@ -155,11 +158,11 @@ TAO_Advanced_Resource_Factory::init (int argc, ACE_TCHAR** argv)
             this->reactor_type_ = TAO_REACTOR_SELECT_ST;
           else if (ACE_OS::strcasecmp (current_arg,
                                        ACE_TEXT("fl")) == 0)
-#if defined(ACE_HAS_FL)
-            this->reactor_type_ = TAO_REACTOR_FL;
-#else
-            this->report_unsupported_error (ACE_TEXT("FlReactor"));
-#endif /* ACE_HAS_FL */
+          {
+              this->reactor_type_ = TAO_REACTOR_FL;
+              if ( !has_flreactor() )
+                  this->report_unsupported_error (ACE_TEXT("FlReactor"));
+          }
           else if (ACE_OS::strcasecmp (current_arg, ACE_TEXT("tk_reactor")) == 0)
 #if defined(ACE_HAS_TK)
             this->reactor_type_ = TAO_REACTOR_TK;
@@ -655,11 +658,8 @@ TAO_Advanced_Resource_Factory::allocate_reactor_impl (void) const
       break;
 
     case TAO_REACTOR_FL:
-#if defined(ACE_HAS_FL)
-      ACE_NEW_RETURN (impl, ACE_FlReactor, 0);
-#endif /* ACE_HAS_FL */
+      return create_flreactor( const_cast< ACE_DLL &> ( reactor_impl_factory_dll_ ) );
       break;
-
     case TAO_REACTOR_TK:
 #if defined(ACE_HAS_TK)
       ACE_NEW_RETURN (impl, ACE_TkReactor, 0);
@@ -883,6 +883,115 @@ TAO_Advanced_Resource_Factory::report_unsupported_error (
              ACE_TEXT("Advanced_Resource_Factory - <%s>")
              ACE_TEXT(" not supported on this platform\n"),
              option_name));
+}
+
+TAO_Advanced_Resource_Factory::Reactor_Impl_Factory
+TAO_Advanced_Resource_Factory::load_reactor_impl_factory( ACE_DLL &dll,
+                                                          const ACE_TCHAR *dll_name,
+                                                          const ACE_TCHAR *factory_name ) const
+{
+#if defined (ACE_WIN32) || defined (ACE_HAS_SVR4_DYNAMIC_LINKING) || \
+    defined (__hpux)
+// some ugly stuff related with dll naming schema
+#  if defined (ACE_WIN32) && defined (_MSC_VER) && defined (_DEBUG)
+#    define OBJ_SUFFIX ACE_TEXT ("d") ACE_DLL_SUFFIX
+#  elif defined (ACE_WIN32) && defined (__BORLANDC__)
+#    define OBJ_SUFFIX ACE_LD_DECORATOR_STR ACE_DLL_SUFFIX
+#  else
+#    define OBJ_SUFFIX ACE_DLL_SUFFIX
+#  endif /* ACE_WIN32 && && _MSC_VER && _DEBUG */
+#  if defined (ACE_WIN32)
+#    define OBJ_PREFIX ACE_DLL_PREFIX
+#  else
+#   define OBJ_PREFIX ACE_TEXT("") ACE_DLL_PREFIX
+#  endif /* ACE_WIN32 */
+
+    // prepare dll name with all system prefices ans suffices
+    ACE_TCHAR full_dll_name[ MAXPATHLEN + 1 ];
+    ACE_OS::sprintf( full_dll_name, "%s%s%s", OBJ_PREFIX, dll_name, OBJ_SUFFIX );
+#  if defined (__KCC)
+    /* With KCC, turning on close-on-destruction will cause problems
+       when libKCC tries to call dtors. */
+    int retval = dll.open (full_dll_name,
+                           ACE_DEFAULT_SHLIB_MODE,
+                           0);
+#else
+    int retval = dll.open (full_dll_name);
+#endif /* __KCC */
+    if (retval != 0)
+    {
+        ACE_TCHAR *dll_error = dll.error ();
+        ACE_ERROR( (LM_ERROR,
+                    ACE_TEXT ("Error in DLL(%s) Open: %s\n"),
+                    full_dll_name,
+                    dll_error ? dll_error : ACE_TEXT ("unknown error")) );
+        dll.close( );
+        return 0;
+    }
+    void *void_factory;
+
+    void_factory = dll.symbol ( factory_name );
+    if (void_factory == 0)
+    {
+        dll.close( );
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("%p\n"),
+                    dll.error ()));
+        return 0;
+    }
+    // Cast the pointer and return
+    return reinterpret_cast< Reactor_Impl_Factory >(
+        reinterpret_cast< ptrdiff_t >( void_factory ) );
+#else // The platform does not support dynamic linking, warn and return 0
+    ACE_ERROR ((LM_INFO,
+              ACE_TEXT ("Dynamically Linkable Libraries not supported on this platform\n")));
+    return 0;
+#endif /* ACE_WIN32 || ACE_HAS_SVR4_DYNAMIC_LINKING || __hpux */
+}
+
+ACE_Reactor_Impl *TAO_Advanced_Resource_Factory::create_reactor_impl_from_dll( ACE_DLL &dll,
+                                                                               const ACE_TCHAR *dll_name,
+                                                                               const ACE_TCHAR *factory_name ) const
+{
+    Reactor_Impl_Factory factory =
+        load_reactor_impl_factory( dll,
+                                   dll_name,
+                                   factory_name );
+    if ( !factory )
+    {
+        dll.close( );
+        ACE_ERROR( (LM_ERROR,
+                    ACE_TEXT ("DLL lost or changed in the meantime?" )
+                    ACE_TEXT( "DLL symbol was found once, then lost next time.\n" ) ) );
+        return 0;
+    }
+    // create and return new reactor implementation
+    return factory( );
+}
+
+bool TAO_Advanced_Resource_Factory::has_reactor_in_dll( const ACE_TCHAR *dll_name,
+                                                        const ACE_TCHAR *factory_name ) const
+{
+    ACE_DLL local_factory_dll;
+    bool result = load_reactor_impl_factory( local_factory_dll,
+                                             dll_name,
+                                             factory_name );
+    local_factory_dll.close( );
+    return result;
+}
+
+ACE_Reactor_Impl *
+TAO_Advanced_Resource_Factory::create_flreactor( ACE_DLL &dll) const
+{
+    return create_reactor_impl_from_dll( dll,
+                                         ACE_FLREACTOR_DLL_NAME,
+                                         ACE_FLREACTOR_FACTORY_NAME );
+}
+
+bool
+TAO_Advanced_Resource_Factory::has_flreactor( ) const
+{
+    return has_reactor_in_dll( ACE_FLREACTOR_DLL_NAME, ACE_FLREACTOR_FACTORY_NAME );
 }
 
 // ****************************************************************

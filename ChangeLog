@@ -1,3 +1,23 @@
+Sun Dec 12 22:53:48 2004  Marek Brudka  <mbrudka@aster.pl>
+
+	* tests/FlReactor_Test.cpp (Module):
+	Removed ACE_HAS_FL macros.
+
+	* bin/MakeProjectCreator/config/strategies.mpb (Module):
+	Removed explicite dependence of TAO_Strategies on TAO_FlReactor.
+
+	* bin/MakeProjectCreator/config/tao_flreactor.mpb (Module):
+	Creating base project for using TAO_FlReactor library.
+
+	* bin/MakeProjectCreator/config/ace_fl.mpb (Module):
+	Removed ACE_HAS_FL macros.
+
+	* ace/config-doxygen.h (Module):
+	Removed ACE_HAS_FL macros.
+	* ace/FlReactor.h (Module):
+	* ace/FlReactor.cpp (Module):
+	Removed ACE_HAS_FL macros. Created factory method for instantinating FlReactor from dll.
+
 Sun Dec 12 02:14:51 2004  Marek Brudka  <mbrudka@aster.pl>
 
         * .cvsignore:

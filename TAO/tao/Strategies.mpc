@@ -2,7 +2,7 @@
 // Strategies should depend on tao_flreactor and tao_tkreactor,
 // but cannot now due many additional dependencies.
 
-project : taolib, core, tao_tkreactor, tao_flreactor {
+project : taolib, core, tao_tkreactor {
   sharedname   = TAO_Strategies
   dynamicflags = TAO_STRATEGIES_BUILD_DLL
 

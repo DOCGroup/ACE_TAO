@@ -18,8 +18,6 @@
 
 #include "testS.h"
 
-#if defined(ACE_HAS_FL)
-
 #include <FL/Fl_Gl_Window.h>
 
 
@@ -82,7 +80,5 @@ private:
 #if defined(__ACE_INLINE__)
 #include "test_i.i"
 #endif /* __ACE_INLINE__ */
-
-#endif /* ACE_HAS_FL */
 
 #endif /* TAO_FL_SERVER_TEST_I_H */
