@@ -1,3 +1,10 @@
+Fri Feb  1 21:53:45 2002  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* examples/OBV/Typed_Events/Event_Types_impl.h:
+	* examples/OBV/Typed_Events/Event_Types_impl.cpp:
+	  Make CORBA methods in servants have the same exception specifications
+	  as in the IDL generated stubs.
+
 Fri Feb  1 06:44:51 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* tao/ORB_Core.h (TAO_ORB_Core): Changed the comment to refer to
