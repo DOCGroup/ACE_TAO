@@ -2339,12 +2339,12 @@ AST_Expression::evaluate (EvalKind ek)
 }
 
 // Expression equality comparison operator.
-long
+bool
 AST_Expression::operator== (AST_Expression *vc)
 {
   if (this->pd_ec != vc->ec ())
     {
-      return I_FALSE;
+      return false;
     }
 
   this->evaluate (EK_const);
@@ -2352,70 +2352,70 @@ AST_Expression::operator== (AST_Expression *vc)
 
   if (pd_ev == 0 || vc->ev() == 0)
     {
-      return I_FALSE;
+      return false;
     }
 
   if (this->pd_ev->et != vc->ev ()->et)
     {
-      return I_FALSE;
+      return false;
     }
 
   switch (pd_ev->et)
     {
     case EV_short:
-      return this->pd_ev->u.sval == vc->ev ()->u.sval ? I_TRUE : I_FALSE;
+      return this->pd_ev->u.sval == vc->ev ()->u.sval ? true : false;
     case EV_ushort:
-      return this->pd_ev->u.usval == vc->ev ()->u.usval ? I_TRUE : I_FALSE;
+      return this->pd_ev->u.usval == vc->ev ()->u.usval ? true : false;
     case EV_long:
-      return this->pd_ev->u.lval == vc->ev ()->u.lval ? I_TRUE : I_FALSE;
+      return this->pd_ev->u.lval == vc->ev ()->u.lval ? true : false;
     case EV_ulong:
-      return this->pd_ev->u.ulval == vc->ev()->u.ulval ? I_TRUE : I_FALSE;
+      return this->pd_ev->u.ulval == vc->ev()->u.ulval ? true : false;
     case EV_float:
-      return this->pd_ev->u.fval == vc->ev ()->u.fval ? I_TRUE : I_FALSE;
+      return this->pd_ev->u.fval == vc->ev ()->u.fval ? true : false;
     case EV_double:
-      return this->pd_ev->u.dval == vc->ev ()->u.dval ? I_TRUE : I_FALSE;
+      return this->pd_ev->u.dval == vc->ev ()->u.dval ? true : false;
     case EV_char:
-      return this->pd_ev->u.cval == vc->ev ()->u.cval ? I_TRUE : I_FALSE;
+      return this->pd_ev->u.cval == vc->ev ()->u.cval ? true : false;
     case EV_wchar:
-      return this->pd_ev->u.wcval == vc->ev ()->u.wcval ? I_TRUE : I_FALSE;
+      return this->pd_ev->u.wcval == vc->ev ()->u.wcval ? true : false;
     case EV_octet:
-      return this->pd_ev->u.oval == vc->ev ()->u.oval ? I_TRUE : I_FALSE;
+      return this->pd_ev->u.oval == vc->ev ()->u.oval ? true : false;
     case EV_bool:
-      return this->pd_ev->u.lval == vc->ev ()->u.lval ? I_TRUE : I_FALSE;
+      return this->pd_ev->u.lval == vc->ev ()->u.lval ? true : false;
     case EV_string:
       if (this->pd_ev->u.strval == 0)
         {
           if (vc->ev ()->u.strval == 0)
             {
-                    return I_TRUE;
+                    return true;
             }
           else
             {
-                    return I_FALSE;
+                    return false;
             }
         }
       else if (vc->ev ()->u.strval == 0)
         {
-          return I_FALSE;
+          return false;
         }
       else
         {
           return this->pd_ev->u.strval == vc->ev ()->u.strval
-                   ? I_TRUE
-                   : I_FALSE;
+                   ? true
+                   : false;
         }
 
     case EV_longlong:
 #if ! defined (ACE_LACKS_LONGLONG_T)
-      return pd_ev->u.llval == vc->ev ()->u.llval ? I_TRUE : I_FALSE;
+      return pd_ev->u.llval == vc->ev ()->u.llval ? true : false;
 #else /* ! defined (ACE_LACKS_LONGLONG_T) */
-      return I_FALSE;
+      return false;
 #endif /* ! defined (ACE_LACKS_LONGLONG_T) */
     case EV_ulonglong:
 #if ! defined (ACE_LACKS_LONGLONG_T)
-      return pd_ev->u.ullval == vc->ev()->u.ullval ? I_TRUE : I_FALSE;
+      return pd_ev->u.ullval == vc->ev()->u.ullval ? true : false;
 #else /* ! defined (ACE_LACKS_LONGLONG_T) */
-      return I_FALSE;
+      return false;
 #endif /* ! defined (ACE_LACKS_LONGLONG_T) */
     case EV_longdouble:
     case EV_wstring:
@@ -2424,10 +2424,10 @@ AST_Expression::operator== (AST_Expression *vc)
     case EV_none:
     case EV_any:
     case EV_object:
-      return I_FALSE;
+      return false;
     }
 
-  return I_FALSE;
+  return false;
 }
 
 long

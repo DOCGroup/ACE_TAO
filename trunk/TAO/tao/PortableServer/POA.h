@@ -87,13 +87,13 @@ public:
 
   static CORBA::ULong creation_time_length (void);
 
-  int operator== (const TAO_Creation_Time &rhs) const;
+  bool operator== (const TAO_Creation_Time &rhs) const;
 
-  int operator!= (const TAO_Creation_Time &rhs) const;
+  bool operator!= (const TAO_Creation_Time &rhs) const;
 
-  int operator== (const TAO_Temporary_Creation_Time &rhs) const;
+  bool operator== (const TAO_Temporary_Creation_Time &rhs) const;
 
-  int operator!= (const TAO_Temporary_Creation_Time &rhs) const;
+  bool operator!= (const TAO_Temporary_Creation_Time &rhs) const;
 
 protected:
 
@@ -125,9 +125,9 @@ public:
 
   void creation_time (const void *creation_time);
 
-  int operator== (const TAO_Creation_Time &rhs) const;
+  bool operator== (const TAO_Creation_Time &rhs) const;
 
-  int operator!= (const TAO_Creation_Time &rhs) const;
+  bool operator!= (const TAO_Creation_Time &rhs) const;
 
 protected:
 

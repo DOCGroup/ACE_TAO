@@ -1103,27 +1103,29 @@ TAO_Unbounded_Sequence<CORBA::Octet>::replace (CORBA::ULong max,
 
 // ****************************************************************
 
-int
+bool
 operator== (const TAO_Unbounded_Sequence<CORBA::Octet> & lhs,
             const TAO_Unbounded_Sequence<CORBA::Octet> & rhs)
 {
-  if (rhs.length () != lhs.length ())
+  const CORBA::ULong rlen = rhs.length ();
+
+  if (rlen != lhs.length ())
     {
-      return 0;
+      return false;
     }
 
-  for (CORBA::ULong i = 0; i < rhs.length (); ++i)
+  for (CORBA::ULong i = 0; i < rlen; ++i)
     {
       if (rhs[i] != lhs[i])
         {
-          return 0;
+          return false;
         }
     }
 
-  return 1;
+  return true;
 }
 
-int
+bool
 operator!= (const TAO_Unbounded_Sequence<CORBA::Octet> & lhs,
             const TAO_Unbounded_Sequence<CORBA::Octet> & rhs)
 {

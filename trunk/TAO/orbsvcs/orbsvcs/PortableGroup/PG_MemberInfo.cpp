@@ -6,7 +6,7 @@ ACE_RCSID (PortableGroup,
            "$Id$")
 
 
-int
+bool
 TAO_PG_MemberInfo::operator== (const TAO_PG_MemberInfo & rhs)
 {
   // For the purposes of the member info set, only the location is

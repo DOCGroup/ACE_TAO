@@ -2,13 +2,15 @@
 
 #if TAO_HAS_SCIOP == 1
 
-#include "ace/OS_NS_string.h"
-#include "tao/debug.h"
-#include "ace/Synch_T.h"
 #include "tao/ORB_Constants.h"
+#include "tao/debug.h"
 
-ACE_RCSID (tao,
-           IIOP_Endpoint,
+#include "ace/Synch_Traits.h"
+#include "ace/Thread_Mutex.h"
+#include "ace/OS_NS_string.h"
+
+ACE_RCSID (Strategies,
+           SCIOP_Endpoint,
            "$Id$")
 
 
