@@ -1,3 +1,13 @@
+Sat Apr 24 21:22:48 2004  George Edwards <g.edwards@vanderbilt.edu>
+
+        Added files:
+        * DnC/Config_Handlers/PC_Handler.h:
+        * DnC/Config_Handlers/PC_Handler.cpp:
+        * DnC/Config_Handlers/CompPkgDesc.h:
+        * DnC/Config_Handlers/CompPkgDesc.cpp:
+
+          Added new handlers for PackageConfiguration and ComponentPackageDescription.
+
 Sat Apr 24 16:02:03 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DnC/Config_Handler/Domain_Handler.h:
