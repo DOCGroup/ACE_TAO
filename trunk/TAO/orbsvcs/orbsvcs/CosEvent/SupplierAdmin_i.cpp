@@ -62,3 +62,11 @@ TAO_CosEC_SupplierAdmin_i::obtain_pull_consumer (CORBA::Environment &)
   // TODO: implement this.
   return CosEventChannelAdmin::ProxyPullConsumer::_nil ();
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+  template class ACE_Auto_Basic_Ptr<TAO_CosEC_ProxyPushConsumer_i>;
+  template class auto_ptr<TAO_CosEC_ProxyPushConsumer_i>;
+#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate ACE_Auto_Basic_Ptr<TAO_CosEC_ProxyPushConsumer_i>
+# pragma instantiate auto_ptr<TAO_CosEC_ProxyPushConsumer_i>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

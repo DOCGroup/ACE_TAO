@@ -118,3 +118,15 @@ TAO_CosEC_EventChannel_i::shutdown (CORBA::Environment &ACE_TRY_ENV)
 {
   this->destroy (ACE_TRY_ENV);
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+  template class ACE_Auto_Basic_Ptr<TAO_CosEC_ConsumerAdmin_i>;
+  template class auto_ptr<TAO_CosEC_ConsumerAdmin_i>;
+  template class ACE_Auto_Basic_Ptr<TAO_CosEC_SupplierAdmin_i>;
+  template class auto_ptr<TAO_CosEC_SupplierAdmin_i>;
+#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate ACE_Auto_Basic_Ptr<TAO_CosEC_ConsumerAdmin_i>
+# pragma instantiate auto_ptr<TAO_CosEC_ConsumerAdmin_i>
+# pragma instantiate ACE_Auto_Basic_Ptr<TAO_CosEC_SupplierAdmin_i>
+# pragma instantiate auto_ptr<TAO_CosEC_SupplierAdmin_i>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
