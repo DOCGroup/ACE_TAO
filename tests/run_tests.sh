@@ -125,6 +125,7 @@ run Task_Test                           # tests ACE_Thread_Manager, ACE_Task
 run Thread_Manager_Test                 # tests ACE_Thread_Manager, ACE_Task
 run Thread_Pool_Test                    # tests ACE_Thread_Manager, ACE_Task
 run Future_Test                         # tests ACE_Thread_Manager, ACE_Task
+run RB_Tree_Test                        # tests ACE_RB_Tree, ACE_RB_Tree_Iterator
 run Reactors_Test                       # tests ACE_Task, ACE_Mutex, ACE_Reactor
 run Reactor_Exceptions_Test             # tests ACE_Reactor and C++ exceptions
 run Reactor_Notify_Test                 # tests ACE_Reactor's notify() method, ACE_Task
