@@ -171,7 +171,7 @@ ifneq ($(CROSS-COMPILE),)
 else  # ! CROSS-COMPILE
 
   ifeq ($(findstring g++,$(CXX)),g++)
-    CCFLAGS += -Wno-switch
+    CCFLAGS += #-Wno-switch
   endif # g++
 
   CPPFLAGS += -Iinclude -Ibe_include -Ife
@@ -181,7 +181,7 @@ else  # ! CROSS-COMPILE
     TAO_IDL_PREPROCESSOR = $(CPP_LOCATION)
   endif # !def CPP_LOCATION
 
-  ifneq ($(TAO_IDL_PREPROCESSOR),)
+  ifeq ($(TAO_IDL_PREPROCESSOR),)
     CPPFLAGS += -DTAO_IDL_PREPROCESSOR=\"$(strip $(CXX))\"
   else
     CPPFLAGS += -DTAO_IDL_PREPROCESSOR=\"$(TAO_IDL_PREPROCESSOR)\"
