@@ -4,9 +4,8 @@
 #if !defined (ACE_LACKS_ACE_TOKEN)
 # include "ace/Token_Manager.h"
 #endif /* ! ACE_LACKS_ACE_TOKEN */
-#if defined (ACE_LACKS_ACE_SVCCONF)
-#  include "ace/Thread_Manager.h"
-#else  /* ! ACE_LACKS_ACE_SVCCONF */
+#include "ace/Thread_Manager.h"
+#if !defined (ACE_LACKS_ACE_SVCCONF)
 #  include "ace/Service_Manager.h"
 #  include "ace/Service_Config.h"
 #endif /* ! ACE_LACKS_ACE_SVCCONF */
@@ -606,28 +605,11 @@ ACE_Object_Manager::fini (void)
 
       ACE_Trace::stop_tracing ();
 
-#if defined (ACE_LACKS_ACE_SVCCONF)
-
-#  if ! defined (ACE_THREAD_MANAGER_LACKS_STATICS)
-      ACE_Thread_Manager::close_singleton ();
-#  endif /* ! ACE_THREAD_MANAGER_LACKS_STATICS */
-
-#else /* ! ACE_LACKS_ACE_SVCCONF */
-
+#if !defined (ACE_LACKS_ACE_SVCCONF)
       // Close and possibly delete all service instances in the Service
       // Repository.
       ACE_Service_Config::fini_svcs ();
 
-#endif /* ! ACE_LACKS_ACE_SVCCONF */
-
-      // Close the main thread's TSS, including its Log_Msg instance.
-      ACE_OS::cleanup_tss (1 /* main thread */);
-
-      //
-      // Note:  Do not access Log Msg after this since it is gone
-      //
-
-#if !defined (ACE_LACKS_ACE_SVCCONF)
       // Unlink all services in the Service Repository and close/delete
       // all ACE library services and singletons.
       ACE_Service_Config::close ();
@@ -636,6 +618,17 @@ ACE_Object_Manager::fini (void)
       // This must come after closing ACE_Service_Config, since it will
       // close down it's dlls--it manages ACE_DLL_Manager.
       ACE_Framework_Repository::close_singleton ();
+
+#  if ! defined (ACE_THREAD_MANAGER_LACKS_STATICS)
+      ACE_Thread_Manager::close_singleton ();
+#  endif /* ! ACE_THREAD_MANAGER_LACKS_STATICS */
+
+      // Close the main thread's TSS, including its Log_Msg instance.
+      ACE_OS::cleanup_tss (1 /* main thread */);
+
+      //
+      // Note:  Do not access Log Msg after this since it is gone
+      //
 
       // Close the ACE_Allocator.
       ACE_Allocator::close_singleton ();

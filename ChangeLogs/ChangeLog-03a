@@ -1,3 +1,21 @@
+Mon Jun 17 06:20:55 2002  Christopher Kohlhoff  <chris@kohlhoff.com>
+
+        * ace/Object_Manager.cpp:
+        * ace/Service_Config.h:
+        * ace/Service_Config.cpp:
+
+          Some components registered with the framework repository have
+          dependencies on the ACE_Log_Msg or ACE_Thread_Manager singletons.
+          Reorganised the ACE_Object_Manager::fini function so that the
+          framework repository is cleaned up before these objects. Thanks to
+          Don Hinton <dhinton@ieee.org> for assistance in tracking this down.
+
+        * ace/Reactor.cpp:
+
+          Prevent the reactor from being erroneously registered with the
+          framework repository a second time, as happened when the reactor
+          instance pointer was explicitly set.
+
 Sun Jun 16 20:38:27 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * ace/DLL_Manager.cpp (ACE_DLL_Handle):
