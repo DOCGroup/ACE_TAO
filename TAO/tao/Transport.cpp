@@ -843,8 +843,8 @@ TAO_Transport::handle_input_i (TAO_Resume_Handle &rh,
   if (TAO_debug_level > 2)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t) Read [%d] bytes \n",
-                  n));
+                  "TAO (%P|%t) Read [%d] bytes from transport [%d]\n",
+                  n, this->id ()));
     }
 
   // Set the write pointer in the stack buffer

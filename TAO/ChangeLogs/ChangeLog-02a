@@ -1,3 +1,10 @@
+Tue Aug  7 14:37:10 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Transport.cpp (handle_input_i): Added the transport
+	  information  to a debugging output.
+
+	* tao/orbconf.h: Fixed a simple typo. 
+
 Mon Aug  6 09:49:39 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
  	* tao/RTPortableServer/TAO_RTPortableServer.dsp: Fixed a build
