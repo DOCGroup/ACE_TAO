@@ -5,7 +5,8 @@
 NAME = Trading_Service
 
 OBJFILES = \
-	$(OBJDIR)\Trading_Service.obj
+	$(OBJDIR)\Trading_Service.obj \
+        $(OBJDIR)\Trading_Server.obj
 
 CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) $(ORBSVCS_CFLAGS)
 
