@@ -1,3 +1,15 @@
+Fri Sep  3 13:34:17 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/DynArray_i.cpp:
+	* tao/DynSequence_i.cpp:
+	* tao/DynStruct_i.cpp:
+	* tao/DynUnion_i.cpp:
+	  In each current_component() method, added a 
+	  CORBA_DynAny::_duplicate before returning the
+	  member, so it can be used in a _var. Thanks to
+	  Phillippe Merle <Philippe.Merle@lifl.fr> for pointing
+	  this out.
+
 Fri Sep  3 12:13:19 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
 	* docs/releasenotes/index.html:
