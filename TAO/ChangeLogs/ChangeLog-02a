@@ -1,3 +1,17 @@
+Wed Feb  2 14:03:00 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp
+	  My fix of Feb. 1 regarding multiple case labels and
+	  typecode generation broke two use cases. One, reported
+	  by Christopher Kohlhoff <chris@kohlhoff.com> was when
+	  a previously defined struct is nested inside a union.
+	  The other, when a union is recursive, appeared when
+	  the DII versions of the param tests were failing. This
+	  fix restores generation of correct typecodes for unions
+	  with nested structs, recursive members, and when any of
+	  its members (nested, recursive or vanilla) has multiple 
+	  case labels
+
 Wed Feb  2 08:39:29 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
