@@ -2,11 +2,11 @@
 
 // Extends ACE_INET_Addr with support for multi-homed addresses.
 
-#include /**/ "ace/Multihomed_INET_Addr.h"
-#include /**/ "ace/Log_Msg.h"
+#include "ace/Multihomed_INET_Addr.h"
+#include "ace/Log_Msg.h"
 
 #if !defined (__ACE_INLINE__)
-#include /**/ "ace/Multihomed_INET_Addr.i"
+#  include "ace/Multihomed_INET_Addr.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (ace,

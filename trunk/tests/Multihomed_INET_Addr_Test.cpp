@@ -180,7 +180,7 @@ int run_main (int argc, ACE_TCHAR *argv[])
            j < num_secondaries + 1;
            ++j, ++pointer) {
 
-        if (memcmp(pointer, stay_out[0].get_addr(), sizeof(sockaddr))) {
+        if (ACE_OS::memcmp(pointer, stay_out[0].get_addr(), sizeof(sockaddr))) {
 
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("Failed get_addresses check\n")));
