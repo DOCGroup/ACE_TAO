@@ -623,7 +623,7 @@ PortableServer::ThreadPolicy_var::upcast (void *src)
 }
 
 // *************************************************************
-// Inline operations for class PortableServer::ThreadPolicy_out
+// Operations for class PortableServer::ThreadPolicy_out
 // *************************************************************
 
 PortableServer::ThreadPolicy_out::ThreadPolicy_out (ThreadPolicy_ptr &p)
@@ -933,7 +933,7 @@ PortableServer::LifespanPolicy_var::upcast (void *src)
 }
 
 // *************************************************************
-// Inline operations for class PortableServer::LifespanPolicy_out
+// Operations for class PortableServer::LifespanPolicy_out
 // *************************************************************
 
 PortableServer::LifespanPolicy_out::LifespanPolicy_out (LifespanPolicy_ptr &p)
@@ -1243,7 +1243,7 @@ PortableServer::IdUniquenessPolicy_var::upcast (void *src)
 }
 
 // *************************************************************
-// Inline operations for class PortableServer::IdUniquenessPolicy_out
+// Operations for class PortableServer::IdUniquenessPolicy_out
 // *************************************************************
 
 PortableServer::IdUniquenessPolicy_out::IdUniquenessPolicy_out (IdUniquenessPolicy_ptr &p)
@@ -1552,7 +1552,7 @@ PortableServer::IdAssignmentPolicy_var::upcast (void *src)
 }
 
 // *************************************************************
-// Inline operations for class PortableServer::IdAssignmentPolicy_out
+// Operations for class PortableServer::IdAssignmentPolicy_out
 // *************************************************************
 
 PortableServer::IdAssignmentPolicy_out::IdAssignmentPolicy_out (IdAssignmentPolicy_ptr &p)
@@ -1873,7 +1873,7 @@ PortableServer::ImplicitActivationPolicy_var::upcast (void *src)
 }
 
 // *************************************************************
-// Inline operations for class PortableServer::ImplicitActivationPolicy_out
+// Operations for class PortableServer::ImplicitActivationPolicy_out
 // *************************************************************
 
 PortableServer::ImplicitActivationPolicy_out::ImplicitActivationPolicy_out (ImplicitActivationPolicy_ptr &p)
@@ -2184,7 +2184,7 @@ PortableServer::ServantRetentionPolicy_var::upcast (void *src)
 }
 
 // *************************************************************
-// Inline operations for class PortableServer::ServantRetentionPolicy_out
+// Operations for class PortableServer::ServantRetentionPolicy_out
 // *************************************************************
 
 PortableServer::ServantRetentionPolicy_out::ServantRetentionPolicy_out (ServantRetentionPolicy_ptr &p)
@@ -2509,7 +2509,7 @@ PortableServer::RequestProcessingPolicy_var::upcast (void *src)
 }
 
 // *************************************************************
-// Inline operations for class PortableServer::RequestProcessingPolicy_out
+// Operations for class PortableServer::RequestProcessingPolicy_out
 // *************************************************************
 
 PortableServer::RequestProcessingPolicy_out::RequestProcessingPolicy_out (RequestProcessingPolicy_ptr &p)
@@ -2774,7 +2774,7 @@ PortableServer::POAManager_var::upcast (void *src)
 }
 
 // *************************************************************
-// Inline operations for class PortableServer::POAManager_out
+// Operations for class PortableServer::POAManager_out
 // *************************************************************
 
 PortableServer::POAManager_out::POAManager_out (POAManager_ptr &p)
@@ -3095,7 +3095,7 @@ PortableServer::AdapterActivator_var::upcast (void *src)
 }
 
 // *************************************************************
-// Inline operations for class PortableServer::AdapterActivator_out
+// Operations for class PortableServer::AdapterActivator_out
 // *************************************************************
 
 PortableServer::AdapterActivator_out::AdapterActivator_out (AdapterActivator_ptr &p)
@@ -3346,7 +3346,7 @@ PortableServer::ServantManager_var::upcast (void *src)
 }
 
 // *************************************************************
-// Inline operations for class PortableServer::ServantManager_out
+// Operations for class PortableServer::ServantManager_out
 // *************************************************************
 
 PortableServer::ServantManager_out::ServantManager_out (ServantManager_ptr &p)
@@ -3597,7 +3597,7 @@ PortableServer::ServantActivator_var::upcast (void *src)
 }
 
 // *************************************************************
-// Inline operations for class PortableServer::ServantActivator_out
+// Operations for class PortableServer::ServantActivator_out
 // *************************************************************
 
 PortableServer::ServantActivator_out::ServantActivator_out (ServantActivator_ptr &p)
@@ -3860,7 +3860,7 @@ PortableServer::ServantLocator_var::upcast (void *src)
 }
 
 // *************************************************************
-// Inline operations for class PortableServer::ServantLocator_out
+// Operations for class PortableServer::ServantLocator_out
 // *************************************************************
 
 PortableServer::ServantLocator_out::ServantLocator_out (ServantLocator_ptr &p)
@@ -4125,7 +4125,7 @@ PortableServer::POA_var::upcast (void *src)
 }
 
 // *************************************************************
-// Inline operations for class PortableServer::POA_out
+// Operations for class PortableServer::POA_out
 // *************************************************************
 
 PortableServer::POA_out::POA_out (POA_ptr &p)
@@ -5070,7 +5070,7 @@ PortableServer::Current_var::upcast (void *src)
 }
 
 // *************************************************************
-// Inline operations for class PortableServer::Current_out
+// Operations for class PortableServer::Current_out
 // *************************************************************
 
 PortableServer::Current_out::Current_out (Current_ptr &p)
@@ -5919,18 +5919,23 @@ CORBA::Boolean operator>> (
     // retrieve all the elements
     
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
-    if (ACE_BIT_DISABLED (strm.start ()->flags (),ACE_Message_Block::DONT_DELETE))
+    if (ACE_BIT_DISABLED (strm.start ()->flags (),
+    ACE_Message_Block::DONT_DELETE))
     {
-      TAO_Unbounded_Sequence<CORBA::Octet> *oseq = 
-        ACE_static_cast(TAO_Unbounded_Sequence<CORBA::Octet>*, &_tao_sequence);
-      oseq->replace (_tao_seq_len, strm.start ());
-      oseq->mb ()->wr_ptr (oseq->mb()->rd_ptr () + _tao_seq_len);
-      strm.skip_bytes (_tao_seq_len);
-      return 1;
+      TAO_ORB_Core* orb_core = strm.orb_core ();
+      if (orb_core != 0 &&
+      strm.orb_core ()->resource_factory ()->
+      input_cdr_allocator_type_locked () == 1)
+      {
+        TAO_Unbounded_Sequence<CORBA::Octet> *oseq = 
+          ACE_static_cast(TAO_Unbounded_Sequence<CORBA::Octet>*, &_tao_sequence);
+        oseq->replace (_tao_seq_len, strm.start ());
+        oseq->mb ()->wr_ptr (oseq->mb()->rd_ptr () + _tao_seq_len);
+        strm.skip_bytes (_tao_seq_len);
+        return 1;
+      }
     }
-    else
-      return strm.read_octet_array (_tao_sequence.get_buffer (), _tao_seq_len);
-    
+    return strm.read_octet_array (_tao_sequence.get_buffer (), _tao_seq_len);
 #else /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
     return strm.read_octet_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
   
