@@ -366,7 +366,7 @@ PACE_INLINE
 ssize_t
 pace_read (PACE_HANDLE fildes, void * buf, size_t nbyte)
 {
-  return read (fildes, buf, nbyte);
+  return read (fildes, PACE_NONCONST_ARG_CAST (char *) buf, nbyte);
 }
 #endif /* PACE_HAS_POSIX_DI_UOF */
 
@@ -501,6 +501,6 @@ PACE_INLINE
 ssize_t
 pace_write (PACE_HANDLE fildes, const void * buf, size_t nbyte)
 {
-  return write (fildes, PACE_NONCONST_ARG_CAST (void *) buf, nbyte);
+  return write (fildes, PACE_NONCONST_ARG_CAST (char *) buf, nbyte);
 }
 #endif /* PACE_HAS_POSIX_DI_UOF */
