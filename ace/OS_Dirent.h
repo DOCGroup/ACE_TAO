@@ -63,9 +63,16 @@ struct ACE_DIR {
   int started_reading_;
 };
 #elif defined (ACE_PSOS) && !defined (ACE_PSOS_DIAB_PPC)
-// pHILE+ calls the DIR struct XDIR instead
-#
-typedef XDIR ACE_DIR;
+// Create our own definition of the DIR struct, like what
+// is available in the newer DIAB PPC header files
+struct ACE_DIR
+{
+  /// The directory handle
+  XDIR            xdir;
+
+  /// The directory entry
+  struct dirent   dirent;
+};
 #else
 typedef DIR ACE_DIR;
 # endif /* ACE_LACKS_STRUCT_DIR */
