@@ -21,7 +21,7 @@
 #include "ace/SOCK_Stream.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#define once
+#pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 
