@@ -1,15 +1,22 @@
+Sun Apr 18 21:52:43 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/config-linux-common.h: moved ACE_LACKS_MADVISE to
+          non-glibc section.  Thanks to JM Strauss <jms97@club-internet.fr>
+          for reporting that it wasn't on a Linux system with a
+          2.0.35 kernel.
+
 Sun Apr 18 16:36:30 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* ace/config-linux-common.h (ACE_LACKS_MADVISE): 
+        * ace/config-linux-common.h (ACE_LACKS_MADVISE):
 
-	  Re-enabled #define ACE_LACKS_MADVISE.  Linux doesn't appear
-	  to have an madvise() system call.
-	
-	* configure.in:
-	* tests/Makefile.am:
+          Re-enabled #define ACE_LACKS_MADVISE.  Linux doesn't appear
+          to have an madvise() system call.
 
-	  Added libtool support for modules (dlopened libraries).
-	
+        * configure.in:
+        * tests/Makefile.am:
+
+          Added libtool support for modules (dlopened libraries).
+
 Sun Apr 18 08:48:37 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Auto_Ptr.i: reordered inline methods to avoid use before
@@ -34,7 +41,6 @@ Sat Apr 17 18:52:38 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
           David Levine and Jean-Marc Strauss <strauss@club-internet.fr>
           for reporting this.
 
->>>>>>> 4.753
 Sat Apr 17 08:34:22 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * examples/Naming/Makefile,performance-tests/Misc/Makefile,
