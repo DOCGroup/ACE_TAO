@@ -1,7 +1,6 @@
 - Fragmentation
-- test for Muli-threaded client & server
+- test for Muli-threaded client & server (muxing tests)
 - test LongUpCalls
-- Russle Moores test
 - Pass data of different sizes from teh client to the server
 - Problem with two messages coming in two diffrent GIOP versions..
 - Remove allocation of data block for reply handlers. Can use
@@ -9,3 +8,5 @@
 - Remove the allocation of data blocks in Reply_Params.
 - AMI tests
 - Big_Twoways..
+- run purify quantify
+- DSI_Gateway tests

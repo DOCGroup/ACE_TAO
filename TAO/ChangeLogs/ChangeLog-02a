@@ -1,6 +1,10 @@
+Fri Jun 22 17:00:38 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/LIST_OF_TODO: Updated teh list of TODO's.
+
 Mon Jun 18 13:31:38 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Asynch_Reply_Dispatcher.cpp (dispatch_reply): 
+	* tao/Asynch_Reply_Dispatcher.cpp (dispatch_reply):
 	* tao/Synch_Reply_Dispatcher.cpp:
 	* tao/GIOP_Message_Base.cpp:
 	* tao/Transport.cpp:
