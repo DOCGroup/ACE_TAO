@@ -57,16 +57,13 @@ Logging_Acceptor::handle_input (ACE_HANDLE)
 
   // Accept the connection from a client client daemon.
 
-  int reset_new_handle = 0;
-#if defined (ACE_WIN32)
   // Try to find out if the implementation of the reactor that we are
-  // using is the WFMO_Reactor. If so we need to reset the event
-  // association for the newly created handle. This is because the
-  // newly created handle will inherit the properties of the listen
-  // handle, including its event associations.
-  reset_new_handle = this->reactor ()->reset_new_handle ();
-#endif /* ACE_WIN32 */
-  
+  // using requires us to reset the event association for the newly
+  // created handle. This is because the newly created handle will
+  // inherit the properties of the listen handle, including its event
+  // associations.
+  int reset_new_handle = this->reactor ()->uses_event_associations ();
+
   if (this->peer_acceptor_.accept (svc_handler->peer (), // stream
                                    0, // remote address
                                    0, // timeout

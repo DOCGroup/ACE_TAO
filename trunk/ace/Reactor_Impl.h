@@ -205,7 +205,10 @@ public:
   virtual int resume_handlers (void) = 0;
   // Resume all <handles>.
 
-  virtual int reset_new_handle (void) = 0;
+  virtual int uses_event_associations (void) = 0;
+  // Return 1 if we any event associations were made by the reactor
+  // for the handles that it waits on, 0 otherwise.
+
   // If we need to reset handles returned from accept/connect.
 
   // Timer management.

@@ -108,9 +108,11 @@ ACE_Select_Reactor::remove_handler (int signum,
 }
 
 ACE_INLINE int
-ACE_Select_Reactor::reset_new_handle (void)
+ACE_Select_Reactor::uses_event_associations (void)
 {
-  return 0;                     // Select Reactor doesn't need to reset new handles.
+  // Since the Select_Reactor does not do any event associations, this
+  // function always return 0.
+  return 0;
 }
 
 // = The remaining methods in this file must be called with locks

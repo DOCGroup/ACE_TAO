@@ -643,9 +643,11 @@ ACE_WFMO_Reactor::handle_events (ACE_Time_Value &how_long)
 }
 
 ACE_INLINE int
-ACE_WFMO_Reactor::reset_new_handle (void)
+ACE_WFMO_Reactor::uses_event_associations (void)
 {
-  return 1;                     // WFMO Reactor needs to reset handles.
+  // Since the WFMO_Reactor does use event associations, this function
+  // always return 1.
+  return 1;
 }
 
 ACE_INLINE int
