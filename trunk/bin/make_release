@@ -807,6 +807,7 @@ sub generate_makefiles () {
         "// This is an automatically generated file.\n\n" .
         "ssl=0\n" .
         "cidl=0\n" .
+        "rwho=0\n" .
         "sctp=0\n";
 
     &ex ("cd ACE_wrappers; \
