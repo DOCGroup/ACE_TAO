@@ -21,13 +21,18 @@ EXT_ID::EXT_ID (const CosPropertyService::PropertyName &name)
 int
 EXT_ID::operator == (const EXT_ID &ext_id) const   
 {
+  ACE_DEBUG ( (LM_DEBUG, "EXT_ID::operator == : %s == %s \n", this->pname_.in (), ext_id.pname_.in ()) );
   return (strcmp(this->pname_.in (), ext_id.pname_.in ()) );
 }
 
 long  unsigned int 
 EXT_ID::hash (void) const 
 {
-  return ACE::hash_pjw (pname_.in());
+  unsigned long ret;
+  
+  ret =  ACE::hash_pjw (this->pname_.in()); 
+  ACE_DEBUG ( (LM_DEBUG, "EXT_ID::hash : hasing %s : val : %d \n", this->pname_.in (), ret) ); 
+  return ret;
 }
 
 EXT_ID::~EXT_ID () 
