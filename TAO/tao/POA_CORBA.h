@@ -1816,7 +1816,7 @@ public:
 
   class IRObject;
   typedef IRObject *IRObject_ptr;
-  class TAO_Export IRObject :  public virtual PortableServer::ServantBase
+  class IRObject : public virtual PortableServer::ServantBase
   {
   protected:
     IRObject (void);

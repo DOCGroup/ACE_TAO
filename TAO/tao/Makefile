@@ -235,8 +235,7 @@ DYNAMIC_ANY_FILES += \
   InconsistentTypeCodeC
 
 INTERFACE_REPO_FILES += \
-  InterfaceC \
-  InterfaceS
+  InterfaceC
 
 endif # minimum_corba
 

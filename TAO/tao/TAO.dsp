@@ -31,7 +31,133 @@ CFG=TAO DLL - Win32 Debug
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath "Desktop"
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+# PROP BASE Use_MFC 0
+# PROP BASE Use_Debug_Libraries 0
+# PROP BASE Output_Dir ""
+# PROP BASE Intermediate_Dir "Release"
+# PROP BASE Ignore_Export_Lib 0
+# PROP BASE Target_Dir ""
+# PROP Use_MFC 0
+# PROP Use_Debug_Libraries 0
+# PROP Output_Dir ""
+# PROP Intermediate_Dir "Release"
+# PROP Ignore_Export_Lib 0
+# PROP Target_Dir ""
+CPP=cl.exe
+# ADD BASE CPP /Gt0 /I "../" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "TAO_BUILD_DLL" /FD nologo MT Gt0 W3 GX O2 I "../../" /c
+# ADD CPP /nologo /MD /Gt0 /W3 /GX /O2 /I "../../" /I "../" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "TAO_BUILD_DLL" /FD /c
+MTL=midl.exe
+# ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /o /win32 "NUL"
+# ADD MTL /nologo /D "NDEBUG" /mktyplib203 /o /win32 "NUL"
+RSC=rc.exe
+# ADD BASE RSC /l 0x409 /d "NDEBUG"
+# ADD RSC /l 0x409 /d "NDEBUG"
+BSC32=bscmake.exe
+# ADD BASE BSC32 /nologo
+# ADD BSC32 /nologo
+LINK32=link.exe
+# ADD BASE LINK32 ace.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:windows /dll /machine:ALPHA /out:"..\..\bin\TAO.dll" /libpath:"..\..\ace"
+# ADD LINK32 ace.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:windows /dll /machine:ALPHA /out:"..\..\bin\TAO.dll" /libpath:"..\..\ace"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+# PROP BASE Use_MFC 0
+# PROP BASE Use_Debug_Libraries 1
+# PROP BASE Output_Dir ""
+# PROP BASE Intermediate_Dir "Debug"
+# PROP BASE Ignore_Export_Lib 0
+# PROP BASE Target_Dir ""
+# PROP Use_MFC 0
+# PROP Use_Debug_Libraries 1
+# PROP Output_Dir ""
+# PROP Intermediate_Dir "Debug"
+# PROP Ignore_Export_Lib 0
+# PROP Target_Dir ""
+CPP=cl.exe
+# ADD BASE CPP /Gt0 /I "../" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "TAO_BUILD_DLL" /FD /MTd nologo Gt0 W3 GX Zi Od Gy I "../../" /c
+# ADD CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /I "../../" /I "../" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "TAO_BUILD_DLL" /FD /MDd /c
+MTL=midl.exe
+# ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o /win32 "NUL"
+# ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o /win32 "NUL"
+RSC=rc.exe
+# ADD BASE RSC /l 0x409 /d "_DEBUG"
+# ADD RSC /l 0x409 /d "_DEBUG"
+BSC32=bscmake.exe
+# ADD BASE BSC32 /nologo
+# ADD BSC32 /nologo
+LINK32=link.exe
+# ADD BASE LINK32 aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:windows /dll /debug /machine:ALPHA /out:"..\..\bin\TAOd.dll" /libpath:"..\..\ace"
+# ADD LINK32 aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:windows /dll /debug /machine:ALPHA /out:"..\..\bin\TAOd.dll" /libpath:"..\..\ace"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+# PROP BASE Use_MFC 0
+# PROP BASE Use_Debug_Libraries 0
+# PROP BASE Output_Dir "TAO_DLL___Win32_MFC_Release"
+# PROP BASE Intermediate_Dir "TAO_DLL___Win32_MFC_Release"
+# PROP BASE Ignore_Export_Lib 0
+# PROP BASE Target_Dir ""
+# PROP Use_MFC 0
+# PROP Use_Debug_Libraries 0
+# PROP Output_Dir ""
+# PROP Intermediate_Dir "DLL\MFC_Release"
+# PROP Ignore_Export_Lib 0
+# PROP Target_Dir ""
+CPP=cl.exe
+# ADD BASE CPP /nologo /MD /W3 /GX /O2 /I "../../" /I "../" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "TAO_BUILD_DLL" /FD /c
+# SUBTRACT BASE CPP /YX
+# ADD CPP /nologo /MD /W3 /GX /O2 /I "../../" /I "../" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "TAO_BUILD_DLL" /D ACE_HAS_MFC=1 /D ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER=1 /FD /c
+# SUBTRACT CPP /YX
+MTL=midl.exe
+# ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /win32
+# ADD MTL /nologo /D "NDEBUG" /mktyplib203 /win32
+RSC=rc.exe
+# ADD BASE RSC /l 0x409 /d "NDEBUG"
+# ADD RSC /l 0x409 /d "NDEBUG"
+BSC32=bscmake.exe
+# ADD BASE BSC32 /nologo
+# ADD BSC32 /nologo
+LINK32=link.exe
+# ADD BASE LINK32 ace.lib /nologo /subsystem:windows /dll /machine:I386 /out:"..\..\bin\TAO.dll" /libpath:"..\..\ace"
+# SUBTRACT BASE LINK32 /incremental:yes
+# ADD LINK32 acemfc.lib /nologo /subsystem:windows /dll /machine:I386 /out:"..\..\bin\TAOmfc.dll" /libpath:"..\..\ace"
+# SUBTRACT LINK32 /incremental:yes
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+# PROP BASE Use_MFC 0
+# PROP BASE Use_Debug_Libraries 1
+# PROP BASE Output_Dir "TAO_DLL___Win32_MFC_Debug"
+# PROP BASE Intermediate_Dir "TAO_DLL___Win32_MFC_Debug"
+# PROP BASE Ignore_Export_Lib 0
+# PROP BASE Target_Dir ""
+# PROP Use_MFC 0
+# PROP Use_Debug_Libraries 1
+# PROP Output_Dir ""
+# PROP Intermediate_Dir "DLL\MFC_Debug"
+# PROP Ignore_Export_Lib 0
+# PROP Target_Dir ""
+CPP=cl.exe
+# ADD BASE CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /Gy /I "../../" /I "../" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "TAO_BUILD_DLL" /FD /c
+# SUBTRACT BASE CPP /YX
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /Gy /I "../../" /I "../" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "TAO_BUILD_DLL" /D ACE_HAS_MFC=1 /D ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER=1 /FD /c
+# SUBTRACT CPP /YX
+MTL=midl.exe
+# ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
+# ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
+RSC=rc.exe
+# ADD BASE RSC /l 0x409 /d "_DEBUG"
+# ADD RSC /l 0x409 /d "_DEBUG"
+BSC32=bscmake.exe
+# ADD BASE BSC32 /nologo
+# ADD BSC32 /nologo
+LINK32=link.exe
+# ADD BASE LINK32 aced.lib /nologo /subsystem:windows /dll /debug /machine:I386 /out:"..\..\bin\TAOd.dll" /libpath:"..\..\ace"
+# ADD LINK32 acemfcd.lib /nologo /subsystem:windows /dll /debug /machine:I386 /out:"..\..\bin\TAOmfcd.dll" /libpath:"..\..\ace"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
@@ -92,142 +218,16 @@ LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /dll /debug /machine:I386
 # ADD LINK32 aced.lib /nologo /subsystem:windows /dll /debug /machine:I386 /out:"..\..\bin\TAOd.dll" /libpath:"..\..\ace"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir ""
-# PROP BASE Intermediate_Dir "Release"
-# PROP BASE Ignore_Export_Lib 0
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir ""
-# PROP Intermediate_Dir "Release"
-# PROP Ignore_Export_Lib 0
-# PROP Target_Dir ""
-CPP=cl.exe
-# ADD BASE CPP /Gt0 /I "../" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "TAO_BUILD_DLL" /FD nologo MT Gt0 W3 GX O2 I "../../" /c
-# ADD CPP /nologo /MD /Gt0 /W3 /GX /O2 /I "../../" /I "../" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "TAO_BUILD_DLL" /FD /c
-MTL=midl.exe
-# ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /o /win32 "NUL"
-# ADD MTL /nologo /D "NDEBUG" /mktyplib203 /o /win32 "NUL"
-RSC=rc.exe
-# ADD BASE RSC /l 0x409 /d "NDEBUG"
-# ADD RSC /l 0x409 /d "NDEBUG"
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 ace.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:windows /dll /machine:ALPHA /out:"..\..\bin\TAO.dll" /libpath:"..\..\ace"
-# ADD LINK32 ace.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:windows /dll /machine:ALPHA /out:"..\..\bin\TAO.dll" /libpath:"..\..\ace"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir ""
-# PROP BASE Intermediate_Dir "Debug"
-# PROP BASE Ignore_Export_Lib 0
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 1
-# PROP Output_Dir ""
-# PROP Intermediate_Dir "Debug"
-# PROP Ignore_Export_Lib 0
-# PROP Target_Dir ""
-CPP=cl.exe
-# ADD BASE CPP /Gt0 /I "../" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "TAO_BUILD_DLL" /FD /MTd nologo Gt0 W3 GX Zi Od Gy I "../../" /c
-# ADD CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /I "../../" /I "../" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "TAO_BUILD_DLL" /FD /MDd /c
-MTL=midl.exe
-# ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o /win32 "NUL"
-# ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o /win32 "NUL"
-RSC=rc.exe
-# ADD BASE RSC /l 0x409 /d "_DEBUG"
-# ADD RSC /l 0x409 /d "_DEBUG"
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:windows /dll /debug /machine:ALPHA /out:"..\..\bin\TAOd.dll" /libpath:"..\..\ace"
-# ADD LINK32 aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:windows /dll /debug /machine:ALPHA /out:"..\..\bin\TAOd.dll" /libpath:"..\..\ace"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "TAO_DLL___Win32_MFC_Debug"
-# PROP BASE Intermediate_Dir "TAO_DLL___Win32_MFC_Debug"
-# PROP BASE Ignore_Export_Lib 0
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 1
-# PROP Output_Dir ""
-# PROP Intermediate_Dir "DLL\MFC_Debug"
-# PROP Ignore_Export_Lib 0
-# PROP Target_Dir ""
-CPP=cl.exe
-# ADD BASE CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /Gy /I "../../" /I "../" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "TAO_BUILD_DLL" /FD /c
-# SUBTRACT BASE CPP /YX
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /Gy /I "../../" /I "../" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "TAO_BUILD_DLL" /D ACE_HAS_MFC=1 /D ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER=1 /FD /c
-# SUBTRACT CPP /YX
-MTL=midl.exe
-# ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
-# ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
-RSC=rc.exe
-# ADD BASE RSC /l 0x409 /d "_DEBUG"
-# ADD RSC /l 0x409 /d "_DEBUG"
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 aced.lib /nologo /subsystem:windows /dll /debug /machine:I386 /out:"..\..\bin\TAOd.dll" /libpath:"..\..\ace"
-# ADD LINK32 acemfcd.lib /nologo /subsystem:windows /dll /debug /machine:I386 /out:"..\..\bin\TAOmfcd.dll" /libpath:"..\..\ace"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "TAO_DLL___Win32_MFC_Release"
-# PROP BASE Intermediate_Dir "TAO_DLL___Win32_MFC_Release"
-# PROP BASE Ignore_Export_Lib 0
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir ""
-# PROP Intermediate_Dir "DLL\MFC_Release"
-# PROP Ignore_Export_Lib 0
-# PROP Target_Dir ""
-CPP=cl.exe
-# ADD BASE CPP /nologo /MD /W3 /GX /O2 /I "../../" /I "../" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "TAO_BUILD_DLL" /FD /c
-# SUBTRACT BASE CPP /YX
-# ADD CPP /nologo /MD /W3 /GX /O2 /I "../../" /I "../" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "TAO_BUILD_DLL" /D ACE_HAS_MFC=1 /D ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER=1 /FD /c
-# SUBTRACT CPP /YX
-MTL=midl.exe
-# ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /win32
-# ADD MTL /nologo /D "NDEBUG" /mktyplib203 /win32
-RSC=rc.exe
-# ADD BASE RSC /l 0x409 /d "NDEBUG"
-# ADD RSC /l 0x409 /d "NDEBUG"
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 ace.lib /nologo /subsystem:windows /dll /machine:I386 /out:"..\..\bin\TAO.dll" /libpath:"..\..\ace"
-# SUBTRACT BASE LINK32 /incremental:yes
-# ADD LINK32 acemfc.lib /nologo /subsystem:windows /dll /machine:I386 /out:"..\..\bin\TAOmfc.dll" /libpath:"..\..\ace"
-# SUBTRACT LINK32 /incremental:yes
-
 !ENDIF 
 
 # Begin Target
 
-# Name "TAO DLL - Win32 Release"
-# Name "TAO DLL - Win32 Debug"
 # Name "TAO DLL - Win32 Alpha Release"
 # Name "TAO DLL - Win32 Alpha Debug"
-# Name "TAO DLL - Win32 MFC Debug"
 # Name "TAO DLL - Win32 MFC Release"
+# Name "TAO DLL - Win32 MFC Debug"
+# Name "TAO DLL - Win32 Release"
+# Name "TAO DLL - Win32 Debug"
 # Begin Group "Source Files"
 
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;hpj;bat;for;f90"
@@ -235,17 +235,17 @@ LINK32=link.exe
 
 SOURCE=.\Acceptor_Registry.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -254,17 +254,17 @@ SOURCE=.\Acceptor_Registry.cpp
 
 SOURCE=.\Active_Object_Map.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -273,17 +273,17 @@ SOURCE=.\Active_Object_Map.cpp
 
 SOURCE=.\Any.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -292,17 +292,17 @@ SOURCE=.\Any.cpp
 
 SOURCE=.\append.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -311,17 +311,17 @@ SOURCE=.\append.cpp
 
 SOURCE=.\Asynch_Invocation.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -330,17 +330,17 @@ SOURCE=.\Asynch_Invocation.cpp
 
 SOURCE=.\BoundsC.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -349,17 +349,17 @@ SOURCE=.\BoundsC.cpp
 
 SOURCE=.\Buffering_Constraint_Policy.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -368,17 +368,17 @@ SOURCE=.\Buffering_Constraint_Policy.cpp
 
 SOURCE=.\CDR.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -387,17 +387,17 @@ SOURCE=.\CDR.cpp
 
 SOURCE=.\CDR_Interpreter.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -406,17 +406,17 @@ SOURCE=.\CDR_Interpreter.cpp
 
 SOURCE=.\Client_Priority_Policy.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -425,17 +425,17 @@ SOURCE=.\Client_Priority_Policy.cpp
 
 SOURCE=.\Client_Strategy_Factory.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -444,17 +444,17 @@ SOURCE=.\Client_Strategy_Factory.cpp
 
 SOURCE=.\Connector_Registry.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -463,17 +463,17 @@ SOURCE=.\Connector_Registry.cpp
 
 SOURCE=.\Context.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -482,17 +482,17 @@ SOURCE=.\Context.cpp
 
 SOURCE=.\CONV_FRAMEC.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -501,17 +501,17 @@ SOURCE=.\CONV_FRAMEC.cpp
 
 SOURCE=.\CONV_FRAMES.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -520,17 +520,17 @@ SOURCE=.\CONV_FRAMES.cpp
 
 SOURCE=.\corbafwd.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -539,17 +539,17 @@ SOURCE=.\corbafwd.cpp
 
 SOURCE=.\CurrentC.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -558,17 +558,17 @@ SOURCE=.\CurrentC.cpp
 
 SOURCE=.\CurrentS.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -577,17 +577,17 @@ SOURCE=.\CurrentS.cpp
 
 SOURCE=.\debug.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -596,17 +596,17 @@ SOURCE=.\debug.cpp
 
 SOURCE=.\default_client.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -615,17 +615,17 @@ SOURCE=.\default_client.cpp
 
 SOURCE=.\default_resource.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -634,17 +634,17 @@ SOURCE=.\default_resource.cpp
 
 SOURCE=.\default_server.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -653,17 +653,17 @@ SOURCE=.\default_server.cpp
 
 SOURCE=.\Direct_Priority_Mapping.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -672,17 +672,17 @@ SOURCE=.\Direct_Priority_Mapping.cpp
 
 SOURCE=.\DomainC.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -691,17 +691,17 @@ SOURCE=.\DomainC.cpp
 
 SOURCE=.\DomainS.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -710,17 +710,17 @@ SOURCE=.\DomainS.cpp
 
 SOURCE=.\DynAny_i.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -729,17 +729,17 @@ SOURCE=.\DynAny_i.cpp
 
 SOURCE=.\DynAnyC.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -748,17 +748,17 @@ SOURCE=.\DynAnyC.cpp
 
 SOURCE=.\DynAnyS.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -767,17 +767,17 @@ SOURCE=.\DynAnyS.cpp
 
 SOURCE=.\DynArray_i.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -786,17 +786,17 @@ SOURCE=.\DynArray_i.cpp
 
 SOURCE=.\DynEnum_i.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -805,17 +805,17 @@ SOURCE=.\DynEnum_i.cpp
 
 SOURCE=.\DynSequence_i.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -824,17 +824,17 @@ SOURCE=.\DynSequence_i.cpp
 
 SOURCE=.\DynStruct_i.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -843,17 +843,17 @@ SOURCE=.\DynStruct_i.cpp
 
 SOURCE=.\DynUnion_i.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -862,17 +862,17 @@ SOURCE=.\DynUnion_i.cpp
 
 SOURCE=.\Environment.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -881,17 +881,17 @@ SOURCE=.\Environment.cpp
 
 SOURCE=.\Exception.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -900,17 +900,17 @@ SOURCE=.\Exception.cpp
 
 SOURCE=.\Forwarding_Servant.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -919,17 +919,17 @@ SOURCE=.\Forwarding_Servant.cpp
 
 SOURCE=.\GIOP_Message_Accept_State.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -938,17 +938,17 @@ SOURCE=.\GIOP_Message_Accept_State.cpp
 
 SOURCE=.\GIOP_Message_Acceptors.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -957,17 +957,17 @@ SOURCE=.\GIOP_Message_Acceptors.cpp
 
 SOURCE=.\GIOP_Message_Base.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -976,17 +976,17 @@ SOURCE=.\GIOP_Message_Base.cpp
 
 SOURCE=.\GIOP_Message_Connectors.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -995,17 +995,17 @@ SOURCE=.\GIOP_Message_Connectors.cpp
 
 SOURCE=.\GIOP_Message_Headers.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -1014,17 +1014,17 @@ SOURCE=.\GIOP_Message_Headers.cpp
 
 SOURCE=.\GIOP_Message_Lite.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -1033,17 +1033,17 @@ SOURCE=.\GIOP_Message_Lite.cpp
 
 SOURCE=.\GIOP_Message_State.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -1052,17 +1052,17 @@ SOURCE=.\GIOP_Message_State.cpp
 
 SOURCE=.\GIOP_Server_Request.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -1071,17 +1071,17 @@ SOURCE=.\GIOP_Server_Request.cpp
 
 SOURCE=.\GIOP_Utils.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -1090,17 +1090,17 @@ SOURCE=.\GIOP_Utils.cpp
 
 SOURCE=.\GIOPC.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -1109,17 +1109,17 @@ SOURCE=.\GIOPC.cpp
 
 SOURCE=.\IIOP_Acceptor.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -1128,17 +1128,17 @@ SOURCE=.\IIOP_Acceptor.cpp
 
 SOURCE=.\IIOP_Connect.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -1147,17 +1147,17 @@ SOURCE=.\IIOP_Connect.cpp
 
 SOURCE=.\IIOP_Connector.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -1166,17 +1166,17 @@ SOURCE=.\IIOP_Connector.cpp
 
 SOURCE=.\IIOP_Factory.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -1185,17 +1185,17 @@ SOURCE=.\IIOP_Factory.cpp
 
 SOURCE=.\IIOP_Lite_Factory.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -1204,17 +1204,17 @@ SOURCE=.\IIOP_Lite_Factory.cpp
 
 SOURCE=.\IIOP_Profile.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -1223,17 +1223,17 @@ SOURCE=.\IIOP_Profile.cpp
 
 SOURCE=.\IIOP_Transport.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -1242,17 +1242,17 @@ SOURCE=.\IIOP_Transport.cpp
 
 SOURCE=.\ImplRepoC.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -1261,17 +1261,17 @@ SOURCE=.\ImplRepoC.cpp
 
 SOURCE=.\ImplRepoS.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -1280,17 +1280,17 @@ SOURCE=.\ImplRepoS.cpp
 
 SOURCE=.\ImplRepoS_T.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -1299,17 +1299,17 @@ SOURCE=.\ImplRepoS_T.cpp
 
 SOURCE=.\InconsistentTypeCodeC.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -1318,17 +1318,17 @@ SOURCE=.\InconsistentTypeCodeC.cpp
 
 SOURCE=.\Interceptor.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -1337,17 +1337,17 @@ SOURCE=.\Interceptor.cpp
 
 SOURCE=.\InterceptorC.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -1356,17 +1356,17 @@ SOURCE=.\InterceptorC.cpp
 
 SOURCE=.\InterceptorS.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -1375,17 +1375,17 @@ SOURCE=.\InterceptorS.cpp
 
 SOURCE=.\InterfaceC.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -1394,17 +1394,17 @@ SOURCE=.\InterfaceC.cpp
 
 SOURCE=.\InterfaceS.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -1413,17 +1413,17 @@ SOURCE=.\InterfaceS.cpp
 
 SOURCE=.\Invocation.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -1432,17 +1432,17 @@ SOURCE=.\Invocation.cpp
 
 SOURCE=.\IOPC.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -1451,17 +1451,17 @@ SOURCE=.\IOPC.cpp
 
 SOURCE=.\IOPS.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -1470,17 +1470,17 @@ SOURCE=.\IOPS.cpp
 
 SOURCE=.\IOR_LookupTable.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -1489,17 +1489,17 @@ SOURCE=.\IOR_LookupTable.cpp
 
 SOURCE=.\IORC.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -1508,17 +1508,17 @@ SOURCE=.\IORC.cpp
 
 SOURCE=.\IORManipulation.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -1527,17 +1527,17 @@ SOURCE=.\IORManipulation.cpp
 
 SOURCE=.\IORS.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -1546,17 +1546,17 @@ SOURCE=.\IORS.cpp
 
 SOURCE=.\Key_Adapters.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -1565,17 +1565,17 @@ SOURCE=.\Key_Adapters.cpp
 
 SOURCE=.\Leader_Follower.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -1584,17 +1584,17 @@ SOURCE=.\Leader_Follower.cpp
 
 SOURCE=.\Linear_Priority_Mapping.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -1603,17 +1603,17 @@ SOURCE=.\Linear_Priority_Mapping.cpp
 
 SOURCE=.\Managed_Types.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -1622,17 +1622,17 @@ SOURCE=.\Managed_Types.cpp
 
 SOURCE=.\Marshal.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -1641,17 +1641,17 @@ SOURCE=.\Marshal.cpp
 
 SOURCE=.\Messaging_Policy_i.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -1660,17 +1660,17 @@ SOURCE=.\Messaging_Policy_i.cpp
 
 SOURCE=.\MessagingC.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -1679,17 +1679,17 @@ SOURCE=.\MessagingC.cpp
 
 SOURCE=.\MessagingS.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -1698,17 +1698,17 @@ SOURCE=.\MessagingS.cpp
 
 SOURCE=.\MProfile.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -1717,17 +1717,17 @@ SOURCE=.\MProfile.cpp
 
 SOURCE=.\NVList.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -1736,17 +1736,17 @@ SOURCE=.\NVList.cpp
 
 SOURCE=.\Object.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -1755,17 +1755,17 @@ SOURCE=.\Object.cpp
 
 SOURCE=.\Object_Adapter.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -1774,17 +1774,17 @@ SOURCE=.\Object_Adapter.cpp
 
 SOURCE=.\Object_KeyC.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -1793,17 +1793,17 @@ SOURCE=.\Object_KeyC.cpp
 
 SOURCE=.\Object_Loader.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -1812,17 +1812,17 @@ SOURCE=.\Object_Loader.cpp
 
 SOURCE=.\ObjectIDList.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -1831,17 +1831,17 @@ SOURCE=.\ObjectIDList.cpp
 
 SOURCE=.\operation_details.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -1850,17 +1850,17 @@ SOURCE=.\operation_details.cpp
 
 SOURCE=.\Operation_Table.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -1869,17 +1869,17 @@ SOURCE=.\Operation_Table.cpp
 
 SOURCE=.\ORB.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -1888,17 +1888,17 @@ SOURCE=.\ORB.cpp
 
 SOURCE=.\ORB_Core.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -1907,17 +1907,17 @@ SOURCE=.\ORB_Core.cpp
 
 SOURCE=.\params.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -1926,17 +1926,17 @@ SOURCE=.\params.cpp
 
 SOURCE=.\Pluggable.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -1945,17 +1945,17 @@ SOURCE=.\Pluggable.cpp
 
 SOURCE=.\Pluggable_Messaging.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -1964,17 +1964,17 @@ SOURCE=.\Pluggable_Messaging.cpp
 
 SOURCE=.\Pluggable_Messaging_Utils.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -1983,17 +1983,17 @@ SOURCE=.\Pluggable_Messaging_Utils.cpp
 
 SOURCE=.\POA.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -2002,17 +2002,17 @@ SOURCE=.\POA.cpp
 
 SOURCE=.\POAC.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -2021,17 +2021,17 @@ SOURCE=.\POAC.cpp
 
 SOURCE=.\POAManager.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -2040,17 +2040,17 @@ SOURCE=.\POAManager.cpp
 
 SOURCE=.\POAS.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -2059,17 +2059,17 @@ SOURCE=.\POAS.cpp
 
 SOURCE=.\Policy_Manager.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -2078,17 +2078,17 @@ SOURCE=.\Policy_Manager.cpp
 
 SOURCE=.\PolicyC.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -2097,17 +2097,17 @@ SOURCE=.\PolicyC.cpp
 
 SOURCE=.\PolicyS.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -2116,17 +2116,17 @@ SOURCE=.\PolicyS.cpp
 
 SOURCE=.\PollableC.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -2135,17 +2135,17 @@ SOURCE=.\PollableC.cpp
 
 SOURCE=.\PollableS.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -2154,17 +2154,17 @@ SOURCE=.\PollableS.cpp
 
 SOURCE=.\Pool_Per_Endpoint.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -2173,17 +2173,17 @@ SOURCE=.\Pool_Per_Endpoint.cpp
 
 SOURCE=.\Principal.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -2192,17 +2192,17 @@ SOURCE=.\Principal.cpp
 
 SOURCE=.\Priority_Mapping.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -2211,17 +2211,17 @@ SOURCE=.\Priority_Mapping.cpp
 
 SOURCE=.\Profile.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -2230,17 +2230,17 @@ SOURCE=.\Profile.cpp
 
 SOURCE=.\Protocol_Factory.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -2249,17 +2249,17 @@ SOURCE=.\Protocol_Factory.cpp
 
 SOURCE=.\Reactor_Per_Priority.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -2268,17 +2268,17 @@ SOURCE=.\Reactor_Per_Priority.cpp
 
 SOURCE=.\Reactor_Registry.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -2287,17 +2287,17 @@ SOURCE=.\Reactor_Registry.cpp
 
 SOURCE=.\Reply_Dispatcher.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -2306,17 +2306,17 @@ SOURCE=.\Reply_Dispatcher.cpp
 
 SOURCE=.\Request.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -2325,17 +2325,17 @@ SOURCE=.\Request.cpp
 
 SOURCE=.\Resource_Factory.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -2344,17 +2344,17 @@ SOURCE=.\Resource_Factory.cpp
 
 SOURCE=.\RT_Current.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -2363,17 +2363,17 @@ SOURCE=.\RT_Current.cpp
 
 SOURCE=.\rtcorbafwd.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -2382,17 +2382,17 @@ SOURCE=.\rtcorbafwd.cpp
 
 SOURCE=.\Sequence.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -2401,17 +2401,17 @@ SOURCE=.\Sequence.cpp
 
 SOURCE=.\Servant_Base.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -2420,17 +2420,17 @@ SOURCE=.\Servant_Base.cpp
 
 SOURCE=.\Server_Request.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -2439,17 +2439,17 @@ SOURCE=.\Server_Request.cpp
 
 SOURCE=.\Server_Strategy_Factory.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -2458,17 +2458,17 @@ SOURCE=.\Server_Strategy_Factory.cpp
 
 SOURCE=.\Services.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -2477,17 +2477,17 @@ SOURCE=.\Services.cpp
 
 SOURCE=.\SHMIOP_Acceptor.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -2496,17 +2496,17 @@ SOURCE=.\SHMIOP_Acceptor.cpp
 
 SOURCE=.\SHMIOP_Connect.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -2515,17 +2515,17 @@ SOURCE=.\SHMIOP_Connect.cpp
 
 SOURCE=.\SHMIOP_Connector.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -2534,17 +2534,17 @@ SOURCE=.\SHMIOP_Connector.cpp
 
 SOURCE=.\SHMIOP_Factory.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -2553,17 +2553,17 @@ SOURCE=.\SHMIOP_Factory.cpp
 
 SOURCE=.\SHMIOP_Profile.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -2572,17 +2572,17 @@ SOURCE=.\SHMIOP_Profile.cpp
 
 SOURCE=.\SHMIOP_Transport.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -2591,17 +2591,17 @@ SOURCE=.\SHMIOP_Transport.cpp
 
 SOURCE=.\Single_Reactor.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -2610,17 +2610,17 @@ SOURCE=.\Single_Reactor.cpp
 
 SOURCE=.\skip.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -2629,17 +2629,17 @@ SOURCE=.\skip.cpp
 
 SOURCE=.\Smart_Proxies.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -2648,17 +2648,17 @@ SOURCE=.\Smart_Proxies.cpp
 
 SOURCE=.\Stub.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -2667,17 +2667,17 @@ SOURCE=.\Stub.cpp
 
 SOURCE=.\Sync_Strategies.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -2686,17 +2686,17 @@ SOURCE=.\Sync_Strategies.cpp
 
 SOURCE=.\Tagged_Components.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -2705,17 +2705,17 @@ SOURCE=.\Tagged_Components.cpp
 
 SOURCE=.\TAO.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -2724,17 +2724,17 @@ SOURCE=.\TAO.cpp
 
 SOURCE=.\TAO_Internal.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -2743,17 +2743,17 @@ SOURCE=.\TAO_Internal.cpp
 
 SOURCE=.\TAOC.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -2762,17 +2762,17 @@ SOURCE=.\TAOC.cpp
 
 SOURCE=.\TAOS.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -2781,17 +2781,17 @@ SOURCE=.\TAOS.cpp
 
 SOURCE=.\target_specification.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -2800,17 +2800,17 @@ SOURCE=.\target_specification.cpp
 
 SOURCE=.\TimeBaseC.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -2819,17 +2819,17 @@ SOURCE=.\TimeBaseC.cpp
 
 SOURCE=.\TimeBaseS.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -2838,17 +2838,17 @@ SOURCE=.\TimeBaseS.cpp
 
 SOURCE=.\Transport_Mux_Strategy.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -2857,17 +2857,17 @@ SOURCE=.\Transport_Mux_Strategy.cpp
 
 SOURCE=.\Typecode.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -2876,17 +2876,17 @@ SOURCE=.\Typecode.cpp
 
 SOURCE=.\Typecode_Constants.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -2895,17 +2895,17 @@ SOURCE=.\Typecode_Constants.cpp
 
 SOURCE=.\UIOP_Acceptor.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -2914,17 +2914,17 @@ SOURCE=.\UIOP_Acceptor.cpp
 
 SOURCE=.\UIOP_Connect.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -2933,17 +2933,17 @@ SOURCE=.\UIOP_Connect.cpp
 
 SOURCE=.\UIOP_Connector.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -2952,17 +2952,17 @@ SOURCE=.\UIOP_Connector.cpp
 
 SOURCE=.\UIOP_Factory.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -2971,17 +2971,17 @@ SOURCE=.\UIOP_Factory.cpp
 
 SOURCE=.\UIOP_Lite_Factory.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -2990,17 +2990,17 @@ SOURCE=.\UIOP_Lite_Factory.cpp
 
 SOURCE=.\UIOP_Profile.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -3009,17 +3009,17 @@ SOURCE=.\UIOP_Profile.cpp
 
 SOURCE=.\UIOP_Transport.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -3028,17 +3028,17 @@ SOURCE=.\UIOP_Transport.cpp
 
 SOURCE=.\Union.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -3047,17 +3047,17 @@ SOURCE=.\Union.cpp
 
 SOURCE=.\ValueBase.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -3066,17 +3066,17 @@ SOURCE=.\ValueBase.cpp
 
 SOURCE=.\ValueFactory.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -3085,17 +3085,17 @@ SOURCE=.\ValueFactory.cpp
 
 SOURCE=.\ValueFactory_Map.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -3104,17 +3104,17 @@ SOURCE=.\ValueFactory_Map.cpp
 
 SOURCE=.\Wait_Strategy.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -3123,17 +3123,17 @@ SOURCE=.\Wait_Strategy.cpp
 
 SOURCE=.\WrongTransactionC.cpp
 
-!IF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
 
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -3353,10 +3353,6 @@ SOURCE=.\InterceptorS.h
 # Begin Source File
 
 SOURCE=.\InterfaceC.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\InterfaceS.h
 # End Source File
 # Begin Source File
 
