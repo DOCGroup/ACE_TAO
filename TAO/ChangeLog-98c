@@ -1,10 +1,14 @@
+Wed Jul 15 10:55:33 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/Quoter/run_tests.pl: removed hard-coded perl path.
+
 Wed Jul 15 09:47:17 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Event/Module_Factory.cpp: 
-	  Removed a bogus include file.
+        * orbsvcs/orbsvcs/Event/Module_Factory.cpp:
+          Removed a bogus include file.
 
-	* orbsvcs/orbsvcs/Makefile: 
-	  Updated dependencies again.
+        * orbsvcs/orbsvcs/Makefile:
+          Updated dependencies again.
 
 Tue Jul 14 21:56:30 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
