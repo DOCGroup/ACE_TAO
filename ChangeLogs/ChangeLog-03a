@@ -1,3 +1,8 @@
+Fri Jul  5 18:44:39 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/ACE.cpp: Corrected undeclared 'select_width' errors and
+          signed/unsigned mismatch warnings.
+
 Fri Jul  5 16:14:51 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/OS.{h i} (send, sendto, recv, recvfrom): Change 'len' argument
