@@ -1,3 +1,8 @@
+Sat Jan 24 15:29:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* ace/config-win32-borland.h:
+	  CBuilderX Preview doesn't have wcsdup
+
 Fri Jan 23 14:04:31 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/README:
