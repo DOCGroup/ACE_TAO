@@ -43,8 +43,8 @@ Tue Oct 20 16:28:12 1998  David L. Levine  <levine@cs.wustl.edu>
           ENOTSUP.  The resume_grp message was wrong (copy and paste
           error).  In addition, I reworded the messages to that
           run_tests.check won't catch them.  They don't indicate a
-          problem, just that Pthreads doesn't support those operations.
-          And more importantly, that ACE preserves the errno.
+          problem, just that Pthreads doesn't support those operations;
+          see Steve's Thu Oct 15 16:40:41 1998 entry.
 
 Tue Oct 20 14:31:37 EDT 1998  James CE Johnson  <jcej@chiroptera.tragus.org>
 
