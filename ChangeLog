@@ -1,3 +1,12 @@
+Wed Aug 25 11:15:33 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ACE-INSTALL.html:
+
+	  Updated ACE_SSL library build notes to refer to MPC, i.e. the
+	  proper way to add ACE_SSL support to GNUmakefiles and MSVC++
+	  workspace/project files.  Thanks to Johnny for pointing out that
+	  the documentation was out of date.
+
 Wed Aug 25 11:46:49 2004  Steve Huston  <shuston@riverace.com>
 
 	* ace/os_include/sys/os_pstat.h: If ACE_HAS_SYS_PSTAT_H, include
