@@ -1,5 +1,6 @@
 Thu Sep 07 11:36:51 2000  Ossama Othman  <ossama@uci.edu>
 
+	* ace/SSL/SSL_Context.cpp (set_mode):
 	* ace/SSL/SSL_SOCK_Acceptor.cpp (ssl_accept):
 	* ace/SSL/SSL_SOCK_Connector.cpp (ssl_connect):
 	* ace/SSL/SSL_SOCK_Stream.i (recv, send):
