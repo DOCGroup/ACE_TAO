@@ -122,10 +122,6 @@ int driver(char *id, int total_num, float requests_sec, char *url1, float p1, ch
 
 main(int argc, char **argv) 
 {
-  // Set the process to a real-time priority class.
-  if (::SetPriorityClass (::GetCurrentProcess (), HIGH_PRIORITY_CLASS) == 0)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p SetPriorityClass failed.\n", "parse_args"), -1);
-
   // This will set the global scale factor if the ACE_SCALE_FACTOR
   // environment variable is set.
   ACE_High_Res_Timer::get_env_global_scale_factor ();
