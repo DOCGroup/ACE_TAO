@@ -1,3 +1,10 @@
+Tue Oct 12 15:46:41 1999  Fred Kuhns  <fredk@cs.wustl.edu>
+
+        * tao/Stub.cpp fixed a bug with location forwarding which caused
+          all forwading information to be discarded if a connect failed
+          on any of the forwarding profiles.  Thanks to Shalini Yajnik
+          shalini@research.bell-labs.com, for reporting this bug.
+
 Tue Oct 12 14:23:40 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * performance-tests/Cubit/TAO/IDL_Cubit/{client,server}.cpp:
