@@ -95,11 +95,11 @@ private:
   // This invocation is using this transport, may change...
 };
 
-#endif /* TAO_HAS_AMI_CALLBACK == 1 || TAO_HAS_AMI_POLLER == 1 */
-
 #if defined (__ACE_INLINE__)
 #include "tao/Asynch_Reply_Dispatcher.i"
 #endif /* __ACE_INLINE__ */
+
+#endif /* TAO_HAS_AMI_CALLBACK == 1 || TAO_HAS_AMI_POLLER == 1 */
 
 #include "ace/post.h"
 #endif /* TAO_ASYNCH_REPLY_DISPATCHER_H */
