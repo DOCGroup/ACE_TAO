@@ -1,3 +1,12 @@
+Sun Mar 10 00:00:08 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/Muxed_GIOP_Versions/server.dsp:
+	* tests/Muxed_GIOP_Versions/client.dsp: Cosmetic fixes. 
+	* tests/Muxed_GIOP_Versions/MT_Server)and_Client.dsw: Removed this
+	  file from the repo. 
+	* tests/Muxed_GIOP_Versions/Muxed_GIOP_Versions.dsw: Added this
+	  workspace file. 
+
 Sat Mar  9 21:00:18 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Muxed_GIOP_Versions/*: 
