@@ -1,3 +1,14 @@
+Mon Feb 12 22:52:34 2001  Frank Hunleth <fhunleth@cs.wustl.edu>
+
+        * tao/RT_Mutex.h:
+        * tao/RT_Mutex.cpp:
+        * tao/RT_ORB.cpp:
+        * tao/RT_ORB.h:
+        * tests/RTCORBA/RTMutex/server.cpp:
+          Changed named mutexes to conform more closely to Win32 named
+          mutex semantics.  Also simplified and cleaned up most of the 
+          RT Mutex code.  Thanks to Irfan for much help.
+
 Mon Feb 12 18:53:05 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/tests/ior_corbaname/Makefile:

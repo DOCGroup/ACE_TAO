@@ -24,23 +24,16 @@ RTCORBA::Mutex_ptr
 TAO_RT_ORB::create_mutex (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_RT_Mutex *mutex;
-
-  ACE_NEW_THROW_EX (mutex,
-                    TAO_RT_Mutex (),
-                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
-                                      CORBA::COMPLETED_NO));
-
-  return mutex;
+  return this->mutex_mgr_.create_mutex (ACE_TRY_ENV);
 }
 
 void
-TAO_RT_ORB::destroy_mutex (RTCORBA::Mutex_ptr,
-                           CORBA::Environment &)
+TAO_RT_ORB::destroy_mutex (RTCORBA::Mutex_ptr mutex,
+                           CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  // Don't need to do anything.  The destructor on the mutex
-  // will automatically reclaim resources.
+  this->mutex_mgr_.destroy_mutex (mutex,
+                                  ACE_TRY_ENV);
 }
 
 
@@ -50,39 +43,9 @@ TAO_RT_ORB::create_named_mutex (const char *name,
                                 CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_RT_Mutex *mutex;
-
-  mutex = mutex_mgr_.find_mutex (name);
-  if (mutex != 0)
-    {
-      created_flag = 0;
-
-      // Increment the reference count to pass ownership to the
-      // caller.
-      mutex->_add_ref ();
-    }
-  else
-    {
-      ACE_NEW_THROW_EX (mutex,
-                        TAO_Named_RT_Mutex (name, mutex_mgr_),
-                        CORBA::NO_MEMORY (
-                          CORBA::SystemException::_tao_minor_code (
-                            TAO_DEFAULT_MINOR_CODE,
-                            ENOMEM),
-                          CORBA::COMPLETED_NO));
-      ACE_CHECK_RETURN (RTCORBA::Mutex::_nil ());
-
-      // registration should always succeed
-      if (mutex_mgr_.register_mutex (name, mutex) != 0)
-        {
-          CORBA::release (mutex);
-          ACE_THROW_RETURN (CORBA::INTERNAL (),
-                            RTCORBA::Mutex::_nil ());
-        }
-      created_flag = 1;
-    }
-
-  return mutex;
+  return this->mutex_mgr_.create_named_mutex (name,
+                                              created_flag,
+                                              ACE_TRY_ENV);
 }
 
 RTCORBA::Mutex_ptr
@@ -91,18 +54,154 @@ TAO_RT_ORB::open_named_mutex (const char *name,
   ACE_THROW_SPEC ((CORBA::SystemException,
                    RTCORBA::RTORB::MutexNotFound))
 {
-  TAO_RT_Mutex *mutex;
+  return this->mutex_mgr_.open_named_mutex (name,
+                                            ACE_TRY_ENV);
+}
 
-  mutex = mutex_mgr_.find_mutex (name);
-  if (mutex == 0)
-    ACE_THROW_RETURN (RTCORBA::RTORB::MutexNotFound (),
-                      RTCORBA::Mutex::_nil ());
-  else
-    // Increment the reference count to pass ownership to the caller.
-    mutex->_add_ref ();
+////////////////////////////////////////////////////////////////////////////////
+
+TAO_Named_RT_Mutex_Manager::TAO_Named_RT_Mutex_Manager (void)
+{
+}
+
+TAO_Named_RT_Mutex_Manager::~TAO_Named_RT_Mutex_Manager (void)
+{
+}
+
+RTCORBA::Mutex_ptr
+TAO_Named_RT_Mutex_Manager::create_mutex (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  TAO_RT_Mutex *mutex = 0;
+  ACE_NEW_THROW_EX (mutex,
+                    TAO_RT_Mutex (),
+                    CORBA::NO_MEMORY (
+                      CORBA::SystemException::_tao_minor_code (
+                        TAO_DEFAULT_MINOR_CODE,
+                        ENOMEM),
+                      CORBA::COMPLETED_NO));
+  ACE_CHECK_RETURN (RTCORBA::Mutex::_nil ());
 
   return mutex;
 }
+
+void
+TAO_Named_RT_Mutex_Manager::destroy_mutex (RTCORBA::Mutex_ptr mutex,
+                                           CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  TAO_RT_Mutex *tao_mutex =
+    ACE_dynamic_cast (TAO_RT_Mutex *,
+                      mutex);
+
+  // If this mutex is named, then we need to remove it from our table.
+  // Otherwise, we don't have to do anything.
+  const char *name = tao_mutex->name ();
+  if (name != 0)
+    {
+      //
+      // The following should be atomic.
+      //
+      ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX,
+                          monitor,
+                          this->lock_,
+                          CORBA::INTERNAL ());
+      ACE_CHECK;
+
+      int result =
+        this->map_.unbind (name);
+
+      if (result != 0)
+        {
+          ACE_THROW (CORBA::INTERNAL ());
+        }
+    }
+}
+
+RTCORBA::Mutex_ptr
+TAO_Named_RT_Mutex_Manager::create_named_mutex (const char *name,
+                                                CORBA::Boolean_out created_flag,
+                                                CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  //
+  // The following should be atomic.
+  //
+  ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX,
+                      monitor,
+                      this->lock_,
+                      CORBA::INTERNAL ());
+  ACE_CHECK_RETURN (RTCORBA::Mutex::_nil ());
+
+  // Optimistic that we'll find it.
+  created_flag = 0;
+
+  // If we find the mutex, simply return it.
+  RTCORBA::Mutex_var mutex;
+  if (this->map_.find (name,
+                       mutex) != 0)
+    {
+      // Oops, we didn't find it.
+      created_flag = 1;
+
+      RTCORBA::Mutex_ptr tmp_mutex;
+
+      // Create a new one.
+      ACE_NEW_THROW_EX (tmp_mutex,
+                        TAO_Named_RT_Mutex (name),
+                        CORBA::NO_MEMORY (
+                          CORBA::SystemException::_tao_minor_code (
+                            TAO_DEFAULT_MINOR_CODE,
+                            ENOMEM),
+                          CORBA::COMPLETED_NO));
+      ACE_CHECK_RETURN (RTCORBA::Mutex::_nil ());
+
+      mutex = tmp_mutex;
+
+      // Add it to the map.
+      int result =
+        this->map_.bind (name,
+                         mutex);
+
+      if (result != 0)
+        {
+          ACE_THROW (CORBA::INTERNAL ());
+        }
+    }
+
+  // Return the one we found or created.
+  return mutex._retn ();
+}
+
+RTCORBA::Mutex_ptr
+TAO_Named_RT_Mutex_Manager::open_named_mutex (const char *name,
+                                              CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   RTCORBA::RTORB::MutexNotFound))
+{
+  //
+  // The following should be atomic.
+  //
+  ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX,
+                      monitor,
+                      this->lock_,
+                      CORBA::INTERNAL ());
+  ACE_CHECK_RETURN (RTCORBA::Mutex::_nil ());
+
+  // If we find the mutex, simply return it.
+  RTCORBA::Mutex_var mutex;
+  if (this->map_.find (name,
+                       mutex) != 0)
+    {
+      ACE_THROW_RETURN (RTCORBA::RTORB::MutexNotFound (),
+                        RTCORBA::Mutex::_nil ());
+    }
+
+  // Return the one we found.
+  return mutex._retn ();
+}
+
+////////////////////////////////////////////////////////////////////////////////
 
 RTCORBA::ThreadpoolId
 TAO_RT_ORB::create_threadpool (CORBA::ULong /*stacksize*/,
@@ -233,64 +332,23 @@ TAO_RT_ORB::create_client_protocol_policy (const RTCORBA::ProtocolList & protoco
   return tmp;
 }
 
-
-TAO_Named_RT_Mutex_Manager::TAO_Named_RT_Mutex_Manager (void)
-{
-}
-
-
-TAO_Named_RT_Mutex_Manager::~TAO_Named_RT_Mutex_Manager (void)
-{
-}
-
-
-TAO_RT_Mutex *
-TAO_Named_RT_Mutex_Manager::find_mutex (const char *name)
-{
-  TAO_RT_Mutex *mutex;
-
-  if (mutex_map_.find (name, mutex) == 0)
-    return mutex;
-  else
-    return 0;
-}
-
-int
-TAO_Named_RT_Mutex_Manager::register_mutex (const char *name,
-                                            TAO_RT_Mutex *mutex)
-{
-  // Only return success if the bind is successful
-  // and there is not already something else bound to
-  // the specified name.
-  if (mutex_map_.bind (name, mutex) == 0)
-    return 0;
-  else
-    return -1;
-}
-
-void
-TAO_Named_RT_Mutex_Manager::unregister_mutex (const char *name)
-{
-  mutex_map_.unbind (name);
-}
-
 ////////////////////////////////////////////////////////////////////////////////
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class ACE_Hash_Map_Manager_Ex<char const *, TAO_RT_Mutex *, ACE_Hash<char const *>, ACE_Equal_To<char const *>, TAO_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Iterator_Base_Ex<char const *, TAO_RT_Mutex *, ACE_Hash<char const *>, ACE_Equal_To<char const *>, TAO_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Iterator_Ex<char const *, TAO_RT_Mutex *, ACE_Hash<char const *>, ACE_Equal_To<char const *>, TAO_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<char const *, TAO_RT_Mutex *, ACE_Hash<char const *>, ACE_Equal_To<char const *>, TAO_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Entry<char const *, TAO_RT_Mutex *>;
+template class ACE_Hash_Map_Manager_Ex<ACE_CString, TAO_RT_Mutex *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, TAO_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, TAO_RT_Mutex *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, TAO_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Iterator_Ex<ACE_CString, TAO_RT_Mutex *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, TAO_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, TAO_RT_Mutex *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, TAO_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Entry<ACE_CString, TAO_RT_Mutex *>;
 
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate ACE_Hash_Map_Manager_Ex<char const *, TAO_RT_Mutex *, ACE_Hash<char const *>, ACE_Equal_To<char const *>, TAO_SYNCH_MUTEX>;
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<char const *, TAO_RT_Mutex *, ACE_Hash<char const *>, ACE_Equal_To<char const *>, TAO_SYNCH_MUTEX>;
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<char const *, TAO_RT_Mutex *, ACE_Hash<char const *>, ACE_Equal_To<char const *>, TAO_SYNCH_MUTEX>;
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<char const *, TAO_RT_Mutex *, ACE_Hash<char const *>, ACE_Equal_To<char const *>, TAO_SYNCH_MUTEX>;
-#pragma instantiate ACE_Hash_Map_Entry<char const *, TAO_RT_Mutex *>;
+#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_CString, TAO_RT_Mutex *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, TAO_SYNCH_MUTEX>;
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, TAO_RT_Mutex *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, TAO_SYNCH_MUTEX>;
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_CString, TAO_RT_Mutex *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, TAO_SYNCH_MUTEX>;
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, TAO_RT_Mutex *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, TAO_SYNCH_MUTEX>;
+#pragma instantiate ACE_Hash_Map_Entry<ACE_CString, TAO_RT_Mutex *>;
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
