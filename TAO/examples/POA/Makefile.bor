@@ -3,6 +3,7 @@
 #
 
 DIRS = \
+        Default_Servant \
         DSI \
         FindPOA \
         Forwarding \
