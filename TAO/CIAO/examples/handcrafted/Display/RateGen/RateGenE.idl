@@ -10,6 +10,10 @@
  * @author Nanbor Wang <nanbor@cs.wustl.edu>
  */
 
+#ifndef RATEGENE_IDL
+#define RATEGENE_IDL
+
+#include "CCM_Container.idl"
 #include "RateGen.idl"
 #include "../HUDisplayE.idl"
 
@@ -18,29 +22,27 @@ module HUDisplay
   local interface CCM_RateGen_Executor
     : Components::EnterpriseComponent, opmode
   {
-    readonly attribute long hertz;
-  }
+    attribute long hertz;
+  };
 
   local interface CCM_RateGen
     : Components::EnterpriseComponent, opmode
   {
-    readonly attribute long hertz;
+    attribute long hertz;
   };
 
   /**
    * Context interface.  This interface defines the mapping.  The
    * container framework provides the implmentation.
+   *
+   * Notice that we are taking a shortcut here to inherit the
+   * component-specific context from SessionContext directly instead
+   * of CCMContext.
    */
   local interface CCM_RateGen_Context
-    : Components::CCMContext
+    : Components::SessionContext
   {
     void push_Pulse (in tick ev);
-  };
-
-  local interface CCM_RateGenHomeImplicit
-  {
-    Components::EnterpriseComponent create ()
-      raises (Components::CreateFailure);
   };
 
   local interface CCM_RateGenHomeExplicit
@@ -50,9 +52,17 @@ module HUDisplay
       raises (Components::CreateFailure);
   };
 
+  local interface CCM_RateGenHomeImplicit
+  {
+    Components::EnterpriseComponent create ()
+      raises (Components::CreateFailure);
+  };
+
   local interface CCM_RateGenHome
   : CCM_RateGenHomeExplicit,
     CCM_RateGenHomeImplicit
   {
   };
 };
+
+#endif /* RATEGENE_IDL */

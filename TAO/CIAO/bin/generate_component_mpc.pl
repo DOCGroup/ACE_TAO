@@ -12,11 +12,12 @@ use Getopt::Std;
 
 $flags = join (" ", @ARGV);
 
-if (!getopts ('dcnp:h') || $opt_h) {
+if (!getopts ('dcnp:l:h') || $opt_h) {
     print "generate_component_mpc.pl [-d] [-h] component_name\n";
     print "\n";
     print "    -d         Turn on debug mode\n";
     print "    -p         Dependent component name\n";
+    print "    -l         Dependent component path\n";
     print "    -n         Supress component make/project\n";
     print "    -c         Create a client makefile\n";
     print "\n";
@@ -48,7 +49,11 @@ $UCOM_NAME = uc $com_name;
 if (defined $opt_p) {
     $stub_depend = "depends += $opt_p".'_stub';
     $svnt_depend = "$opt_p".'_svnt';
-    $lib_depend = "$opt_t".'_stub';
+    $lib_depend = "$opt_p".'_stub';
+}
+
+if (defined $opt_l) {
+    $lib_paths = "libpaths += $opt_l";
 }
 
 if (defined $opt_c) {
@@ -74,7 +79,8 @@ if (! defined $opt_n) {
 project('."$com_name".'_exec) : ciao_server {
   depends   += '."$com_name".'_svnt
   sharedname = '."$com_name".'_exec
-  libs      += '."$com_name".'_stub '."$lib_depend $com_name".'_svnt
+  libs      += '."$com_name".'_stub '."$lib_depend $com_name".'_svnt'."
+  $lib_paths".'
   dllflags   = '."$UCOM_NAME".'_EXEC_BUILD_DLL
 
   IDL_Files {
@@ -106,7 +112,8 @@ project('."$com_name".'_stub): ciao_client {'."
 project('."$com_name".'_svnt) : ciao_server {
   depends += '."$svnt_depend $com_name".'_stub
   sharedname  = '."$com_name".'_svnt
-  libs    += '."$com_name".'_stub'." $lib_depend".'
+  libs    += '."$com_name".'_stub'." $lib_depend
+  $lib_paths".'
   idlflags  +=  -Wb,export_macro='."$UCOM_NAME".'_SVNT_Export -Wb,export_include='."$com_name".'_svnt_export.h
   dllflags = '."$UCOM_NAME".'_SVNT_BUILD_DLL
 

@@ -10,10 +10,21 @@
  * @author Nanbor Wang <nanbor@cs.wustl.edu>
  */
 
+#ifndef HUDISPLAYE_IDL
+#define HUDISPLAYE_IDL
+
+
 #include "HUDisplay.idl"
 
 module HUDisplay
 {
+  /**
+   * Executor interface mapping for supported interfaces.
+   */
+  local interface CCM_opmode : opmode
+  {
+  };
+
   /**
    * Executor interface for tick event comsumers.  This interface is
    * only needed if a component implementation uses the
@@ -32,3 +43,5 @@ module HUDisplay
   {
   };
 };
+
+#endif /* HUDISPLAYE_IDL */

@@ -12,3 +12,15 @@ actualy component definition nor cidl definition are available)
 situation with CIDL compiler.  It looks like we should be able to pass
 a bunch of IDL definitions thru CIDL compiler and get the equivalent
 executor interfaces automatically.  But we'll have to see.
+
+
+To generate mpc files:
+
+  HUDisplay:
+
+   generate_component_mpc.pl -n HUDisplay
+
+
+  All others
+
+   generate_component_mpc.pl -l .. -p HUDisplay {RateGen|GPS|NavDisplay}

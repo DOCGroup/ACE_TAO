@@ -17,7 +17,8 @@ project(NavDisplay_stub): ciao_client {
 project(NavDisplay_svnt) : ciao_server {
   depends += HUDisplay_svnt NavDisplay_stub
   sharedname  = NavDisplay_svnt
-  libs    += NavDisplay_stub _stub
+  libs    += NavDisplay_stub HUDisplay_stub
+  libpaths += ..
   idlflags  +=  -Wb,export_macro=NAVDISPLAY_SVNT_Export -Wb,export_include=NavDisplay_svnt_export.h
   dllflags = NAVDISPLAY_SVNT_BUILD_DLL
 
@@ -36,7 +37,8 @@ project(NavDisplay_svnt) : ciao_server {
 project(NavDisplay_exec) : ciao_server {
   depends   += NavDisplay_svnt
   sharedname = NavDisplay_exec
-  libs      += NavDisplay_stub _stub NavDisplay_svnt
+  libs      += NavDisplay_stub HUDisplay_stub NavDisplay_svnt
+  libpaths += ..
   dllflags   = NAVDISPLAY_EXEC_BUILD_DLL
 
   IDL_Files {
