@@ -53,6 +53,9 @@ struct ip_mreq
 #if !defined (ACE_HAS_FSU_PTHREADS)
 #define ACE_HAS_FSU_PTHREADS
 #endif
+#if !defined (ACE_HAS_PTHREADS_DRAFT6)
+#define ACE_HAS_PTHREADS_DRAFT6
+#endif
 
 // Added for compilation on the m88k
 #if defined (m88k)
