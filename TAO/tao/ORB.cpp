@@ -940,41 +940,18 @@ CORBA_ORB::create_stub_object (const TAO_ObjectKey &key,
 
   TAO_Stub *stub = 0;
 
-  // First we create a profile list, well actually the empty container
-  TAO_MProfile mp (0);
-
   TAO_ORB_Parameters *orb_params =
     this->orb_core_->orb_params ();
 
-  // size_t pfile_count =
-  //     this->orb_core_->acceptor_registry ()->count_profiles ();
-  // {
-  //   int s = 0;
-  //   foreach a in Acceptors s+= a->count_endpoints ();
-  //   return s;
-  // }
-  // TAO_MProfile mp (pfile_count);
-  // this->orb_core_->acceptor_registry ()->fill_mprofile (mp, key);
-  // {
-  //   foreach a in Acceptors a->add_profiles (mp, key);
-  //   {
-  //     foreach e in Endpoints
-  //       mp.give_profile (new Right_Endpoint (e, key));
-  //   }
-  // }
+  size_t pfile_count =
+         this->orb_core_->acceptor_registry ()->endpoint_count ();
 
-  TAO_IIOP_Profile *pfile;
-  ACE_NEW_THROW_EX (pfile,
-                    TAO_IIOP_Profile (orb_params->host (),
-                                      orb_params->addr ().get_port_number (),
-                                      key,
-                                      orb_params->addr ()),
-                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
-                                      CORBA::COMPLETED_MAYBE));
+  // First we create a profile list, well actually the empty container
+  TAO_MProfile mp (pfile_count);
+
+  this->orb_core_->acceptor_registry ()->make_mprofilekey, mp);
+
   ACE_CHECK_RETURN (stub);
-  // we give up the profile to the mp object.  If the mp object is deleted,
-  // the pfile will be taken care of (reference decremented by one!).
-  mp.give_profile (pfile);
 
   ACE_NEW_THROW_EX (stub,
                     TAO_Stub (id, mp, this->orb_core_),
