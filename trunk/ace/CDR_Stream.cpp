@@ -652,7 +652,7 @@ ACE_InputCDR::ACE_InputCDR (const ACE_InputCDR& rhs)
 }
 
 ACE_InputCDR::ACE_InputCDR (ACE_InputCDR::Transfer_Contents x)
-  : start_ (x.rhs_.start_.data_block ()->duplicate ()),
+  : start_ (x.rhs_.start_.data_block ()),
     do_byte_swap_ (x.rhs_.do_byte_swap_),
     good_bit_ (1),
     char_translator_ (x.rhs_.char_translator_),
