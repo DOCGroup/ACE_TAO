@@ -40,11 +40,10 @@ class ACE_Export ACE_FlReactor : public ACE_Select_Reactor
   //
   // = DESCRIPTION
   //   As many other GUI toolkits FL supports a minimal set of
-  //   callbacks to handle event demultiplexing, namely simple methods 
+  //   callbacks to handle event demultiplexing, namely simple methods
   //   to add file descriptors to the event demuxing set or timeout
-  //   events.
-  //   This class adapts this simple mechanisms so they are compatible 
-  //   with ACE's Reactor.
+  //   events.  This class adapts this simple mechanisms so they are
+  //   compatible with ACE's Reactor.
   //   
 
 public:
