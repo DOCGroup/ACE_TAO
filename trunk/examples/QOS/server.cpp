@@ -146,7 +146,7 @@ FillQoSParams (ACE_QoS_Params &qos_params,
 int
 main (int argc, char * argv[])
 {  
-  ACE_Protocol_Info protocol_info;
+  ACE_Protocol_Info protocol_info, *pinfo=0;
 
   OPTIONS options;
 
@@ -157,13 +157,15 @@ main (int argc, char * argv[])
                        "Error in ValidOptions\n"),
                       -1);
  
-  if (FindServiceProvider (options.spOptions.iProtocol,
-                           options.spOptions.bQos,
-                           options.spOptions.bMulticast,
-                           &protocol_info) == FALSE)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Error in FindServiceProvider\n"),
-                      -1);
+  // XX pinfo = &protocol_info;
+  // XX FindServiceProvider is not needed by RSVP
+  // XX if (FindServiceProvider (options.spOptions.iProtocol,
+  // XX                          options.spOptions.bQos,
+  // XX                          options.spOptions.bMulticast,
+  // XX                          pinfo) == FALSE)
+  // XX   ACE_ERROR_RETURN ((LM_ERROR,
+  // XX                      "Error in FindServiceProvider\n"),
+  // XX                     -1);
 	
   ACE_QoS qos;
          
@@ -217,7 +219,11 @@ main (int argc, char * argv[])
   // Ask the factory to create a QoS session. This could be RAPI or
   // GQoS based on the parameter passed.
   ACE_QoS_Session *qos_session = 
-    session_factory.create_session (ACE_QoS_Session_Factory::ACE_GQOS_SESSION);
+    session_factory.create_session (ACE_QoS_Session_Factory::ACE_RAPI_SESSION);
+// XX Shouldn't have to specify GQOS or RAPI?!?
+// XX it is not clear that we need to pass in a key indicating the type
+// XX of object to create.  Since we use RAPI flag at compile time can
+// XX we assume rapi here also?  Or could we have RAPI and GQoS?
 
   // Create a destination address for the QoS session. The same
   // address should be used for the subscribe call later. A copy is
@@ -253,8 +259,9 @@ main (int argc, char * argv[])
                              1,
                              0,
                              AF_INET,
-                             ACE_FROM_PROTOCOL_INFO,
-                             &protocol_info,
+                             // ACE_FROM_PROTOCOL_INFO,
+                             0,
+                             pinfo,
                              0,
                              ACE_OVERLAPPED_SOCKET_FLAG 
                              | ACE_FLAG_MULTIPOINT_C_LEAF 
@@ -693,7 +700,7 @@ ValidOptions (char *argv[],
       pOptions->qosOptions.bFineGrainErrorAvail = TRUE;
       pOptions->qosOptions.bQosabilityIoctls = TRUE;
       ACE_DEBUG ((LM_DEBUG,
-                  "running on NT\n"));
+                  "running on XX\n"));
     }
 
   if (pOptions->nBufSize > 0)
