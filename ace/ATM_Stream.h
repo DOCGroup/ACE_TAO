@@ -17,12 +17,12 @@
 #ifndef ACE_ATM_STREAM_H
 #define ACE_ATM_STREAM_H
 
+#include "ace/ATM_Addr.h"
+#include "ace/ATM_Params.h"
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#include "ace/ATM_Addr.h"
-#include "ace/ATM_Params.h"
 
 #if defined (ACE_HAS_ATM)
 
