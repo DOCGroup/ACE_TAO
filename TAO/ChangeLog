@@ -1,3 +1,13 @@
+Tue Oct  8 11:29:21 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/Log/LogRecordStore.cpp:
+
+	  Removed explicit template instantion for
+	  ACE_Equal_To<DsLogAdmin::RecordId>.  A DsLogAdmin is a 64 bit
+	  unsigned interger.  A template specialization for such an
+	  integer already exists in "ace/Functor.*"  Fixes a compile-time
+	  problem in explicit template instantation builds.
+
 Tue Oct  8 10:05:50 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/Svc_Utils.dsp:
