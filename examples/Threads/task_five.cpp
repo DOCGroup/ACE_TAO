@@ -140,5 +140,5 @@ main (int argc, char *argv[])
       loop_count++;
     }
 
-  return 0;
+  ACE_NOTREACHED (return 0);
 }
