@@ -360,7 +360,7 @@ class TAO_Default_Reactor : public ACE_Reactor
   //
   //   Force TAO to use Select Reactor.
 public:
-  TAO_Default_Reactor (void);
+  TAO_Default_Reactor (int nolock = 0);
   virtual ~TAO_Default_Reactor (void);
 };
 
@@ -378,7 +378,7 @@ class TAO_Export TAO_Resource_Factory : public ACE_Service_Object
 
 public:
   // = Initialization and termination methods.
-  TAO_Resource_Factory (void);
+  TAO_Resource_Factory ();
   virtual ~TAO_Resource_Factory (void);
 
   // = Service Configurator hooks.
@@ -483,6 +483,8 @@ public:
   // created in application space by <CORBA::ORB_init()>, but needs to
   // be available to stubs and generated code.
 
+  virtual int use_lock_freed_reactor (void);
+
   // @@ I suspect that putting these structs inside of this class is
   // going to break some compilers (e.g., HP/YUX) when you try to use
   // this stuff with the ACE_Singletons below.  I suggest you move
@@ -571,6 +573,10 @@ protected:
   // Flag indicating whether the collocation table should be global
   // thread-specific.  It defaults to TAO_GLOBAL if not set
   // specifically.
+
+  int use_lock_freed_reactor_;
+  // Flag indicating wether we should provide a lock-freed reactor
+  // or not.
 
   // = Typedefs for the singleton types used to store our orb core
   // information.
