@@ -1,3 +1,11 @@
+Mon Jul 19 21:38:16 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tests/run_tests.vxworks:
+	  Re-enable the Cached_Conn_Test and Cached_Accept_Conn_Test, it
+	  works on Linux, NT, Solaris, IRIX and HP-UX so we should be
+	  pretty close. Thanks to Irfan for fixing the problems with this
+	  test.
+
 Mon Jul 19 21:26:57 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.{h,i}: reverted sigwait () changes on Digital

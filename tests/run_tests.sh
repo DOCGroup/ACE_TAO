@@ -188,8 +188,8 @@ fi
 test $TOKEN && (test $chorus || test $Unicos || run Tokens_Test) # tests ACE_Token
 
 run Cache_Map_Manager_Test              # tests ACE_Cache_Map_Manager and ACE_Hash_Cache_Manager and caching features.
-#run Cached_Conn_Test                   # tests connection management features (with OneShot Acceptor).
-#run Cached_Accept_Conn_Test            # tests connection management features (with regular Acceptor).
+run Cached_Conn_Test                   # tests connection management features (with OneShot Acceptor).
+run Cached_Accept_Conn_Test            # tests connection management features (with regular Acceptor).
 run Map_Manager_Test                    # tests ACE_Map Manager and ACE_Hash_Map_Manager + Forward and Reverse Map Iterators.
 run Hash_Map_Manager_Test               # tests ACE_Hash_Map_Manager + Forward and Reverse Map Iterators.
 run Hash_Map_Bucket_Iterator_Test       # tests ACE_Hash Map Bucket iterator.
