@@ -229,6 +229,7 @@ Server::parse_args (int argc,char **argv)
           break;
         default:
           ACE_ERROR_RETURN ((LM_ERROR,"Usage: server [-p/-r]"),-1);
+          break;
         }
     }
   ACE_OS::sprintf (buf,"%s -ORBobjrefstyle url",child_name);
