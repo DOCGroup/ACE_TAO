@@ -1,3 +1,14 @@
+Mon Jul  9 15:53:43 2001  Joe Hoffert  <joeh@cs.wustl.edu>
+
+        * tests/Stdio_Test.c: 
+          Added directives to compile test for VxWorks, e.g. calling
+          spa and having it call ace_main (borrowed from ACE_OS).
+
+        * tests/Pthreads_Test.c: 
+        * tests/Makefile: 
+          Added Pthreads_Test to test POSIX threads (at least
+          minimally).
+
 Mon Jul  9 15:39:26 2001  Joe Hoffert  <joeh@cs.wustl.edu>
 
         * pace/vxworks/utsname.h: 
