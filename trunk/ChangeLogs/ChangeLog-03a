@@ -1,3 +1,8 @@
+Tue Apr 24 06:28:00 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/ace_wchar.h: Fixed some code for VxWorks.  Thanks to
+	  Albert Wijnja <Albert.Wijnja@meco.nl> for reporting this.
+
 Sat Apr 14 10:51:39 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * ace/Log_Msg.h:
