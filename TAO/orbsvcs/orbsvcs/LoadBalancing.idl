@@ -254,6 +254,8 @@ module LoadBalancing
     LoadMonitor get_load_monitor (in Location the_location)
       raises (LocationNotFound);
 
+    void remove_load_monitor (in Location the_location)
+      raises (LocationNotFound);
   };
 
   /// It's not clear this interface is needed for the Load Balancer.

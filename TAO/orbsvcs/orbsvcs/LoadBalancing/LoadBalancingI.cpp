@@ -17,7 +17,8 @@ ACE_RCSID (LoadBalancing,
 // Implementation skeleton constructor
 TAO_LoadBalancing_ReplicationManager_i::TAO_LoadBalancing_ReplicationManager_i
 (void)
-  : poa_ (),
+  : orb_ (),
+    poa_ (),
     lock_ (),
     location_map_
     object_group_map_ (),
@@ -98,6 +99,20 @@ TAO_LoadBalancing_ReplicationManager_i::register_load_monitor (
     }
   else
     ACE_THROW (LoadBalancing::MonitorAlreadyPresent ());
+
+
+  // Register the "pull monitoring" event handler only after the first
+  // load monitor is registered.
+  if (this->location_map_.current_size () == 1)
+    {
+      ACE_Time_Value interval (1, 0);
+      ACE_Time_Value restart (1, 0);
+      ACE_Reactor *reactor = this->orb_->orb_core ()->reactor ();
+      (void) reactor->schedule_timer (&this->pull_handler_,
+                                      0,
+                                      interval,
+                                      restart);
+    }
 }
 
 LoadBalancing::LoadMonitor_ptr
@@ -119,6 +134,30 @@ TAO_LoadBalancing_ReplicationManager_i::get_load_monitor (
 
   ACE_THROW_RETURN (LoadBalancing::LocationNotFound (),
                     LoadBalancing::LoadMonitor::_nil ());
+}
+
+void
+TAO_LoadBalancing_ReplicationManager_i::remove_load_monitor (
+    const LoadBalancing::Location &the_location,
+    CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   LoadBalancing::LocationNotFound))
+{
+  TAO_LB_Location_Map_Entry *location_entry = 0;
+
+  if (this->location_map_.find (the_location,
+                                location_entry) != 0)
+    ACE_THROW (LoadBalancing::LocationNotFound);
+
+  (void) location_entry->load_monitor.out ();
+
+  // If no load monitors are registered with the load balancer than
+  // shutdown the "pull monitoring."
+//   if (this->location_map_.current_size () == 0)
+//     {
+//       ACE_Reactor *reactor = this->orb_->orb_core ()->reactor ();
+//       (void) reactor->cancel_timer (&this->pull_handler_);
+//     }
 }
 
 void
@@ -346,11 +385,15 @@ TAO_LoadBalancing_ReplicationManager_i::create_object (
                    LoadBalancing::InvalidProperty,
                    LoadBalancing::CannotMeetCriteria))
 {
-  return
+  CORBA::Object_ptr obj =
     this->generic_factory_.create_object (type_id,
                                           the_criteria,
                                           factory_creation_id,
                                           ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CORBA::Object::_nil ());
+
+
+  return obj;
 }
 
 #if 0
@@ -436,6 +479,7 @@ TAO_LoadBalancing_ReplicationManager_i::replica (
 
 void
 TAO_LoadBalancing_ReplicationManager_i::init (
+  CORBA::ORB_ptr orb,
   PortableServer::POA_ptr root_poa,
   CORBA::Environment &ACE_TRY_ENV)
 {
@@ -512,6 +556,8 @@ TAO_LoadBalancing_ReplicationManager_i::init (
 
       this->object_group_map_.poa (this->poa_.in ());
       this->generic_factory_.poa (this->poa_.in ());
+
+      this->orb_ = CORBA::ORB::_duplicate (orb);
 //     }
 //   ACE_CATCHANY
 //     {
