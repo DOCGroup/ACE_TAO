@@ -433,6 +433,7 @@ fill_receptacles (const char* type,
 
       // Register it with the POA.
       offer_itr = oi->_this (env);
+      oi->_remove_ref (env);
       TAO_CHECK_ENV_RETURN (env, total_offers - offers_in_iterator);
 
       // Add to the iterator
@@ -689,6 +690,7 @@ federated_query (const CosTrading::LinkNameSeq& links,
 
   // Return the collection of offer iterators.
   offer_iter = offer_iter_collection->_this (TAO_IN_ENV);
+  offer_iter_collection->_remove_ref (TAO_IN_ENV);
 }
 
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
@@ -972,8 +974,9 @@ _cxx_export (CORBA::Object_ptr reference,
 
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 void
-TAO_Register<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::withdraw (const char *id,
-                                CORBA::Environment& TAO_IN_ENV)
+TAO_Register<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
+withdraw (const char *id,
+          CORBA::Environment& TAO_IN_ENV)
   TAO_THROW_SPEC ((CORBA::SystemException,
                    CosTrading::IllegalOfferId,
                    CosTrading::UnknownOfferId,
@@ -1282,14 +1285,47 @@ TAO_Admin (TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader)
   // trader, making it extremely unlikely that the sequence spaces for
   // two traders will over lap.
   // @@ TODO: This is a bad way to generate pseudo random numbers.
-  size_t time_value = ACE_OS::time ();
-  ACE_RANDR_TYPE seed = ACE_static_cast(ACE_RANDR_TYPE, time_value);
 
-  this->stem_id_.length (8);
-  this->stem_id_[0] = ACE_static_cast (CORBA::Octet, ACE_OS::rand_r (seed) %  256);
-  this->stem_id_[1] = ACE_static_cast (CORBA::Octet, ACE_OS::rand_r (seed) %  256);
-  this->stem_id_[2] = ACE_static_cast (CORBA::Octet, ACE_OS::rand_r (seed) %  256);
-  this->stem_id_[3] = ACE_static_cast (CORBA::Octet, ACE_OS::rand_r (seed) %  256);
+  // Ok, then, Carlos, we'll do it a different way: ip addr + pid.
+  ACE_UINT32 ip_addr = 0;
+  ASYS_TCHAR host_name[BUFSIZ];
+  
+  if (ACE_OS::hostname (host_name, BUFSIZ) != -1)
+    {
+      ACE_INET_Addr addr ((u_short) 0, host_name);
+      ip_addr = addr.get_ip_address ();
+    }
+  // The better way to do unique stem identifiers.
+  this->stem_id_.length (12);
+
+  if (ip_addr != 0)
+    {
+      pid_t pid = ACE_OS::getpid ();
+      this->stem_id_[0] = ACE_static_cast (CORBA::Octet, (ip_addr >> 24) & 0xff);
+      this->stem_id_[1] = ACE_static_cast (CORBA::Octet, (ip_addr >> 16) & 0xff);
+      this->stem_id_[2] = ACE_static_cast (CORBA::Octet, (ip_addr >> 8) & 0xff);
+      this->stem_id_[3] = ACE_static_cast (CORBA::Octet, ip_addr & 0xff);
+      this->stem_id_[4] = ACE_static_cast (CORBA::Octet, (pid >> 24) & 0xff);
+      this->stem_id_[5] = ACE_static_cast (CORBA::Octet, (pid >> 16) & 0xff);
+      this->stem_id_[6] = ACE_static_cast (CORBA::Octet, (pid >> 8) & 0xff);
+      this->stem_id_[7] = ACE_static_cast (CORBA::Octet, pid & 0xff);
+    }
+
+  // The default way -- eight random integers.
+  else
+    {
+      size_t time_value = ACE_OS::time ();
+      ACE_OS::srand (ACE_static_cast (u_int, time_value));
+      
+      this->stem_id_[0] = ACE_static_cast (CORBA::Octet, ACE_OS::rand () %  256);
+      this->stem_id_[1] = ACE_static_cast (CORBA::Octet, ACE_OS::rand () %  256);
+      this->stem_id_[2] = ACE_static_cast (CORBA::Octet, ACE_OS::rand () %  256);
+      this->stem_id_[3] = ACE_static_cast (CORBA::Octet, ACE_OS::rand () %  256);
+      this->stem_id_[4] = ACE_static_cast (CORBA::Octet, ACE_OS::rand () %  256);
+      this->stem_id_[5] = ACE_static_cast (CORBA::Octet, ACE_OS::rand () %  256);
+      this->stem_id_[6] = ACE_static_cast (CORBA::Octet, ACE_OS::rand () %  256);
+      this->stem_id_[7] = ACE_static_cast (CORBA::Octet, ACE_OS::rand () %  256);
+    }
 }
 
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
@@ -1308,10 +1344,10 @@ TAO_Admin<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::request_id_stem (CORBA::Environment& 
   // prefix. The sequence number is four octets long, the unique
   // prefix, also 4 bytes long.
 
-  this->stem_id_[4] = this->sequence_number_ & 0xff;
-  this->stem_id_[5] = (this->sequence_number_ >> 8) & 0xff;
-  this->stem_id_[6] = (this->sequence_number_ >> 16) & 0xff;
-  this->stem_id_[7] = (this->sequence_number_ >> 24) & 0xff;
+  this->stem_id_[8] = this->sequence_number_ & 0xff;
+  this->stem_id_[9] = (this->sequence_number_ >> 8) & 0xff;
+  this->stem_id_[10] = (this->sequence_number_ >> 16) & 0xff;
+  this->stem_id_[11] = (this->sequence_number_ >> 24) & 0xff;
 
   // Increment the sequence number and return a copy of the stem_id.
   this->sequence_number_++;
@@ -1576,6 +1612,7 @@ list_offers (CORBA::ULong how_many,
       if (offer_id_iter->next_n (how_many, ids, TAO_IN_ENV) == 1)
         {
           id_itr = offer_id_iter->_this (TAO_IN_ENV);
+          offer_id_iter->_remove_ref (TAO_IN_ENV);
           TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
         }
       else
