@@ -14,24 +14,24 @@
 
 ///////////////////////////////////////////////////////////////
 
-ACE_Section_Key_Internal::ACE_Section_Key_Internal ()
-: ref_count_ (0)
+ACE_Section_Key_Internal::ACE_Section_Key_Internal (void)
+  : ref_count_ (0)
 {
 }
 
-ACE_Section_Key_Internal::~ACE_Section_Key_Internal ()
+ACE_Section_Key_Internal::~ACE_Section_Key_Internal (void)
 {
 }
 
 int 
-ACE_Section_Key_Internal::add_ref ()
+ACE_Section_Key_Internal::add_ref (void)
 { 
   ++ref_count_;
   return 0;
 }
 
 int 
-ACE_Section_Key_Internal::dec_ref ()
+ACE_Section_Key_Internal::dec_ref (void)
 { 
   if (!--ref_count_)
     delete this;
@@ -40,26 +40,26 @@ ACE_Section_Key_Internal::dec_ref ()
 
 ///////////////////////////////////////////////////////////////
 
-ACE_Configuration_Section_Key::ACE_Configuration_Section_Key ()
-: key_ (0)
+ACE_Configuration_Section_Key::ACE_Configuration_Section_Key (void)
+  : key_ (0)
 {
 }
 
-ACE_Configuration_Section_Key::~ACE_Configuration_Section_Key ()
+ACE_Configuration_Section_Key::~ACE_Configuration_Section_Key (void)
 {
   if (key_)
     key_->dec_ref ();
 }
 
 ACE_Configuration_Section_Key::ACE_Configuration_Section_Key (ACE_Section_Key_Internal* key)
-: key_ (key)
+  : key_ (key)
 {
   if (key_)
     key_->add_ref ();
 }
 
 ACE_Configuration_Section_Key::ACE_Configuration_Section_Key (const ACE_Configuration_Section_Key& rhs)
-: key_ (rhs.key_)
+  : key_ (rhs.key_)
 {
   if (key_)
     key_->add_ref ();
@@ -83,11 +83,12 @@ ACE_Configuration_Section_Key::operator= (const ACE_Configuration_Section_Key& r
 
 //////////////////////////////////////////////////////////////////////////////
 
-ACE_Configuration::ACE_Configuration ()
+ACE_Configuration::ACE_Configuration (void)
+  : root_ ()
 {
 }
 
-ACE_Configuration::~ACE_Configuration ()
+ACE_Configuration::~ACE_Configuration (void)
 {
 }
 
@@ -114,8 +115,7 @@ ACE_Configuration::expand_path (const ACE_Configuration_Section_Key& key,
     {
       // Detmine the begin/ending of the key name
       end = ACE_OS::strchr (begin, '\\');
-      size_t length = end ? (size_t)(end-begin) : 
-                            ACE_OS::strlen (begin);
+      size_t length = end ? (size_t)(end-begin) : ACE_OS::strlen (begin);
     
       // Make sure length is not 0
       if (!length)
@@ -257,7 +257,7 @@ ACE_Configuration::export_section (const ACE_Configuration_Section_Key& section,
 }
 
 int 
-ACE_Configuration::export (const ASYS_TCHAR* filename)
+ACE_Configuration::_export (const ASYS_TCHAR* filename)
 {
   FILE* out = ACE_OS::fopen (filename, "w");
   if (!out)
@@ -269,7 +269,7 @@ ACE_Configuration::export (const ASYS_TCHAR* filename)
 }
 
 int 
-ACE_Configuration::import (const ASYS_TCHAR* filename)
+ACE_Configuration::_import (const ASYS_TCHAR* filename)
 {
   FILE* in = ACE_OS::fopen (filename, "r");
   if (!in)
@@ -325,14 +325,14 @@ ACE_Configuration::import (const ASYS_TCHAR* filename)
         }
     }
 
-  if (ferror (in))
+  if (::ferror (in))
     return -1;
 
   return 0;
 }
 
 const ACE_Configuration_Section_Key& 
-ACE_Configuration::root_section ()
+ACE_Configuration::root_section (void)
 {
   return root_;
 }
@@ -342,12 +342,12 @@ ACE_Configuration::root_section ()
 #if defined (WIN32)
 
 ACE_Section_Key_Win32::ACE_Section_Key_Win32 (HKEY hKey)
-: hKey_ (hKey)
+  : hKey_ (hKey)
 {
   add_ref ();
 }
 
-ACE_Section_Key_Win32::~ACE_Section_Key_Win32 ()
+ACE_Section_Key_Win32::~ACE_Section_Key_Win32 (void)
 {
   ::RegCloseKey (hKey_);
 }
@@ -364,7 +364,7 @@ ACE_Configuration_Win32Registry::ACE_Configuration_Win32Registry (HKEY hKey)
 }
 
 
-ACE_Configuration_Win32Registry::~ACE_Configuration_Win32Registry ()
+ACE_Configuration_Win32Registry::~ACE_Configuration_Win32Registry (void)
 {
 }
 
@@ -687,7 +687,7 @@ ACE_Configuration_Win32Registry::get_binary_value (const ACE_Configuration_Secti
   char* new_data;
   ACE_NEW_RETURN (new_data, char[length], -4);
 
-  memcpy (new_data, buffer, length);
+  ACE_OS::memcpy (new_data, buffer, length);
   data = new_data;
   return 0;
 }
@@ -741,8 +741,7 @@ ACE_Configuration_Win32Registry::resolve_key (HKEY hKey,
     {
       // Detmine the begin/ending of the key name
       end = ACE_OS::strchr (begin, '\\');
-      size_t length = end ? (size_t)(end-begin) : 
-                            ACE_OS::strlen (begin);
+      size_t length = end ? (size_t)(end-begin) : ACE_OS::strlen (begin);
     
       // Make sure length is not 0
       if (!length)
@@ -795,27 +794,37 @@ ACE_Configuration_Win32Registry::resolve_key (HKEY hKey,
 ///////////////////////////////////////////////////////////////
 
 ACE_Configuration_Value_IntId::ACE_Configuration_Value_IntId (void)
-: type_ (ACE_Configuration::INVALID), data_ (0), length_ (0)
+  : type_ (ACE_Configuration::INVALID),
+    data_ (0),
+    length_ (0)
 {
 }
 
 ACE_Configuration_Value_IntId::ACE_Configuration_Value_IntId (ASYS_TCHAR* string)
-: type_ (ACE_Configuration::STRING), data_ (string), length_ (0)
+  : type_ (ACE_Configuration::STRING),
+    data_ (string),
+    length_ (0)
 {
 }
 
 ACE_Configuration_Value_IntId::ACE_Configuration_Value_IntId (unsigned int integer)
-: type_ (ACE_Configuration::INTEGER), data_ ( (void*)integer), length_ (0)
+  : type_ (ACE_Configuration::INTEGER),
+    data_ ((void*) integer),
+    length_ (0)
 {
 }
 
 ACE_Configuration_Value_IntId::ACE_Configuration_Value_IntId (void* data, unsigned int length)
-: type_ (ACE_Configuration::BINARY), data_ (data), length_ (length)
+  : type_ (ACE_Configuration::BINARY),
+    data_ (data),
+    length_ (length)
 {
 }
 
 ACE_Configuration_Value_IntId::ACE_Configuration_Value_IntId (const ACE_Configuration_Value_IntId& rhs)
-: type_ (rhs.type_), data_ (rhs.data_), length_ (rhs.length_)
+  : type_ (rhs.type_),
+    data_ (rhs.data_),
+    length_ (rhs.length_)
 {
 }
 
@@ -856,17 +865,17 @@ ACE_Configuration_Value_IntId::free (ACE_Allocator* allocator)
 /////////////////////////////////////////////////////////////////////////////
 
 ACE_Configuration_ExtId::ACE_Configuration_ExtId (void)
-: name_ (0)
+  : name_ (0)
 {
 }
 
 ACE_Configuration_ExtId::ACE_Configuration_ExtId (const ASYS_TCHAR* name)
-: name_ (name)
+  : name_ (name)
 {
 }
 
 ACE_Configuration_ExtId::ACE_Configuration_ExtId (const ACE_Configuration_ExtId& rhs)
-: name_ (rhs.name_)
+  : name_ (rhs.name_)
 {
 }
 
@@ -916,17 +925,20 @@ ACE_Configuration_ExtId::free (ACE_Allocator* allocator)
 ///////////////////////////////////////////////////////////////////////
 
 ACE_Configuration_Section_IntId::ACE_Configuration_Section_IntId (void)
-: value_hash_map_ (0), section_hash_map_ (0)
+  : value_hash_map_ (0),
+    section_hash_map_ (0)
 {
 }
 
 ACE_Configuration_Section_IntId::ACE_Configuration_Section_IntId (VALUE_MAP* value_hash_map, SUBSECTION_MAP* section_hash_map)
-: value_hash_map_ (value_hash_map), section_hash_map_ (section_hash_map)
+  : value_hash_map_ (value_hash_map),
+    section_hash_map_ (section_hash_map)
 {
 }
 
 ACE_Configuration_Section_IntId::ACE_Configuration_Section_IntId (const ACE_Configuration_Section_IntId& rhs)
-: value_hash_map_ (rhs.value_hash_map_), section_hash_map_ (rhs.section_hash_map_)
+  : value_hash_map_ (rhs.value_hash_map_),
+    section_hash_map_ (rhs.section_hash_map_)
 {
 
 }
@@ -935,7 +947,8 @@ ACE_Configuration_Section_IntId::~ACE_Configuration_Section_IntId ()
 {
 }
 
-ACE_Configuration_Section_IntId& ACE_Configuration_Section_IntId::operator= (const ACE_Configuration_Section_IntId& rhs)
+ACE_Configuration_Section_IntId&
+ACE_Configuration_Section_IntId::operator= (const ACE_Configuration_Section_IntId& rhs)
 {
   if (this != &rhs)
     {
@@ -945,14 +958,17 @@ ACE_Configuration_Section_IntId& ACE_Configuration_Section_IntId::operator= (con
   return *this;
 }
 
-void ACE_Configuration_Section_IntId::free (ACE_Allocator* allocator)
+void
+ACE_Configuration_Section_IntId::free (ACE_Allocator* allocator)
 {
   allocator->free ((void *)(value_hash_map_));
   allocator->free ((void *)(section_hash_map_));
 }
 
 ACE_Configuration_Section_Key_Heap::ACE_Configuration_Section_Key_Heap (const ASYS_TCHAR* path)
-: value_iter_ (0), section_iter_ (0)
+  : path_ (0),
+    value_iter_ (0),
+    section_iter_ (0)
 {
   path_ = ACE_OS::strdup (path);
 }
@@ -961,14 +977,17 @@ ACE_Configuration_Section_Key_Heap::~ACE_Configuration_Section_Key_Heap ()
 {
   delete value_iter_;
   delete section_iter_;
-  delete path_;
+  ACE_OS::free (path_);
 }
 
 //////////////////////////////////////////////////////////////////////////////
 
 ACE_Configuration_Heap::ACE_Configuration_Heap (void)
+  : allocator_ (0),
+    index_ (0),
+    default_map_size_ (0)
 {
-  ACE_Configuration_Section_Key_Heap *temp;
+  ACE_Configuration_Section_Key_Heap *temp = 0;
 
   ACE_NEW (temp, ACE_Configuration_Section_Key_Heap (ACE_TEXT ("")));
   root_ = ACE_Configuration_Section_Key (temp);
@@ -1040,7 +1059,7 @@ ACE_Configuration_Heap::open (const ASYS_TCHAR* file_name,
 }
 
 int 
-ACE_Configuration_Heap::create_index ()
+ACE_Configuration_Heap::create_index (void)
 {
   void *section_index = 0;
 
@@ -1399,8 +1418,9 @@ ACE_Configuration_Heap::enumerate_values (const ACE_Configuration_Section_Key& k
   if (index == 0)
     {
       ACE_Hash_Map_Manager_Ex<ACE_Configuration_ExtId , ACE_Configuration_Value_IntId, ACE_Hash<ACE_Configuration_ExtId>, ACE_Equal_To<ACE_Configuration_ExtId>, ACE_Null_Mutex>* hash_map = IntId.value_hash_map_;
-      if (pKey->value_iter_)
-        delete pKey->value_iter_;
+      // @@ This zero pointer check is redundant  -Ossama
+      // if (pKey->value_iter_)
+      delete pKey->value_iter_;
 
       ACE_NEW_RETURN (pKey->value_iter_, VALUE_HASH::ITERATOR(hash_map->begin()), -3);
     }
@@ -1749,11 +1769,9 @@ template class ACE_Hash_Map_With_Allocator<ACE_Configuration_ExtId, int>;
 template class ACE_Hash_Map_Manager_Ex<ACE_Configuration_ExtId, int, ACE_Hash<ACE_Configuration_ExtId>, ACE_Equal_To<ACE_Configuration_ExtId>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Manager_Ex<ACE_Configuration_ExtId, ACE_Configuration_Section_IntId, ACE_Hash<ACE_Configuration_ExtId>, ACE_Equal_To<ACE_Configuration_ExtId>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Manager_Ex<ACE_Configuration_ExtId, ACE_Configuration_Value_IntId, ACE_Hash<ACE_Configuration_ExtId>, ACE_Equal_To<ACE_Configuration_ExtId>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Manager_Ex<ACE_Configuration_ExtId, ACE_Configuration_Section_IntId, ACE_Hash<ACE_Configuration_ExtId>, ACE_Equal_To<ACE_Configuration_ExtId>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator_Base_Ex<ACE_Configuration_ExtId, int, ACE_Hash<ACE_Configuration_ExtId>, ACE_Equal_To<ACE_Configuration_ExtId>, ACE_Null_Mutex>;
 template class ACE_Allocator_Adapter<ACE_Malloc<ACE_MMAP_Memory_Pool, ACE_Thread_Mutex> >;
 template class ACE_Hash_Map_With_Allocator<ACE_Configuration_ExtId, ACE_Configuration_Section_IntId>;
-template class ACE_Hash_Map_Manager_Ex<ACE_Configuration_ExtId, int, ACE_Hash<ACE_Configuration_ExtId>, ACE_Equal_To<ACE_Configuration_ExtId>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_With_Allocator<ACE_Configuration_ExtId, ACE_Configuration_Value_IntId>;
 template class ACE_Hash_Map_Iterator_Base_Ex<ACE_Configuration_ExtId, ACE_Configuration_Value_IntId, ACE_Hash<ACE_Configuration_ExtId>, ACE_Equal_To<ACE_Configuration_ExtId>, ACE_Null_Mutex>;
 template class ACE_Malloc<ACE_MMAP_Memory_Pool, ACE_Thread_Mutex>;
@@ -1764,7 +1782,6 @@ template class ACE_Malloc<ACE_MMAP_Memory_Pool, ACE_Thread_Mutex>;
 #pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_Configuration_ExtId, int, ACE_Hash<ACE_Configuration_ExtId>, ACE_Equal_To<ACE_Configuration_ExtId>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_Configuration_ExtId, ACE_Configuration_Section_IntId, ACE_Hash<ACE_Configuration_ExtId>, ACE_Equal_To<ACE_Configuration_ExtId>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_Configuration_ExtId, ACE_Configuration_Value_IntId, ACE_Hash<ACE_Configuration_ExtId>, ACE_Equal_To<ACE_Configuration_ExtId>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_Configuration_ExtId, ACE_Configuration_Section_IntId, ACE_Hash<ACE_Configuration_ExtId>, ACE_Equal_To<ACE_Configuration_ExtId>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_Configuration_ExtId, int, ACE_Hash<ACE_Configuration_ExtId>, ACE_Equal_To<ACE_Configuration_ExtId>, ACE_Null_Mutex>
 #pragma instantiate ACE_Allocator_Adapter<ACE_Malloc<ACE_MMAP_Memory_Pool, ACE_Thread_Mutex> >
 #pragma instantiate ACE_Hash_Map_With_Allocator<ACE_Configuration_ExtId, ACE_Configuration_Section_IntId>
