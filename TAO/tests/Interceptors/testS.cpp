@@ -8,7 +8,7 @@
 //                 http://www.cs.wustl.edu/~schmidt/TAO.html
 
 #include "testS.h"
-#include "Request_Info.h"
+
 #if !defined (__ACE_INLINE__)
 #include "testS.i"
 #endif /* !defined INLINE */
