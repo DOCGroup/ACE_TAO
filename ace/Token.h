@@ -72,7 +72,8 @@ public:
   // Return values: 
   // 0 if acquires without calling <sleep_hook>
   // 1 if <sleep_hook> is called.
-  // -1 if failure or timeout occurs (if timeout occurs errno == ETIME) 
+  // 2 if the token is signaled.
+  // -1 if failure or timeout occurs (if timeout occurs errno == ETIME)
   // If <timeout> == <&ACE_Time_Value::zero> then acquire has polling
   // semantics (and does *not* call <sleep_hook>).
 
@@ -145,6 +146,17 @@ public:
 
   ACE_thread_t current_owner (void);
   // Return the id of the current thread that owns the token.
+
+  int signal_all_threads ();
+  // Force all threads waiting to acquire the token to return one by
+  // one.  The method sets the <signal_all_thread_> to non-zero if
+  // there're threads waiting, and returns the number of threads
+  // waiting.  If there's no thread waiting for the token, the call
+  // returns 0 and doesn't do anything.  The last thread releases the
+  // token also reset the <singal_all_thread_> flag to 0.  This means,
+  // any threads that try to acquire the token after the call is
+  // issued will also get "signaled" and the number of threads waiting
+  // the token is only a snapshot.
 
   void dump (void) const;
   // Dump the state of an object.
@@ -231,6 +243,9 @@ private:
 
   int nesting_level_;
   // Current nesting level.
+
+  int signal_all_threads_;
+  // Whether we are "signaling" all threads or not.
 };
 
 #if defined (__ACE_INLINE__)
