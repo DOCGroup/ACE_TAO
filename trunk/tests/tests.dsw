@@ -339,6 +339,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "New_Fail_Test"=".\New_Fail_Test.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Notify_Performance_Test"=".\Notify_Performance_Test.dsp" - Package Owner=<4>
 
 Package=<5>
