@@ -55,7 +55,7 @@ pace_cfsetispeed (pace_termios *termios_p, pace_speed_t speed)
 #if (PACE_HAS_POSIX_DS_UOF)
 PACE_INLINE
 int
-pace_tcdrain (int fildes)
+pace_tcdrain (PACE_HANDLE fildes)
 {
   return tcdrain (fildes);
 }
@@ -64,7 +64,7 @@ pace_tcdrain (int fildes)
 #if (PACE_HAS_POSIX_DS_UOF)
 PACE_INLINE
 int
-pace_tcgetattr (int fildes, pace_termios *termios_p)
+pace_tcgetattr (PACE_HANDLE fildes, pace_termios *termios_p)
 {
   return tcgetattr (fildes, termios_p);
 }
@@ -73,7 +73,7 @@ pace_tcgetattr (int fildes, pace_termios *termios_p)
 #if (PACE_HAS_POSIX_DS_UOF)
 PACE_INLINE
 int
-pace_tcflow (int fildes, int action)
+pace_tcflow (PACE_HANDLE fildes, int action)
 {
   return tcflow (fildes, action);
 }
@@ -82,7 +82,7 @@ pace_tcflow (int fildes, int action)
 #if (PACE_HAS_POSIX_DS_UOF)
 PACE_INLINE
 int
-pace_tcflush (int fildes, int queue_selector)
+pace_tcflush (PACE_HANDLE fildes, int queue_selector)
 {
   return tcflush (fildes, queue_selector);
 }
@@ -91,7 +91,7 @@ pace_tcflush (int fildes, int queue_selector)
 #if (PACE_HAS_POSIX_DS_UOF)
 PACE_INLINE
 int
-pace_tcsendbreak (int fildes, int duration)
+pace_tcsendbreak (PACE_HANDLE fildes, int duration)
 {
   return tcsendbreak (fildes, duration);
 }
@@ -100,7 +100,7 @@ pace_tcsendbreak (int fildes, int duration)
 #if (PACE_HAS_POSIX_DS_UOF)
 PACE_INLINE
 int
-pace_tcsetattr (int fildes,
+pace_tcsetattr (PACE_HANDLE fildes,
                 int optional_actions,
                 const pace_termios *termios_p)
 {
