@@ -1,3 +1,226 @@
+Sun Jun 30 22:22:05 2002  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/RTCORBA/RT_Invocation_Endpoint_Selectors: 
+	* tao/RTCORBA/RT_Endpoint_Selector_Factory:
+
+	  The RT endpoint and profile selection in TAO was broken.  There
+	  were serveral classes intended for this task such as
+	  TAO_Priority_Endpoint_Selector, TAO_Bands_Endpoint_Selector,
+	  TAO_Protocol_Endpoint_Selector, TAO_Priority_Protocol_Selector,
+	  TAO_Bands_Protocol_Selector, and
+	  TAO_RT_Default_Endpoint_Selector.  However, these class really
+	  did not simultaneously cover the spectrum of policy choices for
+	  RT invocations. Therefore, replaced the above classes with the
+	  new class TAO_RT_Invocation_Endpoint_Selector.
+
+	  - RT_Endpoint_Selector_Factory::get_selector became super simple
+	  since always the same TAO_RT_Invocation_Endpoint_Selector class
+	  is being returned.
+
+	  - RT_Endpoint_Selector_Factory::init_client_protocol removed
+	  since it was empty and was not being called.
+
+	  - The new profile and endpoint selection criteria works as
+	  follows:
+
+	  We first check for client protocol policies. If there aren't
+	  any, we delegate to the TAO_Default_Endpoint_Selector.  If
+	  client protocol policies are set, we cycle through all profiles
+	  to find a protocol match in the policy.  Even though cycling
+	  through all the protocols is the correct things to do to find a
+	  match, starting from the start of the profile list is not.  In
+	  addition, this code is also ignoring the forwarded reference (if
+	  it exists).  This behavior is caused by problems with the
+	  profile management in TAO which are documented in bugzilla bugs
+	  1237, 1238, and 1239.  Once the above problems are fixed, this
+	  behavior should be fixed to do the right thing.
+
+	  We then check if all endpoints are valid or we need to match the
+	  priority of the client thread or we need to match the priority
+	  of the band or if the profile contains just one endpoint.  All
+	  endpoints are valid if the priority model policy is server
+	  declared or if no priority model policy (and no bands policy) is
+	  specified. One endpoint occurs when (a) we are talking to a
+	  nonTAO server (which doesn't have the concept of multiple
+	  endpoints per profile) or (b) we have TAO server with a non-lane
+	  threadpool, in which case there is only one acceptor. In both
+	  cases we should use the endpoint regardless of its priority.
+	  
+	  Finally, we check for the private connection policy.
+
+	  A new test tests/RTCORBA/Profile_And_Endpoint_Selection
+	  described below is added to make sure that all the RT invocation
+	  policy combinations are being correctly honored.
+	
+	* tao/IIOP_Endpoint:
+	* tao/Strategies/DIOP_Endpoint:
+	* tao/Strategies/SHMIOP_Endpoint:	
+
+	  Fixed a very subtle race condition caused by changes from:
+
+	  Wed Jun 12 13:24:11 2002  Carlos O'Ryan  <coryan@atdesk.com>
+
+	  The changes assumed that the <object_addr_> was set if its type
+	  has been set to <AF_INET>.  However, on closer inspection,
+	  INET_Addr::set() is not atomic and the family type is set before
+	  the rest of the fields are set.  Therefore, a very subtle and
+	  difficult to replicate race condition existed where one thread
+	  would think that the address has been set when it was still in
+	  the process of being set by another thread. This bug would
+	  manifest itself in one of the client threads failing to connect
+	  to server.
+
+	  The solution was to separate out the indication of the address
+	  being set into a new <object_addr_set_> flag.  The code that
+	  depended on the address type being set was replaced to check for
+	  this flag.
+
+	* tao: Added a new ORB option -ORBSingleReadOptimization.  This
+	  option controls single read optimzations when reading requests.
+	  If this option is off, the ORB will do two reads to read a
+	  request.  One to read the request header and the other to read
+	  the request payload.  If this option is on, the ORB will do a
+	  read of size <TAO_MAXBUFSIZE>, hoping to read the entire
+	  request.  However, in this case, there is a chance of reading
+	  more than one request.  If any additional requests have been
+	  read, they are queued up for processing later.
+
+          This option defaults to 1 because it can provide better
+	  performance since one less read is performed.  However, in the
+	  case of RT-CORBA, this option should be set to 0.  Consider the
+	  following scenario: two requests are read from one socket; the
+	  additional request is queued; a Reactor notify is dispatch to
+	  awake a follower threads; at this time, new requests arrive on
+	  others sockets of higher priority; however, since notifies are
+	  given preferences over normal I/O, the lower priority queued
+	  message will be processed before the newly arrived higher
+	  priority request.
+
+	  The following files were changed:
+	  
+	  - tao/Transport.cpp (handle_input_i): Check if the single read
+	  optimization option is on. If so continue with existing behavior
+	  of read upto the size of <TAO_MAXBUFSIZE>.  If not, read only
+	  upto the header length specified by the messaging object.
+
+	  - tao/Pluggable_Messaging.h:
+	  - tao/GIOP_Message_Base.h:
+	  - tao/GIOP_Message_Base.cpp:
+	  - tao/GIOP_Message_Lite.h:
+	  - tao/GIOP_Message_Lite.cpp:
+
+	    Added new header_length() method to get the header length used
+	    by the messaging layer.
+
+	  - tao/ORB_Core.cpp: Added parsing of new option.
+
+	  - tao/params.*: Added new option.
+	
+	  - docs/Options.html: Added documentation on new option.
+
+	* tao/Invocation_Endpoint_Selectors (next): Removed this method
+	  since it had been deprecated and was no longer being used.
+	  Also, made endpoint_from_profile() virtual so that the RT
+	  selector class can override it.
+
+	* tao/Default_Endpoint_Selector_Factory.cpp: Format fix.
+
+        * tao/Protocols_Hooks.h:
+        * tao/Default_Protocols_Hooks.cpp:
+        * tao/Default_Protocols_Hooks.h:
+        * tao/RTCORBA/RT_Protocols_Hooks.cpp:
+        * tao/RTCORBA/RT_Protocols_Hooks.h:
+
+	  get_selector_bands_policy_hook() was unnecessarily passing the
+	  <priority> by reference.  Changed it to pass by value since it
+	  is an "in" parameter.
+
+	* tests/RTCORBA/Profile_And_Endpoint_Selection: This new test
+	  exercises the profile and endpoint selection of the ORB.
+
+	  Server: The server creates a servant in a regular POA and
+	  another in an RT-POA. The RT-POA can be configured in serveral
+	  ways as detailed below.
+
+	  Client: The client does the following:
+	  
+	  - vanilla invocations 
+	  - sets private connection
+	  - vanilla invocations 
+	  - reset
+
+	  - sets client protocols
+	  - vanilla invocations 
+	  - sets private connection
+	  - vanilla invocations 
+	  - reset
+	  
+	  - set bands
+	  - priority invocations
+	  - sets private connection
+	  - priority invocations 
+	  - reset
+
+	  - set bands
+	  - sets client protocols
+	  - priority invocations 
+	  - sets private connection
+	  - priority invocations 
+	  - reset
+
+	  Client: The client starts off by making vanilla invocations on
+	  the server. It then sets client protocols policies and repeats
+	  the invocations.  After this, the client protocols policies are
+	  reset.  Then the priority bands are set and priority based
+	  invocations are made. Then the client protocols policies are
+	  reset and the priority based invocations are repeated.  Finally,
+	  the client protocols policies are reset.
+
+	  This test can be configured in several ways (72 to be precise)
+	  as documented in the README file.  
+
+	  The following files were added:
+
+	  - Makefile
+	  - Makefile.bor
+	  - Profile_And_Endpoint_Selection.dsw
+	  - README
+	  - bands
+	  - client.bor
+	  - client.cpp
+	  - client.dsp
+	  - empty_file
+	  - iiop
+	  - iiop_shmiop
+	  - invocation_priorities
+	  - lanes
+	  - run_test.pl
+	  - server.bor
+	  - server.cpp
+	  - server.dsp
+	  - shmiop
+	  - shmiop_iiop
+	  - svc.conf
+	  - test.idl
+
+	  The following files were updated:
+
+	  - tests/RTCORBA/Makefile
+	  - tests/RTCORBA/Makefile.bor
+	  - tests/RTCORBA/RTCORBA_tests.dsw
+	  - $ACE_ROOT/bin/auto_run_tests.lst
+	
+	* tests/RTCORBA/common_args.cpp: New files replaces
+	  tests/RTCORBA/Linear_Priority/readers.cpp since it had reusable
+	  code that is now also used by the Profile_And_Endpoint_Selection
+	  test.
+
+	* tests/RTCORBA/Linear_Priority/client.cpp: 
+	* tests/RTCORBA/Linear_Priority/server.cpp:  
+
+	  Updated to use the new tests/RTCORBA/common_args.cpp parsing
+	  code.
+	
 Mon Jul  8 16:27:22 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/TAO_IDL_FE_DLL.dsp:
