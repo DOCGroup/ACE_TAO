@@ -137,36 +137,6 @@ module Messaging
   local interface QueueOrderPolicy : CORBA::Policy {
     readonly attribute Ordering allowed_orders;
   };
-
-#if 0
-  //
-  // Base value for the Polling model
-  //
-
-#if defined(NO_VALUE)
-  local interface Poller : CORBA::Pollable {
-    readonly attribute Object  operation_target;
-    readonly attribute string  operation_name;
-
-    attribute ReplyHandler     associated_handler;
-    readonly attribute boolean is_from_poller;
-
-    readonly attribute Object  target;
-    readonly attribute string  op_name;
-  };
-#else
-  valuetype Poller supports CORBA::Pollable {
-    readonly attribute Object  operation_target;
-    readonly attribute string  operation_name;
-
-    attribute ReplyHandler     associated_handler;
-    readonly attribute boolean is_from_poller;
-
-    public Object                     target;
-    public string                     op_name;
-  };
-#endif
-#endif /* 0 */
 };
 
 #endif /*TAO_MESSAGING_NO_IMPL_PIDL*/

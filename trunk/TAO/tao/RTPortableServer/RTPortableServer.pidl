@@ -34,8 +34,8 @@
 #ifndef _RT_PORTABLE_SERVER_IDL_
 #define _RT_PORTABLE_SERVER_IDL_
 
-#include <../PortableServer/PortableServer.pidl>
-#include <../RTCORBA/RTCORBA.pidl>
+#include <tao/PortableServer/PortableServer.pidl>
+#include <tao/RTCORBA/RTCORBA.pidl>
 
 #pragma prefix "omg.org"
 

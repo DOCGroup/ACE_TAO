@@ -42,6 +42,7 @@
 #ifndef TAO_CORBA_POLICY_PIDL
 #define TAO_CORBA_POLICY_PIDL
 
+#include <UShortSeq.pidl>
 #include <Current.pidl>
 #include <Policy_Forward.pidl>
 
@@ -60,10 +61,6 @@ module CORBA
   {
     PolicyErrorCode reason;
   };
-
-  //@@ should be replaced with the inclusion of UShortSeq.pidl
-  //
-  typedef sequence<unsigned short> UShortSeq;
   
   exception InvalidPolicies
   {
