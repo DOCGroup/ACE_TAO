@@ -107,12 +107,16 @@ main (int argc, char *argv[])
     }
   ACE_CATCH (CORBA::UNKNOWN, exc)
     {
-      ACE_PRINT_EXCEPTION (exc,
+      // Do something with the exception to make sure it actually
+      // exists.  If it doesn't exist then there is something wrong
+      // with exception lifetime.
+      ACE_DEBUG ((LM_INFO,
                   "\n"
-                  "Successfully caught CORBA system exception \"UNKNOWN\"\n"
-                  "after the last ORB was released.\n"
-                  "\n"
-                  "The exception follows.  It is safe to ignore it.\n");
+                  "Successfully caught CORBA system exception after the\n"
+                  "last ORB was released with the following repository ID:\n"
+                  "  %s\n"
+                  "This exception was expected.  It is safe to ignore it.\n",
+                  exc._id ()));
     }
   ACE_CATCHANY
     {
