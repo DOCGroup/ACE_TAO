@@ -1,3 +1,12 @@
+
+Mon Feb  7 17:30:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* ace/ACE.cpp (out_of_handles): Added ENOTSUP (Operation not
+	  supported) check for SunOS. This helped in solving a bug when 
+	  the Cached_Conn_Test was executed using a single-threaded build.
+	  Thanks to Steve Huston <shuston@riverace.com> for reporting this
+	  bug.
+
 Mon Feb  7 17:28:40 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* netsvcs/clients/Naming/Client/main.cpp (main): Removed two
