@@ -79,7 +79,8 @@ sub print_dependencies {
   ## Project Dependencies
   print $fh "\tGlobalSection(ProjectDependencies) = postSolution$crlf";
   foreach my $project (@$list) {
-    my($name, $deps, $pguid) = @{$$pjs{$project}};
+    my($name, $rawdeps, $pguid) = @{$$pjs{$project}};
+    my($deps) = $self->get_validated_ordering($project);
     if (defined $deps && $deps ne '') {
       my($darr) = $self->create_array($deps);
       my($i)    = 0;
@@ -110,7 +111,8 @@ sub write_comps {
 
   ## Project Information
   foreach my $project (sort @list) {
-    my($name, $deps, $pguid) = @{$$pjs{$project}};
+    my($name, $rawdeps, $pguid) = @{$$pjs{$project}};
+    my($deps) = $self->get_validated_ordering($project);
 
     ## Convert all /'s to \
     my($cpy) = $self->slash_to_backslash($project);
