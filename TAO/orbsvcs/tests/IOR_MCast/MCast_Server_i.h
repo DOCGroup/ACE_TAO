@@ -11,8 +11,8 @@ public:
 
   // Simple method just to see that the client contacted the
   // server. If does contact, a '0' is returned.
-  CORBA::Boolean connect_server (CORBA::Environment & =
-                                 TAO_default_environment ());
+  CORBA::Boolean connect_server (CORBA::Environment &)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 };
 
 #endif /* MCAST_SERVER_I_H */
