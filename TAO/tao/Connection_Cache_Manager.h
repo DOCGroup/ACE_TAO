@@ -127,8 +127,9 @@ public:
   int mark_closed (HASH_MAP_ENTRY *&entry);
   // Mark the entry as closed
 
-  int close (void);
-  // Close the underlying hash map manager
+  int close (ACE_Handle_Set &handle_set);
+  // Close the underlying hash map manager and return the handle set
+  // that have been registered with the reactor
 
   size_t current_size (void) const;
   // Return the current size of the cache.
@@ -175,7 +176,7 @@ private:
   int mark_closed_i (HASH_MAP_ENTRY *&entry);
   // Non-locking version and actual implementation of mark_closed ()
 
-  int close_i (void);
+  int close_i (ACE_Handle_Set &handle_set);
   // Non-locking version and actual implementation of close ()
 
 private:

@@ -220,10 +220,13 @@ TAO_IIOP_Server_Connection_Handler::handle_close (ACE_HANDLE handle,
   --this->refcount_;
   if (this->refcount_ == 0)
     {
-      // Remove the handle from the ORB Core's handle set so that it
-      // isn't included in the set that is passed to the reactor upon
-      // ORB destruction.
-      this->remove_handle (handle);
+      // Set the flag to indicate that it is no longer registered with
+      // the reactor, so that it isn't included in the set that is
+      // passed to the reactor on ORB destruction.
+      this->is_registered (0);
+
+      // Decrement the reference count
+      this->decr_ref_count ();
 
       return TAO_IIOP_SVC_HANDLER::handle_close (handle, rm);
     }
@@ -313,6 +316,12 @@ TAO_IIOP_Server_Connection_Handler::handle_input_i (ACE_HANDLE,
   return result;
 }
 
+ACE_HANDLE
+TAO_IIOP_Server_Connection_Handler::fetch_handle (void)
+{
+  return this->get_handle ();
+}
+
 // ****************************************************************
 
 TAO_IIOP_Client_Connection_Handler::
@@ -343,7 +352,6 @@ TAO_IIOP_Client_Connection_Handler (ACE_Thread_Manager *t,
 
 TAO_IIOP_Client_Connection_Handler::~TAO_IIOP_Client_Connection_Handler (void)
 {
-  cout << "Are we here in dest " <<endl;
   // If the socket has not already been closed.
   if (this->transport_.handle () != ACE_INVALID_HANDLE)
     {
@@ -412,7 +420,6 @@ TAO_IIOP_Client_Connection_Handler::open (void *)
 int
 TAO_IIOP_Client_Connection_Handler::close (u_long)
 {
-  cout << "Do we get here " <<endl;
   this->destroy ();
 
   return 0;
@@ -488,11 +495,24 @@ int
 TAO_IIOP_Client_Connection_Handler::handle_cleanup (void)
 {
   // Call the implementation.
-  this->handle_cleanup_i (this->reactor (),
-                          this);
+  if (this->reactor ())
+    {
+      // Make sure there are no timers.
+      this->reactor ()->cancel_timer (this);
+    }
+
   this->peer ().close ();
 
+  // Now do the decerment of the ref count
+  this->decr_ref_count ();
   return 0;
+}
+
+
+ACE_HANDLE
+TAO_IIOP_Client_Connection_Handler::fetch_handle (void)
+{
+  return this->get_handle ();
 }
 
 

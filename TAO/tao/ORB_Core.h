@@ -908,13 +908,6 @@ protected:
   CORBA::ULong refcount_;
   // Number of outstanding references to this object.
 
-  ACE_Handle_Set handle_set_;
-  // Set of file descriptors corresponding to open connections.  This
-  // handle set is used to explicitly deregister the connection event
-  // handlers from the Reactor.  This is particularly important for
-  // dynamically loaded ORBs where an application level reactor, such
-  // as the Singleton reactor, is used instead of an ORB created one.
-
   TAO_Parser_Registry parser_registry_;
   // The IOR parser registry
 

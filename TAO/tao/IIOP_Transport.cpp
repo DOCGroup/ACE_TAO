@@ -315,10 +315,13 @@ TAO_IIOP_Client_Transport::register_handler (void)
 
   // About to be registered with the reactor, so bump the ref
   // count
-  this->svc_handler ()->incr_ref_count ();
+  this->handler_->incr_ref_count ();
+
+  // Set the flag in the Connection Handler
+  this->handler_->is_registered (1);
 
   // Register the handler with the reactor
-  return  r->register_handler (this->service_handler (),
+  return  r->register_handler (this->handler_,
                                ACE_Event_Handler::READ_MASK);
 }
 

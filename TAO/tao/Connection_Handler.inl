@@ -42,6 +42,17 @@ TAO_Connection_Handler::decr_ref_count (void)
     delete this;
 }
 
+ACE_INLINE CORBA::Boolean
+TAO_Connection_Handler::is_registered (void)
+{
+  return this->is_registered_;
+}
+
+ACE_INLINE void
+TAO_Connection_Handler::is_registered (CORBA::Boolean flag)
+{
+  this->is_registered_ = flag;
+}
 
 ACE_INLINE TAO_ORB_Core *
 TAO_Connection_Handler::orb_core (void)

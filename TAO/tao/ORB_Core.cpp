@@ -139,7 +139,6 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     svc_config_argc_ (0),
     svc_config_argv_ (0),
     refcount_ (1),
-    handle_set_ (),
     connection_cache_ ()
 {
 #if defined(ACE_MVS)
@@ -1218,8 +1217,17 @@ TAO_ORB_Core::fini (void)
       delete this->acceptor_registry_;
     }
 
-  // Close the connection cache
-  //this->connection_cache_.close ();
+  // Set of file descriptors corresponding to open connections.  This
+  // handle set is used to explicitly deregister the connection event
+  // handlers from the Reactor.  This is particularly important for
+  // dynamically loaded ORBs where an application level reactor, such
+  // as the Singleton reactor, is used instead of an ORB created one.
+
+  ACE_Handle_Set handle_set;
+
+  // Close the connection cache and return the handle set that needs
+  // to be de-registered from the reactor.
+  this->connection_cache_.close (handle_set);
 
   // Shutdown all open connections that are registered with the ORB
   // Core.  Note that the ACE_Event_Handler::DONT_CALL mask is NOT
@@ -1227,10 +1235,8 @@ TAO_ORB_Core::fini (void)
   // corresponding ACE_Event_Handler::handle_close() method to ensure
   // that the connection is shutdown gracefully prior to destroying
   // the ORB Core.
-  if (this->server_factory_ != 0
-      && this->server_factory_->activate_server_connections () == 0)
-    (void) this->reactor ()->remove_handler (
-                                             this->handle_set_,
+  if (handle_set.num_set () > 0)
+    (void) this->reactor ()->remove_handler (handle_set,
                                              ACE_Event_Handler::ALL_EVENTS_MASK);
 
   // Pass reactor back to the resource factory.

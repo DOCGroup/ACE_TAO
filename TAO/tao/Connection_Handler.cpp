@@ -16,7 +16,8 @@ TAO_Connection_Handler::TAO_Connection_Handler (TAO_ORB_Core *orb_core)
   :orb_core_ (orb_core),
    tss_resources_ (orb_core->get_tss_resources ()),
    ref_count_ (1),
-   cache_map_entry_ (0)
+   cache_map_entry_ (0),
+   is_registered_ (0)
 {
 }
 
@@ -35,8 +36,8 @@ TAO_Connection_Handler::remove_handle (ACE_HANDLE handle)
   TAO_Server_Strategy_Factory *f =
     this->orb_core_->server_factory ();
 
-  if (f->activate_server_connections () == 0)
-    (void) this->orb_core_->remove_handle (handle);
+  /*if (f->activate_server_connections () == 0)
+    (void) this->orb_core_->remove_handle (handle);*/
 }
 
 
@@ -158,25 +159,4 @@ TAO_Connection_Handler::handle_timeout_i (const ACE_Time_Value &,
 #endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
 
   return max_wait_time;
-}
-
-
-int
-TAO_Connection_Handler::handle_cleanup_i (ACE_Reactor *reactor,
-                                          ACE_Event_Handler *event)
-{
-  // Deregister this handler with the ACE_Reactor.
-  if (reactor)
-    {
-      ACE_Reactor_Mask mask =
-        ACE_Event_Handler::ALL_EVENTS_MASK | ACE_Event_Handler::DONT_CALL;
-
-      // Make sure there are no timers.
-      reactor->cancel_timer (event);
-
-      // Remove self from reactor.
-      reactor->remove_handler (event, mask);
-    }
-
-  return 0;
 }
