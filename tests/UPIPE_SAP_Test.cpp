@@ -38,6 +38,8 @@ connector (void *)
 
   ACE_UPIPE_Stream c_stream;
 
+  ACE_OS::sleep (5);
+
   ACE_DEBUG ((LM_DEBUG, "(%t) connector starting connect\n"));
   ACE_UPIPE_Connector con;
 
