@@ -1,3 +1,6 @@
+/* -*- C++ -*- */
+// $Id$
+
 // The following configuration file is designed to work for DG/UX
 // 4.11 platforms using the EPC compiler.
 

@@ -1,3 +1,5 @@
+// $Id$
+
 #ifndef lint
 char ace_yysccsid[] = "@(#)yaccpar	1.4 (Berkeley) 02/25/90 \n\
  Modified 5/2/90 by J. Roskind to support graphic debugging modes";
