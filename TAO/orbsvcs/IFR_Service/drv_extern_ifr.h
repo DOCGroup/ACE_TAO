@@ -73,8 +73,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 extern void DRV_init (void);
 
-extern void DRV_parse_args (long, 
-                            char **);
+extern void DRV_parse_args (int, 
+                            char *[]);
 
 extern void DRV_usage (void);
 
@@ -86,9 +86,8 @@ extern void DRV_cpp_putarg (const char *str);
 
 extern void DRV_cpp_new_location (const char *new_loc);
 
-extern void DRV_fork (void);
-
-extern int DRV_check_gperf (void);
+extern void DRV_fork (int,
+                      char *[]);
 
 extern void DRV_check_for_include (const char* buf);
 

@@ -8,41 +8,9 @@ ACE_RCSID(IFR_Service, ifr_visitor, "$Id$")
 ifr_visitor::ifr_visitor (void)
   : lock_ (0)
 {
-  int argc = 0;
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      be_global->orb (CORBA::ORB_init (argc,
-                                       0,
-                                       0,
-                                       ACE_TRY_ENV));
-      ACE_TRY_CHECK;
-
-      CORBA::Object_var object =
-        be_global->orb ()->resolve_initial_references ("InterfaceRepository",
-                                                       ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      if (CORBA::is_nil (object.in ()))
-        {
-          ACE_ERROR ((
-              LM_ERROR,
-              ACE_TEXT ("Null objref from resolve_initial_references\n")
-            ));
-        }
-
-      CORBA_Repository_var repo = CORBA_Repository::_narrow (object.in (),
-                                                             ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      if (CORBA::is_nil (repo.in ()))
-        {
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("CORBA::Repository::_narrow failed\n")));
-        }
-
-      be_global->repository (repo._retn ());
-
       // Create the appropriate lock.
       if (be_global->enable_locking ())
         {

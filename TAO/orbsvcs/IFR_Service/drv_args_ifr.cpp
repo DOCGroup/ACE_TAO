@@ -92,16 +92,15 @@ DRV_usage (void)
 
 // Parse arguments on command line
 void
-DRV_parse_args (long ac, char **av)
+DRV_parse_args (int ac, char *av[])
 {
-  char  *buffer;
-  char  *s = 0;
-  long  i;
+  char *buffer = 0;
+  char *s = 0;
 
   DRV_cpp_init ();
   idl_global->set_prog_name (av[0]);
 
-  for (i = 1; i < ac; i++)
+  for (int i = 1; i < ac; i++)
     {
       if (av[i][0] == '-')
         {
@@ -287,10 +286,3 @@ DRV_parse_args (long ac, char **av)
     }
 }
 
-// No-op definition so we can use drv_extern.h (where this is declared
-// 'extern') unmodified. The IFR BE doesn't use gperf.
-int
-DRV_check_gperf (void)
-{
-  return 0;
-}
