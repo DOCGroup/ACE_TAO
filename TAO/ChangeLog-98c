@@ -123,6 +123,10 @@ Tue May 26 09:40:42 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	  The file was full of ^M (i.e. it was using DOS end-of-line)
 	  characters; that was confusing the IDL compiler.
 
+	* TAO_IDL/be/be_visitor_args.cpp: 
+	  The code generation for strings and anys as out parameters was
+	  broken.
+
 Tue May 26 01:46:23 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/Timeprobe.h: Broke up this file in small pieces.  The time
