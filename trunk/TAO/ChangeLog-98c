@@ -1,5 +1,22 @@
 Thu Jan 29 15:58:01 1998  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
 
+	* tests/Param_Test/run_test: Allowed specification of the
+ 	invocation style (sii vs. dii) using a shaell variable.
+
+	* docs/releasenotes/{index,orbcore}.html: Updated to include some
+ 	details regarding this release.  These files are behind the
+ 	release, but I'm opting to get the release out and update these
+ 	files ex post facto.
+
+	* release.pl: Updated this script so that it can update different
+ 	levels of the release version number based on the setting of the
+ 	RELEASE_TYPE environment variable.
+
+	* Makefile: Added release.chk to the list of files going into the
+ 	release.  This file is our checklist for things that have been
+ 	tested and work leading up to a release.  Check in here for
+ 	details on how a test has worked on a platform.
+
 	* tests/POA/FindPOA/FindPOA.cpp (main): Added missing double-quote
  	in ACE_DEBUG().
 	

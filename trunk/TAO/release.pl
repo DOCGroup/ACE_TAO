@@ -1,12 +1,13 @@
-#
-# $Id$
-#
 $date = `/usr/bin/date +"%a %b %d %T %Y"`;
 chop $date;
 $VERSION = "VERSION";
 $CHANGELOG = "ChangeLog";
 $TAO_VERSION = '';
 $MODNAME = 'TAO';
+
+# Range of values on this is "alpha", "beta", or "major",
+# in which case the 3rd, 2nd, or 1st digit.
+$BUMP_WHICH = $ENV{'RELEASE_TYPE'};
 
 sub inplace {
     my($ext, @files) = @_;
@@ -34,7 +35,17 @@ open (VERSIONOUT, ">$VERSION")
 
 undef $version_number;
 while (<VERSION>) {
-    s/(TAO version \d+\.\d+\.)(\d+)/sprintf("$1%d",$2+1)/e;
+    if ($BUMP_WHICH =~ m/major/i) {
+	$bump_expr = 'sprintf("$1%d.0.0", $2+1)';
+    }
+    elsif ($BUMP_WHICH =~ m/beta/i) {
+	$bump_expr = 'sprintf("$1$2.%d.0", $3+1)';
+    }
+    else {
+	$bump_expr = 'sprintf("$1$2.$3.%d", $4+1)';
+    }
+    $subst = 's/(TAO version )(\d+)\.(\d+)\.(\d+)/' . $bump_expr . '/e';
+    eval $subst;
     ($version_number = $_) =~ s/.*(\d+\.\d+\.\d+).*/$1/ if (!defined($version_number));
     if (s/(, released ).*/$1$date./) {
 	($TAO_VERSION = $_) =~ s/^This is //;

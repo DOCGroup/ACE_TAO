@@ -30,8 +30,25 @@
       support for multicast.</LI>
     </UL>
 
-    <p>Known problems:
+    <p>Known issues:
     <dl>
+      <dt><em>Servers cannot properly report OS-chosen port.</em></dt>
+
+      <dd>It is often desireable for a server to start up and not have
+      to specify the TCP port number on which the ORB will listen,
+      i.e., let the OS decide.  While this works properly (by
+      providing an argument <code>-ORBport 0</code>), it is very
+      difficult for the server to publish the IOR for clients' use.
+      This is because the port is not assigned until
+      <code>ORB::run</code> is called.</dd>
+
+      <dt><em>Demarshalling problems with complex types</em></dt>
+
+      <dd>The current demarshalling scheme may not work in cases of
+      complex types such as sequences of unions or anys or object
+      references.  The engine has difficulty determining the dynamic
+      type of the objects.</dd>
+
       <dt><em>Object references for objects dynamically created within
       a server may not have proper host.</em> (See also <a
       href="#hostfix">recent fix</a>.)</dt>

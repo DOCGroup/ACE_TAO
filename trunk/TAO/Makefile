@@ -48,6 +48,7 @@ RELEASE_FILES = TAO/ChangeLog \
 		TAO/TAO-INSTALL.html \
 		TAO/COPYING \
 		TAO/COPYING.sun \
+		TAO/release.chk \
 		TAO/docs \
 		TAO/LICENSE.sun \
 		TAO/Makefile \
@@ -74,15 +75,15 @@ INSTALL:	TAO-INSTALL.html
 ####       that final releases are not.  So, if the version number is, e.g.,
 ####       4.2, it will not be modified because it is assumed to be for a
 ####       final release.
-ifeq ($(shell pwd),/project/adaptive/ACE_wrappers/TAO)
+#ifeq ($(shell pwd),/project/adaptive/ACE_wrappers/TAO)
   TIMESTAMP = (CHANGELOG='ChangeLog'; export CHANGELOG; \
               if [ -z "$$CHANGELOG" ]; then echo unable to find latest ChangeLog file; exit 1; fi; \
               cd ..; UPTODATE=`cvs -nq update $(RELEASE_FILES) | egrep -v '/tests/log/' | perl -pi -e 's%/TAO%%g; s/$$/\\\n  /g'`; cd TAO; \
               if [ "$$UPTODATE" ]; then /pkg/gnu/bin/echo -e ERROR: workspace must be updated, and/or non-controlled files must be removed or added/committed: $$UPTODATE; exit 1; fi; \
 	      perl release.pl) &&
-else
-  TIMESTAMP =
-endif
+#else
+#  TIMESTAMP =
+#endif
 
 #### The following tar creation commands assume that cpio supports -H tar.
 #### Old versions of cpio might not, but the version that's shipped with
