@@ -1,3 +1,11 @@
+Wed Jan 28 13:02:28 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
+
+	* CCF/Example/CIDL/LocalExecutorMapping/ExecutorMappingGenerator.cpp:
+	* CIDLC/ExecutorMappingGenerator.cpp:
+
+	  Implemented generation of additional interfaces that allow
+	  separation between executor interfaces and composition type.
+
 Tue Jan 27 12:05:13 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
 	* examples/Hello/Sender/Sender_exec.cpp:
