@@ -1,3 +1,17 @@
+Fri Jul 10 16:35:21 1998  Jeff Parsons <jp4@cs.wustl.edu>
+
+	* TAO/tests/Param_Test/client.cpp:
+	  Fixed bug in DII arg list creation.
+	
+	* TAO/tests/Param_Test/bd_short_seq.cpp:
+	* TAO/tests/Param_Test/bd_long_seq.cpp:
+	* TAO/tests/Param_Test/ub_short_seq.cpp:
+	* TAO/tests/Param_Test/ub_long_seq.cpp:
+	  DII tests now work.
+
+	* TAO/tests/Param_Test/any.cpp:
+	  Made some changes - not done yet. DII test still doesn't work.
+
 Fri Jul 10 15:32:42 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 	* docs/implrepo.html: Another pass.
