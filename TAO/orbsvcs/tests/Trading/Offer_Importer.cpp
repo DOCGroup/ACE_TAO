@@ -92,7 +92,7 @@ TAO_Offer_Importer::perform_directed_queries (CORBA::Environment& _env)
 
       if (link_name_seq2->length () > 0)
         {
-          int i = 0;
+          CORBA::ULong i = 0;
           CORBA::ULong length = link_name_seq2->length ();
           for (i = 0; i < length; i++)
             {
@@ -100,7 +100,7 @@ TAO_Offer_Importer::perform_directed_queries (CORBA::Environment& _env)
                 break;
             }
 
-          if (i > -1)
+          if (i < length)
             {
               CosTrading::LinkName* trader_name =
                 CosTrading::TraderName::allocbuf (2);

@@ -306,12 +306,12 @@ extract (const CORBA::Any& any_value, SEQ_TYPE *& seq)
   TAO_TRY
     {
       CORBA::TCKind kind_1 =
-        TAO_Sequence_Extracter::sequence_type (any_value.type(),
-                                               TAO_TRY_ENV);
+        TAO_Sequence_Extracter_Base::sequence_type (any_value.type(),
+						    TAO_TRY_ENV);
       TAO_CHECK_ENV;
       
       CORBA::TCKind kind_2 =
-        TAO_Sequence_Extracter::sequence_type (this->typecode_,
+        TAO_Sequence_Extracter_Base::sequence_type (this->typecode_,
                                                TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
@@ -361,16 +361,16 @@ extract (const CORBA::Any& any_value, SEQ_TYPE *& seq)
 
 
 template <class SEQ, class OPERAND_TYPE> CORBA::Boolean
-TAO_find (SEQ& sequence, const OPERAND_TYPE element)
+TAO_find (const SEQ& sequence, const OPERAND_TYPE element)
 {
-  int length = sequence.length(),
-    return_value = 0;
+  int length = sequence.length();
+  CORBA::Boolean return_value = CORBA::B_FALSE;
 
   for (int i = 0; i < length; i++)
     {
-      if (sequence[i] == element)
+      if (ACE_static_cast (const OPERAND_TYPE, sequence[i]) == element)
 	{	  
-	  return_value = 1;
+	  return_value = CORBA::B_TRUE;
 	  break;
 	}
     }

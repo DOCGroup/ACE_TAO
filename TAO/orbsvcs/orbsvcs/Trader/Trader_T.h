@@ -257,7 +257,7 @@ class TAO_Sequence_Extracter : private TAO_Sequence_Extracter_Base
 
 
 template <class SEQ, class OPERAND_TYPE>
-CORBA::Boolean TAO_find (SEQ& sequence, const OPERAND_TYPE operand);
+CORBA::Boolean TAO_find (const SEQ& sequence, const OPERAND_TYPE operand);
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "Trader_T.cpp"

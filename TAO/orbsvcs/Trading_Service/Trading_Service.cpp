@@ -20,7 +20,7 @@ Trading_Shutdown::Trading_Shutdown (Trading_Service& trader)
 }
 
 int
-Trading_Shutdown::handle_signal (int signum, siginfo* sinfo, ucontext* ucon)
+Trading_Shutdown::handle_signal (int signum, siginfo_t* sinfo, ucontext_t* ucon)
 {
   this->trader_.shutdown ();
   exit (0);

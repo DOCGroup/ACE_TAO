@@ -151,7 +151,7 @@ TAO_Policy_Manager::fetch_next_policy (TAO_Policies::POLICY_TYPE pol_type)
           // Copy the element in the first slot to the newly
           // allocated slot.
           TAO_Policies::POLICY_TYPE occupying_policy;
-          for (int i = 0; i < this->num_policies_ - 1; i++)
+          for (CORBA::ULong i = 0; i < this->num_policies_ - 1; i++)
             {
               if (this->poltable_[i] == 0)
                 {
@@ -252,7 +252,7 @@ TAO_Property_Evaluator::property_value (int index,
       TAO_CHECK_ENV_RETURN (_env, 0);
 #else
       dp_eval = dp_struct->eval_if;
-#endif /* TAO_HAS_DYNAMIC_PROPERTY_BUG */
+#endif /* TAO_HAS_OBJECT_IN_STRUCT_MARSHAL_BUG */
 	  
       if (CORBA::is_nil (dp_eval))
 	TAO_THROW_RETURN (CosTradingDynamic::DPEvalFailure (), prop_val);
@@ -790,7 +790,7 @@ copy_in_follow_option (CosTrading::PolicySeq& policy_seq,
         link_info.def_pass_on_follow_rule : trader_max_follow_policy;
     }
 
-  int i = 0;
+  CORBA::ULong i = 0;
   for (i = 0; i < policy_seq.length (); i++)
     {
       if (ACE_OS::strcmp (policy_seq[i].name,
