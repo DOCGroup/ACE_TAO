@@ -1303,34 +1303,38 @@ sub get_validated_ordering {
   my($project)  = shift;
   my($warn)     = shift;
   my($pjs)      = $self->get_project_info();
+  my($name)     = undef;
+  my($deps)     = '';
 
-  my($name, $deps) = @{$$pjs{$project}};
-  if (defined $deps && $deps ne '') {
-    my($darr)     = $self->create_array($deps);
-    my($projects) = $self->get_projects();
-    foreach my $dep (@$darr) {
-      my($found) = 0;
-      ## Avoid circular dependencies
-      if ($dep ne $name && $dep ne basename($project)) {
-        foreach my $p (@$projects) {
-          if ($dep eq $$pjs{$p}->[0] || $dep eq basename($p)) {
-            $found = 1;
-            last;
+  if (defined $$pjs{$project}) {
+    ($name, $deps) = @{$$pjs{$project}};
+    if (defined $deps && $deps ne '') {
+      my($darr)     = $self->create_array($deps);
+      my($projects) = $self->get_projects();
+      foreach my $dep (@$darr) {
+        my($found) = 0;
+        ## Avoid circular dependencies
+        if ($dep ne $name && $dep ne basename($project)) {
+          foreach my $p (@$projects) {
+            if ($dep eq $$pjs{$p}->[0] || $dep eq basename($p)) {
+              $found = 1;
+              last;
+            }
           }
-        }
-        if (!$found) {
-          if ($warn && defined $ENV{MPC_VERBOSE_ORDERING}) {
-            print "WARNING: '$name' references '$dep' which has " .
-                  "not been processed\n";
+          if (!$found) {
+            if ($warn && defined $ENV{MPC_VERBOSE_ORDERING}) {
+              print "WARNING: '$name' references '$dep' which has " .
+                    "not been processed\n";
+            }
+            $deps =~ s/\s*"$dep"\s*/ /g;
           }
-          $deps =~ s/\s*"$dep"\s*/ /g;
         }
       }
     }
-  }
 
-  $deps =~ s/^\s+//;
-  $deps =~ s/\s+$//;
+    $deps =~ s/^\s+//;
+    $deps =~ s/\s+$//;
+  }
 
   return $deps;
 }
