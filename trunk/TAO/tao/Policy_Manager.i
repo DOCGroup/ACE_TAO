@@ -53,6 +53,11 @@ TAO_Policy_Manager::relative_roundtrip_timeout (void) const
 
 // ****************************************************************
 
+ACE_INLINE
+TAO_Policy_Current::TAO_Policy_Current (void)
+{
+}
+
 ACE_INLINE CORBA::Policy_ptr
 TAO_Policy_Current_Impl::get_policy (
       CORBA::PolicyType policy,

@@ -8,7 +8,6 @@
 // CDR_Interpreter to workaround a Greenhills (1.8.8 and 1.8.9)
 // compiler bug.
 #include "tao/Sequence.h"
-#include "tao/Sequence_T.h"
 #include "tao/CDR_Interpreter.h"
 #include "tao/Any.h"
 #include "tao/varout.h"

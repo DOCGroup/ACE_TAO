@@ -37,7 +37,6 @@
 
 #include "tao/corbafwd.h"
 #include "tao/Sequence.h"
-#include "tao/Sequence_T.h"
 
 class TAO_Transport;
 class TAO_ORB_Core;

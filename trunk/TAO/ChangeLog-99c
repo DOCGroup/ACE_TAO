@@ -1,3 +1,47 @@
+Sat Jun  5 23:06:01 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* Sun/CC 5.0 works with TAO now! Partly because we don't use the
+	  same templates than before and partly because we found work
+	  arounds the other compiler bugs.
+
+	* tao/Object_Adapter.h:
+	* tao/Object_Adapter.i:
+	* tao/Policy_Manager.h:
+	* tao/Policy_Manager.i:
+	  Sun/CC was generating buggy code for the compiler-generated
+	  default constructor of TAO_Policy_Current, TAO_POA_Current,
+	  added explicit default constructors and now it is happy.
+
+	* tao/Messaging_Policy_i.h:
+	* tao/Messaging_Policy_i.i:
+	  The compiler-generated copy constructor was not working, added
+	  an explicit one and now things are happy.
+
+	* tao/DynUnion_i.cpp:
+	* tao/Sequence.h:
+	  Added the ACE_TEMPLATE_SPECIALIZATION macro
+
+	* tao/Operation_Table.h:
+	  Made the opname_ field a "const char*" instead of just "char*"
+	  to avoid warnings because we assign string literals to that
+	  field.
+
+	* tao/debug.cpp:
+	* tao/debug.h:
+	  Removed unused variable
+
+	* tao/CDR_Interpreter.cpp:
+	* tao/DynAnyC.h:
+	* tao/GIOP.h:
+	* tao/ObjectIDList.h:
+	* tao/PolicyC.h:
+	* tao/Request.h:
+	* tao/Services.h:
+	* tao/Stub.cpp:
+	* tao/corba.h:
+	  Include "Sequence_T.h" directly from Sequence.h, is the ACE way
+	  and it is easier to use.
+
 Sat Jun  5 20:09:51 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/ORB_Core.cpp:

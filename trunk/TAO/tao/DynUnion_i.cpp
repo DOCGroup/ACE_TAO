@@ -1200,6 +1200,7 @@ TAO_DynUnion_i::get_any (CORBA::Environment &env)
 // Some specialized instantiations of the template functor defined in
 // DynUnion_i_T.cpp.
 
+ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
 DU_Extractor<CORBA::Boolean>::check_match (
     const CORBA_Any& inside_any,
@@ -1213,6 +1214,7 @@ DU_Extractor<CORBA::Boolean>::check_match (
   return member_struct.ref_ == arg_struct.ref_;
 }
 
+ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
 DU_Extractor<CORBA::Char>::check_match (
     const CORBA_Any& inside_any,

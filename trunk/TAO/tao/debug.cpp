@@ -19,4 +19,3 @@ ACE_RCSID(tao, debug, "$Id$")
 
 TAO_Export u_int TAO_debug_level = 0;
 TAO_Export u_int TAO_orbdebug = 0;
-TAO_Export char *TAO_debug_filter = "l";

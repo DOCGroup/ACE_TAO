@@ -74,7 +74,6 @@
 
 #include "tao/Managed_Types.h"
 #include "tao/Sequence.h"
-#include "tao/Sequence_T.h"
 #include "tao/Object_KeyC.h"
 #include "tao/Union.h"
 #include "tao/ValueBase.h"
