@@ -46,9 +46,8 @@ include $(TAO_ROOT)/taoconfig.mk
 #	Local targets
 #----------------------------------------------------------------------------
 
-DCFLAGS = -g
 LDFLAGS += -L$(TAO_ROOT)/orbsvcs/orbsvcs -L$(TAO_ROOT)/tao -L$(TAO_ROOT)/orbsvcs/Naming_Service
-CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT) -I$(TAO_ROOT)/tao/compat $(TSS_ORB_FLAG)#-H
+CPPFLAGS += -I$(TAO_ROOT)/orbsvcs
 
 #$(IDL_SRC): cubit.idl
 #	$(TAO_ROOT)/TAO_IDL/tao_idl cubit.idl

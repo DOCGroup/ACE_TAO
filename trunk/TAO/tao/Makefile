@@ -112,7 +112,6 @@ ifeq ($(probe),1)
 endif # probe
 
 #RLDFLAGS := $(subst -L,-Wl\,-rpath ,$(LDFLAGS))
-CPPFLAGS += -I$(TAO_ROOT) -I$(COMPATDIR) #-H
 LDFLAGS += $(RLDFLAGS)
 
 .PRECIOUS: Object_KeyC.h Object_KeyC.i Object_KeyC.cpp
