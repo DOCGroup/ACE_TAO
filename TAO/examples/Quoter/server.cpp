@@ -19,21 +19,22 @@ ACE_RCSID(Quoter, server, "$Id$")
 
 Quoter_Server::Quoter_Server (void)
   : num_of_objs_ (1),
-    quoter_Factory_i_ptr_ (0)
+    quoter_Factory_i_ptr_ (0),
+    debug_level_ (1)
 {
 }
 
 int
 Quoter_Server::parse_args (void)
 {
-  ACE_Get_Opt get_opts (argc_, argv_, "dn:");
+  ACE_Get_Opt get_opts (argc_, argv_, "d:n:");
   int c;
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'd':  // debug flag.
-        TAO_debug_level++;
+        this->debug_level_ = ACE_OS::atoi (get_opts.optarg);
         break;
       case 'n': // number of Quoter objects we export
         this->num_of_objs_ = ACE_OS::atoi (get_opts.optarg);
@@ -42,7 +43,7 @@ Quoter_Server::parse_args (void)
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s"
-                           " [-d]"
+                           " [-d] <debug level>"
                            " [-n] <num of Quoter objects>"
                            "\n",
                            argv_ [0]),
@@ -131,9 +132,9 @@ Quoter_Server::init (int argc,
       exception_message = "While activating the POA Manager";
       poa_manager->activate (ACE_TRY_ENV);
 
-      ACE_DEBUG ((LM_DEBUG,
-                  "The IOR is: <%s>\n",
-                  quoter_Factory_ior.in ()));
+      // Print the IOR.
+      if (this->debug_level_ >= 2)
+        ACE_DEBUG ((LM_DEBUG, "Quoter Server: IOR is: <%s>\n", quoter_Factory_ior.in ()));
     }
   ACE_CATCHANY
     {
@@ -212,6 +213,10 @@ Quoter_Server::run (CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 
+  if (this->debug_level_ >= 1)
+    ACE_DEBUG ((LM_DEBUG,
+                "\nQuoter Example: Quoter_Server is running\n"));
+
   if (orb_manager_.orb()->run () == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
@@ -247,16 +252,12 @@ Quoter_Server::~Quoter_Server (void)
   ACE_ENDTRY;
 
   delete [] this->argv_;
-  delete this->quoter_Factory_i_ptr_;
 }
 
 int
 main (int argc, char *argv[])
 {
   Quoter_Server quoter_server;
-
-  ACE_DEBUG ((LM_DEBUG,
-              "\n\tQuoter:SERVER \n \n"));
 
   ACE_TRY_NEW_ENV
     {

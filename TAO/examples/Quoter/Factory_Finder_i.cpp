@@ -22,7 +22,8 @@
 ACE_RCSID(Quoter, Factory_Finder_i, "$Id$")
 
 // Constructor
-Quoter_Factory_Finder_i::Quoter_Factory_Finder_i (void)
+Quoter_Factory_Finder_i::Quoter_Factory_Finder_i (int debug_level)
+: debug_level_ (debug_level)
 {
   // Nothing
 }
@@ -92,8 +93,9 @@ Quoter_Factory_Finder_i::find_factories (const CosLifeCycle::Key &factory_key,
     // insert the object reference
     (*factories_ptr)[0] = CORBA::Object::_duplicate (quoterFactoryObject_var.ptr());
 
-    ACE_DEBUG ((LM_DEBUG,
-                "Have reference to a Quoter Factory.\n"));
+    if (this->debug_level_ > 1)
+      ACE_DEBUG ((LM_DEBUG,
+                  "Factory Finder: Have reference to a Quoter Factory.\n"));
   }
   ACE_CATCHANY
     {

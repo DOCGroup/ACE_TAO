@@ -18,9 +18,8 @@
 
 ACE_RCSID(LifeCycle_Service, LifeCycle_Service, "$Id$")
 
-static const char usage [] = "[-? |\n[-O[RBport] ORB port number]]";
-
 Life_Cycle_Service_Server::Life_Cycle_Service_Server (void)
+:   debug_level_ (1)
 {
 }
 
@@ -57,6 +56,11 @@ Life_Cycle_Service_Server::init (int argc,
   // @@ Oh well.  This should actually come before "if".
   ACE_CHECK_RETURN (-1);
 
+  // Activate the POA manager
+  if (this->orb_manager_.activate_poa_manager (ACE_TRY_ENV) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "activate_poa_manager"), -1);
+
+  ACE_CHECK_RETURN (-1);
   // Copy them, because parse_args expects them there.
   this->argc_ = argc;
   this->argv_ = argv;
@@ -65,7 +69,7 @@ Life_Cycle_Service_Server::init (int argc,
 
 
   ACE_NEW_RETURN (this->life_Cycle_Service_i_ptr_,
-                  Life_Cycle_Service_i(),
+                  Life_Cycle_Service_i(this->debug_level_),
                   -1);
 
   // Activate the object.
@@ -74,17 +78,15 @@ Life_Cycle_Service_Server::init (int argc,
                                  ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
 
-  // Failure while activating the  Factory Finder object
-
-  ACE_DEBUG ((LM_DEBUG,
-              "The IOR is: <%s>\n",
-              str.in ()));
+  if (this->debug_level_ >= 2)
+    ACE_DEBUG ((LM_DEBUG, "LifeCycle_Service: IOR is: <%s>\n", str.in ()));
 
   // Register the LifeCycle Service with the Naming Service.
   ACE_TRY
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  "Trying to get a reference to the Naming Service.\n"));
+      if (this->debug_level_ >= 2)
+        ACE_DEBUG ((LM_DEBUG,
+                    "LifeCycle_Service: Trying to get a reference to the Naming Service.\n"));
 
       // Get the Naming Service object reference.
       CORBA::Object_var namingObj_var =
@@ -93,7 +95,7 @@ Life_Cycle_Service_Server::init (int argc,
 
       if (CORBA::is_nil (namingObj_var.in ()))
         ACE_ERROR ((LM_ERROR,
-                   " (%P|%t) Unable get the Naming Service.\n"));
+                   " LifeCycle_Service: Unable get the Naming Service.\n"));
 
       // Narrow the object reference to a Naming Context.
       namingContext_var_ = CosNaming::NamingContext::_narrow (namingObj_var.in (),
@@ -103,10 +105,11 @@ Life_Cycle_Service_Server::init (int argc,
 
       if (CORBA::is_nil (namingContext_var_.in ()))
         ACE_ERROR ((LM_ERROR,
-                   " (%P|%t) Unable get the Naming Service.\n"));
+                   "LifeCycle_Service: Unable get the Naming Service.\n"));
 
-      ACE_DEBUG ((LM_DEBUG,
-                  "Have a proper reference to the Naming Service.\n"));
+      if (this->debug_level_ >= 2)
+        ACE_DEBUG ((LM_DEBUG,
+                    "LifeCycle_Service: Have a proper reference to the Naming Service.\n"));
 
       CosNaming::Name life_Cycle_Service_Name (1);
       life_Cycle_Service_Name.length (1);
@@ -120,8 +123,9 @@ Life_Cycle_Service_Server::init (int argc,
                                 ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      ACE_DEBUG ((LM_DEBUG,
-                  "Bound the LifeCycle Service to the Naming Context.\n"));
+      if (this->debug_level_ >= 2)
+        ACE_DEBUG ((LM_DEBUG,
+                    "LifeCycle_Service: Bound the LifeCycle Service to the Naming Context.\n"));
     }
   ACE_CATCHANY
     {
@@ -134,8 +138,13 @@ Life_Cycle_Service_Server::init (int argc,
 
 
 int
-Life_Cycle_Service_Server::run (CORBA::Environment &)
+Life_Cycle_Service_Server::run (CORBA::Environment &ACE_TRY_ENV)
 {
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
+
+  if (this->debug_level_ >= 1)
+    ACE_DEBUG ((LM_DEBUG,
+                "\nLifeCycle Service: Life_Cycle_Service_Server is running\n"));
   
   if (orb_manager_.orb()->run () == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -151,28 +160,30 @@ Life_Cycle_Service_Server::run (CORBA::Environment &)
 u_int
 Life_Cycle_Service_Server::parse_args (void)
 {
-  // We need the 'O' in get_opt () because we also want to have ORB
-  // parameters, they all start with 'O'.
-  ACE_Get_Opt get_opt (this->argc_, this->argv_, "O?");
+  ACE_Get_Opt get_opt (this->argc_, this->argv_, "?d:");
   int opt;
+  int exit_code = 0;
 
   while ((opt = get_opt ()) != EOF)
     switch (opt)
       {
-      case '?':
-        ACE_DEBUG ((LM_DEBUG,
-                    "Usage: %s %s\n",
-                    this->argv_[0], usage));
-        ACE_OS::exit (0);
+      case 'd':  // debug flag.
+        this->debug_level_ = ACE_OS::atoi (get_opt.optarg);
         break;
       default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "%s: unknown arg, -%c\n"
-                           "Usage: %s %s\n",
-                           this->argv_[0], char (opt),
-                           this->argv_[0],
-                           usage),
-                          1);
+        exit_code = 1;
+        ACE_ERROR ((LM_ERROR, 
+                    "%s: unknown arg, -%c\n",
+                    this->argv_[0], char(opt)));
+      case '?':
+        ACE_DEBUG ((LM_DEBUG,
+                    "usage:  %s"
+                    " [-d] <debug level> - Set the debug level\n"
+                    " [-?]               - Prints this message\n"
+                    "\n",
+                    this->argv_[0]));
+        ACE_OS::exit (exit_code);
+        break;
       }
   return 0;
 }
@@ -184,8 +195,6 @@ main (int argc, char *argv [])
 {
   Life_Cycle_Service_Server life_Cycle_Service_Server;
 
-  ACE_DEBUG ((LM_DEBUG,
-              "\n\tIDL_LifeCycleService: Life_Cycle_Service_Server \n\n"));
   ACE_TRY_NEW_ENV
     {
       int check = life_Cycle_Service_Server.init (argc,
@@ -203,7 +212,7 @@ main (int argc, char *argv [])
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "main");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "LifeCycleService::main");
       return -1;
     }
   ACE_ENDTRY;

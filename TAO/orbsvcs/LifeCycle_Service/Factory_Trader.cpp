@@ -26,13 +26,14 @@ ACE_RCSID(LifeCycle_Service, Factory_Trader, "$Id$")
 
 // This const char * is used for adding a new type to the service repository
 // the added types will be subclasses of this.
-const char * Factory_Trader::GENERIC_FACTORY_INTERFACE_REPOSITORY_ID = "IDL:CosLifeCycle/GenericFactory:1.0";
+const char * Factory_Trader::GENERIC_FACTORY_INTERFACE_REPOSITORY_ID = "IDL:omg.org/CosLifeCycle/GenericFactory:1.0";
 
 
-Factory_Trader::Factory_Trader ()
+Factory_Trader::Factory_Trader (int debug_level)
   : trader_ptr_(0),
     trading_Components_ptr_ (0),
-    support_Attributes_ptr_(0)
+    support_Attributes_ptr_(0),
+    debug_level_ (debug_level)
 {
   ACE_TRY_NEW_ENV
     {
@@ -54,7 +55,7 @@ Factory_Trader::Factory_Trader ()
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Factory_Trader constructor: Failed adding a new type.\n");
+                           "LifeCycle Server: (Factory_Trader::Factory_Trader) Failed adding a new type.\n");
     }
   ACE_ENDTRY;
   // @@ ACE_CHECK?  No way to pass back any exceptions.
@@ -96,7 +97,7 @@ Factory_Trader::add_type ()
       CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq superTypeSeq;
 
       // Add the new type
-      this->repository_.add_type (CORBA::string_dup("Factory"),
+      this->repository_.add_type (CORBA::string_dup("GenericFactory"),
                                   GENERIC_FACTORY_INTERFACE_REPOSITORY_ID,
                                   propStructSeq,
                                   superTypeSeq,
@@ -106,7 +107,7 @@ Factory_Trader::add_type ()
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Factory_Trader::init.\n");
+                           "LifeCycle Server: (Factory_Trader::init).\n");
     }
   ACE_ENDTRY;
   // @@ ACE_CHECK
@@ -115,17 +116,18 @@ Factory_Trader::add_type ()
 
 void
 Factory_Trader::_cxx_export (const char * name,
-	       const char * location,
-	       const char * description,
-	       const CORBA::Object_ptr object_ptr)
+                             const char * location,
+                             const char * description,
+                             const CORBA::Object_ptr object_ptr)
 {
   ACE_TRY_NEW_ENV
     {
       if (CORBA::is_nil(object_ptr))
-	{
-	  ACE_DEBUG ((LM_DEBUG,"Factory_Trader::export: Object pointer is nil, cannot export!\n"));
-	  return;
-	}
+        {
+          ACE_ERROR ((LM_ERROR, "LifeCycle Server (Factory_Trader::export): "
+                                "Object pointer is nil, cannot export!\n"));
+          return;
+        }
 
       CosTrading::PropertySeq propertySeq(3);
       propertySeq.length (3);
@@ -142,7 +144,7 @@ Factory_Trader::_cxx_export (const char * name,
 
       // invoke the export method on the Register interface of the Trading Service
       register_ptr->_cxx_export (CORBA::Object::_duplicate (object_ptr),
-                                 CORBA::string_dup("Factory"),
+                                 CORBA::string_dup("GenericFactory"),
                                  propertySeq,
                                  ACE_TRY_ENV);
 
@@ -151,7 +153,8 @@ Factory_Trader::_cxx_export (const char * name,
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Factory_Trader::export: Failed to export factory.\n");
+                           "LifeCycle Server (Factory_Trader::export): "
+                           "Failed to export factory.\n");
     }
   ACE_ENDTRY;
   // @@ ACE_CHECK*
@@ -179,15 +182,15 @@ Factory_Trader::query (const CORBA::String constraint)
       // this pointer is deleted when the trader_ptr is deleted
 
       // Invoke the query method on the Lookup Interface.
-      lookup_ptr->query ("Factory",         // Type name
-			 constraint,        // Constraint, very important
-			 "",                // Preferences
-			 policySeq,         // Policy
-			 specifiedProps,    // Specified Properties
-			 1,                 // Number of wanted results
-			 CosTrading::OfferSeq_out(offerSeq_ptr),               // results
-			 CosTrading::OfferIterator_out(offerIterator_ptr),     // more results
-			 CosTrading::PolicyNameSeq_out(policyNameSeq_ptr),     // Policies
+      lookup_ptr->query ("GenericFactory",  // Type name
+                         constraint,        // Constraint, very important
+                         "",                // Preferences
+                         policySeq,         // Policy
+                         specifiedProps,    // Specified Properties
+                         1,                 // Number of wanted results
+                         CosTrading::OfferSeq_out(offerSeq_ptr),               // results
+                         CosTrading::OfferIterator_out(offerIterator_ptr),     // more results
+                         CosTrading::PolicyNameSeq_out(policyNameSeq_ptr),     // Policies
                          ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
@@ -196,27 +199,25 @@ Factory_Trader::query (const CORBA::String constraint)
 
       // Check if an offer was made
       if (offerSeq_ptr != 0)
-	{
-	  // Insert the pointer into the out class
-	  CosTrading::OfferSeq_var offerSeq_var(offerSeq_ptr);
+        {
+          // Insert the pointer into the out class
+          CosTrading::OfferSeq_var offerSeq_var(offerSeq_ptr);
 
-	  // We need at least one offer.
-	  if (offerSeq_var->length() >= 1)
-	    {
-	      // now we are all set to read from the sequence the result
-	      object_ptr = CORBA::Object::_duplicate (offerSeq_var[0].reference.in());
+          // We need at least one offer.
+          if (offerSeq_var->length() >= 1)
+            {
+              // now we are all set to read from the sequence the result
+              object_ptr = CORBA::Object::_duplicate (offerSeq_var[0].reference.in());
 
-	      if (CORBA::is_nil (object_ptr))
-		{
-		  ACE_DEBUG ((LM_DEBUG,"Factory_Trader::query: Object reference is nil.\n"));
-		  return 0;
-		}
-	      else
-		ACE_DEBUG ((LM_DEBUG,"Factory_Trader::query: Received a proper object reference.\n"));
-	    }
-	  else
-	    ACE_DEBUG ((LM_DEBUG,"Factory_Trader::query: OfferSequence.length is smaller than 1.\n"));
-	}
+              if (CORBA::is_nil (object_ptr))
+                ACE_ERROR_RETURN ((LM_ERROR,"Factory_Trader::query: Object reference is nil.\n"), 0);
+              else
+                if (this->debug_level_ >= 2)
+                  ACE_DEBUG ((LM_DEBUG, "Factory_Trader::query: Received a proper object reference.\n"));
+            }
+          else
+            ACE_ERROR ((LM_ERROR, "Factory_Trader::query: OfferSequence.length is smaller than 1.\n"));
+        }
       return object_ptr;
     }
   ACE_CATCHANY
