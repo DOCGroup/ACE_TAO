@@ -6,6 +6,11 @@ Sun Jun 28 22:16:51 1998  David L. Levine  <levine@cs.wustl.edu>
         * examples/Threads/task_five.cpp (work): added
           ACE_UNUSED_ARG (stack_size).
 
+        * ace/Message_Queue_T.h: fully qualify the DEFAULT_[HL]WM
+          references so that it will compile with aCC 1.07 on HPUX 10.20.
+          Thanks to Avi Nash <anash@RedBrick.COM> for reporting this
+          problem.
+
 Sat Jun 27 18:13:05 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
         * ace/Timeprobe_T.cpp (ACE_Timeprobe - copy constructor): Stupid
