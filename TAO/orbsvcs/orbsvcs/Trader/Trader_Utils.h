@@ -13,6 +13,7 @@
 //    Seth Widoff <sbw1@cs.wustl.edu>
 //
 // Client Utils:
+//   TAO_Dynamic_Property
 //   TAO_Policy_Manager
 //   TAO_Property_Evaluator
 //   TAO_Property_Evaluator_By_Name
@@ -118,7 +119,7 @@ public:
   // TAO_Property_Evaluator_By_Name
   // *************************************************************
 
-class TAO_Property_Evaluator_By_Name : public TAO_Property_Evaluator
+class TAO_ORBSVCS_Export TAO_Property_Evaluator_By_Name : public TAO_Property_Evaluator
 //
 // = TITLE
 //    This class extends the TAO_Property_Evaluator to allow lookups
@@ -183,6 +184,35 @@ private:
   // The instance of the above mapping for the offer provided in the
   // constructor. 
 };
+
+  // *************************************************************
+  // TAO_Dynamic_Property
+  // *************************************************************
+
+class TAO_ORBSVCS_Export TAO_Dynamic_Property :
+  public POA_CosTradingDynamic::DynamicPropEval
+// = TITLE
+//   Little helper class that you can extend to have your dynamic
+//   property handler construct CosTradingDynamic::DynamicProp structs 
+//   on demand.
+{
+public:
+
+  virtual ~TAO_Dynamic_Property (void);
+  
+  virtual CORBA::Any* evalDP(const char* name,
+			     CORBA::TypeCode_ptr returned_type,
+			     const CORBA::Any& extra_info,
+			     CORBA::Environment& _env) 
+    TAO_THROW_SPEC ((CORBA::SystemException,
+		     CosTradingDynamic::DPEvalFailure)) = 0;
+
+  CosTradingDynamic::DynamicProp*
+    construct_dynamic_prop (const char* name,			    
+			    CORBA::TypeCode_ptr returned_type,
+			    const CORBA::Any& extra_info);
+};
+
 
   // *************************************************************
   // TAO_Policies
@@ -526,12 +556,17 @@ private:
   TAO_Policy_Manager& operator= (const TAO_Policy_Manager&);
   
   CosTrading::Policy& fetch_next_policy (TAO_Policies::POLICY_TYPE pol_type);
+  // Method to prepare the next slot in the policies_ sequence for
+  // policy insertion.
   
   int poltable_[TAO_Policies::REQUEST_ID + 1];
+  // Table mapping policy enum value to the index in the policies sequence.
   
   CosTrading::PolicySeq policies_;
+  // The sequence being prepared for submittal to the query method.
 
   CORBA::ULong num_policies_;
+  // The number of policies so far in the sequence.
 };
 
 
