@@ -3112,12 +3112,12 @@ ACE::get_ip_interfaces (size_t &count,
 
       lpii = &info[i];
       if (!(lpii->iiFlags & IFF_UP))
-	  continue;
+        continue;
 
       // We assume IPv4 addresses here
       addrp = ACE_reinterpret_cast(struct sockaddr_in *, &(lpii->iiAddress));
       if (addrp->sin_addr.s_addr == INADDR_ANY)
-	  continue;
+        continue;
 
       // Set the address for the caller.
       addrs[count].set(addrp, sizeof(lpii->iiAddress));
