@@ -172,6 +172,7 @@
 #  define ACE_LACKS_SETSCHED
 #  define ACE_LACKS_SETDETACH
 #  define ACE_LACKS_PTHREAD_CANCEL
+#  define ACE_LACKS_THREAD_PROCESS_SCOPING
 #endif  /* ACE_MT_SAFE */
 
 #include /**/ "ace/post.h"
