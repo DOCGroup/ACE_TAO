@@ -109,7 +109,6 @@ TAO_Transport::reset_sent_message (ACE_Message_Block *message_block,
                        0);
 }
 
-
 void
 TAO_Transport::reset_queued_message (ACE_Message_Block *message_block,
                                      size_t bytes_delivered)
@@ -166,6 +165,7 @@ TAO_Transport::reset_message (ACE_Message_Block *message_block,
         {
           // Go to the next message block chain.
           message_block = message_block->next ();
+
           // If queued message, adjust the queue.
           if (queued_message)
             // Release this <current_message_block>.
@@ -198,11 +198,11 @@ TAO_Transport::idle_after_send (void)
   return this->tms ()->idle_after_send ();
 }
 
-// int
-// TAO_Transport::idle_after_reply (void)
-// {
-//   return this->tms ()->idle_after_reply ();
-// }
+int
+TAO_Transport::idle_after_reply (void)
+{
+  return this->tms ()->idle_after_reply ();
+}
 
 // int
 // TAO_Transport::reply_received (const CORBA::ULong request_id)

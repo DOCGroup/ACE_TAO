@@ -250,7 +250,7 @@ TAO_NAMESPACE_BEGIN (PortableServer)
 TAO_NAMESPACE_DEFINE (const CORBA::ULong, REQUEST_PROCESSING_POLICY_ID, 22)
 TAO_NAMESPACE_END
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_POA == 0)
 
 static const CORBA::Long _oc_PortableServer_ThreadPolicyValue[] =
 {
@@ -351,7 +351,7 @@ PortableServer::ThreadPolicyValue PortableServer::ThreadPolicy::value(CORBA::Env
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -413,7 +413,7 @@ TAO_NAMESPACE_BEGIN (PortableServer)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ThreadPolicy, &_tc_TAO_tc_PortableServer_ThreadPolicy)
 TAO_NAMESPACE_END
 
-#endif /* TAO_HAS_MINIMUM_CORBA */
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 static const CORBA::Long _oc_PortableServer_LifespanPolicyValue[] =
 {
@@ -514,7 +514,7 @@ PortableServer::LifespanPolicyValue PortableServer::LifespanPolicy::value(CORBA:
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -677,7 +677,7 @@ PortableServer::IdUniquenessPolicyValue PortableServer::IdUniquenessPolicy::valu
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -839,7 +839,7 @@ PortableServer::IdAssignmentPolicyValue PortableServer::IdAssignmentPolicy::valu
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -903,7 +903,7 @@ TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_IdAssignmentPolicy, &_tc_TAO_tc_P
 TAO_NAMESPACE_END
 
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_POA == 0)
 
 static const CORBA::Long _oc_PortableServer_ImplicitActivationPolicyValue[] =
 {
@@ -1004,7 +1004,7 @@ PortableServer::ImplicitActivationPolicyValue PortableServer::ImplicitActivation
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -1167,7 +1167,7 @@ PortableServer::ServantRetentionPolicyValue PortableServer::ServantRetentionPoli
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -1330,7 +1330,7 @@ PortableServer::RequestProcessingPolicyValue PortableServer::RequestProcessingPo
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);
@@ -1393,7 +1393,7 @@ TAO_NAMESPACE_BEGIN (PortableServer)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_RequestProcessingPolicy, &_tc_TAO_tc_PortableServer_RequestProcessingPolicy)
 TAO_NAMESPACE_END
 
-#endif /* TAO_HAS_MINIMUM_CORBA */
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 PortableServer::POAManager_ptr PortableServer::POAManager::_duplicate (PortableServer::POAManager_ptr obj)
 {
@@ -1601,7 +1601,7 @@ TAO_NAMESPACE_BEGIN (PortableServer)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_POAManager, &_tc_TAO_tc_PortableServer_POAManager)
 TAO_NAMESPACE_END
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_POA == 0)
 
 PortableServer::AdapterActivator_ptr PortableServer::AdapterActivator::_duplicate (PortableServer::AdapterActivator_ptr obj)
 {
@@ -1897,7 +1897,7 @@ TAO_NAMESPACE_BEGIN (PortableServer)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ServantLocator, &_tc_TAO_tc_PortableServer_ServantLocator)
 TAO_NAMESPACE_END
 
-#endif /* TAO_HAS_MINIMUM_CORBA */
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 PortableServer::POA_ptr PortableServer::POA::_duplicate (PortableServer::POA_ptr obj)
 {
@@ -2073,7 +2073,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableServer_POA_AdapterAlreadyExists
  (PortableServer::POA::AdapterAlreadyExists));
 CORBA::TypeCode_ptr PortableServer::POA::_tc_AdapterAlreadyExists = &_tc_TAO_tc_PortableServer_POA_AdapterAlreadyExists;
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_POA == 0)
 
 // default constructor
 PortableServer::POA::AdapterInactive::AdapterInactive (void)
@@ -2207,7 +2207,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableServer_POA_AdapterInactive
  (PortableServer::POA::AdapterInactive));
 CORBA::TypeCode_ptr PortableServer::POA::_tc_AdapterInactive = &_tc_TAO_tc_PortableServer_POA_AdapterInactive;
 
-#endif /* TAO_HAS_MINIMUM_CORBA */
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 // default constructor
 PortableServer::POA::AdapterNonExistent::AdapterNonExistent (void)
@@ -2485,7 +2485,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableServer_POA_InvalidPolicy
  (PortableServer::POA::InvalidPolicy));
 CORBA::TypeCode_ptr PortableServer::POA::_tc_InvalidPolicy = &_tc_TAO_tc_PortableServer_POA_InvalidPolicy;
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_POA == 0)
 
 // default constructor
 PortableServer::POA::NoServant::NoServant (void)
@@ -2621,7 +2621,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableServer_POA_NoServant (CORBA::tk_except
                                                              sizeof (PortableServer::POA::NoServant));
 CORBA::TypeCode_ptr PortableServer::POA::_tc_NoServant = &_tc_TAO_tc_PortableServer_POA_NoServant;
 
-#endif /* TAO_HAS_MINIMUM_CORBA */
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 // default constructor
 PortableServer::POA::ObjectAlreadyActive::ObjectAlreadyActive (void)
@@ -3654,7 +3654,7 @@ PortableServer::ObjectId * PortableServer::Current::get_object_id (CORBA::Enviro
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
 
-    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+    CORBA::Short flag = 131;
 
     _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                               ACE_TRY_ENV);

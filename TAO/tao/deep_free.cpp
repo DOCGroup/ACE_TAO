@@ -84,10 +84,6 @@ DEEP_FREE (CORBA::TypeCode_ptr  param,
       break;
     case CORBA::tk_struct:
       retval = TAO_Marshal_Struct::deep_free (param, source, dest, ACE_TRY_ENV);
-
-      // @@ It's likely that other types will need their top-level
-      // memory freed as well. --- Carlos (and Seth).
-      // delete source;
       break;
     case CORBA::tk_union:
       retval = TAO_Marshal_Union::deep_free (param, source, dest, ACE_TRY_ENV);
@@ -97,6 +93,14 @@ DEEP_FREE (CORBA::TypeCode_ptr  param,
       break;
     case CORBA::tk_sequence:
       retval = TAO_Marshal_Sequence::deep_free (param, source, dest, ACE_TRY_ENV);
+      // @@ (JP) This takes care of a memory leak we had for recursive unions
+      // and unions that contain an anonymous sequence. For unions that contain
+      // typedef'd sequences and other cases where the union member is a 
+      // pointer, we still have leaks. These are not so easy to fix for all
+      // cases. What we need is Carlos' _tao_destroy() method in the stubs.
+      delete ACE_reinterpret_cast (TAO_Base_Sequence *, 
+                                   ACE_const_cast (void *, 
+                                                   source));
       break;
     case CORBA::tk_array:
       retval = TAO_Marshal_Array::deep_free (param, source, dest, ACE_TRY_ENV);
@@ -130,7 +134,7 @@ TAO_Marshal_Primitive::deep_free (CORBA::TypeCode_ptr  tc,
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    "TAO_Marshal_Primitive::deep_free detected error\n"));
+                    ASYS_TEXT ("TAO_Marshal_Primitive::deep_free detected error\n")));
       ACE_THROW_RETURN (CORBA::BAD_TYPECODE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE), CORBA::TypeCode::TRAVERSE_STOP);
     }
 
@@ -159,7 +163,7 @@ TAO_Marshal_Primitive::deep_free (CORBA::TypeCode_ptr  tc,
     default:
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    "TAO_Marshal_Primitive::deep_free detected error\n"));
+                    ASYS_TEXT ("TAO_Marshal_Primitive::deep_free detected error\n")));
       ACE_THROW_RETURN (CORBA::BAD_TYPECODE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE),
                         CORBA::TypeCode::TRAVERSE_STOP);
     }
@@ -177,7 +181,7 @@ TAO_Marshal_Struct::deep_free (CORBA::TypeCode_ptr  tc,
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    "TAO_Marshal_Struct::deep_free detected error\n"));
+                    ASYS_TEXT ("TAO_Marshal_Struct::deep_free detected error\n")));
       ACE_THROW_RETURN (CORBA::BAD_TYPECODE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE), CORBA::TypeCode::TRAVERSE_STOP);
     }
 
@@ -303,7 +307,7 @@ TAO_Marshal_Struct::deep_free (CORBA::TypeCode_ptr  tc,
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    "TAO_Marshal_Struct::deep_free detected error\n"));
+                    ASYS_TEXT ("TAO_Marshal_Struct::deep_free detected error\n")));
       ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE),
                         CORBA::TypeCode::TRAVERSE_STOP);
     }
@@ -502,7 +506,7 @@ TAO_Marshal_Array::deep_free (CORBA::TypeCode_ptr  tc,
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    "TAO_Marshal_Struct::deep_free detected error\n"));
+                    ASYS_TEXT ("TAO_Marshal_Struct::deep_free detected error\n")));
       ACE_THROW_RETURN (CORBA::BAD_TYPECODE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE),
                         CORBA::TypeCode::TRAVERSE_STOP);
     }
@@ -647,7 +651,7 @@ TAO_Marshal_Array::deep_free (CORBA::TypeCode_ptr  tc,
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    "TAO_Marshal_Sequence::deep_free detected error\n"));
+                    ASYS_TEXT ("TAO_Marshal_Sequence::deep_free detected error\n")));
       // error exit
       ACE_THROW_RETURN (CORBA::MARSHAL (), CORBA::TypeCode::TRAVERSE_STOP);
     }
@@ -669,7 +673,7 @@ TAO_Marshal_Alias::deep_free (CORBA::TypeCode_ptr  tc,
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    "TAO_Marshal_Alias::deep_free detected error\n"));
+                    ASYS_TEXT ("TAO_Marshal_Alias::deep_free detected error\n")));
       ACE_THROW_RETURN (CORBA::BAD_TYPECODE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE),
                         CORBA::TypeCode::TRAVERSE_STOP);
     }
@@ -749,7 +753,7 @@ TAO_Marshal_Alias::deep_free (CORBA::TypeCode_ptr  tc,
       // We should never reach here.
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    "TAO_Marshal_Alias::decode detected error\n"));
+                    ASYS_TEXT ("TAO_Marshal_Alias::decode detected error\n")));
       ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE),
                         CORBA::TypeCode::TRAVERSE_STOP);
     }
@@ -776,7 +780,7 @@ TAO_Marshal_Except::deep_free (CORBA::TypeCode_ptr  tc,
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    "TAO_Marshal_Except::deep_free detected error\n"));
+                    ASYS_TEXT ("TAO_Marshal_Except::deep_free detected error\n")));
       ACE_THROW_RETURN (CORBA::BAD_TYPECODE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE),
                         CORBA::TypeCode::TRAVERSE_STOP);
     }

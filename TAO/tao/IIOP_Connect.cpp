@@ -9,6 +9,7 @@
 #include "tao/CDR.h"
 #include "tao/Messaging_Policy_i.h"
 
+
 #if !defined (__ACE_INLINE__)
 # include "tao/IIOP_Connect.i"
 #endif /* ! __ACE_INLINE__ */

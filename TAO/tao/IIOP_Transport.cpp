@@ -1,6 +1,7 @@
 // This may look like C, but it's really -*- C++ -*-
 // $Id$
 
+
 #include "tao/IIOP_Transport.h"
 #include "tao/IIOP_Connect.h"
 #include "tao/IIOP_Profile.h"
@@ -80,7 +81,7 @@ TAO_IIOP_Transport::handler (void)
 int
 TAO_IIOP_Transport::idle (void)
 {
-  return this->handler_->idle();
+  return this->handler_->idle ();
 }
 
 void
@@ -179,19 +180,6 @@ TAO_IIOP_Client_Transport::start_locate (TAO_ORB_Core */*orb_core*/,
                                          CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  /*  const TAO_IIOP_Profile* profile =
-      ACE_dynamic_cast(const TAO_IIOP_Profile*, pfile); */
-
-  // Obtain object key.
-  //const TAO_ObjectKey& key = profile->object_key ();
-
-  // @@ This should be implemented in the transport object, which
-  //    would query the profile to obtain the version...
-  /*if (TAO_GIOP::start_message (profile->version (),
-                               TAO_GIOP::LocateRequest,
-                               output,
-                               orb_core) == 0)*/
-
   // See this is GIOP way of doing this..But anyway IIOP will be tied
   // up with GIOP. 
   if (this->client_mesg_factory_->write_protocol_header

@@ -12,7 +12,7 @@ TAO_Stub::set_profile_in_use_i (TAO_Profile *pfile)
   if (pfile && (pfile->_incr_refcnt () == 0))
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                        "(%P|%t) unable to increment profile ref!\n"),
+                        ASYS_TEXT ("(%P|%t) unable to increment profile ref!\n")),
                         0);
     }
 

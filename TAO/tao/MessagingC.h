@@ -1,6 +1,7 @@
 /* -*- C++ -*- */
 //
 // $Id$
+
 //
 // ================================================================
 //
@@ -83,6 +84,11 @@ TAO_NAMESPACE  Messaging
   TAO_NAMESPACE_STORAGE_CLASS const CORBA::Short SYNC_WITH_SERVER;
 
   TAO_NAMESPACE_STORAGE_CLASS const CORBA::Short SYNC_WITH_TARGET;
+
+  // = TAO specific.
+  TAO_NAMESPACE_STORAGE_CLASS const CORBA::Short SYNC_EAGER_BUFFERING;
+
+  TAO_NAMESPACE_STORAGE_CLASS const CORBA::Short SYNC_DELAYED_BUFFERING;
 
   typedef CORBA::Short RoutingType;
   typedef CORBA::Short_out RoutingType_out;
@@ -2110,8 +2116,7 @@ TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, Messaging::PolicyValu
 
 #if (TAO_HAS_AMI_CALLBACK == 1)
 extern TAO_Export  Messaging::ReplyHandler_ptr (*_TAO_collocation_Messaging_ReplyHandler_Stub_Factory_function_pointer) (
-                                                                                                                         CORBA::Object_ptr obj);
-
+                                     CORBA::Object_ptr obj);
 // Any operators for interface Messaging::ReplyHandler
 TAO_Export void operator<<= (CORBA::Any &, Messaging::ReplyHandler_ptr);
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, Messaging::ReplyHandler *&);
@@ -2119,13 +2124,11 @@ TAO_Export CORBA::Boolean  operator<< (TAO_OutputCDR &, const Messaging::Excepti
 TAO_Export CORBA::Boolean  operator>> (TAO_InputCDR &, Messaging::ExceptionHolder *&);
 #endif /* TAO_HAS_AMI_CALLBACK == 1 */
 
-
 #if (TAO_HAS_AMI_POLLER == 1)
 // Any operators for interface Messaging::Poller
 TAO_Export void operator<<= (CORBA::Any &, Messaging::Poller_ptr);
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, Messaging::Poller *&);
 #endif /* TAO_HAS_AMI_POLLER == 1 */
-
 
 #ifndef __ACE_INLINE__
 

@@ -79,3 +79,9 @@ TAO_Tagged_Components::unique_tag (IOP::ComponentId tag) const
           || tag == IOP::TAG_DCE_NO_PIPES
           || tag == IOP::TAG_DCE_SEC_MECH);
 }
+
+ACE_INLINE IOP::MultipleComponentProfile&
+TAO_Tagged_Components::components (void)
+{
+  return this->components_;
+}

@@ -1,6 +1,7 @@
 // $Id$
 
 
+
 // @ (#)iiopobj.cpp     1.9 95/11/04
 // Copyright 1995 by Sun Microsystems Inc.
 // All Rights Reserved
@@ -362,7 +363,7 @@ TAO_Stub::do_static_call (CORBA::Environment &ACE_TRY_ENV,
           call.start (ACE_TRY_ENV);
           ACE_CHECK;
 
-          CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+          CORBA::Short flag = 131;
 
           call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                                ACE_TRY_ENV);
@@ -625,7 +626,7 @@ TAO_Stub::do_dynamic_call (const char *opname,
           call.start (ACE_TRY_ENV);
           ACE_CHECK;
 
-          CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+          CORBA::Short flag = 131;
 
           call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                                ACE_TRY_ENV);
@@ -757,7 +758,7 @@ TAO_Stub::do_deferred_call (const CORBA::Request_ptr req,
       call.start (ACE_TRY_ENV);
       ACE_CHECK;
 
-      CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+      CORBA::Short flag = 131;
 
       call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
                            ACE_TRY_ENV);
@@ -1154,8 +1155,13 @@ TAO_Stub::sync_strategy (void)
           scope == Messaging::SYNC_WITH_TARGET)
         return this->orb_core_->transport_sync_strategy ();
 
-      if (scope == Messaging::SYNC_NONE)
-        return this->orb_core_->none_sync_strategy ();
+      if (scope == Messaging::SYNC_NONE ||
+          scope == Messaging::SYNC_EAGER_BUFFERING)
+        return this->orb_core_->eager_buffering_sync_strategy ();
+
+      if (scope == Messaging::SYNC_DELAYED_BUFFERING)
+        return this->orb_core_->delayed_buffering_sync_strategy ();
+
     }
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */

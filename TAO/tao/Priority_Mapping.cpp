@@ -2,7 +2,7 @@
 
 #include "tao/orbconf.h"
 
-#if defined (TAO_HAS_RT_CORBA)
+#if (TAO_HAS_RT_CORBA == 1)
 
 #include "tao/Priority_Mapping.h"
 
@@ -34,4 +34,4 @@ TAO_Priority_Mapping::to_CORBA (RTCORBA::NativePriority,
   return 0;
 }
 
-#endif /* TAO_HAS_RT_CORBA */
+#endif /* TAO_HAS_RT_CORBA == 1 */

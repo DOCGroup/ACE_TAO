@@ -28,7 +28,7 @@ TAO_GIOP_Message_Connectors::
 
    // @@ (JP) Temporary hack until all of GIOP 1.2 is implemented.
   if (response_flags == 131)
-    out_stream << CORBA::Any::from_octet (1);
+    msg << CORBA::Any::from_octet (1);
 
   // Second the response flags
   // Sync scope - ignored by server if request is not oneway.

@@ -1,5 +1,6 @@
 // $Id$
 
+
 #include "tao/Messaging_Policy_i.h"
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
@@ -11,6 +12,7 @@
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(TAO, Messaging_Policy_i, "$Id$")
+
 
 
 TAO_RelativeRoundtripTimeoutPolicy::TAO_RelativeRoundtripTimeoutPolicy (PortableServer::POA_ptr poa,
@@ -157,18 +159,6 @@ TAO_Sync_Scope_Policy::TAO_Sync_Scope_Policy (const TAO_Sync_Scope_Policy &rhs)
     synchronization_ (rhs.synchronization_),
     poa_ (rhs.poa_)
 {
-}
-
-Messaging::SyncScope
-TAO_Sync_Scope_Policy::synchronization (CORBA::Environment &)
-{
-  return this->synchronization_;
-}
-
-Messaging::SyncScope
-TAO_Sync_Scope_Policy::synchronization (void)
-{
-  return this->synchronization_;
 }
 
 CORBA::PolicyType

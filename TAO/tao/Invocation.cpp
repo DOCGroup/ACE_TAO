@@ -1,5 +1,6 @@
 // $Id$
 
+
 #include "tao/Invocation.h"
 #include "tao/Stub.h"
 #include "tao/Principal.h"
@@ -296,7 +297,7 @@ TAO_GIOP_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
     }
 
   // Obtain unique request id from the RMS.
-  this->request_id_ = this->transport_->tms()->request_id ();
+  this->request_id_ = this->transport_->tms ()->request_id ();
 
   countdown.update ();
 }
@@ -530,7 +531,7 @@ TAO_GIOP_Invocation::location_forward (TAO_InputCDR &inp_stream,
 TAO_GIOP_Twoway_Invocation::~TAO_GIOP_Twoway_Invocation (void)
 {
   if (this->transport_ != 0)
-    this->transport_->idle ();
+    this->transport_->idle_after_reply ();
 }
 
 void
@@ -925,7 +926,7 @@ TAO_GIOP_Oneway_Invocation (TAO_Stub *stub,
 TAO_GIOP_Oneway_Invocation::~TAO_GIOP_Oneway_Invocation (void)
 {
   if (this->transport_ != 0)
-    this->transport_->idle ();
+    this->transport_->idle_after_reply ();
 }
 
 void
@@ -948,17 +949,19 @@ int
 TAO_GIOP_Oneway_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  if (this->sync_scope_ == TAO::SYNC_WITH_TRANSPORT
-      || this->sync_scope_ == TAO::SYNC_NONE)
+  if (this->sync_scope_ == TAO::SYNC_WITH_TRANSPORT ||
+      this->sync_scope_ == TAO::SYNC_NONE ||
+      this->sync_scope_ == TAO::SYNC_EAGER_BUFFERING ||
+      this->sync_scope_ == TAO::SYNC_DELAYED_BUFFERING)
     {
       return TAO_GIOP_Invocation::invoke (0,
                                           ACE_TRY_ENV);
     }
 
-
   // Create this only if a reply is required.
   TAO_Synch_Reply_Dispatcher rd (this->orb_core_,
                                  this->service_info_);
+
 
   // The rest of this function is very similar to
   // TWO_GIOP_Twoway_Invocation::invoke_i, because we must
@@ -1128,7 +1131,7 @@ TAO_GIOP_Oneway_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
 TAO_GIOP_Locate_Request_Invocation::~TAO_GIOP_Locate_Request_Invocation (void)
 {
   if (this->transport_ != 0)
-    this->transport_->idle ();
+    this->transport_->idle_after_reply ();
 }
 
 // Send request, block until any reply comes back.

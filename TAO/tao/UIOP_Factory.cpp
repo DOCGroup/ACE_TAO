@@ -3,7 +3,7 @@
 
 #include "tao/UIOP_Factory.h"
 
-#if defined (TAO_HAS_UIOP)
+#if TAO_HAS_UIOP == 1
 
 #include "tao/UIOP_Acceptor.h"
 #include "tao/UIOP_Connector.h"
@@ -69,6 +69,7 @@ TAO_UIOP_Protocol_Factory::make_connector (void)
   ACE_NEW_RETURN (connector,
                   TAO_UIOP_Connector,
                   0);
+
   return connector;
 }
 
@@ -89,4 +90,4 @@ ACE_STATIC_SVC_DEFINE (TAO_UIOP_Protocol_Factory,
 ACE_FACTORY_DEFINE (TAO, TAO_UIOP_Protocol_Factory)
 
 
-#endif  /* TAO_HAS_UIOP */
+#endif  /* TAO_HAS_UIOP == 1 */

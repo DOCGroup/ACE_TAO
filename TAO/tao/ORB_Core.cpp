@@ -1,6 +1,7 @@
 // $Id$
 
 
+
 #include "tao/ORB_Core.h"
 
 #include "ace/Env_Value_T.h"
@@ -108,7 +109,8 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     open_called_ (0),
     priority_mapping_ (0),
 #if (TAO_HAS_CORBA_MESSAGING == 1)
-    none_sync_strategy_ (0),
+    eager_buffering_sync_strategy_ (0),
+    delayed_buffering_sync_strategy_ (0),
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
     transport_sync_strategy_ (0),
     svc_config_argc_ (0),
@@ -124,8 +126,12 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
-  ACE_NEW (this->none_sync_strategy_,
-           TAO_None_Sync_Strategy);
+  ACE_NEW (this->eager_buffering_sync_strategy_,
+           TAO_Eager_Buffering_Sync_Strategy);
+
+
+  ACE_NEW (this->delayed_buffering_sync_strategy_,
+           TAO_Delayed_Buffering_Sync_Strategy);
 
   ACE_NEW (this->policy_manager_,
            TAO_Policy_Manager);
@@ -152,7 +158,8 @@ TAO_ORB_Core::~TAO_ORB_Core (void)
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
-  delete this->none_sync_strategy_;
+  delete this->eager_buffering_sync_strategy_;
+  delete this->delayed_buffering_sync_strategy_;
 
   delete this->policy_manager_;
   delete this->default_policies_;
@@ -833,7 +840,7 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
                 ("-ORBLogFile")))
         {
           //
-          // redirect all ACE_DEUBG and ACE_ERROR output to a file
+          // redirect all ACE_DEBUG and ACE_ERROR output to a file
           // USAGE: -ORBLogFile <file>
           // default: if <file> is present     = append
           //          if <file> is not present = create
@@ -888,6 +895,45 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
           this->use_implrepo_ = ACE_OS::atoi (current_arg);
 
           arg_shifter.consume_arg ();
+        }
+      else if ((current_arg = arg_shifter.get_the_parameter
+                ("-ORBSetUID")))
+        {
+          // Set the effective user ID of the current ORB process.
+          uid_t orb_uid =
+            ACE_static_cast (uid_t, ACE_OS::atoi (current_arg));
+
+          arg_shifter.consume_arg ();
+
+          if (ACE_OS::setuid (orb_uid) != 0)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ASYS_TEXT ("Error setting effective user ")
+                                 ASYS_TEXT ("ID for ORB <%s>%p\n"),
+                                 this->orbid_,
+                                 ASYS_TEXT("")),
+                                -1);
+            }
+        }
+      else if ((current_arg = arg_shifter.get_the_parameter
+                ("-ORBSetGID")))
+        {
+          // Set the effective group ID of the current ORB process.
+
+          uid_t orb_gid =
+            ACE_static_cast (gid_t, ACE_OS::atoi (current_arg));
+
+          arg_shifter.consume_arg ();
+
+          if (ACE_OS::setgid (orb_gid) != 0)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ASYS_TEXT ("Error setting effective group ")
+                                 ASYS_TEXT ("ID for ORB <%s>%p\n"),
+                                 this->orbid_,
+                                 ASYS_TEXT("")),
+                                -1);
+            }
         }
 
       ////////////////////////////////////////////////////////////////
@@ -1597,20 +1643,24 @@ TAO_ORB_Core::leader_follower (void)
 
 int
 TAO_ORB_Core::run (ACE_Time_Value *tv,
-                   int break_on_timeouts,
+                   int perform_work,
                    CORBA::Environment &ACE_TRY_ENV)
 {
   if (TAO_debug_level >= 3)
     ACE_DEBUG ((LM_DEBUG,
-                ASYS_TEXT ("TAO (%P|%t) - start of run\n")));
+                ASYS_TEXT ("TAO (%P|%t) - start of run/perform_work\n")));
 
   TAO_Leader_Follower &leader_follower = this->leader_follower ();
-  {
-    ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon,
-                      leader_follower.lock (), -1);
+  TAO_LF_Event_Loop_Thread_Helper event_loop_thread_helper (leader_follower);
 
-    leader_follower.set_server_thread ();
-  }
+  int result = event_loop_thread_helper.set_event_loop_thread (tv);
+  if (result != 0)
+    {
+      if (errno == ETIME)
+        return 0;
+      else
+        return result;
+    }
 
   ACE_Reactor *r = this->reactor ();
 
@@ -1630,7 +1680,7 @@ TAO_ORB_Core::run (ACE_Time_Value *tv,
   if (ret == -1)
     return -1;
 
-  int result = 1;
+  result = 1;
   // 1 to detect that nothing went wrong
 
   // Loop handling client requests until the ORB is shutdown.
@@ -1647,8 +1697,10 @@ TAO_ORB_Core::run (ACE_Time_Value *tv,
                     ASYS_TEXT ("TAO (%P|%t) - blocking on handle events\n")));
       switch (r->handle_events (tv))
         {
-        case 0: // Timed out, so we return to caller.
-          if (break_on_timeouts)
+        case 0:
+          // Make sure that a timed out occured.  If so, we return to
+          // caller.
+          if (tv != 0 && *tv == ACE_Time_Value::zero)
             result = 0;
           break;
           /* NOTREACHED */
@@ -1664,23 +1716,14 @@ TAO_ORB_Core::run (ACE_Time_Value *tv,
         }
       if (result == 0 || result == -1)
         break;
+
+      // In perform_work, we only run the loop once.
+      if (perform_work)
+        break;
     }
 
-  {
-    ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon,
-                      leader_follower.lock (), -1);
-
-    leader_follower.reset_server_thread ();
-
-    if (leader_follower.elect_new_leader () == -1)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ASYS_TEXT ("TAO (%P|%t) Failed to wake up ")
-                         ASYS_TEXT ("a follower thread\n")),
-                        -1);
-  }
-
   if (TAO_debug_level >= 3)
-    ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("TAO (%P|%t) - end of run %d\n"), result));
+    ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("TAO (%P|%t) - end of run/perform_work %d\n"), result));
 
   return result;
 }
@@ -2139,8 +2182,8 @@ TAO_ORB_Core_TSS_Resources::TAO_ORB_Core_TSS_Resources (void)
      input_cdr_dblock_allocator_ (0),
      input_cdr_buffer_allocator_ (0),
      connection_cache_ (0),
-     is_server_thread_ (0),
-     is_leader_thread_ (0),
+     event_loop_thread_ (0),
+     client_leader_thread_ (0),
      leader_follower_condition_variable_ (0),
      reactor_registry_ (0),
      reactor_registry_cookie_ (0)
@@ -2266,6 +2309,8 @@ TAO_ORB_Table::unbind (const char *orb_id)
           Iterator end = this->end ();
           if (begin != end)
             this->first_orb_ = (*begin).int_id_;
+          else
+            this->first_orb_ = 0;
         }
     }
   return result;

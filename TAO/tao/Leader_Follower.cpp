@@ -44,6 +44,52 @@ TAO_Leader_Follower::get_next_follower (void)
   return cond;
 }
 
+int
+TAO_Leader_Follower::wait_for_client_leader_to_complete (ACE_Time_Value *max_wait_time)
+{
+  int result = 0;
+  ACE_Countdown_Time countdown (max_wait_time);
+
+  // Note that we are waiting.
+  ++this->event_loop_threads_waiting_;
+
+  while (this->client_thread_is_leader_ &&
+         result != -1)
+    {
+      if (max_wait_time == 0)
+        {
+          if (this->event_loop_threads_condition_.wait () == -1)
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ASYS_TEXT ("TAO (%P|%t): TAO_Leader_Follower::wait_for_client_leader_to_complete - ")
+                          ASYS_TEXT ("Condition variable wait failed\n")));
+
+              result = -1;
+            }
+        }
+      else
+        {
+          countdown.update ();
+          ACE_Time_Value tv = ACE_OS::gettimeofday ();
+          tv += *max_wait_time;
+          if (this->event_loop_threads_condition_.wait (&tv) == -1)
+            {
+              if (errno != ETIME)
+                ACE_ERROR ((LM_ERROR,
+                            ASYS_TEXT ("TAO (%P|%t): TAO_Leader_Follower::wait_for_client_leader_to_complete - ")
+                            ASYS_TEXT ("Condition variable wait failed\n")));
+
+              result = -1;
+            }
+        }
+    }
+
+  // Reset waiting state.
+  --this->event_loop_threads_waiting_;
+
+  return result;
+}
+
 ACE_Reactor *
 TAO_Leader_Follower::reactor (void)
 {

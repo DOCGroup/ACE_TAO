@@ -84,7 +84,7 @@ TAO_Exclusive_TMS::dispatch_reply (CORBA::ULong request_id,
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    "TAO_Exclusive_TMS::dispatch_reply - <%d != %d>\n",
+                    ASYS_TEXT ("TAO_Exclusive_TMS::dispatch_reply - <%d != %d>\n"),
                     this->request_id_, request_id));
       return 0;
     }
@@ -131,14 +131,14 @@ TAO_Exclusive_TMS::idle_after_send (void)
   return 0;
 }
 
-// int
-// TAO_Exclusive_TMS::idle_after_reply (void)
-// {
-//   if (this->transport_ != 0)
-//     return this->transport_->idle ();
-//
-//   return 0;
-// }
+int
+TAO_Exclusive_TMS::idle_after_reply (void)
+{
+  if (this->transport_ != 0)
+    return this->transport_->idle ();
+
+  return 0;
+}
 
 // int
 // TAO_Exclusive_TMS::reply_received (const CORBA::ULong request_id)
@@ -203,8 +203,8 @@ TAO_Muxed_TMS::bind_dispatcher (CORBA::ULong request_id,
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    "(%P | %t):TAO_Muxed_TMS::bind_dispatcher: "
-                    "bind dispatcher failed: result = %d\n",
+                    ASYS_TEXT ("(%P | %t):TAO_Muxed_TMS::bind_dispatcher: ")
+                    ASYS_TEXT ("bind dispatcher failed: result = %d\n"),
                     result));
 
       return -1;
@@ -236,8 +236,8 @@ TAO_Muxed_TMS::dispatch_reply (CORBA::ULong request_id,
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    "(%P | %t):TAO_Muxed_TMS::dispatch_reply: "
-                    "unbind dispatcher failed: result = %d\n",
+                    ASYS_TEXT ("(%P | %t):TAO_Muxed_TMS::dispatch_reply: ")
+                    ASYS_TEXT ("unbind dispatcher failed: result = %d\n"),
                     result));
 
       return -1;
@@ -288,11 +288,12 @@ TAO_Muxed_TMS::idle_after_send (void)
   return 0;
 }
 
-// int
-// TAO_Muxed_TMS::idle_after_reply (void)
-// {
-//   return 0;
-// }
+int
+TAO_Muxed_TMS::idle_after_reply (void)
+{
+  // No op.
+  return 0;
+}
 
 // int
 // TAO_Muxed_TMS::reply_received (const CORBA::ULong request_id)
