@@ -309,7 +309,7 @@ public:
   virtual ACE_Message_Block *clone (Message_Flags mask = 0) const;
 
   /// Return a "shallow" copy that increments our reference count by 1.
-  ACE_Message_Block *duplicate (void) const;
+  virtual ACE_Message_Block *duplicate (void) const;
 
   /**
    * Return a "shallow" copy that increments our reference count by 1.
@@ -343,7 +343,7 @@ public:
    * fall off the stack, cleanup of the message blocks in the
    * continuation chain becomes the responsibility of the user.
    */
-  ACE_Message_Block *release (void);
+  virtual ACE_Message_Block *release (void);
 
   /**
    * This behaves like the non-static method <release>, except that it
