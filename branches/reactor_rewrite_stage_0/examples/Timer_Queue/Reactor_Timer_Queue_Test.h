@@ -23,13 +23,17 @@
 #ifndef _REACTOR_TIMER_QUEUE_TEST_H_
 #define _REACTOR_TIMER_QUEUE_TEST_H_
 
-#include "ace/Timer_Heap.h"
+#include "Driver.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Driver.h"
+/// @@todo: Not sure why this needs to be included. But am sure that,
+/// there is some circular dependency setup. Needs to be
+/// fixed. Atleast on g++
+#include "ace/Timer_Queue.h"
+#include "ace/Timer_Heap.h"
 
 class Reactor_Timer_Queue_Test_Driver;
 

@@ -50,7 +50,7 @@ protected:
 };
 
 
-#if !defined (__ACE_INLINE__)
+#if defined (__ACE_INLINE__)
 #include "ace/Refcountable.inl"
 #endif /* __ACE_INLINE __ */
 
