@@ -28,6 +28,7 @@ ifndef TAO_ORBSVCS
                 Time \
                 Property \
 		RTEvent \
+		NativeCosEvent \
                 CosEvent \
                 Sched \
                 RTOLDEvent \
