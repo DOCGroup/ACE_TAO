@@ -49,6 +49,7 @@ public:
 		     CosTrading::IllegalPropertyName,
 		     CosTrading::DuplicatePropertyName,
 		     CosTrading::DuplicatePolicyName));
+  
 private:
 
   void display_results (const CosTrading::OfferSeq& offer_seq,
