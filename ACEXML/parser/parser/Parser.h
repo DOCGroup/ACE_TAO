@@ -25,27 +25,6 @@
 #include "ace/Containers_T.h"
 #include "parser/parser/Entity_Manager.h"
 
-typedef ACE_Hash_Map_Entry<ACEXML_String,
-                           ACEXML_String> ACEXML_ENTITY_ENTRY;
-
-typedef ACE_Hash_Map_Manager_Ex<ACEXML_String,
-                                ACEXML_String,
-                                ACE_Hash<ACEXML_String>,
-                                ACE_Equal_To<ACEXML_String>,
-                                ACE_Null_Mutex> ACEXML_ENTITIES_MANAGER;
-
-typedef ACE_Hash_Map_Iterator_Ex<ACEXML_String,
-                                 ACEXML_String,
-                                 ACE_Hash<ACEXML_String>,
-                                 ACE_Equal_To<ACEXML_String>,
-                                 ACE_Null_Mutex> ACEXML_ENTITIES_MANAGER_ITER;
-
-typedef ACE_Hash_Map_Reverse_Iterator_Ex<ACEXML_String,
-                                         ACEXML_String,
-                                         ACE_Hash<ACEXML_String>,
-                                         ACE_Equal_To<ACEXML_String>,
-                                         ACE_Null_Mutex> ACEXML_ENTITIES_MANAGER_REVERSE_ITER;
-
 /**
  * @class ACEXML_Parser Parser.h "parser/parser/Parser.h"
  *
@@ -81,8 +60,10 @@ public:
    */
   virtual ACEXML_ErrorHandler *getErrorHandler (void) const;
 
-  /*
-   * Look up the value of a feature.
+  /**
+   * Look up the value of a feature.  This method allows
+   * programmers to check whether a specific feature has been
+   * activated in the parser.
    */
   virtual int getFeature (const ACEXML_Char *name,
                   ACEXML_Env &xmlenv)
@@ -136,8 +117,8 @@ public:
    */
   virtual void setErrorHandler (ACEXML_ErrorHandler *handler);
 
-  /*
-   * Set the state of a feature.
+  /**
+   * Activating or deactivating a feature.
    */
   virtual void setFeature (const ACEXML_Char *name,
                            int boolean_value,
@@ -420,6 +401,20 @@ protected:
    */
   int try_grow_cdata (size_t size, size_t &len, ACEXML_Env &xmlenv);
 
+  // Feature names:
+
+  /**
+   * \addtogroup acexml_parser_features
+   * @{
+   */
+
+  /**
+   *
+   */
+  static const ACEXML_Char simple_parsing_name_[];
+
+  /* @} */
+
 private:
   /**
    * Check and dispatch errors/warnings to ErrorHandler.
@@ -457,6 +452,10 @@ private:
 
   // Locator
   ACEXML_LocatorImpl locator_;
+
+  // Feature flags &
+  int simple_parsing_;
+
 };
 
 #if defined (__ACEXML_INLINE__)

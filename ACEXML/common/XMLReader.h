@@ -56,7 +56,9 @@ public:
   virtual ACEXML_ErrorHandler *getErrorHandler (void) const = 0;
 
   /**
-   * Look up the value of a feature.
+   * Look up the value of a feature.  This method allows
+   * programmers to check whether a specific feature has been
+   * activated in the parser.
    */
   virtual int getFeature (const ACEXML_Char *name,
                   ACEXML_Env &xmlenv)
@@ -111,7 +113,7 @@ public:
   virtual void setErrorHandler (ACEXML_ErrorHandler *handler) = 0;
 
   /**
-   * Set the state of a feature.
+   * Activating or deactivating a feature.
    */
   virtual void setFeature (const ACEXML_Char *name,
                            int boolean_value,
