@@ -1,3 +1,8 @@
+Sat Apr 27 18:05:16 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
+
+	* orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.cpp:
+	  Modified the input parameter for the fini () member function.
+
 Sat Apr 27 18:09:01 2002  Balachandran Natarajan  <bala@guajira.cs.wustl.edu>
 
 	* tao/LF_Connect_Strategy.h: 
