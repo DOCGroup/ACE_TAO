@@ -51,7 +51,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
-# ADD LINK32 ace.lib TAO.lib TAO_PortableServer.lib TAO_ETCL.lib TAO_CosNotification.lib TAO_CosNaming.lib TAO_Svc_Utils.lib /nologo /subsystem:console /incremental:yes /map /debug /machine:I386 /pdbtype:sept /libpath:"..\..\..\..\orbsvcs" /libpath:"..\..\..\..\..\tao" /libpath:"..\..\..\..\..\tao\PortableServer" /libpath:"..\..\..\..\..\..\ace"
+# ADD LINK32 ace.lib TAO.lib TAO_PortableServer.lib TAO_ETCL.lib TAO_CosNotification.lib TAO_CosNaming.lib TAO_Svc_Utils.lib /nologo /subsystem:console /incremental:yes /map /debug /machine:I386 /pdbtype:sept /libpath:"..\..\..\..\orbsvcs" /libpath:"..\..\..\..\orbsvcs\ETCL" /libpath:"..\..\..\..\..\tao" /libpath:"..\..\..\..\..\tao\PortableServer" /libpath:"..\..\..\..\..\..\ace"
 # SUBTRACT LINK32 /pdb:none
 
 !ELSEIF  "$(CFG)" == "RedGreen - Win32 Debug"
@@ -77,7 +77,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 aced.lib TAOd.lib TAO_PortableServerd.lib TAO_ETCLd.lib TAO_CosNotificationd.lib TAO_CosNamingd.lib TAO_Svc_Utilsd.lib /nologo /subsystem:console /map /debug /machine:I386 /pdbtype:sept /libpath:"..\..\..\..\orbsvcs" /libpath:"..\..\..\..\..\tao" /libpath:"..\..\..\..\..\tao\PortableServer" /libpath:"..\..\..\..\..\..\ace"
+# ADD LINK32 aced.lib TAOd.lib TAO_PortableServerd.lib TAO_ETCLd.lib TAO_CosNotificationd.lib TAO_CosNamingd.lib TAO_Svc_Utilsd.lib /nologo /subsystem:console /map /debug /machine:I386 /pdbtype:sept /libpath:"..\..\..\..\orbsvcs" /libpath:"..\..\..\..\orbsvcs\ETCL" /libpath:"..\..\..\..\..\tao" /libpath:"..\..\..\..\..\tao\PortableServer" /libpath:"..\..\..\..\..\..\ace"
 # SUBTRACT LINK32 /pdb:none
 
 !ENDIF 
