@@ -10,6 +10,7 @@
 #define TAO_PERF_RTEC_SERVANT_VAR_H
 
 #include "ace/Swap.h"
+#include "tao/corba.h"
 
 /**
  * @class Servant_var
