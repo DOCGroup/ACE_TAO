@@ -15,6 +15,7 @@
 
 #include "JobS.h"
 #include "activity_export.h"
+#include "ace/SString.h"
 
 class ACE_Arg_Shifter;
 

@@ -25,6 +25,8 @@
 #include "corbalocC.h"
 #include "orbsvcs/orbsvcs/CosNamingC.h"
 
+#include "ace/SString.h"
+
 class IOR_corbaloc_Client_i
 {
   // = TITLE

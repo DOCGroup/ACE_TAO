@@ -31,6 +31,7 @@
 #include "ace/Synch.h"
 #include "ace/SString.h"
 #include "Event_CommS.h"
+#include "ace/Reactor.h"
 
 class ShutdownCallback
 {

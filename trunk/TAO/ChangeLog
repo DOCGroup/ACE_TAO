@@ -1,3 +1,32 @@
+Wed Aug  6 20:44:51 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * examples/Event_Comm/Event_Comm_i.h:
+          Added #include Reactor.h.
+
+        * examples/Logging/Logger_i.h:
+        * examples/POA/DSI/server.cpp:
+        * examples/POA/Default_Servant/client.cpp:
+        * examples/POA/Default_Servant/server.cpp:
+        * examples/POA/Explicit_Activation/server.cpp:
+        * examples/POA/Loader/Servant_Locator.h:
+        * examples/POA/NewPOA/NewPOA.cpp:
+        * examples/POA/On_Demand_Activation/server.cpp.
+        * examples/POA/TIE/server.cpp:
+        * examples/PluggableUDP/tests/Basic/UDP_Client_i.cpp:
+        * examples/PluggableUDP/tests/Performance/UDP_PerformanceClient.cpp:
+        * examples/RTCORBA/Activity/Job_i.h:
+        * examples/RTCORBA/Activity/POA_Holder.h:
+        * examples/RTCORBA/Activity/Periodic_Task.h:
+        * examples/RTScheduling/Job_i.h:
+        * examples/RTScheduling/POA_Holder.h:
+        * examples/Simple/bank/AccountManager_i.h:
+        * examples/ior_corbaloc/ior_corbaloc_client_i.h:
+        * examples/ior_corbaloc/status_i.h:
+          Added #include SString.h.
+
+        * examples/Simple/chat/Client_i.h:
+          Added #include of SString.h and Event_Handler.h.
+
 Wed Aug  6 10:44:08 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/IFR_Service/ifr_adding_visitor.cpp:

@@ -24,6 +24,8 @@
 #include "Receiver_i.h"
 #include "BroadcasterC.h"
 #include "ace/Read_Buffer.h"
+#include "ace/Event_Handler.h"
+#include "ace/SString.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

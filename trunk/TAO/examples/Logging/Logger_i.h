@@ -22,6 +22,7 @@
 
 #include "LoggerS.h"
 #include "ace/Hash_Map_Manager.h"
+#include "ace/SString.h"
 
 class Logger_i : public virtual POA_Logger
 {
