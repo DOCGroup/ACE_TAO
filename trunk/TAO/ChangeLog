@@ -1,3 +1,9 @@
+Mon Aug 11 14:44:00 UTC 2003  Stephen Torri storri@cse.wustl.edu
+
+	* orbsrvcs/orbsvcs/Metrics/Metrics_LocalCache.h:
+
+	  Added missing file.
+
 Mon Aug 11 12:36:19 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
