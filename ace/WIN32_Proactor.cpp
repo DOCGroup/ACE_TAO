@@ -174,7 +174,7 @@ ACE_WIN32_Proactor::create_asynch_read_stream_result (ACE_Handler &handler,
                                                       int priority,
                                                       int signal_number)
 {
-  ACE_Asynch_Read_Stream_Result_Impl *implementation;
+  ACE_Asynch_Read_Stream_Result_Impl *implementation = 0;
   ACE_NEW_RETURN (implementation,
                   ACE_WIN32_Asynch_Read_Stream_Result (handler,
                                                        handle,
@@ -198,7 +198,7 @@ ACE_WIN32_Proactor::create_asynch_write_stream_result (ACE_Handler &handler,
                                                        int priority,
                                                        int signal_number)
 {
-  ACE_Asynch_Write_Stream_Result_Impl *implementation;
+  ACE_Asynch_Write_Stream_Result_Impl *implementation = 0;
   ACE_NEW_RETURN (implementation,
                   ACE_WIN32_Asynch_Write_Stream_Result (handler,
                                                         handle,
@@ -224,7 +224,7 @@ ACE_WIN32_Proactor::create_asynch_read_file_result (ACE_Handler &handler,
                                                     int priority,
                                                     int signal_number)
 {
-  ACE_Asynch_Read_File_Result_Impl *implementation;
+  ACE_Asynch_Read_File_Result_Impl *implementation = 0;
   ACE_NEW_RETURN (implementation,
                   ACE_WIN32_Asynch_Read_File_Result (handler,
                                                      handle,
@@ -252,7 +252,7 @@ ACE_WIN32_Proactor::create_asynch_write_file_result (ACE_Handler &handler,
                                                      int priority,
                                                      int signal_number)
 {
-  ACE_Asynch_Write_File_Result_Impl *implementation;
+  ACE_Asynch_Write_File_Result_Impl *implementation = 0;
   ACE_NEW_RETURN (implementation,
                   ACE_WIN32_Asynch_Write_File_Result (handler,
                                                       handle,
@@ -279,7 +279,7 @@ ACE_WIN32_Proactor::create_asynch_accept_result (ACE_Handler &handler,
                                                  int priority,
                                                  int signal_number)
 {
-  ACE_Asynch_Accept_Result_Impl *implementation;
+  ACE_Asynch_Accept_Result_Impl *implementation = 0;
   ACE_NEW_RETURN (implementation,
                   ACE_WIN32_Asynch_Accept_Result (handler,
                                                   listen_handle,
@@ -309,7 +309,7 @@ ACE_WIN32_Proactor::create_asynch_transmit_file_result (ACE_Handler &handler,
                                                         int priority,
                                                         int signal_number)
 {
-  ACE_Asynch_Transmit_File_Result_Impl *implementation;
+  ACE_Asynch_Transmit_File_Result_Impl *implementation = 0;
   ACE_NEW_RETURN (implementation,
                   ACE_WIN32_Asynch_Transmit_File_Result (handler,
                                                          socket,
@@ -336,7 +336,7 @@ ACE_WIN32_Proactor::create_asynch_timer (ACE_Handler &handler,
                                          int priority,
                                          int signal_number)
 {
-  ACE_Asynch_Result_Impl *implementation;
+  ACE_Asynch_Result_Impl *implementation = 0;
   ACE_NEW_RETURN (implementation,
                   ACE_WIN32_Asynch_Timer (handler,
                                           act,
@@ -511,6 +511,7 @@ int
 ACE_WIN32_Proactor::post_wakeup_completions (int how_many)
 {
   ACE_WIN32_Wakeup_Completion *wakeup_completion = 0;
+
   for (ssize_t ci = 0; ci < how_many; ci++)
     {
       ACE_NEW_RETURN (wakeup_completion,
