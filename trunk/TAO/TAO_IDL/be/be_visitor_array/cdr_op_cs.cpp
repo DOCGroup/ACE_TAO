@@ -54,7 +54,8 @@ be_visitor_array_cdr_op_cs::visit_array (be_array *node)
     }
   else
     {
-      TAO_OutStream *os = tao_cg->client_stubs ();
+      TAO_OutStream *os = this->ctx_->stream ();
+
       be_type *bt; // base type of the array
 
       if (node->cli_stub_cdr_op_gen () || node->imported ())
@@ -78,7 +79,7 @@ be_visitor_array_cdr_op_cs::visit_array (be_array *node)
 
       //  set the sub state as generating code for the output operator
       this->ctx_->sub_state(TAO_CodeGen::TAO_CDR_OUTPUT);
-      *os << "inline CORBA::Boolean operator<< (TAO_OutputCDR &strm, "
+      *os << "ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, "
           << "const " << node->name () << "_forany &_tao_array)" << be_nl
           << "{" << be_idt_nl;
 
@@ -95,7 +96,7 @@ be_visitor_array_cdr_op_cs::visit_array (be_array *node)
       //  set the sub state as generating code for the input operator
       os->indent ();
       this->ctx_->sub_state(TAO_CodeGen::TAO_CDR_INPUT);
-      *os << "inline CORBA::Boolean operator>> (TAO_InputCDR &strm, "
+      *os << "ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, "
           << node->name () << "_forany &_tao_array)" << be_nl
           << "{" << be_idt_nl;
       if (bt->accept (this) == -1)

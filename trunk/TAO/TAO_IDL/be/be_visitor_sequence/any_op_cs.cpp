@@ -48,7 +48,7 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
   if (node->cli_stub_any_op_gen () || node->imported ())
     return 0;
 
-  TAO_OutStream *os = tao_cg->client_stubs ();
+  TAO_OutStream *os = this->ctx_->stream ();
 
   // Any <<= and >>= operators
   os->indent ();

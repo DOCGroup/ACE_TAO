@@ -47,7 +47,7 @@ be_visitor_union_any_op_ch::visit_union (be_union *node)
   if (node->cli_hdr_any_op_gen () || node->imported ())
     return 0;
 
-  TAO_OutStream *os = tao_cg->client_header ();
+  TAO_OutStream *os = this->ctx_->stream ();
 
   // generate the Any <<= and >>= operator declarations
   os->indent ();

@@ -48,11 +48,11 @@ be_visitor_exception_cdr_op_cs::visit_exception (be_exception *node)
   if (node->cli_stub_cdr_op_gen () || node->imported ())
     return 0;
 
-  TAO_OutStream *os = tao_cg->client_stubs ();
+  TAO_OutStream *os = this->ctx_->stream ();
 
   //  set the sub state as generating code for the output operator
   this->ctx_->sub_state(TAO_CodeGen::TAO_CDR_OUTPUT);
-  *os << "inline CORBA::Boolean operator<< (TAO_OutputCDR &strm, "
+  *os << "ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, "
       << "const " << node->name () << " &_tao_aggregate)" << be_nl
       << "{" << be_idt_nl;
   // do we have any members?
@@ -95,7 +95,7 @@ be_visitor_exception_cdr_op_cs::visit_exception (be_exception *node)
 
   // set the substate as generating code for the input operator
   this->ctx_->sub_state(TAO_CodeGen::TAO_CDR_INPUT);
-  *os << "inline CORBA::Boolean operator>> (TAO_InputCDR &strm, "
+  *os << "ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, "
       << node->name () << " &_tao_aggregate)" << be_nl
       << "{" << be_idt_nl;
   // retrieve the repository ID and compare with what we have
@@ -152,7 +152,7 @@ be_visitor_exception_cdr_op_cs::visit_exception (be_exception *node)
 int
 be_visitor_exception_cdr_op_cs::post_process (be_decl *bd)
 {
-  TAO_OutStream *os = tao_cg->client_stubs ();
+  TAO_OutStream *os = this->ctx_->stream ();
 
   if (!this->last_node (bd))
     {

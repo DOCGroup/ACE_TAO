@@ -48,17 +48,18 @@ be_visitor_enum_cdr_op_cs::visit_enum (be_enum *node)
   if (node->cli_stub_cdr_op_gen () || node->imported ())
     return 0;
 
-  TAO_OutStream *os = tao_cg->client_stubs ();
+  TAO_OutStream *os = this->ctx_->stream ();
+
 
   // generate CDR << and >> operators
   os->indent ();
-  *os << "inline CORBA::Boolean operator<< (TAO_OutputCDR &strm, "
+  *os << "ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, "
       << "const " << node->name () << " &_tao_enumval)" << be_nl
       << "{" << be_idt_nl
       << "return strm.write_ulong ((CORBA::ULong) _tao_enumval);" << be_uidt_nl
       << "}\n\n";
 
-  *os << "inline CORBA::Boolean operator>> (TAO_InputCDR &strm, "
+  *os << "ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, "
       << node->name () << " &_tao_enumval)" << be_nl
       << "{" << be_idt_nl
       << "CORBA::ULong _tao_temp;" << be_nl

@@ -48,11 +48,11 @@ be_visitor_union_cdr_op_cs::visit_union (be_union *node)
   if (node->cli_stub_cdr_op_gen () || node->imported ())
     return 0;
 
-  TAO_OutStream *os = tao_cg->client_stubs ();
+  TAO_OutStream *os = this->ctx_->stream ();
 
   //  set the sub state as generating code for the output operator
   this->ctx_->sub_state(TAO_CodeGen::TAO_CDR_OUTPUT);
-  *os << "inline CORBA::Boolean operator<< (TAO_OutputCDR &strm, "
+  *os << "ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, "
       << "const " << node->name () << " &_tao_union)" << be_nl
       << "{" << be_idt_nl
       << "return 1;" << be_uidt_nl
@@ -78,7 +78,7 @@ be_visitor_union_cdr_op_cs::visit_union (be_union *node)
 
   // set the substate as generating code for the input operator
   this->ctx_->sub_state(TAO_CodeGen::TAO_CDR_INPUT);
-  *os << "inline CORBA::Boolean operator>> (TAO_InputCDR &strm, "
+  *os << "ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, "
       << node->name () << " &_tao_union)" << be_nl
       << "{" << be_idt_nl
       << "return 1;" << be_uidt_nl
@@ -121,7 +121,7 @@ be_visitor_union_cdr_op_cs::visit_union (be_union *node)
 int
 be_visitor_union_cdr_op_cs::post_process (be_decl *bd)
 {
-  TAO_OutStream *os = tao_cg->client_stubs ();
+  TAO_OutStream *os = this->ctx_->stream ();
 
   if (!this->last_node (bd))
     {

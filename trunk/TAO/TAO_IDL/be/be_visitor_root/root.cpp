@@ -70,6 +70,7 @@ int be_visitor_root::visit_root (be_root *node)
   //
   // XXXASG - this part of the code may be conditionally generated because at
   // times it is not necessary to have these operators at all. TO-DO.
+  be_visitor *visitor;
   be_visitor_context ctx (*this->ctx_);
 
   switch (this->ctx_->state ())
@@ -86,6 +87,7 @@ int be_visitor_root::visit_root (be_root *node)
       return 0;
 
     case TAO_CodeGen::TAO_ROOT_CI:
+      break;
     case TAO_CodeGen::TAO_ROOT_SI:
       return 0; // nothing to be done
     case TAO_CodeGen::TAO_ROOT_SS:
@@ -101,28 +103,32 @@ int be_visitor_root::visit_root (be_root *node)
       }
     }
 
-  be_visitor *visitor = tao_cg->make_visitor (&ctx);
-  if (!visitor)
+  // *ASG* - this is a tempoaray hack soln so that our CDR operators get
+  // generated in the *.i file rather than the *.cpp file
+  if (this->ctx_->state () != TAO_CodeGen::TAO_ROOT_CI)
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
+      visitor = tao_cg->make_visitor (&ctx);
+      if (!visitor)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_root::"
+                             "visit_root - "
+                             "NUL visitor\n"
+                             ),  -1);
+        }
+      
+      // generate the <<= and >>= operators for all the user-defined data types in
+      // the outermost scope
+      if (node->accept (visitor) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_root::"
-                         "visit_root - "
-                         "NUL visitor\n"
-                         ),  -1);
+                             "visit_root - "
+                             "failed to generate Any operators\n"
+                             ),  -1);
+        }
+      delete visitor;
     }
-
-  // generate the <<= and >>= operators for all the user-defined data types in
-  // the outermost scope
-  if (node->accept (visitor) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_root::"
-                         "visit_root - "
-                         "failed to generate Any operators\n"
-                         ),  -1);
-    }
-  delete visitor;
-
   
   // make one more pass over the entire tree and generate the CDR << and >>
   // operators for compiled marshaling. Again, this code can be conditionally
@@ -134,11 +140,11 @@ int be_visitor_root::visit_root (be_root *node)
     case TAO_CodeGen::TAO_ROOT_CH:
       ctx.state (TAO_CodeGen::TAO_ROOT_CDR_OP_CH);
       break;
-    case TAO_CodeGen::TAO_ROOT_CS:
+    case TAO_CodeGen::TAO_ROOT_CI:
       ctx.state (TAO_CodeGen::TAO_ROOT_CDR_OP_CS);
       break;
     case TAO_CodeGen::TAO_ROOT_SH:
-    case TAO_CodeGen::TAO_ROOT_CI:
+    case TAO_CodeGen::TAO_ROOT_CS:
     case TAO_CodeGen::TAO_ROOT_SI:
     case TAO_CodeGen::TAO_ROOT_SS:
       return 0; // nothing to be done

@@ -54,7 +54,8 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
     }
   else
     {
-      TAO_OutStream *os = tao_cg->client_stubs ();
+      TAO_OutStream *os = this->ctx_->stream ();
+
       be_type *bt; // base type of the sequence
 
       if (node->cli_stub_cdr_op_gen () || node->imported ())
@@ -78,7 +79,7 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
 
       //  set the sub state as generating code for the output operator
       this->ctx_->sub_state (TAO_CodeGen::TAO_CDR_OUTPUT);
-      *os << "inline CORBA::Boolean operator<< (" << be_idt << be_idt_nl
+      *os << "ACE_INLINE CORBA::Boolean operator<< (" << be_idt << be_idt_nl
 	  << "TAO_OutputCDR &strm," << be_nl
           << "const " << node->name ()
 	  << " &_tao_sequence" << be_uidt_nl
@@ -105,7 +106,7 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
       //  set the sub state as generating code for the input operator
       os->indent ();
       this->ctx_->sub_state(TAO_CodeGen::TAO_CDR_INPUT);
-      *os << "inline CORBA::Boolean operator>> (TAO_InputCDR &strm, "
+      *os << "ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, "
           << node->name () << " &_tao_sequence)" << be_nl
           << "{" << be_idt_nl;
       // first retrieve the length and adjust the sequence length accordingly
