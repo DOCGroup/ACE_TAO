@@ -88,13 +88,7 @@ int be_visitor_root::visit_root (be_root *node)
       ctx.state (TAO_CodeGen::TAO_MODULE_OBV_CS);
       break;
     default:
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_root::"
-                             "visit_root - "
-                             "Bad context state\n"
-                             ), -1);
-        }
+	  break;
     }
   if (obv)
     {
