@@ -8,14 +8,16 @@ Sun Oct 31 20:11:43 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 	* tao/ORB.cpp:
 	* tao/ORB.h:
 
-	Abstracted out the code for location of different services through
-	resolve_initial_references () by the ORB. This reduces the
-	footprint of the ORB as now there is a single method to locate 
-	services instead of a different method for each service.
+ 	  Abstracted out the code for location of different services through
+	  resolve_initial_references () by the ORB. This reduces the
+	  footprint of the ORB as now there is a single method to locate 
+	  services instead of a different method for each service.
 
 	* orbsvcs/orbsvcs/Naming/Naming_Utils.cpp:
-	Made changes in this file to reflect the changes made to the ORB
-	Core since a single method is now used to get/set the service port.	
+	* orbsvcs/Trading_Service/Trading_Service.cpp:
+
+	  Made changes in these files to reflect the changes made to the ORB
+	  Core since a single method is now used to get/set the service port.	
 
 Sat Oct 30 21:40:48 1999  Luther J Baker  <ljb1@cs.wustl.edu>
 
