@@ -17,7 +17,6 @@
 // 
 // ============================================================================
 
-#include "test_config.h"
 #include "ace/Signal.h"
 #include "ace/Timer_List.h"
 
@@ -256,8 +255,6 @@ static char menu[] =
 int
 main (int, char *[])
 {
-  // ACE_START_TEST ("Timer_Queue_Test");
-
   register_signal_handlers ();
 
   // Run until the user types ^\.
@@ -277,7 +274,6 @@ main (int, char *[])
       parse_commands (buf);
     }
 
-  // ACE_END_TEST;
   return 0;
 }
 
