@@ -1,24 +1,24 @@
-# Microsoft Developer Studio Project File - Name="server" - Package Owner=<4>
+# Microsoft Developer Studio Project File - Name="client" - Package Owner=<4>
 # Microsoft Developer Studio Generated Build File, Format Version 5.00
 # ** DO NOT EDIT **
 
 # TARGTYPE "Win32 (x86) Console Application" 0x0103
 
-CFG=server - Win32 Debug
+CFG=client - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
-!MESSAGE NMAKE /f "server.mak".
+!MESSAGE NMAKE /f "client.mak".
 !MESSAGE 
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "server.mak" CFG="server - Win32 Debug"
+!MESSAGE NMAKE /f "client.mak" CFG="client - Win32 Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "server - Win32 Release" (based on "Win32 (x86) Console Application")
-!MESSAGE "server - Win32 Debug" (based on "Win32 (x86) Console Application")
+!MESSAGE "client - Win32 Release" (based on "Win32 (x86) Console Application")
+!MESSAGE "client - Win32 Debug" (based on "Win32 (x86) Console Application")
 !MESSAGE 
 
 # Begin Project
@@ -27,7 +27,7 @@ CFG=server - Win32 Debug
 CPP=cl.exe
 RSC=rc.exe
 
-!IF  "$(CFG)" == "server - Win32 Release"
+!IF  "$(CFG)" == "client - Win32 Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
@@ -36,12 +36,11 @@ RSC=rc.exe
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
-# PROP Output_Dir ""
+# PROP Output_Dir "Release"
 # PROP Intermediate_Dir "Release"
-# PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GX /O2 /I "..\..\..\.." /I "..\..\.." /I "..\..\..\orbsvcs" /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
+# ADD CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
 BSC32=bscmake.exe
@@ -49,23 +48,23 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
-# ADD LINK32 TAO.lib ace.lib orbsvcs.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\..\ace" /libpath:"..\..\..\tao" /libpath:"..\..\..\orbsvcs\orbsvcs"
+# ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
 
-!ELSEIF  "$(CFG)" == "server - Win32 Debug"
+!ELSEIF  "$(CFG)" == "client - Win32 Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "Debug"
-# PROP BASE Intermediate_Dir "Debug"
+# PROP BASE Output_Dir "client__"
+# PROP BASE Intermediate_Dir "client__"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir ""
-# PROP Intermediate_Dir "Debug"
+# PROP Output_Dir "client__"
+# PROP Intermediate_Dir "client__"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\..\.." /I "..\..\.." /I "..\..\..\orbsvcs" /I "..\..\..\orbsvcs\orbsvcs" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\.." /I "..\.." /I "..\..\orbsvcs" /I "..\..\..\.." /I "..\..\..\orbsvcs" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -73,25 +72,72 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 TAO.lib aced.lib orbsvcs.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"..\..\..\..\ace" /libpath:"..\..\..\tao" /libpath:"..\..\..\orbsvcs\orbsvcs"
+# ADD LINK32 aced.lib TAO.lib orbsvcs.lib /nologo /subsystem:console /debug /machine:I386 /out:"client.exe" /pdbtype:sept /libpath:"..\..\..\..\ace" /libpath:"..\..\..\tao" /libpath:"..\..\..\orbsvcs\orbsvcs"
 
 !ENDIF 
 
 # Begin Target
 
-# Name "server - Win32 Release"
-# Name "server - Win32 Debug"
+# Name "client - Win32 Release"
+# Name "client - Win32 Debug"
+# Begin Group "source files"
+
+# PROP Default_Filter "*.cpp"
 # Begin Source File
 
-SOURCE=.\Reactor.idl
+SOURCE=.\client.cpp
+# End Source File
+# Begin Source File
 
-!IF  "$(CFG)" == "server - Win32 Release"
+SOURCE=.\local_server.cpp
+# End Source File
+# Begin Source File
 
-!ELSEIF  "$(CFG)" == "server - Win32 Debug"
+SOURCE=.\MT_Client_TestC.cpp
+# End Source File
+# Begin Source File
 
-# Begin Custom Build
-InputPath=.\Reactor.idl
-InputName=Reactor
+SOURCE=.\MT_Client_TestS.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\MT_Object_Impl.cpp
+# End Source File
+# End Group
+# Begin Group "header files"
+
+# PROP Default_Filter "*.h"
+# Begin Source File
+
+SOURCE=.\client.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\local_server.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\MT_Client_TestC.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\MT_Object_Impl.h
+# End Source File
+# End Group
+# Begin Group "IDL files"
+
+# PROP Default_Filter "*.idl"
+# Begin Source File
+
+SOURCE=.\MT_Client_Test.idl
+
+!IF  "$(CFG)" == "client - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "client - Win32 Debug"
+
+# Begin Custom Build - Invoking TAO IDL compiler
+InputPath=.\MT_Client_Test.idl
+InputName=MT_Client_Test
 
 BuildCmds= \
 	tao_idl $(InputName).idl
@@ -118,21 +164,6 @@ BuildCmds= \
 !ENDIF 
 
 # End Source File
-# Begin Source File
-
-SOURCE=.\reactor_i.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\ReactorC.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\ReactorS.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\server.cpp
-# End Source File
+# End Group
 # End Target
 # End Project

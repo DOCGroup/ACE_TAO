@@ -64,7 +64,8 @@ Initiator_Server::read_ior (char *filename, unsigned int A_B)
                         -1);
   }
 
-   return 0;
+  ACE_OS::close (f_handle);
+  return 0;
 }
 
 
