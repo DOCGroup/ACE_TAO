@@ -25,10 +25,12 @@ sub run_test
     $TST = Process::Create  ($EXEPREFIX."$test".$EXE_EXT,
                              "$args");
     print STDERR "\t$test RUNNING\n";
-    $retval = ($TST->Wait ()) / 256;
-    if ($retval != 0)
-    {
-        print STDERR "$brace $test $args FAILED; exited with value $retval\n";
+    $retval = $TST->TimedWait (60);
+    if ($retval == -1) {
+      print STDERR "ERROR $brace $test $args TIMEOUT\n";
+      $TST->Kill (); $TST->TimedWait (5);
+    } elsif ($retval != 0) { 
+      print STDERR "ERROR $brace $test $args, exit value $retval\n";
     }
     print STDERR "$brace $test ENDED successfully\n";
 }
