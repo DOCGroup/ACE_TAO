@@ -1,24 +1,28 @@
+Mon Dec 14 08:35:11 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * BUG-REPORT-FORM: added a few FMMs.
+
 Mon Dec 14 08:27:11 1998  Steve Huston  <shuston@riverace.com>
 
         * tests/run_tests.sh: Enabled MT_Reactor_Timer_Test.
 
 Sun Dec 13 16:40:18 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tests/MT_Reactor_Timer_Test.dsp:
-	* tests/tests.dsw: Added the new project file -
-	  MT_Reactor_Timer_Test.
+        * tests/MT_Reactor_Timer_Test.dsp:
+        * tests/tests.dsw: Added the new project file -
+          MT_Reactor_Timer_Test.
 
-	* tests/run_tests.bat: Added MT_Reactor_Timer_Test into
-	  one-button test for NT.
+        * tests/run_tests.bat: Added MT_Reactor_Timer_Test into
+          one-button test for NT.
 
-	* tests/MT_Reactor_Timer_Test.cpp: Changed the use of
-	  ACE_OS::{read,write} to ACE::{recv,send}.
+        * tests/MT_Reactor_Timer_Test.cpp: Changed the use of
+          ACE_OS::{read,write} to ACE::{recv,send}.
 
 Sat Dec 12 17:19:17 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/ACE.cpp (ldfind): If we specified a suffix which is not the
- 	  default suffix on the platform, the ldfind() operation should
- 	  not try to add the default platform suffix but use ours.
+        * ace/ACE.cpp (ldfind): If we specified a suffix which is not the
+          default suffix on the platform, the ldfind() operation should
+          not try to add the default platform suffix but use ours.
 
 Sat Dec 12 07:44:02 1998 John Lindal <jafl@cco.caltech.edu>
 
