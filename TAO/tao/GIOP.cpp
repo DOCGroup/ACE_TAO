@@ -1531,7 +1531,10 @@ TAO_GIOP::write_request_header_std (const IOP::ServiceContextList& svc_ctx,
         break;
       case 2:
         // Return before dispatching servant.
-        out_stream << CORBA::Any::from_octet (1);
+        // We're also setting the high bit here. This
+        // is a temporary fix until the rest of GIOP
+        // 1.2 is implemented in TAO.
+        out_stream << CORBA::Any::from_octet (129);
         break;
       case 3:
         // Return after dispatching servant.
