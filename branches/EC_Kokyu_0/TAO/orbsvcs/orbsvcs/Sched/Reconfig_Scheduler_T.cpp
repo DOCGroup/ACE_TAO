@@ -793,6 +793,49 @@ last_scheduled_priority (ACE_ENV_SINGLE_ARG_DECL)
   return last_scheduled_priority_;
 }
 
+// Provides the set of Config_Infos associated with the current schedule.
+
+template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
+void
+TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
+get_config_infos (RtecScheduler::Config_Info_Set_out configs
+		  ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+		   RtecScheduler::SYNCHRONIZATION_FAILURE,
+		   RtecScheduler::NOT_SCHEDULED))
+{
+  ACE_GUARD_THROW_EX (ACE_LOCK, ace_mon, this->mutex_,
+                      RtecScheduler::SYNCHRONIZATION_FAILURE ());
+  ACE_CHECK_RETURN (0);
+
+  // Check schedule stability flags.
+  if ((this->stability_flags_ & SCHED_PRIORITY_NOT_STABLE)
+      && this->enforce_schedule_stability_)
+    {
+      ACE_THROW_RETURN (RtecScheduler::NOT_SCHEDULED (),
+                        (RtecScheduler::Preemption_Priority_t) -1);
+    }
+
+  // return the set of Config_Infos
+  if (configs.ptr () == 0)
+    {
+      ACE_NEW_THROW_EX (configs,
+			RtecScheduler::Config_Info_Set(this->
+						       config_info_count_),
+			CORBA::NO_MEMORY ());
+      ACE_CHECK;
+    }
+  configs->length (this->config_info_count_);
+  RtecScheduler::Config_Info* config_info = 0;
+  for (ACE_TYPENAME CONFIG_INFO_MAP::iterator config_iter (this->config_info_map_);
+       config_iter.done () == 0;
+       ++config_iter)
+    {
+      config_info = (*config_iter).int_id_;
+      configs[ACE_static_cast (CORBA::ULong, config_info->preemption_priority)] = *config_info;
+    }
+}
+
 // Internal method to create an RT_Info.  If it does not exist, a new RT_Info is
 // created and inserted into the schedule, and the handle of the new
 // RT_Info is returned.  If the RT_Info already exists, an exception
