@@ -1,4 +1,9 @@
-Tue Jul  1 16:17:24 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+Tue Jul  1 17:00:20 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* Updated the PC_install.bat file. In addition, there was one more
+	warning in typecode.cpp (Win NT compiler) that was fixed. Finally,
+	in the the tc_const.cpp file, the ACE_Svc_Export was used
+	accidently. This has been fixed.
 
 	* A number of files were updated with ACE_Svc_Export so that
 	variables and classes do not remain unresolved for Win32
