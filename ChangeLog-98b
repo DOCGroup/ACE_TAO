@@ -10,6 +10,10 @@ Tue Nov 24 09:34:58 1998  David L. Levine  <levine@cs.wustl.edu>
         * include/makeinclude/platform_vxworks5.x_ghs.GNU: added
           optimize=1, to enable optimization by default.
 
+        * performance-tests/Misc/context_switch_time.cpp (main):
+          don't print suspend-resume results if the suspend-resume
+          test isn't run (because thr_suspend isn't supported).
+
 Mon Nov 24 03:30:36 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
         * tests/DLL_Wrapper_Test.cpp: Added a test example for the DLL
