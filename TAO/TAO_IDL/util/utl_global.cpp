@@ -155,7 +155,14 @@ IDL_GlobalData::IDL_GlobalData (void)
       ami_call_back_ (I_FALSE),
       gen_tie_classes_ (I_TRUE),
       gen_except_ostream_op_ (I_TRUE),
+#if (TAO_HAS_SMART_PROXIES == 1)
+      gen_smart_proxies_ (I_TRUE)
+#else
       gen_smart_proxies_ (I_FALSE)
+#endif /* TAO_HAS_SMART_PROXIES == 1*/
+
+
+
 {
 
   // Path for the perfect hash generator(gperf) program.
