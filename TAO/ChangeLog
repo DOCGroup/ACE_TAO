@@ -1,3 +1,11 @@
+Sun Sep  1 11:10:51 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_ServerRequestInterceptor.cpp
+	  (receive_request_service_contexts):
+
+	  Use the standard CORBA::OMGVMCID constant instead of the
+	  obsolete TAO_OMG_VMCID constant.
+
 Sat Aug 31 23:58:02 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* tao/Makefile.dirs: Add include of rules.tao.GNU, in order to
