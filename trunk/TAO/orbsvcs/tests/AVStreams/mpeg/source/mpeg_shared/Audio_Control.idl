@@ -4,6 +4,7 @@
 
 interface Audio_Control
 {
+  typedef sequence<char> my_seq_char;
 
   struct AudioParameter
   {
@@ -22,7 +23,7 @@ interface Audio_Control
     long version;
     AudioParameter para;
     long nameLength;
-    sequence <char> audiofile;
+    my_seq_char audiofile;
     /* char audioFile[] */
   };
 

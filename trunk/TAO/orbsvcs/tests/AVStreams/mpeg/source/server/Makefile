@@ -234,11 +234,15 @@ realclean: clean
  $(TAO_ROOT)/tao/Marshal.i \
  $(TAO_ROOT)/tao/CDR.h \
  $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/POA.h \
  $(TAO_ROOT)/tao/POAC.h \
  $(TAO_ROOT)/tao/POAC.i \
  $(TAO_ROOT)/tao/Servant_Base.h \
  $(TAO_ROOT)/tao/POAS.h \
+ $(TAO_ROOT)/tao/PolicyS.h \
+ $(TAO_ROOT)/tao/PolicyS.i \
  $(TAO_ROOT)/tao/POAS.i \
  $(TAO_ROOT)/tao/Object_Table.h \
  $(TAO_ROOT)/tao/Connect.h \
@@ -262,14 +266,31 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Video_ControlS.i \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Video_Control_State.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Video_Control_i.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AVStreams_i.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Property/CosPropertyService_i.h \
+ $(ACE_ROOT)/ace/Process.h \
+ $(ACE_ROOT)/ace/Process.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Endpoint_Strategy.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS.i \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Audio_ControlS.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Audio_ControlC.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Audio_ControlC.i \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Audio_ControlS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Naming_Utils.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/IOR_Multicast.h \
  $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.h \
  $(ACE_ROOT)/ace/SOCK_Dgram.h \
@@ -280,8 +301,7 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Entries.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Audio_Server.h \
- $(ACE_ROOT)/ace/Process.h \
- $(ACE_ROOT)/ace/Process.i
+ vs.h
 .obj/vs.o .obj/vs.so .shobj/vs.o .shobj/vs.so: vs.cpp \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Video_Server.h \
  $(ACE_ROOT)/ace/Reactor.h \
@@ -437,11 +457,15 @@ realclean: clean
  $(TAO_ROOT)/tao/Marshal.i \
  $(TAO_ROOT)/tao/CDR.h \
  $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/POA.h \
  $(TAO_ROOT)/tao/POAC.h \
  $(TAO_ROOT)/tao/POAC.i \
  $(TAO_ROOT)/tao/Servant_Base.h \
  $(TAO_ROOT)/tao/POAS.h \
+ $(TAO_ROOT)/tao/PolicyS.h \
+ $(TAO_ROOT)/tao/PolicyS.i \
  $(TAO_ROOT)/tao/POAS.i \
  $(TAO_ROOT)/tao/Object_Table.h \
  $(TAO_ROOT)/tao/Connect.h \
@@ -477,7 +501,27 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Audio_ControlC.i \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Audio_ControlS.i \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Video_Control_State.h \
- $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Video_Control_i.h
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Video_Control_i.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AVStreams_i.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Property/CosPropertyService_i.h \
+ $(ACE_ROOT)/ace/Process.h \
+ $(ACE_ROOT)/ace/Process.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Endpoint_Strategy.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS.i
 .obj/as.o .obj/as.so .shobj/as.o .shobj/as.so: as.cpp \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Audio_Server.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/include/common.h \
@@ -643,11 +687,15 @@ realclean: clean
  $(TAO_ROOT)/tao/Marshal.i \
  $(TAO_ROOT)/tao/CDR.h \
  $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/POA.h \
  $(TAO_ROOT)/tao/POAC.h \
  $(TAO_ROOT)/tao/POAC.i \
  $(TAO_ROOT)/tao/Servant_Base.h \
  $(TAO_ROOT)/tao/POAS.h \
+ $(TAO_ROOT)/tao/PolicyS.h \
+ $(TAO_ROOT)/tao/PolicyS.i \
  $(TAO_ROOT)/tao/POAS.i \
  $(TAO_ROOT)/tao/Object_Table.h \
  $(TAO_ROOT)/tao/Connect.h \
@@ -671,12 +719,29 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Video_ControlS.i \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Video_Control_State.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Video_Control_i.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AVStreams_i.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Property/CosPropertyService_i.h \
+ $(ACE_ROOT)/ace/Process.h \
+ $(ACE_ROOT)/ace/Process.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Endpoint_Strategy.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS.i \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Audio_ControlS.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Audio_ControlC.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Audio_ControlC.i \
- $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Audio_ControlS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i
+ $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Audio_ControlS.i
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

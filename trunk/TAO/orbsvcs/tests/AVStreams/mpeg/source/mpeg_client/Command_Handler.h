@@ -39,10 +39,18 @@
 #include "mpeg_shared/Audio_ControlC.h"
 #include "orbsvcs/AV/AVStreams_i.h"
 
+
+class Command_Handler;
+
 class Video_Client_StreamEndPoint
   :public virtual TAO_Client_StreamEndPoint
 {
 public:
+  Video_Client_StreamEndPoint (void);
+
+  Video_Client_StreamEndPoint (Command_Handler *command_handler);
+  // constructor
+
   virtual int handle_open (void);
   // called when streamendpoint is instantiated
 
@@ -70,40 +78,79 @@ public:
 private:
   ACE_SOCK_Dgram dgram_;
   // The datagram used for streaming.
-
+  Command_Handler *command_handler_;
 };
 
-class Video_Client_MMDevice 
-  :public virtual TAO_MMDevice
+
+
+class Video_Client_VDev
+  : public virtual TAO_VDev
 {
 public:
-  Video_Client_MMDevice (TAO_ORB_Manager *orb_manager);
-  // Constructor taking pointer to an ORB Manager
+  Video_Client_VDev (void);
+  Video_Client_VDev (Command_Handler *command_handler);
 
-  AVStreams::VDev_ptr vdev (void);
-  // Return the virtual device pointer
+protected:
+  CORBA::Boolean set_media_ctrl (CORBA::Object_ptr media_ctrl,
+                                 CORBA::Environment& env);
 
-  Video_Client_StreamEndPoint *streamendpoint (void);
-  // Return the streamendpoint pointer
-  
-  virtual AVStreams::StreamEndPoint_A_ptr  create_A (AVStreams::StreamCtrl_ptr the_requester, 
-                                                     AVStreams::VDev_out the_vdev, 
-                                                     AVStreams::streamQoS &the_qos, 
-                                                     CORBA::Boolean_out met_qos, 
-                                                     char *&named_vdev, 
-                                                     const AVStreams::flowSpec &the_spec,  
-                                                     CORBA::Environment &env);
-  // Called by StreamCtrl to create a "A" type streamandpoint and vdev
 private:
-  TAO_ORB_Manager *orb_manager_;
-  // Pointer to the  ORB Manager
+  Video_Control_ptr video_control_;
+  // The video controller
 
-  Video_Client_StreamEndPoint video_streamendpoint_;
-  // The client side of the video stream.
-  TAO_VDev video_vdev_;
-  // Video virtual device
+  Command_Handler *command_handler_;
+  // pointer to the command handler object
 };
 
+// class Video_Client_MMDevice 
+//   :public virtual TAO_MMDevice
+// {
+// public:
+//   Video_Client_MMDevice (TAO_ORB_Manager *orb_manager);
+//   // Constructor taking pointer to an ORB Manager
+
+//   AVStreams::VDev_ptr vdev (void);
+//   // Return the virtual device pointer
+
+//   Video_Client_StreamEndPoint *streamendpoint (void);
+//   // Return the streamendpoint pointer
+  
+//   virtual AVStreams::StreamEndPoint_A_ptr  create_A (AVStreams::StreamCtrl_ptr the_requester, 
+//                                                      AVStreams::VDev_out the_vdev, 
+//                                                      AVStreams::streamQoS &the_qos, 
+//                                                      CORBA::Boolean_out met_qos, 
+//                                                      char *&named_vdev, 
+//                                                      const AVStreams::flowSpec &the_spec,  
+//                                                      CORBA::Environment &env);
+//   // Called by StreamCtrl to create a "A" type streamandpoint and vdev
+// private:
+//   TAO_ORB_Manager *orb_manager_;
+//   // Pointer to the  ORB Manager
+
+//   Video_Client_StreamEndPoint video_streamendpoint_;
+//   // The client side of the video stream.
+//   TAO_VDev video_vdev_;
+//   // Video virtual device
+// };
+
+class Video_Endpoint_Reactive_Strategy_A 
+  : public TAO_AV_Endpoint_Reactive_Strategy_A<Video_Client_StreamEndPoint,Video_Client_VDev,AV_Null_MediaCtrl> 
+{
+public:
+  Video_Endpoint_Reactive_Strategy_A (TAO_ORB_Manager *orb_manager,
+                                      Command_Handler *command_handler);
+  // constructor . The orb manager is needed for the TAO_AV_Endpoint_Reactive_Strategy_A.
+
+  virtual int make_vdev (Video_Client_VDev *&vdev);
+  // hook to make our Vdev with the pointer to command handler.
+  virtual int make_stream_endpoint (Video_Client_StreamEndPoint *& endpoint);
+  // hook to make our streamendpoint taking a command handler pointer
+private:
+  Command_Handler *command_handler_;
+  // pointer to command handler object
+
+};
+  
 class Command_Handler 
   : public virtual ACE_Event_Handler
 {
@@ -127,6 +174,12 @@ public:
 
   int run (void);
   // Run the ORB event loop
+
+  void set_video_data_handle (ACE_HANDLE data_fd);
+  // sets the data handle (UDP) of the command handler
+
+  void set_video_control (Video_Control_ptr video_control);
+  // called to set the video control object pointer of the comand handler.
   int get_video_control (void);
   // Gets the video control reference thru the property service from
   // the video server virtual device
@@ -199,17 +252,11 @@ private:
   ACE_SOCK_Dgram audio_dgram_;
   // Audio UDP socket
 
-  ACE_SOCK_Stream video_stream_;
-  // TCP stream socket
+  ACE_HANDLE video_data_handle_;
+  // UDP socket for video
 
-  ACE_SOCK_Stream audio_stream_;
-  // audio TCP stream.
-
-  ACE_SOCK_Connector video_connector_;
-  // video connector.
-
-  ACE_SOCK_Connector audio_connector_;
-  // audio connector.
+  ACE_HANDLE audio_data_handle_;
+  // UDP socket for audio
 
   ACE_HANDLE command_handle_;
   // The fd for the UNIX command socket
@@ -217,13 +264,16 @@ private:
   TAO_ORB_Manager orb_manager_;
   // the ORB manager
 
-  Video_Control_var video_control_;
+  Video_Control_ptr video_control_;
   // Video Control CORBA object
 
   AVStreams::MMDevice_var video_server_mmdevice_;
   // The video server multimedia device
 
-  Video_Client_MMDevice video_client_mmdevice_;
+  Video_Endpoint_Reactive_Strategy_A reactive_strategy_;
+  // Strategy for creating stream endpoints
+
+  TAO_MMDevice video_client_mmdevice_;
   // The video client multimedia device
 
   TAO_StreamCtrl video_streamctrl_;

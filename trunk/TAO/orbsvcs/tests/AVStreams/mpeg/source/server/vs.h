@@ -40,4 +40,16 @@
 #include "mpeg_server/Video_Server.h"
 #include "orbsvcs/AV/AVStreams_i.h"
 
+class Video_Child_Process 
+  :public TAO_AV_Child_Process_B <Video_Server_StreamEndPoint,TAO_VDev,Video_Control_i>
+{
+public:
+  int init (int argc,
+            char **argv);
+  // init the Video Singleton.
+            
+  int make_mediactrl (Video_Control_i *&media_ctrl);
+};
+
+
 #endif /* TAO_AV_VS_H */
