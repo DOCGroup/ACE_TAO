@@ -211,12 +211,9 @@ TAO_Notify_Builder::build_event_channel_factory (PortableServer::POA_ptr poa ACE
 
 //  PortableServer::ServantBase_var servant_var (ecf);
 
-  ecf->TAO_Notify_EventChannelFactory::init (poa ACE_ENV_ARG_PARAMETER);
-
-  CORBA::Object_var obj = ecf->activate (ecf ACE_ENV_ARG_PARAMETER);
+  ecf->init (poa ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (ecf_ret._retn ());
-
-  ecf_ret = CosNotifyChannelAdmin::EventChannelFactory::_narrow (obj.in() ACE_ENV_ARG_PARAMETER);
+  ecf_ret = ecf->activate_self (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (ecf_ret._retn ());
 
   return (ecf_ret._retn ());

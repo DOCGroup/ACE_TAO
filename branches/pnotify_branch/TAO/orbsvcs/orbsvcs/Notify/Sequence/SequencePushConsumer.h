@@ -51,6 +51,8 @@ public:
   /// Init the Consumer
   void init (CosNotifyComm::SequencePushConsumer_ptr push_consumer, TAO_Notify_AdminProperties_var& admin_properties ACE_ENV_ARG_DECL);
 
+  void set_consumer (CosNotifyComm::SequencePushConsumer_ptr push_consumer);
+
   /// TAO_Notify_Destroy_Callback methods.
   virtual void release (void);
 

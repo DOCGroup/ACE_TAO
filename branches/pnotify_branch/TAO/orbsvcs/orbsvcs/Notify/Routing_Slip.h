@@ -96,13 +96,6 @@ public:
   void dispatch (TAO_Notify_ProxySupplier * proxy_supplier, bool filter ACE_ENV_ARG_DECL);
 
 
-#if 0
-  /// \brief Forward delivery to a consumer via a proxy supplier
-  /// \param proxy_supplier the proxy supplier that will deliver the event
-  /// \param filter should consumer-based filtering be applied?
-  void forward (TAO_Notify_ProxySupplier* ps, bool filter);
-#endif
-
   /////////////////////////////////////////
   /// \brief Wait until the event/routing_slip has
   /// been saved at least once.

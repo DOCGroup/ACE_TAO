@@ -21,7 +21,7 @@ ACE_RCSID(RT_Notify, TAO_Notify_ProxyConsumer, "$Id$")
 #include "SupplierAdmin.h"
 #include "EventChannel.h"
 #include "Routing_Slip.h"
-#define DEBUG_LEVEL 10
+//#define DEBUG_LEVEL 10
 #ifndef DEBUG_LEVEL
 # define DEBUG_LEVEL TAO_debug_level
 #endif //DEBUG_LEVEL

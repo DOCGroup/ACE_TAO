@@ -100,6 +100,7 @@ public:
                                                    CORBA::Long id,
                                                    const TAO_Notify::NVPList& attrs
                                                    ACE_ENV_ARG_DECL);
+  CosNotifyChannelAdmin::EventChannelFactory_ptr activate_self (ACE_ENV_SINGLE_ARG_DECL);
   virtual void reconnect (ACE_ENV_SINGLE_ARG_DECL);
 
   /// handle change notifications
@@ -113,7 +114,7 @@ public:
   TAO_Notify_ProxyConsumer * find_proxy_consumer (TAO_Notify::IdVec & id_path, size_t position  ACE_ENV_ARG_DECL);
   TAO_Notify_ProxySupplier * find_proxy_supplier (TAO_Notify::IdVec & id_path, size_t position  ACE_ENV_ARG_DECL);
   TAO_Notify_Object * follow_id_path (TAO_Notify::IdVec & id_path, size_t position  ACE_ENV_ARG_DECL);
-  virtual TAO_Notify_Object::ID get_id () const {return id();} // @@todo move to INL
+  virtual TAO_Notify_Object::ID get_id () const;
 
 
  protected:
@@ -176,6 +177,9 @@ public:
 
 private:
   TAO_SYNCH_MUTEX topology_save_lock_;
+
+  CosNotifyChannelAdmin::EventChannelFactory_var channel_factory_;
+
   /// change-in-progress detector to avoid duplicates
   short topology_save_seq_;
   TAO_Notify::Topology_Factory* topology_factory_;

@@ -452,13 +452,13 @@ Supplier_Main::save_ids()
     int imode = ACE_static_cast (int, this->mode_);
     ACE_OS::fprintf (idf,
       "%d,%d,%d,%d,%d,%d,%d,\n",
-      static_cast <int> (imode),
-      static_cast <int> (ec_id_),
-      static_cast <int> (sa_id_),
-      static_cast <int> (structured_proxy_id_),
-      static_cast <int> (sequence_proxy_id_),
-      static_cast <int> (any_proxy_id_),
-      static_cast <int> (endflag) );
+      static_cast<int> (imode),
+      static_cast<int> (ec_id_),
+      static_cast<int> (sa_id_),
+      static_cast<int> (structured_proxy_id_),
+      static_cast<int> (sequence_proxy_id_),
+      static_cast<int> (any_proxy_id_),
+      static_cast<int> (endflag) );
     ACE_OS::fclose (idf);
   }
 }
@@ -474,14 +474,12 @@ Supplier_Main::load_ids()
   {
     int field = 0;
 
-    char buffer[100] = "";
+    char buffer[100] = ""; // because ACE fgets doesn't put a null if the file is empty
     ACE_OS::fgets (buffer, sizeof(buffer), idf);
     ACE_OS::fclose (idf);
-
     char * pb = buffer;
     while (!ok && *pb != 0)
     {
-fprintf (stderr, "Buffer: %s\n" , pb);
       char * eb = ACE_OS::strchr (pb, ',');
       char * nb = eb + 1;
       if (eb == 0)
@@ -490,11 +488,9 @@ fprintf (stderr, "Buffer: %s\n" , pb);
         nb = eb;
       }
       *eb = 0;
-fprintf (stderr, "PARSE: [%s]\n", pb);
       if (pb < eb)
       {
         int value = ACE_OS::atoi(pb);
-fprintf (stderr, "field[%d], %d\n", field, value);
         switch (++field)
         {
         case 1:
@@ -657,6 +653,8 @@ Supplier_Main::init_event_channel (ACE_ENV_SINGLE_ARG_DECL)
     ACE_ENDTRY;
   }
 
+  // if we don't have a channel yet, and a channel id file was specified
+  // try to read from it
   if (!ok && this->channel_file_.length () > 0)
   {
     FILE * chf = ACE_OS::fopen (this->channel_file_.c_str (), "r");
@@ -675,12 +673,17 @@ Supplier_Main::init_event_channel (ACE_ENV_SINGLE_ARG_DECL)
               ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK_EX (unique_label_1)
         ok = ! CORBA::is_nil (this->ec_.in ());
-        if (ok && this->verbose_)
+        if (ok)
         {
-          ACE_DEBUG ((LM_DEBUG,
-            ACE_TEXT ("(%P|%t) supplier: Connect to Consumer's event channel %d\n"),
-            ACE_static_cast (int, this->ec_id_)
-            ));
+          if (this->verbose_)
+          {
+            ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("(%P|%t) Supplier: Connect to Existing event channel %d\n"),
+              ACE_static_cast (int, this->ec_id_)
+              ));
+          }
+          // kill the channel filename so we don't overwrite the file
+          this->channel_file_ = "";
         }
       }
       ACE_CATCHALL
@@ -692,11 +695,10 @@ Supplier_Main::init_event_channel (ACE_ENV_SINGLE_ARG_DECL)
 
   if (!ok)
   {
-    CosNotification::QoSProperties qosprops(7);
-    qosprops.length(7);
-
+    CosNotification::QoSProperties qosprops (7);
+    qosprops.length (7);
     CORBA::ULong i = 0;
-#ifdef DISABLE_PROPERITIES_TODO
+#ifdef DISABLE_PROPERTIES_TODO
     qosprops[i].name = CORBA::string_dup(CosNotification::EventReliability);
     qosprops[i++].value <<= CosNotification::Persistent;
     qosprops[i].name = CORBA::string_dup(CosNotification::ConnectionReliability);
@@ -712,10 +714,9 @@ Supplier_Main::init_event_channel (ACE_ENV_SINGLE_ARG_DECL)
     qosprops[i].name = CORBA::string_dup(CosNotification::PacingInterval);
     qosprops[i++].value <<= (TimeBase::TimeT) 50 * 10000; // 50ms
 #endif
-    qosprops.length(i);
-
+    qosprops.length (i);
     CosNotification::AdminProperties adminprops(4);
-    adminprops.length(4);
+    adminprops.length (4);
     i = 0;
 #ifdef DISABLE_PROPERTIES_TODO
     adminprops[i].name = CORBA::string_dup(CosNotification::MaxQueueLength);
@@ -740,8 +741,19 @@ Supplier_Main::init_event_channel (ACE_ENV_SINGLE_ARG_DECL)
     {
       ACE_DEBUG ((LM_DEBUG,
         ACE_TEXT ("(%P|%t) Supplier: Create event channel %d\n"),
-        ACE_static_cast (int, this->ec_id_)
+        static_cast<int> (this->ec_id_)
         ));
+    }
+  }
+
+  // save channel id
+  if (ok && this->channel_file_.length() > 0)
+  {
+    FILE * chf = ACE_OS::fopen (this->channel_file_.c_str (), "w");
+    if (chf != 0)
+    {
+      fprintf (chf, "%d\n", static_cast<int> (this->ec_id_));
+      fclose (chf);
     }
   }
 }
@@ -1033,7 +1045,7 @@ Supplier_Main::init_any_proxy_consumer (ACE_ENV_SINGLE_ARG_DECL)
     if (ok && this->verbose_)
     {
       ACE_DEBUG ((LM_DEBUG,
-        ACE_TEXT ("(%P|%t) Supplier: Create new proxy\n"),
+        ACE_TEXT ("(%P|%t) Supplier: Create new proxy %d\n"),
           ACE_static_cast (int, this->any_proxy_id_)
         ));
     }
@@ -1083,9 +1095,6 @@ Supplier_Main::init_any_proxy_consumer (ACE_ENV_SINGLE_ARG_DECL)
 
 int Supplier_Main::fini (ACE_ENV_SINGLE_ARG_DECL)
 {
-  ACE_DEBUG ((LM_DEBUG,
-    ACE_TEXT ("(%P|%t) supplier::fini\n")
-    ));
   if (this->disconnect_on_exit_)
   {
     this->reconnection_callback_.fini (ACE_ENV_SINGLE_ARG_PARAMETER);

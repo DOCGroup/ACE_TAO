@@ -34,19 +34,36 @@ TAO_Notify_SequencePushConsumer::~TAO_Notify_SequencePushConsumer ()
 }
 
 void
-TAO_Notify_SequencePushConsumer::init (CosNotifyComm::SequencePushConsumer_ptr push_consumer, TAO_Notify_AdminProperties_var& admin_properties ACE_ENV_ARG_DECL)
+TAO_Notify_SequencePushConsumer::init (
+  CosNotifyComm::SequencePushConsumer_ptr push_consumer, TAO_Notify_AdminProperties_var& admin_properties
+#if 1
+  ACE_ENV_ARG_DECL_NOT_USED)
+#else //1
+  ACE_ENV_ARG_DECL)
+#endif
 {
-  this->push_consumer_ = CosNotifyComm::SequencePushConsumer::_duplicate (push_consumer);
+  set_consumer (push_consumer);
 
-  this->publish_ = CosNotifyComm::NotifyPublish::_duplicate (push_consumer);
+#if 1 //// @@ TODO: use buffering strategy in TAO_Notify_Consumer???
+  ACE_UNUSED_ARG ( admin_properties);
+#else //1
 
-/* @@ TODO: use buffering strategy in TAO_Notify_Consumer???
   ACE_NEW_THROW_EX (this->buffering_strategy_,
                     TAO_Notify_Batch_Buffering_Strategy (this->msg_queue_, admin_properties,
                                                      this->max_batch_size_.value ()),
                     CORBA::NO_MEMORY ());
-*/
+#endif // 1
 }
+
+void
+TAO_Notify_SequencePushConsumer::set_consumer (
+  CosNotifyComm::SequencePushConsumer_ptr push_consumer)
+{
+  this->push_consumer_ = CosNotifyComm::SequencePushConsumer::_duplicate (push_consumer);
+  this->publish_ = CosNotifyComm::NotifyPublish::_duplicate (push_consumer);
+
+}
+
 
 void
 TAO_Notify_SequencePushConsumer::release (void)
@@ -225,7 +242,10 @@ TAO_Notify_SequencePushConsumer::get_ior (ACE_CString & iorstr) const
 
 void
 TAO_Notify_SequencePushConsumer::reconnect_from_consumer (TAO_Notify_Consumer* old_consumer
-    ACE_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL_NOT_USED)
 {
-  int todo_reconnect;
+  TAO_Notify_SequencePushConsumer* tmp = dynamic_cast<TAO_Notify_SequencePushConsumer *> (old_consumer);
+  ACE_ASSERT(tmp != 0);
+  this->set_consumer(tmp->push_consumer_.in());
+  this->schedule_timer(false);
 }

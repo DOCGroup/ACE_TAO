@@ -1070,11 +1070,11 @@ Consumer_Main::load_ids()
   {
     int field = 0;
 
-    char buffer[100];
+    char buffer[100] = ""; // because ACE fgets doesn't put a null if the file is empty
     ACE_OS::fgets (buffer, sizeof(buffer), idf);
     ACE_OS::fclose (idf);
     char * pb = buffer;
-    while (*pb != 0)
+    while (!ok && *pb != 0)
     {
       char * eb = ACE_OS::strchr (pb, ',');
       char * nb = eb + 1;
@@ -1083,14 +1083,11 @@ Consumer_Main::load_ids()
         eb = pb + ACE_OS::strlen (pb);
         nb = eb;
       }
-      else
-      {
-        *eb = 0;
-      }
+      *eb = 0;
       if (pb < eb)
       {
         int value = ACE_OS::atoi(pb);
-        switch (field)
+        switch (++field)
         {
         case 1:
           this->mode_ = static_cast<Mode_T> (value);
@@ -1291,7 +1288,7 @@ Consumer_Main::init_event_channel (ACE_ENV_SINGLE_ARG_DECL)
           if (this->verbose_)
           {
             ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%P|%t) supplier: Connect to Existing event channel %d\n"),
+              ACE_TEXT ("(%P|%t) Consumer: Connect to Existing event channel %d\n"),
               ACE_static_cast (int, this->ec_id_)
               ));
           }
@@ -1308,8 +1305,8 @@ Consumer_Main::init_event_channel (ACE_ENV_SINGLE_ARG_DECL)
 
   if (!ok)
   {
-    CosNotification::QoSProperties qosprops(7);
-    qosprops.length(7);
+    CosNotification::QoSProperties qosprops (7);
+    qosprops.length (7);
     CORBA::ULong i = 0;
 #ifdef DISABLE_PROPERTIES_TODO
     qosprops[i].name = CORBA::string_dup(CosNotification::EventReliability);
@@ -1329,7 +1326,7 @@ Consumer_Main::init_event_channel (ACE_ENV_SINGLE_ARG_DECL)
 #endif
     qosprops.length (i);
     CosNotification::AdminProperties adminprops(4);
-    adminprops.length(4);
+    adminprops.length (4);
     i = 0;
 #ifdef DISABLE_PROPERTIES_TODO
     adminprops[i].name = CORBA::string_dup(CosNotification::MaxQueueLength);
@@ -1349,7 +1346,6 @@ Consumer_Main::init_event_channel (ACE_ENV_SINGLE_ARG_DECL)
           this->ec_id_
           ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
-
     ok = ! CORBA::is_nil (ec_.in ());
     if (ok && this->verbose_)
     {
@@ -1378,35 +1374,63 @@ void
 Consumer_Main::init_consumer_admin (ACE_ENV_SINGLE_ARG_DECL)
 {
   bool ok = false;
-  if (this->reconnecting_ && this->sa_id_ != default_admin_id)
+  if (this->reconnecting_)
   {
-    ACE_TRY_EX(ONE)
+    if (this->sa_id_ == default_admin_id)
     {
-      this->sa_ = this->ec_->get_consumeradmin(
-        this->sa_id_
-        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK_EX(ONE);
-      ok = ! CORBA::is_nil (this->sa_.in ());
-      if (ok && this->verbose_)
+      ACE_TRY_EX(TWO)
       {
-        ACE_DEBUG ((LM_DEBUG,
-          ACE_TEXT ("(%P|%t) Consumer: Reconnect to consumer admin %d\n"),
-          ACE_static_cast (int, this->sa_id_)
-          ));
+        this->sa_ = this->ec_->default_consumer_admin (ACE_ENV_SINGLE_ARG_PARAMETER);
+        ACE_TRY_CHECK_EX(TWO);
+        ok = ! CORBA::is_nil (this->sa_.in ());
+        this->sa_id_ = default_admin_id;
+        if (ok && this->verbose_)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+            ACE_TEXT ("(%P|%t) Consumer: Using default consumer admin\n")
+            ));
+        }
+        else if (this->verbose_)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+            ACE_TEXT ("(%P|%t) Consumer: No default consumer admin\n")
+            ));
+        }
       }
+      ACE_CATCHALL
+      {
+      }
+      ACE_ENDTRY;
     }
-    ACE_CATCHALL
+    else // not default admin
     {
+      ACE_TRY_EX(ONE)
+      {
+        this->sa_ = this->ec_->get_consumeradmin(
+          this->sa_id_
+          ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK_EX(ONE);
+        ok = ! CORBA::is_nil (this->sa_.in ());
+        if (ok && this->verbose_)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+            ACE_TEXT ("(%P|%t) Consumer: Reconnect to consumer admin %d\n"),
+            ACE_static_cast (int, this->sa_id_)
+            ));
+        }
+      }
+      ACE_CATCHALL
+      {
+      }
+      ACE_ENDTRY;
     }
-    ACE_ENDTRY;
   }
-
-  if (!ok)
+  else // !reconnecting
   {
-    ACE_TRY_EX(TWO)
+    ACE_TRY_EX(THREE)
     {
       this->sa_ = this->ec_->default_consumer_admin (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK_EX(TWO);
+      ACE_TRY_CHECK_EX(THREE);
       ok = ! CORBA::is_nil (this->sa_.in ());
       this->sa_id_ = default_admin_id;
       if (ok && this->verbose_)
@@ -1426,45 +1450,51 @@ Consumer_Main::init_consumer_admin (ACE_ENV_SINGLE_ARG_DECL)
     {
     }
     ACE_ENDTRY;
-  }
 
-  if (!ok)
-  {
-    this->sa_ = this->ec_->new_for_consumers(
-      CosNotifyChannelAdmin::OR_OP,
-      this->sa_id_
-      ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
-    ok = ! CORBA::is_nil (this->sa_.in ());
+    if (!ok)
+    {
+      this->sa_ = this->ec_->new_for_consumers(
+        CosNotifyChannelAdmin::OR_OP,
+        this->sa_id_
+        ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+      ok = ! CORBA::is_nil (this->sa_.in ());
 
 #ifdef TEST_SET_QOS
-    // temporary: be sure we can set qos properties here
-    if (ok)
-    {
-      CosNotification::QoSProperties qosprops(2);
-      CORBA::ULong i = 0;
-      qosprops.length(2);
+      // temporary: be sure we can set qos properties here
+      if (ok)
+      {
+        CosNotification::QoSProperties qosprops(2);
+        CORBA::ULong i = 0;
+        qosprops.length(2);
 
-      qosprops[i].name = CORBA::string_dup(CosNotification::EventReliability);
-      qosprops[i++].value <<= CosNotification::Persistent;
-      qosprops[i].name = CORBA::string_dup(CosNotification::ConnectionReliability);
-      qosprops[i++].value <<= CosNotification::Persistent; // Required, or we won't persist much
-      qosprops.length(i);
-      this->sa_->set_qos (qosprops ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
-    }
+        qosprops[i].name = CORBA::string_dup(CosNotification::EventReliability);
+        qosprops[i++].value <<= CosNotification::Persistent;
+        qosprops[i].name = CORBA::string_dup(CosNotification::ConnectionReliability);
+        qosprops[i++].value <<= CosNotification::Persistent; // Required, or we won't persist much
+        qosprops.length(i);
+        this->sa_->set_qos (qosprops ACE_ENV_ARG_PARAMETER);
+        ACE_CHECK;
+      }
 #endif
 
-    if (ok && this->verbose_)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-        ACE_TEXT ("(%P|%t) Consumer: Create new consumer admin %d\n"),
-        ACE_static_cast (int, this->sa_id_)
-        ));
+      if (ok && this->verbose_)
+      {
+        ACE_DEBUG ((LM_DEBUG,
+          ACE_TEXT ("(%P|%t) Consumer: Create new consumer admin %d\n"),
+          ACE_static_cast (int, this->sa_id_)
+          ));
+      }
     }
   }
+  if (!ok)
+  {
+    ACE_DEBUG ((LM_DEBUG,
+      ACE_TEXT ("(%P|%t) Consumer: connect to consumer admin failed %d\n"),
+      ACE_static_cast (int, this->sa_id_)
+      ));
+  }
 }
-
 void
 Consumer_Main::init_structured_proxy_supplier (ACE_ENV_SINGLE_ARG_DECL)
 {
@@ -1505,7 +1535,7 @@ Consumer_Main::init_structured_proxy_supplier (ACE_ENV_SINGLE_ARG_DECL)
     if (ok && this->verbose_)
     {
       ACE_DEBUG ((LM_DEBUG,
-        ACE_TEXT ("(%P|%t) Consumer: Create new proxy %d\n"),
+        ACE_TEXT ("(%P|%t) Consumer: Create new structured proxy %d\n"),
         ACE_static_cast (int, this->structured_proxy_id_)
         ));
     }
@@ -1601,7 +1631,7 @@ Consumer_Main::init_sequence_proxy_supplier (ACE_ENV_SINGLE_ARG_DECL)
     if (ok && this->verbose_)
     {
       ACE_DEBUG ((LM_DEBUG,
-        ACE_TEXT ("(%P|%t) Consumer: Create new proxy %d\n"),
+        ACE_TEXT ("(%P|%t) Consumer: Create new sequence proxy %d\n"),
           ACE_static_cast (int, this->sequence_proxy_id_)
         ));
     }
@@ -1692,9 +1722,28 @@ Consumer_Main::init_any_proxy_supplier (ACE_ENV_SINGLE_ARG_DECL)
           ACE_static_cast (int, this->any_proxy_id_)
           ));
       }
+      else
+      {
+        ACE_DEBUG ((LM_DEBUG,
+          ACE_TEXT ("(%P|%t) Consumer: Get proxy supplier %d returned nil\n"),
+          ACE_static_cast (int, this->any_proxy_id_)
+          ));
+      }
+    }
+    ACE_CATCHANY
+    {
+      ACE_DEBUG ((LM_DEBUG,
+        ACE_TEXT ("(%P|%t) Consumer: Get proxy supplier %d threw exception\n"),
+        ACE_static_cast (int, this->any_proxy_id_)
+        ));
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, ACE_TEXT ("To wit:"));
     }
     ACE_CATCHALL
     {
+      ACE_DEBUG ((LM_DEBUG,
+        ACE_TEXT ("(%P|%t) Consumer: Get proxy supplier %d threw exception\n"),
+        ACE_static_cast (int, this->any_proxy_id_)
+        ));
     }
     ACE_ENDTRY;
   }
@@ -1708,18 +1757,10 @@ Consumer_Main::init_any_proxy_supplier (ACE_ENV_SINGLE_ARG_DECL)
     ACE_CHECK;
     ok = ! CORBA::is_nil (proxy.in ());
 
-#ifdef TEST_SET_QOS
-      // temporary
-    if (ok)
-    {
-      set_proxy_qos (proxy.in () ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
-    }
-#endif // TEST_SET_QOS
     if (ok && this->verbose_)
     {
       ACE_DEBUG ((LM_DEBUG,
-        ACE_TEXT ("(%P|%t) Consumer: Create new proxy\n"),
+        ACE_TEXT ("(%P|%t) Consumer: Create new Any proxy %d\n"),
           ACE_static_cast (int, this->any_proxy_id_)
         ));
     }
@@ -1732,7 +1773,7 @@ Consumer_Main::init_any_proxy_supplier (ACE_ENV_SINGLE_ARG_DECL)
   {
     ACE_ERROR ((LM_ERROR,
       ACE_TEXT ("(%P|%t) Consumer: Received wrong type of push supplier proxy %d\n"),
-        ACE_static_cast (int, this->sequence_proxy_id_)
+        ACE_static_cast (int, this->any_proxy_id_)
       ));
     ACE_THROW (CORBA::BAD_PARAM());
   }
@@ -1764,6 +1805,7 @@ Consumer_Main::init_any_proxy_supplier (ACE_ENV_SINGLE_ARG_DECL)
     this->any_push_consumer_ref_.in ()
     ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
+
   this->any_push_consumer_.set_connected(true);
 }
 

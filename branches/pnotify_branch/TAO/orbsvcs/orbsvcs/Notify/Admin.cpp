@@ -159,7 +159,7 @@ TAO_Notify_Admin::load_attrs(const TAO_Notify::NVPList& attrs)
     }
   if (attrs.find ("default", value))
   {
-    this->is_default_ = ACE_OS::strcmp (value, "yes");
+    this->is_default_ = (ACE_OS::strcmp (value, "yes") == 0);
   }
 }
 

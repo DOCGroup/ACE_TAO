@@ -100,5 +100,9 @@ void
 TAO_Notify_PushConsumer::reconnect_from_consumer (TAO_Notify_Consumer* old_consumer
     ACE_ENV_ARG_DECL)
 {
-  int todo_reconnect;
+  TAO_Notify_PushConsumer* tmp = ACE_dynamic_cast(TAO_Notify_PushConsumer*, old_consumer);
+  ACE_ASSERT(tmp != 0);
+  this->init(tmp->push_consumer_.in() ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+  this->schedule_timer(false);
 }

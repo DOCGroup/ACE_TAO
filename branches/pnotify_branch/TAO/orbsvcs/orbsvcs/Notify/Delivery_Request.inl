@@ -40,6 +40,15 @@ Delivery_Request::should_retry () const
   return this->routing_slip_->should_retry ();
 }
 
+void
+Delivery_Request::dispatch (
+  TAO_Notify_ProxySupplier * proxy_supplier,
+  bool filter ACE_ENV_ARG_DECL)
+{
+  this->routing_slip_->dispatch (proxy_supplier, filter ACE_ENV_ARG_PARAMETER);
+}
+
+
 
 } // namespace TAO_Notify
 
