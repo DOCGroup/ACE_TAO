@@ -1,3 +1,46 @@
+Tue Jun 12 17:53:45 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tao/DynamicAny/DynAnyFactory.cpp:
+        * tao/DynamicAny/DynAnyFactory.h:
+        * tao/DynamicAny/DynAny_i.cpp:
+        * tao/DynamicAny/DynAny_i.h:
+        * tao/DynamicAny/DynArray_i.cpp:
+        * tao/DynamicAny/DynArray_i.h:
+        * tao/DynamicAny/DynEnum_i.cpp:
+        * tao/DynamicAny/DynEnum_i.h:
+        * tao/DynamicAny/DynSequence_i.cpp:
+        * tao/DynamicAny/DynSequence_i.h:
+        * tao/DynamicAny/DynStruct_i.cpp:
+        * tao/DynamicAny/DynStruct_i.h:
+        * tao/DynamicAny/DynUnion_i.cpp:
+        * tao/DynamicAny/DynUnion_i.h:
+        * tao/DynamicAny/Makefile:
+        * tao/DynamicAny/Makefile.bor:
+        * tao/DynamicAny/TAO_DynamicAny.dsp:
+        * tao/DynamicAny/TAO_DynamicAny_Static.dsp:
+
+          Modified the implementation to conform to CORBA
+          2.4.2, and especially with the major changes
+          that appeared in CORBA 2.3.1.
+
+        * tao/DynamicAny/DynCommon.cpp:
+        * tao/DynamicAny/DynCommon.h:
+
+          New files containing an abstract base class that
+          holds implementations for all the insert_* and
+          get_* methods, as well as some of the other
+          methods common to all the dynamic any classes and
+          some utility functions. All the TAO dynamic any
+          implementation classes inherit from this as well
+          as from the corresponding generated class.
+
+        * tao/DynamicAny/DynUnion_i_T.cpp:
+        * tao/DynamicAny/DynUnion_i_T.h:
+
+          Removed these files. There is now an alternate
+          implementation in DynUnion_i.* that was previously
+          handled by template classes in these files.
+
 Tue Jun 12 17:46:16 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/CosNotifyChannelAdmin.idl:
