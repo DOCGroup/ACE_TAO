@@ -1,3 +1,16 @@
+Wed Jan 29 12:31:51 2003  Frank Hunleth  <frank@hunleth.com>
+
+	* ace/config-openbsd.h:
+	* ace/config-openbsd-pthreads.h: Merged config files together and
+	  removed config-openbsd-pthreads.h like what was done for
+	  FreeBSD.
+
+	* include/makeinclude/platform_openbsd.GNU:
+	* include/makeinclude/platform_openbsd_pthreads.GNU:  Merged files
+	  together and removed platform_openbsd_pthreads.GNU like
+	  FreeBSD.  Also removed gratuitous link of -lstdc++.  g++ already
+	  does that for us.  Thanks to Craig Rodrigues' changelog entry.
+
 Wed Jan 29 11:47:29 2003  Steve Huston  <shuston@riverace.com>
 
         * ACEXML/tests/ContentHandler_Test.cpp: Fixed compile errors by
@@ -55,6 +68,7 @@ Sun Jan 26 16:42:23 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
           Don't set any BUILD_DLL defines in this file, the BUILD_DLL defines
           are set in the specific makefiles.
 
+>>>>>>> 4.4596
 Sat Jan 25 20:31:56 2003  Frank Hunleth  <frank@hunleth.com>
 
         * ace/config-openbsd.h:

@@ -1,14 +1,18 @@
 /* -*- C++ -*- */
 // $Id$
 
-// ***** This configuration file is still under testing. *****
-
 // The following configuration file is designed to work for OpenBSD
 // platforms using GNU g++.
 
 #ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
 #include "ace/pre.h"
+
+#if defined (ACE_HAS_THREADS)
+#include /**/ <pthread.h>
+#endif /* ACE_HAS_THREADS */
+
+#include "ace/config-posix.h"
 
 #if ! defined (__ACE_INLINE__)
 #define __ACE_INLINE__
@@ -20,13 +24,36 @@
 # include "ace/config-g++-common.h"
 #endif /* __GNUG__ */
 
+
+// Platform specific directives
+// gcc defines __OpenBSD__ automatically for us.
+#if defined (ACE_HAS_THREADS)
+#if !defined (_THREAD_SAFE)
+#define _THREAD_SAFE
+#endif /* _THREAD_SAFE */
+
+// Check if pthreads and native exceptions are being used together.
+// This causes SEGVs to tbe thrown somewhat randomly for some
+// reason.  According to newsgroup postings, it appears to be an
+// OpenBSD or gcc bug.
+#if defined (ACE_USES_NATIVE_EXCEPTIONS)
+#error "OpenBSD pthreads and native exceptions currently do not work.  See OpenBSD bug #1750"
+#endif /* ACE_USES_NATIVE_EXCEPTIONS */
+
+#endif /* ACE_HAS_THREADS */
+
 #define ACE_HAS_GPERF
 
 // Platform specific directives
+/* Are the following true? */
 #define ACE_LACKS_GETPGID
 #define ACE_LACKS_SETPGID
 #define ACE_LACKS_SETREGID
 #define ACE_LACKS_SETREUID
+
+#define ACE_HAS_ALT_CUSERID
+#define ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS
+
 #define ACE_LACKS_RWLOCK_T
 #define ACE_HAS_SIG_MACROS
 #define ACE_HAS_CHARPTR_DL
@@ -39,6 +66,12 @@
 // OpenBSD has sigwait defined
 #define ACE_HAS_SIGWAIT
 #define ACE_HAS_SIGINFO_T
+
+#define ACE_HAS_REENTRANT_FUNCTIONS
+#define ACE_LACKS_NETDB_REENTRANT_FUNCTIONS
+#define ACE_LACKS_PWD_REENTRANT_FUNCTIONS
+#define ACE_LACKS_RAND_REENTRANT_FUNCTIONS
+#define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
 
 #define ACE_HAS_SOCKLEN_T
 
@@ -149,13 +182,36 @@
 #define ACE_HAS_MSG
 #define ACE_HAS_4_4BSD_SENDMSG_RECVMSG
 #define ACE_HAS_NONCONST_MSGSND
-#define ACE_HAS_ALT_CUSERID
+
+#ifdef ACE_HAS_THREADS
+// Thread specific settings
+
+// And they're even POSIX pthreads
+#if !defined (ACE_MT_SAFE)
+# define ACE_MT_SAFE 1
+#endif /* ! ACE_MT_SAFE */
+#endif /* ACE_HAS_THREADS */
 
 #define ACE_HAS_SIGWAIT
 
 // Optimize ACE_Handle_Set for select().
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
 #define ACE_HAS_NONCONST_SELECT_TIMEVAL
+#define ACE_LACKS_THREAD_PROCESS_SCOPING
+#define ACE_LACKS_CONDATTR_PSHARED
+#define ACE_LACKS_MUTEXATTR_PSHARED
+#define ACE_HAS_THREAD_SPECIFIC_STORAGE
+#define ACE_HAS_DIRENT
+
+#if !defined (ACE_HAS_THREADS)
+// OpenBSD really has readdir_r () in single threaded mode,
+// but the #ifdefs in OS.i select one with the wrong parameter
+// sets if the ACE_HAS_POSIX_STD isn't defined (which is defined
+// when ACE_HAS_THREADS is defined.)
+
+#define ACE_LACKS_READDIR_R
+
+#endif /* ! ACE_HAD_THREADS */
 
 #define ACE_HAS_TERM_IOCTLS
 #define ACE_USES_NEW_TERMIOS_STRUCT
