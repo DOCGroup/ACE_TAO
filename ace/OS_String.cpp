@@ -99,13 +99,17 @@ ACE_OS_String::strdup (const wchar_t *s)
 #   elif defined (ACE_WCSDUP_EQUIVALENT)
   return ACE_WCSDUP_EQUIVALENT (s);
 #   else /* ACE_LACKS_WCSDUP */
+#     if defined (__MINGW32__)
+  return ::wcsdup (ACE_const_cast(wchar_t*, s));
+#     else /* __MINGW32__ */
   return ::wcsdup (s);
+#     endif /* __MINGW32__ */
 #   endif /* ACE_LACKS_WCSDUP */
 }
 #endif /* ACE_HAS_WCHAR */
 
 #if defined (ACE_LACKS_STRERROR)
-/** 
+/**
  * Just returns "Unknown Error" all the time.
  */
 char *
@@ -847,7 +851,7 @@ ACE_OS_String::wcsncmp_emulation (const wchar_t *s1,
 #endif /* ACE_HAS_WCHAR && ACE_LACKS_WCSNCMP */
 
 #if defined (ACE_LACKS_STRTOL)
-long 
+long
 ACE_OS_String::strtol_emulation (const char *nptr, char **endptr, int base)
 {
   register const char *s = nptr;
@@ -855,7 +859,7 @@ ACE_OS_String::strtol_emulation (const char *nptr, char **endptr, int base)
   register int c;
   register unsigned long cutoff;
   register int neg = 0, any, cutlim;
-  
+
   /*
    * Skip white space and pick up leading +/- sign if any.
    * If base is 0, allow 0x for hex and 0 for octal, else
@@ -877,7 +881,7 @@ ACE_OS_String::strtol_emulation (const char *nptr, char **endptr, int base)
   }
   if (base == 0)
     base = c == '0' ? 8 : 10;
-  
+
   /*
    * Compute the cutoff value between legal numbers and illegal
    * numbers.  That is the largest legal value, divided by the
@@ -928,8 +932,8 @@ ACE_OS_String::strtol_emulation (const char *nptr, char **endptr, int base)
 
 #if defined (ACE_LACKS_STRTOUL)
 unsigned long
-ACE_OS_String::strtoul_emulation (const char *nptr, 
-                                  char **endptr, 
+ACE_OS_String::strtoul_emulation (const char *nptr,
+                                  char **endptr,
                                   register int base)
 {
   register const char *s = nptr;
@@ -937,7 +941,7 @@ ACE_OS_String::strtoul_emulation (const char *nptr,
   register int c;
   register unsigned long cutoff;
   register int neg = 0, any, cutlim;
-  
+
   /*
    * See strtol for comments as to the logic used.
    */

@@ -1,4 +1,4 @@
-// -*- C++ -*- 
+// -*- C++ -*-
 //
 // $Id$
 
@@ -37,10 +37,10 @@
 # endif /* __GNUC__ >= 2.91 */
 
 #if __GNUC__ > 2 || ( __GNUC__ == 2 && __GNUC_MINOR__ >= 97 )
-	// gcc 2.97 and higher use libstdc++-v3 and require
-	// the use of the std namespace for using iostreams
+        // gcc 2.97 and higher use libstdc++-v3 and require
+        // the use of the std namespace for using iostreams
 # define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
-# undef  ACE_USES_OLD_IOSTREAMS              
+# undef  ACE_USES_OLD_IOSTREAMS
 #endif /* __GNUC__ >= 2.97 */
 
 # if __GNUC__ == 2  &&  __GNUC_MINOR__ != 9  &&  __GNUC_MINOR__ != 91
@@ -78,7 +78,7 @@
 # define ACE_SIZEOF_LONG_DOUBLE 12
 #endif /* i386 */
 
-#if defined (i386) || defined (__i386__)
+#if !defined (__MINGW32__) && (defined (i386) || defined (__i386__))
   // If running an Intel, assume that it's a Pentium so that
   // ACE_OS::gethrtime () can use the RDTSC instruction.  If running a
   // 486 or lower, be sure to comment this out.  (If not running an

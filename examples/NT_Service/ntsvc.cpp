@@ -13,7 +13,7 @@
 //      seconds until the service is stopped.
 //
 // = AUTHOR
-//    Gonzalo Diethelm <gonzo@cs.wustl.edu> 
+//    Gonzalo Diethelm <gonzo@cs.wustl.edu>
 //    and Steve Huston <shuston@riverace.com>
 //
 // ============================================================================
@@ -36,10 +36,10 @@ Service::Service (void)
 // handles requests for stop and shutdown by calling terminate ().
 // All others get handled by calling up to inherited::handle_control.
 
-void 
+void
 Service::handle_control (DWORD control_code)
 {
-  if (control_code == SERVICE_CONTROL_SHUTDOWN 
+  if (control_code == SERVICE_CONTROL_SHUTDOWN
       || control_code == SERVICE_CONTROL_STOP)
     {
       report_status (SERVICE_STOP_PENDING);
@@ -58,7 +58,7 @@ Service::handle_control (DWORD control_code)
 // doesn't do anything except aid on popping the reactor off its wait
 // and causing a drop out of handle_events.
 
-int 
+int
 Service::handle_exception (ACE_HANDLE)
 {
   return 0;
@@ -66,10 +66,11 @@ Service::handle_exception (ACE_HANDLE)
 
 // Beep every two seconds.  This is what this NT service does...
 
-int 
+int
 Service::handle_timeout (const ACE_Time_Value &tv,
                          const void *)
 {
+  ACE_UNUSED_ARG (tv);
   MessageBeep (MB_OK);
   return 0;
 }
@@ -78,7 +79,7 @@ Service::handle_timeout (const ACE_Time_Value &tv,
 // the initial configuration and runs the event loop until a shutdown
 // request is received.
 
-int 
+int
 Service::svc (void)
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -101,3 +102,9 @@ Service::svc (void)
               "Shutting down\n"));
   return 0;
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Singleton<Service, ACE_Mutex>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Singleton<Service, ACE_Mutex>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

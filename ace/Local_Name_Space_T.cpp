@@ -404,7 +404,12 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::create_manager_i (void)
   ACE_OS::strcat (this->context_file_, database);
 
 #if !defined (CHORUS)
+# if defined(ACE_WIN32) && \
+     (!defined(ACE_HAS_WINNT4) || (ACE_HAS_WINNT4 == 0))
+  ACE_MEM_POOL_OPTIONS options (this->name_options_->base_address (), 0);
+# else
   ACE_MEM_POOL_OPTIONS options (this->name_options_->base_address ());
+# endif /* !ACE_HAS_WINNT4 */
 #else
   // Use base address == 0, don't use a fixed address.
   ACE_MEM_POOL_OPTIONS options (0,

@@ -2572,6 +2572,7 @@ ACE::handle_timed_complete (ACE_HANDLE h,
   // ready for writing, which may indicate a problem.  But we need to
   // make sure...
 #if defined (ACE_WIN32)
+  ACE_UNUSED_ARG (is_tli);
   need_to_check = rd_handles.is_set (h) || ex_handles.is_set (h);
 #elif defined (VXWORKS)
   ACE_UNUSED_ARG (is_tli);

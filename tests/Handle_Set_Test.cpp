@@ -106,7 +106,7 @@ test_boundaries (void)
       const int SET_IS_EMPTY_SO_SHOULD_NOT_SEE_THIS = 1;
       ACE_ASSERT (0 == SET_IS_EMPTY_SO_SHOULD_NOT_SEE_THIS);
 #else /* ! defined (ACE_PSOS_DIAB) */
-      ACE_ASSERT (0 == 
+      ACE_ASSERT (0 ==
                   ACE_TEXT ("this shouldn't get called since ")
                   ACE_TEXT ("the set is empty!\n"));
 #endif /* defined (ACE_PSOS_DIAB) */
@@ -207,16 +207,16 @@ main (int argc, ACE_TCHAR *argv[])
 {
   ACE_START_TEST (ACE_TEXT ("Handle_Set_Test"));
 
-  int count = argc > 1 
-    ? ACE_OS::atoi (argv[1]) 
+  int count = argc > 1
+    ? ACE_OS::atoi (argv[1])
     : ACE_Handle_Set::MAXSIZE;
   size_t max_handles =
-    argc > 2 
-    ? ACE_OS::atoi (argv[2]) 
+    argc > 2
+    ? ACE_OS::atoi (argv[2])
     : ACE_Handle_Set::MAXSIZE;
   size_t max_iterations =
-    argc > 3 
-    ? ACE_OS::atoi (argv[3]) 
+    argc > 3
+    ? ACE_OS::atoi (argv[3])
     : ACE_MAX_ITERATIONS;
 
   test_duplicates (count);
@@ -231,7 +231,8 @@ main (int argc, ACE_TCHAR *argv[])
 // The ACE_Node<ACE_INT32> instantation is in ace/Stats.cpp.
 template class ACE_Unbounded_Set<ACE_HANDLE>;
 template class ACE_Unbounded_Set_Iterator<ACE_HANDLE>;
-# if defined(_CRAYMPP) || defined(ghs) && defined (ACE_WIN32)
+# if defined(_CRAYMPP) \
+     || ((defined(ghs) || defined(__MINGW32__)) && defined (ACE_WIN32))
 // MPP Cray ACE_HANDLE is 64-bit, defined as int, but ACE_INT32 is short
 // so instantiation in ace/Stats.cpp isn't used in this case
 template class ACE_Node<ACE_HANDLE>;

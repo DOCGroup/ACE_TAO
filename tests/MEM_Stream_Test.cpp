@@ -30,7 +30,7 @@
 
 ACE_RCSID(tests, MEM_Stream_Test, "$Id$")
 
-#if defined (ACE_HAS_THREADS)
+#if defined (ACE_HAS_THREADS) && (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
 
 #include "MEM_Stream_Test.h"         // Defines Echo_Handler
 
@@ -45,7 +45,18 @@ ACE_RCSID(tests, MEM_Stream_Test, "$Id$")
 
 #define NO_OF_ITERATION 100
 
-static int opt_wfmo_reactor = 1;
+// If we don't have winsock2 we can't use WFMO_Reactor.
+#if defined (ACE_WIN32) \
+    && !defined (ACE_HAS_WINCE) \
+    && defined (ACE_HAS_WINSOCK2) \
+    && ACE_HAS_WINSOCK2 != 0
+# define TEST_CAN_USE_WFMO_REACTOR
+#endif
+
+#if defined(TEST_CAN_USE_WFMO_REACTOR)
+static const int opt_wfmo_reactor = 1;
+#endif
+
 static int opt_select_reactor = 1;
 static ACE_MEM_IO::Signal_Strategy client_strategy = ACE_MEM_IO::Reactive;
 
@@ -188,14 +199,15 @@ create_reactor (void)
 {
   ACE_Reactor_Impl *impl = 0;
 
+#if defined (TEST_CAN_USE_WFMO_REACTOR)
   if (opt_wfmo_reactor)
     {
-#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
       ACE_NEW (impl,
                ACE_WFMO_Reactor);
-#endif /* ACE_WIN32 */
     }
-  else if (opt_select_reactor)
+#endif /* TEST_CAN_USE_WFMO_REACTOR */
+
+  if (impl == 0 && opt_select_reactor)
     ACE_NEW (impl,
              ACE_Select_Reactor);
 
@@ -380,9 +392,10 @@ main (int, ACE_TCHAR *[])
   ACE_START_TEST (ACE_TEXT ("MEM_Stream_Test"));
 
   ACE_ERROR ((LM_INFO,
-              ACE_TEXT ("threads not supported on this platform\n")));
+              ACE_TEXT ("threads or position independent pointers ")
+              ACE_TEXT ("not supported on this platform\n")));
 
   ACE_END_TEST;
   return 0;
 }
-#endif /* ACE_HAS_THREADS */
+#endif /* ACE_HAS_THREADS || ACE_HAS_POSITION_INDENDENT_POINTERS == 1 */

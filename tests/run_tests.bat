@@ -1,6 +1,10 @@
 @echo off
 rem run_tests.bat,v 4.71 1999/11/08 05:39:06 nanbor Exp
 
+rem
+rem    Note this batch file will not work on Win9X.
+rem
+
 rem    To run this script, the first argument must be either bor
 rem    or msc.  This will determine if the borland tests are run, or
 rem    msvc tests are run.

@@ -1022,25 +1022,27 @@ ACE_WFMO_Reactor::ACE_WFMO_Reactor (ACE_Sig_Handler *sh,
     delete_signal_handler_ (0),
     timer_queue_ (0),
     delete_timer_queue_ (0),
-    handler_rep_ (*this),
     delete_handler_rep_ (0),
     delete_notify_handler_ (0),
     lock_adapter_ (lock_),
+    handler_rep_ (*this),
     // this event is initially signaled
     ok_to_wait_ (1),
     // this event is initially unsignaled
     wakeup_all_threads_ (0),
     // this event is initially unsignaled
     waiting_to_change_state_ (0),
-    new_owner_ (0),
     active_threads_ (0),
     owner_ (ACE_Thread::self ()),
+    new_owner_ (0),
     change_state_thread_ (0),
     open_for_business_ (0),
     deactivated_ (0)
 {
   if (this->open (ACE_WFMO_Reactor::DEFAULT_SIZE, 0, sh, tq) == -1)
-    ACE_ERROR ((LM_ERROR,  ACE_LIB_TEXT ("%p\n"),  ACE_LIB_TEXT ("WFMO_Reactor")));
+    ACE_ERROR ((LM_ERROR,
+                ACE_LIB_TEXT ("%p\n"),
+                ACE_LIB_TEXT ("WFMO_Reactor")));
 }
 
 ACE_WFMO_Reactor::ACE_WFMO_Reactor (size_t size,
@@ -1051,19 +1053,19 @@ ACE_WFMO_Reactor::ACE_WFMO_Reactor (size_t size,
     delete_signal_handler_ (0),
     timer_queue_ (0),
     delete_timer_queue_ (0),
-    handler_rep_ (*this),
     delete_handler_rep_ (0),
     delete_notify_handler_ (0),
     lock_adapter_ (lock_),
+    handler_rep_ (*this),
     // this event is initially signaled
     ok_to_wait_ (1),
     // this event is initially unsignaled
     wakeup_all_threads_ (0),
     // this event is initially unsignaled
     waiting_to_change_state_ (0),
-    new_owner_ (0),
     active_threads_ (0),
     owner_ (ACE_Thread::self ()),
+    new_owner_ (0),
     change_state_thread_ (0),
     open_for_business_ (0),
     deactivated_ (0)
@@ -1071,7 +1073,9 @@ ACE_WFMO_Reactor::ACE_WFMO_Reactor (size_t size,
   ACE_UNUSED_ARG (unused);
 
   if (this->open (size, 0, sh, tq) == -1)
-    ACE_ERROR ((LM_ERROR,  ACE_LIB_TEXT ("%p\n"),  ACE_LIB_TEXT ("WFMO_Reactor")));
+    ACE_ERROR ((LM_ERROR,
+                ACE_LIB_TEXT ("%p\n"),
+                ACE_LIB_TEXT ("WFMO_Reactor")));
 }
 
 int
@@ -1089,6 +1093,7 @@ ACE_WFMO_Reactor::open (size_t size,
                         ACE_Reactor_Notify *notify)
 {
   ACE_UNUSED_ARG (unused);
+  ACE_UNUSED_ARG (disable_notify_pipe);
 
   // This GUARD is necessary since we are updating shared state.
   ACE_GUARD_RETURN (ACE_Process_Mutex, ace_mon, this->lock_, -1);
@@ -1791,8 +1796,11 @@ ACE_WFMO_Reactor::dispatch_handles (size_t wait_status)
        number_of_handlers_dispatched++)
     {
       bool ok = (
-#if ! (defined(__BORLANDC__) && (__BORLANDC__ >= 0x0530)) && !defined (ghs)
-                 // wait_status is unsigned in Borland and Green Hills;
+#if ! (defined(__BORLANDC__) && (__BORLANDC__ >= 0x0530)) \
+    && !defined (ghs) \
+    && !defined (__MINGW32__)
+                 // wait_status is unsigned in Borland, Green Hills
+                 // and mingw32;
                  // This >= is always true, with a warning.
                  wait_status >= WAIT_OBJECT_0 &&
 #endif
@@ -2154,6 +2162,8 @@ int
 ACE_WFMO_Reactor_Notify::dispatch_notifications (int &number_of_active_handles,
                                                  ACE_Handle_Set &rd_mask)
 {
+  ACE_UNUSED_ARG (number_of_active_handles);
+  ACE_UNUSED_ARG (rd_mask);
   return -1;
 }
 
@@ -2164,8 +2174,8 @@ ACE_WFMO_Reactor_Notify::close (void)
 }
 
 ACE_WFMO_Reactor_Notify::ACE_WFMO_Reactor_Notify (void)
-  : max_notify_iterations_ (-1),
-    timer_queue_ (0)
+  : timer_queue_ (0),
+    max_notify_iterations_ (-1)
 {
 }
 
@@ -2174,6 +2184,7 @@ ACE_WFMO_Reactor_Notify::open (ACE_Reactor_Impl *wfmo_reactor,
                                ACE_Timer_Queue *timer_queue,
                                int ignore_notify)
 {
+  ACE_UNUSED_ARG (ignore_notify);
   timer_queue_ = timer_queue;
   return wfmo_reactor->register_handler (this);
 }

@@ -48,10 +48,10 @@ ACE_Process::spawn (ACE_Process_Options &options)
 #if defined (ACE_WIN32)
   if (prepare (options) < 0)
     return ACE_INVALID_PID;
-  
+
   BOOL fork_result =
     ACE_TEXT_CreateProcess (0,
-                            options.command_line_buf (), 
+                            options.command_line_buf (),
                             options.get_process_attributes (),
                             options.get_thread_attributes (),
                             options.handle_inheritence (),
@@ -107,12 +107,12 @@ ACE_Process::spawn (ACE_Process_Options &options)
 #else /* ACE_WIN32 */
   if (prepare (options) < 0)
     return ACE_INVALID_PID;
-  
+
   // Fork the new process.
   this->child_id_ = ACE::fork (options.process_name (),
                                options.avoid_zombies ());
 
-  if (this->child_id_ == 0) 
+  if (this->child_id_ == 0)
     {
       // If we're the child and the options specified a non-default
       // process group, try to set our pgid to it.  This allows the
@@ -124,12 +124,12 @@ ACE_Process::spawn (ACE_Process_Options &options)
         ACE_ERROR ((LM_ERROR,
                     ACE_LIB_TEXT ("%p.\n"),
                     ACE_LIB_TEXT ("ACE_Process::spawn: setpgid failed.")));
-  
+
 #if !defined (ACE_LACKS_SETREUID)
       // Set user and group id's.
-      if (options.getruid () != (uid_t) -1 
+      if (options.getruid () != (uid_t) -1
           || options.geteuid () != (uid_t) -1)
-        if (ACE_OS::setreuid (options.getruid (), 
+        if (ACE_OS::setreuid (options.getruid (),
                               options.geteuid ()) == -1)
           ACE_ERROR ((LM_ERROR,
                       ACE_LIB_TEXT ("%p.\n"),
@@ -137,7 +137,7 @@ ACE_Process::spawn (ACE_Process_Options &options)
 #endif /* ACE_LACKS_SETREUID */
 
 #if !defined (ACE_LACKS_SETREGID)
-      if (options.getrgid () != (uid_t) -1 
+      if (options.getrgid () != (uid_t) -1
           || options.getegid () != (uid_t) -1)
         if (ACE_OS::setregid (options.getrgid (),
                               options.getegid ()) == -1)
@@ -148,9 +148,9 @@ ACE_Process::spawn (ACE_Process_Options &options)
 
       this->child (ACE_OS::getppid ());
     }
-  else if (this->child_id_ != -1) 
+  else if (this->child_id_ != -1)
     this->parent (this->child_id_);
-  
+
   // If we're not supposed to exec, return the process id.
   if (ACE_BIT_ENABLED (options.creation_flags (),
                        ACE_Process_Options::NO_EXEC))
@@ -162,7 +162,7 @@ ACE_Process::spawn (ACE_Process_Options &options)
       // Error.
       return ACE_INVALID_PID;
     case 0:
-      // Child process...exec the 
+      // Child process...exec the
       {
         if (options.get_stdin () != ACE_INVALID_HANDLE
             && ACE_OS::dup2 (options.get_stdin (),
@@ -258,12 +258,12 @@ ACE_Process::running (void) const
 #if defined (ACE_WIN32)
     DWORD code;
 
-    BOOL result = ::GetExitCodeProcess (this->gethandle (), 
+    BOOL result = ::GetExitCodeProcess (this->gethandle (),
                                         &code);
     return result && code == STILL_ACTIVE;
 #else
-    return ACE_OS::kill (this->getpid (), 
-                         0) == 0 
+    return ACE_OS::kill (this->getpid (),
+                         0) == 0
       || errno != ESRCH;
 #endif /* ACE_WIN32 */
 }
@@ -304,7 +304,7 @@ ACE_Process::wait (const ACE_Time_Value &tv,
 
   ACE_Time_Value wait_until = ACE_OS::gettimeofday () + tv;
 
-  for (;;) 
+  for (;;)
     {
       int result = ACE_OS::waitpid (this->getpid (),
                                     status,
@@ -577,7 +577,7 @@ ACE_Process_Options::set_handles (ACE_HANDLE std_in,
                           std_in,
                           ::GetCurrentProcess (),
                           &this->startup_info_.hStdInput,
-                          NULL,
+                          0,
                           TRUE,
                           DUPLICATE_SAME_ACCESS))
     return -1;
@@ -586,7 +586,7 @@ ACE_Process_Options::set_handles (ACE_HANDLE std_in,
                           std_out,
                           ::GetCurrentProcess (),
                           &this->startup_info_.hStdOutput,
-                          NULL,
+                          0,
                           TRUE,
                           DUPLICATE_SAME_ACCESS))
     return -1;
@@ -595,7 +595,7 @@ ACE_Process_Options::set_handles (ACE_HANDLE std_in,
                           std_err,
                           ::GetCurrentProcess (),
                           &this->startup_info_.hStdError,
-                          NULL,
+                          0,
                           TRUE,
                           DUPLICATE_SAME_ACCESS))
     return -1;
@@ -679,8 +679,8 @@ int
 ACE_Process_Options::command_line (const ACE_ANTI_TCHAR *format, ...)
 {
   ACE_ANTI_TCHAR *anti_clb;
-  ACE_NEW_RETURN (anti_clb, 
-                  ACE_ANTI_TCHAR[this->command_line_buf_len_], 
+  ACE_NEW_RETURN (anti_clb,
+                  ACE_ANTI_TCHAR[this->command_line_buf_len_],
                   -1);
 
   // Store all ... args in argp.
@@ -695,7 +695,7 @@ ACE_Process_Options::command_line (const ACE_ANTI_TCHAR *format, ...)
   // Useless macro.
   va_end (argp);
 
-  ACE_OS::strcpy (this->command_line_buf_, 
+  ACE_OS::strcpy (this->command_line_buf_,
                   ACE_TEXT_ANTI_TO_TCHAR (anti_clb));
 
   delete [] anti_clb;
@@ -734,7 +734,7 @@ ACE_Process_Options::command_line_argv (void)
       int x = 0;
       do
         command_line_argv_[x] = parser.next ();
-      while (command_line_argv_[x] != 0 
+      while (command_line_argv_[x] != 0
              // substract one for the ending zero.
              && ++x < MAX_COMMAND_LINE_OPTIONS - 1);
 
@@ -743,4 +743,3 @@ ACE_Process_Options::command_line_argv (void)
 
   return command_line_argv_;
 }
-

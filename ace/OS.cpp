@@ -279,11 +279,11 @@ void ACE_Time_Value::set (const FILETIME &file_time)
   // Convert remainder to microseconds;
   this->tv_.tv_usec = (long)((LL_100ns % ((ACE_UINT32)(10000 * 1000))) / 10);
 #else
-  ULARGE_INTEGER _100ns =
-  {
-    file_time.dwLowDateTime,
-    file_time.dwHighDateTime
-  };
+  // Don't use a struct initializer, gcc don't like it.
+  ULARGE_INTEGER _100ns;
+  _100ns.LowPart = file_time.dwLowDateTime;
+  _100ns.HighPart = file_time.dwHighDateTime;
+
   _100ns.QuadPart -= ACE_Time_Value::FILETIME_to_timval_skew;
 
   // Convert 100ns units to seconds;
@@ -612,6 +612,8 @@ ACE_OS::uname (struct utsname *name)
   ACE_OS::strcpy (name->sysname, ACE_LIB_TEXT ("Win32"));
 #   endif /* ACE_HAS_PHARLAP */
 
+  const ACE_TCHAR* unknown = ACE_LIB_TEXT ("???");
+
   if (vinfo.dwPlatformId == VER_PLATFORM_WIN32_NT)
     {
       // Get information from the two structures
@@ -621,11 +623,11 @@ ACE_OS::uname (struct utsname *name)
 #   else
                        ACE_LIB_TEXT ("Windows NT %d.%d"),
 #   endif /* ACE_HAS_WINCE */
-                       vinfo.dwMajorVersion,
-                       vinfo.dwMinorVersion);
+                       (int) vinfo.dwMajorVersion,
+                       (int) vinfo.dwMinorVersion);
       ACE_OS::sprintf (name->version,
                        ACE_LIB_TEXT ("Build %d %s"),
-                       vinfo.dwBuildNumber,
+                       (int) vinfo.dwBuildNumber,
                        vinfo.szCSDVersion);
 
       // We have to make sure that the size of (processor + subtype)
@@ -688,27 +690,51 @@ ACE_OS::uname (struct utsname *name)
           ACE_OS::strcpy (processor, ACE_LIB_TEXT ("Unknown"));
           break;
         }
-      ACE_OS::sprintf (name->machine, ACE_LIB_TEXT ("%s %s"), processor, subtype);
+      ACE_OS::sprintf (name->machine,
+                       ACE_LIB_TEXT ("%s %s"),
+                       processor, subtype);
     }
   else if (vinfo.dwPlatformId == VER_PLATFORM_WIN32_WINDOWS)
     {
-      // Get Windows 95 Information
-      ACE_OS::strcpy (name->release, ACE_LIB_TEXT ("Windows 95"));
-      ACE_OS::sprintf (name->version, ACE_LIB_TEXT ("%d"), LOWORD (vinfo.dwBuildNumber));
+      if (vinfo.dwMajorVersion == 4 && vinfo.dwMinorVersion == 0)
+        {
+          ACE_OS::strcpy (name->release, ACE_LIB_TEXT ("Windows 95"));
+          if (vinfo.szCSDVersion[1] == 'C')
+            ACE_OS::strcat (name->release, ACE_LIB_TEXT (" OSR2"));
+        }
+      else if (vinfo.dwMajorVersion == 4 && vinfo.dwMinorVersion == 10)
+        {
+          ACE_OS::strcpy (name->release, ACE_LIB_TEXT ("Windows 98"));
+          if (vinfo.szCSDVersion[1] == 'A')
+            ACE_OS::strcat (name->release, ACE_LIB_TEXT (" SE"));
+        }
+      else if (vinfo.dwMajorVersion == 4 && vinfo.dwMinorVersion == 90)
+        {
+          ACE_OS::strcpy (name->release, ACE_LIB_TEXT ("Windows Me"));
+        }
+      else
+        {
+          ACE_OS::strcpy (name->release, unknown);
+        }
+
+      ACE_OS::sprintf (name->version, ACE_LIB_TEXT ("%d"),
+                       LOWORD (vinfo.dwBuildNumber));
       if (sinfo.dwProcessorType == PROCESSOR_INTEL_386)
         ACE_OS::strcpy (name->machine, ACE_LIB_TEXT ("Intel 80386"));
       else if (sinfo.dwProcessorType == PROCESSOR_INTEL_486)
         ACE_OS::strcpy (name->machine, ACE_LIB_TEXT ("Intel 80486"));
       else if (sinfo.dwProcessorType == PROCESSOR_INTEL_PENTIUM)
         ACE_OS::strcpy (name->machine, ACE_LIB_TEXT ("Intel Pentium"));
+      else
+        ACE_OS::strcpy (name->machine, unknown);
     }
   else
     {
       // We don't know what this is!
 
-      ACE_OS::strcpy (name->release, ACE_LIB_TEXT ("???"));
-      ACE_OS::strcpy (name->version, ACE_LIB_TEXT ("???"));
-      ACE_OS::strcpy (name->machine, ACE_LIB_TEXT ("???"));
+      ACE_OS::strcpy (name->release, unknown);
+      ACE_OS::strcpy (name->version, unknown);
+      ACE_OS::strcpy (name->machine, unknown);
     }
 
 # if defined (ACE_LACKS_HOSTNAME)

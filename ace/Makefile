@@ -66,6 +66,7 @@ LOGGING_FILES = \
   Log_Msg_Callback \
   Log_Msg_Backend \
   Log_Msg_IPC \
+  Log_Msg_NT_Event_Log \
   Log_Record \
   Logging_Strategy \
   Trace
@@ -91,6 +92,7 @@ DEMUX_FILES = \
   Handle_Set \
   Msg_WFMO_Reactor \
   POSIX_Proactor \
+  WIN32_Proactor \
   Priority_Reactor \
   Proactor \
   Reactor \
@@ -106,6 +108,7 @@ CONNECTION_FILES = \
   Asynch_IO \
   Asynch_IO_Impl \
   POSIX_Asynch_IO \
+  WIN32_Asynch_IO \
   Strategies
 SOCKETS_FILES = \
   Addr \
@@ -317,7 +320,7 @@ endif # ACE_HAS_GNUG_PRE_2_8
 ## if we have the RAPI library installed
 ifeq ($(rapi),1)
   DIRS += QoS
-endif # rapi                    
+endif # rapi
 
 ####
 #### Build customization.

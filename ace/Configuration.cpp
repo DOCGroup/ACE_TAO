@@ -234,7 +234,7 @@ ACE_Configuration::root_section (void) const
 }
 
 /**
- * Determine if the contents of this object is the same as the 
+ * Determine if the contents of this object is the same as the
  * contents of the object on the right hand side.
  * Returns 1 (True) if they are equal and 0 (False) if they are not equal
  */
@@ -251,7 +251,7 @@ int ACE_Configuration::operator== (const ACE_Configuration& rhs) const
   ACE_Configuration_Section_Key thisSection;
 
   // loop through each section in this object
-  while ((rc) && nonconst_this->enumerate_sections (this->root_, 
+  while ((rc) && nonconst_this->enumerate_sections (this->root_,
                                                     sectionIndex,
                                                     sectionName))
     {
@@ -265,9 +265,9 @@ int ACE_Configuration::operator== (const ACE_Configuration& rhs) const
           // not equal.
           rc = 0;
         }
-      else if (nonconst_this->open_section (this->root_, 
-                                            sectionName.c_str (), 
-                                            0, 
+      else if (nonconst_this->open_section (this->root_,
+                                            sectionName.c_str (),
+                                            0,
                                             thisSection) != 0)
         {
           // if there is some error opening the section in this object
@@ -282,7 +282,7 @@ int ACE_Configuration::operator== (const ACE_Configuration& rhs) const
           VALUETYPE   rhsType;
 
           // Enumerate each value in this section
-          while ((rc) && nonconst_this->enumerate_values (thisSection, 
+          while ((rc) && nonconst_this->enumerate_values (thisSection,
                                                           valueIndex,
                                                           valueName,
                                                           valueType))
@@ -292,7 +292,7 @@ int ACE_Configuration::operator== (const ACE_Configuration& rhs) const
                                            valueName.c_str (),
                                            rhsType) != 0)
                 {
-                  // We're not equal if the same value cannot 
+                  // We're not equal if the same value cannot
                   // be found in the rhs object.
                   rc = 0;
                 }
@@ -378,12 +378,12 @@ int ACE_Configuration::operator== (const ACE_Configuration& rhs) const
                             {
                               rc = (* (thisCharData + count) == * (rhsCharData + count));
                             }
-                        }// end if the length's match 
+                        }// end if the length's match
                     }
                   // We should never have valueTypes of INVALID, therefore
-                  // we're not comparing them.  How would we since we have 
-                  // no get operation for invalid types. 
-                  // So, if we have them, we guess they are equal.  
+                  // we're not comparing them.  How would we since we have
+                  // no get operation for invalid types.
+                  // So, if we have them, we guess they are equal.
 
                 }// end else if values match.
 
@@ -404,7 +404,7 @@ int ACE_Configuration::operator== (const ACE_Configuration& rhs) const
                                              valueName.c_str (),
                                              valueType) != 0)
                 {
-                  // We're not equal if the same value cannot 
+                  // We're not equal if the same value cannot
                   // be found in the rhs object.
                   rc = 0;
                 }
@@ -421,14 +421,14 @@ int ACE_Configuration::operator== (const ACE_Configuration& rhs) const
   // exist in this
   sectionIndex = 0;
   while ((rc) &&
-         (!nonconst_rhs.enumerate_sections (rhsRoot, 
-                                            sectionIndex, 
+         (!nonconst_rhs.enumerate_sections (rhsRoot,
+                                            sectionIndex,
                                             sectionName)))
     {
       // find the section in this
-      if (nonconst_this->open_section (this->root_, 
-                                       sectionName.c_str (), 
-                                       0, 
+      if (nonconst_this->open_section (this->root_,
+                                       sectionName.c_str (),
+                                       0,
                                        thisSection) != 0)
         {
           // if there is some error opening the section in this object
@@ -512,7 +512,12 @@ ACE_Configuration_Win32Registry::open_section (const ACE_Configuration_Section_K
                                    KEY_ALL_ACCESS,
                                    NULL,
                                    &result_key,
-                                   NULL) != ERROR_SUCCESS)
+#if defined(__MINGW32__)
+                                   (PDWORD) 0
+#else
+                                   NULL
+#endif /* __MINGW32__ */
+                                   ) != ERROR_SUCCESS)
         return -3;
     }
 
@@ -803,13 +808,13 @@ ACE_Configuration_Win32Registry::get_binary_value (const ACE_Configuration_Secti
                                 name,
                                 NULL,
                                 &type,
- (BYTE*)data,
+                                (BYTE*)data,
                                 &buffer_length) != ERROR_SUCCESS)
-  {
-    delete data;
-    data = 0;
-    return -5;
-  }
+    {
+      delete data;
+      data = 0;
+      return -5;
+    }
 
   return 0;
 }
@@ -919,13 +924,18 @@ ACE_Configuration_Win32Registry::resolve_key (HKEY hKey,
           // try creating it
           if (!create || ACE_TEXT_RegCreateKeyEx (result,
                                                   key.fast_rep (),
+                                                  0,
                                                   NULL,
-                                                  NULL,
-                                                  NULL,
+                                                  0,
                                                   KEY_ALL_ACCESS,
                                                   NULL,
                                                   &subkey,
-                                                  NULL) != ERROR_SUCCESS)
+#if defined(__MINGW32__)
+                                                  (PDWORD) 0
+#else
+                                                  NULL
+#endif /* __MINGW32__ */
+                                                  ) != ERROR_SUCCESS)
             {
               // error
               ::RegCloseKey (result);

@@ -402,7 +402,7 @@ ACE_MMAP_Memory_Pool::init_acquire (size_t nbytes,
 int
 ACE_MMAP_Memory_Pool::seh_selector (void *ep)
 {
-  int ecode = ((EXCEPTION_POINTERS *) ep)->ExceptionRecord->ExceptionCode;
+  DWORD ecode = ((EXCEPTION_POINTERS *) ep)->ExceptionRecord->ExceptionCode;
 
   if (ecode == EXCEPTION_ACCESS_VIOLATION)
     {
@@ -1007,8 +1007,8 @@ ACE_Pagefile_Memory_Pool::release (void)
 ACE_Pagefile_Memory_Pool::ACE_Pagefile_Memory_Pool (const ACE_TCHAR *backing_store_name,
                                                     const OPTIONS *options)
   : shared_cb_ (0),
-    page_size_ (ACE_Pagefile_Memory_Pool::round_to_page_size (1)),
-    object_handle_ (0)
+    object_handle_ (0),
+    page_size_ (ACE_Pagefile_Memory_Pool::round_to_page_size (1))
 {
   // Initialize local copy of pool statistics.
   if (options != 0)
@@ -1096,7 +1096,7 @@ ACE_Pagefile_Memory_Pool::init_acquire (size_t nbytes,
 int
 ACE_Pagefile_Memory_Pool::seh_selector (void *ep)
 {
-  int ecode = ((EXCEPTION_POINTERS *) ep)->ExceptionRecord->ExceptionCode;
+  DWORD ecode = ((EXCEPTION_POINTERS *) ep)->ExceptionRecord->ExceptionCode;
 
   if (ecode == EXCEPTION_ACCESS_VIOLATION)
     {

@@ -31,7 +31,13 @@
 
 ACE_RCSID(tests, SPIPE_Test, "$Id$")
 
-#if defined (ACE_HAS_STREAM_PIPES) || defined (ACE_WIN32)
+#if defined (ACE_HAS_STREAM_PIPES) \
+    || (defined (ACE_WIN32) && defined(ACE_HAS_WINNT4) \
+        && (ACE_HAS_WINNT4 !=0))
+# define TEST_HAS_STREAM_PIPES
+#endif
+
+#if defined (TEST_HAS_STREAM_PIPES)
 
 static const char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
 
@@ -48,7 +54,7 @@ client (void *)
   ACE_OS::sleep (10);
 
   if (con.connect (cli_stream, ACE_SPIPE_Addr (rendezvous)) == -1)
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), rendezvous));
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n%a"), rendezvous, 1));
 
   for (const char *c = ACE_ALPHABET; *c != '\0'; c++)
     if (cli_stream.send (c, 1) == -1)
@@ -76,13 +82,13 @@ server (void *)
   // Initialize named pipe listener.
 
   if (acceptor.open (ACE_SPIPE_Addr (rendezvous)) == -1)
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("open")));
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n%a"), ACE_TEXT ("open"), 1));
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("waiting for connection\n")));
 
   // Accept a client connection
   if (acceptor.accept (new_stream, 0) == -1)
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("accept")));
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n%a"), ACE_TEXT ("accept"), 1));
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Accepted connection\n")));
 
@@ -96,14 +102,14 @@ server (void *)
   acceptor.close ();
   return 0;
 }
-#endif /* ACE_HAS_STREAM_PIPES || ACE_WIN32 */
+#endif /* TEST_HAS_STREAM_PIPES */
 
 int
 main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("SPIPE_Test"));
 
-#if defined (ACE_HAS_STREAM_PIPES) || defined (ACE_WIN32)
+#if defined (TEST_HAS_STREAM_PIPES)
 #if !defined (ACE_LACKS_FORK)
   switch (ACE_OS::fork ())
     {
@@ -131,7 +137,7 @@ main (int, ACE_TCHAR *[])
 #else
   ACE_DEBUG ((LM_INFO,
               ACE_TEXT ("SPIPE is not supported on this platform\n")));
-#endif /* ACE_HAS_STREAM_PIPES || ACE_WIN32 */
+#endif /* TEST_HAS_STREAM_PIPES */
   ACE_END_TEST;
   return 0;
 }

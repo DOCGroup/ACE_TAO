@@ -434,7 +434,8 @@ main (int, ACE_TCHAR *[])
 
   timeout.set (LONG_TIMEOUT, 0);
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%t) running tests with reactor notification pipe enabled\n")
+              ACE_TEXT ("(%t) running tests with reactor notification ")
+              ACE_TEXT ("pipe enabled\n")
               ACE_TEXT (" and time-out = %d seconds\n"),
               timeout.sec ()));
   run_test (0, timeout);
