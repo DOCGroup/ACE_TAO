@@ -1,3 +1,154 @@
+Sun Sep 15 13:04:49 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/PortableServer/IORInfo.h:
+
+	  No need to include `POA.h' and `portableserver_export.h'.  A
+	  forward declaration is enough for the latter, there is no
+	  need to export this IORInfo implementation on Windows for the
+	  former.
+
+	  Removed unused forward declarations.
+
+	  Unexported the TAO_IORInfo class.  Exporting the
+	  PortableInterceptor::IORInfo interface is enough.
+
+	  Removed useless friend declarations.
+
+	  No need to pass a pointer to the ORB_Core to the TAO_IORInfo
+	  constructor.
+
+	  Removed unused TAO_ORB_Core, TAO_MProfile, CORBA::PolicyList,
+	  AdapterState, AdapterManagerId and ObjectReferenceTemplate
+	  members.  They were not cleaned up or were incorrectly
+	  introduced when TAO's ORT support was added.
+
+	  (invalidate):
+
+	  New method that invalidates the IORInfo instance.  Once the IOR
+	  interception points have been invoked, this IORInfo instance is
+	  no longer valid.  This also addresses potential memory access
+	  violations that could occur if the POA is destroyed before the
+	  IORInfo object.
+
+	  (components_established):
+
+	  This method is used to infom the IORInfo when the
+	  add_ior_component() and add_ior_component_to_profile() methods
+	  are invalid.  They are only valid in the
+	  IORInterceptor::establish_components() interception point.
+
+	  (check_validity):
+
+	   Check if the IORInfo instance is valid.  Once all
+	   IORInterceptor interception points have been called, the
+	   IORInfo object is no longer valid.  Throw an exception in that
+	   case.
+	  
+	* tao/PortableServer/IORInfo.inl:
+
+	  New file containing TAO_IORInfo inlined methods.
+
+	* tao/PortableServer/IORInfo.cpp:
+
+	  No need to include `PortableServerC.h'.  `POA.h' is enough.
+
+	  No need to include `MProfile.h' and `ORB_Core.h'.  They were not
+	  cleaned up when TAO's ORT support was added.
+
+	  (TAO_IORInfo):
+
+	  Removed TAO_ORB_Core parameter from the parameter list.  It is
+	  no longer used.
+
+	  (get_effective_policy):
+
+	  Overhauled this method so that it actually works.  It was
+	  completely broken when TAO's ORT support was added.  [Bug 1307]
+
+	  Verify that the IORInfo object is still valid before proceeding.
+
+	  (add_ior_component, add_ior_component_to_profile):
+
+	  Throw a CORBA::BAD_INV_ORDER exception with the appropriate
+	  minor code if either of these methods is called after the
+	  IORInterceptor::establish_components() interception point has
+	  been called, as required by the CORBA spec.
+
+	  Verify that the IORInfo object is still valid before proceeding.
+
+	  (manager_id, state, adapter_template, current_factory):
+
+	  Verify that the IORInfo object is still valid before proceeding.
+
+	* tao/PortableServer/POA.h (get_policy_list, set_policy_list):
+	  (get_mprofile, set_mprofile):
+
+	  Removed these methods.  The code that used them was misguided
+	  and broken.
+
+	  (components_established_i):
+
+	  Renamed this method to components_established().  The previous
+	  name did not match our naming conventions.  "_i()" methods are
+	  used when implementing the thread-safe interface design pattern.
+
+	  (policy_list_, mprofile_):
+
+	  Removed these members.  The memory they pointed to was not
+	  managed correctly.  This change is part of a number changes that
+	  address many memory management issues.  They were introduced
+	  when the TAO's ORT support was added.
+
+	* tao/PortableServer/POA.cpp (client_exposed_policies):
+
+	  Removed unnecessary ACE_UNUSED_ARG.  Removing the corresponding
+	  parameter name is enough, and is technically more correct in
+	  terms of C++.
+
+	  (tao_establish_components, establish_components):
+
+	  Merged these methods.  tao_establish_components() didn't buy us
+	  anything.
+
+	  (add_ior_component, add_ior_component_to_profile):
+
+	  Pass a reference to a TAO_MProfile to these methods instead of
+	  using the now removed mprofile_ member.  This addresses some
+	  memory access violations, in addition to some thread-safety
+	  issues.
+
+	  (establish_components):
+
+	  Inform the TAO_IORInfo object that the
+	  IORInterceptor::establish_components() interception point was
+	  called.  This prevents user code from illegally adding
+	  TaggedComponents after establish_components() is called.  This
+	  behavior is required by the spec.
+
+	  Invalidate the IORInfo object after the components_established()
+	  interception point is called.  Once all IORInterceptor
+	  interception points have been called, no changes via the IORInfo
+	  object are allowed.  This change addresses a potential memory
+	  violation that could occur if the POA is destroyed before the
+	  IORInfo object.  Such a scenario can occur the user duplicates
+	  the IORInfo reference in an IORInterceptor.
+
+	  (create_stub_object):
+
+	  Removed code that stored the stub object's policy list and
+	  TAO_MProfile for use by TAO's IORInterceptor support.  This code
+	  was very broken since it did not manage memory correctly (broken
+	  when TAO's ORT support was added).  The cached policy list and
+	  TAO_MProfile pointers could easily end up being dangling
+	  pointers.  The IORInfo object now does the right thing, and
+	  retrieves policies from the POA on-demand.  Furthermore, caching
+	  a pointer to the TAO_MProfile was a very bad idea since it is
+	  destroyed as soon as this method's scope is exited!  [Bug 1307]
+
+	* tao/RTPortableServer/RT_POA.cpp (client_exposed_policies):
+
+	  Fixed some exception safety issues.
+
 Sun Sep 15 11:56:58 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tests/Codec/client.cpp (main):

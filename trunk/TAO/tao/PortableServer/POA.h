@@ -97,12 +97,20 @@ protected:
     USEC_FIELD = 1
   };
 
-  // Timestamp
+  /// Timestamp
   CORBA::ULong time_stamp_[2];
 
 };
 
-// Special creation time only useful in the lifetime of the upcall
+// 
+/**
+ * @class TAO_Temporary_Creation_Time
+ *
+ * @brief Special creation time only useful in the lifetime of the
+ *        upcall.
+ *
+ * Special creation time only useful in the lifetime of the upcall.
+ */
 class TAO_Temporary_Creation_Time
 {
 public:
@@ -123,9 +131,16 @@ protected:
 // Forward Declaration
 class ServerObject_i;
 
-class TAO_PortableServer_Export TAO_POA :
-  public virtual PortableServer::POA ,
-  public virtual TAO_Local_RefCounted_Object
+/**
+ * @class TAO_POA
+ *
+ * @brief Implementation of the PortableServer::POA interface.
+ *
+ * Implementation of the PortableServer::POA interface.
+ */
+class TAO_PortableServer_Export TAO_POA
+  : public virtual PortableServer::POA,
+    public virtual TAO_Local_RefCounted_Object
 {
 public:
 
@@ -140,8 +155,9 @@ public:
   typedef ACE_CString String;
 
   /**
-   * This method is used to downcast safely an instance of PortableServer::POA
-   * to an instance of TAO_POA when RTTI is not enabled.
+   * This method is used to downcast safely an instance of
+   * PortableServer::POA to an instance of TAO_POA when RTTI is not
+   * enabled.
    */
   virtual TAO_POA* _tao_poa_downcast (void);
 
@@ -209,10 +225,12 @@ public:
   PortableServer::POAList *the_children (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  PortableServer::POAManager_ptr the_POAManager (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  PortableServer::POAManager_ptr the_POAManager (
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  PortableInterceptor::AdapterManagerId get_manager_id (ACE_ENV_SINGLE_ARG_DECL)
+  PortableInterceptor::AdapterManagerId get_manager_id (
+      ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// This method returns the adapter_name as a sequence of strings of
@@ -221,53 +239,44 @@ public:
   PortableInterceptor::AdapterName *adapter_name (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  /// {@ Accessor methods to ObjectReferenceTemplate
-  PortableInterceptor::ObjectReferenceTemplate * get_adapter_template ();
+  /// Accessor methods to ObjectReferenceTemplate
+  PortableInterceptor::ObjectReferenceTemplate * get_adapter_template (void);
 
   void set_adapter_template (PortableInterceptor::ObjectReferenceTemplate *
                              object_ref_template
                              ACE_ENV_ARG_DECL);
-  /// @}
 
-  /// {@ Accessor methods to PortableInterceptor::ObjectReferenceFactory
-  PortableInterceptor::ObjectReferenceFactory * get_obj_ref_factory ();
+  /// Accessor methods to PortableInterceptor::ObjectReferenceFactory
+  PortableInterceptor::ObjectReferenceFactory * get_obj_ref_factory (void);
 
-  void set_obj_ref_factory (PortableInterceptor::ObjectReferenceFactory *current_factory
-                            ACE_ENV_ARG_DECL);
+  void set_obj_ref_factory (
+    PortableInterceptor::ObjectReferenceFactory *current_factory
+    ACE_ENV_ARG_DECL);
 
-  /// @}
-
-  /// Call the establish components.
-  void tao_establish_components (ACE_ENV_SINGLE_ARG_DECL);
-
-
-  /// Give each registered IOR interceptor the opportunity to add
-  /// tagged components to profiles of each created servant.
-  void establish_components (PortableInterceptor::IORInfo_ptr info
-                             ACE_ENV_ARG_DECL);
-
-  /// TAO_IORInfo requests these members.
-  CORBA::PolicyList *get_policy_list ();
-
-  TAO_MProfile *get_mprofile ();
-
+  /// Store the given TaggedComponent for eventual insertion into all
+  /// object reference profiles.
   void save_ior_component (const IOP::TaggedComponent &component
                            ACE_ENV_ARG_DECL);
 
-  void save_ior_component_and_profile_id (const IOP::TaggedComponent &component,
-                                          IOP::ProfileId profile_id
-                                          ACE_ENV_ARG_DECL);
+  /// Store the given TaggedComponent for eventual insertion into all
+  /// object reference profiles with the given ProfileId.
+  void save_ior_component_and_profile_id (
+    const IOP::TaggedComponent &component,
+    IOP::ProfileId profile_id
+    ACE_ENV_ARG_DECL);
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
-  PortableServer::AdapterActivator_ptr the_activator (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  PortableServer::AdapterActivator_ptr the_activator (
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void the_activator (PortableServer::AdapterActivator_ptr adapter_activator
                       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  PortableServer::ServantManager_ptr get_servant_manager (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  PortableServer::ServantManager_ptr get_servant_manager (
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableServer::POA::WrongPolicy));
 
@@ -469,26 +478,24 @@ public:
 
   ACE_Lock &lock (void);
 
-
+  /// Create the correct stub, properly initialized with the
+  /// attributes and policies attached to the current POA.
   TAO_Stub* key_to_stub (const TAO_ObjectKey &key,
                          const char *type_id,
                          CORBA::Short priority
                          ACE_ENV_ARG_DECL);
-  // Create the correct stub, properly initialized with the attributes
-  // and policies attached to the current POA.
+
 
   /// Accessor for the current thread policy of this POA.
   PortableServer::ThreadPolicyValue thread_policy (void) const;
 
-  /// {@ Accesor methods to POA state. The POA can be in one of
-  /// HOLDING, ACTIVE, DISCARDING, INACTIVE and NON_EXISTENT states.
-  PortableInterceptor::AdapterState
-  get_adapter_state (ACE_ENV_SINGLE_ARG_DECL);
-
-  void set_adapter_state (PortableInterceptor::AdapterState
-                          adapter_state,
-                          CORBA::Environment &ACE_TRY_ENV);
-  /// @}
+  ///Accessor methods to POA state.
+  /**
+   * The POA can be in one of HOLDING, ACTIVE, DISCARDING, INACTIVE
+   * and NON_EXISTENT states.
+   */
+  PortableInterceptor::AdapterState get_adapter_state (
+    ACE_ENV_SINGLE_ARG_DECL);
 
   virtual void *thread_pool (void) const;
 
@@ -555,21 +562,18 @@ protected:
    ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void set_policy_list (CORBA::PolicyList *policy_list);
-  void set_mprofile (TAO_MProfile *mp);
-
   /// Add the given tagged component to all profiles.
-  void tao_add_ior_component (
-      const IOP::TaggedComponent & component
-      ACE_ENV_ARG_DECL)
+  void add_ior_component (TAO_MProfile & mprofile,
+                          const IOP::TaggedComponent & component
+                          ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Add the given tagged component to all profiles matching the given
   /// ProfileId.
-  void tao_add_ior_component_to_profile (
-      const IOP::TaggedComponent & component,
-      IOP::ProfileId profile_id
-      ACE_ENV_ARG_DECL)
+  void add_ior_component_to_profile (TAO_MProfile & mprofile,
+                                     const IOP::TaggedComponent & component,
+                                     IOP::ProfileId profile_id
+                                     ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 #if (TAO_HAS_MINIMUM_POA == 0)
@@ -737,8 +741,20 @@ protected:
 
   TAO_Active_Object_Map &active_object_map (void) const;
 
-  void components_established_i (PortableInterceptor::IORInfo_ptr info
-                                 ACE_ENV_ARG_DECL);
+  /// Call the IORInterceptor::establish_components() method on all
+  /// registered IORInterceptors.
+  /**
+   * This method calls IORInterceptor::establish_components() method
+   * on all registered IORInterceptors, and
+   * IORInterceptor::components_established() once the former is
+   * completed.
+   */
+  void establish_components (ACE_ENV_SINGLE_ARG_DECL);
+
+  /// Call the IORInterceptor::components_established() method on all
+  /// registered IORInterceptors.
+  void components_established (PortableInterceptor::IORInfo_ptr info
+                               ACE_ENV_ARG_DECL);
 
   int delete_child (const String &child);
 
@@ -821,10 +837,6 @@ protected:
   String name_;
 
   TAO_POA_Manager &poa_manager_;
-
-  CORBA::PolicyList *policy_list_;
-
-  TAO_MProfile *mprofile_;
 
   IOP::TaggedComponentList tagged_component_;
 
@@ -919,6 +931,13 @@ protected:
 };
 
 
+/**
+ * @class TAO_POA_Guard
+ *
+ * @brief TAO_POA_Guard
+ *
+ * TAO_POA_Guard
+ */
 class TAO_PortableServer_Export TAO_POA_Guard
 {
 public:

@@ -451,6 +451,8 @@ TAO_RT_POA::client_exposed_policies (CORBA::Short object_priority
                                       CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (0);
 
+  CORBA::PolicyList_var safe_client_exposed_policies = client_exposed_policies;
+
   // Add in all of the client exposed policies.
   this->policies_.add_client_exposed_fixed_policies (client_exposed_policies
                                                      ACE_ENV_ARG_PARAMETER);
@@ -476,6 +478,10 @@ TAO_RT_POA::client_exposed_policies (CORBA::Short object_priority
       else
         priority = object_priority;
 
+      const CORBA::ULong current_length =
+        client_exposed_policies->length ();
+      client_exposed_policies->length (current_length + 1);
+
       TAO_PriorityModelPolicy *priority_model_policy;
       ACE_NEW_THROW_EX (priority_model_policy,
                         TAO_PriorityModelPolicy (RTCORBA::PriorityModel (priority_model),
@@ -484,12 +490,10 @@ TAO_RT_POA::client_exposed_policies (CORBA::Short object_priority
                                           CORBA::COMPLETED_NO));
       ACE_CHECK_RETURN (0);
 
-      CORBA::ULong current_length = client_exposed_policies->length ();
-      client_exposed_policies->length (current_length + 1);
       (*client_exposed_policies)[current_length] = priority_model_policy;
     }
 
-  return client_exposed_policies;
+  return safe_client_exposed_policies._retn ();
 }
 
 
