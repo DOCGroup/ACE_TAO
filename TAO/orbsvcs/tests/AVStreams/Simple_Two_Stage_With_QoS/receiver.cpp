@@ -61,6 +61,31 @@ Receiver_Callback::receive_frame (ACE_Message_Block *frame,
   return 0;
 }
 
+int
+Receiver_Callback::handle_destroy (void)
+{
+  // Called when the distributer requests the stream to be shutdown.
+  ACE_DEBUG ((LM_DEBUG,
+              "Receiver_Callback::end_stream\n"));
+
+  ACE_TRY_NEW_ENV
+    {
+      TAO_AV_CORE::instance ()->orb ()->shutdown (0
+                                                  ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "Receiver_Callback::handle_destroy Failed\n");
+      return -1;
+
+    }
+  ACE_ENDTRY;
+
+  return 0;
+}
+
 Receiver::Receiver (void)
   : mmdevice_ (0)
 {
