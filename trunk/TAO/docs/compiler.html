@@ -66,6 +66,12 @@ Two flags that won't get overwritten by the environment variable are
 <code>-DIDL</code> and <code>-I.</code>.  They are always passed to
 the preprocessor.
 
+If your IDLs need to include <code>&lt;orb.idl&gt;</code>, then you need to
+define either/both <code>ACE_ROOT</code> or/and <code>TAO_ROOT</code>.  If you
+already have <CODE>ACE_ROOT</CODE> defined, TAO_IDL can figure
+<CODE>TAO_ROOT</CODE> out if your ACE/TAO was installed using default directory
+structure, otherwise, you'll need to define <code>TAO_ROOT</code>.
+
 <HR><P>
 <h3>Operation Demuxing Strategies</h3>
 
@@ -84,20 +90,20 @@ To configure TAO's IDL compiler to support perfect hashing please do
 the following:
 
 <ul>
-  <LI> Enable <CODE>ACE_HAS_GPERF</CODE> when building ACE and TAO.
+  <LI>Enable <CODE>ACE_HAS_GPERF</CODE> when building ACE and TAO.
       This macro has been defined for the platforms where <CODE>gperf</CODE>
       has been tested, which includes most <A
       HREF="http://www.cs.wustl.edu/~schmidt/ACE-versions-i.html">platforms</A>
       that ACE runs on. <P>
 
-  <li> Build the <CODE>gperf</CODE> in $ACE_ROOT/apps/gperf.  This build
+  <li>Build the <CODE>gperf</CODE> in $ACE_ROOT/apps/gperf.  This build
       also leaves a copy/link of the gperf program at the $ACE_ROOT/bin
       directory.<P>
 
-  <li> Set the environment variable $ACE_ROOT appropriately or add
+  <li>Set the environment variable $ACE_ROOT appropriately or add
       $ACE_ROOT/bin to your search path. <P>
 
-  <li> Use the <CODE>-g</CODE> option for the TAO IDL compiler or set
+  <li>Use the <CODE>-g</CODE> option for the TAO IDL compiler or set
       your search path accordingly to install <CODE>gperf</CODE> in a
       directory other than $ACE_ROOT/bin.
 </ul>
