@@ -794,7 +794,7 @@ ACE_Thread_Manager::remove_thr (ACE_Thread_Descriptor *td)
   }
 
 int
-ACE_Thread_Manager::join_thr (ACE_Thread_Descriptor *td)
+ACE_Thread_Manager::join_thr (ACE_Thread_Descriptor *td, int)
 {
   ACE_TRACE ("ACE_Thread_Manager::join_thr");
 
@@ -812,7 +812,7 @@ ACE_Thread_Manager::join_thr (ACE_Thread_Descriptor *td)
 }
 
 int
-ACE_Thread_Manager::suspend_thr (ACE_Thread_Descriptor *td)
+ACE_Thread_Manager::suspend_thr (ACE_Thread_Descriptor *td, int)
 {
   ACE_TRACE ("ACE_Thread_Manager::suspend_thr");
 
@@ -820,7 +820,7 @@ ACE_Thread_Manager::suspend_thr (ACE_Thread_Descriptor *td)
 }
 
 int
-ACE_Thread_Manager::resume_thr (ACE_Thread_Descriptor *td)
+ACE_Thread_Manager::resume_thr (ACE_Thread_Descriptor *td, int)
 {
   ACE_TRACE ("ACE_Thread_Manager::resume_thr");
 
@@ -828,7 +828,7 @@ ACE_Thread_Manager::resume_thr (ACE_Thread_Descriptor *td)
 }
 
 int
-ACE_Thread_Manager::cancel_thr (ACE_Thread_Descriptor *td)
+ACE_Thread_Manager::cancel_thr (ACE_Thread_Descriptor *td, int)
 {
   ACE_TRACE ("ACE_Thread_Manager::cancel_thr");
   // @@ Don't really know how to handle thread cancel.
