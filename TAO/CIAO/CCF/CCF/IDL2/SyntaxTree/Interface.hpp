@@ -17,7 +17,7 @@ namespace CCF
       //
       //
       //
-      class InterfaceDecl : public virtual TypeDecl
+      class InterfaceDecl : public virtual ForwardDeclarableTypeDecl
       {
       protected:
         virtual
@@ -28,12 +28,14 @@ namespace CCF
           type_info (static_type_info ());
         }
 
-        // Runtime declaration type information
       public:
-        virtual std::string
-        declaration_class ()
+        virtual bool
+        complete () const
         {
-          return "interface";
+          // Interface is considered complete even if it's
+          // not defined.
+          //
+          return true;
         }
 
       public:
@@ -79,14 +81,6 @@ namespace CCF
         InterfaceForwardDecl ()
         {
           type_info (static_type_info ());
-        }
-
-        // Runtime declaration type information
-      public:
-        virtual std::string
-        declaration_class ()
-        {
-          return "interface";
         }
 
       public:
@@ -171,15 +165,6 @@ namespace CCF
           return s;
         }
 
-        // Runtime declaration type information.
-        //
-      public:
-        virtual std::string
-        declaration_class ()
-        {
-          return "interface";
-        }
-
       public:
         static Introspection::TypeInfo const&
         static_type_info ();
@@ -217,14 +202,6 @@ namespace CCF
         AbstractInterfaceDecl ()
         {
           type_info (static_type_info ());
-        }
-
-        // Runtime declaration type information
-      public:
-        virtual std::string
-        declaration_class ()
-        {
-          return "abstract interface";
         }
 
       public:
@@ -272,8 +249,6 @@ namespace CCF
             new AbstractInterfaceForwardDecl (name, order, scope));
         }
 
-        // Runtime declaration type information.
-        //
       public:
         virtual std::string
         declaration_class ()
@@ -327,8 +302,7 @@ namespace CCF
             new AbstractInterfaceDef (name, order, scope, inherits ()));
         }
 
-        // Runtime declaration type information.
-        //
+
       public:
         virtual std::string
         declaration_class ()
@@ -357,14 +331,6 @@ namespace CCF
         LocalInterfaceDecl ()
         {
           type_info (static_type_info ());
-        }
-
-        // Runtime declaration type information
-      public:
-        virtual std::string
-        declaration_class ()
-        {
-          return "local interface";
         }
 
       public:
@@ -413,8 +379,6 @@ namespace CCF
             new LocalInterfaceForwardDecl (name, order, scope));
         }
 
-        // Runtime declaration type information.
-        //
       public:
         virtual std::string
         declaration_class ()
@@ -468,8 +432,7 @@ namespace CCF
             new LocalInterfaceDef (name, order, scope, inherits ()));
         }
 
-        // Runtime declaration type information.
-        //
+
       public:
         virtual std::string
         declaration_class ()
@@ -499,14 +462,6 @@ namespace CCF
         UnconstrainedInterfaceDecl ()
         {
           type_info (static_type_info ());
-        }
-
-        // Runtime declaration type information
-      public:
-        virtual std::string
-        declaration_class ()
-        {
-          return "unconstrained interface";
         }
 
       public:
@@ -565,7 +520,6 @@ namespace CCF
             new UnconstrainedInterfaceForwardDecl (name, order, scope));
         }
 
-        // Runtime declaration type information
       public:
         virtual std::string
         declaration_class ()
@@ -620,7 +574,7 @@ namespace CCF
             new UnconstrainedInterfaceDef (name, order, scope, inherits ()));
         }
 
-        // Runtime declaration type information
+
       public:
         virtual std::string
         declaration_class ()

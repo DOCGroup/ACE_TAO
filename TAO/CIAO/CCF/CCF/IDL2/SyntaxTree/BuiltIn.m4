@@ -12,6 +12,6 @@ define(`capitalize_word',
 define(`capitalize',
   `patsubst(`$1', `\w+', `capitalize_word(`\&')')')
 
-define(`make_class_name', `patsubst(capitalize(`$1'), ` ')')
+define(`make_class_name', `patsubst(capitalize(`$1'), ` ')Decl')
 
-define(`make_var_name', `patsubst(`$1', ` ', `_')')
+define(`make_var_name', `patsubst(`$1', ` ', `_')_decl')

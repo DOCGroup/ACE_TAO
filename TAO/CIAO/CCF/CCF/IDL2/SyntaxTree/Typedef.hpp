@@ -43,14 +43,13 @@ namespace CCF
         virtual NodePtr
         virtual_type ();
 
-        // Type completeness.
-        //
       public:
         virtual bool
-        defined () const;
+        complete () const
+        {
+          return underlying_type ()->complete ();
+        }
 
-        // Runtime declaration type information.
-        //
       public:
         virtual std::string
         declaration_class ()
@@ -64,7 +63,7 @@ namespace CCF
 
       private:
         TypeDeclPtr
-        underlying_type ();
+        underlying_type () const;
 
       private:
         ScopedName type_;

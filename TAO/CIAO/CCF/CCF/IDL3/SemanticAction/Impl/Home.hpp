@@ -74,7 +74,7 @@ namespace CCF
 
                 // This is not really necessary since home cannot be
                 // forward-declared (yet ;-).
-                return d->dynamic_type<TypeDecl> ()->defined ();
+                return d->dynamic_type<HomeDef> ()->defined ();
               }
             } p;
 
@@ -144,8 +144,8 @@ namespace CCF
                 {
                   throw IncompatibleType (d->declaration_class ());
                 }
-                
-                return d->dynamic_type<TypeDecl> ()->defined ();
+
+                return d->dynamic_type<InterfaceDecl> ()->defined ();
               }
             } p;
 
@@ -219,7 +219,7 @@ namespace CCF
                   throw IncompatibleType (d->declaration_class ());
                 }
 
-                return d->dynamic_type<TypeDecl>()->defined ();
+                return d->dynamic_type<ComponentDecl>()->defined ();
               }
             } p;
 

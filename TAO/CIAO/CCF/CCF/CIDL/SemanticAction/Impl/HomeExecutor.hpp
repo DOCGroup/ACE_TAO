@@ -79,7 +79,7 @@ namespace CCF
                   throw IncompatibleType (d->declaration_class ());
                 }
 
-                return d->dynamic_type<TypeDecl> ()->defined ();
+                return d->dynamic_type<HomeDef> ()->defined ();
               }
             } p;
 

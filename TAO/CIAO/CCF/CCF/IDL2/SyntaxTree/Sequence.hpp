@@ -32,31 +32,22 @@ namespace CCF
         // This c-tor is never called.
         //
         SequenceDecl ();
-        
+
       public:
         TypeDeclPtr
-        type ()
+        type () const
         {
           return type_.resolve ();
         }
 
       public:
         virtual bool
-        defined () const
+        complete () const
         {
-          //@@ TODO
-          return true;
+          // Sequence is complete if and only if its type is complete.
+          //
+          return type ()->complete ();
         }
-
-        // Runtime declaration type information.
-        //
-      public:
-        virtual std::string
-        declaration_class ()
-        {
-          return "sequence";
-        }
-
 
       public:
         static Utility::Introspection::TypeInfo const&
@@ -90,7 +81,7 @@ namespace CCF
         {
           type_info (static_type_info ());
         }
-        
+
       public:
         virtual TypeDeclPtr
         clone_typedef_temporary (SimpleName const& name,
@@ -103,8 +94,8 @@ namespace CCF
                                 scope,
                                 type ()->name ()));
         }
-        
-        // Runtime declaration type information
+
+
       public:
         virtual std::string
         declaration_class ()

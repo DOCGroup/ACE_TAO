@@ -21,7 +21,7 @@ namespace CCF
       //
       //
       //
-      class ComponentDecl : public virtual TypeDecl
+      class ComponentDecl : public virtual ForwardDeclarableTypeDecl
       {
       protected:
         virtual
@@ -32,14 +32,16 @@ namespace CCF
           type_info (static_type_info ());
         }
 
-        // Runtime declaration type information
       public:
-        virtual std::string
-        declaration_class ()
+        virtual bool
+        complete () const
         {
-          return "component";
+          // Component is considered complete even if it's
+          // not defined.
+          //
+          return true;
         }
-
+        
       public:
         static Introspection::TypeInfo const&
         static_type_info ();
@@ -90,7 +92,7 @@ namespace CCF
             new ComponentForwardDecl (name, order, scope));
         }
 
-        // Runtime declaration type information
+
       public:
         virtual std::string
         declaration_class ()
@@ -210,7 +212,7 @@ namespace CCF
           return supports_.end ();
         }
 
-        // Runtime declaration type information
+
       public:
         virtual std::string
         declaration_class ()

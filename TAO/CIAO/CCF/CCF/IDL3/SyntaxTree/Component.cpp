@@ -12,7 +12,7 @@ namespace CCF
   {
     namespace SyntaxTree
     {
-      
+
       // ComponentDecl
       //
       //
@@ -22,7 +22,9 @@ namespace CCF
         component_decl_init_ ()
         {
           TypeInfo ti (typeid (ComponentDecl));
-          ti.add_base (Access::PUBLIC, true, TypeDecl::static_type_info ());
+          ti.add_base (Access::PUBLIC,
+                       true,
+                       ForwardDeclarableTypeDecl::static_type_info ());
           return ti;
         }
 
@@ -32,7 +34,7 @@ namespace CCF
       TypeInfo const& ComponentDecl::
       static_type_info () { return component_decl_; }
 
-      
+
       // ComponentForwardDecl
       //
       //

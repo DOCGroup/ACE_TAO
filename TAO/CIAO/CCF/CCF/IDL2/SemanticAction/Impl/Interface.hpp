@@ -117,7 +117,7 @@ namespace CCF
 
                 //@@ could instead check for XXDef
 		//
-                return d->dynamic_type<TypeDecl> ()->defined ();
+                return d->dynamic_type<InterfaceDecl> ()->defined ();
               }
 
             private:

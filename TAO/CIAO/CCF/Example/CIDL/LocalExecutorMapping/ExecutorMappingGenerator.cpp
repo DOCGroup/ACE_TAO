@@ -287,7 +287,7 @@ namespace
   //
   //
   //
-  class TypeNameEmitter : public Traversal::BuiltInTypeDef,
+  class TypeNameEmitter : public Traversal::BuiltInTypeDecl,
                           public Traversal::TypeDecl
   {
   public:
@@ -297,7 +297,7 @@ namespace
     }
 
     virtual void
-    traverse (BuiltInTypeDefPtr const& t)
+    traverse (BuiltInTypeDeclPtr const& t)
     {
       os << t->name ().simple ();
     }

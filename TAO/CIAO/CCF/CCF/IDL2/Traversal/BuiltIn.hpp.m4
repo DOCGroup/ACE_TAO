@@ -57,24 +57,24 @@ namespace CCF
     namespace Traversal
     {
 
-      // BuiltInTypeDef
+      // BuiltInTypeDecl
       //
       //
-      struct BuiltInTypeDef : Traverser
+      struct BuiltInTypeDecl : Traverser
       {
         typedef
-        SyntaxTree::BuiltInTypeDefPtr
+        SyntaxTree::BuiltInTypeDeclPtr
         NodePtr;
 
-        BuiltInTypeDef ()
+        BuiltInTypeDecl ()
         {
-          map (typeid (SyntaxTree::BuiltInTypeDef), this);
+          map (typeid (SyntaxTree::BuiltInTypeDecl), this);
         }
 
         virtual bool
         traverse (SyntaxTree::NodePtr const& n)
         {
-          traverse (n->dynamic_type<SyntaxTree::BuiltInTypeDef> ());
+          traverse (n->dynamic_type<SyntaxTree::BuiltInTypeDecl> ());
 	  return true;
         }
 
@@ -85,25 +85,25 @@ namespace CCF
         }
       };
 dnl
-built_in_type(`Object')
-built_in_type(`ValueBase')
-built_in_type(`Any')
-built_in_type(`Boolean')
-built_in_type(`Char')
-built_in_type(`Double')
-built_in_type(`Float')
-built_in_type(`Long')
-built_in_type(`LongDouble')
-built_in_type(`LongLong')
-built_in_type(`Octet')
-built_in_type(`Short')
-built_in_type(`String')
-built_in_type(`UnsignedLong')
-built_in_type(`UnsignedLongLong')
-built_in_type(`UnsignedShort')
-built_in_type(`Void')
-built_in_type(`Wchar')
-built_in_type(`Wstring')
+built_in_type(`ObjectDecl')
+built_in_type(`ValueBaseDecl')
+built_in_type(`AnyDecl')
+built_in_type(`BooleanDecl')
+built_in_type(`CharDecl')
+built_in_type(`DoubleDecl')
+built_in_type(`FloatDecl')
+built_in_type(`LongDecl')
+built_in_type(`LongDoubleDecl')
+built_in_type(`LongLongDecl')
+built_in_type(`OctetDecl')
+built_in_type(`ShortDecl')
+built_in_type(`StringDecl')
+built_in_type(`UnsignedLongDecl')
+built_in_type(`UnsignedLongLongDecl')
+built_in_type(`UnsignedShortDecl')
+built_in_type(`VoidDecl')
+built_in_type(`WcharDecl')
+built_in_type(`WstringDecl')
 dnl
     }
   }
