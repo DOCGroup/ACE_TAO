@@ -1,3 +1,8 @@
+Tue Mar  8 07:02:14 2005  Olli Savia  <ops@iki.fi>
+
+        * ace/config-lynxos.h:
+	  Rearranged (sorted) defines.
+
 Mon Mar  7 21:27:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ACE-INSTALL.html:
@@ -16,19 +21,19 @@ Mon Mar  7 06:57:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sun Mar  6 20:21:54 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ace/Makefile.am:
+        * ace/Makefile.am:
 
-	  Regenerate.
+          Regenerate.
 
 Sun Mar  6 17:17:57 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	From Matthew Harris <mharris at hynomics dot com>
-	* m4/ace.m4:
+        From Matthew Harris <mharris at hynomics dot com>
+        * m4/ace.m4:
 
-	  Fixed "$withval" mismatch in AC_ARG_ENABLE blocks.  Use
-	  "$enableval" instead.  Addresses problems where attempts to
-	  enable/disable support for the ACE ACEXML, QoS and SSL libraries
-	  via the `configure script' would fail.  [Bug 2053]
+          Fixed "$withval" mismatch in AC_ARG_ENABLE blocks.  Use
+          "$enableval" instead.  Addresses problems where attempts to
+          enable/disable support for the ACE ACEXML, QoS and SSL libraries
+          via the `configure script' would fail.  [Bug 2053]
 
 Sun Mar  6 20:04:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -58,69 +63,69 @@ Sun Mar  6 18:59:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sun Mar  6 15:01:00 2005  Marek Brudka  <mbrudka@aster.pl>
 
-	* include/makeinclude/wrapper_macros.GNU (Message):
-	* bin/MakeProjectCreator/config/global.features (Module):
-	* ACE-INSTALL.html (Module):
-	Simplied Makefile generation for GUI support in ACE and TAO.
+        * include/makeinclude/wrapper_macros.GNU (Message):
+        * bin/MakeProjectCreator/config/global.features (Module):
+        * ACE-INSTALL.html (Module):
+        Simplied Makefile generation for GUI support in ACE and TAO.
 
 Sun Mar  6 01:58:04 2005  Tao Lu  <lu@dre.vanderbilt.edu>
 
-	* Kokyu/tests/DSRT_MIF/MIF.cpp
-	  Added the include of Countdown_Time.h
+        * Kokyu/tests/DSRT_MIF/MIF.cpp
+          Added the include of Countdown_Time.h
 
 Sun Mar  6 00:52:13 2005  Tao Lu  <lu@dre.vanderbilt.edu>
 
-	* ace/Process.cpp
-	* ace/Process_Manager.h
-	* ace/Process_Manager.cpp
-	* ace/Reactor_Impl.h
-	* ace/TP_Reactor.cpp
-	* ace/Proactor_Impl.h
-	* ace/POSIX_CB_Proactor.cpp
-	* ace/SSL/SSL_SOCK_Connector.cpp
-	* ace/SSL/SSL_SOCK_Stream.cpp
-	  Removed unnecessary includes and added include
-	  at proper places.
+        * ace/Process.cpp
+        * ace/Process_Manager.h
+        * ace/Process_Manager.cpp
+        * ace/Reactor_Impl.h
+        * ace/TP_Reactor.cpp
+        * ace/Proactor_Impl.h
+        * ace/POSIX_CB_Proactor.cpp
+        * ace/SSL/SSL_SOCK_Connector.cpp
+        * ace/SSL/SSL_SOCK_Stream.cpp
+          Removed unnecessary includes and added include
+          at proper places.
 
-	* ace/ace.mpc
-	  Added Countdown_Time.cpp.
+        * ace/ace.mpc
+          Added Countdown_Time.cpp.
 
 Sat Mar  5 23:57:53 2005  Tao Lu  <lu@dre.vanderbilt.edu>
 
-	* ace/Time_Value.h
-	* ace/Time_Value.cpp
-	* ace/Time_Value.inl
-	* ace/Countdown_Time.h
-	* ace/Countdown_Time.cpp
-	  moved the ACE_Countdown_Time to seperate files to avoid
-	  the wrong Windows release build behavior for client
-	  application when the right header is not included.
+        * ace/Time_Value.h
+        * ace/Time_Value.cpp
+        * ace/Time_Value.inl
+        * ace/Countdown_Time.h
+        * ace/Countdown_Time.cpp
+          moved the ACE_Countdown_Time to seperate files to avoid
+          the wrong Windows release build behavior for client
+          application when the right header is not included.
 
-	  There are ways of avoiding many changes but to make things
-	  look nice .... so will work on the whole ACE/TAO repo next.
+          There are ways of avoiding many changes but to make things
+          look nice .... so will work on the whole ACE/TAO repo next.
 
 Sat Mar  5 08:48:02 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* tests/QtReactor_Test.cpp: Reformatted this file so it conforms to
-	  the ACE programming style guide.
+        * tests/QtReactor_Test.cpp: Reformatted this file so it conforms to
+          the ACE programming style guide.
 
-	* netsvcs/lib/TS_Clerk_Handler.cpp (parse_args): Fixed a typo
-	  where ACE_TESXT should be ACE_TEXT.  Thanks to
-	  Sean Parker <supinlick@yahoo.com> for reporting this.
+        * netsvcs/lib/TS_Clerk_Handler.cpp (parse_args): Fixed a typo
+          where ACE_TESXT should be ACE_TEXT.  Thanks to
+          Sean Parker <supinlick@yahoo.com> for reporting this.
 
 Fri Mar  4 10:32:17 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ace/Naming_Context.cpp: Changed ACE_OS::strcat() to
-	  ACE_OS::strcpy() to fix a bug.  Thanks to David Hauck
- 	  <davidh@netacquire.com> for reporting this bug and providing a
- 	  fix.
+        * ace/Naming_Context.cpp: Changed ACE_OS::strcat() to
+          ACE_OS::strcpy() to fix a bug.  Thanks to David Hauck
+          <davidh@netacquire.com> for reporting this bug and providing a
+          fix.
 
 Fri Mar  4 15:18:50 2005  Boris Kolpackov  <boris@kolpackov.net>
 
-	* examples/RMCast/Send_Msg/Receiver.cpp:
-	* examples/RMCast/Send_Msg/Sender.cpp: Replaced usage of
-	std::vector and std::cerr with ACE_Vector and ACE_ERROR/ACE_DEBUG
-	respectively. This should fix warnings in VC6 build.
+        * examples/RMCast/Send_Msg/Receiver.cpp:
+        * examples/RMCast/Send_Msg/Sender.cpp: Replaced usage of
+        std::vector and std::cerr with ACE_Vector and ACE_ERROR/ACE_DEBUG
+        respectively. This should fix warnings in VC6 build.
 
 Fri Mar  4 12:11:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -134,20 +139,20 @@ Thu Mar  3 12:17:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed Mar  2 21:44:22 2005  Boris Kolpackov  <boris@kolpackov.net>
 
-	* protocols/ace/RMCast/Socket.cpp:
-	* protocols/ace/RMCast/Socket.h: Moved implementation to
-	Socket_Impl. Made Socket delegate all functionality to
-	Socket_Impl. This way I can use all kinds of obfuscated
-	names in Socket_Impl (in order to fight compiler warnings)
-	without affecting end user.
+        * protocols/ace/RMCast/Socket.cpp:
+        * protocols/ace/RMCast/Socket.h: Moved implementation to
+        Socket_Impl. Made Socket delegate all functionality to
+        Socket_Impl. This way I can use all kinds of obfuscated
+        names in Socket_Impl (in order to fight compiler warnings)
+        without affecting end user.
 
-	* protocols/ace/RMCast/Stack.h: Removed export macro from
-	all types declared there.
+        * protocols/ace/RMCast/Stack.h: Removed export macro from
+        all types declared there.
 
-	* examples/RMCast/Send_Msg/Receiver.cpp:
-	* examples/RMCast/Send_Msg/Sender.cpp: Updated to use
-	ACE_INET_Addr instead of ACE_RMCast::Address (which was
-	just a typedef of ACE_INET_Addr).
+        * examples/RMCast/Send_Msg/Receiver.cpp:
+        * examples/RMCast/Send_Msg/Sender.cpp: Updated to use
+        ACE_INET_Addr instead of ACE_RMCast::Address (which was
+        just a typedef of ACE_INET_Addr).
 
 Wed Mar  2 09:58:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -159,14 +164,14 @@ Wed Mar  2 09:58:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue Mar  1 12:39:11 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* apps/JAWS3/jaws3/Protocol_Handler.h: Added
-	  JAWS_Export to class JAWS_Protocol_Handler.  Thanks to Shaun
- 	  Cooley <scooley4241@hotmail.com> for reporting this.
+        * apps/JAWS3/jaws3/Protocol_Handler.h: Added
+          JAWS_Export to class JAWS_Protocol_Handler.  Thanks to Shaun
+          Cooley <scooley4241@hotmail.com> for reporting this.
 
 Tue Mar  1 10:33:15 2005  Boris Kolpackov  <boris@kolpackov.net>
 
-	* protocols/ace/RMCast/Acknowledge.h: Made Acknowledge::Descr
-	  public to get broken Sun C++ 5.4 out of its misery.
+        * protocols/ace/RMCast/Acknowledge.h: Made Acknowledge::Descr
+          public to get broken Sun C++ 5.4 out of its misery.
 
 Tue Mar  1 07:40:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -176,20 +181,20 @@ Tue Mar  1 07:40:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Feb 28 17:10:41 2005  Steve Huston  <shuston@riverace.com>
 
-	* ace/Asynch_Pseudo_Task.{h cpp}: Removed all the flg_active_ and
-	  finish locking stuff. Use the thr_count() value to tell if the
-	  thread is running, and don't try to interlock cleanup activities
-	  with other classes. It's messy and doesn't work right. There are
-	  too many race conditions between closing handles and closing down
-	  this object.
-	  Corrected ACE_LIB_TEXT use instead of
-	  ACE_TEXT, and added missing commas between some strings.
+        * ace/Asynch_Pseudo_Task.{h cpp}: Removed all the flg_active_ and
+          finish locking stuff. Use the thr_count() value to tell if the
+          thread is running, and don't try to interlock cleanup activities
+          with other classes. It's messy and doesn't work right. There are
+          too many race conditions between closing handles and closing down
+          this object.
+          Corrected ACE_LIB_TEXT use instead of
+          ACE_TEXT, and added missing commas between some strings.
 
-	* ace/POSIX_Asynch_IO.{h cpp}:
-	* ace/WIN32_Asynch_IO.{h cpp}: Don't try to interlock against the
-	  Asynch_Pseudo_Task. If it's going, it's going. Only hold the lock
-	  around access to the connection/handle map since that's accessed
-	  from the asynch pseudo task thread as well as the caller's.
+        * ace/POSIX_Asynch_IO.{h cpp}:
+        * ace/WIN32_Asynch_IO.{h cpp}: Don't try to interlock against the
+          Asynch_Pseudo_Task. If it's going, it's going. Only hold the lock
+          around access to the connection/handle map since that's accessed
+          from the asynch pseudo task thread as well as the caller's.
 
 Mon Feb 28 09:59:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -204,64 +209,64 @@ Mon Feb 28 09:59:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Feb 28 11:10:58 2005  Boris Kolpackov  <boris@kolpackov.net>
 
-	* protocols/ace/RMCast/Acknowledge.h: Made Acknowledge::Queue
-	  a friend of Acknowledge. Hopefully this will help Sun C++ 5.4.
+        * protocols/ace/RMCast/Acknowledge.h: Made Acknowledge::Queue
+          a friend of Acknowledge. Hopefully this will help Sun C++ 5.4.
 
 Sun Feb 27 08:51:23 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ace/OS_NS_stdio.cpp (snprintf): Enhanced this function so
-	  it terminates the string with a null char if it is *exactly* the
- 	  same length as the buffer.  Thanks to Bruce MacDonald <brucemac
- 	  at netcomuk dot co dot uk> for reporting this and providing a
- 	  fix.  This fixes bugid 2058.
+        * ace/OS_NS_stdio.cpp (snprintf): Enhanced this function so
+          it terminates the string with a null char if it is *exactly* the
+          same length as the buffer.  Thanks to Bruce MacDonald <brucemac
+          at netcomuk dot co dot uk> for reporting this and providing a
+          fix.  This fixes bugid 2058.
 
 Fri Feb 25 18:46:33 2005  Steve Huston  <shuston@riverace.com>
 
-	* ace/Asynch_Pseudo_Task.cpp: Forgot some cleanups for places
-	  returning -2. Fixed. Also reduced the clutter of diagnostic
-	  messages and added useful output (such as %p) to those remaining.
+        * ace/Asynch_Pseudo_Task.cpp: Forgot some cleanups for places
+          returning -2. Fixed. Also reduced the clutter of diagnostic
+          messages and added useful output (such as %p) to those remaining.
 
-	* ace/POSIX_Asynch_IO.cpp: Additional handle cleanups and checks
-	  for ACE_POSIX_Asynch_Accept::close ().
+        * ace/POSIX_Asynch_IO.cpp: Additional handle cleanups and checks
+          for ACE_POSIX_Asynch_Accept::close ().
 
 Fri Feb 25 17:29:12 2005  Steve Huston  <shuston@riverace.com>
 
-	* ace/config-hpux-11.00.h: Always set ACE_HAS_SVR4_DYNAMIC_LINKING.
-	  This is now available always.
+        * ace/config-hpux-11.00.h: Always set ACE_HAS_SVR4_DYNAMIC_LINKING.
+          This is now available always.
 
-	* include/makeinclude/platform_hpux_gcc.GNU: Add -Wl,-E to
-	  SOFLAGS for linking shared libraries. Per info in
-	  Bugzilla #2057, this is needed to have dynamic_cast work across
-	  shared libraries. It still doesn't work, and not sure why...
+        * include/makeinclude/platform_hpux_gcc.GNU: Add -Wl,-E to
+          SOFLAGS for linking shared libraries. Per info in
+          Bugzilla #2057, this is needed to have dynamic_cast work across
+          shared libraries. It still doesn't work, and not sure why...
 
-	* tests/DLL_Test.cpp: Use the correct ACE_DEBUG specifier for
-	  pointers (%@, not %x).
+        * tests/DLL_Test.cpp: Use the correct ACE_DEBUG specifier for
+          pointers (%@, not %x).
 
-	* tests/DLL_Test_Impl.cpp: Added an ACE_DEBUG in dynamic_cast_test()
-	  to see what's being tested, not only the results.
+        * tests/DLL_Test_Impl.cpp: Added an ACE_DEBUG in dynamic_cast_test()
+          to see what's being tested, not only the results.
 
 Fri Feb 25 13:49:27 2005  Steve Huston  <shuston@riverace.com>
 
-	* ace/POSIX_Asynch_IO.{h cpp}: Added 'const' to all the handler_proxy
-	  references on Result-type constructors.
-	  Removed the ACE_LIB_TEXT around strings to ACE_TRACE.
-	  ACE_TRACE adds the ACE_LIB_TEXT.
-	  (Asynch_Accept::handle_close()): This can be called if the
-	  listen handle gets closed in addition to when the pseudo task
-	  is being destroyed. Mark the handle invalid.
+        * ace/POSIX_Asynch_IO.{h cpp}: Added 'const' to all the handler_proxy
+          references on Result-type constructors.
+          Removed the ACE_LIB_TEXT around strings to ACE_TRACE.
+          ACE_TRACE adds the ACE_LIB_TEXT.
+          (Asynch_Accept::handle_close()): This can be called if the
+          listen handle gets closed in addition to when the pseudo task
+          is being destroyed. Mark the handle invalid.
 
-	* ace/WIN32_Asynch_IO.{h cpp}: Added 'const' to all the handler_proxy
-	  references on Result-type constructors.
-	  (accept): Corrected function name in message.
-	  (ACE_WIN32_Asynch_Accept_Result::complete): If the accept failed,
-	  be sure to close the accept handle created in accept().
+        * ace/WIN32_Asynch_IO.{h cpp}: Added 'const' to all the handler_proxy
+          references on Result-type constructors.
+          (accept): Corrected function name in message.
+          (ACE_WIN32_Asynch_Accept_Result::complete): If the accept failed,
+          be sure to close the accept handle created in accept().
 
-	* ace/Asynch_Pseudo_Task.cpp: Removed return value -2 to signify
-	  task shutting down, and return -1/errno = ESHUTDOWN instead.
-	  Secret values like -2 make maintenance harder.
-	  Also removed some of the ACE_ERROR() statements in favor of
-	  setting a reasonable errno value. Lets callers know what's going
-	  on in the code, not just show it in diagnostic output.
+        * ace/Asynch_Pseudo_Task.cpp: Removed return value -2 to signify
+          task shutting down, and return -1/errno = ESHUTDOWN instead.
+          Secret values like -2 make maintenance harder.
+          Also removed some of the ACE_ERROR() statements in favor of
+          setting a reasonable errno value. Lets callers know what's going
+          on in the code, not just show it in diagnostic output.
 
 Fri Feb 25 07:08:35 2005  Chad Elliott  <elliott_c@ociweb.com>
 
