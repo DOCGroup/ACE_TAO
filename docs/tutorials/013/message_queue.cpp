@@ -80,9 +80,9 @@ template class ACE_Guard < ACE_Mutex >;
 template class ACE_Lock_Adapter < ACE_Mutex >;
 template class ACE_Atomic_Op < ACE_Mutex, int >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Guard<ACE_Mutex>;
-#pragma instantiate ACE_Lock_Adapter<ACE_Mutex>;
-#pragma instantiate ACE_Atomic_Op<ACE_Mutex, int>;
+#pragma instantiate ACE_Guard<ACE_Mutex>
+#pragma instantiate ACE_Lock_Adapter<ACE_Mutex>
+#pragma instantiate ACE_Atomic_Op<ACE_Mutex, int>
 #endif /*
          ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
        */
