@@ -738,6 +738,7 @@ TAO_DynEnum_i::get_longdouble (
       ))
 {
   CORBA::LongDouble ret;
+  ACE_UNUSED_ARG (ret);
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), ret);
 }
 

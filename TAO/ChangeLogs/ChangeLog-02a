@@ -1,65 +1,76 @@
+Mon Aug 28 19:09:11 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/DynamicAny/DynAny_i.cpp:
+        * tao/DynamicAny/DynArray_i.cpp:
+        * tao/DynamicAny/DynEnum_i.cpp:
+        * tao/DynamicAny/DynSequence_i.cpp:
+        * tao/DynamicAny/DynStruct_i.cpp:
+        * tao/DynamicAny/DynUnion_i.cpp:
+          Use ACE_UNUSED_ARG to eliminate warnings on builds with
+          exceptions enabled.
+
 Mon Aug 28 16:19:16 2000  Ossama Othman  <ossama@uci.edu>
 
-	* tao/IOP.pidl (TaggedComponentList):
+        * tao/IOP.pidl (TaggedComponentList):
 
-	  Added this typedef.  It is a sequence of TaggedComponents.  The
-	  SecurityReplaceable module from the CORBA Security Service needs
-	  this typedef.
+          Added this typedef.  It is a sequence of TaggedComponents.  The
+          SecurityReplaceable module from the CORBA Security Service needs
+          this typedef.
 
 Mon Aug 28 17:41:12 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-	* test/Exposed_Policies/Counter_i.h
-	* test/Exposed_Policies/Counter_i.cpp
-	* test/Exposed_Policies/Counter.idl
-	
-	  Added method to IDL interface and related
-	  servant implementation.
+        * test/Exposed_Policies/Counter_i.h
+        * test/Exposed_Policies/Counter_i.cpp
+        * test/Exposed_Policies/Counter.idl
+
+          Added method to IDL interface and related
+          servant implementation.
 
 Mon Aug 28 17:28:45 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-	* test/Exposed_Policies/Policy_Tester.h:
-	* test/Exposed_Policies/Policy_Tester.cpp:
-	* test/Exposed_Policies/Policy_Verifier.h:
-	* test/Exposed_Policies/Policy_Verifier.cpp:
-	* test/Exposed_Policies/RT_Properties.h:
-	* test/Exposed_Policies/RT_Properties.cpp:
-	* test/Exposed_Policies/client.cpp:
-	* test/Exposed_Policies/server.cpp
-	* test/Exposed_Policies/Server.dsp
-	* test/Exposed_Policies/Client.dsp
-	* test/Exposed_Policies/README
-	
-	  Extended sample to auto-check if the policies embedded
-	  in the IOR are the same that were specified in the
-	  config files.
+        * test/Exposed_Policies/Policy_Tester.h:
+        * test/Exposed_Policies/Policy_Tester.cpp:
+        * test/Exposed_Policies/Policy_Verifier.h:
+        * test/Exposed_Policies/Policy_Verifier.cpp:
+        * test/Exposed_Policies/RT_Properties.h:
+        * test/Exposed_Policies/RT_Properties.cpp:
+        * test/Exposed_Policies/client.cpp:
+        * test/Exposed_Policies/server.cpp
+        * test/Exposed_Policies/Server.dsp
+        * test/Exposed_Policies/Client.dsp
+        * test/Exposed_Policies/README
+
+          Extended sample to auto-check if the policies embedded
+          in the IOR are the same that were specified in the
+          config files.
 
 Mon Aug 28 14:05:36 2000  Ossama Othman  <ossama@uci.edu>
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.h:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.cpp (init_tcp_properties,
-	  open_i):
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.cpp (init_tcp_properties,
+          open_i):
 
-	  Initialize the TCP properties specific to the SSLIOP pluggable
-	  protocol.
-	
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connect.h:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connect.cpp:
+          Initialize the TCP properties specific to the SSLIOP pluggable
+          protocol.
 
-	  Added TCP properties argument to the server connection handler
-	  constructor.  This argument is used to initialize the TCP
-	  properties to be used by the SSLIOP pluggable protocol during
-	  communication.
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connect.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connect.cpp:
 
-	  (open):
+          Added TCP properties argument to the server connection handler
+          constructor.  This argument is used to initialize the TCP
+          properties to be used by the SSLIOP pluggable protocol during
+          communication.
 
-	  Obtain TCP properties from the newly added TCP_Properties
-	  structure instead of the corresponding members in
-	  TAO_ORB_Parameters.
+          (open):
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.cpp:
+          Obtain TCP properties from the newly added TCP_Properties
+          structure instead of the corresponding members in
+          TAO_ORB_Parameters.
 
-	  Initialize TAO_Protocol_Factory base class with the appropriate
-	  protocol tag (TAO_TAG_IIOP_PROFILE).
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.cpp:
+
+          Initialize TAO_Protocol_Factory base class with the appropriate
+          protocol tag (TAO_TAG_IIOP_PROFILE).
 
 Mon Aug 28 11:49:46 2000  Carlos O'Ryan  <coryan@uci.edu>
 
