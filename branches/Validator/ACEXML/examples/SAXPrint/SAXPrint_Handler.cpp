@@ -69,12 +69,15 @@ ACEXML_SAXPrint_Handler::endPrefixMapping (const ACEXML_Char *prefix
 }
 
 void
-ACEXML_SAXPrint_Handler::ignorableWhitespace (const ACEXML_Char *,
+ACEXML_SAXPrint_Handler::ignorableWhitespace (const ACEXML_Char * cdata,
                                               int,
                                               int ACEXML_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((ACEXML_SAXException))
 {
-  //   ACE_DEBUG ((LM_DEBUG,
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("%s"),
+              cdata));
+//   ACE_DEBUG ((LM_DEBUG,
   //               ACE_TEXT ("* Event ignorableWhitespace () ***************\n")));
 }
 
