@@ -899,6 +899,18 @@ class ACE_Export ACE_Condition_Thread_Mutex
   //     ACE_Condition variable wrapper written using ACE_Mutexes This
   //     allows threads to block until shared data changes state.
   //
+  //     A condition variable enables threads to atomically block and
+  //     test the condition under the protection of a mutual exclu-
+  //     sion lock (mutex) until the condition is satisfied.  That is,
+  //     the mutex must have been held by the thread before calling
+  //     wait or signal on the condition.  If the condition is false,
+  //     a thread blocks on a condition variable and atomically
+  //     releases the mutex that is waiting for the condition to
+  //     change.  If another thread changes the condition, it may wake
+  //     up waiting threads by signaling the associated condition
+  //     variable.  The waiting threads, upon awakening, reacquire the
+  //     mutex and re-evaluate the condition.
+  //
   // = DESCRIPTION
   //     This should be an instantiation of ACE_Condition but problems
   //     with compilers precludes this...
@@ -919,7 +931,7 @@ public:
   // Block on condition, or until absolute time-of-day has passed.  If
   // abstime == 0 use "blocking" <wait> semantics.  Else, if <abstime>
   // != 0 and the call times out before the condition is signaled
-  // <wait> returns -1 and sets errno to ETIME.
+  // <wait> returns -1 and sets errno to ETIME. 
 
   int wait (void);
   // Block on condition.
