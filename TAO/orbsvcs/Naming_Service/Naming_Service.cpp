@@ -67,38 +67,32 @@ TAO_Naming_Service::init (int argc,
 }
 
 int
-TAO_Naming_Service::parse_args (int argc,
+TAO_Naming_Service::parse_args (int &argc,
                                 ACE_TCHAR* argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_LIB_TEXT("b:do:p:s:t:f:m:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_LIB_TEXT("-t:"));
   int c;
-  int time = 0;
-  int i = 0;
-  int count_argv = 0;
 
   while ((c = get_opts ()) != -1)
     {
-      ++count_argv;
       switch (c)
         {
         case 't':
-          time = ACE_OS::atoi (get_opts.opt_arg ());
-          if (time >= 0)
-            this->time_ = time;
-
-          // Remove the option '-t' from argv []
-          // to avoid any confusion that might result.
           {
-            // Added unneeded '{ & }' just to satisfy Win32
-            for (i = count_argv; i != argc; ++i)
-              argv [i] = argv [i+2];
+            int time = ACE_OS::atoi (get_opts.opt_arg ());
+            if (time >= 0)
+              this->time_ = time;
+
+            // Remove the option '-t' from argv []
+            // to avoid any confusion that might result.
+            for (int i = get_opts.opt_ind (); i != argc; ++i)
+              argv [i-2 ] = argv [i];
+
+            // Decrement the value of argc to reflect the removal
+            // of '-t' option.
+            argc = argc - 2;
+            break;
           }
-
-          // Decrement the value of this->argc_ to reflect the removal
-          // of '-t' option.
-          argc = argc - 2;
-          break;
-
         case '?':
         default:
           // Don't do anything. The TAO_Naming_Server::parse_args ()
