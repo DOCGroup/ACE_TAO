@@ -7,6 +7,7 @@
 #include "ace/Thread_Manager.h"
 #include "ace/Handle_Set.h"
 #include "ace/CDR_Stream.h"
+#include "ace/streams.h"
 
 // make sure that the code compiles cleanly even if SCTP is not
 // available. If SCTP is not installed, program will exit early in

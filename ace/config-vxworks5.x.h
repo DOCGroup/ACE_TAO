@@ -33,16 +33,6 @@
   // that it doesn't.  It causes undefined symbols for math functions.
 # define ACE_LACKS_LONGLONG_T
 
-  // On g++/VxWorks, iostream.h defines a static instance (yes, instance)
-  // of the Iostream_init class.  That causes all files that #include it
-  // to put in the global constructor/destructor hooks.  For files that
-  // don't have any static instances of non-class (built-in) types, the
-  // hooks refer to the file name, e.g., "foo.cpp".  That file name gets
-  // embedded in a variable name by munch.  The output from munch won't
-  // compile, though, because of the period!  So, let g++/VxWorks users
-  // include iostream.h only where they need it.
-# define ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION
-
 # define ACE_LACKS_LINEBUFFERED_STREAMBUF
 # define ACE_LACKS_SIGNED_CHAR
 

@@ -375,19 +375,6 @@ ACE_HAS_MALLOC_STATS                    Enabled malloc statistics
                                         collection.
 ACE_HAS_MEMCHR                          Use native implementation of memchr.
 ACE_HAS_MINIMAL_ACE_OS                  Disables some #includes in ace/OS.*.
-ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION     Avoid #including ace/streams.h
-                                        in OS.h.  Users must include
-                                        ace/streams.h, <iostream>, or
-                                        <iostream.h> explicitly in
-                                        their code.  Some platforms,
-                                        such as g++/VxWorks, have
-                                        trouble compiling templates
-                                        and iostreams header because
-                                        of static variables in the
-                                        stream headers.  This flag
-                                        will also avoid extra
-                                        compilation and runtime
-                                        overheads on some platforms.
 ACE_HAS_MFC                             Platform supports Microsoft
                                         Foundation Classes
 ACE_HAS_MSG                             Platform supports recvmsg and

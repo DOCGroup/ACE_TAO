@@ -23,6 +23,7 @@ extern "C" {
 #endif
 
 #include "Options_Manager.h"
+#include "ace/streams.h"
 
 // Set default values
 ACE_CDR::ULong Options_Manager::test_iterations=1000000;

@@ -6,6 +6,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/CDR_Stream.h"
 #include "ace/High_Res_Timer.h"
+#include "ace/streams.h"
 
 // make sure that the code compiles cleanly even if SCTP is not
 // available. If SCTP is not installed, program will exit early in

@@ -34,8 +34,7 @@
 #if defined (ACE_HAS_STANDARD_CPP_LIBRARY)  && \
     (ACE_HAS_STANDARD_CPP_LIBRARY != 0)
 
-# if !defined (ACE_USES_OLD_IOSTREAMS)  || \
-    defined (ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION)
+# if !defined (ACE_USES_OLD_IOSTREAMS) 
 #   include /**/ <iosfwd>
 # else
   // NOTE: If these forward declarations don't work (e.g. aren't
@@ -51,7 +50,7 @@
   class ifstream;
   class ofstream;
   class fstream;
-# endif /* ! ACE_USES_OLD_IOSTREAMS  ||  ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION */
+# endif /* ! ACE_USES_OLD_IOSTREAMS */
 
 # if defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB) && \
              (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB != 0)
