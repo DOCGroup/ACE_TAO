@@ -164,6 +164,9 @@ namespace TAO
         const PortableServer::ObjectId &system_id,
         TAO::Portable_Server::Servant_Upcall &servant_upcall) = 0;
 
+      virtual int unbind_using_user_id (
+        const PortableServer::ObjectId &user_id) = 0;
+
       virtual CORBA::Boolean servant_has_remaining_activations (
         PortableServer::Servant servant) = 0;
     };

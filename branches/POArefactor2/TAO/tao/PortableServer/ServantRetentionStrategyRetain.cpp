@@ -195,6 +195,14 @@ namespace TAO
         }
     }
 
+    int
+    Retain_Servant_Retention_Strategy::unbind_using_user_id (
+      const PortableServer::ObjectId &user_id)
+    {
+      return this->active_object_map_->
+        unbind_using_user_id (user_id);
+    }
+
     PortableServer::Servant
     Retain_Servant_Retention_Strategy::find_servant (
       PortableServer::ObjectId system_id

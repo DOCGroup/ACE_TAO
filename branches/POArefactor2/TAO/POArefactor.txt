@@ -1,3 +1,9 @@
+Mon Nov 22 13:39:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/POA.{h,cpp}:
+        * tao/PortableServer/ServantRetentionStrategy*.{h,cpp}:
+          Added unbind_using_user_id, needed for cleanup
+
 Mon Nov 22 13:11:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/POA.{h,cpp}:

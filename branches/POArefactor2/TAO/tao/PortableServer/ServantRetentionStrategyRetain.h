@@ -188,6 +188,9 @@ namespace TAO
       CORBA::Boolean servant_has_remaining_activations (
         PortableServer::Servant servant);
 
+      virtual int unbind_using_user_id (
+        const PortableServer::ObjectId &user_id);
+
     private:
       TAO_Active_Object_Map *active_object_map_;
       CORBA::ULong waiting_servant_deactivation_;

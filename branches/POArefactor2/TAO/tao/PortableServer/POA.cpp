@@ -1565,6 +1565,12 @@ TAO_POA::find_servant (PortableServer::ObjectId system_id
     find_servant (system_id ACE_ENV_ARG_PARAMETER);
 }
 
+int
+TAO_POA::unbind_using_user_id (const PortableServer::ObjectId &user_id)
+{
+  return this->active_policy_strategies_.servant_retention_strategy()->
+    unbind_using_user_id  (user_id);
+}
 
 PortableServer::Servant
 TAO_POA::id_to_servant_i (const PortableServer::ObjectId &id

@@ -162,6 +162,9 @@ namespace TAO
       virtual CORBA::Boolean servant_has_remaining_activations (
         PortableServer::Servant servant);
 
+      virtual int unbind_using_user_id (
+        const PortableServer::ObjectId &user_id);
+
     protected:
       TAO_POA *poa_;
       RequestProcessingStrategy *request_processing_strategy_;

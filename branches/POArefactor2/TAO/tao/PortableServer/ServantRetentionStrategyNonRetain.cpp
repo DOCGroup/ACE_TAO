@@ -396,6 +396,12 @@ namespace TAO
       return false;
     }
 
+    int
+    Non_Retain_Servant_Retention_Strategy::unbind_using_user_id (
+      const PortableServer::ObjectId &/*user_id*/)
+    {
+      return 0;
+    }
   }
 }
 
