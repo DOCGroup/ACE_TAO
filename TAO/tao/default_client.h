@@ -31,7 +31,7 @@
  * options so that everything operates as if there were no
  * dynamically-linkable strategies.
  */
-class TAO_Export TAO_Default_Client_Strategy_Factory 
+class TAO_Export TAO_Default_Client_Strategy_Factory
   : public TAO_Client_Strategy_Factory
 {
 public:
@@ -110,10 +110,6 @@ private:
   /// Type of lock for the muxed_strategy
   Lock_Type muxed_strategy_lock_type_;
 };
-
-#if defined (__ACE_INLINE__)
-# include "tao/default_client.i"
-#endif /* __ACE_INLINE__ */
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO, TAO_Default_Client_Strategy_Factory)
 ACE_FACTORY_DECLARE (TAO, TAO_Default_Client_Strategy_Factory)
