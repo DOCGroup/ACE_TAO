@@ -33,7 +33,7 @@ Notify_Logging_Service::init_ORB (int& argc, char *argv []
                                 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
-  this->notify_service_ = ACE_Dynamic_Service<TAO_NS_Service>::instance (TAO_NS_COS_NOTIFICATION_SERVICE_NAME);
+  this->notify_service_ = ACE_Dynamic_Service<TAO_Notify_Service>::instance (TAO_NOTIFY_DEF_EMO_FACTORY_NAME);
 
   if (this->notify_service_ == 0)
     {
@@ -89,16 +89,16 @@ Notify_Logging_Service::init (int argc, char *argv[]
   this->notify_factory_ =
     notify_service_->create (this->poa_.in ()
                             ACE_ENV_ARG_PARAMETER);
-  
+
   ACE_NEW_THROW_EX (this->notify_log_factory_,
                       TAO_NotifyLogFactory_i (this->notify_factory_.in ()),
                       CORBA::NO_MEMORY ());
-  
+
   DsNotifyLogAdmin::NotifyLogFactory_var obj =
     notify_log_factory_->activate (this->poa_.in () ACE_ENV_ARG_PARAMETER);
 
   ACE_CHECK_RETURN (-1);
-  
+
   // Register the Factory
   ACE_ASSERT (!CORBA::is_nil (this->naming_.in ()));
 

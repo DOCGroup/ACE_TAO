@@ -16,7 +16,7 @@ TAO_NS_Seq_Worker_T<T>::TAO_NS_Seq_Worker_T (void)
 {
 }
 
-template<class TYPE> TAO_NS_Seq_Worker_T<TYPE>::SEQ*
+template<class TYPE> ACE_TYPENAME TAO_NS_Seq_Worker_T<TYPE>::SEQ*
 TAO_NS_Seq_Worker_T<TYPE>::create (CONTAINER &container ACE_ENV_ARG_DECL)
 {
   SEQ* tmp;
@@ -34,4 +34,3 @@ TAO_NS_Seq_Worker_T<TYPE>::create (CONTAINER &container ACE_ENV_ARG_DECL)
 }
 
 #endif /* TAO_NS_SEQ_WORKER_T_CPP */
-
