@@ -451,11 +451,11 @@ IIOP_ServerRequest::dsi_marshal (CORBA::Environment &env)
   if (this->exception_type_ == TAO_GIOP_NO_EXCEPTION)
     {
       // ... then send any return value ...
-      if (svr_req.retval_)
+      if (this->retval_)
         {
-          tc = svr_req.retval_->type ();
-          value = svr_req.retval_->value ();
-          if (svr_req.retval_->any_owns_data ())
+          tc = this->retval_->type ();
+          value = this->retval_->value ();
+          if (this->retval_->any_owns_data ())
             {
               TAO_InputCDR cdr ((ACE_Message_Block *)value);
               (void) this->outgoing_->append (tc, &cdr, env);
@@ -466,10 +466,10 @@ IIOP_ServerRequest::dsi_marshal (CORBA::Environment &env)
 
       // ... Followed by "inout" and "out" parameters, left to right
       for (u_int i = 0;
-           i < svr_req.params_->count ();
+           i < this->params_->count ();
            i++)
         {
-          CORBA::NamedValue_ptr nv = svr_req.params_->item (i, env);
+          CORBA::NamedValue_ptr nv = this->params_->item (i, env);
           CORBA::Any_ptr any;
 
           if (!(nv->flags () & (CORBA::ARG_INOUT|CORBA::ARG_OUT)))
