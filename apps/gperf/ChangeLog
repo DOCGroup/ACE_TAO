@@ -1,15 +1,21 @@
+Sat Sep  8 22:40:21 2001  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * src/Key_List.cpp (output_lookup_array):
+
+          Removed a compilation warning on 64-bit Linux.
+
 Sun Jul 29 12:17:55 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
         * The following changes fix a bug reported by Karl Proese
  	  <karl.proese@mchp.siemens.de> and Jeff Parsons.
-	
+
         * tests: Patched the *.exp files to include the new WORDLIST_SIZE
  	  macro.
-	
+
 	* src/Key_List.cpp: Generate a new const/enum that defines the
 	  size of the wordlist array.  This is now used to fix a nasty bug
  	  where MAX_HASH_VALUE was used instead of WORDLIST_SIZE.
-	
+
 	* src/Key_List.cpp (output_lookup_array): Reformatted the
 	  debugging output to make it easier to tell what's going on.
 
@@ -21,7 +27,7 @@ Sun Jul 29 12:17:55 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
  	  contents of this file.  In particular, this should detect
  	  certain nasty bugs that were plaguing GPERF earlier for keyword
  	  sets with a large number of duplicates.
-  
+
 	* src/Key_List.cpp (read_keys): Clarified the debugging message
 	  to indicate the key links are *static*.
 
