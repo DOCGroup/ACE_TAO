@@ -55,53 +55,13 @@
 # pragma warning (disable : 4250)
 #endif /* _MSC_VER */
 
-#if !defined (TAO_ORBSVCS_HAS_Trader)
+typedef ACE_Hash_Map_Manager <ACE_CString,AVStreams::FlowEndPoint_ptr,ACE_Null_Mutex>  FlowEndPoint_Map;
+typedef ACE_Hash_Map_Entry <ACE_CString,AVStreams::FlowEndPoint_ptr> FlowEndPoint_Map_Entry;
+typedef ACE_Hash_Map_Iterator <ACE_CString,AVStreams::FlowEndPoint_ptr,ACE_Null_Mutex>  FlowEndPoint_Map_Iterator;
 
-// =  Classes to deal with the ACE_Hash_Map_Manager.
-/**
- * @class TAO_String_Hash_Key
- *
- * @brief Key for the Hash Table. The EXT_ID of the
- * ACE_Hash_Map_Manager.
- */
-class TAO_AV_Export TAO_String_Hash_Key : public CORBA::String_var
-{
-public:
-  // = Initialization and termination methods.
-  /// Default constructor.
-  TAO_String_Hash_Key (void);
-
-  /// Constructor from a const string.
-  TAO_String_Hash_Key (char * name);
-
-  /// Constructor from a const string.
-  TAO_String_Hash_Key (const char * name);
-
-  /// Copy constructor.
-  TAO_String_Hash_Key (const CORBA::String_var &hash_key);
-
-  /// Destructor.
-  ~TAO_String_Hash_Key (void);
-
-  /// The operator for hash binding and "find"ing.
-  int operator == (const TAO_String_Hash_Key &hash_key) const;
-
-  /// The operator for hash binding and "find"ing.
-  friend int operator < (const TAO_String_Hash_Key &left,
-                         const TAO_String_Hash_Key &right);
-
-  /// The function that computes a hash value.
-  u_long hash (void) const;
-};
-#endif /* !TAO_ORBSVCS_HAS_Trader */
-
-typedef ACE_Hash_Map_Manager <TAO_String_Hash_Key,AVStreams::FlowEndPoint_ptr,ACE_Null_Mutex>  FlowEndPoint_Map;
-typedef ACE_Hash_Map_Entry <TAO_String_Hash_Key,AVStreams::FlowEndPoint_ptr> FlowEndPoint_Map_Entry;
-typedef ACE_Hash_Map_Iterator <TAO_String_Hash_Key,AVStreams::FlowEndPoint_ptr,ACE_Null_Mutex>  FlowEndPoint_Map_Iterator;
-
-typedef ACE_Hash_Map_Manager <TAO_String_Hash_Key,TAO_AV_Flow_Handler*,ACE_Null_Mutex>  Flow_Handler_Map;
-typedef ACE_Hash_Map_Entry <TAO_String_Hash_Key,TAO_AV_Flow_Handler*> Flow_Handler_Map_Entry;
-typedef ACE_Hash_Map_Iterator <TAO_String_Hash_Key,TAO_AV_Flow_Handler*,ACE_Null_Mutex>  Flow_Handler_Map_Iterator;
+typedef ACE_Hash_Map_Manager <ACE_CString,TAO_AV_Flow_Handler*,ACE_Null_Mutex>  Flow_Handler_Map;
+typedef ACE_Hash_Map_Entry <ACE_CString,TAO_AV_Flow_Handler*> Flow_Handler_Map_Entry;
+typedef ACE_Hash_Map_Iterator <ACE_CString,TAO_AV_Flow_Handler*,ACE_Null_Mutex>  Flow_Handler_Map_Iterator;
 
 
 #include "AV_Core.h"
@@ -208,9 +168,9 @@ protected:
   AVStreams::StreamEndPoint_B_var sep_b_;
 
   /// Hash table for the flow names and its corresponding flowconnection object reference.
-  typedef ACE_Hash_Map_Manager <TAO_String_Hash_Key,AVStreams::FlowConnection_ptr,ACE_Null_Mutex> FlowConnection_Map;
-  typedef ACE_Hash_Map_Iterator <TAO_String_Hash_Key,AVStreams::FlowConnection_ptr,ACE_Null_Mutex> FlowConnection_Map_Iterator;
-  typedef ACE_Hash_Map_Entry <TAO_String_Hash_Key,AVStreams::FlowConnection_ptr> FlowConnection_Map_Entry;
+  typedef ACE_Hash_Map_Manager <ACE_CString,AVStreams::FlowConnection_ptr,ACE_Null_Mutex> FlowConnection_Map;
+  typedef ACE_Hash_Map_Iterator <ACE_CString,AVStreams::FlowConnection_ptr,ACE_Null_Mutex> FlowConnection_Map_Iterator;
+  typedef ACE_Hash_Map_Entry <ACE_CString,AVStreams::FlowConnection_ptr> FlowConnection_Map_Entry;
   FlowConnection_Map flow_connection_map_;
   AVStreams::FlowConnection_seq flowConnections_;
 
@@ -496,7 +456,7 @@ protected:
   /// Stream Qos.
   AVStreams::streamQoS stream_qos_;
 
-  ACE_Hash_Map_Manager<TAO_String_Hash_Key,AVStreams::QoS,ACE_Null_Mutex> qos_map_;
+  ACE_Hash_Map_Manager<ACE_CString,AVStreams::QoS,ACE_Null_Mutex> qos_map_;
 };
 
 
@@ -765,7 +725,7 @@ protected:
 ///   TAO_Reverse_FlowSpec_Entry reverse_entries_ [FLOWSPEC_MAX];
   u_short mcast_port_;
   ACE_CString mcast_addr_;
-  ACE_Hash_Map_Manager <TAO_String_Hash_Key, TAO_FlowSpec_Entry*,ACE_Null_Mutex> mcast_entry_map_;
+  ACE_Hash_Map_Manager <ACE_CString, TAO_FlowSpec_Entry*,ACE_Null_Mutex> mcast_entry_map_;
   TAO_AV_FlowSpecSet forward_flow_spec_set;
   TAO_AV_FlowSpecSet reverse_flow_spec_set;
   AVStreams::StreamEndPoint_var peer_sep_;
@@ -1073,9 +1033,9 @@ protected:
   /// current flow number used for system generation of flow names.
   u_int flow_num_;
 
-  typedef ACE_Hash_Map_Manager <TAO_String_Hash_Key,AVStreams::FDev_ptr,ACE_Null_Mutex> FDev_Map;
-  typedef ACE_Hash_Map_Iterator <TAO_String_Hash_Key,AVStreams::FDev_ptr,ACE_Null_Mutex> FDev_Map_Iterator;
-  typedef ACE_Hash_Map_Entry <TAO_String_Hash_Key,AVStreams::FDev_ptr> FDev_Map_Entry;
+  typedef ACE_Hash_Map_Manager <ACE_CString,AVStreams::FDev_ptr,ACE_Null_Mutex> FDev_Map;
+  typedef ACE_Hash_Map_Iterator <ACE_CString,AVStreams::FDev_ptr,ACE_Null_Mutex> FDev_Map_Iterator;
+  typedef ACE_Hash_Map_Entry <ACE_CString,AVStreams::FDev_ptr> FDev_Map_Entry;
 
   /// hash table for the flownames and its corresponding flowEndpoint
   /// reference.

@@ -18,7 +18,7 @@
 #define FILL_ACE_QOS_H
 
 #include "ace/SString.h"
-#include "ace/Hash_Map_Manager.h"
+#include "ace/Hash_Map_Manager_T.h"
 #include "ace/Synch.h"
 #include "ace/ACE.h"
 #include "ace/OS.h"
