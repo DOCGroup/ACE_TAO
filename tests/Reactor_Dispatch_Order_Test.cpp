@@ -22,6 +22,7 @@
 #include "ace/Select_Reactor.h"
 #include "ace/WFMO_Reactor.h"
 #include "ace/Pipe.h"
+#include "ace/ACE.h"
 
 ACE_RCSID(tests, Reactor_Dispatch_Order_Test, "$Id$")
 

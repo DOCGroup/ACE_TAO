@@ -21,6 +21,7 @@
 #include "ace/Process.h"
 #include "ace/Process_Mutex.h"
 #include "ace/Get_Opt.h"
+#include "ace/ACE.h"
 
 ACE_RCSID(tests, Process_Mutex_Test, "$Id$")
 

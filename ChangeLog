@@ -1,12 +1,28 @@
+Mon May 19 16:08:47 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * tests/CDR_Test.cpp:
+        * tests/MT_Reactor_Upcall_Test.cpp:
+        * tests/Pipe_Test.cpp:
+        * tests/Process_Mutex_Test.cpp:
+        * tests/Reactor_Dispatch_Order_Test.cpp:
+        * tests/Time_Service_Test.cpp:
+          Added include of ace/ACE.h to fix compile problem on AIX.  ACE.h
+          was being picked up in ace/String_Base.cpp that's only included
+          when ACE_TEMPLATES_REQUIRE_SOURCE is defined, which AIX doesn't.
+
+        * tests/RB_Tree_Test.cpp:
+          Added include of ace/Synch.h to fix compile problem on AIX
+          similar to the above.
+
 Mon May 19 15:14:22 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * tests/Test_Output.dsp:
-		  Changed output location for dll so that other projects can find it.
+          Changed output location for dll so that other projects can find it.
 
         * tests/DLL_Test_Impl.dsp:
         * tests/Framework_Component_DLL.dsp:
         * tests/Service_Config_DLL.dsp:
-		  Removed dependency on Test_Output.dll which isn't needed and causes
+          Removed dependency on Test_Output.dll which isn't needed and causes
           build failures in the autobuilds since they don't honor the dependencies
           in tests.dsw.
 

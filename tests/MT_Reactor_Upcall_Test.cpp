@@ -25,6 +25,7 @@
 #include "ace/Pipe.h"
 #include "ace/Task.h"
 #include "ace/Get_Opt.h"
+#include "ace/ACE.h"
 
 ACE_RCSID(tests, MT_Reactor_Upcall_Test, "$Id$")
 
