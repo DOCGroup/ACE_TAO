@@ -108,8 +108,11 @@ TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR *argv[]
         THR_JOINABLE |
         this->orb_->orb_core ()->orb_params ()->thread_creation_flags ();
 
+      int priority = ACE_Sched_Params::priority_min (this->orb_->orb_core ()->orb_params ()->sched_policy ()
+                                                     , this->orb_->orb_core ()->orb_params ()->scope_policy ());
+
       if (worker_.activate (flags,
-                            this->nthreads_) != 0)
+                            this->nthreads_, 0, priority) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot activate client threads\n"), -1);
     }
