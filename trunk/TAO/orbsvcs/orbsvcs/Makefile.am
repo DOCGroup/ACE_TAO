@@ -1888,7 +1888,12 @@ libTAO_CosNotification_Skel_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
 
 libTAO_CosNotification_Skel_la_LIBADD = \
+  libTAO_CosEvent_Skel.la \
+  $(TAO_BUILDDIR)/tao/libTAO_IFR_Client.la \
+  $(TAO_BUILDDIR)/tao/libTAO_DynamicInterface.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   libTAO_CosNotification.la \
   libTAO_CosEvent.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
@@ -2565,8 +2570,9 @@ libTAO_DsLogAdmin_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
 
 libTAO_DsLogAdmin_la_LIBADD = \
+  libTAO_Svc_Utils.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
-  libTAO_CosNaming.la \
   libTAO_ETCL.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
@@ -2759,6 +2765,7 @@ libTAO_DsNotifyLogAdmin_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
 
 libTAO_DsNotifyLogAdmin_la_LIBADD = \
+  libTAO_CosNotification_Skel.la \
   libTAO_CosNotification.la \
   libTAO_DsEventLogAdmin.la \
   libTAO_CosEvent_Serv.la \
@@ -5057,7 +5064,7 @@ libTAO_SSLIOP_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
 
 libTAO_SSLIOP_la_LIBADD = \
-  -lACE_SSL \
+  $(ACE_BUILDDIR)/ace/SSL/libACE_SSL.la \
   libTAO_Security.la \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \

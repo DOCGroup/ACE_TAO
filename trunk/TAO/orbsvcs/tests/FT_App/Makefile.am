@@ -5,7 +5,7 @@ ACE_BUILDDIR = $(top_builddir)/..
 TAO_ROOT = $(top_srcdir)
 TAO_BUILDDIR = $(top_builddir)
 
-TAO_IDL = ACE_ROOT=$(ACE_ROOT) TAO_ROOT=$(TAO_ROOT) $(top_builddir)/TAO_IDL/tao_idl
+TAO_IDL = ACE_ROOT=$(ACE_ROOT) TAO_ROOT=$(TAO_ROOT) $(TAO_BUILDDIR)/TAO_IDL/tao_idl
 TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 
 ## Makefile.FT_App_Analyzer.am 
@@ -21,7 +21,8 @@ ft_analyzer_CPPFLAGS = \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
   -I$(TAO_ROOT)/orbsvcs \
-  -I$(TAO_BUILDDIR)/orbsvcs
+  -I$(TAO_BUILDDIR)/orbsvcs \
+  -DTAO_HAS_TYPED_EVENT_CHANNEL
 
 ft_analyzer_SOURCES = \
   FTAPP_Analyzer_Main.cpp \
@@ -33,23 +34,22 @@ ft_analyzer_SOURCES = \
   StubFaultConsumer.h
 
 ft_analyzer_LDADD = \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_Skel.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosEvent_Skel.la \
+  $(TAO_BUILDDIR)/tao/libTAO_IFR_Client.la \
+  $(TAO_BUILDDIR)/tao/libTAO_DynamicInterface.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_FaultTolerance.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_FT_ServerORB.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_FT_ClientORB.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_FTORB_Utils.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_PortableGroup.la \
   $(TAO_BUILDDIR)/tao/libTAO_IORManip.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification.la \
-  $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_ETCL.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
-  $(TAO_BUILDDIR)/tao/libTAO_IORInterceptor.la \
-  $(TAO_BUILDDIR)/tao/libTAO_ObjRefTemplate.la \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
-  $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosEvent.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -98,7 +98,8 @@ ft_replica_CPPFLAGS = \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
   -I$(TAO_ROOT)/orbsvcs \
-  -I$(TAO_BUILDDIR)/orbsvcs
+  -I$(TAO_BUILDDIR)/orbsvcs \
+  -DTAO_HAS_TYPED_EVENT_CHANNEL
 
 ft_replica_SOURCES = \
   FT_Replica.cpp \
@@ -122,17 +123,12 @@ ft_replica_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_FTORB_Utils.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_PortableGroup.la \
   $(TAO_BUILDDIR)/tao/libTAO_IORManip.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification.la \
-  $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_ETCL.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
-  $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
-  $(TAO_BUILDDIR)/tao/libTAO_IORInterceptor.la \
-  $(TAO_BUILDDIR)/tao/libTAO_ObjRefTemplate.la \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosEvent.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -144,35 +140,6 @@ endif BUILD_ACE_UUID
 if BUILD_ACE_UUID
 if !BUILD_MINIMUM_CORBA
 
-BUILT_SOURCES += \
-  FT_TestReplicaS_T.cpp \
-  FT_TestReplicaC.inl \
-  FT_TestReplicaS.inl \
-  FT_TestReplicaS_T.inl \
-  FT_TestReplicaC.cpp \
-  FT_TestReplicaS.cpp \
-  FT_TestReplicaC.h \
-  FT_TestReplicaS.h \
-  FT_TestReplicaS_T.h
-
-CLEANFILES += \
-  FT_TestReplicaS_T.cpp \
-  FT_TestReplicaC.inl \
-  FT_TestReplicaS.inl \
-  FT_TestReplicaS_T.inl \
-  FT_TestReplicaC.cpp \
-  FT_TestReplicaS.cpp \
-  FT_TestReplicaC.h \
-  FT_TestReplicaS.h \
-  FT_TestReplicaS_T.h \
-  FT_TestReplica-stamp
-
-FT_TestReplicaS_T.cpp FT_TestReplicaC.inl FT_TestReplicaS.inl FT_TestReplicaS_T.inl FT_TestReplicaC.cpp FT_TestReplicaS.cpp FT_TestReplicaC.h FT_TestReplicaS.h FT_TestReplicaS_T.h: FT_TestReplica-stamp
-
-FT_TestReplica-stamp: $(srcdir)/FT_TestReplica.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/FT_TestReplica.idl
-	@touch $@
-
 noinst_PROGRAMS += ft_client
 
 ft_client_CPPFLAGS = \
@@ -181,7 +148,8 @@ ft_client_CPPFLAGS = \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
   -I$(TAO_ROOT)/orbsvcs \
-  -I$(TAO_BUILDDIR)/orbsvcs
+  -I$(TAO_BUILDDIR)/orbsvcs \
+  -DTAO_HAS_TYPED_EVENT_CHANNEL
 
 ft_client_SOURCES = \
   FT_Client.cpp \
@@ -201,17 +169,12 @@ ft_client_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_FTORB_Utils.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_PortableGroup.la \
   $(TAO_BUILDDIR)/tao/libTAO_IORManip.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification.la \
-  $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_ETCL.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
-  $(TAO_BUILDDIR)/tao/libTAO_IORInterceptor.la \
-  $(TAO_BUILDDIR)/tao/libTAO_ObjRefTemplate.la \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
-  $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosEvent.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -231,7 +194,8 @@ ft_create_CPPFLAGS = \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
   -I$(TAO_ROOT)/orbsvcs \
-  -I$(TAO_BUILDDIR)/orbsvcs
+  -I$(TAO_BUILDDIR)/orbsvcs \
+  -DTAO_HAS_TYPED_EVENT_CHANNEL
 
 ft_create_SOURCES = \
   FT_Creator.cpp \
@@ -246,17 +210,12 @@ ft_create_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_FTORB_Utils.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_PortableGroup.la \
   $(TAO_BUILDDIR)/tao/libTAO_IORManip.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification.la \
-  $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_ETCL.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
-  $(TAO_BUILDDIR)/tao/libTAO_IORInterceptor.la \
-  $(TAO_BUILDDIR)/tao/libTAO_ObjRefTemplate.la \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
-  $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosEvent.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -276,7 +235,8 @@ ft_registry_CPPFLAGS = \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
   -I$(TAO_ROOT)/orbsvcs \
-  -I$(TAO_BUILDDIR)/orbsvcs
+  -I$(TAO_BUILDDIR)/orbsvcs \
+  -DTAO_HAS_TYPED_EVENT_CHANNEL
 
 ft_registry_SOURCES = \
   FTAPP_FactoryRegistry_Main.cpp
@@ -288,17 +248,12 @@ ft_registry_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_FTORB_Utils.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_PortableGroup.la \
   $(TAO_BUILDDIR)/tao/libTAO_IORManip.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification.la \
-  $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_ETCL.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
-  $(TAO_BUILDDIR)/tao/libTAO_IORInterceptor.la \
-  $(TAO_BUILDDIR)/tao/libTAO_ObjRefTemplate.la \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
-  $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosEvent.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -318,7 +273,8 @@ ft_fault_consumer_CPPFLAGS = \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
   -I$(TAO_ROOT)/orbsvcs \
-  -I$(TAO_BUILDDIR)/orbsvcs
+  -I$(TAO_BUILDDIR)/orbsvcs \
+  -DTAO_HAS_TYPED_EVENT_CHANNEL
 
 ft_fault_consumer_SOURCES = \
   FTAPP_FaultConsumer_Main.cpp \
@@ -327,23 +283,22 @@ ft_fault_consumer_SOURCES = \
 
 ft_fault_consumer_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/FT_ReplicationManager/libTAO_ReplicationManagerLib.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_Skel.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosEvent_Skel.la \
+  $(TAO_BUILDDIR)/tao/libTAO_IFR_Client.la \
+  $(TAO_BUILDDIR)/tao/libTAO_DynamicInterface.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_FaultTolerance.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_FT_ServerORB.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_FT_ClientORB.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_FTORB_Utils.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_PortableGroup.la \
   $(TAO_BUILDDIR)/tao/libTAO_IORManip.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification.la \
-  $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_ETCL.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
-  $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
-  $(TAO_BUILDDIR)/tao/libTAO_IORInterceptor.la \
-  $(TAO_BUILDDIR)/tao/libTAO_ObjRefTemplate.la \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosEvent.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -363,7 +318,8 @@ ft_notifier_CPPFLAGS = \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
   -I$(TAO_ROOT)/orbsvcs \
-  -I$(TAO_BUILDDIR)/orbsvcs
+  -I$(TAO_BUILDDIR)/orbsvcs \
+  -DTAO_HAS_TYPED_EVENT_CHANNEL
 
 ft_notifier_SOURCES = \
   FTAPP_Notifier_Main.cpp \
@@ -377,17 +333,12 @@ ft_notifier_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_FTORB_Utils.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_PortableGroup.la \
   $(TAO_BUILDDIR)/tao/libTAO_IORManip.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification.la \
-  $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_ETCL.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
-  $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
-  $(TAO_BUILDDIR)/tao/libTAO_IORInterceptor.la \
-  $(TAO_BUILDDIR)/tao/libTAO_ObjRefTemplate.la \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosEvent.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -407,7 +358,8 @@ replmgr_controller_CPPFLAGS = \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
   -I$(TAO_ROOT)/orbsvcs \
-  -I$(TAO_BUILDDIR)/orbsvcs
+  -I$(TAO_BUILDDIR)/orbsvcs \
+  -DTAO_HAS_TYPED_EVENT_CHANNEL
 
 replmgr_controller_SOURCES = \
   FT_ReplicationManagerController.cpp \
@@ -428,17 +380,12 @@ replmgr_controller_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_FTORB_Utils.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_PortableGroup.la \
   $(TAO_BUILDDIR)/tao/libTAO_IORManip.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification.la \
-  $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_ETCL.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
-  $(TAO_BUILDDIR)/tao/libTAO_IORInterceptor.la \
-  $(TAO_BUILDDIR)/tao/libTAO_ObjRefTemplate.la \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
-  $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosEvent.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
