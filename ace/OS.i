@@ -6740,7 +6740,7 @@ ACE_OS::dup2 (ACE_HANDLE oldhandle, ACE_HANDLE newhandle)
 
 #if ! defined (ACE_WIN32) && ! defined (ACE_HAS_LONGLONG_T)
 ACE_INLINE
-ACE_U_LongLong::ACE_U_LongLong (u_long lo, u_long hi)
+ACE_U_LongLong::ACE_U_LongLong (const u_long lo, const u_long hi)
   : hi_ (hi), lo_ (lo)
 {
 }
@@ -6758,13 +6758,13 @@ ACE_U_LongLong::lo (void) const
 }
 
 ACE_INLINE void 
-ACE_U_LongLong::hi (u_long hi) 
+ACE_U_LongLong::hi (const u_long hi) 
 { 
   hi_ = hi; 
 }
 
 ACE_INLINE void
-ACE_U_LongLong::lo (u_long lo) 
+ACE_U_LongLong::lo (const u_long lo) 
 { 
   lo_ = lo; 
 }
@@ -6778,6 +6778,12 @@ ACE_INLINE int
 ACE_U_LongLong::operator== (const ACE_U_LongLong &ll) const
 {
   return hi_ == ll.hi_  &&  lo_ == ll.lo_;
+}
+
+ACE_INLINE int
+ACE_U_LongLong::operator!= (const ACE_U_LongLong &ll) const
+{
+  return ! (*this == ll);
 }
 
 ACE_INLINE int
@@ -6844,7 +6850,7 @@ ACE_U_LongLong::operator- (const ACE_U_LongLong &ll) const
 }
 
 ACE_INLINE u_long
-ACE_U_LongLong::operator/ (u_long ul) const
+ACE_U_LongLong::operator/ (const u_long ul) const
 {
   return hi_ / ul * ULONG_MAX + lo_ / ul;
 }
