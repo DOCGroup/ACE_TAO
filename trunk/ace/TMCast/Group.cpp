@@ -92,7 +92,7 @@ namespace TMCast
         in_control_.push (MessagePtr (new Terminate));
       }
 
-      if (ACE_OS::thr_join (thread_, 0) != 0) ::abort ();
+      if (ACE_OS::thr_join (thread_, &thread_, 0) != 0) ::abort ();
 
       // cerr << "Scheduler is down." << endl;
     }
@@ -105,7 +105,7 @@ namespace TMCast
     }
 
   private:
-    static void*
+    static ACE_THR_FUNC_RETURN
     thread_thunk (void* arg)
     {
       Scheduler* obj = reinterpret_cast<Scheduler*> (arg);
