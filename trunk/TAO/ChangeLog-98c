@@ -1,3 +1,33 @@
+Wed Dec  3 16:08:34 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
+
+	* orbsvcs/lib/Event_Utilities.cpp: 
+	* orbsvcs/lib/Event_Utilities.i: 
+	* orbsvcs/lib/RtecEventComm.idl: 
+	  Added some more time-stamps to the events to track and measure
+	  the delays as they move on the EC.
+
+	* orbsvcs/lib/RtecEventChannelAdminC.cpp: 
+	* orbsvcs/lib/RtecEventChannelAdminC.h: 
+	* orbsvcs/lib/RtecEventChannelAdminC.i: 
+	* orbsvcs/lib/RtecEventChannelAdminS.cpp: 
+	* orbsvcs/lib/RtecEventChannelAdminS.h: 
+	* orbsvcs/lib/RtecEventChannelAdminS.i: 
+	* orbsvcs/lib/RtecEventCommC.cpp: 
+	* orbsvcs/lib/RtecEventCommC.h: 
+	* orbsvcs/lib/RtecEventCommC.i: 
+	* orbsvcs/lib/RtecEventCommS.cpp: 
+	* orbsvcs/lib/RtecEventCommS.h: 
+	* orbsvcs/lib/RtecEventCommS.i: 
+	* orbsvcs/lib/RtecSchedulerC.cpp: 
+	* orbsvcs/lib/RtecSchedulerC.h: 
+	* orbsvcs/lib/RtecSchedulerC.i: 
+	* orbsvcs/lib/RtecSchedulerS.cpp: 
+	* orbsvcs/lib/RtecSchedulerS.h: 
+	* orbsvcs/lib/RtecSchedulerS.i: 
+	  Thanks to Andy Gokhale efforst the IDL compiler is able to emit
+	  proper code for the EC&friends, hence I'm removing the
+	  hand-crafted files.
+
 Wed Dec  3 11:12:48 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* TAO_IDL/be/be_interface.cpp: Had forgotten to emit code that

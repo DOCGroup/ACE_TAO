@@ -70,7 +70,7 @@ void event_debug (const char* p,
 	      "%*.*s   event.time: %f\n",
 	      l, l, p, event.source_,
 	      l, l, p, event.type_,
-	      l, l, p, event.time_));
+	      l, l, p, event.creation_time_));
 }
 
 void
