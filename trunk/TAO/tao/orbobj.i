@@ -64,4 +64,3 @@ CORBA_ORB::shutdown (CORBA::Boolean wait_for_completion)
   TAO_ORB_Core_instance ()->reactor ()->wakeup_all_threads ();
   return;
 }
-

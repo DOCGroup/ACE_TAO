@@ -1,3 +1,50 @@
+Wed Oct 29 00:56:26 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* tests/Cubit/TAO/svc.conf: Updated documentation comments to
+ 	reflect factory option changes.
+
+	* tao/orbobj.*: Wiped argvec_shift and all its bugs off the face
+ 	of the earth.  Manojkumar Acharya <cvsf325.gpt.co.uk> should prove
+ 	to be very happy about this turn of events. :-)
+	
+	* tao/orbobj.cpp: Weeded out old, dead code here and there and
+ 	migrated much of what had been in ORB_init() into
+ 	TAO_ORB_Core::init().
+
+	* tao/orb_core.*: Added methods init() and fini() which perform
+ 	ORB Core-related initializations and cleanups, respectively.  This
+ 	is all in anticipation of having a Unified Factory which provides
+ 	ORB Core as well as other information.  Also began stubbing out
+ 	and migrating various data members and associated accessors so
+ 	that they are pointers rather than actual members.  The next step
+ 	is to actually make them pointers and have everything get
+ 	initialized properly and deterministically and keep everything
+ 	working.
+
+	* tao/{giop,orb_core}.cpp: Revised code due to recent changes in
+ 	ACE related to the Caching connector.
+
+	* tao/default_server.{h,cpp} (parse_args): This method now uses
+ 	options of the style -ORBfoo rather than the previously-cryptic
+ 	single-letter options.  This should allow us to eventually allow
+ 	this same routine to parse args from the command line as well as
+ 	inside the svc.conf file.  The price we pay for consistency,
+ 	however, is verbosity to the point of insanity (e.g.,
+ 	-ORBconcurrency...blech!)  These options are briefly documented in
+ 	the method header as well as in subsequent svc.conf files.
+
+	* tao/decode.cpp: Added some comments for arguments.
+
+	* tao/connect.{h,cpp}: Moved Connector-related typedefs and
+ 	corresponding template instantiations into the proper
+ 	file--orb_core.*.
+
+	* tao/orb_core.cpp (init): Moved much of what used to be
+ 	ORB_init() into here.  Changed the manner in which objref style
+ 	was determined--it's no longer via a special ORB name but rather
+ 	by the -ORBobjrefstyle option which can have either the value
+ 	"IOR" or "URL" (default is URL).
+
 Tue Oct 28 21:15:36 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* build/SunOS5.5/TAO/tests/IDL_Cubit/clnt.cpp (main): Fixed the

@@ -56,6 +56,13 @@ public:
   // = Service Configurator hooks.
   virtual int init (int argc, char *argv[]);
   int parse_args (int argc, char *argv[]);
+  // Arguments are in the form of -ORBxxx.  Valid arguments are:
+  // <-ORBconcurrency> <{which}>
+  //   where <{which}> is one of <reactive> or <thread-per-connection>.
+  // <-ORBtablesize> <{num}>
+  //   to set the table size
+  // <-ORBdemuxstrategy> <{which}>
+  //   where <{which}> is one of <dynamic>, <linear>, or <active>.
   
 private:
   void tokenize (char *flag_string);

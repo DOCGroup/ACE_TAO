@@ -527,9 +527,9 @@ TAO_Marshal_Principal::decode (CORBA::TypeCode_ptr,
 // decode obj ref
 CORBA::TypeCode::traverse_status
 TAO_Marshal_ObjRef::decode (CORBA::TypeCode_ptr,
-                            const void *data,
+                            const void *data, // where the result will go
                             const void *,
-                            void *context,
+                            void *context, // the CDR stream (cast to CDR*)
                             CORBA::Environment &env)
 {
   CORBA::Boolean continue_decoding = CORBA::B_TRUE;

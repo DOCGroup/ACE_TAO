@@ -123,55 +123,63 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, char *argv[])
 {
   ACE_TRACE ("TAO_Default_Server_Strategy_Factory::parse_args");
 
-  ACE_Get_Opt get_opt (argc, argv, "t:s:RTL:", 0);
-
-  // @@ Chris, I think this code should use the same option format
-  // that is used by CORBA_ORB_init().  Can you please work with Andy
-  // on this?
-
-  for (int c; (c = get_opt ()) != -1; )
+  int curarg;
+  for (curarg = 0; curarg < argc; )
     {
-      switch (c)
+      if (ACE_OS::strcmp (argv[curarg], "-ORBconcurrency") == 0)
         {
-        case 't':
-          {
-            char *temp = get_opt.optarg;
-            this->tokenize (temp);
-          }
-          break;
+          curarg++;
+          if (curarg < argc)
+            {
+              char *name = argv[curarg];
+              
+              if (ACE_OS::strcasecmp (name, "reactive") == 0)
+                this->concurrency_strategy_ = &reactive_strategy_;
+              else if (ACE_OS::strcasecmp (name, "thread-per-connection") == 0)
+                this->concurrency_strategy_ = &threaded_strategy_;
+              curarg++;
+            }
+        }
+      else if (ACE_OS::strcmp (argv[curarg], "-ORBtablesize") == 0)
+        {
+          curarg++;
+          if (curarg < argc)
+            {
+              this->object_table_size_ = ACE_OS::strtoul (argv[curarg], NULL, 10);
+              curarg++;
+            }
+        }
+      else if (ACE_OS::strcmp (argv[curarg], "-ORBdemuxstrategy") == 0)
+        {
+          curarg++;
+          if (curarg < argc)
+            {
+              char *name = argv[curarg];
 
-        case 's':
-          this->object_table_size_ = ACE_OS::strtoul (get_opt.optarg, NULL, 10);
-          break;
+              if (ACE_OS::strcasecmp (name, "dynamic") == 0)
+                this->object_lookup_strategy_ = TAO_DYNAMIC_HASH;
+              else if (ACE_OS::strcasecmp (name, "linear") == 0)
+                this->object_lookup_strategy_ = TAO_LINEAR;
+              else if (ACE_OS::strcasecmp (name, "active") == 0)
+                this->object_lookup_strategy_ = TAO_ACTIVE_DEMUX;
+              else if (ACE_OS::strcasecmp (name, "user") == 0)
+                this->object_lookup_strategy_ = TAO_USER_DEFINED;
 
-        case 'R':
-          // Set Reactive concurrency strategy
-          this->concurrency_strategy_ = &reactive_strategy_;
-          break;
-
-        case 'T':
-          // Set thread-per-connection concurrency strategy
-          this->concurrency_strategy_ = &threaded_strategy_;
-          break;
-
-        case 'L':
-          // 'L' is for Lookup, the word used for demux throughout the code
-          {
-            char *name = get_opt.optarg;
-
-            if (ACE_OS::strcasecmp (name, "dynamic") == 0)
-              this->object_lookup_strategy_ = TAO_DYNAMIC_HASH;
-            else if (ACE_OS::strcasecmp (name, "linear") == 0)
-              this->object_lookup_strategy_ = TAO_LINEAR;
-            else if (ACE_OS::strcasecmp (name, "active") == 0)
-              this->object_lookup_strategy_ = TAO_ACTIVE_DEMUX;
-            else if (ACE_OS::strcasecmp (name, "user") == 0)
-              this->object_lookup_strategy_ = TAO_USER_DEFINED;
-          }
-          break;
+              curarg++;
+            }
+        }
+      else if (ACE_OS::strcmp (argv[curarg], "-ORBthreadflags") == 0)
+        {
+          curarg++;
+          
+          if (curarg < argc)
+            {
+              this->tokenize (argv[curarg]);
+              curarg++;
+            }
         }
     }
-
+  
   return 0;
 }
 
