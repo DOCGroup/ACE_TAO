@@ -452,19 +452,43 @@ public:
 
   /// Add <masks_to_be_added> to the <event_handler>'s entry.
   /// <event_handler> must already have been registered.
+  /// Note that this call does not cause the Reactor to re-examine
+  /// its set of handlers - the new masks will be noticed the next
+  /// time the Reactor waits for activity. If there is no other
+  /// activity expected, or you need immediate re-examination of
+  /// the wait masks, either call ACE_Reactor::notify after this
+  /// call, or use ACE_Reactor::register_handler instead.
   virtual int schedule_wakeup (ACE_Event_Handler *event_handler,
                                ACE_Reactor_Mask masks_to_be_added);
 
   /// Add <masks_to_be_added> to the <handle>'s entry.  <event_handler>
   /// associated with <handle> must already have been registered.
+  /// Note that this call does not cause the Reactor to re-examine
+  /// its set of handlers - the new masks will be noticed the next
+  /// time the Reactor waits for activity. If there is no other
+  /// activity expected, or you need immediate re-examination of
+  /// the wait masks, either call ACE_Reactor::notify after this
+  /// call, or use ACE_Reactor::register_handler instead.
   virtual int schedule_wakeup (ACE_HANDLE handle,
                                ACE_Reactor_Mask masks_to_be_added);
 
   /// Clear <masks_to_be_cleared> from the <event_handler>'s entry.
+  /// Note that this call does not cause the Reactor to re-examine
+  /// its set of handlers - the new masks will be noticed the next
+  /// time the Reactor waits for activity. If there is no other
+  /// activity expected, or you need immediate re-examination of
+  /// the wait masks, either call ACE_Reactor::notify after this
+  /// call, or use ACE_Reactor::register_handler instead.
   virtual int cancel_wakeup (ACE_Event_Handler *event_handler,
                              ACE_Reactor_Mask masks_to_be_cleared);
 
   /// Clear <masks_to_be_cleared> from the <handle>'s entry.
+  /// Note that this call does not cause the Reactor to re-examine
+  /// its set of handlers - the new masks will be noticed the next
+  /// time the Reactor waits for activity. If there is no other
+  /// activity expected, or you need immediate re-examination of
+  /// the wait masks, either call ACE_Reactor::notify after this
+  /// call, or use ACE_Reactor::register_handler instead.
   virtual int cancel_wakeup (ACE_HANDLE handle,
                              ACE_Reactor_Mask masks_to_be_cleared);
 
