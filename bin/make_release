@@ -45,6 +45,14 @@ unless ("$hostname" eq 'ace') {
   die "$0: must run on host ace\n";
 }
 
+if (! "$ENV{'CVSROOT'}") {
+  $ENV{'CVSROOT'} = '/project/cvs-repository';
+}
+
+if (! "$ENV{'ACE_ROOT'}") {
+  chop ($ENV{'ACE_ROOT'} = `/pkg/gnu/bin/pwd`);
+}
+
 
 ########
 ######## Configuration parameters.
@@ -59,15 +67,11 @@ if (-d '/pkg/gnu/bin') {
   $gnu = '';
 }
 
-my $gnu2;
-if (-d '/project/danzon/pkg/gnu/bin') {
-  $gnu2 = '/project/danzon/pkg/gnu/bin/';
-  #### Insert it at head of PATH, so that proper GNU utilities are used.
-  $ENV{'PATH'} = "/project/danzon/pkg/gnu/bin:" . $ENV{'PATH'};
-} else {
-  #### The default utilities had better be GNU.
-  $gnu2 = '';
-}
+#### Unconditionally insert this at the head of the path.  We're
+#### running on ace, so if it hadn't been automounted, -d might fail
+#### to find the directory.
+my $gnu2 = '/project/danzon/pkg/gnu/bin';
+$ENV{'PATH'} = "$gnu2" . ':' . $ENV{'PATH'};
 
 my $export_dir = '/project/ftp-doc/pub/ACE';
 my $diffs_dir = "$export_dir/diffs";
@@ -183,7 +187,7 @@ my $gzip = "${gnu}gzip";
 my $make = "${gnu}make -s";
 my $mv = '/bin/mv -f';
 my $rm = "${gnu}rm -f";
-my $md5sum = "${gnu2}md5sum";
+my $md5sum = "${gnu2}/md5sum";
 chop (my $now = `$date +"%a %b %d %T %Y"`);
 
 unless ("$controlled_files") {
@@ -523,6 +527,9 @@ sub update_version_files () {
 ########
 sub update_changelog () {
   my $logname = $ENV{'LOGNAME'};
+  if (! "$logname") {
+    chop ($logname = `/usr/ucb/whoami`);
+  }
   my $signature = $ENV{'SIGNATURE'} || $logname;
   my $message = "$now  $signature  <$logname\@cs.wustl.edu>\n\n" .
                 "        * $KIT version $version released.\n\n";
