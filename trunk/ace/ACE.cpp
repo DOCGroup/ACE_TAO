@@ -6,6 +6,7 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/INET_Addr.h"
 #include "ace/Object_Manager.h"
+#include "ace/SString.h"
 #include "ace/Version.h"
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
