@@ -755,12 +755,6 @@ TAO_CodeGen::start_server_skeletons (const char *fname)
   // Generate the ident string, if any.
   this->gen_ident_string (this->server_skeletons_);
 
-  // Generate the #ifndef clause.
-  this->gen_ifndef_string (fname,
-                           this->server_skeletons_,
-                           "_TAO_IDL_",
-                           "_CPP_");
-
   // Generate the include statement for the precompiled header file.
   if (be_global->pch_include ())
     {
@@ -768,6 +762,12 @@ TAO_CodeGen::start_server_skeletons (const char *fname)
                                << be_global->pch_include ()
                                << "\"\n\n";
     }
+
+  // Generate the #ifndef clause.
+  this->gen_ifndef_string (fname,
+                           this->server_skeletons_,
+                           "_TAO_IDL_",
+                           "_CPP_");
 
   // Generate the include statement for the server header.
   *this->server_skeletons_
