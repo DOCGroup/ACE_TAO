@@ -1,3 +1,60 @@
+Wed Jul  7 14:24:08 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Makefile:
+	* tao/varout.h:
+	* tao/varout.i:
+	* tao/varout.cpp:
+	* tao/CDR_Interpreter.cpp:
+	* tao/DomainC.cpp:
+	* tao/DynAnyC.cpp:
+	* tao/IORC.cpp:
+	* tao/IORC.h:
+	* tao/IORC.i:
+	* tao/IORManipulation.cpp:
+	* tao/MessagingC.cpp:
+	* tao/ORB.cpp:
+	* tao/ORB_Core.h:
+	* tao/Object.cpp:
+	* tao/PolicyC.cpp:
+	* tao/PollableC.cpp:
+	* tao/decode.cpp:
+	* tao/deep_free.cpp:
+	* tao/encode.cpp:
+	  Changed TAO_Object_Field_T to take two arguments, that way it
+	  can have an assignment operator from Object_Manager and properly 
+	  increment the reference count in that case [BUGID:16]
+
+	* TAO_IDL/Makefile:
+	* TAO_IDL/be/be_sequence.cpp:
+	* TAO_IDL/be/be_visitor_sequence.cpp:
+	* TAO_IDL/be/be_visitor_field/field_ch.cpp:
+	* TAO_IDL/be/be_visitor_interface/any_op_cs.cpp:
+	* TAO_IDL/be/be_visitor_sequence/elemtype.cpp:
+	* TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ch.cpp:
+	* TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ci.cpp:
+	* TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_cs.cpp:
+	* TAO_IDL/be/be_visitor_sequence/gen_object_manager_ch.cpp:
+	* TAO_IDL/be/be_visitor_sequence/gen_object_manager_ci.cpp:
+	* TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_ch.cpp:
+	* TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_ci.cpp:
+	* TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_cs.cpp:
+	* TAO_IDL/be/be_visitor_sequence/sequence_ci.cpp:
+	* TAO_IDL/be/be_visitor_union_branch/private_ch.cpp:
+	* TAO_IDL/be/be_visitor_union_branch/public_access_cs.cpp:
+	* TAO_IDL/be/be_visitor_union_branch/public_assign_cs.cpp:
+	* TAO_IDL/be/be_visitor_union_branch/public_ci.cpp:
+	* TAO_IDL/be_include/be_sequence.h:
+	* TAO_IDL/be_include/be_visitor_sequence/sequence_ch.h:
+	* TAO_IDL/be_include/be_visitor_sequence/sequence_ci.h:
+	  The IDL compiler generates proper code with two arguments now.
+
+	* tests/Param_Test/tmplinst.cpp:
+	  Fixed template instantiations
+
+	* examples/Simple/bank/run_test.pl:
+	* orbsvcs/tests/Property/run_test.pl:
+	  Fixed output and fine tune execution time.
+
 Wed Jul 07 13:07:09 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * rules.tao.GNU: removed check for whether we should add

@@ -211,6 +211,9 @@ be_visitor_field_ch::visit_interface (be_interface *node)
   os->indent ();
   *os << "TAO_Object_Field_T<"
       <<  bt->nested_type_name (this->ctx_->scope (), "")
+      << ",";
+  // Must use another statement, nested_type_name has side effects...
+  *os <<  bt->nested_type_name (this->ctx_->scope (), "_var")
       << ">";
   return 0;
 }
@@ -232,8 +235,9 @@ be_visitor_field_ch::visit_interface_fwd (be_interface_fwd *node)
   // if not a typedef and we are defined in the use scope, we must be defined
   os->indent ();
   *os << "TAO_Object_Field_T<"
-      <<  bt->nested_type_name (this->ctx_->scope (), "")
-      << ">";
+      <<  bt->nested_type_name (this->ctx_->scope (), "") << ",";
+  // Must use another statement, nested_type_name has side effects...
+  *os << bt->nested_type_name (this->ctx_->scope (), "_var") << ">";
   return 0;
 }
 
@@ -304,7 +308,9 @@ be_visitor_field_ch::visit_predefined_type (be_predefined_type *node)
       // check if we are dealing with a CORBA::Object
       if (!ACE_OS::strcmp (node->local_name ()->get_string (), "Object"))
         {
-          *os << "TAO_Object_Field_T<" << bt->name () << ">";
+          *os << "TAO_Object_Field_T<"
+              << bt->name () << ","
+              << bt->name () << "_var>";
         }
       else
         *os << bt->nested_type_name (this->ctx_->scope (), "_var");

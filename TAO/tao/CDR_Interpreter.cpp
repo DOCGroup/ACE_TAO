@@ -93,6 +93,8 @@ TAO_CDR_Interpreter::table_[CORBA::TC_KIND_COUNT] =
 // make sure that alignment of IDL-defined data types is consistent
 // (one byte).
 
+typedef TAO_Object_Field_T<CORBA::Object,CORBA::Object_var> TAO_Object_Field_Class;
+
 enum TCKIND
 {
   tk_null               = 0,
@@ -178,7 +180,7 @@ declare_entry (CORBA::Any, tk_any);
 
 declare_entry (CORBA::TypeCode_ptr, tk_TypeCode);
 declare_entry (CORBA::Principal_ptr, tk_Principal);
-declare_entry (TAO_Object_Field_T<CORBA_Object>, tk_objref);
+declare_entry (TAO_Object_Field_Class, tk_objref);
 
 declare_entry (CORBA::String, tk_string);
 #if !defined (TAO_NO_COPY_OCTET_SEQUENCES)
@@ -210,7 +212,7 @@ TAO_CDR_Interpreter::init (void)
   setup_entry (CORBA::TypeCode_ptr, tk_TypeCode);
   setup_entry (CORBA::Principal_ptr, tk_Principal);
   setup_entry (CORBA::Object_ptr, tk_objref);
-  setup_entry (TAO_Object_Field_T<CORBA_Object>, tk_objref);
+  setup_entry (TAO_Object_Field_Class, tk_objref);
 
   enum generic_enum {a, b, c, d};
 

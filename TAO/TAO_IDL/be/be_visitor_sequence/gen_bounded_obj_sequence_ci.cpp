@@ -76,24 +76,6 @@ be_visitor_sequence_ci::gen_bounded_obj_sequence (be_sequence *node)
   ctx.state (TAO_CodeGen::TAO_SEQUENCE_BASE_CI);
   be_visitor *visitor = tao_cg->make_visitor (&ctx);
 
-  this->gen_object_manager (node);
-  // Generate the code for the object manager
-
-  static char object_manager [NAMEBUFSIZE];
-  ACE_OS::memset (object_manager, '\0', NAMEBUFSIZE);
-
-  if (node->is_nested ())
-    {
-      ACE_OS::sprintf (object_manager, "%s::%s",
-                       be_scope::narrow_from_scope (node->defined_in ())->decl ()->fullname (),
-                       node->object_manager_name ());
-    }
-  else
-    {
-      ACE_OS::sprintf (object_manager, "%s",
-                       node->object_manager_name ());
-    }
-
   // !! branching in either compile time template instantiation
   // or manual template instatiation
   os->gen_ifdef_AHETI();
@@ -256,7 +238,9 @@ be_visitor_sequence_ci::gen_bounded_obj_sequence (be_sequence *node)
       << be_nl;
 
   // operator[]
-  *os << "ACE_INLINE " << object_manager << be_nl
+  *os << "ACE_INLINE TAO_Object_Manager<"
+      << pt->name () << ","
+      << pt->name () << "_var>" << be_nl
       << full_class_name << "::operator[] (CORBA::ULong index) const"
       << " // Read-write accessor." << be_nl
       << "{" << be_idt_nl
@@ -265,7 +249,10 @@ be_visitor_sequence_ci::gen_bounded_obj_sequence (be_sequence *node)
   *os <<" **const tmp = ACE_reinterpret_cast (";
   pt->accept (visitor);
   *os << " ** ACE_CAST_CONST, this->buffer_);" << be_nl
-      << "return " << object_manager << " (tmp + index, this->release_);" << be_uidt_nl
+      << "return TAO_Object_Manager<"
+      << pt->name () << ","
+      << pt->name () << "_var> "
+      << "(tmp + index, this->release_);" << be_uidt_nl
       << "}" << be_nl
       << be_nl;
 

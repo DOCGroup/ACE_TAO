@@ -1714,7 +1714,7 @@ CORBA_ORB::_find_collocated_servant (TAO_Stub *sobj,
       const TAO_Profile* profile = mprofile.get_profile (j);
       TAO_ObjectKey_var objkey = profile->_key ();
 
-      CORBA::Environment ACE_TRY_ENV;
+      ACE_DECLARE_NEW_CORBA_ENV;
       ACE_TRY
         {
           PortableServer::Servant servant =

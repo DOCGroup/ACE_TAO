@@ -92,7 +92,7 @@ public:
   // (potentially) TSS object.
 
   int is_server_thread_;
-  // Is this thread a leader for this ORB?
+  // Is this thread a server for this ORB?
 
   int is_leader_thread_;
   // Is this thread a leader for this ORB?

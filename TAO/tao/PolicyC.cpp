@@ -978,9 +978,9 @@ template class TAO_Unbounded_Sequence<CORBA::ULong>;
 template class TAO_Unbounded_Object_Sequence<CORBA_Policy,CORBA_Policy_var>;
 template class TAO_Object_Manager<CORBA_Policy,CORBA_Policy_var>;
 
-//  template class TAO_Object_Field_T<CORBA_Policy>;
-//  template class TAO_Object_Field_T<CORBA_PolicyManager>;
-//  template class TAO_Object_Field_T<CORBA_PolicyCurrent>;
+//  template class TAO_Object_Field_T<CORBA_Policy,CORBA_Policy_var>;
+//  template class TAO_Object_Field_T<CORBA_PolicyManager,CORBA_PolicyManager_var>;
+//  template class TAO_Object_Field_T<CORBA_PolicyCurrent,CORBA_PolicyCurrent_var>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
@@ -989,8 +989,8 @@ template class TAO_Object_Manager<CORBA_Policy,CORBA_Policy_var>;
 #pragma instantiate TAO_Unbounded_Object_Sequence<CORBA_Policy,CORBA_Policy_var>
 #pragma instantiate TAO_Object_Manager<CORBA_Policy,CORBA_Policy_var>
 
-//#  pragma instantiate TAO_Object_Field_T<CORBA_Policy>
-//#  pragma instantiate TAO_Object_Field_T<CORBA_PolicyManager>
-//#  pragma instantiate TAO_Object_Field_T<CORBA_PolicyCurrent>
+//#  pragma instantiate TAO_Object_Field_T<CORBA_Policy,CORBA_Policy_var>
+//#  pragma instantiate TAO_Object_Field_T<CORBA_PolicyManager,CORBA_PolicyManager_var>
+//#  pragma instantiate TAO_Object_Field_T<CORBA_PolicyCurrent,CORBA_PolicyCurrent_var>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

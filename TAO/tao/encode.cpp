@@ -41,6 +41,8 @@ ACE_RCSID(tao, encode, "$Id$")
 // components.  "context" is the marshaling stream on which to encode
 // the data value.
 
+typedef TAO_Object_Field_T<CORBA::Object,CORBA::Object_var> TAO_Object_Field_Class;
+
 CORBA::TypeCode::traverse_status
 TAO_Marshal_Primitive::encode (CORBA::TypeCode_ptr tc,
                                const void *data,
@@ -375,8 +377,8 @@ TAO_Marshal_Struct::encode (CORBA::TypeCode_ptr tc,
           {
             // we know that the object pointer is stored in a
             // TAO_Object_Field_T parametrized type
-            TAO_Object_Field_T<CORBA_Object>* field =
-              ACE_reinterpret_cast (TAO_Object_Field_T<CORBA_Object> *,
+            TAO_Object_Field_Class* field =
+              ACE_reinterpret_cast (TAO_Object_Field_Class *,
                                     ACE_const_cast (void *, data));
             CORBA::Object_ptr ptr = field->_upcast ();
             retval = stream->encode (param, &ptr, 0, ACE_TRY_ENV);
@@ -568,8 +570,8 @@ TAO_Marshal_Union::encode (CORBA::TypeCode_ptr tc,
             {
               // we know that the object pointer is stored in a
               // TAO_Object_Field_T parametrized type
-              TAO_Object_Field_T<CORBA_Object>* field =
-                ACE_reinterpret_cast (TAO_Object_Field_T<CORBA_Object> *,
+              TAO_Object_Field_Class* field =
+                ACE_reinterpret_cast (TAO_Object_Field_Class *,
                                       member_val);
               CORBA::Object_ptr ptr = field->_upcast ();
               return stream->encode (member_tc, &ptr, data2, ACE_TRY_ENV);
@@ -589,8 +591,8 @@ TAO_Marshal_Union::encode (CORBA::TypeCode_ptr tc,
         {
           // we know that the object pointer is stored in a
           // TAO_Object_Field_T parametrized type
-          TAO_Object_Field_T<CORBA_Object>* field =
-            ACE_reinterpret_cast (TAO_Object_Field_T<CORBA_Object> *,
+          TAO_Object_Field_Class* field =
+            ACE_reinterpret_cast (TAO_Object_Field_Class *,
                                   member_val);
           CORBA::Object_ptr ptr = field->_upcast ();
           return stream->encode (default_tc, &ptr, data2, ACE_TRY_ENV);
@@ -1103,7 +1105,7 @@ TAO_Marshal_Except::encode (CORBA::TypeCode_ptr tc,
   // typecode pointer
   continue_encoding = stream->write_string (tc->id (ACE_TRY_ENV));
   ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
-  
+
 #if defined (__BORLANDC__)
   // Borland C++ Builder 4.0 doesn't seem to align caught exceptions
   // along the correct boundaries!  Therefore we will assume that the
@@ -1117,7 +1119,7 @@ TAO_Marshal_Except::encode (CORBA::TypeCode_ptr tc,
   // of the the base class and its private data members (type_ and
   // refcount_). After skipping these data members, we will have the data
   // members of the derived class which must be encoded.
-  
+
   int member_count = tc->member_count (ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
 
