@@ -198,8 +198,6 @@ extern int h_errno;     /* This isn't declared in a header file on HP-UX */
 #  define ACE_HAS_PTHREAD_EQUAL
 
 #  define ACE_HAS_THREAD_SPECIFIC_STORAGE
-// ... and it's looked up via an argument
-#  define ACE_HAS_PTHREAD_GETSPECIFIC_DATAPTR
 
 // They forgot a const in the prototype of pthread_cond_timedwait
 #  define ACE_LACKS_CONST_TIMESPEC_PTR
