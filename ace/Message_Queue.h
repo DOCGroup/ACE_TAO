@@ -146,7 +146,7 @@ class ACE_Message_Queue_Vx : public ACE_Message_Queue<ACE_NULL_SYNCH>
   //     MsgQ.  It does not use any synchronization, because it relies
   //     on the native MsgQ implementation to take care of that.  The
   //     only system calls that it uses are VxWorks msgQLib calls, so
-  //     it is suitable for use in iterrupt service routines.
+  //     it is suitable for use in interrupt service routines.
   //
   //     NOTE: *Many* ACE_Message_Queue features are not supported with
   //     this specialization, including:
