@@ -20,8 +20,8 @@ TAO/tests/AMI/run_test.pl: !MINIMUM
 TAO/tests/AMI_Timeouts/run_test.pl: !MINIMUM
 
 TAO/tests/OctetSeq/run_test.pl
-TAO/tests/OctetSeq/run_test1.pl
-TAO/tests/OctetSeq/run_test2.pl
+TAO/tests/OctetSeq/run_test1.pl: !STATIC
+TAO/tests/OctetSeq/run_test2.pl: !STATIC
 TAO/tests/BiDirectional/run_test.pl: !MINIMUM
 TAO/tests/BiDirectional_NestedUpcall/run_test.pl: !MINIMUM !STATIC
 TAO/tests/Leader_Followers/run_test.pl: !ST
