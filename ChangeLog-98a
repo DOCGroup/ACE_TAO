@@ -3,8 +3,45 @@ Sat Apr 18 13:59:55 1998  David L. Levine  <levine@cs.wustl.edu>
         * ace/Naming_Context.h: removed trailing ';' at end of
           ACE_FACTORY_DECLARE.
 
+        * ace/OS.*,Sched_Params.{h,cpp}: added support on Solaris
+          for setting the LWP priority.  It is necessary to set the
+          LWP priority for bound threads in the Real-Time scheduing
+          class.  Thread priority is essentially ignored.  See the
+          pthread_setschedparam man page for more info.  Thanks to
+          Fred Kuhns <fredk@arl.wustl.edu> for helping track this problem
+          down.
+
+          There is one drawback:  to set the LWP priority, in ACE,
+          a thread must set its own priority.  There are examples
+          in performance-tests/Misc/preempt.cpp:
+
+            High_Priority_Task::svc (void)
+            {
+              // On Solaris 2.5.x, the LWP priority needs to be set.
+              // This is the ACE way to do that . . .
+              ACE_OS::thr_setprio (priority_);
+
+          I don't know of a way to set the LWP priority for another
+          thread.  The problem is that there is no way that I know of
+          to find the LWP ID of another (bound) thread.  A thread can
+          find the ID of its own LWP using _lwp_self ().
+
+        * ace/config-sunos5*,README: added ACE_HAS_PRIOCNTL and
+          ACE_NEEDS_LWP_PRIO_SET.
+
+        * ace/config-osf1-4.0.h: added ACE_HAS_PRIOCNTL and
+          ACE_LACKS_PRI_T.
+
+        * performance-tests/Misc/preempt.cpp (svc): set LWP priority
+          (on Solaris) by having the thread set its own priority.
+          This test now passes on Solaris 2.5.1!
+
         * ace/High_Res_Timer.cpp (reset): initialize by assignment with
           0 instead of using memset.  Thanks to Carlos for noticing this.
+
+        * ace/Object_Manager.cpp (ACE_Object_Manager ctor): allocate
+          registered_objects_ after the allocation of ACE_STATIC_OBJECT_LOCK,
+          just to be safe.
 
 Sat Apr 18 01:14:30 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
