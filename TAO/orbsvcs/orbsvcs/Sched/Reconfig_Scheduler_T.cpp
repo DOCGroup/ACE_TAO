@@ -1408,7 +1408,7 @@ compute_utilization_i (CORBA::Environment &ACE_TRY_ENV)
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> void
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::init_rt_info (RtecScheduler::RT_Info &rt_info)
-     ACE_THROW_SPEC (())
+     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Set some reasonable default values.
   rt_info.criticality = RtecScheduler::VERY_LOW_CRITICALITY;

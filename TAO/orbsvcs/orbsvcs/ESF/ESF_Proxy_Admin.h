@@ -71,7 +71,7 @@ public:
   /// Iterate over its internal collection.
   void for_each (TAO_ESF_Worker<PROXY> *worker,
                  CORBA::Environment &ACE_TRY_ENV)
-      ACE_THROW_SPEC (());
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
   // @TODO We should use INTERFACE::_ptr_type or PROXY::_ptr_type, but
   // the MSVC compiler (v6.0) gets confused when we do so.  So we have
@@ -81,7 +81,7 @@ public:
   /// Create a new PROXY and activate it.
   virtual INTERFACE*
       obtain (CORBA::Environment &)
-          ACE_THROW_SPEC (());
+          ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**
    * The Event Channel that owns this Admin object is going
@@ -89,7 +89,7 @@ public:
    * collection and prepare to terminate.
    */
   virtual void shutdown (CORBA::Environment &ACE_TRY_ENV)
-      ACE_THROW_SPEC (());
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**
    * A <proxy> has connected, this is invoked when the proxy's client
@@ -98,7 +98,7 @@ public:
    */
   virtual void connected (PROXY *proxy,
                           CORBA::Environment &ACE_TRY_ENV)
-      ACE_THROW_SPEC (());
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**
    * A <proxy> has reconnected, i.e. its client has invoked the
@@ -108,7 +108,7 @@ public:
    */
   virtual void reconnected (PROXY *proxy,
                             CORBA::Environment &ACE_TRY_ENV)
-      ACE_THROW_SPEC (());
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**
    * A <proxy> has been disconnected. The default implementation
@@ -117,7 +117,7 @@ public:
    */
   virtual void disconnected (PROXY *proxy,
                              CORBA::Environment &ACE_TRY_ENV)
-      ACE_THROW_SPEC (());
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
 protected:
   /// The Event Channel we belong to
