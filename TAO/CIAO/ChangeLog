@@ -1,3 +1,8 @@
+Tue Apr 08 19:42:16 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* examples/handcrafted/Display/GPS/GPS_tracing_exec.h: Fixed
+	  a class name mismatch.
+
 Mon Apr 07 21:20:37 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ciao/ServerActivator_Impl.cpp: Fixed a couple of compilation
