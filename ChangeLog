@@ -1,3 +1,7 @@
+Fri May 23 22:20:14 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* Kokyu/Kokyu.cpp: Fixed fuzz errors.
+
 Fri May 23 09:13:38 2003  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* ace/OS_Dirent.cpp (opendir_emulation): Added a check to see
