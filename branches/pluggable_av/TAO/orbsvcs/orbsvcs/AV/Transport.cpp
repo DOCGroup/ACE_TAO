@@ -67,6 +67,23 @@ TAO_AV_Core::init_forward_flows (TAO_Base_StreamEndPoint *endpoint,
        start != end; ++start)
     {
       TAO_FlowSpec_Entry *entry = (*start);
+      switch (direction)
+        {
+        case TAO_AV_Core::TAO_AV_ENDPOINT_B:
+          {
+            switch (entry->direction ())
+              {
+              case TAO_FlowSpec_Entry::TAO_AV_DIR_IN:
+                entry->role (TAO_FlowSpec_Entry::TAO_AV_CONSUMER);
+                break;
+              case TAO_FlowSpec_Entry::TAO_AV_DIR_OUT:
+                entry->role (TAO_FlowSpec_Entry::TAO_AV_PRODUCER);
+                break;
+              }
+          }
+        default:
+          break;
+        }
       ACE_Addr *address = entry->address ();
       if (address != 0)
         {

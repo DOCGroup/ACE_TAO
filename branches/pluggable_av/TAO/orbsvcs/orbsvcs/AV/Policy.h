@@ -34,28 +34,25 @@ struct TAO_AV_frame_info
   CORBA::ULong sequence_num;
 };
 
+#define TAO_AV_SSRC_POLICY 100
+#define TAO_AV_PAYLOAD_TYPE_POLICY 101
+#define TAO_AV_TIMEOUT_POLICY 102
+#define TAO_AV_RTCP_SDES_POLICY 103
+#define TAO_AV_SFP_CREDIT_POLICY 104
+
+struct TAO_AV_RTCP_Sdes
+{
+  CORBA::String_var name_;
+  CORBA::String_var value_;
+};
+
 class TAO_ORBSVCS_Export TAO_AV_Policy
 {
 public:
-  struct sdes
-  {
-    CORBA::String_var name_;
-    CORBA::String_var value_;
-  };
-
-  enum PolicyType
-  {
-    TAO_AV_SSRC_POLICY,
-    TAO_AV_PAYLOAD_TYPE_POLICY,
-    TAO_AV_TIMEOUT_POLICY,
-    TAO_AV_RTCP_SDES_POLICY,
-    TAO_AV_TIMESTAMP_POLICY
-  };
-
-  TAO_AV_Policy (PolicyType type);
-  PolicyType type (void);
+  TAO_AV_Policy (CORBA::ULong type);
+  CORBA::ULong type (void);
 protected:
-  PolicyType type_;
+  CORBA::ULong type_;
 };
 
 class TAO_AV_SSRC_Policy
@@ -86,31 +83,23 @@ class TAO_AV_RTCP_Sdes_Policy
 {
 public:
   TAO_AV_RTCP_Sdes_Policy (void);
-  TAO_AV_Policy::sdes &value (void);
-  void value (const TAO_AV_Policy::sdes& sdes_val);
+  TAO_AV_RTCP_Sdes &value (void);
+  void value (const TAO_AV_RTCP_Sdes& sdes_val);
 protected:
-  TAO_AV_Policy::sdes sdes_;
+  TAO_AV_RTCP_Sdes sdes_;
 };
 
-class TAO_AV_Timestamp_Policy
-  :public TAO_AV_Policy
+class TAO_AV_SFP_Credit_Policy : public TAO_AV_Policy
 {
 public:
-  TAO_AV_Timestamp_Policy (void);
-  ACE_UINT32 value (void);
-  void value (ACE_UINT32 timestamp);
+  TAO_AV_SFP_Credit_Policy (void);
+  int value (void);
+  void value (int val);
 protected:
-  ACE_UINT32 timestamp_;
+  int value_;
 };
 
-typedef TAO_Unbounded_Sequence<TAO_AV_Policy*> PolicyList;
-
-class TAO_AV_Policy_Manager
-{
-public:
-  TAO_AV_Policy *create_policy (TAO_AV_Policy::PolicyType type,
-                                void *value);
-};
+typedef TAO_Unbounded_Sequence<TAO_AV_Policy*> TAO_AV_PolicyList;
 
 class TAO_AV_Protocol_Object;
 class TAO_AV_Transport;
@@ -160,6 +149,9 @@ public:
 
   TAO_AV_Protocol_Object *protocol_object (void);
   // Accessor to protocol object.
+
+  virtual TAO_AV_PolicyList get_policies (void);
+  // get the policies for the protocol object.
 protected:
   TAO_AV_Protocol_Object *protocol_object_;
   TAO_AV_Flow_Handler *handler_;

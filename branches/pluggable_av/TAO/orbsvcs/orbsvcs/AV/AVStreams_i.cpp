@@ -1534,6 +1534,10 @@ TAO_MCastConfigIf::in_flowSpec (const AVStreams::flowSpec& flow_spec, const char
 // TAO_Base_StreamEndPoint
 // ----------------------------------------------------------------------
 
+TAO_Base_StreamEndPoint::TAO_Base_StreamEndPoint (void)
+{
+}
+
 TAO_Base_StreamEndPoint::~TAO_Base_StreamEndPoint (void)
 {
 }

@@ -202,7 +202,7 @@ public:
   virtual int handle_control_input (ACE_Message_Block *frame,
                                     const ACE_Addr &peer_address);
 
-  virtual int set_policies (const PolicyList &policy_list);
+  virtual int set_policies (const TAO_AV_PolicyList &policy_list);
   // set/get policies.
 
   virtual int start (void);

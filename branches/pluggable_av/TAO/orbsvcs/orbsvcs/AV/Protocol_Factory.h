@@ -55,8 +55,8 @@ public:
                                     const ACE_Addr &peer_address);
   // Called on a control object.
 
-  virtual int set_policies (const PolicyList &policy_list);
-  virtual PolicyList get_policies (void);
+  virtual int set_policies (const TAO_AV_PolicyList &policy_list);
+  virtual TAO_AV_PolicyList get_policies (void);
   // set/get policies.
 
   virtual int start (void);
@@ -78,7 +78,7 @@ public:
   TAO_AV_Transport *transport (void);
 protected:
   TAO_AV_Transport *transport_;
-  PolicyList policy_list_;
+  TAO_AV_PolicyList policy_list_;
   TAO_AV_Callback *callback_;
 };
 

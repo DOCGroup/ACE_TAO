@@ -4,7 +4,7 @@
 // TAO_AV_Policy
 //--------------------------------------------------
 
-ACE_INLINE TAO_AV_Policy::PolicyType
+ACE_INLINE CORBA::ULong
 TAO_AV_Policy::type (void)
 {
   return this->type_;
@@ -42,28 +42,34 @@ TAO_AV_Payload_Type_Policy::value (void)
   return this->payload_type_;
 }
 
-// TAO_AV_Timestamp_Policy
-ACE_INLINE void
-TAO_AV_Timestamp_Policy::value (ACE_UINT32 timestamp)
-{
-  this->timestamp_ = timestamp;
-}
-
-ACE_INLINE ACE_UINT32
-TAO_AV_Timestamp_Policy::value (void)
-{
-  return this->timestamp_;
-}
 
 // TAO_AV_RTCP_Sdes_Policy
-ACE_INLINE TAO_AV_Policy::sdes &
+ACE_INLINE TAO_AV_RTCP_Sdes &
 TAO_AV_RTCP_Sdes_Policy::value (void)
 {
   return this->sdes_;
 }
 
 ACE_INLINE void
-TAO_AV_RTCP_Sdes_Policy::value (const TAO_AV_Policy::sdes &sdes_val)
+TAO_AV_RTCP_Sdes_Policy::value (const TAO_AV_RTCP_Sdes &sdes_val)
 {
   this->sdes_ = sdes_val;
+}
+
+//----------------------------------------------------------------------
+// TAO_AV_SFP_Credit_Policy
+//----------------------------------------------------------------------
+
+ACE_INLINE
+void
+TAO_AV_SFP_Credit_Policy::value (int credit)
+{
+  this->value_ = credit;
+}
+
+ACE_INLINE
+int
+TAO_AV_SFP_Credit_Policy::value (void)
+{
+  return this->value_;
 }
