@@ -43,7 +43,7 @@ include $(TAO_ROOT)/rules.tao.GNU
 TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
 ifeq (Security,$(findstring Security,$(TAO_ORBSVCS)))
   ifeq (SSLIOP,$(findstring SSLIOP,$(TAO_ORBSVCS)))
-    BIN = $(BIN2)
+    BIN = $(BIN_UNCHECKED)
   endif #SSLIOP
 endif #Security
 
