@@ -1,3 +1,8 @@
+Thu Nov 18 14:35:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
+
+	* ace/config-cygwin32.h:
+	  Changed some defines to improve Cygwin build.
+
 Thu Nov 18 07:38:34 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/Service_Config.cpp:
