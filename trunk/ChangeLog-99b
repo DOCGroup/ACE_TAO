@@ -1,11 +1,22 @@
+Sat Feb 27 08:02:52 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * include/makeinclude/platform_linux_kcc.GNU:  added note
+          that evaluation copies of KCC might come with libraries
+          that were built with exception handling support.  To use
+          them, ACE must be built with exception handling support
+          (exceptions=1).  Thanks to John Lindal <jafl@cco.caltech.edu>
+          for reporting this.
+
+          Also, added support for the exceptions make flag.
+
 Fri Feb 26 23:58:46 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* ace/CDR_Stream.{h,i,cpp}:
-	  Added some read- and write-pointer alignment
-	  functions, as proposed by Carlos. Also deleted some
-	  ACE_OutputCDR members that weren't being used. 
-	  Checked the build on NT and suncc. Must come up with 
-	  some kind of test for these new functions.
+        * ace/CDR_Stream.{h,i,cpp}:
+          Added some read- and write-pointer alignment
+          functions, as proposed by Carlos. Also deleted some
+          ACE_OutputCDR members that weren't being used.
+          Checked the build on NT and suncc. Must come up with
+          some kind of test for these new functions.
 
 Fri Feb 26 21:56:05 1999  David L. Levine  <levine@cs.wustl.edu>
 
