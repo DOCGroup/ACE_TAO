@@ -1,363 +1,369 @@
+Tue Mar 28 16:05:20 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/tests/Event/Event.dsw:
+        * orbsvcs/tests/Event/Basic/Basic.dsw:
+          Add new projects to the workspaces
+
 Tue Mar 28 15:58:36 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-	* orbsvcs/examples/Makefile:
-	* orbsvcs/examples/Notify/Makefile:
-	* orbsvcs/examples/Notify/Filter/Filter.cpp:
-	* orbsvcs/examples/Notify/Filter/Makefile:
-	* orbsvcs/examples/Notify/Subscribe/Makefile:
-	* orbsvcs/orbsvcs/Notify/Notify_EventChannel_i.h:
-	* orbsvcs/orbsvcs/Notify/Notify_Proxy_T.h:
-	* orbsvcs/orbsvcs/Notify/Notify_PushSupplier.h:
-	* orbsvcs/orbsvcs/Notify/Notify_QoSAdmin_i.cpp:
-	* orbsvcs/orbsvcs/Notify/Notify_QoSAdmin_i.h:
-	* orbsvcs/orbsvcs/Notify/Notify_Resource_Manager.cpp:
-	* orbsvcs/orbsvcs/Notify/Notify_Resource_Manager.h:
-	* orbsvcs/orbsvcs/Notify/Notify_SequenceProxyPushConsumer_i.cpp:
-	* orbsvcs/orbsvcs/Notify/Notify_SequenceProxyPushSupplier_i.cpp:
-	* orbsvcs/orbsvcs/Notify/Notify_SequenceProxyPushSupplier_i.h:
-	* orbsvcs/orbsvcs/Notify/Notify_StructuredProxyPushConsumer_i.cpp:
-	* orbsvcs/orbsvcs/Notify/Notify_StructuredProxyPushSupplier_i.cpp:
-	* orbsvcs/orbsvcs/Notify/Notify_StructuredPushConsumer.cpp:
-	* orbsvcs/orbsvcs/Notify/Notify_StructuredPushConsumer.h:
-	* orbsvcs/orbsvcs/Notify/Notify_StructuredPushSupplier.cpp:
-	* orbsvcs/orbsvcs/Notify/Notify_StructuredPushSupplier.h:
-	* orbsvcs/orbsvcs/Notify/Notify_SupplierAdmin_i.cpp:
-	* orbsvcs/orbsvcs/Notify/Notify_SupplierAdmin_i.h:
-	* orbsvcs/orbsvcs/Notify/Notify_Types.cpp:
-	* orbsvcs/orbsvcs/Notify/Notify_Types.h:
-	  Another bunch of @@ comments for Pradeep.
+        * orbsvcs/examples/Makefile:
+        * orbsvcs/examples/Notify/Makefile:
+        * orbsvcs/examples/Notify/Filter/Filter.cpp:
+        * orbsvcs/examples/Notify/Filter/Makefile:
+        * orbsvcs/examples/Notify/Subscribe/Makefile:
+        * orbsvcs/orbsvcs/Notify/Notify_EventChannel_i.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Proxy_T.h:
+        * orbsvcs/orbsvcs/Notify/Notify_PushSupplier.h:
+        * orbsvcs/orbsvcs/Notify/Notify_QoSAdmin_i.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_QoSAdmin_i.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Resource_Manager.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Resource_Manager.h:
+        * orbsvcs/orbsvcs/Notify/Notify_SequenceProxyPushConsumer_i.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_SequenceProxyPushSupplier_i.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_SequenceProxyPushSupplier_i.h:
+        * orbsvcs/orbsvcs/Notify/Notify_StructuredProxyPushConsumer_i.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_StructuredProxyPushSupplier_i.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_StructuredPushConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_StructuredPushConsumer.h:
+        * orbsvcs/orbsvcs/Notify/Notify_StructuredPushSupplier.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_StructuredPushSupplier.h:
+        * orbsvcs/orbsvcs/Notify/Notify_SupplierAdmin_i.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_SupplierAdmin_i.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Types.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Types.h:
+          Another bunch of @@ comments for Pradeep.
 
 Tue Mar 28 14:40:54 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-	* tao/GIOP_Message_Accept_State.h:
-	* tao/GIOP_Message_Accept_State.i:
-	* tao/GIOP_Message_Accept_State.cpp:
-	* tao/GIOP_Message_Acceptors.h:
-	* tao/GIOP_Message_Acceptors.i:
-	* tao/GIOP_Message_Acceptors.cpp:
-	* tao/GIOP_Message_Base.h:
-	* tao/GIOP_Message_Base.i:
-	* tao/GIOP_Message_Base.cpp:
-	* tao/GIOP_Message_Connectors.h:
-	* tao/GIOP_Message_Connectors.i:
-	* tao/GIOP_Message_Connectors.cpp:
-	* tao/GIOP_Message_Headers.h:
-	* tao/GIOP_Message_Headers.i:
-	* tao/GIOP_Message_Headers.cpp:
-	* tao/GIOP_Message_Lite.h:
-	* tao/GIOP_Message_Lite.i:
-	* tao/GIOP_Message_Lite.cpp:
-	* tao/GIOP_Message_State.h:
-	* tao/GIOP_Message_State.i:
-	* tao/GIOP_Message_State.cpp:
-	* tao/GIOP_Server_Request.h:
-	* tao/GIOP_Server_Request.i:
-	* tao/GIOP_Server_Request.cpp:
-	* tao/GIOP_Utils.h:
-	* tao/GIOP_Utils.cpp:
-	* tao/Pluggable_Messaging.h:
-	* tao/Pluggable_Messaging.i:
-	* tao/Pluggable_Messaging.cpp:
-	* tao/Pluggable_Messaging_Utils.h:
-	* tao/target_specification.h:
-	* tao/target_specification.i:
-	* tao/target_specification.cpp:
-	  Another pass making a code review for Bala.
+        * tao/GIOP_Message_Accept_State.h:
+        * tao/GIOP_Message_Accept_State.i:
+        * tao/GIOP_Message_Accept_State.cpp:
+        * tao/GIOP_Message_Acceptors.h:
+        * tao/GIOP_Message_Acceptors.i:
+        * tao/GIOP_Message_Acceptors.cpp:
+        * tao/GIOP_Message_Base.h:
+        * tao/GIOP_Message_Base.i:
+        * tao/GIOP_Message_Base.cpp:
+        * tao/GIOP_Message_Connectors.h:
+        * tao/GIOP_Message_Connectors.i:
+        * tao/GIOP_Message_Connectors.cpp:
+        * tao/GIOP_Message_Headers.h:
+        * tao/GIOP_Message_Headers.i:
+        * tao/GIOP_Message_Headers.cpp:
+        * tao/GIOP_Message_Lite.h:
+        * tao/GIOP_Message_Lite.i:
+        * tao/GIOP_Message_Lite.cpp:
+        * tao/GIOP_Message_State.h:
+        * tao/GIOP_Message_State.i:
+        * tao/GIOP_Message_State.cpp:
+        * tao/GIOP_Server_Request.h:
+        * tao/GIOP_Server_Request.i:
+        * tao/GIOP_Server_Request.cpp:
+        * tao/GIOP_Utils.h:
+        * tao/GIOP_Utils.cpp:
+        * tao/Pluggable_Messaging.h:
+        * tao/Pluggable_Messaging.i:
+        * tao/Pluggable_Messaging.cpp:
+        * tao/Pluggable_Messaging_Utils.h:
+        * tao/target_specification.h:
+        * tao/target_specification.i:
+        * tao/target_specification.cpp:
+          Another pass making a code review for Bala.
 
 Tue Mar 28 14:29:05 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_exception/any_op_cs.cpp:
-	  Added code to deal with the repo id in the >>=
-	  operator. The corresponding stream operators
-	  insert the repo id, but don't extract it. Thanks to
-	  Carlos for suggesting this approach.
+        * TAO_IDL/be/be_visitor_exception/any_op_cs.cpp:
+          Added code to deal with the repo id in the >>=
+          operator. The corresponding stream operators
+          insert the repo id, but don't extract it. Thanks to
+          Carlos for suggesting this approach.
 
 Mon Mar 27 23:30:26 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/orbconf.h: Changed the following macro definitions to be 0
-	  or 1 so users can modify the configuration in their config.h
-	  files.
+        * tao/orbconf.h: Changed the following macro definitions to be 0
+          or 1 so users can modify the configuration in their config.h
+          files.
 
-	  (TAO_HAS_MINIMUM_CORBA): Default to 0.
+          (TAO_HAS_MINIMUM_CORBA): Default to 0.
 
-	  (TAO_HAS_INTERCEPTORS): Default to 1 when
-	  TAO_HAS_MINIMUM_CORBA==0, otherwise, default to 0.
+          (TAO_HAS_INTERCEPTORS): Default to 1 when
+          TAO_HAS_MINIMUM_CORBA==0, otherwise, default to 0.
 
-	  (TAO_NO_IOR_TABLE): Default to 0 when TAO_HAS_MINIMUM_CORBA==0,
-	  otherwise, for it to 1.
+          (TAO_NO_IOR_TABLE): Default to 0 when TAO_HAS_MINIMUM_CORBA==0,
+          otherwise, for it to 1.
 
-	  (POA_NO_TIMESTAMP): Default to 0
+          (POA_NO_TIMESTAMP): Default to 0
 
-	  (TAO_USE_DOTTED_DECIMAL_ADDRESSES): Default to 0.
+          (TAO_USE_DOTTED_DECIMAL_ADDRESSES): Default to 0.
 
-	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
-	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
-	* orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullConsumer.cpp:
-	* orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullSupplier.cpp:
-	* orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushConsumer.cpp:
-	* orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushSupplier.cpp:
-	* orbsvcs/orbsvcs/Event/EC_ProxyConsumer.cpp:
-	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
-	* performance-tests/Latency/dii_client.cpp:
-	* tao/Asynch_Invocation.cpp:
-	* tao/Asynch_Invocation.h:
-	* tao/Asynch_Invocation.i:
-	* tao/Context.cpp:
-	* tao/Context.h:
-	* tao/DomainC.cpp:
-	* tao/DomainC.h:
-	* tao/DomainC.i:
-	* tao/DomainS.cpp:
-	* tao/DomainS_T.i:
-	* tao/DynAnyC.cpp:
-	* tao/DynAnyC.h:
-	* tao/DynAnyS.cpp:
-	* tao/DynAny_i.cpp:
-	* tao/DynAny_i.h:
-	* tao/DynArray_i.cpp:
-	* tao/DynArray_i.h:
-	* tao/DynEnum_i.cpp:
-	* tao/DynEnum_i.h:
-	* tao/DynSequence_i.cpp:
-	* tao/DynSequence_i.h:
-	* tao/DynStruct_i.cpp:
-	* tao/DynStruct_i.h:
-	* tao/DynUnion_i.cpp:
-	* tao/DynUnion_i.h:
-	* tao/Forwarding_Servant.cpp:
-	* tao/Forwarding_Servant.h:
-	* tao/GIOP_Message_Acceptors.cpp:
-	* tao/GIOP_Message_Lite.cpp:
-	* tao/GIOP_Server_Request.cpp:
-	* tao/GIOP_Server_Request.h:
-	* tao/ImplRepoC.cpp:
-	* tao/ImplRepoS.cpp:
-	* tao/InconsistentTypeCodeC.cpp:
-	* tao/InconsistentTypeCodeC.h:
-	* tao/Interceptor.cpp:
-	* tao/Interceptor.h:
-	* tao/Interceptor.i:
-	* tao/InterceptorC.cpp:
-	* tao/InterceptorC.h:
-	* tao/InterceptorC.i:
-	* tao/InterceptorS.cpp:
-	* tao/InterceptorS.h:
-	* tao/InterfaceS.cpp:
-	* tao/NVList.cpp:
-	* tao/NVList.h:
-	* tao/ORB.cpp:
-	* tao/ORB.h:
-	* tao/ORB.i:
-	* tao/ORB_Core.cpp:
-	* tao/Object.cpp
-	* tao/Object.h:
-	* tao/POA.cpp:
-	* tao/POA.h:
-	* tao/POA.i:
-	* tao/POAC.cpp:
-	* tao/POAC.h:
-	* tao/POAC.i:
-	* tao/POA_CORBA.h:
-	* tao/Reply_Dispatcher.cpp:
-	* tao/Reply_Dispatcher.h:
-	* tao/Reply_Dispatcher.i:
-	* tao/Request.cpp:
-	* tao/Request.h:
-	* tao/Servant_Base.cpp:
-	* tao/Servant_Base.h:
-	* tao/Server_Request.h:
-	* tao/Stub.cpp:
-	* tao/Stub.h:
-	* tao/Typecode_Constants.cpp:
-	* tao/WrongTransactionC.cpp:
-	* tao/WrongTransactionC.h:
-	* tao/corbafwd.h: Changed the macro checking statements of
-	  aforementioned macros.
+        * TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullConsumer.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullSupplier.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushConsumer.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushSupplier.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ProxyConsumer.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
+        * performance-tests/Latency/dii_client.cpp:
+        * tao/Asynch_Invocation.cpp:
+        * tao/Asynch_Invocation.h:
+        * tao/Asynch_Invocation.i:
+        * tao/Context.cpp:
+        * tao/Context.h:
+        * tao/DomainC.cpp:
+        * tao/DomainC.h:
+        * tao/DomainC.i:
+        * tao/DomainS.cpp:
+        * tao/DomainS_T.i:
+        * tao/DynAnyC.cpp:
+        * tao/DynAnyC.h:
+        * tao/DynAnyS.cpp:
+        * tao/DynAny_i.cpp:
+        * tao/DynAny_i.h:
+        * tao/DynArray_i.cpp:
+        * tao/DynArray_i.h:
+        * tao/DynEnum_i.cpp:
+        * tao/DynEnum_i.h:
+        * tao/DynSequence_i.cpp:
+        * tao/DynSequence_i.h:
+        * tao/DynStruct_i.cpp:
+        * tao/DynStruct_i.h:
+        * tao/DynUnion_i.cpp:
+        * tao/DynUnion_i.h:
+        * tao/Forwarding_Servant.cpp:
+        * tao/Forwarding_Servant.h:
+        * tao/GIOP_Message_Acceptors.cpp:
+        * tao/GIOP_Message_Lite.cpp:
+        * tao/GIOP_Server_Request.cpp:
+        * tao/GIOP_Server_Request.h:
+        * tao/ImplRepoC.cpp:
+        * tao/ImplRepoS.cpp:
+        * tao/InconsistentTypeCodeC.cpp:
+        * tao/InconsistentTypeCodeC.h:
+        * tao/Interceptor.cpp:
+        * tao/Interceptor.h:
+        * tao/Interceptor.i:
+        * tao/InterceptorC.cpp:
+        * tao/InterceptorC.h:
+        * tao/InterceptorC.i:
+        * tao/InterceptorS.cpp:
+        * tao/InterceptorS.h:
+        * tao/InterfaceS.cpp:
+        * tao/NVList.cpp:
+        * tao/NVList.h:
+        * tao/ORB.cpp:
+        * tao/ORB.h:
+        * tao/ORB.i:
+        * tao/ORB_Core.cpp:
+        * tao/Object.cpp
+        * tao/Object.h:
+        * tao/POA.cpp:
+        * tao/POA.h:
+        * tao/POA.i:
+        * tao/POAC.cpp:
+        * tao/POAC.h:
+        * tao/POAC.i:
+        * tao/POA_CORBA.h:
+        * tao/Reply_Dispatcher.cpp:
+        * tao/Reply_Dispatcher.h:
+        * tao/Reply_Dispatcher.i:
+        * tao/Request.cpp:
+        * tao/Request.h:
+        * tao/Servant_Base.cpp:
+        * tao/Servant_Base.h:
+        * tao/Server_Request.h:
+        * tao/Stub.cpp:
+        * tao/Stub.h:
+        * tao/Typecode_Constants.cpp:
+        * tao/WrongTransactionC.cpp:
+        * tao/WrongTransactionC.h:
+        * tao/corbafwd.h: Changed the macro checking statements of
+          aforementioned macros.
 
           [Bug 504]
 
 Mon Mar 27 20:37:02 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/POAC.cpp:
-	* tao/GIOP_Server_Request.cpp:
-	  The way we were handling ForwardRequest exceptions wasn't
-	  working with the new Any operators. The
-	  PortableServer::ForwardRequest >>= operator and
-	  TAO_GIOP_ServerRequest::set_exception have been changed
-	  to do the right thing. This fixes the failing of
-	  examples/POA/Forwarding on all platforms (except where
-	  minimum CORBA is defined). Changing the Any operators
-	  for IDL-defined exceptions, and modifying the rest of
-	  the exception >>= operators in TAO will follow shortly.
-	  Thanks to Carlos for suggesting the >>= fix.
+        * tao/POAC.cpp:
+        * tao/GIOP_Server_Request.cpp:
+          The way we were handling ForwardRequest exceptions wasn't
+          working with the new Any operators. The
+          PortableServer::ForwardRequest >>= operator and
+          TAO_GIOP_ServerRequest::set_exception have been changed
+          to do the right thing. This fixes the failing of
+          examples/POA/Forwarding on all platforms (except where
+          minimum CORBA is defined). Changing the Any operators
+          for IDL-defined exceptions, and modifying the rest of
+          the exception >>= operators in TAO will follow shortly.
+          Thanks to Carlos for suggesting the >>= fix.
 
 Mon Mar 27 19:27:00 2000  Douglas C. Schmidt  <schmidt@danzon.cs.wustl.edu>
 
-	* tao/ORB.cpp (ORB_init): Replace CORBA::Environment with
-	  CORBA_Environment to be consistent.  Thanks to Yangfen Qiu
- 	  <yqiu@thomas.com> for motivating this change.
+        * tao/ORB.cpp (ORB_init): Replace CORBA::Environment with
+          CORBA_Environment to be consistent.  Thanks to Yangfen Qiu
+          <yqiu@thomas.com> for motivating this change.
 
 Mon Mar 27 16:11:29 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao: The following changes allows the user finer grain control
-	  over the CORBA Messaging policies.  Most (all?) of the CORBA
-	  Messaging policies are evaluated in the critical path and
-	  therefore having finer grain control over the policies is
-	  important.  Thanks to Dennis Noll <Dennis.Noll@MW.Boeing.com>
-	  for suggesting this.
+        * tao: The following changes allows the user finer grain control
+          over the CORBA Messaging policies.  Most (all?) of the CORBA
+          Messaging policies are evaluated in the critical path and
+          therefore having finer grain control over the policies is
+          important.  Thanks to Dennis Noll <Dennis.Noll@MW.Boeing.com>
+          for suggesting this.
 
-	  - For all the policies, support is enabled by default if TAO is
-	  configured for CORBA Messaging.  If TAO is not configured for
-	  CORBA Messaging, then policies cannot be enabled.  Default
-	  support for all policies can be turned off by setting
-	  TAO_DISABLE_CORBA_MESSAGING_POLICIES to 1.  Once
-	  TAO_DISABLE_CORBA_MESSAGING_POLICIES is set to 1, individual
-	  policies can be turned on through their own #define.  Here is
-	  how to make it work:
+          - For all the policies, support is enabled by default if TAO is
+          configured for CORBA Messaging.  If TAO is not configured for
+          CORBA Messaging, then policies cannot be enabled.  Default
+          support for all policies can be turned off by setting
+          TAO_DISABLE_CORBA_MESSAGING_POLICIES to 1.  Once
+          TAO_DISABLE_CORBA_MESSAGING_POLICIES is set to 1, individual
+          policies can be turned on through their own #define.  Here is
+          how to make it work:
 
-	  (a) If you want most policies turned on and a few disabled,
-	  disable the few explicitly, e.g.:
+          (a) If you want most policies turned on and a few disabled,
+          disable the few explicitly, e.g.:
 
-	  #define TAO_HAS_REBIND_POLICY 0
+          #define TAO_HAS_REBIND_POLICY 0
 
-	  (b) If you want most policies turned off and a few enabled,
-	  diable all by default and enable the few explicitly, e.g.:
+          (b) If you want most policies turned off and a few enabled,
+          diable all by default and enable the few explicitly, e.g.:
 
-	  #define TAO_DISABLE_CORBA_MESSAGING_POLICIES 1
-	  #define TAO_HAS_REBIND_POLICY 1
+          #define TAO_DISABLE_CORBA_MESSAGING_POLICIES 1
+          #define TAO_HAS_REBIND_POLICY 1
 
-	  - The following #defines were added, one for each CORBA
-	  Messaging policy.  Code related to each of the policies now use
-	  the appropriate #define instead of using
-	  TAO_HAS_CORBA_MESSAGING.
+          - The following #defines were added, one for each CORBA
+          Messaging policy.  Code related to each of the policies now use
+          the appropriate #define instead of using
+          TAO_HAS_CORBA_MESSAGING.
 
-	    - TAO_HAS_REBIND_POLICY
-	    - TAO_HAS_SYNC_SCOPE_POLICY
-	    - TAO_HAS_PRIORITY_POLICIES
-	    - TAO_HAS_REQUEST_START_TIME_POLICY
-	    - TAO_HAS_REQUEST_END_TIME_POLICY
-	    - TAO_HAS_REPLY_START_TIME_POLICY
-	    - TAO_HAS_REPLY_END_TIME_POLICY
-	    - TAO_HAS_RELATIVE_REQUEST_TIMEOUT_POLICY
-	    - TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY
-	    - TAO_HAS_ROUTING_POLICY
-	    - TAO_HAS_MAX_HOPS_POLICY
-	    - TAO_HAS_QUEUE_ORDER_POLICY
-	    - TAO_HAS_CLIENT_PRIORITY_POLICY
-	    - TAO_HAS_BUFFERING_CONSTRAINT_POLICY
+            - TAO_HAS_REBIND_POLICY
+            - TAO_HAS_SYNC_SCOPE_POLICY
+            - TAO_HAS_PRIORITY_POLICIES
+            - TAO_HAS_REQUEST_START_TIME_POLICY
+            - TAO_HAS_REQUEST_END_TIME_POLICY
+            - TAO_HAS_REPLY_START_TIME_POLICY
+            - TAO_HAS_REPLY_END_TIME_POLICY
+            - TAO_HAS_RELATIVE_REQUEST_TIMEOUT_POLICY
+            - TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY
+            - TAO_HAS_ROUTING_POLICY
+            - TAO_HAS_MAX_HOPS_POLICY
+            - TAO_HAS_QUEUE_ORDER_POLICY
+            - TAO_HAS_CLIENT_PRIORITY_POLICY
+            - TAO_HAS_BUFFERING_CONSTRAINT_POLICY
 
-	  The following files were effected:
+          The following files were effected:
 
-	    - Buffering_Constraint_Policy.{cpp,h}
-	    - Client_Priority_Policy.{cpp,h,i}
-	    - IIOP_Connect.cpp
-	    - UIOP_Connect.cpp
-	    - Invocation.cpp
-	    - ORB.{cpp,h}
-	    - ORB_Core.{cpp,h,i}
-	    - Object.{cpp,h}
-	    - Stub.{cpp,h}
-	    - Sync_Strategies.{cpp,h}
-	    - TAOC.{cpp,h,i}
-	    - TAOS.{cpp,h,i}
-	    - Policy_Manager.{cpp,h,i}
-	    - Messaging_Policy_i.{cpp,h,i}
-	    - MessagingC.{cpp,h.i}
-	    - MessagingS.{cpp,h.i}
+            - Buffering_Constraint_Policy.{cpp,h}
+            - Client_Priority_Policy.{cpp,h,i}
+            - IIOP_Connect.cpp
+            - UIOP_Connect.cpp
+            - Invocation.cpp
+            - ORB.{cpp,h}
+            - ORB_Core.{cpp,h,i}
+            - Object.{cpp,h}
+            - Stub.{cpp,h}
+            - Sync_Strategies.{cpp,h}
+            - TAOC.{cpp,h,i}
+            - TAOS.{cpp,h,i}
+            - Policy_Manager.{cpp,h,i}
+            - Messaging_Policy_i.{cpp,h,i}
+            - MessagingC.{cpp,h.i}
+            - MessagingS.{cpp,h.i}
 
-	  - AMI is part of Messaging.  Therefore, checking for
-	  TAO_HAS_CORBA_MESSAGING and TAO_HAS_AMI_CALLBACK or
-	  TAO_HAS_AMI_POLLER is redundant.  Removed the extra
-	  TAO_HAS_CORBA_MESSAGING check.  Following files were effected:
+          - AMI is part of Messaging.  Therefore, checking for
+          TAO_HAS_CORBA_MESSAGING and TAO_HAS_AMI_CALLBACK or
+          TAO_HAS_AMI_POLLER is redundant.  Removed the extra
+          TAO_HAS_CORBA_MESSAGING check.  Following files were effected:
 
-	    - Asynch_Invocation.{cpp,h,i}
-	    - PollableC.{cpp,h}
-	    - PollableS.{cpp,h}
-	    - Reply_Dispatcher.{cpp,h,i}
+            - Asynch_Invocation.{cpp,h,i}
+            - PollableC.{cpp,h}
+            - PollableS.{cpp,h}
+            - Reply_Dispatcher.{cpp,h,i}
 
 Mon Mar 27 11:11:01 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/GIOP_Message_Acceptors.h:
-	* tao/GIOP_Message_Acceptors.i: Added a destructor to the class
-	  TAO_GIOP_Message_Acceptors. This would reset the OutputCDR
-	  that it holds.
+        * tao/GIOP_Message_Acceptors.h:
+        * tao/GIOP_Message_Acceptors.i: Added a destructor to the class
+          TAO_GIOP_Message_Acceptors. This would reset the OutputCDR
+          that it holds.
 
 Mon Mar 27 09:05:58 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/tests/EC_Basic/Makefile:
-	* orbsvcs/tests/Event/Basic: Needed the library libTAO_Svc_Utils
-	  for successful linking.
+        * orbsvcs/tests/EC_Basic/Makefile:
+        * orbsvcs/tests/Event/Basic: Needed the library libTAO_Svc_Utils
+          for successful linking.
 
 Mon Mar 27 08:57:42 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/tests/EC_Mcast/Makefile: Needed the library
-	  libTAO_Svc_Utils for successful linking.
+        * orbsvcs/tests/EC_Mcast/Makefile: Needed the library
+          libTAO_Svc_Utils for successful linking.
 
 Sun Mar 26 20:20:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_interface/smart_proxy_ch.cpp:
-	* TAO_IDL/be/be_visitor_interface/smart_proxy_cs.cpp:
-	  Generated an implementation for <_stubobj> method in
-	  the Smart_Proxy_Base class which delegated this call
-	  to the underlying <base_proxy_> member. This allows
-	  <_narrow> on a smart proxy object to succeed. Thanks
-	  to Brian Wallis <brian.wallis@ot.com.au> for reporting
-	  this bug.
+        * TAO_IDL/be/be_visitor_interface/smart_proxy_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/smart_proxy_cs.cpp:
+          Generated an implementation for <_stubobj> method in
+          the Smart_Proxy_Base class which delegated this call
+          to the underlying <base_proxy_> member. This allows
+          <_narrow> on a smart proxy object to succeed. Thanks
+          to Brian Wallis <brian.wallis@ot.com.au> for reporting
+          this bug.
 
 Sun Mar 26 14:57:38 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/fe/idl.ll:
-	* TAO_IDL/fe/lex.yy.cpp:
-	* TAO_IDL/fe/lex.yy.cpp.diff:
-	  Support added for escaped identifiers, as specified in
-	  CORBA 2.3.1. If an identifier appears in an IDL file
-	  with a leading underscore, it will now appear in
-	  generated code without the underscore (such identifiers
-	  were not accepted by the lexer previously). Now
-	  generated code can contain identifiers identical to
-	  IDL keywords. Note that if the stripped identifier
-	  matches a C++ keyword "_cxx_" will be prepended in
-	  generated code as before. Thanks to Alex Bangs
-	  <bangs@entelos.com> for uncovering this problem by
-	  reporting that the IDL compiler would not accept
-	  CosLifeCycle.idl with valuetype support enabled
-	  (CosLifeCycle.idl contains an identifier "suppports",
-	  a valuetype keyword). This closes out Bugzilla #488.
+        * TAO_IDL/fe/idl.ll:
+        * TAO_IDL/fe/lex.yy.cpp:
+        * TAO_IDL/fe/lex.yy.cpp.diff:
+          Support added for escaped identifiers, as specified in
+          CORBA 2.3.1. If an identifier appears in an IDL file
+          with a leading underscore, it will now appear in
+          generated code without the underscore (such identifiers
+          were not accepted by the lexer previously). Now
+          generated code can contain identifiers identical to
+          IDL keywords. Note that if the stripped identifier
+          matches a C++ keyword "_cxx_" will be prepended in
+          generated code as before. Thanks to Alex Bangs
+          <bangs@entelos.com> for uncovering this problem by
+          reporting that the IDL compiler would not accept
+          CosLifeCycle.idl with valuetype support enabled
+          (CosLifeCycle.idl contains an identifier "suppports",
+          a valuetype keyword). This closes out Bugzilla #488.
 
-	* orbsvcs/orbsvcs/CosLifeCycle.idl:
-	  Changed "supports" identifier to "_supports". Generated
-	  code is unchanged, and the file can now be compiled
-	  with the -Gv option.
+        * orbsvcs/orbsvcs/CosLifeCycle.idl:
+          Changed "supports" identifier to "_supports". Generated
+          code is unchanged, and the file can now be compiled
+          with the -Gv option.
 
-	* docs/releasenotes/index.html:
-	  Added item about escaped identifier support in the IDL
-	  compiler.
+        * docs/releasenotes/index.html:
+          Added item about escaped identifier support in the IDL
+          compiler.
 
 Sun Mar 26 13:32:10 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/util/utl_stack.cpp:
-	  Removed unused AST_Decl* variable in method push(), and
-	  the ScopeAsDecl() call that initializes it. This narrowing
-	  operation was causing a crash on cxx/Linux-alpha. This may
-	  not solve the underlying problem, if any. If that's the
-	  case, the error will turn up elsewhere the next time the
-	  IDL compiler is run on the above platform, but in any case,
-	  the local variable, the initialization, and the ACE_UNUSED_ARG
-	  statement were all superfluous in UTL_ScopeStack::push().
+        * TAO_IDL/util/utl_stack.cpp:
+          Removed unused AST_Decl* variable in method push(), and
+          the ScopeAsDecl() call that initializes it. This narrowing
+          operation was causing a crash on cxx/Linux-alpha. This may
+          not solve the underlying problem, if any. If that's the
+          case, the error will turn up elsewhere the next time the
+          IDL compiler is run on the above platform, but in any case,
+          the local variable, the initialization, and the ACE_UNUSED_ARG
+          statement were all superfluous in UTL_ScopeStack::push().
 
 Sat Mar 25 22:10:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
-	  Added a check for TAO_Stub pointer in the generated code for
-	  <_unchecked_narrow>. This check allowed <_unchecked_narrow> on
-	  a smart proxy to succeed. Previously this was failing as the
-	  <protocol_proxy_> member for a smart proxy is nil and it was
-	  used to increment its reference count. Thanks to Brian Wallis
-	  <brian.wallis@ot.com.au> for reporting this bug.
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+          Added a check for TAO_Stub pointer in the generated code for
+          <_unchecked_narrow>. This check allowed <_unchecked_narrow> on
+          a smart proxy to succeed. Previously this was failing as the
+          <protocol_proxy_> member for a smart proxy is nil and it was
+          used to increment its reference count. Thanks to Brian Wallis
+          <brian.wallis@ot.com.au> for reporting this bug.
 
-	  This did not solve the bug, more changes had to be made. Please
-	  see ChangeLogTag:Sun Mar 26 20:20:00 2000  Kirthika Parameswaran
-	  <kirthika@cs.wustl.edu>
+          This did not solve the bug, more changes had to be made. Please
+          see ChangeLogTag:Sun Mar 26 20:20:00 2000  Kirthika Parameswaran
+          <kirthika@cs.wustl.edu>
 
 Sat Mar 25 15:24:06 2000  Carlos O'Ryan  <coryan@uci.edu>
 
@@ -460,22 +466,22 @@ Fri Mar 24 10:21:27 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 Thu Mar 23 23:57:16 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* rules.tao.GNU: There was a problem with the current make rules
-	  that define default values some #defines, e.g., if nothing is
-	  specified by the user with the make command wrt corba messaging,
-	  -DTAO_HAS_CORBA_MESSAGING=1 gets added automatically.  Make
-	  rules such as these are too aggressive since this prevents the
-	  user from setting #define TAO_HAS_CORBA_MESSAGING 0 in their
-	  config files.  Therefore, the default setting of the following
-	  variables was removed from rules.tao.GNU since they will
-	  automatically be picked up from the orb config file unless
-	  overridden by the user in their config file:
+        * rules.tao.GNU: There was a problem with the current make rules
+          that define default values some #defines, e.g., if nothing is
+          specified by the user with the make command wrt corba messaging,
+          -DTAO_HAS_CORBA_MESSAGING=1 gets added automatically.  Make
+          rules such as these are too aggressive since this prevents the
+          user from setting #define TAO_HAS_CORBA_MESSAGING 0 in their
+          config files.  Therefore, the default setting of the following
+          variables was removed from rules.tao.GNU since they will
+          automatically be picked up from the orb config file unless
+          overridden by the user in their config file:
 
-	  - TAO_HAS_CORBA_MESSAGING
-	  - TAO_HAS_RT_CORBA
-	  - TAO_HAS_AMI
-	  - TAO_HAS_AMI_POLLER
-	  - TAO_HAS_AMI_CALLBACK
+          - TAO_HAS_CORBA_MESSAGING
+          - TAO_HAS_RT_CORBA
+          - TAO_HAS_AMI
+          - TAO_HAS_AMI_POLLER
+          - TAO_HAS_AMI_CALLBACK
 
 Thu Mar 23 21:49:36 2000  Darrell Brunsch <brunsch@uci.edu>
 

@@ -51,7 +51,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Gateway"=.\Gateway.dsp - Package Owner=<4>
+Project: "Control"=.\Control.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -64,6 +64,18 @@ Package=<4>
 ###############################################################################
 
 Project: "Disconnect"=.\Disconnect.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Gateway"=.\Gateway.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
