@@ -64,8 +64,10 @@ int be_visitor_union_ci::visit_union (be_union *node)
       *os << "// default constructor" << be_nl
           << "ACE_INLINE" << be_nl
           << node->name () << "::" << node->local_name () << " (void)" << be_nl
+          << "  : TAO_Base_Union ()" << be_nl
           << "{" << be_idt_nl
-          << "ACE_OS::memset (this, 0, sizeof (" << node->name () << "));" << be_uidt_nl
+          << "ACE_OS::memset (&this->disc_, 0, sizeof (this->disc_));" << be_nl
+          << "ACE_OS::memset (&this->u_, 0, sizeof (this->u_));" << be_uidt_nl
           << "}" << be_nl << be_nl;
 
       *os << "// destructor" << be_nl
@@ -74,6 +76,22 @@ int be_visitor_union_ci::visit_union (be_union *node)
           << "{" << be_idt_nl
           << "// finalize" << be_nl
           << "this->_reset (this->disc_, 1);" << be_uidt_nl
+          << "}" << be_nl << be_nl;
+
+      // the virtual overloaded _reset method
+      *os << "// this reset method is used by the decoding engine" << be_nl;
+      *os << "ACE_INLINE void" << be_nl
+          << node->name () << "::_reset (void)" << be_nl
+          << "{" << be_idt_nl
+          << "this->_reset (this->disc_, 1);" << be_uidt_nl
+          << "}" << be_nl << be_nl;
+
+      // the virtual overloaded _discriminant method
+      *os << "// returns pointer to the discriminant" << be_nl;
+      *os << "ACE_INLINE void *" << be_nl
+          << node->name () << "::_discriminant (void)" << be_nl
+          << "{" << be_idt_nl
+          << "return &this->disc_;" << be_uidt_nl
           << "}\n\n";
 
       // the discriminant type may have to be defined here if it was an enum

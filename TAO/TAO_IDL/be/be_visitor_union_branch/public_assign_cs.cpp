@@ -133,13 +133,13 @@ be_visitor_union_branch_public_assign_cs::visit_array (be_array *node)
       *os << "// set the value" << be_nl;
       *os << "// store current val in a _var so as to free it on an assignment"
           << be_nl;
-      *os << bt->name () << "_var " << ub->local_name () << "_var (this->"
+      *os << bt->name () << "_var " << ub->local_name () << "_var (this->u_."
           << ub->local_name () << "_);" << be_nl;
       *os << "// make a deep copy" << be_nl;
       *os << ub->local_name () << "_var = " << bt->name ()
-          << "_dup (u." << ub->local_name () << "_);" << be_nl;
+          << "_dup (u.u_." << ub->local_name () << "_);" << be_nl;
       *os << "// the _var gives up ownership" << be_nl;
-      *os << "this->" << ub->local_name () << "_ = "
+      *os << "this->u_." << ub->local_name () << "_ = "
           << ub->local_name () << "_var._retn ();" << be_uidt_nl;
     }
   else
@@ -182,7 +182,7 @@ be_visitor_union_branch_public_assign_cs::visit_enum (be_enum *node)
     {
       // valid label
       *os << "// set the value" << be_nl
-          << "this->" << ub->local_name () << "_ = u."
+          << "this->u_." << ub->local_name () << "_ = u.u_."
           << ub->local_name () << "_;" << be_uidt_nl;
     }
   else
@@ -227,13 +227,13 @@ be_visitor_union_branch_public_assign_cs::visit_interface (be_interface *node)
       *os << "// set the value" << be_nl;
       *os << "// store current val in a _var so as to free it on an assignment"
           << be_nl;
-      *os << bt->name () << "_var " << ub->local_name () << "_var (this->"
+      *os << bt->name () << "_var " << ub->local_name () << "_var (this->u_."
           << ub->local_name () << "_);" << be_nl;
       *os << "// make a copy" << be_nl;
       *os << ub->local_name () << "_var = " << bt->name ()
-          << "::_duplicate (u." << ub->local_name () << "_);" << be_nl;
+          << "::_duplicate (u.u_." << ub->local_name () << "_);" << be_nl;
       *os << "// the _var gives up ownership" << be_nl;
-      *os << "this->" << ub->local_name () << "_ = "
+      *os << "this->u_." << ub->local_name () << "_ = "
           << ub->local_name () << "_var._retn ();" << be_uidt_nl;
     }
   else
@@ -278,13 +278,13 @@ be_visitor_union_branch_public_assign_cs::visit_interface_fwd (be_interface_fwd 
       *os << "// set the value" << be_nl;
       *os << "// store current val in a _var so as to free it on an assignment"
           << be_nl;
-      *os << bt->name () << "_var " << ub->local_name () << "_var (this->"
+      *os << bt->name () << "_var " << ub->local_name () << "_var (this->u_."
           << ub->local_name () << "_);" << be_nl;
       *os << "// make a copy" << be_nl;
       *os << ub->local_name () << "_var = " << bt->name ()
-          << "::_duplicate (u." << ub->local_name () << "_);" << be_nl;
+          << "::_duplicate (u.u_." << ub->local_name () << "_);" << be_nl;
       *os << "// the _var gives up ownership" << be_nl;
-      *os << "this->" << ub->local_name () << "_ = "
+      *os << "this->u_." << ub->local_name () << "_ = "
           << ub->local_name () << "_var._retn ();" << be_uidt_nl;
     }
   else
@@ -332,33 +332,33 @@ be_visitor_union_branch_public_assign_cs::visit_predefined_type (be_predefined_t
           *os << "// set the value" << be_nl;
           *os << "// store current val in a _var so as to free it on an assignment"
               << be_nl;
-          *os << bt->name () << "_var " << ub->local_name () << "_var (this->"
+          *os << bt->name () << "_var " << ub->local_name () << "_var (this->u_."
               << ub->local_name () << "_);" << be_nl;
           *os << "// make a copy" << be_nl;
           *os << ub->local_name () << "_var = " << bt->name ()
-              << "::_duplicate (u." << ub->local_name () << "_);" << be_nl;
+              << "::_duplicate (u.u_." << ub->local_name () << "_);" << be_nl;
           *os << "// the _var gives up ownership" << be_nl;
-          *os << "this->" << ub->local_name () << "_ = "
+          *os << "this->u_." << ub->local_name () << "_ = "
               << ub->local_name () << "_var._retn ();" << be_uidt_nl;
           break;
         case AST_PredefinedType::PT_any:
           *os << "// set the value" << be_nl;
           *os << "// store current val in a _var so as to free it on an assignment"
               << be_nl;
-          *os << bt->name () << "_var " << ub->local_name () << "_var (this->"
+          *os << bt->name () << "_var " << ub->local_name () << "_var (this->u_."
               << ub->local_name () << "_);" << be_nl;
           *os << "// make a deep copy" << be_nl;
           *os << ub->local_name () << "_var = new " << bt->name ()
-              << " (*u." << ub->local_name () << "_);" << be_nl;
+              << " (*u.u_." << ub->local_name () << "_);" << be_nl;
           *os << "// the _var gives up ownership" << be_nl;
-          *os << "this->" << ub->local_name () << "_ = "
+          *os << "this->u_." << ub->local_name () << "_ = "
               << ub->local_name () << "_var._retn ();" << be_uidt_nl;
           break;
         case AST_PredefinedType::PT_void:
           break;
         default:
           *os << "// set the value" << be_nl
-              << "this->" << ub->local_name () << "_ = u."
+              << "this->u_." << ub->local_name () << "_ = u.u_."
               << ub->local_name () << "_;" << be_uidt_nl;
           break;
         }
@@ -406,13 +406,13 @@ be_visitor_union_branch_public_assign_cs::visit_sequence (be_sequence *node)
       *os << "// set the value" << be_nl;
       *os << "// store current val in a _var so as to free it on an assignment"
           << be_nl;
-      *os << bt->name () << "_var " << ub->local_name () << "_var (this->"
+      *os << bt->name () << "_var " << ub->local_name () << "_var (this->u_."
           << ub->local_name () << "_);" << be_nl;
       *os << "// make a deep copy" << be_nl;
       *os << ub->local_name () << "_var = new " << bt->name ()
-          << " (*u." << ub->local_name () << "_);" << be_nl;
+          << " (*u.u_." << ub->local_name () << "_);" << be_nl;
       *os << "// the _var gives up ownership" << be_nl;
-      *os << "this->" << ub->local_name () << "_ = "
+      *os << "this->u_." << ub->local_name () << "_ = "
           << ub->local_name () << "_var._retn ();" << be_uidt_nl;
     }
   else
@@ -457,13 +457,13 @@ be_visitor_union_branch_public_assign_cs::visit_string (be_string *node)
       *os << "// set the value" << be_nl;
       *os << "// store current val in a _var so as to free it on an assignment"
           << be_nl;
-      *os << bt->name () << "_var " << ub->local_name () << "_var (this->"
+      *os << bt->name () << "_var " << ub->local_name () << "_var (this->u_."
           << ub->local_name () << "_);" << be_nl;
       *os << "// make a deep copy" << be_nl;
-      *os << ub->local_name () << "_var = CORBA::string_dup (u."
+      *os << ub->local_name () << "_var = CORBA::string_dup (u.u_."
           << ub->local_name () << "_);" << be_nl;
       *os << "// the _var gives up ownership" << be_nl;
-      *os << "this->" << ub->local_name () << "_ = "
+      *os << "this->u_." << ub->local_name () << "_ = "
           << ub->local_name () << "_var._retn ();" << be_uidt_nl;
     }
   else
@@ -510,19 +510,19 @@ be_visitor_union_branch_public_assign_cs::visit_structure (be_structure *node)
           *os << "// set the value" << be_nl;
           *os << "// store current val in a _var so as to free it on an assignment"
               << be_nl;
-          *os << bt->name () << "_var " << ub->local_name () << "_var (this->"
+          *os << bt->name () << "_var " << ub->local_name () << "_var (this->u_."
               << ub->local_name () << "_);" << be_nl;
           *os << "// make a deep copy" << be_nl;
           *os << ub->local_name () << "_var = new " << bt->name ()
-              << " (*u." << ub->local_name () << "_);" << be_nl;
+              << " (*u.u_." << ub->local_name () << "_);" << be_nl;
           *os << "// the _var gives up ownership" << be_nl;
-          *os << "this->" << ub->local_name () << "_ = "
+          *os << "this->u_." << ub->local_name () << "_ = "
               << ub->local_name () << "_var._retn ();" << be_uidt_nl;
         }
       else
         {
           *os << "// set the value" << be_nl;
-          *os << "this->" << ub->local_name () << "_ = u."
+          *os << "this->u_." << ub->local_name () << "_ = u.u_."
               << ub->local_name () << "_;" << be_uidt_nl;
         }
     }
@@ -592,13 +592,13 @@ be_visitor_union_branch_public_assign_cs::visit_union (be_union *node)
       *os << "// set the value" << be_nl;
       *os << "// store current val in a _var so as to free it on an assignment"
           << be_nl;
-      *os << bt->name () << "_var " << ub->local_name () << "_var (this->"
+      *os << bt->name () << "_var " << ub->local_name () << "_var (this->u_."
           << ub->local_name () << "_);" << be_nl;
       *os << "// make a deep copy" << be_nl;
       *os << ub->local_name () << "_var = new " << bt->name ()
-          << " (*u." << ub->local_name () << "_);" << be_nl;
+          << " (*u.u_." << ub->local_name () << "_);" << be_nl;
       *os << "// the _var gives up ownership" << be_nl;
-      *os << "this->" << ub->local_name () << "_ = "
+      *os << "this->u_." << ub->local_name () << "_ = "
           << ub->local_name () << "_var._retn ();" << be_uidt_nl;
     }
   else
