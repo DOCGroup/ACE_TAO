@@ -1,18 +1,24 @@
 // $Id$
+
 // ============================================================================
 /**
- *  @file Proactor_Test_IPv6.cpp
+ *  @file Proactor_Test.cpp
+ *
+ *  $Id$
  *
  *  This program illustrates how the ACE_Proactor can be used to
  *  implement an application that does various asynchronous
  *  operations.
  *
  *  @author Alexander Libman <alibman@baltimore.com>
- *  @author Brian Buesker <bbuesker@qualcomm.com> - modified for IPv6 operation
  */
 // ============================================================================
 
 #include "test_config.h"
+
+ACE_RCSID (tests,
+           Proactor_Test,
+           "$Id$")
 
 #if defined (ACE_HAS_THREADS) && ((defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || (defined (ACE_HAS_AIO_CALLS)))
   // This only works on Win32 platforms and on Unix platforms
@@ -27,7 +33,6 @@
 #include "ace/SOCK_Stream.h"
 #include "ace/Object_Manager.h"
 #include "ace/Get_Opt.h"
-//#include "ace/streams.h"
 
 #include "ace/Proactor.h"
 #include "ace/Asynch_Acceptor.h"
@@ -89,7 +94,7 @@ static ACE_TCHAR complete_message[] =
   ACE_TEXT ("Accept: */*\r\n")
   ACE_TEXT ("Accept-Language: C++\r\n")
   ACE_TEXT ("Accept-Encoding: gzip, deflate\r\n")
-  ACE_TEXT ("User-Agent: Proactor_Test_IPv6/1.0 (non-compatible)\r\n")
+  ACE_TEXT ("User-Agent: Proactor_Test/1.0 (non-compatible)\r\n")
   ACE_TEXT ("Connection: Keep-Alive\r\n")
   ACE_TEXT ("\r\n");
 
@@ -151,7 +156,10 @@ disable_signal (int sigmin, int sigmax)
 class MyTask : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
-  MyTask (void): lock_ (), sem_ (0), proactor_(0) {}
+  MyTask (void):
+    lock_ (),
+    sem_ ((unsigned int) 0),
+    proactor_(0) {}
 
   virtual ~MyTask()
     {
@@ -1164,12 +1172,11 @@ Connector::start (const ACE_INET_Addr& addr, int num)
 
   for (; rc < num;  rc++)
     {
-      ACE_INET_Addr localAddr;
-      if (this->connect (addr, localAddr) != 0)
+      if (this->connect (addr) != 0)
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("(%t) %p\n"),
-                      ACE_TEXT ("Connector::connect failed for IPv6")));
+                      ACE_TEXT ("Connector::connect failed")));
           break;
         }
     }
@@ -1266,53 +1273,14 @@ Sender::close ()
 
 
 void
-Sender::addresses (const ACE_INET_Addr& peer, const ACE_INET_Addr& local)
+Sender::addresses (const ACE_INET_Addr& /* peer */, const ACE_INET_Addr& local)
 {
   ACE_TCHAR str[256];
-  ACE_TCHAR str2[256];
-  ACE_INET_Addr addr ((u_short) 0, host);
-
-  // This checks to make sure the peer address given to us matches what
-  // we expect it to be.
-  // This check will fail when Asynch_Connector::parse_addresses does
-  // not handle IPv6 addresses
-  if (0 != peer.get_host_addr (str, sizeof (str) / sizeof (ACE_TCHAR)))
-    {
-      if (0 != addr.get_host_addr (str2, sizeof (str2) / sizeof (ACE_TCHAR)))
-        {
-          if (0 != strncmp (str, str2, sizeof (str) / sizeof (ACE_TCHAR)))
-            {
-              ACE_ERROR ((LM_ERROR,
-                          ACE_TEXT ("(%t) Sender %d peer address (%s) does not "
-                                    "match host address (%s)\n"),
-                          this->index_,
-                          str, str2));
-              return;
-            }
-         }
-       else
-         {
-           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("(%t) Sender %d unable to convert host addr\n"),
-                      this->index_));
-           return;
-        }
-     }
-  else
-    {
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%t) Sender %d unable to convert peer addr\n"),
-                  this->index_));
-      return;
-    }
-
   if (0 == local.addr_to_string (str, sizeof (str) / sizeof (ACE_TCHAR)))
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%t) Sender %d connected on %s\n"),
-                  this->index_,
-                  str));
-    }
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("(%t) Sender %d connected on %s\n"),
+                this->index_,
+                str));
   else
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) Receiver %d %p\n"),
                 this->index_,
@@ -1660,13 +1628,13 @@ Sender::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
     if (result.error () == 0 && result.bytes_transferred () > 0)
       {
         this->total_snd_ += result.bytes_transferred ();
-        if (this->total_snd_ >= xfer_limit)
-          {
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("(%t) Sender %d sent %d, limit %d\n"),
-                        this->index_, this->total_snd_, xfer_limit));
-            this->close ();
-          }
+	if (this->total_snd_ >= xfer_limit)
+	  {
+	    ACE_DEBUG ((LM_DEBUG,
+			ACE_TEXT ("(%t) Sender %d sent %d, limit %d\n"),
+			this->index_, this->total_snd_, xfer_limit));
+	    this->close ();
+	  }
         if (duplex != 0)   // full duplex, continue write
           {
             if ((this->total_snd_- this->total_rcv_) < 1024*32 ) //flow control
@@ -1875,11 +1843,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
   // First, set up all the defaults then let any args change them.
   both = 1;                       // client and server simultaneosly
   duplex = 1;                     // full duplex is on
-#if defined (ACE_HAS_IPV6)
-  host = ACE_IPV6_LOCALHOST;      // server to connect (IPv6 localhost)
-#else /* ACE_HAS_IPV6 */
-  host = ACE_LOCALHOST;
-#endif /*ACE_HAS_IPV6 */
+  host = ACE_LOCALHOST;           // server to connect
   port = ACE_DEFAULT_SERVER_PORT; // port to connect/listen
   max_aio_operations = 512;       // POSIX Proactor params
   proactor_type = DEFAULT;        // Proactor type = default
@@ -1901,9 +1865,9 @@ parse_args (int argc, ACE_TCHAR *argv[])
       {
       case 'x':  // xfer limit
         xfer_limit = ACE_static_cast (size_t,
-                                      ACE_OS::atoi (get_opt.opt_arg ()));
+				      ACE_OS::atoi (get_opt.opt_arg ()));
         if (xfer_limit == 0)
-          xfer_limit = 1;          // Bare minimum.
+	  xfer_limit = 1;          // Bare minimum.
         break;
       case 'b':  // both client and server
         both = 1;
@@ -1954,12 +1918,11 @@ parse_args (int argc, ACE_TCHAR *argv[])
 int
 run_main (int argc, ACE_TCHAR *argv[])
 {
-  ACE_START_TEST (ACE_TEXT ("Proactor_Test_IPv6"));
+  ACE_START_TEST (ACE_TEXT ("Proactor_Test"));
 
   if (::parse_args (argc, argv) == -1)
     return -1;
 
-#if defined (ACE_HAS_IPV6)
   disable_signal (ACE_SIGRTMIN, ACE_SIGRTMAX);
   disable_signal (SIGPIPE, SIGPIPE);
 
@@ -1967,16 +1930,16 @@ run_main (int argc, ACE_TCHAR *argv[])
   Acceptor  acceptor;
   Connector connector;
 
-  int rc = 0;
-
   if (task1.start (threads,
                    proactor_type,
                    max_aio_operations) == 0)
     {
+      int rc = 0;
 
       if (both != 0 || host == 0) // Acceptor
         {
-          if (acceptor.open (ACE_INET_Addr (port, "::"), 0, 1) == 0)
+          // Simplify, initial read with zero size
+          if (acceptor.open (ACE_INET_Addr (port), 0, 1) == 0)
             rc = 1;
         }
 
@@ -1984,7 +1947,7 @@ run_main (int argc, ACE_TCHAR *argv[])
         {
           ACE_INET_Addr addr;
           if (host == 0)
-            host = ACE_IPV6_LOCALHOST;
+            host = ACE_LOCALHOST;
 
           if (addr.set (port, host) == -1)
             ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), host));
@@ -1998,7 +1961,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   ACE_OS::sleep (2);
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Sleeping til sessions run down.\n")));
   while (acceptor.get_number_sessions () > 0 ||
-         connector.get_number_sessions () > 0   )
+	 connector.get_number_sessions () > 0   )
     ACE_OS::sleep (1);
 
 #if 0
@@ -2076,7 +2039,6 @@ run_main (int argc, ACE_TCHAR *argv[])
               bufs,
               bufr));
 
-#endif /* ACE_HAS_IPV6 */
   ACE_END_TEST;
 
   return 0;
@@ -2099,11 +2061,11 @@ template class ACE_Asynch_Connector<Sender>;
 int
 run_main (int, ACE_TCHAR *[])
 {
-  ACE_START_TEST (ACE_TEXT ("Proactor_Test_IPv6"));
+  ACE_START_TEST (ACE_TEXT ("Proactor_Test"));
 
   ACE_DEBUG ((LM_INFO,
               ACE_TEXT ("Threads or Asynchronous IO is unsupported.\n")
-              ACE_TEXT ("Proactor_Test_IPv6 will not be run.")));
+              ACE_TEXT ("Proactor_Test will not be run.")));
 
   ACE_END_TEST;
 
