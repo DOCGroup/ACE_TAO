@@ -93,6 +93,7 @@
 #include "tao/any.h"
 #include "tao/poa.h"
 
+#include "tao/tao_internals.h"
 #include "tao/params.h"
 #include "tao/client_factory.h"
 #include "tao/client_factory.h"
