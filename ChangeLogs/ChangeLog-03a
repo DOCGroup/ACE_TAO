@@ -1,3 +1,10 @@
+Wed Jul 31 10:47:54 2002  Chad Elliott  <elliott_c@ociweb.com>
+
+        * include/makeinclude/rules.local.GNU:
+
+          Added a gnu macro (DEPEND_CMD_ARGS) to the g++dep line to allow
+          pasing arguments (such as -R) to g++dep when running "make depend"
+
 Wed Jul 31 08:41:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-win32-mingw.h:
