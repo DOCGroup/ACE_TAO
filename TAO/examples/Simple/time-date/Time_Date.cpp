@@ -49,6 +49,16 @@ DLL_ORB::svc (void)
 int
 DLL_ORB::init (int argc, char *argv[])
 {
+  // Prevent TAO from registering with the ACE_Object_Manager so
+  // that it can be dynamically unloaded successfully.
+  int register_with_object_manager = 0;
+  if (TAO_Singleton_Manager::instance ()->init (
+        register_with_object_manager) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p\n",
+                       "Unable to pre-initialize ORB"),
+                      -1);
+
   ACE_TRY_NEW_ENV
     {
       ACE_DEBUG ((LM_DEBUG,
@@ -79,7 +89,7 @@ DLL_ORB::init (int argc, char *argv[])
 int
 DLL_ORB::fini (void)
 {
-  return 0;
+  return TAO_Singleton_Manager::instance ()->fini ();
 }
 
 int
