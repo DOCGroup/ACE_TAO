@@ -1,3 +1,24 @@
+Wed Dec 30 16:26:51 1998  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
+
+	The following files have been added to the newly created Time
+	directory under orbsvcs/tests.
+
+	* orbsvcs/tests/Time/Makefile: This makefile compiles just the
+	  client test in this directory.
+
+	* orbsvcs/tests/Time/client.cpp: This is the client wrapper.
+
+	* orbsvcs/tests/Time/Client_i.cpp: This class runs the various
+	  tests for the Time Service. It calls the TimeService clerk
+ 	  running on the same machine and asserts the correctness of the
+	  various operations.
+
+	* orbsvcs/tests/Time/Client_i.h: This class runs the various
+	  tests for the Time Service. It calls the TimeService clerk
+ 	  running on the same machine and asserts the correctness of the
+	  various operations.
+
+
 Wed Dec 30 16:19:06 1998  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 	added the following files for the CosEC test to orbsvcs
 	* orbsvcs/tests/CosEC_Basic:
