@@ -66,9 +66,11 @@ TAO_AV_RTP::handle_input (TAO_AV_Transport *transport,
   if (n < size_phdr)
     ACE_ERROR_RETURN ((LM_ERROR,"TAO_AV_RTP::handle_input:invalid header\n"),-1);
   data->wr_ptr (n);
-  int result = transport->get_peer_addr (addr);
-  if (result < 0)
+  ACE_Addr *addr_ptr = 0;
+  addr_ptr = transport->get_peer_addr ();
+  if (addr_ptr == 0)
     ACE_DEBUG ((LM_ERROR,"TAO_AV_RTP::handle_input:get_peer_addr failed\n"));
+  addr = *addr_ptr;
   rtphdr* rh = (rtphdr*)data->rd_ptr ();
   int version = *(u_char*)rh >> 6;
   if (version != 2)
@@ -101,9 +103,9 @@ TAO_AV_RTCP::handle_input (TAO_AV_Transport *transport,
       nrunt_++;
       ACE_ERROR_RETURN ((LM_ERROR,"TAO_AV_RTP::handle_input:invalid header\n"),-1);
     }
-  ACE_Addr peer_addr;
-  int result = transport->get_peer_addr (peer_addr);
-  if (result < 0)
+  ACE_Addr *peer_addr = 0;
+  peer_addr = transport->get_peer_addr ();
+  if (peer_addr == 0)
     ACE_ERROR_RETURN ((LM_ERROR,"TAO_AV_RTP::handle_input:get_peer_addr failed\n"),-1);
   header = *(rtcphdr*) (data->rd_ptr ());
   /*
@@ -133,17 +135,17 @@ TAO_AV_RTCP::handle_input (TAO_AV_Transport *transport,
    * at this point we think the packet's valid.  Update our average
    * size estimator.  Also, there's valid ssrc so charge errors to it
    */
-  result = (n + 28) - rtcp_avg_size_;
+  int result = (n + 28) - rtcp_avg_size_;
   double tmp = ACE_static_cast (double, result);
   tmp *= RTCP_SIZE_GAIN;
   rtcp_avg_size_ += ACE_static_cast (int, tmp);
   ACE_UINT32 addr = 0;
-  switch (peer_addr.get_type ())
+  switch (peer_addr->get_type ())
     {
     case AF_INET:
       {
         ACE_INET_Addr *inet_addr =
-          ACE_static_cast (ACE_INET_Addr *,&peer_addr);
+          ACE_static_cast (ACE_INET_Addr *,peer_addr);
         addr = inet_addr->get_ip_address ();
       }
       break;
@@ -246,6 +248,7 @@ TAO_AV_RTP_UDP_Acceptor::make_svc_handler (TAO_AV_UDP_Flow_Handler *&handler)
   ACE_NEW_RETURN (handler,
                   TAO_AV_RTP_UDP_Flow_Handler (callback),
                   -1);
+  callback->transport (handler->transport ());
   TAO_AV_Protocol_Object *object = 0;
   ACE_NEW_RETURN (object,
                   TAO_AV_RTP_Object (callback,
@@ -278,6 +281,7 @@ TAO_AV_RTP_UDP_Connector::make_svc_handler (TAO_AV_UDP_Flow_Handler *&handler)
   ACE_NEW_RETURN (handler,
                   TAO_AV_RTP_UDP_Flow_Handler (callback),
                   -1);
+  callback->transport (handler->transport ());
   TAO_AV_Protocol_Object *object = 0;
   ACE_NEW_RETURN (object,
                   TAO_AV_RTP_Object (callback,
@@ -406,5 +410,6 @@ TAO_AV_RTP_Object::TAO_AV_RTP_Object (TAO_AV_Callback *callback,
 int
 TAO_AV_RTP_Object::end_stream (void)
 {
-  return -1;
+  this->callback_->handle_end_stream ();
+  return 0;
 }

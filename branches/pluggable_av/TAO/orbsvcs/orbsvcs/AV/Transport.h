@@ -42,7 +42,8 @@ public:
   virtual int close (void) = 0;
 
   virtual int mtu (void) = 0;
-  virtual int get_peer_addr (ACE_Addr &addr) = 0;
+  virtual ACE_Addr *get_peer_addr (void) = 0;
+  virtual ACE_Addr *get_local_addr (void);
   virtual ssize_t send (const ACE_Message_Block *mblk,
                         ACE_Time_Value *s = 0) = 0;
   // Write the complete Message_Block chain to the connection.
@@ -98,7 +99,7 @@ public:
 
   virtual int mtu (void);
 
-  virtual int get_peer_addr (ACE_Addr &addr);
+  virtual ACE_Addr *get_peer_addr (void);
 
   virtual ssize_t send (const ACE_Message_Block *mblk,
                         ACE_Time_Value *s = 0);
@@ -155,7 +156,7 @@ public:
 
   virtual int mtu (void);
 
-  virtual int get_peer_addr (ACE_Addr &addr);
+  virtual ACE_Addr *get_peer_addr (void);
 
   virtual int set_remote_address (const ACE_INET_Addr &address);
 
@@ -444,6 +445,7 @@ class TAO_AV_TCP_Flow_Handler
 public:
   TAO_AV_TCP_Flow_Handler (TAO_AV_Callback *callback = 0);
   virtual TAO_AV_Transport *transport (void);
+  virtual int open (void * = 0);
   virtual int handle_input (ACE_HANDLE fd);
   //  virtual ACE_Event_Handler* event_handler (void){ return this; }
 protected:

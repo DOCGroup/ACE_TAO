@@ -46,8 +46,8 @@ public:
 
   virtual int mtu (void);
 
-  virtual int get_peer_addr (ACE_Addr &addr);
-
+  virtual ACE_Addr *get_peer_addr (void);
+  virtual ACE_Addr *get_local_addr (void);
   virtual ssize_t send (const ACE_Message_Block *mblk,
                         ACE_Time_Value *s = 0);
   // Write the complete Message_Block chain to the connection.
@@ -80,6 +80,7 @@ public:
 protected:
   TAO_AV_UDP_MCast_Flow_Handler *handler_;
   ACE_INET_Addr peer_addr_;
+  ACE_INET_Addr local_addr_;
 };
 
 class TAO_AV_UDP_MCast_Acceptor

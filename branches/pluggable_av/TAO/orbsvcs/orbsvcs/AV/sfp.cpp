@@ -633,8 +633,11 @@ TAO_SFP_Base::send_message (TAO_AV_Transport *transport,
   // we join the data block with the cdr block.
   ACE_Message_Block *end = (ACE_Message_Block *)stream.end ();
   if (end == 0)
-    // There is only one message block.
-    end = (ACE_Message_Block *)stream.begin ();
+    {
+      // There is only one message block.
+      end = (ACE_Message_Block *)stream.begin ();
+      TAO_SFP_Base::dump_buf (end->rd_ptr (),end->length ());
+    }
   end->cont (mb);
   ssize_t n = transport->send (stream.begin ());
   if (n == -1)
@@ -864,6 +867,7 @@ TAO_SFP_Base::peek_frame_header (TAO_AV_Transport *transport,
                       ACE_TRY_ENV);
           ACE_TRY_CHECK;
         }
+      TAO_SFP_Base::dump_buf (buf,n);
     }
   ACE_CATCHANY
     {
@@ -915,7 +919,7 @@ TAO_SFP_Base::dump_buf (char *buffer,int size)
   char *buf = buffer;
   ACE_DEBUG ((LM_DEBUG,"\n========================================\n"));
   for (int i=0;i<size;i++)
-    ACE_DEBUG ((LM_DEBUG,"%c",buf[i]));
+    ACE_DEBUG ((LM_DEBUG,"%d ",buf[i]));
   ACE_DEBUG ((LM_DEBUG,"\n========================================\n"));
 }
 
@@ -973,17 +977,17 @@ TAO_SFP_UDP_Acceptor::make_svc_handler (TAO_AV_UDP_Flow_Handler *&handler)
   // @@ We should actually look at the entry and find out if we're a
   // sink or a source and create the appropriate handler
   ACE_DEBUG ((LM_DEBUG,"TAO_SFP_UDP_Acceptor::make_svc_handler\n"));
-  //  TAO_SFP_Base *sfp_base = TAO_SFP_BASE::instance ();
+  TAO_SFP_BASE::instance ();
   TAO_SFP_Object *object;
   TAO_AV_Callback *callback;
   this->endpoint_->get_callback (this->entry_->flowname (),callback);
   ACE_NEW_RETURN (object,
                   TAO_SFP_Object (callback),
                   -1);
-
   ACE_NEW_RETURN (handler,
                   TAO_SFP_UDP_Sender_Handler (object),
                   -1);
+  callback->transport (handler->transport ());
   object->transport (handler->transport ());
   this->endpoint_->set_protocol_object (this->entry_->flowname (),
                                         object);
@@ -1040,7 +1044,7 @@ int
 TAO_SFP_UDP_Connector::make_svc_handler (TAO_AV_UDP_Flow_Handler *&handler)
 {
   ACE_DEBUG ((LM_DEBUG,"TAO_SFP_UDP_Connector::make_svc_handler\n"));
-  //  TAO_SFP_Base *sfp_base = TAO_SFP_BASE::instance ();
+  TAO_SFP_BASE::instance ();
   // @@ We should actually look at the entry and find out if we're a
   // sink or a source and create the appropriate handler
   TAO_AV_Callback *callback = 0;
@@ -1053,6 +1057,8 @@ TAO_SFP_UDP_Connector::make_svc_handler (TAO_AV_UDP_Flow_Handler *&handler)
   ACE_NEW_RETURN (object,
                   TAO_SFP_Object (callback),
                   -1);
+  callback->transport (handler->transport ());
+  object->transport (handler->transport ());
   this->endpoint_->set_protocol_object (this->entry_->flowname (),
                                         object);
   this->entry_->protocol_object (object);

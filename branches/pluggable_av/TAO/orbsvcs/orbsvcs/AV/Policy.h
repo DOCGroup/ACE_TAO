@@ -75,6 +75,10 @@ public:
   virtual int handle_stop (void);
   virtual int receive_frame (ACE_Message_Block *frame);
   virtual int handle_end_stream (void);
+  TAO_AV_Transport *transport (void);
+  void transport (TAO_AV_Transport *transport);
+protected:
+  TAO_AV_Transport *transport_;
 };
 
 class TAO_AV_Protocol_Object

@@ -32,31 +32,6 @@
 //#define TAO_SFP_MAX_PACKET_SIZE ACE_MAX_DGRAM_SIZE
 #define TAO_SFP_MAX_PACKET_SIZE 132
 
-// class TAO_ORBSVCS_Export TAO_SFP_Callback
-// {
-//   // =TITLE
-//   //    Callback interface for SFP.
-//   //
-//   // =Description
-//   //    Application should create a callback object which they
-//   //    register with the SFP. The SFP implementation notifies the
-//   //    applicationn of any changes in the stream status like stream
-//   //    established, stream ended.
-// public:
-//   virtual int start_failed (void);
-//   // This is called for both active and passive start.
-
-//   virtual int stream_established (void);
-//   // This is a callback for both active and passive stream
-//   // establshment.
-
-//   virtual int receive_frame (ACE_Message_Block *frame);
-//   // upcall to the application to receive a frame.
-
-//   virtual void end_stream (void);
-//   // called when the EndofStream message is received.
-// };
-
 class TAO_SFP_Fragment_Node
 {
 public:
