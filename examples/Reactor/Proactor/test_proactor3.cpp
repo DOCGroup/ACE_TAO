@@ -19,9 +19,6 @@
 //    from original test_proactor.cpp
 // ============================================================================
 
-#include <list>
-using namespace std;
-
 #include "ace/Signal.h"
 
 #include "ace/Service_Config.h"
@@ -58,7 +55,9 @@ ACE_RCSID(Proactor, test_proactor, "test_proactor.cpp,v 1.27 2000/03/07 17:15:56
 
 //  Some debug helper functions
 static int disable_signal (int sigmin, int sigmax);
+#if 0
 static int print_sigmask (void);
+#endif
 
 #define  COUT(X)  cout << X; cout.flush ();
 
@@ -128,9 +127,11 @@ MyTask::create_proactor (void)
         case 2:	proactor = new ACE_POSIX_SIG_Proactor; 
           ACE_DEBUG ((LM_DEBUG,"(%t) Create Proactor Type=SIG"));
           break;
+#  if defined (sun)
         case 3:	proactor = new ACE_SUN_Proactor (max_aio_operations);
           ACE_DEBUG ((LM_DEBUG,"(%t) Create Proactor Type=SUN"));
           break;
+#  endif /* sun */
         default:proactor = new ACE_POSIX_SIG_Proactor;
           ACE_DEBUG ((LM_DEBUG,"(%t) Create Proactor Type=SIG"));
           break;
@@ -187,7 +188,7 @@ public:
 		     ACE_Message_Block &message_block);
   // This is called after the new connection has been accepted.
 
-  static long get_number_sessions (void) const { return sessions_; }
+  static long get_number_sessions (void) { return sessions_; }
 
 protected:
   // These methods are called by the framework
@@ -249,7 +250,7 @@ Receiver::check_destroy (void)
 
 void 
 Receiver::open (ACE_HANDLE handle,
-		ACE_Message_Block &message_block)
+		ACE_Message_Block &)
 {
   ACE_DEBUG ((LM_DEBUG,
               "%N:%l:Receiver::open called\n"));
@@ -645,7 +646,7 @@ Sender::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
 }
 
 static int
-proactor_type (const char *ptype)
+set_proactor_type (const char *ptype)
 {
   if (!ptype) 
     return false;
@@ -654,8 +655,10 @@ proactor_type (const char *ptype)
     {
     case 'D' :  proactor_type = 0; return true;
     case 'A' :  proactor_type = 1; return true;
-    case 'I' :  proactor_type = 2; return true; 
+    case 'I' :  proactor_type = 2; return true;
+#if defined (sun)
     case 'S' :  proactor_type = 3; return true;
+#endif /* sun */
     }
   return false;
 }
@@ -688,7 +691,7 @@ parse_args (int argc, char *argv[])
         max_aio_operations = ACE_OS::atoi (get_opt.optarg);
 		break;
       case 't':    //  Proactor Type
-	if (proactor_type (get_opt.optarg))
+	if (set_proactor_type (get_opt.optarg))
           break;
       case 'u':
       default:
@@ -736,7 +739,7 @@ main (int argc, char *argv[])
   // wait for creation of Proactor
   task1.waitready ();
 
-  list<Sender *> send_list;
+  Sender * send_list[senders];
 
   ACE_Asynch_Acceptor<Receiver> acceptor;
 
@@ -752,14 +755,11 @@ main (int argc, char *argv[])
     }
   else
     {
-      for (i = 0; i < senders; i ++)
-        send_list.push_back (new Sender);
+      for (i = 0; i < senders; ++i)
+        send_list[i] = new Sender;
 
-      list<Sender*>::iterator it1 = send_list.begin ();
-      list<Sender*>::iterator it2 = send_list.end ();
-
-      for (; it1 != it2; it1++)
-        if ((*it1)->open (host, port) == 0)
+      for (i = 0; i < senders; ++i)
+        if (send_list[i]->open (host, port) == 0)
           rc++;
     }
 
@@ -774,11 +774,8 @@ main (int argc, char *argv[])
 
   if (host != 0) // we are sender
     {
-      list<Sender*>::iterator it1 = send_list.begin ();
-      list<Sender*>::iterator it2 = send_list.end ();
-
-      for (; it1 != it2; it1++)
-        (*it1)->close ();
+      for (i = 0; i < senders; ++i)
+        send_list[i]->close ();
     }
 
 
@@ -791,13 +788,10 @@ main (int argc, char *argv[])
         << Receiver::get_number_sessions () 
         << flush;
 
-  list<Sender*>::iterator it1 = send_list.begin ();
-  list<Sender*>::iterator it2 = send_list.end ();
-
-  for (; it1 != it2; it1++)
+  for (i = 0; i < senders; ++i)
     {
-      delete (*it1);
-      *it1 = 0;
+      delete (send_list[i]);
+      send_list[i] = 0;
     }
 
   return 0;
@@ -829,6 +823,7 @@ disable_signal (int sigmin, int sigmax)
 
 // Get the <signal_set> back from the OS.
 
+#if 0
 static int 
 print_sigmask (void)
 {
@@ -859,7 +854,7 @@ print_sigmask (void)
 #endif /* ACE_WIN32 */
   return 0;
 }
-
+#endif /* 0 */
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Asynch_Acceptor<Receiver>;
