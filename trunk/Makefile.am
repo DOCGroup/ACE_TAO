@@ -112,7 +112,7 @@ endif
 ## Directories to include in the distribution but which I am too lazy to
 ## create Makefile.am files for.  A Makefile.am for these directories isn't
 ## needed anyway.
-ACE_EXTRA_DIST = ./bin ./docs ./m4
+ACE_EXTRA_DIST = $(top_srcdir)/bin $(top_srcdir)/docs $(top_srcdir)/m4
 
 ## Make sure config.h doesn't get into the distribution
 ## since it may later intefere with the newly generated
