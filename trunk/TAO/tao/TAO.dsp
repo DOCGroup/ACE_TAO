@@ -1073,6 +1073,10 @@ SOURCE=.\Thread_Per_Connection_Handler.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\TimeBaseA.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\TimeBaseC.cpp
 # ADD CPP /GR
 # End Source File
@@ -2212,6 +2216,10 @@ SOURCE=.\Thread_Lane_Resources_Manager.h
 # Begin Source File
 
 SOURCE=.\Thread_Per_Connection_Handler.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\TimeBaseA.h
 # End Source File
 # Begin Source File
 
