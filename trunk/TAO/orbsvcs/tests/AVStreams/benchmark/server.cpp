@@ -21,7 +21,7 @@ Server::Server (CORBA::ORB_ptr orb, PortableServer::POA_ptr poa)
 CORBA::ORB_ptr
 Server::orb (void)
 {
-  return this->orb_;
+  return this->orb_.in ();
 }
 
 // Initializes the server
@@ -139,9 +139,9 @@ main (int argc, char **argv)
     = orb->resolve_initial_references ("RootPOA");
   
   PortableServer::POA_var poa
-    = PortableServer::POA::_narrow (obj);
+    = PortableServer::POA::_narrow (obj.in ());
   
-  Server server (orb, poa);
+  Server server (orb.in (), poa.in ());
 
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY

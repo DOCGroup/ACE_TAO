@@ -479,7 +479,7 @@ main (int argc, char **argv)
     = orb->resolve_initial_references ("RootPOA");
   
   PortableServer::POA_var poa
-    = PortableServer::POA::_narrow (obj);
+    = PortableServer::POA::_narrow (obj.in ());
   
   //Activate POA Manager
   PortableServer::POAManager_var mgr
