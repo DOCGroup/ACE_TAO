@@ -17,6 +17,47 @@
 
 ACE_RCSID(tao, UIOP_Connect, "$Id$")
 
+#if defined (ACE_ENABLE_TIMEPROBES)
+
+  static const char *TAO_UIOP_Connect_Timeprobe_Description[] =
+{
+  "UIOP_Server_Connection_Handler::handle_input - start",
+  "UIOP_Server_Connection_Handler::handle_input - end",
+
+  "UIOP_Server_Connection_Handler::handle_locate - start",
+  "UIOP_Server_Connection_Handler::handle_locate - end",
+
+  "UIOP_Server_Connection_Handler::receive_request - end",
+
+  "UIOP_Client_Connection_Handler::send_request - start",
+  "UIOP_Client_Connection_Handler::send_request - end",
+
+  "GIOP::Send_Request - return"
+};
+
+enum
+{
+  // Timeprobe description table start key
+  TAO_UIOP_SERVER_CONNECTION_HANDLER_HANDLE_INPUT_START = 300,
+  TAO_UIOP_SERVER_CONNECTION_HANDLER_HANDLE_INPUT_END,
+
+  TAO_UIOP_SERVER_CONNECTION_HANDLER_HANDLE_LOCATE_START,
+  TAO_UIOP_SERVER_CONNECTION_HANDLER_HANDLE_LOCATE_END,
+
+  TAO_UIOP_SERVER_CONNECTION_HANDLER_RECEIVE_REQUEST_END,
+
+  TAO_UIOP_CLIENT_CONNECTION_HANDLER_SEND_REQUEST_START,
+  TAO_UIOP_CLIENT_CONNECTION_HANDLER_SEND_REQUEST_END,
+
+  GIOP_SEND_REQUEST_RETURN
+};
+
+// Setup Timeprobes
+ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_UIOP_Connect_Timeprobe_Description,
+                                  TAO_UIOP_SERVER_CONNECTION_HANDLER_SEND_RESPONSE_START);
+
+#endif /* ACE_ENABLE_TIMEPROBES */
+
 TAO_UIOP_Handler_Base::TAO_UIOP_Handler_Base (TAO_ORB_Core *orb_core)
     : TAO_UIOP_SVC_HANDLER (orb_core->thr_mgr (), 0, 0)
 {

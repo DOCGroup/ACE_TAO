@@ -132,7 +132,7 @@ public:
                               CORBA::ULong request_id,
                               CORBA::Boolean is_twoway,
                               TAO_OutputCDR &output,
-                              CORBA::Environment &ACE_TRY_ENV)
+                              CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Fill into <output> the right headers to make a request.
 
@@ -140,7 +140,7 @@ public:
                              const TAO_Profile *profile,
                              CORBA::ULong request_id,
                              TAO_OutputCDR &output,
-                             CORBA::Environment &ACE_TRY_ENV)
+                             CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Fill into <output> the right headers to make a locate request.
 

@@ -80,7 +80,7 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const TAO_IIOP_Profile &pfile)
 
 TAO_IIOP_Profile::TAO_IIOP_Profile (const char *string,
                                     TAO_ORB_Core *orb_core,
-                                    CORBA::Environment &env)
+                                    CORBA::Environment &ACE_TRY_ENV)
   : TAO_Profile (TAO_IOP_TAG_INTERNET_IOP),
     host_ (0),
     port_ (0),
@@ -90,7 +90,7 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const char *string,
     hint_ (0),
     orb_core_ (orb_core)
 {
-  parse_string (string, env);
+  parse_string (string, ACE_TRY_ENV);
 }
 
 TAO_IIOP_Profile::TAO_IIOP_Profile (TAO_ORB_Core *orb_core)
@@ -316,11 +316,9 @@ TAO_IIOP_Profile::is_equivalent (const TAO_Profile *other_profile)
 
 CORBA::ULong
 TAO_IIOP_Profile::hash (CORBA::ULong max,
-                        CORBA::Environment &env)
+                        CORBA::Environment &)
 {
   CORBA::ULong hashval;
-
-  env.clear ();
 
   // Just grab a bunch of convenient bytes and hash them; could do
   // more (hostname, full key, exponential hashing) but no real need
@@ -412,10 +410,8 @@ TAO_IIOP_Profile::operator= (const TAO_IIOP_Profile &src)
 }
 
 CORBA::String
-TAO_IIOP_Profile::to_string (CORBA::Environment &env)
+TAO_IIOP_Profile::to_string (CORBA::Environment &)
 {
-  ACE_UNUSED_ARG (env);
-
   CORBA::String_var key;
   TAO_POA::encode_sequence_to_string (key.inout(),
                                       this->object_key ());
