@@ -5,6 +5,26 @@ Thu Jan 29 10:52:34 1998  David L. Levine  <levine@cs.wustl.edu>
         * include/makeinclude/platform_sunos5_g++.GNU: added comment
           about disabling optimization with g++ 2.8.0.
 
+        * include/makeinclude/platform_sunos5_egcs.GNU: include
+          the g++ platform file, it works just fine.  The net effect
+          on egcs is these three changes:
+
+          1) -fno-implicit-templates is included in CPPFLAGS.  That
+             option is necessary with the egcs (egcs-2.90.23 980102
+             (egcs-1.0.1 release)) that we use to save _much_ text
+             space.
+
+          2) Use -G instead of -shared in SOFLAGS.  That way,
+             libstc++.so, etc., need not be built.
+
+          3) The compiler is called g++ instead of c++.  I don't
+             think this hurts anything.  And Purify knows about g++,
+             but not g++.
+
+          These (and any other) options can be overridden in
+          platform_sunos5_egcs.GNU if necessary.  See the commented
+          example there.
+
 Thu Jan 29 10:32:28 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * include/makeinclude/platform_sunos5_sunc++.GNU:
