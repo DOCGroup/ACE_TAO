@@ -1,12 +1,37 @@
 Mon Jan  5 01:20:51 1998  Nanbor Wang  <nw1@cs.wustl.edu>
 
-	* ace/Map_Manager.{h,cpp}: Made operator == and != and their
-	  arguments const.
+        * ace/Map_Manager.{h,cpp}: Made operator == and != and their
+          arguments const.
 
 Sun Jan 04 19:45:47 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.i (rw_trywrlock_upgrade): added ACE_UNUSED_ARG (rw)
           to temporary code.
+
+        * ace/Basic_Types.{h,i}: replaced ACE_HAS_LONGLONG_T with
+          ACE_LACKS_LONGLONG_T.  ACE_HAS_LONGLONG_T was no longer
+          being used on many platforms with the scheme in Basic_Types.h.
+          From now on, we'll assume that a platform has long long
+          (unless ACE_LACKS_LONGLONG_T is #defined), which should help
+          porting to new platforms.
+
+        * ace/config-aix-4.{1,2}.x.h,config-dgux-4.11-epc.h,
+          config-linux-{common,kcc}.h,config-lynxos.h,config-m88k.h,
+          config-osf1-*.h,config-sunos5.*.h,config-tandem.h:
+          removed ACE_HAS_LONGLONG_T.
+
+        * ace/config-chorus.h,config-psosim-g++.h,config-vxworks*.h:
+          added ACE_LACKS_LONGLONG_T.
+
+        * ace/Basic_Types.{h,i} (ACE_U_LongLong):  fixed operator/, and
+          added operator% and operator--.
+
+        * ace/High_Res_Timer.*: changed type of global_scale_factor_ from
+          u_long to ACE_UINT32.  Removed some hacks now that ACE_U_LongLong
+          has operator%.
+
+        * tests/Time_Value_Test.cpp: added tests of ACE_U_LongLong
+          operator/ and operator%.
 
 Sun Jan 04 17:19:31 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -14,29 +39,29 @@ Sun Jan 04 17:19:31 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Sun Jan  4 10:11:53 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/OS.i (rw_trywrlock_upgrade): Temporarily comments out this
- 	  method since we need to finish implementing it correctly.
+        * ace/OS.i (rw_trywrlock_upgrade): Temporarily comments out this
+          method since we need to finish implementing it correctly.
 
-	* ace/OS.i (rw_trywrlock_upgrade): Fixed a minor bug where we
- 	  weren't releasing the lock correctly if there were competing
- 	  readers.
+        * ace/OS.i (rw_trywrlock_upgrade): Fixed a minor bug where we
+          weren't releasing the lock correctly if there were competing
+          readers.
 
-	* apps/Gateway/Gateway/Event_Channel.cpp (put): Uncommented the
- 	  code that sets the appropriate locking strategy for the Message
- 	  Blocks.
+        * apps/Gateway/Gateway/Event_Channel.cpp (put): Uncommented the
+          code that sets the appropriate locking strategy for the Message
+          Blocks.
 
-	* apps/Gateway/Gateway/Connection_Handler.h: Made the
- 	  remote_addr() and local_addr() accessor methods return
- 	  const-correct values.
+        * apps/Gateway/Gateway/Connection_Handler.h: Made the
+          remote_addr() and local_addr() accessor methods return
+          const-correct values.
 
-	* build/SunOS5.5/ace/OS: Revised a bunch of #ifdefs so that we can
- 	  selectively enable the ACE rwlock emulation, even if we're
- 	  compiling with ACE_HAS_STHREADS in order to get the native
- 	  Solaris semaphores.
+        * build/SunOS5.5/ace/OS: Revised a bunch of #ifdefs so that we can
+          selectively enable the ACE rwlock emulation, even if we're
+          compiling with ACE_HAS_STHREADS in order to get the native
+          Solaris semaphores.
 
-	* apps/Gateway/Peer/Makefile: Tweaked the Makefile rules to fix
- 	  some minor problems.  Thanks to David Levine for showing the
- 	  way...
+        * apps/Gateway/Peer/Makefile: Tweaked the Makefile rules to fix
+          some minor problems.  Thanks to David Levine for showing the
+          way...
 
 Sun Jan 04 12:37:02 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -54,33 +79,33 @@ Sun Jan 04 12:37:02 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Sun Jan 04 09:51:59 1998  Nanbor Wang  <nw1@cs.wustl.edu>
 
-	* apps/Gateway/Gateway/Options.{h,cpp}: Removed macros to export
- 	  this class out of DLL.  They are no longer needed.
+        * apps/Gateway/Gateway/Options.{h,cpp}: Removed macros to export
+          this class out of DLL.  They are no longer needed.
 
-	* apps/Gateway/Gateway/Gateway.dsp:  Updated source file listings.
+        * apps/Gateway/Gateway/Gateway.dsp:  Updated source file listings.
 
 Sat Jan  3 22:25:15 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* apps/Gateway/Gateway: Changed the name of the ACE_Event_Channel
- 	  class to Event_Channel since this class wasn't a part of the ACE
- 	  library.
+        * apps/Gateway/Gateway: Changed the name of the ACE_Event_Channel
+          class to Event_Channel since this class wasn't a part of the ACE
+          library.
 
-	* apps/Gateway/Gateway/Event_Channel.h: Updated the inheritance
- 	  relationship for Event_Channel so that it inherits from
- 	  ACE_Event_Handler rather than ACE_Task.  ACE_Task was
- 	  overkill...
+        * apps/Gateway/Gateway/Event_Channel.h: Updated the inheritance
+          relationship for Event_Channel so that it inherits from
+          ACE_Event_Handler rather than ACE_Task.  ACE_Task was
+          overkill...
 
-	* apps/Gateway/Gateway: Removed the supplier_id from all the
- 	  files.  We didn't use this anyway and it was just confusing.
-  	  Also, renamed Proxy_* to Connection_* to underscore the fact
- 	  that the Supplier_Handler and Consumer_Handler work atop
- 	  *connections*.  The previous naming scheme was too abstract for
- 	  its own good.
+        * apps/Gateway/Gateway: Removed the supplier_id from all the
+          files.  We didn't use this anyway and it was just confusing.
+          Also, renamed Proxy_* to Connection_* to underscore the fact
+          that the Supplier_Handler and Consumer_Handler work atop
+          *connections*.  The previous naming scheme was too abstract for
+          its own good.
 
 Sat Jan 03 14:16:40 1998  Nanbor Wang  <nw1@cs.wustl.edu>
 
-	* ace/Map_Manager.cpp (ACE_Map[_Reverse]_Iterator): Fixed the
- 	  initial iterator position.
+        * ace/Map_Manager.cpp (ACE_Map[_Reverse]_Iterator): Fixed the
+          initial iterator position.
 
 Fri Jan 02 18:43:14 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -88,127 +113,127 @@ Fri Jan 02 18:43:14 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Fri Jan  2 17:39:04 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* apps/Gateway/Peer/Options.cpp (Options): Rearranged the order of
- 	  the parameters in the base/member initialization section to make
- 	  GCC happy.  Thanks to David Levine for getting on me about this.
+        * apps/Gateway/Peer/Options.cpp (Options): Rearranged the order of
+          the parameters in the base/member initialization section to make
+          GCC happy.  Thanks to David Levine for getting on me about this.
 
-	* apps/Gateway/Gateway/Options.h: Changed DEFAULT_TIMEOUT
-	  to MAX_TIMEOUT to be consistent.  Thanks to David
-	  Levine for reporting this.
+        * apps/Gateway/Gateway/Options.h: Changed DEFAULT_TIMEOUT
+          to MAX_TIMEOUT to be consistent.  Thanks to David
+          Levine for reporting this.
 
 Fri Jan  2 17:25:05 1998  Nanbor Wang  <nw1@cs.wustl.edu>
 
-	* tests/Map_Manager_Test.cpp: Added codes to test STL-styled
-	  functions in ACE_Map_Manager.
+        * tests/Map_Manager_Test.cpp: Added codes to test STL-styled
+          functions in ACE_Map_Manager.
 
-	* apps/Gateway/Gateway/Proxy_Handler.cpp:
-	* apps/Gateway/Gateway/Proxy_Handler_Connector.cpp:
-	* apps/Gateway/Gateway/Event_Channel.cpp:
-	* apps/Gateway/Peer/Peer.cpp:
-	* ace/Local_Name_Space.cpp:
-	* examples/ASX/Event_Server/Event_Server/Peer_Router.cpp:
-	* examples/ASX/Event_Server/Transceiver/transceiver.cpp:
-	* examples/ASX/UPIPE_Event_Server/Supplier_Router.cpp:
-	* examples/ASX/UPIPE_Event_Server/Consumer_Router.cpp:
-	* examples/Connection/blocking/SPIPE-connector.cpp:
-	* examples/Connection/misc/test_upipe.cpp:
-	* examples/Connection/non_blocking/test_sock_connector.cpp:
-	* examples/Connection/non_blocking/test_spipe_connector.cpp:
-	* examples/Connection/non_blocking/test_tli_connector.cpp:
-	* examples/Connection/non_blocking/test_lsock_connector.cpp:
-	* netsvcs/clients/Tokens/manual/manual.cpp:
-	* netsvcs/lib/TS_Clerk_Handler.cpp:
-	* apps/Gateway/Gateway/Proxy_Handler_Connector.cpp: Added some
-	  more explicit template instantiations.
+        * apps/Gateway/Gateway/Proxy_Handler.cpp:
+        * apps/Gateway/Gateway/Proxy_Handler_Connector.cpp:
+        * apps/Gateway/Gateway/Event_Channel.cpp:
+        * apps/Gateway/Peer/Peer.cpp:
+        * ace/Local_Name_Space.cpp:
+        * examples/ASX/Event_Server/Event_Server/Peer_Router.cpp:
+        * examples/ASX/Event_Server/Transceiver/transceiver.cpp:
+        * examples/ASX/UPIPE_Event_Server/Supplier_Router.cpp:
+        * examples/ASX/UPIPE_Event_Server/Consumer_Router.cpp:
+        * examples/Connection/blocking/SPIPE-connector.cpp:
+        * examples/Connection/misc/test_upipe.cpp:
+        * examples/Connection/non_blocking/test_sock_connector.cpp:
+        * examples/Connection/non_blocking/test_spipe_connector.cpp:
+        * examples/Connection/non_blocking/test_tli_connector.cpp:
+        * examples/Connection/non_blocking/test_lsock_connector.cpp:
+        * netsvcs/clients/Tokens/manual/manual.cpp:
+        * netsvcs/lib/TS_Clerk_Handler.cpp:
+        * apps/Gateway/Gateway/Proxy_Handler_Connector.cpp: Added some
+          more explicit template instantiations.
 
-	* ace/Map_Manager.{h,cpp}:  Added back comparison operators for
-	  ACE_Map_Iterator and ACE_Map_Reverse_Iterator.
+        * ace/Map_Manager.{h,cpp}:  Added back comparison operators for
+          ACE_Map_Iterator and ACE_Map_Reverse_Iterator.
 
-	* ace/Token_Invariants.cpp:
-	* ace/Token_Collection.cpp:
-	* ace/Token_Manager.cpp: Added missing ACE_Map_Reverse_Iterator.
+        * ace/Token_Invariants.cpp:
+        * ace/Token_Collection.cpp:
+        * ace/Token_Manager.cpp: Added missing ACE_Map_Reverse_Iterator.
 
-	* ace/Map_Manager.h: Remove unnecessary method declarations from
- 	  ACE_Map_Iterator adn ACE_Map_Reverse_Iterator.
+        * ace/Map_Manager.h: Remove unnecessary method declarations from
+          ACE_Map_Iterator adn ACE_Map_Reverse_Iterator.
 
-	* examples/Connection/non_blocking/test_tli_connector.cpp:
-	* examples/Connection/non_blocking/test_sock_connector.cpp:
-	* examples/Connection/non_blocking/test_lsock_connector.cpp:
-	* examples/Connection/non_blocking/test_spipe_connector.cpp:
-	* examples/Connection/misc/test_upipe.cpp:
-	* examples/Connection/blocking/SPIPE-connector.cpp:
-	* examples/ASX/UPIPE_Event_Server/Supplier_Router.cpp:
-	* examples/ASX/UPIPE_Event_Server/Consumer_Router.cpp:
-	* examples/ASX/Event_Server/Transceiver/transceiver.cpp:
-	* examples/ASX/Event_Server/Event_Server/Peer_Router.cpp:
-	* apps/JAWS/clients/Caching/http_handler.cpp:
-	* apps/JAWS/clients/Blobby/Blob.cpp:
-	* apps/Gateway/Peer/Peer.cpp:
-	* apps/Gateway/Gateway/Event_Channel.cpp:
-	* apps/Gateway/Gateway/Proxy_Handler.cpp:
-	* apps/Gateway/Gateway/Proxy_Handler_Connector.cpp:
-	* tests/Reactor_Performance_Test.cpp:
-	* tests/Priority_Reactor_Test.cpp:
-	* tests/Map_Manager_Test.cpp:
-	* tests/Conn_Test.cpp:
-	* netsvcs/lib/TS_Clerk_Handler.cpp:
-	* ace/Token_Manager.cpp:
-	* ace/Token_Invariants.cpp:
-	* ace/Token_Collection.cpp:
-	* ace/Local_Name_Space.cpp: Added explicit template instantiation
- 	  for ACE_Map_Iterator_Base.
+        * examples/Connection/non_blocking/test_tli_connector.cpp:
+        * examples/Connection/non_blocking/test_sock_connector.cpp:
+        * examples/Connection/non_blocking/test_lsock_connector.cpp:
+        * examples/Connection/non_blocking/test_spipe_connector.cpp:
+        * examples/Connection/misc/test_upipe.cpp:
+        * examples/Connection/blocking/SPIPE-connector.cpp:
+        * examples/ASX/UPIPE_Event_Server/Supplier_Router.cpp:
+        * examples/ASX/UPIPE_Event_Server/Consumer_Router.cpp:
+        * examples/ASX/Event_Server/Transceiver/transceiver.cpp:
+        * examples/ASX/Event_Server/Event_Server/Peer_Router.cpp:
+        * apps/JAWS/clients/Caching/http_handler.cpp:
+        * apps/JAWS/clients/Blobby/Blob.cpp:
+        * apps/Gateway/Peer/Peer.cpp:
+        * apps/Gateway/Gateway/Event_Channel.cpp:
+        * apps/Gateway/Gateway/Proxy_Handler.cpp:
+        * apps/Gateway/Gateway/Proxy_Handler_Connector.cpp:
+        * tests/Reactor_Performance_Test.cpp:
+        * tests/Priority_Reactor_Test.cpp:
+        * tests/Map_Manager_Test.cpp:
+        * tests/Conn_Test.cpp:
+        * netsvcs/lib/TS_Clerk_Handler.cpp:
+        * ace/Token_Manager.cpp:
+        * ace/Token_Invariants.cpp:
+        * ace/Token_Collection.cpp:
+        * ace/Local_Name_Space.cpp: Added explicit template instantiation
+          for ACE_Map_Iterator_Base.
 
-	* ace/Map_Manager.{h,cpp}: Added a new class ACE_Map_Iterator_Base
- 	  to abstract out most common functionalities from
-	  ACE_Map_Iterator and ACE_Map_Reverse_Iterator.  Added some
-	  missing functions to both iterator classes.
+        * ace/Map_Manager.{h,cpp}: Added a new class ACE_Map_Iterator_Base
+          to abstract out most common functionalities from
+          ACE_Map_Iterator and ACE_Map_Reverse_Iterator.  Added some
+          missing functions to both iterator classes.
 
 Fri Jan  2 12:39:45 1998  Carlos O'Ryan  <coryan@swarm.cs.wustl.edu>
 
-	* ace/Map_Manager.h:
-	  Another declaration removed from ACE_Map_Reverse_Iterator,
-	  operator* is defined in the base class.
+        * ace/Map_Manager.h:
+          Another declaration removed from ACE_Map_Reverse_Iterator,
+          operator* is defined in the base class.
 
-	* tests/Conn_Test.cpp:
-	* tests/Priority_Reactor_Test.cpp:
-	* tests/Reactor_Performance_Test.cpp:
-	  The instantiation of ACE_Map_Manager *requires* instantiating
-	  ACE_Map_Reverse_Iterator.
+        * tests/Conn_Test.cpp:
+        * tests/Priority_Reactor_Test.cpp:
+        * tests/Reactor_Performance_Test.cpp:
+          The instantiation of ACE_Map_Manager *requires* instantiating
+          ACE_Map_Reverse_Iterator.
 
-	* ace/OS.i:
-	  Cannot use ACE_ASSERT in OS.i, at least it make SGI compiler
-	  unhappy.
+        * ace/OS.i:
+          Cannot use ACE_ASSERT in OS.i, at least it make SGI compiler
+          unhappy.
 
-	* ace/Map_Manager.cpp:
-	  Several methods for ACE_Map_Manager were not given their fully
-	  qualified name.
+        * ace/Map_Manager.cpp:
+          Several methods for ACE_Map_Manager were not given their fully
+          qualified name.
 
-	* ace/OS.i:
-	  The error code should be stored in errno, not in "error".
+        * ace/OS.i:
+          The error code should be stored in errno, not in "error".
 
 Fri Jan  2 17:02:36 1998  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
 
-	* tests/run_tests.sh: Added Env_Value_Test to the list of tests to
- 	  run.
+        * tests/run_tests.sh: Added Env_Value_Test to the list of tests to
+          run.
 
-	* tests/Env_Value_Test.cpp (main): Fixed wrong test for negative
- 	  values with unsigned longs.  Thanks to David Levine and
- 	  Linux/Alpha for finding this.
+        * tests/Env_Value_Test.cpp (main): Fixed wrong test for negative
+          values with unsigned longs.  Thanks to David Levine and
+          Linux/Alpha for finding this.
 
-	* tests/Env_Value_Test.cpp (main): Changed the definition of the
- 	  TEST_THIS macro to be all on one line.  While ugly, this helps in
- 	  locating the line when ACE_ASSERT fails, since allowing the macro
- 	  to have multiple lines skews the line # reported by ACE_ASSERT.
+        * tests/Env_Value_Test.cpp (main): Changed the definition of the
+          TEST_THIS macro to be all on one line.  While ugly, this helps in
+          locating the line when ACE_ASSERT fails, since allowing the macro
+          to have multiple lines skews the line # reported by ACE_ASSERT.
 
-	* ace/Env_Value_T.*: Fixed lots of little bugs that got past both
- 	  g++ and Solaris compilers, but were caught by the ever-skeptical
- 	  SGI compiler.  This included providing a definition for the missing
-	  'varname(void)' method.
+        * ace/Env_Value_T.*: Fixed lots of little bugs that got past both
+          g++ and Solaris compilers, but were caught by the ever-skeptical
+          SGI compiler.  This included providing a definition for the missing
+          'varname(void)' method.
 
 Fri Jan 02 10:12:28 1998  Steve Huston  <shuston@riverace.com>
 
-	* ace/config-hpux-10.x-g++.h: Added #define HPUX_10 to catch OS
-	  version-dependent code correctly.
+        * ace/config-hpux-10.x-g++.h: Added #define HPUX_10 to catch OS
+          version-dependent code correctly.
 
 Fri Jan 02 07:06:44 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -248,12 +273,12 @@ Fri Jan 02 00:47:33 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Fri Jan  2 00:17:04 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* Reader_Writer_Test.cpp: Changed from an ACE_RW_Mutex to an
- 	  ACE_RW_Thread_Mutex so that we can use the new
- 	  tryacquire_write_upgrade() method.
+        * Reader_Writer_Test.cpp: Changed from an ACE_RW_Mutex to an
+          ACE_RW_Thread_Mutex so that we can use the new
+          tryacquire_write_upgrade() method.
 
-	* ace/Env_Value_T.h: Reformatted the file a bit to conform to
-	  ACE coding conventions.
+        * ace/Env_Value_T.h: Reformatted the file a bit to conform to
+          ACE coding conventions.
 
 Thu Jan  1 12:04:29 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
@@ -271,8 +296,8 @@ Thu Jan  1 12:04:29 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
           I'm not sure how to make this work on NT!
 
         * examples/Reactor/Misc/notification.cpp: Removed some
- 	  CHORUS-specific, which should be a no-op with our new signal()
- 	  and sigaction() scheme.
+          CHORUS-specific, which should be a no-op with our new signal()
+          and sigaction() scheme.
 
         * ace/OS.i: Enhanced the signal() and sigaction() wrappers so that
           they simply ignore signums of 0.  This means that we don't need
@@ -283,96 +308,96 @@ Thu Jan  1 12:04:29 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
           in ACE_OS can correctly ignore these signals.  This should clean
           up a ton of platform-dependent code throughout ACE.
 
-	* apps/Gateway/Gateway/File_Parser.cpp (getint): Added a new
- 	  special-case check for the '*' character, which indicates "use
- 	  the default value for this field."
+        * apps/Gateway/Gateway/File_Parser.cpp (getint): Added a new
+          special-case check for the '*' character, which indicates "use
+          the default value for this field."
 
-	* apps/Gateway/Gateway/Options: Added a new option to provide a
- 	  default max retry timeout.
+        * apps/Gateway/Gateway/Options: Added a new option to provide a
+          default max retry timeout.
 
-	* tests/Reader_Writer_Test.cpp: Enhanced the test so that it
- 	  exercises the new "upgrade" feature of RW_Thread_Mutexes.
+        * tests/Reader_Writer_Test.cpp: Enhanced the test so that it
+          exercises the new "upgrade" feature of RW_Thread_Mutexes.
 
-	* ace/{OS,Synch}: Added new methods,
- 	  ACE_OS::rw_trywrlock_upgrade() and
- 	  ACE_RW_Thread_Mutex::tryacquire_write_upgrade() that
- 	  conditionally upgrade a read lock to a write lock.  This only
- 	  works if there are no other readers present, in which case the
- 	  method returns 0.  Otherwise, the method returns -1 and sets
- 	  errno to EBUSY.  Note that the caller of this method *must*
- 	  already possess this lock as a read lock.
+        * ace/{OS,Synch}: Added new methods,
+          ACE_OS::rw_trywrlock_upgrade() and
+          ACE_RW_Thread_Mutex::tryacquire_write_upgrade() that
+          conditionally upgrade a read lock to a write lock.  This only
+          works if there are no other readers present, in which case the
+          method returns 0.  Otherwise, the method returns -1 and sets
+          errno to EBUSY.  Note that the caller of this method *must*
+          already possess this lock as a read lock.
 
-	* apps/Gateway/{Gateway,Peer}/Makefile: Removed the $(VLIB) macro
- 	  so that we don't try to build the lib*.a files by default.
-  	  Thanks to David Levine for explaining this.
+        * apps/Gateway/{Gateway,Peer}/Makefile: Removed the $(VLIB) macro
+          so that we don't try to build the lib*.a files by default.
+          Thanks to David Levine for explaining this.
 
-	* apps/Gateway/Gateway: Added new Options.{h,cpp} files and
- 	  rearranged the program to centralize all options processing in
- 	  an Options Singleton.
+        * apps/Gateway/Gateway: Added new Options.{h,cpp} files and
+          rearranged the program to centralize all options processing in
+          an Options Singleton.
 
-	* apps/Gateway/Peer/Options.cpp (parse_args): Changed the
- 	  connector and acceptor options to use a more generalizable
- 	  format.  Now we can set the Consumer and Supplier port numbers
- 	  independently.
+        * apps/Gateway/Peer/Options.cpp (parse_args): Changed the
+          connector and acceptor options to use a more generalizable
+          format.  Now we can set the Consumer and Supplier port numbers
+          independently.
 
-	* apps/Gateway/Gateway/Event.h: This is currently where the macros
- 	  from the following bullets have been moved, so they can be
- 	  shared by the Peer and Gateway components.
+        * apps/Gateway/Gateway/Event.h: This is currently where the macros
+          from the following bullets have been moved, so they can be
+          shared by the Peer and Gateway components.
 
-	* ace/OS.h: Moved the ACE_DEFAULT_{GATEWAY,PEER}_SERVER_PORT
- 	  macros into the Gateway application, where they belong.
+        * ace/OS.h: Moved the ACE_DEFAULT_{GATEWAY,PEER}_SERVER_PORT
+          macros into the Gateway application, where they belong.
 
-	* apps/Gateway/Peer/Options.cpp (parse_args): Changed the option
- 	  to set the passive acceptor port from -p to -a.  This is now
- 	  consistent with the option for active connector port number,
- 	  which is -c.
+        * apps/Gateway/Peer/Options.cpp (parse_args): Changed the option
+          to set the passive acceptor port from -p to -a.  This is now
+          consistent with the option for active connector port number,
+          which is -c.
 
-	* apps/Gateway/Gateway/Gateway.cpp (fini): Added a call to
- 	  ACE::remove_stdin_handler(), which removes the handler for
- 	  ACE_STDIN so the gatewayd will shutdown cleanly.
+        * apps/Gateway/Gateway/Gateway.cpp (fini): Added a call to
+          ACE::remove_stdin_handler(), which removes the handler for
+          ACE_STDIN so the gatewayd will shutdown cleanly.
 
-	* ace/ACE: Added a new method, remove_stdin_handler(), which is
- 	  the inverse of the register_stdin_handler() method.  However,
- 	  I'm not sure how to make this work on NT!
+        * ace/ACE: Added a new method, remove_stdin_handler(), which is
+          the inverse of the register_stdin_handler() method.  However,
+          I'm not sure how to make this work on NT!
 
-	* examples/Reactor/Misc/notification.cpp: Removed some CHORUS-specific
-	  code, which should be a no-op with our new signal() and sigaction()
-	  scheme.
+        * examples/Reactor/Misc/notification.cpp: Removed some CHORUS-specific
+          code, which should be a no-op with our new signal() and sigaction()
+          scheme.
 
-	* ace/OS.i: Enhanced the signal() and sigaction() wrappers so that
- 	  they simply ignore signums of 0.  This means that we don't need
- 	  to special case all this stuff throughout ACE anymore.
+        * ace/OS.i: Enhanced the signal() and sigaction() wrappers so that
+          they simply ignore signums of 0.  This means that we don't need
+          to special case all this stuff throughout ACE anymore.
 
-	* ace/OS.h: Changed all the #defines for various SIG* so that they
- 	  are all 0.  This way, we can ensure that the signal() functions
- 	  in ACE_OS can correctly ignore these signals.  This should clean
- 	  up a ton of platform-dependent code throughout ACE.
+        * ace/OS.h: Changed all the #defines for various SIG* so that they
+          are all 0.  This way, we can ensure that the signal() functions
+          in ACE_OS can correctly ignore these signals.  This should clean
+          up a ton of platform-dependent code throughout ACE.
 
-	* apps/Gateway/Gateway/Gateway.cpp (init): Revised the code a bit
- 	  to factor out platform-dependent signal handling stuff in the
- 	  right place.
+        * apps/Gateway/Gateway/Gateway.cpp (init): Revised the code a bit
+          to factor out platform-dependent signal handling stuff in the
+          right place.
 
-	* apps/Gateway/Gateway/gatewayd.cpp: Cleaned up the gatewayd main
- 	  program so that it reuses more ACE components and so that it is
- 	  more portable.
+        * apps/Gateway/Gateway/gatewayd.cpp: Cleaned up the gatewayd main
+          program so that it reuses more ACE components and so that it is
+          more portable.
 
 Thu Jan 01 18:24:56 1998  Nanbor Wang  <nw1@cs.wustl.edu>
 
-	* apps/Gateway/Gateway/Gateway.dsp:  Added new file Options.cpp.
+        * apps/Gateway/Gateway/Gateway.dsp:  Added new file Options.cpp.
 
-	* apps/Gateway/Gateway/Options.cpp (ACE_BUILD_SVC_DLL): Added
- 	  #define ACE_BUILD_SVC_DLL.
+        * apps/Gateway/Gateway/Options.cpp (ACE_BUILD_SVC_DLL): Added
+          #define ACE_BUILD_SVC_DLL.
 
-	* netsvcs/lib/Base_Optimizer.i: Removed this file.
+        * netsvcs/lib/Base_Optimizer.i: Removed this file.
 
-	* netsvcs/lib/Base_Optimizer.h: Added codes to include in the
-	  source file conditionally if needed.
+        * netsvcs/lib/Base_Optimizer.h: Added codes to include in the
+          source file conditionally if needed.
 
-	* netsvcs/lib/Base_Optimizer.cpp: Moved template implementation
-	  from .i file.  Removed ACE_INLINE keyword.
+        * netsvcs/lib/Base_Optimizer.cpp: Moved template implementation
+          from .i file.  Removed ACE_INLINE keyword.
 
-	* netsvcs/lib/Server_Logging_Handler.cpp: Added explicit template
-	  instantiation macros.
+        * netsvcs/lib/Server_Logging_Handler.cpp: Added explicit template
+          instantiation macros.
 
 Thu Jan 01 17:13:06 1998  David L. Levine  <levine@cs.wustl.edu>
 
