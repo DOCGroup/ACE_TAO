@@ -768,6 +768,7 @@ John Masiyowski <jmasiyowski@fallschurch.esys.com>
 Uwe Landrock <Uwe.Landrock@med.siemens.de>
 Klaus Banzer <klaus.banzer@mchp.siemens.de>
 Probal Bhattacharjya <probal@lucent.com>
+Dmitri Katchalov <Dmitri.Katchalov@computershare.com.au>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson.  Paul devised the recursive Makefile scheme that
