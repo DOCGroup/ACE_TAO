@@ -14,6 +14,7 @@
  * ============================================================================= */
 
 #include <windows.h>
+#include <direct.h>
 
 #if (PACE_HAS_POSIX_FA_UOF)
 PACE_INLINE
@@ -52,15 +53,15 @@ int
 pace_mkdir (const char * path, pace_mode_t mode)
 {
   PACE_UNUSED_ARG (mode);
-  if (CreateDirectory (path, NULL))
-    {
-      return 0;
-    }
-  else
-    {
-      errno = GetLastError ();
-      return -1;
-    }
+# if defined (__IBMCPP__) && (__IBMCPP__ >= 400)
+  PACE_OSCALL_RETURN (_mkdir ((char *) path), int, -1);
+# elif defined (PACE_WINCE)
+  PACE_WIN32CALL_RETURN
+    (PACE_ADAPT_RETVAL
+     (CreateDirectory (path, NULL), pace_result_), int, -1);
+# else
+  PACE_OSCALL_RETURN (_mkdir (path), int, -1);
+# endif /* PACE_WIN32 */
 }
 #endif /* PACE_HAS_POSIX_FS_UOF */
 

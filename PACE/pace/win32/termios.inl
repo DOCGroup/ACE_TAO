@@ -16,7 +16,7 @@
 #if (PACE_HAS_POSIX_DS_UOF)
 PACE_INLINE
 speed_t
-pace_cfgetospeed (const struct termios * termiosp)
+pace_cfgetospeed (const pace_termios * termiosp)
 {
   PACE_UNUSED_ARG (termiosp);
   PACE_ERRNO_NO_SUPPORT_RETURN (-1);
@@ -26,7 +26,7 @@ pace_cfgetospeed (const struct termios * termiosp)
 #if (PACE_HAS_POSIX_DS_UOF)
 PACE_INLINE
 int
-pace_cfsetospeed (struct termios * termios_p, pace_speed_t speed)
+pace_cfsetospeed (pace_termios * termios_p, pace_speed_t speed)
 {
   PACE_UNUSED_ARG (termios_p);
   PACE_UNUSED_ARG (speed);
@@ -37,7 +37,7 @@ pace_cfsetospeed (struct termios * termios_p, pace_speed_t speed)
 #if (PACE_HAS_POSIX_DS_UOF)
 PACE_INLINE
 speed_t
-pace_cfgetispeed (const struct termios * termios_p)
+pace_cfgetispeed (const pace_termios * termios_p)
 {
   PACE_UNUSED_ARG (termios_p);
   PACE_ERRNO_NO_SUPPORT_RETURN (-1);
@@ -47,7 +47,7 @@ pace_cfgetispeed (const struct termios * termios_p)
 #if (PACE_HAS_POSIX_DS_UOF)
 PACE_INLINE
 int
-pace_cfsetispeed (struct termios * termios_p, pace_speed_t speed)
+pace_cfsetispeed (pace_termios * termios_p, pace_speed_t speed)
 {
   PACE_UNUSED_ARG (termios_p);
   PACE_UNUSED_ARG (speed);
@@ -68,7 +68,7 @@ pace_tcdrain (PACE_HANDLE fildes)
 #if (PACE_HAS_POSIX_DS_UOF)
 PACE_INLINE
 int
-pace_tcgetattr (PACE_HANDLE fildes, struct termios * termios_p)
+pace_tcgetattr (PACE_HANDLE fildes, pace_termios * termios_p)
 {
   PACE_UNUSED_ARG (fildes);
   PACE_UNUSED_ARG (termios_p);
@@ -114,7 +114,7 @@ PACE_INLINE
 int
 pace_tcsetattr (PACE_HANDLE fildes,
                 int optional_actions,
-                const struct termios * termios_p)
+                const pace_termios * termios_p)
 {
   PACE_UNUSED_ARG (fildes);
   PACE_UNUSED_ARG (optional_actions);

@@ -15,12 +15,15 @@
 
 #include "pace/string.h"
 
-#if 0 /* Not yet finished */
-
 #if (PACE_HAS_POSIX_SP_UOF)
+PACE_INLINE
 int
-pace_win32_emulation_uname (pace_utsname * name)
+pace_uname (pace_utsname * name)
 {
+  PACE_ERRNO_NO_SUPPORT_RETURN (-1);
+
+#if 0 /* Emulation: Not bug free! :-/ */
+
   size_t maxnamelen = sizeof name->nodename;
   pace_strcpy (name->sysname, "Win32");
 
@@ -167,19 +170,8 @@ pace_win32_emulation_uname (pace_utsname * name)
   
   /* ick */
   return ACE_OS::hostname (name->nodename, maxnamelen);
-}
-#endif /* PACE_HAS_POSIX_SP_UOF */
 
-#endif /* Emulated! */
+#endif 0 /* Emulated! */
 
-#if (PACE_HAS_POSIX_SP_UOF)
-PACE_INLINE
-int
-pace_uname (pace_utsname * name)
-{
-  PACE_ERRNO_NO_SUPPORT_RETURN (-1);
-  /* After emulation
-     pace_win32_emulation_uname (name);
-   */
 }
 #endif /* PACE_HAS_POSIX_SP_UOF */

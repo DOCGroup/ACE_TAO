@@ -27,6 +27,8 @@ PACE_INLINE
 int
 pace_sigsetjmp (pace_sigjmp_buf env, int savemask)
 {
+  PACE_UNUSED_ARG (env);
+  PACE_UNUSED_ARG (savemask);
   PACE_ERRNO_NO_SUPPORT_RETURN (-1);
 }
 #endif /* PACE_HAS_POSIX_SIG_UOF */
@@ -46,6 +48,8 @@ PACE_INLINE
 void
 pace_siglongjmp (pace_sigjmp_buf env, int val)
 {
+  PACE_UNUSED_ARG (env);
+  PACE_UNUSED_ARG (val);
   PACE_ERRNO_NO_SUPPORT ();
   return;
 }
