@@ -482,10 +482,11 @@ TAO_Marshal_Union::append (CORBA::TypeCode_ptr tc,
        ++i)
     {
       CORBA::Any_var any = tc->member_label (i
-                                              ACE_ENV_ARG_PARAMETER);
+                                             ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
 
       CORBA::Octet o;
+
       if ((any >>= CORBA::Any::to_octet (o)) && o == 0)
         {
           CORBA::ULong default_index =
@@ -537,15 +538,12 @@ TAO_Marshal_Union::append (CORBA::TypeCode_ptr tc,
 
         case CORBA::tk_enum:
           {
-            CORBA::ULong d;
-
-            // Create an special Any to handle this case.
-            CORBA::Any tmp;
-            tmp._tao_replace (CORBA::_tc_ulong,
-                              any->_tao_byte_order (),
-                              any->_tao_get_cdr ());
-            if ((tmp >>= d) && d == enum_v)
-              current_member = i;
+            CORBA::ULong *d = ACE_reinterpret_cast (CORBA::ULong *,
+                                                    any->value ());
+            if (*d == enum_v)
+              {
+                current_member = i;
+              }
           }
           break;
 

@@ -45,33 +45,11 @@ namespace CORBA
   public:
 
 // ********** TEMPORARY *********************
-//    typedef void (*_tao_destructor)(void *);
-    void _tao_replace (CORBA::TypeCode_ptr,
-                       int byte_order,
-                       const ACE_Message_Block *mb) {}
-/*
-    void _tao_replace (CORBA::TypeCode_ptr type,
-                       int byte_order,
-                       const ACE_Message_Block *mb,
-                       CORBA::Boolean any_owns_data,
-                       void* value,
-                       CORBA::Any::_tao_destructor destructor) {}
-    void _tao_replace (CORBA::TypeCode_ptr type,
-                       CORBA::Boolean any_owns_data,
-                       void* value,
-                       CORBA::Any::_tao_destructor destructor) {}
-*/
-//    CORBA::Boolean any_owns_data (void) const { return 0; }
     CORBA::TypeCode_ptr type_;
     ACE_Message_Block *cdr_;
     void _tao_encode (TAO_OutputCDR &cdr,
                       TAO_ORB_Core *orb_core
                       ACE_ENV_ARG_DECL) {}
-    Any (CORBA::TypeCode_ptr) {}
-    Any (CORBA::TypeCode_ptr,
-         CORBA::UShort,
-         int,
-         const ACE_Message_Block*) {}
     void _tao_decode (TAO_InputCDR &cdr
                       ACE_ENV_ARG_DECL) {}
 // ******************************************
@@ -81,6 +59,17 @@ namespace CORBA
 
     Any (void);
     Any (const Any &);
+
+    /// This signature is required by the C++ mapping, but allows
+    /// obvious type safety dangers. TAO's implementation will
+    /// accept an ACE_Message_Block passed in as a void*. This is
+    /// also useful for interceptors, where an Any may need to be
+    /// created that contains a void type. In that case, we can
+    /// pass in a void* value of 0.
+    Any (TypeCode_ptr,
+         void *value,
+         Boolean release = 0);
+
     ~Any (void);
 
     Any &operator= (const Any &);
@@ -153,12 +142,12 @@ namespace CORBA
     Boolean operator>>= (to_object) const;
     Boolean operator>>= (to_abstract_base) const;
     Boolean operator>>= (to_value) const;
-/*
+
     /// Spec-defined signature.
     void replace (TypeCode_ptr,
                   void *value,
                   Boolean release = 0);
-*/
+
     /// TAO-specific signature.
     void replace (TAO::Any_Impl *);
 
