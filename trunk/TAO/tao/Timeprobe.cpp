@@ -63,8 +63,13 @@ ACE_Timeprobe::print_times (void) const
                   "\"%-50s\" %8.8x %10.3f\n",
                   timeprobes [i].id_,
                   timeprobes [i].thread_,
+#if defined (ACE_WIN32)
+                  (double) (__int64) (elapsed /
+                                      (ACE_UINT32) 1000u)));
+#else
                   (double) (elapsed /
                             (ACE_UINT32) 1000u) /* nanosec/microsec */));
+#endif
     }
 #if 0
   ACE_hrtime_t elapsed2 = (timeprobes [current_slot_ - 1].time_
