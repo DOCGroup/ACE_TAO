@@ -198,7 +198,7 @@ if [ $sysname != 'procnto' ]; then
 fi # ! procnto
 
 # Redirection gets confused when rsh is involved (Chorus)
-for i in `cat run_tests_shell.lst | tr "\012" "$IFS"`; do
+for i in `cat run_tests_remote.lst | tr "\012" "$IFS"`; do
 
   if [ "$i" != "" ]; then
 
