@@ -814,9 +814,9 @@ nobase_include_HEADERS += \
   Sequence_T.i \
   Service_Callbacks.i \
   Service_Context.inl \
-  ServicesC.i \
-  ServicesS.i \
-  ServicesS_T.i \
+  ServicesC.inl \
+  ServicesS.inl \
+  ServicesS_T.inl \
   ShortSeqC.i \
   Special_Basic_Argument_T.inl \
   Special_Basic_SArgument_T.inl \
