@@ -176,8 +176,17 @@ TAO_SHMIOP_Profile::decode (TAO_InputCDR& cdr)
       return -1;
     }
 
-  this->object_addr_.set (this->port_, this->host_.in ());
-
+    if (this->object_addr_.set (this->port_, 
+                                this->host_.in ()) == -1)
+    {
+      if (TAO_debug_level > 0)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ASYS_TEXT ("TAO (%P|%t) SHMIOP_Profile::decode - \n")
+                      ASYS_TEXT ("TAO (%P|%t) ACE_INET_Addr::set () failed")));
+        }
+      return -1;
+    }
   // ... and object key.
 
   if ((cdr >> this->object_key_) == 0)
@@ -297,7 +306,17 @@ TAO_SHMIOP_Profile::parse_string (const char *string,
 
   this->host_ = tmp._retn ();
 
-  this->object_addr_.set (this->port_, this->host_.in ());
+  if (this->object_addr_.set (this->port_, 
+                              this->host_.in ()) == -1)
+    {
+      if (TAO_debug_level > 0)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ASYS_TEXT ("TAO (%P|%t) SHMIOP_Profile::parse_string () - \n")
+                      ASYS_TEXT ("TAO (%P|%t) ACE_INET_Addr::set () failed")));
+        }
+      return -1;
+    }
 
   start = ++okd;  // increment past the object key separator
 
@@ -387,7 +406,7 @@ TAO_SHMIOP_Profile::operator= (const TAO_SHMIOP_Profile &src)
   this->object_key_ = src.object_key_;
 
   this->object_addr_.set (src.object_addr_);
-
+  
   this->port_ = src.port_;
 
   this->host_ = src.host_;
