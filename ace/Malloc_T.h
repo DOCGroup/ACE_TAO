@@ -6,7 +6,8 @@
  *
  *  $Id$
  *
- *  @author Doug Schmidt and Irfan Pyarali
+ *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu> and 
+ *          Irfan Pyarali <irfan@cs.wustl.edu>
  */
 //==========================================================================
 
@@ -208,9 +209,18 @@ public:
 #endif /* ACE_HAS_TEMPLATE_TYPEDEFS */
 
   // = Initialization.
+  /**
+   * Note that <pool_name> should be located in
+   * a directory with the appropriate visibility and protection so
+   * that all processes that need to access it can do so. */
   ACE_Allocator_Adapter (const char *pool_name = 0);
 
-  /// Constructor (this has to be inline to avoid bugs with some C++ compilers.
+  /**
+   * Note that <pool_name> should be located in
+   * a directory with the appropriate visibility and protection so
+   * that all processes that need to access it can do so. 
+   * This constructor must be inline to avoid bugs with some C++
+   * compilers. */
   ACE_Allocator_Adapter (const char *pool_name,
                          const char *lock_name,
                          MEMORY_POOL_OPTIONS options = 0)
@@ -222,9 +232,18 @@ public:
     }
 
 #if defined (ACE_HAS_WCHAR)
+  /**
+   * Note that <pool_name> should be located in
+   * a directory with the appropriate visibility and protection so
+   * that all processes that need to access it can do so. */
   ACE_Allocator_Adapter (const wchar_t *pool_name);
 
-  /// Constructor (this has to be inline to avoid bugs with some C++ compilers.
+  /**
+   * Note that <pool_name> should be located in
+   * a directory with the appropriate visibility and protection so
+   * that all processes that need to access it can do so. 
+   * This constructor must be inline to avoid bugs with some C++
+   * compilers. */
   ACE_Allocator_Adapter (const wchar_t *pool_name,
                          const wchar_t *lock_name,
                          MEMORY_POOL_OPTIONS options = 0)
@@ -404,6 +423,10 @@ public:
    * initialize the memory pool, and uses <ACE::basename> to
    * automatically extract out the name used for the underlying lock
    * name (if necessary).
+   *
+   * Note that <pool_name> should be located in
+   * a directory with the appropriate visibility and protection so
+   * that all processes that need to access it can do so. 
    */
   ACE_Malloc_T (const ACE_TCHAR *pool_name = 0);
 
@@ -413,6 +436,11 @@ public:
    * extract out the name used for the underlying lock name (if
    * necessary).  In addition, <options> is passed through to
    * initialize the underlying memory pool.
+   *
+   * Note that <pool_name> should be located in
+   * a directory with the appropriate visibility and protection so
+   * that all processes that need to access it can do so. 
+   */
    */
   ACE_Malloc_T (const ACE_TCHAR *pool_name,
                 const ACE_TCHAR *lock_name,
@@ -735,7 +763,9 @@ public:
    * Initialize ACE_Malloc.  This constructor passes <pool_name> to
    * initialize the memory pool, and uses <ACE::basename> to
    * automatically extract out the name used for the underlying lock
-   * name (if necessary).
+   * name (if necessary).  Note that <pool_name> should be located in
+   * a directory with the appropriate visibility and protection so
+   * that all processes that need to access it can do so.
    */
   ACE_Malloc (const ACE_TCHAR *pool_name = 0);
 
@@ -744,7 +774,10 @@ public:
    * initialize the memory pool, and uses <lock_name> to automatically
    * extract out the name used for the underlying lock name (if
    * necessary).  In addition, <options> is passed through to
-   * initialize the underlying memory pool.
+   * initialize the underlying memory pool.  Note that <pool_name>
+   * should be located in a directory with the appropriate visibility
+   * and protection so that all processes that need to access it can
+   * do so. 
    */
   ACE_Malloc (const ACE_TCHAR *pool_name,
               const ACE_TCHAR *lock_name,
