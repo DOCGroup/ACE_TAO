@@ -24,6 +24,16 @@
 #include "ace/OS.h"
 #include "ace/Thread_Adapter.h"
 
+struct cancel_state
+{
+  /// e.g., PTHREAD_CANCEL_ENABLE, PTHREAD_CANCEL_DISABLE,
+  /// PTHREAD_CANCELED.
+  int cancelstate;
+
+  /// e.g., PTHREAD_CANCEL_DEFERRED and PTHREAD_CANCEL_ASYNCHRONOUS.
+  int canceltype;
+};
+
 /**
  * @class ACE_Thread
  *
