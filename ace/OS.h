@@ -2614,10 +2614,6 @@ struct msghdr {};
 typedef int sig_atomic_t;
 # endif /* !ACE_HAS_SIG_ATOMIC_T */
 
-# if !defined (ACE_HAS_SSIZE_T)
-typedef int ssize_t;
-# endif /* ACE_HAS_SSIZE_T */
-
 # if defined (ACE_HAS_PACE)
 #   if defined (ACE_HAS_LYNXOS_SIGNALS)
 typedef void (*ACE_SignalHandler)(...);
@@ -5636,11 +5632,11 @@ public:
                      int backlog);
   static int recv (ACE_HANDLE handle,
                    char *buf,
-                   int len,
+                   size_t len,
                    int flags = 0);
   static int recvfrom (ACE_HANDLE handle,
                        char *buf,
-                       int len,
+                       size_t len,
                        int flags,
                        struct sockaddr *addr,
                        int *addrlen);
@@ -5655,11 +5651,11 @@ public:
                        ACE_OVERLAPPED_COMPLETION_FUNC func);
   static int send (ACE_HANDLE handle,
                    const char *buf,
-                   int len,
+                   size_t len,
                    int flags = 0);
   static int sendto (ACE_HANDLE handle,
                      const char *buf,
-                     int len,
+                     size_t len,
                      int flags,
                      const struct sockaddr *addr,
                      int addrlen);

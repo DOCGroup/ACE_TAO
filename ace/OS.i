@@ -5071,7 +5071,7 @@ ACE_OS::select (int width,
 }
 
 ACE_INLINE int
-ACE_OS::recv (ACE_HANDLE handle, char *buf, int len, int flags)
+ACE_OS::recv (ACE_HANDLE handle, char *buf, size_t len, int flags)
 {
   ACE_OS_TRACE ("ACE_OS::recv");
 
@@ -5085,7 +5085,8 @@ ACE_OS::recv (ACE_HANDLE handle, char *buf, int len, int flags)
   // this function needs to be reviewed.  On Win32, the regular macros
   // can be used, as this is not an issue.
 #if defined (ACE_WIN32)
-  ACE_SOCKCALL_RETURN (::recv ((ACE_SOCKET) handle, buf, len, flags), int, -1);
+  ACE_SOCKCALL_RETURN (::recv ((ACE_SOCKET) handle, buf,
+                               ACE_static_cast (int, len), flags), int, -1);
 #else
   int ace_result_;
   ace_result_ = ::recv ((ACE_SOCKET) handle, buf, len, flags);
@@ -5098,7 +5099,7 @@ ACE_OS::recv (ACE_HANDLE handle, char *buf, int len, int flags)
 ACE_INLINE int
 ACE_OS::recvfrom (ACE_HANDLE handle,
                   char *buf,
-                  int len,
+                  size_t len,
                   int flags,
                   struct sockaddr *addr,
                   int *addrlen)
@@ -5106,18 +5107,18 @@ ACE_OS::recvfrom (ACE_HANDLE handle,
   ACE_OS_TRACE ("ACE_OS::recvfrom");
 #if defined (ACE_PSOS)
 #  if !defined ACE_PSOS_DIAB_PPC
-  ACE_SOCKCALL_RETURN (::recvfrom ((ACE_SOCKET) handle, buf, (ACE_SOCKET_LEN) len, flags,
+  ACE_SOCKCALL_RETURN (::recvfrom ((ACE_SOCKET) handle, buf, len, flags,
                                    (struct sockaddr_in *) addr, (ACE_SOCKET_LEN *) addrlen),
                        int, -1);
 #  else
-  ACE_SOCKCALL_RETURN (::recvfrom ((ACE_SOCKET) handle, buf, (ACE_SOCKET_LEN) len, flags,
+  ACE_SOCKCALL_RETURN (::recvfrom ((ACE_SOCKET) handle, buf, len, flags,
                                    (struct sockaddr *) addr, (ACE_SOCKET_LEN *) addrlen),
                        int, -1);
 #  endif /* defined ACE_PSOS_DIAB_PPC */
 #elif defined (ACE_WIN32)
   int result = ::recvfrom ((ACE_SOCKET) handle,
                            buf,
-                           (ACE_SOCKET_LEN) len,
+                           ACE_static_cast (int, len),
                            flags,
                            addr,
                            (ACE_SOCKET_LEN *) addrlen);
@@ -5133,14 +5134,14 @@ ACE_OS::recvfrom (ACE_HANDLE handle,
   else
     return result;
 #else /* non Win32 and non PSOS */
-  ACE_SOCKCALL_RETURN (::recvfrom ((ACE_SOCKET) handle, buf, (ACE_SOCKET_LEN) len, flags,
+  ACE_SOCKCALL_RETURN (::recvfrom ((ACE_SOCKET) handle, buf, len, flags,
                                    addr, (ACE_SOCKET_LEN *) addrlen),
                        int, -1);
 #endif /* defined (ACE_PSOS) */
 }
 
 ACE_INLINE int
-ACE_OS::send (ACE_HANDLE handle, const char *buf, int len, int flags)
+ACE_OS::send (ACE_HANDLE handle, const char *buf, size_t len, int flags)
 {
   ACE_OS_TRACE ("ACE_OS::send");
 
@@ -5154,7 +5155,10 @@ ACE_OS::send (ACE_HANDLE handle, const char *buf, int len, int flags)
   // this function needs to be reviewed.  On Win32, the regular macros
   // can be used, as this is not an issue.
 #if defined (ACE_WIN32)
-  ACE_SOCKCALL_RETURN (::send ((ACE_SOCKET) handle, buf, len, flags), int, -1);
+  ACE_SOCKCALL_RETURN (::send ((ACE_SOCKET) handle,
+                               buf,
+                               ACE_static_cast (int, len),
+                               flags), int, -1);
 #else
   int ace_result_;
 #  if defined (VXWORKS) || defined (HPUX) || defined (ACE_PSOS)
@@ -5216,7 +5220,7 @@ ACE_OS::recvfrom (ACE_HANDLE handle,
 ACE_INLINE int
 ACE_OS::sendto (ACE_HANDLE handle,
                 const char *buf,
-                int len,
+                size_t len,
                 int flags,
                 const struct sockaddr *addr,
                 int addrlen)
@@ -5237,9 +5241,16 @@ ACE_OS::sendto (ACE_HANDLE handle,
                        int, -1);
 #  endif /*defined ACE_PSOS_DIAB_PPC */
 #else
+#  if defined (ACE_WIN32)
+  ACE_SOCKCALL_RETURN (::sendto ((ACE_SOCKET) handle, buf,
+                                 ACE_static_cast (int, len), flags,
+                                 ACE_const_cast (struct sockaddr *, addr), addrlen),
+                       int, -1);
+#  else
   ACE_SOCKCALL_RETURN (::sendto ((ACE_SOCKET) handle, buf, len, flags,
                                  ACE_const_cast (struct sockaddr *, addr), addrlen),
                        int, -1);
+#  endif /* ACE_WIN32 */
 #endif /* VXWORKS */
 }
 

@@ -185,7 +185,16 @@ public:
                          const ACE_Time_Value *timeout = 0,
                          size_t *bytes_transferred = 0);
 
-  /// Varargs variant.
+  /// Receive into a variable number of pieces.
+  /**
+   * Accepts a variable, caller-specified, number of pointer/length
+   * pairs. Arguments following @a n are char *, size_t pairs.
+   *
+   * @arg handle  The I/O handle to receive on
+   * @arg n       The total number of char *, size_t pairs following @a n.
+   *
+   * @return -1 on error, else total number of bytes received.
+   */
   static ssize_t recv (ACE_HANDLE handle, size_t n, ...);
 
   static ssize_t recvv (ACE_HANDLE handle,
