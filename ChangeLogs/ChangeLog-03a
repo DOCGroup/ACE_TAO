@@ -1,3 +1,10 @@
+Thu Mar 15 05:46:59 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/FILE_Addr.cpp (ACE_FILE_Addr): Make sure to divide the size of
+	  the filename_ by the sizeof (ACE_TCHAR) to handle unicode
+ 	  correctly.  Thanks to the ever vigilant Ivan Murphy for catching
+ 	  this!
+
 Wed Mar 14 01:47:10 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * apps/Gateway/Gateway/Makefile:
@@ -1861,7 +1868,7 @@ Fri Feb 16 05:37:47 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
           the various options mean.
 
         * tests/Log_Msg_Test.cpp (test_log_msg_features): Added
-          ACE_Log_Msg::PROCESS to a coupld or priority_mask() calls to
+          ACE_Log_Msg::PROCESS to a couple of priority_mask() calls to
           make the test work correctly.  Thanks to Kitty for reporting
           this.
 
