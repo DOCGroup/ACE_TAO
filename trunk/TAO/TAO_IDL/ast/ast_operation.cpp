@@ -443,6 +443,15 @@ AST_Operation::fe_add_argument (AST_Argument *t)
                            I_FALSE,
                            t->local_name ());
 
+  UTL_ScopedName *mru = arg_type->last_referenced_as ();
+
+  if (mru != 0)
+    {
+      this->add_to_referenced (arg_type,
+                               I_FALSE,
+                               mru->first_component ());
+    }
+
   return t;
 }
 

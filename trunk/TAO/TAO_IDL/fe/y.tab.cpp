@@ -6117,6 +6117,7 @@ tao_yyreduce:
             }
           else
             {
+              d->last_referenced_as (tao_yyvsp[0].idlist);
               AST_Decl::NodeType nt = d->node_type ();
 
               if (nt == AST_Decl::NT_struct_fwd
