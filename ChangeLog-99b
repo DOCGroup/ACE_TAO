@@ -1,3 +1,19 @@
+Wed Aug 25 22:05:54 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.{h,i} (ACE_Time_Value): added four new
+          constructors.  One takes a double, to avoid surprises
+          (truncation) when constructing an ACE_Time_Value from
+          a double.  The other three constructors take two
+          unsigned longs, ints, and unsigned ints.  They avoid
+          the ambiguity introduced by the new double constructor.
+          Thanks to Dave Meyer <dmeyer@std.saic.com> for starting this :-)
+
+          The double constructor is wrapped with
+          #ifndef ACE_LACKS_FLOATING_POINT.
+
+        * tests/Time_Value_Test.cpp (main): removed cast of
+          2.0 to long.
+
 Wed Aug 25 16:15:07 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * docs/ACE-subsets.html: removed spurious LOGGING_FILES
