@@ -418,7 +418,7 @@ ACE_Name_Handler::resolve (void)
   char *atype;
   if (NAMING_CONTEXT::instance ()->resolve (a_name, avalue, atype) == 0)
     {
-      ACE_Auto_Array_Ptr<ACE_USHORT16> avalue_urep (avalue.ushort_rep ());
+      ACE_Auto_Basic_Array_Ptr<ACE_USHORT16> avalue_urep (avalue.ushort_rep ());
       ACE_Name_Request nrq (ACE_Name_Request::RESOLVE,
                             0,
                             0,
@@ -452,7 +452,7 @@ ACE_Name_Request
 ACE_Name_Handler::name_request (ACE_WString *one_name)
 {
   ACE_TRACE ("ACE_Name_Handler::name_request");
-  ACE_Auto_Array_Ptr<ACE_USHORT16> one_name_urep (one_name->ushort_rep ());
+  ACE_Auto_Basic_Array_Ptr<ACE_USHORT16> one_name_urep (one_name->ushort_rep ());
   return ACE_Name_Request (ACE_Name_Request::LIST_NAMES,
                            one_name_urep.get (),
                            one_name->length () * sizeof (ACE_USHORT16),
@@ -464,7 +464,7 @@ ACE_Name_Request
 ACE_Name_Handler::value_request (ACE_WString *one_value)
 {
   ACE_TRACE ("ACE_Name_Handler::value_request");
-  ACE_Auto_Array_Ptr<ACE_USHORT16> one_value_urep (one_value->ushort_rep ());
+  ACE_Auto_Basic_Array_Ptr<ACE_USHORT16> one_value_urep (one_value->ushort_rep ());
   return ACE_Name_Request (ACE_Name_Request::LIST_VALUES,
                            0, 0,
                            one_value_urep.get (),
@@ -584,9 +584,9 @@ ACE_Name_Handler::lists_entries (void)
            set_iterator.next (one_entry) !=0;
            set_iterator.advance())
         {
-           ACE_Auto_Array_Ptr<ACE_USHORT16> 
+           ACE_Auto_Basic_Array_Ptr<ACE_USHORT16> 
              name_urep (one_entry->name_.ushort_rep ());
-           ACE_Auto_Array_Ptr<ACE_USHORT16> 
+           ACE_Auto_Basic_Array_Ptr<ACE_USHORT16> 
              value_urep (one_entry->value_.ushort_rep ());
            ACE_Name_Request mynrq (this->name_request_.msg_type (),
                                   name_urep.get (),

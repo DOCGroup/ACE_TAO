@@ -42,8 +42,8 @@ ACE_Remote_Name_Space::bind (const ACE_WString &name,
                              const char *type)
 {
   ACE_TRACE ("ACE_Remote_Name_Space::bind");
-  ACE_Auto_Array_Ptr<ACE_USHORT16> name_urep (name.ushort_rep ());
-  ACE_Auto_Array_Ptr<ACE_USHORT16> value_urep (value.ushort_rep ());
+  ACE_Auto_Basic_Array_Ptr<ACE_USHORT16> name_urep (name.ushort_rep ());
+  ACE_Auto_Basic_Array_Ptr<ACE_USHORT16> value_urep (value.ushort_rep ());
   ACE_Name_Request request (ACE_Name_Request::BIND,
                             name_urep.get (),
                             name.length () * sizeof (ACE_USHORT16),
@@ -60,8 +60,8 @@ ACE_Remote_Name_Space::rebind (const ACE_WString &name,
                                const char *type)
 {
   ACE_TRACE ("ACE_Remote_Name_Space::rebind");
-  ACE_Auto_Array_Ptr<ACE_USHORT16> name_urep (name.ushort_rep ());
-  ACE_Auto_Array_Ptr<ACE_USHORT16> value_urep (value.ushort_rep ());
+  ACE_Auto_Basic_Array_Ptr<ACE_USHORT16> name_urep (name.ushort_rep ());
+  ACE_Auto_Basic_Array_Ptr<ACE_USHORT16> value_urep (value.ushort_rep ());
   ACE_Name_Request request (ACE_Name_Request::REBIND,
                             name_urep.get (),
                             name.length () * sizeof (ACE_USHORT16),
@@ -78,7 +78,7 @@ ACE_Remote_Name_Space::resolve (const ACE_WString &name,
                                 char *&type)
 {
   ACE_TRACE ("ACE_Remote_Name_Space::resolve");
-  ACE_Auto_Array_Ptr<ACE_USHORT16> name_urep (name.ushort_rep ());
+  ACE_Auto_Basic_Array_Ptr<ACE_USHORT16> name_urep (name.ushort_rep ());
   ACE_Name_Request request (ACE_Name_Request::RESOLVE,
                             name_urep.get (),
                             name.length () * sizeof (ACE_USHORT16),
@@ -105,7 +105,7 @@ int
 ACE_Remote_Name_Space::unbind (const ACE_WString &name)
 {
   ACE_TRACE ("ACE_Remote_Name_Space::unbind");
-  ACE_Auto_Array_Ptr<ACE_USHORT16> name_urep (name.ushort_rep ());
+  ACE_Auto_Basic_Array_Ptr<ACE_USHORT16> name_urep (name.ushort_rep ());
   ACE_Name_Request request (ACE_Name_Request::UNBIND,
                             name_urep.get (),
                             name.length () * sizeof (ACE_USHORT16),
@@ -118,7 +118,7 @@ ACE_Remote_Name_Space::list_names (ACE_WSTRING_SET &set,
                                    const ACE_WString &pattern)
 {
   ACE_TRACE ("ACE_Remote_Name_Space::list_names");
-  ACE_Auto_Array_Ptr<ACE_USHORT16> pattern_urep (pattern.ushort_rep ());
+  ACE_Auto_Basic_Array_Ptr<ACE_USHORT16> pattern_urep (pattern.ushort_rep ());
   ACE_Name_Request request (ACE_Name_Request::LIST_NAMES,
                             pattern_urep.get (),
                             pattern.length () * sizeof (ACE_USHORT16),
@@ -150,7 +150,7 @@ ACE_Remote_Name_Space::list_values (ACE_WSTRING_SET &set,
                                     const ACE_WString &pattern)
 {
   ACE_TRACE ("ACE_Remote_Name_Space::list_values");
-  ACE_Auto_Array_Ptr<ACE_USHORT16> pattern_urep (pattern.ushort_rep ());
+  ACE_Auto_Basic_Array_Ptr<ACE_USHORT16> pattern_urep (pattern.ushort_rep ());
   ACE_Name_Request request (ACE_Name_Request::LIST_VALUES,
                             pattern_urep.get (),
                             pattern.length () * sizeof (ACE_USHORT16),
@@ -183,7 +183,7 @@ ACE_Remote_Name_Space::list_types (ACE_WSTRING_SET &set,
                                    const ACE_WString &pattern)
 {
   ACE_TRACE ("ACE_Remote_Name_Space::list_types");
-  ACE_Auto_Array_Ptr<ACE_USHORT16> pattern_urep (pattern.ushort_rep ());
+  ACE_Auto_Basic_Array_Ptr<ACE_USHORT16> pattern_urep (pattern.ushort_rep ());
   ACE_Name_Request request (ACE_Name_Request::LIST_TYPES,
                             pattern_urep.get (),
                             pattern.length () * sizeof (ACE_USHORT16),
@@ -216,7 +216,7 @@ ACE_Remote_Name_Space::list_name_entries (ACE_BINDING_SET &set,
                                           const ACE_WString &pattern)
 {
   ACE_TRACE ("ACE_Remote_Name_Space::list_names");
-  ACE_Auto_Array_Ptr<ACE_USHORT16> pattern_urep (pattern.ushort_rep ());
+  ACE_Auto_Basic_Array_Ptr<ACE_USHORT16> pattern_urep (pattern.ushort_rep ());
   ACE_Name_Request request (ACE_Name_Request::LIST_NAME_ENTRIES,
                             pattern_urep.get (),
                             pattern.length () * sizeof (ACE_USHORT16),
@@ -255,7 +255,7 @@ ACE_Remote_Name_Space::list_value_entries (ACE_BINDING_SET &set,
                                            const ACE_WString &pattern)
 {
   ACE_TRACE ("ACE_Remote_Name_Space::list_values");
-  ACE_Auto_Array_Ptr<ACE_USHORT16> pattern_urep (pattern.ushort_rep ());
+  ACE_Auto_Basic_Array_Ptr<ACE_USHORT16> pattern_urep (pattern.ushort_rep ());
   ACE_Name_Request request (ACE_Name_Request::LIST_VALUE_ENTRIES,
                             pattern_urep.get (),
                             pattern.length () * sizeof (ACE_USHORT16),
@@ -294,7 +294,7 @@ ACE_Remote_Name_Space::list_type_entries (ACE_BINDING_SET &set,
                                           const ACE_WString &pattern)
 {
   ACE_TRACE ("ACE_Remote_Name_Space::list_types");
-  ACE_Auto_Array_Ptr<ACE_USHORT16> pattern_urep (pattern.ushort_rep ());
+  ACE_Auto_Basic_Array_Ptr<ACE_USHORT16> pattern_urep (pattern.ushort_rep ());
   ACE_Name_Request request (ACE_Name_Request::LIST_TYPE_ENTRIES,
                             pattern_urep.get (),
                             pattern.length () * sizeof (ACE_USHORT16),
@@ -344,10 +344,8 @@ ACE_Remote_Name_Space::dump (void) const
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Auto_Array_Ptr<ACE_USHORT16>;
 template class ACE_Auto_Basic_Array_Ptr<ACE_USHORT16>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Auto_Array_Ptr<ACE_USHORT16>   
-#pragma instantiate ACE_Auto_Basic_Array_Ptr<ACE_USHORT16>
+#pragma instantiate ACE_Auto_Basic_Array_Ptr<ACE_USHORT16>   
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
