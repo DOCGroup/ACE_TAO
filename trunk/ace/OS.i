@@ -9257,13 +9257,6 @@ exit (int status)
 }
 
 ACE_INLINE int
-fprintf (FILE *fp, char *format, const char *msg)
-{
-  ACE_DEBUG ((LM_DEBUG, ASYS_WIDE_STRING (format), ASYS_WIDE_STRING (msg)));
-  return 0;
-}
-
-ACE_INLINE int
 printf (const char *format, ...)
 {
   ACE_UNUSED_ARG (format);
