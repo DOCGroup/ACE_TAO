@@ -1,3 +1,16 @@
+Sun Jan 23 21:34:00 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ace/Makefile.am:
+        * examples/Misc/Makefile.am:
+        * tests/Makefile.am:
+
+          Regenerate.
+
+        * m4/ace.m4:
+
+          Added extra quoting to AC_REQUIRE arguments.
+          Set BUILD_ACE_{FL,TK,QT,XT}REACTOR automake conditionals.
+
 Sun Jan 23 19:17:25 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* m4/ace.m4:

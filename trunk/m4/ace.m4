@@ -954,7 +954,7 @@ AM_CONDITIONAL([BUILD_GL], [false])
 #---------------------------------------------------------------------------
 # Find FL/TK Libraries, flags, etc.
 AC_DEFUN([ACE_WITH_FL],
-[AC_REQUIRE(ACE_WITH_GL)
+[AC_REQUIRE([ACE_WITH_GL])
 ])
 
 
@@ -977,7 +977,7 @@ AC_DEFUN([ACE_WITH_TK],
 # ACE_ENABLE_FL_REACTOR
 #---------------------------------------------------------------------------
 AC_DEFUN([ACE_ENABLE_FL_REACTOR],
-[AC_REQUIRE(ACE_WITH_FL)
+[AC_REQUIRE([ACE_WITH_FL])
 AC_ARG_ENABLE([fl-reactor],
   	       AS_HELP_STRING([--enable-fl-reactor],
 		              [build support for the FlReactor [[no]]]),
@@ -998,13 +998,15 @@ AC_ARG_ENABLE([fl-reactor],
                  ace_user_enable_fl_reactor=no
                 ])
 AM_CONDITIONAL([BUILD_FL], [test X$ace_enable_fl_reactor = Xyes])
+AM_CONDITIONAL([BUILD_ACE_FLREACTOR], 
+               [test X$ace_enable_fl_reactor = Xyes])
 ])
 
 
 # ACE_ENABLE_QT_REACTOR
 #---------------------------------------------------------------------------
 AC_DEFUN([ACE_ENABLE_QT_REACTOR],
-[AC_REQUIRE(ACE_WITH_QT)
+[AC_REQUIRE([ACE_WITH_QT])
 AC_ARG_ENABLE([qt-reactor],
   	       AS_HELP_STRING([--enable-qt-reactor],
 		              [build support for the QtReactor [[no]]]),
@@ -1025,13 +1027,15 @@ AC_ARG_ENABLE([qt-reactor],
                  ace_user_enable_qt_reactor=no
                 ])
 AM_CONDITIONAL([BUILD_QT], [test X$ace_enable_qt_reactor = Xyes])
+AM_CONDITIONAL([BUILD_ACE_QTREACTOR], 
+               [test X$ace_enable_qt_reactor = Xyes])
 ])
 
 
 # ACE_ENABLE_TK_REACTOR
 #---------------------------------------------------------------------------
 AC_DEFUN([ACE_ENABLE_TK_REACTOR],
-[AC_REQUIRE(ACE_WITH_TK)
+[AC_REQUIRE([ACE_WITH_TK])
 AC_ARG_ENABLE([tk-reactor],
   	       AS_HELP_STRING([--enable-tk-reactor],
 		              [build support for the TkReactor [[no]]]),
@@ -1052,6 +1056,8 @@ AC_ARG_ENABLE([tk-reactor],
                  ace_user_enable_tk_reactor=no
                 ])
 AM_CONDITIONAL([BUILD_TK], [test X$ace_enable_tk_reactor = Xyes])
+AM_CONDITIONAL([BUILD_ACE_TKREACTOR], 
+               [test X$ace_enable_tk_reactor = Xyes])
 ])
 
 
@@ -1091,4 +1097,6 @@ dnl line, then "no_x" is set to "yes."
 		])
 AM_CONDITIONAL([BUILD_X11], [test X$ace_enable_xt_reactor = Xyes])
 AM_CONDITIONAL([BUILD_XT], [test X$ace_enable_xt_reactor = Xyes])
+AM_CONDITIONAL([BUILD_ACE_XTREACTOR], 
+               [test X$ace_enable_xt_reactor = Xyes])
 ])
