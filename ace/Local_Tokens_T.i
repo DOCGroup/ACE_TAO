@@ -2,6 +2,7 @@
 // $Id$
 
 // Local_Tokens_T.i
+#if 0
 
 template <class TYPE> ACE_INLINE void 
 ACE_Token_Name<TYPE>::operator= (const ACE_Token_Name<TYPE> &rhs)
@@ -63,3 +64,4 @@ ACE_Token_Name<TYPE>::type (TYPE type)
   this->type_ = type;
 }
 
+#endif /* 0 */
