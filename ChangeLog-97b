@@ -1,3 +1,16 @@
+Thu Sep 18 21:56:33 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
+	  
+	* ace/OS.cpp (ACE_TSS_Cleanup::exit): Masked out codes that relate
+	  to freeing TSS keys and remove key entries from TSS cleanup
+	  table.  I removed it here to avoid race condition.
+	  (ACE_TSS_Cleanup::free_all_key_left): Added this function to
+	  free all left over TSS keys and remove them from TSS cleanup
+	  table when the program exits.  It is only called from
+	  ACE_OS::cleanup_tss. 
+	  (ACE_OS::cleanup_tss):  Added call to
+	  ACE_TSS_Cleanup::free_all_key_left when ACE_WIN32 or
+	  ACE_HAS_TSS_EMULATION are defined.
+	
 Thu Sep 18 12:24:08 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* netsvcs/lib/Client_Logging_Handler.cpp: Make sure to clean up
