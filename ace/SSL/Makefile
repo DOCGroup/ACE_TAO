@@ -14,7 +14,7 @@ LIBNAME  = libACE_SSL
 LIB      = $(LIBNAME).a
 SHLIB    = $(LIBNAME).$(SOEXT)
 
-ACE_SHLIBS = -lssl -lcrypto
+ACE_SHLIBS = -lACE -lssl -lcrypto
 
 FILES = \
   SSL_Context \
