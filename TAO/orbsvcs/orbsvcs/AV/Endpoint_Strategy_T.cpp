@@ -16,12 +16,25 @@
 
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
 TAO_AV_Endpoint_Reactive_Strategy <T_StreamEndpoint, T_VDev, T_MediaCtrl>::TAO_AV_Endpoint_Reactive_Strategy (void)
+   :  stream_endpoint_a_servant_(0), stream_endpoint_b_servant_(0), vdev_servant_(0),
+      media_ctrl_servant_(0)
 {
 }
 
 template <class T_StreamEndpoint, class T_VDev, class T_MediaCtrl>
 TAO_AV_Endpoint_Reactive_Strategy <T_StreamEndpoint, T_VDev, T_MediaCtrl>::~TAO_AV_Endpoint_Reactive_Strategy (void)
 {
+  if( stream_endpoint_a_servant_ )
+    stream_endpoint_a_servant_->_remove_ref();
+
+  if( stream_endpoint_b_servant_ )
+    stream_endpoint_b_servant_->_remove_ref();
+
+  if( vdev_servant_ )
+    vdev_servant_->_remove_ref(); 
+
+  if( media_ctrl_servant_ )
+    media_ctrl_servant_->_remove_ref();
 }
 
 // Create, activate the objects with the POA
@@ -120,23 +133,13 @@ TAO_AV_Endpoint_Reactive_Strategy <T_StreamEndpoint, T_VDev, T_MediaCtrl>::activ
   ACE_TRY
     {
       // Bridge pattern. Subclasses can override this
-      T_MediaCtrl *media_ctrl = 0;
-      if (this->make_mediactrl (media_ctrl) == -1)
+      if (this->make_mediactrl ( media_ctrl_servant_ ) == -1)
         return -1;
-
-      // Activate the mediactrl object under the root poa.
-//      CORBA::String_var mediactrl_ior = this->activate_with_poa (media_ctrl
-//                                                                 ACE_ENV_ARG_PARAMETER);
-
-//      ACE_TRY_CHECK;
-//      if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"(%P|%t)TAO_AV_Endpoint_Reactive_Strategy::activate_mediactrl , media_ctrl ior is :%s\n",
-//                  mediactrl_ior.in ()));
-
 
       // Associate the media controller object reference with the vdev, as per the OMG spec
       CORBA::Any anyval;
       media_ctrl_obj_
-        = media_ctrl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+        = media_ctrl_servant_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       anyval <<= media_ctrl_obj_.in();
@@ -235,8 +238,8 @@ TAO_AV_Endpoint_Reactive_Strategy_A<T_StreamEndpoint, T_VDev, T_MediaCtrl>::crea
                        "(%P|%t) TAO_AV_Endpoint_Reactive_Strategy_A: Error in activate ()\n"),
                       -1);
 
-  stream_endpoint = AVStreams::StreamEndPoint_A::_duplicate( this->stream_endpoint_a_ );
-  vdev = AVStreams::VDev::_duplicate( this->vdev_ );
+  stream_endpoint = AVStreams::StreamEndPoint_A::_duplicate( this->stream_endpoint_a_.in() );
+  vdev = AVStreams::VDev::_duplicate( this->vdev_.in() );
   return 0;
 
 }
@@ -248,14 +251,13 @@ TAO_AV_Endpoint_Reactive_Strategy_A <T_StreamEndpoint, T_VDev, T_MediaCtrl>::act
 {
   ACE_TRY
     {
-      T_StreamEndpoint *stream_endpoint_a = 0;
 
       // Use the bridge method
-      if (this->make_stream_endpoint (stream_endpoint_a) == -1)
+      if (this->make_stream_endpoint (stream_endpoint_a_servant_) == -1)
         return -1;
 
       // Save the object references, so that create_a can return them
-      this->stream_endpoint_a_ = stream_endpoint_a->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+      this->stream_endpoint_a_ = stream_endpoint_a_servant_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -302,12 +304,10 @@ TAO_AV_Endpoint_Reactive_Strategy_B <T_StreamEndpoint, T_VDev, T_MediaCtrl>::act
 {
   ACE_TRY
     {
-      T_StreamEndpoint *stream_endpoint_b = 0;
-
-      if (this->make_stream_endpoint (stream_endpoint_b) == -1)
+      if (this->make_stream_endpoint ( stream_endpoint_b_servant_ ) == -1)
         return -1;
 
-      this->stream_endpoint_b_ = stream_endpoint_b->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+      this->stream_endpoint_b_ = stream_endpoint_b_servant_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -332,11 +332,10 @@ TAO_AV_Endpoint_Reactive_Strategy_B<T_StreamEndpoint, T_VDev, T_MediaCtrl>::crea
                        "(%P|%t) TAO_AV_Endpoint_Reactive_Strategy_B: Error in activate ()\n"),
                       -1);
 
-  stream_endpoint = this->stream_endpoint_b_;
-  this->vdev_->_add_ref();
-  vdev = this->vdev_;
-  return 0;
+  stream_endpoint = AVStreams::StreamEndPoint_B::_duplicate( this->stream_endpoint_b_.in() );
+  vdev = AVStreams::VDev::_duplicate( this->vdev_.in() );
 
+  return 0;
 }
 
 // ----------------------------------------------------------------------
@@ -744,12 +743,6 @@ template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
 TAO_AV_Child_Process<T_StreamEndpoint, T_VDev, T_MediaCtrl>::~TAO_AV_Child_Process ()
 {
   this->unbind_names ();
-//  if (this->stream_endpoint_ != 0)
-//    delete this->stream_endpoint_;
-//  if (this->vdev_ != 0)
-//    delete this->vdev_;
-//  if (this->media_ctrl_ != 0)
-//    delete this->media_ctrl_;
 }
 
 // ----------------------------------------------------------------------

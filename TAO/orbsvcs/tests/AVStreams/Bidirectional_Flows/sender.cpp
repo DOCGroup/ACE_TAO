@@ -482,7 +482,7 @@ main (int argc,
 
       else
         ACE_DEBUG ((LM_DEBUG,
-                    "File Opened Successfull\n"));
+                    "File Opened Successfully\n"));
 
       // Start sending data.
       result = SENDER::instance ()->pace_data (ACE_ENV_SINGLE_ARG_PARAMETER);
