@@ -256,6 +256,12 @@ ACE_Select_Reactor_Handler_Repository::bind (ACE_HANDLE handle,
                                  this->select_reactor_.wait_set_,
                                  ACE_Reactor::ADD_MASK);
 
+  // Clear any suspend masks for it too.
+  this->select_reactor_.bit_ops (handle,
+                                 mask,
+                                 this->select_reactor_.suspend_set_,
+                                 ACE_Reactor::CLR_MASK);
+
   // Note the fact that we've changed the state of the <wait_set_>,
   // which is used by the dispatching loop to determine whether it can
   // keep going or if it needs to reconsult select().
@@ -302,9 +308,17 @@ ACE_Select_Reactor_Handler_Repository::unbind (ACE_HANDLE handle,
 
   // If there are no longer any outstanding events on this <handle>
   // then we can totally shut down the Event_Handler.
-  if (this->select_reactor_.wait_set_.rd_mask_.is_set (handle) == 0
-      && this->select_reactor_.wait_set_.wr_mask_.is_set (handle) == 0
-      && this->select_reactor_.wait_set_.ex_mask_.is_set (handle) == 0)
+
+  int has_any_wait_mask =
+    (this->select_reactor_.wait_set_.rd_mask_.is_set (handle)
+     || this->select_reactor_.wait_set_.wr_mask_.is_set (handle)
+     || this->select_reactor_.wait_set_.ex_mask_.is_set (handle));
+  int has_any_suspend_mask =
+    (this->select_reactor_.suspend_set_.rd_mask_.is_set (handle)
+     || this->select_reactor_.suspend_set_.wr_mask_.is_set (handle)
+     || this->select_reactor_.suspend_set_.ex_mask_.is_set (handle));
+
+  if (!has_any_wait_mask && !has_any_suspend_mask)
 #if defined (ACE_WIN32)
     {
       ACE_SELECT_REACTOR_HANDLE (slot) = ACE_INVALID_HANDLE;
