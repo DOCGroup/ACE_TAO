@@ -153,19 +153,5 @@ protected:
   // The POA manager of poa_.
 };
 
-class TAO_Export TAO
-{
-  // = TITLE
-  //   Defines a namespace for externally visible TAO extensions.
-public:
-  // From Object_KeyC.h
-  typedef TAO_ObjectKey ObjectKey;
-  typedef TAO_ObjectKey_var ObjectKey_var;
-  typedef TAO_ObjectKey_out ObjectKey_out;
-
-  typedef TAO_ORB_Manager ORB_Manager;
-
-  ACE_CLASS_IS_NAMESPACE (TAO);
-};
 
 #endif /* TAO_H */

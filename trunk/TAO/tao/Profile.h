@@ -7,7 +7,7 @@
 //   TAO
 //
 // = FILENAME
-//   Pluggable.h
+//   Profile.h
 //
 // = AUTHOR
 //   Fred Kuhns <fredk@cs.wustl.edu>

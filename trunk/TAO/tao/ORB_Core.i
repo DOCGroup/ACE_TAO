@@ -129,6 +129,12 @@ TAO_ORB_Core::get_default_policy (
   return this->default_policies_.get_policy (policy, ACE_TRY_ENV);
 }
 
+ACE_INLINE POA_TAO::ClientPriorityPolicy*
+TAO_ORB_Core::default_client_priority (void) const
+{
+  return this->default_policies_.client_priority ();
+}
+
 ACE_INLINE POA_Messaging::RelativeRoundtripTimeoutPolicy*
 TAO_ORB_Core::default_relative_roundtrip_timeout (void) const
 {

@@ -42,6 +42,7 @@
 
 #if defined (TAO_HAS_CORBA_MESSAGING)
 #include "tao/MessagingS.h"
+#include "tao/TAOS.h"
 #endif /* TAO_HAS_CORBA_MESSAGING */
 
 
@@ -277,6 +278,9 @@ public:
 
   POA_Messaging::RelativeRoundtripTimeoutPolicy*
      relative_roundtrip_timeout (void);
+
+  POA_TAO::ClientPriorityPolicy*
+     client_priority (void);
 
   CORBA::Policy_ptr get_client_policy (
       CORBA::PolicyType type,
