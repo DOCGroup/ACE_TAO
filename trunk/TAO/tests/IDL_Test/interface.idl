@@ -36,7 +36,7 @@ interface Derived : Base
 // The fact that the interface begins with 'foo' was causing
 // problems. The IDL compiler thought the interface was in
 // foo's scope.
-module foo 
+module foo_mod
 {
   struct date 
     {
@@ -46,7 +46,7 @@ module foo
 
 interface foostep
 {
-  foo::date getDate ();
+  foo_mod::date getDate ();
 };
 
 // Only operations or attributes should cause a clash
@@ -70,3 +70,22 @@ interface father
 interface child : mother, father
 {
 };
+
+// Test of CORBA 2.3.1 relaxation of forward declared
+// interface restrictions.
+
+// Full definition is in generic_object.idl
+interface forward;
+
+interface bar_iface
+{
+  forward op (in forward inarg, 
+              inout forward inoutarg, 
+              out forward outarg);
+};
+
+union boik switch (short)
+{
+  case 0: forward blik;
+};
+
