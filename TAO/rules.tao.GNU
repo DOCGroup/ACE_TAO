@@ -40,7 +40,7 @@ endif # g++
 #### Build rules.
 ####
 IDL_EXT=C.h C.i C.cpp S.h S.i S.cpp S_T.h S_T.i S_T.cpp
-IDL_EXT2=Cli.h Clie.i Clie.cpp Ser.h Ser.i Ser.cpp Ser_T.h Ser_T.i Ser_T.cpp
+IDL_EXT2=Cli.h Cli.i Cli.cpp Ser.h Ser.i Ser.cpp Ser_T.h Ser_T.i Ser_T.cpp
 
 .SUFFIXES: $(IDL_EXT)
 
