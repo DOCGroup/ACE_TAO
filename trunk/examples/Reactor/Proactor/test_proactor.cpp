@@ -576,7 +576,7 @@ main (int argc, char *argv[])
   Sender sender;
 
   // Note: acceptor parameterized by the Receiver
-  ACE_Asynch_Acceptor <Receiver> acceptor;
+  ACE_Asynch_Acceptor<Receiver> acceptor;
 
   // If passive side
   if (host == 0)

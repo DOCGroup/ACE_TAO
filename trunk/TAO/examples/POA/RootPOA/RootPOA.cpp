@@ -18,7 +18,6 @@
 //
 //=========================================================================
 
-#include "ace/streams.h"
 #include "tao/corba.h"
 
 ACE_RCSID(RootPOA, RootPOA, "$Id$")
