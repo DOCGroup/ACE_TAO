@@ -3,18 +3,19 @@
 # This is for the HP-UX 10.x and 11.x using the aC++ compiler.
 #
 # For 10.x, most of the difference for threaded vs. non-threaded is
-# contained in ace/config-hpux-10.x.h.  However, there is a line to verify
-# in this file - if you are using DCE threads, "-lcma" needs to be on the
-# 10.x version of the LIBS line, below.  If you are not using DCE threads,
-# then use the LIBS without -lcma.
+# contained in ace/config-hpux-10.x.h.  However, to build without threads,
+# you should run the make with "threads=0" since the default is to build
+# with threads.
 #
 # HP-UX 11 supports both 32-bit and 64-bit builds, regardless of which
 # architecture the build is done on.  This file is set up to build native
 # to the machine it's running on.  To cross-build for another platform, add
-# the appropriate +DA switch to CCFLAGS.  Note that if you do this, and want to
-# shut up the "At least one PA 2.0 object file detected..." messages, you
-# should also add -Wl,+vnocompatwarnings.
+# "buildbits=32" to make a 32-bit build, and "buildbits=64" to do a 64-bit
+# build.  Note that if you explicitly specify a 64-bit build, the option
+#  -Wl,+vnocompatwarnings is added to shut up the "At least one PA 2.0 object
+# file detected..." messages.
 
+buildbits = 0
 debug = 1
 distrib = 0
 threads = 1
@@ -50,7 +51,7 @@ endif
 DCFLAGS		+= -g
 DLD		= $(CXX) $(CCFLAGS)
 LD		= $(CXX)
-OCFLAGS		= -O
+OCCFLAGS	= -O
 PIC		= +Z
 
 AR		= $(COMPILE.cc) +inst_close $^; /bin/ar
@@ -58,10 +59,32 @@ ARFLAGS		= ruv
 RANLIB		= echo
 LDFLAGS		= -Wl,+s
 SOFLAGS		= -b
+
 ifeq ($(distrib),1)
+
+ifeq ($(word 2,$(HPVERS_WORDS)), 10)
+SOFLAGS		+= -Wl,-x -Wl,+h/usr/lib/$(@F)
+else
+ifeq ($(buildbits),32)
 SOFLAGS		+= -Wl,-x -Wl,+h/usr/lib/$(@F)
 endif
+ifeq ($(buildbits),64)
+SOFLAGS		+= -Wl,-x -Wl,+h/usr/lib/pa20_64/$(@F)
+endif
+endif
+
+endif
+
 SOEXT		= sl
+
+ifeq ($(buildbits),32)
+CCFLAGS		+= +DA1.1 +DS1.1
+endif
+ifeq ($(buildbits),64)
+CCFLAGS		+= +DA2.0 +DS2.0
+LDFLAGS		+= -Wl,+vnocompatwarnings
+endif
+
 #
 # Grab the appropriate libraries based on the version of HP-UX we're building
 # on and whether or not thread support is being used.
