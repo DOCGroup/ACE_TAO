@@ -1,3 +1,8 @@
+Thu May 20 15:33:21 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * include/makeinclude/platform_vxworks5.x_ghs.GNU:
+          added (and default to) LIBS for Green Hills 1.8.9.
+
 Thu May 20 14:34:59 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-sunos5.5.h: with Green Hills only, added
