@@ -37,7 +37,7 @@ public:
   ACE_Bounded_Stack (const ACE_Bounded_Stack<T> &s);
   // The copy constructor (performs initialization). 
 
-  const ACE_Bounded_Stack<T> &operator= (const ACE_Bounded_Stack<T> &s);
+  void operator= (const ACE_Bounded_Stack<T> &s);
   // Assignment operator (performs assignment). 
 
   ~ACE_Bounded_Stack (void); 
@@ -107,7 +107,7 @@ public:
   ACE_Fixed_Stack (const ACE_Fixed_Stack<T, SIZE> &s);
   // The copy constructor (performs initialization). 
 
-  const ACE_Fixed_Stack<T, SIZE> &operator= (const ACE_Fixed_Stack<T, SIZE> &s);
+  void operator= (const ACE_Fixed_Stack<T, SIZE> &s);
   // Assignment operator (performs assignment). 
 
   ~ACE_Fixed_Stack (void); 
@@ -212,7 +212,7 @@ public:
   ACE_Unbounded_Stack (const ACE_Unbounded_Stack<T> &s);
   // The copy constructor (performs initialization). 
 
-  const ACE_Unbounded_Stack<T> &operator= (const ACE_Unbounded_Stack<T> &s);
+  void operator= (const ACE_Unbounded_Stack<T> &s);
   // Assignment operator (performs assignment). 
 
   ~ACE_Unbounded_Stack (void); 
@@ -373,7 +373,7 @@ public:
   ACE_Unbounded_Queue (const ACE_Unbounded_Queue<T> &);
   // Copy constructor. 
 
-  const ACE_Unbounded_Queue<T> &operator= (const ACE_Unbounded_Queue<T> &);
+  void operator= (const ACE_Unbounded_Queue<T> &);
   // Assignment operator.
 
   ~ACE_Unbounded_Queue (void);
@@ -494,7 +494,7 @@ public:
   ACE_Unbounded_Set (const ACE_Unbounded_Set<T> &);
   // Copy constructor. 
 
-  const ACE_Unbounded_Set<T> &operator= (const ACE_Unbounded_Set<T> &);
+  void operator= (const ACE_Unbounded_Set<T> &);
   // Assignment operator.
 
   ~ACE_Unbounded_Set (void);
@@ -616,7 +616,7 @@ public:
   ACE_Fixed_Set (const ACE_Fixed_Set<T, SIZE> &);
   // Copy constructor. 
 
-  const ACE_Fixed_Set<T, SIZE> &operator= (const ACE_Fixed_Set<T, SIZE> &);
+  void operator= (const ACE_Fixed_Set<T, SIZE> &);
   // Assignment operator.
 
   ~ACE_Fixed_Set (void);
@@ -743,7 +743,7 @@ public:
   ACE_Bounded_Set (const ACE_Bounded_Set<T> &);
   // Copy constructor. 
 
-  const ACE_Bounded_Set<T> &operator= (const ACE_Bounded_Set<T> &);
+  void operator= (const ACE_Bounded_Set<T> &);
   // Assignment operator.
 
   ~ACE_Bounded_Set (void);

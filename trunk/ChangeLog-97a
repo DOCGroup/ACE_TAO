@@ -1,4 +1,8 @@
-Fri May  9 00:26:58 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+Fri May  9 01:02:29 1997  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
+
+	* build/gcc/tests/Simple_Message_Block_Test.cpp (main): Changed
+ 	  the use of ACE_Mutex to ACE_SYNCH_MUTEX so that everything will
+ 	  build correctly on non-MT platforms.
 
 	* ace/Timer_{Heap,List}_T.cpp: To ensure backwards compatibility
  	  with the old "int" return value of Timer_*::schedule() we must
