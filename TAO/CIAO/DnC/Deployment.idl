@@ -204,6 +204,15 @@ module Deployment {
 
   typedef sequence < InstanceDeploymentDescription > InstanceDeploymentDescriptions;
 
+  struct PlanSubcomponentPortEndpoint {
+    string portName;
+    boolean provider;
+    // following newly added
+    InstanceDeploymentDescription instance;
+  };
+
+  typedef sequence < PlanSubcomponentPortEndpoint > PlanSubcomponentPortEndpoints;
+
   // @@Issue 6392@@ added new
   struct ConnectionResourceDeploymentDescription {
     string targetName;
@@ -219,15 +228,6 @@ module Deployment {
   };
 
   typedef sequence < ComponentExternalPortEndpoint > ComponentExternalPortEndpoints;
-
-  struct PlanSubcomponentPortEndpoint {
-    string portName;
-    boolean provider;
-    // following newly added
-    InstanceDeploymentDescription instance;
-  };
-
-  typedef sequence < PlanSubcomponentPortEndpoint > PlanSubcomponentPortEndpoints;
 
   struct ExternalReferenceEndpoint {
     string location;
@@ -282,141 +282,6 @@ module Deployment {
     ImplementationDependencies dependsOn;
     ArtifactDeploymentDescriptions artifact;
     Properties infoProperty;    // Issue 5967
-  };
-
-  exception ResourceNotAvailable {
-    string name;
-    string resourceType;
-    string propertyName;
-    string elementName;
-    string resourceName;
-  };
-
-  exception PlanError {
-    string name;
-    string reason;
-  };
-
-  enum DomainUpdateKind {
-    Add,
-    Delete,
-    UpdateAll,
-    UpdateAvailable
-  };
-
-  interface TargetManager {
-    Domain getAllResources ();
-    Domain getAvailableResources ();
-    void commitResources (in DeploymentPlan plan)
-      raises (ResourceNotAvailable, PlanError);
-    void releaseResources (in DeploymentPlan argname);
-    void updateDomain (in ::CORBA::StringSeq elements, in Domain domainSubset, in DomainUpdateKind updateKind);
-  };
-
-  typedef sequence < Object > Endpoints;
-
-  struct Connection {
-    string name;
-    Endpoints endpoint;
-  };
-
-  typedef sequence < Connection > Connections;
-
-  exception StartError {
-    string name;
-    string reason;
-  };
-
-  exception InvalidConnection {
-    string name;
-    string reason;
-  };
-
-  interface Application {
-    void finishLaunch (in Connections providedReference, in boolean start)
-      raises (StartError, InvalidConnection);
-    void start ()
-      raises (StartError);
-  };
-
-  exception InvalidProperty {
-    string name;
-    string reason;
-  };
-
-  exception StopError {
-    string name;
-    string reason;
-  };
-
-  interface ApplicationManager {
-    Application startLaunch (in Properties configProperty, out Connections providedReference, in boolean start)
-      raises (ResourceNotAvailable, StartError, InvalidProperty);
-    void destroyApplication (in Application app)
-      raises (StopError);
-  };
-
-  typedef sequence < Application > Applications;
-
-  interface DomainApplicationManager :
-      ApplicationManager
-  {
-    Applications getApplications ();
-    DeploymentPlan getPlan ();
-  };
-
-  typedef sequence < DomainApplicationManager > DomainApplicationManagers;
-
-  interface ExecutionbManager {
-    DomainApplicationManager preparePlan (in DeploymentPlan plan, in boolean commitResources)
-      raises (ResourceNotAvailable, PlanError, StartError);
-    DomainApplicationManagers getManagers ();
-    void destroyManager (in DomainApplicationManager manager)
-      raises (StopError);
-  };
-
-  interface Logger {
-  };
-
-  interface NodeApplicationManager :
-      ApplicationManager
-  {
-  };
-
-  interface NodeManager {
-    void joinDomain (in Domain domain, in TargetManager manager, in Logger log);
-    void leaveDomain ();
-    NodeApplicationManager preparePlan (in DeploymentPlan plan)
-      raises (StartError, PlanError);
-    void destroyManager (in NodeApplicationManager appManager)
-      raises (StopError);
-  };
-
-  interface NodeApplication :
-      Application
-  {
-  };
-
-  interface DomainApplication :
-      Application
-  {
-  };
-
-  exception NameExists {
-  };
-
-  exception PackageError {
-    string label;
-    string reason;
-  };
-
-  exception NoSuchName {
-  };
-
-  exception LastConfiguration {
-  };
-
-  exception InvalidReference {
   };
 
   struct ComponentPackageDescription;
@@ -567,6 +432,141 @@ module Deployment {
     ComponentPackageReferences reference;
     Requirements selectRequirement;
     Properties configProperty;
+  };
+
+  exception ResourceNotAvailable {
+    string name;
+    string resourceType;
+    string propertyName;
+    string elementName;
+    string resourceName;
+  };
+
+  exception PlanError {
+    string name;
+    string reason;
+  };
+
+  enum DomainUpdateKind {
+    Add,
+    Delete,
+    UpdateAll,
+    UpdateAvailable
+  };
+
+  interface TargetManager {
+    Domain getAllResources ();
+    Domain getAvailableResources ();
+    void commitResources (in DeploymentPlan plan)
+      raises (ResourceNotAvailable, PlanError);
+    void releaseResources (in DeploymentPlan argname);
+    void updateDomain (in ::CORBA::StringSeq elements, in Domain domainSubset, in DomainUpdateKind updateKind);
+  };
+
+  typedef sequence < Object > Endpoints;
+
+  struct Connection {
+    string name;
+    Endpoints endpoint;
+  };
+
+  typedef sequence < Connection > Connections;
+
+  exception StartError {
+    string name;
+    string reason;
+  };
+
+  exception InvalidConnection {
+    string name;
+    string reason;
+  };
+
+  interface Application {
+    void finishLaunch (in Connections providedReference, in boolean start)
+      raises (StartError, InvalidConnection);
+    void start ()
+      raises (StartError);
+  };
+
+  exception InvalidProperty {
+    string name;
+    string reason;
+  };
+
+  exception StopError {
+    string name;
+    string reason;
+  };
+
+  interface ApplicationManager {
+    Application startLaunch (in Properties configProperty, out Connections providedReference, in boolean start)
+      raises (ResourceNotAvailable, StartError, InvalidProperty);
+    void destroyApplication (in Application app)
+      raises (StopError);
+  };
+
+  typedef sequence < Application > Applications;
+
+  interface DomainApplicationManager :
+      ApplicationManager
+  {
+    Applications getApplications ();
+    DeploymentPlan getPlan ();
+  };
+
+  typedef sequence < DomainApplicationManager > DomainApplicationManagers;
+
+  interface ExecutionbManager {
+    DomainApplicationManager preparePlan (in DeploymentPlan plan, in boolean commitResources)
+      raises (ResourceNotAvailable, PlanError, StartError);
+    DomainApplicationManagers getManagers ();
+    void destroyManager (in DomainApplicationManager manager)
+      raises (StopError);
+  };
+
+  interface Logger {
+  };
+
+  interface NodeApplicationManager :
+      ApplicationManager
+  {
+  };
+
+  interface NodeManager {
+    void joinDomain (in Domain domain, in TargetManager manager, in Logger log);
+    void leaveDomain ();
+    NodeApplicationManager preparePlan (in DeploymentPlan plan)
+      raises (StartError, PlanError);
+    void destroyManager (in NodeApplicationManager appManager)
+      raises (StopError);
+  };
+
+  interface NodeApplication :
+      Application
+  {
+  };
+
+  interface DomainApplication :
+      Application
+  {
+  };
+
+  exception NameExists {
+  };
+
+  exception PackageError {
+    string label;
+    string reason;
+  };
+
+  exception NoSuchName {
+  };
+
+  exception LastConfiguration {
+  };
+
+  exception InvalidReference {
   };
 
   interface RepositoryManager {
