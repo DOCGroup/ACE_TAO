@@ -21,7 +21,7 @@ ACE_RCSID(ace, Proactor, "$Id$")
 
 #if defined (ACE_HAS_SIG_C_FUNC)
 extern "C" void
-ACE_Proactor_Cleanup (void *instance, void *arg)
+ACE_Proactor_cleanup (void *instance, void *arg)
 {
   ACE_Proactor::cleanup (instance, arg);
 }
