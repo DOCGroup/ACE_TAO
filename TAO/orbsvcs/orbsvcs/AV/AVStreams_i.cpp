@@ -4812,6 +4812,9 @@ TAO_Tokenizer::operator [] (size_t index) const
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
+template class ACE_Hash<TAO_String_Hash_Key>;
+template class ACE_Equal_To<TAO_String_Hash_Key>;
+
 template class ACE_Hash_Map_Entry<TAO_String_Hash_Key, AVStreams::FDev_ptr>;
 template class ACE_Hash_Map_Entry<TAO_String_Hash_Key, AVStreams::FlowConnection_ptr>;
 template class ACE_Hash_Map_Entry<TAO_String_Hash_Key, AVStreams::FlowEndPoint_ptr>;
@@ -4940,6 +4943,9 @@ template class ACE_Unbounded_Set<AVStreams::FlowConsumer *>;
 template class ACE_Unbounded_Set_Iterator<AVStreams::FlowConsumer *>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate ACE_Hash<TAO_String_Hash_Key>;
+#pragma instantiate ACE_Equal_To<TAO_String_Hash_Key>;
 
 #pragma instantiate ACE_Hash_Map_Entry<TAO_String_Hash_Key,AVStreams::FDev_ptr>
 #pragma instantaite ACE_Hash_Map_Entry<TAO_String_Hash_Key, TAO_FlowSpec_Entry *>
