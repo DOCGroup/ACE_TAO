@@ -1,6 +1,13 @@
+Sun May 20 01:38:59 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/config-freebsd-pthread.h:
+	* ace/POSIX_Proactor.cpp: Applied patches from Russell L. Carter
+	  <rcarter@pinyon.org> that introduce FreeBSD 4.3 to AIO
+	  (compiling at least).                        [Bug 917]
+
 Sat May 19 10:28:56 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* bin/make_pretty.pl: Ignore the mktemp () messages on Linux. 
+	* bin/make_pretty.pl: Ignore the mktemp () messages on Linux.
 
 Fri May 18 20:58:59 2001  Ossama Othman  <ossama@uci.edu>
 
@@ -93,18 +100,18 @@ Fri May 18 00:36:35 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	  Thanks to Johnny Willemsen <johnny.willemsen@meco.nl> for
 	  suggesting this.
-	
+
 Thu May 17 21:34:28 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* ace/POSIX_Asynch_IO.cpp: Added an ACE_UNUSED_ARG to keep G++ 
+	* ace/POSIX_Asynch_IO.cpp: Added an ACE_UNUSED_ARG to keep G++
 	  happy.
 
 Thu May 17 16:52:17 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tests/CDR_File_Test.cpp (run_test): 
+	* tests/CDR_File_Test.cpp (run_test):
 	  Modified ACE_OutputCDR instantiation to follow the new modified
 	  constructor.
-	
+
 Thu May 17 17:01:11 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* bin/nightlybuilds/builds.lst: Re-enabled Core and Full builds on
@@ -131,18 +138,18 @@ Thu May 17 14:36:57 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 	  ace/WIN32_Proactor.cpp
 	  ace/WIN32_Proactor.h: Added more fixes and improved comments
 	  from Roger Tragin <rtragin@cuseeme.com>.
-  
+
 	* ace/SString.cpp: Fixed a bug in the check_allocate() method.
 	  Thanks to Wayne Erchak <wayne@stentor.com> for reporting this.
 
 Thu May 17 12:16:57 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* ace/CDR_Stream.h (ACE_InputCDR): 
-	* ace/CDR_Stream.cpp: 
+	* ace/CDR_Stream.h (ACE_InputCDR):
+	* ace/CDR_Stream.cpp:
 	  Modified so that even the Message_Block_Allocators are also
 	  allocated from TSS memory. The constructor of ACE_OutputCDR
 	  changes.
-	
+
 Thu May 17 11:51:03 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * include/makeinclude/rules.local.GNU:
@@ -188,15 +195,15 @@ Thu May 17 10:00:59 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
           Added interfaces for create_asynch_read_dgram_result and
           create_asynch_write_dgram_result.
 
-Thu May 17 06:23:59 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu> 
+Thu May 17 06:23:59 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* ace/Proactor_Impl.h: Added two missing factory methods to
  	  ACE_Proactor_Impl.  Thanks to Bala for reporting this.
-  
+
 	* ace/WIN32_Proactor.h (ACE_WIN32_Proactor): The signal_number
           parameter was missing.  Thanks to Andy Gokhale for reporting this.
 
-Thu May 17 06:23:59 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu> 
+Thu May 17 06:23:59 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* ace/Asynch_IO.cpp
 	  ace/Asynch_IO.h
