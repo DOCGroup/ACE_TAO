@@ -590,11 +590,11 @@ public:
   /// Placeholder to enable compilation on non-Win32 platforms
   static sig_atomic_t event_loop_done (void);
 };
-#endif /* ACE_WIN32 && !ACE_HAS_WINCE || ACE_HAS_AIO_CALLS*/
 
 #if defined (__ACE_INLINE__)
 #include "ace/Proactor.i"
 #endif /* __ACE_INLINE__ */
+#endif /* ACE_WIN32 && !ACE_HAS_WINCE || ACE_HAS_AIO_CALLS*/
 
 #include "ace/post.h"
 #endif /* ACE_PROACTOR_H */
