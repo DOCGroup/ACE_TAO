@@ -117,7 +117,7 @@ public:
   void type (const ACE_Service_Type *, 
 	     int active = 1);
 
-  const ACE_SHLIB_HANDLE handle (void) const;
+  ACE_SHLIB_HANDLE handle (void) const;
   void handle (const ACE_SHLIB_HANDLE);
 
   void suspend (void) const;
