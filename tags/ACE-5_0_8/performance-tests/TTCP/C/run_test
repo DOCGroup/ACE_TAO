@@ -1,0 +1,35 @@
+# test_run 64 enatm0-kavita.cs.wustl.edu title 10002
+# repeat 100 new-ttcp -r -s -fm -p 10002 -b 65536
+#!/bin/csh -f
+if ($#argv != 4) then
+	echo "Usage: sclt <Max msg size> <destination> <TitleOfThisTest> <port>" $4
+	exit 1
+endif
+#
+@ msize=1024
+@ limit= ($argv[1] * 1024)
+#echo $limit
+#echo $msize 
+echo "Iteration#" 1 ": new-ttcp -fm -s -t -l" $msize "-h" $2 "-x -L" $3 "-p" $4
+new-ttcp -fm -s -t -l $msize -h $2 -x -L $3 -p $4
+sleep 1
+set flag=0
+while ($msize <= $limit)
+  if ($flag == 0) goto label
+     echo "Iteration#" 1 ": new-ttcp -fm -s -t -l" $msize "-h" $2 "-x -L" $3 "-p" $4
+     new-ttcp -fm -s -t -l $msize -h $2 -x -L $3 -p $4
+     sleep 1
+ label:
+  set flag=1
+  foreach i (2 3 4 5)
+	echo "Iteration#" $i ": new-ttcp -fm -s -t -l" $msize "-h" $2 "-L" $3 "-p" $4
+ 	new-ttcp -fm -s -t -l $msize -h $2 -L $3 -p $4
+	sleep 1
+  end
+	echo "---------------------------"
+	@ msize = ($msize * 2)
+end 
+
+echo " "
+echo "Done at:" 
+date
