@@ -1,3 +1,17 @@
+Wed Aug 13 10:42:12 2003  George Edwards <g.edwards@vanderbilt.edu>
+
+        * examples/handcrafted/BasicSP_EC/BMClosedED/BMClosedED_svnt.h:
+        * examples/handcrafted/BasicSP_EC/BMDevice/BMDevice_svnt.h:
+        * examples/handcrafted/BasicSP_EC/BMDisplay/BMDisplay_svnt.h:
+        * examples/handcrafted/BasicSP_EC/EC/EC_svnt.h:
+        * examples/handcrafted/BasicSP_EC2/BMClosedED/BMClosedED_svnt.h:
+        * examples/handcrafted/BasicSP_EC2/BMDevice/BMDevice_svnt.h:
+        * examples/handcrafted/BasicSP_EC2/BMDisplay/BMDisplay_svnt.h:
+        * examples/handcrafted/BasicSP_EC2/EC/EC_svnt.h:
+        * examples/handcrafted/BasicSP_EC2/RTEventService/RTEventService_svnt.h:
+
+          Added /**/ to pre.h and post.h includes.
+
 Tue Aug 12 21:56:42 2003 Arvind S. Krishna <arvindk@dre.vanderbilt.edu>
   
         * tools/XML_Helper/Assembly_Spec.h:
@@ -57,8 +71,8 @@ Tue Aug 12 20:18:23 2003  George Edwards <g.edwards@vanderbilt.edu>
         * examples/handcrafted/BasicSP_EC2/RTEventService/RTEventService_svnt.h:
         * examples/handcrafted/BasicSP_EC2/BasicSP.idl:
 
-        Updated handcrafted event channel example; components now provide and use the
-        RtecEventChannelAdmin::EventChannel interface.
+          Updated handcrafted event channel example; components now provide and use the
+          RtecEventChannelAdmin::EventChannel interface.
 
 2003-08-11  Arvind S. Krishna  <arvindk@equus.dre.vanderbilt.edu>
 

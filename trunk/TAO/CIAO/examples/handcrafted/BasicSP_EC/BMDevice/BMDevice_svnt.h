@@ -20,7 +20,7 @@
 
 #ifndef CIAO_GLUE_SESSION_BMDEVICE_SVNT_H
 #define CIAO_GLUE_SESSION_BMDEVICE_SVNT_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "BMDeviceS.h"
 #include "BMDeviceEC.h"
@@ -661,6 +661,6 @@ namespace CIAO_GLUE_BasicSP
 
 }
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* CIAO_GLUE_SESSION_BMDEVICE_SVNT_H */
 
