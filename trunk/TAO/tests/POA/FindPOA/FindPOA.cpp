@@ -1,5 +1,7 @@
 // $Id$
 //
+//===============================================================================
+//
 // = LIBRARY
 //     TAO/tests/POA/FindPOA
 //
@@ -8,6 +10,7 @@
 //
 // = DESCRIPTION
 //     This Program tests the find_POA method of a POA.
+//
 // = AUTHOR
 //     Irfan Pyarali
 //
