@@ -59,7 +59,7 @@ PM_Client::process (void)
        frp = this->Protocol_Manager::get_each_friend ())
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "%c%-*s [", (frp->is_active != 0 ? '*' : ' '), 
+                  "%c%-*s [", (frp->is_active_ != 0 ? '*' : ' '), 
                   this->max_key_length,
                   (frp->*get_name) ()));
       
@@ -86,7 +86,8 @@ PM_Client::process (void)
 	    ACE_DEBUG ((LM_DEBUG,
                         "*"));
 	  
-	  if ((np = np->next) == 0)
+          np = np->next_;
+	  if (np == 0)
 	    break;
 	  else
             ACE_DEBUG ((LM_DEBUG,

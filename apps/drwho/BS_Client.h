@@ -28,7 +28,7 @@ public:
   BS_Client (void);
   // Constructor.
 
-  virtual Protocol_Record *insert (char *key_name,
+  virtual Protocol_Record *insert (const char *key_name,
                                    int max_len = MAXUSERIDNAMELEN);
   // This function is used to merge the <key_name> from server
   // <host_name> into the sorted list of userids kept on the client's

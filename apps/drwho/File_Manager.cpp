@@ -98,7 +98,7 @@ File_Manager::open_passwd_file (void)
   
   ACE_Mem_Map mmap (file_name);
 
-  File_Manager::buffer_ptr = mmap.addr ();
+  File_Manager::buffer_ptr = (char *) mmap.addr ();
 
   if (File_Manager::buffer_ptr >= 0)
     {
@@ -118,7 +118,7 @@ File_Manager::open_friends_file (const char *file_name)
 {
   ACE_HANDLE fd;
   
-  char *fnp = ACE_OS::strrchr (file_name, '/');
+  const char *fnp = ACE_OS::strrchr (file_name, '/');
   
   // Split file_name into directory/file_name. 
 
@@ -141,7 +141,7 @@ File_Manager::open_friends_file (const char *file_name)
 
   ACE_Mem_Map mmap (fd);
 
-  File_Manager::buffer_ptr = mmap.addr ();
+  File_Manager::buffer_ptr = (char *) mmap.addr ();
 
   if (File_Manager::buffer_ptr >= 0)
     {

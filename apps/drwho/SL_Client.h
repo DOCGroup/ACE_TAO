@@ -25,8 +25,8 @@ class SL_Client : public Single_Lookup
   //   Provides the client's single user lookup table abstraction. 
 
 public:
-  SL_Client (char *usr_name);
-  virtual Protocol_Record *insert (char *key_name,
+  SL_Client (const char *key_name);
+  virtual Protocol_Record *insert (const char *key_name,
                                    int max_len = MAXUSERIDNAMELEN);
 };
 

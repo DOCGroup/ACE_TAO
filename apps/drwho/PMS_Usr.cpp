@@ -67,9 +67,9 @@ PMS_Usr::decode (char *packet, int &packet_length)
                   "\n"));
     }
 
-  ACE_NEW_RTURN (this->ss,
-                 SL_Server (packet),
-                 -1);
+  ACE_NEW_RETURN (this->ss,
+                  SL_Server (packet),
+                  -1);
   return 1;
 }
 

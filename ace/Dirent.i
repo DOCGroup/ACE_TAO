@@ -2,40 +2,40 @@
 // $Id$
 
 ACE_INLINE int
-ACE_Dirent::opendir (char *dirname) 
+ACE_Dirent::open (const char *dirname) 
 {
   this->dirp_ = ACE_OS::opendir (dirname);
 
-  if (this->dirp == 0)
+  if (this->dirp_ == 0)
     return -1;
   else
     return 0;
 }
 
 ACE_INLINE 
-ACE_Dirent::Dirent (char *dirname) 
+ACE_Dirent::ACE_Dirent (const char *dirname) 
 {
   if (this->open (dirname) == -1)
     ACE_ERROR ((LM_ERROR,
                 "%p\n", 
-                "Dirent::Dirent"))
+                "Dirent::Dirent"));
 }
 
 ACE_INLINE 
-Dirent::~Dirent (void)
+ACE_Dirent::~ACE_Dirent (void)
 {
   ACE_OS::closedir (this->dirp_);
 }
 
-ACE_INLINE struct direct *
-Dirent::readdir (void)
+ACE_INLINE dirent *
+ACE_Dirent::read (void)
 {
   return ACE_OS::readdir (this->dirp_);
 }
 
 ACE_INLINE int
-Dirent::readdir_r (struct dirent *entry,
-                   struct dirent **result)
+ACE_Dirent::read (struct dirent *entry,
+                  struct dirent **result)
 {
   return ACE_OS::readdir_r (this->dirp_,
                             entry,
@@ -43,25 +43,25 @@ Dirent::readdir_r (struct dirent *entry,
 }
 
 ACE_INLINE void
-Dirent::closedir (void)
+ACE_Dirent::close (void)
 {
   ACE_OS::closedir (this->dirp_);
 }
 
 ACE_INLINE void
-Dirent::rewinddir (void)
+ACE_Dirent::rewind (void)
 {
   ACE_OS::rewinddir (this->dirp_);
 }
 
 ACE_INLINE void
-Dirent::seekdir (long loc)
+ACE_Dirent::seek (long loc)
 {
   ACE_OS::seekdir (this->dirp_, loc);
 }
 
 ACE_INLINE long
-Dirent::telldir (void)
+ACE_Dirent::tell (void)
 {
   return ACE_OS::telldir (this->dirp_);
 }

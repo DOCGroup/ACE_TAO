@@ -27,11 +27,11 @@ RWho_DB_Manager::RWho_DB_Manager (void)
                 this->rwho_dir_name,
                 1));
 
-  this->rwho_dir.opendir (this->rwho_dir_name);
+  this->rwho_dir.open (this->rwho_dir_name);
 
   // Skip "." and ".." 
-  this->rwho_dir.readdir ();
-  this->rwho_dir.readdir ();
+  this->rwho_dir.read ();
+  this->rwho_dir.read ();
 }
 
 // The destructor cleans up the RWHOD_DIR handle.
@@ -67,9 +67,9 @@ RWho_DB_Manager::get_next_host (void)
 
   // Go through each file in the directory looking for valid entries.
 
-  for (dirent *dir_ptr = this->rwho_dir.readdir ();
+  for (dirent *dir_ptr = this->rwho_dir.read ();
        dir_ptr != 0;
-       dir_ptr = this->rwho_dir.readdir ())
+       dir_ptr = this->rwho_dir.read ())
     {
       ACE_HANDLE user_file = ACE_OS::open (dir_ptr->d_name, O_RDONLY);
 	  

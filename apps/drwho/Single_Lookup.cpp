@@ -3,7 +3,7 @@
 #include "Options.h"
 #include "Single_Lookup.h"
 
-Single_Lookup::Single_Lookup (char *usr_name)
+Single_Lookup::Single_Lookup (const char *usr_name)
 {
   ACE_NEW (this->frp,
            Protocol_Record (ACE::strnew (usr_name)));
