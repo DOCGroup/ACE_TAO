@@ -91,8 +91,8 @@ private:
   // Cache the SSL tagged component in a decoded format. Notice that
   // we do not need to marshal this object!
 
-  /// Cached instance of @param ACE_INET_Addr> for use in making
-  /// invocations, etc.
+  /// Cached instance of ACE_INET_Addr for use in making invocations,
+  /// etc.
   ACE_INET_Addr object_addr_;
 
   TAO_SSLIOP_Endpoint *next_;
