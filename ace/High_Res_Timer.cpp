@@ -233,14 +233,14 @@ ACE_High_Res_Timer::reset (void)
 }
 
 void
-ACE_High_Res_Timer::elapsed_time (ACE_Time_Value &tv)
+ACE_High_Res_Timer::elapsed_time (ACE_Time_Value &tv) const
 {
   hrtime_to_tv (tv, end_ - start_);
 }
 
 #if defined (ACE_HAS_POSIX_TIME)
 void
-ACE_High_Res_Timer::elapsed_time (struct timespec &elapsed_time)
+ACE_High_Res_Timer::elapsed_time (struct timespec &elapsed_time) const
 {
   // This implementation should be cleaned up.
 
@@ -271,13 +271,13 @@ ACE_High_Res_Timer::elapsed_time (struct timespec &elapsed_time)
 #endif /* ACE_HAS_POSIX_TIME */
 
 void
-ACE_High_Res_Timer::elapsed_time_incr (ACE_Time_Value &tv)
+ACE_High_Res_Timer::elapsed_time_incr (ACE_Time_Value &tv) const
 {
   hrtime_to_tv (tv, total_);
 }
 
 void
-ACE_High_Res_Timer::elapsed_time (ACE_hrtime_t &nanoseconds)
+ACE_High_Res_Timer::elapsed_time (ACE_hrtime_t &nanoseconds) const
 {
   // Please do _not_ rearrange this equation.  It is carefully
   // designed and tested to avoid overflow on machines that
@@ -289,7 +289,7 @@ ACE_High_Res_Timer::elapsed_time (ACE_hrtime_t &nanoseconds)
 void
 ACE_High_Res_Timer::print_ave (const char *str,
                                const int count,
-                               ACE_HANDLE handle)
+                               ACE_HANDLE handle) const
 {
   ACE_TRACE ("ACE_High_Res_Timer::print_ave");
 
@@ -322,7 +322,9 @@ ACE_High_Res_Timer::print_ave (const char *str,
 }
 
 void
-ACE_High_Res_Timer::print_total (const char *str, const int count, ACE_HANDLE handle)
+ACE_High_Res_Timer::print_total (const char *str,
+                                 const int count,
+                                 ACE_HANDLE handle) const
 {
   ACE_TRACE ("ACE_High_Res_Timer::print_total");
 
