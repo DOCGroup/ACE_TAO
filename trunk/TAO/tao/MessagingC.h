@@ -2112,7 +2112,7 @@ TAO_Export void operator<<= (CORBA::Any &, Messaging::PolicyValueSeq*); // nonco
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, Messaging::PolicyValueSeq *&);
 
 #if defined (TAO_HAS_AMI_CALLBACK)
-TAO_Export  Messaging::ReplyHandler_ptr (*_TAO_collocation_Messaging_ReplyHandler_Stub_Factory_function_pointer) (
+extern TAO_Export  Messaging::ReplyHandler_ptr (*_TAO_collocation_Messaging_ReplyHandler_Stub_Factory_function_pointer) (
                                      CORBA::Object_ptr obj);
 
 // Any operators for interface Messaging::ReplyHandler
