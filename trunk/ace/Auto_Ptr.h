@@ -100,7 +100,7 @@ private:
 };
 
 template<class X>
-class auto_array_ptr : public auto_basic_array_ptr 
+class auto_array_ptr : public auto_basic_array_ptr<X>
   // = TITLE
   //     Implements an extension to the draft C++ standard auto_ptr
   //     abstraction.
