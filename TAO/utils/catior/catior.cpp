@@ -196,7 +196,7 @@ catior (char* str
 
   mb.rd_ptr (1);
   mb.wr_ptr (2 * len - 1);
-  TAO_InputCDR stream (&mb, ACE_static_cast(int,byteOrder));
+  TAO_InputCDR stream (&mb, static_cast<int> (byteOrder));
 
   if (byteOrder == 1)
     ACE_DEBUG ((LM_DEBUG,
@@ -723,7 +723,7 @@ cat_tag_policies (TAO_InputCDR& stream) {
     int byteOrder = policies[iter].pvalue[0];
     TAO_InputCDR stream3 (pmbuf,
                           policies[iter].pvalue.length(),
-                          ACE_static_cast(int,byteOrder));
+                          static_cast<int> (byteOrder));
 
     if (policies[iter].ptype == RTCORBA::PRIORITY_MODEL_POLICY_TYPE) {
       ACE_DEBUG ((LM_DEBUG,

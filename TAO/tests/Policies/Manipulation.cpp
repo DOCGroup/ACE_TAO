@@ -304,10 +304,10 @@ Manipulation::svc (void)
     {
 #ifndef ACE_LACKS_LONGLONG_T
       ACE_RANDR_TYPE seed =
-        ACE_static_cast (ACE_RANDR_TYPE, ACE_OS::gethrtime ());
+        static_cast<ACE_RANDR_TYPE> (ACE_OS::gethrtime ());
 #else
       ACE_RANDR_TYPE seed =
-        ACE_static_cast (ACE_RANDR_TYPE, ACE_OS::gethrtime().lo());
+        static_cast<ACE_RANDR_TYPE> (ACE_OS::gethrtime().lo());
 #endif
       CORBA::Object_var object =
         this->orb_->resolve_initial_references ("ORBPolicyManager"

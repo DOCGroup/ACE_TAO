@@ -83,14 +83,13 @@ ACE_UTF16_T
 load_raw_wchar (const char * buffer, size_t & pos, int do_byte_swap)
 {
   // need a two byte object to load the UTF16 2 byte codepoint
-  ACE_UTF16_T utf16_char = * ACE_reinterpret_cast (ACE_UTF16_T const *,
-    &buffer[pos*ACE_UTF16_CODEPOINT_SIZE]);
+  ACE_UTF16_T utf16_char = * reinterpret_cast<ACE_UTF16_T const *> (&buffer[pos*ACE_UTF16_CODEPOINT_SIZE]);
 #if ! defined (ACE_DISABLE_SWAP_ON_READ)
   if (do_byte_swap)
     {
       ACE_CDR::swap_2 (
         &buffer[pos*ACE_UTF16_CODEPOINT_SIZE],
-        ACE_reinterpret_cast(char *,&utf16_char));
+        reinterpret_cast<char *> (&utf16_char));
     }
 #endif
   pos ++;
@@ -103,8 +102,7 @@ static
 ACE_CDR::WChar
 convert_surrogate_pair (ACE_UTF16_T high, ACE_UTF16_T low)
 {
-  return ACE_static_cast (ACE_CDR::WChar,
-    ((high - ACE_UTF16_SURROGATE_HIGH_BEGIN) << ACE_UTF16_SURROGATE_HIGH_SHIFT)
+  return static_cast<ACE_CDR::WChar> (((high - ACE_UTF16_SURROGATE_HIGH_BEGIN) << ACE_UTF16_SURROGATE_HIGH_SHIFT)
     + (low - ACE_UTF16_SURROGATE_LOW_BEGIN)
     + ACE_UTF16_SURROGATE_OFFSET
     );
@@ -121,7 +119,7 @@ load_wchar (const char * buffer, size_t & pos, size_t length, int do_byte_swap)
   ACE_CDR::WChar rc = ACE_UNICODE_SUBSTITUTE_CHARACTER;
   if (pos < length)
     {
-      rc = ACE_static_cast (ACE_CDR::WChar, load_raw_wchar (buffer, pos, do_byte_swap));
+      rc = static_cast<ACE_CDR::WChar> (load_raw_wchar (buffer, pos, do_byte_swap));
       // Is this a UTF16 surrogate?
       // note assumpton that SURROGATE_HIGH_END == SURROGATE_LOW_BEGIN
       if (rc >= ACE_UTF16_SURROGATE_HIGH_BEGIN && rc < ACE_UTF16_SURROGATE_LOW_END)
@@ -137,7 +135,7 @@ load_wchar (const char * buffer, size_t & pos, size_t length, int do_byte_swap)
                   && low < ACE_UTF16_SURROGATE_LOW_END)
                   {
                     rc = convert_surrogate_pair (
-                      ACE_static_cast (ACE_UTF16_T, rc), low);
+                      static_cast<ACE_UTF16_T> (rc), low);
                   }
                 else
                   {
@@ -162,7 +160,7 @@ static
 //ACE_INLINE
 size_t encode_utf16 (ACE_UTF16_T * buffer, ACE_CDR::WChar value)
 {
-  buffer[0] = ACE_static_cast (ACE_UTF16_T, value);
+  buffer[0] = static_cast<ACE_UTF16_T> (value);
   size_t length = 1;
   if (value >= ACE_UTF16_SURROGATE_HIGH_BEGIN)
     {
@@ -178,8 +176,7 @@ size_t encode_utf16 (ACE_UTF16_T * buffer, ACE_CDR::WChar value)
             }
           else
             {
-              ACE_CDR::WChar offset = ACE_static_cast (ACE_CDR::WChar,
-                value - ACE_UTF16_SURROGATE_OFFSET);
+              ACE_CDR::WChar offset = static_cast<ACE_CDR::WChar> (value - ACE_UTF16_SURROGATE_OFFSET);
               buffer[0] = (offset >> ACE_UTF16_SURROGATE_HIGH_SHIFT)
                 + ACE_UTF16_SURROGATE_HIGH_BEGIN;
               buffer[1] = (offset & ACE_UTF16_SURROGATE_LOW_MASK)
@@ -229,8 +226,8 @@ WUCS4_UTF16::~WUCS4_UTF16 (void)
 ACE_CDR::Boolean
 WUCS4_UTF16::read_wchar (ACE_InputCDR &cdr, ACE_CDR::WChar &x)
 {
-  if (ACE_static_cast (ACE_CDR::Short, this->major_version(cdr)) == 1
-      && ACE_static_cast (ACE_CDR::Short, this->minor_version(cdr)) > 1)
+  if (static_cast<ACE_CDR::Short> (this->major_version(cdr)) == 1
+      && static_cast<ACE_CDR::Short> (this->minor_version(cdr)) > 1)
     {
       ACE_CDR::Octet len;
       if (! this->read_1 (cdr, &len))
@@ -284,7 +281,7 @@ WUCS4_UTF16::read_wchar (ACE_InputCDR &cdr, ACE_CDR::WChar &x)
         }
       else
         {
-          x = ACE_static_cast(ACE_CDR::WChar, sx);
+          x = static_cast<ACE_CDR::WChar> (sx);
         }
 
         cdr.reset_byte_order (old_bo);
@@ -296,7 +293,7 @@ WUCS4_UTF16::read_wchar (ACE_InputCDR &cdr, ACE_CDR::WChar &x)
         {
           return 0;
         }
-      x = ACE_static_cast(ACE_CDR::WChar, sx);
+      x = static_cast<ACE_CDR::WChar> (sx);
     }
   return 1;
 }
@@ -314,8 +311,8 @@ WUCS4_UTF16::read_wstring (ACE_InputCDR &cdr,
   // the memory is allocated.
   if (len > 0 && len <= cdr.length())
     {
-      if (ACE_static_cast (ACE_CDR::Short, this->major_version(cdr)) == 1
-          && ACE_static_cast (ACE_CDR::Short, this->minor_version(cdr)) > 1)
+      if (static_cast<ACE_CDR::Short> (this->major_version(cdr)) == 1
+          && static_cast<ACE_CDR::Short> (this->minor_version(cdr)) > 1)
         {
           len /= ACE_UTF16_CODEPOINT_SIZE;
 
@@ -404,8 +401,8 @@ WUCS4_UTF16::read_wchar_array (ACE_InputCDR & cdr,
   if (length == 0)
     return 1;
 
-  if (ACE_static_cast (ACE_CDR::Short, this->major_version(cdr)) == 1
-      && ACE_static_cast (ACE_CDR::Short, this->minor_version(cdr)) > 1)
+  if (static_cast<ACE_CDR::Short> (this->major_version(cdr)) == 1
+      && static_cast<ACE_CDR::Short> (this->minor_version(cdr)) > 1)
     {
       for (size_t i = 0; i < length; i++)
         if (!this->read_wchar(cdr,x[i]))
@@ -421,12 +418,12 @@ WUCS4_UTF16::write_wchar (ACE_OutputCDR &cdr,
                           ACE_CDR::WChar x)
 {
   int encode_len = 1;
-  if (ACE_static_cast (ACE_CDR::Short, this->minor_version(cdr)) == 0)
+  if (static_cast<ACE_CDR::Short> (this->minor_version(cdr)) == 0)
     { // wchar is not allowed with GIOP 1.0
       errno = EINVAL;
       return 0;
     }
-  else if (ACE_static_cast (ACE_CDR::Short, this->minor_version(cdr)) == 1)
+  else if (static_cast<ACE_CDR::Short> (this->minor_version(cdr)) == 1)
     encode_len = 0;
 
   return write_wchar_i(cdr,x,1,encode_len);
@@ -450,22 +447,21 @@ WUCS4_UTF16::write_wchar_i (ACE_OutputCDR &cdr,
     {
       len = 2;
       buffer[0] = ACE_UNICODE_BOM_CORRECT;
-      buffer[1] = ACE_static_cast(ACE_CDR::Short,x);
+      buffer[1] = static_cast<ACE_CDR::Short> (x);
     }
   else
     {
       len = 1;
       if (cdr.byte_order())
-        ACE_CDR::swap_2 (ACE_reinterpret_cast (const char *,&x),
-                         ACE_reinterpret_cast (char *,buffer));
+        ACE_CDR::swap_2 (reinterpret_cast<const char *> (&x),
+                         reinterpret_cast<char *> (buffer));
       else
-        buffer[0] = ACE_static_cast(ACE_CDR::Short,x);
+        buffer[0] = static_cast<ACE_CDR::Short> (x);
     }
 
   if (encode_len)
     {
-      unsigned char tcsize = ACE_static_cast (unsigned char,
-                                              len * ACE_UTF16_CODEPOINT_SIZE);
+      unsigned char tcsize = static_cast<unsigned char> (len * ACE_UTF16_CODEPOINT_SIZE);
       if (this->write_1 (cdr, &tcsize))
         return this->write_array(cdr, &buffer, tcsize, 1, 1);
       else
@@ -483,8 +479,8 @@ WUCS4_UTF16::write_wstring (ACE_OutputCDR & cdr,
                 ACE_CDR::ULong len,
                 const ACE_CDR::WChar *x)
 {
-  if (ACE_static_cast (ACE_CDR::Short, this->major_version(cdr)) == 1
-      && ACE_static_cast (ACE_CDR::Short, this->minor_version(cdr)) > 1)
+  if (static_cast<ACE_CDR::Short> (this->major_version(cdr)) == 1
+      && static_cast<ACE_CDR::Short> (this->minor_version(cdr)) > 1)
     {
       // count characters that will require surrogates to
       // determine transmission length
@@ -529,12 +525,12 @@ WUCS4_UTF16::write_wchar_array (ACE_OutputCDR & cdr,
 #endif
 
   int encode_len = 1;
-  if (ACE_static_cast (ACE_CDR::Short, this->minor_version(cdr)) == 0)
+  if (static_cast<ACE_CDR::Short> (this->minor_version(cdr)) == 0)
     { // wchar is not allowed with GIOP 1.0
       errno = EINVAL;
       return 0;
     }
-  else if (ACE_static_cast (ACE_CDR::Short, this->minor_version(cdr)) == 1)
+  else if (static_cast<ACE_CDR::Short> (this->minor_version(cdr)) == 1)
     encode_len = 0;
 
   for (size_t i = 0; i < length; i++)
@@ -559,7 +555,7 @@ WUCS4_UTF16::write_measured_wchar_array (ACE_OutputCDR & cdr,
       return 0;
     }
 
-  ACE_UTF16_T *sb = ACE_reinterpret_cast(ACE_UTF16_T *, buf);
+  ACE_UTF16_T *sb = reinterpret_cast<ACE_UTF16_T *> (buf);
   size_t sbpos = 0;
 
   for (size_t i = 0; i < length; i++)
@@ -574,7 +570,7 @@ WUCS4_UTF16::write_measured_wchar_array (ACE_OutputCDR & cdr,
       // and we don't want to allocate a new array
       for (size_t i = 0; i < sbpos; i++)
         {
-          char * pchar = ACE_static_cast (char *, &sb[i]);
+          char * pchar = static_cast<char *> (&sb[i]);
           // ACE_CDR::swap_2 (pchar, pchar);
           // can't use swap_2 because inplace swaps are not safe
           // and work-arounds like copying to another buffer lose

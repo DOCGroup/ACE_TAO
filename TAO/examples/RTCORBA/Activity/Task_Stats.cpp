@@ -111,8 +111,7 @@ Task_Stats::dump_latency_stats (ACE_TCHAR *out_msg, ACE_UINT32 sf)
   ACE_UINT64 avg = this->sum_ / this->samples_count_;
   ACE_UINT64 dev =
 #if defined ACE_LACKS_LONGLONG_T
-    ACE_static_cast (ACE_U_LongLong,
-                     this->sum2_ / this->samples_count_)
+    static_cast<ACE_U_LongLong> (this->sum2_ / this->samples_count_)
     - avg * ACE_U64_TO_U32(avg);
 #else  /* ! ACE_LACKS_LONGLONG_T */
     this->sum2_ / this->samples_count_ - avg * avg;

@@ -28,8 +28,7 @@ Grid_i::Grid_i (CORBA::Short x,
     {
       // Allocate memory for the matrix.
        ACE_ALLOCATOR (array_,
-                      ACE_static_cast (CORBA::Long **,
-                                       mem_pool->malloc (y * sizeof (CORBA::Long *))));
+                      static_cast<CORBA::Long **> (mem_pool->malloc (y * sizeof (CORBA::Long *))));
       //array_ = (CORBA::Long **) mem_pool->malloc (y * sizeof (CORBA::Long *));
 
       if (array_ != 0)
@@ -37,8 +36,7 @@ Grid_i::Grid_i (CORBA::Short x,
           for (int ctr = 0; ctr < y; ctr++)
             {
               ACE_ALLOCATOR (array_[ctr],
-                             ACE_static_cast (CORBA::Long *,
-                                              mem_pool->malloc (x *
+                             static_cast<CORBA::Long *> (mem_pool->malloc (x *
                                                                 sizeof (CORBA::Long ))));
 
               //array_[ctr] = (CORBA::Long *)mem_pool->malloc (x *

@@ -81,8 +81,7 @@ ServantLocator_i::postinvoke (const PortableServer::ObjectId &oid,
   // Check the passed servant with the cookie.
 
   PortableServer::Servant my_servant =
-    ACE_reinterpret_cast (PortableServer::Servant,
-                          cookie);
+    reinterpret_cast<PortableServer::Servant> (cookie);
 
   ACE_ASSERT (servant == my_servant);
 

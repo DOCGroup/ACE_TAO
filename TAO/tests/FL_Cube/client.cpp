@@ -122,14 +122,14 @@ Client::show (void)
 void
 Client::x_cb (Fl_Widget*, void* cookie)
 {
-  Client *self = ACE_static_cast(Client*,cookie);
+  Client *self = static_cast<Client*> (cookie);
   self->x_changed ();
 }
 
 void
 Client::y_cb (Fl_Widget*, void* cookie)
 {
-  Client *self = ACE_static_cast(Client*,cookie);
+  Client *self = static_cast<Client*> (cookie);
   self->y_changed ();
 }
 
