@@ -3,6 +3,11 @@ Tue Nov 10 10:09:06 1998  David L. Levine  <levine@cs.wustl.edu>
         * tests/Env_Value_Test.cpp (main): replaced hard-coded "/" with
           ACE_DIRECTORY_SEPARATOR_STR.
 
+        * ace/config-vxworks5.x.h: removed ACE_HAS_VERBOSE_NOTSUP #define.
+          Thanks to Margherita Vittone Wiersma <vittone@fndaub.fnal.gov> and
+          Ramiro_Penataro_Blanco <penataro@ll.iac.es> for complaining
+          about it.
+
 Mon Nov  9 23:27:59 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * examples/ASX/Message_Queue/buffer_stream.cpp (main): Fixed an
