@@ -1,3 +1,39 @@
+Thu Jun 24 14:53:32 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/Invocation.cpp (TAO_GIOP_Invocation::invoke and
+	  TAO_GIOP_Locate_Request_Invocation::invoke):  Now that
+	  GIOP::send_message() is not closing the transport on error, we
+	  have do so here.
+
+	* tao/Stub: Added an extra ORB_var to the Stub.  This extra
+	  ORB_var is required for reference counting.  It will help us
+	  keep the ORB that created us around until the CORBA::Object we
+	  represent dies.  This will eliminate the need for making sure
+	  that all CORBA objects dies before the ORB dies.
+
+	* tao/UIOP_Connect.cpp (handle_input):
+	* tao/IIOP_Connect.cpp (handle_input):
+
+	  Only reset the message state of the transport on success. On
+	  failures, the transport will be closed anyway.
+
+	* tao/GIOP.cpp: Many of the GIOP functions were closing the
+	  transport on failure.  In addition, -1 was also being returned
+	  to the Reactor, which further called handle_close() on the
+	  transport.  This would typically result in a double delete.
+
+	  The solution was to not close the transport on failure but
+	  return the error result to the caller.  If the caller was the
+	  Reactor, it will call handle_close() and clean up the
+	  transport. If the caller was the client-side, it will have to do
+	  the correct cleanup.
+
+	* tao/POAS.cpp:
+	* tao/POAS.i:
+	* tao/Forwarding_Servant.cpp:
+
+	  Fixed old style of exception handling.
+
 Thu Jun 24 13:46:46 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/ORB.h:
