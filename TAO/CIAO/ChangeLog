@@ -1,3 +1,9 @@
+Wed Jun 30 13:32:08 2004  Tao Lu  <lu@dre.vanderbilt.edu>
+
+	* DnC/tests/NodeApplicationTest/NodeAppTest.mpc:
+
+	  Removed "after += CIAO_DnC_Container" from the stub project.
+
 Wed Jun 30 13:14:50 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
 	* DnC/ciao/CCM_Core.mpc:
