@@ -1,3 +1,75 @@
+Wed Jul 02 22:10:59 2003  Pradeep Gore  <pradeep@oomworks.com>
+
+	* orbsvcs/tests/Notify/Blocking/Notify_Structured_Push_Consumer.cpp:
+	* orbsvcs/tests/Notify/Blocking/Notify_Structured_Push_Consumer.h:
+	* orbsvcs/tests/Notify/Blocking/Structured_Consumer.cpp:
+	* orbsvcs/tests/Notify/Discarding/Notify_Sequence_Push_Consumer.cpp:
+	* orbsvcs/tests/Notify/Discarding/Notify_Sequence_Push_Consumer.h:
+	* orbsvcs/tests/Notify/Discarding/Notify_Structured_Push_Consumer.cpp:
+	* orbsvcs/tests/Notify/Discarding/Notify_Structured_Push_Consumer.h:
+	* orbsvcs/tests/Notify/Discarding/Sequence_Consumer.cpp:
+	* orbsvcs/tests/Notify/Discarding/Structured_Consumer.cpp:
+	* orbsvcs/tests/Notify/Ordering/Notify_Sequence_Push_Consumer.cpp:
+	* orbsvcs/tests/Notify/Ordering/Notify_Sequence_Push_Consumer.h:
+	* orbsvcs/tests/Notify/Ordering/Notify_Structured_Push_Consumer.cpp:
+	* orbsvcs/tests/Notify/Ordering/Notify_Structured_Push_Consumer.h:
+	* orbsvcs/tests/Notify/Ordering/Sequence_Consumer.cpp:
+	* orbsvcs/tests/Notify/Ordering/Structured_Consumer.cpp:
+	* orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Notify_Sequence_Push_Consumer.cpp:
+	* orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Notify_Sequence_Push_Consumer.h:
+	* orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Sequence_Consumer.cpp:
+	* orbsvcs/tests/Notify/Sequence_Multi_Filter/Notify_Sequence_Push_Consumer.cpp:
+	* orbsvcs/tests/Notify/Sequence_Multi_Filter/Notify_Sequence_Push_Consumer.h:
+	* orbsvcs/tests/Notify/Sequence_Multi_Filter/Sequence_Consumer.cpp:
+	* orbsvcs/tests/Notify/Structured_Multi_Filter/Notify_Push_Consumer.cpp:
+	* orbsvcs/tests/Notify/Structured_Multi_Filter/Notify_Push_Consumer.h:
+	* orbsvcs/tests/Notify/Structured_Multi_Filter/Notify_Push_Supplier.cpp:
+	* orbsvcs/tests/Notify/Structured_Multi_Filter/Notify_Push_Supplier.h:
+	* orbsvcs/tests/Notify/Structured_Multi_Filter/Structured_Consumer.cpp:
+	* orbsvcs/tests/Notify/Structured_Multi_Filter/Structured_Supplier.cpp:
+	* orbsvcs/tests/Notify/performance-tests/Filter/Notify_Sequence_Push_Consumer.cpp:
+	* orbsvcs/tests/Notify/performance-tests/Filter/Notify_Sequence_Push_Consumer.h:
+	* orbsvcs/tests/Notify/performance-tests/Filter/Notify_Structured_Push_Consumer.cpp:
+	* orbsvcs/tests/Notify/performance-tests/Filter/Notify_Structured_Push_Consumer.h:
+	* orbsvcs/tests/Notify/performance-tests/Filter/Sequence_Consumer.cpp:
+	* orbsvcs/tests/Notify/performance-tests/Filter/Structured_Consumer.cpp:
+
+	  Fixed the build warnings of derived class method "hides virtual
+	  function" in the base class, on SunCC and BCB compiler.
+	  All the <connect> methods in the derived classes have been
+	  changed to <_connect> and all calls to these methods have also
+	  been renamed.
+
+	* orbsvcs/examples/Notify/Consumer_Client.cpp:
+ 	* orbsvcs/examples/Notify/Consumer_Client.h:
+	* orbsvcs/examples/Notify/Supplier_Client.cpp:
+	* orbsvcs/examples/Notify/Supplier_Client.h:
+
+	  For the same reason as above, the <init> method has been
+	  renamed to <initialize>.
+
+	* orbsvcs/tests/Notify/lib/Activation_Manager.cpp:
+	  
+	  Initialized the member pointer <barrier_> in the constructor.
+	  The pointer is "delete"ed in the destructor. If it is left
+	  uninitialized, we will get an exception when the
+	  Activation_Manager is destroyed without calling the	
+	  <activate_suppliers> method (where <barrier_> is initialized).	
+	
+	* orbsvcs/tests/Notify/lib/ConsumerAdmin_Command.cpp:
+	  
+	  Corrected a comment on line 141.
+	
+	* orbsvcs/tests/Notify/lib/Driver.cpp:
+
+	  Added a wait for the <worker_> thread manager before exit.
+	  This is required to make sure we do not exit the main thread
+	  before the spawned threads in the <worker_> task have finished.
+
+	* orbsvcs/examples/Notify/Lanes.dsp:
+ 	  This file was checked in by mistake. It is not required so I
+	  have removed it.
+
 Thu Jul  3 00:59:24 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * tao/Any_Array_Impl_T.cpp:

@@ -249,6 +249,7 @@ TAO_NS_Driver::run (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 
   // Wait till we're done.
   this->orb_run_worker_.thr_mgr ()->wait ();
+  this->worker_.thr_mgr ()->wait ();
 }
 
 void

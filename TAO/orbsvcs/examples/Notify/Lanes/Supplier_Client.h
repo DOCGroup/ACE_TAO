@@ -35,7 +35,7 @@ public:
   ~TAO_NS_Supplier_Client ();
 
   /// Init
-  void init (ACE_ENV_SINGLE_ARG_DECL);
+  void initialize (ACE_ENV_SINGLE_ARG_DECL);
 
   /// Run
   void run (ACE_ENV_SINGLE_ARG_DECL);

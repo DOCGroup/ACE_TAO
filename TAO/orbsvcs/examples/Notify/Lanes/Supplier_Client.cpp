@@ -60,7 +60,7 @@ TAO_NS_Supplier_Client::parse_args (int argc, char *argv[])
 }
 
 void
-TAO_NS_Supplier_Client::init (ACE_ENV_SINGLE_ARG_DECL)
+TAO_NS_Supplier_Client::initialize (ACE_ENV_SINGLE_ARG_DECL)
 {
   PortableServer::POAManager_var poa_manager =
     this->orb_objects_.root_poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -193,7 +193,7 @@ TAO_NS_Supplier_Client::svc (void)
       this->orb_objects_.current_->the_priority (0 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      this->init (ACE_ENV_SINGLE_ARG_PARAMETER); //Init the Client
+      this->initialize (ACE_ENV_SINGLE_ARG_PARAMETER); //Init the Client
       ACE_TRY_CHECK;
 
       this->run (ACE_ENV_SINGLE_ARG_PARAMETER);

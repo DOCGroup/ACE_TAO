@@ -2,7 +2,7 @@
 #include "Notify_Push_Supplier.h"
 
 void
-Notify_Push_Supplier::connect (
+Notify_Push_Supplier::_connect (
                 CosNotifyChannelAdmin::SupplierAdmin_ptr supplier_admin,
                 CosNotifyChannelAdmin::EventChannel_ptr notify_channel,
                 CORBA::Boolean isFilter
@@ -63,5 +63,3 @@ Notify_Push_Supplier::connect (
   // give ownership to POA
   this->_remove_ref ();
 }
-
-
