@@ -20,8 +20,12 @@ main (int argc, char *argv[])
 
   IPC_SERVER peer_acceptor;
 
-  if (peer_acceptor.init (argc, argv) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "init"), -1);
+  if (peer_acceptor.init (argc,
+                          argv) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p\n",
+                       "init"),
+                      -1);
 
   return peer_acceptor.svc ();
 }
@@ -39,13 +43,13 @@ template class Svc_Handler<ACE_SPIPE_STREAM>;
 #pragma instantiate IPC_Server<SVC_HANDLER, ACE_SPIPE_ACCEPTOR>
 #pragma instantiate Svc_Handler<ACE_SPIPE_STREAM>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-
 #else
 int
 main (int, char *[])
 {
-  ACE_ERROR_RETURN ((LM_ERROR, "This test is not ported to Win32 (yet)\n"), -1);
+  ACE_ERROR_RETURN ((LM_ERROR,
+                     "This test is not ported to Win32 (yet)\n"),
+                    -1);
 }
 #endif /* !ACE_WIN32 */
 

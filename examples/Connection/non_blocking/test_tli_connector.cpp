@@ -22,8 +22,10 @@ main (int argc, char *argv[])
   IPC_CLIENT peer_connector;
 
   if (peer_connector.init (argc, argv) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "init"), -1);
-
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p\n",
+                       "init"),
+                      -1);
   return peer_connector.svc ();
 }
 
@@ -51,11 +53,12 @@ template class Peer_Handler<ACE_TLI_STREAM>;
 #pragma instantiate Peer_Handler<ACE_TLI_STREAM>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-
 #else
 int
 main (int, char *[])
 {
-  ACE_ERROR_RETURN ((LM_ERROR, "your platform does not support TLI\n"), 1);
+  ACE_ERROR_RETURN ((LM_ERROR,
+                     "your platform does not support TLI\n"),
+                    1);
 }
 #endif /* ACE_HAS_TLI */

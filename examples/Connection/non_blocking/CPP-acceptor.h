@@ -6,12 +6,12 @@
 
 #include "ace/Acceptor.h"
 
-// This is the class that does the work once the ACE_Oneshot_Acceptor
-// has accepted a connection.
-
 template <ACE_PEER_STREAM_1>
 class Svc_Handler : public ACE_Svc_Handler <ACE_PEER_STREAM_2, ACE_NULL_SYNCH>
 {
+  // = TITLE
+  //     This class does the work once the <ACE_Oneshot_Acceptor> has
+  //     accepted a connection.
 public:
   // = Initialization method.
   Svc_Handler (ACE_Reactor *r);
@@ -29,16 +29,28 @@ public:
   // Handles acceptor timeouts.
 
 private:
-  typedef ACE_Svc_Handler <ACE_PEER_STREAM_2, ACE_NULL_SYNCH> SVC_HANDLER;
+  typedef ACE_Svc_Handler <ACE_PEER_STREAM_2, ACE_NULL_SYNCH> 
+          SVC_HANDLER;
 };
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1>
 class IPC_Server : public ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>
 {
+  // = TITLE
+  //     This class illustrates how the <ACE_Oneshot_Acceptor> works.
 public:
   // = Initialization and termination.
   IPC_Server (void);
+  // Constructor.
+
   ~IPC_Server (void);
+  // Destructor.
+
+  // = Demultiplexing hooks.
+  virtual int handle_close (ACE_HANDLE handle,
+                            ACE_Reactor_Mask mask);
+  // Make sure not to close down the <handle> if we're removed from
+  // the <Reactor>.
 
   // = Dynamic linking hooks.
   virtual int init (int argc, char *argv[]);
@@ -51,7 +63,8 @@ public:
   // Run the interative service.
 
 private:
-  typedef ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2> inherited;
+  typedef ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2> 
+          inherited;
 
   ACE_PEER_ACCEPTOR_ADDR server_addr_;
   // Address of this server.
