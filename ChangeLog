@@ -1,3 +1,8 @@
+Thu Jul 17 15:02:56 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * examples/C++NPv1/Logging_Handler.cpp:
+          Added #include "ace/streams.h".
+
 Thu Jul 17 12:49:39 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * examples/NT_Service/main.cpp:
