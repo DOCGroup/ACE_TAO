@@ -1621,11 +1621,17 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 #    endif /* ACE_NEEDS_HUGE_THREAD_STACKSIZE */
 
 #     if defined (CHORUS)
-  // if it is a super actor, we can't set stacksize.
-  // But for the time bing we are all non-super actors
-  // To be fixed later
+  // If it is a super actor, we can't set stacksize.  But for the time
+  // being we are all non-super actors.  Should be fixed to take care
+  // of super actors!!!
   if (stacksize == 0)
-      stacksize = 0x100000;
+    stacksize = ACE_OS::sysconf (_SC_PTHREAD_STACK_MIN);
+  else
+    {
+      size_t _s = ACE_OS::sysconf (_SC_PTHREAD_STACK_MIN);
+      if (size < _s)
+        size = _s;
+    }
 #     endif /*CHORUS */
 
   if (stacksize != 0)
@@ -2963,3 +2969,81 @@ ACE_OS::rwlock_init (ACE_rwlock_t *rw,
 #endif /* ACE_HAS_THREADS */                 
 }
 #endif /* ! ACE_HAS_THREADS || ! ACE_HAS_STHREADS */
+
+#if defined (CHORUS)
+extern "C"
+void
+ace_sysconf_dump (void)
+{
+  ACE_Time_Value time = ACE_OS::gettimeofday ();
+  if (time == -1)
+    ACE_DEBUG ((LM_DEBUG, "Cannot get time\n"));
+  else
+    time.dump ();
+
+  ACE_DEBUG ((LM_DEBUG,
+	      "ARG_MAX \t= \t%d\t"
+	      "DELAYTIMER_MAX \t= \t%d\n"
+	      "_MQ_OPEN_MAX \t= \t%d\t"
+	      "_MQ_PRIO_MAX \t= \t%d\n"
+	      "_MQ_DFL_MSGSIZE\t= \t%d\t"
+	      "_MQ_DFL_MAXMSGNB\t= \t%d\n"
+	      "_MQ_PATHMAX \t= \t%d\n"
+	      "NGROUPS_MAX \t= \t%d\t"
+	      "OPEN_MAX \t= \t%d\n"
+	      "PAGESIZE \t= \t%d\n"
+	      "PTHREAD_DESTRUCTOR_ITERATIONS \t= \t%d\n"
+	      "PTHREAD_KEYS_MAX \t= \t%d\n"
+	      "PTHREAD_STACK_MAX \t= \t%d\n"
+	      "PTHREAD_STACK_MIN \t= \t%d\n"
+	      "PTHREAD_THREADS_MAX \t= \t%d\n"
+	      "SEM_VALUE_MAX \t= \t%d\n"
+	      "SEM_PATHMAX \t= \t%d\n"
+	      "TIMER_MAX \t= \t%d\n"
+	      "TZNAME_MAX \t= \t%d\n"
+	      "_POSIX_MESSAGE_PASSING \t= \t%d\n"
+	      "_POSIX_SEMAPHORES \t= \t%d\n"
+	      "_POSIX_SHARED_MEMORY_OBJECTS \t= \t%d\n"
+	      "_POSIX_THREADS \t= \t%d\n"
+	      "_POSIX_THREAD_ATTR_STACKADDR \t= \t%d\n"
+	      "_POSIX_THREAD_ATTR_STACKSIZE \t= \t%d\n"
+	      "_POSIX_THREAD_PRIORITY_SCHEDULING= \t%d\n"
+	      "_POSIX_THREAD_PRIO_INHERIT \t= \t%d\n"
+	      "_POSIX_THREAD_PRIO_PROTECT \t= \t%d\n"
+	      "_POSIX_THREAD_PROCESS_SHARED \t= \t%d\n"
+	      "_POSIX_THREAD_SAFE_FUNCTIONS \t= \t%d\n"
+	      "_POSIX_TIMERS \t= \t%d\n"
+	      "_POSIX_VERSION \t= \t%d\n",
+	      ACE_OS::sysconf (_SC_ARG_MAX),
+	      ACE_OS::sysconf (_SC_DELAYTIMER_MAX),
+	      ACE_OS::sysconf (_SC_MQ_OPEN_MAX),
+	      ACE_OS::sysconf (_SC_MQ_PRIO_MAX),
+	      ACE_OS::sysconf (_SC_MQ_DFL_MSGSIZE),
+	      ACE_OS::sysconf (_SC_MQ_DFL_MAXMSGNB),
+	      ACE_OS::sysconf (_SC_MQ_PATHMAX),
+	      ACE_OS::sysconf (_SC_NGROUPS_MAX),
+	      ACE_OS::sysconf (_SC_OPEN_MAX),
+	      ACE_OS::sysconf (_SC_PAGESIZE),
+	      ACE_OS::sysconf (_SC_PTHREAD_DESTRUCTOR_ITERATIONS),
+	      ACE_OS::sysconf (_SC_PTHREAD_KEYS_MAX),
+	      ACE_OS::sysconf (_SC_PTHREAD_STACK_MIN),
+	      ACE_OS::sysconf (_SC_PTHREAD_THREADS_MAX),
+	      ACE_OS::sysconf (_SC_SEM_VALUE_MAX),
+	      ACE_OS::sysconf (_SC_SHM_PATHMAX),
+	      ACE_OS::sysconf (_SC_TIMER_MAX),
+	      ACE_OS::sysconf (_SC_TZNAME_MAX),
+	      ACE_OS::sysconf (_SC_MESSAGE_PASSING),
+	      ACE_OS::sysconf (_SC_SEMAPHORES),
+	      ACE_OS::sysconf (_SC_SHARED_MEMORY_OBJECTS),
+	      ACE_OS::sysconf (_SC_THREADS),
+	      ACE_OS::sysconf (_SC_THREAD_ATTR_STACKADDR),
+	      ACE_OS::sysconf (_SC_THREAD_ATTR_STACKSIZE),
+	      ACE_OS::sysconf (_SC_THREAD_PRIORITY_SCHEDULING),
+	      ACE_OS::sysconf (_SC_THREAD_PRIO_INHERIT),
+	      ACE_OS::sysconf (_SC_THREAD_PRIO_PROTECT),
+	      ACE_OS::sysconf (_SC_THREAD_PROCESS_SHARED),
+	      ACE_OS::sysconf (_SC_THREAD_SAFE_FUNCTIONS),
+	      ACE_OS::sysconf (_SC_TIMERS),
+	      ACE_OS::sysconf (_SC_VERSION)));
+}
+#endif

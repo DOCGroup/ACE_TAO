@@ -6,7 +6,7 @@ the much of the specific information probably is inaccurate with
 respect to the current state of TAO.  Please see the ./README file
 that comes with TAO for up-to-date information.
 
-Specifically, many of the file referred to in here may not appear in
+Specifically, some of the files referred to below have been renamed in
 TAO.
 
 ========================================
@@ -69,8 +69,8 @@ The rest of this document includes these sections:
     - WHAT ARE:  IOP, IIOP, GIOP, ESIOP, AND DCE-CIOP?
 
 For instructions on how to build and test this software, see the file
-named "BUILDING" in the "docs" directory.
-
+named "BUILDING" in the "docs" directory. [Note, this is renamed to
+TAO-Install.html for TAO].
 
 ENGINE OVERVIEW
 ---------------

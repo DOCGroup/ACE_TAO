@@ -1,5 +1,13 @@
 Thu Oct 23 05:21:43 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/OS.cpp (thr_create): Added a fix to set the Chorus stack
+ 	  size correctly.  Thanks to Wei Chiang <chiang@tele.nokia.fi> for
+ 	  reporting this.
+
+	* ace/OS.cpp: Added a new method ace_sysconf_dump() to dump the
+ 	  state of the configuration.  Thanks to Wei Chiang
+ 	  <chiang@tele.nokia.fi> for reporting this.
+
 	* ace/Singleton.cpp (dump): There was a typo in the dump() method
  	  for ACE_TSS_Singleton, it should be
  	  ACE_TSS_Singleton::instance_i().  I've fixed this.
