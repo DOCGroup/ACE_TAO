@@ -125,7 +125,7 @@ public:
       case 4:                   // Shutdown
         this->done_ = 1;
         ACE_DEBUG ((LM_DEBUG, "Shutting down event loop\n"));
-        return 0;
+        return -1;
       default:                  // Huh?
         ACE_DEBUG ((LM_DEBUG, "Got string (%d): %s\n", n, buffer));
         break;
@@ -156,8 +156,8 @@ main (int, char *[])
   // This is the stdin handler.
   Input_Handler *thandler = new Input_Handler (&private_queue);
 
-  REACTOR->register_handler (ACE_STDIN, thandler,
-                             ACE_Event_Handler::READ_MASK);
+  ACE::register_stdin_handler (thandler, REACTOR,
+                               ACE_Thread_Manager::instance ());
 
   ::usage_prompt ();
 
