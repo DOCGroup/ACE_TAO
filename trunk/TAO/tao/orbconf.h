@@ -16,7 +16,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_ORB_CONFIG_H
 #define TAO_ORB_CONFIG_H
 #include "ace/pre.h"
