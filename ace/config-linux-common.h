@@ -126,6 +126,8 @@
 
 #define ACE_DEFAULT_MAX_SOCKET_BUFSIZ 65535
 
+#define ACE_DEFAULT_SELECT_REACTOR_SIZE 256
+
 #define ACE_HAS_GETPAGESIZE 1
 
 // Platform lacks POSIX prototypes for certain System V functions
