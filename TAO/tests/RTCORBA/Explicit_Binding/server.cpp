@@ -4,6 +4,7 @@
 #include "ace/Get_Opt.h"
 
 #include "tao/Strategies/advanced_resource.h"
+#include "tao/RTCORBA/RTCORBA.h"
 
 class Test_i : public POA_Test
 {
