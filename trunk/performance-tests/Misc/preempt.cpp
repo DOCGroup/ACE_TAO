@@ -35,18 +35,32 @@
 #include "ace/Sched_Params.h"
 #include "ace/Get_Opt.h"
 
-#if defined (ACE_HAS_THREADS)
+#if defined (ACE_HAS_THREADS) || ! defined (ACE_LACKS_FORK)
+
+#if defined (ACE_HAS_STHREADS)
+# include <sys/lwp.h> /* for _lwp_self () */
+#endif /* ACE_HAS_STHREADS */
 
 static const char usage [] = "[-? |\n"
-                             "       [-c <iterations, default 10>]\n"
-                             "       [-n <high priority threads, default 1>\n"
-                             "       [-p <read period, default 500000 usec>\n"
-                             "       [-y to yield the low priority thread\n"
-                             "[<iterations>]]";
+#if defined (ACE_HAS_THREADS)
+                            "       [-f use fork instead of spawn]\n"
+#endif /* ACE_HAS_THREADS */
+                            "       [-h <high pri iterations, default 10>]\n"
+                            "       [-l <low pri iterations, default 25000>]\n"
+                            "       [-n <high priority threads, default 1>]\n"
+                            "       [-p <read period, default 500000 usec>]\n"
+                            "       [-y to yield the low priority thread]]\n";
 
 // Configuration options.
-u_int iterations = 10;
+#if defined (ACE_HAS_THREADS)
+u_int use_fork = 0;
+#else  /* ! ACE_HAS_THREADS */
+u_int use_fork = 1;
+#endif /* ! ACE_HAS_THREADS */
+u_int high_iterations = 10;
 u_int high_priority_tasks = 1;
+u_int low_iterations = 25000;  /* Big enough to keep the low priority task
+                                  cranking for a while */
 u_long read_period = 500000; /* usec */
 u_int low_yield = 0;
 
@@ -86,7 +100,7 @@ High_Priority_Task::High_Priority_Task (void)
                  ACE_SCOPE_THREAD)),
     done_ (0)
 {
-  ACE_NEW (time_, u_long[iterations]);
+  ACE_NEW (time_, u_long[high_iterations]);
 }
 
 High_Priority_Task::~High_Priority_Task (void)
@@ -98,15 +112,29 @@ High_Priority_Task::~High_Priority_Task (void)
 int
 High_Priority_Task::open (void *)
 {
-  long flags = THR_BOUND | THR_SCHED_FIFO;
+  if (use_fork == 1)
+    {
+      ACE_hthread_t thr_handle;
+      ACE_Thread::self (thr_handle);
+
+      if (ACE_Thread::setprio (thr_handle, priority_) == -1)
+        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "setprio failed"), -1);
+
+      return svc ();
+    }
+  else
+    {
+  long flags = THR_BOUND | THR_NEW_LWP | THR_SCHED_FIFO;
 
   // Become an active object.
   if (this->activate (flags, 1, 0, this->priority_) == -1)
     {
-      ACE_DEBUG ((LM_ERROR, "(%t) task activation failed, exiting!\n%a", -1));
+      ACE_DEBUG ((LM_ERROR, "(%P|%t) task activation failed, exiting!\n%a",
+                  -1));
     }
 
   return 0;
+    }
 }
 
 int
@@ -119,13 +147,18 @@ High_Priority_Task::svc (void)
   if (ACE_Thread::getprio (thr_handle, prio) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "getprio failed"), -1);
 
-  ACE_DEBUG ((LM_DEBUG, "(%t) High: prio = %d, priority_ = %d\n",
+#if defined (ACE_HAS_STHREADS)
+  ACE_DEBUG ((LM_DEBUG, "(%P|%u|%t) High: prio = %d, priority_ = %d\n",
+              _lwp_self (), prio, this->priority_));
+#else  /* ! ACE_HAS_STHREADS */
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) High: prio = %d, priority_ = %d\n",
               prio, this->priority_));
+#endif /* ! ACE_HAS_STHREADS */
   ACE_ASSERT (this->priority_ == prio);
 
   ACE_Time_Value pause (0, read_period);
 
-  for (u_int i = 0; i < iterations; ++i)
+  for (u_int i = 0; i < high_iterations; ++i)
     {
       time_ [i] = (u_long) ((ACE_OS::gethrtime () - starttime)/
                             (ACE_UINT32) 1000000u);
@@ -134,16 +167,17 @@ High_Priority_Task::svc (void)
 
   done_ = 1;
 
+  ACE_DEBUG ((LM_INFO, "(%P|%t) High finishes\n"));
   return 0;
 }
 
 void
 High_Priority_Task::print_times () const
 {
-  for (u_int i = 0; i < iterations; ++i)
+  for (u_int i = 0; i < high_iterations; ++i)
     {
-      ACE_OS::printf ("  iteration %u, time %lu msec\n",
-                      i, time_ [i]);
+      ACE_DEBUG ((LM_INFO, "  iteration %u, time %u msec\n",
+                           i, time_ [i]));
     }
 }
 
@@ -179,14 +213,27 @@ Low_Priority_Task::Low_Priority_Task (
 int
 Low_Priority_Task::open (void *)
 {
-  long flags = THR_BOUND | THR_SCHED_FIFO;
+  if (use_fork == 1)
+    {
+      ACE_hthread_t thr_handle;
+      ACE_Thread::self (thr_handle);
+
+      if (ACE_Thread::setprio (thr_handle, priority_) == -1)
+        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "setprio failed"), -1);
+
+      return svc ();
+    }
+  else
+    {
+  long flags = THR_BOUND | THR_NEW_LWP | THR_SCHED_FIFO;
 
   // Become an active object.
   if (this->activate (flags, 1, 0, this->priority_) == -1)
     ACE_ERROR ((LM_ERROR,
-                "(%t) task activation failed, exiting!\n%a",
+                "(%P|%t) task activation failed, exiting!\n%a",
                 -1));
   return 0;
+    }
 }
 
 int
@@ -199,28 +246,32 @@ Low_Priority_Task::svc (void)
   if (ACE_Thread::getprio (thr_handle, prio) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "getprio failed"), -1);
 
-  ACE_DEBUG ((LM_DEBUG, "(%t) Low: prio = %d, priority_ = %d\n",
+#if defined (ACE_HAS_STHREADS)
+  ACE_DEBUG ((LM_DEBUG, "(%P|%u|%t) Low: prio = %d, priority_ = %d\n",
+              _lwp_self (), prio, this->priority_));
+#else  /* ! ACE_HAS_STHREADS */
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) Low: prio = %d, priority_ = %d\n",
               prio, this->priority_));
+#endif /* ! ACE_HAS_STHREADS */
   ACE_ASSERT (this->priority_ == prio);
 
-  const u_int interval = 1; /* seconds */
   u_long iterations = 0;
 
   // Chew up CPU for the entire interval.
   for (;
-         ! high_priority_task_.done () &&
-         iterations < interval * 1000000 / 40.2;
+       ! high_priority_task_.done () && iterations < low_iterations;
        ++iterations)
     {
-      u_long n = 1279ul;  /* takes about 40.2 usecs on a 168 MHz Ultra2 */
+      u_long n = 1279ul;  /* Takes about 40.2 usecs on a 168 MHz Ultra2. */
       ACE::is_prime (n,
                      2ul /* min_factor */,
                      n/2 /* max_factor */);
 
-      if (low_yield) ACE_OS::thr_yield ();
+      if (low_yield)
+        ACE_OS::thr_yield ();
     }
 
-  ACE_OS::printf ("%lu iterations\n", iterations);
+  ACE_DEBUG ((LM_INFO, "Low completed %u iterations\n", iterations));
 
   return 0;
 }
@@ -235,15 +286,25 @@ Low_Priority_Task::svc (void)
 static int
 get_options (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, "c:n:p:y?");
+  ACE_Get_Opt get_opt (argc, argv, "fh:l:n:p:y?");
   int opt;
   while ((opt = get_opt ()) != EOF) {
     switch (opt) {
-    case 'c':
+    case 'f':
+      use_fork = 1;
+      break;
+    case 'h':
       if (ACE_OS::atoi (get_opt.optarg) >= 2)
-        iterations = ACE_OS::atoi (get_opt.optarg);
+        high_iterations = ACE_OS::atoi (get_opt.optarg);
       else
-        ACE_ERROR_RETURN ((LM_ERROR, "%n: iterations must be >= 2\n"), -1);
+        ACE_ERROR_RETURN ((LM_ERROR, "%n: high iterations must be >= 2\n"),
+                          -1);
+      break;
+    case 'l':
+      if (ACE_OS::atoi (get_opt.optarg) >= 2)
+        low_iterations = ACE_OS::atoi (get_opt.optarg);
+      else
+        ACE_ERROR_RETURN ((LM_ERROR, "%n: low iterations must be >= 2\n"), -1);
       break;
     case 'n':
       if (ACE_OS::atoi (get_opt.optarg) >= 1)
@@ -273,7 +334,7 @@ get_options (int argc, char *argv[])
 
   switch (argc - get_opt.optind) {
   case 0:
-    // use default number of iterations
+    // OK, no non-flag arguments.
     break;
   default:
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -284,7 +345,7 @@ get_options (int argc, char *argv[])
   return 0;
 }
 
-#endif /* ACE_HAS_THREADS */
+#endif /* ACE_HAS_THREADS || ! ACE_LACKS_FORK */
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -296,7 +357,9 @@ get_options (int argc, char *argv[])
 int
 main (int argc, char *argv[])
 {
-#if defined (ACE_HAS_THREADS)
+  ACE_LOG_MSG->open (argv[0] ? argv[0] : "preempt");
+
+#if defined (ACE_HAS_THREADS) || !defined (ACE_LACKS_FORK)
 
   u_int i;
 
@@ -324,35 +387,64 @@ main (int argc, char *argv[])
 
   Low_Priority_Task low_priority_task (high_priority_task[0]);
 
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) main (), wait for threads to exit . . .\n"));
+
   // Save the start time, so that deltas can be displayed later.
   starttime = ACE_OS::gethrtime ();
 
-  // Spawn the threads . . .
-  for (i = 0; i < high_priority_tasks; ++i)
-  {
-    high_priority_task[i].open (0);
-  }
-  low_priority_task.open (0);
+  // Spawn the threads/processes . . .
+  pid_t child = 0;
+  if (use_fork == 1)
+    {
+      switch ((child = ACE_OS::fork ("preempt-low_priority_process")))
+        {
+        case -1:
+          ACE_ERROR ((LM_ERROR, "%p\n%a", "fork failed"));
+          return -1;
+        case 0: // In child
+          {
+            low_priority_task.open (0);
+            break;
+          }
+        default: // In parent
+          for (i = 0; i < high_priority_tasks; ++i)
+            {
+              high_priority_task[i].open (0);
+            }
+          break;
+        }
+    }
+  else
+    {
+      for (i = 0; i < high_priority_tasks; ++i)
+        {
+          high_priority_task[i].open (0);
+        }
+      low_priority_task.open (0);
 
-  ACE_DEBUG ((LM_DEBUG, "(%t) main (), wait for threads to exit . . .\n"));
-
-  // Wait for all threads to exit.
-  ACE_Thread_Manager::instance ()->wait ();
+#if defined (ACE_HAS_THREADS)
+     // Wait for all threads to exit.
+     ACE_Thread_Manager::instance ()->wait ();
+#endif /* ACE_HAS_THREADS */
+    }
 
   // Display the time deltas.  They should be about a half second apart.
-  for (i = 0; i < high_priority_tasks; ++i)
+  if (child || ! use_fork)
     {
-      ACE_DEBUG ((LM_DEBUG, "High priority task %u:\n", i + 1));
-      high_priority_task[i].print_times ();
+      for (i = 0; i < high_priority_tasks; ++i)
+        {
+          ACE_DEBUG ((LM_DEBUG, "High priority task %u:\n", i + 1));
+          high_priority_task[i].print_times ();
+        }
     }
 
   delete [] high_priority_task;
 
-#else
+#else  /* ! ACE_HAS_THREADS && ACE_LACKS_FORK */
   ACE_UNUSED_ARG (argc);
   ACE_UNUSED_ARG (argv);
-  ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
-#endif /* ACE_HAS_THREADS */
+  ACE_ERROR ((LM_ERROR, "threads and fork not supported on this platform\n"));
+#endif /* ! ACE_HAS_THREADS && ACE_LACKS_FORK */
 
   return 0;
 }
