@@ -48,21 +48,9 @@ CORBA_Environment::clear (void)
   this->exception_ = 0;
 }
 
-void
-CORBA_Exception::operator delete (void *p)
-{
-  ::operator delete (p);
-}
-
 CORBA_Environment::CORBA_Environment (void)
   : exception_ (0)
 {
-}
-
-void *
-CORBA_Exception::operator new (size_t s)
-{
-  return ::operator new (s);
 }
 
 CORBA_Exception::CORBA_Exception (CORBA::TypeCode_ptr tc)

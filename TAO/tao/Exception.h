@@ -43,11 +43,6 @@ public:
   virtual ~CORBA_Exception (void);
   // destructor
 
-  // = Memory allocators.
-  void *operator new (size_t, const void *p);
-  void *operator new (size_t s);
-  void operator delete (void *p);
-
   // these are extensions
 
   CORBA_Exception (CORBA::TypeCode_ptr type);
