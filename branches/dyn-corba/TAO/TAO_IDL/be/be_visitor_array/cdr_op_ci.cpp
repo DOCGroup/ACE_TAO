@@ -44,6 +44,14 @@ be_visitor_array_cdr_op_ci::~be_visitor_array_cdr_op_ci (void)
 int
 be_visitor_array_cdr_op_ci::visit_array (be_array *node)
 {
+  if (this->ctx_->alias ())
+    {
+      // We are here because we are visiting base type 
+      // of the array node which is itself an
+      // array, i.e., this is a case of array of array.
+      return this->visit_node (node);
+    }
+
   if (node->cli_inline_cdr_op_gen () || node->imported ())
     {
       return 0;
@@ -83,13 +91,6 @@ be_visitor_array_cdr_op_ci::visit_array (be_array *node)
         }
 
       return 0;
-    }
-
-  if (this->ctx_->alias ())
-    {
-      // We are here because the base type of the array node is itself an
-      // array, i.e., this is a case of array of array.
-      return this->visit_node (node);
     }
 
   be_type *bt = be_type::narrow_from_decl (node->base_type ());
