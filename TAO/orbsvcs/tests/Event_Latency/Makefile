@@ -51,7 +51,7 @@ Event_Latency: $(addprefix $(VDIR),$(EVENT_LATENCY_OBJS) $(EVENT_LATENCY_CONFIG_
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/Event_Latency.o .obj/Event_Latency.o .obj/Event_Latency.o .obj/Event_Latency.o: Event_Latency.cpp \
+.obj/Event_Latency.o .obj/Event_Latency.so .shobj/Event_Latency.o .shobj/Event_Latency.so: Event_Latency.cpp \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \

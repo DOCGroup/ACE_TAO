@@ -35,7 +35,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/workers.o .obj/workers.o .obj/workers.o .obj/workers.o: workers.cpp \
+.obj/workers.o .obj/workers.so .shobj/workers.o .shobj/workers.so: workers.cpp \
  $(ACE_ROOT)/ace/Task.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Service_Object.h \

@@ -111,7 +111,7 @@ CC_client: $(addprefix $(VDIR),$(CC_CLT_OBJS))
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/CC_client.o .obj/CC_client.o .obj/CC_client.o .obj/CC_client.o: CC_client.cpp \
+.obj/CC_client.o .obj/CC_client.so .shobj/CC_client.o .shobj/CC_client.so: CC_client.cpp \
  $(ACE_ROOT)/ace/Read_Buffer.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -451,7 +451,7 @@ CC_client: $(addprefix $(VDIR),$(CC_CLT_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.i \
  CC_command.h CC_command.tab.h
 
-.obj/CC_tests.o .obj/CC_tests.o .obj/CC_tests.o .obj/CC_tests.o: CC_tests.cpp CC_tests.h \
+.obj/CC_tests.o .obj/CC_tests.so .shobj/CC_tests.o .shobj/CC_tests.so: CC_tests.cpp CC_tests.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -785,7 +785,7 @@ CC_client: $(addprefix $(VDIR),$(CC_CLT_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.i
 
-.obj/CC_naming_service.o .obj/CC_naming_service.o .obj/CC_naming_service.o .obj/CC_naming_service.o: CC_naming_service.cpp CC_naming_service.h \
+.obj/CC_naming_service.o .obj/CC_naming_service.so .shobj/CC_naming_service.o .shobj/CC_naming_service.so: CC_naming_service.cpp CC_naming_service.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -1118,7 +1118,7 @@ CC_client: $(addprefix $(VDIR),$(CC_CLT_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.i
 
-.obj/tmplinst.o .obj/tmplinst.o .obj/tmplinst.o .obj/tmplinst.o: tmplinst.cpp \
+.obj/tmplinst.o .obj/tmplinst.so .shobj/tmplinst.o .shobj/tmplinst.so: tmplinst.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosConcurrencyControlC.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -1426,7 +1426,7 @@ CC_client: $(addprefix $(VDIR),$(CC_CLT_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/Concurrency/concurrency_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosConcurrencyControlC.i
 
-.obj/CC_command.tab.o .obj/CC_command.tab.o .obj/CC_command.tab.o .obj/CC_command.tab.o: CC_command.tab.cpp CC_command.h \
+.obj/CC_command.tab.o .obj/CC_command.tab.so .shobj/CC_command.tab.o .shobj/CC_command.tab.so: CC_command.tab.cpp CC_command.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosConcurrencyControlC.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -1734,7 +1734,7 @@ CC_client: $(addprefix $(VDIR),$(CC_CLT_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/Concurrency/concurrency_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosConcurrencyControlC.i
 
-.obj/lex.CC_command.o .obj/lex.CC_command.o .obj/lex.CC_command.o .obj/lex.CC_command.o: lex.CC_command.cpp \
+.obj/lex.CC_command.o .obj/lex.CC_command.so .shobj/lex.CC_command.o .shobj/lex.CC_command.so: lex.CC_command.cpp \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
@@ -2044,7 +2044,7 @@ CC_client: $(addprefix $(VDIR),$(CC_CLT_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosConcurrencyControlC.i \
  CC_command.tab.h
 
-.obj/CC_command.o .obj/CC_command.o .obj/CC_command.o .obj/CC_command.o: CC_command.cpp CC_command.h \
+.obj/CC_command.o .obj/CC_command.so .shobj/CC_command.o .shobj/CC_command.so: CC_command.cpp CC_command.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosConcurrencyControlC.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -2380,7 +2380,7 @@ CC_client: $(addprefix $(VDIR),$(CC_CLT_OBJS))
  $(ACE_ROOT)/ace/Process.h \
  $(ACE_ROOT)/ace/Process.i
 
-.obj/CC_test_utils.o .obj/CC_test_utils.o .obj/CC_test_utils.o .obj/CC_test_utils.o: CC_test_utils.cpp CC_test_utils.h \
+.obj/CC_test_utils.o .obj/CC_test_utils.so .shobj/CC_test_utils.o .shobj/CC_test_utils.so: CC_test_utils.cpp CC_test_utils.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosConcurrencyControlC.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corba.h \

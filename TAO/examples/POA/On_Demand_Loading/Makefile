@@ -48,7 +48,7 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/Server_Manager.o .obj/Server_Manager.o .obj/Server_Manager.o .obj/Server_Manager.o: Server_Manager.cpp Server_Manager.h \
+.obj/Server_Manager.o .obj/Server_Manager.so .shobj/Server_Manager.o .shobj/Server_Manager.so: Server_Manager.cpp Server_Manager.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
@@ -358,7 +358,7 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i
 
-.obj/Servant_Manager.o .obj/Servant_Manager.o .obj/Servant_Manager.o .obj/Servant_Manager.o: Servant_Manager.cpp Servant_Manager.h \
+.obj/Servant_Manager.o .obj/Servant_Manager.so .shobj/Servant_Manager.o .shobj/Servant_Manager.so: Servant_Manager.cpp Servant_Manager.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
@@ -664,7 +664,7 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(TAO_ROOT)/tao/MessagingS_T.cpp \
  $(TAO_ROOT)/tao/MessagingS.i
 
-.obj/Servant_Activator.o .obj/Servant_Activator.o .obj/Servant_Activator.o .obj/Servant_Activator.o: Servant_Activator.cpp Servant_Activator.h \
+.obj/Servant_Activator.o .obj/Servant_Activator.so .shobj/Servant_Activator.o .shobj/Servant_Activator.so: Servant_Activator.cpp Servant_Activator.h \
  Servant_Manager.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
@@ -971,7 +971,7 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(TAO_ROOT)/tao/MessagingS_T.cpp \
  $(TAO_ROOT)/tao/MessagingS.i
 
-.obj/Servant_Locator.o .obj/Servant_Locator.o .obj/Servant_Locator.o .obj/Servant_Locator.o: Servant_Locator.cpp Servant_Locator.h \
+.obj/Servant_Locator.o .obj/Servant_Locator.so .shobj/Servant_Locator.o .shobj/Servant_Locator.so: Servant_Locator.cpp Servant_Locator.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -1278,7 +1278,7 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/DLL.h \
  Servant_Manager.h
 
-.obj/server.o .obj/server.o .obj/server.o .obj/server.o: server.cpp Server_Manager.h \
+.obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp Server_Manager.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \

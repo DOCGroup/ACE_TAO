@@ -59,7 +59,7 @@ ECT_Throughput: $(addprefix $(VDIR),$(ECT_Throughput_OBJS))
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/ECT_Supplier_Driver.o .obj/ECT_Supplier_Driver.o .obj/ECT_Supplier_Driver.o .obj/ECT_Supplier_Driver.o: ECT_Supplier_Driver.cpp \
+.obj/ECT_Supplier_Driver.o .obj/ECT_Supplier_Driver.so .shobj/ECT_Supplier_Driver.o .shobj/ECT_Supplier_Driver.so: ECT_Supplier_Driver.cpp \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -431,7 +431,7 @@ ECT_Throughput: $(addprefix $(VDIR),$(ECT_Throughput_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/Sched/sched_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerC.i
 
-.obj/ECT_Consumer_Driver.o .obj/ECT_Consumer_Driver.o .obj/ECT_Consumer_Driver.o .obj/ECT_Consumer_Driver.o: ECT_Consumer_Driver.cpp \
+.obj/ECT_Consumer_Driver.o .obj/ECT_Consumer_Driver.so .shobj/ECT_Consumer_Driver.o .shobj/ECT_Consumer_Driver.so: ECT_Consumer_Driver.cpp \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \

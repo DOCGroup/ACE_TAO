@@ -38,7 +38,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/buffer_stream.o .obj/buffer_stream.o .obj/buffer_stream.o .obj/buffer_stream.o: buffer_stream.cpp \
+.obj/buffer_stream.o .obj/buffer_stream.so .shobj/buffer_stream.o .shobj/buffer_stream.so: buffer_stream.cpp \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -180,7 +180,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Stream.i \
  $(ACE_ROOT)/ace/Stream.cpp
 
-.obj/bounded_buffer.o .obj/bounded_buffer.o .obj/bounded_buffer.o .obj/bounded_buffer.o: bounded_buffer.cpp \
+.obj/bounded_buffer.o .obj/bounded_buffer.so .shobj/bounded_buffer.o .shobj/bounded_buffer.so: bounded_buffer.cpp \
  $(ACE_ROOT)/ace/Message_Queue.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -308,7 +308,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Message_Queue.i
 
-.obj/priority_buffer.o .obj/priority_buffer.o .obj/priority_buffer.o .obj/priority_buffer.o: priority_buffer.cpp \
+.obj/priority_buffer.o .obj/priority_buffer.so .shobj/priority_buffer.o .shobj/priority_buffer.so: priority_buffer.cpp \
  $(ACE_ROOT)/ace/Message_Queue.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Message_Block.h \

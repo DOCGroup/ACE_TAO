@@ -46,7 +46,7 @@ endif
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/Test_URL_Addr.o .obj/Test_URL_Addr.o .obj/Test_URL_Addr.o .obj/Test_URL_Addr.o: Test_URL_Addr.cpp \
+.obj/Test_URL_Addr.o .obj/Test_URL_Addr.so .shobj/Test_URL_Addr.o .shobj/Test_URL_Addr.so: Test_URL_Addr.cpp \
  $(ACE_ROOT)/websvcs/lib/URL_Addr.h \
  $(ACE_ROOT)/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/pre.h \

@@ -82,7 +82,7 @@ realclean: clean
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/testC.o .obj/testC.o .obj/testC.o .obj/testC.o: testC.cpp testC.h \
+.obj/testC.o .obj/testC.so .shobj/testC.o .shobj/testC.so: testC.cpp testC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -388,7 +388,7 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS.i \
  testC.i
 
-.obj/testS.o .obj/testS.o .obj/testS.o .obj/testS.o: testS.cpp testS.h testC.h \
+.obj/testS.o .obj/testS.so .shobj/testS.o .shobj/testS.so: testS.cpp testS.h testC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -694,7 +694,7 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS.i \
  testC.i testS_T.h testS_T.i testS_T.cpp testS.i
 
-.obj/Smart_Test_Factory.o .obj/Smart_Test_Factory.o .obj/Smart_Test_Factory.o .obj/Smart_Test_Factory.o: Smart_Test_Factory.cpp Smart_Test_Factory.h \
+.obj/Smart_Test_Factory.o .obj/Smart_Test_Factory.so .shobj/Smart_Test_Factory.o .shobj/Smart_Test_Factory.so: Smart_Test_Factory.cpp Smart_Test_Factory.h \
  Smart_Proxy_Impl.h testC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
@@ -1001,7 +1001,7 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS.i \
  testC.i
 
-.obj/Smart_Proxy_Impl.o .obj/Smart_Proxy_Impl.o .obj/Smart_Proxy_Impl.o .obj/Smart_Proxy_Impl.o: Smart_Proxy_Impl.cpp Smart_Proxy_Impl.h testC.h \
+.obj/Smart_Proxy_Impl.o .obj/Smart_Proxy_Impl.so .shobj/Smart_Proxy_Impl.o .shobj/Smart_Proxy_Impl.so: Smart_Proxy_Impl.cpp Smart_Proxy_Impl.h testC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -1307,7 +1307,7 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS.i \
  testC.i
 
-.obj/client.o .obj/client.o .obj/client.o .obj/client.o: client.cpp \
+.obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -1616,7 +1616,7 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS.i \
  testC.i
 
-.obj/server.o .obj/server.o .obj/server.o .obj/server.o: server.cpp testS.h testC.h \
+.obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp testS.h testC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \

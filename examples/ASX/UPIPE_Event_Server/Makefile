@@ -44,7 +44,7 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/Options.o .obj/Options.o .obj/Options.o .obj/Options.o: Options.cpp \
+.obj/Options.o .obj/Options.so .shobj/Options.o .shobj/Options.so: Options.cpp \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -96,7 +96,7 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Profile_Timer.i \
  Options.i
 
-.obj/Supplier_Router.o .obj/Supplier_Router.o .obj/Supplier_Router.o .obj/Supplier_Router.o: Supplier_Router.cpp Options.h \
+.obj/Supplier_Router.o .obj/Supplier_Router.so .shobj/Supplier_Router.o .shobj/Supplier_Router.so: Supplier_Router.cpp Options.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
@@ -272,7 +272,7 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i
 
-.obj/Event_Analyzer.o .obj/Event_Analyzer.o .obj/Event_Analyzer.o .obj/Event_Analyzer.o: Event_Analyzer.cpp Event_Analyzer.h \
+.obj/Event_Analyzer.o .obj/Event_Analyzer.so .shobj/Event_Analyzer.o .shobj/Event_Analyzer.so: Event_Analyzer.cpp Event_Analyzer.h \
  $(ACE_ROOT)/ace/Stream.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -414,7 +414,7 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Stream.i \
  $(ACE_ROOT)/ace/Stream.cpp
 
-.obj/Consumer_Router.o .obj/Consumer_Router.o .obj/Consumer_Router.o .obj/Consumer_Router.o: Consumer_Router.cpp Consumer_Router.h \
+.obj/Consumer_Router.o .obj/Consumer_Router.so .shobj/Consumer_Router.o .shobj/Consumer_Router.so: Consumer_Router.cpp Consumer_Router.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Thread.h \
@@ -591,7 +591,7 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Profile_Timer.i \
  Options.i
 
-.obj/Peer_Router.o .obj/Peer_Router.o .obj/Peer_Router.o .obj/Peer_Router.o: Peer_Router.cpp \
+.obj/Peer_Router.o .obj/Peer_Router.so .shobj/Peer_Router.o .shobj/Peer_Router.so: Peer_Router.cpp \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \

@@ -70,7 +70,7 @@ realclean: clean
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/PP_TestC.o .obj/PP_TestC.o .obj/PP_TestC.o .obj/PP_TestC.o: PP_TestC.cpp PP_TestC.h \
+.obj/PP_TestC.o .obj/PP_TestC.so .shobj/PP_TestC.o .shobj/PP_TestC.so: PP_TestC.cpp PP_TestC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -376,7 +376,7 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS.i \
  PP_TestC.i
 
-.obj/PP_TestS.o .obj/PP_TestS.o .obj/PP_TestS.o .obj/PP_TestS.o: PP_TestS.cpp PP_TestS.h PP_TestC.h \
+.obj/PP_TestS.o .obj/PP_TestS.so .shobj/PP_TestS.o .shobj/PP_TestS.so: PP_TestS.cpp PP_TestS.h PP_TestC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -682,7 +682,7 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS.i \
  PP_TestC.i PP_TestS_T.h PP_TestS_T.i PP_TestS_T.cpp PP_TestS.i
 
-.obj/PP_Test_Server.o .obj/PP_Test_Server.o .obj/PP_Test_Server.o .obj/PP_Test_Server.o: PP_Test_Server.cpp PP_Test_Server.h \
+.obj/PP_Test_Server.o .obj/PP_Test_Server.so .shobj/PP_Test_Server.o .shobj/PP_Test_Server.so: PP_Test_Server.cpp PP_Test_Server.h \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -993,7 +993,7 @@ realclean: clean
  PP_TestC.i PP_TestS_T.h PP_TestS_T.i PP_TestS_T.cpp PP_TestS.i \
  $(TAO_ROOT)/tao/TAO_Internal.h
 
-.obj/server.o .obj/server.o .obj/server.o .obj/server.o: server.cpp PP_Test_Server.h \
+.obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp PP_Test_Server.h \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -1305,7 +1305,7 @@ realclean: clean
  $(TAO_ROOT)/tao/Timeprobe.h \
  $(ACE_ROOT)/ace/Timeprobe.h
 
-.obj/PP_Test_Client.o .obj/PP_Test_Client.o .obj/PP_Test_Client.o .obj/PP_Test_Client.o: PP_Test_Client.cpp \
+.obj/PP_Test_Client.o .obj/PP_Test_Client.so .shobj/PP_Test_Client.o .shobj/PP_Test_Client.so: PP_Test_Client.cpp \
  $(ACE_ROOT)/ace/Read_Buffer.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -1619,7 +1619,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Timeprobe.h \
  $(TAO_ROOT)/tao/TAO_Internal.h
 
-.obj/client.o .obj/client.o .obj/client.o .obj/client.o: client.cpp PP_Test_Client.h \
+.obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp PP_Test_Client.h \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -1929,7 +1929,7 @@ realclean: clean
  $(TAO_ROOT)/tao/Timeprobe.h \
  $(ACE_ROOT)/ace/Timeprobe.h
 
-.obj/PP_Test_i.o .obj/PP_Test_i.o .obj/PP_Test_i.o .obj/PP_Test_i.o: PP_Test_i.cpp \
+.obj/PP_Test_i.o .obj/PP_Test_i.so .shobj/PP_Test_i.o .shobj/PP_Test_i.so: PP_Test_i.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \

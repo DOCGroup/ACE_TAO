@@ -62,7 +62,7 @@ realclean:
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/dataC.o .obj/dataC.o .obj/dataC.o .obj/dataC.o: dataC.cpp dataC.h \
+.obj/dataC.o .obj/dataC.so .shobj/dataC.o .shobj/dataC.so: dataC.cpp dataC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -368,7 +368,7 @@ realclean:
  $(TAO_ROOT)/tao/MessagingS.i \
  dataC.i
 
-.obj/dataS.o .obj/dataS.o .obj/dataS.o .obj/dataS.o: dataS.cpp dataS.h dataC.h \
+.obj/dataS.o .obj/dataS.so .shobj/dataS.o .shobj/dataS.so: dataS.cpp dataS.h dataC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -674,7 +674,7 @@ realclean:
  $(TAO_ROOT)/tao/MessagingS.i \
  dataC.i dataS_T.h dataS_T.i dataS_T.cpp dataS.i
 
-.obj/ECM_Data.o .obj/ECM_Data.o .obj/ECM_Data.o .obj/ECM_Data.o: ECM_Data.cpp ECM_Data.h \
+.obj/ECM_Data.o .obj/ECM_Data.so .shobj/ECM_Data.o .shobj/ECM_Data.so: ECM_Data.cpp ECM_Data.h \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \

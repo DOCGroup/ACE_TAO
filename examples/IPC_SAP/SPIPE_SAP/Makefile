@@ -45,7 +45,7 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/client.o .obj/client.o .obj/client.o .obj/client.o: client.cpp \
+.obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp \
  $(ACE_ROOT)/ace/SPIPE_Addr.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Addr.h \
@@ -89,7 +89,7 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/SPIPE_Stream.i \
  $(ACE_ROOT)/ace/SPIPE_Connector.i
 
-.obj/server.o .obj/server.o .obj/server.o .obj/server.o: server.cpp \
+.obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp \
  $(ACE_ROOT)/ace/SPIPE_Addr.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Addr.h \
@@ -132,7 +132,7 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/SPIPE.i \
  $(ACE_ROOT)/ace/SPIPE_Stream.i
 
-.obj/consumer_msg.o .obj/consumer_msg.o .obj/consumer_msg.o .obj/consumer_msg.o: consumer_msg.cpp \
+.obj/consumer_msg.o .obj/consumer_msg.so .shobj/consumer_msg.o .shobj/consumer_msg.so: consumer_msg.cpp \
  $(ACE_ROOT)/ace/SPIPE_Addr.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Addr.h \
@@ -175,7 +175,7 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/SPIPE.i \
  $(ACE_ROOT)/ace/SPIPE_Stream.i
 
-.obj/consumer_read.o .obj/consumer_read.o .obj/consumer_read.o .obj/consumer_read.o: consumer_read.cpp \
+.obj/consumer_read.o .obj/consumer_read.so .shobj/consumer_read.o .shobj/consumer_read.so: consumer_read.cpp \
  $(ACE_ROOT)/ace/SPIPE_Addr.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Addr.h \
@@ -218,7 +218,7 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/SPIPE.i \
  $(ACE_ROOT)/ace/SPIPE_Stream.i
 
-.obj/producer_msg.o .obj/producer_msg.o .obj/producer_msg.o .obj/producer_msg.o: producer_msg.cpp \
+.obj/producer_msg.o .obj/producer_msg.so .shobj/producer_msg.o .shobj/producer_msg.so: producer_msg.cpp \
  $(ACE_ROOT)/ace/SPIPE_Addr.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Addr.h \
@@ -262,7 +262,7 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/SPIPE_Stream.i \
  $(ACE_ROOT)/ace/SPIPE_Connector.i
 
-.obj/producer_read.o .obj/producer_read.o .obj/producer_read.o .obj/producer_read.o: producer_read.cpp \
+.obj/producer_read.o .obj/producer_read.so .shobj/producer_read.o .shobj/producer_read.so: producer_read.cpp \
  $(ACE_ROOT)/ace/SPIPE_Addr.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Addr.h \
@@ -306,7 +306,7 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/SPIPE_Stream.i \
  $(ACE_ROOT)/ace/SPIPE_Connector.i
 
-.obj/NPClient.o .obj/NPClient.o .obj/NPClient.o .obj/NPClient.o: NPClient.cpp \
+.obj/NPClient.o .obj/NPClient.so .shobj/NPClient.o .shobj/NPClient.so: NPClient.cpp \
  $(ACE_ROOT)/ace/SPIPE_Addr.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Addr.h \
@@ -350,7 +350,7 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/SPIPE_Stream.i \
  $(ACE_ROOT)/ace/SPIPE_Connector.i
 
-.obj/NPServer.o .obj/NPServer.o .obj/NPServer.o .obj/NPServer.o: NPServer.cpp \
+.obj/NPServer.o .obj/NPServer.so .shobj/NPServer.o .shobj/NPServer.so: NPServer.cpp \
  $(ACE_ROOT)/ace/SPIPE_Addr.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Addr.h \

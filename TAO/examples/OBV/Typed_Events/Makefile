@@ -88,7 +88,7 @@ realclean: clean
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/Event_TypesC.o .obj/Event_TypesC.o .obj/Event_TypesC.o .obj/Event_TypesC.o: Event_TypesC.cpp Event_TypesC.h \
+.obj/Event_TypesC.o .obj/Event_TypesC.so .shobj/Event_TypesC.o .shobj/Event_TypesC.so: Event_TypesC.cpp Event_TypesC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -394,7 +394,7 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS.i \
  Event_TypesC.i
 
-.obj/Event_TypesS.o .obj/Event_TypesS.o .obj/Event_TypesS.o .obj/Event_TypesS.o: Event_TypesS.cpp Event_TypesS.h Event_TypesC.h \
+.obj/Event_TypesS.o .obj/Event_TypesS.so .shobj/Event_TypesS.o .shobj/Event_TypesS.so: Event_TypesS.cpp Event_TypesS.h Event_TypesC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -701,7 +701,7 @@ realclean: clean
  Event_TypesC.i Event_TypesS_T.h Event_TypesS_T.i Event_TypesS_T.cpp \
  Event_TypesS.i
 
-.obj/client.o .obj/client.o .obj/client.o .obj/client.o: client.cpp Client_i.h ../Simple_util.h \
+.obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp Client_i.h ../Simple_util.h \
  $(TAO_ROOT)/tao/TAO.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corbafwd.h \
@@ -1014,7 +1014,7 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS.i \
  Event_TypesC.i
 
-.obj/server.o .obj/server.o .obj/server.o .obj/server.o: server.cpp ../Simple_util.h \
+.obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp ../Simple_util.h \
  $(TAO_ROOT)/tao/TAO.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corbafwd.h \
@@ -1328,7 +1328,7 @@ realclean: clean
  Event_TypesC.i Event_TypesS_T.h Event_TypesS_T.i Event_TypesS_T.cpp \
  Event_TypesS.i
 
-.obj/Server_i.o .obj/Server_i.o .obj/Server_i.o .obj/Server_i.o: Server_i.cpp Server_i.h Event_TypesS.h Event_TypesC.h \
+.obj/Server_i.o .obj/Server_i.so .shobj/Server_i.o .shobj/Server_i.so: Server_i.cpp Server_i.h Event_TypesS.h Event_TypesC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -1635,7 +1635,7 @@ realclean: clean
  Event_TypesC.i Event_TypesS_T.h Event_TypesS_T.i Event_TypesS_T.cpp \
  Event_TypesS.i Event_Types_impl.h
 
-.obj/Client_i.o .obj/Client_i.o .obj/Client_i.o .obj/Client_i.o: Client_i.cpp Client_i.h ../Simple_util.h \
+.obj/Client_i.o .obj/Client_i.so .shobj/Client_i.o .shobj/Client_i.so: Client_i.cpp Client_i.h ../Simple_util.h \
  $(TAO_ROOT)/tao/TAO.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corbafwd.h \
@@ -1948,7 +1948,7 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS.i \
  Event_TypesC.i Event_Types_impl.h
 
-.obj/Event_Types_impl.o .obj/Event_Types_impl.o .obj/Event_Types_impl.o .obj/Event_Types_impl.o: Event_Types_impl.cpp Event_Types_impl.h \
+.obj/Event_Types_impl.o .obj/Event_Types_impl.so .shobj/Event_Types_impl.o .shobj/Event_Types_impl.so: Event_Types_impl.cpp Event_Types_impl.h \
  Event_TypesC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
@@ -2255,7 +2255,7 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS.i \
  Event_TypesC.i
 
-.obj/Simple_util.o .obj/Simple_util.o .obj/Simple_util.o .obj/Simple_util.o: ../Simple_util.cpp ../Simple_util.h \
+.obj/Simple_util.o .obj/Simple_util.so .shobj/Simple_util.o .shobj/Simple_util.so: ../Simple_util.cpp ../Simple_util.h \
  $(TAO_ROOT)/tao/TAO.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corbafwd.h \

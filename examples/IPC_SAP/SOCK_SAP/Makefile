@@ -57,7 +57,7 @@ endif
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/CPP-inclient.o .obj/CPP-inclient.o .obj/CPP-inclient.o .obj/CPP-inclient.o: CPP-inclient.cpp \
+.obj/CPP-inclient.o .obj/CPP-inclient.so .shobj/CPP-inclient.o .shobj/CPP-inclient.so: CPP-inclient.cpp \
  $(ACE_ROOT)/ace/SOCK_Connector.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
@@ -155,7 +155,7 @@ endif
  $(ACE_ROOT)/ace/High_Res_Timer.i \
  CPP-inclient.h
 
-.obj/CPP-unclient.o .obj/CPP-unclient.o .obj/CPP-unclient.o .obj/CPP-unclient.o: CPP-unclient.cpp \
+.obj/CPP-unclient.o .obj/CPP-unclient.so .shobj/CPP-unclient.o .shobj/CPP-unclient.so: CPP-unclient.cpp \
  $(ACE_ROOT)/ace/LSOCK_Connector.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/SOCK_Connector.h \
@@ -208,7 +208,7 @@ endif
  $(ACE_ROOT)/ace/LSOCK_Stream.i \
  $(ACE_ROOT)/ace/LSOCK_Connector.i
 
-.obj/CPP-inserver.o .obj/CPP-inserver.o .obj/CPP-inserver.o .obj/CPP-inserver.o: CPP-inserver.cpp \
+.obj/CPP-inserver.o .obj/CPP-inserver.so .shobj/CPP-inserver.o .shobj/CPP-inserver.so: CPP-inserver.cpp \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
@@ -307,7 +307,7 @@ endif
  $(ACE_ROOT)/ace/High_Res_Timer.i \
  $(ACE_ROOT)/ace/Profile_Timer.i
 
-.obj/CPP-inserver-fancy.o .obj/CPP-inserver-fancy.o .obj/CPP-inserver-fancy.o .obj/CPP-inserver-fancy.o: CPP-inserver-fancy.cpp \
+.obj/CPP-inserver-fancy.o .obj/CPP-inserver-fancy.so .shobj/CPP-inserver-fancy.o .shobj/CPP-inserver-fancy.so: CPP-inserver-fancy.cpp \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
@@ -472,7 +472,7 @@ endif
  $(ACE_ROOT)/ace/Get_Opt.i \
  CPP-inserver-fancy.h
 
-.obj/CPP-inserver-poll.o .obj/CPP-inserver-poll.o .obj/CPP-inserver-poll.o .obj/CPP-inserver-poll.o: CPP-inserver-poll.cpp \
+.obj/CPP-inserver-poll.o .obj/CPP-inserver-poll.so .shobj/CPP-inserver-poll.o .shobj/CPP-inserver-poll.so: CPP-inserver-poll.cpp \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
@@ -517,7 +517,7 @@ endif
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.i
 
-.obj/CPP-unserver.o .obj/CPP-unserver.o .obj/CPP-unserver.o .obj/CPP-unserver.o: CPP-unserver.cpp \
+.obj/CPP-unserver.o .obj/CPP-unserver.so .shobj/CPP-unserver.o .shobj/CPP-unserver.so: CPP-unserver.cpp \
  $(ACE_ROOT)/ace/LSOCK_Acceptor.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
@@ -617,7 +617,7 @@ endif
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Thread_Manager.i
 
-.obj/FD-unclient.o .obj/FD-unclient.o .obj/FD-unclient.o .obj/FD-unclient.o: FD-unclient.cpp \
+.obj/FD-unclient.o .obj/FD-unclient.so .shobj/FD-unclient.o .shobj/FD-unclient.so: FD-unclient.cpp \
  $(ACE_ROOT)/ace/LSOCK_Connector.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/SOCK_Connector.h \
@@ -670,7 +670,7 @@ endif
  $(ACE_ROOT)/ace/LSOCK_Stream.i \
  $(ACE_ROOT)/ace/LSOCK_Connector.i
 
-.obj/FD-unserver.o .obj/FD-unserver.o .obj/FD-unserver.o .obj/FD-unserver.o: FD-unserver.cpp \
+.obj/FD-unserver.o .obj/FD-unserver.so .shobj/FD-unserver.o .shobj/FD-unserver.so: FD-unserver.cpp \
  $(ACE_ROOT)/ace/LSOCK_Acceptor.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
@@ -722,7 +722,7 @@ endif
  $(ACE_ROOT)/ace/LSOCK.i \
  $(ACE_ROOT)/ace/LSOCK_Stream.i
 
-.obj/C-inclient.o .obj/C-inclient.o .obj/C-inclient.o .obj/C-inclient.o: C-inclient.cpp \
+.obj/C-inclient.o .obj/C-inclient.so .shobj/C-inclient.o .shobj/C-inclient.so: C-inclient.cpp \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
@@ -749,7 +749,7 @@ endif
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i
 
-.obj/C-inserver.o .obj/C-inserver.o .obj/C-inserver.o .obj/C-inserver.o: C-inserver.cpp \
+.obj/C-inserver.o .obj/C-inserver.so .shobj/C-inserver.o .shobj/C-inserver.so: C-inserver.cpp \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \

@@ -78,7 +78,7 @@ endif # RTEvent
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/Schedule.o .obj/Schedule.o .obj/Schedule.o .obj/Schedule.o: Schedule.cpp Schedule.h ../lib/Driver.h \
+.obj/Schedule.o .obj/Schedule.so .shobj/Schedule.o .shobj/Schedule.so: Schedule.cpp Schedule.h ../lib/Driver.h \
  ../lib/ectest_export.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \

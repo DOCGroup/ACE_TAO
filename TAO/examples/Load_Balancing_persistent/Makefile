@@ -94,7 +94,7 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/Load_BalancerC.o .obj/Load_BalancerC.o .obj/Load_BalancerC.o .obj/Load_BalancerC.o: Load_BalancerC.cpp Load_BalancerC.h \
+.obj/Load_BalancerC.o .obj/Load_BalancerC.so .shobj/Load_BalancerC.o .shobj/Load_BalancerC.so: Load_BalancerC.cpp Load_BalancerC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -400,7 +400,7 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/MessagingS.i \
  Load_BalancerC.i
 
-.obj/Load_BalancerS.o .obj/Load_BalancerS.o .obj/Load_BalancerS.o .obj/Load_BalancerS.o: Load_BalancerS.cpp Load_BalancerS.h Load_BalancerC.h \
+.obj/Load_BalancerS.o .obj/Load_BalancerS.so .shobj/Load_BalancerS.o .shobj/Load_BalancerS.so: Load_BalancerS.cpp Load_BalancerS.h Load_BalancerC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -707,7 +707,7 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  Load_BalancerC.i Load_BalancerS_T.h Load_BalancerS_T.i \
  Load_BalancerS_T.cpp Load_BalancerS.i
 
-.obj/IdentityC.o .obj/IdentityC.o .obj/IdentityC.o .obj/IdentityC.o: IdentityC.cpp IdentityC.h \
+.obj/IdentityC.o .obj/IdentityC.so .shobj/IdentityC.o .shobj/IdentityC.so: IdentityC.cpp IdentityC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -1013,7 +1013,7 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/MessagingS.i \
  IdentityC.i
 
-.obj/IdentityS.o .obj/IdentityS.o .obj/IdentityS.o .obj/IdentityS.o: IdentityS.cpp IdentityS.h IdentityC.h \
+.obj/IdentityS.o .obj/IdentityS.so .shobj/IdentityS.o .shobj/IdentityS.so: IdentityS.cpp IdentityS.h IdentityC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -1319,7 +1319,7 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(TAO_ROOT)/tao/MessagingS.i \
  IdentityC.i IdentityS_T.h IdentityS_T.i IdentityS_T.cpp IdentityS.i
 
-.obj/Load_Balancing_Service.o .obj/Load_Balancing_Service.o .obj/Load_Balancing_Service.o .obj/Load_Balancing_Service.o: Load_Balancing_Service.cpp \
+.obj/Load_Balancing_Service.o .obj/Load_Balancing_Service.so .shobj/Load_Balancing_Service.o .shobj/Load_Balancing_Service.so: Load_Balancing_Service.cpp \
  Load_Balancing_Service.h \
  $(TAO_ROOT)/tao/TAO.h \
  $(ACE_ROOT)/ace/pre.h \
@@ -1638,7 +1638,7 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(ACE_ROOT)/ace/High_Res_Timer.h \
  $(ACE_ROOT)/ace/High_Res_Timer.i
 
-.obj/Identity_Server.o .obj/Identity_Server.o .obj/Identity_Server.o .obj/Identity_Server.o: Identity_Server.cpp Identity_Server.h \
+.obj/Identity_Server.o .obj/Identity_Server.so .shobj/Identity_Server.o .shobj/Identity_Server.so: Identity_Server.cpp Identity_Server.h \
  $(TAO_ROOT)/tao/TAO.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corbafwd.h \
@@ -1950,7 +1950,7 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  Identity_i.h IdentityS.h IdentityC.h IdentityC.i IdentityS_T.h \
  IdentityS_T.i IdentityS_T.cpp IdentityS.i
 
-.obj/Identity_Client.o .obj/Identity_Client.o .obj/Identity_Client.o .obj/Identity_Client.o: Identity_Client.cpp \
+.obj/Identity_Client.o .obj/Identity_Client.so .shobj/Identity_Client.o .shobj/Identity_Client.so: Identity_Client.cpp \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -2265,7 +2265,7 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(ACE_ROOT)/ace/Stats.h \
  $(ACE_ROOT)/ace/Stats.i
 
-.obj/Load_Balancer_i.o .obj/Load_Balancer_i.o .obj/Load_Balancer_i.o .obj/Load_Balancer_i.o: Load_Balancer_i.cpp Load_Balancer_i.h \
+.obj/Load_Balancer_i.o .obj/Load_Balancer_i.so .shobj/Load_Balancer_i.o .shobj/Load_Balancer_i.so: Load_Balancer_i.cpp Load_Balancer_i.h \
  Load_BalancerS.h Load_BalancerC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
@@ -2583,7 +2583,7 @@ client: $(addprefix $(VDIR),$(CLIENT_OBJS))
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp
 
-.obj/Identity_i.o .obj/Identity_i.o .obj/Identity_i.o .obj/Identity_i.o: Identity_i.cpp Identity_i.h IdentityS.h IdentityC.h \
+.obj/Identity_i.o .obj/Identity_i.so .shobj/Identity_i.o .shobj/Identity_i.so: Identity_i.cpp Identity_i.h IdentityS.h IdentityC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \

@@ -56,7 +56,7 @@ client:$(addprefix $(VDIR),$(CosProperty_CLIENT_OBJS))
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/server.o .obj/server.o .obj/server.o .obj/server.o: server.cpp server.h \
+.obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp server.h \
  $(TAO_ROOT)/tao/TAO.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corbafwd.h \
@@ -396,7 +396,7 @@ client:$(addprefix $(VDIR),$(CosProperty_CLIENT_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.i
 
-.obj/client.o .obj/client.o .obj/client.o .obj/client.o: client.cpp client.h \
+.obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp client.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \

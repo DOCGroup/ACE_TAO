@@ -42,7 +42,7 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/Log_Wrapper.o .obj/Log_Wrapper.o .obj/Log_Wrapper.o .obj/Log_Wrapper.o: Log_Wrapper.cpp Log_Wrapper.h \
+.obj/Log_Wrapper.o .obj/Log_Wrapper.so .shobj/Log_Wrapper.o .shobj/Log_Wrapper.so: Log_Wrapper.cpp Log_Wrapper.h \
  $(ACE_ROOT)/ace/Profile_Timer.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \

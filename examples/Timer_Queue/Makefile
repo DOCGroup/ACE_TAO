@@ -52,7 +52,7 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/Async_Timer_Queue_Test.o .obj/Async_Timer_Queue_Test.o .obj/Async_Timer_Queue_Test.o .obj/Async_Timer_Queue_Test.o: Async_Timer_Queue_Test.cpp \
+.obj/Async_Timer_Queue_Test.o .obj/Async_Timer_Queue_Test.so .shobj/Async_Timer_Queue_Test.o .shobj/Async_Timer_Queue_Test.so: Async_Timer_Queue_Test.cpp \
  $(ACE_ROOT)/ace/Signal.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -200,7 +200,7 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp
 
-.obj/Reactor_Timer_Queue_Test.o .obj/Reactor_Timer_Queue_Test.o .obj/Reactor_Timer_Queue_Test.o .obj/Reactor_Timer_Queue_Test.o: Reactor_Timer_Queue_Test.cpp \
+.obj/Reactor_Timer_Queue_Test.o .obj/Reactor_Timer_Queue_Test.so .shobj/Reactor_Timer_Queue_Test.o .shobj/Reactor_Timer_Queue_Test.so: Reactor_Timer_Queue_Test.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Thread.h \
@@ -360,7 +360,7 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  Reactor_Timer_Queue_Test.h
 
-.obj/Thread_Timer_Queue_Test.o .obj/Thread_Timer_Queue_Test.o .obj/Thread_Timer_Queue_Test.o .obj/Thread_Timer_Queue_Test.o: Thread_Timer_Queue_Test.cpp \
+.obj/Thread_Timer_Queue_Test.o .obj/Thread_Timer_Queue_Test.so .shobj/Thread_Timer_Queue_Test.o .shobj/Thread_Timer_Queue_Test.so: Thread_Timer_Queue_Test.cpp \
  $(ACE_ROOT)/ace/Task.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Service_Object.h \
@@ -507,7 +507,7 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp
 
-.obj/Driver.o .obj/Driver.o .obj/Driver.o .obj/Driver.o: Driver.cpp \
+.obj/Driver.o .obj/Driver.so .shobj/Driver.o .shobj/Driver.so: Driver.cpp \
  $(ACE_ROOT)/ace/Auto_Ptr.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -655,7 +655,7 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Timer_Queue_Adapters.cpp \
  Driver.cpp
 
-.obj/main_async.o .obj/main_async.o .obj/main_async.o .obj/main_async.o: main_async.cpp \
+.obj/main_async.o .obj/main_async.so .shobj/main_async.o .shobj/main_async.so: main_async.cpp \
  $(ACE_ROOT)/ace/Auto_Ptr.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -804,7 +804,7 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  Driver.cpp Async_Timer_Queue_Test.h \
  $(ACE_ROOT)/ace/Timer_Heap.h
 
-.obj/main_reactor.o .obj/main_reactor.o .obj/main_reactor.o .obj/main_reactor.o: main_reactor.cpp \
+.obj/main_reactor.o .obj/main_reactor.so .shobj/main_reactor.o .shobj/main_reactor.so: main_reactor.cpp \
  $(ACE_ROOT)/ace/Auto_Ptr.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -953,7 +953,7 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  Driver.cpp Reactor_Timer_Queue_Test.h \
  $(ACE_ROOT)/ace/Timer_Heap.h
 
-.obj/main_thread.o .obj/main_thread.o .obj/main_thread.o .obj/main_thread.o: main_thread.cpp \
+.obj/main_thread.o .obj/main_thread.so .shobj/main_thread.o .shobj/main_thread.so: main_thread.cpp \
  $(ACE_ROOT)/ace/Auto_Ptr.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \

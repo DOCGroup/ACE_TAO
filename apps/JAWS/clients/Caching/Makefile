@@ -47,7 +47,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/http_handler.o .obj/http_handler.o .obj/http_handler.o .obj/http_handler.o: http_handler.cpp \
+.obj/http_handler.o .obj/http_handler.so .shobj/http_handler.o .shobj/http_handler.so: http_handler.cpp \
  $(ACE_ROOT)/ace/Filecache.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Mem_Map.h \

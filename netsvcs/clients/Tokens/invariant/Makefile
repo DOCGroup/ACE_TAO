@@ -48,7 +48,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/invariant.o .obj/invariant.o .obj/invariant.o .obj/invariant.o: invariant.cpp \
+.obj/invariant.o .obj/invariant.so .shobj/invariant.o .shobj/invariant.so: invariant.cpp \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \

@@ -41,7 +41,7 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/transceiver.o .obj/transceiver.o .obj/transceiver.o .obj/transceiver.o: transceiver.cpp \
+.obj/transceiver.o .obj/transceiver.so .shobj/transceiver.o .shobj/transceiver.so: transceiver.cpp \
  $(ACE_ROOT)/ace/Service_Config.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Service_Object.h \

@@ -68,7 +68,7 @@ realclean: clean
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/CosLifeCycleS.o .obj/CosLifeCycleS.o .obj/CosLifeCycleS.o .obj/CosLifeCycleS.o: CosLifeCycleS.cpp CosLifeCycleS.h \
+.obj/CosLifeCycleS.o .obj/CosLifeCycleS.so .shobj/CosLifeCycleS.o .shobj/CosLifeCycleS.so: CosLifeCycleS.cpp CosLifeCycleS.h \
  $(ACE_ROOT)/ace/pre.h \
  CosNamingS.h CosNamingC.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -378,7 +378,7 @@ realclean: clean
  LifeCycle/lifecycle_export.h CosLifeCycleC.i CosLifeCycleS_T.h \
  CosLifeCycleS_T.i CosLifeCycleS_T.cpp CosLifeCycleS.i
 
-.obj/LifeCycleServiceS.o .obj/LifeCycleServiceS.o .obj/LifeCycleServiceS.o .obj/LifeCycleServiceS.o: LifeCycleServiceS.cpp LifeCycleServiceS.h \
+.obj/LifeCycleServiceS.o .obj/LifeCycleServiceS.so .shobj/LifeCycleServiceS.o .shobj/LifeCycleServiceS.so: LifeCycleServiceS.cpp LifeCycleServiceS.h \
  $(ACE_ROOT)/ace/pre.h \
  CosLifeCycleS.h CosNamingS.h CosNamingC.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -690,7 +690,7 @@ realclean: clean
  LifeCycleServiceC.h LifeCycleServiceC.i LifeCycleServiceS_T.h \
  LifeCycleServiceS_T.i LifeCycleServiceS_T.cpp LifeCycleServiceS.i
 
-.obj/CosLifeCycleC.o .obj/CosLifeCycleC.o .obj/CosLifeCycleC.o .obj/CosLifeCycleC.o: CosLifeCycleC.cpp CosLifeCycleC.h \
+.obj/CosLifeCycleC.o .obj/CosLifeCycleC.so .shobj/CosLifeCycleC.o .shobj/CosLifeCycleC.so: CosLifeCycleC.cpp CosLifeCycleC.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -997,7 +997,7 @@ realclean: clean
  LifeCycle/lifecycle_export.h CosNamingC.h Naming/naming_export.h \
  CosNamingC.i CosLifeCycleC.i
 
-.obj/LifeCycleServiceC.o .obj/LifeCycleServiceC.o .obj/LifeCycleServiceC.o .obj/LifeCycleServiceC.o: LifeCycleServiceC.cpp LifeCycleServiceC.h \
+.obj/LifeCycleServiceC.o .obj/LifeCycleServiceC.so .shobj/LifeCycleServiceC.o .shobj/LifeCycleServiceC.so: LifeCycleServiceC.cpp LifeCycleServiceC.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \

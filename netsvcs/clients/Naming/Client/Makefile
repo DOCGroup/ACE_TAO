@@ -68,7 +68,7 @@ endif # BIN
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/Client_Test.o .obj/Client_Test.o .obj/Client_Test.o .obj/Client_Test.o: Client_Test.cpp \
+.obj/Client_Test.o .obj/Client_Test.so .shobj/Client_Test.o .shobj/Client_Test.so: Client_Test.cpp \
  $(ACE_ROOT)/ace/Service_Config.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Service_Object.h \
@@ -192,7 +192,7 @@ endif # BIN
  $(ACE_ROOT)/ace/Thread_Manager.i \
  Client_Test.h
 
-.obj/main.o .obj/main.o .obj/main.o .obj/main.o: main.cpp \
+.obj/main.o .obj/main.so .shobj/main.o .shobj/main.so: main.cpp \
  $(ACE_ROOT)/ace/Service_Config.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Service_Object.h \

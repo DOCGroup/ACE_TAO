@@ -108,7 +108,7 @@ realclean: clean
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/client.o .obj/client.o .obj/client.o .obj/client.o: client.cpp \
+.obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -435,7 +435,7 @@ realclean: clean
  $(TAO_ROOT)/tao/Asynch_Invocation.i \
  testC.i
 
-.obj/st_client.o .obj/st_client.o .obj/st_client.o .obj/st_client.o: st_client.cpp \
+.obj/st_client.o .obj/st_client.so .shobj/st_client.o .shobj/st_client.so: st_client.cpp \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -752,7 +752,7 @@ realclean: clean
  $(TAO_ROOT)/tao/Asynch_Invocation.i \
  testC.i
 
-.obj/dii_client.o .obj/dii_client.o .obj/dii_client.o .obj/dii_client.o: dii_client.cpp \
+.obj/dii_client.o .obj/dii_client.so .shobj/dii_client.o .shobj/dii_client.so: dii_client.cpp \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -1069,7 +1069,7 @@ realclean: clean
  $(TAO_ROOT)/tao/Asynch_Invocation.i \
  testC.i
 
-.obj/server.o .obj/server.o .obj/server.o .obj/server.o: server.cpp test_i.h testS.h \
+.obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp test_i.h testS.h \
  $(TAO_ROOT)/tao/MessagingS.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/orbconf.h \
@@ -1392,7 +1392,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Sched_Params.h \
  $(ACE_ROOT)/ace/Sched_Params.i
 
-.obj/st_server.o .obj/st_server.o .obj/st_server.o .obj/st_server.o: st_server.cpp test_i.h testS.h \
+.obj/st_server.o .obj/st_server.so .shobj/st_server.o .shobj/st_server.so: st_server.cpp test_i.h testS.h \
  $(TAO_ROOT)/tao/MessagingS.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/orbconf.h \
@@ -1705,7 +1705,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Sched_Params.h \
  $(ACE_ROOT)/ace/Sched_Params.i
 
-.obj/testC.o .obj/testC.o .obj/testC.o .obj/testC.o: testC.cpp testC.h \
+.obj/testC.o .obj/testC.so .shobj/testC.o .shobj/testC.so: testC.cpp testC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -2013,7 +2013,7 @@ realclean: clean
  $(TAO_ROOT)/tao/Asynch_Invocation.i \
  testC.i
 
-.obj/testS.o .obj/testS.o .obj/testS.o .obj/testS.o: testS.cpp testS.h \
+.obj/testS.o .obj/testS.so .shobj/testS.o .shobj/testS.so: testS.cpp testS.h \
  $(TAO_ROOT)/tao/MessagingS.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/orbconf.h \
@@ -2322,7 +2322,7 @@ realclean: clean
  $(TAO_ROOT)/tao/BoundsC.i \
  testC.i testS_T.h testS_T.i testS_T.cpp testS.i
 
-.obj/ami-latency-client.o .obj/ami-latency-client.o .obj/ami-latency-client.o .obj/ami-latency-client.o: ami-latency-client.cpp \
+.obj/ami-latency-client.o .obj/ami-latency-client.so .shobj/ami-latency-client.o .shobj/ami-latency-client.so: ami-latency-client.cpp \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -2650,7 +2650,7 @@ realclean: clean
  $(TAO_ROOT)/tao/BoundsC.i \
  testC.i testS_T.h testS_T.i testS_T.cpp testS.i
 
-.obj/ami-throughput-client.o .obj/ami-throughput-client.o .obj/ami-throughput-client.o .obj/ami-throughput-client.o: ami-throughput-client.cpp \
+.obj/ami-throughput-client.o .obj/ami-throughput-client.so .shobj/ami-throughput-client.o .shobj/ami-throughput-client.so: ami-throughput-client.cpp \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \

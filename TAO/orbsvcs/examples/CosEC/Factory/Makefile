@@ -88,7 +88,7 @@ realclean: clean
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/CosEventChannelFactoryC.o .obj/CosEventChannelFactoryC.o .obj/CosEventChannelFactoryC.o .obj/CosEventChannelFactoryC.o: CosEventChannelFactoryC.cpp \
+.obj/CosEventChannelFactoryC.o .obj/CosEventChannelFactoryC.so .shobj/CosEventChannelFactoryC.o .shobj/CosEventChannelFactoryC.so: CosEventChannelFactoryC.cpp \
  CosEventChannelFactoryC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
@@ -400,7 +400,7 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.i \
  CosEventChannelFactoryC.i
 
-.obj/CosEventChannelFactoryS.o .obj/CosEventChannelFactoryS.o .obj/CosEventChannelFactoryS.o .obj/CosEventChannelFactoryS.o: CosEventChannelFactoryS.cpp \
+.obj/CosEventChannelFactoryS.o .obj/CosEventChannelFactoryS.so .shobj/CosEventChannelFactoryS.o .shobj/CosEventChannelFactoryS.so: CosEventChannelFactoryS.cpp \
  CosEventChannelFactoryS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.h \
  $(ACE_ROOT)/ace/pre.h \
@@ -724,7 +724,7 @@ realclean: clean
  CosEventChannelFactoryS_T.h CosEventChannelFactoryS_T.i \
  CosEventChannelFactoryS_T.cpp CosEventChannelFactoryS.i
 
-.obj/CosEventChannelFactory_i.o .obj/CosEventChannelFactory_i.o .obj/CosEventChannelFactory_i.o .obj/CosEventChannelFactory_i.o: CosEventChannelFactory_i.cpp \
+.obj/CosEventChannelFactory_i.o .obj/CosEventChannelFactory_i.so .shobj/CosEventChannelFactory_i.o .shobj/CosEventChannelFactory_i.so: CosEventChannelFactory_i.cpp \
  CosEventChannelFactory_i.h \
  $(ACE_ROOT)/ace/pre.h \
  CosEventChannelFactoryS.h \
@@ -1101,7 +1101,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp
 
-.obj/FactoryClient.o .obj/FactoryClient.o .obj/FactoryClient.o .obj/FactoryClient.o: FactoryClient.cpp CosEventChannelFactoryC.h \
+.obj/FactoryClient.o .obj/FactoryClient.so .shobj/FactoryClient.o .shobj/FactoryClient.so: FactoryClient.cpp CosEventChannelFactoryC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -1415,7 +1415,7 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i
 
-.obj/FactoryDriver.o .obj/FactoryDriver.o .obj/FactoryDriver.o .obj/FactoryDriver.o: FactoryDriver.cpp FactoryDriver.h \
+.obj/FactoryDriver.o .obj/FactoryDriver.so .shobj/FactoryDriver.o .shobj/FactoryDriver.so: FactoryDriver.cpp FactoryDriver.h \
  CosEventChannelFactory_i.h \
  $(ACE_ROOT)/ace/pre.h \
  CosEventChannelFactoryS.h \
@@ -1767,7 +1767,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i
 
-.obj/main.o .obj/main.o .obj/main.o .obj/main.o: main.cpp FactoryDriver.h CosEventChannelFactory_i.h \
+.obj/main.o .obj/main.so .shobj/main.o .shobj/main.so: main.cpp FactoryDriver.h CosEventChannelFactory_i.h \
  $(ACE_ROOT)/ace/pre.h \
  CosEventChannelFactoryS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.h \
