@@ -3,6 +3,33 @@ Microsoft Developer Studio Workspace File, Format Version 6.00
 
 ###############################################################################
 
+Project: "BiDirGIOP"=.\BiDir_GIOP\TAO_BiDir_GIOP.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "BiDirGIOP_Static"=.\BiDir_GIOP\TAO_BiDir_GIOP_Static.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Domain"=.\Domain\TAO_Domain.dsp - Package Owner=<4>
 
 Package=<5>
@@ -43,36 +70,6 @@ Package=<4>
 ###############################################################################
 
 Project: "DynamicAny_Static"=.\DynamicAny\TAO_DynamicAny_Static.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name TAO LIB
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "BiDirGIOP"=.\BiDir_GIOP\TAO_BiDir_GIOP.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name TAO DLL
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "BiDir_GIOP_Static"=.\BiDir_GIOP\TAO_BiDir_GIOP_Static.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -282,6 +279,30 @@ Package=<4>
 
 ###############################################################################
 
+Project: "TypeCodeFactory"=.\TypeCodeFactory\TypeCodeFactory.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "TypeCodeFactory_Static"=.\TYPECODEFACTORY\TypeCodeFactory_Static\TypeCodeFactory_Static.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Global:
 
 Package=<5>
@@ -293,3 +314,4 @@ Package=<3>
 }}}
 
 ###############################################################################
+

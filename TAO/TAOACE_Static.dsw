@@ -483,6 +483,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "TypeCodeFactory_Static"=.\tao\TypeCodeFactory\TypeCodeFactory_Static.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "gperf"=..\apps\gperf\src\gperf.dsp - Package Owner=<4>
 
 Package=<5>
