@@ -1,0 +1,26 @@
+// @@ Sumedh, please figure out how to remove this file and share it
+// between the client and server.
+
+interface Cubit 
+{
+  octet	cube_octet (in octet o);
+  short	cube_short (in short s);
+  long cube_long (in long l);
+    
+  struct Many 
+  {
+    octet o;		// + 3 bytes padding (normally) ...
+    long l;
+    short s;		// + 2 bytes padding (normally) ...
+  };
+    
+  Many cube_struct (in Many values);
+    
+  oneway void please_exit ();
+};
+
+interface Cubit_Factory 
+{ 
+  Cubit create_cubit (in short priority);
+};
+
