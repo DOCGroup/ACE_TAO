@@ -41,6 +41,7 @@
 // ============================================================================
 
 #include "tests/test_config.h"
+#include "ace/OS_NS_string.h"
 #include "ace/Get_Opt.h"
 #include "ace/Acceptor.h"
 #include "ace/Thread_Manager.h"
