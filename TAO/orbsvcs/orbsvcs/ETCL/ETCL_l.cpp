@@ -621,7 +621,8 @@ YY_MALLOC_DECL
 YY_DECL
 	{
 	register yy_state_type yy_current_state;
-	register char *yy_cp, *yy_bp;
+	register char *yy_cp = 0;
+  register char *yy_bp = 0;
 	register int yy_act;
 
 //#line 50 "ETCL/ETCL.ll"
