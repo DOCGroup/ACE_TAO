@@ -1,5 +1,17 @@
 Thu Mar 06 13:24:04 1997  David L. Levine  <levine@cs.wustl.edu>
 
+	* ace/OS.i (gettimeofday): moved declaration of "result" so
+	  that it's not declared on VxWorks, where it's not needed;
+	  (stat): added cast of file arg to char * for VxWorks;
+	  (thr_getprio): added missing "#else" before ACE_NOTSUP_RETURN (-1).
+	  Thanks to Dave Mayerhoefer <m210229@svappl36.mdc.com> for
+	  reporting these.
+
+	* ace/Svc_Conf_l.cpp: commented out YY_BREAK after ace_yyterminate ()
+	  to avoid GHS compiler warning about unreachable statement.
+	  Thanks to Dave Mayerhoefer <m210229@svappl36.mdc.com> for
+	  reporting this.
+
 	* ace/ace.mak: removed Thread_Priority and renamed Scheduling_Params
 	  to Sched_Param.
 
