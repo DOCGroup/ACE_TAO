@@ -57,13 +57,12 @@ TAO_CORBALOC_Parser::parse_string (const char *ior,
 
   // If the protocol is "rir:", there is no need to do any of this.
   //
-  if (ACE_OS::strncmp (corbaloc_name, rir_prefix, 
-                       sizeof (rir_prefix)-1) != 0)
+  if (this->check_prefix (corbaloc_name) == 0)
     {
       
       char *key_string = CORBA::string_alloc (sizeof (corbaloc_name));
       char *key_stringPtr = key_string;
-      
+      cout << "lets see" << endl;
       for (const char *i = corbaloc_name; *i != '\0'; ++i)
         {
           if (*i == ',')
@@ -153,10 +152,82 @@ TAO_CORBALOC_Parser::parse_string (const char *ior,
           addr [current_addr] = CORBA::string_alloc (pos);
           cloc_namePtr = ACE_OS::strtok (NULL, ",");
         }
+
+      // Now We have an array of <obj_addr> obtained from the
+      // <obj_list>. Now, we define an MProfile and then use
+      // make_mprofile ()....
+      // 
+      TAO_MProfile mprofile;
+
+      for (CORBA::ULong i=0; i != count_addr; ++i)
+        {
+          int retv = 
+            orb->orb_core ()->connector_registry ()->make_mprofile (addr [i],
+                                                                  mprofile, 
+                                                                  ACE_TRY_ENV);
+
+          ACE_CHECK_RETURN (CORBA::Object::_nil ());   // Return nil.
+
+          if (retv != 0)
+            {
+              ACE_THROW_RETURN (CORBA::INV_OBJREF (
+                                  CORBA_SystemException::_tao_minor_code (
+                                    TAO_DEFAULT_MINOR_CODE,
+                                    EINVAL),
+                                  CORBA::COMPLETED_NO),
+                                CORBA::Object::_nil ());
+            }
+
+          // Now make the TAO_Stub.
+          TAO_Stub *data = 0;
+          ACE_NEW_THROW_EX (data,
+                            TAO_Stub ((char *) 0, mprofile,
+                                      orb->orb_core ()),
+                            CORBA::NO_MEMORY (
+                              CORBA_SystemException::_tao_minor_code (
+                                TAO_DEFAULT_MINOR_CODE,
+                                ENOMEM),
+                              CORBA::COMPLETED_NO));
+          ACE_CHECK_RETURN (CORBA::Object::_nil ());
+          
+          TAO_Stub_Auto_Ptr safe_data (data);
+          
+          // Figure out if the servant is collocated.
+          TAO_ServantBase *servant = 0;
+          TAO_SERVANT_LOCATION servant_location =
+            orb->_get_collocated_servant (safe_data.get (),
+                                           servant);
+          
+          int collocated = 0;
+          if (servant_location != TAO_SERVANT_NOT_FOUND)
+            collocated = 1;
+          
+          CORBA::Object_ptr obj = CORBA::Object::_nil ();
+          
+          // Create the CORBA level proxy.  This will increase the ref_count
+          // on data by one
+          ACE_NEW_THROW_EX (obj,
+                            CORBA_Object (safe_data.get (),
+                                          servant,
+                                          (CORBA::Boolean) collocated),
+                            CORBA::NO_MEMORY (
+                              CORBA_SystemException::_tao_minor_code (
+                                TAO_DEFAULT_MINOR_CODE,
+                                ENOMEM),
+                              CORBA::COMPLETED_NO));
+          ACE_CHECK_RETURN (CORBA::Object::_nil ());
+          
+          // All is well, so release the stub object from its auto_ptr.
+          data = safe_data.release ();
+          
+          return obj;
+          
+        }
+
     }
 
   CORBA::Object_ptr object = CORBA::Object::_nil ();
-
+  
   if (ACE_OS::strncmp (corbaloc_name, rir_prefix, 
                        sizeof (rir_prefix)-1) == 0)
     {
@@ -164,7 +235,7 @@ TAO_CORBALOC_Parser::parse_string (const char *ior,
       // argument to the resolve_initial_references ()
       const char *key_string =
         corbaloc_name + sizeof (rir_prefix) -1;
-      
+          
       ACE_TRY 
         {
           ACE_DEBUG ((LM_DEBUG, "The key string is %s\n", key_string));
@@ -176,12 +247,42 @@ TAO_CORBALOC_Parser::parse_string (const char *ior,
           ACE_PRINT_EXCEPTION (ex, "CORBALOC_Parser");
         }
       ACE_ENDTRY;
-     
+      
     }
   
   return object;
+  
 }
 
+int
+TAO_CORBALOC_Parser::check_prefix (const char *endpoint)
+{
+
+  // Check for a valid string
+  if (!endpoint || !*endpoint)
+    return -1; // Failure
+
+  const char *protocol[] = { "iiop", "" };
+
+  size_t slot = ACE_OS::strchr (endpoint, '/') - endpoint;
+
+  size_t len0 = ACE_OS::strlen (protocol[0]);
+  size_t len1 = ACE_OS::strlen (protocol[1]);
+
+  // Check for the proper prefix in the IOR.  If the proper prefix
+  // isn't in the IOR then it is not an IOR we can use.
+  if (slot == len0
+      && ACE_OS::strncasecmp (endpoint, protocol[0], len0) == 0)
+    return 0;
+  else if (slot == len1
+           && ACE_OS::strncasecmp (endpoint, protocol[1], len1) == 0)
+    return 0;
+
+  return -1;
+  // Failure: not an IIOP IOR
+  // DO NOT throw an exception here.
+}
+  
 ACE_FACTORY_DEFINE (TAO_IOR_CORBALOC, TAO_CORBALOC_Parser)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
