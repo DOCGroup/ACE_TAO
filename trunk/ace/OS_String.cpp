@@ -1020,7 +1020,7 @@ ACE_OS_String::strsncpy (wchar_t *dst, const wchar_t *src, size_t maxlen)
 
   if (rmaxlen > 0)
     {
-      *rdst = ACW_TEXT_WIDE ('\0'); 
+      *rdst = ACE_TEXT_WIDE ('\0'); 
       if (rsrc != 0)
         strncat (rdst, rsrc ,--rmaxlen);  
     }
