@@ -18,7 +18,8 @@ ACE_SHLIBS = -lTAO -lACE
 CPP_SRCS += \
   IORInterceptorC \
   IORInterceptor_Adapter_Impl \
-  IORInterceptor_List 
+  IORInterceptor_List \
+  IORInterceptor_Adapter_Factory_Impl
 
 FILES = $(CPP_SRCS)
 DEFS  = $(addsuffix .h,$(FILES))

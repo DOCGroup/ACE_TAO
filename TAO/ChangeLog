@@ -1,3 +1,12 @@
+Fri Jul 18 15:58:20 2003  George Edwards <g.edwards@vanderbilt.edu>
+
+        * tao/tao.mpc:
+        * tao/IORInterceptor/Makefile:
+        * tao/IORInterceptor/Makefile.bor:
+        * tao/IORInterceptor/TAO_IORInterceptor_Static.dsp:
+
+        Added new IORInterceptor_Adapter_Factory files to makefiles.
+
 Fri Jul 18 14:02:42 2003  George Edwards <g.edwards@vanderbilt.edu>
 
         * tao/ORB_Core.cpp:
