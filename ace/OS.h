@@ -308,14 +308,6 @@ class ACE_Timeout_Manager;
 
 #     include "ace/os_include/os_limits.h"  // <sys/param.h>
 
-// This is here for ACE_OS::num_processors_online(). On HP-UX, it
-// needs sys/param.h (above) and sys/pstat.h. The implementation of the
-// num_processors_online() method also uses 'defined (__hpux)' to decide
-// whether or not to try the syscall.
-#   if defined (__hpux)
-#     include /**/ <sys/pstat.h>
-#   endif /* __hpux **/
-
 #   if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS) && !defined (VXWORKS)
 #     include "ace/os_include/sys/os_un.h"
 #   endif /* ACE_LACKS_UNIX_DOMAIN_SOCKETS */

@@ -16,14 +16,7 @@ ACE_RCSID(ace, OS_NS_unistd, "$Id$")
 #include "ace/OS_Memory.h"
 #include "ace/OS_NS_Thread.h"
 #include "ace/Object_Manager_Base.h"
-
-// This is here for ACE_OS::num_processors_online(). On HP-UX, it
-// needs sys/param.h (above) and sys/pstat.h. The implementation of the
-// num_processors_online() method also uses 'defined (__hpux)' to decide
-// whether or not to try the syscall.
-#if defined (__hpux)
-#  include /**/ <sys/pstat.h>
-#endif /* __hpux **/
+#include "ace/os_include/sys/os_pstat.h"
 
 #if defined (ACE_NEEDS_FTRUNCATE)
 extern "C" int
