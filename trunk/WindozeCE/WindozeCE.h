@@ -16,6 +16,8 @@
 #include "resource.h"		// main symbols
 #include "ace/OS.h"
 
+// FUZZ: disable check_for_tchar
+
 /////////////////////////////////////////////////////////////////////////////
 // CWindozeCEApp:
 // See WindozeCE.cpp for the implementation of this class

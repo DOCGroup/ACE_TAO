@@ -10,6 +10,7 @@
  *									  *
  **************************************************************************/
 
+/* FUZZ: disable check_for_math_include */
 #ifndef WIN32
 #include <netdb.h>
 #include <sys/time.h>

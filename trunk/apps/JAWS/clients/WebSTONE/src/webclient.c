@@ -10,6 +10,8 @@
  *									  *
  **************************************************************************/
 
+/* FUZZ: disable check_for_math_include */
+
 #include <thread.h>
 
 #include <stdio.h>

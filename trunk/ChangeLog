@@ -1,3 +1,70 @@
+Fri Sep 22 12:27:42 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * bin/fuzz.pl:
+
+          The checks for TEXT and TCHAR gave too many false positives.
+          Fixed to be a bit smarter about having these inside other
+          macro names (such as DEFAULTCHARS).
+
+          Also improved detection of CVS Id strings, since it ends
+          up that there are several places where the strings are close
+          (start with $ and Id) but then are missing a colon so they
+          don't get updated properly.
+
+        * WindozeCE/ACEApp.cpp:
+        * WindozeCE/WindozeCE.cpp:
+        * WindozeCE/WindozeCE.h:
+        * WindozeCE/WindozeCEDlg.cpp:
+        
+          Disabled the fuzz tchar check, since these are WinCE only
+          files and shouldn't have any problems with using the Win32
+          specific character macros.
+
+        * WindozeCE/WindozeCE.plg:  (removed)
+
+          Shouldn't be in the repository
+
+        * ace/ACE.cpp:
+          
+          There were some TEXT's (albeit in comments) that I changed
+          to ACE_TEXT to make fuzz happy.
+
+        * ace/Atomic_Op.i:
+
+          Changed the inline's to ACE_INLINE to be consistent with the
+          rest of the file.  
+
+        * ace/Handle_Gobbler.i:
+        * apps/JAWS/remora/app/Remora_Export.i:
+        * apps/JAWS/remora/app/Remora_Import.i:
+        * examples/ASX/Event_Server/Event_Server/Options.i:
+        * examples/ASX/UPIPE_Event_Server/Options.i:
+        * performance-tests/Synch-Benchmarks/Perf_Test/Performance_Test_Options.i:
+
+          Disabled the fuzz check for inline in these files, since
+          they are only included in .h files, so they should be 
+          inline instead of ACE_INLINE.
+
+        * apps/JAWS/clients/WebSTONE/src/bench.c:
+        * apps/JAWS/clients/WebSTONE/src/genrand.c:
+        * apps/JAWS/clients/WebSTONE/src/statistics.c:
+        * apps/JAWS/clients/WebSTONE/src/timefunc.c:
+        * apps/JAWS/clients/WebSTONE/src/webclient.c:
+        * apps/JAWS/clients/WebSTONE/src/webmaster.c:
+        * apps/JAWS/clients/WebSTONE/src/nsapi-includes/base/eventlog.h:
+        * apps/JAWS/stress_testing/global.h:
+        
+          Disabled checks for inline and math.h, since there probably 
+          isn't any problems with them here.
+        
+        * performance-tests/TCP/tcp_test.cpp:
+        * performance-tests/UDP/udp_test.cpp:
+
+          Disabled fuzz math.h include checks.
+
+          Fuzz reports should be pretty clean now, just some Id string
+          stuff to clean up.  [Bug 630]
+
 Fri Sep 22 12:01:06 2000  Ossama Othman  <ossama@uci.edu>
 
 	* ace/Basic_Types.h (ACE_ULongLong):

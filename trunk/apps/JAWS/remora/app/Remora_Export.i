@@ -1,4 +1,8 @@
-// $Id
+// $Id$
+
+// Since this is only included in Remora_Export.i these should stay
+// inline, not ACE_INLINE.
+// FUZZ: disable check_for_inline
 
 inline void
 Remora_Export::operator=(const int new_value)

@@ -1,4 +1,8 @@
-// $Id
+// $Id$
+
+// Since this is only included in Remora_Import.h these should stay
+// inline, not ACE_INLINE.
+// FUZZ: disable check_for_inline
 
 inline
 Remora_Import::operator CORBA::Long()

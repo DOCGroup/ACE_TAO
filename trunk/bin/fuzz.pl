@@ -162,7 +162,7 @@ sub check_for_id_string ()
         if (open (FILE, $file)) {
             print "Looking at file $file\n" if $opt_d;
             while (<FILE>) {
-                if (/\$Id/) {
+                if (/\$Id\:/ or /\$Id\$/) {
                     $found = 1;
                 }
             }
@@ -348,15 +348,23 @@ sub check_for_tchar
                         print_error ("ASYS_TCHAR found on "
                                      ."line $line in $file");
                     }
-                    elsif (/TCHAR/ and $` !~ /ACE_/) {
-                        print_error ("TCHAR on line $line in $file");
+                    elsif (/TCHAR/ and !/ACE_TCHAR/) {
+                        ### Do a double check, since some macros do have TCHAR
+                        ### (like DEFAULTCHARS)
+                        if (/^TCHAR[^\w_]/ or /[^\w_]TCHAR[^\w_]/) {
+                            print_error ("TCHAR on line $line in $file");
+                        }
                     }
     
                     if (/ASYS_TEXT/) {
                         print_error ("ASYS_TEXT on line $line in $file");
                     }
-                    elsif (/TEXT\s+\(/ and $` !~ /ACE_/) {
-                        print_error ("TEXT found on line $line in $file");
+                    elsif (/TEXT/ and !/ACE_TEXT/) {
+                        ### Do a double check, since there are several macros
+                        ### that end with TEXT
+                        if (/^TEXT\s*\(/ or /[^\w_]TEXT\s*\(/) {
+	                    print_error ("TEXT found on line $line in $file");
+                        }
                     }
                 }
             }
