@@ -1,3 +1,9 @@
+Wed Dec  3 09:06:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_1627_Regression/Test_i.cpp:
+        * tests/Bug_1330_Regression/Test_i.cpp:
+          Fixed exception macro usage
+
 Wed Dec  3 08:56:47 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Collocation_Tests/Collocation_Tests.mpc:
