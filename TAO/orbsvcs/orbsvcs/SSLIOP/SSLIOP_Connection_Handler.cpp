@@ -148,7 +148,7 @@ TAO_SSLIOP_Connection_Handler::activate (long flags,
                                          size_t stack_size[],
                                          ACE_thread_t  thread_names[])
 {
-  if (TAO_debug_level > 0)
+  if (TAO_orbdebug)
     ACE_DEBUG  ((LM_DEBUG,
                  ACE_TEXT ("TAO (%P|%t) ")
                  ACE_TEXT ("SSLIOP_Connection_Handler::activate %d ")
@@ -158,8 +158,7 @@ TAO_SSLIOP_Connection_Handler::activate (long flags,
                  THR_BOUND));
 
   // Set the id in the transport now that we're active.
-  this->transport ()->id (ACE_reinterpret_cast (int,
-                                                this->get_handle ()));
+  this->transport ()->id ((int) this->get_handle ()));
 
   return TAO_SSL_SVC_HANDLER::activate (flags,
                                         n_threads,
@@ -194,7 +193,7 @@ int
 TAO_SSLIOP_Connection_Handler::handle_close (ACE_HANDLE handle,
                                              ACE_Reactor_Mask rm)
 {
-  if (TAO_debug_level > 0)
+  if (TAO_orbdebug)
     ACE_DEBUG  ((LM_DEBUG,
                  "TAO (%P|%t) SSLIOP_Server_Connection_Handler::handle_close "
                  "(%d, %d)\n",

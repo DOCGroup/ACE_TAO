@@ -146,8 +146,7 @@ TAO_SHMIOP_Connection_Handler::activate (long flags,
                  THR_BOUND));
 
   // Set the id in the transport now that we're active.
-  this->transport ()->id (ACE_reinterpret_cast (int,
-                                                this->get_handle ()));
+  this->transport ()->id ((int) this->get_handle ());
 
   return TAO_SHMIOP_SVC_HANDLER::activate (flags,
                                          n_threads,
