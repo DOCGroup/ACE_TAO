@@ -1,3 +1,11 @@
+Tue May 11 12:51:14 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * DnC/Config_Handlers/Domain_Handler.h:
+        * DnC/Config_Handlers/Domain_Handler.cpp:
+
+          Changed the interface of the functions process_domain_node
+          and process_domain_bridge.
+
 Tue May 11 12:25:39 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
 	* CIDLC/ExecutorMappingGenerator.cpp:

@@ -100,10 +100,12 @@ namespace CIAO
                           Deployment::Domain& domain);
 
       /// process the node attribute
-      void process_domain_node (Deployment::Node& domain_node);
+      void process_domain_node (DOMNodeIterator* iter,
+                                Deployment::Node& domain_node);
 
       /// process the node attribute
-      void process_domain_bridge (Deployment::Bridge& domain_bridge);
+      void process_domain_bridge (DOMNodeIterator* iter,
+                                  Deployment::Bridge& domain_bridge);
 
       /// process the node attribute
       void process_domain_interconnect (Deployment::Interconnect& domain_ic);
