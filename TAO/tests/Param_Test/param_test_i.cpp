@@ -16,10 +16,48 @@
 #include "tao/corba.h"
 #include "param_test_i.h"
 
+// ********* class Coffee_i ****************
 // Constructor
 
-Param_Test_i::Param_Test_i (const char *obj_name)
-  : POA_Param_Test (obj_name)
+Coffee_i::Coffee_i (const char *name,
+                    const char *obj_name)
+  : name_ (name),
+    POA_Coffee (obj_name)
+{
+}
+
+// Destructor
+
+Coffee_i::~Coffee_i (void)
+{
+}
+
+// get attribute
+Coffee::Desc *
+Coffee_i::description (CORBA::Environment & /*env*/)
+{
+  Coffee::Desc *desc = new Coffee::Desc;
+  desc->name = CORBA::string_dup (this->name_);
+  return desc;
+}
+
+// set attribute
+void
+Coffee_i::description (const Coffee::Desc &description,
+                       CORBA::Environment & /*env*/)
+{
+  this->name_ = CORBA::string_dup (description.name);
+}
+
+
+// ********* class Param_Test_i ****************
+
+// Constructor
+
+Param_Test_i::Param_Test_i (const char *coffee_name,
+                            const char *obj_name)
+  : obj_ (new Coffee_i (coffee_name)),
+    POA_Param_Test (obj_name)
 {
 }
 
@@ -81,6 +119,7 @@ Param_Test_i::test_strseq (const Param_Test::StrSeq &s1,
                            Param_Test::StrSeq_out s3,
                            CORBA::Environment &env)
 {
+  ACE_UNUSED_ARG (env);
   // we copy the "in" sequences into all the inout, out and return sequences.
 
   Param_Test::StrSeq
@@ -102,6 +141,7 @@ Param_Test_i::test_var_struct (const Param_Test::Var_Struct &s1,
                              Param_Test::Var_Struct_out s3,
                              CORBA::Environment &env)
 {
+  ACE_UNUSED_ARG (env);
   // we copy the "in" sequences into all the inout, out and return sequences.
 
   Param_Test::Var_Struct
@@ -123,6 +163,7 @@ Param_Test_i::test_nested_struct (const Param_Test::Nested_Struct &s1,
                                   Param_Test::Nested_Struct_out s3,
                                   CORBA::Environment &env)
 {
+  ACE_UNUSED_ARG (env);
   // we copy the "in" sequences into all the inout, out and return sequences.
 
   Param_Test::Nested_Struct
@@ -135,4 +176,33 @@ Param_Test_i::test_nested_struct (const Param_Test::Nested_Struct &s1,
   *ret = s1;
   s3 = out;
   return ret;
+}
+
+// make a Coffee object
+Coffee_ptr
+Param_Test_i::make_coffee (CORBA::Environment & /*env*/)
+{
+  return Coffee::_duplicate (this->obj_.in ());
+}
+
+// test for object references
+Coffee_ptr
+Param_Test_i::test_objref (Coffee_ptr o1,
+                           Coffee_ptr &o2,
+                           Coffee_out o3,
+                           CORBA::Environment &env)
+{
+  // o1's attribute should be same as the one we have
+  if (this->obj_->_is_equivalent (o1, env))
+    {
+      o2 = Coffee::_duplicate (this->obj_.in ());
+      o3 = Coffee::_duplicate (this->obj_.in ());
+      return Coffee::_duplicate (this->obj_.in ());
+    }
+  else
+    {
+      o2 = Coffee::_nil ();
+      o3 = Coffee::_nil ();
+      return Coffee::_nil ();
+    }
 }

@@ -161,6 +161,7 @@ extern int yyleng;
 %token		IDL_INOUT
 %token		IDL_RAISES
 %token		IDL_CONTEXT
+%token          IDL_NATIVE
 
 %token <ival>	IDL_INTEGER_LITERAL
 %token <sval>	IDL_STRING_LITERAL
@@ -870,6 +871,28 @@ type_dcl
 	| struct_type { $$ = 0;}
 	| union_type  { $$ = 0;}
 	| enum_type   { $$ = 0;}
+        | IDL_NATIVE simple_declarator
+        {
+	  UTL_Scope		*s = idl_global->scopes()->top_non_null();
+	  AST_Native		*node = NULL;
+	  AST_Decl		*v = NULL;
+	  UTL_StrList		*p = idl_global->pragmas();
+
+          ACE_UNUSED_ARG (v);
+
+	  idl_global->set_parse_state(IDL_GlobalData::PS_NativeSeen);
+	  /*
+	   * Create a node representing a Native and add it to its
+	   * enclosing scope
+	   */
+	  if (s != NULL) {
+	    node = idl_global->gen()->create_native ($2->name (), p);
+	    /*
+	     * Add it to its defining scope
+	     */
+	    (void) s->fe_add_native (node);
+	  }
+	}
 	;
 
 type_declarator :
@@ -886,7 +909,7 @@ type_declarator :
 	  AST_Decl		*v = NULL;
 	  UTL_StrList		*p = idl_global->pragmas();
 
-      ACE_UNUSED_ARG (v);
+          ACE_UNUSED_ARG (v);
 
 	  idl_global->set_parse_state(IDL_GlobalData::PS_DeclaratorsSeen);
 	  /*

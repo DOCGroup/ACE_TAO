@@ -84,6 +84,8 @@ Options::parse_args (int argc, char **argv)
           this->test_type_ = Options::TEST_VAR_STRUCT;
         else if (!ACE_OS::strcmp (get_opts.optarg, "nested_struct"))
           this->test_type_ = Options::TEST_NESTED_STRUCT;
+        else if (!ACE_OS::strcmp (get_opts.optarg, "objref"))
+          this->test_type_ = Options::TEST_OBJREF;
         break;
       case '?':
       default:
