@@ -88,7 +88,9 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
 
       // STEP 2: Generate the body ==
 
-      *os << "{" << be_idt_nl;
+      *os << "{" << be_nl;
+
+      this->begin_public ();
 
       // Generate code for the OBV_ class definition.
       if (this->visit_valuetype_scope (node) == -1)
@@ -175,7 +177,6 @@ void
 be_visitor_valuetype_obv_ch::begin_public (void)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  *os << be_uidt_nl;
   *os << "public:" << be_idt_nl;
 }
 

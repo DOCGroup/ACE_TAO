@@ -144,7 +144,16 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
 
               if (n_inherits_valuetypes > 1)
                 {
-                  *os << "," << be_nl;
+                  *os << ",";
+
+                  if (i == 1)
+                    {
+                      *os << be_idt_nl;
+                    }
+                  else
+                    {
+                      *os << be_nl;
+                    }
                 }
 
               be_decl *scope = 0;
@@ -163,6 +172,11 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
 
           if (n_inherits_valuetypes > 0)
             {
+              if (n_inherits_valuetypes > 1)
+                {
+                  *os << be_uidt;
+                }
+
               *os << be_uidt_nl;
             }
         }
@@ -429,5 +443,5 @@ void
 be_visitor_valuetype_ch::begin_private (void)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  *os << "protected:" << be_idt_nl;
+  *os << be_uidt_nl << "protected:" << be_idt_nl;
 }
