@@ -1,3 +1,18 @@
+Thu Jun 14 09:53:45 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tao/ORB.cpp (object_to_string):
+
+	  Verify that the object reference is non-nil before checking if
+	  it refers to a local object.  Fixes a seg fault that occured
+	  when passing a nil object reference to ORB::object_to_string(),
+	  a perfectly valid thing to do.  Thanks to Knut-Havard Aksnes
+	  <knut@orion.no> for reporting the problem.  [Bug 942]
+
+	  Fixed a potential seg fault that would occur when attempting to
+	  convert a nil object reference to a URL IOR
+	  (e.g. corbaloc:...).  Unlike standard "IOR:..." IORs, it is not
+	  possible to represent a nil object reference using a URL IOR.
+
 Thu Jun 14 08:24:03 2001  Christopher Kohlhoff  <chris@kohlhoff.com>
 
         * tao/RTPortableServer/Makefile.bor:
