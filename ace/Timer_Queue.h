@@ -25,6 +25,8 @@
 
 // The following typedef are here for ease of use and backward
 // compatibility.
+typedef ACE_Timer_Node_Dispatch_Info_T<ACE_Event_Handler *>
+        ACE_Timer_Node_Dispatch_Info;
 
 typedef ACE_Timer_Node_T<ACE_Event_Handler *>
         ACE_Timer_Node;

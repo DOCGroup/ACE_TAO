@@ -255,6 +255,9 @@ protected:
   int handle_signals (int &event_count,
                       ACE_TP_Token_Guard &g);
 
+  int handle_timer_events (int &event_count,
+                           ACE_TP_Token_Guard &g);
+
   int handle_notify_events (int &event_count,
                             ACE_TP_Token_Guard &g);
 
