@@ -1,3 +1,9 @@
+Tue Feb 17 13:04:04 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/Makefile.CosLoadBalancing:
+
+	  Updated dependencies.
+
 Tue Feb 17 03:31:13 2004  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
 	* orbsvcs/orbsvcs/AV/SCTP_SEQ.cpp (open): 
@@ -18,7 +24,8 @@ Mon Feb 16 09:36:08 2004  David Smith  <dts@prismtechnologies.com>
 
         * tao/Exception.cpp:
         * tao/ORB.cpp:
-        Prevents compile errors on HPUX, but is not the real fix.
+
+          Prevents compile errors on HPUX, but is not the real fix.
 
 Sun Feb 15 14:06:33 2004  Huang-Ming Huang  <hh1@cse.wustl.edu>
 
