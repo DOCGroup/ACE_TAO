@@ -1,3 +1,20 @@
+Thu Sep 16 10:52:41 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* tests/ORB_init/ORB_init.cpp (main):
+
+	  Do not print the exception since our automatic test scripts look 
+	  for keywords such as "EXCEPTION" to determine if an error
+	  occured.  Instead, the exception's repository ID is printed.
+	  The idea behind this part of the test is to simply verify that
+	  an exception exists after the last ORB is released, and that
+	  something can be done with it.
+
+	* tests/ORB_init/run_test.pl:
+
+	  Fixed check for successful return status from TimedWait perl
+	  subroutine.  A successful TimedWait call returns the PID, not
+	  zero.
+
 Wed Sep 15 21:40:21 1999  Marina Spivak  <marina@cs.wustl.edu>
 
 	* tao/Invocation.cpp:
