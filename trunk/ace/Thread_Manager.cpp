@@ -1223,8 +1223,8 @@ ACE_Thread_Manager::wait (const ACE_Time_Value *timeout)
 #if defined (ACE_HAS_THREADS)
   size_t threads_waited_on;
 
-  // Just hold onto the guard while waiting.
   {
+    // Just hold onto the guard while waiting.
     ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
     threads_waited_on = this->current_count_;
@@ -1232,15 +1232,13 @@ ACE_Thread_Manager::wait (const ACE_Time_Value *timeout)
     while (this->current_count_ > 0)
       if (this->zero_cond_.wait (timeout) == -1)
         return -1;
-  }
+  } // Let go of the guard, giving other threads a chance to run.
 
   // @@ Hopefully, we can get rid of all this stuff if we keep a list
   // of threads to join with...  In addition, we should be able to
   // close down the HANDLE at this point, as well, on NT.  Note that
   // we can also mark the thr_table_[entry] as ACE_THR_IDLE once we've
   // joined with it.
-
-  // Let go of the guard, giving other threads a chance to run.
 
   // Yield (four times) for each thread that we had to wait on.  This
   // should give each of those threads a chance to clean up.  The
@@ -1251,16 +1249,16 @@ ACE_Thread_Manager::wait (const ACE_Time_Value *timeout)
   for (size_t i = 0; i < 4 * threads_waited_on; ++i)
     ACE_OS::thr_yield ();
 
+#if !defined (VXWORKS)
   {
     ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
+
     ACE_Thread_Descriptor item;
 
     while (! this->terminated_thr_queue_.dequeue_head (item))
-#if !defined (VXWORKS)
-	ACE_Thread::join (item.thr_handle_)
-#endif /* VXWORKS */
-          ;
+	ACE_Thread::join (item.thr_handle_);
   }
+#endif /* VXWORKS */
 #else
   ACE_UNUSED_ARG (timeout);
 #endif /* ACE_HAS_THREADS */
