@@ -4,8 +4,9 @@ This test application exercises basic features of TAO's Naming
 Service.  It behaves as follows:
 
         1. It obtains an object reference to a remote Naming
-           Service (which currently must be handed started,
-           but will ultimately be run in by a perl script).
+           Service.  This currently must be handed started from
+           the $TAO_ROOT/orsvcs/Naming_Service/Naming_Service 
+           program, but will ultimately be launched by a perl script.
 
         2. It binds(), resolves(), and unbinds() an object
            reference into the Naming Context.
