@@ -1,3 +1,8 @@
+Thu Aug 10 12:22:31 2000  Steve Huston  <shuston@riverace.com>
+
+        * ace/Svc_Handler.h (close): Added some comments to help make this
+          function easier to understand.
+
 Thu Aug 10 12:15:16 2000  Steve Huston  <shuston@riverace.com>
 
         * ace/POSIX_Proactor.(h cpp) (ACE_POSIX_AIOCB_Proactor): Surround
