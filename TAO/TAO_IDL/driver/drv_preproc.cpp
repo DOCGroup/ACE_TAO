@@ -178,7 +178,7 @@ DRV_copy_input(FILE *fin, char *fn, const char *orig_filename)
            << GTDEVEL(": cannot open input file\n");
       exit(99);
   }
-  fprintf (f, "#1 \"%s\"\n", orig_filename);
+  fprintf (f, "#line 1 \"%s\"\n", orig_filename);
   while (DRV_get_line(fin))
     fprintf(f, "%s\n", drv_line);
   fclose(f);
