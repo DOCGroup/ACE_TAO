@@ -11,6 +11,16 @@ TAO_Notify_Refcountable_Guard_T<T>::TAO_Notify_Refcountable_Guard_T (T *t)
 }
 
 template <class T> ACE_INLINE
+TAO_Notify_Refcountable_Guard_T<T>::TAO_Notify_Refcountable_Guard_T (const TAO_Notify_Refcountable_Guard_T<T> &rhs)
+  : t_ (rhs.t_)
+{
+  if (this->t_ != 0)
+    {
+      this->t_->_incr_refcnt ();
+    }
+}
+
+template <class T> ACE_INLINE
 TAO_Notify_Refcountable_Guard_T<T>::~TAO_Notify_Refcountable_Guard_T ()
 {
   if (this->t_ != 0)
@@ -32,9 +42,30 @@ TAO_Notify_Refcountable_Guard_T<T>::operator-> (void) const
   return this->t_;
 }
 
-template <class T> ACE_INLINE T&
+template <class T> ACE_INLINE
+T&
 TAO_Notify_Refcountable_Guard_T<T>::operator *(void) const
 {
   ACE_ASSERT (this->t_ != 0);
   return *this->t_;
+}
+
+template <class T> ACE_INLINE
+TAO_Notify_Refcountable_Guard_T<T> &
+TAO_Notify_Refcountable_Guard_T<T>::operator = (
+  const TAO_Notify_Refcountable_Guard_T<T> & rhs)
+{
+  // note exception safe assignment. see Sutter's "Exceptional C++"
+  swap (TAO_Notify_Refcountable_Guard_T<T> (rhs.t_));
+  return *this;
+}
+
+
+template <class T> ACE_INLINE
+void
+TAO_Notify_Refcountable_Guard_T<T>::swap (TAO_Notify_Refcountable_Guard_T & rhs)
+{
+  T* pt = rhs.t_;
+  rhs.t_ = this->t_;
+  this->t_ = rhs.t_;
 }
