@@ -1,3 +1,11 @@
+Thu Aug 19 16:47:21 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ACE-INSTALL.html: Added a reference to $ACE_ROOT/docs/ACE-SLL.html.
+  
+        * docs: Added a new ACE-SSL.html file that explains how to participate in the
+	  ACE SSL project.  Thanks to John Heitmann <jwh1@cs.wustl.edu>
+ 	  for adding this.
+
 Thu Aug 19 15:31:58 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/OS.h (ACE_OSTREAM_TYPE): Removed the redundant trailing *
