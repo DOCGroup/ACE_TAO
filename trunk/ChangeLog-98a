@@ -1,3 +1,9 @@
+Fri Dec  5 11:15:17 1997  Nanbor Wang  <nw1@merengue.cs.wustl.edu>
+
+	* ace/Log_Msg.h (callers.): Added documentation for %I and %D
+	  flags.  Thanks to John Morey <jmorey@tbi.com> for reosting
+	  this.
+
 Fri Dec  5 00:58:23 1997  Nanbor Wang  <nw1@merengue.cs.wustl.edu>
 
 	* ace/Dynamic.h:
