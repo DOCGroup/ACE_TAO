@@ -591,7 +591,7 @@ ACE_Throughput_Stats::dump_throughput (const ACE_TCHAR *msg,
     ACE_static_cast (double,
                      ACE_UINT64_DBLCAST_ADAPTER(elapsed_time / sf));
 #endif /* ! ACE_LACKS_LONGLONG_T */
-  seconds /= ACE_HR_SCALE_CONVERSION; 
+  seconds /= ACE_HR_SCALE_CONVERSION;
   double t_avg = samples_count / seconds;
 
   ACE_DEBUG ((LM_DEBUG,
@@ -602,11 +602,7 @@ ACE_Throughput_Stats::dump_throughput (const ACE_TCHAR *msg,
 // ****************************************************************
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Node <ACE_INT32>;
-template class ACE_Unbounded_Queue <ACE_INT32>;
-template class ACE_Unbounded_Queue_Iterator <ACE_INT32>;
+
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Node <ACE_INT32>
-#pragma instantiate ACE_Unbounded_Queue <ACE_INT32>
-#pragma instantiate ACE_Unbounded_Queue_Iterator <ACE_INT32>
+
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -1,3 +1,18 @@
+Thu Jun 12 15:20:37 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ace/Template_Instantiations.cpp: This file now contains some
+	  useful template definitions that would be used by ACE+TAO and
+	  its applications. We have started of by doing
+	  ACE_Unbounded_Queue<long>. In future we will add other basic 
+	  types on a case by case basis.
+
+	* ace/Stats.cpp: Removed the template instantiations of
+	  ACE_Unbounded_Queue<long> since it has now been moved to another
+	  file. 
+
+	* ace/Makefile.ace: Compile the file Template_Instantiations.cpp
+	  in normal builds.
+
 Wed Jun 11 16:27:41 2003  Steve Huston  <shuston@riverace.com>
 
 	* examples/C++NPv1/Logging_Client.cpp:
