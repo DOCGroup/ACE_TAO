@@ -1697,7 +1697,7 @@ TAO_TypeCodes::fini (void)
 
   CORBA::release (CORBA::_tc_ORBid);
 
-#if !defined(TAO_HAS_MINIMUM_CORBA)
+#if !defined (TAO_HAS_MINIMUM_CORBA)
   CORBA::release (CORBA_ORB::_tc_InconsistentTypeCode);
 
   CORBA::release (CORBA::_tc_ConstructionPolicy);
@@ -1736,6 +1736,14 @@ TAO_TypeCodes::fini (void)
   CORBA::release (CORBA::_tc_DomainManager);
 
   CORBA::release (CORBA::_tc_DomainManagerList);
+
+#if defined (TAO_POLLER)
+  CORBA::release (CORBA::_tc_Pollable);
+
+  CORBA::release (CORBA::_tc_DIIPollable);
+
+  CORBA::release (CORBA::_tc_PollableSet);
+#endif /* defined (TAO_POLLER) */
 
   // Service types
    //= Service type
