@@ -15,10 +15,6 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    RequestProcessingStrategyFactoryImpl::~RequestProcessingStrategyFactoryImpl (void)
-    {
-    }
-
     RequestProcessingStrategy*
     RequestProcessingStrategyFactoryImpl::create (
         ::PortableServer::RequestProcessingPolicyValue value,

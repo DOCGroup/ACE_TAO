@@ -31,12 +31,10 @@ namespace TAO
     class Temporary_Creation_Time;
 
     class TAO_PortableServer_Export LifespanStrategy
-      : public virtual Policy_Strategy
+      : public Policy_Strategy
     {
     public:
       LifespanStrategy (void);
-
-      virtual ~LifespanStrategy (void);
 
       virtual void strategy_init(TAO_Root_POA *poa ACE_ENV_ARG_DECL);
 

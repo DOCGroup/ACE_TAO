@@ -12,47 +12,37 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    LifespanStrategyFactoryImpl::~LifespanStrategyFactoryImpl (void)
-    {
-    }
     LifespanStrategy*
     LifespanStrategyFactoryImpl::create (
       ::PortableServer::LifespanPolicyValue value)
     {
-      LifespanStrategy* strategy = 0;
+      LifespanStrategy *strategy = 0;
+      const char *strategy_name = 0;
 
       switch (value)
       {
         case ::PortableServer::PERSISTENT :
         {
-          LifespanStrategyFactory *strategy_factory =
-            ACE_Dynamic_Service<LifespanStrategyFactory>::instance ("LifespanStrategyPersistentFactory");
-
-          if (strategy_factory != 0)
-            strategy = strategy_factory->create (value);
-          else
-            ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("(%P|%t) %p\n"),
-                        ACE_TEXT ("Unable to get ")
-                        ACE_TEXT ("LifespanStrategyPersistentFactory")));
-
+          strategy_name = "LifespanStrategyPersistentFactory";
           break;
         }
         case ::PortableServer::TRANSIENT :
         {
-          LifespanStrategyFactory *strategy_factory =
-            ACE_Dynamic_Service<LifespanStrategyFactory>::instance ("LifespanStrategyTransientFactory");
-
-          if (strategy_factory != 0)
-            strategy = strategy_factory->create (value);
-          else
-            ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("(%P|%t) %p\n"),
-                        ACE_TEXT ("Unable to get ")
-                        ACE_TEXT ("LifespanStrategyTransientFactory")));
+          strategy_name = "LifespanStrategyTransientFactory";
           break;
         }
       }
+
+      LifespanStrategyFactory *strategy_factory =
+        ACE_Dynamic_Service<LifespanStrategyFactory>::instance (strategy_name);
+
+      if (strategy_factory != 0)
+        strategy = strategy_factory->create (value);
+      else
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("(%P|%t) Unable to get %s\n"),
+                    strategy_name));
+
 
       return strategy;
     }

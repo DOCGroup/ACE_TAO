@@ -34,10 +34,6 @@ namespace TAO
     {
     }
 
-    ServantRetentionStrategyRetain::~ServantRetentionStrategyRetain ()
-    {
-    }
-
     void
     ServantRetentionStrategyRetain::strategy_init (
       TAO_Root_POA *poa

@@ -110,10 +110,6 @@ namespace TAO
     {
     }
 
-    LifespanStrategyPersistent::~LifespanStrategyPersistent ()
-    {
-    }
-
     void
     LifespanStrategyPersistent::check_state (ACE_ENV_SINGLE_ARG_DECL)
     {

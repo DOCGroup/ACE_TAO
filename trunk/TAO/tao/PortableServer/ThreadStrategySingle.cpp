@@ -13,10 +13,6 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    ThreadStrategySingle::~ThreadStrategySingle()
-    {
-    }
-
     int
     ThreadStrategySingle::enter ()
     {

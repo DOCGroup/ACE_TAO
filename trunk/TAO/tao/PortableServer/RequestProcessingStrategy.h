@@ -46,12 +46,10 @@ namespace TAO
   namespace Portable_Server
   {
     class TAO_PortableServer_Export RequestProcessingStrategy
-      : public virtual Policy_Strategy
+      : public Policy_Strategy
     {
     public:
       RequestProcessingStrategy (void);
-
-      virtual ~RequestProcessingStrategy (void);
 
       virtual void strategy_init(
         TAO_Root_POA *poa

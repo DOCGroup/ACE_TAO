@@ -30,11 +30,9 @@ namespace TAO
   namespace Portable_Server
   {
     class TAO_PortableServer_Export ThreadStrategy :
-       public virtual Policy_Strategy
+       public Policy_Strategy
     {
     public:
-      virtual ~ThreadStrategy (void);
-
       virtual int enter () = 0;
 
       virtual int exit () = 0;

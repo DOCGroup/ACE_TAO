@@ -24,10 +24,6 @@ namespace TAO
     {
     }
 
-    LifespanStrategy::~LifespanStrategy ()
-    {
-    }
-
     void
     LifespanStrategy::strategy_init (
       TAO_Root_POA *poa

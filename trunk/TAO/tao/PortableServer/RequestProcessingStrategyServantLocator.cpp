@@ -23,10 +23,6 @@ namespace TAO
     {
     }
 
-    RequestProcessingStrategyServantLocator::~RequestProcessingStrategyServantLocator (void)
-    {
-    }
-
     void
     RequestProcessingStrategyServantLocator::strategy_cleanup(
       ACE_ENV_SINGLE_ARG_DECL)

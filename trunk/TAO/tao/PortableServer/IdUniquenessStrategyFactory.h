@@ -30,7 +30,7 @@ namespace TAO
     class IdUniquenessStrategy;
 
     class TAO_PortableServer_Export IdUniquenessStrategyFactory
-      : public virtual StrategyFactory
+      : public StrategyFactory
     {
     public:
       /// Create a new servant retention strategy

@@ -12,10 +12,6 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    ThreadStrategyORBControl::~ThreadStrategyORBControl()
-    {
-    }
-
     int
     ThreadStrategyORBControl::enter ()
     {

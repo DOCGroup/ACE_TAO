@@ -16,10 +16,6 @@ namespace TAO
     {
     }
 
-    IdUniquenessStrategyUnique::~IdUniquenessStrategyUnique()
-    {
-    }
-
     void
     IdUniquenessStrategyUnique::strategy_init (
       TAO_Root_POA *poa

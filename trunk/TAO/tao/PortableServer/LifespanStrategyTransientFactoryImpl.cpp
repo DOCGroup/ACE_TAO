@@ -12,9 +12,6 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    LifespanStrategyTransientFactoryImpl::~LifespanStrategyTransientFactoryImpl (void)
-    {
-    }
     LifespanStrategy*
     LifespanStrategyTransientFactoryImpl::create (
       ::PortableServer::LifespanPolicyValue value)

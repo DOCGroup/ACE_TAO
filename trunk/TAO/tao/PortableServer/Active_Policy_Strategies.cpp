@@ -60,7 +60,7 @@ namespace TAO
 
     void
     Active_Policy_Strategies::update (Cached_Policies &policies,
-                                      TAO_Root_POA* poa
+                                      ::TAO_Root_POA *poa
                                       ACE_ENV_ARG_DECL)
     {
       thread_strategy_factory_ =

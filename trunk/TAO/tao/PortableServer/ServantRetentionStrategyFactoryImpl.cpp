@@ -12,10 +12,6 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    ServantRetentionStrategyFactoryImpl::~ServantRetentionStrategyFactoryImpl (void)
-    {
-    }
-
     ServantRetentionStrategy*
     ServantRetentionStrategyFactoryImpl::create (
       ::PortableServer::ServantRetentionPolicyValue value)
