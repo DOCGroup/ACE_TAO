@@ -39,10 +39,11 @@ main (int argc, char **argv)
       return -1;
     }
 
-  for (int i = 0; i < policies.length () && env.exception == 0; i++)
+  for (CORBA::ULong i = 0;
+       i < policies.length () && env.exception == 0;
+       ++i)
     {
-      // const CORBA::Policy_ptr policy = policies[i];
-      const PortableServer::Policy_ptr policy = policies[i];
+      PortableServer::Policy_ptr policy = policies[i];
       policy->destroy (env);
     }  
   if (env.exception () != 0)

@@ -123,8 +123,6 @@ TAO_Object_Manager<T>::TAO_Object_Manager(T** buffer, CORBA::Boolean release)
   : ptr_ (buffer),
     release_ (release)
 {
-  if (this->release_)
-    T::_duplicate (*this->ptr_);
 }
 
 template <class T> ACE_INLINE
