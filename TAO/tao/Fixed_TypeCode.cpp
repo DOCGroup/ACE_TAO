@@ -3,7 +3,7 @@
 #ifndef TAO_FIXED_TYPECODE_CPP
 #define TAO_FIXED_TYPECODE_CPP
 
-#include "Fixed_TypeCode.h"
+#include "tao/Fixed_TypeCode.h"
 
 #ifndef __ACE_INLINE__
 # include "tao/Fixed_TypeCode.inl"
