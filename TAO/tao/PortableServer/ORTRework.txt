@@ -1,3 +1,9 @@
+Fri Aug 20 12:14:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/POA.{h,cpp}:
+          Include PI_ForwardC.h in header file, and PortableInterceptorC.h in
+          the cpp file.
+
 Fri Aug 20 12:09:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/POA.cpp:

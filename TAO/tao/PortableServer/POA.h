@@ -42,7 +42,7 @@
 #include "tao/LocalObject.h"
 
 // Portable Interceptor
-#include "tao/PortableInterceptorC.h"
+#include "tao/PI_ForwardC.h"
 
 #include "ace/Hash_Map_Manager_T.h"
 #include "ace/Array_Base.h"
