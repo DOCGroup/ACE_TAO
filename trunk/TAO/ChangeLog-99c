@@ -1,9 +1,15 @@
+Tue Mar  9 13:42:49 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* TAO_IDL/fe: Regenerated the y.tab.cpp file using Berkeley
+	  yacc rather than yacc so the nifty tracing features
+	  will be enabled.
+
 Tue Mar  9 13:05:49 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* docs/releasenotes/index.html: 
 	* orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp: Fixed all the
-	Sequence_out parameters to get created even though their  
-	length may be zero. This is according to the CORBA spec. 
+ 	  Sequence_out parameters to get created even though their length
+ 	  may be zero. This is according to the CORBA spec.
 
 Tue Mar 09 01:16:41 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
