@@ -1,3 +1,8 @@
+Fri May 23 20:12:33 1997  James C Hu  <jxh@polka.cs.wustl.edu>
+
+	* tests/SV_Shared_Memory_Test.cpp: Thanks to Chuck Gehr, fixed
+	  ASCII dependent code in the parent and child routines.
+
 Fri May 23 10:11:26 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/OS.cpp: (thr_create, with STHREADS only): *thr_handle was
