@@ -42,6 +42,12 @@ namespace CIAO
     return this->component_poa_.in ();
   }
 
+  PortableServer::POA_ptr
+  Container::the_facet_cons_POA (void) const
+  {
+    return this->facet_cons_poa_.in ();
+  }
+
   CORBA::ORB_ptr
   Container::the_ORB (void) const
   {

@@ -66,6 +66,28 @@ namespace CIAO
                      Components::RemoveFailure))
   {
     Components::SessionComponent_var temp = this->get_executor ();
+
+    Components::FacetDescriptions_var facets =
+      this->get_all_facets (ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_CHECK_RETURN (0);
+
+    const CORBA::ULong facet_len = facets->length ();
+    CORBA::ULong i = 0;
+    for (i = 0; i < facet_len; ++i)
+    {
+      PortableServer::ObjectId_var oid =
+        this->container_->the_facet_cons_POA ()->reference_to_id 
+              (facets[i]->facet_ref ()
+               ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+
+      CIAO::Servant_Activator *sa =
+        this->container_->ports_servant_activator ();
+      sa->update_port_activator (oid);
+
+      this->container_->deactivate_facet (oid);
+    }
+
     temp->ccm_passivate (ACE_ENV_SINGLE_ARG_PARAMETER);
 
     CORBA::Object_var objref =
