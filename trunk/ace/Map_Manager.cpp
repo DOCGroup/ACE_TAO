@@ -138,7 +138,10 @@ ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::free_search_structure (void)
     {
       for (int i = 0; i < this->total_size_; i++)
 	// Explicitly call the destructor.
-	this->search_structure_[i].~ACE_Map_Entry<EXT_ID, INT_ID> ();
+	{
+	  ACE_Map_Entry<EXT_ID, INT_ID> &ss = this->search_structure_[i];
+	  ss.ACE_Map_Entry<EXT_ID, INT_ID>::~ACE_Map_Entry ();
+	}
 
       // Actually free the memory.
       this->allocator_->free (this->search_structure_);
