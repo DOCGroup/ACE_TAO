@@ -38,6 +38,7 @@
 #include "test_config.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Process_Manager.h"
+#include "ace/Signal.h"
 #include "ace/Get_Opt.h"
 
 ACE_RCSID(tests, Process_Manager_Test, "$Id$")
@@ -271,7 +272,8 @@ multiple_children_sig_handler (void *)
 	}
     }
 
-  return 0;
+  // @@ We never actually reach this code.  Comment to fix warning.
+  // return 0;
 }
 
 // Function that runs in the child process in its own worker thread
