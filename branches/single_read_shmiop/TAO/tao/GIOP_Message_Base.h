@@ -22,7 +22,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/GIOP_Message_Generator_Parser_Impl.h"
-#include "tao/GIOP_Message_Handler.h"
+#include "tao/GIOP_Message_Reactive_Handler.h"
 #include "tao/GIOP_Utils.h"
 
 class TAO_Pluggable_Reply_Params;
@@ -40,7 +40,7 @@ class TAO_Pluggable_Reply_Params;
 class TAO_Export TAO_GIOP_Message_Base : public TAO_Pluggable_Messaging
 {
 public:
-  friend class TAO_GIOP_Message_Handler;
+  friend class TAO_GIOP_Message_Reactive_Handler;
 
   /// Constructor
   TAO_GIOP_Message_Base (TAO_ORB_Core *orb_core,
@@ -189,7 +189,7 @@ private:
 
   /// Thr message handler object that does reading and parsing of the
   /// incoming messages
-  TAO_GIOP_Message_Handler message_handler_;
+  TAO_GIOP_Message_Reactive_Handler message_handler_;
 
   /// Output CDR
   TAO_OutputCDR *output_;

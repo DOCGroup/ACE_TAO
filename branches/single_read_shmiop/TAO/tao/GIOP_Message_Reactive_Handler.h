@@ -109,20 +109,31 @@ public:
 
 protected:
 
-  /// Actually parses the header information from the
-  /// <current_buffer_>.
-  int parse_message_header_i (void);
+  /// Actually parses the header information
+  int parse_message_header_i (char* buf, size_t length);
 
+  /// Parses the GIOP FRAGMENT_HEADER  information from the incoming
+  /// stream.
+  ///   - returns 1 on sucessful parsing,
+  ///   - returns 0 if not found
+  ///   - returns -1 if there is an error
+  int parse_fragment_header (char *buf,
+                             size_t length);
+
+  /// GIOP 1.2 has a MESSAGE_FRAGMENT_HEADER. This flag indicates
+  /// whether the MESSAGE_FRAGMENT_HEADER appeared while parsing the
+  /// header of the message
 private:
+
   /// Validates the first 4 bytes that contain the magic word
   /// "GIOP". Also calls the validate_version () on the incoming
   /// stream.
-  int parse_magic_bytes (void);
+  int parse_magic_bytes (char *buf);
 
   /// Gets the size of the payload from the <current_buffer_>. If the
   /// size of the current buffer is less than the payload size, the
   /// size of the buffer is increased.
-  CORBA::ULong get_payload_size (void);
+  CORBA::ULong get_payload_size (char *buf);
 
   /// Extract a CORBA::ULong from the <current_buffer_>
   CORBA::ULong read_ulong (const char *buf);
@@ -130,6 +141,11 @@ private:
   /// Get the next message from the <supp_buffer_> in to the
   /// <current_buffer_>
   int get_message (void);
+
+protected:
+  /// The message state. It represents the status of the messages that
+  /// have been read from the current_buffer_
+  TAO_GIOP_Message_State message_state_;
 
 private:
 
@@ -156,13 +172,6 @@ private:
   /// the <current_buffer_> is taken and filled in this buffer, which
   /// is then sent to the higher layers of the ORB.
   ACE_Message_Block supp_buffer_;
-
-  /// The message state. It represents the status of the messages that
-  /// have been read from the current_buffer_
-  TAO_GIOP_Message_State message_state_;
-
-  /// Our copy the ORB_Core
-  TAO_ORB_Core *orb_core_;
 };
 
 
@@ -175,7 +184,7 @@ const size_t TAO_GIOP_VERSION_MAJOR_OFFSET = 4;
 const size_t TAO_GIOP_MESSAGE_FRAGMENT_HEADER = 4;
 
 #if defined (__ACE_INLINE__)
-# include "tao/GIOP_Message_Handler.inl"
+# include "tao/GIOP_Message_Reactive_Handler.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"

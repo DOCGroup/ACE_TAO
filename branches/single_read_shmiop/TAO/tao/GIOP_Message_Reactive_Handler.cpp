@@ -17,13 +17,13 @@ ACE_RCSID(tao, GIOP_Message_Reactive_Handler, "$Id$")
 TAO_GIOP_Message_Reactive_Handler::TAO_GIOP_Message_Reactive_Handler (TAO_ORB_Core * orb_core,
                                                     TAO_GIOP_Message_Base *base,
                                                     size_t input_cdr_size)
-  : mesg_base_ (base),
+  : message_state_ (orb_core),
+    mesg_base_ (base),
     message_status_ (TAO_GIOP_WAITING_FOR_HEADER),
     message_size_ (input_cdr_size),
     current_buffer_ (orb_core->data_block_for_message_block (input_cdr_size)),
-    supp_buffer_ (orb_core->data_block_for_message_block (input_cdr_size)),
-    message_state_ (orb_core),
-    orb_core_ (orb_core)
+    supp_buffer_ (orb_core->data_block_for_message_block (input_cdr_size))
+
 {
   // NOTE: The message blocks here use a locked allocator which is not
   // from the TSS even if there is one. We are getting the allocators
@@ -96,16 +96,70 @@ TAO_GIOP_Message_Reactive_Handler::read_messages (TAO_Transport *transport)
 }
 
 int
+TAO_GIOP_Message_Reactive_Handler::parse_message_header (void)
+{
+  // Check what message are we waiting for and take suitable action
+  if (this->message_status_ == TAO_GIOP_WAITING_FOR_HEADER)
+    {
+      size_t len = this->current_buffer_.length ();
+      char *buf = this->current_buffer_.rd_ptr ();
+      cout << "Buf is " << buf << endl;
+      if (len > TAO_GIOP_MESSAGE_HEADER_LEN)
+        {
+          // Parse the GIOP header
+          if (this->parse_message_header_i (buf,
+                                            len) == -1)
+            return -1;
+
+          int retval = this->parse_fragment_header (buf,
+                                                    len);
+
+          // Set the pointer read pointer position in the
+          // <current_buffer_>
+          size_t pos = TAO_GIOP_MESSAGE_HEADER_LEN;
+
+          if (retval)
+            {
+              // We had a fragment header, so the position should be
+              // beyond that
+              pos += TAO_GIOP_MESSAGE_FRAGMENT_HEADER;
+            }
+
+          cout << "Poa value is " << pos <<endl;
+          this->current_buffer_.rd_ptr (pos);
+          buf = this->current_buffer_.rd_ptr ();
+          cout << "Buf is " << buf << endl;
+          // The GIOP header has been parsed. Set the status to wait for
+          // payload
+          this->message_status_ = TAO_GIOP_WAITING_FOR_PAYLOAD;
+
+          return 1;
+        }
+
+      // We dont have sufficient information to decipher the GIOP
+      // header. Make sure that the reactor calls us back.
+      return -2;
+    }
+
+  // The last read just "read" left-over messages
+  return 0;
+}
+
+int
 TAO_GIOP_Message_Reactive_Handler::is_message_ready (void)
 {
   if (this->message_status_ == TAO_GIOP_WAITING_FOR_PAYLOAD)
     {
+      cout << "Amba " <<endl;
       size_t len = this->current_buffer_.length ();
       char *buf = this->current_buffer_.rd_ptr ();
+      cout << "Buff 1" << buf <<endl;
+      cout << "Length " << len <<endl;
 
       // Set the buf pointer to the start of the GIOP header
       buf -= TAO_GIOP_MESSAGE_HEADER_LEN;
 
+      cout << "Buff " << buf <<endl;
       // Dump the incoming message . It will be dumped only if the
       // debug level is greater than 5 anyway.
       this->mesg_base_->dump_msg (
@@ -160,15 +214,27 @@ TAO_GIOP_Message_Reactive_Handler::is_message_ready (void)
 
       if (len > TAO_GIOP_MESSAGE_HEADER_LEN)
         {
-          //
+          // @@ What about fragment headers???
           this->current_buffer_.copy (
                                       this->supp_buffer_.rd_ptr (),
                                       TAO_GIOP_MESSAGE_HEADER_LEN);
 
           this->supp_buffer_.rd_ptr (TAO_GIOP_MESSAGE_HEADER_LEN);
 
-          if (this->parse_message_header_i () == -1)
+          len = this->current_buffer_.length ();
+          char *buf = this->current_buffer_.rd_ptr ();
+
+          if (this->parse_message_header_i (buf,
+                                            len) == -1)
             return -1;
+
+          // Set the pointer read pointer position in the
+          // <current_buffer_>
+          this->current_buffer_.rd_ptr (TAO_GIOP_MESSAGE_HEADER_LEN);
+
+          // The GIOP header has been parsed. Set the status to wait for
+          // payload
+          this->message_status_ = TAO_GIOP_WAITING_FOR_PAYLOAD;
 
           return this->get_message ();
         }
@@ -230,7 +296,8 @@ TAO_GIOP_Message_Reactive_Handler::reset (int reset_flag)
 
 
 int
-TAO_GIOP_Message_Reactive_Handler::parse_message_header_i (void)
+TAO_GIOP_Message_Reactive_Handler::parse_message_header_i (char *buf,
+                                                           size_t /*length*/)
 {
   if (TAO_debug_level > 8)
     {
@@ -238,11 +305,8 @@ TAO_GIOP_Message_Reactive_Handler::parse_message_header_i (void)
     }
 
   // Check whether we have a GIOP Message in the first place
-  if (this->parse_magic_bytes () == -1)
+  if (this->parse_magic_bytes (buf) == -1)
     return -1;
-
-  // Grab the read pointer
-  char *buf = this->current_buffer_.rd_ptr ();
 
   // Let us be specific that this is for 1.0
   if (this->message_state_.giop_version.minor == 0 &&
@@ -292,7 +356,7 @@ TAO_GIOP_Message_Reactive_Handler::parse_message_header_i (void)
   // Get the payload size. If the payload size is greater than the
   // length then set the length of the message block to that
   // size. Move the rd_ptr to the end of the GIOP header
-  this->message_state_.message_size = this->get_payload_size ();
+  this->message_state_.message_size = this->get_payload_size (buf);
 
   // If the message_size or the payload_size  is zero then something
   // is fishy. So return an error.
@@ -310,36 +374,44 @@ TAO_GIOP_Message_Reactive_Handler::parse_message_header_i (void)
                   this->message_state_.message_size));
     }
 
-  // By this point we are doubly sure that we have a more or less
-  // valid GIOP message with a valid major revision number.
-  if (this->message_state_.more_fragments &&
-      this->message_state_.giop_version.minor == 2 &&
-      this->current_buffer_.length () > TAO_GIOP_MESSAGE_FRAGMENT_HEADER)
-    {
-      // Fragmented message in GIOP 1.2 should have a fragment header
-      // following the GIOP header.  Grab the rd_ptr to get that
-      // info.
-      buf = this->current_buffer_.rd_ptr ();
-      this->message_state_.request_id = this->read_ulong (buf);
 
-      // Move the read pointer to the end of the fragment header
-      this->current_buffer_.rd_ptr (TAO_GIOP_MESSAGE_FRAGMENT_HEADER);
-    }
 
-  // The GIOP header has been parsed. Set the status to wait for
-  // payload
-  this->message_status_ = TAO_GIOP_WAITING_FOR_PAYLOAD;
+
 
   return 1;
 }
 
 
 int
-TAO_GIOP_Message_Reactive_Handler::parse_magic_bytes (void)
+TAO_GIOP_Message_Reactive_Handler::parse_fragment_header (char *buf,
+                                                          size_t length)
 {
-  // Grab the read pointer
-  char *buf = this->current_buffer_.rd_ptr ();
+  size_t len =
+    TAO_GIOP_MESSAGE_FRAGMENT_HEADER + TAO_GIOP_MESSAGE_HEADER_LEN;
 
+  // By this point we are doubly sure that we have a more or less
+  // valid GIOP message with a valid major revision number.
+  if (this->message_state_.more_fragments &&
+      this->message_state_.giop_version.minor == 2 &&
+      length > len)
+    {
+      // Fragmented message in GIOP 1.2 should have a fragment header
+      // following the GIOP header.  Grab the rd_ptr to get that
+      // info.
+      buf += TAO_GIOP_MESSAGE_HEADER_LEN;
+      this->message_state_.request_id = this->read_ulong (buf);
+
+      // As we parsed the header
+      return 1;
+    }
+
+  return 0;
+}
+
+
+int
+TAO_GIOP_Message_Reactive_Handler::parse_magic_bytes (char *buf)
+{
   // The values are hard-coded to support non-ASCII platforms.
   if (!(buf [0] == 0x47      // 'G'
         && buf [1] == 0x49   // 'I'
@@ -387,11 +459,8 @@ TAO_GIOP_Message_Reactive_Handler::parse_magic_bytes (void)
 
 
 CORBA::ULong
-TAO_GIOP_Message_Reactive_Handler::get_payload_size (void)
+TAO_GIOP_Message_Reactive_Handler::get_payload_size (char *rd_ptr)
 {
-  // Grab the read pointer
-  char *rd_ptr = this->current_buffer_.rd_ptr ();
-
   // Move the read pointer
   rd_ptr += TAO_GIOP_MESSAGE_SIZE_OFFSET;
 
