@@ -700,7 +700,8 @@ module Components {
 
     interface Assembly
     {
-      void build();
+      void build()
+        raises (CreateFailure);
 
       void tear_down()
         raises (RemoveFailure);

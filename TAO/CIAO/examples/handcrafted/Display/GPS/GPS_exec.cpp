@@ -2,11 +2,14 @@
 
 #include "GPS_exec.h"
 
+#define DISPLACEMENT 256
+
 /// Default constructor.
 MyImpl::GPS_exec_impl::GPS_exec_impl ()
 {
   ACE_OS::srand ((u_int) ACE_OS::time ());
-  this->position_ = ACE_OS::rand ();
+  this->positionx_ = ACE_OS::rand ();
+  this->positiony_ = ACE_OS::rand ();
 }
 
 /// Default destructor.
@@ -29,7 +32,8 @@ MyImpl::GPS_exec_impl::push_Refresh (HUDisplay::tick_ptr ev
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Refresh position
-  this->position_ += ACE_OS::rand () % 64 - 32;
+  this->positionx_ += ACE_OS::rand () % DISPLACEMENT - (DISPLACEMENT/2);
+  this->positiony_ += ACE_OS::rand () % DISPLACEMENT - (DISPLACEMENT/2);
 
   // Nitify others
   HUDisplay::tick_var event = new OBV_HUDisplay::tick;
@@ -41,10 +45,17 @@ MyImpl::GPS_exec_impl::push_Refresh (HUDisplay::tick_ptr ev
 // Operations from HUDisplay::position
 
 CORBA::Long
-MyImpl::GPS_exec_impl::pos (ACE_ENV_SINGLE_ARG_DECL)
+MyImpl::GPS_exec_impl::posx (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return this->position_;
+  return this->positionx_;
+}
+
+CORBA::Long
+MyImpl::GPS_exec_impl::posy (ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  return this->positiony_;
 }
 
 // Operations from Components::SessionComponent

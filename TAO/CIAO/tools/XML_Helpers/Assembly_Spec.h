@@ -16,6 +16,7 @@
 #include "ace/Hash_Map_Manager_T.h"
 #include "ace/Containers_T.h"
 #include "ace/SString.h"
+#include "ace/CORBA_macros.h"
 
 namespace CIAO
 {
@@ -61,7 +62,8 @@ namespace CIAO
       Node (const char *id = 0);
 
       /// Accepting a visitor.
-      virtual int accept (Visitor &v);
+      virtual int accept (Visitor &v
+                          ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
       virtual ~Node ();
 
@@ -95,7 +97,8 @@ namespace CIAO
                  unsigned long cardinality);
 
       /// Accepting a visitor.
-      virtual int accept (Visitor &v);
+      virtual int accept (Visitor &v
+                          ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
       //@{
       /** Accesor/mutator for destination information */
@@ -152,11 +155,13 @@ namespace CIAO
 
 
       /// Accepting a visitor.
-      virtual int accept (Visitor &v);
+      virtual int accept (Visitor &v
+                          ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
       virtual ~componentinstantiation ();
 
-      ACE_Unbounded_Queue <Register_Info> register_info_;
+      typedef ACE_Unbounded_Queue <Register_Info> REGISTRATION_QUEUE;
+      REGISTRATION_QUEUE register_info_;
 
     protected:
     };
@@ -186,7 +191,8 @@ namespace CIAO
       homeplacement (const char *id,
                      unsigned long cardinality = 1);
       /// Accepting a visitor.
-      virtual int accept (Visitor &v);
+      virtual int accept (Visitor &v
+                          ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
       virtual ~homeplacement ();
 
@@ -213,7 +219,8 @@ namespace CIAO
                        unsigned long cardinality = 1);
 
       /// Accepting a visitor.
-      virtual int accept (Visitor &v);
+      virtual int accept (Visitor &v
+                          ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
       virtual ~hostcollocation ();
 
@@ -230,7 +237,8 @@ namespace CIAO
                           unsigned long cardinality = 1);
 
       /// Accepting a visitor.
-      virtual int accept (Visitor &v);
+      virtual int accept (Visitor &v
+                          ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
       virtual ~processcollocation ();
 
@@ -249,15 +257,20 @@ namespace CIAO
 
       virtual ~Visitor () = 0;
 
-      virtual int visit_Container (Container *c) = 0;
+      virtual int visit_Container (Container *c
+                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS) = 0;
 
-      virtual int visit_hostcollocation (hostcollocation *hc) = 0;
+      virtual int visit_hostcollocation (hostcollocation *hc
+                                         ACE_ENV_ARG_DECL_WITH_DEFAULTS) = 0;
 
-      virtual int visit_processcollocation (processcollocation *pc) = 0;
+      virtual int visit_processcollocation (processcollocation *pc
+                                            ACE_ENV_ARG_DECL_WITH_DEFAULTS) = 0;
 
-      virtual int visit_homeplacement (homeplacement *hp) = 0;
+      virtual int visit_homeplacement (homeplacement *hp
+                                       ACE_ENV_ARG_DECL_WITH_DEFAULTS) = 0;
 
-      virtual int visit_componentinstantiation (componentinstantiation *ci) = 0;
+      virtual int visit_componentinstantiation (componentinstantiation *ci
+                                                ACE_ENV_ARG_DECL_WITH_DEFAULTS) = 0;
 
     protected:
     };
@@ -365,7 +378,8 @@ namespace CIAO
     Assembly_Placement::Container partitioning_;
 
     /// Connection data
-    ACE_Unbounded_Queue<Assembly_Connection::Connect_Info*> connections_;
+    typedef ACE_Unbounded_Queue<Assembly_Connection::Connect_Info> CONNECTION_QUEUE;
+    CONNECTION_QUEUE connections_;
   } Assembly_Spec;
 }
 

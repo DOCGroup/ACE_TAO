@@ -12,7 +12,7 @@
       <fileinarchive name="GPS.csd"/>
     </componentfile>
     <componentfile id="com-NavDisplay">
-      <fileinarchive name="NavDisplay.csd"/>
+      <fileinarchive name="NavDisplayGUI.csd"/>
     </componentfile>
   </componentfiles>
 
@@ -34,11 +34,13 @@
         <componentinstantiation id="a_GPS"/>
       </homeplacement>
 
+    <processcollocation>
       <homeplacement id="a_NavDisplayHome">
         <componentfileref idref="com-NavDisplay"/>
         <componentinstantiation id="a_NavDisplay"/>
       </homeplacement>
-
+      <destination>Remote</destination>
+    </processcollocation>
   </partitioning>
 
   <connections>

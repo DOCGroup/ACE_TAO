@@ -1,3 +1,70 @@
+Sat Apr 05 20:08:27 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ciao/CCM_Deployment.idl:
+	* ciao/Component_Base.idl:
+	  The operation Components::Deployment::Assembly::build can throw
+	  CreateFailure exception.  It was missing in the IDL files.
+
+	* ciao/Server_init.cpp:
+	  Register OBV factory for CIAO::Cookie also.
+
+	* docs/templates/CIAO_Glue_Session_Template.cpp:
+	  Made sure we duplicate the object reference before adding them
+	  to subscriber/connection active maps.
+
+	* examples/handcrafted/Display/HUDisplay.idl:
+	* examples/handcrafted/Display/HUDisplay.mpc:
+	* examples/handcrafted/Display/HUDisplay_svnt.h:
+	* examples/handcrafted/Display/HUDisplay_svnt.inl:
+	* examples/handcrafted/Display/GPS/GPS_exec.cpp:
+	* examples/handcrafted/Display/GPS/GPS_exec.h:
+	* examples/handcrafted/Display/GPS/GPS_svnt.cpp:
+	* examples/handcrafted/Display/NavDisplay/NavDisplay_exec.cpp:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/NavDisplayGUI_exec.cpp:
+	* examples/handcrafted/Display/RateGen/RateGen.mpc:
+	* examples/handcrafted/Display/RateGen/RateGen_svnt.cpp:
+	  Updated the example to support 2-dimentional position interface.
+	  Also fixed the reference counting problem in the servant glue
+	  code.
+
+
+	* examples/handcrafted/Display/RateGen/controller.cpp:
+	  Added a new
+
+	* examples/handcrafted/Display/descriptors/HUDisplay.cad:
+	* examples/handcrafted/Display/descriptors/HUDisplayGUI.cad:
+	* examples/handcrafted/Display/descriptors/RemoteDisplay.cad:
+	* examples/handcrafted/Display/descriptors/RemoteDisplayGUI.cad:
+	  Added variety of different composition example.  See NOTE.txt
+	  under the same directory for more information.
+
+	* examples/handcrafted/Display/descriptors/test.dat:
+	  Added a "Remote" entry so showcase how to deploy a system across
+	  several machines.
+
+	* tools/Assembly_Deployer/Assembly_Deployer.cpp:
+	* tools/Assembly_Deployer/Assembly_Deployer.mpc:
+	* tools/Assembly_Deployer/Assembly_Impl.cpp:
+	* tools/Assembly_Deployer/Assembly_Impl.h:
+	* tools/Assembly_Deployer/Assembly_Manager.cpp:
+	* tools/Assembly_Deployer/Assembly_Visitors.h:
+	  Added support for establishing connections according to
+	  Assembly_Spec.
+
+	* tools/Assembly_Deployer/Assembly_Service.idl:
+	* tools/Assembly_Deployer/Assembly_Service_Impl.cpp:
+	* tools/Assembly_Deployer/Assembly_Service_Impl.h:
+	  Added a simple interface in an attempt to solve the unreliable
+	  shutdown problem.
+
+	* tools/XML_Helpers/Assembly_Handlers.cpp:
+	* tools/XML_Helpers/Assembly_Handlers.h:
+	* tools/XML_Helpers/Assembly_Handlers.inl:
+	* tools/XML_Helpers/Assembly_Spec.cpp:
+	* tools/XML_Helpers/Assembly_Spec.h:
+	  Fixed "connectevent" parsing.  I had the "source" and
+	  "destination" interface reversed.
+
 Fri Apr 04 22:40:11 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* examples/handcrafted/Display/descriptors/*: Moved all XML

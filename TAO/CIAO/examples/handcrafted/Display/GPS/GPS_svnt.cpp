@@ -51,9 +51,14 @@ CIAO_GLUE_HUDisplay::GPS_Context::subscribe_Ready (HUDisplay::tickConsumer_ptr c
   if (CORBA::is_nil (c))
     ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);
 
+  HUDisplay::tickConsumer_var sub
+    = HUDisplay::tickConsumer::_duplicate (c);
+
   ACE_Active_Map_Manager_Key key;
-  this->ciao_publishes_Ready_map_.bind (c,
+  this->ciao_publishes_Ready_map_.bind (sub.in (),
                                         key);
+
+  sub._retn ();                 // Release ownership.
 
   ::Components::Cookie_var retv = new CIAO::Map_Key_Cookie (key);
   return retv._retn ();

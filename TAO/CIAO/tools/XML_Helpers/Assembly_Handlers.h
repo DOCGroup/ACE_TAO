@@ -294,8 +294,8 @@ namespace CIAO
 
   protected:
     // Create a new blank Connect_Info.
-    void create_info (ACEXML_Attributes *atts
-                      ACEXML_ENV_ARG_DECL)
+    void reset_info (ACEXML_Attributes *atts
+                     ACEXML_ENV_ARG_DECL)
       ACE_THROW_SPEC ((ACEXML_SAXException)) ;
 
     long element_count_;
@@ -303,7 +303,7 @@ namespace CIAO
     Assembly_Spec *context_;
 
     // Connection Info currently being built.
-    Assembly_Connection::Connect_Info *info_;
+    Assembly_Connection::Connect_Info info_;
 
     CH_States state_;
 

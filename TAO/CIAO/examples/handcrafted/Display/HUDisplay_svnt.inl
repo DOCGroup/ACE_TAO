@@ -25,8 +25,15 @@ CIAO_GLUE_HUDisplay::position_Servant::~position_Servant ()
 // executor.
 
 ACE_INLINE CORBA::Long
-CIAO_GLUE_HUDisplay::position_Servant::pos (ACE_ENV_SINGLE_ARG_DECL)
+CIAO_GLUE_HUDisplay::position_Servant::posx (ACE_ENV_SINGLE_ARG_DECL)
 {
   // Simply relay to executor.  May not need to return the result...
-  return this->executor_->pos (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->executor_->posx (ACE_ENV_SINGLE_ARG_PARAMETER);
+}
+
+ACE_INLINE CORBA::Long
+CIAO_GLUE_HUDisplay::position_Servant::posy (ACE_ENV_SINGLE_ARG_DECL)
+{
+  // Simply relay to executor.  May not need to return the result...
+  return this->executor_->posy (ACE_ENV_SINGLE_ARG_PARAMETER);
 }

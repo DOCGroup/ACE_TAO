@@ -80,6 +80,7 @@ CIAO::AssemblyFactory_Impl::create_assembly (const char * assembly_loc
                             key);
 
   ::Components::Cookie_var retv = new CIAO::Map_Key_Cookie (key);
+
   return retv._retn ();
 }
 
@@ -140,8 +141,6 @@ CIAO::AssemblyFactory_Impl::destroy (Components::Cookie * c
 
   this->poa_->deactivate_object (oid
                                  ACE_ENV_ARG_PARAMETER);
-
-  this->orb_->shutdown (0);
 }
 
 
@@ -179,7 +178,8 @@ CIAO::Assembly_Impl::init (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 
 void
 CIAO::Assembly_Impl::build (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Components::CreateFailure))
 {
   ACE_DEBUG ((LM_DEBUG,
               "CIAO::Assembly_Impl::build %d\n",
@@ -189,15 +189,34 @@ CIAO::Assembly_Impl::build (ACE_ENV_SINGLE_ARG_DECL)
 
   ACE_DEBUG ((LM_DEBUG, "------------------------------------\n"));
 
+  // Installing homes and instantiating components
+
   CIAO::Assembly_Builder_Visitor builder (this->orb_.in (),
                                           this->assembly_context_,
                                           this->assembly_spec_->componentfiles_,
                                           this->deployment_config_);
-  int build_result = this->assembly_spec_->partitioning_.accept (builder);
+  int build_result = this->assembly_spec_->partitioning_.accept (builder
+                                                                 ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 
   ACE_DEBUG ((LM_DEBUG, "------------------------------------\n"));
 
-  // @@ Connect components.
+  // Setting connections
+
+  CIAO::Assembly_Spec::CONNECTION_QUEUE::ITERATOR
+    conn_iter (this->assembly_spec_->connections_);
+
+  while (!conn_iter.done ())
+    {
+      CIAO::Assembly_Connection::Connect_Info *connection;
+      conn_iter.next (connection);
+
+      this->make_connection (connection
+                             ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+
+      conn_iter.advance ();
+    }
 
   this->state_ = ::Components::Deployment::INSERVICE;
 }
@@ -207,9 +226,6 @@ CIAO::Assembly_Impl::tear_down (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::RemoveFailure))
 {
-  ACE_DEBUG ((LM_DEBUG,
-              "CIAO::Assembly_Impl::tear_down %d\n",
-              this->serial_number_));
   if (this->state_ != Components::Deployment::INSERVICE)
     return;                     // Nothing to do here.
 
@@ -248,6 +264,9 @@ CIAO::Assembly_Impl::tear_down (ACE_ENV_SINGLE_ARG_DECL)
       }
   }
 
+  ACE_DEBUG ((LM_DEBUG,
+              "CIAO::Assembly_Impl::tear_down %d\n",
+              this->serial_number_));
   this->state_ = ::Components::Deployment::INACTIVE;
 }
 
@@ -259,6 +278,222 @@ CIAO::Assembly_Impl::get_state (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
               "CIAO::Assembly_Impl::get_state %d\n",
               this->serial_number_));
   return this->state_;
+}
+
+void
+CIAO::Assembly_Impl::make_connection (CIAO::Assembly_Connection::Connect_Info *info
+                                      ACE_ENV_ARG_DECL)
+{
+  switch (info->type_)
+    {
+    case CIAO::Assembly_Connection::INTERFACE:
+      {
+        CORBA::Object_var source
+          = this->resolve_interface (info->interface_
+                                     ACE_ENV_ARG_PARAMETER);
+        ACE_CHECK;
+
+        Components::CCMObject_var comp
+          = this->resolve_component (info->component_
+                                     ACE_ENV_ARG_PARAMETER);
+        ACE_CHECK;
+
+        comp->connect (info->name_.c_str (),
+                       source.in ()
+                       ACE_ENV_ARG_PARAMETER);
+        ACE_CHECK;
+
+        // @@ Register the connection?  How?
+      }
+      break;
+
+    case CIAO::Assembly_Connection::EMITTER_CONSUMER:
+      {
+        Components::EventConsumerBase_var source
+          = this->resolve_consumer (info->interface_
+                                    ACE_ENV_ARG_PARAMETER);
+        ACE_CHECK;
+
+        Components::CCMObject_var comp
+          = this->resolve_component (info->component_
+                                     ACE_ENV_ARG_PARAMETER);
+        ACE_CHECK;
+
+        comp->connect_consumer (info->name_.c_str (),
+                                source.in ()
+                                ACE_ENV_ARG_PARAMETER);
+        ACE_CHECK;
+      }
+      break;
+
+    case CIAO::Assembly_Connection::PUBLISHER_CONSUMER:
+      {
+        Components::EventConsumerBase_var source
+          = this->resolve_consumer (info->interface_
+                                    ACE_ENV_ARG_PARAMETER);
+        ACE_CHECK;
+
+        Components::CCMObject_var comp
+          = this->resolve_component (info->component_
+                                     ACE_ENV_ARG_PARAMETER);
+        ACE_CHECK;
+
+        comp->subscribe (info->name_.c_str (),
+                         source.in ()
+                         ACE_ENV_ARG_PARAMETER);
+        ACE_CHECK;
+      }
+      break;
+
+    case CIAO::Assembly_Connection::HOME:
+      ACE_THROW (CORBA::NO_IMPLEMENT ());
+
+    default:
+      ACE_THROW (CORBA::INTERNAL ());
+    }
+}
+
+CORBA::Object_ptr
+CIAO::Assembly_Impl::resolve_interface (CIAO::Assembly_Connection::IF_Resolver_Info *info
+                                        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+{
+  switch (info->resolver_type ())
+    {
+    case CIAO::Assembly_Connection::PROVIDER:
+      {
+        Components::CCMObject_var comp =
+          this->resolve_component (info->nested_resolver ()
+                                   ACE_ENV_ARG_PARAMETER);
+        ACE_CHECK_RETURN (0);
+
+        return comp->provide_facet (info->resolver_info ()
+                                    ACE_ENV_ARG_PARAMETER);
+      }
+
+    case CIAO::Assembly_Connection::CONSUMER:
+      return this->resolve_consumer (info
+                                     ACE_ENV_ARG_PARAMETER);
+
+    case CIAO::Assembly_Connection::COMP_IDREF:
+      return this->resolve_component (info
+                                      ACE_ENV_ARG_PARAMETER);
+
+    case CIAO::Assembly_Connection::HOME_IDREF:
+      return this->resolve_home (info
+                                 ACE_ENV_ARG_PARAMETER);
+
+    case CIAO::Assembly_Connection::NAMINGSERVICE:
+      ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+
+    case CIAO::Assembly_Connection::STRINGIFIEDOBJECTREF:
+      return this->orb_->string_to_object (info->resolver_info ()
+                                           ACE_ENV_ARG_PARAMETER);
+
+    case CIAO::Assembly_Connection::HOMEFINDER:
+      return this->resolve_home (info
+                                 ACE_ENV_ARG_PARAMETER);
+
+    case CIAO::Assembly_Connection::TRADERQUERY:
+      ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+
+    default:
+      ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
+    }
+}
+
+Components::CCMObject_ptr
+CIAO::Assembly_Impl::resolve_component (CIAO::Assembly_Connection::IF_Resolver_Info *info
+                                        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+{
+  if (info->resolver_type () == CIAO::Assembly_Connection::COMP_IDREF)
+    {
+      CIAO::Assembly_Context::COMP_MAP::ENTRY *entry;
+
+      if (this->assembly_context_.instantiated_components_.find (info->resolver_info (),
+                                                                 entry) != 0)
+        // This isn't really a good exception to throw unless we can
+        // specify FailureReason somehow.
+        ACE_THROW_RETURN (Components::CreateFailure (), 0);
+
+      return Components::CCMObject::_duplicate (entry->int_id_.in ());
+    }
+
+  CORBA::Object_var obj = this->resolve_interface (info
+                                                   ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  Components::CCMObject_var comp
+    = Components::CCMObject::_narrow (obj.in ()
+                                      ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  return comp._retn ();
+}
+
+Components::CCMHome_ptr
+CIAO::Assembly_Impl::resolve_home (CIAO::Assembly_Connection::IF_Resolver_Info *info
+                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+{
+  switch (info->resolver_type ())
+    {
+    case CIAO::Assembly_Connection::HOME_IDREF:
+      {
+        CIAO::Assembly_Context::HOME_MAP::ENTRY *entry;
+
+        if (this->assembly_context_.installed_homes_.find (info->resolver_info (),
+                                                           entry) != 0)
+          // This isn't really a good exception to throw unless we can
+          // specify FailureReason somehow.
+          ACE_THROW_RETURN (Components::CreateFailure (), 0);
+
+        return Components::CCMHome::_duplicate (entry->int_id_.in ());
+      }
+
+    case CIAO::Assembly_Connection::HOMEFINDER:
+      ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+
+    default:
+      {
+        CORBA::Object_var obj = this->resolve_interface (info
+                                                   ACE_ENV_ARG_PARAMETER);
+        ACE_CHECK_RETURN (0);
+
+        Components::CCMHome_var home
+          = Components::CCMHome::_narrow (obj.in ()
+                                          ACE_ENV_ARG_PARAMETER);
+        ACE_CHECK_RETURN (0);
+
+        return home._retn ();
+      }
+    }
+  ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
+}
+
+Components::EventConsumerBase_ptr
+CIAO::Assembly_Impl::resolve_consumer (CIAO::Assembly_Connection::IF_Resolver_Info *info
+                                       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+{
+  if (info->resolver_type () == CIAO::Assembly_Connection::CONSUMER)
+    {
+      Components::CCMObject_var comp =
+        this->resolve_component (info->nested_resolver ()
+                                 ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (0);
+
+      return comp->get_consumer (info->resolver_info ()
+                                 ACE_ENV_ARG_PARAMETER);
+    }
+
+  CORBA::Object_var obj = this->resolve_interface (info
+                                                   ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  Components::EventConsumerBase_var consumer
+    = Components::EventConsumerBase::_narrow (obj.in ()
+                                              ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  return consumer._retn ();
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \

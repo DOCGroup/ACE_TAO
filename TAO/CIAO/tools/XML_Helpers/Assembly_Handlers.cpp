@@ -508,7 +508,8 @@ CIAO::Partitioning_Handler::startElement (const ACEXML_Char *namespaceURI,
           ACEXML_THROW (ACEXML_SAXException
                         (ACE_TEXT ("\"extension\" is not yet supported.")));
         }
-      else if (ACE_OS::strcmp (qName, "partitioning") == 0)
+      else if (ACE_OS::strcmp (qName, "partitioning") == 0 ||
+               ACE_OS::strcmp (qName, "destination") == 0)
         {
           // do nothing
         }
@@ -603,13 +604,10 @@ CIAO::Partitioning_Handler::startElement (const ACEXML_Char *namespaceURI,
 
       break;
 
-
-      break;
-
     default:
       ACEXML_THROW
         (ACEXML_SAXException
-         ("Invalid tag encounter while parsing \"partitioning\""));
+         ("Invalid state encounter while parsing \"partitioning\""));
     }
 
 }
@@ -649,10 +647,10 @@ CIAO::Connections_Handler::endElement (const ACEXML_Char *namespaceURI,
   if (ACE_OS::strcmp (qName, "stringifiedobjectref") == 0)
     {
         ACEXML_NEW_THROW_EX (this->resolver_,
-                           CIAO::Assembly_Connection::IF_Resolver_Info
-                           (CIAO::Assembly_Connection::STRINGIFIEDOBJECTREF,
-                            this->characters_.c_str ()),
-                           ACEXML_SAXException ("No memory left"));
+                             CIAO::Assembly_Connection::IF_Resolver_Info
+                             (CIAO::Assembly_Connection::STRINGIFIEDOBJECTREF,
+                              this->characters_.c_str ()),
+                             ACEXML_SAXException ("No memory left"));
       ACEXML_CHECK;
       return;
     }
@@ -660,38 +658,68 @@ CIAO::Connections_Handler::endElement (const ACEXML_Char *namespaceURI,
   switch (this->state_)
     {
     case START:
-      if (ACE_OS::strcmp (qName, "consumesidentifier") == 0 ||
-          ACE_OS::strcmp (qName, "usesidentifier") == 0)
+      if (ACE_OS::strcmp (qName, "usesidentifier") == 0 ||
+          ACE_OS::strcmp (qName, "emitsidentifier") == 0 ||
+          ACE_OS::strcmp (qName, "publishesidentifier") == 0)
         {
-          this->info_->name_ = this->characters_.c_str ();
+          this->info_.name_ = this->characters_.c_str ();
         }
-      if (ACE_OS::strcmp (qName, "consumesport") == 0 ||
-          ACE_OS::strcmp (qName, "usesport") == 0 ||
-          ACE_OS::strcmp (qName, "proxyhome") == 0)
+      else if (ACE_OS::strcmp (qName, "usesport") == 0 ||
+               ACE_OS::strcmp (qName, "proxyhome") == 0)
         {
           if (this->resolver_ == 0)
             ACEXML_THROW (ACEXML_SAXException ("No valide IF resolver available"));
-          this->info_->component_ = this->resolver_;
+          this->info_.component_ = this->resolver_;
           this->resolver_ = 0;
           this->state_ = SOURCE;
         }
+      else if (ACE_OS::strcmp (qName, "emitsport") == 0 ||
+               ACE_OS::strcmp (qName, "publishesport") == 0)
+        {
+          if (this->resolver_ == 0)
+            ACEXML_THROW (ACEXML_SAXException
+                          ("No valide nested IF resolver available"));
+          this->info_.component_ = this->resolver_;
+          this->resolver_ = 0;
+        }
+      else if (ACE_OS::strcmp (qName, "connectevent") == 0)
+        this->context_->connections_.enqueue_tail (this->info_);
       else if (ACE_OS::strcmp (qName, "extension") == 0)
         {
           // @@ Not supported yet.
         }
       break;
 
+
     case SOURCE:
-      if (ACE_OS::strcmp (qName, "destinationhome") == 0)
+      if (ACE_OS::strcmp (qName, "destinationhome") == 0 ||
+          ACE_OS::strcmp (qName, "existinginterface") == 0)
         {
           if (this->resolver_ == 0)
             ACEXML_THROW (ACEXML_SAXException ("No valide IF resolver available"));
-          this->info_->interface_ = this->resolver_;
+          this->info_.interface_ = this->resolver_;
           this->resolver_ = 0;
         }
-      else if (ACE_OS::strcmp (qName, "providesidentifier") == 0 ||
-               ACE_OS::strcmp (qName, "emitsidentifier") == 0 ||
-               ACE_OS::strcmp (qName, "publishesidentifier") == 0)
+      else if (ACE_OS::strcmp (qName, "consumesport") == 0)
+        {
+          if (this->resolver_ == 0)
+            ACEXML_THROW (ACEXML_SAXException
+                          ("No valide nested IF resolver available"));
+          CIAO::Assembly_Connection::IF_Resolver_Info *nested = this->resolver_;
+
+          ACEXML_NEW_THROW_EX (this->resolver_,
+                               CIAO::Assembly_Connection::IF_Resolver_Info
+                               (CIAO::Assembly_Connection::CONSUMER,
+                                this->resolver_info_.c_str (),
+                                nested),
+                               ACEXML_SAXException ("No memory left"));
+          ACEXML_CHECK;
+          this->info_.interface_ = this->resolver_;
+          this->resolver_ = 0;
+          this->state_ = START;
+        }
+      else if (ACE_OS::strcmp (qName, "consumesidentifier") == 0 ||
+               ACE_OS::strcmp (qName, "providesidentifier") == 0)
         {
           this->resolver_info_ = this->characters_.c_str ();
         }
@@ -709,33 +737,13 @@ CIAO::Connections_Handler::endElement (const ACEXML_Char *namespaceURI,
                                 nested),
                                ACEXML_SAXException ("No memory left"));
           ACEXML_CHECK;
-          this->info_->interface_ = this->resolver_;
-          this->resolver_ = 0;
-        }
-      else if (ACE_OS::strcmp (qName, "emitsport") == 0 ||
-               ACE_OS::strcmp (qName, "publishesport") == 0)
-        {
-          if (this->resolver_ == 0)
-            ACEXML_THROW (ACEXML_SAXException
-                          ("No valide nested IF resolver available"));
-          CIAO::Assembly_Connection::IF_Resolver_Info *nested = this->resolver_;
-
-          ACEXML_NEW_THROW_EX (this->resolver_,
-                               CIAO::Assembly_Connection::IF_Resolver_Info
-                               (CIAO::Assembly_Connection::CONSUMER,
-                                this->resolver_info_.c_str (),
-                                nested),
-                               ACEXML_SAXException ("No memory left"));
-          ACEXML_CHECK;
-          this->info_->interface_ = this->resolver_;
+          this->info_.interface_ = this->resolver_;
           this->resolver_ = 0;
         }
       else if (ACE_OS::strcmp (qName, "connectinterface") == 0 ||
-               ACE_OS::strcmp (qName, "connectevent") == 0 ||
                ACE_OS::strcmp (qName, "connecthomes") == 0)
         {
           this->context_->connections_.enqueue_tail (this->info_);
-          this->info_ = 0;
           this->state_ = START;
         }
       break;
@@ -835,25 +843,33 @@ CIAO::Connections_Handler::startElement (const ACEXML_Char *namespaceURI,
     case START:
       if (ACE_OS::strcmp (qName, "connectinterface") == 0)
         {
-          this->create_info (atts
-                             ACEXML_ENV_ARG_PARAMETER);
+          this->reset_info (atts
+                            ACEXML_ENV_ARG_PARAMETER);
           ACEXML_CHECK;
 
-          this->info_->type_ = CIAO::Assembly_Connection::INTERFACE;
+          this->info_.type_ = CIAO::Assembly_Connection::INTERFACE;
         }
       else if (ACE_OS::strcmp (qName, "connectevent") == 0)
         {
-          this->create_info (atts
-                             ACEXML_ENV_ARG_PARAMETER);
+          this->reset_info (atts
+                            ACEXML_ENV_ARG_PARAMETER);
           ACEXML_CHECK;
-
+          this->state_ = SOURCE;
         }
       else if (ACE_OS::strcmp (qName, "connecthomes") == 0)
         {
-          this->create_info (atts
-                             ACEXML_ENV_ARG_PARAMETER);
+          this->reset_info (atts
+                            ACEXML_ENV_ARG_PARAMETER);
           ACEXML_CHECK;
-          this->info_->type_ = CIAO::Assembly_Connection::HOME;
+          this->info_.type_ = CIAO::Assembly_Connection::HOME;
+        }
+      else if (ACE_OS::strcmp (qName, "emitsport") == 0)
+        {
+          this->info_.type_ = CIAO::Assembly_Connection::EMITTER_CONSUMER;
+        }
+      else if (ACE_OS::strcmp (qName, "publishesport") == 0)
+        {
+          this->info_.type_ = CIAO::Assembly_Connection::PUBLISHER_CONSUMER;
         }
       else if (ACE_OS::strcmp (qName, "extension") == 0)
         {
@@ -862,14 +878,6 @@ CIAO::Connections_Handler::startElement (const ACEXML_Char *namespaceURI,
       break;
 
     case SOURCE:
-      if (ACE_OS::strcmp (qName, "emitsport") == 0)
-        {
-          this->info_->type_ = CIAO::Assembly_Connection::EMITTER_CONSUMER;
-        }
-      else if (ACE_OS::strcmp (qName, "publishesport") == 0)
-        {
-          this->info_->type_ = CIAO::Assembly_Connection::PUBLISHER_CONSUMER;
-        }
       break;
 
     default:
@@ -881,22 +889,24 @@ CIAO::Connections_Handler::startElement (const ACEXML_Char *namespaceURI,
 }
 
 void
-CIAO::Connections_Handler::create_info (ACEXML_Attributes *atts
-                                        ACEXML_ENV_ARG_DECL)
+CIAO::Connections_Handler::reset_info (ACEXML_Attributes *atts
+                                       ACEXML_ENV_ARG_DECL)
   ACE_THROW_SPEC ((ACEXML_SAXException))
 {
-  ACEXML_NEW_THROW_EX (this->info_,
-                       CIAO::Assembly_Connection::Connect_Info (),
-                       ACEXML_SAXException
-                       ("Internal error, no memory."));
-  ACEXML_CHECK;
+  this->info_.type_ = CIAO::Assembly_Connection::INVALID_CONN;
+  this->info_.id_.clear ();
+  this->info_.name_.clear ();
+
+  // @@ Potential memory leaks below.  Need to ensure the allocated
+  // memory is free when the Assembly_Spec is destroyed.
+
+  this->info_.component_ = 0;
+  this->info_.interface_ = 0;
 
   for (size_t i = 0; i < atts->getLength (); ++i)
     {
       if (ACE_OS_String::strcmp (atts->getQName (i), ACE_TEXT ("id")) == 0)
-        {
-          this->info_->id_ = atts->getValue (i);
-        }
+        this->info_.id_ = atts->getValue (i);
       else
         ACEXML_THROW
           (ACEXML_SAXException

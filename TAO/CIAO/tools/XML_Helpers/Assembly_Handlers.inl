@@ -107,7 +107,6 @@ CIAO::Connections_Handler::Connections_Handler (Assembly_Spec *spec,
                              ACEXML_ENV_ARG_PARAMETER),
       element_count_ (0),
       context_ (spec),
-      info_ (0),
       state_ (START)
 {
 }
