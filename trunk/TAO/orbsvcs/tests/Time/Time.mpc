@@ -1,0 +1,5 @@
+project(client): server, namingexe {
+  depends += CosTime
+  libs    += TAO_CosTime
+  exename  = client
+}

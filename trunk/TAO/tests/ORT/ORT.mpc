@@ -1,0 +1,16 @@
+project: server {
+  Source_Files {
+    ORT_test_i.cpp
+    ORT_test_IORInterceptor_ORBInitializer.cpp
+    ORT_test_IORInterceptor.cpp
+    server.cpp
+  }
+}
+
+project: client {
+  Source_Files {
+    ORT_testC.cpp
+    client.cpp
+  }
+}
+

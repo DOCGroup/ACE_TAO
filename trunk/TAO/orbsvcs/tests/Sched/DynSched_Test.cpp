@@ -1,6 +1,6 @@
 // $Id$
 
-#include "Strategy_Scheduler.h"
+#include "orbsvcs/Sched/Strategy_Scheduler.h"
 #include "orbsvcs/Time_Utilities.h"
 #if defined (ACE_HAS_QUANTIFY)
 # include <quantify.h>

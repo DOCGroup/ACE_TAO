@@ -1,0 +1,5 @@
+project : orbsvcsexe {
+  depends += LoadBalancing PortableServer
+  exename  = LoadBalancer_Service
+  libs    += TAO_LoadBalancing TAO_PortableServer
+}
