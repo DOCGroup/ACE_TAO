@@ -1,3 +1,7 @@
+Sat Jan 25 11:34:56 1997  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
+
+	* STL/bstring.h: Fixed typo.
+
 Mon Jan 20 10:04:11 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* algobase.h: wrapped min/max templates with #if ! defined (VXWORKS)

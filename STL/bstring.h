@@ -2495,7 +2495,7 @@ operator>> (istream& i, basic_string<charT>& s) _THROW_ALLOC_LENGTH
 #if ! defined (ghs)
 // GreenHills 1.8.8 doesn't like this template specialization . . .
 template basic_string<char>;
-#endf /* ghs */
+#endif /* ghs */
 typedef  basic_string<char>     cstring;
 typedef  basic_string<char>     string;
 //typedef  basic_string<wchar_t>  wstring;
