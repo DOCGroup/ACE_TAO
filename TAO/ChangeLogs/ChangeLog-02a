@@ -1,3 +1,33 @@
+Fri Apr 14 11:02:31 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/corbafwd.h:
+	* tao/DomainC.h:
+	* tao/DomainC.cpp:
+	* tao/DomainS.cpp:
+	* tao/InterfaceC.h:
+	* tao/InterfaceC.i:
+	* tao/InterfaceC.cpp:
+	* tao/InterfaceS.h:
+	* tao/InterfaceS.cpp:
+	* tao/Object.h:
+	* tao/Object.cpp:
+	* tao/ORB.h:
+	* tao/ORB.cpp:
+	* tao/POA_CORBA.h:
+	* tao/TAO.dsp:
+	* tao/TAO_static.dsp:
+	  Changes related to the forthcoming Interface Repository,
+	  and some code moved out to the directory where the
+	  TypeCodeFactory DLL resides (to be checked in shortly).
+
+	* tao/ifrfwd.h:
+	  New file, the IR namespace is now handled similarly to
+	  the handling of the CORBA namespace in TAO.
+
+	* tao/InterfaceS.i:
+	  Removed file, this code will be in the directory with the
+	  rest of the Interface Repository files.
+
 Fri Apr 14 08:16:02 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 	* orbsvcs/orbsvcs/Makefile.CosEvent:
