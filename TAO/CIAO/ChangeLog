@@ -1,3 +1,24 @@
+Tue Apr 15 11:07:36 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ciao/Daemon.idl:
+	* ciao/Daemon_Impl.h:
+	* ciao/Daemon_Impl.inl:
+	* ciao/Daemon_Impl.cpp:
+	* tools/Daemon/Daemon.idl:
+	* tools/Daemon/Daemon_Impl.h:
+	* tools/Daemon/Daemon_Impl.inl:
+	* tools/Daemon/Daemon_Impl.cpp:
+	* ciao/CCM_Core.mpc:
+	* ciao/CIAO_Server.dsp:
+	* tools/Daemon/CIAO_Daemon.dsp:
+	* tools/Daemon/Daemon.mpc:
+	* tools/Daemon/DaemonController.dsp: Moved Daemon idl file and
+	  implementations out of CIAO_Server library into Daemon
+	  implemenation.
+
+	* docs/todo.html:  Document other refactoring needed in the
+	  CCM_Core libraries.
+
 Mon Apr 14 17:06:37 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* examples/handcrafted/Display/HUDisplay_svnt.cpp:
