@@ -1,3 +1,13 @@
+Thu Jul 29 20:44:56 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* include/makeinclude/wrapper_macros.GNU:
+
+	  Override minimum_corba variable if it isn't set to 1 (i.e. if
+	  minimum_corba is not enabled).  This change was needed to make
+	  it easier to disable some TAO ORB services, examples and tests
+	  that rely on CORBA features that aren't supported in the minimum 
+	  CORBA specification.
+
 Thu Jul 29 19:04:12 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* ace/Atomic_Op.i:
