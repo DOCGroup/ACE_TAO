@@ -68,6 +68,12 @@ Wed Oct 15 07:21:05 1997  David L. Levine  <levine@cs.wustl.edu>
 	* examples/Shared_Malloc/test_persistence.cpp:
 	  removed unused Employee ostream << operator.
 
+	* tests/Conn_Test.cpp: neutered Conn_Test on DEC_CXX.  It
+	  doesn't build on DEC cxx 5.5 due to apparent template
+	  instantiation problems.  Thanks to James Johnson for
+	  reporting that.  And it doesn't terminate when built with
+	  DEC cxx (beta) 6.0.
+
 Wed Oct 15 01:48:36 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
 	* ace/Containers.{h,i,cpp}: 
