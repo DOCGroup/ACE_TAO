@@ -2,6 +2,9 @@ Fri Dec 06 14:44:20 1996  David L. Levine  <levine@cs.wustl.edu>
 	* ace/OS.cpp: added ::spa () function to allow command line args
  	  to be passed to programs in VxWorks
 
+	* ace/OS.i: (ACE_OS::gettimeofday):  VxWorks returns nsec instead
+	  of usec, so convert
+
 Fri Dec  6 01:21:48 1996  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
 
 	* examples/Reactor/ReactorEx/test_reactorEx.cpp: Rewrote the
@@ -36,8 +39,7 @@ Wed Dec  4 09:09:56 1996  David L. Levine  <levine@cs.wustl.edu>
  	  only use rusage if ACE_HAS_PRUSAGE_T is #defined
 
 	* examples/IPC_SAP/SOCK_SAP/CPP-in{client,server}.cpp:
- 	  use blocking connect on VxWorks, and hard code server hostname
- 	  in client
+ 	  use blocking connect on VxWorks
 
 	* ace/config-vxworks*.h: added ACE_LACKS_MPROTECT and
           ACE_HAS_STRERROR
