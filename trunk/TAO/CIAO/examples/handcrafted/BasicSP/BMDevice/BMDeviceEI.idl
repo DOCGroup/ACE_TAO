@@ -1,0 +1,29 @@
+// $Id$
+//=============================================================================
+/**
+ * @file BMDeviceEI.idl
+ *
+ * Definition of the BMDevice component implementation.
+ *
+ * @author Nanbor Wang <nanbor@cs.wustl.edu>
+ */
+//=============================================================================
+#ifndef CIAO_BMDEVICEEI_IDL
+#define CIAO_BMDEVICEEI_IDL
+
+#include "BMDeviceE.idl"
+
+module BasicSP
+{
+  /**
+   * @interface BMDevice_Exec
+   */
+  local interface BMDevice_Exec :
+    CCM_BM_Device,
+    Components::SessionComponent
+  {
+  };
+
+};
+
+#endif /* CIAO_BMDEVICEEI_IDL */
