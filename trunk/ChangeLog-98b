@@ -4,6 +4,11 @@ Tue Oct  6 15:06:21 1998  Steve Huston  <shuston@riverace.com>
 	  version of the ctor with no args - it's equivalent to the one
 	  with all defaulted args, and HP aCC complained.
 
+	* ace/NT_Service.{h cpp i}: New class, ACE_NT_Service.  This provides
+	  a class and supporting macros to integrate NT Services into the
+	  ACE framework at run-time.  I'll work on getting an example into
+	  the kit soon.
+
 Tue Oct  6 12:49:37 EDT 1998  James CE Johnson  <jcej@lads.com>
 
         * docs/tutorials/006/client_handler.cpp
