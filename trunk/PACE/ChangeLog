@@ -1,4 +1,14 @@
+Tue Aug 29 14:59:35 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* pace/win32/stat.inl (pace_fstat):
+
+	  Typo.
+
 Tue Aug 29 14:57:04 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* pace/win32/stat.h (pace_stat):
+
+	  Atered pace_stat_h typedef.
 
 	* pace/win32/stat.inl (pace_stat): 
 

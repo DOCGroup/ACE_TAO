@@ -46,7 +46,7 @@ pace_fstat (PACE_HANDLE fildes, pace_stat_s * buf)
   int fd = _open_osfhandle ((long) fildes, 0);
   if (fd != -1)
     {
-      retval = ::_fstat (fd, (struct _stat *) stp);
+      retval = _fstat (fd, (struct _stat *) buf);
     }
 
   _close (fd);
