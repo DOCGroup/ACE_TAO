@@ -83,14 +83,14 @@ public:
   virtual int visit_union (be_union *node);
   // visit union type
 
-  void setenclosings (char *pre, char *post);
+  void setenclosings (const char *pre, const char *post);
   const char *pre_op ();
   const char *post_op ();
   // print additional material around the field (e.g. virtual before)
 
 private:
-  char *pre_op_;
-  char *post_op_;
+  const char *pre_op_;
+  const char *post_op_;
 };
 
 #endif /* _BE_VISITOR_VALUETYPE_FIELD_CH_H_ */
