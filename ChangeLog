@@ -1,3 +1,12 @@
+Mon Jun 12 18:17:42 2000  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+        * bin/auto_run_tests.lst: (added)
+        * bin/auto_run_tests.pl: (added)
+        * tests/run_test.lst: (added)
+        * tests/run_test.pl: (added)
+
+          New scripts to facilitate the auto_build testing on NT.
+
 Sun Jun 11 18:12:12 2000  Vishal Kachroo  <vishal@cs.wustl.edu>
 
 	* examples/QOS/QoSEvent.h: Removed a warning on Win2K.
