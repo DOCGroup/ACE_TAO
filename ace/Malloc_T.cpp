@@ -394,6 +394,10 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::shared_malloc (size_t nbytes)
               currp = (MALLOC_HEADER *)
                 this->memory_pool_.acquire (nunits * sizeof (MALLOC_HEADER),
                                             chunk_bytes);
+              void *remap_addr = this->memory_pool_.base_addr ();
+              if (remap_addr != 0)
+                this->cb_ptr_ = (ACE_CB *) remap_addr;
+
               if (currp != 0)
                 {
                   ACE_MALLOC_STATS (++this->cb_ptr_->malloc_stats_.nblocks_);
