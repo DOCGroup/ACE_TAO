@@ -171,10 +171,6 @@ public:
   // Returns the content type (element type). Raises (BadKind); Useful
   // for tk_sequence, tk_array, and tk_alias.
 
-  CORBA::ULong TAO_discrim_pad_size (CORBA_Environment &ACE_TRY_ENV =
-                                       TAO_default_environment ());
-  // Calculates the padded size of discriminant type TAO Extension.
-
   // = Creation/refcounting
 
   // These aren't really public APIs, but an IDL compiler will need to
@@ -214,15 +210,6 @@ public:
     TRAVERSE_CONTINUE
   };
   // these are used to indicate the status of marshaling
-
-  size_t size (CORBA_Environment &ACE_TRY_ENV =
-                 TAO_default_environment ());
-  // returns the size. Used by the IIOP marshaling engine.
-
-  size_t alignment (CORBA_Environment &ACE_TRY_ENV =
-                      TAO_default_environment ());
-  // returns the alignment requirements for this typecode.
-  // used by the IIOP marshaling engine.
 
   // Reference counting operations.
   CORBA::ULong _incr_refcnt (void);
@@ -365,19 +352,6 @@ private:
   // returns the content type (element type). Raises (BadKind); Useful
   // for tk_sequence, tk_array, and tk_alias
 
-  size_t private_size (CORBA_Environment &ACE_TRY_ENV =
-                         TAO_default_environment ());
-  // returns the size. Used by the IIOP marshaling engine.
-
-  size_t private_alignment (CORBA_Environment &ACE_TRY_ENV =
-                              TAO_default_environment ());
-  // returns the alignment requirements for this typecode. used by the
-  // IIOP marshaling engine.
-
-  CORBA::ULong private_discrim_pad_size (CORBA_Environment &ACE_TRY_ENV =
-                                           TAO_default_environment ());
-  // Calculates the padded size of discriminant type TAO Extension
-
   // = All the private helpers testing for equality of typecodes
 
   CORBA::Boolean private_equal_objref (CORBA::TypeCode_ptr tc,
@@ -507,8 +481,6 @@ public:
   CORBA::Boolean tc_default_index_used_known_;
   CORBA::Boolean tc_length_known_;
   CORBA::Boolean tc_content_type_known_;
-  CORBA::Boolean tc_size_known_;
-  CORBA::Boolean tc_alignment_known_;
   CORBA::Boolean tc_discrim_pad_size_known_;
 
   // = These data members store the precomputed values
@@ -522,10 +494,6 @@ public:
   CORBA::Long   tc_default_index_used_;
   CORBA::ULong   tc_length_;
   CORBA::TypeCode_ptr  tc_content_type_;
-  CORBA::ULong  tc_size_;
-  CORBA::ULong  tc_alignment_;
-  CORBA::ULong  tc_discrim_pad_size_;
-
 };
 
 class TAO_Export CORBA_TypeCode_var
