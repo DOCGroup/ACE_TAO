@@ -1,3 +1,15 @@
+Thu Mar  6 09:58:41 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/NMakeWorkspaceCreator.pm:
+        * bin/MakeProjectCreator/templates/nmake.mpd:
+        * bin/MakeProjectCreator/templates/nmakedll.mpt:
+        * bin/MakeProjectCreator/templates/nmakeexe.mpt:
+
+          Added support for nmake on Win64.  To generate nmake files use the
+          following command line:
+
+          mwc.pl -type nmake -value_template platforms=Win64
+
 Thu Mar  6 08:06:35 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/Driver.pm:
@@ -9,30 +21,30 @@ Thu Mar  6 08:06:35 2003  Chad Elliott  <elliott_c@ociweb.com>
 
 Wed Mar  5 21:45:39 2003  Steve Huston  <shuston@riverace.com>
 
-	* ace/INET_Addr.cpp (get_port_number_from_name): Correct arg name
-	  for ACE_UNUSED_ARG. Suspected cut/paste error.
+        * ace/INET_Addr.cpp (get_port_number_from_name): Correct arg name
+          for ACE_UNUSED_ARG. Suspected cut/paste error.
 
-	* tests/ACE_Test.cpp: const_cast the pointers returned from
-	  ACE::execname() so they can be deleted on MSVC6.
+        * tests/ACE_Test.cpp: const_cast the pointers returned from
+          ACE::execname() so they can be deleted on MSVC6.
 
 Wed Mar  5 07:05:11 2003  Phil Mesnier  <mesnier_p@ociweb.com>
 
-	* ace/ace-dll.icc:
-	* ace/ace-lib.icc:
-	* ace/ace.icc:
-	* ace/ace_dll64.mak:
-	* ace/ace_lib64.mak:
+        * ace/ace-dll.icc:
+        * ace/ace-lib.icc:
+        * ace/ace.icc:
+        * ace/ace_dll64.mak:
+        * ace/ace_lib64.mak:
 
-	Added codeset registry files to more makefiles.
-	
+        Added codeset registry files to more makefiles.
+
 Wed Mar  5 06:32:40 2003  Phil Mesnier  <mesnier_p@ociweb.com>
 
-	* ace/Makefile.bor:
-	* ace/ace_dll.dsp:
-	* ace/ace_lib.dsp:
+        * ace/Makefile.bor:
+        * ace/ace_dll.dsp:
+        * ace/ace_lib.dsp:
 
-	Added codeset registry files and fixed spelling error in Makefile.bor.
-	
+        Added codeset registry files and fixed spelling error in Makefile.bor.
+
 Wed Mar  5 06:10:48 2003  Phil Mesnier  <mesnier_p@ociweb.com>
 
        * ace/Makefile.bor:
@@ -41,14 +53,14 @@ Wed Mar  5 06:10:48 2003  Phil Mesnier  <mesnier_p@ociweb.com>
 
 Tue Mar 04 19:58:29 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ACEXML/common/FileCharStream.cpp (determine_encoding): Commented
-	  out the annoying debug information.  Users should get the
-	  encoding information from this->getEncoding(), instead of
-	  relying on the debug info.
+        * ACEXML/common/FileCharStream.cpp (determine_encoding): Commented
+          out the annoying debug information.  Users should get the
+          encoding information from this->getEncoding(), instead of
+          relying on the debug info.
 
-	* ACEXML/common/LocatorImpl.cpp (reset): Remember to reset string
-	  pointers to 0 after deleteing them.  Otherwise, a parser may
-	  crash if it is used to parse a second file.
+        * ACEXML/common/LocatorImpl.cpp (reset): Remember to reset string
+          pointers to 0 after deleteing them.  Otherwise, a parser may
+          crash if it is used to parse a second file.
 
 Tue Mar  4 17:39:31 2003  Steve Huston  <shuston@riverace.com>
 
@@ -107,15 +119,15 @@ Tue Mar  4 13:54:52 2003  Phil Mesnier  <mesnier_p@ociweb.com>
 
 Tue Jan 24 17:50:32 2003  Gonzalo Diethelm  <gonzalo.diethelm@aditiva.com>
 
-	* ace/INET_Addr.cpp:
-  	  Method string_to_addr() now uses ACE_OS_String::strtol() instead
- 	  of the ugly hack using ACE_OS::strspn() and ACE_OS::atoi().  The
- 	  two set() methods that receive a const char port_name[] now try
- 	  first to parse that port_name as a simple number (like "901"),
- 	  and if that fails they try to resolve the port name as a
- 	  service.  In order to implement this, I added a static helper
- 	  function called get_port_number_from_name() (sorry for the awful
- 	  name).
+        * ace/INET_Addr.cpp:
+          Method string_to_addr() now uses ACE_OS_String::strtol() instead
+          of the ugly hack using ACE_OS::strspn() and ACE_OS::atoi().  The
+          two set() methods that receive a const char port_name[] now try
+          first to parse that port_name as a simple number (like "901"),
+          and if that fails they try to resolve the port name as a
+          service.  In order to implement this, I added a static helper
+          function called get_port_number_from_name() (sorry for the awful
+          name).
 
 Tue Mar  4 12:53:06 2003  Chad Elliott  <elliott_c@ociweb.com>
 
