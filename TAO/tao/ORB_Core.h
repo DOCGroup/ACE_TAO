@@ -874,9 +874,6 @@ public:
   /// otherwise 0.
   int open (CORBA::Environment &ACE_TRY_ENV);
 
-  /// Return the underlying transport cache
-  TAO_Transport_Cache_Manager *transport_cache (void);
-
   /// Call the bidir_giop library to parse the policy.
   int parse_bidir_policy (CORBA::Policy_ptr policy,
                           CORBA::Environment &ACE_TRY_ENV);
@@ -1265,9 +1262,6 @@ protected:
 
   /// The IOR parser registry.
   TAO_Parser_Registry parser_registry_;
-
-  /// TAO's connection cache
-  TAO_Transport_Cache_Manager *transport_cache_;
 
   /// BiDirectional GIOP factory
   TAO_BiDir_Adapter *bidir_adapter_;

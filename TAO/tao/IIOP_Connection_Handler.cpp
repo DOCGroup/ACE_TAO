@@ -11,6 +11,7 @@
 #include "tao/IIOP_Transport.h"
 #include "tao/IIOP_Endpoint.h"
 #include "tao/Transport_Cache_Manager.h"
+#include "tao/Thread_Lane_Resources.h"
 #include "tao/Base_Transport_Property.h"
 
 #if !defined (__ACE_INLINE__)
@@ -267,8 +268,8 @@ TAO_IIOP_Connection_Handler::add_transport_to_cache (void)
   TAO_Base_Transport_Property prop (&endpoint);
 
   // Add the handler to Cache
-  return this->orb_core ()->transport_cache ()->cache_transport (&prop,
-                                                                 this->transport ());
+  return this->orb_core ()->lane_resources ().transport_cache ().cache_transport (&prop,
+                                                                                  this->transport ());
 }
 
 int
