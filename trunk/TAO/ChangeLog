@@ -1,3 +1,14 @@
+Thu Dec 19 08:48:04 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* orbsvcs/tests/Security/Big_Request/Makefile:
+	* orbsvcs/tests/Security/Callback/Makefile:
+	* orbsvcs/tests/Security/MT_SSLIOP/Makefile:
+	* orbsvcs/tests/Security/Secure_Invocation/Makefile:
+	* orbsvcs/tests/Security/SecurityLevel1/Makefile: Added our usual
+	  checks to make sure that these dont get built if Security
+	  service or SSLIOP libraries arent built. This shold fix compile
+	  errors in NO_AMI_MESSAGING and NO_INTERCEPTORS builds.
+
 Thu Dec 19 08:25:04 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tao/Transport_Cache_Manager.cpp: Call
@@ -5,7 +16,8 @@ Thu Dec 19 08:25:04 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 	  TAO_Transport_Cache_Manager::purge () instead of
 	  close_connection_i (). Surprising that Chris Cleeland missed
 	  this after we agreed that this was the right things to do. Looks
-	  like Chris C has been caught in a different world altogether!
+	  like Chris C has been caught up in a different world altogether
+	  :-). This should fix the  errors in the daily builds.
 
 Wed Dec 18 19:45:45 2002  Jeff Parsons <j.parsons@vanderbilt.edu>
 
