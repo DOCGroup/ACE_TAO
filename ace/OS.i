@@ -3260,8 +3260,14 @@ ACE_OS::sema_init (ACE_sema_t *s,
       if (s->sema_ == (sem_t *) MAP_FAILED)
         return -1;
       if (s->name_
-          // Only initialize it if we're the one who created it
-          && ::sem_init (s->sema_, USYNC_THREAD, count) != 0)
+          // @@ According UNIX Network Programming V2 by Stevens,
+          //    sem_init() is currently not required to return zero on
+          //    success, but it *does* return -1 upon failure.  For
+          //    this reason, check for failure by comparing to -1,
+          //    instead of checking for success by comparing to zero.
+          //        -Ossama
+          // Only initialize it if we're the one who created it.
+          && ::sem_init (s->sema_, USYNC_THREAD, count) == -1)
         return -1;
       return 0;
     }
