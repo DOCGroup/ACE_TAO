@@ -68,8 +68,7 @@ public:
   int open (TAO_ORB_Core *orb_core,
             ACE_Reactor *reactor,
             int ignore_address
-            ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+            ACE_ENV_ARG_DECL);
 
   /// Close all open acceptors.
   int close_all (void);
