@@ -90,6 +90,10 @@ PACE_INLINE
 pace_mode_t
 pace_umask (pace_mode_t cmask)
 {
+#if defined (__BORLANDC__)
+  return umask (cmask);
+#else /* __BORLANDC__ */
   return _umask (cmask);
+#endif /* __BORLANDC__ */
 }
 #endif /* PACE_HAS_POSIX_FA_UOF */

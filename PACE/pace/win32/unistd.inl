@@ -53,7 +53,11 @@ PACE_INLINE
 int
 pace_chdir (const char * path)
 {
+#if defined (__BORLANDC__)
+  return chdir (path);
+#else /* __BORLANDC__ */
   return _chdir (path);
+#endif /* __BORLANDC__ */
 }
 #endif /* PACE_HAS_POSIX_FS_UOF */
 
@@ -105,7 +109,11 @@ int
 pace_execv (const char * path,
             char * const argv[])
 {
+#if defined (__BORLANDC__)
+  return execv (path, argv);
+#else /* __BORLANDC__ */
   return _execv (path, (const char * const *) argv);
+#endif /* __BORLANDC__ */
   /* if successful, this operation does NOT return */
 }
 #endif /* PACE_HAS_POSIX_MP_UOF */
@@ -117,8 +125,12 @@ pace_execve (const char * path,
              char * const argv[],
              char * const envp[])
 {
+#if defined (__BORLANDC__)
+  return execve (path, argv, envp);
+#else /* __BORLANDC__ */
   return _execve (path, (const char *const *) argv,
                   (const char *const *) envp);
+#endif /* __BORLANDC__ */
   /* if successful, this operation does NOT return */
 }
 #endif /* PACE_HAS_POSIX_MP_UOF */
@@ -129,7 +141,11 @@ int
 pace_execvp (const char * file,
              char * const argv[])
 {
+#if defined (__BORLANDC__)
+  return execvp (file, argv);
+#else /* __BORLANDC__ */
   return _execvp (file, (const char *const *) argv);
+#endif /* __BORLANDC__ */
   /* if successful, this operation does NOT return */
 }
 #endif /* PACE_HAS_POSIX_MP_UOF */
@@ -294,7 +310,11 @@ PACE_INLINE
 int
 pace_isatty (int fildes)
 {
+#if defined (__BORLANDC__)
+  return isatty (fildes);
+#else /* __BORLANDC__ */
   return _isatty (fildes);
+#endif /* __BORLANDC__ */
 }
 #endif /* PACE_HAS_POSIX_DS_UOF */
 
