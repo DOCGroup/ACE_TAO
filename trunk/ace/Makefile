@@ -264,6 +264,8 @@ TEMPLATE_FILES = \
 	   Hash_Map_With_Allocator_T \
            Hash_Cache_Map_Manager_T \
            IOStream_T \
+	   Intrusive_List \
+	   Intrusive_List_Node \
            LOCK_SOCK_Acceptor \
            Local_Name_Space_T \
            Malloc_T \

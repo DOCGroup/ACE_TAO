@@ -250,6 +250,8 @@ INCLUDES = \
 	Free_List.cpp \
 	Future.cpp \
 	Future_Set.cpp \
+	Intrusive_List.cpp \
+	Intrusive_List_Node.cpp \
 	LOCK_SOCK_Acceptor.cpp \
 	Managed_Object.cpp \
 	Map_Manager.cpp \
