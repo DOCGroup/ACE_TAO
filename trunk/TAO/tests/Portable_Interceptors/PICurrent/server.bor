@@ -14,7 +14,8 @@ OBJFILES = \
 	$(OBJDIR)\server.obj \
 	$(OBJDIR)\test_i.obj \
 	$(OBJDIR)\ServerRequestInterceptor.obj \
-	$(OBJDIR)\ServerORBInitializer.obj
+	$(OBJDIR)\ServerORBInitializer.obj \
+	$(OBJDIR)\ClientRequestInterceptor2.obj
 
 CFLAGS = \
 	$(ACE_CFLAGS) \
