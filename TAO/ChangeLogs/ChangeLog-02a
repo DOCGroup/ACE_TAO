@@ -123,7 +123,9 @@ Mon Oct 23 02:49:25 2000  Ossama Othman  <ossama@uci.edu>
 	  Implemented this method.  Obtain the policies in effect by
 	  invoking CORBA::Object::_get_policy().
 
+	* tao/DomainC.h:
 	* tao/DomainC.cpp:
+	* tao/PortableServer/DomainS.h:
 	* tao/PortableServer/DomainS.cpp:
 
 	  Updated interceptor code to work with the updates in
