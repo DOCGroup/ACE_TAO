@@ -1,3 +1,5 @@
+// $Id$
+
 // ============================================================================
 //
 // = LIBRARY
@@ -17,9 +19,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include "idl.h"
+#include "idl_extern.h"
+#include "be.h"
 #include "be_visitor_sequence.h"
 
 /*
@@ -195,10 +197,12 @@ be_sequence::managed_type (void)
 int
 be_sequence::gen_client_header (void)
 {
+#if 0 /* visitor code */
   TAO_OutStream *ch; // output stream
   TAO_NL  nl;        // end line
   be_type *bt;       // type node
   be_state *s;       // state based code gen object
+#endif /* visitor code */
 
   if (!this->cli_hdr_gen_)
     {
@@ -412,7 +416,7 @@ be_sequence::gen_client_header (void)
       *ch << "};\n";
       ch->indent ();
       *ch << "typedef " << this->local_name () << "* "
-	  << this->local_name () << "_ptr;\n";
+          << this->local_name () << "_ptr;\n";
       // Generate the typecode decl
       if (this->is_nested ())
         {
@@ -426,9 +430,9 @@ be_sequence::gen_client_header (void)
           // we are in the ROOT scope
           ch->indent ();
           *ch << "extern "
-	      << idl_global->export_macro ()
-	      << " CORBA::TypeCode_ptr "
-	      << this->tc_name ()->last_component () << ";\n\n";
+              << idl_global->export_macro ()
+              << " CORBA::TypeCode_ptr "
+              << this->tc_name ()->last_component () << ";\n\n";
         }
 
       ch->gen_endif (); // endif macro
@@ -474,8 +478,10 @@ be_sequence::gen_client_stubs (void)
 {
   TAO_OutStream *cs; // output stream
   TAO_NL  nl;        // end line
+#if 0 /* visitor code */
   be_type *bt; // base type
   be_state *s; //state object
+#endif /* visitor code */
 
   if (!this->cli_stub_gen_)
     {
@@ -486,7 +492,7 @@ be_sequence::gen_client_stubs (void)
       // generate the ifdefined macro for the sequence type
       cs->gen_ifdef_macro (this->flatname ());
 
-#if 0 // visitor code
+#if 0 /* visitor code */
       // retrieve base type
       bt = be_type::narrow_from_decl (this->base_type ());
       if (!bt)
@@ -908,7 +914,7 @@ be_sequence::gen_client_stubs (void)
           cs->decr_indent ();
           *cs << "}\n\n";
         }
-#endif
+#endif /* visitor code */
       // generate the typecode information here
       cs->indent (); // start from current indentation level
       *cs << "static const CORBA::Long _oc_" << this->flatname () << "[] =" <<
@@ -949,9 +955,11 @@ int
 be_sequence::gen_client_inline (void)
 {
   TAO_OutStream *ci; // output stream
+#if 0 /* visitor code */
   TAO_NL  nl;        // end line
   be_state *s;       // code gen state
   be_type *bt;  // base type
+#endif /* visitor code */
 
   if (!this->cli_inline_gen_)
     {
@@ -2536,7 +2544,6 @@ int
 be_sequence::gen_encapsulation (void)
 {
   TAO_OutStream *os; // output stream
-  TAO_NL  nl;        // end line
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
   be_type *bt; // base type
 
@@ -2612,7 +2619,7 @@ be_sequence::decl (void)
 }
 
 int be_sequence::write_as_return (TAO_OutStream *stream,
-				  be_type *type)
+                                  be_type *type)
 {
   *stream << type->name () << " *";
   return 0;
