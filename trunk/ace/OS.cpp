@@ -23,7 +23,7 @@
 #include "ace/Object_Manager.h"
 
 #if defined (ACE_LACKS_NETDB_REENTRANT_FUNCTIONS)
-int 
+int
 ACE_OS::netdb_acquire (void)
 {
   ACE_Thread_Mutex *ace_os_monitor_lock =
@@ -32,7 +32,7 @@ ACE_OS::netdb_acquire (void)
   return ace_os_monitor_lock->acquire ();
 }
 
-int 
+int
 ACE_OS::netdb_release (void)
 {
   ACE_Thread_Mutex *ace_os_monitor_lock =
@@ -61,8 +61,8 @@ ACE_Time_Value::ACE_Time_Value (const FILETIME &file_time)
 
 void ACE_Time_Value::set (const FILETIME &file_time)
 {
-  //  Initializes the ACE_Time_Value object from a Win32 FILETIME 
-  ACE_QWORD _100ns = ACE_MAKE_QWORD (file_time.dwLowDateTime, 
+  //  Initializes the ACE_Time_Value object from a Win32 FILETIME
+  ACE_QWORD _100ns = ACE_MAKE_QWORD (file_time.dwLowDateTime,
                                      file_time.dwHighDateTime);
   // Convert 100ns units to seconds;
   this->tv_.tv_sec = long (_100ns / (10000 * 1000));
@@ -103,7 +103,7 @@ ACE_Time_Value::normalize (void)
   if (this->tv_.tv_usec >= ACE_ONE_SECOND_IN_USECS)
     {
       do
-        { 
+        {
           this->tv_.tv_sec++;
           this->tv_.tv_usec -= ACE_ONE_SECOND_IN_USECS;
         }
@@ -112,13 +112,13 @@ ACE_Time_Value::normalize (void)
   else if (this->tv_.tv_usec <= -ACE_ONE_SECOND_IN_USECS)
     {
       do
-        { 
+        {
           this->tv_.tv_sec--;
           this->tv_.tv_usec += ACE_ONE_SECOND_IN_USECS;
         }
       while (this->tv_.tv_usec <= -ACE_ONE_SECOND_IN_USECS);
     }
- 
+
   if (this->tv_.tv_sec >= 1 && this->tv_.tv_usec < 0)
     {
       this->tv_.tv_sec--;
@@ -150,7 +150,7 @@ ACE_Countdown_Time::stop (void)
 {
   if (this->max_wait_time_ != 0 && this->stopped_ == 0)
     {
-      ACE_Time_Value elapsed_time = 
+      ACE_Time_Value elapsed_time =
         ACE_OS::gettimeofday () - this->start_time_;
 
       if (*this->max_wait_time_ > elapsed_time)
@@ -158,7 +158,7 @@ ACE_Countdown_Time::stop (void)
       else
         {
           // Used all of timeout.
-          *this->max_wait_time_ = ACE_Time_Value::zero; 
+          *this->max_wait_time_ = ACE_Time_Value::zero;
           errno = ETIME;
         }
       this->stopped_ = 1;
@@ -216,7 +216,7 @@ ACE_OS::readPPCTimeBase (u_long &most, u_long &least)
 // Don't inline on those platforms because this function contains
 // string literals, and some compilers, e.g., g++, don't handle those
 // efficiently in unused inline functions.
-int 
+int
 ACE_OS::uname (struct utsname *name)
 {
   // ACE_TRACE ("ACE_OS::uname");
@@ -236,18 +236,18 @@ ACE_OS::uname (struct utsname *name)
   if (vinfo.dwPlatformId == VER_PLATFORM_WIN32_NT)
   {
     // Get information from the two structures
-    ACE_OS::sprintf (name->release, 
-                    "Windows NT %d.%d", 
+    ACE_OS::sprintf (name->release,
+                    "Windows NT %d.%d",
                     vinfo.dwMajorVersion,
                     vinfo.dwMinorVersion);
     ACE_OS::sprintf (name->version,
                      "Build %d %s",
                      vinfo.dwBuildNumber,
                      vinfo.szCSDVersion);
-    
+
     char processor[10] = "Unknown";
     char subtype[10] = "Unknown";
-    
+
     switch (sinfo.wProcessorArchitecture)
     {
     case PROCESSOR_ARCHITECTURE_INTEL:
@@ -311,8 +311,8 @@ ACE_OS::uname (struct utsname *name)
     ACE_OS::strcpy (name->release, "???");
     ACE_OS::strcpy (name->version, "???");
     ACE_OS::strcpy (name->machine, "???");
-  }  
-  
+  }
+
   return ACE_OS::hostname (name->nodename, maxnamelen);
 #elif defined (VXWORKS)
   size_t maxnamelen = sizeof name->nodename;
@@ -352,7 +352,7 @@ ACE_OS::gethostbyname (const char *name)
   hostaddr[1] = 0;
 
   // might not be official: just echo input arg.
-  ret.h_name = (char *) name;  
+  ret.h_name = (char *) name;
   ret.h_addrtype = AF_INET;
   ret.h_length = 4;  // VxWorks 5.2/3 doesn't define IP_ADDR_LEN;
   ret.h_addr_list = hostaddr;
@@ -361,7 +361,7 @@ ACE_OS::gethostbyname (const char *name)
 #elif defined (ACE_HAS_NONCONST_GETBY)
   ACE_SOCKCALL_RETURN (::gethostbyname ((char *) name), struct hostent *, 0);
 #else
-  ACE_SOCKCALL_RETURN (::gethostbyname (name), struct hostent *, 0); 
+  ACE_SOCKCALL_RETURN (::gethostbyname (name), struct hostent *, 0);
 #endif /* ACE_HAS_NONCONST_GETBY */
 }
 
@@ -381,9 +381,9 @@ ACE_OS::inet_ntoa (const struct in_addr addr)
                    addr.s_addr & 255);
   return buf;
 }
-#endif /* VXWORKS */ 
+#endif /* VXWORKS */
 
-void 
+void
 ACE_OS::ace_flock_t::dump (void) const
 {
 // ACE_TRACE ("ACE_OS::ace_flock_t::dump");
@@ -422,7 +422,7 @@ ACE_OS::mutex_lock_cleanup (void *mutex)
 
 // The following *printf functions aren't inline because
 // they use varargs.
-int 
+int
 ACE_OS::fprintf (FILE *fp, const char *format, ...)
 {
   // ACE_TRACE ("ACE_OS::fprintf");
@@ -434,7 +434,7 @@ ACE_OS::fprintf (FILE *fp, const char *format, ...)
   return result;
 }
 
-int 
+int
 ACE_OS::printf (const char *format, ...)
 {
   // ACE_TRACE ("ACE_OS::printf");
@@ -446,7 +446,7 @@ ACE_OS::printf (const char *format, ...)
   return result;
 }
 
-int 
+int
 ACE_OS::sprintf (char *buf, const char *format, ...)
 {
   // ACE_TRACE ("ACE_OS::sprintf");
@@ -461,7 +461,7 @@ ACE_OS::sprintf (char *buf, const char *format, ...)
 #if defined (ACE_HAS_UNICODE)
 #if defined (ACE_WIN32)
 
-int 
+int
 ACE_OS::sprintf (wchar_t *buf, const wchar_t *format, ...)
 {
   // ACE_TRACE ("ACE_OS::sprintf");
@@ -473,13 +473,13 @@ ACE_OS::sprintf (wchar_t *buf, const wchar_t *format, ...)
   return result;
 }
 
-int 
+int
 ACE_OS::sprintf (wchar_t *buf, const char *format, ...)
 {
   // ACE_TRACE ("ACE_OS::sprintf");
   const wchar_t *wide_format = ACE_WString (format).fast_rep ();
   int result;
-  va_list ap;  
+  va_list ap;
   va_start (ap, wide_format);
   ACE_OSCALL (::vswprintf (buf, wide_format, ap), int, -1, result);
   va_end (ap);
@@ -489,7 +489,7 @@ ACE_OS::sprintf (wchar_t *buf, const char *format, ...)
 #endif /* ACE_WIN32 */
 #endif /* ACE_HAS_UNICODE */
 
-int 
+int
 ACE_OS::execl (const char * /* path */, const char * /* arg0 */, ...)
 {
   // ACE_TRACE ("ACE_OS::execl");
@@ -502,7 +502,7 @@ ACE_OS::execl (const char * /* path */, const char * /* arg0 */, ...)
 #endif /* ACE_WIN32 */
 }
 
-int 
+int
 ACE_OS::execle (const char * /* path */, const char * /* arg0 */, ...)
 {
   // ACE_TRACE ("ACE_OS::execle");
@@ -515,7 +515,7 @@ ACE_OS::execle (const char * /* path */, const char * /* arg0 */, ...)
 #endif /* ACE_WIN32 */
 }
 
-int 
+int
 ACE_OS::execlp (const char * /* file */, const char * /* arg0 */, ...)
 {
   // ACE_TRACE ("ACE_OS::execlp");
@@ -683,7 +683,7 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params)
   else if (sched_params.scope () == ACE_SCOPE_THREAD)
     {
       ACE_thread_t thr_id = ACE_OS::thr_self ();
-  
+
 #   if defined (ACE_HAS_DCE_DRAFT4_THREADS)
       return (::pthread_setscheduler(thr_id,
                                      sched_params.policy (),
@@ -775,9 +775,11 @@ int ACE_OS::socket_initialized_;
 
 #if defined (ACE_WIN32) || defined (ACE_HAS_TSS_EMULATION)
 
+#include "ace/Array.h"
+
 class ACE_TSS_Ref
   // = TITLE
-  //     "Reference count" for thread-specific storage keys.  
+  //     "Reference count" for thread-specific storage keys.
   //
   // = DESCRIPTION
   //     Since the <ACE_Unbounded_Stack> doesn't allow duplicates, the
@@ -792,6 +794,9 @@ public:
 
   int operator== (const ACE_TSS_Ref &);
   // Check for equality.
+
+  int operator!= (const ACE_TSS_Ref &);
+  // Check for inequality.
 
 // private:
 
@@ -819,6 +824,16 @@ ACE_TSS_Ref::operator== (const ACE_TSS_Ref &info)
   return this->tid_ == info.tid_;
 }
 
+// Check for inequality.
+inline
+int
+ACE_TSS_Ref::operator!= (const ACE_TSS_Ref &tss_ref)
+{
+// ACE_TRACE ("ACE_TSS_Ref::operator==");
+
+  return !(*this == tss_ref);
+}
+
 typedef ACE_Unbounded_Stack<ACE_TSS_Ref> ACE_TSS_REF_TABLE;
 typedef ACE_Unbounded_Stack_Iterator<ACE_TSS_Ref> ACE_TSS_REF_TABLE_ITERATOR;
 
@@ -830,8 +845,8 @@ class ACE_TSS_Info
   //     This class maps a key to a "destructor."
 {
 public:
-  ACE_TSS_Info (ACE_thread_key_t key, 
-                void (*dest)(void *) = 0, 
+  ACE_TSS_Info (ACE_thread_key_t key,
+                void (*dest)(void *) = 0,
                 void *tss_inst = 0);
   // Constructor
 
@@ -840,6 +855,9 @@ public:
 
   int operator== (const ACE_TSS_Info &);
   // Check for equality.
+
+  int operator!= (const ACE_TSS_Info &);
+  // Check for inequality.
 
   void dump (void);
   // Dump the state.
@@ -853,12 +871,12 @@ public:
 
   void *tss_obj_;
   // Pointer to ACE_TSS<xxx> instance that has/will allocate the key.
- 
+
   ACE_TSS_REF_TABLE ref_table_;
   // Table of thread IDs that are using this key.
 };
 
-ACE_TSS_Info::ACE_TSS_Info (ACE_thread_key_t key, 
+ACE_TSS_Info::ACE_TSS_Info (ACE_thread_key_t key,
                             void (*dest)(void *),
                             void *tss_inst)
   : key_ (key),
@@ -874,7 +892,7 @@ ACE_TSS_Info::ACE_TSS_Info (void)
 }
 
 // Check for equality.
-int 
+int
 ACE_TSS_Info::operator== (const ACE_TSS_Info &info)
 {
 // ACE_TRACE ("ACE_TSS_Info::operator==");
@@ -882,7 +900,17 @@ ACE_TSS_Info::operator== (const ACE_TSS_Info &info)
   return this->key_ == info.key_;
 }
 
-void 
+// Check for inequality.
+inline
+int
+ACE_TSS_Info::operator!= (const ACE_TSS_Info &info)
+{
+// ACE_TRACE ("ACE_TSS_Info::operator==");
+
+  return !(*this == info);
+}
+
+void
 ACE_TSS_Info::dump (void)
 {
 //  ACE_TRACE ("ACE_TSS_Info::dump");
@@ -908,14 +936,14 @@ ACE_TSS_Info::dump (void)
 
 // Create a set of <ACE_TSS_Info> objects that will reside
 // within thread-specific storage.
-typedef ACE_Unbounded_Stack<ACE_TSS_Info> ACE_TSS_TABLE;
-typedef ACE_Unbounded_Stack_Iterator<ACE_TSS_Info> ACE_TSS_TABLE_ITERATOR;
+typedef ACE_Array<ACE_TSS_Info> ACE_TSS_TABLE;
+typedef ACE_Array_Iterator<ACE_TSS_Info> ACE_TSS_TABLE_ITERATOR;
 
 class ACE_TSS_Cleanup
   // = TITLE
   //     Singleton that knows how to clean up all the thread-specific
   //     resources for Win32.
-  // 
+  //
   // = DESCRIPTION
   //     All this nonsense is required since Win32 doesn't
   //     automatically cleanup thread-specific storage on thread exit,
@@ -937,10 +965,10 @@ public:
 
   int detach (void *inst);
   // Detaches a tss_instance from its key.
- 
+
   int detach (ACE_thread_key_t key, ACE_thread_t tid);
   // Detaches a thread from the key.
- 
+
   int key_used (ACE_thread_key_t key);
   // Mark a key as being used by this thread.
 
@@ -990,31 +1018,31 @@ ACE_TSS_Cleanup::~ACE_TSS_Cleanup (void)
   ACE_TSS_Cleanup::instance_ = 0;
 }
 
-int 
+int
 ACE_TSS_Cleanup::mark_cleanup_i (void)
 {
   return this->ref_table_.insert (ACE_TSS_Ref (ACE_OS::thr_self ()));
 }
-  
-int 
+
+int
 ACE_TSS_Cleanup::check_cleanup_i (void)
 {
   return this->ref_table_.find (ACE_TSS_Ref (ACE_OS::thr_self ()));
 }
 
-int 
+int
 ACE_TSS_Cleanup::exit_cleanup_i (void)
 {
   return this->ref_table_.remove (ACE_TSS_Ref (ACE_OS::thr_self ()));
 }
 
-void 
+void
 ACE_TSS_Cleanup::exit (void * /* status */)
 {
   // ACE_TRACE ("ACE_TSS_Cleanup::exit");
 
-  //  ACE_thread_key_t key_arr[ACE_DEFAULT_THREAD_KEYS];
 #if 0
+  ACE_thread_key_t key_arr[ACE_DEFAULT_THREAD_KEYS];
   int index = 0;
 #endif /* 0 */
 
@@ -1051,9 +1079,11 @@ ACE_TSS_Cleanup::exit (void * /* status */)
          iter.next (key_info) != 0;
          iter.advance ())
       {
-        void *tss_info = 0;
+        if (key_info->key_ == 0) continue;
 
         key_info->ref_table_.remove (ACE_TSS_Ref (ACE_OS::thr_self ()));
+
+        void *tss_info = 0;
 
         if (key_info->destructor_
             && ACE_OS::thr_getspecific (key_info->key_, &tss_info) == 0
@@ -1065,8 +1095,8 @@ ACE_TSS_Cleanup::exit (void * /* status */)
           }
 
 #if 0
-	// See below.
-        if (key_info->ref_table_.size () == 0 
+        // See below.
+        if (key_info->ref_table_.size () == 0
             && key_info->tss_obj_ == 0)
           key_arr[index++] = key_info->key_;
 #endif /* 0 */
@@ -1074,9 +1104,8 @@ ACE_TSS_Cleanup::exit (void * /* status */)
   }
 
   // Now we have given up the ACE_TSS_Cleanup::lock_ and we start
-  // invoking destructors.
-
-  for (int i = 0; i < info_ix; i++)
+  // invoking destructors, in the reverse order of creation.
+  for (int i = info_ix - 1; i >= 0; --i)
     {
       void *tss_info = 0;
 
@@ -1104,7 +1133,7 @@ ACE_TSS_Cleanup::exit (void * /* status */)
     // even get started (or their TSS object haven't been created yet,)
     // it's entry will be removed from the table and we are in big chaos.
     // For TSS object, these have been done in ACE_TSS_Cleanup::detach.
-    // Two other use cases will be user managed TSS'es and system wide 
+    // Two other use cases will be user managed TSS'es and system wide
     // TSS, ones are users responsibilities and the others should be
     // persistant system wide.
     for (int i = 0; i < index; i++)
@@ -1116,16 +1145,17 @@ ACE_TSS_Cleanup::exit (void * /* status */)
 #endif /* ACE_WIN32 */
         this->table_.remove (ACE_TSS_Info (key_arr[i]));
       }
-#endif /* 0 */
 
     this->exit_cleanup_i (); // remove thread id from reference list.
+
+#endif /* 0 */
   }
 }
 
 int
 ACE_TSS_Cleanup::free_all_key_left (void)
   // This is call from ACE_OS::cleanup_tss
-  // When this gets called, all threads should 
+  // When this gets called, all threads should
   // have exited except the main thread.
 {
   ACE_thread_key_t key_arr[ACE_DEFAULT_THREAD_KEYS];
@@ -1138,11 +1168,15 @@ ACE_TSS_Cleanup::free_all_key_left (void)
     key_arr [idx++] = key_info->key_;
 
   for (int i = 0; i < idx; i++)
-    ACE_OS::thr_keyfree (key_arr[i]);
+    if (key_arr[i] != 0)
+      ACE_OS::thr_keyfree (key_arr[i]);
+
   return 0;
 }
 
 ACE_TSS_Cleanup::ACE_TSS_Cleanup (void)
+  : table_ (ACE_DEFAULT_THREAD_KEYS, ACE_TSS_Info (0)),
+    ref_table_ ()
 {
 // ACE_TRACE ("ACE_TSS_Cleanup::ACE_TSS_Cleanup");
 }
@@ -1164,14 +1198,16 @@ ACE_TSS_Cleanup::instance (void)
       // Now, use the Double-Checked Locking pattern to make sure we
       // only create the ACE_TSS_Cleanup instance once.
       if (instance_ == 0)
-        ACE_NEW_RETURN (ACE_TSS_Cleanup::instance_, ACE_TSS_Cleanup, 0);
+        {
+          ACE_NEW_RETURN (ACE_TSS_Cleanup::instance_, ACE_TSS_Cleanup, 0);
+        }
     }
 
   return ACE_TSS_Cleanup::instance_;
 }
 
-int 
-ACE_TSS_Cleanup::insert (ACE_thread_key_t key, 
+int
+ACE_TSS_Cleanup::insert (ACE_thread_key_t key,
                          void (*destructor)(void *),
                          void *inst)
 {
@@ -1181,33 +1217,47 @@ ACE_TSS_Cleanup::insert (ACE_thread_key_t key,
       (ACE_Object_Manager::ACE_TSS_CLEANUP_LOCK);
     ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, *lock, -1));
 
-  return this->table_.insert (ACE_TSS_Info (key, destructor, inst));
+  return this->table_.set (ACE_TSS_Info (key, destructor, inst), key - 1);
 }
 
 int
 ACE_TSS_Cleanup::remove (ACE_thread_key_t key)
 {
-// ACE_TRACE ("ACE_TSS_Cleanup::remove");
+  // ACE_TRACE ("ACE_TSS_Cleanup::remove");
   ACE_MT (ACE_Recursive_Thread_Mutex *lock =
     ACE_Managed_Object<ACE_Recursive_Thread_Mutex>::get_preallocated_object
       (ACE_Object_Manager::ACE_TSS_CLEANUP_LOCK);
     ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, *lock, -1));
 
-  return this->table_.remove (ACE_TSS_Info (key));
+  if (key <= this->table_.size ())
+    {
+      // "Remove" the TSS_Info table entry by zeroing out its key_ and
+      // destructor_ fields.
+      ACE_TSS_Info &info = this->table_ [key - 1];
+      info.key_ = 0;
+      info.destructor_ = 0;
+      return 0;
+    }
+  else
+    return -1;
 }
 
-int 
+int
 ACE_TSS_Cleanup::detach (void *inst)
-{ 
+{
   ACE_MT (ACE_Recursive_Thread_Mutex *lock =
     ACE_Managed_Object<ACE_Recursive_Thread_Mutex>::get_preallocated_object
       (ACE_Object_Manager::ACE_TSS_CLEANUP_LOCK);
     ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, *lock, -1));
-  
+
   ACE_TSS_Info *key_info = 0;
   int success = 0;
   int ref_cnt = 0;
-  
+
+  // Mark the key as detached in the TSS_Info table.
+  // It seems that there should be a way to do this without
+  // iterating, but I'm not sure why this function takes "inst"
+  // as an argument instead of the key.
   for (ACE_TSS_TABLE_ITERATOR iter (this->table_);
        iter.next (key_info) != 0;
        iter.advance ())
@@ -1220,7 +1270,7 @@ ACE_TSS_Cleanup::detach (void *inst)
           break;
         }
     }
-  
+
   if (success == 0)
     return -1;
   else if (ref_cnt == 0)
@@ -1230,13 +1280,13 @@ ACE_TSS_Cleanup::detach (void *inst)
 #else
       // don't bother to free the key
 #endif /* ACE_WIN32 */
-      return this->table_.remove (ACE_TSS_Info (key_info->key_));
+      return this->remove (key_info->key_);
     }
 
   return 0;
 }
-  
-int 
+
+int
 ACE_TSS_Cleanup::detach (ACE_thread_key_t key, ACE_thread_t tid)
 {
         ACE_UNUSED_ARG(key);
@@ -1244,8 +1294,8 @@ ACE_TSS_Cleanup::detach (ACE_thread_key_t key, ACE_thread_t tid)
 
         return -1;
 }
-  
-int 
+
+int
 ACE_TSS_Cleanup::key_used (ACE_thread_key_t key)
 {
   ACE_MT (ACE_Recursive_Thread_Mutex *lock =
@@ -1253,18 +1303,12 @@ ACE_TSS_Cleanup::key_used (ACE_thread_key_t key)
       (ACE_Object_Manager::ACE_TSS_CLEANUP_LOCK);
     ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, *lock, -1));
 
-  ACE_TSS_Info *key_info = 0;
+  ACE_TSS_Info &key_info = this->table_ [key - 1];
 
-  for (ACE_TSS_TABLE_ITERATOR iter (this->table_);
-       iter.next (key_info) != 0;
-       iter.advance ())
-    if (key_info->key_ == key)
-      return key_info->ref_table_.insert (ACE_TSS_Ref (ACE_OS::thr_self ()));
-
-  return -1;
+  return key_info.ref_table_.insert (ACE_TSS_Ref (ACE_OS::thr_self ()));
 }
-  
-void 
+
+void
 ACE_TSS_Cleanup::dump (void)
 {
   ACE_TSS_Info *key_info = 0;
@@ -1281,7 +1325,7 @@ ACE_TSS_Cleanup::dump (void)
 ACE_thread_key_t ACE_TSS_Emulation::total_keys_ = 0;
 
 ACE_TSS_Emulation::ACE_TSS_DESTRUCTOR
-ACE_TSS_Emulation::tss_destructor_ [ACE_TSS_THREAD_KEYS_MAX] = { 0 };
+ACE_TSS_Emulation::tss_destructor_ [ACE_TSS_Emulation::ACE_TSS_THREAD_KEYS_MAX] = { 0 };
 
 void *
 ACE_TSS_Emulation::tss_open (void *ts_storage[ACE_TSS_THREAD_KEYS_MAX])
@@ -1327,7 +1371,7 @@ ACE_TSS_Emulation::tss_close (void *ts_storage[ACE_TSS_THREAD_KEYS_MAX])
 #if !defined (VXWORKS)
 // FOR TESTING ONLY!
 void **
-ACE_TSS_Emulation::tss_collection_ [ACE_TSS_THREADS_MAX] = { 0 };
+ACE_TSS_Emulation::tss_collection_ [ACE_TSS_Emulation::ACE_TSS_THREADS_MAX] = { 0 };
 #endif /* VXWORKS */
 #endif /* ACE_HAS_TSS_EMULATION */
 
@@ -1338,6 +1382,10 @@ template class ACE_Unbounded_Stack<ACE_TSS_Info>;
 template class ACE_Unbounded_Stack<ACE_TSS_Ref>;
 template class ACE_Unbounded_Stack_Iterator<ACE_TSS_Info>;
 template class ACE_Unbounded_Stack_Iterator<ACE_TSS_Ref>;
+template class ACE_Array<ACE_TSS_Info>;
+template class ACE_Array<ACE_TSS_Ref>;
+template class ACE_Array_Iterator<ACE_TSS_Info>;
+template class ACE_Array_Iterator<ACE_TSS_Ref>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Node<ACE_TSS_Info>
 #pragma instantiate ACE_Node<ACE_TSS_Ref>
@@ -1345,6 +1393,10 @@ template class ACE_Unbounded_Stack_Iterator<ACE_TSS_Ref>;
 #pragma instantiate ACE_Unbounded_Stack<ACE_TSS_Ref>
 #pragma instantiate ACE_Unbounded_Stack_Iterator<ACE_TSS_Info>
 #pragma instantiate ACE_Unbounded_Stack_Iterator<ACE_TSS_Ref>
+#pragma instantiate ACE_Array<ACE_TSS_Info>
+#pragma instantiate ACE_Array<ACE_TSS_Ref>
+#pragma instantiate ACE_Array_Iterator<ACE_TSS_Info>
+#pragma instantiate ACE_Array_Iterator<ACE_TSS_Ref>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 #endif /* WIN32 || ACE_HAS_TSS_EMULATION */
@@ -1353,7 +1405,7 @@ void
 ACE_OS::cleanup_tss ()
 {
 #if defined (ACE_HAS_TSS_EMULATION)
-  // Call destructors for thread-specific storage.
+  // Call destructors for thread-specific storage of main thread.
   ACE_TSS_Cleanup::instance ()->exit (0);
 #else
   // Just close the ACE_Log_Msg for the current (which should be main) thread.
@@ -1364,7 +1416,7 @@ ACE_OS::cleanup_tss ()
   // Removed all TSS_Info table entries.
   ACE_TSS_Cleanup::instance ()->free_all_key_left ();
   // Finally, free up the ACE_TSS_Cleanup instance.  This method gets
-  // call by the ACE_Object_Manager.
+  // called by the ACE_Object_Manager.
   delete ACE_TSS_Cleanup::instance ();
 #endif /* WIN32 || ACE_HAS_TSS_EMULATION */
 }
@@ -1397,7 +1449,7 @@ ACE_Thread_Adapter::inherit_log_msg (void)
     ACE_LOG_MSG->thr_desc (this->thr_desc_, this->thr_mgr_);
   // Block the thread from proceeding until
   // thread manager has thread descriptor ready.
-#endif /* ACE_THREADS_DONT_INHERIT_LOG_MSG */  
+#endif /* ACE_THREADS_DONT_INHERIT_LOG_MSG */
 }
 
 void *
@@ -1432,14 +1484,14 @@ ACE_Thread_Adapter::invoke (void)
   if (func == ACE_Task_Base::svc_run)
     {
       ACE_Task_Base *task_ptr = (ACE_Task_Base *) arg;
-      ACE_Thread_Manager *thr_mgr_ptr = task_ptr->thr_mgr (); 
+      ACE_Thread_Manager *thr_mgr_ptr = task_ptr->thr_mgr ();
 
-      // This calls the Task->close() hook.      
-      task_ptr->cleanup (task_ptr, 0);       
+      // This calls the Task->close() hook.
+      task_ptr->cleanup (task_ptr, 0);
 
       // This prevents a second invocation of the cleanup code (called
       // later by ACE_Thread_Manager::exit()).
-  
+
       thr_mgr_ptr->at_exit (task_ptr, NULL, 0);
     }
 #endif /* 0 */
@@ -1467,14 +1519,14 @@ ACE_Thread_Adapter::invoke (void)
   if (func == ACE_Task_Base::svc_run)
     {
       ACE_Task_Base *task_ptr = (ACE_Task_Base *) arg;
-      ACE_Thread_Manager *thr_mgr_ptr = task_ptr->thr_mgr (); 
-      
+      ACE_Thread_Manager *thr_mgr_ptr = task_ptr->thr_mgr ();
+
       // This calls the <Task->close> hook.
-      task_ptr->cleanup (task_ptr, 0);       
-      
+      task_ptr->cleanup (task_ptr, 0);
+
       // This prevents a second invocation of the cleanup code (called
       // later by ACE_Thread_Manager::exit()).
-  
+
       thr_mgr_ptr->at_exit (task_ptr, NULL, 0);
     }
 #endif /* 0 */
@@ -1528,11 +1580,11 @@ ace_thread_adapter (void *args)
   return status;
 }
 
-ACE_Thread_Adapter::ACE_Thread_Adapter (ACE_THR_FUNC user_func, 
+ACE_Thread_Adapter::ACE_Thread_Adapter (ACE_THR_FUNC user_func,
                                         void *arg,
                                         ACE_THR_C_FUNC entry_point,
                                         ACE_Thread_Manager *tm,
-					ACE_Thread_Descriptor *td)
+                                        ACE_Thread_Descriptor *td)
   : user_func_ (user_func),
     arg_ (arg),
     entry_point_ (entry_point),
@@ -1681,10 +1733,10 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
     {
       // *** Set Detach state
 #    if !defined (ACE_LACKS_SETDETACH)
-      if (ACE_BIT_ENABLED (flags, THR_DETACHED) 
+      if (ACE_BIT_ENABLED (flags, THR_DETACHED)
           || ACE_BIT_ENABLED (flags, THR_JOINABLE))
         {
-          int dstate = PTHREAD_CREATE_JOINABLE; 
+          int dstate = PTHREAD_CREATE_JOINABLE;
 
           if (ACE_BIT_ENABLED (flags, THR_DETACHED))
             dstate = PTHREAD_CREATE_DETACHED;
@@ -1740,10 +1792,10 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
           else if (ACE_BIT_ENABLED (flags, THR_SCHED_IO))
             spolicy = SCHED_IO;
 #else
-          else if (ACE_BIT_ENABLED (flags, THR_SCHED_IO)) 
+          else if (ACE_BIT_ENABLED (flags, THR_SCHED_IO))
             {
               errno = ENOSYS;
-              return -1; 
+              return -1;
             }
 #endif /* SCHED_IO */
           else
@@ -1825,7 +1877,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 #      elif defined(ACE_HAS_PTHREADS_1003_DOT_1C)
           // The following code forces priority into range.
           if (ACE_BIT_ENABLED (flags, THR_SCHED_FIFO))
-            sparam.sched_priority = 
+            sparam.sched_priority =
               ACE_MIN (ACE_THR_PRI_FIFO_MAX, ACE_MAX (ACE_THR_PRI_FIFO_MIN, priority));
           else if (ACE_BIT_ENABLED(flags, THR_SCHED_RR))
             sparam.sched_priority =
@@ -1934,19 +1986,19 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 #       if defined (ACE_HAS_DCE_DRAFT4_THREADS)
   ACE_OSCALL (::pthread_create (thr_id, attr,
                                 ACE_THREAD_FUNCTION,
-                                ACE_THREAD_ARGUMENT), 
+                                ACE_THREAD_ARGUMENT),
               int, -1, result);
 #       else
   ACE_OSCALL (ACE_ADAPT_RETVAL (::pthread_create (thr_id, attr,
                                                   ACE_THREAD_FUNCTION,
-                                                  ACE_THREAD_ARGUMENT), 
+                                                  ACE_THREAD_ARGUMENT),
                                 result),
               int, -1, result);
 #       endif /* ACE_HAS_DCE_DRAFT4_THREADS */
   ::pthread_attr_delete (&attr);
 #    else /* !ACE_HAS_DCETHREADS */
   ACE_OSCALL (ACE_ADAPT_RETVAL (::pthread_create (thr_id,
-						  &attr,
+                                                  &attr,
                                                   ACE_THREAD_FUNCTION,
                                                   ACE_THREAD_ARGUMENT),
                                 result),
@@ -1981,8 +2033,8 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
       int policy = 0;
       ACE_OSCALL (ACE_ADAPT_RETVAL (::pthread_getschedparam (thr_self (),
                                                              &policy,
-                                                             &sparam), 
-                                    result), int, 
+                                                             &sparam),
+                                    result), int,
                   -1, result);
 
       if (sparam.sched_priority != 0)
@@ -2015,7 +2067,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
   ACE_OSCALL (ACE_ADAPT_RETVAL (::thr_create (stack, stacksize,
                                               ACE_THREAD_FUNCTION,
                                               ACE_THREAD_ARGUMENT,
-                                              flags, thr_id), result), 
+                                              flags, thr_id), result),
               int, -1, result);
 
   if (result != -1)
@@ -2050,20 +2102,20 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 #    if defined (ACE_HAS_MFC) && (ACE_HAS_MFC != 0)
   if (ACE_BIT_ENABLED (flags, THR_USE_AFX))
     {
-      CWinThread *cwin_thread = 
+      CWinThread *cwin_thread =
         ::AfxBeginThread ((AFX_THREADPROC) &ACE_THREAD_FUNCTION,
-                          ACE_THREAD_ARGUMENT, priority, 0, 
+                          ACE_THREAD_ARGUMENT, priority, 0,
                           flags | THR_SUSPENDED);
       // Have to duplicate the handle because
       // CWinThread::~CWinThread() closes the original handle.
-      (void) ::DuplicateHandle (::GetCurrentProcess (), 
+      (void) ::DuplicateHandle (::GetCurrentProcess (),
                                 cwin_thread->m_hThread,
                                 ::GetCurrentProcess (),
                                 thr_handle,
-                                0, 
+                                0,
                                 TRUE,
                                 DUPLICATE_SAME_ACCESS);
- 
+
       *thr_id = cwin_thread->m_nThreadID;
 
       if (ACE_BIT_ENABLED (flags, THR_SUSPENDED) == 0)
@@ -2082,7 +2134,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
         // thread in a suspended mode.
         ACE_SET_BITS (flags, THR_SUSPENDED);
 
-      *thr_handle = (void *) ::_beginthreadex 
+      *thr_handle = (void *) ::_beginthreadex
         (NULL,
          stacksize,
          (unsigned (__stdcall *) (void *)) ACE_THREAD_FUNCTION,
@@ -2102,7 +2154,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
         }
     }
 #    if 0
-  *thr_handle = ::CreateThread 
+  *thr_handle = ::CreateThread
     (NULL, stacksize,
      LPTHREAD_START_ROUTINE (ACE_THREAD_FUNCTION),
      ACE_THREAD_ARGUMENT, flags, thr_id);
@@ -2147,7 +2199,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
                                    (int) flags,
                                    (int) stacksize,
                                    ACE_THREAD_FUNCTION,
-                                   (int) ACE_THREAD_ARGUMENT, 
+                                   (int) ACE_THREAD_ARGUMENT,
                                    0, 0, 0, 0, 0, 0, 0, 0, 0);
   if (tid == ERROR)
     return -1;
@@ -2174,10 +2226,10 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
   ACE_UNUSED_ARG (stack);
   ACE_UNUSED_ARG (stacksize);
   ACE_NOTSUP_RETURN (-1);
-#endif /* ACE_HAS_THREADS */            
+#endif /* ACE_HAS_THREADS */
 }
 
-void 
+void
 ACE_OS::thr_exit (void *status)
 {
 // ACE_TRACE ("ACE_OS::thr_exit");
@@ -2187,9 +2239,9 @@ ACE_OS::thr_exit (void *status)
 # elif defined (ACE_HAS_STHREADS)
     ::thr_exit (status);
 # elif defined (ACE_HAS_WTHREADS)
-    // Can't call it here because on NT, thr_exit is actually
-    // called from ACE_TSS_Cleanup::exit ()
-    //    ACE_TSS_Cleanup::instance ()->exit (status);
+    // Can't call it here because on NT, the thread is exited
+    // directly by ACE_Thread_Adapter::invoke ().
+    //   ACE_TSS_Cleanup::instance ()->exit (status);
 # elif defined (VXWORKS)
     ACE_hthread_t tid;
     ACE_OS::thr_self (tid);
@@ -2198,10 +2250,10 @@ ACE_OS::thr_exit (void *status)
 # endif /* ACE_HAS_STHREADS */
 #else
   ACE_UNUSED_ARG (status);
-#endif /* ACE_HAS_THREADS */                 
+#endif /* ACE_HAS_THREADS */
 }
 
-int 
+int
 ACE_OS::thr_setspecific (ACE_thread_key_t key, void *data)
 {
 // ACE_TRACE ("ACE_OS::thr_setspecific");
@@ -2245,7 +2297,7 @@ ACE_OS::thr_setspecific (ACE_thread_key_t key, void *data)
 #endif /* ACE_HAS_THREADS */
 }
 
-int 
+int
 ACE_OS::thr_keyfree (ACE_thread_key_t key)
 {
 // ACE_TRACE ("ACE_OS::thr_keyfree");
@@ -2257,7 +2309,7 @@ ACE_OS::thr_keyfree (ACE_thread_key_t key)
     ACE_NOTSUP_RETURN (-1);
 # elif defined (ACE_HAS_PTHREADS) && !defined (ACE_HAS_FSU_PTHREADS)
     return ::pthread_key_delete (key);
-# elif defined (ACE_HAS_DCETHREADS) 
+# elif defined (ACE_HAS_DCETHREADS)
     ACE_UNUSED_ARG (key);
     ACE_NOTSUP_RETURN (-1);
 # elif defined (ACE_HAS_THR_KEYDELETE)
@@ -2277,8 +2329,8 @@ ACE_OS::thr_keyfree (ACE_thread_key_t key)
 #endif /* ACE_HAS_THREADS */
 }
 
-int 
-ACE_OS::thr_keycreate (ACE_thread_key_t *key, 
+int
+ACE_OS::thr_keycreate (ACE_thread_key_t *key,
 #if defined (ACE_HAS_THR_C_DEST)
                        ACE_THR_C_DEST dest,
 #else
@@ -2308,13 +2360,13 @@ ACE_OS::thr_keycreate (ACE_thread_key_t *key,
     ACE_OSCALL_RETURN (::pthread_keycreate (key, dest), int, -1);
 # elif defined (ACE_HAS_PTHREADS)
     ACE_UNUSED_ARG (inst);
-    ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_key_create (key, dest), 
-                                         ace_result_), 
+    ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_key_create (key, dest),
+                                         ace_result_),
                        int, -1);
 # elif defined (ACE_HAS_STHREADS)
     ACE_UNUSED_ARG (inst);
-    ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_keycreate (key, dest), 
-                                         ace_result_), 
+    ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_keycreate (key, dest),
+                                         ace_result_),
                        int, -1);
 # elif defined (ACE_HAS_WTHREADS)
     *key = ::TlsAlloc ();
@@ -2334,21 +2386,21 @@ ACE_OS::thr_keycreate (ACE_thread_key_t *key,
   ACE_UNUSED_ARG (dest);
   ACE_UNUSED_ARG (inst);
   ACE_NOTSUP_RETURN (-1);
-#endif /* ACE_HAS_THREADS */                 
+#endif /* ACE_HAS_THREADS */
 }
 
-int 
+int
 ACE_OS::thr_key_used (ACE_thread_key_t key)
 {
 #if defined (ACE_WIN32) || defined (ACE_HAS_TSS_EMULATION)
   return ACE_TSS_Cleanup::instance ()->key_used (key);
 #else
   ACE_UNUSED_ARG (key);
-  ACE_NOTSUP_RETURN (-1);  
+  ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_WIN32 || ACE_HAS_TSS_EMULATION */
 }
 
-int 
+int
 ACE_OS::thr_key_detach (void *inst)
 {
 #if defined (ACE_WIN32) || defined (ACE_HAS_TSS_EMULATION)
@@ -2362,7 +2414,7 @@ ACE_OS::thr_key_detach (void *inst)
     return -1;
 #else
   ACE_UNUSED_ARG (inst);
-  ACE_NOTSUP_RETURN (-1);  
+  ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_WIN32 || ACE_HAS_TSS_EMULATION */
 }
 
@@ -2381,7 +2433,7 @@ ACE_OS::fork_exec (char *argv[])
       STARTUPINFO startup_info;
       ACE_OS::memset ((void *) &startup_info, 0, sizeof startup_info);
       startup_info.cb = sizeof startup_info;
-      
+
       if (::CreateProcess (NULL,
                            (LPTSTR) ACE_WIDE_STRING (argv_buf.buf ()),
                            NULL, // No process attributes.
@@ -2402,7 +2454,7 @@ ACE_OS::fork_exec (char *argv[])
     }
 
   // CreateProcess failed.
-  return -1; 
+  return -1;
 #elif defined (CHORUS)
   return -1;                    // do it later!!!
 #else
@@ -2453,7 +2505,7 @@ writev (ACE_HANDLE handle, ACE_WRITEV_TYPE iov[], int n)
 
 #if defined (ACE_HAS_ALLOCA)
   buf = (char *) alloca (length);
-#else 
+#else
   ACE_NEW_RETURN (buf, char[length], -1);
 #endif /* !defined (ACE_HAS_ALLOCA) */
 
@@ -2479,7 +2531,7 @@ writev (ACE_HANDLE handle, ACE_WRITEV_TYPE iov[], int n)
 // thread-safe.
 
 extern "C" int
-readv (ACE_HANDLE handle, 
+readv (ACE_HANDLE handle,
        ACE_READV_TYPE *iov,
        int n)
 {
@@ -2497,7 +2549,7 @@ readv (ACE_HANDLE handle,
   char *buf;
 #if defined (ACE_HAS_ALLOCA)
   buf = (char *) alloca (length);
-#else 
+#else
   ACE_NEW_RETURN (buf, char[length], -1);
 #endif /* !defined (ACE_HAS_ALLOCA) */
 
@@ -2507,9 +2559,9 @@ readv (ACE_HANDLE handle,
     {
       char *ptr = buf;
       int copyn = length;
-     
-      for (i = 0; 
-           i < n && copyn > 0; 
+
+      for (i = 0;
+           i < n && copyn > 0;
            i++)
         {
           ACE_OS::memcpy (iov[i].iov_base, ptr,
@@ -2548,7 +2600,7 @@ ACE_OS::mktemp (char *s)
 {
   // ACE_TRACE ("ACE_OS::mktemp");
 #if defined (ACE_LACKS_MKTEMP)
-  if (s == 0) 
+  if (s == 0)
     // check for null template string failed!
     return 0;
   else
@@ -2584,7 +2636,7 @@ ACE_OS::mktemp (char *s)
         }
       return s;
     }
-  
+
 #else
   return ::mktemp (s);
 #endif /* ACE_LACKS_MKTEMP */
@@ -2742,44 +2794,44 @@ ACE_Thread_ID::ACE_Thread_ID (ACE_thread_t thread_id,
 {
 }
 
-ACE_thread_t 
+ACE_thread_t
 ACE_Thread_ID::id (void)
 {
   return this->thread_id_;
 }
 
-void 
+void
 ACE_Thread_ID::id (ACE_thread_t thread_id)
 {
   this->thread_id_ = thread_id;
 }
 
-ACE_hthread_t 
+ACE_hthread_t
 ACE_Thread_ID::handle (void)
 {
   return this->thread_handle_;
 }
 
-void 
+void
 ACE_Thread_ID::handle (ACE_hthread_t thread_handle)
 {
   this->thread_handle_ = thread_handle;
 }
 
-int 
+int
 ACE_Thread_ID::operator == (const ACE_Thread_ID &rhs)
 {
   return ACE_OS::thr_cmp (this->thread_handle_, rhs.thread_handle_) == 0
     && ACE_OS::thr_equal (this->thread_id_, rhs.thread_id_) == 0;
 }
 
-int 
+int
 ACE_Thread_ID::operator != (const ACE_Thread_ID &rhs)
 {
   return !(*this == rhs);
 }
 
-int 
+int
 ACE_OS::inet_aton (const char *host_name, struct in_addr *addr)
 {
   long ip_addr = ACE_OS::inet_addr (host_name);
@@ -2796,35 +2848,35 @@ ACE_OS::inet_aton (const char *host_name, struct in_addr *addr)
     return 1;
 }
 
-ssize_t 
-ACE_OS::pread (ACE_HANDLE handle, 
-               void *buf,  
+ssize_t
+ACE_OS::pread (ACE_HANDLE handle,
+               void *buf,
                size_t nbytes,
                off_t offset)
 {
 #if defined (ACE_HAS_P_READ_WRITE)
 #if defined (ACE_WIN32)
   // This will work irrespective of whether the <handle> is in
-  // OVERLAPPED mode or not.  
+  // OVERLAPPED mode or not.
   OVERLAPPED overlapped;
   overlapped.Internal = 0;
   overlapped.InternalHigh = 0;
   overlapped.Offset = offset;
   overlapped.OffsetHigh = 0;
   overlapped.hEvent = 0;
-  
+
   DWORD bytes_written; // This is set to 0 byte WriteFile.
-  
+
   if (::ReadFile (handle, buf, nbytes, &bytes_written, &overlapped))
     return (ssize_t) bytes_written;
   else if (::GetLastError () == ERROR_IO_PENDING)
     if (::GetOverlappedResult (handle, &overlapped, &bytes_written, TRUE) == TRUE)
       return (ssize_t) bytes_written;
-  
+
   return -1;
 #else
   return ::pread (handle, buf, nbytes, offset);
-#endif /* ACE_WIN32 */  
+#endif /* ACE_WIN32 */
 #elif defined (ACE_HAS_THREADS)
   ACE_MT (ACE_Thread_Mutex *ace_os_monitor_lock =
     ACE_Managed_Object<ACE_Thread_Mutex>::get_preallocated_object
@@ -2840,13 +2892,13 @@ ACE_OS::pread (ACE_HANDLE handle,
   ACE_UNUSED_ARG (buf);
   ACE_UNUSED_ARG (nbytes);
   ACE_UNUSED_ARG (offset);
-  ACE_NOTSUP_RETURN (-1);  
+  ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAD_P_READ_WRITE */
 }
 
-ssize_t 
-ACE_OS::pwrite (ACE_HANDLE handle, 
-                const void *buf,  
+ssize_t
+ACE_OS::pwrite (ACE_HANDLE handle,
+                const void *buf,
                 size_t nbytes,
                 off_t offset)
 {
@@ -2868,11 +2920,11 @@ ACE_OS::pwrite (ACE_HANDLE handle,
   else if (::GetLastError () == ERROR_IO_PENDING)
     if (::GetOverlappedResult (handle, &overlapped, &bytes_written, TRUE) == TRUE)
       return (ssize_t) bytes_written;
-  
+
   return -1;
 #else
   return ::pwrite (handle, buf, nbytes, offset);
-#endif /* ACE_WIN32 */  
+#endif /* ACE_WIN32 */
 #elif defined (ACE_HAS_THREADS)
   ACE_MT (ACE_Thread_Mutex *ace_os_monitor_lock =
     ACE_Managed_Object<ACE_Thread_Mutex>::get_preallocated_object
@@ -2888,7 +2940,7 @@ ACE_OS::pwrite (ACE_HANDLE handle,
   ACE_UNUSED_ARG (buf);
   ACE_UNUSED_ARG (nbytes);
   ACE_UNUSED_ARG (offset);
-  ACE_NOTSUP_RETURN (-1);  
+  ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAD_P_READ_WRITE */
 }
 
@@ -2910,10 +2962,10 @@ ACE_OS::mktime (struct tm *t)
 
 #if !defined (ACE_HAS_THREADS) || !defined (ACE_HAS_STHREADS)
 // The ACE_HAS_THREADS and ACE_HAS_STHREADS case is in OS.i
-int 
-ACE_OS::rwlock_init (ACE_rwlock_t *rw, 
-                     int type, 
-                     LPCTSTR name, 
+int
+ACE_OS::rwlock_init (ACE_rwlock_t *rw,
+                     int type,
+                     LPCTSTR name,
                      void *arg)
 {
   // ACE_TRACE ("ACE_OS::rwlock_init");
@@ -2924,7 +2976,7 @@ ACE_OS::rwlock_init (ACE_rwlock_t *rw,
   /* NT, POSIX, and VxWorks don't support this natively. */
   ACE_UNUSED_ARG (name);
   int result = -1;
-  
+
   // Since we cannot use the user specified name for all three
   // objects, we will create three complete new names
   TCHAR name1[ACE_UNIQUE_NAME_LEN];
@@ -2942,7 +2994,7 @@ ACE_OS::rwlock_init (ACE_rwlock_t *rw,
       && ACE_OS::cond_init (&rw->waiting_readers_, type, name2, arg) == 0
       && ACE_OS::cond_init (&rw->waiting_writers_, type, name3, arg) == 0)
     {
-      // Success!  
+      // Success!
       rw->ref_count_ = 0;
       rw->num_waiting_writers_ = 0;
       rw->num_waiting_readers_ = 0;
@@ -2966,7 +3018,7 @@ ACE_OS::rwlock_init (ACE_rwlock_t *rw,
   ACE_UNUSED_ARG (name);
   ACE_UNUSED_ARG (arg);
   ACE_NOTSUP_RETURN (-1);
-#endif /* ACE_HAS_THREADS */                 
+#endif /* ACE_HAS_THREADS */
 }
 #endif /* ! ACE_HAS_THREADS || ! ACE_HAS_STHREADS */
 
@@ -2982,68 +3034,68 @@ ace_sysconf_dump (void)
     time.dump ();
 
   ACE_DEBUG ((LM_DEBUG,
-	      "ARG_MAX \t= \t%d\t"
-	      "DELAYTIMER_MAX \t= \t%d\n"
-	      "_MQ_OPEN_MAX \t= \t%d\t"
-	      "_MQ_PRIO_MAX \t= \t%d\n"
-	      "_MQ_DFL_MSGSIZE\t= \t%d\t"
-	      "_MQ_DFL_MAXMSGNB\t= \t%d\n"
-	      "_MQ_PATHMAX \t= \t%d\n"
-	      "NGROUPS_MAX \t= \t%d\t"
-	      "OPEN_MAX \t= \t%d\n"
-	      "PAGESIZE \t= \t%d\n"
-	      "PTHREAD_DESTRUCTOR_ITERATIONS \t= \t%d\n"
-	      "PTHREAD_KEYS_MAX \t= \t%d\n"
-	      "PTHREAD_STACK_MAX \t= \t%d\n"
-	      "PTHREAD_STACK_MIN \t= \t%d\n"
-	      "PTHREAD_THREADS_MAX \t= \t%d\n"
-	      "SEM_VALUE_MAX \t= \t%d\n"
-	      "SEM_PATHMAX \t= \t%d\n"
-	      "TIMER_MAX \t= \t%d\n"
-	      "TZNAME_MAX \t= \t%d\n"
-	      "_POSIX_MESSAGE_PASSING \t= \t%d\n"
-	      "_POSIX_SEMAPHORES \t= \t%d\n"
-	      "_POSIX_SHARED_MEMORY_OBJECTS \t= \t%d\n"
-	      "_POSIX_THREADS \t= \t%d\n"
-	      "_POSIX_THREAD_ATTR_STACKADDR \t= \t%d\n"
-	      "_POSIX_THREAD_ATTR_STACKSIZE \t= \t%d\n"
-	      "_POSIX_THREAD_PRIORITY_SCHEDULING= \t%d\n"
-	      "_POSIX_THREAD_PRIO_INHERIT \t= \t%d\n"
-	      "_POSIX_THREAD_PRIO_PROTECT \t= \t%d\n"
-	      "_POSIX_THREAD_PROCESS_SHARED \t= \t%d\n"
-	      "_POSIX_THREAD_SAFE_FUNCTIONS \t= \t%d\n"
-	      "_POSIX_TIMERS \t= \t%d\n"
-	      "_POSIX_VERSION \t= \t%d\n",
-	      ACE_OS::sysconf (_SC_ARG_MAX),
-	      ACE_OS::sysconf (_SC_DELAYTIMER_MAX),
-	      ACE_OS::sysconf (_SC_MQ_OPEN_MAX),
-	      ACE_OS::sysconf (_SC_MQ_PRIO_MAX),
-	      ACE_OS::sysconf (_SC_MQ_DFL_MSGSIZE),
-	      ACE_OS::sysconf (_SC_MQ_DFL_MAXMSGNB),
-	      ACE_OS::sysconf (_SC_MQ_PATHMAX),
-	      ACE_OS::sysconf (_SC_NGROUPS_MAX),
-	      ACE_OS::sysconf (_SC_OPEN_MAX),
-	      ACE_OS::sysconf (_SC_PAGESIZE),
-	      ACE_OS::sysconf (_SC_PTHREAD_DESTRUCTOR_ITERATIONS),
-	      ACE_OS::sysconf (_SC_PTHREAD_KEYS_MAX),
-	      ACE_OS::sysconf (_SC_PTHREAD_STACK_MIN),
-	      ACE_OS::sysconf (_SC_PTHREAD_THREADS_MAX),
-	      ACE_OS::sysconf (_SC_SEM_VALUE_MAX),
-	      ACE_OS::sysconf (_SC_SHM_PATHMAX),
-	      ACE_OS::sysconf (_SC_TIMER_MAX),
-	      ACE_OS::sysconf (_SC_TZNAME_MAX),
-	      ACE_OS::sysconf (_SC_MESSAGE_PASSING),
-	      ACE_OS::sysconf (_SC_SEMAPHORES),
-	      ACE_OS::sysconf (_SC_SHARED_MEMORY_OBJECTS),
-	      ACE_OS::sysconf (_SC_THREADS),
-	      ACE_OS::sysconf (_SC_THREAD_ATTR_STACKADDR),
-	      ACE_OS::sysconf (_SC_THREAD_ATTR_STACKSIZE),
-	      ACE_OS::sysconf (_SC_THREAD_PRIORITY_SCHEDULING),
-	      ACE_OS::sysconf (_SC_THREAD_PRIO_INHERIT),
-	      ACE_OS::sysconf (_SC_THREAD_PRIO_PROTECT),
-	      ACE_OS::sysconf (_SC_THREAD_PROCESS_SHARED),
-	      ACE_OS::sysconf (_SC_THREAD_SAFE_FUNCTIONS),
-	      ACE_OS::sysconf (_SC_TIMERS),
-	      ACE_OS::sysconf (_SC_VERSION)));
+              "ARG_MAX \t= \t%d\t"
+              "DELAYTIMER_MAX \t= \t%d\n"
+              "_MQ_OPEN_MAX \t= \t%d\t"
+              "_MQ_PRIO_MAX \t= \t%d\n"
+              "_MQ_DFL_MSGSIZE\t= \t%d\t"
+              "_MQ_DFL_MAXMSGNB\t= \t%d\n"
+              "_MQ_PATHMAX \t= \t%d\n"
+              "NGROUPS_MAX \t= \t%d\t"
+              "OPEN_MAX \t= \t%d\n"
+              "PAGESIZE \t= \t%d\n"
+              "PTHREAD_DESTRUCTOR_ITERATIONS \t= \t%d\n"
+              "PTHREAD_KEYS_MAX \t= \t%d\n"
+              "PTHREAD_STACK_MAX \t= \t%d\n"
+              "PTHREAD_STACK_MIN \t= \t%d\n"
+              "PTHREAD_THREADS_MAX \t= \t%d\n"
+              "SEM_VALUE_MAX \t= \t%d\n"
+              "SEM_PATHMAX \t= \t%d\n"
+              "TIMER_MAX \t= \t%d\n"
+              "TZNAME_MAX \t= \t%d\n"
+              "_POSIX_MESSAGE_PASSING \t= \t%d\n"
+              "_POSIX_SEMAPHORES \t= \t%d\n"
+              "_POSIX_SHARED_MEMORY_OBJECTS \t= \t%d\n"
+              "_POSIX_THREADS \t= \t%d\n"
+              "_POSIX_THREAD_ATTR_STACKADDR \t= \t%d\n"
+              "_POSIX_THREAD_ATTR_STACKSIZE \t= \t%d\n"
+              "_POSIX_THREAD_PRIORITY_SCHEDULING= \t%d\n"
+              "_POSIX_THREAD_PRIO_INHERIT \t= \t%d\n"
+              "_POSIX_THREAD_PRIO_PROTECT \t= \t%d\n"
+              "_POSIX_THREAD_PROCESS_SHARED \t= \t%d\n"
+              "_POSIX_THREAD_SAFE_FUNCTIONS \t= \t%d\n"
+              "_POSIX_TIMERS \t= \t%d\n"
+              "_POSIX_VERSION \t= \t%d\n",
+              ACE_OS::sysconf (_SC_ARG_MAX),
+              ACE_OS::sysconf (_SC_DELAYTIMER_MAX),
+              ACE_OS::sysconf (_SC_MQ_OPEN_MAX),
+              ACE_OS::sysconf (_SC_MQ_PRIO_MAX),
+              ACE_OS::sysconf (_SC_MQ_DFL_MSGSIZE),
+              ACE_OS::sysconf (_SC_MQ_DFL_MAXMSGNB),
+              ACE_OS::sysconf (_SC_MQ_PATHMAX),
+              ACE_OS::sysconf (_SC_NGROUPS_MAX),
+              ACE_OS::sysconf (_SC_OPEN_MAX),
+              ACE_OS::sysconf (_SC_PAGESIZE),
+              ACE_OS::sysconf (_SC_PTHREAD_DESTRUCTOR_ITERATIONS),
+              ACE_OS::sysconf (_SC_PTHREAD_KEYS_MAX),
+              ACE_OS::sysconf (_SC_PTHREAD_STACK_MIN),
+              ACE_OS::sysconf (_SC_PTHREAD_THREADS_MAX),
+              ACE_OS::sysconf (_SC_SEM_VALUE_MAX),
+              ACE_OS::sysconf (_SC_SHM_PATHMAX),
+              ACE_OS::sysconf (_SC_TIMER_MAX),
+              ACE_OS::sysconf (_SC_TZNAME_MAX),
+              ACE_OS::sysconf (_SC_MESSAGE_PASSING),
+              ACE_OS::sysconf (_SC_SEMAPHORES),
+              ACE_OS::sysconf (_SC_SHARED_MEMORY_OBJECTS),
+              ACE_OS::sysconf (_SC_THREADS),
+              ACE_OS::sysconf (_SC_THREAD_ATTR_STACKADDR),
+              ACE_OS::sysconf (_SC_THREAD_ATTR_STACKSIZE),
+              ACE_OS::sysconf (_SC_THREAD_PRIORITY_SCHEDULING),
+              ACE_OS::sysconf (_SC_THREAD_PRIO_INHERIT),
+              ACE_OS::sysconf (_SC_THREAD_PRIO_PROTECT),
+              ACE_OS::sysconf (_SC_THREAD_PROCESS_SHARED),
+              ACE_OS::sysconf (_SC_THREAD_SAFE_FUNCTIONS),
+              ACE_OS::sysconf (_SC_TIMERS),
+              ACE_OS::sysconf (_SC_VERSION)));
 }
 #endif
