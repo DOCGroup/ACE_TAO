@@ -23,7 +23,7 @@ class FTClientMain
 
   ////////////
   // execution
-  int run ();
+  int run (ACE_ENV_SINGLE_ARG_DECL);
 
   /////////////////
   // implementation
@@ -35,7 +35,7 @@ private:
     int & more,             // out
     ACE_CString & command,  // inout
     int retry               // in
-    );
+    ACE_ENV_ARG_DECL);
 
 
   int next_replica (ACE_ENV_SINGLE_ARG_DECL);
@@ -203,7 +203,8 @@ int FTClientMain::pass (
   long & counter,
   int & more,
   ACE_CString & command,
-  int retry)
+  int retry
+  ACE_ENV_ARG_DECL)
 {
   int result = 0;
 
@@ -428,10 +429,12 @@ int FTClientMain::pass (
                 std::cout << "FT Client: ->shutdown();" << std::endl;
               }
               this->replica_->shutdown( ACE_ENV_SINGLE_ARG_PARAMETER);
+        ACE_TRY_CHECK;
               // @@ Note: this is here because the corba event loop seems to go to sleep
               // if there's nothing for it to do.
               // not quite sure why, yet.  Dale
               this->replica_->is_alive(ACE_ENV_SINGLE_ARG_PARAMETER);
+        ACE_TRY_CHECK;
             }
             ACE_CATCHANY
             {
@@ -489,8 +492,8 @@ int FTClientMain::next_replica (ACE_ENV_SINGLE_ARG_DECL)
     this->replica_name_ = this->replica_iors_[this->replica_pos_].c_str();
     this->replica_pos_ += 1;
     CORBA::Object_var rep_obj = this->orb_->string_to_object (this->replica_name_ ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (0)
-    replica_ = FT_TEST::TestReplica::_narrow (rep_obj.in ());
+    ACE_CHECK_RETURN (0);
+    this->replica_ = FT_TEST::TestReplica::_narrow (rep_obj.in ());
     if (! CORBA::is_nil (replica_.in ()))
     {
       result = 1;
@@ -508,14 +511,15 @@ int FTClientMain::next_replica (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 
-int FTClientMain::run ()
+int FTClientMain::run (ACE_ENV_SINGLE_ARG_DECL)
 {
   int result = 0;
 
-  this->orb_ = CORBA::ORB_init(this->argc_, this->argv_ ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1)
+  this->orb_ = CORBA::ORB_init(this->argc_, this->argv_);
 
-  if (next_replica ())
+  int ok = next_replica (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
+  if (ok)
   {
     // retry information
     ACE_CString command;
@@ -537,7 +541,7 @@ int FTClientMain::run ()
     {
       ACE_TRY_NEW_ENV
       {
-        result = pass (counter, more, command, retry);
+        result = pass (counter, more, command, retry ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
       }
       ACE_CATCH (CORBA::SystemException, sysex)
@@ -548,7 +552,8 @@ int FTClientMain::run ()
         retry = 0;
         int handled = 0;
 
-        handled = next_replica();
+        handled = next_replica(ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
         if (handled)
         {
           std::cout << "FT Client: Recovering from fault." << std::endl;
@@ -601,7 +606,8 @@ main (int argc, char *argv[])
   {
     ACE_TRY_NEW_ENV
     {
-      result = app.run ();
+      result = app.run (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
     }
     ACE_CATCHANY
     {

@@ -2,7 +2,6 @@
 
 project(*Server): taoserver, fault_tolerance, orbsvcsexe{
   exename = ft_replica
-  requires += exceptions
   avoids += minimum_corba
   Source_Files {
     FT_Replica.cpp
@@ -38,7 +37,6 @@ project(*Server): taoserver, fault_tolerance, orbsvcsexe{
 
 project(*Client): taoclient, fault_tolerance, orbsvcsexe {
   exename = ft_client
-  requires += exceptions
   avoids += minimum_corba
   includes += $(TAO_ROOT)
   after += *Server
@@ -51,7 +49,6 @@ project(*Client): taoclient, fault_tolerance, orbsvcsexe {
 
 project(*Notifier): taoserver, fault_tolerance, iormanip, orbsvcsexe {
   exename = ft_notifier
-  requires += exceptions
   avoids += minimum_corba
   Source_Files {
     FTAPP_Notifier_Main.cpp
@@ -67,7 +64,6 @@ project(*Notifier): taoserver, fault_tolerance, iormanip, orbsvcsexe {
 
 project(*Analyzer): taoclient, fault_tolerance, orbsvcsexe {
   exename = ft_analyzer
-  requires += exceptions
 
   Source_Files {
     FTAPP_Analyzer_Main.cpp
@@ -86,7 +82,6 @@ project(*Analyzer): taoclient, fault_tolerance, orbsvcsexe {
 project(*FaultConsumer): taoserver, fault_tolerance, orbsvcsexe {
   exename = ft_fault_consumer
   avoids += minimum_corba
-  requires += exceptions
   libs    += TAO_ReplicationManagerLib
   after   += FT_ReplicationManager_Lib
   Source_Files {
@@ -104,7 +99,6 @@ project(*FaultConsumer): taoserver, fault_tolerance, orbsvcsexe {
 project(*FactoryRegistry): taoclient, fault_tolerance, orbsvcsexe {
   exename = ft_registry
   avoids += minimum_corba
-  requires += exceptions
 
   Source_Files {
     FTAPP_FactoryRegistry_Main.cpp
@@ -123,7 +117,6 @@ project(*FactoryRegistry): taoclient, fault_tolerance, orbsvcsexe {
 project(*Creator): taoclient, fault_tolerance, orbsvcsexe {
   exename = ft_create
   avoids += minimum_corba
-  requires += exceptions
 
   Source_Files {
     FT_Creator.cpp
@@ -140,7 +133,6 @@ project(*Creator): taoclient, fault_tolerance, orbsvcsexe {
 
 project(*RMController): taoclient, fault_tolerance, orbsvcsexe {
   exename = replmgr_controller
-  requires += exceptions
   avoids += minimum_corba
   Source_Files {
     FT_ReplicationManagerController.cpp

@@ -73,7 +73,7 @@ public:
    * @param result [out] status code to return from process
    * @returns 0 to continue; nonzero to quit
    */
-  int idle(int &result);
+  int idle(int &result ACE_ENV_ARG_DECL);
 
   void request_quit();
 
@@ -95,49 +95,49 @@ private:
   ///////////////////////////
   // override Replica methods
   virtual void set (CORBA::Long value
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC (( CORBA::SystemException));
 
   virtual CORBA::Long increment (CORBA::Long delta
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA::Long get (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual CORBA::Long get (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA::Long counter (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual CORBA::Long counter (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void counter (CORBA::Long counter
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void die (FT_TEST::TestReplica::Bane when
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   ///////////////////////////
   // override PullMonitorable
 
-  virtual CORBA::Boolean is_alive (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual CORBA::Boolean is_alive (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   ///////////////////////////
   // override Updatable
 
-  virtual ::FT::State * get_update ()
+  virtual ::FT::State * get_update (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException, FT::NoUpdateAvailable));
 
-  virtual void set_update (const FT::State & s)
+  virtual void set_update (const FT::State & s ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException, FT::InvalidUpdate));
 
-  virtual ::FT::State * get_state ()
+  virtual ::FT::State * get_state (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException, FT::NoStateAvailable));
 
-  virtual void set_state (const FT::State & s)
+  virtual void set_state (const FT::State & s ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException, FT::InvalidState));
 
   ////////////////

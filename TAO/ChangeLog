@@ -1,11 +1,33 @@
+Sat Jan 17 13:58:11 2004  Dale Wilson  <wilson_d@ociweb.com>
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_FactoryRegistry.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_FactoryRegistry.cpp:
+        * orbsvcs/tests/FT_App/FT_Client.cpp:
+        * orbsvcs/tests/FT_App/FT_Creator.cpp:
+        * orbsvcs/tests/FT_App/FT_ReplicaFactory_i.h:
+        * orbsvcs/tests/FT_App/FT_ReplicaFactory_i.cpp:
+        * orbsvcs/tests/FT_App/FT_TestReplica_i.h:
+        * orbsvcs/tests/FT_App/FT_TestReplica_i.cpp:
+        * orbsvcs/tests/FT_App/ReplicationManagerFaultConsumerAdapter.h:
+        * orbsvcs/tests/FT_App/ReplicationManagerFaultConsumerAdapter.cpp:
+        * orbsvcs/tests/FT_App/StubFaultAnalyzer.h:
+        * orbsvcs/tests/FT_App/StubFaultAnalyzer.cpp:
+        * orbsvcs/tests/FT_App/StubFaultNotifier.h:
+        * orbsvcs/tests/FT_App/StubFaultNotifier.cpp:
+        * orbsvcs/tests/FT_App/TAO_Object_Group_Creator.cpp:
+          Fix exceptions=0 build problems.
+
+        * orbsvcs/tests/FT_App/FT_App.mpc:
+          Renable exceptions=0 build.
+
 Sat Jan 17 19:28:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* orbsvcs/tests/AVStreams/Pluggable_Flow_Protocol/TimeStamp.{h,cpp}:
-	* orbsvcs/tests/AVStreams/Pluggable_Flow_Protocol/export.h:
-	* orbsvcs/tests/AVStreams/Pluggable_Flow_Protocol/AVStream_Pluggable_Flow_Protocol.mpc:
-	  This test buils an own shared library but used the AV export macro's.
-	  Gave this test its own macro so that it exports just it own symbols
-	  instead of all AV symbols.
+  * orbsvcs/tests/AVStreams/Pluggable_Flow_Protocol/TimeStamp.{h,cpp}:
+  * orbsvcs/tests/AVStreams/Pluggable_Flow_Protocol/export.h:
+  * orbsvcs/tests/AVStreams/Pluggable_Flow_Protocol/AVStream_Pluggable_Flow_Protocol.mpc:
+    This test buils an own shared library but used the AV export macro's.
+    Gave this test its own macro so that it exports just it own symbols
+    instead of all AV symbols.
 
 Sat Jan 17 11:26:03 2004  Huang-Ming Huang  <hh1@cse.wustl.edu>
 
@@ -50,7 +72,7 @@ Fri Jan 16 11:27:28 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/driver/drv_args.cpp:
 
           Modified the -g <gperf path> command line option to
-	  automatically append "\gperf.exe" if we are on
+    automatically append "\gperf.exe" if we are on
           Windows. CreateProcess (called under the hood when the gperf
  	  process is spawned) apparently needs it this way. Thanks to Brad
  	  Orner <bradley_p_orner@raytheon.com> for reporting the problem
@@ -59,64 +81,64 @@ Fri Jan 16 11:27:28 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Fri Jan 16 15:34:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* orsbvcs/Notify_Service/Notify_Service.{h,cpp}:
-	  Parse the notify service arguments before initialising the ORB so
-	  that the -ORBRunThreads option is consumed before we let the ORB
-	  parse the arguments, because else the ORB will throw an exception
-	  about a unknown -ORB option. The argc argument of the parse_args
-	  function is now by reference, so that it is updated because this
-	  method consumes the arguments. Thanks to Olli Savia <ops@iki.fi>
-	  for reporting this and also testing the changes.
+  * orsbvcs/Notify_Service/Notify_Service.{h,cpp}:
+    Parse the notify service arguments before initialising the ORB so
+    that the -ORBRunThreads option is consumed before we let the ORB
+    parse the arguments, because else the ORB will throw an exception
+    about a unknown -ORB option. The argc argument of the parse_args
+    function is now by reference, so that it is updated because this
+    method consumes the arguments. Thanks to Olli Savia <ops@iki.fi>
+    for reporting this and also testing the changes.
 
 Fri Jan 16 14:16:49 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* examples/Advanced/ch_8_and_10/icp.cpp:
-	  Also msvc doesn't have lrand48
+  * examples/Advanced/ch_8_and_10/icp.cpp:
+    Also msvc doesn't have lrand48
 
-	* examples/Advanced/ch_8_and_10/server.h:
-	  Use ::strcmp instead of strcmp. Because of the subsetting just using
-	  strcmp directly gives compile problems with Borland. This fixes
-	  the problems with Borland and it didn't break the environments I have
-	  access to. If other environments break, the solution would be to use
-	  ACE_OS::strcmp but these examples doesn't use anything of ACE_OS
-	  at this moment.
+  * examples/Advanced/ch_8_and_10/server.h:
+    Use ::strcmp instead of strcmp. Because of the subsetting just using
+    strcmp directly gives compile problems with Borland. This fixes
+    the problems with Borland and it didn't break the environments I have
+    access to. If other environments break, the solution would be to use
+    ACE_OS::strcmp but these examples doesn't use anything of ACE_OS
+    at this moment.
 
 Fri Jan 16 14:10:09 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* examples/Advanced/ch_8_and_10/server.cpp:
-	  Moved function call outside assert. This fixes a warning in the
-	  release builds and the function call is also then done in a release
-	  build.
+  * examples/Advanced/ch_8_and_10/server.cpp:
+    Moved function call outside assert. This fixes a warning in the
+    release builds and the function call is also then done in a release
+    build.
 
 Fri Jan 16 13:53:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* docs/tutorials/Quoter/Simple/Persistent/Quoter_Simple_Persistent.mpc:
-	* docs/tutorials/Quoter/Simple/Client/Quoter_Simple_Client.mpc:
-	  Client projects are now also based on portableserver. This fixes link
-	  errors in the BCB6 Static build.
+  * docs/tutorials/Quoter/Simple/Persistent/Quoter_Simple_Persistent.mpc:
+  * docs/tutorials/Quoter/Simple/Client/Quoter_Simple_Client.mpc:
+    Client projects are now also based on portableserver. This fixes link
+    errors in the BCB6 Static build.
 
 Fri Jan 16 12:41:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/Fault_Detector_Loader.cpp:
-	  Corrected argument of ACE_AUTO_PTR_RESET call. Thanks to
+  * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Fault_Detector_Loader.cpp:
+    Corrected argument of ACE_AUTO_PTR_RESET call. Thanks to
           Mickael P. Golovin <migel@garant.ru> for reporting this.
 
 Fri Jan 16 12:33:46 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* orbsvcs/orbsvcs/PortableGroup/PG_FactoryRegistry.cpp:
-	  Removed superfluous reset call which caused problems using old
-	  stl. Thanks to Mickael P. Golovin <migel@garant.ru> for reporting
-	  this.
+  * orbsvcs/orbsvcs/PortableGroup/PG_FactoryRegistry.cpp:
+    Removed superfluous reset call which caused problems using old
+    stl. Thanks to Mickael P. Golovin <migel@garant.ru> for reporting
+    this.
 
 Fri Jan 16 09:41:53 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* orbsvcs/tests/FT_App/FT_TestReplica_i.cpp:
-	  Fixed compile problem in Tru64 build.
+  * orbsvcs/tests/FT_App/FT_TestReplica_i.cpp:
+    Fixed compile problem in Tru64 build.
 
 Fri Jan 16 09:13:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* orbsvcs/orbsvcs/PortableGroup/PG_Properties_Encoder.cpp:
-	  Removed not needed include of ace/pre.h
+  * orbsvcs/orbsvcs/PortableGroup/PG_Properties_Encoder.cpp:
+    Removed not needed include of ace/pre.h
 
 Thu Jan 15 16:10:27 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -181,10 +203,10 @@ Thu Jan 15 15:36:42 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Thu Jan 15 16:50:32 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/ORB_Per_Priority.mpc:
-	* performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/Single_Endpoint.mpc:
-	  Removed avoids += minimum_corba from these files because it is now set
-	  in rtcorbacommon.
+  * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/ORB_Per_Priority.mpc:
+  * performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/Single_Endpoint.mpc:
+    Removed avoids += minimum_corba from these files because it is now set
+    in rtcorbacommon.
 
 Thu Jan 15 16:14:01 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
