@@ -6,7 +6,8 @@
 template <class IF>
 class TAO_ORBSVCS_Export TAO_StreamEndPoint
   : public virtual TAO_Base_StreamEndPoint,
-    public virtual TAO_PropertySet<IF>
+    public virtual TAO_PropertySet<IF>,
+    public virtual PortableServer::RefCountServantBase
 {
   // = DESCRIPTION
   //    The Stream EndPoint. Used to implement one endpoint of a stream
@@ -26,7 +27,6 @@ public:
   virtual void destroy (const AVStreams::flowSpec &the_spec,
                         CORBA::Environment &env = CORBA::Environment::default_environment ());
   // Destroy the stream, Empty the_spec means, for all the flows
-
 
   virtual CORBA::Boolean connect (AVStreams::StreamEndPoint_ptr responder,
                                   AVStreams::streamQoS &qos_spec,

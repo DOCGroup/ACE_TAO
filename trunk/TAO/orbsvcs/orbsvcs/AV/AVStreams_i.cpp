@@ -85,51 +85,42 @@ TAO_Basic_StreamCtrl::destroy (const AVStreams::flowSpec &the_spec,
 // Changes the QoS associated with the stream
 // Empty the_spec means apply operation to all flows
 CORBA::Boolean
-TAO_Basic_StreamCtrl::modify_QoS (AVStreams::streamQoS &new_qos,
-                                  const AVStreams::flowSpec &the_spec,
-                                  CORBA::Environment &ACE_TRY_ENV)
+TAO_Basic_StreamCtrl::modify_QoS (AVStreams::streamQoS &/*new_qos*/,
+                                  const AVStreams::flowSpec &/*the_spec*/,
+                                  CORBA::Environment &/*ACE_TRY_ENV*/)
 {
-  ACE_UNUSED_ARG (new_qos);
-  ACE_UNUSED_ARG (the_spec);
-  ACE_UNUSED_ARG (ACE_TRY_ENV);
   return 0;
 }
 
 // Used by StreamEndPoint and VDev to inform StreamCtrl of events.
 // E.g., loss of flow, reestablishment of flow, etc..
 void
-TAO_Basic_StreamCtrl::push_event (const struct CosPropertyService::Property & the_event,
-                                  CORBA::Environment &ACE_TRY_ENV)
+TAO_Basic_StreamCtrl::push_event (const struct CosPropertyService::Property &/*the_event*/,
+                                  CORBA::Environment &/*ACE_TRY_ENV*/)
 {
-  ACE_DEBUG ((LM_DEBUG,
-              "\n(%P|%t) Recieved event \""));
-  ACE_UNUSED_ARG (the_event);
-  ACE_UNUSED_ARG (ACE_TRY_ENV);
+  ACE_DEBUG ((LM_DEBUG,"\n(%P|%t) Recieved event \""));
 }
 
 // @@ Need to throw not-supported exception here
 void
-TAO_Basic_StreamCtrl::set_FPStatus (const AVStreams::flowSpec &the_spec,
-                                    const char *fp_name,
-                                    const CORBA::Any &fp_settings,
-                                    CORBA::Environment &ACE_TRY_ENV)
+TAO_Basic_StreamCtrl::set_FPStatus (const AVStreams::flowSpec &/*the_spec*/,
+                                    const char */*fp_name*/,
+                                    const CORBA::Any &/*fp_settings*/,
+                                    CORBA::Environment &/*ACE_TRY_ENV*/)
 {
-  ACE_UNUSED_ARG (the_spec);
-  ACE_UNUSED_ARG (fp_name);
-  ACE_UNUSED_ARG (fp_settings);
-  ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
 
 // @@ Need to throw not-supported exception here
 CORBA::Object_ptr
 TAO_Basic_StreamCtrl::get_flow_connection (const char *flow_name,
-                                           CORBA::Environment &)
+                                           CORBA::Environment &ACE_TRY_ENV)
 {
   TAO_String_Hash_Key flow_name_key (flow_name);
   FlowConnection_Map::ENTRY *flow_connection_entry = 0;
   if (this->flow_map_.find (flow_name_key,flow_connection_entry) == 0)
     return flow_connection_entry->int_id_;
-  return 0;
+  else
+    ACE_THROW_RETURN (AVStreams::noSuchFlow (),CORBA::Object::_nil ());
 }
 
 // @@ Need to throw not-supported exception here
@@ -1023,9 +1014,20 @@ TAO_MMDevice::destroy (AVStreams::StreamEndPoint_ptr the_ep,
                        const char *vdev_name,
                        CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_UNUSED_ARG (the_ep);
-  ACE_UNUSED_ARG (vdev_name);
-  ACE_UNUSED_ARG (ACE_TRY_ENV);
+  // Remove self from POA.  Because of reference counting, the POA
+  // will automatically delete the servant when all pending requests
+  // on this servant are complete.
+  //
+  PortableServer::POA_var poa = this->_default_POA (ACE_TRY_ENV);
+  ACE_CHECK;
+
+  PortableServer::ObjectId_var id = poa->servant_to_id (this,
+                                                        ACE_TRY_ENV);
+  ACE_CHECK;
+
+  poa->deactivate_object (id.in (),
+                          ACE_TRY_ENV);
+  ACE_CHECK;
 }
 
 // Adds the fdev object to the MMDevice.
@@ -1164,7 +1166,20 @@ TAO_FlowConnection::start (CORBA::Environment &ACE_TRY_ENV)
 void
 TAO_FlowConnection::destroy (CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_UNUSED_ARG (ACE_TRY_ENV);
+  // Remove self from POA.  Because of reference counting, the POA
+  // will automatically delete the servant when all pending requests
+  // on this servant are complete.
+  //
+  PortableServer::POA_var poa = this->_default_POA (ACE_TRY_ENV);
+  ACE_CHECK;
+
+  PortableServer::ObjectId_var id = poa->servant_to_id (this,
+                                                        ACE_TRY_ENV);
+  ACE_CHECK;
+
+  poa->deactivate_object (id.in (),
+                          ACE_TRY_ENV);
+  ACE_CHECK;
 }
 
 // modify the QoS for this flow.
@@ -1340,7 +1355,20 @@ TAO_FlowEndPoint::start (CORBA::Environment &ACE_TRY_ENV)
 void
 TAO_FlowEndPoint::destroy (CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_UNUSED_ARG (ACE_TRY_ENV);
+  // Remove self from POA.  Because of reference counting, the POA
+  // will automatically delete the servant when all pending requests
+  // on this servant are complete.
+  //
+  PortableServer::POA_var poa = this->_default_POA (ACE_TRY_ENV);
+  ACE_CHECK;
+
+  PortableServer::ObjectId_var id = poa->servant_to_id (this,
+                                                        ACE_TRY_ENV);
+  ACE_CHECK;
+
+  poa->deactivate_object (id.in (),
+                          ACE_TRY_ENV);
+  ACE_CHECK;
 }
 
 AVStreams::StreamEndPoint_ptr
@@ -1808,13 +1836,24 @@ TAO_FDev::bind_mcast (AVStreams::FDev_ptr first_peer,
 }
 
 void
-TAO_FDev::destroy (AVStreams::FlowEndPoint_ptr the_ep,
-                   const char * fdev_name,
+TAO_FDev::destroy (AVStreams::FlowEndPoint_ptr /*the_ep*/,
+                   const char * /*fdev_name*/,
                    CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_UNUSED_ARG (the_ep);
-  ACE_UNUSED_ARG (fdev_name);
-  ACE_UNUSED_ARG (ACE_TRY_ENV);
+  // Remove self from POA.  Because of reference counting, the POA
+  // will automatically delete the servant when all pending requests
+  // on this servant are complete.
+  //
+  PortableServer::POA_var poa = this->_default_POA (ACE_TRY_ENV);
+  ACE_CHECK;
+
+  PortableServer::ObjectId_var id = poa->servant_to_id (this,
+                                                        ACE_TRY_ENV);
+  ACE_CHECK;
+
+  poa->deactivate_object (id.in (),
+                          ACE_TRY_ENV);
+  ACE_CHECK;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
