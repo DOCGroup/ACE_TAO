@@ -1,3 +1,16 @@
+Tue Dec 23 12:03:27 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
+
+	* CIDLC/CIDLC.vcproj:
+	
+	  Updated VC7.1 projects. Also temporarily excluded from the
+	  build generators that are still to be ported.
+	
+	* CCF/Example/CIDL/LocalExecutorMapping/ExecutorMappingGenerator.cpp:
+	* CIDLC/ExecutorMappingGenerator.cpp:
+
+	  Changed 'interface' to 'interface_' since VC7.1 naively believes
+	  that interface is an alias for struct.
+
 Tue Dec 23 11:34:56 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
 	* CCF/CCF/CIDL/CIDL.vcproj:
@@ -8,7 +21,7 @@ Tue Dec 23 11:34:56 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
 	  Updated VC7.1 projects.
 
-	
+
 	* CCF/CCF/IDL2/LexicalAnalyzer.cpp:
 	* CCF/CCF/IDL2/Parser.hpp:
 	* CCF/CCF/IDL2/SemanticAction/Impl/Attribute.cpp:
