@@ -1,3 +1,21 @@
+Mon Oct 13 14:10:30 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
+
+	* tests/Priority_Reactor_Test.cpp: 
+	  Fixed a number of bugs: hostname not initialized when creating
+	  the server address.
+	  The Svc_Handler base class should be instantiated using the
+	  ACE_*_STREAM macros.
+	  The code for non-threaded platforms was broken.
+	  Thanks to Irfan <irfan@cs.wustl.edu>
+
+	* tests/Priority_Task_Test.cpp: 
+	  We use the new ACE_Sched_Priority_Iterator.
+
+	* include/makeinclude/platform_irix6.x-32_sgic++.GNU: 
+	* include/makeinclude/platform_irix6.x-n32_sgic++.GNU: 
+	  Removed this old config files, they have been superseeded by
+	  platform_irix6.x_sgic++.GNU.
+
 Mon Oct 13 13:42:05 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
 	* examples/Service_Configurator/IPC-tests/server/Handle_Thr_Stream.cpp (svc): 
