@@ -182,12 +182,14 @@ public:
   /// Returns a pointer to this <ACE_Timer_Queue>'s iterator.
   virtual ACE_Timer_Queue_Iterator_T<TYPE, FUNCTOR, ACE_LOCK> &iter (void);
 
-  /// Removes the earliest node from the queue and returns it. Note that
-  /// the timer is removed from the heap, but is not freed, and its ID
-  /// is not reclaimed. The caller is responsible for calling either
-  /// @c reschedule or @c free_node after this function returns. Thus,
-  /// this function is for support of @c ACE_Timer_Queue::expire and
-  /// should not be used unadvisedly in other conditions.
+  /**
+   * Removes the earliest node from the queue and returns it. Note that
+   * the timer is removed from the heap, but is not freed, and its ID
+   * is not reclaimed. The caller is responsible for calling either
+   * @c reschedule or @c free_node after this function returns. Thus,
+   * this function is for support of @c ACE_Timer_Queue::expire and
+   * should not be used unadvisedly in other conditions.
+   */
   ACE_Timer_Node_T <TYPE> *remove_first (void);
 
   /// Dump the state of an object.
