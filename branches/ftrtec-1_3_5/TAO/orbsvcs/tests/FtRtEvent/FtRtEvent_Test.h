@@ -12,7 +12,7 @@
 #ifndef FTRTEVENT_TEST_H
 #define FTRTEVENT_TEST_H
 
-#include "orbsvcs/FtRtecEventChannelAdminC.h"
+#include "orbsvcs/RtecEventChannelAdminC.h"
 
 namespace TAO_FTRTEC {
   class FTEC_Gateway;
@@ -27,7 +27,7 @@ public:
   int run(int argc, ACE_TCHAR** argv);
 protected:
   CORBA::ORB_var orb_;
-  FtRtecEventChannelAdmin::EventChannel_var channel_;
+  RtecEventChannelAdmin::EventChannel_var channel_;
   TAO_FTRTEC::FTEC_Gateway* gateway_;
   ACE_Time_Value timer_interval_;
   int num_iterations_;
