@@ -1,3 +1,10 @@
+Thu Sep 24 13:30:00 CDT 1998  Chris Gill <cdgill@cs.wustl.edu>
+
+        * examples/Bounded_Packet_Relay/README
+          examples/Bounded_Packet_Relay/Bounded_Packet_Relay.{dsp,dsw}
+
+          Updated README, added in MSVC++ project, workspace files.
+
 Thu Sep 24 12:48:58 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Containers_T.cpp (ACE_{Bounded,Fixed}_Set_Iterator::done):
