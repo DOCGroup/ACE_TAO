@@ -2906,12 +2906,6 @@ unsigned long inet_network(const char *);
 # ifndef howmany
 #   define howmany(x, y)   (((x)+((y)-1))/(y))
 # endif /* howmany */
-
-  // LynxOS sets NSIG to the highest-numbered signal.  We assume that
-  // it is one greater than that; redefine it here based on the
-  // knowledge that SIGRTMAX is the highest-numbered signal.
-# undef NSIG
-# define NSIG (SIGRTMAX + 1)
 #endif /* __Lynx__ */
 
 #if defined (CHORUS)
@@ -3352,10 +3346,14 @@ struct sigaction
 #define SEM_UNDO 0
 #endif /* SEM_UNDO */
 
-// Why is this defined?  It must be a std C library symbol.
-#if !defined (NSIG)
-#define NSIG 0
-#endif /* NSIG */
+#if defined (__Lynx__)
+  // LynxOS sets NSIG to the highest-numbered signal.
+# define ACE_NSIG (NSIG + 1)
+#else
+  // All other platforms set NSIG to one greater than the
+  // highest-numbered signal.
+# define ACE_NSIG NSIG
+#endif /* __Lynx__ */
 
 #if !defined (R_OK)
 #define R_OK    04      /* Test for Read permission. */
