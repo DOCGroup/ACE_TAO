@@ -1994,12 +1994,12 @@ ACE_Thread_Adapter::invoke (void)
           return status;
         }
     }
+#if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
   ACE_SEH_EXCEPT (ACE_LOG_MSG->seh_except_selector ()(0))
     {
-#if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
       ACE_LOG_MSG->seh_except_handler ()(0);
-#endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
     }
+#endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
 
   ACE_NOTREACHED (return status);
 }
