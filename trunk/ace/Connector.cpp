@@ -559,11 +559,12 @@ ACE_Connector<SVH, PR_CO_2>::create_AST (SVH *sh,
                                         const ACE_Synch_Options &synch_options)
 {
   ACE_TRACE ("ACE_Connector<SVH, PR_CO_2>::create_AST");
+  ACE_HANDLE handle = sh->get_handle ();
   AST *ast;
 
   ACE_NEW_RETURN (ast,
                   AST (sh,
-                       sh->get_handle (),
+                       handle,
                        synch_options.arg (), -1),
                   -1);
 
@@ -571,10 +572,9 @@ ACE_Connector<SVH, PR_CO_2>::create_AST (SVH *sh,
   ACE_Reactor_Mask mask = ACE_Event_Handler::CONNECT_MASK;
 
   // Bind ACE_Svc_Tuple with the ACE_HANDLE we're trying to connect.
-  if (this->handler_map_.bind (sh->get_handle (),
-                               ast) == -1)
+  if (this->handler_map_.bind (handle, ast) == -1)
     goto fail1;
-  else if (this->reactor ()->register_handler (sh->get_handle (),
+  else if (this->reactor ()->register_handler (handle,
                                                this,
                                                mask) == -1)
     goto fail2;
@@ -609,7 +609,7 @@ fail3:
     (this, mask | ACE_Event_Handler::DONT_CALL);
   /* FALLTHRU */
 fail2:
-  this->handler_map_.unbind (sh->get_handle ());
+  this->handler_map_.unbind (handle);
   /* FALLTHRU */
 fail1:
 

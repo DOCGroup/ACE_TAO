@@ -20,7 +20,7 @@ ACE_Incremental_Key_Generator<T>::operator() (T &t)
 }
 
 template <class T> ACE_INLINE T &
-ACE_Incremental_Key_Generator<T>::current_value (void)
+ACE_Incremental_Key_Generator<T>::current_value (void) const
 {
   return this->t_;
 }

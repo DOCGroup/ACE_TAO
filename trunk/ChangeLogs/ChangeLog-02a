@@ -1,3 +1,33 @@
+Sun Jul 22 08:19:43 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/Log_Record.cpp (priority_names_): Added commas after the
+	  'ACE_LIB_TEXT ("LM_UNK(04000)")' lines.  Thanks to Steve Harris
+ 	  <harris_s@ociweb.com> for reporting this.
+
+Sat Jul 21 19:56:08 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/Map_T.{h,i}: Made current_value() a const member function.
+	  Thanks to Johnny Willemsen for reporting this.
+
+Fri Jul 20 10:16:46 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/Connector.cpp (create_AST): Replaced some calls to
+	  sh->get_handle () with a cached value of handle.  This fixes a
+ 	  bug with gcc 2.96 on Tornado 2.1/VxWorks for SuperH.  Thanks to
+ 	  Frank Wolf <fwolf@gum.de> for reporting this.
+	
+	* examples/Connection/non_blocking/CPP-acceptor.cpp:
+	* examples/Service_Configurator/IPC-tests/server/Handle_Thr_Stream.cpp: 
+	* examples/Connection/non_blocking/CPP-connector.cpp:  Changed the
+	  SH macro to SVH to avoid clashes with a macro in VxWorks.
+  	  Thanks to Frank Wolf <fwolf@gum.de> for reporting this.
+
+Thu Jul 19 06:55:07 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/config-g++-common.h: Version 2.96 of g++ on VxWorks 
+	  is missing auto_ptr, so let's add the ACE_LACK_AUTO_PTR flag
+ 	  there.  Thanks to Frank Wolf for suggesting this.
+
 Fri Jul 20 09:47:38 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Log_Msg.cpp: Fixed WinCE errors.  CE does not support

@@ -9272,7 +9272,7 @@ ACE_OS::write (ACE_HANDLE handle, const void *buf, size_t nbyte)
   ACE_UNUSED_ARG (nbyte);
   ACE_NOTSUP_RETURN (-1);
 # else
-  if(::write_f(handle, (void *) buf, nbyte) == 0)
+  if(::write_f (handle, (void *) buf, nbyte) == 0)
     return (ssize_t) nbyte;
   else
     return -1;
