@@ -299,6 +299,11 @@ TAO_IIOP_Transport::send_request_header (TAO_Operation_Details &opdetails,
                                          TAO_Target_Specification &spec,
                                          TAO_OutputCDR &msg)
 {
+  // Check whether we have a Bi Dir IIOP policy set
+  if (this->orb_core ()->bidir_giop_policy ())
+    {
+
+    }
   // We are going to pass on this request to the underlying messaging
   // layer. It should take care of this request
   if (this->messaging_object_->generate_request_header (opdetails,

@@ -152,7 +152,8 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
     ior_interceptors_ (),
     parser_registry_ (),
-    connection_cache_ ()
+    connection_cache_ (),
+    bidir_giop_policy (0)
 {
 #if defined(ACE_MVS)
   ACE_NEW (this->from_iso8859_, ACE_IBM1047_ISO8859);
