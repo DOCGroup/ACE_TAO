@@ -1,0 +1,44 @@
+                        TNF client-side profile for Visibroker for 20000 calls
+
+Function name         %      self+desc.          mean     max      min     std.
+                     time       ms       calls  ms/call ms/call  ms/call   err
+________________________________________________________________________________
+mutex_unlock         1.31      188.930  61797    0.003    1.027    0.002   0.000
+mutex_lock           1.21      175.465  61790    0.003    0.330    0.002   0.000
+
+
+                        TNF server-side profile for Visibroker for 20000 calls
+
+                                     Profile
+
+Function name         %      self+desc.          mean     max      min     std.
+                     time       ms       calls  ms/call ms/call  ms/call   err
+________________________________________________________________________________
+mutex_lock           0.18      165.141  60432    0.003    0.501    0.002   0.000
+mutex_unlock         0.16      153.891  60432    0.003    0.373    0.002   0.000
+
+
+
+Cubit results over Ethernet with 20,000 calls
+---------------------------------------------
+
+                                Latency (ms)            Calls/Sec
+
+Visibroker without filters        1.077                 928
+Visibroker Thread-Per-Request     
+Visibroker Thread-Pool (25)       
+Visibroker Thread-Per-Session     
+        
+
+Cubit results over ATM with 20,000 calls
+----------------------------------------
+
+                                Latency (ms)            Calls/Sec
+
+Visibroker without filters        1.060                 943
+Visibroker Thread-Per-Request     
+Visibroker Thread-Pool (25)       
+Visibroker Thread-Per-Session     
+
+
+        
