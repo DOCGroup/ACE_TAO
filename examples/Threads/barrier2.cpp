@@ -259,6 +259,11 @@ main (int argc, char *argv[])
   ACE_DEBUG ((LM_DEBUG,"(%t) done correct!\n"));
   return 0;
 }
+
+#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+template class Worker_Task<ACE_Null_Barrier>;
+#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+
 #else
 int 
 main (int, char *[])

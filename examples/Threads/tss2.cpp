@@ -188,6 +188,13 @@ main (int argc, char *argv[])
   return 0;
 }
 
+
+#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+template class ACE_Atomic_Op<ACE_Thread_Mutex, int>;
+template class ACE_Atomic_Op<ACE_Token, int>;
+template class ACE_TSS<TSS_Obj>;
+#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+
 #else
 int 
 main (int, char *[])
@@ -196,7 +203,3 @@ main (int, char *[])
   return 0;
 }
 #endif /* ACE_HAS_THREADS */
-
-#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
-template class ACE_Atomic_Op<ACE_Token, int>;
-#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */

@@ -174,6 +174,9 @@ int main (int argc, char *argv[])
 
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
 template class ACE_Atomic_Op<ACE_Thread_Mutex, int>;
+template class ACE_Guard<ACE_RW_Mutex>;
+template class ACE_Read_Guard<ACE_RW_Mutex>;
+template class ACE_Write_Guard<ACE_RW_Mutex>;
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
 
 #else
