@@ -83,7 +83,7 @@ public:
   // Request has been just sent, but the reply is not received. Idle
   // the transport now.
 
-  // virtual int idle_after_reply (void) = 0;
+  virtual int idle_after_reply (void) = 0;
   // Request is sent and the reply is received. Idle the transport
   // now.
 
@@ -141,7 +141,7 @@ public:
   // Request has been just sent, but the reply is not received. Idle
   // the transport now.
 
-  // virtual int idle_after_reply (void);
+  virtual int idle_after_reply (void);
   // Request is sent and the reply is received. Idle the transport
   // now.
 
@@ -209,7 +209,7 @@ public:
   // Request has been just sent, but the reply is not received. Idle
   // the transport now.
 
-  // virtual int idle_after_reply (void);
+  virtual int idle_after_reply (void);
   // Request is sent and the reply is received. Idle the transport
   // now.
 
