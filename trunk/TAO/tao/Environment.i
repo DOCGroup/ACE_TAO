@@ -7,6 +7,19 @@ CORBA_Environment::exception (void) const
   return this->exception_;
 }
 
+ACE_INLINE void
+CORBA::release (CORBA::Environment_ptr env)
+{
+  if (env)
+    env->_decr_refcnt ();
+}
+
+ACE_INLINE CORBA::Boolean
+CORBA::is_nil (CORBA::Environment_ptr env)
+{
+  return env == 0;
+}
+
 // *************************************************************
 // Inline operations for class CORBA_Environment_var
 // *************************************************************

@@ -538,7 +538,7 @@ TAO_SYSTEM_EXCEPTION_LIST
   static Boolean is_nil (Request_ptr);
   static Boolean is_nil (NamedValue_ptr);
   static Boolean is_nil (NVList_ptr);
-  //  static Boolean is_nil (Context_ptr);
+  static Boolean is_nil (Context_ptr);
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
