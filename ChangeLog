@@ -1,3 +1,11 @@
+Wed Jun 25 12:45:44 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* bin/topinfo_iorsize_stats.sh (s_id): 
+	* bin/topinfo_simple_stats.sh: We used 'top' to determine the
+	  runtime memory used by the process. A better way to get this
+	  done is to use /proc/processid/status. The scripts have been
+	  changed to use the proc info instead of 'top'. 
+
 Wed Jun 25 11:00:00 2003  Justin Michel  <michel_j@ociweb.com>
 
         * nightly.mwc:
