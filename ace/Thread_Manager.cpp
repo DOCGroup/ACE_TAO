@@ -76,6 +76,11 @@ ACE_Thread_Descriptor::ACE_Thread_Descriptor (void)
     thr_state_ (ACE_THR_IDLE)
 {
   ACE_TRACE ("ACE_Thread_Descriptor::ACE_Thread_Descriptor");
+
+  // We use the cleanup_hook_, so we have to be sure to initialize it.
+  this->cleanup_info_.object_ = 0;
+  this->cleanup_info_.cleanup_hook_ = 0;
+  this->cleanup_info_.param_ = 0;
 }
 
 // The following macro simplifies subsequence code.
@@ -774,7 +779,6 @@ int
 ACE_Thread_Manager::kill_thr (int i, int arg)
 {
   ACE_TRACE ("ACE_Thread_Manager::kill_thr");
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, 0));
 
   int signum = (int) arg;
 
