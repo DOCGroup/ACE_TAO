@@ -1,186 +1,191 @@
+Sat Jan 27 10:39:28 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * bin/nightlybuilds/builds.lst:
+          Apparently the blank in 'RedHat 7.0' breaks the scoreboard.
+
 Sat Jan 27 01:06:09 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* include/makeinclude/platform_sunos5_sunc++.GNU: SPRO 5.0
-	  compiler should be able to support automatic template
-	  instantiation.  Also, standard C++ library should be ok.  -g was
-	  added to DCCFLAGS.
-	  
-	* ace/config-sunos5.5.h: Turned off
-	  ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION,
-	  ACE_TEMPLATES_REQUIRE_SOURCE and ACE_USES_OLD_IOSTREAMS for the
-	  SPRO 5.0 compiler.
+        * include/makeinclude/platform_sunos5_sunc++.GNU: SPRO 5.0
+          compiler should be able to support automatic template
+          instantiation.  Also, standard C++ library should be ok.  -g was
+          added to DCCFLAGS.
 
-	  Thanks to J. Russell Noseworthy <rnosewor@objectsciences.com>
-	  for contributing the above patches.
+        * ace/config-sunos5.5.h: Turned off
+          ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION,
+          ACE_TEMPLATES_REQUIRE_SOURCE and ACE_USES_OLD_IOSTREAMS for the
+          SPRO 5.0 compiler.
+
+          Thanks to J. Russell Noseworthy <rnosewor@objectsciences.com>
+          for contributing the above patches.
 
 Sat Jan 27 00:37:26 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/OS.i:
+        * ace/OS.i:
 
-	  - (mutex_lock): Windows code must use relative time since that
-	  is what WaitForSingleObject() expects.  Also, fixed extra
-	  "return" before ACE_NOTSUP_RETURN.
+          - (mutex_lock): Windows code must use relative time since that
+          is what WaitForSingleObject() expects.  Also, fixed extra
+          "return" before ACE_NOTSUP_RETURN.
 
-	  - (thread_mutex_lock): Made thread_mutex_lock() with timeout
-	  close to the thread_mutex_lock() without timeouts.
+          - (thread_mutex_lock): Made thread_mutex_lock() with timeout
+          close to the thread_mutex_lock() without timeouts.
 
 Fri Jan 26 21:53:45 2001  Ossama Othman  <ossama@uci.edu>
 
-	* ace/OS.h:
-	* ace/OS.i (thread_mutex_lock):
+        * ace/OS.h:
+        * ace/OS.i (thread_mutex_lock):
 
-	  Added an overloaded version of this method that accepts a
-	  timeout argument.  It delegates to the standard
-	  ACE_OS::mutex_lock() method on non-Windows platforms.
-	  Otherwise, it returns with an ENOTSUP.
+          Added an overloaded version of this method that accepts a
+          timeout argument.  It delegates to the standard
+          ACE_OS::mutex_lock() method on non-Windows platforms.
+          Otherwise, it returns with an ENOTSUP.
 
-	  The addition of this method was necessary to fix a compile
-	  problem related to the ACE_Thread_Mutex class.
+          The addition of this method was necessary to fix a compile
+          problem related to the ACE_Thread_Mutex class.
 
-	* ace/Synch.i (acquire):
+        * ace/Synch.i (acquire):
 
-	  In ACE_Thread_Mutex::acquire() that accepts a timeout argument,
-	  call the corresponding ACE_OS::thread_mutex_lock() method.  This
-	  fixes compile-time error on MS Windows builds due to the fact
-	  that ACE_mutex_t and ACE_thread_mutex_t are different types on
-	  that platform.
+          In ACE_Thread_Mutex::acquire() that accepts a timeout argument,
+          call the corresponding ACE_OS::thread_mutex_lock() method.  This
+          fixes compile-time error on MS Windows builds due to the fact
+          that ACE_mutex_t and ACE_thread_mutex_t are different types on
+          that platform.
 
 Fri Jan 26 17:31:26 2001  Ossama Othman  <ossama@uci.edu>
 
-	* ace/OS.i (mutex_lock):
+        * ace/OS.i (mutex_lock):
 
-	  Fixed unused argument warnings that occured when compiling for
-	  the single threaded case.
+          Fixed unused argument warnings that occured when compiling for
+          the single threaded case.
 
 Fri Jan 26 16:58:03 2001  Ossama Othman  <ossama@uci.edu>
 
-	* ace/config-linux.h:
+        * ace/config-linux.h:
 
-	  glibc 2.1.x doesn't have the (very useful) __GLIBC_PREREQ
-	  macro.  Use a preprocessor test that doesn't rely on it.
+          glibc 2.1.x doesn't have the (very useful) __GLIBC_PREREQ
+          macro.  Use a preprocessor test that doesn't rely on it.
 
 Fri Jan 26 16:48:06 2001  Ossama Othman  <ossama@uci.edu>
 
-	* ace/config-qnx-neutrino.h (ACE_HAS_MUTEX_TIMEOUTS):
-	* ace/config-qnx-rtp.h (ACE_HAS_MUTEX_TIMEOUTS):
+        * ace/config-qnx-neutrino.h (ACE_HAS_MUTEX_TIMEOUTS):
+        * ace/config-qnx-rtp.h (ACE_HAS_MUTEX_TIMEOUTS):
 
-	  QNX supports pthread_mutex_timedlock().  Yes!
+          QNX supports pthread_mutex_timedlock().  Yes!
 
 Fri Jan 26 17:50:38 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/config-win32-common.h:
-	  ace/config-vxworks-5.x.h: Added ACE_HAS_MUTEX_TIMEOUTS macro.
+        * ace/config-win32-common.h:
+          ace/config-vxworks-5.x.h: Added ACE_HAS_MUTEX_TIMEOUTS macro.
 
-	* ace/OS.i: Added timed mutex operations for Win32, VxWorks, and
- 	  pSoS.
+        * ace/OS.i: Added timed mutex operations for Win32, VxWorks, and
+          pSoS.
 
 Fri Jan 26 16:31:15 2001  Ossama Othman  <ossama@uci.edu>
 
-	* ace/OS.h (mutex_lock):
+        * ace/OS.h (mutex_lock):
 
-	  Updated documentation for the version of this method that
-	  accepts a timeout value.
+          Updated documentation for the version of this method that
+          accepts a timeout value.
 
-	* ace/OS.i (mutex_lock):
+        * ace/OS.i (mutex_lock):
 
-	  If the platform does not support timed mutexes, then return with
-	  an ENOTSUP.
-	
-	* ace/Process_Mutex.h:
-	* ace/Process_Mutex.inl (acquire):
+          If the platform does not support timed mutexes, then return with
+          an ENOTSUP.
 
-	  Added version of this method that accepts a timeout value.
+        * ace/Process_Mutex.h:
+        * ace/Process_Mutex.inl (acquire):
+
+          Added version of this method that accepts a timeout value.
 
 Fri Jan 26 17:50:38 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* examples/Bounded_Packet_Relay/Thread_Bounded_Packet_Relay.cpp (report_stats): 
-	  Fixed some unintentional tabs.  Thanks to Mike Curtis for
- 	  reporting this!
+        * examples/Bounded_Packet_Relay/Thread_Bounded_Packet_Relay.cpp (report_stats):
+          Fixed some unintentional tabs.  Thanks to Mike Curtis for
+          reporting this!
 
 Fri Jan 26 15:34:01 2001  Ossama Othman  <ossama@uci.edu>
 
-	* ace/OS.h:
-	* ace/OS.i (mutex_timedlock, mutex_lock):
-	* ace/Synch.i (acquire):
+        * ace/OS.h:
+        * ace/OS.i (mutex_timedlock, mutex_lock):
+        * ace/Synch.i (acquire):
 
-	  Renamed the ACE_OS::mutex_timedlock() to the overloaded
-	  ACE_OS::mutex_lock().
+          Renamed the ACE_OS::mutex_timedlock() to the overloaded
+          ACE_OS::mutex_lock().
 
 Fri Jan 26 14:13:32 2001  Ossama Othman  <ossama@uci.edu>
 
-	* ace/OS.h:
-	* ace/OS.i (mutex_timedlock):
+        * ace/OS.h:
+        * ace/OS.i (mutex_timedlock):
 
-	  Wrapped the pthread_mutex_timedlock() function.  It times out if
-	  a lock hasn't been acquired by the given absolute time.
+          Wrapped the pthread_mutex_timedlock() function.  It times out if
+          a lock hasn't been acquired by the given absolute time.
 
-	* ace/Synch.h:
-	* ace/Synch.i (acquire):
+        * ace/Synch.h:
+        * ace/Synch.i (acquire):
 
-	  Added versions of this method that accept an ACE_Time_Value.
-	  They are used to prevent blocking definitely while waiting for a
-	  given mutex to become available.
+          Added versions of this method that accept an ACE_Time_Value.
+          They are used to prevent blocking definitely while waiting for a
+          given mutex to become available.
 
-	* ace/config-linux.h (ACE_HAS_MUTEX_TIMEOUTS):
+        * ace/config-linux.h (ACE_HAS_MUTEX_TIMEOUTS):
 
-	  glibc 2.2.x supports the pthread_mutex_timedlock() function.
+          glibc 2.2.x supports the pthread_mutex_timedlock() function.
 
-	* ace/config-linux-common.h:
+        * ace/config-linux-common.h:
 
-	  Undefine ACE_LACKS_{LLSEEK,LSEEK64}_PROTOTYPE prior to include
- 	  the KCC configuration file.  Thanks to Jeff Greif
- 	  <jgreif@befree.com> for reporting this.
+          Undefine ACE_LACKS_{LLSEEK,LSEEK64}_PROTOTYPE prior to include
+          the KCC configuration file.  Thanks to Jeff Greif
+          <jgreif@befree.com> for reporting this.
 
-	* ace/README:
+        * ace/README:
 
-	  Added ACE_HAS_MUTEX_TIMEOUTS to the list of ACE macros.
+          Added ACE_HAS_MUTEX_TIMEOUTS to the list of ACE macros.
 
 Fri Jan 26 11:18:15 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/Log_Msg.cpp (dump): Fixed some unintentional tabs.  Thanks
-	  to Mike Curtis for reporting this!
+        * ace/Log_Msg.cpp (dump): Fixed some unintentional tabs.  Thanks
+          to Mike Curtis for reporting this!
 
-	* ace/SOCK_Dgram_Mcast.cpp (open): Modified the call to
-	  ACE_SOCK_Dgram::shared_open() to just pass in this->mcast_
- 	  rather than making a local copy that just contained the port
- 	  number.  Thanks to Keith Nicewarner <knicewar@erg.sri.com> for
- 	  reporting this.
+        * ace/SOCK_Dgram_Mcast.cpp (open): Modified the call to
+          ACE_SOCK_Dgram::shared_open() to just pass in this->mcast_
+          rather than making a local copy that just contained the port
+          number.  Thanks to Keith Nicewarner <knicewar@erg.sri.com> for
+          reporting this.
 
-	* tests/Makefile.bor (TESTS): Added Message_Queue_Test_Ex.cpp.
+        * tests/Makefile.bor (TESTS): Added Message_Queue_Test_Ex.cpp.
 
 Fri Jan 26 13:37:30 2001  Luther J Baker  <luther@cs.wustl.edu>
 
-	* ace/OS.h:
+        * ace/OS.h:
 
-	  If using PACE, ACE_stat typedefs to pace_stat_s.
+          If using PACE, ACE_stat typedefs to pace_stat_s.
 
 Fri Jan 26 11:18:15 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* tests/Message_Queue_Test_Ex.cpp: Fixed some ASYS_* macros with
-	  ACE_* stuff.  Thanks to Darrell for reporting this.
+        * tests/Message_Queue_Test_Ex.cpp: Fixed some ASYS_* macros with
+          ACE_* stuff.  Thanks to Darrell for reporting this.
 
-	* ace/Message_Queue_T.h,
-  	* ace/Message_Queue_T.i,
-  	* ace/Message_Queue_T.cpp:
-	  Added the ACE_Message_Queue_Ex, which provides a message queue
-	  abstraction whose type is templatized.  Thanks to Michael Vitlo
-	  <mvitalo@sprynet.com> for contributing this.
+        * ace/Message_Queue_T.h,
+        * ace/Message_Queue_T.i,
+        * ace/Message_Queue_T.cpp:
+          Added the ACE_Message_Queue_Ex, which provides a message queue
+          abstraction whose type is templatized.  Thanks to Michael Vitlo
+          <mvitalo@sprynet.com> for contributing this.
 
-	* tests/run_tests.lst: 
-  	* tests/run_test.lst: 
-	* tests: Added support for the new Message_Queue_Test_Ex.cpp file.
-	  Thanks to Michael Vitlo <mvitalo@sprynet.com> for contributing
-	  this. 
+        * tests/run_tests.lst:
+        * tests/run_test.lst:
+        * tests: Added support for the new Message_Queue_Test_Ex.cpp file.
+          Thanks to Michael Vitlo <mvitalo@sprynet.com> for contributing
+          this.
 
 Fri Jan 26 09:33:20 2001  Carlos O'Ryan  <coryan@uci.edu>
 
-	* bin/auto_run_tests.lst:
-	  Add TAO/tests/Object_Loader to the list
+        * bin/auto_run_tests.lst:
+          Add TAO/tests/Object_Loader to the list
 
-	* include/makeinclude/rules.lib.GNU:
-	  Allow both .cpp and .c files in the LSRC macro.  This should
-	  let the PACE guys use the real name for their files, and
-	  generate proper dependencies.
+        * include/makeinclude/rules.lib.GNU:
+          Allow both .cpp and .c files in the LSRC macro.  This should
+          let the PACE guys use the real name for their files, and
+          generate proper dependencies.
 
 Fri Jan 26 02:16:42 2001  Darrell Brunsch <brunsch@uci.edu>
 
@@ -190,44 +195,44 @@ Fri Jan 26 02:16:42 2001  Darrell Brunsch <brunsch@uci.edu>
 
 Thu Jan 25 19:16:48 2001  Ossama Othman  <ossama@uci.edu>
 
-	* ace/config-linux.h:
+        * ace/config-linux.h:
 
-	  Only define ACE_LACKS_NETDB_REENTRANT_FUNCTIONS and
-	  ACE_LACKS_THREAD_STACK_SIZE for glibc < 2.1.  glibc 2.1+ has the
-	  netdb reentrant functions (albeit with funky signatures), and it
-	  has pthread_attr_setstacksize().
+          Only define ACE_LACKS_NETDB_REENTRANT_FUNCTIONS and
+          ACE_LACKS_THREAD_STACK_SIZE for glibc < 2.1.  glibc 2.1+ has the
+          netdb reentrant functions (albeit with funky signatures), and it
+          has pthread_attr_setstacksize().
 
-	* ace/OS.h:
+        * ace/OS.h:
 
-	  Removed trailing whitespace.
+          Removed trailing whitespace.
 
-	* ace/OS.i (getprotobyname_r, getprotobynumber_r, gethostbyaddr_r,
-	  gethostbyname_r, getservbyname_r):
+        * ace/OS.i (getprotobyname_r, getprotobynumber_r, gethostbyaddr_r,
+          gethostbyname_r, getservbyname_r):
 
-	  Added glibc-specific calls to these functions.  This allows us
-	  to avoid grabbing a lock! Thanks to Ben Strong
-	  <bstrong@bluelark.com> for providing the patch.
+          Added glibc-specific calls to these functions.  This allows us
+          to avoid grabbing a lock! Thanks to Ben Strong
+          <bstrong@bluelark.com> for providing the patch.
 
-	* THANKS:
+        * THANKS:
 
-	  Added Ben Strong to list of contributors.
+          Added Ben Strong to list of contributors.
 
 Thu Jan 25 20:10:24 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* include/makeinclude/platform_irix6.x_sgic++.GNU: 
-	* include/makeinclude/platform_irix5.3_sgic++.GNU: 
+        * include/makeinclude/platform_irix6.x_sgic++.GNU:
+        * include/makeinclude/platform_irix5.3_sgic++.GNU:
 
-	  Removed -rpath "$(ACE_ROOT)/ace" from LDFLAGS.
+          Removed -rpath "$(ACE_ROOT)/ace" from LDFLAGS.
 
-	* ace/Message_Queue_T.{h,i}: Moved code from .i to .h to work
-	  around a compiler bug.  The Sun Forte 6 (CC 5.1) compiler is
-	  only happy if this is in the header file.
+        * ace/Message_Queue_T.{h,i}: Moved code from .i to .h to work
+          around a compiler bug.  The Sun Forte 6 (CC 5.1) compiler is
+          only happy if this is in the header file.
 
-	* ace/Message_Block_T.cpp: Fixed template parameter name mismatch
-	  between declaration and definition.
+        * ace/Message_Block_T.cpp: Fixed template parameter name mismatch
+          between declaration and definition.
 
-	  Thanks to J. Russell Noseworthy <rnosewor@objectsciences.com>
-	  for contributing the above patches.
+          Thanks to J. Russell Noseworthy <rnosewor@objectsciences.com>
+          for contributing the above patches.
 
 Thu Jan 25 10:50:35 2001  Steve Huston  <shuston@riverace.com>
 
@@ -244,56 +249,56 @@ Thu Jan 25 10:50:35 2001  Steve Huston  <shuston@riverace.com>
 
 Thu Jan 25 05:34:58 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/Connector.cpp (connector): Added an ACE_const_cast() to
-	  get rid of the const for the accessor method!
+        * ace/Connector.cpp (connector): Added an ACE_const_cast() to
+          get rid of the const for the accessor method!
 
-	* ace/Acceptor.cpp (acceptor): Added an ACE_const_cast() to
-	  get rid of the const for the accessor method!
+        * ace/Acceptor.cpp (acceptor): Added an ACE_const_cast() to
+          get rid of the const for the accessor method!
 
-	* ace/Log_Msg.{h,cpp},
-	* ace/Trace.{h,cpp}: The Log_Msg -I flag now uses the current
-	  ACE_Trace nesting level rather than always using 1.  Thanks to
- 	  Mike Curtis for providing this.
+        * ace/Log_Msg.{h,cpp},
+        * ace/Trace.{h,cpp}: The Log_Msg -I flag now uses the current
+          ACE_Trace nesting level rather than always using 1.  Thanks to
+          Mike Curtis for providing this.
 
 Wed Jan 24 19:43:24 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/OS.i (lstat,stat): Separated win32 cases out.
+        * ace/OS.i (lstat,stat): Separated win32 cases out.
 
 Wed Jan 24 18:15:59 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/OS.i (fstat): Oops, wrong version of this function was
-	  modified.
+        * ace/OS.i (fstat): Oops, wrong version of this function was
+          modified.
 
 Wed Jan 24 14:44:12 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/FILE.cpp:
-	* ace/Filecache.cpp:
-	* ace/Filecache.h:
-	* ace/OS.h:
-	* ace/OS.i:
-	* ace/OS.cpp: Changed the signature of <stat>, <fstat>, and
-	  <lstat> to use ACE_stat instead of "struct stat".  Also changed
-	  to use _fstat and _stat on win32 instead of <fstat> and <stat>
-	  directly.  Also replaced several use of "struct stat" to
-	  ACE_stat.  Thanks to Mike Anderson <manderson@sonusnet.com> for
-	  reporting this.  [Bug 762]
+        * ace/FILE.cpp:
+        * ace/Filecache.cpp:
+        * ace/Filecache.h:
+        * ace/OS.h:
+        * ace/OS.i:
+        * ace/OS.cpp: Changed the signature of <stat>, <fstat>, and
+          <lstat> to use ACE_stat instead of "struct stat".  Also changed
+          to use _fstat and _stat on win32 instead of <fstat> and <stat>
+          directly.  Also replaced several use of "struct stat" to
+          ACE_stat.  Thanks to Mike Anderson <manderson@sonusnet.com> for
+          reporting this.  [Bug 762]
 
 Wed Jan 24 16:13:10 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/OS_Dirent.cpp: Fixed a bug in the readdir_emulation() method.
-	  Thanks to Yung Trinh <ytrinh@email.com> for reporting this.
+        * ace/OS_Dirent.cpp: Fixed a bug in the readdir_emulation() method.
+          Thanks to Yung Trinh <ytrinh@email.com> for reporting this.
 
-	* ace/Connector.{h,cpp}: Added a new connector() accessor to
-	  return the underlying ACE_PEER_CONNECTOR.  Thanks to Pedro
- 	  Brandao <pbrandao@inescn.pt> for suggesting this.
+        * ace/Connector.{h,cpp}: Added a new connector() accessor to
+          return the underlying ACE_PEER_CONNECTOR.  Thanks to Pedro
+          Brandao <pbrandao@inescn.pt> for suggesting this.
 
 Wed Jan 24 10:17:03 2001  Carlos O'Ryan  <coryan@uci.edu>
 
-	* ace/Makefile:
-	  Add dependencies (again). They were lost is a previous commit.
+        * ace/Makefile:
+          Add dependencies (again). They were lost is a previous commit.
 
-	* */Makefile:
-	  Update dependencies (yet another time).
+        * */Makefile:
+          Update dependencies (yet another time).
 
 Wed Jan 24 09:41:54 2001  Carlos O'Ryan  <coryan@uci.edu>
 
