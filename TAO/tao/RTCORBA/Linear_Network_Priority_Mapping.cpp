@@ -41,10 +41,9 @@ ACE_RCSID(Strategies, Linear_Network_Priority_Mapping, "$Id$")
 #define IPDSFIELD_CE_MASK       0x01
 #define IPDSFIELD_DSCP_EF       0x2E
 
-
 static int dscp [] =
 {
-  // IPDSFIELD_DSCP_DEFAULT ,
+  IPDSFIELD_DSCP_DEFAULT ,
   IPDSFIELD_DSCP_CS1     ,
   IPDSFIELD_DSCP_CS2     ,
   IPDSFIELD_DSCP_CS3     ,
@@ -67,75 +66,74 @@ static int dscp [] =
   IPDSFIELD_DSCP_EF
 };
 
-
 /*
 static const char *dscp_char[]=
-  {
-    //"Normal",
-    "CS1",
-    "CS2",
-    "CS3",
-    "CS4",
-    "CS5",
-    "CS6",
-    "CS7",
-    "Assured Forwarding 11",
-    "Assured Forwarding 12",
-    "Assured Forwarding 13",
-    "Assured Forwarding 21",
-    "Assured Forwarding 22",
-    "Assured Forwarding 23",
-    "Assured Forwarding 31",
-    "Assured Forwarding 32",
-    "Assured Forwarding 33",
-    "Assured Forwarding 41",
-    "Assured Forwarding 42",
-    "Assured Forwarding 43",
-    "Expedited Forwarding"
-  };
+{
+  "Normal",
+  "CS1",
+  "CS2",
+  "CS3",
+  "CS4",
+  "CS5",
+  "CS6",
+  "CS7",
+  "Assured Forwarding 11",
+  "Assured Forwarding 12",
+  "Assured Forwarding 13",
+  "Assured Forwarding 21",
+  "Assured Forwarding 22",
+  "Assured Forwarding 23",
+  "Assured Forwarding 31",
+  "Assured Forwarding 32",
+  "Assured Forwarding 33",
+  "Assured Forwarding 41",
+  "Assured Forwarding 42",
+  "Assured Forwarding 43",
+  "Expedited Forwarding"
+};
 */
 
-TAO_Linear_Network_Priority_Mapping::TAO_Linear_Network_Priority_Mapping (long policy)
-  : policy_ (policy)
-{
-  this->min_ = 0;
-  this->max_ = 32767;
-
-  if (TAO_debug_level)
-    ACE_DEBUG ((LM_DEBUG,
-                "Min = %d\n"
-                "Max = %d\n",
-                this->min_,
-                this->max_));
-
-  this->increment_ = (((this->max_ - this->min_) + 1) / 20) + 1;
-}
-
-TAO_Linear_Network_Priority_Mapping::~TAO_Linear_Network_Priority_Mapping (void)
+TAO_Linear_Network_Priority_Mapping::TAO_Linear_Network_Priority_Mapping (long)
 {
 }
 
 CORBA::Boolean
 TAO_Linear_Network_Priority_Mapping::to_network (RTCORBA::Priority corba_priority,
-                                         RTCORBA::NetworkPriority &network_priority)
+                                                 RTCORBA::NetworkPriority &network_priority)
 {
-  network_priority = dscp [(corba_priority - this->min_) / this->increment_];
   if (TAO_debug_level)
     ACE_DEBUG ((LM_DEBUG,
-                "TAO_Linear_Network_Priority_Mapping::to_network = %x increment = %d\n",
-                network_priority,
-                this->increment_));
+                "TAO_Linear_Network_Priority_Mapping::to_network corba_priority %d\n",
+                corba_priority));
+
+  int total_slots = sizeof (dscp) / sizeof (int);
+
+  int array_slot =
+    ((corba_priority - RTCORBA::minPriority) / double (RTCORBA::maxPriority - RTCORBA::minPriority)) * total_slots;
+
+  if (array_slot == total_slots)
+    array_slot -= 1;
+
+  network_priority = dscp[array_slot];
+
+  if (TAO_debug_level)
+    ACE_DEBUG ((LM_DEBUG,
+                "TAO_Linear_Network_Priority_Mapping::to_network = %x\n",
+                network_priority));
+
   return 1;
 }
 
 CORBA::Boolean
-TAO_Linear_Network_Priority_Mapping::to_CORBA (RTCORBA::NetworkPriority /*network_priority*/,
+TAO_Linear_Network_Priority_Mapping::to_CORBA (RTCORBA::NetworkPriority network_priority,
                                                RTCORBA::Priority &/*corba_priority*/)
 {
   if (TAO_debug_level)
     ACE_DEBUG ((LM_DEBUG,
-                "TAO_Linear_Network_Priority_Mapping::to_corba\n"));
-  return 1;
+                "TAO_Linear_Network_Priority_Mapping::to_CORBA network_priority %d\n",
+                network_priority));
+
+  return 0;
 }
 
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */

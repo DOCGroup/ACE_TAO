@@ -1,3 +1,41 @@
+Fri May 14 15:29:36 2004  Irfan Pyarali  <irfan@oomworks.com>
+
+	* tao\RTCORBA\Linear_Network_Priority_Mapping: 
+
+	  Several changes were made to simplify this class. <increment_>,
+	  <max_> and <min_> were removed.  Conversion from corba to
+	  network in to_network() was corrected.  
+
+	* tao\IIOP_Connection_Handler.cpp (set_dscp_codepoint): 
+
+	  "Failed to set Diffserv" message was incorrectly getting printed
+	  out. IPDSFIELD_DSCP_DEFAULT was made a valid DiffServ code
+	  point.
+
+	* tests\RTCORBA\Diffserv\server.cpp:
+
+	  test_method() was modified since there is no passing or
+	  respecting of corba (thread) priorities.  Only network
+	  priorities are set. Command line options were also simplified.
+	  Both servants are registered in the same instance of the
+	  server.  The first one in the RootPOA and the other one in a POA
+	  with the correct ServerProtocolPolicy.
+
+	* tests\RTCORBA\Diffserv\client.cpp: 
+
+	  Serveral changes were made to correct and simplify code in this
+	  file.  PolicyCurrent was used rather than using the ORB_Core.
+	  Command line options were also simplified.  Server is shutdown
+	  only if specified.
+
+	* tests\RTCORBA\Diffserv\Custom_Network_Priority_Mapping: 
+
+	  Several changes were made to simplify this class. <increment_>,
+	  <corba_priority_>, <max_> and <min_> were removed.
+	  desired_priority() was renamed to corba_priority().  Conversion
+	  from corba to network in to_network() was corrected.  An assert
+	  was added to to_CORBA() since it should never be called.
+
 Fri May 14 09:43:03 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/DynamicInterface/DII_Invocation.cpp (handle_user_exception):

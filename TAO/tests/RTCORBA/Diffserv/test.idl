@@ -4,10 +4,6 @@
 
 interface Test
 {
-  void test_method (in short priority);
-  // Print out the CORBA priority of the servant thread and check that
-  // it is equal to the <priority> argument.
-
+  void test_method ();
   oneway void shutdown ();
-  // Shut down the ORB.
 };
