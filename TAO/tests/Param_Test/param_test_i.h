@@ -52,7 +52,7 @@ class Param_Test_i : public POA_Param_Test
   //    Implementation of the Param_Test test suite.
 public:
   Param_Test_i (const char *coffee_name,
-                const char *obj_name = 0);
+                CORBA::ORB_ptr orb);
   // Constructor
 
   ~Param_Test_i (void);
@@ -241,7 +241,7 @@ public:
                     Param_Test::Big_Union_out u3,
                     CORBA::Environment &env);
 
-  virtual CORBA::Any* 
+  virtual CORBA::Any*
     test_complex_any (const CORBA::Any &a1,
                       CORBA::Any &a2,
                       CORBA::Any_out a3,
@@ -254,11 +254,11 @@ public:
                       Param_Test::Multdim_Array ,
                       Param_Test::Multdim_Array_out ,
                       CORBA::Environment &);
-  
+
 #endif
   void shutdown (CORBA::Environment &env);
 
-  
+
 private:
   Coffee_i obj_;
   // the coffee object reference we maintain
@@ -266,6 +266,8 @@ private:
   int test_exception_count_;
   // Count the number of calls to test_exception() so we can throw
   // every 3 calls or so.
+
+  CORBA::ORB_var orb_;
 };
 
 #endif /* PARAM_TEST_I_H */

@@ -332,8 +332,18 @@ rtype TAO_Default_Resource_Factory::methodname(void)\
 }
 
 IMPLEMENT_GET_METHOD(get_thr_mgr, ACE_Thread_Manager *, tm_)
-IMPLEMENT_GET_METHOD(get_acceptor_registry, TAO_Acceptor_Registry *, ar_)
-IMPLEMENT_GET_METHOD(get_connector_registry, TAO_Connector_Registry *, cr_)
+
+TAO_Acceptor_Registry*
+TAO_Default_Resource_Factory::get_acceptor_registry (void)
+{
+  return new TAO_Acceptor_Registry;
+}
+
+TAO_Connector_Registry*
+TAO_Default_Resource_Factory::get_connector_registry (void)
+{
+  return new TAO_Connector_Registry;
+}
 
 // @@ TODO We may be changing the state of the global
 //    Allocated_Resources structure, but without any locks?

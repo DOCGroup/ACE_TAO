@@ -20,6 +20,7 @@
 #include "ace/streams.h"
 #include "tao/corba.h"
 #include "tao/IIOP_Profile.h"
+#include "tao/UIOP_Profile.h"
 
 static CORBA::Boolean
 catiiop (CORBA::String string,
@@ -113,6 +114,12 @@ catiiop (CORBA::String string,
               string));
   return 1;
 }
+
+static CORBA::Boolean
+cat_iiop_profile (TAO_InputCDR& cdr);
+
+static CORBA::Boolean
+cat_uiop_profile (TAO_InputCDR& cdr);
 
 static CORBA::Boolean
 catior (CORBA::String str,
@@ -232,140 +239,20 @@ catior (CORBA::String str,
             continue;
           }
 
-        if (tag != TAO_IOP_TAG_INTERNET_IOP)
+        if (tag == TAO_IOP_TAG_INTERNET_IOP)
+          {
+            continue_decoding = cat_iiop_profile (stream);
+          }
+        else if (tag == TAO_IOP_TAG_UNIX_IOP)
+          {
+            continue_decoding = cat_uiop_profile (stream);
+          }
+        else
           {
             continue_decoding = stream.skip_string ();
             ACE_DEBUG ((LM_DEBUG,
                         "unknown tag %d skipping\n", tag));
-            continue;
           }
-
-        // OK, we've got an IIOP profile.  It's going to be
-        // encapsulated ProfileData.  Create a new decoding stream and
-        // context for it, and tell the "parent" stream that this data
-        // isn't part of it any more.
-
-        CORBA::ULong encap_len;
-        continue_decoding = stream.read_ulong (encap_len);
-
-        // ProfileData is encoded as a sequence of octet. So first get
-        // the length of the sequence.
-        if (continue_decoding == 0)
-          {
-            ACE_DEBUG ((LM_DEBUG,
-                        "cannot read encap length\n"));
-            continue;
-          }
-
-        // Create the decoding stream from the encapsulation in the
-        // buffer, and skip the encapsulation.
-        TAO_InputCDR str (stream, encap_len);
-
-        continue_decoding = str.good_bit ()
-          && stream.skip_bytes (encap_len);
-
-        if (!continue_decoding)
-          {
-            ACE_DEBUG ((LM_DEBUG,
-                        "problem decoding encapsulated stream, "
-                        "len = %d\n",
-                        encap_len));
-            continue;
-          }
-
-        // Read and verify major, minor versions, ignoring IIOP
-        // profiles whose versions we don't understand.
-        //
-        // XXX this doesn't actually go back and skip the whole
-        // encapsulation...
-        CORBA::Octet iiop_version_major, iiop_version_minor;
-        if (! (str.read_octet (iiop_version_major)
-              && iiop_version_major == TAO_IIOP_Profile::DEF_IIOP_MAJOR
-              && str.read_octet (iiop_version_minor)
-              && iiop_version_minor <= TAO_IIOP_Profile::DEF_IIOP_MINOR))
-          {
-            ACE_DEBUG ((LM_DEBUG,
-                        "detected new v%d.%d IIOP profile",
-                        iiop_version_major,
-                        iiop_version_minor));
-            continue;
-          }
-
-        ACE_DEBUG ((LM_DEBUG,
-                    "IIOP Version:\t%d.%d\n",
-                    iiop_version_major,
-                    iiop_version_minor));
-
-        // Get host and port.
-        CORBA::UShort port_number;
-        CORBA::String hostname;
-        if (str.decode (CORBA::_tc_string,
-                        &hostname,
-                        0,
-                        env) != CORBA::TypeCode::TRAVERSE_CONTINUE
-            || !str.read_ushort (port_number))
-          {
-            ACE_DEBUG ((LM_DEBUG,
-                        "error decoding IIOP host/port"));
-            return CORBA::TypeCode::TRAVERSE_STOP;
-          }
-
-        ACE_DEBUG ((LM_DEBUG,
-                    "Host Name:\t%s\n",
-                    hostname));
-        ACE_DEBUG ((LM_DEBUG,
-                    "Port Number:\t%d\n",
-                    port_number));
-        CORBA::string_free (hostname);
-
-        // ... and object key.
-
-        CORBA::ULong objKeyLength = 0;
-        continue_decoding = str.read_ulong (objKeyLength);
-
-        ACE_DEBUG ((LM_DEBUG,
-                    "Object Key len:\t%d\n",
-                    objKeyLength));
-
-        ACE_DEBUG ((LM_DEBUG,
-                    "Object Key as hex:\n"));
-
-        CORBA::Octet anOctet;
-        CORBA::String objKey = CORBA::string_alloc (objKeyLength + 1);
-
-        short counter = -1;
-
-        u_int i = 0;
-
-        for (; i < objKeyLength; i++)
-          {
-            if (++counter == 8)
-              {
-                ACE_DEBUG ((LM_DEBUG,
-                            "\n"));
-                counter = 0;
-              }
-            str.read_octet (anOctet);
-
-            ACE_DEBUG ((LM_DEBUG,
-                        "%x ",
-                        anOctet));
-            objKey[i] = (char) anOctet;
-          }
-
-        objKey[i] = '\0';
-
-        ACE_DEBUG ((LM_DEBUG,
-                    "\nThe Object Key as string:\n"));
-
-        for (i = 0; i < objKeyLength; i++)
-          ACE_DEBUG ((LM_DEBUG,
-                      "%c",
-                      objKey[i]));
-
-        CORBA::string_free (objKey);
-        ACE_DEBUG ((LM_DEBUG,
-                    "\n"));
       }
   return 1;
 }
@@ -618,4 +505,180 @@ main (int argc, char *argv[])
     }
 
   return 0;
+}
+
+static CORBA::Boolean
+cat_object_key (TAO_InputCDR& stream)
+{
+  // ... and object key.
+
+  CORBA::ULong objKeyLength = 0;
+  if (stream.read_ulong (objKeyLength) == 0)
+    return 1;
+
+  ACE_DEBUG ((LM_DEBUG,
+              "Object Key len:\t%d\n",
+              objKeyLength));
+
+  ACE_DEBUG ((LM_DEBUG,
+              "Object Key as hex:\n"));
+
+  CORBA::Octet anOctet;
+  CORBA::String objKey = CORBA::string_alloc (objKeyLength + 1);
+
+  short counter = -1;
+
+  u_int i = 0;
+
+  for (; i < objKeyLength; i++)
+    {
+      if (++counter == 8)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "\n"));
+          counter = 0;
+        }
+      stream.read_octet (anOctet);
+
+      ACE_DEBUG ((LM_DEBUG,
+                  "%x ",
+                  anOctet));
+      objKey[i] = (char) anOctet;
+    }
+
+  objKey[i] = '\0';
+
+  ACE_DEBUG ((LM_DEBUG,
+              "\nThe Object Key as string:\n"));
+
+  for (i = 0; i < objKeyLength; i++)
+    ACE_DEBUG ((LM_DEBUG,
+                "%c",
+                objKey[i]));
+
+  CORBA::string_free (objKey);
+  ACE_DEBUG ((LM_DEBUG,
+              "\n"));
+  return 1;
+}
+
+static CORBA::Boolean
+cat_iiop_profile (TAO_InputCDR& stream)
+{
+  // OK, we've got an IIOP profile.  It's going to be
+  // encapsulated ProfileData.  Create a new decoding stream and
+  // context for it, and tell the "parent" stream that this data
+  // isn't part of it any more.
+
+  CORBA::ULong encap_len;
+  if (stream.read_ulong (encap_len) == 0)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "cannot read encap length\n"));
+      return 0;
+    }
+
+  // Create the decoding stream from the encapsulation in the
+  // buffer, and skip the encapsulation.
+  TAO_InputCDR str (stream, encap_len);
+
+  if (str.good_bit () == 0 || stream.skip_bytes (encap_len) == 0)
+    return 0;
+
+  // Read and verify major, minor versions, ignoring IIOP
+  // profiles whose versions we don't understand.
+  //
+  // XXX this doesn't actually go back and skip the whole
+  // encapsulation...
+  CORBA::Octet iiop_version_major, iiop_version_minor;
+  if (! (str.read_octet (iiop_version_major)
+         && iiop_version_major == TAO_IIOP_Profile::DEF_IIOP_MAJOR
+         && str.read_octet (iiop_version_minor)
+         && iiop_version_minor <= TAO_IIOP_Profile::DEF_IIOP_MINOR))
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "detected new v%d.%d IIOP profile",
+                  iiop_version_major,
+                  iiop_version_minor));
+      return 1;
+    }
+
+  ACE_DEBUG ((LM_DEBUG,
+              "IIOP Version:\t%d.%d\n",
+              iiop_version_major,
+              iiop_version_minor));
+
+  // Get host and port.
+  CORBA::UShort port_number;
+  CORBA::String hostname;
+  if ((str >> hostname) == 0)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "problem decoding hostname\n"));
+      return 1;
+    }
+
+  ACE_DEBUG ((LM_DEBUG,
+              "Host Name:\t%s\n",
+              hostname));
+  ACE_DEBUG ((LM_DEBUG,
+              "Port Number:\t%d\n",
+              port_number));
+  CORBA::string_free (hostname);
+
+  return cat_object_key (str);
+}
+
+static CORBA::Boolean
+cat_uiop_profile (TAO_InputCDR& stream)
+{
+  // OK, we've got an IIOP profile.  It's going to be
+  // encapsulated ProfileData.  Create a new decoding stream and
+  // context for it, and tell the "parent" stream that this data
+  // isn't part of it any more.
+
+  CORBA::ULong encap_len;
+  if (stream.read_ulong (encap_len) == 0)
+    return 0;
+
+  // Create the decoding stream from the encapsulation in the
+  // buffer, and skip the encapsulation.
+  TAO_InputCDR str (stream, encap_len);
+
+  if (str.good_bit () == 0 || stream.skip_bytes (encap_len) == 0)
+    return 0;
+
+  // Read and verify major, minor versions, ignoring IIOP
+  // profiles whose versions we don't understand.
+  //
+  // XXX this doesn't actually go back and skip the whole
+  // encapsulation...
+  CORBA::Octet iiop_version_major, iiop_version_minor;
+  if (! (str.read_octet (iiop_version_major)
+         && iiop_version_major == TAO_UIOP_Profile::DEF_UIOP_MAJOR
+         && str.read_octet (iiop_version_minor)
+         && iiop_version_minor <= TAO_UIOP_Profile::DEF_UIOP_MINOR))
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "detected new v%d.%d UIOP profile",
+                  iiop_version_major,
+                  iiop_version_minor));
+      return 1;
+    }
+
+  ACE_DEBUG ((LM_DEBUG,
+              "UIOP Version:\t%d.%d\n",
+              iiop_version_major,
+              iiop_version_minor));
+
+  // Get host and port.
+  CORBA::String_var rendezvous;
+  if ((str >> rendezvous.out ()) == 0)
+    return 0;
+
+  ACE_DEBUG ((LM_DEBUG,
+              "Rendezvous point:\t%s\n",
+              rendezvous.in ()));
+
+  return cat_object_key (str);
 }
