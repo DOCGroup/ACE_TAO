@@ -1,18 +1,15 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    IORTable
-//
-// = FILENAME
-//    Object_Adapter.h
-//
-// = AUTHOR
-//    Carlos O'Ryan (coryan@uci.edu)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file IOR_Table_Impl.h
+ *
+ *  $Id$
+ *
+ *  @author Carlos O'Ryan (coryan@uci.edu)
+ */
+//=============================================================================
+
 
 #ifndef TAO_IOR_TABLE_IMPL_H
 #define TAO_IOR_TABLE_IMPL_H
@@ -37,9 +34,10 @@
 class TAO_IORTable_Export TAO_IOR_Table_Impl : public virtual IORTable::Table, public virtual TAO_Local_RefCounted_Object
 {
 public:
+  /// Constructor
   TAO_IOR_Table_Impl (void);
-  // Constructor
 
+  /// Find the object, using the locator if it is not on the table.
   char *find (
       const char *object_key,
       CORBA::Environment &ACE_TRY_ENV
@@ -48,7 +46,6 @@ public:
       CORBA::SystemException,
       IORTable::NotFound
     ));
-  // Find the object, using the locator if it is not on the table.
 
   // = The IORTable::Table methods, check the IORTable.pidl file for
   // details.
@@ -95,14 +92,14 @@ public:
 private:
   typedef ACE_Hash_Map_Manager<ACE_CString,ACE_CString,ACE_Null_Mutex> Map;
 
+  /// The map
   Map map_;
-  // The map
 
+  /// The locator
   IORTable::Locator_var locator_;
-  // The locator
 
+  /// Synchronization
   ACE_SYNCH_MUTEX lock_;
-  // Synchronization
 };
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)

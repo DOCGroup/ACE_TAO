@@ -1,3 +1,14 @@
+Mon Dec 11 15:36:54 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/IORTable/IORTable.pidl:
+        * tao/IORTable/IORTable.h:
+        * tao/IORTable/IORTable.cpp:
+        * tao/IORTable/IOR_Table_Impl.h:
+        * tao/IORTable/IOR_Table_Impl.cpp:
+        * tao/IORTable/Table_Adapter.h:
+        * tao/IORTable/Table_Adapter.cpp:
+	  Changed to conform to the doxygen documentation style.
+
 Mon Dec 11 15:30:20 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/ORB.cpp:
