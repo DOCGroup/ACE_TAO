@@ -13,6 +13,7 @@ CFLAGS = \
         $(ACE_CFLAGS) \
         $(TAO_CFLAGS) \
         $(TAO_PORTABLESERVER_CFLAGS) \
+        $(TAO_STRATEGIES_CFLAGS) \
         -DDiamond_HAS_DLL=1 \
         -DMY_Stub_HAS_DLL=1
 
@@ -20,6 +21,7 @@ LIBFILES = \
         $(ACE_LIB) \
         $(TAO_LIB) \
         $(TAO_PORTABLESERVER_LIB) \
+        $(TAO_STRATEGIES_LIB) \
         $(BINDIR)\Diamond$(LIB_DECORATOR).lib \
 	$(BINDIR)\Coll_Test_Stubs$(LIB_DECORATOR).lib
 
