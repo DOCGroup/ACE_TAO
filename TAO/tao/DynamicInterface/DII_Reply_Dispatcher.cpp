@@ -1,19 +1,35 @@
 // $Id$
 
 
+
 #include "DII_Reply_Dispatcher.h"
 
 ACE_RCSID(DynamicInterface, DII_Reply_Dispatcher, "$Id$")
+
 
 #include "Request.h"
 #include "tao/Pluggable.h"
 #include "tao/Environment.h"
 #include "tao/GIOP_Message_State.h"
 #include "tao/debug.h"
+#include "tao/ORB_Core.h"
+#include "tao/Pluggable_Messaging_Utils.h"
+
+#if !defined (__ACE_INLINE__)
+#include "DII_Reply_Dispatcher.inl"
+#endif /* __ACE_INLINE__ */
+
 
 // Constructor.
-TAO_DII_Deferred_Reply_Dispatcher::TAO_DII_Deferred_Reply_Dispatcher (const CORBA::Request_ptr req)
-  : req_ (req)
+TAO_DII_Deferred_Reply_Dispatcher::TAO_DII_Deferred_Reply_Dispatcher (
+    const CORBA::Request_ptr req,
+    TAO_ORB_Core *orb_core)
+  : TAO_Asynch_Reply_Dispatcher_Base (orb_core),
+    reply_cdr_ (orb_core->create_input_cdr_data_block (ACE_CDR::DEFAULT_BUFSIZE),
+                TAO_ENCAP_BYTE_ORDER,
+                orb_core),
+    req_ (req)
+
 {
 }
 
@@ -25,20 +41,19 @@ TAO_DII_Deferred_Reply_Dispatcher::~TAO_DII_Deferred_Reply_Dispatcher (void)
 // Dispatch the reply.
 int
 TAO_DII_Deferred_Reply_Dispatcher::dispatch_reply (
-    CORBA::ULong reply_status,
-    const TAO_GIOP_Version & /* version */,
-    IOP::ServiceContextList &reply_ctx,
-    TAO_GIOP_Message_State *message_state
+    TAO_Pluggable_Reply_Params &params
   )
 {
-  this->reply_status_ = reply_status;
-  this->message_state_ = message_state;
+  this->reply_status_ = params.reply_status_;
+
+  // Steal the buffer so that no copying is done.
+  this->reply_cdr_.steal_from (params.input_cdr_);
 
   // Steal the buffer, that way we don't do any unnecesary copies of
   // this data.
-  CORBA::ULong max = reply_ctx.maximum ();
-  CORBA::ULong len = reply_ctx.length ();
-  IOP::ServiceContext* context_list = reply_ctx.get_buffer (1);
+  CORBA::ULong max = params.svc_ctx_.maximum ();
+  CORBA::ULong len = params.svc_ctx_.length ();
+  IOP::ServiceContext* context_list = params.svc_ctx_.get_buffer (1);
   this->reply_service_info_.replace (max, len, context_list, 1);
 
   if (TAO_debug_level >= 4)
@@ -50,8 +65,8 @@ TAO_DII_Deferred_Reply_Dispatcher::dispatch_reply (
   ACE_TRY_NEW_ENV
     {
       // Call the Request back and send the reply data.
-      this->req_->handle_response (this->message_state_->cdr,
-                                   reply_status,
+      this->req_->handle_response (this->reply_cdr_,
+                                   this->reply_status_,
                                    ACE_TRY_ENV);
       ACE_TRY_CHECK;
     }
@@ -78,18 +93,18 @@ TAO_DII_Deferred_Reply_Dispatcher::connection_closed (void)
   ACE_TRY_NEW_ENV
     {
       // Generate a fake exception....
-      CORBA::COMM_FAILURE comm_failure (0, 
+      CORBA::COMM_FAILURE comm_failure (0,
                                         CORBA::COMPLETED_MAYBE);
 
       TAO_OutputCDR out_cdr;
 
-      comm_failure._tao_encode (out_cdr, 
+      comm_failure._tao_encode (out_cdr,
                                 ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       // Turn into an output CDR
       TAO_InputCDR cdr (out_cdr);
-      
+
       this->req_->handle_response (cdr,
                                    TAO_PLUGGABLE_MESSAGE_SYSTEM_EXCEPTION,
                                    ACE_TRY_ENV);
@@ -107,4 +122,3 @@ TAO_DII_Deferred_Reply_Dispatcher::connection_closed (void)
     }
   ACE_ENDTRY;
 }
-

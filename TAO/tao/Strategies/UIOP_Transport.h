@@ -1,23 +1,16 @@
 // This may look like C, but it's really -*- C++ -*-
-// $Id$
-
-
-// ============================================================================
 //
-// = LIBRARY
-//     TAO
-//
-// = FILENAME
-//     UIOP_Transport.h
-//
-// = DESCRIPTION
-//     UIOP Transport specific processing
-//
-// = AUTHOR
-//     Fred Kuhns <fredk@cs.wustl.edu>
-//     Ossama Othman <othman@cs.wustl.edu>
-//
-// ============================================================================
+// ===================================================================
+/**
+ *  @file   UIOP_Transport.h
+ *
+ *  $Id$
+ *
+ *  @author Originally by Fred Kuhns <fredk@cs.wustl.edu> and Ossama
+ *   Othman <ossama@ece.uci.edu>
+ *  @author Modified by Balachandran Natarajan <bala@cs.wustl.edu>
+ */
+// ===================================================================
 
 #ifndef TAO_UIOP_TRANSPORT_H
 #define TAO_UIOP_TRANSPORT_H
@@ -33,96 +26,95 @@
 
 # if TAO_HAS_UIOP == 1
 #include "ace/LSOCK_Acceptor.h"
-#include "tao/GIOP_Message_State.h"
 #include "ace/Synch.h"
 #include "ace/Svc_Handler.h"
 
 // Forward decls.
 
-class TAO_UIOP_Client_Connection_Handler;
-class TAO_UIOP_Server_Connection_Handler;
 class TAO_ORB_Core;
+class TAO_UIOP_Connection_Handler;
+class TAO_Pluggable_Messaging;
 
 typedef ACE_Svc_Handler<ACE_LSOCK_STREAM, ACE_NULL_SYNCH>
         TAO_UIOP_SVC_HANDLER;
 
+/**
+ * @class TAO_UIOP_Transport
+ *
+ * @brief Specialization of the base TAO_Transport class to handle the
+ *  UIOP protocol.
+ *
+ *
+ *
+ */
+
 class TAO_Strategies_Export TAO_UIOP_Transport : public TAO_Transport
 {
-  // = TITLE
-  //   This class acts as a bridge class to the transport specific
-  //   connection handler (handler_).
-  //
-  // = DESCRIPTION
-  //   Specialization of the base TAO_Transport class to handle the UIOP
-  //   protocol.  This class in turn will be further specialized for
-  //   the client and server side.
 public:
-  TAO_UIOP_Transport (TAO_ORB_Core *orb_core);
-  // Base object's creator method.
 
+  /// Constructor.
+  TAO_UIOP_Transport (TAO_UIOP_Connection_Handler *handler,
+                      TAO_ORB_Core *orb_core,
+                      CORBA::Boolean flag);
+
+  /// Default destructor.
   ~TAO_UIOP_Transport (void);
-  // Default destructor.
 
-  // = The TAO_Transport methods, please check the documentation in
-  //   "tao/Pluggable.h" for more details.
+  /// Return the connection service handler
+  TAO_UIOP_SVC_HANDLER *service_handler (void);
 
-
+  ///  The TAO_Transport methods, please check the documentation in
+  ///  "tao/Pluggable.h" for more details.
   virtual ACE_HANDLE handle (void);
+
   virtual ACE_Event_Handler *event_handler (void);
+
+  virtual void close_connection (void);
+
+  virtual int idle (void);
+
+  /// Write the complete Message_Block chain to the connection.
   virtual ssize_t send (TAO_Stub *stub,
                         int two_way,
                         const ACE_Message_Block *mblk,
                         const ACE_Time_Value *s = 0);
+
   virtual ssize_t send (const ACE_Message_Block *mblk,
                         const ACE_Time_Value *s = 0,
                         size_t *bytes_transferred = 0);
+
+
+  /// Write the contents of the buffer of length len to the
+  /// connection.
   virtual ssize_t send (const u_char *buf,
                         size_t len,
                         const ACE_Time_Value *s = 0);
+
+  /// Read len bytes from into buf.
   virtual ssize_t recv (char *buf,
                         size_t len,
                         const ACE_Time_Value *s = 0);
+
+  /// Read and process the message from the connection. The processing
+  /// of the message is done by delegating the work to the underlying
+  /// messaging object
+  virtual int read_process_message (ACE_Time_Value *max_time_value = 0,
+                                    int block =0);
+
+  virtual int register_handler (void);
+
+  /// @@TODO: These methods IMHO should have more meaningful
+  /// names. The names seem to indicate nothing.
   virtual int send_request (TAO_Stub *stub,
-                            TAO_ORB_Core *orb_core ,
+                            TAO_ORB_Core *orb_core,
                             TAO_OutputCDR &stream,
                             int twoway,
                             ACE_Time_Value *max_wait_time);
 
-
-  virtual CORBA::Boolean
-  send_request_header (TAO_Operation_Details &opdetails,
-                       TAO_Target_Specification &spec,
-                       TAO_OutputCDR &msg);
-
-  virtual TAO_UIOP_SVC_HANDLER *service_handler (void) = 0;
-  // Acces the underlying connection handler
-
-};
-
-class TAO_Strategies_Export TAO_UIOP_Client_Transport : public TAO_UIOP_Transport
-{
-  // = TITLE
-  //   The Transport class used for Client side communication with a
-  //   server.
-  //
-  // = DESCRIPTION
-  //   Specialization of the TAO_UIOP_Transport class for client
-  //   side.  Methods related to sending one and two way requests
-  //   lives here.
-public:
-  TAO_UIOP_Client_Transport (TAO_UIOP_Client_Connection_Handler *handler,
-                             TAO_ORB_Core *orb_core);
-  // Constructor.  Note, TAO_UIOP_Handler_Base is the base class for
-  // both TAO_UIOP_Client_Connection_Handler and
-  // TAO_UIOP_Server_Connection_Handler.
-
-  ~TAO_UIOP_Client_Transport (void);
-  // destructor
-
-  // = The TAO_Transport methods, please check the documentation in
-  //   "tao/Pluggable.h" for more details.
-  virtual void close_connection (void);
-  virtual int idle (void);
+  virtual int send_message (TAO_OutputCDR &stream,
+                            TAO_Stub *stub = 0,
+                            int twoway = 1,
+                            ACE_Time_Value *max_time_wait = 0);
 
   virtual void start_request (TAO_ORB_Core *orb_core,
                               TAO_Target_Specification &spec,
@@ -137,91 +129,32 @@ public:
                              CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual int send_request (TAO_Stub *stub,
-                            TAO_ORB_Core *orb_core,
-                            TAO_OutputCDR &stream,
-                            int twoway,
-                            ACE_Time_Value *max_wait_time);
-  virtual int handle_client_input (int block = 0,
-                                   ACE_Time_Value *max_time_value = 0);
-  virtual int register_handler (void);
-  // Register the handler with the reactor. This will be called by the
-  // Wait Strategy if Reactor is used  for that strategy.
-
-  TAO_UIOP_SVC_HANDLER *service_handler (void);
-  // Access the underlying connection handler
 
   virtual CORBA::Boolean
-  send_request_header (TAO_Operation_Details &opdetail,
+  send_request_header (TAO_Operation_Details &opdetails,
                        TAO_Target_Specification &spec,
                        TAO_OutputCDR &msg);
 
-  int messaging_init (CORBA::Octet major,
-                      CORBA::Octet minor);
-  // Initialising the messaging object
-
-  void use_lite (CORBA::Boolean flag);
-  // Set the lite flag
+  /// Initialising the messaging object
+  virtual int messaging_init (CORBA::Octet major,
+                              CORBA::Octet minor);
 
 private:
 
-  TAO_UIOP_Client_Connection_Handler *handler_;
-  // The connection service handler used for accessing lower layer
-  // communication protocols.
-
-  TAO_Pluggable_Messaging *client_mesg_factory_;
-  // The message_factor instance specific for this particular
-  // transport protocol.
-
-  TAO_ORB_Core *orb_core_;
-  // Our orb Core
-
-  CORBA::Boolean lite_flag_;
-  // We using GIOP lite?
-
-  TAO_Pluggable_Reply_Params params_;
-  // The reply data that is sent back by the server
-};
-
-// ****************************************************************
-
-class TAO_Strategies_Export TAO_UIOP_Server_Transport : public TAO_UIOP_Transport
-{
-  // = TITLE
-  //   The Transport class used for server communication with a
-  //   connected client.
-  //
-  // = DESCRIPTION
-  //   Specialization of the TAO_UIOP_Transport class for the server side.
-  //   methods for reading messages (requests) and sending replies live
-  //   here.
-public:
-
-  TAO_UIOP_Server_Transport (TAO_UIOP_Server_Connection_Handler *handler,
-                             TAO_ORB_Core* orb_core);
-  //  Default creator method.
-
-  ~TAO_UIOP_Server_Transport (void);
-  // Default destructor
-
-  // See Pluggable.h for documentation
-  virtual void close_connection (void);
-  virtual int idle (void);
-
-  TAO_UIOP_SVC_HANDLER *service_handler (void);
-  // Access the underlying connection handler
-
-  TAO_GIOP_Message_State message_state_;
-  // This keep the state of the current message, to enable
-  // non-blocking reads, fragment reassembly, etc.
+  /// Process the message that we have read
+  int process_message (void);
 
 private:
 
-  TAO_UIOP_Server_Connection_Handler *handler_;
-  // the connection service handler used for accessing lower layer
-  // communication protocols.
+  /// The connection service handler used for accessing lower layer
+  /// communication protocols.
+  TAO_UIOP_Connection_Handler *connection_handler_;
 
+  /// Our messaging object.
+  TAO_Pluggable_Messaging *messaging_object_;
 };
+
+
 
 #if defined (__ACE_INLINE__)
 #include "UIOP_Transport.i"

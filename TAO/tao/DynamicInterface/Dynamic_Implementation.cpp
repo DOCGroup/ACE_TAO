@@ -2,6 +2,7 @@
 
 #include "Dynamic_Implementation.h"
 
+
 ACE_RCSID(DynamicInterface, Dynamic_Implementation, "$Id$")
 
 #include "Server_Request.h"
@@ -146,4 +147,3 @@ TAO_DynamicImplementation::_dispatch (TAO_ServerRequest &request,
 
   CORBA::release (dsi_request);
 }
-

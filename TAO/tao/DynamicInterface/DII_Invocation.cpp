@@ -1,9 +1,11 @@
 // $Id$
 
 
+
 #include "DII_Invocation.h"
 
 ACE_RCSID(DynamicInterface, DII_Invocation, "$Id$")
+
 
 #include "tao/Stub.h"
 #include "tao/Principal.h"
@@ -51,7 +53,7 @@ TAO_GIOP_DII_Invocation::invoke (CORBA::ExceptionList_ptr exceptions,
            exceptions != 0 && i < exceptions->count ();
            i++)
         {
-          CORBA::TypeCode_ptr tcp = exceptions->item (i, 
+          CORBA::TypeCode_ptr tcp = exceptions->item (i,
                                                       ACE_TRY_ENV);
           ACE_CHECK_RETURN (TAO_INVOKE_EXCEPTION);
 
@@ -65,7 +67,7 @@ TAO_GIOP_DII_Invocation::invoke (CORBA::ExceptionList_ptr exceptions,
 
           const ACE_Message_Block* cdr = this->inp_stream ().start ();
 
-          CORBA_Any any (tcp, 
+          CORBA_Any any (tcp,
                          0,
                          this->inp_stream ().byte_order (),
                          cdr);
@@ -143,4 +145,3 @@ TAO_GIOP_DII_Deferred_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
   // We do not wait for the reply. Let us return.
   return TAO_INVOKE_OK;
 }
-

@@ -1,5 +1,6 @@
 // $Id$
 
+
 #include "Servant_Base.h"
 #include "POA.h"
 #include "Operation_Table.h"
@@ -12,6 +13,7 @@
 #include "tao/TAO_Server_Request.h"
 
 ACE_RCSID(tao, Servant_Base, "$Id$")
+
 
 #if !defined (__ACE_INLINE__)
 # include "Servant_Base.i"

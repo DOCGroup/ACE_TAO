@@ -22,9 +22,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 class TAO_Reply_Dispatcher;
-class TAO_GIOP_Version;
-class TAO_GIOP_Message_State;
 class TAO_Transport;
+class TAO_Pluggable_Reply_Params;
 
 class TAO_Export TAO_Transport_Mux_Strategy
 {
@@ -63,11 +62,7 @@ public:
   // request.
   // A later reply for that request should be ignored.
 
-  virtual int dispatch_reply (CORBA::ULong request_id,
-                              CORBA::ULong reply_status,
-                              const TAO_GIOP_Version& version,
-                              IOP::ServiceContextList& reply_ctx,
-                              TAO_GIOP_Message_State* message_state) = 0;
+  virtual int dispatch_reply (TAO_Pluggable_Reply_Params &params) = 0;
   // Dispatch the reply for <request_id>, cleanup any resources
   // allocated for that request.
 
@@ -75,10 +70,10 @@ public:
   //    the factory simply allocates a new one, in the Exclusive case
   //    the factory returns a pointer to the pre-allocated CDR.
 
-  virtual TAO_GIOP_Message_State *get_message_state (void) = 0;
+  // virtual TAO_GIOP_Message_State *get_message_state (void) = 0;
   // Get a CDR stream.
 
-  virtual void destroy_message_state (TAO_GIOP_Message_State *) = 0;
+  // virtual void destroy_message_state (TAO_GIOP_Message_State *) = 0;
   // Destroy a CDR stream.
 
   virtual int idle_after_send (void) = 0;

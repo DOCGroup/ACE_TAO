@@ -51,8 +51,8 @@ TAO_IIOP_Endpoint::port (CORBA::UShort p)
   return this->port_ = p;
 }
 
-ACE_INLINE TAO_IIOP_Client_Connection_Handler *&
+/*ACE_INLINE TAO_IIOP_Client_Connection_Handler *&
 TAO_IIOP_Endpoint::hint (void)
 {
   return this->hint_;
-}
+}*/

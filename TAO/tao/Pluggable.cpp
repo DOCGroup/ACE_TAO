@@ -50,6 +50,7 @@ TAO_Transport::~TAO_Transport (void)
   delete this->buffering_queue_;
 }
 
+
 ssize_t
 TAO_Transport::send_buffered_messages (const ACE_Time_Value *max_wait_time)
 {
@@ -191,14 +192,13 @@ TAO_Transport::messaging_init (CORBA::Octet /*major*/,
   ACE_NOTSUP_RETURN (-1);
 }
 
-// Read and handle the reply. Returns 0 when there is Short Read on
-// the connection. Returns 1 when the full reply is read and
-// handled. Returns -1 on errors.
-// If <block> is 1, then reply is read in a blocking manner.
-
+// Read the message on the connection. Returns 0 when there is Short
+// Read on the connection. Returns 1 when the full reply is read and
+// handled. Returns -1 on errors. If <block> is 1, then reply is
+// read in a blocking manner.
 int
-TAO_Transport::handle_client_input (int /* block */,
-                                    ACE_Time_Value * /* max_wait_time */)
+TAO_Transport::read_process_message (ACE_Time_Value * /* max_wait_time */,
+                                     int /* block */)
 {
   ACE_NOTSUP_RETURN (-1);
 }

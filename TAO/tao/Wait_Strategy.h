@@ -52,8 +52,8 @@ public:
   // true or the time expires.
 
   virtual int register_handler (void) = 0;
-  // Register the handler with the Reactor if it makes sense for the
-  // strategy.
+  // Register the handler needs with the reactor provided that it makes
+  // sense for the  strategy.
 
   virtual ACE_SYNCH_CONDITION *leader_follower_condition_variable (void);
   // Return the TSS leader follower condition variable used in the

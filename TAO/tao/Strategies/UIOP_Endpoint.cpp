@@ -3,7 +3,7 @@
 
 
 #include "UIOP_Endpoint.h"
-#include "UIOP_Connect.h"
+#include "UIOP_Connection_Handler.h"
 
 #if TAO_HAS_UIOP == 1
 
@@ -18,7 +18,6 @@ ACE_RCSID(Strategies, UIOP_Endpoint, "$Id$")
 TAO_UIOP_Endpoint::TAO_UIOP_Endpoint (const ACE_UNIX_Addr &addr)
   : TAO_Endpoint (TAO_TAG_UIOP_PROFILE),
     object_addr_ (addr),
-    hint_ (0),
     next_ (0)
 {
 }
@@ -26,7 +25,6 @@ TAO_UIOP_Endpoint::TAO_UIOP_Endpoint (const ACE_UNIX_Addr &addr)
 TAO_UIOP_Endpoint::TAO_UIOP_Endpoint (void)
   : TAO_Endpoint (TAO_TAG_UIOP_PROFILE),
     object_addr_ (),
-    hint_ (0),
     next_ (0)
 {
 }
@@ -49,8 +47,8 @@ TAO_UIOP_Endpoint::addr_to_string (char *buffer, size_t length)
 void
 TAO_UIOP_Endpoint::reset_hint (void)
 {
-  if (this->hint_)
-    this->hint_->cleanup_hint ((void **) &this->hint_);
+  //  if (this->hint_)
+  //this->hint_->cleanup_hint ((void **) &this->hint_);
 }
 
 TAO_Endpoint *

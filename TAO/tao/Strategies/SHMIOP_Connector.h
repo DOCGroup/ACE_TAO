@@ -32,39 +32,9 @@
 #include "ace/Connector.h"
 #include "ace/MEM_Connector.h"
 #include "tao/Pluggable.h"
-#include "SHMIOP_Connect.h"
+#include "SHMIOP_Connection_Handler.h"
 #include "tao/Resource_Factory.h"
-
-// ****************************************************************
-
-class TAO_Strategies_Export TAO_SHMIOP_Connect_Creation_Strategy : public ACE_Creation_Strategy<TAO_SHMIOP_Client_Connection_Handler>
-{
-  // = TITLE
-  //   Helper creation strategy
-  //
-  // = DESCRIPTION
-  //   Creates SHMIOP_Client_Connection_Handler objects but satisfies
-  //   the interface required by the
-  //   ACE_Creation_Strategy<TAO_SHMIOP_Client_Connection_Handler>
-  //
-public:
-  TAO_SHMIOP_Connect_Creation_Strategy (ACE_Thread_Manager * = 0,
-                                        TAO_ORB_Core* orb_core = 0,
-                                        CORBA::Boolean flag = 0);
-
-  ~TAO_SHMIOP_Connect_Creation_Strategy (void);
-  // Default destructor
-
-  virtual int make_svc_handler (TAO_SHMIOP_Client_Connection_Handler *&sh);
-  // Makes TAO_SHMIOP_Client_Connection_Handlers
-
-private:
-  TAO_ORB_Core* orb_core_;
-  // The ORB
-
-  CORBA::Boolean lite_flag_;
-  // Are we using lite?
-};
+#include "tao/Connector_Impl.h"
 
 // ****************************************************************
 
@@ -110,35 +80,32 @@ protected:
 
 public:
 
-  typedef ACE_Concurrency_Strategy<TAO_SHMIOP_Client_Connection_Handler>
-          TAO_ACTIVATION_STRATEGY;
+  typedef TAO_Connect_Concurrency_Strategy<TAO_SHMIOP_Connection_Handler>
+          TAO_SHMIOP_CONNECT_CONCURRENCY_STRATEGY;
 
-  typedef ACE_Connect_Strategy<TAO_SHMIOP_Client_Connection_Handler,
+  typedef TAO_Connect_Creation_Strategy<TAO_SHMIOP_Connection_Handler>
+          TAO_SHMIOP_CONNECT_CREATION_STRATEGY;
+
+  typedef ACE_Connect_Strategy<TAO_SHMIOP_Connection_Handler,
                                ACE_MEM_CONNECTOR>
-          TAO_CONNECT_STRATEGY ;
+          TAO_SHMIOP_CONNECT_STRATEGY ;
 
-  typedef ACE_Strategy_Connector<TAO_SHMIOP_Client_Connection_Handler,
+  typedef ACE_Strategy_Connector<TAO_SHMIOP_Connection_Handler,
                                  ACE_MEM_CONNECTOR>
           TAO_SHMIOP_BASE_CONNECTOR;
-
 private:
+
   ACE_MEM_Addr address_;
   // local address
 
-  TAO_ACTIVATION_STRATEGY null_activation_strategy_;
-  // Our activation strategy
-
-  TAO_CONNECT_STRATEGY connect_strategy_;
+  TAO_SHMIOP_CONNECT_STRATEGY connect_strategy_;
   // Our connect strategy
 
   TAO_SHMIOP_BASE_CONNECTOR base_connector_;
-  // The connector initiating connection requests for IIOP.
-
-  TAO_SHMIOP_Connect_Creation_Strategy creation_strategy_;
-  // Our creation strategy
+  // The connector initiating connection requests for SHMIOP.
 
   CORBA::Boolean lite_flag_;
-  // Do we need to use a GIOP_Lite for sending messages?
+  // Are we using GIOP lite??
 };
 
 #endif /* TAO_HAS_SHMIOP && TAO_HAS_SHMIOP != 0 */

@@ -21,7 +21,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/GIOP_Message_State.h"
+
+class TAO_Pluggable_Reply_Params;
 
 class TAO_Export TAO_Exclusive_TMS : public TAO_Transport_Mux_Strategy
 {
@@ -47,13 +48,13 @@ public:
   virtual int bind_dispatcher (CORBA::ULong request_id,
                                TAO_Reply_Dispatcher *rh);
   virtual void unbind_dispatcher (CORBA::ULong request_id);
-  virtual int dispatch_reply (CORBA::ULong request_id,
-                              CORBA::ULong reply_status,
-                              const TAO_GIOP_Version& version,
-                              IOP::ServiceContextList& reply_ctx,
-                              TAO_GIOP_Message_State* message_state);
-  virtual TAO_GIOP_Message_State *get_message_state (void);
-  virtual void destroy_message_state (TAO_GIOP_Message_State *);
+
+  virtual int dispatch_reply (TAO_Pluggable_Reply_Params &params);
+
+  // @@ Commented for the time being, let the commented line stay for
+  //    sometime - Bala
+  // virtual TAO_GIOP_Message_State *get_message_state (void);
+  // virtual void destroy_message_state (TAO_GIOP_Message_State *);
   virtual int idle_after_send (void);
   virtual int idle_after_reply (void);
   virtual void connection_closed (void);
@@ -73,7 +74,9 @@ protected:
   TAO_Reply_Dispatcher *rd_;
   // Reply Dispatcher corresponding to the request.
 
-  TAO_GIOP_Message_State message_state_;
+  // @@ Commented for the time being, let the commented line stay for
+  //    sometime - Bala
+  // TAO_GIOP_Message_State message_state_;
   // Message state to read the incoming message.
 
   // @@ Having members of type TAO_GIOP* indicates that we

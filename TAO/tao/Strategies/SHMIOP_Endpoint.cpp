@@ -6,7 +6,7 @@
 
 #if defined (TAO_HAS_SHMIOP) && (TAO_HAS_SHMIOP != 0)
 
-#include "SHMIOP_Connect.h"
+#include "SHMIOP_Connection_Handler.h"
 #include "tao/debug.h"
 
 ACE_RCSID(Strategies, SHMIOP_Endpoint, "$Id$")
@@ -21,7 +21,6 @@ TAO_SHMIOP_Endpoint::TAO_SHMIOP_Endpoint (const ACE_MEM_Addr &addr,
     host_ (),
     port_ (0),
     object_addr_ (addr.get_remote_addr ()),
-    hint_ (0),
     next_ (0)
 {
   this->set (addr.get_remote_addr (), use_dotted_decimal_addresses);
@@ -33,7 +32,6 @@ TAO_SHMIOP_Endpoint::TAO_SHMIOP_Endpoint (const ACE_INET_Addr &addr,
     host_ (),
     port_ (0),
     object_addr_ (addr),
-    hint_ (0),
     next_ (0)
 {
   this->set (addr, use_dotted_decimal_addresses);
@@ -46,7 +44,6 @@ TAO_SHMIOP_Endpoint::TAO_SHMIOP_Endpoint (const char *host,
     host_ (),
     port_ (port),
     object_addr_ (addr),
-    hint_ (0),
     next_ (0)
 {
   if (host != 0)
@@ -58,7 +55,6 @@ TAO_SHMIOP_Endpoint::TAO_SHMIOP_Endpoint (void)
     host_ (),
     port_ (0),
     object_addr_ (),
-    hint_ (0),
     next_ (0)
 {
 }
@@ -70,7 +66,6 @@ TAO_SHMIOP_Endpoint::TAO_SHMIOP_Endpoint (const char *host,
     host_ (),
     port_ (port),
     object_addr_ (),
-    hint_ (0),
     next_ (0)
 {
   if (host != 0)
@@ -144,8 +139,8 @@ TAO_SHMIOP_Endpoint::host (const char *h)
 void
 TAO_SHMIOP_Endpoint::reset_hint (void)
 {
-  if (this->hint_)
-    this->hint_->cleanup_hint ((void **) &this->hint_);
+  //  if (this->hint_)
+  //this->hint_->cleanup_hint ((void **) &this->hint_);
 }
 
 TAO_Endpoint *

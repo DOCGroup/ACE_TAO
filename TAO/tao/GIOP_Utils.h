@@ -21,12 +21,15 @@
 #define TAO_GIOP_UTILS_H
 #include "ace/pre.h"
 
-#include "tao/Pluggable_Messaging.h"
 #include "tao/Object.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "tao/IOPC.h"
+
+class TAO_Transport;
 
 typedef enum GIOP_Messages
 {

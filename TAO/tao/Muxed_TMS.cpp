@@ -5,14 +5,14 @@
 #include "tao/Pluggable.h"
 #include "tao/GIOP_Message_State.h"
 #include "tao/debug.h"
+#include "tao/Pluggable_Messaging_Utils.h"
 
 ACE_RCSID(tao, Muxed_TMS, "$Id$")
 
 TAO_Muxed_TMS::TAO_Muxed_TMS (TAO_Transport *transport)
   : TAO_Transport_Mux_Strategy (transport),
     request_id_generator_ (0),
-    orb_core_ (transport->orb_core ()),
-    message_state_ (0)
+    orb_core_ (transport->orb_core ())
 {
 }
 
@@ -62,16 +62,12 @@ TAO_Muxed_TMS::unbind_dispatcher (CORBA::ULong request_id)
 }
 
 int
-TAO_Muxed_TMS::dispatch_reply (CORBA::ULong request_id,
-                               CORBA::ULong reply_status,
-                               const TAO_GIOP_Version &version,
-                               IOP::ServiceContextList &reply_ctx,
-                               TAO_GIOP_Message_State *message_state)
+TAO_Muxed_TMS::dispatch_reply (TAO_Pluggable_Reply_Params &params)
 {
   // This message state should be the same as the one we have here,
   // which we gave to the Transport to read the message. Just a sanity
   // check here.
-  ACE_ASSERT (message_state == this->message_state_);
+  //  ACE_ASSERT (message_state == this->message_state_);
 
   int result = 0;
   TAO_Reply_Dispatcher *rd = 0;
@@ -79,7 +75,7 @@ TAO_Muxed_TMS::dispatch_reply (CORBA::ULong request_id,
   // Grab the reply dispatcher for this id.
   {
     ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1);
-    result = this->dispatcher_table_.unbind (request_id, rd);
+    result = this->dispatcher_table_.unbind (params.request_id_, rd);
   }
 
   if (result != 0)
@@ -94,16 +90,13 @@ TAO_Muxed_TMS::dispatch_reply (CORBA::ULong request_id,
     }
 
   // Dispatch the reply.
-  return rd->dispatch_reply (reply_status,
-                             version,
-                             reply_ctx,
-                             message_state);
+  return rd->dispatch_reply (params);
 
   // No need for idling Transport, it would have got idle'd soon after
   // sending the request.
 }
 
-TAO_GIOP_Message_State *
+/*TAO_GIOP_Message_State *
 TAO_Muxed_TMS::get_message_state (void)
 {
   if (this->message_state_ == 0)
@@ -123,7 +116,7 @@ TAO_Muxed_TMS::destroy_message_state (TAO_GIOP_Message_State *)
 {
   delete this->message_state_;
   this->message_state_ = 0;
-}
+}*/
 
 int
 TAO_Muxed_TMS::idle_after_send (void)
