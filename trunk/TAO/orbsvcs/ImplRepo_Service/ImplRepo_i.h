@@ -44,8 +44,7 @@ class IMR_Adapter_Activator : public POA_PortableServer::AdapterActivator
   //    arbitrary requests.  This allows for the setting up of child
   //    POAs with default servants.
 public:
-  IMR_Adapter_Activator (IMR_Forwarder *servant,
-                         PortableServer::POAManager_ptr poa_manager);
+  IMR_Adapter_Activator (IMR_Forwarder *servant);
   // Constructor
 
   virtual CORBA::Boolean unknown_adapter (PortableServer::POA_ptr parent,
@@ -58,9 +57,6 @@ public:
 private:
   IMR_Forwarder *servant_;
   // The object to use as the default servant.
-
-  PortableServer::POAManager_var poa_manager_;
-  // POA Manager
 };
 
 class ImplRepo_i 
@@ -152,6 +148,9 @@ public:
             CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
   // Initialize the Server state - parsing arguments and waiting.
 
+  int fini (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
+  // Cleans up any state created by init ().
+
   int run (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
   // Runs the orb.
 
@@ -191,9 +190,6 @@ private:
 
   PortableServer::POA_var imr_poa_;
   // Implementation Repository's POA.
-
-  PortableServer::POAManager_var poa_manager_;
-  // The POA manager.
 
   char *server_key_;
   // Key of the obj ref of the server.
