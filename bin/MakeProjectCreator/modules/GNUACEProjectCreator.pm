@@ -19,15 +19,6 @@ use vars qw(@ISA);
 @ISA = qw(ProjectCreator);
 
 # ************************************************************
-# Data Section
-# ************************************************************
-
-my(%compscript) = ('ACE_COMPONENTS'     => ['--ace',     '--set'],
-                   'TAO_COMPONENTS'     => ['--tao',     '--set'],
-                   'ORBSVCS_COMPONENTS' => ['--orbsvcs', '--append'],
-                  );
-
-# ************************************************************
 # Subroutine Section
 # ************************************************************
 
@@ -73,45 +64,11 @@ sub fill_value {
       $value = 'VPATH = .:' . $str . $self->crlf();
     }
   }
-  elsif ($name eq 'comptarget') {
-    my($crlf)  = $self->crlf();
-    foreach my $name (keys %$names) {
-      if (defined $compscript{$name}) {
-        if (!defined $value) {
-          $value = '';
-        }
-        $value .= "$crlf.PHONY: $name$crlf" .
-                  "$name:$crlf" .
-                  "\t\@sh \$(ACE_ROOT)/bin/ace_components $compscript{$name}->[0] $compscript{$name}->[1] '\$($name)'$crlf$crlf" .
-                  "compclean:$crlf" .
-                  "\t\@sh \$(ACE_ROOT)/bin/ace_components $compscript{$name}->[0] --remove";
-      }
-    }
-  }
-  elsif ($name eq 'compclean') {
-    foreach my $name (keys %$names) {
-      if (defined $compscript{$name}) {
-        $value = 'compclean';
-        last;
-      }
-    }
-  }
-  elsif ($name eq 'libcheck') {
-    my($libs) = $self->get_assignment('libs');
-    if (defined $libs) {
-      my($libpaths) = $self->get_assignment('libpaths');
-      if (defined $libpaths) {
-        $value = "LIBCHECK = \$(shell for lib in $libs; do for libpath in $libpaths; do full=\"`echo \$\$libpath/lib\$\$lib.* | tr ' ' '\\012' | head -1`\"; if [ -r \$\$full ]; then break; else full=; fi; done; if [ -z \"\$\$full\" ]; then echo \$\$lib; exit; fi; done; echo 1)";
-      }
-    }
-  }
   elsif ($name eq 'tao') {
     my($incs) = $self->get_assignment('includes');
     my($libs) = $self->get_assignment('libpaths');
-    if ((defined $incs && $incs =~ /tao/i) ||
-        (defined $libs && $libs =~ /tao/i)) {
-      $value = 1;
-    }
+    $value = ((defined $incs && $incs =~ /tao/i) ||
+              (defined $libs && $libs =~ /tao/i));
   }
 
   return $value;

@@ -160,8 +160,6 @@ avoids          Specifies which features should be disabled in order to
                 target.
 
 The Following are GNUACE only:
-compname        Specifies the argument to pass to the ace_components script
-comps           Specifies which components are required to build the target
 tagname         Specifies the make macro to check before building the target
 tagchecks       Specifies the values for tagname to check
 

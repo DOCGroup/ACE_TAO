@@ -4,6 +4,5 @@
 project : rtevent, rtsched {
   after     += RTOLDEvent
   libs      += TAO_RTOLDEvent
-  comps     += RTOLDEvent
   tagchecks += RTOLDEvent
 }

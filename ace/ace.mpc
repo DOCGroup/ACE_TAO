@@ -1,7 +1,7 @@
 //  -*- MPC -*- now wouldn't this be cool...
 // $Id$
 
-project(ACE) : acedefaults, aceversion, core, qt_moc, qt_reactor {
+project(ACE) : acedefaults, aceversion, core, qt_moc, qt_reactor, other, codecs, token, svcconf, uuid, filecache {
   libout       = $(ACE_ROOT)/lib
   sharedname   = ACE
   dynamicflags = ACE_BUILD_DLL ACE_OS_BUILD_DLL
@@ -106,10 +106,6 @@ project(ACE) : acedefaults, aceversion, core, qt_moc, qt_reactor {
       Stats.cpp
       Container_Instantiations.cpp
       Sample_History.cpp
-    }
-
-    Filecache {
-      Filecache.cpp
     }
 
     Logging {
@@ -265,24 +261,6 @@ project(ACE) : acedefaults, aceversion, core, qt_moc, qt_reactor {
       MEM_Stream.cpp
     }
 
-    Svcconf {
-      DLL.cpp
-      DLL_Manager.cpp
-      Dynamic_Service_Base.cpp
-      Parse_Node.cpp
-      Service_Config.cpp
-      Service_Manager.cpp
-      Service_Object.cpp
-      Service_Repository.cpp
-      Service_Types.cpp
-      Service_Templates.cpp
-      Shared_Object.cpp
-      Svc_Conf_l.cpp
-      Svc_Conf_y.cpp
-      Svc_Conf_Lexer_Guard.cpp
-      XML_Svc_Conf.cpp
-    }
-
     Streams {
       CDR_Base.cpp
       CDR_Stream.cpp
@@ -322,34 +300,6 @@ project(ACE) : acedefaults, aceversion, core, qt_moc, qt_reactor {
       Timer_List.cpp
       Timer_Queue.cpp
       Timer_Wheel.cpp
-    }
-
-    Token {
-      Local_Tokens.cpp
-      Remote_Tokens.cpp
-      Token_Collection.cpp
-      Token_Invariants.cpp
-      Token_Manager.cpp
-      Token_Request_Reply.cpp
-    }
-
-    Codecs {
-      Codecs.cpp
-    }
-
-    UUID {
-      UUID.cpp
-    }
-
-    Other {
-      Local_Name_Space.cpp
-      Name_Proxy.cpp
-      Name_Request_Reply.cpp
-      Name_Space.cpp
-      Naming_Context.cpp
-      Registry_Name_Space.cpp
-      Remote_Name_Space.cpp
-      NT_Service.cpp
     }
 
     Metrics {
