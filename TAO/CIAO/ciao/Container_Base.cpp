@@ -296,7 +296,7 @@ CIAO::Session_Container::generate_reference (const char *obj_id,
     this->poa_->create_reference_with_id (oid.in (),
                                           repo_id
                                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   return objref._retn ();
 }
