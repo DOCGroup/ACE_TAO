@@ -1,57 +1,62 @@
+Thu Aug 30 07:59:40 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * TAOACE.dsw:
+          Remove bogus dependency for the RT Event Service
+
 Wed Aug 29 14:35:31 2001  Ossama Othman  <ossama@uci.edu>
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.h:
 
-	  "Doxygen-ated" this header.
+          "Doxygen-ated" this header.
 
 Wed Aug 29 14:46:25 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/performance-tests/EC_Federated_Latency/Makefile:
-	* orbsvcs/performance-tests/EC_Federated_Latency/Makefile: Will
-	  not build with old g++ compilers.
+        * orbsvcs/performance-tests/EC_Federated_Latency/Makefile:
+        * orbsvcs/performance-tests/EC_Federated_Latency/Makefile: Will
+          not build with old g++ compilers.
 
 Wed Aug 29 14:27:27 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* performance-tests/Throughput/svc.conf: Used blocked flushing
-	  strategy. Using a RW connection handler with a LF flushing
-	  strategy can be really really tricky. It may not be that tricky,
-	  it wouldnt work :-). This should fix the failure problem
-	  observed in Solaris builds.
+        * performance-tests/Throughput/svc.conf: Used blocked flushing
+          strategy. Using a RW connection handler with a LF flushing
+          strategy can be really really tricky. It may not be that tricky,
+          it wouldnt work :-). This should fix the failure problem
+          observed in Solaris builds.
 
 Wed Aug 29 13:13:23 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/performance-tests/EC_Federated_Latency/Servant_var.h:
-	* orbsvcs/performance-tests/EC_Federated_Latency/Servant_var.inl:
-	  Fixed warnings in TRU 64 builds.
- 
+        * orbsvcs/performance-tests/EC_Federated_Latency/Servant_var.h:
+        * orbsvcs/performance-tests/EC_Federated_Latency/Servant_var.inl:
+          Fixed warnings in TRU 64 builds.
+
 Wed Aug 29 06:21:25 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* tao/ORB.h (CORBA_ORB): Improved the documentation for
-	  ORB::destroy().  Thanks to Wilfried Reinoehl
- 	  <Wilfried.Reinoehl@WiredMinds.de> for reporting this.
+        * tao/ORB.h (CORBA_ORB): Improved the documentation for
+          ORB::destroy().  Thanks to Wilfried Reinoehl
+          <Wilfried.Reinoehl@WiredMinds.de> for reporting this.
 
 Tue Aug 28 16:56:07 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/IIOP_Connection_Handler.cpp:
-	* tao/Strategies/UIOP_Connection_Handler.cpp:
-	* tao/Strategies/SHMIOP_Connection_Handler.cpp: Put the sockets in
-	  non-blocking mode even for wait on read strategy. Need to figure
-	  out how much of performance impact does this have. If it has a
-	  penalty then we can revert this change. This solves one problem
-	  that we could have. If someone uses RW connection handler
-	  through a svc conf file, we could inadvertently turn the server
-	  sockets into blocking mode which could create problems.
+        * tao/IIOP_Connection_Handler.cpp:
+        * tao/Strategies/UIOP_Connection_Handler.cpp:
+        * tao/Strategies/SHMIOP_Connection_Handler.cpp: Put the sockets in
+          non-blocking mode even for wait on read strategy. Need to figure
+          out how much of performance impact does this have. If it has a
+          penalty then we can revert this change. This solves one problem
+          that we could have. If someone uses RW connection handler
+          through a svc conf file, we could inadvertently turn the server
+          sockets into blocking mode which could create problems.
 
 Tue Aug 28 11:31:58 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tests/DLL_ORB/client.cpp (main):
-	* tests/DLL_ORB/server.cpp (main):
+        * tests/DLL_ORB/client.cpp (main):
+        * tests/DLL_ORB/server.cpp (main):
 
-	  Load the Resource_Factory before the test module.  This forces
-	  the Resource_Factory to exist longer than the dynamically loaded
-	  ORB, thus allowing the ORB to make invocations on it during
-	  destruction.  Fixes a segmentation fault in both the client and
-	  server binaries.
+          Load the Resource_Factory before the test module.  This forces
+          the Resource_Factory to exist longer than the dynamically loaded
+          ORB, thus allowing the ORB to make invocations on it during
+          destruction.  Fixes a segmentation fault in both the client and
+          server binaries.
 
 Tue Aug 28 12:28:58 2001  Chad Elliott  <elliott_c@ociweb.com>
 
