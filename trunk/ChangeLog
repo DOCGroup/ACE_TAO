@@ -1,3 +1,7 @@
+Fri Feb  8 22:56:29 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/Log_Msg.cpp (log): Fixed a warning in TRU 64 builds.
+
 Fri Feb  8 14:54:21 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* apps/JAWS2/Makefile (LDFLAGS): 

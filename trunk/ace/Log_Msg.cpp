@@ -1438,7 +1438,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                   {
                     // On some platforms sizeof (wchar_t) can be 2
                     // on the others 4 ...
-                    wchar_t wtchar = 
+                    wchar_t wtchar =
                       ACE_static_cast(wchar_t,
                                       va_arg (argp, int));
 #if defined (ACE_WIN32)
@@ -1461,7 +1461,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
 #endif /* ACE_WIN32 */
                   break;
                   }
-                  
+
                  case 'Z':              // ACE_OS::WChar character string
                   {
                     ACE_OS::WChar *wchar_str = va_arg (argp, ACE_OS::WChar*);
@@ -1474,12 +1474,12 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                     if(sizeof(ACE_OS::WChar) != sizeof(wchar_t))
                       {
                         u_int len = ACE_OS::wslen (wchar_str) + 1;
-                        //@@ Bad, but there is no such ugly thing as 
-                        // ACE_NEW_BREAK and ACE_NEW has a return 
+                        //@@ Bad, but there is no such ugly thing as
+                        // ACE_NEW_BREAK and ACE_NEW has a return
                         // statement inside.
                         ACE_NEW_RETURN(wchar_t_str, wchar_t[len], 0);
                         if(wchar_t_str == 0)
-                          { 
+                          {
                             break;
                           }
                         for (u_int i = 0; i < len; i++)
@@ -1487,11 +1487,12 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                             wchar_t_str[i] = wchar_str[i];
                           }
                       }
-                    else
-                      {                                      
-                        wchar_t_str = ACE_reinterpret_cast(wchar_t*, 
+
+                    if (wchar_t_str == 0)
+                      {
+                        wchar_t_str = ACE_reinterpret_cast(wchar_t*,
                                                            wchar_str);
-                      }                    
+                      }
 #if defined (ACE_WIN32)
 # if defined (ACE_USES_WCHAR)
                   ACE_OS::strcpy (fp, ACE_LIB_TEXT ("s"));
@@ -1511,7 +1512,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                     {
                       delete wchar_t_str;
                     }
-                  break;                  
+                  break;
                   }
 
                 case 'c':
@@ -1710,17 +1711,17 @@ ACE_Log_Msg::log (ACE_Log_Record &log_record,
 #endif /* ACE_HAS_WINCE */
 
 
-      if (ACE_BIT_ENABLED (ACE_Log_Msg::flags_, ACE_Log_Msg::CUSTOM) || 
+      if (ACE_BIT_ENABLED (ACE_Log_Msg::flags_, ACE_Log_Msg::CUSTOM) ||
           ACE_BIT_ENABLED (ACE_Log_Msg::flags_, ACE_Log_Msg::LOGGER))
         {
           // Be sure that there is a message_queue_, with multiple threads.
           ACE_MT (ACE_Log_Msg_Manager::init_backend ());
         }
-  
+
 
       if (ACE_BIT_ENABLED (ACE_Log_Msg::flags_,
                            ACE_Log_Msg::LOGGER))
-        {          
+        {
           result =
             ACE_Log_Msg_Manager::log_backend_->log (log_record);
         }
