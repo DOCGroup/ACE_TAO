@@ -1,25 +1,31 @@
+Mon Mar  5 08:20:21 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/RMCast/RMCast_Fragment_Test.cpp:
+        * tests/RMCast/RMCast_Reassembly_Test.cpp:
+          Undo Doug's changes.  They broke the test.
+
 Mon Mar  5 07:52:52 2001  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tests/RMCast/RMCast_Fragment_Test.cpp,
-	* tests/RMCast/RMCast_Reassembly_Test.cpp,
-	* tests/Dynamic_Priority_Test.cpp,
-	* tests/Thread_Pool_Test.cpp: Make sure to write into the
-	  wr_ptr() rather than the rd_ptr().  Thanks to Gonzalo Diethelm
- 	  <Gonzalo.Diethelm@sonda.com> for reporting this.
+        * tests/RMCast/RMCast_Fragment_Test.cpp,
+        * tests/RMCast/RMCast_Reassembly_Test.cpp,
+        * tests/Dynamic_Priority_Test.cpp,
+        * tests/Thread_Pool_Test.cpp: Make sure to write into the
+          wr_ptr() rather than the rd_ptr().  Thanks to Gonzalo Diethelm
+          <Gonzalo.Diethelm@sonda.com> for reporting this.
 
 Mon Mar  5 08:00:23 2001  Chad Elliott  <elliott_c@ociweb.com>
 
-        * bin/nightlybuilds/builds.lst: 
+        * bin/nightlybuilds/builds.lst:
 
           Added new VxWorks 5.4 and Chorus 4.0.1 nightly builds.
 
 Mon Mar 05 00:10:15 2001  Ossama Othman  <ossama@uci.edu>
 
-	* bin/fuzz.pl:
+        * bin/fuzz.pl:
 
-	  Updated to detect missing ACE_TRY_ENV parameters in
-	  ORB::resolve_initial_references() calls when emulated exceptions
-	  are used.  Thanks to Darrell for providing this update.
+          Updated to detect missing ACE_TRY_ENV parameters in
+          ORB::resolve_initial_references() calls when emulated exceptions
+          are used.  Thanks to Darrell for providing this update.
 
 Mon Mar  5 07:57:07 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
