@@ -19,7 +19,7 @@ Echo_Client_i::~Echo_Client_i (void)
 }
 
 int
-Echo_Client_i::run (char *name,
+Echo_Client_i::run (const char *name,
                     int argc,
                     char *argv[])
 {

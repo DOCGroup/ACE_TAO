@@ -20,7 +20,7 @@ Bank_Client_i::~Bank_Client_i (void)
 
 
 int
-Bank_Client_i::run (char *name,
+Bank_Client_i::run (const char *name,
                     int argc,
                     char *argv[])
 {
