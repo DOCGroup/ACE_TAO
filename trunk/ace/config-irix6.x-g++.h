@@ -25,6 +25,10 @@
 #endif
 
 // Platform supports the very odd IRIX 6.2 threads...
+#define ACE_HAS_THREADS
+#if !defined (ACE_MT_SAFE)
+# define ACE_MT_SAFE 1
+#endif /* !ACE_MT_SAFE */
 #define ACE_HAS_IRIX62_THREADS
 #define ACE_HAS_PTHREAD_SIGMASK
 
