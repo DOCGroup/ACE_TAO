@@ -1,3 +1,16 @@
+Wed Jun 11 15:08:29 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Profile.cpp:
+	* tao/Profile.h: Strategized the lock held by the Profile
+	  class. With this change it is possible to hold a null-lock for
+	  single threaded applications. We can configure the profiles to
+	  have a null lock using -ORBProfileLock null. This fixes BUG
+	  1527. 
+
+	* tao/Invocation.cpp: Fixed a stupid typo that caused the profile's
+	  refcount to be incremented twice in every call. This should fix
+	  a memory leak.
+
 Wed Jun 11 12:15:02 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp: Added
