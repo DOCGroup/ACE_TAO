@@ -204,6 +204,10 @@ private:
   ACE_Unbounded_Set<ACE_Timer_Node *> preallocated_node_set_;
   // Set of pointers to the arrays of preallocated timer nodes.
   // Used to delete the allocated memory when required.
+
+  // = Don't allow these operations for now.
+  ACE_Timer_Heap (const ACE_Timer_Heap &);
+  void operator= (const ACE_Timer_Heap &);
 };
 
 #endif /* ACE_TIMER_HEAP_H */

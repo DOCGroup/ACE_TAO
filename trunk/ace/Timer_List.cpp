@@ -258,9 +258,10 @@ ACE_Timer_List::cancel (ACE_Event_Handler *handler)
 	{
 	  number_of_cancellations++;
 
-	  // Call the close hook.
-	  curr->handler_->handle_close (ACE_INVALID_HANDLE, 
-					ACE_Event_Handler::TIMER_MASK);
+	  if (number_of_cancellations == 1)	  
+	    // Call the close hook.
+	    curr->handler_->handle_close (ACE_INVALID_HANDLE, 
+					  ACE_Event_Handler::TIMER_MASK);
 	  if (prev == 0)
 	    {
 	      this->head_ = curr->next_;

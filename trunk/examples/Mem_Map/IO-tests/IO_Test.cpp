@@ -83,7 +83,7 @@ Block_Read_Write_Test::run_test (int iterations, FILE *input_fp, FILE *output_fp
   while (--iterations >= 0)
     {
       char buf[BUFSIZ];
-      int  n;
+      ssize_t n;
 
       while ((n = ACE_OS::read (ifd, buf, sizeof buf)) > 0)
 	::write (ofd, buf, n);
@@ -109,7 +109,7 @@ Block_Fread_Fwrite_Test::run_test (int iterations, FILE *input_fp, FILE *output_
   while (--iterations >= 0)
     {
       char buf[BUFSIZ];
-      int  n;
+      ssize_t n;
 
       while ((n = ACE_OS::fread (buf, 1, sizeof buf, input_fp)) != 0)
 	::fwrite (buf, n, 1, output_fp);
@@ -134,7 +134,7 @@ Mmap1_Test::run_test (int iterations, FILE *input_fp, FILE *output_fp)
   void *src = 0;
 
   if (map_input (src) == -1)
-    return -1;
+    ACE_ERROR_RETURN ((ACE_ERROR, "%s", this->name ()), -1);
   else
     {
       this->tm_.start ();
@@ -142,7 +142,7 @@ Mmap1_Test::run_test (int iterations, FILE *input_fp, FILE *output_fp)
       while (--iterations >= 0)
 	{
 	  if (ACE_OS::write (fileno (output_fp), src, map_input.size ()) == -1)
-	    return -1;
+	    ACE_ERROR_RETURN ((ACE_ERROR, "%s", this->name ()), -1);
 	  ACE_OS::lseek (fileno (output_fp), 0, SEEK_SET);
 	}
 
@@ -150,7 +150,7 @@ Mmap1_Test::run_test (int iterations, FILE *input_fp, FILE *output_fp)
     }
   
   if (map_input.unmap () == -1)
-    return -1;
+    ACE_ERROR_RETURN ((ACE_ERROR, "%s", this->name ()), -1);
   else
     return 0;
 }  

@@ -86,7 +86,9 @@ ACE_INLINE int
 ACE_Mem_Map::unmap (int len)
 {
   ACE_TRACE ("ACE_Mem_Map::unmap");
-  if (this->file_mapping_ != this->handle_)
+
+  if (this->file_mapping_ != this->handle_
+      && this->file_mapping_ != ACE_INVALID_HANDLE)
     ACE_OS::close (this->file_mapping_);
 
   this->file_mapping_ = ACE_INVALID_HANDLE;
@@ -100,7 +102,9 @@ ACE_INLINE int
 ACE_Mem_Map::unmap (void *addr, int len)
 {
   ACE_TRACE ("ACE_Mem_Map::unmap");
-  if (this->file_mapping_ != this->handle_)
+
+  if (this->file_mapping_ != this->handle_
+      && this->file_mapping_ != ACE_INVALID_HANDLE)
     ACE_OS::close (this->file_mapping_);
 
   this->file_mapping_ = ACE_INVALID_HANDLE;

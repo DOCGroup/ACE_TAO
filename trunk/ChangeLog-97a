@@ -1,3 +1,9 @@
+Sun Mar 16 11:31:46 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Timer_{List,Queue,Heap}.h: Defined copy constructors and
+ 	  assignment operators in the private part of the class so that
+ 	  users won't accidentally make mistakes.
+
 Mon Mar 17 06:58:18 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/OS.cpp (sched_params): return -1 if not supported,
@@ -15,6 +21,43 @@ Mon Mar 17 06:58:18 1997  David L. Levine  <levine@cs.wustl.edu>
 	  local variable "i" to (signed) int to avoid signed/unsigned
 	  comparison, and eventual seg fault because a loop would never
 	  terminate.
+
+Sat Mar 15 21:44:45 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Timer_{Queue,List}.cpp (cancel): handle_close() should be
+ 	  called only once (especially when handle_close() implements
+ 	  "delete this;" ).  Since it is possible that the EH will be
+ 	  registered more than once, I changed the code to do the
+ 	  following:
+
+          if (number_of_cancellations == 1)
+	    // Call the close hook.
+            curr->handler_->handle_close (ACE_INVALID_HANDLE, 
+                                          ACE_Event_Handler::TIMER_MASK);
+
+          Thanks to Hamutal Yanay <Hamutal_Yanay@mail.icomverse.com> for
+ 	  suggesting this.
+
+	* examples/Mem_Map/IO-tests/test_io.cpp (run_tests): Removed all
+ 	  uses of ::perror and replaced them with calls to ACE_ERROR
+ 	  macros.
+
+	* ace/Mem_Map.i (unmap): The ACE_Mem_Map::close method does not
+	  work properly if the value of file_mapping_ is equal to
+	  ACE_INVALID_HANDLE.  In this case the method calls a useless
+	  close (-1).  Therefore, I changed:
+
+	  if (this->file_mapping_ != this->handle_)
+	    ACE_OS::close (this->file_mapping_);
+ 
+          in:
+ 
+          if (this->file_mapping_ != this->handle_ &&
+	      this->file_mapping_ != ACE_INVALID_HANDLE)
+	    ACE_OS::close (this->file_mapping_);
+
+	  Thanks to Sandro Doro <alex@aureus.sublink.org> for reporting
+ 	  this.
 
 Thu Mar 13 18:21:15 1997  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
 

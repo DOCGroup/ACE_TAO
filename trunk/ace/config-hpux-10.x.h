@@ -56,6 +56,8 @@
 // Compiler/platform defines the sig_atomic_t typedef
 #define ACE_HAS_SIG_ATOMIC_T
 
+// If you don't want to use threads make sure to comment out the
+// folowing block of #defines 
 #define ACE_HAS_THREADS
 #define ACE_HAS_PTHREADS
 #define ACE_LACKS_RWLOCK_T
@@ -69,8 +71,6 @@
 #define ACE_LACKS_KEYDELETE                     /*  new */
 #define ACE_LACKS_THREAD_PROCESS_SCOPING
 #define ACE_LACKS_THREAD_STACK_ADDR
-
-// Compiler/platform has thread-specific storage
 #define ACE_HAS_THREAD_SPECIFIC_STORAGE
 
 // Compiler/platform supports struct strbuf.

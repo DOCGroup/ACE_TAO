@@ -512,11 +512,14 @@ ACE_Timer_Heap::cancel (ACE_Event_Handler *handler)
       if (this->heap_[i]->handler_ == handler)
         {
           ACE_Timer_Node *temp = this->remove (i);
-	  // Call the close hook.
-	  temp->handler_->handle_close (ACE_INVALID_HANDLE, 
-					ACE_Event_Handler::TIMER_MASK);
-          this->free_node (temp);
+
           number_of_cancellations++;
+
+	  if (number_of_cancellations == 1)
+	    // Call the close hook.
+	    temp->handler_->handle_close (ACE_INVALID_HANDLE, 
+					  ACE_Event_Handler::TIMER_MASK);
+          this->free_node (temp);
         }
       else
        i++;
