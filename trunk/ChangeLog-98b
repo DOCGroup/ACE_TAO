@@ -1,3 +1,9 @@
+Tue Sep 22 00:31:26 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Log_Record.cpp (print): Make sure that the process id and
+ 	  timestamp are fixed width.  Thanks to Valery Arkhangorodsky
+ 	  <avalery@geocities.com> for this fix.
+
 Mon Sep 21 22:54:44 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* examples/Bounded_Packet_Relay: Removed a gratuitous

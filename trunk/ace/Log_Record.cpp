@@ -205,15 +205,24 @@ ACE_Log_Record::print (const ASYS_TCHAR host_name[],
         0 ? ASYS_TEXT ("<local_host>") : host_name;
 #endif /* ! defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS) */
 
+      // Make sure that the output of the timestamp and process id is
+      // "fixed width."
+      ASYS_TCHAR s_msec [10];
+      ACE_OS::sprintf (s_msec,
+                       "%03d",
+                       this->time_stamp_.usec () / 1000);
+      ASYS_TCHAR s_pid [10];
+      ACE_OS::sprintf (s_pid,
+                       "%03d",
+                       this->pid_);
       s << (ctp + 4) << '.'
-	// The following line isn't portable, so I've commented it out...
-	// << setw (3) << setfill ('0') << this->time_stamp_.usec () / 1000 << ' '
-	<< this->time_stamp_.usec () / 1000 << ' '
+	<< s_msec 
+        << ' '
 	<< (ctp + 20)
 	<< '@'
 	<< lhost_name
 	<< '@'
-	<< this->pid_
+	<< s_pid
 	<< '@'
 	<< ACE_Log_Record::priority_name (ACE_Log_Priority (this->type_))
 	<< '@';
