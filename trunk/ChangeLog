@@ -1,3 +1,9 @@
+Tue Jul 23 13:08:27 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/Log_Msg.{h cpp} (log_hexdump):
+        * ace/ACE.{h cpp} (format_hexdump): Change size arguments from int
+          to size_t. Change format_hexdump()'s return from int to size_t.
+
 Tue Jul 23 09:48:15 2002  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/Driver.pm:
@@ -13,6 +19,7 @@ Tue Jul 23 09:48:15 2002  Chad Elliott  <elliott_c@ociweb.com>
 
           Only add LIB and SHLIB assignments if we are generating a Makefile
           for libraries.
+
 Mon Jul 22 22:30:53 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ACEXML/common/XML_Common.dsp: Added the macro definition
