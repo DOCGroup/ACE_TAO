@@ -1,130 +1,139 @@
+Fri Apr 03 09:01:00 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/Cubit/TAO/MT_Cubit/server.cpp (start_servants):
+          changed local "ior_file" to "ior_f" because it shadowed
+          the global and caused compile failure with g++.
+
+        * tests/Cubit/TAO/MT_Cubit/Task_Client.cpp (run_tests):
+          added default case to switch statement.
+
 Thu Apr 02 15:49:16 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/tests/Cubit/TAO/MT_Cubit/client.dsp:
-	* tao/tests/Cubit/TAO/MT_Cubit/server.dsp: Updated project file.
+        * tao/tests/Cubit/TAO/MT_Cubit/client.dsp:
+        * tao/tests/Cubit/TAO/MT_Cubit/server.dsp: Updated project file.
 
-	* tao/ORB_Core.{h,i,cpp} (create_and_set_root_poa): Added this
-	  private method to create and set the root poa of the calling
-	  ORB_Core. 
-	  (root_poa): Make sure this function will always return a valid
-	  poa pointer (thru the use of create_and_set_root_poa above.)
+        * tao/ORB_Core.{h,i,cpp} (create_and_set_root_poa): Added this
+          private method to create and set the root poa of the calling
+          ORB_Core.
+          (root_poa): Make sure this function will always return a valid
+          poa pointer (thru the use of create_and_set_root_poa above.)
 
-	* tao/ORB.cpp (resolve_poa): Moved the creation of poa into
-	  ORB_Core.
+        * tao/ORB.cpp (resolve_poa): Moved the creation of poa into
+          ORB_Core.
 
 Wed Apr  1 23:39:04 1998  Sergio Flores  <sergio@flamenco.cs.wustl.edu>
 
-	* tests/Cubit/TAO/MT_Cubit/Task_Client.cpp:
-	* tests/Cubit/TAO/MT_Cubit/Task_Client.h:
-	* tests/Cubit/TAO/MT_Cubit/Util_Thread.cpp:
-	* tests/Cubit/TAO/MT_Cubit/Util_Thread.h:
-	* tests/Cubit/TAO/MT_Cubit/client.cpp:
-	* tests/Cubit/TAO/MT_Cubit/server.cpp:
-	* tests/Cubit/TAO/MT_Cubit/server.h: Fixed some bugs and added
- 	some comments.
+        * tests/Cubit/TAO/MT_Cubit/Task_Client.cpp:
+        * tests/Cubit/TAO/MT_Cubit/Task_Client.h:
+        * tests/Cubit/TAO/MT_Cubit/Util_Thread.cpp:
+        * tests/Cubit/TAO/MT_Cubit/Util_Thread.h:
+        * tests/Cubit/TAO/MT_Cubit/client.cpp:
+        * tests/Cubit/TAO/MT_Cubit/server.cpp:
+        * tests/Cubit/TAO/MT_Cubit/server.h: Fixed some bugs and added
+        some comments.
 
 Wed Apr 01 22:37:59 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tests/POA/Default_Servant/client.cpp: Fixed options parsing.
+        * tests/POA/Default_Servant/client.cpp: Fixed options parsing.
 
-	* tao/Servant_Base.h: Added TAO_Export to
- 	  TAO_DynamicImplementation.
+        * tao/Servant_Base.h: Added TAO_Export to
+          TAO_DynamicImplementation.
 
 Wed Apr  1 17:33:04 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tests/Cubit/TAO/MT_Cubit: Cleaned up the formatting of the code
- 	  to conform to the TAO programming style.
+        * tests/Cubit/TAO/MT_Cubit: Cleaned up the formatting of the code
+          to conform to the TAO programming style.
 
 Wed Apr  1 11:07:53 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
-	* orbsvcs/tests/Simulator/DOVEBrowser/VisCompFactory.java:
- 	  Implemented a Factory pattern to generate the Visualization
- 	  Components and the Java class loader is now used to instantiate
- 	  the JavaBeans Visualization Components.
+        * orbsvcs/tests/Simulator/DOVEBrowser/VisCompFactory.java:
+          Implemented a Factory pattern to generate the Visualization
+          Components and the Java class loader is now used to instantiate
+          the JavaBeans Visualization Components.
 
-	* orbsvcs/tests/Simulator/DOVEBrowser, DOVEMIB and Event Supplier
-	  are running under NT properly.
+        * orbsvcs/tests/Simulator/DOVEBrowser, DOVEMIB and Event Supplier
+          are running under NT properly.
 
 Wed Apr 01 09:44:31 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/ORB_Core.cpp (init,fini): Removed calls to
- 	  ACE_OS::socket_init and ACE_OS::socket_fini because they are
- 	  taken care of by ACE already.
+        * tao/ORB_Core.cpp (init,fini): Removed calls to
+          ACE_OS::socket_init and ACE_OS::socket_fini because they are
+          taken care of by ACE already.
 
 Wed Apr  1 09:46:53 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
-	The following fix was also made by Carlos simultaneously. Here is
- 	the reason what was going wrong.
+        The following fix was also made by Carlos simultaneously. Here is
+        the reason what was going wrong.
 
-	* tao/IIOP_Interpreter.cpp: In calc_nested_size_alignment_i, there
- 	  was a bug in which we were initializing the CDR stream for
- 	  nested parameters with an incorrect size. This was due to the
- 	  fact that we were computing the byte order outside and then
- 	  initializing the stream with 4 less bytes. However, the
- 	  constructor of the TAO_InputCDR was also computing the byteorder
- 	  using wrong locations in the bytestream. This is now fixed.
+        * tao/IIOP_Interpreter.cpp: In calc_nested_size_alignment_i, there
+          was a bug in which we were initializing the CDR stream for
+          nested parameters with an incorrect size. This was due to the
+          fact that we were computing the byte order outside and then
+          initializing the stream with 4 less bytes. However, the
+          constructor of the TAO_InputCDR was also computing the byteorder
+          using wrong locations in the bytestream. This is now fixed.
 
-	* tests/Param_Test: Added barebones implementation to test
- 	  Anys. This is still not complete because we still have to work
- 	  on getting Anys in TAO to work correctly and get rid of the
- 	  memory management problems we are having.
+        * tests/Param_Test: Added barebones implementation to test
+          Anys. This is still not complete because we still have to work
+          on getting Anys in TAO to work correctly and get rid of the
+          memory management problems we are having.
 
 Wed Apr  1 09:41:07 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/IIOP_Interpreter.cpp (calc_nested_size_and_alignment_i):
-	   Fixed nested strem interpretation.
+        * tao/IIOP_Interpreter.cpp (calc_nested_size_and_alignment_i):
+           Fixed nested strem interpretation.
 
 Wed Apr  1 08:56:24 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tao: Renamed ResultFromScode to TAO_ResultFromScode to avoid
- 	  clashes with MFC functions.  Thanks to David Janello
- 	  <djanello@cccis.com> for reporting this.
+        * tao: Renamed ResultFromScode to TAO_ResultFromScode to avoid
+          clashes with MFC functions.  Thanks to David Janello
+          <djanello@cccis.com> for reporting this.
 
 Tue Mar 31 21:01:30 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Naming/Naming_Utils.cpp (init): Fixed a typo.
+        * orbsvcs/orbsvcs/Naming/Naming_Utils.cpp (init): Fixed a typo.
 
 Tue Mar 31 20:18:36 1998  Nagarajan Surendran  <naga@tango.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Naming/Naming_Utils.cpp (TAO_Naming_Server):
-	Added code to remove the IOR_Multicase event handler in the destructor.
+        * orbsvcs/orbsvcs/Naming/Naming_Utils.cpp (TAO_Naming_Server):
+        Added code to remove the IOR_Multicase event handler in the destructor.
 
 Tue Mar 31 19:50:48 1998  Nagarajan Surendran  <naga@tango.cs.wustl.edu>
 
-	* tests/Cubit/TAO/IDL_Cubit/server.cpp (Cubit_Server): Removed the
-	naming service unbind code from the destructor as the naming
-	server is a component and not an external server. Also they will
-	be destructed when the ~Cubit_Server is called.
+        * tests/Cubit/TAO/IDL_Cubit/server.cpp (Cubit_Server): Removed the
+        naming service unbind code from the destructor as the naming
+        server is a component and not an external server. Also they will
+        be destructed when the ~Cubit_Server is called.
 
 Tue Mar 31 19:30:03 1998  Nagarajan Surendran  <naga@tango.cs.wustl.edu>
 
-	* tests/Cubit/TAO/IDL_Cubit/server.cpp (Cubit_Server): Added a
-	check in the destructor to unbind the cubit_factory from the
-	naming service.
+        * tests/Cubit/TAO/IDL_Cubit/server.cpp (Cubit_Server): Added a
+        check in the destructor to unbind the cubit_factory from the
+        naming service.
 
 Tue Mar 31 15:15:53 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/Sequence.h:
-	* tao/Sequence.i:
-	* tao/Sequence_T.h:
-	* tao/Sequence_T.i:
-	  g++ does not like typedefs inside templates, and we were abusing
-	  them in the sequences.
+        * tao/Sequence.h:
+        * tao/Sequence.i:
+        * tao/Sequence_T.h:
+        * tao/Sequence_T.i:
+          g++ does not like typedefs inside templates, and we were abusing
+          them in the sequences.
 
-	* tests/CDR/tc.cpp:
-	  Fixed formatting problems.
+        * tests/CDR/tc.cpp:
+          Fixed formatting problems.
 
-	* tests/Param_Test/tmplinst.cpp:
-	  Added missing template instantiations.
+        * tests/Param_Test/tmplinst.cpp:
+          Added missing template instantiations.
 
 Tue Mar 31 11:10:34 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/ORB.h (String_out):  Added the infamous TAO_Export macro.
+        * tao/ORB.h (String_out):  Added the infamous TAO_Export macro.
 
 Tue Mar 31 14:38:29 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* tao/Sequence_T.i (replace): Make sure to cast this->buffer_
-	  to (T *) to make compilers like GCC happy!
+        * tao/Sequence_T.i (replace): Make sure to cast this->buffer_
+          to (T *) to make compilers like GCC happy!
 
 Tue Mar 31 13:34:36 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -145,79 +154,79 @@ Tue Mar 31 13:34:36 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Tue Mar 31 11:05:23 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/CDR.h:
-	* tao/CDR.cpp:
-	* tao/decode.cpp:
-	* tao/Typecode.cpp:
-	  Added constructor for encapsulated streams to the TAO_InputCDR
-	  class; this was causing problems on Intel machines.
+        * tao/CDR.h:
+        * tao/CDR.cpp:
+        * tao/decode.cpp:
+        * tao/Typecode.cpp:
+          Added constructor for encapsulated streams to the TAO_InputCDR
+          class; this was causing problems on Intel machines.
 
-	* TAO_IDL/be/be_helper.cpp:
-	* TAO_IDL/be/be_codegen.cpp:
-	  We end #if/#endif blocks using C style comments (/* */) as
-	  opposed to C++ style (// )
+        * TAO_IDL/be/be_helper.cpp:
+        * TAO_IDL/be/be_codegen.cpp:
+          We end #if/#endif blocks using C style comments (/* */) as
+          opposed to C++ style (// )
 
-	* tao/Sequence.i:
-	* tao/Sequence.cpp:
-	* tao/Sequence_T.i:
-	* tao/Sequence_T.cpp:
-	  Fixed a lot of const-correctness problems, thanks to J, Russell
-	  Noteworthy <rnosewor@objectsciences.com> for putting me on this
-	  track.
+        * tao/Sequence.i:
+        * tao/Sequence.cpp:
+        * tao/Sequence_T.i:
+        * tao/Sequence_T.cpp:
+          Fixed a lot of const-correctness problems, thanks to J, Russell
+          Noteworthy <rnosewor@objectsciences.com> for putting me on this
+          track.
 
-	* tests/Param_Test/tmplinst.cpp:
-	* tests/Param_Test/tests.cpp:
-	* tests/Param_Test/param_test_i.h:
-	* tests/Param_Test/param_test_i.cpp:
-	* tests/Param_Test/param_test.idl:
-	  The test now includes all kind of sequences: of basic types, of
-	  structs, of strings, of objects; both bounded and unbounded.
-	  Unfortunately only compilation is verified, I still have to add
-	  code to verify functionality.
+        * tests/Param_Test/tmplinst.cpp:
+        * tests/Param_Test/tests.cpp:
+        * tests/Param_Test/param_test_i.h:
+        * tests/Param_Test/param_test_i.cpp:
+        * tests/Param_Test/param_test.idl:
+          The test now includes all kind of sequences: of basic types, of
+          structs, of strings, of objects; both bounded and unbounded.
+          Unfortunately only compilation is verified, I still have to add
+          code to verify functionality.
 
-	* TAO_IDL/be/be_visitor_sequence.cpp:
-	  Unproper code was generated for bounded sequences of strings.
+        * TAO_IDL/be/be_visitor_sequence.cpp:
+          Unproper code was generated for bounded sequences of strings.
 
-	* tao/IIOP_ORB.cpp:
-	  Added some debug messages to verify that collocation works.
+        * tao/IIOP_ORB.cpp:
+          Added some debug messages to verify that collocation works.
 
-	* orbsvcs/tests/EC_Multiple/README:
-	* orbsvcs/tests/EC_Multiple/EC_Multiple.h:
-	* orbsvcs/tests/EC_Multiple/EC_Multiple.cpp:
-	  Now that the ORB supports collocation we can create a collocated
-	  EC, but that requires a smarter startup.
-	  It seems that the ECP is not receiving all the messages it
-	  should.
-	  The main purpose of the change was to verify that collocation
-	  works and it seems to do so.
+        * orbsvcs/tests/EC_Multiple/README:
+        * orbsvcs/tests/EC_Multiple/EC_Multiple.h:
+        * orbsvcs/tests/EC_Multiple/EC_Multiple.cpp:
+          Now that the ORB supports collocation we can create a collocated
+          EC, but that requires a smarter startup.
+          It seems that the ECP is not receiving all the messages it
+          should.
+          The main purpose of the change was to verify that collocation
+          works and it seems to do so.
 
-	* tao/Connect.cpp:
-	  We set the flag to expect input *before* making the
-	  request. This alleviates (but does not solve) the problems of
-	  using several threads and a global ORB: in such a configuration
-	  it is possible that one thread is running the event loop, but
-	  another makes a request, if the reply is received before the
-	  flag is set the ORB believes it has received an out-of-order
-	  reply and shutdowns the connection.
-	  The real solution is to use the leader-follower model.
+        * tao/Connect.cpp:
+          We set the flag to expect input *before* making the
+          request. This alleviates (but does not solve) the problems of
+          using several threads and a global ORB: in such a configuration
+          it is possible that one thread is running the event loop, but
+          another makes a request, if the reply is received before the
+          flag is set the ORB believes it has received an out-of-order
+          reply and shutdowns the connection.
+          The real solution is to use the leader-follower model.
 
-	* tao/decode.cpp:
-	* orbsvcs/Event_Service/Event_Service.cpp:
-	  Cosmetic changes.
+        * tao/decode.cpp:
+        * orbsvcs/Event_Service/Event_Service.cpp:
+          Cosmetic changes.
 
 Mon Mar 30 21:38:32 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/ORB_Core.cpp (fini): Added a call to ACE_OS::socket_fini ().
+        * tao/ORB_Core.cpp (fini): Added a call to ACE_OS::socket_fini ().
 
-	* tao/IIOP_ORB.cpp (_get_collocated_object): Changed to call
-	  TAO_ORB_Core_instance ()-> root_poa () instead of
-	  this->resolve_poa ().  Thanks to Carlos for tracing this down.
+        * tao/IIOP_ORB.cpp (_get_collocated_object): Changed to call
+          TAO_ORB_Core_instance ()-> root_poa () instead of
+          this->resolve_poa ().  Thanks to Carlos for tracing this down.
 
 Mon Mar 30 17:59:30 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/ORB_Core.i: Only _NOT_ specialize
-	  ACE_Hash_Addr<ACE_INET_Addr> when ACE needs to instantiate
-	  template explicitly and it is not inlined.
+        * tao/ORB_Core.i: Only _NOT_ specialize
+          ACE_Hash_Addr<ACE_INET_Addr> when ACE needs to instantiate
+          template explicitly and it is not inlined.
 
 Mon Mar 30 13:13:07 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
