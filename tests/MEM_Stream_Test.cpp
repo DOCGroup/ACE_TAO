@@ -29,13 +29,15 @@
 
 ACE_RCSID(tests, MEM_Stream_Test, "$Id$")
 
+#if defined (ACE_HAS_THREADS)
+
 #define NO_OF_CONNECTION 3
 #define NO_OF_ITERATION 100
 
 static int opt_wfmo_reactor = 1;
 static int opt_select_reactor = 1;
 
-class Echo_Handler : public ACE_Svc_Handler<ACE_MEM_STREAM, ACE_SYNCH>
+class Echo_Handler : public ACE_Svc_Handler<ACE_MEM_STREAM, ACE_MT_SYNCH>
 {
   // = TITLE
   //   Simple class for reading in the data and then sending it back
@@ -186,7 +188,7 @@ create_reactor (void)
 int
 main (int, ACE_TCHAR *[])
 {
-  //  ACE_START_TEST (ACE_TEXT ("MEM_Stream_Test"));
+  ACE_START_TEST (ACE_TEXT ("MEM_Stream_Test"));
 
   create_reactor ();
 
@@ -207,6 +209,28 @@ main (int, ACE_TCHAR *[])
 
   ACE_Thread_Manager::instance ()->wait ();
 
-  //  ACE_END_TEST;
+  ACE_END_TEST;
   return 0;
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Svc_Handler <ACE_MEM_STREAM, ACE_MT_SYNCH>;
+template class ACE_Acceptor<Echo_Handler, ACE_MEM_ACCEPTOR>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Svc_Handler <ACE_MEM_STREAM, ACE_MT_SYNCH>
+#pragma instantiate ACE_Acceptor<Echo_Handler, ACE_MEM_ACCEPTOR>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+#else
+int
+main (int, ACE_TCHAR *[])
+{
+  ACE_START_TEST (ACE_TEXT ("MEM_Stream_Test"));
+
+  ACE_ERROR ((LM_INFO,
+              ACE_TEXT ("threads not supported on this platform\n")));
+
+  ACE_END_TEST;
+  return 0;
+}
+#endif /* ACE_HAS_THREADS */
