@@ -1,3 +1,16 @@
+Sat Mar 20 22:25:07 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* tests/Multicast_Test.cpp (leave): Replaced 
+	
+	  size_t size = 0;
+  
+          with 
+  
+          size_t size = this->address_vec_.size ();
+  
+          Thanks to Valery Salamakha <ccapstan@bigpond.net.au>
+	  for reporting this!
+  
 Sat Mar 20 17:01:55 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* ace/Timer_Queue_Adapters.h:

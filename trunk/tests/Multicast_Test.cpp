@@ -546,17 +546,17 @@ MCT_Event_Handler::leave (const ACE_INET_Addr &mcast_addr,
   if (this->mcast_.leave (mcast_addr, net_if) == 0)
     {
       char buf[MAX_STRING_SIZE];
-      size_t size = 0;
+      size_t size = this->address_vec_.size ();
       for (size_t i = 0; i < size; ++i)
         {
           ACE_OS::sprintf (buf, "%s/%d",
                            mcast_addr.get_host_addr (),
                            mcast_addr.get_port_number ());
           if (ACE_OS::strcasecmp (buf, this->address_vec_[i]->c_str ()) == 0)
-          {
-            this->address_vec_[i]->set ("");
-            break;
-          }
+            {
+              this->address_vec_[i]->set ("");
+              break;
+            }
         }
       return 0;
     }
