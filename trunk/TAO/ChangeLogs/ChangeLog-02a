@@ -1,3 +1,14 @@
+Sat Aug 11 17:02:44 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/GIOP_Message_Base.cpp:
+	* tao/GIOP_Message_State.cpp:
+	* tao/GIOP_Message_State.inl:
+	* tao/Incoming_Message_Queue.inl:
+	* tao/Transport.cpp:  A chance for us to test the fragmentation
+	  support on the server side. Fixed quite a few bugs with our
+	  fragmentation support. The tests were conducted against ORBIX
+	  2K. The bugs fixed were mostly the way we handle the fragments. 
+
 Sat Aug 11 11:34:47 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/orbsvcs/Event_Utilities.cpp (insert):

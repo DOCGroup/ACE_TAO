@@ -27,6 +27,7 @@
 
 ACE_RCSID(tao, Transport, "$Id$")
 
+
 TAO_Synch_Refcountable::TAO_Synch_Refcountable (ACE_Lock *lock, int refcount)
   : ACE_Refcountable (refcount)
   , refcount_lock_ (lock)
@@ -879,7 +880,7 @@ TAO_Transport::handle_input_i (TAO_Resume_Handle &rh,
     {
       // Duplicate the node that we have as the node is on stack..
       TAO_Queued_Data *nqd =
-        this->make_queued_data (message_block);
+        TAO_Queued_Data::duplicate (qd);
 
       return this->consolidate_fragments (nqd, rh);
     }
@@ -955,7 +956,7 @@ size_t
 TAO_Transport::missing_data (ACE_Message_Block &incoming)
 {
   // If we have a incomplete message in the queue then find out how
-  // much of data is required to get a complete message
+  // much of data is required to get a complete message.
   if (this->incoming_message_queue_.is_tail_complete () == 0)
     {
       return this->incoming_message_queue_.missing_data_tail ();
@@ -999,6 +1000,13 @@ TAO_Transport::consolidate_message (ACE_Message_Block &incoming,
                           missing_data,
                           max_wait_time);
 
+  if (TAO_debug_level > 6)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%P|%t) Read [%d] bytes on attempt \n",
+                  n));
+    }
+
   // If we got an error..
   if (n == -1)
     {
@@ -1027,16 +1035,19 @@ TAO_Transport::consolidate_message (ACE_Message_Block &incoming,
   // in the queue as they would have been taken care before. Put
   // ourselves in the queue and  then try processing one of the
   // messages..
-  if (missing_data > 0 ||
-      this->incoming_message_queue_.queue_length ())
+  if ((missing_data > 0
+       ||this->incoming_message_queue_.queue_length ())
+      && this->incoming_message_queue_.is_tail_fragmented () == 0)
     {
       if (TAO_debug_level > 4)
         {
           ACE_DEBUG ((LM_DEBUG,
+                      "(%P|%t) Amba \n",
+                      n));
+          ACE_DEBUG ((LM_DEBUG,
                       "TAO (%P|%t) - TAO_Transport[%d]::consolidate_message \n"
                       "queueing up the message \n",
                       this->id ()));
-
         }
 
       // Get a queued data
@@ -1100,10 +1111,12 @@ TAO_Transport::consolidate_fragments (TAO_Queued_Data *qd,
         this->incoming_message_queue_.dequeue_tail ();
 
       tqd->more_fragments_ = qd->more_fragments_;
+      tqd->missing_data_ = qd->missing_data_;
 
       if (this->messaging_object ()->consolidate_fragments (tqd,
                                                             qd) == -1)
         return -1;
+
 
       TAO_Queued_Data::release (qd);
 
@@ -1181,6 +1194,14 @@ TAO_Transport::consolidate_message_queue (ACE_Message_Block &incoming,
 
           // Add the missing data to the queue
           qd->missing_data_ = 0;
+
+          // Check whether the message was fragmented and try to consolidate
+          // the fragments..
+          if (qd->more_fragments_ ||
+              (qd->msg_type_ == TAO_PLUGGABLE_MESSAGE_FRAGMENT))
+            {
+              return this->consolidate_fragments (qd, rh);
+            }
 
           // Add it to the tail of the queue..
           this->incoming_message_queue_.enqueue_tail (qd);
