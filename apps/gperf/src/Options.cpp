@@ -701,7 +701,7 @@ Options::parse_args (int argc, char *argv[])
                        argv[getopt.optind],
                        &Options::usage),
                       -1);
-  if (++getopt.optind < argc)
+  if (getopt.optind + 1 < argc)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Extra trailing arguments to %n.\n%r",
                        usage),

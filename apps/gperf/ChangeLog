@@ -1,3 +1,9 @@
+Mon Dec 24 12:47:27 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+	* src/Options.cpp:
+	  Add temporary fix until something better shows up, at least it
+	  compiles this way!
+
 Sat Sep 22 09:06:10 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* src/Makefile: Removed the rules.lib.GNU file since it didn't
