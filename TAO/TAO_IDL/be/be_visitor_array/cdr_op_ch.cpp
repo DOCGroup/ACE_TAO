@@ -51,15 +51,15 @@ be_visitor_array_cdr_op_ch::visit_array (be_array *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   // generate the CDR << and >> operator declarations
-  *os << "CORBA::Boolean " << idl_global->stub_export_macro ()
-      << " operator<< (TAO_OutputCDR &, const ";
+  *os << "CORBA::Boolean " << idl_global->export_macro ()
+      << " operator<< (TAO_OutputCDR &, const "; 
   // @@ TODO: this should be done in the node, it is absurd to repeat
   // this code all over the visitors!!!!
   if (!this->ctx_->tdef ())
     {
       be_scope* scope = be_scope::narrow_from_scope (node->defined_in ());
       be_decl* parent = scope->decl ();
-      *os << parent->fullname ()
+      *os << parent->full_name ()
           << "::_" << node->local_name ()
           << "_forany &);" << be_nl;
     }
@@ -67,13 +67,13 @@ be_visitor_array_cdr_op_ch::visit_array (be_array *node)
     {
       *os << node->name () << "_forany &);" << be_nl;
     }
-  *os << "CORBA::Boolean " << idl_global->stub_export_macro ()
+  *os << "CORBA::Boolean " << idl_global->export_macro ()
       << " operator>> (TAO_InputCDR &, ";
   if (!this->ctx_->tdef ())
     {
       be_scope* scope = be_scope::narrow_from_scope (node->defined_in ());
       be_decl* parent = scope->decl ();
-      *os << parent->fullname ()
+      *os << parent->full_name ()
           << "::_" << node->local_name ()
           << "_forany &);" << be_nl;
     }
@@ -81,6 +81,34 @@ be_visitor_array_cdr_op_ch::visit_array (be_array *node)
     {
       *os << node->name () << "_forany &);" << be_nl;
     }
+
+      // If we contain an anonymous sequence, 
+      // generate code for the sequence here.
+
+      // retrieve the type
+      be_type *bt = be_type::narrow_from_decl (node->base_type ());
+      if (!bt)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_array_cdr_op_ch::"
+                             "visit_array - "
+                             "bad base type\n"),
+                            -1);
+        }
+
+      if (bt->node_type () == AST_Decl::NT_sequence)
+        {
+          if (this->gen_anonymous_base_type (bt, 
+                                             TAO_CodeGen::TAO_SEQUENCE_CDR_OP_CH) 
+              == -1)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "(%N:%l) be_visitor_array_cdr_op_ch::"
+                                 "visit_array - "
+                                 "gen_anonymous_base_type failed\n"),
+                                -1);
+            }              
+        }
 
   node->cli_hdr_cdr_op_gen (1);
   return 0;

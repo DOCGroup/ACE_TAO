@@ -37,6 +37,6 @@ $NS->Terminate (); if ($NS->TimedWait (5) == -1) {
   print STDERR "ERROR: cannot terminate naming service\n";
   $NS->Kill (); $NS->TimedWait (1);
   exit 1;
-}
+}  
 
 exit $status;

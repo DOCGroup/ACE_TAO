@@ -271,10 +271,8 @@ CORBA_SystemException::_tao_errno (int errno_value)
       return TAO_ENOENT_MINOR_CODE;
     case EBADF:
       return TAO_EBADF_MINOR_CODE;
-#if (ENOSYS != EFAULT)
     case ENOSYS:
       return TAO_ENOSYS_MINOR_CODE;
-#endif /* ENOSYS != EFAULT */
     case EPERM:
       return TAO_EPERM_MINOR_CODE;
     case EAFNOSUPPORT:
@@ -291,8 +289,6 @@ CORBA_SystemException::_tao_errno (int errno_value)
       return TAO_EBUSY_MINOR_CODE;
     case EEXIST:
       return TAO_EEXIST_MINOR_CODE;
-    case EINVAL:
-      return TAO_EINVAL_MINOR_CODE;
     default:
       // Mask off bottom 7 bits and return them.
       return errno_value & 0x7F;
@@ -435,9 +431,6 @@ CORBA_SystemException::_info (void) const
           break;
         case TAO_EEXIST_MINOR_CODE:
           errno_indication = "EEXIST";
-          break;
-        case TAO_EINVAL_MINOR_CODE:
-          errno_indication = "EINVAL";
           break;
         default:
           {

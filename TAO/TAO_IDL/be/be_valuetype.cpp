@@ -39,7 +39,6 @@ be_valuetype::be_valuetype (void)
 {
   this->size_type (be_decl::VARIABLE); // always the case
   (AST_Module::narrow_from_scope (this->defined_in ()))->set_has_nested_valuetype ();
-  this->has_constructor (I_TRUE);  // always the case
 }
 
 // constructor used to build the AST
@@ -56,7 +55,6 @@ be_valuetype::be_valuetype (UTL_ScopedName *n, AST_Interface **ih, long nih,
   // ---
   this->size_type (be_decl::VARIABLE); // always the case
   (AST_Module::narrow_from_scope (this->defined_in ()))->set_has_nested_valuetype ();
-  this->has_constructor (I_TRUE);  // always the case
 }
 
 be_valuetype::~be_valuetype (void)
@@ -101,7 +99,7 @@ be_valuetype::set_abstract_valuetype ()
 void
 be_valuetype::compute_fullobvskelname (void)
 {
-  this->compute_fullskelname (this->full_obv_skel_name_, "OBV_");
+  this->compute_full_skel_name ("OBV_", this->full_obv_skel_name_);
 }
 
 
@@ -126,7 +124,7 @@ be_valuetype::gen_var_defn (char *)
   char namebuf [NAMEBUFSIZE];  // names
 
   ACE_OS::memset (namebuf, '\0', NAMEBUFSIZE);
-  ACE_OS::sprintf (namebuf, "%s_var", this->local_name ()->get_string ());
+  ACE_OS::sprintf (namebuf, "%s_var", this->local_name ());
 
   // retrieve a singleton instance of the code generator
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
@@ -138,7 +136,7 @@ be_valuetype::gen_var_defn (char *)
   // for over here.
 
   ch->indent (); // start with whatever was our current indent level
-  *ch << "class " << idl_global->stub_export_macro ()
+  *ch << "class " << idl_global->export_macro ()
       << " " << namebuf << nl;
   *ch << "{" << nl;
   *ch << "public:\n";
@@ -213,10 +211,10 @@ be_valuetype::gen_var_impl (char *, char *)
   char lname [NAMEBUFSIZE];  // local _var names
 
   ACE_OS::memset (fname, '\0', NAMEBUFSIZE);
-  ACE_OS::sprintf (fname, "%s_var", this->fullname ());
+  ACE_OS::sprintf (fname, "%s_var", this->full_name ());
 
   ACE_OS::memset (lname, '\0', NAMEBUFSIZE);
-  ACE_OS::sprintf (lname, "%s_var", local_name ()->get_string ());
+  ACE_OS::sprintf (lname, "%s_var", local_name ());
 
   // retrieve a singleton instance of the code generator
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
@@ -407,7 +405,7 @@ be_valuetype::gen_out_defn (char *)
   char namebuf [NAMEBUFSIZE];  // to hold the _out name
 
   ACE_OS::memset (namebuf, '\0', NAMEBUFSIZE);
-  ACE_OS::sprintf (namebuf, "%s_out", local_name ()->get_string ());
+  ACE_OS::sprintf (namebuf, "%s_out", local_name ());
 
   // retrieve a singleton instance of the code generator
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
@@ -417,7 +415,7 @@ be_valuetype::gen_out_defn (char *)
   // generate the out definition (always in the client header)
   ch->indent (); // start with whatever was our current indent level
 
-  *ch << "class " << idl_global->stub_export_macro ()
+  *ch << "class " << idl_global->export_macro ()
       << " " << namebuf << nl;
   *ch << "{" << nl;
   *ch << "public:\n";
@@ -465,10 +463,10 @@ be_valuetype::gen_out_impl (char *, char *)
   char lname [NAMEBUFSIZE];  // local _out names
 
   ACE_OS::memset (fname, '\0', NAMEBUFSIZE);
-  ACE_OS::sprintf (fname, "%s_out", this->fullname ());
+  ACE_OS::sprintf (fname, "%s_out", this->full_name ());
 
   ACE_OS::memset (lname, '\0', NAMEBUFSIZE);
-  ACE_OS::sprintf (lname, "%s_out", local_name ()->get_string ());
+  ACE_OS::sprintf (lname, "%s_out", local_name ());
 
   // retrieve a singleton instance of the code generator
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();

@@ -17,8 +17,6 @@
 #ifndef TAO_SEQUENCE_T_H
 #define TAO_SEQUENCE_T_H
 
-#include "tao/Sequence.h"
-
 template <class T>
 class TAO_Unbounded_Sequence : public TAO_Unbounded_Base_Sequence
 {
@@ -778,11 +776,6 @@ public:
 
 #if defined (__ACE_INLINE__)
 #include "tao/Sequence_T.i"
-
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-# pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
-
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)

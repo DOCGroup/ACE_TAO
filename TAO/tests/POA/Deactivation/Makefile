@@ -22,6 +22,9 @@ LSRC = $(PROG_SRCS)
 SVR_OBJS = testC.o testS.o Deactivation.o
 
 BIN = Deactivation
+BUILD = $(BIN)
+VLDLIBS = $(LDLIBS:%=%$(VAR))
+VBIN = $(BIN:%=%$(VAR))
 
 TAO_IDLFLAGS += -Ge 1
 #----------------------------------------------------------------------------

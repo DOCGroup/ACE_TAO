@@ -30,28 +30,6 @@
 #define ACE_MALLOC_ALIGN ((int) sizeof (long))
 #endif /* ACE_MALLOC_ALIGN */
 
-// States of a recyclable object.
-enum ACE_Recyclable_State
-{
-  ACE_RECYCLABLE_IDLE_AND_PURGABLE,
-  // Idle and can be purged.
-
-  ACE_RECYCLABLE_IDLE_BUT_NOT_PURGABLE,
-  // Idle but cannot be purged.
-
-  ACE_RECYCLABLE_PURGABLE_BUT_NOT_IDLE,
-  // Can be purged, but is not idle (mostly for debugging).
-
-  ACE_RECYCLABLE_BUSY = 2,
-  // Busy (i.e., cannot be recycled or purged).
-
-  ACE_RECYCLABLE_CLOSED = 3,
-  // Closed.
-
-  ACE_RECYCLABLE_UNKNOWN = 4
-  // Unknown state.
-};
-
 // Do not change these values wantonly since GPERF depends on them..
 #define ACE_ASCII_SIZE 128
 #define ACE_EBCDIC_SIZE 256
@@ -84,111 +62,40 @@ enum ACE_Recyclable_State
 # endif /* defined (ACE_LACKS_INLINE_FUNCTIONS) && !defined (ACE_NO_INLINE) */
 
 # if defined (ACE_HAS_ANSI_CASTS)
-
 #   define ACE_sap_any_cast(TYPE)                                      reinterpret_cast<TYPE> (const_cast<ACE_Addr &> (ACE_Addr::sap_any))
-
 #   define ACE_static_cast(TYPE, EXPR)                                 static_cast<TYPE> (EXPR)
-#   define ACE_static_cast_1_ptr(TYPE, T1, EXPR)                       static_cast<TYPE<T1> *> (EXPR)
-#   define ACE_static_cast_2_ptr(TYPE, T1, T2, EXPR)                   static_cast<TYPE<T1, T2> *> (EXPR)
-#   define ACE_static_cast_3_ptr(TYPE, T1, T2, T3, EXPR)               static_cast<TYPE<T1, T2, T3> *> (EXPR)
-#   define ACE_static_cast_4_ptr(TYPE, T1, T2, T3, T4, EXPR)           static_cast<TYPE<T1, T2, T3, T4> *> (EXPR)
-#   define ACE_static_cast_5_ptr(TYPE, T1, T2, T3, T4, T5, EXPR)       static_cast<TYPE<T1, T2, T3, T4, T5> *> (EXPR)
-#   define ACE_static_cast_1_ref(TYPE, T1, EXPR)                       static_cast<TYPE<T1> &> (EXPR)
-#   define ACE_static_cast_2_ref(TYPE, T1, T2, EXPR)                   static_cast<TYPE<T1, T2> &> (EXPR)
-#   define ACE_static_cast_3_ref(TYPE, T1, T2, T3, EXPR)               static_cast<TYPE<T1, T2, T3> &> (EXPR)
-#   define ACE_static_cast_4_ref(TYPE, T1, T2, T3, T4, EXPR)           static_cast<TYPE<T1, T2, T3, T4> &> (EXPR)
-#   define ACE_static_cast_5_ref(TYPE, T1, T2, T3, T4, T5, EXPR)       static_cast<TYPE<T1, T2, T3, T4, T5> &> (EXPR)
-
 #   define ACE_const_cast(TYPE, EXPR)                                  const_cast<TYPE> (EXPR)
-#   define ACE_const_cast_1_ptr(TYPE, T1, EXPR)                        const_cast<TYPE<T1> *> (EXPR)
-#   define ACE_const_cast_2_ptr(TYPE, T1, T2, EXPR)                    const_cast<TYPE<T1, T2> *> (EXPR)
-#   define ACE_const_cast_3_ptr(TYPE, T1, T2, T3, EXPR)                const_cast<TYPE<T1, T2, T3> *> (EXPR)
-#   define ACE_const_cast_4_ptr(TYPE, T1, T2, T3, T4, EXPR)            const_cast<TYPE<T1, T2, T3, T4> *> (EXPR)
-#   define ACE_const_cast_5_ptr(TYPE, T1, T2, T3, T4, T5, EXPR)        const_cast<TYPE<T1, T2, T3, T4, T5> *> (EXPR)
-#   define ACE_const_cast_1_ref(TYPE, T1, EXPR)                        const_cast<TYPE<T1> &> (EXPR)
-#   define ACE_const_cast_2_ref(TYPE, T1, T2, EXPR)                    const_cast<TYPE<T1, T2> &> (EXPR)
-#   define ACE_const_cast_3_ref(TYPE, T1, T2, T3, EXPR)                const_cast<TYPE<T1, T2, T3> &> (EXPR)
-#   define ACE_const_cast_4_ref(TYPE, T1, T2, T3, T4, EXPR)            const_cast<TYPE<T1, T2, T3, T4> &> (EXPR)
-#   define ACE_const_cast_5_ref(TYPE, T1, T2, T3, T4, T5, EXPR)        const_cast<TYPE<T1, T2, T3, T4, T5> &> (EXPR)
-
 #   define ACE_reinterpret_cast(TYPE, EXPR)                            reinterpret_cast<TYPE> (EXPR)
-#   define ACE_reinterpret_cast_1_ptr(TYPE, T1, EXPR)                  reinterpret_cast<TYPE<T1> *> (EXPR)
-#   define ACE_reinterpret_cast_2_ptr(TYPE, T1, T2, EXPR)              reinterpret_cast<TYPE<T1, T2> *> (EXPR)
-#   define ACE_reinterpret_cast_3_ptr(TYPE, T1, T2, T3, EXPR)          reinterpret_cast<TYPE<T1, T2, T3> *> (EXPR)
-#   define ACE_reinterpret_cast_4_ptr(TYPE, T1, T2, T3, T4, EXPR)      reinterpret_cast<TYPE<T1, T2, T3, T4> *> (EXPR)
-#   define ACE_reinterpret_cast_5_ptr(TYPE, T1, T2, T3, T4, T5, EXPR)  reinterpret_cast<TYPE<T1, T2, T3, T4, T5> *> (EXPR)
-#   define ACE_reinterpret_cast_1_ref(TYPE, T1, EXPR)                  reinterpret_cast<TYPE<T1> &> (EXPR)
-#   define ACE_reinterpret_cast_2_ref(TYPE, T1, T2, EXPR)              reinterpret_cast<TYPE<T1, T2> &> (EXPR)
-#   define ACE_reinterpret_cast_3_ref(TYPE, T1, T2, T3, EXPR)          reinterpret_cast<TYPE<T1, T2, T3> &> (EXPR)
-#   define ACE_reinterpret_cast_4_ref(TYPE, T1, T2, T3, T4, EXPR)      reinterpret_cast<TYPE<T1, T2, T3, T4> &> (EXPR)
-#   define ACE_reinterpret_cast_5_ref(TYPE, T1, T2, T3, T4, T5, EXPR)  reinterpret_cast<TYPE<T1, T2, T3, T4, T5> &> (EXPR)
-
 #   if defined (ACE_LACKS_RTTI)
-#     define ACE_dynamic_cast(TYPE, EXPR)                              static_cast<TYPE> (EXPR)
-#     define ACE_dynamic_cast_1_ptr(TYPE, T1, EXPR)                    static_cast<TYPE<T1> *> (EXPR)
-#     define ACE_dynamic_cast_2_ptr(TYPE, T1, T2, EXPR)                static_cast<TYPE<T1, T2> *> (EXPR)
-#     define ACE_dynamic_cast_3_ptr(TYPE, T1, T2, T3, EXPR)            static_cast<TYPE<T1, T2, T3> *> (EXPR)
-#     define ACE_dynamic_cast_4_ptr(TYPE, T1, T2, T3, T4, EXPR)        static_cast<TYPE<T1, T2, T3, T4> *> (EXPR)
-#     define ACE_dynamic_cast_5_ptr(TYPE, T1, T2, T3, T4, T5, EXPR)    static_cast<TYPE<T1, T2, T3, T4, T5> *> (EXPR)
-#     define ACE_dynamic_cast_1_ref(TYPE, T1, EXPR)                    static_cast<TYPE<T1> &> (EXPR)
-#     define ACE_dynamic_cast_2_ref(TYPE, T1, T2, EXPR)                static_cast<TYPE<T1, T2> &> (EXPR)
-#     define ACE_dynamic_cast_3_ref(TYPE, T1, T2, T3, EXPR)            static_cast<TYPE<T1, T2, T3> &> (EXPR)
-#     define ACE_dynamic_cast_4_ref(TYPE, T1, T2, T3, T4, EXPR)        static_cast<TYPE<T1, T2, T3, T4> &> (EXPR)
-#     define ACE_dynamic_cast_5_ref(TYPE, T1, T2, T3, T4, T5, EXPR)    static_cast<TYPE<T1, T2, T3, T4, T5> &> (EXPR)
+#     define ACE_dynamic_cast(TYPE, EXPR)                              static_cast< TYPE > (EXPR)
+#     define ACE_dynamic_cast_1_ptr(TYPE, T1, EXPR)                    static_cast< TYPE<T1> *> (EXPR)
+#     define ACE_dynamic_cast_2_ptr(TYPE, T1, T2, EXPR)                static_cast< TYPE<T1, T2> *> (EXPR)
+#     define ACE_dynamic_cast_3_ptr(TYPE, T1, T2, T3, EXPR)            static_cast< TYPE<T1, T2, T3> *> (EXPR)
+#     define ACE_dynamic_cast_4_ptr(TYPE, T1, T2, T3, T4, EXPR)        static_cast< TYPE<T1, T2, T3, T4> *> (EXPR)
+#     define ACE_dynamic_cast_5_ptr(TYPE, T1, T2, T3, T4, T5, EXPR)    static_cast< TYPE<T1, T2, T3, T4, T5> *> (EXPR)
+#     define ACE_dynamic_cast_1_ref(TYPE, T1, EXPR)                    static_cast< TYPE<T1> &> (EXPR)
+#     define ACE_dynamic_cast_2_ref(TYPE, T1, T2, EXPR)                static_cast< TYPE<T1, T2> &> (EXPR)
+#     define ACE_dynamic_cast_3_ref(TYPE, T1, T2, T3, EXPR)            static_cast< TYPE<T1, T2, T3> &> (EXPR)
+#     define ACE_dynamic_cast_4_ref(TYPE, T1, T2, T3, T4, EXPR)        static_cast< TYPE<T1, T2, T3, T4> &> (EXPR)
+#     define ACE_dynamic_cast_5_ref(TYPE, T1, T2, T3, T4, T5, EXPR)    static_cast< TYPE<T1, T2, T3, T4, T5> &> (EXPR)
 #   else  /* ! ACE_LACKS_RTTI */
-#     define ACE_dynamic_cast(TYPE, EXPR)                              dynamic_cast<TYPE> (EXPR)
-#     define ACE_dynamic_cast_1_ptr(TYPE, T1, EXPR)                    dynamic_cast<TYPE<T1> *> (EXPR)
-#     define ACE_dynamic_cast_2_ptr(TYPE, T1, T2, EXPR)                dynamic_cast<TYPE<T1, T2> *> (EXPR)
-#     define ACE_dynamic_cast_3_ptr(TYPE, T1, T2, T3, EXPR)            dynamic_cast<TYPE<T1, T2, T3> *> (EXPR)
-#     define ACE_dynamic_cast_4_ptr(TYPE, T1, T2, T3, T4, EXPR)        dynamic_cast<TYPE<T1, T2, T3, T4> *> (EXPR)
-#     define ACE_dynamic_cast_5_ptr(TYPE, T1, T2, T3, T4, T5, EXPR)    dynamic_cast<TYPE<T1, T2, T3, T4, T5> *> (EXPR)
-#     define ACE_dynamic_cast_1_ref(TYPE, T1, EXPR)                    dynamic_cast<TYPE<T1> &> (EXPR)
-#     define ACE_dynamic_cast_2_ref(TYPE, T1, T2, EXPR)                dynamic_cast<TYPE<T1, T2> &> (EXPR)
-#     define ACE_dynamic_cast_3_ref(TYPE, T1, T2, T3, EXPR)            dynamic_cast<TYPE<T1, T2, T3> &> (EXPR)
-#     define ACE_dynamic_cast_4_ref(TYPE, T1, T2, T3, T4, EXPR)        dynamic_cast<TYPE<T1, T2, T3, T4> &> (EXPR)
-#     define ACE_dynamic_cast_5_ref(TYPE, T1, T2, T3, T4, T5, EXPR)    dynamic_cast<TYPE<T1, T2, T3, T4, T5> &> (EXPR)
+#     define ACE_dynamic_cast(TYPE, EXPR)                              dynamic_cast< TYPE > (EXPR)
+#     define ACE_dynamic_cast_1_ptr(TYPE, T1, EXPR)                    dynamic_cast< TYPE<T1> *> (EXPR)
+#     define ACE_dynamic_cast_2_ptr(TYPE, T1, T2, EXPR)                dynamic_cast< TYPE<T1, T2> *> (EXPR)
+#     define ACE_dynamic_cast_3_ptr(TYPE, T1, T2, T3, EXPR)            dynamic_cast< TYPE<T1, T2, T3> *> (EXPR)
+#     define ACE_dynamic_cast_4_ptr(TYPE, T1, T2, T3, T4, EXPR)        dynamic_cast< TYPE<T1, T2, T3, T4> *> (EXPR)
+#     define ACE_dynamic_cast_5_ptr(TYPE, T1, T2, T3, T4, T5, EXPR)    dynamic_cast< TYPE<T1, T2, T3, T4, T5> *> (EXPR)
+#     define ACE_dynamic_cast_1_ref(TYPE, T1, EXPR)                    dynamic_cast< TYPE<T1> &> (EXPR)
+#     define ACE_dynamic_cast_2_ref(TYPE, T1, T2, EXPR)                dynamic_cast< TYPE<T1, T2> &> (EXPR)
+#     define ACE_dynamic_cast_3_ref(TYPE, T1, T2, T3, EXPR)            dynamic_cast< TYPE<T1, T2, T3> &> (EXPR)
+#     define ACE_dynamic_cast_4_ref(TYPE, T1, T2, T3, T4, EXPR)        dynamic_cast< TYPE<T1, T2, T3, T4> &> (EXPR)
+#     define ACE_dynamic_cast_5_ref(TYPE, T1, T2, T3, T4, T5, EXPR)    dynamic_cast< TYPE<T1, T2, T3, T4, T5> &> (EXPR)
 #   endif /* ! ACE_LACKS_RTTI */
-
 # else
-
 #   define ACE_sap_any_cast(TYPE)                                      ((TYPE) (ACE_Addr::sap_any))
-
 #   define ACE_static_cast(TYPE, EXPR)                                 ((TYPE) (EXPR))
-#   define ACE_static_cast_1_ptr(TYPE, T1, EXPR)                       ((TYPE<T1> *) (EXPR))
-#   define ACE_static_cast_2_ptr(TYPE, T1, T2, EXPR)                   ((TYPE<T1, T2> *) (EXPR))
-#   define ACE_static_cast_3_ptr(TYPE, T1, T2, T3, EXPR)               ((TYPE<T1, T2, T3> *) (EXPR))
-#   define ACE_static_cast_4_ptr(TYPE, T1, T2, T3, T4, EXPR)           ((TYPE<T1, T2, T3, T4> *) (EXPR))
-#   define ACE_static_cast_5_ptr(TYPE, T1, T2, T3, T4, T5, EXPR)       ((TYPE<T1, T2, T3, T4, T5> *) (EXPR))
-#   define ACE_static_cast_1_ref(TYPE, T1, EXPR)                       ((TYPE<T1> &) (EXPR))
-#   define ACE_static_cast_2_ref(TYPE, T1, T2, EXPR)                   ((TYPE<T1, T2> &) (EXPR))
-#   define ACE_static_cast_3_ref(TYPE, T1, T2, T3, EXPR)               ((TYPE<T1, T2, T3> &) (EXPR))
-#   define ACE_static_cast_4_ref(TYPE, T1, T2, T3, T4, EXPR)           ((TYPE<T1, T2, T3, T4> &) (EXPR))
-#   define ACE_static_cast_5_ref(TYPE, T1, T2, T3, T4, T5, EXPR)       ((TYPE<T1, T2, T3, T4, T5> &) (EXPR))
-
 #   define ACE_const_cast(TYPE, EXPR)                                  ((TYPE) (EXPR))
-#   define ACE_const_cast_1_ptr(TYPE, T1, EXPR)                        ((TYPE<T1> *) (EXPR))
-#   define ACE_const_cast_2_ptr(TYPE, T1, T2, EXPR)                    ((TYPE<T1, T2> *) (EXPR))
-#   define ACE_const_cast_3_ptr(TYPE, T1, T2, T3, EXPR)                ((TYPE<T1, T2, T3> *) (EXPR))
-#   define ACE_const_cast_4_ptr(TYPE, T1, T2, T3, T4, EXPR)            ((TYPE<T1, T2, T3, T4> *) (EXPR))
-#   define ACE_const_cast_5_ptr(TYPE, T1, T2, T3, T4, T5, EXPR)        ((TYPE<T1, T2, T3, T4, T5> *) (EXPR))
-#   define ACE_const_cast_1_ref(TYPE, T1, EXPR)                        ((TYPE<T1> &) (EXPR))
-#   define ACE_const_cast_2_ref(TYPE, T1, T2, EXPR)                    ((TYPE<T1, T2> &) (EXPR))
-#   define ACE_const_cast_3_ref(TYPE, T1, T2, T3, EXPR)                ((TYPE<T1, T2, T3> &) (EXPR))
-#   define ACE_const_cast_4_ref(TYPE, T1, T2, T3, T4, EXPR)            ((TYPE<T1, T2, T3, T4> &) (EXPR))
-#   define ACE_const_cast_5_ref(TYPE, T1, T2, T3, T4, T5, EXPR)        ((TYPE<T1, T2, T3, T4, T5> &) (EXPR))
-
 #   define ACE_reinterpret_cast(TYPE, EXPR)                            ((TYPE) (EXPR))
-#   define ACE_reinterpret_cast_1_ptr(TYPE, T1, EXPR)                  ((TYPE<T1> *) (EXPR))
-#   define ACE_reinterpret_cast_2_ptr(TYPE, T1, T2, EXPR)              ((TYPE<T1, T2> *) (EXPR))
-#   define ACE_reinterpret_cast_3_ptr(TYPE, T1, T2, T3, EXPR)          ((TYPE<T1, T2, T3> *) (EXPR))
-#   define ACE_reinterpret_cast_4_ptr(TYPE, T1, T2, T3, T4, EXPR)      ((TYPE<T1, T2, T3, T4> *) (EXPR))
-#   define ACE_reinterpret_cast_5_ptr(TYPE, T1, T2, T3, T4, T5, EXPR)  ((TYPE<T1, T2, T3, T4, T5> *) (EXPR))
-#   define ACE_reinterpret_cast_1_ref(TYPE, T1, EXPR)                  ((TYPE<T1> &) (EXPR))
-#   define ACE_reinterpret_cast_2_ref(TYPE, T1, T2, EXPR)              ((TYPE<T1, T2> &) (EXPR))
-#   define ACE_reinterpret_cast_3_ref(TYPE, T1, T2, T3, EXPR)          ((TYPE<T1, T2, T3> &) (EXPR))
-#   define ACE_reinterpret_cast_4_ref(TYPE, T1, T2, T3, T4, EXPR)      ((TYPE<T1, T2, T3, T4> &) (EXPR))
-#   define ACE_reinterpret_cast_5_ref(TYPE, T1, T2, T3, T4, T5, EXPR)  ((TYPE<T1, T2, T3, T4, T5> &) (EXPR))
-
 #   define ACE_dynamic_cast(TYPE, EXPR)                                ((TYPE) (EXPR))
 #   define ACE_dynamic_cast_1_ptr(TYPE, T1, EXPR)                      ((TYPE<T1> *) (EXPR))
 #   define ACE_dynamic_cast_2_ptr(TYPE, T1, T2, EXPR)                  ((TYPE<T1, T2> *) (EXPR))
@@ -2054,13 +1961,13 @@ struct stat
 #       define ACE_THR_PRI_OTHER_MAX ACE_PROC_PRI_OTHER_MAX
 #     endif
 #     if !defined(ACE_THR_PRI_FIFO_DEF)
-#       define ACE_THR_PRI_FIFO_DEF  ((ACE_THR_PRI_FIFO_MIN + ACE_THR_PRI_FIFO_MAX)/2)
+#       define ACE_THR_PRI_FIFO_DEF  (ACE_THR_PRI_FIFO_MIN + (ACE_THR_PRI_FIFO_MAX - ACE_THR_PRI_FIFO_MIN)/2)
 #     endif
 #     if !defined(ACE_THR_PRI_RR_DEF)
-#       define ACE_THR_PRI_RR_DEF ((ACE_THR_PRI_RR_MIN + ACE_THR_PRI_RR_MAX)/2)
+#       define ACE_THR_PRI_RR_DEF (ACE_THR_PRI_RR_MIN + (ACE_THR_PRI_RR_MAX - ACE_THR_PRI_RR_MIN)/2)
 #     endif
 #     if !defined(ACE_THR_PRI_OTHER_DEF)
-#       define ACE_THR_PRI_OTHER_DEF ((ACE_THR_PRI_OTHER_MIN + ACE_THR_PRI_OTHER_MAX)/2)
+#       define ACE_THR_PRI_OTHER_DEF (ACE_THR_PRI_OTHER_MIN + (ACE_THR_PRI_OTHER_MAX - ACE_THR_PRI_OTHER_MIN)/2)
 #     endif
 
       // Typedefs to help compatibility with Windows NT and Pthreads.
@@ -2777,14 +2684,14 @@ typedef unsigned int size_t;
 
 // Define some helpful constants.
 // Not type-safe, and signed.  For backward compatibility.
-#define ACE_ONE_SECOND_IN_MSECS 1000L
-#define ACE_ONE_SECOND_IN_USECS 1000000L
-#define ACE_ONE_SECOND_IN_NSECS 1000000000L
+#define ACE_ONE_SECOND_IN_MSECS 1000l
+#define ACE_ONE_SECOND_IN_USECS 1000000l
+#define ACE_ONE_SECOND_IN_NSECS 1000000000l
 
 // Type-safe, and unsigned.
-static const ACE_UINT32 ACE_U_ONE_SECOND_IN_MSECS = 1000U;
-static const ACE_UINT32 ACE_U_ONE_SECOND_IN_USECS = 1000000U;
-static const ACE_UINT32 ACE_U_ONE_SECOND_IN_NSECS = 1000000000U;
+static const ACE_UINT32 ACE_U_ONE_SECOND_IN_MSECS = 1000u;
+static const ACE_UINT32 ACE_U_ONE_SECOND_IN_USECS = 1000000u;
+static const ACE_UINT32 ACE_U_ONE_SECOND_IN_NSECS = 1000000000u;
 
 # if defined (ACE_HAS_SIG_MACROS)
 #   undef sigemptyset
@@ -3702,12 +3609,11 @@ extern int t_errno;
   // trouble when introducing member functions with the same name.
   // Thanks to Thilo Kielmann" <kielmann@informatik.uni-siegen.de> for
   // this fix.
+#     undef sigwait
 #     if defined  (__DECCXX_VER)
-#       undef sigwait
-        // cxx on Digital Unix 4.0 needs this declaration.  With it,
-        // ::_Psigwait () works with cxx -pthread.  g++ does _not_
-        // need it.
-        extern "C" int _Psigwait __((const sigset_t *set, int *sig));
+    // cxx on Digital Unix 4.0 needs this declaration.  With it,
+    // ::_Psigwait () works with cxx -pthread.  g++ does _not_ need it.
+    extern "C" int _Psigwait __((const sigset_t *set, int *sig));
 #     endif /* __DECCXX_VER */
 #   elif !defined (ACE_HAS_SIGWAIT)
   extern "C" int sigwait (sigset_t *set);
@@ -4191,10 +4097,6 @@ struct sigaction
 
 # if !defined (ENOSYS)
 #   define ENOSYS EFAULT /* Operation not supported or unknown error. */
-# endif /* !ENOSYS */
-
-# if !defined (ENFILE)
-#   define ENFILE EMFILE /* No more socket descriptors are available. */
 # endif /* !ENOSYS */
 
 # if !defined (ENOTSUP)
@@ -4981,10 +4883,9 @@ public:
   void ttl (int t);
 };
 
-#if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
-class ACE_Export ACE_QoS : public QOS
-#else
 class ACE_Export ACE_QoS
+#if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
+  : public QOS
 #endif /* ACE_HAS_WINSOCK2 */
 {
   // = TITLE
@@ -5011,10 +4912,10 @@ class ACE_Export ACE_QoS_Params
   //   enabled <ACE_OS::connect> and <ACE_OS::join_leaf> methods.
 public:
   ACE_QoS_Params (iovec *caller_data = 0,
-                  iovec *callee_data = 0,
-                  ACE_QoS *socket_qos = 0,
-                  ACE_QoS *group_socket_qos = 0,
-                  u_long flags = 0);
+                          iovec *callee_data = 0,
+                          ACE_QoS *socket_qos = 0,
+                          ACE_QoS *group_socket_qos = 0,
+                          u_long flags = 0);
   // Initialize the data members.  The <caller_data> is a pointer to
   // the user data that is to be transferred to the peer during
   // connection establishment.  The <callee_data> is a pointer to the
@@ -6654,12 +6555,10 @@ public:
 # if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
       ACE_OS_MONITOR_LOCK,
       ACE_TSS_CLEANUP_LOCK,
-#   if defined (ACE_HAS_TSS_EMULATION)
-      ACE_TSS_KEY_LOCK,
-#     if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
+#   if defined (ACE_HAS_TSS_EMULATION) && \
+       defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
       ACE_TSS_BASE_LOCK,
-#     endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE */
-#   endif /* ACE_HAS_TSS_EMULATION */
+#   endif /* ACE_HAS_TSS_EMULATION && ACE_HAS_THREAD_SPECIFIC_STORAGE */
 # else
       // Without ACE_MT_SAFE, There are no preallocated objects.  Make
       // sure that the preallocated_array size is at least one by
@@ -6820,14 +6719,9 @@ public:
   // Does _not_ check for a valid key.
 
   static void *tss_open (void *ts_storage[ACE_TSS_THREAD_KEYS_MAX]);
-  // Setup an array to be used for local TSS.  Returns the array
-  // address on success.  Returns 0 if local TSS had already been
-  // setup for this thread.  There is no corresponding tss_close ()
-  // because it is not needed.
-  // NOTE: tss_open () is called by ACE for threads that it spawns.
-  // If your application spawns threads without using ACE, and it uses
-  // ACE's TSS emulation, each of those threads should call tss_open
-  // ().  See the ace_thread_adapter () implementaiton for an example.
+  // Setup an array to be used for local TSS.  Returns the array address on
+  // success.  Returns 0 if local TSS had already been setup for this thread.
+  // There is no corresponding tss_close () because it is not needed.
 
   static void tss_close ();
   // Shutdown TSS emulation.  For use only by ACE_OS::cleanup_tss ().
@@ -6842,7 +6736,7 @@ private:
   // key (that has one) when the thread exits.
 
 #   if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
-  static void **tss_base (void* ts_storage[] = 0, u_int *ts_created = 0);
+  static void **tss_base (void* ts_storage[] = 0);
   // Location of current thread's TSS array.
 #   else  /* ! ACE_HAS_THREAD_SPECIFIC_STORAGE */
   static void **&tss_base ();
@@ -7653,8 +7547,7 @@ private:
 #   define ACE_INLINE_FOR_GNUC
 # endif /* ACE_HAS_GNUC_BROKEN_TEMPLATE_INLINE_FUNCTIONS */
 
-# if defined (ACE_WIN32) && ! defined (ACE_HAS_WINCE) \
-                         && ! defined (ACE_HAS_PHARLAP)
+# if defined (ACE_WIN32) && ! defined (ACE_HAS_WINCE)
 typedef TRANSMIT_FILE_BUFFERS ACE_TRANSMIT_FILE_BUFFERS;
 typedef LPTRANSMIT_FILE_BUFFERS ACE_LPTRANSMIT_FILE_BUFFERS;
 typedef PTRANSMIT_FILE_BUFFERS ACE_PTRANSMIT_FILE_BUFFERS;

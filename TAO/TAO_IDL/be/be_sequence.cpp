@@ -34,7 +34,6 @@ be_sequence::be_sequence (void)
   : mt_ (be_sequence::MNG_UNKNOWN)
 {
   this->size_type (be_decl::VARIABLE); // always the case
-  this->has_constructor (I_TRUE);      // always the case
 }
 
 be_sequence::be_sequence (AST_Expression *v, AST_Type *t)
@@ -57,7 +56,6 @@ be_sequence::be_sequence (AST_Expression *v, AST_Type *t)
 
   this->size_type (be_decl::VARIABLE); // a sequence data type is always
                                        // VARIABLE
-  this->has_constructor (I_TRUE);      // always the case
 }
 
 idl_bool
@@ -108,10 +106,8 @@ be_sequence::gen_name (void)
   // append the size (if any)
   if (!this->unbounded_)
     {
-      ACE_OS::sprintf (namebuf, 
-                       "%s_%lu", 
-                       namebuf, 
-                       this->max_size ()->ev ()->u.ulval);
+      ACE_OS::sprintf (namebuf, "%s_%d", namebuf, this->max_size ()->ev
+                       ()->u.ulval);
     }
   return ACE_OS::strdup (namebuf);
 }
@@ -280,11 +276,11 @@ be_sequence::instance_name ()
       if (this->unbounded ())
         ACE_OS::sprintf (namebuf,
                          "_TAO_Unbounded_Object_Sequence_%s",
-                         this->flatname());
+                         this->flat_name());
       else
         ACE_OS::sprintf (namebuf,
-                         "_TAO_Bounded_Object_Sequence_%s_%lu",
-                         this->flatname(),
+                         "_TAO_Bounded_Object_Sequence_%s_%d",
+                         this->flat_name(),
                          this->max_size ()->ev()->u.ulval);
       break;
     case be_sequence::MNG_STRING: // sequence of strings
@@ -294,7 +290,7 @@ be_sequence::instance_name ()
       else
         ACE_OS::sprintf (namebuf,
                          "_TAO_Bounded_String_Sequence_%s",
-                         this->flatname());
+                         this->flat_name());
       break;
     default: // not a managed type
       if (this->unbounded ())
@@ -310,16 +306,16 @@ be_sequence::instance_name ()
 	  else
             ACE_OS::sprintf (namebuf,
                              "_TAO_Unbounded_Sequence_%s",
-                             this->flatname());
-                             // or prim_type->flatname ());
+                             this->flat_name());
+                             // or prim_type->flat_name ());
 	  // ACE_DEBUG ((LM_DEBUG, "testing.... %d, %d = <%s>\n",
 	  // predef, predef->pt (), namebuf));
 	}
       else
         ACE_OS::sprintf (namebuf,
-                         "_TAO_Bounded_Sequence_%s_%lu",
-                          this->flatname(),
-                          //prim_type->flatname (),
+                         "_TAO_Bounded_Sequence_%s_%d",
+                          this->flat_name(),
+                          //prim_type->flat_name (),
                           this->max_size()->ev()->u.ulval);
       break;
     }
@@ -350,7 +346,7 @@ be_sequence::in_recursion (be_type *node)
                         0);
     }
 
-  if (!ACE_OS::strcmp (node->fullname (), type->fullname ()))
+  if (!ACE_OS::strcmp (node->full_name (), type->full_name ()))
     // they match
     return 1;
   else

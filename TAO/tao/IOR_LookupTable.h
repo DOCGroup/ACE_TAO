@@ -4,17 +4,16 @@
 // ============================================================================
 //
 // = LIBRARY
-//     TAO
+//    TAO/orbsvcs/orbsvcs
 //
 // = FILENAME
-//     IOR_LookupTable.h
+//   IOR_LookupTable.h
 //
 // = DESCRIPTION
-//     Contains the class that defines the IOR lookup table.
+//   Contains the class that defines the IOR lookup table.
 //
 // = AUTHOR
-//     Vishal Kachroo
-//     Ossama Othman
+//   Vishal Kachroo.
 //
 // ============================================================================
 
@@ -31,6 +30,7 @@
 
 class TAO_Export TAO_IOR_LookupTable
 {
+  
   //   Represents a table for the IOR lookups, given the object keys. A
   //   Hash_Map_Manager is being used currently for the table. This
   //   could be changed/added-on-to by other data structures like a file
@@ -62,17 +62,11 @@ public:
   // Locate <object_name> and pass out parameter via <ior>.  If the IOR is
   // found, return 0. Return -1 if not found.
 
-  CORBA_ORB_ObjectIdList_ptr list_initial_services (
-              CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
-  // Returns a sequence of ObjectIds that lists which objects have
-  // references available via the initial references mechanism.
-
-  typedef ACE_Hash_Map_Manager<ACE_CString,
-                               ACE_CString,
-                               ACE_Null_Mutex> TAO_IOR_Map;
-
 private:
-  TAO_IOR_Map table_;
+
+  ACE_Hash_Map_Manager<ACE_CString,
+    ACE_CString,
+    ACE_Null_Mutex> hash_map_;
   // Maintains the table of object_names -> IORs.
 };
 

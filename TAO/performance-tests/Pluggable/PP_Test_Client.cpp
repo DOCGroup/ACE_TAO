@@ -285,6 +285,8 @@ PP_Test_Client::shutdown_server (int do_shutdown)
           ACE_DEBUG ((LM_DEBUG, 
                       "server, please ACE_OS::exit"));
         }
+
+      return 0;
     }
   ACE_CATCHANY
     {
@@ -294,7 +296,7 @@ PP_Test_Client::shutdown_server (int do_shutdown)
       return -1;
     }
   ACE_ENDTRY;
-  return 0;
+  ACE_NOTREACHED (return 0;)
 }
 
 int
@@ -328,6 +330,8 @@ PP_Test_Client::run_oneway (void)
           ACE_DEBUG ((LM_DEBUG, 
                       "server, please ACE_OS::exit"));
         }
+
+      return this->error_count_ == 0 ? 0 : 1;
     }
   ACE_CATCHANY
     {
@@ -337,7 +341,7 @@ PP_Test_Client::run_oneway (void)
       return -1;
     }
   ACE_ENDTRY;
-  return this->error_count_ == 0 ? 0 : 1;
+  ACE_NOTREACHED (return 0;)
 }
 
 int
@@ -371,6 +375,8 @@ PP_Test_Client::run_void (void)
           ACE_DEBUG ((LM_DEBUG, 
                       "server, please ACE_OS::exit"));
         }
+
+      return this->error_count_ == 0 ? 0 : 1;
     }
   ACE_CATCHANY
     {
@@ -380,7 +386,7 @@ PP_Test_Client::run_void (void)
       return -1;
     }
   ACE_ENDTRY;
-  return this->error_count_ == 0 ? 0 : 1;
+  ACE_NOTREACHED (return 0;)
 }
 
 PP_Test_Client::~PP_Test_Client (void)
@@ -466,6 +472,8 @@ PP_Test_Client::init (int argc, char **argv)
                              "null objref returned by factory\n"),
                             -1);
         }
+
+      return 0;
     }
   ACE_CATCHANY
     {
@@ -474,6 +482,6 @@ PP_Test_Client::init (int argc, char **argv)
       return -1;
     }
   ACE_ENDTRY;
-  return 0;
+  ACE_NOTREACHED (return 0;)
 }
 

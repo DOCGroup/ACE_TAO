@@ -170,8 +170,6 @@ merged with <a href="#-ORBCollocation"><code>-ORBCollocation</code></a>.
         -ORBEndpoint uiop://
         </CODE></blockquote>
         then a default endpoint will be created for the specified protocol.
-        <P>
-        This is a server side option.
     </TD>
   </TR>
 
@@ -280,10 +278,7 @@ merged with <a href="#-ORBCollocation"><code>-ORBCollocation</code></a>.
         The <CODE>-ORBPreconnect</CODE> option uses the same endpoint format as the
         <CODE>-ORBEndpoint</CODE> option.  Specifying IIOP endpoints using a comma
         delimited list of <EM>host<STRONG>:</STRONG>port</EM> pairs is deprecated
-        and will not be supported in the future.
-        <P>
-        This is a client side option.
-    </TD>
+        and will not be supported in the future.</TD>
   </TR>
   <TR>
     <TD><CODE>-ORBCDRTradeoff</CODE> <EM>maxsize</EM></TD>
@@ -317,20 +312,18 @@ merged with <a href="#-ORBCollocation"><code>-ORBCollocation</code></a>.
     <TD><CODE>-ORBInitRef</CODE> <EM>ObjectId=IOR</EM></TD>
     <TD><A name="-ORBInitRef"></a> Allows specification of an arbitrary
         object reference for an initial service. The IOR could be in any
-        one of the following formats : OMG IOR, URL, iioploc (including
-        uioploc) or file. iioploc is a multiple end-point IOR understood by
-        the string_to_object () method and used as a boot-strapping
-        mechanism by the resolve_initial_references () method. The mappings
-        specified through this argument override the orb-install-time
-        defaults. The file://<I>pathname</I> interprets the contents of the
-        <I>pathname</I> file as an object reference in any of the above
-        formats.
-    </TD>
+        one of the following formats : OMG IOR, URL, iioploc or
+        file. iioploc is a multiple end-point IOR understood by the
+        string_to_object () and used as a boot-strapping mechanism by the
+        resolve_initial_references (). The mappings specified through this
+        argument override the orb-install-time defaults. The
+        file://<I>pathname</I> interprets the contents of the <I>pathname</I> file
+        as an object reference in any of the above formats. </TD>
   </TR>
 
   <TR>
     <TD><CODE>-ORBDefaultInitRef</CODE> <EM>IOR prefix</EM></TD>
-    <TD><A name="-ORBDefaultInitRef"></a> This argument allows resolution of initial references not explicitly specified with -ORBInitRef. It requires a URL prefix that, after appending a slash '/' ('|' for UIOP pluggable protocol) and a simple object key, forms a new URL to identify an initial object reference. The URL prefix format currently supported is iioploc.</TD>
+    <TD><A name="-ORBDefaultInitRef"></a> This argument allows resolution of initial references not explicitly specified with -ORBInitRef. It requires a URL prefix that, after appending a slash '/' and a simple object key, forms a new URL to identify an initial object reference. The URL prefix format currently supported is iioploc.</TD>
   </TR>
 
   <TR>
@@ -472,8 +465,7 @@ The default is <code>select_mt</code></TD>
   </TR>
   <TR>
 
-    <TD><a name="orb_concurrency"><CODE>-ORBConcurrency</CODE></a>
-        <EM>which</EM></TD>
+    <TD><CODE>-ORBConcurrency</CODE> <EM>which</EM></TD>
     <TD>Specify which
         concurrency strategy to use.  Range of values is <code>reactive</code>
         for a purely Reactor-driven concurrency strategy or
@@ -607,8 +599,12 @@ The default is <code>select_mt</code></TD>
 -->
     <TD><CODE>-ORBConnectorLock</CODE> <EM>lock type</EM></TD>
     <TD><a
-        name="-ORBConnectorLock"></a>This option has been moved to the 
-	    client strategy factory.</TD>
+        name="-ORBConnectorLock"></a>Specify the type of lock to be used by
+        the connector.  Possible values for <em>lock type</em> are
+        <code>thread</code>, which specifies that an inter-thread mutex is
+        used to guarantee exclusive acccess, and <code>null</code>, which
+        specifies that no locking be performed.  The default is
+        <code>thread</code>.</TD>
   </TR>
 
 </TABLE>
@@ -624,7 +620,7 @@ The default is <code>select_mt</code></TD>
     <TH>Description</TH>
   </TR>
   <TR>
-    <TD><CODE><a name="#-ORBProfileLock">-ORBProfileLock</a></CODE> <EM>which</EM></TD>
+    <TD><CODE>-ORBProfileLock</CODE> <EM>which</EM></TD>
     <TD>
         Specify the kind of synchronization primitive for the
         Profiles.
@@ -684,19 +680,6 @@ The default is <code>select_mt</code></TD>
 
     </TD>
   </TR>
-
-  <TR>
-    <TD><CODE>-ORBConnectorLock</CODE> <EM>lock type</EM></TD>
-    <TD><a
-        name="-ORBConnectorLock"></a>Specify the type of lock to be used by
-        the connector.  Possible values for <em>lock type</em> are
-        <code>thread</code>, which specifies that an inter-thread mutex is
-        used to guarantee exclusive acccess, and <code>null</code>, which
-        specifies that no locking be performed.  The default is
-        <code>thread</code>.
-    </TD>
-  </TR>
-
 </TABLE>
 </P>
 </BLOCKQUOTE>

@@ -89,11 +89,10 @@ public:
   void shutdown (CORBA::Environment &ACE_TRY_ENV);
   // Disconnect from the EC, also deactivates the object
 
-  virtual void dump_results (const char* name,
-                             ACE_UINT32 global_scale_factor);
+  virtual void dump_results (const char* name);
   // Dump the results...
 
-  void accumulate (ACE_Throughput_Stats& stats) const;
+  void accumulate (EC_Driver::Throughput_Stats& stats) const;
   // Add our statistics to <stats>
 
   void event_type (int event_number,
@@ -120,10 +119,7 @@ private:
   RtecEventChannelAdmin::ProxyPushConsumer_var consumer_proxy_;
   // We talk to the EC (as a supplier) using this proxy.
 
-  ACE_hrtime_t throughput_start_;
-  // The time for the first event sent
-
-  ACE_Throughput_Stats throughput_;
+  EC_Driver::Throughput_Stats throughput_;
   // Measure the elapsed time spent while sending the events.
 
   int burst_count_;

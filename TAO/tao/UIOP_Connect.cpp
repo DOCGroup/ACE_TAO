@@ -1,16 +1,15 @@
 // $Id$
 
-#include "tao/UIOP_Connect.h"
-
 #if !defined(ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
+#include "tao/UIOP_Connect.h"
+#include "tao/Timeprobe.h"
 #include "tao/UIOP_Transport.h"
-#include "tao/GIOP.h"
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
 #include "tao/ORB.h"
 #include "tao/CDR.h"
-#include "tao/Timeprobe.h"
+#include "tao/GIOP.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/UIOP_Connect.i"
@@ -228,11 +227,28 @@ TAO_UIOP_Server_Connection_Handler::handle_input (ACE_HANDLE)
 
   if (result == 0 || result == -1)
     return result;
+  
+  // = Take out all the information from the <message_state> and reset
+  //   it so that nested upcall on the same Transport can be handled.
 
+  // Copy message type.
+  CORBA::Octet message_type = this->transport_.message_state_.message_type;
+
+  // Copy version.
+  TAO_GIOP_Version giop_version = this->transport_.message_state_.giop_version;
+  
+  // Steal the input CDR from the message state.
+  TAO_InputCDR input_cdr (this->transport_.message_state_.cdr);
+  
+  // Reset the message state.
+  this->transport_.message_state_.reset ();
+  
   result = TAO_GIOP::process_server_message (this->transport (),
                                              this->orb_core_,
-                                             this->transport_.message_state_.cdr,
-                                             this->transport_.message_state_);
+                                             input_cdr,
+                                             message_type,
+                                             giop_version);
+  
   if (result != -1)
     {
       this->transport_.message_state_.reset ();

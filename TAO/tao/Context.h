@@ -22,10 +22,6 @@
 
 #include "tao/corbafwd.h"
 
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-# pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
-
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 
 class TAO_Export CORBA_Context

@@ -10,12 +10,8 @@ tmp=/tmp
 SUCCESS_MSGS="starting|Ending"
 
 # These patterns should not be contained in log file.
-if [ "$1" != "log/Cached_Accept_Conn_Test.log" ]; then
-  ERROR_MSGS="assertion failed|not supported|No such file or directory|Invalid argument|timeout|Bad file number"
-else
-  # "No such file or directory" is allowed in Cached_Accept_Conn_Test.log
-  ERROR_MSGS="assertion failed|not supported|Invalid argument|timeout|Bad file number"
-fi
+ERROR_MSGS="assertion failed|not supported|No such file or directory|Invalid argument|timeout|Bad file number"
+
 status=0
 
 for arg do

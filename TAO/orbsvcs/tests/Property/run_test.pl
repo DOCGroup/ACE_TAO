@@ -21,8 +21,8 @@ $nsior = "ns.ior";
 sub name_server
 {
     my $args = " -o $nsior";
-    my $prog =
-    print STDERR ("\nNaming_Service: $args\n");
+    my $prog = 
+      print STDERR "\nNaming_Service: $args\n";
 
     unlink $nsior;
     $NS = Process::Create ("..".$DIR_SEPARATOR
@@ -71,7 +71,7 @@ $SV->Terminate (); if ($SV->TimedWait (5) == -1) {
   $NS->Kill (); $NS->TimedWait (1);
   exit 1;
 }
-
+  
 $NS->Terminate (); if ($NS->TimedWait (5) == -1) {
   print STDERR "ERROR: cannot terminate naming service\n";
   $NS->Kill (); $NS->TimedWait (1);

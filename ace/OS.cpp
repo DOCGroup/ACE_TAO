@@ -346,6 +346,44 @@ ACE_Time_Value::normalize (void)
     }
 }
 
+int
+ACE_Countdown_Time::start (void)
+{
+  if (this->max_wait_time_ != 0)
+    {
+      this->start_time_ = ACE_OS::gettimeofday ();
+      this->stopped_ = 0;
+    }
+  return 0;
+}
+
+int
+ACE_Countdown_Time::update (void)
+{
+  return (this->stop () == 0) && this->start ();
+}
+
+int
+ACE_Countdown_Time::stop (void)
+{
+  if (this->max_wait_time_ != 0 && this->stopped_ == 0)
+    {
+      ACE_Time_Value elapsed_time =
+        ACE_OS::gettimeofday () - this->start_time_;
+
+      if (*this->max_wait_time_ > elapsed_time)
+        *this->max_wait_time_ -= elapsed_time;
+      else
+        {
+          // Used all of timeout.
+          *this->max_wait_time_ = ACE_Time_Value::zero;
+          // errno = ETIME;
+        }
+      this->stopped_ = 1;
+    }
+  return 0;
+}
+
 ACE_Countdown_Time::ACE_Countdown_Time (ACE_Time_Value *max_wait_time)
   : max_wait_time_ (max_wait_time),
     stopped_ (0)
@@ -1277,7 +1315,7 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params,
       int result = ::sched_setscheduler (0, // this process
                                          sched_params.policy (),
                                          &param) == -1 ? -1 : 0;
-#   if defined (DIGITAL_UNIX)
+#   if defined DIGITAL_UNIX
         return result == 0
           ? // Use priocntl (2) to set the process in the RT class,
             // if using an RT policy.
@@ -2010,7 +2048,7 @@ ACE_TSS_Emulation_cleanup (void *ptr)
 }
 
 void **
-ACE_TSS_Emulation::tss_base (void* ts_storage[], u_int *ts_created)
+ACE_TSS_Emulation::tss_base (void* ts_storage[])
 {
   // TSS Singleton implementation.
 
@@ -2025,9 +2063,9 @@ ACE_TSS_Emulation::tss_base (void* ts_storage[], u_int *ts_created)
           ACE_NO_HEAP_CHECK;
           if (ACE_OS::thr_keycreate (&native_tss_key_,
                                      &ACE_TSS_Emulation_cleanup) != 0)
-            {
+           {
               return 0; // Major problems, this should *never* happen!
-            }
+           }
           key_created_ = 1;
         }
     }
@@ -2044,85 +2082,41 @@ ACE_TSS_Emulation::tss_base (void* ts_storage[], u_int *ts_created)
   // at least on Pthreads Draft 4 platforms.
   if (old_ts_storage == 0)
     {
-      if (ts_created)
-        *ts_created = 1u;
-
       // Use the ts_storage passed as argument, if non-zero.  It is
       // possible that this has been implemented in the stack. At the
       // moment, this is unknown.  The cleanup must not do nothing.
       // If ts_storage is zero, allocate (and eventually leak) the
       // storage array.
       if (ts_storage == 0)
-        {
-          ACE_NO_HEAP_CHECK;
+      {
+        ACE_NO_HEAP_CHECK;
 
-          ACE_NEW_RETURN (ts_storage,
-                          void*[ACE_TSS_THREAD_KEYS_MAX],
-                          0);
+        ACE_NEW_RETURN (ts_storage,
+                        void*[ACE_TSS_THREAD_KEYS_MAX],
+                        0);
 
-          // Zero the entire TSS array.  Do it manually instead of
-          // using memset, for optimum speed.  Though, memset may be
-          // faster :-)
-          void **tss_base_p = ts_storage;
+        // Zero the entire TSS array.  Do it manually instead of using
+        // memset, for optimum speed.  Though, memset may be faster
+        // :-)
+        void **tss_base_p = ts_storage;
 
-          for (u_int i = 0;
-               i < ACE_TSS_THREAD_KEYS_MAX;
-               ++i)
-            *tss_base_p++ = 0;
-        }
+        for (u_int i = 0;
+             i < ACE_TSS_THREAD_KEYS_MAX;
+             ++i)
+          *tss_base_p++ = 0;
+      }
 
-       // Store the pointer in thread-specific storage.  It gets
-       // deleted via the ACE_TSS_Emulation_cleanup function when the
-       // thread terminates.
-       if (ACE_OS::thr_setspecific (native_tss_key_,
-                                    (void *) ts_storage) != 0)
+     // Store the pointer in thread-specific storage.  It gets deleted
+     // via the ACE_TSS_Emulation_cleanup function when the thread
+     // terminates.
+     if (ACE_OS::thr_setspecific (native_tss_key_,
+                                 (void *) ts_storage) != 0)
           return 0; // Major problems, this should *never* happen!
     }
-  else
-    if (ts_created)
-      ts_created = 0;
 
-  return ts_storage  ?  ts_storage  :  old_ts_storage;
+  return old_ts_storage;
 }
 #endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE */
-
-u_int
-ACE_TSS_Emulation::total_keys ()
-{
-  ACE_OS_Recursive_Thread_Mutex_Guard (
-    *ACE_static_cast (ACE_recursive_thread_mutex_t *,
-                      ACE_OS_Object_Manager::preallocated_object[
-                        ACE_OS_Object_Manager::ACE_TSS_KEY_LOCK]));
-
-  return total_keys_;
-}
-
-int
-ACE_TSS_Emulation::next_key (ACE_thread_key_t &key)
-{
-  ACE_OS_Recursive_Thread_Mutex_Guard (
-    *ACE_static_cast (ACE_recursive_thread_mutex_t *,
-                      ACE_OS_Object_Manager::preallocated_object[
-                        ACE_OS_Object_Manager::ACE_TSS_KEY_LOCK]));
-
-  if (total_keys_ < ACE_TSS_THREAD_KEYS_MAX)
-    {
-# if defined (ACE_HAS_NONSCALAR_THREAD_KEY_T)
-      ACE_OS::memset (&key, 0, sizeof (ACE_thread_key_t));
-      ACE_OS::memcpy (&key, &total_keys_, sizeof (u_int));
-# else
-      key = total_keys_;
-# endif /* ACE_HAS_NONSCALAR_THREAD_KEY_T */
-
-      ++total_keys_;
-      return 0;
-    }
-  else
-    {
-      key = ACE_OS::NULL_key;
-      return -1;
-    }
-}
 
 void *
 ACE_TSS_Emulation::tss_open (void *ts_storage[ACE_TSS_THREAD_KEYS_MAX])
@@ -2137,9 +2131,9 @@ ACE_TSS_Emulation::tss_open (void *ts_storage[ACE_TSS_THREAD_KEYS_MAX])
   // Zero the entire TSS array.
   void **tss_base_p = ts_storage;
   for (u_int i = 0; i < ACE_TSS_THREAD_KEYS_MAX; ++i, ++tss_base_p)
-    {
-      *tss_base_p = 0;
-    }
+  {
+    *tss_base_p = 0;
+  }
 
   return (void *) tss_base;
 #   else  /* ! ACE_PSOS */
@@ -2149,9 +2143,7 @@ ACE_TSS_Emulation::tss_open (void *ts_storage[ACE_TSS_THREAD_KEYS_MAX])
         // directly by the shell (without spawning a new task) after
         // another program has been run.
 
-  u_int ts_created = 0;
-  tss_base (ts_storage, &ts_created);
-  if (ts_created)
+  if (tss_base (ts_storage) == 0)
     {
 #     else  /* ! ACE_HAS_THREAD_SPECIFIC_STORAGE */
       tss_base () = ts_storage;
@@ -3798,8 +3790,8 @@ ACE_OS::thr_key_detach (void *inst)
 
 void
 ACE_OS::unique_name (const void *object,
-                     LPTSTR name,
-                     size_t length)
+                  LPTSTR name,
+                  size_t length)
 {
   // The process ID will provide uniqueness between processes on the
   // same machine. The "this" pointer of the <object> will provide
@@ -3809,7 +3801,7 @@ ACE_OS::unique_name (const void *object,
   TCHAR temp_name[ACE_UNIQUE_NAME_LEN];
   ACE_OS::sprintf (temp_name,
                    ACE_TEXT ("%x%d"),
-                   ACE_reinterpret_cast (ptr_arith_t, object),
+                   object,
                    ACE_OS::getpid ());
   ACE_OS::strncpy (name,
                    temp_name,
@@ -4469,7 +4461,7 @@ spa (FUNCPTR entry, ...)
   const int ret = ::taskSpawn (argv[0],    // task name
                                100,        // task priority
                                VX_FP_TASK, // task options
-                               ACE_NEEDS_HUGE_THREAD_STACKSIZE, // stack size
+                               1000000,    // stack size
                                entry,      // entry point
                                argc,       // first argument to main ()
                                (int) argv, // second argument to main ()
@@ -5195,16 +5187,14 @@ ACE_OS::difftime (time_t t1, time_t t0)
 # endif /* ACE_LACKS_DIFFTIME */
 
 # if defined (ACE_HAS_MOSTLY_UNICODE_APIS)
+#   if defined (ACE_HAS_WINCE)
 wchar_t *
 ACE_OS::ctime (const time_t *t)
 {
-#if defined (ACE_HAS_WINCE)
   wchar_t buf[26];              // 26 is a "magic number" ;)
   return ACE_OS::ctime_r (t, buf, 26);
-#else
-  ACE_OSCALL_RETURN (::_wctime (t), wchar_t *, 0);
-#endif /* ACE_HAS_WINCE */
 }
+#   endif /* ACE_HAS_WINCE */
 
 wchar_t *
 ACE_OS::ctime_r (const time_t *clock,
@@ -6335,43 +6325,31 @@ ACE_OS_Object_Manager::init (void)
 # if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
           ACE_OS_PREALLOCATE_OBJECT (ACE_thread_mutex_t, ACE_OS_MONITOR_LOCK)
           if (ACE_OS::thread_mutex_init (ACE_reinterpret_cast (
-            ACE_thread_mutex_t *,
-            ACE_OS_Object_Manager::preallocated_object[
-              ACE_OS_MONITOR_LOCK])) != 0)
+        ACE_thread_mutex_t *,
+        ACE_OS_Object_Manager::preallocated_object[ACE_OS_MONITOR_LOCK])) != 0)
             ACE_ERROR ((LM_ERROR,
-              ASYS_TEXT("%p\n"),
-              ASYS_TEXT("ACE_OS_Object_Manager::init, ACE_OS_MONITOR_LOCK")));
+                        ASYS_TEXT("%p\n"),
+                        ASYS_TEXT("ACE_OS_Object_Manager::init (1)")));
           ACE_OS_PREALLOCATE_OBJECT (ACE_recursive_thread_mutex_t,
                                      ACE_TSS_CLEANUP_LOCK)
           if (ACE_OS::recursive_mutex_init (ACE_reinterpret_cast (
-            ACE_recursive_thread_mutex_t *,
-            ACE_OS_Object_Manager::preallocated_object[
-              ACE_TSS_CLEANUP_LOCK])) != 0)
+        ACE_recursive_thread_mutex_t *,
+        ACE_OS_Object_Manager::preallocated_object[ACE_TSS_CLEANUP_LOCK])) !=
+        0)
             ACE_ERROR ((LM_ERROR,
-              ASYS_TEXT("%p\n"),
-              ASYS_TEXT("ACE_OS_Object_Manager::init, ACE_TSS_CLEANUP_LOCK")));
-#   if defined (ACE_HAS_TSS_EMULATION)
-          ACE_OS_PREALLOCATE_OBJECT (ACE_recursive_thread_mutex_t,
-                                     ACE_TSS_KEY_LOCK)
-          if (ACE_OS::recursive_mutex_init (ACE_reinterpret_cast (
-            ACE_recursive_thread_mutex_t *,
-            ACE_OS_Object_Manager::preallocated_object[
-              ACE_TSS_KEY_LOCK])) != 0)
-            ACE_ERROR ((LM_ERROR,
-              ASYS_TEXT("%p\n"),
-              ASYS_TEXT("ACE_OS_Object_Manager::init, ACE_TSS_KEY_LOCK")));
-#     if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
+                        ASYS_TEXT("%p\n"),
+                        ASYS_TEXT("ACE_OS_Object_Manager::init (2)")));
+#   if defined (ACE_HAS_TSS_EMULATION) && \
+       defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
           ACE_OS_PREALLOCATE_OBJECT (ACE_recursive_thread_mutex_t,
                                      ACE_TSS_BASE_LOCK)
           if (ACE_OS::recursive_mutex_init (ACE_reinterpret_cast (
-            ACE_recursive_thread_mutex_t *,
-            ACE_OS_Object_Manager::preallocated_object[
-              ACE_TSS_BASE_LOCK])) != 0)
+          ACE_recursive_thread_mutex_t *,
+          ACE_OS_Object_Manager::preallocated_object[ACE_TSS_BASE_LOCK])) != 0)
             ACE_ERROR ((LM_ERROR,
-              ASYS_TEXT("%p\n"),
-              ASYS_TEXT("ACE_OS_Object_Manager::init, ACE_TSS_BASE_LOCK")));
-#     endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE */
-#   endif /* ACE_HAS_TSS_EMULATION */
+                        ASYS_TEXT("%p\n"),
+                        ASYS_TEXT("ACE_OS_Object_Manager::init (3)")));
+#   endif /* ACE_HAS_TSS_EMULATION && ACE_HAS_THREAD_SPECIFIC_STORAGE */
 # endif /* ACE_MT_SAFE */
 
           // Open Winsock (no-op on other platforms).
@@ -6435,8 +6413,8 @@ ACE_OS_Object_Manager::fini (void)
         ACE_thread_mutex_t *,
         ACE_OS_Object_Manager::preallocated_object[ACE_OS_MONITOR_LOCK])) != 0)
           ACE_ERROR ((LM_ERROR,
-            ASYS_TEXT("%p\n"),
-            ASYS_TEXT("ACE_OS_Object_Manager::fini, ACE_OS_MONITOR_LOCK")));
+                      ASYS_TEXT("%p\n"),
+                      ASYS_TEXT("ACE_OS_Object_Manager::fini (1)")));
 #   endif /* ! __Lynx__ */
       ACE_OS_DELETE_PREALLOCATED_OBJECT (ACE_thread_mutex_t,
                                          ACE_OS_MONITOR_LOCK)
@@ -6446,39 +6424,25 @@ ACE_OS_Object_Manager::fini (void)
        ACE_recursive_thread_mutex_t *,
        ACE_OS_Object_Manager::preallocated_object[ACE_TSS_CLEANUP_LOCK])) != 0)
           ACE_ERROR ((LM_ERROR,
-            ASYS_TEXT("%p\n"),
-            ASYS_TEXT("ACE_OS_Object_Manager::fini, ACE_TSS_CLEANUP_LOCK")));
+                      ASYS_TEXT("%p\n"),
+                      ASYS_TEXT("ACE_OS_Object_Manager::fini (2)")));
 #   endif /* ! __Lynx__ */
       ACE_OS_DELETE_PREALLOCATED_OBJECT (ACE_recursive_thread_mutex_t,
                                          ACE_TSS_CLEANUP_LOCK)
-#   if defined (ACE_HAS_TSS_EMULATION)
-#     if !defined (__Lynx__)
-        // LynxOS 3.0.0 has problems with this after fork.
-        if (ACE_OS::recursive_mutex_destroy (ACE_reinterpret_cast (
-          ACE_recursive_thread_mutex_t *,
-          ACE_OS_Object_Manager::preallocated_object[
-            ACE_TSS_KEY_LOCK])) != 0)
+#   if defined (ACE_HAS_TSS_EMULATION) && \
+       defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
+#   if !defined (__Lynx__)
+      // LynxOS 3.0.0 has problems with this after fork.
+      if (ACE_OS::recursive_mutex_destroy (ACE_reinterpret_cast (
+        ACE_recursive_thread_mutex_t *,
+        ACE_OS_Object_Manager::preallocated_object[ACE_TSS_BASE_LOCK])) != 0)
           ACE_ERROR ((LM_ERROR,
-              ASYS_TEXT("%p\n"),
-              ASYS_TEXT("ACE_OS_Object_Manager::fini, ACE_TSS_KEY_LOCK")));
-#     endif /* ! __Lynx__ */
-      ACE_OS_DELETE_PREALLOCATED_OBJECT (ACE_recursive_thread_mutex_t,
-                                         ACE_TSS_KEY_LOCK)
-#     if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
-#       if !defined (__Lynx__)
-          // LynxOS 3.0.0 has problems with this after fork.
-          if (ACE_OS::recursive_mutex_destroy (ACE_reinterpret_cast (
-            ACE_recursive_thread_mutex_t *,
-            ACE_OS_Object_Manager::preallocated_object[
-              ACE_TSS_BASE_LOCK])) != 0)
-            ACE_ERROR ((LM_ERROR,
-              ASYS_TEXT("%p\n"),
-              ASYS_TEXT("ACE_OS_Object_Manager::fini, ACE_TSS_BASE_LOCK")));
-#       endif /* ! __Lynx__ */
+                      ASYS_TEXT("%p\n"),
+                      ASYS_TEXT("ACE_OS_Object_Manager::fini (3)")));
+#   endif /* ! __Lynx__ */
       ACE_OS_DELETE_PREALLOCATED_OBJECT (ACE_recursive_thread_mutex_t,
                                          ACE_TSS_BASE_LOCK)
-#     endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE */
-#   endif /* ACE_HAS_TSS_EMULATION */
+#   endif /* ACE_HAS_TSS_EMULATION && ACE_HAS_THREAD_SPECIFIC_STORAGE */
 # endif /* ACE_MT_SAFE */
 #endif /* ! ACE_HAS_STATIC_PREALLOCATION */
     }

@@ -112,7 +112,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
         }
       else
         {
-          *os << "this->_tao_marshal__" << node->flatname ()
+          *os << "this->_tao_marshal__" << node->flat_name ()
               << " (strm);" << be_uidt_nl;
         }
       *os << "}\n" << be_nl;
@@ -130,7 +130,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
         }
       else
         {
-          *os << "this->_tao_unmarshal__" << node->flatname ()
+          *os << "this->_tao_unmarshal__" << node->flat_name ()
               << " (strm);" << be_uidt_nl;
         }
       *os << "}\n" << be_nl;
@@ -181,7 +181,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
   // The static T::_tao_unmarshal method  ------------------------ end
 
   // generate the ifdefined macro for  the _init type
-  os->gen_ifdef_macro (node->flatname (), "_init");
+  os->gen_ifdef_macro (node->flat_name (), "_init");
   if (this->gen_init_impl (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,

@@ -104,18 +104,18 @@ be_visitor_union_branch_cdr_op_ci::visit_array (be_array *node)
         {
           be_decl *parent =
             be_scope::narrow_from_scope (node->defined_in ())->decl ();
-          ACE_OS::sprintf (fname, "%s::_%s", parent->fullname (),
+          ACE_OS::sprintf (fname, "%s::_%s", parent->full_name (),
                            node->local_name ()->get_string ());
         }
       else
         {
-          ACE_OS::sprintf (fname, "_%s", node->fullname ());
+          ACE_OS::sprintf (fname, "_%s", node->full_name ());
         }
     }
   else
     {
       // typedefed node
-      ACE_OS::sprintf (fname, "%s", node->fullname ());
+      ACE_OS::sprintf (fname, "%s", node->full_name ());
     }
 
   // check what is the code generations substate. Are we generating code for
@@ -506,28 +506,12 @@ be_visitor_union_branch_cdr_op_ci::visit_sequence (be_sequence *node)
   switch (this->ctx_->sub_state ())
     {
     case TAO_CodeGen::TAO_CDR_INPUT:
-      {
-        // If the typedef'd sequence is included from another
-        // file, node->name() won't work. The following works
-        // for all typedefs, external or not.
-        be_typedef *td = this->ctx_->alias ();
-
-        if (td)
-          {
-            *os << td->name ();
-          }
-        else
-          {
-            *os << node->name ();
-          }
-
-        *os << " _tao_union_tmp;" << be_nl
-            << "result = strm >> _tao_union_tmp;" << be_nl
-            << "if (result)" << be_idt_nl
-            << "_tao_union."
-            << f->local_name () << " (_tao_union_tmp);" << be_uidt;
-        return 0;
-      }
+      *os << node->name () << " _tao_union_tmp;" << be_nl
+          << "result = strm >> _tao_union_tmp;" << be_nl
+          << "if (result)" << be_idt_nl
+          << "_tao_union."
+          << f->local_name () << " (_tao_union_tmp);" << be_uidt;
+      return 0;
 
     case TAO_CodeGen::TAO_CDR_OUTPUT:
       *os << "result = strm << _tao_union."

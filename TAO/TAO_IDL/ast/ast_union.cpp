@@ -129,9 +129,6 @@ AST_Union::AST_Union(AST_ConcreteType *dt, UTL_ScopedName *n, UTL_StrList *p)
     case AST_PredefinedType::PT_char:
       pd_udisc_type = AST_Expression::EV_char;
       break;
-    case AST_PredefinedType::PT_wchar:
-      pd_udisc_type = AST_Expression::EV_wchar;
-      break;
     case AST_PredefinedType::PT_octet:
       pd_udisc_type = AST_Expression::EV_octet;
       break;

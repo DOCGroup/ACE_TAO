@@ -19,10 +19,6 @@
 
 #include "tao/corbafwd.h"
 
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-# pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
-
 // Forward decls.
 
 class TAO_Active_Object_Map_Impl;
@@ -43,7 +39,7 @@ typedef ACE_Unbounded_Set_Iterator<ACE_CString> TAO_EndpointSetIterator;
 // @@ Using an ACE_Unbounded_Queue to contain the preconnects may not
 //    be the best container to use.  However, it will only be used
 //    during client side initialization.  Also, a template
-//    instantiation of ACE_Unbounded_Queue<ACE_CString> already exists
+//    instantiation of ACE_Unbounded_Queue<ACE_CString> already exists 
 //    in ACE so we do not have to worry about increasing TAO's
 //    footprint by using this container.
 typedef ACE_Unbounded_Queue<ACE_CString> TAO_PreconnectSet;
@@ -154,6 +150,21 @@ public:
   int sock_sndbuf_size (void) const;
   void sock_sndbuf_size (int);
   // Set/Get the size to be used for a socket's send buffer.
+
+  int cdr_default_size (void) const;
+  void cdr_default_size (int);
+  // If the user does not specify the size of a CDR stream this is the
+  // size of its internal buffer.
+
+  int cdr_max_exp_size (void) const;
+  void cdr_max_exp_size (int);
+  // CDR streams internal buffers grow exponentially until they reach
+  // this size.
+
+  int cdr_linear_chunk (void) const;
+  void cdr_linear_chunk (int);
+  // After reaching their maximum exponential size limit CDR streams
+  // grow linearly in chunks of this size.
 
   int cdr_memcpy_tradeoff (void) const;
   void cdr_memcpy_tradeoff (int);

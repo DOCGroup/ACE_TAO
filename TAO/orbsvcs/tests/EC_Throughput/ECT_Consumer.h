@@ -49,12 +49,14 @@ public:
   void disconnect (CORBA::Environment &_env);
   // Disconnect from the EC.
 
-  void dump_results (const char* name,
-                     ACE_UINT32 global_scale_factor);
+  void dump_results (const char* name);
   // Print out the results
 
-  void accumulate (ACE_Throughput_Stats& stats) const;
-  // Add our throughput and latency statistics to <stats>
+  void accumulate (ECT_Driver::Throughput_Stats& stats) const;
+  // Add our throughput statistics to <stats>
+
+  void accumulate (ECT_Driver::Latency_Stats& stats) const;
+  // Add our latency statistics to <stats>
 
   virtual void push (const RtecEventComm::EventSet& events,
                      CORBA::Environment &_env)
@@ -80,10 +82,12 @@ private:
 
   ACE_SYNCH_MUTEX lock_;
   int recv_count_;
-  ACE_hrtime_t first_event_;
   // How many events we have received.
 
-  ACE_Throughput_Stats throughput_;
+  ECT_Driver::Throughput_Stats throughput_;
+  // Used for reporting stats.
+
+  ECT_Driver::Latency_Stats latency_;
   // Used for reporting stats.
 
   int shutdown_count_;

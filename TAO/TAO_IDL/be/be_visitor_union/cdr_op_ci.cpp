@@ -68,33 +68,9 @@ be_visitor_union_cdr_op_ci::visit_union (be_union *node)
       << "TAO_OutputCDR &strm," << be_nl
       << "const " << node->name () << " &_tao_union" << be_uidt_nl
       << ")" << be_uidt_nl
-      << "{" << be_idt_nl;
-
-  switch (node->udisc_type ())
-    {
-      case AST_Expression::EV_bool:
-        *os << "CORBA_Any::from_boolean tmp (_tao_union._d ());" << be_nl
-            << "if ( !(strm << tmp) )" << be_idt_nl;
-        break;
-
-      case AST_Expression::EV_char:
-        *os << "CORBA_Any::from_char tmp (_tao_union._d ());" << be_nl
-            << "if ( !(strm << tmp) )" << be_idt_nl;
-        break;
-
-      case AST_Expression::EV_wchar:
-        *os << "CORBA_Any::from_wchar tmp (_tao_union._d ());" << be_nl
-            << "if ( !(strm << tmp) )" << be_idt_nl;
-        break;
-
-      default:
-        *os << "if ( !(strm << _tao_union._d ()) )" << be_idt_nl;
-        break;
-    }
-
-  *os << "{" << be_idt_nl
+      << "{" << be_idt_nl
+      << "if (!(strm << _tao_union._d ()))" << be_idt_nl
       << "return 0;" << be_uidt_nl
-      << "}" << be_uidt_nl
       << "CORBA::Boolean result = 0;" << be_nl
       << "switch (_tao_union._d ())" << be_nl
       << "{" << be_idt_nl;
@@ -106,21 +82,6 @@ be_visitor_union_cdr_op_ci::visit_union (be_union *node)
                          "visit_union - "
                          "codegen for scope failed\n"), -1);
     }
-
-  // If there is no explicit default case, but there
-  // is an implicit one, and the discriminant is an enum,
-  // we need this to avert warnings in some compilers that
-  // not all case values are included. If there is no
-  // implicit default case, or the discriminator is not
-  // an enum, this does no harm.
-  if (node->default_index () == -1)
-    {
-      os->decr_indent (0);
-      *os << "default:" << be_nl;
-      os->incr_indent ();
-      *os << "break;";
-    }
-
   *os << be_uidt_nl << "}" << be_nl
       << "return result;" << be_uidt_nl
       << "}\n\n";
@@ -137,34 +98,10 @@ be_visitor_union_cdr_op_ci::visit_union (be_union *node)
     be_type::narrow_from_decl (node->disc_type ());
 
   // Generate a temporary to store the discriminant
-  *os << disc_type->fullname ()
-      << " " << "_tao_discriminant;" << be_nl;
-
-  switch (node->udisc_type ())
-    {
-      case AST_Expression::EV_bool:
-        *os << "CORBA_Any::to_boolean tmp (_tao_discriminant);" << be_nl
-            << "if ( !(strm >> tmp) )" << be_idt_nl;
-        break;
-
-      case AST_Expression::EV_char:
-        *os << "CORBA_Any::to_char tmp (_tao_discriminant);" << be_nl
-            << "if ( !(strm >> tmp) )" << be_idt_nl;
-        break;
-
-      case AST_Expression::EV_wchar:
-        *os << "CORBA_Any::to_wchar tmp (_tao_discriminant);" << be_nl
-            << "if ( !(strm >> tmp) )" << be_idt_nl;
-        break;
-
-      default:
-        *os << "if ( !(strm >> _tao_discriminant) )" << be_idt_nl;
-        break;
-    }
-
-  *os << "{" << be_idt_nl
+  *os << disc_type->full_name ()
+      << " " << "_tao_discriminant;" << be_nl
+      << "if ( !(strm >> _tao_discriminant) )" << be_idt_nl
       << "return 0;" << be_uidt_nl
-      << "}" << be_uidt_nl
       << "CORBA::Boolean result = 0;" << be_nl
       << "switch (_tao_discriminant)" << be_nl
       << "{" << be_idt_nl;
@@ -175,20 +112,6 @@ be_visitor_union_cdr_op_ci::visit_union (be_union *node)
                          "(%N:%l) be_visitor_union_cdr_op_ci::"
                          "visit_union - "
                          "codegen for scope failed\n"), -1);
-    }
-
-  // If there is no explicit default case, but there
-  // is an implicit one, and the discriminant is an enum,
-  // we need this to avert warnings in some compilers that
-  // not all case values are included. If there is no
-  // implicit default case, or the discriminator is not
-  // an enum, this does no harm.
-  if (node->default_index () == -1)
-    {
-      os->decr_indent (0);
-      *os << "default:" << be_nl;
-      os->incr_indent ();
-      *os << "break;";
     }
 
   *os << be_uidt_nl << "}" << be_nl

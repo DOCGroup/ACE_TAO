@@ -106,8 +106,6 @@ OBJFILES = \
 	$(OBJDIR)\Wait_Strategy.obj \
 	$(OBJDIR)\WrongTransactionC.obj
 
-RESOURCE = $(OBJDIR)\tao.res
-
 CFLAGS = $(ACE_CFLAGS) $(TAO_BUILD_CFLAGS) $(TAO_CFLAGS)
 
 CPPDIR = .

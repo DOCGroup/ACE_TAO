@@ -90,7 +90,8 @@ be_visitor_operation_ami_handler_operation_ch::visit_operation (be_operation *no
   // Generating the skeleton method.
 
   // Skeleton not necessary for collocated class.
-  if (this->ctx_->state () == TAO_CodeGen::TAO_COLLOCATED_AMI_HANDLER_OPERATION_CH)
+  if (this->ctx_->state () == TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_THRU_POA_COLLOCATED_CH
+      || this->ctx_->state () == TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_DIRECT_COLLOCATED_CH)
     {
       return 0;
       /* NOT REACHED */

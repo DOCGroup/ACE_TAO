@@ -20,9 +20,6 @@
 #ifndef TAO_BE_STATE_H
 #define TAO_BE_STATE_H
 
-class be_type;
-class be_decl;
-
 class be_state
 {
   // =TITLE

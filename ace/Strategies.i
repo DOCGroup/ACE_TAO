@@ -14,8 +14,8 @@ ACE_Connection_Recycling_Strategy::ACE_Connection_Recycling_Strategy (void)
 }
 
 ACE_INLINE
-ACE_Recyclable::ACE_Recyclable (ACE_Recyclable_State initial_state)
-  : recycle_state_ (initial_state)
+ACE_Recyclable::ACE_Recyclable (ACE_Recyclable::State initial_state)
+  : state_ (initial_state)
 {
 }
 
@@ -24,25 +24,25 @@ ACE_Recyclable::~ACE_Recyclable (void)
 {
 }
 
-ACE_INLINE ACE_Recyclable_State
-ACE_Recyclable::recycle_state (void) const
+ACE_INLINE ACE_Recyclable::State 
+ACE_Recyclable::state (void) const
 {
-  return this->recycle_state_;
+  return this->state_;
 }
 
-ACE_INLINE void
-ACE_Recyclable::recycle_state (ACE_Recyclable_State new_state)
+ACE_INLINE void 
+ACE_Recyclable::state (ACE_Recyclable::State new_state)
 {
-  this->recycle_state_ = new_state;
+  this->state_ = new_state;
 }
 
-ACE_INLINE
+ACE_INLINE 
 ACE_Hashable::ACE_Hashable (void)
   : hash_value_ (0)
 {
 }
 
-ACE_INLINE
+ACE_INLINE 
 ACE_Hashable::~ACE_Hashable (void)
 {
 }
@@ -62,13 +62,13 @@ ACE_Hashable::hash (void) const
   return this->hash_value_;
 }
 
-ACE_INLINE
+ACE_INLINE 
 ACE_Refcountable::ACE_Refcountable (int refcount)
   : refcount_ (refcount)
 {
 }
 
-ACE_INLINE
+ACE_INLINE 
 ACE_Refcountable::~ACE_Refcountable (void)
 {
 }
@@ -79,14 +79,15 @@ ACE_Refcountable::increment (void)
   return ++this->refcount_;
 }
 
-ACE_INLINE int
+ACE_INLINE int 
 ACE_Refcountable::decrement (void)
 {
   return --this->refcount_;
 }
 
-ACE_INLINE int
+ACE_INLINE int 
 ACE_Refcountable::refcount (void) const
 {
   return this->refcount_;
 }
+

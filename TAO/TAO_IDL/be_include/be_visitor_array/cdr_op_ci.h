@@ -23,7 +23,7 @@
 #define _BE_VISITOR_ARRAY_CDR_OP_CI_H_
 
 // ************************************************************
-// class be_visitor_array_cdr_op_ci
+// class be_visitor_array_cs
 // ************************************************************
 
 class be_visitor_array_cdr_op_ci : public be_visitor_decl

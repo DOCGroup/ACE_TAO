@@ -236,10 +236,26 @@ TAO_IIOP_Server_Connection_Handler::handle_input (ACE_HANDLE)
   if (result == 0 || result == -1)
     return result;
 
+  // = Take out all the information from the <message_state> and reset
+  //   it so that nested upcall on the same Transport can be handled.
+
+  // Copy message type.
+  CORBA::Octet message_type = this->transport_.message_state_.message_type;
+  
+  // Copy version.
+  TAO_GIOP_Version giop_version = this->transport_.message_state_.giop_version;
+  
+  // Steal the input CDR from the message state.
+  TAO_InputCDR input_cdr (this->transport_.message_state_.cdr);
+  
+  // Reset the message state.
+  this->transport_.message_state_.reset ();
+  
   result = TAO_GIOP::process_server_message (this->transport (),
                                              this->orb_core_,
-                                             this->transport_.message_state_.cdr,
-                                             this->transport_.message_state_);
+                                             input_cdr,
+                                             message_type,
+                                             giop_version);
   if (result != -1)
     {
       this->transport_.message_state_.reset ();

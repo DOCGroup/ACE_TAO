@@ -15,6 +15,8 @@ SERVER_OBJS = server.o child.o
 CLIENT_OBJS = client.o
 CHILD_PROCESS_OBJS = child.o child_process.o
 
+VLDLIBS = $(LDLIBS:%=%$(VAR))
+
 ifndef TAO_ROOT
 TAO_ROOT = $(ACE_ROOT)/TAO
 endif

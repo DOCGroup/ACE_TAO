@@ -10,7 +10,10 @@
 //    try_macros.h
 //
 // = DESCRIPTION
-//     This file has been depricated.
+//   Writing code that is portable between platforms with a without
+//   native C++ exceptions is hard.  The following macros offer some
+//   help on this task, mostly oriented to making the ORB code and the
+//   IDL generated code portable.
 //
 // = AUTHOR
 //     Copyright by Douglas C. Schmidt.
@@ -19,22 +22,12 @@
 //   *                                                               *
 //   *        NOTICE !!!    NOTICE !!!   NOTICE !!!   NOTICE !!!     *
 //   *                                                               *
+//   *                                                               *
 //   *        The macros in this file is deprecated.                 *
 //   *                                                               *
 //   *        Please check out $ACE_ROOT/ace/CORBA_macros.h          *
-//   *        and $ACE_ROOT/docs/exceptions.html for a new           *
-//   *        set of helper macros that replace this file.           *
-//   *                                                               *
-//   *        We strongely encourage you to stop using the           *
-//   *        macros in this file.  You should try to convert        *
-//   *        your program to use the new ACE try macros             *
-//   *        which are simpler to use and easier to remember.       *
-//   *        However, if you still insist on using these old        *
-//   *        macros, you can do this by uncomment the "#define      *
-//   *        TAO_USES_DEPRECATED_TAO_TRY_MACROS" below.             *
-//   *                                                               *
-//   *        Again, we no longer maintain this file and it will     *
-//   *        eventually go away.                                    *
+//   *        for a new set of helper macros that replace            *
+//   *        this file.                                             *
 //   *                                                               *
 //   *****************************************************************
 //
@@ -42,19 +35,21 @@
 
 #ifndef TAO_TRY_MACROS_H
 #define TAO_TRY_MACROS_H
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-# pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
-
-//   *****************************************************************
-//   *                                                               *
-//   *      Uncomment the following line to use TAO try macros.      *
-//   *                                                               *
-//   *****************************************************************
-//#define TAO_USES_DEPRECATED_TAO_TRY_MACROS
 
 #include "tao/orbconf.h"
 #include "ace/CORBA_macros.h"
+
+#if defined (TAO_HAS_EXCEPTIONS)
+#define TAO_RAISE(EXCEPTION) throw EXCEPTION
+#else
+#define TAO_RAISE(EXCEPTION)
+#endif /* TAO_HAS_EXCEPTIONS */
+
+// This is used in the implementation of the _raise methods
+
+// Remove the following line when we're not using TAO try macros any
+// more.
+//#define TAO_USES_DEPRECATED_TAO_TRY_MACROS
 
 #if defined (TAO_USES_DEPRECATED_TAO_TRY_MACROS)
 

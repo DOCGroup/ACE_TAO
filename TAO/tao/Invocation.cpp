@@ -84,8 +84,6 @@ TAO_GIOP_Invocation::TAO_GIOP_Invocation (TAO_Stub *stub,
 
 TAO_GIOP_Invocation::~TAO_GIOP_Invocation (void)
 {
-  if (this->transport_ != 0)
-    this->transport_->idle_after_reply ();
 }
 
 // The public API involves creating an invocation, starting it, filling
@@ -152,7 +150,7 @@ TAO_GIOP_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
         timeout->relative_expiry (ACE_TRY_ENV);
       ACE_CHECK;
       TimeBase::TimeT seconds = t / 10000000u;
-      TimeBase::TimeT microseconds = (t % 10000000u) / 10;
+      TimeBase::TimeT microseconds = t % 10000000u;
       this->max_wait_time_value_.set (ACE_U64_TO_U32(seconds),
                                       ACE_U64_TO_U32(microseconds));
       this->max_wait_time_ = &this->max_wait_time_value_;
@@ -392,6 +390,12 @@ TAO_GIOP_Invocation::location_forward (TAO_InputCDR &inp_stream,
 }
 
 // ****************************************************************
+
+TAO_GIOP_Twoway_Invocation::~TAO_GIOP_Twoway_Invocation (void)
+{
+  if (this->transport_ != 0)              
+    this->transport_->idle ();
+}
 
 void
 TAO_GIOP_Twoway_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
@@ -638,7 +642,8 @@ TAO_GIOP_Twoway_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
     }
 
   int reply_error =
-    this->transport_->wait_for_reply (this->max_wait_time_);
+    this->transport_->wait_for_reply (this->max_wait_time_,
+                                      this->rd_.reply_received ());
 
   // Do the wait loop till we receive the reply for this invocation.
   // while (reply_error != -1 &&
@@ -767,6 +772,12 @@ TAO_GIOP_Twoway_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
 
 // ****************************************************************
 
+TAO_GIOP_Oneway_Invocation::~TAO_GIOP_Oneway_Invocation (void)
+{
+  if (this->transport_ != 0)              
+    this->transport_->idle ();
+}
+
 void
 TAO_GIOP_Oneway_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
@@ -784,6 +795,12 @@ TAO_GIOP_Oneway_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
 }
 
 // ****************************************************************
+
+TAO_GIOP_Locate_Request_Invocation::~TAO_GIOP_Locate_Request_Invocation (void)
+{
+  if (this->transport_ != 0)              
+    this->transport_->idle ();
+}
 
 // Send request, block until any reply comes back.
 void
@@ -860,7 +877,8 @@ TAO_GIOP_Locate_Request_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
   // Wait for the reply.
 
   int reply_error =
-    this->transport_->wait_for_reply (this->max_wait_time_);
+    this->transport_->wait_for_reply (this->max_wait_time_,
+                                      this->rd_.reply_received ());
 
   //   // Do the wait loop, till we receive the reply for this invocation.
   //   while (reply_error != -1 &&

@@ -37,17 +37,7 @@ else # ! ACE_HAS_GNUG_PRE_2_8
   include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
 endif # ! ACE_HAS_GNUG_PRE_2_8
 
-#----------------------------------------------------------------------------
-#       Local targets (and local hacks)
-#----------------------------------------------------------------------------
-
-ifeq ($(LYNXTARGET),ppc)
-#### EC_Multiple.cpp raises internal compiler error with LynxOS 3.0.0 g++,
-#### but only when -O2 optimization is enabled.  Disable it . . .
-.obj/EC_Multiple.o .obj/EC_Multiple.so .shobj/EC_Multiple.o .shobj/EC_Multiple.so: EC_Multiple.cpp
-	@echo NOTE: compiling EC_Multiple.cpp with -O instead of -O2, see Makefile.
-	$(subst $(OCFLAGS) ,-O ,$(COMPILE.cc)) -o $@ $<
-endif # LYNXTARGET == ppc
+#### Local rules and variables...
 
 #----------------------------------------------------------------------------
 #       Dependencies

@@ -75,7 +75,7 @@ be_visitor_valuetype_ci::visit_valuetype (be_valuetype *node)
       <<  "}\n\n";
 
   // generate the ifdefined macro for  the _var type
-  os->gen_ifdef_macro (node->flatname (), "_var");
+  os->gen_ifdef_macro (node->flat_name (), "_var");
   if (node->gen_var_impl () == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -86,7 +86,7 @@ be_visitor_valuetype_ci::visit_valuetype (be_valuetype *node)
   os->gen_endif ();
 
   // generate the ifdefined macro for  the _out type
-  os->gen_ifdef_macro (node->flatname (), "_out");
+  os->gen_ifdef_macro (node->flat_name (), "_out");
   if (node->gen_out_impl () == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,

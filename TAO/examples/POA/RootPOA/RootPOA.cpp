@@ -36,8 +36,7 @@ main (int argc, char **argv)
       // Resolve the initial references for the name RootPOA thus getting
       // an object of type CORBA::Object.
       CORBA::Object_var obj =
-        orb->resolve_initial_references ("RootPOA", ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+        orb->resolve_initial_references ("RootPOA");
 
       // apply _narrow on the object of type CORBA::Object, to make it a
       // POA class Object.

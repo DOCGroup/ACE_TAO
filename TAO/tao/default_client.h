@@ -18,11 +18,6 @@
 #define TAO_DEFAULT_CLIENT_H
 
 #include "tao/Client_Strategy_Factory.h"
-
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-# pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
-
 #include "ace/Service_Config.h"
 
 class TAO_Export TAO_Default_Client_Strategy_Factory : public TAO_Client_Strategy_Factory
@@ -47,12 +42,16 @@ public:
   int parse_args (int argc, char* argv[]);
   // Parse svc.conf arguments
 
-  // = Check Client_Strategy_Factory.h for the documentation of the
-  //   following methods.
   ACE_Lock* create_profile_lock (void);
-  TAO_Transport_Mux_Strategy *create_transport_mux_strategy (TAO_ORB_Core *orb_core);
+  // create the lock for the forwarding Profile used by
+  // the TAO_GIOP_Invocation::location_forward and the
+  // TAO_GIOP_Invocation::start
+
+  TAO_Transport_Mux_Strategy *create_transport_mux_strategy (TAO_Transport *transport);
+  // Create the correct client request muxing strategy.
+
   TAO_Wait_Strategy *create_wait_strategy (TAO_Transport *transport);
-  virtual ACE_Lock *create_cached_connector_lock (void);
+  // Create the correct client wait-for-reply strategy.
 
 private:
   enum Lock_Type
@@ -82,9 +81,6 @@ private:
 
   Wait_Strategy wait_strategy_;
   // The wait-for-reply strategy.
-
-  Lock_Type cached_connector_lock_type_;
-  // Type of lock used by the cached connector.
 };
 
 #if defined (__ACE_INLINE__)

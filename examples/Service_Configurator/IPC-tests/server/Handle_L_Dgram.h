@@ -32,7 +32,7 @@ private:
   virtual int handle_input (int fd);
   virtual int handle_close (int fd, ACE_Reactor_Mask);
 
-  char rendezvous[MAXPATHLEN + 1];
+  char              rendezvous[MAXPATHLEN + 1];
   static const char *DEFAULT_RENDEZVOUS;
 };
 
@@ -44,6 +44,5 @@ extern ACE_Service_Object_Type ld;
 #else
 #define ACE_INLINE
 #endif /* __ACE_INLINE__ */
-
 #endif /* ACE_LACKS_UNIX_DOMAIN_SOCKETS */
 #endif /* _HANDLE_L_DGRAM_H */

@@ -18,7 +18,7 @@ require ACEutils;
 
 $iorfile = "cubit.ior";
 $exepref = '.' . $DIR_SEPARATOR;
-$svnsflags = " -f $iorfile";
+$svnsflags = " -o $iorfile";
 $clnsflags = " -f $iorfile";
 $clflags = "";
 $svflags = "";
@@ -147,13 +147,13 @@ if ($OSNAME ne "MSWin32")
   $CL = Process::Create ($exepref . "client".$EXE_EXT,
                          " $clflags $clnsflags -x");
 
-  $client = $CL->TimedWait (120);
+  $client = $CL->TimedWait (60);
   if ($client == -1) {
     print STDERR "ERROR: client timedout\n";
     $CL->Kill (); $CL->TimedWait (1);
   }
 
-  $server = $SV->TimedWait (30);
+  $server = $SV->TimedWait (10);
   if ($server == -1) {
     print STDERR "ERROR: server timedout\n";
     $SV->Kill (); $SV->TimedWait (1);

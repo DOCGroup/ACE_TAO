@@ -27,26 +27,12 @@
 // Forward declaration.
 class ACE_Allocator;
 
-#if !defined (ACE_HAS_BROKEN_EXTENDED_TEMPLATES)
-#define ACE_CACHE_MAP_MANAGER \
-        ACE_Cache_Map_Manager<KEY, \
-                              VALUE, \
-                              ACE_Hash_Map_Manager_Ex<KEY, ACE_Pair<VALUE, ATTRIBUTES>, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex>, \
-                              ACE_Hash_Map_Iterator_Ex<KEY, ACE_Pair<VALUE, ATTRIBUTES>, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex>, \
-                              ACE_Hash_Map_Reverse_Iterator_Ex<KEY, ACE_Pair<VALUE, ATTRIBUTES>, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex>, \
-                              CACHING_STRATEGY, \
-                              ATTRIBUTES>
-#else
-#define ACE_CACHE_MAP_MANAGER \
-        ACE_Cache_Map_Manager<KEY, \
-                              VALUE, \
-                              ACE_Hash_Map_Manager_Ex<KEY, ACE_Pair<VALUE, ATTRIBUTES>, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex>, \
-                              CACHING_STRATEGY, \
-                              ATTRIBUTES>
-#endif /* ACE_HAS_BROKEN_EXTENDED_TEMPLATES */
-
 template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class CACHING_STRATEGY, class ATTRIBUTES>
-class ACE_Hash_Cache_Map_Manager : public ACE_CACHE_MAP_MANAGER
+class ACE_Hash_Cache_Map_Manager : public ACE_Cache_Map_Manager< KEY, VALUE,
+                                   ACE_Hash_Map_Manager_Ex<KEY, ACE_Pair<VALUE, ATTRIBUTES>, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex>,
+                                   ACE_Hash_Map_Iterator_Ex<KEY, ACE_Pair<VALUE, ATTRIBUTES>, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex>,
+                                   ACE_Hash_Map_Reverse_Iterator_Ex<KEY, ACE_Pair<VALUE, ATTRIBUTES>, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex>,
+                                   CACHING_STRATEGY, ATTRIBUTES>
 {
   // = TITLE
   //     Defines a abstraction which will purge entries from a map.
@@ -174,7 +160,12 @@ class ACE_Hash_Cache_Map_Manager : public ACE_CACHE_MAP_MANAGER
 
 protected:
 
-  typedef ACE_CACHE_MAP_MANAGER ACE_HCMM_BASE;
+  typedef ACE_Cache_Map_Manager<KEY, VALUE,
+                                ACE_Hash_Map_Manager_Ex<KEY, ACE_Pair<VALUE, ATTRIBUTES>, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex>,
+                                ACE_Hash_Map_Iterator_Ex<KEY, ACE_Pair<VALUE, ATTRIBUTES>, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex>,
+                                ACE_Hash_Map_Reverse_Iterator_Ex<KEY, ACE_Pair<VALUE, ATTRIBUTES>, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex>,
+                                CACHING_STRATEGY, ATTRIBUTES>
+    ACE_HCMM_BASE;
   // Base class.
 };
 

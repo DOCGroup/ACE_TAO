@@ -8,7 +8,7 @@ ACE_RCSID(benchmark, client, "$Id$")
 Client_StreamEndPoint::Client_StreamEndPoint (void)
 {
 }
-
+ 
 
 int
 Client_StreamEndPoint::handle_open (void)
@@ -47,7 +47,7 @@ Client_StreamEndPoint::handle_postconnect (AVStreams::flowSpec& /* server_spec *
 
 int
 Client_StreamEndPoint::handle_start (const AVStreams::flowSpec &/* the_spec */,
-                                     CORBA::Environment &/* env */)
+                                     CORBA::Environment &/* env */) 
 
 {
   return -1;
@@ -55,7 +55,7 @@ Client_StreamEndPoint::handle_start (const AVStreams::flowSpec &/* the_spec */,
 
 int
 Client_StreamEndPoint::handle_stop (const AVStreams::flowSpec &/* the_spec */,
-                                    CORBA::Environment &/* env */)
+                                    CORBA::Environment &/* env */) 
 
 {
   return -1;
@@ -63,7 +63,7 @@ Client_StreamEndPoint::handle_stop (const AVStreams::flowSpec &/* the_spec */,
 
 int
 Client_StreamEndPoint::handle_destroy (const AVStreams::flowSpec &/* the_spec */,
-                                       CORBA::Environment &/* env */)
+                                       CORBA::Environment &/* env */) 
 
 {
   return -1;
@@ -95,7 +95,7 @@ CORBA::Boolean
 ttcp_Client_StreamEndPoint::handle_preconnect (AVStreams::flowSpec &the_spec)
 {
   // listen for the tcp socket.
-
+  
   ACE_INET_Addr tcp_addr;
 
   //  tcp_addr.set (TCP_PORT,"mambo-atm.cs.wustl.edu");
@@ -117,7 +117,7 @@ ttcp_Client_StreamEndPoint::handle_preconnect (AVStreams::flowSpec &the_spec)
              local_addr.get_port_number ());
   the_spec.length (1);
   the_spec [0] = CORBA::string_dup (client_address_string);
-
+  
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) client flow spec is %s\n",
               client_address_string));
@@ -194,7 +194,7 @@ Globals::parse_args (int argc,
         this->thread_count_ = ACE_OS::atoi (opts.optarg);
         break;
       case 's':
-        // use ttcp strategy.
+        // use ttcp strategy.        
         this->strategy_ = TTCP_REACTIVE;
         break;
       case '?':
@@ -212,7 +212,7 @@ Client::svc (void)
   // Now start pumping data.
   ACE_High_Res_Timer timer;
   ACE_Time_Value tv1,tv2;
-
+  
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) Thread created\n"));
 
@@ -266,13 +266,13 @@ Client::svc (void)
       ACE_TRY_CHECK;
 
       if (this->bind_to_server () == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
+        ACE_ERROR_RETURN ((LM_ERROR, 
                            "(%P|%t) Error binding to the naming service\n"),
                           -1);
-
+      
       // wait for the other clients to finish binding
       GLOBALS::instance ()->barrier_->wait ();
-
+      
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) All threads finished, starting tests.\n"));
 
       ACE_Time_Value tv (0);
@@ -297,16 +297,16 @@ Client::svc (void)
       tv1.dump ();
       ACE_DEBUG ((LM_DEBUG,"(%P|%t)time taken for stream setup is %ld \n",
                   time_taken ));
-
+      
 #if !defined (ACE_LACKS_SOCKET_BUFSIZ)
       int sndbufsize = ACE_DEFAULT_MAX_SOCKET_BUFSIZ;
       int rcvbufsize = ACE_DEFAULT_MAX_SOCKET_BUFSIZ;
-
+      
       int result;
       result = this->stream_.set_option (SOL_SOCKET,
-                                         SO_SNDBUF,
-                                         (void *) &sndbufsize,
-                                         sizeof (sndbufsize));
+					 SO_SNDBUF,
+					 (void *) &sndbufsize,
+					 sizeof (sndbufsize));
       if ((result == -1) && (errno != ENOTSUP))
         ACE_ERROR_RETURN ((LM_ERROR,"set_option failed for sndbufsize:%p\n",""),-1);
       result = this->stream_.set_option (SOL_SOCKET,
@@ -319,25 +319,25 @@ Client::svc (void)
 #if defined (TCP_NODELAY)
       int one = 1;
       result = this->stream_.set_option (SOL_SOCKET,
-                                         TCP_NODELAY,
-                                         (char *)& one,
-                                         sizeof (one));
+					 TCP_NODELAY,
+					 (char *)& one,
+					 sizeof (one));
       if (result == -1)
         ACE_ERROR_RETURN ((LM_ERROR,"set_option failed TCP_NODELAY:%p\n",""),-1);
 #endif
 
       char *buffer;
       long buffer_siz = GLOBALS::instance ()->block_size_*1024;
-
+      
       ACE_NEW_RETURN (buffer,
                       char [buffer_siz],
                       -1);
       long number = 64 *1024/(GLOBALS::instance ()->block_size_);
       timer.start ();
       for (int i=0;i<number;i++)
-        {
+	{
           this->stream_.send_n (buffer,buffer_siz);
-        }
+	}
       timer.stop ();
       timer.elapsed_time (tv2);
       double total_time = tv2.sec ()+tv2.usec ()/1000000.0;
@@ -354,7 +354,7 @@ Client::svc (void)
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (-1);
-
+  
   return 0;
 }
 
@@ -365,25 +365,25 @@ Client::bind_to_server (void)
   ACE_TRY
     {
       /*
-        CORBA::Object_var naming_obj =
-        this->orb_manager_.orb ()->resolve_initial_references ("NameService");
-        if (CORBA::is_nil (naming_obj.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-        " (%P|%t) Unable to resolve the Name Service.\n"),
-        -1);
-        CosNaming::NamingContext_var naming_context =
-        CosNaming::NamingContext::_narrow (naming_obj.in (),
-        ACE_TRY_ENV);
-        ACE_TRY_CHECK;
+	CORBA::Object_var naming_obj =
+	this->orb_manager_.orb ()->resolve_initial_references ("NameService");
+	if (CORBA::is_nil (naming_obj.in ()))
+	ACE_ERROR_RETURN ((LM_ERROR,
+	" (%P|%t) Unable to resolve the Name Service.\n"),
+	-1);
+	CosNaming::NamingContext_var naming_context =
+	CosNaming::NamingContext::_narrow (naming_obj.in (),
+	ACE_TRY_ENV);
+	ACE_TRY_CHECK;
       */
 
       // Initialize the naming services
       if (my_name_client_.init (this->orb_manager_.orb ()) != 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize "
-                           "the TAO_Naming_Client. \n"),
-                          -1);
-
+	ACE_ERROR_RETURN ((LM_ERROR,
+			   " (%P|%t) Unable to initialize "
+			   "the TAO_Naming_Client. \n"),
+			  -1);
+      
       CosNaming::Name server_mmdevice_name (1);
 
       server_mmdevice_name.length (1);
@@ -432,7 +432,7 @@ Client::establish_stream (void)
          the_qos.inout (),
          the_flows.in (),
          ACE_TRY_ENV);
-
+      
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -471,7 +471,7 @@ ttcp_Endpoint_Reactive_Strategy_A::make_stream_endpoint (ttcp_Client_StreamEndPo
 
 int
 main (int argc, char **argv)
-{
+{  
 
   GLOBALS::instance ()->thread_count_ = 1;
   // Preliminary argument processing.
@@ -494,7 +494,7 @@ main (int argc, char **argv)
                       -1);
 
       if (client->activate (THR_BOUND) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
+        ACE_ERROR_RETURN ((LM_ERROR, 
                            "(%P|%t) Error in activate: %p",
                            "activate"),
                           -1);
@@ -510,14 +510,18 @@ template class TAO_AV_Endpoint_Reactive_Strategy<Client_StreamEndPoint,TAO_VDev,
 template class TAO_AV_Endpoint_Reactive_Strategy_A<ttcp_Client_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>;
 template class TAO_AV_Endpoint_Reactive_Strategy_A<Client_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>;
 template class ACE_Acceptor <ttcp_Client_StreamEndPoint,ACE_SOCK_ACCEPTOR>;
+template class ACE_Svc_Handler <ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
+template class ACE_Task<ACE_SYNCH>;
 template class ACE_Condition<ACE_SYNCH_MUTEX> ;
 template class ACE_Singleton<Globals,ACE_SYNCH_MUTEX>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate TAO_AV_Endpoint_Reactive_Strategy<ttcp_Client_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>
 #pragma instantiate TAO_AV_Endpoint_Reactive_Strategy<Client_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>
-#pragma instantiate TAO_AV_Endpoint_Reactive_Strategy_A<ttcp_Client_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>
+#pragma instantiate TAO_AV_Endpoint_Reactive_Strategy_A<ttcp_Client_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl> 
 #pragma instantiate TAO_AV_Endpoint_Reactive_Strategy_A<Client_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>
 #pragma instantiate ACE_Acceptor <ttcp_Client_StreamEndPoint,ACE_SOCK_ACCEPTOR>
-#pragma instantiate ACE_Condition<ACE_SYNCH_MUTEX>
-#pragma instantiate ACE_Singleton <Globals,ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Svc_Handler <ACE_SOCK_STREAM, ACE_NULL_SYNCH>
+#pragma instantiate ACE_Task<ACE_SYNCH>
+#pragma instantiate ACE_Condition<ACE_SYNCH_MUTEX> 
+#pragma instantiate ACE_Singleton <Globals,ACE_SYNCH_MUTEX> 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

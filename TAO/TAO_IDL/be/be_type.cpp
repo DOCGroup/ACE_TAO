@@ -219,8 +219,8 @@ be_type::nested_type_name (be_decl *use_scope, const char *suffix, const char *p
   if (def_scope && def_scope->node_type () != AST_Decl::NT_root && use_scope)
     // if both scopes exist and that we are not in the root scope
     {
-      ACE_OS::strcpy (def_name, def_scope->fullname ());
-      ACE_OS::strcpy (use_name, use_scope->fullname ());
+      ACE_OS::strcpy (def_name, def_scope->full_name ());
+      ACE_OS::strcpy (use_name, use_scope->full_name ());
 
       // find the first occurrence of a :: and advance the next pointers accordingly
       def_next = ACE_OS::strstr (def_curr, "::");
@@ -241,7 +241,7 @@ be_type::nested_type_name (be_decl *use_scope, const char *suffix, const char *p
         }
       else
         {
-          int len = ACE_OS::strlen (use_curr);
+          int len = ACE_OS::strlen (def_curr);
           if (len > len_to_match)
             len_to_match = len;
         }
@@ -280,7 +280,7 @@ be_type::nested_type_name (be_decl *use_scope, const char *suffix, const char *p
                 }
               else
                 {
-                  int len = ACE_OS::strlen (use_curr);
+                  int len = ACE_OS::strlen (def_curr);
                   if (len > len_to_match)
                     len_to_match = len;
                 }
@@ -323,10 +323,10 @@ be_type::nested_type_name (be_decl *use_scope, const char *suffix, const char *p
         } // end of if the root prefixes match
     }
 
-  // otherwise just emit our fullname
+  // otherwise just emit our full_name
   if (prefix)
     ACE_OS::strcat (this->nested_type_name_, prefix);
-  ACE_OS::strcat (this->nested_type_name_, this->fullname ());
+  ACE_OS::strcat (this->nested_type_name_, this->full_name ());
   if (suffix)
     ACE_OS::strcat (this->nested_type_name_, suffix);
 

@@ -57,91 +57,29 @@ be_visitor_interface_ami_handler_fwd_ci::visit_interface (be_interface *node)
   os = this->ctx_->stream ();
   
   // Start from the current indentation level.
-  os->indent ();
+  os->indent (); // start from the current indentation level
 
-  // Create the full name and local name for the AMI_<Interface
-  // name>_Handler interface.
-  char *full_name = 0;
-  char *local_name = 0;
-
-  // Full name. 
-  // If there exists a scope name for this, then generate
-  // "Scope::AMI_<Local Name>_Handler". 
-
-  size_t scope_len = 0;
-
-  be_decl *parent = be_scope::narrow_from_scope (node->defined_in ())->decl ();
-  
-  if (parent != 0 &&
-      parent->fullname () != 0 &&
-      ACE_OS::strlen (parent->fullname ()))
-    scope_len = ACE_OS::strlen (parent->fullname ()) + ACE_OS::strlen ("::");
-  
-  ACE_NEW_RETURN (full_name,
-                  char [scope_len +
-                       ACE_OS::strlen ("AMI_") +
-                       ACE_OS::strlen (node->local_name ()->get_string ()) +
-                       ACE_OS::strlen ("_Handler") +
-                       1],
-                  -1);
-  
-  if (parent != 0 &&
-      parent->fullname () != 0 &&
-      ACE_OS::strlen (parent->fullname ()))
-    ACE_OS::sprintf (full_name,
-                     "%s::AMI_%s_Handler",
-                     parent->fullname (),
-                     node->local_name ()->get_string ());
-  else
-    ACE_OS::sprintf (full_name,
-                     "AMI_%s_Handler",
-                     node->local_name ()->get_string ());
-
-  // Local name.
-
-  ACE_NEW_RETURN (local_name,
-                  char [ACE_OS::strlen ("AMI_") +
-                       ACE_OS::strlen (node->local_name ()->get_string ()) +
-                       ACE_OS::strlen ("_Handler") +
-                       1],
-                  -1);
-  
-  ACE_OS::sprintf (local_name,
-                   "AMI_%s_Handler",
-                   node->local_name ()->get_string ());
-
-  // Generate the constructors and destructor.
-
+  // generate the constructors and destructor
   *os << "ACE_INLINE" << be_nl;
-  *os << full_name << "::" << local_name 
-      << " (void) // default constructor" << be_nl;
+  *os << node->full_name () << "::" << node->local_name () <<
+    " (void) // default constructor" << be_nl;
   *os << "{}" << be_nl << be_nl;
 
   *os << "ACE_INLINE" << be_nl;
-  *os << full_name << "::" << local_name
-      << " (TAO_Stub *objref, TAO_ServantBase *_tao_servant, "
-      << "CORBA::Boolean _tao_collocated) // constructor"
-      << be_nl
-      << "  : CORBA_Object (objref, _tao_servant, _tao_collocated)"
-      << be_nl
-      << "{}" << be_nl << be_nl;
+  *os << node->full_name () << "::" << node->local_name () <<
+    " (TAO_Stub *objref, TAO_ServantBase *_tao_servant, "
+      << "CORBA::Boolean _tao_collocated) // constructor" << be_nl;
+  *os << "  : CORBA_Object (objref, _tao_servant, _tao_collocated)" << be_nl;
+  *os << "{}" << be_nl << be_nl;
 
   *os << "ACE_INLINE" << be_nl;
-  *os << full_name << "::~" << local_name
-      << " (void) // destructor" << be_nl
-      << "{}\n\n";
+  *os << node->full_name () << "::~" << node->local_name () <<
+    " (void) // destructor" << be_nl;
+  *os << "{}\n\n";
 
-  // _nil method.
-  *os << "ACE_INLINE "
-      << full_name << "_ptr" << be_nl
-      << full_name << "::_nil (void)" << be_nl
-      << "{" << be_idt_nl
-      << "return (" << full_name << "_ptr)0;" << be_uidt_nl
-      << "}" << be_nl << be_nl;
-
-  // Generate the ifdefined macro for  the _var type.
-  os->gen_ifdef_macro (full_name, "_var");
-  if (node->gen_var_impl (full_name, local_name) == -1)
+  // generate the ifdefined macro for  the _var type
+  os->gen_ifdef_macro (node->flat_name (), "_var");
+  if (node->gen_var_impl () == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_interface_ci::"
@@ -150,10 +88,9 @@ be_visitor_interface_ami_handler_fwd_ci::visit_interface (be_interface *node)
     }
   os->gen_endif ();
 
-  // Generate the ifdefined macro for  the _out type.
-  os->gen_ifdef_macro (full_name, "_out");
-  if (node->gen_out_impl (full_name,
-                          local_name) == -1)
+  // generate the ifdefined macro for  the _out type
+  os->gen_ifdef_macro (node->flat_name (), "_out");
+  if (node->gen_out_impl () == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_interface_ci::"
@@ -161,6 +98,7 @@ be_visitor_interface_ami_handler_fwd_ci::visit_interface (be_interface *node)
                          "codegen for _out failed\n"), -1);
     }
   os->gen_endif ();
+
 
   return 0;
 }

@@ -1131,8 +1131,6 @@ TAO_POA::create_reference_i (const char *intf,
   // Ask the ORB to create you a reference
   return this->orb_core_.orb ()->key_to_object (key.in (),
                                                 intf,
-                                                0,
-                                                1,
                                                 ACE_TRY_ENV);
 }
 
@@ -1164,14 +1162,7 @@ TAO_POA::create_reference_with_id_i (const PortableServer::ObjectId &user_id,
   // requests on those references will cause the object to be
   // activated if necessary, or the default servant used, depending on
   // the applicable policies.
-  PortableServer::Servant servant = 0;
   PortableServer::ObjectId_var system_id;
-
-  // @@ We need something that can find the system id using appropriate strategy,
-  // at the same time, return the servant if one is available.  Before we have that
-  // function, <create_reference_with_id_i> basically generates broken collocated
-  // object when DIRECT collocation strategy is used.
-
   if (this->active_object_map ().find_system_id_using_user_id (user_id,
                                                                system_id.out ()) != 0)
     {
@@ -1185,8 +1176,6 @@ TAO_POA::create_reference_with_id_i (const PortableServer::ObjectId &user_id,
   // Ask the ORB to create you a reference
   return this->orb_core_.orb ()->key_to_object (key.in (),
                                                 intf,
-                                                servant,
-                                                1,
                                                 ACE_TRY_ENV);
 }
 
@@ -1346,8 +1335,6 @@ TAO_POA::servant_to_reference (PortableServer::Servant servant,
   // Ask the ORB to create you a reference
   return this->orb_core_.orb ()->key_to_object (key.in (),
                                                 servant->_interface_repository_id (),
-                                                servant,
-                                                1,
                                                 ACE_TRY_ENV);
 }
 
@@ -1612,8 +1599,6 @@ TAO_POA::id_to_reference_i (const PortableServer::ObjectId &id,
       // Ask the ORB to create you a reference
       return this->orb_core_.orb ()->key_to_object (key.in (),
                                                     servant->_interface_repository_id (),
-                                                    servant,
-                                                    1,
                                                     ACE_TRY_ENV);
     }
   else
@@ -2439,14 +2424,14 @@ TAO_POA::encode_sequence_to_string (CORBA::String &str,
   // OR, we could just return this space.  The classic time-space tradeoff,
   // and for now we'll let time win out, which means that we only do the
   // allocation once.
-  u_int len = 3 * seq.length (); /* space for zero termination not needed */;
+  u_int len = 3 * seq.length() + 1 /* for zero termination */;
   str = CORBA::string_alloc (len);
 
   char *cp = str;
 
   for (u_int i = 0;
-       cp < (cp + len) && i < seq.length();
-       ++i)
+       cp < (cp+len) && i < seq.length();
+       i++)
     {
       u_char byte = seq[i];
       if (isprint (byte) && byte != '\\')

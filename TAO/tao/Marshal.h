@@ -21,11 +21,6 @@
 #define TAO_MARSHAL_H
 
 #include "tao/corbafwd.h"
-
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-# pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
-
 #include "tao/Typecode.h"
 #include "tao/Principal.h"
 #include "tao/Any.h"

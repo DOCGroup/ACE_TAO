@@ -1,6 +1,8 @@
 /* -*- C++ -*- */
 // $Id$
 
+// Singleton.i
+
 // Default constructors.
 //
 // Note: don't explicitly initialize "instance_", because TYPE may not
@@ -12,16 +14,7 @@ ACE_Singleton<TYPE, ACE_LOCK>::ACE_Singleton (void)
 }
 
 template <class TYPE, class ACE_LOCK> ACE_INLINE
-ACE_Unmanaged_Singleton<TYPE, ACE_LOCK>::ACE_Unmanaged_Singleton (void)
-{
-}
-
-template <class TYPE, class ACE_LOCK> ACE_INLINE
 ACE_TSS_Singleton<TYPE, ACE_LOCK>::ACE_TSS_Singleton (void)
 {
 }
 
-template <class TYPE, class ACE_LOCK> ACE_INLINE
-ACE_Unmanaged_TSS_Singleton<TYPE, ACE_LOCK>::ACE_Unmanaged_TSS_Singleton (void)
-{
-}

@@ -37,6 +37,23 @@
 #define TAO_NULL_LOCK_REACTOR ACE_Select_Reactor_T< ACE_Select_Reactor_Token_T<ACE_Noop_Token> >
 #endif /* TAO_NULL_LOCK_REACTOR */
 
+// Users should override this stuff if they don't want to use the
+// default ACE Socket wrappers.  This makes it possible to change
+// TAO's transport mechanism wholesale by making a few minor changes
+// to the ACE config.h file.
+#if !defined (TAO_SOCK_STREAM)
+#define TAO_SOCK_STREAM ACE_SOCK_STREAM
+#define TAO_SOCK_Stream ACE_SOCK_Stream
+#endif /* TAO_SOCK_STREAM */
+
+#if !defined (TAO_SOCK_ACCEPTOR)
+#define TAO_SOCK_ACCEPTOR ACE_SOCK_ACCEPTOR
+#endif /* TAO_SOCK_ACCEPTOR */
+
+#if !defined (TAO_SOCK_CONNECTOR)
+#define TAO_SOCK_CONNECTOR ACE_SOCK_CONNECTOR
+#endif /* TAO_SOCK_CONNECTOR */
+
 //#define POA_NO_TIMESTAMP
 //
 // Define this if you don't want POA timestamps in the IOR.  Remember,
@@ -109,7 +126,7 @@
 #define TAO_DEFAULT_TRADING_SERVER_REPLY_PORT 10017
 #endif /* TAO_DEFAULT_TRADING_SERVER_REPLY_PORT */
 
-// The default UDP multicast port number for locating the TAO
+// The default UDP multicast port number for locating the TAO 
 // Implementation Repository Service.
 #if !defined (TAO_DEFAULT_IMPLREPO_SERVER_REQUEST_PORT)
 #define TAO_DEFAULT_IMPLREPO_SERVER_REQUEST_PORT 10018
@@ -147,17 +164,6 @@
 #if !defined (TAO_MAXIMUM_NATIVE_TYPE_SIZE)
 # define TAO_MAXIMUM_NATIVE_TYPE_SIZE 128
 #endif /* TAO_MAXIMUM_NATIVE_TYPE_SIZE */
-
-// This deals with the strategies for connection caching. By default
-// it is the Least Recently Used (LRU) with the default purging
-// percentage of 20%.
-#if !defined (TAO_CONNECTION_CACHING_STRATEGY)
-# define TAO_CONNECTION_CACHING_STRATEGY TAO_Resource_Factory::LRU
-#endif /* TAO_CONNECTION_CACHING_STRATEGY */
-
-#if !defined (TAO_PURGE_PERCENT)
-# define TAO_PURGE_PERCENT 20
-#endif /* TAO_PURGE_PERCENT */
 
 // This deals with platforms that support namespaces vs platforms that
 // don't.  @@ MSVC's namespace implementation is somehow broken.
@@ -282,8 +288,8 @@
 // responsible for instantiating the templates.
 //
 #if !defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) && \
-    (defined (ACE_HAS_TEMPLATE_SPECIALIZATION) || \
-     (defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA) && defined (_UNICOS)))
+    ( defined (ACE_HAS_TEMPLATE_SPECIALIZATION) || \
+    defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA) )
 #define TAO_USE_SEQUENCE_TEMPLATES
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -299,20 +305,6 @@
 #define TAO_OBJID_POLICYMANAGER    "ORBPolicyManager"
 #define TAO_OBJID_POLICYCURRENT    "PolicyCurrent"
 #define TAO_OBJID_IORMANIPULATION  "IORManipulation"
-
-// Comma separated list of the above ObjectIDs.
-// DO NOT include unimplemented services!
-// The CORBA_ORB::list_initial_services () method iterates through
-// this list to determine which initial services are available.
-#define TAO_LIST_OF_INITIAL_SERVICES \
-        TAO_OBJID_NAMESERVICE, \
-        TAO_OBJID_TRADINGSERVICE, \
-        TAO_OBJID_IMPLREPOSERVICE, \
-        TAO_OBJID_ROOTPOA, \
-        TAO_OBJID_POACURRENT, \
-        TAO_OBJID_POLICYMANAGER, \
-        TAO_OBJID_POLICYCURRENT, \
-        TAO_OBJID_IORMANIPULATION
 
 // TAO Naming Service.
 

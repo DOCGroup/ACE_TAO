@@ -5,7 +5,6 @@
 #include "Supplier.h"
 #include "orbsvcs/Event/EC_Event_Channel.h"
 #include "ace/Arg_Shifter.h"
-#include "ace/High_Res_Timer.h"
 
 ACE_RCSID(EC_Tests_Performance, Connect, "$Id$")
 
@@ -97,10 +96,9 @@ EC_Connect::print_args (void) const
 void
 EC_Connect::dump_results (void)
 {
-  ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
   ACE_DEBUG ((LM_DEBUG, "\nConnect time:\n"));
-  this->consumer_connect_.dump_results ("Consumer/connect", gsf);
-  this->supplier_connect_.dump_results ("Supplier/connect", gsf);
+  this->consumer_connect_.dump_results ("Consumer", "connect");
+  this->supplier_connect_.dump_results ("Supplier", "connect");
 
   ACE_DEBUG ((LM_DEBUG, "\nDisconnect time:\n"));
 }
@@ -116,8 +114,7 @@ EC_Connect::connect_consumer (
                                      i,
                                      ACE_TRY_ENV);
   ACE_hrtime_t now = ACE_OS::gethrtime ();
-  this->consumer_connect_.sample (now - this->start_time_,
-                                  now - start);
+  this->consumer_connect_.sample (now - start);
 }
 
 void
@@ -131,8 +128,7 @@ EC_Connect::connect_supplier (
                                      i,
                                      ACE_TRY_ENV);
   ACE_hrtime_t now = ACE_OS::gethrtime ();
-  this->supplier_connect_.sample (now - this->start_time_,
-                                  now - start);
+  this->supplier_connect_.sample (now - start);
 }
 
 EC_Consumer*
@@ -150,7 +146,6 @@ EC_Connect::allocate_supplier (int i)
 void
 EC_Connect::connect_clients (CORBA::Environment &ACE_TRY_ENV)
 {
-  this->start_time_ = ACE_OS::gethrtime ();
   switch (this->order_)
     {
     default:
@@ -236,7 +231,6 @@ EC_Connect::disconnect_clients (CORBA::Environment &ACE_TRY_ENV)
     this->event_channel_->for_suppliers (ACE_TRY_ENV);
   ACE_CHECK;
 
-  ACE_hrtime_t start_time = ACE_OS::gethrtime ();
   for (int i = 0; i != max; ++i)
     {
       if (i < this->n_suppliers_)
@@ -247,8 +241,7 @@ EC_Connect::disconnect_clients (CORBA::Environment &ACE_TRY_ENV)
           ACE_CHECK;
 
           ACE_hrtime_t now = ACE_OS::gethrtime ();
-          this->supplier_disconnect_.sample (now - start_time,
-                                             now - start);
+          this->supplier_disconnect_.sample (now - start);
         }
       if (i < this->n_consumers_)
         {
@@ -258,19 +251,16 @@ EC_Connect::disconnect_clients (CORBA::Environment &ACE_TRY_ENV)
           ACE_CHECK;
 
           ACE_hrtime_t now = ACE_OS::gethrtime ();
-          this->consumer_disconnect_.sample (now - start_time,
-                                             now - start);
+          this->consumer_disconnect_.sample (now - start);
         }
     }
-  ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
-  this->consumer_disconnect_.dump_results ("Consumer/disconnect", gsf);
-  this->supplier_disconnect_.dump_results ("Supplier/disconnect", gsf);
+  this->consumer_disconnect_.dump_results ("Consumer", "disconnect");
+  this->supplier_disconnect_.dump_results ("Supplier", "disconnect");
 }
 
 void
 EC_Connect::disconnect_consumers (CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_hrtime_t start_time = ACE_OS::gethrtime ();
   for (int i = 0; i < this->n_consumers_; ++i)
     {
       ACE_hrtime_t start = ACE_OS::gethrtime ();
@@ -279,12 +269,9 @@ EC_Connect::disconnect_consumers (CORBA::Environment &ACE_TRY_ENV)
       ACE_CHECK;
 
       ACE_hrtime_t now = ACE_OS::gethrtime ();
-      this->consumer_disconnect_.sample (now - start_time,
-                                         now - start);
+      this->consumer_disconnect_.sample (now - start);
     }
-  ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
-  this->consumer_disconnect_.dump_results ("Consumer/disconnect",
-                                           gsf);
+  this->consumer_disconnect_.dump_results ("Consumer", "disconnect");
   if (this->verbose ())
     ACE_DEBUG ((LM_DEBUG, "EC_Connect (%P|%t) consumers disconnected\n"));
 }
@@ -292,7 +279,6 @@ EC_Connect::disconnect_consumers (CORBA::Environment &ACE_TRY_ENV)
 void
 EC_Connect::disconnect_suppliers (CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_hrtime_t start_time = ACE_OS::gethrtime ();
   for (int i = 0; i < this->n_suppliers_; ++i)
     {
       ACE_hrtime_t start = ACE_OS::gethrtime ();
@@ -301,12 +287,9 @@ EC_Connect::disconnect_suppliers (CORBA::Environment &ACE_TRY_ENV)
       ACE_CHECK;
 
       ACE_hrtime_t now = ACE_OS::gethrtime ();
-      this->supplier_disconnect_.sample (now - start_time,
-                                         now - start);
+      this->supplier_disconnect_.sample (now - start);
     }
-  ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
-  this->supplier_disconnect_.dump_results ("Supplier/disconnect",
-                                           gsf);
+  this->supplier_disconnect_.dump_results ("Supplier", "disconnect");
   if (this->verbose ())
     ACE_DEBUG ((LM_DEBUG, "EC_Connect (%P|%t) suppliers disconnected\n"));
 }
@@ -343,15 +326,14 @@ ECC_Consumer::connect (
                               shutdown_event_type,
                               ACE_TRY_ENV);
   ACE_hrtime_t now = ACE_OS::gethrtime ();
-  this->connect_time_.sample (now, now - start);
+  this->connect_time_.sample (now - start);
 }
 
 void
-ECC_Consumer::dump_results (const char* name,
-                            ACE_UINT32 gsf)
+ECC_Consumer::dump_results (const char* name)
 {
-  this->connect_time_.dump_results (name, gsf);
-  this->EC_Consumer::dump_results (name, gsf);
+  this->connect_time_.dump_results ("EC_Consumers/connect", name);
+  this->EC_Consumer::dump_results (name);
 }
 
 // ****************************************************************
@@ -385,15 +367,14 @@ ECC_Supplier::connect (
                               shutdown_event_type,
                               ACE_TRY_ENV);
   ACE_hrtime_t now = ACE_OS::gethrtime ();
-  this->connect_time_.sample (now, now - start);
+  this->connect_time_.sample (now - start);
 }
 
 void
-ECC_Supplier::dump_results (const char* name,
-                            ACE_UINT32 gsf)
+ECC_Supplier::dump_results (const char* name)
 {
-  this->connect_time_.dump_results (name, gsf);
-  this->EC_Supplier::dump_results (name, gsf);
+  this->connect_time_.dump_results ("EC_Suppliers/connect", name);
+  this->EC_Supplier::dump_results (name);
 }
 
 

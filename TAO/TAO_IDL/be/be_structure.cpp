@@ -95,7 +95,7 @@ be_structure::gen_var_defn (char *)
   // for over here.
 
   ch->indent (); // start with whatever was our current indent level
-  *ch << "class " << idl_global->stub_export_macro ()
+  *ch << "class " << idl_global->export_macro ()
       << " " << namebuf << nl;
   *ch << "{" << nl;
   *ch << "public:\n";
@@ -169,7 +169,7 @@ be_structure::gen_var_impl (char *, char *)
   char lname [NAMEBUFSIZE];  // local _var names
 
   ACE_OS::memset (fname, '\0', NAMEBUFSIZE);
-  ACE_OS::sprintf (fname, "%s_var", this->fullname ());
+  ACE_OS::sprintf (fname, "%s_var", this->full_name ());
 
   ACE_OS::memset (lname, '\0', NAMEBUFSIZE);
   ACE_OS::sprintf (lname, "%s_var", local_name ()->get_string ());
@@ -403,7 +403,7 @@ be_structure::gen_out_defn (char *)
   // generate the out definition (always in the client header)
   ch->indent (); // start with whatever was our current indent level
 
-  *ch << "class " << idl_global->stub_export_macro ()
+  *ch << "class " << idl_global->export_macro ()
       << " " << namebuf << nl;
   *ch << "{" << nl;
   *ch << "public:\n";
@@ -452,7 +452,7 @@ be_structure::gen_out_impl (char *, char *)
   char lname [NAMEBUFSIZE];  // local _out names
 
   ACE_OS::memset (fname, '\0', NAMEBUFSIZE);
-  ACE_OS::sprintf (fname, "%s_out", this->fullname ());
+  ACE_OS::sprintf (fname, "%s_out", this->full_name ());
 
   ACE_OS::memset (lname, '\0', NAMEBUFSIZE);
   ACE_OS::sprintf (lname, "%s_out", local_name ()->get_string ());
@@ -591,9 +591,6 @@ be_structure::compute_size_type (void)
               // guaranteed by the "size_type" call that once the value reached
               // be_decl::VARIABLE, nothing else can overwrite it.
               this->size_type (bd->size_type ());
-
-              // While we're iterating, we might as well do this one too.
-              this->has_constructor (bd->has_constructor ());
             }
           else
             {

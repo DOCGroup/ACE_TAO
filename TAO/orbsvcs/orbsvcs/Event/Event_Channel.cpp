@@ -1444,8 +1444,7 @@ ACE_ES_Consumer_Module::obtain_push_supplier (
   {
     ACE_GUARD_THROW_EX (
         ACE_ES_MUTEX, ace_mon, this->lock_,
-        CORBA::INTERNAL ());
-    // @@ RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR());
+        RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR());
     ACE_CHECK_RETURN (proxy);
 
     if (all_consumers_.insert (new_consumer.get ()) == -1)
@@ -3352,8 +3351,7 @@ ACE_ES_Supplier_Module::obtain_push_consumer (CORBA::Environment &ACE_TRY_ENV)
   {
     ACE_GUARD_THROW_EX (
          ACE_ES_MUTEX, ace_mon, this->lock_,
-         CORBA::INTERNAL ());
-    // @@ RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR());
+         RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR());
     ACE_CHECK_RETURN (proxy);
 
     if (all_suppliers_.insert (new_supplier.get ()) == -1)

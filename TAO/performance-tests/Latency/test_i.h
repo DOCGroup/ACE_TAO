@@ -31,8 +31,13 @@ public:
   // ctor
 
   // = The Test methods.
-  void test_method (CORBA::Environment&)
+  CORBA::ULongLong test_method (CORBA::ULongLong stamp,
+                                CORBA::Environment&)
     ACE_THROW_SPEC (());
+
+  void time_stamp (CORBA::ULong & index,
+                   CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   void shutdown (CORBA::Environment&)
     ACE_THROW_SPEC ((CORBA::SystemException));

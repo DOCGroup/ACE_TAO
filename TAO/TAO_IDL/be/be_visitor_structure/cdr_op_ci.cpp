@@ -133,8 +133,7 @@ be_visitor_structure_cdr_op_ci::post_process (be_decl *bd)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  if (!this->last_node (bd) 
-      && bd->node_type () != AST_Decl::NT_enum_val)
+  if (!this->last_node (bd))
     {
       switch (this->ctx_->sub_state ())
         {

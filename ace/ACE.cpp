@@ -30,29 +30,6 @@ size_t ACE::pagesize_ = 0;
 // Size of allocation granularity.
 size_t ACE::allocation_granularity_ = 0;
 
-int
-ACE::out_of_handles (int error)
-{
-  // EMFILE is common to all platforms.
-  if (error == EMFILE ||
-#if defined (ACE_WIN32)
-      // On Win32, we need to check for ENOBUFS also.
-      error == ENOBUFS ||
-#elif defined (HPUX)
-      // On HPUX, we need to check for EADDRNOTAVAIL also.
-      error == EADDRNOTAVAIL ||
-#elif defined (linux)
-      // On linux, we need to check for ENOENT also.
-      error == ENOENT ||
-#elif defined (sun)
-      // On sun, we need to check for ENOSR also.
-      error == ENOSR ||
-#endif /* ACE_WIN32 */
-      error == ENFILE)
-    return 1;
-  else
-    return 0;
-}
 
 int
 ACE::init (void)
@@ -252,7 +229,7 @@ ACE::strsplit_r (char *str,
 const char *
 ACE::execname (const char *old_name)
 {
-#if defined (ACE_WIN32)
+#if defined (ACE_HAS_WIN32)
   if (ACE_OS::strstr (old_name, ".exe") == 0)
     {
       char *new_name;
@@ -264,7 +241,7 @@ ACE::execname (const char *old_name)
 
       ACE_NEW_RETURN (new_name,
                       char[size],
-                      0);
+                      -1);
       char *end = new_name;
 
       end = ACE_OS::strecpy (new_name, old_name);
@@ -274,7 +251,7 @@ ACE::execname (const char *old_name)
 
       return new_name;
     }
-#endif /* ACE_WIN32 */
+#endif /* ACE_HAS_WIN32 */
   return old_name;
 }
 
@@ -332,7 +309,7 @@ ACE::strsplit_r (wchar_t *str,
 const wchar_t *
 ACE::execname (const wchar_t *old_name)
 {
-#if defined (ACE_WIN32)
+#if defined (ACE_HAS_WIN32)
   if (ACE_OS::strstr (old_name, L".exe") == 0)
     {
       wchar_t *new_name;
@@ -344,7 +321,7 @@ ACE::execname (const wchar_t *old_name)
 
       ACE_NEW_RETURN (new_name,
                       wchar_t[size],
-                      0);
+                      -1);
       wchar_t *end = new_name;
 
       end = ACE_OS::strecpy (new_name, old_name);
@@ -354,7 +331,7 @@ ACE::execname (const wchar_t *old_name)
 
       return new_name;
     }
-#endif /* ACE_WIN32 */
+#endif /* ACE_HAS_WIN32 */
   return old_name;
 }
 #endif /* ACE_HAS_UNICODE */
@@ -1692,7 +1669,7 @@ ACE::timestamp (ASYS_TCHAR date_and_time[], int date_and_timelen)
                    timebuf,
                    date_and_timelen);
   ACE_OS::sprintf (&date_and_time[19],
-                   ".%06ld",
+                   ".%06d",
                    cur_time.usec ());
 #endif /* WIN32 */
   date_and_time[26] = '\0';
@@ -2851,6 +2828,7 @@ ACE::get_bcast_addr (ACE_UINT32 &bcast_addr,
         {
           ACE_UINT64 haddr;  // a place to put the address
           char * haddrp = (char *) &haddr;  // convert to char pointer
+          haddr += 4;   // adjust within the word
           ACE_OS::memcpy(haddrp,(char *) hp->h_addr,hp->h_length);
           ip_addr.sin_addr.s_addr = haddr;
         }
@@ -3220,7 +3198,7 @@ ACE::get_ip_interfaces (size_t &count,
       // Ethernet.
       ACE_OS::sprintf (dev_name,
                        "ether%d",
-                       i);
+                       i);    
       ip_dev[count] = EtsTCPGetDeviceHandle (dev_name);
       if (ip_dev[count] == 0)
         break;
@@ -3230,7 +3208,7 @@ ACE::get_ip_interfaces (size_t &count,
       // SLIP.
       ACE_OS::sprintf (dev_name,
                        "sl%d",
-                       i);
+                       i); 
       ip_dev[count] = EtsTCPGetDeviceHandle (dev_name);
       if (ip_dev[count] == 0)
         break;

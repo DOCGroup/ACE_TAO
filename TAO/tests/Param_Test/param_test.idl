@@ -162,11 +162,8 @@ interface Param_Test
   // variable structures
   struct Var_Struct
   {
-    double dbl;
     DUMMY dummy1;
-    boolean boole;
     DUMMY dummy2;
-    short shrt;
     StrSeq seq;
   };
 

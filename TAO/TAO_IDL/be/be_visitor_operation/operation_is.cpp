@@ -90,12 +90,12 @@ be_visitor_operation_is::visit_operation (be_operation *node)
   delete visitor;
 
 
-  ACE_CString str(node->flatname ());
+  ACE_CString str(node->flat_name ());
 
 
   int lnmlength = ACE_OS::strlen (node->local_name ()->get_string ());
 
-  int fnmlength = ACE_OS::strlen (node->flatname ());
+  int fnmlength = ACE_OS::strlen (node->flat_name ());
   fnmlength--;
 
   char * classname =  str.substr (0,(fnmlength-lnmlength) ).rep ();
@@ -132,7 +132,7 @@ be_visitor_operation_is::visit_operation (be_operation *node)
   delete visitor;
 
   //generate the excetions thrown by the operation
-  //  this->gen_throw_spec (node);
+  this->gen_throw_spec (node);
 
   *os <<be_idt_nl << "{"<<be_idt_nl;
   *os << "//Add your implementation here"<<be_uidt_nl;

@@ -22,14 +22,6 @@
 #ifndef BE_UNION_BRANCH_H
 #define BE_UNION_BRANCH_H
 
-#include "be_decl.h"
-#include "ast_union_branch.h"
-
-class UTL_LabelList;
-class UTL_Type;
-class UTL_StrList;
-class be_visitor;
-
 /*
  * BE_UnionBranch
  */
@@ -41,19 +33,12 @@ public:
   be_union_branch (void);
   // default constructor
 
-  be_union_branch (UTL_LabelList *ll, 
-                   AST_Type *ft, 
-                   UTL_ScopedName *n,
+  be_union_branch (UTL_LabelList *ll, AST_Type *ft, UTL_ScopedName *n,
                    UTL_StrList *p);
   // constructor
 
-  int gen_label_value (TAO_OutStream *os, 
-                       unsigned long index = 0);
+  int gen_label_value (TAO_OutStream *os, unsigned long index = 0);
   // Generate the label value (as in a switch/case statement).
-
-  int gen_default_label_value (TAO_OutStream *os,
-                               be_union *bu);
-  // Generate the default label value (as in a switch/case statement).
 
   // Visiting
   virtual int accept (be_visitor *visitor);

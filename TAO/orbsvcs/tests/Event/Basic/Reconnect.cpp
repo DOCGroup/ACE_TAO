@@ -5,7 +5,6 @@
 #include "Supplier.h"
 #include "orbsvcs/Event/EC_Event_Channel.h"
 #include "ace/Get_Opt.h"
-#include "ace/High_Res_Timer.h"
 
 ACE_RCSID(EC_Tests_Basic, Reconnect, "$Id$")
 
@@ -91,11 +90,12 @@ void
 EC_Reconnect::execute_test (CORBA::Environment& ACE_TRY_ENV)
 {
   this->execute_consumer_test (ACE_TRY_ENV);
+
   this->execute_supplier_test (ACE_TRY_ENV);
 
-  ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
-  this->consumer_reconnect_.dump_results ("Reconnect/consumer", gsf);
-  this->supplier_reconnect_.dump_results ("Reconnect/supplier", gsf);
+  this->consumer_reconnect_.dump_results ("Reconnect", "consumer");
+
+  this->supplier_reconnect_.dump_results ("Reconnect", "supplier");
 
   // this->EC_Driver::execute_test (ACE_TRY_ENV);
 }
@@ -115,7 +115,6 @@ EC_Reconnect::execute_consumer_test (CORBA::Environment& ACE_TRY_ENV)
 
   if (this->allow_consumer_reconnect_)
     {
-      ACE_hrtime_t start_time = ACE_OS::gethrtime ();
       for (int i = 0; i < this->disconnections_; ++i)
         {
           ACE_hrtime_t start = ACE_OS::gethrtime ();
@@ -124,8 +123,7 @@ EC_Reconnect::execute_consumer_test (CORBA::Environment& ACE_TRY_ENV)
                                         ACE_TRY_ENV);
           ACE_CHECK;
           ACE_hrtime_t stop = ACE_OS::gethrtime ();
-          this->consumer_reconnect_.sample (stop - start_time,
-                                            stop - start);
+          this->consumer_reconnect_.sample (stop - start);
         }
     }
   else
@@ -154,7 +152,6 @@ EC_Reconnect::execute_consumer_test (CORBA::Environment& ACE_TRY_ENV)
         this->event_channel_->for_consumers (ACE_TRY_ENV);
       ACE_CHECK;
 
-      ACE_hrtime_t start_time = ACE_OS::gethrtime ();
       for (int i = 0; i < this->disconnections_; ++i)
         {
           ACE_hrtime_t start = ACE_OS::gethrtime ();
@@ -166,8 +163,7 @@ EC_Reconnect::execute_consumer_test (CORBA::Environment& ACE_TRY_ENV)
                                         ACE_TRY_ENV);
           ACE_CHECK;
           ACE_hrtime_t stop = ACE_OS::gethrtime ();
-          this->consumer_reconnect_.sample (stop - start_time,
-                                            stop - start);
+          this->consumer_reconnect_.sample (stop - start);
         }
     }
 }
@@ -182,7 +178,6 @@ EC_Reconnect::execute_supplier_test (CORBA::Environment& ACE_TRY_ENV)
 
   if (this->allow_supplier_reconnect_)
     {
-      ACE_hrtime_t start_time = ACE_OS::gethrtime ();
       for (int i = 0; i < this->disconnections_; ++i)
         {
           ACE_hrtime_t start = ACE_OS::gethrtime ();
@@ -190,8 +185,7 @@ EC_Reconnect::execute_supplier_test (CORBA::Environment& ACE_TRY_ENV)
                                         ACE_TRY_ENV);
           ACE_CHECK;
           ACE_hrtime_t stop = ACE_OS::gethrtime ();
-          this->supplier_reconnect_.sample (stop - start_time,
-                                            stop - start);
+          this->supplier_reconnect_.sample (stop - start);
         }
     }
   else
@@ -219,7 +213,6 @@ EC_Reconnect::execute_supplier_test (CORBA::Environment& ACE_TRY_ENV)
         this->event_channel_->for_suppliers (ACE_TRY_ENV);
       ACE_CHECK;
 
-      ACE_hrtime_t start_time = ACE_OS::gethrtime ();
       for (int i = 0; i < this->disconnections_; ++i)
         {
           ACE_hrtime_t start = ACE_OS::gethrtime ();
@@ -231,8 +224,7 @@ EC_Reconnect::execute_supplier_test (CORBA::Environment& ACE_TRY_ENV)
                                         ACE_TRY_ENV);
           ACE_CHECK;
           ACE_hrtime_t stop = ACE_OS::gethrtime ();
-          this->supplier_reconnect_.sample (stop - start_time,
-                                            stop - start);
+          this->supplier_reconnect_.sample (stop - start);
         }
     }
 }

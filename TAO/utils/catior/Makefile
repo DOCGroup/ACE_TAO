@@ -18,6 +18,8 @@ BIN   	= catior
 
 SRC= catior.cpp
 
+BUILD	= $(VBIN)
+
 TAO_IDLFLAGS += -Ge 1
 #----------------------------------------------------------------------------
 #	Include macros and targets

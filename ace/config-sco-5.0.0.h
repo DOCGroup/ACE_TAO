@@ -13,7 +13,6 @@
 #define MAXPATHLEN 1023
 #endif /* SCO */
 
-#define ACE_HAS_NONCONST_SELECT_TIMEVAL
 #define ACE_HAS_SIG_MACROS
 #define ACE_LACKS_CONST_TIMESPEC_PTR
 #define ACE_LACKS_SYSCALL
@@ -84,7 +83,7 @@
 #define ACE_HAS_SELECT_H
 
 // Platform has prototypes for ACE_TLI.
-#define ACE_HAS_TLI_PROTOTYPES
+//#define ACE_HAS_TLI_PROTOTYPES
 // Platform has the XLI version of ACE_TLI.
 // #define ACE_HAS_XLI
 

@@ -69,6 +69,8 @@ CosEC_Multiple::init_ORB  (int argc, char *argv [])
 
       poa_manager->activate (ACE_TRY_ENV);
       ACE_TRY_CHECK;
+
+      return 0;
     }
   ACE_CATCHANY
     {
@@ -79,7 +81,7 @@ CosEC_Multiple::init_ORB  (int argc, char *argv [])
   ACE_ENDTRY;
   ACE_CHECK_RETURN (-1);
 
-  return 0;
+  ACE_NOTREACHED (return 0;)
 }
 
 int
@@ -112,6 +114,8 @@ CosEC_Multiple::init_CosEC (void)
         CosEventChannelAdmin::EventChannel::_narrow (EC_obj.in (),
                                                      ACE_TRY_ENV);
       ACE_TRY_CHECK;
+
+      return 0;
     }
   ACE_CATCHANY
     {
@@ -122,7 +126,7 @@ CosEC_Multiple::init_CosEC (void)
   ACE_ENDTRY;
   ACE_CHECK_RETURN (-1);
 
-  return 0;
+  ACE_NOTREACHED (return 0;)
 }
 
 int

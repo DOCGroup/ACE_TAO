@@ -352,7 +352,7 @@ TAO_Object_Adapter::find_transient_poa (const poa_name &system_name,
                                         const TAO_Temporary_Creation_Time &poa_creation_time,
                                         TAO_POA *&poa,
                                         CORBA::Environment &ACE_TRY_ENV)
-{
+{ 
   int result = 0;
 
   if (root)

@@ -237,17 +237,6 @@ make: *** [libACE.so] Error 8
       install patched versions of the C++ libraries, which correctly
       define this symbol.<p>
 
-      To build ACE on AIX with Visual Age C++, use the
-      $ACE_ROOT/ace/ace-dll.icc (or ace-lib.icc) along with the appropriate
-      version-specific config file (e.g. config-aix-4.3.x.h). All of the
-      version-specific config files set the version number macros and
-      include the general config-aix-4.x.h file which has support for all
-      of the OS versions and compilers supported on AIX. Using the general
-      config file is the recommended practice for egcs, C Set++, and IBM
-      C/C++ compilers. However, the Visual Age C++ compiler does not make
-      use of the platform_macros.GNU file, which is how the OS version
-      information generally gets set.<p>
-
       BTW, here's a technique from Rob Jordan &lt<A
       HREF="mailto:jordan@hursley.ibm.com">jordan@hursley.ibm.com</A>&gt
       that can reduce the size of the ACE libraries by about one
@@ -283,11 +272,7 @@ make: *** [libACE.so] Error 8
       1999 (R5), with glibc 2.1.1.<p>
 
       If you run out of memory, it's easy to add virtual memory on
-      Linux.  Please see the <code>mkswap</code> man page.  You'll
-      need around 256 to 300 Mb of virtual memory (RAM + swap) to
-      compile all of ACE+TAO.  The <a href="#resource_requirements">System
-      Resource Requirements section</a> has some suggestions on how
-      to reduce the memory requirement.<p>
+      Linux.  Please see the <code>mkswap</code> man page.<p>
 
       The glibc 2.0 dynamic loader isn't thread safe. If you want to
       use the Invocation API you'll have to set
@@ -397,15 +382,6 @@ make: *** [libACE.so] Error 8
       of CXX 6.1, notably versions -021 and earlier.  It's best to use
       V6.1-022 or later.<p>
 
-      NOTE: if you use Digital UNIX 4.0f or later, you <strong>must</strong>
-      use <code>ace/config-tru64.h</code> instead of
-      <code>ace/config-osf1-4.0.h</code>.  <code>ace/config-tru64.h</code>
-      can be used for all supported compilers on any version of
-      Digital UNIX after and include 4.0.  And, with 4.0f and later when
-      using Digital CXX, you <strong>must</strong> use
-      <code>include/makeinclude/platform_tru64_cxx.GNU</code> instead of
-      <code>include/makeinclude/platform_osf1_4.0.GNU</code>.
-
       GNU gcc 2.7.2.1 compiles without problems. All tests run
       (besides minor problems).  Thanks to Thilo Kielmann &lt<A
       HREF="mailto:kielmann@informatik.uni-siegen.de">kielmann@informatik.uni-siegen.de</A>&gt
@@ -509,6 +485,14 @@ make: *** [libACE.so] Error 8
       VxWorks/Tornado.  An anonymous contributor has also
       provided <a href="os-patches/vxworks-5.1.txt">notes for using
       ACE with VxWorks 5.1.</a><P>
+
+      Please note that ACE and TAO build with Tornado II.  The version
+      of egcs that is provided with Tornado II produces some spurious
+      warnings about uninitialized variables (including "this" :-).
+      This was a problem in older versions of egcs, but has since been
+      fixed.  If you'd like to disable the warnings, you can add
+      <code>-Wno-uninitialized</code> to your <code>CCFLAGS</code> in
+      <code>$ACE_ROOT/include/makeinclude/platform_macros.GNU</code><p>
 
       Tornado II/VxWorks 5.4 support IP multicast.  That is not enabled
       by default in ACE for VxWorks, because it probably depends on
@@ -753,7 +737,7 @@ If you use the GNU GCC g++ compiler please note the following:
       for reporting the problem with ACE_Singleton on g++, and for
       helping to find and implement these solutions.<P>
 
-  <LI>On VxWorks only, g++ (thru version 2.7.2, distributed
+  <LI>On VxWorks only, g++ (thru version 2.7.2, at least, distributed
       with Tornado 1.0.1/VxWorks 5.3.1), -fno-implicit-templates is
       broken.  In addition, -O2 is not supported on some targets.<P>
 </UL>
@@ -880,7 +864,7 @@ need to do:<P>
       contains the compiler and Makefile directives that are
       platform/compiler-specific<P>
 
-  <LI>Note that because ACE builds shared libraries, you'll need to set
+  <LI>Note that since ACE builds shared libraries, you'll need to set
       LD_LIBRARY_PATH to whereever you put the binary version of the
       ACE library.  For example, you probably want to do something
       like the following<P>
@@ -933,9 +917,11 @@ IBM's VisualAge C++ compiler (*.icc).  There are also Makefile.bor
 files to compile ACE, the ACE one-button tests, and TAO with Borland
 C++ Builder 4.0. <P>
 
-The Borland C++ Builder 4.0 port has been done by <A
-HREF="mailto:jody@atdesk.com">Jody Hagins</A>, so contact him for any
-questions.<P>
+The port of ACE and TAO to the VisualAge C++ compiler has been done by
+<A HREF="mailto:matteau@ca.ibm.com">Rene Matteau</A>, whom you should
+contact if you have any problems.  Likewise, the Borland C++ Builder
+4.0 port has been done by <A HREF="mailto:jody@atdesk.com">Jody
+Hagins</A>, so contact him for any questions.<P>
 
 <EM>Note concerning MSVC 5.0 and Service Pack 3:</EM> There has been
 confusion regarding MSVC 5 and its Service Pack 3.  Some ACE users
@@ -1141,7 +1127,7 @@ easiest way to fix it is as above, recreate it.</P>
 For the most part, you should be able to follow the instructions above
 to build ACE and applications that use it.  Start with the
 <a href="#unix">Unix instructions</a> above to build ACE and the
-applications that use it.  Please see below for more information on
+applications that use it.  Please see below for mroe information on
 <a href="#VxWorks/NT">building ACE on NT hosts for VxWorks targets</a>.<P>
 
 A few notes on VxWorks builds (thanks to
@@ -1173,13 +1159,13 @@ are several ways to do this; please see the
 platform file for detailed information.<P>
 
 The VxWorks platform_vxworks*.GNU files are set up so that shared
-libraries are not built on VxWorks, by default.  Only static
-libraries, with .a extension, are built.  Therefore, it's not
-necessary to set the LD_LIBRARY_PATH environment variable on your host
-system when building for VxWorks targets.  Please note, however, if
-you use TAO on VxWorks that you will need to set your LD_LIBRARY_PATH
-to find the TAO IDL compiler libraries (installed in the ace
-directory) on the host.<P>
+libraries are not built on VxWorks.  Only static libraries,
+with .a extension, are built.  Therefore, it's not necessary
+to set the LD_LIBRARY_PATH environment variable on your host
+system when building for VxWorks targets.  Please note, however,
+if you use TAO on VxWorks that you will need to set your LD_LIBRARY_PATH
+to find the TAO IDL compiler libraries (installed in the ace directory)
+on the host.<P>
 
 With g++, $ACE_ROOT/bin/ace_ld is used to munch object files and
 libraries to set up calls to static constructors and destructors.
@@ -1230,6 +1216,10 @@ Please note that those VxWorks kernel configuration parameters
 are set in the VxWorks configAll.h file.  You must rebuild your
 VxWorks kernel after modifying that file.<p>
 
+It probably wouldn't take much effort to modify the
+ACE library to not require <code>INCLUDE_CPLUS_IOSTREAMS</code>,
+if necessary.<p>
+
 If you're first getting started with ACE and/or VxWorks, I recommend
 just building the ACE library and tests first.  (Some of the ACE
 examples, in System_V_IPC, don't build on VxWorks yet.)  Then try
@@ -1261,31 +1251,17 @@ spa ace_main, "arg1" [, ...]
 
 All arguments must be quoted, even numbers.<p>
 
-The ACE <a href="tests/">tests</a> write their output files in a
-directory named <code>log/</code>, below the current
-(<code>tests</code>) directory.  If you don't have NFS included in
-your VxWorks kernel, you can use these steps, provided by
-<a href="mailto:clarence_m_weaver@md.northgrum.com">Clarence M. Weaver</a>,
-to run the tests and capture their output:<p>
-<ol>
-  <li>What I did was create a log directory on the boot NT host of my vxworks
-    target.<p>
-  <li>I copied all the test applications and the run_tests.vxworks script to
-    the parent of the log directory.<p>
-  <li>Using the target shell not the host shell, I "cd" to the directory
-    containing the script and test programs.<p>
-  <li>Invoked the script &lt; run_tests.vxworks from this target shell.<p>
-</ol>
-
+By default, the ACE Makefiles link the ACE library into every
+executable.  If you want to run multiple ACE executables but just use
+a single ACE library, it should be possible, though I haven't tried
+it.  Just link the first executable to be loaded onto the target with
+the ACE library, as usual.  All other executables can be linked
+without the ACE library by added <code>ACELIB=</code> to the make
+invocation when building them.  When they are loaded onto the target,
+the should load against the symbols from the ACE library from the
+first executable that was loaded.<p>
 
 <h5><a name="VxWorks/SharedLibs">Building Shared Libraries for VxWorks</a>.</h5>
-
-<strong>NOTE</strong>: The ACE support for shared libraries is
-under development.  If you use any writeable global (static)
-data in a shared library, it probably won't work for you.  A
-fix is under development, and should be ready shortly after
-the release of ACE 5.0.<p>
-
 ACE now supports shared libraries for VxWorks, but only with the
 g++ compiler.  To build shared libraries instead of the default
 static libraries, added <code>shared_libs_only=1</code> to either
@@ -1322,7 +1298,6 @@ A few additional Windows Notes, from Paul von Behren:<p>
       ``generic'' Unix environment.  Using this library, they have ported a
       large collection of GNU tools to WinNT/95 - including a port of
       gcc/g++.  See <A href="http://www.cygnus.com/misc/gnu-win32/">http://www.cygnus.com/misc/gnu-win32/</A>
-      A related link is <a href="ftp://ftp.cygnus.com/pub/gnu-win32/latest/">ftp://ftp.cygnus.com/pub/gnu-win32/latest/</a>
       WindRiver provides a subset of these tools - including make
       and gcc cross-compilers.  (Note:  it appears that the make
       that is provided with Tornado 2.0 cannot be used to build ACE.
@@ -1352,7 +1327,12 @@ Using the Cygnus tools, this approach should work:
     <code>ACE_wrappers/include/makeinclude/platform_macros.GNU</code>
     as usual for VxWorks.  See
     <a href="include/makeinclude/platform_vxworks5.x_g++.GNU">the
-    g++/VxWorks platform file</a> for more information.<p>
+    g++/VxWorks platform file</a> for more information.  You may
+    also want to add this line, because there's no need to install
+    libraries in the VxWorks build:
+<pre>
+INSTALL=
+</pre><p>
   <li>Create an <code>ACE_wrappers/ace/config.h</code> file that looks
     something like the following.  tao_idl should be built to not support
     native exception handling, because that's not available on VxWorks.
@@ -1374,6 +1354,21 @@ And Chris Ryan's instructions for building for VxWorks targets
 on Windows NT hosts:
 
 <ol>
+  <li>Create UNIX-like environment in NT Command Prompt windows by
+      downloading GNU bash, perl, and so forth from your favorite ftp
+      site. I went to <a href="ftp://ftp.cygnus.com/pub/gnu-win32/latest/">ftp://ftp.cygnus.com/pub/gnu-win32/latest/</a>
+      and downloaded <code>cdk.exe</code> and installed that on my NT box.
+      I downloaded perl5.0 from where I can't remember.  There may have been
+      bits and pieces from other places for things like <code>vi</code> and
+      <code>less</code>.
+
+  <li>Download latest ACE.  Create 2 parallel trees, say
+      <code>/ace/ACE_wrappers.NT</code> and
+      <code>/ace/ACE_wrappers.vxworks</code>.  The NT tree is for building
+      <code>aced.dll</code> and <code>tao_idl.exe</code> as currently
+      documented for ACE/TAO on NT/VC++5.0. The VxWorks tree is the
+      cross compilation tree.
+
   <li>Path setting that seems to be working is:<p>
       <pre>
       /tornado/host/x86-win32/bin:
@@ -1421,20 +1416,42 @@ on Windows NT hosts:
       <code>cygwin.dll</code> is from the Cygnus GNU software download and install.
 
   <li>Basically, follow documented procedure for ACE build/install on UNIX
-      platform.  Create a <code>$ACE_ROOT/ace/config.h</code> that looks
-      like:<p>
+      platform. Create a <code>$ACE_ROOT/ace/config.h</code> that looks like:<p>
       <pre>
       #include "config-vxworks5.x.h"
       </pre>
 
-      And create a
-      <code>$ACE_ROOT/include/makeinclude/platform_macros.GNU</code>
+      And create a <code>$ACE_ROOT/include/makeinclude/platform_macros.GNU</code>
       that looks like:<p>
       <pre>
       WIND_BASE = /tornado
       WIND_HOST_TYPE = x86-win32
+      PATH += :$(WIND_BASE)/host/$(WIND_HOST_TYPE)/bin
       CPU = I80486
-      include $(ACE_ROOT)/include/makeinclude/platform_vxworks5.x_g++.GNU
+      include $(ACE_ROOT)/include/makeinclude/platform_NTvxworks5.x_g++.GNU
+      </pre>
+
+      (But, I guess the PATH+= line is superfluous based on the PATH as shown
+      previously).
+
+      Finally, create a
+      <code>$ACE_ROOT/include/makeinclude/platform_NTvxworks5.x_g++.GNU</code>
+      with diff output from 'diff platform_vxworks5.x_g++.GNU
+      platform_NTvxworks5.x_g++.GNU' that looks like:
+
+      <pre>
+      58c58
+      &lt; HOST_DIR        = $(WIND_BASE)/host/sun4-solaris2
+      ---
+      &gt; HOST_DIR        = $(WIND_BASE)/host/x86-win32
+      62,63c62,63
+      &lt; CXX             = g++$(TOOLENV)
+      &lt; CFLAGS          += -DVXWORKS -D_REENTRANT -ansi -fno-builtin
+      -fno-defer-pop -fvolatile -nostdinc -nostdlib -pipe -Wall
+      ---
+      &gt; CXX             = $(CC)
+      &gt; CFLAGS          += -DVXWORKS -D_REENTRANT -ansi -fno-builtin -fno-defer-pop \
+      -fvolatile -nostdinc -nostdlib -Wall #-pipe
       </pre>
 
   <li>Now, follow the existing documentation for a UNIX platform build of ACE
@@ -1444,8 +1461,8 @@ on Windows NT hosts:
       </pre>
 
   <li>To build $ACE_ROOT/tests, I had to use the <code>make.exe</code> in the
-      <code>/gnuwin32/b18/H-i386-cygwin32/bin</code> directory as I couldn't
-      get make shipped with Tornado to run ace_ld and I couldn't figure out any
+      <code>/gnuwin32/b18/H-i386-cygwin32/bin</code> directory as I couldn't get
+      make shipped with Tornado to run ace_ld and I couldn't figure out any
       other work around.<p>
 
       <pre>
@@ -1461,17 +1478,21 @@ on Windows NT hosts:
   <li>Build ACE and TAO_IDL in the NT tree as already documented. As
       mentioned above, I put <code>aced.dll</code> in <code>/bin</code>.
 
-  <li>Build $TAO_ROOT/tao
-      <pre>
-      CPP_LOCATION=/Program Files/DevStudio/VC/bin/CL.exe
-      cd $TAO_ROOT/tao
-      /gnuwin32/b18/H-i386-cygwin32/bin/make
-      </pre>
+  <li>Copy TAO_IDL/tao_idl.exe to TAO_IDL directory in the ACE/TAO vxworks
+      source tree. (I didn't spend any time yet looking for the place where the
+      makefiles are using the absolute path to tao_idl.exe.)
 
   <li>Build orbsvcs.
       <pre>
       CPP_LOCATION=/Program Files/DevStudio/VC/bin/CL.exe
       cd $TAO_ROOT/orbsvcs/orbsvcs
+      /gnuwin32/b18/H-i386-cygwin32/bin/make
+      </pre>
+
+  <li>Build $TAO_ROOT/tao
+      <pre>
+      CPP_LOCATION=/Program Files/DevStudio/VC/bin/CL.exe
+      cd $TAO_ROOT/tao
       /gnuwin32/b18/H-i386-cygwin32/bin/make
       </pre>
 
@@ -1547,8 +1568,8 @@ in your PATH.<P>
 The amount of system resources required to build ACE and TAO varies
 greatly.  Platform, build options, and components built primarily
 influence the required system resources.  As a rough guide, the
-typical peak memory requirement could be well over 256 Mb (notably,
-for TAO's orbsvcs).  An <strong>entire</strong> build of ACE and TAO
+typical peak memory requirement could be about 256 Mb (notably, for
+TAO's orbsvcs).  An <strong>entire</strong> build of ACE and TAO
 can use well over 1300 Mb of disk space.  It's usually not necessary
 to build <strong>all</strong> of ACE and TAO, though.<p>
 

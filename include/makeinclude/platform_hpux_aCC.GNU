@@ -15,21 +15,10 @@
 #  -Wl,+vnocompatwarnings is added to shut up the "At least one PA 2.0 object
 # file detected..." messages.
 
-ifeq (,$(buildbits))
-  buildbits = 0
-endif
-ifeq (,$(debug))
-  debug = 1
-endif
-ifeq (,$(distrib))
-  distrib = 0
-endif
-ifeq (,$(optimize))
-  optimize = 0
-endif
-ifeq (,$(threads))
-  threads = 1
-endif
+buildbits = 0
+debug = 1
+distrib = 0
+threads = 1
 
 # First, extract the OS version number.
 HPVERS_WORDS := $(subst ., ,$(shell uname -r))
@@ -37,6 +26,8 @@ HPUX_VERS	:= $(join $(word 2,$(HPVERS_WORDS)),$(word 3,$(HPVERS_WORDS)))
 #
 CC		= /bin/cc
 CXX		= /opt/aCC/bin/aCC
+# CPP_LOCATION is for TAO builds - says where the C preprocessor is
+CPP_LOCATION    = /usr/ccs/lbin/cpp
 #
 # Set the appropriate preprocessor defs for threading based on OS version.
 # If the user has requested building without threads, then don't set any

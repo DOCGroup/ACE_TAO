@@ -1,10 +1,9 @@
 // This may look like C, but it's really -*- C++ -*-
 // $Id$
 
-#include "tao/UIOP_Profile.h"
-
 #if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
+#include "tao/UIOP_Profile.h"
 #include "tao/GIOP.h"
 #include "tao/CDR.h"
 #include "tao/Environment.h"
@@ -150,7 +149,7 @@ TAO_UIOP_Profile::parse_string (const char *string,
   ACE_OS::strncpy (rendezvous.inout (), start, length);
   rendezvous[length] = '\0';
 
-  if (this->object_addr_.set (rendezvous.in ()) != 0)
+  if (this->object_addr_.set (rendezvous.in ()) == 0)
     {
       ACE_THROW_RETURN (CORBA::INV_OBJREF (
         CORBA_SystemException::_tao_minor_code (
@@ -257,7 +256,7 @@ TAO_UIOP_Profile::to_string (CORBA::Environment &)
                   1 /* `@' character */ +
                   ACE_OS::strlen (this->rendezvous_point ()) +
                   1 /* object key separator */ +
-                  ACE_OS::strlen (key.in ()));
+                  ACE_OS::strlen (key));
 
   CORBA::String buf = CORBA::string_alloc (buflen);
 

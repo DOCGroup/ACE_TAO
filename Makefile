@@ -94,12 +94,9 @@ CONTROLLED_FILES = \
         ChangeLog-93 \
         FAQ \
         Makefile \
-        Makefile.am \
-        NEWS \
         PROBLEM-REPORT-FORM \
         README \
         THANKS \
-        TODO \
         VERSION \
         WindozeCE \
         acconfig.h \
@@ -161,14 +158,14 @@ release: ACE-INSTALL
 	@$(GENERATE_MAN_PAGES)
 	@$(ACE_ROOT)/bin/make_release $(CHECK) -k ace -t $(REL) \
            -c "$(CONTROLLED_FILES)" -r "$(RELEASE_FILES)" \
-           -l "$(RELEASE_LIB_FILES)" -u
+           -l "$(RELEASE_LIB_FILES)"
 
 #### The following target is for use by the TAO Makefile.  It should not
 #### be called directly from the command line.  The releasetao target
 #### creates the combined ACE-TAO kit.
 releasetao:
 	@$(ACE_ROOT)/bin/make_release $(CHECK) -k ace+tao -t $(REL) \
-           -c "$(CONTROLLED_FILES)" -r "$(ALL_RELEASE_FILES)" -u
+           -c "$(CONTROLLED_FILES)" -r "$(ALL_RELEASE_FILES)"
 
 #### The releaseall target:
 ####   1) Creates the ACE kit.

@@ -30,14 +30,10 @@ int
 ACE_SOCK::get_remote_addr (ACE_Addr &sa) const
 {
   ACE_TRACE ("ACE_SOCK::get_remote_addr");
-
   int len = sa.get_size ();
-  sockaddr *addr = ACE_reinterpret_cast (sockaddr *,
-                                         sa.get_addr ());
+  sockaddr *addr = (sockaddr *) sa.get_addr ();
 
-  if (ACE_OS::getpeername (this->get_handle (),
-                           addr,
-                           &len) == -1)
+  if (ACE_OS::getpeername (this->get_handle (), addr, &len) == -1)
     return -1;
   
   sa.set_size (len);
@@ -48,14 +44,10 @@ int
 ACE_SOCK::get_local_addr (ACE_Addr &sa) const
 {
   ACE_TRACE ("ACE_SOCK::get_local_addr");
-
   int len = sa.get_size ();
-  sockaddr *addr = ACE_reinterpret_cast (sockaddr *,
-                                         sa.get_addr ());
+  sockaddr *addr = (sockaddr *) sa.get_addr ();
 
-  if (ACE_OS::getsockname (this->get_handle (),
-                           addr,
-                           &len) == -1)
+  if (ACE_OS::getsockname (this->get_handle (), addr, &len) == -1)
     return -1;
 
   sa.set_size (len);
@@ -141,6 +133,7 @@ ACE_SOCK::open (int type,
                                     protocolinfo,
                                     g,
                                     flags));
+
   int one = 1;
 
   if (this->get_handle () == ACE_INVALID_HANDLE)
@@ -154,8 +147,7 @@ ACE_SOCK::open (int type,
       this->close ();
       return -1;
     }
-  else
-    return 0;
+  return 0;
 }
 
 ACE_SOCK::ACE_SOCK (int type, 

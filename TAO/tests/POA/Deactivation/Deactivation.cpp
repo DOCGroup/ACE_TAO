@@ -56,7 +56,6 @@ test_i::deactivate_self (CORBA::Environment &ACE_TRY_ENV)
   ACE_DEBUG ((LM_DEBUG, "(%t) Deactivation complete: signaling main thread and going to sleep\n"));
   int result = this->event_.signal ();
   ACE_ASSERT (result == 0);
-  ACE_UNUSED_ARG (result);
 
   ACE_OS::sleep (3);
   ACE_DEBUG ((LM_DEBUG, "(%t) test_i::deactivate_self complete\n"));
@@ -104,7 +103,6 @@ Activator::svc (void)
 
   int result = this->event_.wait ();
   ACE_ASSERT (result == 0);
-  ACE_UNUSED_ARG (result);
 
   ACE_DEBUG ((LM_DEBUG, "(%t) Deactivation complete, trying to activate\n"));
 
@@ -250,11 +248,6 @@ main (int argc, char **argv)
 
       if (result != 0)
         return result;
-
-      root_poa->destroy (1,
-                         1,
-                         ACE_TRY_ENV);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {

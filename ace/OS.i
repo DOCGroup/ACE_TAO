@@ -72,13 +72,6 @@ typedef char *ACE_MMAP_TYPE;
 # include /**/ <xliuser.h>
 #endif /* ACE_HAS_XLI */
 
-#if defined (_M_UNIX)
-extern "C" int _dlclose (void *);
-extern "C" char *_dlerror (void);
-extern "C" void *_dlopen (const char *, int);
-extern "C" void * _dlsym (void *, const char *);
-#endif /* _M_UNIX */
-
 #if !defined (ACE_HAS_CPLUSPLUS_HEADERS)
 # include /**/ <libc.h>
 # include /**/ <osfcn.h>
@@ -4582,10 +4575,10 @@ ACE_QoS::provider_specific (const iovec &ps)
 
 ACE_INLINE
 ACE_QoS_Params::ACE_QoS_Params (iovec *caller_data,
-                                iovec *callee_data,
-                                ACE_QoS *socket_qos,
-                                ACE_QoS *group_socket_qos,
-                                u_long flags)
+                                                iovec *callee_data,
+                                                ACE_QoS *socket_qos,
+                                                ACE_QoS *group_socket_qos,
+                                                u_long flags)
   : caller_data_ (caller_data),
     callee_data_ (callee_data),
     socket_qos_ (socket_qos),
@@ -4841,14 +4834,11 @@ ACE_OS::bind (ACE_HANDLE handle, struct sockaddr *addr, int addrlen)
 {
   ACE_TRACE ("ACE_OS::bind");
 #if defined (ACE_PSOS) && !defined (ACE_PSOS_DIAB_PPC)
-  ACE_SOCKCALL_RETURN (::bind ((ACE_SOCKET) handle,
-                               (struct sockaddr_in *) addr,
+  ACE_SOCKCALL_RETURN (::bind ((ACE_SOCKET) handle,  (struct sockaddr_in *) addr,
                                (ACE_SOCKET_LEN) addrlen),
                        int, -1);
 #else /* !defined (ACE_PSOS) || defined (ACE_PSOS_DIAB_PPC) */
-  ACE_SOCKCALL_RETURN (::bind ((ACE_SOCKET) handle,
-                               addr,
-                               (ACE_SOCKET_LEN) addrlen), int, -1);
+  ACE_SOCKCALL_RETURN (::bind ((ACE_SOCKET) handle, addr, (ACE_SOCKET_LEN) addrlen), int, -1);
 #endif /* defined (ACE_PSOS) && !defined (ACE_PSOS_DIAB_PPC) */
 }
 
@@ -4859,14 +4849,11 @@ ACE_OS::connect (ACE_HANDLE handle,
 {
   ACE_TRACE ("ACE_OS::connect");
 #if defined (ACE_PSOS) && !defined (ACE_PSOS_DIAB_PPC)
-  ACE_SOCKCALL_RETURN (::connect ((ACE_SOCKET) handle,
-                                  (struct sockaddr_in *) addr,
+  ACE_SOCKCALL_RETURN (::connect ((ACE_SOCKET) handle, (struct sockaddr_in *) addr,
                                   (ACE_SOCKET_LEN) addrlen),
                        int, -1);
 #else  /* !defined (ACE_PSOS) || defined (ACE_PSOS_DIAB_PPC) */
-  ACE_SOCKCALL_RETURN (::connect ((ACE_SOCKET) handle,
-                                  addr,
-                                  (ACE_SOCKET_LEN) addrlen), int, -1);
+  ACE_SOCKCALL_RETURN (::connect ((ACE_SOCKET) handle, addr, (ACE_SOCKET_LEN) addrlen), int, -1);
 #endif /* defined (ACE_PSOS)  && !defined (ACE_PSOS_DIAB_PPC) */
 }
 
@@ -4926,7 +4913,9 @@ ACE_OS::gethostbyname2 (const char *name, int family)
 # else
   // IPv4-only implementation
   if (family == AF_INET)
-    return ACE_OS::gethostbyname (name);
+    {
+      return ACE_OS::gethostbyname (name);
+    }
 
   ACE_NOTSUP_RETURN (0);
 # endif /* ACE_PSOS */
@@ -5009,15 +4998,16 @@ ACE_OS::recv (ACE_HANDLE handle, char *buf, int len, int flags)
 {
   ACE_TRACE ("ACE_OS::recv");
 
-  // On UNIX, a non-blocking socket with no data to receive, this
-  // system call will return EWOULDBLOCK or EAGAIN, depending on the
-  // platform.  UNIX 98 allows either errno, and they may be the same
-  // numeric value.  So to make life easier for upper ACE layers as
-  // well as application programmers, always change EAGAIN to
-  // EWOULDBLOCK.  Rather than hack the ACE_OSCALL_RETURN macro, it's
-  // handled explicitly here.  If the ACE_OSCALL macro ever changes,
-  // this function needs to be reviewed.  On Win32, the regular macros
-  // can be used, as this is not an issue.
+
+  // On UNIX, a non-blocking socket with no data to receive, this system
+  // call will return EWOULDBLOCK or EAGAIN, depending on the platform.
+  // UNIX 98 allows either errno, and they may be the same numeric value.
+  // So to make life easier for upper ACE layers as well as application
+  // programmers, always change EAGAIN to EWOULDBLOCK.  Rather than hack the
+  // ACE_OSCALL_RETURN macro, it's handled explicitly here.  If the ACE_OSCALL
+  // macro ever changes, this function needs to be reviewed.
+  // On Win32, the regular macros can be used, as this is not an issue.
+
 #if defined (ACE_WIN32)
   ACE_SOCKCALL_RETURN (::recv ((ACE_SOCKET) handle, buf, len, flags), int, -1);
 #else
@@ -5112,7 +5102,7 @@ ACE_OS::recvfrom (ACE_HANDLE handle,
                               overlapped,
                               func);
   flags = the_flags;
-  number_of_bytes_recvd = ACE_static_cast (size_t, bytes_recvd);
+  number_of_bytes_recvd = ACE_static_cast(size_t,bytes_recvd);
   return result;
 #else
   ACE_UNUSED_ARG (handle);
@@ -5181,7 +5171,7 @@ ACE_OS::sendto (ACE_HANDLE handle,
                             addrlen,
                             overlapped,
                             func);
-  number_of_bytes_sent = ACE_static_cast (size_t, bytes_sent);
+  number_of_bytes_sent = ACE_static_cast(size_t, bytes_sent);
   return result;
 #else
   ACE_UNUSED_ARG (overlapped);
@@ -5194,8 +5184,8 @@ ACE_OS::sendto (ACE_HANDLE handle,
   for (int i = 0; i < buffer_count; i++)
     {
        result = ACE_OS::sendto (handle,
-                                ACE_reinterpret_cast (char *ACE_CAST_CONST,
-                                                      buffers[i].iov_base),
+                                ACE_reinterpret_cast(char* ACE_CAST_CONST,
+                                                     buffers[i].iov_base),
                                 buffers[i].iov_len,
                                 flags,
                                 addr,
@@ -5215,14 +5205,11 @@ ACE_OS::getpeername (ACE_HANDLE handle, struct sockaddr *addr,
 {
   ACE_TRACE ("ACE_OS::getpeername");
 #if defined (ACE_PSOS) && !defined ACE_PSOS_DIAB_PPC
-  ACE_SOCKCALL_RETURN (::getpeername ((ACE_SOCKET) handle,
-                                      (struct sockaddr_in *) addr,
+  ACE_SOCKCALL_RETURN (::getpeername ((ACE_SOCKET) handle, (struct sockaddr_in *) addr,
                                       (ACE_SOCKET_LEN *) addrlen),
                        int, -1);
 #else
-  ACE_SOCKCALL_RETURN (::getpeername ((ACE_SOCKET) handle,
-                                      addr,
-                                      (ACE_SOCKET_LEN *) addrlen),
+  ACE_SOCKCALL_RETURN (::getpeername ((ACE_SOCKET) handle, addr, (ACE_SOCKET_LEN *) addrlen),
                        int, -1);
 #endif /* defined (ACE_PSOS) */
 }
@@ -6113,7 +6100,7 @@ ACE_OS::last_error (void)
   return lerrno == 0 ? lerror : lerrno;
 #else
   return errno;
-#endif /* ACE_WIN32 */
+#endif /* ACE_HAS_WIN32 */
 }
 
 ACE_INLINE void
@@ -6124,7 +6111,7 @@ ACE_OS::last_error (int error)
   ::SetLastError (error);
 #else
   errno = error;
-#endif /* ACE_WIN32 */
+#endif /* ACE_HAS_WIN32 */
 }
 
 #if !defined (ACE_HAS_WINCE)
@@ -6399,6 +6386,37 @@ ACE_TSS_Emulation::tss_base ()
 # endif /* VXWORKS */
 }
 #endif /* ! ACE_HAS_THREAD_SPECIFIC_STORAGE */
+
+ACE_INLINE
+u_int
+ACE_TSS_Emulation::total_keys ()
+{
+  return total_keys_;
+}
+
+
+ACE_INLINE
+int
+ACE_TSS_Emulation::next_key (ACE_thread_key_t &key)
+{
+  if (total_keys_ < ACE_TSS_THREAD_KEYS_MAX)
+    {
+# if defined (ACE_HAS_NONSCALAR_THREAD_KEY_T)
+      ACE_OS::memset (&key, 0, sizeof (ACE_thread_key_t));
+      ACE_OS::memcpy (&key, &total_keys_, sizeof (u_int));
+# else
+      key = total_keys_;
+# endif /* ACE_HAS_NONSCALAR_THREAD_KEY_T */
+
+      ++total_keys_;
+      return 0;
+    }
+  else
+    {
+      key = ACE_OS::NULL_key;
+      return -1;
+    }
+}
 
 ACE_INLINE
 ACE_TSS_Emulation::ACE_TSS_DESTRUCTOR
@@ -6722,15 +6740,20 @@ ACE_OS::sigwait (sigset_t *set, int *sig)
     // signal number is returned).
     *sig = ::sigwait (set, 0);
     return *sig;
-#   elif defined (DIGITAL_UNIX)  &&  defined (__DECCXX_VER)
-      // DEC cxx (but not g++) needs this direct call to its internal
-      // sigwait ().  This allows us to #undef sigwait, so that we can
-      // have ACE_OS::sigwait.  cxx gets confused by ACE_OS::sigwait
-      // if sigwait is _not_ #undef'ed.
-      errno = ::_Psigwait (set, sig);
-      return errno == 0  ?  *sig  :  -1;
-#   else /* ! __Lynx __ && ! (DIGITAL_UNIX && __DECCXX_VER) */
-#     if (defined (ACE_HAS_PTHREADS_DRAFT4) || (defined (ACE_HAS_PTHREADS_DRAFT6)) && !defined(ACE_HAS_FSU_PTHREADS)) || (defined (_UNICOS) && _UNICOS == 9)
+#   elif defined (DIGITAL_UNIX)
+#     if defined (__DECCXX_VER)
+        // DEC cxx (but not g++) needs this direct call to its internal
+        // sigwait ().  This allows us to #undef sigwait, so that we can
+        // have ACE_OS::sigwait.  cxx gets confused by ACE_OS::sigwait if
+        // sigwait is _not_ #undef'ed.
+        errno = ::_Psigwait (set, sig);
+        return errno == 0  ?  *sig  :  -1;
+#     else  /* g++, for example, on DIGITAL_UNIX */
+        *sig = ::__sigwaitd10 (set, sig);
+        return errno == 0  ?  *sig  :  -1;
+#     endif /* g++, for example, on DIGITAL_UNIX */
+#   else /* ! __Lynx __ && ! DIGITAL_UNIX */
+#     if (defined (ACE_HAS_PTHREADS_DRAFT4) || defined (ACE_HAS_PTHREADS_DRAFT6)) && !defined(ACE_HAS_FSU_PTHREADS)
         *sig = ::sigwait (set);
         return *sig;
 #     elif defined(ACE_HAS_FSU_PTHREADS)
@@ -6805,8 +6828,7 @@ ACE_OS::thr_sigsetmask (int how,
   // Draft 4 and 6 implementations will sometimes have a sigprocmask () that
   // modifies the calling thread's mask only.  If this is not so for your
   // platform, define ACE_LACKS_PTHREAD_THR_SIGSETMASK.
-#   elif defined(ACE_HAS_PTHREADS_DRAFT4) || \
-    defined (ACE_HAS_PTHREADS_DRAFT6) || (defined (_UNICOS) && _UNICOS == 9)
+#   elif defined(ACE_HAS_PTHREADS_DRAFT4) || defined (ACE_HAS_PTHREADS_DRAFT6)
   ACE_OSCALL_RETURN (::sigprocmask (how, nsm, osm), int, -1);
 #   else
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_sigmask (how, nsm, osm),
@@ -7953,32 +7975,28 @@ ACE_OS::dlclose (ACE_SHLIB_HANDLE handle)
   if (ptr != 0)
     (*((int (*)(void)) ptr)) (); // Call _fini hook explicitly.
 # endif /* ACE_HAS_AUTOMATIC_INIT_FINI */
-#if defined (_M_UNIX)
-  ACE_OSCALL_RETURN (::_dlclose (handle), int, -1);
-#else /* _MUNIX */
-    ACE_OSCALL_RETURN (::dlclose (handle), int, -1);
-#endif /* _M_UNIX */
+  ACE_OSCALL_RETURN (::dlclose (handle), int, -1);
 #elif defined (ACE_WIN32)
   ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::FreeLibrary (handle), ace_result_), int, -1);
 #elif defined (__hpux)
-  // HP-UX 10.x and 32-bit 11.00 do not pay attention to the ref count
-  // when unloading a dynamic lib.  So, if the ref count is more than
-  // 1, do not unload the lib.  This will cause a library loaded more
-  // than once to not be unloaded until the process runs down, but
-  // that's life.  It's better than unloading a library that's in use.
-  // So far as I know, there's no way to decrement the refcnt that the
-  // kernel is looking at - the shl_descriptor is a copy of what the
-  // kernel has, not the actual struct.  On 64-bit HP-UX using dlopen,
-  // this problem has been fixed.
+  // HP-UX 10.x and 32-bit 11.00 do not pay attention to the ref count when
+  // unloading a dynamic lib.  So, if the ref count is more than 1, do not
+  // unload the lib.  This will cause a library loaded more than once to
+  // not be unloaded until the process runs down, but that's life.  It's
+  // better than unloading a library that's in use.
+  // So far as I know, there's no way to decrement the refcnt that the kernel
+  // is looking at - the shl_descriptor is a copy of what the kernel has, not
+  // the actual struct.
+  // On 64-bit HP-UX using dlopen, this problem has been fixed.
   struct shl_descriptor  desc;
-  if (shl_gethandle_r (handle, &desc) == -1)
+  if (shl_gethandle_r(handle, &desc) == -1)
     return -1;
   if (desc.ref_count > 1)
     return 0;
 # if defined(__GNUC__) || __cplusplus >= 199707L
-  ACE_OSCALL_RETURN (::shl_unload (handle), int, -1);
+  ACE_OSCALL_RETURN (::shl_unload(handle), int, -1);
 # else
-  ACE_OSCALL_RETURN (::cxxshl_unload (handle), int, -1);
+  ACE_OSCALL_RETURN (::cxxshl_unload(handle), int, -1);
 # endif  /* aC++ vs. Hp C++ */
 #else
   ACE_UNUSED_ARG (handle);
@@ -7991,11 +8009,7 @@ ACE_OS::dlerror (void)
 {
   ACE_TRACE ("ACE_OS::dlerror");
 # if defined (ACE_HAS_SVR4_DYNAMIC_LINKING)
-#if defined(_M_UNIX)
-  ACE_OSCALL_RETURN ((char *)::_dlerror (), char *, 0);
-#else /* _M_UNIX */
   ACE_OSCALL_RETURN ((char *)::dlerror (), char *, 0);
-#endif /* _M_UNIX */
 # elif defined (__hpux)
   ACE_OSCALL_RETURN (::strerror(errno), char *, 0);
 # elif defined (ACE_WIN32)
@@ -8040,8 +8054,6 @@ ACE_OS::dlopen (const ASYS_TCHAR *fname,
   void *handle;
 #   if defined (ACE_HAS_SGIDLADD)
   ACE_OSCALL (::sgidladd (filename, mode), void *, 0, handle);
-#   elif defined (_M_UNIX)
-  ACE_OSCALL (::_dlopen (filename, mode), void *, 0, handle);
 #   else
   ACE_OSCALL (::dlopen (filename, mode), void *, 0, handle);
 #   endif /* ACE_HAS_SGIDLADD */
@@ -8099,29 +8111,21 @@ ACE_OS::dlsym (ACE_SHLIB_HANDLE handle,
 #   if defined (ACE_LACKS_POSIX_PROTOTYPES)
   ACE_OSCALL_RETURN (::dlsym (handle, (char*) symbolname), void *, 0);
 #   elif defined (ACE_USES_ASM_SYMBOL_IN_DLSYM)
-  int l = ACE_OS::strlen (symbolname) + 2;
-  char *asm_symbolname = 0;
-  ACE_NEW_RETURN (asm_symbolname,
-                  char[l],
-                  0);
-  ACE_OS::strcpy (asm_symbolname,
-                  "_") ;
-  ACE_OS::strcpy (asm_symbolname + 1,
-                  symbolname) ;
-  void *ace_result;
+  int l = strlen(symbolname) + 2;
+  char* asm_symbolname;
+  ACE_NEW_RETURN(asm_symbolname, char[l], 0);
+  ACE_OS::strcpy (asm_symbolname, "_") ;
+  ACE_OS::strcpy (asm_symbolname + 1, symbolname) ;
+  void* ace_result;
   ACE_OSCALL (::dlsym (handle, asm_symbolname), void *, 0,
               ace_result);
-  delete [] asm_symbolname;
+  delete[] asm_symbolname;
   return ace_result;
-#   elif defined (_M_UNIX)
-  ACE_OSCALL_RETURN (::_dlsym (handle, symbolname), void *, 0);
 #   else
   ACE_OSCALL_RETURN (::dlsym (handle, symbolname), void *, 0);
 #   endif /* ACE_LACKS_POSIX_PROTOTYPES */
 # elif defined (ACE_WIN32)
-  ACE_WIN32CALL_RETURN (::GetProcAddress (handle,
-                                          ASYS_ONLY_MULTIBYTE_STRING (symbolname)),
-                        void *, 0);
+  ACE_WIN32CALL_RETURN (::GetProcAddress (handle, symbolname), void *, 0);
 # elif defined (__hpux)
 
   void *value;
@@ -8247,18 +8251,11 @@ ACE_OS::read (ACE_HANDLE handle, void *buf, size_t len)
     }
 # endif /* defined (ACE_PSOS_LACKS_PHILE */
 #else
-
-  int result;
-
 # if defined (ACE_LACKS_POSIX_PROTOTYPES) || defined (ACE_HAS_CHARPTR_SOCKOPT)
-  ACE_OSCALL (::read (handle, (char *) buf, len), ssize_t, -1, result);
+  ACE_OSCALL_RETURN (::read (handle, (char *) buf, len), ssize_t, -1);
 # else
-  ACE_OSCALL (::read (handle, buf, len), ssize_t, -1, result);
+  ACE_OSCALL_RETURN (::read (handle, buf, len), ssize_t, -1);
 # endif /* ACE_LACKS_POSIX_PROTOTYPES */
-  if (result == -1 && errno == EAGAIN)
-    errno = EWOULDBLOCK;
-  return result;
-
 #endif /* ACE_WIN32 */
 }
 
@@ -8850,7 +8847,7 @@ ACE_OS::difftime (time_t t1, time_t t0)
 }
 #endif /* ! ACE_LACKS_DIFFTIME */
 
-#if !defined (ACE_HAS_MOSTLY_UNICODE_APIS)
+#if !defined (ACE_HAS_WINCE)
 ACE_INLINE char *
 ACE_OS::ctime (const time_t *t)
 {
@@ -8863,9 +8860,7 @@ ACE_OS::ctime (const time_t *t)
   ACE_OSCALL_RETURN (::ctime (t), char *, 0);
 # endif    /* ACE_HAS_BROKEN_CTIME) */
 }
-#endif /* ACE_HAS_MOSTLY_UNICODE_APIS */
 
-#if !defined (ACE_HAS_WINCE)
 ACE_INLINE char *
 ACE_OS::ctime_r (const time_t *t, char *buf, int buflen)
 {
@@ -11938,42 +11933,4 @@ ACE_INLINE ACE_USHORT16 *
 ACE_OS_CString::wchar_rep (void)
 {
   return this->rep_;
-}
-
-ACE_INLINE int
-ACE_Countdown_Time::start (void)
-{
-  if (this->max_wait_time_ != 0)
-    {
-      this->start_time_ = ACE_OS::gettimeofday ();
-      this->stopped_ = 0;
-    }
-  return 0;
-}
-
-ACE_INLINE int
-ACE_Countdown_Time::stop (void)
-{
-  if (this->max_wait_time_ != 0 && this->stopped_ == 0)
-    {
-      ACE_Time_Value elapsed_time =
-        ACE_OS::gettimeofday () - this->start_time_;
-
-      if (*this->max_wait_time_ > elapsed_time)
-        *this->max_wait_time_ -= elapsed_time;
-      else
-        {
-          // Used all of timeout.
-          *this->max_wait_time_ = ACE_Time_Value::zero;
-          // errno = ETIME;
-        }
-      this->stopped_ = 1;
-    }
-  return 0;
-}
-
-ACE_INLINE int
-ACE_Countdown_Time::update (void)
-{
-  return (this->stop () == 0) && this->start ();
 }

@@ -1,10 +1,9 @@
 // This may look like C, but it's really -*- C++ -*-
 // $Id$
 
-#include "tao/UIOP_Transport.h"
-
 # if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
+#include "tao/UIOP_Transport.h"
 #include "tao/UIOP_Connect.h"
 #include "tao/UIOP_Profile.h"
 #include "tao/Timeprobe.h"
@@ -210,13 +209,10 @@ TAO_UIOP_Client_Transport::send_request (TAO_ORB_Core *orb_core,
                                   two_way) == -1)
     return -1;
 
-  if (TAO_GIOP::send_message (this,
-                              stream,
-                              orb_core,
-                              max_wait_time) == -1)
-    return -1;
-
-  return this->idle_after_send ();
+  return TAO_GIOP::send_message (this,
+                                 stream,
+                                 orb_core,
+                                 max_wait_time);
 }
 
 // Return 0, when the reply is not read fully, 1 if it is read fully.

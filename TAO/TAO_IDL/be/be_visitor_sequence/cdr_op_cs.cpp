@@ -75,17 +75,6 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
       // save the sequence node for further use
       this->ctx_->node (node);
 
-      be_typedef *tdef = be_typedef::narrow_from_decl (bt);
-
-      // If we're an anonymous sequence, we must protect against
-      // being declared more than once.
-      if (!tdef)
-        {
-          *os << "\n#if !defined _TAO_CDR_OP_" 
-              << node->flatname () << "_CPP_" << be_nl
-              << "#define _TAO_CDR_OP_" << node->flatname () << "_CPP_\n\n";
-        }
-
       //  set the sub state as generating code for the output operator
       this->ctx_->sub_state (TAO_CodeGen::TAO_CDR_OUTPUT);
       *os << "CORBA::Boolean operator<< (" << be_idt << be_idt_nl
@@ -174,12 +163,6 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
       *os << "}" << be_nl
           << "return 0; // error" << be_uidt_nl
           << "}\n\n";
-
-      if (!tdef)
-        {
-          *os << "#endif /* _TAO_CDR_OP_" 
-              << node->flatname () << "_CPP_ */\n\n";
-        }
 
       node->cli_stub_cdr_op_gen (1);
     }

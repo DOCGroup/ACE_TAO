@@ -536,11 +536,6 @@ ACE_Service_Config::open_i (const ASYS_TCHAR program_name[],
 {
   int result = 0;
   ACE_TRACE ("ACE_Service_Config::open");
-  ACE_Log_Msg *log_msg = ACE_LOG_MSG;
-
-  // Record the current log setting upon entering this thread.
-  int debugging_enabled =
-    log_msg->log_priority_enabled (LM_DEBUG);
 
   if (ACE_Service_Config::is_initialized_ != 0)
     // Guard against reentrant processing!
@@ -550,7 +545,8 @@ ACE_Service_Config::open_i (const ASYS_TCHAR program_name[],
 
   if (ACE_Service_Config::init_svc_conf_file_queue () == -1)
     return -1;
-  else if (!ignore_default_svc_conf_file
+
+  if (!ignore_default_svc_conf_file
       && ACE_Service_Config::svc_conf_file_queue_->is_empty ()
       // Load the default "svc.conf" entry here if there weren't
       // overriding -f arguments in <parse_args>.
@@ -561,19 +557,15 @@ ACE_Service_Config::open_i (const ASYS_TCHAR program_name[],
                        "enqueue_tail"),
                       -1);
 
-  // If -d was included as a startup parameter, the user wants debug
-  // information printed during service initialization.
+  // Clear the LM_DEBUG bit from log messages if appropriate.  This
+  // will be reset at the bottom of this function.
   if (ACE::debug ())
-    ACE_Log_Msg::enable_debug_messages ();
-  else 
-    // The user has requested no debugging info.
     ACE_Log_Msg::disable_debug_messages ();
-
   // Become a daemon before doing anything else.
   if (ACE_Service_Config::be_a_daemon_)
     ACE_Service_Config::start_daemon ();
 
-  u_long flags = log_msg->flags ();
+  u_long flags = ACE_LOG_MSG->flags ();
 
   if (flags == 0)
     // Only use STDERR if the caller hasn't already set the flags.
@@ -587,9 +579,9 @@ ACE_Service_Config::open_i (const ASYS_TCHAR program_name[],
     // equal to the default static logger key.
     key = ACE_Service_Config::logger_key_;
 
-  if (log_msg->open (program_name,
-                     flags,
-                     key) == -1)
+  if (ACE_LOG_MSG->open (program_name,
+                         flags,
+                         key) == -1)
     result = -1;
   else
     {
@@ -611,16 +603,15 @@ ACE_Service_Config::open_i (const ASYS_TCHAR program_name[],
         result = -1;
       else
         {
-          int result =
-            ACE_Service_Config::process_commandline_directives ();
-          result =
-            ACE_Service_Config::process_directives () + result;
+          int result = ACE_Service_Config::process_commandline_directives ();
+          result = ACE_Service_Config::process_directives () + result;
         }
 
-      // There's no point in dealing with this on NT since it doesn't
-      // really support signals very well...
+      // There's no point in dealing with this on NT since it doesn't really
+      // support signals very well...
 #if !defined (ACE_LACKS_UNIX_SIGNALS)
-      // @@ This really ought to be a Singleton.
+      // This really ought to be a Singleton I suspect...
+
       if (ACE_Reactor::instance ()->register_handler
           (ACE_Service_Config::signum_,
            ACE_Service_Config::signal_handler_) == -1)
@@ -631,13 +622,8 @@ ACE_Service_Config::open_i (const ASYS_TCHAR program_name[],
 
   ace_yy_delete_parse_buffer ();
 
-  // Reset debugging back to the way it was when we came into into
-  // <open_i>.
-  if (debugging_enabled)
+  if (ACE::debug ())
     ACE_Log_Msg::enable_debug_messages ();
-   else 
-     // Debugging was off when we entered <open_i>.
-    ACE_Log_Msg::disable_debug_messages ();
 
   return result;
 }
@@ -647,8 +633,7 @@ ACE_Service_Config::ACE_Service_Config (const ASYS_TCHAR program_name[],
 {
   ACE_TRACE ("ACE_Service_Config::ACE_Service_Config");
 
-  if (this->open (program_name, 
-                  logger_key) == -1
+  if (this->open (program_name, logger_key) == -1
       && errno != ENOENT)
     // Only print out an error if it wasn't the svc.conf file that was
     // missing.

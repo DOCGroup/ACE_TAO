@@ -45,6 +45,8 @@ SIMPLE_SVR_OBJS = \
                 server.o \
                 Simple_util.o 
 
+VLDLIBS = $(LDLIBS:%=%$(VAR))
+
 BIN2 = 	server \
 	client \
 	persistent_client 

@@ -30,11 +30,6 @@
 #define TAO_INVOCATION_H
 
 #include "tao/CDR.h"
-
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-# pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
-
 #include "tao/ORB_Core.h"
 #include "tao/GIOP.h"
 #include "tao/Any.h"
@@ -76,8 +71,11 @@ public:
                        TAO_ORB_Core* orb_core);
   // Constructor.
 
-  ~TAO_GIOP_Invocation (void);
-  // Destructor.
+  virtual ~TAO_GIOP_Invocation (void);
+  // This destructor is virtual so that the derived synchronous
+  // invocation classes can call <idle> method on the <Transport>, if
+  // they want to. All the synchronous invocations <idle> the
+  // Transport, but asynchronous invocations do not do that.
 
   void put_param (CORBA::TypeCode_ptr tc,
                   void *value,
@@ -177,6 +175,9 @@ public:
                               TAO_ORB_Core* orb_core);
   // Constructor.
 
+  ~TAO_GIOP_Twoway_Invocation (void);
+  // Destructor.
+
   void start (CORBA_Environment &TAO_IN_ENV =
                     TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -235,6 +236,9 @@ public:
                               TAO_ORB_Core* orb_core);
   // Constructor.
 
+  ~TAO_GIOP_Oneway_Invocation (void);
+  // Destructor.
+
   void start (CORBA_Environment &TAO_IN_ENV =
                     TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -257,6 +261,9 @@ public:
   TAO_GIOP_Locate_Request_Invocation (TAO_Stub *data,
                                       TAO_ORB_Core* orb_core);
   // Constructor.
+
+  ~TAO_GIOP_Locate_Request_Invocation (void);
+  // Destructor.
 
   void start (CORBA_Environment &TAO_IN_ENV =
                     TAO_default_environment ())

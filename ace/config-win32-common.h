@@ -55,17 +55,13 @@ typedef unsigned __int64 ACE_UINT64;
 # define ACE_LACKS_PRAGMA_ONCE
 #endif /* _MSC_VER < 1000 */
 
-// Only >= MSVC 5.0 definitions
+// Only MSVC 5.0 definitions
 #if (_MSC_VER >= 1100)
   #if !defined (ACE_HAS_WINCE)
     #define ACE_HAS_SIG_ATOMIC_T
   #endif /* ACE_HAS_WINCE */
-#endif /* _MSC_VER >= 1100 */
-
-// Only >= MSVC 6.0 definitions
-#if (_MSC_VER >= 1200)
 #define ACE_HAS_TYPENAME_KEYWORD
-#endif /* _MSC_VER >= 1200 */
+#endif /* _MSC_VER >= 1100 */
 
 // Optimize ACE_Handle_Set for select().
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
@@ -88,6 +84,9 @@ typedef unsigned __int64 ACE_UINT64;
 
 // Compiler/platform has correctly prototyped header files.
 #define ACE_HAS_CPLUSPLUS_HEADERS
+
+// Platform supports IP multicast
+#define ACE_HAS_IP_MULTICAST
 
 // Platform contains <poll.h>.
 //define ACE_HAS_POLL
@@ -274,7 +273,7 @@ typedef unsigned __int64 ACE_UINT64;
 #endif /* NOMINMAX */
 
 #if defined (ACE_HAS_MOSTLY_UNICODE_APIS) && !defined (UNICODE)
-#define UNICODE
+#defined UNICODE
 #endif /* ACE_HAS_MOSTLY_UNICODE_APIS && !UNICODE */
 
 #if defined (_UNICODE)
@@ -409,11 +408,6 @@ typedef unsigned __int64 ACE_UINT64;
 
         // Version 1.1 of WinSock
         #define ACE_WSOCK_VERSION 1, 1
-#endif /* ACE_HAS_WINSOCK2 */
-
-// Platform supports IP multicast on Winsock 2
-#if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
-# define ACE_HAS_IP_MULTICAST
 #endif /* ACE_HAS_WINSOCK2 */
 
 #if defined (_MSC_VER)

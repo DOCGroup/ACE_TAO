@@ -1,5 +1,5 @@
 // $Id$
-
+//
 // ============================================================================
 //
 // = LIBRARY
@@ -19,7 +19,7 @@
 //    new will throw an exception, and trust that the user accepts that risk.
 //
 // = AUTHOR
-//    Steve Huston <shuston@riverace.com>
+//    Steve Huston
 //
 // ============================================================================
 
@@ -35,35 +35,33 @@ USELIB("..\ace\aced.lib");
 //---------------------------------------------------------------------------
 #endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
 
-// This test allocates all of the heap memory, forcing 'new' to fail
-// because of a lack of memory.  The ACE_NEW macros should prevent an
-// exception from being thrown past the ACE_NEW.  If this test doesn't
-// wipe out on an alloc exception, it passes.
+
+// This test allocates all of the heap memory, forcing 'new' to fail because
+// of a lack of memory.  The ACE_NEW macros should prevent an exception from
+// being thrown past the ACE_NEW.  If this test doesn't wipe out on an alloc
+// exception, it passes.
 //
 // If it doesn't ever fail an allocation, there's a warning that something is
 // wrong.  The allocated memory is always freed to avoid masking a leak
 // somewhere else in the test.
+static const int BIG_BLOCK = 1024*1024;       // 1MB
+static const int MAX_ALLOCS_IN_TEST = 4096;   // about 4GB max in the test
 
-// 1MB
-static const int BIG_BLOCK = 1024*1024;       
 
-// about 4GB max in the test
-static const int MAX_ALLOCS_IN_TEST = 4096;   
-
-static void 
-try_ace_new (char **p)
+static void try_ace_new (char **p)
 {
   ACE_NEW (*p, char[BIG_BLOCK]);
   return;
 }
 
-static char * 
-try_ace_new_return (void)
+
+static char * try_ace_new_return (void)
 {
-  char *p = 0;
+  char *p;
   ACE_NEW_RETURN (p, char[BIG_BLOCK], 0);
   return p;
 }
+
 
 int
 main (int, ASYS_TCHAR *[])
@@ -71,23 +69,20 @@ main (int, ASYS_TCHAR *[])
   ACE_START_TEST (ASYS_TEXT ("New_Fail_Test"));
   int status = 0;
 
-  // Some platforms are known to throw an exception on a failed 'new',
-  // but are customarily built without exception support to improve
-  // performance.  These platforms are noted, and the test passes.
-  // For new ports, it is wise to let this test run.  Depending on
-  // intended conditions, exceptions can be disabled when the port is
-  // complete.
+  // Some platforms are known to throw an exception on a failed 'new', but
+  // are customarily built without exception support to improve performance.
+  // These platforms are noted, and the test passes.
+  // For new ports, it is wise to let this test run.  Depending on intended
+  // conditions, exceptions can be disabled when the port is complete.
 #if (defined (__SUNPRO_CC) || defined (__GNUG__)) && \
-  !defined (ACE_HAS_EXCEPTIONS)
-    ACE_DEBUG ((LM_NOTICE, ASYS_TEXT ("Out-of-memory will throw an unhandled exception\n")));
+    !defined (ACE_HAS_EXCEPTIONS)
+  ACE_DEBUG ((LM_NOTICE, ASYS_TEXT ("Out-of-memory will throw an unhandled exception\n")));
   ACE_DEBUG ((LM_NOTICE, ASYS_TEXT ("Rebuild with exceptions=1 to prevent this, but it may impair performance.\n")));
 
   // Use the static function addresses, to prevent warnings about the
   // functions not being used.
-  if (&try_ace_new) 
-    /* NULL */;
-  if (&try_ace_new_return) 
-    /* NULL */;
+  if (&try_ace_new) /* null */;
+  if (&try_ace_new_return) /* null */;
 #else
 
   char *blocks[MAX_ALLOCS_IN_TEST];
@@ -108,16 +103,13 @@ main (int, ASYS_TCHAR *[])
         {
           ACE_ERROR((LM_WARNING,
                      ASYS_TEXT ("Test didn't exhaust all available memory\n")));
-          // Back up to valid pointer for deleting.
-          --i;    
+          --i;    // Back up to valid pointer for deleting
         }
       else
         {
           ACE_ASSERT (blocks[i] == 0);
           ACE_ASSERT (errno == ENOMEM);
-          ACE_DEBUG ((LM_DEBUG,
-                      ASYS_TEXT ("ACE_NEW failed properly at block %d\n"),
-                      i));
+          ACE_DEBUG((LM_DEBUG, ASYS_TEXT ("ACE_NEW failed properly at block %d\n"), i));
         }
 
       // Free the memory to try ACE_NEW_RETURN
@@ -131,20 +123,17 @@ main (int, ASYS_TCHAR *[])
           if (blocks[i] == 0)
             break;
         }
-
       if (i == MAX_ALLOCS_IN_TEST)
         {
-          ACE_ERROR ((LM_WARNING,
-                      ASYS_TEXT ("Test didn't exhaust all available memory\n")));
-          // Back up to valid pointer.
-          --i;    
+          ACE_ERROR((LM_WARNING,
+                     ASYS_TEXT ("Test didn't exhaust all available memory\n")));
+          --i;    // Back up to valid pointer
         }
       else
         {
           ACE_ASSERT (blocks[i] == 0);
           ACE_ASSERT (errno == ENOMEM);
-          ACE_DEBUG ((LM_DEBUG,
-                      ASYS_TEXT ("ACE_NEW_RETURN failed properly at block %d\n"),
+          ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("ACE_NEW_RETURN failed properly at block %d\n"),
                       i));
         }
       while (i >= 0)
@@ -156,12 +145,11 @@ main (int, ASYS_TCHAR *[])
   catch (...)
     {
       ACE_ERROR ((LM_ERROR,
-                  ASYS_TEXT ("Caught exception during test; ")
-                  ASYS_TEXT ("ACE_bad_alloc not defined correctly, or\n")));
+        ASYS_TEXT ("Caught exception during test; ")
+        ASYS_TEXT ("ACE_bad_alloc not defined correctly, or\n")));
       ACE_ERROR ((LM_ERROR,
-                  ASYS_TEXT ("ACE_NEW_THROWS_EXCEPTIONS is not #defined (and should be).\n")));
-      // Mark test failure
-      status = 1;
+        ASYS_TEXT ("ACE_NEW_THROWS_EXCEPTIONS is not #defined (and should be).\n")));
+      status = 1;        // Mark test failure
     }
 #endif /* ACE_HAS_EXCEPTIONS */
 #endif /* __SUNPRO_CC && !ACE_HAS_EXCEPTIONS */

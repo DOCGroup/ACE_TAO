@@ -57,7 +57,6 @@ check_PROGRAMS = \
         Basic_Types_Test \
         Buffer_Stream_Test \
 	Cache_Map_Manager_Test \
-        Cached_Conn_Test \
         CDR_Test \
         Collection_Test \
         Conn_Test \
@@ -68,6 +67,7 @@ check_PROGRAMS = \
         Env_Value_Test \
         Future_Test \
         Handle_Set_Test \
+        Hash_Map_Manager_Test \
         High_Res_Timer_Test \
         IOStream_Test \
         MM_Shared_Memory_Test \
@@ -79,6 +79,7 @@ check_PROGRAMS = \
         Message_Block_Test \
         Message_Queue_Notifications_Test \
         Message_Queue_Test \
+        Naming_Test \
         New_Fail_Test \
         Notify_Performance_Test \
         OrdMultiSet_Test \
@@ -110,19 +111,15 @@ check_PROGRAMS = \
         Task_Test \
         Thread_Manager_Test \
         Thread_Mutex_Test \
+        Thread_Pool_Reactor_Test \
         Thread_Pool_Test \
         Time_Service_Test \
         Time_Value_Test \
         Timeprobe_Test \
         Timer_Queue_Test \
+        Tokens_Test \
         UPIPE_SAP_Test \
-        Upgradable_RW_Test \
-	\
-	Naming_Test \
-	\
-        FlReactor_Test \
-	Thread_Pool_Reactor_Test \
-        TkReactor_Test $(XTREACTOR_TEST)
+        Upgradable_RW_Test $(XTREACTOR_TEST)
 
 Aio_Platform_Test_SOURCES = Aio_Platform_Test.cpp
 
@@ -136,12 +133,7 @@ Buffer_Stream_Test_SOURCES = Buffer_Stream_Test.cpp
 
 CDR_Test_SOURCES = CDR_Test.cpp
 
-# Cached_Accept_Conn_Test_SOURCES = Cached_Accept_Conn_Test.cpp
-
-Cached_Conn_Test_SOURCES = Cached_Conn_Test.cpp
-
-Cache_Map_Manager_Test_SOURCES = Cache_Map_Manager_Test.cpp \
-                                 Cache_Map_Manager_Test.h
+Cache_Map_Manager_Test_SOURCES = Cache_Map_Manager_Test.cpp
 
 Collection_Test_SOURCES = Collection_Test.cpp
 
@@ -157,11 +149,11 @@ Enum_Interfaces_Test_SOURCES = Enum_Interfaces_Test.cpp
 
 Env_Value_Test_SOURCES = Env_Value_Test.cpp
 
-FlReactor_Test_SOURCES = FlReactor_Test.cpp
-
 Future_Test_SOURCES = Future_Test.cpp
 
 Handle_Set_Test_SOURCES = Handle_Set_Test.cpp
+
+Hash_Map_Manager_Test_SOURCES = Hash_Map_Manager_Test.cpp
 
 High_Res_Timer_Test_SOURCES = High_Res_Timer_Test.cpp
 
@@ -210,7 +202,7 @@ Process_Strategy_Test_SOURCES = Process_Strategy_Test.cpp \
 
 # Purgable_Map_Manager_Test_SOURCES = Purgable_Map_Manager_Test.cpp
 
-RB_Tree_Test_SOURCES = RB_Tree_Test.cpp RB_Tree_Test.h
+RB_Tree_Test_SOURCES = RB_Tree_Test.cpp
 
 Reactor_Exceptions_Test_SOURCES = Reactor_Exceptions_Test.cpp
 
@@ -269,7 +261,7 @@ Timeprobe_Test_SOURCES = Timeprobe_Test.cpp
 
 Timer_Queue_Test_SOURCES = Timer_Queue_Test.cpp
 
-TkReactor_Test_SOURCES = TkReactor_Test.cpp
+Tokens_Test_SOURCES = Tokens_Test.cpp
 
 UPIPE_SAP_Test_SOURCES = UPIPE_SAP_Test.cpp
 
@@ -283,15 +275,12 @@ XtReactor_Test_LDADD = $(top_builddir)/ace/libACE.la @XTREACTOR_TEST_XLIBS@
 noinst_HEADERS = test_config.h
 
 ## Architecture independent data files
-noinst_DATA = \
-	TkReactor_Test.tcl \
-	\
-	UNIXserver.conf \
-        UNIXclerk.conf \
-        UNIXtokens.conf \
-        Win32server.conf \
-        Win32clerk.conf \
-        Win32tokens.conf
+noinst_DATA = UNIXserver.conf \
+              UNIXclerk.conf \
+              UNIXtokens.conf \
+              Win32server.conf \
+              Win32clerk.conf \
+              Win32tokens.conf
 
 
 ## The tests we want to run are all of the test programs we are going to build.
@@ -299,7 +288,7 @@ noinst_DATA = \
 if ACE_CROSS_COMPILED
 TESTS =
 else
-TESTS = $(check_PROGRAMS)
+TESTS = $(noinst_PROGRAMS)
 endif
 
 ## Set up the test environment

@@ -56,7 +56,7 @@ be_visitor_interface_is::visit_interface (be_interface *node)
   // constructor
   *os << "// Implementation skeleton constructor" << be_nl;
   // find if we are at the top scope or inside some module
-  *os << idl_global->impl_class_prefix () << node->flatname () << idl_global->impl_class_suffix () <<"::" << idl_global->impl_class_prefix () << node->flatname () << idl_global->impl_class_suffix () <<
+  *os << idl_global->impl_class_prefix () << node->flat_name () << idl_global->impl_class_suffix () <<"::" << idl_global->impl_class_prefix () << node->flat_name () << idl_global->impl_class_suffix () <<
         " (void)" << be_idt_nl;
   
 
@@ -72,7 +72,7 @@ be_visitor_interface_is::visit_interface (be_interface *node)
   os->indent ();
   *os << "// Implementation skeleton destructor" << be_nl;
   
-  *os << idl_global->impl_class_prefix () << node->flatname () << idl_global->impl_class_suffix () <<"::~" << idl_global->impl_class_prefix () << node->flatname () << idl_global->impl_class_suffix () <<
+  *os << idl_global->impl_class_prefix () << node->flat_name () << idl_global->impl_class_suffix () <<"::~" << idl_global->impl_class_prefix () << node->flat_name () << idl_global->impl_class_suffix () <<
     " (void)" << be_idt_nl;
   
   *os << "{" <<be_nl;
@@ -82,9 +82,9 @@ be_visitor_interface_is::visit_interface (be_interface *node)
     {
       *os << "//Implementation Skeleton Copy Constructor" << be_nl;
       
-      *os <<idl_global->impl_class_prefix () << node->flatname () << idl_global->impl_class_suffix () <<"::"
-          << idl_global->impl_class_prefix () << node->flatname () << idl_global->impl_class_suffix () << " (const " 
-          << idl_global->impl_class_prefix () << node->flatname () << idl_global->impl_class_suffix () << "& t)"<< be_idt_nl;
+      *os <<idl_global->impl_class_prefix () << node->flat_name () << idl_global->impl_class_suffix () <<"::"
+          << idl_global->impl_class_prefix () << node->flat_name () << idl_global->impl_class_suffix () << " (const " 
+          << idl_global->impl_class_prefix () << node->flat_name () << idl_global->impl_class_suffix () << "& t)"<< be_idt_nl;
       if(node->n_inherits () >0)
         {
           node->gen_copy_ctors(os);
@@ -98,9 +98,9 @@ be_visitor_interface_is::visit_interface (be_interface *node)
     {
       *os << "//Implementation Skeleton Copy Assignment" << be_nl;
 
-      *os << idl_global->impl_class_prefix () << node->flatname () << idl_global->impl_class_suffix () << "& "
-          << idl_global->impl_class_prefix () << node->flatname () << idl_global->impl_class_suffix () << "::operator=(const " 
-          << idl_global->impl_class_prefix () << node->flatname () << idl_global->impl_class_suffix () << "& t)" <<be_idt_nl
+      *os << idl_global->impl_class_prefix () << node->flat_name () << idl_global->impl_class_suffix () << "& "
+          << idl_global->impl_class_prefix () << node->flat_name () << idl_global->impl_class_suffix () << "::operator=(const " 
+          << idl_global->impl_class_prefix () << node->flat_name () << idl_global->impl_class_suffix () << "& t)" <<be_idt_nl
           << "{" << be_idt_nl
           << "return *this;" << be_uidt_nl
           << "}" << be_nl << be_uidt_nl;
@@ -117,27 +117,6 @@ be_visitor_interface_is::visit_interface (be_interface *node)
                         -1);
     }
   
-   if (node->n_inherits () > 0)
-    {
-      // this interface inherits from other interfaces
-      be_interface *intf; // inherited interface
-
-      for (int i = 0; i < node->n_inherits (); i++)
-	{
-	  intf = be_interface::narrow_from_decl (node->inherits ()[i]);
-	  // generate code for elements in the scope (e.g., operations)
-	  if (this->visit_scope (intf) ==  -1)
-	    {
-	      ACE_ERROR_RETURN ((LM_ERROR,
-				 "be_visitor_interface_ih::"
-				 "visit_interface - "
-			     "codegen for scope failed\n"),
-				-1);
-	    }
-	}
-      
-    }
- 
 
    return 0;
 }

@@ -10,12 +10,6 @@ Echo_i::Echo_i (void)
 {
 }
 
-// Old g++ fooler.
-Echo_i::Echo_i (Echo_i &foo)
-  : POA_Echo (foo)
-{
-}
-
 // Destructor.
 
 Echo_i::~Echo_i (void)
@@ -40,7 +34,7 @@ Echo_i::echo_list (const char *message,
   ACE_UNUSED_ARG (message);
 
   Echo::List *list;
-
+  
   ACE_NEW_RETURN (list,
                   Echo::List (3),
                   0);
@@ -84,7 +78,7 @@ Echo_i::echo_string (const char *mesg,
 
 // Shutdown the server application.
 
-void
+void 
 Echo_i::shutdown (CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {

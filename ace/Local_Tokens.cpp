@@ -1112,8 +1112,7 @@ ACE_Token_Proxy::open (const ASYS_TCHAR *token_name,
   // We must have a name.
   if (token_name == 0)
     {
-      ACE_OS::sprintf (name, ASYS_TEXT ("token %x"),
-                       ACE_reinterpret_cast (ptr_arith_t, this));
+      ACE_OS::sprintf (name, ASYS_TEXT ("token %d"), this);
       token_name = name;
     }
 

@@ -210,36 +210,6 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Cached_Conn_Test"=..\tests\Cached_Conn_Test.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name ACE DLL
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "Cached_Accept_Conn_Test"=..\tests\Cached_Accept_Conn_Test.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name ACE DLL
-    End Project Dependency
-}}}
-
-###############################################################################
-
 Project: "Callback Quoter Consumer"=.\examples\Callback_Quoter\Consumer.dsp - Package Owner=<4>
 
 Package=<5>
@@ -867,21 +837,6 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Hash_Map_Bucket_Iterator_Test"=..\tests\Hash_Map_Bucket_Iterator_Test.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name ACE DLL
-    End Project Dependency
-}}}
-
-###############################################################################
-
 Project: "High_Res_Timer_Test"=..\tests\High_Res_Timer_Test.dsp - Package Owner=<4>
 
 Package=<5>
@@ -1456,48 +1411,6 @@ Package=<4>
 {{{
     Begin Project Dependency
     Project_Dep_Name ACE DLL
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "Nested Upcall Simple Client"=.\tests\NestedUpcall\Simple\client.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO DLL
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO_IDL Compiler
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "Nested Upcall Simple Server"=.\tests\NestedUpcall\Simple\server.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO DLL
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO_IDL Compiler
     End Project Dependency
 }}}
 

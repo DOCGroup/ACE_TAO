@@ -222,7 +222,7 @@ ACE_Stats::print_summary (const u_int precision,
       // Build a format string, in case the C library doesn't support %*u.
       ASYS_TCHAR format[32];
       if (tmp_precision == 0)
-        ACE_OS::sprintf (format, ASYS_TEXT ("%%%d"), tmp_precision);
+        ACE_OS::sprintf (format, ASYS_TEXT ("%%d"), tmp_precision);
       else
         ACE_OS::sprintf (format, ASYS_TEXT ("%%d.%%0%du"), tmp_precision);
 
@@ -547,8 +547,7 @@ ACE_Throughput_Stats::dump_results (const ASYS_TCHAR* msg,
 {
   if (this->samples_count_ == 0u)
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("%s : no data collected\n"), msg));
+      ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("%s : no data collected\n")));
       return;
     }
 

@@ -57,32 +57,15 @@ be_visitor_interface_ami_handler_fwd_ch::visit_interface (be_interface *node)
       os->indent ();
 
       // Generate forward declaration class.
-      *os << "class "
-          << "AMI_" << node->local_name () << "_Handler" << ";"
+      *os << "class " << node->local_name ()  << ";"
           << be_nl;
       
-      // Create a string "AMI_<interface name>_Handler". We can use
-      // this for defining all _Var, _out,etc.
-      char *interface_name = 0;
-      ACE_NEW_RETURN (interface_name,
-                      char [ACE_OS::strlen ("AMI_") +
-                           ACE_OS::strlen (node->flatname ()) + 
-                           ACE_OS::strlen ("_Handler") +
-                           // end of string
-                           1],
-                      0);
-      ACE_OS::sprintf (interface_name,
-                       "AMI_%s_Handler",
-                       node->flatname ());
-
       // Generate the ifdefined macro for the _ptr type.
-      os->gen_ifdef_macro (interface_name, "_ptr");
+      os->gen_ifdef_macro (node->flat_name (), "_ptr");
 
       // Generate the _ptr declaration
-      *os << "typedef "
-          << "AMI_" << node->local_name () << "_Handler"
-          << " *"
-          << "AMI_" << node->local_name () << "_Handler" << "_ptr;"
+      *os << "typedef " << node->local_name () 
+          << " *" <<  node->local_name () << "_ptr;"
           << be_nl;
 
       // Generate the endif.
@@ -91,10 +74,10 @@ be_visitor_interface_ami_handler_fwd_ch::visit_interface (be_interface *node)
       // Generate the var class.
       
       // Enclose under an ifdef macro
-      os->gen_ifdef_macro (interface_name, "_var");
+      os->gen_ifdef_macro (node->local_name (), "_var");
       
       // Generate the _var declaration.
-      if (node->gen_var_defn (interface_name) == -1)
+      if (node->gen_var_defn ((char *) node->local_name ()) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_interface_ami_handler_fwd_ch::"
@@ -108,11 +91,11 @@ be_visitor_interface_ami_handler_fwd_ch::visit_interface (be_interface *node)
       // Generate the our class.
 
       // Enclose under an ifdef macro.
-      os->gen_ifdef_macro (interface_name, "_out");
+      os->gen_ifdef_macro (node->local_name (), "_out");
 
       // Generate the _out declaration - ORBOS/97-05-15 pg 16-20
       // spec. 
-      if (node->gen_out_defn (interface_name) == -1)
+      if (node->gen_out_defn ( (char *) node->local_name ()) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_interface_ami_handler_fwd_ch::"

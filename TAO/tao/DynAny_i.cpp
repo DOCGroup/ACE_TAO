@@ -739,14 +739,12 @@ TAO_DynAny_i::get_wchar (CORBA::Environment &ACE_TRY_ENV)
 CORBA::Any_ptr
 TAO_DynAny_i::get_any (CORBA::Environment& ACE_TRY_ENV)
 {
-  CORBA_Any_ptr tmp = 0;
+  CORBA_Any_var val;
 
-  ACE_NEW_THROW_EX (tmp,
+  ACE_NEW_THROW_EX (val.out (),
                     CORBA_Any,
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
-
-  CORBA_Any_var val = tmp;
 
   if (!(this->value_ >>= *val.out ()))
     {

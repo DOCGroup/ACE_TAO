@@ -58,7 +58,10 @@ EC_Supplier::send_event (const RtecEventComm::EventSet& event,
   ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->lock_);
 
   if (this->push_count_ == 0)
-    this->throughput_start_ = ACE_OS::gethrtime ();
+    this->throughput_.start ();
+
+  // We start the timer as soon as we receive the first event...
+  this->throughput_.sample ();
 
   this->push_count_ += event.length ();
 
@@ -69,14 +72,7 @@ EC_Supplier::send_event (const RtecEventComm::EventSet& event,
                   "EC_Consumer (%P|%t): %d events received\n",
                   this->push_count_));
     }
-  
-  ACE_hrtime_t start = ACE_OS::gethrtime ();
-
   this->consumer_proxy_->push (event, ACE_TRY_ENV);
-
-  ACE_hrtime_t end = ACE_OS::gethrtime ();
-  this->throughput_.sample (end - this->throughput_start_,
-                            end - start);
 }
 
 void
@@ -181,14 +177,13 @@ EC_Supplier::disconnect_push_supplier (CORBA::Environment &ACE_TRY_ENV)
 }
 
 void
-EC_Supplier::dump_results (const char* name,
-                           ACE_UINT32 gsf)
+EC_Supplier::dump_results (const char* name)
 {
-  this->throughput_.dump_results (name, gsf);
+  this->throughput_.dump_results ("EC_Supplier", name);
 }
 
 void
-EC_Supplier::accumulate (ACE_Throughput_Stats& stats) const
+EC_Supplier::accumulate (EC_Driver::Throughput_Stats& stats) const
 {
   stats.accumulate (this->throughput_);
 }
@@ -267,8 +262,9 @@ EC_Supplier_Task::svc (void)
               ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "SYS_EX");
             }
           ACE_ENDTRY;
+
+          ACE_OS::sleep (tv);
         }
-      ACE_OS::sleep (tv);
     }
 
   ACE_TRY_EX(SHUTDOWN)

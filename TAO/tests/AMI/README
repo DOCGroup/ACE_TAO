@@ -2,13 +2,33 @@
 
 Description:
 
-	This is a simple test for AMI callback model. Right now the
-IDL compiler does not generate all the code. Therefore, you need to
-copy test-handC.cpp onto testC.cpp.             
-
-        This is still in a development phase. It is not at all
-complete. 
+This is a simple test for AMI callback model.
 
 $ server -o test.ior
 $ client -k file://test.ior -n 4 -i 1000
-$ simple_client -k file://test_ior
+
+simple-client:
+=============
+
+$ simple_client -k file://test_ior [-i <niterations] [-x] [-d] \
+     -ORBSvcConf {simple-client-muxed.conf,
+                  simple-client-exclusive.conf}
+
+-d Enable debug messages.
+-i Number of iterations.
+-k IOR.
+-x Call shutdown method.
+
+Issues <i> number of asynchronous requests. Then it issues a
+synchronous request, which collects the replies.
+
+If you choose Muxed Transport configuration, then the synchronous
+request  will collect all the asynchronous replies also, since the
+replies will arrive in order. 
+
+But in the Exclusive Transport, the synchronous request might now
+collect all the AMI replies. It might return as soon as its reply
+arrives. 
+
+
+

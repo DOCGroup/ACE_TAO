@@ -24,7 +24,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/RtecEventChannelAdminS.h"
-#include "ace/Stats.h"
 
 class TAO_EC_Event_Channel_Attributes;
 class TAO_Module_Factory;
@@ -224,6 +223,72 @@ public:
   virtual void activate_tasks (CORBA::Environment& env);
   // Activate all the tasks, by default runs each supplier on its
   // own thread.
+
+  class EC_Test_Export Latency_Stats
+  {
+    // = TITLE
+    //   Maintains latency statistics.
+    //
+    // = DESCRIPTION
+    //   This class is used to keep latency statistics, collected
+    //   using the high resolution timers.
+    //
+    // = TODO
+    //   Implement a version that keeps a histogram, with bounded
+    //   memory requirements.
+    //
+  public:
+    Latency_Stats (void);
+
+    void dump_results (const char* test_name,
+                       const char* sub_test);
+
+    void sample (ACE_hrtime_t sample);
+
+    void accumulate (const Latency_Stats& stats);
+    // Useful to merge several Latency_Stats.
+
+  private:
+    u_long n_;
+    ACE_hrtime_t sum_;
+    ACE_hrtime_t sum2_;
+    ACE_hrtime_t min_;
+    ACE_hrtime_t max_;
+  };
+
+  class EC_Test_Export Throughput_Stats
+  {
+    // = TITLE
+    //   Maintains throughput statistics.
+    //
+    // = DESCRIPTION
+    //   This class is used to keep throughput statistics, the data is
+    //   collected using the High Resolution Timer.
+    //
+  public:
+    Throughput_Stats (void);
+
+    void dump_results (const char* test_name,
+                       const char* sub_test);
+
+    void start (void);
+    // Start measuring the time.
+
+    void stop (void);
+    // The test has completed
+
+    void sample (void);
+    // An event has been received
+
+    void accumulate (const Throughput_Stats& stats);
+    // Useful to merge several Throughput_Stats.
+
+  private:
+    CORBA::ULong n_;
+    int done_;
+    ACE_hrtime_t start_;
+    ACE_hrtime_t stop_;
+  };
 
 protected:
   CORBA::ORB_var orb_;

@@ -1,3 +1,4 @@
+
 //
 // $Id$
 //
@@ -61,7 +62,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
       *os << "class " << node->local_name () << ";" << be_nl;
 
       // generate the ifdefined macro for the _var type
-      os->gen_ifdef_macro (node->flatname (), "_var");
+      os->gen_ifdef_macro (node->flat_name (), "_var");
 
       // generate the _var declaration
       if (node->gen_var_defn () == -1)
@@ -74,7 +75,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
       os->gen_endif ();
 
       // generate the ifdef macro for the _out class
-      os->gen_ifdef_macro (node->flatname (), "_out");
+      os->gen_ifdef_macro (node->flat_name (), "_out");
 
       // generate the _out declaration - ORBOS/97-05-15 pg 16-20 spec
       if (node->gen_out_defn () == -1)
@@ -88,7 +89,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
       os->gen_endif ();
 
       // generate the ifdef macro for the _init class
-      os->gen_ifdef_macro (node->flatname (), "_init");
+      os->gen_ifdef_macro (node->flat_name (), "_init");
 
       // generate the _init declaration - ptc/98-09-03 20.17.10 p.20-93
       if (this->gen_init_defn (node) == -1)
@@ -102,11 +103,11 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
       os->gen_endif ();
 
       // now the valuetype definition itself
-      os->gen_ifdef_macro (node->flatname ());
+      os->gen_ifdef_macro (node->flat_name ());
 
       // now generate the class definition
       os->indent ();
-      *os << "class " << idl_global->stub_export_macro ()
+      *os << "class " << idl_global->export_macro ()
                 << " " << node->local_name ();
 
       // node valuetype inherits from other valuetypes (OMG 20.17.9)
@@ -172,12 +173,12 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
 
           // generate the _ptr_type and _var_type typedef
           // but we must protect against certain versions of g++
-          << "#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)"
+          << "#if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8"
           << be_idt_nl
           << "typedef " << node->local_name () << "* _ptr_type;" << be_nl
           << "typedef " << node->local_name () << "_var _var_type;"
           << be_uidt_nl
-          << "#endif /* ! __GNUC__ || g++ >= 2.8 */\n" << be_idt_nl
+          << "#endif /* __GNUC__ */\n" << be_idt_nl
 
           // generate the static _downcast operation
           // (see OMG 20.17.{4,5})
@@ -254,10 +255,10 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
             {
               *os << be_uidt_nl << "protected:" << be_idt_nl;
               *os << "virtual CORBA::Boolean _tao_marshal__"
-                  <<    node->flatname () << " (TAO_OutputCDR &) = 0;"
+                  <<    node->flat_name () << " (TAO_OutputCDR &) = 0;"
                   << be_nl;
               *os << "virtual CORBA::Boolean _tao_unmarshal__"
-                  <<    node->flatname () << " (TAO_InputCDR &) = 0;"
+                  <<    node->flat_name () << " (TAO_InputCDR &) = 0;"
                   << be_nl;
             }
         }

@@ -95,9 +95,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include        "ast_expression.h"
 #include        "utl_scoped_name.h"
 
-// This is for AIX w/IBM C++
-class Identifier;
-
 // Forward declaration of active iterator for UTL_Scope
 class UTL_ScopeActiveIterator;
 

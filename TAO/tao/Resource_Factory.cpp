@@ -3,7 +3,7 @@
 #include "tao/Resource_Factory.h"
 #include "ace/Dynamic_Service.h"
 #include "tao/ORB_Core.h"
-#include "tao/Client_Strategy_Factory.h"
+#include "tao/Server_Strategy_Factory.h"
 
 ACE_RCSID(tao, Resource_Factory, "$Id$")
 
@@ -11,7 +11,7 @@ ACE_RCSID(tao, Resource_Factory, "$Id$")
 
 TAO_Cached_Connector_Lock::TAO_Cached_Connector_Lock (TAO_ORB_Core *orb_core)
 {
-  this->lock_ = orb_core->client_factory ()->create_cached_connector_lock ();
+  this->lock_ = orb_core->server_factory ()->create_cached_connector_lock ();
 }
 
 TAO_Cached_Connector_Lock::~TAO_Cached_Connector_Lock (void)
@@ -121,18 +121,6 @@ TAO_Resource_Factory::init_protocol_factories (void)
   return -1;
 }
 
-TAO_Resource_Factory::Caching_Strategy
-TAO_Resource_Factory::connection_caching_strategy_type (void) const
-{
-  return TAO_Resource_Factory::NOOP;
-}
-
-double
-TAO_Resource_Factory::purge_percentage (void) const
-{
-  return 0;
-}
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 template class ACE_Dynamic_Service<TAO_Resource_Factory>;
@@ -140,19 +128,11 @@ template class ACE_Node<TAO_Protocol_Item*>;
 template class ACE_Unbounded_Set<TAO_Protocol_Item*>;
 template class ACE_Unbounded_Set_Iterator<TAO_Protocol_Item*>;
 
-template class ACE_Guard<TAO_Cached_Connector_Lock>;
-template class ACE_Reverse_Lock<TAO_Cached_Connector_Lock>;
-template class ACE_Guard<ACE_Reverse_Lock<TAO_Cached_Connector_Lock> >;
-
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate ACE_Dynamic_Service<TAO_Resource_Factory>
 #pragma instantiate ACE_Node<TAO_Protocol_Item*>
 #pragma instantiate ACE_Unbounded_Set<TAO_Protocol_Item*>
 #pragma instantiate ACE_Unbounded_Set_Iterator<TAO_Protocol_Item*>
-
-#pragma instantiate ACE_Guard<TAO_Cached_Connector_Lock>
-#pragma instantiate ACE_Reverse_Lock<TAO_Cached_Connector_Lock>
-#pragma instantiate ACE_Guard<ACE_Reverse_Lock<TAO_Cached_Connector_Lock> >
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

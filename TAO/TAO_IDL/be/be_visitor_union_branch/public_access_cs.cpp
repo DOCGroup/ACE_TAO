@@ -141,25 +141,25 @@ be_visitor_union_branch_public_access_cs::visit_array (be_array *node)
       if (bt->is_nested ())
         {
           be_decl *parent = be_scope::narrow_from_scope (bt->defined_in ())->decl ();
-          ACE_OS::sprintf (fname, "%s::_%s", parent->fullname (),
+          ACE_OS::sprintf (fname, "%s::_%s", parent->full_name (),
                            bt->local_name ()->get_string ());
         }
       else
         {
-          ACE_OS::sprintf (fname, "_%s", bt->fullname ());
+          ACE_OS::sprintf (fname, "_%s", bt->full_name ());
         }
     }
   else
     {
       // typedefed node
-      ACE_OS::sprintf (fname, "%s", bt->fullname ());
+      ACE_OS::sprintf (fname, "%s", bt->full_name ());
     }
 
   os = this->ctx_->stream ();
-  *os << "if (alloc_flag)" << be_idt_nl
-      << "this->u_." << ub->local_name () << "_ = " << fname
-      << "_alloc ();" << be_uidt_nl
-      << "return this->u_." << ub->local_name () << "_;" << be_uidt_nl;
+  *os << "if (alloc_flag)" << be_idt_nl;
+  *os << "this->u_." << ub->local_name () << "_ = " << fname
+      << "_alloc ();" << be_uidt_nl;
+  *os << "return this->u_." << ub->local_name () << "_;" << be_uidt_nl;
 
   return 0;
 }
@@ -181,8 +181,7 @@ be_visitor_union_branch_public_access_cs::visit_enum (be_enum *)
                          ), -1);
     }
   TAO_OutStream *os = this->ctx_->stream ();
-  *os << "ACE_UNUSED_ARG (alloc_flag);" << be_nl
-      << "return &this->u_." << ub->local_name () << "_;" << be_uidt_nl;
+  *os << "return &this->u_." << ub->local_name () << "_;" << be_uidt_nl;
 
   return 0;
 }
@@ -212,12 +211,12 @@ be_visitor_union_branch_public_access_cs::visit_interface (be_interface *node)
                          ), -1);
     }
   TAO_OutStream *os = this->ctx_->stream ();
-  *os << "if (alloc_flag)" << be_idt_nl
-      << "ACE_NEW_RETURN (this->u_." << ub->local_name () << "_, "
+  *os << "if (alloc_flag)" << be_idt_nl;
+  *os << "ACE_NEW_RETURN (this->u_." << ub->local_name () << "_, "
       << "(TAO_Object_Field_T<"
       << bt->name () << ","
-      << bt->name () << "_var>), 0);" << be_uidt_nl
-      << "return this->u_." << ub->local_name () << "_;" << be_uidt_nl;
+      << bt->name () << "_var>), 0);" << be_uidt_nl;
+  *os << "return this->u_." << ub->local_name () << "_;" << be_uidt_nl;
 
   return 0;
 }
@@ -239,8 +238,7 @@ be_visitor_union_branch_public_access_cs::visit_interface_fwd (be_interface_fwd 
                          ), -1);
     }
   TAO_OutStream *os = this->ctx_->stream ();
-  *os << "ACE_UNUSED_ARG (alloc_flag);" << be_nl
-      << "return (CORBA::Object_ptr) &this->u_." << ub->local_name ()
+  *os << "return (CORBA::Object_ptr) &this->u_." << ub->local_name ()
       << "_->inout ();" << be_uidt_nl;
 
   return 0;
@@ -275,21 +273,18 @@ be_visitor_union_branch_public_access_cs::visit_predefined_type (be_predefined_t
   switch (node->pt ())
     {
     case AST_PredefinedType::PT_pseudo:
-      *os << "ACE_UNUSED_ARG (alloc_flag);" << be_nl
-          << "return &this->u_." << ub->local_name () << "_;" << be_uidt_nl;
+      *os << "return &this->u_." << ub->local_name () << "_;" << be_uidt_nl;
       break;
     case AST_PredefinedType::PT_any:
-      *os << "if (alloc_flag)" << be_idt_nl
-          << "this->u_." << ub->local_name () << "_ = new " << bt->name ()
-          << ";" << be_uidt_nl
-          << "return this->u_." << ub->local_name () << "_;" << be_uidt_nl;
+      *os << "if (alloc_flag)" << be_idt_nl;
+      *os << "this->u_." << ub->local_name () << "_ = new " << bt->name ()
+          << ";" << be_uidt_nl;
+      *os << "return this->u_." << ub->local_name () << "_;" << be_uidt_nl;
       break;
     case AST_PredefinedType::PT_void:
-     *os << "ACE_UNUSED_ARG (alloc_flag);" << be_nl;
       break;
     default:
-      *os << "ACE_UNUSED_ARG (alloc_flag);" << be_nl
-          << "return &this->u_." << ub->local_name () << "_;" << be_uidt_nl;
+      *os << "return &this->u_." << ub->local_name () << "_;" << be_uidt_nl;
     }
   return 0;
 }
@@ -319,10 +314,10 @@ be_visitor_union_branch_public_access_cs::visit_sequence (be_sequence *node)
                          ), -1);
     }
   os = this->ctx_->stream ();
-  *os << "if (alloc_flag)" << be_idt_nl
-      << "this->u_." << ub->local_name () << "_ = new " << bt->name ()
-      << ";" << be_uidt_nl
-      << "return this->u_." << ub->local_name () << "_;" << be_uidt_nl;
+  *os << "if (alloc_flag)" << be_idt_nl;
+  *os << "this->u_." << ub->local_name () << "_ = new " << bt->name ()
+      << ";" << be_uidt_nl;
+  *os << "return this->u_." << ub->local_name () << "_;" << be_uidt_nl;
 
   return 0;
 }
@@ -344,8 +339,7 @@ be_visitor_union_branch_public_access_cs::visit_string (be_string *)
                          ), -1);
     }
   TAO_OutStream *os = this->ctx_->stream ();
-  *os << "ACE_UNUSED_ARG (alloc_flag);" << be_nl
-      << "return &this->u_." << ub->local_name () << "_;" << be_uidt_nl;
+  *os << "return &this->u_." << ub->local_name () << "_;" << be_uidt_nl;
 
   return 0;
 }
@@ -375,18 +369,16 @@ be_visitor_union_branch_public_access_cs::visit_structure (be_structure *node)
                          ), -1);
     }
   os = this->ctx_->stream ();
-  if (bt->size_type () == be_type::VARIABLE
-      || node->has_constructor ())
+  if (bt->size_type () == be_type::VARIABLE)
     {
-      *os << "if (alloc_flag)" << be_idt_nl
-          << "this->u_." << ub->local_name () << "_ = new " << bt->name ()
-          << ";" << be_uidt_nl
-          << "return this->u_." << ub->local_name () << "_;" << be_uidt_nl;
+      *os << "if (alloc_flag)" << be_idt_nl;
+      *os << "this->u_." << ub->local_name () << "_ = new " << bt->name ()
+          << ";" << be_uidt_nl;
+      *os << "return this->u_." << ub->local_name () << "_;" << be_uidt_nl;
     }
   else
     {
-      *os << "ACE_UNUSED_ARG (alloc_flag);" << be_nl
-          << "return &this->u_." << ub->local_name () << "_;" << be_uidt_nl;
+      *os << "return &this->u_." << ub->local_name () << "_;" << be_uidt_nl;
     }
 
   return 0;
@@ -438,10 +430,10 @@ be_visitor_union_branch_public_access_cs::visit_union (be_union *node)
                          ), -1);
     }
   os = this->ctx_->stream ();
-  *os << "if (alloc_flag)" << be_idt_nl
-      << "this->u_." << ub->local_name () << "_ = new " << bt->name ()
-      << ";" << be_uidt_nl
-      << "return this->u_." << ub->local_name () << "_;" << be_uidt;
+  *os << "if (alloc_flag)" << be_idt_nl;
+  *os << "this->u_." << ub->local_name () << "_ = new " << bt->name ()
+      << ";" << be_uidt_nl;
+  *os << "return this->u_." << ub->local_name () << "_;" << be_uidt_nl;
 
   return 0;
 }

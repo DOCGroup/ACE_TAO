@@ -36,8 +36,7 @@ goto setupmsc
 shift
 :setupbor
 set arg=%1
-set exedir=.\Dynamic\Release\
-set PATH=%PATH%;%exedir%
+set exedir=.\bor\bin\
 rem Set deco to whatever decoration you have for the executables
 set deco=
 set platform=bor
@@ -78,13 +77,10 @@ call %run_cmd% %dopure% %platform% Future_Test
 call %run_cmd% %dopure% %platform% Future_Set_Test
 call %run_cmd% %dopure% %platform% Handle_Set_Test
 call %run_cmd% %dopure% %platform% Hash_Map_Manager_Test
-call %run_cmd% %dopure% %platform% Hash_Map_Bucket_Iterator_Test
 call %run_cmd% %dopure% %platform% High_Res_Timer_Test
 call %run_cmd% %dopure% %platform% IOStream_Test
 call %run_cmd% %dopure% %platform% Map_Manager_Test
 call %run_cmd% %dopure% %platform% Cache_Map_Manager_Test
-call %run_cmd% %dopure% %platform% Cached_Conn_Test
-call %run_cmd% %dopure% %platform% Cached_Accept_Conn_Test
 call %run_cmd% %dopure% %platform% Map_Test
 call %run_cmd% %dopure% %platform% Mem_Map_Test
 call %run_cmd% %dopure% %platform% Message_Block_Test

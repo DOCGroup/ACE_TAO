@@ -1,23 +1,7 @@
 /* -*- C++ -*- */
 // $Id$
 
-// ============================================================================
-//
-// = FILENAME
-//    TSS_Test_Errno.h
-//
-// = DESCRIPTION
-//    This file contains the definition of Errno.  Some compilers need
-//    it in a .h file for template instantiation (such as AIX C Set
-//    ++).
-//
-// = AUTHOR
-//    Douglas C. Schmidt <schmidt@cs.wustl.edu>
-//
-// ============================================================================
-
 class Errno
-{
   // = TITLE
   //    Define a simple Errno abstraction
   //
@@ -25,6 +9,7 @@ class Errno
   //    This class gets its own header file to work around AIX C++
   //    compiler "features" related to template instantiation...  It is
   //    only used by TSS_Test.cpp.
+{
 public:
   int error (void) { return this->errno_; }
   void error (int i) { this->errno_ = i; }
@@ -51,7 +36,7 @@ public:
 #if defined (ACE_HAS_THREADS)
   static
   ACE_Thread_Mutex *
-  allocate_lock (void)
+  allocate_lock ()
   {
     ACE_NEW_RETURN (Errno::lock_, ACE_Thread_Mutex, 0);
     return Errno::lock_;

@@ -26,6 +26,7 @@ CUBIT_CLT_OBJS = client.o
 CFLAGS += -I../IDL_Cubit
 
 BIN = client
+VLDLIBS = $(LDLIBS:%=%$(VAR))
 
 TAO_IDLFLAGS += -Ge 1
 #----------------------------------------------------------------------------
@@ -50,10 +51,10 @@ include $(TAO_ROOT)/taoconfig.mk
 LDFLAGS += -L$(TAO_ROOT)/tao
 
 ifeq ($(CXX),cxx)
-  ifeq (use_ld_input,$(findstring use_ld_input,$(SOFLAGS)))
-    #### Digital Unix 4.0 or later
-    CCFLAGS += -ptr ../IDL_Cubit/cxx_repository
-  endif # DU 4.0 or later
+  ifeq ($(findstring ptrepository,$(CCFLAGS)),ptrepository)
+    #### Digital Unix 4.0
+    CCFLAGS += -ptr ../IDL_Cubit/ptrepository
+  endif # CCFLAGS contains ptrepository
 else
 ifeq (-xildoff,$(findstring -xildoff,$(LDFLAGS)))
   #### Sun CC
@@ -67,14 +68,10 @@ client: $(addprefix $(VDIR),$(CUBIT_CLT_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 ../IDL_Cubit/server:
-	cd ../IDL_Cubit; $(MAKE) BIN=server
+	cd ../IDL_Cubit; $(MAKE) BUILD=server
 
 realclean: clean
 	-$(RM) cubitC.* cubitS.* cubitS_T.*
-
-#----------------------------------------------------------------------------
-#       Dependencies
-#----------------------------------------------------------------------------
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.

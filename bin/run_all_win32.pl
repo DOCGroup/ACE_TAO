@@ -1,48 +1,47 @@
 # -*- perl -*-
 # $Id$
 #
-# This script execute the test programs (usually, other scripts) in
-# the RUN_LIST defined below. If it detects any problem it send email.
+# This script checkouts ACE from CVS, updates the "clone" directory,
+# compiles $ACE_ROOT/ace and $ACE_ROOT/tests and finally runs
+# $ACE_ROOT/tests/run_tests.sh.
 #
-# This script requires ActivePerl for Win32 and libnet from CPAN.
+# If it detects any problem it send email.
 #
-# Usage:  run_all_win32.pl <log directory> <admin email address>
+# DO NOT invoke this script from your crontab, use
+# auto_compile_wrapper for that.
 #
-#     For example: run_all_win32.pl c:\log peter_pan@neverland.org
+# This script requires Perl5.
+#
+# TODO: Modify the script or split it in such a way that the main copy
+# can be obtained either using cvs or downloading the lastest beta
+# from the WWW.
+#
+
+eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
+    & eval 'exec perl -S $0 $argv:q'
+    if 0;
+
+# The first three lines above let this script run without specifying the
+# full path to perl, as long as it is in the user's PATH.
+# Taken from perlrun man page.
 
 use Net::SMTP;
 use File::Basename;
 use FileHandle;
 require POSIX;
 
-
 # This is the module we will checkout, someday someone could define a
 # smaller module.
 $MODULE='ACE_wrappers';
 
-# The following are for redirecting execution results to temporary files.
-$exe_log_name='run_test.log';   # Name of the tempfile used.
-
-# If using 'sh'.
-$sh_cmd="c:/bin/sh ";
-$sh_redirection=" > $exe_log_name 2>&1";
-
-#if using '4nt'
-$four_nt_cmd="d:/Utils/4NT301/4NT.EXE ";
-$four_nt_redirection=" >& $exe_log_name";
-
-# Pick the one your like.
-$shell_invoke = $sh_cmd;
-$redirect_output  = $sh_redirection;
-
 # This are the pairs "sub-directory , script" we run; the separator
 # *must* be a space followed by a comma and then another space.
 
-@RUN_LIST = (
-      'tests , run_tests.bat',
-      'TAO/tests/Param_Test , run_test.pl',
-      'TAO/tests/Param_Test , run_test.pl -i dii',
-      'TAO/performance-tests/Cubit/TAO/IDL_Cubit , run_test.pl',
+@RUN_LIST =
+      ( 'tests , run_tests.bat',
+        'TAO/tests/Param_Test , run_test.pl',
+        'TAO/tests/Param_Test , run_test.pl -i dii',
+        'TAO/performance-tests/Cubit/TAO/IDL_Cubit , run_test.pl',
       'TAO/tests/OctetSeq , run_test.pl',
       'TAO/tests/Multiple_Inheritance , run_test.pl',
       'TAO/tests/MT_Client , run_test.pl',
@@ -53,16 +52,16 @@ $redirect_output  = $sh_redirection;
       'TAO/tests/POA/Identity , run_test.pl',
       'TAO/tests/POA/Destruction , run_test.pl',
       'TAO/tests/IORManipulation , run_test.pl',
-      'TAO/examples/POA/Adapter_Activator , run_test.pl',
-      'TAO/examples/POA/DSI , run_test.pl',
-      'TAO/examples/POA/Default_Servant , run_test.pl',
-      'TAO/examples/POA/Explicit_Activation , run_test.pl',
-      'TAO/examples/POA/FindPOA , run_test.pl',
-      'TAO/examples/POA/Forwarding , run_test.pl',
-      'TAO/examples/POA/NewPOA , run_test.pl',
-      'TAO/examples/POA/On_Demand_Activation , run_test.pl',
-      'TAO/examples/POA/On_Demand_Loading , run_test.pl',
-      'TAO/examples/POA/Reference_Counted_Servant , run_test.pl',
+        'TAO/examples/POA/Adapter_Activator , run_test.pl',
+        'TAO/examples/POA/DSI , run_test.pl',
+        'TAO/examples/POA/Default_Servant , run_test.pl',
+        'TAO/examples/POA/Explicit_Activation , run_test.pl',
+        'TAO/examples/POA/FindPOA , run_test.pl',
+        'TAO/examples/POA/Forwarding , run_test.pl',
+        'TAO/examples/POA/NewPOA , run_test.pl',
+        'TAO/examples/POA/On_Demand_Activation , run_test.pl',
+        'TAO/examples/POA/On_Demand_Loading , run_test.pl',
+        'TAO/examples/POA/Reference_Counted_Servant , run_test.pl',
       'TAO/examples/Simple/bank , run_test.pl',
       'TAO/examples/Simple/grid , run_test.pl',
       'TAO/examples/Simple/time-date , run_test.pl',
@@ -80,7 +79,7 @@ $redirect_output  = $sh_redirection;
       'TAO/examples/Simple/echo , run_test.pl < Echo.idl',
 #      'TAO/examples/Simple/chat , run_test.pl',
       'TAO/orbsvcs/tests/Property , run_test.pl',
-      'TAO/performance-tests/POA/Object_Creation_And_Registration , run_test.pl',
+   'TAO/performance-tests/POA/Object_Creation_And_Registration , run_test.pl',
       'TAO/performance-tests/Cubit/TAO/MT_Cubit , run_test.pl -n 100'
 #      'TAO/orbsvcs/tests/ImplRepo , run_test.pl airplane',
 #      'TAO/orbsvcs/tests/ImplRepo , run_test.pl airplane_ir',
@@ -95,8 +94,11 @@ $CMD = basename($0);
 
 # Extract configuration information from command line.
 # TODO: Some validation and checking should be done here.
-$LOGDIR = $ARGV[0];
-$ADMIN = $ARGV[1];
+$CHECKOUT = $ARGV[0];
+$BUILD = $ARGV[1];
+$LOGDIR = $ARGV[2];
+$ADMIN = $ARGV[3];
+$MAKEFLAGS = $ARGV[4];
 
 # When an error is found we try to die gracefully and send some email
 # to ADMIN.
@@ -187,11 +189,10 @@ foreach $i (@RUN_LIST) {
 	|| mydie "cannot chdir to $subdir";
 
     $run_error = 0;
-
-    system ($shell_invoke . " " . $program . " " . $redirect_output);
-
-    open (RUN, "$exe_log_name") || push @failures, "Can't open execution log file $exe_log_name\n";
-
+    if (open(RUN, "$program 2>&1 |") == 0) {
+	push @failures, "cannot run $program in $directory";
+	next;
+    }
     while (<RUN>) {
 	print LOG $_;
 	if (m/^Error/ || m/FAILED/ || m/EXCEPTION/) {
@@ -199,7 +200,7 @@ foreach $i (@RUN_LIST) {
 	}
     }
     if (close(RUN) == 0) {
-	push @failures, "Error when closing log file $program in $directory";
+	push @failures, "Error when closing pipe for $program in $directory";
 	next;
     }
     $date = localtime;
@@ -209,8 +210,6 @@ foreach $i (@RUN_LIST) {
 	push @failures,
 	    "errors detected while running $program in $directory";
     }
-
-    unlink ("$exe_log_name");
 }
 
 if ($#failures >= 0) {
@@ -228,3 +227,4 @@ unlink $disable_file
     || mydie "cannot unlink disable file";
 
 exit 0;
+

@@ -383,8 +383,6 @@ ImplRepo_i::init (int argc, char **argv, CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_TRY
     {
-      int retval = 0;
-
       // Call the init of <TAO_ORB_Manager> to initialize the ORB and
       // create a child POA under the root POA.
       if (this->orb_manager_.init_child_poa (argc,
@@ -397,7 +395,7 @@ ImplRepo_i::init (int argc, char **argv, CORBA::Environment &ACE_TRY_ENV)
                           -1);
       ACE_TRY_CHECK;
 
-      retval = OPTIONS::instance()->parse_args (argc, argv);
+      int retval = OPTIONS::instance()->parse_args (argc, argv);
 
       if (retval != 0)
         return retval;
@@ -573,13 +571,17 @@ ImplRepo_i::list (CORBA::ULong how_many,
   ACE_NEW_THROW_EX (server_list,
                     ImplementationRepository::ServerInformationList (0),
                     CORBA::NO_MEMORY ());
+  ACE_CHECK;
 
   // Get a new iterator
   auto_ptr<Server_Repository::HASH_IR_ITER> server_iter (this->repository_.new_iterator ());
 
   // Check for a memory error.
   if (server_iter.get () == 0)
+  {
     ACE_THROW (CORBA::NO_MEMORY ());
+    ACE_CHECK;
+  }
   
   // Number of servers that will go into the server_list.
   CORBA::ULong n;
@@ -633,6 +635,7 @@ ImplRepo_i::list (CORBA::ULong how_many,
       ACE_NEW_THROW_EX (ir_iter,
                         IR_Iterator (server_iter.release (), this->orb_manager_.root_poa ()),
                         CORBA::NO_MEMORY ());
+      ACE_CHECK;
 
       ACE_TRY
         {
@@ -854,8 +857,6 @@ IR_Forwarder::invoke (CORBA::ServerRequest_ptr ,
 
   CORBA_Object_ptr forward_object =
     this->orb_var_->key_to_object (poa_current_impl->object_key (),
-                                   0,
-                                   0,
                                    0,
                                    ACE_TRY_ENV);
   ACE_CHECK;

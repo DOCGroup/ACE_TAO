@@ -333,7 +333,7 @@ template <class T> ASYS_INLINE
 ACE_Refcounted_Hash_Recyclable<T>::ACE_Refcounted_Hash_Recyclable (void)
   : ACE_Refcountable (0),
     ACE_Hashable (),
-    ACE_Recyclable (ACE_RECYCLABLE_UNKNOWN),
+    ACE_Recyclable (ACE_Recyclable::UNKNOWN),
     t_ ()
 {
 }
@@ -341,7 +341,7 @@ ACE_Refcounted_Hash_Recyclable<T>::ACE_Refcounted_Hash_Recyclable (void)
 template <class T> ASYS_INLINE
 ACE_Refcounted_Hash_Recyclable<T>::ACE_Refcounted_Hash_Recyclable (const T &t,
                                                                    int refcount,
-                                                                   ACE_Recyclable_State state)
+                                                                   ACE_Recyclable::State state)
   : ACE_Refcountable (refcount),
     ACE_Hashable (),
     ACE_Recyclable (state),
@@ -360,23 +360,24 @@ ACE_Refcounted_Hash_Recyclable<T>::hash_i (void) const
   return this->t_.hash ();
 }
 
-template <class T> ASYS_INLINE T &
-ACE_Refcounted_Hash_Recyclable<T>::subject (void)
-{
-  return this->t_;
-}
-
 template <class T> ASYS_INLINE int
 ACE_Refcounted_Hash_Recyclable<T>::operator== (const ACE_Refcounted_Hash_Recyclable<T> &rhs) const
 {
-  return this->recycle_state () == rhs.recycle_state () &&
-         this->t_ == rhs.t_;
+  if (this->state () != ACE_Recyclable::IDLE_AND_PURGABLE &&
+      this->state () != ACE_Recyclable::IDLE_BUT_NOT_PURGABLE)
+    return 0;
+  else
+    return this->t_ == rhs.t_;
 }
 
 template <class T> ASYS_INLINE int
-ACE_Refcounted_Hash_Recyclable<T>::operator!= (const ACE_Refcounted_Hash_Recyclable<T> &rhs) const
+ACE_Refcounted_Hash_Recyclable<T>::operator== (const T &rhs) const
 {
-  return !this->operator== (rhs);
+  if (this->state () != ACE_Recyclable::IDLE_AND_PURGABLE &&
+      this->state () != ACE_Recyclable::IDLE_BUT_NOT_PURGABLE)
+    return 0;
+  else
+    return this->t_ == rhs;
 }
 
 template <class SVC_HANDLER> ASYS_INLINE int

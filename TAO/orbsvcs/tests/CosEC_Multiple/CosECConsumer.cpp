@@ -162,6 +162,8 @@ CosECConsumer::init_Consumer (void)
 
       this->connect (ACE_TRY_ENV);
       ACE_TRY_CHECK;
+
+      return 0;
     }
   ACE_CATCHANY
     {
@@ -172,7 +174,7 @@ CosECConsumer::init_Consumer (void)
   ACE_ENDTRY;
   ACE_CHECK_RETURN (-1);
 
-  return 0;
+  ACE_NOTREACHED (return 0;)
 }
 
 int

@@ -705,53 +705,58 @@ ACE_Message_Queue<ACE_SYNCH_USE>::notify (void)
 }
 
 
-// = Initialization and termination methods.
-template <ACE_SYNCH_DECL>
-ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::ACE_Dynamic_Message_Queue (ACE_Dynamic_Message_Strategy & message_strategy,
-                                                                     size_t hwm,
-                                                                     size_t lwm,
-                                                                     ACE_Notification_Strategy *ns)
-  : ACE_Message_Queue<ACE_SYNCH_USE> (hwm, lwm, ns),
-    pending_head_ (0),
-    pending_tail_ (0),
-    late_head_ (0),
-    late_tail_ (0),
-    beyond_late_head_ (0),
-    beyond_late_tail_ (0),
-    message_strategy_ (message_strategy)
-{
-  // Note, the ACE_Dynamic_Message_Queue assumes full responsibility
-  // for the passed ACE_Dynamic_Message_Strategy object, and deletes
-  // it in its own dtor
-}
+/////////////////////////////////////
+// class ACE_Dynamic_Message_Queue //
+/////////////////////////////////////
 
-// dtor: free message strategy and let base class dtor do the rest.
+  // = Initialization and termination methods.
+template <ACE_SYNCH_DECL>
+ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::ACE_Dynamic_Message_Queue (
+                                                      ACE_Dynamic_Message_Strategy & message_strategy,
+                                                      size_t hwm,
+                                                      size_t lwm,
+                                                      ACE_Notification_Strategy *ns)
+  : ACE_Message_Queue<ACE_SYNCH_USE> (hwm, lwm, ns)
+  , pending_head_ (0)
+  , pending_tail_ (0)
+  , late_head_ (0)
+  , late_tail_ (0)
+  , beyond_late_head_ (0)
+  , beyond_late_tail_ (0)
+  , message_strategy_ (message_strategy)
+{
+  // note, the ACE_Dynamic_Message_Queue assumes full responsibility for the
+  // passed ACE_Dynamic_Message_Strategy object, and deletes it in its own dtor
+}
 
 template <ACE_SYNCH_DECL>
 ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::~ACE_Dynamic_Message_Queue (void)
 {
-  delete &this->message_strategy_;
+  delete &(this->message_strategy_);
 }
+// dtor: free message strategy and let base class dtor do the rest
 
 template <ACE_SYNCH_DECL> int
 ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::remove_messages (ACE_Message_Block *&list_head,
                                                            ACE_Message_Block *&list_tail,
                                                            u_int status_flags)
 {
+  int result = 0;
+
   // start with an empty list
   list_head = 0;
   list_tail = 0;
 
-  // Get the current time
+
+  // get the current time
   ACE_Time_Value current_time = ACE_OS::gettimeofday ();
 
-  // Refresh priority status boundaries in the queue.
-  int result = this->refresh_queue (current_time);
+  // refresh priority status boundaries in the queue
+  result = this->refresh_queue (current_time);
   if (result < 0)
     return result;
 
-  if (ACE_BIT_ENABLED (status_flags,
-                       (u_int) ACE_Dynamic_Message_Strategy::PENDING)
+  if ((status_flags & (u_int) ACE_Dynamic_Message_Strategy::PENDING)
       && this->pending_head_
       && this->pending_tail_)
     {
@@ -778,8 +783,7 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::remove_messages (ACE_Message_Block *&l
       this->pending_tail_ = 0;
     }
 
-  if (ACE_BIT_ENABLED (status_flags,
-                       (u_int) ACE_Dynamic_Message_Strategy::LATE)
+  if ((status_flags & (u_int) ACE_Dynamic_Message_Strategy::LATE)
       && this->late_head_
       && this->late_tail_)
     {
@@ -809,8 +813,7 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::remove_messages (ACE_Message_Block *&l
       this->late_tail_ = 0;
     }
 
-  if (ACE_BIT_ENABLED (status_flags,
-      (u_int) ACE_Dynamic_Message_Strategy::BEYOND_LATE)
+  if ((status_flags & (u_int) ACE_Dynamic_Message_Strategy::BEYOND_LATE)
       && this->beyond_late_head_
       && this->beyond_late_tail_)
     {

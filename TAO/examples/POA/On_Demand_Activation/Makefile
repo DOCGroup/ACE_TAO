@@ -14,6 +14,10 @@ CPPFLAGS += -I$(TAO_ROOT) -I../Generic_Servant
 LDLIBS     =   -lGeneric_Servant -lTAO
 LDFLAGS += -L$(TAO_ROOT)/tao -L../Generic_Servant
 
+VLDLIBS = $(LDLIBS:%=%$(VAR))
+
+BUILD = $(VBIN)
+
 INSTALL =
 
 #----------------------------------------------------------------------------

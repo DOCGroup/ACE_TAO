@@ -20,8 +20,6 @@
 #ifndef TAO_BE_HELPER_H
 #define TAO_BE_HELPER_H
 
-#include "be_helper.h"
-
 class TAO_SunSoft_OutStream : public TAO_OutStream
 {
   // =TITLE

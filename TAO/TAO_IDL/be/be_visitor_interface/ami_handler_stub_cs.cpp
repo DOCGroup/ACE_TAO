@@ -43,6 +43,9 @@ be_visitor_interface_ami_handler_stub_cs::~be_visitor_interface_ami_handler_stub
 int
 be_visitor_interface_ami_handler_stub_cs::visit_interface (be_interface *node)
 {
+  be_interface_type_strategy *old_strategy =  
+    node->set_strategy (new be_interface_ami_handler_strategy (node));
+
   // output stream.
   TAO_OutStream *os;
 
@@ -67,29 +70,27 @@ be_visitor_interface_ami_handler_stub_cs::visit_interface (be_interface *node)
   be_decl *parent = be_scope::narrow_from_scope (node->defined_in ())->decl ();
   
   if (parent != 0 &&
-      parent->fullname () != 0 &&
-      ACE_OS::strlen (parent->fullname ()))
-    scope_len = ACE_OS::strlen (parent->fullname ()) + ACE_OS::strlen ("::");
+      parent->full_name () != 0 &&
+      ACE_OS::strlen (parent->full_name ()))
+    scope_len = ACE_OS::strlen (parent->full_name ()) + ACE_OS::strlen ("::");
   
   ACE_NEW_RETURN (full_name,
                   char [scope_len +
-                       ACE_OS::strlen ("AMI_") +
-                       ACE_OS::strlen (node->local_name ()->get_string ()) +
-                       ACE_OS::strlen ("_Handler") +
+                       ACE_OS::strlen (node->local_name ()) +
                        1],
                   -1);
   
   if (parent != 0 &&
-      parent->fullname () != 0 &&
-      ACE_OS::strlen (parent->fullname ()))
+      parent->full_name () != 0 &&
+      ACE_OS::strlen (parent->full_name ()))
     ACE_OS::sprintf (full_name,
-                     "%s::AMI_%s_Handler",
-                     parent->fullname (),
-                     node->local_name ()->get_string ());
+                     "%s::%s",
+                     parent->full_name (),
+                     node->local_name ());
   else
     ACE_OS::sprintf (full_name,
-                     "AMI_%s_Handler",
-                     node->local_name ()->get_string ());
+                     "%s",
+                     node->local_name ());
 
   // First generate the code for the static methods.
   
@@ -103,7 +104,7 @@ be_visitor_interface_ami_handler_stub_cs::visit_interface (be_interface *node)
       << "if (CORBA::is_nil (obj))" << be_idt_nl
       << "return " << full_name << "::_nil ();" << be_uidt_nl
       << "if (!obj->_is_a (\""
-      << node->compute_repoID ("AMI_", "_Handler") << "\", env))" 
+      << node->repoID () << "\", env))" 
       << be_idt_nl
       << "return " << full_name << "::_nil ();" << be_uidt_nl;
 
@@ -114,48 +115,28 @@ be_visitor_interface_ami_handler_stub_cs::visit_interface (be_interface *node)
   // This may be necessary to work around a GCC compiler bug!
   //  const char *skel_name = node->full_skel_name (); // unused at this time
 
-  // @@ Michael: We need to check this value being passed. I am
-  //    passing 1 right now. (Alex).
-  const char *coll_name = node->full_coll_name (1);
-  assert (coll_name != 0);
-
+  // the following full_name usage was node->name
   // The _unchecked_narrow method
   *os << full_name << "_ptr " << full_name
       << "::_unchecked_narrow (" << be_idt << be_idt_nl
       << "CORBA::Object_ptr obj," << be_nl
-      << "CORBA::Environment &ACE_TRY_ENV" << be_uidt_nl
+      << "CORBA::Environment &" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
-      << "ACE_UNUSED_ARG (ACE_TRY_ENV);" << be_nl
       << "if (CORBA::is_nil (obj))" << be_idt_nl
       << "return " << full_name << "::_nil ();" << be_uidt_nl;
 
   *os << "TAO_Stub* stub = obj->_stubobj ();" << be_nl
       << "stub->_incr_refcnt ();" << be_nl;
-  *os << "void* servant = 0;" << be_nl;
-  *os << "if (obj->_is_collocated () "
-      << "&& obj->_servant() != 0)" << be_idt_nl
-      << "servant = obj->_servant()->_downcast (\""
-      << "IDL:omg.org/CORBA/Object:1.0\");" << be_uidt_nl;
 
-  *os << "if (servant != 0)" << be_idt_nl << "{" << be_idt_nl
-    // The collocated object reference factory is not working right (yet)
-      << full_name << "_ptr retv = ACE_reinterpret_cast (" << be_idt << be_idt_nl
-      << full_name << "_ptr," << be_nl
-      << "ACE_reinterpret_cast (" << be_idt << be_idt_nl
-      << "PortableServer::Servant," << be_nl
-      << "servant" << be_uidt_nl
-      << ")" << be_uidt_nl
-      << "->_create_collocated_objref (" << be_idt << be_idt_nl
-      << "\"" << node->compute_repoID ("AMI_", "_Handler") << "\"," << be_nl
-      << "TAO_ORB_Core::ORB_CONTROL," << be_nl
-      << "stub" << be_uidt_nl
-      << ")" << be_uidt << be_uidt_nl
-      << ");" << be_uidt_nl
+  *os << "if (obj->_is_collocated () && _TAO_collocation_" << node->flat_name ()
+      << "_Stub_Factory_function_pointer != 0)" << be_idt_nl
+      << "{" << be_idt_nl
+      << node->local_name () << "_ptr retv = _TAO_collocation_"
+      << node->flat_name ()
+      << "_Stub_Factory_function_pointer (obj);" << be_nl
       << "if (retv != 0)" << be_idt_nl
-      << "return retv;" << be_uidt
-    // So we are still using the old way to create collocated objref.
-      << be_uidt_nl
+      << "return retv;" << be_uidt << be_uidt_nl
       << "}" << be_uidt_nl;
 
   *os << "return new " << full_name << "(stub);" << be_uidt_nl
@@ -194,7 +175,7 @@ be_visitor_interface_ami_handler_stub_cs::visit_interface (be_interface *node)
   // Current interface.
   *os << "(!ACE_OS::strcmp ((char *)value, "
       << "\""
-      << node->compute_repoID ("AMI_", "_Handler")
+      << node->repoID ()
       << "\""
       << ")) ||"
       << be_nl;
@@ -223,7 +204,7 @@ be_visitor_interface_ami_handler_stub_cs::visit_interface (be_interface *node)
       << "::_interface_repository_id (void) const"
       << be_nl
       << "{" << be_idt_nl
-      << "return \"" << node->compute_repoID ("AMI_", "_Handler") << "\";" << be_uidt_nl
+      << "return \"" << node->repoID () << "\";" << be_uidt_nl
       << "}\n\n";
 
   // By using a visitor to declare and define the TypeCode, we have the
@@ -245,6 +226,8 @@ be_visitor_interface_ami_handler_stub_cs::visit_interface (be_interface *node)
   
   delete full_name;
   full_name = 0;
+
+  delete node->set_strategy (old_strategy);
 
   return 0;
 }

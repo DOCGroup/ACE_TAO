@@ -18,11 +18,6 @@
 #define TAO_SERVER_STRATEGY_FACTORY_H
 
 #include "tao/corbafwd.h"
-
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-# pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
-
 #include "ace/Service_Object.h"
 
 class TAO_Active_Object_Map_Impl;
@@ -109,6 +104,9 @@ public:
 
   virtual ACE_Lock *create_event_loop_lock (void);
   // Creates and returns a lock for the event loop.
+
+  virtual ACE_Lock *create_cached_connector_lock (void);
+  // Create the lock to be used by the cached connector.
 
   virtual const Active_Object_Map_Creation_Parameters &active_object_map_creation_parameters (void) const;
   // Return the active object map creation parameters.

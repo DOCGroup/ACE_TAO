@@ -63,6 +63,7 @@ Consumer_Handler::init (int argc,
       this->notifier_->subscribe (this->receiver_,
 				  filtering_criteria,
 				  ACE_TRY_ENV);
+      return 0;
     }
   ACE_CATCHANY
    {
@@ -72,7 +73,7 @@ Consumer_Handler::init (int argc,
    }
   ACE_ENDTRY;
 
-  return 0;
+  ACE_NOTREACHED (return 0;)
 }
 
 int

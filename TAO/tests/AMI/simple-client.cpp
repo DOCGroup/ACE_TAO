@@ -8,21 +8,29 @@ ACE_RCSID(MT_Client, client, "$Id$")
 
 const char *ior = "file://test.ior";
 int niterations = 5;
+int shutdown_flag = 0;
+int debug = 0;
 
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:i:");
+  ACE_Get_Opt get_opts (argc, argv, "dk:i:x");
   int c;
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
+      case 'd':
+        debug = 1;
+        break;
       case 'k':
         ior = get_opts.optarg;
         break;
       case 'i':
         niterations = ACE_OS::atoi (get_opts.optarg);
+        break;
+      case 'x':
+        shutdown_flag = 1;
         break;
       case '?':
       default:
@@ -30,6 +38,7 @@ parse_args (int argc, char *argv[])
                            "usage:  %s "
                            "-k <ior> "
                            "-i <niterations> "
+                           "-x "
                            "\n",
                            argv [0]),
                           -1);
@@ -42,8 +51,23 @@ class Handler : public POA_AMI_Simple_Server_Handler
 {
 public:
   Handler (void) {};
- 
+  // Constructor.
+
+  void get_put_number (CORBA::Long result,
+                       CORBA::Long out_l,
+                       CORBA::Environment&)
+    {
+      if (debug)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "Callback method called: result <%d>, out_arg <%d>\n",
+                      result, 
+                      out_l));
+        }
+    };
+
   ~Handler (void) {};
+  // Destructor.
 };
 
 int
@@ -91,27 +115,42 @@ main (int argc, char *argv[])
                             1);
         }
 
+      // Instantiate the ReplyHandler and register that with the POA. 
       Handler handler;
       AMI_Simple_Server_Handler_var the_handler =
         handler._this (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-
-      CORBA::Long number = 0;
       
+      CORBA::Long l = 931247;
+
       for (ssize_t ni = 0; ni < niterations; ni++)
         {
-        
-          server->sendc_get_number (the_handler.in (),
-                                    ACE_TRY_ENV);
+          server->sendc_get_put_number (the_handler.in (),
+                                        l,
+                                        ACE_TRY_ENV);
           ACE_TRY_CHECK;
         }
 
-      number = server->get_number (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      if (debug)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "<%d> Asynchronous methods issued\n",
+                      niterations));
+        }
       
-      ACE_DEBUG ((LM_DEBUG,
-                  "get_number = %d\n",
-                  number));
+      if (debug)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "Issuing a synchronous method to collect the AMI replies\n"));
+        }
+      
+      CORBA::Long number = server->get_put_number (l,
+                                                   l,
+                                                   ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      if (shutdown_flag)
+        server->shutdown ();
     }
   ACE_CATCHANY
     {

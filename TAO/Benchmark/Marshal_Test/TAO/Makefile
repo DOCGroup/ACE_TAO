@@ -21,6 +21,10 @@ MARSHAL_SERVER_OBJS = marshalC.o marshalS.o tao_marshal_impl.o tao_marshal_serve
 
 BIN = client server
 
+BUILD = $(BIN)
+
+VLDLIBS = $(LDLIBS:%=%$(VAR))
+
 #----------------------------------------------------------------------------
 #	Include macros and targets
 #----------------------------------------------------------------------------

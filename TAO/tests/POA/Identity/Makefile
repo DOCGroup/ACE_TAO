@@ -16,6 +16,9 @@ LSRC = $(PROG_SRCS)
 PROG_OBJS = testC.o testS.o Identity.o
 
 BIN = Identity
+BUILD = $(BIN)
+VLDLIBS = $(LDLIBS:%=%$(VAR))
+VBIN = $(BIN:%=%$(VAR))
 
 #----------------------------------------------------------------------------
 #	Include macros and targets

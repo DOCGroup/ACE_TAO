@@ -1,10 +1,9 @@
 // -*- C++ -*-
 // $Id$
 
-#include "tao/UIOP_Factory.h"
-
 # if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
+#include "tao/UIOP_Factory.h"
 #include "tao/UIOP_Acceptor.h"
 #include "tao/UIOP_Connector.h"
 #include "ace/Dynamic_Service.h"
@@ -65,12 +64,6 @@ TAO_UIOP_Protocol_Factory::make_connector (void)
                   TAO_UIOP_Connector,
                   0);
   return connector;
-}
-
-int
-TAO_UIOP_Protocol_Factory::requires_explicit_endpoint (void) const
-{
-  return 1;
 }
 
 ACE_STATIC_SVC_DEFINE (TAO_UIOP_Protocol_Factory,

@@ -14,6 +14,8 @@ SVR_OBJS = cubitS.o cubit_impl.o server.o tpool.o
 
 LDLIBS	 = 
 
+VLDLIBS	 = $(LDLIBS:%=%$(VAR))
+
 #----------------------------------------------------------------------------
 #	Include macros and targets
 #----------------------------------------------------------------------------

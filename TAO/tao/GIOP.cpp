@@ -227,43 +227,37 @@ TAO_GIOP::dump_msg (const char *label,
 {
   if (TAO_debug_level >= 5)
     {
+      // Message name.
       const char *message_name = "UNKNOWN MESSAGE";
       u_long slot = ptr[TAO_GIOP_MESSAGE_TYPE_OFFSET];
       if (slot < sizeof (names)/sizeof(names[0]))
         message_name = names [slot];
+
+      // Byte order.
       int byte_order = ptr[TAO_GIOP_MESSAGE_FLAGS_OFFSET] & 0x01;
+      
+      // request/reply id.
+      CORBA::ULong tmp = 0;
+      CORBA::ULong *id = &tmp;
+      if (ptr[TAO_GIOP_MESSAGE_TYPE_OFFSET] == TAO_GIOP::Request ||
+          ptr[TAO_GIOP_MESSAGE_TYPE_OFFSET] == TAO_GIOP::Reply)
+        {
+          // @@ Only works if ServiceContextList is empty....
+          id = ACE_reinterpret_cast (CORBA::ULong *,
+                                     (char * ) (ptr + TAO_GIOP_HEADER_LEN + 4));
+        }
+
+      // Print.
       ACE_DEBUG ((LM_DEBUG,
-                  "(%P | %t):%s GIOP v%c.%c msg, %d data bytes, %s endian, %s",
+                  "(%P | %t):%s GIOP v%c.%c msg, %d data bytes, %s endian, %s = %d\n",
                   label,
                   digits[ptr[TAO_GIOP_VERSION_MAJOR_OFFSET]],
                   digits[ptr[TAO_GIOP_VERSION_MINOR_OFFSET]],
                   len - TAO_GIOP_HEADER_LEN,
                   (byte_order == TAO_ENCAP_BYTE_ORDER) ? "my" : "other",
-                  message_name));
-
-      if (ptr[TAO_GIOP_MESSAGE_TYPE_OFFSET] == TAO_GIOP::Request)
-        {
-          // @@ Only works if ServiceContextList is empty....
-          const CORBA::ULong *request_id =
-            ACE_reinterpret_cast (const CORBA::ULong *,
-                                  ptr + TAO_GIOP_HEADER_LEN + 4);
-          ACE_DEBUG ((LM_DEBUG,
-                      " = %d\n",
-                      *request_id));
-        }
-      else if (ptr[TAO_GIOP_MESSAGE_TYPE_OFFSET] == TAO_GIOP::Reply)
-        {
-          const CORBA::ULong *request_id =
-            ACE_reinterpret_cast (const CORBA::ULong *,
-                                  ptr + TAO_GIOP_HEADER_LEN + 4);
-          ACE_DEBUG ((LM_DEBUG,
-                      " = %d\n",
-                      *request_id));
-        }
-      else
-        ACE_DEBUG ((LM_DEBUG,
-                    "\n"));
-
+                  message_name,
+                  *id));
+      
       if (TAO_debug_level >= 10)
         ACE_HEX_DUMP ((LM_DEBUG,
                        (const char *) ptr,
@@ -879,7 +873,8 @@ int
 TAO_GIOP::process_server_message (TAO_Transport *transport,
                                   TAO_ORB_Core *orb_core,
                                   TAO_InputCDR &input,
-                                  const TAO_GIOP_Message_State &state)
+                                  const CORBA::Octet &message_type,
+                                  const TAO_GIOP_Version &giop_version)
 {
   char repbuf[ACE_CDR::DEFAULT_BUFSIZE];
 #if defined(ACE_HAS_PURIFY)
@@ -897,8 +892,8 @@ TAO_GIOP::process_server_message (TAO_Transport *transport,
                         orb_core->to_unicode ());
 
   TAO_MINIMAL_TIMEPROBE (TAO_SERVER_CONNECTION_HANDLER_RECEIVE_REQUEST_END);
-
-  switch (state.message_type)
+  
+  switch (message_type)
     {
     case TAO_GIOP::Request:
       // The following two routines will either raise an exception
@@ -907,14 +902,14 @@ TAO_GIOP::process_server_message (TAO_Transport *transport,
                                                orb_core,
                                                input,
                                                output,
-                                               state.giop_version);
+                                               giop_version);
 
     case TAO_GIOP::LocateRequest:
       return TAO_GIOP::process_server_locate (transport,
                                               orb_core,
                                               input,
                                               output,
-                                              state.giop_version);
+                                              giop_version);
 
     case TAO_GIOP::MessageError:
       if (TAO_debug_level > 0)
@@ -932,7 +927,7 @@ TAO_GIOP::process_server_message (TAO_Transport *transport,
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
                     "TAO (%P|%t) Illegal message received by server\n"));
-      return TAO_GIOP::send_error (state.giop_version, transport);
+      return TAO_GIOP::send_error (giop_version, transport);
     }
 
   TAO_MINIMAL_TIMEPROBE (TAO_SERVER_CONNECTION_HANDLER_HANDLE_INPUT_END);
@@ -983,17 +978,10 @@ TAO_GIOP::process_server_request (TAO_Transport *transport,
                                  0,
                                  0);
 
-          // @@ This debugging output should *NOT* be used since the
-          //    object key string is not null terminated, nor can it
-          //    be null terminated without copying.  No copying should 
-          //    be done since performance is somewhat important here.
-          //    So, just remove the debugging output entirely.
-          //
-          //           if (TAO_debug_level > 0)
-          //             ACE_DEBUG ((LM_DEBUG,
-          //                         "Simple Object key %s. "
-          //                         "Doing the Table Lookup ...\n",
-          //                         object_id.c_str ()));
+          if (TAO_debug_level > 0)
+            ACE_DEBUG ((LM_DEBUG,
+                        "Simple Object key %s. Doing the Table Lookup ...\n",
+                        object_id.c_str ()));
 
           CORBA::Object_ptr object_reference =
             CORBA::Object::_nil ();

@@ -32,7 +32,6 @@ ACE_RCSID(be, be_union, "$Id$")
 
 be_union::be_union (void)
 {
-  this->has_constructor (I_TRUE);  // always the case
 }
 
 be_union::be_union (AST_ConcreteType *dt, UTL_ScopedName *n, UTL_StrList *p)
@@ -44,7 +43,6 @@ be_union::be_union (AST_ConcreteType *dt, UTL_ScopedName *n, UTL_StrList *p)
     default_index_ (-2)
 {
   this->default_value_.computed_ = -2;
-  this->has_constructor (I_TRUE);  // always the case
 }
 
 // compute total number of members
@@ -102,7 +100,7 @@ be_union::compute_default_index (void)
                    ++j)
                 {
                   // check if we are printing the default case
-                  if (bub->label (j)->label_kind ()
+                  if (bub->label (j)->label_kind () 
                       == AST_UnionLabel::UL_default)
                     this->default_index_ = i; // zero based indexing
                   i++;
@@ -156,7 +154,7 @@ be_union::gen_var_defn (char *)
   // for over here.
 
   ch->indent (); // start with whatever was our current indent level
-  *ch << "class " << idl_global->stub_export_macro ()
+  *ch << "class " << idl_global->export_macro ()
       << " " << namebuf << nl;
   *ch << "{" << nl;
   *ch << "public:\n";
@@ -230,7 +228,7 @@ be_union::gen_var_impl (char *, char *)
   char lname [NAMEBUFSIZE];  // local _var names
 
   ACE_OS::memset (fname, '\0', NAMEBUFSIZE);
-  ACE_OS::sprintf (fname, "%s_var", this->fullname ());
+  ACE_OS::sprintf (fname, "%s_var", this->full_name ());
 
   ACE_OS::memset (lname, '\0', NAMEBUFSIZE);
   ACE_OS::sprintf (lname, "%s_var", local_name ()->get_string ());
@@ -464,7 +462,7 @@ be_union::gen_out_defn (char *)
   // generate the out definition (always in the client header)
   ch->indent (); // start with whatever was our current indent level
 
-  *ch << "class " << idl_global->stub_export_macro ()
+  *ch << "class " << idl_global->export_macro ()
       << " " << namebuf << nl;
   *ch << "{" << nl;
   *ch << "public:\n";
@@ -513,7 +511,7 @@ be_union::gen_out_impl (char *, char *)
   char lname [NAMEBUFSIZE];  // local _out names
 
   ACE_OS::memset (fname, '\0', NAMEBUFSIZE);
-  ACE_OS::sprintf (fname, "%s_out", this->fullname ());
+  ACE_OS::sprintf (fname, "%s_out", this->full_name ());
 
   ACE_OS::memset (lname, '\0', NAMEBUFSIZE);
   ACE_OS::sprintf (lname, "%s_out", local_name ()->get_string ());
@@ -783,7 +781,7 @@ be_union::compute_default_value (void)
   // default case is provided, it must be flagged off as an error. Our
   // front-end is not able to handle such a case since it is a semantic error
   // and not a syntax error. Such an error is caught here.
-
+  
   switch (this->udisc_type ())
     {
     case AST_Expression::EV_short:
@@ -808,10 +806,6 @@ be_union::compute_default_value (void)
       ACE_NOTREACHED (break;)
     case AST_Expression::EV_char:
       if (total_case_members == ACE_OCTET_MAX+1)
-        this->default_value_.computed_ = 0;
-      break;
-    case AST_Expression::EV_wchar:
-      if (total_case_members == ACE_WCHAR_MAX+1)
         this->default_value_.computed_ = 0;
       break;
     case AST_Expression::EV_bool:
@@ -854,7 +848,7 @@ be_union::compute_default_value (void)
                         -1);
       ACE_NOTREACHED (break;)
     } // end of switch
-
+  
   // if we have determined that we don't need a default case and even then a
   // default case was provided, flag this off as error
   if ((this->default_value_.computed_ == 0) &&
@@ -867,13 +861,13 @@ be_union::compute_default_value (void)
                          ASYS_TEXT ("- default clause is invalid here\n")),
                         -1);
     }
-
+  
   // proceed only if necessary
   switch (this->default_value_.computed_)
     {
     case -1:
       // error. We should never be here because errors have already been caught
-      // above
+      // above 
       return -1;
     case 0:
       // nothing more to do
@@ -901,9 +895,6 @@ be_union::compute_default_value (void)
     case AST_Expression::EV_char:
       this->default_value_.u.char_val = 0;
       break;
-    case AST_Expression::EV_wchar:
-      this->default_value_.u.wchar_val = 0;
-      break;
     case AST_Expression::EV_bool:
       this->default_value_.u.bool_val = 0;
       break;
@@ -923,9 +914,9 @@ be_union::compute_default_value (void)
     {
       si = new UTL_ScopeActiveIterator (this, UTL_Scope::IK_decls);
       // instantiate a scope iterator.
-
+      
       int break_loop = 0;
-
+      
       while (!(si->is_done ()) && !break_loop)
         {
           // get the next AST decl node
@@ -944,14 +935,14 @@ be_union::compute_default_value (void)
                         {
                           // error
                           this->default_value_.computed_ = -1;
-                          ACE_ERROR_RETURN
+                          ACE_ERROR_RETURN 
                             ((LM_ERROR,
                               ASYS_TEXT ("(%N:%l) be_union::")
                               ASYS_TEXT ("compute_default_value - ")
                               ASYS_TEXT ("Bad case label value\n")),
                              -1);
                         }
-
+                      
                       switch (expr->ev ()->et)
                         {
                           // check if they match in which case this
@@ -959,7 +950,7 @@ be_union::compute_default_value (void)
                           // start with a new value and try the whole loop
                           // again because our case labels may not be sorted
                         case AST_Expression::EV_short:
-                          if (this->default_value_.u.short_val
+                          if (this->default_value_.u.short_val 
                               == expr->ev ()->u.sval)
                             {
                               this->default_value_.u.short_val++;
@@ -967,7 +958,7 @@ be_union::compute_default_value (void)
                             }
                           break;
                         case AST_Expression::EV_ushort:
-                          if (this->default_value_.u.ushort_val
+                          if (this->default_value_.u.ushort_val 
                               == expr->ev ()->u.usval)
                             {
                               this->default_value_.u.ushort_val++;
@@ -975,7 +966,7 @@ be_union::compute_default_value (void)
                             }
                           break;
                         case AST_Expression::EV_long:
-                          if (this->default_value_.u.long_val
+                          if (this->default_value_.u.long_val 
                               == expr->ev ()->u.lval)
                             {
                               this->default_value_.u.long_val++;
@@ -983,7 +974,7 @@ be_union::compute_default_value (void)
                             }
                           break;
                         case AST_Expression::EV_ulong:
-                          if (this->default_value_.u.ulong_val
+                          if (this->default_value_.u.ulong_val 
                               == expr->ev ()->u.ulval)
                             {
                               this->default_value_.u.ulong_val++;
@@ -991,7 +982,7 @@ be_union::compute_default_value (void)
                             }
                           break;
                         case AST_Expression::EV_char:
-                          if (this->default_value_.u.char_val
+                          if (this->default_value_.u.char_val 
                               == expr->ev ()->u.cval)
                             {
                               this->default_value_.u.char_val++;
@@ -999,7 +990,7 @@ be_union::compute_default_value (void)
                             }
                           break;
                         case AST_Expression::EV_bool:
-                          if (this->default_value_.u.bool_val
+                          if (this->default_value_.u.bool_val 
                               == expr->ev ()->u.bval)
                             {
                               this->default_value_.u.bool_val++;
@@ -1009,7 +1000,7 @@ be_union::compute_default_value (void)
                         case AST_Expression::EV_any:
                           // this is the case of enums. We maintain
                           // evaluated values which always start with 0
-                          if (this->default_value_.u.enum_val
+                          if (this->default_value_.u.enum_val 
                               == expr->ev ()->u.eval)
                             {
                               this->default_value_.u.enum_val++;
@@ -1029,14 +1020,14 @@ be_union::compute_default_value (void)
           si->next ();
         } // end of while scope iterator loop
       delete si; // free the iterator object
-
+      
       // we have not aborted the inner loops which means we have found the
       // default value
       if (!break_loop)
         this->default_value_.computed_ = 1;
-
+      
     } // end of outer while
-
+  
   return 0;
 }
 

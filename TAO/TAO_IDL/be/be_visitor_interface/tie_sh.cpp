@@ -63,15 +63,15 @@ be_visitor_interface_tie_sh::visit_interface (be_interface *node)
   if (!node->is_nested ())
     {
       // we are outermost
-      ACE_OS::sprintf (namebuf, "POA_%s", node->local_name ()->get_string ());
+      ACE_OS::sprintf (namebuf, "POA_%s", node->local_name ());
       ACE_OS::sprintf (tiename, "POA_%s_tie",
-                       node->local_name ()->get_string ());
+                       node->local_name ());
     }
   else
     {
-      ACE_OS::sprintf (namebuf, "%s", node->local_name ()->get_string ());
+      ACE_OS::sprintf (namebuf, "%s", node->local_name ());
       ACE_OS::sprintf (tiename, "%s_tie",
-                       node->local_name ()->get_string ());
+                       node->local_name ());
     }
 
   // now generate the class definition
@@ -87,7 +87,7 @@ be_visitor_interface_tie_sh::visit_interface (be_interface *node)
 
   *os << "// TIE class: Refer to CORBA v2.2, Section 20.34.4" << be_nl;
   *os << "template <class T>" << be_nl;
-  *os << "class " << idl_global->skel_export_macro ()
+  *os << "class " << idl_global->export_macro ()
       << " " << tiename << " : public " << namebuf << be_nl;
   *os << "{" << be_nl
       << "public:" << be_idt_nl

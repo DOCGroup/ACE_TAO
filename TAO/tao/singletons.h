@@ -24,11 +24,6 @@
 #define TAO_SINGLETONS_H
 
 #include "ace/Singleton.h"
-
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-# pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
-
 #include "ace/Synch.h"
 #include "tao/Marshal.h"
 

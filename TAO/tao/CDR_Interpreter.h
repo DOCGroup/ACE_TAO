@@ -22,10 +22,6 @@
 
 #include "tao/corbafwd.h"
 
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-# pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
-
 // Useful typedefs.
 typedef size_t TAO_attribute_calculator (TAO_InputCDR *stream,
                                          size_t &alignment,
@@ -110,13 +106,13 @@ public:
   static size_t calc_nested_size_and_alignment (CORBA::TypeCode_ptr tc,
                                                 TAO_InputCDR *original_stream,
                                                 size_t &alignment,
-                                                CORBA_Environment &ACE_TRY_ENV =
+                                                CORBA_Environment &ACE_TRY_ENV = 
                                                   TAO_default_environment ());
   static size_t calc_nested_size_and_alignment_i (CORBA::TypeCode_ptr tc,
                                                   TAO_InputCDR *stream,
                                                   CORBA::TCKind kind,
                                                   size_t &alignment,
-                                                  CORBA_Environment &ACE_TRY_ENV =
+                                                  CORBA_Environment &ACE_TRY_ENV = 
                                                     TAO_default_environment ());
   // For a given typecode, figure out its size and alignment needs.
   // This version is used mostly when traversing other typecodes, and
@@ -150,7 +146,7 @@ public:
   static size_t calc_struct_and_except_attributes (TAO_InputCDR *stream,
                                                    size_t &alignment,
                                                    CORBA::Boolean is_exception,
-                                                   CORBA_Environment &ACE_TRY_ENV =
+                                                   CORBA_Environment &ACE_TRY_ENV = 
                                                     TAO_default_environment ());
   // Given typecode bytes for a structure (or exception), figure out
   // its alignment and size; return size, alignment is an 'out'
@@ -169,7 +165,7 @@ public:
 
   static size_t calc_struct_attributes (TAO_InputCDR *stream,
                                         size_t &alignment,
-                                        CORBA_Environment &ACE_TRY_ENV =
+                                        CORBA_Environment &ACE_TRY_ENV = 
                                           TAO_default_environment ());
   // Calculate size and alignment for a structure.
 
@@ -177,7 +173,7 @@ public:
 #if defined (TAO_NO_COPY_OCTET_SEQUENCES)
   static size_t calc_seq_attributes (TAO_InputCDR *stream,
                                      size_t &alignment,
-                                     CORBA_Environment &ACE_TRY_ENV =
+                                     CORBA_Environment &ACE_TRY_ENV = 
                                       TAO_default_environment ());
   // Calculate size and alignment for a sequence, most of them have
   // the same requirements, but for the sequences of Octets that are
@@ -186,14 +182,14 @@ public:
 
   static size_t calc_exception_attributes (TAO_InputCDR *stream,
                                            size_t &alignment,
-                                           CORBA_Environment &ACE_TRY_ENV =
+                                           CORBA_Environment &ACE_TRY_ENV = 
                                             TAO_default_environment ());
   // Calculate size and alignment for an exception.
 
 
   static size_t calc_union_attributes (TAO_InputCDR *stream,
                                        size_t &alignment,
-                                       CORBA_Environment &ACE_TRY_ENV =
+                                       CORBA_Environment &ACE_TRY_ENV = 
                                         TAO_default_environment ());
   // Calculate size and alignment for a CORBA discriminated union.
   //
@@ -206,13 +202,13 @@ public:
 
   static size_t calc_alias_attributes (TAO_InputCDR *stream,
                                        size_t &alignment,
-                                       CORBA_Environment &ACE_TRY_ENV =
+                                       CORBA_Environment &ACE_TRY_ENV = 
                                         TAO_default_environment ());
   // Calculate size and alignment for a typedeffed type.
 
   static size_t calc_array_attributes (TAO_InputCDR *stream,
                                        size_t &alignment,
-                                       CORBA_Environment &ACE_TRY_ENV =
+                                       CORBA_Environment &ACE_TRY_ENV = 
                                         TAO_default_environment ());
   // Calculate size and alignment of an array.  (All such arrays are
   // described as single dimensional, even though the IDL definition
@@ -222,7 +218,7 @@ public:
   static CORBA::Boolean match_value (CORBA::TCKind kind,
                                      TAO_InputCDR *tc_stream,
                                      const void *value,
-                                     CORBA_Environment &ACE_TRY_ENV =
+                                     CORBA_Environment &ACE_TRY_ENV = 
                                       TAO_default_environment ());
   // Cast the discriminant values to the right type and compare them.
 
@@ -230,7 +226,7 @@ public:
   calc_key_union_attributes (TAO_InputCDR *stream,
                              size_t &overall_alignment,
                              size_t &discrim_size_with_pad,
-                             CORBA_Environment &ACE_TRY_ENV =
+                             CORBA_Environment &ACE_TRY_ENV = 
                               TAO_default_environment ());
 
 

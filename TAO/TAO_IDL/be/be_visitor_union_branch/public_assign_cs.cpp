@@ -127,7 +127,7 @@ be_visitor_union_branch_public_assign_cs::visit_array (be_array *node)
   os = this->ctx_->stream ();
 
   // for anonymous arrays, the type name has a _ prepended. We compute the
-  // fullname with or without the underscore and use it later on.
+  // full_name with or without the underscore and use it later on.
   char fname [NAMEBUFSIZE];  // to hold the full and
 
   // save the node's local name and full name in a buffer for quick use later
@@ -143,18 +143,18 @@ be_visitor_union_branch_public_assign_cs::visit_array (be_array *node)
       if (bt->is_nested ())
         {
           be_decl *parent = be_scope::narrow_from_scope (bt->defined_in ())->decl ();
-          ACE_OS::sprintf (fname, "%s::_%s", parent->fullname (),
+          ACE_OS::sprintf (fname, "%s::_%s", parent->full_name (),
                            bt->local_name ()->get_string ());
         }
       else
         {
-          ACE_OS::sprintf (fname, "_%s", bt->fullname ());
+          ACE_OS::sprintf (fname, "_%s", bt->full_name ());
         }
     }
   else
     {
       // typedefed node
-      ACE_OS::sprintf (fname, "%s", bt->fullname ());
+      ACE_OS::sprintf (fname, "%s", bt->full_name ());
     }
 
   os->indent (); // start from current indentation
@@ -425,8 +425,7 @@ be_visitor_union_branch_public_assign_cs::visit_structure (be_structure *node)
 
   os->indent (); // start from current indentation
   // set the discriminant to the appropriate label
-  if (bt->size_type () == be_type::VARIABLE
-      || node->has_constructor ())
+  if (bt->size_type () == be_type::VARIABLE)
     {
       *os << "this->u_." << ub->local_name () << "_ = new "
           << bt->name () << " (*u.u_."

@@ -161,7 +161,7 @@ TAO_Transport::TAO_Transport (CORBA::ULong tag,
   this->ws_ = orb_core->client_factory ()->create_wait_strategy (this);
 
   // Create TMS now.
-  this->tms_ = orb_core->client_factory ()->create_transport_mux_strategy (orb_core);
+  this->tms_ = orb_core->client_factory ()->create_transport_mux_strategy (this);
 }
 
 TAO_Transport::~TAO_Transport (void)
@@ -215,9 +215,11 @@ TAO_Transport::bind_reply_dispatcher (CORBA::ULong request_id,
 }
 
 int
-TAO_Transport::wait_for_reply (ACE_Time_Value *max_wait_time)
+TAO_Transport::wait_for_reply (ACE_Time_Value *max_wait_time,
+                               int &reply_received)
 {
-  return this->ws_->wait (max_wait_time);
+  return this->ws_->wait (max_wait_time,
+                          reply_received);
 }
 
 // Read and handle the reply. Returns 0 when there is Short Read on
@@ -241,19 +243,25 @@ TAO_Transport::register_handler (void)
 int
 TAO_Transport::idle_after_send (void)
 {
-  return this->tms ()->idle_after_send (this);
+  return this->tms ()->idle_after_send ();
 }  
 
-int
-TAO_Transport::idle_after_reply (void)
-{
-  return this->tms ()->idle_after_reply (this);
-}
+// int
+// TAO_Transport::idle_after_reply (void)
+// {
+//   return this->tms ()->idle_after_reply ();
+// }
 
-int
-TAO_Transport::reply_received (const CORBA::ULong request_id)
+// int
+// TAO_Transport::reply_received (const CORBA::ULong request_id)
+// {
+//   return this->tms ()->reply_received (request_id);
+// }
+
+ACE_SYNCH_CONDITION *
+TAO_Transport::leader_follower_condition_variable (void)
 {
-  return this->tms ()->reply_received (request_id);
+  return this->wait_strategy ()->leader_follower_condition_variable ();
 }
 
 void
@@ -358,17 +366,6 @@ TAO_Connector::make_mprofile (const char *string,
       // Add the length of the colon and the two forward slashes `://'
       // to the IOR string index (i.e. 3)
     }
-
-  const int objkey_index =
-    ior.find (this->object_key_delimiter (), ior_index) + ior_index;
-  // Find the object key
-
-  if (objkey_index == 0 || objkey_index == ACE_CString::npos)
-    {
-      ACE_THROW_RETURN (CORBA::INV_OBJREF (), -1);
-      // Failure: No endpoints specified or no object key specified.
-    }
-
   const char endpoint_delimiter = ',';
   // The delimiter used to seperate inidividual addresses.
 
@@ -376,11 +373,9 @@ TAO_Connector::make_mprofile (const char *string,
   // of entries in the MProfile.
 
   CORBA::ULong profile_count = 1;
-  // Number of endpoints in the IOR  (initialized to 1).
+  // Number of endpoints in the IOR  (initialized to 1)
 
-  // Only check for endpoints after the protocol specification and
-  // before the object key.
-  for (int i = ior_index; i < objkey_index; ++i)
+  for (size_t i = 0; i < ior.length (); ++i)
     {
       if (ior[i] == endpoint_delimiter)
         profile_count++;
@@ -407,6 +402,16 @@ TAO_Connector::make_mprofile (const char *string,
   //    `1.3@moo/arf'
   //    `shu/arf'
   //    `1.1@chicken/arf'
+
+  int objkey_index =
+    ior.find (this->object_key_delimiter (), ior_index) + ior_index;
+  // Find the object key
+
+  if (objkey_index == 0 || objkey_index == ACE_CString::npos)
+    {
+      ACE_THROW_RETURN (CORBA::INV_OBJREF (), -1);
+      // Failure: No endpoints specified or no object key specified.
+    }
 
   int begin = 0;
   int end = ior_index - 1;

@@ -102,12 +102,6 @@ class ACE_Export Snmp : public transaction_result
     void result(transaction * t, int rc);
     // for async transaction results
 
-        static void override_host_name(const char* name);
-        // allow the host name to be overriden
-
-        static void get_host_name(char* name, int len);
-        // returns the overriden host name
-
  protected:
   void check_default_port(UdpTarget& target,unsigned short port=DEF_AGENT_PORT);
   int run_transaction(Pdu& pdu, UdpTarget& target);
@@ -127,8 +121,7 @@ class ACE_Export Snmp : public transaction_result
 
   unsigned req_id_;
   // transaction request id
-
-  static char host_name_[MAXHOSTNAMELEN];
 };
 
 #endif //SNMP_CLS_
+

@@ -649,17 +649,17 @@ public:
 
   ACE_Refcounted_Hash_Recyclable (const T &t,
                                   int refcount = 0,
-                                  ACE_Recyclable_State state = ACE_RECYCLABLE_UNKNOWN);
+                                  ACE_Recyclable::State state = ACE_Recyclable::UNKNOWN);
   // Constructor.
 
   virtual ~ACE_Refcounted_Hash_Recyclable (void);
   // Destructor
 
   int operator== (const ACE_Refcounted_Hash_Recyclable<T> &rhs) const;
-  int operator!= (const ACE_Refcounted_Hash_Recyclable<T> &rhs) const;
   // Compares two instances.
 
-  T &subject ();
+  int operator== (const T &rhs) const;
+  // Compares two instances.
 
 protected:
   u_long hash_i (void) const;
@@ -681,8 +681,6 @@ class ACE_Cached_Connect_Strategy : public ACE_Connection_Recycling_Strategy, pu
   //     plug-in connection strategy for <ACE_Strategy_Connector>.
   //     It's added value is re-use of established connections.
 public:
-
-  typedef ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX> SELF;
 
   ACE_Cached_Connect_Strategy (ACE_Creation_Strategy<SVC_HANDLER> *cre_s = 0,
                                ACE_Concurrency_Strategy<SVC_HANDLER> *con_s = 0,
@@ -749,11 +747,6 @@ public:
   virtual int cache (const void *recycling_act);
   // Add to cache.
 
-  virtual int recycle_state (const void *recycling_act,
-                             ACE_Recyclable_State new_state);
-  virtual ACE_Recyclable_State recycle_state (const void *recycling_act) const;
-  // Get/Set <recycle_state>.
-
   virtual int mark_as_closed (const void *recycling_act);
   // Mark as closed.
 
@@ -775,14 +768,12 @@ public:
   // = Typedefs for managing the map
   typedef ACE_Refcounted_Hash_Recyclable<ACE_PEER_CONNECTOR_ADDR>
           REFCOUNTED_HASH_RECYCLABLE_ADDRESS;
-  typedef ACE_Hash_Map_Manager<REFCOUNTED_HASH_RECYCLABLE_ADDRESS, SVC_HANDLER *, ACE_Null_Mutex>
+  typedef ACE_Hash_Map_Manager <REFCOUNTED_HASH_RECYCLABLE_ADDRESS, SVC_HANDLER *, ACE_Null_Mutex>
           CONNECTION_MAP;
-  typedef ACE_Hash_Map_Iterator<REFCOUNTED_HASH_RECYCLABLE_ADDRESS, SVC_HANDLER *, ACE_Null_Mutex>
+  typedef ACE_Hash_Map_Iterator <REFCOUNTED_HASH_RECYCLABLE_ADDRESS, SVC_HANDLER *, ACE_Null_Mutex>
           CONNECTION_MAP_ITERATOR;
   typedef ACE_Hash_Map_Entry<REFCOUNTED_HASH_RECYCLABLE_ADDRESS, SVC_HANDLER *>
           CONNECTION_MAP_ENTRY;
-
-  typedef ACE_Reverse_Lock<MUTEX> REVERSE_MUTEX;
 
   // = Strategy accessors
   virtual ACE_Creation_Strategy<SVC_HANDLER> *creation_strategy (void) const;
@@ -791,29 +782,11 @@ public:
 
 protected:
 
-  virtual int new_connection (SVC_HANDLER *&sh,
-                              const ACE_PEER_CONNECTOR_ADDR &remote_addr,
-                              ACE_Time_Value *timeout,
-                              const ACE_PEER_CONNECTOR_ADDR &local_addr,
-                              int reuse_addr,
-                              int flags,
-                              int perms);
-  // Creates a new connection.
-
-  int find (ACE_Refcounted_Hash_Recyclable<ACE_PEER_CONNECTOR_ADDR> &search_addr,
-            ACE_Hash_Map_Entry<ACE_Refcounted_Hash_Recyclable<ACE_PEER_CONNECTOR_ADDR>, SVC_HANDLER *> *&entry);
-  // Find an idle handle.
-
   virtual int purge_i (const void *recycling_act);
   // Remove from cache (non-locking version).
 
   virtual int cache_i (const void *recycling_act);
   // Add to cache (non-locking version).
-
-  virtual int recycle_state_i (const void *recycling_act,
-                               ACE_Recyclable_State new_state);
-  virtual ACE_Recyclable_State recycle_state_i (const void *recycling_act) const;
-  // Get/Set <recycle_state> (non-locking version).
 
   virtual int mark_as_closed_i (const void *recycling_act);
   // Mark as closed (non-locking version).
@@ -832,6 +805,15 @@ protected:
                     ACE_Hash_Map_Entry<ACE_Refcounted_Hash_Recyclable<ACE_PEER_CONNECTOR_ADDR>, SVC_HANDLER *> *&entry,
                     int &found);
 
+  virtual int connect_svc_handler_i (SVC_HANDLER *&sh,
+                             const ACE_PEER_CONNECTOR_ADDR &remote_addr,
+                             ACE_Time_Value *timeout,
+                             const ACE_PEER_CONNECTOR_ADDR &local_addr,
+                             int reuse_addr,
+                             int flags,
+                             int perms,
+                             int &found);
+
   int find_or_create_svc_handler_i (SVC_HANDLER *&sh,
                                     const ACE_PEER_CONNECTOR_ADDR &remote_addr,
                                     ACE_Time_Value *timeout,
@@ -842,16 +824,7 @@ protected:
                                     ACE_Hash_Map_Entry<ACE_Refcounted_Hash_Recyclable<ACE_PEER_CONNECTOR_ADDR>, SVC_HANDLER *> *&entry,
                                     int &found);
 
-  virtual int connect_svc_handler_i (SVC_HANDLER *&sh,
-                                     const ACE_PEER_CONNECTOR_ADDR &remote_addr,
-                                     ACE_Time_Value *timeout,
-                                     const ACE_PEER_CONNECTOR_ADDR &local_addr,
-                                     int reuse_addr,
-                                     int flags,
-                                     int perms,
-                                     int &found);
-
-  CONNECTION_MAP connection_map_;
+  CONNECTION_MAP connection_cache_;
   // Table that maintains the cache of connected <SVC_HANDLER>s.
 
   MUTEX *lock_;
@@ -859,9 +832,6 @@ protected:
 
   int delete_lock_;
   // Mutual exclusion for this object.
-
-  REVERSE_MUTEX *reverse_lock_;
-  // Reverse lock.
 
   // = Strategy objects.
 

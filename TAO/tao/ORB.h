@@ -21,11 +21,6 @@
 #define TAO_ORB_H
 
 #include "tao/corbafwd.h"
-
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-# pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
-
 #include "tao/Exception.h"
 #include "tao/IOR_LookupTable.h"
 #include "tao/Services.h"
@@ -516,10 +511,9 @@ public:
   // will remains compliant with the CORBA
   // <resolve_initial_references> specification.
 
-  CORBA_ORB_ObjectIdList_ptr list_initial_services (
-              CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
-  // Returns a sequence of ObjectIds that lists which objects have
-  // references available via the initial references mechanism.
+  // Unimplemented function - throws CORBA::NO_IMPLEMENT.
+  CORBA_ORB_ObjectIdList_ptr list_initial_services (CORBA_Environment &ACE_TRY_ENV =
+                                                    TAO_default_environment ());
 
 #if defined(TAO_HAS_CORBA_MESSAGING)
   CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
@@ -562,8 +556,6 @@ public:
 
   CORBA_Object_ptr key_to_object (const TAO_ObjectKey &key,
                                   const char *type_id,
-                                  TAO_ServantBase *servant = 0,
-                                  CORBA::Boolean collocated = 1,
                                   CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
   // Convert key into an object reference.  Return Object_ptr as out
   // parameter.  Errors will come through the environment.
@@ -575,10 +567,6 @@ public:
   // relationships to other OMG-IDL interfaces.  It's OK to provide a
   // null type ID.  Providing a null object key will result in an
   // INV_OBJREF exception.
-  //
-  // <servant> and <collocated> are used to created collocated object
-  // references.  All object references created by this function should
-  // be collocated object.
   //
   // Clients which invoke operations using one of these references
   // when the server is not active (or after the last reference to the
@@ -607,6 +595,12 @@ public:
   // Reference counting...
   virtual CORBA::ULong _incr_refcnt (void);
   virtual CORBA::ULong _decr_refcnt (void);
+
+  void should_shutdown (int value);
+  // Set the shutdown flag to <value>.
+
+  int should_shutdown (void);
+  // Get the shutdown flag value
 
   void _use_omg_ior_format (CORBA::Boolean ior);
   // Set the IOR flag.
@@ -708,6 +702,13 @@ private:
 
   ACE_SYNCH_MUTEX open_lock_;
   // Mutual exclusion for calling open.
+
+  ACE_Lock *shutdown_lock_;
+  // Pointer to our shutdown lock.
+
+  int should_shutdown_;
+  // Flag which denotes that the ORB should shut down and <run> should
+  // return.
 
   CORBA_Object_ptr name_service_;
   // If this is non-_nil(), then this is the object reference to our

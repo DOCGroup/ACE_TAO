@@ -6,6 +6,7 @@ LSRC =  $(SCHEDULE_SRCS)
 SCHEDULE_OBJS = $(SCHEDULE_SRCS:.cpp=.o)
 
 LDLIBS  = -lorbsvcs -lTAO
+VLDLIBS = $(LDLIBS:%=%$(VAR))
 
 BIN2 = Scheduling_Service
 

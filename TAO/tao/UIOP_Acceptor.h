@@ -23,10 +23,6 @@
 
 #include "ace/Acceptor.h"
 
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-# pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
-
 # if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
 #include "ace/LSOCK_Acceptor.h"
@@ -79,38 +75,25 @@ public:
   CORBA::ULong endpoint_count (void);
   // return the number of profiles this will generate
 
-  typedef ACE_Strategy_Acceptor<TAO_UIOP_Server_Connection_Handler, ACE_LSOCK_ACCEPTOR> TAO_UIOP_BASE_ACCEPTOR;
-  typedef TAO_Creation_Strategy<TAO_UIOP_Server_Connection_Handler> TAO_UIOP_CREATION_STRATEGY;
-  typedef TAO_Concurrency_Strategy<TAO_UIOP_Server_Connection_Handler> TAO_UIOP_CONCURRENCY_STRATEGY;
-  typedef TAO_Accept_Strategy<TAO_UIOP_Server_Connection_Handler, ACE_LSOCK_ACCEPTOR> TAO_UIOP_ACCEPT_STRATEGY;
+  typedef TAO_Acceptor_Impl<TAO_UIOP_Server_Connection_Handler,ACE_LSOCK_ACCEPTOR> TAO_UIOP_BASE_ACCEPTOR;
 
 private:
   int open_i (TAO_ORB_Core *orb_core, const char *rendezvous);
   // Implement the common part of the open*() methods
 
   void rendezvous_point (ACE_UNIX_Addr &, const char *rendezvous);
-  // Set the rendezvous point and verify that it is
+  // Set the rendezvous point and verify that it is 
   // valid (e.g. wasn't truncated because it was too long).
 
 private:
   TAO_UIOP_BASE_ACCEPTOR base_acceptor_;
   // the concrete acceptor, as a pointer to its base class.
 
-  TAO_UIOP_CREATION_STRATEGY *creation_strategy_;
-  TAO_UIOP_CONCURRENCY_STRATEGY *concurrency_strategy_;
-  TAO_UIOP_ACCEPT_STRATEGY *accept_strategy_;
-  // Acceptor strategies.
-
   TAO_GIOP_Version version_;
   // The GIOP version for this endpoint
 
   TAO_ORB_Core *orb_core_;
   // ORB Core.
-
-  int unlink_on_close_;
-  // Flag that determines whether or not the rendezvous point should
-  // be unlinked on close.  This is really only used when an error
-  // occurs.
 };
 
 # endif /* !ACE_LACKS_UNIX_DOMAIN_SOCKETS */

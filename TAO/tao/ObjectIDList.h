@@ -37,7 +37,7 @@
 // ObjectIdList
 // *************************************************************
 
-class TAO_Export CORBA_ORB_ObjectIdList : public
+class  CORBA_ORB_ObjectIdList : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
 TAO_Unbounded_String_Sequence
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
@@ -68,7 +68,7 @@ typedef CORBA_ORB_ObjectIdList *CORBA_ORB_ObjectIdList_ptr;
 // class CORBA::ORB::ObjectIdList_var
 // *************************************************************
 
-class TAO_Export CORBA_ORB_ObjectIdList_var
+class CORBA_ORB_ObjectIdList_var
 {
 public:
   CORBA_ORB_ObjectIdList_var (void); // default constructor
@@ -102,7 +102,7 @@ private:
 #if !defined (_CORBA_ORB_OBJECTIDLIST___OUT_CH_)
 #define _CORBA_ORB_OBJECTIDLIST___OUT_CH_
 
-class TAO_Export CORBA_ORB_ObjectIdList_out
+class CORBA_ORB_ObjectIdList_out
 {
 public:
   CORBA_ORB_ObjectIdList_out (CORBA_ORB_ObjectIdList *&);
@@ -125,8 +125,8 @@ private:
 
 #ifndef __ACE_INLINE__
 
-CORBA::Boolean TAO_Export operator<< (TAO_OutputCDR &, const CORBA_ORB_ObjectIdList &); //
-CORBA::Boolean TAO_Export operator>> (TAO_InputCDR &, CORBA_ORB_ObjectIdList &);
+CORBA::Boolean  operator<< (TAO_OutputCDR &, const CORBA_ORB_ObjectIdList &); //
+CORBA::Boolean  operator>> (TAO_InputCDR &, CORBA_ORB_ObjectIdList &);
 
 #endif /* __ACE_INLINE__ */
 

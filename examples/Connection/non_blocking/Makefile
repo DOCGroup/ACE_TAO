@@ -1,57 +1,60 @@
 #----------------------------------------------------------------------------
-#       $Id$
+#	$Id$
 #
-#       Makefile for the Connection pattern tests
+#	Makefile for the Connection pattern tests
 #----------------------------------------------------------------------------
 
 #----------------------------------------------------------------------------
-#       Local macros
+#	Local macros
 #----------------------------------------------------------------------------
 
-LIB     = libConn.a
-SHLIB   = libConn.$(SOEXT)
+LIB   	= libConn.a
+SHLIB 	= libConn.$(SOEXT)
 
-BIN     = test_sock_connector \
+BIN   	= test_sock_connector \
           test_sock_acceptor \
-          test_lsock_connector \
+	  test_lsock_connector \
           test_lsock_acceptor \
-          test_tli_connector \
-          test_tli_acceptor \
-          test_spipe_connector \
-          test_spipe_acceptor
+	  test_tli_connector \
+	  test_tli_acceptor \
+	  test_spipe_connector \
+	  test_spipe_acceptor
 
-PSRC    = $(addsuffix .cpp,$(BIN))
+PSRC   	= $(addsuffix .cpp,$(BIN))
 
-LSRC    = CPP-connector.cpp \
+LSRC  	= CPP-connector.cpp \
           CPP-acceptor.cpp
 
-LDLIBS  = -lConn
+LDLIBS 	= -lConn
+LIBS   += $(ACELIB)
+
+BUILD = $(VLIB) $(VSHLIB) $(SHLIBA) $(VBIN)
 
 #----------------------------------------------------------------------------
-#       Include macros and targets
+#	Include macros and targets
 #----------------------------------------------------------------------------
 
-include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
-include $(ACE_ROOT)/include/makeinclude/macros.GNU
-include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
-include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
-include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
-include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
-include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
+include		$(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+include		$(ACE_ROOT)/include/makeinclude/macros.GNU
+include		$(ACE_ROOT)/include/makeinclude/rules.common.GNU
+include		$(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
+include		$(ACE_ROOT)/include/makeinclude/rules.lib.GNU
+include		$(ACE_ROOT)/include/makeinclude/rules.bin.GNU
+include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 # To build multiple executables in the same directory on AIX, it works
 # best to wipe out any previously-created tempinc directory.
 # The compiler/linker isn't too smart about instantiating templates...
 ifdef TEMPINCDIR
-  COMPILE.cc := $(RM) -rf tempinc; $(COMPILE.cc)
+COMPILE.cc := $(RM) -rf tempinc; $(COMPILE.cc)
 endif
 
 #----------------------------------------------------------------------------
-#       Local targets
+#	Local targets
 #----------------------------------------------------------------------------
 
 #----------------------------------------------------------------------------
-#       Dependencies
+#	Dependencies
 #----------------------------------------------------------------------------
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.

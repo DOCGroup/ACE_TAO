@@ -15,6 +15,8 @@ FILES  	= ior-handler
 SRC   	= $(addsuffix .cpp,$(FILES))
 OBJ	= $(addsuffix .o,$(FILES))
 
+BUILD	= $(VBIN)
+
 TAO_IDLFLAGS += -Ge 1
 #----------------------------------------------------------------------------
 #	Include macros and targets

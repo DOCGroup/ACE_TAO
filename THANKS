@@ -23,7 +23,6 @@ Yamuna Krishnamurthy <yamuna@cs.wustl.edu>
 Fred Kuhns <fredk@cs.wustl.edu>
 David Levine <levine@cs.wustl.edu>
 Mike Moran <mm4@cs.wustl.edu>
-Sumedh Mungee <sumedh@cs.wustl.edu>
 Balachandran Natarajan <bala@cs.wustl.edu>
 Kirthika Parameswaran <kirthika@cs.wustl.edu>
 Carlos O'Ryan <coryan@cs.wustl.edu>
@@ -79,6 +78,7 @@ Chandra Venkatapathy <cvenkat@develop.bsis.com>
 Matt Stevens <mstevens@kirk.softeng.infonautics.com>
 Bob Vistica <robertv@ims.com>
 David Trumble <trumble@cvg.enet.dec.com>
+John Morey <jmorey@crl.com>
 George Reynolds <george@dvcorp.com>
 Hans Rohnert <hans.rohnert@mchp.siemens.de>
 Alex V. Maclinovsky <alexm@teltrunk1.tait.co.nz>
@@ -314,7 +314,7 @@ Achint Sandhu <sandhu@nortel.ca>
 Mitch Kuninsky <Mitch_Kuninsky@avid.com>
 Alex Chan <Alex.Chan@Aspect.com>
 Jeff Hellzen <JHellzen@hwdcsaws.cahwnet.gov>
-Thomas Venturella <thomas.e.venturella@boeing.com>
+Thomas Venturella <tventurell@mdc.com>
 Philippe O'Reilly <philippe@robot.ireq.ca>
 Stan Leeson <STANLEY.D.LEESON@cdev.com>
 Richard Keizer <RICHARD.L.KEIZER@cdev.com>
@@ -387,7 +387,7 @@ Johan Lundin <johan@lundin.com>
 Eric Powers <powerg@deltanet.com>
 Zheng Han <zhan@glenvan.glenayre.com>
 Gabriel Lima <gali@enea.se>
-Doug Anderson <dla@home.com>
+Doug Anderson <doug@clark.net>
 Hongyin Quan <hq1@arl.wustl.edu>
 Maximilian Hoferer <mhoferer@krones.de>
 Kevin Stanley <kstanley1@mdc.com>
@@ -484,7 +484,7 @@ Jon Lindgren <jlindgren@SLK.com>
 Steve Vinoski <vinoski@iona.com>
 Christian Mueffling <cvm@aiss.de>
 Victor Yu <victor.yu@computechnics.com.au>
-Jeff Donner <JDonner@schedsys.com>
+Jeff Donner's <JDonner@schedsys.com>
 Joe Loyall <jloyall@bbn.com>
 Stanislav Meduna <stanom@etm.co.at>
 Christian Korn <korn@gate.qaqa.com>
@@ -592,6 +592,7 @@ Dave Steele <Dave_Steele@Mitel.COM>
 Simeon Simeonov <simeons@allaire.com>
 David H. Whittington <david.h.whittington@boeing.com>
 Ian MacDonald <ianmacd@bg.com>
+Rene Matteau <matteau@ca.ibm.com>
 Hans Ridder <ridder@veritas.com>
 Todd Mullanix <Todd.Mullanix@sylantro.com>
 Hai Vu <Hai_Vu@Mitel.Com>
@@ -673,36 +674,12 @@ John Chludzinski <john_chludzinski@jsims.com>
 Pedro Alves Ferreira <pedro.ferreira@inescn.pt>
 Bruce Edge <bedge@sattel.com>
 Dan Butler <daniel.g.butler@boeing.com>
-Ron MacKenzie <ronm@SLAC.Stanford.EDU>
-Craig Rodrigues <rodrigc@mediaone.net>
-Surovegin Eugene <Surovegin@SoftLab.RU>
-Phil Y. Wang <yhwang@cs.columbia.edu>
-David Brock <dbrock@mail.arc.nasa.gov>
-John Morey <jmorey@tbi.com>
-Dwayne Burns <dburns@isrglobal.com>
-Denis Ouellet <douellet@gel.ulaval.ca>
-Stefan Ullrich <SUllrich@Heimannsystems.com>
-Brian Raven <brianr@liffe.com>
-Gheorghe Aprotosoaie <gaprotosoaie@paragonms.com>
-Roger Egbers <regbers@isrglobal.com>
-Carsten Zerbst <zerbst@tu-harburg.de>
-Paul Calabrese <calabrese_p@ociweb.com>
-Stephane Chatre <schatre@oresis.com>
-James Whitledge <jwhitledge@spyglass.com>
-Erik Johannes <ejohannes@oresis.com>
-Alex Hornby <alex@anvil.co.uk>
-Riaz Syed <syed@Lynx.COM>
-Clarence M. Weaver <clarence_m_weaver@md.northgrum.com>
-John Forest <forestj@res.raytheon.com>
-Roger Egbers <regbers@isrglobal.com>
-Ralf Kluthe <kluthe@iti.mu-luebeck.de>
-Ruud Diterwich<R.M.L.Diterwich@marin.nl>
 
 I would particularly like to thank Paul Stephenson, who worked with me
-at Ericsson.  Paul devised the recursive Makefile scheme that
-underlies this distribution and also spent countless hours with me
-discussing object-oriented techniques for developing distributed
-application frameworks.
+at Ericsson and is now at ObjectSpace.  Paul devised the recursive
+Makefile scheme that underlies this distribution and also spent
+countless hours with me discussing object-oriented techniques for
+developing distributed application frameworks.
 
 Finally, I'd also like to thank Todd L. Montgomery <tmont@cs.wvu.edu>,
 fellow heavy metal head, for fulfilling his quest to get ACE to

@@ -61,6 +61,8 @@ CosEC_Basic::init_ORB  (int argc, char *argv [])
 
       poa_manager->activate (ACE_TRY_ENV);
       ACE_TRY_CHECK;
+
+      return 0;
     }
   ACE_CATCHANY
     {
@@ -71,7 +73,7 @@ CosEC_Basic::init_ORB  (int argc, char *argv [])
   ACE_ENDTRY;
   ACE_CHECK_RETURN (-1);
 
-  return 0;
+  ACE_NOTREACHED (return 0;)
 }
 
 int
@@ -111,6 +113,8 @@ CosEC_Basic::init_RtEC (void)
                   str.in ()));
 
       this->ec_impl_->activate ();
+
+      return 0;
     }
   ACE_CATCHANY
     {
@@ -121,7 +125,7 @@ CosEC_Basic::init_RtEC (void)
   ACE_ENDTRY;
   ACE_CHECK_RETURN (-1);
 
-  return 0;
+  ACE_NOTREACHED (return 0;)
 }
 
 int
@@ -160,6 +164,8 @@ CosEC_Basic::init_CosEC (void)
 
       this->cos_ec_ = this->ec_i_._this (ACE_TRY_ENV);
       ACE_TRY_CHECK;
+
+      return 0;
     }
   ACE_CATCHANY
     {
@@ -170,7 +176,7 @@ CosEC_Basic::init_CosEC (void)
   ACE_ENDTRY;
   ACE_CHECK_RETURN (-1);
 
-  return 0;
+  ACE_NOTREACHED (return 0;)
 }
 
 int

@@ -133,19 +133,6 @@ int be_visitor_union_cs::visit_union (be_union *node)
                              "codegen for copy ctor failed\n"), -1);
         }
 
-      // If there is no explicit default case, but there
-      // is an implicit one, and the discriminant is an enum,
-      // we need this to avert warnings in some compilers that
-      // not all case values are included. If there is no
-      // implicit default case, or the discriminator is not
-      // an enum, this does no harm.
-      if (node->default_index () == -1)
-        {
-          os->indent ();
-          *os << "default:" << be_nl
-              << "break;" << be_uidt_nl;
-        }
-
       os->decr_indent ();
       *os << "}\n";
       os->decr_indent ();
@@ -176,19 +163,6 @@ int be_visitor_union_cs::visit_union (be_union *node)
                              "codegen for assign op failed\n"), -1);
         }
 
-      // If there is no explicit default case, but there
-      // is an implicit one, and the discriminant is an enum,
-      // we need this to avert warnings in some compilers that
-      // not all case values are included. If there is no
-      // implicit default case, or the discriminator is not
-      // an enum, this does no harm.
-      if (node->default_index () == -1)
-        {
-          os->indent ();
-          *os << "default:" << be_nl
-              << "break;" << be_uidt_nl;
-        }
-
       os->decr_indent ();
       *os << "}" << be_nl;
       *os << "return *this;\n";
@@ -200,7 +174,7 @@ int be_visitor_union_cs::visit_union (be_union *node)
       os->indent ();
       *os << "// reset method to reset old values of a union" << be_nl;
       *os << "void " << node->name () << "::_reset (" << bt->name ()
-          << ", CORBA::Boolean /*finalize*/)" << be_nl;
+          << ", CORBA::Boolean finalize)" << be_nl;
       *os << "{" << be_idt_nl;
       *os << "switch (this->disc_)" << be_nl;
       *os << "{" << be_idt_nl;
@@ -212,20 +186,6 @@ int be_visitor_union_cs::visit_union (be_union *node)
                              "codegen for reset failed\n"), -1);
         }
 
-      // If there is no explicit default case, but there
-      // is an implicit one, and the discriminant is an enum,
-      // we need this to avert warnings in some compilers that
-      // not all case values are included. If there is no
-      // implicit default case, or the discriminator is not
-      // an enum, this does no harm.
-      if (node->default_index () == -1)
-        {
-          os->decr_indent (0);
-          *os << "default:" << be_nl;
-          os->incr_indent ();
-          *os << "break;";
-        }
-
       *os << be_uidt_nl << "}" << be_uidt_nl
           << "}\n\n";
 
@@ -233,7 +193,7 @@ int be_visitor_union_cs::visit_union (be_union *node)
       os->indent ();
       *os << "// the virtual overloaded access method" << be_nl;
       *os << "void *" << node->name () << "::_access ("
-          << "CORBA::Boolean alloc_flag)" << be_nl;
+          << " CORBA::Boolean alloc_flag)" << be_nl;
       *os << "{" << be_idt_nl;
       *os << "switch (this->disc_)" << be_nl;
       *os << "{" << be_idt_nl;
@@ -246,22 +206,9 @@ int be_visitor_union_cs::visit_union (be_union *node)
                              "codegen for access failed\n"), -1);
         }
 
-      // If there is no explicit default case, but there
-      // is an implicit one, and the discriminant is an enum,
-      // we need this to avert warnings in some compilers that
-      // not all case values are included. If there is no
-      // implicit default case, or the discriminator is not
-      // an enum, this does no harm.
-      if (node->default_index () == -1)
-        {
-          os->decr_indent (0);
-          *os << "default:" << be_nl;
-          os->incr_indent ();
-          *os << "return 0;";
-        }
-
-      *os << be_uidt_nl << "}" << be_uidt_nl;
-      *os << "}\n\n";
+      *os << be_uidt_nl << "}" << be_nl;
+      *os << "return 0; // default" << be_uidt_nl
+          << "}\n\n";
 
 
       // by using a visitor to declare and define the TypeCode, we have the

@@ -201,8 +201,7 @@ Param_Test_Client<T>::run_dii_test (void)
 
       // then the result holder (length 1 because value is *replaced*)
       CORBA::NVList_var retval;
-      this->orb_->create_list (1, 
-                               retval.out ());
+      this->orb_->create_list (1, retval.out ());
 
       // create the request
       CORBA::Request_var req;
@@ -237,7 +236,7 @@ Param_Test_Client<T>::run_dii_test (void)
             ACE_DEBUG ((LM_DEBUG, "\n****** Before call values *****\n"));
 
           // Make the invocation, verify the result.
-          this->test_object_->dii_req_invoke (req.in (), 
+          this->test_object_->dii_req_invoke (req, 
                                               ACE_TRY_ENV);
           ACE_TRY_CHECK;
         }

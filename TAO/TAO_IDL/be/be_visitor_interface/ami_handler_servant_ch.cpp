@@ -12,11 +12,11 @@
 //
 // = DESCRIPTION
 //    Visitor generating AMI Reply Handler code for Interfaces in the
-//    client header.
+//    client header. 
 //
 // = AUTHOR
 //    Aniruddha Gokhale and Alexander Babu Arulanthu
-//    <alex@cs.wustl.edu>
+//    <alex@cs.wustl.edu>  
 //
 // ============================================================================
 
@@ -45,6 +45,9 @@ be_visitor_interface_ami_handler_servant_ch::~be_visitor_interface_ami_handler_s
 int
 be_visitor_interface_ami_handler_servant_ch::visit_interface (be_interface *node)
 {
+  be_interface_type_strategy *old_strategy =  
+    node->set_strategy (new be_interface_ami_handler_strategy (node));
+
    // Output stream.
   TAO_OutStream *os;
 
@@ -52,7 +55,7 @@ be_visitor_interface_ami_handler_servant_ch::visit_interface (be_interface *node
   static char namebuf [NAMEBUFSIZE];
 
   // AMI_<Interface_Name>_Handler string.
-  static char ami_handler [NAMEBUFSIZE];
+  static char ami_handler [NAMEBUFSIZE]; 
 
   if (node->srv_hdr_gen () || node->imported ())
     return 0;
@@ -61,32 +64,32 @@ be_visitor_interface_ami_handler_servant_ch::visit_interface (be_interface *node
   ACE_OS::memset (ami_handler, '\0', NAMEBUFSIZE);
 
   os = this->ctx_->stream ();
-
+  
   // Generate the skeleton class name.
 
   // Start with whatever indentation level we are at.
   os->indent ();
 
-  // We shall have a POA_ prefix only if we are at the topmost level.
+  // We shall have a POA_ prefix only if we are at the topmost level. 
   if (!node->is_nested ())
     {
       // we are outermost
       ACE_OS::sprintf (namebuf,
-                       "POA_AMI_%s_Handler",
-                       node->local_name ()->get_string ());
+                       "POA_%s",
+                       node->local_name ());
     }
   else
     {
       ACE_OS::sprintf (namebuf,
-                       "AMI_%s_Handler",
-                       node->local_name ()->get_string ());
+                       "%s",
+                       node->local_name ());
     }
 
   // AMI Handler object's name.
   ACE_OS::sprintf (ami_handler,
-                   "AMI_%s_Handler",
-                   node->local_name ()->get_string ());
-
+                   "%s",
+                   node->local_name ());
+  
   *os << "class " << namebuf << ";" << be_nl;
 
   // generate the _ptr declaration
@@ -94,8 +97,8 @@ be_visitor_interface_ami_handler_servant_ch::visit_interface (be_interface *node
       << "_ptr;" << be_nl;
 
   // Now generate the class definition.
-  // This class will inherit from the Messaging::ReplyHandler class.
-  *os << "class " << idl_global->stub_export_macro ()
+  // This class will inherit from the Messaging::ReplyHandler class. 
+  *os << "class " << idl_global->export_macro ()
       << " " << namebuf
       << " : public virtual POA_Messaging::ReplyHandler"
       << be_nl;
@@ -107,20 +110,20 @@ be_visitor_interface_ami_handler_servant_ch::visit_interface (be_interface *node
   // Default constructor.
   *os << "protected:" << be_idt_nl
       << namebuf << " (void);\n" << be_uidt_nl;
-
-  // Public portion starts.
+  
+  // Public portion starts. 
   *os << "public:" << be_idt_nl
-
+    
     // Copy constructor.
       << namebuf << " (const " << namebuf << "& rhs);" << be_nl
-
+    
     // Destructor.
       << "virtual ~" << namebuf << " (void);\n\n"
-
+      
       << be_nl;
-
+    
     // Methods.
-
+  
   // _is_a.
   *os << "virtual CORBA::Boolean _is_a (" << be_idt << be_idt_nl
       << "const char* logical_type_id," << be_nl
@@ -128,12 +131,12 @@ be_visitor_interface_ami_handler_servant_ch::visit_interface (be_interface *node
       << "TAO_default_environment ()"
       << be_uidt << be_uidt_nl
       << ");\n" << be_uidt_nl;
-
+  
   // _down_cast.
   *os << "virtual void* _downcast (" << be_idt << be_idt_nl
       << "const char* logical_type_id" << be_uidt_nl
       << ");\n" << be_uidt_nl;
-
+  
   // add a skeleton for our _is_a method
   *os << "static void _is_a_skel (" << be_idt << be_idt_nl
       << "CORBA::ServerRequest &req," << be_nl
@@ -164,7 +167,7 @@ be_visitor_interface_ami_handler_servant_ch::visit_interface (be_interface *node
       << ");\n" << be_uidt_nl;
 
   // Print out the _this() method.
-  *os << ami_handler << " *_this (" << be_idt << be_idt_nl
+  *os << node->local_name () << " *_this (" << be_idt << be_idt_nl
       << "CORBA::Environment &ACE_TRY_ENV = " << be_idt_nl
       << "TAO_default_environment ()"
       << be_uidt << be_uidt_nl
@@ -202,19 +205,41 @@ be_visitor_interface_ami_handler_servant_ch::visit_interface (be_interface *node
 
   *os << be_uidt_nl << "};\n\n";
 
-  // Generate the collocated class
   be_visitor_context ctx (*this->ctx_);
-  ctx.state (TAO_CodeGen::TAO_COLLOCATED_AMI_HANDLER_CH);
-  be_visitor *visitor = tao_cg->make_visitor (&ctx);
-  if (!visitor || (node->accept (visitor) == -1))
+  be_visitor *visitor = 0;
+
+  // generate the collocated class
+  if (idl_global->gen_thru_poa_collocation ())
     {
-      delete visitor;
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_interface_ami_handler_servant_ch::"
-                         "visit_interface - "
-                         "codegen for collocated class failed\n"),
-                        -1);
+      ctx.state (TAO_CodeGen::TAO_INTERFACE_THRU_POA_COLLOCATED_SH);
+      visitor = tao_cg->make_visitor (&ctx);
+      if (!visitor || (node->accept (visitor) == -1))
+        {
+          delete visitor;
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "be_visitor_interface_ami_handler_servant_ch::"
+                             "visit_interface - "
+                             "codegen for thru_poa_collocated class failed\n"),
+                            -1);
+        }
     }
+
+  if (idl_global->gen_direct_collocation ())
+    {
+      ctx = *this->ctx_;
+      ctx.state (TAO_CodeGen::TAO_INTERFACE_DIRECT_COLLOCATED_SH);
+      visitor = tao_cg->make_visitor (&ctx);
+      if (!visitor || (node->accept (visitor) == -1))
+        {
+          delete visitor;
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "be_visitor_interface_ami_handler_servant_ch::"
+                             "visit_interface - "
+                             "codegen for direct_collocated class failed\n"),
+                            -1);
+        }
+    }
+
 
 #if 0
   // @@ Do this (Alex).
@@ -238,6 +263,8 @@ be_visitor_interface_ami_handler_servant_ch::visit_interface (be_interface *node
 #if 0
   ctx.stream (tao_cg->server_template_header ());
 #endif /* 0 */
+
+  delete node->set_strategy (old_strategy);
 
   return 0;
 }

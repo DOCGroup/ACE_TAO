@@ -4,32 +4,46 @@
 // ============================================================================
 //
 // = LIBRARY
-//   ace
+//    ace
 //
 // = FILENAME
-//   CDR_Stream.h
+//    CDR.h
 //
 // = DESCRIPTION
-//   ACE Common Data Representation (CDR) marshaling and demarshaling
-//   classes.
+//     Common Data Representation (CDR) marshaling streams.
 //
-//   This implementation was inspired in the CDR class in SunSoft's
-//   IIOP engine, but has a completely different implementation and a
-//   different interface too.
+//     This implementation assumes that the native numeric
+//     representation is two's complement for integers, IEEE
+//     single/double for floats.  Also that characters are in ISO
+//     Latin/1.
 //
-//   The current implementation assumes that the host has 1-byte,
-//   2-byte and 4-byte integral types, and that it has single
-//   precision and double precision IEEE floats.
-//   Those assumptions are pretty good these days, with Crays beign
-//   the only known exception.
+//     Note that CDR itself makes no such assumptions, but this
+//     implementation makes such assumptions for reasons of
+//     efficiency.  Careful enhancements could preserve that
+//     efficiency where the assumptions are true, yet still allow the
+//     code to work when they aren't true.
+//
+//     The implementation expects that buffers are aligned according
+//     to the strongest CDR alignment restriction.
+//
+//     NOTE: this does everything "CDR 1.1" does ... that is, it
+//     supports the five extended OMG-IDL data types in UNO Appendix
+//     A, which provide richer arithmetic types (64 bit integers,
+//     "quad precision" FP) and UNICODE-based characters and strings.
+//     Those types are not standard parts of OMG-IDL at this time.
+//
+//     THREADING NOTE: CDR data structures must be protected against
+//     concurrent access by their owning thread.
 //
 // = AUTHORS
-//   Aniruddha Gokhale <gokhale@cs.wustl.edu> and Carlos O'Ryan
-//   <coryan@cs.wustl.edu> for the original implementation in TAO.
-//   ACE version by Jeff Parsons <parsons@cs.wustl.edu>
-//   and Istvan Buki <istvan.buki@euronet.be>.
-//   Codeset translation by Jim Rogers (jrogers@viasoft.com) and
-//   Carlos O'Ryan <coryan@cs.wustl.edu>
+//     Original copyright 1994-1995 by Sun Microsystems, Inc.  See
+//     $TAO_ROOT/COPYING.sun for more info.
+//     Many enhancements added by Aniruddha Gokhale
+//     <gokhale@cs.wustl.edu> and Carlos O'Ryan <coryan@cs.wustl.edu>
+//     for TAO.  ACE version by Jeff Parsons <parsons@cs.wustl.edu>
+//     and Istvan Buki <istvan.buki@euronet.be>.
+//     Codeset translation by Jim Rogers (jrogers@viasoft.com) and
+//     Carlos O'Ryan <coryan@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -143,7 +157,7 @@ public:
   # if    (defined (_MSC_VER) && (_MSC_VER >= 900)) \
           || (defined (__BORLANDC__) && (__BORLANDC__ >= 0x530))
       typedef __int64 LongLong;
-  # elif ACE_SIZEOF_LONG == 8 && !defined(_CRAYMPP)
+  # elif ACE_SIZEOF_LONG == 8
       typedef long LongLong;
   # elif ACE_SIZEOF_LONG_LONG == 8 && !defined (ACE_LACKS_LONGLONG_T)
   #   if defined (sun) && !defined (ACE_LACKS_U_LONGLONG_T) && !defined (__KCC)
@@ -179,11 +193,11 @@ public:
   #     else  /* ACE_SIZEOF_INT != 4 */
           // Applications will probably have trouble with this.
           char f[4];
-  #       if defined(_UNICOS) && !defined(_CRAYMPP)
-            Float (void);
-            Float (const float &init);
-            Float & operator= (const float &rhs);
-            int operator!= (const Float &rhs) const;
+  #       if defined(_UNICOS)
+        Float (void);
+        Float (const float &init);
+        float operator= (const Float &rhs) const;
+        int operator!= (const Float &rhs) const;
   #       endif /* _UNICOS */
   #     endif /* ACE_SIZEOF_INT != 4 */
       };

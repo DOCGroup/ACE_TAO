@@ -19,8 +19,8 @@ main (int argc, char *argv[])
 
   ACE_TRY
     {
-      int status = pp_test_server.init (argc,
-                                        argv,
+      int status = pp_test_server.init (argc, 
+                                        argv, 
                                         ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
@@ -35,6 +35,8 @@ main (int argc, char *argv[])
           pp_test_server.run (ACE_TRY_ENV);
           ACE_TRY_CHECK;
         }
+
+        return 0;
     }
   ACE_CATCH (CORBA::SystemException, sysex)
     {
@@ -52,6 +54,5 @@ main (int argc, char *argv[])
     }
   ACE_ENDTRY;
   ACE_TIMEPROBE_PRINT;
-
-  return 0;
+  ACE_NOTREACHED (return 0;)
 }

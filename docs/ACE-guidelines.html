@@ -607,7 +607,7 @@ bgcolor="#ffffff">
   <li><strong>I/O</strong><p>
   <ul>
      <li>Use <strong><code>ACE_DEBUG</code></strong> for printouts,
-         and <strong><code>ACE_OS::fprintf ()</code></strong> for
+         and <strong><code>ACE_OS::scanf/fprintf ()</code></strong> for
          file I/O.  Avoid using iostreams because of implementation
          differences across platforms.<p>
      <li>After attempting to open an existing file, always check for success.
@@ -645,26 +645,6 @@ bgcolor="#ffffff">
         This is because ACE also support platforms which use UNICODE
         in most of their APIs.  On these platforms, ACE also uses
         UNICODE as its system string type.<p>
-
-        Notice that when spaning a string literal across several lines,
-        you must apply <code>ASYS_TEXT</code> to <strong>every</strong>
-        line.  For example, it is <font color=red>illegal</font> to do this:
-        <pre>
-        ACE_ERROR ((LM_ERROR,
-                    ASYS_TEXT ("%p\n"),
-                    ASYS_TEXT ("\nerror: x is a null pointer in "
-                               "ACE_RB_Tree&lt;EXT_ID, INT_ID&gt;::"
-                               "RB_rotate_left\n")));
-        </pre></p>
-
-        <p>Instead, this should be written like this:
-        <pre>
-        ACE_ERROR ((LM_ERROR,
-                    ASYS_TEXT ("%p\n"),
-                    ASYS_TEXT ("\nerror: x is a null pointer in ")
-                    ASYS_TEXT ("ACE_RB_Tree&lt;EXT_ID, INT_ID&gt;::")
-                    ASYS_TEXT ("RB_rotate_left\n")));
-        </pre></p>
 
     <li><strong><code>ACE_TRACE</code></strong> handles conversion
         between char strings and UNICODE strings automatically.<p>
@@ -762,8 +742,7 @@ bgcolor="#ffffff">
           ~exe_foo ()
             { cerr &lt;&lt; "destructor of exception called" &lt;&lt; endl; }
           exe_foo (const exe_foo& foo) : data_ (foo.data_)
-            { cerr &lt;&lt; "copy constructor of exception called"
-                   &lt;&lt; endl; }
+            { cerr &lt;&lt; "copy constructor of exception called" &lt;&lt; endl; }
           int data_;
         };
 
@@ -783,52 +762,44 @@ bgcolor="#ffffff">
 
         int main ()
         {
-          cout &lt;&lt; endl &lt;&lt; "First exception" &lt;&lt; endl
-               &lt;&lt; endl;
+          cout &lt;&lt; endl &lt;&lt; "First exception" &lt;&lt; endl &lt;&lt; endl;
           try
             {
               good (0);
             }
           catch (exe_foo &foo)
             {
-              cerr &lt;&lt; "exception caught: " &lt;&lt; foo.data_
-                   &lt;&lt; endl;
+              cerr &lt;&lt; "exception caught: " &lt;&lt; foo.data_ &lt;&lt; endl;
             }
 
-          cout &lt;&lt; endl &lt;&lt; "Second exception" &lt;&lt; endl
-               &lt;&lt; endl;
+          cout &lt;&lt; endl &lt;&lt; "Second exception" &lt;&lt; endl &lt;&lt; endl;
           try
             {
               good (0);
             }
           catch (exe_foo foo)
             {
-              cerr &lt;&lt; "exception caught: " &lt;&lt; foo.data_
-                   &lt;&lt; endl;
+              cerr &lt;&lt; "exception caught: " &lt;&lt; foo.data_ &lt;&lt; endl;
             }
 
-          cout &lt;&lt; endl &lt;&lt; "Third exception" &lt;&lt; endl
-               &lt;&lt; endl;
+          cout &lt;&lt; endl &lt;&lt; "Third exception" &lt;&lt; endl &lt;&lt; endl;
           try
             {
               bad (1);
             }
           catch (exe_foo &foo)
             {
-              cerr &lt;&lt; "exception caught: " &lt;&lt; foo.data_
-                   &lt;&lt; endl;
+              cerr &lt;&lt; "exception caught: " &lt;&lt; foo.data_ &lt;&lt; endl;
             }
 
-          cout &lt;&lt; endl &lt;&lt; "Fourth exception" &lt;&lt; endl
-               &lt;&lt; endl;
+          cout &lt;&lt; endl &lt;&lt; "Fourth exception" &lt;&lt; endl &lt;&lt; endl;
           try
             {
               bad (1);
             }
           catch (exe_foo foo)
             {
-              cerr &lt;&lt; "exception caught: " &lt;&lt; foo.data_
-                   &lt;&lt; endl;
+              cerr &lt;&lt; "exception caught: " &lt;&lt; foo.data_ &lt;&lt; endl;
             }
 
           return 0;
@@ -1006,7 +977,8 @@ bgcolor="#ffffff">
   <ol>
     <li>Test your change on at least one platform.  All changes
       <strong>must</strong> be tested with egcs before commiting.
-      That means you may need to test on at least two platforms.<p>
+      That means you may need to test on two platforms.<p>
+    <li>Commit your change with a meaningful message.<p>
     <li>An an entry to the appropriate ChangeLog.  TAO and some
       ACE subdirectories, such as <a href="../ASNMP">ASNMP</a>,
       <a href="../apps/JAWS">JAWS</a>, and
@@ -1014,11 +986,6 @@ bgcolor="#ffffff">
       own ChangeLogs.  If you don't use one of those, use the
       <a href="../ChangeLog">ChangeLog</a> in the top-level
       <a href="..">ACE_wrappers</a> directory.<p>
-    <li>Commit your change using a message of this form:<p>
-<code>
-ChangeLogTag: Thu Jul 22 09:55:10 1999  David L. Levine
- &lt;levine@cs.wustl.edu&gt;
-</code><p>
     <li>If the change is in response to a request by someone else:
     <ol>
       <li>Make sure that person is acknowledged in
@@ -1038,9 +1005,7 @@ ChangeLogTag: Thu Jul 22 09:55:10 1999  David L. Levine
   Usage Guidelines</h3>
 <ul>
   <li>Always make sure that a change builds and executes correctly
-    on at least one platform before checking it into the CVS repository.
-    All changes <strong>must</strong> be tested with egcs before commiting.
-    That means you may need to test on at least two platforms.<p>
+      on at least one platform before checking it into the CVS repository.<p>
 </ul>
 
 
@@ -1058,9 +1023,9 @@ ChangeLogTag: Thu Jul 22 09:55:10 1999  David L. Levine
     the following code at the top of the script to pick up
     perl from the users <code>PATH</code>:<br>
       <pre>
-eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
-    & eval 'exec perl -S $0 $argv:q'
-    if 0;
+eval '(exit $?0)' &&
+     eval 'exec perl -S $0 ${1+"$@"}' &
+     eval 'exec perl -S $0 $argv:q' if 0;
       </pre><p>
 
   <li>Never, never, never start the first line of a script

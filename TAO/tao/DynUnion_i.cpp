@@ -104,18 +104,17 @@ TAO_DynUnion_i::~TAO_DynUnion_i (void)
 CORBA::Boolean
 TAO_DynUnion_i::set_as_default (CORBA::Environment& ACE_TRY_ENV)
 {
-  if ((CORBA::Long) this->current_index_
-      == this->type_->default_index (ACE_TRY_ENV))
+  if ((CORBA::Long) this->current_index_ == this->type_->default_index (ACE_TRY_ENV))
     return 1;
   else
     return 0;
 }
 
 void
-TAO_DynUnion_i::set_as_default (CORBA::Boolean /* set_as_default */,
-                                CORBA::Environment &)
+TAO_DynUnion_i::set_as_default (CORBA::Boolean set_as_default,
+                                CORBA::Environment&)
 {
-  // set_as_default should be treated as read-only and
+  // Set_as_default should be treated as read-only and
   // probably will be in a future spec. For now, since
   // the IDL compiler generated the virtual function,
   // we override it as a no-op.

@@ -142,8 +142,7 @@ TAO_EC_ProxyPushSupplier::connect_push_consumer (
   {
     ACE_GUARD_THROW_EX (
         ACE_Lock, ace_mon, *this->lock_,
-        CORBA::INTERNAL ());
-    // @@ RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
+        RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
     ACE_CHECK;
 
     if (this->is_connected_i ())
@@ -174,8 +173,7 @@ TAO_EC_ProxyPushSupplier::connect_push_consumer (
         {
           ACE_GUARD_THROW_EX (
               TAO_EC_Unlock, ace_mon, reverse_lock,
-              CORBA::INTERNAL ());
-          // @@ RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
+              RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
           ACE_CHECK;
 
           this->event_channel_->disconnected (this, ACE_TRY_ENV);
@@ -212,8 +210,7 @@ TAO_EC_ProxyPushSupplier::disconnect_push_supplier (
   {
     ACE_GUARD_THROW_EX (
         ACE_Lock, ace_mon, *this->lock_,
-        CORBA::INTERNAL ());
-    // @@ RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
+        RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
     ACE_CHECK;
 
     if (this->is_connected_i () == 0)
@@ -237,8 +234,7 @@ TAO_EC_ProxyPushSupplier::suspend_connection (CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_GUARD_THROW_EX (
             ACE_Lock, ace_mon, *this->lock_,
-            CORBA::INTERNAL ());
-  // @@ RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
+            RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
   ACE_CHECK;
 
   this->suspended_ = 1;
@@ -250,8 +246,7 @@ TAO_EC_ProxyPushSupplier::resume_connection (CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_GUARD_THROW_EX (
             ACE_Lock, ace_mon, *this->lock_,
-            CORBA::INTERNAL ());
-  // @@ RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
+            RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
   ACE_CHECK;
 
   this->suspended_ = 0;

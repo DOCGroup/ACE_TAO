@@ -95,10 +95,10 @@ TAO_Persistent_Context_Index::allocator (void)
   return allocator_;
 }
 
-CosNaming::NamingContext_ptr
-TAO_Persistent_Context_Index::root_context (void)
+char*
+TAO_Persistent_Context_Index::root_ior (void)
 {
-  return CosNaming::NamingContext::_duplicate (root_context_.in ());
+  return CORBA::string_dup (root_ior_.in ());
 }
 
 CORBA::ORB_ptr
@@ -136,12 +136,16 @@ TAO_Persistent_Context_Index::init (size_t context_size)
     {
       ACE_DECLARE_NEW_CORBA_ENV;
 
-      this->root_context_ =
+      CosNaming::NamingContext_var result =
         TAO_Persistent_Naming_Context::make_new_context (poa_.in (),
                                                          TAO_ROOT_NAMING_CONTEXT,
                                                          context_size,
                                                          this,
                                                          ACE_TRY_ENV);
+      ACE_CHECK_RETURN (-1);
+
+      this->root_ior_=
+        orb_->object_to_string (result.in (), ACE_TRY_ENV);
       ACE_CHECK_RETURN (-1);
     }
 
@@ -221,8 +225,11 @@ TAO_Persistent_Context_Index::recreate_all (void)
 
       // If this is the root Naming Context, take a note of it.
       if (context_impl->root ())
-          this->root_context_= result._retn ();
-
+        {
+          this->root_ior_=
+            orb_->object_to_string (result.in (), ACE_TRY_ENV);
+          ACE_CHECK_RETURN (-1);
+        }
     } while (index_iter->advance ());
 
   return 0;

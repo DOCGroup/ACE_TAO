@@ -408,7 +408,7 @@ TAO_IIOP_Profile::to_string (CORBA::Environment &)
                   1 /* colon separator */ +
                   5 /* port number */ +
                   1 /* object key separator */ +
-                  ACE_OS::strlen (key.in ()));
+                  ACE_OS::strlen (key));
 
   CORBA::String buf = CORBA::string_alloc (buflen);
 

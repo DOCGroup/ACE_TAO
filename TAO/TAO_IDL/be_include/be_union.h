@@ -22,14 +22,6 @@
 #ifndef BE_UNION_H
 #define BE_UNION_H
 
-#include "be_type.h"
-#include "be_scope.h"
-#include "ast_union.h"
-
-class AST_ConcreteType;
-class UTL_StrList;
-class be_visitor;
-
 /*
  * BE_Union
  */
@@ -67,7 +59,7 @@ public:
   // return the default index used
 
   virtual idl_bool in_recursion (be_type *node = 0);
-  // ar we or the parameter node involved in some kind of recursion
+  // ar we or the parameter node involved in some kind of recursion 
 
   // Visiting
   virtual int accept (be_visitor *visitor);
@@ -82,7 +74,6 @@ public:
     union PermittedTypes
     {
       char char_val;
-      ACE_CDR::WChar wchar_val;
       unsigned long bool_val;
       ACE_INT16 short_val;
       ACE_UINT16 ushort_val;

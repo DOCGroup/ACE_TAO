@@ -22,12 +22,6 @@
 #ifndef BE_STRING_H
 #define BE_STRING_H
 
-#include "be_type.h"
-#include "ast_string.h"
-
-class AST_Expression;
-class be_visitor;
-
 /*
  * BE_String
  */

@@ -115,6 +115,9 @@ Notifier_Handler::init (int argc,
          Event_Comm::Notifier::_narrow (notifier_obj.in (),
 					ACE_TRY_ENV);
       ACE_TRY_CHECK;
+
+      return 0;
+
   }
  ACE_CATCHANY
    {
@@ -124,5 +127,5 @@ Notifier_Handler::init (int argc,
    }
  ACE_ENDTRY;
 
- return 0;
+ ACE_NOTREACHED (return 0;)
 }

@@ -124,6 +124,7 @@ TAO_Stub::add_forward_profiles (const TAO_MProfile &mprofiles)
   // make sure we start at the beginning of mprofiles
   this->forward_profiles_->rewind ();
 }
+
 // Quick'n'dirty hash of objref data, for partitioning objrefs into
 // sets.
 //
@@ -927,7 +928,6 @@ TAO_Stub::validate_connection (
   inconsistent_policies = 0;
   return 0;
 }
-
 
 #endif /* TAO_HAS_CORBA_MESSAGING */
 

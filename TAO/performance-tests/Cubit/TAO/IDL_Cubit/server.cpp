@@ -1,11 +1,5 @@
 // $Id$
 
-#include "ace/inc_user_config.h"
-#if defined (VXWORKS)
-# undef ACE_MAIN
-# define ACE_MAIN server
-#endif /* VXWORKS */
-
 #include "Cubit_Server.h"
 #include "tao/Timeprobe.h"
 #include "ace/Sched_Params.h"

@@ -21,11 +21,6 @@
 #define TAO_IIOP_PROFILE_H
 
 #include "tao/ORB.h"
-
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-# pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
-
 #include "tao/Pluggable.h"
 #include "tao/Object_KeyC.h"
 #include "tao/GIOP.h"
@@ -71,7 +66,7 @@ public:
 
   TAO_IIOP_Profile (const char *string,
                     TAO_ORB_Core *orb_core,
-                    CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
+                    CORBA::Environment &ACE_TRY_ENV);
   // Create object using a string ior.
 
   TAO_IIOP_Profile (const TAO_IIOP_Profile &pfile);
@@ -87,10 +82,10 @@ public:
   // Destructor is to be called only through <_decr_refcnt>.
 
   int parse_string (const char *string,
-                    CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
+                    CORBA::Environment &ACE_TRY_ENV);
   // Initialize this object using the given input string.
 
-  CORBA::String to_string (CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
+  CORBA::String to_string (CORBA::Environment &ACE_TRY_ENV);
   // Return a string representation for this profile.
   // client must deallocate memory.
 

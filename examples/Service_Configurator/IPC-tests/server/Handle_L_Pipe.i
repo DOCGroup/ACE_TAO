@@ -8,6 +8,18 @@ Handle_L_Pipe::~Handle_L_Pipe (void)
 {
 }
 
+/* Uppercase N bytes of S. */
+
+static char *
+upper_case (char s[], int n)
+{
+  while (--n >= 0)
+    if (islower (s[n]))
+      s[n] = toupper (s[n]);
+
+  return s;
+} 
+
 ACE_INLINE
 Handle_L_Pipe::Handle_L_Pipe (void)
 {
@@ -82,6 +94,37 @@ ACE_INLINE int
 Handle_L_Pipe::get_handle (void) const
 { 
   return ACE_LSOCK_Acceptor::get_handle (); 
+}
+
+ACE_INLINE int 
+Handle_L_Pipe::handle_input (ACE_HANDLE)
+{
+  ACE_LSOCK_Stream   new_local_stream;
+  int n;
+  ACE_HANDLE fd1 = ACE_INVALID_HANDLE;
+  ACE_HANDLE fd2 = ACE_INVALID_HANDLE;
+  char buf[BUFSIZ];
+
+  if (this->accept (new_local_stream) == -1)
+    return -1;
+
+  if (new_local_stream.recv_handle (fd1) == -1 
+      || new_local_stream.recv_handle (fd2) == -1)
+    return -1;
+  else
+    ACE_DEBUG ((LM_INFO, "received file descriptors %d and %d\n", fd1, fd2));
+
+  if ((n = ACE_OS::read (fd1, buf, sizeof buf)) == -1)
+    return -1;
+  else if (ACE_OS::write (fd2, upper_case (buf, n), n) == -1)
+    return -1;
+  if (ACE_OS::close (fd1) == -1 
+      || ACE_OS::close (fd2) == -1)
+    return -1;
+  if (new_local_stream.close () == -1)
+    return -1;
+
+  return 0;
 }
 
 ACE_INLINE int

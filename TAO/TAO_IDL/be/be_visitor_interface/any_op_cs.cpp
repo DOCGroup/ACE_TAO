@@ -53,26 +53,45 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
 
   os->indent ();
   // Generate the stub factory function pointer definition.
-  *os << node->name () << "_ptr (*";
+  *os << node->full_name () << "_ptr (*";
 
   *os << "_TAO_collocation_"
-      << node->flatname () << "_Stub_Factory_function_pointer) ("
+      << node->flat_name () << "_Stub_Factory_function_pointer) ("
       << be_idt << be_idt_nl
       << "CORBA::Object_ptr obj" << be_uidt_nl
       << ") = 0;" << be_uidt_nl;
 
+  // @@ Michael: This might not be the right place .. 
+  if (idl_global->ami_call_back () == I_TRUE)
+  {
+    // AMI Handler stuff
+    be_interface_type_strategy *old_strategy =  
+      node->set_strategy (new be_interface_ami_handler_strategy (node));
+
+    os->indent ();
+    // Generate the stub factory function pointer definition.
+    *os << node->full_name () << "_ptr (*";
+
+    *os << "_TAO_collocation_"
+        << node->flat_name () << "_Stub_Factory_function_pointer) ("
+        << be_idt << be_idt_nl
+        << "CORBA::Object_ptr obj" << be_uidt_nl
+        << ") = 0;" << be_uidt_nl;
+
+    delete node->set_strategy (old_strategy);
+  }
 
   // generate the Any <<= and >>= operator declarations
   // Any <<= and >>= operators
   os->indent ();
   *os << "void operator<<= (CORBA::Any &_tao_any, "
-      << node->name () << "_ptr _tao_elem)" << be_nl
+      << node->full_name () << "_ptr _tao_elem)" << be_nl
       << "{" << be_idt_nl
       << "CORBA::Object_ptr *_tao_obj_ptr = 0;" << be_nl
       << "ACE_TRY_NEW_ENV" << be_nl
       << "{" << be_idt_nl
       << "ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);" << be_nl
-      << "*_tao_obj_ptr = " << node->name ()
+      << "*_tao_obj_ptr = " << node->full_name ()
       << "::_duplicate (_tao_elem);" << be_nl
       << "_tao_any.replace (" << node->tc_name () << ", "
       << "_tao_obj_ptr, 1, ACE_TRY_ENV);" << be_nl
@@ -86,12 +105,12 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
       << "}\n" << be_nl;
 
   *os << "CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, "
-      << node->name () << "_ptr &_tao_elem)" << be_nl
+      << node->full_name () << "_ptr &_tao_elem)" << be_nl
       << "{" << be_idt_nl
       << "CORBA::Object_ptr *tmp = 0;" << be_nl
       << "ACE_TRY_NEW_ENV" << be_nl
       << "{" << be_idt_nl
-      << "_tao_elem = " << node->name () << "::_nil ();" << be_nl
+      << "_tao_elem = " << node->full_name () << "::_nil ();" << be_nl
       << "CORBA::TypeCode_var type = _tao_any.type ();" << be_nl
       << "if (!type->equal (" << node->tc_name ()
       << ", ACE_TRY_ENV)) return 0; // not equal" << be_nl
@@ -104,7 +123,7 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
       << ", &_tao_obj_var.out (), 0, ACE_TRY_ENV)" << be_nl
       << "   == CORBA::TypeCode::TRAVERSE_CONTINUE)" << be_nl
       << "{" << be_idt_nl
-      << "_tao_elem = " << node->name ()
+      << "_tao_elem = " << node->full_name ()
       << "::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);" << be_nl
       << "ACE_TRY_CHECK;" << be_nl
       << "*tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object"
@@ -127,18 +146,18 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
 
   *os << "#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)" << be_idt_nl
       << "template class TAO_Object_Field_T<"
-      << node->name () << ","
-      << node->name () << "_var>;" << be_uidt_nl
+      << node->full_name () << ","
+      << node->full_name () << "_var>;" << be_uidt_nl
       << "template class TAO_Object_Manager<"
-      << node->name () << ","
-      << node->name () << "_var>;" << be_uidt_nl
+      << node->full_name () << ","
+      << node->full_name () << "_var>;" << be_uidt_nl
       << "#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)" << be_nl
       << "#  pragma instantiate TAO_Object_Field_T<"
-      << node->name () << ","
-      << node->name () << "_var>" << be_uidt_nl
+      << node->full_name () << ","
+      << node->full_name () << "_var>" << be_uidt_nl
       << "#  pragma instantiate TAO_Object_Manager<"
-      << node->name () << ","
-      << node->name () << "_var>" << be_uidt_nl
+      << node->full_name () << ","
+      << node->full_name () << "_var>" << be_uidt_nl
       << "#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */\n\n";
 
   // all we have to do is to visit the scope and generate code

@@ -131,7 +131,7 @@ int be_visitor_union_ci::visit_union (be_union *node)
         }
 
       // generate the ifdefined macro for the array type
-      os->gen_ifdef_macro (node->flatname (), "_var");
+      os->gen_ifdef_macro (node->flat_name (), "_var");
       if (node->gen_var_impl () == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -143,7 +143,7 @@ int be_visitor_union_ci::visit_union (be_union *node)
 
       // generate the ifdefined macro for the array type then generate the _out
       // impl
-      os->gen_ifdef_macro (node->flatname (), "_out");
+      os->gen_ifdef_macro (node->flat_name (), "_out");
       if (node->size_type () == be_decl::VARIABLE
           && node->gen_out_impl () == -1)
         {

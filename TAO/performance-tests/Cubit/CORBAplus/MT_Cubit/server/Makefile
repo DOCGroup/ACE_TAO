@@ -20,6 +20,9 @@ LSRC = $(IDL_SRC) $(PROG_SRCS)
 CUBIT_SVR_OBJS = cubit.o cubit_s.o svr.o cubit_i.o
 
 BIN = svr
+BUILD = $(BIN)
+VLDLIBS = $(LDLIBS:%=%$(VAR))
+VBIN = $(BIN:%=%$(VAR))
 
 #----------------------------------------------------------------------------
 #	Include macros and targets

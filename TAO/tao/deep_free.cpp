@@ -181,18 +181,10 @@ TAO_Marshal_Struct::deep_free (CORBA::TypeCode_ptr  tc,
       ACE_THROW_RETURN (CORBA::BAD_TYPECODE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE), CORBA::TypeCode::TRAVERSE_STOP);
     }
 
-  // In case this hasn't been done yet.
-  source = ptr_align_binary (source, 
-                             tc->alignment (ACE_TRY_ENV));
-  ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
-
   CORBA::TypeCode::traverse_status retval = CORBA::TypeCode::TRAVERSE_CONTINUE;
   CORBA::TypeCode_ptr param;
-  CORBA::Long size, alignment, align_offset;
+  CORBA::Long size;
 
-  void *start_addr = (void *)source;
-
-  // Number of fields in the struct.
   // compute the number of fields in the struct
   int member_count = tc->member_count (ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
@@ -207,20 +199,6 @@ TAO_Marshal_Struct::deep_free (CORBA::TypeCode_ptr  tc,
       // get the size of the field
       size = param->size (ACE_TRY_ENV);
       ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
-
-      alignment = param->alignment (ACE_TRY_ENV);
-      ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
-
-      align_offset =
-        (ptr_arith_t) ptr_align_binary (source, alignment)
-        - (ptr_arith_t) source
-        + (ptr_arith_t) ptr_align_binary (start_addr, alignment)
-        - (ptr_arith_t) start_addr;
-      // if both the start_addr and data are not aligned as per
-      // the alignment, we do not add the offset
-      source = (const void *) ((ptr_arith_t) source +
-                               ((align_offset == alignment) ?
-                               0 : align_offset));
 
       // Since every exception-throwing function is followed by a break, we'll just
       // check for exception after the switch.

@@ -3,20 +3,6 @@
 // ACE_LSOCK Server.
 
 #include "ace/LSOCK_Acceptor.h"
-
-#if defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
-int
-main (int, char *argv[])
-{
-  ACE_ERROR_RETURN ((LM_INFO,
-                     ASYS_TEXT ("%s: not supported with ")
-                     ASYS_TEXT ("ACE_LACKS_UNIX_DOMAIN_SOCKETS\n"),
-                     argv[0]),
-                     -1);
-}
-
-#else  /* ! ACE_LACKS_UNIX_DOMAIN_SOCKETS */
-
 #include "ace/UNIX_Addr.h"
 #include "CPP-acceptor.h"
 
@@ -56,4 +42,3 @@ template class Svc_Handler<ACE_LSOCK_STREAM>;
 #pragma instantiate Svc_Handler<ACE_LSOCK_STREAM>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-#endif /* ! ACE_LACKS_UNIX_DOMAIN_SOCKETS */

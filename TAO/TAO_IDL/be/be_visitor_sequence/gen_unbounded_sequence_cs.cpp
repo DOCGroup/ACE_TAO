@@ -65,7 +65,7 @@ be_visitor_sequence_cs::gen_unbounded_sequence (be_sequence *node)
   if (node->is_nested ())
     {
       ACE_OS::sprintf (full_class_name, "%s::%s",
-                       be_scope::narrow_from_scope (node->defined_in ())->decl ()->fullname (),
+                       be_scope::narrow_from_scope (node->defined_in ())->decl ()->full_name (),
                        class_name);
     }
   else
@@ -92,8 +92,7 @@ be_visitor_sequence_cs::gen_unbounded_sequence (be_sequence *node)
       << full_class_name << "::_allocate_buffer (CORBA::ULong length)" << be_nl
       << "{" << be_idt_nl;
   pt->accept (visitor);
-  *os << "* tmp = 0;" << be_nl
-      << "tmp = " << full_class_name << "::allocbuf (length);" << be_nl
+  *os <<"* tmp = " << full_class_name << "::allocbuf (length);" << be_nl
       << be_nl
       << "if (this->buffer_ != 0)" << be_nl
       << "{" << be_idt_nl;

@@ -4,70 +4,122 @@
 #ifndef JAWS_FILECACHE_H
 #define JAWS_FILECACHE_H
 
-#include "ace/OS.h"
-#include "ace/FILE_IO.h"
-
 #include "JAWS/Cache_Manager.h"
-#include "JAWS/FILE.h"
-#include "JAWS/Export.h"
 
-class JAWS_Export JAWS_Referenced_Filecache_Factory
+class ACE_Export JAWS_Referenced_Filecache_Factory
   : public JAWS_Referenced_Cache_Object_Factory
 {
 public:
 
-  virtual void destroy (JAWS_Cache_Object *);
+  virtual void destroy (ACE_Cache_Object *);
 
 };
 
-class JAWS_Export JAWS_Counted_Filecache_Factory
+class ACE_Export JAWS_Counted_Filecache_Factory
   : public JAWS_Counted_Cache_Object_Factory
 {
 public:
 
-  virtual void destroy (JAWS_Cache_Object *);
+  virtual void destroy (ACE_Cache_Object *);
 
 };
 
-typedef JAWS_Cache_Manager<JAWS_Strdup_String,
-                           JAWS_Referenced_Filecache_Factory,
-                           JAWS_String_Hash_Functor,
-                           JAWS_String_Equal_Functor>
+typedef ACE_Cache_Manager<ACE_Strdup_String,
+                          JAWS_Referenced_Filecache_Factory,
+                          ACE_String_Hash_Functor,
+                          ACE_String_Equal_Functor>
         JAWS_Referenced_Filecache_Manager;
 
-typedef JAWS_Cache_Manager<JAWS_Strdup_String,
-                           JAWS_Counted_Filecache_Factory,
-                           JAWS_String_Hash_Functor,
-                           JAWS_String_Equal_Functor>
+typedef ACE_Cache_Manager<ACE_Strdup_String,
+                          JAWS_Counted_Filecache_Factory,
+                          ACE_String_Hash_Functor,
+                          ACE_String_Equal_Functor>
         JAWS_Counted_Filecache_Manager;
 
-typedef JAWS_Referenced_Filecache_Manager JAWS_Filecache_Manager;
-
-typedef JAWS_Cache_Proxy<const char *,
-                         JAWS_FILE, JAWS_Filecache_Manager>
-        JAWS_Filecache_Proxy;
-
-class JAWS_Export JAWS_Cached_FILE : private JAWS_Filecache_Proxy
+class ACE_Export JAWS_Filecache_Manager
 {
 public:
 
-  JAWS_Cached_FILE (const char *const &filename,
-                    JAWS_Filecache_Proxy::Cache_Manager *cm = 0);
-  JAWS_Cached_FILE (const char *const &filename,
-                    JAWS_FILE *&file,
-                    size_t size,
-                    JAWS_Filecache_Proxy::Cache_Manager *cm = 0);
+  JAWS_Filecache_Manager (ACE_Allocator *alloc = 0,
+                          JAWS_Cache_Object_Factory *cof = 0,
 
-  ~JAWS_Cached_FILE (void);
+                          size_t hashsize = 2048,
+                          size_t maxsize = 65535,
 
-  ACE_FILE_IO * file (void);
-  ACE_Mem_Map * mmap (void);
+                          size_t maxobjsize = 256,
+                          size_t minobjsize = 0,
+
+                          size_t highwater = 100,
+                          size_t lowwater = 50,
+
+                          int timetolive = -1,
+
+                          int counted = 0
+                          );
+
+  int open (ACE_Allocator *alloc = 0,
+            JAWS_Cache_Object_Factory *cof = 0,
+
+            size_t hashsize = 1024,
+            size_t maxsize = 4096,
+
+            size_t maxobjsize = 5120,
+            size_t minobjsize = 0,
+
+            size_t highwater = 50,
+            size_t lowwater = 30,
+
+            int timetolive = -1,
+
+            int counted = 0
+            );
+
+  ~JAWS_Cache_Manager (void);
+
+  int close (void);
+
+  int GET (const char *const &key, JAWS_Cache_Object *&cobj);
+
+  int PUT (const char *const &key, const void *data, size_t size,
+           JAWS_Cache_Object *&obj);
+
+  int MAKE (const void *data, size_t size, JAWS_Cache_Object *&cobj);
+
+  int TAKE (JAWS_Cache_Object *const &cobj);
+
+  int DROP (JAWS_Cache_Object *&cobj);
+
+  int FLUSH (void);
+
+  enum { JAWS_REFERENCED_FILECACHE, JAWS_COUNTED_FILECACHE };
 
 private:
 
-  ACE_FILE_IO file_;
+  int type_;
+  JAWS_Referenced_Filecache_Manager rfm_;
+  JAWS_Counted_Filecache_Manager cfm_;
+};
+
+typedef ACE_Cache_Proxy<const char *,
+                        JAWS_Filecache_Object, JAWS_Filecache_Manager>
+        JAWS_Filecache_Proxy;
+
+
+class JAWS_Filecache : public JAWS_Filecache_Proxy
+{
+public:
+
+  HTTP_Cached_MB (const char *const &url,
+                 HTTP_Cache_Proxy::Cache_Manager *cm = 0);
+  HTTP_Cached_MB (const char *const &url, ACE_Message_Block *&mb, size_t size,
+                 HTTP_Cache_Proxy::Cache_Manager *cm = 0);
+  HTTP_Cached_MB (const char *const &url, const char *data, size_t size,
+                 HTTP_Cache_Proxy::Cache_Manager *cm = 0);
+
+
+  const ACE_Message_Block * operator-> (void) const;
 
 };
 
 
-#endif /* JAWS_FILECACHE_H */
+#endif /* HTTP_UCACHE_H */

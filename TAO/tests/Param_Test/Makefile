@@ -66,6 +66,9 @@ SRC	= $(addsuffix .cpp,$(SVR_FILES)) \
 	  $(addsuffix .cpp,$(CLI_FILES))
 
 BIN = server client
+BUILD = $(BIN)
+VLDLIBS = $(LDLIBS:%=%$(VAR))
+VBIN = $(BIN:%=%$(VAR))
 
 #----------------------------------------------------------------------------
 #	Include macros and targets

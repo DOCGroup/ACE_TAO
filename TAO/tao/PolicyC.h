@@ -12,11 +12,6 @@
 #define TAO_IDL_POLICYC_H
 
 #include "tao/CurrentC.h"
-
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-# pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
-
 #include "tao/CDR.h"
 #include "tao/Sequence.h"
 

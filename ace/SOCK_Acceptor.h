@@ -47,9 +47,6 @@ public:
                      int backlog = ACE_DEFAULT_BACKLOG,
                      int protocol = 0);
   // Initialize a passive-mode BSD-style acceptor socket (no QoS).
-  // <local_sap> is the address that we're going to listen for
-  // connections on.  If <reuse_addr> is 1 then we'll use the
-  // <SO_REUSEADDR> to reuse this address.
 
   ACE_SOCK_Acceptor (const ACE_Addr &local_sap,
                      ACE_Protocol_Info *protocolinfo,
@@ -68,10 +65,7 @@ public:
             int backlog = ACE_DEFAULT_BACKLOG,
             int protocol = 0);
   // Initialize a passive-mode BSD-style acceptor socket (no QoS).
-  // <local_sap> is the address that we're going to listen for
-  // connections on.  If <reuse_addr> is 1 then we'll use the
-  // <SO_REUSEADDR> to reuse this address.  Returns 0 on success and
-  // -1 on failure.
+  // Returns 0 on success and -1 on failure.
 
   int open (const ACE_Addr &local_sap,
             ACE_Protocol_Info *protocolinfo,
@@ -130,13 +124,6 @@ protected:
 			    int reset_new_handle) const;
   // Perform operations that must occur after <ACE_OS::accept> is
   // called.
-
-  int shared_open (const ACE_Addr &local_sap,
-                   int protocol_family,
-                   int backlog);
-  // This method factors out the common <open> code and is called by
-  // both the QoS-enabled <open> method and the BSD-style <open>
-  // method.
 
 private:
   int get_remote_addr (ACE_Addr &) const;

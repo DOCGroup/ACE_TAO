@@ -70,12 +70,11 @@ be_visitor_scope::visit_scope (be_scope *node)
                                  "bad node in this scope\n"), -1);
 
             }
-
           be_decl *bd = be_decl::narrow_from_decl (d);
-
           // set the scope node as "node" in which the code is being
           // generated so that elements in the node's scope can use it
           // for code generation
+
           this->ctx_->scope (node->decl ());
 
           // set the node to be visited
@@ -119,7 +118,7 @@ be_visitor_scope::visit_scope (be_scope *node)
   // For debugging the prefix...
   be_decl* decl = node->decl ();
   ACE_DEBUG ((LM_DEBUG, "Enter scope <%s> : [%s]\n",
-              decl->fullname (), decl->prefix ()));
+              decl->full_name (), decl->prefix ()));
   if (decl->pragmas () != 0)
     {
       for (UTL_StrlistActiveIterator i(decl->pragmas ());

@@ -50,7 +50,7 @@ int be_visitor_exception_ch::visit_exception (be_exception *node)
     {
       os = this->ctx_->stream ();
 
-      os->gen_ifdef_macro (node->flatname (), "_ptr");
+      os->gen_ifdef_macro (node->flat_name (), "_ptr");
 
       os->indent ();
       *os << "class " << node->local_name () << ";" << be_nl;
@@ -59,10 +59,10 @@ int be_visitor_exception_ch::visit_exception (be_exception *node)
 	  << node->local_name () << "_ptr;" << be_nl;
       os->gen_endif ();
 
-      os->gen_ifdef_macro (node->flatname ());
+      os->gen_ifdef_macro (node->flat_name ());
 
       os->indent ();
-      *os << "class " << idl_global->stub_export_macro ()
+      *os << "class " << idl_global->export_macro ()
 	  << " " << node->local_name ()
 	  << " : public CORBA::UserException" << be_nl;
       *os << "{" << be_nl

@@ -47,6 +47,8 @@ NOTIFIER_OBJS = Event_CommC.o \
                 Event_Comm_i.o \
                 notifier.o
 
+VLDLIBS = $(LDLIBS:%=%$(VAR))
+
 BIN2 = supplier \
        notifier \
        consumer

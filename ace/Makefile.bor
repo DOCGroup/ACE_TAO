@@ -188,8 +188,6 @@ OBJFILES = \
 	$(OBJDIR)\WIN32_Proactor.obj \
 	$(OBJDIR)\XtReactor.obj
 
-RESOURCE = $(OBJDIR)\ace.res
-
 CFLAGS = $(ACE_CFLAGS)
 
 CPPDIR = .

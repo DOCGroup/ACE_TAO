@@ -18,8 +18,8 @@ require Uniqueid;
 $sleeptime = 8;
 
 # Variables for command-line arguments to client and server
-# executables.
-$ns_multicast_port = 10000 + uniqueid ();
+# executables. 
+$ns_multicast_port = 10000 + uniqueid ();  
 $ns_orb_port = 12000 + uniqueid ();
 $iorfile = "ns.ior";
 $persistent_ior_file = "pns.ior";
@@ -60,9 +60,9 @@ sub client
 # Options for all simple tests recognized by the 'client' program.
 @opts = ("-s -ORBnameserviceior file://$iorfile",
          "-s -ORBnameserviceport $ns_multicast_port",
-         "-t -ORBnameserviceior file://$iorfile",
-         "-i -ORBnameserviceior file://$iorfile",
-         "-e -ORBnameserviceior file://$iorfile",
+         "-t -ORBnameserviceior file://$iorfile", 
+         "-i -ORBnameserviceior file://$iorfile", 
+         "-e -ORBnameserviceior file://$iorfile", 
          "-y -ORBnameserviceior file://$iorfile",
          "-p $persistent_ior_file -ORBnameserviceior file://$iorfile",
          "-c file://$persistent_ior_file -ORBnameserviceior file://$iorfile");
@@ -141,3 +141,4 @@ print STDERR "\n";
 
 # @@ Capture any exit status from the processes.
 exit 0;
+

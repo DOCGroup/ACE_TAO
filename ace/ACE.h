@@ -72,10 +72,6 @@ public:
   static u_int compiler_beta_version (void);
   // E.g., the "0" in SunPro C++ 4.32.0
 
-  static int out_of_handles (int error);
-  // Check if error indicates the process being out of handles (file
-  // descriptors).
-
   // = Recv operations that factor out differences between Win32 and UNIX.
   static ssize_t recv (ACE_HANDLE handle,
                        void *buf,

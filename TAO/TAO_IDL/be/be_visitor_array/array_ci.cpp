@@ -54,7 +54,7 @@ int be_visitor_array_ci::visit_array (be_array *node)
   if (!bt)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_array_ci::"
+                         "(%N:%l) be_visitor_field_cdr_op_ch::"
                          "visit_array - "
                          "bad base type\n"),
                         -1);
@@ -126,8 +126,8 @@ be_visitor_array_ci::gen_var_impl (be_array *node)
   if (this->ctx_->tdef ())
     {
       // typedefed node
-      ACE_OS::sprintf (nodename, "%s", node->fullname ());
-      ACE_OS::sprintf (fname, "%s_var", node->fullname ());
+      ACE_OS::sprintf (nodename, "%s", node->full_name ());
+      ACE_OS::sprintf (fname, "%s_var", node->full_name ());
       ACE_OS::sprintf (lname, "%s_var",
                        node->local_name ()->get_string ());
     }
@@ -139,17 +139,17 @@ be_visitor_array_ci::gen_var_impl (be_array *node)
       if (node->is_nested ())
         {
           be_decl *parent = be_scope::narrow_from_scope (node->defined_in ())->decl ();
-          ACE_OS::sprintf (nodename, "%s::_%s", parent->fullname (),
+          ACE_OS::sprintf (nodename, "%s::_%s", parent->full_name (),
                            node->local_name ()->get_string ());
-          ACE_OS::sprintf (fname, "%s::_%s_var", parent->fullname (),
+          ACE_OS::sprintf (fname, "%s::_%s_var", parent->full_name (),
                            node->local_name ()->get_string ());
           ACE_OS::sprintf (lname, "_%s_var",
                            node->local_name ()->get_string ());
         }
       else
         {
-          ACE_OS::sprintf (nodename, "_%s", node->fullname ());
-          ACE_OS::sprintf (fname, "_%s_var", node->fullname ());
+          ACE_OS::sprintf (nodename, "_%s", node->full_name ());
+          ACE_OS::sprintf (fname, "_%s_var", node->full_name ());
           ACE_OS::sprintf (lname, "_%s_var",
                            node->local_name ()->get_string ());
         }
@@ -184,8 +184,7 @@ be_visitor_array_ci::gen_var_impl (be_array *node)
   *os << fname << "::" << lname << " (const " << fname
       << " &p) // copy constructor" << be_nl;
   *os << "{" << be_idt_nl;
-  *os << "this->ptr_ = " << nodename << "_dup " << "(ACE_const_cast (const " 
-      << nodename << "_slice *, p.ptr_));" << be_uidt_nl;
+  *os << "this->ptr_ = " << nodename << "_dup (p.ptr_);" << be_uidt_nl;
   *os << "}\n\n";
 
   // destructor
@@ -223,9 +222,8 @@ be_visitor_array_ci::gen_var_impl (be_array *node)
   *os << "{" << be_idt_nl;
   *os << "// not assigning to ourselves" << be_nl;
   *os << nodename << "_free (this->ptr_); // free old stuff" << be_nl;
-  *os << "// deep copy" << be_nl;
-  *os << "this->ptr_ = " << nodename << "_dup (ACE_const_cast (const " 
-      << nodename << "_slice *, p.ptr_));" << be_uidt_nl;
+  *os << "this->ptr_ = " << nodename
+      << "_dup (p.ptr_);// deep copy" << be_uidt_nl;
   *os << "}" << be_nl;
   *os << "return *this;" << be_uidt_nl;
   *os << "}\n\n";
@@ -251,8 +249,7 @@ be_visitor_array_ci::gen_var_impl (be_array *node)
   *os << "ACE_INLINE const " << nodename << "_slice &" << be_nl;
   *os << fname << "::operator[] (CORBA::ULong index) const" << be_nl;
   *os << "{" << be_idt_nl;
-  *os << "return ACE_const_cast (const " << nodename 
-      << "_slice &, this->ptr_[index]);" << be_uidt_nl;
+  *os << "return this->ptr_[index];" << be_uidt_nl;
   *os << "}\n\n";
 
   os->indent ();
@@ -267,8 +264,7 @@ be_visitor_array_ci::gen_var_impl (be_array *node)
   *os << "ACE_INLINE const " << nodename << "_slice *" << be_nl;
   *os << fname << "::in (void) const" << be_nl;
   *os << "{" << be_idt_nl;
-  *os << "return ACE_const_cast (const " << nodename 
-      << "_slice *, this->ptr_);" << be_uidt_nl;
+  *os << "return this->ptr_;" << be_uidt_nl;
   *os << "}\n\n";
 
   os->indent ();
@@ -323,8 +319,8 @@ be_visitor_array_ci::gen_out_impl (be_array *node)
   if (this->ctx_->tdef ())
     {
       // typedefed node
-      ACE_OS::sprintf (nodename, "%s", node->fullname ());
-      ACE_OS::sprintf (fname, "%s_out", node->fullname ());
+      ACE_OS::sprintf (nodename, "%s", node->full_name ());
+      ACE_OS::sprintf (fname, "%s_out", node->full_name ());
       ACE_OS::sprintf (lname, "%s_out",
                        node->local_name ()->get_string ());
     }
@@ -336,17 +332,17 @@ be_visitor_array_ci::gen_out_impl (be_array *node)
       if (node->is_nested ())
         {
           be_decl *parent = be_scope::narrow_from_scope (node->defined_in ())->decl ();
-          ACE_OS::sprintf (nodename, "%s::_%s", parent->fullname (),
+          ACE_OS::sprintf (nodename, "%s::_%s", parent->full_name (),
                            node->local_name ()->get_string ());
-          ACE_OS::sprintf (fname, "%s::_%s_out", parent->fullname (),
+          ACE_OS::sprintf (fname, "%s::_%s_out", parent->full_name (),
                            node->local_name ()->get_string ());
           ACE_OS::sprintf (lname, "_%s_out",
                            node->local_name ()->get_string ());
         }
       else
         {
-          ACE_OS::sprintf (nodename, "_%s", node->fullname ());
-          ACE_OS::sprintf (fname, "_%s_out", node->fullname ());
+          ACE_OS::sprintf (nodename, "_%s", node->full_name ());
+          ACE_OS::sprintf (fname, "_%s_out", node->full_name ());
           ACE_OS::sprintf (lname, "_%s_out",
                            node->local_name ()->get_string ());
         }
@@ -457,8 +453,8 @@ be_visitor_array_ci::gen_forany_impl (be_array *node)
   if (this->ctx_->tdef ())
     {
       // typedefed node
-      ACE_OS::sprintf (nodename, "%s", node->fullname ());
-      ACE_OS::sprintf (fname, "%s_forany", node->fullname ());
+      ACE_OS::sprintf (nodename, "%s", node->full_name ());
+      ACE_OS::sprintf (fname, "%s_forany", node->full_name ());
       ACE_OS::sprintf (lname, "%s_forany",
                        node->local_name ()->get_string ());
     }
@@ -470,17 +466,17 @@ be_visitor_array_ci::gen_forany_impl (be_array *node)
       if (node->is_nested ())
         {
           be_decl *parent = be_scope::narrow_from_scope (node->defined_in ())->decl ();
-          ACE_OS::sprintf (nodename, "%s::_%s", parent->fullname (),
+          ACE_OS::sprintf (nodename, "%s::_%s", parent->full_name (),
                            node->local_name ()->get_string ());
-          ACE_OS::sprintf (fname, "%s::_%s_forany", parent->fullname (),
+          ACE_OS::sprintf (fname, "%s::_%s_forany", parent->full_name (),
                            node->local_name ()->get_string ());
           ACE_OS::sprintf (lname, "_%s_forany",
                            node->local_name ()->get_string ());
         }
       else
         {
-          ACE_OS::sprintf (nodename, "_%s", node->fullname ());
-          ACE_OS::sprintf (fname, "_%s_forany", node->fullname ());
+          ACE_OS::sprintf (nodename, "_%s", node->full_name ());
+          ACE_OS::sprintf (fname, "_%s_forany", node->full_name ());
           ACE_OS::sprintf (lname, "_%s_forany",
                            node->local_name ()->get_string ());
         }
@@ -518,8 +514,7 @@ be_visitor_array_ci::gen_forany_impl (be_array *node)
   *os << fname << "::" << lname << " (const " << fname
       << " &p) // copy constructor" << be_nl;
   *os << "{" << be_idt_nl;
-  *os << "this->ptr_ = " << nodename << "_dup (ACE_const_cast (const "
-      << nodename << "_slice *, p.ptr_));" << be_nl;
+  *os << "this->ptr_ = " << nodename << "_dup (p.ptr_);" << be_nl;
   *os << "this->nocopy_ = p.nocopy_;" << be_uidt_nl;
   *os << "}\n\n";
 
@@ -537,8 +532,8 @@ be_visitor_array_ci::gen_forany_impl (be_array *node)
   *os << fname << "::operator= (" << nodename
       << "_slice *p)" << be_nl;
   *os << "{" << be_idt_nl;
-  *os << "// is what we own the same that is being assigned to us?" 
-      << be_nl;
+  *os << "// is what we own the same that is being assigned to us?" <<
+    be_nl;
   *os << "if (this->ptr_ != p)" << be_nl;
   *os << "{" << be_idt_nl;
   *os << "// delete our stuff and assume ownership of p" << be_nl;
@@ -558,9 +553,8 @@ be_visitor_array_ci::gen_forany_impl (be_array *node)
   *os << "{" << be_idt_nl;
   *os << "// not assigning to ourselves" << be_nl;
   *os << nodename << "_free (this->ptr_); // free old stuff" << be_nl;
-  *os << "// deep copy" << be_nl;
-  *os << "this->ptr_ = " << nodename << "_dup (ACE_const_cast (const " 
-      << nodename << "_slice *, p.ptr_));" << be_nl;
+  *os << "this->ptr_ = " << nodename
+      << "_dup (p.ptr_);// deep copy" << be_nl;
   *os << "this->nocopy_ = p.nocopy_;" << be_uidt_nl;
   *os << "}" << be_nl;
   *os << "return *this;" << be_uidt_nl;
@@ -588,8 +582,7 @@ be_visitor_array_ci::gen_forany_impl (be_array *node)
   *os << "ACE_INLINE " << nodename << "_slice const &" << be_nl;
   *os << fname << "::operator[] (CORBA::ULong index) const" << be_nl;
   *os << "{" << be_idt_nl;
-  *os << "return ACE_const_cast (" << nodename 
-      << "_slice const &, this->ptr_[index]);" << be_uidt_nl;
+  *os << "return this->ptr_[index];" << be_uidt_nl;
   *os << "}\n\n";
 
   os->indent ();
@@ -604,8 +597,7 @@ be_visitor_array_ci::gen_forany_impl (be_array *node)
   *os << "ACE_INLINE const " << nodename << "_slice *" << be_nl;
   *os << fname << "::in (void) const" << be_nl;
   *os << "{" << be_idt_nl;
-  *os << "return ACE_const_cast (const " << nodename 
-      << "_slice *, this->ptr_);" << be_uidt_nl;
+  *os << "return this->ptr_;" << be_uidt_nl;
   *os << "}\n\n";
 
   os->indent ();

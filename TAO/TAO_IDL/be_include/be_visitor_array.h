@@ -32,6 +32,5 @@
 #include "be_visitor_array/any_op_cs.h"
 #include "be_visitor_array/cdr_op_ch.h"
 #include "be_visitor_array/cdr_op_ci.h"
-#include "be_visitor_array/cdr_op_cs.h"
 
 #endif /* TAO_BE_VISITOR_ARRAY_H */

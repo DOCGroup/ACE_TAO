@@ -23,13 +23,6 @@
 #ifndef BE_CONSTANT_H
 #define BE_CONSTANT_H
 
-#include "be_decl.h"
-#include "ast_constant.h"
-#include "ast_expression.h"
-
-class UTL_StrList;
-class be_visitor;
-
 /*
  * BE_Constant
  */

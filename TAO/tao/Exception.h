@@ -22,17 +22,6 @@
 
 #include "tao/corbafwd.h"
 
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-# pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
-
-// This is used in the implementation of the _raise methods
-#if defined (TAO_HAS_EXCEPTIONS)
-#define TAO_RAISE(EXCEPTION) throw EXCEPTION
-#else
-#define TAO_RAISE(EXCEPTION)
-#endif /* TAO_HAS_EXCEPTIONS */
-
 class CORBA_Any;
 
 class TAO_Export CORBA_Exception

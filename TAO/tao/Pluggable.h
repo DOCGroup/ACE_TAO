@@ -21,11 +21,6 @@
 #define TAO_PLUGGABLE_H
 
 #include "tao/corbafwd.h"
-
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-# pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
-
 #include "tao/Sequence.h"
 #include "tao/Typecode.h"
 
@@ -172,7 +167,8 @@ public:
                              TAO_Reply_Dispatcher *rd);
   // Bind the reply dispatcher with the TMS object.
 
-  virtual int wait_for_reply (ACE_Time_Value *max_wait_time);
+  virtual int wait_for_reply (ACE_Time_Value *max_wait_time,
+                              int &reply_received);
   // Wait for the reply depending on the strategy.
 
   virtual int handle_client_input (int block = 0,
@@ -189,19 +185,24 @@ public:
 
   // = Setting the Transport object in Idle state. Theese methods are
   //   routed the TMS object. The TMS starategies implement the
-  //   methods accordingly.
-
+  //   methods accordingly. 
+  
   virtual int idle_after_send (void);
   // Request has been just sent, but the reply is not received. Idle
   // the transport now.
-
-  virtual int idle_after_reply (void);
+  
+  // virtual int idle_after_reply (void);
   // Request is sent and the reply is received. Idle the transport
-  // now.
+  // now. 
 
-  virtual int reply_received (const CORBA::ULong request_id);
+  // virtual int reply_received (const CORBA::ULong request_id);
   // Check with the TMS whether the reply has been receieved for the
   // request with <request_id>.
+
+  virtual ACE_SYNCH_CONDITION *leader_follower_condition_variable (void);
+  // Return the TSS leader follower condition variable used in the
+  // Wait Strategy. Muxed Leader Follower implementation returns a
+  // valid condition variable, others return 0.
 
 protected:
   CORBA::ULong tag_;
@@ -455,9 +456,6 @@ public:
 
   virtual char object_key_delimiter (void) const = 0;
   // Return the object key delimiter to use or expect.
-
-  virtual int purge_connections (void) = 0;
-  // Purge "old" connections.
 
 protected:
   virtual void make_profile (const char *endpoint,

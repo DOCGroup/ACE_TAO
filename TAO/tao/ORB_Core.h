@@ -18,11 +18,6 @@
 #define TAO_ORB_CORE_H
 
 #include "tao/corbafwd.h"
-
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-# pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
-
 #include "tao/Environment.h"
 #include "tao/Policy_Manager.h"
 #include "tao/Resource_Factory.h"
@@ -101,6 +96,9 @@ public:
 
   int is_leader_thread_;
   // Is this thread a leader for this ORB?
+
+  ACE_SYNCH_CONDITION* leader_follower_condition_variable_;
+  // Condition variable for the leader follower model.
 };
 
 // ****************************************************************
@@ -169,9 +167,6 @@ public:
   ACE_Reverse_Lock<ACE_SYNCH_MUTEX> &reverse_lock (void);
   // Accessors
 
-  int has_clients (void) const;
-  // Check if there are any client threads running
-
 private:
   TAO_ORB_Core_TSS_Resources *get_tss_resources (void) const;
   // Shortcut to obtain the TSS resources of the orb core.
@@ -194,10 +189,6 @@ private:
   // There could be many leaders in the thread pool (i.e. calling
   // ORB::run), and the same leader could show up multiple times as it
   // receives nested upcalls and sends more requests.
-
-  int clients_;
-  // Count the number of active clients, this is useful to know when
-  // to deactivate the reactor
 };
 
 // ****************************************************************
@@ -416,17 +407,14 @@ public:
   // Obtain the TSS resources of this orb.
 
   TAO_Leader_Follower &leader_follower (void);
-  // Get access to the leader_follower class
+  // Get access to the leader_follower class.
 
   int run (ACE_Time_Value *tv, int break_on_timeouts);
-  // Run the event loop
+  // Run the event loop.
 
-  void shutdown (CORBA::Boolean wait_for_completion,
-                 CORBA::Environment &ACE_TRY_ENV);
-  // End the event loop
-
-  int has_shutdown (void);
-  // Get the shutdown flag value
+  ACE_SYNCH_CONDITION* leader_follower_condition_variable (void);
+  // Condition variable used in the Leader Follower Wait Strategy, on
+  // which the follower thread blocks. 
 
 protected:
   int set_iiop_endpoint (int dotted_decimal_addresses,
@@ -482,7 +470,7 @@ protected:
   PortableServer::POA_var root_poa_reference_;
   // Cached POA reference
 
-  TAO_ORB_Parameters orb_params_;
+  TAO_ORB_Parameters *orb_params_;
   // Parameters used by the ORB.
 
   char* orbid_;
@@ -574,10 +562,6 @@ protected:
 
   TAO_Leader_Follower leader_follower_;
   // Information about the leader follower model
-
-  int has_shutdown_;
-  // Flag which denotes that the ORB should shut down and <run> should
-  // return.
 };
 
 // ****************************************************************

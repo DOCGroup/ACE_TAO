@@ -62,8 +62,7 @@ sub airplane_ir_test
 
   system($airplane_client." -k file://$airplane_ior");
 
-  system($tao_ir." -ORBImplRepoIOR file://$implrepo_ior shutdown plane");
-
+  $SV->Kill (); $SV->Wait ();
   $IR->Kill (); $IR->Wait ();
 }
 
@@ -100,8 +99,7 @@ sub nestea_ir_test
 
   system ($nestea_client." -k file://$nestea_ior");
 
-  system ($tao_ir." -ORBImplRepoIOR file://$implrepo_ior shutdown nestea_server");
-
+  $SV->Kill (); $SV->Wait ();
   $IR->Kill (); $IR->Wait ();
 }
 

@@ -25,11 +25,9 @@
 #define  ACE_LACKS_PRAGMA_ONCE
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if defined(_MSC_VER)
-#pragma warning(disable:4503)
-#endif /* _MSC_VER */
+#include "ace/Cleanup_Strategies_T.h"
 
-template <class ATTRIBUTES, class CACHING_UTILITY>
+template <class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY>
 class ACE_Caching_Strategy
 {
   // = TITLE
@@ -43,6 +41,12 @@ public:
 
   virtual ~ACE_Caching_Strategy (void);
   // Destructor.
+
+  virtual int open (ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_s = 0,
+                    int delete_cleanup_strategy = 1,
+                    CACHING_STRATEGY_UTILITY *utility_s = 0,
+                    int delete_caching_strategy_utility = 1) = 0;
+  // This method which does the actual initialisation.
 
   virtual ATTRIBUTES attributes (void) = 0;
   // Accessor method for the timer attributes.
@@ -78,8 +82,9 @@ public:
   // This method acts as a notification about the CONTAINERs rebind
   // method call
 
-  virtual CACHING_UTILITY &caching_utility (void) = 0;
-  // Purge the cache.
+  virtual int clear_cache (CONTAINER &container) = 0;
+  // This is the method which looks at each ITEM's attributes  and
+  // then decides on the one to remove.
 
   virtual void dump (void) const = 0;
   // Dumps the state of the object.
@@ -87,8 +92,8 @@ public:
 
 //////////////////////////////////////////////////////////////////////////
 
-template <class ATTRIBUTES, class CACHING_UTILITY, class IMPLEMENTATION>
-class ACE_Caching_Strategy_Adapter : public ACE_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>
+template <class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY, class IMPLEMENTATION>
+class ACE_Caching_Strategy_Adapter : public ACE_Caching_Strategy<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY>
 {
   // = TITLE
   //     This class follows the Adaptor pattern and is used to provide
@@ -108,6 +113,12 @@ public:
 
   ~ACE_Caching_Strategy_Adapter (void);
   // Destructor.
+
+  int open (ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_s = 0,
+            int delete_cleanup_strategy = 1,
+            CACHING_STRATEGY_UTILITY *utility_s = 0,
+            int delete_caching_strategy_utility = 1);
+  // This method which does the actual initialisation.
 
   ATTRIBUTES attributes (void);
   // Accessor method for the timer attributes.
@@ -143,11 +154,12 @@ public:
   // This method acts as a notification about the CONTAINERs rebind
   // method call
 
+  int clear_cache (CONTAINER &container);
+  // This is the method which looks at each ITEM's attributes  and
+  // then decides on the one to remove.
+
   IMPLEMENTATION &implementation (void);
   // Accessor to the implementation.
-
-  CACHING_UTILITY &caching_utility (void);
-  // Purge the cache.
 
   void dump (void) const;
   // Dumps the state of the object.
@@ -163,7 +175,7 @@ private:
 
 //////////////////////////////////////////////////////////////////////////
 
-template <class ATTRIBUTES, class CACHING_UTILITY>
+template <class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY>
 class ACE_LRU_Caching_Strategy
 {
   // = TITLE
@@ -181,7 +193,7 @@ class ACE_LRU_Caching_Strategy
   //     The ATTRIBUTES are the deciding factor for purging of entries
   //     and should logically be included with the VALUE. Some ways of
   //     doing this are: As being a member of the VALUE or VALUE being
-  //     ACE_Pair<x, ATTRIBUTES>. The CACHING_UTILITY is the
+  //     ACE_Pair<x, ATTRIBUTES>. The CACHING_STRATEGY_UTILITY is the
   //     class which can be plugged in and which decides the entries
   //     to purge.
 
@@ -189,17 +201,36 @@ public:
 
   // Traits.
   typedef ATTRIBUTES CACHING_ATTRIBUTES;
+  typedef CONTAINER CACHE;
 
   // = Initialisation and termination.
 
-  ACE_LRU_Caching_Strategy (void);
-  // The <container> is the map in which the entries reside.  The
-  // timer attribute is initialed to zero in this constructor.  And
-  // the <purge_percent> field denotes the percentage of the entries
+  ACE_LRU_Caching_Strategy (ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_s = 0,
+                            int delete_cleanup_strategy = 1,
+                            CACHING_STRATEGY_UTILITY *utility_s = 0,
+                            int delete_caching_strategy_utility = 1);
+  // The <container> is the map in which the entries reside.
+  // The Cleanup_Strategy is the callback class to which the entries
+  // to be cleaned up will be delegated. The <delete_cleanup_strategy>
+  // flag is needed to decide the ownership of the cleanup strategy.
+  // Also, the timer attribute is initialed to zero in this constructor.
+  // And the <purge_percent> field denotes the percentage of the entries
   // in the cache which can be purged automagically and by default is
-  // set to 10%.
+  // set to 10%. The ultility which helps the caching strategy in the
+  // purging of entries needs to be specified. By default a new one
+  // will be created of type CACHING_STRATEGY_UTILITY and
+  // <delete_caching_strategy_utility> decides whether to destroy the
+  // utility object or not.
+
+  ~ACE_LRU_Caching_Strategy (void);
 
   // = Operations of the strategy.
+
+  int open (ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_s = 0,
+            int delete_cleanup_strategy = 1,
+            CACHING_STRATEGY_UTILITY *utility_s = 0,
+            int delete_caching_strategy_utility = 1);
+  // This method which does the actual initialisation.
 
   ATTRIBUTES attributes (void);
   // Accessor method for the timer attributes.
@@ -237,13 +268,16 @@ public:
   // This method acts as a notification about the CONTAINERs rebind
   // method call
 
-  CACHING_UTILITY &caching_utility (void);
-  // Purge the cache.
+  int clear_cache (CONTAINER &container);
+  // This is the method which looks at each ITEM's attributes  and
+  // then decides on the one to remove.
 
   void dump (void) const;
   // Dumps the state of the object.
 
 private:
+
+  typedef ACE_Default_Cleanup_Strategy<KEY, VALUE, CONTAINER> CLEANUP_STRATEGY;
 
   ATTRIBUTES timer_;
   // This element is the one which is the deciding factor for purging
@@ -252,14 +286,31 @@ private:
   double purge_percent_;
   // The level about which the purging will happen automagically.
 
-  CACHING_UTILITY caching_utility_;
+  unsigned int entries_;
+  // The no of entries bound in the cache.
+
+  ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_strategy_;
+  // The cleanup strategy which can be used to destroy the entries of
+  // the container.
+
+  int delete_cleanup_strategy_;
+  // The flag which denotes the ownership of the cleanup strategy.
+  // If 1 then this class itself will destroy the strategy.
+
+  CACHING_STRATEGY_UTILITY *caching_strategy_utility_;
   // This is the helper class which will decide and expunge entries
   // from the cache.
+
+  int delete_caching_strategy_utility_;
+  // The flag which denotes the ownership of the
+  // caching_strategy_utility. If 1 then this class itself will
+  // destroy the strategy utility object.
+
 };
 
 //////////////////////////////////////////////////////////////////////////
 
-template <class ATTRIBUTES, class CACHING_UTILITY>
+template <class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY>
 class ACE_LFU_Caching_Strategy
 {
   // = TITLE
@@ -277,7 +328,7 @@ class ACE_LFU_Caching_Strategy
   //     The ATTRIBUTES are the deciding factor for purging of entries
   //     and should logically be included with the VALUE. Some ways of
   //     doing this are: As being a member of the VALUE or VALUE being
-  //     ACE_Pair<x, ATTRIBUTES>. The CACHING_UTILITY is the
+  //     ACE_Pair<x, ATTRIBUTES>. The CACHING_STRATEGY_UTILITY is the
   //     class which can be plugged in and which decides the entries
   //     to purge.
 
@@ -285,15 +336,34 @@ public:
 
   // Traits.
   typedef ATTRIBUTES CACHING_ATTRIBUTES;
+  typedef CONTAINER CACHE;
 
   // = Initialisation and termination methods.
 
-  ACE_LFU_Caching_Strategy (void);
-  // The <container> is the map in which the entries reside.  The
-  // timer attribute is initialed to zero in this constructor.  And
-  // the <purge_percent> field denotes the percentage of the entries
+  ACE_LFU_Caching_Strategy (ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_s = 0,
+                            int delete_cleanup_strategy = 1,
+                            CACHING_STRATEGY_UTILITY *utility_s = 0,
+                            int delete_caching_strategy_utility = 1);
+  // The <container> is the map in which the entries reside.
+  // The Cleanup_Strategy is the callback class to which the entries
+  // to be cleaned up will be delegated. The <delete_cleanup_strategy>
+  // flag is needed to decide the ownership of the cleanup strategy.
+  // Also, the timer attribute is initialed to zero in this constructor.
+  // And the <purge_percent> field denotes the percentage of the entries
   // in the cache which can be purged automagically and by default is
-  // set to 10%.
+  // set to 10%.The ultility which helps the caching strategy in the
+  // purging of entries will be default be the
+  // ACE_Caching_Strategy_Utility and the
+  // <delete_caching_strategy_utility> decides whether to destroy the
+  // utility or not.
+
+  ~ACE_LFU_Caching_Strategy (void);
+
+  int open (ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_s = 0,
+            int delete_cleanup_strategy = 1,
+            CACHING_STRATEGY_UTILITY *utility_s = 0,
+            int delete_caching_strategy_utility = 1);
+  // This method which does the actual initialisation.
 
   // = Strategy methods.
 
@@ -331,25 +401,45 @@ public:
   // This method acts as a notification about the CONTAINERs rebind
   // method call
 
-  CACHING_UTILITY &caching_utility (void);
-  // Purge the cache.
+
+  int clear_cache (CONTAINER &container);
+  // This is the method which looks at each ITEM's attributes  and
+  // then decides on the one to remove.
 
   void dump (void) const;
   // Dumps the state of the object.
 
 private:
 
+  typedef ACE_Default_Cleanup_Strategy<KEY, VALUE, CONTAINER> CLEANUP_STRATEGY;
+
   double purge_percent_;
   // The level about which the purging will happen automagically.
 
-  CACHING_UTILITY caching_utility_;
+  unsigned int entries_;
+  // The no of entries bound in the cache.
+
+  ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_strategy_;
+  // The cleanup strategy which can be used to destroy the entries of
+  // the container.
+
+  int delete_cleanup_strategy_;
+  // The flag which denotes the ownership of the cleanup strategy.
+  // If 1 then this class itself will destroy the strategy.
+
+  CACHING_STRATEGY_UTILITY *caching_strategy_utility_;
   // This is the helper class which will decide and expunge entries
   // from the cache.
+
+  int delete_caching_strategy_utility_;
+  // The flag which denotes the ownership of the
+  // caching_strategy_utility. If 1 then this class itself will
+  // destroy the strategy utility object.
 };
 
 /////////////////////////////////////////////////////////////
 
-template<class ATTRIBUTES, class CACHING_UTILITY>
+template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY>
 class ACE_FIFO_Caching_Strategy
 {
   // = TITLE
@@ -365,22 +455,41 @@ class ACE_FIFO_Caching_Strategy
   //     The ATTRIBUTES are the deciding factor for purging of entries
   //     and should logically be included with the VALUE. Some ways of
   //     doing this are: As being a member of the VALUE or VALUE being
-  //     ACE_Pair<x, ATTRIBUTES>. The CACHING_UTILITY is the
+  //     ACE_Pair<x, ATTRIBUTES>. The CACHING_STRATEGY_UTILITY is the
   //     class which can be plugged in and which decides the entries
   //     to purge.
 
 public:
 
   typedef ATTRIBUTES CACHING_ATTRIBUTES;
+  typedef CONTAINER CACHE;
 
   // = Initialisation and termination.
 
-  ACE_FIFO_Caching_Strategy (void);
-  // The <container> is the map in which the entries reside.  The
-  // timer attribute is initialed to zero in this constructor.  And
-  // the <purge_percent> field denotes the percentage of the entries
+  ACE_FIFO_Caching_Strategy (ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_s = 0,
+                             int delete_cleanup_strategy = 1,
+                             CACHING_STRATEGY_UTILITY *utility_s = 0,
+                             int delete_caching_strategy_utility = 1);
+  // The <container> is the map in which the entries reside.
+  // The Cleanup_Strategy is the callback class to which the entries
+  // to be cleaned up will be delegated. The <delete_cleanup_strategy>
+  // flag is needed to decide the ownership of the cleanup strategy.
+  // Also, the timer attribute is initialed to zero in this constructor.
+  // And the <purge_percent> field denotes the percentage of the entries
   // in the cache which can be purged automagically and by default is
-  // set to 10%.
+  // set to 10%.The ultility which helps the caching strategy in the
+  // purging of entries will be default be the
+  // ACE_Caching_Strategy_Utility and the
+  // <delete_caching_strategy_utility> decides whether to destroy the
+  // utility or not.
+
+  ~ACE_FIFO_Caching_Strategy (void);
+
+  int open (ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_s = 0,
+            int delete_cleanup_strategy = 1,
+            CACHING_STRATEGY_UTILITY *utility_s = 0,
+            int delete_caching_strategy_utility = 1);
+  // This method which does the actual initialisation.
 
   // = Strategy methods.
 
@@ -417,13 +526,16 @@ public:
                      const ATTRIBUTES &attr);
   // Notification for an item getting bound again into the cache.
 
-  CACHING_UTILITY &caching_utility (void);
-  // Purge the cache.
+  int clear_cache (CONTAINER &container);
+  // This is the method which looks at each ITEM's attributes  and
+  // then decides on the one to remove.
 
   void dump (void) const;
   // Dumps the state of the object.
 
 private:
+
+  typedef ACE_Default_Cleanup_Strategy<KEY, VALUE, CONTAINER> CLEANUP_STRATEGY;
 
   ATTRIBUTES order_;
   // The order is the deciding factor for the item to be removed from
@@ -432,12 +544,29 @@ private:
   double purge_percent_;
   // The level about which the purging will happen automagically.
 
-  CACHING_UTILITY caching_utility_;
+  unsigned int entries_;
+  // The no of entries bound in the cache.
+
+  ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_strategy_;
+  // The cleanup strategy which can be used to destroy the entries of
+  // the container.
+
+  int delete_cleanup_strategy_;
+  // The flag which denotes the ownership of the cleanup strategy.
+  // If 1 then this class itself will destroy the strategy.
+
+  CACHING_STRATEGY_UTILITY *caching_strategy_utility_;
   // This is the helper class which will decide and expunge entries
   // from the cache.
+
+  int delete_caching_strategy_utility_;
+  // The flag which denotes the ownership of the
+  // caching_strategy_utility. If 1 then this class itself will
+  // destroy the strategy utility object.
+
 };
 
-template<class ATTRIBUTES, class CACHING_UTILITY>
+template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY>
 class ACE_Null_Caching_Strategy
 {
   // = TITLE
@@ -452,6 +581,23 @@ public:
 
   // = Traits.
   typedef ATTRIBUTES CACHING_ATTRIBUTES;
+  typedef CONTAINER CACHE;
+
+  // = Initialisation and termination.
+
+  ACE_Null_Caching_Strategy (ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_s = 0,
+                             int delete_cleanup_strategy = 1,
+                             CACHING_STRATEGY_UTILITY *utility_s = 0,
+                             int delete_caching_strategy_utility = 1);
+
+  ~ACE_Null_Caching_Strategy (void);
+
+
+  int open (ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_s = 0,
+            int delete_cleanup_strategy = 1,
+            CACHING_STRATEGY_UTILITY *utility_s = 0,
+            int delete_caching_strategy_utility = 1);
+  // This method which does the actual initialisation.
 
   // = Strategy methods. All are NO_OP methods!!!
 
@@ -488,17 +634,13 @@ public:
                      const ATTRIBUTES &attr);
   // Notification for an item getting bound again into the cache.
 
-  CACHING_UTILITY &caching_utility (void);
-  // Purge the cache.
+  int clear_cache (CONTAINER &container);
+  // This is the method which looks at each ITEM's attributes  and
+  // then decides on the one to remove.
 
   void dump (void) const;
   // Dumps the state of the object.
 
-private:
-
-  CACHING_UTILITY caching_utility_;
-  // This is the helper class which will decide and expunge entries
-  // from the cache.
 };
 
 #if defined (__ACE_INLINE__)

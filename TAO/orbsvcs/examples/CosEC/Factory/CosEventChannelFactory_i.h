@@ -66,8 +66,7 @@ class TAO_CosEventChannelFactory_i :
      )
     ACE_THROW_SPEC ((
         CORBA::SystemException,
-        CosEventChannelFactory::DuplicateChannel,
-        CosEventChannelFactory::BindFailed
+        CosEventChannelFactory::DuplicateChannel
       ));
 
   virtual void destroy

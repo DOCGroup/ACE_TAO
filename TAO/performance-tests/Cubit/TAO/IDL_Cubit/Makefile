@@ -52,6 +52,9 @@ COLLOCATION_OBJS = cubitC.o \
 BIN = server \
       client \
       collocation/collocation_test
+BUILD = $(BIN)
+VLDLIBS = $(LDLIBS:%=%$(VAR))
+VBIN = $(BIN:%=%$(VAR))
 
 TAO_IDLFLAGS += -Ge 1
 

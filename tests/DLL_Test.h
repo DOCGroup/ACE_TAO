@@ -1,22 +1,8 @@
 // $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    DLL_Test.h
-//
-// = DESCRIPTION
-//     This file has the class definitions needed for template generation in
-//     DLL_Test.cpp.  They have to be in a separate file so AIX xlC can
-//     find them at auto-instantiate time.
-//
-// = AUTHOR
-//     Kirthika Parameswaran  <kirthika@cs.wustl.edu>
-//
-// ============================================================================
+// This file has the class definitions needed for template generation in
+// DLL_Test.cpp.  They have to be in a separate file so AIX xlC can
+// find them at auto-instantiate time.
 
 #ifndef ACE_DLL_TEST_H
 #define ACE_DLL_TEST_H

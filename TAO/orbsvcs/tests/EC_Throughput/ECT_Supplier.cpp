@@ -1,16 +1,14 @@
 // $Id$
 
-#include "ECT_Supplier.h"
-
-#include "orbsvcs/Event_Utilities.h"
-#include "orbsvcs/Event_Service_Constants.h"
-#include "orbsvcs/Time_Utilities.h"
-#include "tao/Timeprobe.h"
-
 #include "ace/Get_Opt.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/Sched_Params.h"
-#include "ace/High_Res_Timer.h"
+
+#include "tao/Timeprobe.h"
+#include "orbsvcs/Event_Utilities.h"
+#include "orbsvcs/Event_Service_Constants.h"
+#include "orbsvcs/Time_Utilities.h"
+#include "ECT_Supplier.h"
 
 ACE_RCSID(EC_Throughput, ECT_Supplier, "$Id$")
 
@@ -157,8 +155,7 @@ Test_Supplier::svc ()
       event[0].data.payload.replace (this->event_size_,
                                      &mb);
 
-      ACE_hrtime_t test_start = ACE_OS::gethrtime ();
-
+      this->throughput_.start ();
       for (int i = 0; i < this->burst_count_; ++i)
         {
           for (int j = 0; j < this->burst_size_; ++j)
@@ -166,17 +163,15 @@ Test_Supplier::svc ()
               event[0].header.type =
                 this->type_start_ + j % this->type_count_;
 
-              ACE_hrtime_t request_start = ACE_OS::gethrtime ();
+              ACE_hrtime_t now = ACE_OS::gethrtime ();
               ORBSVCS_Time::hrtime_to_TimeT (event[0].header.creation_time,
-                                             request_start);
+                                             now);
               // ACE_DEBUG ((LM_DEBUG, "(%t) supplier push event\n"));
               this->consumer_proxy ()->push (event, ACE_TRY_ENV);
 
               ACE_TRY_CHECK;
-              ACE_hrtime_t end = ACE_OS::gethrtime ();
-              this->throughput_.sample (end - test_start,
-                                        end - request_start);
             }
+          this->throughput_.sample ();
 
           if (TAO_debug_level > 0
               && i % 100 == 0)
@@ -191,14 +186,14 @@ Test_Supplier::svc ()
 
       // Send one event shutdown from each supplier
       event[0].header.type = ACE_ES_EVENT_SHUTDOWN;
-      ACE_hrtime_t request_start = ACE_OS::gethrtime ();
+      ACE_hrtime_t now = ACE_OS::gethrtime ();
       ORBSVCS_Time::hrtime_to_TimeT (event[0].header.creation_time,
-                                     request_start);
+                                     now);
       this->consumer_proxy ()->push(event, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      ACE_hrtime_t end = ACE_OS::gethrtime ();
-      this->throughput_.sample (end - test_start,
-                                end - request_start);
+      this->throughput_.sample ();
+      this->throughput_.stop ();
+
     }
   ACE_CATCH (CORBA::SystemException, sys_ex)
     {
@@ -233,14 +228,13 @@ Test_Supplier::consumer_proxy (void)
 }
 
 void
-Test_Supplier::dump_results (const char* name,
-                             ACE_UINT32 gsf)
+Test_Supplier::dump_results (const char* name)
 {
-  this->throughput_.dump_results (name, gsf);
+  this->throughput_.dump_results ("ECT_Supplier", name);
 }
 
 void
-Test_Supplier::accumulate (ACE_Throughput_Stats& stats) const
+Test_Supplier::accumulate (ECT_Driver::Throughput_Stats& stats) const
 {
   stats.accumulate (this->throughput_);
 }

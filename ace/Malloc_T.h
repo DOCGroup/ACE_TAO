@@ -386,8 +386,7 @@ private:
   int open (void);
   // Initialize the Malloc pool.
 
-  int shared_bind (const char *name,
-                   void *pointer);
+  int shared_bind (const char *name, void *pointer);
   // Associate <name> with <pointer>.  Assumes that locks are held by
   // callers.
 
@@ -403,14 +402,14 @@ private:
   // Deallocate memory.  Assumes that locks are held by callers.
 
   ACE_Control_Block *cb_ptr_;
-  // Pointer to the control block that is stored in memory controlled
-  // by <MEMORY_POOL>.
+  // Pointer to the control block (stored in memory controlled by
+  // MEMORY_POOL).
 
   MEMORY_POOL memory_pool_;
-  // Pool of memory used by <ACE_Malloc> to manage its freestore.
+  // Pool of memory used by ACE_Malloc
 
   ACE_LOCK lock_;
-  // Lock that ensures mutual exclusion for the <MEMORY_POOL>.
+  // Local that ensures mutual exclusion.
 };
 
 template <ACE_MEM_POOL_1, class ACE_LOCK>
@@ -439,8 +438,7 @@ public:
   int done (void) const;
   // Returns 1 when all items have been seen, else 0.
 
-  int next (void *&next_entry, 
-            const char *&name);
+  int next (void *&next_entry, char *&name);
   // Pass back the next <entry> (and the <name> associated with it) in
   // the set that hasn't yet been visited.  Returns 0 when all items
   // have been seen, else 1.

@@ -13,7 +13,8 @@ TAO_Default_Server_Strategy_Factory::TAO_Default_Server_Strategy_Factory (void)
   : activate_server_connections_ (0),
     thread_flags_ (THR_BOUND),
     poa_lock_type_ (TAO_THREAD_LOCK),
-    event_loop_lock_type_ (TAO_NULL_LOCK)
+    event_loop_lock_type_ (TAO_NULL_LOCK),
+    cached_connector_lock_type_ (TAO_THREAD_LOCK)
 {
 }
 
@@ -65,6 +66,23 @@ TAO_Default_Server_Strategy_Factory::create_event_loop_lock (void)
   else
     ACE_NEW_RETURN (the_lock,
                     ACE_Lock_Adapter<ACE_SYNCH_RECURSIVE_MUTEX>,
+                    0);
+
+  return the_lock;
+}
+
+ACE_Lock *
+TAO_Default_Server_Strategy_Factory::create_cached_connector_lock (void)
+{
+  ACE_Lock *the_lock = 0;
+
+  if (this->cached_connector_lock_type_ == TAO_NULL_LOCK)
+    ACE_NEW_RETURN (the_lock,
+                    ACE_Lock_Adapter<ACE_SYNCH_NULL_MUTEX>,
+                    0);
+  else
+    ACE_NEW_RETURN (the_lock,
+                    ACE_Lock_Adapter<ACE_SYNCH_MUTEX>,
                     0);
 
   return the_lock;
@@ -336,16 +354,22 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, char *argv[])
               this->event_loop_lock_type_ = TAO_NULL_LOCK;
           }
       }
-
     else if (ACE_OS::strcasecmp (argv[curarg],
                                  "-ORBConnectorLock") == 0)
       {
-        ACE_DEBUG ((LM_DEBUG,
-                    "TAO (%P|%t) WARNING: the "
-                    "-ORBConnectorLock option is in the client "
-                    "strategy factory now\n"));
-      }
+        curarg++;
+        if (curarg < argc)
+          {
+            char *name = argv[curarg];
 
+            if (ACE_OS::strcasecmp (name,
+                                    "thread") == 0)
+              this->cached_connector_lock_type_ = TAO_THREAD_LOCK;
+            else if (ACE_OS::strcasecmp (name,
+                                         "null") == 0)
+              this->cached_connector_lock_type_ = TAO_NULL_LOCK;
+          }
+      }
     else if (ACE_OS::strcasecmp (argv[curarg],
                                  "-ORBThreadFlags") == 0)
       {

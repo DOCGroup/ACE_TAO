@@ -18,11 +18,6 @@
 #define TAO_DEFAULT_SERVER_FACTORY_H
 
 #include "tao/Server_Strategy_Factory.h"
-
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-# pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
-
 #include "ace/Service_Config.h"
 
 class TAO_Export TAO_Default_Server_Strategy_Factory : public TAO_Server_Strategy_Factory
@@ -57,6 +52,10 @@ public:
   // controlling the event loop (termination). Otherwise a
   // Recursive_Thread_Mutex or Thread_Mutex may be required.
 
+  virtual ACE_Lock *create_cached_connector_lock (void);
+  // Created the cached connector lock based on the command line
+  // options.
+
   int parse_args (int argc, char *argv[]);
   // Parse the arguments, check the documentation in
   // $TAO_ROOT/docs/Options.html for details
@@ -82,6 +81,9 @@ protected:
 
   Lock_Type event_loop_lock_type_;
   // The type of lock to be returned by <create_event_loop_lock()>.
+
+  Lock_Type cached_connector_lock_type_;
+  // Type of lock used by the cached connector.
 };
 
 #if defined (__ACE_INLINE__)

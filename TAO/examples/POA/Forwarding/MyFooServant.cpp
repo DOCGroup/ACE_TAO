@@ -46,7 +46,6 @@ MyFirstFooServant::MyFirstFooServant (CORBA::ORB_ptr orb_ptr,
   int result = this->orb_->orb_core ()->reactor ()->
     register_handler (this->handle_, this, mask);
   ACE_ASSERT (result == 0);
-  ACE_UNUSED_ARG (result);
 }
 
 // Destructor
@@ -56,7 +55,6 @@ MyFirstFooServant::~MyFirstFooServant (void)
   int result = this->orb_->orb_core ()->reactor ()->
     remove_handler (this->handle_, mask);
   ACE_ASSERT (result == 0);
-  ACE_UNUSED_ARG (result);
 }
 
 // Return the Default POA of this Servant
@@ -99,11 +97,10 @@ MyFirstFooServant::forward (CORBA::Environment &ACE_TRY_ENV)
       //
 
       int result = this->orb_->orb_core ()->reactor ()->ready_ops
-        (this->handle_,
+	(this->handle_,
          ACE_Event_Handler::READ_MASK,
          ACE_Reactor::ADD_MASK);
       ACE_ASSERT (result != -1);
-      ACE_UNUSED_ARG (result);
     }
   else
     {

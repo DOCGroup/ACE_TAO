@@ -22,7 +22,7 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Hash_Cache_Map_Manager)
 #define T_1 class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class CACHING_STRATEGY, class ATTRIBUTES
 #define T_2 KEY, VALUE,  HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY, ATTRIBUTES
 
-template <T_1>
+  template <T_1>
 ACE_Hash_Cache_Map_Manager<T_2>::ACE_Hash_Cache_Map_Manager (CACHING_STRATEGY &caching_s,
                                                              size_t size,
                                                              ACE_Allocator *alloc)
@@ -178,32 +178,6 @@ ACE_Hash_Cache_Map_Manager<T_2>::find (const KEY &key,
     }
 
   return find_result;
-}
-
-template <T_1> int
-ACE_Hash_Cache_Map_Manager<T_2>::find (const KEY &key,
-                                       VALUE &value)
-{
-  CACHE_ENTRY *entry = 0;
-
-  int result = this->find (key,
-                           entry);
-
-  if (result != -1)
-    {
-      value = entry->int_id_.first ();
-    }
-
-  return result;
-}
-
-template <T_1> int
-ACE_Hash_Cache_Map_Manager<T_2>::find (const KEY &key)
-{
-  CACHE_ENTRY *entry = 0;
-
-  return this->find (key,
-                     entry);
 }
 
 template <T_1> int

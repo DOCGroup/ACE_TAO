@@ -103,8 +103,7 @@ ACE_Service_Manager::init (int argc, ASYS_TCHAR *argv[])
          break;
        }
 
-  if (this->get_handle () == ACE_INVALID_HANDLE &&
-      this->open (local_addr) == -1)
+  if (this->open (local_addr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ASYS_TEXT ("%p\n"),
                        ASYS_TEXT ("open")), -1);
@@ -129,17 +128,11 @@ ACE_Service_Manager::fini (void)
 {
   ACE_TRACE ("ACE_Service_Manager::fini");
 
-  int retv = 0;
   if (this->get_handle () != ACE_INVALID_HANDLE)
-    {
-      retv = ACE_Reactor::instance ()->remove_handler
-        (this,
-         ACE_Event_Handler::ACCEPT_MASK |
-         ACE_Event_Handler::DONT_CALL);
-      this->handle_close (ACE_INVALID_HANDLE,
-                          ACE_Event_Handler::NULL_MASK);
-    }
-  return retv;
+    return ACE_Reactor::instance ()->remove_handler
+      (this,
+       ACE_Event_Handler::ACCEPT_MASK);
+  return 0;
 }
 
 ACE_HANDLE

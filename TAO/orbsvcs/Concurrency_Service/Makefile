@@ -11,6 +11,7 @@
 SRC = Concurrency_Service.cpp
 
 LDLIBS  = -lorbsvcs -lTAO
+VLDLIBS = $(LDLIBS:%=%$(VAR))
 
 BIN2 = Concurrency_Service
 
