@@ -1,3 +1,9 @@
+Thu Sep 16 14:14:31 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* bin/MakeProjectCreator/config/event_serv.mpb:
+
+	  Changed to inherit from svc_utils.
+
 Thu Sep 16 12:36:29 2004  Steve Huston  <shuston@riverace.com>
 
 	* ace/POSIX_Proactor.{h cpp}: Change the SystemType enumerator value
@@ -108,7 +114,7 @@ Wed Sep 15 11:41:53 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 Wed Sep 15 10:46:07 2004  Dale Wilson  <wilson_d@ociweb.com>
 
         * ace/Log_Msg.cpp:
-          
+
           Explicitly initialize a static int to zero to make it clear that
           the initial value is important.
 
