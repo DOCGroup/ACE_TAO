@@ -3,7 +3,6 @@
 
 #include "ace/Handle_Set.h"
 #include "ace/TLI_Connector.h"
-#include "ace/Log_Msg.h"
 
 ACE_RCSID(ace, TLI_Connector, "$Id$")
 
