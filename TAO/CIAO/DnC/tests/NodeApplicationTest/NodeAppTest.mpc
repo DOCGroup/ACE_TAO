@@ -17,7 +17,7 @@ project(NodeAppTest_RoundTrip_stub): ciao_client {
 project(NodeAppTest_RoundTrip_svnt) : ciao_servant {
   after += NodeAppTest_RoundTrip_stub
   sharedname  = NodeAppTest_RoundTrip_svnt
-  libs    += NodeAppTest_RoundTrip_stub 
+  libs    += NodeAppTest_RoundTrip_stub
   idlflags  +=  -Wb,export_macro=NODEAPPTEST_ROUNDTRIP_SVNT_Export -Wb,export_include=RoundTrip_svnt_export.h
   dynamicflags = NODEAPPTEST_ROUNDTRIP_SVNT_BUILD_DLL
 
@@ -55,10 +55,21 @@ project(NodeAppTest_RoundTrip_exec) : ciao_component {
   }
 }
 
+project (NodeAppTest_client_simple) : ciao_deployment_stub, ciao_server {
+ after += NodeAppTest_RoundTrip_exec
+ exename += client_simple
+ libs += NodeAppTest_RoundTrip_stub
+
+ Source_Files {
+   NodeApp_test_client_simple.cpp
+ }
+}
+
 project (NodeAppTest_client) : ciao_deployment_stub, ciao_server {
  after += NodeAppTest_RoundTrip_exec
  exename += client
-
+ libs += NodeAppTest_RoundTrip_stub
+ 
  Source_Files {
    NodeApp_test_client.cpp
  }

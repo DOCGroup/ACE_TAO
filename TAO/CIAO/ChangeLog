@@ -1,3 +1,22 @@
+Wed Jun  2 18:57:29 2004  Tao Lu  <lu@dre.vanderbilt.edu>
+
+	* DnC/Core/NodeApplication_Impl.cpp:
+	  Fixed a few bugs inside.
+
+	* DnC/tests/NodeApplicationTest/NodeAppTest.mpc:
+	* DnC/tests/NodeApplicationTest/NodeApp_test_client_simple.cpp:
+	* DnC/tests/NodeApplicationTest/NodeApp_test_client.cpp:
+	* DnC/tests/NodeApplicationTest/run_test.pl:
+	* DnC/tests/NodeApplicationTest/NodeApp_test_client_simple.cpp:
+
+	  Added a test to do a more complete test on NodeApplication.
+	  Please note that there is a name change of files. The mpc file
+	  explains very thing.
+
+	* DnC/Core/Client_init.cpp:
+	  I made the default value for debug_level 1, later we should
+	  reverse the change.
+
 Wed Jun  2 18:37:24 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
         * DnC/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
