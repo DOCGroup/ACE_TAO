@@ -18,10 +18,10 @@
 // 
 // ============================================================================
 
-
 #include "ace/Synch.h"
 #include "ace/Thread.h"
 #include "ace/Service_Config.h"
+#include "ace/Get_Opt.h"
 #include "test_config.h"
 
 #if defined (ACE_HAS_THREADS)
@@ -45,10 +45,10 @@ static ACE_thread_t shared_data;
 static ACE_RW_Mutex rw_mutex;     
 
 // Count of the number of readers and writers.
-static ACE_Atomic_Op<ACE_Thread_Mutex, int> current_readers, current_writers;
+static ACE_Atomic_Op<ACE_Thread_Mutex, int> current_readers;
+static ACE_Atomic_Op<ACE_Thread_Mutex, int> current_writers;
 
 // Explain usage and exit.
-#if 0
 static void 
 print_usage_and_die (void)
 {
@@ -56,8 +56,32 @@ print_usage_and_die (void)
 	      "usage: %n [-r n_readers] [-w n_writers] [-n iteration_count]\n"));
   ACE_OS::exit (1);
 }
-#endif /* 0 */
 
+static void
+parse_args (int argc, char *argv[])
+{
+  ACE_Get_Opt get_opt (argc, argv, "r:w:n:");
+
+  int c; 
+
+  while ((c = get_opt ()) != -1)
+    switch (c)
+    {
+    case 'r':
+      n_readers = ACE_OS::atoi (get_opt.optarg);
+      break;
+    case 'w':
+      n_writers = ACE_OS::atoi (get_opt.optarg);
+      break;
+    case 'n':
+      n_iterations = atoi (get_opt.optarg);
+      break;
+    default:
+      print_usage_and_die ();
+      break;
+  }
+}
+ 
 // Iterate <n_iterations> each time checking that nobody modifies the data
 // while we have a read lock.
 
@@ -67,31 +91,31 @@ reader (void *)
   ACE_Thread_Control tc (ACE_Service_Config::thr_mgr ());
   ACE_NEW_THREAD;
 
-  ACE_DEBUG ((LM_DEBUG, "(%t) reader starting\n"));
+  ACE_DEBUG ((LM_DEBUG, " (%t) reader starting\n"));
   
   for (size_t iterations = 1; iterations <= n_iterations; iterations++)
     {
-      ACE_Read_Guard<ACE_RW_Mutex> g(rw_mutex);
+      ACE_Read_Guard<ACE_RW_Mutex> g (rw_mutex);
       // int n = ++current_readers;
-      // ACE_DEBUG ((LM_DEBUG, "(%t) I'm reader number %d\n", n));
+      // ACE_DEBUG ((LM_DEBUG, " (%t) I'm reader number %d\n", n));
 
       if (current_writers > 0)
-        ACE_DEBUG ((LM_DEBUG, "(%t) writers found!!!\n"));
+        ACE_DEBUG ((LM_DEBUG, " (%t) writers found!!!\n"));
 	
       ACE_thread_t data = shared_data;
 
       for (size_t loop = 1; loop <= n_loops; loop++)
         {
-	  ACE_Thread::yield();
+	  ACE_Thread::yield ();
 
 	  if (!ACE_OS::thr_equal (shared_data, data))
             ACE_DEBUG ((LM_DEBUG, 
-			"(%t) somebody changed %d to %d\n", 
+			" (%t) somebody changed %d to %d\n", 
 			data, shared_data));
         }
 
       --current_readers;
-      //ACE_DEBUG ((LM_DEBUG, "(%t) done with reading guarded data\n"));
+      //ACE_DEBUG ((LM_DEBUG, " (%t) done with reading guarded data\n"));
 
       ACE_Thread::yield ();
     }
@@ -107,20 +131,20 @@ writer (void *)
   ACE_Thread_Control tc (ACE_Service_Config::thr_mgr ());
   ACE_NEW_THREAD;
 
-  ACE_DEBUG ((LM_DEBUG, "(%t) writer starting\n"));
+  ACE_DEBUG ((LM_DEBUG, " (%t) writer starting\n"));
   
   for (size_t iterations = 1; iterations <= n_iterations; iterations++)
     {
-      ACE_Write_Guard<ACE_RW_Mutex> g(rw_mutex);
+      ACE_Write_Guard<ACE_RW_Mutex> g (rw_mutex);
 
       ++current_writers;
-      //ACE_DEBUG ((LM_DEBUG, "(%t) writing to guarded data\n"));
+      //ACE_DEBUG ((LM_DEBUG, " (%t) writing to guarded data\n"));
 
       if (current_writers > 1)
-        ACE_DEBUG ((LM_DEBUG, "(%t) other writers found!!!\n"));
+        ACE_DEBUG ((LM_DEBUG, " (%t) other writers found!!!\n"));
 
       if (current_readers > 0)
-        ACE_DEBUG ((LM_DEBUG, "(%t) readers found!!!\n"));
+        ACE_DEBUG ((LM_DEBUG, " (%t) readers found!!!\n"));
 	
       ACE_thread_t self = ACE_Thread::self ();
 
@@ -128,17 +152,17 @@ writer (void *)
 
       for (size_t loop = 1; loop <= n_loops; loop++)
         {
-	  ACE_Thread::yield();
+	  ACE_Thread::yield ();
 
 	  if (!ACE_OS::thr_equal (shared_data, self))
             ACE_DEBUG ((LM_DEBUG, 
-			"(%t) somebody wrote on my data %d\n", 
+			" (%t) somebody wrote on my data %d\n", 
 			shared_data));
         }
 
       --current_writers;
 
-      //ACE_DEBUG ((LM_DEBUG, "(%t) done with guarded data\n"));
+      //ACE_DEBUG ((LM_DEBUG, " (%t) done with guarded data\n"));
       ACE_Thread::yield ();
     }
   return 0;
@@ -148,15 +172,17 @@ writer (void *)
 
 // Spawn off threads.
 
-int main (int, char *[])
+int main (int argc, char *argv[])
 {
   ACE_START_TEST ("Reader_Writer_Test");
 
 #if defined (ACE_HAS_THREADS)
+  parse_args (argc, argv);
+
   current_readers = 0; // Possibly already done
   current_writers = 0; // Possibly already done
 
-  ACE_DEBUG ((LM_DEBUG, "(%t) main thread starting\n"));
+  ACE_DEBUG ((LM_DEBUG, " (%t) main thread starting\n"));
 
   if (ACE_Service_Config::thr_mgr ()->spawn_n (n_readers, 
 					       ACE_THR_FUNC (reader), 
@@ -171,7 +197,7 @@ int main (int, char *[])
 
   ACE_Service_Config::thr_mgr ()->wait ();
 
-  ACE_DEBUG ((LM_DEBUG, "(%t) exiting main thread\n"));
+  ACE_DEBUG ((LM_DEBUG, " (%t) exiting main thread\n"));
 #else
   ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
 #endif /* ACE_HAS_THREADS */
