@@ -52,7 +52,7 @@ ACE_Read_Buffer::~ACE_Read_Buffer (void)
   ACE_TRACE ("ACE_Read_Buffer::~ACE_Read_Buffer");
 
   if (this->close_on_delete_)
-    ::fclose (this->stream_);
+    ACE_OS::fclose (this->stream_);
 }
 
 // Input: term        the character to terminate on
