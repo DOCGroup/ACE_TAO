@@ -1,3 +1,9 @@
+Fri Mar 24 10:21:27 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/ast/ast_expression.cpp:
+	  Initialized some variables to avoid cxx warnings,
+	  and made some cosmetic changes.
+
 Thu Mar 23 21:49:36 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * orbsvcs/orbsvcs/RTEvent.dsp: Somehow the debugging information
