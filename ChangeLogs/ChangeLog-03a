@@ -1,3 +1,10 @@
+Wed Mar 08 14:46:52 2000  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-aix-4.x.h:
+        * include/makeinclude/platform_aix4_cset++.GNU: Allow building w/o
+          threads by including threads=0 on build command line. Include
+          -O2 compile option when optimize=1 is set on build command line.
+
 Wed Mar  8 11:13:04 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/Log_Msg.cpp (log): Reverted this change.
