@@ -2265,6 +2265,10 @@ struct sigaction
 #define PROT_RDWR (PROT_READ|PROT_WRITE)
 #endif /* PROT_RDWR */
 
+#if !defined (WNOHANG)
+#define WNOHANG 0
+#endif /* WNOHANG */
+
 #if defined (ACE_HAS_POSIX_NONBLOCK)
 #define ACE_NONBLOCK O_NONBLOCK
 #else
