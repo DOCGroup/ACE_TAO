@@ -1,3 +1,7 @@
+Fri Feb 26 10:06:57 1999 Fred Kuhns <fredk@cs.wustl.edu>
+
+        * Fixed inline function ordering in Stub.i!
+
 Fri Feb 26 00:43:30 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs: Updated all the ORB services IDL files so that
