@@ -1,7 +1,12 @@
+Sun Apr 16 17:04:03 2000  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
+
+	* orbsvcs/examples/CosEC/Factory/CosEventChannelFactory_i.h:
+          disabled MSVC "inheritance via dominance" warnings.
+
 Sun Apr 16 10:25:53 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-	* tao/ORB.h: 
-	  The test should be #if (TAO_HAS_INTERCEPTORS == 1) not 
+	* tao/ORB.h:
+	  The test should be #if (TAO_HAS_INTERCEPTORS == 1) not
 	  #if defined(TAO_HAS_INTERCEPTORS)
 
 Sat Apr 15 19:48:47 2000  Darrell Brunsch <brunsch@uci.edu>
@@ -16,12 +21,12 @@ Sat Apr 15 19:48:47 2000  Darrell Brunsch <brunsch@uci.edu>
         * orbsvcs/Naming_Service/Naming_Service.dsp:
         * tao/TAO.dsp:
 
-          Changed around the order of the configurations so that in the 
-          default case (such as out of the box) the regular Debug version 
+          Changed around the order of the configurations so that in the
+          default case (such as out of the box) the regular Debug version
           will be the current configuration.
 
         * orbsvcs/Naming_Service/NT_Naming_Service.dsp:
-        
+
           Sandro Doro <doro.s@flashnet.it> reported that NT_Naming_Service
           wasn't linking to some win32 libraries it needed.  Added
           user32.lib and advapi32.lib.
@@ -30,16 +35,16 @@ Sat Apr 15 19:44:40 2000  Darrell Brunsch <brunsch@uci.edu>
 
         (On behalf of Christopher Kohlhoff <chris@kohlhoff.com>)
 
-        * tao/Makefile.bor: 
-        
+        * tao/Makefile.bor:
+
           Added new files.
 
-        * tao/Smart_Proxies.h: 
-        
+        * tao/Smart_Proxies.h:
+
           Added missing pre/post includes.
 
-        * TAO_IDL/Makefile.bor: 
-        
+        * TAO_IDL/Makefile.bor:
+
           Tidied up formatting.
 
         * orbsvcs/orbsvcs/AV.bor: (added)
@@ -68,17 +73,17 @@ Sat Apr 15 19:44:40 2000  Darrell Brunsch <brunsch@uci.edu>
         * tests/InterOp-Naming/client.bor:
         * tests/InterOp-Naming/server.bor:
         * utils/nslist/Makefile.bor:
-        
+
           Updated for new orbsvcs libraries.
 
-        * orbsvcs/orbsvcs/AV/AV_export.h: 
-        
+        * orbsvcs/orbsvcs/AV/AV_export.h:
+
           Removed unnecessary include of ace/pre.h.
 
         * orbsvcs/orbsvcs/ESF/ESF_Peer_Admin.cpp:
         * orbsvcs/orbsvcs/ESF/ESF_Peer_Admin.i:
-        
-          Workaround for C++Builder compiler bug - compiler doesn't like 
+
+          Workaround for C++Builder compiler bug - compiler doesn't like
           having this template constructor inlined.
 
 Sat Apr 15 21:53:44 2000  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
