@@ -59,6 +59,7 @@
 #endif /* _MSC_VER */
 
 class TAO_POA;
+class TAO_ServerProtocolPolicy;
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
@@ -271,6 +272,13 @@ public:
   CORBA::Short server_priority (void) const;
   void server_priority (CORBA::Short value);
 
+#if (TAO_HAS_RT_CORBA == 1)
+
+  TAO_ServerProtocolPolicy *server_protocol (void) const;
+  void server_protocol (TAO_ServerProtocolPolicy *policy);
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
+
   void parse_policies (const CORBA::PolicyList &policies,
                        CORBA_Environment &ACE_TRY_ENV);
 
@@ -284,6 +292,8 @@ protected:
   int validity_check (void);
 
   int validate_priority_model (void);
+
+  int validate_server_protocol (void);
 
   PortableServer::ThreadPolicyValue thread_;
 
@@ -302,6 +312,12 @@ protected:
   PriorityModel priority_model_;
 
   CORBA::Short server_priority_;
+
+#if (TAO_HAS_RT_CORBA == 1)
+
+  TAO_ServerProtocolPolicy *server_protocol_;
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
 
   CORBA::PolicyList client_exposed_fixed_policies_;
 };

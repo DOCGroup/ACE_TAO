@@ -148,6 +148,16 @@ TAO_POA_Policies::server_priority (CORBA::Short value)
   this->server_priority_ = value;
 }
 
+#if (TAO_HAS_RT_CORBA == 1)
+
+ACE_INLINE TAO_ServerProtocolPolicy *
+TAO_POA_Policies::server_protocol (void) const
+{
+  return this->server_protocol_;
+}
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
+
 ACE_INLINE CORBA::PolicyList &
 TAO_POA_Policies::client_exposed_fixed_policies (void)
 {

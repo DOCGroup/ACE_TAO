@@ -1,3 +1,13 @@
+Wed Jun 07 00:36:01 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/POA.cpp (parse_policy): Added code to handle
+	  ServerProtocolPolicy. If we get a ServerProtocolPolicy, we store
+	  it as a servant.  It is only used in the creation of the IOR
+	  where it is used to select/order/restrict the profiles.
+
+	* tao/ORB_Core.cpp (server_protocol): Added accessors to the ORB
+	  level server protocol policy.
+
 Tue Jun 06 23:25:14 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/POA.cpp (servant_to_reference): Made sure that <priority> is
