@@ -1,3 +1,8 @@
+Thu Dec 26 18:51:22 1996  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/config-linux-lxpthreads.h: Has James CE Johnson's
+	  latest adjustments to this config file.
+
 Tue Dec 24 10:55:20 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/OS.cpp (ace_thread_adapter): Changed the message that is
