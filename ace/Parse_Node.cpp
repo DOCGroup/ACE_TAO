@@ -372,7 +372,7 @@ ACE_Location_Node::open_handle (void)
   ACE_TRACE ("ACE_Location_Node::open_handle");
 
   ASYS_TCHAR dl_pathname[MAXPATHLEN + 1];
-  ASYS_TCHAR *name = ASYS_WIDE_STRING (this->pathname ());
+  const ASYS_TCHAR *name = ASYS_WIDE_STRING (this->pathname ());
 
 #if defined (ACE_WIN32)
   ASYS_TCHAR dl_exppathname[MAXPATHLEN];
