@@ -1,12 +1,17 @@
+Sun Feb 29 09:49:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* TAO/orbsvcs/examples/ORT/ORT.mpc:
+	  Removed idl_files from client to reduce build dependencies
+
 Fri Feb 27 16:28:51 2004  Irfan Pyarali  <irfan@oomworks.com>
 
-	* examples\POA\Explicit_Activation\Alt_Resources\Resource_Factory.cpp (allocate_reactor_impl): 
+	* examples/POA/Explicit_Activation/Alt_Resources/Resource_Factory.cpp (allocate_reactor_impl):
 
 	  Set errno to zero before creating the Reactor.  Otherwise, the
 	  code in TAO_Default_Resource_Factory::get_reactor() improperly
 	  think there was a failure in creating the Reactor.
 
-	* examples\POA\Explicit_Activation\alternate.conf: 
+	* examples/POA/Explicit_Activation/alternate.conf:
 
 	  Removed old "-ORBresources global" option.
 
