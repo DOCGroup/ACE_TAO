@@ -28,6 +28,21 @@ TAO_GIOP_Invocation::restart_flag (CORBA::Boolean flag)
   this->restart_flag_ =	flag;
 }
 
+ACE_INLINE void
+TAO_GIOP_Invocation::init_inconsistent_policies (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  ACE_NEW_THROW_EX (this->inconsistent_policies_,
+                    CORBA::PolicyList (0),
+                    CORBA::NO_MEMORY ());
+}
+
+ACE_INLINE CORBA::PolicyList *
+TAO_GIOP_Invocation::get_inconsistent_policies (void)
+{
+  return this->inconsistent_policies_._retn ();
+}
+
 // ****************************************************************
 
 ACE_INLINE

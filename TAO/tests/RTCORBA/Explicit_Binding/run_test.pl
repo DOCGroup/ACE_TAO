@@ -10,28 +10,27 @@ require ACEutils;
 use Cwd;
 
 $cwd = getcwd();
-$iorfile1 = "$cwd$DIR_SEPARATOR" . "test1.ior";
-$iorfile2 = "$cwd$DIR_SEPARATOR" . "test2.ior";
+$iorfile = "$cwd$DIR_SEPARATOR" . "test.ior";
 
 ACE::checkForTarget($cwd);
 
-print STDERR "\n********** RTCORBA Private Connection Unit Test\n\n";
+print STDERR "\n********** RTCORBA Explicit Binding Unit Test\n\n";
 
-unlink $iorfile1;
-unlink $iorfile2;
+unlink $iorfile;
 
 $SV = Process::Create ($EXEPREFIX."server$EXE_EXT ",
-                       " -o $iorfile1 -p $iorfile2 ");
+                       " -o $iorfile "
+                       ."-ORBendpoint iiop:// "
+                       ."-ORBendpoint shmiop://");
 
-if (ACE::waitforfile_timed ($iorfile2, 10) == -1) {
+if (ACE::waitforfile_timed ($iorfile, 10) == -1) {
   print STDERR "ERROR: cannot find file <$iorfile>\n";
   $SV->Kill (); $SV->TimedWait (1);
   exit 1;
 }
 
 $CL = Process::Create ($EXEPREFIX."client$EXE_EXT ",
-                       " -o file://$iorfile1 -p file://$iorfile2 "
-                       ."-ORBdebuglevel 3 ");
+                       " -o file://$iorfile -ORBdebuglevel 1 ");
 
 $client = $CL->TimedWait (60);
 if ($client == -1) {
@@ -45,8 +44,7 @@ if ($server == -1) {
   $SV->Kill (); $SV->TimedWait (1);
 }
 
-unlink $iorfile1;
-unlink $iorfile2;
+unlink $iorfile;
 
 if ($server != 0 || $client != 0) {
   exit 1;
