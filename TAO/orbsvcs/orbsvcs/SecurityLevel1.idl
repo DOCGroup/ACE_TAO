@@ -13,7 +13,7 @@
 
 module SecurityLevel1 {
 
-//# pragma version SecurityLevel1 1.5
+# pragma version SecurityLevel1 1.5
 
     local interface Current : CORBA::Current {	// Locality Constrained
 

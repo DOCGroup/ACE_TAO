@@ -13,7 +13,7 @@
 
 module SecurityLevel2 {
 
-//# pragma version SecurityLevel2 1.7
+# pragma version SecurityLevel2 1.7
 
     // Forward declaration of interfaces
     local interface PrincipalAuthenticator;
@@ -22,7 +22,7 @@ module SecurityLevel2 {
 
     // Interface PrincipalAuthenticator
     local interface PrincipalAuthenticator {    // Locality Constrained
-//#    pragma version PrincipalAuthenticator 1.5
+#    pragma version PrincipalAuthenticator 1.5
         Security::AuthenticationStatus authenticate (
             in   Security::AuthenticationMethod    method,
             in   Security::MechanismType           mechanism,
@@ -46,7 +46,7 @@ module SecurityLevel2 {
     // Interface Credentials
     local interface Credentials {     // Locality Constrained
 
-//#    pragma version Credentials 1.7
+#    pragma version Credentials 1.7
 
         Credentials copy ();
 
@@ -100,7 +100,7 @@ module SecurityLevel2 {
 
     local interface ReceivedCredentials : Credentials { // Locality Constrained
 
-//#    pragma version ReceivedCredentials 1.5
+#    pragma version ReceivedCredentials 1.5
 
       readonly attribute Credentials accepting_credentials;
 
@@ -242,7 +242,7 @@ module SecurityLevel2 {
     // This is implemented by the ORB
     local interface Current : SecurityLevel1::Current { // Locality Constrained
 
-//#    pragma version Current 1.7
+#    pragma version Current 1.7
 
       // Thread specific
 
