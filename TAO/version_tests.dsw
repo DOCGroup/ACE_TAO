@@ -30,6 +30,60 @@ Package=<4>
 
 ###############################################################################
 
+Project: "AMI_Test_Client"=.\tests\AMI\AMI_Test_Client.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_IDL Compiler
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "AMI_Test_Server"=.\tests\AMI\AMI_Test_Server.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_IDL Compiler
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "AMI_Test_Simple_Client"=.\tests\AMI\AMI_Test_Simple_Client.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_IDL Compiler
+    End Project Dependency
+}}}
+
+###############################################################################
+
 Project: "Atomic_Op_Test"=..\tests\Atomic_Op_Test.dsp - Package Owner=<4>
 
 Package=<5>
@@ -100,6 +154,78 @@ Package=<4>
 {{{
     Begin Project Dependency
     Project_Dep_Name ACE DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Buffered_AMI Client"=.\examples\Buffered_AMI\client.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_IDL Compiler
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Buffered_AMI Server"=.\examples\Buffered_AMI\server.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_IDL Compiler
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Buffered_Oneways Client"=.\examples\Buffered_Oneways\client.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_IDL Compiler
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Buffered_Oneways Server"=.\examples\Buffered_Oneways\server.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_IDL Compiler
     End Project Dependency
 }}}
 
@@ -214,276 +340,6 @@ Package=<4>
 {{{
     Begin Project Dependency
     Project_Dep_Name ACE DLL
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "AMI_Test_Client"=.\tests\AMI\AMI_Test_Client.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name TAO DLL
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO_IDL Compiler
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "AMI_Test_Server"=.\tests\AMI\AMI_Test_Server.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name TAO DLL
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO_IDL Compiler
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "AMI_Test_Simple_Client"=.\tests\AMI\AMI_Test_Simple_Client.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name TAO DLL
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO_IDL Compiler
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "Buffered_AMI Client"=.\examples\Buffered_AMI\client.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name TAO DLL
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO_IDL Compiler
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "Buffered_AMI Server"=.\examples\Buffered_AMI\server.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name TAO DLL
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO_IDL Compiler
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "Buffered_Oneways Client"=.\examples\Buffered_Oneways\client.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name TAO DLL
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO_IDL Compiler
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "Buffered_Oneways Server"=.\examples\Buffered_Oneways\server.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name TAO DLL
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO_IDL Compiler
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "Timed_Buffered_Oneways Client"=.\tests\Timed_Buffered_Oneways\client.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name TAO DLL
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO_IDL Compiler
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "Timed_Buffered_Oneways Server"=.\tests\Timed_Buffered_Oneways\server.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name TAO DLL
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO_IDL Compiler
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "Nested_Event_Loop Client"=.\tests\Nested_Event_Loop\client.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name TAO DLL
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO_IDL Compiler
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "Nested_Event_Loop Server"=.\tests\Nested_Event_Loop\server.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name TAO DLL
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO_IDL Compiler
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "Leader_Followers Client"=.\tests\Leader_Followers\client.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name TAO DLL
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO_IDL Compiler
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "Leader_Followers Server"=.\tests\Leader_Followers\server.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name TAO DLL
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO_IDL Compiler
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "Reliable Oneways Client"=.\performance-tests\RTCorba\Oneways\Reliable\client.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name TAO DLL
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO_IDL Compiler
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "Reliable Oneways Server"=.\performance-tests\RTCorba\Oneways\Reliable\server.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name TAO DLL
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO_IDL Compiler
     End Project Dependency
 }}}
 
@@ -729,7 +585,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "ECTest"=.\orbsvcs\tests\Event\lib\ECTest.dsp - Package Owner=<4>
+Project: "ECTest DLL"=.\orbsvcs\tests\Event\lib\ECTest.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -737,9 +593,6 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name ORB Services DLL
-    End Project Dependency
 }}}
 
 ###############################################################################
@@ -1008,21 +861,6 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Lazy_Map_Manager_Test"=..\tests\Lazy_Map_Manager_Test.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name ACE DLL
-    End Project Dependency
-}}}
-
-###############################################################################
-
 Project: "High_Res_Timer_Test"=..\tests\High_Res_Timer_Test.dsp - Package Owner=<4>
 
 Package=<5>
@@ -1215,7 +1053,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "MM_Shared_Memory_Test"=..\tests\MM_Shared_Memory_Test.dsp - Package Owner=<4>
+Project: "Lazy_Map_Manager_Test"=..\tests\Lazy_Map_Manager_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1230,7 +1068,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "MT_Client Simple Client"=.\tests\MT_Client\simple_client.dsp - Package Owner=<4>
+Project: "Leader_Followers Client"=.\tests\Leader_Followers\client.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1243,6 +1081,39 @@ Package=<4>
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name TAO_IDL Compiler
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Leader_Followers Server"=.\tests\Leader_Followers\server.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_IDL Compiler
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "MM_Shared_Memory_Test"=..\tests\MM_Shared_Memory_Test.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ACE DLL
     End Project Dependency
 }}}
 
@@ -1285,6 +1156,24 @@ Package=<4>
 ###############################################################################
 
 Project: "MT_Client Server"=.\tests\MT_Client\server.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_IDL Compiler
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "MT_Client Simple Client"=.\tests\MT_Client\simple_client.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1686,6 +1575,42 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Nested_Event_Loop Client"=.\tests\Nested_Event_Loop\client.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_IDL Compiler
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Nested_Event_Loop Server"=.\tests\Nested_Event_Loop\server.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_IDL Compiler
+    End Project Dependency
+}}}
+
+###############################################################################
+
 Project: "New_Fail_Test"=..\tests\New_Fail_Test.dsp - Package Owner=<4>
 
 Package=<5>
@@ -1765,6 +1690,36 @@ Package=<4>
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name TAO_IDL Compiler
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "ORB_destroy"=.\tests\ORB_destroy\ORB_destroy.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "ORB_init"=.\tests\ORB_init\ORB_init.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
     End Project Dependency
 }}}
 
@@ -1905,55 +1860,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "ORB_init"=.\tests\ORB_init\ORB_init.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name TAO DLL
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "ORB_destroy"=.\tests\ORB_destroy\ORB_destroy.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name TAO DLL
-    End Project Dependency
-}}}
-
-###############################################################################
-
 Project: "POA Deactivation"=.\tests\POA\Deactivation\Deactivation.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name TAO DLL
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO_IDL Compiler
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "POA Non_Servant_Upcalls"=.\tests\POA\Non_Servant_Upcalls\Non_Servant_Upcalls.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -2161,6 +2068,24 @@ Package=<4>
 ###############################################################################
 
 Project: "POA NewPOA"=.\examples\POA\NewPOA\NewPOA.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_IDL Compiler
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "POA Non_Servant_Upcalls"=.\tests\POA\Non_Servant_Upcalls\Non_Servant_Upcalls.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -2667,6 +2592,42 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Reliable Oneways Client"=".\performance-tests\RTCorba\Oneways\Reliable\client.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_IDL Compiler
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Reliable Oneways Server"=".\performance-tests\RTCorba\Oneways\Reliable\server.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_IDL Compiler
+    End Project Dependency
+}}}
+
+###############################################################################
+
 Project: "Reverse_Lock_Test"=..\tests\Reverse_Lock_Test.dsp - Package Owner=<4>
 
 Package=<5>
@@ -3159,10 +3120,43 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name gperf
+    Project_Dep_Name TAO_IDL_BE_DLL
     End Project Dependency
     Begin Project Dependency
+    Project_Dep_Name TAO_IDL_FE_DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "TAO_IDL_BE_DLL"=.\TAO_IDL\TAO_IDL_BE_DLL.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO_IDL_FE_DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "TAO_IDL_FE_DLL"=.\TAO_IDL\TAO_IDL_FE_DLL.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
     Project_Dep_Name ACE DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name gperf
     End Project Dependency
 }}}
 
@@ -3303,6 +3297,42 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Timed_Buffered_Oneways Client"=.\tests\Timed_Buffered_Oneways\client.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_IDL Compiler
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Timed_Buffered_Oneways Server"=.\tests\Timed_Buffered_Oneways\server.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_IDL Compiler
+    End Project Dependency
+}}}
+
+###############################################################################
+
 Project: "Timeout"=.\orbsvcs\tests\Event\Basic\Timeout.dsp - Package Owner=<4>
 
 Package=<5>
@@ -3396,7 +3426,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "TradingLib"=.\orbsvcs\tests\Trading\TradingLib.dsp - Package Owner=<4>
+Project: "Trading Test Library"=.\orbsvcs\tests\Trading\TradingLib.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -3404,9 +3434,6 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name ORB Services DLL
-    End Project Dependency
 }}}
 
 ###############################################################################
@@ -3500,3 +3527,4 @@ Package=<3>
 }}}
 
 ###############################################################################
+
