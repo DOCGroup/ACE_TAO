@@ -411,7 +411,7 @@ public:
     // instance.
   };
 
-  class String_out
+  class TAO_Export String_out
   {
     // = TITLE
     //   String_out
