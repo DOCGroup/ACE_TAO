@@ -96,19 +96,19 @@ private:
 };
 
 // Video_Control_Handler instance singleton.
-//@@ Does this really need to be a singleton?
+//@@ Does this really need to be a thread-specific singleton?
 typedef ACE_TSS_Singleton <Video_Control_Handler_Instance,
                            ACE_SYNCH_MUTEX>
         VIDEO_CONTROL_HANDLER_INSTANCE; 
 
 class Video_Sig_Handler : public virtual ACE_Event_Handler
 {
-  // =TITLE
+  // = TITLE
   //   Defines a video signal handler class which registers itself with the
   //   default ACE_Reactor::instance () . Handles the
   //   SIGALRM signal.
   //
-  // =DESCRIPTION
+  // = DESCRIPTION
   //   This class contains a pointer to a Video_Control_Handler
   //   instance and decides the signal action depending on its state.
   //   An object of this class is used to periodically send the video
@@ -139,15 +139,13 @@ private:
   // the current state of the server.
 };
 
-
-class Video_Data_Handler 
-  : public virtual ACE_Event_Handler
+class Video_Data_Handler : public virtual ACE_Event_Handler
 {
-  // =TITLE
+  // = TITLE
   //   Defines a event handler for video data using a datagram i.e UDP
-  // socket.
+  //   socket.
   //
-  // =DESCRIPTION
+  // = DESCRIPTION
   //   This takes a pointer to a Video_Control_Handler instance and
   //   reacts differently to the events based on the
   //   video_control_handler's state.
@@ -169,19 +167,17 @@ private:
   Video_Control_Handler *vch_;
   // Pointer to the control handler, for accessing
   // the current state of the server.
-  
-
 };
 
 class Video_Server
 {
-  // =TITLE
+  // = TITLE
   //   Defines a class that abstracts the functionality of a
-  // video_server.
+  //   video_server.
   //
-  // =DESCRIPTION
-  //   This registers 3 event handlers with the ACE_Reactor::instance
-  //   () ,namely a control,data and signal handlers.
+  // = DESCRIPTION
+  //   This registers 3 event handlers with the <ACE_Reactor::instance>,
+  //   namely a control,data and signal handlers.
 public:
   Video_Server (void);
   // Default constructor
@@ -221,7 +217,6 @@ private:
   Video_Sig_Handler *sig_handler_;
   // signal handler for SIGALRM to periodically send the video frames
   // to the client
-
 };
 
-#endif // MPEG_VIDEO_SERVER_H
+#endif /* MPEG_VIDEO_SERVER_H */

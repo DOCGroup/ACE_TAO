@@ -1,12 +1,11 @@
 #include "server.h"
 #include "../mpeg_server/Video_Server.h"
 
-// creates a svc handler by passing "this", i.e. 
-// a reference to the acceptor that created it
-// this is needed by the svc_handler to remove the
-// acceptor handle from the reactor
-// called by the acceptor to create a new svc_handler to 
-// handle the new connection.
+// creates a svc handler by passing "this", i.e.  a reference to the
+// acceptor that created it this is needed by the svc_handler to
+// remove the acceptor handle from the reactor called by the acceptor
+// to create a new svc_handler to handle the new connection.
+
 int
 AV_Acceptor::make_svc_handler (AV_Svc_Handler *&sh)
 {
@@ -17,26 +16,25 @@ AV_Acceptor::make_svc_handler (AV_Svc_Handler *&sh)
   return 0;
 }
 
-// initialize the svc_handler, and the acceptor. 
+// Initialize the svc_handler, and the acceptor. 
+
 AV_Svc_Handler::AV_Svc_Handler (ACE_Reactor *reactor,
-                                    AV_Acceptor *acceptor)
+                                AV_Acceptor *acceptor)
   : ACE_Svc_Handler <ACE_SOCK_STREAM, 
                      ACE_NULL_SYNCH> (0, 0, reactor),
     acceptor_ (acceptor)
 {
-  
 }
 
-// Client connected to our control port
-// called by the reactor (acceptor)
+// Client connected to our control port called by the reactor
+// (acceptor).
+
 int
 AV_Svc_Handler::open (void *)
 {
-
   // Lets use threads at a later point. The current scheme works fine
-  // with fork..  
-  // this will activate a thread 
-  //  this->activate (THR_BOUND);
+  // with fork..  this will activate a thread this->activate
+  // (THR_BOUND);
   switch (ACE_OS::fork ("child"))
     {
     case -1:
@@ -45,13 +43,13 @@ AV_Svc_Handler::open (void *)
                          "(%P|%t) fork failed\n"),
                         -1);
     case 0:
-      // I am the child. i should handle this connection
-      // close down the "listen-mode" socket
+      // I am the child. i should handle this connection close down
+      // the "listen-mode" socket
       ACE_Reactor::instance ()->remove_handler
         (this->acceptor_->get_handle (),
          ACCEPT_MASK);
       
-      // handle this connection in the same thread
+      // Handle this connection in the same thread.
       this->svc ();
 
       ACE_DEBUG ((LM_DEBUG,
@@ -79,7 +77,6 @@ AV_Svc_Handler::open (void *)
   return 0;
 }
 
-
 // this will handle the connection
 int
 AV_Svc_Handler::svc (void)
@@ -96,6 +93,7 @@ AV_Svc_Handler::svc (void)
 }
 
 // handles the connection
+
 int
 AV_Svc_Handler::handle_connection (ACE_HANDLE)
 {
@@ -116,7 +114,6 @@ AV_Svc_Handler::handle_connection (ACE_HANDLE)
   this->client_data_addr_.set (port,
                                ip,
                                0);
-
   ACE_DEBUG ((LM_DEBUG, 
               "(%P|%t) Client IP == %s, "
               "Client Port == %d\n",
@@ -201,7 +198,8 @@ AV_Svc_Handler::handle_connection (ACE_HANDLE)
       }
       break;
     default:
-      if (Mpeg_Global::live_audio) LeaveLiveAudio();
+      if (Mpeg_Global::live_audio)
+        LeaveLiveAudio ();
       result = AudioServer (this->peer ().get_handle (), 
                             this->dgram_.get_handle (), 
                             Mpeg_Global::rttag, 
@@ -221,7 +219,8 @@ AV_Svc_Handler::handle_connection (ACE_HANDLE)
 int
 AV_Svc_Handler::close (u_long)
 {
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t)AV_Svc_Handler::close called \n"));
+  ACE_DEBUG ((LM_DEBUG,
+              "(%P|%t)AV_Svc_Handler::close called \n"));
   return 0;
 }
 
@@ -229,7 +228,8 @@ int
 AV_Svc_Handler::handle_timeout (const ACE_Time_Value &,
                                   const void *arg)
 {
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t)AV_Svc_Handler::handle_timeout called \n"));
+  ACE_DEBUG ((LM_DEBUG,
+              "(%P|%t)AV_Svc_Handler::handle_timeout called \n"));
   return 0;
 }
 
@@ -356,9 +356,7 @@ AV_Server_Sig_Handler::clear_child (int sig)
     Mpeg_Global::session_num --;
     
     if (status == 0) 
-      {
-        continue;
-      }
+      continue;
     
     ACE_DEBUG ((LM_DEBUG, 
                 "(%P|%t) VCRS: child %d (status %d) ", 
@@ -368,6 +366,8 @@ AV_Server_Sig_Handler::clear_child (int sig)
     // %% what does the following do
     if (WIFEXITED(status)) 
       {
+        // @@ Can you replace these fprintfs with the appropriate
+        // ACE_DEBUG/ACE_ERROR macros?!
         fprintf(stderr, "exited with status %d\n", WEXITSTATUS(status));
       }
     else if (WIFSIGNALED(status)) 
@@ -381,10 +381,7 @@ AV_Server_Sig_Handler::clear_child (int sig)
 #endif
       }
     else if (WIFSTOPPED(status)) 
-      {
-        fprintf(stderr, "stopped at signal %d\n", WSTOPSIG(status));
-      }
-    
+      fprintf(stderr, "stopped at signal %d\n", WSTOPSIG(status));
   }
 }
 
