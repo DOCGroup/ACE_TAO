@@ -27,8 +27,8 @@ Task_State::Task_State (int argc, char **argv)
     switch (c) {
     case 'g':
       grain_ = ACE_OS::atoi (opts.optarg);
-      if (grain_ < 1) 
-	grain_ = 1;
+      if (grain_ < 1)
+        grain_ = 1;
       break;
     case 's':
       use_name_service_ = 0;
@@ -545,7 +545,6 @@ Client::run_tests (Cubit_ptr cb,
   u_int i = 0;
   u_int call_count = 0;
   u_int error_count = 0;
-  u_int context_switch = 0;
   double *my_jitter_array;
 
   ACE_NEW_RETURN (my_jitter_array,
@@ -556,8 +555,10 @@ Client::run_tests (Cubit_ptr cb,
   double sleep_time = (1 / frequency) * (1000 * 1000);
   double delta = 0;
 
+#if defined (CHORUS)
   int pstartTime = 0;
   int pstopTime = 0;
+#endif /* CHORUS */
   double real_time = 0.0;
 
 #if defined (USE_QUANTIFY)
@@ -572,16 +573,16 @@ Client::run_tests (Cubit_ptr cb,
       ACE_High_Res_Timer timer_;
       ACE_Time_Value tv (0, (long int) (sleep_time - delta));
       ACE_OS::sleep (tv);
-      
+
       // Elapsed time will be in microseconds.
       ACE_Time_Value delta_t;
-      
-#if defined (CHORUS)       
+
+#if defined (CHORUS)
       pstartTime = pccTime1Get();
 #else /* CHORUS */
       timer_.start ();
 #endif /* !CHORUS */
-      
+
       if (ts_->oneway_ == 0)
         {
           switch (datatype)
@@ -771,25 +772,25 @@ Client::run_tests (Cubit_ptr cb,
             }
         }
 
-#if defined (CHORUS)      
-      if ( (loop_count % ts_->grain_) == 0) 
-	  pstopTime = pccTime1Get();
+#if defined (CHORUS)
+      if ( (loop_count % ts_->grain_) == 0)
+          pstopTime = pccTime1Get();
 #else /* CHORUS */
       // if CHORUS is not defined just use plain timer_.stop ().
-      timer_.stop (); 
+      timer_.stop ();
       timer_.elapsed_time (delta_t);
 #endif /* !CHORUS */
 
       // Calculate time elapsed
 #if defined (ACE_LACKS_FLOATING_POINT)
-#   if defined (CHORUS)      
+#   if defined (CHORUS)
       real_time = pstopTime - pstartTime;
       my_jitter_array [i/ts_->grain_] = real_time; // in units of microseconds.
-	  // update the latency array, correcting the index using the granularity 
+          // update the latency array, correcting the index using the granularity
 #   else /* CHORUS */
       // Store the time in usecs.
       real_time = delta_t.sec () * ACE_ONE_SECOND_IN_USECS  +
-	delta_t.usec ();
+        delta_t.usec ();
       my_jitter_array [i] = real_time; // in units of microseconds.
 #   endif /* !CHORUS */
       delta = ((40 * fabs (real_time) / 100) + (60 * delta / 100)); // pow(10,6)
@@ -822,9 +823,9 @@ Client::run_tests (Cubit_ptr cb,
                           latency,
                           calls_per_second));
 
-              this->put_latency (my_jitter_array, 
-				 latency, 
-				 thread_id);
+              this->put_latency (my_jitter_array,
+                                 latency,
+                                 thread_id);
 #else
               ACE_DEBUG ((LM_DEBUG,
                           "(%P|%t) cube average call ACE_OS::time\t= %f msec, \t"
@@ -961,28 +962,28 @@ context_switch_time (void)
           ACE_SCOPE_PROCESS)) != 0)
     {
       if (ACE_OS::last_error () == EPERM)
-	{
-	  ACE_DEBUG ((LM_MAX, "context_switch_time: user is not superuser, "
-		      "so remain in time-sharing class\n"));
-	}
+        {
+          ACE_DEBUG ((LM_MAX, "context_switch_time: user is not superuser, "
+                      "so remain in time-sharing class\n"));
+        }
       else
-	{
-	  ACE_OS::perror ("context_switch_time");
-	  ACE_OS::exit (-1);
-	}
+        {
+          ACE_OS::perror ("context_switch_time");
+          ACE_OS::exit (-1);
+        }
     }
 
   for (u_int i=0; i<100; i++)
     {
       LOW_PRIORITY = ACE_Sched_Params::priority_min (ACE_SCHED_FIFO);
       HIGH_PRIORITY = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,
-						       LOW_PRIORITY);
-      
+                                                       LOW_PRIORITY);
+
       // then Yield test
       Yield_Test yield_test (iterations);
       // Wait for all tasks to exit.
       ACE_Thread_Manager::instance ()->wait ();
-      
+
       tmp += (double) (yield_test.elapsed_time ()/ (ACE_UINT32) 1u) /iterations /2;
     }
 
