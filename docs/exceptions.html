@@ -178,7 +178,7 @@ try macros.
 
         <li><P>Throw an exception within a <code>ACE_TRY</code>
             block or <code>ACE_CATCH</code> block using
-            <a href="#try_throw"><code>ACE_TRY_THROW</code></a>.
+            <a href="#ace_try"><code>ACE_TRY_THROW</code></a>.
             </p>
         </LI>
       </ul>
@@ -205,6 +205,7 @@ macros discussed here.
 <ul>Examples on using ACE try macros:
   <li><p>
       <pre>
+      <a name="try_env">
       ACE_TRY  // Use ACE_DECLARE_NEW_CORBA_ENV to create ACE_TRY_ENV
                // if you got undefined symbol warning here.
         {
@@ -219,6 +220,7 @@ macros discussed here.
           some_other_operation (arg1, arg2, arg3, ACE_TRY_ENV);
           ACE_TRY_CHECK;
         }
+      <a name="ace_try">
       ACE_CATCH (CORBA_some_exception, ex)
         {
           // error handling.
