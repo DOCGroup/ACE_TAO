@@ -34,6 +34,13 @@ TAO::be_visitor_union_typecode::visit_union (be_union * node)
 
   ACE_ASSERT (discriminant_type != 0);
 
+  if (this->gen_case_typecodes (node) != 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "TAO::be_visitor_union_typecode::visit_union - "
+                       "Unable to generate union field "
+                       "TypeCodes.\n"),
+                      -1);
+
   if (this->visit_cases (node) != 0)
     return -1;
 
@@ -55,6 +62,36 @@ TAO::be_visitor_union_typecode::visit_union (be_union * node)
 
   return
     this->gen_typecode_ptr (be_type::narrow_from_decl (node));
+}
+
+int
+TAO::be_visitor_union_typecode::gen_case_typecodes (be_union * node)
+{
+  AST_Field ** member_ptr = 0;
+
+  size_t const count = node->nfields ();
+
+  for (size_t i = 0; i < count; ++i)
+    {
+      node->field (member_ptr, i);
+
+      be_interface * const intf =
+        be_interface::narrow_from_decl ((*member_ptr)->field_type ());
+
+      if (intf && intf->is_defined ())
+        {
+          // Only generate TypeCodes for interfaces and valuetypes if
+          // they are forward declared.
+          continue;
+        }
+
+      be_type * const member_type =
+        be_type::narrow_from_decl ((*member_ptr)->field_type ());
+
+      member_type->accept (this);
+    }
+
+  return 0;
 }
 
 int
