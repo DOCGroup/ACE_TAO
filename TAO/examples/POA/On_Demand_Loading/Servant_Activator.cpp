@@ -9,7 +9,7 @@
 //     Servant_Activator.cpp
 //
 // = DESCRIPTION
-//     Implementation of Dir_Service_Activator, which is used by a
+//     Implementation of MyFooServantActivator, which is used by a
 //     POA with a RETAIN policy.
 //
 // = AUTHOR
@@ -18,13 +18,13 @@
 // ============================================================================
 
 #include "Servant_Activator.h"
-#include "Dir_Service_i.h"
+#include "MyFooServant.h"
 
 ACE_RCSID(On_Demand_Loading, Servant_Activator, "$Id$")
 
 // Initialization.
 
-Dir_Service_Activator::Dir_Service_Activator (CORBA::ORB_ptr orb)
+MyFooServantActivator::MyFooServantActivator (CORBA::ORB_ptr orb)
   :  orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
@@ -32,7 +32,7 @@ Dir_Service_Activator::Dir_Service_Activator (CORBA::ORB_ptr orb)
 // This method associates an servant with the ObjectID.
 
 PortableServer::Servant
-Dir_Service_Activator::incarnate (const PortableServer::ObjectId &oid,
+MyFooServantActivator::incarnate (const PortableServer::ObjectId &oid,
                                   PortableServer::POA_ptr poa,
                                   CORBA::Environment &env)
 {
@@ -44,7 +44,8 @@ Dir_Service_Activator::incarnate (const PortableServer::ObjectId &oid,
   // Activate and return the servant else exception.
   
   PortableServer::Servant servant = this->activate_servant (s.in (),
-                                                            poa);
+                                                            poa,
+                                                            27);
   if (servant != 0)
     return servant;
   else
@@ -65,7 +66,7 @@ Dir_Service_Activator::incarnate (const PortableServer::ObjectId &oid,
 // entire POA is is deactivated or destroyed.
 
 void
-Dir_Service_Activator::etherealize (const PortableServer::ObjectId &oid,
+MyFooServantActivator::etherealize (const PortableServer::ObjectId &oid,
                                     PortableServer::POA_ptr poa,
                                     PortableServer::Servant servant,
                                     CORBA::Boolean cleanup_in_progress,
@@ -78,7 +79,8 @@ Dir_Service_Activator::etherealize (const PortableServer::ObjectId &oid,
   ACE_UNUSED_ARG (env);
 
   // If there are no remaining activations i.e ObjectIds associated
-  // with Dir_Service object, deactivate it.
+  // with MyFooServant object, deactivate it.
+  // Etheralization happens on POA::destroy() and/or Object::deactivate().
 
   if (remaining_activations == 0)
     deactivate_servant (servant);
@@ -89,8 +91,9 @@ Dir_Service_Activator::etherealize (const PortableServer::ObjectId &oid,
 // operations in the library.
 
 PortableServer::Servant
-Dir_Service_Activator::activate_servant (const char *str, 
-                                         PortableServer::POA_ptr poa)
+MyFooServantActivator::activate_servant (const char *str, 
+                                         PortableServer::POA_ptr poa,
+                                         long value)
 {
   // The string format is dllname:factory_method which needs to be parsed.
   parse_string (str);
@@ -119,14 +122,14 @@ Dir_Service_Activator::activate_servant (const char *str,
                       0);
    
   // Now create and return the servant.
-  return servant_creator (this->orb_.in (), poa);
+  return servant_creator (this->orb_.in (), poa, value);
 }
 
 // This method removes the servant and the dll object associated with
 // it after it has performed the opening and symbol obtaining operations.
  
 void 
-Dir_Service_Activator::deactivate_servant (PortableServer::Servant servant)
+MyFooServantActivator::deactivate_servant (PortableServer::Servant servant)
 {
   // the servant is destroyed.
   delete servant;
@@ -136,7 +139,7 @@ Dir_Service_Activator::deactivate_servant (PortableServer::Servant servant)
 // be parsed and separated into tokens to be used.
 
 void
-Dir_Service_Activator::parse_string (const char *s)
+MyFooServantActivator::parse_string (const char *s)
 {
   // The format of the object library:factory_method.  This string is
   // parsed to obtain the library name and the function name which
@@ -176,3 +179,20 @@ Dir_Service_Activator::parse_string (const char *s)
               this->create_symbol_.in ()));
 }
 
+// This method returns an ObjectId when given an library name and the factory method
+// to be invoked in the library.The format of the ObjectId is libname:factory_method.
+
+PortableServer::ObjectId_var
+MyFooServantActivator::create_objectId (const char *libname, const char *factory_method)
+{
+  char format_string [BUFSIZ];
+  
+  ACE_OS::strcpy (format_string, libname);
+  ACE_OS::strcat (format_string, ":");
+  ACE_OS::strcat (format_string, factory_method);
+  
+  PortableServer::ObjectId_var oid =
+    PortableServer::string_to_ObjectId ( format_string);
+
+  return oid;
+}

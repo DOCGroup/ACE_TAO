@@ -4,17 +4,15 @@
 
 BIN = server
 
-MYFILES = Servant_Activator 
+MYFILES = Servant_Activator #Servant_Locator
 
 SRC = $(addsuffix .cpp,$(MYFILES)) $(addsuffix .cpp, $(BIN))
-
 OBJ = $(addsuffix .o,$(MYFILES))
 
-CPPFLAGS += -I$(TAO_ROOT) 
+CPPFLAGS += -I$(TAO_ROOT) -I../Generic_Servant
 
-LDLIBS   =   -lserver -lTAO
-
-LDFLAGS += -L$(TAO_ROOT)/tao
+LDLIBS     =   -lserver -lTAO
+LDFLAGS += -L$(TAO_ROOT)/tao -L../Generic_Servant
 
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 
@@ -38,14 +36,6 @@ ifndef TAO_ROOT
 TAO_ROOT = $(ACE_ROOT)/TAO
 endif
 
-CLIENT:
-	make -f Makefile.Client
-
-DIR_SERVICE:
-	make -f Makefile.DirService
-
-all: CLIENT DIR_SERVICE $(BIN)
-
 #----------------------------------------------------------------------------
 #	Dependencies
 #----------------------------------------------------------------------------
@@ -53,7 +43,7 @@ all: CLIENT DIR_SERVICE $(BIN)
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
-.obj/Dir_ServiceC.o .obj/Dir_ServiceC.so .shobj/Dir_ServiceC.o .shobj/Dir_ServiceC.so: Dir_ServiceC.cpp Dir_ServiceC.h \
+.obj/Servant_Activator.o .obj/Servant_Activator.so .shobj/Servant_Activator.o .shobj/Servant_Activator.so: Servant_Activator.cpp Servant_Activator.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -71,6 +61,9 @@ all: CLIENT DIR_SERVICE $(BIN)
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i \
@@ -114,7 +107,6 @@ all: CLIENT DIR_SERVICE $(BIN)
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -132,8 +124,6 @@ all: CLIENT DIR_SERVICE $(BIN)
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -291,17 +281,22 @@ all: CLIENT DIR_SERVICE $(BIN)
  $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- generic_servant_export.h Dir_ServiceC.i Dir_ServiceS.h \
- Dir_ServiceS_T.h Dir_ServiceS_T.i Dir_ServiceS_T.cpp Dir_ServiceS.i
-.obj/Dir_ServiceS.o .obj/Dir_ServiceS.so .shobj/Dir_ServiceS.o .shobj/Dir_ServiceS.so: Dir_ServiceS.cpp Dir_ServiceS.h Dir_ServiceC.h \
- $(TAO_ROOT)/tao/corba.h \
- $(TAO_ROOT)/tao/orbconf.h \
- $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/DLL.h \
+ ../Generic_Servant/MyFooServant.h ../Generic_Servant/FooS.h \
+ ../Generic_Servant/FooC.h ../Generic_Servant/generic_servant_export.h \
+ ../Generic_Servant/FooC.i ../Generic_Servant/FooS_T.h \
+ ../Generic_Servant/FooS_T.i ../Generic_Servant/FooS_T.cpp \
+ ../Generic_Servant/FooS.i
+.obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp \
+ $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/config-g++-common.h \
- $(ACE_ROOT)/ace/streams.h \
+ Servant_Activator.h \
+ $(TAO_ROOT)/tao/corba.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/OS.i \
@@ -311,6 +306,9 @@ all: CLIENT DIR_SERVICE $(BIN)
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i \
@@ -354,7 +352,6 @@ all: CLIENT DIR_SERVICE $(BIN)
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -372,8 +369,6 @@ all: CLIENT DIR_SERVICE $(BIN)
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -531,7 +526,6 @@ all: CLIENT DIR_SERVICE $(BIN)
  $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- generic_servant_export.h Dir_ServiceC.i Dir_ServiceS_T.h \
- Dir_ServiceS_T.i Dir_ServiceS_T.cpp Dir_ServiceS.i
+ $(ACE_ROOT)/ace/DLL.h
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY
