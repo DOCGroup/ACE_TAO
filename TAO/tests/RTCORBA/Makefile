@@ -13,6 +13,7 @@
 DIRS  = Banded_Connections \
 	Client_Propagated \
 	Client_Protocol \
+	Destroy_Thread_Pool \
 	Explicit_Binding \
 	Server_Declared \
         Server_Protocol \
