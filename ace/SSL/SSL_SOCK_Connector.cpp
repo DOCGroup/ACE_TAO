@@ -7,6 +7,7 @@
 #include "ace/Handle_Set.h"
 #include "ace/INET_Addr.h"
 #include "ace/Log_Msg.h"
+#include "ace/Time_Value.h"
 
 #include <openssl/err.h>
 
