@@ -1,7 +1,9 @@
 #----------------------------------------------------------------------------
-#	@(#)Makefile	1.1	10/18/96
+#
+#	$Id$
 #
 #	Makefile for the TAO tests
+#
 #----------------------------------------------------------------------------
 
 #----------------------------------------------------------------------------
@@ -11,11 +13,11 @@
 DIRS  = \
 	Cubit \
 	POA \
-	Param_Test \
-	Thruput
+	Param_Test
 
-# The following test hasn't been updated yet
-# Demux_Test
+# The following tests have not been updated yet
+#	Thruput
+# 	Demux_Test
 
 #----------------------------------------------------------------------------
 #	Include macros and targets
