@@ -69,10 +69,10 @@ Client_Task::run_test (Test_Interceptors::Visual_ptr server
   server->normal (10 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  CORBA::Long one = 1, two = 1, result = 0;
-  result = server->calculate (one,
-                              two
-                              ACE_ENV_ARG_PARAMETER);
+  CORBA::Long one = 1, two = 1;
+  (void) server->calculate (one,
+                            two
+                            ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   ACE_TRY

@@ -143,11 +143,9 @@ Thread_Task::svc (void)
         --active_thread_count_;
         if (active_thread_count_ == 0)
           orb_->shutdown ();
-        return 0;
       }
 
-      return 1;
-
+      return 0;
     }
   ACE_CATCHANY
     {
