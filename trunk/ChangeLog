@@ -1,3 +1,12 @@
+Sat Jun 19 07:24:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/SSL/SSL_SOCK.{h,cpp,i}:
+        * ace/SSL/SSL_SOCK_Acceptor.{h,cpp,i}:
+        * ace/SSL/SSL_SOCK_Connector.{h,cpp,i}:
+        * ace/SSL/SSL_SOCK_Stream.{h,cpp,i}:
+          Changed checks for ACE_LACKS_INLINE_FUNCTIONS with __ACE_INLINE__ in
+          the h/cpp files. In the .i files changed ASYS_INLINE with ACE_INLINE.
+
 Fri Jun 18 18:36:39 2004  Steve Huston  <shuston@riverace.com>
 
 	* docs/index.html: Changed title of the ACE-tutorial.pdf/ps link to
@@ -13,7 +22,7 @@ Fri Jun 18 12:42:52 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 	* ace/OS_NS_time.cpp:
 	* ace/OS_NS_time.inl:
 	* ace/OS_NS_time.h:
-	  Changed GNU C version of readPPCTimeBase() so it can be 
+	  Changed GNU C version of readPPCTimeBase() so it can be
 	  inlined in ACE_OS::gethrtime() and compiled on Mac OS X
 	  where "r" register prefixes are required in inline asm.
 
@@ -25,9 +34,9 @@ Fri Jun 18 12:04:35 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* m4/ace.m4:
 	  Added --enable-ipv6 flag which sets ACE_HAS_IPV6.
-	  Added --enable-ipv4-ipv6 flag which sets 
+	  Added --enable-ipv4-ipv6 flag which sets
 	  ACE_USES_IPV4_IPV6_MIGRATION.
-	
+
 	* m4/config_h.m4:
 	  Added ACE_USES_IPV4_IPV6_MIGRATION template.
 
