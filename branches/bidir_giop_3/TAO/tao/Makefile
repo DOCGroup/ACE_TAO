@@ -197,6 +197,7 @@ ORB_CORE_FILES = \
   CONV_FRAMEC \
   CONV_FRAMES \
   Tagged_Components \
+  Service_Context \
   GIOPC \
   GIOPS \
   BoundsC \
