@@ -1,3 +1,22 @@
+Tue Jan 25 19:42:54 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/UIOP_Profile.cpp (decode): 
+	* tao/IIOP_Profile.cpp : A problem when TAO clients were
+	  interacting with GIOP 1.2 servers. The profile received by the
+	  TAO client is parsed in decode (). In the code for IIOP_Profile,
+	  a check was made for a higher minor version but no action was
+	  taken. In the process, the version information that the
+	  IIOP_Profile class was holding had the minor version information
+	  of the received profile and  not what the TAO client can
+	  send. So, changes have been made to check for the minor version
+	  number. If the minor version is less than or equal to the minor
+	  version that TAO supports, we save that information. If it is
+	  greater than the one we support, the {IIOP, UIOP}_Profile
+	  classes would highest minor version that we support. This
+	  information gets passed on through the invocation classes to the
+	  transport and then to the messaging classes. Thanks to Klemen
+	  Zagar <klemen.zagar@irj.si> for reporting this problem. 
+
 Tue Jan 25 19:27:24 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* docs/releasenotes/index.html:
