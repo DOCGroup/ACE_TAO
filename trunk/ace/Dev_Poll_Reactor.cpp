@@ -11,19 +11,10 @@ ACE_RCSID (ace,
 
 #  if defined (ACE_HAS_EVENT_POLL) && defined (linux)
 
-// #undef POLLIN
-// #undef POLLPRI
-// #undef POLLOUT
-// #undef POLLERR
-// #undef POLLHUP
-// #undef POLLNVAL
+#    include "ace/OS_NS_unistd.h"
+#    include "ace/OS_NS_fcntl.h"
 
-#    include /**/ <asm/page.h>
-  //#  include <asm/poll.h>
-  // @@ UGLY HACK ... REMOVE ME
-  //    <asm/poll.h> and <sys/poll.h> conflict.
-#    define POLLREMOVE      0x1000
-#    include /**/ <linux/eventpoll.h>
+#    include <sys/epoll.h>
 
 #  elif defined (ACE_HAS_DEV_POLL)
 
@@ -247,7 +238,7 @@ ACE_Dev_Poll_Reactor_Notify::dispatch_notifications (
   // for details.
   if (read_handle != ACE_INVALID_HANDLE)
     {
-      number_of_active_handles--;
+      --number_of_active_handles;
 
       return this->handle_input (read_handle);
     }
@@ -324,7 +315,7 @@ ACE_Dev_Poll_Reactor_Notify::handle_input (ACE_HANDLE handle)
       // Dispatch the buffer
       // NOTE: We count only if we made any dispatches ie. upcalls.
       if (this->dispatch_notify (buffer) > 0)
-        number_dispatched++;
+        ++number_dispatched;
 
       // Bail out if we've reached the <notify_threshold_>.  Note that
       // by default <notify_threshold_> is -1, so we'll loop until all
@@ -749,17 +740,19 @@ ACE_Dev_Poll_Reactor::ACE_Dev_Poll_Reactor (ACE_Sig_Handler *sh,
                                             int disable_notify_pipe,
                                             ACE_Reactor_Notify *notify,
                                             int mask_signals)
-  : initialized_ (0)
+  : initialized_ (false)
   , poll_fd_ (ACE_INVALID_HANDLE)
   , size_ (0)
   // , ready_set_ ()
 #if defined (ACE_HAS_EVENT_POLL)
-  , mmap_ (0)
+  , events_ (0)
+  , start_pevents_ (0)
+  , end_pevents_ (0)
 #else
   , dp_fds_ (0)
-#endif  /* ACE_HAS_EVENT_POLL */
   , start_pfds_ (0)
   , end_pfds_ (0)
+#endif  /* ACE_HAS_EVENT_POLL */
   , deactivated_ (0)
   , lock_ ()
   , lock_adapter_ (lock_)
@@ -794,17 +787,19 @@ ACE_Dev_Poll_Reactor::ACE_Dev_Poll_Reactor (size_t size,
                                             int disable_notify_pipe,
                                             ACE_Reactor_Notify *notify,
                                             int mask_signals)
-  : initialized_ (0)
+  : initialized_ (false)
   , poll_fd_ (ACE_INVALID_HANDLE)
   , size_ (0)
   // , ready_set_ ()
 #if defined (ACE_HAS_EVENT_POLL)
-  , mmap_ (0)
+  , events_ (0)
+  , start_pevents_ (0)
+  , end_pevents_ (0)
 #else
   , dp_fds_ (0)
-#endif  /* ACE_HAS_EVENT_POLL */
   , start_pfds_ (0)
   , end_pfds_ (0)
+#endif  /* ACE_HAS_EVENT_POLL */
   , deactivated_ (0)
   , lock_ ()
   , lock_adapter_ (lock_)
@@ -849,7 +844,7 @@ ACE_Dev_Poll_Reactor::open (size_t size,
   ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1));
 
   // Can't initialize ourselves more than once.
-  if (this->initialized_ > 0)
+  if (this->initialized_)
     return -1;
 
   this->restart_ = restart;
@@ -899,29 +894,15 @@ ACE_Dev_Poll_Reactor::open (size_t size,
     }
 
 #if defined (ACE_HAS_EVENT_POLL)
-
-  // Open the `/dev/epoll' character device.
-  this->poll_fd_ = ACE_OS::open ("/dev/epoll", O_RDWR);
-  if (this->poll_fd_ == ACE_INVALID_HANDLE)
+  
+  // Allocating event table:
+  ACE_NEW_RETURN (this->events_, epoll_event[size], -1);
+  
+  // Initializing epoll:
+  this->poll_fd_ = ::epoll_create (size);
+  if (this->poll_fd_ == -1)
     result = -1;
 
-  // Set the maximum number of file descriptors to expect.
-  if (result != -1
-      && ACE_OS::ioctl (this->poll_fd_, EP_ALLOC, (void *) size) == 0)
-    {
-      // Map an area of memory to which results will be fed.
-      void *mm = ACE_OS::mmap (0,
-                               EP_MAP_SIZE (size),
-                               PROT_READ | PROT_WRITE,
-                               MAP_PRIVATE,
-                               this->poll_fd_,
-                               0);
-
-      if (mm == (void *) MAP_FAILED)
-        result = -1;
-      else
-        this->mmap_ = static_cast<char *> (mm);
-    }
 #else
 
   // Allocate the array before opening the device to avoid a potential
@@ -955,7 +936,7 @@ ACE_Dev_Poll_Reactor::open (size_t size,
 
   if (result != -1)
     // We're all set to go.
-    this->initialized_ = 1;
+    this->initialized_ = true;
   else
     // This will close down all the allocated resources properly.
     (void) this->close ();
@@ -1011,21 +992,25 @@ ACE_Dev_Poll_Reactor::close (void)
   int result = 0;
 
 #if defined (ACE_HAS_EVENT_POLL)
-  if (this->mmap_ != 0)
+
+  if( this->events_ != 0 )
     {
-      (void) ACE_OS::munmap (this->mmap_, EP_MAP_SIZE (this->size_));
-      this->mmap_ = 0;
+      ACE_OS::memset (this->events_,
+                      0,
+                      this->size_ * sizeof (struct epoll_event));
+      delete [] this->events_;
+      this->events_        = 0;
     }
+
 #else
+
   delete [] this->dp_fds_;
   this->dp_fds_ = 0;
+
 #endif  /* ACE_HAS_EVENT_POLL */
 
   if (this->poll_fd_ != ACE_INVALID_HANDLE)
     {
-#if defined (ACE_HAS_EVENT_POLL)
-      (void) ACE_OS::ioctl (this->poll_fd_, EP_FREE, 0);
-#endif  /* ACE_HAS_EVENT_POLL */
       result = ACE_OS::close (this->poll_fd_);
     }
 
@@ -1056,9 +1041,16 @@ ACE_Dev_Poll_Reactor::close (void)
     }
 
   this->poll_fd_ = ACE_INVALID_HANDLE;
+
+#if defined (ACE_HAS_EVENT_POLL)
+  this->start_pevents_ = 0;
+  this->end_pevents_   = 0;
+#else
   this->start_pfds_ = 0;
   this->end_pfds_ = 0;
-  this->initialized_ = 0;
+#endif /* ACE_HAS_EVENT_POLL */
+
+  this->initialized_ = false;
 
   return result;
 }
@@ -1091,7 +1083,11 @@ ACE_Dev_Poll_Reactor::work_pending_i (ACE_Time_Value * max_wait_time)
   if (this->deactivated_)
     return 0;
 
+#if defined (ACE_HAS_EVENT_POLL)
+  if (this->start_pevents_ != this->end_pevents_)
+#else
   if (this->start_pfds_ != this->end_pfds_)
+#endif /* ACE_HAS_EVENT_POLL */
     return 1;  // We still have work_pending(). Do not poll for
                // additional events.
 
@@ -1108,21 +1104,24 @@ ACE_Dev_Poll_Reactor::work_pending_i (ACE_Time_Value * max_wait_time)
          && *this_timeout != *max_wait_time) ? 1 : 0);
 
   const long timeout =
-    (this_timeout == 0 ? -1 /* Infinity */ : this_timeout->msec ());
+    (this_timeout == 0 ? -1 /* Infinity */ : static_cast<long> (this_timeout->msec ()));
 
 #if defined (ACE_HAS_EVENT_POLL)
 
-  struct evpoll evp;
+   // Waiting for events...
+   const int nfds = ::epoll_wait (this->poll_fd_,
+                                  this->events_,
+                                  this->size_, 
+                                  static_cast<int> (timeout));
 
-  evp.ep_timeout = timeout;  // Milliseconds
-  evp.ep_resoff = 0;
-
-  // Poll for events
-  const int nfds = ACE_OS::ioctl (this->poll_fd_, EP_POLL, &evp);
-
-  // Retrieve the results from the memory map.
-  this->start_pfds_ =
-    reinterpret_cast<struct pollfd *> (this->mmap_ + evp.ep_resoff);
+  // all detected events are put in this->events_:
+   this->start_pevents_ = this->events_;
+  
+   // If nfds == 0 then end_pevents_ == start_pevents_ meaning that there is
+   // no work pending.  If nfds > 0 then there is work pending.
+   // Otherwise an error occurred.
+  if (nfds > -1)
+     this->end_pevents_ = this->start_pevents_ + nfds;
 
 #else
 
@@ -1138,13 +1137,12 @@ ACE_Dev_Poll_Reactor::work_pending_i (ACE_Time_Value * max_wait_time)
   // Retrieve the results from the pollfd array.
   this->start_pfds_ = dvp.dp_fds;
 
-#endif  /* ACE_HAS_EVENT_POLL */
-
   // If nfds == 0 then end_pfds_ == start_pfds_ meaning that there is
   // no work pending.  If nfds > 0 then there is work pending.
   // Otherwise an error occurred.
   if (nfds > -1)
     this->end_pfds_ = this->start_pfds_ + nfds;
+#endif  /* ACE_HAS_EVENT_POLL */
 
   // If timers are pending, override any timeout from the poll.
   return (nfds == 0 && timers_pending != 0 ? 1 : nfds);
@@ -1359,18 +1357,35 @@ ACE_Dev_Poll_Reactor::dispatch_io_events (int &io_handlers_dispatched)
   //
   // Notice that pfds only contains file descriptors that have
   // received events.
+#if defined (ACE_HAS_EVENT_POLL)
+  for (struct epoll_event *& pfds = this->start_pevents_;
+       pfds < this->end_pevents_;
+#else
   for (struct pollfd *& pfds = this->start_pfds_;
        pfds < this->end_pfds_;
+#endif /* ACE_HAS_EVENT_POLL */
        /* Nothing to do before next loop iteration */)
     {
+#if defined (ACE_HAS_EVENT_POLL)
+      const ACE_HANDLE handle = pfds->data.fd;
+      const short revents     = static_cast<short> (pfds->events);
+#else
       const ACE_HANDLE handle = pfds->fd;
       const short revents     = pfds->revents;
+#endif /* ACE_HAS_EVENT_POLL */
 
-      // Increment the pointer to the next pollfd element before we
+      // Increment the pointer to the next element before we
       // release the lock.  Otherwise event handlers end up being
       // dispatched multiple times for the same poll.
       ++pfds;
 
+
+      /* When using sys_epoll, we can attach arbitrary user
+         data to the descriptor, so it can be delivered when
+         activity is detected. Perhaps we should store event
+         handler together with descriptor, instead of looking
+         it up in a repository ? Could it boost performance ?
+      */
       ACE_Event_Handler *eh = this->handler_rep_.find (handle);
 
       {
@@ -1385,7 +1400,11 @@ ACE_Dev_Poll_Reactor::dispatch_io_events (int &io_handlers_dispatched)
                           -1);
 
         // Dispatch all output events.
+#if defined (ACE_HAS_EVENT_POLL)
+        if (ACE_BIT_ENABLED (revents, EPOLLOUT))
+#else
         if (ACE_BIT_ENABLED (revents, POLLOUT))
+#endif /* ACE_HAS_EVENT_POLL */
           {
             int status =
               this->upcall (eh, &ACE_Event_Handler::handle_output, handle);
@@ -1398,11 +1417,15 @@ ACE_Dev_Poll_Reactor::dispatch_io_events (int &io_handlers_dispatched)
                                              ACE_Event_Handler::WRITE_MASK);
               }
 
-            io_handlers_dispatched++;
+            ++io_handlers_dispatched;
           }
 
         // Dispatch all "high priority" (e.g. out-of-band data) events.
+#if defined (ACE_HAS_EVENT_POLL)
+        if (ACE_BIT_ENABLED (revents, EPOLLPRI))
+#else
         if (ACE_BIT_ENABLED (revents, POLLPRI))
+#endif /* ACE_HAS_EVENT_POLL */
           {
             int status =
               this->upcall (eh, &ACE_Event_Handler::handle_exception, handle);
@@ -1415,11 +1438,15 @@ ACE_Dev_Poll_Reactor::dispatch_io_events (int &io_handlers_dispatched)
                                              ACE_Event_Handler::EXCEPT_MASK);
               }
 
-            io_handlers_dispatched++;
+            ++io_handlers_dispatched;
           }
 
         // Dispatch all input events.
+#if defined (ACE_HAS_EVENT_POLL)
+        if (ACE_BIT_ENABLED (revents, EPOLLIN))
+#else
         if (ACE_BIT_ENABLED (revents, POLLIN))
+#endif /* ACE_HAS_EVENT_POLL */
           {
             int status =
               this->upcall (eh, &ACE_Event_Handler::handle_input, handle);
@@ -1432,7 +1459,7 @@ ACE_Dev_Poll_Reactor::dispatch_io_events (int &io_handlers_dispatched)
                                              ACE_Event_Handler::READ_MASK);
               }
 
-            io_handlers_dispatched++;
+            ++io_handlers_dispatched;
           }
       } // The reactor lock is reacquired upon leaving this scope.
     }
@@ -1502,7 +1529,7 @@ ACE_Dev_Poll_Reactor::register_handler (ACE_HANDLE handle,
   return this->register_handler_i (handle,
                                    event_handler,
                                    mask);
-};
+}
 
 int
 ACE_Dev_Poll_Reactor::register_handler_i (ACE_HANDLE handle,
@@ -1523,6 +1550,25 @@ ACE_Dev_Poll_Reactor::register_handler_i (ACE_HANDLE handle,
   if (this->handler_rep_.bind (handle, event_handler, mask) != 0)
     return -1;
 
+#if defined (ACE_HAS_EVENT_POLL)
+
+  struct epoll_event epev;
+  int op = 0;
+  int status = 0;
+
+  op           = EPOLL_CTL_ADD;
+  epev.events  = this->reactor_mask_to_poll_event (mask);
+  epev.data.fd = handle;
+
+  status = ::epoll_ctl (this->poll_fd_, op, handle, &epev);
+
+  if (status == -1)
+    {
+      (void) this->handler_rep_.unbind (handle);
+      return -1;
+    }
+
+#else
   struct pollfd pfd;
 
   pfd.fd      = handle;
@@ -1536,6 +1582,7 @@ ACE_Dev_Poll_Reactor::register_handler_i (ACE_HANDLE handle,
 
       return -1;
     }
+#endif /*ACE_HAS_EVENT_POLL*/
 
   // Note the fact that we've changed the state of the wait_set_,
   // which is used by the dispatching loop to determine whether it can
@@ -1812,6 +1859,23 @@ ACE_Dev_Poll_Reactor::suspend_handler_i (ACE_HANDLE handle)
   if (this->handler_rep_.suspended (handle))
     return 0;  // Already suspended.  @@ Should this be an error?
 
+#if defined (ACE_HAS_EVENT_POLL)
+
+  struct epoll_event epev;
+  int op     = 0,
+      status = 0;
+
+  op           = EPOLL_CTL_DEL;
+  epev.events  = 0;
+  epev.data.fd = handle;
+
+  status = ::epoll_ctl (this->poll_fd_, op, handle, &epev);
+
+  if(status == -1)
+   return -1;
+
+#else
+
   struct pollfd pfd[1];
 
   pfd[0].fd      = handle;
@@ -1825,6 +1889,8 @@ ACE_Dev_Poll_Reactor::suspend_handler_i (ACE_HANDLE handle)
   // no event will be dispatched to the event handler.
   if (ACE_OS::write (this->poll_fd_, pfd, sizeof (pfd)) != sizeof (pfd))
     return -1;
+
+#endif  /* ACE_HAS_EVENT_POLL */
 
   this->handler_rep_.suspend (handle);
 
@@ -1907,6 +1973,22 @@ ACE_Dev_Poll_Reactor::resume_handler_i (ACE_HANDLE handle)
   if (mask == ACE_Event_Handler::NULL_MASK)
     return -1;
 
+#if defined (ACE_HAS_EVENT_POLL)
+
+  struct epoll_event epev;
+  int op     = 0,
+      status = 0;
+
+  op           = EPOLL_CTL_ADD;
+  epev.events  = this->reactor_mask_to_poll_event (mask);
+  epev.data.fd = handle;
+
+  status = ::epoll_ctl (this->poll_fd_, op, handle, &epev);
+  if(status == -1)
+   return -1;
+
+#else
+
   struct pollfd pfd[1];
 
   pfd[0].fd      = handle;
@@ -1918,6 +2000,8 @@ ACE_Dev_Poll_Reactor::resume_handler_i (ACE_HANDLE handle)
   // Events for the given handle will once again be polled.
   if (ACE_OS::write (this->poll_fd_, pfd, sizeof (pfd)) != sizeof (pfd))
     return -1;
+
+#endif  /* ACE_HAS_EVENT_POLL */
 
   this->handler_rep_.resume (handle);
 
@@ -2324,19 +2408,50 @@ ACE_Dev_Poll_Reactor::mask_ops_i (ACE_HANDLE handle,
       pfd[1].fd      = (events == POLLREMOVE ? ACE_INVALID_HANDLE : handle);
       pfd[1].events  = events;
       pfd[1].revents = 0;
-#else
-      pollfd pfd[1];
-
-      pfd[0].fd      = handle;
-      pfd[0].events  = events;
-      pfd[0].revents = 0;
-#endif  /* sun */
 
       // Change the events associated with the given file descriptor.
       if (ACE_OS::write (this->poll_fd_,
                          pfd,
                          sizeof (pfd)) != sizeof (pfd))
         return -1;
+#elif defined (ACE_HAS_EVENT_POLL)
+
+      struct epoll_event epev;
+      int op     = 0,
+          status = 0;
+
+      // ACE_Event_Handler::NULL_MASK ???
+      if(new_mask == 0)
+        {
+          op           = EPOLL_CTL_DEL;
+          epev.events  = 0;
+          epev.data.fd = handle;
+        }
+      else
+        {
+          op           = EPOLL_CTL_MOD;
+          epev.events  = events;
+          epev.data.fd = handle;
+        }
+
+      status = ::epoll_ctl (this->poll_fd_, op, handle, &epev);
+
+      if(status == -1)
+       return -1;
+
+#else
+      pollfd pfd[1];
+
+      pfd[0].fd      = handle;
+      pfd[0].events  = events;
+      pfd[0].revents = 0;
+
+      // Change the events associated with the given file descriptor.
+      if (ACE_OS::write (this->poll_fd_,
+                         pfd,
+                         sizeof (pfd)) != sizeof (pfd))
+        return -1;
+#endif /*ACE_HAS_EVENT_POLL  */
     }
 
   return old_mask;
@@ -2394,7 +2509,12 @@ ACE_Dev_Poll_Reactor::reactor_mask_to_poll_event (ACE_Reactor_Mask mask)
   ACE_TRACE ("ACE_Dev_Poll_Reactor::reactor_mask_to_poll_event");
 
   if (mask == ACE_Event_Handler::NULL_MASK)
-    return POLLREMOVE;  // No event.  Remove from interest set.
+    // No event.  Remove from interest set.
+#if defined (ACE_HAS_EVENT_POLL)
+    return EPOLL_CTL_DEL;
+#else
+    return POLLREMOVE;
+#endif /* ACE_HAS_EVENT_POLL */
 
   short events = 0;
 
@@ -2404,20 +2524,32 @@ ACE_Dev_Poll_Reactor::reactor_mask_to_poll_event (ACE_Reactor_Mask mask)
       || ACE_BIT_ENABLED (mask, ACE_Event_Handler::ACCEPT_MASK)
       || ACE_BIT_ENABLED (mask, ACE_Event_Handler::CONNECT_MASK))
     {
+#if defined (ACE_HAS_EVENT_POLL)
+      ACE_SET_BITS (events, EPOLLIN);
+#else
       ACE_SET_BITS (events, POLLIN);
+#endif /*ACE_HAS_EVENT_POLL*/
     }
 
   // WRITE and CONNECT flag will place the handle in the write set.
   if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::WRITE_MASK)
       || ACE_BIT_ENABLED (mask, ACE_Event_Handler::CONNECT_MASK))
     {
+#if defined (ACE_HAS_EVENT_POLL)
+      ACE_SET_BITS (events, EPOLLOUT);
+#else
       ACE_SET_BITS (events, POLLOUT);
+#endif /*ACE_HAS_EVENT_POLL*/
     }
 
   // EXCEPT flag will place the handle in the except set.
   if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::EXCEPT_MASK))
     {
+#if defined (ACE_HAS_EVENT_POLL)
+      ACE_SET_BITS (events, EPOLLPRI);
+#else
       ACE_SET_BITS (events, POLLPRI);
+#endif /*ACE_HAS_EVENT_POLL*/
     }
 
   return events;

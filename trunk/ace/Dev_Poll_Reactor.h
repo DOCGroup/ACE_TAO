@@ -40,6 +40,8 @@
 class ACE_Sig_Handler;
 class ACE_Dev_Poll_Reactor;
 
+struct pollfd;
+
 /**
  * @class ACE_Dev_Poll_Event_Tuple
  *
@@ -242,8 +244,6 @@ public:
   virtual int purge_pending_notifications (
     ACE_Event_Handler * = 0,
     ACE_Reactor_Mask    = ACE_Event_Handler::ALL_EVENTS_MASK);
-
-
 
   /// Dump the state of an object.
   virtual void dump (void) const;
@@ -1049,7 +1049,7 @@ protected:
 protected:
 
   /// Has the reactor been initialized.
-  char initialized_;
+  bool initialized_;
 
   /// The file descriptor associated with the open `/dev/poll' or
   /// `/dev/epoll' device.
@@ -1068,12 +1068,24 @@ protected:
   /// ACE_Dev_Poll_Ready_Set ready_set_;
 
 #if defined (ACE_HAS_EVENT_POLL)
-  /// The memory map that `/dev/epoll' will feed its results to.
-  char *mmap_;
+  /// Table of event structures to be filled by epoll_wait:
+  struct epoll_event *events_;
+
+  /// Pointer to the next epoll_event array element that contains the next
+  /// event to be dispatched.
+  struct epoll_event *start_pevents_;
+
+  /// The last element in the event array plus one.
+  /**
+   * The loop that dispatches IO events stops when this->start_pevents_ ==
+   * this->end_pevents_.
+   */
+  struct epoll_event *end_pevents_;
+
 #else
   /// The pollfd array that `/dev/poll' will feed its results to.
   struct pollfd *dp_fds_;
-#endif  /* ACE_HAS_EVENT_POLL */
+
 
   /// Pointer to the next pollfd array element that contains the next
   /// event to be dispatched.
@@ -1085,6 +1097,7 @@ protected:
    * this->end_pfds_.
    */
   struct pollfd *end_pfds_;
+#endif  /* ACE_HAS_EVENT_POLL */
 
   /// This flag is used to keep track of whether we are actively handling
   /// events or not.
