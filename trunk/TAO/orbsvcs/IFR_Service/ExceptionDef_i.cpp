@@ -254,7 +254,7 @@ TAO_ExceptionDef_i::members (const IR::StructMemberSeq & members,
           PortableServer::ObjectId_var oid = 
             this->repo_->ir_poa ()->reference_to_id (members[i].type_def,
                                                      ACE_TRY_ENV);
-          ACE_CHECK_RETURN (IR::StructDef::_nil ());
+          ACE_CHECK;
 
           CORBA::String_var path =
             PortableServer::ObjectId_to_string (oid.in ());
