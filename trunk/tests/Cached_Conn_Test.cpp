@@ -545,6 +545,7 @@ template class ACE_Hash_Map_Manager_Ex<ADDR, CACHED_HANDLER, H_KEY, C_KEYS, ACE_
 template class ACE_Hash_Map_Iterator_Ex<ADDR, CACHED_HANDLER, H_KEY, C_KEYS, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Reverse_Iterator_Ex<ADDR, CACHED_HANDLER, H_KEY, C_KEYS, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator_Base_Ex<ADDR, CACHED_HANDLER, H_KEY, C_KEYS, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Bucket_Iterator<ADDR, CACHED_HANDLER, H_KEY, C_KEYS, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Bucket_Iterator<ADDR, Svc_Handler *, H_KEY, C_KEYS, ACE_Null_Mutex>;
 
 // = Caching_Strategy
@@ -630,6 +631,7 @@ template class ACE_Recyclable_Handler_Caching_Utility<ADDR, CACHED_HANDLER, HASH
 #pragma instantiate ACE_Hash_Map_Iterator_Ex<ADDR, CACHED_HANDLER, H_KEY, C_KEYS, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ADDR, CACHED_HANDLER, H_KEY, C_KEYS, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ADDR, CACHED_HANDLER, H_KEY, C_KEYS, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Bucket_Iterator<ADDR, CACHED_HANDLER, H_KEY, C_KEYS, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Bucket_Iterator<ADDR, Svc_Handler *, H_KEY, C_KEYS, ACE_Null_Mutex>
 
 // = Caching_Strategy
