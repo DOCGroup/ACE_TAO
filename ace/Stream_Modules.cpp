@@ -202,10 +202,10 @@ ACE_Stream_Tail<ACE_SYNCH_2>::control (ACE_Message_Block *mb)
     case ACE_IO_Cntl_Msg::SET_LWM:
     case ACE_IO_Cntl_Msg::SET_HWM:
       {
-	size_t size = *(size_t *) mb->cont ()->rd_ptr ();
+	size_t wm_size = *(size_t *) mb->cont ()->rd_ptr ();
 
-	this->water_marks (cmd, size);
-	this->sibling ()->water_marks (cmd, size);
+	this->water_marks (cmd, wm_size);
+	this->sibling ()->water_marks (cmd, wm_size);
 	ioc->rval (0);
 	break;
       }
