@@ -1,5 +1,8 @@
 Wed Sep 24 23:37:19 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
+	* ace/ACE.cpp (daemonize): Here we should use ACE_LACKS_FORK
+	  instead of ACE_LACKS_EXEC.
+
 	* ace/OS.i (thr_getspecific): On NT, added check whether
 	  ::GetLastError() is NO_ERROR when ::TlsGetValue() return 0. 
 
