@@ -147,6 +147,30 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Profile_And_Endpoint_Selection Client"=.\Profile_And_Endpoint_Selection\client.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Profile_And_Endpoint_Selection Server"=.\Profile_And_Endpoint_Selection\server.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "MT_Client_Protocol_Priority Client"=.\MT_Client_Protocol_Priority\client.dsp - Package Owner=<4>
 
 Package=<5>

@@ -59,17 +59,6 @@ TAO_Default_Endpoint_Selector::select_endpoint (
                                CORBA::COMPLETED_NO));
 }
 
-// @@ RTCORBA_Subsetting - next should be deprecated...
-void
-TAO_Default_Endpoint_Selector::next (TAO_GIOP_Invocation *
-                                     ACE_ENV_ARG_DECL_NOT_USED)
-{
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("This method is DEPRECATED!\n")));
-  // if (invocation->stub_->next_profile_retry () == 0)
-  //     ACE_THROW (CORBA::TRANSIENT (TAO_OMG_VMCID | 2,
-  //                                  CORBA::COMPLETED_NO));
-}
-
 void
 TAO_Default_Endpoint_Selector::forward (TAO_GIOP_Invocation *invocation,
                                         const TAO_MProfile &mprofile

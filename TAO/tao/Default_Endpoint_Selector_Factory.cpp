@@ -24,7 +24,7 @@ TAO_Default_Endpoint_Selector_Factory::~TAO_Default_Endpoint_Selector_Factory (v
 
 TAO_Invocation_Endpoint_Selector *
 TAO_Default_Endpoint_Selector_Factory::get_selector (TAO_GIOP_Invocation *
-                                             ACE_ENV_ARG_DECL_NOT_USED)
+                                                     ACE_ENV_ARG_DECL_NOT_USED)
 {
   // Trivial endpoint selector.  Just return the default selector.
   return this->default_endpoint_selector_;
@@ -39,4 +39,3 @@ ACE_STATIC_SVC_DEFINE (TAO_Default_Endpoint_Selector_Factory,
                        ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
                        0)
 ACE_FACTORY_DEFINE (TAO, TAO_Default_Endpoint_Selector_Factory)
-

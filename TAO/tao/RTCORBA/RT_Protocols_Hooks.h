@@ -104,12 +104,11 @@ public:
                                   &is_client_propagated,
                                   CORBA::Short &server_priority);
 
-  virtual void get_selector_bands_policy_hook (
-                    CORBA::Policy *bands_policy,
-                    CORBA::Short &min_priority,
-                    CORBA::Short &max_priority,
-                    CORBA::Short &p,
-                    int &in_range);
+  virtual void get_selector_bands_policy_hook (CORBA::Policy *bands_policy,
+                                               CORBA::Short priority,
+                                               CORBA::Short &min_priority,
+                                               CORBA::Short &max_priority,
+                                               int &in_range);
 
   /**
    * Accessor and modifier to the current thread priority, used to

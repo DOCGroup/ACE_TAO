@@ -11,7 +11,7 @@ TAO_DIOP_Endpoint::object_addr (void) const
   //   ...etc..
 
   // Double checked locking optimization.
-  if (this->object_addr_.get_type () != AF_INET)
+  if (!this->object_addr_set_)
     {
       // We need to modify the object_addr_ in this method.  Do so
       // using a  non-const copy of the <this> pointer.
@@ -24,18 +24,25 @@ TAO_DIOP_Endpoint::object_addr (void) const
                         endpoint->addr_lookup_lock_,
                         this->object_addr_ );
 
-      if (this->object_addr_.get_type () != AF_INET
-          && endpoint->object_addr_.set (this->port_,
-                                         this->host_.in ()) == -1)
+      if (!this->object_addr_set_)
         {
-          // If this call fails, it most likely due a hostname lookup
-          // failure caused by a DNS misconfiguration.  If a request is
-          // made to the object at the given host and port, then a
-          // CORBA::TRANSIENT() exception should be thrown.
+          if (endpoint->object_addr_.set (this->port_,
+                                          this->host_.in ()) == -1)
+            {
+              // If this call fails, it most likely due a hostname
+              // lookup failure caused by a DNS misconfiguration.  If
+              // a request is made to the object at the given host and
+              // port, then a CORBA::TRANSIENT() exception should be
+              // thrown.
 
-          // Invalidate the ACE_INET_Addr.  This is used as a flag to
-          // denote that ACE_INET_Addr initialization failed.
-          endpoint->object_addr_.set_type (-1);
+              // Invalidate the ACE_INET_Addr.  This is used as a flag
+              // to denote that ACE_INET_Addr initialization failed.
+              endpoint->object_addr_.set_type (-1);
+            }
+          else
+            {
+              endpoint->object_addr_set_ = 1;
+            }
         }
     }
   return this->object_addr_;

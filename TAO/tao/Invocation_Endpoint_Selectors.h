@@ -56,15 +56,6 @@ public:
                                 ACE_ENV_ARG_DECL_WITH_DEFAULTS) = 0;
 
   /**
-   * This method must be called when previously selected endpoint
-   * didn't work out, and we want to try another one, i.e., reselect.
-   * This method performs the necessary state updates, so that next
-   * <select_endpoint> call picks a new endpoint.
-   */
-    virtual void next (TAO_GIOP_Invocation *invocation
-                   ACE_ENV_ARG_DECL_WITH_DEFAULTS) = 0;
-
-  /**
    * This method must be called if the invocation attempt on a
    * selected endpoint resulted in location forward.  This method
    * performs the necessary state updates, so that next <select_endpoint>
@@ -108,20 +99,18 @@ public:
   virtual ~TAO_Default_Endpoint_Selector (void);
 
   virtual void select_endpoint (TAO_GIOP_Invocation *invocation
-                                ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-  virtual void next (TAO_GIOP_Invocation *invocation
-                     ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                                ACE_ENV_ARG_DECL);
   virtual void forward (TAO_GIOP_Invocation *invocation,
                         const TAO_MProfile &mprofile
-                        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                        ACE_ENV_ARG_DECL);
   virtual void success (TAO_GIOP_Invocation *invocation);
   virtual void close_connection (TAO_GIOP_Invocation *invocation);
 
 protected:
   /// This method selects an endpoint from the profile in the
   /// invocation object.
-  int endpoint_from_profile (TAO_GIOP_Invocation *invocation
-                             ACE_ENV_ARG_DECL);
+  virtual int endpoint_from_profile (TAO_GIOP_Invocation *invocation
+                                     ACE_ENV_ARG_DECL);
 };
 
 #if defined (__ACE_INLINE__)

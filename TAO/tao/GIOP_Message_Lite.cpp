@@ -1643,3 +1643,9 @@ TAO_GIOP_Message_Lite::is_ready_for_bidirectional (TAO_OutputCDR & )
   // No we dont support..
   return 0;
 }
+
+size_t
+TAO_GIOP_Message_Lite::header_length (void) const
+{
+  return TAO_GIOP_LITE_HEADER_LEN;
+}
