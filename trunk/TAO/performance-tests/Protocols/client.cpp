@@ -184,7 +184,6 @@ Paced_Worker::Paced_Worker (RTCORBA::RTORB_ptr rtorb,
   this->tcp_protocol_policy_[0] =
     this->rtorb_->create_client_protocol_policy (protocols);
 
-  CORBA::ULong test_protocol_id = 0;
   if (ACE_OS::strcmp (test_protocol, "DIOP") == 0)
     {
       ACE_DEBUG ((LM_DEBUG, "test protocol is DIOP\n"));
