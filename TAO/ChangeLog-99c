@@ -1,5 +1,8 @@
 Mon Jun 21 17:06:32 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
+	* utils/IOR-parser/Makefile:
+	* utils/catior/Makefile:
+	* utils/nslist/Makefile:
 	* tests/CDR/Makefile:
 	* tests/FL_Cube/Makefile:
 	* tests/InterOp-Naming/Makefile:
