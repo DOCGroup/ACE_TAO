@@ -1,3 +1,8 @@
+Tue Apr 10 01:27:16 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/Strategies/SHMIOP_Connection_Handler.cpp (handle_close): The
+	  SHMIOP cleanup code was mysteriously removed.  Added it back.
+
 Tue Apr  10 07:58:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * performance-tests/latency/dii-client.bor
