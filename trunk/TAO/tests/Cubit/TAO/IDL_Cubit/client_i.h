@@ -72,6 +72,12 @@ private:
   void cube_long (int i);
   // calculate the cube from a long.
 
+  void cube_oneway (int i);
+  // Oneway operation test.
+
+  void cube_void (int i);
+  // Twoway operation test.
+
   void cube_octet (int i);
   // Cube an octet.
 

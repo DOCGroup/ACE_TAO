@@ -1,3 +1,70 @@
+Mon Jul 13 16:20:30 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/corba.h: 
+	* tao/Makefile: 
+	* tao/Invocation.h: 
+	* tao/Invocation.i: 
+	* tao/Invocation.cpp: 
+	* tao/GIOP.h: 
+	* tao/GIOP.i: 
+	* tao/GIOP.cpp: 
+	* tao/IIOP_Object.h: 
+	* tao/IIOP_Object.cpp: 
+	  On the client side we can optimize memory allocation for
+	  oneway requests by not allocating the response
+	  buffer. But to do this and take as much memory as possible from
+	  the stack also requires to follow different execution paths for
+	  the oneway vs. two way tests.
+	  With this changes the memory allocations are:
+	  + For oneways:
+	    1 on the client side (can be TSS allocator).
+	    3 on the server side (one can be TSS allocator).
+	  + For twoway:
+	    3 on the client side (1 can be a TSS allocator).
+	    3 on the server side (1 can be TSS allocator).
+	  
+
+	* tests/Cubit/TAO/IDL_Cubit/cubit.idl: 
+	* tests/Cubit/TAO/IDL_Cubit/client_i.h: 
+	* tests/Cubit/TAO/IDL_Cubit/client_i.cpp: 
+	* tests/Cubit/TAO/IDL_Cubit/cubit_i.h: 
+	* tests/Cubit/TAO/IDL_Cubit/cubit_i.cpp: 
+	  Added simple tests with no arguments or return values, also
+	  added a oneway test.
+
+	* orbsvcs/Dump_Schedule/Makefile: 
+	* orbsvcs/Event_Service/Makefile: 
+	* orbsvcs/LifeCycle_Service/Makefile: 
+	* orbsvcs/Naming_Service/Makefile: 
+	* orbsvcs/Scheduling_Service/Makefile: 
+	* orbsvcs/orbsvcs/Makefile: 
+	* orbsvcs/tests/EC_Mcast/Makefile: 
+	* orbsvcs/tests/EC_Multiple/Makefile: 
+	* orbsvcs/tests/EC_Throughput/Makefile: 
+	* orbsvcs/tests/Event_Latency/Makefile: 
+	* orbsvcs/tests/Logger/Makefile: 
+	* orbsvcs/tests/Simple_Naming/Makefile: 
+	* tests/CDR/Makefile: 
+	* tests/Cubit/TAO/IDL_Cubit/Makefile: 
+	* tests/Cubit/TAO/MT_Cubit/Makefile: 
+	* tests/NestedUpcall/Reactor/Makefile: 
+	* tests/NestedUpcall/Triangle_Test/Makefile: 
+	* tests/OctetSeq/Makefile: 
+	* tests/POA/Default_Servant/Makefile: 
+	* tests/POA/Explicit_Activation/Makefile: 
+	* tests/POA/FindPOA/Makefile: 
+	* tests/POA/Generic_Servant/Makefile: 
+	* tests/POA/NewPOA/Makefile: 
+	* tests/POA/On_Demand_Activation/Makefile: 
+	* tests/POA/RootPOA/Makefile: 
+	* tests/Param_Test/Makefile: 
+	* tests/Quoter/Makefile: 
+	* tests/Thruput/TAO/Makefile: 
+	  The new files in the tao library changed the dependencies.
+
+	* orbsvcs/Dump_Schedule/Makefile: 
+	  Sources were listed in the wrong macro.
+
 Mon Jul 13 14:37:06 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * Event_Latency.cpp: use ACE_CU64_TO_CU32 to convert const

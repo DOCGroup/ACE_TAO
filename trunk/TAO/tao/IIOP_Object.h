@@ -24,6 +24,8 @@
 #if !defined (TAO_IIOPOBJ_H)
 #  define TAO_IIOPOBJ_H
 
+class TAO_GIOP_Invocation;
+
 class TAO_Export IIOP
 {
   // = TITLE
@@ -222,6 +224,20 @@ public:
 
   ACE_Lock &get_fwd_profile_lock (void);
   // Gives reference to the lock guarding the forwarding profile.
+
+private:
+  void put_params (CORBA::Environment &env,
+		   const TAO_Call_Data *info,
+		   TAO_GIOP_Invocation &call,
+		   va_list argp);
+  // Helper method to factor out common code in static oneway
+  // vs. twoway invocations.
+
+  void put_params (TAO_GIOP_Invocation &call,
+		   CORBA::NVList_ptr args,
+		   CORBA::Environment &env);
+  // Helper method to factor out common code in dynamic oneway
+  // vs. twoway invocations.
 
 private:
   IIOP::Profile *fwd_profile_;

@@ -11,6 +11,12 @@
 
 static const char *Cubit_Client_Timeprobe_Description[] =
 {
+  "Cubit_Client::cube_oneway - start",
+  "Cubit_Client::cube_oneway - end",
+
+  "Cubit_Client::cube_void - start",
+  "Cubit_Client::cube_void - end",
+
   "Cubit_Client::cube_octet - start",
   "Cubit_Client::cube_octet - end",
 
@@ -36,7 +42,13 @@ static const char *Cubit_Client_Timeprobe_Description[] =
 enum
 {
   // Timeprobe description table start key 
-  CUBIT_CLIENT_CUBE_OCTET_START = 10000,
+  CUBIT_CLIENT_CUBE_ONEWAY_START = 10000,
+  CUBIT_CLIENT_CUBE_ONEWAY_END,
+
+  CUBIT_CLIENT_CUBE_VOID_START,
+  CUBIT_CLIENT_CUBE_VOID_END,
+
+  CUBIT_CLIENT_CUBE_OCTET_START,
   CUBIT_CLIENT_CUBE_OCTET_END,
 
   CUBIT_CLIENT_CUBE_SHORT_START,
@@ -282,6 +294,44 @@ Cubit_Client::cube_short (int i)
                       ret_short));
           this->error_count_++;
         }
+    }
+}
+
+// Oneway test.
+
+void
+Cubit_Client::cube_oneway (int i)
+{
+  {
+    ACE_FUNCTION_TIMEPROBE (CUBIT_CLIENT_CUBE_ONEWAY_START);
+
+    this->cubit_->cube_oneway (this->env_);
+  }
+
+  this->call_count_++;
+
+  if (this->env_.exception () != 0)
+    {
+      this->env_.print_exception ("from cube_oneway");
+      this->error_count_++;
+    }
+}
+
+void
+Cubit_Client::cube_void (int i)
+{
+  {
+    ACE_FUNCTION_TIMEPROBE (CUBIT_CLIENT_CUBE_VOID_START);
+
+    this->cubit_->cube_void (this->env_);
+  }
+
+  this->call_count_++;
+
+  if (this->env_.exception () != 0)
+    {
+      this->env_.print_exception ("from cube_void");
+      this->error_count_++;
     }
 }
 
@@ -605,6 +655,26 @@ Cubit_Client::run (int testing_collocation)
   //
   // Show the results one type at a time.
   //
+
+  // ONEWAY
+  this->call_count_ = 0;
+  this->error_count_ = 0;
+  timer.start ();
+  for (i = 0; i < this->loop_count_; i++)
+    this->cube_oneway (i);
+  timer.stop ();
+  timer.elapsed_time (elapsed_time);
+  this->print_stats ("cube_oneway", elapsed_time);
+
+  // VOID
+  this->call_count_ = 0;
+  this->error_count_ = 0;
+  timer.start ();
+  for (i = 0; i < this->loop_count_; i++)
+    this->cube_void (i);
+  timer.stop ();
+  timer.elapsed_time (elapsed_time);
+  this->print_stats ("cube_void", elapsed_time);
 
   // SHORT
   this->call_count_ = 0;

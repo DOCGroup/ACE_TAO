@@ -23,6 +23,12 @@
 
 static const char *Cubit_i_Timeprobe_Description[] =
 {
+  "Cubit_i::cube_oneway - start",
+  "Cubit_i::cube_oneway - end",
+
+  "Cubit_i::cube_void - start",
+  "Cubit_i::cube_void - end",
+
   "Cubit_i::cube_octet - start",
   "Cubit_i::cube_octet - end",
 
@@ -48,7 +54,13 @@ static const char *Cubit_i_Timeprobe_Description[] =
 enum
 {
   // Timeprobe description table start key 
-  CUBIT_I_CUBE_OCTET_START = 10000,
+  CUBIT_I_CUBE_ONEWAY_START,
+  CUBIT_I_CUBE_ONEWAY_END,
+
+  CUBIT_I_CUBE_VOID_START,
+  CUBIT_I_CUBE_VOID_END,
+
+  CUBIT_I_CUBE_OCTET_START,
   CUBIT_I_CUBE_OCTET_END,
 
   CUBIT_I_CUBE_SHORT_START,
@@ -105,6 +117,18 @@ Cubit_i::Cubit_i (const char *)
 
 Cubit_i::~Cubit_i (void)
 {
+}
+
+void
+Cubit_i::cube_oneway (CORBA::Environment &)
+{
+  ACE_FUNCTION_TIMEPROBE (CUBIT_I_CUBE_ONEWAY_START);
+}
+
+void
+Cubit_i::cube_void (CORBA::Environment &)
+{
+  ACE_FUNCTION_TIMEPROBE (CUBIT_I_CUBE_VOID_START);
 }
 
 // Cube an octet

@@ -214,6 +214,7 @@ extern TAO_Export int operator== (const TAO_ObjectKey &l,
 #include "tao/IIOP_ORB.h"
 #include "tao/IIOP_Interpreter.h"
 #include "tao/GIOP.h"
+#include "tao/Invocation.h"
 #include "tao/Server_Request.h"
 
 #include "tao/singletons.h"
