@@ -91,6 +91,12 @@ public:
   CORBA::ULong _incr_refcnt (void);
   CORBA::ULong _decr_refcnt (void);
 
+#if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
+  typedef CORBA_Request_ptr _ptr_type;
+  typedef CORBA_Request_var _var_type;
+#endif /* __GNUC__ */
+  // Useful for template programming.
+
 private:
   friend class CORBA_Object;
 

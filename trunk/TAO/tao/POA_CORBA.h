@@ -87,6 +87,12 @@ public:
 
     ACE_CORBA_1(Policy) *_this (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
     virtual const char* _interface_repository_id (void) const;
+
+#if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
+  typedef Policy_ptr _ptr_type;
+#endif /* __GNUC__ */
+  // Useful for template programming.
+
   };
 
 
@@ -148,6 +154,12 @@ public:
 
     ACE_CORBA_1(Current) *_this (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
     virtual const char* _interface_repository_id (void) const;
+
+#if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
+  typedef Current_ptr _ptr_type;
+#endif /* __GNUC__ */
+  // Useful for template programming.
+
   };
 
 
@@ -435,6 +447,12 @@ public:
         CORBA::Environment::default_environment ()
     );
   virtual const char* _interface_repository_id (void) const;
+
+#if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
+  typedef DynAny_ptr _ptr_type;
+#endif /* __GNUC__ */
+  // Useful for template programming.
+
 };
 
 
@@ -702,6 +720,12 @@ public:
         CORBA::Environment::default_environment ()
     );
   virtual const char* _interface_repository_id (void) const;
+
+#if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
+  typedef DynEnum_ptr _ptr_type;
+#endif /* __GNUC__ */
+  // Useful for template programming.
+
 };
 
 
@@ -799,6 +823,12 @@ public:
         CORBA::Environment::default_environment ()
     );
   virtual const char* _interface_repository_id (void) const;
+
+#if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
+  typedef DynStruct_ptr _ptr_type;
+#endif /* __GNUC__ */
+  // Useful for template programming.
+
 };
 
 
@@ -916,6 +946,12 @@ public:
         CORBA::Environment::default_environment ()
     );
   virtual const char* _interface_repository_id (void) const;
+
+#if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
+  typedef DynUnion_ptr _ptr_type;
+#endif /* __GNUC__ */
+  // Useful for template programming.
+
 };
 
 
@@ -1038,6 +1074,12 @@ public:
         CORBA::Environment::default_environment ()
     );
   virtual const char* _interface_repository_id (void) const;
+
+#if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
+  typedef DynSequence_ptr _ptr_type;
+#endif /* __GNUC__ */
+  // Useful for template programming.
+
 };
 
 
@@ -1125,6 +1167,12 @@ public:
         CORBA::Environment::default_environment ()
     );
   virtual const char* _interface_repository_id (void) const;
+
+#if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
+  typedef DynArray_ptr _ptr_type;
+#endif /* __GNUC__ */
+  // Useful for template programming.
+
 };
 
 

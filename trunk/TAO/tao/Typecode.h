@@ -236,6 +236,12 @@ public:
   // skip a typecode encoding in a given CDR stream.  This is just a
   // helper function.
 
+#if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
+  typedef CORBA_TypeCode_ptr _ptr_type;
+  typedef CORBA_TypeCode_var _var_type;
+#endif /* __GNUC__ */
+  // Useful for template programming.
+
 private:
   // = All the private/helper methods
 

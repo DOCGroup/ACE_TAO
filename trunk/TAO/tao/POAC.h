@@ -211,6 +211,12 @@ public:
 
     // = TAO extension
     static CORBA::Exception *_alloc (void);
+
+#if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
+  typedef ForwardRequest_ptr _ptr_type;
+#endif /* __GNUC__ */
+  // Useful for template programming.
+
   }; // exception PortableServer::ForwardRequest
 
   friend void operator<<= (CORBA::Any &, const ForwardRequest &); // copying version
@@ -1639,6 +1645,11 @@ public:
 
       // = TAO extension
       static CORBA::Exception *_alloc (void);
+
+  #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
+    typedef AdapterInactive_ptr _ptr_type;
+  #endif /* __GNUC__ */
+
     }; // exception PortableServer::POA::AdapterInactive
 
     friend void operator<<= (CORBA::Any &, const AdapterInactive &); // copying version
@@ -1673,6 +1684,11 @@ public:
 
       // = TAO extension
       static CORBA::Exception *_alloc (void);
+
+  #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
+    typedef AdapterNonExistent_ptr _ptr_type;
+  #endif /* __GNUC__ */
+
     }; // exception PortableServer::POA::AdapterNonExistent
 
     friend void operator<<= (CORBA::Any &, const AdapterNonExistent &); // copying version
@@ -1711,6 +1727,11 @@ public:
 
       // = TAO extension
       static CORBA::Exception *_alloc (void);
+
+  #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
+    typedef InvalidPolicy_ptr _ptr_type;
+  #endif /* __GNUC__ */
+
     }; // exception PortableServer::POA::InvalidPolicy
 
     friend void operator<<= (CORBA::Any &, const InvalidPolicy &); // copying version
@@ -1745,6 +1766,11 @@ public:
 
       // = TAO extension
       static CORBA::Exception *_alloc (void);
+
+  #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
+    typedef NoServant_ptr _ptr_type;
+  #endif /* __GNUC__ */
+
     }; // exception PortableServer::POA::NoServant
 
     friend void operator<<= (CORBA::Any &, const NoServant &); // copying version
@@ -1779,6 +1805,11 @@ public:
 
       // = TAO extension
       static CORBA::Exception *_alloc (void);
+
+  #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
+    typedef ObjectAlreadyActive_ptr _ptr_type;
+  #endif /* __GNUC__ */
+
     }; // exception PortableServer::POA::ObjectAlreadyActive
 
     friend void operator<<= (CORBA::Any &, const ObjectAlreadyActive &); // copying version
@@ -1811,6 +1842,11 @@ public:
 
       // = TAO extension
       static CORBA::Exception *_alloc (void);
+
+  #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
+    typedef ObjectNotActive_ptr _ptr_type;
+  #endif /* __GNUC__ */
+
     }; // exception PortableServer::POA::ObjectNotActive
 
     friend void operator<<= (CORBA::Any &, const ObjectNotActive &); // copying version
@@ -1843,6 +1879,11 @@ public:
 
       // = TAO extension
       static CORBA::Exception *_alloc (void);
+
+  #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
+    typedef ServantAlreadyActive_ptr _ptr_type;
+  #endif /* __GNUC__ */
+
     }; // exception PortableServer::POA::ServantAlreadyActive
 
     friend void operator<<= (CORBA::Any &, const ServantAlreadyActive &); // copying version
@@ -1875,6 +1916,11 @@ public:
 
       // = TAO extension
       static CORBA::Exception *_alloc (void);
+
+  #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
+    typedef ServantNotActive_ptr _ptr_type;
+  #endif /* __GNUC__ */
+
     }; // exception PortableServer::POA::ServantNotActive
 
     friend void operator<<= (CORBA::Any &, const ServantNotActive &); // copying version
@@ -1907,6 +1953,11 @@ public:
 
       // = TAO extension
       static CORBA::Exception *_alloc (void);
+
+  #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
+    typedef WrongAdapter_ptr _ptr_type;
+  #endif /* __GNUC__ */
+
     }; // exception PortableServer::POA::WrongAdapter
 
     friend void operator<<= (CORBA::Any &, const WrongAdapter &); // copying version
@@ -1939,6 +1990,11 @@ public:
 
       // = TAO extension
       static CORBA::Exception *_alloc (void);
+
+  #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
+    typedef WrongPolicy_ptr _ptr_type;
+  #endif /* __GNUC__ */
+
     }; // exception PortableServer::POA::WrongPolicy
 
     friend void operator<<= (CORBA::Any &, const WrongPolicy &); // copying version
@@ -2115,6 +2171,11 @@ public:
 
       // = TAO extension
       static CORBA::Exception *_alloc (void);
+
+  #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
+    typedef NoContext_ptr _ptr_type;
+  #endif /* __GNUC__ */
+
     }; // exception PortableServer::Current::NoContext
 
     friend void operator<<= (CORBA::Any &, const NoContext &); // copying version
