@@ -1,12 +1,6 @@
 // -*- C++ -*-
 // $Id$
 
-ACE_INLINE CORBA::Boolean
-CORBA::is_nil (CORBA_ServerRequest *x)
-{
-  return x != 0;
-}
-
 // @@ TODO TAO allocates its ServerRequest objects from the stack,
 // using reference counting wouldn't help much.  Using a _clone()
 // method would make the following methods really easy to implement,
@@ -21,11 +15,6 @@ ACE_INLINE CORBA_ServerRequest *
 CORBA_ServerRequest::_duplicate (CORBA_ServerRequest *)
 {
   return 0;
-}
-
-ACE_INLINE void
-CORBA::release (CORBA_ServerRequest *)
-{
 }
 
 ACE_INLINE CORBA_ServerRequest *

@@ -5,12 +5,6 @@
 // Return the target of this request.
 
 
-ACE_INLINE CORBA::Boolean
-CORBA::is_nil (CORBA::Request_ptr req)
-{
-  return (CORBA::Boolean) (req == 0);
-}
-
 ACE_INLINE CORBA_Request*
 CORBA_Request::_duplicate (CORBA_Request* x)
 {
@@ -20,38 +14,38 @@ CORBA_Request::_duplicate (CORBA_Request* x)
 }
 
 
-ACE_INLINE CORBA::Object_ptr 
-CORBA_Request::target (void) const 
-{ 
-  return this->target_; 
+ACE_INLINE CORBA::Object_ptr
+CORBA_Request::target (void) const
+{
+  return this->target_;
 }
 
 // Return the operation name for the request.
 ACE_INLINE const CORBA::Char *
-CORBA_Request::operation (void) const 
+CORBA_Request::operation (void) const
 {
-  return this->opname_; 
+  return this->opname_;
 }
 
 // Return the arguments for the request.
-ACE_INLINE CORBA::NVList_ptr 
-CORBA_Request::arguments (void) 
-{ 
-  return this->args_; 
+ACE_INLINE CORBA::NVList_ptr
+CORBA_Request::arguments (void)
+{
+  return this->args_;
 }
 
 // Return the result for the request.
-ACE_INLINE CORBA::NamedValue_ptr 
-CORBA_Request::result (void) 
+ACE_INLINE CORBA::NamedValue_ptr
+CORBA_Request::result (void)
 {
-  return this->result_; 
+  return this->result_;
 }
 
 // Return the exceptions resulting from this request.
-ACE_INLINE CORBA::ExceptionList_ptr 
-CORBA_Request::exceptions (void) 
-{ 
-  return &this->exceptions_; 
+ACE_INLINE CORBA::ExceptionList_ptr
+CORBA_Request::exceptions (void)
+{
+  return &this->exceptions_;
 }
 
 // Return the request's contexts
@@ -63,9 +57,9 @@ CORBA_Request::contexts (void)
 
 // Return the <Environment> for this request.
 ACE_INLINE CORBA::Environment *
-CORBA_Request::env (void) 
+CORBA_Request::env (void)
 {
-  return &this->env_; 
+  return &this->env_;
 }
 
 // The argument manipulation helper functions
@@ -297,5 +291,3 @@ CORBA_Request_out::operator-> (void)
 {
   return this->ptr_;
 }
-
-

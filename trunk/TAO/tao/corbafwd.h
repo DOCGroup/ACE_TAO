@@ -408,6 +408,7 @@ TAO_NAMESPACE CORBA
   TAO_NAMESPACE_STORAGE_CLASS Char* string_alloc (ULong len);
   TAO_NAMESPACE_STORAGE_CLASS Char* string_dup (const Char *);
   TAO_NAMESPACE_STORAGE_CLASS void string_free (Char *);
+
   // This is a TAO extension and must go away....
   TAO_NAMESPACE_STORAGE_CLASS Char* string_copy (const Char *);
 
@@ -892,6 +893,7 @@ TAO_NAMESPACE CORBA
   // = TAO extensions...
 
   TAO_NAMESPACE_STORAGE_CLASS CORBA_Environment& default_environment (void);
+
   // Obtain the thread-specific default environment.
   // This is obsolete and only left here for backwards compatibility.
 

@@ -26,6 +26,20 @@
 
 ACE_RCSID(tao, Typecode, "$Id$")
 
+void
+CORBA::release (CORBA::TypeCode_ptr tc)
+{
+  if (tc)
+    tc->_decr_refcnt ();
+}
+
+// returns true if the typecode is NULL
+CORBA::Boolean
+CORBA::is_nil (CORBA::TypeCode_ptr tc)
+{
+  return tc == 0;
+}
+
 CORBA_TypeCode::Bounds::Bounds (void)
   : CORBA_UserException (CORBA::TypeCode::_tc_Bounds)
 {
@@ -221,7 +235,7 @@ CORBA_TypeCode::CORBA_TypeCode (CORBA::TCKind kind,
       // field in our CDR representation. Hence, we introduce a new field
       // called tc_base_ which represents the start of our CDR
       // representation. The buffer_ data member will point to our
-      // encapsulation. 
+      // encapsulation.
 
       // @@ The typecode buffer contain the encapsulation byte order
       // in the first byte...
