@@ -27,87 +27,7 @@
 
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:63
-
-#if !defined (_PORTABLEINTERCEPTOR_INTERCEPTOR___CI_)
-#define _PORTABLEINTERCEPTOR_INTERCEPTOR___CI_
-
-#endif /* end #if !defined */
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:63
-
-#if !defined (_PORTABLEINTERCEPTOR_CURRENT___CI_)
-#define _PORTABLEINTERCEPTOR_CURRENT___CI_
-
-#endif /* end #if !defined */
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:63
-
-#if !defined (_PORTABLEINTERCEPTOR_REQUESTINFO___CI_)
-#define _PORTABLEINTERCEPTOR_REQUESTINFO___CI_
-
-#endif /* end #if !defined */
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:63
-
-#if !defined (_PORTABLEINTERCEPTOR_CLIENTREQUESTINFO___CI_)
-#define _PORTABLEINTERCEPTOR_CLIENTREQUESTINFO___CI_
-
-#endif /* end #if !defined */
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:63
-
-#if !defined (_PORTABLEINTERCEPTOR_SERVERREQUESTINFO___CI_)
-#define _PORTABLEINTERCEPTOR_SERVERREQUESTINFO___CI_
-
-#endif /* end #if !defined */
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:63
-
-#if !defined (_PORTABLEINTERCEPTOR_CLIENTREQUESTINTERCEPTOR___CI_)
-#define _PORTABLEINTERCEPTOR_CLIENTREQUESTINTERCEPTOR___CI_
-
-#endif /* end #if !defined */
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:63
-
-#if !defined (_PORTABLEINTERCEPTOR_SERVERREQUESTINTERCEPTOR___CI_)
-#define _PORTABLEINTERCEPTOR_SERVERREQUESTINTERCEPTOR___CI_
-
-#endif /* end #if !defined */
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:63
-
-#if !defined (_PORTABLEINTERCEPTOR_POLICYFACTORY___CI_)
-#define _PORTABLEINTERCEPTOR_POLICYFACTORY___CI_
-
-#endif /* end #if !defined */
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:63
-
-#if !defined (_PORTABLEINTERCEPTOR_ORBINITINFO___CI_)
-#define _PORTABLEINTERCEPTOR_ORBINITINFO___CI_
-
-#endif /* end #if !defined */
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:63
-
-#if !defined (_PORTABLEINTERCEPTOR_ORBINITIALIZER___CI_)
-#define _PORTABLEINTERCEPTOR_ORBINITIALIZER___CI_
-
-#endif /* end #if !defined */
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/cdr_op_ci.cpp:71
+// be/be_visitor_exception/cdr_op_ci.cpp:71
 
 ACE_INLINE
 CORBA::Boolean operator<< (
@@ -121,7 +41,7 @@ CORBA::Boolean operator<< (
       // Now marshal the members (if any).
       if (
         (strm << _tao_aggregate.forward.in ()) &&
-        (strm << ACE_OutputCDR::from_boolean (_tao_aggregate.permanent))
+        (strm << CORBA::Any::from_boolean (_tao_aggregate.permanent))
        )
         {
           return 1;
@@ -146,7 +66,7 @@ CORBA::Boolean operator>> (
   // Demarshal the members.
   if (
     (strm >> _tao_aggregate.forward.out ()) &&
-    (strm >> ACE_InputCDR::to_boolean (_tao_aggregate.permanent))
+    (strm >> CORBA::Any::to_boolean (_tao_aggregate.permanent))
   )
     {
       return 1;
@@ -158,7 +78,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/cdr_op_ci.cpp:71
+// be/be_visitor_exception/cdr_op_ci.cpp:71
 
 ACE_INLINE
 CORBA::Boolean operator<< (
