@@ -56,8 +56,9 @@ CPPFLAGS += -I$(TAO_ROOT)
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/ORB_Destroyer.o .obj/ORB_Destroyer.SO .shobj/ORB_Destroyer.o .shobj/ORB_Destroyer.SO: ORB_Destroyer.cpp ORB_Destroyer.h \
-  $(ACE_ROOT)/ace/pre.h Auto_Functor.h \
+.obj/ORB_Destroyer.o .obj/ORB_Destroyer.so .shobj/ORB_Destroyer.o .shobj/ORB_Destroyer.so: ORB_Destroyer.cpp ORB_Destroyer.h \
+  $(ACE_ROOT)/ace/pre.h \
+  Auto_Functor.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -81,8 +82,9 @@ CPPFLAGS += -I$(TAO_ROOT)
   $(TAO_ROOT)/tao/Pseudo_VarOut_T.h \
   $(TAO_ROOT)/tao/Pseudo_VarOut_T.inl \
   $(TAO_ROOT)/tao/Pseudo_VarOut_T.cpp \
-  $(TAO_ROOT)/tao/Environment.i Auto_Functor.inl \
-  Auto_Functor.cpp $(TAO_ROOT)/tao/ORB.h \
+  $(TAO_ROOT)/tao/Environment.i \
+  Auto_Functor.inl Auto_Functor.cpp \
+  $(TAO_ROOT)/tao/ORB.h \
   $(TAO_ROOT)/tao/Exception.h \
   $(ACE_ROOT)/ace/CORBA_macros.h \
   $(ACE_ROOT)/ace/Exception_Macros.h \
@@ -107,7 +109,8 @@ CPPFLAGS += -I$(TAO_ROOT)
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h \
+  $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -256,8 +259,9 @@ CPPFLAGS += -I$(TAO_ROOT)
   $(TAO_ROOT)/tao/PolicyC.i \
   $(TAO_ROOT)/tao/ORB.i
 
-.obj/Implicit_Deactivator.o .obj/Implicit_Deactivator.SO .shobj/Implicit_Deactivator.o .shobj/Implicit_Deactivator.SO: Implicit_Deactivator.cpp Implicit_Deactivator.h \
-  $(ACE_ROOT)/ace/pre.h Auto_Functor.h \
+.obj/Implicit_Deactivator.o .obj/Implicit_Deactivator.so .shobj/Implicit_Deactivator.o .shobj/Implicit_Deactivator.so: Implicit_Deactivator.cpp Implicit_Deactivator.h \
+  $(ACE_ROOT)/ace/pre.h \
+  Auto_Functor.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -281,8 +285,8 @@ CPPFLAGS += -I$(TAO_ROOT)
   $(TAO_ROOT)/tao/Pseudo_VarOut_T.h \
   $(TAO_ROOT)/tao/Pseudo_VarOut_T.inl \
   $(TAO_ROOT)/tao/Pseudo_VarOut_T.cpp \
-  $(TAO_ROOT)/tao/Environment.i Auto_Functor.inl \
-  Auto_Functor.cpp \
+  $(TAO_ROOT)/tao/Environment.i \
+  Auto_Functor.inl Auto_Functor.cpp \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
   $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -307,7 +311,8 @@ CPPFLAGS += -I$(TAO_ROOT)
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h \
+  $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -466,7 +471,7 @@ CPPFLAGS += -I$(TAO_ROOT)
   $(ACE_ROOT)/ace/Atomic_Op.i \
   $(TAO_ROOT)/tao/PortableServer/Servant_Base.i
 
-.obj/PolicyList_Destroyer.o .obj/PolicyList_Destroyer.SO .shobj/PolicyList_Destroyer.o .shobj/PolicyList_Destroyer.SO: PolicyList_Destroyer.cpp PolicyList_Destroyer.h \
+.obj/PolicyList_Destroyer.o .obj/PolicyList_Destroyer.so .shobj/PolicyList_Destroyer.o .shobj/PolicyList_Destroyer.so: PolicyList_Destroyer.cpp PolicyList_Destroyer.h \
   $(ACE_ROOT)/ace/pre.h \
   $(TAO_ROOT)/tao/PolicyC.h \
   $(TAO_ROOT)/tao/CurrentC.h \
@@ -509,7 +514,8 @@ CPPFLAGS += -I$(TAO_ROOT)
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h \
+  $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -655,6 +661,7 @@ CPPFLAGS += -I$(TAO_ROOT)
   $(TAO_ROOT)/tao/CurrentC.i \
   $(TAO_ROOT)/tao/Remote_Object_Proxy_Impl.h \
   $(TAO_ROOT)/tao/Object_Proxy_Impl.h \
-  $(TAO_ROOT)/tao/PolicyC.i PolicyList_Destroyer.inl
+  $(TAO_ROOT)/tao/PolicyC.i \
+  PolicyList_Destroyer.inl
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

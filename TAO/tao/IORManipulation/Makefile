@@ -67,7 +67,9 @@ endif
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/IORC.o .obj/IORC.SO .shobj/IORC.o .shobj/IORC.SO: IORC.cpp IORManip_Loader.h $(ACE_ROOT)/ace/pre.h \
+.obj/IORC.o .obj/IORC.so .shobj/IORC.o .shobj/IORC.so: IORC.cpp IORManip_Loader.h \
+  $(ACE_ROOT)/ace/pre.h \
+  ior_manip_export.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -107,7 +109,8 @@ endif
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h \
+  $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/Shared_Object.i \
   $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
   $(ACE_ROOT)/ace/Event_Handler.h \
@@ -194,7 +197,8 @@ endif
   $(ACE_ROOT)/ace/Timer_Queue_T.i \
   $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
   $(ACE_ROOT)/ace/Reactor.i \
-  $(ACE_ROOT)/ace/Reactor_Impl.h IORC.h \
+  $(ACE_ROOT)/ace/Reactor_Impl.h \
+  IORC.h \
   $(TAO_ROOT)/tao/Object.h \
   $(TAO_ROOT)/tao/Policy_ForwardC.h \
   $(TAO_ROOT)/tao/Sequence.h \
@@ -259,7 +263,8 @@ endif
   $(TAO_ROOT)/tao/debug.h \
   $(TAO_ROOT)/tao/Any_Dual_Impl_T.h \
   $(TAO_ROOT)/tao/Any_Dual_Impl_T.inl \
-  $(TAO_ROOT)/tao/Any_Dual_Impl_T.cpp IORC.i \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.cpp \
+  IORC.i \
   $(TAO_ROOT)/tao/Stub.h \
   $(TAO_ROOT)/tao/MProfile.h \
   $(TAO_ROOT)/tao/PolicyC.h \
@@ -401,8 +406,9 @@ endif
   $(TAO_ROOT)/tao/ClientInterceptorAdapter.h \
   $(TAO_ROOT)/tao/ClientInterceptorAdapter.inl
 
-.obj/IORManip_Loader.o .obj/IORManip_Loader.SO .shobj/IORManip_Loader.o .shobj/IORManip_Loader.SO: IORManip_Loader.cpp IORManip_Loader.h \
-  $(ACE_ROOT)/ace/pre.h ior_manip_export.h \
+.obj/IORManip_Loader.o .obj/IORManip_Loader.so .shobj/IORManip_Loader.o .shobj/IORManip_Loader.so: IORManip_Loader.cpp IORManip_Loader.h \
+  $(ACE_ROOT)/ace/pre.h \
+  ior_manip_export.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -442,7 +448,8 @@ endif
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h \
+  $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/Shared_Object.i \
   $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
   $(ACE_ROOT)/ace/Event_Handler.h \
@@ -529,7 +536,8 @@ endif
   $(ACE_ROOT)/ace/Timer_Queue_T.i \
   $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
   $(ACE_ROOT)/ace/Reactor.i \
-  $(ACE_ROOT)/ace/Reactor_Impl.h IORC.h \
+  $(ACE_ROOT)/ace/Reactor_Impl.h \
+  IORC.h \
   $(TAO_ROOT)/tao/Object.h \
   $(TAO_ROOT)/tao/Policy_ForwardC.h \
   $(TAO_ROOT)/tao/Sequence.h \
@@ -594,11 +602,12 @@ endif
   $(TAO_ROOT)/tao/debug.h \
   $(TAO_ROOT)/tao/Any_Dual_Impl_T.h \
   $(TAO_ROOT)/tao/Any_Dual_Impl_T.inl \
-  $(TAO_ROOT)/tao/Any_Dual_Impl_T.cpp IORC.i \
-  IORManipulation.h $(TAO_ROOT)/tao/LocalObject.h \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.cpp \
+  IORC.i IORManipulation.h \
+  $(TAO_ROOT)/tao/LocalObject.h \
   $(TAO_ROOT)/tao/LocalObject.i
 
-.obj/IORManipulation.o .obj/IORManipulation.SO .shobj/IORManipulation.o .shobj/IORManipulation.SO: IORManipulation.cpp IORManipulation.h \
+.obj/IORManipulation.o .obj/IORManipulation.so .shobj/IORManipulation.o .shobj/IORManipulation.so: IORManipulation.cpp IORManipulation.h \
   $(ACE_ROOT)/ace/pre.h \
   $(TAO_ROOT)/tao/LocalObject.h \
   $(TAO_ROOT)/tao/Object.h \
@@ -640,7 +649,8 @@ endif
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h \
+  $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -775,14 +785,16 @@ endif
   $(TAO_ROOT)/tao/VarOut_T.cpp \
   $(TAO_ROOT)/tao/IOP_IORC.i \
   $(TAO_ROOT)/tao/Object.i \
-  $(TAO_ROOT)/tao/LocalObject.i IORManip_Loader.h \
-  ior_manip_export.h $(TAO_ROOT)/tao/Object_Loader.h \
+  $(TAO_ROOT)/tao/LocalObject.i \
+  IORManip_Loader.h ior_manip_export.h \
+  $(TAO_ROOT)/tao/Object_Loader.h \
   $(ACE_ROOT)/ace/Service_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.i \
   $(ACE_ROOT)/ace/DLL.h \
   $(ACE_ROOT)/ace/Service_Object.i \
-  $(TAO_ROOT)/tao/Object_Loader.i IORC.h \
+  $(TAO_ROOT)/tao/Object_Loader.i \
+  IORC.h \
   $(TAO_ROOT)/tao/Any_Impl_T.h \
   $(TAO_ROOT)/tao/Any.h \
   $(TAO_ROOT)/tao/Any.i \
@@ -793,7 +805,8 @@ endif
   $(TAO_ROOT)/tao/debug.h \
   $(TAO_ROOT)/tao/Any_Dual_Impl_T.h \
   $(TAO_ROOT)/tao/Any_Dual_Impl_T.inl \
-  $(TAO_ROOT)/tao/Any_Dual_Impl_T.cpp IORC.i \
+  $(TAO_ROOT)/tao/Any_Dual_Impl_T.cpp \
+  IORC.i \
   $(TAO_ROOT)/tao/MProfile.h \
   $(TAO_ROOT)/tao/PolicyC.h \
   $(TAO_ROOT)/tao/CurrentC.h \
