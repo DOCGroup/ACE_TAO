@@ -125,31 +125,26 @@ AST_Structure::in_recursion (AST_Type *node)
   if (this->nmembers () > 0)
     {
       // Initialize an iterator to iterate over our scope.
-      UTL_ScopeActiveIterator *si = 0;
-      ACE_NEW_RETURN (si,
-                      UTL_ScopeActiveIterator (this,
-                                               UTL_Scope::IK_decls),
-                      -1);
+      UTL_ScopeActiveIterator si (this,
+                                  UTL_Scope::IK_decls);
+
       // Continue until each element is visited.
-      while (!si->is_done ())
+      while (!si.is_done ())
         {
-          AST_Field *field =
-            AST_Field::narrow_from_decl (si->item ());
+          AST_Field *field = AST_Field::narrow_from_decl (si.item ());
 
           if (field == 0)
             // This will be an enum value or other legitimate non-field
             // member - in any case, no recursion.
             {
-              si->next ();
+              si.next ();
               continue;
             }
 
-          AST_Type *type =
-            AST_Type::narrow_from_decl (field->field_type ());
+          AST_Type *type = field->field_type ();
 
           if (type == 0)
             {
-              delete si;
               ACE_ERROR_RETURN ((LM_ERROR,
                                  ACE_TEXT ("(%N:%l) AST_Structure::")
                                  ACE_TEXT ("in_recursion - ")
@@ -159,14 +154,11 @@ AST_Structure::in_recursion (AST_Type *node)
 
           if (type->in_recursion (node))
             {
-              delete si;
               return 1;
             }
 
-          si->next ();
+          si.next ();
         }
-
-      delete si;
     }
 
   // Not in recursion.
