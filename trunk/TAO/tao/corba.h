@@ -140,6 +140,9 @@ class CORBA_String_var;
 
 class CORBA_ExceptionList;
 
+class TAO_InputCDR;
+class TAO_OuputCDR;
+
 // enum values defined in nvlist.hh, bitwise ORed.
 typedef u_int CORBA_Flags;
 
@@ -152,8 +155,8 @@ typedef void (*TAO_Skeleton)(CORBA_ServerRequest &,
 // NOTE: stub APIs are nonportable, and must be explicitly #included
 // by code emitted from an IDL compiler.
 
-#if     defined (_MSC_VER)
-#       pragma pack (pop)               // VC++, goes back to other padding rules
+#if defined (_MSC_VER)
+#pragma pack (pop)               // VC++, goes back to other padding rules
 #endif /* _MSC_VER */
 
 // Alignment macros
@@ -164,6 +167,12 @@ typedef void (*TAO_Skeleton)(CORBA_ServerRequest &,
 
 typedef TAO_Unbounded_Sequence<CORBA::Octet> TAO_opaque;
 extern CORBA::TypeCode_ptr TC_opaque;
+
+extern TAO_Export TAO_OutputCDR&
+operator<<(TAO_OutputCDR&, const TAO_opaque&);
+
+extern TAO_Export TAO_InputCDR&
+operator>>(TAO_InputCDR&, TAO_opaque&);
 
 #include "tao/Exception.h"
 #include "tao/Any.h"

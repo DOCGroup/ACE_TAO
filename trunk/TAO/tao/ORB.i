@@ -371,3 +371,4 @@ CORBA_ORB_out::operator-> (void)
 {
   return this->ptr_;
 }
+
