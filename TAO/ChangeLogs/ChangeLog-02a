@@ -1,3 +1,15 @@
+Thu Mar  7 19:59:36 2002  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* orbsvcs/performance-tests/RTEvent/Federated_RoundTrip/server.cpp:
+	* orbsvcs/performance-tests/RTEvent/RoundTrip:
+	  Chance ACE_ENV_SINGLE_ARG_PARAMETER  to ACE_ENV_ARG_PARAMETER.
+	* orbsvcs/performance-tests/RTEvent/lib/PriorityBand_Setup.cpp:
+	  Chance ACE_ENV_ARG_PARAMETER to ACE_ENV_SINGLE_ARG_PARAMETER.
+
+	* orbsvcs/performance-tests/RTEvent/lib/RTServer_Setup.cpp:
+	  Add ACE_TRY block to eliminate compilation errors
+	  complaining about lack of ACE_TRY_FLAG.
+
 Thu Mar  7 18:40:05 2002  Carlos O'Ryan  <coryan@uci.edu>
 
 	* orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/Makefile:

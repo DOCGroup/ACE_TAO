@@ -115,7 +115,7 @@ int main (int argc, char *argv[])
 
       RtecEventChannelAdmin::EventChannel_var ec =
         RtecEventChannelAdmin::EventChannel::_narrow (ec_object.in ()
-                                                      ACE_ENV_SINGLE_ARG_PARAMETER);
+                                                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::String_var ior =
