@@ -4,6 +4,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
 #include "orbsvcs/PingS.h"
+#include "tao/IIOP_Profile.h"
 
 class Ping_i: public POA_Ping_Object
   // = TITLE
