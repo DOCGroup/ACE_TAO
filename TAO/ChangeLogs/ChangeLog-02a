@@ -1,3 +1,11 @@
+Wed Jan 10 17:21:12 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tao/ORB_Core.cpp : 
+	  
+	  In TAO_ORB_Core::get_protocol_hooks method, checked if we
+	  succesfully loaded the necessary instance of TAO_Protocols_Hooks
+	  and if it is unsuccessful, loaded the same in a hard-coded way.
+	
 Wed Jan 10 17:02:42 2001  Darrell Brunsch <brunsch@uci.edu>
 
         * tao/Policy_Manager.cpp:
