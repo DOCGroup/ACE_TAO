@@ -1145,7 +1145,7 @@ sub sift_files {
       foreach my $save (@saved) {
         my($file) = $self->escape_regex_special($save);
         if ($pjname =~ /$file/ || $file =~ /$pjname/) {
-          if (!$self->already_added($array, $file)) {
+          if (!$self->already_added($array, $save)) {
             push(@$array, $save);
           }
         }
