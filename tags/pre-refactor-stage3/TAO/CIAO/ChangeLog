@@ -1,0 +1,2750 @@
+Sun Jun 08 10:42:15 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* examples/OEP/BasicSP/BMDevice/BMDevice_exec.cpp:
+	* examples/OEP/BasicSP/BMClosedED/BMClosedED_exec.cpp: Added code
+	  to registered the ValueFactory with the ORB so we can deploy
+	  this component independent of others in this example.  Enhanced
+	  the debug output a bit.
+
+	* docs/releasenote.html: Added info on CIDL compiler.
+
+	* exampels/OEP/Display/NavDisplayGUI_exec/NavDisplayGUI_exec.dsp:
+	  Really checked in the following change.
+
+	    Mon Jun 02 23:36:29 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+Tue Jun 03 07:55:01 2003  Simon McQueen  <sm@prismtechnologies.com>
+
+        * CIAO version 0.3.2 released.
+
+Tue Jun  3 01:26:04 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * examples/OEP/BasicSP/BasicSP.dsw:
+        * examples/OEP/BasicSP/BasicSP_stub.dsp:
+        * examples/OEP/BasicSP/BasicSP_svnt.dsp:
+        * examples/OEP/BasicSP/BMClosedED/BMClosedED_stub.dsp:
+        * examples/OEP/BasicSP/BMDisplay/BMDisplay_stub.dsp:
+        * examples/OEP/BasicSP/EC/EC_stub.dsp:
+        * examples/OEP/Display/HUDisplay_stub.dsp:
+        * examples/OEP/Display/HUDisplay_svnt.dsp:
+
+	  Updated settings in these files.
+
+        * examples/OEP/BasicSP/NOTE.txt:
+
+          Fixed typos.
+
+        * examples/OEP/BasicSP/descriptors/daemon.ior:
+
+	  Removed this file from the repository - it's just a temporary.
+
+Mon Jun 02 23:36:29 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* exampels/OEP/Display/NavDisplayGUI_exec/NavDisplayGUI_exec.dsp:
+	  Regenerated and hand modified the project file.
+
+Mon Jun  2 22:45:05 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ciao/ComponentsC.h:
+        * ciao/ComponentsS.h:
+
+          Contains the *C.h and *S.h corresponding to the include in Components.idl.
+
+Mon Jun 02 12:47:50 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* README: Revised the root readme file.
+
+Mon Jun  2 12:42:10 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * CCF/External/Utility/Documentation/Build.html:
+
+          New file containing build information for the CIDL compiler.
+
+        * CIDLC/README:
+
+          Updated file to point to the new file above and other
+          documentation files in that same directory.
+
+Mon Jun  2 02:00:04 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * examples/OEP/BasicSP/BasicSP.dsw:
+        * examples/OEP/BasicSP/BasicSP_stub.dsp:
+        * examples/OEP/BasicSP/BasicSP_svnt.dsp:
+        * examples/OEP/BasicSP/BMClosedED/BMClosedED_exec.dsp:
+        * examples/OEP/BasicSP/BMClosedED/BMClosedED_stub.dsp:
+        * examples/OEP/BasicSP/BMClosedED/BMClosedED_svnt.dsp:
+        * examples/OEP/BasicSP/BMDevice/BMDevice_exec.dsp:
+        * examples/OEP/BasicSP/BMDevice/BMDevice_stub.dsp:
+        * examples/OEP/BasicSP/BMDevice/BMDevice_svnt.dsp:
+        * examples/OEP/BasicSP/BMDisplay/BMDisplay_exec.dsp:
+        * examples/OEP/BasicSP/BMDisplay/BMDisplay_stub.dsp:
+        * examples/OEP/BasicSP/BMDisplay/BMDisplay_svnt.dsp:
+        * examples/OEP/BasicSP/EC/EC_client.dsp:
+        * examples/OEP/BasicSP/EC/EC_exec.dsp:
+        * examples/OEP/BasicSP/EC/EC_stub.dsp:
+        * examples/OEP/BasicSP/EC/EC_svnt.dsp:
+        * examples/OEP/BasicSP/EC/controller.dsp:
+        * examples/OEP/Display/Display.dsw:
+        * examples/OEP/Display/HUDisplay_stub.dsp:
+        * examples/OEP/Display/HUDisplay_svnt.dsp:
+        * examples/OEP/Display/GPS/GPS_exec.dsp:
+        * examples/OEP/Display/GPS/GPS_stub.dsp:
+        * examples/OEP/Display/GPS/GPS_svnt.dsp:
+        * examples/OEP/Display/GPS/GPS_tracing_exec.dsp:
+        * examples/OEP/Display/NavDisplay/NavDisplay_exec.dsp:
+        * examples/OEP/Display/NavDisplay/NavDisplay_stub.dsp:
+        * examples/OEP/Display/NavDisplay/NavDisplay_svnt.dsp:
+        * examples/OEP/Display/NavDisplayGUI_exec/NavDisplayGUI_exec.dsp:
+        * examples/OEP/Display/NavDisplayGUI_exec/README
+        * examples/OEP/Display/RateGen/RateGen_client.dsp:
+        * examples/OEP/Display/RateGen/RateGen_exec.dsp:
+        * examples/OEP/Display/RateGen/RateGen_stub.dsp:
+        * examples/OEP/Display/RateGen/RateGen_svnt.dsp:
+        * examples/OEP/Display/RateGen/controller.dsp:
+
+	  Fixed project and workspace settings for the generated
+	  version of the HUDisplay and BasicSP examples.
+
+Sun Jun  1 23:00:53 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* Makefile: Added the path to the RELEASE_FILES
+
+Sun Jun  1 19:07:49 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * CIDLC/README:
+        * examples/OEP?BasicSP/README:
+        * examples/OEP/Display/README:
+
+          Updated these files with info about the URL for downloading
+          CIDL compiler binaries.
+
+Sun Jun  1 14:30:53 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * docs/releasenotes.html:
+        * docs/todo.html:
+
+          Added items related to the CIDL compiler.
+
+Sat May 31 10:54:11 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* Makefile: We dont have any special files like INSTALL that needs
+	  specila attention during the release.
+
+Fri May 30 19:33:36 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * CCF/DesignNotes:
+        * CCF/Makefile:
+        * CCF/Version:
+        * CCF/CCF/CCF.sln:
+        * CCF/CCF/Makefile:
+        * CCF/CCF/CIDL/CIDL.cpp:
+        * CCF/CCF/CIDL/CIDL.vcproj:
+        * CCF/CCF/CIDL/CIDL_LexicalAnalyzer.hpp:
+        * CCF/CCF/CIDL/CIDL_Parser.hpp:
+        * CCF/CCF/CIDL/CIDL_SemanticAction.hpp:
+        * CCF/CCF/CIDL/CIDL_SemanticActionImpl.hpp:
+        * CCF/CCF/CIDL/CIDL_SyntaxTree.cpp:
+        * CCF/CCF/CIDL/CIDL_SyntaxTree.hpp:
+        * CCF/CCF/CIDL/CIDL_SyntaxTreeFwd.hpp:
+        * CCF/CCF/CIDL/CIDL_Traversal.cpp:
+        * CCF/CCF/CIDL/CIDL_Traversal.hpp:
+        * CCF/CCF/CIDL/MSVC_Pragmas.hpp:
+        * CCF/CCF/CIDL/Makefile:
+        * CCF/CCF/CodeGenerationKit/CodeGenerationKit.cpp:
+        * CCF/CCF/CodeGenerationKit/CodeGenerationKit.vcproj:
+        * CCF/CCF/CodeGenerationKit/CommandLine.cpp:
+        * CCF/CCF/CodeGenerationKit/CommandLine.hpp:
+        * CCF/CCF/CodeGenerationKit/CommandLineDescriptor.hpp:
+        * CCF/CCF/CodeGenerationKit/CommandLineGrammar.cpp:
+        * CCF/CCF/CodeGenerationKit/CommandLineGrammar.hpp:
+        * CCF/CCF/CodeGenerationKit/CommandLineParser.cpp:
+        * CCF/CCF/CodeGenerationKit/CommandLineParser.hpp:
+        * CCF/CCF/CodeGenerationKit/IDLStream.hpp:
+        * CCF/CCF/CodeGenerationKit/MSVC_Pragmas.hpp:
+        * CCF/CCF/CodeGenerationKit/Makefile:
+        * CCF/CCF/CodeGenerationKit/Regex.hpp:
+        * CCF/CCF/CompilerElements/DiagnosticStream.cpp:
+        * CCF/CCF/CompilerElements/DiagnosticStream.hpp:
+        * CCF/CCF/CompilerElements/ExH.hpp:
+        * CCF/CCF/CompilerElements/FileSystem.hpp:
+        * CCF/CCF/CompilerElements/MSVC_Pragmas.hpp:
+        * CCF/CCF/CompilerElements/Parser.hpp:
+        * CCF/CCF/CompilerElements/Preprocessor.hpp:
+        * CCF/CCF/CompilerElements/ReferenceCounting.hpp:
+        * CCF/CCF/CompilerElements/SemanticAction.hpp:
+        * CCF/CCF/CompilerElements/Token.hpp:
+        * CCF/CCF/CompilerElements/TokenStream.hpp:
+        * CCF/CCF/CompilerElements/Traversal.hpp:
+        * CCF/CCF/IDL2/IDL2.cpp:
+        * CCF/CCF/IDL2/IDL2.vcproj:
+        * CCF/CCF/IDL2/IDL2_LexicalAnalyzer.cpp:
+        * CCF/CCF/IDL2/IDL2_LexicalAnalyzer.hpp:
+        * CCF/CCF/IDL2/IDL2_Parser.hpp:
+        * CCF/CCF/IDL2/IDL2_SemanticAction.hpp:
+        * CCF/CCF/IDL2/IDL2_SemanticActionImpl.hpp:
+        * CCF/CCF/IDL2/IDL2_SyntaxTree.cpp:
+        * CCF/CCF/IDL2/IDL2_SyntaxTree.hpp:
+        * CCF/CCF/IDL2/IDL2_SyntaxTree.tpp:
+        * CCF/CCF/IDL2/IDL2_SyntaxTreeFwd.hpp:
+        * CCF/CCF/IDL2/IDL2_SyntaxTree_BuiltIn.cpp:
+        * CCF/CCF/IDL2/IDL2_SyntaxTree_BuiltIn.hpp:
+        * CCF/CCF/IDL2/IDL2_SyntaxTree_Value.hpp:
+        * CCF/CCF/IDL2/IDL2_Traversal.cpp:
+        * CCF/CCF/IDL2/IDL2_Traversal.hpp:
+        * CCF/CCF/IDL2/MSVC_Pragmas.hpp:
+        * CCF/CCF/IDL2/Makefile:
+        * CCF/CCF/IDL3/IDL3.cpp:
+        * CCF/CCF/IDL3/IDL3.vcproj:
+        * CCF/CCF/IDL3/IDL3_LexicalAnalyzer.hpp:
+        * CCF/CCF/IDL3/IDL3_Parser.hpp:
+        * CCF/CCF/IDL3/IDL3_SemanticAction.hpp:
+        * CCF/CCF/IDL3/IDL3_SemanticActionImpl.hpp:
+        * CCF/CCF/IDL3/IDL3_SyntaxTree.cpp:
+        * CCF/CCF/IDL3/IDL3_SyntaxTree.hpp:
+        * CCF/CCF/IDL3/IDL3_SyntaxTreeFwd.hpp:
+        * CCF/CCF/IDL3/IDL3_SyntaxTree_EventType.cpp:
+        * CCF/CCF/IDL3/IDL3_SyntaxTree_EventType.hpp:
+        * CCF/CCF/IDL3/IDL3_Traversal.cpp:
+        * CCF/CCF/IDL3/IDL3_Traversal.hpp:
+        * CCF/CCF/IDL3/MSVC_Pragmas.hpp:
+        * CCF/CCF/IDL3/Makefile:
+        * CCF/External/Utility/Makefile:
+        * CCF/External/Utility/Version:
+        * CCF/External/Utility/Config/Archive.gcc.post.rules:
+        * CCF/External/Utility/Config/Archive.gcc.pre.rules:
+        * CCF/External/Utility/Config/Archive.post.rules:
+        * CCF/External/Utility/Config/Archive.pre.rules:
+        * CCF/External/Utility/Config/Documentation.post.rules:
+        * CCF/External/Utility/Config/Documentation.pre.rules:
+        * CCF/External/Utility/Config/Executable.gcc.post.rules:
+        * CCF/External/Utility/Config/Executable.gcc.pre.rules:
+        * CCF/External/Utility/Config/Executable.generic.post.rules:
+        * CCF/External/Utility/Config/Executable.generic.pre.rules:
+        * CCF/External/Utility/Config/Executable.post.rules:
+        * CCF/External/Utility/Config/Executable.pre.rules:
+        * CCF/External/Utility/Config/Recursion.post.rules:
+        * CCF/External/Utility/Config/Recursion.pre.rules:
+        * CCF/External/Utility/Config/Shared.gcc.post.rules:
+        * CCF/External/Utility/Config/Shared.gcc.pre.rules:
+        * CCF/External/Utility/Config/Shared.generic.post.rules:
+        * CCF/External/Utility/Config/Shared.generic.pre.rules:
+        * CCF/External/Utility/Config/Shared.post.rules:
+        * CCF/External/Utility/Config/Shared.pre.rules:
+        * CCF/External/Utility/Config/Thoughts:
+        * CCF/External/Utility/Documentation/Makefile:
+        * CCF/External/Utility/Documentation/News.html:
+        * CCF/External/Utility/Documentation/index.html:
+        * CCF/External/Utility/Documentation/ExH/Makefile:
+        * CCF/External/Utility/Documentation/ExH/Makefile.documentation:
+        * CCF/External/Utility/Documentation/ExH/News.html:
+        * CCF/External/Utility/Documentation/ExH/index.html:
+        * CCF/External/Utility/Documentation/ExH/Example/Makefile:
+        * CCF/External/Utility/Documentation/ExH/Logic/Makefile:
+        * CCF/External/Utility/Documentation/ExH/System/Makefile:
+        * CCF/External/Utility/Documentation/ReferenceCounting/Makefile:
+        * CCF/External/Utility/Documentation/ReferenceCounting/News.html:
+        * CCF/External/Utility/Documentation/ReferenceCounting/index.html:
+        * CCF/External/Utility/Documentation/Style/CXX.css:
+        * CCF/External/Utility/Documentation/Style/CXX_Blue.css:
+        * CCF/External/Utility/Documentation/Synch/Makefile:
+        * CCF/External/Utility/Documentation/Synch/News.html:
+        * CCF/External/Utility/Documentation/Synch/index.html:
+        * CCF/External/Utility/Documentation/Synch/Policy/Makefile:
+        * CCF/External/Utility/Utility/ExH/Compound.hpp:
+        * CCF/External/Utility/Utility/ExH/Compound.tpp:
+        * CCF/External/Utility/Utility/ExH/Converter.hpp:
+        * CCF/External/Utility/Utility/ExH/Converter.tpp:
+        * CCF/External/Utility/Utility/ExH/ExH.hpp:
+        * CCF/External/Utility/Utility/ExH/StringConverter.hpp:
+        * CCF/External/Utility/Utility/ExH/StringConverter.ipp:
+        * CCF/External/Utility/Utility/ExH/StringStreamConverter.hpp:
+        * CCF/External/Utility/Utility/ExH/StringStreamConverter.ipp:
+        * CCF/External/Utility/Utility/ExH/Logic/DescriptiveException.hpp:
+        * CCF/External/Utility/Utility/ExH/Logic/DescriptiveException.ipp:
+        * CCF/External/Utility/Utility/ExH/Logic/Exception.hpp:
+        * CCF/External/Utility/Utility/ExH/Logic/Exception.ipp:
+        * CCF/External/Utility/Utility/ExH/System/DescriptiveException.hpp:
+        * CCF/External/Utility/Utility/ExH/System/DescriptiveException.ipp:
+        * CCF/External/Utility/Utility/ExH/System/Exception.hpp:
+        * CCF/External/Utility/Utility/ReferenceCounting/DefaultImpl.hpp:
+        * CCF/External/Utility/Utility/ReferenceCounting/DefaultImpl.ipp:
+        * CCF/External/Utility/Utility/ReferenceCounting/ExternalLockImpl.hpp:
+        * CCF/External/Utility/Utility/ReferenceCounting/ExternalLockImpl.ipp:
+        * CCF/External/Utility/Utility/ReferenceCounting/Interface.hpp:
+        * CCF/External/Utility/Utility/ReferenceCounting/Interface.ipp:
+        * CCF/External/Utility/Utility/ReferenceCounting/Interface.tpp:
+        * CCF/External/Utility/Utility/ReferenceCounting/ReferenceCounting.hpp:
+        * CCF/External/Utility/Utility/ReferenceCounting/SmartPtr.hpp:
+        * CCF/External/Utility/Utility/ReferenceCounting/SmartPtr.tpp:
+        * CCF/External/Utility/Utility/ReferenceCounting/StrictPtr.hpp:
+        * CCF/External/Utility/Utility/ReferenceCounting/StrictPtr.tpp:
+        * CCF/External/Utility/Utility/Synch/Policy/Null.hpp:
+        * CCF/External/Utility/Utility/Synch/Policy/Null.ipp:
+        * CIDLC/CIDLC.sln:
+        * CIDLC/CIDLC.vcproj:
+        * CIDLC/ExecutorMapp:ingGenerator.cpp:
+        * CIDLC/ExecutorMapp:ingGenerator.hpp:
+        * CIDLC/Literals.hpp:
+        * CIDLC/Makefile:
+        * CIDLC/ServantGenerator.cpp:
+        * CIDLC/ServantGenerator.hpp:
+        * CIDLC/ServantHeaderGenerator.cpp:
+        * CIDLC/ServantHeaderGenerator.hpp:
+        * CIDLC/ServantSourceGenerator.cpp:
+        * CIDLC/ServantSourceGenerator.hpp:
+        * CIDLC/Version:
+        * CIDLC/cidlc.cpp:
+
+	  Source code, documentation and build files for the
+	  CIDL compiler.
+
+Fri May 30 18:18:25 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * CIDLC/*:
+
+          Removed all files in this directory from the repository except
+          DesignNotes, which will reappear in a new directory along with
+          other CIDL compiler checkins. The parser examples that were
+          in this directory are no longer useful or up to date. Soon
+          parts of the CIDL compiler will be checked into this directory.
+
+        * README:
+
+          New file.
+
+Fri May 30 17:41:05 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * examples/OEP/BasicSP/BMClosedED/BMClosedED_svnt.dsp:
+        * examples/OEP/BasicSP/BMDevice/BMDevice_svnt.dsp:
+        * examples/OEP/BasicSP/BMDisplay/BMDisplay_svnt.dsp:
+        * examples/OEP/BasicSP/EC/EC_svnt.dsp:
+        * examples/OEP/Display/GPS/GPS_svnt.dsp:
+        * examples/OEP/Display/NavDisplay/NavDisplay_svnt.dsp:
+        * examples/OEP/Display/RateGen/RateGen_svnt.dsp:
+
+          Changed the location of the CIDL compiler executable to
+          CIAO_ROOT/bin for the MSVC projects.
+
+        * examples/OEP/Display/NavDisplay/NavDisplay_svnt.cpp:
+        * examples/OEP/Display/NavDisplay/NavDisplay_svnt.h:
+
+          Removed these file from the repository - they are generated
+          and shouldn't have been checked in.
+
+Fri May 30 15:25:29 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * examples/OEP/Display/Configuration-0.png:
+        * examples/OEP/Display/Display.dsw:
+        * examples/OEP/Display/HUDisplay.idl:
+        * examples/OEP/Display/HUDisplay.mpc:
+        * examples/OEP/Display/HUDisplay_stub.dsp:
+        * examples/OEP/Display/HUDisplay_stub_export.h:
+        * examples/OEP/Display/HUDisplay_svnt.dsp:
+        * examples/OEP/Display/HUDisplay_svnt_export.h:
+        * examples/OEP/Display/NOTE:
+        * examples/OEP/Display/README:
+        * examples/OEP/Display/cleanup_mpcfiles.cmd:
+        * examples/OEP/Display/GPS/GPS.cidl:
+        * examples/OEP/Display/GPS/GPS.idl:
+        * examples/OEP/Display/GPS/GPSEI.idl:
+        * examples/OEP/Display/GPS/GPS_exec.cpp:
+        * examples/OEP/Display/GPS/GPS_exec.dsp:
+        * examples/OEP/Display/GPS/GPS_exec.h:
+        * examples/OEP/Display/GPS/GPS_exec_export.h:
+        * examples/OEP/Display/GPS/GPS_stub.dsp:
+        * examples/OEP/Display/GPS/GPS_stub_export.h:
+        * examples/OEP/Display/GPS/GPS_svnt.dsp:
+        * examples/OEP/Display/GPS/GPS_svnt_export.h:
+        * examples/OEP/Display/GPS/GPS_tracing_exec.cpp:
+        * examples/OEP/Display/GPS/GPS_tracing_exec.dsp:
+        * examples/OEP/Display/GPS/GPS_tracing_exec.h:
+        * examples/OEP/Display/GPS/config:
+        * examples/OEP/Display/NavDisplay/NavDisplay.cidl:
+        * examples/OEP/Display/NavDisplay/NavDisplay.idl:
+        * examples/OEP/Display/NavDisplay/NavDisplayEI.idl:
+        * examples/OEP/Display/NavDisplay/NavDisplay_exec.cpp:
+        * examples/OEP/Display/NavDisplay/NavDisplay_exec.dsp:
+        * examples/OEP/Display/NavDisplay/NavDisplay_exec.h:
+        * examples/OEP/Display/NavDisplay/NavDisplay_exec_export.h:
+        * examples/OEP/Display/NavDisplay/NavDisplay_stub.dsp:
+        * examples/OEP/Display/NavDisplay/NavDisplay_stub_export.h:
+        * examples/OEP/Display/NavDisplay/NavDisplay_svnt.cpp:
+        * examples/OEP/Display/NavDisplay/NavDisplay_svnt.dsp:
+        * examples/OEP/Display/NavDisplay/NavDisplay_svnt.h:
+        * examples/OEP/Display/NavDisplay/NavDisplay_svnt_export.h:
+        * examples/OEP/Display/NavDisplay/config:
+        * examples/OEP/Display/NavDisplay/run_test.pl:
+        * examples/OEP/Display/NavDisplayGUI_exec/AddNavUnitCmd.cpp:
+        * examples/OEP/Display/NavDisplayGUI_exec/AddNavUnitCmd.h:
+        * examples/OEP/Display/NavDisplayGUI_exec/Command.h:
+        * examples/OEP/Display/NavDisplayGUI_exec/DetailView.cpp:
+        * examples/OEP/Display/NavDisplayGUI_exec/DetailView.h:
+        * examples/OEP/Display/NavDisplayGUI_exec/MapView.cpp:
+        * examples/OEP/Display/NavDisplayGUI_exec/MapView.h:
+        * examples/OEP/Display/NavDisplayGUI_exec/NavDisplayGUI_exec.cpp:
+        * examples/OEP/Display/NavDisplayGUI_exec/NavDisplayGUI_exec.dsp:
+        * examples/OEP/Display/NavDisplayGUI_exec/NavDisplayGUI_exec.h:
+        * examples/OEP/Display/NavDisplayGUI_exec/NavUnit.cpp:
+        * examples/OEP/Display/NavDisplayGUI_exec/NavUnit.h:
+        * examples/OEP/Display/NavDisplayGUI_exec/NodeItem.cpp:
+        * examples/OEP/Display/NavDisplayGUI_exec/NodeItem.h:
+        * examples/OEP/Display/NavDisplayGUI_exec/QuitCmd.cpp:
+        * examples/OEP/Display/NavDisplayGUI_exec/QuitCmd.h:
+        * examples/OEP/Display/NavDisplayGUI_exec/README:
+        * examples/OEP/Display/NavDisplayGUI_exec/RootPanel.cpp:
+        * examples/OEP/Display/NavDisplayGUI_exec/RootPanel.h:
+        * examples/OEP/Display/NavDisplayGUI_exec/UpdatePositionCmd.cpp:
+        * examples/OEP/Display/NavDisplayGUI_exec/UpdatePositionCmd.h:
+        * examples/OEP/Display/NavDisplayGUI_exec/Worker.cpp:
+        * examples/OEP/Display/NavDisplayGUI_exec/Worker.h:
+        * examples/OEP/Display/NavDisplayGUI_exec/trolltech.gif:
+        * examples/OEP/Display/NavDisplayGUI_exec/worldmap1.gif:
+        * examples/OEP/Display/NavDisplayGUI_exec/worldmap1.xpm:
+        * examples/OEP/Display/RateGen/RateGen.cidl:
+        * examples/OEP/Display/RateGen/RateGen.idl:
+        * examples/OEP/Display/RateGen/RateGenEI.idl:
+        * examples/OEP/Display/RateGen/RateGen_client.dsp:
+        * examples/OEP/Display/RateGen/RateGen_exec.cpp:
+        * examples/OEP/Display/RateGen/RateGen_exec.dsp:
+        * examples/OEP/Display/RateGen/RateGen_exec.h:
+        * examples/OEP/Display/RateGen/RateGen_exec_export.h:
+        * examples/OEP/Display/RateGen/RateGen_stub.dsp:
+        * examples/OEP/Display/RateGen/RateGen_stub_export.h:
+        * examples/OEP/Display/RateGen/RateGen_svnt.dsp:
+        * examples/OEP/Display/RateGen/RateGen_svnt_export.h:
+        * examples/OEP/Display/RateGen/client.cpp:
+        * examples/OEP/Display/RateGen/config:
+        * examples/OEP/Display/RateGen/controller.cpp:
+        * examples/OEP/Display/RateGen/controller.dsp:
+        * examples/OEP/Display/RateGen/run_test.pl:
+        * examples/OEP/Display/descriptors/CIAO_Installation_Data.ini:
+        * examples/OEP/Display/descriptors/DuelDisplay.cad:
+        * examples/OEP/Display/descriptors/GPS.csd:
+        * examples/OEP/Display/descriptors/GPS.ssd:
+        * examples/OEP/Display/descriptors/GPS_tracing.csd:
+        * examples/OEP/Display/descriptors/HUDisplay.cad:
+        * examples/OEP/Display/descriptors/HUDisplayGUI.cad:
+        * examples/OEP/Display/descriptors/NOTE.txt:
+        * examples/OEP/Display/descriptors/NavDisplay.csd:
+        * examples/OEP/Display/descriptors/NavDisplay.ssd:
+        * examples/OEP/Display/descriptors/NavDisplayGUI.csd:
+        * examples/OEP/Display/descriptors/RateGen.csd:
+        * examples/OEP/Display/descriptors/RateGen.ssd:
+        * examples/OEP/Display/descriptors/RemoteDisplay.cad:
+        * examples/OEP/Display/descriptors/RemoteDisplayGUI.cad:
+        * examples/OEP/Display/descriptors/test.dat:
+
+          New example, same as the one in examples/handcrafted/Display,
+          but using CIDL compiler generated code.
+
+Fri May 30 14:27:55 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* PROBLEM-REPORT-FORM (Subject): Fixed a typo.
+
+Fri May 30 14:15:45 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* VERSION:
+	* PROBLEM-REPORT-FORM (Subject): Files needed for the release.
+
+Fri May 30 14:11:11 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ciao/Version.h: Changed the version info to be 0.3.1 instead of
+	  0.1.1. We want it to go the way ACE+TAO go.
+
+Fri May 30 13:57:26 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* Makefile: A new top level Makefile which will have the needed
+	  information for the release.
+
+Fri May 30 12:29:37 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * examples/OEP/BasicSP/BasicSP.dsw:
+        * examples/OEP/BasicSP/BasicSP.idl:
+        * examples/OEP/BasicSP/BasicSP.mpc:
+        * examples/OEP/BasicSP/BasicSP_stub.dsp:
+        * examples/OEP/BasicSP/BasicSP_stub_export.h:
+        * examples/OEP/BasicSP/BasicSP_svnt.dsp:
+        * examples/OEP/BasicSP/BasicSP_svnt_export.h:
+        * examples/OEP/BasicSP/NOTE.txt:
+        * examples/OEP/BasicSP/README:
+        * examples/OEP/BasicSP/BMClosedED/BMClosedED.cidl:
+        * examples/OEP/BasicSP/BMClosedED/BMClosedED.idl:
+        * examples/OEP/BasicSP/BMClosedED/BMClosedEDEI.idl:
+        * examples/OEP/BasicSP/BMClosedED/BMClosedED_exec.cpp:
+        * examples/OEP/BasicSP/BMClosedED/BMClosedED_exec.dsp:
+        * examples/OEP/BasicSP/BMClosedED/BMClosedED_exec.h:
+        * examples/OEP/BasicSP/BMClosedED/BMClosedED_exec_export.h:
+        * examples/OEP/BasicSP/BMClosedED/BMClosedED_stub.dsp:
+        * examples/OEP/BasicSP/BMClosedED/BMClosedED_stub_export.h:
+        * examples/OEP/BasicSP/BMClosedED/BMClosedED_svnt.dsp:
+        * examples/OEP/BasicSP/BMClosedED/BMClosedED_svnt_export.h:
+        * examples/OEP/BasicSP/BMClosedED/config:
+        * examples/OEP/BasicSP/BMDevice/BMDevice.cidl:
+        * examples/OEP/BasicSP/BMDevice/BMDevice.idl:
+        * examples/OEP/BasicSP/BMDevice/BMDeviceEI.idl:
+        * examples/OEP/BasicSP/BMDevice/BMDevice_exec.cpp:
+        * examples/OEP/BasicSP/BMDevice/BMDevice_exec.dsp:
+        * examples/OEP/BasicSP/BMDevice/BMDevice_exec.h:
+        * examples/OEP/BasicSP/BMDevice/BMDevice_exec_export.h:
+        * examples/OEP/BasicSP/BMDevice/BMDevice_stub.dsp:
+        * examples/OEP/BasicSP/BMDevice/BMDevice_stub_export.h:
+        * examples/OEP/BasicSP/BMDevice/BMDevice_svnt.dsp:
+        * examples/OEP/BasicSP/BMDevice/BMDevice_svnt_export.h:
+        * examples/OEP/BasicSP/BMDevice/config:
+        * examples/OEP/BasicSP/BMDisplay/BMDisplay.cidl:
+        * examples/OEP/BasicSP/BMDisplay/BMDisplay.idl:
+        * examples/OEP/BasicSP/BMDisplay/BMDisplayEI.idl:
+        * examples/OEP/BasicSP/BMDisplay/BMDisplay_exec.cpp:
+        * examples/OEP/BasicSP/BMDisplay/BMDisplay_exec.dsp:
+        * examples/OEP/BasicSP/BMDisplay/BMDisplay_exec.h:
+        * examples/OEP/BasicSP/BMDisplay/BMDisplay_exec_export.h:
+        * examples/OEP/BasicSP/BMDisplay/BMDisplay_stub.dsp:
+        * examples/OEP/BasicSP/BMDisplay/BMDisplay_stub_export.h:
+        * examples/OEP/BasicSP/BMDisplay/BMDisplay_svnt.dsp:
+        * examples/OEP/BasicSP/BMDisplay/BMDisplay_svnt_export.h:
+        * examples/OEP/BasicSP/BMDisplay/config:
+        * examples/OEP/BasicSP/EC/EC.cidl:
+        * examples/OEP/BasicSP/EC/EC.idl:
+        * examples/OEP/BasicSP/EC/ECEI.idl:
+        * examples/OEP/BasicSP/EC/EC_client.dsp:
+        * examples/OEP/BasicSP/EC/EC_exec.cpp:
+        * examples/OEP/BasicSP/EC/EC_exec.dsp:
+        * examples/OEP/BasicSP/EC/EC_exec.h:
+        * examples/OEP/BasicSP/EC/EC_exec_export.h:
+        * examples/OEP/BasicSP/EC/EC_stub.dsp:
+        * examples/OEP/BasicSP/EC/EC_stub_export.h:
+        * examples/OEP/BasicSP/EC/EC_svnt.dsp:
+        * examples/OEP/BasicSP/EC/EC_svnt_export.h:
+        * examples/OEP/BasicSP/EC/README:
+        * examples/OEP/BasicSP/EC/client.cpp:
+        * examples/OEP/BasicSP/EC/config:
+        * examples/OEP/BasicSP/EC/controller.cpp:
+        * examples/OEP/BasicSP/EC/controller.dsp:
+        * examples/OEP/BasicSP/descriptors/BMClosedED.csd:
+        * examples/OEP/BasicSP/descriptors/BMClosedED.ssd:
+        * examples/OEP/BasicSP/descriptors/BMDevice.csd:
+        * examples/OEP/BasicSP/descriptors/BMDevice.ssd:
+        * examples/OEP/BasicSP/descriptors/BMDisplay.csd:
+        * examples/OEP/BasicSP/descriptors/BMDisplay.ssd:
+        * examples/OEP/BasicSP/descriptors/BasicSP.cad:
+        * examples/OEP/BasicSP/descriptors/CIAO_Installation_Data.ini:
+        * examples/OEP/BasicSP/descriptors/EC.csd:
+        * examples/OEP/BasicSP/descriptors/EC.ssd:
+        * examples/OEP/BasicSP/descriptors/daemon.ior:
+        * examples/OEP/BasicSP/descriptors/ec.ior:
+        * examples/OEP/BasicSP/descriptors/test.dat:
+
+          New example, same as the one in examples/handcrafted/BasicSP,
+          but using CIDL compiler generated code.
+
+Thu May 29 22:25:09 2003  Krishnakumar B  <kitty@spam.invalid.domain>
+
+        * docs/XML/componentassembly.dtd:
+
+          Fixed an error in the DTD.
+
+        * examples/handcrafted/BasicSP/descriptors/BMClosedED.csd:
+        * examples/handcrafted/BasicSP/descriptors/BMClosedED.ssd:
+        * examples/handcrafted/BasicSP/descriptors/BMDevice.csd:
+        * examples/handcrafted/BasicSP/descriptors/BMDevice.ssd:
+        * examples/handcrafted/BasicSP/descriptors/BMDisplay.csd:
+        * examples/handcrafted/BasicSP/descriptors/BMDisplay.ssd:
+        * examples/handcrafted/BasicSP/descriptors/BasicSP.cad:
+        * examples/handcrafted/BasicSP/descriptors/EC.csd:
+        * examples/handcrafted/BasicSP/descriptors/EC.ssd:
+        * examples/handcrafted/Display/descriptors/DuelDisplay.cad:
+        * examples/handcrafted/Display/descriptors/GPS.csd:
+        * examples/handcrafted/Display/descriptors/GPS.ssd:
+        * examples/handcrafted/Display/descriptors/GPS_tracing.csd:
+        * examples/handcrafted/Display/descriptors/HUDisplay.cad:
+        * examples/handcrafted/Display/descriptors/HUDisplayGUI.cad:
+        * examples/handcrafted/Display/descriptors/NavDisplay.csd:
+        * examples/handcrafted/Display/descriptors/NavDisplay.ssd:
+        * examples/handcrafted/Display/descriptors/NavDisplayGUI.csd:
+        * examples/handcrafted/Display/descriptors/RateGen.csd:
+        * examples/handcrafted/Display/descriptors/RateGen.ssd:
+        * examples/handcrafted/Display/descriptors/RemoteDisplay.cad:
+        * examples/handcrafted/Display/descriptors/RemoteDisplayGUI.cad:
+        * examples/handcrafted/Hello/hello.csd:
+        * examples/handcrafted/Hello/hello.ssd:
+
+          Modified the files to point to the correct DTDs. Also added a
+          note to make sure that noone changes the path to the DTD by
+          mistake.
+
+        * tools/XML_Helpers/svc.conf.xml:
+
+          Fixed some errors in the file to allow parsing with the new
+          parser.
+
+
+Tue May 27 18:23:53 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * examples/handcrafted/BasicSP/BMClosedED/BMClosedED.cidl:
+        * examples/handcrafted/BasicSP/BMDevice/BMDevice.cidl:
+        * examples/handcrafted/BasicSP/BMDisplay/BMDisplay.cidl:
+        * examples/handcrafted/BasicSP/EC/EC.cidl:
+
+          New CIDL files added to the appropriate directory of the
+          BasicSP example.
+
+Tue May 27 17:44:36 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ciao/Components.idl:
+
+          New file that matches the name of the #included IDL file generated
+          by the CIDL compiler executor mapping. For now, this file just
+          includes CCM_Container.idl.
+
+Tue May 27 09:57:24 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* examples/handcrafted/Display/NavDisplayGUI_exec/moc_DetailView.cpp:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/moc_MapView.cpp:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/moc_NodeItem.cpp:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/moc_RootPanel.cpp:
+	  Removed these Qt generated files.  Andrey fixed the mpc file for
+	  this component so they will be generated on the fly.
+
+Mon May 26 21:34:48 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tools/Simple_Component_Server/Simple_Component_Server.cpp:
+	  Change the IOR output logic to write the component IOR if one is
+	  instatiated with the -c flag instead of the home IOR (when the
+	  -c flag is not specified.)
+
+	* tools/Simple_Component_Server/README: Updated documentation for
+	  simple component server.
+
+Mon May 26 21:13:10 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tools/Simple_Component_Server/Simple_Server.idl:
+	  Changed to include "ciao/CCM_Component.idl".  Subdir name to is
+	  now required.
+
+	* examples/handcrafted/Display/NavDisplayGUI_exec/NavDisplayEIC.cpp:
+	  Removed.  This file should be generated from the IDL file.
+
+	* examples/handcrafted/Display/NavDisplayGUI_exec/NavDisplayEIC.mpc:
+	  Added NavDisplayEIC.cpp into source file list.  Also documented
+	  the necessary changes to generated win32 makefiles/projects for
+	  compiling this component on win32.
+
+	* examples/handcrafted/Hello/run_test.pl: Added the use of the new
+	  PerlACE::Process::Normalize_Executable_Name so we can test this
+	  stuff with release builds.
+
+Fri May 23 22:17:36 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* examples/handcrafted/BasicSP/BMClosedED/BMClosedEDE.idl:
+	* examples/handcrafted/BasicSP/BMClosedED/BMClosedEDEI.idl:
+	* examples/handcrafted/BasicSP/BMDevice/BMDevice_svnt.cpp:Fixed
+	  fuzz errors.
+
+Sat May 17 16:29:35 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* examples/handcrafted/BasicSP/descriptors/test.dat
+	* examples/handcrafted/BasicSP/BMClosedED/BMClosedED_exec.cpp
+	* examples/handcrafted/BasicSP/BMDevice/BMDevice_exec.cpp
+	* examples/handcrafted/BasicSP/BMDevice/BMDevice_exec.h
+	* examples/handcrafted/BasicSP/BMDisplay/BMDisplay_exec.cpp
+	* examples/handcrafted/BasicSP/EC/EC_exec.cpp
+	* examples/handcrafted/BasicSP/EC/EC_svnt.cpp
+	* examples/handcrafted/BasicSP/EC/controller.cpp: Now the demo
+	  works! Fixed a few problems and made debug statements to be more
+	  meaningful. Now that teh CIDL compiler is also ready, we are
+	  ready to storm KSU :-)
+
+Sat May 17 12:40:44 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* examples/handcrafted/BasicSP/BMDevice/BMDevice_svnt.cpp
+	  (provide_facet): Added the implementation to resolve "data_read"
+	  facet name.
+
+Sat May 17 12:19:17 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* examples/handcrafted/BasicSP/descriptors/BasicSP.cad: Fixed yet
+	  another typo. Thanks to Nanbor for pointing it out.
+
+Sat May 17 12:07:47 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* examples/handcrafted/BasicSP/descriptors/BasicSP.cad: Fixed a
+	  typo. Thanks to Nanbor for pointing it out.
+
+	* examples/handcrafted/BasicSP/BasicSP.idl: Added ciao/ to the
+	  CM_Container.idl
+
+Sat May 17 11:18:22 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* examples/handcrafted/BasicSP/*/config: Config files for
+	  testing.
+
+Sat May 17 11:05:40 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* examples/handcrafted/BasicSP/BasicSP.idl: Changed to include
+	  "CCM_Components.idl" directly instead of
+	  "ciao/CCM_Components.idl".
+
+	* examples/handcrafted/BasicSP/BasicSP.mpc: Removed BasicSPC.cpp
+	  from the svnt library source file list since we are linking with
+	  BasicSP stub library already.  Removed BasicSPES.cpp from the
+	  source file list also because it's basically empty.
+
+	* examples/handcrafted/BasicSP/BMDevice/BMDevice.mpc: The stub and
+	  svnt libraries should depends on BasicSP_stub library instead of
+	  themselves.
+
+	* examples/handcrafted/BasicSP/BMDevice/BMDevice_exec.h: Fixed
+	  incorrect usage of extern "C" and export macro.
+
+	* examples/handcrafted/BasicSP/BMDevice/BMDevice_svnt.h: Changed
+	  the use of BMDEVICE_STUB_Export macro to BMDEVICE_SVNT_Export.
+
+	* examples/handcrafted/BasicSP/EC/EC_svnt.cpp: The start ()
+	  operation should not return anything.
+
+Fri May 16 18:11:42 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* examples/handcrafted/BasicSP/BMDisplay/BMDisplay.idl (BasicSP):
+	* examples/handcrafted/BasicSP/BasicSP.mpc:
+	* examples/handcrafted/BasicSP/BMDevice/BMDevice.mpc:
+	* examples/handcrafted/BasicSP/BMDevice/BMDevice_exec.cpp:
+	* examples/handcrafted/BasicSP/BMDevice/BMDevice_exec.h:
+	* examples/handcrafted/BasicSP/EC/EC.idl:
+	* examples/handcrafted/BasicSP/EC/ECE.idl:
+	* examples/handcrafted/BasicSP/EC/EC_exec.cpp:
+	* examples/handcrafted/BasicSP/EC/EC_svnt.cpp:
+	* examples/handcrafted/BasicSP/EC/EC_svnt.h:
+	* examples/handcrafted/BasicSP/EC/client.cpp:
+	* examples/handcrafted/BasicSP/EC/controller.cpp:
+	* examples/handcrafted/BasicSP/descriptors/BMClosedED.csd:
+	* examples/handcrafted/BasicSP/descriptors/BMClosedED.ssd:
+	* examples/handcrafted/BasicSP/descriptors/BMDevice.csd:
+	* examples/handcrafted/BasicSP/descriptors/BMDevice.ssd:
+	* examples/handcrafted/BasicSP/descriptors/BMDisplay.csd:
+	* examples/handcrafted/BasicSP/descriptors/BMDisplay.ssd:
+	* examples/handcrafted/BasicSP/descriptors/BasicSP.cad:
+	* examples/handcrafted/BasicSP/descriptors/CIAO_Installation_Data.ini:
+	* examples/handcrafted/BasicSP/descriptors/EC.csd:
+	* examples/handcrafted/BasicSP/descriptors/EC.ssd: Some more files
+	  for the BasicSP example.
+
+Wed May 14 17:02:29 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* examples/handcrafted/BasicSP/EC/EC.idl:
+	* examples/handcrafted/BasicSP/EC/EC.mpc:
+	* examples/handcrafted/BasicSP/EC/ECE.idl:
+	* examples/handcrafted/BasicSP/EC/ECEI.idl:
+	* examples/handcrafted/BasicSP/EC/EC_exec.cpp:
+	* examples/handcrafted/BasicSP/EC/EC_exec.h:
+	* examples/handcrafted/BasicSP/EC/EC_exec_export.h:
+	* examples/handcrafted/BasicSP/EC/EC_stub_export.h:
+	* examples/handcrafted/BasicSP/EC/EC_svnt.cpp:
+	* examples/handcrafted/BasicSP/EC/EC_svnt.h:
+	* examples/handcrafted/BasicSP/EC/EC_svnt_export.h:
+	* examples/handcrafted/BasicSP/EC/client.cpp:
+	* examples/handcrafted/BasicSP/EC/controller.cpp: Implementation
+	  for the EC component.
+
+Wed May 14 15:50:12 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* examples/handcrafted/BasicSP/BMClosedED/BMClosedED.idl:
+	* examples/handcrafted/BasicSP/BMClosedED/BMClosedED.mpc:
+	* examples/handcrafted/BasicSP/BMClosedED/BMClosedEDE.idl:
+	* examples/handcrafted/BasicSP/BMClosedED/BMClosedEDEI.idl:
+	* examples/handcrafted/BasicSP/BMClosedED/BMClosedED_exec.cpp:
+	* examples/handcrafted/BasicSP/BMClosedED/BMClosedED_exec.h:
+	* examples/handcrafted/BasicSP/BMClosedED/BMClosedED_exec_export.h:
+	* examples/handcrafted/BasicSP/BMClosedED/BMClosedED_stub_export.h:
+	* examples/handcrafted/BasicSP/BMClosedED/BMClosedED_svnt.cpp:
+	* examples/handcrafted/BasicSP/BMClosedED/BMClosedED_svnt.h:
+	* examples/handcrafted/BasicSP/BMClosedED/BMClosedED_svnt_export.h:
+	* examples/handcrafted/BasicSP/EC/EC.idl: Implementation for the
+	  BMClosedED component.
+
+
+Tue May 13 23:26:18 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* examples/handcrafted/BasicSP/BasicSP_svnt.cpp:
+	* examples/handcrafted/BasicSP/BasicSP_svnt.h:
+	* examples/handcrafted/BasicSP/BMDevice/BMDevice.idl:
+	* examples/handcrafted/BasicSP/BMDevice/BMDevice.mpc:
+	* examples/handcrafted/BasicSP/BMDevice/BMDeviceE.idl:
+	* examples/handcrafted/BasicSP/BMDevice/BMDeviceEI.idl:
+	* examples/handcrafted/BasicSP/BMDevice/BMDevice_exec.cpp:
+	* examples/handcrafted/BasicSP/BMDevice/BMDevice_exec.h:
+	* examples/handcrafted/BasicSP/BMDevice/BMDevice_svnt.cpp:
+	* examples/handcrafted/BasicSP/BMDevice/BMDevice_svnt.h:
+	* examples/handcrafted/BasicSP/BMDisplay/BMDisplay.idl:
+	* examples/handcrafted/BasicSP/BMDisplay/BMDisplay.mpc:
+	* examples/handcrafted/BasicSP/BMDisplay/BMDisplayE.idl:
+	* examples/handcrafted/BasicSP/BMDisplay/BMDisplayEI.idl:
+	* examples/handcrafted/BasicSP/BMDisplay/BMDisplay_exec.cpp:
+	* examples/handcrafted/BasicSP/BMDisplay/BMDisplay_exec.h:
+	* examples/handcrafted/BasicSP/BMDisplay/BMDisplay_exec_export.h:
+	* examples/handcrafted/BasicSP/BMDisplay/BMDisplay_stub_export.h:
+	* examples/handcrafted/BasicSP/BMDisplay/BMDisplay_svnt.cpp:
+	* examples/handcrafted/BasicSP/BMDisplay/BMDisplay_svnt.h:
+	* examples/handcrafted/BasicSP/BMDisplay/BMDisplay_svnt_export.h:
+	* examples/handcrafted/BasicSP/EC/EC.idl: Hand code the BMDevice
+	  and BMDisplay component in the Boeing OEP scenario.
+
+Mon May 12 16:53:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* examples/handcrafted/BasicSP/BasicSP.idl:
+	* examples/handcrafted/BasicSP/BMDevice/BMDevice.idl:
+	* examples/handcrafted/BasicSP/BMDevice/BMDeviceE.idl:
+	* examples/handcrafted/BasicSP/BMDevice/BMDeviceEI.idl:
+	* examples/handcrafted/BasicSP/BMDevice/BMDevice.mpc
+	* examples/handcrafted/BasicSP/BMDevice/BMDevice_exec_export.h:
+	* examples/handcrafted/BasicSP/BMDevice/BMDevice_stub_export.h:
+	* examples/handcrafted/BasicSP/BMDevice/BMDevice_svnt_export.h:
+
+	  Some standard files for thr BMDevice component
+
+Mon May 12 14:48:12 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* examples/handcrafted/Hello/run_simple_test.pl:
+	* examples/handcrafted/Hello/simple_client.cpp:
+	* examples/handcrafted/Hello/hello.mpc: Added a test client
+	  program and perl script to test the HelloWorld component using
+	  Simple_Component_Server.
+
+Mon May 12 14:00:57 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* examples/handcrafted/BasicSP/BasicSP.idl
+	* examples/handcrafted/BasicSP/BasicSP.mpc
+	* examples/handcrafted/BasicSP/BasicSPE.idl
+	* examples/handcrafted/BasicSP/BasicSP_stub_export.h
+	* examples/handcrafted/BasicSP/BasicSP_svnt_export.h
+	* examples/handcrafted/BasicSP/README
+	* examples/handcrafted/BasicSP/BMClosedED/BMClosedED.idl
+	* examples/handcrafted/BasicSP/BMDevice/BMDevice.idl
+	* examples/handcrafted/BasicSP/BMDisplay/BMDisplay.idl
+	* examples/handcrafted/BasicSP/EC/EC.idl
+	* examples/handcrafted/BasicSP/EC/README
+
+	  A framework on which the new BasicSP would be developed.
+
+Mon May 12 13:34:16 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* README: Updated the list of TAO librearies CIAO depends on.
+
+	* tools/Assembly_Deployer/Assembly_Service_Impl.h: Fixed
+	  mismatched comments. :)
+
+	* tools/Simple_Component_Server/Simple_Component_Server.cpp:
+	* tools/Simple_Component_Server/Simple_Component_Server.mpc:
+	* tools/Simple_Component_Server/Simple_Server.idl:
+	* tools/Simple_Component_Server/Simple_Server_Stub_Export.h:
+	* tools/Simple_Component_Server/Simple_Server_i.cpp:
+	* tools/Simple_Component_Server/Simple_Server_i.h:
+	* tools/Simple_Component_Server/sample_client.cpp: Revamped the
+	  simple_component_server to make debugging a single component
+	  implementation a more direct process.  There's also a
+	  sample_client that can be used as a blueprint to interfact with
+	  the simple component server.
+
+Fri May 09 12:51:03 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* README: Updated the list of libraries that CIAO depends on,
+	  based on the recent subsetting effort in TAO.
+
+	* ciao/CCM_Core.mpc: Fixed several problems.
+
+Fri May  9 10:57:14 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ciao/Component_Base.idl: Removed references to the Notification
+	  services. They are not needed with 1.1.
+
+Fri May  9 10:54:47 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ciao/Container_Impl.cpp: Used .inout () while doing a deep copy
+	  so that the right operator= on  TAO_Unbounded_Sequence is
+	  invoked without any warning in g++.
+
+Wed May  7 17:24:46 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* examples/handcrafted/Display/RateGen/RateGen.mpc: Added new
+	  libraries and paths to them. This was forced due to the recent
+	  subestting in TAO.
+
+Wed May  7 17:09:45 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ciao/ComponentServer_Impl.cpp (configuration): Used .inout ()
+	  while doing a deep copy so that the right operator= on
+	  TAO_Unbounded_Sequence is invoked without any warning in g++.
+
+Wed May  7 16:41:42 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ciao/ComponentServer_Impl.cpp (remove_container): Fixed warnings
+	  with g++ builds.
+
+Wed May  7 16:36:15 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ciao/CCM_Core.mpc: Added missing libraries that were essential
+	  due to the subsetting effort.
+
+Wed May  7 16:22:59 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ciao/Container_Base.cpp: Fixed warnings with gcc.
+
+Tue May  6 12:47:26 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* examples/handcrafted/Display/NavDisplayGUI_exec/NavDisplayEIC.cpp:
+
+	  Changed all uses of ptr_arith_t to ptrdiff_t.  Addresses 64 bit
+	  platform issues.  Thanks to Steve Huston <shuston@riverace.com>
+	  for suggesting this change.
+
+Wed Apr 30 13:29:46 2003  Simon McQueen  <sm@prismtechnologies.com>
+
+        * tests/temp/assembly/assembly.dsw:
+        * tests/temp/assembly/client.dsp:
+        * tests/temp/assembly/server.dsp:
+
+          Files removed to prevent errors in the msvc 6 builds.
+
+Tue Apr 29 16:53:17 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* README: Added XML_Helpers to the list of "tools" that need to
+	  build to run CIAO.  Thanks to Diego Sevilla Ruiz
+	  <dsevilla@ditec.um.es> for pointing this out.
+
+Tue Apr 29 16:38:18 2003  Simon McQueen  <sm@prismtechnologies.com>
+
+	* tests/temp/assembly/client.dsp:
+	* tests/temp/assembly/client.dsp:
+	  Fixed build VCpp6 Release error.
+
+Mon Apr 28 21:43:01 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* examples/handcrafted/Display/RateGen/RateGen.mpc: Added missing
+	  library path dependencies.  I'm not sure what has changed
+	  because they used to work just fine. :)
+
+Mon Apr 28 21:33:19 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* docs/templates/CIAO_Glue_Session_Template.cpp:
+	* docs/templates/CIAO_Glue_Session_Template.h:
+	* docs/templates/CIAO_Glue_Session_Template.inl:
+	* examples/handcrafted/Display/GPS/GPS_svnt.cpp:
+	* examples/handcrafted/Display/GPS/GPS_svnt.h:
+	* examples/handcrafted/Display/GPS/GPS_svnt.inl:
+	* examples/handcrafted/Display/NavDisplay/NavDisplay_svnt.cpp:
+	* examples/handcrafted/Display/NavDisplay/NavDisplay_svnt.h:
+	* examples/handcrafted/Display/RateGen/RateGen_svnt.cpp:
+	* examples/handcrafted/Display/RateGen/RateGen_svnt.h:
+	* examples/handcrafted/Display/RateGen/RateGen_svnt.inl: Fixed
+	  more misuses of "valuetype_ptr" bug.  Thanks to Tao Lu
+	  <tao.lu@vanderbilt.edu> for reporting them.
+
+Mon Apr 28 20:50:09 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* docs/templates/CIAO_Glue_Session_Template.cpp:
+	* docs/templates/CIAO_Glue_Session_Template.h:
+	* docs/templates/CIAO_Glue_Session_Template.inl:
+	* examples/handcrafted/Display/GPS/GPS_exec.cpp:
+	* examples/handcrafted/Display/GPS/GPS_exec.h:
+	* examples/handcrafted/Display/GPS/GPS_svnt.cpp:
+	* examples/handcrafted/Display/GPS/GPS_svnt.h:
+	* examples/handcrafted/Display/GPS/GPS_tracing_exec.cpp:
+	* examples/handcrafted/Display/GPS/GPS_tracing_exec.h:
+	* examples/handcrafted/Display/NavDisplay/NavDisplay_exec.cpp:
+	* examples/handcrafted/Display/NavDisplay/NavDisplay_exec.h:
+	* examples/handcrafted/Display/NavDisplay/NavDisplay_svnt.h:
+	* examples/handcrafted/Display/NavDisplay/NavDisplay_svnt.inl:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/NavDisplayGUI_exec.cpp:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/NavDisplayGUI_exec.h:
+	* examples/handcrafted/Display/RateGen/RateGen_svnt.cpp:
+	* examples/handcrafted/Display/RateGen/RateGen_svnt.h:
+	* tools/Assembly_Deployer/Assembly_Visitors.cpp:
+	* tools/ComponentServer/ComponentServer_test_client.cpp:
+	* tools/Daemon/Softpkg_Commands.cpp:
+	* tools/ServerActivator/ServerActivator_test_client.cpp: Changed
+	  all "[event]_ptr ev" and "[key]_ptr k" to "[event] *ev" and
+	  "[key] *k".  They all map to valuetypes and, according to the
+	  spec, there should not be _ptr typedef defined.  TAO_IDL
+	  recently removed the incorrect typedef so we need to remove
+	  their useage.  Thanks to Jeff Parsons for pointing this out.
+
+	* ciao/CCMCore.dsw:
+	* ciao/CIAO_Client.dsp:
+	* ciao/CIAO_Container.dsp:
+	* ciao/CIAO_Server.dsp:
+	* examples/handcrafted/Hello/client.dsp:
+	* examples/handcrafted/Hello/hello.dsw:
+	* examples/handcrafted/Hello/hello_executors.dsp:
+	* examples/handcrafted/Hello/hello_servants.dsp:
+	* examples/handcrafted/Hello/hello_stub.dsp:
+	* tools/ComponentServer/ComponentServer.dsp:
+	* tools/ComponentServer/ComponentServer.dsw:
+	* tools/ComponentServer/ComponentServer_test_client.dsp:
+	* tools/ServerActivator/ServerActivator.dsp:
+	* tools/ServerActivator/ServerActivator.dsw:
+	* tools/ServerActivator/ServerActivator_test_client.dsp:
+	* tools/Simple_Component_Server/Simple_Component_Server.dsw:
+	* tools/Simple_Component_Server/Simple_Component_Server.dsp:
+	  Removed all vc6 dsp files.  They confused the msvc nightly build
+	  script.  The script doesn't seem to parse the mpc generated dsp
+	  files correctly and their build order are all messed up.
+	  Besides, we only maintain mpc files in CIAO now.
+
+Mon Apr 28 19:39:00 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* README: Added the root README file to provide some instructions
+	  on how to play with CIAO.  Thanks to Diego Sevilla Ruiz
+	  <dsevilla@ditec.um.es> for motivating me to update the old
+	  README file and add it into the repo.
+
+Mon Apr 28 16:49:39 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tools/ComponentServer/ComponentServer.cpp (main): Fixed a gcc
+	  compilation error.  Thanks to Tao Lu <tao.lu@dre.vanderbilt.edu>
+	  for reporting this.
+
+Fri Apr 25 10:39:26 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* examples/handcrafted/Display/NavDisplayGUI_exec/worldmap1.xpm:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/MapView.cpp:
+	  Andrey changed the implementation of MapView to embedded the
+	  world map in the DLL as I was having some difficulty loading the
+	  gif file at runtime.  Thanks to Andrey Nechypurenko for fixing
+	  it and sending us the patch.
+
+Tue Apr 22 23:07:06 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* examples/handcrafted/Display/RateGen/RateGen.cidl: Added this
+	  cidl example.
+
+	* ciao/Client_init.h:
+	* ciao/Cookies.h:
+	* ciao/Server_init.h:
+	* examples/handcrafted/Display/NavDisplay/NavDisplay.idl:
+	* examples/handcrafted/Display/NavDisplay/NavDisplayE.idl:
+	* examples/handcrafted/Display/NavDisplay/NavDisplay_svnt.h:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/NavDisplayGUI_exec.h:
+	* tools/Daemon/CIAO_Daemon.cpp:
+	* tools/Daemon/Daemon.idl:
+	* tools/ServerActivator/ServerActivator.cpp:
+	* tools/Simple_Component_Server/Simple_Component_Server.cpp:
+	* tools/XML_Helpers/Assembly_Handlers.h:
+	* tools/XML_Helpers/Assembly_Spec.h:
+	* tools/XML_Helpers/Softpkg_Handlers.h:
+	* tools/XML_Helpers/XML_Utils.h: Fixed fuzz errors.
+
+	* examples/handcrafted/Display/RateGen/RateGen_comp.idl: Removed
+	  this unused file.
+
+Mon Apr 21 15:36:06 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* *: Merged with main trunk.
+
+Wed Apr 16 22:56:32 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	  The followings are fixes to make CIAO to compile and work on
+	  Linux.
+
+	* bin/generate_component_mpc.pl:
+	* examples/handcrafted/Display/HUDisplay.mpc:
+	* examples/handcrafted/Display/GPS/GPS.mpc:
+	* examples/handcrafted/Display/NavDisplay/NavDisplay.mpc:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/NavDisplayGUI.mpc:
+	* examples/handcrafted/Display/RateGen/RateGen.mpc:
+	* examples/handcrafted/Hello/hello.mpc:
+	* tools/Assembly_Deployer/Assembly_Deployer.mpc: Reordered the
+	  source file listing so that IDL files will always be compiled
+	  before other files to avoid non-existing generated file
+	  problem.  Also added missing library dependencies to some MPC
+	  files.
+
+	* examples/handcrafted/Display/HUDisplay_svnt.cpp:
+	* examples/handcrafted/Display/HUDisplay_svnt.inl:
+	* examples/handcrafted/Display/GPS/GPSE.idl:
+	* examples/handcrafted/Display/GPS/GPS_exec.cpp:
+	* examples/handcrafted/Display/GPS/GPS_exec.h:
+	* examples/handcrafted/Display/GPS/GPS_svnt.cpp:
+	* examples/handcrafted/Display/GPS/GPS_tracing_exec.cpp:
+	* examples/handcrafted/Display/GPS/GPS_tracing_exec.h:
+	* examples/handcrafted/Display/NavDisplay/NavDisplay_exec.cpp:
+	* examples/handcrafted/Display/NavDisplay/NavDisplay_exec.h:
+	* examples/handcrafted/Display/NavDisplay/NavDisplay_svnt.cpp:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/NavDisplayGUI_exec.cpp:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/NavDisplayGUI_exec.h:
+	* examples/handcrafted/Display/RateGen/RateGenE.idl:
+	* examples/handcrafted/Display/RateGen/RateGen_exec.cpp:
+	* examples/handcrafted/Display/RateGen/RateGen_exec.h:
+	* examples/handcrafted/Display/RateGen/RateGen_svnt.cpp:
+	* examples/handcrafted/Display/RateGen/client.cpp:
+	* examples/handcrafted/Display/RateGen/controller.cpp:
+	* examples/handcrafted/Hello/client.cpp:
+	* examples/handcrafted/Hello/helloE.idl:
+	* examples/handcrafted/Hello/hello_servants.cpp:
+	* tools/Assembly_Deployer/Assembly_Impl.cpp:
+	* tools/Assembly_Deployer/Assembly_Manager.cpp:
+	* tools/Assembly_Deployer/Assembly_Visitors.h:
+	* tools/Assembly_Deployer/Assembly_Visitors.inl:
+	* tools/ComponentServer/ComponentServer.cpp:
+	* tools/ComponentServer/ComponentServer_test_client.cpp:
+	* tools/Daemon/controller_i.cpp:
+	* tools/Daemon/controller_i.h:
+	* tools/ServerActivator/ServerActivator_test_client.cpp:
+	* tools/XML_Helpers/Assembly_Handlers.cpp:
+	* tools/XML_Helpers/Assembly_Spec.cpp:
+	* tools/XML_Helpers/Assembly_Spec.inl:
+	* tools/XML_Helpers/Cascadable_DocHandler.cpp:
+	* tools/XML_Helpers/Softpkg_Handlers.cpp: Fixed compilation errors
+	  and warnings.  They include
+
+	  Using a _var in places where a _ptr is expected.
+
+	  Incorrect Capitalization of file names.
+
+	  Unused variables warnings.
+
+	  Exception throw specification mis-matches.
+
+	* docs/templates/CIAO_Glue_Session_Template.cpp: Propagated
+	  previous fixes into the tempate code.
+
+	* ciao/Container_Base.cpp: Removed a redundant ACE_INLINE decl.
+
+Tue Apr 15 17:07:52 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tools/XML_Helpers/Assembly_Spec.h:
+	* tools/XML_Helpers/Softpkg_Handlers.h:
+	* tools/XML_Helpers/XMLHelpers.mpc:
+	* tools/XML_Helpers/XML_Utils.h:
+	* tools/XML_Helpers/XML_Helpers_Export.h: Refactored these files
+	  to make them into a library.
+
+	* tools/XML_Helpers/XML_Helpers.dsw:
+	* tools/XML_Helpers/Helper_Test.dsp:
+	* tools/Daemon/CIAO_Daemon.dsp:
+	* tools/Daemon/Daemon.dsw:
+	* tools/Daemon/DaemonController.dsp: Removed these project files
+	  and depend solely on MPC generated files.
+
+	* tools/Assembly_Deployer/Assembly_Deployer.mpc:
+	* tools/Daemon/Daemon.mpc: Updated MPC files to link with the new
+	  XML_Helpers library.
+
+Tue Apr 15 11:07:36 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ciao/Daemon.idl:
+	* ciao/Daemon_Impl.h:
+	* ciao/Daemon_Impl.inl:
+	* ciao/Daemon_Impl.cpp:
+	* tools/Daemon/Daemon.idl:
+	* tools/Daemon/Daemon_Impl.h:
+	* tools/Daemon/Daemon_Impl.inl:
+	* tools/Daemon/Daemon_Impl.cpp:
+	* ciao/CCM_Core.mpc:
+	* ciao/CIAO_Server.dsp:
+	* tools/Daemon/CIAO_Daemon.dsp:
+	* tools/Daemon/Daemon.mpc:
+	* tools/Daemon/DaemonController.dsp: Moved Daemon idl file and
+	  implementations out of CIAO_Server library into Daemon
+	  implemenation.
+
+	  Removed HomeRegistrar related files from the projects of the
+	  CIAO_Server library.  They need to be moved a a proper place in
+	  the near future.
+
+	* docs/todo.html:  Document other refactoring needed in the
+	  CCM_Core libraries.
+
+Mon Apr 14 17:06:37 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* examples/handcrafted/Display/HUDisplay_svnt.cpp:
+	* examples/handcrafted/Display/HUDisplay_svnt.h:
+	* examples/handcrafted/Display/GPS/GPS_exec.cpp:
+	* examples/handcrafted/Display/GPS/GPS_exec.h:
+	* examples/handcrafted/Display/GPS/GPS_svnt.cpp:
+	* examples/handcrafted/Display/GPS/GPS_svnt.h:
+	* examples/handcrafted/Display/GPS/GPS_tracing_exec.cpp:
+	* examples/handcrafted/Display/GPS/GPS_tracing_exec.h:
+	* examples/handcrafted/Display/NavDisplay/NavDisplay_exec.cpp:
+	* examples/handcrafted/Display/RateGen/RateGen_exec.cpp:
+	* examples/handcrafted/Display/RateGen/RateGen_exec.h:
+	* examples/handcrafted/Display/RateGen/client.cpp:
+	* examples/handcrafted/Display/RateGen/controller.cpp:
+	* examples/handcrafted/Display/RateGen/run_test.pl:
+	* examples/handcrafted/Display/descriptors/NOTE.txt: Updated
+	  docuemntation.  Changed to inherit Pulse_Handler from
+	  ACE_Task_Base.  Reworked controller.cpp so that it won't look
+	  like the process that actually generates the events.
+
+Mon Apr 14 14:57:51 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* examples/handcrafted/Display/RateGen/controller.cpp: Changed to
+	  perform only one action in each exection of this program.  I.e.,
+	  it either switch on or off the RateGen component and exit
+	  immediately.  This is to avoid the mis-conception that the
+	  controller actually generates the Rate.
+
+Sat Apr 12 12:36:08 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* CIDLC/parser_examples/cidl/cidl.vcproj:
+	* CIDLC/parser_examples/idl2/idl2.vcproj:
+	* CIDLC/parser_examples/idl3/idl3.vcproj: Changed the extra
+	  include paths from:
+
+	    ..,../spirit-1.3.0,../spirit-1.3.0/miniboost
+
+	  to:
+
+	    ..,$(SPIRIT_DIR),$(SPIRIT_DIR)/miniboost
+
+	  to be consistent with the MPC files and to decouple Spirit from
+	  CIAO's directory strucutre.
+
+Sat Apr 12 10:48:13 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* docs/templates/CIAO_Glue_Session_Template.cpp:
+	* docs/templates/CIAO_Glue_Session_Template.inl: Incorporated
+	  changes for fixing gcc compilation warnings.
+
+	* tools/Assembly_Deployer/Assembly_Manager.cpp:
+	* tools/ComponentServer/ComponentServer.cpp:
+	* tools/ComponentServer/ComponentServer_test_client.cpp:
+	* tools/Daemon/CIAO_Daemon.cpp:
+	* tools/Simple_Component_Server/Simple_Component_Server.cpp: Added
+	  misiing newlines in usage messages.
+
+Sat Apr 12 01:25:35 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* CIDLC/parser_examples/README:
+	* CIDLC/parser_examples/cidl/cidl.mpc:
+	* CIDLC/parser_examples/idl2/idl2.mpc:
+	* CIDLC/parser_examples/idl3/idl3.mpc: Added new MPC files to take
+	  advantage of MPC/MWC tool.  Updated the README to provide some
+	  minimal instructions.
+
+Tue Apr  8 23:10:43 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * CIDLC/parser_examples/README:
+        * CIDLC/parser_examples/parser_examples.sln:
+        * CIDLC/parser_examples/cidl/cidl.cpp:
+        * CIDLC/parser_examples/cidl/cidl.vcproj:
+        * CIDLC/parser_examples/cidl/cidl_grammar.cpp:
+        * CIDLC/parser_examples/cidl/cidl_grammar.h:
+        * CIDLC/parser_examples/cidl/hello.cidl:
+        * CIDLC/parser_examples/idl2/idl2.cpp:
+        * CIDLC/parser_examples/idl2/idl2.vcproj:
+        * CIDLC/parser_examples/idl2/idl2_grammar.cpp:
+        * CIDLC/parser_examples/idl2/idl2_grammar.h:
+        * CIDLC/parser_examples/idl2/test_idl2.idl:
+        * CIDLC/parser_examples/idl3/idl3.cpp:
+        * CIDLC/parser_examples/idl3/idl3.vcproj:
+        * CIDLC/parser_examples/idl3/idl3_grammar.cpp:
+        * CIDLC/parser_examples/idl3/idl3_grammar.h:
+        * CIDLC/parser_examples/idl3/test_idl3.idl:
+
+          Added parser examples (IDL2, IDL3, and CIDL) using the Spirit
+          parser.
+
+Tue Apr 08 19:42:16 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* examples/handcrafted/Display/GPS/GPS_tracing_exec.h: Fixed
+	  a class name mismatch.
+
+Mon Apr 07 21:20:37 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ciao/ServerActivator_Impl.cpp: Fixed a couple of compilation
+	  warnings with gcc.
+
+	* ciao/CIAO_Client.dsp:
+	* ciao/CIAO_Container.dsp:
+	* ciao/CIAO_Server.dsp: Turned on RTTI to sync up with the new Any
+	  implementation.
+
+	* ciao/CIAO_common.h:
+	* ciao/Cookies.cpp: Fixed the use of old CORBA_* types.  They are
+	  no longer available in the newer version of ACE/TAO.
+
+Sun Apr 06 20:36:39 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* examples/handcrafted/Display/CIAO_Installation_Data.ini:
+	* examples/handcrafted/Display/HUDisplay.cad:
+	* examples/handcrafted/Display/GPS/GPS.csd:
+	* examples/handcrafted/Display/GPS/GPS.ssd:
+	* examples/handcrafted/Display/NavDisplay/NavDisplay.csd:
+	* examples/handcrafted/Display/NavDisplay/NavDisplay.ssd:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/NavDisplayGUI.csd:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/NavDisplayGUI.ssd:
+	* examples/handcrafted/Display/RateGen/RateGen.csd:
+	* examples/handcrafted/Display/RateGen/RateGen.ssd: Removed these
+	  files as they have already been moved to the
+	  examples/handcrafted/Display/descriptors/ subdirectory.
+
+	* examples/handcrafted/Display/NOTE: Updated obsolete notes.
+
+	  Thanks to Andrey Nechypurenko
+	  <Andrey.Nechypurenko@mchp.siemens.de> for the following
+	  changes.  He reported, motivated or sent patches for them.
+
+	* examples/handcrafted/Display/descriptors/NOTE.txt: Fixed several
+	  typos.
+
+	* examples/handcrafted/Display/descriptors/DuelDisplay.cad:
+	* examples/handcrafted/Display/descriptors/GPS_tracing.csd:
+	* examples/handcrafted/Display/descriptors/HUDisplayGUI.cad:
+	* examples/handcrafted/Display/descriptors/RemoteDisplayGUI.cad:
+	  Updated these assembly descriptors to use the new GPS component
+	  that emulate a trace (instead of the random coordinates).
+
+	* examples/handcrafted/Display/NavDisplay/client.cpp:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/run_test.pl:
+	  Removed these testing artifacts because NavDisplay component
+	  requires other component to function properly.
+
+	* tools/XML_Helpers/Assembly_Spec.inl: Fixed VC7.1 compilation
+	  error.
+
+	* examples/handcrafted/Display/GPS/GPS.mpc:
+	* examples/handcrafted/Display/GPS/GPS_tracing_exec.cpp:
+	* examples/handcrafted/Display/GPS/GPS_tracing_exec.h: Added a
+	  new implementation for the GPS component.  This implementation
+	  simulates coordinates of a trace instead of some random
+	  positions.
+
+	* examples/handcrafted/Display/NavDisplay/NavDisplay.mpc:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/DetailView.cpp:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/MapView.cpp:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/NavDisplayGUI_exec.cpp:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/NavDisplayGUI_exec.h:
+	  Please find in attachment slightly modified version of
+	  NavDisplayGUI. I have modified it slightly mainly in order to
+	  let the GUI component to find background and animation images
+	  either based on ACE_ROOT or using ../NavDisplayGUI_exec/.
+
+	* examples/handcrafted/Display/NavDisplayGUI_exec/README: Removed
+	  the mentioning of run_test.pl.  It's no longer valid.
+
+Sat Apr 05 20:08:27 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ciao/CCM_Deployment.idl:
+	* ciao/Component_Base.idl:
+	  The operation Components::Deployment::Assembly::build can throw
+	  CreateFailure exception.  It was missing in the IDL files.
+
+	* ciao/Server_init.cpp:
+	  Register OBV factory for CIAO::Cookie also.
+
+	* docs/templates/CIAO_Glue_Session_Template.cpp:
+	  Made sure we duplicate the object reference before adding them
+	  to subscriber/connection active maps.
+
+	* examples/handcrafted/Display/HUDisplay.idl:
+	* examples/handcrafted/Display/HUDisplay.mpc:
+	* examples/handcrafted/Display/HUDisplay_svnt.h:
+	* examples/handcrafted/Display/HUDisplay_svnt.inl:
+	* examples/handcrafted/Display/GPS/GPS_exec.cpp:
+	* examples/handcrafted/Display/GPS/GPS_exec.h:
+	* examples/handcrafted/Display/GPS/GPS_svnt.cpp:
+	* examples/handcrafted/Display/NavDisplay/NavDisplay_exec.cpp:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/NavDisplayGUI_exec.cpp:
+	* examples/handcrafted/Display/RateGen/RateGen.mpc:
+	* examples/handcrafted/Display/RateGen/RateGen_svnt.cpp:
+	  Updated the example to support 2-dimentional position interface.
+	  Also fixed the reference counting problem in the servant glue
+	  code.
+
+
+	* examples/handcrafted/Display/RateGen/controller.cpp:
+	  Added a new
+
+	* examples/handcrafted/Display/descriptors/HUDisplay.cad:
+	* examples/handcrafted/Display/descriptors/HUDisplayGUI.cad:
+	* examples/handcrafted/Display/descriptors/RemoteDisplay.cad:
+	* examples/handcrafted/Display/descriptors/RemoteDisplayGUI.cad:
+	  Added variety of different composition example.  See NOTE.txt
+	  under the same directory for more information.
+
+	* examples/handcrafted/Display/descriptors/test.dat:
+	  Added a "Remote" entry so showcase how to deploy a system across
+	  several machines.
+
+	* tools/Assembly_Deployer/Assembly_Deployer.cpp:
+	* tools/Assembly_Deployer/Assembly_Deployer.mpc:
+	* tools/Assembly_Deployer/Assembly_Impl.cpp:
+	* tools/Assembly_Deployer/Assembly_Impl.h:
+	* tools/Assembly_Deployer/Assembly_Manager.cpp:
+	* tools/Assembly_Deployer/Assembly_Visitors.h:
+	  Added support for establishing connections according to
+	  Assembly_Spec.
+
+	* tools/Assembly_Deployer/Assembly_Service.idl:
+	* tools/Assembly_Deployer/Assembly_Service_Impl.cpp:
+	* tools/Assembly_Deployer/Assembly_Service_Impl.h:
+	  Added a simple interface in an attempt to solve the unreliable
+	  shutdown problem.
+
+	* tools/XML_Helpers/Assembly_Handlers.cpp:
+	* tools/XML_Helpers/Assembly_Handlers.h:
+	* tools/XML_Helpers/Assembly_Handlers.inl:
+	* tools/XML_Helpers/Assembly_Spec.cpp:
+	* tools/XML_Helpers/Assembly_Spec.h:
+	  Fixed "connectevent" parsing.  I had the "source" and
+	  "destination" interface reversed.
+
+Fri Apr 04 22:40:11 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* examples/handcrafted/Display/descriptors/*: Moved all XML
+	  descriptors and deployment configuration into this newly created
+	  subdirectory to simply procedures to test this example.
+
+	* examples/handcrafted/Display/NavDisplay/NavDisplay_exec.cpp:
+	  Changed to thow a BAD_INV_ORDER exception is the receptacle is
+	  not connected instead of a MSVC structural exception.
+
+	* tools/Daemon/Daemon.mpc:
+	* tools/Daemon/DaemonController.dsp:
+	* tools/XML_Helpers/Assembly_Handlers.cpp:
+	* tools/XML_Helpers/Assembly_Spec.cpp:
+	* tools/XML_Helpers/Assembly_Spec.h:
+	* tools/XML_Helpers/Assembly_Spec.inl:
+	* tools/Assembly_Deployer/Assembly_Deployer.cpp:
+	* tools/Assembly_Deployer/Assembly_Deployer.mpc:
+	* tools/Assembly_Deployer/Assembly_Impl.cpp:
+	* tools/Assembly_Deployer/Assembly_Impl.h:
+	* tools/Assembly_Deployer/Assembly_Impl.inl:
+	* tools/Assembly_Deployer/Assembly_Manager.cpp:
+	* tools/Assembly_Deployer/Assembly_Visitors.h:
+	* tools/Assembly_Deployer/Assembly_Visitors.inl:
+	* tools/Assembly_Deployer/Deployment_Configuration.cpp:
+	* tools/Assembly_Deployer/Deployment_Configuration.h:
+	* tools/Assembly_Deployer/Deployment_Configuration.inl: Added more
+	  support for component installation when building an Assembly.
+
+Thu Apr 03 15:08:20 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ciao/Assembly_Impl.*:
+	* tools/Assembly_Deployer/Assembly_Impl.*: Moved the Assembly
+	  implementaiton files to the tools/Assembly_Deployer/ directory.
+
+	* ciao/CCM_Core.mpc:
+	* ciao/CIAO_Server.dsp: Removed Assembly_Impl.*.
+
+Thu Apr 03 13:11:49 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tools/XML_Helpers/Assembly_Spec.h:
+	* tools/XML_Helpers/Assembly_Handlers.h:
+	* tools/XML_Helpers/Assembly_Handlers.cpp: Added support for parsing
+	  component and home registering info.  Otherwise, it'd be hard to
+	  use a composed application.
+
+Wed Apr 02 17:08:00 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tools/XML_Helpers/Assembly_Handlers.cpp:
+	* tools/XML_Helpers/Assembly_Handlers.h:
+	* tools/XML_Helpers/Assembly_Handlers.inl:
+	* tools/XML_Helpers/Assembly_Spec.cpp:
+	* tools/XML_Helpers/Assembly_Spec.h:
+	* tools/XML_Helpers/Assembly_Spec.inl:
+	* tools/XML_Helpers/Helper_Test.dsp: Added implementations for
+	  handling componentassembly XML documents and building the
+	  assembly specification information.  These handlers currently
+	  process only "crucial" information needed to get a system up and
+	  running, i.e., they do not yet extract all types of information
+	  in a componentassembly document.
+
+	  Also important is that all XML handlers in CIAO assume all XML
+	  documents they process are valid and well-formed.  ACEXML
+	  currently does not validate XML document yet.  Therefore, you
+	  need to validate the XML documents using other XML parser (such
+	  as msxml) shall CIAO's assembly parsing behave strangely as the
+	  handlers assume a validator has already taken up most of the
+	  checking responsibility.
+
+	* tools/XML_Helpers/Softpkg_Handlers.cpp:
+	* tools/XML_Helpers/Softpkg_Handlers.h:
+	* tools/XML_Helpers/Softpkg_Handlers.inl:
+	* tools/XML_Helpers/XML_Utils.cpp:
+	* tools/XML_Helpers/XML_Utils.h: Added a new
+	  parse_componentassembly utility function and moved some of the
+	  helper functions out of Softpkg_Handlers.
+
+	* tools/XML_Helpers/main.cpp:
+
+	* bin/generate_component_mpc.pl: Added dependent library to the
+	  list of libraries client program links to.
+
+	* docs/XML/componentassembly.dtd: Fixed a typo in DTD definition.
+
+	* examples/handcrafted/Display/HUDisplay.cad: Added a
+
+	* examples/handcrafted/Display/NavDisplay/NavDisplay.mpc:
+	* examples/handcrafted/Display/NavDisplay/client.cpp:
+	* examples/handcrafted/Display/NavDisplay/run_test.pl: Added a
+	  client program to test the component.
+
+	* examples/handcrafted/Display/NavDisplayGUI_exec/AddNavUnitCmd.cpp:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/AddNavUnitCmd.h:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/Command.h:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/DetailView.cpp:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/DetailView.h:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/MapView.cpp:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/MapView.h:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/NavDisplayEIC.cpp:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/NavDisplayGUI.csd:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/NavDisplayGUI.mpc:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/NavDisplayGUI.ssd:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/NavDisplayGUI_exec.cpp:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/NavDisplayGUI_exec.h:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/NavUnit.cpp:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/NavUnit.h:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/NodeItem.cpp:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/NodeItem.h:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/QuitCmd.cpp:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/QuitCmd.h:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/README:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/RootPanel.cpp:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/RootPanel.h:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/UpdatePositionCmd.cpp:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/UpdatePositionCmd.h:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/Worker.cpp:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/Worker.h:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/moc_DetailView.cpp:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/moc_MapView.cpp:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/moc_NodeItem.cpp:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/moc_RootPanel.cpp:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/run_test.pl:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/trolltech.gif:
+	* examples/handcrafted/Display/NavDisplayGUI_exec/worldmap1.gif:
+	  Added a Qt GUI based component to showcase how we can
+	  reconfigure a system using different component easily.  Thanks
+	  to Andrey Nechypurenko <andreynech@mchp.siemens.com> for
+	  contributing the implementation.
+
+	* examples/handcrafted/Display/CIAO_Installation_Data.ini: Added
+	  deployment information for the new GUI NavDisplay component
+	  implementation.
+
+	* examples/handcrafted/Hello/client.dsp:
+	* examples/handcrafted/Hello/hello_executors.dsp:
+	* examples/handcrafted/Hello/hello_servants.dsp:
+	* examples/handcrafted/Hello/hello_stub.dsp:  Hmm, I probably
+	  checked in the MPC/MWC generated project accidentally.  :)
+
+Mon Mar 24 16:17:21 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* examples/handcrafted/Display/GPS/GPS_svnt.cpp:
+	* examples/handcrafted/Display/NavDisplay/NavDisplay_svnt.cpp:
+	  Added implementation for servant factory methods.  Thanks to
+	  Andrey Nechypurenko <andreynech@yahoo.com> for reporting this.
+
+Fri Mar 21 15:51:57 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* docs/new_components.html: Revised naming convention for
+	  user-defined component executor impl IDL.
+
+	* bin/generate_component_mpc.pl: Added an option for adding
+	  user-defined component executor impl IDL automatically,
+	  according the the naming convention.  Fixed the dependencies to
+	  "dependent" libraries.
+
+	* examples/handcrafted/Display/RateGen/RateGen.csd:
+	* examples/handcrafted/Display/RateGen/RateGen.ssd: Simplified the
+	  XML descriptors.
+
+	* examples/handcrafted/Display/RateGen/RateGen.mpc:
+	* examples/handcrafted/Display/RateGen/RateGenEI.idl:
+	* examples/handcrafted/Display/RateGen/RateGen_exec.h: Fixed
+	  dependencies and naming convention.
+
+	* examples/handcrafted/Display/GPS/GPS.csd:
+	* examples/handcrafted/Display/GPS/GPS.mpc:
+	* examples/handcrafted/Display/GPS/GPS.ssd:
+	* examples/handcrafted/Display/GPS/GPSEI.idl:
+	* examples/handcrafted/Display/GPS/GPS_exec.cpp:
+	* examples/handcrafted/Display/GPS/GPS_exec.h:
+
+	* examples/handcrafted/Display/NavDisplay/NavDisplay.csd:
+	* examples/handcrafted/Display/NavDisplay/NavDisplay.mpc:
+	* examples/handcrafted/Display/NavDisplay/NavDisplay.ssd:
+	* examples/handcrafted/Display/NavDisplay/NavDisplayEI.idl:
+	* examples/handcrafted/Display/NavDisplay/NavDisplay_exec.cpp:
+	* examples/handcrafted/Display/NavDisplay/NavDisplay_exec.h:
+
+	* examples/handcrafted/Display/CIAO_Installation_Data.ini: Added
+	  component implementaions for GPS and NavDisplay.
+
+Thu Mar 20 21:50:07 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ciao/ComponentInstallation_Impl.cpp: Added a more comprehensive
+	  error printout.
+
+	* docs/index.html: Fixed a broken link.
+
+	* docs/templates/CIAO_Glue_Session_Template.cpp:
+	* docs/templates/CIAO_Glue_Session_Template.h: Added the servant
+	  factory entry point function that I missed.
+
+	* examples/handcrafted/Display/RateGen/RateGen_svnt.cpp:
+	* examples/handcrafted/Display/RateGen/RateGen_svnt.h: Fixed up
+	  the servant DLL entry point.
+
+	* examples/handcrafted/Display/RateGen/RateGen.mpc:
+	* examples/handcrafted/Display/RateGen/RateGen_comp.idl:
+	* examples/handcrafted/Display/RateGen/RateGen_exec.cpp:
+	* examples/handcrafted/Display/RateGen/RateGen_exec.h: Added the
+	  actual implementation for component executor.
+
+	* examples/handcrafted/Display/CIAO_Installation_Data.ini: Added
+	  this deployment datafile.  This file will contain information
+	  describing all the components used in this example.
+
+	* examples/handcrafted/Display/RateGen/RateGen.csd:
+	* examples/handcrafted/Display/RateGen/RateGen.ssd: Added XML
+	  component descriptors.
+
+	* examples/handcrafted/Display/RateGen/client.cpp: Added a test
+	  client program.
+
+	* examples/handcrafted/Display/RateGen/run_test.pl: Added a test
+	  script to test out this single component.
+
+	* tools/ComponentServer/ComponentServer_test_client.cpp: Changed
+	  the client program to debug RateGen component.  We need to make
+	  this test client more robust so we can use it to debug different
+	  component implementations more easily.
+
+Tue Mar 18 16:36:07 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* bin/generate_component_mpc.pl:
+	* examples/handcrafted/Display/HUDisplay.mpc:
+	* examples/handcrafted/Display/GPS/GPS.mpc:
+	* examples/handcrafted/Display/NavDisplay/NavDisplay.mpc:
+	* examples/handcrafted/Display/RateGen/RateGen.mpc: Updated the
+	  script and regenerated mpc file to record the original options
+	  used to generate the MPC files.
+
+	* examples/handcrafted/Display/NOTE: Added more info on how to
+	  generate Makefiles/Projects for this example.
+
+	* examples/handcrafted/Display/RateGen/RateGen.idl: Fixed a typo.
+
+	* examples/handcrafted/Display/RateGen/RateGen_Impl.idl:
+	* examples/handcrafted/Display/RateGen/RateGen_exec.cpp:
+	* examples/handcrafted/Display/RateGen/RateGen_exec.h: Added the
+	  actual component and home implementations.  This particular
+	  component implementation shows how to suppoort SessionComponent
+	  interface in a component implementation (you will need to do
+	  that for any non-trivial component implementations that require
+	  to access component-specific context.)
+
+Tue Mar 18 12:03:29 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* examples/handcrafted/Hello/hello_servants.cpp:
+	* examples/handcrafted/Hello/hello_servants.h: Renamed various
+	  "_ciao_deactivate*" operations to "ciao_passivate*" to be more
+	  consistent with the CC* opertions.
+
+	* docs/templates/CIAO_Glue_Session_Template.cpp:
+	* docs/templates/CIAO_Glue_Session_Template.h:
+	* docs/templates/CIAO_Glue_Session_Template.inl:
+	* examples/handcrafted/Display/GPS/GPS_svnt.cpp:
+	* examples/handcrafted/Display/GPS/GPS_svnt.h:
+	* examples/handcrafted/Display/GPS/GPS_svnt.inl:
+	* examples/handcrafted/Display/NavDisplay/NavDisplay_svnt.cpp:
+	* examples/handcrafted/Display/NavDisplay/NavDisplay_svnt.h:
+	* examples/handcrafted/Display/NavDisplay/NavDisplay_svnt.inl:
+	* examples/handcrafted/Display/RateGen/RateGen_svnt.cpp:
+	* examples/handcrafted/Display/RateGen/RateGen_svnt.h:
+	* examples/handcrafted/Display/RateGen/RateGen_svnt.inl:
+	  Propagated the SessionComponent opertion support to CIDL
+	  templates and the multiple component example "generated" files.
+
+Mon Mar 17 23:10:47 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ciao/Container_Base.cpp:
+	* ciao/Container_Base.h:
+	* examples/handcrafted/Hello/hello_servants.cpp:
+	* examples/handcrafted/Hello/hello_servants.h: Added support for
+	  SessionComponent specific operations,
+	  ccm_{activate,passivate,remove}.  These changes still need to be
+	  propagated to the CIDL templates.
+
+	  We also need to review how Deployment::Container and CCMHome
+	  manage the lifecyles of homes, components, and facet servants.
+
+Sun Mar 16 21:57:10 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* docs/templates/CIAO_Glue_Session_Template.h:
+	* docs/templates/CIAO_Glue_Session_Template.inl:
+	* examples/handcrafted/Display/GPS/GPS_svnt.h:
+	* examples/handcrafted/Display/GPS/GPS_svnt.inl:
+	* examples/handcrafted/Display/NavDisplay/NavDisplay_svnt.h:
+	* examples/handcrafted/Display/NavDisplay/NavDisplay_svnt.inl:
+	* examples/handcrafted/Display/RateGen/RateGen_svnt.cpp:
+	* examples/handcrafted/Display/RateGen/RateGen_svnt.h:
+	* examples/handcrafted/Display/RateGen/RateGen_svnt.inl: Added
+	  code to support SessionComponent::set_session_context operation
+	  and make sure the Context objects also inherit from
+	  TAO_Local_RefCounted_Object.
+
+	* examples/handcrafted/Hello/helloE.idl:
+	* examples/handcrafted/Hello/hello_executors.h:
+	* examples/handcrafted/Hello/hello_servants.cpp:
+	* examples/handcrafted/Hello/hello_servants.h: Changed to implement
+	  component specific context as a SessionContext, plus the
+	  aforementioned changes.
+
+Sun Mar 16 11:43:20 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* docs/ConfigValues.html:
+	* docs/index.html: Updated the main document entry page.  It is
+	  grossly outdated.
+
+	* tools/ComponentServer/ComponentServer.mpc:
+	* tools/Daemon/Daemon.mpc:
+	* tools/ServerActivator/ServerActivator.mpc:
+	* tools/XML_Helpers/XMLHelpers.mpc: Added more mpc files.
+
+Sat Mar 15 11:43:34 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ciao/Makefile:
+	* ciao/Makefile.client:
+	* ciao/Makefile.container:
+	* ciao/Makefile.server: Removed Makefiles.  I depend on MPC files
+	  exclusively at the moment.
+
+	* ciao/Assembly_Impl.cpp:
+	* ciao/Assembly_Impl.h:
+	* ciao/CCM_Core.mpc:
+	* ciao/Container_Base.cpp:
+	* ciao/Container_Base.h:
+	* ciao/Container_Impl.h:
+	* ciao/Daemon_Impl.h:
+	* ciao/Object_Set_T.cpp:
+	* ciao/ServerActivator_Impl.h: Fixed Linux build errors.  Some
+	  warnings are not fixed due to incomplete implementations and I
+	  want to make sure they got addressed in some future point.
+
+Fri Mar 14 23:19:52 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ciao/CCM_Core.mpc: Updated the core MPC file to reflect recent
+	  added files.
+
+Fri Mar 14 16:08:22 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* docs/todo.html: Recorded a compilation error in the generated
+	  code that I commented out for later "study."
+
+	* examples/handcrafted/Display/NavDisplay/NavDisplay.idl: Fixed a
+	  typo.
+
+	* examples/handcrafted/Display/NavDisplay/NavDisplayE.idl:
+	* examples/handcrafted/Display/NavDisplay/NavDisplay_svnt.cpp:
+	* examples/handcrafted/Display/NavDisplay/NavDisplay_svnt.h:
+	* examples/handcrafted/Display/NavDisplay/NavDisplay_svnt.inl:
+	  Added new "generated" code.
+
+	* docs/templates/CIAO_Glue_Session_Template.cpp:
+	* docs/templates/CIAO_Glue_Session_Template.h:
+	* docs/templates/CIAO_Glue_Session_Template.inl:
+	* docs/templates/Executor.idl: Updated templates based on the code
+	  they generated.
+
+Thu Mar 13 20:11:49 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* examples/handcrafted/Display/NavDisplay/NavDisplay.idl:
+	* examples/handcrafted/Display/GPS/GPS.idl:
+	* examples/handcrafted/Display/Configuration-0.png: Updated the
+	  port names so they make more sense in the context.  Thanks to
+	  Dave Sharp and Wendy Rolls for the suggestions.
+
+	* examples/handcrafted/Display/RateGen/RateGen_svnt.h: Added the
+	  missing factory entry point for the servant home.
+
+	* examples/handcrafted/Display/GPS/GPSE.idl:
+	* examples/handcrafted/Display/GPS/GPS_svnt.cpp:
+	* examples/handcrafted/Display/GPS/GPS_svnt.h:
+	* examples/handcrafted/Display/GPS/GPS_svnt.inl: Added new
+	  "generated" code.
+
+	* docs/templates/CIAO_Glue_Session_Template.cpp:
+	* docs/templates/CIAO_Glue_Session_Template.h:
+	* docs/templates/CIAO_Glue_Session_Template.inl:
+	* docs/templates/Executor.idl: Updated templates based on the code
+	  they generated (manually.  Did I mention how much fun it was to
+	  generate code manually?)
+
+Wed Mar 12 23:29:27 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* bin/generate_component_mpc.pl: Fixed an incomplete library
+	  expansion and added a flag to specify library path
+	  dependencies.
+
+	* docs/releasenotes.html: Updated the status of single component
+	  deployment capability.  I forgot to do that when it was done.
+
+	* examples/handcrafted/Display/NOTE: Added directions on how to
+	  generate various mpc files.
+
+	* examples/handcrafted/Display/GPS/GPS.mpc:
+	* examples/handcrafted/Display/NavDisplay/NavDisplay.mpc:
+	* examples/handcrafted/Display/RateGen/RateGen.mpc: Regenerated
+	  MPC files to fix incomplete dependent library names and to add
+	  library path dependencies.
+
+	* examples/handcrafted/Display/HUDisplay.idl:
+	* examples/handcrafted/Display/RateGen/RateGen.idl:
+	* examples/handcrafted/Display/HUDisplayE.idl:
+	* examples/handcrafted/Display/RateGen/RateGenE.idl: Moved the
+	  opmode interface definition from RateGen.idl back to
+	  HUDisplay.idl.  This interface is a supported interface of
+	  RateGen but it should be viewed as a shared interface.
+
+	* examples/handcrafted/Display/RateGen/RateGen_svnt.cpp:
+	* examples/handcrafted/Display/RateGen/RateGen_svnt.h:
+	* examples/handcrafted/Display/RateGen/RateGen_svnt.inl: Added
+	  more handcrafted servant glue code for RateGen component.
+
+	* docs/templates/CIAO_Glue_Session_Template.cpp:
+	* docs/templates/CIAO_Glue_Session_Template.h:
+	* docs/templates/CIAO_Glue_Session_Template.inl:
+	* docs/templates/Executor.idl:  Updated and fixed CIDL template
+	  code based on results from using these templates manually.
+
+Wed Mar 12 00:03:56 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* examples/handcrafted/Display/HUDisplay_svnt.h:
+	* examples/handcrafted/Display/HUDisplay_svnt.cpp: Added forgotten
+	  _get_component implementation.
+
+Tue Mar 11 22:47:06 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* examples/handcrafted/Display/HUDisplayE.idl: Removed redundant
+	  operations that have already been defined in the facet interface.
+
+	* examples/handcrafted/Display/HUDisplay_svnt.cpp:
+	* examples/handcrafted/Display/HUDisplay_svnt.h:
+	* examples/handcrafted/Display/HUDisplay_svnt.inl: Added hand
+	  generated code based on the glue code template in
+
+	    docs/templates/
+
+	* docs/templates/CIAO_Glue_Session_Template.cpp:
+	* docs/templates/CIAO_Glue_Session_Template.h:
+	* docs/templates/CIAO_Glue_Session_Template.inl: Updated template
+	  code based on results from hand generated code.
+
+Tue Mar 11 15:18:52 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* bin/generate_component_mpc.pl: Added this new to auto-generate
+	  the mpc files for a single component implementation.  The mpc
+	  file generated by the script should work for most simple
+	  component implementation, without modification and can serve as
+	  a template for more complicated ones.  This script also
+	  generates hints that can be fed back to a shell to create the
+	  necessary export definition files.
+
+	* docs/todo.html: Added improvement items that can be done for
+	  generate_component_mpc.pl.
+
+	* bin/gen_export_files.cmd: Removed.  The new
+	  generate_component_mpc script provides more accurate hints on
+	  how to create export files.
+
+
+	  Renamed and reorganized all files in the following
+	  multi-component example according to the guideline I set in
+	  docs/new_component.html.
+
+	* examples/handcrafted/Display/Display.mpc:
+	* examples/handcrafted/Display/HUD_skel_export.h:
+	* examples/handcrafted/Display/HUD_stub_export.h:
+	* examples/handcrafted/Display/GPS/GPS_skel_export.h:
+	* examples/handcrafted/Display/NavDisplay/NavDisplay_skel_export.h:
+	* examples/handcrafted/Display/RateGen/RateGen_skel_export.h:
+	  Removed.
+
+	* examples/handcrafted/Display/HUDisplay.mpc:
+	* examples/handcrafted/Display/HUDisplay_stub_export.h:
+	* examples/handcrafted/Display/HUDisplay_svnt_export.h:
+	* examples/handcrafted/Display/GPS/GPS_exec_export.h:
+	* examples/handcrafted/Display/GPS/GPS_svnt_export.h:
+	* examples/handcrafted/Display/NavDisplay/NavDisplay_exec_export.h:
+	* examples/handcrafted/Display/NavDisplay/NavDisplay_svnt_export.h:
+	* examples/handcrafted/Display/RateGen/RateGen_exec_export.h:
+	* examples/handcrafted/Display/RateGen/RateGen_svnt_export.h:
+	  Modified.
+
+	* examples/handcrafted/Display/HUDisplay.idl:
+	* examples/handcrafted/Display/HUDisplayE.idl:
+	* examples/handcrafted/Display/GPS/GPS.mpc:
+	* examples/handcrafted/Display/GPS/GPS_stub_export.h:
+	* examples/handcrafted/Display/NavDisplay/NavDisplay.mpc:
+	* examples/handcrafted/Display/NavDisplay/NavDisplay_stub_export.h:
+	* examples/handcrafted/Display/RateGen/RateGen.idl:
+	* examples/handcrafted/Display/RateGen/RateGen.mpc:
+	* examples/handcrafted/Display/RateGen/RateGen_stub_export.h:
+	  Added.
+
+Tue Mar 11 11:41:39 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* bin/generate_component_mpc.pl: Added a MPC file generater perl
+	  script for creating new MPC definitions for single component
+	  implementations.
+
+Sun Mar 09 14:38:59 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* docs/new_components.html: Added this new document to describe
+	  files involved in creating a new components.
+
+	* docs/com-impl.html: Added a link to the new component
+	  implementation. document
+
+	* docs/imgs/File-Gen-Existing.png:
+	* docs/imgs/File-Gen-Future.png:
+	* docs/imgs/File_Generation_Flow.vsd: Updated the tools/files
+	  collaboration diagram to reflect the latest plan.
+
+	* examples/handcrafted/Hello/hello.mpc: Updated the MPC file to
+	  make sure it works properly.  We need to figure out a way to
+	  auto-generate a template of this file.
+
+Thu Mar 06 20:29:42 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	  The following changes integrate the XML parsing of softpkg
+	  descriptors with the daemon management framework so we can now
+	  instantiate and test a single component implementation using
+	  its softpkg descriptor.
+
+	* ciao/ComponentServer_Impl.cpp:
+	* ciao/ComponentServer_Impl.h:
+	* ciao/ComponentServer_Impl.inl: Added a cached
+	  ComponentInstallation reference so we can pass it to the
+	  containers this ComponentServer creates.
+
+	* ciao/Container_Impl.cpp:
+	* ciao/Container_Impl.h: Added an extra argument in init for
+	  taking in the ComponentInstallation reference.  Also modified
+	  the install_home related mechanisms to use ComponentInstallation
+	  interface to acquire the actual implementation "locations".
+
+	* tools/ServerActivator/ServerActivator_test_client.cpp:
+	* tools/ComponentServer/ComponentServer_test_client.cpp: Changed
+	  to use UUID.
+
+	* tools/XML_Helpers/Cascadable_DocHandler.h: Removed a redundant
+	  export decl.
+
+	* tools/Daemon/DaemonController.dsp: Added files from the
+	  XML_Helpers directories for the added XML handling capability.
+
+	* tools/Daemon/CIAO_Daemon.cpp:
+	* tools/Daemon/Softpkg_Commands.cpp:
+	* tools/Daemon/Softpkg_Commands.h: Added new commands to start and
+	  terminate ComponentServer for running one component home.
+
+	* examples/handcrafted/Hello/CIAO_Installation_Data.ini:
+	* examples/handcrafted/Hello/client.cpp:
+	* examples/handcrafted/Hello/hello.ssd:
+	* examples/handcrafted/Hello/run_test.pl: Changed and set up the
+	  test to start up a ComponentServer via Daemon.
+
+Wed Mar 05 21:43:44 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	  Moved all Daemon controller related classes into CIAO::Daemon_i
+	  namespace.
+
+	* tools/Daemon/Softpkg_Commands.cpp:
+	* tools/Daemon/Softpkg_Commands.h:
+	* tools/Daemon/Softpkg_Commands.inl: Added two new "start_home"
+	  and "end_home" command for starting up and shutting down a
+	  ComponentServer for a single component home.  Still need
+	  implementation.
+
+	* tools/Daemon/DaemonController.cpp:
+	* tools/Daemon/DaemonController.dsp:
+
+	* tools/Daemon/controller_i.cpp:
+	* tools/Daemon/controller_i.h:
+	* tools/Daemon/controller_i.inl:
+	* tools/Daemon/Daemon_Commands.cpp:
+	* tools/Daemon/Daemon_Commands.h:
+	* tools/Daemon/Daemon_Commands.inl: Moved most of the Daemon
+	  controlling commands into this file.
+
+Tue Mar 04 20:40:21 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* examples/handcrafted/Display/RateGen/RateGenE.idl: Fixed a typo.
+	  Thanks to Jeff Gray <gray@cis.uab.edu> for pointing it out.
+
+Thu Feb 27 22:15:48 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ciao/ComponentServer_Impl.h: Fixed a cut-n-paste error in a comment.
+
+	* ciao/ServerActivator_Impl.cpp:
+	* ciao/ServerActivator_Impl.h:  Changed to cache an IOR to
+	  the ComponentInstallation interface and pass the IOR with
+	  -ORBInitRef option to the ComponentServer.  We will need it when
+	  installing a component home in the container.
+
+	* examples/handcrafted/Hello/hello_servants.cpp:
+	* examples/handcrafted/Hello/hello_servants.h: Removed inheriting
+	  the component specific context from the SessionContext local
+	  interface.  This component example should be run as Service
+	  component, not Session component.
+
+	* tools/ServerActivator/README:
+	* tools/Daemon/CIAO_Daemon.cpp:
+	* tools/ServerActivator/ServerActivator.cpp: Changed to propagate
+	  the ComponentInstallation somehow.
+
+	* tools/ServerActivator/ServerActivator_test_client.cpp: Removed a
+	  redundant $Id$ tag.
+
+Sat Feb 22 23:45:52 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* docs/releasenotes.html:
+	* docs/todo.html: Updated information regarding different
+	  component deployment schemes.
+
+	* examples/handcrafted/Hello/hello.csd:
+	* examples/handcrafted/Hello/hello.ssd: Fixed syntax errors.
+
+	* tools/XML_Helpers/Softpkg_Handlers.cpp:
+	* tools/XML_Helpers/Softpkg_Handlers.h:
+	* tools/XML_Helpers/Softpkg_Handlers.inl:
+	* tools/XML_Helpers/XML_Utils.cpp:
+	* tools/XML_Helpers/XML_Utils.h:
+	* tools/XML_Helpers/XML_Utils.inl: Added these new file to extract
+	  necessary information to install the component specified in a
+	  .csd (component softpkg descriptor) file.  The
+	  Softpkg_Handlers.* contain the XML Handler(s) for parsing the
+	  csd document and XML_Utils.* contain the file Assembly tools can
+	  use to extract the needed info.  Notice that the XML handler
+	  currently don't do a lot of validation.
+
+	* tools/XML_Helpers/Cascadable_DocHandler.cpp:
+	* tools/XML_Helpers/Cascadable_DocHandler.h:
+	* tools/XML_Helpers/Cascadable_DocHandler.i: Added error handling
+	  functions and allows it to accept a Locator from the parser to
+	  show error location.
+
+	* tools/XML_Helpers/Svcconf.dsp:
+	* tools/XML_Helpers/Svcconf.dsw: Renamed these files to the
+	  following:
+
+	* tools/XML_Helpers/XMLHelpers.dsp:
+	* tools/XML_Helpers/Helper_Test.dsw:
+	* tools/XML_Helpers/main.cpp: Added new files into the project
+	  file and changed the project and workspace name.
+
+
+Thu Feb 20 22:15:08 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	  Manually generated the following XML descriptors.  These are the
+	  minimum to install a component.  Currently, I just get the UUID
+	  using win32's UUIDGEN or GUIDGEN.
+
+	* examples/handcrafted/Hello/hello.csd: Component softpkg descriptor.
+
+	* examples/handcrafted/Hello/hello.ssd: CIAO's servant softpkg
+	  descriptor.
+
+	* examples/handcrafted/Hello/hello.ccd: CORBA component descriptor.
+
+Wed Feb 19 13:30:19 2003  Boris Kolpackov  <boris@isis-server.isis.vanderbilt.edu>
+
+	* CIDLC/DesignNotes: Reorganized stuff a bit again and added some
+	  comments on Jeff's comments.
+
+Mon Feb 17 17:47:55 2003  Boris Kolpackov  <boris@isis-server.isis.vanderbilt.edu>
+
+	* CIDLC/DesignNotes: Reorganized stuff a bit and added some new
+	  ideas/notes.
+
+Sun Feb 16 21:30:42 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* docs/releasenotes.html: Updated release info with the following.
+
+	* ciao/ComponentInstallation_Impl.cpp:
+	* ciao/ComponentInstallation_Impl.h: Fixed a problem of empty
+	  persistent backing store file.  I need to store the
+	  configuration data under a subsection (as oppose to the root
+	  section.)
+
+	* ciao/CIAO_Server.dsp:
+	* ciao/Daemon.idl:
+	* ciao/Daemon_Impl.cpp:
+	* ciao/Daemon_Impl.h:
+	* ciao/Daemon_Impl.inl: Added a generic server process control
+	  interface that provides operations to query available service
+	  interfaces and to shutdown the server process.
+
+	* tools/Daemon/CIAO_Daemon.cpp:
+	* tools/Daemon/CIAO_Daemon.dsp:
+	* tools/Daemon/CIAO_Installation_Data.ini:
+	* tools/Daemon/Daemon.dsw:
+	* tools/Daemon/README:
+	* tools/Daemon/DaemonController.cpp:
+	* tools/Daemon/DaemonController.dsp:
+	* tools/Daemon/controller_i.cpp:
+	* tools/Daemon/controller_i.h:
+	* tools/Daemon/controller_i.inl: Added new per-host CIAO_Daemon
+	  implementaion which offer both ComponentInstallation interface
+	  which manages the local component implementation cache, and
+	  ServerActivator interface which the Assembly framework interacts
+	  with to spawn new ComponentServer processes.  See the README
+	  file in this directory and releasenotes.html for more details.
+
+	  There's also a DaemonController tool which provides a command
+	  line interface to control the daemon process and to interact
+	  with ComponentInstallation and ServerActivation interfaces.
+
+Sat Feb 15 22:54:11 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ciao/CIAO_Server.dsp:
+	* ciao/ComponentInstallation_Impl.cpp:
+	* ciao/ComponentInstallation_Impl.h:
+	* ciao/ComponentInstallation_Impl.inl: Filled in the
+	  implementation for ComponentInstallation interface.  We
+	  currently only provide a naive implemntation for this
+	  interface.  It currently manages the pathnames to various
+	  component implementations so a Container can fetch a
+	  implementation from its UUID.
+
+	* examples/handcrafted/Hello/hello_servants.dsp: Added CIAO_server
+	  to the list of link libraries.   I need to move the base
+	  container implementation from the CIAO_Server library to
+	  CIAO_Container library.
+
+Fri Feb 14 23:15:39 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* docs/todo.html:  Added info on why the Assembly tools should
+	  be responsible of the act of home registration.
+
+	* ciao/Container_Impl.cpp:
+	* ciao/ServerActivator_Impl.cpp:
+	* ciao/ComponentServer_Impl.cpp: Changed the use of ACE_NEW_RETURN
+	  to ACE_NEW_THROW_EX.
+
+	* ciao/ComponentServer_Impl.h: Cosmetic changes.
+
+	* examples/handcrafted/Hello/hello_servants.cpp:
+	* examples/handcrafted/Hello/hello_servants.h: Fixed <unsubscribe>
+	  signature based on RTF 1.1.
+
+	* tools/ComponentServer/ComponentServer.cpp: Added comments
+	  explaining why we are not init'ing the component server right
+	  now.
+
+	* tools/ServerActivator/README:
+	* examples/handcrafted/Hello/client.cpp:
+	* tools/ServerActivator/ServerActivator_test_client.cpp: Forced in
+	  hack to test out installing the HelloWorldHome using the new
+	  ServerActivator -> ComponentServer -> Container interfaces.
+
+	* tools/Simple_Component_Server/Simple_Component_Server.cpp: Fix
+
+Fri Feb 14 17:10:50 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* docs/ConfigValues.html: Updated more supported ConfigValues types.
+
+	* docs/releasenotes.html:
+	* docs/todo.html:
+
+	* ciao/Client_init.cpp:
+	* ciao/Server_init.cpp:
+	* ciao/Client_init.h:
+	* ciao/Server_init.h: Removed "ciao/" from the include paths.  We
+	  now always include ciao core files as they are specified in the
+	  include path directly.
+
+	* ciao/CIAO_Server.dsp:
+	* ciao/CIAO_Servers.idl:
+	* ciao/ComponentServer_Impl.cpp:
+	* ciao/ComponentServer_Impl.h:
+	* ciao/ComponentServer_Impl.inl:
+	* ciao/Container_Base.cpp:
+	* ciao/Container_Base.h:
+	* ciao/Container_Impl.cpp:
+	* ciao/Container_Impl.h:
+	* ciao/Container_Impl.inl:
+	* ciao/Object_Set_T.cpp:
+	* ciao/Object_Set_T.h:
+	* ciao/Object_Set_T.inl:
+	* ciao/ServerActivator_Impl.cpp:
+	* ciao/ServerActivator_Impl.h:
+	* ciao/ServerActivator_Impl.inl: Filled in more implementations.
+
+	* tools/ServerActivator/README:
+	* tools/ServerActivator/ServerActivator.cpp:
+	* tools/ServerActivator/ServerActivator.dsp:
+	* tools/ServerActivator/ServerActivator.dsw:
+	* tools/ServerActivator/ServerActivator_test_client.cpp:
+	* tools/ServerActivator/ServerActivator_test_client.dsp: Added a
+	  ServerActivator implementation.
+
+	* tools/ComponentServer/ComponentServer.cpp:
+	* tools/ComponentServer/ComponentServer.dsp:
+	* tools/ComponentServer/ComponentServer.dsw:
+	* tools/ComponentServer/ComponentServer_test_client.cpp:
+	* tools/ComponentServer/ComponentServer_test_client.dsp:
+	* tools/ComponentServer/README: Added a more comprehensive
+	  ComponentServer implementation.
+
+Sun Feb 09 20:39:05 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* docs/todo.html: Added more todo items as we go along. :)
+
+	* ciao/Component_Base.idl:
+	* ciao/CCM_Deployment.idl: Changed the create method in
+	  ::Components::Deployment::AssemblyFactory to create_assembly per
+	  CCM RTF 1.1.
+
+	* ciao/Assembly_Impl.cpp:
+	* ciao/Assembly_Impl.h:
+	* ciao/Assembly_Impl.inl: CCM RTF 1.1 changes.  Also added other
+	  test code in the file and explained how to create an Assembly
+	  object.
+
+	* ciao/CIAO_Core.mpc:
+	* ciao/CIAO_Client.dsp:
+	* ciao/CIAO_Server.dsp:
+	* ciao/CIAO_Value.idl: Added a CIAO internal cookie valuetype so
+	  we can downcast the incoming ::Components::Cookie back to CIAO's
+	  internal implementation type CIAO::Cookie easily.  The original
+	  "brute force cast" didn't work and CIAO::Cookie also provides a
+	  way to fish out the internal octetseq we need internally.
+
+	* ciao/Cookies.cpp:
+	* ciao/Cookies.h:
+	* ciao/Cookies.inl: Changed to inherit the internal cookie
+	  implementation from OBV_CIAO::Cookie instead of
+	  OBV_Components::Cookie.  Also changed the extract method to be
+	  static.
+
+	* ciao/Client_init.cpp: Added a new valuefactory to create
+	  ::Components::Cookie valuetype when receiving CIAO::Cookie from
+	  the server.  This should really be handled by supporting
+	  truncatable valuetype in TAO.
+
+	* docs/templates/CIAO_Glue_Session_Template.inl: Applied some of
+	  the bug fixes from using Active Map and Cookie.  These template
+	  files need to be reviewed further.
+
+	* tests/temp/README:
+	* tests/temp/assembly/README:
+	* tests/temp/assembly/assembly.dsw:
+	* tests/temp/assembly/client.cpp:
+	* tests/temp/assembly/client.dsp:
+	* tests/temp/assembly/control.idl:
+	* tests/temp/assembly/control.mpc:
+	* tests/temp/assembly/run_test.pl:
+	* tests/temp/assembly/server.cpp:
+	* tests/temp/assembly/server.dsp: Added this test to make sure the
+	  demonstrate how to use AssemblyFactory and Assembly interface,
+	  and the Assembly's are being managed properly.  More
+	  importantly, I used this test to make sure the internal
+	  implementation for Cookie and Active_Object_Map are working
+	  correctly.
+
+	* tools/XML_Helpers/Svcconf.dsp:
+	* tools/XML_Helpers/Svcconf.dsw:
+	* tools/XML_Helpers/Svcconf_Handler.cpp:
+	* tools/XML_Helpers/Svcconf_Handler.h:
+	* tools/XML_Helpers/Svcconf_Handler.i:
+	* tools/XML_Helpers/main.cpp:
+	* tools/XML_Helpers/svc.conf.xml: Added an example to demonstrate
+	  how to write a subclass of Cascadable_DocHandler and how to use
+	  the Skip_DocHandler.  Just so I won't forget how to use them.
+
+Sat Feb 08 20:45:20 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ciao/*: WiP intermediate checkins.
+
+	* ciao/Object_Set_T.h:
+	* ciao/Object_Set_T.cpp (object_in_set): Added a new method to
+	  check if an object is already in the set or not.
+
+Fri Feb 07 23:35:35 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ciao/Object_Set_T.h:
+	* ciao/Object_Set_T.i:
+	* ciao/Object_Set_T.cpp: Added a naive implementation of an object
+	  reference set.  It is naive because it simply keeps object
+	  references in an objref_var array without checking for
+	  duplication.  More importantly, it takes O(n) to to look for an
+	  object reference and return it.  What we really need is a
+	  thread-safe hash_set<> like class here.  Since this is mostly
+	  used only during setup/assemble time for a CIAO application,
+	  i.e., not on critical path, this class serves as a place holder
+	  for later, more efficient implementation.
+
+	  This new class is needed to support ServerActivator,
+	  ComponentServer, and Container interface in
+	  Components::Deployment module.
+
+	* docs/ConfigVAlues.html: Added this new document page to record
+	  what configuration values can be used to initialize
+	  ComponentServer's and Container's.
+
+	* docs/todo.html: Documented more future todo tasks and ideas.
+
+Tue Feb 04 23:10:56 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* docs/todo.html: Added a new item descirbing things that need to
+	  be done for component/home configuration using CCM's XML
+	  property files.
+
+	* tools/XML_Helpers/Handler-Interaction.png:
+	* tools/XML_Helpers/Handler-Interaction.vsd:
+	* tools/XML_Helpers/README: Files that document how to use
+	  Cascadable_DocHandler and interactions among handlers of
+	  different layers.
+
+	* tools/XML_Helpers/Cascadable_DocHandler.cpp:
+	* tools/XML_Helpers/Cascadable_DocHandler.h:
+	* tools/XML_Helpers/Cascadable_DocHandler.i: A
+	  ACEXML_DefaultHandler subclass which can be easily cascaded
+	  together to handle hierarchical XML document structure.  There
+	  is also a Skip_DocHandler class which subclasses from
+	  Cascadable_DocHandler and can be used to skip over some certain
+	  XML tags completely.  These helper classes should probably be
+	  collected under ACEXML in the future.
+
+Sun Feb 02 21:05:39 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ciao/Cookies.cpp (insert): Fixed a warning.
+
+	* ciao/CCM_Base.idl: Changed to include <orb.idl> instead of <corba.pidl>.
+
+	* ciao/CCM_Event.idl: Fixed a typo I put in last.
+
+Sun Feb 02 15:23:26 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* docs/XML/componentassembly.dtd:
+	* docs/XML/corbacomponent.dtd:
+	* docs/XML/properties.dtd:
+	* docs/XML/softpkg.dtd: Updated these files with the ones from my
+	  web page.  They are now in-sync with the latest RTF.
+
+Wed Jan 29 13:27:01 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * CIDLC/DesignNotes:
+
+          Added a list of items from the IDL compiler that need redesign and
+          can perhaps be done incrementally in the CIDL compiler, and
+          eventually integrated back into the IDL compiler.
+
+Wed Jan 22 16:05:18 2003  Boris S Kolpackov  <boris@isis-server.isis.vanderbilt.edu>
+
+	* CIDLC/DesignNotes: added some more ideas.
+
+Wed Jan 22 13:54:12 2003  Boris S Kolpackov  <boris@isis-server.isis.vanderbilt.edu>
+
+	* CIDLC/DesignNotes: added this file to capture and document CIDL
+	  complier design ideas/decisions.
+
+Tue Jan 21 16:20:44 2003  Boris S Kolpackov  <boris@isis-server.isis.vanderbilt.edu>
+
+	* tools/CIDLC:
+	* CIDLC: moved CIDLC directory one level up.
+
+Mon Jan 13 15:23:09 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* docs/templates/Executor.idl: Added meta-code for user-defined
+	  oeprations, factory operations, and finder operations.
+
+	* docs/templates/CIAO_Glue_Session_Template.cpp:
+	* docs/templates/CIAO_Glue_Session_Template.h:
+	* docs/templates/CIAO_Glue_Session_Template.inl: Filled in the
+	  rest of the CIDL generated Servant Glue code templates.
+
+Mon Jan 13 11:18:37 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ciao/Component_Base.idl:
+	* ciao/CCM_Base.idl: Based on Components 1.1 RTF
+	  Events::unsubscribe operations now return the unsubscribed
+	  consumber object reference instead of void.
+
+	* docs/templates/CIAO_Glue_Session_Template.cpp:
+	* docs/templates/CIAO_Glue_Session_Template.h:
+	* docs/templates/CIAO_Glue_Session_Template.inl: Filled in most of
+	  the operations for component servant.  Only opeations left
+	  unimplemented include Events::get_*_publishers which I will
+	  implement in the *_Context class later.
+
+	  There are several other oeprations that throw NO_IMPLEMENT
+	  exception or are no-op currently.  Missing them probably is okay
+	  for now.  Next up, Home Servant template.
+
+Mon Jan 13 00:27:03 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* docs/templates/CIAO_Glue_Session_Template.cpp:
+	* docs/templates/CIAO_Glue_Session_Template.h:
+	* docs/templates/CIAO_Glue_Session_Template.inl: Filled in a great
+	  more generated code.  This is almost done, finally.
+
+	* docs/templates/CIAO_Glue_Session_Template.cpp:
+	* docs/templates/CIAO_Glue_Session_Template.h:
+	* docs/templates/CIAO_Glue_Session_Template.inl:
+	* docs/templates/Executor.idl: Changed to lead template comments
+	  with '##' instead of # to diffentiate them from preprocessor
+	  directives that we should generate.
+
+	* ciao/HomeRegistrar_i.inl:
+	* ciao/HomeRegistrar_i.cpp: Fixed incorrect uses of exception macros.
+
+	* ciao/Cookies.h:
+	* ciao/Cookies.cpp: Added a new insert method which "encode" an
+	  Active_Objref_Map key into the Cookie.
+
+	* ciao/Container_Base.inl:
+	* ciao/Container_Base.cpp:
+	* ciao/Container_Base.h: Added a new get_objref method which
+	  basically allow us to get the component reference using POA's
+	  servant_to_reference operation.  Added a new inline file and
+	  fixed some incorrect uses of exception macros.
+
+	* ciao/Component_Base.idl:
+	* ciao/CCM_Base.idl: Based on Components 1.1 RTF
+	  Receptacles::disconnect operations now return the disconnected
+	  object reference instead of void.
+
+Fri Jan 10 12:03:00 2003  Boris S Kolpackov  <boris@isis-server.isis.vanderbilt.edu>
+
+	* tools/CCIDL:
+	* tools/CIDLC:
+	* tools/CIDLC/README: Renamed CCIDL to CIDLC. Added some
+	explanations about naming convention choosen for CIDL compiler.
+
+Thu Jan 09 00:57:37 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* docs/templates/cidl_template.cidl: Added an example CIDL file.
+
+	* docs/templates/CIAO_Glue_Session_Template.h:
+	* docs/templates/CIAO_Glue_Session_Template.inl:
+	* docs/templates/CIAO_Glue_Session_Template.cpp: Added more
+	  implementation code.
+
+Wed Jan 08 16:48:28 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* docs/templates/CIAO_Glue_Session_Template.h: Added the complete
+	  list of operations that needs to be supported.  Next up, the
+	  implementation templates.
+
+	* ciao/Active_Objref_Map.cpp:
+	* ciao/Active_Objref_Map.h: Defined a typedef called
+	  CIAO::Active_Objref_Map for managing CORBA::Object_var's using
+	  the ACE_Active_Map_Manager and instantiate the template.
+
+	* ciao/Cookies.cpp:
+	* ciao/Cookies.h: Added insertion/extraction of
+	  ACE_Active_Map_Manager_Key operations.
+
+Tue Jan 07 23:28:28 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ciao/CIAO_common.h: Added a new file to collect common CIAO
+	  macros.
+
+	* ciao/CIAO_Component_i.cpp:
+	* ciao/CIAO_Component_i.h: Removed.
+	* ciao/Client_init.cpp:
+	* ciao/Client_init.h:  The old CIAO_client_init in
+	  CIAO_Component_i is now called Client_init under CIAO namespace.
+	  This function initlializes the value factories for client side ORB.
+
+	* ciao/Server_init.cpp:
+	* ciao/Server_init.h: Added new function Server_init under CIAO
+	  namespace to initialize server side value factories for server
+	  side ORB.
+
+	* ciao/Cookies.cpp:
+	* ciao/Cookies.h:
+	* ciao/Cookies.inl: Added server-side implementation of
+	  Components::Cookie called CIAO::Map_Key_Cookie.  This
+	  implementation is only used within the containers (i.e., server
+	  side).  Client doesn't need to know how to interpret a Cookie.
+
+	* ciao/Container_Base.h:
+	* ciao/HomeRegistrar_i.h: Fixed various ACE-guideline conformity
+	  problems.
+
+	* ciao/CCM_Core.mpc:
+	* ciao/CIAO_Client.dsp:
+	* ciao/CIAO_Container.dsp:
+	* ciao/CIAO_Server.dsp:
+	* ciao/Makefile.client:
+	* ciao/Makefile.container:
+	* ciao/Makefile.server: Updated various makefiles/projects.
+
+Tue Jan 07 07:48:02 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ciao/Container_Base.cpp (install_servant): Changed to decrease
+	  the refcount of servant by one to make sure servants get
+	  "released" properly.
+
+Fri Jan 03 11:27:12 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* docs/templates/Executor.idl: This pseudo-meta IDL template file
+	  summarizes the standard executor mapping and serves as a
+	  template for CCIDL compiler.
+
+Sun Dec 22 23:12:49 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* examples/handcrafted/Display/RateGen/RateGen.idl:
+	* examples/handcrafted/Display/GPS/GPS.idl:
+	* examples/handcrafted/Display/NavDisplay/NavDisplay.idl:
+	* examples/handcrafted/Display/HUDisplay.idl:
+	* examples/handcrafted/Display/Display.mpc: Added more files for
+	  this multi-component example.
+
+	The followings should go to the ChangeLog under $(ACE_ROOT)
+
+	* bin/MakeProjectCreator/configs/ciao_client.mpc:
+	* bin/MakeProjectCreator/configs/ciao_component.mpc:
+	* bin/MakeProjectCreator/configs/ciao_server.mpc: Added libpaths
+	  defintions.
+
+Sat Dec 21 15:09:55 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tools/Simple_Component_Server/Simple_Component_Server.dsp:
+	* examples/handcrafted/Hello/run_test.pl: Changed to generate
+	  Simple_Component_Server executable in the project directory.
+
+	* examples/handcrafted/Hello/hello.mpc:
+	* ciao/CCM_Core.mpc:
+	* tools/Simple_Component_Server/Simple_Component_Server.mpc:
+	  Created MPC specifications.
+
+	The followings should go to the ChangeLog under $(ACE_ROOT)
+
+	* bin/MakeProjectCreator/configs/ciao_client.mpc:
+	* bin/MakeProjectCreator/configs/ciao_component.mpc:
+	* bin/MakeProjectCreator/configs/ciao_server.mpc: Created MPC
+	  templates for CIAO client, component implmentation, and server
+	  tools.
+
+Fri Dec 20 23:09:53 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ciao/Makefile.server: Added HomeRegistrar.idl and
+	  HomeRegistrar_i to the makefile.
+
+	* tools/Simple_Component_Server/Makefile: Added a new makefile.
+
+Fri Dec 20 20:32:53 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ciao/CCM_Component.idl:
+	* ciao/CCM_Container.idl:
+	* ciao/Container_Base.cpp:
+	* ciao/Makefile.client:
+	* ciao/Makefile.container:
+	* ciao/Makefile.server: Fixed compilation erros and Makefiles on
+	  Linux.
+
+Thu Dec 19 20:44:39 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* examples/handcrafted/Display/README:
+	* examples/handcrafted/Display/Configuration-0.png: Added new
+	  files explaining the purpose of the the new example and what it
+	  will do.
+
+Wed Dec 18 20:37:06 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* examples/handcrafted/Hello/run_test.pl: Added a script to
+	  automate running this stuff.
+
+	* examples/handcrafted/Hello/README: Replaced the reference to
+	  CIAO_single_com_server to Simple_Component_Server.
+
+Tue Dec 17 23:30:59 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tools/CIAO_single_com_server/*:
+	* tools/Simple_Component_Server/*: Changed the name of the simple
+	  server from CIAO_single_com_server to Simple_Component_Server.
+	  The original name didn't make too much sense at all.
+
+Tue Dec 17 22:49:32 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ciao/CIAO_Server.dsp:
+	* ciao/HomeRegistrar.idl:
+	* ciao/HomeRegistrar_i.{h,inl,cpp}: Added a NameService based
+	  HomeFinder extension.  This interface defines the registration
+	  operation, which is not defined in the CCM specification.  This
+	  is part of the CIAO_Server library.
+
+	* tools/CIAO_single_com_server/CIAO_single_com_server.cpp: Changed
+	  to register installed components with the HomeRegistrar instead
+	  of dumping the IOR into a file.  The only thing that gets dumped
+	  into a file now is the IOR for the HomeFinder interface which
+	  HomeRegistrar inherits.
+
+	* examples/handecrafted/Hello/README: Added information on the
+	  procedures one should follow to run this test.
+
+	* examples/handcrafted/Hello/config: Updated the component server
+	  config file to include the repo ids and canonical name for the
+	  home.
+
+	* examples/handcrafted/Hello/client.dsp:
+	* examples/handcrafted/Hello/client.cpp: Changed to use acquire
+	  the home object reference thru the HomeFinder interface, instead
+	  of passing it in explicitly.
+
+	* examples/handcrafted/Hello/hello.dsw:
+	* examples/handcrafted/Hello/server.cpp:
+	* examples/handcrafted/Hello/server.dsp: Removed server from the
+	  workspace.  As we now have a true component server, we no longer
+	  need a server process for this example.
+
+
+Mon Dec 16 10:56:46 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tools/CIAO_single_com_server/CIAO_single_com_server.cpp: Fixed
+	  command line argument parsing problem.  We now process the
+	  command line argument for ORB correctly.
+
+Sun Dec 15 23:54:16 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tools/CIAO_single_com_server/*: Added a new prototype component
+	  server.  We can now run session components on a generic server
+	  using a proprietary config file for component installation.
+
+	* ciao/Container_Base.{h,cpp}: Fixed incorrect usage of ACE_DLL
+	  where executor and servant Dlls got unloaded prematurely.
+
+Wed Dec 11 14:39:08 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	  A lot have changed since last ChangeLog entry.  Most of the
+	  changes are intermediate so I didn't even try to record them.
+
+	* ciao/CCMCore.dsw:
+	* ciao/CIAO_Container.dsp:
+	* ciao/CIAO_Server.dsp: Moved Container_Base.* from CIAO_Container
+	  library to CIAO_Server library.  These classes in Container_Base
+	  are really run-time container management interfaces than
+	  container interfaces themselves.
+
+	* ciao/Container_Base.cpp:
+	* ciao/Container_Base.h: Added _ciao_install_home which enable
+	  installing a component home from relevant DLL named and entry
+	  points.  We are not managing the lifecycle of DLL objects in the
+	  implementation yet (we just never unlink DLL. :)  This will have
+	  to be changed in the future.
+
+	* examples/handcrafted/Hello/hello_servants.cpp:
+	* examples/handcrafted/Hello/hello_servants.h: Added an entry
+	  point "create_HelloWorld_Servant" so we can use the glue code
+	  with the new "generic server."
+
+	* examples/handcrafted/Hello/server.cpp:
+	* examples/handcrafted/Hello/server.dsp: Reworked the server
+	  implementation so that it is no longer tied to a specific
+	  component implementation.  I.e., we can use the same server to
+	  host any *one* component now.
+
+	* examples/handcrafted/Hello/client.dsp: Added a missing link
+	  directory.
+
+Tue Nov 05 23:42:04 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* CCMCore.dsp:
+	* CIAO_BaseC.cpp:
+	* CIAO_BaseC.h:
+	* CIAO_BaseC.i:
+	* CIAO_ComponentC.cpp:
+	* CIAO_ComponentC.h:
+	* CIAO_ComponentC.i:
+	* CIAO_ContainerC.cpp:
+	* CIAO_ContainerC.h:
+	* CIAO_ContainerC.i:
+	* CIAO_Container_ExC.cpp:
+	* CIAO_Container_ExC.h:
+	* CIAO_Container_ExC.i:
+	* CIAO_DeploymentC.cpp:
+	* CIAO_DeploymentC.h:
+	* CIAO_DeploymentC.i:
+	* CIAO_EventC.cpp:
+	* CIAO_EventC.h:
+	* CIAO_EventC.i:
+	* CIAO_TransactionC.cpp:
+	* CIAO_TransactionC.h:
+	* CIAO_TransactionC.i:
+	* Component_BaseC.cpp:
+	* Component_BaseC.h:
+	* Component_BaseC.i:
+	* Component_BaseS.cpp:
+	* Component_BaseS.h:
+	* Component_BaseS.i:
+	* Component_BaseS_T.cpp:
+	* Component_BaseS_T.h:
+	* Component_BaseS_T.i:
+	* CosPersistentStateC.cpp:
+	* CosPersistentStateC.h:
+	* CosPersistentStateC.i:
+	* CosPersistentStateS.cpp:
+	* CosPersistentStateS.h:
+	* CosPersistentStateS.i:
+	* CosPersistentStateS_T.cpp:
+	* CosPersistentStateS_T.h:
+	* CosPersistentStateS_T.i: Removed generated files.
+
+	* CCMCore.dsw:
+	* CIAO_CLIENT_Export.h:
+	* CIAO_Client.dsp:
+	* CIAO_Component.pidl:
+	* CIAO_Container.dsp:
+	* CIAO_Container_Export.h:
+	* CIAO_SERVER_Export.h:
+	* CIAO_Server.dsp:
+	* README: Split up the CCM Core library into 3 libraries for clients,
+	  component implementations, and component servers.
+
+Thu Sep 26 15:20:13 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ciao/CCMCore.dsp:
+	* ciao/CIAO_Base.pidl:
+	* ciao/CIAO_BaseC.cpp:
+	* ciao/CIAO_BaseC.h:
+	* ciao/CIAO_BaseC.i:
+	* ciao/CIAO_Component.pidl:
+	* ciao/CIAO_ComponentC.cpp:
+	* ciao/CIAO_ComponentC.h:
+	* ciao/CIAO_ComponentC.i:
+	* ciao/CIAO_Container.pidl:
+	* ciao/CIAO_ContainerC.cpp:
+	* ciao/CIAO_ContainerC.h:
+	* ciao/CIAO_ContainerC.i:
+	* ciao/CIAO_Container_Ex.pidl:
+	* ciao/CIAO_Container_ExC.cpp:
+	* ciao/CIAO_Container_ExC.h:
+	* ciao/CIAO_Container_ExC.i:
+	* ciao/CIAO_Deployment.pidl:
+	* ciao/CIAO_DeploymentC.cpp:
+	* ciao/CIAO_DeploymentC.h:
+	* ciao/CIAO_DeploymentC.i:
+	* ciao/CIAO_Event.pidl:
+	* ciao/CIAO_EventC.cpp:
+	* ciao/CIAO_EventC.h:
+	* ciao/CIAO_EventC.i:
+	* ciao/CIAO_Transaction.pidl:
+	* ciao/CIAO_TransactionC.cpp:
+	* ciao/CIAO_TransactionC.h:
+	* ciao/CIAO_TransactionC.i: Changed to split the component idl
+	  file into severl smaller idl files.
+
+	* ciao/Makefile: An empty place holder for now.
+
+	* ciao/Version.h:
+	* ciao/ciao.rc: Added version information files.
+
+Thu Jul 18 22:14:59 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* examples/handcrafted/Philosophers/Philosophers.idl (Example):
+
+Mon Jun 17 17:35:31 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* docs/index.html:
+	* docs/imgs/CCM.vsd:
+	* docs/imgs/basic-container.png:
+	* docs/imgs/component-basic.png:
+	* docs/imgs/deployment.png:
+	* docs/imgs/extended-container.png:
+	* docs/imgs/home-config.png: Added CIAO documentation.

@@ -1,0 +1,16 @@
+project(Nested Event Loop Server): strategies, server {
+  Source_Files {
+    test_i.cpp
+    server.cpp
+  }
+}
+
+project(Nested Event Loop Client): strategies, server {
+  exename  = client
+
+  Source_Files {
+    test_i.cpp
+    client.cpp
+  }
+}
+

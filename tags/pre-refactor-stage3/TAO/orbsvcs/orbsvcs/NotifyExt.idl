@@ -1,0 +1,126 @@
+/**
+ * @file NotifyExt.idl
+ *
+ * @brief Additional interfaces for QoS properties to Notify.
+ *
+ * $Id$
+ *
+ * @author Pradeep Gore <pradeep@oomworks.com>
+ */
+
+#ifndef _NOTIFY_EXT_IDL_
+#define _NOTIFY_EXT_IDL_
+
+#include "CosNotifyChannelAdmin.idl"
+
+#pragma prefix ""
+
+/**
+ * @namespace NotifyExt
+ *
+ * @brief Notify Extensions.
+ */
+module NotifyExt
+{
+  // Priority defs. same as RTCORBA
+  typedef short Priority;
+  const Priority minPriority = 0;
+  const Priority maxPriority = 32767;
+
+  /*
+   * ThreadPool QoS property,
+   */
+  const string ThreadPool = "ThreadPool";
+
+  // ThreadPoolParams : same as RTCORBA::create_threadpool
+  struct ThreadPoolParams
+  {
+    unsigned long stacksize;
+    unsigned long static_threads;
+    unsigned long dynamic_threads;
+    Priority default_priority;
+    boolean allow_request_buffering;
+    unsigned long max_buffered_requests;
+    unsigned long max_request_buffer_size;
+  };
+
+  /*
+   * ThreadPoolLanes QoS property,
+   */
+  const string ThreadPoolLanes = "ThreadPoolLanes";
+
+  struct ThreadPoolLane
+  {
+    Priority lane_priority;
+    unsigned long static_threads;
+    unsigned long dynamic_threads;
+  };
+
+  typedef sequence <ThreadPoolLane> ThreadPoolLanes_List;
+
+  struct ThreadPoolLanesParams
+    {
+      unsigned long stacksize;
+      ThreadPoolLanes_List lanes;
+      boolean allow_borrowing;
+      boolean allow_request_buffering;
+      unsigned long max_buffered_requests;
+      unsigned long max_request_buffer_size;
+  };
+
+  /*
+   * Extend the EventChannelFactory to have a shutdown method.
+   */
+  interface EventChannelFactory : CosNotifyChannelAdmin::EventChannelFactory
+  {
+    void destroy ();
+  };
+
+  interface ConsumerAdmin : CosNotifyChannelAdmin::ConsumerAdmin
+  {
+    // Create a new push-style proxy supplier
+    /**
+     * @param ctype The event format that the ProxyConsumer should
+     *   support
+     * @param proxy_id The ID assigned to the new proxy supplier
+     * @param initial_qos Configure the initial QoS properties of the
+     *   new Proxy.
+     * @return The new ProxySupplier
+     * @throws AdminLimitExceeded if a limit in this admin is reached,
+     *   such as the maximum number of proxies.
+     * @throws CosNotification::UnsupportedQoS if the requested QoS
+     *   properties cannot be satisfied or are invalid
+     */
+    CosNotifyChannelAdmin::ProxySupplier obtain_notification_push_supplier_with_qos (in CosNotifyChannelAdmin::ClientType ctype,
+                                                                                     out CosNotifyChannelAdmin::ProxyID proxy_id,
+                                                                                     in CosNotification::QoSProperties initial_qos)
+      raises ( CosNotifyChannelAdmin::AdminLimitExceeded,
+               CosNotification::UnsupportedQoS
+               );
+  };
+
+  interface SupplierAdmin : CosNotifyChannelAdmin::SupplierAdmin
+  {
+    // Create a new push-style proxy supplier
+    /**
+     * @param ctype The event format that the ProxyConsumer should
+     *   support
+     * @param proxy_id The ID assigned to the new proxy supplier
+     * @param initial_qos Configure the initial QoS properties of the
+     *   new Proxy.
+     * @return The new ProxyConsumer
+     * @throws AdminLimitExceeded if a limit in this admin is reached,
+     *   such as the maximum number of proxies.
+     * @throws CosNotification::UnsupportedQoS if the requested QoS
+     *   properties cannot be satisfied or are invalid
+     */
+    CosNotifyChannelAdmin::ProxyConsumer obtain_notification_push_consumer_with_qos (in CosNotifyChannelAdmin::ClientType ctype,
+                                                                                     out CosNotifyChannelAdmin::ProxyID proxy_id,
+                                                                                     in CosNotification::QoSProperties initial_qos)
+      raises ( CosNotifyChannelAdmin::AdminLimitExceeded,
+               CosNotification::UnsupportedQoS
+               );
+  };
+};
+
+#endif /* _NOTIFY_EXT_IDL_ */

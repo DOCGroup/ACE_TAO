@@ -1,0 +1,16 @@
+project(Crashed Callback Server): messaging, corba_messaging {
+  Source_Files {
+    Service.cpp
+    server.cpp
+  }  
+}
+ 
+project(Crashed Callback Client): messaging, corba_messaging {
+  exename = client
+
+  Source_Files {
+    Crashed_Callback.cpp
+    client.cpp
+  }  
+}
+

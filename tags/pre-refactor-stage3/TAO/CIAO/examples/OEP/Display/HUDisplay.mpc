@@ -1,0 +1,29 @@
+// $Id$
+// This file is generated with "generate_component_mpc.pl -n HUDisplay"
+
+project(HUDisplay_stub): ciao_client {
+
+  sharedname = HUDisplay_stub
+  idlflags += -Wb,stub_export_macro=HUDISPLAY_STUB_Export -Wb,stub_export_include=HUDisplay_stub_export.h -Wb,skel_export_macro=HUDISPLAY_SVNT_Export -Wb,skel_export_include=HUDisplay_svnt_export.h
+  dllflags   = HUDISPLAY_STUB_BUILD_DLL
+
+  IDL_Files {
+    HUDisplay.idl
+  }
+
+  Source_Files {
+    HUDisplayC.cpp
+  }
+}
+
+project(HUDisplay_svnt) : ciao_server {
+  depends +=  HUDisplay_stub
+  sharedname  = HUDisplay_svnt
+  libs    += HUDisplay_stub
+
+  dllflags = HUDISPLAY_SVNT_BUILD_DLL
+
+  Source_Files {
+    HUDisplayS.cpp
+  }
+}

@@ -1,0 +1,15 @@
+project(ServerActivator): ciao_server {
+
+  libs += TAO_IORTable
+  libpaths += $(TAO_ROOT)/tao/IORTable
+
+  Source_Files {
+    ServerActivator.cpp
+  }
+}
+
+project(ServerActivator_test_client) : ciao_server {
+  Source_Files {
+    ServerActivator_test_client.cpp
+  }
+}
