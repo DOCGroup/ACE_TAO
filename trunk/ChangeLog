@@ -1,3 +1,9 @@
+Mon Mar 22 10:57:20 2004  Steve Huston  <shuston@riverace.com>
+
+	* ace/SSL/SSL_Asynch_Stream.cpp:
+	* ace/SSL/SSL_Asynch_BIO.cpp: Added #include "ace/OS_NS_string.h" to
+	  pick up missing symbols on AIX.
+
 Sat Mar 20 22:25:07 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* tests/Multicast_Test.cpp (leave): Replaced 
