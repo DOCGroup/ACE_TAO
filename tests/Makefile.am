@@ -62,6 +62,8 @@ check_PROGRAMS = \
   Cached_Conn_Test \
   Capabilities_Test \
   CDR_Test \
+  CDR_File_Test \
+  CDR_Array_Test \
   Collection_Test \
   Conn_Test \
   DLL_Test \
