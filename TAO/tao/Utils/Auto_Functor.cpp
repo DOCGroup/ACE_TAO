@@ -1,5 +1,5 @@
-#ifndef TAO_UTILS_AUTO_FUNCTOR_H
-#define TAO_UTILS_AUTO_FUNCTOR_H
+#ifndef TAO_UTILS_AUTO_FUNCTOR_CPP
+#define TAO_UTILS_AUTO_FUNCTOR_CPP
 
 #include "Auto_Functor.h"
 
@@ -37,4 +37,4 @@ TAO::Utils::Auto_Functor<X,Functor>::reset (X * p, Functor f)
   f_ = f;
 }
 
-#endif /*TAO_UTILS_AUTO_FUNCTOR_H*/
+#endif /*TAO_UTILS_AUTO_FUNCTOR_CPP*/

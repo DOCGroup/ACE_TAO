@@ -1,3 +1,9 @@
+Mon Dec  2 13:21:26 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/Utils/Auto_Functor.cpp: Changed the names of #ifndef. They
+	  had the same symbols as the header file. Thanks to Don Hinton
+	  for pointing this out.
+
 Sun Dec 01 10:17:32 2002  Balachandran  <bala@cs.wustl.edu>
 
         * TAO version 1.2.7 released.
