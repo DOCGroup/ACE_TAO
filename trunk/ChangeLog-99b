@@ -7,6 +7,10 @@ Sat Mar 13 08:07:25 1999  David L. Levine  <levine@cs.wustl.edu>
           The warnings appeared with cxx 6.2-009.  If someone uses
           6.2-007, they might have to manually remove the 1180 suppression.
 
+        * examples/IPC_SAP/SOCK_SAP/CPP-inserver-fancy.cpp (handle_events):
+          replaced NOTREACHED comment with ACE_NOTREACHED macro.  DU cxx
+          started complaining about the unreached return statement.
+
 Sat Mar 13 00:37:17 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.6.28 released.
