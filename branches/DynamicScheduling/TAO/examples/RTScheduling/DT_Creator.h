@@ -8,6 +8,7 @@
 
 
 class Thread_Task;
+class Task;
 
 typedef Thread_Task **DT_LIST;
 
@@ -15,7 +16,6 @@ class DT_Creator : public ACE_Service_Object
 {
  public:
 
-  DT_Creator (void);
   ~DT_Creator (void);
 
   int init (int argc, char *argv []);
@@ -24,7 +24,11 @@ class DT_Creator : public ACE_Service_Object
 				     RTScheduling::Current_ptr  current
 				     ACE_ENV_ARG_DECL_WITH_DEFAULTS);
   
+  virtual void yield (int suspend_time) = 0;
+
   virtual CORBA::Policy_ptr sched_param (int importance) = 0;
+
+  virtual Task* task (void) = 0;
 
   int dt_count (void);
 

@@ -26,6 +26,12 @@ FP_DT_Creator::sched_param (int importance)
   return DT_TEST::instance ()->scheduler ()->create_segment_scheduling_parameter (importance);
 }
 
+void
+FP_DT_Creator::yield (int suspend_time)
+{
+  ACE_OS::sleep (suspend_time);
+}
+
 ACE_STATIC_SVC_DEFINE(FP_DT_Creator,
                       ACE_TEXT ("FP_DT_Creator"),
                       ACE_SVC_OBJ_T,
