@@ -24,7 +24,8 @@ ACE_SSL_SOCK_Stream::set_handle (ACE_HANDLE fd)
 ASYS_INLINE
 ACE_SSL_SOCK_Stream::ACE_SSL_SOCK_Stream (ACE_SSL_Context *context)
   : context_ (context == 0 ? ACE_SSL_Context::instance () : context),
-    ssl_ (::SSL_new (this->context_->context ()))
+    ssl_ (::SSL_new (this->context_->context ())),
+    stream_ ()
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::ACE_SSL_SOCK_Stream");
 
