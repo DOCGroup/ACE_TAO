@@ -6063,7 +6063,8 @@ ACE_OS::getprotobyname_r (const char *name,
     return result;
   else
     return 0;
-# elif defined (__GLIBC__)  // GNU C library has a different signature
+# elif defined (__GLIBC__)
+  // GNU C library has a different signature
   if (::getprotobyname_r (name,
                           result,
                           buffer,
@@ -6129,7 +6130,8 @@ ACE_OS::getprotobynumber_r (int proto,
     return result;
   else
     return 0;
-# elif defined (__GLIBC__)  // GNU C library has a different signature
+# elif defined (__GLIBC__)
+  // GNU C library has a different signature
   if (::getprotobynumber_r (proto,
                             result,
                             buffer,
@@ -6730,7 +6732,8 @@ ACE_OS::gethostbyaddr_r (const char *addr,
       *h_errnop = h_errno;
       return (struct hostent *) 0;
     }
-# elif defined (__GLIBC__)  // GNU C library has a different signature
+# elif defined (__GLIBC__)
+  // GNU C library has a different signature
   ::memset (buffer, 0, sizeof (ACE_HOSTENT_DATA));
 
   if (::gethostbyaddr_r ((char *) addr,
@@ -6813,7 +6816,8 @@ ACE_OS::gethostbyname_r (const char *name,
       *h_errnop = h_errno;
       return (struct hostent *) 0;
     }
-# elif defined (__GLIBC__)  // GNU C library has a different signature
+# elif defined (__GLIBC__)
+  // GNU C library has a different signature
   ::memset (buffer, 0, sizeof (ACE_HOSTENT_DATA));
 
   if (::gethostbyname_r (name,
@@ -6893,7 +6897,8 @@ ACE_OS::getservbyname_r (const char *svc,
     return result;
   else
     return (struct servent *) 0;
-# elif defined (__GLIBC__)  // GNU C library has a different signature
+# elif defined (__GLIBC__)
+  // GNU C library has a different signature
   ::memset (buf, 0, sizeof (ACE_SERVENT_DATA));
 
   if (::getservbyname_r (svc,
