@@ -1,3 +1,12 @@
+2003-07-22  Jaiganesh Balasubramanian  <jai@equus.dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/PortableGroup/PG_GenericFactory.cpp:
+	* orbsvcs/tests/LoadBalancing/GenericFactory/Makefile:
+	* orbsvcs/tests/LoadBalancing/GenericFactory/Makefile.bor:
+
+	  Changed the files to assist in adding the test to check the infrastructure
+	  controlled membership of the Load Balancer.
+
 Tue Jul 22 17:51:03 2003  Irfan Pyarali  <irfan@oomworks.com>
 
 	* tests\Collocation_Opportunities\Makefile: 
