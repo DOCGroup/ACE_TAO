@@ -1,3 +1,14 @@
+Tue Aug 10 08:13:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_1476_Regression/*:
+          New regression test for bug 1476. This tests that when using
+          oneways with sync_none policy applied the ORB doesn't block
+          on connection establishment. To be able to run this test you
+          must have a long connection establishment time, this isn't
+          the case on localhost, so run client and server far far from
+          away. Because of this, this test isn't able to run in our
+          daily builds.
+
 Tue Aug 10 00:41:10 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* utils/nslist/nslist.cpp (display_endpoint_info):
