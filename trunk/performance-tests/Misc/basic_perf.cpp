@@ -52,9 +52,9 @@ inline
 double
 per_iteration (const ACE_hrtime_t elapsed /* nanoseconds */)
 {
-  // The division by 1 allows transparent support of ACE_U_LongLong;
-  // its operator/ produces a u_long result.
-  double ms_per_iteration = (double) (elapsed/1) / 1000.0 /
+  // The division by (ACE_UINT32) 1u allows transparent support of
+  // ACE_U_LongLong; its operator/ produces a u_long result.
+  double ms_per_iteration = (double) (elapsed/ (ACE_UINT32) 1u) / 1000.0 /
                             (double) iterations;
 
   // Don't print out "-0.000" or "-0.001" . . .
@@ -495,33 +495,34 @@ get_options (int argc, char *argv [])
 
   while ((opt = get_opt ()) != EOF)
     {
-      switch (opt) 
-	{
-	case 'i':
-	  {
-	    int temp = ACE_OS::atoi (get_opt.optarg);
-	    if (temp > 0)
-	      iterations = (u_int) temp;
-	    else
-	      {
-		ACE_DEBUG ((LM_ERROR, "%s: number of iterations must be > 0\n",
-			    argv [0]));
-		return 1;
-	      }
-	    break;
-	  }
-	case '?':
-	  ACE_DEBUG ((LM_INFO, "usage: %s %s\n", argv [0], usage));
-	  ACE_OS::exit (0);
-	  break;
-	default:
-	  ACE_DEBUG ((LM_ERROR, "%s: unknown arg, %c\n", argv [0], (char) opt));
-	  ACE_DEBUG ((LM_ERROR, "usage: %s %s\n", argv [0], usage));
-	  return 1;
-	}
+      switch (opt)
+        {
+        case 'i':
+          {
+            int temp = ACE_OS::atoi (get_opt.optarg);
+            if (temp > 0)
+              iterations = (u_int) temp;
+            else
+              {
+                ACE_DEBUG ((LM_ERROR, "%s: number of iterations must be > 0\n",
+                            argv [0]));
+                return 1;
+              }
+            break;
+          }
+        case '?':
+          ACE_DEBUG ((LM_INFO, "usage: %s %s\n", argv [0], usage));
+          ACE_OS::exit (0);
+          break;
+        default:
+          ACE_DEBUG ((LM_ERROR, "%s: unknown arg, %c\n", argv [0],
+                                (char) opt));
+          ACE_DEBUG ((LM_ERROR, "usage: %s %s\n", argv [0], usage));
+          return 1;
+        }
     }
 
-  switch (argc - get_opt.optind) 
+  switch (argc - get_opt.optind)
     {
     case 0:
       // OK
@@ -545,14 +546,14 @@ get_options (int argc, char *argv [])
 int
 main (int argc, char *argv[])
 {
-  if (get_options (argc, argv)) 
+  if (get_options (argc, argv))
     ACE_OS::exit (-1);
 
   struct utsname name;
 
   if (ACE_OS::uname (&name) != -1)
     ACE_DEBUG ((LM_INFO, "%s (%s), %s %s at %T\n",
-		name.nodename, name.machine, name.sysname, name.release));
+                name.nodename, name.machine, name.sysname, name.release));
 
   ACE_DEBUG ((LM_INFO, "%u iterations\n", iterations));
 

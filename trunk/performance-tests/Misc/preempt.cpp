@@ -127,7 +127,8 @@ High_Priority_Task::svc (void)
 
   for (u_int i = 0; i < iterations; ++i)
     {
-      time_ [i] = (u_long) ((ACE_OS::gethrtime () - starttime)/1000000ul);
+      time_ [i] = (u_long) ((ACE_OS::gethrtime () - starttime)/
+                            (ACE_UINT32) 1000000u);
       ACE_OS::select (0, 0, 0, 0, &pause);
     }
 
