@@ -55,7 +55,7 @@ TAO_NS_Proxy_T<SERVANT_TYPE>::get_qos (ACE_ENV_SINGLE_ARG_DECL)
                    CORBA::SystemException
                    ))
 {
-        return this->TAO_NS_Object::get_qos (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->TAO_NS_Object::get_qos (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 template <class SERVANT_TYPE> void

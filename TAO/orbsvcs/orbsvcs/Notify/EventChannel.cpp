@@ -247,11 +247,13 @@ TAO_NS_EventChannel::get_all_consumeradmins (ACE_ENV_SINGLE_ARG_DECL)
                    CORBA::SystemException
                    ))
 {
-  CosNotifyChannelAdmin::AdminIDSeq* seq;
+  CosNotifyChannelAdmin::AdminIDSeq* seq_ptr;
 
-  ACE_NEW_THROW_EX (seq,
+  ACE_NEW_THROW_EX (seq_ptr,
                     CosNotifyChannelAdmin::AdminIDSeq (),
                     CORBA::NO_MEMORY ());
+
+  CosNotifyChannelAdmin::AdminIDSeq_var seq (seq_ptr);
 
   seq->length (this->consumer_admin_id_list_.size ());
 
@@ -263,7 +265,7 @@ TAO_NS_EventChannel::get_all_consumeradmins (ACE_ENV_SINGLE_ARG_DECL)
   for (iter.first (); iter.next (object_id); iter.advance (), ++i)
     seq[i] = *object_id;
 
-  return seq;
+  return seq._retn ();
 }
 
 CosNotifyChannelAdmin::AdminIDSeq*
@@ -272,11 +274,13 @@ TAO_NS_EventChannel::get_all_supplieradmins (ACE_ENV_SINGLE_ARG_DECL)
                    CORBA::SystemException
                    ))
 {
-  CosNotifyChannelAdmin::AdminIDSeq* seq;
+  CosNotifyChannelAdmin::AdminIDSeq* seq_ptr;
 
-  ACE_NEW_THROW_EX (seq,
+  ACE_NEW_THROW_EX (seq_ptr,
                     CosNotifyChannelAdmin::AdminIDSeq (),
                     CORBA::NO_MEMORY ());
+
+  CosNotifyChannelAdmin::AdminIDSeq_var seq (seq_ptr);
 
   seq->length (this->supplier_admin_id_list_.size ());
 
@@ -288,7 +292,7 @@ TAO_NS_EventChannel::get_all_supplieradmins (ACE_ENV_SINGLE_ARG_DECL)
   for (iter.first (); iter.next (object_id); iter.advance (), ++i)
     seq[i] = *object_id;
 
-  return seq;
+  return seq._retn ();
 }
 
 void
