@@ -16,7 +16,7 @@ project(TAO_IDL3_TO_IDL2_BE) : acelib, core, tao_output, crosscompile {
     be_sunsoft.cpp
     idl3_to_idl2_visitor.cpp
   }
-  
+
   Header_Files {
     be_extern.h
     be_global.h
@@ -42,8 +42,8 @@ project(TAO_IDL3_TO_IDL2_EXE) : aceexe, core, tao_output, crosscompile {
     else
       CPPFLAGS += -DTAO_IDL_PREPROCESSOR=\\\"$(subst \\,\\,$(TAO_IDL_PREPROCESSOR))\\\"
     endif
-    
-    VPATH = $(TAO_ROOT)/TOA_IDL $(TAO_ROOT)/TAO_IDL/driver
+
+    VPATH = $(TAO_ROOT)/TAO_IDL $(TAO_ROOT)/TAO_IDL/driver
   }
 
   Source_Files {
@@ -51,7 +51,7 @@ project(TAO_IDL3_TO_IDL2_EXE) : aceexe, core, tao_output, crosscompile {
     $(TAO_ROOT)/TAO_IDL/driver/drv_preproc.cpp
     $(TAO_ROOT)/TAO_IDL/tao_idl.cpp
   }
-  
+
   Header_Files {
     $(TAO_ROOT)/TAO_IDL/include/drv_extern.h
   }
