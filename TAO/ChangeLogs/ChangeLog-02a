@@ -1,3 +1,10 @@
+Sun Dec  9 16:45:06 2001  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/SecurityLevel2.idl (set_attributes):
+
+	  Corrected parameter name.  Some text was still left over from a
+	  previous update.
+
 Sun Dec  9 13:50:47 2001  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.h:
