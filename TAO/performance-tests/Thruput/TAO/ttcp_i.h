@@ -42,13 +42,15 @@ public:
                              CORBA::Environment &IT_env)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-  /* Routines to calculate the time required to transfer */
-  virtual void start_timer (CORBA::Environment &IT_env);
-  virtual void stop_timer (CORBA::Environment &IT_env);
+  // = Routines to calculate the time required to transfer.
+  virtual void start_timer (CORBA::Environment &IT_env)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual void stop_timer (CORBA::Environment &IT_env)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
-  unsigned long nbytes_;
+  u_long nbytes_;
 };
 
-#endif // defined (TTCP_I_H)
+#endif /* TTCP_I_H */
 

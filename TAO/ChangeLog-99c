@@ -1,5 +1,12 @@
 Thu Jun 17 21:45:11 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* performance-tests/Thruput/TAO: Added the ACE_THROW macros.
+
+	* examples/Event_Comm: Added the ACE_THROW macros.
+
+	* examples/Simple/time/Time_i: Fixed the ACE_THROW macros to work
+ 	  correctly.
+
 	* examples/Simple/bank: Added all the ACE_THROW specs.
 
 	* ChangeLog: Split the ChangeLog to make a ChangeLog-99a since we
