@@ -146,7 +146,7 @@ ACE_Filecache_Handle::size (void) const
 #define ACE_Filecache_Hash_Entry \
         ACE_Hash_Map_Entry<const ACE_TCHAR *, ACE_Filecache_Object *>
 
-
+template <>
 ACE_Filecache_Hash_Entry::ACE_Hash_Map_Entry (
   const ACE_TCHAR *const &ext_id,
   ACE_Filecache_Object *const &int_id,
@@ -161,6 +161,7 @@ ACE_Filecache_Hash_Entry::ACE_Hash_Map_Entry (
 {
 }
 
+template <>
 ACE_Filecache_Hash_Entry::ACE_Hash_Map_Entry (ACE_Filecache_Hash_Entry *next,
                                               ACE_Filecache_Hash_Entry *prev)
   : ext_id_ (0),
@@ -169,6 +170,7 @@ ACE_Filecache_Hash_Entry::ACE_Hash_Map_Entry (ACE_Filecache_Hash_Entry *next,
 {
 }
 
+template <>
 ACE_Filecache_Hash_Entry::~ACE_Hash_Map_Entry (void)
 {
   ACE_OS::free ((void *) ext_id_);
@@ -177,12 +179,14 @@ ACE_Filecache_Hash_Entry::~ACE_Hash_Map_Entry (void)
 // We need these template specializations since KEY is defined as a
 // ACE_TCHAR*, which doesn't have a hash() or equal() method defined on it.
 
+template <>
 unsigned long
 ACE_Filecache_Hash::hash (const ACE_TCHAR *const &ext_id)
 {
   return ACE::hash_pjw (ext_id);
 }
 
+template <>
 int
 ACE_Filecache_Hash::equal (const ACE_TCHAR *const &id1,
                            const ACE_TCHAR *const &id2)
