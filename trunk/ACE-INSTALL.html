@@ -1337,6 +1337,23 @@ task.  The TAO IDL_Cubit test <a
 href="TAO/performance-tests/Cubit/TAO/IDL_Cubit/collocation_test.cpp">collocation
 test</a> is a good example.<p>
 
+<h5><a name="VxWorks/LinkToKernel">Linking ACE and/or TAO Libraries into the VxWorks Kernel</a>.</h5>
+
+It's easy to link your ACE and/or TAO libraries into the VxWorks kernel.
+Just build <a href="#VxWorks/SharedLibs">shared versions</a>, but
+disable the munch step.  The easiest way to do that is to set the
+<code>LD</code> make variable to the name of your linker.  For
+example, to build a libACE.so for PowerPC that can be linked into
+the kernel:
+<pre>
+% cd $ACE_ROOT/ace
+% make LD=ldppc shared_libs_only=1
+</pre>
+After building the shared lib, link it into the kernel by setting
+the <code>MACH_EXTRA</code> make variable in the kernel configuration
+Makefile.  Then, build the kernel using <code>make exe</code>.<p>
+
+
 <h5><a name="VxWorks/NT">Building ACE on Tornado/NT hosts for VxWorks targets</a>.</h5>
 The following, very useful information was contributed by
 <a href="http://people.qualcomm.com/cryan">Chris Ryan</a>
@@ -1344,33 +1361,11 @@ and <a href="mailto:Paul_von_Behren@stortek.com">Paul von Behren</a>.
 Please submit corrections, additions, or clarifications to the
 the <a href="mailto:ace-users@cs.wustl.edu">ACE mailing list</a>.<p>
 
-A few additional Windows Notes, from Paul von Behren:<p>
-<ul>
-  <li>Cygnus has created a Win32 API which is compatible with a
-      ``generic'' Unix environment.  Using this library, they have ported a
-      large collection of GNU tools to WinNT/95 - including a port of
-      gcc/g++.  See <A href="http://www.cygnus.com/misc/gnu-win32/">http://www.cygnus.com/misc/gnu-win32/</A>
-      A related link is <a href="ftp://ftp.cygnus.com/pub/gnu-win32/latest/">ftp://ftp.cygnus.com/pub/gnu-win32/latest/</a>
-      WindRiver provides a subset of these tools - including make
-      and gcc cross-compilers.  (Note:  it appears that the make
-      that is provided with Tornado 2.0 cannot be used to build ACE.
-      Use Cygnus' make (version 3.75) instead.)<p>
-  <li>To set up the command-prompt build environemnt, run
-      <code>Tornado\host\x86-win32\bin\TorVars.bat</code>.  This is done
-      implicitly within the Tornado IDE.<p>
-  <li>To run <code>ace_ld</code>, you still need perl installed -
-      see <A href="http://www.activestate.com/software/default.htm">http://www.activestate.com/software/default.htm</A>
-      for Windows perl.<p>
-  <li>The Tornado IDE will use a standard Makefile for project
-      builds, but does not have a GUI interface for managing the
-      Makefile.  By default, it will use rules from Makefile in the current
-      directory and you can configure it to add certain Makefile
-      targets to the project.  If you have <code>ACE_ROOT</code> defined
-      before starting Tornado, you can specify an ACE Makefile as a Tornado
-      target and Tornado will then call make from the menu.<p>
-</ul>
+<strong>NOTE:</strong>The make (version 3.74) that is provided with
+Tornado II cannot be used to build ACE.  Use Cygnus' make (version 3.75)
+instead.)<p>
 
-Using the Cygnus tools, this approach should work:
+Using the Cygnus tools, this approach works:
 <ul>
   <li>You'll build both your NT and VxWorks executables in the same
     workspace (directory hierarchy).  This works because the NT
@@ -1396,6 +1391,28 @@ Using the Cygnus tools, this approach should work:
      <code>WIND_BASE</code>, and <code>WIND_HOST_TYPE</code> environment
      variables.<p>
    <li>Build for NT, then build for VxWorks.<p>
+</ul>
+
+A few additional Windows Notes, from Paul von Behren:<p>
+<ul>
+  <li>Cygnus has created a Win32 API which is compatible with a
+      ``generic'' Unix environment.  Using this library, they have ported a
+      large collection of GNU tools to WinNT/95 - including a port of
+      gcc/g++.  See <A href="http://www.cygnus.com/misc/gnu-win32/">http://www.cygnus.com/misc/gnu-win32/</A>
+      A related link is <a href="ftp://ftp.cygnus.com/pub/gnu-win32/latest/">ftp://ftp.cygnus.com/pub/gnu-win32/latest/</a><p>
+  <li>To set up the command-prompt build environemnt, run
+      <code>Tornado\host\x86-win32\bin\TorVars.bat</code>.  This is done
+      implicitly within the Tornado IDE.<p>
+  <li>To run <code>ace_ld</code>, you still need perl installed -
+      see <A href="http://www.activestate.com/software/default.htm">http://www.activestate.com/software/default.htm</A>
+      for Windows perl.<p>
+  <li>The Tornado IDE will use a standard Makefile for project
+      builds, but does not have a GUI interface for managing the
+      Makefile.  By default, it will use rules from Makefile in the current
+      directory and you can configure it to add certain Makefile
+      targets to the project.  If you have <code>ACE_ROOT</code> defined
+      before starting Tornado, you can specify an ACE Makefile as a Tornado
+      target and Tornado will then call make from the menu.<p>
 </ul>
 
 And Chris Ryan's instructions for building for VxWorks targets
@@ -1464,23 +1481,6 @@ on Windows NT hosts:
       CPU = I80486
       include $(ACE_ROOT)/include/makeinclude/platform_vxworks5.x_g++.GNU
       </pre>
-
-  <li>Now, follow the existing documentation for a UNIX platform build of ACE
-      such as:
-      <pre>
-      cd $ACE_ROOT/ace; make
-      </pre>
-
-  <li>To build $ACE_ROOT/tests, I had to use the <code>make.exe</code> in the
-      <code>/gnuwin32/b18/H-i386-cygwin32/bin</code> directory as I couldn't
-      get make shipped with Tornado to run ace_ld and I couldn't figure out any
-      other work around.<p>
-
-      <pre>
-      cd $ACE_ROOT/tests; /gnuwin32/b18/H-i386-cygwin32/bin/make
-      </pre>
-
-      Also, running the tests works as already documented.
 </ol>
 
 <h5>TAO on NT Tornado host, VxWorks target.</h5>
@@ -1488,6 +1488,8 @@ on Windows NT hosts:
 <ol>
   <li>Build ACE and TAO_IDL in the NT tree as already documented. As
       mentioned above, I put <code>aced.dll</code> in <code>/bin</code>.
+      Be sure to build ACE's gperf on NT, in
+      <code>ACE_wrappers/apps/gperf/src</code>.<p>
 
   <li>Build $TAO_ROOT/tao
       <pre>
@@ -1503,7 +1505,7 @@ on Windows NT hosts:
       /gnuwin32/b18/H-i386-cygwin32/bin/make
       </pre>
 
-  <li>Build $TAO_ROOT/tests
+  <li>Build $TAO_ROOT/tests<p>
 </ol>
 
 
