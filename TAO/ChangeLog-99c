@@ -1,3 +1,10 @@
+Tue Apr  6 16:29:55 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* examples/Simple/echo/Echo_i.cpp (echo_string): 
+	* examples/Simple/echo/Echo_Client_i.cpp
+	* examples/Simple/echo/server.cpp
+	Made some changes to the ACE_TRY macros
+
 Tue Apr  6 15:44:52 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 
 	  Changed the Names of the following files:
