@@ -176,18 +176,14 @@ TAO_DIOP_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
   if (endpoint == 0)
     return 0;
 
-  return
-    (this->port_ == endpoint->port_)
-    && (this->object_addr_.get_ip_address () ==
-        endpoint->object_addr_.get_ip_address());
+  return (this->port () == endpoint->port ()
+          && ACE_OS::strcmp(this->host (), endpoint->host()) == 0);
 }
 
 CORBA::ULong
 TAO_DIOP_Endpoint::hash (void)
 {
-  return
-    ACE::hash_pjw (this->host_.in ())
-    + this->port_;
+  return ACE::hash_pjw (this->host ().in ()) + this->port ();
 }
 
 #endif /* TAO_HAS_DIOP && TAO_HAS_DIOP != 0 */
