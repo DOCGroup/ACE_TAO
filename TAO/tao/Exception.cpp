@@ -238,9 +238,12 @@ CORBA::ULong
 CORBA_SystemException::errno_tao_ (int errno_value)
 {
   switch (errno_value) {
+    case 0 : return TAO_UNSPECIFIED_MINOR_CODE;
     case ETIMEDOUT : return TAO_ETIMEDOUT_MINOR_CODE;
     case ENFILE : return TAO_ENFILE_MINOR_CODE;
     case EMFILE : return TAO_EMFILE_MINOR_CODE;
+    case EPIPE : return TAO_EPIPE_MINOR_CODE;
+    case ECONNREFUSED : return TAO_ECONNREFUSED_MINOR_CODE;
     default : return TAO_UNKNOWN_MINOR_CODE;
   }
 }
@@ -266,12 +269,12 @@ CORBA_SystemException::print_exception_tao_ (FILE *) const
               "(%P|%t) system exception, ID '%s'\n",
               _id ()));
 
-  CORBA::ULong VMCID = this->minor () & 0xFFFFF000;
+  CORBA::ULong VMCID = this->minor () & 0xFFFFF000u;
 
   if (VMCID == TAO_DEFAULT_MINOR_CODE)
     {
       const char *location;
-      switch (this->minor () & 0x00000FF0) {
+      switch (this->minor () & 0x00000FF0u) {
       case TAO_INVOCATION_CONNECT_MINOR_CODE :
         location = "invocation connect failed";
         break;
@@ -290,12 +293,18 @@ CORBA_SystemException::print_exception_tao_ (FILE *) const
       case TAO_UNHANDLED_SERVER_CXX_EXCEPTION :
         location = "unhandled c++ exception in server side";
         break;
+      case TAO_INVOCATION_RECV_REQUEST_MINOR_CODE :
+        location = "failed to recv request response";
+        break;
       default :
         location = "unknown location";
       }
 
       const char *errno_indication;
-      switch (this->minor () & 0x0000000F) {
+      switch (this->minor () & 0x0000000Fu) {
+      case TAO_UNSPECIFIED_MINOR_CODE :
+        errno_indication = "unspecified errno";
+        break;
       case TAO_ETIMEDOUT_MINOR_CODE :
         errno_indication = "ETIMEOUT";
         break;
@@ -304,6 +313,12 @@ CORBA_SystemException::print_exception_tao_ (FILE *) const
         break;
       case TAO_EMFILE_MINOR_CODE :
         errno_indication = "EMFILE";
+        break;
+      case TAO_EPIPE_MINOR_CODE :
+        errno_indication = "EPIPE";
+        break;
+      case TAO_ECONNREFUSED_MINOR_CODE :
+        errno_indication = "ECONNREFUSED";
         break;
       default :
         errno_indication = "unknown errno";
