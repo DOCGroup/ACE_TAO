@@ -80,6 +80,10 @@ protected:
 
   /// Table of <Request ID, Reply Dispatcher> pairs.
   REQUEST_DISPATCHER_TABLE dispatcher_table_;
+
+protected:
+  int clear_cache (void);
+
 };
 
 #include "ace/post.h"

@@ -1,3 +1,28 @@
+Tue Jul 15 10:18:07 2003  Gan Deng  <gan.deng@vanderbilt.edu>
+
+        * tao/Transport.cpp (send_closed_connection_notification):
+          Before closing the TMS, release the lock. Else the ORB would
+          deadlock. This should also fix Bug_1482_Regression failures
+          in our daily builds.
+
+        * tao/Muxed_TMS.h:
+        * tao/Muxed_TMS.cpp: Added a new method clear_cache () that
+          takes care of cleaning up the dispatcher table. We now
+          do the following during close_connection
+
+          - Iterate through the dispatcher table by taking the
+            elements and adding it to an unbounded array. 
+
+          - Unbind all the entries
+  
+          - Call close_connection on all of them. 
+
+          This prevents closed entries being left over in cache that
+          which leads to crashes. Thanks to Balachandran Natarajan
+          <bala@dre.vanderbilt.edu> for helping me out with
+          this. Thanks to Carlos O'Ryan <coryan@atdesk.com> for
+          reporting the bug. 
+
 Mon Jul 14 18:41:29 2003  Pradeep Gore  <pradeep@oomworks.com>
 
 	* orbsvcs/orbsvcs/Notify_Service.cpp:
