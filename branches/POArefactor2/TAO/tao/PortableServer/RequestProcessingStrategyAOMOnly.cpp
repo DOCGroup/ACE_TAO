@@ -9,10 +9,6 @@
  */
 //=============================================================================
 
-#include "tao/Server_Strategy_Factory.h"
-#include "tao/ORB_Core.h"
-#include "tao/TSS_Resources.h"
-
 #include "tao/PortableServer/ServantActivatorC.h"
 #include "tao/PortableServer/ServantLocatorC.h"
 
