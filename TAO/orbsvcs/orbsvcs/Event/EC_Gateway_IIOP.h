@@ -105,6 +105,14 @@ public:
    */
   void cleanup_consumer_proxies (ACE_ENV_SINGLE_ARG_DECL);
 
+  /// Cleanup the connection to the consumer ec. Doesn't call anything on the
+  /// ec again, just set the object to nil
+  int cleanup_consumer_ec (void);
+
+  /// Cleanup the connection to the supplier ec. Doesn't call anything on the
+  /// ec again, just set the object to nil
+  int cleanup_supplier_ec (void);
+
 private:
   void close_i (ACE_ENV_SINGLE_ARG_DECL);
 
@@ -121,6 +129,10 @@ private:
 
   void push_to_consumer (RtecEventChannelAdmin::ProxyPushConsumer_ptr consumer,
                          const RtecEventComm::EventSet& event ACE_ENV_ARG_DECL);
+
+  void cleanup_consumer_ec_i (void);
+
+  void cleanup_supplier_ec_i (void);
 
 protected:
   /// Do the real work in init()

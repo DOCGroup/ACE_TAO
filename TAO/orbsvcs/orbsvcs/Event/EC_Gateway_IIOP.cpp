@@ -551,12 +551,44 @@ TAO_EC_Gateway_IIOP::shutdown (ACE_ENV_SINGLE_ARG_DECL)
       this->consumer_is_active_ = 0;
     }
 
-  this->consumer_ec_ =
-    RtecEventChannelAdmin::EventChannel::_nil ();
-  this->supplier_ec_ =
-    RtecEventChannelAdmin::EventChannel::_nil ();
+  this->cleanup_consumer_ec_i ();
+  this->cleanup_supplier_ec_i ();
 
   return 0;
+}
+
+int
+TAO_EC_Gateway_IIOP::cleanup_consumer_ec (void)
+{
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, -1);
+
+  this->cleanup_consumer_ec_i ();
+
+  return 0;
+}
+
+int
+TAO_EC_Gateway_IIOP::cleanup_supplier_ec (void)
+{
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, -1);
+
+  this->cleanup_supplier_ec_i ();
+
+  return 0;
+}
+
+void
+TAO_EC_Gateway_IIOP::cleanup_consumer_ec_i (void)
+{
+  this->consumer_ec_ =
+    RtecEventChannelAdmin::EventChannel::_nil ();
+}
+
+void
+TAO_EC_Gateway_IIOP::cleanup_supplier_ec_i (void)
+{
+  this->supplier_ec_ =
+    RtecEventChannelAdmin::EventChannel::_nil ();
 }
 
 CORBA::Boolean
