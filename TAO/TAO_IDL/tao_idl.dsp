@@ -81,6 +81,9 @@ LINK32=link.exe
 
 # Name "tao_idl - Win32 Release"
 # Name "tao_idl - Win32 Debug"
+# Begin Group "Source Files"
+
+# PROP Default_Filter "*.cpp"
 # Begin Source File
 
 SOURCE=.\ast\ast_argument.cpp
@@ -453,5 +456,394 @@ SOURCE=.\util\utl_strlist.cpp
 
 SOURCE=.\fe\y.tab.cpp
 # End Source File
+# End Group
+# Begin Group "Header Files"
+
+# PROP Default_Filter "*.h"
+# Begin Source File
+
+SOURCE=.\include\ast.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\include\ast_argument.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\include\ast_array.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\include\ast_attribute.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\include\ast_concrete_type.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\include\ast_constant.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\include\ast_decl.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\include\ast_enum.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\include\ast_enum_val.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\include\ast_exception.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\include\ast_expression.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\include\ast_extern.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\include\ast_field.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\include\ast_generator.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\include\ast_interface.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\include\ast_interface_fwd.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\include\ast_module.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\include\ast_operation.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\include\ast_predefined_type.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\include\ast_root.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\include\ast_sequence.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\include\ast_string.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\include\ast_structure.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\include\ast_type.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\include\ast_typedef.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\include\ast_union.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\include\ast_union_branch.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\include\ast_union_label.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_argument.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_array.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_attribute.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_codegen.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_constant.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_decl.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_enum.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_enum_val.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_exception.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_expression.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\include\be_extern.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_factory.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_field.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_generator.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_helper.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_interface.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_interface_fwd.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_module.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_operation.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_predefined_type.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_root.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_scope.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_sequence.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_state.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_string.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_structure.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_sunsoft.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_type.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_typedef.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_union.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_union_branch.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_union_label.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\include\drv_extern.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\include\drv_link.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\include\drv_private.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\include\fe_declarator.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\include\fe_extern.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\include\fe_interface_header.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\include\fe_private.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\include\global_extern.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\include\idl.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\include\idl_bool.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\include\idl_defines.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\include\idl_extern.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\include\idl_fwd.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\include\idl_global.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\include\idl_narrow.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\include\intlmacros.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\include\nr_extern.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\include\util.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\include\utl_decllist.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\include\utl_error.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\include\utl_exceptlist.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\include\utl_exprlist.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\include\utl_identifier.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\include\utl_idlist.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\include\utl_indenter.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\include\utl_labellist.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\include\utl_list.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\include\utl_namelist.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\include\utl_scope.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\include\utl_scoped_name.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\include\utl_stack.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\include\utl_string.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\include\utl_strlist.h
+# End Source File
+# End Group
+# Begin Group "Inline Files"
+
+# PROP Default_Filter ""
+# End Group
+# Begin Group "Template Files"
+
+# PROP Default_Filter ""
+# End Group
 # End Target
 # End Project
