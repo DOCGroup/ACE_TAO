@@ -22,7 +22,6 @@ CLIENT_OBJS = 	client.o
 SERVER_OBJS = 	server.o
 
 BUILD = $(BIN)
-VLDLIBS = $(LDLIBS:%=%$(VAR))
 VBIN = $(BIN:%=%$(VAR))
 SRC=$(CLIENT_OBJS:.o=.cpp) $(SERVER_OBJS:.o=.cpp)
 CPPFLAGS += -I../Common
@@ -49,10 +48,10 @@ include $(TAO_ROOT)/taoconfig.mk
 #----------------------------------------------------------------------------
 
 server: $(addprefix $(VDIR),$(SERVER_OBJS))
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(TAO_SRVR_LIBS) $(VLDLIBS) $(POSTLINK)
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(RT_TAO_SRVR_LIBS) $(LDLIBS) $(POSTLINK)
 
 client: $(addprefix $(VDIR),$(CLIENT_OBJS))
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(RT_TAO_CLNT_LIBS) $(VLDLIBS) $(POSTLINK)
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(RT_TAO_CLNT_LIBS) $(LDLIBS) $(POSTLINK)
 
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
