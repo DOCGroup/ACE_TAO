@@ -2178,8 +2178,8 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 {
   // ACE_TRACE ("ACE_OS::thr_create");
 
-  if (ACE_BIT_DISABLE (flags, THR_DETACHED) &&
-      ACE_BIT_DISABLE (flags, THR_JOINABLE))
+  if (ACE_BIT_DISABLED (flags, THR_DETACHED) &&
+      ACE_BIT_DISABLED (flags, THR_JOINABLE))
     ACE_SET_BITS (flags, THR_JOINABLE);
 
 # if defined (ACE_NO_THREAD_ADAPTER)
