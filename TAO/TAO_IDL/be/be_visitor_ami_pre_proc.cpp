@@ -35,6 +35,7 @@
 #include "be_predefined_type.h"
 #include "be_argument.h"
 #include "utl_identifier.h"
+#include "nr_extern.h"
 
 ACE_RCSID (be, 
            be_visitor_ami_pre_proc, 
@@ -456,64 +457,6 @@ be_interface *
 be_visitor_ami_pre_proc::create_reply_handler (be_interface *node,
                                                be_valuetype *excep_holder)
 {
-  Identifier *id = 0;
-  UTL_ScopedName *sn = 0;
-
-  // Create a virtual module named "Messaging" and an interface "ReplyHandler"
-  // from which we inherit.
-  ACE_NEW_RETURN (id,
-                  Identifier ("Messaging"),
-                  0);
-
-  UTL_ScopedName *inherit_name = 0;
-  ACE_NEW_RETURN (inherit_name,
-                  UTL_ScopedName (id,
-                                  0),
-                  0);
-
-  ACE_NEW_RETURN (id,
-                  Identifier ("ReplyHandler"),
-                  0);
-
-  ACE_NEW_RETURN (sn,
-                  UTL_ScopedName (id,
-                                  0),
-                  0);
-
-  inherit_name->nconc (sn);
-
-  be_interface *inherit_intf = 0;
-  ACE_NEW_RETURN (inherit_intf,
-                  be_interface (inherit_name,
-                                0,  // inherited interfaces
-                                0,  // number of inherited interfaces
-                                0,  // ancestors
-                                0,  // number of ancestors
-                                0,  // not local
-                                0), // not abstract
-                  0);
-
-  inherit_intf->set_name (inherit_name);
-
-  ACE_NEW_RETURN (id,
-                  Identifier ("Messaging"),
-                  0);
-
-  ACE_NEW_RETURN (sn,
-                  UTL_ScopedName (id,
-                                  0),
-                  0);
-
-  be_module *msg = 0;
-  ACE_NEW_RETURN (msg,
-                  be_module (sn),
-                  0);
-
-  // Notice the interface "ReplyHandler" that it is defined in the
-  // "Messaging" module.
-  inherit_intf->set_defined_in (msg);
-
-
   // Create the reply handler name.
   ACE_CString reply_handler_local_name;
   this->generate_name (reply_handler_local_name,
@@ -526,20 +469,22 @@ be_visitor_ami_pre_proc::create_reply_handler (be_interface *node,
   reply_handler_name->last_component ()->replace_string (
                                              reply_handler_local_name.rep ()
                                            );
+  
+  long n_parents = 0;
+  AST_Interface_ptr *p_intf = this->create_inheritance_list (node, n_parents);
+//  AST_Interface_ptr *p_intf = 0;
+//  ACE_NEW_RETURN (p_intf,
+//                  AST_Interface_ptr[1],
+//                  0);
 
-  AST_Interface_ptr *p_intf = 0;
-  ACE_NEW_RETURN (p_intf,
-                  AST_Interface_ptr[1],
-                  0);
-
-  p_intf[0] = ACE_static_cast (AST_Interface *,
-                               inherit_intf);
+//  p_intf[0] = ACE_static_cast (AST_Interface *,
+//                               inherit_intf);
 
   be_interface *reply_handler = 0;
   ACE_NEW_RETURN (reply_handler,
                   be_interface (reply_handler_name, // name
                                 p_intf,             // list of inherited
-                                1,                  // number of inherited
+                                n_parents,          // number of inherited
                                 0,                  // list of all ancestors
                                 0,                  // number of ancestors
                                 0,                  // non-local
@@ -1326,3 +1271,142 @@ be_visitor_ami_pre_proc::generate_set_operation (be_attribute *node)
 
   return operation;
 }
+
+be_visitor_ami_pre_proc::AST_Interface_ptr *
+be_visitor_ami_pre_proc::create_inheritance_list (be_interface *node,
+                                                  long &n_rh_parents)
+{
+  AST_Interface_ptr *retval = 0;
+
+  long n_parents = node->n_inherits ();
+  long n_concrete_parents = 0;
+  AST_Interface **parents = node->inherits ();
+
+  for (long i = 0; i < n_parents; ++i)
+    {
+      if (! parents[i]->is_abstract ())
+        {
+          ++n_concrete_parents;
+        }
+    }
+
+  Identifier *id = 0;
+  UTL_ScopedName *sn = 0;
+
+  if (n_concrete_parents == 0)
+    {
+      // Create a virtual module named "Messaging" and an interface "ReplyHandler"
+      // from which we inherit.
+      ACE_NEW_RETURN (id,
+                      Identifier ("Messaging"),
+                      0);
+
+      UTL_ScopedName *inherit_name = 0;
+      ACE_NEW_RETURN (inherit_name,
+                      UTL_ScopedName (id,
+                                      0),
+                      0);
+
+      ACE_NEW_RETURN (id,
+                      Identifier ("ReplyHandler"),
+                      0);
+
+      ACE_NEW_RETURN (sn,
+                      UTL_ScopedName (id,
+                                      0),
+                      0);
+
+      inherit_name->nconc (sn);
+
+      be_interface *inherit_intf = 0;
+      ACE_NEW_RETURN (inherit_intf,
+                      be_interface (inherit_name,
+                                    0,  // inherited interfaces
+                                    0,  // number of inherited interfaces
+                                    0,  // ancestors
+                                    0,  // number of ancestors
+                                    0,  // not local
+                                    0), // not abstract
+                      0);
+
+      inherit_intf->set_name (inherit_name);
+
+      ACE_NEW_RETURN (id,
+                      Identifier ("Messaging"),
+                      0);
+
+      ACE_NEW_RETURN (sn,
+                      UTL_ScopedName (id,
+                                      0),
+                      0);
+
+      be_module *msg = 0;
+      ACE_NEW_RETURN (msg,
+                      be_module (sn),
+                      0);
+
+      // Notice the interface "ReplyHandler" that it is defined in the
+      // "Messaging" module.
+      inherit_intf->set_defined_in (msg);
+
+      ACE_NEW_RETURN (retval,
+                      AST_Interface_ptr[1],
+                      0);
+
+      retval[0] = inherit_intf;
+      n_rh_parents = 1;
+    }
+  else
+    {
+      ACE_NEW_RETURN (retval,
+                      AST_Interface_ptr[n_concrete_parents],
+                      0);
+
+      AST_Interface *parent = 0;
+      ACE_CString prefix ("AMI_");
+      ACE_CString suffix ("Handler");
+      long index = 0;
+
+      for (long j = 0; j < n_parents; ++j)
+        {
+          parent = parents[j];
+
+          if (parent->is_abstract ())
+            {
+              continue;
+            }
+
+          ACE_CString rh_local_name = 
+            prefix + parent->local_name ()->get_string () + suffix;
+
+          AST_Decl *parent_scope = ScopeAsDecl (parent->defined_in ());
+
+          UTL_ScopedName *rh_parent_name = 
+            (UTL_ScopedName *) parent_scope->name ()->copy ();
+
+          ACE_NEW_RETURN (id,
+                          Identifier (rh_local_name.c_str ()),
+                          0);
+
+          ACE_NEW_RETURN (sn,
+                          UTL_ScopedName (id,
+                                          0),
+                          0);
+
+          rh_parent_name->nconc (sn);
+
+          AST_Decl *d = 
+            node->defined_in ()->lookup_by_name (rh_parent_name,
+                                                 1);
+
+          retval[index++] = AST_Interface::narrow_from_decl (d);
+
+          rh_parent_name->destroy ();
+        }
+
+      n_rh_parents = index;
+    }
+
+  return retval;
+}
+

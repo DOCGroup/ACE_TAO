@@ -1,3 +1,13 @@
+Fri Nov 22 15:30:28 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_ami_pre_proc.cpp:
+
+          Fixed the creation of the inheritance list for the implied
+          AMI reply handler interface. It now inherits from the
+          reply handler of each of the original interface's parents. Thanks
+          to Carlos O'Ryan <coryan@atdesk> for pointing out the bug. This closes
+          [BUGID:1371].
+
 Fri Nov 22 12:27:27 2002  Craig Rodrigues <crodrigu@bbn.com>
 
 	* orbsvcs/examples/CosEC/RtEC_Based/lib/Makefile:
