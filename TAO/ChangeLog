@@ -1,3 +1,22 @@
+Thu Oct 30 15:01:43 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp:
+	* orbsvcs/tests/Notify/Blocking/Notify_Structured_Push_Consumer.cpp:
+	* orbsvcs/tests/Notify/Discarding/Notify_Sequence_Push_Consumer.cpp:
+	* orbsvcs/tests/Notify/Discarding/Notify_Structured_Push_Consumer.cpp:
+	* orbsvcs/tests/Notify/Ordering/Notify_Sequence_Push_Consumer.cpp:
+	* orbsvcs/tests/Notify/Ordering/Notify_Structured_Push_Consumer.cpp:
+	* orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Notify_Sequence_Push_Consumer.cpp:
+	* orbsvcs/tests/Notify/Sequence_Multi_Filter/Notify_Sequence_Push_Consumer.cpp:
+	* orbsvcs/tests/Notify/Structured_Multi_Filter/Notify_Push_Consumer.cpp:
+	* orbsvcs/tests/Notify/Structured_Multi_Filter/Notify_Push_Supplier.cpp:
+	* orbsvcs/tests/Notify/lib/Command.cpp:
+	* orbsvcs/tests/Notify/lib/Command.h:
+	* orbsvcs/tests/Notify/performance-tests/Filter/Notify_Sequence_Push_Consumer.cpp:
+	* orbsvcs/tests/Notify/performance-tests/Filter/Notify_Structured_Push_Consumer.cpp:
+
+	  Fixed compilation on platforms where exceptions are turned off. 
+
 Thu Oct 30 20:45:00 UTC 2003  Gautam Thaker  <gthaker@atl.lmco.com>
 
         Please direct all queries regarding this commit to
