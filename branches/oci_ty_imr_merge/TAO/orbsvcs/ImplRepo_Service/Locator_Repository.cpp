@@ -1,6 +1,7 @@
 #include "Locator_Repository.h"
 #include "Locator_XMLHandler.h"
 #include "utils.h"
+#include "ace/OS_NS_stdio.h"
 
 #include "ACEXML/parser/parser/Parser.h"
 #include "ACEXML/common/FileCharStream.h"
