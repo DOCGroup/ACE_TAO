@@ -354,7 +354,7 @@ CORBA_SystemException::_tao_errno (int errno_value)
 #endif /* ENOSYS != EFAULT */
     default:
       // Mask off bottom 7 bits and return them.
-      return errno_value & 0x7F;
+      return errno_value & 0x7FU;
     }
 }
 
@@ -439,6 +439,12 @@ CORBA_SystemException::_info (void) const
         case TAO_IMPLREPO_SERVER_MANUAL_ACTIVATION:
           location = "implrepo server specified manual startup";
           break;
+        case TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE:
+          location = "endpoint initialization failure in Acceptor Registry";
+          break;
+        case TAO_ORB_CORE_INIT_LOCATION_CODE:
+          location = "ORB Core initialization failed";
+          break;
         default:
           location = "unknown location";
         }
@@ -508,7 +514,7 @@ CORBA_SystemException::_info (void) const
           errno_indication = "ECONNRESET";
           break;
         case TAO_ENOTSUP_MINOR_CODE:
-          errno_indication = "EENOTSUP";
+          errno_indication = "ENOTSUP";
           break;
         default:
           {
