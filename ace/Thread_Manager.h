@@ -293,6 +293,8 @@ public:
    * only called from ACE_Log_Msg::thr_desc.
    */
   void acquire_release (void);
+  void acquire (void);
+  void release (void);
 
   /**
    * Set/get the <next_> pointer.  These are required by the
@@ -1069,9 +1071,9 @@ protected:
   ACE_Condition_Thread_Mutex zero_cond_;
 #endif /* ACE_HAS_THREADS */
 
-private:
   ACE_Locked_Free_List<ACE_Thread_Descriptor, ACE_SYNCH_MUTEX> thread_desc_freelist_;
 
+private:
 #if ! defined (ACE_THREAD_MANAGER_LACKS_STATICS)
   /// Pointer to a process-wide <ACE_Thread_Manager>.
   static ACE_Thread_Manager *thr_mgr_;
