@@ -25,7 +25,7 @@ Cubit_Server::parse_args (void)
         this->num_of_objs_ = ACE_OS::atoi (get_opts.optarg);
         break;
       case 'o': // output the IOR to a file.
-	this->ior_output_file_ = ACE_OS::fopen (get_opts.optarg, "w");
+        this->ior_output_file_ = ACE_OS::fopen (get_opts.optarg, "w");
         if (this->ior_output_file_ == 0)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Unable to open %s for writing: %p\n",
@@ -53,15 +53,15 @@ Cubit_Server::parse_args (void)
 
 int
 Cubit_Server::init (int argc,
-		    char** argv,
-		    CORBA::Environment& env)
+                    char** argv,
+                    CORBA::Environment& env)
 {
   // Call the init of TAO_ORB_Manager to create a child POA
   // under the root POA.
   this->init_child_poa (argc,
-			argv,
-			"child_poa",
-			env);
+                        argv,
+                        "child_poa",
+                        env);
 
   TAO_CHECK_ENV_RETURN (env,-1);
   this->argc_ = argc;
@@ -71,10 +71,10 @@ Cubit_Server::init (int argc,
 
   CORBA::String_var str  =
     this->activate_under_child_poa ("factory",
-				    &this->factory_impl_,
-				    env);
+                                    &this->factory_impl_,
+                                    env);
   ACE_DEBUG ((LM_DEBUG,
-	      "The IOR is: <%s>\n",
+              "The IOR is: <%s>\n",
               str.in ()));
 
   if (this->ior_output_file_)
@@ -98,7 +98,7 @@ int
 Cubit_Server::init_naming_service (CORBA::Environment& env)
 {
   int result;
-  result = this->my_name_server_.init (this->orb_, 
+  result = this->my_name_server_.init (this->orb_,
                               this->child_poa_);
   if (result < 0)
     return result;
@@ -135,7 +135,7 @@ Cubit_Server::run (CORBA::Environment& env)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "run"),
-                      -1);      
+                      -1);
   return 0;
 }
 
@@ -158,8 +158,8 @@ Cubit_Server::~Cubit_Server (void)
       TAO_CHECK_ENV;
       // Destroy all the POAs.
       this->root_poa_->destroy (CORBA::B_TRUE,
-				CORBA::B_TRUE,
-				TAO_TRY_ENV);
+                                CORBA::B_TRUE,
+                                TAO_TRY_ENV);
       TAO_CHECK_ENV;
     }
   TAO_CATCH (CORBA::SystemException, sysex)
@@ -173,23 +173,24 @@ Cubit_Server::~Cubit_Server (void)
       TAO_TRY_ENV.print_exception ("User Exception");
     }
   TAO_ENDTRY;
-}  
+}
 
-main (int argc, char** argv)
+int
+main (int argc, char *argv[])
 {
   Cubit_Server cubit_server;
-  
+
   ACE_DEBUG ((LM_DEBUG,
               "\n \t IDL_Cubit:SERVER \n \n"));
   TAO_TRY
     {
       if (cubit_server.init (argc,argv,TAO_TRY_ENV) == -1)
-	return 1;
+        return 1;
       else
-	{
-	 cubit_server.run (TAO_TRY_ENV);
-	 TAO_CHECK_ENV;
-	}
+        {
+         cubit_server.run (TAO_TRY_ENV);
+         TAO_CHECK_ENV;
+        }
     }
   TAO_CATCH (CORBA::SystemException, sysex)
     {
@@ -206,8 +207,3 @@ main (int argc, char** argv)
   TAO_ENDTRY;
   return 0;
 }
-
-
-
-
-
