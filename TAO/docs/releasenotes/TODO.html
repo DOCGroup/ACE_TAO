@@ -156,6 +156,26 @@
 	  present for the "on memory" representation.
 	</P>
       </LI>
+
+      <LI><P>In some cases it is possible to marshal a complete
+	  structure in a single operation to allow this the structure
+	  must have fixed size (in the CDR spec sense) and its memory
+	  layout must match the CDR layout.
+	</P>
+      </LI>
+      
+      <LI><P>If all the arguments to an operation are fixed size then
+	  the header can be sent before the rest of the data, if the
+	  data is big enoug this can represent a performance
+	  improvement (because we increase overlapping between client
+	  and server); further if the arguments also have the proper
+	  layout they can be sent without copying to a temporary
+	  buffer.
+	</P>
+	<P>If the arguments are not fixed size the header could be
+	  sent before, but two passes over the data will be required.
+	</P>
+      <LI>
     </OL>
 
     <H4>New features</H4>
