@@ -2351,12 +2351,26 @@ ACE_OS::sema_destroy (ACE_sema_t *s)
     }
   else
 #   endif /* ! ACE_LACKS_NAMED_POSIX_SEM */
+#  if defined(CHORUS)
+    {
+      if (s->name_) 
+        {
+          // Only destroy the semaphore if we're the ones who
+          // initialized it.
+          ACE_OSCALL (ACE_ADAPT_RETVAL (::sem_destroy (s->sema_), result), int, -1, result);
+          ACE_OS::shm_unlink (s->name_);
+          delete s->name_;
+          return result;
+        }
+    }
+#  else
     {
       ACE_OSCALL (ACE_ADAPT_RETVAL (::sem_destroy (s->sema_), result), int, -1, result);
       delete s->sema_;
       s->sema_ = 0;
       return result;
     }
+#endif /* CHORUS */
 # elif defined (ACE_HAS_THREADS)
 #   if defined (ACE_HAS_STHREADS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sema_destroy (s), ace_result_), int, -1);
@@ -2417,12 +2431,71 @@ ACE_OS::sema_init (ACE_sema_t *s,
     }
   else
 #   endif /*ACE_LACKS_NAMED_POSIX_SEM */
+#  if defined(CHORUS)
+    {
+      s->name_ = 0;
+      if (type == USYNC_PROCESS) 
+        {
+          // Let's see if it already exists.
+          ACE_HANDLE fd = ACE_OS::shm_open (name,
+                                            O_RDWR | O_CREAT | O_EXCL,
+                                            ACE_DEFAULT_FILE_PERMS);
+          if (fd == ACE_INVALID_HANDLE)
+            {
+              if (errno == EEXIST) 
+                fd = ACE_OS::shm_open (name,
+                                       O_RDWR | O_CREAT,
+                                       ACE_DEFAULT_FILE_PERMS);
+              else 
+                return -1;
+            } 
+          else 
+            {
+              // We own this shared memory object!  Let's set its
+              // size.
+              if (ACE_OS::ftruncate (fd,
+                                     sizeof (ACE_sema_t)) == -1)
+                return -1;
+              s->name_ = ACE_OS::strnew (name);
+              if (s->name_ == 0)
+                return -1;
+            }
+          if (fd == -1) 
+            return -1;
+
+          s->sema_ = (sem_t *)
+            ACE_OS::mmap (0, 
+                          sizeof (ACE_sema_t),
+                          PROT_RDWR,
+                          MAP_SHARED,
+                          fd,
+                          0);
+          ACE_OS::close (fd);
+          if (s->sema_ == MAP_FAILED) 
+            return -1;
+          if (s->name_ 
+              // Only initialize it if we're the one who created it
+              && if (::sem_init (s->sema_, USYNC_THREAD, count) != 0))
+            return -1;
+          return 0;
+        }
+      ACE_NEW_RETURN (s->sema_,
+                      sem_t,
+                      -1);
+      ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sem_init (s->sema_,
+                                                       type != USYNC_THREAD,
+                                                       count),
+                                           ace_result_),
+ 			 int, -1);
+    }
+#else
     {
       s->name_ = 0;
       ACE_NEW_RETURN (s->sema_, sem_t, -1);
       ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sem_init (s->sema_, type != USYNC_THREAD, count), ace_result_),
                          int, -1);
     }
+#endif /* CHORUS */
 # elif defined (ACE_HAS_THREADS)
 #   if defined (ACE_HAS_STHREADS)
   ACE_UNUSED_ARG (name);
@@ -5487,9 +5560,14 @@ ACE_OS::thr_getspecific (ACE_OS_thread_key_t key, void **data)
     ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_getspecific (key, data), ace_result_), int, -1);
 # elif defined (ACE_HAS_PTHREADS)
 #   if defined (ACE_HAS_PTHREADS_DRAFT4) || defined (ACE_HAS_PTHREADS_DRAFT6)
-    return pthread_getspecific(key, data);
+    return pthread_getspecific (key, data);
 #   else /* this is ACE_HAS_PTHREADS_DRAFT7 or STD */
+#if (pthread_getspecific)
+    // This is a macro on some platforms, e.g., CHORUS!
+    *data = pthread_getspecific (key);
+#else
     *data = ::pthread_getspecific (key);
+#endif /* pthread_getspecific */
 #   endif       /*  ACE_HAS_PTHREADS_DRAFT4, 6 */
     return 0;
 # elif defined (ACE_HAS_WTHREADS)
@@ -8023,6 +8101,52 @@ ACE_OS::flock_init (ACE_OS::ace_flock_t *lock,
                     mode_t perms)
 {
   // ACE_TRACE ("ACE_OS::flock_init");
+#if defined (CHORUS)
+  lock->lockname_ = 0;
+  // Let's see if it already exists.
+  lock->handle_ = ACE_OS::shm_open (name,
+                                    flags | O_CREAT | O_EXCL,
+                                    perms);
+  if (lock->handle_ == ACE_INVALID_HANDLE)
+    {
+      if (errno == EEXIST) 
+        lock->handle_ = ACE_OS::shm_open (name,
+                                          flags | O_CREAT,
+                                          ACE_DEFAULT_FILE_PERMS);
+      else
+        return -1;
+    } 
+  else 
+    {
+      // We own this shared memory object!  Let's set its size.
+      if (ACE_OS::ftruncate (lock->handle_,
+                             sizeof (ACE_mutex_t)) == -1)
+        return -1;
+
+      ACE_ALLOCATOR_RETURN (lock->lockname_,
+                            ACE_OS::strdup (name),
+                            -1);
+    }
+  if (lock->handle_ == ACE_INVALID_HANDLE) 
+    return -1;
+
+  lock->processLock_ =
+    (ACE_mutex_t *) ACE_OS::mmap (0,
+                                  sizeof (ACE_mutex_t),
+                                  PROT_RDWR,
+                                  MAP_SHARED,
+                                  lock->handle_,
+                                  0);
+  if (lock->processLock_ == MAP_FAILED) 
+    return -1;
+
+  if (lock->lockname_
+      // Only initialize it if we're the one who created it.
+      && ACE_OS::mutex_init (lock->processLock_, USYNC_PROCESS, name, 0) != 0)
+        return -1;
+
+  return lock->handle_;
+#else
 #if defined (ACE_WIN32)
   // Once initialized, these values are never changed.
   lock->overlapped_.Internal = 0;
@@ -8044,11 +8168,15 @@ ACE_OS::flock_init (ACE_OS::ace_flock_t *lock,
     }
   else
     return 0;
+#endif /* CHORUS */
 }
 
 #if defined (ACE_WIN32)
 ACE_INLINE void
-ACE_OS::adjust_flock_params (ACE_OS::ace_flock_t *lock, short whence, off_t &start, off_t &len)
+ACE_OS::adjust_flock_params (ACE_OS::ace_flock_t *lock,
+                             short whence,
+                             off_t &start,
+                             off_t &len)
 {
   switch (whence)
     {
@@ -8063,12 +8191,16 @@ ACE_OS::adjust_flock_params (ACE_OS::ace_flock_t *lock, short whence, off_t &sta
     }
   lock->overlapped_.Offset = start;
   if (len == 0)
-    len = ::GetFileSize (lock->handle_, NULL) - start;
+    len = ::GetFileSize (lock->handle_,
+                         NULL) - start;
 }
 #endif /* ACE_WIN32 */
 
 ACE_INLINE int
-ACE_OS::flock_wrlock (ACE_OS::ace_flock_t *lock, short whence, off_t start, off_t len)
+ACE_OS::flock_wrlock (ACE_OS::ace_flock_t *lock,
+                      short whence,
+                      off_t start,
+                      off_t len)
 {
   // ACE_TRACE ("ACE_OS::flock_wrlock");
 #if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
@@ -8294,6 +8426,12 @@ ACE_OS::execv (const char *path, char *const argv[])
   ACE_UNUSED_ARG (argv);
 
   ACE_NOTSUP_RETURN (-1);
+#elif defined (CHORUS)
+  KnCap cactorcap;
+  int result = ::afexecv (path, &cactorcap, 0, argv);
+  if (result != -1)
+    ACE_OS::actorcaps_[result] = cactorcap;
+  return result;
 #elif defined (ACE_WIN32)
 # if defined (__BORLANDC__) // VSB
   return ::execv (path, argv);
@@ -8317,6 +8455,12 @@ ACE_OS::execve (const char *path, char *const argv[], char *const envp[])
   ACE_UNUSED_ARG (envp);
 
   ACE_NOTSUP_RETURN (-1);
+#elif defined(CHORUS)
+  KnCap cactorcap;
+  int result = ::afexecve (path, &cactorcap, 0, argv, envp);
+  if (result != -1)
+    ACE_OS::actorcaps_[result] = cactorcap;
+  return result;
 #elif defined (ACE_WIN32)
 # if defined (__BORLANDC__) // VSB
   return ::execve (path, argv, envp);
@@ -8339,6 +8483,12 @@ ACE_OS::execvp (const char *file, char *const argv[])
   ACE_UNUSED_ARG (argv);
 
   ACE_NOTSUP_RETURN (-1);
+#elif defined(CHORUS)
+  KnCap cactorcap;
+  int result = ::afexecvp (file, &cactorcap, 0, argv);
+  if (result != -1)
+    ACE_OS::actorcaps_[result] = cactorcap;
+  return result;
 #elif defined (ACE_WIN32)
 # if defined (__BORLANDC__) // VSB
   return ::execvp (file, argv);
@@ -8861,12 +9011,14 @@ ACE_INLINE pid_t
 ACE_OS::waitpid (pid_t pid, int *stat_loc, int options)
 {
   // ACE_TRACE ("ACE_OS::waitpid");
-#if defined (ACE_WIN32) || defined (VXWORKS) || defined (CHORUS) || defined (ACE_PSOS)
+#if defined (ACE_WIN32) || defined (VXWORKS) || defined (ACE_PSOS)
   ACE_UNUSED_ARG (pid);
   ACE_UNUSED_ARG (stat_loc);
   ACE_UNUSED_ARG (options);
 
   ACE_NOTSUP_RETURN (0);
+#elif defined (CHORUS)
+  ACE_OSCALL_RETURN (::await (&ACE_OS::actorcaps_[pid]), pid_t, -1);
 #else
   ACE_OSCALL_RETURN (::waitpid (pid, stat_loc, options),
                      pid_t, -1);

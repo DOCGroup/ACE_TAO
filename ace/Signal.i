@@ -261,11 +261,17 @@ ACE_INLINE
 ACE_Sig_Guard::~ACE_Sig_Guard (void)
 {
   //ACE_TRACE ("ACE_Sig_Guard::~ACE_Sig_Guard");
+#if !defined (ACE_LACKS_UNIX_SIGNALS)
 #if defined (ACE_LACKS_PTHREAD_THR_SIGSETMASK)
-  ACE_OS::sigprocmask (SIG_SETMASK, (sigset_t *) this->omask_, 0);
+  ACE_OS::sigprocmask (SIG_SETMASK,
+                       (sigset_t *) this->omask_,
+                       0);
 #else
-  ACE_OS::thr_sigsetmask (SIG_SETMASK, (sigset_t *) this->omask_, 0);
+  ACE_OS::thr_sigsetmask (SIG_SETMASK,
+                          (sigset_t *) this->omask_,
+                          0);
 #endif /* ACE_LACKS_PTHREAD_THR_SIGSETMASK */
+#endif /* !ACE_LACKS_UNIX_SIGNALS */
 }
 
 #if defined (ACE_HAS_WINCE)

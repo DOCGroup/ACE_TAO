@@ -4360,6 +4360,10 @@ public:
 
     ACE_HANDLE handle_;
     // Handle to the underlying file.
+
+#if defined (CHORUS)
+    ACE_mutex_t *processLock_;
+#endif /* CHORUS */
   };
 
 #if defined (ACE_WIN32)
@@ -5502,6 +5506,12 @@ public:
   // This is necessary to deal with POSIX pthreads and their use of
   // structures for TSS keys.
 
+#if defined (CHORUS)
+  KnCap actorcaps_[ACE_CHORUS_MAX_ACTORS];
+  // This is used to map an actor's id into a KnCap for killing and
+  // waiting actors.
+#endif /* CHORUS */
+  
 # if defined (ACE_WIN32)
   static int socket_initialized_;
   // Keeps track of whether we've already initialized WinSock...
