@@ -1,3 +1,10 @@
+Wed Jan 24 18:09:12 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tao/Domain/TAO_Domain.dsp:
+
+          Modified the settings for the release version to get rid
+          of build errors on Win32 DLL release builds.
+
 Wed Jan 24 14:34:47 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be_codegen.cpp:
