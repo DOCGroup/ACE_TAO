@@ -5,6 +5,7 @@
 #define ACE_BASELINE_TEST_H
 
 #include "ace/Profile_Timer.h"
+#include "ace/svc_export.h"
 
 #include "Synch_Lib/Benchmark_Base.h"
 
