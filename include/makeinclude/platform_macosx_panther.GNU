@@ -18,7 +18,7 @@ with_ld = macosx
 
 CC              = gcc
 CXX             = g++
-CFLAGS          += -Wall -Wpointer-arith -Wno-long-double -pipe -I/sw/include 
+CFLAGS          += -Wall -Wpointer-arith -Wno-long-double -pipe  
 
 DCFLAGS         += -g
 DLD             = libtool
@@ -26,13 +26,6 @@ LD              = $(CXX)
 LDFLAGS		+= -L/sw/lib
 LIBS            += -lcc_dynamic -lstdc++ -lSystem
 
-## dlcompat package (not part of base Darwin) is needed for dlopen().
-## Fink installer puts libraries in /sw/lib and headers in /sw/include
-## In order to install dlcompat do the following:
-##   - download fink from http://fink.sf.net
-##   - type:
-##        fink install dlcompat
-##LIBS            += -ldl 
 OCFLAGS         += -O3
 RANLIB          = ranlib
 SOEXT		= dylib
