@@ -794,10 +794,17 @@ Writer::initiate_write_file (void)
 
   // and now finally perform the write
   ACE_Message_Block *united_mb = this->odd_chain_;
+  // update the remainders of the chains
+  this->odd_chain_  = new_odd_chain_head;
+  this->even_chain_ = new_even_chain_head;
   size_t increment_writing_file_offset = united_mb->total_length ();
 
   // Reconstruct the file
   // Write the size, not the length, because we must write in chunks of <page size>
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("Writer::initiate_write_file: write %d bytes at %d\n"),
+              united_mb->total_size (),
+              this->writing_file_offset_));
   if (this->wf_.writev (*united_mb, 
                         united_mb->total_size (),
                         this->writing_file_offset_) == -1)
@@ -814,11 +821,6 @@ Writer::initiate_write_file (void)
   // pipelined writing (that is, mulitple calls to write before the callbacks 
   // to handle_x)
   this->writing_file_offset_ += increment_writing_file_offset;
-
-  // update the remainders of the chains
-  this->odd_chain_  = new_odd_chain_head;
-  this->even_chain_ = new_even_chain_head;
-
   ++this->io_count_;
   return 0;
 }
@@ -829,7 +831,7 @@ Writer::handle_write_file (const ACE_Asynch_Write_File::Result &result)
   ACE_Message_Block *mb = &result.message_block ();
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Writer::handle_write_file - offset %d + %d\n"),
+              ACE_TEXT ("Writer::handle_write_file at offset %d wrote %d\n"),
               this->reported_file_offset_,
               result.bytes_transferred ()));
 
@@ -854,7 +856,7 @@ Writer::handle_write_file (const ACE_Asynch_Write_File::Result &result)
       ACE_ASSERT (0 == this->odd_chain_ && 0 == this->even_chain_);
 
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("Writer::handle_write_file"),
+                  ACE_TEXT ("Writer::handle_write_file")
                   ACE_TEXT (" - ending proactor event loop\n")));
 
       ACE_Proactor::instance ()->end_event_loop ();
@@ -1214,6 +1216,11 @@ Sender::handle_read_file (const ACE_Asynch_Read_File::Result &result)
     {
       size_t bytes_transferred = result.bytes_transferred ();
       size_t chunks_chain_size = mb->total_size ();
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("Sender::handle_read_file, read %d, ")
+                  ACE_TEXT ("chain total %d\n"),
+                  bytes_transferred,
+                  chunks_chain_size));
 
       this->file_offset_ += bytes_transferred;
 
@@ -1321,17 +1328,20 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   if (::parse_args (argc, argv) == -1)
     return -1;
 
+  chunk_size = ACE_OS::getpagesize ();
+
   if (client_only)
     ACE_DEBUG ((LM_INFO,
-                ACE_TEXT ("Running as client only\n")));
+                ACE_TEXT ("Running as client only, page size %d\n"),
+                chunk_size));
   else if (server_only)
     ACE_DEBUG ((LM_INFO,
-                ACE_TEXT ("Running as server only\n")));
+                ACE_TEXT ("Running as server only, page size %d\n"),
+                chunk_size));
   else
     ACE_DEBUG ((LM_INFO,
-                ACE_TEXT ("Running as server and client\n")));
-
-  chunk_size = ACE_OS::getpagesize ();
+                ACE_TEXT ("Running as server and client, page size %d\n"),
+                chunk_size));
 
   Acceptor  acceptor;
   Connector connector;
@@ -1400,18 +1410,15 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       }
 
       if (0 == success)
-        ACE_DEBUG ((LM_INFO,
+        ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("input file and the output file identical!\n")));
       else
-        ACE_DEBUG ((LM_INFO,
+        ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("input file and the output file are different!\n")));
     }
 
   if (!client_only)
     ACE_OS::unlink (output_file);
-
-  if (0 != success)
-    ACE_ASSERT (0);
 
   ACE_END_TEST;
 
