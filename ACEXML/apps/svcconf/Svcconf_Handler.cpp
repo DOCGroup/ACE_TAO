@@ -20,8 +20,7 @@ ACEXML_Svcconf_Handler::ACEXML_Svcconf_Handler (void)
   : in_stream_def_ (0),
     in_module_ (0),
     stream_svc_type_ (0),
-    stream_ (0),
-    dll_handle_ (0)
+    stream_ (0)
 {
   // no-op
 }
@@ -100,7 +99,6 @@ ACEXML_Svcconf_Handler::endElement (const ACEXML_Char *,
           if (active_info->service_type () == ACE_Service_Type::STREAM)
             {
               this->stream_ = (ACE_Stream_Type *) stp;
-              this->dll_handle_ = svc_dll.get_handle (1);
             }
           else
             {
@@ -112,7 +110,7 @@ ACEXML_Svcconf_Handler::endElement (const ACEXML_Char *,
           this->stream_svc_type_ =
             ACE_Service_Config::create_service_type (this->stream_info_.name (),
                                                      this->stream_,
-                                                     this->dll_handle_,
+                                                     svc_dll,
                                                      this->stream_info_.active ());
 
         }
@@ -151,7 +149,7 @@ ACEXML_Svcconf_Handler::endElement (const ACEXML_Char *,
               ACE_Service_Type *stype =
                 ACE_Service_Config::create_service_type (active_info->name (),
                                                          stp,
-                                                         svc_dll.get_handle (1),
+                                                         svc_dll,
                                                          active_info->active ());
               // @@ Check error here.
 
@@ -214,7 +212,6 @@ ACEXML_Svcconf_Handler::endElement (const ACEXML_Char *,
       this->stream_info_.reset ();
       this->stream_svc_type_ = 0;
       this->stream_ = 0;
-      this->dll_handle_ = 0;
     }
   else if (ACE_OS_String::strcmp (qName, ACE_TEXT ("stream")) == 0)
     {

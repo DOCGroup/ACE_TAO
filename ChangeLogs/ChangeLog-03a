@@ -1,3 +1,17 @@
+Wed May 29 20:16:48 UTC 2002  Don Hinton  <dhinton@ieee.org>
+
+	* tests/Framework_Component_Test.cpp: 
+
+	  Changed ACE_Service_Config::open() to call the 
+	  ignore_default_svc_conf_file flag since all the directives 
+	  are passed directly without using a config file anyway.
+	
+	* ACEXML/apps/svcconf/Svcconf_Handler.{h,cpp}:
+
+	  Removed handle_ member variable and pass the local svc_dll 
+	  object instead of handle_ to ACE_Service_Config::create_service_type()
+	  in accordance with changes below to ACE_DLL.
+
 Wed May 29 12:35:21 2002  Ossama Othman  <ossama@uci.edu>
 
 	* ace/OS.h:
