@@ -50,7 +50,7 @@
 
 #include "test_config.h"
 
-#if defined(ACE_HAS_THREADS) 
+#if defined(ACE_HAS_THREADS)
 
 #include "TP_Reactor_Test.h"
 
@@ -88,7 +88,7 @@ static size_t threads = 1;
 static u_short port = ACE_DEFAULT_SERVER_PORT;
 
 // Log options
-static int loglevel = 0; // 0 full , 1 only errors
+static int loglevel = 1; // 0 full , 1 only errors
 
 static const size_t MIN_TIME = 1;    // min 1 sec
 static const size_t MAX_TIME = 3600; // max 1 hour
@@ -105,7 +105,7 @@ static char data[] =
 
 // *************************************************************
 
-class LogLocker 
+class LogLocker
 {
 public:
 
@@ -314,7 +314,7 @@ Acceptor::on_delete_receiver (Receiver &rcvr)
 
   ACE_OS::sprintf ( bufs , ACE_TEXT ("%ld"), rcvr.get_total_snd ());
   ACE_OS::sprintf ( bufr , ACE_TEXT ("%ld"), rcvr.get_total_rcv ());
-  
+
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Receiver::~DTOR index=%d snd=%s rcv=%s sessions_=%d\n"),
               rcvr.index_,
@@ -661,7 +661,7 @@ Connector::on_delete_sender (Sender & sndr)
 
   ACE_OS::sprintf ( bufs , ACE_TEXT ("%ld"), sndr.get_total_snd ());
   ACE_OS::sprintf ( bufr , ACE_TEXT ("%ld"), sndr.get_total_rcv ());
-  
+
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Sender::~DTOR index=%d snd=%s rcv=%s sessions_=%d\n"),
               sndr.index_,
@@ -925,7 +925,7 @@ Sender::handle_input (ACE_HANDLE h)
   rc = initiate_write ();
   if (rc != 0)
     return -1;
-  
+
   return check_destroy ();
 }
 
@@ -977,7 +977,7 @@ Sender::handle_output (ACE_HANDLE h)
   if (qcount < 0)  // no more message blocks in queue
     {
       if (duplex != 0 &&   // full duplex, continue write
-          (this->total_snd_ - this->total_rcv_ ) < 1024 )  // flow control 
+          (this->total_snd_ - this->total_rcv_ ) < 1024 )  // flow control
         rc = initiate_write ();
       else
         rc = terminate_io (ACE_Event_Handler::WRITE_MASK);
@@ -1192,7 +1192,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   ACE_OS::sprintf (bufs , ACE_TEXT ("%ld"), connector.get_total_snd());
   ACE_OS::sprintf (bufr , ACE_TEXT ("%ld"), connector.get_total_rcv() );
-  
+
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Connector/Senders  total bytes: snd=%s rcv=%s\n"),
               bufs,
@@ -1201,7 +1201,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   ACE_OS::sprintf (bufs , ACE_TEXT ("%ld"), acceptor.get_total_snd());
   ACE_OS::sprintf (bufr , ACE_TEXT ("%ld"), acceptor.get_total_rcv() );
-  
+
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Acceptor/Receivers total bytes: snd=%s rcv=%s\n"),
               bufs,
@@ -1217,4 +1217,3 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   return 0;
 }
-
