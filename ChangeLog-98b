@@ -1,15 +1,24 @@
+Tue Dec 08 21:39:16 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * include/makeinclude/platform_osf1_4.0.GNU,ACE-INSTALL.html:
+          enable DU 4.0 cxx 6.x warnings by default.  To disable, if
+          you're using cxx 5.x, set CXX_VER to CXX_5 either on the
+          make command line, or in your environment.  Thanks to
+          Gary York <gfyork@ix.netcom.com> for being that last
+          cxx 6.x user to trip over this :-)
+
 Tue Dec  8 19:50:49 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Shared_Object.cpp: Changed the various default
- 	  implementations of init()/fini()/info() to return 0 rather than
- 	  -1 so that users won't have to subclass Service_Object just to
- 	  change the return value.  Thanks to Eric Newton for motivating
- 	  this.
+        * ace/Shared_Object.cpp: Changed the various default
+          implementations of init()/fini()/info() to return 0 rather than
+          -1 so that users won't have to subclass Service_Object just to
+          change the return value.  Thanks to Eric Newton for motivating
+          this.
 
 Tue Dec  8 16:52:57 1998  Ossama Othman  <ossama@debian.org>
 
-	* ace/OS.{h,i}, ace/README: Added a fsync() method.  Define
-	  ACE_LACKS_FSYNC if ::fsync() isn't supported.
+        * ace/OS.{h,i}, ace/README: Added a fsync() method.  Define
+          ACE_LACKS_FSYNC if ::fsync() isn't supported.
 
 Tue Dec 08 15:03:25 1998  Steve Huston  <shuston@riverace.com>
 
@@ -26,33 +35,33 @@ Tue Dec 08 11:22:56 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
 Tue Dec 08 10:45:56 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/System_Time.h: Removed redundant ACE_Time_Date definition.
-	  Thanks to Martin Krumpolec <krumpo@pobox.sk> for reporting this.
+        * ace/System_Time.h: Removed redundant ACE_Time_Date definition.
+          Thanks to Martin Krumpolec <krumpo@pobox.sk> for reporting this.
 
 Mon Dec 07 22:58:53 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* examples/Reactor/Misc/test_early_timeouts.cpp: On some
- 	  platforms, select() returns before the time value specified.
-  	  This tests counts the number of times this happens and the max
- 	  early timeout.
+        * examples/Reactor/Misc/test_early_timeouts.cpp: On some
+          platforms, select() returns before the time value specified.
+          This tests counts the number of times this happens and the max
+          early timeout.
 
-	* ace/DLL.cpp (open): Added a call to ACE::ldopen() before calling
- 	  ACE_OS::dlopen().  The allows us to find the library is
- 	  predefined places and also expand the file name to the correct
- 	  syntax (prefix and suffix) according to the platform.
+        * ace/DLL.cpp (open): Added a call to ACE::ldopen() before calling
+          ACE_OS::dlopen().  The allows us to find the library is
+          predefined places and also expand the file name to the correct
+          syntax (prefix and suffix) according to the platform.
 
-	  Also, fixed a bug where the <close_on_destruction_> flag has not
-	  being consulted on a reopen.
+          Also, fixed a bug where the <close_on_destruction_> flag has not
+          being consulted on a reopen.
 
-	* ace/ACE.cpp (ldfind): Moved the code that calls
- 	  ExpandEnvironmentStringsA() from
- 	  ACE_Location_Node::open_handle() to ACE::ldfind().  This code is
- 	  more general and therefore belongs in ACE::ldfind().
+        * ace/ACE.cpp (ldfind): Moved the code that calls
+          ExpandEnvironmentStringsA() from
+          ACE_Location_Node::open_handle() to ACE::ldfind().  This code is
+          more general and therefore belongs in ACE::ldfind().
 
-	* ace/Parse_Node.cpp and ace/Svc_Conf_y.cpp: Fixed the incorrect
- 	  use of ASYS_WIDE_STRING. Remember that the string returned from
- 	  ASYS_WIDE_STRING is only valid for that line of code ;)
-	
+        * ace/Parse_Node.cpp and ace/Svc_Conf_y.cpp: Fixed the incorrect
+          use of ASYS_WIDE_STRING. Remember that the string returned from
+          ASYS_WIDE_STRING is only valid for that line of code ;)
+
 Mon Dec  7 19:10:24 EST 1998  James CE Johnson <jcej@lads.com>
 
         * docs/tutorials/

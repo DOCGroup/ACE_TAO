@@ -1,74 +1,83 @@
+Tue Dec 08 21:39:16 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * include/makeinclude/platform_osf1_4.0.GNU,ACE-INSTALL.html:
+          enable DU 4.0 cxx 6.x warnings by default.  To disable, if
+          you're using cxx 5.x, set CXX_VER to CXX_5 either on the
+          make command line, or in your environment.  Thanks to
+          Gary York <gfyork@ix.netcom.com> for being that last
+          cxx 6.x user to trip over this :-)
+
 Tue Dec 08 15:10:35 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* performance-tests/Cubit/TAO/IDL_Cubit/{client,server}.dsp: Added
-	  static build configurations.
+        * performance-tests/Cubit/TAO/IDL_Cubit/{client,server}.dsp: Added
+          static build configurations.
 
-	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Server.cpp (init): 
-	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp (init): 
-	* performance-tests/Cubit/TAO/MT_Cubit/Cubit_Task.cpp (initialize_orb): 
-	* performance-tests/Cubit/TAO/MT_Cubit/Task_Client.cpp (init_orb):
-	  Hard-coded the orb initialization code to use the new
-	  <open_services> function to setup resources when compiling
-	  static linked versions on NT.  Notice when building
-	  static-linked version on NT, the svc.conf file is not used and
-	  the configurations is hard-coded in these two files.
+        * performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Server.cpp (init):
+        * performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp (init):
+        * performance-tests/Cubit/TAO/MT_Cubit/Cubit_Task.cpp (initialize_orb):
+        * performance-tests/Cubit/TAO/MT_Cubit/Task_Client.cpp (init_orb):
+          Hard-coded the orb initialization code to use the new
+          <open_services> function to setup resources when compiling
+          static linked versions on NT.  Notice when building
+          static-linked version on NT, the svc.conf file is not used and
+          the configurations is hard-coded in these two files.
 
-	* tao/TAO_Internal.{h,cpp} (open_services): Added a new
-	  <open_services> method that simply takes the arguments for
-	  TAO_Resource_Factory, TAO_Default_Client_Strategy_Factory and
-	  TAO_Default_Server_Strategy_Factory directly and initializes
-	  them.  This eliminates the need of loading in a DLL when it is
-	  not desirable.  Removed <fake_service_entries_i> for this is now
-	  covered by the new <open_services> method.
+        * tao/TAO_Internal.{h,cpp} (open_services): Added a new
+          <open_services> method that simply takes the arguments for
+          TAO_Resource_Factory, TAO_Default_Client_Strategy_Factory and
+          TAO_Default_Server_Strategy_Factory directly and initializes
+          them.  This eliminates the need of loading in a DLL when it is
+          not desirable.  Removed <fake_service_entries_i> for this is now
+          covered by the new <open_services> method.
 
-	  Like the original <open_services>, the new method is also
-	  one-shot.  Once you call either <open_services>, all subsequence
-	  calls to either functions become no-ops.
+          Like the original <open_services>, the new method is also
+          one-shot.  Once you call either <open_services>, all subsequence
+          calls to either functions become no-ops.
 
 Tue Dec  8 10:17:16 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/CDR.cpp: 
-	  Fixed a problem with the CDR::grow routine: it estimated the
-	  size *before* alignment, after the alignment the object did not
-	  fit anymore.  Thanks to Dave Meyer <dmeyer@std.saic.com> for
-	  providing an easy way to reproduce this problem, and for his
-	  workmates at SAIC for finding the problem.
-	  Also fixed a problem in the write_array() method when
-	  SWAP_ON_WRITE is enabled, thanks to Istvan Buki
-	  <istvan.buki@infoboard.be> for reporting this one.
+        * tao/CDR.cpp:
+          Fixed a problem with the CDR::grow routine: it estimated the
+          size *before* alignment, after the alignment the object did not
+          fit anymore.  Thanks to Dave Meyer <dmeyer@std.saic.com> for
+          providing an easy way to reproduce this problem, and for his
+          workmates at SAIC for finding the problem.
+          Also fixed a problem in the write_array() method when
+          SWAP_ON_WRITE is enabled, thanks to Istvan Buki
+          <istvan.buki@infoboard.be> for reporting this one.
 
 Tue Dec  8 07:22:42 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp : Fixed the template
-	  instantiation problems. Thanks to Andy for reporting this.
+        * orbsvcs/orbsvcs/AV/AVStreams_i.cpp : Fixed the template
+          instantiation problems. Thanks to Andy for reporting this.
 
 Tue Dec  8 02:09:47 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* examples/POA/On_Demand_Loading/server.cpp (main): Changed the 
-	  ObjectID format.
+        * examples/POA/On_Demand_Loading/server.cpp (main): Changed the
+          ObjectID format.
 
-	* examples/POA/On_Demand_Loading/client.cpp (main): Added the
-	  end_note() request call on the object.
+        * examples/POA/On_Demand_Loading/client.cpp (main): Added the
+          end_note() request call on the object.
 
-	* examples/POA/On_Demand_Loading/Servant_Activator.h: Changed the
-	  dll object pointer from a pointer object to simply an
-	  instantiation of ACE_DLL. 
+        * examples/POA/On_Demand_Loading/Servant_Activator.h: Changed the
+          dll object pointer from a pointer object to simply an
+          instantiation of ACE_DLL.
 
-	* examples/POA/On_Demand_Loading/Servant_Activator.cpp (incarnate): 
-	  Added an dll object open() call explicitly which was done
-	  implicitly before along with the dll object creation.
+        * examples/POA/On_Demand_Loading/Servant_Activator.cpp (incarnate):
+          Added an dll object open() call explicitly which was done
+          implicitly before along with the dll object creation.
 
-	* examples/POA/On_Demand_Loading/Servant_Activator.cpp (parse_string):
-	  Updated the ObjectID format to dllname:factory_method.
+        * examples/POA/On_Demand_Loading/Servant_Activator.cpp (parse_string):
+          Updated the ObjectID format to dllname:factory_method.
 
-	* examples/POA/On_Demand_Loading/Dir_Service_i.cpp: Added some ACE_DEBUG
-	  statements to make the output clearer.
+        * examples/POA/On_Demand_Loading/Dir_Service_i.cpp: Added some ACE_DEBUG
+          statements to make the output clearer.
 
-	* examples/POA/On_Demand_Loading/README: Added it to the repository.
-	
+        * examples/POA/On_Demand_Loading/README: Added it to the repository.
+
 Tue Dec  8 00:49:23 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/CDR.i: Applied more exception handling macros.
+        * tao/CDR.i: Applied more exception handling macros.
 
 Mon Dec  7 22:00:50 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
@@ -80,22 +89,22 @@ Mon Dec  7 22:00:50 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
 Mon Dec  7 15:28:16 1998  Shawn Michael Atkins  <sma1@lambada.cs.wustl.edu>
 
-	* performance-tests/Thruput/TAO/utils.cpp (psecs): fixed another
-	warning that David was getting about an implicit cast from double
-	to int.
+        * performance-tests/Thruput/TAO/utils.cpp (psecs): fixed another
+        warning that David was getting about an implicit cast from double
+        to int.
 
 Mon Dec  7 12:48:29 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/try_macros.h: Removed TAO_CHECK_CONDITION_ENV_RETURN[_VOID].
+        * tao/try_macros.h: Removed TAO_CHECK_CONDITION_ENV_RETURN[_VOID].
 
-	* tao/decode.cpp: Removed the use of TAO_CHECK_CONDITION_ENV_RETURN.
+        * tao/decode.cpp: Removed the use of TAO_CHECK_CONDITION_ENV_RETURN.
 
 Mon Dec  7 05:26:35 EST 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
-	* docs/compiler.html:
+        * docs/compiler.html:
 
-	  Fixed the entry for -St (suppressing typecodes). It was
-	  appearing as -Ge. Thanks to Ossama Othman for noticing this.
+          Fixed the entry for -St (suppressing typecodes). It was
+          appearing as -Ge. Thanks to Ossama Othman for noticing this.
 
 Sun Dec  6 17:48:21 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
@@ -121,30 +130,30 @@ Sun Dec  6 17:48:21 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 1998-12-06  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
-	added the following files for the implementation of
-	the Cos Event Channel -
-	* orbsvcs/orbsvcs/CosEventChannelAdmin.idl
-	* orbsvcs/orbsvcs/CosEventComm.idl
-	* orbsvcs/orbsvcs/CosEvent/EventChannel_i.h
-	* orbsvcs/orbsvcs/CosEvent/EventChannel_i.cpp
-	* orbsvcs/orbsvcs/CosEvent/SupplierAdmin_i.h
-	* orbsvcs/orbsvcs/CosEvent/SupplierAdmin_i.cpp
-	* orbsvcs/orbsvcs/CosEvent/ConsumerAdmin_i.h
-	* orbsvcs/orbsvcs/CosEvent/ConsumerAdmin_i.cpp
-	* orbsvcs/orbsvcs/CosEvent/ProxyPushSupplier_i.h
-	* orbsvcs/orbsvcs/CosEvent/ProxyPushSupplier_i.cpp
-	* orbsvcs/orbsvcs/CosEvent/ProxyPushConsumer_i.h
-	* orbsvcs/orbsvcs/CosEvent/ProxyPushConsumer_i.cpp
+        added the following files for the implementation of
+        the Cos Event Channel -
+        * orbsvcs/orbsvcs/CosEventChannelAdmin.idl
+        * orbsvcs/orbsvcs/CosEventComm.idl
+        * orbsvcs/orbsvcs/CosEvent/EventChannel_i.h
+        * orbsvcs/orbsvcs/CosEvent/EventChannel_i.cpp
+        * orbsvcs/orbsvcs/CosEvent/SupplierAdmin_i.h
+        * orbsvcs/orbsvcs/CosEvent/SupplierAdmin_i.cpp
+        * orbsvcs/orbsvcs/CosEvent/ConsumerAdmin_i.h
+        * orbsvcs/orbsvcs/CosEvent/ConsumerAdmin_i.cpp
+        * orbsvcs/orbsvcs/CosEvent/ProxyPushSupplier_i.h
+        * orbsvcs/orbsvcs/CosEvent/ProxyPushSupplier_i.cpp
+        * orbsvcs/orbsvcs/CosEvent/ProxyPushConsumer_i.h
+        * orbsvcs/orbsvcs/CosEvent/ProxyPushConsumer_i.cpp
 
 1998-12-06  Nagarajan Surendran  <naga@polka.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp : Fixed the TAO_THROW
-	  compilation errors. Thanks to David for pointing this out.
+        * orbsvcs/orbsvcs/AV/AVStreams_i.cpp : Fixed the TAO_THROW
+          compilation errors. Thanks to David for pointing this out.
 
 Sun Dec  6 14:13:52 1998  Ossama Othman  <ossama@debian.org>
 
-	* TAO_IDL/tao_idl.1:  Created a man page for tao_idl based on
-	  Carlos' HTML tao_idl compiler page.
+        * TAO_IDL/tao_idl.1:  Created a man page for tao_idl based on
+          Carlos' HTML tao_idl compiler page.
 
 Sat Dec  6 13:30:50 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
@@ -163,100 +172,100 @@ Sat Dec  6 13:30:50 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 Sun Dec  6 03:23:21 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/AVStreams.idl: Added the idl code for the
-	  Audio/Video full profile implementation.
+        * orbsvcs/orbsvcs/AVStreams.idl: Added the idl code for the
+          Audio/Video full profile implementation.
 
-	* orbsvcs/orbsvcs/AV/AVStreams_i.{h,cpp}: Added code for the full
-	  profile implementation of the Audio/Video Streaming service. The
-	  Audio/Video Streaming service now supports flows.
-	  Defined new classes TAO_FlowConnection, TAO_FlowEndPoint,
-	  TAO_FlowProducer, TAO_FlowConsumer, TAO_FlowConnection, TAO_FDev.
+        * orbsvcs/orbsvcs/AV/AVStreams_i.{h,cpp}: Added code for the full
+          profile implementation of the Audio/Video Streaming service. The
+          Audio/Video Streaming service now supports flows.
+          Defined new classes TAO_FlowConnection, TAO_FlowEndPoint,
+          TAO_FlowProducer, TAO_FlowConsumer, TAO_FlowConnection, TAO_FDev.
 
-	  Also added code to the existing A/V classes so that they now
-	  behave according to the full profile.
+          Also added code to the existing A/V classes so that they now
+          behave according to the full profile.
 
 Sun Dec  6 00:43:46 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* examples/POA/On_Demand_Loading/Dir_Service.idl:
-	* examples/POA/On_Demand_Loading/Dir_Service.{h,cpp}:
+        * examples/POA/On_Demand_Loading/Dir_Service.idl:
+        * examples/POA/On_Demand_Loading/Dir_Service.{h,cpp}:
 
-	  The servant library idl interface and files.
+          The servant library idl interface and files.
 
-	* examples/POA/On_Demand_Loading/Servant_Activator.{h,cpp}:
+        * examples/POA/On_Demand_Loading/Servant_Activator.{h,cpp}:
 
-	  This file is the servant_manager activator interface.
+          This file is the servant_manager activator interface.
 
-	* examples/POA/On_Demand_Loading/server.cpp:
+        * examples/POA/On_Demand_Loading/server.cpp:
 
-	  This is the server process.
+          This is the server process.
 
-	* examples/POA/On_Demand_Loading/client.cpp:
+        * examples/POA/On_Demand_Loading/client.cpp:
 
-	  This is the client process.
+          This is the client process.
 
-	* examples/POA/On_Demand_Loading/generic_servant_export.h:
+        * examples/POA/On_Demand_Loading/generic_servant_export.h:
 
-	  Generated and needed for the defining a servant class.
+          Generated and needed for the defining a servant class.
 
-	* examples/POA/On_Demand_Loading/Makefile.Client:
-	* examples/POA/On_Demand_Loading/Makefile.DirService:
-	* examples/POA/On_Demand_Loading/Makefile:
+        * examples/POA/On_Demand_Loading/Makefile.Client:
+        * examples/POA/On_Demand_Loading/Makefile.DirService:
+        * examples/POA/On_Demand_Loading/Makefile:
 
-	  The makefiles needed for the test.
+          The makefiles needed for the test.
 
-	  Added the above files to the repository. This test example loads
-	  an servant library on demand and associates a servant with an object.
+          Added the above files to the repository. This test example loads
+          an servant library on demand and associates a servant with an object.
 
 Sat Dec  5 22:10:13 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/Typecode.cpp (private_equal_struct,private_equal_except):
-	  (private_equal_sequence,private_equal_union,private_equal_union):
-	  Changed to the use of TAO_CHECK_CONDITION_ENV_RETURN to
-	  TAO_CHECK_ENV_RETURN and then check the condition explicitly.
-	  This avoids warnings on some compiler.
-	  (typecode_param): Fixed an error.
+        * tao/Typecode.cpp (private_equal_struct,private_equal_except):
+          (private_equal_sequence,private_equal_union,private_equal_union):
+          Changed to the use of TAO_CHECK_CONDITION_ENV_RETURN to
+          TAO_CHECK_ENV_RETURN and then check the condition explicitly.
+          This avoids warnings on some compiler.
+          (typecode_param): Fixed an error.
 
-	  Thanks to David for pointing these out.
+          Thanks to David for pointing these out.
 
 Fri Dec 04 19:35:56 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/Typecode.cpp (typecode_param): Moved declaration of loop
-	  counter up to avoid a skipping declaration warning from MSVC.
+        * tao/Typecode.cpp (typecode_param): Moved declaration of loop
+          counter up to avoid a skipping declaration warning from MSVC.
 
-	* tao/try_macros.h (TAO_TRY_THROW[_EX]): Removed extra spaces in
-	  definitions for native exceptions.
+        * tao/try_macros.h (TAO_TRY_THROW[_EX]): Removed extra spaces in
+          definitions for native exceptions.
 
 Fri Dec  4 16:51:16 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* docs/exceptions.html: Added guidelines on throwing exceptions
-	  from within try blocks and using
-	  TAO_RETHROW_SAME_ENV_RETURN[_EX].
+        * docs/exceptions.html: Added guidelines on throwing exceptions
+          from within try blocks and using
+          TAO_RETHROW_SAME_ENV_RETURN[_EX].
 
-	* tao/try_macros.h: Added TAO_TRY_THROW[_EX] which allow
-	  exceptions beting thrown within try blocks be caught.
+        * tao/try_macros.h: Added TAO_TRY_THROW[_EX] which allow
+          exceptions beting thrown within try blocks be caught.
 
-	  Rename TAO_RETHROW_RETURN[_VOID]_SYS to
-	  TAO_RETHROW_SAME_ENV_RETURN[_VOID].
+          Rename TAO_RETHROW_RETURN[_VOID]_SYS to
+          TAO_RETHROW_SAME_ENV_RETURN[_VOID].
 
-	* tao/IIOP_Object.cpp:
-	* tao/Invocation.cpp: Replaced TAO_RETHROW_RETURN[_VOID]_SYS with
-	  TAO_RETHROW_SAME_ENV_RETURN[_VOID].
+        * tao/IIOP_Object.cpp:
+        * tao/Invocation.cpp: Replaced TAO_RETHROW_RETURN[_VOID]_SYS with
+          TAO_RETHROW_SAME_ENV_RETURN[_VOID].
 
-	* tao/deep_free.cpp:
-	* tao/Typecode.cpp: Changed to handle exceptions with macros in
-	  try_macros.h.
+        * tao/deep_free.cpp:
+        * tao/Typecode.cpp: Changed to handle exceptions with macros in
+          try_macros.h.
 
 Fri Dec  4 16:04:56 1998  Ossama Othman  <ossama@debian.org>
 
-	* TAO_IDL/util/utl_global.cpp(IDL_GlobalData constructor):
-	  Added support for hardcoding a gperf default path other than
-	  $ACE_ROOT/bin/gperf.  This works by #defining the ACE_GPERF
-	  macro at compile time to be the desired gperf.
+        * TAO_IDL/util/utl_global.cpp(IDL_GlobalData constructor):
+          Added support for hardcoding a gperf default path other than
+          $ACE_ROOT/bin/gperf.  This works by #defining the ACE_GPERF
+          macro at compile time to be the desired gperf.
 
-	  For example:  -DACE_GPERF=\"/usr/local/bin/gperf-ace\"
+          For example:  -DACE_GPERF=\"/usr/local/bin/gperf-ace\"
 
-	  The actual gperf program must be included in the definition of
-	  ACE_GPERF, not just the directory in which it is located.
+          The actual gperf program must be included in the definition of
+          ACE_GPERF, not just the directory in which it is located.
 
 Fri Dec 04 12:45:01 1998  David L. Levine  <levine@cs.wustl.edu>
 
