@@ -19,7 +19,8 @@ Fri Jan 29 15:55:41 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 Fri Jan 29 13:07:42 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * docs/configurations.html: Added links to various examples for
-          different configurations.
+ 	  different configurations.  Thanks to Jerry D. De Master
+ 	  <jdemaster@ipdinc.com> for this suggestion.
 
 Fri Jan 29 12:22:22 1999  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
