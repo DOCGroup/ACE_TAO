@@ -1,0 +1,50 @@
+#----------------------------------------------------------------------------
+#       $Id$
+#
+#       Touches the executable if any of the libraries have changed
+#----------------------------------------------------------------------------
+
+ifndef TAO_ROOT
+  TAO_ROOT = $(ACE_ROOT)/TAO
+endif # ! TAO_ROOT
+
+#----------------------------------------------------------------------------
+#       Include macros
+#----------------------------------------------------------------------------
+
+include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
+
+#----------------------------------------------------------------------------
+#       Define local rules and targets
+#---------------------------------------------------------------------------
+
+all: tao_ifr
+
+ifeq ($(static_libs_only),)
+  override static_libs_only=0
+endif
+
+ifeq ($(static_libs_only),0)
+
+tao_ifr: libTAO_IDL_FE_DLL.$(SOEXT) libTAO_IFR_BE_DLL.$(SOEXT)
+	touch tao_ifr;
+
+libTAO_IDL_FE_DLL.$(SOEXT):
+
+libTAO_IFR_BE_DLL.$(SOEXT):
+
+else # static_libs_only == 1
+
+tao_ifr: libTAO_IDL_FE_DLL.a libTAO_IFR_BE_DLL.a
+	touch tao_ifr;
+
+libTAO_IDL_FE_DLL.a:
+
+libTAO_IFR_BE_DLL.a:
+
+endif # static_libs_only
+
+clean realclean:
+
+depend:

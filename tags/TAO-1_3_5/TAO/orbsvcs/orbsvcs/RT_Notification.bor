@@ -1,0 +1,72 @@
+# Makefile for building the TAO_RT_Notification library with Borland C++ Builder
+
+NAME = TAO_RT_Notification
+
+OBJFILES = \
+	$(OBJDIR)\RT_Builder.obj \
+	$(OBJDIR)\RT_Factory.obj \
+	$(OBJDIR)\RT_Notify_Service.obj \
+	$(OBJDIR)\RT_POA_Helper.obj \
+	$(OBJDIR)\RT_Properties.obj
+
+EXTERNAL_LIBS =
+
+LFLAGS = \
+	-j$(TAO_ROOT)\orbsvcs\orbsvcs\$(CONFIG_SUBDIR) -j$(TAO_ROOT)\orbsvcs\orbsvcs \
+	-L$(TAO_ROOT)\orbsvcs\orbsvcs\$(CONFIG_SUBDIR) -L$(TAO_ROOT)\orbsvcs\orbsvcs \
+	-j$(TAO_ROOT)\tao\$(CONFIG_SUBDIR) -j$(TAO_ROOT)\tao \
+	-L$(TAO_ROOT)\tao\$(CONFIG_SUBDIR) -L$(TAO_ROOT)\tao \
+	-j$(ACE_ROOT)\ace\$(CONFIG_SUBDIR) -j$(ACE_ROOT)\ace \
+	-L$(ACE_ROOT)\ace\$(CONFIG_SUBDIR) -L$(ACE_ROOT)\ace \
+  -j$(CORE_BINDIR) \
+  -L$(CORE_BINDIR)
+
+LIBFILES = \
+	TAO_CosNotification$(LIB_DECORATOR).lib \
+	TAO_Svc_Utils$(LIB_DECORATOR).lib \
+	TAO_ETCL$(LIB_DECORATOR).lib \
+	TAO_DynamicAny$(LIB_DECORATOR).lib \
+	TAO_PortableServer$(LIB_DECORATOR).lib \
+	TAO$(LIB_DECORATOR).lib \
+	TAO_RTCORBA$(LIB_DECORATOR).lib \
+	ACE$(LIB_DECORATOR).lib \
+	$(EXTERNAL_LIBS)
+
+!ifdef STATIC
+LIB_FLAGS = -DTAO_AS_STATIC_LIBS=1 -DACE_AS_STATIC_LIBS=1
+DLL_FLAGS =
+!else
+LIB_FLAGS =
+DLL_FLAGS = -DTAO_RT_NOTIFY_BUILD_DLL=1
+!endif
+
+CFLAGS = \
+	-I$(TAO_ROOT)\orbsvcs \
+	-I$(TAO_ROOT) \
+	-I$(TAO_ROOT)\tao \
+	-I$(ACE_ROOT) \
+	$(LIB_FLAGS) \
+	$(DLL_FLAGS)
+
+CPPDIR = Notify
+
+INCLUDES = \
+	Channel_Clients_T.h \
+	Notify\RT_Builder.h \
+	Notify\RT_Factory.h \
+	Notify\RT_Notify_Service.h \
+	Notify\RT_POA_Helper.h \
+	Notify\RT_Properties.h \
+	Channel_Clients_T.cpp \
+	Channel_Clients_T.i \
+	Notify\RT_Builder.inl \
+	Notify\RT_Factory.inl \
+	Notify\RT_Notify_Service.inl \
+	Notify\RT_POA_Helper.inl \
+	Notify\RT_Properties.inl
+
+INCDIR_NAME = orbsvcs
+
+BASE_BINDIR = $(ACE_ROOT)\bin
+
+!include <$(ACE_ROOT)\include\makeinclude\build_core_library.bor>
