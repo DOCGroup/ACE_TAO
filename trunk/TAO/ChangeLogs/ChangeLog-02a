@@ -1,3 +1,8 @@
+Wed May 31 09:50:34 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_interface/any_op_cs.cpp:
+	  Cosmetic cleanup I forgot to do on my last checkin.
+
 Tue May 30 22:47:16 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* examples/Buffered_Oneways/client.cpp
