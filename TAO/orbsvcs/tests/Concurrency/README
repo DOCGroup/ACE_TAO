@@ -1,0 +1,7 @@
+$Id$
+
+This is the readme file for the tests of the concurrency service. At
+present the description of the tests is in the readme file for the
+concurrency service in the directory:
+        $TAO_ROOT/orbsvcs/Concurrency_Control
+please consult this file for a decription of the tests.
