@@ -149,7 +149,6 @@ sub Build_Core ()
     }
     if ($Build_LIB) {
         @core_list = ($ACE_ROOT."\\ace\\ace_lib.dsp",
-                      $ACE_ROOT."\\apps\\gperf\\src\\gperf_lib.dsp",
                       $ACE_ROOT."\\apps\\gperf\\src\\gperf.dsp",
                       $ACE_ROOT."\\TAO\\TAO_IDL\\TAO_IDL_BE_LIB.dsp",
                       $ACE_ROOT."\\TAO\\TAO_IDL\\TAO_IDL_FE_LIB.dsp",
