@@ -36,7 +36,7 @@ const ACE_Time_Value ACE_Time_Value::max_time (LONG_MAX,
 // Accessor method for max_time for exported use (since some compilers,
 // i.e. MingW, have trouble handling exported class data members).
 const ACE_Time_Value&
-ACE_Time_Value::max_time_value (viud)
+ACE_Time_Value::max_time_value (void)
 {
   return max_time;
 }
