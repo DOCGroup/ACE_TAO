@@ -1,3 +1,8 @@
+Thu May 20 11:19:45 1999  Joe Hoffert <joeh@cs.wustl.edu>
+
+        * ace/ATM_Addr.cpp: Added ACE_UNUSED_ARG for selector parameter
+          when appropriate.
+
 Thu May 20 09:57:57 1999  Bill Rizzi <rizzi@softserv.com>
 
         * ace/Log_Msg.{h,cpp},examples/Log_Msg/test_log_msg.cpp
