@@ -26,10 +26,11 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:302
+// be\be_codegen.cpp:323
 
 
 #include "Default_ORTC.h"
+#include "tao/CDR.h"
 #include "tao/Valuetype/ValueFactory.h"
 #include "tao/Typecode.h"
 #include "tao/Any_Impl_T.h"
@@ -43,38 +44,39 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be/be_visitor_arg_traits.cpp:60
+// be\be_visitor_arg_traits.cpp:64
 
 // Arg traits specializations.
 namespace TAO
 {
 }
 
+
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_TAO_Default_ORT_ObjectReferenceTemplate[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   48,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x54414f5f),
-  ACE_NTOHL (0x44656661),
-  ACE_NTOHL (0x756c745f),
-  ACE_NTOHL (0x4f52542f),
-  ACE_NTOHL (0x4f626a65),
-  ACE_NTOHL (0x63745265),
-  ACE_NTOHL (0x66657265),
-  ACE_NTOHL (0x6e636554),
-  ACE_NTOHL (0x656d706c),
-  ACE_NTOHL (0x6174653a),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x54414f5f), 
+  ACE_NTOHL (0x44656661), 
+  ACE_NTOHL (0x756c745f), 
+  ACE_NTOHL (0x4f52542f), 
+  ACE_NTOHL (0x4f626a65), 
+  ACE_NTOHL (0x63745265), 
+  ACE_NTOHL (0x66657265), 
+  ACE_NTOHL (0x6e636554), 
+  ACE_NTOHL (0x656d706c), 
+  ACE_NTOHL (0x6174653a), 
   ACE_NTOHL (0x312e3000),  // repository ID = IDL:TAO_Default_ORT/ObjectReferenceTemplate:1.0
     24,
-  ACE_NTOHL (0x4f626a65),
-  ACE_NTOHL (0x63745265),
-  ACE_NTOHL (0x66657265),
-  ACE_NTOHL (0x6e636554),
-  ACE_NTOHL (0x656d706c),
+  ACE_NTOHL (0x4f626a65), 
+  ACE_NTOHL (0x63745265), 
+  ACE_NTOHL (0x66657265), 
+  ACE_NTOHL (0x6e636554), 
+  ACE_NTOHL (0x656d706c), 
   ACE_NTOHL (0x61746500),  // name = ObjectReferenceTemplate
     0, // value modifier
   CORBA::tk_null, // no stateful base valuetype
@@ -97,9 +99,9 @@ namespace TAO_Default_ORT
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_valuetype/valuetype_cs.cpp:66
+// be\be_visitor_valuetype/valuetype_cs.cpp:66
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 void
 TAO::Value_Traits<TAO_Default_ORT::ObjectReferenceTemplate>::tao_add_ref (
     TAO_Default_ORT::ObjectReferenceTemplate * p
@@ -108,7 +110,7 @@ TAO::Value_Traits<TAO_Default_ORT::ObjectReferenceTemplate>::tao_add_ref (
   CORBA::add_ref (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 void
 TAO::Value_Traits<TAO_Default_ORT::ObjectReferenceTemplate>::tao_remove_ref (
     TAO_Default_ORT::ObjectReferenceTemplate * p
@@ -117,7 +119,7 @@ TAO::Value_Traits<TAO_Default_ORT::ObjectReferenceTemplate>::tao_remove_ref (
   CORBA::remove_ref (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 void
 TAO::Value_Traits<TAO_Default_ORT::ObjectReferenceTemplate>::tao_release (
     TAO_Default_ORT::ObjectReferenceTemplate * p
@@ -133,8 +135,8 @@ TAO_Default_ORT::ObjectReferenceTemplate::_downcast (CORBA::ValueBase *v)
     {
       return 0;
     }
-
-  return dynamic_cast<TAO_Default_ORT::ObjectReferenceTemplate *> (v);
+  
+  return dynamic_cast< ::TAO_Default_ORT::ObjectReferenceTemplate * > (v);
 }
 
 const char *
@@ -178,23 +180,23 @@ CORBA::Boolean TAO_Default_ORT::ObjectReferenceTemplate::_tao_unmarshal (
         base,
         ObjectReferenceTemplate::_tao_obv_static_repository_id ()
       );
-
+  
   if (retval == 0)
     {
       return 0;
     }
-
+  
   if (factory.in () != 0)
     {
       base = factory->create_for_unmarshal ();
-
+      
       if (base == 0)
         {
           return 0;  // %! except.?
         }
-
+      
       retval = base->_tao_unmarshal_v (strm);
-
+      
       if (retval == 0)
         {
           return 0;
@@ -208,7 +210,7 @@ CORBA::Boolean TAO_Default_ORT::ObjectReferenceTemplate::_tao_unmarshal (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_valuetype/valuetype_obv_cs.cpp:58
+// be\be_visitor_valuetype/valuetype_obv_cs.cpp:58
 
 OBV_TAO_Default_ORT::ObjectReferenceTemplate::ObjectReferenceTemplate (void)
 {}
@@ -229,7 +231,7 @@ OBV_TAO_Default_ORT::ObjectReferenceTemplate::_tao_unmarshal__TAO_Default_ORT_Ob
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_valuetype/any_op_cs.cpp:57
+// be\be_visitor_valuetype/any_op_cs.cpp:57
 
 
 
@@ -287,7 +289,7 @@ operator>>= (
 
 
 // TAO_IDL - Generated from
-// be/be_valuetype.cpp:490
+// be\be_valuetype.cpp:490
 
 void
 CORBA::add_ref (TAO_Default_ORT::ObjectReferenceTemplate * vt)
@@ -308,7 +310,7 @@ CORBA::remove_ref (TAO_Default_ORT::ObjectReferenceTemplate * vt)
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_valuetype/cdr_op_cs.cpp:73
+// be\be_visitor_valuetype/cdr_op_cs.cpp:73
 
 CORBA::Boolean
 operator<< (
@@ -337,40 +339,26 @@ operator>> (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_valuetype/marshal_cs.cpp:44
+// be\be_visitor_valuetype/marshal_cs.cpp:44
 
 CORBA::Boolean
 OBV_TAO_Default_ORT::ObjectReferenceTemplate::_tao_marshal_state (TAO_OutputCDR &)
 {
-  if (
-    1
-   )
-    {
-      return 1;
-    }
-  else
-    {
-      return 0;
-    }
+  return (
+      1
+    );
 }
 
 CORBA::Boolean
 OBV_TAO_Default_ORT::ObjectReferenceTemplate::_tao_unmarshal_state (TAO_InputCDR &)
 {
-  if (
+  return (
     1
-   )
-    {
-      return 1;
-    }
-  else
-    {
-      return 0;
-    }
+  );
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_root/root.cpp:1702
+// be\be_visitor_root/root.cpp:1633
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
