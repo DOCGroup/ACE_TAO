@@ -217,7 +217,7 @@ Wed Oct  8 12:09:46 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 Wed Oct  8 09:52:20 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
 	* ace/Parse_Node.cpp: 
-	  Fixed the minor sintax error *again*.
+	  Fixed the minor syntax error *again*.
 
 Tue Oct  7 17:10:51 1997  Carlos O'Ryan  <coryan@swarm.cs.wustl.edu>
 
@@ -241,7 +241,7 @@ Tue Oct  7 10:57:48 1997  Carlos O'Ryan  <coryan@swarm.cs.wustl.edu>
 	  but was needed by some users.
 
 	* ace/Parse_Node.cpp: 
-	  Fixed a minor sintax error.
+	  Fixed a minor syntax error.
 
 Tue Oct 07 06:58:40 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
