@@ -1,3 +1,20 @@
+Mon Apr 12 16:41:43 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/WrongTransactionA.cpp:
+        * tao/WrongTransactionC.{h,cpp,i}:
+        * tao/UShortSeqA.cpp:
+        * tao/UShortSeqC.{h,cpp,i}:
+          Regenerated these files
+
+        * tao/WrongTransaction.pidl:
+        * tao/UShortSeq.pidl:
+          Updated regeneration message
+
+        * tao/WrongTransactionA.h:
+        * tao/UShortSeqS.i:
+        * tao/diffs/WrongTransaction.diff:
+          Removed these files, not needed anymore
+
 Mon Apr 12 11:27:36 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/performance-tests/RTEvent/Roundtrip/Roundtrip.mpc:
