@@ -1,3 +1,24 @@
+Tue Oct 31 11:54:30 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Object.cpp:
+          Remove stray template instantiation, probably left out during
+          development.
+
+        * tao/DynamicInterface/DII_Invocation.h:
+        * tao/DynamicInterface/DII_Reply_Dispatcher.h:
+        * tao/DynamicInterface/Request.h:
+          Fixed a few #includes that still referenced files with the tao/
+          prefix, even though they were moved to the DynamicInterface
+          directory.
+
+        * tao/Makefile:
+        * tao/DynamicAny/Makefile:
+        * tao/IORManipulation/Makefile:
+        * tao/IORTable/Makefile:
+        * tao/PortableServer/Makefile:
+        * tao/DynamicInterface/Makefile:
+          Update dependencies
+
 Tue Oct 31 11:05:47 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/PortableServer/TAO_PortableServer.dsp:

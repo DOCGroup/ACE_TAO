@@ -28,7 +28,7 @@
 #include "dynamicinterface_export.h"
 #include "tao/Reply_Dispatcher.h"
 
-class TAO_DynamicInterface_Export TAO_DII_Deferred_Reply_Dispatcher 
+class TAO_DynamicInterface_Export TAO_DII_Deferred_Reply_Dispatcher
   : public TAO_Reply_Dispatcher
 {
   // = TITLE
@@ -87,7 +87,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "tao/DII_Reply_Dispatcher.inl"
+# include "DII_Reply_Dispatcher.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
