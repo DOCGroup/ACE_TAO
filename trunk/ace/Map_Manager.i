@@ -173,18 +173,16 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::unbind (const EXT_ID &ext_id)
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> ACE_INLINE size_t
-ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::current_size (void)
+ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::current_size (void) const
 {
-  ACE_WRITE_GUARD_RETURN (ACE_LOCK, ace_mon, this->lock_,
-                          ACE_static_cast(size_t, -1));
+  ACE_WRITE_GUARD_RETURN (ACE_LOCK, ace_mon, ACE_const_cast (ACE_LOCK &, this->lock_), ACE_static_cast (size_t, -1));
   return this->cur_size_;
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> ACE_INLINE size_t
-ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::total_size (void)
+ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::total_size (void) const
 {
-  ACE_WRITE_GUARD_RETURN (ACE_LOCK, ace_mon, this->lock_,
-                          ACE_static_cast (size_t, -1));
+  ACE_WRITE_GUARD_RETURN (ACE_LOCK, ace_mon, ACE_const_cast (ACE_LOCK &, this->lock_), ACE_static_cast (size_t, -1));
   return this->total_size_;
 }
 

@@ -238,13 +238,13 @@ ACE_Active_Map_Manager<T>::close (void)
 }
 
 template <class T> ACE_INLINE size_t
-ACE_Active_Map_Manager<T>::current_size (void)
+ACE_Active_Map_Manager<T>::current_size (void) const
 {
   return ACE_AMM_BASE::current_size ();
 }
 
 template <class T> ACE_INLINE size_t
-ACE_Active_Map_Manager<T>::total_size (void)
+ACE_Active_Map_Manager<T>::total_size (void) const
 {
   return ACE_AMM_BASE::total_size ();
 }

@@ -245,10 +245,10 @@ public:
   int unbind (ACE_Hash_Map_Entry<EXT_ID, INT_ID> *entry);
   // Remove entry from map.
 
-  size_t current_size (void);
+  size_t current_size (void) const;
   // Return the current size of the map.
 
-  size_t total_size (void);
+  size_t total_size (void) const;
   // Return the total size of the map.
 
   ACE_LOCK &mutex (void);

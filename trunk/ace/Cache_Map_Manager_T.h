@@ -165,10 +165,10 @@ public:
   int purge (void);
   // Remove entries from the cache depending upon the strategy.
 
-  size_t current_size (void);
+  size_t current_size (void) const;
   // Return the current size of the cache.
 
-  size_t total_size (void);
+  size_t total_size (void) const;
   // Return the total size of the cache.
 
   void dump (void) const;

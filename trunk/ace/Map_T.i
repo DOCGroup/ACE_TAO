@@ -1,14 +1,10 @@
 // $Id$
 
-////////////////////////////////////////////////////////////////////////////////
-
 template <class T> ACE_INLINE int
 ACE_Noop_Key_Generator<T>::operator() (T &)
 {
   return -1;
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 template <class T> ACE_INLINE
 ACE_Incremental_Key_Generator<T>::ACE_Incremental_Key_Generator (void)
@@ -29,21 +25,15 @@ ACE_Incremental_Key_Generator<T>::current_value (void)
   return this->t_;
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 template <class T> ACE_INLINE
 ACE_Iterator_Impl<T>::~ACE_Iterator_Impl (void)
 {
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 template <class T> ACE_INLINE
 ACE_Reverse_Iterator_Impl<T>::~ACE_Reverse_Iterator_Impl (void)
 {
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 template <class T> ACE_INLINE
 ACE_Iterator<T>::ACE_Iterator (ACE_Iterator_Impl<T> *impl)
@@ -125,8 +115,6 @@ ACE_Iterator<T>::impl (void)
   return *this->implementation_;
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 template <class T> ACE_INLINE
 ACE_Reverse_Iterator<T>::ACE_Reverse_Iterator (ACE_Reverse_Iterator_Impl<T> *impl)
   : implementation_ (impl)
@@ -207,8 +195,6 @@ ACE_Reverse_Iterator<T>::impl (void)
   return *this->implementation_;
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 template <class KEY, class VALUE> ACE_INLINE
 ACE_Map<KEY, VALUE>::ACE_Map (void)
 {
@@ -242,8 +228,6 @@ ACE_Map<KEY, VALUE>::rend (void)
 {
   return reverse_iterator (this->rend_impl ());
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 template <class T, class IMPLEMENTATION, class ENTRY> ACE_INLINE
 ACE_Map_Impl_Iterator_Adapter<T, IMPLEMENTATION, ENTRY>::ACE_Map_Impl_Iterator_Adapter (const IMPLEMENTATION &impl)
@@ -298,8 +282,6 @@ ACE_Map_Impl_Iterator_Adapter<T, IMPLEMENTATION, ENTRY>::impl (void)
   return this->implementation_;
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 template <class T, class IMPLEMENTATION, class ENTRY> ACE_INLINE
 ACE_Map_Impl_Reverse_Iterator_Adapter<T, IMPLEMENTATION, ENTRY>::ACE_Map_Impl_Reverse_Iterator_Adapter (const IMPLEMENTATION &impl)
   : implementation_ (impl)
@@ -352,8 +334,6 @@ ACE_Map_Impl_Reverse_Iterator_Adapter<T, IMPLEMENTATION, ENTRY>::impl (void)
 {
   return this->implementation_;
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 template <class KEY, class VALUE, class IMPLEMENTATION, class ITERATOR, class REVERSE_ITERATOR, class ENTRY> ACE_INLINE
 ACE_Map_Impl<KEY, VALUE, IMPLEMENTATION, ITERATOR, REVERSE_ITERATOR, ENTRY>::ACE_Map_Impl (ACE_Allocator *alloc)
@@ -493,13 +473,13 @@ ACE_Map_Impl<KEY, VALUE, IMPLEMENTATION, ITERATOR, REVERSE_ITERATOR, ENTRY>::unb
 }
 
 template <class KEY, class VALUE, class IMPLEMENTATION, class ITERATOR, class REVERSE_ITERATOR, class ENTRY> ACE_INLINE size_t
-ACE_Map_Impl<KEY, VALUE, IMPLEMENTATION, ITERATOR, REVERSE_ITERATOR, ENTRY>::current_size (void)
+ACE_Map_Impl<KEY, VALUE, IMPLEMENTATION, ITERATOR, REVERSE_ITERATOR, ENTRY>::current_size (void) const
 {
   return this->implementation_.current_size ();
 }
 
 template <class KEY, class VALUE, class IMPLEMENTATION, class ITERATOR, class REVERSE_ITERATOR, class ENTRY> ACE_INLINE size_t
-ACE_Map_Impl<KEY, VALUE, IMPLEMENTATION, ITERATOR, REVERSE_ITERATOR, ENTRY>::total_size (void)
+ACE_Map_Impl<KEY, VALUE, IMPLEMENTATION, ITERATOR, REVERSE_ITERATOR, ENTRY>::total_size (void) const
 {
   return this->implementation_.total_size ();
 }
@@ -539,8 +519,6 @@ ACE_Map_Impl<KEY, VALUE, IMPLEMENTATION, ITERATOR, REVERSE_ITERATOR, ENTRY>::imp
 {
   return this->implementation_;
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 template <class T, class VALUE> ACE_INLINE
 ACE_Active_Map_Manager_Iterator_Adapter<T, VALUE>::ACE_Active_Map_Manager_Iterator_Adapter (const ACE_Map_Iterator<ACE_Active_Map_Manager_Key, VALUE, ACE_Null_Mutex> &impl)
@@ -596,8 +574,6 @@ ACE_Active_Map_Manager_Iterator_Adapter<T, VALUE>::impl (void)
   return this->implementation_;
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 template <class T, class VALUE> ACE_INLINE
 ACE_Active_Map_Manager_Reverse_Iterator_Adapter<T, VALUE>::ACE_Active_Map_Manager_Reverse_Iterator_Adapter (const ACE_Map_Reverse_Iterator<ACE_Active_Map_Manager_Key, VALUE, ACE_Null_Mutex> &impl)
   : implementation_ (impl)
@@ -651,8 +627,6 @@ ACE_Active_Map_Manager_Reverse_Iterator_Adapter<T, VALUE>::impl (void)
 {
   return this->implementation_;
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 template <class KEY, class VALUE, class KEY_ADAPTER> ACE_INLINE
 ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::ACE_Active_Map_Manager_Adapter (ACE_Allocator *alloc)
@@ -953,13 +927,13 @@ ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::unbind (const KEY &key,
 }
 
 template <class KEY, class VALUE, class KEY_ADAPTER> ACE_INLINE size_t
-ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::current_size (void)
+ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::current_size (void) const
 {
   return this->implementation_.current_size ();
 }
 
 template <class KEY, class VALUE, class KEY_ADAPTER> ACE_INLINE size_t
-ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::total_size (void)
+ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::total_size (void) const
 {
   return this->implementation_.total_size ();
 }
@@ -1005,8 +979,6 @@ ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::key_adapter (void)
 {
   return this->key_adapter_;
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 template <class T, class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS> ACE_INLINE
 ACE_Hash_Map_Manager_Ex_Iterator_Adapter<T, KEY, VALUE, HASH_KEY, COMPARE_KEYS>::ACE_Hash_Map_Manager_Ex_Iterator_Adapter (const ACE_Hash_Map_Iterator_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex> &impl)
@@ -1062,8 +1034,6 @@ ACE_Hash_Map_Manager_Ex_Iterator_Adapter<T, KEY, VALUE, HASH_KEY, COMPARE_KEYS>:
   return this->implementation_;
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 template <class T, class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS> ACE_INLINE
 ACE_Hash_Map_Manager_Ex_Reverse_Iterator_Adapter<T, KEY, VALUE, HASH_KEY, COMPARE_KEYS>::ACE_Hash_Map_Manager_Ex_Reverse_Iterator_Adapter (const ACE_Hash_Map_Reverse_Iterator_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex> &impl)
   : implementation_ (impl)
@@ -1117,8 +1087,6 @@ ACE_Hash_Map_Manager_Ex_Reverse_Iterator_Adapter<T, KEY, VALUE, HASH_KEY, COMPAR
 {
   return this->implementation_;
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class KEY_GENERATOR> ACE_INLINE
 ACE_Hash_Map_Manager_Ex_Adapter<KEY, VALUE, HASH_KEY, COMPARE_KEYS, KEY_GENERATOR>::ACE_Hash_Map_Manager_Ex_Adapter (ACE_Allocator *alloc)
@@ -1269,13 +1237,13 @@ ACE_Hash_Map_Manager_Ex_Adapter<KEY, VALUE, HASH_KEY, COMPARE_KEYS, KEY_GENERATO
 }
 
 template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class KEY_GENERATOR> ACE_INLINE size_t
-ACE_Hash_Map_Manager_Ex_Adapter<KEY, VALUE, HASH_KEY, COMPARE_KEYS, KEY_GENERATOR>::current_size (void)
+ACE_Hash_Map_Manager_Ex_Adapter<KEY, VALUE, HASH_KEY, COMPARE_KEYS, KEY_GENERATOR>::current_size (void) const
 {
   return this->implementation_.current_size ();
 }
 
 template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class KEY_GENERATOR> ACE_INLINE size_t
-ACE_Hash_Map_Manager_Ex_Adapter<KEY, VALUE, HASH_KEY, COMPARE_KEYS, KEY_GENERATOR>::total_size (void)
+ACE_Hash_Map_Manager_Ex_Adapter<KEY, VALUE, HASH_KEY, COMPARE_KEYS, KEY_GENERATOR>::total_size (void) const
 {
   return this->implementation_.total_size ();
 }
@@ -1321,8 +1289,6 @@ ACE_Hash_Map_Manager_Ex_Adapter<KEY, VALUE, HASH_KEY, COMPARE_KEYS, KEY_GENERATO
 {
   return this->key_generator_;
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 template <class T, class KEY, class VALUE> ACE_INLINE
 ACE_Map_Manager_Iterator_Adapter<T, KEY, VALUE>::ACE_Map_Manager_Iterator_Adapter (const ACE_Map_Iterator<KEY, VALUE, ACE_Null_Mutex> &impl)
@@ -1378,8 +1344,6 @@ ACE_Map_Manager_Iterator_Adapter<T, KEY, VALUE>::impl (void)
   return this->implementation_;
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 template <class T, class KEY, class VALUE> ACE_INLINE
 ACE_Map_Manager_Reverse_Iterator_Adapter<T, KEY, VALUE>::ACE_Map_Manager_Reverse_Iterator_Adapter (const ACE_Map_Reverse_Iterator<KEY, VALUE, ACE_Null_Mutex> &impl)
   : implementation_ (impl)
@@ -1433,8 +1397,6 @@ ACE_Map_Manager_Reverse_Iterator_Adapter<T, KEY, VALUE>::impl (void)
 {
   return this->implementation_;
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 template <class KEY, class VALUE, class KEY_GENERATOR> ACE_INLINE
 ACE_Map_Manager_Adapter<KEY, VALUE, KEY_GENERATOR>::ACE_Map_Manager_Adapter (ACE_Allocator *alloc)
@@ -1585,13 +1547,13 @@ ACE_Map_Manager_Adapter<KEY, VALUE, KEY_GENERATOR>::unbind (const KEY &key,
 }
 
 template <class KEY, class VALUE, class KEY_GENERATOR> ACE_INLINE size_t
-ACE_Map_Manager_Adapter<KEY, VALUE, KEY_GENERATOR>::current_size (void)
+ACE_Map_Manager_Adapter<KEY, VALUE, KEY_GENERATOR>::current_size (void) const
 {
   return this->implementation_.current_size ();
 }
 
 template <class KEY, class VALUE, class KEY_GENERATOR> ACE_INLINE size_t
-ACE_Map_Manager_Adapter<KEY, VALUE, KEY_GENERATOR>::total_size (void)
+ACE_Map_Manager_Adapter<KEY, VALUE, KEY_GENERATOR>::total_size (void) const
 {
   return this->implementation_.total_size ();
 }
@@ -1637,5 +1599,3 @@ ACE_Map_Manager_Adapter<KEY, VALUE, KEY_GENERATOR>::key_generator (void)
 {
   return this->key_generator_;
 }
-
-////////////////////////////////////////////////////////////////////////////////

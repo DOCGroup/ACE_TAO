@@ -81,6 +81,9 @@ run SOCK_Connector_Test                 # uses SOCK_Connector
 #Future_Test: threads not supported on this platform
 #run Future_Test                         # uses Thread_Manager, Task
 
+#Future_Set_Test: threads not supported on this platform
+#run Future_Set_Test                         # uses Thread_Manager, Task
+
 #Reactors_Test: threads not supported on this platform
 #run Reactors_Test                       # uses Task, Mutex, Reactor
 

@@ -1601,8 +1601,8 @@ ACE_OS::strncasecmp (const char *s,
 #if !defined (ACE_WIN32) || defined (ACE_HAS_WINCE)
   ACE_TRACE ("ACE_OS::strcasecmp");
 # if defined (ACE_LACKS_STRCASECMP)
-  const wchar_t *scan1 = s;
-  const wchar_t *scan2 = t
+  const char *scan1 = s;
+  const char *scan2 = t;
   ssize_t count = ssize_t (n);
 
   while (--count >= 0
@@ -10444,7 +10444,7 @@ ACE_OS::strncasecmp (const wchar_t *s,
 
 # if !defined (ACE_WIN32)
   const wchar_t *scan1 = s;
-  const wchar_t *scan2 = t
+  const wchar_t *scan2 = t;
   ssize_t count = ssize_t (n);
 
   while (--count >= 0
