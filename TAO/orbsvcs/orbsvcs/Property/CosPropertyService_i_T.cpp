@@ -415,7 +415,7 @@ TAO_PropertySet<IF>::get_all_property_names (CORBA::ULong how_many,
   // Allocating storage is a must.
   ACE_NEW (property_names,
            CosPropertyService::PropertyNames);
-  
+
   size_t num_of_properties =
     this->get_number_of_properties (TAO_IN_ENV);
 
@@ -523,18 +523,18 @@ TAO_PropertySet<IF>::get_properties (const CosPropertyService::PropertyNames &pr
   ACE_NEW_RETURN (nproperties,
                   CosPropertyService::Properties,
                   0);
-  
+
   // Validate the length.
   size_t n = property_names.length ();
   if (n == 0)
     return 0;
-  
+
   // Set the length for the out parameter.
   nproperties->length (n);
-  
+
   CORBA::Any_ptr any_ptr = 0;
   CORBA::Boolean ret_val = 1;
-  
+
   for (size_t i = 0; i < n; i++)
     {
       TAO_IN_ENV.clear ();
@@ -590,7 +590,7 @@ TAO_PropertySet<IF>::get_all_properties (CORBA::ULong how_many,
   if (num_of_properties == 0)
     return;
 
-  // Set the length for the nproperties if how_many > 0. 
+  // Set the length for the nproperties if how_many > 0.
   CORBA::ULong sequence_length = 0;
 
   if (how_many > 0)
@@ -866,4 +866,10 @@ TAO_PropertySet<IF>::is_property_defined (const char *property_name,  CORBA::Env
     }
 }
 
+template <class IF>
+void
+TAO_PropertySet<IF>::operator= (const TAO_PropertySet<IF> &)
+{
+  // Empty.
+}
 #endif /* TAO_COSPROPERTYSERVICE_I_T_C */
