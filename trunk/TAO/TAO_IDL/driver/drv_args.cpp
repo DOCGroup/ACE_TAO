@@ -119,8 +119,8 @@ DRV_usage (void)
   cerr << GTDEVEL (" -Dname[=value]\t\tdefines name for preprocessor\n");
   cerr << GTDEVEL (" -E\t\t\truns preprocessor only, prints on stdout\n");
   cerr << GTDEVEL (" -g <gperf_path>\tPath for the GPERF program. Default is $ACE_ROOT/bin/gperf\n");
-  cerr << GTDEVEL (" -Cw\t\t\tWarning if identifier spellings differ only in case (default)\n");
-  cerr << GTDEVEL (" -Ce\t\t\tError if identifier spellings differ only in case (default is warning)\n");
+  cerr << GTDEVEL (" -Cw\t\t\tWarning if identifier spellings differ only in case (default is error)\n");
+  cerr << GTDEVEL (" -Ce\t\t\tError if identifier spellings differ only in case (default)\n");
   cerr << GTDEVEL (" -Gc\t\t\tenable Compiled marshaling (default)\n");
   cerr << GTDEVEL (" -Gi\t\t\tenable Interpretive marshaling (default is compiled)\n");
   cerr << GTDEVEL (" -Ge [0|1]\t\t\tDisable/Enable generation of CORBA::Environment arguments (enabled by default if ACE_HAS_EXCEPTIONS)\n");
