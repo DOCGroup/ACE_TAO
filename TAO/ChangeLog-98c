@@ -1,3 +1,9 @@
+Wed Jul 22 11:18:51 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
+
+	* Makefile: Updated the Makefile to include the server_i and
+	client_i. This should fix failing compiles. I should have done
+	this in my previous commit. Gomen  ^_^
+	
 Wed Jul 22 11:15:07 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Sched/Config_Scheduler.cpp (compute_scheduling):
