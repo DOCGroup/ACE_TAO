@@ -1,3 +1,10 @@
+Fri Jun 16 16:00:45 2000  Joe Hoffert  <joeh@cs.wustl.edu>
+
+        * include/makeinclude/{rules.bin.GNU,wrapper_macros.GNU}:
+          Moving VLDLIBS definition from wrapper_macros.GNU to rules.bin.GNU
+          to allow unsetting ACE_LIB. Needed for PACE builds that don't need
+          the ACE library.
+
 Fri Jun 16 14:24:36 2000  Steve Huston  <shuston@riverace.com>
 
         * ace/config-hpux-11.00.h:
