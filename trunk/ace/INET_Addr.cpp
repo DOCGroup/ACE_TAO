@@ -186,7 +186,7 @@ ACE_INET_Addr::set (u_short port_number,
   this->ACE_Addr::base_set (AF_INET, sizeof this->inet_addr_);
   (void) ACE_OS::memset ((void *) &this->inet_addr_, 0, sizeof
                          this->inet_addr_);
-  const char *hostname_ch = ACE_MULTIBYTE_STRING (host_name);
+  const char *hostname_ch = ASYS_ONLY_MULTIBYTE_STRING (host_name);
 
   // Yow, someone gave us a NULL host_name!
   if (host_name == 0)
