@@ -1,3 +1,9 @@
+Tue Apr 18 08:54:04 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * bin/vc_filter.pl:
+          
+          Brand spankin' new filter script for Win32 auto build results.
+
 Sun Apr 16 22:24:34 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ACE-INSTALL.html: Updated the link for GNU make to be more
