@@ -9,6 +9,7 @@ Wed Nov 28 09:28:09 2001  Johnny Willemsen <jwillemsen@remedy.nl>
         * ace/examples/Reactor/Ntalker/*
         * ace/examples/Registry/*
         * ace/examples/Threads/*
+        * ace/examples/Service_Configurator/IPC_tests/client/*
           Made these examples compiling when ACE_USES_WCHAR is set
 
 Mon Nov 26 16:07:57 2001  Balachandran Natarajan  <bala@cs.wustl.edu>

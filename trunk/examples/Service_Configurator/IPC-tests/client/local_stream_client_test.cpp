@@ -9,16 +9,16 @@
 ACE_RCSID(client, local_stream_client_test, "$Id$")
 
 #if defined (ACE_HAS_MSG) && !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
-// Name of the program. 
+// Name of the program.
 static char *program_name;
 
-// Name of rendezvous point. 
+// Name of rendezvous point.
 static const char *rendezvous = "/tmp/foo_stream";
 
-// Name of file to send. 
+// Name of file to send.
 static const char *file_name = "local_data";
 
-static void 
+static void
 print_usage_and_die (void)
 {
   ACE_ERROR ((LM_ERROR,
@@ -49,7 +49,7 @@ parse_args (int argc, char *argv[])
 }
 
 int
-main (int argc, char *argv[])
+main (int argc, ACE_TCHAR *argv[])
 {
   parse_args (argc, argv);
 
@@ -74,14 +74,14 @@ main (int argc, char *argv[])
                        "open"),
                       -1);
 
-  // Send the open file descriptor to the server! 
+  // Send the open file descriptor to the server!
 
   if (sc.send_handle (fd) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "send_handle"),
                       -1);
-  
+
   if ((n = sc.recv_n (buf,
                       sizeof buf)) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -100,7 +100,7 @@ main (int argc, char *argv[])
   return 0;
 }
 #else
-int main (int, char *[])
+int main (int, ACE_TCHAR *[])
 {
   ACE_ERROR_RETURN ((LM_ERROR,
                      "your platform must support sendmsg/recvmsg to run this test\n"),

@@ -10,17 +10,17 @@
 
 ACE_RCSID(client, remote_dgram_client_test, "$Id$")
 
-// Name of the program. 
-static const char *program_name;
+// Name of the program.
+static const ACE_TCHAR *program_name;
 
 // Port number to use.
 static u_short port_number = ACE_DEFAULT_SERVER_PORT;
 
-// Name of remote host. 
-static const char *host_name = ACE_DEFAULT_SERVER_HOST;
+// Name of remote host.
+static const ACE_TCHAR *host_name = ACE_DEFAULT_SERVER_HOST;
 
-// Name of file to send. 
-static const char *file_name = "./remote_data";
+// Name of file to send.
+static const ACE_TCHAR *file_name = ACE_TEXT("./remote_data");
 
 static void print_usage_and_die (void)
 {
@@ -31,11 +31,11 @@ static void print_usage_and_die (void)
 }
 
 void
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
   program_name = argv[0];
 
-  ACE_Get_Opt get_opt (argc, argv, "f:h:p:");
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("f:h:p:"));
 
   for (int c; (c = get_opt ()) != -1; )
     switch (c)
@@ -56,7 +56,7 @@ parse_args (int argc, char *argv[])
 }
 
 int
-main (int argc, char *argv[])
+main (int argc, ACE_TCHAR *argv[])
 {
   parse_args (argc, argv);
 
@@ -71,7 +71,7 @@ main (int argc, char *argv[])
                        "%p\n",
                        "mmap"),
                       -1);
-      
+
   // Next, send the file's contents.
 
   ssize_t cc = sd.send (cp, mmap.size (), sa);
@@ -83,7 +83,7 @@ main (int argc, char *argv[])
                       -1);
   else if (cc != (ssize_t) mmap.size ())
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n", 
+                       "%p\n",
 		       "Not all the contents of mmap file are sent."),
                       -1);
   return 0;

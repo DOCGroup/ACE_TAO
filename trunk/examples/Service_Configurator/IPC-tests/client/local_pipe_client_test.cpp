@@ -11,16 +11,16 @@
 ACE_RCSID(client, local_pipe_client_test, "$Id$")
 
 #if defined (ACE_HAS_MSG) && !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
-// Name of the program. 
+// Name of the program.
 static char *program_name;
 
-// Name of rendezvous point. 
+// Name of rendezvous point.
 static const char *rendezvous = "/tmp/foo_pipe";
 
-// Name of file to send. 
+// Name of file to send.
 static const char *file_name = "local_data";
 
-static void 
+static void
 print_usage_and_die (void)
 {
   ACE_ERROR ((LM_ERROR,
@@ -99,8 +99,8 @@ do_client_processing (ACE_LSOCK_Stream &sc)
 	return -1;
     }
 
-  if (ACE_OS::close (fd_read[0]) == -1 
-      || ACE_OS::close (fd_write[1]) == -1 
+  if (ACE_OS::close (fd_read[0]) == -1
+      || ACE_OS::close (fd_write[1]) == -1
       || ACE_OS::close (fd1) == -1)
     ACE_OS::exit (1);
 
@@ -108,7 +108,7 @@ do_client_processing (ACE_LSOCK_Stream &sc)
 }
 
 int
-main (int argc, char *argv[])
+main (int argc, ACE_TCHAR *argv[])
 {
   parse_args (argc, argv);
 
@@ -133,11 +133,11 @@ main (int argc, char *argv[])
                        "%p\n",
                        "close"),
                       -1);
-  
+
   return 0;
 }
 #else
-int main (int, char *[])
+int main (int, ACE_TCHAR *[])
 {
   ACE_ERROR_RETURN ((LM_ERROR,
                      "your platform must support sendmsg/recvmsg to run this test\n"),

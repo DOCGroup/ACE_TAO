@@ -1,6 +1,6 @@
 // $Id$
 
-// Tests out the UNIX domain IPC-SAP abstraction. 
+// Tests out the UNIX domain IPC-SAP abstraction.
 
 #include "ace/LSOCK_CODgram.h"
 #include "ace/LSOCK_Dgram.h"
@@ -20,10 +20,10 @@ static const char *rendezvous_dgram = "/tmp/foo_dgram";
 // Name of file to send.
 static const char *file_name = "local_data";
 
-static void 
+static void
 print_usage_and_die (void)
 {
-  ACE_ERROR ((LM_ERROR, 
+  ACE_ERROR ((LM_ERROR,
               "usage: %s [-r rendezvous_dgram] [-c rendezvous_codgram] [-f file]\n",
 	      program_name));
   ACE_OS::exit (1);
@@ -53,7 +53,7 @@ parse_args (int argc, char *argv[])
 }
 
 int
-main (int argc, char *argv[])
+main (int argc, ACE_TCHAR *argv[])
 {
   program_name = argv[0];
 
@@ -85,7 +85,7 @@ main (int argc, char *argv[])
                        "%p\n",
                        "open"),
                       -1);
-  
+
   // Send the open file descriptor to the server!
 
   if (sc.send_handle (handle) == -1)
@@ -113,7 +113,7 @@ main (int argc, char *argv[])
   return 0;
 }
 #else
-int main (int, char *[])
+int main (int, ACE_TCHAR *[])
 {
   ACE_ERROR_RETURN ((LM_ERROR,
                      "your platform must support sendmsg/recvmsg to run this test\n"),

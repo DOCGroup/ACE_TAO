@@ -22,7 +22,7 @@ static const char *rendezvous_spipe = "/tmp/foo_spipe";
 // Name of file to send.
 static const char *file_name = "./local_data";
 
-static void 
+static void
 print_usage_and_die (void)
 {
   ACE_ERROR ((LM_ERROR,
@@ -52,12 +52,12 @@ parse_arguments (int argc, char *argv[])
   }
   if (debug)
     ACE_DEBUG ((LM_DEBUG,
-                "rendezvous_spipe = %s\n", 
+                "rendezvous_spipe = %s\n",
 		rendezvous_spipe));
 }
 
 int
-main(int argc, char *argv[])
+main(int argc, ACE_TCHAR *argv[])
 {
   parse_arguments (argc, argv);
 
@@ -66,7 +66,7 @@ main(int argc, char *argv[])
 
   if (con.connect (spipe,
                    ACE_SPIPE_Addr (rendezvous_spipe)) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, 
+    ACE_ERROR_RETURN ((LM_ERROR,
 		       "Cannot open %s for requesting a new communication channel"
 		       " in local_spipe_client_test.\n",
                        rendezvous_spipe),
@@ -80,7 +80,7 @@ main(int argc, char *argv[])
                        "%p\n",
                        "mmap"),
                       -1);
-      
+
   // Next, send the file's contents.
 
   ACE_Str_Buf msg (cp, int (mmap.size ()));
@@ -94,8 +94,8 @@ main(int argc, char *argv[])
 }
 #else
 #include <stdio.h>
-int 
-main (int, char *[])
+int
+main (int, ACE_TCHAR *[])
 {
   ACE_ERROR_RETURN ((LM_ERROR,
                      "This feature is not supported\n"),
