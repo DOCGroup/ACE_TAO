@@ -4,8 +4,8 @@
 #include "ace/Asynch_Acceptor.h"
 #include "ace/Proactor.h"
 
-#include "apps/JAWS/server/IO.h"
-#include "apps/JAWS/server/HTTP_Server.h"
+#include "IO.h"
+#include "HTTP_Server.h"
 
 void
 HTTP_Server::parse_args (int argc, char *argv[])

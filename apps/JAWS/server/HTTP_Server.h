@@ -10,10 +10,10 @@
 #include "ace/SOCK_Acceptor.h"
 #include "ace/Task.h"
 #include "ace/Asynch_IO.h"
-#include "apps/JAWS/server/HTTP_Handler.h"
+#include "HTTP_Handler.h"
 
 // Include the templates here.
-#include "apps/JAWS/server/HTTP_Server_T.h"
+#include "HTTP_Server_T.h"
 
 // Forward declaration.
 class ACE_Proactor;
