@@ -86,28 +86,8 @@ main (int argc, char *argv[])
       Deployment::NodeImplementationInfo node_info;
       node_info.length (1);
       node_info[0] = container_info;
-/*
-      // Install the NodeApplication Test component
-      ::Components::CCMHome_var home = node_app->install_home (info);
-      ACE_TRY_CHECK;
 
-      // Narrow the Home to the appropriate component
-      NodeAppTest::NodeAppTest_RoundTripHome_var home_var =
-        NodeAppTest::NodeAppTest_RoundTripHome::_narrow (home.in ());
-
-      ACE_TRY_CHECK;
-      if (CORBA::is_nil (home_var.in ()))
-       {
-         ACE_ERROR_RETURN ((LM_DEBUG,
-                            "Nil RoundTripHome reference\n"),
-                            1);
-       }
-
-      // Get Component from Home
-      ACE_DEBUG ((LM_DEBUG, "Try obtaining RoundTrip component ref from Home\n"));
-      NodeAppTest::NodeAppTest_RoundTrip_var roundtrip_var =
-        home_var->create (ACE_ENV_SINGLE_ARG_PARAMETER);
-*/
+      // Install test component and its home on NodeApplication
       Deployment::ComponentInfos_var comp_info =
         node_app->install (node_info ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -115,11 +95,11 @@ main (int argc, char *argv[])
       assert (comp_info->length () == 1); //return 1 component objeref
 
       const CORBA::ULong i = 0;
-      Components::CCMObject_ptr objref =
-        (comp_info[i]).component_ref;
+      Components::CCMObject_ptr objref = (comp_info[i]).component_ref;
 
       NodeAppTest::NodeAppTest_RoundTrip_var roundtrip_var =
-        NodeAppTest::NodeAppTest_RoundTrip::_narrow (objref);
+        NodeAppTest::NodeAppTest_RoundTrip::_narrow (objref ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (roundtrip_var.in ()))
        {
@@ -127,8 +107,6 @@ main (int argc, char *argv[])
                             "Nil RoundTrip reference\n"),
                             1);
        }
-
-      ACE_TRY_CHECK;
 
       // Invoke Operation on the Interface
       ACE_DEBUG ((LM_DEBUG, "Try cube_long operation on the Interface \n"));
