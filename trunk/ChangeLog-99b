@@ -1,3 +1,9 @@
+Thu Aug  5 11:57:23 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* include/makeinclude/wrapper_macros.GNU (YACC): Removed the
+	  definition of interface_repo a command line option with 'make'
+	  to $TAO_ROOT/rules.tao.GNU as per Dr.Levine's suggestions.
+
 Thu Aug 05 08:43:27 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/platform_vxworks5.x_diab.GNU: added.

@@ -38,6 +38,12 @@ ifeq ($(findstring g++,$(CXX)),g++)
   endif # g++ < 2.8
 endif # g++
 
+######
+##### Interface Repository stuff..
+#####
+ifneq ($(interface_repo),1)
+  CPPFLAGS += -DTAO_HAS_INTERFACE_REPOSITORY
+endif #interface_repo
 
 ####
 #### Build rules.
