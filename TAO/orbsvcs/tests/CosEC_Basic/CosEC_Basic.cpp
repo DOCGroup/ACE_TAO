@@ -3,8 +3,7 @@
 
 #include "CosEC_Basic.h"
 #include "orbsvcs/CosEvent_Utilities.h"
-#include "ace/Auto_Ptr.h"
-#include "tao/POA.h"
+#include "tao/POAC.h"
 
 int
 main (int argc, char *argv [])
@@ -97,14 +96,14 @@ CosEC_Basic::init_ORB  (int argc, char *argv [],
 void
 CosEC_Basic::init_CosEC (CORBA::Environment &ACE_TRY_ENV)
 {
-  CosEC_ServantBase *_ec = 0;
+  CosEC_ServantBase *ec = 0;
 
-  ACE_NEW_THROW_EX (_ec,
+  ACE_NEW_THROW_EX (ec,
                     CosEC_ServantBase (),
                     CORBA::NO_MEMORY ());
   ACE_CHECK;
 
-  auto_ptr <CosEC_ServantBase> ec (_ec);
+  PortableServer::ServantBase_var ec_var (ec);
 
   ec->init (this->root_poa_.in(),
             this->root_poa_.in(),
@@ -119,14 +118,13 @@ CosEC_Basic::init_CosEC (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW (CORBA::UNKNOWN ());
   // @@ look for more descriptive exception to throw here
 
-  ec.release (); // release the ownership from the auto_ptr.
-
   CORBA::Object_var obj =
-    this->root_poa_->servant_to_reference (_ec, ACE_TRY_ENV);
+    this->root_poa_->servant_to_reference (ec, ACE_TRY_ENV);
   ACE_CHECK;
 
-  cos_ec_ = CosEventChannelAdmin::EventChannel::_narrow (obj.in (),
-                                                         ACE_TRY_ENV);
+  this->cos_ec_ =
+    CosEventChannelAdmin::EventChannel::_narrow (obj._retn (),
+                                                 ACE_TRY_ENV);
   ACE_CHECK;
 }
 
@@ -134,10 +132,8 @@ void
 CosEC_Basic::run (CORBA::Environment &ACE_TRY_ENV)
 {
   // Create an Any type to pass to the Cos EC.
-  CORBA_Any cany;
-  cany <<= CORBA::Long (50);
   CORBA::Any any;
-  cany >>= any;
+  any <<= (CORBA::Long)50;
 
   this->consumer_.open (this->cos_ec_.in (),
                         this->orb_.in (),
