@@ -1,3 +1,12 @@
+Wed Mar 09 16:40:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+         * tao/ImR_Client/ImR_Client_Adapter_Impl.cpp:
+           Fixed a bug in the deletion of the server object. When it was
+           registered on the root poa the root poa pointer is zero, so
+           we throw an exception. Reverted back to the way it was before
+           the refactoring, get the poa from the server object and use
+           that
+
 Wed Mar 09 11:11:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/idl_make_vars:
