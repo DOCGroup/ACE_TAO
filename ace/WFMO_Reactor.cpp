@@ -59,8 +59,11 @@ ACE_WFMO_Reactor_Handler_Repository::remove_network_events_i (long &existing_mas
 							      ACE_Reactor_Mask to_be_removed_masks)
 {
   if (ACE_BIT_ENABLED (to_be_removed_masks, ACE_Event_Handler::READ_MASK))
-    ACE_CLR_BITS (existing_masks, FD_READ);
-  
+    {
+      ACE_CLR_BITS (existing_masks, FD_READ);
+      ACE_CLR_BITS (existing_masks, FD_CLOSE);
+    }
+      
   if (ACE_BIT_ENABLED (to_be_removed_masks, ACE_Event_Handler::WRITE_MASK))
     ACE_CLR_BITS (existing_masks, FD_WRITE);
   
@@ -78,9 +81,6 @@ ACE_WFMO_Reactor_Handler_Repository::remove_network_events_i (long &existing_mas
   
   if (ACE_BIT_ENABLED (to_be_removed_masks, ACE_Event_Handler::GROUP_QOS_MASK))
     ACE_CLR_BITS (existing_masks, FD_GROUP_QOS);
-  
-  if (ACE_BIT_ENABLED (to_be_removed_masks, ACE_Event_Handler::CLOSE_MASK))
-    ACE_CLR_BITS (existing_masks, FD_CLOSE);
 }
 
 int
@@ -156,6 +156,12 @@ ACE_WFMO_Reactor_Handler_Repository::remove_handler_i (size_t index,
 			this->current_handles_[index],
 			this->current_info_[index].network_events_);
     }
+  else
+    // Normal event entries
+    {
+      // Make sure that the <to_be_removed_masks> is the NULL_MASK 
+      to_be_removed_masks = ACE_Event_Handler::NULL_MASK;
+    }
   
   // If there are no more events that the <Event_Handler> is
   // interested in, or this is a non-I/O entry, schedule the
@@ -194,7 +200,13 @@ ACE_WFMO_Reactor_Handler_Repository::remove_suspended_handler_i (size_t index,
 			this->current_suspended_info_[index].event_handle_,
 			this->current_suspended_info_[index].network_events_);
     }
-
+  else
+    // Normal event entries
+    {
+      // Make sure that the <to_be_removed_masks> is the NULL_MASK 
+      to_be_removed_masks = ACE_Event_Handler::NULL_MASK;
+    }
+  
   // If there are no more events that the <Event_Handler> is
   // interested in, or this is a non-I/O entry, schedule the
   // <Event_Handler> for removal
@@ -285,10 +297,10 @@ ACE_WFMO_Reactor_Handler_Repository::unbind_all (void)
     
     // Remove all the handlers 
     for (size_t i = 0; i < this->max_handlep1_; i++)
-      this->remove_handler_i (i, ACE_Event_Handler::NULL_MASK);
+      this->remove_handler_i (i, ACE_Event_Handler::ALL_EVENTS_MASK);
 
     for (i = 0; i < this->suspended_handles_; i++)
-      this->remove_suspended_handler_i (i, ACE_Event_Handler::NULL_MASK);    
+      this->remove_suspended_handler_i (i, ACE_Event_Handler::ALL_EVENTS_MASK);    
   }
   // The guard is released here
   
@@ -866,7 +878,10 @@ ACE_WFMO_Reactor_Handler_Repository::add_network_events_i (ACE_Reactor_Mask mask
       }
 
   if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::READ_MASK))
-    ACE_SET_BITS (*modified_masks, FD_READ);
+    {
+      ACE_SET_BITS (*modified_masks, FD_READ);
+      ACE_SET_BITS (*modified_masks, FD_CLOSE);
+    }
   
   if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::WRITE_MASK))
     ACE_SET_BITS (*modified_masks, FD_WRITE);
@@ -885,9 +900,6 @@ ACE_WFMO_Reactor_Handler_Repository::add_network_events_i (ACE_Reactor_Mask mask
 
   if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::GROUP_QOS_MASK))
     ACE_SET_BITS (*modified_masks, FD_GROUP_QOS);
-
-  if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::CLOSE_MASK))
-    ACE_SET_BITS (*modified_masks, FD_CLOSE);
 
   new_masks = *modified_masks;
 
@@ -1127,7 +1139,7 @@ ACE_WFMO_Reactor::complex_dispatch_handler (int index,
 		    current_info.io_handle_, 
 		    event_handle,
 		    current_info.network_events_) == -1)
-    this->handler_rep_.unbind (event_handle, ACE_Event_Handler::NULL_MASK);
+    this->handler_rep_.unbind (event_handle, ACE_Event_Handler::ALL_EVENTS_MASK);
   
   return 0;
 }
@@ -1153,6 +1165,9 @@ ACE_WFMO_Reactor::upcall (ACE_Event_Handler *event_handler,
       if (result != -1 && interested_events & actual_events & FD_READ)
 	result = event_handler->handle_input (io_handle);
 
+      if (result != -1 && interested_events & actual_events & FD_CLOSE)
+	result = event_handler->handle_input (io_handle);
+
       if (result != -1 && interested_events & actual_events & FD_WRITE)
 	result = event_handler->handle_output (io_handle);
 
@@ -1171,9 +1186,6 @@ ACE_WFMO_Reactor::upcall (ACE_Event_Handler *event_handler,
 	    // Unsuccessful connect
 	    result = event_handler->handle_input (io_handle);
 	}
-      
-      if (result != -1 && interested_events & actual_events & FD_CLOSE)
-	result = event_handler->handle_close (io_handle, ACE_Event_Handler::CLOSE_MASK);
       
       if (result != -1 && interested_events & actual_events & FD_QOS)
 	result = event_handler->handle_qos (io_handle);

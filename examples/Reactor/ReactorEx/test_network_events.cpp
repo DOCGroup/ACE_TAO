@@ -61,9 +61,7 @@ Network_Handler::Network_Handler (ACE_SOCK_Stream &s)
 {
   this->reactor (&::reactor);
 
-  ACE_Reactor_Mask mask = ACE_Event_Handler::READ_MASK | ACE_Event_Handler::CLOSE_MASK;
-  ACE_ASSERT (this->reactor ()->register_handler (this, 
-						  mask) == 0);
+  ACE_ASSERT (this->reactor ()->register_handler (this, READ_MASK) == 0);
 }
 
 ACE_HANDLE  
@@ -85,6 +83,11 @@ Network_Handler::handle_input (ACE_HANDLE handle)
       ACE_DEBUG ((LM_DEBUG, "Remote message: %s\n", message));
       return 0;
     }
+  else if (result == 0)
+    {
+      ACE_DEBUG ((LM_DEBUG, "Connection closed\n"));
+      return -1;
+    }
   else
     {
       ACE_DEBUG ((LM_DEBUG, "Problems in receiving data, result = %d", result));
@@ -98,17 +101,8 @@ Network_Handler::handle_close (ACE_HANDLE handle,
 {
   ACE_DEBUG ((LM_DEBUG, "Network_Handler::handle_close handle = %d\n", handle));
 
-  // Called because of remote shutdown
-  if (close_mask == ACE_Event_Handler::CLOSE_MASK)
-    {
-      ACE_Reactor_Mask mask = ACE_Event_Handler::DONT_CALL | ACE_Event_Handler::ALL_EVENTS_MASK;
-      this->reactor ()->remove_handler (this, mask);
-    }
-  
-  this->stream_.close ();
-  
+  this->stream_.close ();  
   delete this;
-
   return 0;
 }
 
