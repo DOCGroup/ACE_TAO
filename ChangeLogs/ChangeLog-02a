@@ -1,9 +1,29 @@
+Tue May  7 16:45:13 2002  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * ace/ACE.cpp (handle_timed_complete):
+
+          Check for the return value from ACE_OS::getsockopt(). Return
+          ACE_INVALID_HANDLE if return value is -1. Thanks to Jonathan
+          Wackley <jwackley@legato.com> for reporting this.
+
+        * ace/OS.i (ACE_LACKS_SETREUID_PROTOTYPE):
+
+          Check if we are compiling with gcc in addition to checking for
+          _XOPEN_SOURCE. GCC unconditionally turns on _XOPEN_SOURCE, but
+          it is not defined in Solaris 2.5.1. So this hack to expose the
+          missing prototypes of setreuid() and setregid(). Thanks to
+          Jonathan Wackley <jwackley@legato.com> for reporting this.
+
+        * include/makeinclude/platform_sunos5_sunc++.GNU:
+
+          Cosmetic fixes.
+
 Tue May 07 15:44:41 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* bin/auto_run_tests.lst: Reverted the change "Tue May 07 15:15:30
 	  2002  Balachandran Natarajan  <bala@cs.wustl.edu>". Got an idea
 	  waht was going wrong with the test and fixed that.
-	
+
 Tue May 07 15:15:30 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* bin/auto_run_tests.lst: Removed No_Server_MT_Connect_Test from
@@ -15,21 +35,21 @@ Tue May  7 12:59:24 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Proactor_Test.cpp (handle_write_stream): Tried to fix
 	  warnings and errors in Borland builds. Thanks to Ru for pointing
-	  it out.  
+	  it out.
 
 Tue May  7 10:31:24 2002  Alex Libman <AlexL@rumblegroup.com>
 
 	* tests/TP_Reactor_Test.cpp:
 	* tests/TP_Reactor_Test.h: Fixed the tests to work fine on all
-	  platforms.  
-	
+	  platforms.
+
 	* tests/run_test.lst (TP_Reactor_Test): Enabled the test for the
-	  daily runs. 
+	  daily runs.
 
 Mon May 06 16:31:14 2002  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* examples/Reactor/WFMO_Reactor/Abandoned.cpp (handle_timeout): 
-	* examples/Reactor/WFMO_Reactor/APC.cpp (handle_signal): 
+	* examples/Reactor/WFMO_Reactor/Abandoned.cpp (handle_timeout):
+	* examples/Reactor/WFMO_Reactor/APC.cpp (handle_signal):
 
 	  Make sure to remove handlers from the reactor if they are not
 	  going to be around when the reactor closes down.
