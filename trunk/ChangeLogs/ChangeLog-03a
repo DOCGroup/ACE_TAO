@@ -1,3 +1,17 @@
+Tue Oct  1 20:46:35 2002  Christopher Kohlhoff  <chris@kohlhoff.com>
+
+        * ace/Atomic_Op.cpp:
+          Added explicit instantiations for ACE_Atomic_Op<ACE_Thread_Mutex,long>
+          and ACE_Atomic_Op_Ex<ACE_Thread_Mutex,long>. Programs using ACE should
+          no longer explicitly instantiate these classes. This change eliminates
+          the complexity of having to test for the ACE_HAS_BUILTIN_ATOMIC_OP
+          define when doing explicit instantiations.
+
+        * tests/Atomic_Op_Test.cpp:
+        * tests/Notify_Performance_Test.cpp:
+          Removed ACE_Atomic_Op explicit instantiations that are now made in the
+          ACE library itself.
+
 Tue Oct  1 19:49:36 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * ace/Exception_Macros.h:
