@@ -37,11 +37,13 @@ ACE_DEV_IO::get_remote_addr (ACE_DEV_Addr &addr) const
 void
 ACE_DEV_IO::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_DEV_IO::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   this->addr_.dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }
 
 // Simple-minded do nothing constructor. 

@@ -106,9 +106,11 @@ ACE_FILE_Addr::addr_to_string (ACE_TCHAR *s, size_t len) const
 void
 ACE_FILE_Addr::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_FILE_Addr::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("filename_ = %s"), this->filename_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }

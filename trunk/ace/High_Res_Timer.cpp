@@ -287,6 +287,7 @@ ACE_High_Res_Timer::calibrate (const ACE_UINT32 usec,
 void
 ACE_High_Res_Timer::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_High_Res_Timer::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
@@ -318,6 +319,7 @@ ACE_High_Res_Timer::dump (void) const
              ACE_CU64_TO_CU32 (start_incr_ & 0xfffffffful)));
 #endif /* ! ACE_LACKS_LONGLONG_T */
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }
 
 void

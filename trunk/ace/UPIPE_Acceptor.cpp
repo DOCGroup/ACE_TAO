@@ -16,7 +16,9 @@ ACE_ALLOC_HOOK_DEFINE(ACE_UPIPE_Acceptor)
 void
 ACE_UPIPE_Acceptor::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_UPIPE_Acceptor::dump");
+#endif /* ACE_HAS_DUMP */
 }
 
 /* Do nothing routine for constructor. */

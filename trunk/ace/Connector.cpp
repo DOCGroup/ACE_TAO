@@ -53,12 +53,14 @@ ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::timer_id (long id)
 template <class SVC_HANDLER> void
 ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("svc_handler_ = %x"), this->svc_handler_));
   ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("\ntimer_id_ = %d"), this->timer_id_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }
 
 template <class SVC_HANDLER> SVC_HANDLER *
@@ -182,11 +184,13 @@ ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::resume_handler (void)
 template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1> void
 ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("\nflags_ = %d"), this->flags_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }
 
 template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1> int

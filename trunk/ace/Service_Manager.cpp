@@ -22,7 +22,9 @@ ACE_ALLOC_HOOK_DEFINE (ACE_Service_Manager)
 void
 ACE_Service_Manager::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Service_Manager::dump");
+#endif /* ACE_HAS_DUMP */
 }
 
 // Static variables.

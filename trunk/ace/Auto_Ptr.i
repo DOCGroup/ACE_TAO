@@ -3,6 +3,22 @@
 
 // Auto_Ptr.i
 
+template<class X> ACE_INLINE void
+ACE_Auto_Basic_Ptr<X>::dump (void) const
+{
+#if defined (ACE_HAS_DUMP)
+  ACE_TRACE ("ACE_Auto_Basic_Ptr<X>::dump");
+#endif /* ACE_HAS_DUMP */
+}
+
+template<class X> ACE_INLINE void
+ACE_Auto_Basic_Array_Ptr<X>::dump (void) const
+{
+#if defined (ACE_HAS_DUMP)
+  ACE_TRACE ("ACE_Auto_Basic_Array_Ptr<X>::dump");
+#endif /* ACE_HAS_DUMP */
+}
+
 template<class X> ACE_INLINE
 ACE_Auto_Basic_Ptr<X>::ACE_Auto_Basic_Ptr (ACE_Auto_Basic_Ptr<X> &rhs)
   : p_ (rhs.release ())

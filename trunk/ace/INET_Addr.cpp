@@ -57,6 +57,7 @@ ACE_INET_Addr::addr_to_string (ACE_TCHAR s[],
 void
 ACE_INET_Addr::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_INET_Addr::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
@@ -65,6 +66,7 @@ ACE_INET_Addr::dump (void) const
   this->addr_to_string(s, ACE_MAX_FULLY_QUALIFIED_NAME_LEN + 16);
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("%s"), s));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }
 
 // Compare two addresses for inequality.

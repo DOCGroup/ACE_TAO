@@ -22,6 +22,7 @@ ACE_RCSID(ace, Task_T, "$Id$")
 template <ACE_SYNCH_DECL> void
 ACE_Task<ACE_SYNCH_USE>::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Task<ACE_SYNCH_USE>::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("\nthr_mgr_ = %x"), this->thr_mgr_));
@@ -37,6 +38,7 @@ ACE_Task<ACE_SYNCH_USE>::dump (void) const
 #endif /* ACE_MT_SAFE */
 
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }
 
 // If the user doesn't supply a ACE_Message_Queue pointer then we'll

@@ -40,6 +40,7 @@ ACE_Thread_Manager::set_thr_exit (ACE_TSS_TYPE (ACE_Thread_Exit) *ptr)
 void
 ACE_Thread_Manager::dump (void)
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Thread_Manager::dump");
   // Cast away const-ness of this in order to use its non-const lock_.
   ACE_MT (ACE_GUARD (ACE_Thread_Mutex, ace_mon,
@@ -56,6 +57,7 @@ ACE_Thread_Manager::dump (void)
     iter.next ()->dump ();
 
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }
 
 ACE_Thread_Descriptor::~ACE_Thread_Descriptor (void)
@@ -230,6 +232,7 @@ ACE_Thread_Descriptor::at_exit (void *object,
 void
 ACE_Thread_Descriptor::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Thread_Descriptor::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
 
@@ -241,6 +244,7 @@ ACE_Thread_Descriptor::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nflags_ = %x\n"), this->flags_));
 
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }
 
 ACE_Thread_Descriptor::ACE_Thread_Descriptor (void)

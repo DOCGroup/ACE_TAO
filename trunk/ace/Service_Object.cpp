@@ -17,7 +17,9 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Service_Type)
 void
 ACE_Service_Type::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Service_Type::dump");
+#endif /* ACE_HAS_DUMP */
 }
 
 ACE_Service_Type::ACE_Service_Type (const ACE_TCHAR *n,

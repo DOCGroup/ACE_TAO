@@ -151,7 +151,9 @@ ACE_SOCK_SEQPACK_Acceptor::accept (ACE_SOCK_SEQPACK_Association &new_association
 void
 ACE_SOCK_SEQPACK_Acceptor::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_SOCK_SEQPACK_Acceptor::dump");
+#endif /* ACE_HAS_DUMP */
 }
 
 int

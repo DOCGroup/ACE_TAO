@@ -15,7 +15,9 @@ ACE_ALLOC_HOOK_DEFINE(ACE_SV_Message_Queue)
 void
 ACE_SV_Message_Queue::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_SV_Message_Queue::dump");
+#endif /* ACE_HAS_DUMP */
 }
 
 ACE_SV_Message_Queue::ACE_SV_Message_Queue (void)

@@ -253,6 +253,7 @@ ACE_Token_Manager::release_token (ACE_Tokens *&token)
 void
 ACE_Token_Manager::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Token_Manager::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("ACE_Token_Manager::dump:\n")));
@@ -261,6 +262,7 @@ ACE_Token_Manager::dump (void) const
   ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("collection_\n")));
   collection_.dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

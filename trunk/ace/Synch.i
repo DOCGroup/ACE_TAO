@@ -452,6 +452,8 @@ ACE_Null_Semaphore::tryacquire_read (void)
 ACE_INLINE void
 ACE_Null_Semaphore::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
+#endif /* ACE_HAS_DUMP */
 }
 
 #if defined (ACE_HAS_THREADS)
@@ -748,6 +750,8 @@ ACE_Null_Barrier::wait (void)
 ACE_INLINE void
 ACE_Null_Barrier::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
+#endif /* ACE_HAS_DUMP */
 }
 
 ACE_INLINE
@@ -832,6 +836,8 @@ ACE_Null_Mutex::tryacquire_read (void)
 ACE_INLINE void
 ACE_Null_Mutex::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
+#endif /* ACE_HAS_DUMP */
 }
 
 ACE_INLINE int
@@ -854,6 +860,8 @@ ACE_Noop_Token::renew (int, ACE_Time_Value *)
 ACE_INLINE void
 ACE_Noop_Token::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
+#endif /* ACE_HAS_DUMP */
 }
 
 
@@ -910,6 +918,8 @@ ACE_Null_Condition::mutex (void)
 ACE_INLINE void
 ACE_Null_Condition::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
+#endif /* ACE_HAS_DUMP */
 }
 
 #if defined (ACE_USES_OBSOLETE_GUARD_CLASSES)
@@ -956,6 +966,8 @@ ACE_Null_Mutex_Guard::release (void)
 ACE_INLINE void
 ACE_Null_Mutex_Guard::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
+#endif /* ACE_HAS_DUMP */
 }
 #endif /* ACE_USES_OBSOLETE_GUARD_CLASSES */
 

@@ -27,9 +27,11 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Message_Queue_Ex)
 template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL> void
 ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::dump");
 
   this->queue_.dump ();
+#endif /* ACE_HAS_DUMP */
 }
 
 template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL> void
@@ -376,6 +378,8 @@ ACE_Message_Queue_Iterator<ACE_SYNCH_USE>::advance (void)
 template <ACE_SYNCH_DECL> void
 ACE_Message_Queue_Iterator<ACE_SYNCH_USE>::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
+#endif /* ACE_HAS_DUMP */
 }
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Message_Queue_Iterator)
@@ -422,11 +426,14 @@ ACE_Message_Queue_Reverse_Iterator<ACE_SYNCH_USE>::advance (void)
 template <ACE_SYNCH_DECL> void
 ACE_Message_Queue_Reverse_Iterator<ACE_SYNCH_USE>::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
+#endif /* ACE_HAS_DUMP */
 }
 
 template <ACE_SYNCH_DECL> void
 ACE_Message_Queue<ACE_SYNCH_USE>::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   switch (this->state_)
@@ -464,6 +471,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("not_empty_cond: \n")));
   not_empty_cond_.dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }
 
 template <ACE_SYNCH_DECL> void
@@ -1599,6 +1607,7 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::dequeue_head (ACE_Message_Block *&firs
 template <ACE_SYNCH_DECL> void
 ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
 
@@ -1623,6 +1632,7 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::dump (void) const
   message_strategy_.dump ();
 
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }
   // dump the state of the queue
 

@@ -113,7 +113,9 @@ ACE_String_Base<CHAR>::~ACE_String_Base (void)
 template <class CHAR> ACE_INLINE void
 ACE_String_Base<CHAR>::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_String_Base<CHAR>::dump");
+#endif /* ACE_HAS_DUMP */
 }
 
 // Assignment operator (does copy memory).

@@ -39,12 +39,14 @@ ACE_Reverse_Lock<ACE_LOCKING_MECHANISM>::~ACE_Reverse_Lock (void)
 template <class ACE_LOCK> void
 ACE_Guard<ACE_LOCK>::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
 // ACE_TRACE ("ACE_Guard<ACE_LOCK>::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("mutex_ = %x\n"), this->lock_));
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("owner_ = %d\n"), this->owner_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }
 
 // ACE_ALLOC_HOOK_DEFINE(ACE_Write_Guard)
@@ -52,8 +54,10 @@ ACE_Guard<ACE_LOCK>::dump (void) const
 template <class ACE_LOCK> void
 ACE_Write_Guard<ACE_LOCK>::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
 // ACE_TRACE ("ACE_Write_Guard<ACE_LOCK>::dump");
   ACE_Guard<ACE_LOCK>::dump ();
+#endif /* ACE_HAS_DUMP */
 }
 
 // ACE_ALLOC_HOOK_DEFINE(ACE_Read_Guard)
@@ -72,6 +76,7 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Condition)
 template <class MUTEX> void
 ACE_Condition<MUTEX>::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
 // ACE_TRACE ("ACE_Condition<MUTEX>::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
@@ -81,6 +86,7 @@ ACE_Condition<MUTEX>::dump (void) const
 #endif /* CHORUS */
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }
 
 template <class MUTEX>
@@ -95,9 +101,11 @@ ACE_Thread_Condition<MUTEX>::ACE_Thread_Condition (MUTEX &m,
 template <class MUTEX> void
 ACE_Thread_Condition<MUTEX>::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
 // ACE_TRACE ("ACE_Thread_Condition<MUTEX>::dump");
 
   ACE_Condition<MUTEX>::dump ();
+#endif /* ACE_HAS_DUMP */
 }
 
 template <class MUTEX>
@@ -272,6 +280,7 @@ ACE_TSS<TYPE>::make_TSS_TYPE (void) const
 template <class TYPE> void
 ACE_TSS<TYPE>::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
 // ACE_TRACE ("ACE_TSS<TYPE>::dump");
 #if defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION))
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
@@ -281,6 +290,7 @@ ACE_TSS<TYPE>::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION)) */
+#endif /* ACE_HAS_DUMP */
 }
 
 #if defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION))
@@ -545,12 +555,14 @@ ACE_ALLOC_HOOK_DEFINE(ACE_TSS_Guard)
 template <class ACE_LOCK> void
 ACE_TSS_Guard<ACE_LOCK>::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
 // ACE_TRACE ("ACE_TSS_Guard<ACE_LOCK>::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("key_ = %d"), this->key_));
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
 }
 
 template <class ACE_LOCK> void
@@ -796,8 +808,10 @@ ACE_TSS_Write_Guard<ACE_LOCK>::tryacquire_write (void)
 template <class ACE_LOCK> void
 ACE_TSS_Write_Guard<ACE_LOCK>::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
 // ACE_TRACE ("ACE_TSS_Write_Guard<ACE_LOCK>::dump");
   ACE_TSS_Guard<ACE_LOCK>::dump ();
+#endif /* ACE_HAS_DUMP */
 }
 
 template <class ACE_LOCK>
@@ -882,8 +896,10 @@ ACE_TSS_Read_Guard<ACE_LOCK>::tryacquire_read (void)
 template <class ACE_LOCK> void
 ACE_TSS_Read_Guard<ACE_LOCK>::dump (void) const
 {
+#if defined (ACE_HAS_DUMP)
 // ACE_TRACE ("ACE_TSS_Read_Guard<ACE_LOCK>::dump");
   ACE_TSS_Guard<ACE_LOCK>::dump ();
+#endif /* ACE_HAS_DUMP */
 }
 
 
