@@ -36,7 +36,7 @@ PATH +=:$(GHS_DIR)
 
 CC      = cxch68
 CXX     = $(CC)
-CFLAGS  = -groot=$(MVME_DIR)/ -alttools=$(GHS_DIR) -68040 -fprecise \
+CFLAGS  = -groot=$(MVME_DIR)/ -alttools=$(GHS_DIR)/gnuch68 -68040 -fprecise \
           -I$(MVME_INCL)/posix \
           -I$(MVME_INCL)/stdc \
           -I$(MVME_INCL)/chorus \
@@ -51,10 +51,10 @@ LDFLAGS = --no_auto_instantiation \
           $(MVME_DIR)/lib/CC/ioassign.o $(MVME_DIR)/lib/CC/iostream.o \
           $(COOL_DIR)/lib/libOrb.a  \
           $(MVME_DIR)/lib/CC/libC.a \
-          $(GHS_DIR)/ch68/libedg.a \
+          $(GHS_DIR)/ch68/libedgnoe.a \
           $(MVME_DIR)/lib/classix/libcx.s.a
 OCFLAGS += -OL -OM
-AR      = $(GHS_DIR)/gnuch68/bin/ar
+AR      = $(GHS_DIR)/gnuch68/ar
 ARFLAGS = rv
 RANLIB  = @true
 
