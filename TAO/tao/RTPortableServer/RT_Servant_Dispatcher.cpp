@@ -86,13 +86,10 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (TAO_POA &poa,
       const char protocol [] = "iiop";
       const char *protocol_type = protocol;
       
-      TAO_RT_POA *rt_poa = ACE_dynamic_cast (TAO_RT_POA *,
-					     &poa);
-
       TAO_IIOP_Transport *iiop_transport = ACE_dynamic_cast (TAO_IIOP_Transport *,
 							     req.transport ());
       
-      CORBA::Policy* policy = rt_poa->server_protocol ();
+      CORBA::Policy* policy = poa.server_protocol ();
       
       int result =
 	tph->update_server_protocol_properties (policy,
