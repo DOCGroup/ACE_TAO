@@ -66,7 +66,11 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 15.2.1.
    */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  # define pace_mq_open mq_open
+# if defined (PACE_HAS_CPLUSPLUS)
+#  define pace_mq_open ::mq_open
+# else
+#  define pace_mq_open mq_open
+# endif /* PACE_HAS_CPLUSPLUS */
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
   /* mqd_t mq_open (const char *name, int oflag, (*//* args *//*) ... ); */
 

@@ -31,14 +31,16 @@ PACE_INLINE
 char *
 pace_asctime_r (const pace_tm * time, char * buf)
 {
-# if defined (PACE_HAS_POSIX_PTHREAD_SEMANTICS)
+#if (PACE_LYNXOS)
+  /*lynxos 3.1 has POSIX.4 Draft 9 versions of this */
+  if (asctime_r (time, buf, 26) == -1) /* ??? */
+    return (char*) 0;
+  return buf;
+#elif (PACE_SUNOS)
+  return asctime_r (time, buf, 26);
+#else
   return asctime_r (time, buf);
-# else /* ! PACE_HAS_POSIX_PTHREAD_SEMANTICS */
-  PACE_UNUSED_ARG (time);
-  PACE_UNUSED_ARG (buf);
-  PACE_ERRNO_NO_SUPPORT ();
-  return 0;
-# endif /* ! PACE_HAS_POSIX_PTHREAD_SEMANTICS */
+#endif /* PACE_LYNXOS */
 }
 #endif /* PACE_HAS_POSIX_CLSR_UOF */
 
@@ -125,14 +127,11 @@ PACE_INLINE
 char *
 pace_ctime_r (const pace_time_t * clock, char * buf)
 {
-# if defined (PACE_HAS_POSIX_PTHREAD_SEMANTICS)
+# if (PACE_SUNOS) || (PACE_LYNXOS)
+  return ctime_r (clock, buf, 26);
+# else
   return ctime_r (clock, buf);
-# else /* ! PACE_HAS_POSIX_PTHREAD_SEMANTICS */
-  PACE_UNUSED_ARG (clock);
-  PACE_UNUSED_ARG (buf);
-  PACE_ERRNO_NO_SUPPORT ();
-  return 0;
-# endif /* ! PACE_HAS_POSIX_PTHREAD_SEMANTICS */
+# endif /* PACE_SUNOS */
 }
 #endif /* PACE_HAS_POSIX_CLSR_UOF */
 
@@ -150,14 +149,14 @@ PACE_INLINE
 pace_tm *
 pace_gmtime_r (const pace_time_t * clock, pace_tm * result)
 {
-# if defined (PACE_HAS_POSIX_PTHREAD_SEMANTICS)
+#if (PACE_LYNXOS)
+  /*lynxos 3.1 has POSIX.4 Draft 9 versions of these */
+  if (gmtime_r (result, clock) == 0)
+    return (pace_tm*)0;
+  return result; /* ????? */
+#else
   return gmtime_r (clock, result);
-# else /* ! PACE_HAS_POSIX_PTHREAD_SEMANTICS */
-  PACE_UNUSED_ARG (clock);
-  PACE_UNUSED_ARG (result);
-  PACE_ERRNO_NO_SUPPORT ();
-  return 0;
-# endif /* ! PACE_HAS_POSIX_PTHREAD_SEMANTICS */
+#endif /* PACE_LYNXOS */
 }
 #endif /* PACE_HAS_POSIX_CLSR_UOF */
 
@@ -175,14 +174,14 @@ PACE_INLINE
 pace_tm *
 pace_localtime_r (const pace_time_t * clock, pace_tm * result)
 {
-# if defined (PACE_HAS_POSIX_PTHREAD_SEMANTICS)
+#if (PACE_LYNXOS)
+  /*lynxos 3.1 has POSIX.4 Draft 9 versions of these */
+  if (localtime_r (result, clock) == 0)
+    return (pace_tm*)0;
+  return result; /* ????? */
+#else
   return localtime_r (clock, result);
-# else /* ! PACE_HAS_POSIX_PTHREAD_SEMANTICS */
-  PACE_UNUSED_ARG (clock);
-  PACE_UNUSED_ARG (result);
-  PACE_ERRNO_NO_SUPPORT ();
-  return 0;
-# endif /* ! PACE_HAS_POSIX_PTHREAD_SEMANTICS */
+#endif /* PACE_LYNXOS */
 }
 #endif /* PACE_HAS_POSIX_CLSR_UOF */
 

@@ -16,6 +16,12 @@
 #ifndef PACE_CONFIG_CONFIG_H
 #define PACE_CONFIG_CONFIG_H
 
+#if (PACE_SUNOS)
+#   if !defined (_REENTRANT)
+#     define _REENTRANT
+#   endif /* _REENTRANT */
+#endif /* PACE_SUNOS */
+
 #if !defined (PACE_HAS_POSIX_C_SOURCE)
 # if defined (_POSIX_C_SOURCE)
 #   define PACE_HAS_POSIX_C_SOURCE _POSIX_C_SOURCE
@@ -47,11 +53,13 @@
 # endif /* other POSIX */
 #endif /* ! PACE_HAS_REENTRANT */
 
+
 #if !defined (PACE_HAS_POSIX_PTHREAD_SEMANTICS)
 # if defined (_POSIX_PTHREAD_SEMANTICS)
 #   define PACE_HAS_POSIX_PTHREAD_SEMANTICS _POSIX_PTHREAD_SEMANTICS
 # endif /* _POSIX_PTHREAD_SEMANTICS */
 #endif /* ! PACE_HAS_POSIX_PTHREAD_SEMANTICS */
+
 
 #if PACE_HAS_POSIX == PACE_LYNXOS
 # define PACE_NONCONST_ARG_CAST(TYPE) (TYPE)
