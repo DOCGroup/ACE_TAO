@@ -1,8 +1,27 @@
--*- mode: outline; outline-regexp: " *\\[" -*-
+The CE stuff has pretty much been all inherited by me (Darrell).  Unfortunately
+I haven't been able to spend all my time on it recently, especially since
+I've been waiting for the new eMbedded Toolkit from MS.  
 
-Note, the CE stuff has changed hands and this document has gotten
-out of date.  It should be updated in the next release to reflect
-the current status.
+My plans are to report ACE to the Pocket PC Platform.  The eMbedded Toolkit
+also comes with support for Windows CE 2.11 on both the Palm/PC and 
+Handheld/PC, but I will probably not put too much effort into supporting 
+these platforms (as the system libraries and the compilers have "issues").
+
+This release (which will be 5.1.4) will not have a working version of ACE
+on Windows CE because of last-minute issues with errno.  One of the first
+things I plan to look into reimplementing the errno emulation with 
+SetLastError () and GetLastError ().
+
+While doing this, I will also be focusing on splitting ACE into separate
+libraries, which is a slow task, but something that is very useful for 
+using ACE on small devices like CE.  
+
+Finally, once ACE is stable enough, I'll look into porting TAO over also.
+
+And just for reference, here is the old CE-status.txt file:
+
+
+-*- mode: outline; outline-regexp: " *\\[" -*-
 
 This document presents the status of the ACE port to Windows CE.  We
 present hints on writing portable code using ACE on Windows CE and

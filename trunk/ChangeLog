@@ -1,3 +1,12 @@
+Sat Jun 10 23:34:16 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * docs/CE-status.txt:
+
+          Updated to reflect my current plans for Windows CE.  
+          Unfortunately, ACE on CE will not be working with the
+          next beta kit of ACE. :-(  Need to get an autobuild
+          set up for CE sometime...
+
 Sat Jun 10 20:51:56 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/config-win32-common.h:
