@@ -230,6 +230,44 @@ LINK32=link.exe
 # PROP Default_Filter ".cpp"
 # Begin Source File
 
+SOURCE=.\Log\BasicLog_i.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Log\BasicLogFactory_i.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\Event\BCU.cpp
 
 !IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
@@ -725,6 +763,44 @@ SOURCE=.\CosTradingS.cpp
 # Begin Source File
 
 SOURCE=.\Event\Dispatching_Modules.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\DsLogAdminC.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\DsLogAdminS.cpp
 
 !IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
 
@@ -1731,6 +1807,25 @@ SOURCE=.\IR_Helper.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Log\Iterator_i.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\LifeCycleServiceC.cpp
 
 !IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
@@ -1770,6 +1865,101 @@ SOURCE=.\LifeCycleServiceS.cpp
 # Begin Source File
 
 SOURCE=.\Event\Local_ESTypes.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Log\Log_Constraint_Interpreter.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Log\Log_Constraint_Visitors.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Log\Log_i.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Log\LogMgr_i.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Log\LogRecordStore.cpp
 
 !IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
 
@@ -2704,6 +2894,14 @@ SOURCE=.\Naming\Transient_Naming_Context.cpp
 # PROP Default_Filter ".h"
 # Begin Source File
 
+SOURCE=.\Log\BasicLog_i.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Log\BasicLogFactory_i.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Event\BCU.h
 # End Source File
 # Begin Source File
@@ -2805,6 +3003,18 @@ SOURCE=.\CosTradingS_T.h
 # Begin Source File
 
 SOURCE=.\Event\Dispatching_Modules.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\DsLogAdminC.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\DsLogAdminS.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\DsLogAdminS_T.h
 # End Source File
 # Begin Source File
 
@@ -3000,6 +3210,10 @@ SOURCE=.\IR_Helper.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Log\Iterator_i.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\LifeCycleServiceC.h
 # End Source File
 # Begin Source File
@@ -3013,6 +3227,26 @@ SOURCE=.\Event\Local_ESTypes.h
 # Begin Source File
 
 SOURCE=.\Trader\Locking.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Log\Log_Constraint_Interpreter.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Log\Log_Constraint_Visitors.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Log\Log_i.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Log\LogMgr_i.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Log\LogRecordStore.h
 # End Source File
 # Begin Source File
 
@@ -3273,6 +3507,18 @@ SOURCE=.\CosTradingS_T.i
 # Begin Source File
 
 SOURCE=.\Event\Dispatching_Modules.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\DsLogAdminC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\DsLogAdminS.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\DsLogAdminS_T.i
 # End Source File
 # Begin Source File
 
@@ -5430,6 +5676,62 @@ BuildCmds= \
 "$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 # End Custom Build
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\DsLogAdmin.idl
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+# PROP Ignore_Default_Tool 1
+USERDEP__DSLOG="..\..\..\bin\tao_idl.exe"	
+# Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
+InputPath=.\DsLogAdmin.idl
+InputName=DsLogAdmin
+
+BuildCmds= \
+	..\..\..\bin\tao_idl -Ge 1 -I../../ -I../../tao   -Wb,export_macro=TAO_ORBSVCS_Export                                                     -Wb,export_include=orbsvcs_export.h $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Release"
 
 !ENDIF 
 
@@ -7727,6 +8029,27 @@ SOURCE=.\CosTradingS_T.cpp
 
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\DsLogAdminS_T.cpp
+
+!IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Debug"
+
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "ORB Services DLL - Win32 MFC Release"
 
 !ENDIF 
 
