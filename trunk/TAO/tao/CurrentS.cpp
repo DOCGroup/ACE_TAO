@@ -49,20 +49,6 @@ void* POA_CORBA::Current::_downcast (
   return 0;
 }
 
-void POA_CORBA::Current::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &env)
-{
-  TAO_Skeleton skel; // pointer to skeleton for operation
-  const char *opname = req.operation (); // retrieve operation name
-  // find the skeleton corresponding to this opname
-  if (this->_find (opname, skel) == -1)
-  {
-    env.exception (new CORBA_BAD_OPERATION ());
-    ACE_ERROR ((LM_ERROR, "Bad operation <%s>\n", opname));
-  }
-else
-    skel (req, this, context, env);
-}
-
 const char* POA_CORBA::Current::_interface_repository_id (void) const
 {
   return "IDL:CORBA/Current:1.0";

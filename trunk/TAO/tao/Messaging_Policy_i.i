@@ -8,11 +8,3 @@ TAO_RelativeRoundtripTimeoutPolicy_i::TAO_RelativeRoundtripTimeoutPolicy_i (
      relative_expiry_ (relative_expiry)
 {
 }
-
-ACE_INLINE
-TAO_RelativeRoundtripTimeoutPolicy_i::TAO_RelativeRoundtripTimeoutPolicy_i (
-    const TAO_RelativeRoundtripTimeoutPolicy_i& rhs)
-  :  poa_ (PortableServer::POA::_duplicate (rhs.poa_.in ())),
-     relative_expiry_ (rhs.relative_expiry_)
-{
-}
