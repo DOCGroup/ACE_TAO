@@ -2733,7 +2733,7 @@ assign_priorities_i (ACE_ENV_SINGLE_ARG_DECL)
               " TAO_Reconfig_Scheduler::assign_priorities_i.\n"));
 
   ACE_DEBUG ((LM_DEBUG, "Scheduler::entry ptr array before sorting is\n"));
-  for (int i = 0; i < this->rt_info_count_; ++i)
+  for (i = 0; i < this->rt_info_count_; ++i)
     {
       RtecScheduler::RT_Info* rt_info_ptr = 
         this->entry_ptr_array_[i]->actual_rt_info ();
