@@ -2,13 +2,16 @@
 #include "tao/ORB_Constants.h"
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/os_include/os_netdb.h"
 #include "ace/os_include/sys/os_loadavg.h"
 
+
 ACE_RCSID (LoadBalancing,
            LB_CPU_Utilization_Monitor,
            "$Id$")
+
 
 double calc_cpu_loading (void)
 {
