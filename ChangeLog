@@ -1,3 +1,21 @@
+Mon Jun 25 12:18:41 2001  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/aix_shr:
+
+          Added to filter the duplicate symbol warnings from the compilation
+          of the shr.o file for AIX shared libraries.
+
+        * include/makeinclude/platform_aix_ibm.GNU:
+
+          Added the definition of SHR_FILTER.  It is defined to be
+          $(ACE_ROOT)/bin/aix_shr.
+
+        * include/makeinclude/rules.lib.GNU:
+
+          Added the GNU Make macro SHR_FILTER which will be used when
+          compiling the shr.o file.  This will only have an affect if
+          SHR_FILTER is defined.
+
 Mon Jun 25 10:05:37 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Malloc_T.cpp (avail_chunks): Guarded againt the case when a

@@ -60,6 +60,7 @@ SOEXT       = a
 # aix_build turns on the funky shared library building code in
 # rules.lib.GNU
 aix_build = 1
+SHR_FILTER=$(ACE_ROOT)/bin/aix_shr
 
 ifeq ($(threads),1)
 # Note - the _r form of the compiler command turns on -qthreads and the
