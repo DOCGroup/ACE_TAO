@@ -1,3 +1,8 @@
+Wed Feb  6 06:57:35 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/run_test.lst: Disabled TP_Reactor_Test as the test is
+	  hanging. 
+
 Tue Feb  5 11:59:00 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* tests/TP_Reactor_Test.cpp (disable_signal): Eliminate unused
