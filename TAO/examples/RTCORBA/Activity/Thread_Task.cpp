@@ -2,6 +2,7 @@
 #include "Thread_Task.h"
 
 #include "ace/High_Res_Timer.h"
+#include "ace/OS_NS_unistd.h"
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
 

@@ -22,6 +22,8 @@
 #include "tao/ORB_Core.h"
 #include "ace/Read_Buffer.h"
 #include "ace/Get_Opt.h"
+#include "ace/OS_NS_fcntl.h"
+#include "ace/OS_NS_unistd.h"
 
 Client_i::Client_i ()
   : ior_file_name_ ("chat.ior"),

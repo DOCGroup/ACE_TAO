@@ -2,6 +2,7 @@
 
 #include "ace/High_Res_Timer.h"
 #include "ace/SString.h"
+#include "ace/OS_NS_unistd.h"
 
 #include "UDP_PerformanceClient.h"
 
