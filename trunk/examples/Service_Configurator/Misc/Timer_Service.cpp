@@ -95,7 +95,7 @@ Timer_Service_1::handle_close (ACE_HANDLE,
 ACE_STATIC_SVC_DEFINE (Timer_Service_1,
 		       "Timer_Service_1",
                        ACE_SVC_OBJ_T,
-                       &ACE_SVC_NAME (Timer_Service_2),
+                       &ACE_SVC_NAME (Timer_Service_1),
 		       ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
                        0)
 
