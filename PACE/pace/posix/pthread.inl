@@ -44,13 +44,8 @@ int
 pace_pthread_attr_getinheritsched (const pace_pthread_attr_t * attr,
                                    int * inheritsched)
 {
-#if PACE_HAS_POSIX == PACE_LYNXOS
-  /* Cast away const since LynxOS' prototypes aren't const */
-  return pthread_attr_getinheritsched ((pace_pthread_attr_t *) attr,
+  return pthread_attr_getinheritsched (PACE_NONCONST_ARG_CAST (pace_pthread_attr_t *) attr,
                                        inheritsched);
-#else
-  return pthread_attr_getinheritsched (attr, inheritsched);
-#endif /* ! PACE_HAS_POSIX == PACE_LYNXOS */
 }
 
 PACE_INLINE
@@ -90,12 +85,8 @@ int
 pace_pthread_attr_getstacksize (const pace_pthread_attr_t * attr,
                                 size_t * stacksize)
 {
-#if PACE_HAS_POSIX == PACE_LYNXOS
-  /* Cast away const since LynxOS' prototypes aren't const */
-  return pthread_attr_getstacksize ((pace_pthread_attr_t *) attr, stacksize);
-#else
-  return pthread_attr_getstacksize (attr, stacksize);
-#endif /* ! PACE_HAS_POSIX == PACE_LYNXOS */
+  return pthread_attr_getstacksize (PACE_NONCONST_ARG_CAST (pace_pthread_attr_t *) attr,
+                                    stacksize);
 }
 
 PACE_INLINE
@@ -203,12 +194,7 @@ pace_pthread_cond_timedwait (pthread_cond_t * cond,
                              pace_pthread_mutex_t * mutex,
                              const pace_timespec * abstime)
 {
-#if PACE_HAS_POSIX == PACE_LYNXOS
-  /* Cast away const since LynxOS' prototypes aren't const */
-  return pthread_cond_timedwait (cond, mutex, (struct timespec *) abstime);
-#else
-  return pthread_cond_timedwait (cond, mutex, abstime);
-#endif /* ! PACE_HAS_POSIX == PACE_LYNXOS */
+  return pthread_cond_timedwait (cond, mutex, PACE_NONCONST_ARG_CAST (struct timespec *) abstime);
 }
 
 PACE_INLINE
@@ -231,13 +217,8 @@ int
 pace_pthread_condattr_getpshared (const pace_pthread_condattr_t * attr,
                                   int * pshared)
 {
-#if PACE_HAS_POSIX == PACE_LYNXOS
-  /* Cast away const since LynxOS' prototypes aren't const */
-  return pthread_condattr_getpshared ((pace_pthread_condattr_t *) attr,
+  return pthread_condattr_getpshared (PACE_NONCONST_ARG_CAST (pace_pthread_condattr_t *) attr,
                                       pshared);
-#else
-  return pthread_condattr_getpshared (attr, pshared);
-#endif /* ! PACE_HAS_POSIX == PACE_LYNXOS */
 }
 
 PACE_INLINE
@@ -413,13 +394,8 @@ int
 pace_pthread_mutexattr_getprotocol (const pace_pthread_mutexattr_t * attr,
                                     int * protocol)
 {
-#if PACE_HAS_POSIX == PACE_LYNXOS
-  /* Cast away const since LynxOS' prototypes aren't const */
-  return pthread_mutexattr_getprotocol ((pace_pthread_mutexattr_t *) attr,
+  return pthread_mutexattr_getprotocol (PACE_NONCONST_ARG_CAST (pace_pthread_mutexattr_t *) attr,
                                         protocol);
-#else
-  return pthread_mutexattr_getprotocol (attr, protocol);
-#endif /* ! PACE_HAS_POSIX == PACE_LYNXOS */
 }
 
 PACE_INLINE
@@ -443,13 +419,8 @@ int
 pace_pthread_mutexattr_getpshared (const pace_pthread_mutexattr_t * attr,
                                    int * pshared)
 {
-#if PACE_HAS_POSIX == PACE_LYNXOS
-  /* Cast away const since LynxOS' prototypes aren't const */
-  return pthread_mutexattr_getpshared ((pace_pthread_mutexattr_t *) attr,
+  return pthread_mutexattr_getpshared (PACE_NONCONST_ARG_CAST (pace_pthread_mutexattr_t *) attr,
                                        pshared);
-#else
-  return pthread_mutexattr_getpshared (attr, pshared);
-#endif /* ! PACE_HAS_POSIX == PACE_LYNXOS */
 }
 
 PACE_INLINE
@@ -510,12 +481,7 @@ PACE_INLINE
 int
 pace_pthread_setspecific (pace_pthread_key_t key, const void * value)
 {
-#if PACE_HAS_POSIX == PACE_LYNXOS
-  /* Cast away const since LynxOS' prototypes aren't const */
-  return pthread_setspecific (key, (void *) value);
-#else
-  return pthread_setspecific (key, value);
-#endif /* ! PACE_HAS_POSIX == PACE_LYNXOS */
+  return pthread_setspecific (key, PACE_NONCONST_ARG_CAST (void *) value);
 }
 
 PACE_INLINE
