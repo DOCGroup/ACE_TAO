@@ -184,11 +184,15 @@ That is the version that is shipped with Tornado 1.0.1/
 VxWorks 5.3.1.  The problems are:<P>
 
 <OL>
-  <LI> There a gory problem with munch that is severely aggravated
-       by the presence of a static in the Wind River/g++ iostream.h.
-       ACE hides this and provides an easy-to-use workaround in the
-       very unlikely situation where it becomes a problem.
-       Please see ace/config-vxworks5.2-g++.h for more information.<P>
+  <LI> The program entry point cannot be called ``main''.  ACE
+       renames it to ``ace_main'' on VxWorks.  While this may seem
+       trivial, it is important with legacy code.  ACE itself ran
+       into this problem.<P>
+
+  <LI> argc/argv isn't used with VxWorks entry points.  ACE provides
+       a wrapper function that transparently converts shell command
+       line arguments to argc/argv form.  See <A HREF="#spa">below</a>
+       for details.
 
   <LI> Unsigned long long support is not available with the g++ that
        is distributed with Tornado 1.0.1/VxWorks 5.3.1, or with
@@ -198,10 +202,11 @@ VxWorks 5.3.1.  The problems are:<P>
        type, ACE_hrtime_t, so you don't even have to worry about this
        problem if you use it.<P>
 
-  <LI> The program entry point cannot be called ``main''.  ACE
-       renames it to ``ace_main'' on VxWorks.  While this may seem
-       trivial, it is important with legacy code.  ACE itself ran
-       into this problem.<P>
+  <LI> There a gory problem with munch that is severely aggravated
+       by the presence of a static in the Wind River/g++ iostream.h.
+       ACE hides this and provides an easy-to-use workaround in the
+       very unlikely situation where it becomes a problem.
+       Please see ace/config-vxworks5.2-g++.h for more information.<P>
 </OL>
 
 In addition, as noted <A HREF="#g++">below</A> following the
@@ -538,9 +543,9 @@ I recommend just building the ACE library and tests first.
 Then try running the tests.  Please see $ACE_ROOT/tests/README
 for the latest status of the ACE tests on VxWorks.<P>
 
-Please note that the <code>main</code> entry point is renamed to
-<code>ace_main</code> on VxWorks, to comply with the VxWorks
-restriction against using <code>main</code>.  Also, if you run
+<A NAME="spa">Please</A> note that the <code>main</code> entry point
+is renamed to <code>ace_main</code> on VxWorks, to comply with the
+VxWorks restriction against using <code>main</code>.  Also, if you run
 <code>ace_main</code> directly from a shell, you'll probably have to
 restart the shell (using Ctrl-C, if enabled in your configuration) in
 order to be able to unld the module.  Alternatively, you can spawn a
