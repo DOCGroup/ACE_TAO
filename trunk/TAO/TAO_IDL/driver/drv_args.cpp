@@ -569,7 +569,9 @@ DRV_parse_args (long ac, char **av)
               else if (av[i][2] == 't')
                 {
                   // suppress typecode support
+                  // Anys must be suppressed as well
                   idl_global->tc_support (0);
+                  idl_global->any_support (0);
                 }
               else if (av[i][2] == 'p')
                 {
