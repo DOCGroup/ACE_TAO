@@ -1,3 +1,13 @@
+Fri Jul 27 10:50:42 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tests/Smart_Proxies/Benchmark/Makefile:
+        * tests/Smart_Proxies/Policy/Makefile:
+
+          Replaced VLDLIBS with TAO_SRVR_LIBS for the server
+          target in each Makefile, in order to pull in
+          TAO_PortableServer. Thanks to Ekkehard Hoffmann 
+          <ehoffman@fzi.de> for pointing out the link errors.
+
 Thu Jul 26 22:41:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
        * orbsvcs/orbsvcs/AV/AVStreams_i.h:
