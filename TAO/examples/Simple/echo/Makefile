@@ -28,14 +28,14 @@ SRC = $(IDL_SRC) $(PROG_SRCS)
 SIMPLE_CLT_OBJS = \
 		EchoC.o \
 		EchoS.o \
-                Echo_Client_i.cpp \
-        	../Simple_util.cpp \
+                Echo_Client_i.o \
+        	../Simple_util.o \
 		client.o
 SIMPLE_SVR_OBJS = \
 		EchoC.o \
 		EchoS.o \
 		Echo_i.o \
-        	../Simple_util.cpp \
+        	../Simple_util.o \
 		server.o
 
 BIN = server \
