@@ -88,8 +88,17 @@ be_visitor_traits::visit_module (be_module *node)
 int
 be_visitor_traits::visit_interface (be_interface *node)
 {
-  if (node->cli_traits_gen ()
-      || (node->imported () && !node->seen_in_operation ()))
+  if (node->cli_traits_gen ())
+    {
+      return 0;
+    }
+
+  // We want to generate the second block below only if we have
+  // been seen in an operation and the first block only if we
+  // are forward declared in this file but not defined. If neither
+  // of these conditions hold, just skip this call.
+  if (!node->seen_in_operation ()
+      && (node->imported () || node->is_defined ()))
     {
       return 0;
     }
@@ -193,8 +202,17 @@ be_visitor_traits::visit_interface_fwd (be_interface_fwd *node)
 int 
 be_visitor_traits::visit_valuetype (be_valuetype *node)
 {
-  if (node->cli_traits_gen ()
-      || (node->imported () && !node->seen_in_operation ()))
+  if (node->cli_traits_gen ())
+    {
+      return 0;
+    }
+
+  // We want to generate the second block below only if we have
+  // been seen in an operation and the first block only if we
+  // are forward declared in this file but not defined. If neither
+  // of these conditions hold, just skip this call.
+  if (!node->seen_in_operation ()
+      && (node->imported () || node->is_defined ()))
     {
       return 0;
     }
@@ -339,7 +357,7 @@ be_visitor_traits::visit_string (be_string *node)
   unsigned long bound = node->max_size ()->ev ()->u.ulval;
   be_typedef *alias = this->ctx_->alias ();
 
-  // Unbounded (w)strings can be handled as a predefined type.
+  // Unbounded (w)string args are handled as a predefined type.
   // Bounded (w)strings must come in as a typedef - they can't
   // be used directly as arguments or return types.
   if (bound == 0 || alias == 0)
@@ -376,10 +394,20 @@ be_visitor_traits::visit_string (be_string *node)
 int 
 be_visitor_traits::visit_array (be_array *node)
 {
-  if (node->cli_traits_gen ()
-      || (node->imported () && !node->seen_in_operation ()))
+  if (node->cli_traits_gen ())
     {
       return 0;
+    }
+
+  if (!node->seen_in_operation ())
+    {
+      // @@@ (JP) I don't think we have to generate the Array_Traits decl.
+      /*
+      if (node->imported ())
+        {
+          return 0;
+        }
+      */
     }
 
   TAO_OutStream *os = this->ctx_->stream ();
@@ -389,6 +417,8 @@ be_visitor_traits::visit_array (be_array *node)
 
   os->gen_ifdef_macro (node->flat_name (), "arg_traits");
 
+  // @@@ (JP) I don't think we have to generate the Array_Traits decl.
+/*
   // This is used by the _var and _out classes, so it should always be
   // generated in the main file.
   if (!node->imported ())
@@ -413,7 +443,7 @@ be_visitor_traits::visit_array (be_array *node)
           << ");" << be_uidt << be_uidt_nl
           << "};";
     }
-
+*/
   // This should be generated even for imported nodes. The ifdef guard prevents
   // multiple declarations.
   if (node->seen_in_operation ())

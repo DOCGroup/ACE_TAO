@@ -8,6 +8,7 @@ ACE_RCSID (tao,
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
+template class TAO::Arg_Traits_T<void>;
 template class TAO::Arg_Traits_T<CORBA::Short>;
 template class TAO::Arg_Traits_T<CORBA::Long>;
 template class TAO::Arg_Traits_T<CORBA::UShort>;
@@ -30,6 +31,7 @@ template class TAO::Basic_Arg_Traits_T<CORBA::LongDouble>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
+# pragma instantiate TAO::Arg_Traits_T<void>
 # pragma instantiate TAO::Arg_Traits_T<CORBA::Short>
 # pragma instantiate TAO::Arg_Traits_T<CORBA::Long>
 # pragma instantiate TAO::Arg_Traits_T<CORBA::UShort>

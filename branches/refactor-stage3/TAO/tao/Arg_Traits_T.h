@@ -31,7 +31,6 @@ namespace TAO
   class Arg_Traits
   {
   };
-
 };
 
 #include "ace/post.h"
