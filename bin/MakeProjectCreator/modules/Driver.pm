@@ -13,12 +13,15 @@ package Driver;
 use strict;
 use File::Basename;
 
+use Parser;
+
 # ************************************************************
 # Data Section
 # ************************************************************
 
 my($index)    = 0;
 my(@progress) = ("|", "/", "-", "\\");
+my($cmdenv)   = 'MPC_COMMANDLINE';
 
 # ************************************************************
 # Subroutine Section
@@ -168,6 +171,14 @@ sub run {
     $self->{'types'}->{$tag} = $creator;
   }
 
+  ## Before we process the arguments, we will prepend the $cmdenv
+  ## environment variable.
+  if (defined $ENV{$cmdenv}) {
+    my($envargs) = Parser::create_array(undef, $ENV{$cmdenv});
+    unshift(@args, @$envargs);
+  }
+
+  ## Process the command line arguments
   for(my $i = 0; $i <= $#args; $i++) {
     my($arg) = $args[$i];
     if ($arg eq '-complete') {
@@ -182,8 +193,17 @@ sub run {
 
       my($type) = lc($args[$i]);
       if (defined $self->{'types'}->{$type}) {
-        my($call) = $self->{'types'}->{$type};
-        push(@generators, $call);
+        my($call)  = $self->{'types'}->{$type};
+        my($found) = 0;
+        foreach my $generator (@generators) {
+          if ($generator eq $call) {
+            $found = 1;
+            last;
+          }
+        }
+        if (!$found) {
+          push(@generators, $call);
+        }
       }
       else {
         $self->usageAndExit("Invalid type: $args[$i]");

@@ -1,3 +1,12 @@
+Thu Mar  6 08:06:35 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/Driver.pm:
+
+          Added an environment variable that allows users to set default
+          command line parameters.  The MPC_COMMANDLINE environment variable
+          is added to the command line parameters.  It will not override any
+          arguments passed in.
+
 Wed Mar  5 21:45:39 2003  Steve Huston  <shuston@riverace.com>
 
 	* ace/INET_Addr.cpp (get_port_number_from_name): Correct arg name
@@ -26,7 +35,7 @@ Wed Mar  5 06:32:40 2003  Phil Mesnier  <mesnier_p@ociweb.com>
 	
 Wed Mar  5 06:10:48 2003  Phil Mesnier  <mesnier_p@ociweb.com>
 
-       * ace/Makefile.bor: 
+       * ace/Makefile.bor:
 
        Added codeset registry files to makefile.
 
