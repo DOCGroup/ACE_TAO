@@ -51,8 +51,8 @@ Technical Data and Computer Software clause at DFARS 252.227-7013 and FAR
 Sun, Sun Microsystems and the Sun logo are trademarks or registered
 trademarks of Sun Microsystems, Inc.
 
-SunSoft, Inc.  
-2550 Garcia Avenue 
+SunSoft, Inc.
+2550 Garcia Avenue
 Mountain View, California  94043
 
 NOTE:
@@ -151,12 +151,12 @@ error_string(UTL_Error::ErrorCode c)
 static void
 idl_error_header(UTL_Error::ErrorCode c, long lineno, String *s)
 {
-  cerr << idl_global->prog_name() 
-       << ": \"" 
+  cerr << idl_global->prog_name()
+       << ": \""
        << (idl_global->read_from_stdin() ? "standard input" : s->get_string())
-       << GTDEVEL("\", line ") 
+       << GTDEVEL("\", line ")
        << ((lineno == -1) ? idl_global->lineno() : lineno)
-       << ": " 
+       << ": "
        << error_string(c);
 }
 
@@ -631,7 +631,7 @@ UTL_Error::ambiguous(UTL_Scope *s, AST_Decl *l, AST_Decl *d)
   cerr << GTDEVEL(" scope: ")
        << (ScopeAsDecl(s))->local_name()->get_string()
        << ", ";
-  cerr << GTDEVEL(" collision: "); 
+  cerr << GTDEVEL(" collision: ");
   d->name()->dump(cerr);
   cerr << " vs. ";
   l->name()->dump(cerr);
@@ -681,14 +681,14 @@ UTL_Error::redefinition_in_scope(AST_Decl *d, AST_Decl *s)
 void
 UTL_Error::not_a_type(AST_Decl *d)
 {
-  idl_error_header(EIDL_NOT_A_TYPE, 
-		   idl_global->lineno(), 
+  idl_error_header(EIDL_NOT_A_TYPE,
+		   idl_global->lineno(),
 		   idl_global->filename());
   if (d == NULL || d->name() == NULL)
     cerr << GTDEVEL("unknown symbol");
   else
     d->name()->dump(cerr);
-  cerr << "\n"; 
+  cerr << "\n";
   idl_global->set_err_count(idl_global->err_count() + 1);
 }
 
@@ -697,4 +697,4 @@ UTL_Error::back_end(long lineno, String *s)
 {
   idl_error_header(EIDL_BACK_END, lineno, s);
   idl_global->set_err_count(idl_global->err_count() + 1);
-} 
+}

@@ -1,8 +1,5 @@
-#ifndef lint
-char yysccsid[] = "@(#)yaccpar	1.4 (Berkeley) 02/25/90 \n\
- Modified 5/2/90 by J. Roskind to support graphic debugging modes";
-#endif
-#line 73 "idl.yy"
+
+# line 73 "idl.yy"
 #include "idl.h"
 #include "idl_extern.h"
 #include "fe_private.h"
@@ -10,18 +7,23 @@ char yysccsid[] = "@(#)yaccpar	1.4 (Berkeley) 02/25/90 \n\
 
 #if (defined(apollo) || defined(hpux)) && defined(__cplusplus)
 extern	"C" int yywrap();
-#endif	/* (defined(apollo) || defined(hpux)) && defined(__cplusplus)*/
+#endif	// (defined(apollo) || defined(hpux)) && defined(__cplusplus)
 
 void yyerror (char *);
 int yylex (void);
 extern "C" int yywrap (void);
 extern char yytext[];
 extern int yyleng;
-#define YYDEBUG_LEXER_TEXT (yytext[yyleng] = '\0', yytext) 
-/* Force the pretty debugging code to compile.*/
-#define YYDEBUG 1 
-#line 96 "idl.yy"
-typedef union {
+#define YYDEBUG_LEXER_TEXT (yytext[yyleng] = '\0', yytext)
+// Force the pretty debugging code to compile.
+#define YYDEBUG 1
+
+# line 96 "idl.yy"
+typedef union
+#ifdef __cplusplus
+	YYSTYPE
+#endif
+ {
   AST_Decl		*dcval;		/* Decl value		*/
   UTL_StrList		*slval;		/* String list		*/
   UTL_NameList		*nlval;		/* Name list		*/
@@ -47,741 +49,99 @@ typedef union {
   Identifier		*idval;		/* Identifier		*/
   UTL_IdList		*idlist;	/* Identifier list	*/
 } YYSTYPE;
-#line 51 "y.tab.c"
-#define IDENTIFIER 257
-#define IDL_CONST 258
-#define IDL_MODULE 259
-#define IDL_INTERFACE 260
-#define IDL_TYPEDEF 261
-#define IDL_LONG 262
-#define IDL_SHORT 263
-#define IDL_UNSIGNED 264
-#define IDL_DOUBLE 265
-#define IDL_FLOAT 266
-#define IDL_CHAR 267
-#define IDL_WCHAR 268
-#define IDL_OCTET 269
-#define IDL_BOOLEAN 270
-#define IDL_ANY 271
-#define IDL_STRUCT 272
-#define IDL_UNION 273
-#define IDL_SWITCH 274
-#define IDL_ENUM 275
-#define IDL_SEQUENCE 276
-#define IDL_STRING 277
-#define IDL_WSTRING 278
-#define IDL_EXCEPTION 279
-#define IDL_CASE 280
-#define IDL_DEFAULT 281
-#define IDL_READONLY 282
-#define IDL_ATTRIBUTE 283
-#define IDL_ONEWAY 284
-#define IDL_IDEMPOTENT 285
-#define IDL_VOID 286
-#define IDL_IN 287
-#define IDL_OUT 288
-#define IDL_INOUT 289
-#define IDL_RAISES 290
-#define IDL_CONTEXT 291
-#define IDL_INTEGER_LITERAL 292
-#define IDL_STRING_LITERAL 293
-#define IDL_CHARACTER_LITERAL 294
-#define IDL_FLOATING_PT_LITERAL 295
-#define IDL_TRUETOK 296
-#define IDL_FALSETOK 297
-#define IDL_SCOPE_DELIMITOR 298
-#define IDL_LEFT_SHIFT 299
-#define IDL_RIGHT_SHIFT 300
-#define YYERRCODE 256
-short yylhs[] = {                                        -1,
-    0,   67,   67,   69,   68,   71,   68,   73,   68,   75,
-   68,   77,   68,   78,   68,   79,   80,   81,   82,   76,
-   74,   74,   85,   87,   88,   83,   89,   64,   32,   90,
-   22,   22,   86,   86,   92,   91,   93,   91,   94,   91,
-   96,   91,   98,   91,   99,   91,   20,  100,   21,   21,
-   16,  101,   16,  102,   16,   65,   84,  103,  104,  105,
-  106,   70,   48,   48,   48,   48,   48,   48,   48,   48,
-   33,   34,   35,   35,   36,   36,   37,   37,   38,   38,
-   38,   39,   39,   39,   40,   40,   40,   40,   41,   41,
-   41,   41,   42,   42,   42,   43,   43,   43,   43,   43,
-   43,   44,  108,   66,   66,   66,   66,  109,  107,    1,
-    1,    2,    2,    2,   56,   56,   56,   56,   56,   56,
-    4,    4,    4,    3,    3,    3,   28,  110,   29,   29,
-   60,   60,   30,  111,   31,   31,   61,   62,   49,   49,
-   54,   54,   54,   55,   55,   55,   52,   52,   52,   50,
-   50,   57,   51,   53,  112,  113,  115,  116,    7,  114,
-  118,  118,  119,  120,  117,  121,  117,  122,  123,  124,
-  125,  126,  127,  129,  130,   10,    9,    9,    9,    9,
-    9,    9,  128,  132,  132,  133,  134,  131,  135,  131,
-   26,   27,   27,  136,   46,  137,  138,   46,  139,   47,
-  140,  141,  143,  144,    8,  142,  147,  146,  146,  145,
-  148,  149,    5,    5,  150,  151,   13,  153,  154,    6,
-    6,  152,  156,  157,   14,   14,  155,  158,   11,   24,
-   25,   25,  159,  160,   45,  161,  162,   95,   63,   63,
-  163,  164,  165,  166,   72,  167,  169,  170,  171,   97,
-   59,   59,   59,   12,   12,  172,  168,  174,  168,  173,
-  177,  176,  176,  178,  179,  175,   15,   15,   15,   58,
-   58,   58,  180,  181,   23,   23,  182,  183,   17,   17,
-   18,  184,   19,   19,
-};
-short yylen[] = {                                         2,
-    1,    2,    0,    0,    3,    0,    3,    0,    3,    0,
-    3,    0,    3,    0,    3,    0,    0,    0,    0,    9,
-    1,    1,    0,    0,    0,    7,    0,    3,    2,    0,
-    3,    0,    2,    0,    0,    3,    0,    3,    0,    3,
-    0,    3,    0,    3,    0,    3,    2,    0,    4,    0,
-    1,    0,    3,    0,    4,    1,    1,    0,    0,    0,
-    0,    9,    1,    1,    1,    1,    1,    1,    1,    1,
-    1,    1,    1,    3,    1,    3,    1,    3,    1,    3,
-    3,    1,    3,    3,    1,    3,    3,    3,    1,    2,
-    2,    2,    1,    1,    3,    1,    1,    1,    1,    1,
-    1,    1,    0,    3,    1,    1,    1,    0,    3,    1,
-    1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-    1,    1,    1,    1,    1,    1,    2,    0,    4,    0,
-    1,    1,    2,    0,    4,    0,    1,    1,    1,    1,
-    1,    2,    1,    2,    3,    2,    1,    1,    2,    1,
-    1,    1,    1,    1,    0,    0,    0,    0,    9,    2,
-    2,    0,    0,    0,    5,    0,    3,    0,    0,    0,
-    0,    0,    0,    0,    0,   17,    1,    1,    1,    1,
-    1,    1,    2,    2,    0,    0,    0,    5,    0,    3,
-    2,    2,    0,    0,    3,    0,    0,    5,    0,    3,
-    0,    0,    0,    0,    9,    2,    0,    4,    0,    1,
-    0,    0,    6,    2,    0,    0,    5,    0,    0,    6,
-    1,    1,    0,    0,    6,    1,    1,    0,    3,    2,
-    2,    0,    0,    0,    5,    0,    0,    6,    1,    0,
-    0,    0,    0,    0,    9,    0,    0,    0,    0,   10,
-    1,    1,    0,    1,    1,    0,    3,    0,    4,    2,
-    0,    4,    0,    0,    0,    5,    1,    1,    1,    1,
-    1,    1,    0,    0,    6,    0,    0,    0,    6,    0,
-    2,    0,    4,    0,
-};
-short yydefred[] = {                                      0,
-   14,   58,   16,   27,  103,  155,  168,  201,  241,    0,
-  105,  107,  106,   23,    0,    4,    1,    0,    6,    8,
-   10,   12,   21,   22,    0,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,   30,   29,    0,    2,    0,    0,
-    0,    0,   15,   56,    0,  143,    0,  147,  148,  150,
-  151,  152,  153,  222,  227,   52,   68,   69,    0,   59,
-   63,   64,   66,   67,  139,  140,   65,   51,    0,    0,
-   17,   28,  154,  215,  108,  110,  111,  113,  121,  122,
-  124,  126,  125,    0,  123,    0,  115,  117,  118,  116,
-  120,  112,  119,  104,  156,  169,  202,  242,   24,    0,
-    5,    7,    9,   11,   13,  142,  149,    0,  146,    0,
-   54,    0,  218,  223,    0,    0,    0,  211,  214,    0,
-    0,    0,    0,   34,    0,   31,  145,   53,    0,   60,
-    0,    0,   18,  216,  138,  109,  130,  131,  132,    0,
-    0,  157,  170,  203,  243,    0,    0,   55,    0,   96,
-   97,   98,   99,  100,  101,    0,    0,    0,    0,    0,
-  102,    0,    0,    0,    0,    0,    0,   85,   89,   94,
-  219,  224,    0,    0,    0,    0,  212,    0,    0,    0,
-  162,   45,  239,  251,  252,    0,    0,   35,   37,   39,
-    0,   33,   41,   43,   48,   61,   90,   91,   92,    0,
-    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-    0,    0,   19,  217,  128,  233,  229,  232,    0,  166,
-  163,  158,  162,  171,  210,  204,  209,    0,    0,  255,
-  268,  246,  254,    0,  267,  236,    0,    0,    0,   26,
-    0,    0,    0,    0,   95,    0,    0,    0,    0,    0,
-    0,    0,   86,   87,   88,  220,  225,    0,    0,    0,
-    0,  213,    0,    0,    0,    0,    0,    0,    0,  161,
-    0,   46,    0,    0,   36,   38,   40,   42,   44,    0,
-   62,   71,   20,  129,  234,  231,  167,  164,  159,    0,
-  181,  172,    0,  177,  178,  180,  179,  205,  207,  245,
-  247,  237,    0,    0,    0,    0,    0,    0,  235,  165,
-  173,  208,    0,  248,  238,  136,  137,    0,    0,    0,
-    0,    0,  174,  257,  270,  271,  272,  264,    0,  263,
-  273,  249,  134,    0,    0,  259,    0,    0,    0,    0,
-  189,  196,  194,  186,  193,  175,  185,  265,  261,  274,
-  277,  250,  135,    0,    0,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,  190,  197,  195,  199,  187,  192,
-  176,  184,  266,  262,    0,  278,    0,    0,    0,  275,
-    0,  198,  200,  188,  284,    0,    0,  279,  282,    0,
-  283,
-};
-short yydgoto[] = {                                      10,
-  221,   76,   77,   78,   79,   80,   81,   82,  292,   83,
-  135,  232,   84,   85,  233,  160,  352,  386,  387,  126,
-  147,   36,  332,  217,  261,  344,  358,  136,  175,  315,
-  322,   14,  281,  161,  162,  163,  164,  165,  166,  167,
-  168,  169,  170,  171,  218,  345,  369,   60,   87,   88,
-   89,   90,   91,   65,   66,   92,   93,  328,  186,  137,
-  138,  139,  187,   15,   68,   16,   17,   18,   37,   19,
-   39,   20,   40,   21,   41,   22,   42,   25,   27,  115,
-  173,  258,   23,   24,   34,  146,  124,  191,   28,  100,
-  192,  237,  238,  239,  193,  241,  194,  242,  229,  243,
-  110,  129,   26,  112,  149,  244,   94,   29,  117,  259,
-  340,   30,  120,  222,  178,  265,  270,  228,  264,  304,
-  263,   31,  121,  179,  267,  305,  318,  346,  334,  359,
-  347,  360,  357,  379,  354,  356,  355,  377,  378,   32,
-  122,  226,  180,  268,  227,  269,  306,  141,  219,  116,
-  174,   69,  131,  211,   70,  132,  212,  176,  260,  303,
-  274,  308,   33,  123,  181,  271,  273,  314,  307,  321,
-  339,  319,  329,  320,  330,  337,  362,  335,  361,  338,
-  363,  364,  381,  390,
-};
-short yysindex[] = {                                    320,
-    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,   44,    0,    0,  320,    0,    0,
-    0,    0,    0,    0,   51,  256, -112, -106,  167, -106,
- -106, -106, -106,   16,    0,    0,  108,    0,  110,  120,
-  126,  154,    0,    0, -118,    0,  -86,    0,    0,    0,
-    0,    0,    0,    0,    0,    0,    0,    0,  -84,    0,
-    0,    0,    0,    0,    0,    0,    0,    0,  157,  161,
-    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-    0,    0,    0,   41,    0,  -84,    0,    0,    0,    0,
-    0,    0,    0,    0,    0,    0,    0,    0,    0, -198,
-    0,    0,    0,    0,    0,    0,    0,  -38,    0, -106,
-    0, -106,    0,    0,  103,  172, -106,    0,    0,  112,
-  -37,  115,  116,    0,  -84,    0,    0,    0, -106,    0,
-   -6,   -6,    0,    0,    0,    0,    0,    0,    0,    0,
-   -6,    0,    0,    0,    0,  290,  196,    0,  180,    0,
-    0,    0,    0,    0,    0,  -32,  -32,  -32,   -6,  -84,
-    0,  128,  150,  212,  -95,  119,  131,    0,    0,    0,
-    0,    0,  320,  214,  213,  176,    0,  143,  235,   26,
-    0,    0,    0,    0,    0,  231,    2,    0,    0,    0,
-  168,    0,    0,    0,    0,    0,    0,    0,    0,  253,
-   -6,   -6,   -6,   -6,   -6,   -6,   -6,   -6,   -6,   -6,
-  233,  236,    0,    0,    0,    0,    0,    0,  239,    0,
-    0,    0,    0,    0,    0,    0,    0,  143,  244,    0,
-    0,    0,    0,  -84,    0,    0,  245,  247,  248,    0,
-  249,  250, -198,   -6,    0,  150,  212,  -95,  119,  119,
-  131,  131,    0,    0,    0,    0,    0,  186, -106,   -6,
-  176,    0,  254, -106,  189,  143,  127,  199,  281,    0,
-  204,    0,   73,  273,    0,    0,    0,    0,    0,  -84,
-    0,    0,    0,    0,    0,    0,    0,    0,    0,   74,
-    0,    0,  -84,    0,    0,    0,    0,    0,    0,    0,
-    0,    0,  241,  282,  299,   26,  304, -106,    0,    0,
-    0,    0,    0,    0,    0,    0,    0,  222,  306, -158,
-   58,  309,    0,    0,    0,    0,    0,    0,  308,    0,
-    0,    0,    0, -139,  273,    0,  310,  319,   69, -106,
-    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-    0,    0,    0,  302,   -6,  311,  167,  -99,  243, -139,
- -106, -158, -198,  330,    0,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,  331,    0,  313, -106,  315,    0,
-   82,    0,    0,    0,    0,  335,  336,    0,    0,   86,
-    0,
-};
-short yyrindex[] = {                                    381,
-    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,   40,    0,    0,   49,    0,    0,
-    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,   -9,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,    0,    0,    0,    0,  129,    0,
-    0,    0,    0,    0,    0,    0,    0,    0,   -1,    1,
-    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,    0,   21,    0,    0,    0,    0,
-    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,    0,    0,    0,  -15,    0,    0,
-    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,   11,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,    0,    0,    0,    0,    0,   64,
-    0,    0,    0,    0,    0,  -71,    9,    0,    0,    0,
-    0,    0,    0,    0,    0,    0,    0,    0,    0,  -26,
-    0,  305,  160,   33,  238,   56,  -18,    0,    0,    0,
-    0,    0,  260,    0,  324,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,    0,    0,    0,  262,    0,    0,
-    0,    0,    0,  135,    0,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,    0,  280,  258,  264,   66,   78,
-   19,   28,    0,    0,    0,    0,    0,    0,    0,    0,
-   94,    0,    0,    0,    0,  268,    0,    0,  276,    0,
-    0,    0,    0,    0,    0,    0,    0,    0,    0,   52,
-    0,    0,    0,    0,    0,    0,    0,    0,    0,  362,
-    0,    0,  376,    0,    0,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-    0,    0,  -19,    0,    0,    0,    0,    0,    0,    0,
-  -46,  363,    0,    0,    0,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,    0,    0,  382,    0,  367,    0,
-    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,    0,    0,    0,  191,    0,  303,
-    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,    0,    0,  386,    0,    0,    0,
-    0,
-};
-short yygindex[] = {                                      0,
-  -22,  272,    0,    0,    0,  -25,   38,   10,    0,   70,
-    0,    0,    0,  421, -202,  -20,    0,    0,    0,   87,
-    0,    0,    0,    0,    0,    0,    0,  185,    0,    0,
-    0,    0,    0, -135,    0,  251,  270,  267,   29,    3,
-  -21,   72,    0,  -90,  190,  117,    0,    0,  -12,   -8,
-    4,  447,    0,    0,    0, -128,    5,    0,    0, -213,
- -229,    0,    0,    0,  -28,  328,   30,    0,    0,  340,
-    0,  341,    0,    0,    0,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,    0,    0,  325,  283,    0,    0,
-    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-  144,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,  201,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,  147,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,
-};
-#define YYTABLESIZE 599
-short yytable[] = {                                      72,
-   57,   95,   96,   97,   98,   59,   75,  159,   86,   12,
-   93,   93,  276,   61,   93,   93,   93,   62,   93,   82,
-   93,  256,   82,  200,   82,  144,   82,   12,  144,   63,
-   67,   93,   93,  159,  141,   93,  156,   11,  157,   82,
-   82,  172,  221,   82,  226,  284,  144,   38,    3,   47,
-  177,   50,  141,   25,   50,   11,   83,  235,   44,   83,
-  221,   83,  226,   83,  114,   84,   93,   93,   84,   13,
-   84,  302,   84,   75,   82,   82,   83,   83,  316,  125,
-   83,  128,  114,  130,  118,   84,   84,   13,  140,   84,
-   75,   75,   49,   79,   75,   49,   79,   93,   57,   56,
-  148,   35,  119,   80,  137,   82,   80,  137,  282,   43,
-  353,   83,   83,   79,   79,   81,  341,   79,   81,  158,
-   84,   84,  137,   80,   80,   75,   75,   80,  325,  326,
-  327,   47,  348,   50,  230,   81,   81,  230,   99,   81,
-  342,  343,   83,  106,   71,  235,  107,  373,   79,   79,
-   44,   84,  230,   86,  228,   12,   75,   86,   80,   80,
-  231,  206,   32,  207,  383,  234,  101,  210,  102,  285,
-   81,   81,  208,    3,   49,  108,  109,  209,  103,   79,
-  342,  343,   12,   11,  104,  253,  253,  254,  255,   80,
-  253,  253,  253,  253,  253,  253,  253,  253,  253,  253,
-   73,   81,  213,  204,  205,  253,  235,   86,  251,  252,
-   11,  240,  105,  111,  253,   13,  113,   73,   73,  366,
-  114,   73,  280,  127,   44,  133,  253,  197,  198,  199,
-  140,  134,  249,  250,  142,  140,  143,  144,  145,  195,
-  196,  144,   13,  202,  276,   86,  293,  141,  231,  203,
-   44,  201,   73,  234,  294,  221,  215,  226,  295,  150,
-  151,  152,  153,  154,  155,   56,  216,  258,  258,  258,
-  296,  297,   93,   93,  224,   77,  291,  114,   77,  317,
-   82,   82,  225,   73,  236,  150,  151,  152,  153,  154,
-  155,   56,  240,  245,  256,   77,   77,  257,   76,   77,
-  262,   78,  272,  275,   78,  276,  277,  278,  279,  231,
-  283,  317,  287,  289,  234,   76,   76,   83,   83,   76,
-   74,   78,   78,  298,  299,   78,   84,   84,  300,  301,
-   77,   77,  140,  309,  368,  106,   86,   74,   74,  311,
-  310,   74,  125,  313,  323,   72,  324,  331,  336,  140,
-   76,   76,  333,  349,   79,   79,   78,   78,  350,  351,
-  365,   77,   72,   72,   80,   80,   72,  371,  367,  376,
-  382,  380,   74,  384,  385,  388,   81,   81,  391,  389,
-    3,   76,  127,   44,    3,   70,  244,   78,  290,   46,
-   47,  269,  160,   50,   51,   52,   53,   72,  220,   44,
-  206,    8,  141,   74,   45,   46,   47,   48,   49,   50,
-   51,   52,   53,   73,    6,    7,  182,    8,   74,   54,
-   55,  133,  260,   44,   56,  280,  281,  183,   45,   46,
-   47,   48,   49,   50,   51,   52,   53,   73,    6,    7,
-   56,    8,   74,   54,   55,  214,   58,  191,  288,  375,
-  286,  246,  191,  191,  191,  191,  191,  191,  191,  191,
-  191,  191,  191,  191,   56,  191,  191,  191,  191,  248,
-   44,  247,   64,  188,  370,   45,   46,   47,   48,   49,
-   50,   51,   52,   53,   73,  189,  190,   44,  191,   74,
-   54,   55,   45,   46,   47,   48,   49,   50,   51,   52,
-   53,   73,  223,  372,    0,  266,  312,   54,  374,    0,
-    0,   56,   44,    0,    0,    0,  230,   45,   46,   47,
-   48,   49,   50,   51,   52,   53,    0,    0,   56,   44,
-    0,    0,   54,   55,   45,   46,   47,   48,   49,   50,
-   51,   52,   53,   73,    0,  182,    0,    2,    0,   54,
-    5,    0,    0,   56,    0,    0,    0,    0,    0,    0,
-    0,    6,    7,    0,    8,    0,    0,    0,    9,    0,
-   56,  183,    0,  184,  185,    1,    0,    2,    3,    4,
-    5,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-    0,    6,    7,    0,    8,    0,    0,    0,    9,
-};
-short yycheck[] = {                                      28,
-   26,   30,   31,   32,   33,   26,   29,   40,   29,    0,
-   37,   38,   59,   26,   41,   42,   43,   26,   45,   38,
-   47,   41,   41,  159,   43,   41,   45,   18,   44,   26,
-   26,   58,   59,   40,   44,   62,   43,    0,   45,   58,
-   59,  132,   44,   62,   44,  259,   62,   18,    0,   41,
-  141,   41,   62,  125,   44,   18,   38,  186,  257,   41,
-   62,   43,   62,   45,   44,   38,   93,   94,   41,    0,
-   43,  274,   45,   41,   93,   94,   58,   59,  308,  100,
-   62,  110,   62,  112,   44,   58,   59,   18,  117,   62,
-   58,   59,   41,   38,   62,   44,   41,  124,   59,  298,
-  129,   58,   62,   38,   41,  124,   41,   44,  244,   59,
-  340,   93,   94,   58,   59,   38,  256,   62,   41,  126,
-   93,   94,   59,   58,   59,   93,   94,   62,  287,  288,
-  289,  123,  335,  123,   41,   58,   59,   44,  123,   62,
-  280,  281,  124,  262,  257,  274,  265,  361,   93,   94,
-  257,  124,   59,  174,   91,  146,  124,  178,   93,   94,
-  186,   43,  123,   45,  378,  186,   59,   37,   59,  260,
-   93,   94,   42,  125,  123,  262,  263,   47,   59,  124,
-  280,  281,  173,  146,   59,  257,  208,  209,  210,  124,
-  262,  263,  264,  265,  266,  267,  268,  269,  270,  271,
-   41,  124,  173,  299,  300,  277,  335,  228,  206,  207,
-  173,  283,   59,  298,  286,  146,   60,   58,   59,  355,
-   60,   62,  243,  262,  257,  123,  298,  156,  157,  158,
-  259,   60,  204,  205,  123,  264,  274,  123,  123,   44,
-   61,  257,  173,   94,  291,  266,  267,  257,  274,   38,
-  257,  124,   93,  274,  267,  257,   44,  257,  267,  292,
-  293,  294,  295,  296,  297,  298,   91,  287,  288,  289,
-  267,  267,  299,  300,   40,   38,  267,  257,   41,  308,
-  299,  300,  257,  124,  283,  292,  293,  294,  295,  296,
-  297,  298,  125,   41,   62,   58,   59,   62,   41,   62,
-   62,   38,   59,   59,   41,   59,   59,   59,   59,  335,
-  125,  340,   59,  125,  335,   58,   59,  299,  300,   62,
-   41,   58,   59,  125,   44,   62,  299,  300,  125,  257,
-   93,   94,  361,   93,  357,  262,  357,   58,   59,   41,
-   59,   62,  363,   40,  123,   41,   41,  290,   41,  378,
-   93,   94,   44,   44,  299,  300,   93,   94,   40,  291,
-   59,  124,   58,   59,  299,  300,   62,  125,   58,   40,
-   58,   41,   93,   59,  293,   41,  299,  300,  293,   44,
-    0,  124,   59,  257,  125,  257,  125,  124,  262,  263,
-  264,  257,  125,  267,  268,  269,  270,   93,  256,  257,
-  125,  275,   41,  124,  262,  263,  264,  265,  266,  267,
-  268,  269,  270,  271,  272,  273,   41,  275,  276,  277,
-  278,   59,   41,  257,  298,   59,   41,  125,  262,  263,
-  264,  265,  266,  267,  268,  269,  270,  271,  272,  273,
-  298,  275,  276,  277,  278,  174,   26,  257,  264,  363,
-  261,  201,  262,  263,  264,  265,  266,  267,  268,  269,
-  270,  271,  272,  273,  298,  275,  276,  277,  278,  203,
-  257,  202,   26,  146,  358,  262,  263,  264,  265,  266,
-  267,  268,  269,  270,  271,  146,  146,  257,  298,  276,
-  277,  278,  262,  263,  264,  265,  266,  267,  268,  269,
-  270,  271,  178,  360,   -1,  223,  306,  277,  362,   -1,
-   -1,  298,  257,   -1,   -1,   -1,  286,  262,  263,  264,
-  265,  266,  267,  268,  269,  270,   -1,   -1,  298,  257,
-   -1,   -1,  277,  278,  262,  263,  264,  265,  266,  267,
-  268,  269,  270,  271,   -1,  256,   -1,  258,   -1,  277,
-  261,   -1,   -1,  298,   -1,   -1,   -1,   -1,   -1,   -1,
-   -1,  272,  273,   -1,  275,   -1,   -1,   -1,  279,   -1,
-  298,  282,   -1,  284,  285,  256,   -1,  258,  259,  260,
-  261,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
-   -1,  272,  273,   -1,  275,   -1,   -1,   -1,  279,
-};
-#define YYFINAL 10
-#ifndef YYDEBUG
-#define YYDEBUG 1
-#endif
-#define YYMAXTOKEN 300
-#if YYDEBUG
-char *yyname[] = {
-"end-of-file",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,"'%'","'&'",0,"'('","')'","'*'","'+'","','","'-'",0,"'/'",0,0,0,0,0,0,0,0,
-0,0,"':'","';'","'<'","'='","'>'",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,"'['",0,"']'","'^'",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,"'{'","'|'","'}'","'~'",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"IDENTIFIER","IDL_CONST",
-"IDL_MODULE","IDL_INTERFACE","IDL_TYPEDEF","IDL_LONG","IDL_SHORT",
-"IDL_UNSIGNED","IDL_DOUBLE","IDL_FLOAT","IDL_CHAR","IDL_WCHAR","IDL_OCTET",
-"IDL_BOOLEAN","IDL_ANY","IDL_STRUCT","IDL_UNION","IDL_SWITCH","IDL_ENUM",
-"IDL_SEQUENCE","IDL_STRING","IDL_WSTRING","IDL_EXCEPTION","IDL_CASE",
-"IDL_DEFAULT","IDL_READONLY","IDL_ATTRIBUTE","IDL_ONEWAY","IDL_IDEMPOTENT",
-"IDL_VOID","IDL_IN","IDL_OUT","IDL_INOUT","IDL_RAISES","IDL_CONTEXT",
-"IDL_INTEGER_LITERAL","IDL_STRING_LITERAL","IDL_CHARACTER_LITERAL",
-"IDL_FLOATING_PT_LITERAL","IDL_TRUETOK","IDL_FALSETOK","IDL_SCOPE_DELIMITOR",
-"IDL_LEFT_SHIFT","IDL_RIGHT_SHIFT",
-};
-char *yyrule[] = {
-"$accept : start",
-"start : definitions",
-"definitions : definition definitions",
-"definitions :",
-"$$1 :",
-"definition : type_dcl $$1 ';'",
-"$$2 :",
-"definition : const_dcl $$2 ';'",
-"$$3 :",
-"definition : exception $$3 ';'",
-"$$4 :",
-"definition : interface_def $$4 ';'",
-"$$5 :",
-"definition : module $$5 ';'",
-"$$6 :",
-"definition : error $$6 ';'",
-"$$7 :",
-"$$8 :",
-"$$9 :",
-"$$10 :",
-"module : IDL_MODULE $$7 IDENTIFIER $$8 '{' $$9 definitions $$10 '}'",
-"interface_def : interface",
-"interface_def : forward",
-"$$11 :",
-"$$12 :",
-"$$13 :",
-"interface : interface_header $$11 '{' $$12 exports $$13 '}'",
-"$$14 :",
-"interface_decl : IDL_INTERFACE $$14 id",
-"interface_header : interface_decl inheritance_spec",
-"$$15 :",
-"inheritance_spec : ':' $$15 at_least_one_scoped_name",
-"inheritance_spec :",
-"exports : exports export",
-"exports :",
-"$$16 :",
-"export : type_dcl $$16 ';'",
-"$$17 :",
-"export : const_dcl $$17 ';'",
-"$$18 :",
-"export : exception $$18 ';'",
-"$$19 :",
-"export : attribute $$19 ';'",
-"$$20 :",
-"export : operation $$20 ';'",
-"$$21 :",
-"export : error $$21 ';'",
-"at_least_one_scoped_name : scoped_name scoped_names",
-"$$22 :",
-"scoped_names : scoped_names ',' $$22 scoped_name",
-"scoped_names :",
-"scoped_name : id",
-"$$23 :",
-"scoped_name : IDL_SCOPE_DELIMITOR $$23 id",
-"$$24 :",
-"scoped_name : scoped_name IDL_SCOPE_DELIMITOR $$24 id",
-"id : IDENTIFIER",
-"forward : interface_decl",
-"$$25 :",
-"$$26 :",
-"$$27 :",
-"$$28 :",
-"const_dcl : IDL_CONST $$25 const_type $$26 id $$27 '=' $$28 expression",
-"const_type : integer_type",
-"const_type : char_type",
-"const_type : octet_type",
-"const_type : boolean_type",
-"const_type : floating_pt_type",
-"const_type : string_type_spec",
-"const_type : wstring_type_spec",
-"const_type : scoped_name",
-"expression : const_expr",
-"const_expr : or_expr",
-"or_expr : xor_expr",
-"or_expr : or_expr '|' xor_expr",
-"xor_expr : and_expr",
-"xor_expr : xor_expr '^' and_expr",
-"and_expr : shift_expr",
-"and_expr : and_expr '&' shift_expr",
-"shift_expr : add_expr",
-"shift_expr : shift_expr IDL_LEFT_SHIFT add_expr",
-"shift_expr : shift_expr IDL_RIGHT_SHIFT add_expr",
-"add_expr : mult_expr",
-"add_expr : add_expr '+' mult_expr",
-"add_expr : add_expr '-' mult_expr",
-"mult_expr : unary_expr",
-"mult_expr : mult_expr '*' unary_expr",
-"mult_expr : mult_expr '/' unary_expr",
-"mult_expr : mult_expr '%' unary_expr",
-"unary_expr : primary_expr",
-"unary_expr : '+' primary_expr",
-"unary_expr : '-' primary_expr",
-"unary_expr : '~' primary_expr",
-"primary_expr : scoped_name",
-"primary_expr : literal",
-"primary_expr : '(' const_expr ')'",
-"literal : IDL_INTEGER_LITERAL",
-"literal : IDL_STRING_LITERAL",
-"literal : IDL_CHARACTER_LITERAL",
-"literal : IDL_FLOATING_PT_LITERAL",
-"literal : IDL_TRUETOK",
-"literal : IDL_FALSETOK",
-"positive_int_expr : const_expr",
-"$$29 :",
-"type_dcl : IDL_TYPEDEF $$29 type_declarator",
-"type_dcl : struct_type",
-"type_dcl : union_type",
-"type_dcl : enum_type",
-"$$30 :",
-"type_declarator : type_spec $$30 at_least_one_declarator",
-"type_spec : simple_type_spec",
-"type_spec : constructed_type_spec",
-"simple_type_spec : base_type_spec",
-"simple_type_spec : template_type_spec",
-"simple_type_spec : scoped_name",
-"base_type_spec : integer_type",
-"base_type_spec : floating_pt_type",
-"base_type_spec : char_type",
-"base_type_spec : boolean_type",
-"base_type_spec : octet_type",
-"base_type_spec : any_type",
-"template_type_spec : sequence_type_spec",
-"template_type_spec : string_type_spec",
-"template_type_spec : wstring_type_spec",
-"constructed_type_spec : struct_type",
-"constructed_type_spec : union_type",
-"constructed_type_spec : enum_type",
-"at_least_one_declarator : declarator declarators",
-"$$31 :",
-"declarators : declarators ',' $$31 declarator",
-"declarators :",
-"declarator : simple_declarator",
-"declarator : complex_declarator",
-"at_least_one_simple_declarator : simple_declarator simple_declarators",
-"$$32 :",
-"simple_declarators : simple_declarators ',' $$32 simple_declarator",
-"simple_declarators :",
-"simple_declarator : id",
-"complex_declarator : array_declarator",
-"integer_type : signed_int",
-"integer_type : unsigned_int",
-"signed_int : IDL_LONG",
-"signed_int : IDL_LONG IDL_LONG",
-"signed_int : IDL_SHORT",
-"unsigned_int : IDL_UNSIGNED IDL_LONG",
-"unsigned_int : IDL_UNSIGNED IDL_LONG IDL_LONG",
-"unsigned_int : IDL_UNSIGNED IDL_SHORT",
-"floating_pt_type : IDL_DOUBLE",
-"floating_pt_type : IDL_FLOAT",
-"floating_pt_type : IDL_LONG IDL_DOUBLE",
-"char_type : IDL_CHAR",
-"char_type : IDL_WCHAR",
-"octet_type : IDL_OCTET",
-"boolean_type : IDL_BOOLEAN",
-"any_type : IDL_ANY",
-"$$33 :",
-"$$34 :",
-"$$35 :",
-"$$36 :",
-"struct_type : IDL_STRUCT $$33 id $$34 '{' $$35 at_least_one_member $$36 '}'",
-"at_least_one_member : member members",
-"members : members member",
-"members :",
-"$$37 :",
-"$$38 :",
-"member : type_spec $$37 at_least_one_declarator $$38 ';'",
-"$$39 :",
-"member : error $$39 ';'",
-"$$40 :",
-"$$41 :",
-"$$42 :",
-"$$43 :",
-"$$44 :",
-"$$45 :",
-"$$46 :",
-"$$47 :",
-"union_type : IDL_UNION $$40 id $$41 IDL_SWITCH $$42 '(' $$43 switch_type_spec $$44 ')' $$45 '{' $$46 at_least_one_case_branch $$47 '}'",
-"switch_type_spec : integer_type",
-"switch_type_spec : char_type",
-"switch_type_spec : octet_type",
-"switch_type_spec : boolean_type",
-"switch_type_spec : enum_type",
-"switch_type_spec : scoped_name",
-"at_least_one_case_branch : case_branch case_branches",
-"case_branches : case_branches case_branch",
-"case_branches :",
-"$$48 :",
-"$$49 :",
-"case_branch : at_least_one_case_label $$48 element_spec $$49 ';'",
-"$$50 :",
-"case_branch : error $$50 ';'",
-"at_least_one_case_label : case_label case_labels",
-"case_labels : case_labels case_label",
-"case_labels :",
-"$$51 :",
-"case_label : IDL_DEFAULT $$51 ':'",
-"$$52 :",
-"$$53 :",
-"case_label : IDL_CASE $$52 const_expr $$53 ':'",
-"$$54 :",
-"element_spec : type_spec $$54 declarator",
-"$$55 :",
-"$$56 :",
-"$$57 :",
-"$$58 :",
-"enum_type : IDL_ENUM $$55 id $$56 '{' $$57 at_least_one_enumerator $$58 '}'",
-"at_least_one_enumerator : enumerator enumerators",
-"$$59 :",
-"enumerators : enumerators ',' $$59 enumerator",
-"enumerators :",
-"enumerator : IDENTIFIER",
-"$$60 :",
-"$$61 :",
-"sequence_type_spec : seq_head ',' $$60 positive_int_expr $$61 '>'",
-"sequence_type_spec : seq_head '>'",
-"$$62 :",
-"$$63 :",
-"seq_head : IDL_SEQUENCE $$62 '<' $$63 simple_type_spec",
-"$$64 :",
-"$$65 :",
-"string_type_spec : string_head '<' $$64 positive_int_expr $$65 '>'",
-"string_type_spec : string_head",
-"string_head : IDL_STRING",
-"$$66 :",
-"$$67 :",
-"wstring_type_spec : wstring_head '<' $$66 positive_int_expr $$67 '>'",
-"wstring_type_spec : wstring_head",
-"wstring_head : IDL_WSTRING",
-"$$68 :",
-"array_declarator : id $$68 at_least_one_array_dim",
-"at_least_one_array_dim : array_dim array_dims",
-"array_dims : array_dims array_dim",
-"array_dims :",
-"$$69 :",
-"$$70 :",
-"array_dim : '[' $$69 positive_int_expr $$70 ']'",
-"$$71 :",
-"$$72 :",
-"attribute : opt_readonly IDL_ATTRIBUTE $$71 param_type_spec $$72 at_least_one_simple_declarator",
-"opt_readonly : IDL_READONLY",
-"opt_readonly :",
-"$$73 :",
-"$$74 :",
-"$$75 :",
-"$$76 :",
-"exception : IDL_EXCEPTION $$73 id $$74 '{' $$75 members $$76 '}'",
-"$$77 :",
-"$$78 :",
-"$$79 :",
-"$$80 :",
-"operation : opt_op_attribute op_type_spec $$77 IDENTIFIER $$78 parameter_list $$79 opt_raises $$80 opt_context",
-"opt_op_attribute : IDL_ONEWAY",
-"opt_op_attribute : IDL_IDEMPOTENT",
-"opt_op_attribute :",
-"op_type_spec : param_type_spec",
-"op_type_spec : IDL_VOID",
-"$$81 :",
-"parameter_list : '(' $$81 ')'",
-"$$82 :",
-"parameter_list : '(' $$82 at_least_one_parameter ')'",
-"at_least_one_parameter : parameter parameters",
-"$$83 :",
-"parameters : parameters ',' $$83 parameter",
-"parameters :",
-"$$84 :",
-"$$85 :",
-"parameter : direction $$84 param_type_spec $$85 declarator",
-"param_type_spec : base_type_spec",
-"param_type_spec : string_type_spec",
-"param_type_spec : scoped_name",
-"direction : IDL_IN",
-"direction : IDL_OUT",
-"direction : IDL_INOUT",
-"$$86 :",
-"$$87 :",
-"opt_raises : IDL_RAISES $$86 '(' $$87 at_least_one_scoped_name ')'",
-"opt_raises :",
-"$$88 :",
-"$$89 :",
-"opt_context : IDL_CONTEXT $$88 '(' $$89 at_least_one_string_literal ')'",
-"opt_context :",
-"at_least_one_string_literal : IDL_STRING_LITERAL string_literals",
-"$$90 :",
-"string_literals : string_literals ',' $$90 IDL_STRING_LITERAL",
-"string_literals :",
-};
-#endif
-#define yyclearin (yychar=(-1))
-#define yyerrok (yyerrflag=0)
-#ifndef YYSTACKSIZE
-#ifdef YYMAXDEPTH
-#define YYSTACKSIZE YYMAXDEPTH
+# define IDENTIFIER 257
+# define IDL_CONST 258
+# define IDL_MODULE 259
+# define IDL_INTERFACE 260
+# define IDL_TYPEDEF 261
+# define IDL_LONG 262
+# define IDL_SHORT 263
+# define IDL_UNSIGNED 264
+# define IDL_DOUBLE 265
+# define IDL_FLOAT 266
+# define IDL_CHAR 267
+# define IDL_WCHAR 268
+# define IDL_OCTET 269
+# define IDL_BOOLEAN 270
+# define IDL_ANY 271
+# define IDL_STRUCT 272
+# define IDL_UNION 273
+# define IDL_SWITCH 274
+# define IDL_ENUM 275
+# define IDL_SEQUENCE 276
+# define IDL_STRING 277
+# define IDL_WSTRING 278
+# define IDL_EXCEPTION 279
+# define IDL_CASE 280
+# define IDL_DEFAULT 281
+# define IDL_READONLY 282
+# define IDL_ATTRIBUTE 283
+# define IDL_ONEWAY 284
+# define IDL_IDEMPOTENT 285
+# define IDL_VOID 286
+# define IDL_IN 287
+# define IDL_OUT 288
+# define IDL_INOUT 289
+# define IDL_RAISES 290
+# define IDL_CONTEXT 291
+# define IDL_INTEGER_LITERAL 292
+# define IDL_STRING_LITERAL 293
+# define IDL_CHARACTER_LITERAL 294
+# define IDL_FLOATING_PT_LITERAL 295
+# define IDL_TRUETOK 296
+# define IDL_FALSETOK 297
+# define IDL_SCOPE_DELIMITOR 298
+# define IDL_LEFT_SHIFT 299
+# define IDL_RIGHT_SHIFT 300
+
+#ifdef __STDC__
+#include <stdlib.h>
+#include <string.h>
 #else
-#define YYSTACKSIZE 300
+#include <malloc.h>
+#include <memory.h>
+#endif
+
+#include <values.h>
+
+#ifdef __cplusplus
+
+#ifndef yyerror
+	void yyerror(const char *);
+#endif
+
+#ifndef yylex
+#ifdef __EXTERN_C__
+	extern "C" { int yylex(void); }
+#else
+	int yylex(void);
 #endif
 #endif
-int yydebug;
-int yynerrs;
-int yyerrflag;
-int yychar;
-short *yyssp;
-YYSTYPE *yyvsp;
-YYSTYPE yyval;
+	int yyparse(void);
+
+#endif
+#define yyclearin yychar = -1
+#define yyerrok yyerrflag = 0
+extern int yychar;
+extern int yyerrflag;
 YYSTYPE yylval;
-#define yystacksize YYSTACKSIZE
-short yyss[YYSTACKSIZE];
-YYSTYPE yyvs[YYSTACKSIZE];
-#line 2243 "idl.yy"
+YYSTYPE yyval;
+typedef int yytabelem;
+#ifndef YYMAXDEPTH
+#define YYMAXDEPTH 150
+#endif
+#if YYMAXDEPTH > 0
+int yy_yys[YYMAXDEPTH], *yys = yy_yys;
+YYSTYPE yy_yyv[YYMAXDEPTH], *yyv = yy_yyv;
+#else	/* user does initial allocation */
+int *yys;
+YYSTYPE *yyv;
+#endif
+static int yymaxdepth = YYMAXDEPTH;
+# define YYERRCODE 256
+
+# line 2242 "idl.yy"
+
 /* programs */
 
 /*
@@ -803,396 +163,1275 @@ void
 yyerror(char *)
 {
 }
-#line 807 "y.tab.c"
-#define YYABORT goto yyabort
-#define YYACCEPT goto yyaccept
-#define YYERROR goto yyerrlab
-#ifdef YYDEBUG
-#ifndef YYDEBUG_LEXER_TEXT /* pointer to the text isolated by the lexer*/
-#define YYDEBUG_LEXER_TEXT "YYDEBUG_LEXER_TEXT not defined"
-#endif
-#ifndef YYDEBUG_INDENT_STRING
-#define YYDEBUG_INDENT_STRING  "|       "
-#endif
-#ifndef YYDEBUG_REDUCE_STRING
-#define YYDEBUG_REDUCE_STRING  "+-------"
-#endif
-#ifndef YYDEBUG_INDENT
+yytabelem yyexca[] ={
+-1, 0,
+	0, 3,
+	-2, 0,
+-1, 1,
+	0, -1,
+	-2, 0,
+-1, 3,
+	0, 3,
+	125, 3,
+	-2, 0,
+-1, 23,
+	123, 32,
+	-2, 57,
+-1, 131,
+	91, 228,
+	-2, 137,
+-1, 146,
+	257, 253,
+	262, 253,
+	263, 253,
+	264, 253,
+	265, 253,
+	266, 253,
+	267, 253,
+	268, 253,
+	269, 253,
+	270, 253,
+	271, 253,
+	277, 253,
+	283, 240,
+	286, 253,
+	298, 253,
+	125, 25,
+	-2, 0,
+-1, 178,
+	125, 3,
+	-2, 0,
+-1, 219,
+	125, 244,
+	-2, 0,
+-1, 266,
+	125, 160,
+	-2, 0,
+-1, 317,
+	41, 256,
+	-2, 258,
+-1, 355,
+	125, 183,
+	-2, 0,
+	};
+# define YYNPROD 285
+# define YYLAST 524
+yytabelem yyact[]={
+
+    68,   128,   152,   329,   342,   125,    53,   164,    66,   238,
+   345,   224,    83,   227,   223,   129,   107,    74,    84,    85,
+    72,    73,    75,    76,    78,    77,    79,    19,    20,   391,
+    21,    86,    87,    88,    83,    98,   386,   100,   101,   102,
+    55,    97,    95,   105,   350,   166,   326,    50,   161,    83,
+   162,   204,   205,    69,    74,    84,    85,    72,    73,    75,
+    76,    78,    77,    79,    19,    20,   236,    21,    86,    87,
+    88,   144,    83,   166,   344,    69,    63,    74,    84,    85,
+    72,    73,    75,    76,    78,    77,    79,   331,   332,   333,
+    69,    86,    87,    88,   347,   346,   109,   109,   347,   346,
+   110,   115,   116,    62,    61,    59,   138,   131,   127,   134,
+    92,    83,   126,    69,   228,    83,   302,    99,   219,   140,
+    74,    84,    85,    72,    73,    75,    76,    78,    77,    79,
+   158,   163,    58,    13,   150,    87,    13,    93,    91,    90,
+    83,   198,   155,   151,   239,    74,    84,    85,    72,    73,
+    75,    76,    78,    77,    79,   156,    69,    51,     6,   154,
+    87,   365,     5,    57,    12,    83,     4,    12,   299,   214,
+    74,    84,    85,    72,    73,    75,    76,    78,    77,   157,
+   288,    69,   159,    55,    83,    87,    88,    55,   287,   298,
+    84,    85,   262,   286,    75,    76,    78,    77,   240,   242,
+   241,   229,    21,   189,   201,    14,    69,     2,    10,    56,
+    11,    25,   323,    11,   145,   143,   142,   141,   103,    19,
+    20,   202,    21,   309,   199,    69,    15,    55,   260,   192,
+   111,   193,   194,     9,   160,    14,    18,    24,    10,   259,
+   247,   218,   139,   114,   113,   131,   281,   382,   112,    19,
+    20,   280,    21,   369,   310,   290,    15,   277,   276,   275,
+   274,   273,    83,   272,   285,    48,    47,    46,   131,    45,
+    44,    43,   384,   371,    55,    41,   206,   297,   207,    13,
+   173,   174,   389,   352,   210,   240,   242,   241,   301,   208,
+    83,   387,   324,   300,   209,   196,   195,   167,   168,   169,
+   170,   171,   172,    69,   381,   186,   338,   327,   315,   185,
+    12,    13,   311,   184,   258,   373,   351,   317,   225,   203,
+   312,    60,   390,   314,    67,   167,   168,   169,   170,   171,
+   172,    69,   380,   217,   361,   362,   315,   253,   254,   337,
+   364,   266,    12,   340,   363,   249,   294,   240,   242,   241,
+   353,   348,   339,   328,   322,    94,    11,   321,    96,   250,
+   366,   248,   336,   372,    55,   131,   376,   375,   374,   370,
+   126,   368,   222,   295,   293,   292,   289,   320,   316,   131,
+   383,   308,   279,   263,   251,   252,   220,   282,    11,   177,
+   283,   255,   256,   257,   119,    34,   211,   212,   213,   307,
+   278,   303,   296,   246,   149,   216,   137,    82,   215,   136,
+    81,   175,   117,   200,   135,   306,   271,   270,   226,   181,
+   123,    38,   378,   379,   360,   359,   357,   377,   356,   355,
+   354,   341,   334,   318,   305,   269,   180,   122,    37,   268,
+   304,   267,   265,   221,   179,   121,    36,   335,   244,   106,
+    49,    32,   261,   176,   118,    33,   133,   108,   243,   235,
+   234,   188,   233,   187,   232,   231,   230,   183,   104,    42,
+   182,   146,   124,    39,    17,    16,   264,   178,   120,    35,
+    31,    30,     8,    29,     7,    28,    27,    26,     3,     1,
+    23,   190,   130,   191,   330,    71,    70,    64,    89,   367,
+   165,   153,   284,    22,   319,   313,   148,   358,   343,   245,
+   197,   325,    40,   147,   388,   385,   349,    80,   237,   132,
+   291,    65,    54,    52 };
+yytabelem yypact[]={
+
+   -23,-10000000,-10000000,   -23,-10000000,-10000000,-10000000,-10000000,-10000000,-10000000,
+-10000000,-10000000,-10000000,-10000000,-10000000,-10000000,-10000000,-10000000,-10000000,-10000000,
+-10000000,-10000000,-10000000,   217,-10000000,-10000000,   212,   211,   210,   208,
+   207,   206,  -208,   -92,  -146,  -140,  -146,  -146,  -146,    95,
+-10000000,-10000000,  -146,-10000000,-10000000,-10000000,-10000000,-10000000,-10000000,-10000000,
+-10000000,-10000000,-10000000,-10000000,-10000000,  -282,-10000000,-10000000,-10000000,-10000000,
+-10000000,-10000000,-10000000,-10000000,-10000000,-10000000,-10000000,-10000000,-10000000,-10000000,
+-10000000,-10000000,-10000000,-10000000,  -165,-10000000,-10000000,-10000000,-10000000,-10000000,
+   186,   184,   183,-10000000,-10000000,  -161,-10000000,-10000000,-10000000,-10000000,
+-10000000,-10000000,-10000000,-10000000,-10000000,-10000000,-10000000,  -282,-10000000,-10000000,
+-10000000,-10000000,-10000000,-10000000,  -223,-10000000,  -146,-10000000,  -146,-10000000,
+-10000000,-10000000,-10000000,-10000000,-10000000,  -156,-10000000,   182,  -146,    94,
+    93,    92,  -203,    91,-10000000,-10000000,  -282,-10000000,-10000000,-10000000,
+-10000000,-10000000,-10000000,  -146,-10000000,     5,     5,     5,-10000000,-10000000,
+-10000000,-10000000,-10000000,-10000000,-10000000,-10000000,   -53,   252,   251,   133,
+-10000000,-10000000,-10000000,    80,   127,   281,  -248,   233,   247,-10000000,
+-10000000,    33,    33,    33,  -282,-10000000,     5,-10000000,-10000000,-10000000,
+-10000000,-10000000,-10000000,-10000000,-10000000,  -185,   180,-10000000,   -23,  -245,
+   278,  -143,    76,-10000000,-10000000,-10000000,-10000000,-10000000,-10000000,-10000000,
+  -217,  -142,-10000000,-10000000,-10000000,-10000000,-10000000,-10000000,-10000000,-10000000,
+   178,     5,     5,     5,     5,     5,     5,     5,     5,     5,
+     5,-10000000,-10000000,-10000000,   273,   177,   166,-10000000,-10000000,  -245,
+-10000000,-10000000,-10000000,-10000000,-10000000,-10000000,-10000000,-10000000,-10000000,-10000000,
+   204,   202,   201,   200,   199,   198,-10000000,-10000000,-10000000,-10000000,
+-10000000,-10000000,  -282,  -223,  -146,   133,     5,-10000000,   127,   281,
+  -248,   233,   233,   247,   247,-10000000,-10000000,-10000000,-10000000,-10000000,
+-10000000,     5,-10000000,    68,    63,    55,  -245,  -146,   196,   -73,
+    43,   249,-10000000,-10000000,-10000000,-10000000,-10000000,-10000000,  -117,  -141,
+  -282,-10000000,-10000000,-10000000,-10000000,-10000000,-10000000,-10000000,-10000000,-10000000,
+-10000000,-10000000,-10000000,-10000000,-10000000,-10000000,-10000000,  -282,  -166,-10000000,
+-10000000,-10000000,-10000000,   130,   195,   271,  -143,  -146,   277,-10000000,
+-10000000,-10000000,-10000000,-10000000,-10000000,-10000000,-10000000,-10000000,    89,   248,
+  -244,   266,  -200,-10000000,-10000000,-10000000,-10000000,-10000000,   265,-10000000,
+-10000000,-10000000,-10000000,-10000000,  -182,  -146,  -247,   276,-10000000,   239,
+  -117,-10000000,-10000000,-10000000,-10000000,-10000000,-10000000,-10000000,-10000000,-10000000,
+-10000000,-10000000,-10000000,-10000000,    36,  -182,  -208,   194,  -186,   215,
+     5,   275,  -223,  -200,  -146,-10000000,-10000000,-10000000,-10000000,-10000000,
+-10000000,-10000000,-10000000,-10000000,   263,-10000000,-10000000,   188,  -146,   214,
+  -257,-10000000,-10000000,-10000000,-10000000,   250,-10000000,-10000000,   238,-10000000,
+  -264,-10000000 };
+yytabelem yypgo[]={
+
+     0,    14,   157,   523,   522,   521,     8,   209,   132,   520,
+   163,   519,   518,   517,   324,     9,     7,   516,   515,   514,
+     5,   513,   512,   511,   510,   509,   508,   507,   108,   506,
+   505,   504,   503,   502,     2,   501,   159,   142,   155,   179,
+   130,   182,   234,   500,   143,   141,    10,   499,   498,   105,
+   104,   103,   321,   497,   496,   495,     6,    76,   494,   493,
+     1,    15,   492,   491,   490,     0,   166,   489,   207,   488,
+   487,   162,   486,   158,   485,   484,   483,   482,   481,   480,
+   479,   478,   477,   476,   475,   474,   473,   472,   471,   470,
+   469,   468,   467,   466,   465,   464,   463,   462,   461,   460,
+   459,   458,   457,   456,   455,   454,   453,   452,   451,   450,
+   449,   448,   447,   446,   445,   444,   443,   442,   192,   118,
+   441,   440,   439,   438,   437,   436,   435,   434,   433,   432,
+   431,   430,     4,   429,   428,   427,   426,   425,   424,   423,
+   422,   421,   420,   419,   418,   417,    13,   416,   415,   414,
+   413,   412,   411,   410,   409,   408,   407,   406,   405,   404,
+   403,   401,   400,   399,   395,   394,   389,   383,   382,   381,
+   378,   377,   362,   357,   354,   353,     3,   352,   344,   343,
+   340,   339,   335,   334,   332,   322 };
+yytabelem yyr1[]={
+
+     0,    67,    68,    68,    70,    69,    72,    69,    74,    69,
+    76,    69,    78,    69,    79,    69,    80,    81,    82,    83,
+    77,    75,    75,    86,    87,    89,    84,    90,    64,    32,
+    91,    22,    22,    88,    88,    93,    92,    94,    92,    95,
+    92,    97,    92,    99,    92,   100,    92,    20,   101,    21,
+    21,    16,   102,    16,   103,    16,    65,    85,   104,   105,
+   106,   107,    71,    48,    48,    48,    48,    48,    48,    48,
+    48,    33,    34,    35,    35,    36,    36,    37,    37,    38,
+    38,    38,    39,    39,    39,    40,    40,    40,    40,    41,
+    41,    41,    41,    42,    42,    42,    43,    43,    43,    43,
+    43,    43,    44,   108,    66,    66,    66,    66,   110,   109,
+     1,     1,     2,     2,     2,    56,    56,    56,    56,    56,
+    56,     4,     4,     4,     3,     3,     3,    28,   111,    29,
+    29,    60,    60,    30,   112,    31,    31,    61,    62,    49,
+    49,    54,    54,    54,    55,    55,    55,    52,    52,    52,
+    50,    50,    57,    51,    53,   113,   114,   115,   117,     7,
+   116,   119,   119,   120,   121,   118,   122,   118,   123,   124,
+   125,   126,   127,   128,   129,   131,    10,     9,     9,     9,
+     9,     9,     9,   130,   133,   133,   134,   135,   132,   136,
+   132,    26,    27,    27,   137,    46,   138,   139,    46,   140,
+    47,   141,   142,   143,   145,     8,   144,   148,   147,   147,
+   146,   149,   150,     5,     5,   151,   152,    13,   154,   155,
+     6,     6,   153,   157,   158,    14,    14,   156,   159,    11,
+    24,    25,    25,   160,   161,    45,   162,   163,    96,    63,
+    63,   164,   165,   166,   167,    73,   168,   169,   171,   172,
+    98,    59,    59,    59,    12,    12,   173,   170,   174,   170,
+   175,   178,   177,   177,   179,   180,   176,    15,    15,    15,
+    58,    58,    58,   181,   182,    23,    23,   183,   184,    17,
+    17,    18,   185,    19,    19 };
+yytabelem yyr2[]={
+
+     0,     2,     4,     0,     1,     7,     1,     7,     1,     7,
+     1,     7,     1,     7,     1,     7,     1,     1,     1,     1,
+    19,     2,     2,     1,     1,     1,    15,     1,     7,     5,
+     1,     7,     1,     4,     0,     1,     7,     1,     7,     1,
+     7,     1,     7,     1,     7,     1,     7,     5,     1,     9,
+     1,     3,     1,     7,     1,     9,     3,     3,     1,     1,
+     1,     1,    19,     2,     2,     2,     2,     2,     3,     3,
+     3,     2,     2,     2,     7,     2,     7,     2,     7,     2,
+     7,     7,     2,     7,     7,     2,     7,     7,     7,     2,
+     5,     5,     5,     3,     2,     7,     3,     3,     3,     3,
+     3,     3,     3,     1,     7,     3,     3,     3,     1,     7,
+     2,     2,     3,     2,     3,     2,     2,     2,     2,     2,
+     2,     2,     2,     2,     2,     2,     2,     5,     1,     9,
+     1,     2,     2,     5,     1,     9,     1,     3,     3,     2,
+     2,     3,     5,     3,     5,     7,     5,     3,     3,     5,
+     3,     3,     3,     3,     3,     1,     1,     1,     1,    19,
+     4,     4,     0,     1,     1,    11,     1,     7,     1,     1,
+     1,     1,     1,     1,     1,     1,    35,     3,     3,     3,
+     3,     2,     3,     4,     4,     0,     1,     1,    11,     1,
+     7,     5,     5,     1,     1,     7,     1,     1,    11,     1,
+     7,     1,     1,     1,     1,    19,     4,     1,     8,     0,
+     3,     1,     1,    13,     5,     1,     1,    11,     1,     1,
+    13,     3,     3,     1,     1,    13,     3,     3,     1,     7,
+     5,     5,     1,     1,     1,    11,     1,     1,    13,     3,
+     1,     1,     1,     1,     1,    19,     1,     1,     1,     1,
+    21,     3,     3,     1,     2,     3,     1,     7,     1,     9,
+     4,     1,     8,     0,     1,     1,    11,     3,     2,     3,
+     3,     3,     3,     1,     1,    13,     1,     1,     1,    13,
+     1,     5,     1,     9,     1 };
+yytabelem yychk[]={
+
+-10000000,   -67,   -68,   -69,   -66,   -71,   -73,   -75,   -77,   256,
+   261,    -7,   -10,    -8,   258,   279,   -84,   -85,   259,   272,
+   273,   275,   -32,   -64,   260,   -68,   -70,   -72,   -74,   -76,
+   -78,   -79,  -108,  -104,  -164,   -80,  -113,  -123,  -141,   -86,
+   -22,    58,   -90,    59,    59,    59,    59,    59,    59,  -109,
+    -1,    -2,    -3,   -56,    -4,   -16,    -7,   -10,    -8,   -49,
+   -52,   -50,   -51,   -57,   -53,    -5,    -6,   -14,   -65,   298,
+   -54,   -55,   265,   266,   262,   267,   268,   270,   269,   271,
+   -13,  -153,  -156,   257,   263,   264,   276,   277,   278,   -48,
+   -49,   -50,   -57,   -51,   -52,    -6,   -14,   -16,   -65,   257,
+   -65,   -65,   -65,   123,   -91,   -65,  -110,   298,  -102,   262,
+   265,    44,    62,    60,    60,   262,   263,  -151,  -105,  -165,
+   -81,  -114,  -124,  -142,   -87,   -20,   -16,   -28,   -60,   -61,
+   -62,   -65,   -11,  -103,   -65,  -149,  -154,  -157,   262,    60,
+   -65,   123,   123,   123,   274,   123,   -88,   -21,   -29,  -159,
+   -65,   -44,   -34,   -35,   -36,   -37,   -38,   -39,   -40,   -41,
+   -42,    43,    45,   126,   -16,   -43,    40,   292,   293,   294,
+   295,   296,   297,   -44,   -44,  -152,  -106,  -166,   -82,  -115,
+  -125,  -143,   -89,   -92,   -66,   -71,   -73,   -96,   -98,   256,
+   -63,   -59,   282,   284,   285,    44,    44,   -24,   -45,    91,
+  -150,   124,    94,    38,   299,   300,    43,    45,    42,    47,
+    37,   -42,   -42,   -42,   -34,  -155,  -158,    -2,    61,  -119,
+   -68,  -116,  -118,    -1,   256,    40,  -144,  -146,   257,   125,
+   -93,   -94,   -95,   -97,   -99,  -100,   283,   -12,   -15,   286,
+   -56,    -6,   -16,  -101,  -111,   -25,  -160,    62,   -36,   -37,
+   -38,   -39,   -39,   -40,   -40,   -41,   -41,   -41,    41,    62,
+    62,  -107,  -118,  -167,   -83,  -117,  -119,  -120,  -122,  -126,
+  -145,  -147,    59,    59,    59,    59,    59,    59,  -162,  -168,
+   -16,   -60,   -45,   -44,   -33,   -34,   125,   125,   125,   -28,
+    59,    -9,   -49,   -50,   -57,   -51,    -8,   -16,   262,   125,
+    44,   -15,   257,  -161,  -121,  -127,  -148,  -163,  -169,    93,
+    59,    41,  -146,   -30,   -61,   -65,  -170,    40,  -128,   -31,
+  -171,  -173,  -174,   123,    44,   -23,   290,    41,  -175,  -176,
+   -58,   287,   288,   289,  -129,  -112,  -172,  -181,    41,  -177,
+  -179,  -130,  -132,   -26,   256,   -46,   281,   280,   -61,   -17,
+   291,    40,    44,   -15,  -131,  -133,  -134,  -136,   -27,  -137,
+  -138,  -183,  -182,  -178,  -180,   125,  -132,   -47,    -1,    59,
+   -46,    58,   -34,    40,   -20,  -176,   -60,  -135,  -140,  -139,
+  -184,    41,    59,   -60,    58,   -18,   293,    41,   -19,    44,
+  -185,   293 };
+yytabelem yydef[]={
+
+    -2,    -2,     1,    -2,     4,     6,     8,    10,    12,    14,
+   103,   105,   106,   107,    58,   241,    21,    22,    16,   155,
+   168,   201,    23,    -2,    27,     2,     0,     0,     0,     0,
+     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+    29,    30,     0,     5,     7,     9,    11,    13,    15,   104,
+   108,   110,   111,   112,   113,   114,   124,   125,   126,   115,
+   116,   117,   118,   119,   120,   121,   122,   123,    51,    52,
+   139,   140,   147,   148,   141,   150,   151,   153,   152,   154,
+     0,   221,   226,    56,   143,     0,   215,   222,   227,    59,
+    63,    64,    65,    66,    67,    68,    69,    70,   242,    17,
+   156,   169,   202,    24,     0,    28,     0,    54,     0,   142,
+   149,   211,   214,   218,   223,   144,   146,     0,     0,     0,
+     0,     0,     0,     0,    34,    31,    50,   109,   130,   131,
+   132,    -2,   138,     0,    53,     0,     0,     0,   145,   216,
+    60,   243,    18,   157,   170,   203,    -2,    47,   127,     0,
+    55,   212,   102,    72,    73,    75,    77,    79,    82,    85,
+    89,     0,     0,     0,    93,    94,     0,    96,    97,    98,
+    99,   100,   101,   219,   224,     0,     0,   162,    -2,     0,
+     0,     0,     0,    33,    35,    37,    39,    41,    43,    45,
+     0,     0,   239,   251,   252,    48,   128,   229,   232,   233,
+     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+     0,    90,    91,    92,     0,     0,     0,   217,    61,    -2,
+    19,   158,   162,   163,   166,   171,   204,   209,   210,    26,
+     0,     0,     0,     0,     0,     0,   236,   246,   254,   255,
+   267,   268,   269,     0,     0,   230,     0,   213,    74,    76,
+    78,    80,    81,    83,    84,    86,    87,    88,    95,   220,
+   225,     0,   161,     0,     0,     0,    -2,     0,     0,     0,
+     0,   206,    36,    38,    40,    42,    44,    46,     0,     0,
+    49,   129,   231,   234,    62,    71,   245,    20,   159,   164,
+   167,   172,   177,   178,   179,   180,   181,   182,   141,   205,
+   207,   237,   247,     0,     0,     0,     0,     0,     0,   235,
+   165,   173,   208,   238,   136,   137,   248,    -2,     0,   133,
+   276,     0,     0,   174,   134,   249,   273,   257,     0,   263,
+   264,   270,   271,   272,     0,     0,   280,     0,   259,   260,
+     0,   175,   185,   186,   189,   193,   194,   196,   135,   250,
+   277,   274,   261,   265,     0,    -2,     0,     0,   191,     0,
+     0,     0,     0,     0,     0,   176,   184,   187,   199,   190,
+   192,   195,   197,   278,     0,   262,   266,     0,     0,     0,
+     0,   275,   188,   200,   198,     0,   284,   279,   281,   282,
+     0,   283 };
+typedef struct
 #ifdef __cplusplus
-void YYDEBUG_INDENT(int yyindent)
-#else
-YYDEBUG_INDENT(yyindent)
-int yyindent;
+	yytoktype
 #endif
-{
-    while(yyindent-- > 0)
-        printf("%s", YYDEBUG_INDENT_STRING);
-}
-#endif /* YYDEBUG_INDENT */
-#ifndef YYDEBUG_REDUCE
-#ifdef __cplusplus
-void YYDEBUG_REDUCE(int yynew_state, int yyrule_num, char *yyrule_string, int yynew_indent, int yyrhs_count)
-#else
-YYDEBUG_REDUCE(yynew_state, yyrule_num, yyrule_string, yynew_indent, yyrhs_count)
-int yynew_state;
-int yyrule_num;
-char * yyrule_string;
-int yynew_indent;
-int yyrhs_count;
+{ char *t_name; int t_val; } yytoktype;
+#ifndef YYDEBUG
+#	define YYDEBUG	1	/* allow debugging */
 #endif
+
+#if YYDEBUG
+
+yytoktype yytoks[] =
 {
-    if (1 < yyrhs_count)
-    {  /* draw the graphics for the reduction */
-        YYDEBUG_INDENT(yynew_indent);
-        while(1 < yyrhs_count--)
-            printf("%s", YYDEBUG_REDUCE_STRING);
-        putchar('+'); /* left rotated L would look nice */
-        putchar('\n');
-        YYDEBUG_INDENT(yynew_indent);
-        putchar('|'); /* down arrow would look nice */
-        putchar('\n');
-    }
-    YYDEBUG_INDENT(yynew_indent);
-    /* Only print the resulting token name */
-    while (*yyrule_string)
-        putchar(*yyrule_string++);
-    putchar('\n');
-}
-#endif /* YYDEBUG_REDUCE */
-#ifndef YYDEBUG_SHIFT_LEXEME
-#ifdef __cplusplus
-void YYDEBUG_SHIFT_LEXEME(int yyold_state, int yynew_state, char *yytoken_string, int yynew_indent)
-#else
-YYDEBUG_SHIFT_LEXEME(yyold_state, yynew_state, yytoken_string, yynew_indent)
-int yyold_state;
-int yynew_state;
-char * yytoken_string;
-int yynew_indent;
-#endif
+	"IDENTIFIER",	257,
+	"IDL_CONST",	258,
+	"IDL_MODULE",	259,
+	"IDL_INTERFACE",	260,
+	"IDL_TYPEDEF",	261,
+	"IDL_LONG",	262,
+	"IDL_SHORT",	263,
+	"IDL_UNSIGNED",	264,
+	"IDL_DOUBLE",	265,
+	"IDL_FLOAT",	266,
+	"IDL_CHAR",	267,
+	"IDL_WCHAR",	268,
+	"IDL_OCTET",	269,
+	"IDL_BOOLEAN",	270,
+	"IDL_ANY",	271,
+	"IDL_STRUCT",	272,
+	"IDL_UNION",	273,
+	"IDL_SWITCH",	274,
+	"IDL_ENUM",	275,
+	"IDL_SEQUENCE",	276,
+	"IDL_STRING",	277,
+	"IDL_WSTRING",	278,
+	"IDL_EXCEPTION",	279,
+	"IDL_CASE",	280,
+	"IDL_DEFAULT",	281,
+	"IDL_READONLY",	282,
+	"IDL_ATTRIBUTE",	283,
+	"IDL_ONEWAY",	284,
+	"IDL_IDEMPOTENT",	285,
+	"IDL_VOID",	286,
+	"IDL_IN",	287,
+	"IDL_OUT",	288,
+	"IDL_INOUT",	289,
+	"IDL_RAISES",	290,
+	"IDL_CONTEXT",	291,
+	"IDL_INTEGER_LITERAL",	292,
+	"IDL_STRING_LITERAL",	293,
+	"IDL_CHARACTER_LITERAL",	294,
+	"IDL_FLOATING_PT_LITERAL",	295,
+	"IDL_TRUETOK",	296,
+	"IDL_FALSETOK",	297,
+	"IDL_SCOPE_DELIMITOR",	298,
+	"IDL_LEFT_SHIFT",	299,
+	"IDL_RIGHT_SHIFT",	300,
+	"-unknown-",	-1	/* ends search */
+};
+
+char * yyreds[] =
 {
-    YYDEBUG_INDENT(yynew_indent);
-    printf("%s <-- `%s'\n", yytoken_string, YYDEBUG_LEXER_TEXT);
-}
-#endif /*  YYDEBUG_SHIFT_LEXEME */
-#ifndef YYDEBUG_LOOK_AHEAD
-#ifdef __cplusplus
-void YYDEBUG_LOOK_AHEAD(int yynew_state, int yytoken_num, char *yytoken_string, int yyindent)
-#else
-YYDEBUG_LOOK_AHEAD(yynew_state, yytoken_num, yytoken_string, yyindent)
-int yynew_state;
-int yytoken_num;
-char * yytoken_string;
-int yyindent;
-#endif
-{
-    YYDEBUG_INDENT(yyindent);
-    printf("          .... look ahead at %s   `%s'\n",
-           yytoken_string,
-           (0 == yytoken_num)? "\0": YYDEBUG_LEXER_TEXT);
-}
-#endif /* YYDEBUG_LOOK_AHEAD */
-#ifndef YYDEBUG_DISCARD_STATE
-#ifdef __cplusplus
-void YYDEBUG_DISCARD_STATE(int yynew_state, int yyindent)
-#else
-YYDEBUG_DISCARD_STATE(yynew_state, yyindent)
-int yynew_state;
-int yyindent;
-#endif
-{
-    if (0 < yyindent)
-    {  /* draw the graphics for the reduction */
-        YYDEBUG_INDENT(yyindent-1);
-        printf("%s", YYDEBUG_REDUCE_STRING);
-        putchar('+'); /* left rotated L would look nice */
-        printf("  discarding state\n");
-        YYDEBUG_INDENT(yyindent-1);
-        putchar('|'); /* down arrow would look nice */
-        putchar('\n');
-    }
-    else
-    {
-        if (0 == yyindent)
-            printf("discarding state\n");
-        else
-            printf("no more states to discard: parser will abort\n");
-    }
-}
-#endif /* YYDEBUG_DISCARD_STATE */
-#ifndef YYDEBUG_DISCARD_TOKEN
-#ifdef __cplusplus
-void YYDEBUG_DISCARD_TOKEN(int yynew_state, int yytoken_num, char *yytoken_string, int yyindent)
-#else
-YYDEBUG_DISCARD_TOKEN(yynew_state, yytoken_num, yytoken_string, yyindent)
-int yynew_state;
-int yytoken_num;
-char * yytoken_string;
-int yyindent;
-#endif
-{
-    YYDEBUG_INDENT(yyindent);
-    printf("discarding token %s\n", yytoken_string);
-}
-#endif /* YYDEBUG_DISCARD_TOKEN */
-#ifndef YYDEBUG_SHIFT_ERROR_LEXEME
-#ifdef __cplusplus
-void YYDEBUG_SHIFT_ERROR_LEXEME(int yyold_state, int yynew_state, int yyindent)
-#else
-YYDEBUG_SHIFT_ERROR_LEXEME(yyold_state, yynew_state, yyindent)
-int yyold_state;
-int yynew_state;
-int yyindent;
-#endif
-{
-    YYDEBUG_INDENT(yyindent);
-    printf("error\n");
-}
-#endif /* YYDEBUG_SHIFT_ERROR_LEXEME */
+	"-no such reduction-",
+	"start : definitions",
+	"definitions : definition definitions",
+	"definitions : /* empty */",
+	"definition : type_dcl",
+	"definition : type_dcl ';'",
+	"definition : const_dcl",
+	"definition : const_dcl ';'",
+	"definition : exception",
+	"definition : exception ';'",
+	"definition : interface_def",
+	"definition : interface_def ';'",
+	"definition : module",
+	"definition : module ';'",
+	"definition : error",
+	"definition : error ';'",
+	"module : IDL_MODULE",
+	"module : IDL_MODULE IDENTIFIER",
+	"module : IDL_MODULE IDENTIFIER '{'",
+	"module : IDL_MODULE IDENTIFIER '{' definitions",
+	"module : IDL_MODULE IDENTIFIER '{' definitions '}'",
+	"interface_def : interface",
+	"interface_def : forward",
+	"interface : interface_header",
+	"interface : interface_header '{'",
+	"interface : interface_header '{' exports",
+	"interface : interface_header '{' exports '}'",
+	"interface_decl : IDL_INTERFACE",
+	"interface_decl : IDL_INTERFACE id",
+	"interface_header : interface_decl inheritance_spec",
+	"inheritance_spec : ':'",
+	"inheritance_spec : ':' at_least_one_scoped_name",
+	"inheritance_spec : /* empty */",
+	"exports : exports export",
+	"exports : /* empty */",
+	"export : type_dcl",
+	"export : type_dcl ';'",
+	"export : const_dcl",
+	"export : const_dcl ';'",
+	"export : exception",
+	"export : exception ';'",
+	"export : attribute",
+	"export : attribute ';'",
+	"export : operation",
+	"export : operation ';'",
+	"export : error",
+	"export : error ';'",
+	"at_least_one_scoped_name : scoped_name scoped_names",
+	"scoped_names : scoped_names ','",
+	"scoped_names : scoped_names ',' scoped_name",
+	"scoped_names : /* empty */",
+	"scoped_name : id",
+	"scoped_name : IDL_SCOPE_DELIMITOR",
+	"scoped_name : IDL_SCOPE_DELIMITOR id",
+	"scoped_name : scoped_name IDL_SCOPE_DELIMITOR",
+	"scoped_name : scoped_name IDL_SCOPE_DELIMITOR id",
+	"id : IDENTIFIER",
+	"forward : interface_decl",
+	"const_dcl : IDL_CONST",
+	"const_dcl : IDL_CONST const_type",
+	"const_dcl : IDL_CONST const_type id",
+	"const_dcl : IDL_CONST const_type id '='",
+	"const_dcl : IDL_CONST const_type id '=' expression",
+	"const_type : integer_type",
+	"const_type : char_type",
+	"const_type : octet_type",
+	"const_type : boolean_type",
+	"const_type : floating_pt_type",
+	"const_type : string_type_spec",
+	"const_type : wstring_type_spec",
+	"const_type : scoped_name",
+	"expression : const_expr",
+	"const_expr : or_expr",
+	"or_expr : xor_expr",
+	"or_expr : or_expr '|' xor_expr",
+	"xor_expr : and_expr",
+	"xor_expr : xor_expr '^' and_expr",
+	"and_expr : shift_expr",
+	"and_expr : and_expr '&' shift_expr",
+	"shift_expr : add_expr",
+	"shift_expr : shift_expr IDL_LEFT_SHIFT add_expr",
+	"shift_expr : shift_expr IDL_RIGHT_SHIFT add_expr",
+	"add_expr : mult_expr",
+	"add_expr : add_expr '+' mult_expr",
+	"add_expr : add_expr '-' mult_expr",
+	"mult_expr : unary_expr",
+	"mult_expr : mult_expr '*' unary_expr",
+	"mult_expr : mult_expr '/' unary_expr",
+	"mult_expr : mult_expr '%' unary_expr",
+	"unary_expr : primary_expr",
+	"unary_expr : '+' primary_expr",
+	"unary_expr : '-' primary_expr",
+	"unary_expr : '~' primary_expr",
+	"primary_expr : scoped_name",
+	"primary_expr : literal",
+	"primary_expr : '(' const_expr ')'",
+	"literal : IDL_INTEGER_LITERAL",
+	"literal : IDL_STRING_LITERAL",
+	"literal : IDL_CHARACTER_LITERAL",
+	"literal : IDL_FLOATING_PT_LITERAL",
+	"literal : IDL_TRUETOK",
+	"literal : IDL_FALSETOK",
+	"positive_int_expr : const_expr",
+	"type_dcl : IDL_TYPEDEF",
+	"type_dcl : IDL_TYPEDEF type_declarator",
+	"type_dcl : struct_type",
+	"type_dcl : union_type",
+	"type_dcl : enum_type",
+	"type_declarator : type_spec",
+	"type_declarator : type_spec at_least_one_declarator",
+	"type_spec : simple_type_spec",
+	"type_spec : constructed_type_spec",
+	"simple_type_spec : base_type_spec",
+	"simple_type_spec : template_type_spec",
+	"simple_type_spec : scoped_name",
+	"base_type_spec : integer_type",
+	"base_type_spec : floating_pt_type",
+	"base_type_spec : char_type",
+	"base_type_spec : boolean_type",
+	"base_type_spec : octet_type",
+	"base_type_spec : any_type",
+	"template_type_spec : sequence_type_spec",
+	"template_type_spec : string_type_spec",
+	"template_type_spec : wstring_type_spec",
+	"constructed_type_spec : struct_type",
+	"constructed_type_spec : union_type",
+	"constructed_type_spec : enum_type",
+	"at_least_one_declarator : declarator declarators",
+	"declarators : declarators ','",
+	"declarators : declarators ',' declarator",
+	"declarators : /* empty */",
+	"declarator : simple_declarator",
+	"declarator : complex_declarator",
+	"at_least_one_simple_declarator : simple_declarator simple_declarators",
+	"simple_declarators : simple_declarators ','",
+	"simple_declarators : simple_declarators ',' simple_declarator",
+	"simple_declarators : /* empty */",
+	"simple_declarator : id",
+	"complex_declarator : array_declarator",
+	"integer_type : signed_int",
+	"integer_type : unsigned_int",
+	"signed_int : IDL_LONG",
+	"signed_int : IDL_LONG IDL_LONG",
+	"signed_int : IDL_SHORT",
+	"unsigned_int : IDL_UNSIGNED IDL_LONG",
+	"unsigned_int : IDL_UNSIGNED IDL_LONG IDL_LONG",
+	"unsigned_int : IDL_UNSIGNED IDL_SHORT",
+	"floating_pt_type : IDL_DOUBLE",
+	"floating_pt_type : IDL_FLOAT",
+	"floating_pt_type : IDL_LONG IDL_DOUBLE",
+	"char_type : IDL_CHAR",
+	"char_type : IDL_WCHAR",
+	"octet_type : IDL_OCTET",
+	"boolean_type : IDL_BOOLEAN",
+	"any_type : IDL_ANY",
+	"struct_type : IDL_STRUCT",
+	"struct_type : IDL_STRUCT id",
+	"struct_type : IDL_STRUCT id '{'",
+	"struct_type : IDL_STRUCT id '{' at_least_one_member",
+	"struct_type : IDL_STRUCT id '{' at_least_one_member '}'",
+	"at_least_one_member : member members",
+	"members : members member",
+	"members : /* empty */",
+	"member : type_spec",
+	"member : type_spec at_least_one_declarator",
+	"member : type_spec at_least_one_declarator ';'",
+	"member : error",
+	"member : error ';'",
+	"union_type : IDL_UNION",
+	"union_type : IDL_UNION id",
+	"union_type : IDL_UNION id IDL_SWITCH",
+	"union_type : IDL_UNION id IDL_SWITCH '('",
+	"union_type : IDL_UNION id IDL_SWITCH '(' switch_type_spec",
+	"union_type : IDL_UNION id IDL_SWITCH '(' switch_type_spec ')'",
+	"union_type : IDL_UNION id IDL_SWITCH '(' switch_type_spec ')' '{'",
+	"union_type : IDL_UNION id IDL_SWITCH '(' switch_type_spec ')' '{' at_least_one_case_branch",
+	"union_type : IDL_UNION id IDL_SWITCH '(' switch_type_spec ')' '{' at_least_one_case_branch '}'",
+	"switch_type_spec : integer_type",
+	"switch_type_spec : char_type",
+	"switch_type_spec : octet_type",
+	"switch_type_spec : boolean_type",
+	"switch_type_spec : enum_type",
+	"switch_type_spec : scoped_name",
+	"at_least_one_case_branch : case_branch case_branches",
+	"case_branches : case_branches case_branch",
+	"case_branches : /* empty */",
+	"case_branch : at_least_one_case_label",
+	"case_branch : at_least_one_case_label element_spec",
+	"case_branch : at_least_one_case_label element_spec ';'",
+	"case_branch : error",
+	"case_branch : error ';'",
+	"at_least_one_case_label : case_label case_labels",
+	"case_labels : case_labels case_label",
+	"case_labels : /* empty */",
+	"case_label : IDL_DEFAULT",
+	"case_label : IDL_DEFAULT ':'",
+	"case_label : IDL_CASE",
+	"case_label : IDL_CASE const_expr",
+	"case_label : IDL_CASE const_expr ':'",
+	"element_spec : type_spec",
+	"element_spec : type_spec declarator",
+	"enum_type : IDL_ENUM",
+	"enum_type : IDL_ENUM id",
+	"enum_type : IDL_ENUM id '{'",
+	"enum_type : IDL_ENUM id '{' at_least_one_enumerator",
+	"enum_type : IDL_ENUM id '{' at_least_one_enumerator '}'",
+	"at_least_one_enumerator : enumerator enumerators",
+	"enumerators : enumerators ','",
+	"enumerators : enumerators ',' enumerator",
+	"enumerators : /* empty */",
+	"enumerator : IDENTIFIER",
+	"sequence_type_spec : seq_head ','",
+	"sequence_type_spec : seq_head ',' positive_int_expr",
+	"sequence_type_spec : seq_head ',' positive_int_expr '>'",
+	"sequence_type_spec : seq_head '>'",
+	"seq_head : IDL_SEQUENCE",
+	"seq_head : IDL_SEQUENCE '<'",
+	"seq_head : IDL_SEQUENCE '<' simple_type_spec",
+	"string_type_spec : string_head '<'",
+	"string_type_spec : string_head '<' positive_int_expr",
+	"string_type_spec : string_head '<' positive_int_expr '>'",
+	"string_type_spec : string_head",
+	"string_head : IDL_STRING",
+	"wstring_type_spec : wstring_head '<'",
+	"wstring_type_spec : wstring_head '<' positive_int_expr",
+	"wstring_type_spec : wstring_head '<' positive_int_expr '>'",
+	"wstring_type_spec : wstring_head",
+	"wstring_head : IDL_WSTRING",
+	"array_declarator : id",
+	"array_declarator : id at_least_one_array_dim",
+	"at_least_one_array_dim : array_dim array_dims",
+	"array_dims : array_dims array_dim",
+	"array_dims : /* empty */",
+	"array_dim : '['",
+	"array_dim : '[' positive_int_expr",
+	"array_dim : '[' positive_int_expr ']'",
+	"attribute : opt_readonly IDL_ATTRIBUTE",
+	"attribute : opt_readonly IDL_ATTRIBUTE param_type_spec",
+	"attribute : opt_readonly IDL_ATTRIBUTE param_type_spec at_least_one_simple_declarator",
+	"opt_readonly : IDL_READONLY",
+	"opt_readonly : /* empty */",
+	"exception : IDL_EXCEPTION",
+	"exception : IDL_EXCEPTION id",
+	"exception : IDL_EXCEPTION id '{'",
+	"exception : IDL_EXCEPTION id '{' members",
+	"exception : IDL_EXCEPTION id '{' members '}'",
+	"operation : opt_op_attribute op_type_spec",
+	"operation : opt_op_attribute op_type_spec IDENTIFIER",
+	"operation : opt_op_attribute op_type_spec IDENTIFIER parameter_list",
+	"operation : opt_op_attribute op_type_spec IDENTIFIER parameter_list opt_raises",
+	"operation : opt_op_attribute op_type_spec IDENTIFIER parameter_list opt_raises opt_context",
+	"opt_op_attribute : IDL_ONEWAY",
+	"opt_op_attribute : IDL_IDEMPOTENT",
+	"opt_op_attribute : /* empty */",
+	"op_type_spec : param_type_spec",
+	"op_type_spec : IDL_VOID",
+	"parameter_list : '('",
+	"parameter_list : '(' ')'",
+	"parameter_list : '('",
+	"parameter_list : '(' at_least_one_parameter ')'",
+	"at_least_one_parameter : parameter parameters",
+	"parameters : parameters ','",
+	"parameters : parameters ',' parameter",
+	"parameters : /* empty */",
+	"parameter : direction",
+	"parameter : direction param_type_spec",
+	"parameter : direction param_type_spec declarator",
+	"param_type_spec : base_type_spec",
+	"param_type_spec : string_type_spec",
+	"param_type_spec : scoped_name",
+	"direction : IDL_IN",
+	"direction : IDL_OUT",
+	"direction : IDL_INOUT",
+	"opt_raises : IDL_RAISES",
+	"opt_raises : IDL_RAISES '('",
+	"opt_raises : IDL_RAISES '(' at_least_one_scoped_name ')'",
+	"opt_raises : /* empty */",
+	"opt_context : IDL_CONTEXT",
+	"opt_context : IDL_CONTEXT '('",
+	"opt_context : IDL_CONTEXT '(' at_least_one_string_literal ')'",
+	"opt_context : /* empty */",
+	"at_least_one_string_literal : IDL_STRING_LITERAL string_literals",
+	"string_literals : string_literals ','",
+	"string_literals : string_literals ',' IDL_STRING_LITERAL",
+	"string_literals : /* empty */",
+};
 #endif /* YYDEBUG */
-#ifdef __cplusplus
-extern "C" { extern char *getenv(const char *); }
+# line	1 "/usr/ccs/bin/yaccpar"
+/*
+ * Copyright (c) 1993 by Sun Microsystems, Inc.
+ */
+
+#pragma ident	"@(#)yaccpar	6.12	93/06/07 SMI"
+
+/*
+** Skeleton parser driver for yacc output
+*/
+
+/*
+** yacc user known macros and defines
+*/
+#define YYERROR		goto yyerrlab
+#define YYACCEPT	return(0)
+#define YYABORT		return(1)
+#define YYBACKUP( newtoken, newvalue )\
+{\
+	if ( yychar >= 0 || ( yyr2[ yytmp ] >> 1 ) != 1 )\
+	{\
+		yyerror( "syntax error - cannot backup" );\
+		goto yyerrlab;\
+	}\
+	yychar = newtoken;\
+	yystate = *yyps;\
+	yylval = newvalue;\
+	goto yynewstate;\
+}
+#define YYRECOVERING()	(!!yyerrflag)
+#define YYNEW(type)	malloc(sizeof(type) * yynewmax)
+#define YYCOPY(to, from, type) \
+	(type *) memcpy(to, (char *) from, yynewmax * sizeof(type))
+#define YYENLARGE( from, type) \
+	(type *) realloc((char *) from, yynewmax * sizeof(type))
+#ifndef YYDEBUG
+#	define YYDEBUG	1	/* make debugging available */
 #endif
-int
-yyparse()
+
+/*
+** user known globals
+*/
+int yydebug;			/* set to 1 to get debugging */
+
+/*
+** driver internal defines
+*/
+#define YYFLAG		(-10000000)
+
+/*
+** global variables used by the parser
+*/
+YYSTYPE *yypv;			/* top of value stack */
+int *yyps;			/* top of state stack */
+
+int yystate;			/* current state */
+int yytmp;			/* extra var (lasts between blocks) */
+
+int yynerrs;			/* number of errors */
+int yyerrflag;			/* error recovery flag */
+int yychar;			/* current input token number */
+
+
+
+#ifdef YYNMBCHARS
+#define YYLEX()		yycvtok(yylex())
+/*
+** yycvtok - return a token if i is a wchar_t value that exceeds 255.
+**	If i<255, i itself is the token.  If i>255 but the neither 
+**	of the 30th or 31st bit is on, i is already a token.
+*/
+#if defined(__STDC__) || defined(__cplusplus)
+int yycvtok(int i)
+#else
+int yycvtok(i) int i;
+#endif
 {
-    register int yym, yyn, yystate;
-#if YYDEBUG
-    register char *yys;
-#ifndef __cplusplus
-    extern char *getenv();
+	int first = 0;
+	int last = YYNMBCHARS - 1;
+	int mid;
+	wchar_t j;
+
+	if(i&0x60000000){/*Must convert to a token. */
+		if( yymbchars[last].character < i ){
+			return i;/*Giving up*/
+		}
+		while ((last>=first)&&(first>=0)) {/*Binary search loop*/
+			mid = (first+last)/2;
+			j = yymbchars[mid].character;
+			if( j==i ){/*Found*/ 
+				return yymbchars[mid].tvalue;
+			}else if( j<i ){
+				first = mid + 1;
+			}else{
+				last = mid -1;
+			}
+		}
+		/*No entry in the table.*/
+		return i;/* Giving up.*/
+	}else{/* i is already a token. */
+		return i;
+	}
+}
+#else/*!YYNMBCHARS*/
+#define YYLEX()		yylex()
+#endif/*!YYNMBCHARS*/
+
+/*
+** yyparse - return 0 if worked, 1 if syntax error not recovered from
+*/
+#if defined(__STDC__) || defined(__cplusplus)
+int yyparse(void)
+#else
+int yyparse()
+#endif
+{
+	register YYSTYPE *yypvt;	/* top of value stack for $vars */
+
+#if defined(__cplusplus) || defined(lint)
+/*
+	hacks to please C++ and lint - goto's inside switch should never be
+	executed; yypvt is set to 0 to avoid "used before set" warning.
+*/
+	static int __yaccpar_lint_hack__ = 0;
+	switch (__yaccpar_lint_hack__)
+	{
+		case 1: goto yyerrlab;
+		case 2: goto yynewstate;
+	}
+	yypvt = 0;
 #endif
 
-    if (yys = getenv("YYDEBUG"))
-    {
-        yyn = *yys;
-        if (yyn >= '0' && yyn <= '9')
-            yydebug = yyn - '0';
-    }
+	/*
+	** Initialize externals - yyparse may be called more than once
+	*/
+	yypv = &yyv[-1];
+	yyps = &yys[-1];
+	yystate = 0;
+	yytmp = 0;
+	yynerrs = 0;
+	yyerrflag = 0;
+	yychar = -1;
+
+#if YYMAXDEPTH <= 0
+	if (yymaxdepth <= 0)
+	{
+		if ((yymaxdepth = YYEXPAND(0)) <= 0)
+		{
+			yyerror("yacc initialization error");
+			YYABORT;
+		}
+	}
 #endif
 
-    yynerrs = 0;
-    yyerrflag = 0;
-    yychar = (-1);
+	{
+		register YYSTYPE *yy_pv;	/* top of value stack */
+		register int *yy_ps;		/* top of state stack */
+		register int yy_state;		/* current state */
+		register int  yy_n;		/* internal state number info */
+	goto yystack;	/* moved from 6 lines above to here to please C++ */
 
-    yyssp = yyss;
-    yyvsp = yyvs;
-    *yyssp = yystate = 0;
+		/*
+		** get globals into registers.
+		** branch to here only if YYBACKUP was called.
+		*/
+	yynewstate:
+		yy_pv = yypv;
+		yy_ps = yyps;
+		yy_state = yystate;
+		goto yy_newstate;
 
-yyloop:
-    if (yyn = yydefred[yystate]) goto yyreduce;
-    if (yychar < 0)
-    {
-        if ((yychar = yylex()) < 0) yychar = 0;
+		/*
+		** get globals into registers.
+		** either we just started, or we just finished a reduction
+		*/
+	yystack:
+		yy_pv = yypv;
+		yy_ps = yyps;
+		yy_state = yystate;
+
+		/*
+		** top of for (;;) loop while no reductions done
+		*/
+	yy_stack:
+		/*
+		** put a state and value onto the stacks
+		*/
 #if YYDEBUG
-        if (yydebug)
-        {
-            yys = 0;
-            if (yychar <= YYMAXTOKEN) yys = yyname[yychar];
-            if (!yys) yys = "illegal-symbol";
-            if (5 < yydebug)
-                printf("yydebug: state %d, reading %d (%s)\n", yystate,
-                        yychar, yys);
-            else
-                YYDEBUG_LOOK_AHEAD(yystate, yychar, yys, yyssp-yyss);
-        }
+		/*
+		** if debugging, look up token value in list of value vs.
+		** name pairs.  0 and negative (-1) are special values.
+		** Note: linear search is used since time is not a real
+		** consideration while debugging.
+		*/
+		if ( yydebug )
+		{
+			register int yy_i;
+
+			printf( "State %d, token ", yy_state );
+			if ( yychar == 0 )
+				printf( "end-of-file\n" );
+			else if ( yychar < 0 )
+				printf( "-none-\n" );
+			else
+			{
+				for ( yy_i = 0; yytoks[yy_i].t_val >= 0;
+					yy_i++ )
+				{
+					if ( yytoks[yy_i].t_val == yychar )
+						break;
+				}
+				printf( "%s\n", yytoks[yy_i].t_name );
+			}
+		}
+#endif /* YYDEBUG */
+		if ( ++yy_ps >= &yys[ yymaxdepth ] )	/* room on stack? */
+		{
+			/*
+			** reallocate and recover.  Note that pointers
+			** have to be reset, or bad things will happen
+			*/
+			int yyps_index = (yy_ps - yys);
+			int yypv_index = (yy_pv - yyv);
+			int yypvt_index = (yypvt - yyv);
+			int yynewmax;
+#ifdef YYEXPAND
+			yynewmax = YYEXPAND(yymaxdepth);
+#else
+			yynewmax = 2 * yymaxdepth;	/* double table size */
+			if (yymaxdepth == YYMAXDEPTH)	/* first time growth */
+			{
+				char *newyys = (char *)YYNEW(int);
+				char *newyyv = (char *)YYNEW(YYSTYPE);
+				if (newyys != 0 && newyyv != 0)
+				{
+					yys = YYCOPY(newyys, yys, int);
+					yyv = YYCOPY(newyyv, yyv, YYSTYPE);
+				}
+				else
+					yynewmax = 0;	/* failed */
+			}
+			else				/* not first time */
+			{
+				yys = YYENLARGE(yys, int);
+				yyv = YYENLARGE(yyv, YYSTYPE);
+				if (yys == 0 || yyv == 0)
+					yynewmax = 0;	/* failed */
+			}
 #endif
-    }
-    if ((yyn = yysindex[yystate]) && (yyn += yychar) >= 0 &&
-            yyn <= YYTABLESIZE && yycheck[yyn] == yychar)
-    {
+			if (yynewmax <= yymaxdepth)	/* tables not expanded */
+			{
+				yyerror( "yacc stack overflow" );
+				YYABORT;
+			}
+			yymaxdepth = yynewmax;
+
+			yy_ps = yys + yyps_index;
+			yy_pv = yyv + yypv_index;
+			yypvt = yyv + yypvt_index;
+		}
+		*yy_ps = yy_state;
+		*++yy_pv = yyval;
+
+		/*
+		** we have a new state - find out what to do
+		*/
+	yy_newstate:
+		if ( ( yy_n = yypact[ yy_state ] ) <= YYFLAG )
+			goto yydefault;		/* simple state */
 #if YYDEBUG
-        if (yydebug)
-            if (5 < yydebug)
-                printf("yydebug: state %d, shifting to state %d\n",
-                        yystate, yytable[yyn]);
-            else
-                YYDEBUG_SHIFT_LEXEME(yystate, yytable[yyn], yys, yyssp-yyss);
+		/*
+		** if debugging, need to mark whether new token grabbed
+		*/
+		yytmp = yychar < 0;
 #endif
-        if (yyssp >= yyss + yystacksize - 1)
-        {
-            goto yyoverflow;
-        }
-        *++yyssp = yystate = yytable[yyn];
-        *++yyvsp = yylval;
-        yychar = (-1);
-        if (yyerrflag > 0)  --yyerrflag;
-        goto yyloop;
-    }
-    if ((yyn = yyrindex[yystate]) && (yyn += yychar) >= 0 &&
-            yyn <= YYTABLESIZE && yycheck[yyn] == yychar)
-    {
-        yyn = yytable[yyn];
-        goto yyreduce;
-    }
-    if (yyerrflag) goto yyinrecovery;
-#ifdef lint
-    goto yynewerror;
-#endif
-yynewerror:
-    yyerror("syntax error");
-#ifdef lint
-    goto yyerrlab;
-#endif
-yyerrlab:
-    ++yynerrs;
-yyinrecovery:
-    if (yyerrflag < 3)
-    {
-        yyerrflag = 3;
-        for (;;)
-        {
-            if ((yyn = yysindex[*yyssp]) && (yyn += YYERRCODE) >= 0 &&
-                    yyn <= YYTABLESIZE && yycheck[yyn] == YYERRCODE)
-            {
+		if ( ( yychar < 0 ) && ( ( yychar = YYLEX() ) < 0 ) )
+			yychar = 0;		/* reached EOF */
 #if YYDEBUG
-                if (yydebug)
-                    if (5 < yydebug)
-                        printf("yydebug: state %d, error recovery shifting\
- to state %d\n", *yyssp, yytable[yyn]);
-                    else
-                        YYDEBUG_SHIFT_ERROR_LEXEME(*yyssp, yytable[yyn], yyssp-yyss);
-#endif
-                if (yyssp >= yyss + yystacksize - 1)
-                {
-                    goto yyoverflow;
-                }
-                *++yyssp = yystate = yytable[yyn];
-                *++yyvsp = yylval;
-                goto yyloop;
-            }
-            else
-            {
+		if ( yydebug && yytmp )
+		{
+			register int yy_i;
+
+			printf( "Received token " );
+			if ( yychar == 0 )
+				printf( "end-of-file\n" );
+			else if ( yychar < 0 )
+				printf( "-none-\n" );
+			else
+			{
+				for ( yy_i = 0; yytoks[yy_i].t_val >= 0;
+					yy_i++ )
+				{
+					if ( yytoks[yy_i].t_val == yychar )
+						break;
+				}
+				printf( "%s\n", yytoks[yy_i].t_name );
+			}
+		}
+#endif /* YYDEBUG */
+		if ( ( ( yy_n += yychar ) < 0 ) || ( yy_n >= YYLAST ) )
+			goto yydefault;
+		if ( yychk[ yy_n = yyact[ yy_n ] ] == yychar )	/*valid shift*/
+		{
+			yychar = -1;
+			yyval = yylval;
+			yy_state = yy_n;
+			if ( yyerrflag > 0 )
+				yyerrflag--;
+			goto yy_stack;
+		}
+
+	yydefault:
+		if ( ( yy_n = yydef[ yy_state ] ) == -2 )
+		{
 #if YYDEBUG
-                if (yydebug)
-                    if (5 < yydebug)
-                        printf("yydebug: error recovery discarding state %d\
-",
-                            *yyssp);
-                    else
-                        YYDEBUG_DISCARD_STATE(*yyssp, yyssp-yyss-1);
+			yytmp = yychar < 0;
 #endif
-                if (yyssp <= yyss) goto yyabort;
-                --yyssp;
-                --yyvsp;
-            }
-        }
-    }
-    else
-    {
-        if (yychar == 0) goto yyabort;
+			if ( ( yychar < 0 ) && ( ( yychar = YYLEX() ) < 0 ) )
+				yychar = 0;		/* reached EOF */
 #if YYDEBUG
-        if (yydebug)
-        {
-            yys = 0;
-            if (yychar <= YYMAXTOKEN) yys = yyname[yychar];
-            if (!yys) yys = "illegal-symbol";
-            if (5 < yydebug)
-                printf("yydebug: state %d, error recovery discards token %d (%s)\n",
-                    yystate, yychar, yys);
-            else 
-                YYDEBUG_DISCARD_TOKEN(yystate, yychar, yys, yyssp-yyss);
-        }
-#endif
-        yychar = (-1);
-        goto yyloop;
-    }
-yyreduce:
-    yym = yylen[yyn];
-    yyval = yyvsp[1-yym];
+			if ( yydebug && yytmp )
+			{
+				register int yy_i;
+
+				printf( "Received token " );
+				if ( yychar == 0 )
+					printf( "end-of-file\n" );
+				else if ( yychar < 0 )
+					printf( "-none-\n" );
+				else
+				{
+					for ( yy_i = 0;
+						yytoks[yy_i].t_val >= 0;
+						yy_i++ )
+					{
+						if ( yytoks[yy_i].t_val
+							== yychar )
+						{
+							break;
+						}
+					}
+					printf( "%s\n", yytoks[yy_i].t_name );
+				}
+			}
+#endif /* YYDEBUG */
+			/*
+			** look through exception table
+			*/
+			{
+				register int *yyxi = yyexca;
+
+				while ( ( *yyxi != -1 ) ||
+					( yyxi[1] != yy_state ) )
+				{
+					yyxi += 2;
+				}
+				while ( ( *(yyxi += 2) >= 0 ) &&
+					( *yyxi != yychar ) )
+					;
+				if ( ( yy_n = yyxi[1] ) < 0 )
+					YYACCEPT;
+			}
+		}
+
+		/*
+		** check for syntax error
+		*/
+		if ( yy_n == 0 )	/* have an error */
+		{
+			/* no worry about speed here! */
+			switch ( yyerrflag )
+			{
+			case 0:		/* new error */
+				yyerror( "syntax error" );
+				goto skip_init;
+			yyerrlab:
+				/*
+				** get globals into registers.
+				** we have a user generated syntax type error
+				*/
+				yy_pv = yypv;
+				yy_ps = yyps;
+				yy_state = yystate;
+			skip_init:
+				yynerrs++;
+				/* FALLTHRU */
+			case 1:
+			case 2:		/* incompletely recovered error */
+					/* try again... */
+				yyerrflag = 3;
+				/*
+				** find state where "error" is a legal
+				** shift action
+				*/
+				while ( yy_ps >= yys )
+				{
+					yy_n = yypact[ *yy_ps ] + YYERRCODE;
+					if ( yy_n >= 0 && yy_n < YYLAST &&
+						yychk[yyact[yy_n]] == YYERRCODE)					{
+						/*
+						** simulate shift of "error"
+						*/
+						yy_state = yyact[ yy_n ];
+						goto yy_stack;
+					}
+					/*
+					** current state has no shift on
+					** "error", pop stack
+					*/
 #if YYDEBUG
-    if (yydebug)
-        if (5 < yydebug)
-            printf("yydebug: state %d, reducing by rule %d (%s)\n",
-                    yystate, yyn, yyrule[yyn]);
-        else
-            YYDEBUG_REDUCE(yystate, yyn, yyrule[yyn], yyssp-yyss-yym, yym);
+#	define _POP_ "Error recovery pops state %d, uncovers state %d\n"
+					if ( yydebug )
+						printf( _POP_, *yy_ps,
+							yy_ps[-1] );
+#	undef _POP_
 #endif
-    switch (yyn)
-    {
+					yy_ps--;
+					yy_pv--;
+				}
+				/*
+				** there is no state on stack with "error" as
+				** a valid shift.  give up.
+				*/
+				YYABORT;
+			case 3:		/* no shift yet; eat a token */
+#if YYDEBUG
+				/*
+				** if debugging, look up token in list of
+				** pairs.  0 and negative shouldn't occur,
+				** but since timing doesn't matter when
+				** debugging, it doesn't hurt to leave the
+				** tests here.
+				*/
+				if ( yydebug )
+				{
+					register int yy_i;
+
+					printf( "Error recovery discards " );
+					if ( yychar == 0 )
+						printf( "token end-of-file\n" );
+					else if ( yychar < 0 )
+						printf( "token -none-\n" );
+					else
+					{
+						for ( yy_i = 0;
+							yytoks[yy_i].t_val >= 0;
+							yy_i++ )
+						{
+							if ( yytoks[yy_i].t_val
+								== yychar )
+							{
+								break;
+							}
+						}
+						printf( "token %s\n",
+							yytoks[yy_i].t_name );
+					}
+				}
+#endif /* YYDEBUG */
+				if ( yychar == 0 )	/* reached EOF. quit */
+					YYABORT;
+				yychar = -1;
+				goto yy_newstate;
+			}
+		}/* end if ( yy_n == 0 ) */
+		/*
+		** reduction by production yy_n
+		** put stack tops, etc. so things right after switch
+		*/
+#if YYDEBUG
+		/*
+		** if debugging, print the string that is the user's
+		** specification of the reduction which is just about
+		** to be done.
+		*/
+		if ( yydebug )
+			printf( "Reduce by (%d) \"%s\"\n",
+				yy_n, yyreds[ yy_n ] );
+#endif
+		yytmp = yy_n;			/* value to switch over */
+		yypvt = yy_pv;			/* $vars top of value stack */
+		/*
+		** Look in goto table for next state
+		** Sorry about using yy_state here as temporary
+		** register variable, but why not, if it works...
+		** If yyr2[ yy_n ] doesn't have the low order bit
+		** set, then there is no action to be done for
+		** this reduction.  So, no saving & unsaving of
+		** registers done.  The only difference between the
+		** code just after the if and the body of the if is
+		** the goto yy_stack in the body.  This way the test
+		** can be made before the choice of what to do is needed.
+		*/
+		{
+			/* length of production doubled with extra bit */
+			register int yy_len = yyr2[ yy_n ];
+
+			if ( !( yy_len & 01 ) )
+			{
+				yy_len >>= 1;
+				yyval = ( yy_pv -= yy_len )[1];	/* $$ = $1 */
+				yy_state = yypgo[ yy_n = yyr1[ yy_n ] ] +
+					*( yy_ps -= yy_len ) + 1;
+				if ( yy_state >= YYLAST ||
+					yychk[ yy_state =
+					yyact[ yy_state ] ] != -yy_n )
+				{
+					yy_state = yyact[ yypgo[ yy_n ] ];
+				}
+				goto yy_stack;
+			}
+			yy_len >>= 1;
+			yyval = ( yy_pv -= yy_len )[1];	/* $$ = $1 */
+			yy_state = yypgo[ yy_n = yyr1[ yy_n ] ] +
+				*( yy_ps -= yy_len ) + 1;
+			if ( yy_state >= YYLAST ||
+				yychk[ yy_state = yyact[ yy_state ] ] != -yy_n )
+			{
+				yy_state = yyact[ yypgo[ yy_n ] ];
+			}
+		}
+					/* save until reenter driver code */
+		yystate = yy_state;
+		yyps = yy_ps;
+		yypv = yy_pv;
+	}
+	/*
+	** code supplied by user is placed in this switch
+	*/
+	switch( yytmp )
+	{
+		
 case 4:
-#line 238 "idl.yy"
+# line 238 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_TypeDeclSeen);
-        }
-break;
+        } break;
 case 5:
-#line 242 "idl.yy"
+# line 242 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_NoState);
-        }
-break;
+        } break;
 case 6:
-#line 246 "idl.yy"
+# line 246 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_ConstDeclSeen);
-        }
-break;
+        } break;
 case 7:
-#line 250 "idl.yy"
+# line 250 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_NoState);
-        }
-break;
+        } break;
 case 8:
-#line 254 "idl.yy"
+# line 254 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_ExceptDeclSeen);
-        }
-break;
+        } break;
 case 9:
-#line 258 "idl.yy"
+# line 258 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_NoState);
-        }
-break;
+        } break;
 case 10:
-#line 262 "idl.yy"
+# line 262 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_InterfaceDeclSeen);
-        }
-break;
+        } break;
 case 11:
-#line 266 "idl.yy"
+# line 266 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_NoState);
-        }
-break;
+        } break;
 case 12:
-#line 270 "idl.yy"
+# line 270 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_ModuleDeclSeen);
-        }
-break;
+        } break;
 case 13:
-#line 274 "idl.yy"
+# line 274 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_NoState);
-        }
-break;
+        } break;
 case 14:
-#line 278 "idl.yy"
+# line 278 "idl.yy"
 {
 	  idl_global->err()->syntax_error(idl_global->parse_state());
-	}
-break;
+	} break;
 case 15:
-#line 282 "idl.yy"
+# line 282 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_NoState);
 	  yyerrok;
-	}
-break;
+	} break;
 case 16:
-#line 289 "idl.yy"
+# line 289 "idl.yy"
 {
 	    idl_global->set_parse_state(IDL_GlobalData::PS_ModuleSeen);
-	  }
-break;
+	  } break;
 case 17:
-#line 293 "idl.yy"
+# line 293 "idl.yy"
 {
 	    UTL_ScopedName 	*n =
-		new UTL_ScopedName(new Identifier(yyvsp[0].strval, 1, 0, I_FALSE), NULL);
+		new UTL_ScopedName(new Identifier(yypvt[-0].strval, 1, 0, I_FALSE), NULL);
 	    AST_Module		*m = NULL;
 	    UTL_Scope		*s = idl_global->scopes()->top_non_null();
 	    UTL_StrList		*p = idl_global->pragmas();
@@ -1209,32 +1448,28 @@ case 17:
 	     * Push it on the stack
 	     */
 	    idl_global->scopes()->push(m);
-	  }
-break;
+	  } break;
 case 18:
-#line 314 "idl.yy"
+# line 314 "idl.yy"
 {
 	    idl_global->set_parse_state(IDL_GlobalData::PS_ModuleSqSeen);
-	  }
-break;
+	  } break;
 case 19:
-#line 318 "idl.yy"
+# line 318 "idl.yy"
 {
 	    idl_global->set_parse_state(IDL_GlobalData::PS_ModuleBodySeen);
-	  }
-break;
+	  } break;
 case 20:
-#line 322 "idl.yy"
+# line 322 "idl.yy"
 {
 	    idl_global->set_parse_state(IDL_GlobalData::PS_ModuleQsSeen);
 	    /*
 	     * Finished with this module - pop it from the scope stack
 	     */
 	    idl_global->scopes()->pop();
-	  }
-break;
+	  } break;
 case 23:
-#line 338 "idl.yy"
+# line 338 "idl.yy"
 {
 	  UTL_Scope     *s = idl_global->scopes()->top_non_null();
 	  AST_Interface *i = NULL;
@@ -1248,10 +1483,10 @@ case 23:
 	  /*
 	   * Make a new interface node and add it to its enclosing scope
 	   */
-	  if (s != NULL && yyvsp[0].ihval != NULL) {
-	    i = idl_global->gen()->create_interface(yyvsp[0].ihval->interface_name(),
-						    yyvsp[0].ihval->inherits(),
-						    yyvsp[0].ihval->n_inherits(),
+	  if (s != NULL && yypvt[-0].ihval != NULL) {
+	    i = idl_global->gen()->create_interface(yypvt[-0].ihval->interface_name(),
+						    yypvt[-0].ihval->inherits(),
+						    yypvt[-0].ihval->n_inherits(),
 						    p);
 	    if (i != NULL &&
 		(d = s->lookup_by_name(i->name(), I_FALSE)) != NULL) {
@@ -1289,8 +1524,8 @@ case 23:
 		   * All OK, do the redefinition
 		   */
 		  else {
-		    fd->set_inherits(yyvsp[0].ihval->inherits());
-		    fd->set_n_inherits(yyvsp[0].ihval->n_inherits());
+		    fd->set_inherits(yypvt[-0].ihval->inherits());
+		    fd->set_n_inherits(yypvt[-0].ihval->n_inherits());
 		    /*
 		     * Update place of definition
 		     */
@@ -1317,45 +1552,39 @@ case 23:
 	   * Push it on the scope stack
 	   */
 	  idl_global->scopes()->push(i);
-        }
-break;
+        } break;
 case 24:
-#line 422 "idl.yy"
+# line 422 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_InterfaceSqSeen);
-	}
-break;
+	} break;
 case 25:
-#line 426 "idl.yy"
+# line 426 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_InterfaceBodySeen);
-	}
-break;
+	} break;
 case 26:
-#line 430 "idl.yy"
+# line 430 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_InterfaceQsSeen);
 	  /*
 	   * Done with this interface - pop it off the scopes stack
 	   */
 	  idl_global->scopes()->pop();
-	}
-break;
+	} break;
 case 27:
-#line 441 "idl.yy"
+# line 441 "idl.yy"
 {
 	   idl_global->set_parse_state(IDL_GlobalData::PS_InterfaceSeen);
-	 }
-break;
+	 } break;
 case 28:
-#line 445 "idl.yy"
+# line 445 "idl.yy"
 {
 	   idl_global->set_parse_state(IDL_GlobalData::PS_InterfaceIDSeen);
-	   yyval.idval = yyvsp[0].idval;
-	 }
-break;
+	   yyval.idval = yypvt[-0].idval;
+	 } break;
 case 29:
-#line 453 "idl.yy"
+# line 453 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_InheritSpecSeen);
 	  /*
@@ -1364,180 +1593,154 @@ case 29:
 	   * list of all interfaces which this interface inherits from,
 	   * recursively
 	   */
-	  yyval.ihval = new FE_InterfaceHeader(new UTL_ScopedName(yyvsp[-1].idval, NULL), yyvsp[0].nlval);
-	}
-break;
+	  yyval.ihval = new FE_InterfaceHeader(new UTL_ScopedName(yypvt[-1].idval, NULL), yypvt[-0].nlval);
+	} break;
 case 30:
-#line 467 "idl.yy"
+# line 467 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_InheritColonSeen);
-        }
-break;
+        } break;
 case 31:
-#line 471 "idl.yy"
+# line 471 "idl.yy"
 {
-	  yyval.nlval = yyvsp[0].nlval;
-	}
-break;
+	  yyval.nlval = yypvt[-0].nlval;
+	} break;
 case 32:
-#line 475 "idl.yy"
+# line 475 "idl.yy"
 {
 	  yyval.nlval = NULL;
-	}
-break;
+	} break;
 case 35:
-#line 487 "idl.yy"
+# line 487 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_TypeDeclSeen);
-        }
-break;
+        } break;
 case 36:
-#line 491 "idl.yy"
+# line 491 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_NoState);
-        }
-break;
+        } break;
 case 37:
-#line 495 "idl.yy"
+# line 495 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_ConstDeclSeen);
-        }
-break;
+        } break;
 case 38:
-#line 499 "idl.yy"
+# line 499 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_NoState);
-        }
-break;
+        } break;
 case 39:
-#line 503 "idl.yy"
+# line 503 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_ExceptDeclSeen);
-        }
-break;
+        } break;
 case 40:
-#line 507 "idl.yy"
+# line 507 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_NoState);
-        }
-break;
+        } break;
 case 41:
-#line 511 "idl.yy"
+# line 511 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_AttrDeclSeen);
-        }
-break;
+        } break;
 case 42:
-#line 515 "idl.yy"
+# line 515 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_NoState);
-        }
-break;
+        } break;
 case 43:
-#line 519 "idl.yy"
+# line 519 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_OpDeclSeen);
-        }
-break;
+        } break;
 case 44:
-#line 523 "idl.yy"
+# line 523 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_NoState);
-        }
-break;
+        } break;
 case 45:
-#line 527 "idl.yy"
+# line 527 "idl.yy"
 {
 	  idl_global->err()->syntax_error(idl_global->parse_state());
-	}
-break;
+	} break;
 case 46:
-#line 531 "idl.yy"
+# line 531 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_NoState);
 	  yyerrok;
-	}
-break;
+	} break;
 case 47:
-#line 539 "idl.yy"
+# line 539 "idl.yy"
 {
-	  yyval.nlval = new UTL_NameList(yyvsp[-1].idlist, yyvsp[0].nlval);
-	}
-break;
+	  yyval.nlval = new UTL_NameList(yypvt[-1].idlist, yypvt[-0].nlval);
+	} break;
 case 48:
-#line 547 "idl.yy"
+# line 547 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_SNListCommaSeen);
-        }
-break;
+        } break;
 case 49:
-#line 551 "idl.yy"
+# line 551 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_ScopedNameSeen);
 
-	  if (yyvsp[-3].nlval == NULL)
-	    yyval.nlval = new UTL_NameList(yyvsp[0].idlist, NULL);
+	  if (yypvt[-3].nlval == NULL)
+	    yyval.nlval = new UTL_NameList(yypvt[-0].idlist, NULL);
 	  else {
-	    yyvsp[-3].nlval->nconc(new UTL_NameList(yyvsp[0].idlist, NULL));
-	    yyval.nlval = yyvsp[-3].nlval;
+	    yypvt[-3].nlval->nconc(new UTL_NameList(yypvt[-0].idlist, NULL));
+	    yyval.nlval = yypvt[-3].nlval;
 	  }
-	}
-break;
+	} break;
 case 50:
-#line 562 "idl.yy"
+# line 562 "idl.yy"
 {
 	  yyval.nlval = NULL;
-	}
-break;
+	} break;
 case 51:
-#line 569 "idl.yy"
+# line 569 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_SN_IDSeen);
 
-	  yyval.idlist = new UTL_IdList(yyvsp[0].idval, NULL);
-	}
-break;
+	  yyval.idlist = new UTL_IdList(yypvt[-0].idval, NULL);
+	} break;
 case 52:
-#line 575 "idl.yy"
+# line 575 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_ScopeDelimSeen);
-        }
-break;
+        } break;
 case 53:
-#line 579 "idl.yy"
+# line 579 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_SN_IDSeen);
 
-	  yyval.idlist = new UTL_IdList(new Identifier(yyvsp[-2].strval, 1, 0, I_FALSE),
-			      new UTL_IdList(yyvsp[0].idval, NULL));
-	}
-break;
+	  yyval.idlist = new UTL_IdList(new Identifier(yypvt[-2].strval, 1, 0, I_FALSE),
+			      new UTL_IdList(yypvt[-0].idval, NULL));
+	} break;
 case 54:
-#line 587 "idl.yy"
+# line 587 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_ScopeDelimSeen);
-        }
-break;
+        } break;
 case 55:
-#line 591 "idl.yy"
+# line 591 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_SN_IDSeen);
 
-	  yyvsp[-3].idlist->nconc(new UTL_IdList(yyvsp[0].idval, NULL));
-	  yyval.idlist = yyvsp[-3].idlist;
-	}
-break;
+	  yypvt[-3].idlist->nconc(new UTL_IdList(yypvt[-0].idval, NULL));
+	  yyval.idlist = yypvt[-3].idlist;
+	} break;
 case 56:
-#line 600 "idl.yy"
+# line 600 "idl.yy"
 {
-            yyval.idval = new Identifier(yyvsp[0].strval, 1, 0, I_FALSE);
-        }
-break;
+            yyval.idval = new Identifier(yypvt[-0].strval, 1, 0, I_FALSE);
+        } break;
 case 57:
-#line 607 "idl.yy"
+# line 607 "idl.yy"
 {
 	  UTL_Scope		*s = idl_global->scopes()->top_non_null();
-	  UTL_ScopedName	*n = new UTL_ScopedName(yyvsp[0].idval, NULL);
+	  UTL_ScopedName	*n = new UTL_ScopedName(yypvt[-0].idval, NULL);
 	  AST_InterfaceFwd	*f = NULL;
 	  UTL_StrList		*p = idl_global->pragmas();
 
@@ -1550,36 +1753,31 @@ case 57:
 	    f = idl_global->gen()->create_interface_fwd(n, p);
 	    (void) s->fe_add_interface_fwd(f);
 	  }
-	}
-break;
+	} break;
 case 58:
-#line 627 "idl.yy"
+# line 627 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_ConstSeen);
-        }
-break;
+        } break;
 case 59:
-#line 631 "idl.yy"
+# line 631 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_ConstTypeSeen);
-        }
-break;
+        } break;
 case 60:
-#line 635 "idl.yy"
+# line 635 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_ConstIDSeen);
-        }
-break;
+        } break;
 case 61:
-#line 639 "idl.yy"
+# line 639 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_ConstAssignSeen);
-        }
-break;
+        } break;
 case 62:
-#line 643 "idl.yy"
+# line 643 "idl.yy"
 {
-	  UTL_ScopedName	*n = new UTL_ScopedName(yyvsp[-4].idval, NULL);
+	  UTL_ScopedName	*n = new UTL_ScopedName(yypvt[-4].idval, NULL);
 	  UTL_Scope		*s = idl_global->scopes()->top_non_null();
 	  AST_Constant		*c = NULL;
 	  UTL_StrList		*p = idl_global->pragmas();
@@ -1592,31 +1790,28 @@ case 62:
 	   * Create a node representing a constant declaration. Store
 	   * it in the enclosing scope
 	   */
-	  if (yyvsp[0].exval != NULL && s != NULL) {
-	    if (yyvsp[0].exval->coerce(yyvsp[-6].etval) == NULL)
-	      idl_global->err()->coercion_error(yyvsp[0].exval, yyvsp[-6].etval);
+	  if (yypvt[-0].exval != NULL && s != NULL) {
+	    if (yypvt[-0].exval->coerce(yypvt[-6].etval) == NULL)
+	      idl_global->err()->coercion_error(yypvt[-0].exval, yypvt[-6].etval);
 	    else {
 	      c =
-		idl_global->gen()->create_constant(yyvsp[-6].etval, yyvsp[0].exval, n, p);
+		idl_global->gen()->create_constant(yypvt[-6].etval, yypvt[-0].exval, n, p);
 	      (void) s->fe_add_constant(c);
 	    }
 	  }
-	}
-break;
+	} break;
 case 68:
-#line 676 "idl.yy"
+# line 676 "idl.yy"
 {
 	  yyval.etval = AST_Expression::EV_string;
-	}
-break;
+	} break;
 case 69:
-#line 680 "idl.yy"
+# line 680 "idl.yy"
 {
 	  yyval.etval = AST_Expression::EV_wstring;
-        }
-break;
+        } break;
 case 70:
-#line 684 "idl.yy"
+# line 684 "idl.yy"
 {
 	  UTL_Scope		*s = idl_global->scopes()->top_non_null();
 	  AST_Decl		*d = NULL;
@@ -1627,7 +1822,7 @@ case 70:
 	   * If the constant's type is a scoped name, it must resolve
 	   * to a scalar constant type
 	   */
-	  if (s != NULL && (d = s->lookup_by_name(yyvsp[0].idlist, I_TRUE)) != NULL) {
+	  if (s != NULL && (d = s->lookup_by_name(yypvt[-0].idlist, I_TRUE)) != NULL) {
 	    /*
 	     * Look through typedefs
 	     */
@@ -1650,184 +1845,155 @@ case 70:
 	      yyval.etval = AST_Expression::EV_any;
 	  } else
 	    yyval.etval = AST_Expression::EV_any;
-	}
-break;
+	} break;
 case 74:
-#line 726 "idl.yy"
+# line 726 "idl.yy"
 {
-	  yyval.exval = idl_global->gen()->create_expr(AST_Expression::EC_or, yyvsp[-2].exval, yyvsp[0].exval);
-	}
-break;
+	  yyval.exval = idl_global->gen()->create_expr(AST_Expression::EC_or, yypvt[-2].exval, yypvt[-0].exval);
+	} break;
 case 76:
-#line 734 "idl.yy"
+# line 734 "idl.yy"
 {
-	  yyval.exval = idl_global->gen()->create_expr(AST_Expression::EC_xor, yyvsp[-2].exval, yyvsp[0].exval);
-	}
-break;
+	  yyval.exval = idl_global->gen()->create_expr(AST_Expression::EC_xor, yypvt[-2].exval, yypvt[-0].exval);
+	} break;
 case 78:
-#line 742 "idl.yy"
+# line 742 "idl.yy"
 {
-	  yyval.exval = idl_global->gen()->create_expr(AST_Expression::EC_and, yyvsp[-2].exval, yyvsp[0].exval);
-	}
-break;
+	  yyval.exval = idl_global->gen()->create_expr(AST_Expression::EC_and, yypvt[-2].exval, yypvt[-0].exval);
+	} break;
 case 80:
-#line 750 "idl.yy"
+# line 750 "idl.yy"
 {
-	  yyval.exval = idl_global->gen()->create_expr(AST_Expression::EC_right,yyvsp[-2].exval,yyvsp[0].exval);
-	}
-break;
+	  yyval.exval = idl_global->gen()->create_expr(AST_Expression::EC_right,yypvt[-2].exval,yypvt[-0].exval);
+	} break;
 case 81:
-#line 754 "idl.yy"
+# line 754 "idl.yy"
 {
-	  yyval.exval = idl_global->gen()->create_expr(AST_Expression::EC_left,yyvsp[-2].exval,yyvsp[0].exval);
-	}
-break;
+	  yyval.exval = idl_global->gen()->create_expr(AST_Expression::EC_left,yypvt[-2].exval,yypvt[-0].exval);
+	} break;
 case 83:
-#line 762 "idl.yy"
+# line 762 "idl.yy"
 {
-	  yyval.exval = idl_global->gen()->create_expr(AST_Expression::EC_add, yyvsp[-2].exval, yyvsp[0].exval);
-	}
-break;
+	  yyval.exval = idl_global->gen()->create_expr(AST_Expression::EC_add, yypvt[-2].exval, yypvt[-0].exval);
+	} break;
 case 84:
-#line 766 "idl.yy"
+# line 766 "idl.yy"
 {
-	  yyval.exval = idl_global->gen()->create_expr(AST_Expression::EC_minus,yyvsp[-2].exval,yyvsp[0].exval);
-	}
-break;
+	  yyval.exval = idl_global->gen()->create_expr(AST_Expression::EC_minus,yypvt[-2].exval,yypvt[-0].exval);
+	} break;
 case 86:
-#line 774 "idl.yy"
+# line 774 "idl.yy"
 {
-	  yyval.exval = idl_global->gen()->create_expr(AST_Expression::EC_mul, yyvsp[-2].exval, yyvsp[0].exval);
-	}
-break;
+	  yyval.exval = idl_global->gen()->create_expr(AST_Expression::EC_mul, yypvt[-2].exval, yypvt[-0].exval);
+	} break;
 case 87:
-#line 778 "idl.yy"
+# line 778 "idl.yy"
 {
-	  yyval.exval = idl_global->gen()->create_expr(AST_Expression::EC_div, yyvsp[-2].exval, yyvsp[0].exval);
-	}
-break;
+	  yyval.exval = idl_global->gen()->create_expr(AST_Expression::EC_div, yypvt[-2].exval, yypvt[-0].exval);
+	} break;
 case 88:
-#line 782 "idl.yy"
+# line 782 "idl.yy"
 {
-	  yyval.exval = idl_global->gen()->create_expr(AST_Expression::EC_mod, yyvsp[-2].exval, yyvsp[0].exval);
-	}
-break;
+	  yyval.exval = idl_global->gen()->create_expr(AST_Expression::EC_mod, yypvt[-2].exval, yypvt[-0].exval);
+	} break;
 case 90:
-#line 790 "idl.yy"
+# line 790 "idl.yy"
 {
 	  yyval.exval = idl_global->gen()->create_expr(AST_Expression::EC_u_plus,
-					      yyvsp[0].exval,
+					      yypvt[-0].exval,
 					      NULL);
-	}
-break;
+	} break;
 case 91:
-#line 796 "idl.yy"
+# line 796 "idl.yy"
 {
 	  yyval.exval = idl_global->gen()->create_expr(AST_Expression::EC_u_minus,
-					      yyvsp[0].exval,
+					      yypvt[-0].exval,
 					      NULL);
-	}
-break;
+	} break;
 case 92:
-#line 802 "idl.yy"
+# line 802 "idl.yy"
 {
 	  yyval.exval = idl_global->gen()->create_expr(AST_Expression::EC_bit_neg,
-					      yyvsp[0].exval,
+					      yypvt[-0].exval,
 					      NULL);
-	}
-break;
+	} break;
 case 93:
-#line 811 "idl.yy"
+# line 811 "idl.yy"
 {
 	  /*
 	   * An expression which is a scoped name is not resolved now,
 	   * but only when it is evaluated (such as when it is assigned
 	   * as a constant value)
 	   */
-	  yyval.exval = idl_global->gen()->create_expr(yyvsp[0].idlist);
-	}
-break;
+	  yyval.exval = idl_global->gen()->create_expr(yypvt[-0].idlist);
+	} break;
 case 95:
-#line 821 "idl.yy"
+# line 821 "idl.yy"
 {
-	  yyval.exval = yyvsp[-1].exval;
-	}
-break;
+	  yyval.exval = yypvt[-1].exval;
+	} break;
 case 96:
-#line 828 "idl.yy"
+# line 828 "idl.yy"
 {
-	  yyval.exval = idl_global->gen()->create_expr(yyvsp[0].ival);
-	}
-break;
+	  yyval.exval = idl_global->gen()->create_expr(yypvt[-0].ival);
+	} break;
 case 97:
-#line 832 "idl.yy"
+# line 832 "idl.yy"
 {
-	  yyval.exval = idl_global->gen()->create_expr(yyvsp[0].sval);
-	}
-break;
+	  yyval.exval = idl_global->gen()->create_expr(yypvt[-0].sval);
+	} break;
 case 98:
-#line 836 "idl.yy"
+# line 836 "idl.yy"
 {
-	  yyval.exval = idl_global->gen()->create_expr(yyvsp[0].cval);
-	}
-break;
+	  yyval.exval = idl_global->gen()->create_expr(yypvt[-0].cval);
+	} break;
 case 99:
-#line 840 "idl.yy"
+# line 840 "idl.yy"
 {
-	  yyval.exval = idl_global->gen()->create_expr(yyvsp[0].dval);
-	}
-break;
+	  yyval.exval = idl_global->gen()->create_expr(yypvt[-0].dval);
+	} break;
 case 100:
-#line 844 "idl.yy"
+# line 844 "idl.yy"
 {
 	  yyval.exval = idl_global->gen()->create_expr((idl_bool) I_TRUE,
 					    AST_Expression::EV_bool);
-	}
-break;
+	} break;
 case 101:
-#line 849 "idl.yy"
+# line 849 "idl.yy"
 {
 	  yyval.exval = idl_global->gen()->create_expr((idl_bool) I_FALSE,
 					    AST_Expression::EV_bool);
-	}
-break;
+	} break;
 case 102:
-#line 857 "idl.yy"
+# line 857 "idl.yy"
 {
-	    yyvsp[0].exval->evaluate(AST_Expression::EK_const);
-	    yyval.exval = idl_global->gen()->create_expr(yyvsp[0].exval, AST_Expression::EV_ulong);
-	}
-break;
+	    yypvt[-0].exval->evaluate(AST_Expression::EK_const);
+	    yyval.exval = idl_global->gen()->create_expr(yypvt[-0].exval, AST_Expression::EV_ulong);
+	} break;
 case 103:
-#line 865 "idl.yy"
+# line 865 "idl.yy"
 {
 	    idl_global->set_parse_state(IDL_GlobalData::PS_TypedefSeen);
-	  }
-break;
+	  } break;
 case 104:
-#line 868 "idl.yy"
-{yyval.ival = 0;}
-break;
+# line 868 "idl.yy"
+{yyval.ival = 0;} break;
 case 105:
-#line 869 "idl.yy"
-{ yyval.ival = 0;}
-break;
+# line 869 "idl.yy"
+{ yyval.ival = 0;} break;
 case 106:
-#line 870 "idl.yy"
-{ yyval.ival = 0;}
-break;
+# line 870 "idl.yy"
+{ yyval.ival = 0;} break;
 case 107:
-#line 871 "idl.yy"
-{ yyval.ival = 0;}
-break;
+# line 871 "idl.yy"
+{ yyval.ival = 0;} break;
 case 108:
-#line 876 "idl.yy"
+# line 876 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_TypeSpecSeen);
-        }
-break;
+        } break;
 case 109:
-#line 880 "idl.yy"
+# line 880 "idl.yy"
 {
 	  UTL_Scope		*s = idl_global->scopes()->top_non_null();
 	  UTL_DecllistActiveIterator *l;
@@ -1836,220 +2002,192 @@ case 109:
 	  AST_Decl		*v = NULL;
 	  UTL_StrList		*p = idl_global->pragmas();
 
-          ACE_UNUSED_ARG (v);
+      ACE_UNUSED_ARG (v);
 
 	  idl_global->set_parse_state(IDL_GlobalData::PS_DeclaratorsSeen);
 	  /*
 	   * Create a list of type renamings. Add them to the
 	   * enclosing scope
 	   */
-	  if (s != NULL && yyvsp[-2].dcval != NULL && yyvsp[0].dlval != NULL) {
-	    l = new UTL_DecllistActiveIterator(yyvsp[0].dlval);
+	  if (s != NULL && yypvt[-2].dcval != NULL && yypvt[-0].dlval != NULL) {
+	    l = new UTL_DecllistActiveIterator(yypvt[-0].dlval);
 	    for (;!(l->is_done()); l->next()) {
 	      d = l->item();
 	      if (d == NULL)
-		continue;
-              AST_Type * tp = d->compose(yyvsp[-2].dcval);
-              if (tp == NULL)
-		continue;
+		      continue;
+          AST_Type * tp = d->compose(yypvt[-2].dcval);
+          if (tp == NULL)
+		     continue;
 	      t = idl_global->gen()->create_typedef(tp, d->name(), p);
 	      (void) s->fe_add_typedef(t);
 	    }
 	    delete l;
 	  }
-	}
-break;
+	} break;
 case 112:
-#line 919 "idl.yy"
+# line 919 "idl.yy"
 {
-	  yyval.dcval = idl_global->scopes()->bottom()->lookup_primitive_type(yyvsp[0].etval);
-	}
-break;
+	  yyval.dcval = idl_global->scopes()->bottom()->lookup_primitive_type(yypvt[-0].etval);
+	} break;
 case 114:
-#line 924 "idl.yy"
+# line 924 "idl.yy"
 {
 	  UTL_Scope	*s = idl_global->scopes()->top_non_null();
 	  AST_Decl	*d = NULL;
 
 	  if (s != NULL)
-	    d = s->lookup_by_name(yyvsp[0].idlist, I_TRUE);
+	    d = s->lookup_by_name(yypvt[-0].idlist, I_TRUE);
 	  if (d == NULL)
-	    idl_global->err()->lookup_error(yyvsp[0].idlist);
+	    idl_global->err()->lookup_error(yypvt[-0].idlist);
 	  yyval.dcval = d;
-	}
-break;
+	} break;
 case 127:
-#line 959 "idl.yy"
+# line 959 "idl.yy"
 {
-	  yyval.dlval = new UTL_DeclList(yyvsp[-1].deval, yyvsp[0].dlval);
-	}
-break;
+	  yyval.dlval = new UTL_DeclList(yypvt[-1].deval, yypvt[-0].dlval);
+	} break;
 case 128:
-#line 967 "idl.yy"
+# line 967 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_DeclsCommaSeen);
-        }
-break;
+        } break;
 case 129:
-#line 971 "idl.yy"
+# line 971 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_DeclsDeclSeen);
 
-	  if (yyvsp[-3].dlval == NULL)
-	    yyval.dlval = new UTL_DeclList(yyvsp[0].deval, NULL);
+	  if (yypvt[-3].dlval == NULL)
+	    yyval.dlval = new UTL_DeclList(yypvt[-0].deval, NULL);
 	  else {
-	    yyvsp[-3].dlval->nconc(new UTL_DeclList(yyvsp[0].deval, NULL));
-	    yyval.dlval = yyvsp[-3].dlval;
+	    yypvt[-3].dlval->nconc(new UTL_DeclList(yypvt[-0].deval, NULL));
+	    yyval.dlval = yypvt[-3].dlval;
 	  }
-	}
-break;
+	} break;
 case 130:
-#line 982 "idl.yy"
+# line 982 "idl.yy"
 {
 	  yyval.dlval = NULL;
-	}
-break;
+	} break;
 case 133:
-#line 994 "idl.yy"
+# line 994 "idl.yy"
 {
-	  yyval.dlval = new UTL_DeclList(yyvsp[-1].deval, yyvsp[0].dlval);
-	}
-break;
+	  yyval.dlval = new UTL_DeclList(yypvt[-1].deval, yypvt[-0].dlval);
+	} break;
 case 134:
-#line 1002 "idl.yy"
+# line 1002 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_DeclsCommaSeen);
-        }
-break;
+        } break;
 case 135:
-#line 1006 "idl.yy"
+# line 1006 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_DeclsDeclSeen);
 
-	  if (yyvsp[-3].dlval == NULL)
-	    yyval.dlval = new UTL_DeclList(yyvsp[0].deval, NULL);
+	  if (yypvt[-3].dlval == NULL)
+	    yyval.dlval = new UTL_DeclList(yypvt[-0].deval, NULL);
 	  else {
-	    yyvsp[-3].dlval->nconc(new UTL_DeclList(yyvsp[0].deval, NULL));
-	    yyval.dlval = yyvsp[-3].dlval;
+	    yypvt[-3].dlval->nconc(new UTL_DeclList(yypvt[-0].deval, NULL));
+	    yyval.dlval = yypvt[-3].dlval;
 	  }
-	}
-break;
+	} break;
 case 136:
-#line 1017 "idl.yy"
+# line 1017 "idl.yy"
 {
 	  yyval.dlval = NULL;
-	}
-break;
+	} break;
 case 137:
-#line 1024 "idl.yy"
+# line 1024 "idl.yy"
 {
-	  yyval.deval = new FE_Declarator(new UTL_ScopedName(yyvsp[0].idval, NULL),
+	  yyval.deval = new FE_Declarator(new UTL_ScopedName(yypvt[-0].idval, NULL),
 				 FE_Declarator::FD_simple, NULL);
-	}
-break;
+	} break;
 case 138:
-#line 1032 "idl.yy"
+# line 1032 "idl.yy"
 {
-	  yyval.deval = new FE_Declarator(new UTL_ScopedName(yyvsp[0].dcval->local_name(), NULL),
+	  yyval.deval = new FE_Declarator(new UTL_ScopedName(yypvt[-0].dcval->local_name(), NULL),
 				 FE_Declarator::FD_complex,
-				 yyvsp[0].dcval);
-	}
-break;
+				 yypvt[-0].dcval);
+	} break;
 case 141:
-#line 1046 "idl.yy"
+# line 1046 "idl.yy"
 {
 	  yyval.etval = AST_Expression::EV_long;
-	}
-break;
+	} break;
 case 142:
-#line 1050 "idl.yy"
+# line 1050 "idl.yy"
 {
 	  yyval.etval = AST_Expression::EV_longlong;
-        }
-break;
+        } break;
 case 143:
-#line 1054 "idl.yy"
+# line 1054 "idl.yy"
 {
 	  yyval.etval = AST_Expression::EV_short;
-	}
-break;
+	} break;
 case 144:
-#line 1061 "idl.yy"
+# line 1061 "idl.yy"
 {
 	  yyval.etval = AST_Expression::EV_ulong;
-	}
-break;
+	} break;
 case 145:
-#line 1065 "idl.yy"
+# line 1065 "idl.yy"
 {
 	  yyval.etval = AST_Expression::EV_ulonglong;
-        }
-break;
+        } break;
 case 146:
-#line 1069 "idl.yy"
+# line 1069 "idl.yy"
 {
 	  yyval.etval = AST_Expression::EV_ushort;
-	}
-break;
+	} break;
 case 147:
-#line 1076 "idl.yy"
+# line 1076 "idl.yy"
 {
 	  yyval.etval = AST_Expression::EV_double;
-	}
-break;
+	} break;
 case 148:
-#line 1080 "idl.yy"
+# line 1080 "idl.yy"
 {
 	  yyval.etval = AST_Expression::EV_float;
-	}
-break;
+	} break;
 case 149:
-#line 1084 "idl.yy"
+# line 1084 "idl.yy"
 {
 	  yyval.etval = AST_Expression::EV_longdouble;
-        }
-break;
+        } break;
 case 150:
-#line 1091 "idl.yy"
+# line 1091 "idl.yy"
 {
 	  yyval.etval = AST_Expression::EV_char;
-	}
-break;
+	} break;
 case 151:
-#line 1095 "idl.yy"
+# line 1095 "idl.yy"
 {
 	  yyval.etval = AST_Expression::EV_wchar;
-        }
-break;
+        } break;
 case 152:
-#line 1102 "idl.yy"
+# line 1102 "idl.yy"
 {
           yyval.etval = AST_Expression::EV_octet;
-	}
-break;
+	} break;
 case 153:
-#line 1109 "idl.yy"
+# line 1109 "idl.yy"
 {
 	  yyval.etval = AST_Expression::EV_bool;
-        }
-break;
+        } break;
 case 154:
-#line 1116 "idl.yy"
+# line 1116 "idl.yy"
 {
 	  yyval.etval = AST_Expression::EV_any;
-	}
-break;
+	} break;
 case 155:
-#line 1123 "idl.yy"
+# line 1123 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_StructSeen);
-        }
-break;
+        } break;
 case 156:
-#line 1127 "idl.yy"
+# line 1127 "idl.yy"
 {
 	  UTL_Scope		*s = idl_global->scopes()->top_non_null();
-	  UTL_ScopedName	*n = new UTL_ScopedName(yyvsp[0].idval, NULL);
+	  UTL_ScopedName	*n = new UTL_ScopedName(yypvt[-0].idval, NULL);
 	  AST_Structure		*d = NULL;
 	  UTL_StrList		*p = idl_global->pragmas();
 	  AST_Decl		*v = NULL;
@@ -2069,22 +2207,19 @@ case 156:
 	   * Push the scope of the struct on the scopes stack
 	   */
 	  idl_global->scopes()->push(d);
-	}
-break;
+	} break;
 case 157:
-#line 1151 "idl.yy"
+# line 1151 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_StructSqSeen);
-        }
-break;
+        } break;
 case 158:
-#line 1155 "idl.yy"
+# line 1155 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_StructBodySeen);
-        }
-break;
+        } break;
 case 159:
-#line 1159 "idl.yy"
+# line 1159 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_StructQsSeen);
 	  /*
@@ -2098,22 +2233,19 @@ case 159:
 				   idl_global->scopes()->top_non_null());
 	    idl_global->scopes()->pop();
 	  }
-	}
-break;
+	} break;
 case 163:
-#line 1184 "idl.yy"
+# line 1184 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_MemberTypeSeen);
-        }
-break;
+        } break;
 case 164:
-#line 1188 "idl.yy"
+# line 1188 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_MemberDeclsSeen);
-        }
-break;
+        } break;
 case 165:
-#line 1192 "idl.yy"
+# line 1192 "idl.yy"
 {
 	  UTL_Scope		*s = idl_global->scopes()->top_non_null();
 	  UTL_DecllistActiveIterator *l = NULL;
@@ -2125,19 +2257,19 @@ case 165:
 	  /*
 	   * Check for illegal recursive use of type
 	   */
-	  if (yyvsp[-4].dcval != NULL && AST_illegal_recursive_type(yyvsp[-4].dcval))
-	    idl_global->err()->error1(UTL_Error::EIDL_RECURSIVE_TYPE, yyvsp[-4].dcval);
+	  if (yypvt[-4].dcval != NULL && AST_illegal_recursive_type(yypvt[-4].dcval))
+	    idl_global->err()->error1(UTL_Error::EIDL_RECURSIVE_TYPE, yypvt[-4].dcval);
 	  /*
 	   * Create a node representing a struct or exception member
 	   * Add it to the enclosing scope
 	   */
-	  else if (s != NULL && yyvsp[-4].dcval != NULL && yyvsp[-2].dlval != NULL) {
-	    l = new UTL_DecllistActiveIterator(yyvsp[-2].dlval);
+	  else if (s != NULL && yypvt[-4].dcval != NULL && yypvt[-2].dlval != NULL) {
+	    l = new UTL_DecllistActiveIterator(yypvt[-2].dlval);
 	    for (;!(l->is_done()); l->next()) {
 	      d = l->item();
 	      if (d == NULL)
 		continue;
- 	      AST_Type *tp = d->compose(yyvsp[-4].dcval);
+ 	      AST_Type *tp = d->compose(yypvt[-4].dcval);
 	      if (tp == NULL)
 		continue;
 	      f = idl_global->gen()->create_field(tp, d->name(), p);
@@ -2145,56 +2277,48 @@ case 165:
 	    }
 	    delete l;
 	  }
-	}
-break;
+	} break;
 case 166:
-#line 1225 "idl.yy"
+# line 1225 "idl.yy"
 {
 	  idl_global->err()->syntax_error(idl_global->parse_state());
-	}
-break;
+	} break;
 case 167:
-#line 1229 "idl.yy"
+# line 1229 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_NoState);
 	  yyerrok;
-	}
-break;
+	} break;
 case 168:
-#line 1237 "idl.yy"
+# line 1237 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_UnionSeen);
-        }
-break;
+        } break;
 case 169:
-#line 1241 "idl.yy"
+# line 1241 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_UnionIDSeen);
-        }
-break;
+        } break;
 case 170:
-#line 1245 "idl.yy"
+# line 1245 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_SwitchSeen);
-        }
-break;
+        } break;
 case 171:
-#line 1249 "idl.yy"
+# line 1249 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_SwitchOpenParSeen);
-        }
-break;
+        } break;
 case 172:
-#line 1253 "idl.yy"
+# line 1253 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_SwitchTypeSeen);
-        }
-break;
+        } break;
 case 173:
-#line 1257 "idl.yy"
+# line 1257 "idl.yy"
 {
 	  UTL_Scope		*s = idl_global->scopes()->top_non_null();
-	  UTL_ScopedName	*n = new UTL_ScopedName(yyvsp[-8].idval, NULL);
+	  UTL_ScopedName	*n = new UTL_ScopedName(yypvt[-8].idval, NULL);
 	  AST_Union		*u = NULL;
 	  AST_Decl		*v = NULL;
 	  UTL_StrList		*p = idl_global->pragmas();
@@ -2206,10 +2330,10 @@ case 173:
 	   * Create a node representing a union. Add it to its enclosing
 	   * scope
 	   */
-	  if (yyvsp[-2].dcval != NULL && s != NULL) {
- 	    AST_ConcreteType    *tp = AST_ConcreteType::narrow_from_decl(yyvsp[-2].dcval);
+	  if (yypvt[-2].dcval != NULL && s != NULL) {
+ 	    AST_ConcreteType    *tp = AST_ConcreteType::narrow_from_decl(yypvt[-2].dcval);
             if (tp == NULL) {
-              idl_global->err()->not_a_type(yyvsp[-2].dcval);
+              idl_global->err()->not_a_type(yypvt[-2].dcval);
             } else {
 	      u = idl_global->gen()->create_union(tp, n, p);
 	      (void) s->fe_add_union(u);
@@ -2219,22 +2343,19 @@ case 173:
 	   * Push the scope of the union on the scopes stack
 	   */
 	  idl_global->scopes()->push(u);
-	}
-break;
+	} break;
 case 174:
-#line 1286 "idl.yy"
+# line 1286 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_UnionSqSeen);
-        }
-break;
+        } break;
 case 175:
-#line 1290 "idl.yy"
+# line 1290 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_UnionBodySeen);
-        }
-break;
+        } break;
 case 176:
-#line 1294 "idl.yy"
+# line 1294 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_UnionQsSeen);
 	  /*
@@ -2248,34 +2369,29 @@ case 176:
 				idl_global->scopes()->top_non_null());
 	    idl_global->scopes()->pop();
 	  }
-	}
-break;
+	} break;
 case 177:
-#line 1312 "idl.yy"
+# line 1312 "idl.yy"
 {
-	  yyval.dcval = idl_global->scopes()->bottom()->lookup_primitive_type(yyvsp[0].etval);
-	}
-break;
+	  yyval.dcval = idl_global->scopes()->bottom()->lookup_primitive_type(yypvt[-0].etval);
+	} break;
 case 178:
-#line 1316 "idl.yy"
+# line 1316 "idl.yy"
 {
-	  yyval.dcval = idl_global->scopes()->bottom()->lookup_primitive_type(yyvsp[0].etval);
-	}
-break;
+	  yyval.dcval = idl_global->scopes()->bottom()->lookup_primitive_type(yypvt[-0].etval);
+	} break;
 case 179:
-#line 1320 "idl.yy"
+# line 1320 "idl.yy"
 {
-	  yyval.dcval = idl_global->scopes()->bottom()->lookup_primitive_type(yyvsp[0].etval);
-	}
-break;
+	  yyval.dcval = idl_global->scopes()->bottom()->lookup_primitive_type(yypvt[-0].etval);
+	} break;
 case 180:
-#line 1324 "idl.yy"
+# line 1324 "idl.yy"
 {
-	  yyval.dcval = idl_global->scopes()->bottom()->lookup_primitive_type(yyvsp[0].etval);
-	}
-break;
+	  yyval.dcval = idl_global->scopes()->bottom()->lookup_primitive_type(yypvt[-0].etval);
+	} break;
 case 182:
-#line 1329 "idl.yy"
+# line 1329 "idl.yy"
 {
 	  UTL_Scope		*s = idl_global->scopes()->top_non_null();
 	  AST_Decl		*d = NULL;
@@ -2289,7 +2405,7 @@ case 182:
 	   * typedef's to arrive at the base type at the end of the
 	   * chain
 	   */
-	  if (s != NULL && (d = s->lookup_by_name(yyvsp[0].idlist, I_TRUE)) != NULL) {
+	  if (s != NULL && (d = s->lookup_by_name(yypvt[-0].idlist, I_TRUE)) != NULL) {
 	    while (!found) {
 	      switch (d->node_type()) {
 	      case AST_Decl::NT_enum:
@@ -2333,37 +2449,34 @@ case 182:
 	    yyval.dcval = NULL;
 
 	  if (yyval.dcval == NULL)
-	    idl_global->err()->lookup_error(yyvsp[0].idlist);
-	}
-break;
+	    idl_global->err()->lookup_error(yypvt[-0].idlist);
+	} break;
 case 186:
-#line 1399 "idl.yy"
+# line 1399 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_UnionLabelSeen);
-        }
-break;
+        } break;
 case 187:
-#line 1403 "idl.yy"
+# line 1403 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_UnionElemSeen);
-        }
-break;
+        } break;
 case 188:
-#line 1407 "idl.yy"
+# line 1407 "idl.yy"
 {
 	  UTL_Scope		*s = idl_global->scopes()->top_non_null();
 	  UTL_LabellistActiveIterator *l = NULL;
 	  AST_UnionLabel	*d = NULL;
 	  AST_UnionBranch	*b = NULL;
-	  AST_Field		*f = yyvsp[-2].ffval;
+	  AST_Field		*f = yypvt[-2].ffval;
 
 	  idl_global->set_parse_state(IDL_GlobalData::PS_UnionElemCompleted);
 	  /*
 	   * Create several nodes representing branches of a union.
 	   * Add them to the enclosing scope (the union scope)
 	   */
-	  if (s != NULL && yyvsp[-4].llval != NULL && yyvsp[-2].ffval != NULL) {
-	    l = new UTL_LabellistActiveIterator(yyvsp[-4].llval);
+	  if (s != NULL && yypvt[-4].llval != NULL && yypvt[-2].ffval != NULL) {
+	    l = new UTL_LabellistActiveIterator(yypvt[-4].llval);
 	    for (;!(l->is_done()); l->next()) {
 	      d = l->item();
 	      if (d == NULL)
@@ -2376,123 +2489,109 @@ case 188:
 	    }
 	    delete l;
 	  }
-	}
-break;
+	} break;
 case 189:
-#line 1435 "idl.yy"
+# line 1435 "idl.yy"
 {
 	  idl_global->err()->syntax_error(idl_global->parse_state());
-	}
-break;
+	} break;
 case 190:
-#line 1439 "idl.yy"
+# line 1439 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_NoState);
 	  yyerrok;
-	}
-break;
+	} break;
 case 191:
-#line 1447 "idl.yy"
+# line 1447 "idl.yy"
 {
-	  yyval.llval = new UTL_LabelList(yyvsp[-1].ulval, yyvsp[0].llval);
-	}
-break;
+	  yyval.llval = new UTL_LabelList(yypvt[-1].ulval, yypvt[-0].llval);
+	} break;
 case 192:
-#line 1454 "idl.yy"
+# line 1454 "idl.yy"
 {
-	  if (yyvsp[-1].llval == NULL)
-	    yyval.llval = new UTL_LabelList(yyvsp[0].ulval, NULL);
+	  if (yypvt[-1].llval == NULL)
+	    yyval.llval = new UTL_LabelList(yypvt[-0].ulval, NULL);
 	  else {
-	    yyvsp[-1].llval->nconc(new UTL_LabelList(yyvsp[0].ulval, NULL));
-	    yyval.llval = yyvsp[-1].llval;
+	    yypvt[-1].llval->nconc(new UTL_LabelList(yypvt[-0].ulval, NULL));
+	    yyval.llval = yypvt[-1].llval;
 	  }
-	}
-break;
+	} break;
 case 193:
-#line 1463 "idl.yy"
+# line 1463 "idl.yy"
 {
 	  yyval.llval = NULL;
-	}
-break;
+	} break;
 case 194:
-#line 1470 "idl.yy"
+# line 1470 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_DefaultSeen);
-        }
-break;
+        } break;
 case 195:
-#line 1474 "idl.yy"
+# line 1474 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_LabelColonSeen);
 
 	  yyval.ulval = idl_global->gen()->
 	            create_union_label(AST_UnionLabel::UL_default,
 				       NULL);
-	}
-break;
+	} break;
 case 196:
-#line 1482 "idl.yy"
+# line 1482 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_CaseSeen);
-        }
-break;
+        } break;
 case 197:
-#line 1486 "idl.yy"
+# line 1486 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_LabelExprSeen);
-        }
-break;
+        } break;
 case 198:
-#line 1490 "idl.yy"
+# line 1490 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_LabelColonSeen);
 
 	  yyval.ulval = idl_global->gen()->create_union_label(AST_UnionLabel::UL_label,
-						     yyvsp[-2].exval);
-	}
-break;
+						     yypvt[-2].exval);
+	} break;
 case 199:
-#line 1500 "idl.yy"
+# line 1500 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_UnionElemTypeSeen);
-        }
-break;
+        } break;
 case 200:
-#line 1504 "idl.yy"
+# line 1504 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_UnionElemDeclSeen);
 	  /*
 	   * Check for illegal recursive use of type
 	   */
-	  if (yyvsp[-2].dcval != NULL && AST_illegal_recursive_type(yyvsp[-2].dcval))
-	    idl_global->err()->error1(UTL_Error::EIDL_RECURSIVE_TYPE, yyvsp[-2].dcval);
+	  if (yypvt[-2].dcval != NULL && AST_illegal_recursive_type(yypvt[-2].dcval))
+	    idl_global->err()->error1(UTL_Error::EIDL_RECURSIVE_TYPE, yypvt[-2].dcval);
 	  /*
 	   * Create a field in a union branch
 	   */
-	  else if (yyvsp[-2].dcval == NULL || yyvsp[0].deval == NULL)
+	  else if (yypvt[-2].dcval == NULL || yypvt[-0].deval == NULL)
 	    yyval.ffval = NULL;
 	  else {
-	    AST_Type *tp = yyvsp[0].deval->compose(yyvsp[-2].dcval);
+	    AST_Type *tp = yypvt[-0].deval->compose(yypvt[-2].dcval);
 	    if (tp == NULL)
 	      yyval.ffval = NULL;
  	    else
 	      yyval.ffval = idl_global->gen()->create_field(tp,
-			        		   yyvsp[0].deval->name(),
+			        		   yypvt[-0].deval->name(),
 			        		   idl_global->pragmas());
 	  }
-	}
-break;
+	} break;
 case 201:
-#line 1530 "idl.yy"
+# line 1530 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_EnumSeen);
-        }
-break;
+        } break;
 case 202:
-#line 1534 "idl.yy"
+# line 1534 "idl.yy"
 {
 	  UTL_Scope		*s = idl_global->scopes()->top_non_null();
-	  UTL_ScopedName	*n = new UTL_ScopedName(yyvsp[0].idval, NULL);
+	  UTL_ScopedName	*n = new UTL_ScopedName(yypvt[-0].idval, NULL);
 	  AST_Enum		*e = NULL;
 	  AST_Decl		*v = NULL;
 	  UTL_StrList		*p = idl_global->pragmas();
@@ -2515,22 +2614,19 @@ case 202:
 	   * Push the enum scope on the scopes stack
 	   */
 	  idl_global->scopes()->push(e);
-	}
-break;
+	} break;
 case 203:
-#line 1561 "idl.yy"
+# line 1561 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_EnumSqSeen);
-        }
-break;
+        } break;
 case 204:
-#line 1565 "idl.yy"
+# line 1565 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_EnumBodySeen);
-        }
-break;
+        } break;
 case 205:
-#line 1569 "idl.yy"
+# line 1569 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_EnumQsSeen);
 	  /*
@@ -2542,20 +2638,18 @@ case 205:
 	    yyval.dcval = AST_Enum::narrow_from_scope(idl_global->scopes()->top_non_null());
 	    idl_global->scopes()->pop();
 	  }
-	}
-break;
+	} break;
 case 207:
-#line 1588 "idl.yy"
+# line 1588 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_EnumCommaSeen);
-        }
-break;
+        } break;
 case 210:
-#line 1597 "idl.yy"
+# line 1597 "idl.yy"
 {
 	  UTL_Scope		*s = idl_global->scopes()->top_non_null();
 	  UTL_ScopedName	*n =
-		new UTL_ScopedName(new Identifier(yyvsp[0].strval, 1, 0, I_FALSE), NULL);
+		new UTL_ScopedName(new Identifier(yypvt[-0].strval, 1, 0, I_FALSE), NULL);
 	  AST_EnumVal		*e = NULL;
 	  AST_Enum		*c = NULL;
 	  UTL_StrList		*p = idl_global->pragmas();
@@ -2570,22 +2664,19 @@ case 210:
 	      e = idl_global->gen()->create_enum_val(c->next_enum_val(), n, p);
 	    (void) s->fe_add_enum_val(e);
 	  }
-	}
-break;
+	} break;
 case 211:
-#line 1621 "idl.yy"
+# line 1621 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_SequenceCommaSeen);
-        }
-break;
+        } break;
 case 212:
-#line 1625 "idl.yy"
+# line 1625 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_SequenceExprSeen);
-        }
-break;
+        } break;
 case 213:
-#line 1629 "idl.yy"
+# line 1629 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_SequenceQsSeen);
 	  /*
@@ -2596,17 +2687,17 @@ case 213:
 	  /*
 	   * Create a node representing a sequence
 	   */
-	  if (yyvsp[-2].exval == NULL || yyvsp[-2].exval->coerce(AST_Expression::EV_ulong) == NULL) {
-	    idl_global->err()->coercion_error(yyvsp[-2].exval, AST_Expression::EV_ulong);
+	  if (yypvt[-2].exval == NULL || yypvt[-2].exval->coerce(AST_Expression::EV_ulong) == NULL) {
+	    idl_global->err()->coercion_error(yypvt[-2].exval, AST_Expression::EV_ulong);
 	    yyval.dcval = NULL;
-	  } else if (yyvsp[-5].dcval == NULL) {
+	  } else if (yypvt[-5].dcval == NULL) {
 	    yyval.dcval = NULL;
 	  } else {
- 	    AST_Type *tp = AST_Type::narrow_from_decl(yyvsp[-5].dcval);
+ 	    AST_Type *tp = AST_Type::narrow_from_decl(yypvt[-5].dcval);
 	    if (tp == NULL)
 	      yyval.dcval = NULL;
 	    else {
-	      yyval.dcval = idl_global->gen()->create_sequence(yyvsp[-2].exval, tp);
+	      yyval.dcval = idl_global->gen()->create_sequence(yypvt[-2].exval, tp);
 	      /*
 	       * Add this AST_Sequence to the types defined in the global scope
 	       */
@@ -2614,10 +2705,9 @@ case 213:
 		        ->fe_add_sequence(AST_Sequence::narrow_from_decl(yyval.dcval));
  	    }
 	  }
-	}
-break;
+	} break;
 case 214:
-#line 1660 "idl.yy"
+# line 1660 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_SequenceQsSeen);
 	  /*
@@ -2628,10 +2718,10 @@ case 214:
 	  /*
 	   * Create a node representing a sequence
 	   */
-	  if (yyvsp[-1].dcval == NULL)
+	  if (yypvt[-1].dcval == NULL)
 	    yyval.dcval = NULL;
 	  else {
-	    AST_Type *tp = AST_Type::narrow_from_decl(yyvsp[-1].dcval);
+	    AST_Type *tp = AST_Type::narrow_from_decl(yypvt[-1].dcval);
 	    if (tp == NULL)
 	      yyval.dcval = NULL;
             else {
@@ -2646,65 +2736,58 @@ case 214:
 		        ->fe_add_sequence(AST_Sequence::narrow_from_decl(yyval.dcval));
 	    }
 	  }
-	}
-break;
+	} break;
 case 215:
-#line 1693 "idl.yy"
+# line 1693 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_SequenceSeen);
 	  /*
 	   * Push a sequence marker on scopes stack
 	   */
 	  idl_global->scopes()->push(NULL);
-	}
-break;
+	} break;
 case 216:
-#line 1701 "idl.yy"
+# line 1701 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_SequenceSqSeen);
-        }
-break;
+        } break;
 case 217:
-#line 1705 "idl.yy"
+# line 1705 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_SequenceTypeSeen);
-	  yyval.dcval = yyvsp[0].dcval;
-        }
-break;
+	  yyval.dcval = yypvt[-0].dcval;
+        } break;
 case 218:
-#line 1714 "idl.yy"
+# line 1714 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_StringSqSeen);
-        }
-break;
+        } break;
 case 219:
-#line 1718 "idl.yy"
+# line 1718 "idl.yy"
 {
 	   idl_global->set_parse_state(IDL_GlobalData::PS_StringExprSeen);
-        }
-break;
+        } break;
 case 220:
-#line 1722 "idl.yy"
+# line 1722 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_StringQsSeen);
 	  /*
 	   * Create a node representing a string
 	   */
-	  if (yyvsp[-2].exval == NULL || yyvsp[-2].exval->coerce(AST_Expression::EV_ulong) == NULL) {
-	    idl_global->err()->coercion_error(yyvsp[-2].exval, AST_Expression::EV_ulong);
+	  if (yypvt[-2].exval == NULL || yypvt[-2].exval->coerce(AST_Expression::EV_ulong) == NULL) {
+	    idl_global->err()->coercion_error(yypvt[-2].exval, AST_Expression::EV_ulong);
 	    yyval.dcval = NULL;
 	  } else {
-	    yyval.dcval = idl_global->gen()->create_string(yyvsp[-2].exval);
+	    yyval.dcval = idl_global->gen()->create_string(yypvt[-2].exval);
 	    /*
 	     * Add this AST_String to the types defined in the global scope
 	     */
 	    (void) idl_global->root()
 		      ->fe_add_string(AST_String::narrow_from_decl(yyval.dcval));
 	  }
-	}
-break;
+	} break;
 case 221:
-#line 1740 "idl.yy"
+# line 1740 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_StringCompleted);
 	  /*
@@ -2718,48 +2801,43 @@ case 221:
 	   */
 	  (void) idl_global->root()
                     ->fe_add_string(AST_String::narrow_from_decl(yyval.dcval));
-	}
-break;
+	} break;
 case 222:
-#line 1758 "idl.yy"
+# line 1758 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_StringSeen);
-        }
-break;
+        } break;
 case 223:
-#line 1766 "idl.yy"
+# line 1766 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_StringSqSeen);
-        }
-break;
+        } break;
 case 224:
-#line 1770 "idl.yy"
+# line 1770 "idl.yy"
 {
 	   idl_global->set_parse_state(IDL_GlobalData::PS_StringExprSeen);
-        }
-break;
+        } break;
 case 225:
-#line 1774 "idl.yy"
+# line 1774 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_StringQsSeen);
 	  /*
 	   * Create a node representing a string
 	   */
-	  if (yyvsp[-2].exval == NULL || yyvsp[-2].exval->coerce(AST_Expression::EV_ulong) == NULL) {
-	    idl_global->err()->coercion_error(yyvsp[-2].exval, AST_Expression::EV_ulong);
+	  if (yypvt[-2].exval == NULL || yypvt[-2].exval->coerce(AST_Expression::EV_ulong) == NULL) {
+	    idl_global->err()->coercion_error(yypvt[-2].exval, AST_Expression::EV_ulong);
 	    yyval.dcval = NULL;
 	  } else {
-	    yyval.dcval = idl_global->gen()->create_wstring(yyvsp[-2].exval);
+	    yyval.dcval = idl_global->gen()->create_wstring(yypvt[-2].exval);
 	    /*
 	     * Add this AST_String to the types defined in the global scope
 	     */
 	    (void) idl_global->root()
 		      ->fe_add_string(AST_String::narrow_from_decl(yyval.dcval));
 	  }
-	}
-break;
+	} break;
 case 226:
-#line 1792 "idl.yy"
+# line 1792 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_StringCompleted);
 	  /*
@@ -2773,97 +2851,85 @@ case 226:
 	   */
 	  (void) idl_global->root()
                     ->fe_add_string(AST_String::narrow_from_decl(yyval.dcval));
-	}
-break;
+	} break;
 case 227:
-#line 1810 "idl.yy"
+# line 1810 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_StringSeen);
-        }
-break;
+        } break;
 case 228:
-#line 1817 "idl.yy"
+# line 1817 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_ArrayIDSeen);
-        }
-break;
+        } break;
 case 229:
-#line 1821 "idl.yy"
+# line 1821 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_ArrayCompleted);
 	  /*
 	   * Create a node representing an array
 	   */
-	  if (yyvsp[0].elval != NULL) {
-	     yyval.dcval = idl_global->gen()->create_array(new UTL_ScopedName(yyvsp[-2].idval, NULL),
-						  yyvsp[0].elval->length(), yyvsp[0].elval);
+	  if (yypvt[-0].elval != NULL) {
+	     yyval.dcval = idl_global->gen()->create_array(new UTL_ScopedName(yypvt[-2].idval, NULL),
+						  yypvt[-0].elval->length(), yypvt[-0].elval);
 	  }
-	}
-break;
+	} break;
 case 230:
-#line 1835 "idl.yy"
+# line 1835 "idl.yy"
 {
-	  yyval.elval = new UTL_ExprList(yyvsp[-1].exval, yyvsp[0].elval);
-	}
-break;
+	  yyval.elval = new UTL_ExprList(yypvt[-1].exval, yypvt[-0].elval);
+	} break;
 case 231:
-#line 1842 "idl.yy"
+# line 1842 "idl.yy"
 {
-	  if (yyvsp[-1].elval == NULL)
-	    yyval.elval = new UTL_ExprList(yyvsp[0].exval, NULL);
+	  if (yypvt[-1].elval == NULL)
+	    yyval.elval = new UTL_ExprList(yypvt[-0].exval, NULL);
 	  else {
-	    yyvsp[-1].elval->nconc(new UTL_ExprList(yyvsp[0].exval, NULL));
-	    yyval.elval = yyvsp[-1].elval;
+	    yypvt[-1].elval->nconc(new UTL_ExprList(yypvt[-0].exval, NULL));
+	    yyval.elval = yypvt[-1].elval;
 	  }
-	}
-break;
+	} break;
 case 232:
-#line 1851 "idl.yy"
+# line 1851 "idl.yy"
 {
 	  yyval.elval = NULL;
-	}
-break;
+	} break;
 case 233:
-#line 1858 "idl.yy"
+# line 1858 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_DimSqSeen);
-        }
-break;
+        } break;
 case 234:
-#line 1862 "idl.yy"
+# line 1862 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_DimExprSeen);
-        }
-break;
+        } break;
 case 235:
-#line 1866 "idl.yy"
+# line 1866 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_DimQsSeen);
 	  /*
 	   * Array dimensions are expressions which must be coerced to
 	   * positive integers
 	   */
-	  if (yyvsp[-2].exval == NULL || yyvsp[-2].exval->coerce(AST_Expression::EV_ulong) == NULL) {
-	    idl_global->err()->coercion_error(yyvsp[-2].exval, AST_Expression::EV_ulong);
+	  if (yypvt[-2].exval == NULL || yypvt[-2].exval->coerce(AST_Expression::EV_ulong) == NULL) {
+	    idl_global->err()->coercion_error(yypvt[-2].exval, AST_Expression::EV_ulong);
 	    yyval.exval = NULL;
 	  } else
-	    yyval.exval = yyvsp[-2].exval;
-	}
-break;
+	    yyval.exval = yypvt[-2].exval;
+	} break;
 case 236:
-#line 1883 "idl.yy"
+# line 1883 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_AttrSeen);
-        }
-break;
+        } break;
 case 237:
-#line 1887 "idl.yy"
+# line 1887 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_AttrTypeSeen);
-        }
-break;
+        } break;
 case 238:
-#line 1891 "idl.yy"
+# line 1891 "idl.yy"
 {
 	  UTL_Scope		*s = idl_global->scopes()->top_non_null();
 	  UTL_DecllistActiveIterator *l = NULL;
@@ -2876,16 +2942,16 @@ case 238:
 	   * Create nodes representing attributes and add them to the
 	   * enclosing scope
 	   */
-	  if (s != NULL && yyvsp[-2].dcval != NULL && yyvsp[0].dlval != NULL) {
-	    l = new UTL_DecllistActiveIterator(yyvsp[0].dlval);
+	  if (s != NULL && yypvt[-2].dcval != NULL && yypvt[-0].dlval != NULL) {
+	    l = new UTL_DecllistActiveIterator(yypvt[-0].dlval);
 	    for (;!(l->is_done()); l->next()) {
 	      d = l->item();
 	      if (d == NULL)
 		continue;
-	      AST_Type *tp = d->compose(yyvsp[-2].dcval);
+	      AST_Type *tp = d->compose(yypvt[-2].dcval);
  	      if (tp == NULL)
 	 	continue;
-	      a = idl_global->gen()->create_attribute(yyvsp[-5].bval, tp, d->name(), p);
+	      a = idl_global->gen()->create_attribute(yypvt[-5].bval, tp, d->name(), p);
 	      /*
 	       * Add one attribute to the enclosing scope
 	       */
@@ -2893,32 +2959,28 @@ case 238:
 	    }
 	    delete l;
 	  }
-	}
-break;
+	} break;
 case 239:
-#line 1925 "idl.yy"
+# line 1925 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_AttrROSeen);
 	  yyval.bval = I_TRUE;
-	}
-break;
+	} break;
 case 240:
-#line 1930 "idl.yy"
+# line 1930 "idl.yy"
 {
 	  yyval.bval = I_FALSE;
-	}
-break;
+	} break;
 case 241:
-#line 1937 "idl.yy"
+# line 1937 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_ExceptSeen);
-	}
-break;
+	} break;
 case 242:
-#line 1941 "idl.yy"
+# line 1941 "idl.yy"
 {
 	  UTL_Scope		*s = idl_global->scopes()->top_non_null();
-	  UTL_ScopedName	*n = new UTL_ScopedName(yyvsp[0].idval, NULL);
+	  UTL_ScopedName	*n = new UTL_ScopedName(yypvt[-0].idval, NULL);
 	  AST_Exception		*e = NULL;
 	  UTL_StrList		*p = idl_global->pragmas();
 	  AST_Decl		*v = NULL;
@@ -2938,42 +3000,37 @@ case 242:
 	   * Push the exception scope on the scope stack
 	   */
 	  idl_global->scopes()->push(e);
-	}
-break;
+	} break;
 case 243:
-#line 1965 "idl.yy"
+# line 1965 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_ExceptSqSeen);
-        }
-break;
+        } break;
 case 244:
-#line 1969 "idl.yy"
+# line 1969 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_ExceptBodySeen);
-        }
-break;
+        } break;
 case 245:
-#line 1973 "idl.yy"
+# line 1973 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_ExceptQsSeen);
 	  /*
 	   * Done with this exception. Pop its scope from the scope stack
 	   */
 	  idl_global->scopes()->pop();
-	}
-break;
+	} break;
 case 246:
-#line 1985 "idl.yy"
+# line 1985 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_OpTypeSeen);
-        }
-break;
+        } break;
 case 247:
-#line 1989 "idl.yy"
+# line 1989 "idl.yy"
 {
 	  UTL_Scope		*s = idl_global->scopes()->top_non_null();
 	  UTL_ScopedName	*n =
-		new UTL_ScopedName(new Identifier(yyvsp[0].strval, 1, 0, I_FALSE), NULL);
+		new UTL_ScopedName(new Identifier(yypvt[-0].strval, 1, 0, I_FALSE), NULL);
 	  AST_Operation		*o = NULL;
 	  UTL_StrList		*p = idl_global->pragmas();
 
@@ -2982,14 +3039,14 @@ case 247:
 	   * Create a node representing an operation on an interface
 	   * and add it to its enclosing scope
 	   */
-	  if (s != NULL && yyvsp[-2].dcval != NULL) {
-	    AST_Type *tp = AST_Type::narrow_from_decl(yyvsp[-2].dcval);
+	  if (s != NULL && yypvt[-2].dcval != NULL) {
+	    AST_Type *tp = AST_Type::narrow_from_decl(yypvt[-2].dcval);
             if (tp == NULL) {
-              idl_global->err()->not_a_type(yyvsp[-2].dcval);
+              idl_global->err()->not_a_type(yypvt[-2].dcval);
             } else if (tp->node_type() == AST_Decl::NT_except) {
-              idl_global->err()->not_a_type(yyvsp[-2].dcval);
+              idl_global->err()->not_a_type(yypvt[-2].dcval);
             } else {
-	      o = idl_global->gen()->create_operation(tp, yyvsp[-3].ofval, n, p);
+	      o = idl_global->gen()->create_operation(tp, yypvt[-3].ofval, n, p);
 	      (void) s->fe_add_operation(o);
 	    }
 	  }
@@ -2997,22 +3054,19 @@ case 247:
 	   * Push the operation scope onto the scopes stack
 	   */
 	  idl_global->scopes()->push(o);
-	}
-break;
+	} break;
 case 248:
-#line 2018 "idl.yy"
+# line 2018 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_OpParsCompleted);
-        }
-break;
+        } break;
 case 249:
-#line 2022 "idl.yy"
+# line 2022 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_OpRaiseCompleted);
-        }
-break;
+        } break;
 case 250:
-#line 2026 "idl.yy"
+# line 2026 "idl.yy"
 {
 	  UTL_Scope		*s = idl_global->scopes()->top_non_null();
 	  AST_Operation		*o = NULL;
@@ -3024,89 +3078,77 @@ case 250:
 	  if (s != NULL && s->scope_node_type() == AST_Decl::NT_op) {
 	    o = AST_Operation::narrow_from_scope(s);
 
-	    if (yyvsp[-2].nlval != NULL && o != NULL)
-	      (void) o->fe_add_exceptions(yyvsp[-2].nlval);
-	    if (yyvsp[0].slval != NULL)
-	      (void) o->fe_add_context(yyvsp[0].slval);
+	    if (yypvt[-2].nlval != NULL && o != NULL)
+	      (void) o->fe_add_exceptions(yypvt[-2].nlval);
+	    if (yypvt[-0].slval != NULL)
+	      (void) o->fe_add_context(yypvt[-0].slval);
 	  }
 	  /*
 	   * Done with this operation. Pop its scope from the scopes stack
 	   */
 	  idl_global->scopes()->pop();
-	}
-break;
+	} break;
 case 251:
-#line 2051 "idl.yy"
+# line 2051 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_OpAttrSeen);
 	  yyval.ofval = AST_Operation::OP_oneway;
-	}
-break;
+	} break;
 case 252:
-#line 2056 "idl.yy"
+# line 2056 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_OpAttrSeen);
 	  yyval.ofval = AST_Operation::OP_idempotent;
-	}
-break;
+	} break;
 case 253:
-#line 2061 "idl.yy"
+# line 2061 "idl.yy"
 {
 	  yyval.ofval = AST_Operation::OP_noflags;
-	}
-break;
+	} break;
 case 255:
-#line 2069 "idl.yy"
+# line 2069 "idl.yy"
 {
 	  yyval.dcval =
 	    idl_global->scopes()->bottom()
 	       ->lookup_primitive_type(AST_Expression::EV_void);
-	}
-break;
+	} break;
 case 256:
-#line 2078 "idl.yy"
+# line 2078 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_OpSqSeen);
-        }
-break;
+        } break;
 case 257:
-#line 2082 "idl.yy"
+# line 2082 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_OpQsSeen);
-        }
-break;
+        } break;
 case 258:
-#line 2086 "idl.yy"
+# line 2086 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_OpSqSeen);
-        }
-break;
+        } break;
 case 259:
-#line 2091 "idl.yy"
+# line 2091 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_OpQsSeen);
-        }
-break;
+        } break;
 case 261:
-#line 2101 "idl.yy"
+# line 2101 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_OpParCommaSeen);
-        }
-break;
+        } break;
 case 264:
-#line 2110 "idl.yy"
+# line 2110 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_OpParDirSeen);
-        }
-break;
+        } break;
 case 265:
-#line 2114 "idl.yy"
+# line 2114 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_OpParTypeSeen);
-        }
-break;
+        } break;
 case 266:
-#line 2118 "idl.yy"
+# line 2118 "idl.yy"
 {
 	  UTL_Scope		*s = idl_global->scopes()->top_non_null();
 	  AST_Argument		*a = NULL;
@@ -3117,188 +3159,115 @@ case 266:
 	   * Create a node representing an argument to an operation
 	   * Add it to the enclosing scope (the operation scope)
 	   */
-	  if (yyvsp[-2].dcval != NULL && yyvsp[0].deval != NULL && s != NULL) {
-	    AST_Type *tp = yyvsp[0].deval->compose(yyvsp[-2].dcval);
+	  if (yypvt[-2].dcval != NULL && yypvt[-0].deval != NULL && s != NULL) {
+	    AST_Type *tp = yypvt[-0].deval->compose(yypvt[-2].dcval);
 	    if (tp != NULL) {
-	      a = idl_global->gen()->create_argument(yyvsp[-4].dival, tp, yyvsp[0].deval->name(), p);
+	      a = idl_global->gen()->create_argument(yypvt[-4].dival, tp, yypvt[-0].deval->name(), p);
 	      (void) s->fe_add_argument(a);
 	    }
 	  }
-	}
-break;
+	} break;
 case 267:
-#line 2140 "idl.yy"
+# line 2140 "idl.yy"
 {
-	  yyval.dcval = idl_global->scopes()->bottom()->lookup_primitive_type(yyvsp[0].etval);
-	}
-break;
+	  yyval.dcval = idl_global->scopes()->bottom()->lookup_primitive_type(yypvt[-0].etval);
+	} break;
 case 269:
-#line 2145 "idl.yy"
+# line 2145 "idl.yy"
 {
 	  UTL_Scope	*s = idl_global->scopes()->top_non_null();
 	  AST_Decl	*d = NULL;
 
 	  if (s != NULL)
-	    d = s->lookup_by_name(yyvsp[0].idlist, I_TRUE);
+	    d = s->lookup_by_name(yypvt[-0].idlist, I_TRUE);
 	  if (d == NULL)
-	    idl_global->err()->lookup_error(yyvsp[0].idlist);
+	    idl_global->err()->lookup_error(yypvt[-0].idlist);
 	  yyval.dcval = d;
-	}
-break;
+	} break;
 case 270:
-#line 2159 "idl.yy"
+# line 2159 "idl.yy"
 {
 	  yyval.dival = AST_Argument::dir_IN;
-	}
-break;
+	} break;
 case 271:
-#line 2163 "idl.yy"
+# line 2163 "idl.yy"
 {
 	  yyval.dival = AST_Argument::dir_OUT;
-	}
-break;
+	} break;
 case 272:
-#line 2167 "idl.yy"
+# line 2167 "idl.yy"
 {
 	  yyval.dival = AST_Argument::dir_INOUT;
-	}
-break;
+	} break;
 case 273:
-#line 2174 "idl.yy"
+# line 2174 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_OpRaiseSeen);
-        }
-break;
+        } break;
 case 274:
-#line 2178 "idl.yy"
+# line 2178 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_OpRaiseSqSeen);
-        }
-break;
+        } break;
 case 275:
-#line 2183 "idl.yy"
+# line 2183 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_OpRaiseQsSeen);
-	  yyval.nlval = yyvsp[-1].nlval;
-	}
-break;
+	  yyval.nlval = yypvt[-1].nlval;
+	} break;
 case 276:
-#line 2188 "idl.yy"
+# line 2188 "idl.yy"
 {
 	  yyval.nlval = NULL;
-	}
-break;
+	} break;
 case 277:
-#line 2195 "idl.yy"
+# line 2195 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_OpContextSeen);
-        }
-break;
+        } break;
 case 278:
-#line 2199 "idl.yy"
+# line 2199 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_OpContextSqSeen);
-        }
-break;
+        } break;
 case 279:
-#line 2204 "idl.yy"
+# line 2204 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_OpContextQsSeen);
-	  yyval.slval = yyvsp[-1].slval;
-	}
-break;
+	  yyval.slval = yypvt[-1].slval;
+	} break;
 case 280:
-#line 2209 "idl.yy"
+# line 2209 "idl.yy"
 {
 	  yyval.slval = NULL;
-	}
-break;
+	} break;
 case 281:
-#line 2216 "idl.yy"
+# line 2216 "idl.yy"
 {
-	  yyval.slval = new UTL_StrList(yyvsp[-1].sval, yyvsp[0].slval);
-	}
-break;
+	  yyval.slval = new UTL_StrList(yypvt[-1].sval, yypvt[-0].slval);
+	} break;
 case 282:
-#line 2224 "idl.yy"
+# line 2224 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_OpContextCommaSeen);
-        }
-break;
+        } break;
 case 283:
-#line 2228 "idl.yy"
+# line 2228 "idl.yy"
 {
-	  if (yyvsp[-3].slval == NULL)
-	    yyval.slval = new UTL_StrList(yyvsp[0].sval, NULL);
+	  if (yypvt[-3].slval == NULL)
+	    yyval.slval = new UTL_StrList(yypvt[-0].sval, NULL);
 	  else {
-	    yyvsp[-3].slval->nconc(new UTL_StrList(yyvsp[0].sval, NULL));
-	    yyval.slval = yyvsp[-3].slval;
+	    yypvt[-3].slval->nconc(new UTL_StrList(yypvt[-0].sval, NULL));
+	    yyval.slval = yypvt[-3].slval;
 	  }
-	}
-break;
+	} break;
 case 284:
-#line 2237 "idl.yy"
+# line 2237 "idl.yy"
 {
 	  yyval.slval = NULL;
+	} break;
+# line	532 "/usr/ccs/bin/yaccpar"
 	}
-break;
-#line 3245 "y.tab.c"
-    }
-    yyssp -= yym;
-    yystate = *yyssp;
-    yyvsp -= yym;
-    yym = yylhs[yyn];
-    if (yystate == 0 && yym == 0)
-    {
-#ifdef YYDEBUG
-        if (5 < yydebug)
-            printf("yydebug: after reduction, shifting from state 0 to\
- state %d\n", YYFINAL);
-#endif
-        yystate = YYFINAL;
-        *++yyssp = YYFINAL;
-        *++yyvsp = yyval;
-        if (yychar < 0)
-        {
-            if ((yychar = yylex()) < 0) yychar = 0;
-#if YYDEBUG
-            if (yydebug)
-            {
-                yys = 0;
-                if (yychar <= YYMAXTOKEN) yys = yyname[yychar];
-                if (!yys) yys = "illegal-symbol";
-                if (5 < yydebug)
-                    printf("yydebug: state %d, reading %d (%s)\n",
-                        YYFINAL, yychar, yys);
-                else
-                    YYDEBUG_LOOK_AHEAD(YYFINAL, yychar, yys, yyssp-yyss);
-            }
-#endif
-        }
-        if (yychar == 0) goto yyaccept;
-        goto yyloop;
-    }
-    if ((yyn = yygindex[yym]) && (yyn += yystate) >= 0 &&
-            yyn <= YYTABLESIZE && yycheck[yyn] == yystate)
-        yystate = yytable[yyn];
-    else
-        yystate = yydgoto[yym];
-#ifdef YYDEBUG
-    if (5 < yydebug)
-        printf("yydebug: after reduction, shifting from state %d \
-to state %d\n", *yyssp, yystate);
-#endif
-    if (yyssp >= yyss + yystacksize - 1)
-    {
-        goto yyoverflow;
-    }
-    *++yyssp = yystate;
-    *++yyvsp = yyval;
-    goto yyloop;
-yyoverflow:
-    yyerror("yacc stack overflow");
-yyabort:
-    return (1);
-yyaccept:
-    return (0);
+	goto yystack;		/* reset registers in driver code */
 }
+
