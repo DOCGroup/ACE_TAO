@@ -8,10 +8,10 @@
 #include "orbsvcs/Event/EC_Event_Channel.h"
 #include "orbsvcs/Event/EC_Default_Factory.h"
 #include "orbsvcs/Event/EC_Kokyu_Factory.h"
+#include "orbsvcs/Scheduler_Factory.h"
 #include "Consumer.h"
 #include "Supplier.h"
 
-#include "Schedule.h"
 
 #include "ace/Get_Opt.h"
 #include "ace/Sched_Params.h"
@@ -77,23 +77,10 @@ main (int argc, char* argv[])
 
       // Create an scheduling service
       POA_RtecScheduler::Scheduler* sched_impl = 0;
-      if (config_run)
-        {
-          ACE_NEW_RETURN (sched_impl,
-                          RECONFIG_SCHED_TYPE,
-                          1);
-        }
-      else
-        {
-          ACE_NEW_RETURN (sched_impl,
-                          RECONFIG_SCHED_TYPE (configs_size,
-                                               configs,
-                                               infos_size,
-                                               infos,
-                                               0, 0,
-                                               0),
-                          1);
-        }
+
+      ACE_NEW_RETURN (sched_impl,
+		      RECONFIG_SCHED_TYPE,
+		      1);
 
       RtecScheduler::Scheduler_var scheduler =
         sched_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -337,38 +324,35 @@ main (int argc, char* argv[])
 
       // The schedule is returned in this variables....
 
-      if (config_run)
-        {
-          ACE_DEBUG ((LM_DEBUG, "Computing schedule\n"));
-          RtecScheduler::RT_Info_Set_var infos;
-          RtecScheduler::Config_Info_Set_var configs;
-          RtecScheduler::Scheduling_Anomaly_Set_var anomalies;
+      ACE_DEBUG ((LM_DEBUG, "Computing schedule\n"));
+      RtecScheduler::RT_Info_Set_var infos;
+      RtecScheduler::Config_Info_Set_var configs;
+      RtecScheduler::Scheduling_Anomaly_Set_var anomalies;
 
-          // Obtain the range of valid priorities in the current
-          // platform, the scheduler hard-code this values in the
-          // generated file, but in the future we may just use the
-          // "logical" priorities and define the mapping to OS
-          // priorities at run-time.
-          int min_os_priority =
-            ACE_Sched_Params::priority_min (ACE_SCHED_FIFO,
-                                            ACE_SCOPE_THREAD);
-          int max_os_priority =
-            ACE_Sched_Params::priority_max (ACE_SCHED_FIFO,
-                                            ACE_SCOPE_THREAD);
-          scheduler->compute_scheduling (min_os_priority,
-                                         max_os_priority,
-                                         infos.out (),
-                                         configs.out (),
-                                         anomalies.out ()
-                                         ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-
-          // Dump the schedule to a file..
-          ACE_Scheduler_Factory::dump_schedule (infos.in (),
-                                                configs.in (),
-                                                anomalies.in (),
-                                                "schedule.out");
-        }
+      // Obtain the range of valid priorities in the current
+      // platform, the scheduler hard-code this values in the
+      // generated file, but in the future we may just use the
+      // "logical" priorities and define the mapping to OS
+      // priorities at run-time.
+      int min_os_priority =
+	ACE_Sched_Params::priority_min (ACE_SCHED_FIFO,
+					ACE_SCOPE_THREAD);
+      int max_os_priority =
+	ACE_Sched_Params::priority_max (ACE_SCHED_FIFO,
+					ACE_SCOPE_THREAD);
+      scheduler->compute_scheduling (min_os_priority,
+				     max_os_priority,
+				     infos.out (),
+				     configs.out (),
+				     anomalies.out ()
+				     ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+	  
+      // Dump the schedule to a file..
+      ACE_Scheduler_Factory::dump_schedule (infos.in (),
+					    configs.in (),
+					    anomalies.in (),
+					    "schedule.out");
 
       // ****************************************************************
 
@@ -436,15 +420,10 @@ int parse_args (int argc, char *argv[])
   while ((c = get_opts ()) != -1)
     switch (c)
       {
-      case 'c':
-        config_run = 1;
-        break;
-
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s "
-                           "-c (config run)"
                            "\n",
                            argv [0]),
                           -1);
