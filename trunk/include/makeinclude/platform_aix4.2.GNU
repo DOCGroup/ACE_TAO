@@ -9,7 +9,7 @@ CC	    = xlC
 CXX	    = xlC_r
 DLD	    = makeC++SharedLib_r
 LD          = $(CXX)
-CPPFLAGS    += -qxcall -qtempinc -qcheck=nobounds:div:null  -M -qlanglvl=ansi -qextchk -qflag=w:w -qinfo -qnoro
+CPPFLAGS    += -qxcall -qtempinc -qcheck=nobounds:div:null  -M -qlanglvl=ansi -qextchk -qflag=w:w -qinfo 
 SHLIBA      = $(SHLIB:lib%.so=lib%shr.a)
 ifdef SHLIB
 ACELIB      = -lACEshr

@@ -42,6 +42,7 @@ ACE_HAS_INLINED_OSCALLS			Inline all the static class OS methods to remove call 
 ACE_HAS_IP_MULTICAST			Platform supports IP multicast
 ACE_HAS_IRIX_GETTIMEOFDAY		Denotes that IRIX 5.3 has second argument to gettimeofday() which is variable ... 
 ACE_HAS_IRIX62_THREADS			Platform supports the very odd IRIX 6.2 threads...
+ACE_HAS_THR_KEYDELETE			Platform supports thr_keydelete (e.g,. UNIXWARE)
 ACE_HAS_LIMITED_RUSAGE_T		The rusage_t structure has only two fields.
 ACE_HAS_LONGLONG_T			Compiler/platform supports the "long long" datatype.
 ACE_HAS_LONG_MAP_FAILED                 Platform defines MAP_FAILED as a long constant.

@@ -1,26 +1,35 @@
-Tue Feb 04 18:26:01 1997    <irfan@cha-cha.cs.wustl.edu>
+Tue Feb  4 19:06:52 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Service_Config.cpp (alloc): The implementation now creates a
- 	  ACE_New_Allocator rather than a ACE_Allocator_Adaptor.  If you
-	  still want the old behavior, overwrite the allocator singleton
-	  in Service_Config.
+	* ace/Signal.cpp: Fixed all the ACE_Sig_Handler[s] methods so that
+ 	  they now use ACE_Guard, rather than ACE_TSS_Guard, *unless* they
+ 	  are actually performing callbacks to user-code.  Not only is
+ 	  this faster, but it also avoids thread-specific storage key
+ 	  leaks on platforms like Solaris!
 
-	* ace/OS.i (mktemp): Added the missing ACE_INLINE directive.
+	* ace/OS.cpp (thr_keyfree): Added a new #ifdef for
+ 	  ACE_HAS_THR_KEYDELETE, which is defined for UNIXWARE.  This
+ 	  fixes a nasty problem with leaking thread-specific keys.  Thanks
+ 	  to Nigel Owen <Nigel@voicelink.co.nz> for reporting this.
 
-	* ace/OS.h: ACE_HAS_INLINED_OSCALLS is now automatically defined
-	  when __ACE_INLINE__ is defined. 
+	* ace/Message_Block.cpp: Added a #include for
+	  "ace/Service_Config.h".
 
-	* ace/Malloc: Added a virtual destructor to ACE_Allocator.  Also
- 	  added a new class ACE_New_Allocator which is a sub-class of
- 	  ACE_Allocator. This class uses the new/delete operators to
- 	  allocate and free up memory.  Please note that the only methods
- 	  that are supported are malloc and free. All other methods are
- 	  no-ops.  If you require this functionality, please use:
- 	  ACE_Allocator_Adapter <ACE_Malloc <ACE_LOCAL_MEMORY_POOL,
- 	  MUTEX>> This will allow you to use the added functionality of
- 	  bind/find/etc. while using the new/delete operators.
+	* ace/Malloc.i: Fixed a few warnings by removing the names of
+ 	  unused parameters.
 
-Tue Feb  4 15:08:55 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+	* ace: Added many minor changes to ACE so that it will work on
+ 	  DG/UX.  Thanks to Michael Maxie <maxie@acm.org> for all these.
+
+	* ace/LSOCK_Stream.cpp: Applied the same fix as to LSOCK.cpp.
+
+	* ace/LSOCK.cpp: Removed the cast of 0 to (char *) for msg_name
+ 	  since some platforms use (struct sockaddr *).  By omitting the
+ 	  cast the compiler will figure it out correctly.  Thanks to
+ 	  Michael Maxie <maxie@acm.org> for this.
+
+	* ace/IOStream: Added a new template adapter for creating an
+ 	  iostream-like object using an ACE IPC Stream for the actual I/O.
+  	  Thanks to James CE Johnson <jcej@lads.com> for this.
 
 	* examples/Misc/test_iostreams.cpp: Added a test that illustrates
  	  how the new ACE_iostreams mechanism works.  Thanks to James CE
@@ -39,6 +48,29 @@ Tue Feb  4 15:08:55 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/config-dgux-4.11-epc.h: Added a new config file for DG/UX.
   	  Thanks to Michael Maxie <maxie@acm.org> for this.
+
+Tue Feb 04 18:26:01 1997    <irfan@cha-cha.cs.wustl.edu>
+
+	* ace/Service_Config.cpp (alloc): The implementation now creates a
+ 	  ACE_New_Allocator rather than a ACE_Allocator_Adaptor.  If
+	  you still want the old behavior, simply provide your own
+	  custom allocator singleton for ACE_Service_Config.
+
+	* ace/OS.i (mktemp): Added the missing ACE_INLINE directive.
+
+	* ace/OS.h: ACE_HAS_INLINED_OSCALLS is now automatically defined
+	  when __ACE_INLINE__ is defined.  This avoids mysterious linking
+	  problems that occur otherwise.
+
+	* ace/Malloc: Added a virtual destructor to ACE_Allocator.  Also
+ 	  added a new class ACE_New_Allocator which is a sub-class of
+ 	  ACE_Allocator. This class uses the new/delete operators to
+ 	  allocate and free up memory.  Please note that the only methods
+ 	  that are supported are malloc() and free(). All other
+	  methods are no-ops.  If you require more functionality, please use:
+ 	  ACE_Allocator_Adapter <ACE_Malloc <ACE_LOCAL_MEMORY_POOL,
+ 	  MUTEX>> This will allow you to use the added functionality of
+ 	  bind/find/etc. while using the new/delete operators.
 
 Mon Feb  3 15:35:24 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
