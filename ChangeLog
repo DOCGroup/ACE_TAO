@@ -1,3 +1,12 @@
+Thu Nov 20 09:35:01 2003  Dale Wilson  <wilson_d@ociweb.com>
+
+        * bin/MakeProjectCreator/config/fault_tolerance.mpb:
+          New--to support fault tolerance mpc files.
+
+        * bin/MakeProjectCreator/config/orbsvcsexe.mpb:
+        * bin/MakeProjectCreator/config/taoexe.mpb:
+          Add IDL includes to match CPP includes.
+
 Thu Nov 20 07:51:59 2003  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* ace/OS_NS_sys_uio.cpp: "Short-circuit the readv_emulation() and
@@ -7,12 +16,12 @@ Thu Nov 20 07:51:59 2003  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 Wed Nov 19 11:55:43 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/Mem_Map.i (map): Reverted the change from
-  
+        * ace/Mem_Map.i (map): Reverted the change from
+
           Mon Nov 17 17:09:37 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
-  
+
           since this isn't the right fix.  Thanks to Kitty for noting this.
-  
+
 Wed Nov 19 10:09:12 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/DependencyGenerator/GNUDependencyWriter.pm:
