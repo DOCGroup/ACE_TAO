@@ -1,3 +1,19 @@
+Mon Jul 10 17:28:55 2000  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/Security.dsp:
+	* orbsvcs/orbsvcs/SSLIOP.dsp:
+
+	  Added MSVC++ project files for TAO's Security Service library
+	  and SSLIOP pluggable protocol.
+
+	* examples/Content_Server/AMI_Iterator/client.dsp:
+	* examples/Content_Server/AMI_Iterator/server.dsp:
+	* examples/Content_Server/AMI_Observer/client.dsp:
+	* examples/Content_Server/AMI_Observer/server.dsp:
+
+	  Added missing "-GC" TAO IDL compiler flag option to the Release
+	  configuration.  This causes AMI stubs to be generated.
+
 Mon Jul 10 13:10:21 2000  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connect.cpp (handle_input):
