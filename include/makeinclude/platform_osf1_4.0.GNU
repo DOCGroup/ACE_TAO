@@ -36,14 +36,14 @@ ifneq ($(CXX_VER),CXX_5)
   endif # ACE_DU_VERSION
 endif # 6.0 or later
 
-CCFLAGS         += $(CFLAGS) -ptr ptrepository $(WARNING_FLAGS)
+CCFLAGS         += $(CFLAGS) $(WARNING_FLAGS)
 ifeq ($(rtti),)
   CCFLAGS += -nortti
 endif # rtti
 DCFLAGS         += -g -O0
 DLD             = $(CXX)
 LD              = $(CXX)
-LIBS            += $(CFLAGS) -ptr ptrepository -ltli -lrt
+LIBS            += $(CFLAGS) -ltli -lrt
 MATHLIB         = -lm
 OCFLAGS         += -O4
 PIC             =
