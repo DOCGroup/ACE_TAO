@@ -586,10 +586,6 @@ SOURCE=.\Msg_WFMO_Reactor.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Multihomed_INET_Addr.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\Multiplexor.cpp
 # End Source File
 # Begin Source File
@@ -851,18 +847,6 @@ SOURCE=.\SOCK_Dgram_Mcast.cpp
 # Begin Source File
 
 SOURCE=.\SOCK_IO.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\SOCK_SEQPACK_Acceptor.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\SOCK_SEQPACK_Association.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\SOCK_SEQPACK_Connector.cpp
 # End Source File
 # Begin Source File
 
@@ -1706,10 +1690,6 @@ SOURCE=.\Msg_WFMO_Reactor.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Multihomed_INET_Addr.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Multiplexor.h
 # End Source File
 # Begin Source File
@@ -2035,18 +2015,6 @@ SOURCE=.\SOCK_Dgram_Mcast_QoS.h
 # Begin Source File
 
 SOURCE=.\SOCK_IO.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\SOCK_SEQPACK_Acceptor.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\SOCK_SEQPACK_Association.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\SOCK_SEQPACK_Connector.h
 # End Source File
 # Begin Source File
 
@@ -2778,10 +2746,6 @@ SOURCE=.\Msg_WFMO_Reactor.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\Multihomed_INET_Addr.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\Multiplexor.i
 # End Source File
 # Begin Source File
@@ -3027,18 +2991,6 @@ SOURCE=.\SOCK_Dgram_Mcast_QoS.i
 # Begin Source File
 
 SOURCE=.\SOCK_IO.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\SOCK_SEQPACK_Acceptor.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\SOCK_SEQPACK_Association.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\SOCK_SEQPACK_Connector.i
 # End Source File
 # Begin Source File
 
