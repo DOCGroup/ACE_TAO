@@ -75,9 +75,14 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 //       will cease to operate correctly if you use either multiple or
 //       public virtual inheritance.
 
-#include "TAO_IDL_FE_Export.h"
 #include "utl_list.h"
 #include "ace/OS.h"
+
+// Needed to recognize ACE_OSTREAM_TYPE, and for BCB it's
+// not included in ace/OS.h, so we include it here.
+#if defined (__BORLANDC__)
+# include "ace/streams.h"
+#endif
 
 class Identifier;
 
