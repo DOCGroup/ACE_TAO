@@ -28,13 +28,6 @@
 
 #include "tao/Object.h"
 
-#if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
-#pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
-#pragma warning(disable:4250)
-#endif /* _MSC_VER */
-
 class Manager
 {
 public:
@@ -69,4 +62,5 @@ private:
   CORBA::Object_var merged_set_;
   // The merged IOR set
 };
+
 #endif /*TEST_FT_IOGR_MANAGER_H */
