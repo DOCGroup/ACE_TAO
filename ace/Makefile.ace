@@ -249,8 +249,9 @@ OTHER_FILES = \
   Name_Space \
   Naming_Context \
   Registry_Name_Space \
-  Remote_Name_Space \
-
+  Remote_Name_Space
+METRICS_FILES = \
+  Metrics_Cache
 TEMPLATE_FILES = \
            Acceptor \
            Active_Map_Manager_T \
@@ -295,6 +296,7 @@ TEMPLATE_FILES = \
            Map_T \
            Message_Block_T \
            Message_Queue_T \
+	   Metrics_Cache_T \
            Module \
 	   Obstack_T \
            Pair_T \
@@ -356,6 +358,7 @@ ifndef ACE_COMPONENTS
     Timer \
     Token \
     Codecs \
+    Metrics \
     Other
 endif # ACE_COMPONENTS
 
@@ -448,6 +451,10 @@ ifeq (,$(findstring Other,$(ACE_COMPONENTS)))
 else  # ! Other
   FILES += $(OTHER_FILES)
 endif # ! Other
+
+ifneq (,$(findstring Metrics,$(ACE_COMPONENTS)))
+  FILES += $(METRICS_FILES)
+endif # Metrics
 
 ifeq ($(AIX_TEMPLATE_HACK),1)
   FILES = 0_ACE_All_Src

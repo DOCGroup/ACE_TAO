@@ -109,9 +109,6 @@ public:
   /// Sorted Event Descriptions.
   ACE_Unbounded_Set<ACE_Event_Descriptions> &sorted_event_descriptions (void);
 
-  /// VME slot address.
-  u_int *current_slot_vme_address (void);
-
   /// Find description of event \<i\>
   const char *find_description_i (u_long i);
 
@@ -141,10 +138,6 @@ protected:
 
   /// Sorted Event Descriptions.
   EVENT_DESCRIPTIONS sorted_event_descriptions_;
-
-  /// Added sections below here to make compatible with the VMETRO
-  /// board test.
-  u_int *current_slot_vme_address_;
 
   /// Time probe slots
   ACE_timeprobe_t *timeprobes_;
