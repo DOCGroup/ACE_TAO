@@ -37,6 +37,7 @@
 #include "ace/SOCK_Dgram.h"
 #include "ace/SOCK_Connector.h"
 #include "mpeg_shared/Audio_ControlC.h"
+#include "orbsvcs/AV/AVStreams_i.h"
 
 class Command_Handler 
   : public virtual ACE_Event_Handler
@@ -148,6 +149,9 @@ private:
   Video_Control_var video_control_;
   // Video Control CORBA object
 
+  AVStreams::MMDevice_var video_mmdevice_;
+  // The video multimedia device
+
   Audio_Control_var audio_control_;
   // audio control corba object
 };
@@ -209,5 +213,37 @@ private:
 
 };
 
+class Video_Client_StreamEndPoint
+  :public virtual TAO_Client_StreamEndPoint
+{
+public:
+  virtual int handle_preconnect (void);
+  // called before connecting
+
+  virtual int handle_postconnect (void);
+  // called after connecting
+
+  CORBA::Boolean connect (AVStreams::StreamEndPoint_ptr responder, 
+                          AVStreams::streamQoS &qos_spec, 
+                          const AVStreams::flowSpec &the_spec,  
+                          CORBA::Environment &env);
+private:
+  ACE_SOCK_Dgram dgram_;
+};
+
+class Video_Client_MMDevice 
+  :public virtual TAO_MMDevice
+{
+public:
+  virtual AVStreams::StreamEndPoint_A_ptr  create_A (AVStreams::StreamCtrl_ptr the_requester, 
+                                                     AVStreams::VDev_out the_vdev, 
+                                                     AVStreams::streamQoS &the_qos, 
+                                                     CORBA::Boolean_out met_qos, 
+                                                     char *&named_vdev, 
+                                                     const AVStreams::flowSpec &the_spec,  
+                                                     CORBA::Environment &env);
+  // Called by StreamCtrl to create a "A" type streamandpoint and vdev
+
+};
 
 #endif /* AV_COMMAND_HANDLER_H */
