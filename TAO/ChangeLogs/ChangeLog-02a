@@ -1,3 +1,9 @@
+Thu Mar  8 11:01:45 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+	* performance-tests/RTCorba/Oneways/Reliable/server.cpp:
+	  Added missing ACE_TRY_ENV to resolve_initial_references
+	  call.
+
 Thu Mar  8 08:34:16 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * examples/Makefile:
