@@ -158,7 +158,7 @@ ACE_TSS_TPQ_Entry::dump (void) const
 			" client_id_ = %s\n",
 			client_id_ == 0 ? "0" : client_id_));
   ACE_DEBUG ((LM_DEBUG, "base:\n"));
-  ACE_TSS<ACE_TPQ_Entry>::dump ();
+  ACE_TPQ_ENTRY::dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));    
 }
 
