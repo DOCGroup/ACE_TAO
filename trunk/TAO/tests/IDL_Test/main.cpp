@@ -20,7 +20,7 @@
 #include "ace/Log_Msg.h"
 
 int 
-main (int argc, char *argv[])
+main (int, char *[])
 {
   ACE_DEBUG ((LM_DEBUG,
               "IDL_Test build completed without errors\n"

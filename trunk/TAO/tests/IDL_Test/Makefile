@@ -30,8 +30,8 @@ IDL_SRC =	anonymous		\
 		union			\
 
 IDL_FILES = \
-        $(addsuffix S, $(IDL_SRCS)) \
-        $(addsuffix C, $(IDL_SRCS))
+        $(addsuffix S, $(IDL_SRC)) \
+        $(addsuffix C, $(IDL_SRC))
 
 IDL_TEST_FILES = $(IDL_FILES) main
 
