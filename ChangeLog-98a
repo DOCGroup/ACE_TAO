@@ -1,3 +1,26 @@
+Tue Feb 24 05:08:31 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Asynch_Acceptor.i: Filled in some missing keywords.
+
+	* ace/Log_Record.h (ACE_Log_Record): Hacked it to work for CE.
+	  Undefined the ostream version of print ().  I'm planning to drop
+	  iostream support on WinCE.  (Then, I don't have to write my
+	  own. ;-)
+
+	* ace/ACE.{h,i} (timestamp, format_hexdump): Removed UNICODE_ONLY version.
+	  Changed to use ASYS_TCHAR to differentiate this condition.
+
+	* ace/OS.h (ACE_OS): Undefined shm_{open,unlink} if
+	  ACE_HAS_MOSTLY_UNICODE_APIS. 
+
+	* ace/OS.cpp (ctime,ctime_r): Added CE implementation.
+
+	* ace/streams.h: Added /**/ between #include and <..> in several
+	  places. 
+
+	* ace/*: Changed ACE_HAS_UNICODE_ONLY to
+	  ACE_HAS_MOSTLY_UNICODE_APIS. 
+
 Mon Feb 23 19:41:53 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/Asynch_Acceptor.i (bytes_to_read): Added an inline accessor
