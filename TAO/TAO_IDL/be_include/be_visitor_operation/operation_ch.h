@@ -43,7 +43,7 @@ public:
   // destructor
 
   virtual int visit_operation (be_operation *node);
-  // visit operation. We provide code for this method in the derived class
+  // visit operation.
 
 };
 
