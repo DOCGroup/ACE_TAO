@@ -139,13 +139,14 @@ TAO_Connection_Cache_Manager::mark_closed (HASH_MAP_ENTRY *&entry)
 }
 
 ACE_INLINE int
-TAO_Connection_Cache_Manager::close (void)
+TAO_Connection_Cache_Manager::close (ACE_Handle_Set &handle_Set)
 {
   ACE_MT (ACE_GUARD_RETURN (ACE_Lock,
                             guard,
                             *this->cache_lock_,
                             -1));
-  return this->close_i ();
+
+  return this->close_i (handle_Set);
 }
 
 

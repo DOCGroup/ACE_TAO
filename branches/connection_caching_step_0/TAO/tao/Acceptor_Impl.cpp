@@ -98,6 +98,10 @@ TAO_Concurrency_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *sh,
   // created one.
   sh->incr_ref_count ();
 
+  // Also set the flag in the connection handler to indicate whether
+  // the handler has been registered with the reactor
+  sh->is_registered (1);
+
   return this->orb_core_->reactor ()->register_handler
     (sh, ACE_Event_Handler::READ_MASK);
 }

@@ -102,6 +102,9 @@ public:
   virtual TAO_Transport *transport (void);
   // Return the transport objects
 
+  virtual ACE_HANDLE fetch_handle (void);
+  // Return the underlying handle
+
 protected:
 
   int handle_cleanup (void);
@@ -164,6 +167,9 @@ public:
   // = Template Methods Called by <handle_input>
 
   TAO_Transport *transport (void);
+
+  virtual ACE_HANDLE fetch_handle (void);
+  // Return the underlying handle
 
 protected:
 

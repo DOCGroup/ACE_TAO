@@ -102,6 +102,9 @@ public:
 
   virtual TAO_Transport *transport (void);
 
+  virtual ACE_HANDLE fetch_handle (void);
+  // Get the underlying handle
+
 protected:
   int handle_cleanup (void);
   // This method deregisters the handler from the reactor and closes it.
@@ -163,6 +166,9 @@ public:
   // = Template Methods Called by <handle_input>
 
   TAO_Transport *transport (void);
+
+  virtual ACE_HANDLE fetch_handle (void);
+  // Get the underlying handle
 
 protected:
 

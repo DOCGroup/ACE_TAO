@@ -85,7 +85,15 @@ public:
   // Increment the reference count
 
   void decr_ref_count (void);
-  // Decrement the refernce count
+  // Decrement the reference count
+
+  CORBA::Boolean is_registered (void);
+  void is_registered (CORBA::Boolean);
+  // Get and set method for the flag that indicates whether the
+  // handler has been registered with the reactor or not.
+
+  virtual ACE_HANDLE fetch_handle (void) = 0;
+  // Get the underlying handle
 
 protected:
 
@@ -123,7 +131,6 @@ protected:
   // Implementation of the call  handle_cleanup () in
   // Service_Handler.
 
-
 private:
 
   TAO_ORB_Core *orb_core_;
@@ -138,6 +145,9 @@ private:
 
   TAO_Connection_Cache_Manager::HASH_MAP_ENTRY *cache_map_entry_;
   // The cache map entry -- where we are in the Connection Cache
+
+  CORBA::Boolean is_registered_;
+  // Are we registered with the reactor?
 };
 
 #if defined (__ACE_INLINE__)

@@ -179,8 +179,8 @@ TAO_UIOP_Server_Connection_Handler::handle_close (ACE_HANDLE handle,
       TAO_Server_Strategy_Factory *f =
         this->orb_core ()->server_factory ();
 
-      if (f->activate_server_connections () == 0)
-        (void) this->orb_core ()->remove_handle (handle);
+      /*if (f->activate_server_connections () == 0)
+        (void) this->orb_core ()->remove_handle (handle);*/
 
       return TAO_UIOP_SVC_HANDLER::handle_close (handle, rm);
     }
@@ -272,6 +272,11 @@ TAO_UIOP_Server_Connection_Handler::handle_input_i (ACE_HANDLE,
   return result;
 }
 
+ACE_HANDLE
+TAO_UIOP_Server_Connection_Handler::fetch_handle (void)
+{
+  return this->get_handle ();
+}
 // ****************************************************************
 
 TAO_UIOP_Client_Connection_Handler::
@@ -430,13 +435,19 @@ int
 TAO_UIOP_Client_Connection_Handler::handle_cleanup (void)
 {
   // Call the implementation.
-  this->handle_cleanup_i (this->reactor (),
-                          this);
+  /*this->handle_cleanup_i (this->reactor (),
+    this);*/
   this->peer ().close ();
 
   return 0;
 }
 
+
+ACE_HANDLE
+TAO_UIOP_Client_Connection_Handler::fetch_handle (void)
+{
+  return this->get_handle ();
+}
 
 // ****************************************************************
 
