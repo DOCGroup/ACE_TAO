@@ -1,3 +1,15 @@
+Wed Jun 21 13:19:47 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/fe/idl.ll:
+	* TAO_IDL/fe/lex.yy.cpp:
+	* TAO_IDL/fe/lex.yy.cpp.diff:
+	  Added a regular expression to the lexer. Phil Mesnier 
+	  <mesnier_p@ociweb.com> is porting TAO to Unixware 7.1 
+	  using the UDK (unixware dev kit) CC compiler, and its
+	  preprocessor is outputting a #file "...." directive
+	  that the IDL compiler lexer doesn't recognize. We now
+	  recognize the directive, and ignore it.
+
 Wed Jun 21 04:54:18 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/FT_CORBA.pidl: Deleted the file from the tao library. Looks
