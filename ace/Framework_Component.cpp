@@ -115,13 +115,10 @@ ACE_Framework_Repository::register_component (const ACE_Framework_Component *fc)
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
   int i;
 
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT("register_component\n")));
-
   // Check to see if it's already registered
   for (i = 0; i < this->current_size_; i++)
     if (fc->this_ == this->component_vector_[i]->this_)
       {
-        ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("Component already registered.\n")));
         // Delete it since it's already here and component adapter was newed.
         delete fc;
         return 0;
@@ -129,7 +126,6 @@ ACE_Framework_Repository::register_component (const ACE_Framework_Component *fc)
 
   if (i < this->total_size_)
     {
-      ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("Component registered.\n")));
       this->component_vector_[i] = fc;
       this->current_size_++;
       return 0;
