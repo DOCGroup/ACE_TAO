@@ -721,6 +721,7 @@ namespace
   struct ExplicitPortEmitter : Traversal::Attribute,
                                Traversal::Operation,
                                Traversal::HomeFactory,
+                               Traversal::HomeFinder,
                                Emitter
   {
     ExplicitPortEmitter (Context& c, ostream& os)
@@ -843,6 +844,57 @@ namespace
 
     virtual void
     comma (SemanticGraph::HomeFactory&)
+    {
+      os << ", ";
+    }
+
+    // HomeFinder.
+    //
+
+    virtual void
+    returns (SemanticGraph::HomeFinder&)
+    {
+      os << "::Components::EnterpriseComponent ";
+    }
+
+    virtual void
+    name (SemanticGraph::HomeFinder& hf)
+    {
+      os << " " << hf.name ();
+    }
+
+    virtual void
+    receives_pre (SemanticGraph::HomeFinder&)
+    {
+      os << " (";
+    }
+
+    virtual void
+    receives_post (SemanticGraph::HomeFinder&)
+    {
+      os << ")";
+    }
+
+    virtual void
+    raises_pre (SemanticGraph::HomeFinder&)
+    {
+      os << " raises (";
+    }
+
+    virtual void
+    raises_post (SemanticGraph::HomeFinder&)
+    {
+      os << ")";
+    }
+
+    virtual void
+    post (SemanticGraph::HomeFinder&)
+    {
+      os << ";";
+    }
+
+    virtual void
+    comma (SemanticGraph::HomeFinder&)
     {
       os << ", ";
     }

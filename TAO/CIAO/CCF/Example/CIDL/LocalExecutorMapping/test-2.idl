@@ -59,5 +59,6 @@ module M2
 	 inout S_Seq s_seq) raises (Ex1, Ex2);
 	 	 
     factory new (in long l, in OctetSeq s) raises (Ex2, Ex1);
+    finder find (in long l, in OctetSeq s) raises (Ex1, Ex2);
   };
 };

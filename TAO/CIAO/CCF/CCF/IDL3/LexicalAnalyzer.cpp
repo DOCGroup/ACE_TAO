@@ -7,7 +7,7 @@
 namespace CCF
 {
   namespace IDL3
-  { 
+  {
     LexicalAnalyzer::
     LexicalAnalyzer (TokenStream<char>& is)
         : IDL2::LexicalAnalyzer (is)
@@ -19,6 +19,7 @@ namespace CCF
       keyword_table_.insert ("emits"    );
       keyword_table_.insert ("eventtype");
       keyword_table_.insert ("home"     );
+      keyword_table_.insert ("finder"   );
       keyword_table_.insert ("manages"  );
       keyword_table_.insert ("provides" );
       keyword_table_.insert ("publishes");

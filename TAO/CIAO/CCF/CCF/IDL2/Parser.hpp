@@ -314,6 +314,7 @@ namespace CCF
       KeywordParser INTERFACE;
       KeywordParser LOCAL;
       KeywordParser MODULE;
+      KeywordParser ONEWAY;
       KeywordParser OUT;
       KeywordParser RAISES;
       KeywordParser SEQUENCE;
@@ -416,6 +417,7 @@ namespace CCF
       Rule member_declarator_list;
 
       Rule operation_decl;
+      Rule operation_decl_trailer;
       Rule operation_parameter_list;
       Rule operation_parameter;
       Rule operation_raises_list;
@@ -555,6 +557,8 @@ namespace CCF
       // Operation
       //
       //
+      NoArgAction<SemanticAction::Operation>
+      act_operation_one_way, act_operation_two_way;
 
       OneArgAction<IdentifierPtr, SemanticAction::Operation>
       act_operation_type;

@@ -107,7 +107,7 @@ namespace CCF
       //
       //
       //
-      class HomeFactory : public virtual Operation
+      class HomeFactory : public virtual TwoWayOperation
       {
       public:
         static Introspection::TypeInfo const&
@@ -126,7 +126,7 @@ namespace CCF
       //
       //
       //
-      class HomeFinder : public virtual Operation
+      class HomeFinder : public virtual TwoWayOperation
       {
       public:
         static Introspection::TypeInfo const&

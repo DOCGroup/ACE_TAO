@@ -44,6 +44,7 @@ namespace CCF
           INTERFACE  ("interface"  ),
           LOCAL      ("local"      ),
           MODULE     ("module"     ),
+          ONEWAY     ("oneway"     ),
           OUT        ("out"        ),
           RAISES     ("raises"     ),
           SEQUENCE   ("sequence"   ),
@@ -190,6 +191,12 @@ namespace CCF
           // Operation
           //
           //
+          act_operation_one_way (
+            f.operation (), &SemanticAction::Operation::one_way),
+
+          act_operation_two_way (
+            f.operation (), &SemanticAction::Operation::two_way),
+
           act_operation_type (
             f.operation (), &SemanticAction::Operation::type),
 
@@ -736,8 +743,22 @@ namespace CCF
       //
       //
       operation_decl =
-           identifier[act_operation_type]
-        >> simple_identifier[act_operation_name]
+           (
+               (
+                    ONEWAY[act_operation_one_way]
+                 >> identifier[act_operation_type]
+               )
+             |
+               (
+                 identifier[act_operation_two_way][act_operation_type]
+               )
+           )
+        >> operation_decl_trailer
+        ;
+
+
+      operation_decl_trailer =
+           simple_identifier[act_operation_name]
         >> LPAREN
         >> operation_parameter_list
         >> RPAREN

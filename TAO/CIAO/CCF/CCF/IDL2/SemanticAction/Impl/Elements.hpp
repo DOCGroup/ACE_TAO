@@ -171,7 +171,7 @@ namespace CCF
 
           class AlreadySupported_ {};
           typedef ExceptionTemplate<AlreadySupported_> AlreadySupported;
-          
+
           template<typename I>
           void
           check_inheritance (I begin, I end, SemanticGraph::Nameable& t)
@@ -181,7 +181,7 @@ namespace CCF
           void
           check_support (I begin, I end, SemanticGraph::Nameable& t)
             throw (AlreadySupported);
-          
+
         protected:
           Context& ctx;
         };

@@ -22,6 +22,12 @@ namespace CCF
       {
       public:
         virtual void
+        one_way () = 0;
+
+        virtual void
+        two_way () = 0;
+
+        virtual void
         type (IdentifierPtr const& id) = 0;
 
         virtual void
