@@ -19,6 +19,7 @@ DIRS  = Cubit \
 	DII_Latency \
 	DSI_Latency \
 	Single_Threaded_Latency \
+	AMH_Single_Threaded_Latency \
 	Thread_Pool_Latency \
 	Thread_Per_Connection_Latency \
 	Callback \
