@@ -1,4 +1,4 @@
-project : acelib {
+project : acelib, taoversion {
   tao        = 1
   includes  += $(TAO_ROOT) $(TAO_ROOT)/tao
   sharedname = TAO
