@@ -527,7 +527,7 @@ TAO_TestCombinedThreads::getTimeout (void)
       if (timeout == 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "WARNING: Could not find timeout for %d\n",
+                      "WARNING: Could not find timeout for task %d\n",
                       threadId));
           // Couldn't find the timeout for the current thread, so
           // we try to get the largest timeout registered.
@@ -537,8 +537,8 @@ TAO_TestCombinedThreads::getTimeout (void)
             }
           else
             {
-              // If that doesn't work, fall back to the 30 second default
-              timeMap->bind (threadId, ACE_Time_Value(30));
+              // If that doesn't work, fall back to the 60 second default
+              timeMap->bind (threadId, ACE_Time_Value(60));
               if (timeMap->find (threadId, entry) == 0)
                 {
                   timeout = &(entry->int_id_);
@@ -615,16 +615,16 @@ TAO_TestCombinedThreads::thr_join (ACE_hthread_t thr_handle,
     }
   else
     {
+      // Whether the task exists or not
+      // we will return a successful value
+      retval = 0;
+
       // Verify that the task id still exists
       while (taskIdVerify (thr_handle) == OK)
         {
           // Wait a bit to see if the task is still active.
           // I'm not sure what a good value would be.
           ACE_OS::sleep (5);
-
-          // We have found the task so set retval to
-          // a successful value
-          retval = 0;
         }
     }
 
