@@ -1,0 +1,44 @@
+# Configuration file for specifying connection information about
+# proxies. 
+# 
+# Here's an explanation of the fields in this file, and how they
+# relate to fields in the "consumer_config" file.
+#
+# 1. Proxy ID -- Each Proxy is given a unique ID that is used
+#    in the "consumer_config" file to specify to which Consumers
+#    the Event Channel will forward incoming events from Suppliers.
+#    The Proxy ID field is the "key" that is used to match up Proxy
+#    connections in this file with the Consumer subscription requests
+#    in the "consumer_config" file.
+#
+# 2. Host -- The host name where the Supplier/Consumer peerd
+#    process is running.
+#
+# 3. Remote Port -- The port number where the remote
+#    Supplier/Consumer peerd process is listening on.
+#
+# 4. Proxy Role -- i.e., Consumer ('C') or Supplier ('S')
+#
+# 5. Max Retry Timeout -- The maximum amount of time that we'll
+#    wait between retry attempts (these start at 1 second and 
+#    double until they reach the Max Retry Timeout).
+#
+# 6. Local Port -- The port number that we want to use for
+#    our local Proxy connection.  If this is the value 0, then
+#    we'll let the socket implementation pick this value for us.
+#
+# 7. Priority -- Each Consumer/Supplier can be given a priority
+#    that will determine its importance relative to other 
+#    Consumers/Suppliers (this feature isn't implemented yet).
+#
+# Proxy Host         Remote  Proxy  Max Retry  Local  Priority 
+# ID		     Port    Role   Timeout    Port   
+# ----  --------     ------  ------ ---------- -----  --------
+   1    localhost    10002   S	    32	       0      1
+   2    localhost    10003   C	    32	       0      1
+#  3    mambo.cs     10002   C	    32	       0      1
+#  4    lambada.cs   10002   C	    32	       0      1
+#  5    lambada.cs   10002   C	    32	       0      1
+#  6    tango.cs     10002   C	    32	       0      1
+#  7    tango.cs     5001    S	    32	       0      1
+#  8    tango.cs     5002    C	    32	       0      1
