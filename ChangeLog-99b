@@ -1,3 +1,18 @@
+Mon Jan 25 22:11:36 1999  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * ACE_wrappers/tests/CDR_Test.dsp:
+        * ACE_wrappers/tests/tests.dsw:
+        * ACE_wrappers/tests/versions_tests/CDR_Test.dsp:
+        * ACE_wrappers/tests/versions_tests/version_tests.dsw:
+        * ACE_wrappers/tests/run_tests.sh:
+        * ACE_wrappers/tests/run_tests.psosim:
+        * ACE_wrappers/tests/run_tests.bat:
+        * ACE_wrappers/tests/run_tests.vxworks:
+          Fixed the project files (they had incorrrect project
+          settings, I think) and updated the workspace files.
+          Also, on a tip from Nanbor, added CDR_Test to the
+          various run_tests files.
+
 Mon Jan 25 20:22:01 1999  Jeff Parsons <parsons@cs.wustl.edu>
 
         * ace/CDR.{h,i,cpp}:
