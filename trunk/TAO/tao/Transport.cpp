@@ -1408,7 +1408,7 @@ TAO_Transport::make_queued_data (ACE_Message_Block &incoming)
       size_t wr_pos = incoming.wr_ptr () - start;
 
       qd->msg_block_->rd_ptr (rd_pos);
-      qd->msg_block_->wr_ptr (rd_pos);
+      qd->msg_block_->wr_ptr (wr_pos);
     }
 
 
@@ -1436,7 +1436,7 @@ TAO_Transport::process_queue_head (TAO_Resume_Handle &rh)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "TAO(%P|%t) - Transport[%d]::process_queue_head"
-                      " the size of the queue is [%d]",
+                      " the size of the queue is [%d] \n",
                       this->id (),
                       this->incoming_message_queue_.queue_length ()));
         }
