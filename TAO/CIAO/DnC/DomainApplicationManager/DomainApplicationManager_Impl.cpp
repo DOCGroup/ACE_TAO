@@ -4,6 +4,8 @@
 #include "ace/Null_Mutex.h"
 #include "ace/OS_NS_string.h"
 
+#include "CIAO/DnC/Config_Handlers/DnC_Dump.h"
+
 #if !defined (__ACE_INLINE__)
 # include "DomainApplicationManager_Impl.inl"
 #endif /* __ACE_INLINE__ */
@@ -43,13 +45,19 @@ init (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       if ( ! this->get_plan_info () )
         ACE_THROW (Deployment::PlanError ());
 
+      ACE_DEBUG ((LM_DEBUG, "after: get_plan_info...\n"));
+
       // Check the validity of the global deployment plan.
-      if ( ! this->check_validity () )
-        ACE_THROW (Deployment::PlanError ());
+      //if ( ! this->check_validity () )
+      //  ACE_THROW (Deployment::PlanError ());
+
+      ACE_DEBUG ((LM_DEBUG, "after: check_validity...\n"));
 
       // Call split_plan()
       if ( ! this->split_plan () )
         ACE_THROW (Deployment::PlanError ());
+
+      ACE_DEBUG ((LM_DEBUG, "after: split_plan...\n"));
 
       // Invoke preparePlan for each child deployment plan.
       for (size_t i = 0; i < this->num_child_plans_; i++)
@@ -70,17 +78,21 @@ init (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
           Chained_Artifacts artifacts = entry->int_id_;
 
+          // Dump the contents
+          ::Deployment::DnC_Dump::dump (artifacts.child_plan_);
+
+
           // Call preparePlan() method on the NodeManager with the
           // corresponding child plan as input, which returns a
           // NodeApplicationManager object reference.  @@TODO: Does
           // preparePlan take a _var type variable?
-          ::Deployment::NodeApplicationManager_var my_nam =
-            my_node_manager->preparePlan (artifacts.child_plan_
-                                          ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          //::Deployment::NodeApplicationManager_var my_nam =
+          //  my_node_manager->preparePlan (artifacts.child_plan_
+          //                                ACE_ENV_ARG_PARAMETER);
+          //ACE_TRY_CHECK;
 
           // Cache the NodeApplicationManager object reference.
-          artifacts.node_application_manager_ = my_nam;
+          //artifacts.node_application_manager_ = my_nam;
         }
     }
   ACE_CATCHANY
@@ -155,9 +167,8 @@ check_validity (void)
 
   for (size_t i = 0; i < this->num_child_plans_; i++)
     {
-      if (this->deployment_config_.get_node_manager
-            (this->node_manager_names_[i].c_str ())
-            == NULL) // invalid name
+      if (this->deployment_config_.get_node_manager (this->node_manager_names_[i].c_str ())
+            == 0) // invalid name
         {
           return false;
         }
@@ -180,6 +191,7 @@ split_plan (void)
                     ::Deployment::DeploymentPlan,
                     0);
 
+    tmp_plan->UUID = CORBA::string_dup (this->plan_.UUID.in ());
     tmp_plan->implementation.length (0);
     tmp_plan->instance.length (0);
     tmp_plan->connection.length (0);
@@ -200,6 +212,8 @@ split_plan (void)
 
     this->artifact_map_.bind (node_manager_names_[i], artifacts);
   }
+
+   ACE_DEBUG ((LM_DEBUG, "after: initialize empty child plans...\n"));
 
   // (1) Iterate over the <instance> field of the global DeploymentPlan
   //     variabl.
@@ -240,7 +254,7 @@ split_plan (void)
 
       CORBA::ULong index_imp = child_plan->implementation.length ();
       child_plan->implementation.length (++index_imp);
-      child_plan->implementation[index_imp] = my_implementation;
+      child_plan->implementation[index_imp-1] = my_implementation;
 
       // @@TODO: Create a ULong sequence of artifactRef, which will be
       // as the new artifactRef field for the implementation struct.
@@ -259,7 +273,7 @@ split_plan (void)
 
           CORBA::ULong index_art = child_plan->artifact.length ();
           child_plan->artifact.length (++index_art);
-          child_plan->artifact[index_art] =
+          child_plan->artifact[index_art-1] =
             (this->plan_.artifact)[artifact_ref];
 
           // @@ The artifactRef starts from 0.
@@ -267,7 +281,7 @@ split_plan (void)
         }
 
       // Change the <artifactRef> field of the "implementation".
-      child_plan->implementation[index_imp].artifactRef = ulong_seq;
+      child_plan->implementation[index_imp-1].artifactRef = ulong_seq;
 
       // Append the "InstanceDeploymentDescription instance" field with
       // a new "instance", which is almost the same as the "instance" in
@@ -275,11 +289,11 @@ split_plan (void)
       // NOTE: The <implementationRef> field needs to be changed accordingly.
       CORBA::ULong index_ins = child_plan->instance.length ();
       child_plan->instance.length (++index_ins);
-      child_plan->instance[index_ins] = my_instance;
+      child_plan->instance[index_ins-1] = my_instance;
 
       // Change the <implementationRef> field of the "instance".
       // @@ The implementationRef starts from 0.
-      child_plan->instance[index_ins].implementationRef = index_ins;
+      child_plan->instance[index_ins-1].implementationRef = index_ins-1;
     }
 
   return 1;
