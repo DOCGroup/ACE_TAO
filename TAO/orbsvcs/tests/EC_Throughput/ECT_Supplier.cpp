@@ -109,8 +109,8 @@ ECTS_Driver::run (int argc, char* argv[])
       if (ACE_OS::thr_setprio (min_priority) == -1)
         {
           ACE_ERROR ((LM_ERROR, "(%P|%t) main thr_setprio failed,"
-		      "no real-time features\n"));
-	}
+                      "no real-time features\n"));
+        }
 
       CORBA::Object_var naming_obj =
         orb->resolve_initial_references ("NameService");
@@ -124,22 +124,22 @@ ECTS_Driver::run (int argc, char* argv[])
       TAO_CHECK_ENV;
 
       if (ACE_Scheduler_Factory::use_config (naming_context.in ()) == -1)
-	return -1;
+        return -1;
 
       CosNaming::Name name (1);
       name.length (1);
       name[0].id = CORBA::string_dup ("EventService");
 
       CORBA::Object_var ec_obj =
-	naming_context->resolve (name, TAO_TRY_ENV);
+        naming_context->resolve (name, TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       RtecEventChannelAdmin::EventChannel_var channel;
       if (CORBA::is_nil (ec_obj.in ()))
-	channel = RtecEventChannelAdmin::EventChannel::_nil ();
+        channel = RtecEventChannelAdmin::EventChannel::_nil ();
       else
-	channel = RtecEventChannelAdmin::EventChannel::_narrow (ec_obj.in (),
-								TAO_TRY_ENV);
+        channel = RtecEventChannelAdmin::EventChannel::_narrow (ec_obj.in (),
+                                                                TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       poa_manager->activate (TAO_TRY_ENV);
@@ -157,16 +157,16 @@ ECTS_Driver::run (int argc, char* argv[])
 
       // Wait for the supplier threads...
       if (ACE_Thread_Manager::instance ()->wait () == -1)
-	{
-	  ACE_ERROR ((LM_ERROR, "Thread_Manager wait failed\n"));
-	  return 1;
-	}
+        {
+          ACE_ERROR ((LM_ERROR, "Thread_Manager wait failed\n"));
+          return 1;
+        }
 
       ACE_DEBUG ((LM_DEBUG, "suppliers finished\n"));
 
       this->disconnect_suppliers (TAO_TRY_ENV);
       TAO_CHECK_ENV;
-      
+
       // @@ Deactivate the suppliers (as CORBA Objects?)
     }
   TAO_CATCH (CORBA::SystemException, sys_ex)
@@ -183,7 +183,7 @@ ECTS_Driver::run (int argc, char* argv[])
 
 int
 ECTS_Driver::supplier_task (Test_Supplier *supplier,
-		       void* cookie)
+                       void* cookie)
 {
   TAO_TRY
     {
@@ -200,11 +200,11 @@ ECTS_Driver::supplier_task (Test_Supplier *supplier,
       other.description = CORBA::string_copy ("some data");
 
       for (CORBA::ULong j = 0; j < n; ++j)
-	{
-	  info.trajectory[j].x = j;
-	  info.trajectory[j].y = j*j;
-	  other.inventory.bind (j, j + 1);
-	}
+        {
+          info.trajectory[j].x = j;
+          info.trajectory[j].y = j*j;
+          other.inventory.bind (j, j + 1);
+        }
 
       // We have to make it big enough so we get a contiguous block,
       // otherwise the octet sequence will not work correctly.
@@ -227,38 +227,38 @@ ECTS_Driver::supplier_task (Test_Supplier *supplier,
       CORBA::ULong mblen = cdr.length ();
 
       for (CORBA::ULong i = 0; i < n; ++i)
-	{
-	  RtecEventComm::EventSet event (1);
-	  event.length (1);
-	  event[0].source_ = supplier->supplier_id ();
-	  event[0].ttl_ = 1;
+        {
+          RtecEventComm::EventSet event (1);
+          event.length (1);
+          event[0].source_ = supplier->supplier_id ();
+          event[0].ttl_ = 1;
 
-	  ACE_hrtime_t t = ACE_OS::gethrtime ();
-	  ORBSVCS_Time::hrtime_to_TimeT (event[0].creation_time_, t);
-	  event[0].ec_recv_time_ = ORBSVCS_Time::zero;
-	  event[0].ec_send_time_ = ORBSVCS_Time::zero;
+          ACE_hrtime_t t = ACE_OS::gethrtime ();
+          ORBSVCS_Time::hrtime_to_TimeT (event[0].creation_time_, t);
+          event[0].ec_recv_time_ = ORBSVCS_Time::zero;
+          event[0].ec_send_time_ = ORBSVCS_Time::zero;
 
-	  if (i == this->event_count_ - 1)
-	    event[0].type_ = ACE_ES_EVENT_SHUTDOWN;
-	  else if (i % 2 == 0)
-	    event[0].type_ = this->event_a_;
-	  else
-	    event[0].type_ = this->event_b_;
+          if (i == ACE_static_cast (CORBA::ULong, this->event_count_) - 1)
+            event[0].type_ = ACE_ES_EVENT_SHUTDOWN;
+          else if (i % 2 == 0)
+            event[0].type_ = this->event_a_;
+          else
+            event[0].type_ = this->event_b_;
 
-	  event[0].data_.x = 0;
-	  event[0].data_.y = 0;
+          event[0].data_.x = 0;
+          event[0].data_.y = 0;
 
-	  // We use replace to minimize the copies, this should result
-	  // in just one memory allocation; 
-	  event[0].data_.payload.replace (mblen, mb);
+          // We use replace to minimize the copies, this should result
+          // in just one memory allocation;
+          event[0].data_.payload.replace (mblen, mb);
 
-	  supplier->consumer_proxy ()->push(event, TAO_TRY_ENV);
-	  TAO_CHECK_ENV;
+          supplier->consumer_proxy ()->push(event, TAO_TRY_ENV);
+          TAO_CHECK_ENV;
 
-	  // ACE_DEBUG ((LM_DEBUG, "(%t) supplier push event\n"));
-	  
-	  ACE_OS::sleep (tv);
-	}
+          // ACE_DEBUG ((LM_DEBUG, "(%t) supplier push event\n"));
+
+          ACE_OS::sleep (tv);
+        }
     }
   TAO_CATCH (CORBA::SystemException, sys_ex)
     {
@@ -274,7 +274,7 @@ ECTS_Driver::supplier_task (Test_Supplier *supplier,
 
 void
 ECTS_Driver::connect_suppliers (RtecEventChannelAdmin::EventChannel_ptr channel,
-			   CORBA::Environment &_env)
+                           CORBA::Environment &_env)
 {
   for (int i = 0; i < this->n_suppliers_; ++i)
     {
@@ -284,11 +284,11 @@ ECTS_Driver::connect_suppliers (RtecEventChannelAdmin::EventChannel_ptr channel,
       ACE_NEW (this->suppliers_[i], Test_Supplier (this));
 
       this->suppliers_[i]->connect (buf,
-				    this->event_a_,
-				    this->event_b_,
-				    this->event_period_,
-				    channel,
-				    _env);
+                                    this->event_a_,
+                                    this->event_b_,
+                                    this->event_period_,
+                                    channel,
+                                    _env);
       if (_env.exception () != 0) return;
     }
 }
@@ -322,17 +322,17 @@ ECTS_Driver::parse_args (int argc, char *argv [])
     {
       switch (opt)
         {
-	case 's':
-	  this->n_suppliers_ = ACE_OS::atoi (get_opt.optarg);
-	  break;
+        case 's':
+          this->n_suppliers_ = ACE_OS::atoi (get_opt.optarg);
+          break;
 
-	case 'n':
-	  this->event_count_ = ACE_OS::atoi (get_opt.optarg);
-	  break;
+        case 'n':
+          this->event_count_ = ACE_OS::atoi (get_opt.optarg);
+          break;
 
-	case 't':
-	  this->event_period_ = ACE_OS::atoi (get_opt.optarg);
-	  break;
+        case 't':
+          this->event_period_ = ACE_OS::atoi (get_opt.optarg);
+          break;
 
         case 'h':
           {
@@ -355,8 +355,8 @@ ECTS_Driver::parse_args (int argc, char *argv [])
                       "Usage: %s "
                       "[ORB options] "
                       "-s <nsuppliers> "
-		      "-n <event count> "
-		      "-t <event period (usecs)> "
+                      "-n <event count> "
+                      "-t <event period (usecs)> "
                       "-h <eventa,eventb> "
                       "-p <pid file name> "
                       "\n",
@@ -377,11 +377,11 @@ ECTS_Driver::parse_args (int argc, char *argv [])
 
   if (this->n_suppliers_ <= 0)
     {
+      this->n_suppliers_ = 1;
       ACE_ERROR_RETURN ((LM_DEBUG,
                          "%s: number of suppliers out of range, "
-			 "reset to default (%d)\n",
-			 argv[0], 1), -1);
-      this->n_suppliers_ = 1;
+                         "reset to default (%d)\n",
+                         argv[0], 1), -1);
     }
 
   return 0;
@@ -397,11 +397,11 @@ Test_Supplier::Test_Supplier (ECTS_Driver *driver)
 
 void
 Test_Supplier::connect (const char* name,
-			int event_a,
-			int event_b,
-			int event_period,
-			RtecEventChannelAdmin::EventChannel_ptr ec,
-			CORBA::Environment &_env)
+                        int event_a,
+                        int event_b,
+                        int event_period,
+                        RtecEventChannelAdmin::EventChannel_ptr ec,
+                        CORBA::Environment &_env)
 {
   TAO_TRY
     {
@@ -457,7 +457,7 @@ Test_Supplier::connect (const char* name,
       TAO_CHECK_ENV;
 
       RtecEventComm::PushSupplier_var objref =
-	this->supplier_._this (TAO_TRY_ENV);
+        this->supplier_._this (TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       this->consumer_proxy_->connect_push_supplier (objref.in (),
