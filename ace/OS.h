@@ -4646,6 +4646,12 @@ public:
   static int atoi (const wchar_t *s);
 # endif /* ACE_HAS_WCHAR */
 
+  static void *atop (const char *s);
+
+# if defined (ACE_HAS_WCHAR)
+  static void *atop (const wchar_t *s);
+# endif /* ACE_HAS_WCHAR */
+
   /// This method computes the largest integral value not greater than x.
   static double floor (double x);
 

@@ -118,10 +118,16 @@ int
 ACE_WIN32_Proactor::register_handle (ACE_HANDLE handle,
                                      const void *completion_key)
 {
+#if defined (ACE_WIN64)
+  ULONG_PTR comp_key (ACE_static_cast (ULONG_PTR, completion_key));
+#else
+  ULONG comp_key (ACE_static_cast (ULONG, completion_key));
+#endif /* ACE_WIN64 */
+
   // No locking is needed here as no state changes.
   ACE_HANDLE cp = ::CreateIoCompletionPort (handle,
                                             this->completion_port_,
-                                            (u_long) completion_key,
+                                            comp_key,
                                             this->number_of_threads_);
   if (cp == 0)
     {
@@ -671,11 +677,16 @@ ACE_WIN32_Proactor::post_completion (ACE_WIN32_Asynch_Result *result)
       bytes_transferred = result->bytes_transferred ();
       completion_key = result->completion_key();
     }
+#if defined (ACE_WIN64)
+  ULONG_PTR comp_key (ACE_static_cast (ULONG_PTR, completion_key));
+#else
+  ULONG comp_key (ACE_static_cast (ULONG, completion_key));
+#endif /* ACE_WIN64 */
 
   // Post a completion
   if (::PostQueuedCompletionStatus (this->completion_port_, // completion port
-                                    bytes_transferred,      // number of bytes transferred
-                                    (ULONG) completion_key, // completion key
+                                    bytes_transferred,      // xfer count
+                                    comp_key,               // completion key
                                     result                  // overlapped
                                     ) == FALSE)
     {

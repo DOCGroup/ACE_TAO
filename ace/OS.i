@@ -5629,6 +5629,38 @@ ACE_OS::atoi (const wchar_t *s)
 }
 #endif /* ACE_HAS_WCHAR */
 
+
+ACE_INLINE void *
+ACE_OS::atop (const char *s)
+{
+  ACE_TRACE ("ACE_OS::atop");
+  // It would be nice to make use of Basic_Types.h here, but that
+  // file relies on OS.h. Fortunately, most platforms have int
+  // the same as pointer size (IA32, IA64), with Win64 being the
+  // exception.
+#if defined (ACE_WIN64)
+  __int64 ip = ::_atoi64 (s);
+#else
+  int ip = ::atoi (s);
+#endif /* ACE_WIN64 */
+  void *p = ACE_reinterpret_cast (void *, ip);
+  return p;
+}
+
+#if defined (ACE_HAS_WCHAR)
+ACE_INLINE void *
+ACE_OS::atop (const wchar_t *s)
+{
+#  if defined (ACE_WIN64)
+  __int64 ip = ::_wtoi64 (s);
+#  else
+  int ip = ACE_OS::atoi (s);
+#  endif /* ACE_WIN64 */
+  void *p = ACE_reinterpret_cast (void *, ip);
+  return p;
+}
+#endif /* ACE_HAS_WCHAR */
+
 ACE_INLINE double
 ACE_OS::floor (double x)
 {
@@ -9580,7 +9612,7 @@ ACE_OS::fdopen (ACE_HANDLE handle, const ACE_TCHAR *mode)
 
   FILE *file = 0;
 
-  int crt_handle = ::_open_osfhandle ((long) handle, 0);
+  int crt_handle = ::_open_osfhandle (intptr_t (handle), 0);
 
   if (crt_handle != -1)
     {
@@ -11233,8 +11265,10 @@ ACE_OS::isatty (ACE_HANDLE handle)
   ACE_UNUSED_ARG (handle);
   return 0;
 #else
-  int fd = ::_open_osfhandle ((long) handle, 0);
-  return ::_isatty (fd);
+  int fd = ::_open_osfhandle (intptr_t (handle), 0);
+  int status = ::_isatty (fd);
+  ::_close (fd);
+  return status;
 #endif /* ACE_LACKS_ISATTY */
 }
 

@@ -1051,30 +1051,30 @@ ACE_Configuration_Win32Registry::resolve_key (HKEY hKey,
 
 ACE_Configuration_Value_IntId::ACE_Configuration_Value_IntId (void)
   : type_ (ACE_Configuration::INVALID),
-    data_ (0),
     length_ (0)
 {
+  this->data_.ptr_ = 0;
 }
 
 ACE_Configuration_Value_IntId::ACE_Configuration_Value_IntId (ACE_TCHAR* string)
   : type_ (ACE_Configuration::STRING),
-    data_ (string),
     length_ (0)
 {
+  this->data_.ptr_ = string;
 }
 
 ACE_Configuration_Value_IntId::ACE_Configuration_Value_IntId (u_int integer)
   : type_ (ACE_Configuration::INTEGER),
-    data_ (ACE_reinterpret_cast (void*, integer)),
     length_ (0)
 {
+  this->data_.int_ = integer;
 }
 
-ACE_Configuration_Value_IntId::ACE_Configuration_Value_IntId (void* data, u_int length)
+ACE_Configuration_Value_IntId::ACE_Configuration_Value_IntId (void* data, size_t length)
   : type_ (ACE_Configuration::BINARY),
-    data_ (data),
     length_ (length)
 {
+  this->data_.ptr_ = data;
 }
 
 ACE_Configuration_Value_IntId::ACE_Configuration_Value_IntId (const ACE_Configuration_Value_IntId& rhs)
@@ -1104,7 +1104,7 @@ ACE_Configuration_Value_IntId::free (ACE_Allocator *alloc)
 {
   if (this->type_ == ACE_Configuration::STRING
       || this->type_ == ACE_Configuration::BINARY)
-    alloc->free ((void *) (data_));
+    alloc->free (data_.ptr_);
   // Do nothing in other cases...
 }
 
@@ -1985,7 +1985,7 @@ ACE_Configuration_Heap::get_string_value (const ACE_Configuration_Section_Key& k
     return -4;
 
   // everythings ok, return the data
-  value = (ACE_TCHAR*)VIntId.data_;
+  value = ACE_static_cast (ACE_TCHAR*, VIntId.data_.ptr_);
   return 0;
 }
 
@@ -2021,7 +2021,7 @@ ACE_Configuration_Heap::get_integer_value (const ACE_Configuration_Section_Key& 
     return -4;
 
   // Everythings ok, return the data
-  value = (u_int) ((long)VIntId.data_);
+  value = VIntId.data_.int_;
   return 0;
 }
 
@@ -2058,7 +2058,7 @@ ACE_Configuration_Heap::get_binary_value (const ACE_Configuration_Section_Key& k
 
   // Make a copy
   ACE_NEW_RETURN (data, char[VIntId.length_], -5);
-  ACE_OS::memcpy (data, VIntId.data_, VIntId.length_);
+  ACE_OS::memcpy (data, VIntId.data_.ptr_, VIntId.length_);
   length = VIntId.length_;
   return 0;
 }

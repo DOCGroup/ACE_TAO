@@ -902,7 +902,7 @@ ACE_OS::fopen (const ACE_TCHAR *filename,
       }
 # else
       hmode &= _O_TEXT | _O_RDONLY | _O_APPEND;
-      int fd = _open_osfhandle ((long) handle, hmode);
+      int fd = _open_osfhandle (intptr_t (handle), hmode);
       if (fd != -1)
         {
 #   if defined (__BORLANDC__) && !defined (ACE_USES_WCHAR)
@@ -4082,8 +4082,8 @@ ACE_OS::unique_name (const void *object,
   // <object>.
   ACE_TCHAR temp_name[ACE_UNIQUE_NAME_LEN];
   ACE_OS::sprintf (temp_name,
-                   ACE_LIB_TEXT ("%lx%d"),
-                   ACE_reinterpret_cast (long, object),
+                   ACE_LIB_TEXT ("%p%d"),
+                   object,
                    ACE_static_cast (int, ACE_OS::getpid ()));
   ACE_OS::strsncpy (name,
                     temp_name,
