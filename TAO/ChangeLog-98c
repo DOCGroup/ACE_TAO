@@ -1,3 +1,9 @@
+Wed Oct  1 09:10:38 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
+
+	* docs/releasenotes.html: 
+	  Updated information on the Event Channel, the use of the Naming
+	  Service is no longer a plan, it is done already.
+
 Tue Sep 30 20:14:29 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* TAO version 0.0.9, released Tue Sep 30 20:14:29 1997.
