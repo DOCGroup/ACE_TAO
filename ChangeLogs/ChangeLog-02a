@@ -1,3 +1,18 @@
+Wed Apr 25 23:24:25 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * tests/MEM_Stream_Test.cpp: Changed the error message on SysV
+          semaphores to LM_WARNING and moved it up before executing the MT
+          test.
+
+        * ace/MEM_IO.cpp:
+        * ace/MEM_IO.h:
+        * ace/MEM_IO.i: Do not compile MT signaling code if only SysV
+	  semaphores are available.
+
+        * ace/MEM_Acceptor.cpp:
+        * ace/MEM_Connector.cpp: Force the other party to use Reactive
+	  signaling if we don't support MT signaling.
+
 Wed Apr 25 19:48:48 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * bin/auto_run_tests.lst:
@@ -41,9 +56,12 @@ Wed Apr 25 03:45:55 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 Wed Apr 25 03:15:34 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-        * ace/Malloc.h:
+        * ace/Malloc.h: Added new variables to reference counting the
+	  Malloc.
+
         * ace/PI_Malloc.h: Added new variables to reference counting the
-          Malloc.
+	  Malloc and removed a ton of duplicated code that had already
+	  been defined in Malloc.h.
 
         * ace/Malloc_T.cpp:
         * ace/Malloc_T.h:
