@@ -1,3 +1,12 @@
+Thu Feb 13 17:50:07 2003  Krishnakumar B  <kitty@cse.wustl.edu>
+
+        * include/makeinclude/rules.lib.GNU: Build static libraries
+          using xargs with the list of all the object files instead of
+          using them directly on the command line. This works around
+          brokenness of systems that have a small limit on the length of
+          the command-line arguments. Thanks to Abhay Kulkarni
+          <Abhay.Kulkarni@veritas.com> for reporting the problem.
+
 Thu Feb 13 12:43:27 2003  Pradeep Gore  <pradeep@oomworks.com>
 
 	* bin/auto_run_tests.lst:
@@ -11,7 +20,7 @@ Wed Feb 12 12:40:21 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 
 	* bin/auto_run_tests.lst: Prevented a few RTCORBA tests to be run
 	  in our daily builds since changing priorities requires root
-	  access. 
+	  access.
 
 Wed Feb 12 12:06:05 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
