@@ -76,8 +76,13 @@ static CORBA::TypeCode _tc__tc_CORBA_ORB_InconsistentTypeCode (
     0,
     sizeof (CORBA_ORB_InconsistentTypeCode));
 
-// Static initialization.
+// = Static initialization.
+
+// Count of the number of ORBs.
 int CORBA_ORB::orb_init_count_ = 0;
+
+// Pointer to the "default ORB."
+CORBA::ORB_ptr CORBA::instance_ = 0;
 
 // ORB exception typecode initialization.
 CORBA::TypeCode_ptr CORBA_ORB::_tc_InconsistentTypeCode = 
@@ -143,6 +148,11 @@ CORBA_ORB::~CORBA_ORB (void)
 
       // free up all the ORB owned TypeCodes
       TAO_TypeCodes::fini ();
+
+      // @@ Note that we shouldn't need to actually delete this
+      // instance since it'll be handled by the destruction of the
+      // instance via another mechanism.
+      CORBA::instance_ = 0;
     }
 
   delete this->shutdown_lock_;
@@ -877,7 +887,6 @@ CORBA::ORB_init (int &argc,
   // from being called within a static object CTOR.
   ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard,
                             *ACE_Static_Object_Lock::instance (), 0));
-
   env.clear ();
 
   // Make sure initialization of TAO globals only occurs once.
@@ -901,8 +910,10 @@ CORBA::ORB_init (int &argc,
       || sizeof (CORBA::WChar) < 2
       || sizeof (void *) != ACE_SIZEOF_VOID_P)
     {
-      ACE_DEBUG ((LM_DEBUG, "%s; ERROR: unexpected basic type size; "
-                            "s:%d l:%d ll:%d f:%d d:%d ld:%d wc:%d v:%d\n",
+      ACE_DEBUG ((LM_DEBUG,
+                  "%s; ERROR: unexpected basic type size; "
+                  "s:%d l:%d ll:%d f:%d d:%d ld:%d wc:%d v:%d\n"
+                  "please reconfigure TAO\n",
                   __FILE__,
                   sizeof (CORBA::Short),
                   sizeof (CORBA::Long),
@@ -921,18 +932,47 @@ CORBA::ORB_init (int &argc,
   TAO_ORB_Core *oc = TAO_ORB_Core_instance ();
 
   // Initialize the ORB Core instance.
-  int result = oc->init (argc, (char **)argv);
+  int result = oc->init (argc, (char **) argv);
 
-  // check for errors and return 0 if error.
+  // Check for errors and return 0 if error.
   if (result == -1)
     {
       env.exception (new CORBA::BAD_PARAM (CORBA::COMPLETED_NO));
       return 0;
     }
 
+  // @@ We may only want to set this if ORB_init() has 0 argc/argv
+  // parameters.
+  if (CORBA::instance_ == 0)
+    CORBA::instance_ = oc->orb ();
+
   return oc->orb ();
 }
 
+CORBA::ORB_ptr
+CORBA::instance (void)
+{
+  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard,
+                            *ACE_Static_Object_Lock::instance (), 0));
+  if (CORBA::instance_ == 0)
+    {
+      int argc = 0;
+      const *char *argv = 0;
+      // Note that CORBA::ORB_init() will also acquire the static
+      // lock, but that's ok since it's a recursive lock.
+      CORBA::instance_ = CORBA::ORB_init (argc, argv);
+    }
+
+  return CORBA::instance_;
+}
+
+void
+CORBA::instance (CORBA::ORB_ptr orb)
+{
+  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard,
+                            *ACE_Static_Object_Lock::instance (), 0));
+  CORBA::instance_ = orb;
+}
 
 // *************************************************************
 // Inline operators for TAO_opaque encoding and decoding
