@@ -1,3 +1,11 @@
+Mon Jul 06 09:07:36 1998  Steve Huston  <shuston@riverace.com>
+
+	* tao/ORB_Core.{i cpp}: Removed redundant preprocessing token 
+	  concatentations - HP-UX aCC warned about them.
+
+	* tao/Connect.h: Added #include "tao/corba.h" so the defs are visible
+	  at template instantiation on AIX xlC.
+
 Mon Jul  6 04:45:02 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/Connect.h (TAO_Client_Connect_Handler): Added a new data
