@@ -411,7 +411,7 @@ ACE_INET_Addr::get_host_name (ASYS_TCHAR hostname[], size_t len) const
       hostent *hp = ACE_OS::gethostbyaddr ((char *) &this->inet_addr_.sin_addr,
                                            a_len,
                                            this->addr_type_);
-      if (!hp)
+      if (hp == 0)
         error = errno;  // So that the errno gets propagated back; it is
                         // loaded from error below.
 #else
@@ -430,35 +430,19 @@ ACE_INET_Addr::get_host_name (ASYS_TCHAR hostname[], size_t len) const
           errno = error;
           return -1;
         }
-      else
+
+      if (hp->h_name == 0)
+        return -1;
+
+      if (ACE_OS::strlen (hp->h_name) >= len)
         {
-          char **p;
-
-          for (p = hp->h_addr_list; *p != 0; ++p)
-            if (ACE_OS::memcmp (&inet_addr_.sin_addr,
-                                *p, 
-                                hp->h_length) == 0)
-              break;
-
-          if (*p == 0)
-            return -1;
-
-          char *h = hp->h_aliases[p - hp->h_addr_list];
-
-          if (h == 0)
-            h = hp->h_name;
-          if (ACE_OS::strlen (h) >= len)
-            {
-              errno = ENOSPC;
-              return -1;
-            }
-          else
-            {
-              ACE_OS::strcpy (hostname,
-                              ASYS_WIDE_STRING (h));
-              return 0;
-            }
+          errno = ENOSPC;
+          return -1;
         }
+
+      ACE_OS::strcpy (hostname,
+                      ASYS_WIDE_STRING (hp->h_name));
+      return 0;
 #endif /* VXWORKS */
     }
 }
