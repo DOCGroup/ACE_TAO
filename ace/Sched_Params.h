@@ -171,7 +171,7 @@ public:
   // Check if there are more priorities.
 
   int priority (void) const;
-  // Return the current priority
+  // Return the current priority.
 
   void next (void);
   // Move to the next priority.
