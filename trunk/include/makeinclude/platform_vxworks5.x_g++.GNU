@@ -8,12 +8,6 @@
 ####    because it contains identifiers with ".", e.g., ".cpp", in them:
 ####    add a global variable or function to that .cpp file.  See
 ####    ace/IOStream_T.cpp for an explanation and example.
-####
-#### 3) I have run into problems with undefined symbols __cleanup and
-####    __exit, with some executables, on pc486 target.  For some reason,
-####    they're not provided in Wind River's Tornado 1.0.1 libraries.
-####    I have a TSR (#44826) open with them to investigate/solve this.
-####    In the meantime, I created stub versions and link them in.
 
 
 #### BEGIN CPU-specific settings
@@ -32,15 +26,12 @@ ifeq ($(CPU),)
 endif # default CPU
 
 ifeq ($(CPU),PPC604)
-  CCFLAGS += -B$(GCCLIB_DIR)/ -DCPU=PPC604
+  CFLAGS += -B$(GCCLIB_DIR)/ -DCPU=PPC604
   GCCLIB_DIR = $(HOST_DIR)/lib/gcc-lib/powerpc-wrs-vxworks/cygnus-2.7.2-960126
-  LIB_DIR = $(HOST_DIR)/powerpc-wrs-vxworks/lib
   TOOLENV = ppc
 else
 ifeq ($(CPU),I80486)
-  CCFLAGS += -DCPU=I80486 -m486 #### -B$(GCCLIB_DIR)/
-  GCCLIB_DIR = $(HOST_DIR)/lib/gcc-lib/i386-wrs-vxworks/cygnus-2.7.2-960126
-  LIB_DIR = $(HOST_DIR)/i386-wrs-vxworks/lib
+  CFLAGS += -DCPU=I80486 -m486
   TOOLENV = 386
 endif # I80486
 endif # PPC604
@@ -54,26 +45,28 @@ BIN_DIR		= $(HOST_DIR)/bin
 
 CC		= cc$(TOOLENV)
 CXX		= g++$(TOOLENV)
-CFLAGS		+= -DVXWORKS -I$(WIND_BASE)/target/h -ansi -fno-builtin -fno-defer-pop -fvolatile -nostdinc -nostdlib -O -pipe -Wall
+CFLAGS		+= -DVXWORKS -D_REENTRANT -I. -I$(WRAPPER_ROOT) -I$(WIND_BASE)/target/h -ansi -fno-builtin -fno-defer-pop -fvolatile -nostdinc -nostdlib -O -pipe -Wall
 #### Note: -f-no-implicit-templates doesn't seem to work well with
 ####       g++ cygnus-2.7.2-960126 for pc486 target.  Some
-####       member functions don't get instantiated.
+####       member functions don't get instantiated.  Wind River knows
+####       about this problem (SPR 8483).
 CCFLAGS		+= $(DCFLAGS) $(CFLAGS) #### -fno-implicit-templates
 DCFLAGS		+= -g
 INCLDIRS	+=
-LD		= $(CXX)
-LDFLAGS		+= -r -L$(LIB_DIR) -L$(GCCLIB_DIR) -lgcc .obj/__ctordtor.o
+LD		= ld$(TOOLENV)
+LDFLAGS		+= -X -r .obj/__ctordtor.o
 PIC		=
 AR		= ar$(TOOLENV)
 ARFLAGS		= rv
 RANLIB		= /bin/true
-PRELIB	= (echo "main() { }" > gcctemp.c && \
-	  $(COMPILE.cc) -o gcctemp.o gcctemp.c && \
-	  $(LD) $^ $(CFLAGS) -r -L$(WRAPPER_ROOT)/ace -L./ -L$(LIB_DIR) \
-                                -L$(GCCLIB_DIR) -lgcc $(LIBS); \
-	  status=$$?; rm -f gcctemp.* a.out; exit $$status)
 PRELINK		= nm$(TOOLENV) .obj/$@.o $(WRAPPER_ROOT)/ace/libACE.a | munch | egrep -v '\.cpp' > __ctordtor.c; $(COMPILE.c) -traditional -o .obj/__ctordtor.o __ctordtor.c; /bin/rm __ctordtor.c;
-
 
 #### don't build shared objects:
 BUILD           = $(VOBJS) $(VLIB) $(VBIN)
+
+#### ld can't handle INCLDIRS, so override LINK definitions.
+LINK.c           = override
+LINK.c.override  = $(LD) $(LDFLAGS) $(LDLIBS) $(LIBS)
+
+LINK.cc          = override
+LINK.cc.override = $(PRELINK) $(LD) $(PTDIRS)
