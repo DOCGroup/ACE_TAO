@@ -168,7 +168,7 @@ client (void *arg)
     {
       errno = 0;
       sent = cli_stream.send_n (buff, sizeof (buff));
-      if (errno != 0 || sent != sizeof (buff))
+      if (sent != sizeof (buff) && errno != 0)
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("(%P|%t) Test 3, pass %d, sent %d, %p\n"),

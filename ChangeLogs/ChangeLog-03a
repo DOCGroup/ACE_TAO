@@ -1,3 +1,36 @@
+Thu Oct 19 13:17:41 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * tests/run_test.pl:
+
+          Changed the method used to detect errors in a log file.  Since
+          the log contains the log message type (such as LM_ERROR),
+          I changed the detection to look for this.  
+
+        * tests/ACE_Init_Test.cpp:
+
+          Added ACE_START_TEST and ACE_END_TEST so the run_test.pl
+          script won't think ACE_Init_Test failed.
+
+        * tests/test_config.h:
+
+          With the way ACE_ALPHABET and some functions were defined,
+          they would cause duplicate symbols if test_config.h was 
+          included in more than one object file.  Changed them so
+          the symbols are static to the file.
+
+        * tests/Reactors_Test.cpp:
+
+          When the reactor was shutting down, it was returning a
+          information message with ACE_ERROR_RETURN.  Since it really
+          wasn't an error condition, changed this to a ACE_DEBUG
+          and return 0.
+
+        * tests/SOCK_Send_Recv_Test.cpp:
+
+          The test was checking errno without checking a return value.
+          As a result, it was getting an out-of-date errno and 
+          incorrectly interpreted that as an error.  Fixed.
+
 Thu Oct 19 12:12:00 2000  Darrell Brunsch <brunsch@uci.edu>
 
 	* ace/ACE_Lib_Find.h:
