@@ -7328,7 +7328,13 @@ realclean.old:
  be/be_visitor_sequence/sequence_base.cpp \
  be/be_visitor_sequence/sequence_ch.cpp \
  be/be_visitor_sequence/sequence_ci.cpp \
- be/be_visitor_sequence/sequence_cs.cpp
+ be/be_visitor_sequence/sequence_cs.cpp \
+ be/be_visitor_sequence/gen_unbounded_sequence_ch.cpp \
+ be/be_visitor_sequence/gen_bounded_sequence_ch.cpp \
+ be/be_visitor_sequence/gen_unbounded_obj_sequence_ch.cpp \
+ be/be_visitor_sequence/gen_bounded_obj_sequence_ch.cpp \
+ be/be_visitor_sequence/gen_bounded_str_sequence_ch.cpp \
+ be/be_visitor_sequence/gen_object_manager_ch.cpp
 .obj/be_visitor_structure.o .obj/be_visitor_structure.so .shobj/be_visitor_structure.o .shobj/be_visitor_structure.so: be/be_visitor_structure.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -7840,9 +7846,13 @@ realclean.old:
  be_include/be_visitor_union_branch/public_ci.h \
  be_include/be_visitor_union_branch/public_cs.h \
  be_include/be_visitor_union_branch/public_assign_cs.h \
+ be_include/be_visitor_union_branch/public_reset_cs.h \
+ be_include/be_visitor_union_branch/public_access_cs.h \
  be_include/be_visitor_union_branch/private_ch.h \
  be/be_visitor_union_branch/private_ch.cpp \
  be/be_visitor_union_branch/public_assign_cs.cpp \
+ be/be_visitor_union_branch/public_reset_cs.cpp \
+ be/be_visitor_union_branch/public_access_cs.cpp \
  be/be_visitor_union_branch/public_ch.cpp \
  be/be_visitor_union_branch/public_ci.cpp \
  be/be_visitor_union_branch/public_cs.cpp
@@ -8067,6 +8077,8 @@ realclean.old:
  be_include/be_visitor_union_branch/public_ci.h \
  be_include/be_visitor_union_branch/public_cs.h \
  be_include/be_visitor_union_branch/public_assign_cs.h \
+ be_include/be_visitor_union_branch/public_reset_cs.h \
+ be_include/be_visitor_union_branch/public_access_cs.h \
  be_include/be_visitor_union_branch/private_ch.h
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

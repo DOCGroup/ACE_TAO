@@ -830,6 +830,8 @@ TAO_Marshal_Union::decode (CORBA::TypeCode_ptr  tc,
   CORBA::ULong i;
   CORBA::TypeCode_ptr default_tc = 0;
   CORBA::Boolean discrim_matched = CORBA::B_FALSE;
+  TAO_Base_Union *base_union = (TAO_Base_Union *)data;
+  void *member_val;
 
   discrim_tc = tc->discriminator_type (env);
   // get the discriminator type
@@ -948,9 +950,12 @@ TAO_Marshal_Union::decode (CORBA::TypeCode_ptr  tc,
                                     // save a handle to the typecode for the default
                                     default_tc = member_tc;
                                   if (discrim_matched)
-                                    // marshal according to the matched typecode
-                                    return stream->decode (member_tc, data,
+                                    {
+                                      member_val = base_union->_access (1);
+                                      // marshal according to the matched typecode
+                                      return stream->decode (member_tc, member_val,
                                                            data2, env);
+                                    }
                                 }
                               else
                                 {
@@ -966,7 +971,10 @@ TAO_Marshal_Union::decode (CORBA::TypeCode_ptr  tc,
                         } // end of for loop
                       // we are here only if there was no match
                       if (default_tc)
-                        return stream->decode (default_tc, data, data2, env);
+                        {
+                          member_val = base_union->_access (1);
+                          return stream->decode (default_tc, member_val, data2, env);
+                        }
                       else
                         return CORBA::TypeCode::TRAVERSE_CONTINUE;
                     }

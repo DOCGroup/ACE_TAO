@@ -748,6 +748,7 @@ public:
 #include "tao/Sequence.h"
 #include "tao/Sequence_T.h"
 #include "tao/Object_KeyC.h"
+#include "tao/Union.h"
 
 class STUB_Object;
 // Forward declaration.

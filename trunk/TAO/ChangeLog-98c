@@ -1,3 +1,57 @@
+Wed Jun 24 15:49:19 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* tao/Union.{h, cpp}:
+
+	  Added a base sequence definition for Unions. This uses the same
+	  logic as the Base sequences. We need such a base sequence to
+	  provide us virtual methods called "_access" and "_reset". The
+	  _access method us ised to access the right union member at the
+	  right offset. The reset method is used to free the storage.
+
+	  *NOTE* these are new files
+
+	* tao/{encode, decode}.cpp: For Union::{encode, decode}, we now
+	use the Base Union class on which we invoke the virtual methods.
+
+	* TAO_IDL/be_include/be_codegen.h: Added a new enumeration for
+	generating the overloaded _access method on the union class.
+
+	* TAO_IDL/be/be_visitor_union/union.cpp:
+
+	  Handled the case for the access method generating visitor.
+
+	* TAO_IDL/be/be_visitor_union/union_ch.cpp:
+
+	  The union class now inherits from the TAO_Base_Union class. In
+	  addition, it defines the virtual overloaded _reset and _access
+	  methods.
+
+	* TAO_IDL/be/be_visitor_union/union_ci.cpp:
+
+	  Since the reset method was renamed to _reset, we now use this
+	  name.
+
+	* TAO_IDL/be/be_visitor_union/union_cs.cpp:
+
+	  Added code for the overloaded _reset and _access method.
+
+	* TAO_IDL/be/be_visitor_union_branch/public_ci.cpp:
+	  All calls to reset converted to _reset.
+
+	* TAO_IDL/be_visitor_union_branch/public_access_cs.cpp:
+	  TAO_IDL/be_include/be_visitor_union_branch/public_access_cs.h:
+
+	  New visitor to generate the code for the access method.
+	  *NOTE* these are new files.
+
+	* TAO_IDL/be_visitor_union_branch.cpp:
+	  TAO_IDL/be_include/be_visitor_union_branch.h:
+
+	  Includes the new files.
+
+	* TAO_IDL/be/be_interpretive.cpp: Handled the case for the new
+	visitor on unions that generates the _access method.
+
 Wed Jun 24 14:29:56 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
 	* docs/releasenotes/index.html:

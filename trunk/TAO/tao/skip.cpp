@@ -509,8 +509,10 @@ TAO_Marshal_Union::skip (CORBA::TypeCode_ptr  tc,
                                     // save a handle to the typecode for the default
                                     default_tc = member_tc;
                                   if (discrim_matched)
-                                    // marshal according to the matched typecode
-                                    return stream->skip (member_tc, env);
+                                    {
+                                      // marshal according to the matched typecode
+                                      return stream->skip (member_tc, env);
+                                    }
                                 }
                               else
                                 {
