@@ -1151,7 +1151,7 @@ template CORBA::Boolean TAO_find (const CosTradingSequences::ULongSeq&, const CO
 template CORBA::Boolean TAO_find (const CosTradingSequences::LongSeq&, const CORBA::Long);
 template CORBA::Boolean TAO_find (const CosTradingSequences::ShortSeq&, const CORBA::Long);
 template CORBA::Boolean TAO_find (const CosTradingSequences::UShortSeq&, const CORBA::ULong);
-template CORBA::Boolean TAO_find (const CosTradingSequences::StringSeq&, const char*);
+template CORBA::Boolean TAO_find (const CosTradingSequences::StringSeq&, const char* const);
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Node<TAO_Literal_Constraint>
 #pragma instantiate ACE_Unbounded_Queue<TAO_Literal_Constraint>
