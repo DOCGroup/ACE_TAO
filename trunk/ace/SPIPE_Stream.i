@@ -98,7 +98,8 @@ ACE_SPIPE_Stream::send_handle (ACE_HANDLE handle) const
 #if defined (ACE_HAS_STREAM_PIPES)
   return ACE_OS::ioctl (this->get_handle (), I_SENDFD, (void *) handle);
 #elif defined (ACE_WIN32) && \
-      (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0))
+      (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)) && \
+       !defined (ACE_HAS_WINCE)   /* CE4 has WS2 but not WSADuplicateSocket */
   DWORD procID;
   WSAPROTOCOL_INFO protInfo;
   ssize_t res;
