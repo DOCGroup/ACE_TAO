@@ -1,3 +1,11 @@
+Fri Jul 24 00:39:47 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/config-win32.h (ACE_HAS_NONSTATIC_OBJECT_MANAGER): Use
+ 	  non-static object manager by default on Win32 (except CE.)  This
+ 	  at least fixed the problem of WSACleanup getting called too late. 
+
+	  To disable this, define ACE_HAS_NONSTATIC_OBJECT_MANAGER to 0.
+
 Thu Jul 23 22:17:41 1998  Arturo Montes  <mitosys@colomsat.net.co>
 
         * ace/OS.cpp,Task.cpp,Thread_Manager.cpp: unify the Thread
