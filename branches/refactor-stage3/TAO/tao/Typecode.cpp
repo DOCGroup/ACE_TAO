@@ -3740,6 +3740,7 @@ template class ACE_Hash_Map_Iterator_Ex<const char *,
 template class TAO_Pseudo_Var_T<CORBA::TypeCode>;
 template class TAO_Pseudo_Out_T<CORBA::TypeCode, CORBA::TypeCode_var>;
 
+template class TAO::Arg_Traits<CORBA::TypeCode>;
 template class TAO::Object_Arg_Traits_T<CORBA::TypeCode_ptr,
                                         CORBA::TypeCode_var,
                                         CORBA::TypeCode_out>;
@@ -3779,6 +3780,7 @@ template class TAO::Object_Arg_Traits_T<CORBA::TypeCode_ptr,
 #pragma instantiate TAO_Pseudo_Var_T<CORBA::TypeCode>
 #pragma instantiate TAO_Pseudo_Out_T<CORBA::TypeCode, CORBA::TypeCode_var>
 
+#pragma instantiate TAO::Arg_Traits<CORBA::TypeCode>
 #pragma instantiate TAO::Object_Arg_Traits_T<CORBA::TypeCode_ptr, \
                                              CORBA::TypeCode_var, \
                                              CORBA::TypeCode_out>

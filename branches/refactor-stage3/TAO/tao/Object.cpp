@@ -995,6 +995,7 @@ TAO_Object_Proxy_Broker * (*_TAO_collocation_Object_Proxy_Broker_Factory_functio
 
 template class TAO_Pseudo_Var_T<CORBA::Object>;
 template class TAO_Pseudo_Out_T<CORBA::Object, CORBA::Object_var>;
+template class TAO::Arg_Traits<CORBA::Object>;
 template class TAO::Object_Arg_Traits_T<CORBA::Object_ptr,
                                         CORBA::Object_var,
                                         CORBA::Object_out>;
@@ -1003,6 +1004,7 @@ template class TAO::Object_Arg_Traits_T<CORBA::Object_ptr,
 
 #pragma instantiate TAO_Pseudo_Var_T<CORBA::Object>
 #pragma instantiate TAO_Pseudo_Out_T<CORBA::Object, CORBA::Object_var>
+#pragma instantiate TAO::Arg_Traits<CORBA::Object>
 #pragma instantiate TAO::Object_Arg_Traits_T<CORBA::Object_ptr, \
                                              CORBA::Object_var, \
                                              CORBA::Object_out>;

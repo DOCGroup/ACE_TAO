@@ -1,3 +1,39 @@
+Tue Jun 24 18:12:24 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Arg_Traits_T.h:
+
+          Cosmetic changes.
+
+        * tao/Object.cpp:
+        * tao/Object.h:
+        * tao/Typecode.cpp:
+        * tao/Typecode.h:
+
+          Changed these predefined pseudo objects to use the
+          specialization approach for their argument traits,
+          instead of the typedef approach, as mentioned in
+
+          Tue Jun 24 13:48:20 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Objref_VarOut_T.cpp:
+        * tao/Objref_VarOut_T.h:
+
+          Added template base class for the interface traits - the static
+          methods used by the _var, _out and sequence classes. At the
+          moment, the interface _var and _out template classes are
+          using these template-wrapped static methods. The base class is
+          specialized in generated code. When the existing hand-crafted
+          files are regenerated, the template implementations in
+          Objref_VarOut_T.cpp can be removed, as well as the T_life
+          parameter from the _var and _out template classes.
+
+        * tao/Sequence_T.cpp:
+        * tao/Sequence_T.h:
+
+          Corresponding changes for the T_cast parameter, passed to 
+          sequence of objects. This struct parameter wraps methods used
+          in object sequences to narrow and widen interfaces.
+
 Tue Jun 24 13:48:20 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Arg_Traits_T.h:

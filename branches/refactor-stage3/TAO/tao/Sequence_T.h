@@ -257,6 +257,27 @@ template<size_t MAX> class TAO_Bounded_String_Sequence;
 
 // *************************************************************
 
+namespace TAO
+{
+  /**
+   * @struct Object_Cast
+   *
+   * @brief Specialized in generated code.
+   *
+   */
+  template<typename T>
+  struct Object_Cast
+  {
+    static T * tao_narrow (
+        CORBA::Object_ptr
+        ACE_ENV_ARG_DECL
+      );
+    static CORBA::Object_ptr tao_upcast (void *);
+  };
+};
+
+// *************************************************************
+
   /**
    * @class TAO_Object_Manager
    *
