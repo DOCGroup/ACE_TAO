@@ -462,7 +462,6 @@ Command_Handler::init_av (void)
 
   if (af[0] != 0)
     {
-      int result;
       if ((result =init_audio_channel(af)) > 0)
         return result;
       else if (result < 0)
@@ -486,7 +485,7 @@ Command_Handler::init_av (void)
   if (vf[0] != 0)
     {
       ACE_DEBUG ((LM_DEBUG,"(%P|%t) Initializing video\n"));
-      if (this->init_video_channel(vf) > 0)
+      if ((result = this->init_video_channel(vf)) > 0)
         return result;
       else if (result < 0)
         {
@@ -525,6 +524,13 @@ Command_Handler::init_av (void)
       set_speed();
       if (videoSocket >= 0)
         this->wait_for_display (INIT);
+      CmdWrite(&tmp, 1);
+      if (videoSocket < 0)
+        {
+          tmp = CmdVPclearScreen;
+          CmdWrite(&tmp, 1);
+        }
+      return 0;
     }
   cerr << "returning from init_av \n";
   return 0;
@@ -598,7 +604,10 @@ Command_Handler::init_java_av (char *audio_ior,
 
   if (audio_file!= 0)
     {
-      if (init_audio_channel(audio_file))
+      int result;
+      if ((result = init_audio_channel(audio_file)) > 0)
+        return result;
+      else if (result < 0)
         {
           audioSocket = -1;
           shared->totalSamples = 0;
@@ -619,7 +628,9 @@ Command_Handler::init_java_av (char *audio_ior,
   if (video_file!= 0)
     {
       ACE_DEBUG ((LM_DEBUG,"(%P|%t) Initializing video\n"));
-      if (this->init_video_channel(video_file))
+      if ((result = this->init_video_channel(video_file)) > 0)
+        return result;
+      else if (result < 0)
         {
           shared->totalFrames = 0;      /* disable video channel */
           videoSocket = -1;
