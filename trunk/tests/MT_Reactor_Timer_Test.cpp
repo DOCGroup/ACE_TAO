@@ -192,13 +192,6 @@ Dispatch_Count_Handler::handle_close (ACE_HANDLE h,
   ACE_ASSERT (h == this->pipe_.read_handle ()
               && m == ACE_Event_Handler::READ_MASK);
 
-  if (r->remove_handler (this->pipe_.read_handle (),
-                         ACE_Event_Handler::READ_MASK
-                         | ACE_Event_Handler::DONT_CALL) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("remove_handler")),
-                      -1);
   return 0;
 }
 
