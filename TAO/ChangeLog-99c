@@ -1,3 +1,18 @@
+Wed Jul  7 19:24:00 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* docs/Options.html:
+	* tao/Makefile:
+	* tao/default_resource.h:
+	* tao/default_resource.cpp:
+	* tao/xt_resource.h:
+	* tao/xt_resource.i:
+	* tao/xt_resource.cpp:
+	  Removed the <xt> ReactorType from the default resource factory,
+	  it simply did not work because the context was not properly
+	  initialized.
+	  Added a new Resource_Factory that can create XtReactors, but
+	  only after the context has been properly set.
+
 Wed Jul 07 18:26:58 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao: Fixed determination of collocation.  It is not necessary to

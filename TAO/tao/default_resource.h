@@ -70,7 +70,6 @@ public:
     TAO_REACTOR_SELECT_MT, // Use ACE_Token
     TAO_REACTOR_SELECT_ST, // Use ACE_Noop_Token
     TAO_REACTOR_FL,
-    TAO_REACTOR_XT,
     TAO_REACTOR_WFMO,
     TAO_REACTOR_MSGWFMO,
     TAO_REACTOR_TP
@@ -93,7 +92,7 @@ public:
   virtual int init_protocol_factories (void);
 
 protected:
-  ACE_Reactor_Impl *allocate_reactor_impl (void) const;
+  virtual ACE_Reactor_Impl *allocate_reactor_impl (void) const;
   // Obtain the reactor implementation
 
 protected:
