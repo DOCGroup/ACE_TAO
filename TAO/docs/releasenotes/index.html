@@ -141,7 +141,7 @@ A complete list of all modifications to TAO is available in the <a href="http://
 <a NAME="idl"></a>IDL Compiler</h3>
 Point of contact: <a href="mailto:parsons@cs.wustl.edu">
 Jeff Parsons</a>
-<p>Current status: (As of May 29, 2000.)
+<p>Current status: (As of July 20, 2000.)
 <ul>
 <li>
 Generated code closely follows the C++ Mapping specified in the latest
@@ -353,7 +353,13 @@ Option -Ge 2 added which generates 'throw' instead of ACE_THROW_SPEC, ACE_THROW,
 and ACE_RETHROW. Since the expansion of ACE_THROW_RETURN is platform-dependent,
 it was left as is. Same for TAO_INTERCEPTOR_THROW, since it sometimes
 expands to ACE_THROW_RETURN. Of course ACE_HAS_EXCEPTIONS must be defined for
-this option to work.
+this option to work.</li>
+
+<li>
+Removed generation of ostream operators for user exceptions, along with the
+command line option to suppress this generation. The ostream operator
+defined in the base class CORBA::Exception works fine and produces the same
+output.</li>
 </ul>
 
 <p><br>Known bugs/unimplemented constructs:
