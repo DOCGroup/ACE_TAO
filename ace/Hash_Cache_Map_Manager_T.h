@@ -184,7 +184,7 @@ protected:
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("ace/Hash_Cache_Map_Manager_T.cpp")
+#pragma implementation ("Hash_Cache_Map_Manager_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #endif /* HASH_CACHE_MAP_MANAGER_T_H */
