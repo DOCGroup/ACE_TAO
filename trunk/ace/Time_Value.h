@@ -168,7 +168,7 @@ public:
    */
   void msec (ACE_UINT64 &ms) const;
 
-#endif /*ACE_LACKS_LONLONG_T */
+#endif /*ACE_LACKS_LONGLONG_T */
 
   /// Converts from milli-seconds format into ACE_Time_Value format.
   /**

@@ -17,7 +17,7 @@ Thu Sep  9 16:40:27 2004  Steve Huston  <shuston@riverace.com>
 	* apps/Gateway/Gateway/gatewayd.cpp:
 	* apps/Gateway/Peer/Options.{h cpp}:
 	* apps/Gateway/Peer/Peer.{h cpp}: Narrow/wide char fixes.
-	
+
 	* apps/Gateway/Gateway/Options.h: Removed const char *connector_host()
 	  method because it's not ever defined or referenced.
 
