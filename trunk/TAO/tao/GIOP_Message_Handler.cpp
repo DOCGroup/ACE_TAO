@@ -27,6 +27,8 @@ TAO_GIOP_Message_Handler::TAO_GIOP_Message_Handler (TAO_ORB_Core * orb_core,
     supp_buffer_ (ACE_CDR::DEFAULT_BUFSIZE),
     message_state_ (orb_core)
 {
+  ACE_CDR::mb_align (&this->current_buffer_);
+  ACE_CDR::mb_align (&this->supp_buffer_);
 }
 
 
@@ -304,6 +306,7 @@ TAO_GIOP_Message_Handler::is_message_ready (TAO_Transport *transport)
 
           // Reset the current buffer
           this->current_buffer_.reset ();
+          ACE_CDR::mb_align (&this->current_buffer_);
 
           // Set the read and write pointers again for the current buffer
           this->current_buffer_.rd_ptr (rd_pos);
@@ -365,6 +368,8 @@ TAO_GIOP_Message_Handler::more_messages (void)
 
           // Reset the supp buffer now
           this->supp_buffer_.reset ();
+          ACE_CDR::mb_align (&this->supp_buffer_);
+
           this->message_status_ = TAO_GIOP_WAITING_FOR_HEADER;
         }
 
@@ -434,6 +439,7 @@ TAO_GIOP_Message_Handler::get_message (void)
 
           // Reset the supp buffer now
           this->supp_buffer_.reset ();
+          ACE_CDR::mb_align (&this->supp_buffer_);
         }
     }
 

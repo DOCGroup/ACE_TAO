@@ -355,10 +355,27 @@ TAO_GIOP_Message_Lite::format_message (TAO_OutputCDR &stream)
   // versions seem to need it though.  Leaving it costs little.
   if (TAO_debug_level > 2)
     {
+      // Check whether the output cdr stream is build up of multiple
+      // messageblocks. If so, consolidate them to one block that can be
+      // dumped
+      ACE_Message_Block* consolidated_block = 0;
+      if (stream.begin()->cont() != 0)
+        {
+          consolidated_block = new ACE_Message_Block;
+          ACE_CDR::consolidate(consolidated_block, stream.begin());
+          buf = (char *) (consolidated_block->rd_ptr ());
+        }
+      ///
+
       this->dump_msg ("send",
                       ACE_reinterpret_cast (u_char *,
                                             buf),
                       stream.length ());
+
+      //
+      delete consolidated_block;
+      consolidated_block = 0;
+      //
     }
 
   return 0;

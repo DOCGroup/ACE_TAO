@@ -28,9 +28,13 @@ TAO_GIOP_Message_Handler::reset (int /*reset_flag*/)
 
   // Reset the current buffer
   this->current_buffer_.reset ();
+  ACE_CDR::mb_align (&this->current_buffer_);
 
   if (this->message_status_ != TAO_GIOP_MULTIPLE_MESSAGES)
-    this->supp_buffer_.reset ();
+    {
+      this->supp_buffer_.reset ();
+      ACE_CDR::mb_align (&this->supp_buffer_);
+    }
 
 }
 
