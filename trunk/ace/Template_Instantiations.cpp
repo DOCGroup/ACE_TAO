@@ -203,17 +203,12 @@ template class ACE_Fixed_Set_Iterator<ACE_Event_Handler *, ACE_MAX_SIGNAL_HANDLE
 
 template class ACE_Local_Name_Space <ACE_LITE_MMAP_MEMORY_POOL, ACE_RW_Process_Mutex>;
 template class ACE_Local_Name_Space <ACE_MMAP_MEMORY_POOL, ACE_RW_Process_Mutex>;
-template class ACE_Malloc<ACE_LOCAL_MEMORY_POOL, ACE_Null_Mutex>;
 template class ACE_Malloc<ACE_LITE_MMAP_MEMORY_POOL, ACE_RW_Process_Mutex>;
-template class ACE_Malloc<ACE_LOCAL_MEMORY_POOL, ACE_Null_Mutex>;
 template class ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex>;
 template class ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_RW_Process_Mutex>;
-template class ACE_Malloc_T<ACE_LOCAL_MEMORY_POOL, ACE_Null_Mutex, ACE_Control_Block>;
 template class ACE_Malloc_T<ACE_LITE_MMAP_MEMORY_POOL, ACE_RW_Process_Mutex, ACE_Control_Block>;
-template class ACE_Malloc_T<ACE_LOCAL_MEMORY_POOL, ACE_Null_Mutex, ACE_Control_Block>;
 template class ACE_Malloc_T<ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex, ACE_Control_Block>;
 template class ACE_Malloc_T<ACE_MMAP_MEMORY_POOL, ACE_RW_Process_Mutex, ACE_Control_Block>;
-template class ACE_Allocator_Adapter<ACE_Malloc<ACE_LOCAL_MEMORY_POOL, ACE_Null_Mutex> >;
 template class ACE_Allocator_Adapter<ACE_Malloc<ACE_LITE_MMAP_MEMORY_POOL, ACE_RW_Process_Mutex> >;
 
 template class ACE_Map_Entry <ACE_Token_Name, ACE_Tokens *>;
@@ -223,11 +218,7 @@ template class ACE_Map_Entry<ACE_Token_Name, ACE_Token_Proxy *>;
 template class ACE_Module<ACE_Thread_Mutex, ACE_Condition_Thread_Mutex>;
 
 // from Remote_Tokens.cpp
-#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-template class ACE_Singleton <ACE_TSS_Connection, ACE_Thread_Mutex>;
-#else
-template class ACE_Singleton <ACE_TSS_Connection, ACE_Null_Mutex>;
-#endif /* ACE_MT_SAFE */
+template class ACE_Singleton <ACE_TSS_Connection, ACE_SYNCH_MUTEX>;
 
 template class ACE_TSS_Singleton<ACE_Dynamic, ACE_Null_Mutex>;
 
