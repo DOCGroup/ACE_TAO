@@ -6,20 +6,28 @@
 
 ACE_Atomic_Op<ACE_Thread_Mutex, long> thread_count = 0;
 
-Thread_Task::Thread_Task (RTScheduling::Current_ptr current)
+Thread_Task::Thread_Task (RTScheduling::Current_ptr current,
+			  CORBA::Policy_ptr sched_param,
+			  int start_time,
+			  int load,
+			  long flags,
+			  ACE_Barrier* barrier)
 {
   this->current_ = RTScheduling::Current::_narrow (current);
-}
-
-int
-Thread_Task::activate_task (CORBA::Policy_ptr sched_param,
-			    long flags,
-			    ACE_Barrier* barrier)
-{
   this->sched_param_ = CORBA::Policy::_duplicate (sched_param);
   this->barrier_ = barrier;
+  this->load_ = load;
+  this->start_time_ = start_time;
+  this->flags_ = flags;
 
-  if (this->activate (flags,
+  this->count_ = ++thread_count.value_i ();
+}
+
+
+int
+Thread_Task::activate_task (void)
+{
+  if (this->activate (flags_,
 		      1) == -1)
     {
       if (ACE_OS::last_error () == EPERM)
@@ -30,6 +38,7 @@ Thread_Task::activate_task (CORBA::Policy_ptr sched_param,
   
   return 0;
 }
+
 
 int
 Thread_Task::perform_task (int times)
@@ -53,9 +62,6 @@ Thread_Task::svc (void)
   ACE_DEBUG ((LM_DEBUG,
 	      "After Thread_Task::svc \n"));
       
-
-  this->count_ = ++thread_count.value_i ();
-
   this->barrier_->wait ();
 
   const char * name = 0;
@@ -66,16 +72,15 @@ Thread_Task::svc (void)
 					    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  if (this->count_ == 2)
-    ACE_OS::sleep (10);
+  ACE_OS::sleep (start_time_);
 
   for (int i = 0; i < 100; i++)
     {
 
-      this->perform_task (10000);
+      this->perform_task (load_);
 
       ACE_DEBUG ((LM_DEBUG,
-		  "%t|%T %d\n", 
+		  "%d\n", 
 		  this->count_));
       
     }
