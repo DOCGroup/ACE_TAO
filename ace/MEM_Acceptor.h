@@ -141,8 +141,8 @@ private:
   ACE_MEM_SAP::MALLOC_OPTIONS malloc_options_;
 };
 
-#if defined (__ACE_INLINE__)
+#if !defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/MEM_Acceptor.i"
-#endif /* __ACE_INLINE__ */
+#endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
 #endif /* ACE_MEM_ACCEPTOR_H */

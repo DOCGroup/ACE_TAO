@@ -1,3 +1,10 @@
+Fri Feb 11 01:16:15 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/MEM_Acceptor.cpp:
+	* ace/MEM_Acceptor.h: Changed to use ACE_LACKS_INLINE_FUNCTIONS to
+	  determine where to include MEM_Acceptor.i file as ASYS_INLINE is
+	  used.  Thanks to Marina and SunCC 5 for reporting the problem.
+
 Thu Feb 10 21:57:04 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/MEM_SAP.h

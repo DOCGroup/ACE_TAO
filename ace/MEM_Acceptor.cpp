@@ -4,9 +4,9 @@
 #define ACE_BUILD_DLL
 #include "ace/MEM_Acceptor.h"
 
-#if !defined (__ACE_INLINE__)
+#if defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/MEM_Acceptor.i"
-#endif /* __ACE_INLINE__ */
+#endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
 ACE_RCSID(ace, MEM_Acceptor, "$Id$")
 
