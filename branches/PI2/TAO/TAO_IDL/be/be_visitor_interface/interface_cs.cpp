@@ -255,6 +255,26 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       << "return \"" << node->repoID () << "\";" << be_uidt_nl
       << "}\n\n";
 
+  // Interceptor classes
+  
+  be_visitor_context ctx (*this->ctx_);
+  be_visitor *visitor = 0;
+
+  ctx.state (TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_CS);
+  visitor = tao_cg->make_visitor (&ctx);
+  if (!visitor || (node->accept (visitor) == -1))
+    {
+      delete visitor;
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "be_visitor_interface_cs::"
+                         "visit_interface - "
+                         "codegen for interceptors classes failed\n"),
+                        -1);
+    }
+  delete visitor;
+  visitor = 0;
+    
+
   // Smart Proxy classes
   if (! node->is_local ())
     {
@@ -289,8 +309,8 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
                              "TypeCode definition failed\n"),
                             -1);
         }
+    
     }
-
 
   return 0;
 }
