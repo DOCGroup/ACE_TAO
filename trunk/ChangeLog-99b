@@ -25,6 +25,9 @@ Mon Mar 01 13:04:53 1999  David L. Levine  <levine@cs.wustl.edu>
           on ACE_Thread_Exit.  It would probably be best to move
           that to ACE Thread_Manager, if possible.
 
+        * ace/config-minimal.h: suppress ACE_HAS_TSS_EMUATION, because
+          it requires other ACE headers to be #included.
+
         * ace/Synch.{i,cpp} (~ACE_Recursive_Thread_Mutex): added
           a call to this->remove ().  Without it, the mutex wasn't
           being destroyed.  Uninlined both the destructor to avoid
