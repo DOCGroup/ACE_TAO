@@ -1,16 +1,23 @@
+Sat Aug 11 11:34:47 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/Event_Utilities.cpp (insert):
+          Fixed event initialization, one of the insert() methods was
+          setting an event before growing the publications list.
+          Thanks to Jody Hagins <jody@atdesk.com> for pointing this out.
+
 Sat Aug 11 08:31:37 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/IDL_Test/idl_test.dsp: Fixed the relase builds.
+        * tests/IDL_Test/idl_test.dsp: Fixed the relase builds.
 
 Sat Aug 11 08:24:37 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Notify_ProxyConsumer_T.cpp:
-	* orbsvcs/orbsvcs/Notify_ProxySupplier_T.cpp: Fixed warnings with
-	  HPUX's aCC.
+        * orbsvcs/orbsvcs/Notify_ProxyConsumer_T.cpp:
+        * orbsvcs/orbsvcs/Notify_ProxySupplier_T.cpp: Fixed warnings with
+          HPUX's aCC.
 
 Sat Aug 11 08:14:59 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/Native_Exceptions/test_i.cpp: Fixed warning with KCC.
+        * tests/Native_Exceptions/test_i.cpp: Fixed warning with KCC.
 
 Fri Aug 10 10:59:42 2001  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -21,32 +28,32 @@ Fri Aug 10 10:59:42 2001  Chad Elliott  <elliott_c@ociweb.com>
 
 Fri Aug 10 08:07:57 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/Oneways_Invoking_Twoways/Receiver_i.cpp: Added a debugging
-	  statement.
+        * tests/Oneways_Invoking_Twoways/Receiver_i.cpp: Added a debugging
+          statement.
 
 Thu Aug  9 16:15:03 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/RTCORBA/ORB_init/ORB_init.cpp: Fixed a warning in KCC
-	  builds on Linux.
+        * tests/RTCORBA/ORB_init/ORB_init.cpp: Fixed a warning in KCC
+          builds on Linux.
 
 Thu Aug  9 11:10:59 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/default_resource.cpp:
+        * tao/default_resource.cpp:
 
-	  Temporarily reverted previous change.  The default resource
-	  factory is still destroyed before the ORB core is destroyed.
-	  Another solution is needed.
+          Temporarily reverted previous change.  The default resource
+          factory is still destroyed before the ORB core is destroyed.
+          Another solution is needed.
 
 Thu Aug  9 11:46:27 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/CDR.h: Fixed the ambigous constructor problem. The InputCDR
-	  class had two constructors which were  similar if the default
-	  values for the arguments were exercised. Thanks to Torbjorn
-	  Backstrom <torbjorn.k.backstrom@volvo.com>  for reporting this.
+        * tao/CDR.h: Fixed the ambigous constructor problem. The InputCDR
+          class had two constructors which were  similar if the default
+          values for the arguments were exercised. Thanks to Torbjorn
+          Backstrom <torbjorn.k.backstrom@volvo.com>  for reporting this.
 
 Wed Aug  8 22:53:37 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/DLL_ORB.cpp: Fixed a unused variable warning.
+        * tao/DLL_ORB.cpp: Fixed a unused variable warning.
 
 Wed Aug  8 16:15:59 2001  Carlos O'Ryan  <coryan@uci.edu>
 

@@ -163,9 +163,9 @@ ACE_SupplierQOS_Factory::insert (RtecEventComm::EventSourceID sid,
                                  u_int ncalls)
 {
   int l = qos_.publications.length ();
+  qos_.publications.length (l + 1);
   if (this->event_initializer_ != 0)
     (*this->event_initializer_) (qos_.publications[l].event);
-  qos_.publications.length (l + 1);
   qos_.publications[l].event.header.source = sid;
   qos_.publications[l].event.header.type = type;
   // TODO: IDL union qos_.publications[l].event.data_.lval (0);
