@@ -276,9 +276,9 @@ catior (char* str
         else
           {
             ACE_DEBUG ((LM_DEBUG, "%{"));
-            continue_decoding = stream.skip_string ();
             ACE_DEBUG ((LM_DEBUG,
-                        "%I unknown tag %d skipping\n", tag));
+                        "%I Profile tag = %d (unknown protocol)\n", tag));
+            continue_decoding = cat_octet_seq("Profile body", stream);
             ACE_DEBUG ((LM_DEBUG, "%}"));
           }
       }
