@@ -1,7 +1,0 @@
-#
-# Makefile for building the Faults test executables
-#
-
-MAKEFILES = blocking_server.bor blocking_client.bor ami_server.bor ami_client.bor
-
-!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

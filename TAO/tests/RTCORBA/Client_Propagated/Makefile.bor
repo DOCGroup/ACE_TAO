@@ -1,7 +1,0 @@
-#
-# Makefile for building the Client_Propagated test executables
-#
-
-MAKEFILES = server.bor client.bor
-
-!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

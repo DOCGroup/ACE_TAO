@@ -1,9 +1,0 @@
-
-#
-# Makefile for building the AMH examples
-#
-
-DIRS =  \
-        Sink_Server
-
-!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

@@ -1,6 +1,0 @@
-project : acelib {
-  depends    = ace
-  sharedname = ACE_QoS
-  dllflags   = ACE_QoS_BUILD_DLL
-  libout     = ..
-}
