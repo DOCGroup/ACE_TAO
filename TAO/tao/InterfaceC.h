@@ -59,44 +59,6 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-enum IR_DefinitionKind
-  {
-      dk_none,
-      dk_all,
-      dk_Attribute,
-      dk_Constant,
-      dk_Exception,
-      dk_Interface,
-      dk_Module,
-      dk_Operation,
-      dk_Typedef,
-      dk_Alias,
-      dk_Struct,
-      dk_Union,
-      dk_Enum,
-      dk_Primitive,
-      dk_String,
-      dk_Sequence,
-      dk_Array,
-      dk_Repository,
-      dk_Wstring,
-      dk_Fixed,
-      dk_Value,
-      dk_ValueBox,
-      dk_ValueMember,
-      dk_Native,
-      dk_Component,
-      dk_Home,
-      dk_Factory,
-      dk_Finder,
-      dk_PrimaryKey,
-      dk_Emits,
-      dk_Publishes,
-      dk_Consumes,
-      dk_Provides,
-      dk_Uses
-  };
-
   class TAO_Export CORBA_IRObject_var : public TAO_Base_var
   {
   public:
@@ -5534,32 +5496,6 @@ private:
   IR_FixedDef_ptr &ptr_;
 };
 
-enum IR_PrimitiveKind
-  {
-    pk_null,
-    pk_void,
-    pk_short,
-    pk_long,
-    pk_ushort,
-    pk_ulong,
-    pk_float,
-    pk_double,
-    pk_boolean,
-    pk_char,
-    pk_octet,
-    pk_any,
-    pk_TypeCode,
-    pk_Principal,
-    pk_string,
-    pk_objref,
-    pk_longlong,
-    pk_ulonglong,
-    pk_longdouble,
-    pk_wchar,
-    pk_wstring,
-    pk_value_base
-  };
-
 // Forward Classes Declaration
 class _TAO_Repository_Proxy_Impl;
 class _TAO_Repository_Remote_Proxy_Impl;
@@ -10466,12 +10402,6 @@ private:
   void operator= (const IR_ExcDescriptionSeq_var &);
 };
 
-enum IR_AttributeMode
-{
-  ATTR_NORMAL,
-  ATTR_READONLY
-};
-
 class TAO_Export IR_AttributeDef_var : public TAO_Base_var
 {
 public:
@@ -10887,19 +10817,6 @@ private:
   // assignment from T_var not allowed
   void operator= (const IR_AttributeDescription_var &);
 };
-
-enum IR_OperationMode
-  {
-    OP_NORMAL,
-    OP_ONEWAY
-  };
-
-enum IR_ParameterMode
-  {
-    PARAM_IN,
-    PARAM_OUT,
-    PARAM_INOUT
-  };
 
 struct TAO_Export IR_ParameterDescription
 {

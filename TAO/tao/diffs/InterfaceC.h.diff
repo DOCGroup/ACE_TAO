@@ -1,5 +1,5 @@
 --- InterfaceC.h	Fri Dec 01 16:26:23 2000
-+++ ..\..\..\tao\InterfaceC.h	Mon Nov 27 19:25:21 2000
++++ ..\..\..\tao\InterfaceC.h	Fri Dec 01 20:26:21 2000
 @@ -1,6 +1,6 @@
  // -*- C++ -*-
  //
@@ -34,15 +34,14 @@
  
  #if !defined (ACE_LACKS_PRAGMA_ONCE)
  # pragma once
-@@ -49,160 +59,122 @@
+@@ -49,160 +59,84 @@
  #pragma warning(disable:4250)
  #endif /* _MSC_VER */
  
 -TAO_NAMESPACE  IR
 -{
 -  enum DefinitionKind
-+enum IR_DefinitionKind
-   {
+-  {
 -        dk_none,
 -        dk_all,
 -        dk_Attribute,
@@ -77,41 +76,7 @@
 -        dk_Consumes,
 -        dk_Provides,
 -        dk_Uses    
-+      dk_none,
-+      dk_all,
-+      dk_Attribute,
-+      dk_Constant,
-+      dk_Exception,
-+      dk_Interface,
-+      dk_Module,
-+      dk_Operation,
-+      dk_Typedef,
-+      dk_Alias,
-+      dk_Struct,
-+      dk_Union,
-+      dk_Enum,
-+      dk_Primitive,
-+      dk_String,
-+      dk_Sequence,
-+      dk_Array,
-+      dk_Repository,
-+      dk_Wstring,
-+      dk_Fixed,
-+      dk_Value,
-+      dk_ValueBox,
-+      dk_ValueMember,
-+      dk_Native,
-+      dk_Component,
-+      dk_Home,
-+      dk_Factory,
-+      dk_Finder,
-+      dk_PrimaryKey,
-+      dk_Emits,
-+      dk_Publishes,
-+      dk_Consumes,
-+      dk_Provides,
-+      dk_Uses
-   };
+-  };
 -  typedef DefinitionKind &DefinitionKind_out;
 -  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_DefinitionKind;
 -
@@ -121,7 +86,7 @@
 -
 -TAO_NAMESPACE  CORBA
 -{
- 
+-
 -#if !defined (_TAO_CORBA_IROBJECT___PTR_CH_)
 -#define _TAO_CORBA_IROBJECT___PTR_CH_
 -
@@ -269,7 +234,7 @@
          CORBA::Environment &ACE_TRY_ENV = 
            TAO_default_environment ()
        )
-@@ -212,7 +184,7 @@
+@@ -212,7 +146,7 @@
  
      virtual void destroy (
          CORBA::Environment &ACE_TRY_ENV = 
@@ -278,7 +243,7 @@
        )
        ACE_THROW_SPEC ((
          CORBA::SystemException
-@@ -231,120 +203,28 @@
+@@ -231,120 +165,28 @@
      _TAO_IRObject_Proxy_Broker *the_TAO_IRObject_Proxy_Broker_;
      
    protected:
@@ -412,7 +377,7 @@
  
  
  // The Proxy Implementations are used by each interface to
-@@ -361,7 +241,7 @@
+@@ -361,7 +203,7 @@
  public:
    virtual ~_TAO_IRObject_Proxy_Impl (void) { }
    
@@ -421,7 +386,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -381,6 +261,7 @@
+@@ -381,6 +223,7 @@
    _TAO_IRObject_Proxy_Impl (void);
  
  };
@@ -429,7 +394,7 @@
  //
  //                Base  Proxy Impl. Declaration
  ///////////////////////////////////////////////////////////////////////
-@@ -399,7 +280,7 @@
+@@ -399,7 +242,7 @@
    
    virtual ~_TAO_IRObject_Remote_Proxy_Impl (void) { }
    
@@ -438,7 +403,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -437,8 +318,9 @@
+@@ -437,8 +280,9 @@
  {
  public:
    virtual ~_TAO_IRObject_Proxy_Broker (void);
@@ -449,7 +414,7 @@
      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
    ) = 0;
  
-@@ -463,9 +345,9 @@
+@@ -463,9 +307,9 @@
    _TAO_IRObject_Remote_Proxy_Broker (void);
    
    virtual ~_TAO_IRObject_Remote_Proxy_Broker (void);
@@ -461,7 +426,7 @@
      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
    );
  
-@@ -479,355 +361,175 @@
+@@ -479,355 +323,175 @@
    static _TAO_IRObject_Remote_Proxy_Broker *the_TAO_IRObject_Remote_Proxy_Broker (void);
  };
  
@@ -915,7 +880,7 @@
        }
  
      static void _tao_any_destructor (void*);
-@@ -883,7 +585,7 @@
+@@ -883,7 +547,7 @@
          CORBA::SystemException
        ));
  
@@ -924,7 +889,7 @@
          CORBA::Environment &ACE_TRY_ENV = 
            TAO_default_environment ()
        )
-@@ -899,7 +601,7 @@
+@@ -899,7 +563,7 @@
          CORBA::SystemException
        ));
  
@@ -933,7 +898,7 @@
          CORBA::Environment &ACE_TRY_ENV = 
            TAO_default_environment ()
        )
-@@ -919,7 +621,7 @@
+@@ -919,7 +583,7 @@
  
        static void _tao_any_destructor (void*);
  
@@ -942,7 +907,7 @@
        CORBA::Any value;
      };
  
-@@ -972,8 +674,8 @@
+@@ -972,8 +636,8 @@
  
      static CORBA::TypeCode_ptr _tc_Description;
  
@@ -953,7 +918,7 @@
            TAO_default_environment ()
        )
        ACE_THROW_SPEC ((
-@@ -981,7 +683,7 @@
+@@ -981,7 +645,7 @@
        ));
  
      virtual void move (
@@ -962,7 +927,7 @@
          const char * new_name,
          const char * new_version,
          CORBA::Environment &ACE_TRY_ENV = 
-@@ -1004,554 +706,70 @@
+@@ -1004,554 +668,70 @@
      _TAO_Contained_Proxy_Broker *the_TAO_Contained_Proxy_Broker_;
      
    protected:
@@ -1209,12 +1174,6 @@
 -      TAO_default_environment ()
 -  )
 -  ACE_THROW_SPEC ((CORBA::SystemException));
--
--virtual Dynamic::ExceptionList * exceptions (
--    CORBA::Environment &ACE_TRY_ENV = 
--      TAO_default_environment ()
--  )
--  ACE_THROW_SPEC ((CORBA::SystemException));
 +    virtual char * id (
 +      CORBA_Object *_collocated_tao_target_,
 +      CORBA::Environment &ACE_TRY_ENV
@@ -1223,7 +1182,7 @@
 +      CORBA::SystemException
 +    )) = 0;
  
--virtual CORBA::Any * result (
+-virtual Dynamic::ExceptionList * exceptions (
 -    CORBA::Environment &ACE_TRY_ENV = 
 -      TAO_default_environment ()
 -  )
@@ -1237,6 +1196,12 @@
 +      CORBA::SystemException
 +    )) = 0;
  
+-virtual CORBA::Any * result (
+-    CORBA::Environment &ACE_TRY_ENV = 
+-      TAO_default_environment ()
+-  )
+-  ACE_THROW_SPEC ((CORBA::SystemException));
+-
 -private:
 -  TAO_ClientRequestInfo_IR_Contained_version_get (const TAO_ClientRequestInfo_IR_Contained_version_get &);
 -  void operator= (const TAO_ClientRequestInfo_IR_Contained_version_get &);
@@ -1561,7 +1526,7 @@
  
    virtual void name (
        CORBA_Object *_collocated_tao_target_,
-@@ -1579,7 +797,7 @@
+@@ -1579,7 +759,7 @@
        CORBA::SystemException
      )) = 0;
  
@@ -1570,7 +1535,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -1595,7 +813,7 @@
+@@ -1595,7 +775,7 @@
        CORBA::SystemException
      )) = 0;
  
@@ -1579,7 +1544,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -1603,7 +821,7 @@
+@@ -1603,7 +783,7 @@
        CORBA::SystemException
      )) = 0;
  
@@ -1588,7 +1553,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -1613,7 +831,7 @@
+@@ -1613,7 +793,7 @@
  
    virtual void move (
        CORBA_Object *_collocated_tao_target_,
@@ -1597,7 +1562,7 @@
        const char * new_name,
        const char * new_version,
        CORBA::Environment &ACE_TRY_ENV
-@@ -1624,8 +842,8 @@
+@@ -1624,8 +804,8 @@
  
  protected:
    _TAO_Contained_Proxy_Impl (void);
@@ -1607,7 +1572,7 @@
  //
  //                Base  Proxy Impl. Declaration
  ///////////////////////////////////////////////////////////////////////
-@@ -1638,7 +856,7 @@
+@@ -1638,7 +818,7 @@
  class TAO_Export _TAO_Contained_Remote_Proxy_Impl : 
    public virtual _TAO_Contained_Proxy_Impl,
    public virtual TAO_Remote_Object_Proxy_Impl,
@@ -1616,7 +1581,7 @@
    
  {
  public:
-@@ -1646,7 +864,7 @@
+@@ -1646,7 +826,7 @@
    
    virtual ~_TAO_Contained_Remote_Proxy_Impl (void) { }
    
@@ -1625,7 +1590,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -1697,7 +915,7 @@
+@@ -1697,7 +877,7 @@
        CORBA::SystemException
      ));
  
@@ -1634,7 +1599,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -1713,7 +931,7 @@
+@@ -1713,7 +893,7 @@
        CORBA::SystemException
      ));
  
@@ -1643,7 +1608,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -1721,7 +939,7 @@
+@@ -1721,7 +901,7 @@
        CORBA::SystemException
      ));
  
@@ -1652,7 +1617,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -1731,7 +949,7 @@
+@@ -1731,7 +911,7 @@
  
    virtual void move (
        CORBA_Object *_collocated_tao_target_,
@@ -1661,7 +1626,7 @@
        const char * new_name,
        const char * new_version,
        CORBA::Environment &ACE_TRY_ENV
-@@ -1739,7 +957,6 @@
+@@ -1739,7 +919,6 @@
      ACE_THROW_SPEC ((
        CORBA::SystemException
      ));
@@ -1669,7 +1634,7 @@
  };
  
  //
-@@ -1762,8 +979,9 @@
+@@ -1762,8 +941,9 @@
  {
  public:
    virtual ~_TAO_Contained_Proxy_Broker (void);
@@ -1680,7 +1645,7 @@
      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
    ) = 0;
  
-@@ -1788,9 +1006,9 @@
+@@ -1788,9 +968,9 @@
    _TAO_Contained_Remote_Proxy_Broker (void);
    
    virtual ~_TAO_Contained_Remote_Proxy_Broker (void);
@@ -1692,7 +1657,7 @@
      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
    );
  
-@@ -1804,702 +1022,462 @@
+@@ -1804,702 +984,462 @@
    static _TAO_Contained_Remote_Proxy_Broker *the_TAO_Contained_Remote_Proxy_Broker (void);
  };
  
@@ -2685,7 +2650,7 @@
    class _TAO_Unbounded_Object_Sequence_IR_InterfaceDefSeq : public TAO_Unbounded_Base_Sequence
    {
    public:
-@@ -2509,19 +1487,19 @@
+@@ -2509,19 +1449,19 @@
      _TAO_Unbounded_Object_Sequence_IR_InterfaceDefSeq (CORBA::ULong maximum);
      _TAO_Unbounded_Object_Sequence_IR_InterfaceDefSeq (CORBA::ULong maximum,
        CORBA::ULong length,
@@ -2711,7 +2676,7 @@
      virtual void _shrink_buffer (CORBA::ULong nl, CORBA::ULong ol);
      virtual void _downcast (
          void* target,
-@@ -2533,193 +1511,139 @@
+@@ -2533,193 +1473,139 @@
      
    };
  
@@ -2767,18 +2732,16 @@
  };
  
 -#endif /* end #if !defined */
-+// *************************************************************
-+// class IR_InterfaceDefSeq_var
-+// *************************************************************
- 
+-
 -
 -#if !defined (_TAO_IR_INTERFACEDEFSEQ___VAR_CH_)
 -#define _TAO_IR_INTERFACEDEFSEQ___VAR_CH_
 -
--// *************************************************************
+ // *************************************************************
 -// class IR::InterfaceDefSeq_var
--// *************************************************************
--
++// class IR_InterfaceDefSeq_var
+ // *************************************************************
+ 
 -class TAO_Export InterfaceDefSeq_var
 +class TAO_Export IR_InterfaceDefSeq_var
  {
@@ -2979,7 +2942,7 @@
    class _TAO_Unbounded_Object_Sequence_IR_ValueDefSeq : public TAO_Unbounded_Base_Sequence
    {
    public:
-@@ -2729,19 +1653,19 @@
+@@ -2729,19 +1615,19 @@
      _TAO_Unbounded_Object_Sequence_IR_ValueDefSeq (CORBA::ULong maximum);
      _TAO_Unbounded_Object_Sequence_IR_ValueDefSeq (CORBA::ULong maximum,
        CORBA::ULong length,
@@ -3005,7 +2968,7 @@
      virtual void _shrink_buffer (CORBA::ULong nl, CORBA::ULong ol);
      virtual void _downcast (
          void* target,
-@@ -2753,261 +1677,184 @@
+@@ -2753,261 +1639,184 @@
      
    };
  
@@ -3368,7 +3331,7 @@
    class _TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq : public TAO_Unbounded_Base_Sequence
    {
    public:
-@@ -3017,19 +1864,19 @@
+@@ -3017,19 +1826,19 @@
      _TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq (CORBA::ULong maximum);
      _TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq (CORBA::ULong maximum,
        CORBA::ULong length,
@@ -3394,7 +3357,7 @@
      virtual void _shrink_buffer (CORBA::ULong nl, CORBA::ULong ol);
      virtual void _downcast (
          void* target,
-@@ -3041,193 +1888,139 @@
+@@ -3041,193 +1850,139 @@
      
    };
  
@@ -3660,7 +3623,7 @@
    class _TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq : public TAO_Unbounded_Base_Sequence
    {
    public:
-@@ -3237,19 +2030,19 @@
+@@ -3237,19 +1992,19 @@
      _TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq (CORBA::ULong maximum);
      _TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq (CORBA::ULong maximum,
        CORBA::ULong length,
@@ -3686,7 +3649,7 @@
      virtual void _shrink_buffer (CORBA::ULong nl, CORBA::ULong ol);
      virtual void _downcast (
          void* target,
-@@ -3261,193 +2054,139 @@
+@@ -3261,193 +2016,139 @@
      
    };
  
@@ -3952,7 +3915,7 @@
    class _TAO_Unbounded_Object_Sequence_IR_UsesDefSeq : public TAO_Unbounded_Base_Sequence
    {
    public:
-@@ -3457,19 +2196,19 @@
+@@ -3457,19 +2158,19 @@
      _TAO_Unbounded_Object_Sequence_IR_UsesDefSeq (CORBA::ULong maximum);
      _TAO_Unbounded_Object_Sequence_IR_UsesDefSeq (CORBA::ULong maximum,
        CORBA::ULong length,
@@ -3978,7 +3941,7 @@
      virtual void _shrink_buffer (CORBA::ULong nl, CORBA::ULong ol);
      virtual void _downcast (
          void* target,
-@@ -3481,193 +2220,140 @@
+@@ -3481,193 +2182,140 @@
      
    };
  
@@ -4244,7 +4207,7 @@
    class _TAO_Unbounded_Object_Sequence_IR_HomeDefSeq : public TAO_Unbounded_Base_Sequence
    {
    public:
-@@ -3677,19 +2363,19 @@
+@@ -3677,19 +2325,19 @@
      _TAO_Unbounded_Object_Sequence_IR_HomeDefSeq (CORBA::ULong maximum);
      _TAO_Unbounded_Object_Sequence_IR_HomeDefSeq (CORBA::ULong maximum,
        CORBA::ULong length,
@@ -4270,7 +4233,7 @@
      virtual void _shrink_buffer (CORBA::ULong nl, CORBA::ULong ol);
      virtual void _downcast (
          void* target,
-@@ -3701,261 +2387,184 @@
+@@ -3701,261 +2349,184 @@
      
    };
  
@@ -4633,7 +4596,7 @@
    class _TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq : public TAO_Unbounded_Base_Sequence
    {
    public:
-@@ -3965,19 +2574,19 @@
+@@ -3965,19 +2536,19 @@
      _TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq (CORBA::ULong maximum);
      _TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq (CORBA::ULong maximum,
        CORBA::ULong length,
@@ -4659,7 +4622,7 @@
      virtual void _shrink_buffer (CORBA::ULong nl, CORBA::ULong ol);
      virtual void _downcast (
          void* target,
-@@ -3989,193 +2598,139 @@
+@@ -3989,193 +2560,139 @@
      
    };
  
@@ -4925,7 +4888,7 @@
    class _TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq : public TAO_Unbounded_Base_Sequence
    {
    public:
-@@ -4185,19 +2740,19 @@
+@@ -4185,19 +2702,19 @@
      _TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq (CORBA::ULong maximum);
      _TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq (CORBA::ULong maximum,
        CORBA::ULong length,
@@ -4951,7 +4914,7 @@
      virtual void _shrink_buffer (CORBA::ULong nl, CORBA::ULong ol);
      virtual void _downcast (
          void* target,
-@@ -4209,193 +2764,139 @@
+@@ -4209,193 +2726,139 @@
      
    };
  
@@ -5217,7 +5180,7 @@
    class _TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq : public TAO_Unbounded_Base_Sequence
    {
    public:
-@@ -4405,19 +2906,19 @@
+@@ -4405,19 +2868,19 @@
      _TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq (CORBA::ULong maximum);
      _TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq (CORBA::ULong maximum,
        CORBA::ULong length,
@@ -5243,7 +5206,7 @@
      virtual void _shrink_buffer (CORBA::ULong nl, CORBA::ULong ol);
      virtual void _downcast (
          void* target,
-@@ -4429,193 +2930,139 @@
+@@ -4429,193 +2892,139 @@
      
    };
  
@@ -5509,7 +5472,7 @@
    class _TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq : public TAO_Unbounded_Base_Sequence
    {
    public:
-@@ -4625,19 +3072,19 @@
+@@ -4625,19 +3034,19 @@
      _TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq (CORBA::ULong maximum);
      _TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq (CORBA::ULong maximum,
        CORBA::ULong length,
@@ -5535,7 +5498,7 @@
      virtual void _shrink_buffer (CORBA::ULong nl, CORBA::ULong ol);
      virtual void _downcast (
          void* target,
-@@ -4649,193 +3096,139 @@
+@@ -4649,193 +3058,139 @@
      
    };
  
@@ -5801,7 +5764,7 @@
    class _TAO_Unbounded_Object_Sequence_IR_FinderDefSeq : public TAO_Unbounded_Base_Sequence
    {
    public:
-@@ -4845,19 +3238,19 @@
+@@ -4845,19 +3200,19 @@
      _TAO_Unbounded_Object_Sequence_IR_FinderDefSeq (CORBA::ULong maximum);
      _TAO_Unbounded_Object_Sequence_IR_FinderDefSeq (CORBA::ULong maximum,
        CORBA::ULong length,
@@ -5827,7 +5790,7 @@
      virtual void _shrink_buffer (CORBA::ULong nl, CORBA::ULong ol);
      virtual void _downcast (
          void* target,
-@@ -4869,193 +3262,139 @@
+@@ -4869,193 +3224,139 @@
      
    };
  
@@ -6093,7 +6056,7 @@
    class _TAO_Unbounded_Object_Sequence_IR_ContainedSeq : public TAO_Unbounded_Base_Sequence
    {
    public:
-@@ -5065,19 +3404,19 @@
+@@ -5065,19 +3366,19 @@
      _TAO_Unbounded_Object_Sequence_IR_ContainedSeq (CORBA::ULong maximum);
      _TAO_Unbounded_Object_Sequence_IR_ContainedSeq (CORBA::ULong maximum,
        CORBA::ULong length,
@@ -6119,7 +6082,7 @@
      virtual void _shrink_buffer (CORBA::ULong nl, CORBA::ULong ol);
      virtual void _downcast (
          void* target,
-@@ -5089,191 +3428,156 @@
+@@ -5089,191 +3390,156 @@
      
    };
  
@@ -6387,7 +6350,7 @@
    class TAO_EXPORT_NESTED_MACRO _TAO_Unbounded_Sequence_IR_StructMemberSeq : public TAO_Unbounded_Base_Sequence
    {
    public:
-@@ -5283,214 +3587,178 @@
+@@ -5283,214 +3549,178 @@
      _TAO_Unbounded_Sequence_IR_StructMemberSeq (CORBA::ULong maximum); 
      _TAO_Unbounded_Sequence_IR_StructMemberSeq (CORBA::ULong maximum,
        CORBA::ULong length,
@@ -6689,7 +6652,7 @@
    class TAO_EXPORT_NESTED_MACRO _TAO_Unbounded_Sequence_IR_InitializerSeq : public TAO_Unbounded_Base_Sequence
    {
    public:
-@@ -5500,151 +3768,121 @@
+@@ -5500,151 +3730,121 @@
      _TAO_Unbounded_Sequence_IR_InitializerSeq (CORBA::ULong maximum); 
      _TAO_Unbounded_Sequence_IR_InitializerSeq (CORBA::ULong maximum,
        CORBA::ULong length,
@@ -6895,7 +6858,7 @@
  #endif /* ! __GNUC__ || g++ >= 2.8 */
  
    static void _tao_any_destructor (void*);
-@@ -5652,64 +3890,58 @@
+@@ -5652,64 +3852,58 @@
    TAO_String_Manager name;
    CORBA::Any label;
    CORBA::TypeCode_var type;
@@ -6991,7 +6954,7 @@
    class TAO_EXPORT_NESTED_MACRO _TAO_Unbounded_Sequence_IR_UnionMemberSeq : public TAO_Unbounded_Base_Sequence
    {
    public:
-@@ -5719,155 +3951,121 @@
+@@ -5719,155 +3913,121 @@
      _TAO_Unbounded_Sequence_IR_UnionMemberSeq (CORBA::ULong maximum); 
      _TAO_Unbounded_Sequence_IR_UnionMemberSeq (CORBA::ULong maximum,
        CORBA::ULong length,
@@ -7201,7 +7164,7 @@
  #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
    TAO_Unbounded_String_Sequence
  #else /* TAO_USE_SEQUENCE_TEMPLATES */
-@@ -5875,202 +4073,112 @@
+@@ -5875,202 +4035,112 @@
  #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
  {
  public:
@@ -7450,7 +7413,7 @@
        const char * search_name,
        CORBA::Environment &ACE_TRY_ENV = 
          TAO_default_environment ()
-@@ -6079,8 +4187,8 @@
+@@ -6079,8 +4149,8 @@
        CORBA::SystemException
      ));
  
@@ -7461,7 +7424,7 @@
        CORBA::Boolean exclude_inherited,
        CORBA::Environment &ACE_TRY_ENV = 
          TAO_default_environment ()
-@@ -6089,10 +4197,10 @@
+@@ -6089,10 +4159,10 @@
        CORBA::SystemException
      ));
  
@@ -7474,7 +7437,7 @@
        CORBA::Boolean exclude_inherited,
        CORBA::Environment &ACE_TRY_ENV = 
          TAO_default_environment ()
-@@ -6113,8 +4221,8 @@
+@@ -6113,8 +4183,8 @@
  
      static void _tao_any_destructor (void*);
  
@@ -7485,7 +7448,7 @@
      CORBA::Any value;
    };
  
-@@ -6170,9 +4278,6 @@
+@@ -6170,9 +4240,6 @@
  
  #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
      
@@ -7495,7 +7458,7 @@
      class TAO_EXPORT_NESTED_MACRO _TAO_Unbounded_Sequence_IR_Container_DescriptionSeq : public TAO_Unbounded_Base_Sequence
      {
      public:
-@@ -6205,15 +4310,8 @@
+@@ -6205,15 +4272,8 @@
          CORBA::Boolean release);
      };
  
@@ -7511,7 +7474,7 @@
    class DescriptionSeq_var;
    
    // *************************************************************
-@@ -6246,14 +4344,8 @@
+@@ -6246,14 +4306,8 @@
  
    };
    
@@ -7527,7 +7490,7 @@
    // *************************************************************
  
    class TAO_Export DescriptionSeq_var
-@@ -6275,8 +4367,7 @@
+@@ -6275,8 +4329,7 @@
      operator DescriptionSeq *&(); // variable-size base types only
      
      Description & operator[] (CORBA::ULong index);
@@ -7537,7 +7500,7 @@
      // in, inout, out, _retn 
      const DescriptionSeq &in (void) const;
      DescriptionSeq &inout (void);
-@@ -6288,13 +4379,6 @@
+@@ -6288,13 +4341,6 @@
      DescriptionSeq *ptr_;
    };
  
@@ -7551,7 +7514,7 @@
    class TAO_Export DescriptionSeq_out
    {
    public:
-@@ -6314,13 +4398,10 @@
+@@ -6314,13 +4360,10 @@
      void operator= (const DescriptionSeq_var &);
    };
  
@@ -7567,7 +7530,7 @@
        CORBA::Boolean exclude_inherited,
        CORBA::Long max_returned_objs,
        CORBA::Environment &ACE_TRY_ENV = 
-@@ -6330,7 +4411,7 @@
+@@ -6330,7 +4373,7 @@
        CORBA::SystemException
      ));
  
@@ -7576,7 +7539,7 @@
        const char * id,
        const char * name,
        const char * version,
-@@ -6341,11 +4422,11 @@
+@@ -6341,11 +4384,11 @@
        CORBA::SystemException
      ));
  
@@ -7590,7 +7553,7 @@
        const CORBA::Any & value,
        CORBA::Environment &ACE_TRY_ENV = 
          TAO_default_environment ()
-@@ -6354,11 +4435,11 @@
+@@ -6354,11 +4397,11 @@
        CORBA::SystemException
      ));
  
@@ -7604,7 +7567,7 @@
        CORBA::Environment &ACE_TRY_ENV = 
          TAO_default_environment ()
      )
-@@ -6366,12 +4447,12 @@
+@@ -6366,12 +4409,12 @@
        CORBA::SystemException
      ));
  
@@ -7620,7 +7583,7 @@
        CORBA::Environment &ACE_TRY_ENV = 
          TAO_default_environment ()
      )
-@@ -6379,11 +4460,11 @@
+@@ -6379,11 +4422,11 @@
        CORBA::SystemException
      ));
  
@@ -7634,7 +7597,7 @@
        CORBA::Environment &ACE_TRY_ENV = 
          TAO_default_environment ()
      )
-@@ -6391,11 +4472,11 @@
+@@ -6391,11 +4434,11 @@
        CORBA::SystemException
      ));
  
@@ -7648,7 +7611,7 @@
        CORBA::Environment &ACE_TRY_ENV = 
          TAO_default_environment ()
      )
-@@ -6403,11 +4484,11 @@
+@@ -6403,11 +4446,11 @@
        CORBA::SystemException
      ));
  
@@ -7662,7 +7625,7 @@
        CORBA::Boolean is_abstract,
        CORBA::Boolean is_local,
        CORBA::Environment &ACE_TRY_ENV = 
-@@ -6417,17 +4498,17 @@
+@@ -6417,17 +4460,17 @@
        CORBA::SystemException
      ));
  
@@ -7685,7 +7648,7 @@
        CORBA::Environment &ACE_TRY_ENV = 
          TAO_default_environment ()
      )
-@@ -6435,11 +4516,11 @@
+@@ -6435,11 +4478,11 @@
        CORBA::SystemException
      ));
  
@@ -7699,7 +7662,7 @@
        CORBA::Environment &ACE_TRY_ENV = 
          TAO_default_environment ()
      )
-@@ -6447,11 +4528,11 @@
+@@ -6447,11 +4490,11 @@
        CORBA::SystemException
      ));
  
@@ -7713,7 +7676,7 @@
        CORBA::Environment &ACE_TRY_ENV = 
          TAO_default_environment ()
      )
-@@ -6459,7 +4540,7 @@
+@@ -6459,7 +4502,7 @@
        CORBA::SystemException
      ));
  
@@ -7722,7 +7685,7 @@
        const char * id,
        const char * name,
        const char * version,
-@@ -6483,804 +4564,27 @@
+@@ -6483,804 +4526,27 @@
    _TAO_Container_Proxy_Broker *the_TAO_Container_Proxy_Broker_;
    
  protected:
@@ -8540,7 +8503,7 @@
  };
  
  
-@@ -7294,12 +4598,12 @@
+@@ -7294,12 +4560,12 @@
  //
  
  class TAO_Export _TAO_Container_Proxy_Impl : 
@@ -8555,7 +8518,7 @@
        CORBA_Object *_collocated_tao_target_,
        const char * search_name,
        CORBA::Environment &ACE_TRY_ENV
-@@ -7308,9 +4612,9 @@
+@@ -7308,9 +4574,9 @@
        CORBA::SystemException
      )) = 0;
  
@@ -8567,7 +8530,7 @@
        CORBA::Boolean exclude_inherited,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -7318,11 +4622,11 @@
+@@ -7318,11 +4584,11 @@
        CORBA::SystemException
      )) = 0;
  
@@ -8581,7 +8544,7 @@
        CORBA::Boolean exclude_inherited,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -7330,9 +4634,9 @@
+@@ -7330,9 +4596,9 @@
        CORBA::SystemException
      )) = 0;
  
@@ -8593,7 +8556,7 @@
        CORBA::Boolean exclude_inherited,
        CORBA::Long max_returned_objs,
        CORBA::Environment &ACE_TRY_ENV
-@@ -7341,7 +4645,7 @@
+@@ -7341,7 +4607,7 @@
        CORBA::SystemException
      )) = 0;
  
@@ -8602,7 +8565,7 @@
        CORBA_Object *_collocated_tao_target_,
        const char * id,
        const char * name,
-@@ -7352,12 +4656,12 @@
+@@ -7352,12 +4618,12 @@
        CORBA::SystemException
      )) = 0;
  
@@ -8617,7 +8580,7 @@
        const CORBA::Any & value,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -7365,61 +4669,61 @@
+@@ -7365,61 +4631,61 @@
        CORBA::SystemException
      )) = 0;
  
@@ -8690,7 +8653,7 @@
        CORBA::Boolean is_abstract,
        CORBA::Boolean is_local,
        CORBA::Environment &ACE_TRY_ENV
-@@ -7428,49 +4732,49 @@
+@@ -7428,49 +4694,49 @@
        CORBA::SystemException
      )) = 0;
  
@@ -8750,7 +8713,7 @@
        CORBA_Object *_collocated_tao_target_,
        const char * id,
        const char * name,
-@@ -7485,6 +4789,7 @@
+@@ -7485,6 +4751,7 @@
    _TAO_Container_Proxy_Impl (void);
  
  };
@@ -8758,7 +8721,7 @@
  //
  //                Base  Proxy Impl. Declaration
  ///////////////////////////////////////////////////////////////////////
-@@ -7497,7 +4802,7 @@
+@@ -7497,7 +4764,7 @@
  class TAO_Export _TAO_Container_Remote_Proxy_Impl : 
    public virtual _TAO_Container_Proxy_Impl,
    public virtual TAO_Remote_Object_Proxy_Impl,
@@ -8767,7 +8730,7 @@
    
  {
  public:
-@@ -7505,7 +4810,7 @@
+@@ -7505,7 +4772,7 @@
    
    virtual ~_TAO_Container_Remote_Proxy_Impl (void) { }
    
@@ -8776,7 +8739,7 @@
        CORBA_Object *_collocated_tao_target_,
        const char * search_name,
        CORBA::Environment &ACE_TRY_ENV
-@@ -7514,9 +4819,9 @@
+@@ -7514,9 +4781,9 @@
        CORBA::SystemException
      ));
  
@@ -8788,7 +8751,7 @@
        CORBA::Boolean exclude_inherited,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -7524,11 +4829,11 @@
+@@ -7524,11 +4791,11 @@
        CORBA::SystemException
      ));
  
@@ -8802,7 +8765,7 @@
        CORBA::Boolean exclude_inherited,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -7536,9 +4841,9 @@
+@@ -7536,9 +4803,9 @@
        CORBA::SystemException
      ));
  
@@ -8814,7 +8777,7 @@
        CORBA::Boolean exclude_inherited,
        CORBA::Long max_returned_objs,
        CORBA::Environment &ACE_TRY_ENV
-@@ -7547,7 +4852,7 @@
+@@ -7547,7 +4814,7 @@
        CORBA::SystemException
      ));
  
@@ -8823,7 +8786,7 @@
        CORBA_Object *_collocated_tao_target_,
        const char * id,
        const char * name,
-@@ -7558,12 +4863,12 @@
+@@ -7558,12 +4825,12 @@
        CORBA::SystemException
      ));
  
@@ -8838,7 +8801,7 @@
        const CORBA::Any & value,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -7571,61 +4876,61 @@
+@@ -7571,61 +4838,61 @@
        CORBA::SystemException
      ));
  
@@ -8911,7 +8874,7 @@
        CORBA::Boolean is_abstract,
        CORBA::Boolean is_local,
        CORBA::Environment &ACE_TRY_ENV
-@@ -7634,49 +4939,49 @@
+@@ -7634,49 +4901,49 @@
        CORBA::SystemException
      ));
  
@@ -8971,7 +8934,7 @@
        CORBA_Object *_collocated_tao_target_,
        const char * id,
        const char * name,
-@@ -7686,7 +4991,6 @@
+@@ -7686,7 +4953,6 @@
      ACE_THROW_SPEC ((
        CORBA::SystemException
      ));
@@ -8979,7 +8942,7 @@
  };
  
  //
-@@ -7709,8 +5013,9 @@
+@@ -7709,8 +4975,9 @@
  {
  public:
    virtual ~_TAO_Container_Proxy_Broker (void);
@@ -8990,7 +8953,7 @@
      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
    ) = 0;
  
-@@ -7735,9 +5040,9 @@
+@@ -7735,9 +5002,9 @@
    _TAO_Container_Remote_Proxy_Broker (void);
    
    virtual ~_TAO_Container_Remote_Proxy_Broker (void);
@@ -9002,7 +8965,7 @@
      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
    );
  
-@@ -7751,123 +5056,45 @@
+@@ -7751,123 +5018,45 @@
    static _TAO_Container_Remote_Proxy_Broker *the_TAO_Container_Remote_Proxy_Broker (void);
  };
  
@@ -9136,7 +9099,7 @@
          TAO_default_environment ()
      )
      ACE_THROW_SPEC ((
-@@ -7887,78 +5114,27 @@
+@@ -7887,78 +5076,27 @@
    _TAO_IDLType_Proxy_Broker *the_TAO_IDLType_Proxy_Broker_;
    
  protected:
@@ -9229,7 +9192,7 @@
  };
  
  
-@@ -7972,14 +5148,14 @@
+@@ -7972,14 +5110,14 @@
  //
  
  class TAO_Export _TAO_IDLType_Proxy_Impl : 
@@ -9247,7 +9210,7 @@
      )
      ACE_THROW_SPEC ((
        CORBA::SystemException
-@@ -7989,6 +5165,7 @@
+@@ -7989,6 +5127,7 @@
    _TAO_IDLType_Proxy_Impl (void);
  
  };
@@ -9255,7 +9218,7 @@
  //
  //                Base  Proxy Impl. Declaration
  ///////////////////////////////////////////////////////////////////////
-@@ -8001,7 +5178,7 @@
+@@ -8001,7 +5140,7 @@
  class TAO_Export _TAO_IDLType_Remote_Proxy_Impl : 
    public virtual _TAO_IDLType_Proxy_Impl,
    public virtual TAO_Remote_Object_Proxy_Impl,
@@ -9264,7 +9227,7 @@
    
  {
  public:
-@@ -8009,9 +5186,9 @@
+@@ -8009,9 +5148,9 @@
    
    virtual ~_TAO_IDLType_Remote_Proxy_Impl (void) { }
    
@@ -9276,7 +9239,7 @@
      )
      ACE_THROW_SPEC ((
        CORBA::SystemException
-@@ -8039,8 +5216,9 @@
+@@ -8039,8 +5178,9 @@
  {
  public:
    virtual ~_TAO_IDLType_Proxy_Broker (void);
@@ -9287,7 +9250,7 @@
      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
    ) = 0;
  
-@@ -8065,9 +5243,9 @@
+@@ -8065,9 +5205,9 @@
    _TAO_IDLType_Remote_Proxy_Broker (void);
    
    virtual ~_TAO_IDLType_Remote_Proxy_Broker (void);
@@ -9299,7 +9262,7 @@
      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
    );
  
-@@ -8081,426 +5259,283 @@
+@@ -8081,558 +5221,315 @@
    static _TAO_IDLType_Remote_Proxy_Broker *the_TAO_IDLType_Remote_Proxy_Broker (void);
  };
  
@@ -9768,9 +9731,8 @@
 -#define _TAO_IR_WSTRINGDEF___OUT_CH_
 -
 -class TAO_Export WstringDef_out
-+class TAO_Export IR_WstringDef_out
- {
- public:
+-{
+-public:
 -  WstringDef_out (WstringDef_ptr &);
 -  WstringDef_out (WstringDef_var &);
 -  WstringDef_out (const WstringDef_out &);
@@ -9780,21 +9742,11 @@
 -  operator WstringDef_ptr &();
 -  WstringDef_ptr &ptr (void);
 -  WstringDef_ptr operator-> (void);
-+  IR_WstringDef_out (IR_WstringDef_ptr &);
-+  IR_WstringDef_out (IR_WstringDef_var &);
-+  IR_WstringDef_out (const IR_WstringDef_out &);
-+  IR_WstringDef_out &operator= (const IR_WstringDef_out &);
-+  IR_WstringDef_out &operator= (const IR_WstringDef_var &);
-+  IR_WstringDef_out &operator= (IR_WstringDef_ptr);
-+  operator IR_WstringDef_ptr &();
-+  IR_WstringDef_ptr &ptr (void);
-+  IR_WstringDef_ptr operator-> (void);
-   
- private:
+-  
+-private:
 -  WstringDef_ptr &ptr_;
-+  IR_WstringDef_ptr &ptr_;
- };
- 
+-};
+-
 -
 -#endif /* end #if !defined */
 -
@@ -9812,51 +9764,34 @@
 -#define _TAO_IR_FIXEDDEF___VAR_CH_
 -
 -class TAO_Export FixedDef_var : public TAO_Base_var
-+class TAO_Export IR_FixedDef_var : public TAO_Base_var
++class TAO_Export IR_WstringDef_out
  {
  public:
 -  FixedDef_var (void); // default constructor
 -  FixedDef_var (FixedDef_ptr p) : ptr_ (p) {} 
 -  FixedDef_var (const FixedDef_var &); // copy constructor
 -  ~FixedDef_var (void); // destructor
-+  IR_FixedDef_var (void); // default constructor
-+  IR_FixedDef_var (IR_FixedDef_ptr p) : ptr_ (p) {} 
-+  IR_FixedDef_var (const IR_FixedDef_var &); // copy constructor
-+  ~IR_FixedDef_var (void); // destructor
-   
+-  
 -  FixedDef_var &operator= (FixedDef_ptr);
 -  FixedDef_var &operator= (const FixedDef_var &);
 -  FixedDef_ptr operator-> (void) const;
-+  IR_FixedDef_var &operator= (IR_FixedDef_ptr);
-+  IR_FixedDef_var &operator= (const IR_FixedDef_var &);
-+  IR_FixedDef_ptr operator-> (void) const;
-   
+-  
 -  operator const FixedDef_ptr &() const;
 -  operator FixedDef_ptr &();
-+  operator const IR_FixedDef_ptr &() const;
-+  operator IR_FixedDef_ptr &();
-   // in, inout, out, _retn 
+-  // in, inout, out, _retn 
 -  FixedDef_ptr in (void) const;
 -  FixedDef_ptr &inout (void);
 -  FixedDef_ptr &out (void);
 -  FixedDef_ptr _retn (void);
 -  FixedDef_ptr ptr (void) const;
-+  IR_FixedDef_ptr in (void) const;
-+  IR_FixedDef_ptr &inout (void);
-+  IR_FixedDef_ptr &out (void);
-+  IR_FixedDef_ptr _retn (void);
-+  IR_FixedDef_ptr ptr (void) const;
- 
- private:
+-
+-private:
 -  FixedDef_ptr ptr_;
-+  IR_FixedDef_ptr ptr_;
-   // Unimplemented - prevents widening assignment.
+-  // Unimplemented - prevents widening assignment.
 -  FixedDef_var (const TAO_Base_var &rhs);
 -  FixedDef_var &operator= (const TAO_Base_var &rhs);
-+  IR_FixedDef_var (const TAO_Base_var &rhs);
-+  IR_FixedDef_var &operator= (const TAO_Base_var &rhs);
- };
- 
+-};
+-
 -
 -#endif /* end #if !defined */
 -
@@ -9865,9 +9800,8 @@
 -#define _TAO_IR_FIXEDDEF___OUT_CH_
 -
 -class TAO_Export FixedDef_out
-+class TAO_Export IR_FixedDef_out
- {
- public:
+-{
+-public:
 -  FixedDef_out (FixedDef_ptr &);
 -  FixedDef_out (FixedDef_var &);
 -  FixedDef_out (const FixedDef_out &);
@@ -9877,37 +9811,49 @@
 -  operator FixedDef_ptr &();
 -  FixedDef_ptr &ptr (void);
 -  FixedDef_ptr operator-> (void);
-+  IR_FixedDef_out (IR_FixedDef_ptr &);
-+  IR_FixedDef_out (IR_FixedDef_var &);
-+  IR_FixedDef_out (const IR_FixedDef_out &);
-+  IR_FixedDef_out &operator= (const IR_FixedDef_out &);
-+  IR_FixedDef_out &operator= (const IR_FixedDef_var &);
-+  IR_FixedDef_out &operator= (IR_FixedDef_ptr);
-+  operator IR_FixedDef_ptr &();
-+  IR_FixedDef_ptr &ptr (void);
-+  IR_FixedDef_ptr operator-> (void);
++  IR_WstringDef_out (IR_WstringDef_ptr &);
++  IR_WstringDef_out (IR_WstringDef_var &);
++  IR_WstringDef_out (const IR_WstringDef_out &);
++  IR_WstringDef_out &operator= (const IR_WstringDef_out &);
++  IR_WstringDef_out &operator= (const IR_WstringDef_var &);
++  IR_WstringDef_out &operator= (IR_WstringDef_ptr);
++  operator IR_WstringDef_ptr &();
++  IR_WstringDef_ptr &ptr (void);
++  IR_WstringDef_ptr operator-> (void);
    
  private:
 -  FixedDef_ptr &ptr_;
-+  IR_FixedDef_ptr &ptr_;
- };
- 
+-};
+-
 -
 -#endif /* end #if !defined */
 -
 -enum PrimitiveKind
 -{
-+enum IR_PrimitiveKind
-+  {
-     pk_null,
-     pk_void,
-     pk_short,
-@@ -8522,82 +5557,8 @@
-     pk_longdouble,
-     pk_wchar,
-     pk_wstring,
+-    pk_null,
+-    pk_void,
+-    pk_short,
+-    pk_long,
+-    pk_ushort,
+-    pk_ulong,
+-    pk_float,
+-    pk_double,
+-    pk_boolean,
+-    pk_char,
+-    pk_octet,
+-    pk_any,
+-    pk_TypeCode,
+-    pk_Principal,
+-    pk_string,
+-    pk_objref,
+-    pk_longlong,
+-    pk_ulonglong,
+-    pk_longdouble,
+-    pk_wchar,
+-    pk_wstring,
 -    pk_value_base  
--};
++  IR_WstringDef_ptr &ptr_;
+ };
 -typedef PrimitiveKind &PrimitiveKind_out;
 -TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_PrimitiveKind;
 -
@@ -9920,38 +9866,56 @@
 -
 -#endif /* end #if !defined */
 -
--
+ 
 -#if !defined (_TAO_IR_REPOSITORY___VAR_CH_)
 -#define _TAO_IR_REPOSITORY___VAR_CH_
 -
 -class TAO_Export Repository_var : public TAO_Base_var
--{
--public:
++class TAO_Export IR_FixedDef_var : public TAO_Base_var
+ {
+ public:
 -  Repository_var (void); // default constructor
 -  Repository_var (Repository_ptr p) : ptr_ (p) {} 
 -  Repository_var (const Repository_var &); // copy constructor
 -  ~Repository_var (void); // destructor
--  
++  IR_FixedDef_var (void); // default constructor
++  IR_FixedDef_var (IR_FixedDef_ptr p) : ptr_ (p) {} 
++  IR_FixedDef_var (const IR_FixedDef_var &); // copy constructor
++  ~IR_FixedDef_var (void); // destructor
+   
 -  Repository_var &operator= (Repository_ptr);
 -  Repository_var &operator= (const Repository_var &);
 -  Repository_ptr operator-> (void) const;
--  
++  IR_FixedDef_var &operator= (IR_FixedDef_ptr);
++  IR_FixedDef_var &operator= (const IR_FixedDef_var &);
++  IR_FixedDef_ptr operator-> (void) const;
+   
 -  operator const Repository_ptr &() const;
 -  operator Repository_ptr &();
--  // in, inout, out, _retn 
++  operator const IR_FixedDef_ptr &() const;
++  operator IR_FixedDef_ptr &();
+   // in, inout, out, _retn 
 -  Repository_ptr in (void) const;
 -  Repository_ptr &inout (void);
 -  Repository_ptr &out (void);
 -  Repository_ptr _retn (void);
 -  Repository_ptr ptr (void) const;
--
--private:
++  IR_FixedDef_ptr in (void) const;
++  IR_FixedDef_ptr &inout (void);
++  IR_FixedDef_ptr &out (void);
++  IR_FixedDef_ptr _retn (void);
++  IR_FixedDef_ptr ptr (void) const;
+ 
+ private:
 -  Repository_ptr ptr_;
--  // Unimplemented - prevents widening assignment.
++  IR_FixedDef_ptr ptr_;
+   // Unimplemented - prevents widening assignment.
 -  Repository_var (const TAO_Base_var &rhs);
 -  Repository_var &operator= (const TAO_Base_var &rhs);
--};
--
++  IR_FixedDef_var (const TAO_Base_var &rhs);
++  IR_FixedDef_var &operator= (const TAO_Base_var &rhs);
+ };
+ 
 -
 -#endif /* end #if !defined */
 -
@@ -9960,8 +9924,9 @@
 -#define _TAO_IR_REPOSITORY___OUT_CH_
 -
 -class TAO_Export Repository_out
--{
--public:
++class TAO_Export IR_FixedDef_out
+ {
+ public:
 -  Repository_out (Repository_ptr &);
 -  Repository_out (Repository_var &);
 -  Repository_out (const Repository_out &);
@@ -9971,23 +9936,31 @@
 -  operator Repository_ptr &();
 -  Repository_ptr &ptr (void);
 -  Repository_ptr operator-> (void);
--  
--private:
++  IR_FixedDef_out (IR_FixedDef_ptr &);
++  IR_FixedDef_out (IR_FixedDef_var &);
++  IR_FixedDef_out (const IR_FixedDef_out &);
++  IR_FixedDef_out &operator= (const IR_FixedDef_out &);
++  IR_FixedDef_out &operator= (const IR_FixedDef_var &);
++  IR_FixedDef_out &operator= (IR_FixedDef_ptr);
++  operator IR_FixedDef_ptr &();
++  IR_FixedDef_ptr &ptr (void);
++  IR_FixedDef_ptr operator-> (void);
+   
+ private:
 -  Repository_ptr &ptr_;
--};
--
++  IR_FixedDef_ptr &ptr_;
+ };
+ 
 -
 -#endif /* end #if !defined */
 -
 -
 -#if !defined (_TAO_IR_REPOSITORY_CH_)
 -#define _TAO_IR_REPOSITORY_CH_
-+    pk_value_base
-+  };
- 
+-
  // Forward Classes Declaration
  class _TAO_Repository_Proxy_Impl;
-@@ -8605,34 +5566,34 @@
+ class _TAO_Repository_Remote_Proxy_Impl;
  class _TAO_Repository_Proxy_Broker;
  class _TAO_Repository_Remote_Proxy_Broker;
  
@@ -10031,7 +10004,7 @@
        const char * search_id,
        CORBA::Environment &ACE_TRY_ENV = 
          TAO_default_environment ()
-@@ -8650,8 +5611,8 @@
+@@ -8650,8 +5547,8 @@
        CORBA::SystemException
      ));
  
@@ -10042,7 +10015,7 @@
        CORBA::Environment &ACE_TRY_ENV = 
          TAO_default_environment ()
      )
-@@ -8659,7 +5620,7 @@
+@@ -8659,7 +5556,7 @@
        CORBA::SystemException
      ));
  
@@ -10051,7 +10024,7 @@
        CORBA::ULong bound,
        CORBA::Environment &ACE_TRY_ENV = 
          TAO_default_environment ()
-@@ -8668,7 +5629,7 @@
+@@ -8668,7 +5565,7 @@
        CORBA::SystemException
      ));
  
@@ -10060,7 +10033,7 @@
        CORBA::ULong bound,
        CORBA::Environment &ACE_TRY_ENV = 
          TAO_default_environment ()
-@@ -8677,9 +5638,9 @@
+@@ -8677,9 +5574,9 @@
        CORBA::SystemException
      ));
  
@@ -10072,7 +10045,7 @@
        CORBA::Environment &ACE_TRY_ENV = 
          TAO_default_environment ()
      )
-@@ -8687,9 +5648,9 @@
+@@ -8687,9 +5584,9 @@
        CORBA::SystemException
      ));
  
@@ -10084,7 +10057,7 @@
        CORBA::Environment &ACE_TRY_ENV = 
          TAO_default_environment ()
      )
-@@ -8697,7 +5658,7 @@
+@@ -8697,7 +5594,7 @@
        CORBA::SystemException
      ));
  
@@ -10093,7 +10066,7 @@
        CORBA::UShort digits,
        CORBA::Short scale,
        CORBA::Environment &ACE_TRY_ENV = 
-@@ -8720,401 +5681,27 @@
+@@ -8720,401 +5617,27 @@
    _TAO_Repository_Proxy_Broker *the_TAO_Repository_Proxy_Broker_;
    
  protected:
@@ -10506,7 +10479,7 @@
  };
  
  
-@@ -9128,12 +5715,12 @@
+@@ -9128,12 +5651,12 @@
  //
  
  class TAO_Export _TAO_Repository_Proxy_Impl : 
@@ -10521,7 +10494,7 @@
        CORBA_Object *_collocated_tao_target_,
        const char * search_id,
        CORBA::Environment &ACE_TRY_ENV
-@@ -9151,16 +5738,16 @@
+@@ -9151,16 +5674,16 @@
        CORBA::SystemException
      )) = 0;
  
@@ -10541,7 +10514,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::ULong bound,
        CORBA::Environment &ACE_TRY_ENV
-@@ -9169,7 +5756,7 @@
+@@ -9169,7 +5692,7 @@
        CORBA::SystemException
      )) = 0;
  
@@ -10550,7 +10523,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::ULong bound,
        CORBA::Environment &ACE_TRY_ENV
-@@ -9178,27 +5765,27 @@
+@@ -9178,27 +5701,27 @@
        CORBA::SystemException
      )) = 0;
  
@@ -10583,7 +10556,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::UShort digits,
        CORBA::Short scale,
-@@ -9212,6 +5799,7 @@
+@@ -9212,6 +5735,7 @@
    _TAO_Repository_Proxy_Impl (void);
  
  };
@@ -10591,7 +10564,7 @@
  //
  //                Base  Proxy Impl. Declaration
  ///////////////////////////////////////////////////////////////////////
-@@ -9224,7 +5812,7 @@
+@@ -9224,7 +5748,7 @@
  class TAO_Export _TAO_Repository_Remote_Proxy_Impl : 
    public virtual _TAO_Repository_Proxy_Impl,
    public virtual TAO_Remote_Object_Proxy_Impl,
@@ -10600,7 +10573,7 @@
    
  {
  public:
-@@ -9232,7 +5820,7 @@
+@@ -9232,7 +5756,7 @@
    
    virtual ~_TAO_Repository_Remote_Proxy_Impl (void) { }
    
@@ -10609,7 +10582,7 @@
        CORBA_Object *_collocated_tao_target_,
        const char * search_id,
        CORBA::Environment &ACE_TRY_ENV
-@@ -9250,16 +5838,16 @@
+@@ -9250,16 +5774,16 @@
        CORBA::SystemException
      ));
  
@@ -10629,7 +10602,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::ULong bound,
        CORBA::Environment &ACE_TRY_ENV
-@@ -9268,7 +5856,7 @@
+@@ -9268,7 +5792,7 @@
        CORBA::SystemException
      ));
  
@@ -10638,7 +10611,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::ULong bound,
        CORBA::Environment &ACE_TRY_ENV
-@@ -9277,27 +5865,27 @@
+@@ -9277,27 +5801,27 @@
        CORBA::SystemException
      ));
  
@@ -10671,7 +10644,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::UShort digits,
        CORBA::Short scale,
-@@ -9329,8 +5917,9 @@
+@@ -9329,8 +5853,9 @@
  {
  public:
    virtual ~_TAO_Repository_Proxy_Broker (void);
@@ -10682,7 +10655,7 @@
      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
    ) = 0;
  
-@@ -9355,9 +5944,9 @@
+@@ -9355,9 +5880,9 @@
    _TAO_Repository_Remote_Proxy_Broker (void);
    
    virtual ~_TAO_Repository_Remote_Proxy_Broker (void);
@@ -10694,7 +10667,7 @@
      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
    );
  
-@@ -9371,127 +5960,94 @@
+@@ -9371,127 +5896,94 @@
    static _TAO_Repository_Remote_Proxy_Broker *the_TAO_Repository_Remote_Proxy_Broker (void);
  };
  
@@ -10862,7 +10835,7 @@
        CORBA::Environment &ACE_TRY_ENV = 
          TAO_default_environment ()
      )
-@@ -9499,13 +6055,13 @@
+@@ -9499,13 +5991,13 @@
        CORBA::SystemException
      ));
  
@@ -10880,7 +10853,7 @@
        CORBA::Environment &ACE_TRY_ENV = 
          TAO_default_environment ()
      )
-@@ -9526,143 +6082,27 @@
+@@ -9526,143 +6018,27 @@
    _TAO_ComponentRepository_Proxy_Broker *the_TAO_ComponentRepository_Proxy_Broker_;
    
  protected:
@@ -11037,7 +11010,7 @@
  };
  
  
-@@ -9676,32 +6116,32 @@
+@@ -9676,32 +6052,32 @@
  //
  
  class TAO_Export _TAO_ComponentRepository_Proxy_Impl : 
@@ -11078,7 +11051,7 @@
        CORBA::Environment &ACE_TRY_ENV
      )
      ACE_THROW_SPEC ((
-@@ -9712,6 +6152,7 @@
+@@ -9712,6 +6088,7 @@
    _TAO_ComponentRepository_Proxy_Impl (void);
  
  };
@@ -11086,7 +11059,7 @@
  //
  //                Base  Proxy Impl. Declaration
  ///////////////////////////////////////////////////////////////////////
-@@ -9724,7 +6165,7 @@
+@@ -9724,7 +6101,7 @@
  class TAO_Export _TAO_ComponentRepository_Remote_Proxy_Impl : 
    public virtual _TAO_ComponentRepository_Proxy_Impl,
    public virtual TAO_Remote_Object_Proxy_Impl,
@@ -11095,7 +11068,7 @@
    
  {
  public:
-@@ -9732,27 +6173,27 @@
+@@ -9732,27 +6109,27 @@
    
    virtual ~_TAO_ComponentRepository_Remote_Proxy_Impl (void) { }
    
@@ -11130,7 +11103,7 @@
        CORBA::Environment &ACE_TRY_ENV
      )
      ACE_THROW_SPEC ((
-@@ -9781,8 +6222,9 @@
+@@ -9781,8 +6158,9 @@
  {
  public:
    virtual ~_TAO_ComponentRepository_Proxy_Broker (void);
@@ -11141,7 +11114,7 @@
      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
    ) = 0;
  
-@@ -9807,9 +6249,9 @@
+@@ -9807,9 +6185,9 @@
    _TAO_ComponentRepository_Remote_Proxy_Broker (void);
    
    virtual ~_TAO_ComponentRepository_Remote_Proxy_Broker (void);
@@ -11153,7 +11126,7 @@
      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
    );
  
-@@ -9823,117 +6265,39 @@
+@@ -9823,117 +6201,39 @@
    static _TAO_ComponentRepository_Remote_Proxy_Broker *the_TAO_ComponentRepository_Remote_Proxy_Broker (void);
  };
  
@@ -11251,19 +11224,15 @@
 -class _TAO_ModuleDef_Remote_Proxy_Broker;
 -
 -class TAO_Export ModuleDef: public virtual Container, public virtual Contained
--{
--public:
--#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
++class TAO_Export IR_ModuleDef: public virtual IR_Container, public virtual IR_Contained
+ {
+ public:
+ #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
 -  typedef ModuleDef_ptr _ptr_type;
 -  typedef ModuleDef_var _var_type;
--#endif /* ! __GNUC__ || g++ >= 2.8 */
-+class TAO_Export IR_ModuleDef: public virtual IR_Container, public virtual IR_Contained
-+{
-+public:
-+#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
 +  typedef IR_ModuleDef_ptr _ptr_type;
 +  typedef IR_ModuleDef_var _var_type;
-+#endif /* ! __GNUC__ || g++ >= 2.8 */
+ #endif /* ! __GNUC__ || g++ >= 2.8 */
  
    // the static operations
 -  static ModuleDef_ptr _duplicate (ModuleDef_ptr obj);
@@ -11288,7 +11257,7 @@
      }
  
    static void _tao_any_destructor (void*);
-@@ -9951,58 +6315,51 @@
+@@ -9951,58 +6251,51 @@
    _TAO_ModuleDef_Proxy_Broker *the_TAO_ModuleDef_Proxy_Broker_;
    
  protected:
@@ -11367,7 +11336,7 @@
    //
    //                Base  Proxy Impl. Declaration
    ///////////////////////////////////////////////////////////////////////
-@@ -10015,8 +6372,8 @@
+@@ -10015,8 +6308,8 @@
  class TAO_Export _TAO_ModuleDef_Remote_Proxy_Impl : 
    public virtual _TAO_ModuleDef_Proxy_Impl,
    public virtual TAO_Remote_Object_Proxy_Impl,
@@ -11378,7 +11347,7 @@
    
  {
  public:
-@@ -10024,7 +6381,7 @@
+@@ -10024,7 +6317,7 @@
    
    virtual ~_TAO_ModuleDef_Remote_Proxy_Impl (void) { }
    
@@ -11387,7 +11356,7 @@
  
  //
  //                Base  Proxy Impl. Declaration
-@@ -10046,8 +6403,9 @@
+@@ -10046,8 +6339,9 @@
  {
  public:
    virtual ~_TAO_ModuleDef_Proxy_Broker (void);
@@ -11398,7 +11367,7 @@
      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
    ) = 0;
  
-@@ -10072,9 +6430,9 @@
+@@ -10072,9 +6366,9 @@
    _TAO_ModuleDef_Remote_Proxy_Broker (void);
    
    virtual ~_TAO_ModuleDef_Remote_Proxy_Broker (void);
@@ -11410,7 +11379,7 @@
      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
    );
  
-@@ -10088,24 +6446,15 @@
+@@ -10088,24 +6382,15 @@
    static _TAO_ModuleDef_Remote_Proxy_Broker *the_TAO_ModuleDef_Remote_Proxy_Broker (void);
  };
  
@@ -11437,7 +11406,7 @@
  #endif /* ! __GNUC__ || g++ >= 2.8 */
  
    static void _tao_any_destructor (void*);
-@@ -10116,170 +6465,96 @@
+@@ -10116,170 +6401,96 @@
    TAO_String_Manager version;
  };
  
@@ -11651,7 +11620,7 @@
          TAO_default_environment ()
      )
      ACE_THROW_SPEC ((
-@@ -10287,7 +6562,7 @@
+@@ -10287,7 +6498,7 @@
      ));
  
    virtual void type_def (
@@ -11660,7 +11629,7 @@
        CORBA::Environment &ACE_TRY_ENV = 
          TAO_default_environment ()
      )
-@@ -10325,250 +6600,27 @@
+@@ -10325,250 +6536,27 @@
    _TAO_ConstantDef_Proxy_Broker *the_TAO_ConstantDef_Proxy_Broker_;
    
  protected:
@@ -11921,7 +11890,7 @@
  };
  
  
-@@ -10582,12 +6634,12 @@
+@@ -10582,12 +6570,12 @@
  //
  
  class TAO_Export _TAO_ConstantDef_Proxy_Impl : 
@@ -11936,7 +11905,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -10595,7 +6647,7 @@
+@@ -10595,7 +6583,7 @@
        CORBA::SystemException
      )) = 0;
  
@@ -11945,7 +11914,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -10605,7 +6657,7 @@
+@@ -10605,7 +6593,7 @@
  
    virtual void type_def (
        CORBA_Object *_collocated_tao_target_,
@@ -11954,7 +11923,7 @@
        CORBA::Environment &ACE_TRY_ENV
      )
      ACE_THROW_SPEC ((
-@@ -10633,6 +6685,7 @@
+@@ -10633,6 +6621,7 @@
    _TAO_ConstantDef_Proxy_Impl (void);
  
  };
@@ -11962,7 +11931,7 @@
  //
  //                Base  Proxy Impl. Declaration
  ///////////////////////////////////////////////////////////////////////
-@@ -10645,7 +6698,7 @@
+@@ -10645,7 +6634,7 @@
  class TAO_Export _TAO_ConstantDef_Remote_Proxy_Impl : 
    public virtual _TAO_ConstantDef_Proxy_Impl,
    public virtual TAO_Remote_Object_Proxy_Impl,
@@ -11971,7 +11940,7 @@
    
  {
  public:
-@@ -10653,15 +6706,15 @@
+@@ -10653,15 +6642,15 @@
    
    virtual ~_TAO_ConstantDef_Remote_Proxy_Impl (void) { }
    
@@ -11990,7 +11959,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -10671,22 +6724,22 @@
+@@ -10671,22 +6660,22 @@
  
    virtual void type_def (
        CORBA_Object *_collocated_tao_target_,
@@ -12017,7 +11986,7 @@
        CORBA_Object *_collocated_tao_target_,
        const CORBA::Any & value,
        CORBA::Environment &ACE_TRY_ENV
-@@ -10717,8 +6770,9 @@
+@@ -10717,8 +6706,9 @@
  {
  public:
    virtual ~_TAO_ConstantDef_Proxy_Broker (void);
@@ -12028,7 +11997,7 @@
      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
    ) = 0;
  
-@@ -10743,9 +6797,9 @@
+@@ -10743,9 +6733,9 @@
    _TAO_ConstantDef_Remote_Proxy_Broker (void);
    
    virtual ~_TAO_ConstantDef_Remote_Proxy_Broker (void);
@@ -12040,7 +12009,7 @@
      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
    );
  
-@@ -10759,24 +6813,15 @@
+@@ -10759,24 +6749,15 @@
    static _TAO_ConstantDef_Remote_Proxy_Broker *the_TAO_ConstantDef_Remote_Proxy_Broker (void);
  };
  
@@ -12067,7 +12036,7 @@
  #endif /* ! __GNUC__ || g++ >= 2.8 */
  
    static void _tao_any_destructor (void*);
-@@ -10789,156 +6834,127 @@
+@@ -10789,156 +6770,127 @@
    CORBA::Any value;
  };
  
@@ -12293,7 +12262,7 @@
      }
  
    static void _tao_any_destructor (void*);
-@@ -10956,61 +6972,54 @@
+@@ -10956,61 +6908,54 @@
    _TAO_TypedefDef_Proxy_Broker *the_TAO_TypedefDef_Proxy_Broker_;
    
  protected:
@@ -12378,7 +12347,7 @@
    
    
  ///////////////////////////////////////////////////////////////////////
-@@ -11020,8 +7029,8 @@
+@@ -11020,8 +6965,8 @@
  class TAO_Export _TAO_TypedefDef_Remote_Proxy_Impl : 
    public virtual _TAO_TypedefDef_Proxy_Impl,
    public virtual TAO_Remote_Object_Proxy_Impl,
@@ -12389,7 +12358,7 @@
    
  {
  public:
-@@ -11029,7 +7038,7 @@
+@@ -11029,7 +6974,7 @@
    
    virtual ~_TAO_TypedefDef_Remote_Proxy_Impl (void) { }
    
@@ -12398,7 +12367,7 @@
  
  //
  //                Base  Proxy Impl. Declaration
-@@ -11051,8 +7060,9 @@
+@@ -11051,8 +6996,9 @@
  {
  public:
    virtual ~_TAO_TypedefDef_Proxy_Broker (void);
@@ -12409,7 +12378,7 @@
      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
    ) = 0;
  
-@@ -11077,9 +7087,9 @@
+@@ -11077,9 +7023,9 @@
    _TAO_TypedefDef_Remote_Proxy_Broker (void);
    
    virtual ~_TAO_TypedefDef_Remote_Proxy_Broker (void);
@@ -12421,7 +12390,7 @@
      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
    );
  
-@@ -11093,24 +7103,15 @@
+@@ -11093,24 +7039,15 @@
    static _TAO_TypedefDef_Remote_Proxy_Broker *the_TAO_TypedefDef_Remote_Proxy_Broker (void);
  };
  
@@ -12448,13 +12417,14 @@
  #endif /* ! __GNUC__ || g++ >= 2.8 */
  
    static void _tao_any_destructor (void*);
-@@ -11122,170 +7123,96 @@
+@@ -11122,170 +7059,96 @@
    CORBA::TypeCode_var type;
  };
  
 -class TAO_Export TypeDescription_var
--{
--public:
++class TAO_Export IR_TypeDescription_var
+ {
+ public:
 -  TypeDescription_var (void); // default constructor
 -  TypeDescription_var (TypeDescription *);
 -  TypeDescription_var (const TypeDescription_var &); // copy constructor
@@ -12469,20 +12439,40 @@
 -  operator TypeDescription &();
 -  operator TypeDescription &() const;
 -  operator TypeDescription *&(); // variable-size types only
--  
--  // in, inout, out, _retn 
++  IR_TypeDescription_var (void); // default constructor
++  IR_TypeDescription_var (IR_TypeDescription *);
++  IR_TypeDescription_var (const IR_TypeDescription_var &); // copy constructor
++  ~IR_TypeDescription_var (void); // destructor
++  
++  IR_TypeDescription_var &operator= (IR_TypeDescription *);
++  IR_TypeDescription_var &operator= (const IR_TypeDescription_var &);
++  IR_TypeDescription *operator-> (void);
++  const IR_TypeDescription *operator-> (void) const;
++  
++  operator const IR_TypeDescription &() const;
++  operator IR_TypeDescription &();
++  operator IR_TypeDescription &() const;
++  operator IR_TypeDescription *&(); // variable-size types only
+   
+   // in, inout, out, _retn 
 -  const TypeDescription &in (void) const;
 -  TypeDescription &inout (void);
 -  TypeDescription *&out (void);
 -  TypeDescription *_retn (void);
 -  TypeDescription *ptr (void) const;
--
--private:
++  const IR_TypeDescription &in (void) const;
++  IR_TypeDescription &inout (void);
++  IR_TypeDescription *&out (void);
++  IR_TypeDescription *_retn (void);
++  IR_TypeDescription *ptr (void) const;
+ 
+ private:
 -  TypeDescription *ptr_;
--};
--
++  IR_TypeDescription *ptr_;
+ };
+ 
 -class TAO_Export TypeDescription_out
-+class TAO_Export IR_TypeDescription_var
++class TAO_Export IR_TypeDescription_out
  {
  public:
 -  TypeDescription_out (TypeDescription *&);
@@ -12493,17 +12483,23 @@
 -  operator TypeDescription *&();
 -  TypeDescription *&ptr (void);
 -  TypeDescription *operator-> (void);
-+  IR_TypeDescription_var (void); // default constructor
-+  IR_TypeDescription_var (IR_TypeDescription *);
-+  IR_TypeDescription_var (const IR_TypeDescription_var &); // copy constructor
-+  ~IR_TypeDescription_var (void); // destructor
++  IR_TypeDescription_out (IR_TypeDescription *&);
++  IR_TypeDescription_out (IR_TypeDescription_var &);
++  IR_TypeDescription_out (const IR_TypeDescription_out &);
++  IR_TypeDescription_out &operator= (const IR_TypeDescription_out &);
++  IR_TypeDescription_out &operator= (IR_TypeDescription *);
++  operator IR_TypeDescription *&();
++  IR_TypeDescription *&ptr (void);
++  IR_TypeDescription *operator-> (void);
    
--private:
+ private:
 -  TypeDescription *&ptr_;
--  // assignment from T_var not allowed
++  IR_TypeDescription *&ptr_;
+   // assignment from T_var not allowed
 -  void operator= (const TypeDescription_var &);
--};
--
++  void operator= (const IR_TypeDescription_var &);
+ };
+ 
 -TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_TypeDescription;
 -
 -
@@ -12526,41 +12522,27 @@
 -  StructDef_var (StructDef_ptr p) : ptr_ (p) {} 
 -  StructDef_var (const StructDef_var &); // copy constructor
 -  ~StructDef_var (void); // destructor
-+  IR_TypeDescription_var &operator= (IR_TypeDescription *);
-+  IR_TypeDescription_var &operator= (const IR_TypeDescription_var &);
-+  IR_TypeDescription *operator-> (void);
-+  const IR_TypeDescription *operator-> (void) const;
-   
+-  
 -  StructDef_var &operator= (StructDef_ptr);
 -  StructDef_var &operator= (const StructDef_var &);
 -  StructDef_ptr operator-> (void) const;
-+  operator const IR_TypeDescription &() const;
-+  operator IR_TypeDescription &();
-+  operator IR_TypeDescription &() const;
-+  operator IR_TypeDescription *&(); // variable-size types only
-   
+-  
 -  operator const StructDef_ptr &() const;
 -  operator StructDef_ptr &();
-   // in, inout, out, _retn 
+-  // in, inout, out, _retn 
 -  StructDef_ptr in (void) const;
 -  StructDef_ptr &inout (void);
 -  StructDef_ptr &out (void);
 -  StructDef_ptr _retn (void);
 -  StructDef_ptr ptr (void) const;
-+  const IR_TypeDescription &in (void) const;
-+  IR_TypeDescription &inout (void);
-+  IR_TypeDescription *&out (void);
-+  IR_TypeDescription *_retn (void);
-+  IR_TypeDescription *ptr (void) const;
- 
- private:
+-
+-private:
 -  StructDef_ptr ptr_;
 -  // Unimplemented - prevents widening assignment.
 -  StructDef_var (const TAO_Base_var &rhs);
 -  StructDef_var &operator= (const TAO_Base_var &rhs);
-+  IR_TypeDescription *ptr_;
- };
- 
+-};
+-
 -
 -#endif /* end #if !defined */
 -
@@ -12569,9 +12551,8 @@
 -#define _TAO_IR_STRUCTDEF___OUT_CH_
 -
 -class TAO_Export StructDef_out
-+class TAO_Export IR_TypeDescription_out
- {
- public:
+-{
+-public:
 -  StructDef_out (StructDef_ptr &);
 -  StructDef_out (StructDef_var &);
 -  StructDef_out (const StructDef_out &);
@@ -12581,22 +12562,11 @@
 -  operator StructDef_ptr &();
 -  StructDef_ptr &ptr (void);
 -  StructDef_ptr operator-> (void);
-+  IR_TypeDescription_out (IR_TypeDescription *&);
-+  IR_TypeDescription_out (IR_TypeDescription_var &);
-+  IR_TypeDescription_out (const IR_TypeDescription_out &);
-+  IR_TypeDescription_out &operator= (const IR_TypeDescription_out &);
-+  IR_TypeDescription_out &operator= (IR_TypeDescription *);
-+  operator IR_TypeDescription *&();
-+  IR_TypeDescription *&ptr (void);
-+  IR_TypeDescription *operator-> (void);
-   
- private:
+-  
+-private:
 -  StructDef_ptr &ptr_;
-+  IR_TypeDescription *&ptr_;
-+  // assignment from T_var not allowed
-+  void operator= (const IR_TypeDescription_var &);
- };
- 
+-};
+-
 -
 -#endif /* end #if !defined */
 -
@@ -12662,7 +12632,7 @@
        CORBA::Environment &ACE_TRY_ENV = 
          TAO_default_environment ()
      )
-@@ -11306,121 +7233,27 @@
+@@ -11306,121 +7169,27 @@
    _TAO_StructDef_Proxy_Broker *the_TAO_StructDef_Proxy_Broker_;
    
  protected:
@@ -12797,7 +12767,7 @@
  };
  
  
-@@ -11434,13 +7267,13 @@
+@@ -11434,13 +7203,13 @@
  //
  
  class TAO_Export _TAO_StructDef_Proxy_Impl : 
@@ -12814,7 +12784,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -11450,7 +7283,7 @@
+@@ -11450,7 +7219,7 @@
  
    virtual void members (
        CORBA_Object *_collocated_tao_target_,
@@ -12823,7 +12793,7 @@
        CORBA::Environment &ACE_TRY_ENV
      )
      ACE_THROW_SPEC ((
-@@ -11461,6 +7294,7 @@
+@@ -11461,6 +7230,7 @@
    _TAO_StructDef_Proxy_Impl (void);
  
  };
@@ -12831,7 +12801,7 @@
  //
  //                Base  Proxy Impl. Declaration
  ///////////////////////////////////////////////////////////////////////
-@@ -11473,8 +7307,8 @@
+@@ -11473,8 +7243,8 @@
  class TAO_Export _TAO_StructDef_Remote_Proxy_Impl : 
    public virtual _TAO_StructDef_Proxy_Impl,
    public virtual TAO_Remote_Object_Proxy_Impl,
@@ -12842,7 +12812,7 @@
    
  {
  public:
-@@ -11482,7 +7316,7 @@
+@@ -11482,7 +7252,7 @@
    
    virtual ~_TAO_StructDef_Remote_Proxy_Impl (void) { }
    
@@ -12851,7 +12821,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -11492,7 +7326,7 @@
+@@ -11492,7 +7262,7 @@
  
    virtual void members (
        CORBA_Object *_collocated_tao_target_,
@@ -12860,7 +12830,7 @@
        CORBA::Environment &ACE_TRY_ENV
      )
      ACE_THROW_SPEC ((
-@@ -11521,8 +7355,9 @@
+@@ -11521,8 +7291,9 @@
  {
  public:
    virtual ~_TAO_StructDef_Proxy_Broker (void);
@@ -12871,7 +12841,7 @@
      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
    ) = 0;
  
-@@ -11547,9 +7382,9 @@
+@@ -11547,9 +7318,9 @@
    _TAO_StructDef_Remote_Proxy_Broker (void);
    
    virtual ~_TAO_StructDef_Remote_Proxy_Broker (void);
@@ -12883,7 +12853,7 @@
      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
    );
  
-@@ -11563,117 +7398,39 @@
+@@ -11563,117 +7334,39 @@
    static _TAO_StructDef_Remote_Proxy_Broker *the_TAO_StructDef_Remote_Proxy_Broker (void);
  };
  
@@ -13009,7 +12979,7 @@
      }
  
    static void _tao_any_destructor (void*);
-@@ -11686,7 +7443,7 @@
+@@ -11686,7 +7379,7 @@
        CORBA::SystemException
      ));
  
@@ -13018,7 +12988,7 @@
        CORBA::Environment &ACE_TRY_ENV = 
          TAO_default_environment ()
      )
-@@ -11695,7 +7452,7 @@
+@@ -11695,7 +7388,7 @@
      ));
  
    virtual void discriminator_type_def (
@@ -13027,7 +12997,7 @@
        CORBA::Environment &ACE_TRY_ENV = 
          TAO_default_environment ()
      )
-@@ -11703,7 +7460,7 @@
+@@ -11703,7 +7396,7 @@
        CORBA::SystemException
      ));
  
@@ -13036,7 +13006,7 @@
        CORBA::Environment &ACE_TRY_ENV = 
          TAO_default_environment ()
      )
-@@ -11712,7 +7469,7 @@
+@@ -11712,7 +7405,7 @@
      ));
  
    virtual void members (
@@ -13045,7 +13015,7 @@
        CORBA::Environment &ACE_TRY_ENV = 
          TAO_default_environment ()
      )
-@@ -11733,250 +7490,27 @@
+@@ -11733,250 +7426,27 @@
    _TAO_UnionDef_Proxy_Broker *the_TAO_UnionDef_Proxy_Broker_;
    
  protected:
@@ -13305,7 +13275,7 @@
  };
  
  
-@@ -11990,13 +7524,13 @@
+@@ -11990,13 +7460,13 @@
  //
  
  class TAO_Export _TAO_UnionDef_Proxy_Impl : 
@@ -13322,7 +13292,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -12004,7 +7538,7 @@
+@@ -12004,7 +7474,7 @@
        CORBA::SystemException
      )) = 0;
  
@@ -13331,7 +13301,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -12014,24 +7548,24 @@
+@@ -12014,24 +7484,24 @@
  
    virtual void discriminator_type_def (
        CORBA_Object *_collocated_tao_target_,
@@ -13361,7 +13331,7 @@
        CORBA::Environment &ACE_TRY_ENV
      )
      ACE_THROW_SPEC ((
-@@ -12042,6 +7576,7 @@
+@@ -12042,6 +7512,7 @@
    _TAO_UnionDef_Proxy_Impl (void);
  
  };
@@ -13369,7 +13339,7 @@
  //
  //                Base  Proxy Impl. Declaration
  ///////////////////////////////////////////////////////////////////////
-@@ -12054,8 +7589,8 @@
+@@ -12054,8 +7525,8 @@
  class TAO_Export _TAO_UnionDef_Remote_Proxy_Impl : 
    public virtual _TAO_UnionDef_Proxy_Impl,
    public virtual TAO_Remote_Object_Proxy_Impl,
@@ -13380,7 +13350,7 @@
    
  {
  public:
-@@ -12063,7 +7598,7 @@
+@@ -12063,7 +7534,7 @@
    
    virtual ~_TAO_UnionDef_Remote_Proxy_Impl (void) { }
    
@@ -13389,7 +13359,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -12071,7 +7606,7 @@
+@@ -12071,7 +7542,7 @@
        CORBA::SystemException
      ));
  
@@ -13398,7 +13368,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -12081,14 +7616,14 @@
+@@ -12081,14 +7552,14 @@
  
    virtual void discriminator_type_def (
        CORBA_Object *_collocated_tao_target_,
@@ -13415,7 +13385,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -12098,7 +7633,7 @@
+@@ -12098,7 +7569,7 @@
  
    virtual void members (
        CORBA_Object *_collocated_tao_target_,
@@ -13424,7 +13394,7 @@
        CORBA::Environment &ACE_TRY_ENV
      )
      ACE_THROW_SPEC ((
-@@ -12127,8 +7662,9 @@
+@@ -12127,8 +7598,9 @@
  {
  public:
    virtual ~_TAO_UnionDef_Proxy_Broker (void);
@@ -13435,7 +13405,7 @@
      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
    ) = 0;
  
-@@ -12153,9 +7689,9 @@
+@@ -12153,9 +7625,9 @@
    _TAO_UnionDef_Remote_Proxy_Broker (void);
    
    virtual ~_TAO_UnionDef_Remote_Proxy_Broker (void);
@@ -13447,7 +13417,7 @@
      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
    );
  
-@@ -12169,122 +7705,44 @@
+@@ -12169,122 +7641,44 @@
    static _TAO_UnionDef_Remote_Proxy_Broker *the_TAO_UnionDef_Remote_Proxy_Broker (void);
  };
  
@@ -13480,8 +13450,9 @@
 -#define _TAO_IR_ENUMDEF___VAR_CH_
 -
 -class TAO_Export EnumDef_var : public TAO_Base_var
--{
--public:
++class TAO_Export IR_EnumDef: public virtual IR_TypedefDef
+ {
+ public:
 -  EnumDef_var (void); // default constructor
 -  EnumDef_var (EnumDef_ptr p) : ptr_ (p) {} 
 -  EnumDef_var (const EnumDef_var &); // copy constructor
@@ -13545,15 +13516,16 @@
 -class _TAO_EnumDef_Remote_Proxy_Broker;
 -
 -class TAO_Export EnumDef: public virtual TypedefDef
-+class TAO_Export IR_EnumDef: public virtual IR_TypedefDef
- {
- public:
- #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
+-{
+-public:
+-#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
 -  typedef EnumDef_ptr _ptr_type;
 -  typedef EnumDef_var _var_type;
+-#endif /* ! __GNUC__ || g++ >= 2.8 */
++#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
 +  typedef IR_EnumDef_ptr _ptr_type;
 +  typedef IR_EnumDef_var _var_type;
- #endif /* ! __GNUC__ || g++ >= 2.8 */
++#endif /* ! __GNUC__ || g++ >= 2.8 */
  
    // the static operations
 -  static EnumDef_ptr _duplicate (EnumDef_ptr obj);
@@ -13584,7 +13556,7 @@
        CORBA::Environment &ACE_TRY_ENV = 
          TAO_default_environment ()
      )
-@@ -12293,7 +7751,7 @@
+@@ -12293,7 +7687,7 @@
      ));
  
    virtual void members (
@@ -13593,7 +13565,7 @@
        CORBA::Environment &ACE_TRY_ENV = 
          TAO_default_environment ()
      )
-@@ -12314,121 +7772,27 @@
+@@ -12314,121 +7708,27 @@
    _TAO_EnumDef_Proxy_Broker *the_TAO_EnumDef_Proxy_Broker_;
    
  protected:
@@ -13728,7 +13700,7 @@
  };
  
  
-@@ -12442,12 +7806,12 @@
+@@ -12442,12 +7742,12 @@
  //
  
  class TAO_Export _TAO_EnumDef_Proxy_Impl : 
@@ -13743,7 +13715,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -12455,9 +7819,9 @@
+@@ -12455,9 +7755,9 @@
        CORBA::SystemException
      )) = 0;
  
@@ -13755,7 +13727,7 @@
        CORBA::Environment &ACE_TRY_ENV
      )
      ACE_THROW_SPEC ((
-@@ -12468,6 +7832,7 @@
+@@ -12468,6 +7768,7 @@
    _TAO_EnumDef_Proxy_Impl (void);
  
  };
@@ -13763,7 +13735,7 @@
  //
  //                Base  Proxy Impl. Declaration
  ///////////////////////////////////////////////////////////////////////
-@@ -12480,7 +7845,7 @@
+@@ -12480,7 +7781,7 @@
  class TAO_Export _TAO_EnumDef_Remote_Proxy_Impl : 
    public virtual _TAO_EnumDef_Proxy_Impl,
    public virtual TAO_Remote_Object_Proxy_Impl,
@@ -13772,7 +13744,7 @@
    
  {
  public:
-@@ -12488,7 +7853,7 @@
+@@ -12488,7 +7789,7 @@
    
    virtual ~_TAO_EnumDef_Remote_Proxy_Impl (void) { }
    
@@ -13781,7 +13753,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -12498,7 +7863,7 @@
+@@ -12498,7 +7799,7 @@
  
    virtual void members (
        CORBA_Object *_collocated_tao_target_,
@@ -13790,7 +13762,7 @@
        CORBA::Environment &ACE_TRY_ENV
      )
      ACE_THROW_SPEC ((
-@@ -12527,8 +7892,9 @@
+@@ -12527,8 +7828,9 @@
  {
  public:
    virtual ~_TAO_EnumDef_Proxy_Broker (void);
@@ -13801,7 +13773,7 @@
      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
    ) = 0;
  
-@@ -12553,9 +7919,9 @@
+@@ -12553,9 +7855,9 @@
    _TAO_EnumDef_Remote_Proxy_Broker (void);
    
    virtual ~_TAO_EnumDef_Remote_Proxy_Broker (void);
@@ -13813,7 +13785,7 @@
      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
    );
  
-@@ -12569,122 +7935,44 @@
+@@ -12569,122 +7871,44 @@
    static _TAO_EnumDef_Remote_Proxy_Broker *the_TAO_EnumDef_Remote_Proxy_Broker (void);
  };
  
@@ -13945,7 +13917,7 @@
        CORBA::Environment &ACE_TRY_ENV = 
          TAO_default_environment ()
      )
-@@ -12692,8 +7980,8 @@
+@@ -12692,8 +7916,8 @@
        CORBA::SystemException
      ));
  
@@ -13956,7 +13928,7 @@
        CORBA::Environment &ACE_TRY_ENV = 
          TAO_default_environment ()
      )
-@@ -12714,121 +8002,27 @@
+@@ -12714,121 +7938,27 @@
    _TAO_AliasDef_Proxy_Broker *the_TAO_AliasDef_Proxy_Broker_;
    
  protected:
@@ -14091,7 +14063,7 @@
  };
  
  
-@@ -12842,12 +8036,12 @@
+@@ -12842,12 +7972,12 @@
  //
  
  class TAO_Export _TAO_AliasDef_Proxy_Impl : 
@@ -14106,7 +14078,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -12857,7 +8051,7 @@
+@@ -12857,7 +7987,7 @@
  
    virtual void original_type_def (
        CORBA_Object *_collocated_tao_target_,
@@ -14115,7 +14087,7 @@
        CORBA::Environment &ACE_TRY_ENV
      )
      ACE_THROW_SPEC ((
-@@ -12868,6 +8062,7 @@
+@@ -12868,6 +7998,7 @@
    _TAO_AliasDef_Proxy_Impl (void);
  
  };
@@ -14123,7 +14095,7 @@
  //
  //                Base  Proxy Impl. Declaration
  ///////////////////////////////////////////////////////////////////////
-@@ -12880,7 +8075,7 @@
+@@ -12880,7 +8011,7 @@
  class TAO_Export _TAO_AliasDef_Remote_Proxy_Impl : 
    public virtual _TAO_AliasDef_Proxy_Impl,
    public virtual TAO_Remote_Object_Proxy_Impl,
@@ -14132,7 +14104,7 @@
    
  {
  public:
-@@ -12888,7 +8083,7 @@
+@@ -12888,7 +8019,7 @@
    
    virtual ~_TAO_AliasDef_Remote_Proxy_Impl (void) { }
    
@@ -14141,7 +14113,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -12898,7 +8093,7 @@
+@@ -12898,7 +8029,7 @@
  
    virtual void original_type_def (
        CORBA_Object *_collocated_tao_target_,
@@ -14150,7 +14122,7 @@
        CORBA::Environment &ACE_TRY_ENV
      )
      ACE_THROW_SPEC ((
-@@ -12927,8 +8122,9 @@
+@@ -12927,8 +8058,9 @@
  {
  public:
    virtual ~_TAO_AliasDef_Proxy_Broker (void);
@@ -14161,7 +14133,7 @@
      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
    ) = 0;
  
-@@ -12953,9 +8149,9 @@
+@@ -12953,9 +8085,9 @@
    _TAO_AliasDef_Remote_Proxy_Broker (void);
    
    virtual ~_TAO_AliasDef_Remote_Proxy_Broker (void);
@@ -14173,7 +14145,7 @@
      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
    );
  
-@@ -12969,117 +8165,39 @@
+@@ -12969,117 +8101,39 @@
    static _TAO_AliasDef_Remote_Proxy_Broker *the_TAO_AliasDef_Remote_Proxy_Broker (void);
  };
  
@@ -14299,7 +14271,7 @@
      }
  
    static void _tao_any_destructor (void*);
-@@ -13097,60 +8215,53 @@
+@@ -13097,60 +8151,53 @@
    _TAO_NativeDef_Proxy_Broker *the_TAO_NativeDef_Proxy_Broker_;
    
  protected:
@@ -14391,7 +14363,7 @@
    
    
  ///////////////////////////////////////////////////////////////////////
-@@ -13160,7 +8271,7 @@
+@@ -13160,7 +8207,7 @@
  class TAO_Export _TAO_NativeDef_Remote_Proxy_Impl : 
    public virtual _TAO_NativeDef_Proxy_Impl,
    public virtual TAO_Remote_Object_Proxy_Impl,
@@ -14400,7 +14372,7 @@
    
  {
  public:
-@@ -13168,7 +8279,7 @@
+@@ -13168,7 +8215,7 @@
    
    virtual ~_TAO_NativeDef_Remote_Proxy_Impl (void) { }
    
@@ -14409,7 +14381,7 @@
  
  //
  //                Base  Proxy Impl. Declaration
-@@ -13190,8 +8301,9 @@
+@@ -13190,8 +8237,9 @@
  {
  public:
    virtual ~_TAO_NativeDef_Proxy_Broker (void);
@@ -14420,7 +14392,7 @@
      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
    ) = 0;
  
-@@ -13216,138 +8328,60 @@
+@@ -13216,138 +8264,60 @@
    _TAO_NativeDef_Remote_Proxy_Broker (void);
    
    virtual ~_TAO_NativeDef_Remote_Proxy_Broker (void);
@@ -14435,17 +14407,16 @@
  private:
    _TAO_NativeDef_Remote_Proxy_Impl remote_proxy_impl_;
 -// This member function is used to get an handle to the unique instance
--// of the Remote Proxy Broker that is available for a given
--// interface.
--
++};
++
++// This funxtion is used to get an handle to the unique instance
+ // of the Remote Proxy Broker that is available for a given
+ // interface.
+ 
 -public:
 -  static _TAO_NativeDef_Remote_Proxy_Broker *the_TAO_NativeDef_Remote_Proxy_Broker (void);
- };
- 
-+// This funxtion is used to get an handle to the unique instance
-+// of the Remote Proxy Broker that is available for a given
-+// interface.
-+
+-};
+-
 +_TAO_NativeDef_Remote_Proxy_Broker *the_TAO_NativeDef_Remote_Proxy_Broker (void);
  
  //
@@ -14575,7 +14546,7 @@
        CORBA::Environment &ACE_TRY_ENV = 
          TAO_default_environment ()
      )
-@@ -13368,78 +8402,27 @@
+@@ -13368,78 +8338,27 @@
    _TAO_PrimitiveDef_Proxy_Broker *the_TAO_PrimitiveDef_Proxy_Broker_;
    
  protected:
@@ -14668,7 +14639,7 @@
  };
  
  
-@@ -13453,12 +8436,12 @@
+@@ -13453,12 +8372,12 @@
  //
  
  class TAO_Export _TAO_PrimitiveDef_Proxy_Impl : 
@@ -14683,7 +14654,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -13470,6 +8453,7 @@
+@@ -13470,6 +8389,7 @@
    _TAO_PrimitiveDef_Proxy_Impl (void);
  
  };
@@ -14691,7 +14662,7 @@
  //
  //                Base  Proxy Impl. Declaration
  ///////////////////////////////////////////////////////////////////////
-@@ -13482,7 +8466,7 @@
+@@ -13482,7 +8402,7 @@
  class TAO_Export _TAO_PrimitiveDef_Remote_Proxy_Impl : 
    public virtual _TAO_PrimitiveDef_Proxy_Impl,
    public virtual TAO_Remote_Object_Proxy_Impl,
@@ -14700,7 +14671,7 @@
    
  {
  public:
-@@ -13490,7 +8474,7 @@
+@@ -13490,7 +8410,7 @@
    
    virtual ~_TAO_PrimitiveDef_Remote_Proxy_Impl (void) { }
    
@@ -14709,7 +14680,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -13520,8 +8504,9 @@
+@@ -13520,8 +8440,9 @@
  {
  public:
    virtual ~_TAO_PrimitiveDef_Proxy_Broker (void);
@@ -14720,7 +14691,7 @@
      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
    ) = 0;
  
-@@ -13546,9 +8531,9 @@
+@@ -13546,9 +8467,9 @@
    _TAO_PrimitiveDef_Remote_Proxy_Broker (void);
    
    virtual ~_TAO_PrimitiveDef_Remote_Proxy_Broker (void);
@@ -14732,7 +14703,7 @@
      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
    );
  
-@@ -13562,117 +8547,39 @@
+@@ -13562,117 +8483,39 @@
    static _TAO_PrimitiveDef_Remote_Proxy_Broker *the_TAO_PrimitiveDef_Remote_Proxy_Broker (void);
  };
  
@@ -14858,7 +14829,7 @@
      }
  
    static void _tao_any_destructor (void*);
-@@ -13707,121 +8614,27 @@
+@@ -13707,121 +8550,27 @@
    _TAO_StringDef_Proxy_Broker *the_TAO_StringDef_Proxy_Broker_;
    
  protected:
@@ -14993,7 +14964,7 @@
  };
  
  
-@@ -13835,12 +8648,12 @@
+@@ -13835,12 +8584,12 @@
  //
  
  class TAO_Export _TAO_StringDef_Proxy_Impl : 
@@ -15008,7 +14979,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -13861,6 +8674,7 @@
+@@ -13861,6 +8610,7 @@
    _TAO_StringDef_Proxy_Impl (void);
  
  };
@@ -15016,7 +14987,7 @@
  //
  //                Base  Proxy Impl. Declaration
  ///////////////////////////////////////////////////////////////////////
-@@ -13873,7 +8687,7 @@
+@@ -13873,7 +8623,7 @@
  class TAO_Export _TAO_StringDef_Remote_Proxy_Impl : 
    public virtual _TAO_StringDef_Proxy_Impl,
    public virtual TAO_Remote_Object_Proxy_Impl,
@@ -15025,7 +14996,7 @@
    
  {
  public:
-@@ -13881,7 +8695,7 @@
+@@ -13881,7 +8631,7 @@
    
    virtual ~_TAO_StringDef_Remote_Proxy_Impl (void) { }
    
@@ -15034,7 +15005,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -13920,8 +8734,9 @@
+@@ -13920,8 +8670,9 @@
  {
  public:
    virtual ~_TAO_StringDef_Proxy_Broker (void);
@@ -15045,7 +15016,7 @@
      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
    ) = 0;
  
-@@ -13946,9 +8761,9 @@
+@@ -13946,9 +8697,9 @@
    _TAO_StringDef_Remote_Proxy_Broker (void);
    
    virtual ~_TAO_StringDef_Remote_Proxy_Broker (void);
@@ -15057,7 +15028,7 @@
      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
    );
  
-@@ -13962,117 +8777,39 @@
+@@ -13962,117 +8713,39 @@
    static _TAO_StringDef_Remote_Proxy_Broker *the_TAO_StringDef_Remote_Proxy_Broker (void);
  };
  
@@ -15183,7 +15154,7 @@
      }
  
    static void _tao_any_destructor (void*);
-@@ -14107,142 +8844,48 @@
+@@ -14107,121 +8780,27 @@
    _TAO_WstringDef_Proxy_Broker *the_TAO_WstringDef_Proxy_Broker_;
    
  protected:
@@ -15205,25 +15176,16 @@
        CORBA::Boolean _tao_collocated = 0,
        TAO_Abstract_ServantBase *servant = 0
 -      );
-+    );
-     
+-    
 -    friend class _TAO_WstringDef_Remote_Proxy_Impl;
 -    friend class _TAO_WstringDef_ThruPOA_Proxy_Impl;
 -    friend class _TAO_WstringDef_Direct_Proxy_Impl;
-+  friend class _TAO_WstringDef_Remote_Proxy_Impl;
-+  friend class _TAO_WstringDef_ThruPOA_Proxy_Impl;
-+  friend class _TAO_WstringDef_Direct_Proxy_Impl;
-   
+-  
 -  virtual ~WstringDef (void);
 -  private:
 -    WstringDef (const WstringDef &);
 -    void operator= (const WstringDef &);    
-+  virtual ~IR_WstringDef (void);
-+private:
-+  IR_WstringDef (const IR_WstringDef &);
-+  void operator= (const IR_WstringDef &);    
-+};
- 
+-
 -#if (TAO_HAS_INTERCEPTORS == 1)
 -    // Generation of interceptors related RequestInfo classes per operation.
 -    // This needed to be able to store the arguments, exceptions, contexts
@@ -15280,22 +15242,7 @@
 -    friend class _TAO_WstringDef_Remote_Proxy_Impl;
 -    friend class _TAO_WstringDef_ThruPOA_Proxy_Impl;
 -    friend class _TAO_WstringDef_Direct_Proxy_Impl;
-+
-+// The Proxy Implementations are used by each interface to
-+// perform a call. Each different implementation encapsulate
-+// an invocation logics.
-+
-+
-+///////////////////////////////////////////////////////////////////////
-+//                    Base  Impl. Declaration
-+//
-+
-+class TAO_Export _TAO_WstringDef_Proxy_Impl : 
-+  public virtual _TAO_IDLType_Proxy_Impl
-+{
-+public:
-+  virtual ~_TAO_WstringDef_Proxy_Impl (void) { }
-   
+-  
 -  TAO_ClientRequestInfo_IR_WstringDef_bound_set (
 -      const char *_tao_operation,
 -      IOP::ServiceContextList &_tao_service_context_list,
@@ -15303,8 +15250,12 @@
 -      const CORBA::ULong & bound,
 -      CORBA::Environment &ACE_TRY_ENV = 
 -        TAO_default_environment ()
--    );
--  
+     );
++    
++  friend class _TAO_WstringDef_Remote_Proxy_Impl;
++  friend class _TAO_WstringDef_ThruPOA_Proxy_Impl;
++  friend class _TAO_WstringDef_Direct_Proxy_Impl;
+   
 -  virtual Dynamic::ParameterList * arguments (
 -      CORBA::Environment &ACE_TRY_ENV = 
 -        TAO_default_environment ()
@@ -15323,7 +15274,8 @@
 -    )
 -    ACE_THROW_SPEC ((CORBA::SystemException));
 -  
--private:
++  virtual ~IR_WstringDef (void);
+ private:
 -  TAO_ClientRequestInfo_IR_WstringDef_bound_set (const TAO_ClientRequestInfo_IR_WstringDef_bound_set &);
 -  void operator= (const TAO_ClientRequestInfo_IR_WstringDef_bound_set &);
 -  const CORBA::ULong & bound_;
@@ -15332,24 +15284,21 @@
 -
 -#endif /* TAO_HAS_INTERCEPTORS */
 -
--};
--
--
--// The Proxy Implementations are used by each interface to
--// perform a call. Each different implementation encapsulate
--// an invocation logics.
--
--
--///////////////////////////////////////////////////////////////////////
--//                    Base  Impl. Declaration
--//
--
--class TAO_Export _TAO_WstringDef_Proxy_Impl : 
++  IR_WstringDef (const IR_WstringDef &);
++  void operator= (const IR_WstringDef &);    
+ };
+ 
+ 
+@@ -14235,14 +8814,14 @@
+ //
+ 
+ class TAO_Export _TAO_WstringDef_Proxy_Impl : 
 -  public virtual IR::_TAO_IDLType_Proxy_Impl
--{
--public:
--  virtual ~_TAO_WstringDef_Proxy_Impl (void) { }
--  
++  public virtual _TAO_IDLType_Proxy_Impl
+ {
+ public:
+   virtual ~_TAO_WstringDef_Proxy_Impl (void) { }
+   
 -    virtual CORBA::ULong bound (
 +  virtual CORBA::ULong bound (
        CORBA_Object *_collocated_tao_target_,
@@ -15358,7 +15307,7 @@
      )
      ACE_THROW_SPEC ((
        CORBA::SystemException
-@@ -14261,6 +8904,7 @@
+@@ -14261,6 +8840,7 @@
    _TAO_WstringDef_Proxy_Impl (void);
  
  };
@@ -15366,7 +15315,7 @@
  //
  //                Base  Proxy Impl. Declaration
  ///////////////////////////////////////////////////////////////////////
-@@ -14273,7 +8917,7 @@
+@@ -14273,7 +8853,7 @@
  class TAO_Export _TAO_WstringDef_Remote_Proxy_Impl : 
    public virtual _TAO_WstringDef_Proxy_Impl,
    public virtual TAO_Remote_Object_Proxy_Impl,
@@ -15375,7 +15324,7 @@
    
  {
  public:
-@@ -14281,7 +8925,7 @@
+@@ -14281,7 +8861,7 @@
    
    virtual ~_TAO_WstringDef_Remote_Proxy_Impl (void) { }
    
@@ -15384,7 +15333,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -14320,8 +8964,9 @@
+@@ -14320,8 +8900,9 @@
  {
  public:
    virtual ~_TAO_WstringDef_Proxy_Broker (void);
@@ -15395,7 +15344,7 @@
      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
    ) = 0;
  
-@@ -14346,9 +8991,9 @@
+@@ -14346,9 +8927,9 @@
    _TAO_WstringDef_Remote_Proxy_Broker (void);
    
    virtual ~_TAO_WstringDef_Remote_Proxy_Broker (void);
@@ -15407,7 +15356,7 @@
      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
    );
  
-@@ -14362,123 +9007,45 @@
+@@ -14362,123 +8943,45 @@
    static _TAO_WstringDef_Remote_Proxy_Broker *the_TAO_WstringDef_Remote_Proxy_Broker (void);
  };
  
@@ -15541,7 +15490,7 @@
          TAO_default_environment ()
      )
      ACE_THROW_SPEC ((
-@@ -14524,207 +9091,27 @@
+@@ -14524,207 +9027,27 @@
    _TAO_FixedDef_Proxy_Broker *the_TAO_FixedDef_Proxy_Broker_;
    
  protected:
@@ -15759,7 +15708,7 @@
  };
  
  
-@@ -14738,12 +9125,12 @@
+@@ -14738,12 +9061,12 @@
  //
  
  class TAO_Export _TAO_FixedDef_Proxy_Impl : 
@@ -15774,7 +15723,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -14781,6 +9168,7 @@
+@@ -14781,6 +9104,7 @@
    _TAO_FixedDef_Proxy_Impl (void);
  
  };
@@ -15782,7 +15731,7 @@
  //
  //                Base  Proxy Impl. Declaration
  ///////////////////////////////////////////////////////////////////////
-@@ -14793,7 +9181,7 @@
+@@ -14793,7 +9117,7 @@
  class TAO_Export _TAO_FixedDef_Remote_Proxy_Impl : 
    public virtual _TAO_FixedDef_Proxy_Impl,
    public virtual TAO_Remote_Object_Proxy_Impl,
@@ -15791,7 +15740,7 @@
    
  {
  public:
-@@ -14801,7 +9189,7 @@
+@@ -14801,7 +9125,7 @@
    
    virtual ~_TAO_FixedDef_Remote_Proxy_Impl (void) { }
    
@@ -15800,7 +15749,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -14857,8 +9245,9 @@
+@@ -14857,8 +9181,9 @@
  {
  public:
    virtual ~_TAO_FixedDef_Proxy_Broker (void);
@@ -15811,7 +15760,7 @@
      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
    ) = 0;
  
-@@ -14883,9 +9272,9 @@
+@@ -14883,9 +9208,9 @@
    _TAO_FixedDef_Remote_Proxy_Broker (void);
    
    virtual ~_TAO_FixedDef_Remote_Proxy_Broker (void);
@@ -15823,7 +15772,7 @@
      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
    );
  
-@@ -14899,117 +9288,39 @@
+@@ -14899,117 +9224,39 @@
    static _TAO_FixedDef_Remote_Proxy_Broker *the_TAO_FixedDef_Remote_Proxy_Broker (void);
  };
  
@@ -15949,7 +15898,7 @@
      }
  
    static void _tao_any_destructor (void*);
-@@ -15039,7 +9350,7 @@
+@@ -15039,7 +9286,7 @@
        CORBA::SystemException
      ));
  
@@ -15958,7 +15907,7 @@
        CORBA::Environment &ACE_TRY_ENV = 
          TAO_default_environment ()
      )
-@@ -15048,7 +9359,7 @@
+@@ -15048,7 +9295,7 @@
      ));
  
    virtual void element_type_def (
@@ -15967,7 +15916,7 @@
        CORBA::Environment &ACE_TRY_ENV = 
          TAO_default_environment ()
      )
-@@ -15069,269 +9380,46 @@
+@@ -15069,269 +9316,46 @@
    _TAO_SequenceDef_Proxy_Broker *the_TAO_SequenceDef_Proxy_Broker_;
    
  protected:
@@ -15989,25 +15938,16 @@
        CORBA::Boolean _tao_collocated = 0,
        TAO_Abstract_ServantBase *servant = 0
 -      );
-+    );
-     
+-    
 -    friend class _TAO_SequenceDef_Remote_Proxy_Impl;
 -    friend class _TAO_SequenceDef_ThruPOA_Proxy_Impl;
 -    friend class _TAO_SequenceDef_Direct_Proxy_Impl;
-+  friend class _TAO_SequenceDef_Remote_Proxy_Impl;
-+  friend class _TAO_SequenceDef_ThruPOA_Proxy_Impl;
-+  friend class _TAO_SequenceDef_Direct_Proxy_Impl;
-   
+-  
 -  virtual ~SequenceDef (void);
 -  private:
 -    SequenceDef (const SequenceDef &);
 -    void operator= (const SequenceDef &);    
-+  virtual ~IR_SequenceDef (void);
-+private:
-+  IR_SequenceDef (const IR_SequenceDef &);
-+  void operator= (const IR_SequenceDef &);    
-+};
- 
+-
 -#if (TAO_HAS_INTERCEPTORS == 1)
 -    // Generation of interceptors related RequestInfo classes per operation.
 -    // This needed to be able to store the arguments, exceptions, contexts
@@ -16064,22 +16004,7 @@
 -    friend class _TAO_SequenceDef_Remote_Proxy_Impl;
 -    friend class _TAO_SequenceDef_ThruPOA_Proxy_Impl;
 -    friend class _TAO_SequenceDef_Direct_Proxy_Impl;
-+
-+// The Proxy Implementations are used by each interface to
-+// perform a call. Each different implementation encapsulate
-+// an invocation logics.
-+
-+
-+///////////////////////////////////////////////////////////////////////
-+//                    Base  Impl. Declaration
-+//
-+
-+class TAO_Export _TAO_SequenceDef_Proxy_Impl : 
-+  public virtual _TAO_IDLType_Proxy_Impl
-+{
-+public:
-+  virtual ~_TAO_SequenceDef_Proxy_Impl (void) { }
-   
+-  
 -  TAO_ClientRequestInfo_IR_SequenceDef_bound_set (
 -      const char *_tao_operation,
 -      IOP::ServiceContextList &_tao_service_context_list,
@@ -16087,7 +16012,7 @@
 -      const CORBA::ULong & bound,
 -      CORBA::Environment &ACE_TRY_ENV = 
 -        TAO_default_environment ()
--    );
+     );
 -  
 -  virtual Dynamic::ParameterList * arguments (
 -      CORBA::Environment &ACE_TRY_ENV = 
@@ -16119,9 +16044,10 @@
 -public:
 -  friend class IR::SequenceDef;
 -  
--  friend class _TAO_SequenceDef_Remote_Proxy_Impl;
--  friend class _TAO_SequenceDef_ThruPOA_Proxy_Impl;
--  friend class _TAO_SequenceDef_Direct_Proxy_Impl;
++    
+   friend class _TAO_SequenceDef_Remote_Proxy_Impl;
+   friend class _TAO_SequenceDef_ThruPOA_Proxy_Impl;
+   friend class _TAO_SequenceDef_Direct_Proxy_Impl;
 -
 -TAO_ClientRequestInfo_IR_SequenceDef_element_type_get (
 -    const char *_tao_operation,
@@ -16149,14 +16075,18 @@
 -  )
 -  ACE_THROW_SPEC ((CORBA::SystemException));
 -
--private:
++  
++  virtual ~IR_SequenceDef (void);
+ private:
 -  TAO_ClientRequestInfo_IR_SequenceDef_element_type_get (const TAO_ClientRequestInfo_IR_SequenceDef_element_type_get &);
 -  void operator= (const TAO_ClientRequestInfo_IR_SequenceDef_element_type_get &);
 -  void result (CORBA::TypeCode_ptr result);
 -  // update the result 
 -  CORBA::TypeCode_ptr result_;
--};
--
++  IR_SequenceDef (const IR_SequenceDef &);
++  void operator= (const IR_SequenceDef &);    
+ };
+ 
 -class TAO_ClientRequestInfo_IR_SequenceDef_element_type_def_get : public TAO_ClientRequestInfo
 -{
 -public:
@@ -16179,19 +16109,22 @@
 -      TAO_default_environment ()
 -  )
 -  ACE_THROW_SPEC ((CORBA::SystemException));
--
+ 
 -virtual Dynamic::ExceptionList * exceptions (
 -    CORBA::Environment &ACE_TRY_ENV = 
 -      TAO_default_environment ()
 -  )
 -  ACE_THROW_SPEC ((CORBA::SystemException));
--
++// The Proxy Implementations are used by each interface to
++// perform a call. Each different implementation encapsulate
++// an invocation logics.
+ 
 -virtual CORBA::Any * result (
 -    CORBA::Environment &ACE_TRY_ENV = 
 -      TAO_default_environment ()
 -  )
 -  ACE_THROW_SPEC ((CORBA::SystemException));
--
+ 
 -private:
 -  TAO_ClientRequestInfo_IR_SequenceDef_element_type_def_get (const TAO_ClientRequestInfo_IR_SequenceDef_element_type_def_get &);
 -  void operator= (const TAO_ClientRequestInfo_IR_SequenceDef_element_type_def_get &);
@@ -16199,12 +16132,18 @@
 -  // update the result 
 -  IR::IDLType_ptr result_;
 -};
--
++///////////////////////////////////////////////////////////////////////
++//                    Base  Impl. Declaration
++//
+ 
 -class TAO_ClientRequestInfo_IR_SequenceDef_element_type_def_set : public TAO_ClientRequestInfo
--{
--public:
++class TAO_Export _TAO_SequenceDef_Proxy_Impl : 
++  public virtual _TAO_IDLType_Proxy_Impl
+ {
+ public:
 -  friend class IR::SequenceDef;
--  
++  virtual ~_TAO_SequenceDef_Proxy_Impl (void) { }
+   
 -  friend class _TAO_SequenceDef_Remote_Proxy_Impl;
 -  friend class _TAO_SequenceDef_ThruPOA_Proxy_Impl;
 -  friend class _TAO_SequenceDef_Direct_Proxy_Impl;
@@ -16268,7 +16207,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -15356,7 +9444,7 @@
+@@ -15356,7 +9380,7 @@
        CORBA::SystemException
      )) = 0;
  
@@ -16277,7 +16216,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -15364,9 +9452,9 @@
+@@ -15364,9 +9388,9 @@
        CORBA::SystemException
      )) = 0;
  
@@ -16289,7 +16228,7 @@
        CORBA::Environment &ACE_TRY_ENV
      )
      ACE_THROW_SPEC ((
-@@ -15377,6 +9465,8 @@
+@@ -15377,6 +9401,8 @@
    _TAO_SequenceDef_Proxy_Impl (void);
  
  };
@@ -16298,7 +16237,7 @@
  //
  //                Base  Proxy Impl. Declaration
  ///////////////////////////////////////////////////////////////////////
-@@ -15389,7 +9479,7 @@
+@@ -15389,7 +9415,7 @@
  class TAO_Export _TAO_SequenceDef_Remote_Proxy_Impl : 
    public virtual _TAO_SequenceDef_Proxy_Impl,
    public virtual TAO_Remote_Object_Proxy_Impl,
@@ -16307,7 +16246,7 @@
    
  {
  public:
-@@ -15397,7 +9487,7 @@
+@@ -15397,7 +9423,7 @@
    
    virtual ~_TAO_SequenceDef_Remote_Proxy_Impl (void) { }
    
@@ -16316,7 +16255,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -15414,7 +9504,7 @@
+@@ -15414,7 +9440,7 @@
        CORBA::SystemException
      ));
  
@@ -16325,7 +16264,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -15422,7 +9512,7 @@
+@@ -15422,7 +9448,7 @@
        CORBA::SystemException
      ));
  
@@ -16334,7 +16273,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -15432,7 +9522,7 @@
+@@ -15432,7 +9458,7 @@
  
    virtual void element_type_def (
        CORBA_Object *_collocated_tao_target_,
@@ -16343,7 +16282,7 @@
        CORBA::Environment &ACE_TRY_ENV
      )
      ACE_THROW_SPEC ((
-@@ -15461,8 +9551,9 @@
+@@ -15461,8 +9487,9 @@
  {
  public:
    virtual ~_TAO_SequenceDef_Proxy_Broker (void);
@@ -16354,7 +16293,7 @@
      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
    ) = 0;
  
-@@ -15487,9 +9578,9 @@
+@@ -15487,9 +9514,9 @@
    _TAO_SequenceDef_Remote_Proxy_Broker (void);
    
    virtual ~_TAO_SequenceDef_Remote_Proxy_Broker (void);
@@ -16366,7 +16305,7 @@
      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
    );
  
-@@ -15503,117 +9594,39 @@
+@@ -15503,117 +9530,39 @@
    static _TAO_SequenceDef_Remote_Proxy_Broker *the_TAO_SequenceDef_Remote_Proxy_Broker (void);
  };
  
@@ -16492,7 +16431,7 @@
      }
  
    static void _tao_any_destructor (void*);
-@@ -15643,7 +9656,7 @@
+@@ -15643,7 +9592,7 @@
        CORBA::SystemException
      ));
  
@@ -16501,7 +16440,7 @@
        CORBA::Environment &ACE_TRY_ENV = 
          TAO_default_environment ()
      )
-@@ -15652,7 +9665,7 @@
+@@ -15652,7 +9601,7 @@
      ));
  
    virtual void element_type_def (
@@ -16510,7 +16449,7 @@
        CORBA::Environment &ACE_TRY_ENV = 
          TAO_default_environment ()
      )
-@@ -15673,250 +9686,27 @@
+@@ -15673,250 +9622,27 @@
    _TAO_ArrayDef_Proxy_Broker *the_TAO_ArrayDef_Proxy_Broker_;
    
  protected:
@@ -16771,7 +16710,7 @@
  };
  
  
-@@ -15930,12 +9720,12 @@
+@@ -15930,12 +9656,12 @@
  //
  
  class TAO_Export _TAO_ArrayDef_Proxy_Impl : 
@@ -16786,7 +16725,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -15960,9 +9750,9 @@
+@@ -15960,9 +9686,9 @@
        CORBA::SystemException
      )) = 0;
  
@@ -16798,7 +16737,7 @@
      )
      ACE_THROW_SPEC ((
        CORBA::SystemException
-@@ -15970,7 +9760,7 @@
+@@ -15970,7 +9696,7 @@
  
    virtual void element_type_def (
        CORBA_Object *_collocated_tao_target_,
@@ -16807,7 +16746,7 @@
        CORBA::Environment &ACE_TRY_ENV
      )
      ACE_THROW_SPEC ((
-@@ -15981,6 +9771,7 @@
+@@ -15981,6 +9707,7 @@
    _TAO_ArrayDef_Proxy_Impl (void);
  
  };
@@ -16815,7 +16754,7 @@
  //
  //                Base  Proxy Impl. Declaration
  ///////////////////////////////////////////////////////////////////////
-@@ -15993,7 +9784,7 @@
+@@ -15993,7 +9720,7 @@
  class TAO_Export _TAO_ArrayDef_Remote_Proxy_Impl : 
    public virtual _TAO_ArrayDef_Proxy_Impl,
    public virtual TAO_Remote_Object_Proxy_Impl,
@@ -16824,7 +16763,7 @@
    
  {
  public:
-@@ -16001,7 +9792,7 @@
+@@ -16001,7 +9728,7 @@
    
    virtual ~_TAO_ArrayDef_Remote_Proxy_Impl (void) { }
    
@@ -16833,7 +16772,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -16018,25 +9809,25 @@
+@@ -16018,25 +9745,25 @@
        CORBA::SystemException
      ));
  
@@ -16865,7 +16804,7 @@
        CORBA::Environment &ACE_TRY_ENV
      )
      ACE_THROW_SPEC ((
-@@ -16065,8 +9856,9 @@
+@@ -16065,8 +9792,9 @@
  {
  public:
    virtual ~_TAO_ArrayDef_Proxy_Broker (void);
@@ -16876,7 +16815,7 @@
      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
    ) = 0;
  
-@@ -16091,9 +9883,9 @@
+@@ -16091,9 +9819,9 @@
    _TAO_ArrayDef_Remote_Proxy_Broker (void);
    
    virtual ~_TAO_ArrayDef_Remote_Proxy_Broker (void);
@@ -16888,7 +16827,7 @@
      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
    );
  
-@@ -16107,117 +9899,41 @@
+@@ -16107,117 +9835,41 @@
    static _TAO_ArrayDef_Remote_Proxy_Broker *the_TAO_ArrayDef_Remote_Proxy_Broker (void);
  };
  
@@ -16897,12 +16836,7 @@
  //              End Remote Proxy Broker Declaration 
  ///////////////////////////////////////////////////////////////////////
  
-+// Forward Classes Declaration
-+class _TAO_ExceptionDef_Proxy_Impl;
-+class _TAO_ExceptionDef_Remote_Proxy_Impl;
-+class _TAO_ExceptionDef_Proxy_Broker;
-+class _TAO_ExceptionDef_Remote_Proxy_Broker;
- 
+-
 -#endif /* end #if !defined */
 -
 -TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ArrayDef;
@@ -16921,11 +16855,8 @@
 -#define _TAO_IR_EXCEPTIONDEF___VAR_CH_
 -
 -class TAO_Export ExceptionDef_var : public TAO_Base_var
-+class TAO_Export IR_ExceptionDef 
-+  : public virtual IR_Contained, 
-+    public virtual IR_Container
- {
- public:
+-{
+-public:
 -  ExceptionDef_var (void); // default constructor
 -  ExceptionDef_var (ExceptionDef_ptr p) : ptr_ (p) {} 
 -  ExceptionDef_var (const ExceptionDef_var &); // copy constructor
@@ -16982,23 +16913,24 @@
 -#if !defined (_TAO_IR_EXCEPTIONDEF_CH_)
 -#define _TAO_IR_EXCEPTIONDEF_CH_
 -
--// Forward Classes Declaration
--class _TAO_ExceptionDef_Proxy_Impl;
--class _TAO_ExceptionDef_Remote_Proxy_Impl;
--class _TAO_ExceptionDef_Proxy_Broker;
--class _TAO_ExceptionDef_Remote_Proxy_Broker;
--
+ // Forward Classes Declaration
+ class _TAO_ExceptionDef_Proxy_Impl;
+ class _TAO_ExceptionDef_Remote_Proxy_Impl;
+ class _TAO_ExceptionDef_Proxy_Broker;
+ class _TAO_ExceptionDef_Remote_Proxy_Broker;
+ 
 -class TAO_Export ExceptionDef: public virtual Contained, public virtual Container
--{
--public:
--#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
++class TAO_Export IR_ExceptionDef 
++  : public virtual IR_Contained, 
++    public virtual IR_Container
+ {
+ public:
+ #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
 -  typedef ExceptionDef_ptr _ptr_type;
 -  typedef ExceptionDef_var _var_type;
--#endif /* ! __GNUC__ || g++ >= 2.8 */
-+#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
 +  typedef IR_ExceptionDef_ptr _ptr_type;
 +  typedef IR_ExceptionDef_var _var_type;
-+#endif /* ! __GNUC__ || g++ >= 2.8 */
+ #endif /* ! __GNUC__ || g++ >= 2.8 */
  
    // the static operations
 -  static ExceptionDef_ptr _duplicate (ExceptionDef_ptr obj);
@@ -17023,7 +16955,7 @@
      }
  
    static void _tao_any_destructor (void*);
-@@ -16230,7 +9946,7 @@
+@@ -16230,7 +9882,7 @@
        CORBA::SystemException
      ));
  
@@ -17032,7 +16964,7 @@
        CORBA::Environment &ACE_TRY_ENV = 
          TAO_default_environment ()
      )
-@@ -16239,7 +9955,7 @@
+@@ -16239,7 +9891,7 @@
      ));
  
    virtual void members (
@@ -17041,7 +16973,7 @@
        CORBA::Environment &ACE_TRY_ENV = 
          TAO_default_environment ()
      )
-@@ -16260,164 +9976,27 @@
+@@ -16260,165 +9912,28 @@
    _TAO_ExceptionDef_Proxy_Broker *the_TAO_ExceptionDef_Proxy_Broker_;
    
  protected:
@@ -17063,11 +16995,15 @@
        CORBA::Boolean _tao_collocated = 0,
        TAO_Abstract_ServantBase *servant = 0
 -      );
--    
++    );
+     
 -    friend class _TAO_ExceptionDef_Remote_Proxy_Impl;
 -    friend class _TAO_ExceptionDef_ThruPOA_Proxy_Impl;
 -    friend class _TAO_ExceptionDef_Direct_Proxy_Impl;
--  
++  friend class _TAO_ExceptionDef_Remote_Proxy_Impl;
++  friend class _TAO_ExceptionDef_ThruPOA_Proxy_Impl;
++  friend class _TAO_ExceptionDef_Direct_Proxy_Impl;
+   
 -  virtual ~ExceptionDef (void);
 -  private:
 -    ExceptionDef (const ExceptionDef &);
@@ -17136,7 +17072,7 @@
 -      CORBA::Object *_tao_target,
 -      CORBA::Environment &ACE_TRY_ENV = 
 -        TAO_default_environment ()
-     );
+-    );
 -  
 -  virtual Dynamic::ParameterList * arguments (
 -      CORBA::Environment &ACE_TRY_ENV = 
@@ -17169,10 +17105,9 @@
 -public:
 -  friend class IR::ExceptionDef;
 -  
-+    
-   friend class _TAO_ExceptionDef_Remote_Proxy_Impl;
-   friend class _TAO_ExceptionDef_ThruPOA_Proxy_Impl;
-   friend class _TAO_ExceptionDef_Direct_Proxy_Impl;
+-  friend class _TAO_ExceptionDef_Remote_Proxy_Impl;
+-  friend class _TAO_ExceptionDef_ThruPOA_Proxy_Impl;
+-  friend class _TAO_ExceptionDef_Direct_Proxy_Impl;
 -
 -TAO_ClientRequestInfo_IR_ExceptionDef_members_set (
 -    const char *_tao_operation,
@@ -17205,19 +17140,21 @@
 -  TAO_ClientRequestInfo_IR_ExceptionDef_members_set (const TAO_ClientRequestInfo_IR_ExceptionDef_members_set &);
 -  void operator= (const TAO_ClientRequestInfo_IR_ExceptionDef_members_set &);
 -  const IR::StructMemberSeq & members_;
-   
+-  
 -};
 -
 -#endif /* TAO_HAS_INTERCEPTORS */
 -
+-};
 +  virtual ~IR_ExceptionDef (void);
 +private:
 +  IR_ExceptionDef (const IR_ExceptionDef &);
 +  void operator= (const IR_ExceptionDef &);    
- };
++};
  
  
-@@ -16431,13 +10010,13 @@
+ // The Proxy Implementations are used by each interface to
+@@ -16431,13 +9946,13 @@
  //
  
  class TAO_Export _TAO_ExceptionDef_Proxy_Impl : 
@@ -17234,7 +17171,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -16445,17 +10024,17 @@
+@@ -16445,17 +9960,17 @@
        CORBA::SystemException
      )) = 0;
  
@@ -17256,7 +17193,7 @@
        CORBA::Environment &ACE_TRY_ENV
      )
      ACE_THROW_SPEC ((
-@@ -16466,6 +10045,7 @@
+@@ -16466,6 +9981,7 @@
    _TAO_ExceptionDef_Proxy_Impl (void);
  
  };
@@ -17264,7 +17201,7 @@
  //
  //                Base  Proxy Impl. Declaration
  ///////////////////////////////////////////////////////////////////////
-@@ -16478,8 +10058,8 @@
+@@ -16478,8 +9994,8 @@
  class TAO_Export _TAO_ExceptionDef_Remote_Proxy_Impl : 
    public virtual _TAO_ExceptionDef_Proxy_Impl,
    public virtual TAO_Remote_Object_Proxy_Impl,
@@ -17275,7 +17212,7 @@
    
  {
  public:
-@@ -16487,7 +10067,7 @@
+@@ -16487,7 +10003,7 @@
    
    virtual ~_TAO_ExceptionDef_Remote_Proxy_Impl (void) { }
    
@@ -17284,7 +17221,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -16495,7 +10075,7 @@
+@@ -16495,7 +10011,7 @@
        CORBA::SystemException
      ));
  
@@ -17293,7 +17230,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -16505,7 +10085,7 @@
+@@ -16505,7 +10021,7 @@
  
    virtual void members (
        CORBA_Object *_collocated_tao_target_,
@@ -17302,7 +17239,7 @@
        CORBA::Environment &ACE_TRY_ENV
      )
      ACE_THROW_SPEC ((
-@@ -16534,8 +10114,9 @@
+@@ -16534,8 +10050,9 @@
  {
  public:
    virtual ~_TAO_ExceptionDef_Proxy_Broker (void);
@@ -17313,7 +17250,7 @@
      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
    ) = 0;
  
-@@ -16560,9 +10141,9 @@
+@@ -16560,9 +10077,9 @@
    _TAO_ExceptionDef_Remote_Proxy_Broker (void);
    
    virtual ~_TAO_ExceptionDef_Remote_Proxy_Broker (void);
@@ -17325,7 +17262,7 @@
      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
    );
  
-@@ -16576,24 +10157,15 @@
+@@ -16576,24 +10093,15 @@
    static _TAO_ExceptionDef_Remote_Proxy_Broker *the_TAO_ExceptionDef_Remote_Proxy_Broker (void);
  };
  
@@ -17352,7 +17289,7 @@
  #endif /* ! __GNUC__ || g++ >= 2.8 */
  
    static void _tao_any_destructor (void*);
-@@ -16605,61 +10177,55 @@
+@@ -16605,61 +10113,55 @@
    CORBA::TypeCode_var type;
  };
  
@@ -17446,7 +17383,7 @@
    class _TAO_Unbounded_Object_Sequence_IR_ExceptionDefSeq : public TAO_Unbounded_Base_Sequence
    {
    public:
-@@ -16669,19 +10235,19 @@
+@@ -16669,19 +10171,19 @@
      _TAO_Unbounded_Object_Sequence_IR_ExceptionDefSeq (CORBA::ULong maximum);
      _TAO_Unbounded_Object_Sequence_IR_ExceptionDefSeq (CORBA::ULong maximum,
        CORBA::ULong length,
@@ -17472,7 +17409,7 @@
      virtual void _shrink_buffer (CORBA::ULong nl, CORBA::ULong ol);
      virtual void _downcast (
          void* target,
-@@ -16693,125 +10259,94 @@
+@@ -16693,125 +10195,94 @@
      
    };
  
@@ -17641,7 +17578,7 @@
    class TAO_EXPORT_NESTED_MACRO _TAO_Unbounded_Sequence_IR_ExcDescriptionSeq : public TAO_Unbounded_Base_Sequence
    {
    public:
-@@ -16821,252 +10356,196 @@
+@@ -16821,252 +10292,190 @@
      _TAO_Unbounded_Sequence_IR_ExcDescriptionSeq (CORBA::ULong maximum); 
      _TAO_Unbounded_Sequence_IR_ExcDescriptionSeq (CORBA::ULong maximum,
        CORBA::ULong length,
@@ -17826,26 +17763,23 @@
 +  IR_ExcDescriptionSeq *&ptr_;
    // assignment from T_var not allowed
 -  void operator= (const ExcDescriptionSeq_var &);
-+  void operator= (const IR_ExcDescriptionSeq_var &);
- };
- 
+-};
+-
 -
 -#endif /* end #if !defined */
 -
 -TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ExcDescriptionSeq;
 -
 -enum AttributeMode
-+enum IR_AttributeMode
- {
+-{
 -    ATTR_NORMAL,
 -    ATTR_READONLY  
-+  ATTR_NORMAL,
-+  ATTR_READONLY
++  void operator= (const IR_ExcDescriptionSeq_var &);
  };
 -typedef AttributeMode &AttributeMode_out;
 -TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_AttributeMode;
 -
- 
+-
 -#if !defined (_TAO_IR_ATTRIBUTEDEF___PTR_CH_)
 -#define _TAO_IR_ATTRIBUTEDEF___PTR_CH_
 -
@@ -17857,7 +17791,7 @@
 -
 -#if !defined (_TAO_IR_ATTRIBUTEDEF___VAR_CH_)
 -#define _TAO_IR_ATTRIBUTEDEF___VAR_CH_
--
+ 
 -class TAO_Export AttributeDef_var : public TAO_Base_var
 +class TAO_Export IR_AttributeDef_var : public TAO_Base_var
  {
@@ -17986,7 +17920,7 @@
      }
  
    static void _tao_any_destructor (void*);
-@@ -17079,7 +10558,7 @@
+@@ -17079,7 +10488,7 @@
        CORBA::SystemException
      ));
  
@@ -17995,7 +17929,7 @@
        CORBA::Environment &ACE_TRY_ENV = 
          TAO_default_environment ()
      )
-@@ -17088,7 +10567,7 @@
+@@ -17088,7 +10497,7 @@
      ));
  
    virtual void type_def (
@@ -18004,7 +17938,7 @@
        CORBA::Environment &ACE_TRY_ENV = 
          TAO_default_environment ()
      )
-@@ -17096,7 +10575,7 @@
+@@ -17096,7 +10505,7 @@
        CORBA::SystemException
      ));
  
@@ -18013,7 +17947,7 @@
        CORBA::Environment &ACE_TRY_ENV = 
          TAO_default_environment ()
      )
-@@ -17105,7 +10584,7 @@
+@@ -17105,7 +10514,7 @@
      ));
  
    virtual void mode (
@@ -18022,7 +17956,7 @@
        CORBA::Environment &ACE_TRY_ENV = 
          TAO_default_environment ()
      )
-@@ -17126,250 +10605,27 @@
+@@ -17126,250 +10535,27 @@
    _TAO_AttributeDef_Proxy_Broker *the_TAO_AttributeDef_Proxy_Broker_;
    
  protected:
@@ -18283,7 +18217,7 @@
  };
  
  
-@@ -17383,12 +10639,12 @@
+@@ -17383,12 +10569,12 @@
  //
  
  class TAO_Export _TAO_AttributeDef_Proxy_Impl : 
@@ -18298,7 +18232,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -17396,7 +10652,7 @@
+@@ -17396,7 +10582,7 @@
        CORBA::SystemException
      )) = 0;
  
@@ -18307,7 +18241,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -17406,14 +10662,14 @@
+@@ -17406,14 +10592,14 @@
  
    virtual void type_def (
        CORBA_Object *_collocated_tao_target_,
@@ -18324,7 +18258,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -17423,7 +10679,7 @@
+@@ -17423,7 +10609,7 @@
  
    virtual void mode (
        CORBA_Object *_collocated_tao_target_,
@@ -18333,7 +18267,7 @@
        CORBA::Environment &ACE_TRY_ENV
      )
      ACE_THROW_SPEC ((
-@@ -17434,6 +10690,7 @@
+@@ -17434,6 +10620,7 @@
    _TAO_AttributeDef_Proxy_Impl (void);
  
  };
@@ -18341,7 +18275,7 @@
  //
  //                Base  Proxy Impl. Declaration
  ///////////////////////////////////////////////////////////////////////
-@@ -17446,7 +10703,7 @@
+@@ -17446,7 +10633,7 @@
  class TAO_Export _TAO_AttributeDef_Remote_Proxy_Impl : 
    public virtual _TAO_AttributeDef_Proxy_Impl,
    public virtual TAO_Remote_Object_Proxy_Impl,
@@ -18350,7 +18284,7 @@
    
  {
  public:
-@@ -17454,7 +10711,7 @@
+@@ -17454,7 +10641,7 @@
    
    virtual ~_TAO_AttributeDef_Remote_Proxy_Impl (void) { }
    
@@ -18359,7 +18293,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -17462,7 +10719,7 @@
+@@ -17462,7 +10649,7 @@
        CORBA::SystemException
      ));
  
@@ -18368,7 +18302,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -17472,14 +10729,14 @@
+@@ -17472,14 +10659,14 @@
  
    virtual void type_def (
        CORBA_Object *_collocated_tao_target_,
@@ -18385,7 +18319,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -17489,7 +10746,7 @@
+@@ -17489,7 +10676,7 @@
  
    virtual void mode (
        CORBA_Object *_collocated_tao_target_,
@@ -18394,7 +18328,7 @@
        CORBA::Environment &ACE_TRY_ENV
      )
      ACE_THROW_SPEC ((
-@@ -17518,8 +10775,9 @@
+@@ -17518,8 +10705,9 @@
  {
  public:
    virtual ~_TAO_AttributeDef_Proxy_Broker (void);
@@ -18405,7 +18339,7 @@
      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
    ) = 0;
  
-@@ -17544,9 +10802,9 @@
+@@ -17544,9 +10732,9 @@
    _TAO_AttributeDef_Remote_Proxy_Broker (void);
    
    virtual ~_TAO_AttributeDef_Remote_Proxy_Broker (void);
@@ -18417,7 +18351,7 @@
      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
    );
  
-@@ -17560,24 +10818,15 @@
+@@ -17560,24 +10748,15 @@
    static _TAO_AttributeDef_Remote_Proxy_Broker *the_TAO_AttributeDef_Remote_Proxy_Broker (void);
  };
  
@@ -18444,7 +18378,7 @@
  #endif /* ! __GNUC__ || g++ >= 2.8 */
  
    static void _tao_any_destructor (void*);
-@@ -17587,150 +10836,135 @@
+@@ -17587,150 +10766,122 @@
    TAO_String_Manager defined_in;
    TAO_String_Manager version;
    CORBA::TypeCode_var type;
@@ -18530,39 +18464,31 @@
 +  IR_AttributeDescription *&ptr_;
    // assignment from T_var not allowed
 -  void operator= (const AttributeDescription_var &);
-+  void operator= (const IR_AttributeDescription_var &);
- };
- 
+-};
+-
 -TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_AttributeDescription;
 -
 -enum OperationMode
 -{
-+enum IR_OperationMode
-+  {
-     OP_NORMAL,
+-    OP_NORMAL,
 -    OP_ONEWAY  
 -};
 -typedef OperationMode &OperationMode_out;
 -TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_OperationMode;
-+    OP_ONEWAY
-+  };
- 
+-
 -enum ParameterMode
 -{
-+enum IR_ParameterMode
-+  {
-     PARAM_IN,
-     PARAM_OUT,
+-    PARAM_IN,
+-    PARAM_OUT,
 -    PARAM_INOUT  
--};
++  void operator= (const IR_AttributeDescription_var &);
+ };
 -typedef ParameterMode &ParameterMode_out;
 -TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ParameterMode;
--
+ 
 -struct ParameterDescription;
 -class ParameterDescription_var;
-+    PARAM_INOUT
-+  };
- 
+-
 -struct TAO_Export ParameterDescription
 +struct TAO_Export IR_ParameterDescription
  {
@@ -18670,7 +18596,7 @@
    class TAO_EXPORT_NESTED_MACRO _TAO_Unbounded_Sequence_IR_ParDescriptionSeq : public TAO_Unbounded_Base_Sequence
    {
    public:
-@@ -17740,160 +10974,121 @@
+@@ -17740,160 +10891,121 @@
      _TAO_Unbounded_Sequence_IR_ParDescriptionSeq (CORBA::ULong maximum); 
      _TAO_Unbounded_Sequence_IR_ParDescriptionSeq (CORBA::ULong maximum,
        CORBA::ULong length,
@@ -18885,7 +18811,7 @@
  #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
    TAO_Unbounded_String_Sequence
  #else /* TAO_USE_SEQUENCE_TEMPLATES */
-@@ -17901,210 +11096,165 @@
+@@ -17901,210 +11013,165 @@
  #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
  {
  public:
@@ -19173,7 +19099,7 @@
        CORBA::Environment &ACE_TRY_ENV = 
          TAO_default_environment ()
      )
-@@ -18113,7 +11263,7 @@
+@@ -18113,7 +11180,7 @@
      ));
  
    virtual void result_def (
@@ -19182,7 +19108,7 @@
        CORBA::Environment &ACE_TRY_ENV = 
          TAO_default_environment ()
      )
-@@ -18121,7 +11271,7 @@
+@@ -18121,7 +11188,7 @@
        CORBA::SystemException
      ));
  
@@ -19191,7 +19117,7 @@
        CORBA::Environment &ACE_TRY_ENV = 
          TAO_default_environment ()
      )
-@@ -18130,7 +11280,7 @@
+@@ -18130,7 +11197,7 @@
      ));
  
    virtual void params (
@@ -19200,7 +19126,7 @@
        CORBA::Environment &ACE_TRY_ENV = 
          TAO_default_environment ()
      )
-@@ -18138,7 +11288,7 @@
+@@ -18138,7 +11205,7 @@
        CORBA::SystemException
      ));
  
@@ -19209,7 +19135,7 @@
        CORBA::Environment &ACE_TRY_ENV = 
          TAO_default_environment ()
      )
-@@ -18147,7 +11297,7 @@
+@@ -18147,7 +11214,7 @@
      ));
  
    virtual void mode (
@@ -19218,7 +19144,7 @@
        CORBA::Environment &ACE_TRY_ENV = 
          TAO_default_environment ()
      )
-@@ -18155,7 +11305,7 @@
+@@ -18155,7 +11222,7 @@
        CORBA::SystemException
      ));
  
@@ -19227,7 +19153,7 @@
        CORBA::Environment &ACE_TRY_ENV = 
          TAO_default_environment ()
      )
-@@ -18164,7 +11314,7 @@
+@@ -18164,7 +11231,7 @@
      ));
  
    virtual void contexts (
@@ -19236,7 +19162,7 @@
        CORBA::Environment &ACE_TRY_ENV = 
          TAO_default_environment ()
      )
-@@ -18172,7 +11322,7 @@
+@@ -18172,7 +11239,7 @@
        CORBA::SystemException
      ));
  
@@ -19245,7 +19171,7 @@
        CORBA::Environment &ACE_TRY_ENV = 
          TAO_default_environment ()
      )
-@@ -18181,7 +11331,7 @@
+@@ -18181,7 +11248,7 @@
      ));
  
    virtual void exceptions (
@@ -19254,7 +19180,7 @@
        CORBA::Environment &ACE_TRY_ENV = 
          TAO_default_environment ()
      )
-@@ -18202,652 +11352,172 @@
+@@ -18202,508 +11269,27 @@
    _TAO_OperationDef_Proxy_Broker *the_TAO_OperationDef_Proxy_Broker_;
    
  protected:
@@ -19382,17 +19308,10 @@
 -public:
 -  friend class IR::OperationDef;
 -  
-+    
-   friend class _TAO_OperationDef_Remote_Proxy_Impl;
-   friend class _TAO_OperationDef_ThruPOA_Proxy_Impl;
-   friend class _TAO_OperationDef_Direct_Proxy_Impl;
-+  
-+  virtual ~IR_OperationDef (void);
-+private:
-+  IR_OperationDef (const IR_OperationDef &);
-+  void operator= (const IR_OperationDef &);    
-+};
- 
+-  friend class _TAO_OperationDef_Remote_Proxy_Impl;
+-  friend class _TAO_OperationDef_ThruPOA_Proxy_Impl;
+-  friend class _TAO_OperationDef_Direct_Proxy_Impl;
+-
 -TAO_ClientRequestInfo_IR_OperationDef_result_def_set (
 -    const char *_tao_operation,
 -    IOP::ServiceContextList &_tao_service_context_list,
@@ -19407,40 +19326,31 @@
 -      TAO_default_environment ()
 -  )
 -  ACE_THROW_SPEC ((CORBA::SystemException));
- 
+-
 -virtual Dynamic::ExceptionList * exceptions (
 -    CORBA::Environment &ACE_TRY_ENV = 
 -      TAO_default_environment ()
 -  )
 -  ACE_THROW_SPEC ((CORBA::SystemException));
-+// The Proxy Implementations are used by each interface to
-+// perform a call. Each different implementation encapsulate
-+// an invocation logics.
- 
+-
 -virtual CORBA::Any * result (
 -    CORBA::Environment &ACE_TRY_ENV = 
 -      TAO_default_environment ()
 -  )
 -  ACE_THROW_SPEC ((CORBA::SystemException));
- 
+-
 -private:
 -  TAO_ClientRequestInfo_IR_OperationDef_result_def_set (const TAO_ClientRequestInfo_IR_OperationDef_result_def_set &);
 -  void operator= (const TAO_ClientRequestInfo_IR_OperationDef_result_def_set &);
 -  IR::IDLType_ptr result_def_;
 -  
 -};
-+///////////////////////////////////////////////////////////////////////
-+//                    Base  Impl. Declaration
-+//
- 
+-
 -class TAO_ClientRequestInfo_IR_OperationDef_params_get : public TAO_ClientRequestInfo
-+class TAO_Export _TAO_OperationDef_Proxy_Impl : 
-+  public virtual _TAO_Contained_Proxy_Impl
- {
- public:
+-{
+-public:
 -  friend class IR::OperationDef;
-+  virtual ~_TAO_OperationDef_Proxy_Impl (void) { }
-   
+-  
 -  friend class _TAO_OperationDef_Remote_Proxy_Impl;
 -  friend class _TAO_OperationDef_ThruPOA_Proxy_Impl;
 -  friend class _TAO_OperationDef_Direct_Proxy_Impl;
@@ -19458,41 +19368,19 @@
 -      TAO_default_environment ()
 -  )
 -  ACE_THROW_SPEC ((CORBA::SystemException));
-+  virtual CORBA::TypeCode_ptr result (
-+      CORBA_Object *_collocated_tao_target_,
-+      CORBA::Environment &ACE_TRY_ENV
-+    )
-+    ACE_THROW_SPEC ((
-+      CORBA::SystemException
-+    )) = 0;
- 
+-
 -virtual Dynamic::ExceptionList * exceptions (
 -    CORBA::Environment &ACE_TRY_ENV = 
 -      TAO_default_environment ()
 -  )
 -  ACE_THROW_SPEC ((CORBA::SystemException));
-+  virtual IR_IDLType_ptr result_def (
-+      CORBA_Object *_collocated_tao_target_,
-+      CORBA::Environment &ACE_TRY_ENV
-+    )
-+    ACE_THROW_SPEC ((
-+      CORBA::SystemException
-+    )) = 0;
- 
+-
 -virtual CORBA::Any * result (
 -    CORBA::Environment &ACE_TRY_ENV = 
 -      TAO_default_environment ()
 -  )
 -  ACE_THROW_SPEC ((CORBA::SystemException));
-+  virtual void result_def (
-+      CORBA_Object *_collocated_tao_target_,
-+      IR_IDLType_ptr result_def,
-+      CORBA::Environment &ACE_TRY_ENV
-+    )
-+    ACE_THROW_SPEC ((
-+      CORBA::SystemException
-+    )) = 0;
- 
+-
 -private:
 -  TAO_ClientRequestInfo_IR_OperationDef_params_get (const TAO_ClientRequestInfo_IR_OperationDef_params_get &);
 -  void operator= (const TAO_ClientRequestInfo_IR_OperationDef_params_get &);
@@ -19500,14 +19388,7 @@
 -  // update the result 
 -  IR::ParDescriptionSeq * result_;
 -};
-+  virtual IR_ParDescriptionSeq * params (
-+      CORBA_Object *_collocated_tao_target_,
-+      CORBA::Environment &ACE_TRY_ENV
-+    )
-+    ACE_THROW_SPEC ((
-+      CORBA::SystemException
-+    )) = 0;
- 
+-
 -class TAO_ClientRequestInfo_IR_OperationDef_params_set : public TAO_ClientRequestInfo
 -{
 -public:
@@ -19516,15 +19397,7 @@
 -  friend class _TAO_OperationDef_Remote_Proxy_Impl;
 -  friend class _TAO_OperationDef_ThruPOA_Proxy_Impl;
 -  friend class _TAO_OperationDef_Direct_Proxy_Impl;
-+  virtual void params (
-+      CORBA_Object *_collocated_tao_target_,
-+      const IR_ParDescriptionSeq & params,
-+      CORBA::Environment &ACE_TRY_ENV
-+    )
-+    ACE_THROW_SPEC ((
-+      CORBA::SystemException
-+    )) = 0;
- 
+-
 -TAO_ClientRequestInfo_IR_OperationDef_params_set (
 -    const char *_tao_operation,
 -    IOP::ServiceContextList &_tao_service_context_list,
@@ -19533,69 +19406,32 @@
 -    CORBA::Environment &ACE_TRY_ENV = 
 -      TAO_default_environment ()
 -  );
-+  virtual IR_OperationMode mode (
-+      CORBA_Object *_collocated_tao_target_,
-+      CORBA::Environment &ACE_TRY_ENV
-+    )
-+    ACE_THROW_SPEC ((
-+      CORBA::SystemException
-+    )) = 0;
- 
+-
 -virtual Dynamic::ParameterList * arguments (
 -    CORBA::Environment &ACE_TRY_ENV = 
 -      TAO_default_environment ()
 -  )
 -  ACE_THROW_SPEC ((CORBA::SystemException));
-+  virtual void mode (
-+      CORBA_Object *_collocated_tao_target_,
-+      IR_OperationMode mode,
-+      CORBA::Environment &ACE_TRY_ENV
-+    )
-+    ACE_THROW_SPEC ((
-+      CORBA::SystemException
-+    )) = 0;
- 
+-
 -virtual Dynamic::ExceptionList * exceptions (
 -    CORBA::Environment &ACE_TRY_ENV = 
 -      TAO_default_environment ()
 -  )
 -  ACE_THROW_SPEC ((CORBA::SystemException));
-+  virtual IR_ContextIdSeq * contexts (
-+      CORBA_Object *_collocated_tao_target_,
-+      CORBA::Environment &ACE_TRY_ENV
-+    )
-+    ACE_THROW_SPEC ((
-+      CORBA::SystemException
-+    )) = 0;
- 
+-
 -virtual CORBA::Any * result (
 -    CORBA::Environment &ACE_TRY_ENV = 
 -      TAO_default_environment ()
 -  )
 -  ACE_THROW_SPEC ((CORBA::SystemException));
-+  virtual void contexts (
-+      CORBA_Object *_collocated_tao_target_,
-+      const IR_ContextIdSeq & contexts,
-+      CORBA::Environment &ACE_TRY_ENV
-+    )
-+    ACE_THROW_SPEC ((
-+      CORBA::SystemException
-+    )) = 0;
- 
+-
 -private:
 -  TAO_ClientRequestInfo_IR_OperationDef_params_set (const TAO_ClientRequestInfo_IR_OperationDef_params_set &);
 -  void operator= (const TAO_ClientRequestInfo_IR_OperationDef_params_set &);
 -  const IR::ParDescriptionSeq & params_;
 -  
 -};
-+  virtual IR_ExceptionDefSeq * exceptions (
-+      CORBA_Object *_collocated_tao_target_,
-+      CORBA::Environment &ACE_TRY_ENV
-+    )
-+    ACE_THROW_SPEC ((
-+      CORBA::SystemException
-+    )) = 0;
- 
+-
 -class TAO_ClientRequestInfo_IR_OperationDef_mode_get : public TAO_ClientRequestInfo
 -{
 -public:
@@ -19604,15 +19440,7 @@
 -  friend class _TAO_OperationDef_Remote_Proxy_Impl;
 -  friend class _TAO_OperationDef_ThruPOA_Proxy_Impl;
 -  friend class _TAO_OperationDef_Direct_Proxy_Impl;
-+  virtual void exceptions (
-+      CORBA_Object *_collocated_tao_target_,
-+      const IR_ExceptionDefSeq & exceptions,
-+      CORBA::Environment &ACE_TRY_ENV
-+    )
-+    ACE_THROW_SPEC ((
-+      CORBA::SystemException
-+    )) = 0;
- 
+-
 -TAO_ClientRequestInfo_IR_OperationDef_mode_get (
 -    const char *_tao_operation,
 -    IOP::ServiceContextList &_tao_service_context_list,
@@ -19620,31 +19448,25 @@
 -    CORBA::Environment &ACE_TRY_ENV = 
 -      TAO_default_environment ()
 -  );
-+protected:
-+  _TAO_OperationDef_Proxy_Impl (void);
- 
+-
 -virtual Dynamic::ParameterList * arguments (
 -    CORBA::Environment &ACE_TRY_ENV = 
 -      TAO_default_environment ()
 -  )
 -  ACE_THROW_SPEC ((CORBA::SystemException));
-+};
- 
+-
 -virtual Dynamic::ExceptionList * exceptions (
 -    CORBA::Environment &ACE_TRY_ENV = 
 -      TAO_default_environment ()
 -  )
 -  ACE_THROW_SPEC ((CORBA::SystemException));
-+//
-+//                Base  Proxy Impl. Declaration
-+///////////////////////////////////////////////////////////////////////
- 
+-
 -virtual CORBA::Any * result (
 -    CORBA::Environment &ACE_TRY_ENV = 
 -      TAO_default_environment ()
 -  )
 -  ACE_THROW_SPEC ((CORBA::SystemException));
- 
+-
 -private:
 -  TAO_ClientRequestInfo_IR_OperationDef_mode_get (const TAO_ClientRequestInfo_IR_OperationDef_mode_get &);
 -  void operator= (const TAO_ClientRequestInfo_IR_OperationDef_mode_get &);
@@ -19652,18 +19474,10 @@
 -  // update the result 
 -  IR::OperationMode result_;
 -};
-+///////////////////////////////////////////////////////////////////////
-+//                    Remote  Impl. Declaration
-+//
- 
+-
 -class TAO_ClientRequestInfo_IR_OperationDef_mode_set : public TAO_ClientRequestInfo
-+class TAO_Export _TAO_OperationDef_Remote_Proxy_Impl : 
-+  public virtual _TAO_OperationDef_Proxy_Impl,
-+  public virtual TAO_Remote_Object_Proxy_Impl,
-+  public virtual _TAO_Contained_Remote_Proxy_Impl
-+  
- {
- public:
+-{
+-public:
 -  friend class IR::OperationDef;
 -  
 -  friend class _TAO_OperationDef_Remote_Proxy_Impl;
@@ -19795,9 +19609,10 @@
 -public:
 -  friend class IR::OperationDef;
 -  
--  friend class _TAO_OperationDef_Remote_Proxy_Impl;
--  friend class _TAO_OperationDef_ThruPOA_Proxy_Impl;
--  friend class _TAO_OperationDef_Direct_Proxy_Impl;
++    
+   friend class _TAO_OperationDef_Remote_Proxy_Impl;
+   friend class _TAO_OperationDef_ThruPOA_Proxy_Impl;
+   friend class _TAO_OperationDef_Direct_Proxy_Impl;
 -
 -TAO_ClientRequestInfo_IR_OperationDef_exceptions_get (
 -    const char *_tao_operation,
@@ -19837,7 +19652,7 @@
 -{
 -public:
 -  friend class IR::OperationDef;
--  
+   
 -  friend class _TAO_OperationDef_Remote_Proxy_Impl;
 -  friend class _TAO_OperationDef_ThruPOA_Proxy_Impl;
 -  friend class _TAO_OperationDef_Direct_Proxy_Impl;
@@ -19869,7 +19684,8 @@
 -  )
 -  ACE_THROW_SPEC ((CORBA::SystemException));
 -
--private:
++  virtual ~IR_OperationDef (void);
+ private:
 -  TAO_ClientRequestInfo_IR_OperationDef_exceptions_set (const TAO_ClientRequestInfo_IR_OperationDef_exceptions_set &);
 -  void operator= (const TAO_ClientRequestInfo_IR_OperationDef_exceptions_set &);
 -  const IR::ExceptionDefSeq & exceptions_;
@@ -19878,139 +19694,130 @@
 -
 -#endif /* TAO_HAS_INTERCEPTORS */
 -
--};
--
--
--// The Proxy Implementations are used by each interface to
--// perform a call. Each different implementation encapsulate
--// an invocation logics.
--
--
--///////////////////////////////////////////////////////////////////////
--//                    Base  Impl. Declaration
--//
--
--class TAO_Export _TAO_OperationDef_Proxy_Impl : 
++  IR_OperationDef (const IR_OperationDef &);
++  void operator= (const IR_OperationDef &);    
+ };
+ 
+ 
+@@ -18717,12 +11303,12 @@
+ //
+ 
+ class TAO_Export _TAO_OperationDef_Proxy_Impl : 
 -  public virtual IR::_TAO_Contained_Proxy_Impl
--{
--public:
--  virtual ~_TAO_OperationDef_Proxy_Impl (void) { }
--  
++  public virtual _TAO_Contained_Proxy_Impl
+ {
+ public:
+   virtual ~_TAO_OperationDef_Proxy_Impl (void) { }
+   
 -    virtual CORBA::TypeCode_ptr result (
--      CORBA_Object *_collocated_tao_target_,
--      CORBA::Environment &ACE_TRY_ENV
--    )
--    ACE_THROW_SPEC ((
--      CORBA::SystemException
--    )) = 0;
--
++  virtual CORBA::TypeCode_ptr result (
+       CORBA_Object *_collocated_tao_target_,
+       CORBA::Environment &ACE_TRY_ENV
+     )
+@@ -18730,7 +11316,7 @@
+       CORBA::SystemException
+     )) = 0;
+ 
 -  virtual IR::IDLType_ptr result_def (
--      CORBA_Object *_collocated_tao_target_,
--      CORBA::Environment &ACE_TRY_ENV
--    )
--    ACE_THROW_SPEC ((
--      CORBA::SystemException
--    )) = 0;
--
--  virtual void result_def (
--      CORBA_Object *_collocated_tao_target_,
++  virtual IR_IDLType_ptr result_def (
+       CORBA_Object *_collocated_tao_target_,
+       CORBA::Environment &ACE_TRY_ENV
+     )
+@@ -18740,14 +11326,14 @@
+ 
+   virtual void result_def (
+       CORBA_Object *_collocated_tao_target_,
 -      IR::IDLType_ptr result_def,
--      CORBA::Environment &ACE_TRY_ENV
--    )
--    ACE_THROW_SPEC ((
--      CORBA::SystemException
--    )) = 0;
--
++      IR_IDLType_ptr result_def,
+       CORBA::Environment &ACE_TRY_ENV
+     )
+     ACE_THROW_SPEC ((
+       CORBA::SystemException
+     )) = 0;
+ 
 -  virtual IR::ParDescriptionSeq * params (
--      CORBA_Object *_collocated_tao_target_,
--      CORBA::Environment &ACE_TRY_ENV
--    )
--    ACE_THROW_SPEC ((
--      CORBA::SystemException
--    )) = 0;
--
--  virtual void params (
--      CORBA_Object *_collocated_tao_target_,
++  virtual IR_ParDescriptionSeq * params (
+       CORBA_Object *_collocated_tao_target_,
+       CORBA::Environment &ACE_TRY_ENV
+     )
+@@ -18757,14 +11343,14 @@
+ 
+   virtual void params (
+       CORBA_Object *_collocated_tao_target_,
 -      const IR::ParDescriptionSeq & params,
--      CORBA::Environment &ACE_TRY_ENV
--    )
--    ACE_THROW_SPEC ((
--      CORBA::SystemException
--    )) = 0;
--
++      const IR_ParDescriptionSeq & params,
+       CORBA::Environment &ACE_TRY_ENV
+     )
+     ACE_THROW_SPEC ((
+       CORBA::SystemException
+     )) = 0;
+ 
 -  virtual IR::OperationMode mode (
--      CORBA_Object *_collocated_tao_target_,
--      CORBA::Environment &ACE_TRY_ENV
--    )
--    ACE_THROW_SPEC ((
--      CORBA::SystemException
--    )) = 0;
--
--  virtual void mode (
--      CORBA_Object *_collocated_tao_target_,
++  virtual IR_OperationMode mode (
+       CORBA_Object *_collocated_tao_target_,
+       CORBA::Environment &ACE_TRY_ENV
+     )
+@@ -18774,14 +11360,14 @@
+ 
+   virtual void mode (
+       CORBA_Object *_collocated_tao_target_,
 -      IR::OperationMode mode,
--      CORBA::Environment &ACE_TRY_ENV
--    )
--    ACE_THROW_SPEC ((
--      CORBA::SystemException
--    )) = 0;
--
++      IR_OperationMode mode,
+       CORBA::Environment &ACE_TRY_ENV
+     )
+     ACE_THROW_SPEC ((
+       CORBA::SystemException
+     )) = 0;
+ 
 -  virtual IR::ContextIdSeq * contexts (
--      CORBA_Object *_collocated_tao_target_,
--      CORBA::Environment &ACE_TRY_ENV
--    )
--    ACE_THROW_SPEC ((
--      CORBA::SystemException
--    )) = 0;
--
--  virtual void contexts (
--      CORBA_Object *_collocated_tao_target_,
++  virtual IR_ContextIdSeq * contexts (
+       CORBA_Object *_collocated_tao_target_,
+       CORBA::Environment &ACE_TRY_ENV
+     )
+@@ -18791,14 +11377,14 @@
+ 
+   virtual void contexts (
+       CORBA_Object *_collocated_tao_target_,
 -      const IR::ContextIdSeq & contexts,
--      CORBA::Environment &ACE_TRY_ENV
--    )
--    ACE_THROW_SPEC ((
--      CORBA::SystemException
--    )) = 0;
--
++      const IR_ContextIdSeq & contexts,
+       CORBA::Environment &ACE_TRY_ENV
+     )
+     ACE_THROW_SPEC ((
+       CORBA::SystemException
+     )) = 0;
+ 
 -  virtual IR::ExceptionDefSeq * exceptions (
--      CORBA_Object *_collocated_tao_target_,
--      CORBA::Environment &ACE_TRY_ENV
--    )
--    ACE_THROW_SPEC ((
--      CORBA::SystemException
--    )) = 0;
--
--  virtual void exceptions (
--      CORBA_Object *_collocated_tao_target_,
++  virtual IR_ExceptionDefSeq * exceptions (
+       CORBA_Object *_collocated_tao_target_,
+       CORBA::Environment &ACE_TRY_ENV
+     )
+@@ -18808,7 +11394,7 @@
+ 
+   virtual void exceptions (
+       CORBA_Object *_collocated_tao_target_,
 -      const IR::ExceptionDefSeq & exceptions,
--      CORBA::Environment &ACE_TRY_ENV
--    )
--    ACE_THROW_SPEC ((
--      CORBA::SystemException
--    )) = 0;
--
--protected:
--  _TAO_OperationDef_Proxy_Impl (void);
--
--};
--//
--//                Base  Proxy Impl. Declaration
--///////////////////////////////////////////////////////////////////////
--
--
--///////////////////////////////////////////////////////////////////////
--//                    Remote  Impl. Declaration
--//
--
--class TAO_Export _TAO_OperationDef_Remote_Proxy_Impl : 
--  public virtual _TAO_OperationDef_Proxy_Impl,
--  public virtual TAO_Remote_Object_Proxy_Impl,
++      const IR_ExceptionDefSeq & exceptions,
+       CORBA::Environment &ACE_TRY_ENV
+     )
+     ACE_THROW_SPEC ((
+@@ -18819,6 +11405,7 @@
+   _TAO_OperationDef_Proxy_Impl (void);
+ 
+ };
++
+ //
+ //                Base  Proxy Impl. Declaration
+ ///////////////////////////////////////////////////////////////////////
+@@ -18831,7 +11418,7 @@
+ class TAO_Export _TAO_OperationDef_Remote_Proxy_Impl : 
+   public virtual _TAO_OperationDef_Proxy_Impl,
+   public virtual TAO_Remote_Object_Proxy_Impl,
 -  public virtual IR::_TAO_Contained_Remote_Proxy_Impl
--  
--{
--public:
--  _TAO_OperationDef_Remote_Proxy_Impl (void);
-+  _TAO_OperationDef_Remote_Proxy_Impl (void);
++  public virtual _TAO_Contained_Remote_Proxy_Impl
+   
+ {
+ public:
+@@ -18839,15 +11426,15 @@
    
    virtual ~_TAO_OperationDef_Remote_Proxy_Impl (void) { }
    
@@ -20029,7 +19836,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -18857,14 +11527,14 @@
+@@ -18857,14 +11444,14 @@
  
    virtual void result_def (
        CORBA_Object *_collocated_tao_target_,
@@ -20046,7 +19853,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -18874,14 +11544,14 @@
+@@ -18874,14 +11461,14 @@
  
    virtual void params (
        CORBA_Object *_collocated_tao_target_,
@@ -20063,7 +19870,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -18891,14 +11561,14 @@
+@@ -18891,14 +11478,14 @@
  
    virtual void mode (
        CORBA_Object *_collocated_tao_target_,
@@ -20080,7 +19887,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -18908,14 +11578,14 @@
+@@ -18908,14 +11495,14 @@
  
    virtual void contexts (
        CORBA_Object *_collocated_tao_target_,
@@ -20097,7 +19904,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -18925,7 +11595,7 @@
+@@ -18925,7 +11512,7 @@
  
    virtual void exceptions (
        CORBA_Object *_collocated_tao_target_,
@@ -20106,7 +19913,7 @@
        CORBA::Environment &ACE_TRY_ENV
      )
      ACE_THROW_SPEC ((
-@@ -18954,8 +11624,9 @@
+@@ -18954,8 +11541,9 @@
  {
  public:
    virtual ~_TAO_OperationDef_Proxy_Broker (void);
@@ -20117,7 +19924,7 @@
      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
    ) = 0;
  
-@@ -18980,9 +11651,9 @@
+@@ -18980,9 +11568,9 @@
    _TAO_OperationDef_Remote_Proxy_Broker (void);
    
    virtual ~_TAO_OperationDef_Remote_Proxy_Broker (void);
@@ -20129,7 +19936,7 @@
      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
    );
  
-@@ -18996,24 +11667,15 @@
+@@ -18996,24 +11584,15 @@
    static _TAO_OperationDef_Remote_Proxy_Broker *the_TAO_OperationDef_Remote_Proxy_Broker (void);
  };
  
@@ -20156,7 +19963,7 @@
  #endif /* ! __GNUC__ || g++ >= 2.8 */
  
    static void _tao_any_destructor (void*);
-@@ -19023,73 +11685,64 @@
+@@ -19023,73 +11602,64 @@
    TAO_String_Manager defined_in;
    TAO_String_Manager version;
    CORBA::TypeCode_var result;
@@ -20266,7 +20073,7 @@
  #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
    TAO_Unbounded_String_Sequence
  #else /* TAO_USE_SEQUENCE_TEMPLATES */
-@@ -19097,102 +11750,80 @@
+@@ -19097,102 +11667,80 @@
  #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
  {
  public:
@@ -20406,7 +20213,7 @@
    class TAO_EXPORT_NESTED_MACRO _TAO_Unbounded_Sequence_IR_OpDescriptionSeq : public TAO_Unbounded_Base_Sequence
    {
    public:
-@@ -19202,149 +11833,118 @@
+@@ -19202,149 +11750,118 @@
      _TAO_Unbounded_Sequence_IR_OpDescriptionSeq (CORBA::ULong maximum); 
      _TAO_Unbounded_Sequence_IR_OpDescriptionSeq (CORBA::ULong maximum,
        CORBA::ULong length,
@@ -20608,7 +20415,7 @@
    class TAO_EXPORT_NESTED_MACRO _TAO_Unbounded_Sequence_IR_AttrDescriptionSeq : public TAO_Unbounded_Base_Sequence
    {
    public:
-@@ -19354,249 +11954,151 @@
+@@ -19354,249 +11871,151 @@
      _TAO_Unbounded_Sequence_IR_AttrDescriptionSeq (CORBA::ULong maximum); 
      _TAO_Unbounded_Sequence_IR_AttrDescriptionSeq (CORBA::ULong maximum,
        CORBA::ULong length,
@@ -20885,19 +20692,15 @@
 -class _TAO_InterfaceDef_Remote_Proxy_Broker;
 -
 -class TAO_Export InterfaceDef: public virtual Container, public virtual Contained, public virtual IDLType
--{
--public:
--#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
++class TAO_Export IR_InterfaceDef: public virtual IR_Container, public virtual IR_Contained, public virtual IR_IDLType
+ {
+ public:
+ #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
 -  typedef InterfaceDef_ptr _ptr_type;
 -  typedef InterfaceDef_var _var_type;
--#endif /* ! __GNUC__ || g++ >= 2.8 */
-+class TAO_Export IR_InterfaceDef: public virtual IR_Container, public virtual IR_Contained, public virtual IR_IDLType
-+{
-+public:
-+#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
 +  typedef IR_InterfaceDef_ptr _ptr_type;
 +  typedef IR_InterfaceDef_var _var_type;
-+#endif /* ! __GNUC__ || g++ >= 2.8 */
+ #endif /* ! __GNUC__ || g++ >= 2.8 */
  
    // the static operations
 -  static InterfaceDef_ptr _duplicate (InterfaceDef_ptr obj);
@@ -20928,7 +20731,7 @@
        CORBA::Environment &ACE_TRY_ENV = 
          TAO_default_environment ()
      )
-@@ -19605,7 +12107,7 @@
+@@ -19605,7 +12024,7 @@
      ));
  
    virtual void base_interfaces (
@@ -20937,7 +20740,7 @@
        CORBA::Environment &ACE_TRY_ENV = 
          TAO_default_environment ()
      )
-@@ -19656,14 +12158,14 @@
+@@ -19656,14 +12075,14 @@
        CORBA::SystemException
      ));
  
@@ -20957,7 +20760,7 @@
        CORBA::Environment &ACE_TRY_ENV = 
          TAO_default_environment ()
      )
-@@ -19671,15 +12173,15 @@
+@@ -19671,15 +12090,15 @@
        CORBA::SystemException
      ));
  
@@ -20979,7 +20782,7 @@
        CORBA::Environment &ACE_TRY_ENV = 
          TAO_default_environment ()
      )
-@@ -19700,454 +12202,27 @@
+@@ -19700,454 +12119,27 @@
    _TAO_InterfaceDef_Proxy_Broker *the_TAO_InterfaceDef_Proxy_Broker_;
    
  protected:
@@ -21444,7 +21247,7 @@
  };
  
  
-@@ -20161,14 +12236,14 @@
+@@ -20161,14 +12153,14 @@
  //
  
  class TAO_Export _TAO_InterfaceDef_Proxy_Impl : 
@@ -21463,7 +21266,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -20178,7 +12253,7 @@
+@@ -20178,7 +12170,7 @@
  
    virtual void base_interfaces (
        CORBA_Object *_collocated_tao_target_,
@@ -21472,7 +21275,7 @@
        CORBA::Environment &ACE_TRY_ENV
      )
      ACE_THROW_SPEC ((
-@@ -20228,31 +12303,31 @@
+@@ -20228,31 +12220,31 @@
        CORBA::SystemException
      )) = 0;
  
@@ -21515,7 +21318,7 @@
        CORBA::Environment &ACE_TRY_ENV
      )
      ACE_THROW_SPEC ((
-@@ -20263,6 +12338,7 @@
+@@ -20263,6 +12255,7 @@
    _TAO_InterfaceDef_Proxy_Impl (void);
  
  };
@@ -21523,7 +21326,7 @@
  //
  //                Base  Proxy Impl. Declaration
  ///////////////////////////////////////////////////////////////////////
-@@ -20275,9 +12351,9 @@
+@@ -20275,9 +12268,9 @@
  class TAO_Export _TAO_InterfaceDef_Remote_Proxy_Impl : 
    public virtual _TAO_InterfaceDef_Proxy_Impl,
    public virtual TAO_Remote_Object_Proxy_Impl,
@@ -21536,7 +21339,7 @@
    
  {
  public:
-@@ -20285,7 +12361,7 @@
+@@ -20285,7 +12278,7 @@
    
    virtual ~_TAO_InterfaceDef_Remote_Proxy_Impl (void) { }
    
@@ -21545,7 +21348,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -20295,7 +12371,7 @@
+@@ -20295,7 +12288,7 @@
  
    virtual void base_interfaces (
        CORBA_Object *_collocated_tao_target_,
@@ -21554,7 +21357,7 @@
        CORBA::Environment &ACE_TRY_ENV
      )
      ACE_THROW_SPEC ((
-@@ -20345,31 +12421,31 @@
+@@ -20345,31 +12338,31 @@
        CORBA::SystemException
      ));
  
@@ -21597,7 +21400,7 @@
        CORBA::Environment &ACE_TRY_ENV
      )
      ACE_THROW_SPEC ((
-@@ -20398,8 +12474,9 @@
+@@ -20398,8 +12391,9 @@
  {
  public:
    virtual ~_TAO_InterfaceDef_Proxy_Broker (void);
@@ -21608,7 +21411,7 @@
      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
    ) = 0;
  
-@@ -20424,9 +12501,9 @@
+@@ -20424,9 +12418,9 @@
    _TAO_InterfaceDef_Remote_Proxy_Broker (void);
    
    virtual ~_TAO_InterfaceDef_Remote_Proxy_Broker (void);
@@ -21620,7 +21423,7 @@
      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
    );
  
-@@ -20440,24 +12517,15 @@
+@@ -20440,24 +12434,15 @@
    static _TAO_InterfaceDef_Remote_Proxy_Broker *the_TAO_InterfaceDef_Remote_Proxy_Broker (void);
  };
  
@@ -21647,7 +21450,7 @@
  #endif /* ! __GNUC__ || g++ >= 2.8 */
  
    static void _tao_any_destructor (void*);
-@@ -20466,71 +12534,66 @@
+@@ -20466,71 +12451,66 @@
    TAO_String_Manager id;
    TAO_String_Manager defined_in;
    TAO_String_Manager version;
@@ -21756,7 +21559,7 @@
  #endif /* ! __GNUC__ || g++ >= 2.8 */
  
    static void _tao_any_destructor (void*);
-@@ -20540,65 +12603,59 @@
+@@ -20540,65 +12520,59 @@
    TAO_String_Manager defined_in;
    TAO_String_Manager version;
    CORBA::TypeCode_var type;
@@ -21855,7 +21658,7 @@
    class TAO_EXPORT_NESTED_MACRO _TAO_Unbounded_Sequence_IR_ValueMemberSeq : public TAO_Unbounded_Base_Sequence
    {
    public:
-@@ -20608,258 +12665,204 @@
+@@ -20608,258 +12582,204 @@
      _TAO_Unbounded_Sequence_IR_ValueMemberSeq (CORBA::ULong maximum); 
      _TAO_Unbounded_Sequence_IR_ValueMemberSeq (CORBA::ULong maximum,
        CORBA::ULong length,
@@ -22207,7 +22010,7 @@
          TAO_default_environment ()
      )
      ACE_THROW_SPEC ((
-@@ -20867,7 +12870,7 @@
+@@ -20867,7 +12787,7 @@
      ));
  
    virtual void type_def (
@@ -22216,7 +22019,7 @@
        CORBA::Environment &ACE_TRY_ENV = 
          TAO_default_environment ()
      )
-@@ -20905,251 +12908,28 @@
+@@ -20905,251 +12825,28 @@
    _TAO_ValueMemberDef_Proxy_Broker *the_TAO_ValueMemberDef_Proxy_Broker_;
    
  protected:
@@ -22483,7 +22286,7 @@
  
  
  // The Proxy Implementations are used by each interface to
-@@ -21162,12 +12942,12 @@
+@@ -21162,12 +12859,12 @@
  //
  
  class TAO_Export _TAO_ValueMemberDef_Proxy_Impl : 
@@ -22498,7 +22301,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -21175,7 +12955,7 @@
+@@ -21175,7 +12872,7 @@
        CORBA::SystemException
      )) = 0;
  
@@ -22507,7 +22310,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -21185,7 +12965,7 @@
+@@ -21185,7 +12882,7 @@
  
    virtual void type_def (
        CORBA_Object *_collocated_tao_target_,
@@ -22516,7 +22319,7 @@
        CORBA::Environment &ACE_TRY_ENV
      )
      ACE_THROW_SPEC ((
-@@ -21213,6 +12993,7 @@
+@@ -21213,6 +12910,7 @@
    _TAO_ValueMemberDef_Proxy_Impl (void);
  
  };
@@ -22524,7 +22327,7 @@
  //
  //                Base  Proxy Impl. Declaration
  ///////////////////////////////////////////////////////////////////////
-@@ -21225,7 +13006,7 @@
+@@ -21225,7 +12923,7 @@
  class TAO_Export _TAO_ValueMemberDef_Remote_Proxy_Impl : 
    public virtual _TAO_ValueMemberDef_Proxy_Impl,
    public virtual TAO_Remote_Object_Proxy_Impl,
@@ -22533,7 +22336,7 @@
    
  {
  public:
-@@ -21233,15 +13014,15 @@
+@@ -21233,15 +12931,15 @@
    
    virtual ~_TAO_ValueMemberDef_Remote_Proxy_Impl (void) { }
    
@@ -22552,7 +22355,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -21251,7 +13032,7 @@
+@@ -21251,7 +12949,7 @@
  
    virtual void type_def (
        CORBA_Object *_collocated_tao_target_,
@@ -22561,7 +22364,7 @@
        CORBA::Environment &ACE_TRY_ENV
      )
      ACE_THROW_SPEC ((
-@@ -21297,8 +13078,9 @@
+@@ -21297,8 +12995,9 @@
  {
  public:
    virtual ~_TAO_ValueMemberDef_Proxy_Broker (void);
@@ -22572,7 +22375,7 @@
      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
    ) = 0;
  
-@@ -21323,9 +13105,9 @@
+@@ -21323,9 +13022,9 @@
    _TAO_ValueMemberDef_Remote_Proxy_Broker (void);
    
    virtual ~_TAO_ValueMemberDef_Remote_Proxy_Broker (void);
@@ -22584,7 +22387,7 @@
      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
    );
  
-@@ -21339,122 +13121,44 @@
+@@ -21339,122 +13038,44 @@
    static _TAO_ValueMemberDef_Remote_Proxy_Broker *the_TAO_ValueMemberDef_Remote_Proxy_Broker (void);
  };
  
@@ -22716,7 +22519,7 @@
        CORBA::Environment &ACE_TRY_ENV = 
          TAO_default_environment ()
      )
-@@ -21463,7 +13167,7 @@
+@@ -21463,7 +13084,7 @@
      ));
  
    virtual void supported_interfaces (
@@ -22725,7 +22528,7 @@
        CORBA::Environment &ACE_TRY_ENV = 
          TAO_default_environment ()
      )
-@@ -21471,7 +13175,7 @@
+@@ -21471,7 +13092,7 @@
        CORBA::SystemException
      ));
  
@@ -22734,7 +22537,7 @@
        CORBA::Environment &ACE_TRY_ENV = 
          TAO_default_environment ()
      )
-@@ -21480,7 +13184,7 @@
+@@ -21480,7 +13101,7 @@
      ));
  
    virtual void initializers (
@@ -22743,7 +22546,7 @@
        CORBA::Environment &ACE_TRY_ENV = 
          TAO_default_environment ()
      )
-@@ -21488,7 +13192,7 @@
+@@ -21488,7 +13109,7 @@
        CORBA::SystemException
      ));
  
@@ -22752,7 +22555,7 @@
        CORBA::Environment &ACE_TRY_ENV = 
          TAO_default_environment ()
      )
-@@ -21497,7 +13201,7 @@
+@@ -21497,7 +13118,7 @@
      ));
  
    virtual void base_value (
@@ -22761,7 +22564,7 @@
        CORBA::Environment &ACE_TRY_ENV = 
          TAO_default_environment ()
      )
-@@ -21505,7 +13209,7 @@
+@@ -21505,7 +13126,7 @@
        CORBA::SystemException
      ));
  
@@ -22770,7 +22573,7 @@
        CORBA::Environment &ACE_TRY_ENV = 
          TAO_default_environment ()
      )
-@@ -21514,7 +13218,7 @@
+@@ -21514,7 +13135,7 @@
      ));
  
    virtual void abstract_base_values (
@@ -22779,7 +22582,7 @@
        CORBA::Environment &ACE_TRY_ENV = 
          TAO_default_environment ()
      )
-@@ -21582,11 +13286,11 @@
+@@ -21582,11 +13203,11 @@
        CORBA::SystemException
      ));
  
@@ -22793,7 +22596,7 @@
        CORBA::Visibility access,
        CORBA::Environment &ACE_TRY_ENV = 
          TAO_default_environment ()
-@@ -21595,14 +13299,14 @@
+@@ -21595,14 +13216,14 @@
        CORBA::SystemException
      ));
  
@@ -22813,7 +22616,7 @@
        CORBA::Environment &ACE_TRY_ENV = 
          TAO_default_environment ()
      )
-@@ -21610,15 +13314,15 @@
+@@ -21610,15 +13231,15 @@
        CORBA::SystemException
      ));
  
@@ -22835,7 +22638,7 @@
        CORBA::Environment &ACE_TRY_ENV = 
          TAO_default_environment ()
      )
-@@ -21639,923 +13343,99 @@
+@@ -21639,923 +13260,99 @@
    _TAO_ValueDef_Proxy_Broker *the_TAO_ValueDef_Proxy_Broker_;
    
  protected:
@@ -22994,23 +22797,19 @@
 -  )
 -  ACE_THROW_SPEC ((CORBA::SystemException));
 -
-+  
-+  virtual ~IR_ValueDef (void);
- private:
+-private:
 -  TAO_ClientRequestInfo_IR_ValueDef_initializers_get (const TAO_ClientRequestInfo_IR_ValueDef_initializers_get &);
 -  void operator= (const TAO_ClientRequestInfo_IR_ValueDef_initializers_get &);
 -  void result (IR::InitializerSeq * result);
 -  // update the result 
 -  IR::InitializerSeq * result_;
-+  IR_ValueDef (const IR_ValueDef &);
-+  void operator= (const IR_ValueDef &);    
- };
- 
+-};
+-
 -class TAO_ClientRequestInfo_IR_ValueDef_initializers_set : public TAO_ClientRequestInfo
 -{
 -public:
 -  friend class IR::ValueDef;
--  
+   
 -  friend class _TAO_ValueDef_Remote_Proxy_Impl;
 -  friend class _TAO_ValueDef_ThruPOA_Proxy_Impl;
 -  friend class _TAO_ValueDef_Direct_Proxy_Impl;
@@ -23020,6 +22819,51 @@
 -    IOP::ServiceContextList &_tao_service_context_list,
 -    CORBA::Object *_tao_target,
 -    const IR::InitializerSeq & initializers,
+-    CORBA::Environment &ACE_TRY_ENV = 
+-      TAO_default_environment ()
+-  );
+-
+-virtual Dynamic::ParameterList * arguments (
+-    CORBA::Environment &ACE_TRY_ENV = 
+-      TAO_default_environment ()
+-  )
+-  ACE_THROW_SPEC ((CORBA::SystemException));
+-
+-virtual Dynamic::ExceptionList * exceptions (
+-    CORBA::Environment &ACE_TRY_ENV = 
+-      TAO_default_environment ()
+-  )
+-  ACE_THROW_SPEC ((CORBA::SystemException));
+-
+-virtual CORBA::Any * result (
+-    CORBA::Environment &ACE_TRY_ENV = 
+-      TAO_default_environment ()
+-  )
+-  ACE_THROW_SPEC ((CORBA::SystemException));
+-
++  virtual ~IR_ValueDef (void);
+ private:
+-  TAO_ClientRequestInfo_IR_ValueDef_initializers_set (const TAO_ClientRequestInfo_IR_ValueDef_initializers_set &);
+-  void operator= (const TAO_ClientRequestInfo_IR_ValueDef_initializers_set &);
+-  const IR::InitializerSeq & initializers_;
+-  
++  IR_ValueDef (const IR_ValueDef &);
++  void operator= (const IR_ValueDef &);    
+ };
+ 
+-class TAO_ClientRequestInfo_IR_ValueDef_base_value_get : public TAO_ClientRequestInfo
+-{
+-public:
+-  friend class IR::ValueDef;
+-  
+-  friend class _TAO_ValueDef_Remote_Proxy_Impl;
+-  friend class _TAO_ValueDef_ThruPOA_Proxy_Impl;
+-  friend class _TAO_ValueDef_Direct_Proxy_Impl;
+-
+-TAO_ClientRequestInfo_IR_ValueDef_base_value_get (
+-    const char *_tao_operation,
+-    IOP::ServiceContextList &_tao_service_context_list,
+-    CORBA::Object *_tao_target,
 -    CORBA::Environment &ACE_TRY_ENV = 
 -      TAO_default_environment ()
 -  );
@@ -23046,16 +22890,17 @@
 -  ACE_THROW_SPEC ((CORBA::SystemException));
  
 -private:
--  TAO_ClientRequestInfo_IR_ValueDef_initializers_set (const TAO_ClientRequestInfo_IR_ValueDef_initializers_set &);
--  void operator= (const TAO_ClientRequestInfo_IR_ValueDef_initializers_set &);
--  const IR::InitializerSeq & initializers_;
--  
+-  TAO_ClientRequestInfo_IR_ValueDef_base_value_get (const TAO_ClientRequestInfo_IR_ValueDef_base_value_get &);
+-  void operator= (const TAO_ClientRequestInfo_IR_ValueDef_base_value_get &);
+-  void result (IR::ValueDef_ptr result);
+-  // update the result 
+-  IR::ValueDef_ptr result_;
 -};
 +///////////////////////////////////////////////////////////////////////
 +//                    Base  Impl. Declaration
 +//
  
--class TAO_ClientRequestInfo_IR_ValueDef_base_value_get : public TAO_ClientRequestInfo
+-class TAO_ClientRequestInfo_IR_ValueDef_base_value_set : public TAO_ClientRequestInfo
 +class TAO_Export _TAO_ValueDef_Proxy_Impl : 
 +  public virtual _TAO_Container_Proxy_Impl, 
 +  public virtual _TAO_Contained_Proxy_Impl, 
@@ -23076,10 +22921,11 @@
 +      CORBA::SystemException
 +    )) = 0;
  
--TAO_ClientRequestInfo_IR_ValueDef_base_value_get (
+-TAO_ClientRequestInfo_IR_ValueDef_base_value_set (
 -    const char *_tao_operation,
 -    IOP::ServiceContextList &_tao_service_context_list,
 -    CORBA::Object *_tao_target,
+-    IR::ValueDef_ptr base_value,
 -    CORBA::Environment &ACE_TRY_ENV = 
 -      TAO_default_environment ()
 -  );
@@ -23119,65 +22965,6 @@
 +      CORBA::SystemException
 +    )) = 0;
  
--virtual CORBA::Any * result (
--    CORBA::Environment &ACE_TRY_ENV = 
--      TAO_default_environment ()
--  )
--  ACE_THROW_SPEC ((CORBA::SystemException));
-+  virtual IR_ValueDef_ptr base_value (
-+      CORBA_Object *_collocated_tao_target_,
-+      CORBA::Environment &ACE_TRY_ENV
-+    )
-+    ACE_THROW_SPEC ((
-+      CORBA::SystemException
-+    )) = 0;
- 
--private:
--  TAO_ClientRequestInfo_IR_ValueDef_base_value_get (const TAO_ClientRequestInfo_IR_ValueDef_base_value_get &);
--  void operator= (const TAO_ClientRequestInfo_IR_ValueDef_base_value_get &);
--  void result (IR::ValueDef_ptr result);
--  // update the result 
--  IR::ValueDef_ptr result_;
--};
-+  virtual void base_value (
-+      CORBA_Object *_collocated_tao_target_,
-+      IR_ValueDef_ptr base_value,
-+      CORBA::Environment &ACE_TRY_ENV
-+    )
-+    ACE_THROW_SPEC ((
-+      CORBA::SystemException
-+    )) = 0;
- 
--class TAO_ClientRequestInfo_IR_ValueDef_base_value_set : public TAO_ClientRequestInfo
--{
--public:
--  friend class IR::ValueDef;
--  
--  friend class _TAO_ValueDef_Remote_Proxy_Impl;
--  friend class _TAO_ValueDef_ThruPOA_Proxy_Impl;
--  friend class _TAO_ValueDef_Direct_Proxy_Impl;
--
--TAO_ClientRequestInfo_IR_ValueDef_base_value_set (
--    const char *_tao_operation,
--    IOP::ServiceContextList &_tao_service_context_list,
--    CORBA::Object *_tao_target,
--    IR::ValueDef_ptr base_value,
--    CORBA::Environment &ACE_TRY_ENV = 
--      TAO_default_environment ()
--  );
--
--virtual Dynamic::ParameterList * arguments (
--    CORBA::Environment &ACE_TRY_ENV = 
--      TAO_default_environment ()
--  )
--  ACE_THROW_SPEC ((CORBA::SystemException));
--
--virtual Dynamic::ExceptionList * exceptions (
--    CORBA::Environment &ACE_TRY_ENV = 
--      TAO_default_environment ()
--  )
--  ACE_THROW_SPEC ((CORBA::SystemException));
--
 -virtual CORBA::Any * result (
 -    CORBA::Environment &ACE_TRY_ENV = 
 -      TAO_default_environment ()
@@ -23812,22 +23599,30 @@
 -    ACE_THROW_SPEC ((
 -      CORBA::SystemException
 -    )) = 0;
--
--  virtual void base_value (
--      CORBA_Object *_collocated_tao_target_,
++  virtual IR_ValueDef_ptr base_value (
++      CORBA_Object *_collocated_tao_target_,
++      CORBA::Environment &ACE_TRY_ENV
++    )
++    ACE_THROW_SPEC ((
++      CORBA::SystemException
++    )) = 0;
+ 
+   virtual void base_value (
+       CORBA_Object *_collocated_tao_target_,
 -      IR::ValueDef_ptr base_value,
--      CORBA::Environment &ACE_TRY_ENV
--    )
--    ACE_THROW_SPEC ((
--      CORBA::SystemException
--    )) = 0;
--
++      IR_ValueDef_ptr base_value,
+       CORBA::Environment &ACE_TRY_ENV
+     )
+     ACE_THROW_SPEC ((
+       CORBA::SystemException
+     )) = 0;
+ 
 -  virtual IR::ValueDefSeq * abstract_base_values (
 +  virtual IR_ValueDefSeq * abstract_base_values (
        CORBA_Object *_collocated_tao_target_,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -22565,7 +13445,7 @@
+@@ -22565,7 +13362,7 @@
  
    virtual void abstract_base_values (
        CORBA_Object *_collocated_tao_target_,
@@ -23836,7 +23631,7 @@
        CORBA::Environment &ACE_TRY_ENV
      )
      ACE_THROW_SPEC ((
-@@ -22632,12 +13512,12 @@
+@@ -22632,12 +13429,12 @@
        CORBA::SystemException
      )) = 0;
  
@@ -23851,7 +23646,7 @@
        CORBA::Visibility access,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -22645,31 +13525,31 @@
+@@ -22645,31 +13442,31 @@
        CORBA::SystemException
      )) = 0;
  
@@ -23894,7 +23689,7 @@
        CORBA::Environment &ACE_TRY_ENV
      )
      ACE_THROW_SPEC ((
-@@ -22680,6 +13560,7 @@
+@@ -22680,6 +13477,7 @@
    _TAO_ValueDef_Proxy_Impl (void);
  
  };
@@ -23902,7 +23697,7 @@
  //
  //                Base  Proxy Impl. Declaration
  ///////////////////////////////////////////////////////////////////////
-@@ -22692,9 +13573,9 @@
+@@ -22692,9 +13490,9 @@
  class TAO_Export _TAO_ValueDef_Remote_Proxy_Impl : 
    public virtual _TAO_ValueDef_Proxy_Impl,
    public virtual TAO_Remote_Object_Proxy_Impl,
@@ -23915,7 +23710,7 @@
    
  {
  public:
-@@ -22702,7 +13583,7 @@
+@@ -22702,7 +13500,7 @@
    
    virtual ~_TAO_ValueDef_Remote_Proxy_Impl (void) { }
    
@@ -23924,7 +23719,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -22712,14 +13593,14 @@
+@@ -22712,14 +13510,14 @@
  
    virtual void supported_interfaces (
        CORBA_Object *_collocated_tao_target_,
@@ -23941,7 +23736,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -22729,14 +13610,14 @@
+@@ -22729,14 +13527,14 @@
  
    virtual void initializers (
        CORBA_Object *_collocated_tao_target_,
@@ -23958,7 +23753,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -22746,14 +13627,14 @@
+@@ -22746,14 +13544,14 @@
  
    virtual void base_value (
        CORBA_Object *_collocated_tao_target_,
@@ -23975,7 +23770,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -22763,7 +13644,7 @@
+@@ -22763,7 +13561,7 @@
  
    virtual void abstract_base_values (
        CORBA_Object *_collocated_tao_target_,
@@ -23984,7 +23779,7 @@
        CORBA::Environment &ACE_TRY_ENV
      )
      ACE_THROW_SPEC ((
-@@ -22830,12 +13711,12 @@
+@@ -22830,12 +13628,12 @@
        CORBA::SystemException
      ));
  
@@ -23999,7 +23794,7 @@
        CORBA::Visibility access,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -22843,31 +13724,31 @@
+@@ -22843,31 +13641,31 @@
        CORBA::SystemException
      ));
  
@@ -24042,7 +23837,7 @@
        CORBA::Environment &ACE_TRY_ENV
      )
      ACE_THROW_SPEC ((
-@@ -22896,8 +13777,9 @@
+@@ -22896,8 +13694,9 @@
  {
  public:
    virtual ~_TAO_ValueDef_Proxy_Broker (void);
@@ -24053,7 +23848,7 @@
      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
    ) = 0;
  
-@@ -22922,9 +13804,9 @@
+@@ -22922,9 +13721,9 @@
    _TAO_ValueDef_Remote_Proxy_Broker (void);
    
    virtual ~_TAO_ValueDef_Remote_Proxy_Broker (void);
@@ -24065,7 +23860,7 @@
      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
    );
  
-@@ -22938,24 +13820,15 @@
+@@ -22938,24 +13737,15 @@
    static _TAO_ValueDef_Remote_Proxy_Broker *the_TAO_ValueDef_Remote_Proxy_Broker (void);
  };
  
@@ -24092,7 +23887,7 @@
  #endif /* ! __GNUC__ || g++ >= 2.8 */
  
    static void _tao_any_destructor (void*);
-@@ -22966,172 +13839,98 @@
+@@ -22966,181 +13756,107 @@
    CORBA::Boolean is_custom;
    TAO_String_Manager defined_in;
    TAO_String_Manager version;
@@ -24194,20 +23989,44 @@
  
 -TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ValueDescription;
 -
--
--#if !defined (_TAO_IR_VALUEBOXDEF___PTR_CH_)
--#define _TAO_IR_VALUEBOXDEF___PTR_CH_
 +// Forward Classes Declaration
 +class _TAO_ValueBoxDef_Proxy_Impl;
 +class _TAO_ValueBoxDef_Remote_Proxy_Impl;
 +class _TAO_ValueBoxDef_Proxy_Broker;
 +class _TAO_ValueBoxDef_Remote_Proxy_Broker;
  
+-#if !defined (_TAO_IR_VALUEBOXDEF___PTR_CH_)
+-#define _TAO_IR_VALUEBOXDEF___PTR_CH_
++class TAO_Export IR_ValueBoxDef: public virtual IR_TypedefDef
++{
++public:
++#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
++  typedef IR_ValueBoxDef_ptr _ptr_type;
++  typedef IR_ValueBoxDef_var _var_type;
++#endif /* ! __GNUC__ || g++ >= 2.8 */
+ 
 -class ValueBoxDef;
 -typedef ValueBoxDef *ValueBoxDef_ptr;
--
++  // the static operations
++  static IR_ValueBoxDef_ptr _duplicate (IR_ValueBoxDef_ptr obj);
++  static IR_ValueBoxDef_ptr _narrow (
++      CORBA::Object_ptr obj,
++      CORBA::Environment &ACE_TRY_ENV = 
++        TAO_default_environment ()
++    );
++  static IR_ValueBoxDef_ptr _unchecked_narrow (
++      CORBA::Object_ptr obj,
++      CORBA::Environment &ACE_TRY_ENV = 
++        TAO_default_environment ()
++    );
++  static IR_ValueBoxDef_ptr _nil (void)
++    {
++      return (IR_ValueBoxDef_ptr)0;
++    }
+ 
 -#endif /* end #if !defined */
--
++  static void _tao_any_destructor (void*);
+ 
 -
 -#if !defined (_TAO_IR_VALUEBOXDEF___VAR_CH_)
 -#define _TAO_IR_VALUEBOXDEF___VAR_CH_
@@ -24278,47 +24097,46 @@
 -class _TAO_ValueBoxDef_Remote_Proxy_Broker;
 -
 -class TAO_Export ValueBoxDef: public virtual TypedefDef
-+class TAO_Export IR_ValueBoxDef: public virtual IR_TypedefDef
- {
- public:
- #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
+-{
+-public:
+-#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
 -  typedef ValueBoxDef_ptr _ptr_type;
 -  typedef ValueBoxDef_var _var_type;
-+  typedef IR_ValueBoxDef_ptr _ptr_type;
-+  typedef IR_ValueBoxDef_var _var_type;
- #endif /* ! __GNUC__ || g++ >= 2.8 */
- 
-   // the static operations
+-#endif /* ! __GNUC__ || g++ >= 2.8 */
+-
+-  // the static operations
 -  static ValueBoxDef_ptr _duplicate (ValueBoxDef_ptr obj);
 -  static ValueBoxDef_ptr _narrow (
-+  static IR_ValueBoxDef_ptr _duplicate (IR_ValueBoxDef_ptr obj);
-+  static IR_ValueBoxDef_ptr _narrow (
-       CORBA::Object_ptr obj,
-       CORBA::Environment &ACE_TRY_ENV = 
-         TAO_default_environment ()
-     );
+-      CORBA::Object_ptr obj,
+-      CORBA::Environment &ACE_TRY_ENV = 
+-        TAO_default_environment ()
+-    );
 -  static ValueBoxDef_ptr _unchecked_narrow (
-+  static IR_ValueBoxDef_ptr _unchecked_narrow (
-       CORBA::Object_ptr obj,
-       CORBA::Environment &ACE_TRY_ENV = 
-         TAO_default_environment ()
-     );
+-      CORBA::Object_ptr obj,
+-      CORBA::Environment &ACE_TRY_ENV = 
+-        TAO_default_environment ()
+-    );
 -  static ValueBoxDef_ptr _nil (void)
-+  static IR_ValueBoxDef_ptr _nil (void)
-     {
+-    {
 -      return (ValueBoxDef_ptr)0;
-+      return (IR_ValueBoxDef_ptr)0;
-     }
- 
-   static void _tao_any_destructor (void*);
- 
+-    }
+-
+-  static void _tao_any_destructor (void*);
+-
 -  virtual IR::IDLType_ptr original_type_def (
+-      CORBA::Environment &ACE_TRY_ENV = 
+-        TAO_default_environment ()
+-    )
+-    ACE_THROW_SPEC ((
+-      CORBA::SystemException
+-    ));
 +  virtual IR_IDLType_ptr original_type_def (
-       CORBA::Environment &ACE_TRY_ENV = 
-         TAO_default_environment ()
-     )
-@@ -23140,7 +13939,7 @@
-     ));
++      CORBA::Environment &ACE_TRY_ENV = 
++        TAO_default_environment ()
++    )
++    ACE_THROW_SPEC ((
++      CORBA::SystemException
++    ));
  
    virtual void original_type_def (
 -      IR::IDLType_ptr original_type_def,
@@ -24326,7 +24144,7 @@
        CORBA::Environment &ACE_TRY_ENV = 
          TAO_default_environment ()
      )
-@@ -23161,121 +13960,27 @@
+@@ -23161,121 +13877,27 @@
    _TAO_ValueBoxDef_Proxy_Broker *the_TAO_ValueBoxDef_Proxy_Broker_;
    
  protected:
@@ -24461,7 +24279,7 @@
  };
  
  
-@@ -23289,12 +13994,12 @@
+@@ -23289,12 +13911,12 @@
  //
  
  class TAO_Export _TAO_ValueBoxDef_Proxy_Impl : 
@@ -24476,7 +24294,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -23304,7 +14009,7 @@
+@@ -23304,7 +13926,7 @@
  
    virtual void original_type_def (
        CORBA_Object *_collocated_tao_target_,
@@ -24485,7 +24303,7 @@
        CORBA::Environment &ACE_TRY_ENV
      )
      ACE_THROW_SPEC ((
-@@ -23315,6 +14020,7 @@
+@@ -23315,6 +13937,7 @@
    _TAO_ValueBoxDef_Proxy_Impl (void);
  
  };
@@ -24493,7 +24311,7 @@
  //
  //                Base  Proxy Impl. Declaration
  ///////////////////////////////////////////////////////////////////////
-@@ -23327,7 +14033,7 @@
+@@ -23327,7 +13950,7 @@
  class TAO_Export _TAO_ValueBoxDef_Remote_Proxy_Impl : 
    public virtual _TAO_ValueBoxDef_Proxy_Impl,
    public virtual TAO_Remote_Object_Proxy_Impl,
@@ -24502,7 +24320,7 @@
    
  {
  public:
-@@ -23335,9 +14041,9 @@
+@@ -23335,9 +13958,9 @@
    
    virtual ~_TAO_ValueBoxDef_Remote_Proxy_Impl (void) { }
    
@@ -24514,7 +24332,7 @@
      )
      ACE_THROW_SPEC ((
        CORBA::SystemException
-@@ -23345,7 +14051,7 @@
+@@ -23345,7 +13968,7 @@
  
    virtual void original_type_def (
        CORBA_Object *_collocated_tao_target_,
@@ -24523,7 +24341,7 @@
        CORBA::Environment &ACE_TRY_ENV
      )
      ACE_THROW_SPEC ((
-@@ -23374,8 +14080,9 @@
+@@ -23374,8 +13997,9 @@
  {
  public:
    virtual ~_TAO_ValueBoxDef_Proxy_Broker (void);
@@ -24534,7 +24352,7 @@
      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
    ) = 0;
  
-@@ -23400,9 +14107,9 @@
+@@ -23400,9 +14024,9 @@
    _TAO_ValueBoxDef_Remote_Proxy_Broker (void);
    
    virtual ~_TAO_ValueBoxDef_Remote_Proxy_Broker (void);
@@ -24546,7 +24364,7 @@
      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
    );
  
-@@ -23416,122 +14123,44 @@
+@@ -23416,122 +14040,44 @@
    static _TAO_ValueBoxDef_Remote_Proxy_Broker *the_TAO_ValueBoxDef_Remote_Proxy_Broker (void);
  };
  
@@ -24678,7 +24496,7 @@
        CORBA::Environment &ACE_TRY_ENV = 
          TAO_default_environment ()
      )
-@@ -23552,78 +14181,27 @@
+@@ -23552,78 +14098,27 @@
    _TAO_ProvidesDef_Proxy_Broker *the_TAO_ProvidesDef_Proxy_Broker_;
    
  protected:
@@ -24771,7 +24589,7 @@
  };
  
  
-@@ -23637,12 +14215,12 @@
+@@ -23637,12 +14132,12 @@
  //
  
  class TAO_Export _TAO_ProvidesDef_Proxy_Impl : 
@@ -24786,7 +24604,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -23654,6 +14232,7 @@
+@@ -23654,6 +14149,7 @@
    _TAO_ProvidesDef_Proxy_Impl (void);
  
  };
@@ -24794,7 +24612,7 @@
  //
  //                Base  Proxy Impl. Declaration
  ///////////////////////////////////////////////////////////////////////
-@@ -23666,7 +14245,7 @@
+@@ -23666,7 +14162,7 @@
  class TAO_Export _TAO_ProvidesDef_Remote_Proxy_Impl : 
    public virtual _TAO_ProvidesDef_Proxy_Impl,
    public virtual TAO_Remote_Object_Proxy_Impl,
@@ -24803,7 +24621,7 @@
    
  {
  public:
-@@ -23674,7 +14253,7 @@
+@@ -23674,7 +14170,7 @@
    
    virtual ~_TAO_ProvidesDef_Remote_Proxy_Impl (void) { }
    
@@ -24812,7 +24630,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -23704,8 +14283,9 @@
+@@ -23704,8 +14200,9 @@
  {
  public:
    virtual ~_TAO_ProvidesDef_Proxy_Broker (void);
@@ -24823,7 +24641,7 @@
      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
    ) = 0;
  
-@@ -23730,9 +14310,9 @@
+@@ -23730,9 +14227,9 @@
    _TAO_ProvidesDef_Remote_Proxy_Broker (void);
    
    virtual ~_TAO_ProvidesDef_Remote_Proxy_Broker (void);
@@ -24835,7 +24653,7 @@
      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
    );
  
-@@ -23746,24 +14326,15 @@
+@@ -23746,24 +14243,15 @@
    static _TAO_ProvidesDef_Remote_Proxy_Broker *the_TAO_ProvidesDef_Remote_Proxy_Broker (void);
  };
  
@@ -24862,7 +24680,7 @@
  #endif /* ! __GNUC__ || g++ >= 2.8 */
  
    static void _tao_any_destructor (void*);
-@@ -23772,164 +14343,90 @@
+@@ -23772,164 +14260,90 @@
    TAO_String_Manager id;
    TAO_String_Manager defined_in;
    TAO_String_Manager version;
@@ -25067,7 +24885,7 @@
        CORBA::Environment &ACE_TRY_ENV = 
          TAO_default_environment ()
      )
-@@ -23958,121 +14455,27 @@
+@@ -23958,122 +14372,28 @@
    _TAO_UsesDef_Proxy_Broker *the_TAO_UsesDef_Proxy_Broker_;
    
  protected:
@@ -25089,11 +24907,15 @@
        CORBA::Boolean _tao_collocated = 0,
        TAO_Abstract_ServantBase *servant = 0
 -      );
--    
++    );
+     
 -    friend class _TAO_UsesDef_Remote_Proxy_Impl;
 -    friend class _TAO_UsesDef_ThruPOA_Proxy_Impl;
 -    friend class _TAO_UsesDef_Direct_Proxy_Impl;
--  
++  friend class _TAO_UsesDef_Remote_Proxy_Impl;
++  friend class _TAO_UsesDef_ThruPOA_Proxy_Impl;
++  friend class _TAO_UsesDef_Direct_Proxy_Impl;
+   
 -  virtual ~UsesDef (void);
 -  private:
 -    UsesDef (const UsesDef &);
@@ -25162,12 +24984,8 @@
 -      CORBA::Object *_tao_target,
 -      CORBA::Environment &ACE_TRY_ENV = 
 -        TAO_default_environment ()
-     );
-+    
-+  friend class _TAO_UsesDef_Remote_Proxy_Impl;
-+  friend class _TAO_UsesDef_ThruPOA_Proxy_Impl;
-+  friend class _TAO_UsesDef_Direct_Proxy_Impl;
-   
+-    );
+-  
 -  virtual Dynamic::ParameterList * arguments (
 -      CORBA::Environment &ACE_TRY_ENV = 
 -        TAO_default_environment ()
@@ -25186,8 +25004,7 @@
 -    )
 -    ACE_THROW_SPEC ((CORBA::SystemException));
 -  
-+  virtual ~IR_UsesDef (void);
- private:
+-private:
 -  TAO_ClientRequestInfo_IR_UsesDef_is_multiple_get (const TAO_ClientRequestInfo_IR_UsesDef_is_multiple_get &);
 -  void operator= (const TAO_ClientRequestInfo_IR_UsesDef_is_multiple_get &);
 -  void result (CORBA::Boolean result);
@@ -25197,12 +25014,16 @@
 -
 -#endif /* TAO_HAS_INTERCEPTORS */
 -
+-};
++  virtual ~IR_UsesDef (void);
++private:
 +  IR_UsesDef (const IR_UsesDef &);
 +  void operator= (const IR_UsesDef &);    
- };
++};
  
  
-@@ -24086,12 +14489,12 @@
+ // The Proxy Implementations are used by each interface to
+@@ -24086,12 +14406,12 @@
  //
  
  class TAO_Export _TAO_UsesDef_Proxy_Impl : 
@@ -25217,7 +25038,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -24111,6 +14514,7 @@
+@@ -24111,6 +14431,7 @@
    _TAO_UsesDef_Proxy_Impl (void);
  
  };
@@ -25225,7 +25046,7 @@
  //
  //                Base  Proxy Impl. Declaration
  ///////////////////////////////////////////////////////////////////////
-@@ -24123,7 +14527,7 @@
+@@ -24123,7 +14444,7 @@
  class TAO_Export _TAO_UsesDef_Remote_Proxy_Impl : 
    public virtual _TAO_UsesDef_Proxy_Impl,
    public virtual TAO_Remote_Object_Proxy_Impl,
@@ -25234,7 +25055,7 @@
    
  {
  public:
-@@ -24131,7 +14535,7 @@
+@@ -24131,7 +14452,7 @@
    
    virtual ~_TAO_UsesDef_Remote_Proxy_Impl (void) { }
    
@@ -25243,7 +25064,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -24169,8 +14573,9 @@
+@@ -24169,8 +14490,9 @@
  {
  public:
    virtual ~_TAO_UsesDef_Proxy_Broker (void);
@@ -25254,7 +25075,7 @@
      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
    ) = 0;
  
-@@ -24195,9 +14600,9 @@
+@@ -24195,9 +14517,9 @@
    _TAO_UsesDef_Remote_Proxy_Broker (void);
    
    virtual ~_TAO_UsesDef_Remote_Proxy_Broker (void);
@@ -25266,7 +25087,7 @@
      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
    );
  
-@@ -24211,24 +14616,15 @@
+@@ -24211,24 +14533,15 @@
    static _TAO_UsesDef_Remote_Proxy_Broker *the_TAO_UsesDef_Remote_Proxy_Broker (void);
  };
  
@@ -25293,7 +25114,7 @@
  #endif /* ! __GNUC__ || g++ >= 2.8 */
  
    static void _tao_any_destructor (void*);
-@@ -24237,65 +14633,61 @@
+@@ -24237,65 +14550,61 @@
    TAO_String_Manager id;
    TAO_String_Manager defined_in;
    TAO_String_Manager version;
@@ -25393,7 +25214,7 @@
    class TAO_EXPORT_NESTED_MACRO _TAO_Unbounded_Sequence_IR_ProvidesDescSeq : public TAO_Unbounded_Base_Sequence
    {
    public:
-@@ -24305,149 +14697,118 @@
+@@ -24305,149 +14614,118 @@
      _TAO_Unbounded_Sequence_IR_ProvidesDescSeq (CORBA::ULong maximum); 
      _TAO_Unbounded_Sequence_IR_ProvidesDescSeq (CORBA::ULong maximum,
        CORBA::ULong length,
@@ -25595,7 +25416,7 @@
    class TAO_EXPORT_NESTED_MACRO _TAO_Unbounded_Sequence_IR_UsesDescSeq : public TAO_Unbounded_Base_Sequence
    {
    public:
-@@ -24457,244 +14818,145 @@
+@@ -24457,244 +14735,145 @@
      _TAO_Unbounded_Sequence_IR_UsesDescSeq (CORBA::ULong maximum); 
      _TAO_Unbounded_Sequence_IR_UsesDescSeq (CORBA::ULong maximum,
        CORBA::ULong length,
@@ -25900,7 +25721,7 @@
      }
  
    static void _tao_any_destructor (void*);
-@@ -24708,7 +14970,7 @@
+@@ -24708,7 +14887,7 @@
        CORBA::SystemException
      ));
  
@@ -25909,7 +25730,7 @@
        CORBA::Environment &ACE_TRY_ENV = 
          TAO_default_environment ()
      )
-@@ -24729,123 +14991,27 @@
+@@ -24729,123 +14908,27 @@
    _TAO_EventDef_Proxy_Broker *the_TAO_EventDef_Proxy_Broker_;
    
  protected:
@@ -26046,7 +25867,7 @@
  };
  
  
-@@ -24859,12 +15025,12 @@
+@@ -24859,12 +14942,12 @@
  //
  
  class TAO_Export _TAO_EventDef_Proxy_Impl : 
@@ -26061,7 +25882,7 @@
        CORBA_Object *_collocated_tao_target_,
        const char * event_id,
        CORBA::Environment &ACE_TRY_ENV
-@@ -24873,7 +15039,7 @@
+@@ -24873,7 +14956,7 @@
        CORBA::SystemException
      )) = 0;
  
@@ -26070,7 +25891,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -24885,6 +15051,7 @@
+@@ -24885,6 +14968,7 @@
    _TAO_EventDef_Proxy_Impl (void);
  
  };
@@ -26078,7 +25899,7 @@
  //
  //                Base  Proxy Impl. Declaration
  ///////////////////////////////////////////////////////////////////////
-@@ -24897,7 +15064,7 @@
+@@ -24897,7 +14981,7 @@
  class TAO_Export _TAO_EventDef_Remote_Proxy_Impl : 
    public virtual _TAO_EventDef_Proxy_Impl,
    public virtual TAO_Remote_Object_Proxy_Impl,
@@ -26087,7 +25908,7 @@
    
  {
  public:
-@@ -24905,7 +15072,7 @@
+@@ -24905,7 +14989,7 @@
    
    virtual ~_TAO_EventDef_Remote_Proxy_Impl (void) { }
    
@@ -26096,7 +25917,7 @@
        CORBA_Object *_collocated_tao_target_,
        const char * event_id,
        CORBA::Environment &ACE_TRY_ENV
-@@ -24914,7 +15081,7 @@
+@@ -24914,7 +14998,7 @@
        CORBA::SystemException
      ));
  
@@ -26105,7 +25926,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -24944,8 +15111,9 @@
+@@ -24944,8 +15028,9 @@
  {
  public:
    virtual ~_TAO_EventDef_Proxy_Broker (void);
@@ -26116,7 +25937,7 @@
      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
    ) = 0;
  
-@@ -24970,9 +15138,9 @@
+@@ -24970,9 +15055,9 @@
    _TAO_EventDef_Remote_Proxy_Broker (void);
    
    virtual ~_TAO_EventDef_Remote_Proxy_Broker (void);
@@ -26128,7 +25949,7 @@
      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
    );
  
-@@ -24986,24 +15154,15 @@
+@@ -24986,24 +15071,15 @@
    static _TAO_EventDef_Remote_Proxy_Broker *the_TAO_EventDef_Remote_Proxy_Broker (void);
  };
  
@@ -26155,7 +25976,7 @@
  #endif /* ! __GNUC__ || g++ >= 2.8 */
  
    static void _tao_any_destructor (void*);
-@@ -25012,159 +15171,85 @@
+@@ -25012,159 +15088,85 @@
    TAO_String_Manager id;
    TAO_String_Manager defined_in;
    TAO_String_Manager version;
@@ -26354,7 +26175,7 @@
      }
  
    static void _tao_any_destructor (void*);
-@@ -25182,60 +15267,53 @@
+@@ -25182,60 +15184,53 @@
    _TAO_EmitsDef_Proxy_Broker *the_TAO_EmitsDef_Proxy_Broker_;
    
  protected:
@@ -26446,7 +26267,7 @@
    
    
  ///////////////////////////////////////////////////////////////////////
-@@ -25245,7 +15323,7 @@
+@@ -25245,7 +15240,7 @@
  class TAO_Export _TAO_EmitsDef_Remote_Proxy_Impl : 
    public virtual _TAO_EmitsDef_Proxy_Impl,
    public virtual TAO_Remote_Object_Proxy_Impl,
@@ -26455,7 +26276,7 @@
    
  {
  public:
-@@ -25253,7 +15331,7 @@
+@@ -25253,7 +15248,7 @@
    
    virtual ~_TAO_EmitsDef_Remote_Proxy_Impl (void) { }
    
@@ -26464,7 +26285,7 @@
  
  //
  //                Base  Proxy Impl. Declaration
-@@ -25275,8 +15353,9 @@
+@@ -25275,8 +15270,9 @@
  {
  public:
    virtual ~_TAO_EmitsDef_Proxy_Broker (void);
@@ -26475,7 +26296,7 @@
      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
    ) = 0;
  
-@@ -25301,9 +15380,9 @@
+@@ -25301,9 +15297,9 @@
    _TAO_EmitsDef_Remote_Proxy_Broker (void);
    
    virtual ~_TAO_EmitsDef_Remote_Proxy_Broker (void);
@@ -26487,7 +26308,7 @@
      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
    );
  
-@@ -25317,117 +15396,38 @@
+@@ -25317,117 +15313,38 @@
    static _TAO_EmitsDef_Remote_Proxy_Broker *the_TAO_EmitsDef_Remote_Proxy_Broker (void);
  };
  
@@ -26496,7 +26317,11 @@
  //              End Remote Proxy Broker Declaration 
  ///////////////////////////////////////////////////////////////////////
  
--
++class _TAO_PublishesDef_Proxy_Impl;
++class _TAO_PublishesDef_Remote_Proxy_Impl;
++class _TAO_PublishesDef_Proxy_Broker;
++class _TAO_PublishesDef_Remote_Proxy_Broker;
+ 
 -#endif /* end #if !defined */
 -
 -TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_EmitsDef;
@@ -26515,8 +26340,9 @@
 -#define _TAO_IR_PUBLISHESDEF___VAR_CH_
 -
 -class TAO_Export PublishesDef_var : public TAO_Base_var
--{
--public:
++class TAO_Export IR_PublishesDef: public virtual IR_EventDef
+ {
+ public:
 -  PublishesDef_var (void); // default constructor
 -  PublishesDef_var (PublishesDef_ptr p) : ptr_ (p) {} 
 -  PublishesDef_var (const PublishesDef_var &); // copy constructor
@@ -26574,21 +26400,22 @@
 -#define _TAO_IR_PUBLISHESDEF_CH_
 -
 -// Forward Classes Declaration
- class _TAO_PublishesDef_Proxy_Impl;
- class _TAO_PublishesDef_Remote_Proxy_Impl;
- class _TAO_PublishesDef_Proxy_Broker;
- class _TAO_PublishesDef_Remote_Proxy_Broker;
- 
+-class _TAO_PublishesDef_Proxy_Impl;
+-class _TAO_PublishesDef_Remote_Proxy_Impl;
+-class _TAO_PublishesDef_Proxy_Broker;
+-class _TAO_PublishesDef_Remote_Proxy_Broker;
+-
 -class TAO_Export PublishesDef: public virtual EventDef
-+class TAO_Export IR_PublishesDef: public virtual IR_EventDef
- {
- public:
- #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
+-{
+-public:
+-#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
 -  typedef PublishesDef_ptr _ptr_type;
 -  typedef PublishesDef_var _var_type;
+-#endif /* ! __GNUC__ || g++ >= 2.8 */
++#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
 +  typedef IR_PublishesDef_ptr _ptr_type;
 +  typedef IR_PublishesDef_var _var_type;
- #endif /* ! __GNUC__ || g++ >= 2.8 */
++#endif /* ! __GNUC__ || g++ >= 2.8 */
  
    // the static operations
 -  static PublishesDef_ptr _duplicate (PublishesDef_ptr obj);
@@ -26613,7 +26440,7 @@
      }
  
    static void _tao_any_destructor (void*);
-@@ -25445,60 +15445,53 @@
+@@ -25445,60 +15362,53 @@
    _TAO_PublishesDef_Proxy_Broker *the_TAO_PublishesDef_Proxy_Broker_;
    
  protected:
@@ -26705,7 +26532,7 @@
    
    
  ///////////////////////////////////////////////////////////////////////
-@@ -25508,7 +15501,7 @@
+@@ -25508,7 +15418,7 @@
  class TAO_Export _TAO_PublishesDef_Remote_Proxy_Impl : 
    public virtual _TAO_PublishesDef_Proxy_Impl,
    public virtual TAO_Remote_Object_Proxy_Impl,
@@ -26714,7 +26541,7 @@
    
  {
  public:
-@@ -25516,7 +15509,7 @@
+@@ -25516,7 +15426,7 @@
    
    virtual ~_TAO_PublishesDef_Remote_Proxy_Impl (void) { }
    
@@ -26723,7 +26550,7 @@
  
  //
  //                Base  Proxy Impl. Declaration
-@@ -25538,8 +15531,9 @@
+@@ -25538,8 +15448,9 @@
  {
  public:
    virtual ~_TAO_PublishesDef_Proxy_Broker (void);
@@ -26734,7 +26561,7 @@
      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
    ) = 0;
  
-@@ -25564,9 +15558,9 @@
+@@ -25564,9 +15475,9 @@
    _TAO_PublishesDef_Remote_Proxy_Broker (void);
    
    virtual ~_TAO_PublishesDef_Remote_Proxy_Broker (void);
@@ -26746,7 +26573,7 @@
      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
    );
  
-@@ -25580,117 +15574,39 @@
+@@ -25580,117 +15491,39 @@
    static _TAO_PublishesDef_Remote_Proxy_Broker *the_TAO_PublishesDef_Remote_Proxy_Broker (void);
  };
  
@@ -26872,7 +26699,7 @@
      }
  
    static void _tao_any_destructor (void*);
-@@ -25708,60 +15624,53 @@
+@@ -25708,60 +15541,53 @@
    _TAO_ConsumesDef_Proxy_Broker *the_TAO_ConsumesDef_Proxy_Broker_;
    
  protected:
@@ -26946,12 +26773,12 @@
 +{
 +public:
 +  virtual ~_TAO_ConsumesDef_Proxy_Impl (void) { }
++    
++protected:
++  _TAO_ConsumesDef_Proxy_Impl (void);
      
 -    protected:
 -    _TAO_ConsumesDef_Proxy_Impl (void);
-+protected:
-+  _TAO_ConsumesDef_Proxy_Impl (void);
-+    
 +};
    
 -  };
@@ -26964,7 +26791,7 @@
    
    
  ///////////////////////////////////////////////////////////////////////
-@@ -25771,7 +15680,7 @@
+@@ -25771,7 +15597,7 @@
  class TAO_Export _TAO_ConsumesDef_Remote_Proxy_Impl : 
    public virtual _TAO_ConsumesDef_Proxy_Impl,
    public virtual TAO_Remote_Object_Proxy_Impl,
@@ -26973,7 +26800,7 @@
    
  {
  public:
-@@ -25779,7 +15688,7 @@
+@@ -25779,7 +15605,7 @@
    
    virtual ~_TAO_ConsumesDef_Remote_Proxy_Impl (void) { }
    
@@ -26982,7 +26809,7 @@
  
  //
  //                Base  Proxy Impl. Declaration
-@@ -25801,8 +15710,9 @@
+@@ -25801,8 +15627,9 @@
  {
  public:
    virtual ~_TAO_ConsumesDef_Proxy_Broker (void);
@@ -26993,7 +26820,7 @@
      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
    ) = 0;
  
-@@ -25827,9 +15737,9 @@
+@@ -25827,9 +15654,9 @@
    _TAO_ConsumesDef_Remote_Proxy_Broker (void);
    
    virtual ~_TAO_ConsumesDef_Remote_Proxy_Broker (void);
@@ -27005,7 +26832,7 @@
      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
    );
  
-@@ -25843,122 +15753,44 @@
+@@ -25843,122 +15670,44 @@
    static _TAO_ConsumesDef_Remote_Proxy_Broker *the_TAO_ConsumesDef_Remote_Proxy_Broker (void);
  };
  
@@ -27137,7 +26964,7 @@
        CORBA::Environment &ACE_TRY_ENV = 
          TAO_default_environment ()
      )
-@@ -25967,39 +15799,7 @@
+@@ -25967,75 +15716,7 @@
      ));
  
    virtual void supported_interfaces (
@@ -27174,46 +27001,6 @@
 -    ));
 -
 -  virtual IR::EmitsDefSeq * emits_events (
-+      const IR_InterfaceDefSeq & supported_interfaces,
-       CORBA::Environment &ACE_TRY_ENV = 
-         TAO_default_environment ()
-     )
-@@ -26007,7 +15807,7 @@
-       CORBA::SystemException
-     ));
- 
--  virtual IR::PublishesDefSeq * publishes_events (
-+  virtual IR_ComponentDef_ptr base_component (
-       CORBA::Environment &ACE_TRY_ENV = 
-         TAO_default_environment ()
-     )
-@@ -26015,7 +15815,7 @@
-       CORBA::SystemException
-     ));
- 
--  virtual IR::ConsumesDefSeq * consumes_events (
-+  virtual IR_ProvidesDefSeq * provides_interfaces (
-       CORBA::Environment &ACE_TRY_ENV = 
-         TAO_default_environment ()
-     )
-@@ -26023,7 +15823,7 @@
-       CORBA::SystemException
-     ));
- 
--  virtual CORBA::Boolean is_basic (
-+  virtual IR_UsesDefSeq * uses_interfaces (
-       CORBA::Environment &ACE_TRY_ENV = 
-         TAO_default_environment ()
-     )
-@@ -26031,756 +15831,135 @@
-       CORBA::SystemException
-     ));
- 
--  virtual IR::ProvidesDef_ptr create_provides (
--      const char * id,
--      const char * name,
--      const char * version,
--      IR::InterfaceDef_ptr interface_type,
 -      CORBA::Environment &ACE_TRY_ENV = 
 -        TAO_default_environment ()
 -    )
@@ -27221,6 +27008,43 @@
 -      CORBA::SystemException
 -    ));
 -
+-  virtual IR::PublishesDefSeq * publishes_events (
+-      CORBA::Environment &ACE_TRY_ENV = 
+-        TAO_default_environment ()
+-    )
+-    ACE_THROW_SPEC ((
+-      CORBA::SystemException
+-    ));
+-
+-  virtual IR::ConsumesDefSeq * consumes_events (
+-      CORBA::Environment &ACE_TRY_ENV = 
+-        TAO_default_environment ()
+-    )
+-    ACE_THROW_SPEC ((
+-      CORBA::SystemException
+-    ));
+-
+-  virtual CORBA::Boolean is_basic (
+-      CORBA::Environment &ACE_TRY_ENV = 
+-        TAO_default_environment ()
+-    )
+-    ACE_THROW_SPEC ((
+-      CORBA::SystemException
+-    ));
+-
+-  virtual IR::ProvidesDef_ptr create_provides (
+-      const char * id,
+-      const char * name,
+-      const char * version,
+-      IR::InterfaceDef_ptr interface_type,
++      const IR_InterfaceDefSeq & supported_interfaces,
+       CORBA::Environment &ACE_TRY_ENV = 
+         TAO_default_environment ()
+     )
+@@ -26043,24 +15724,7 @@
+       CORBA::SystemException
+     ));
+ 
 -  virtual IR::UsesDef_ptr create_uses (
 -      const char * id,
 -      const char * name,
@@ -27239,37 +27063,40 @@
 -      const char * name,
 -      const char * version,
 -      IR::ValueDef_ptr value,
--      CORBA::Environment &ACE_TRY_ENV = 
--        TAO_default_environment ()
--    )
--    ACE_THROW_SPEC ((
--      CORBA::SystemException
--    ));
--
++  virtual IR_ComponentDef_ptr base_component (
+       CORBA::Environment &ACE_TRY_ENV = 
+         TAO_default_environment ()
+     )
+@@ -26068,11 +15732,7 @@
+       CORBA::SystemException
+     ));
+ 
 -  virtual IR::PublishesDef_ptr create_publishes (
 -      const char * id,
 -      const char * name,
 -      const char * version,
 -      IR::ValueDef_ptr value,
--      CORBA::Environment &ACE_TRY_ENV = 
--        TAO_default_environment ()
--    )
--    ACE_THROW_SPEC ((
--      CORBA::SystemException
--    ));
--
++  virtual IR_ProvidesDefSeq * provides_interfaces (
+       CORBA::Environment &ACE_TRY_ENV = 
+         TAO_default_environment ()
+     )
+@@ -26080,11 +15740,7 @@
+       CORBA::SystemException
+     ));
+ 
 -  virtual IR::ConsumesDef_ptr create_consumes (
 -      const char * id,
 -      const char * name,
 -      const char * version,
 -      IR::ValueDef_ptr value,
--      CORBA::Environment &ACE_TRY_ENV = 
--        TAO_default_environment ()
--    )
--    ACE_THROW_SPEC ((
--      CORBA::SystemException
--    ));
--
++  virtual IR_UsesDefSeq * uses_interfaces (
+       CORBA::Environment &ACE_TRY_ENV = 
+         TAO_default_environment ()
+     )
+@@ -26092,695 +15748,135 @@
+       CORBA::SystemException
+     ));
+ 
 -  virtual CORBA::Boolean _is_a (
 -      const CORBA::Char *type_id, 
 -      CORBA::Environment &ACE_TRY_ENV = 
@@ -28072,7 +27899,7 @@
  // The Proxy Implementations are used by each interface to
  // perform a call. Each different implementation encapsulate
  // an invocation logics.
-@@ -26791,12 +15970,12 @@
+@@ -26791,12 +15887,12 @@
  //
  
  class TAO_Export _TAO_ComponentDef_Proxy_Impl : 
@@ -28087,7 +27914,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -26806,14 +15985,14 @@
+@@ -26806,14 +15902,14 @@
  
    virtual void supported_interfaces (
        CORBA_Object *_collocated_tao_target_,
@@ -28104,7 +27931,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -26821,7 +16000,7 @@
+@@ -26821,7 +15917,7 @@
        CORBA::SystemException
      )) = 0;
  
@@ -28113,7 +27940,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -26829,7 +16008,7 @@
+@@ -26829,7 +15925,7 @@
        CORBA::SystemException
      )) = 0;
  
@@ -28122,7 +27949,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -26837,7 +16016,7 @@
+@@ -26837,7 +15933,7 @@
        CORBA::SystemException
      )) = 0;
  
@@ -28131,7 +27958,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -26845,7 +16024,7 @@
+@@ -26845,7 +15941,7 @@
        CORBA::SystemException
      )) = 0;
  
@@ -28140,7 +27967,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -26853,7 +16032,7 @@
+@@ -26853,7 +15949,7 @@
        CORBA::SystemException
      )) = 0;
  
@@ -28149,7 +27976,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -26869,24 +16048,24 @@
+@@ -26869,24 +15965,24 @@
        CORBA::SystemException
      )) = 0;
  
@@ -28178,7 +28005,7 @@
        CORBA::Boolean is_multiple,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -26894,36 +16073,36 @@
+@@ -26894,36 +15990,36 @@
        CORBA::SystemException
      )) = 0;
  
@@ -28221,7 +28048,7 @@
        CORBA::Environment &ACE_TRY_ENV
      )
      ACE_THROW_SPEC ((
-@@ -26934,6 +16113,7 @@
+@@ -26934,6 +16030,7 @@
    _TAO_ComponentDef_Proxy_Impl (void);
  
  };
@@ -28229,7 +28056,7 @@
  //
  //                Base  Proxy Impl. Declaration
  ///////////////////////////////////////////////////////////////////////
-@@ -26946,7 +16126,7 @@
+@@ -26946,7 +16043,7 @@
  class TAO_Export _TAO_ComponentDef_Remote_Proxy_Impl : 
    public virtual _TAO_ComponentDef_Proxy_Impl,
    public virtual TAO_Remote_Object_Proxy_Impl,
@@ -28238,7 +28065,7 @@
    
  {
  public:
-@@ -26954,7 +16134,7 @@
+@@ -26954,7 +16051,7 @@
    
    virtual ~_TAO_ComponentDef_Remote_Proxy_Impl (void) { }
    
@@ -28247,7 +28074,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -26964,14 +16144,14 @@
+@@ -26964,14 +16061,14 @@
  
    virtual void supported_interfaces (
        CORBA_Object *_collocated_tao_target_,
@@ -28264,7 +28091,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -26979,7 +16159,7 @@
+@@ -26979,7 +16076,7 @@
        CORBA::SystemException
      ));
  
@@ -28273,7 +28100,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -26987,7 +16167,7 @@
+@@ -26987,7 +16084,7 @@
        CORBA::SystemException
      ));
  
@@ -28282,7 +28109,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -26995,7 +16175,7 @@
+@@ -26995,7 +16092,7 @@
        CORBA::SystemException
      ));
  
@@ -28291,7 +28118,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -27003,7 +16183,7 @@
+@@ -27003,7 +16100,7 @@
        CORBA::SystemException
      ));
  
@@ -28300,7 +28127,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -27011,7 +16191,7 @@
+@@ -27011,7 +16108,7 @@
        CORBA::SystemException
      ));
  
@@ -28309,7 +28136,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -27027,24 +16207,24 @@
+@@ -27027,24 +16124,24 @@
        CORBA::SystemException
      ));
  
@@ -28338,7 +28165,7 @@
        CORBA::Boolean is_multiple,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -27052,36 +16232,36 @@
+@@ -27052,36 +16149,36 @@
        CORBA::SystemException
      ));
  
@@ -28381,7 +28208,7 @@
        CORBA::Environment &ACE_TRY_ENV
      )
      ACE_THROW_SPEC ((
-@@ -27110,8 +16290,9 @@
+@@ -27110,8 +16207,9 @@
  {
  public:
    virtual ~_TAO_ComponentDef_Proxy_Broker (void);
@@ -28392,7 +28219,7 @@
      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
    ) = 0;
  
-@@ -27136,9 +16317,9 @@
+@@ -27136,9 +16234,9 @@
    _TAO_ComponentDef_Remote_Proxy_Broker (void);
    
    virtual ~_TAO_ComponentDef_Remote_Proxy_Broker (void);
@@ -28404,7 +28231,7 @@
      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
    );
  
-@@ -27152,24 +16333,15 @@
+@@ -27152,24 +16250,15 @@
    static _TAO_ComponentDef_Remote_Proxy_Broker *the_TAO_ComponentDef_Remote_Proxy_Broker (void);
  };
  
@@ -28431,7 +28258,7 @@
  #endif /* ! __GNUC__ || g++ >= 2.8 */
  
    static void _tao_any_destructor (void*);
-@@ -27179,317 +16351,147 @@
+@@ -27179,317 +16268,147 @@
    TAO_String_Manager defined_in;
    TAO_String_Manager version;
    TAO_String_Manager base_component;
@@ -28843,7 +28670,7 @@
  };
  
  
-@@ -27503,12 +16505,12 @@
+@@ -27503,12 +16422,12 @@
  //
  
  class TAO_Export _TAO_PrimaryKeyDef_Proxy_Impl : 
@@ -28858,7 +28685,7 @@
        CORBA_Object *_collocated_tao_target_,
        const char * primary_key_id,
        CORBA::Environment &ACE_TRY_ENV
-@@ -27517,7 +16519,7 @@
+@@ -27517,7 +16436,7 @@
        CORBA::SystemException
      )) = 0;
  
@@ -28867,7 +28694,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -27529,6 +16531,7 @@
+@@ -27529,6 +16448,7 @@
    _TAO_PrimaryKeyDef_Proxy_Impl (void);
  
  };
@@ -28875,7 +28702,7 @@
  //
  //                Base  Proxy Impl. Declaration
  ///////////////////////////////////////////////////////////////////////
-@@ -27541,7 +16544,7 @@
+@@ -27541,7 +16461,7 @@
  class TAO_Export _TAO_PrimaryKeyDef_Remote_Proxy_Impl : 
    public virtual _TAO_PrimaryKeyDef_Proxy_Impl,
    public virtual TAO_Remote_Object_Proxy_Impl,
@@ -28884,7 +28711,7 @@
    
  {
  public:
-@@ -27549,7 +16552,7 @@
+@@ -27549,7 +16469,7 @@
    
    virtual ~_TAO_PrimaryKeyDef_Remote_Proxy_Impl (void) { }
    
@@ -28893,7 +28720,7 @@
        CORBA_Object *_collocated_tao_target_,
        const char * primary_key_id,
        CORBA::Environment &ACE_TRY_ENV
-@@ -27558,7 +16561,7 @@
+@@ -27558,7 +16478,7 @@
        CORBA::SystemException
      ));
  
@@ -28902,7 +28729,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -27588,8 +16591,9 @@
+@@ -27588,8 +16508,9 @@
  {
  public:
    virtual ~_TAO_PrimaryKeyDef_Proxy_Broker (void);
@@ -28913,7 +28740,7 @@
      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
    ) = 0;
  
-@@ -27614,9 +16618,9 @@
+@@ -27614,9 +16535,9 @@
    _TAO_PrimaryKeyDef_Remote_Proxy_Broker (void);
    
    virtual ~_TAO_PrimaryKeyDef_Remote_Proxy_Broker (void);
@@ -28925,7 +28752,7 @@
      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
    );
  
-@@ -27630,24 +16634,15 @@
+@@ -27630,24 +16551,15 @@
    static _TAO_PrimaryKeyDef_Remote_Proxy_Broker *the_TAO_PrimaryKeyDef_Remote_Proxy_Broker (void);
  };
  
@@ -28952,7 +28779,7 @@
  #endif /* ! __GNUC__ || g++ >= 2.8 */
  
    static void _tao_any_destructor (void*);
-@@ -27656,159 +16651,85 @@
+@@ -27656,159 +16568,85 @@
    TAO_String_Manager id;
    TAO_String_Manager defined_in;
    TAO_String_Manager version;
@@ -29151,7 +28978,7 @@
      }
  
    static void _tao_any_destructor (void*);
-@@ -27826,60 +16747,53 @@
+@@ -27826,60 +16664,53 @@
    _TAO_FactoryDef_Proxy_Broker *the_TAO_FactoryDef_Proxy_Broker_;
    
  protected:
@@ -29243,7 +29070,7 @@
    
    
  ///////////////////////////////////////////////////////////////////////
-@@ -27889,7 +16803,7 @@
+@@ -27889,7 +16720,7 @@
  class TAO_Export _TAO_FactoryDef_Remote_Proxy_Impl : 
    public virtual _TAO_FactoryDef_Proxy_Impl,
    public virtual TAO_Remote_Object_Proxy_Impl,
@@ -29252,7 +29079,7 @@
    
  {
  public:
-@@ -27897,7 +16811,7 @@
+@@ -27897,7 +16728,7 @@
    
    virtual ~_TAO_FactoryDef_Remote_Proxy_Impl (void) { }
    
@@ -29261,7 +29088,7 @@
  
  //
  //                Base  Proxy Impl. Declaration
-@@ -27919,8 +16833,9 @@
+@@ -27919,8 +16750,9 @@
  {
  public:
    virtual ~_TAO_FactoryDef_Proxy_Broker (void);
@@ -29272,7 +29099,7 @@
      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
    ) = 0;
  
-@@ -27945,9 +16860,9 @@
+@@ -27945,9 +16777,9 @@
    _TAO_FactoryDef_Remote_Proxy_Broker (void);
    
    virtual ~_TAO_FactoryDef_Remote_Proxy_Broker (void);
@@ -29284,7 +29111,7 @@
      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
    );
  
-@@ -27961,117 +16876,39 @@
+@@ -27961,117 +16793,39 @@
    static _TAO_FactoryDef_Remote_Proxy_Broker *the_TAO_FactoryDef_Remote_Proxy_Broker (void);
  };
  
@@ -29410,7 +29237,7 @@
      }
  
    static void _tao_any_destructor (void*);
-@@ -28089,60 +16926,53 @@
+@@ -28089,60 +16843,53 @@
    _TAO_FinderDef_Proxy_Broker *the_TAO_FinderDef_Proxy_Broker_;
    
  protected:
@@ -29503,7 +29330,7 @@
    
    
  ///////////////////////////////////////////////////////////////////////
-@@ -28152,7 +16982,7 @@
+@@ -28152,7 +16899,7 @@
  class TAO_Export _TAO_FinderDef_Remote_Proxy_Impl : 
    public virtual _TAO_FinderDef_Proxy_Impl,
    public virtual TAO_Remote_Object_Proxy_Impl,
@@ -29512,7 +29339,7 @@
    
  {
  public:
-@@ -28160,7 +16990,7 @@
+@@ -28160,7 +16907,7 @@
    
    virtual ~_TAO_FinderDef_Remote_Proxy_Impl (void) { }
    
@@ -29521,7 +29348,7 @@
  
  //
  //                Base  Proxy Impl. Declaration
-@@ -28182,129 +17012,52 @@
+@@ -28182,129 +16929,52 @@
  {
  public:
    virtual ~_TAO_FinderDef_Proxy_Broker (void);
@@ -29680,7 +29507,7 @@
  
  // Forward Classes Declaration
  class _TAO_HomeDef_Proxy_Impl;
-@@ -28312,42 +17065,42 @@
+@@ -28312,42 +16982,42 @@
  class _TAO_HomeDef_Proxy_Broker;
  class _TAO_HomeDef_Remote_Proxy_Broker;
  
@@ -29734,7 +29561,7 @@
        CORBA::Environment &ACE_TRY_ENV = 
          TAO_default_environment ()
      )
-@@ -28355,7 +17108,7 @@
+@@ -28355,7 +17025,7 @@
        CORBA::SystemException
      ));
  
@@ -29743,7 +29570,7 @@
        CORBA::Environment &ACE_TRY_ENV = 
          TAO_default_environment ()
      )
-@@ -28363,7 +17116,7 @@
+@@ -28363,7 +17033,7 @@
        CORBA::SystemException
      ));
  
@@ -29752,7 +29579,7 @@
        CORBA::Environment &ACE_TRY_ENV = 
          TAO_default_environment ()
      )
-@@ -28371,7 +17124,7 @@
+@@ -28371,7 +17041,7 @@
        CORBA::SystemException
      ));
  
@@ -29761,7 +29588,7 @@
        CORBA::Environment &ACE_TRY_ENV = 
          TAO_default_environment ()
      )
-@@ -28387,11 +17140,11 @@
+@@ -28387,11 +17057,11 @@
        CORBA::SystemException
      ));
  
@@ -29775,7 +29602,7 @@
        CORBA::Environment &ACE_TRY_ENV = 
          TAO_default_environment ()
      )
-@@ -28399,12 +17152,12 @@
+@@ -28399,12 +17069,12 @@
        CORBA::SystemException
      ));
  
@@ -29791,7 +29618,7 @@
        CORBA::Environment &ACE_TRY_ENV = 
          TAO_default_environment ()
      )
-@@ -28412,12 +17165,12 @@
+@@ -28412,12 +17082,12 @@
        CORBA::SystemException
      ));
  
@@ -29807,7 +29634,7 @@
        CORBA::Environment &ACE_TRY_ENV = 
          TAO_default_environment ()
      )
-@@ -28438,450 +17191,27 @@
+@@ -28438,450 +17108,27 @@
    _TAO_HomeDef_Proxy_Broker *the_TAO_HomeDef_Proxy_Broker_;
    
  protected:
@@ -30268,7 +30095,7 @@
  };
  
  
-@@ -28895,12 +17225,12 @@
+@@ -28895,12 +17142,12 @@
  //
  
  class TAO_Export _TAO_HomeDef_Proxy_Impl : 
@@ -30283,7 +30110,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -28908,7 +17238,7 @@
+@@ -28908,7 +17155,7 @@
        CORBA::SystemException
      )) = 0;
  
@@ -30292,7 +30119,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -28916,7 +17246,7 @@
+@@ -28916,7 +17163,7 @@
        CORBA::SystemException
      )) = 0;
  
@@ -30301,7 +30128,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -28924,7 +17254,7 @@
+@@ -28924,7 +17171,7 @@
        CORBA::SystemException
      )) = 0;
  
@@ -30310,7 +30137,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -28932,54 +17262,54 @@
+@@ -28932,54 +17179,54 @@
        CORBA::SystemException
      )) = 0;
  
@@ -30377,7 +30204,7 @@
        CORBA::Environment &ACE_TRY_ENV
      )
      ACE_THROW_SPEC ((
-@@ -28990,6 +17320,7 @@
+@@ -28990,6 +17237,7 @@
    _TAO_HomeDef_Proxy_Impl (void);
  
  };
@@ -30385,7 +30212,7 @@
  //
  //                Base  Proxy Impl. Declaration
  ///////////////////////////////////////////////////////////////////////
-@@ -29002,7 +17333,7 @@
+@@ -29002,7 +17250,7 @@
  class TAO_Export _TAO_HomeDef_Remote_Proxy_Impl : 
    public virtual _TAO_HomeDef_Proxy_Impl,
    public virtual TAO_Remote_Object_Proxy_Impl,
@@ -30394,7 +30221,7 @@
    
  {
  public:
-@@ -29010,7 +17341,7 @@
+@@ -29010,7 +17258,7 @@
    
    virtual ~_TAO_HomeDef_Remote_Proxy_Impl (void) { }
    
@@ -30403,7 +30230,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -29018,7 +17349,7 @@
+@@ -29018,7 +17266,7 @@
        CORBA::SystemException
      ));
  
@@ -30412,7 +30239,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -29026,7 +17357,7 @@
+@@ -29026,7 +17274,7 @@
        CORBA::SystemException
      ));
  
@@ -30421,7 +30248,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -29034,7 +17365,7 @@
+@@ -29034,7 +17282,7 @@
        CORBA::SystemException
      ));
  
@@ -30430,7 +30257,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -29042,7 +17373,7 @@
+@@ -29042,7 +17290,7 @@
        CORBA::SystemException
      ));
  
@@ -30439,7 +30266,7 @@
        CORBA_Object *_collocated_tao_target_,
        CORBA::Environment &ACE_TRY_ENV
      )
-@@ -29058,38 +17389,38 @@
+@@ -29058,38 +17306,38 @@
        CORBA::SystemException
      ));
  
@@ -30486,7 +30313,7 @@
        CORBA::Environment &ACE_TRY_ENV
      )
      ACE_THROW_SPEC ((
-@@ -29118,8 +17449,9 @@
+@@ -29118,8 +17366,9 @@
  {
  public:
    virtual ~_TAO_HomeDef_Proxy_Broker (void);
@@ -30497,7 +30324,7 @@
      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
    ) = 0;
  
-@@ -29144,9 +17476,9 @@
+@@ -29144,9 +17393,9 @@
    _TAO_HomeDef_Remote_Proxy_Broker (void);
    
    virtual ~_TAO_HomeDef_Remote_Proxy_Broker (void);
@@ -30509,7 +30336,7 @@
      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
    );
  
-@@ -29160,24 +17492,15 @@
+@@ -29160,24 +17409,15 @@
    static _TAO_HomeDef_Remote_Proxy_Broker *the_TAO_HomeDef_Remote_Proxy_Broker (void);
  };
  
@@ -30536,7 +30363,7 @@
  #endif /* ! __GNUC__ || g++ >= 2.8 */
  
    static void _tao_any_destructor (void*);
-@@ -29188,1033 +17511,875 @@
+@@ -29188,1033 +17428,875 @@
    TAO_String_Manager version;
    TAO_String_Manager base_home;
    TAO_String_Manager managed_component;
@@ -32140,7 +31967,7 @@
  
  #endif /* __ACE_INLINE__ */
  
-@@ -30227,5 +18392,6 @@
+@@ -30227,5 +18309,6 @@
  #pragma warning(pop)
  #endif /* _MSC_VER */
  
