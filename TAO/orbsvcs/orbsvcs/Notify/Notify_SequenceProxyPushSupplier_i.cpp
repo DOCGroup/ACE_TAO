@@ -4,6 +4,8 @@
 #include "Notify_SequenceProxyPushSupplier_i.h"
 #include "Notify_ConsumerAdmin_i.h"
 #include "Notify_StructuredEvents.h"
+#include "Notify_Factory.h"
+#include "Notify_Channel_Objects_Factory.h"
 
 #include "tao/ORB_Core.h"
 #include "tao/PortableServer/Object_Adapter.h"
