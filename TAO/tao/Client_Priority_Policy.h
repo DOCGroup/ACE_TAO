@@ -29,7 +29,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if (TAO_HAS_CORBA_MESSAGING == 1)
+#if (TAO_HAS_CLIENT_PRIORITY_POLICY == 1)
 
 #include "tao/TAOS.h"
 
@@ -98,7 +98,7 @@ private:
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
-#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
+#endif /* TAO_HAS_CLIENT_PRIORITY_POLICY == 1 */
 
 #if defined (__ACE_INLINE__)
 #include "tao/Client_Priority_Policy.i"

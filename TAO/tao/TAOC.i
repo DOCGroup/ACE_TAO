@@ -11,7 +11,7 @@
 // Inline operations for class TAO::PrioritySpecification_var
 // *************************************************************
 
-#if (TAO_HAS_CORBA_MESSAGING == 1)
+#if (TAO_HAS_CLIENT_PRIORITY_POLICY == 1)
 
 ACE_INLINE
 TAO::PrioritySpecification_var::PrioritySpecification_var (void) // default constructor
@@ -330,6 +330,10 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, TAO::PrioritySpecifica
     return 0;
 
 }
+
+#endif /* TAO_HAS_CLIENT_PRIORITY_POLICY == 1 */
+
+#if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
 // *************************************************************
 // Inline operations for class TAO::BufferingConstraint_var
@@ -655,4 +659,4 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, TAO::BufferingConstrai
 
 }
 
-#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
+#endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */

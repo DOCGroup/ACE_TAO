@@ -452,6 +452,211 @@ enum MCAST_SERVICEID
 #  endif  /* TAO_HAS_MINIMUM_CORBA */
 #endif  /* !TAO_HAS_CORBA_MESSAGING */
 
+// For all the policies, support is enabled by default if TAO is
+// configured for CORBA Messaging.  If TAO is not configured for CORBA
+// Messaging, then policies cannot be enabled.  Default support can be
+// turned off by setting TAO_DISABLE_CORBA_MESSAGING_POLICIES to 1.
+
+#if !defined (TAO_DISABLE_CORBA_MESSAGING_POLICIES)
+# define TAO_DISABLE_CORBA_MESSAGING_POLICIES 0
+#endif  /* !TAO_DISABLE_CORBA_MESSAGING_POLICIES */
+
+// To explicitly disable REBIND_POLICY support uncomment the following
+// #define TAO_HAS_REBIND_POLICY 0
+
+// Default REBIND_POLICY settings
+#if !defined (TAO_HAS_REBIND_POLICY)
+#  if (TAO_HAS_CORBA_MESSAGING == 1) && \
+      (TAO_DISABLE_CORBA_MESSAGING_POLICIES == 0)
+#    define TAO_HAS_REBIND_POLICY 1
+#  else
+#    define TAO_HAS_REBIND_POLICY 0
+#  endif  /* TAO_HAS_CORBA_MESSAGING == 1 &&
+             TAO_DISABLE_CORBA_MESSAGING_POLICIES == 0 */
+#endif  /* !TAO_HAS_REBIND_POLICY */
+
+// To explicitly disable SYNC_SCOPE_POLICY support uncomment the following
+// #define TAO_HAS_SYNC_SCOPE_POLICY 0
+
+// Default SYNC_SCOPE_POLICY settings
+#if !defined (TAO_HAS_SYNC_SCOPE_POLICY)
+#  if (TAO_HAS_CORBA_MESSAGING == 1) && \
+      (TAO_DISABLE_CORBA_MESSAGING_POLICIES == 0)
+#    define TAO_HAS_SYNC_SCOPE_POLICY 1
+#  else
+#    define TAO_HAS_SYNC_SCOPE_POLICY 0
+#  endif  /* TAO_HAS_CORBA_MESSAGING == 1 &&
+             TAO_DISABLE_CORBA_MESSAGING_POLICIES == 0 */
+#endif  /* !TAO_HAS_SYNC_SCOPE_POLICY */
+
+// To explicitly disable PRIORITY_POLICIES support uncomment the following
+// #define TAO_HAS_PRIORITY_POLICIES 0
+
+// Default PRIORITY_POLICIES settings
+#if !defined (TAO_HAS_PRIORITY_POLICIES)
+#  if (TAO_HAS_CORBA_MESSAGING == 1) && \
+      (TAO_DISABLE_CORBA_MESSAGING_POLICIES == 0)
+#    define TAO_HAS_PRIORITY_POLICIES 1
+#  else
+#    define TAO_HAS_PRIORITY_POLICIES 0
+#  endif  /* TAO_HAS_CORBA_MESSAGING == 1 &&
+             TAO_DISABLE_CORBA_MESSAGING_POLICIES == 0 */
+#endif  /* !TAO_HAS_PRIORITY_POLICIES */
+
+// To explicitly disable REQUEST_START_TIME_POLICY support uncomment the following
+// #define TAO_HAS_REQUEST_START_TIME_POLICY 0
+
+// Default REQUEST_START_TIME_POLICY settings
+#if !defined (TAO_HAS_REQUEST_START_TIME_POLICY)
+#  if (TAO_HAS_CORBA_MESSAGING == 1) && \
+      (TAO_DISABLE_CORBA_MESSAGING_POLICIES == 0)
+#    define TAO_HAS_REQUEST_START_TIME_POLICY 1
+#  else
+#    define TAO_HAS_REQUEST_START_TIME_POLICY 0
+#  endif  /* TAO_HAS_CORBA_MESSAGING == 1 &&
+             TAO_DISABLE_CORBA_MESSAGING_POLICIES == 0 */
+#endif  /* !TAO_HAS_REQUEST_START_TIME_POLICY */
+
+// To explicitly disable REQUEST_END_TIME_POLICY support uncomment the following
+// #define TAO_HAS_REQUEST_END_TIME_POLICY 0
+
+// Default REQUEST_END_TIME_POLICY settings
+#if !defined (TAO_HAS_REQUEST_END_TIME_POLICY)
+#  if (TAO_HAS_CORBA_MESSAGING == 1) && \
+      (TAO_DISABLE_CORBA_MESSAGING_POLICIES == 0)
+#    define TAO_HAS_REQUEST_END_TIME_POLICY 1
+#  else
+#    define TAO_HAS_REQUEST_END_TIME_POLICY 0
+#  endif  /* TAO_HAS_CORBA_MESSAGING == 1 &&
+             TAO_DISABLE_CORBA_MESSAGING_POLICIES == 0 */
+#endif  /* !TAO_HAS_REQUEST_END_TIME_POLICY */
+
+// To explicitly disable REPLY_START_TIME_POLICY support uncomment the following
+// #define TAO_HAS_REPLY_START_TIME_POLICY 0
+
+// Default REPLY_START_TIME_POLICY settings
+#if !defined (TAO_HAS_REPLY_START_TIME_POLICY)
+#  if (TAO_HAS_CORBA_MESSAGING == 1) && \
+      (TAO_DISABLE_CORBA_MESSAGING_POLICIES == 0)
+#    define TAO_HAS_REPLY_START_TIME_POLICY 1
+#  else
+#    define TAO_HAS_REPLY_START_TIME_POLICY 0
+#  endif  /* TAO_HAS_CORBA_MESSAGING == 1 &&
+             TAO_DISABLE_CORBA_MESSAGING_POLICIES == 0 */
+#endif  /* !TAO_HAS_REPLY_START_TIME_POLICY */
+
+// To explicitly disable REPLY_END_TIME_POLICY support uncomment the following
+// #define TAO_HAS_REPLY_END_TIME_POLICY 0
+
+// Default REPLY_END_TIME_POLICY settings
+#if !defined (TAO_HAS_REPLY_END_TIME_POLICY)
+#  if (TAO_HAS_CORBA_MESSAGING == 1) && \
+      (TAO_DISABLE_CORBA_MESSAGING_POLICIES == 0)
+#    define TAO_HAS_REPLY_END_TIME_POLICY 1
+#  else
+#    define TAO_HAS_REPLY_END_TIME_POLICY 0
+#  endif  /* TAO_HAS_CORBA_MESSAGING == 1 &&
+             TAO_DISABLE_CORBA_MESSAGING_POLICIES == 0 */
+#endif  /* !TAO_HAS_REPLY_END_TIME_POLICY */
+
+// To explicitly disable RELATIVE_REQUEST_TIMEOUT_POLICY support uncomment the following
+// #define TAO_HAS_RELATIVE_REQUEST_TIMEOUT_POLICY 0
+
+// Default RELATIVE_REQUEST_TIMEOUT_POLICY settings
+#if !defined (TAO_HAS_RELATIVE_REQUEST_TIMEOUT_POLICY)
+#  if (TAO_HAS_CORBA_MESSAGING == 1) && \
+      (TAO_DISABLE_CORBA_MESSAGING_POLICIES == 0)
+#    define TAO_HAS_RELATIVE_REQUEST_TIMEOUT_POLICY 1
+#  else
+#    define TAO_HAS_RELATIVE_REQUEST_TIMEOUT_POLICY 0
+#  endif  /* TAO_HAS_CORBA_MESSAGING == 1 &&
+             TAO_DISABLE_CORBA_MESSAGING_POLICIES == 0 */
+#endif  /* !TAO_HAS_RELATIVE_REQUEST_TIMEOUT_POLICY */
+
+// To explicitly disable RELATIVE_ROUNDTRIP_TIMEOUT_POLICY support uncomment the following
+// #define TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY 0
+
+// Default RELATIVE_ROUNDTRIP_TIMEOUT_POLICY settings
+#if !defined (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY)
+#  if (TAO_HAS_CORBA_MESSAGING == 1) && \
+      (TAO_DISABLE_CORBA_MESSAGING_POLICIES == 0)
+#    define TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY 1
+#  else
+#    define TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY 0
+#  endif  /* TAO_HAS_CORBA_MESSAGING == 1 &&
+             TAO_DISABLE_CORBA_MESSAGING_POLICIES == 0 */
+#endif  /* !TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY */
+
+// To explicitly disable ROUTING_POLICY support uncomment the following
+// #define TAO_HAS_ROUTING_POLICY 0
+
+// Default ROUTING_POLICY settings
+#if !defined (TAO_HAS_ROUTING_POLICY)
+#  if (TAO_HAS_CORBA_MESSAGING == 1) && \
+      (TAO_DISABLE_CORBA_MESSAGING_POLICIES == 0)
+#    define TAO_HAS_ROUTING_POLICY 1
+#  else
+#    define TAO_HAS_ROUTING_POLICY 0
+#  endif  /* TAO_HAS_CORBA_MESSAGING == 1 &&
+             TAO_DISABLE_CORBA_MESSAGING_POLICIES == 0 */
+#endif  /* !TAO_HAS_ROUTING_POLICY */
+
+// To explicitly disable MAX_HOPS_POLICY support uncomment the following
+// #define TAO_HAS_MAX_HOPS_POLICY 0
+
+// Default MAX_HOPS_POLICY settings
+#if !defined (TAO_HAS_MAX_HOPS_POLICY)
+#  if (TAO_HAS_CORBA_MESSAGING == 1) && \
+      (TAO_DISABLE_CORBA_MESSAGING_POLICIES == 0)
+#    define TAO_HAS_MAX_HOPS_POLICY 1
+#  else
+#    define TAO_HAS_MAX_HOPS_POLICY 0
+#  endif  /* TAO_HAS_CORBA_MESSAGING == 1 &&
+             TAO_DISABLE_CORBA_MESSAGING_POLICIES == 0 */
+#endif  /* !TAO_HAS_MAX_HOPS_POLICY */
+
+// To explicitly disable QUEUE_ORDER_POLICY support uncomment the following
+// #define TAO_HAS_QUEUE_ORDER_POLICY 0
+
+// Default QUEUE_ORDER_POLICY settings
+#if !defined (TAO_HAS_QUEUE_ORDER_POLICY)
+#  if (TAO_HAS_CORBA_MESSAGING == 1) && \
+      (TAO_DISABLE_CORBA_MESSAGING_POLICIES == 0)
+#    define TAO_HAS_QUEUE_ORDER_POLICY 1
+#  else
+#    define TAO_HAS_QUEUE_ORDER_POLICY 0
+#  endif  /* TAO_HAS_CORBA_MESSAGING == 1 &&
+             TAO_DISABLE_CORBA_MESSAGING_POLICIES == 0 */
+#endif  /* !TAO_HAS_QUEUE_ORDER_POLICY */
+
+// To explicitly disable CLIENT_PRIORITY_POLICY support uncomment the following
+// #define TAO_HAS_CLIENT_PRIORITY_POLICY 0
+
+// Default CLIENT_PRIORITY_POLICY settings
+#if !defined (TAO_HAS_CLIENT_PRIORITY_POLICY)
+#  if (TAO_HAS_CORBA_MESSAGING == 1) && \
+      (TAO_DISABLE_CORBA_MESSAGING_POLICIES == 0)
+#    define TAO_HAS_CLIENT_PRIORITY_POLICY 1
+#  else
+#    define TAO_HAS_CLIENT_PRIORITY_POLICY 0
+#  endif  /* TAO_HAS_CORBA_MESSAGING == 1 &&
+             TAO_DISABLE_CORBA_MESSAGING_POLICIES == 0 */
+#endif  /* !TAO_HAS_CLIENT_PRIORITY_POLICY */
+
+// To explicitly disable BUFFERING_CONSTRAINT_POLICY support uncomment the following
+// #define TAO_HAS_BUFFERING_CONSTRAINT_POLICY 0
+
+// Default BUFFERING_CONSTRAINT_POLICY settings
+#if !defined (TAO_HAS_BUFFERING_CONSTRAINT_POLICY)
+#  if (TAO_HAS_CORBA_MESSAGING == 1) && \
+      (TAO_DISABLE_CORBA_MESSAGING_POLICIES == 0)
+#    define TAO_HAS_BUFFERING_CONSTRAINT_POLICY 1
+#  else
+#    define TAO_HAS_BUFFERING_CONSTRAINT_POLICY 0
+#  endif  /* TAO_HAS_CORBA_MESSAGING == 1 &&
+             TAO_DISABLE_CORBA_MESSAGING_POLICIES == 0 */
+#endif  /* !TAO_HAS_BUFFERING_CONSTRAINT_POLICY */
+
 // AMI support is disabled by default, irrespective of whether TAO is
 // configured for minimum CORBA.
 // To explicitly enable AMI support uncomment the following

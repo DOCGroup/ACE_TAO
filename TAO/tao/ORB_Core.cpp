@@ -79,11 +79,15 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     opt_for_collocation_ (1),
     use_global_collocation_ (1),
     collocation_strategy_ (THRU_POA),
+
 #if (TAO_HAS_CORBA_MESSAGING == 1)
+
     policy_manager_ (0),
     default_policies_ (0),
     policy_current_ (0),
+
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
+
     poa_current_ (0),
     object_adapter_ (0),
     tm_ (),
@@ -105,10 +109,10 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     open_lock_ (),
     open_called_ (0),
     priority_mapping_ (0),
-#if (TAO_HAS_CORBA_MESSAGING == 1)
+#if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
     eager_buffering_sync_strategy_ (0),
     delayed_buffering_sync_strategy_ (0),
-#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
+#endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
     transport_sync_strategy_ (0),
     svc_config_argc_ (0),
     svc_config_argv_ (0)
@@ -121,13 +125,17 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
   ACE_NEW (this->to_iso8859_,   ACE_IBM1047_ISO8859);
 #endif /* ACE_MVS */
 
-#if (TAO_HAS_CORBA_MESSAGING == 1)
+#if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
   ACE_NEW (this->eager_buffering_sync_strategy_,
            TAO_Eager_Buffering_Sync_Strategy);
 
   ACE_NEW (this->delayed_buffering_sync_strategy_,
            TAO_Delayed_Buffering_Sync_Strategy);
+
+#endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
+
+#if (TAO_HAS_CORBA_MESSAGING == 1)
 
   ACE_NEW (this->policy_manager_,
            TAO_Policy_Manager);
@@ -152,10 +160,14 @@ TAO_ORB_Core::~TAO_ORB_Core (void)
   delete this->from_iso8859_;
   delete this->to_iso8859_;
 
-#if (TAO_HAS_CORBA_MESSAGING == 1)
+#if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
   delete this->eager_buffering_sync_strategy_;
   delete this->delayed_buffering_sync_strategy_;
+
+#endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
+
+#if (TAO_HAS_CORBA_MESSAGING == 1)
 
   delete this->policy_manager_;
   delete this->default_policies_;
@@ -963,7 +975,7 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
         {
           if (TAO_debug_level > 0)
             {
-              current_arg = arg_shifter.get_current (); 
+              current_arg = arg_shifter.get_current ();
               ACE_DEBUG ((LM_ERROR,
                           ASYS_TEXT ("ERROR: Unknown \"-ORB\" option ")
                           ASYS_TEXT ("<%s>.\n"),
@@ -2167,7 +2179,7 @@ TAO_ORB_Core::implrepo_service (void)
   return CORBA::Object::_duplicate (this->implrepo_service_);
 }
 
-#if (TAO_HAS_CORBA_MESSAGING == 1)
+#if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
 
 TAO_RelativeRoundtripTimeoutPolicy *
 TAO_ORB_Core::stubless_relative_roundtrip_timeout (void)
@@ -2196,7 +2208,7 @@ TAO_ORB_Core::stubless_relative_roundtrip_timeout (void)
   return result;
 }
 
-#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
+#endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
 
 // ****************************************************************
 
@@ -2252,9 +2264,13 @@ TAO_ORB_Core_TSS_Resources::~TAO_ORB_Core_TSS_Resources (void)
 TAO_TSS_Resources::TAO_TSS_Resources (void)
   :  poa_current_impl_ (0),
      default_environment_ (&this->tss_environment_)
+
 #if (TAO_HAS_CORBA_MESSAGING == 1)
+
   , policy_current_ (&this->initial_policy_current_)
+
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
+
 {
 }
 

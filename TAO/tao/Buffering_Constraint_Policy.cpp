@@ -3,7 +3,7 @@
 
 #include "tao/Buffering_Constraint_Policy.h"
 
-#if (TAO_HAS_CORBA_MESSAGING == 1)
+#if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
 ACE_RCSID(TAO, Buffering_Constraint_Policy, "$Id$")
 
@@ -109,4 +109,4 @@ TAO_Buffering_Constraint_Policy::_default_POA (CORBA_Environment &)
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
+#endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */

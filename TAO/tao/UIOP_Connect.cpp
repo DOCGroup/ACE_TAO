@@ -429,7 +429,8 @@ TAO_UIOP_Client_Connection_Handler::handle_timeout (const ACE_Time_Value &,
 
   ACE_Time_Value *max_wait_time = 0;
 
-#if (TAO_HAS_CORBA_MESSAGING == 1)
+#if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
+
   TAO_RelativeRoundtripTimeoutPolicy *timeout_policy =
     this->orb_core_->stubless_relative_roundtrip_timeout ();
 
@@ -443,7 +444,8 @@ TAO_UIOP_Client_Connection_Handler::handle_timeout (const ACE_Time_Value &,
       timeout_policy->set_time_value (max_wait_time_value);
       max_wait_time = &max_wait_time_value;
     }
-#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
+
+#endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
 
   // Cannot deal with errors, and therefore they are ignored.
   this->transport ()->send_buffered_messages (max_wait_time);

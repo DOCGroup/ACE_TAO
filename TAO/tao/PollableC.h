@@ -23,7 +23,7 @@
 
 #include "tao/corbafwd.h"
 
-#if (TAO_HAS_CORBA_MESSAGING == 1) && (TAO_HAS_AMI_POLLER == 1)
+#if (TAO_HAS_AMI_POLLER == 1)
 
 #include "tao/Object.h"
 #include "tao/Exception.h"
@@ -474,7 +474,7 @@ TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA_PollableSet::Unknown
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
-#endif /* TAO_HAS_CORBA_MESSAGING == 1 && TAO_HAS_AMI_POLLER == 1 */
+#endif /* TAO_HAS_AMI_POLLER == 1 */
 
 #include "ace/post.h"
 #endif /* TAO_IDL_POLLABLEC_H */

@@ -55,12 +55,12 @@ class TAO_Reactor_Registry;
 class TAO_Leader_Follower;
 class TAO_Priority_Mapping;
 
-#if (TAO_HAS_CORBA_MESSAGING == 1)
+#if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
 class TAO_Eager_Buffering_Sync_Strategy;
 class TAO_Delayed_Buffering_Sync_Strategy;
 
-#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
+#endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
 
 class TAO_Transport_Sync_Strategy;
 
@@ -325,14 +325,35 @@ public:
       CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ());
   // Accesor to obtain the default policy for a particular policy
-  // type.
-  // If there is no default policy it returns CORBA::Policy::_nil ()
+  // type.  If there is no default policy it returns
+  // CORBA::Policy::_nil ()
+
+#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
+
+#if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
 
   TAO_RelativeRoundtripTimeoutPolicy *default_relative_roundtrip_timeout (void) const;
 
+  TAO_RelativeRoundtripTimeoutPolicy *stubless_relative_roundtrip_timeout (void);
+  // Access to the RoundtripTimeoutPolicy policy set on the thread or
+  // on the ORB.  In this method, we do not consider the stub since we
+  // do not have access to it.
+
+#endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
+
+#if (TAO_HAS_CLIENT_PRIORITY_POLICY == 1)
+
   TAO_Client_Priority_Policy *default_client_priority (void) const;
 
+#endif /* TAO_HAS_CLIENT_PRIORITY_POLICY == 1 */
+
+#if (TAO_HAS_SYNC_SCOPE_POLICY == 1)
+
   TAO_Sync_Scope_Policy *default_sync_scope (void) const;
+
+#endif /* TAO_HAS_SYNC_SCOPE_POLICY == 1 */
+
+#if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
   TAO_Buffering_Constraint_Policy *default_buffering_constraint (void) const;
 
@@ -340,12 +361,7 @@ public:
   TAO_Eager_Buffering_Sync_Strategy &eager_buffering_sync_strategy (void);
   TAO_Delayed_Buffering_Sync_Strategy &delayed_buffering_sync_strategy (void);
 
-  TAO_RelativeRoundtripTimeoutPolicy *stubless_relative_roundtrip_timeout (void);
-  // Access to the RoundtripTimeoutPolicy policy set on the thread or
-  // on the ORB.  In this method, we do not consider the stub since we
-  // do not have access to it.
-
-#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
+#endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
 
   TAO_Transport_Sync_Strategy &transport_sync_strategy (void);
   // This strategy will sync with the transport.
@@ -530,6 +546,7 @@ protected:
   // Default collocation policy.  This should never be ORB_CONTROL.
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
+
   TAO_Policy_Manager *policy_manager_;
   // The Policy_Manager for this ORB.
 
@@ -538,6 +555,7 @@ protected:
 
   TAO_Policy_Current *policy_current_;
   // Policy current.
+
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
   TAO_POA_Current *poa_current_;
@@ -595,7 +613,7 @@ protected:
   TAO_Priority_Mapping *priority_mapping_;
   // The priority mapping.
 
-#if (TAO_HAS_CORBA_MESSAGING == 1)
+#if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
   TAO_Eager_Buffering_Sync_Strategy *eager_buffering_sync_strategy_;
   // This strategy will buffer messages.
@@ -603,7 +621,7 @@ protected:
   TAO_Delayed_Buffering_Sync_Strategy *delayed_buffering_sync_strategy_;
   // This strategy will buffer messages.
 
-#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
+#endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
 
   TAO_Transport_Sync_Strategy *transport_sync_strategy_;
   // This strategy will sync with the transport.
@@ -678,13 +696,16 @@ public:
   // still holds one.
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
+
   TAO_Policy_Current_Impl initial_policy_current_;
   // The initial PolicyCurrent for this thread. Should be a TSS
   // resource.
 
   TAO_Policy_Current_Impl *policy_current_;
   // This pointer is reset by the POA on each upcall.
+
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
+
 };
 
 // @@ Must go away....
