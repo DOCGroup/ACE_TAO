@@ -1940,7 +1940,7 @@ Mon Dec 31 11:01:29 2001  Jeff Parsons <parsons@cs.wustl.edu>
 	    done previously. Each AST node now has knowledge only of its own
 	    prefix, if any. This means that a list of prefixes seen so far has
 	    been eliminated as an argument to the constructor of all AST node.
-	    classes.
+	    classes.  [Bug 129]
 
 	  - Support for #pragma version and #pragma ID. Since these apply only to
 	    the IDL declaration immediately following, no scope maintenance is
