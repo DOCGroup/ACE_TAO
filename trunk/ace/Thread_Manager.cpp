@@ -1157,7 +1157,11 @@ ACE_Thread_Manager::kill_thr (ACE_Thread_Descriptor *td, int signum)
 
       return -1;
     }
-  else
+#if defined (CHORUS)
+  else if (signum == SIGTHREADKILL)
+    this->thr_to_be_removed_.enqueue_tail (td);
+#endif /* CHORUS */
+
     return 0;
 }
 
