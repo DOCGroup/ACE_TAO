@@ -731,7 +731,7 @@ namespace
 
       os << "void" << endl
          << t.name () << "_exec_i::ciao_preactivate (" << endl
-         << STRS[ENV_SNGL_SRC_NOT_USED] << ")" << endl
+         << STRS[ENV_SNGL_SRC_NOTUSED] << ")" << endl
          << STRS[EXCP_START] << endl
          << STRS[EXCP_SYS] << "," << endl
          << STRS[EXCP_CE] << "))" << endl
