@@ -122,6 +122,71 @@ private:
 };
 
 /**
+ * @class ACE_Dynamic_Cached_Allocator
+ *
+ * @brief Create a cached memory poll with <n_chunks> chunks each with
+ * requested size <chunk_size>.
+ *
+ * This class enables caching of dynamically allocated,
+ * chunks with size <chunk_size>.  Notice that the <code>chunk_size</code>
+ * must be greater than or equal to <code> sizeof (void*) </code> for
+ * this to work properly.
+ *
+ * @sa ACE_Cached_Mem_Pool_Node
+ */
+template <class ACE_LOCK>
+class ACE_Dynamic_Cached_Allocator : public ACE_New_Allocator
+{
+public:
+  /// Create a cached memory poll with <n_chunks> chunks
+  /// each with <chunk_size> size.
+  ACE_Dynamic_Cached_Allocator (size_t n_chunks, size_t chunk_size);
+
+  /// clear things up.
+  ~ACE_Dynamic_Cached_Allocator (void);
+
+  /**
+   * Get a chunk of memory from free list cache.  Note that <nbytes> is
+   * only checked to make sure that it's <= to <chunk_size>, and is
+   * otherwise ignored since <malloc> always returns a pointer to an
+   * item of <chunk_size> size.
+   */
+  void *malloc (size_t nbytes = 0);
+
+  /**
+   * Get a chunk of memory from free list cache, giving them
+   * <initial_value>.  Note that <nbytes> is only checked to make sure
+   * that it's <= to <chunk_size>, and is otherwise ignored since <malloc>
+   * always returns a pointer to an item of <chunk_size>.
+   */
+  virtual void *calloc (size_t nbytes,
+                        char initial_value = '\0');
+
+  /// This method is a no-op and just returns 0 since the free list
+  /// only works with fixed sized entities.
+  virtual void *calloc (size_t n_elem,
+                        size_t elem_size,
+                        char initial_value = '\0');
+
+  /// Return a chunk of memory back to free list cache.
+  void free (void *);
+
+private:
+  /// Remember how we allocate the memory in the first place so
+  /// we can clear things up later.
+  char *pool_;
+
+  /// Maintain a cached memory free list. We use <char> as template
+  /// parameter, although sizeof(char) is usually less than
+  /// sizeof(void*). Really important is that <chunk_size> 
+  /// must be >= sizeof(void*).
+  ACE_Locked_Free_List<ACE_Cached_Mem_Pool_Node<char>, ACE_LOCK> free_list_;
+
+  /// Remember the size of our chunks.
+  size_t chunk_size_;
+};
+
+/**
  * @class ACE_Allocator_Adapter
  *
  * @brief This class is an Adapter that allows the <ACE_Allocator> to
