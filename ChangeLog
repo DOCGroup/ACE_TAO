@@ -1,3 +1,11 @@
+Sat May 20 18:34:05 2000  Ossama Othman  <ossama@uci.edu>
+
+	* configure.in (ACE_HAS_BROKEN_T_ERROR):
+
+	  Fixed the test that checks if t_error() correctly accepts a
+	  "const char *" parameter.  This should fix a problem that was
+	  occuring on Solaris.
+
 Sat May 20 19:47:52 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Memory_Pool.cpp: Added the seh_selector method for
