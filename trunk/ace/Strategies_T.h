@@ -112,13 +112,13 @@ public:
   // "Do-nothing" constructor.
 
   ACE_DLL_Strategy (const char svc_dll_info[],
-		    ACE_Service_Config *,
+		    ACE_Service_Repository *,
 		    ACE_Thread_Manager * = 0);
   // Initialize the DLL strategy based upon the service's DLL
   // information contained in the <svc_dll_info> string.
 
   int open (const char svc_dll_info[],
-	    ACE_Service_Config *,
+	    ACE_Service_Repository *,
 	    ACE_Thread_Manager * = 0);
   // Initialize the DLL strategy based upon the service's DLL
   // information contained in the <svc_dll_info> string.
@@ -147,8 +147,8 @@ protected:
   char svc_name[MAXNAMELEN];
   // Name of the service.
 
-  ACE_Service_Config *svc_config_;
-  // Pointer to the Service_Configurator. 
+  ACE_Service_Repository *svc_rep_;
+  // Pointer to the <Service_Repository>.
 };
 
 template <class SVC_HANDLER>

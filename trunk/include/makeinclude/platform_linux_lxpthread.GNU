@@ -10,9 +10,9 @@
 
 CC              = gcc
 CXX		= g++
-CFLAGS          += $(DCFLAGS) -w -O2 -fno-strict-prototypes -D_POSIX_THREADS -D_POSIX_THREAD_SAFE_FUNCTIONS -D_REENTRANT
+CFLAGS          += $(DCFLAGS) -Wall -fno-strict-prototypes -D_POSIX_THREADS -D_POSIX_THREAD_SAFE_FUNCTIONS -D_REENTRANT
 CCFLAGS         += $(CFLAGS) -fno-implicit-templates
-DCFLAGS		+= -g
+DCFLAGS		+= -g -O3
 DLD             = $(CXX)
 LD		= $(CXX) 
 LIBS            += -ldl -lpthread
