@@ -874,6 +874,8 @@ CORBA_ORB::resolve_initial_references (const char *name,
   // Is the service name in the IOR Table.
   if (table->find_ior (object_id, ior) == 0)
     return this->string_to_object (ior.c_str (), ACE_TRY_ENV);
+  if (this->lookup_table_.find_ior (object_id, ior) == 0)
+    return this->string_to_object (ior.c_str (), ACE_TRY_ENV);
   else
     {
       // Get the list of initial reference prefixes specified through
