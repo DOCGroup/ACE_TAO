@@ -12,8 +12,6 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
 
-LDLIBS = -lTAO
-
 IDL_FILES = PP_Test
 IDL_SRC = PP_TestC.cpp PP_TestS.cpp
 PROG_SRCS = PP_Test_Server.cpp \

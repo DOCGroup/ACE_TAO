@@ -10,8 +10,6 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
 
-LDLIBS = -lTAO
-
 IDL_FILES = test
 TAO_IDLFLAGS += -I../../..
 IDL_SRC = testC.cpp testS.cpp

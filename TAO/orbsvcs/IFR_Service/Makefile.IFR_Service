@@ -13,7 +13,7 @@ ifndef TAO_ROOT
 endif
 
 LDLIBS = -lTypeCodeFactory_DLL -lTAO_Svc_Utils -lTAO_IFR_Client \
-         -lTAO_IORTable -lTAO_PortableServer -lTAO -lACE
+         -lTAO_IORTable -lTAO_PortableServer
 
 PROG_SRCS = \
         AliasDef_i.cpp \

@@ -10,8 +10,6 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
 
-LDLIBS = -lTAO
-
 IDL_FILES = test
 IDL_SRC = testC
 BIN = client

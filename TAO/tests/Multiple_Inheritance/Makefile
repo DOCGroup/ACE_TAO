@@ -12,8 +12,6 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
 
-LDLIBS = -lTAO
-
 IDL_FILES = Multiple_Inheritance
 IDL_SRC = Multiple_InheritanceC.cpp Multiple_InheritanceS.cpp
 PROG_SRCS = $(IDL_SRC) server.cpp client.cpp
