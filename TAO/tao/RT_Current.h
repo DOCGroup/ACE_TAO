@@ -17,9 +17,11 @@
 #define TAO_RT_CURRENT_H
 #include "ace/pre.h"
 
+#include "tao/orbconf.h"
+
 #if (TAO_HAS_RT_CORBA == 1)
 
-#iclude "tao/RTCORBAS.h"
+#include "tao/RTCORBAS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

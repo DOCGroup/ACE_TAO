@@ -1,3 +1,10 @@
+Tue May 23 22:45:50 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* tao/RT_Policy_i.cpp:
+	* tao/RT_Current.h:
+	* tao/Makefile
+	  Minor compiler warning fixes, dependencies.
+
 Tue May 23 19:19:09 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/append.cpp:
