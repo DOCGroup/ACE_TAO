@@ -85,6 +85,11 @@ private:
   Cubit_Factory_var factory;
   // Factory_var to register with NamingService.
 
+  Cubit_Shutdown_i shutdown_impl_;
+  // Implementation object of shutdown object.
+
+  Cubit_Shutdown_var shutdown_;
+
   CosNaming::NamingContext_var cubit_context_;
   // Naming context for the cubit_factory.
 

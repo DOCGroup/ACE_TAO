@@ -19,6 +19,7 @@
 // ============================================================================
 
 #include "ace/Get_Opt.h"
+#include "ace/Profile_Timer.h"
 #include "tao/corba.h"
 #include "cubitC.h"
 
@@ -38,7 +39,7 @@ public:
   Cubit_Client (void);
   ~Cubit_Client (void);
 
-  int run (void);
+  int run (int testing_collocation = 0);
   // Execute client example code.
 
   int init (int argc, char **argv);
