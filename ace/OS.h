@@ -29,6 +29,7 @@
 #include "ace/OS_Dirent.h"
 #include "ace/OS_String.h"
 #include "ace/OS_Memory.h"
+#include "ace/OS_TLI.h"
 
 // States of a recyclable object.
 enum ACE_Recyclable_State
@@ -875,9 +876,6 @@ typedef struct
 #     define ACE_DEFAULT_GLOBALNAME ACE_TEXT ("globalnames")
 #   endif /* ACE_DEFAULT_GLOBALNAME */
 
-typedef int ACE_HANDLE;
-typedef ACE_HANDLE ACE_SOCKET;
-#   define ACE_INVALID_HANDLE -1
 typedef int ACE_exitcode;
 
 typedef ACE_HANDLE ACE_SHLIB_HANDLE;
@@ -3202,24 +3200,8 @@ typedef int uid_t;
 typedef int gid_t;
 #   endif /* __BORLANDC__ */
 typedef char *caddr_t;
-struct rlimit { };
-struct t_call { };
-struct t_bind { };
-struct t_info { };
-struct t_optmgmt { };
-struct t_discon { };
-struct t_unitdata { };
-struct t_uderr { };
-struct netbuf { };
-
-// This is for file descriptors.
-typedef HANDLE ACE_HANDLE;
-
-// For Win32 compatibility.
-typedef SOCKET ACE_SOCKET;
 
 typedef DWORD ACE_exitcode;
-#   define ACE_INVALID_HANDLE INVALID_HANDLE_VALUE
 #   define ACE_SYSCALL_FAILED 0xFFFFFFFF
 
 // Needed to map calls to NT transparently.
@@ -3383,11 +3365,6 @@ protected:
   u_long waiting_threads_;
   // Number of waiting threads.
 };
-
-// Provide compatibility with Windows NT.
-typedef int ACE_HANDLE;
-// For Win32 compatibility.
-typedef ACE_HANDLE ACE_SOCKET;
 
 struct ACE_OVERLAPPED
 {
@@ -3654,34 +3631,6 @@ typedef void (*__sighandler_t)(int); // keep Signal compilation happy
 #     include /**/ <alloca.h>
 #   endif /* ACE_HAS_ALLOCA_H */
 
-#   if defined (ACE_HAS_TIUSER_H) || defined (ACE_HAS_XTI) || defined (ACE_HAS_FORE_ATM_XTI)
-#     if defined (ACE_HAS_BROKEN_XTI_MACROS)
-#       undef TCP_NODELAY
-#       undef TCP_MAXSEG
-#     endif /* ACE_HAS_BROKEN_XTI_MACROS */
-#     if defined (ACE_HAS_TIUSER_H_BROKEN_EXTERN_C)
-extern "C" {
-#     endif /* ACE_HAS_TIUSER_H_BROKEN_EXTERN_C */
-#     if defined (ACE_HAS_FORE_ATM_XTI)
-#       include /**/ <fore_xti/xti_user_types.h>
-#       include /**/ <fore_xti/xti.h>
-#       include /**/ <fore_xti/xti_atm.h>
-#       include /**/ <fore_xti/netatm/atm.h>
-#       include /**/ <fore_xti/ans.h>
-#     elif defined (ACE_HAS_TIUSER_H)
-#       include /**/ <tiuser.h>
-#     elif defined (ACE_HAS_SYS_XTI_H)
-#         define class ace_xti_class
-#         include /**/ <sys/xti.h>
-#         undef class
-#     else
-#         include /**/ <xti.h>
-#     endif /* ACE_HAS_FORE_ATM_XTI */
-#     if defined (ACE_HAS_TIUSER_H_BROKEN_EXTERN_C)
-}
-#     endif /* ACE_HAS_TIUSER_H_BROKEN_EXTERN_C */
-#   endif /* ACE_HAS_TIUSER_H || ACE_HAS_XTI */
-
 /* Set the proper handle type for dynamically-loaded libraries. */
 /* Also define a default 'mode' for loading a library - the names and values */
 /* differ between OSes, so if you write code that uses the mode, be careful */
@@ -3737,41 +3686,6 @@ extern "C" {
 #       endif /* RLIMIT_OFILE */
 #     endif /* defined (linux) || defined (AIX) || defined (SCO) */
 #   endif /* RLIMIT_NOFILE */
-
-#   if !defined (ACE_HAS_TLI_PROTOTYPES)
-// Define ACE_TLI headers for systems that don't prototype them....
-extern "C"
-{
-  int t_accept(int fildes, int resfd, struct t_call *call);
-  char *t_alloc(int fildes, int struct_type, int fields);
-  int t_bind(int fildes, struct t_bind *req, struct t_bind *ret);
-  int t_close(int fildes);
-  int t_connect(int fildes, struct t_call *sndcall,
-                struct t_call *rcvcall);
-  void t_error(const char *errmsg);
-  int t_free(char *ptr, int struct_type);
-  int t_getinfo(int fildes, struct t_info *info);
-  int t_getname (int fildes, struct netbuf *namep, int type);
-  int t_getstate(int fildes);
-  int t_listen(int fildes, struct t_call *call);
-  int t_look(int fildes);
-  int t_open(char *path, int oflag, struct t_info *info);
-  int t_optmgmt(int fildes, struct t_optmgmt *req,
-                struct t_optmgmt *ret);
-  int t_rcv(int fildes, char *buf, u_int nbytes, int *flags);
-  int t_rcvconnect(int fildes, struct t_call *call);
-  int t_rcvdis(int fildes, struct t_discon *discon);
-  int t_rcvrel(int fildes);
-  int t_rcvudata(int fildes, struct t_unitdata *unitdata, int *flags);
-  int t_rcvuderr(int fildes, struct t_uderr *uderr);
-  int t_snd(int fildes, const char *buf, u_int nbytes, int flags);
-  int t_snddis(int fildes, struct t_call *call);
-  int t_sndrel(int fildes);
-  int t_sndudata(int fildes, struct t_unitdata *unitdata);
-  int t_sync(int fildes);
-  int t_unbind(int fildes);
-}
-#   endif /* !ACE_HAS_TLI_PROTOTYPES */
 
 #   if defined (ACE_LACKS_MMAP)
 #     define PROT_READ 0
@@ -4385,17 +4299,6 @@ private:
 
 // Type of the extended signal handler.
 typedef void (*ACE_Sig_Handler_Ex) (int, siginfo_t *siginfo, ucontext_t *ucontext);
-
-// If the xti.h file redefines the function names, do it now, else
-// when the functigon definitions are encountered, they won't match the
-// declaration here.
-
-# if defined (ACE_REDEFINES_XTI_FUNCTIONS)
-#   include /**/ <xti.h>
-#   if defined (UNIXWARE_2_0)         /* They apparantly forgot one... */
-extern "C" int _xti_error(char *);
-#   endif /* UNIXWARE */
-# endif /* ACE_REDEFINES_XTI_FUNCTIONS */
 
 // = The ACE_Sched_Priority type should be used for platform-
 //   independent thread and process priorities, by convention.
@@ -5182,7 +5085,8 @@ private:
 class ACE_Export ACE_OS 
   : public ACE_OS_Dirent, 
     public ACE_OS_String,
-    public ACE_OS_Memory
+    public ACE_OS_Memory,
+    public ACE_OS_TLI
 {
   // = TITLE
   //     This class defines an OS independent programming API that
@@ -6121,63 +6025,6 @@ public:
   static int wsncmp (const WChar *,
                      const WChar *,
                      size_t len);
-
-  // = A set of wrappers for TLI.
-  static int t_accept (ACE_HANDLE fildes,
-                       int resfd,
-                       struct t_call
-                       *call);
-  static char *t_alloc (ACE_HANDLE fildes,
-                        int struct_type,
-                        int
-                        fields);
-  static int t_bind (ACE_HANDLE fildes,
-                     struct t_bind *req,
-                     struct
-                     t_bind *ret);
-  static int t_close (ACE_HANDLE fildes);
-  static int t_connect(int fildes,
-                       struct t_call *sndcall,
-                       struct t_call *rcvcall);
-  static void t_error (const char *errmsg);
-  static int t_free (char *ptr,
-                     int struct_type);
-  static int t_getinfo (ACE_HANDLE fildes,
-                        struct t_info *info);
-  static int t_getname (ACE_HANDLE fildes,
-                        struct netbuf *namep,
-                        int type);
-  static int t_getstate (ACE_HANDLE fildes);
-  static int t_listen (ACE_HANDLE fildes,
-                       struct t_call *call);
-  static int t_look (ACE_HANDLE fildes);
-  static int t_open (char *path,
-                     int oflag,
-                     struct t_info *info);
-  static int t_optmgmt (ACE_HANDLE fildes,
-                        struct t_optmgmt *req,
-                        struct t_optmgmt *ret);
-  static int t_rcv (ACE_HANDLE fildes,
-                    char *buf,
-                    u_int nbytes,
-                    int *flags);
-  static int t_rcvdis (ACE_HANDLE fildes,
-                       struct t_discon *discon);
-  static int t_rcvrel (ACE_HANDLE fildes);
-  static int t_rcvudata (ACE_HANDLE fildes,
-                         struct t_unitdata *unitdata,
-                         int *flags);
-  static int t_rcvuderr (ACE_HANDLE fildes,
-                         struct t_uderr *uderr);
-  static int t_snd (ACE_HANDLE fildes,
-                    const char *buf,
-                    u_int nbytes,
-                    int flags);
-  static int t_snddis (ACE_HANDLE fildes,
-                       struct t_call *call);
-  static int t_sndrel (ACE_HANDLE fildes);
-  static int t_sync (ACE_HANDLE fildes);
-  static int t_unbind (ACE_HANDLE fildes);
 
 # if 0
   // = A set of wrappers for threads (these are portable since they use the ACE_Thread_ID).
