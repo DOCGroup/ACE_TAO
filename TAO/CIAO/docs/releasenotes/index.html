@@ -33,8 +33,8 @@
 	    A run-time infrastructure that performs the actual deployment and
 	    configuration, with a superset of the capabilities described in OMG
 	    DnC specification with CIAO extension. The implementation source code
-	    could be fount in <a href="../../DnC"> this directory </a>.
-	    <br><br>
+	    could be fount in <a href="../../DnC"> this directory </a>.<p><p>
+
 	    In the new DnC run-time framework we have migrated all the
 	    functionalities presented in the old CIAO runtime except the
 	    Real-Time configuration and Static Configuration, which are
@@ -42,7 +42,27 @@
 	    the two CIAO runtime co-exist in our source and the component
 	    implementation could be used with both framework without much
 	    change. (For the change that one has to go through please
-	    read <a href="./switch.html">this</a>.)
+	    read <a href="./switch.html">this</a>.)<p>
+	  <li>
+	    Here is a set of updates in the CIDL Compiler.<p>
+	    <ul>
+	        <li>Fixed bugs in generation of inherited: home operations,
+		    attribute operations, port operations, home factory
+		    operations, supported operationsa.<p>
+
+		 <li>Added support for multiplex uses ports.<p>
+
+		 <li>Added automatic registration of value factories for
+		     event consumers.<p>
+
+		 <li>Added support for emits-related navigation.<p>
+
+		 <li>Fixed bug with multiple facets in a build that provide
+		     the same interface.<p>
+
+		 <li>Implemented get_all_facets() and get_all_consumers()
+		     navigation methods.
+	     </ul>
 	  </ul>
       </ul>
 
@@ -418,7 +438,7 @@ certain release together.  All interfaces and types are under
       </ul>
       <p>
 
-  <li><b>CIAO 0.5 beta release</b> - (TAO 1.4.x, July 2004)
+  <li><b>CIAO 0.4.3 beta release</b> - (TAO 1.4.x, July 2004)
       <ul>
         <li>Usable version of CIAO with the new DnC implementation
 	    tested on Linux and Win32.
