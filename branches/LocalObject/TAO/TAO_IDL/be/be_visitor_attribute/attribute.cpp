@@ -225,8 +225,14 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
     case TAO_CodeGen::TAO_ATTRIBUTE_CH:
       ctx.state (TAO_CodeGen::TAO_OPERATION_CH);
       break;
+    case TAO_CodeGen::TAO_LOCAL_ATTRIBUTE_H:
+      ctx.state (TAO_CodeGen::TAO_LOCAL_OPERATION_H);
+      break;
     case TAO_CodeGen::TAO_ATTRIBUTE_CS:
       ctx.state (TAO_CodeGen::TAO_OPERATION_CS);
+      break;
+    case TAO_CodeGen::TAO_LOCAL_ATTRIBUTE_S:
+      ctx.state (TAO_CodeGen::TAO_LOCAL_OPERATION_S);
       break;
     case TAO_CodeGen::TAO_ATTRIBUTE_SH:
       ctx.state (TAO_CodeGen::TAO_OPERATION_SH);
