@@ -1,5 +1,8 @@
 Tue May 12 17:34:06 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
+	* tests/OctetSeq/OctetSeq.cpp: 
+	  Added missing template instantiation.
+
 	* tao/Sequence_T.i: 
 	  Fixed typo in Unbounded sequences.
 
