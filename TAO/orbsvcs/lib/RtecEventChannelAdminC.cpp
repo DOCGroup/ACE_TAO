@@ -298,7 +298,7 @@ static const CORBA::Long _oc_RtecEventChannelAdmin_ConsumerQOS[] =
   TAO_ENCAP_BYTE_ORDER, // byte order
   42, 0x49444c3a, 0x52746563, 0x4576656e, 0x74436861, 0x6e6e656c, 0x41646d69, 0x6e2f436f, 0x6e73756d, 0x6572514f, 0x533a312e, 0x30000000,  // repository ID = IDL:RtecEventChannelAdmin/ConsumerQOS:1.0
   12, 0x436f6e73, 0x756d6572, 0x514f5300,  // name = ConsumerQOS
-  2, // member count
+  1, // member count
     13, 0x64657065, 0x6e64656e, 0x63696573, 0x0,  // name = dependencies
     CORBA::tk_alias, // typecode kind for typedefs
     664, // encapsulation length
@@ -367,51 +367,7 @@ static const CORBA::Long _oc_RtecEventChannelAdmin_ConsumerQOS[] =
             CORBA::tk_long,
 
             0,
-    14, 0x666f7277, 0x6172645f, 0x6576656e, 0x74000000,  // name = forward_event
-    CORBA::tk_struct, // typecode kind
-    396, // encapsulation length
-      TAO_ENCAP_BYTE_ORDER, // byte order
-      28, 0x49444c3a, 0x52746563, 0x4576656e, 0x74436f6d, 0x6d2f4576, 0x656e743a, 0x312e3000,  // repository ID = IDL:RtecEventComm/Event:1.0
-      6, 0x4576656e, 0x74000000,  // name = Event
-      4, // member count
-        8, 0x736f7572, 0x63655f00,  // name = source_
-        CORBA::tk_alias, // typecode kind for typedefs
-        68, // encapsulation length
-          TAO_ENCAP_BYTE_ORDER, // byte order
-          36, 0x49444c3a, 0x52746563, 0x4576656e, 0x74436f6d, 0x6d2f4576, 0x656e7453, 0x6f757263, 0x6549443a, 0x312e3000,  // repository ID = IDL:RtecEventComm/EventSourceID:1.0
-          14, 0x4576656e, 0x74536f75, 0x72636549, 0x44000000,  // name = EventSourceID
-          CORBA::tk_long,
-
-        6, 0x74797065, 0x5f000000,  // name = type_
-        CORBA::tk_alias, // typecode kind for typedefs
-        60, // encapsulation length
-          TAO_ENCAP_BYTE_ORDER, // byte order
-          32, 0x49444c3a, 0x52746563, 0x4576656e, 0x74436f6d, 0x6d2f4576, 0x656e7454, 0x7970653a, 0x312e3000,  // repository ID = IDL:RtecEventComm/EventType:1.0
-          10, 0x4576656e, 0x74547970, 0x65000000,  // name = EventType
-          CORBA::tk_long,
-
-        6, 0x74696d65, 0x5f000000,  // name = time_
-        CORBA::tk_alias, // typecode kind for typedefs
-        52, // encapsulation length
-          TAO_ENCAP_BYTE_ORDER, // byte order
-          27, 0x49444c3a, 0x52746563, 0x4576656e, 0x74436f6d, 0x6d2f5469, 0x6d653a31, 0x2e300000,  // repository ID = IDL:RtecEventComm/Time:1.0
-          5, 0x54696d65, 0x0,  // name = Time
-          CORBA::tk_long,
-
-        6, 0x64617461, 0x5f000000,  // name = data_
-        CORBA::tk_struct, // typecode kind
-        84, // encapsulation length
-          TAO_ENCAP_BYTE_ORDER, // byte order
-          32, 0x49444c3a, 0x52746563, 0x4576656e, 0x74436f6d, 0x6d2f4576, 0x656e7444, 0x6174613a, 0x312e3000,  // repository ID = IDL:RtecEventComm/EventData:1.0
-          10, 0x4576656e, 0x74446174, 0x61000000,  // name = EventData
-          2, // member count
-            2, 0x78000000,  // name = x
-            CORBA::tk_long,
-
-            2, 0x79000000,  // name = y
-            CORBA::tk_long,
-
-            };
+};
 static CORBA::TypeCode _tc__tc_RtecEventChannelAdmin_ConsumerQOS (CORBA::tk_struct, sizeof (_oc_RtecEventChannelAdmin_ConsumerQOS), (unsigned char *) &_oc_RtecEventChannelAdmin_ConsumerQOS, CORBA::B_FALSE);
 CORBA::TypeCode_ptr RtecEventChannelAdmin::_tc_ConsumerQOS = &_tc__tc_RtecEventChannelAdmin_ConsumerQOS;
 

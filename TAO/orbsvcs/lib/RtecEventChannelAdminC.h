@@ -248,8 +248,6 @@ static CORBA::TypeCode_ptr _tc_TypeError;
   {
     ACE_NESTED_CLASS (RtecEventChannelAdmin,DependencySet) dependencies;
 
-    RtecEventComm::Event forward_event;
-
   };
 
   class ConsumerQOS_var

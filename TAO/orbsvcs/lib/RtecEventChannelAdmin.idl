@@ -19,7 +19,6 @@ module RtecEventChannelAdmin {
 
   struct ConsumerQOS {
     DependencySet dependencies;
-    RtecEventComm::Event forward_event;
   };
 
   struct Publication {
