@@ -1,3 +1,13 @@
+Mon Nov 22 07:54:06 2004  Ciju John  <john_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/Notify/Any/ProxyPushConsumer.cpp
+        * orbsvcs/orbsvcs/Notify/Any/ProxyPushConsumer.h
+        * orbsvcs/Notify/Sequence/SequenceProxyPushConsumer.cpp
+        * orbsvcs/Notify/Sequence/SequenceProxyPushConsumer.h
+        * orbsvcs/Notify/Structured/StructuredProxyPushConsumer.cpp
+        * orbsvcs/Notify/Structured/StructuredProxyPushConsumer.h
+          ACE environment parameters were missing.
+
 Sun Nov 21 20:42:59 2004  Ciju John  <john_c@ociweb.com>
 
         * notify_serv.mpb:
