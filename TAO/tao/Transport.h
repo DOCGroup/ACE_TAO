@@ -324,9 +324,9 @@ public:
    * bytes already on the OS I/O subsystem.
    *
    */
-  virtual ssize_t send (const ACE_Message_Block *mblk,
-                        const ACE_Time_Value *timeout = 0,
-                        size_t *bytes_transferred = 0) = 0;
+  virtual ssize_t send (iovec *iov, int iovcnt,
+                        size_t &bytes_transferred,
+                        const ACE_Time_Value *timeout = 0) = 0;
 
   // Read len bytes from into buf.
   /**
@@ -466,26 +466,10 @@ public:
                               CORBA::Octet minor) = 0;
   //@}
 
-protected:
-#if 0
-  /// Remove the first message from the outgoing queue.
-  void dequeue_head (void);
-
-  /// Update the state of the outgoing queue, assuming that
-  /// bytes_delivered bytes have been sent already.
-  void reset_queued_message (ACE_Message_Block *message_block,
-                             size_t bytes_delivered);
-
-  /// Update the state of the outgoing queue, this time a complete
-  /// message was sent.
-  void reset_sent_message (ACE_Message_Block *message_block,
-                           size_t bytes_delivered);
-
-  /// Helper function used to implement the two methods above.
-  void reset_message (ACE_Message_Block *message_block,
-                      size_t bytes_delivered,
-                      int queued_message);
-#endif /* 0 */
+  /// Send a message block chain, 
+  int send_message_block_chain (const ACE_Message_Block *message_block,
+                                size_t &bytes_transferred,
+                                ACE_Time_Value *max_wait_time = 0);
 
 protected:
   /// Sent the contents of <message_block>, blocking if required by

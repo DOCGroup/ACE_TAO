@@ -21,7 +21,13 @@ TAO_Queued_Message::TAO_Queued_Message (ACE_Message_Block *contents,
 
 TAO_Queued_Message::~TAO_Queued_Message (void)
 {
-  ACE_Message_Block::release (this->contents_);
+  ACE_Message_Block *i = this->contents_;
+  while (i != 0)
+    {
+      ACE_Message_Block *cont = i->cont (); i->cont (0);
+      ACE_Message_Block::release (i);
+      i = cont;
+    }
 }
 
 void

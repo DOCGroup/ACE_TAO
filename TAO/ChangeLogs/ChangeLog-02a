@@ -1,19 +1,37 @@
+Mon Feb 12 10:15:47 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Transport.h:
+        * tao/Transport.cpp:
+          Add new method to send a message block chain.
+          The template method to send data takes an iovec argument.
+
+        * tao/IIOP_Transport.h:
+        * tao/IIOP_Transport.cpp:
+          Implement the iovec-based send() template method.
+
+        * tao/Queued_Message.cpp:
+          The cleanup code was broken.
+
+        * tao/GIOP_Message_Base.cpp:
+          Use the message block chain method to send short critical
+          messages.
+
 Fri Feb 09 10:50:47 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/Queued_Message.h:
         * tao/Queued_Message.inl:
         * tao/Queued_Message.cpp:
-	  Add new class to represent a queued message in the outgoing
-	  path.  This class has to keep more than just the message block,
-	  it also takes care of timeouts and signaling any waiting thread
-	  when the message is sent.
+          Add new class to represent a queued message in the outgoing
+          path.  This class has to keep more than just the message block,
+          it also takes care of timeouts and signaling any waiting thread
+          when the message is sent.
 
         * tao/Message_Sent_Callback.h:
         * tao/Message_Sent_Callback.inl:
         * tao/Message_Sent_Callback.cpp:
-	  Define interface to signal threads waiting for a message to be
-	  sent out, e.g. twoway requests blocked waiting for a queued
-	  message.
+          Define interface to signal threads waiting for a message to be
+          sent out, e.g. twoway requests blocked waiting for a queued
+          message.
 
         * tao/Flushing_Strategy.h:
         * tao/Flushing_Strategy.cpp:
@@ -21,40 +39,40 @@ Fri Feb 09 10:50:47 2001  Carlos O'Ryan  <coryan@uci.edu>
         * tao/Block_Flushing_Strategy.cpp:
         * tao/Reactive_Flushing_Strategy.h
         * tao/Reactive_Flushing_Strategy.cpp:
-	  New classes to control how the outgoing data is flushed,
-	  either by blocking on write() or by using the reactor.
+          New classes to control how the outgoing data is flushed,
+          either by blocking on write() or by using the reactor.
 
-	* tao/Resource_Factory.h:
+        * tao/Resource_Factory.h:
         * tao/default_resource.h:
         * tao/default_resource.cpp:
-	  Add new methods to create the flushing strategy.
+          Add new methods to create the flushing strategy.
 
         * tao/ORB_Core.h:
         * tao/ORB_Core.i:
         * tao/ORB_Core.cpp:
-	  Add accessor for the flushing strategy.  Notice that the
-	  strategy is stateless so a single instance (per-ORB) is needed.
+          Add accessor for the flushing strategy.  Notice that the
+          strategy is stateless so a single instance (per-ORB) is needed.
 
         * tao/Sync_Strategies.h:
         * tao/Sync_Strategies.cpp:
-	  The Sync_Strategies have been simplified.  They are now
-	  stateless, and they only need to answer a couple of questions
-	  (1) should a message be buffered, (2) should the ORB flush a
-	  queue.
+          The Sync_Strategies have been simplified.  They are now
+          stateless, and they only need to answer a couple of questions
+          (1) should a message be buffered, (2) should the ORB flush a
+          queue.
 
         * performance-tests/Latency/st_client.cpp:
-	  Destroy the ORB on shutdown.
+          Destroy the ORB on shutdown.
 
         * tao/TAO.dsp:
         * tao/TAO_Static.dsp:
-	  Add the new files to the TAO project files.
+          Add the new files to the TAO project files.
 
         * tao/Transport.h:
         * tao/Transport.inl:
         * tao/Transport.cpp:
-	  Move much of the functionality of sending and outgoing message
-	  queue up to the base transport class.  Remove a lot of code
-	  deailing with the previous (blocking) queues.
+          Move much of the functionality of sending and outgoing message
+          queue up to the base transport class.  Remove a lot of code
+          deailing with the previous (blocking) queues.
 
         * tao/IIOP_Transport.cpp:
         * tao/IIOP_Connection_Handler.cpp:
@@ -64,18 +82,18 @@ Fri Feb 09 10:50:47 2001  Carlos O'Ryan  <coryan@uci.edu>
         * tao/Strategies/UIOP_Connection_Handler.cpp:
         * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp:
         * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
-	  Change the transport and connection handlers to use the new
-	  outgoing message queue, the flushing strategy and the changes to
-	  the SyncStrategy.
+          Change the transport and connection handlers to use the new
+          outgoing message queue, the flushing strategy and the changes to
+          the SyncStrategy.
 
         * tao/GIOP_Message_Base.cpp:
-	  Propagate a few interface changes.
+          Propagate a few interface changes.
 
         * tests/LongWrites/LongWrites.dsw:
         * tests/LongWrites/client.dsp:
         * tests/LongWrites/server.dsp:
         * tests/LongWrites/run_test.pl:
-	  Got the test to compile (and run) under NT.
+          Got the test to compile (and run) under NT.
 
 Wed Feb  7 14:31:48 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -94,18 +112,18 @@ Wed Feb  7 14:31:48 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Wed Feb  7 12:57:35 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
-	* tao/Acceptor_Registry.cpp:
-	  Fixed redundant call to strtok_r in open_i when a protocol is
- 	  specified without an endpoint.  This was causing core dumps on
- 	  Linux platforms.  Thanks to Christian Ewald
- 	  <christian.ewald@zuehlke.com> for reporting this.
+        * tao/Acceptor_Registry.cpp:
+          Fixed redundant call to strtok_r in open_i when a protocol is
+          specified without an endpoint.  This was causing core dumps on
+          Linux platforms.  Thanks to Christian Ewald
+          <christian.ewald@zuehlke.com> for reporting this.
 
 Tue Feb  6 22:39:06 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
-	* tao/Connection_Cache_Manager.cpp:
-	  Fixed core dump in close_i () that was being caused by
-	  unbinding hash map entries while iterating over the
-	  hash map.
+        * tao/Connection_Cache_Manager.cpp:
+          Fixed core dump in close_i () that was being caused by
+          unbinding hash map entries while iterating over the
+          hash map.
 
 Tue Feb 06 15:49:41 2001  Carlos O'Ryan  <coryan@uci.edu>
 
@@ -117,9 +135,9 @@ Tue Feb 06 15:49:41 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 Tue Feb  6 16:34:16 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/Multicast/ftp.cpp: 
-	
-	  Fixed compile warnings on SunCC42.	
+        * orbsvcs/tests/AVStreams/Multicast/ftp.cpp:
+
+          Fixed compile warnings on SunCC42.
 
 Tue Feb  6 10:20:02 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
