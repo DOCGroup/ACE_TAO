@@ -239,7 +239,7 @@ typedef enum CMA_T_SCHED_POLICY {
 #define ACE_LACKS_SOCKETPAIR
 
 // Platform limits the maximum socket message size.
-#define ACE_HAS_SSIZE_MAX
+#define ACE_HAS_SOCK_BUF_SIZE_MAX
 
 // Platform has strptime()
 #define ACE_HAS_STRPTIME
