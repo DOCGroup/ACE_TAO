@@ -1,3 +1,9 @@
+Thu May 29 16:46:51 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* rules.tao.GNU: Reverted the change "Thu May 29 14:30:57 UTC 2003
+	  Gary Duzan <gduzan@bbn.com> , Craig Rodrigues
+	  <crodrigu@bbn.com>" since it breaks parallel builds.
+
 Thu May 29 11:12:28 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_decl.cpp:
