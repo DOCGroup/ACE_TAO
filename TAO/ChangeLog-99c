@@ -1,3 +1,12 @@
+Mon Jul 12 15:15:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.{cpp, h}: Fixed behavior
+	  of the reconfig scheduler so that it can be configured to return a
+          default value instead of throwing an exception if a schedule had not
+          been computed.  This is the behavior of the DynSched implementation.
+	  Thanks to Tom Venturella <thomas.e.venturella@boeing.com> for
+          reporting this.
+	
 Mon Jul 12 14:58:13 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tests/NestedUpcall/Simple/server.cpp: Fixed constness warning.
