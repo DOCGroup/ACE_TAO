@@ -463,8 +463,6 @@ extern "C" {
                          int sig);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
-  # define PACE_PTHREAD_MUTEX_INITIALIZER PTHREAD_MUTEX_INITIALIZER
-
   /**
      PACE's implementation of the POSIX function pthread_mutex_destroy.
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;

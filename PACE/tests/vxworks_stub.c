@@ -15,9 +15,12 @@
 /*                                                                       */
 /* ===================================================================== */
 
-# define main pace_main
+# define main post_pace_main
 # define PACE_NEEDS_HUGE_THREAD_STACKSIZE 64000
 # include /**/ <usrLib.h>   /* for ::sp() */
+# include /**/ "pace/pthread.h"
+
+int post_pace_main();
 
 /* This global function can be used from the VxWorks shell to pass
  * arguments to a C main () function.
@@ -91,4 +94,17 @@ spa (FUNCPTR entry, ...)
    * successful
    */
   return ret > 0 ? 0 : ret;
+}
+
+int
+pace_main(unsigned int argc, char* argv[])
+{
+  /* Setup information for VxWorks emulation */ 
+  if (pacevx_vxworks_init() == ERROR)
+    return ERROR;
+
+  /* Call the "normal" main function now that we've done
+   * our bookkeeping.
+   */
+  return post_pace_main(argc, argv);
 }
