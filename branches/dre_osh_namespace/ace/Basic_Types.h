@@ -257,51 +257,6 @@ typedef unsigned long  ptrdiff_t;    // evc3, PocketPC don't defined ptrdiff_t
 # endif
 typedef ptrdiff_t ptr_arith_t;
 
-// Byte-order (endian-ness) determination.
-# if defined (BYTE_ORDER)
-#   if (BYTE_ORDER == LITTLE_ENDIAN)
-#     define ACE_LITTLE_ENDIAN 0x0123
-#     define ACE_BYTE_ORDER ACE_LITTLE_ENDIAN
-#   elif (BYTE_ORDER == BIG_ENDIAN)
-#     define ACE_BIG_ENDIAN 0x3210
-#     define ACE_BYTE_ORDER ACE_BIG_ENDIAN
-#   else
-#     error: unknown BYTE_ORDER!
-#   endif /* BYTE_ORDER */
-# elif defined (_BYTE_ORDER)
-#   if (_BYTE_ORDER == _LITTLE_ENDIAN)
-#     define ACE_LITTLE_ENDIAN 0x0123
-#     define ACE_BYTE_ORDER ACE_LITTLE_ENDIAN
-#   elif (_BYTE_ORDER == _BIG_ENDIAN)
-#     define ACE_BIG_ENDIAN 0x3210
-#     define ACE_BYTE_ORDER ACE_BIG_ENDIAN
-#   else
-#     error: unknown _BYTE_ORDER!
-#   endif /* _BYTE_ORDER */
-# elif defined (__BYTE_ORDER)
-#   if (__BYTE_ORDER == __LITTLE_ENDIAN)
-#     define ACE_LITTLE_ENDIAN 0x0123
-#     define ACE_BYTE_ORDER ACE_LITTLE_ENDIAN
-#   elif (__BYTE_ORDER == __BIG_ENDIAN)
-#     define ACE_BIG_ENDIAN 0x3210
-#     define ACE_BYTE_ORDER ACE_BIG_ENDIAN
-#   else
-#     error: unknown __BYTE_ORDER!
-#   endif /* __BYTE_ORDER */
-# else /* ! BYTE_ORDER && ! __BYTE_ORDER */
-  // We weren't explicitly told, so we have to figure it out . . .
-#   if defined (i386) || defined (__i386__) || defined (_M_IX86) || \
-     defined (vax) || defined (__alpha) || defined (__LITTLE_ENDIAN__) ||\
-     defined (ARM) || defined (_M_IA64)
-    // We know these are little endian.
-#     define ACE_LITTLE_ENDIAN 0x0123
-#     define ACE_BYTE_ORDER ACE_LITTLE_ENDIAN
-#   else
-    // Otherwise, we assume big endian.
-#     define ACE_BIG_ENDIAN 0x3210
-#     define ACE_BYTE_ORDER ACE_BIG_ENDIAN
-#   endif
-# endif /* ! BYTE_ORDER && ! __BYTE_ORDER */
 
 #if defined (ACE_LACKS_LONGLONG_T)
   // This throws away the high 32 bits.  It's very unlikely that a

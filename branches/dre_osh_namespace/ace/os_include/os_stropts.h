@@ -50,9 +50,27 @@
 #  include /**/ <sys/sockio.h>
 #endif /* ACE_HAS_SOCKIO_ */
 
+// This is sorta counter intuitive, but this is how it was done in OS.h
+// @todo: fix this...  dhinton
+#if defined (ACE_HAS_STREAMS)
+#  if defined (AIX)
+#    if !defined (_XOPEN_EXTENDED_SOURCE)
+#      define _XOPEN_EXTENDED_SOURCE
+#    endif /* !_XOPEN_EXTENDED_SOURCE */
+#  endif /* AIX */
+#endif /* ACE_HAS_STREAMS */
+
 #if !defined (ACE_LACKS_STROPTS_H)
 #  include /**/ <stropts.h>
 #endif /* !ACE_LACKS_STROPTS_H */
+
+// This is sorta counter intuitive, but this is how it was done in OS.h
+// @todo: fix this...  dhinton
+#if defined (ACE_HAS_STREAMS)
+#  if defined (AIX)
+#    undef _XOPEN_EXTENDED_SOURCE
+#  endif /* AIX */
+#endif /* ACE_HAS_STREAMS */
 
 #if defined (VXWORKS)
 // for ioctl()
@@ -68,6 +86,32 @@ extern "C"
 #if defined (ACE_LACKS_STRRECVFD)
    struct strrecvfd {};
 #endif /* ACE_LACKS_STRRECVFD */
+
+# if !defined (SIOCGIFBRDADDR)
+#   define SIOCGIFBRDADDR 0
+# endif /* SIOCGIFBRDADDR */
+
+# if !defined (SIOCGIFADDR)
+#   define SIOCGIFADDR 0
+# endif /* SIOCGIFADDR */
+
+# if !defined (ACE_HAS_STRBUF_T)
+struct strbuf
+{
+  /// No. of bytes in buffer.
+  int maxlen;
+  /// No. of bytes returned.
+  int len;
+  /// Pointer to data.
+  void *buf;
+};
+# endif /* ACE_HAS_STRBUF_T */
+
+// These prototypes are chronically lacking from many versions of
+// UNIX.
+#if !defined (ACE_WIN32) && !defined (ACE_HAS_ISASTREAM_PROTO)
+  int isastream (int);
+#endif /* !ACE_WIN32 && ACE_HAS_ISASTREAM_PROTO */
 
 #ifdef __cplusplus
 }

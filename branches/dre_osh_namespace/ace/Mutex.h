@@ -24,6 +24,16 @@
 
 #include "ace/OS.h"
 
+# if !defined (ACE_DEFAULT_MUTEX_A)
+#   define ACE_DEFAULT_MUTEX_A "ACE_MUTEX"
+# endif /* ACE_DEFAULT_MUTEX_A */
+
+# if defined (ACE_HAS_WCHAR)
+#   define ACE_DEFAULT_MUTEX_W ACE_TEXT_WIDE(ACE_DEFAULT_MUTEX_A)
+# endif /* ACE_HAS_WCHAR */
+
+# define ACE_DEFAULT_MUTEX ACE_LIB_TEXT (ACE_DEFAULT_MUTEX_A)
+
 class ACE_Time_Value;
 
 /**

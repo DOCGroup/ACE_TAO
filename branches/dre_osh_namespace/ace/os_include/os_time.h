@@ -31,6 +31,17 @@
 #  include /**/ <time.h>
 #endif /* !ACE_LACKS_TIME_H */
 
+# if defined (ACE_USES_STD_NAMESPACE_FOR_STDC_LIB) && \
+             (ACE_USES_STD_NAMESPACE_FOR_STDC_LIB != 0)
+using std::tm;
+# if defined (ACE_WIN32)
+using std::_timezone;
+# else
+using std::timezone;
+# endif
+using std::difftime;
+# endif /* ACE_USES_STD_NAMESPACE_FOR_STDC_LIB */
+
 // Place all additions (especially function declarations) within extern "C" {}
 #ifdef __cplusplus
 extern "C"

@@ -26,42 +26,16 @@
 #include "ace/os_include/os_dirent.h"
 #include "ace/os_include/sys/os_types.h"
 
+#include "ace/OS_NS_dirent.h"
 /**
- * @class ACE_OS_Dirent
+ * @namespace ACE_OS_Dirent
  *
  * @brief This class is a wrapper for the dirent.h operations
  *
  */
-class ACE_OS_Export ACE_OS_Dirent
-{
-public:
-  static ACE_DIR *opendir (const ACE_TCHAR *filename);
-  static void closedir (ACE_DIR *);
-  static dirent *readdir (ACE_DIR *);
-  static int readdir_r (ACE_DIR *dirp,
-                        struct dirent *entry,
-                        struct dirent **result);
-  static long telldir (ACE_DIR *);
-  static void seekdir (ACE_DIR *,
-                       long loc);
-  static void rewinddir (ACE_DIR *);
-
-  static int scandir (const ACE_TCHAR *dirname,
-                      struct dirent **namelist[],
-                      int (*selector) (const struct dirent *filename),
-                      int (*comparator) (const struct dirent **f1,
-                                         const struct dirent **f2));
-private:
-  // Win32 emulation functions
-  static ACE_DIR *opendir_emulation (const ACE_TCHAR *filename);
-  static int scandir_emulation (const ACE_TCHAR *dirname,
-                                dirent **namelist[],
-                                int (*selector)(const dirent *entry),
-                                int (*comparator)(const dirent **f1,
-                                                  const dirent**f2));
-  static void closedir_emulation (ACE_DIR *);
-  static dirent *readdir_emulation (ACE_DIR *);
-};
+#define ACE_OS_Dirent ACE_OS
+namespace ACE_OS {
+}; /* namespace ACE_OS */
 
 # if defined (ACE_HAS_INLINED_OSCALLS)
 #   if defined (ACE_INLINE)

@@ -26,6 +26,9 @@
 
 #include "ace/Event_Handler.h"
 
+// Type of the extended signal handler.
+typedef void (*ACE_Sig_Handler_Ex) (int, siginfo_t *siginfo, ucontext_t *ucontext);
+
 // This worksaround a horrible bug with HP/UX C++...
 typedef struct sigaction ACE_SIGACTION;
 

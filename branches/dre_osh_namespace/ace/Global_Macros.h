@@ -645,7 +645,20 @@ _make_##SERVICE_CLASS (ACE_Service_Object_Exterminator *gobbler) \
 # define ACE_SVC_FACTORY_DEFINE(X) ACE_FACTORY_DEFINE (ACE_Svc, X)
 //@}
 
-#if !defined (ACE_WIN32)
+#if defined (ACE_WIN32)
+// These are used in SPIPE_Acceptor/Connector, but are ignored at runtime.
+#   if defined (ACE_HAS_WINCE)
+#     if !defined (PIPE_TYPE_MESSAGE)
+#       define PIPE_TYPE_MESSAGE  0
+#     endif
+#     if !defined (PIPE_READMODE_MESSAGE)
+#       define PIPE_READMODE_MESSAGE  0
+#     endif
+#     if !defined (PIPE_WAIT)
+#       define PIPE_WAIT  0
+#     endif
+#   endif /* ACE_HAS_WINCE */
+#else /* !ACE_WIN32 */
 // Add some typedefs and macros to enhance Win32 conformance...
 #   if !defined (LPSECURITY_ATTRIBUTES)
 #     define LPSECURITY_ATTRIBUTES int
@@ -692,7 +705,8 @@ _make_##SERVICE_CLASS (ACE_Service_Object_Exterminator *gobbler) \
 #   if !defined(PIPE_TYPE_MESSAGE)
 #     define PIPE_TYPE_MESSAGE 0
 #   endif /* !defined PIPE_TYPE_MESSAGE */
-#endif /* !ACE_WIN32 */
+#endif /* ACE_WIN32 */
+
 
 // Some useful abstrations for expressions involving
 // ACE_Allocator.malloc ().  The difference between ACE_NEW_MALLOC*
@@ -727,6 +741,35 @@ _make_##SERVICE_CLASS (ACE_Service_Object_Exterminator *gobbler) \
      else { new (POINTER) CONSTRUCTOR; } \
    } while (0)
 
+/* ACE_Metrics */
+#if defined ACE_LACKS_ARRAY_PLACEMENT_NEW
+# define ACE_NEW_MALLOC_ARRAY_RETURN(POINTER,ALLOCATOR,CONSTRUCTOR,COUNT,RET_VAL) \
+   do { POINTER = ALLOCATOR; \
+     if (POINTER == 0) { errno = ENOMEM; return RET_VAL;} \
+     else { for (u_int i = 0; i < COUNT; ++i) \
+              {new (POINTER) CONSTRUCTOR; ++POINTER;} \
+            POINTER -= COUNT;} \
+   } while (0)
+# define ACE_NEW_MALLOC_ARRAY(POINTER,ALLOCATOR,CONSTRUCTOR,COUNT) \
+   do { POINTER = ALLOCATOR; \
+     if (POINTER == 0) { errno = ENOMEM; return;} \
+     else { for (u_int i = 0; i < COUNT; ++i) \
+              {new (POINTER) CONSTRUCTOR; ++POINTER;} \
+            POINTER -= COUNT;} \
+   } while (0)
+#else /* ! defined ACE_LACKS_ARRAY_PLACEMENT_NEW */
+# define ACE_NEW_MALLOC_ARRAY_RETURN(POINTER,ALLOCATOR,CONSTRUCTOR,COUNT,RET_VAL) \
+   do { POINTER = ALLOCATOR; \
+     if (POINTER == 0) { errno = ENOMEM; return RET_VAL;} \
+     else { new (POINTER) CONSTRUCTOR [COUNT]; } \
+   } while (0)
+# define ACE_NEW_MALLOC_ARRAY(POINTER,ALLOCATOR,CONSTRUCTOR,COUNT) \
+   do { POINTER = ALLOCATOR; \
+     if (POINTER == 0) { errno = ENOMEM; return;} \
+     else { new (POINTER) CONSTRUCTOR [COUNT]; } \
+   } while (0)
+#endif /* defined ACE_LACKS_ARRAY_PLACEMENT_NEW */
+
 // This is being placed here temporarily to help stablelize the builds, but will
 // be moved out along with the above macros as part of the subsetting.  dhinton
 # if !defined (ACE_HAS_WINCE)
@@ -740,6 +783,238 @@ _make_##SERVICE_CLASS (ACE_Service_Object_Exterminator *gobbler) \
 # endif /* !ACE_HAS_WINCE */
 
 # define ACE_NOOP(x)
+
+#if defined (ACE_PSOS)
+#   define ACE_SEH_TRY if (1)
+#   define ACE_SEH_EXCEPT(X) while (0)
+#   define ACE_SEH_FINALLY if (1)
+#elif defined (ACE_WIN32)
+#   if !defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
+#     define ACE_SEH_TRY if (1)
+#     define ACE_SEH_EXCEPT(X) while (0)
+#     define ACE_SEH_FINALLY if (1)
+#   elif defined(__BORLANDC__)
+#     if (__BORLANDC__ >= 0x0530) /* Borland C++ Builder 3.0 */
+#       define ACE_SEH_TRY try
+#       define ACE_SEH_EXCEPT(X) __except(X)
+#       define ACE_SEH_FINALLY __finally
+#     else
+#       define ACE_SEH_TRY if (1)
+#       define ACE_SEH_EXCEPT(X) while (0)
+#       define ACE_SEH_FINALLY if (1)
+#     endif
+#   elif defined (__IBMCPP__) && (__IBMCPP__ >= 400)
+#     define ACE_SEH_TRY if (1)
+#     define ACE_SEH_EXCEPT(X) while (0)
+#     define ACE_SEH_FINALLY if (1)
+#   else
+#     define ACE_SEH_TRY __try
+#     define ACE_SEH_EXCEPT(X) __except(X)
+#     define ACE_SEH_FINALLY __finally
+#   endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
+# else /* !ACE_WIN32 && ACE_PSOS */
+#   define ACE_SEH_TRY if (1)
+#   define ACE_SEH_EXCEPT(X) while (0)
+#   define ACE_SEH_FINALLY if (1)
+#endif /* ACE_WIN32 && ACE_PSOS */
+
+
+// These should probably be put into a seperate header.
+
+// The following is necessary since many C++ compilers don't support
+// typedef'd types inside of classes used as formal template
+// arguments... ;-(.  Luckily, using the C++ preprocessor I can hide
+// most of this nastiness!
+
+# if defined (ACE_HAS_TEMPLATE_TYPEDEFS)
+
+// Handle ACE_Message_Queue.
+#   define ACE_SYNCH_DECL class _ACE_SYNCH
+#   define ACE_SYNCH_USE _ACE_SYNCH
+#   define ACE_SYNCH_MUTEX_T ACE_TYPENAME _ACE_SYNCH::MUTEX
+#   define ACE_SYNCH_CONDITION_T ACE_TYPENAME _ACE_SYNCH::CONDITION
+#   define ACE_SYNCH_SEMAPHORE_T ACE_TYPENAME _ACE_SYNCH::SEMAPHORE
+
+// Handle ACE_Malloc*
+#   define ACE_MEM_POOL_1 class _ACE_MEM_POOL
+#   define ACE_MEM_POOL_2 _ACE_MEM_POOL
+#   define ACE_MEM_POOL _ACE_MEM_POOL
+#   define ACE_MEM_POOL_OPTIONS ACE_TYPENAME _ACE_MEM_POOL::OPTIONS
+
+// Handle ACE_Svc_Handler
+#   define ACE_PEER_STREAM_1 class _ACE_PEER_STREAM
+#   define ACE_PEER_STREAM_2 _ACE_PEER_STREAM
+#   define ACE_PEER_STREAM _ACE_PEER_STREAM
+#   define ACE_PEER_STREAM_ADDR ACE_TYPENAME _ACE_PEER_STREAM::PEER_ADDR
+
+// Handle ACE_Acceptor
+#   define ACE_PEER_ACCEPTOR_1 class _ACE_PEER_ACCEPTOR
+#   define ACE_PEER_ACCEPTOR_2 _ACE_PEER_ACCEPTOR
+#   define ACE_PEER_ACCEPTOR _ACE_PEER_ACCEPTOR
+#   define ACE_PEER_ACCEPTOR_ADDR ACE_TYPENAME _ACE_PEER_ACCEPTOR::PEER_ADDR
+
+// Handle ACE_Connector
+#   define ACE_PEER_CONNECTOR_1 class _ACE_PEER_CONNECTOR
+#   define ACE_PEER_CONNECTOR_2 _ACE_PEER_CONNECTOR
+#   define ACE_PEER_CONNECTOR _ACE_PEER_CONNECTOR
+#   define ACE_PEER_CONNECTOR_ADDR ACE_TYPENAME _ACE_PEER_CONNECTOR::PEER_ADDR
+#   if !defined(ACE_HAS_TYPENAME_KEYWORD)
+#     define ACE_PEER_CONNECTOR_ADDR_ANY ACE_PEER_CONNECTOR_ADDR::sap_any
+#   else
+    //
+    // If the compiler supports 'typename' we cannot use
+    //
+    // PEER_CONNECTOR::PEER_ADDR::sap_any
+    //
+    // because PEER_CONNECTOR::PEER_ADDR is not considered a type. But:
+    //
+    // typename PEER_CONNECTOR::PEER_ADDR::sap_any
+    //
+    // will not work either, because now we are declaring sap_any a
+    // type, further:
+    //
+    // (typename PEER_CONNECTOR::PEER_ADDR)::sap_any
+    //
+    // is considered a casting expression. All I can think of is using a
+    // typedef, I tried PEER_ADDR but that was a source of trouble on
+    // some platforms. I will try:
+    //
+#     define ACE_PEER_CONNECTOR_ADDR_ANY ACE_PEER_ADDR_TYPEDEF::sap_any
+#   endif /* ACE_HAS_TYPENAME_KEYWORD */
+
+// Handle ACE_SOCK_*
+#   define ACE_SOCK_ACCEPTOR ACE_SOCK_Acceptor
+#   define ACE_SOCK_CONNECTOR ACE_SOCK_Connector
+#   define ACE_SOCK_STREAM ACE_SOCK_Stream
+
+// Handle ACE_SOCK_SEQPACK_*
+#   define ACE_SOCK_SEQPACK_ACCEPTOR ACE_SOCK_SEQPACK_Acceptor
+#   define ACE_SOCK_SEQPACK_CONNECTOR ACE_SOCK_SEQPACK_Connector
+#   define ACE_SOCK_SEQPACK_ASSOCIATION ACE_SOCK_SEQPACK_Association
+
+// Handle ACE_MEM_*
+#   define ACE_MEM_ACCEPTOR ACE_MEM_Acceptor
+#   define ACE_MEM_CONNECTOR ACE_MEM_Connector
+#   define ACE_MEM_STREAM ACE_MEM_Stream
+
+// Handle ACE_LSOCK_*
+#   define ACE_LSOCK_ACCEPTOR ACE_LSOCK_Acceptor
+#   define ACE_LSOCK_CONNECTOR ACE_LSOCK_Connector
+#   define ACE_LSOCK_STREAM ACE_LSOCK_Stream
+
+// Handle ACE_TLI_*
+#   define ACE_TLI_ACCEPTOR ACE_TLI_Acceptor
+#   define ACE_TLI_CONNECTOR ACE_TLI_Connector
+#   define ACE_TLI_STREAM ACE_TLI_Stream
+
+// Handle ACE_SPIPE_*
+#   define ACE_SPIPE_ACCEPTOR ACE_SPIPE_Acceptor
+#   define ACE_SPIPE_CONNECTOR ACE_SPIPE_Connector
+#   define ACE_SPIPE_STREAM ACE_SPIPE_Stream
+
+// Handle ACE_UPIPE_*
+#   define ACE_UPIPE_ACCEPTOR ACE_UPIPE_Acceptor
+#   define ACE_UPIPE_CONNECTOR ACE_UPIPE_Connector
+#   define ACE_UPIPE_STREAM ACE_UPIPE_Stream
+
+// Handle ACE_FILE_*
+#   define ACE_FILE_CONNECTOR ACE_FILE_Connector
+#   define ACE_FILE_STREAM ACE_FILE_IO
+
+// Handle ACE_*_Memory_Pool.
+#   define ACE_MMAP_MEMORY_POOL ACE_MMAP_Memory_Pool
+#   define ACE_LITE_MMAP_MEMORY_POOL ACE_Lite_MMAP_Memory_Pool
+#   define ACE_SBRK_MEMORY_POOL ACE_Sbrk_Memory_Pool
+#   define ACE_SHARED_MEMORY_POOL ACE_Shared_Memory_Pool
+#   define ACE_LOCAL_MEMORY_POOL ACE_Local_Memory_Pool
+#   define ACE_PAGEFILE_MEMORY_POOL ACE_Pagefile_Memory_Pool
+
+# else /* TEMPLATES are broken in some form or another (i.e., most C++ compilers) */
+
+// Handle ACE_Message_Queue.
+#   if defined (ACE_HAS_OPTIMIZED_MESSAGE_QUEUE)
+#     define ACE_SYNCH_DECL class _ACE_SYNCH_MUTEX_T, class _ACE_SYNCH_CONDITION_T, class _ACE_SYNCH_SEMAPHORE_T
+#     define ACE_SYNCH_USE _ACE_SYNCH_MUTEX_T, _ACE_SYNCH_CONDITION_T, _ACE_SYNCH_SEMAPHORE_T
+#   else
+#     define ACE_SYNCH_DECL class _ACE_SYNCH_MUTEX_T, class _ACE_SYNCH_CONDITION_T
+#     define ACE_SYNCH_USE _ACE_SYNCH_MUTEX_T, _ACE_SYNCH_CONDITION_T
+#   endif /* ACE_HAS_OPTIMIZED_MESSAGE_QUEUE */
+#   define ACE_SYNCH_MUTEX_T _ACE_SYNCH_MUTEX_T
+#   define ACE_SYNCH_CONDITION_T _ACE_SYNCH_CONDITION_T
+#   define ACE_SYNCH_SEMAPHORE_T _ACE_SYNCH_SEMAPHORE_T
+
+// Handle ACE_Malloc*
+#   define ACE_MEM_POOL_1 class _ACE_MEM_POOL, class _ACE_MEM_POOL_OPTIONS
+#   define ACE_MEM_POOL_2 _ACE_MEM_POOL, _ACE_MEM_POOL_OPTIONS
+#   define ACE_MEM_POOL _ACE_MEM_POOL
+#   define ACE_MEM_POOL_OPTIONS _ACE_MEM_POOL_OPTIONS
+
+// Handle ACE_Svc_Handler
+#   define ACE_PEER_STREAM_1 class _ACE_PEER_STREAM, class _ACE_PEER_ADDR
+#   define ACE_PEER_STREAM_2 _ACE_PEER_STREAM, _ACE_PEER_ADDR
+#   define ACE_PEER_STREAM _ACE_PEER_STREAM
+#   define ACE_PEER_STREAM_ADDR _ACE_PEER_ADDR
+
+// Handle ACE_Acceptor
+#   define ACE_PEER_ACCEPTOR_1 class _ACE_PEER_ACCEPTOR, class _ACE_PEER_ADDR
+#   define ACE_PEER_ACCEPTOR_2 _ACE_PEER_ACCEPTOR, _ACE_PEER_ADDR
+#   define ACE_PEER_ACCEPTOR _ACE_PEER_ACCEPTOR
+#   define ACE_PEER_ACCEPTOR_ADDR _ACE_PEER_ADDR
+
+// Handle ACE_Connector
+#   define ACE_PEER_CONNECTOR_1 class _ACE_PEER_CONNECTOR, class _ACE_PEER_ADDR
+#   define ACE_PEER_CONNECTOR_2 _ACE_PEER_CONNECTOR, _ACE_PEER_ADDR
+#   define ACE_PEER_CONNECTOR _ACE_PEER_CONNECTOR
+#   define ACE_PEER_CONNECTOR_ADDR _ACE_PEER_ADDR
+#   define ACE_PEER_CONNECTOR_ADDR_ANY ACE_PEER_CONNECTOR_ADDR::sap_any
+
+// Handle ACE_SOCK_*
+#   define ACE_SOCK_ACCEPTOR ACE_SOCK_Acceptor, ACE_INET_Addr
+#   define ACE_SOCK_CONNECTOR ACE_SOCK_Connector, ACE_INET_Addr
+#   define ACE_SOCK_STREAM ACE_SOCK_Stream, ACE_INET_Addr
+
+// Handle ACE_SOCK_SEQPACK_*
+#   define ACE_SOCK_SEQPACK_ACCEPTOR ACE_SOCK_SEQPACK_Acceptor, ACE_INET_Addr
+#   define ACE_SOCK_SEQPACK_CONNECTOR ACE_SOCK_SEQPACK_Connector, ACE_INET_Addr
+#   define ACE_SOCK_SEQPACK_ASSOCIATION ACE_SOCK_SEQPACK_Association, ACE_INET_Addr
+
+// Handle ACE_MEM_*
+#   define ACE_MEM_ACCEPTOR ACE_MEM_Acceptor, ACE_MEM_Addr
+#   define ACE_MEM_CONNECTOR ACE_MEM_Connector, ACE_INET_Addr
+#   define ACE_MEM_STREAM ACE_MEM_Stream, ACE_INET_Addr
+
+// Handle ACE_LSOCK_*
+#   define ACE_LSOCK_ACCEPTOR ACE_LSOCK_Acceptor, ACE_UNIX_Addr
+#   define ACE_LSOCK_CONNECTOR ACE_LSOCK_Connector, ACE_UNIX_Addr
+#   define ACE_LSOCK_STREAM ACE_LSOCK_Stream, ACE_UNIX_Addr
+
+// Handle ACE_TLI_*
+#   define ACE_TLI_ACCEPTOR ACE_TLI_Acceptor, ACE_INET_Addr
+#   define ACE_TLI_CONNECTOR ACE_TLI_Connector, ACE_INET_Addr
+#   define ACE_TLI_STREAM ACE_TLI_Stream, ACE_INET_Addr
+
+// Handle ACE_SPIPE_*
+#   define ACE_SPIPE_ACCEPTOR ACE_SPIPE_Acceptor, ACE_SPIPE_Addr
+#   define ACE_SPIPE_CONNECTOR ACE_SPIPE_Connector, ACE_SPIPE_Addr
+#   define ACE_SPIPE_STREAM ACE_SPIPE_Stream, ACE_SPIPE_Addr
+
+// Handle ACE_UPIPE_*
+#   define ACE_UPIPE_ACCEPTOR ACE_UPIPE_Acceptor, ACE_SPIPE_Addr
+#   define ACE_UPIPE_CONNECTOR ACE_UPIPE_Connector, ACE_SPIPE_Addr
+#   define ACE_UPIPE_STREAM ACE_UPIPE_Stream, ACE_SPIPE_Addr
+
+// Handle ACE_FILE_*
+#   define ACE_FILE_CONNECTOR ACE_FILE_Connector, ACE_FILE_Addr
+#   define ACE_FILE_STREAM ACE_FILE_IO, ACE_FILE_Addr
+
+// Handle ACE_*_Memory_Pool.
+#   define ACE_MMAP_MEMORY_POOL ACE_MMAP_Memory_Pool, ACE_MMAP_Memory_Pool_Options
+#   define ACE_LITE_MMAP_MEMORY_POOL ACE_Lite_MMAP_Memory_Pool, ACE_MMAP_Memory_Pool_Options
+#   define ACE_SBRK_MEMORY_POOL ACE_Sbrk_Memory_Pool, ACE_Sbrk_Memory_Pool_Options
+#   define ACE_SHARED_MEMORY_POOL ACE_Shared_Memory_Pool, ACE_Shared_Memory_Pool_Options
+#   define ACE_LOCAL_MEMORY_POOL ACE_Local_Memory_Pool, ACE_Local_Memory_Pool_Options
+#   define ACE_PAGEFILE_MEMORY_POOL ACE_Pagefile_Memory_Pool, ACE_Pagefile_Memory_Pool_Options
+# endif /* ACE_HAS_TEMPLATE_TYPEDEFS */
 
 #include /**/ "ace/post.h"
 
