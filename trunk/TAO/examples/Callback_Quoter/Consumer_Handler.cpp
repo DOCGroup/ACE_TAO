@@ -140,7 +140,7 @@ Consumer_Handler::parse_args (void)
 int
 Consumer_Handler::via_naming_service (void)
 {
-  TAO_TRY
+  ACE_TRY_NEW_ENV
     {
       // Initialization of the naming service.
       if (naming_services_client_.init (orb_.in ()) != 0)
@@ -155,23 +155,24 @@ Consumer_Handler::via_naming_service (void)
 
       CORBA::Object_var notifier_obj =
 	this->naming_services_client_->resolve (notifier_ref_name,
-						TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+						ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       // The CORBA::Object_var object is downcast to Notifier_var using
       // the <_narrow> method.
       this->server_ =
         Notifier::_narrow (notifier_obj.in (),
-                           TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+                           ACE_TRY_ENV);
+      
+      ACE_TRY_CHECK;
 
     }
-  TAO_CATCHANY
+  ACE_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("Consumer_Handler::via_naming_service\n");
+      ACE_TRY_ENV.print_exception ("Consumer_Handler::via_naming_service\n");
       return -1;
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
 
   return 0;
 }
@@ -212,14 +213,14 @@ Consumer_Handler::init (int argc, char **argv)
 		       "register_handler for SIGINT"),
 		      -1);
 
-  TAO_TRY
+  ACE_TRY_NEW_ENV
     {
       // Retrieve the ORB.
       this->orb_ = CORBA::ORB_init (this->argc_,
                                     this->argv_,
                                     0,
-                                    TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+                                    ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       // Parse command line and verify parameters.
       if (this->parse_args () == -1)
@@ -240,8 +241,8 @@ Consumer_Handler::init (int argc, char **argv)
 
       CORBA::Object_var server_object =
         this->orb_->string_to_object (this->ior_,
-                                      TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+                                      ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (server_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -251,15 +252,15 @@ Consumer_Handler::init (int argc, char **argv)
       // The downcasting from CORBA::Object_var to Notifier_var is
       // done using the <_narrow> method.
       this->server_ = Notifier::_narrow (server_object.in (),
-                                         TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+                                         ACE_TRY_ENV);
+      ACE_TRY_CHECK;
     }
-  TAO_CATCHANY
+  ACE_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("Consumer_Handler::init");
+      ACE_TRY_ENV.print_exception ("Consumer_Handler::init");
       return -1;
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
 
   return 0;
 }
@@ -267,9 +268,9 @@ Consumer_Handler::init (int argc, char **argv)
 int
 Consumer_Handler::run (void)
 {
-  CORBA::Environment TAO_TRY_ENV;
+  //CORBA::Environment TAO_TRY_ENV;
 
-  TAO_TRY
+  ACE_TRY_NEW_ENV
     {
       ACE_NEW_RETURN (this->consumer_servant_,
 		      Consumer_i (),
@@ -285,18 +286,18 @@ Consumer_Handler::run (void)
 
       // Get the consumer stub (i.e consumer object) pointer.
       this->consumer_var_ =
-	this->consumer_servant_->_this (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+	this->consumer_servant_->_this (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       // Run the ORB.
       this->orb_->run ();
     }
-  TAO_CATCHANY
+  ACE_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("Consumer_Handler::run ()");
+      ACE_TRY_ENV.print_exception ("Consumer_Handler::run ()");
       return -1;
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
 
   return 0;
 }

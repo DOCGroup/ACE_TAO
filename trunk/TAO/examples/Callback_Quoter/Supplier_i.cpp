@@ -150,23 +150,23 @@ Supplier::parse_args (void)
 
 int
 Supplier::send_market_status (const char *stock_name,
-                                       long value)
+                              long value)
 {
-  TAO_TRY
+  ACE_TRY_NEW_ENV
     {
       // Make the RMI.
       this->notifier_->market_status (stock_name,
                                       value,
-                                      TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+                                      ACE_TRY_ENV);
+      ACE_TRY_CHECK;
     }
-  TAO_CATCHANY
+  ACE_CATCHANY
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "Exception raised!\n"),
                         -1);
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
   return 0;
 }
 
@@ -210,7 +210,7 @@ Supplier::run (void)
 int
 Supplier::via_naming_service (void)
 {
-  TAO_TRY
+  ACE_TRY_NEW_ENV
     {
       // Initialization of the naming service.
       if (naming_services_client_.init (orb_.in ()) != 0)
@@ -224,22 +224,22 @@ Supplier::via_naming_service (void)
 
       CORBA::Object_var notifier_obj =
         this->naming_services_client_->resolve (notifier_ref_name,
-                                                TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+                                                ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       // The CORBA::Object_var object is downcast to Notifier_var
       // using the <_narrow> method.
       this->notifier_ =
         Notifier::_narrow (notifier_obj.in (),
-                           TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+                           ACE_TRY_ENV);
+      ACE_TRY_CHECK;
     }
-  TAO_CATCHANY
+  ACE_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("Supplier::via_naming_service\n");
+      ACE_TRY_ENV.print_exception ("Supplier::via_naming_service\n");
       return -1;
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
 
   return 0;
 }
@@ -252,14 +252,14 @@ Supplier::init (int argc, char **argv)
   this->argc_ = argc;
   this->argv_ = argv;
 
-  TAO_TRY
+  ACE_TRY_NEW_ENV
     {
       // Retrieve the ORB.
       this->orb_ = CORBA::ORB_init (this->argc_,
                                     this->argv_,
                                     0,
-                                    TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+                                    ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       // Parse command line and verify parameters.
       if (this->parse_args () == -1)
@@ -281,8 +281,8 @@ Supplier::init (int argc, char **argv)
                           -1);
       CORBA::Object_var notifier_object =
         this->orb_->string_to_object (this->ior_,
-                                      TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+                                      ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (notifier_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -292,15 +292,15 @@ Supplier::init (int argc, char **argv)
       // The downcasting from CORBA::Object_var to Notifier_var is
       // done using the <_narrow> method.
       this->notifier_ = Notifier::_narrow (notifier_object.in (),
-                                         TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+                                           ACE_TRY_ENV);
+      ACE_TRY_CHECK;
     }
-  TAO_CATCHANY
+  ACE_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("Supplier::init");
+      ACE_TRY_ENV.print_exception ("Supplier::init");
       return -1;
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
 
   return 0;
 }
