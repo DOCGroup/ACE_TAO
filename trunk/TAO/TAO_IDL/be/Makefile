@@ -37,7 +37,8 @@ BE_FILES	= \
 		be_generator \
 		be_init \
 		be_produce \
-		be_args
+		be_args \
+		be_helper
 
 FILES	 = $(BE_FILES)
 
