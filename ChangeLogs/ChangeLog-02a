@@ -1,3 +1,20 @@
+Fri Jan 26 16:31:15 2001  Ossama Othman  <ossama@uci.edu>
+
+	* ace/OS.h (mutex_lock):
+
+	  Updated documentation for the version of this method that
+	  accepts a timeout value.
+
+	* ace/OS.i (mutex_lock):
+
+	  If the platform does not support timed mutexes, then return with
+	  an ENOTSUP.
+	
+	* ace/Process_Mutex.h:
+	* ace/Process_Mutex.inl (acquire):
+
+	  Added version of this method that accepts a timeout value.
+
 Fri Jan 26 17:50:38 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* examples/Bounded_Packet_Relay/Thread_Bounded_Packet_Relay.cpp (report_stats): 

@@ -64,6 +64,10 @@ public:
   /// Acquire lock ownership (wait on queue if necessary).
   int acquire (void);
 
+  /// Acquire lock ownership, but timeout if lock if hasn't been
+  /// acquired by given time.
+  int acquire (ACE_Time_Value &tv);
+
   /**
    * Conditionally acquire lock (i.e., don't wait on queue).  Returns
    * -1 on failure.  If we "failed" because someone else already had
