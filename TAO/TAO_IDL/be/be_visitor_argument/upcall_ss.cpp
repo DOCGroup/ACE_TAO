@@ -79,6 +79,15 @@ int be_visitor_args_upcall_ss::visit_array (be_array *node)
   switch (this->direction ())
     {
     case AST_Argument::dir_IN:
+      // This is to placate some compilers which have
+      // trouble with IN args that are multidimensional arrays.
+      if (node->n_dims () > 1)
+        {
+          *os << "(const ::" << node->name () << "_slice *) ";
+        }
+
+      *os << arg->local_name ();
+      break;
     case AST_Argument::dir_INOUT:
       *os << arg->local_name ();
       break;
