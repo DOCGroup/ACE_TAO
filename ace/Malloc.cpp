@@ -216,7 +216,7 @@ template class ACE_Based_Pointer<ACE_Malloc_Header>;
 template ACE_Based_Pointer<ACE_Malloc_Header> operator+ (const ACE_Based_Pointer<ACE_Malloc_Header> &lhs, long increment);
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Based_Pointer<ACE_Malloc_Header>
-#pragma ACE_Based_Pointer<ACE_Malloc_Header> operator+ (const ACE_Based_Pointer<ACE_Malloc_Header> &lhs, long increment);
+#pragma instantiate ACE_Based_Pointer<ACE_Malloc_Header> operator+ (const ACE_Based_Pointer<ACE_Malloc_Header> &lhs, long increment)
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 #endif /* ACE_HAS_POSITION_INDEPENDENT_MALLOC */
 
