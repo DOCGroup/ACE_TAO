@@ -11,8 +11,10 @@ Wed Aug 26 17:00:38 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 	  ACE_Select_Reactor_Token_T<ACE_Noop_Token>>. 
 	
 	* tao/ORB_Core.{h,cpp}: Added a new option '-ORBlockfreereactor'
-	  for TAO_Resource_Factory.  Specify it to 'yes' if you don't want
-	  any locking with the reactor.  Use with care.
+ 	  for TAO_Resource_Factory.  Specify it to 'yes' if you don't want
+ 	  any locking with the reactor.  Use with care, e.g., if you are
+ 	  running a completely single-threaded ORB or a Reactor-per-thread
+ 	  model.
 
 Wed Aug 26 17:05:27 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
