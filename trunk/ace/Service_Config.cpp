@@ -215,7 +215,7 @@ ACE_Service_Config::parse_args (int argc, char *argv[])
         ACE_Service_Config::service_config_file_ = getopt.optarg;
         break;
       case 'k':
-        ACE_Service_Config::logger_key_ = getopt.optarg;
+        ACE_Service_Config::logger_key_ = ACE_WIDE_STRING (getopt.optarg);
         break;
       case 'n':
         ACE_Service_Config::no_static_svcs_ = 1;
