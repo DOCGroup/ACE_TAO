@@ -49,7 +49,7 @@ public:
                           CORBA_Environment &env);
   // Activate <servant>, using the POA <activate_object> call.  Users
   // can call this method multiple times to activate multiple objects.
-  // Returns 0 on failure
+  // Returns 0 on failure.
       
   CORBA::String activate_under_child_poa (const char *servant_name,
 					  PortableServer::Servant servant,
