@@ -33,7 +33,7 @@ Event_factory::~Event_factory ()
 }
 
 TAO_OBV_CREATE_RETURN_TYPE (Event)
-Event_factory::create_for_unmarshal ()
+Event_factory::create_for_unmarshal (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   return new Event_impl;
 }
@@ -68,7 +68,7 @@ Temperature_factory::~Temperature_factory ()
 }
 
 TAO_OBV_CREATE_RETURN_TYPE (Temperature)
-Temperature_factory::create_for_unmarshal ()
+Temperature_factory::create_for_unmarshal (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   return new Temperature_impl;
 }
@@ -142,7 +142,7 @@ Position_factory::~Position_factory ()
 }
 
 TAO_OBV_CREATE_RETURN_TYPE (Position)
-Position_factory::create_for_unmarshal ()
+Position_factory::create_for_unmarshal (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   return new Position_impl;
 }
@@ -186,7 +186,7 @@ Log_Msg_factory::~Log_Msg_factory ()
 }
 
 TAO_OBV_CREATE_RETURN_TYPE (Log_Msg)
-Log_Msg_factory::create_for_unmarshal ()
+Log_Msg_factory::create_for_unmarshal (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   return new Log_Msg_impl;
 }
@@ -240,7 +240,7 @@ Event_List_Link_factory::~Event_List_Link_factory ()
 }
 
 TAO_OBV_CREATE_RETURN_TYPE (Event_List_Link)
-Event_List_Link_factory::create_for_unmarshal ()
+Event_List_Link_factory::create_for_unmarshal (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   return new Event_List_Link_impl;
 }
@@ -307,7 +307,7 @@ Event_List_factory::~Event_List_factory (void)
 }
 
 TAO_OBV_CREATE_RETURN_TYPE (Event_List)
-Event_List_factory::create_for_unmarshal (void)
+Event_List_factory::create_for_unmarshal (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   return new Event_List_impl;
 }
@@ -434,7 +434,7 @@ Temperature_Criterion_factory::~Temperature_Criterion_factory ()
 }
 
 TAO_OBV_CREATE_RETURN_TYPE (Temperature_Criterion)
-Temperature_Criterion_factory::create_for_unmarshal ()
+Temperature_Criterion_factory::create_for_unmarshal (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   return new Temperature_Criterion_impl;
 }
@@ -495,7 +495,7 @@ Position_Criterion_factory::~Position_Criterion_factory ()
 }
 
 TAO_OBV_CREATE_RETURN_TYPE (Position_Criterion)
-Position_Criterion_factory::create_for_unmarshal ()
+Position_Criterion_factory::create_for_unmarshal (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   return new Position_Criterion_impl;
 }
@@ -539,7 +539,7 @@ Log_Msg_Criterion_factory::~Log_Msg_Criterion_factory ()
 }
 
 TAO_OBV_CREATE_RETURN_TYPE (Log_Msg_Criterion)
-Log_Msg_Criterion_factory::create_for_unmarshal ()
+Log_Msg_Criterion_factory::create_for_unmarshal (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   return new Log_Msg_Criterion_impl;
 }

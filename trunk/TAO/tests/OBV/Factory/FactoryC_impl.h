@@ -1,45 +1,43 @@
-// $Id$
+// -*- C++ -*-
 
-// ============================================================================
-//
-// = LIBRARY
-//   TAO/tests/OBV/Factory
-//
-// = FILENAME
-//   FactoryC_impl.h
-//
-// = AUTHOR
-//   Boris Kolpackov <bosk@ipmce.ru>
-//
-// ============================================================================
+// ===================================================================
+/**
+ *  @file   FactoryC_impl.h
+ *
+ *  $Id$
+ *
+ *  @author Boris Kolpackov <bosk@ipmce.ru>
+ */
+// ===================================================================
 
 #ifndef TAO_FACTORY_FACTORY_C_IMPL_H
 #define TAO_FACTORY_FACTORY_C_IMPL_H
 
 #include "FactoryC.h"
 
-// Just need to mix-in RefCounter
+/**
+ * @class Value2_impl
+ *
+ * @brief Value2 implementation.
+ *
+ * Implements the Value2 valuetype.
+ *
+ * @note Just need to mix-in RefCounter
+ */
 class Value2_impl : public virtual OBV_OBV_FactoryTest::Value2,
                     public virtual CORBA::DefaultValueRefCountBase
 {
-  // = TITLE
-  //   Value2 implementation
-  //
-  // = DESCRIPTION
-  //   Implements the Value2 valuetype
-  //
-
 };
 
-// Factory implementation
+/**
+ * @class Value2_init_impl
+ *
+ * @brief OBV factory implementation.
+ *
+ * Implements the Value2 factory implementation.
+ */
 class Value2_init_impl : public OBV_FactoryTest::Value2_init
 {
-  // = TITLE
-  //   OBV factory implementation
-  //
-  // = DESCRIPTION
-  //   Implements the Value2 factory implementation
-  //
 public:
 
   virtual OBV_FactoryTest::Value2* create_default (
@@ -59,7 +57,7 @@ public:
 
 public:
 
-  virtual CORBA::ValueBase * create_for_unmarshal (void);
+  virtual CORBA::ValueBase * create_for_unmarshal (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
 };
 
