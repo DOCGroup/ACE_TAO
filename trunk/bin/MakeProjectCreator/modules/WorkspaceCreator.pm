@@ -884,7 +884,7 @@ sub add_implicit_project_dependencies {
   my(%bidir)     = ();
 
   ## Take the current working directory and regular expression'ize it.
-  $cwd = $self->escape_regex_special($cwd) . '/';
+  $cwd = $self->escape_regex_special($cwd);
 
   ## Look at each projects file list and check it against all of the
   ## others.  If any of the other projects file lists contains anothers
@@ -917,7 +917,7 @@ sub add_implicit_project_dependencies {
 
           ## Remove our starting directory from the projects directory
           ## to get the right part of the directory to prepend.
-          $dir =~ s/^$cwd//;
+          $dir =~ s/^$cwd[\/\\]*//;
           if ($dir ne '') {
             $file = "$dir/$file";
           }
