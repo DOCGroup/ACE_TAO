@@ -862,7 +862,7 @@ ACE_Process_Manager::reap (pid_t pid,
 // if process found, 0 if not.  Must be called with locks held.
 
 int
-ACE_Process_Manager::notify_proc_handler (ACE_HANDLE h,
+ACE_Process_Manager::notify_proc_handler (ACE_HANDLE,
                                           pid_t pid,
                                           ACE_exitcode exit_code)
 {

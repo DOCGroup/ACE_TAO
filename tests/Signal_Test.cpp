@@ -208,75 +208,13 @@ worker_child (void *)
   return 0;
 }
 
-// This is the driver function that spawns threads to run the test for
-// the parent and the child process.
-
-static void
-run_test (ACE_THR_FUNC worker,
-          int handle_signals_in_separate_thread,
-          int handle_signals_synchronously)
-{
-#if defined (ACE_HAS_THREADS)
-  if (handle_signals_synchronously)
-    {
-      int result;
-      {
-        // Block all signals before spawning the threads.  Then,
-        // unblock these signals as the scope is exited.
-        ACE_Sig_Guard guard;
-
-        ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("(%P|%t) spawning worker thread\n")));
-        result = ACE_Thread_Manager::instance ()->spawn
-          (worker,
-           ACE_reinterpret_cast (void *,
-                                 handle_signals_synchronously),
-           THR_DETACHED);
-        ACE_ASSERT (result != -1);
-
-        if (handle_signals_in_separate_thread)
-          {
-            ACE_DEBUG ((LM_DEBUG,
-                        ASYS_TEXT ("(%P|%t) spawning signal handler thread\n")));
-
-            result = ACE_Thread_Manager::instance ()->spawn
-              (synchronous_signal_handler,
-               0,
-               THR_DETACHED);
-            ACE_ASSERT (result != -1);
-
-            // Wait for the other thread to finish.
-            result = ACE_Thread_Manager::instance ()->wait ();
-            ACE_ASSERT (result != -1);
-          }
-      }
-      if (handle_signals_in_separate_thread == 0)
-        {
-          synchronous_signal_handler (0);
-
-          // Wait for the other thread to finish.
-          result = ACE_Thread_Manager::instance ()->wait ();
-          ACE_ASSERT (result != -1);
-        }
-    }
-  else
-#endif /* ACE_HAS_THREADS */
-    {
-      ACE_UNUSED_ARG (handle_signals_in_separate_thread);
-      // Arrange to handle signals asynchronously.
-      asynchronous_signal_handler (0);
-      (*worker) (ACE_reinterpret_cast (void *,
-                                       handle_signals_synchronously));
-    }
-}
-
 // This function runs the parent process in a separate worker thread.
 
 static void *
 worker_parent (void *arg)
 {
-  int handle_signals_synchronously =
-    ACE_reinterpret_cast (int, arg);
+  long handle_signals_synchronously =
+    ACE_reinterpret_cast (long, arg);
   ACE_Process_Options options;
 
   ASYS_TCHAR *l_argv[3];
@@ -338,6 +276,68 @@ worker_parent (void *arg)
   ACE_DEBUG ((LM_DEBUG,
               ASYS_TEXT ("(%P|%t) parent worker done\n")));
   return 0;
+}
+
+// This is the driver function that spawns threads to run the test for
+// the parent and the child process.
+
+static void
+run_test (ACE_THR_FUNC worker,
+          long handle_signals_in_separate_thread,
+          long handle_signals_synchronously)
+{
+#if defined (ACE_HAS_THREADS)
+  if (handle_signals_synchronously)
+    {
+      int result;
+      {
+        // Block all signals before spawning the threads.  Then,
+        // unblock these signals as the scope is exited.
+        ACE_Sig_Guard guard;
+
+        ACE_DEBUG ((LM_DEBUG,
+                    ASYS_TEXT ("(%P|%t) spawning worker thread\n")));
+        result = ACE_Thread_Manager::instance ()->spawn
+          (worker,
+           ACE_reinterpret_cast (void *,
+                                 handle_signals_synchronously),
+           THR_DETACHED);
+        ACE_ASSERT (result != -1);
+
+        if (handle_signals_in_separate_thread)
+          {
+            ACE_DEBUG ((LM_DEBUG,
+                        ASYS_TEXT ("(%P|%t) spawning signal handler thread\n")));
+
+            result = ACE_Thread_Manager::instance ()->spawn
+              (synchronous_signal_handler,
+               0,
+               THR_DETACHED);
+            ACE_ASSERT (result != -1);
+
+            // Wait for the other thread to finish.
+            result = ACE_Thread_Manager::instance ()->wait ();
+            ACE_ASSERT (result != -1);
+          }
+      }
+      if (handle_signals_in_separate_thread == 0)
+        {
+          synchronous_signal_handler (0);
+
+          // Wait for the other thread to finish.
+          result = ACE_Thread_Manager::instance ()->wait ();
+          ACE_ASSERT (result != -1);
+        }
+    }
+  else
+#endif /* ACE_HAS_THREADS */
+    {
+      ACE_UNUSED_ARG (handle_signals_in_separate_thread);
+      // Arrange to handle signals asynchronously.
+      asynchronous_signal_handler (0);
+      (*worker) (ACE_reinterpret_cast (void *,
+                                       handle_signals_synchronously));
+    }
 }
 
 // Parse the command-line arguments and set options.
@@ -426,21 +426,21 @@ main (int argc, ASYS_TCHAR *argv[])
       test_number++;
       // Run the parent logic for the signal test, first by handling
       // signals synchronously in a separate thread.
-      run_test (worker_parent, 1, 1);
+      run_test (worker_parent, 1L, 1L);
 
       ACE_DEBUG ((LM_DEBUG,
                   ASYS_TEXT ("(%P|%t) **** test 2: handle signals synchronously in this thread\n")));
 
       test_number++;
       // And next by handling synchronously signals in this thread.
-      run_test (worker_parent, 0, 1);
+      run_test (worker_parent, 0L, 1L);
 
       ACE_DEBUG ((LM_DEBUG,
                   ASYS_TEXT ("(%P|%t) **** test 3: handle signals asynchronously in this thread\n")));
 
       test_number++;
       // And finally by handling asynchronously signals in this thread.
-      run_test (worker_parent, 0, 0);
+      run_test (worker_parent, 0L, 0L);
 
       ACE_END_TEST;
     }
