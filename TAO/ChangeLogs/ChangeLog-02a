@@ -1,3 +1,12 @@
+Wed Jun 20 18:45:40 2001  Angelo Corsaro  <corsaro@cs.wustl.edu>
+
+	* performance-tests/RTCorba/Multiple_Endpoints/Common/Makefile:
+ 	* performance-tests/RTCorba/Multiple_Endpoints/Common/Endpoint_Per_Priority/Makefile:
+	* performance-tests/RTCorba/Multiple_Endpoints/Common/Orb_Per_Priority/Makefile:
+	* performance-tests/RTCorba/Multiple_Endpoints/Common/Single_Endpoint/Makefile:
+
+	  Updated Makefiles to fix the static builds.
+	
 Wed Jun 20 17:37:28 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/DynamicAny/DynAnyFactory.cpp:
