@@ -101,11 +101,15 @@ SOURCE=.\Command_Factory.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Command_Factory_T.cpp
+SOURCE=.\ConsumerAdmin_Command.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\ConsumerAdmin_Command.cpp
+SOURCE=.\Direct_Consumer.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Direct_Supplier.cpp
 # End Source File
 # Begin Source File
 
@@ -165,6 +169,10 @@ SOURCE=.\Options_Parser.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Peer.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Periodic_Consumer.cpp
 # End Source File
 # Begin Source File
@@ -185,7 +193,35 @@ SOURCE=.\Priority_Mapping.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\PushConsumer.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\PushSupplier.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Relay_Consumer.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\SequencePushConsumer.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\SequencePushSupplier.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\StructuredEvent.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\StructuredPushConsumer.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\StructuredPushSupplier.cpp
 # End Source File
 # Begin Source File
 
@@ -347,6 +383,18 @@ SOURCE=.\Task_Stats.inl
 
 SOURCE=.\Command_Factory_T.cpp
 # PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Consumer_T.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Peer_T.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Supplier_T.cpp
 # End Source File
 # End Group
 # Begin Group "Documentation"
