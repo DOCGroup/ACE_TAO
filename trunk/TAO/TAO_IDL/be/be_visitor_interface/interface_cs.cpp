@@ -380,14 +380,14 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
   if (node->is_abstract () || node->has_mixed_parentage ())
     {
       *os << "!ACE_OS::strcmp (" << be_idt << be_idt_nl
-          << "(char *)value," << be_nl
+          << "value," << be_nl
           << "\"IDL:omg.org/CORBA/AbstractBase:1.0\"" << be_uidt_nl
           << ")";
     }
   else if (node->is_local ())
     {
       *os << "!ACE_OS::strcmp (" << be_idt << be_idt_nl
-          << "(char *)value," << be_nl
+          << "value," << be_nl
           << "\"IDL:omg.org/CORBA/LocalObject:1.0\"" << be_uidt_nl
           << ")";
     }
@@ -404,12 +404,12 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
   if (! node->is_abstract ())
     {
       *os << "!ACE_OS::strcmp (" << be_idt << be_idt_nl
-          << "(char *)value," << be_nl
+          << "value," << be_nl
           << "\"IDL:omg.org/CORBA/Object:1.0\"" << be_uidt_nl
           << ")" << be_uidt << be_uidt_nl;
     }
 
-  *os << " )" << be_nl
+  *os << ")" << be_nl
       << "{" << be_idt_nl
       << "return 1; // success using local knowledge" << be_uidt_nl
       << "}" << be_uidt_nl

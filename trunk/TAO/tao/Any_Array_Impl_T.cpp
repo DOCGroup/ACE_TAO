@@ -8,6 +8,7 @@
 #include "tao/Marshal.h"
 #include "tao/debug.h"
 #include "tao/CDR.h"
+#include "tao/SystemException.h"
 
 #include "ace/CORBA_macros.h"
 #include "ace/Auto_Ptr.h"
