@@ -1,3 +1,12 @@
+Thu Mar 25 16:31:27 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/OS.h: 
+	  Added new macros for byte swapping, this are rather evil. They
+	  add the correct padding to use a single long to represent a
+	  short or char, but in such a way that the first bytes of the
+	  long contain the required data.
+	  Nobody should need that, but the IDL compiler does.
+
 Thu Mar 25 14:55:37 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Basic_Types_Test.cpp: print out ACE version
