@@ -43,7 +43,7 @@ TAO_LB_ReplicaProxy::disconnect (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((LoadBalancing::ReplicaProxy::NotConnected,
                    CORBA::SystemException))
 {
-  ACE_MT (ACE_GUARD (ACE_SYNCH_MUTEX,
+  ACE_MT (ACE_GUARD (TAO_SYNCH_MUTEX,
                      guard,
                      this->lock_));
 
@@ -69,7 +69,7 @@ TAO_LB_ReplicaProxy::connect (TAO_LB_LoadBalancer *balancer,
                    LoadBalancing::ReplicaProxy::NilReplica,
                    CORBA::SystemException))
 {
-  ACE_MT (ACE_GUARD (ACE_SYNCH_MUTEX,
+  ACE_MT (ACE_GUARD (TAO_SYNCH_MUTEX,
                      guard,
                      this->lock_));
 

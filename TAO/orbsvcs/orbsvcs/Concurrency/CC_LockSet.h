@@ -172,7 +172,7 @@ private:
   // Mapping between requested and held lock modes. Used by compatible
   // (...).  Uses the internal enumeration as indices.
 
-  ACE_SYNCH_MUTEX mlock_;
+  TAO_SYNCH_MUTEX mlock_;
   // Lock to ensure that race conditions does not occur.
 
   ACE_Unbounded_Queue <CC_LockModeEnum> lock_queue_;

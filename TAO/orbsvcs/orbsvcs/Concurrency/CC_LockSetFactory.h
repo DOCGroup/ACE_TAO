@@ -55,7 +55,7 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
-  ACE_SYNCH_MUTEX lock_;
+  TAO_SYNCH_MUTEX lock_;
   // Lock to serialize the access to the factory.
 };
 

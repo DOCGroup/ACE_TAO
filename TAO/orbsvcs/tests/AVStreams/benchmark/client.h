@@ -138,10 +138,10 @@ public:
   // ready flag used by the high priority thread to wake up the low
   // priority threads after it's parsed the arguments.
 
-  ACE_SYNCH_MUTEX ready_mtx_;
+  TAO_SYNCH_MUTEX ready_mtx_;
   // mutex for the condition variable.
 
-  ACE_SYNCH_CONDITION ready_cond_;
+  TAO_SYNCH_CONDITION ready_cond_;
   // condition variable for the low priority threads to wait
   //until the high priority thread is done with the arguments parsing.
 
@@ -166,7 +166,7 @@ public:
   // No. of threads.
 };
 
-typedef ACE_Singleton <Globals,ACE_SYNCH_MUTEX> GLOBALS;
+typedef ACE_Singleton <Globals,TAO_SYNCH_MUTEX> GLOBALS;
 
 class Client : public ACE_Task<ACE_SYNCH>
 // one of these per client thread

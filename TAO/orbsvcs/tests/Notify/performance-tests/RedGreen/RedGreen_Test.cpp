@@ -18,7 +18,7 @@ ACE_RCSID(Notify, RedGreen_Test, "$Id$")
 #define TYPE_GREEN "TYPE_GREEN"
 #define TYPE_RED "TYPE_RED"
 
-ACE_Atomic_Op <ACE_SYNCH_MUTEX, int> g_result_count = 0;
+ACE_Atomic_Op <TAO_SYNCH_MUTEX, int> g_result_count = 0;
 ACE_hrtime_t g_throughput_start_;
 
 int
@@ -414,7 +414,7 @@ RedGreen_Test_StructuredPushConsumer::push_structured_event (const CosNotificati
                    CosEventComm::Disconnected
                    ))
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->lock_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
   const char* domain_name =
     notification.header.fixed_header.event_type.domain_name;
 
@@ -609,10 +609,10 @@ Worker::svc (void)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class  ACE_Atomic_Op<ACE_SYNCH_MUTEX, int>;
+template class  ACE_Atomic_Op<TAO_SYNCH_MUTEX, int>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate ACE_Atomic_Op<ACE_SYNCH_MUTEX, int>
+#pragma instantiate ACE_Atomic_Op<TAO_SYNCH_MUTEX, int>
 
 #endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -103,7 +103,7 @@ public:
 protected:
   // = Typedefs
   typedef ACE_Hash_Map_Manager <TAO_Notify_EventType,
-    TAO_Notify_EventListener_List*, ACE_SYNCH_MUTEX> EVENT_RECIPIENT_MAP;
+    TAO_Notify_EventListener_List*, TAO_SYNCH_MUTEX> EVENT_RECIPIENT_MAP;
 
   // = Data Members
   EVENT_RECIPIENT_MAP event_recipient_map_;

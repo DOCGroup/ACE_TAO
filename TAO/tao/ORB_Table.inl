@@ -5,7 +5,7 @@
 ACE_INLINE TAO_ORB_Table *
 TAO_ORB_Table::instance (void)
 {
-  return TAO_Singleton<TAO_ORB_Table, ACE_SYNCH_MUTEX>::instance ();
+  return TAO_Singleton<TAO_ORB_Table, TAO_SYNCH_MUTEX>::instance ();
 }
 
 ACE_INLINE TAO_ORB_Core *

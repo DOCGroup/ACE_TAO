@@ -37,7 +37,7 @@ void
 TAO_Notify_Event_Manager::init (CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_NEW_THROW_EX (this->lock_,
-                    ACE_Lock_Adapter<ACE_SYNCH_MUTEX> (),
+                    ACE_Lock_Adapter<TAO_SYNCH_MUTEX> (),
                     CORBA::NO_MEMORY ());
 
   // Create members.
@@ -155,25 +155,25 @@ TAO_Notify_Update_Worker::work (TAO_Notify_UpdateListener* listener, CORBA::Envi
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 template class ACE_Hash_Map_Entry<TAO_Notify_EventType, TAO_Notify_EventListener_List *>;
-template class ACE_Hash_Map_Manager<TAO_Notify_EventType, TAO_Notify_EventListener_List *,ACE_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Manager_Ex<TAO_Notify_EventType, TAO_Notify_EventListener_List *,ACE_Hash<TAO_Notify_EventType>, ACE_Equal_To<TAO_Notify_EventType>,ACE_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Iterator<TAO_Notify_EventType, TAO_Notify_EventListener_List *,ACE_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Iterator_Ex<TAO_Notify_EventType, TAO_Notify_EventListener_List *,ACE_Hash<TAO_Notify_EventType>, ACE_Equal_To<TAO_Notify_EventType>,ACE_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Iterator_Base_Ex<TAO_Notify_EventType, TAO_Notify_EventListener_List *,ACE_Hash<TAO_Notify_EventType>, ACE_Equal_To<TAO_Notify_EventType>,ACE_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Reverse_Iterator<TAO_Notify_EventType, TAO_Notify_EventListener_List *,ACE_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<TAO_Notify_EventType, TAO_Notify_EventListener_List *,ACE_Hash<TAO_Notify_EventType>, ACE_Equal_To<TAO_Notify_EventType>,ACE_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Manager<TAO_Notify_EventType, TAO_Notify_EventListener_List *,TAO_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Manager_Ex<TAO_Notify_EventType, TAO_Notify_EventListener_List *,ACE_Hash<TAO_Notify_EventType>, ACE_Equal_To<TAO_Notify_EventType>,TAO_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Iterator<TAO_Notify_EventType, TAO_Notify_EventListener_List *,TAO_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Iterator_Ex<TAO_Notify_EventType, TAO_Notify_EventListener_List *,ACE_Hash<TAO_Notify_EventType>, ACE_Equal_To<TAO_Notify_EventType>,TAO_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Iterator_Base_Ex<TAO_Notify_EventType, TAO_Notify_EventListener_List *,ACE_Hash<TAO_Notify_EventType>, ACE_Equal_To<TAO_Notify_EventType>,TAO_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Reverse_Iterator<TAO_Notify_EventType, TAO_Notify_EventListener_List *,TAO_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<TAO_Notify_EventType, TAO_Notify_EventListener_List *,ACE_Hash<TAO_Notify_EventType>, ACE_Equal_To<TAO_Notify_EventType>,TAO_SYNCH_MUTEX>;
 template class ACE_Hash<TAO_Notify_EventType>;
 template class ACE_Equal_To<TAO_Notify_EventType>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate ACE_Hash_Map_Entry<TAO_Notify_EventType, TAO_Notify_EventListener_List *>
-#pragma instantiate ACE_Hash_Map_Manager<TAO_Notify_EventType, TAO_Notify_EventListener_List *,ACE_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<TAO_Notify_EventType, TAO_Notify_EventListener_List *,ACE_Hash<TAO_Notify_EventType>, ACE_Equal_To<TAO_Notify_EventType>,ACE_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Iterator<TAO_Notify_EventType, TAO_Notify_EventListener_List *,ACE_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<TAO_Notify_EventType, TAO_Notify_EventListener_List *,ACE_Hash<TAO_Notify_EventType>, ACE_Equal_To<TAO_Notify_EventType>,ACE_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<TAO_Notify_EventType, TAO_Notify_EventListener_List *,ACE_Hash<TAO_Notify_EventType>, ACE_Equal_To<TAO_Notify_EventType>,ACE_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator<TAO_Notify_EventType, TAO_Notify_EventListener_List *,ACE_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<TAO_Notify_EventType, TAO_Notify_EventListener_List *,ACE_Hash<TAO_Notify_EventType>, ACE_Equal_To<TAO_Notify_EventType>,ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Manager<TAO_Notify_EventType, TAO_Notify_EventListener_List *,TAO_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Manager_Ex<TAO_Notify_EventType, TAO_Notify_EventListener_List *,ACE_Hash<TAO_Notify_EventType>, ACE_Equal_To<TAO_Notify_EventType>,TAO_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Iterator<TAO_Notify_EventType, TAO_Notify_EventListener_List *,TAO_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<TAO_Notify_EventType, TAO_Notify_EventListener_List *,ACE_Hash<TAO_Notify_EventType>, ACE_Equal_To<TAO_Notify_EventType>,TAO_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<TAO_Notify_EventType, TAO_Notify_EventListener_List *,ACE_Hash<TAO_Notify_EventType>, ACE_Equal_To<TAO_Notify_EventType>,TAO_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator<TAO_Notify_EventType, TAO_Notify_EventListener_List *,TAO_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<TAO_Notify_EventType, TAO_Notify_EventListener_List *,ACE_Hash<TAO_Notify_EventType>, ACE_Equal_To<TAO_Notify_EventType>,TAO_SYNCH_MUTEX>
 #pragma instantiate template ACE_Hash<TAO_Notify_EventType>
 #pragma instantiate template ACE_Equal_To<TAO_Notify_EventType>
 #endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

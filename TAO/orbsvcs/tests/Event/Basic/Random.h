@@ -65,7 +65,7 @@ protected:
   RtecEventChannelAdmin::ProxyPushSupplier_var proxy_;
   // The supplier.
 
-  ACE_SYNCH_MUTEX lock_;
+  TAO_SYNCH_MUTEX lock_;
   // Synch
 };
 
@@ -129,7 +129,7 @@ private:
   RtecEventChannelAdmin::ProxyPushConsumer_var proxy_;
   // The supplier.
 
-  ACE_SYNCH_MUTEX lock_;
+  TAO_SYNCH_MUTEX lock_;
   // Synch
 
   int verbose_;

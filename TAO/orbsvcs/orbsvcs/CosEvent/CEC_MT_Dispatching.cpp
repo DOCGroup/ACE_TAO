@@ -24,7 +24,7 @@ TAO_CEC_MT_Dispatching::TAO_CEC_MT_Dispatching (int nthreads,
 void
 TAO_CEC_MT_Dispatching::activate (void)
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->lock_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
   if (this->active_ != 0)
     return;
@@ -48,7 +48,7 @@ TAO_CEC_MT_Dispatching::activate (void)
 void
 TAO_CEC_MT_Dispatching::shutdown (void)
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->lock_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
   if (this->active_ == 0)
     return;

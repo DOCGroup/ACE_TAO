@@ -140,7 +140,7 @@ TAO_Default_Client_Strategy_Factory::create_profile_lock (void)
                     0);
   else
     ACE_NEW_RETURN (the_lock,
-                    ACE_Lock_Adapter<ACE_SYNCH_MUTEX> (),
+                    ACE_Lock_Adapter<TAO_SYNCH_MUTEX> (),
                     0);
 
   return the_lock;
@@ -201,7 +201,7 @@ TAO_Default_Client_Strategy_Factory::create_ft_service_retention_id_lock (void)
   ACE_Lock *the_lock = 0;
 
   ACE_NEW_RETURN (the_lock,
-                  ACE_Lock_Adapter<ACE_SYNCH_MUTEX>,
+                  ACE_Lock_Adapter<TAO_SYNCH_MUTEX>,
                   0);
 
   return the_lock;

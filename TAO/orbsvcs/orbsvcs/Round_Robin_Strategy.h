@@ -71,7 +71,7 @@ private:
 
   ACE_Unbounded_Set_Iterator<TAO_LB_ReplicaProxy *> next_replica_;
 
-  ACE_SYNCH_MUTEX lock_;
+  TAO_SYNCH_MUTEX lock_;
   // Lock used to ensure access to state within this class is atomic.
 };
 

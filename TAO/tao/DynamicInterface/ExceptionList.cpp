@@ -104,11 +104,11 @@ CORBA_ExceptionList::_decr_refcnt (void)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class ACE_Atomic_Op<ACE_SYNCH_MUTEX, CORBA::ULong>;
+template class ACE_Atomic_Op<TAO_SYNCH_MUTEX, CORBA::ULong>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate ACE_Atomic_Op<ACE_SYNCH_MUTEX, CORBA::ULong>
+#pragma instantiate ACE_Atomic_Op<TAO_SYNCH_MUTEX, CORBA::ULong>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 

@@ -164,7 +164,7 @@ CC_LockSet::unlock (CosConcurrencyControl::lock_mode mode,
 
   CC_LockModeEnum lm = lmconvert (mode);
 
-  ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->mlock_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mlock_);
 
   if (lock_[lm] == 0) // This lock is not held.
     ACE_THROW (CosConcurrencyControl::LockNotHeld());
@@ -225,7 +225,7 @@ CC_LockSet::change_mode (CosConcurrencyControl::lock_mode held_mode,
 int
 CC_LockSet::lock_i (CC_LockModeEnum lm)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mlock_, 1);
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mlock_, 1);
   // If the lock is not compatible with the locks we hold allready or
   // there is lock requests in the queue we cannot grant the lock and
   // thus we queue the request. Otherwise update the lock count.
@@ -246,7 +246,7 @@ CC_LockSet::lock_i (CC_LockModeEnum lm)
 int
 CC_LockSet::try_lock_i (CC_LockModeEnum lm)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mlock_, 1);
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mlock_, 1);
   // If the lock we try is compatible with the locks we hold we just
   // opdates the count. Otherwise we return false.
   if (compatible (lm) == 0)
@@ -265,7 +265,7 @@ int
 CC_LockSet::change_mode_i (CC_LockModeEnum lm_held,
                           CC_LockModeEnum lm_new)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mlock_, 1);
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mlock_, 1);
   // If the new mode is compatible with the modes we hold we change
   // the counts for the two locks. If not we must queue the new
   // request. We can decrement the count for the old mode without
@@ -292,7 +292,7 @@ CC_LockSet::change_mode_i (CC_LockModeEnum lm_held,
 int
 CC_LockSet::lock_held (CC_LockModeEnum lm)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mlock_, 1);
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mlock_, 1);
   if (lock_[lm] > 0)
     return 1;
   else

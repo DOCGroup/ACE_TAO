@@ -49,7 +49,7 @@ public:
 
 private:
   CORBA::ULong _tao_reference_count_;
-  ACE_SYNCH_MUTEX _tao_reference_count_lock_;
+  TAO_SYNCH_MUTEX _tao_reference_count_lock_;
 }; // CORBA_ValueFactoryBase
 
 

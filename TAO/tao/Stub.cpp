@@ -235,7 +235,7 @@ TAO_Stub::is_equivalent (CORBA::Object_ptr other_obj)
 CORBA::ULong
 TAO_Stub::_incr_refcnt (void)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX,
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                     guard,
                     this->refcount_lock_,
                     0);
@@ -247,7 +247,7 @@ CORBA::ULong
 TAO_Stub::_decr_refcnt (void)
 {
   {
-    ACE_GUARD_RETURN (ACE_SYNCH_MUTEX,
+    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                       mon,
                       this->refcount_lock_,
                       0);

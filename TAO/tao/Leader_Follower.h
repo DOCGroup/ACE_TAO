@@ -80,7 +80,7 @@ public:
    * returns 0 on success, -1 on failure and 1 if the element is
    * already there.
    */
-  int add_follower (ACE_SYNCH_CONDITION *follower_ptr);
+  int add_follower (TAO_SYNCH_CONDITION *follower_ptr);
 
   /// checks for the availablity of a follower
   /// returns 1 on available, 0 else
@@ -88,15 +88,15 @@ public:
 
   /// removes a follower from the leader-follower set
   /// returns 0 on success, -1 on failure
-  int remove_follower (ACE_SYNCH_CONDITION *follower_ptr);
+  int remove_follower (TAO_SYNCH_CONDITION *follower_ptr);
 
   /// returns randomly a follower from the leader-follower set
   /// returns follower on success, else 0
-  ACE_SYNCH_CONDITION *get_next_follower (void);
+  TAO_SYNCH_CONDITION *get_next_follower (void);
 
   /// Accessors
-  ACE_SYNCH_MUTEX &lock (void);
-  ACE_Reverse_Lock<ACE_SYNCH_MUTEX> &reverse_lock (void);
+  TAO_SYNCH_MUTEX &lock (void);
+  ACE_Reverse_Lock<TAO_SYNCH_MUTEX> &reverse_lock (void);
 
   /// Check if there are any client threads running
   int has_clients (void) const;
@@ -123,12 +123,12 @@ private:
   TAO_ORB_Core *orb_core_;
 
   /// To synchronize access to the members.
-  ACE_SYNCH_MUTEX lock_;
+  TAO_SYNCH_MUTEX lock_;
 
   /// do protect the access to the following three members
-  ACE_Reverse_Lock<ACE_SYNCH_MUTEX> reverse_lock_;
+  ACE_Reverse_Lock<TAO_SYNCH_MUTEX> reverse_lock_;
 
-  ACE_Unbounded_Set<ACE_SYNCH_CONDITION *> follower_set_;
+  ACE_Unbounded_Set<TAO_SYNCH_CONDITION *> follower_set_;
   // keep a set of followers around (protected)
 
   /**
@@ -154,7 +154,7 @@ private:
 
   /// Condition variable for server threads waiting for the client
   /// leader to complete.
-  ACE_SYNCH_CONDITION event_loop_threads_condition_;
+  TAO_SYNCH_CONDITION event_loop_threads_condition_;
 };
 
 class TAO_Export TAO_LF_Client_Thread_Helper

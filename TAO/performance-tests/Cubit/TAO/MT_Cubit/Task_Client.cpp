@@ -297,7 +297,7 @@ Client::put_latency (JITTER_ARRAY *jitter,
                      u_int thread_id,
                      u_int count)
 {
-  ACE_MT (ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->ts_->lock_));
+  ACE_MT (ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->ts_->lock_));
 
   this->ts_->latency_[thread_id] = latency;
   this->ts_->global_jitter_array_[thread_id] = jitter;
@@ -599,7 +599,7 @@ Client::init_orb (CORBA::Environment &ACE_TRY_ENV)
       ACE_DEBUG ((LM_DEBUG,
                   "(%t)Arguments parsed successfully\n"));
 
-      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ready_mon,
+      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ready_mon,
                         this->ts_->ready_mtx_,
                         CORBA::ORB::_nil ());
       this->ts_->ready_ = 1;

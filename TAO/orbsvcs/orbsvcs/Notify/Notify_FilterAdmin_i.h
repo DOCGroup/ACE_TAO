@@ -90,7 +90,7 @@ public:
   ));
 
 private:
-  typedef ACE_Hash_Map_Manager <CosNotifyFilter::FilterID, CosNotifyFilter::Filter_var, ACE_SYNCH_MUTEX> FILTER_LIST;
+  typedef ACE_Hash_Map_Manager <CosNotifyFilter::FilterID, CosNotifyFilter::Filter_var, TAO_SYNCH_MUTEX> FILTER_LIST;
   FILTER_LIST filter_list_;
   // List of filters
 

@@ -18,17 +18,17 @@ TAO_Leader_Follower::~TAO_Leader_Follower (void)
   this->reactor_ = 0;
 }
 
-ACE_SYNCH_CONDITION*
+TAO_SYNCH_CONDITION*
 TAO_Leader_Follower::get_next_follower (void)
 {
-  ACE_Unbounded_Set_Iterator<ACE_SYNCH_CONDITION *> iterator (
+  ACE_Unbounded_Set_Iterator<TAO_SYNCH_CONDITION *> iterator (
     this->follower_set_);
 
   if (iterator.first () == 0)
     // means set is empty
     return 0;
 
-  ACE_SYNCH_CONDITION *cond = *iterator;
+  TAO_SYNCH_CONDITION *cond = *iterator;
 
 #if defined (TAO_DEBUG_LEADER_FOLLOWER)
   ACE_DEBUG ((LM_DEBUG,
@@ -99,7 +99,7 @@ TAO_Leader_Follower::reactor (void)
 {
   if (this->reactor_ == 0)
     {
-      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock (), 0);
+      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock (), 0);
       if (this->reactor_ == 0)
         {
           this->reactor_ =
@@ -156,14 +156,14 @@ TAO_Leader_Follower::reset_client_thread (void)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class ACE_Node<ACE_SYNCH_CONDITION*>;
-template class ACE_Unbounded_Set<ACE_SYNCH_CONDITION*>;
-template class ACE_Unbounded_Set_Iterator<ACE_SYNCH_CONDITION*>;
+template class ACE_Node<TAO_SYNCH_CONDITION*>;
+template class ACE_Unbounded_Set<TAO_SYNCH_CONDITION*>;
+template class ACE_Unbounded_Set_Iterator<TAO_SYNCH_CONDITION*>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate ACE_Node<ACE_SYNCH_CONDITION*>
-#pragma instantiate ACE_Unbounded_Set<ACE_SYNCH_CONDITION*>
-#pragma instantiate ACE_Unbounded_Set_Iterator<ACE_SYNCH_CONDITION*>
+#pragma instantiate ACE_Node<TAO_SYNCH_CONDITION*>
+#pragma instantiate ACE_Unbounded_Set<TAO_SYNCH_CONDITION*>
+#pragma instantiate ACE_Unbounded_Set_Iterator<TAO_SYNCH_CONDITION*>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

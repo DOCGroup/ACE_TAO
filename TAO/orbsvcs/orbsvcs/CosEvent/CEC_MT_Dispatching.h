@@ -77,7 +77,7 @@ private:
   TAO_CEC_Dispatching_Task task_;
   // The dispatching task
 
-  ACE_SYNCH_MUTEX lock_;
+  TAO_SYNCH_MUTEX lock_;
   // Synchronize access to internal data
 
   int active_;

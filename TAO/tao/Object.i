@@ -17,7 +17,7 @@ CORBA_Object::CORBA_Object (int)
 ACE_INLINE CORBA::ULong
 CORBA_Object::_incr_refcnt (void)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->refcount_lock_, 0);
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->refcount_lock_, 0);
   return this->refcount_++;
 }
 
@@ -25,7 +25,7 @@ ACE_INLINE CORBA::ULong
 CORBA_Object::_decr_refcnt (void)
 {
   {
-    ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, mon, this->refcount_lock_, 0);
+    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, this->refcount_lock_, 0);
     this->refcount_--;
     if (this->refcount_ != 0)
       return this->refcount_;

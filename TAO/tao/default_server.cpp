@@ -72,7 +72,7 @@ TAO_Default_Server_Strategy_Factory::create_event_loop_lock (void)
                     0);
   else
     ACE_NEW_RETURN (the_lock,
-                    ACE_Lock_Adapter<ACE_SYNCH_RECURSIVE_MUTEX>,
+                    ACE_Lock_Adapter<TAO_SYNCH_RECURSIVE_MUTEX>,
                     0);
 
   return the_lock;

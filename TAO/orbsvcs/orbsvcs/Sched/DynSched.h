@@ -380,15 +380,15 @@ private:
   typedef RT_Info *INT;
 
 #if defined (ACE_HAS_THREADS)
-  typedef ACE_Thread_Mutex SYNCH;
-  typedef ACE_Recursive_Thread_Mutex LOCK;
+  typedef TAO_SYNCH_MUTEX SYNCH;
+  typedef TAO_SYNCH_RECURSIVE_MUTEX LOCK;
 #else
   typedef ACE_Null_Mutex SYNCH;
   typedef ACE_Null_Mutex LOCK;
 #endif /* ACE_HAS_THREADS */
 
-  typedef ACE_Map_Manager<EXT, INT, ACE_SYNCH_MUTEX> Info_Collection;
-  typedef ACE_Map_Iterator<EXT, INT, ACE_SYNCH_MUTEX> Info_Collection_Iterator;
+  typedef ACE_Map_Manager<EXT, INT, TAO_SYNCH_MUTEX> Info_Collection;
+  typedef ACE_Map_Iterator<EXT, INT, TAO_SYNCH_MUTEX> Info_Collection_Iterator;
   typedef ACE_Map_Entry<EXT, INT> Info_Collection_Entry;
 
   //////////////////////////////

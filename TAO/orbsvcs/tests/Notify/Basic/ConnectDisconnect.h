@@ -101,7 +101,7 @@ protected:
   TAO_Notify_SequencePushSupplier** sequence_supplier_;
   // arrays of Suppliers
 
-  ACE_Atomic_Op <ACE_SYNCH_MUTEX, int> result_count_;
+  ACE_Atomic_Op <TAO_SYNCH_MUTEX, int> result_count_;
   // count of clients destroyed. for c consumers, s suppliers and for t times.
   // this should be (s+c)*t
 

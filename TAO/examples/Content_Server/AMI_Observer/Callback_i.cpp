@@ -73,7 +73,7 @@ Callback_i::next_chunk (const Web_Server::Chunk_Type & chunk_data,
   else
     {
       {
-        ACE_MT (ACE_GUARD (ACE_SYNCH_MUTEX,
+        ACE_MT (ACE_GUARD (TAO_SYNCH_MUTEX,
                            guard,
                            this->lock_));
 
@@ -109,7 +109,7 @@ Callback_i::metadata (const Web_Server::Metadata_Type &metadata)
   ACE_TRY
     {
       {
-        ACE_MT (ACE_GUARD (ACE_SYNCH_MUTEX,
+        ACE_MT (ACE_GUARD (TAO_SYNCH_MUTEX,
                            guard,
                            this->lock_));
         this->metadata_ = metadata;
@@ -145,7 +145,7 @@ Callback_i::metadata (const Web_Server::Metadata_Type &metadata)
 int
 Callback_i::metadata_received (void)
 {
-  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX,
+  ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                             guard,
                             this->lock_,
                             0));
@@ -156,7 +156,7 @@ Callback_i::metadata_received (void)
 int
 Callback_i::content_received (void)
 {
-  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX,
+  ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                             guard,
                             this->lock_,
                             0));

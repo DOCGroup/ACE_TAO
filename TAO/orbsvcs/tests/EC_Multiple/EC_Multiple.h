@@ -362,17 +362,17 @@ private:
   // Store the measurements for local and remote events..
 
   int ready_;
-  ACE_SYNCH_MUTEX ready_mtx_;
-  ACE_SYNCH_CONDITION ready_cnd_;
+  TAO_SYNCH_MUTEX ready_mtx_;
+  TAO_SYNCH_CONDITION ready_cnd_;
   // Before accepting any events the suppliers must wait for the test
   // to setup all the consumers.
   // The suppliers wait on the condition variable.
 
-  ACE_Atomic_Op<ACE_SYNCH_MUTEX,int> running_suppliers_;
+  ACE_Atomic_Op<TAO_SYNCH_MUTEX,int> running_suppliers_;
   // keep track of how many suppliers are still running so we shutdown
   // at the right moment.
 
-  ACE_Atomic_Op<ACE_SYNCH_MUTEX,int> running_consumers_;
+  ACE_Atomic_Op<TAO_SYNCH_MUTEX,int> running_consumers_;
   // keep track of how many consumers are still running so we shutdown
   // at the right moment.
 

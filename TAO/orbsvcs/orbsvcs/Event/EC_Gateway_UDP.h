@@ -248,7 +248,7 @@ public:
 
 private:
   /// The request id....
-  ACE_Atomic_Op<ACE_SYNCH_MUTEX,CORBA::ULong> request_id_generator_;
+  ACE_Atomic_Op<TAO_SYNCH_MUTEX,CORBA::ULong> request_id_generator_;
 
   /// The datagram....
   ACE_SOCK_Dgram dgram_;
@@ -493,7 +493,7 @@ private:
 
   typedef ACE_Hash_Map_Manager<TAO_ECG_UDP_Request_Index,
                                TAO_ECG_UDP_Request_Entry*,
-                               ACE_SYNCH_MUTEX> Request_Map;
+                               TAO_SYNCH_MUTEX> Request_Map;
   typedef ACE_Hash_Map_Entry<TAO_ECG_UDP_Request_Index,
                              TAO_ECG_UDP_Request_Entry*> Request_Map_Entry;
 

@@ -588,7 +588,7 @@ TAO_Default_Resource_Factory::reclaim_reactor (ACE_Reactor *reactor)
 typedef ACE_Malloc<ACE_LOCAL_MEMORY_POOL,ACE_Null_Mutex> NULL_LOCK_MALLOC;
 typedef ACE_Allocator_Adapter<NULL_LOCK_MALLOC> NULL_LOCK_ALLOCATOR;
 
-typedef ACE_Malloc<ACE_LOCAL_MEMORY_POOL,ACE_SYNCH_MUTEX> LOCKED_MALLOC;
+typedef ACE_Malloc<ACE_LOCAL_MEMORY_POOL,TAO_SYNCH_MUTEX> LOCKED_MALLOC;
 typedef ACE_Allocator_Adapter<LOCKED_MALLOC> LOCKED_ALLOCATOR;
 
 ACE_Allocator *
@@ -652,7 +652,7 @@ TAO_Default_Resource_Factory::create_cached_connection_lock (void)
                     0);
   else
     ACE_NEW_RETURN (the_lock,
-                    ACE_Lock_Adapter<ACE_SYNCH_MUTEX>,
+                    ACE_Lock_Adapter<TAO_SYNCH_MUTEX>,
                     0);
 
   return the_lock;

@@ -56,7 +56,7 @@ private:
   TAO_Object_Proxy_Impl
   *proxy_cache_[TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM];
 
-  ACE_SYNCH_MUTEX mutex_;
+  TAO_SYNCH_MUTEX mutex_;
 };
 
 TAO_Strategized_Object_Proxy_Broker *the_tao_strategized_object_proxy_broker (void);

@@ -39,7 +39,7 @@ CORBA_DefaultValueRefCountBase::CORBA_DefaultValueRefCountBase (void)
 ACE_INLINE void
 CORBA_DefaultValueRefCountBase::_tao_add_ref (void)
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->_tao_reference_count_lock_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->_tao_reference_count_lock_);
   ++_tao_reference_count_;
 }
 
@@ -47,7 +47,7 @@ ACE_INLINE void
 CORBA_DefaultValueRefCountBase::_tao_remove_ref (void)
 {
   {
-    ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->_tao_reference_count_lock_);
+    ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->_tao_reference_count_lock_);
     -- this->_tao_reference_count_;
     if (this->_tao_reference_count_ != 0)
       return;
@@ -61,7 +61,7 @@ CORBA_DefaultValueRefCountBase::_tao_remove_ref (void)
 ACE_INLINE CORBA::ULong
 CORBA_DefaultValueRefCountBase::_tao_refcount_value (void)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->_tao_reference_count_lock_,0);
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->_tao_reference_count_lock_,0);
   return _tao_reference_count_;
 }
 

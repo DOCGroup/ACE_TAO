@@ -2,7 +2,7 @@
 
 #include "Interpreter.h"
 
-ACE_SYNCH_MUTEX TAO_Interpreter::parserMutex__;
+TAO_SYNCH_MUTEX TAO_Interpreter::parserMutex__;
 
 TAO_Interpreter::TAO_Interpreter (void)
   : root_ (0)
@@ -17,7 +17,7 @@ TAO_Interpreter::~TAO_Interpreter (void)
 int
 TAO_Interpreter::build_tree (const char* constraints)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX,
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                     guard,
                     TAO_Interpreter::parserMutex__,
                     -1);

@@ -54,7 +54,7 @@ public:
   TAO_Bindings_Iterator (TAO_Hash_Naming_Context *context,
                          ITERATOR *hash_iter,
                          PortableServer::POA_ptr poa,
-                         ACE_SYNCH_RECURSIVE_MUTEX &lock);
+                         TAO_SYNCH_RECURSIVE_MUTEX &lock);
   // Constructor expects a pointer to a
   // dynamically allocated hash map iterator (destructor
   // deallocates hash map iterator).
@@ -112,7 +112,7 @@ private:
   ITERATOR *hash_iter_;
   // A pointer to the hash map iterator.
 
-  ACE_SYNCH_RECURSIVE_MUTEX &lock_;
+  TAO_SYNCH_RECURSIVE_MUTEX &lock_;
   // Lock passed on from Naming Context to serialize access to the
   // internal data structure.
 

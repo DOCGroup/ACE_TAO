@@ -158,7 +158,7 @@ TAO_ServantBase::_create_stub (CORBA_Environment &ACE_TRY_ENV)
   return stub;
 }
 
-ACE_SYNCH_MUTEX &
+TAO_SYNCH_MUTEX &
 TAO_ServantBase::_single_threaded_poa_lock (void)
 {
   return *this->single_threaded_poa_lock_;
@@ -174,7 +174,7 @@ TAO_ServantBase::_increment_single_threaded_poa_lock_count (void)
   if (current_count == 0)
     {
       ACE_NEW (this->single_threaded_poa_lock_,
-               ACE_SYNCH_MUTEX);
+               TAO_SYNCH_MUTEX);
     }
 }
 
@@ -403,10 +403,10 @@ TAO_Local_ServantBase::_dispatch (TAO_ServerRequest &,
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class ACE_Atomic_Op<ACE_SYNCH_MUTEX, long>;
+template class ACE_Atomic_Op<TAO_SYNCH_MUTEX, long>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate ACE_Atomic_Op<ACE_SYNCH_MUTEX, long>
+#pragma instantiate ACE_Atomic_Op<TAO_SYNCH_MUTEX, long>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

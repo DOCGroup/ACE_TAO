@@ -76,9 +76,9 @@ public:
   virtual void close (void);
 };
 
-typedef ACE_Singleton <Audio_Control_Waiting_State, ACE_SYNCH_MUTEX>
+typedef ACE_Singleton <Audio_Control_Waiting_State, TAO_SYNCH_MUTEX>
         AUDIO_CONTROL_WAITING_STATE;
-typedef ACE_Singleton <Audio_Control_Play_State, ACE_SYNCH_MUTEX>
+typedef ACE_Singleton <Audio_Control_Play_State, TAO_SYNCH_MUTEX>
         AUDIO_CONTROL_PLAY_STATE;
 
 #endif /*_MPEG_AUDIO_CONTROL_STATE_H */

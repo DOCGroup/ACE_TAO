@@ -282,7 +282,7 @@ private:
 
   /// Protect the reference count, this is OK because we do no
   /// duplicates or releases on the critical path.
-  ACE_SYNCH_MUTEX refcount_lock_;
+  TAO_SYNCH_MUTEX refcount_lock_;
 
   // = Unimplemented methods
   CORBA_Object (const CORBA_Object &);

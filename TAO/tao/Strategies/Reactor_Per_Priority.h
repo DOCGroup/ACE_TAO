@@ -62,8 +62,8 @@ private:
   // implement all the other methods
 
 private:
-  typedef ACE_Map_Manager<CORBA::Short,TAO_Leader_Follower*,ACE_SYNCH_MUTEX> Map;
-  typedef ACE_Map_Iterator<CORBA::Short,TAO_Leader_Follower*,ACE_SYNCH_MUTEX> Map_Iterator;
+  typedef ACE_Map_Manager<CORBA::Short,TAO_Leader_Follower*,TAO_SYNCH_MUTEX> Map;
+  typedef ACE_Map_Iterator<CORBA::Short,TAO_Leader_Follower*,TAO_SYNCH_MUTEX> Map_Iterator;
 
   Map map_;
   // The map between priorities and the control structure for the

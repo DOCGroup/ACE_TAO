@@ -841,7 +841,6 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
 
           arg_shifter.consume_arg ();
         }
-
       ////////////////////////////////////////////////////////////////
       // catch any unknown -ORB args                                //
       ////////////////////////////////////////////////////////////////
@@ -1085,8 +1084,58 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
   // in the shutdown state.
   this->has_shutdown_ = 0;
 
+#if (TAO_HAS_RT_CORBA == 1)
+  // check RT ORB options
+  if (this->RT_ORB_init (argc, argv, ACE_TRY_ENV) != 0)
+    return -1;
+#endif /* TAO_HAS_RT_CORBA */
+
   return 0;
 }
+
+#if (TAO_HAS_RT_CORBA == 1)
+int
+TAO_ORB_Core::RT_ORB_init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
+{
+  ACE_Arg_Shifter arg_shifter (argc, argv);
+
+  while (arg_shifter.is_anything_left ())
+    {
+      char *current_arg = 0;
+
+      /* Place holder for future RTORB options */
+
+      if (arg_shifter.cur_arg_strncasecmp ("-RTORB") != -1)
+        {
+          if (TAO_debug_level > 0)
+            {
+              current_arg = arg_shifter.get_current ();
+              ACE_DEBUG ((LM_ERROR,
+                          ACE_TEXT ("ERROR: Unknown \"-RTORB\" option ")
+                          ACE_TEXT ("<%s>.\n"),
+                          ((current_arg == 0) ? "<NULL>" : current_arg)));
+            }
+
+          ACE_THROW_RETURN (CORBA::BAD_PARAM (
+                                  CORBA::SystemException::_tao_minor_code (
+                                          TAO_ORB_CORE_INIT_LOCATION_CODE,
+                                          EINVAL),
+                                  CORBA::COMPLETED_NO),
+                            -1);
+        }
+
+      ////////////////////////////////////////////////////////////////
+      // ok, we can't interpret this argument, move to next argument//
+      ////////////////////////////////////////////////////////////////
+      else
+        // Any arguments that don't match are ignored so that the
+        // caller can still use them.
+        arg_shifter.ignore_arg ();
+    }
+
+  return 0;
+}
+#endif /* TAO_HAS_RT_CORBA */
 
 int
 TAO_ORB_Core::fini (void)
@@ -1535,7 +1584,7 @@ TAO_ORB_Core::poa_adapter (void)
 {
   if (this->poa_adapter_ == 0)
     {
-      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, 0);
+      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
       if (this->poa_adapter_ == 0)
         {
           this->poa_adapter_ =
@@ -1545,7 +1594,7 @@ TAO_ORB_Core::poa_adapter (void)
   return this->poa_adapter_;
 }
 
-ACE_SYNCH_CONDITION *
+TAO_SYNCH_CONDITION *
 TAO_ORB_Core::leader_follower_condition_variable (void)
 {
   // Always using TSS.
@@ -1557,7 +1606,7 @@ TAO_ORB_Core::leader_follower_condition_variable (void)
     {
       // Create a new one and return.
       ACE_NEW_RETURN (tss->leader_follower_condition_variable_,
-                      ACE_SYNCH_CONDITION (this->leader_follower ().lock ()),
+                      TAO_SYNCH_CONDITION (this->leader_follower ().lock ()),
                       0);
     }
 
@@ -1720,7 +1769,7 @@ TAO_ORB_Core::create_object (TAO_Stub *stub)
     // @@ Ossama: maybe we need another lock for the table, to
     //    reduce contention on the Static_Object_Lock below, if so
     //    then we need to use that lock in the ORB_init() function.
-    ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard,
+    ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX, guard,
                               *ACE_Static_Object_Lock::instance (),
                               0));
 
@@ -1936,7 +1985,7 @@ TAO_ORB_Core::destroy (CORBA_Environment &ACE_TRY_ENV)
   // Now remove it from the ORB table so that it's ORBid may be
   // reused.
   {
-    ACE_MT (ACE_GUARD (ACE_SYNCH_RECURSIVE_MUTEX, guard,
+    ACE_MT (ACE_GUARD (TAO_SYNCH_RECURSIVE_MUTEX, guard,
                        *ACE_Static_Object_Lock::instance ()));
     TAO_ORB_Table::instance ()->unbind (this->orbid_);
   }
@@ -1951,7 +2000,7 @@ TAO_ORB_Core::open (CORBA::Environment &ACE_TRY_ENV)
   if (this->open_called_ == 1)
     return 1;
 
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, tao_mon, this->open_lock_, -1);
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, tao_mon, this->open_lock_, -1);
 
   if (this->open_called_ == 1)
     return 1;
@@ -2148,7 +2197,7 @@ TAO_ORB_Core::resolve_rir (const char *name,
       if (list_of_profiles[list_of_profiles.length() - 1] !=
           object_key_delimiter)
             list_of_profiles += ACE_CString (object_key_delimiter);
-      
+
       list_of_profiles += object_id;
 
       return this->orb ()->string_to_object (list_of_profiles.c_str (),
@@ -2235,7 +2284,7 @@ TAO_ORB_Core::input_cdr_dblock_allocator (void)
   if (this->orb_resources_.input_cdr_dblock_allocator_ == 0)
     {
       // Double checked locking
-      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, 0);
+      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
       if (this->orb_resources_.input_cdr_dblock_allocator_ == 0)
         this->orb_resources_.input_cdr_dblock_allocator_ =
           this->resource_factory ()->input_cdr_dblock_allocator ();
@@ -2272,7 +2321,7 @@ TAO_ORB_Core::input_cdr_buffer_allocator (void)
   if (this->orb_resources_.input_cdr_buffer_allocator_ == 0)
     {
       // Double checked locking
-      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, 0);
+      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
       if (this->orb_resources_.input_cdr_buffer_allocator_ == 0)
         this->orb_resources_.input_cdr_buffer_allocator_ =
           this->resource_factory ()->input_cdr_buffer_allocator ();
@@ -2306,7 +2355,7 @@ TAO_ORB_Core::output_cdr_dblock_allocator (void)
   if (this->orb_resources_.output_cdr_dblock_allocator_ == 0)
     {
       // Double checked locking
-      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, 0);
+      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
       if (this->orb_resources_.output_cdr_dblock_allocator_ == 0)
         this->orb_resources_.output_cdr_dblock_allocator_ =
           this->resource_factory ()->output_cdr_dblock_allocator ();
@@ -2341,7 +2390,7 @@ TAO_ORB_Core::output_cdr_buffer_allocator (void)
   if (this->orb_resources_.output_cdr_buffer_allocator_ == 0)
     {
       // Double checked locking
-      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, 0);
+      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
       if (this->orb_resources_.output_cdr_buffer_allocator_ == 0)
         this->orb_resources_.output_cdr_buffer_allocator_ =
           this->resource_factory ()->output_cdr_buffer_allocator ();
@@ -2412,7 +2461,7 @@ TAO_ORB_Core::reactor (void)
   if (this->reactor_ == 0)
     {
       // Double checked locking
-      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, 0);
+      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
       if (this->reactor_ == 0)
         {
           this->reactor_ =
@@ -2432,7 +2481,7 @@ TAO_ORB_Core::reactor (TAO_Acceptor *acceptor)
   if (this->reactor_ == 0)
     {
       // Double checked locking
-      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, 0);
+      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
       if (this->reactor_ == 0)
         {
           this->reactor_ =
@@ -2456,7 +2505,7 @@ TAO_ORB_Core::implrepo_service (void)
           CORBA::Object_var temp = this->orb_->resolve_initial_references ("ImplRepoService", ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
-          ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, CORBA::Object::_nil ());
+          ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, CORBA::Object::_nil ());
 
           // @@ Worry about assigning a different IOR? (brunsch)
           this->implrepo_service_ = temp._retn ();
@@ -2773,7 +2822,7 @@ TAO_ORB_Core_instance (void)
   TAO_ORB_Table *orb_table = TAO_ORB_Table::instance ();
   if (orb_table->first_orb () == 0)
     {
-      ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard,
+      ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX, guard,
                                 *ACE_Static_Object_Lock::instance (), 0));
 
       if (orb_table->first_orb () == 0)
@@ -2837,17 +2886,17 @@ TAO_ORB_Core::collocation_strategy (CORBA::Object_ptr object)
 
 template class ACE_Lock_Adapter<ACE_Null_Mutex>;
 #if defined (ACE_HAS_THREADS)
-template class ACE_Lock_Adapter<ACE_Recursive_Thread_Mutex>;
-template class ACE_Lock_Adapter<ACE_Thread_Mutex>;
+template class ACE_Lock_Adapter<TAO_SYNCH_RECURSIVE_MUTEX>;
+template class ACE_Lock_Adapter<TAO_SYNCH_MUTEX>;
 #endif /* ACE_HAS_THREADS */
 
-template class ACE_Reverse_Lock<ACE_SYNCH_MUTEX>;
-template class ACE_Guard<ACE_Reverse_Lock<ACE_SYNCH_MUTEX> >;
+template class ACE_Reverse_Lock<TAO_SYNCH_MUTEX>;
+template class ACE_Guard<ACE_Reverse_Lock<TAO_SYNCH_MUTEX> >;
 
 template class ACE_Env_Value<int>;
 template class ACE_Env_Value<u_int>;
 
-template class TAO_TSS_Singleton<TAO_TSS_Resources, ACE_SYNCH_MUTEX>;
+template class TAO_TSS_Singleton<TAO_TSS_Resources, TAO_SYNCH_MUTEX>;
 template class ACE_TSS<TAO_TSS_Resources>;
 template class ACE_TSS<TAO_ORB_Core_TSS_Resources>;
 
@@ -2866,17 +2915,17 @@ template class ACE_Array_Base<void *>;
 
 #pragma instantiate ACE_Lock_Adapter<ACE_Null_Mutex>
 #if defined (ACE_HAS_THREADS)
-#pragma instantiate ACE_Lock_Adapter<ACE_Recursive_Thread_Mutex>
-#pragma instantiate ACE_Lock_Adapter<ACE_Thread_Mutex>
+#pragma instantiate ACE_Lock_Adapter<TAO_SYNCH_RECURSIVE_MUTEX>
+#pragma instantiate ACE_Lock_Adapter<TAO_SYNCH_MUTEX>
 #endif /* ACE_HAS_THREADS */
 
-#pragma instantiate ACE_Reverse_Lock<ACE_SYNCH_MUTEX>
-#pragma instantiate ACE_Guard<ACE_Reverse_Lock<ACE_SYNCH_MUTEX> >
+#pragma instantiate ACE_Reverse_Lock<TAO_SYNCH_MUTEX>
+#pragma instantiate ACE_Guard<ACE_Reverse_Lock<TAO_SYNCH_MUTEX> >
 
 #pragma instantiate ACE_Env_Value<int>
 #pragma instantiate ACE_Env_Value<u_int>
 
-#pragma instantiate TAO_TSS_Singleton<TAO_TSS_Resources, ACE_SYNCH_MUTEX>
+#pragma instantiate TAO_TSS_Singleton<TAO_TSS_Resources, TAO_SYNCH_MUTEX>
 #pragma instantiate ACE_TSS<TAO_TSS_Resources>
 #pragma instantiate ACE_TSS<TAO_ORB_Core_TSS_Resources>
 

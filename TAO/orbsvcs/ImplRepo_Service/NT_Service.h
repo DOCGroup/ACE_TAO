@@ -38,7 +38,7 @@ static const char *IMR_DESCRIPTION = "Activation service for TAO";
 class ImR_NT_Service : public ACE_NT_Service
 {
 public:
-  typedef ACE_Recursive_Thread_Mutex MUTEX;
+  typedef TAO_SYNCH_RECURSIVE_MUTEX MUTEX;
 
   /// Constructor (not protected since it is used by ACE_NT_SERVICE_DEFINE).
   ImR_NT_Service (void);

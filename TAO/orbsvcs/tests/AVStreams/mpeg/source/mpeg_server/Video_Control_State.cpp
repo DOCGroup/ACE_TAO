@@ -486,13 +486,13 @@ Video_Control_Fast_Backward_State::close (void)
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Singleton<Video_Control_Play_State, ACE_Thread_Mutex>;
-template class ACE_Singleton<Video_Control_Fast_Forward_State, ACE_Thread_Mutex>;
-template class ACE_Singleton<Video_Control_Fast_Backward_State, ACE_Thread_Mutex>;
-template class ACE_Singleton<Video_Control_Waiting_State, ACE_Thread_Mutex>;
+template class ACE_Singleton<Video_Control_Play_State, TAO_SYNCH_MUTEX>;
+template class ACE_Singleton<Video_Control_Fast_Forward_State, TAO_SYNCH_MUTEX>;
+template class ACE_Singleton<Video_Control_Fast_Backward_State, TAO_SYNCH_MUTEX>;
+template class ACE_Singleton<Video_Control_Waiting_State, TAO_SYNCH_MUTEX>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Singleton<Video_Control_Fast_Backward_State, ACE_Thread_Mutex>
-#pragma instantiate ACE_Singleton<Video_Control_Play_State, ACE_Thread_Mutex>
-#pragma instantiate ACE_Singleton<Video_Control_Fast_Forward_State, ACE_Thread_Mutex>
-#pragma instantiate ACE_Singleton<Video_Control_Waiting_State, ACE_Thread_Mutex>
+#pragma instantiate ACE_Singleton<Video_Control_Fast_Backward_State, TAO_SYNCH_MUTEX>
+#pragma instantiate ACE_Singleton<Video_Control_Play_State, TAO_SYNCH_MUTEX>
+#pragma instantiate ACE_Singleton<Video_Control_Fast_Forward_State, TAO_SYNCH_MUTEX>
+#pragma instantiate ACE_Singleton<Video_Control_Waiting_State, TAO_SYNCH_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -67,7 +67,7 @@ private:
   TAO_LB_ReplicaProxySet proxies_;
   // Set containing the ReplicaProxy servants.
 
-  ACE_SYNCH_MUTEX lock_;
+  TAO_SYNCH_MUTEX lock_;
   // Lock used to ensure atomic access to state retained by this
   // class.
 };

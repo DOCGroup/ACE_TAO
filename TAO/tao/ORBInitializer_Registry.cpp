@@ -22,7 +22,7 @@ PortableInterceptor::register_orb_initializer (
   // Using ACE_Static_Object_Lock::instance() precludes
   // <register_orb_initializer> from being called within a static
   // object CTOR.
-  ACE_MT (ACE_GUARD (ACE_SYNCH_RECURSIVE_MUTEX, guard,
+  ACE_MT (ACE_GUARD (TAO_SYNCH_RECURSIVE_MUTEX, guard,
                      *ACE_Static_Object_Lock::instance ()));
 
   // Make sure TAO's singleton manager is initialized.
@@ -118,12 +118,12 @@ TAO_ORBInitializer_Registry::post_init (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class TAO_Singleton<TAO_ORBInitializer_Registry, ACE_SYNCH_MUTEX>;
+template class TAO_Singleton<TAO_ORBInitializer_Registry, TAO_SYNCH_MUTEX>;
 template class ACE_Array_Base<PortableInterceptor::ORBInitializer_ptr>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate TAO_Singleton<TAO_ORBInitializer_Registry, ACE_SYNCH_MUTEX>
+#pragma instantiate TAO_Singleton<TAO_ORBInitializer_Registry, TAO_SYNCH_MUTEX>
 #pragma instantiate ACE_Array_Base<PortableInterceptor::ORBInitializer_ptr>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -206,14 +206,14 @@ TAO_Object_Adapter::~TAO_Object_Adapter (void)
 /* static */
 ACE_Lock *
 TAO_Object_Adapter::create_lock (int enable_locking,
-                                 ACE_SYNCH_MUTEX &thread_lock)
+                                 TAO_SYNCH_MUTEX &thread_lock)
 {
 #if defined (ACE_HAS_THREADS)
   if (enable_locking)
     {
       ACE_Lock *the_lock;
       ACE_NEW_RETURN (the_lock,
-                      ACE_Lock_Adapter<ACE_SYNCH_MUTEX> (thread_lock),
+                      ACE_Lock_Adapter<TAO_SYNCH_MUTEX> (thread_lock),
                       0);
       return the_lock;
     }

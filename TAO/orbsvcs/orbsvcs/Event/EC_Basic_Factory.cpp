@@ -132,7 +132,7 @@ TAO_EC_ObserverStrategy*
 TAO_EC_Basic_Factory::create_observer_strategy (TAO_EC_Event_Channel *ec)
 {
   ACE_Lock* lock;
-  ACE_NEW_RETURN (lock, ACE_Lock_Adapter<ACE_SYNCH_MUTEX>, 0);
+  ACE_NEW_RETURN (lock, ACE_Lock_Adapter<TAO_SYNCH_MUTEX>, 0);
   return new TAO_EC_Basic_ObserverStrategy (ec, lock);
 }
 
@@ -191,7 +191,7 @@ TAO_EC_Basic_Factory::destroy_proxy_push_supplier_collection (TAO_EC_ProxyPushSu
 ACE_Lock*
 TAO_EC_Basic_Factory::create_consumer_lock (void)
 {
-  return new ACE_Lock_Adapter<ACE_SYNCH_MUTEX> ();
+  return new ACE_Lock_Adapter<TAO_SYNCH_MUTEX> ();
 }
 
 void
@@ -203,7 +203,7 @@ TAO_EC_Basic_Factory::destroy_consumer_lock (ACE_Lock* x)
 ACE_Lock*
 TAO_EC_Basic_Factory::create_supplier_lock (void)
 {
-  return new ACE_Lock_Adapter<ACE_SYNCH_RECURSIVE_MUTEX> ();
+  return new ACE_Lock_Adapter<TAO_SYNCH_RECURSIVE_MUTEX> ();
 }
 
 void

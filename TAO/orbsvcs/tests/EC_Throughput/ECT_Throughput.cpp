@@ -361,7 +361,7 @@ ECT_Throughput::shutdown_consumer (void*,
   //
   // ACE_DEBUG ((LM_DEBUG, "(%t) events received by consumer %d\n", ID));
 
-  ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->lock_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
   this->active_count_--;
   if (this->active_count_ <= 0)
     {
@@ -378,7 +378,7 @@ ECT_Throughput::connect_consumers
       CORBA::Environment &ACE_TRY_ENV)
 {
   {
-    ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->lock_);
+    ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
     this->active_count_ = this->n_consumers_;
   }
   for (int i = 0; i < this->n_consumers_; ++i)

@@ -210,7 +210,7 @@ TAO_Transport::idle_after_reply (void)
   return this->tms ()->idle_after_reply ();
 }
 
-ACE_SYNCH_CONDITION *
+TAO_SYNCH_CONDITION *
 TAO_Transport::leader_follower_condition_variable (void)
 {
   return this->wait_strategy ()->leader_follower_condition_variable ();

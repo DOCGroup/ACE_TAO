@@ -144,8 +144,8 @@ private:
   PortableServer::POA_var default_POA_;
   // Store the default POA.
 
-  ACE_SYNCH_MUTEX queue_lock_;
-  ACE_SYNCH_CONDITION wait_not_empty_;
+  TAO_SYNCH_MUTEX queue_lock_;
+  TAO_SYNCH_CONDITION wait_not_empty_;
   ACE_Unbounded_Queue<CORBA::Any> queue_;
   // Use a message queue to pass the
 };

@@ -1,5 +1,6 @@
 // $Id$
 
+#include "tao/orbconf.h"
 #include "ace/Object_Manager.h"
 #include "ace/Log_Msg.h"
 #include "ace/Synch.h"
@@ -34,7 +35,7 @@ TAO_Singleton_Manager::TAO_Singleton_Manager (void)
     exit_info_ (),
     registered_with_object_manager_ (-1)
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-  , internal_lock_ (new ACE_Recursive_Thread_Mutex)
+  , internal_lock_ (new TAO_SYNCH_RECURSIVE_MUTEX)
 # endif /* ACE_MT_SAFE */
 {
   // Be sure that no further instances are created via instance ().
@@ -268,7 +269,7 @@ TAO_Singleton_Manager::at_exit_i (void *object,
                                   ACE_CLEANUP_FUNC cleanup_hook,
                                   void *param)
 {
-  ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
+  ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX, ace_mon,
     *instance_->internal_lock_, -1));
 
   if (this->shutting_down_i ())

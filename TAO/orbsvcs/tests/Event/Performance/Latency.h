@@ -33,7 +33,7 @@ class EC_Latency_Consumer : public POA_RtecEventComm::PushConsumer
 public:
   /// Constructor
   EC_Latency_Consumer (ACE_Sample_History *history,
-                       ACE_SYNCH_MUTEX *mutex,
+                       TAO_SYNCH_MUTEX *mutex,
                        int message_count);
 
   /// Return 1 when all the messages have been received
@@ -50,7 +50,7 @@ private:
   ACE_Sample_History *history_;
 
   /// Use this mutex to synchronize access to history_
-  ACE_SYNCH_MUTEX *mutex_;
+  TAO_SYNCH_MUTEX *mutex_;
 
   /// Number of messages yet to be received
   int remaining_messages_;
@@ -92,7 +92,7 @@ private:
   int remaining_messages_;
 
   /// Synchronize access to remaining_messages_
-  ACE_SYNCH_MUTEX mutex_;
+  TAO_SYNCH_MUTEX mutex_;
 };
 
 #endif /* EC_LATENCY_H */

@@ -329,13 +329,13 @@ private:
 
 // Define a singleton instance of operation table parameters.
 typedef TAO_Singleton<TAO_Operation_Table_Parameters,
-                      ACE_SYNCH_RECURSIVE_MUTEX>
+                      TAO_SYNCH_RECURSIVE_MUTEX>
         TAO_OP_TABLE_PARAMETERS;
 
 
 // Define a singleton instance of the operation table factory.
 typedef TAO_Singleton<TAO_Operation_Table_Factory,
-                      ACE_SYNCH_RECURSIVE_MUTEX>
+                      TAO_SYNCH_RECURSIVE_MUTEX>
         TAO_OP_TABLE_FACTORY;
 
 #include "ace/post.h"

@@ -351,7 +351,7 @@
 -  
 +  _TAO_IRObject_Proxy_Impl *proxy_cache_[TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM];
 +
-   ACE_SYNCH_MUTEX mutex_;
+   TAO_SYNCH_MUTEX mutex_;
  // This funxtion is used to get an handle to the unique instance
  // of the Strategized Proxy Broker that is available for a given
 @@ -305,16 +187,16 @@
@@ -1391,7 +1391,7 @@
 +  _TAO_Contained_Proxy_Impl
     *proxy_cache_[TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM];
    
-   ACE_SYNCH_MUTEX mutex_;
+   TAO_SYNCH_MUTEX mutex_;
 @@ -1273,7 +516,6 @@
    static _TAO_Contained_Strategized_Proxy_Broker *the_TAO_Contained_Strategized_Proxy_Broker (void);
  };
@@ -2825,7 +2825,7 @@
 +  _TAO_Container_Proxy_Impl
 +   *proxy_cache_[TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM];
 +  
-+  ACE_SYNCH_MUTEX mutex_;
++  TAO_SYNCH_MUTEX mutex_;
 +// This funxtion is used to get an handle to the unique instance
 +// of the Strategized Proxy Broker that is available for a given
 +// interface.
@@ -3982,7 +3982,7 @@
 +  _TAO_IDLType_Proxy_Impl
     *proxy_cache_[TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM];
    
-   ACE_SYNCH_MUTEX mutex_;
+   TAO_SYNCH_MUTEX mutex_;
 @@ -2865,10 +1793,9 @@
  // interface.
  
@@ -4987,7 +4987,7 @@
 +  _TAO_Repository_Proxy_Impl
     *proxy_cache_[TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM];
    
-   ACE_SYNCH_MUTEX mutex_;
+   TAO_SYNCH_MUTEX mutex_;
 @@ -3512,10 +2272,9 @@
  // interface.
  
@@ -6295,7 +6295,7 @@
 -  ::IR::_TAO_Repository_Proxy_Impl
 -   *proxy_cache_[TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM];
 -  
--  ACE_SYNCH_MUTEX mutex_;
+-  TAO_SYNCH_MUTEX mutex_;
 -// This funxtion is used to get an handle to the unique instance
 -// of the Strategized Proxy Broker that is available for a given
 -// interface.
@@ -6644,7 +6644,7 @@
 +  _TAO_ComponentRepository_Proxy_Impl
 +   *proxy_cache_[TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM];
 +  
-+  ACE_SYNCH_MUTEX mutex_;
++  TAO_SYNCH_MUTEX mutex_;
 +// This funxtion is used to get an handle to the unique instance
 +// of the Strategized Proxy Broker that is available for a given
 +// interface.
@@ -8036,7 +8036,7 @@
 +  _TAO_ModuleDef_Proxy_Impl
     *proxy_cache_[TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM];
    
-   ACE_SYNCH_MUTEX mutex_;
+   TAO_SYNCH_MUTEX mutex_;
 @@ -5332,10 +3761,9 @@
  // interface.
  
@@ -9290,7 +9290,7 @@
 +  _TAO_ConstantDef_Proxy_Impl
     *proxy_cache_[TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM];
    
-   ACE_SYNCH_MUTEX mutex_;
+   TAO_SYNCH_MUTEX mutex_;
 @@ -6067,10 +4412,9 @@
  // interface.
  
@@ -10545,7 +10545,7 @@
 +  _TAO_TypedefDef_Proxy_Impl
     *proxy_cache_[TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM];
    
-   ACE_SYNCH_MUTEX mutex_;
+   TAO_SYNCH_MUTEX mutex_;
 @@ -6983,10 +4890,9 @@
  // interface.
  
@@ -11377,7 +11377,7 @@
 -  ::IR::_TAO_TypedefDef_Proxy_Impl
 -   *proxy_cache_[TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM];
 -  
--  ACE_SYNCH_MUTEX mutex_;
+-  TAO_SYNCH_MUTEX mutex_;
 -// This funxtion is used to get an handle to the unique instance
 -// of the Strategized Proxy Broker that is available for a given
 -// interface.
@@ -11636,7 +11636,7 @@
 +  _TAO_StructDef_Proxy_Impl
 +   *proxy_cache_[TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM];
 +  
-+  ACE_SYNCH_MUTEX mutex_;
++  TAO_SYNCH_MUTEX mutex_;
 +// This funxtion is used to get an handle to the unique instance
 +// of the Strategized Proxy Broker that is available for a given
 +// interface.
@@ -12649,7 +12649,7 @@
 -  ::IR::_TAO_StructDef_Proxy_Impl
 -   *proxy_cache_[TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM];
 -  
--  ACE_SYNCH_MUTEX mutex_;
+-  TAO_SYNCH_MUTEX mutex_;
 -// This funxtion is used to get an handle to the unique instance
 -// of the Strategized Proxy Broker that is available for a given
 -// interface.
@@ -12937,7 +12937,7 @@
 -    ACE_THROW_SPEC ((
 -      CORBA::SystemException
 -    ));
-+  ACE_SYNCH_MUTEX mutex_;
++  TAO_SYNCH_MUTEX mutex_;
 +// This funxtion is used to get an handle to the unique instance
 +// of the Strategized Proxy Broker that is available for a given
 +// interface.
@@ -14255,7 +14255,7 @@
 +  _TAO_EnumDef_Proxy_Impl
 +   *proxy_cache_[TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM];
 +  
-+  ACE_SYNCH_MUTEX mutex_;
++  TAO_SYNCH_MUTEX mutex_;
 +// This funxtion is used to get an handle to the unique instance
 +// of the Strategized Proxy Broker that is available for a given
 +// interface.
@@ -14576,7 +14576,7 @@
 -  ::IR::_TAO_UnionDef_Proxy_Impl
 -   *proxy_cache_[TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM];
 -  
--  ACE_SYNCH_MUTEX mutex_;
+-  TAO_SYNCH_MUTEX mutex_;
 -// This funxtion is used to get an handle to the unique instance
 -// of the Strategized Proxy Broker that is available for a given
 -// interface.
@@ -15457,7 +15457,7 @@
 +  _TAO_AliasDef_Proxy_Impl
 +   *proxy_cache_[TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM];
 +  
-+  ACE_SYNCH_MUTEX mutex_;
++  TAO_SYNCH_MUTEX mutex_;
 +// This funxtion is used to get an handle to the unique instance
 +// of the Strategized Proxy Broker that is available for a given
 +// interface.
@@ -15978,7 +15978,7 @@
 -  ::IR::_TAO_EnumDef_Proxy_Impl
 -   *proxy_cache_[TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM];
 -  
--  ACE_SYNCH_MUTEX mutex_;
+-  TAO_SYNCH_MUTEX mutex_;
 -// This funxtion is used to get an handle to the unique instance
 -// of the Strategized Proxy Broker that is available for a given
 -// interface.
@@ -16363,7 +16363,7 @@
 +  _TAO_NativeDef_Proxy_Impl
 +   *proxy_cache_[TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM];
 +  
-+  ACE_SYNCH_MUTEX mutex_;
++  TAO_SYNCH_MUTEX mutex_;
 +// This funxtion is used to get an handle to the unique instance
 +// of the Strategized Proxy Broker that is available for a given
 +// interface.
@@ -16962,7 +16962,7 @@
 +  _TAO_PrimitiveDef_Proxy_Impl
     *proxy_cache_[TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM];
    
-   ACE_SYNCH_MUTEX mutex_;
+   TAO_SYNCH_MUTEX mutex_;
 @@ -10625,10 +8204,9 @@
  // interface.
  
@@ -17574,7 +17574,7 @@
 +  _TAO_StringDef_Proxy_Impl
     *proxy_cache_[TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM];
    
-   ACE_SYNCH_MUTEX mutex_;
+   TAO_SYNCH_MUTEX mutex_;
 @@ -11073,10 +8473,9 @@
  // interface.
  
@@ -18148,7 +18148,7 @@
 +  _TAO_WstringDef_Proxy_Impl
     *proxy_cache_[TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM];
    
-   ACE_SYNCH_MUTEX mutex_;
+   TAO_SYNCH_MUTEX mutex_;
 @@ -11466,10 +8760,9 @@
  // interface.
  
@@ -18731,7 +18731,7 @@
 +  _TAO_FixedDef_Proxy_Impl
     *proxy_cache_[TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM];
    
-   ACE_SYNCH_MUTEX mutex_;
+   TAO_SYNCH_MUTEX mutex_;
 @@ -11848,10 +9080,9 @@
  // interface.
  
@@ -19381,7 +19381,7 @@
 +  _TAO_SequenceDef_Proxy_Impl
     *proxy_cache_[TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM];
    
-   ACE_SYNCH_MUTEX mutex_;
+   TAO_SYNCH_MUTEX mutex_;
 @@ -12248,10 +9450,9 @@
  // interface.
  
@@ -20166,7 +20166,7 @@
 +  _TAO_ArrayDef_Proxy_Impl
     *proxy_cache_[TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM];
    
-   ACE_SYNCH_MUTEX mutex_;
+   TAO_SYNCH_MUTEX mutex_;
 @@ -12782,10 +9836,9 @@
  // interface.
  
@@ -21202,7 +21202,7 @@
 +  _TAO_ExceptionDef_Proxy_Impl
     *proxy_cache_[TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM];
    
-   ACE_SYNCH_MUTEX mutex_;
+   TAO_SYNCH_MUTEX mutex_;
 @@ -13417,10 +10389,9 @@
  // interface.
  
@@ -22217,7 +22217,7 @@
 -  ::IR::_TAO_ArrayDef_Proxy_Impl
 -   *proxy_cache_[TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM];
 -  
--  ACE_SYNCH_MUTEX mutex_;
+-  TAO_SYNCH_MUTEX mutex_;
 -// This funxtion is used to get an handle to the unique instance
 -// of the Strategized Proxy Broker that is available for a given
 -// interface.
@@ -22513,7 +22513,7 @@
 +  _TAO_AttributeDef_Proxy_Impl
 +   *proxy_cache_[TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM];
 +  
-+  ACE_SYNCH_MUTEX mutex_;
++  TAO_SYNCH_MUTEX mutex_;
 +// This funxtion is used to get an handle to the unique instance
 +// of the Strategized Proxy Broker that is available for a given
 +// interface.
@@ -23572,7 +23572,7 @@
 -  ::IR::_TAO_ExceptionDef_Proxy_Impl
 -   *proxy_cache_[TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM];
 -  
--  ACE_SYNCH_MUTEX mutex_;
+-  TAO_SYNCH_MUTEX mutex_;
 -// This funxtion is used to get an handle to the unique instance
 -// of the Strategized Proxy Broker that is available for a given
 -// interface.
@@ -23839,7 +23839,7 @@
 +  _TAO_OperationDef_Proxy_Impl
 +   *proxy_cache_[TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM];
 +  
-+  ACE_SYNCH_MUTEX mutex_;
++  TAO_SYNCH_MUTEX mutex_;
 +// This funxtion is used to get an handle to the unique instance
 +// of the Strategized Proxy Broker that is available for a given
 +// interface.
@@ -25352,7 +25352,7 @@
 +  _TAO_InterfaceDef_Proxy_Impl
     *proxy_cache_[TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM];
    
-   ACE_SYNCH_MUTEX mutex_;
+   TAO_SYNCH_MUTEX mutex_;
 @@ -15751,10 +12604,9 @@
  // interface.
  
@@ -27214,7 +27214,7 @@
 +  _TAO_ValueMemberDef_Proxy_Impl
     *proxy_cache_[TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM];
    
-   ACE_SYNCH_MUTEX mutex_;
+   TAO_SYNCH_MUTEX mutex_;
 @@ -16970,10 +13446,9 @@
  // interface.
  
@@ -28946,7 +28946,7 @@
 +  _TAO_ValueDef_Proxy_Impl
 +   *proxy_cache_[TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM];
 +  
-+  ACE_SYNCH_MUTEX mutex_;
++  TAO_SYNCH_MUTEX mutex_;
 +// This funxtion is used to get an handle to the unique instance
 +// of the Strategized Proxy Broker that is available for a given
 +// interface.
@@ -29357,7 +29357,7 @@
 -  ::IR::_TAO_InterfaceDef_Proxy_Impl
 -   *proxy_cache_[TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM];
 -  
--  ACE_SYNCH_MUTEX mutex_;
+-  TAO_SYNCH_MUTEX mutex_;
 -// This funxtion is used to get an handle to the unique instance
 -// of the Strategized Proxy Broker that is available for a given
 -// interface.
@@ -31166,7 +31166,7 @@
 +  _TAO_ValueBoxDef_Proxy_Impl
     *proxy_cache_[TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM];
    
-   ACE_SYNCH_MUTEX mutex_;
+   TAO_SYNCH_MUTEX mutex_;
 @@ -19440,10 +15323,9 @@
  // interface.
  
@@ -32036,7 +32036,7 @@
 +  _TAO_ProvidesDef_Proxy_Impl
 +   *proxy_cache_[TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM];
 +  
-+  ACE_SYNCH_MUTEX mutex_;
++  TAO_SYNCH_MUTEX mutex_;
 +// This funxtion is used to get an handle to the unique instance
 +// of the Strategized Proxy Broker that is available for a given
 +// interface.
@@ -33113,7 +33113,7 @@
 +  _TAO_UsesDef_Proxy_Impl
 +   *proxy_cache_[TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM];
 +  
-+  ACE_SYNCH_MUTEX mutex_;
++  TAO_SYNCH_MUTEX mutex_;
 +// This funxtion is used to get an handle to the unique instance
 +// of the Strategized Proxy Broker that is available for a given
 +// interface.
@@ -34135,7 +34135,7 @@
 +  _TAO_EventDef_Proxy_Impl
     *proxy_cache_[TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM];
    
-   ACE_SYNCH_MUTEX mutex_;
+   TAO_SYNCH_MUTEX mutex_;
 @@ -21319,10 +16652,9 @@
  // interface.
  
@@ -35095,7 +35095,7 @@
 +  _TAO_EmitsDef_Proxy_Impl
 +   *proxy_cache_[TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM];
 +  
-+  ACE_SYNCH_MUTEX mutex_;
++  TAO_SYNCH_MUTEX mutex_;
 +// This funxtion is used to get an handle to the unique instance
 +// of the Strategized Proxy Broker that is available for a given
 +// interface.
@@ -35887,7 +35887,7 @@
 +  _TAO_PublishesDef_Proxy_Impl
     *proxy_cache_[TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM];
    
-   ACE_SYNCH_MUTEX mutex_;
+   TAO_SYNCH_MUTEX mutex_;
 @@ -22395,10 +17507,9 @@
  // interface.
  
@@ -36698,7 +36698,7 @@
 +  _TAO_ConsumesDef_Proxy_Impl
     *proxy_cache_[TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM];
    
-   ACE_SYNCH_MUTEX mutex_;
+   TAO_SYNCH_MUTEX mutex_;
 @@ -22902,10 +17926,9 @@
  // interface.
  
@@ -37660,7 +37660,7 @@
 -  ::IR::_TAO_UsesDef_Proxy_Impl
 -   *proxy_cache_[TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM];
 -  
--  ACE_SYNCH_MUTEX mutex_;
+-  TAO_SYNCH_MUTEX mutex_;
 -// This funxtion is used to get an handle to the unique instance
 -// of the Strategized Proxy Broker that is available for a given
 -// interface.
@@ -38221,7 +38221,7 @@
 +  _TAO_ComponentDef_Proxy_Impl
 +   *proxy_cache_[TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM];
 +  
-+  ACE_SYNCH_MUTEX mutex_;
++  TAO_SYNCH_MUTEX mutex_;
 +// This funxtion is used to get an handle to the unique instance
 +// of the Strategized Proxy Broker that is available for a given
 +// interface.
@@ -38604,7 +38604,7 @@
 -  ::IR::_TAO_EventDef_Proxy_Impl
 -   *proxy_cache_[TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM];
 -  
--  ACE_SYNCH_MUTEX mutex_;
+-  TAO_SYNCH_MUTEX mutex_;
 -// This funxtion is used to get an handle to the unique instance
 -// of the Strategized Proxy Broker that is available for a given
 -// interface.
@@ -39492,7 +39492,7 @@
 -  ::IR::_TAO_EmitsDef_Proxy_Impl
 -   *proxy_cache_[TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM];
 -  
--  ACE_SYNCH_MUTEX mutex_;
+-  TAO_SYNCH_MUTEX mutex_;
 -// This funxtion is used to get an handle to the unique instance
 -// of the Strategized Proxy Broker that is available for a given
 -// interface.
@@ -40200,7 +40200,7 @@
 +  _TAO_PrimaryKeyDef_Proxy_Impl
     *proxy_cache_[TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM];
    
-   ACE_SYNCH_MUTEX mutex_;
+   TAO_SYNCH_MUTEX mutex_;
 @@ -24896,10 +19743,9 @@
  // interface.
  
@@ -41025,7 +41025,7 @@
 +  _TAO_FactoryDef_Proxy_Impl
     *proxy_cache_[TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM];
    
-   ACE_SYNCH_MUTEX mutex_;
+   TAO_SYNCH_MUTEX mutex_;
 @@ -25327,10 +20251,9 @@
  // interface.
  
@@ -42123,7 +42123,7 @@
 +  _TAO_FinderDef_Proxy_Impl
 +   *proxy_cache_[TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM];
 +  
-+  ACE_SYNCH_MUTEX mutex_;
++  TAO_SYNCH_MUTEX mutex_;
 +// This funxtion is used to get an handle to the unique instance
 +// of the Strategized Proxy Broker that is available for a given
 +// interface.
@@ -43496,7 +43496,7 @@
 -  ::IR::_TAO_ComponentDef_Proxy_Impl
 -   *proxy_cache_[TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM];
 -  
--  ACE_SYNCH_MUTEX mutex_;
+-  TAO_SYNCH_MUTEX mutex_;
 -// This funxtion is used to get an handle to the unique instance
 -// of the Strategized Proxy Broker that is available for a given
 -// interface.
@@ -44800,7 +44800,7 @@
 -  ::IR::_TAO_PrimaryKeyDef_Proxy_Impl
 -   *proxy_cache_[TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM];
 -  
--  ACE_SYNCH_MUTEX mutex_;
+-  TAO_SYNCH_MUTEX mutex_;
 -// This funxtion is used to get an handle to the unique instance
 -// of the Strategized Proxy Broker that is available for a given
 -// interface.
@@ -45320,7 +45320,7 @@
 -  ::IR::_TAO_FactoryDef_Proxy_Impl
 -   *proxy_cache_[TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM];
 -  
--  ACE_SYNCH_MUTEX mutex_;
+-  TAO_SYNCH_MUTEX mutex_;
 -// This funxtion is used to get an handle to the unique instance
 -// of the Strategized Proxy Broker that is available for a given
 -// interface.
@@ -45899,7 +45899,7 @@
 -  ::IR::_TAO_FinderDef_Proxy_Impl
 -   *proxy_cache_[TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM];
 -  
--  ACE_SYNCH_MUTEX mutex_;
+-  TAO_SYNCH_MUTEX mutex_;
 -// This funxtion is used to get an handle to the unique instance
 -// of the Strategized Proxy Broker that is available for a given
 -// interface.
@@ -47317,7 +47317,7 @@
 +  _TAO_HomeDef_Proxy_Impl
     *proxy_cache_[TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM];
    
-   ACE_SYNCH_MUTEX mutex_;
+   TAO_SYNCH_MUTEX mutex_;
 @@ -30465,641 +21658,639 @@
    static _TAO_HomeDef_Strategized_Proxy_Broker *the_TAO_HomeDef_Strategized_Proxy_Broker (void);
  };

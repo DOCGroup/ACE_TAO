@@ -128,7 +128,7 @@ TAO_ORB_Table::unbind (const char *orb_id)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class TAO_Singleton<TAO_ORB_Table,ACE_SYNCH_MUTEX>;
+template class TAO_Singleton<TAO_ORB_Table,TAO_SYNCH_MUTEX>;
 
 template class ACE_Hash_Map_Entry<const char *, TAO_ORB_Core *>;
 template class ACE_Hash_Map_Manager<const char *, TAO_ORB_Core *, ACE_Null_Mutex>;
@@ -141,7 +141,7 @@ template class ACE_Hash_Map_Reverse_Iterator_Ex<const char *, TAO_ORB_Core *, AC
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate TAO_Singleton<TAO_ORB_Table,ACE_SYNCH_MUTEX>
+#pragma instantiate TAO_Singleton<TAO_ORB_Table,TAO_SYNCH_MUTEX>
 
 #pragma instantiate ACE_Hash_Map_Entry<const char *, TAO_ORB_Core *>
 #pragma instantiate ACE_Hash_Map_Manager<const char *, TAO_ORB_Core *, ACE_Null_Mutex>

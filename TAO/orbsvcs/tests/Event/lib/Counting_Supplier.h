@@ -124,7 +124,7 @@ private:
   CORBA::ULong push_count_;
   // Count the number of push() calls
 
-  ACE_SYNCH_MUTEX lock_;
+  TAO_SYNCH_MUTEX lock_;
 };
 
 #endif /* ECT_SUPPLIER_H */

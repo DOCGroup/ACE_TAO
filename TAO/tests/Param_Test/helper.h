@@ -45,5 +45,5 @@ public:
   Param_Test::Step step_;
 };
 
-typedef ACE_Singleton<Generator, ACE_SYNCH_RECURSIVE_MUTEX> GENERATOR;
+typedef ACE_Singleton<Generator, TAO_SYNCH_RECURSIVE_MUTEX> GENERATOR;
 #endif /* HELPER_H */

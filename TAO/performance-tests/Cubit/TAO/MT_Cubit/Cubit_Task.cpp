@@ -138,7 +138,7 @@ Cubit_Task::initialize_orb (void)
           ACE_NEW_RETURN (GLOBALS::instance ()->barrier_,
                           ACE_Barrier (GLOBALS::instance ()->num_of_objs + 1),
                           -1);
-          ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ready_mon,
+          ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ready_mon,
                                     GLOBALS::instance ()->ready_mtx_, 1));
           GLOBALS::instance ()->ready_ = 1;
           GLOBALS::instance ()->ready_cnd_.broadcast ();

@@ -50,7 +50,7 @@ void
 EC_Supplier::send_event (const RtecEventComm::EventSet& event,
                          CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->lock_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
   if (this->push_count_ == 0)
     this->throughput_start_ = ACE_OS::gethrtime ();

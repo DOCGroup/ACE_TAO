@@ -149,7 +149,7 @@ private:
   // If not zero then pause for <milliseconds> before sending each
   // event.
 
-  ACE_SYNCH_MUTEX lock_;
+  TAO_SYNCH_MUTEX lock_;
 };
 
 #endif /* ECT_CONSUMER_H */

@@ -52,7 +52,7 @@ public:
     TAO_Persistent_IntId> CONTEXT;
   // Hash map used by Persistent Naming Context to keep its state.
 
-  typedef ACE_Allocator_Adapter <ACE_Malloc <ACE_MMAP_MEMORY_POOL, ACE_SYNCH_MUTEX>
+  typedef ACE_Allocator_Adapter <ACE_Malloc <ACE_MMAP_MEMORY_POOL, TAO_SYNCH_MUTEX>
   > ALLOCATOR;
   // Allocator we will be using to make the Naming Service persistent.
 
@@ -119,7 +119,7 @@ private:
   // Helper for <create_index> method: places hash table into an
   // allocated space.
 
-  ACE_SYNCH_MUTEX lock_;
+  TAO_SYNCH_MUTEX lock_;
   // Lock to prevent multiple threads from modifying entries in the
   // <index_> simultanneously.
 

@@ -60,7 +60,7 @@ TAO_Single_Reactor::shutdown_all (void)
   TAO_Leader_Follower &leader_follower =
     this->leader_follower ();
 
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX,
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                     ace_mon,
                     leader_follower.lock (),
                     -1);

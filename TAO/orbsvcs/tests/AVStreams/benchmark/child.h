@@ -43,10 +43,10 @@ public:
   // ready flag used by the high priority thread to wake up the low
   // priority threads after it's parsed the arguments.
 
-  ACE_SYNCH_MUTEX ready_mtx_;
+  TAO_SYNCH_MUTEX ready_mtx_;
   // mutex for the condition variable.
 
-  ACE_SYNCH_CONDITION ready_cond_;
+  TAO_SYNCH_CONDITION ready_cond_;
   // condition variable for the low priority threads to wait
   //until the high priority thread is done with the arguments parsing.
 
@@ -65,7 +65,7 @@ public:
   // The process options for the process to be spawned by the process strategy
 };
 
-typedef ACE_Singleton <Server_Globals,ACE_SYNCH_MUTEX> SERVER_GLOBALS;
+typedef ACE_Singleton <Server_Globals,TAO_SYNCH_MUTEX> SERVER_GLOBALS;
 
 
 class ttcp_Stream_Handler : public virtual ACE_Event_Handler

@@ -204,7 +204,7 @@ Client::svc (void)
     {
       if (this->task_id_ == 0)
         {
-          ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ready_mon, GLOBALS::instance ()->ready_mtx_, 1));
+          ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ready_mon, GLOBALS::instance ()->ready_mtx_, 1));
 
           ACE_NEW_RETURN (GLOBALS::instance ()->barrier_,
                           ACE_Barrier (GLOBALS::instance ()->thread_count_),
@@ -214,7 +214,7 @@ Client::svc (void)
         }
       else
         {
-          ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ready_mon, GLOBALS::instance ()->ready_mtx_, 1));
+          ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ready_mon, GLOBALS::instance ()->ready_mtx_, 1));
           GLOBALS::instance ()->ready_cond_.wait ();
         }
 
@@ -513,12 +513,12 @@ template class TAO_AV_Endpoint_Reactive_Strategy<Client_StreamEndPoint,TAO_VDev,
 template class TAO_AV_Endpoint_Reactive_Strategy_A<ttcp_Client_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>;
 template class TAO_AV_Endpoint_Reactive_Strategy_A<Client_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>;
 template class ACE_Acceptor <ttcp_Client_StreamEndPoint,ACE_SOCK_ACCEPTOR>;
-template class ACE_Singleton<Globals,ACE_SYNCH_MUTEX>;
+template class ACE_Singleton<Globals,TAO_SYNCH_MUTEX>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate TAO_AV_Endpoint_Reactive_Strategy<ttcp_Client_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>
 #pragma instantiate TAO_AV_Endpoint_Reactive_Strategy<Client_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>
 #pragma instantiate TAO_AV_Endpoint_Reactive_Strategy_A<ttcp_Client_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>
 #pragma instantiate TAO_AV_Endpoint_Reactive_Strategy_A<Client_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>
 #pragma instantiate ACE_Acceptor <ttcp_Client_StreamEndPoint,ACE_SOCK_ACCEPTOR>
-#pragma instantiate ACE_Singleton <Globals,ACE_SYNCH_MUTEX> 
+#pragma instantiate ACE_Singleton <Globals,TAO_SYNCH_MUTEX> 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

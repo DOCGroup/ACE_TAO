@@ -393,7 +393,7 @@ EC_Observer::consumer_push (void*,
 
       for (int i = 1; i < this->n_consumers_; ++i)
         {
-          ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->lock_);
+          ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
           if (this->consumers_[i]->connected ())
             {

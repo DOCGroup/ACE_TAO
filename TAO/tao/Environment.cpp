@@ -65,7 +65,7 @@ CORBA_Environment::CORBA_Environment (TAO_ORB_Core* orb_core)
 CORBA::ULong
 CORBA_Environment::_incr_refcnt (void)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->refcount_lock_, 0);
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->refcount_lock_, 0);
   return refcount_++;
 }
 
@@ -73,7 +73,7 @@ CORBA::ULong
 CORBA_Environment::_decr_refcnt (void)
 {
   {
-    ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->refcount_lock_, 0);
+    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->refcount_lock_, 0);
 
     this->refcount_--;
     if (this->refcount_ != 0)
