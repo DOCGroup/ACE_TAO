@@ -75,13 +75,13 @@ public:
 
   CORBA::ORB_var orb_;
 
-  RTCORBA::Priority low_priority_;
-
-  RTCORBA::Priority high_priority_;
-
   RTCORBA::RTORB_var rt_orb_;
 
   RTCORBA::Current_var rt_current_;
+
+  RTCORBA::Priority low_priority_;
+
+  RTCORBA::Priority high_priority_;
 };
 
 Task::Task (ACE_Thread_Manager &thread_manager,

@@ -9,7 +9,7 @@
 ACE_RCSID(RTCORBA, TAO_RT_Transport_Descriptor, "$id$")
 
 #include "RT_Transport_Descriptor_Property.h"
-#include "Endpoint.h"
+#include "tao/Endpoint.h"
 
 TAO_RT_Transport_Descriptor::~TAO_RT_Transport_Descriptor ()
 {
