@@ -1,8 +1,9 @@
 Tue Oct  3 10:52:07 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/ast/ast_structure.cpp:
+	* TAO_IDL/ast/ast_union.cpp:
 
-	  Fixed a cut-and-paste mistake from a previous checking,
+	  Fixed some cut-and-paste mistakes from a previous checking,
 	  where add_to_scope() was incorrectly pasted where
 	  add_to_local_types() should have been.
 
