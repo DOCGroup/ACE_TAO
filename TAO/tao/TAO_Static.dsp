@@ -83,7 +83,7 @@ LIB32=link.exe -lib
 # Name "TAO LIB - Win32 Debug"
 # Begin Group "Source Files"
 
-# PROP Default_Filter ""
+# PROP Default_Filter "cpp"
 # Begin Source File
 
 SOURCE=.\Acceptor_Registry.cpp
@@ -243,6 +243,10 @@ SOURCE=.\GIOP.cpp
 # Begin Source File
 
 SOURCE=.\GIOP_Server_Request.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOPC.cpp
 # End Source File
 # Begin Source File
 
@@ -603,7 +607,7 @@ SOURCE=.\WrongTransactionC.cpp
 # End Group
 # Begin Group "Header Files"
 
-# PROP Default_Filter ""
+# PROP Default_Filter "h"
 # Begin Source File
 
 SOURCE=.\Acceptor_Registry.h
@@ -747,6 +751,10 @@ SOURCE=.\giop.h
 # Begin Source File
 
 SOURCE=.\GIOP_Server_Request.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOPC.h
 # End Source File
 # Begin Source File
 
@@ -1111,7 +1119,7 @@ SOURCE=.\WrongTransactionC.h
 # End Group
 # Begin Group "Inline Files"
 
-# PROP Default_Filter ""
+# PROP Default_Filter "i"
 # Begin Source File
 
 SOURCE=.\Acceptor_Registry.i
@@ -1199,6 +1207,10 @@ SOURCE=.\giop.i
 # Begin Source File
 
 SOURCE=.\GIOP_Server_Request.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOPC.i
 # End Source File
 # Begin Source File
 
@@ -1415,6 +1427,14 @@ SOURCE=.\ValueFactory.i
 # Begin Source File
 
 SOURCE=.\ValueFactory_Map.i
+# End Source File
+# End Group
+# Begin Group "Resource files"
+
+# PROP Default_Filter "rc"
+# Begin Source File
+
+SOURCE=.\tao.rc
 # End Source File
 # End Group
 # End Target
