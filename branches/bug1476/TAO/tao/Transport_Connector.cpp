@@ -218,11 +218,9 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
                         ACE_Time_Value *timeout
                         ACE_ENV_ARG_DECL_NOT_USED)
 {
-  if ((this->set_validate_endpoint (
-         desc->endpoint ()) == -1) || desc == 0)
-    {
-      return 0;
-    }
+  if (desc == 0 ||
+      (this->set_validate_endpoint (desc->endpoint ()) == -1))
+    return 0;
 
   TAO_Transport *base_transport = 0;
 
@@ -245,11 +243,9 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
                                     timeout);
     }
 
-  // When we get a connected transport from the cache, than things are easy,
-  // return that, in case it is not connected we have to do several extra
-  // things
+  // If connected return..
   if (base_transport->is_connected())
-      return base_transport;
+    return base_transport;
 
   if (TAO_debug_level > 4)
     ACE_DEBUG ((LM_DEBUG,
@@ -264,8 +260,8 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
       // Wait until the connection is ready
       int result =
         this->active_connect_strategy_->wait (
-            base_transport,
-            timeout);
+          base_transport,
+          timeout);
 
       if (TAO_debug_level > 2)
         ACE_DEBUG ((LM_DEBUG,
@@ -279,22 +275,29 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
       // (a) and (b).  (c) is tricky since the connection is still
       // pending and may get completed by some other thread.  The
       // following method deals with (c).
+      // @@ Johnny why don't you consider using the call
+      // transport->event_handler_i () instead. All you need is a
+      // ACE_Svc_Handler and that would prevent a bunch of canypptions
+      // in the code. BTW, I would also recommend changing the method
+      // name event_handler_i () to event_handler ().
       result =
-         this->check_connection_closure (base_transport->connection_handler(),
-                                         result);
+        this->check_connection_closure (
+          base_transport->connection_handler (),
+          result);
 
       // In case of errors.
       if (result == -1)
         {
           // Give users a clue to the problem.
+          // @@ Johnny the errno here could be completely different
+          // from why the connection failed. We touch the reactor and
+          // the errno could be changed. This is simply misleading at
+          // best !
           if (TAO_debug_level > 3)
-            {
-              ACE_ERROR ((LM_ERROR,
-                          "TAO (%P|%t) - Transport_Connector::connect, "
-                          "connection failed (%p)\n",
-                          ACE_TEXT("errno")));
-            }
-
+            ACE_ERROR ((LM_ERROR,
+                        "TAO (%P|%t) - Transport_Connector::connect, "
+                        "connection failed (%p)\n",
+                        ACE_TEXT("errno")));
           return 0;
         }
 
@@ -308,7 +311,9 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
     this->active_connect_strategy_->wait (base_transport,
                                           &zero);
 
-// @@bala, check error?
+  // @@ Johnny, yes you need to check error. More importantly the last
+  // if () and the present status can be combined and a single error
+  // handling can be called.
 
   // Connection not ready yet, just use this base_transport, if
   // we need a connected one we will block later to make sure

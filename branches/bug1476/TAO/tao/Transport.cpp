@@ -2130,16 +2130,20 @@ TAO_Transport::post_open (size_t id)
   int result =
     this->wait_strategy ()->register_handler ();
 
+  // @@ Johnny, where are you calling schedule_output () if there is
+  // data in the transport?
   // Registration failures.
   if (result != 0)
     {
-// @bala, this line looks tricky, we expect that the caller put this transport
-// in the cache, what about this?
+      // @bala, this line looks tricky, we expect that the caller put
+      // this transport  in the cache, what about this?
+      // @@ Johnny not a problem. If the stuff isn't in cache the
+      // entry will be null and the call will return empty-handled.
       // Purge from the connection cache.
-      this->purge_entry ();
+      (Void) this->purge_entry ();
 
       // Close the handler.
-      this->connection_handler()->close_connection ();
+      (void) this->close_connection ();
 
       if (TAO_debug_level > 0)
         ACE_ERROR ((LM_ERROR,
@@ -2148,6 +2152,7 @@ TAO_Transport::post_open (size_t id)
                     "in the reactor.\n"));
     }
 
+  // @@ Johnny, can't you use a bool as a return value?
   return result;
 }
 

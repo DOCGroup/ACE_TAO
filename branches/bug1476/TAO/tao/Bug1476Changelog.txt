@@ -1,3 +1,16 @@
+Mon Aug  2 03:40:36 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Transport_Connector.cpp:
+
+	  Fixed a logic error and added a few comments for Johnny. 
+	
+ 	* tao/IIOP_Connection_Handler.cpp:
+	* tao/IIOP_Connector.cpp:
+	* tao/Transport.cpp:
+	* tao/Transport_Connector.h:
+
+	  More comments for Johnny.
+
 Fri Jul 30 10:25:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Transport.cpp:

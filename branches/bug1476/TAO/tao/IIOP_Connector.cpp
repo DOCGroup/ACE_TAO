@@ -224,12 +224,15 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
                     "wait done for handle[%d], result = %d\n",
                     svc_handler->get_handle (), result));
 
-// @TODO, Check this with Bala
+      // @TODO, Check this with Bala
       if (result == -1 && !r->blocked () && errno == ETIME)
         {
           // If we did a non blocking connect, just ignore
           // any timeout errors
+
           result = 0;
+
+          // @@ Johnny why are you setting the result to zero here?
         }
 
       // There are three possibilities when wait() returns: (a)
@@ -262,23 +265,24 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
   TAO_Transport *transport =
     svc_handler->transport ();
 
-  // At this point, the connection has be successfully created connected or not.
-  // #REFCOUNT# is one.
+  // At this point, the connection has be successfully created
+  // connected or not.
   if (TAO_debug_level > 2)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "TAO (%P|%t) - IIOP_Connector::make_connection, "
                   "new %s connection to <%s:%d> on Transport[%d]\n",
-                  transport->is_connected() ? ACE_TEXT("connected") : ACE_TEXT("not connected"),
-                  ACE_TEXT_CHAR_TO_TCHAR(iiop_endpoint->host ()),
+                  transport->is_connected() ? "connected" : "not connected",
+                  iiop_endpoint->host (),
                   iiop_endpoint->port (),
                   svc_handler->peer ().get_handle ()));
     }
 
   // Add the handler to Cache
   int retval =
-    this->orb_core ()->lane_resources ().transport_cache ().cache_transport (&desc,
-                                                                             transport);
+    this->orb_core ()->lane_resources ().transport_cache ().cache_transport (
+      &desc,
+      transport);
 
   // Failure in adding to cache.
   if (retval != 0)

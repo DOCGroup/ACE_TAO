@@ -117,16 +117,21 @@ protected:
   virtual int set_validate_endpoint (TAO_Endpoint *endpoint) = 0;
 
   /// Make a connection
-  virtual TAO_Transport* make_connection (TAO::Profile_Transport_Resolver *r,
-                                          TAO_Transport_Descriptor_Interface &desc,
-                                          ACE_Time_Value *timeout) = 0;
+  virtual TAO_Transport* make_connection (
+      TAO::Profile_Transport_Resolver *r,
+      TAO_Transport_Descriptor_Interface &desc,
+      ACE_Time_Value *timeout) = 0;
 
   /// Cancel the passed cvs handler from the connector
-  virtual int cancel_svc_handler (TAO_Connection_Handler *svc_handler) = 0;
+  virtual int cancel_svc_handler (
+      TAO_Connection_Handler *svc_handler) = 0;
 
   /// Check whether the connection is not closed
-  virtual int check_connection_closure (TAO_Connection_Handler *svc_handler,
-                                        int result);
+  /// @@ Johnny, what is the semantics of the sent result and te
+  /// returned result. Confusing...
+  virtual int check_connection_closure (
+      TAO_Connection_Handler *svc_handler,
+      int result);
 
   /// Set the ORB Core pointer
   void orb_core (TAO_ORB_Core *orb_core);
