@@ -394,7 +394,7 @@ Hongyin Quan <hq1@arl.wustl.edu>
 Maximilian Hoferer <mhoferer@krones.de>
 Kevin Stanley <kstanley1@mdc.com>
 Jeff Greif <jmg@trivida.com>
-Jeff McDaniel <jsmcdani@gte.net>
+Jeff McDaniel <jsmpcdani@gte.net>
 Andreas Geisler <andreas.geisler@erls.siemens.de>
 Bob McWhirter <bob@werken.com>
 Daniel Winder <Daniel.Winder@cern.ch>
@@ -947,6 +947,7 @@ John Foresteire <John_J_Foresteire@res.raytheon.com>
 Larry Peacock <larry@appsmiths.com>
 Francisco Bravo <emefjbm@madrid.es.eu.ericsson.se>
 Antti Valtokari <Antti.Valtokari@iocore.fi>
+J Smyder <jsmyder@salient.com>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson.  Paul devised the recursive Makefile scheme that
