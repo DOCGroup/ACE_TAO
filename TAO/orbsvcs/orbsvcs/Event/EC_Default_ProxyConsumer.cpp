@@ -115,7 +115,7 @@ TAO_EC_Default_ProxyPushConsumer::push (const RtecEventComm::EventSet& event
   tmp_event[0].header.eid.tid = oid.tid;
   tmp_event[0].header.eid.pid = oid.pid;
   tmp_event[0].header.eid.queue_id = oid.queue_id;
-  tmp_event[0].header.type = oid.type;
+  oid.type = tmp_event[0].header.type;
 
   DSUI_EVENT_LOG (EC2_GROUP_FAM, ENTER_PROXY_PUSH_CONSUMER, 0, sizeof(Object_ID), (char*)&oid);
 
