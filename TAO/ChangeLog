@@ -1,3 +1,9 @@
+Tue Apr 27 13:20:42 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/AMI/run_test.pl:
+          Fixed an error in this script when -exclusive was passed as
+          commandline option
+
 Tue Apr 27 13:02:23 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Default_Thread_Lane_Resources_Manager.h:
