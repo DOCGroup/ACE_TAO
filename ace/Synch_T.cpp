@@ -1,6 +1,5 @@
 // $Id$
 
-
 #ifndef ACE_SYNCH_T_C
 #define ACE_SYNCH_T_C
 
@@ -18,8 +17,6 @@ ACE_RCSID(ace, Synch_T, "$Id$")
 #if !defined (__ACE_INLINE__)
 #include "ace/Synch_T.i"
 #endif /* __ACE_INLINE__ */
-
-
 
 // This constructor isn't inlined, because SunPRO C++ 4.2 + patch
 // 104631-07 has trouble compiling TAO with it inline.
