@@ -51,7 +51,7 @@ Grid_i::set (CORBA::Short x,
       || x >= width_
       || y >= height_)
     {
-      TAO_THROW (RANGE_ERROR);
+    TAO_THROW (Grid::RANGE_ERROR);
     }
   else 
     array_[x][y] = value;
@@ -69,7 +69,7 @@ Grid_i::get (CORBA::Short x,
       || x >= width_
       || y >= height_)
   {
-    TAO_THROW_RETURN (RANGE_ERROR, 0);
+    TAO_THROW_RETURN (Grid::RANGE_ERROR, 0);
   }
   else 
     return array_[x][y];
