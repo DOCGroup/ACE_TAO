@@ -1,3 +1,37 @@
+Tue Aug 28 08:22:07 2001  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/AMI_Buffering/run_test.pl:
+        * tests/Big_Oneways/run_test.pl:
+        * tests/Big_Request_Muxing/run_test.pl:
+        * tests/Big_Twoways/run_test.pl:
+        * tests/Blocking_Sync_None/run_test.pl:
+        * tests/Client_Leaks/run_test.pl:
+        * tests/Crash_On_Write/run_test.pl:
+        * tests/Crashed_Callback/run_test.pl:
+        * tests/Exposed_Policies/run_test.pl:
+        * tests/Hello/run_test.pl:
+        * tests/MT_Server/run_test.pl:
+        * tests/MT_Timeout/run_test.pl:
+        * tests/Muxing/run_test.pl:
+        * tests/Oneway_Buffering/run_buffer_size.pl:
+        * tests/Oneway_Buffering/run_message_count.pl:
+        * tests/Oneway_Buffering/run_test.pl:
+        * tests/Oneway_Buffering/run_timeout.pl:
+        * tests/Param_Test/run_test.pl:
+        * tests/RTCORBA/Server_Declared/run_test.pl:
+        * tests/RTCORBA/Server_Protocol/run_test.pl:
+        * tests/RTCORBA/Thread_Pool/run_test.pl:
+        * tests/Reliable_Oneways/run_sync_none.pl:
+        * tests/Reliable_Oneways/run_sync_with_server.pl:
+        * tests/Reliable_Oneways/run_sync_with_target.pl:
+        * tests/Reliable_Oneways/run_sync_with_transport.pl:
+        * tests/Reliable_Oneways/run_test.pl:
+        * tests/Server_Leaks/run_test.pl:
+        * tests/Single_Read/run_test.pl:
+        * tests/Timed_Buffered_Oneways/run_test.pl:
+
+          Very minor bug fixes and consistency modifications.
+
 Mon Aug 27 07:36:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * tests/Makefile.bor: added new File_IO test
@@ -9,38 +43,38 @@ Mon Aug 27 07:36:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
 Sun Aug 26 08:20:30 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/performance-tests/EC_Federated_Latency/Servant_var.inl:
-	  Removed the default value of the argument. This should fix
-	  warnings in GCC 3.0 builds.
+        * orbsvcs/performance-tests/EC_Federated_Latency/Servant_var.inl:
+          Removed the default value of the argument. This should fix
+          warnings in GCC 3.0 builds.
 
 Sat Aug 25 23:38:26 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
         * orbsvcs/performance-tests/EC_Federated_Latency/server.cpp:
-	* orbsvcs/performance-tests/EC_Federated_Latency/client.cpp:
-	* orbsvcs/performance-tests/EC_Latency/server.cpp:
-	* orbsvcs/performance-tests/EC_Latency/client.cpp: #included
-	  "tao/Messaging.h". Fixes build problems in no interceptors
-	  build.
+        * orbsvcs/performance-tests/EC_Federated_Latency/client.cpp:
+        * orbsvcs/performance-tests/EC_Latency/server.cpp:
+        * orbsvcs/performance-tests/EC_Latency/client.cpp: #included
+          "tao/Messaging.h". Fixes build problems in no interceptors
+          build.
 
 Sat Aug 25 09:49:06 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/File_IO/server.dsp:
-	* tests/File_IO/client.dsp: Fixed the Win32 builds.
+        * tests/File_IO/server.dsp:
+        * tests/File_IO/client.dsp: Fixed the Win32 builds.
 
 Sat Aug 25 09:04:06 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
         * orbsvcs/performance-tests/EC_Federated_Latency/Makefile:
-	* orbsvcs/performance-tests/EC_Latency/Makefile: Will not build
-	  if corba_messaging == 0.
+        * orbsvcs/performance-tests/EC_Latency/Makefile: Will not build
+          if corba_messaging == 0.
 
 Fri Aug 24 23:16:59 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/File_IO/File.idl:
-	* tests/File_IO/File_i.cpp:
-	* tests/File_IO/File_i.h:
-	* tests/File_IO/client.cpp
-	* tests/File_IO/run_test.pl:
-	* tests/File_IO/server.cpp: Fixed Fuzz errors.
+        * tests/File_IO/File.idl:
+        * tests/File_IO/File_i.cpp:
+        * tests/File_IO/File_i.h:
+        * tests/File_IO/client.cpp
+        * tests/File_IO/run_test.pl:
+        * tests/File_IO/server.cpp: Fixed Fuzz errors.
 
 Fri Aug 24 19:20:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
 

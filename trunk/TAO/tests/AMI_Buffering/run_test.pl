@@ -10,6 +10,7 @@ use PerlACE::Run_Test;
 
 $admin_iorfile = PerlACE::LocalFile ("admin.ior");
 $server_iorfile = PerlACE::LocalFile ("server.ior");
+$status = 0;
 
 foreach $test_type ("-c", "-t", "-b") {
   unlink $admin_iorfile;

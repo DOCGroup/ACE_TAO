@@ -13,7 +13,7 @@ $iorfile2 = PerlACE::LocalFile ("test2.ior");
 
 unlink $iorfile1;
 unlink $iorfile2;
-
+$status = 0;
 
 $server_conf = PerlACE::LocalFile ("server.conf");
 

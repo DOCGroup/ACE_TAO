@@ -11,6 +11,7 @@ use PerlACE::Run_Test;
 $iorfile = PerlACE::LocalFile ("ior");
 
 unlink $iorfile;
+$status = 0;
 
 $SV = new PerlACE::Process ("server", "-o $iorfile");
 $CL = new PerlACE::Process ("client", "-k file://$iorfile -d 10 -i 10 -x");

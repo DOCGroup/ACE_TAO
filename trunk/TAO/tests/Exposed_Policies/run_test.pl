@@ -47,7 +47,7 @@ $status = 0;
 $SV->Spawn ();
 
 if (PerlACE::waitforfile_timed ($base_ior_file, 30) == -1) {
-    print STDERR "ERROR: cannot find file <$iorfile>\n";
+    print STDERR "ERROR: cannot find file <$base_ior_file>\n";
     $SV->Kill ();
     exit 1;
 }

@@ -12,9 +12,7 @@ $iorfile = PerlACE::LocalFile ("server.ior");
 
 $invocation = "sii";
 $num = 5;
-$other = "";
 $debug = "";
-$type = "";
 $status = 0;
 
 unlink $iorfile;
@@ -62,9 +60,6 @@ for ($i = 0; $i <= $#ARGV; $i++) {
     elsif ($ARGV[$i] eq "-i") {
       $invocation = $ARGV[$i + 1];
       $i++;
-    }
-    else {
-        $other .= $ARGV[$i];
     }
 }
 

@@ -19,6 +19,7 @@ if (!getopts ('i:')) {
     exit 1;
 }
 
+$status = 0;
 my $iterations = 40;
 if (defined $opt_i) {
     $iterations = $opt_i;
