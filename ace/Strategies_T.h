@@ -744,7 +744,9 @@ public:
 
   ACE_Cached_Connect_Strategy (ACE_Creation_Strategy<SVC_HANDLER> *cre_s = 0,
                                ACE_Concurrency_Strategy<SVC_HANDLER> *con_s = 0,
-                               ACE_Recycling_Strategy<SVC_HANDLER> *rec_s = 0);
+                               ACE_Recycling_Strategy<SVC_HANDLER> *rec_s = 0,
+                               MUTEX *mutex = 0,
+                               int delete_mutex = 0);
   // Constructor
 
   virtual ~ACE_Cached_Connect_Strategy (void);
@@ -885,7 +887,10 @@ protected:
   CONNECTION_MAP connection_cache_;
   // Table that maintains the cache of connected <SVC_HANDLER>s.
 
-  MUTEX lock_;
+  MUTEX *lock_;
+  // Mutual exclusion for this object.
+
+  int delete_lock_;
   // Mutual exclusion for this object.
 
   // = Strategy objects.
