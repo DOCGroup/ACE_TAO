@@ -475,5 +475,13 @@ SOURCE=.\LifeCycleServiceS_T.cpp
 
 # End Source File
 # End Group
+# Begin Group "Resource Files"
+
+# PROP Default_Filter "rc"
+# Begin Source File
+
+SOURCE=.\CosLifeCycle.rc
+# End Source File
+# End Group
 # End Target
 # End Project
