@@ -1,7 +1,13 @@
+Fri Sep  3 12:13:19 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
+
+	* docs/releasenotes/index.html:
+	  Added status information for the upcomming CORBA Telecom Log
+	  Service.
+
 Fri Sep  3 09:36:17 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* tests/Interceptors/interceptors.cpp (postinvoke): 
-	* tests/Interceptors/interceptors.cpp (preinvoke): 
+	* tests/Interceptors/interceptors.cpp (postinvoke):
+	* tests/Interceptors/interceptors.cpp (preinvoke):
 
 	  Replaced static casts to reinterpret cast to ward off warnings.
 
@@ -10,13 +16,13 @@ Thu Sep 03 05:00:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 	* tao/Reply_Dispatcher.cpp:
 	  Changed the method TAO_Synch_Reply_Dispatcher::dispatch_reply
 	  to not release the old service context buffer.
-	  This needs to be verified by Carlos to see if it is the right 
+	  This needs to be verified by Carlos to see if it is the right
 	  thing to do. Releasing it caused an access violation.
 	  This passage of the source code needs to be documented.
 
 	* tests/AMI/run_test.pl,
 	  tests/AMI/simple_client.cpp:
-	  Enhanced the example to fully support attributes. 
+	  Enhanced the example to fully support attributes.
 
 	* TAO_IDL/be/be_visitor_factory.cpp,
 	  TAO_IDL/be/be_visitor_operation.cpp,
@@ -34,7 +40,7 @@ Thu Sep 03 05:00:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 	* TAO_IDL/be/be_visitor_operation/ami_handler_thru_poa_collocated_sh.cpp
 	  TAO_IDL/be/be_visitor_operation/ami_handler_thru_poa_collocated_ss.cpp:
 	  Fixed a the generation of the names for attributes.
-	  AMI works now fine with attributes! 
+	  AMI works now fine with attributes!
 
 
 Thu Sep 03 01:30:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
