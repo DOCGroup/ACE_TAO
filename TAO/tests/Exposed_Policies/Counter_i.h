@@ -19,9 +19,10 @@
 #ifndef COUNTER_I_H_
 #define COUNTER_I_H_
 
+// -- App. Specific Include --
 #include "CounterS.h"
+#include "Policy_Tester.h"
 
-// @@ Angelo: you are missing all the throw specs, please fix.
 
 class Counter_Servant : public POA_Counter
 {
@@ -29,24 +30,30 @@ public:
 
   // = Ctor-Dtor Declaration
 
-  Counter_Servant (CORBA::ORB_ptr o);
+  Counter_Servant (Policy_Tester *policy_tester);
   virtual ~Counter_Servant (void);
 
   // = Counter Interface Methods Overloading.
 
   virtual void increment (CORBA::Environment &ACE_TRY_ENV =
-                          TAO_default_environment ());
+                          TAO_default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::Long get_count (CORBA::Environment &ACE_TRY_ENV =
-                                 TAO_default_environment ());
-
+                                 TAO_default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
+  virtual void reset (CORBA::Environment &ACE_TRY_ENV =
+                      TAO_default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  
   virtual void shutdown (CORBA::Environment &ACE_TRY_ENV =
                          TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 protected:
   CORBA::Long count_;
-  CORBA::ORB_var orb_;
+  Policy_Tester *policy_tester_;
 };
 
 #endif /*COUNTER_I_H_*/
