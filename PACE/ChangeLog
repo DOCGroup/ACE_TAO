@@ -1,3 +1,8 @@
+Tue Sep  4 08:55:02 2001  Joe Hoffert  <joeh@cs.wustl.edu>
+
+	* tests/Cond_Var_Test.c: 
+	  Added test for condition variables.
+
 Tue Sep  4 08:36:13 2001  Joe Hoffert  <joeh@cs.wustl.edu>
 
 	* tests/vxworks_stub.c: 
