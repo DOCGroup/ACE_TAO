@@ -1,5 +1,71 @@
 Mon Jan 17 18:03:17 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/Process_Manager.cpp: Under WIN32, the ACE_Process_Manager
+ 	  registered itself as an event handler with ACE_Reactor, but did
+ 	  not properly unregister itself when it closed.  For error to be
+ 	  noticed, you must instantiate ACE_Process_Manager with an
+ 	  ACE_Reactor.  ACE_Process_Manager should *not* be run as a
+ 	  singleton.  It must be instantiated such that it will be
+ 	  destroyed *before* the ACE_Reactor is destroyed.
+	
+	  When you call ACE_Process_Manager::spawn, the newly created
+ 	  process is added to the ACE_Process_Manager's process table and
+ 	  (under WIN32) the ACE_Process_Manager is registered as an event
+ 	  handler for the new process (ace/Process_Manager.cpp, line 523)
+ 	  using this call:
+  
+          r->register_handler (this, proc->gethandle ());
+       
+          This will happen for every process spawned. Thus,
+ 	  ACE_Process_Manager will potentially be associated with more
+ 	  than one WIN32 process handle.
+	
+          When the ACE_Process_Manager was destroyed, the dtor calls
+ 	  ACE_Process_Manager::close which (for WIN32) attempts to remove
+ 	  ACE_Process_Manager as an Event_Handler from the ACE_Reactor
+ 	  using the following code (ace/Process_Manager.cpp, line 256)
+	
+          this->reactor ()->remove_handler (this, 0);
+          
+          This version of ACE_Reactor::remove_handler is:
+       
+          int ACE_Reactor::remove_handler
+          (
+                ACE_Event_Handler *event_handler,
+                ACE_Reactor_Mask mask
+          );
+          
+          It calls event_handler->get_handle() to obtain the handle to
+ 	  which 'event_handler' is associated.  The problem is that
+ 	  ACE_Process_Manager::get_handle returns ACE_INVALID_HANDLE, so
+ 	  the ACE_Reactor never properly unregistered the
+ 	  ACE_Process_Manager. This is now fixed and should work correctly
+ 	  on Win32 and other platforms.
+	
+          Thanks to Greg Gallant <gcg@intercap.com> for tracking all this
+ 	  down and providing the fix.
+  
+	* ace/Process_Manager.cpp (open): Wrapped the setpgid() call with a
+	  #if !defined (ACE_LACKS_SETPGID) to remove spurious run-time
+ 	  warnings on platforms that don't support setpgid().  Thanks to
+ 	  Craig Perras <cperras@watchguard.com> for reporting this.
+
+	* ace/NT_Service: Reformatted this head to conform to the ACE
+ 	  programming guidelines.  Also, replaced
+	  
+	  #if defined (ACE_HAS_WINNT4) && ACE_HAS_WINNT4 != 0)
+  
+          with
+  
+          #if defined (ACE_WIN32)
+  
+          This change allows a single dll to be built that supports both
+ 	  NT and Win9x.  The app can use GetVersionEx() to check whether
+ 	  the platform is NT or not dynamically, or it can just call the
+ 	  various service functions, which will return a function not
+ 	  supported error.  Thanks to Craig Perras
+ 	  <cperras@watchguard.com> for reporting this.
+  
 	* tests/Thread_Pool_Test.cpp: Enhanced this test to illustrate how
 	  to shut down Tasks using either the "empty message" strategy or
  	  the "queue deactivation" strategy.
