@@ -612,7 +612,7 @@ ACE_OS::mkstemp_emulation (ACE_TCHAR * s)
   static unsigned int const NUM_RETRIES = 50;
   static unsigned int const NUM_CHARS   = 6;  // Do not change!
 
-  ACE_RANDR_TYPE const seed =
+  ACE_RANDR_TYPE seed =
     static_cast<ACE_RANDR_TYPE> (ACE_OS::gettimeofday ().msec ());
 
   static ACE_TCHAR const MAX_VAL =
