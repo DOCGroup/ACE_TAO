@@ -23,7 +23,7 @@ MyImpl::UCAV_exec_i::push_start_move (BBN_UAV::StartMove *ev
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
-              "UCAV, received a StartMove from CAOC \n"));
+              "UCAV, received a StartMove from UCAV_GS \n"));
 }
 
 // Operations from Components::SessionComponent

@@ -241,6 +241,17 @@ namespace Engagement_Impl
     ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
     {
+
+      ACE_CString my_uuid = this->servant_->component_UUID (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK;
+      my_uuid += "_prepare_move_publisher";
+
+      this->container_->push_event (ev,
+                                    my_uuid.c_str ()
+                                    ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+
+      /*
       ACE_Active_Map_Manager<
       ::BBN_UAV::PrepareMoveConsumer_var>::iterator end =
       this->ciao_publishes_prepare_move_map_.end ();
@@ -265,6 +276,7 @@ namespace Engagement_Impl
         ACE_ENV_ARG_PARAMETER);
         ACE_CHECK;
       }
+      */
     }
 
     ::Components::Cookie *
