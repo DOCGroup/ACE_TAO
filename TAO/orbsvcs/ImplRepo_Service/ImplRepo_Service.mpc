@@ -1,5 +1,5 @@
 // $Id$
-project(ImR_Activator_IDL) : orbsvcslib, portableserver, messaging {
+project(ImR_Activator_IDL) : orbsvcslib, portableserver, messaging, valuetype {
   sharedname = TAO_ImR_Activator_IDL
   dynamicflags = ACTIVATOR_IDL_BUILD_DLL
   idlflags += -GH -Wb,export_macro=ActivatorIDL_Export -Wb,export_include=activator_idl_export.h
@@ -15,7 +15,7 @@ project(ImR_Activator_IDL) : orbsvcslib, portableserver, messaging {
   }
 }
 
-project(ImR_Locator_IDL) : orbsvcslib, valuetype, portableserver {
+project(ImR_Locator_IDL) : orbsvcslib, valuetype, portableserver, valuetype {
   sharedname   = TAO_ImR_Locator_IDL
   after       += ImR_Activator_IDL
   libs        += TAO_ImR_Activator_IDL
@@ -33,7 +33,7 @@ project(ImR_Locator_IDL) : orbsvcslib, valuetype, portableserver {
   }
 }
 
-project(ImR_Activator) : orbsvcslib, core, acexml, minimum_corba, valuetype, portableserver {
+project(ImR_Activator) : orbsvcslib, core, acexml, minimum_corba, valuetype, portableserver, valuetype {
   sharedname   = TAO_ImR_Activator
   dynamicflags = ACTIVATOR_BUILD_DLL
   after       += ImR_Activator_IDL ImR_Locator_IDL
@@ -50,7 +50,7 @@ project(ImR_Activator) : orbsvcslib, core, acexml, minimum_corba, valuetype, por
   }
 }
 
-project(ImR_Locator) : orbsvcslib, core, minimum_corba, iortable, portableserver, messaging, svc_utils, acexml {
+project(ImR_Locator) : orbsvcslib, core, minimum_corba, iortable, portableserver, messaging, svc_utils, acexml, valuetype {
   sharedname   = TAO_ImR_Locator
   dynamicflags = LOCATOR_BUILD_DLL
   after       += ImR_Locator_IDL ImR_Activator_IDL
@@ -99,7 +99,7 @@ project(ImR_Locator_Service) : orbsvcsexe, core, minimum_corba, iortable, messag
 }
 
 
-project(ImR_Activator_Service) : orbsvcsexe, core, acexml, minimum_corba, valuetype, svc_utils {
+project(ImR_Activator_Service) : orbsvcsexe, core, acexml, minimum_corba, valuetype, svc_utils, valuetype {
   exename  = ImR_Activator
   after   += ImR_Activator ImR_Activator_IDL ImR_Locator_IDL
   libs    += TAO_ImR_Activator TAO_ImR_Activator_IDL TAO_ImR_Locator_IDL
