@@ -1,0 +1,26 @@
+// -*- MPC -*-
+// $Id$
+
+project(*Unbounded_Simple_Types) : taoexe {
+  Source_Files {
+    Unbounded_Simple_Types.cpp
+  }
+}
+
+project(*Bounded_Simple_Types) : taoexe {
+  Source_Files {
+    Bounded_Simple_Types.cpp
+  }
+}
+
+project(*Unbounded_Primitive_Types): taoexe, boost_unit_test {
+  Source_Files {
+    Unbounded_Primitive_Types.cpp
+  }
+}
+
+project(*Bounded_Primitive_Types): taoexe, boost_unit_test {
+  Source_Files {
+    Bounded_Primitive_Types.cpp
+  }
+}
