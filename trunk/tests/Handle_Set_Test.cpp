@@ -73,7 +73,9 @@ static ACE_HANDLE handle_vector[] =
   (ACE_HANDLE) 127,
   (ACE_HANDLE) 128,
   (ACE_HANDLE) 129,
+#if defined(ACE_DEFAULT_REACTOR_SIZE) && ACE_DEFAULT_REACTOR_SIZE >= 255
   (ACE_HANDLE) 255,
+#endif
   ACE_INVALID_HANDLE
 };
 
@@ -81,7 +83,7 @@ static void
 test_boundaries (void)
 {
   ACE_Handle_Set handle_set;
-  ACE_Unbounded_Queue<ACE_HANDLE> queue;
+  ACE_Unbounded_Set<ACE_HANDLE> set;
   ACE_HANDLE handle;
 
   // First test an empty set.
@@ -98,18 +100,16 @@ test_boundaries (void)
        i++)
     {
       handle_set.set_bit (handle_vector[i]);
-      queue.enqueue_tail (handle_vector[i]);
+      set.insert (handle_vector[i]);
     }
 
   int count = 0;
 
   ACE_Handle_Set_Iterator i2 (handle_set);
-
   while ((handle = i2 ()) != ACE_INVALID_HANDLE)
     {
-      ACE_HANDLE temp;
-      queue.dequeue_head (temp);
-      ACE_ASSERT (handle == temp);
+      int done = set.remove(handle);
+      ACE_ASSERT(done == 0);
       count++;
     }
 
@@ -178,12 +178,12 @@ main (int argc, char *argv[])
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Unbounded_Queue<ACE_HANDLE>;
-template class ACE_Unbounded_Queue_Iterator<ACE_HANDLE>;
+template class ACE_Unbounded_Set<ACE_HANDLE>;
+template class ACE_Unbounded_Set_Iterator<ACE_HANDLE>;
 template class ACE_Node<ACE_HANDLE>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Unbounded_Queue<ACE_HANDLE>
-#pragma instantiate ACE_Unbounded_Queue_Iterator<ACE_HANDLE>
+#pragma instantiate ACE_Unbounded_Set<ACE_HANDLE>
+#pragma instantiate ACE_Unbounded_Set_Iterator<ACE_HANDLE>
 #pragma instantiate ACE_Node<ACE_HANDLE>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
