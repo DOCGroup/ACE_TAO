@@ -457,7 +457,7 @@ dnl    fi
 
 
  AC_ARG_ENABLE([fast],
-  AS_HELP_STRING(--enable-fast,enable -fast flag, e.g. Sun C++ [[[no]]]),
+  AS_HELP_STRING(--enable-fast,enable -fast flag (e.g. Sun C++) [[[no]]]),
   [
    case "${enableval}" in
     yes)

@@ -71,7 +71,7 @@ AC_DEFUN([ACE_CHECK_TOP_SRCDIR],
      [
       Please configure and build in a directory other than the
       top-level source directory.  Doing so will prevent files
-      distributed with the package from being overwritten.  This
+      distributed with the package from being overwritten.  This is
       currently necessary since autoconf support is still
       experimental.  If you encounter problems please use the stock
       build procedure.

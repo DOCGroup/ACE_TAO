@@ -53,6 +53,7 @@ AH_BOTTOM([
 // Local] [Variables:
 // mode:C++
 // End:
+
 ])
 
 
@@ -516,14 +517,6 @@ AH_TEMPLATE([ACE_HAS_LONG_MAP_FAILED],
 AH_TEMPLATE([ACE_HAS_MALLOC_STATS], [Enabled malloc statistics collection.])
 
 AH_TEMPLATE([ACE_HAS_MEMCHR],[Use native implementation of memchr().])
-
-AH_TEMPLATE([ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION],
-[Avoid #including ace/streams.h in OS.h.  Users must include
-   ace/streams.h, <iostream>, or <iostream.h> explicitly in their code.
-   Some platforms, such as g++/VxWorks, have trouble compiling templates
-   and iostreams header because of static variables in the stream
-   headers.  This flag will also avoid extra compilation and runtime
-   overheads on some platforms.])
 
 AH_TEMPLATE([ACE_USES_OLD_IOSTREAMS],
 [Some files, such as ace/streams.h, want to include new style C++

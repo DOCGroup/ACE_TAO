@@ -1,3 +1,52 @@
+Thu Jan 15 20:54:38 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* configure.ac:
+
+	  Require GNU Autoconf 2.58 or better, not 2.57g or better.
+	  Version 2.57g was a testing release not a stable release.
+
+	  Use more comprehensive (custom) test for detecting shm_open()
+	  support instead of AC_CHECK_FUNC.  In particular, use
+	  AC_LINK_IFELSE so that we can detect missing function prototype
+	  errors.  Addresses a problem on Solaris builds where shm_open()
+	  support was incorrectly detected as available despite the fact
+	  POSIX.1b support was not enabled.
+
+	  Removed ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION test.  This macro is
+	  no longer used.
+
+	* ace/os_include/sys/os_resource.h:
+
+	  Include <sys/procfs.h> in the ACE_HAS_PROC_FS case.  It is
+	  necessary to pull in the "prusage_t" typedef.  That typedef is
+	  used later in this header.  Addresses an ACE+autoconf build
+	  problem on Solaris.
+
+	* m4/ace.m4:
+
+	  Corrected quoting problem that caused "--enable-fast" help
+	  string to be echoed incorrectly.
+
+	* m4/acinclude.m4:
+
+	  Corrected typo in warning message.
+
+	* m4/compiler.m4:
+
+	  Updated Sun C++ 5.0 configuration settings to match those in the
+	  latest platform_sunos5_sunc++.GNU file.
+
+	* m4/config_h.m4 (AH_BOTTOM):
+
+	  Added empty line to text appended to generated `config.h' file
+	  to correct a "non-empty ending line" warning exhibited by Sun
+	  C++ 5.0.
+
+	  (ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION):
+
+	  Removed template for this preprocessor macro.  It is no longer
+	  used.
+
 Thu Jan 15 20:33:09 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* docs/ACE-development-process.html (HREF): 
