@@ -1,3 +1,8 @@
+Thu Mar  3 15:27:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Exposed_Policies/Counter.idl:
+          Converted documentation to doxygen style
+
 Thu Mar  3 15:08:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/POA/Forwarding/test.idl:
