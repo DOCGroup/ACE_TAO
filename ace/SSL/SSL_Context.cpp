@@ -461,7 +461,7 @@ ACE_SSL_Context::dh_params (const char *file_name,
     DH *ret=0;
     FILE *dhfp = 0;
 
-    if ((dhfp = ACE_OS::fopen (this->dh_params_.file_name (), "r")) == NULL)
+    if ((dhfp = ACE_OS::fopen (this->dh_params_.file_name (), ACE_TEXT ("r"))) == NULL)
       return -1;
 
     ret = PEM_read_DHparams (dhfp, NULL, NULL, NULL);
