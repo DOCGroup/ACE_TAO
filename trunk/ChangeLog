@@ -1,3 +1,12 @@
+Fri Oct  1 23:41:11 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/OS_NS_ctype.h:
+	* ace/OS_NS_ctype.inl:
+
+	  Removed "const" qualifier from all pass-by-value function
+	  parameters.  There is no point in making such parameters
+	  "const".
+
 Fri Oct  1 23:30:06 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/OS_NS_stdlib.h (mkstemp, mkstemp_emulation):
