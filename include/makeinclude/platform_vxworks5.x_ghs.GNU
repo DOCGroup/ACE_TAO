@@ -3,7 +3,8 @@
 # VxWorks 5.2-5.3.1 with Green Hills 1.8.8
 
 debug = 1
-static_libs_only = 1
+shared_libs =
+static_libs = 1
 
 CC              = cxvxppc
 CXX             = $(CC)

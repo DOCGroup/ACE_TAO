@@ -4,10 +4,12 @@
 
 debug = 1
 optimize = 1
+shared_libs =
+static_libs = 1
 
 include         $(CLASSIXDIR)/dtool/htgt-cf.rf
 INC_DIR         = $(CLASSIXDIR)/include
-BIN_DIR		= 
+BIN_DIR		=
 LIB_DIR		= $(CLASSIXDIR)/lib
 #CC		= gcc
 #CXX		= g++
@@ -39,6 +41,3 @@ ARFLAGS		= srv
 #RANLIB		= /bin/true
 RANLIB		= $(XDIR)/bin/ranlib
 PRELIB	= @true
-#### don't build shared objects:
-BUILD           = $(VOBJS) $(VLIB) $(VBIN)
-
