@@ -1,3 +1,12 @@
+Thu Nov 13 17:14:29 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/config-WinCE.h:
+          Added #define ACE_LACKS_ERRNO_H and ACE_LACKS_TIME_H.
+
+        * ace/config-all.h:
+        * ace/os_include/os_stddef.h:
+          Fixed typo's in rarely accessed #ifdef'd sections.
+
 Thu Nov 13 16:18:30 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/Sock_Connect.cpp:
