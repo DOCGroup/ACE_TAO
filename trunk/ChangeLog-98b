@@ -1,3 +1,10 @@
+Sun Nov  8 10:42:38 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Message_Block.h: Changed the ACE_Message_Type from being an
+ 	  enum to being a u_long so that it's easier for users to add
+ 	  their own message types to an ACE_Message_Queue.  Thanks to
+	  Martin Krumpolec <krumpo@pobox.sk> for this suggestion.
+
 Fri Nov  6 23:08:16 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * ace/Process.cpp (spawn): Set result correctly when execvp() is
