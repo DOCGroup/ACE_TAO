@@ -15,7 +15,8 @@
 #endif /* __ACE_INLINE__ */
 
 // Static initializers.
-CORBA::TypeCode_ptr TAO_Exceptions::sys_exceptions[TAO_Exceptions::NUM_SYS_EXCEPTIONS];
+CORBA::TypeCode_ptr
+TAO_Exceptions::sys_exceptions[TAO_Exceptions::NUM_SYS_EXCEPTIONS];
 
 CORBA::ExceptionList TAO_Exceptions::system_exceptions;
 
@@ -324,7 +325,9 @@ TAO_Exceptions::make_standard_typecode (CORBA::TypeCode_ptr tcp,
   // a TypeCode, saving it away in the list of ones that the ORB will
   // always accept as part of any operation response!
 
-  sys_exceptions [TAO_Exceptions::system_exceptions.length++] =
+  int l = TAO_Exceptions::system_exceptions.length ();
+  TAO_Exceptions::system_exceptions.length (l + 1);
+  TAO_Exceptions::sys_exceptions [l] =
     new (tcp) CORBA::TypeCode (CORBA::tk_except,
                                stream.length (),
                                stream.buffer (),
@@ -385,11 +388,9 @@ TAO_Exceptions::init_standard_exceptions (CORBA::Environment &env)
 {
   // Initialize the list of system exceptions, used when
   // unmarshaling.
-  TAO_Exceptions::system_exceptions.length = 0;
-  TAO_Exceptions::system_exceptions.maximum =
-    TAO_Exceptions::NUM_SYS_EXCEPTIONS;
-  TAO_Exceptions::system_exceptions.buffer =
-    &TAO_Exceptions::sys_exceptions [0];
+  TAO_Exceptions::system_exceptions = 
+    CORBA::ExceptionList (TAO_Exceptions::NUM_SYS_EXCEPTIONS, 0,
+			  TAO_Exceptions::sys_exceptions);
 
   // Initialize the typecodes.
 #define TAO_SYSTEM_EXCEPTION(name) \

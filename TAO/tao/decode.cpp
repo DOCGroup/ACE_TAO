@@ -405,7 +405,7 @@ TAO_Marshal_Principal::decode (CORBA::TypeCode_ptr,
   CORBA::ULong len;
 
   continue_decoding = stream->read_ulong (len);
-  if (len == 0)
+  if (len == 0 || !continue_decoding)
     *pp = 0;  // null principal
   else
     {
@@ -413,15 +413,10 @@ TAO_Marshal_Principal::decode (CORBA::TypeCode_ptr,
       ACE_NEW_RETURN (*pp,
                       CORBA::Principal,
                       CORBA::TypeCode::TRAVERSE_CONTINUE);
-      ACE_NEW_RETURN ((*pp)->id.buffer,
-                      CORBA::Octet [(size_t) len],
-                      CORBA::TypeCode::TRAVERSE_CONTINUE);
-      (*pp)->id.maximum = (*pp)->id.length = len;
+      (*pp)->id.length (len);
 
-      for (u_int i = 0;
-           continue_decoding != CORBA::B_FALSE && i < len;
-           i++)
-        continue_decoding = stream->read_octet ((*pp)->id.buffer [i]);
+      continue_decoding = 
+	stream->read_octet_array ((*pp)->id.get_buffer (), len);
     }
 
   if (continue_decoding == CORBA::B_TRUE)

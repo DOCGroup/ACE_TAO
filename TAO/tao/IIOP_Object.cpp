@@ -491,14 +491,11 @@ IIOP_Object::do_static_call (CORBA::Environment &env,   // exception reporting
       // ones.
 
       TAO_GIOP_ReplyStatusType status;
-      CORBA::ExceptionList exceptions;
-
-      exceptions.length = exceptions.maximum = info->except_count;
-      exceptions.buffer = (CORBA::TypeCode_ptr *) info->excepts;
+      CORBA::ExceptionList exceptions (info->except_count,
+				       info->except_count,
+				       info->excepts);
 
       status = call.invoke (exceptions, env);
-
-      exceptions.buffer = 0;            // don't free it
 
       if (env.exception ())
         {

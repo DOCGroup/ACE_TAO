@@ -89,7 +89,8 @@ Latency_Consumer::open_consumer (RtecEventChannelAdmin::EventChannel_ptr ec,
       dependencies.insert_type (ACE_ES_EVENT_NOTIFICATION, rt_info_);
       dependencies.insert_type (ACE_ES_EVENT_SHUTDOWN, rt_info_);
 
-      this->channel_admin_ = ec;
+      this->channel_admin_ =
+	RtecEventChannelAdmin::EventChannel::_duplicate (ec);
 
       // = Connect as a consumer.
       this->consumer_admin_ =
@@ -336,15 +337,9 @@ Latency_Supplier::Latency_Supplier (const u_int total_messages,
     timestamp_ (timestamp),
     total_sent_ (0),
     master_ (0),
-    supplier_ (new Supplier (this)),
-    consumer_ (new Consumer (this))
+    supplier_ (this),
+    consumer_ (this)
 {
-}
-
-Latency_Supplier::~Latency_Supplier (void)
-{
-  delete this->consumer_;
-  delete this->supplier_;
 }
 
 int
@@ -355,7 +350,8 @@ Latency_Supplier::open_supplier (RtecEventChannelAdmin::EventChannel_ptr ec,
   master_ = master;
   TAO_TRY
     {
-      this->channel_admin_ = ec;
+      this->channel_admin_ =
+	RtecEventChannelAdmin::EventChannel::_duplicate (ec);
 
       RtecScheduler::Scheduler_ptr server =
         ACE_Scheduler_Factory::server ();
@@ -394,7 +390,7 @@ Latency_Supplier::open_supplier (RtecEventChannelAdmin::EventChannel_ptr ec,
       TAO_CHECK_ENV;
 
       RtecEventComm::PushSupplier_var objref =
-        this->supplier_->_this (TAO_TRY_ENV);
+        this->supplier_._this (TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       consumers_->connect_push_supplier (objref.in (),
@@ -464,7 +460,7 @@ Latency_Supplier::start_generating_events (void)
       TAO_CHECK_ENV;
 
       RtecEventComm::PushConsumer_var objref =
-        this->consumer_->_this (TAO_TRY_ENV);
+        this->consumer_._this (TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       this->suppliers_->connect_push_consumer (objref.in (),
@@ -864,7 +860,7 @@ main (int argc, char *argv [])
           sprintf (supplier_name, "supplier-%d", i+1);
           // Only the first supplier timestamps its messages.
           int master = (i==0);
-          if (supplier [i]->open_supplier (ec.ptr (),
+          if (supplier [i]->open_supplier (ec.in (),
                                            supplier_name,
                                            master) == -1)
             ACE_ERROR_RETURN ((LM_ERROR, "Supplier open failed.\n"), -1);
@@ -878,7 +874,7 @@ main (int argc, char *argv [])
           char buf [BUFSIZ];
           sprintf (buf, "consumer-%d", i+1);
 
-          if (consumer [i]->open_consumer (ec.ptr (), buf) == -1)
+          if (consumer [i]->open_consumer (ec.in (), buf) == -1)
             ACE_ERROR_RETURN ((LM_ERROR, "Someone was feeling introverted.\n"),
                               -1);
         }

@@ -24,15 +24,14 @@
 // Default constructor
 
 TAO_Naming_Server::TAO_Naming_Server (void)
-  :  naming_context_ptr_ (0),
-     ior_multicast_ (0)
+  :  ior_multicast_ (0)
 {
 }
 
 // Constructor which takes an ORB and POA.
 
-TAO_Naming_Server::TAO_Naming_Server (CORBA::ORB_var &orb,
-                                      PortableServer::POA_var &child_poa)
+TAO_Naming_Server::TAO_Naming_Server (CORBA::ORB_ptr orb,
+                                      PortableServer::POA_ptr child_poa)
 {
   this->init (orb, child_poa);
 }
@@ -41,13 +40,13 @@ TAO_Naming_Server::TAO_Naming_Server (CORBA::ORB_var &orb,
 // and poa
 
 int
-TAO_Naming_Server::init (CORBA::ORB_var &orb,
-                         PortableServer::POA_var &child_poa)
+TAO_Naming_Server::init (CORBA::ORB_ptr orb,
+                         PortableServer::POA_ptr child_poa)
 {
   TAO_TRY
     {
       // Get the naming context ptr to NameService.
-      naming_context_ptr_ =
+      this->naming_context =
         naming_context_impl_._this (TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
@@ -143,10 +142,11 @@ TAO_Naming_Server::naming_service_ior (void)
 
 // Returns a pointer to the NamingContext.
 
-CosNaming::NamingContext*
+CosNaming::NamingContext_ptr
 TAO_Naming_Server::operator -> (void) const
 {
-  return this->naming_context_ptr_;
+  // @@ Is the memory managment here correct? Is it clear?
+  return this->naming_context.ptr ();
 }
 
 // Destructor.

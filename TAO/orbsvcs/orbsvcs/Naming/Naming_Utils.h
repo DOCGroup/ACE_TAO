@@ -41,13 +41,13 @@ public:
   TAO_Naming_Server (void);
   //Default constructor.
 
-  TAO_Naming_Server (CORBA::ORB_var &orb,
-                     PortableServer::POA_var &root_poa);
+  TAO_Naming_Server (CORBA::ORB_ptr orb,
+                     PortableServer::POA_ptr root_poa);
   // Takes the POA under which to register the Naming Service
   // implementation object.
 
-  int init (CORBA::ORB_var &orb,
-            PortableServer::POA_var &root_poa);
+  int init (CORBA::ORB_ptr orb,
+            PortableServer::POA_ptr root_poa);
   // Initialize the name server under the given ORB and POA.
 
   NS_NamingContext &GetNamingContext (void);
@@ -57,7 +57,7 @@ public:
   CORBA::String naming_service_ior (void);
   // Returns the ior of the naming service.
 
-  CosNaming::NamingContext *operator -> (void) const;
+  CosNaming::NamingContext_ptr operator -> (void) const;
   // Returns a NamingContext_ptr.
 
   ~TAO_Naming_Server (void);
@@ -67,7 +67,7 @@ private:
   NS_NamingContext naming_context_impl_;
   // Naming context implemetation for "NameService".
 
-  CosNaming::NamingContext_ptr naming_context_ptr_;
+  CosNaming::NamingContext_var naming_context;
   // NamingContext ptr.
 
   TAO_IOR_Multicast *ior_multicast_;
