@@ -1,0 +1,6 @@
+
+NAME = http_client
+OBJFILES = \
+	$(OBJDIR)\http_client.obj \
+	$(OBJDIR)\http_handler.obj
+!include <$(ACE_ROOT)\apps\build.bor>
