@@ -1,3 +1,10 @@
+Sat May  5 20:31:36 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
+
+        * orbsvcs/tests/AVStreams/Component_Switching/Makefile:
+        * orbsvcs/tests/AVStreams/Asynch_Three_Stage/Makefile:	
+
+	  Made changes to avoid compiling and running the test on VxWorks.
+	
 Sat May  5 16:24:11 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* examples/POA/TIE/server.cpp: Guarded some more portions using
