@@ -11,6 +11,8 @@
 #include "ace/Auto_Ptr.i"
 #endif /* __ACE_INLINE__ */
 
+#if defined (ACE_HAS_STANDARD_CPP_LIBRARY) 
+
 ACE_ALLOC_HOOK_DEFINE(ACE_Auto_Basic_Ptr)
 
 template<class X> void
@@ -28,6 +30,8 @@ ACE_Auto_Basic_Ptr<X>::remove (X *& x)
   x = 0;
   delete tp;
 }
+
+#endif /* ACE_HAS_STANDARD_CPP_LIBRARY */
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Auto_Basic_Array_Ptr)
 

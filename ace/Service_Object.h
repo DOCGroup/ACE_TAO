@@ -94,7 +94,7 @@ class ACE_Export ACE_Service_Object_Ptr
   //
   // = DESCRIPTION
   //     This class is similar to the Standard C++ Library class
-  //     <ACE_Auto_Ptr>.  It is used in conjunction with statically linked
+  //     <auto_ptr>.  It is used in conjunction with statically linked
   //     <ACE_Service_Objects>, as shown in the
   //     ./netsvcs/server/main.cpp example.
 {
