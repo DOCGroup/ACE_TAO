@@ -1265,8 +1265,11 @@ void *
 ACE_Thread_Manager::exit (void *status, int do_thr_exit)
 {
   ACE_TRACE ("ACE_Thread_Manager::exit");
+  int close_handle = 0;
 
 #if defined (ACE_WIN32)
+  // Remove detached thread handle.
+
   if (do_thr_exit)
     {
       // On Win32, if we really wants to exit from a thread, we must
@@ -1323,10 +1326,16 @@ ACE_Thread_Manager::exit (void *status, int do_thr_exit)
             td->thr_state_ = ACE_THR_TERMINATED;
             this->terminated_thr_queue_.enqueue_tail (*td);
           }
+#if defined (ACE_WIN32)
+        else
+          {
+            close_handle = 1;
+          }
+#endif /* ACE_WIN32 */
 #endif /* ! VXWORKS */
 
         // Remove thread descriptor from the table.
-        this->remove_thr (td, 0);
+        this->remove_thr (td, close_handle);
       }
     // Release the guard.
   }
@@ -1406,6 +1415,7 @@ ACE_Thread_Manager::wait (const ACE_Time_Value *timeout,
         if (ACE_BIT_DISABLED (item.flags_, (THR_DETACHED | THR_DAEMON))
             || ACE_BIT_ENABLED (item.flags_, THR_JOINABLE))
           ACE_Thread::join (item.thr_handle_);
+      // Detached handles shouldn't reached here.
 #if defined (CHORUS)
     }
 #endif /* CHORUS */
