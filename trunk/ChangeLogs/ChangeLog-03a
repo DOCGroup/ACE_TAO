@@ -1,3 +1,24 @@
+Fri Jan 26 21:53:45 2001  Ossama Othman  <ossama@uci.edu>
+
+	* ace/OS.h:
+	* ace/OS.i (thread_mutex_lock):
+
+	  Added an overloaded version of this method that accepts a
+	  timeout argument.  It delegates to the standard
+	  ACE_OS::mutex_lock() method on non-Windows platforms.
+	  Otherwise, it returns with an ENOTSUP.
+
+	  The addition of this method was necessary to fix a compile
+	  problem related to the ACE_Thread_Mutex class.
+
+	* ace/Synch.i (acquire):
+
+	  In ACE_Thread_Mutex::acquire() that accepts a timeout argument,
+	  call the corresponding ACE_OS::thread_mutex_lock() method.  This
+	  fixes compile-time error on MS Windows builds due to the fact
+	  that ACE_mutex_t and ACE_thread_mutex_t are different types on
+	  that platform.
+
 Fri Jan 26 17:31:26 2001  Ossama Othman  <ossama@uci.edu>
 
 	* ace/OS.i (mutex_lock):

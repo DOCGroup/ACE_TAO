@@ -541,6 +541,14 @@ ACE_OS::mktemp (ACE_TCHAR *s)
 }
 #endif /* !ACE_LACKS_MKTEMP */
 
+#if defined (ACE_HAS_MKSTEMP)
+ACE_INLINE ACE_HANDLE
+ACE_OS::mkstemp (ACE_TCHAR *template)
+{
+  return mkstemp (template);
+}
+#endif  /* ACE_HAS_MKSTEMP */
+
 ACE_INLINE int
 ACE_OS::mkfifo (const ACE_TCHAR *file, mode_t mode)
 {
@@ -1302,12 +1310,13 @@ ACE_OS::cuserid (char *user, size_t maxlen)
       // zero pointer was passed in as the destination.
 
 #if defined (_POSIX_SOURCE)
-      static char tmp[L_cuserid];
+      const size_t ACE_L_cuserid = L_cuserid;
 #else
-      static char tmp[9];  // 8 character user ID + NULL
+      const size_t ACE_L_cuserid = 9;  // 8 character user ID + NULL
 #endif  /* _POSIX_SOURCE */
 
-      max_length = sizeof(tmp);
+      static ACE_TCHAR tmp[ACE_L_cuserid] = { 0 };
+      max_length = ACE_L_cuserid - 1; // Do not include NULL in length
 
       userid = tmp;
     }
@@ -1348,7 +1357,7 @@ ACE_OS::cuserid (wchar_t *user, size_t maxlen)
   char *char_user;
   wchar_t *result = 0;
 
-  ACE_NEW_RETURN (char_user, char[maxlen], 0);
+  ACE_NEW_RETURN (char_user, char[maxlen + 1], 0);
 
   if (ACE_OS::cuserid (char_user, maxlen))
     {
@@ -2016,8 +2025,7 @@ ACE_OS::mutex_lock (ACE_mutex_t *m,
 
   // "timeout" should be an absolute time.
 
-  timespec_t ts = timeout;  // Calls ACE_Time_Value::operator
-                            // timespec_t().
+  timespec_t ts = timeout;  // Calls ACE_Time_Value::operator timespec_t().
 
   // Note that the mutex should not be a recursive one, i.e., it
   // should only be a standard mutex or an error checking mutex.
@@ -2264,6 +2272,29 @@ ACE_OS::thread_mutex_lock (ACE_thread_mutex_t *m)
   ACE_UNUSED_ARG (m);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_THREADS */
+}
+
+ACE_INLINE int
+ACE_OS::thread_mutex_lock (ACE_thread_mutex_t *m,
+                           const ACE_Time_Value &timeout)
+{
+  // ACE_OS_TRACE ("ACE_OS::thread_mutex_lock");
+
+  // For all platforms, except MS Windows, this method is equivalent
+  // to calling ACE_OS::mutex_lock() since ACE_thread_mutex_t and
+  // ACE_mutex_t are the same type.  However, those typedefs evaluate
+  // to different types on MS Windows.  The "thread mutex"
+  // implementation in ACE for MS Windows cannot readily support
+  // timeouts due to a lack of timeout features for this type of MS
+  // Windows synchronization mechanism.
+
+#if defined (ACE_HAS_THREADS) && defined (ACE_HAS_PTHREADS)
+  return ACE_OS::mutex_lock (m, timeout);
+#else
+  ACE_UNUSED_ARG (m);
+  ACE_UNUSED_ARG (timeout);
+  ACE_NOTSUP_RETURN (-1);
+#endif /* ACE_HAS_THREADS && ACE_HAS_PTHREADS */
 }
 
 ACE_INLINE int
