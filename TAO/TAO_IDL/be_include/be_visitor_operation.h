@@ -66,5 +66,7 @@
 #include "be_visitor_operation/ami_handler_argument_marshal.h"
 #include "be_visitor_operation/ami_handler_thru_poa_collocated_sh.h"
 #include "be_visitor_operation/ami_handler_thru_poa_collocated_ss.h"
+#include "be_visitor_operation/ami_exception_holder_operation_ch.h"
+#include "be_visitor_operation/ami_exception_holder_operation_cs.h"
 
 #endif // TAO_BE_VISITOR_OPERATION_H

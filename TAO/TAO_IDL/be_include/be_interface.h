@@ -37,7 +37,14 @@ class be_interface;
 class be_interface_type_strategy
 {
 public:
-  be_interface_type_strategy (be_interface *node);
+  enum Strategy_Kind {
+      DEFAULT = 0,
+      AMI_HANDLER,
+      AMI_EXCEPTION_HOLDER
+  };
+
+  be_interface_type_strategy (be_interface *node,
+                              Strategy_Kind strategy_type);
 
   virtual ~be_interface_type_strategy ();
 
@@ -89,7 +96,10 @@ public:
   // return the file name of the output stream.
   // @@ Michael: Right now every strategy behaves the 
   // same way.
- 
+
+  int strategy_type ();
+  // Return the type of the strategy.
+
 protected:
 
   char *local_name_;
@@ -113,18 +123,22 @@ protected:
 
   int cached_type_;
   // Current cached collocated name.
+
+  Strategy_Kind strategy_type_;
+  // 
 };
 
-
-
-class be_interface_ami_handler_strategy
+class be_interface_prefix_suffix_strategy
   : public be_interface_type_strategy
 {
 public:
   // begin overridden methods.
-  be_interface_ami_handler_strategy (be_interface *node);
+  be_interface_prefix_suffix_strategy (be_interface *node,
+                                       Strategy_Kind strategy_type,
+                                       const char *prefix,
+                                       const char *suffix);
 
-  virtual ~be_interface_ami_handler_strategy ();
+  virtual ~be_interface_prefix_suffix_strategy ();
 
   const char * local_name (void);
   // return the local name
@@ -155,6 +169,29 @@ private:
 
   const char *suffix_;
   // The suffix to the interface
+};
+
+
+class be_interface_ami_handler_strategy
+  : public be_interface_prefix_suffix_strategy
+{
+public:
+  // begin overridden methods.
+  be_interface_ami_handler_strategy (be_interface *node);
+
+  virtual ~be_interface_ami_handler_strategy ();
+};
+
+
+class be_interface_ami_exception_holder_strategy
+  : public be_interface_prefix_suffix_strategy
+{
+public:
+  // begin overridden methods.
+  be_interface_ami_exception_holder_strategy (be_interface *node);
+
+  virtual ~be_interface_ami_exception_holder_strategy ();
+
 };
 
 
