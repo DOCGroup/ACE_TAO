@@ -1,3 +1,29 @@
+Thu Dec 13 21:16:42 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/Objref_Sequence_Test: A new test that passes big sequences
+	  of Object References between the client and the server. The
+	  original version of the test was donated by Petr Tuma
+	  <petr.tuma@mff.cuni.cz>. 
+
+	* tests/Objref_Sequence_Test/client.cpp:
+	* tests/Objref_Sequence_Test/server.cpp:
+	* tests/Objref_Sequence_Test/Test.idl:
+	* tests/Objref_Sequence_Test/README:
+	* tests/Makefile:
+	* tests/Objref_Sequence_Test/Makefile:
+	* tests/Objref_Sequence_Test/Makefile.bor:
+	* tests/Objref_Sequence_Test/client.bor:
+	* tests/Objref_Sequence_Test/server.bor:
+	* tests/Objref_Sequence_Test/run_test.pl:
+	* tests/Objref_Sequence_Test/client.dsp:
+	* tests/Objref_Sequence_Test/server.dsp:
+	* tests/Objref_Sequence_Test/Objref_Sequence.dsw: Files for the
+	  new test. 
+
+	  This test cannot be run in the daily builds. The test takes too
+	  long to complete. Making really large sequences is the idea of
+	  the test and reducing that would mean, diluting the test. 
+
 Thu Dec 13 16:20:52 2001  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.h (iiop_endpoint):
