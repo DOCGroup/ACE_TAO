@@ -19,8 +19,11 @@ ACE_Scheduler_Factory::Factory_Status ACE_Scheduler_Factory::status_ =
 
 // This symbols are extern because the automatic template
 // instantiation mechanism in SunCC get confused otherwise.
+int TAO_SF_config_count = -1;
+ACE_Scheduler_Factory::POD_Config_Info* TAO_SF_config_info = 0;
 int TAO_SF_entry_count = -1;
 ACE_Scheduler_Factory::POD_RT_Info* TAO_SF_rt_info = 0;
+
 
 // Helper struct, to encapsulate the singleton static server and
 // ACE_TSS objects.  We can't use ACE_Singleton directly, because
@@ -37,7 +40,8 @@ struct ACE_Scheduler_Factory_Data
   // Channel.
 
   ACE_Scheduler_Factory_Data (void)
-    : scheduler_ (TAO_SF_entry_count, TAO_SF_rt_info),
+    : scheduler_ (TAO_SF_config_count, TAO_SF_config_info, 
+	              TAO_SF_entry_count, TAO_SF_rt_info),
       preemption_priority_ ()
     {
     }
@@ -45,7 +49,9 @@ struct ACE_Scheduler_Factory_Data
 
 static ACE_Scheduler_Factory_Data *ace_scheduler_factory_data = 0;
 
-int ACE_Scheduler_Factory::use_runtime (int ec,
+int ACE_Scheduler_Factory::use_runtime (int cc,
+                                        POD_Config_Info cfgi[],
+										int ec,
                                         POD_RT_Info rti[])
 {
   if (server_ != 0 || TAO_SF_entry_count != -1)
@@ -55,6 +61,8 @@ int ACE_Scheduler_Factory::use_runtime (int ec,
                          "server already configured\n"), -1);
     }
 
+  TAO_SF_config_count = cc;
+  TAO_SF_config_info = cfgi;
   TAO_SF_entry_count = ec;
   TAO_SF_rt_info = rti;
   status_ = ACE_Scheduler_Factory::RUNTIME;
@@ -178,26 +186,45 @@ static char start_infos[] =
 
 static char end_infos[] =
 "};\n"
-"static int infos_size = sizeof(infos)/sizeof(infos[0])\n";
+"static int infos_size = sizeof(infos)/sizeof(infos[0])\n\n";
+
+static char start_configs[] =
+"\nstatic ACE_Scheduler_Factory::POD_Config_Info configs[] = {\n";
+
+static char end_configs[] =
+"};\n"
+"static int configs_size = sizeof(configs)/sizeof(configs[0])\n\n";
 
 int ACE_Scheduler_Factory::dump_schedule
-    (const RtecScheduler::RT_Info_Set& infos,
-     const char* filename, const char* format_string)
+   (const RtecScheduler::RT_Info_Set& infos,
+    const RtecScheduler::Config_Info_Set& configs,
+    const char* file_name,
+    const char* rt_info_format,
+    const char* config_info_format)
 {
-  if (format_string == 0)
+  u_int i;
+
+  // default format for printing RT_Info output
+  if (rt_info_format == 0)
   {
-    format_string = "{ \"%20s\", %10d, {%10d, %10d}, {%10d, %10d}, "
-                    "{%10d, %10d}, %10d, "
-                    "(RtecScheduler::Criticality) %d, "
-                    "(RtecScheduler::Importance) %d, "
-                    "{%10d, %10d}, %10d, %10d, %10d, %10d, "
-                    "(RtecScheduler::Info_Type) %d }";
+    rt_info_format = "{ \"%20s\", %10d, {%10d, %10d}, {%10d, %10d}, "
+                     "{%10d, %10d}, %10d, "
+                     "(RtecScheduler::Criticality) %d, "
+                     "(RtecScheduler::Importance) %d, "
+                     "{%10d, %10d}, %10d, %10d, %10d, %10d, "
+                     "(RtecScheduler::Info_Type) %d }";
+  }
+
+  // default format for printing Config_Info output
+  if (config_info_format == 0)
+  {
+    config_info_format = "{ %10d, %10d, (RtecScheduler::Dispatching_Type) %d }";
   }
 
   FILE* file = stdout;
-  if (filename != 0)
+  if (file_name != 0)
     {
-      file = ACE_OS::fopen (filename, "w");
+      file = ACE_OS::fopen (file_name, "w");
       if (file == 0)
         {
           return -1;
@@ -205,8 +232,9 @@ int ACE_Scheduler_Factory::dump_schedule
     }
   ACE_OS::fprintf(file, header);
 
+  // print out operation QoS info
   ACE_OS::fprintf(file, start_infos);
-  for (u_int i = 0; i < infos.length (); ++i)
+  for (i = 0; i < infos.length (); ++i)
     {
       if (i != 0)
         {
@@ -217,7 +245,7 @@ int ACE_Scheduler_Factory::dump_schedule
       // @@ TODO Eventually the TimeT structure will be a 64-bit
       // unsigned int, we will have to change this dump method then.
       ACE_OS::fprintf (file,
-                       format_string,
+                       rt_info_format,
                        (const char*) info.entry_point,
                        info.handle,
                        info.worst_case_execution_time.low,
@@ -240,6 +268,27 @@ int ACE_Scheduler_Factory::dump_schedule
   // finish last line.
   ACE_OS::fprintf(file, "\n");
   ACE_OS::fprintf(file, end_infos);
+
+  // print out queue configuration info
+  ACE_OS::fprintf(file, start_configs);
+  for (i = 0; i < configs.length (); ++i)
+    {
+      if (i != 0)
+        {
+          // Finish previous line
+          ACE_OS::fprintf(file, ",\n");
+        }
+      const RtecScheduler::Config_Info& config = configs[i];
+      ACE_OS::fprintf (file,
+                       config_info_format,
+                       config.preemption_priority,
+                       config.thread_priority,
+                       config.dispatching_type);
+    }
+  // finish last line.
+  ACE_OS::fprintf(file, "\n");
+  ACE_OS::fprintf(file, end_configs);
+
   ACE_OS::fprintf(file, footer);
   ACE_OS::fclose (file);
   return 0;
@@ -291,3 +340,5 @@ template class ACE_TSS_Type_Adapter<RtecScheduler::Preemption_Priority>;
 #pragma instantiate ACE_TSS<ACE_TSS_Type_Adapter<RtecScheduler::Preemption_Priority> >
 #pragma instantiate ACE_TSS_Type_Adapter<RtecScheduler::Preemption_Priority>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+

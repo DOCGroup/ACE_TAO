@@ -84,11 +84,29 @@ public:
   virtual void compute_scheduling (CORBA::Long minimum_priority,
                                    CORBA::Long maximum_priority,
                                    RtecScheduler::RT_Info_Set_out infos,
+				   RtecScheduler::Config_Info_Set_out configs,
                                    CORBA::Environment &_env)
     TAO_THROW_SPEC((CORBA::SystemException,
                     RtecScheduler::UTILIZATION_BOUND_EXCEEDED,
                     RtecScheduler::INSUFFICIENT_THREAD_PRIORITY_LEVELS,
                     RtecScheduler::TASK_COUNT_MISMATCH));
+
+  virtual void dispatch_configuration (RtecScheduler::Preemption_Priority p_priority,
+                                       RtecScheduler::OS_Priority& priority,
+				       enum RtecScheduler::Dispatching_Type & d_type,
+				       CORBA::Environment &_env)
+    TAO_THROW_SPEC ((CORBA::SystemException,
+                    RtecScheduler::NOT_SCHEDULED,
+                    RtecScheduler::UNKNOWN_PRIORITY_LEVEL));
+  // provide the thread priority and queue type for the given priority level
+
+  virtual RtecScheduler::Preemption_Priority last_scheduled_priority (CORBA::Environment &_env)
+    TAO_THROW_SPEC ((CORBA::SystemException,
+                    RtecScheduler::NOT_SCHEDULED));
+  // Returns the last priority number assigned to an operation in the schedule.
+  // The number returned is one less than the total number of scheduled priorities.
+  // All scheduled priorities range from 0 to the number returned, inclusive.
+
 
 private:
 

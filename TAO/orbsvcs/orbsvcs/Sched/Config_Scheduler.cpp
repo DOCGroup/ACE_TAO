@@ -242,6 +242,7 @@ void ACE_Config_Scheduler::add_dependency (RtecScheduler::handle_t handle,
 void ACE_Config_Scheduler::compute_scheduling (CORBA::Long minimum_priority,
                                                CORBA::Long maximum_priority,
                                                RtecScheduler::RT_Info_Set_out infos,
+                                               RtecScheduler::Config_Info_Set_out configs,
                                                CORBA::Environment &_env)
      TAO_THROW_SPEC ((CORBA::SystemException,
                       RtecScheduler::UTILIZATION_BOUND_EXCEEDED,
@@ -257,6 +258,8 @@ void ACE_Config_Scheduler::compute_scheduling (CORBA::Long minimum_priority,
       ACE_ERROR ((LM_ERROR, "schedule failed\n"));
       return;
     }
+
+  // return the set of scheduled RT_Infos
   if (infos.ptr () == 0)
     {
       infos = new RtecScheduler::RT_Info_Set(impl->tasks ());
@@ -282,6 +285,34 @@ void ACE_Config_Scheduler::compute_scheduling (CORBA::Long minimum_priority,
           break;
         }
     }
+
+  // return the set of scheduled Config_Infos
+  if (configs.ptr () == 0)
+    {
+      configs = new RtecScheduler::Config_Info_Set(impl->minimum_priority_queue () + 1);
+    }
+  configs->length (impl->minimum_priority_queue () + 1);
+  for (RtecScheduler::Preemption_Priority priority = 0;
+       priority <= (RtecScheduler::Preemption_Priority) impl->minimum_priority_queue ();
+       ++priority)
+    {
+      RtecScheduler::Config_Info* config_info = 0;
+      switch (impl->lookup_config_info (priority, config_info))
+        {
+        case BaseSchedImplType::SUCCEEDED:
+          // We know that handles start at 1.
+          configs[CORBA::ULong(priority)] = *config_info;
+          break;
+        case BaseSchedImplType::FAILED:
+        case BaseSchedImplType::ST_UNKNOWN_TASK:
+        default:
+          ACE_ERROR ((LM_ERROR,
+                      "Config_Scheduler::schedule - lookup_config_info failed\n"));
+          // TODO: throw something.
+          break;
+        }
+    }
+
   ACE_DEBUG ((LM_DEBUG, "schedule prepared\n"));
 
   ACE_DEBUG ((LM_DEBUG, "dumping to stdout\n"));
@@ -292,7 +323,45 @@ void ACE_Config_Scheduler::compute_scheduling (CORBA::Long minimum_priority,
 
 
 
+void ACE_Config_Scheduler::dispatch_configuration (RtecScheduler::Preemption_Priority p_priority,
+                                                   RtecScheduler::OS_Priority& priority,
+				                   enum RtecScheduler::Dispatching_Type & d_type,
+                                                   CORBA::Environment &_env)
+    TAO_THROW_SPEC ((CORBA::SystemException,
+                    RtecScheduler::NOT_SCHEDULED,
+                    RtecScheduler::UNKNOWN_PRIORITY_LEVEL))
+{
+  ACE_UNUSED_ARG (_env);
+
+  if (impl->dispatch_configuration (p_priority, priority, d_type) == -1)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "Config_Scheduler::dispatch_configuration -"
+                  " dispatch_configuration failed\n"));
+      // TODO: throw something.
+    }
+}
+  // provide the thread priority and queue type for the given priority level
 
 
+RtecScheduler::Preemption_Priority 
+ACE_Config_Scheduler::last_scheduled_priority (CORBA::Environment &_env)
+    TAO_THROW_SPEC ((CORBA::SystemException,
+                    RtecScheduler::NOT_SCHEDULED))
+{
+  ACE_UNUSED_ARG (_env);
 
+  RtecScheduler::Preemption_Priority priority = impl->minimum_priority_queue ();
 
+  if (priority < 0)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "Config_Scheduler::last_scheduled_priority - priorities failed\n"));
+      // TODO: throw something.
+    }
+
+  return priority;
+}
+  // Returns the last priority number assigned to an operation in the schedule.
+  // The number returned is one less than the total number of scheduled priorities.
+  // All scheduled priorities range from 0 to the number returned, inclusive. 

@@ -49,6 +49,10 @@ public:
                                    RT_Info* &rtinfo);
   // Obtains an RT_Info based on its "handle".
 
+  virtual status_t lookup_config_info (Preemption_Priority priority,
+				       Config_Info* &config_info);
+  // Obtains a Config_Info based on its priority.
+
   // = Computes the schedule.
   virtual status_t schedule (void);
 
@@ -91,6 +95,9 @@ private:
 
   ACE_Unbounded_Set <RT_Info **> task_entries_;
   // Collection of known tasks.
+
+  Config_Info config_info_;
+  // dispatchin configuration info
 
 #if defined (ACE_HAS_THREADS)
   typedef ACE_Recursive_Thread_Mutex LOCK;

@@ -53,6 +53,22 @@ public:
     CORBA::Long info_type;
   };
 
+    struct POD_Config_Info
+    // = TITLE
+    //   Plain Old Data for dispatch queue configuration information.
+    //
+    // = DESCRIPTION
+    //   This class provide us with a plain old data version of
+    //   configuration info, which is useful for implementing static arrays
+	//   NOTE: if used in an array, the run-time scheduler requires that the
+	//   array index match the preemption priority stored in the config info
+	//   at that index: this is used to detect uninitialized/corrupted schedules
+  {
+    RtecScheduler::Preemption_Priority preemption_priority;
+    RtecScheduler::OS_Priority thread_priority;
+    RtecScheduler::Dispatching_Type dispatching_type;
+  };
+
   static int use_config (CosNaming::NamingContext_ptr naming);
   // Setup the variables needed for a config run, using the
   // NamingContext to locate a Scheduler.
@@ -62,10 +78,12 @@ public:
   // Setup the variables needed for a config run, using the
   // NamingContext to locate a Scheduler.
 
-  static int use_runtime (int entry_count,
-                          POD_RT_Info rt_info[]);
-  // Disable config runs in the Factory and setups the precomputed
-  // scheduling.
+  static int use_runtime (int cc,
+                          POD_Config_Info cfgi[],
+                          int ec,
+                          POD_RT_Info rti[]);
+  // Disable config runs in the Factory and sets up the precomputed
+  // scheduling information.
 
   static RtecScheduler::Scheduler_ptr server (void);
   // Return the Real-time Scheduling Service used for this run.
@@ -77,8 +95,10 @@ public:
   // resolve_initial_references.
 
   static int dump_schedule (const RtecScheduler::RT_Info_Set& infos,
+                            const RtecScheduler::Config_Info_Set& configs,
                             const char* file_name = 0,
-                            const char* format_string = 0);
+                            const char* rt_info_format = 0,
+                            const char* config_info_format = 0);
   // This helper function will dump the schedule returned by a
   // RtecScheduler::Scheduler into a file, the file can be compiled to
   // create an efficient local implementation of the Scheduler.
