@@ -6,7 +6,9 @@
 #include "Server_Worker.h"
 
 const char *ior_output_file = 0;
+char *another_output_file = 0;
 const char *ior_table_name = 0;
+char *another_table_name = 0;
 int nthreads = 4;
 
 int
@@ -19,13 +21,25 @@ parse_args (int argc, char *argv[])
     switch (c)
       {
       case 'i':
-         ior_table_name = get_opts.opt_arg ();
-         break;
-
+        {
+          ior_table_name = get_opts.opt_arg ();
+          int len = ACE_OS::strlen(ior_table_name) + 1;
+          another_table_name = new char[len + 1];
+          ACE_OS::strcpy(another_table_name, ior_table_name);
+          another_table_name[len-1] = '1';
+          another_table_name[len] = '\0';
+          break;
+        }
       case 'o':
-        ior_output_file = get_opts.opt_arg ();
-        break;
-
+        {
+          ior_output_file = get_opts.opt_arg ();
+          int len = ACE_OS::strlen(ior_output_file) + 1;
+          another_output_file = new char[len + 1];
+          ACE_OS::strcpy(another_output_file, ior_output_file);
+          another_output_file[len-1] = '1';
+          another_output_file[len] = '\0';
+          break;
+        }
       case 'n':
         nthreads = ACE_OS::atoi (get_opts.opt_arg ());
         break;
@@ -78,16 +92,27 @@ main (int argc, char *argv[])
         return 1;
 
       Simple_Server_i server_impl (orb.in ());
+      Another_One_i another_one_impl (orb.in());
 
       Simple_Server_var server =
         server_impl._this (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      Another_One_var another_one =
+        another_one_impl._this (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::String_var ior =
         orb->object_to_string (server.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
+      CORBA::String_var another_ior =
+        orb->object_to_string (another_one.in () ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
       ACE_DEBUG ((LM_DEBUG, "Activated as <%s>\n", ior.in ()));
+
+      ACE_DEBUG ((LM_DEBUG, "Activated another one as <%s>\n", another_ior.in ()));
 
       if (ior_table_name != 0)
         {
@@ -106,6 +131,7 @@ main (int argc, char *argv[])
             }
 
           adapter->bind ( ior_table_name, ior.in () ACE_ENV_ARG_PARAMETER);
+          adapter->bind ( another_table_name, another_ior.in() ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (-1);
         }
 
@@ -119,7 +145,19 @@ main (int argc, char *argv[])
                                "Cannot open output file for writing IOR: %s",
                                ior_output_file),
                               1);
+          ACE_DEBUG ((LM_DEBUG,"Wrote ior to %s\n",
+                      ior_output_file));
           ACE_OS::fprintf (output_file, "%s", ior.in ());
+          ACE_OS::fclose (output_file);
+          output_file = ACE_OS::fopen (another_output_file, "w");
+          if (output_file == 0)
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "Cannot open output file for writing IOR: %s",
+                               another_output_file),
+                              1);
+          ACE_DEBUG ((LM_DEBUG,"Wrote another ior to %s\n",
+                      another_output_file));
+          ACE_OS::fprintf (output_file, "%s", another_ior.in ());
           ACE_OS::fclose (output_file);
         }
 

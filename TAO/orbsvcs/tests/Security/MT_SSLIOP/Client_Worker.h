@@ -38,7 +38,9 @@ class Client_Worker : public ACE_Task_Base
   //
 
 public:
-  Client_Worker (Simple_Server_ptr server, int niterations);
+  Client_Worker (Simple_Server_ptr server,
+                 Another_One_ptr another,
+                 int niterations);
   // ctor
 
   virtual int svc (void);
@@ -51,6 +53,9 @@ private:
 private:
   Simple_Server_var server_;
   // The server.
+
+  Another_One_var another_;
+  // Another object served by the same server as server_.
 
   int niterations_;
   // The number of iterations on each client thread.

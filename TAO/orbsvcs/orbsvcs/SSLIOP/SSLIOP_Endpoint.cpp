@@ -27,7 +27,8 @@ TAO_SSLIOP_Endpoint::TAO_SSLIOP_Endpoint (const ::SSLIOP::SSL *ssl_component,
     // Some compilers don't like the initialization
     trust_ (),
 #endif /* !VXWORKS && !__QNX__ */
-    credentials_ ()
+    credentials_ (),
+    credentials_set_ (0)
 {
   if (ssl_component != 0)
     {
@@ -156,6 +157,8 @@ TAO_SSLIOP_Endpoint::duplicate (void)
   endpoint->qop (this->qop_);
   endpoint->trust (this->trust_);
   endpoint->credentials (this->credentials_.in ());  // Shallow copy
+
+  endpoint->credentials_set_ = this->credentials_set_;
 
   endpoint->iiop_endpoint (this->iiop_endpoint_, true);
 
