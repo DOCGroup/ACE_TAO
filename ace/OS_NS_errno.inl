@@ -7,6 +7,11 @@ ACE_OS::last_error (void)
   // ACE_OS_TRACE ("ACE_OS::last_error");
 
 #if defined (ACE_WIN32)
+  // ACE_OS::last_error() prefers errnor since started out as a way to
+  // avoid directly accessing errno in ACE code - particularly the ACE
+  // C++ socket wrapper facades.  On Windows, some things that would
+  // use errno on UNIX require ::GetLastError(), so this method tries
+  // to shield the rest of ACE from having to know about this.
   int lerror = ::GetLastError ();
   int lerrno = errno;
   return lerrno == 0 ? lerror : lerrno;

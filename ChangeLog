@@ -1,3 +1,9 @@
+Wed Jul  7 00:03:34 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* ace/OS_NS_errno.inl: Clarified why ACE_OS::last_error()
+	  has a preference for errno.  Thanks to Lance Paine
+ 	  <lance@ams.co.nz> for motivating this.
+
 Tue Jul  6 16:13:31 2004  Rich Seibel <seibel_r@ociweb.com>
 
         * bin/tao_other_tests.lst:
