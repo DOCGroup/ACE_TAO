@@ -81,7 +81,7 @@ namespace TAO
 #endif /* _MSC_VER */
 
 #if defined (__ACE_INLINE__)
-# include "POA_Current.i"
+# include "POA_Current.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

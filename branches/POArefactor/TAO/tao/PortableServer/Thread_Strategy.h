@@ -51,7 +51,10 @@ namespace TAO
 
       virtual int exit () = 0;
 
-      void strategy_init (TAO_POA *poa, CORBA::PolicyList *policy_list);
+      // @@ Johnny, its not clear what initialization this is going to
+      // do. My $0.02
+      void strategy_init (TAO_POA *poa,
+                          CORBA::PolicyList *policy_list);
     };
 
     class TAO_PortableServer_Export Single_Thread_Strategy :

@@ -14,21 +14,19 @@
 #define TAO_LOADABLE_THREAD_POLICY_H
 #include /**/ "ace/pre.h"
 
-#include "portableserver_export.h"
-#include "PolicyFactory.h"
-#include "PortableServerC.h"
-#include "ace/Service_Config.h"
+#include "tao/PortableServer/portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if (TAO_HAS_MINIMUM_POA == 0)
+#include "tao/PortableServer/PolicyFactory.h"
+#include "tao/PortableServer/PortableServerC.h"
+#include "ace/Service_Config.h"
+#include "tao/PolicyC.h"
 
-namespace CORBA
-{
-  class PolicyError;
-}
+
+#if (TAO_HAS_MINIMUM_POA == 0)
 
 namespace TAO
 {
