@@ -1,3 +1,7 @@
+Wed Feb 19 12:50:58 2003  Heather Drury  <oci@cs.wustl.edu>
+
+        * ACE version 5.3.1 released.
+
 Mon Feb 17 15:21:18 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* bin/auto_run_tests.lst: The Server_Protocol and the ORB_init
