@@ -39,6 +39,8 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+class TAO_Thread_Pool;
+
 class TAO_RTPortableServer_Export TAO_RT_POA :
   public virtual RTPortableServer::POA,
   public virtual TAO_POA
@@ -289,6 +291,16 @@ protected:
   // cached policy instance.
   void parse_rt_policies (TAO_POA_Policy_Set &policies,
                           CORBA::Environment &ACE_TRY_ENV);
+
+  size_t endpoint_count (void);
+
+  TAO_Stub *create_stub_object (const TAO_ObjectKey &object_key,
+                                const char *type_id,
+                                CORBA::PolicyList *policy_list,
+                                TAO_Acceptor_Filter *filter,
+                                CORBA::Environment &ACE_TRY_ENV);
+
+  TAO_Thread_Pool *thread_pool_;
 
 };
 

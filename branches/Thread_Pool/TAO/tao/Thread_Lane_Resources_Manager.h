@@ -41,6 +41,7 @@ public:
   virtual int open_default_resources (CORBA_Environment &ACE_TRY_ENV) = 0;
 
   virtual TAO_Thread_Lane_Resources &lane_resources (void) = 0;
+  virtual TAO_Thread_Lane_Resources &default_lane_resources (void) = 0;
 };
 
 #if defined (__ACE_INLINE__)

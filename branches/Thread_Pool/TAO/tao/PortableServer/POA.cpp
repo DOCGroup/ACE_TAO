@@ -16,7 +16,6 @@
 #include "tao/Server_Strategy_Factory.h"
 #include "tao/Acceptor_Registry.h"
 #include "tao/Thread_Lane_Resources.h"
-#include "tao/Thread_Lane_Resources_Manager.h"
 #include "tao/Environment.h"
 #include "tao/Exception.h"
 #include "tao/Stub.h"
@@ -384,21 +383,6 @@ TAO_POA::create_POA_i (const char *adapter_name,
   // Merge in any policies that the user may have specified.
   tao_policies.merge_policies (policies,
                                ACE_TRY_ENV);
-  ACE_CHECK_RETURN (PortableServer::POA::_nil ());
-
-  // Check to see if the user has specfied a thread pool policy.
-  CORBA::Policy_var policy =
-    tao_policies.get_cached_policy (TAO_CACHED_POLICY_THREADPOOL);
-
-  // If a thread pool policy was specified, then this POA will be run
-  // by an RT thread pool.  Resources for RT threads pools are opened
-  // during the creation of the thread pool.
-  //
-  // However, if the thread pool was not specified, this POA will be
-  // run by the default thread pool.  Therefore, we have to make sure
-  // that the resources for the default thread pool are open.
-  if (CORBA::is_nil (policy.in ()))
-    this->orb_core_.thread_lane_resources_manager ().open_default_resources (ACE_TRY_ENV);
   ACE_CHECK_RETURN (PortableServer::POA::_nil ());
 
   // If any of the policy objects specified are not valid for the ORB
@@ -3258,6 +3242,7 @@ TAO_POA::key_to_stub_i (const TAO_ObjectKey &key,
                               type_id,
                               client_exposed_policies._retn (),
                               &filter,
+                              this->orb_core_.lane_resources ().acceptor_registry (),
                               ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
@@ -3269,13 +3254,12 @@ TAO_POA::create_stub_object (const TAO_ObjectKey &object_key,
                              const char *type_id,
                              CORBA::PolicyList *policy_list,
                              TAO_Acceptor_Filter *filter,
+                             TAO_Acceptor_Registry &acceptor_registry,
                              CORBA::Environment &ACE_TRY_ENV)
 {
   int error = 0;
-  TAO_Acceptor_Registry &acceptor_registry =
-    this->orb_core_.lane_resources ().acceptor_registry ();
 
-   // Count the number of endpoints.
+  // Count the number of endpoints.
   size_t profile_count =
     acceptor_registry.endpoint_count ();
 

@@ -242,6 +242,10 @@ SOURCE=.\RTCORBAC.cpp
 
 SOURCE=.\Thread_Pool.cpp
 # End Source File
+# Begin Source File
+
+SOURCE=.\RT_Thread_Lane_Resources_Manager.cpp
+# End Source File
 # End Group
 # Begin Group "Header Files"
 
@@ -338,6 +342,10 @@ SOURCE=.\RTCORBAC.h
 
 SOURCE=.\Thread_Pool.h
 # End Source File
+# Begin Source File
+
+SOURCE=.\RT_Thread_Lane_Resources_Manager.h
+# End Source File
 # End Group
 # Begin Group "Inline Files"
 
@@ -397,6 +405,10 @@ SOURCE=.\RTCORBAC.i
 # Begin Source File
 
 SOURCE=.\Thread_Pool.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\RT_Thread_Lane_Resources_Manager.i
 # End Source File
 # End Group
 # Begin Group "Template Files"

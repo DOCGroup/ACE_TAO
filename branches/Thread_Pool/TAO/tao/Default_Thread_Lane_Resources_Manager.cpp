@@ -81,6 +81,12 @@ TAO_Default_Thread_Lane_Resources_Manager::lane_resources (void)
   return *this->lane_resources_;
 }
 
+TAO_Thread_Lane_Resources &
+TAO_Default_Thread_Lane_Resources_Manager::default_lane_resources (void)
+{
+  return *this->lane_resources_;
+}
+
 ACE_STATIC_SVC_DEFINE (TAO_Default_Thread_Lane_Resources_Manager,
                        ACE_TEXT ("Default_Thread_Lane_Resources_Manager"),
                        ACE_SVC_OBJ_T,

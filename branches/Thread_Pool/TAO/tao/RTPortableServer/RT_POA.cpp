@@ -9,11 +9,14 @@
 #include "tao/Exception.h"
 #include "tao/Stub.h"
 #include "tao/debug.h"
+#include "tao/RTCORBA/Thread_Pool.h"
+#include "tao/Thread_Lane_Resources.h"
 #include "tao/Acceptor_Registry.h"
 
 #include "tao/RTCORBA/RT_Policy_i.h"
 
 #include "tao/PortableServer/Default_Acceptor_Filter.h"
+#include "tao/RTPortableServer/RT_Policy_Validator.h"
 #include "RT_Acceptor_Filters.h"
 
 // auto_ptr class
@@ -42,7 +45,8 @@ TAO_RT_POA::TAO_RT_POA (const TAO_POA::String &name,
              thread_lock,
              orb_core,
              object_adapter,
-             ACE_TRY_ENV)
+             ACE_TRY_ENV),
+  thread_pool_ (0)
 {
   ACE_CHECK;
 
@@ -89,28 +93,38 @@ void
 TAO_RT_POA::parse_rt_policies (TAO_POA_Policy_Set &policies,
                                CORBA::Environment &ACE_TRY_ENV)
 {
-  CORBA::Policy_var policy =
-    policies.get_cached_policy (TAO_CACHED_POLICY_PRIORITY_MODEL);
+  {
+    CORBA::Policy_var policy =
+      policies.get_cached_policy (TAO_CACHED_POLICY_PRIORITY_MODEL);
 
-  RTCORBA::PriorityModelPolicy_var priority_model =
-    RTCORBA::PriorityModelPolicy::_narrow (policy.in (),
-                                           ACE_TRY_ENV);
-  ACE_CHECK;
+    RTCORBA::PriorityModelPolicy_var priority_model =
+      RTCORBA::PriorityModelPolicy::_narrow (policy.in (),
+                                             ACE_TRY_ENV);
+    ACE_CHECK;
 
-  if (!CORBA::is_nil (priority_model.in ()))
-    {
-      RTCORBA::PriorityModel rt_priority_model =
-        priority_model->priority_model (ACE_TRY_ENV);
-      ACE_CHECK;
+    if (!CORBA::is_nil (priority_model.in ()))
+      {
+        RTCORBA::PriorityModel rt_priority_model =
+          priority_model->priority_model (ACE_TRY_ENV);
+        ACE_CHECK;
 
-      this->cached_policies ().priority_model (
-                    TAO_POA_Cached_Policies::PriorityModel (rt_priority_model));
+        this->cached_policies ().priority_model (
+           TAO_POA_Cached_Policies::PriorityModel (
+              rt_priority_model));
 
-      RTCORBA::Priority priority = priority_model->server_priority (ACE_TRY_ENV);
+        RTCORBA::Priority priority =
+          priority_model->server_priority (ACE_TRY_ENV);
       ACE_CHECK;
 
       this->cached_policies ().server_priority (priority);
     }
+  }
+
+  this->thread_pool_ =
+    TAO_POA_RT_Policy_Validator::extract_thread_pool (this->orb_core_,
+                                                      policies.policies (),
+                                                      ACE_TRY_ENV);
+  ACE_CHECK;
 }
 
 void
@@ -152,10 +166,13 @@ TAO_RT_POA::valid_priority (RTCORBA::Priority priority,
   else
     // Case 2.
     {
-      TAO_Acceptor_Registry &ar =
-        this->orb_core_.lane_resources ().acceptor_registry ();
+      TAO_Acceptor_Registry *ar =
+        TAO_POA_RT_Policy_Validator::extract_acceptor_registry (this->orb_core_,
+                                                                this->thread_pool_);
 
-      for (TAO_Acceptor **a = ar.begin (); a != ar.end (); ++a)
+      for (TAO_Acceptor **a = ar->begin ();
+           a != ar->end ();
+           ++a)
         {
           if ((*a)->priority () == priority)
             return;
@@ -195,6 +212,115 @@ TAO_RT_POA::validate_policies (CORBA::Environment &ACE_TRY_ENV)
   // observed.
 }
 
+size_t
+TAO_RT_POA::endpoint_count (void)
+{
+  size_t profile_count = 0;
+
+  TAO_Thread_Lane **lanes =
+    this->thread_pool_->lanes ();
+
+  for (CORBA::ULong i = 0;
+       i != this->thread_pool_->number_of_lanes ();
+       ++i)
+    profile_count +=
+      lanes[i]->resources ().acceptor_registry ().endpoint_count ();
+
+  return profile_count;
+}
+
+TAO_Stub *
+TAO_RT_POA::create_stub_object (const TAO_ObjectKey &object_key,
+                                const char *type_id,
+                                CORBA::PolicyList *policy_list,
+                                TAO_Acceptor_Filter *filter,
+                                CORBA::Environment &ACE_TRY_ENV)
+{
+  if (this->thread_pool_ == 0)
+    {
+      TAO_Acceptor_Registry *acceptor_registry =
+        TAO_POA_RT_Policy_Validator::extract_acceptor_registry (this->orb_core_,
+                                                                this->thread_pool_);
+
+      return
+        this->TAO_POA::create_stub_object (object_key,
+                                           type_id,
+                                           policy_list,
+                                           filter,
+                                           *acceptor_registry,
+                                           ACE_TRY_ENV);
+    }
+
+  int error = 0;
+
+  // Count the number of endpoints.
+  size_t profile_count =
+    this->endpoint_count ();
+
+  // Create a profile container and have acceptor registries populate
+  // it with profiles as appropriate.
+  TAO_MProfile mprofile (0);
+
+  // Allocate space for storing the profiles.  There can never be more
+  // profiles than there are endpoints.  In some cases, there can be
+  // less profiles than endpoints.
+  int result =
+    mprofile.set (profile_count);
+  if (result == -1)
+    error = 1;
+
+  TAO_Thread_Lane **lanes =
+    this->thread_pool_->lanes ();
+
+  // Leave it to the filter to decide which acceptors/in which order
+  // go into the mprofile.
+  for (CORBA::ULong i = 0;
+       i != this->thread_pool_->number_of_lanes () &&
+         !error;
+       ++i)
+    {
+      TAO_Acceptor_Registry &acceptor_registry =
+        lanes[i]->resources ().acceptor_registry ();
+
+      result =
+        filter->fill_mprofile (object_key,
+                               mprofile,
+                               acceptor_registry.begin (),
+                               acceptor_registry.end ());
+      if (result == -1)
+        error = 1;
+    }
+
+  if (!error)
+    result = filter->encode_endpoints (mprofile);
+  if (result == -1)
+    error = 1;
+
+  if (error)
+    ACE_THROW_RETURN (CORBA::INTERNAL (
+                        CORBA::SystemException::_tao_minor_code (
+                          TAO_MPROFILE_CREATION_ERROR,
+                          0),
+                        CORBA::COMPLETED_NO),
+                      0);
+
+  // Make sure we have at least one profile.  <mp> may end up being
+  // empty if none of the acceptor endpoints have the right priority
+  // for this object, for example.
+  if (mprofile.profile_count () == 0)
+    ACE_THROW_RETURN (CORBA::BAD_PARAM (
+                        CORBA::SystemException::_tao_minor_code (
+                          TAO_MPROFILE_CREATION_ERROR,
+                          0),
+                        CORBA::COMPLETED_NO),
+                      0);
+
+  return
+    this->orb_core_.create_stub_object (mprofile,
+                                        type_id,
+                                        policy_list,
+                                        ACE_TRY_ENV);
+}
 
 TAO_Stub *
 TAO_RT_POA::key_to_stub_i (const TAO_ObjectKey &key,
@@ -252,11 +378,12 @@ TAO_RT_POA::key_to_stub_i (const TAO_ObjectKey &key,
             filter (server_protocol->protocols_rep (),
                     priority_bands_i->priority_bands_rep());
 
-          data = this->orb_core_.create_stub_object (key,
-                                                     type_id,
-                                                     client_exposed_policies._retn (),
-                                                     &filter,
-                                                     ACE_TRY_ENV);
+          data =
+            this->create_stub_object (key,
+                                      type_id,
+                                      client_exposed_policies._retn (),
+                                      &filter,
+                                      ACE_TRY_ENV);
           ACE_CHECK_RETURN (0);
         }
       else
@@ -267,11 +394,12 @@ TAO_RT_POA::key_to_stub_i (const TAO_ObjectKey &key,
           TAO_Priority_Acceptor_Filter filter (server_protocol->protocols_rep (),
                                                object_priority);
 
-          data = this->orb_core_.create_stub_object (key,
-                                                     type_id,
-                                                     client_exposed_policies._retn (),
-                                                     &filter,
-                                                     ACE_TRY_ENV);
+          data =
+            this->create_stub_object (key,
+                                      type_id,
+                                      client_exposed_policies._retn (),
+                                      &filter,
+                                      ACE_TRY_ENV);
           ACE_CHECK_RETURN (0);
         }
     }
@@ -279,11 +407,12 @@ TAO_RT_POA::key_to_stub_i (const TAO_ObjectKey &key,
     {
       // Client propagated.
       TAO_Server_Protocol_Acceptor_Filter filter (server_protocol->protocols_rep ());
-      data = this->orb_core_.create_stub_object (key,
-                                                 type_id,
-                                                 client_exposed_policies._retn (),
-                                                 &filter,
-                                                 ACE_TRY_ENV);
+      data =
+        this->create_stub_object (key,
+                                  type_id,
+                                  client_exposed_policies._retn (),
+                                  &filter,
+                                  ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
     }
 
