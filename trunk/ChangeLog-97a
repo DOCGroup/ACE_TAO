@@ -7,6 +7,13 @@ Mon May 12 18:59:39 1997  David L. Levine  <levine@cs.wustl.edu>
 	* ace/Thread_Manager.cpp (wait_grp,wait_task): changed type of loop
 	  index "i" from size_t to int to avoid signed/unsigned comparison.
 
+Mon May 12 18:41:19 1997  Nanbor Wang  <nw1@cs.wustl.edu>
+
+	* ace/config-freebsd-pthread.h: 
+	* ace/config-freebsd.h: Added ACE_LACKS_RWLOCK_T to FreeBSD config
+	  files.  Thanks to Amoncio Hasty <hasty@rah.star-gate.com> for
+	  noticing this. 
+
 Mon May 12 17:11:50 1997  Tim H. Harrison  <harrison@waltz.cs.wustl.edu>
 
 	* ace/Process.h: Changed ACE_Process::start to
