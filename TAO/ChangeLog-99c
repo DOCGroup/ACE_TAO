@@ -1,3 +1,11 @@
+Thu Jul 15 21:53:18 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_union/cdr_op_ci.cpp:
+	  Added check and CORBA_Any::from_* construction for generation of
+	  CDR insertion operators similarly to the change made for the
+	  generated extraction operators listed in a recent commit.
+	  MSVC didn't mind, but SunOS/egcs complained.
+
 Thu Jul 15 21:03:31 1999  Marina Spivak  <marina@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Naming/Naming_Utils.cpp
