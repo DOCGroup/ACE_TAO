@@ -1,5 +1,12 @@
 Tue Dec 02 06:16:39 1997  David L. Levine  <levine@cs.wustl.edu>
 
+        * ace/Object_Manager.cpp (~ACE_Object_Manager_Destroyer): don't
+          delete the ACE_Object_Manager if not destroyed by the main
+          thread.  That can cause problems, at least on WIN32.  And
+          it should only happen under exceptional conditions, at least
+          on WIN32.  Thanks to Ari Erev <ari_erev@icomverse.com> and
+          John Neystadt <john_neystadt@icomverse.com> for suggesting this.
+
         * ace/Future.cpp: removed ACE_Atomic_Op<ACE_Thread_Mutex, int>
           instantiation because it no longer appears to be necessary,
           and caused link collisions on g++/VxWorks.
