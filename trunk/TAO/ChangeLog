@@ -1,3 +1,61 @@
+Wed Feb 12 00:19:58 UTC 2003  Craig Rodrigues <crodrigu@bbn.com>
+
+	* tao/RTCORBA/Linear_Priority_Mapping.cpp (to_CORBA): 
+	  Unconditionally display error message upon priority mapping failure.
+	* tao/RTCORBA/RT_Protocol_Hooks.cpp: Display errno value and message
+	  if setting the native thread priority fails.
+	* tao/RTCORBA/RT_ORBInitiializer.h:
+	  Create a new class member variable sched_policy_flags_.
+	  The value of sched_policy_flags_ is a bitmask value that can be one of
+	  THR_SCHED_RR, THR_SCHED_FIFO, THR_SCHED_DEFAULT, etc.  
+	  sched_policy_flags_ value is stored in the 
+	  TAO_ORB_Core TAO_ORB_Parameters structure.  
+	  In TAO_Thread_Lane::create_dynamic_threads(), the sched_policy_flags_
+	  is passed to the ACE_Task_Base::activate() call for creating new
+	  threads for a RTCORBA thread pool.
+
+	  sched_policy_ is an integer value that can be one of
+	  ACE_SCHED_RR, ACE_SCHED_FIFO, ACE_SCHED_OTHER, etc.  This value
+	  can be passed directly to the newly modified ACE_OS::thr_setpriority()
+	  call.  For POSIX pthreads, this value maps directly to the
+	  policy parameter of the pthread_setschedparam() call.
+	  ACE_SCHED_* values can also be passed directly to ACE_Sched_Params
+	  for determining the minimum and maximum priority value for a particular
+	  policy.
+
+	* tao/RTCORBA/RT_ORBInitiializer.cpp:
+	  Change all assignments of sched_policy_ variable to use 
+	  ACE_SCHED_* values and not THR_SCHED_* values.
+	  In the TAO_RT_ORBInitializer constructor, set sched_policy_flags_
+	  to the appropriate THR_SCHED_* values depending on what ACE_SCHED_*
+	  value is specified.
+
+	  In TAO_RT_ORBInitializer::pre_init(), pass sched_policy_flags_
+	  to orb_core()->orb_params()->sched_policy(), since this value
+	  will be later used in the activate() call in 
+	  TAO_Thread_Lane::create_dynamic_threads().
+
+	  At the end of TAO_RT_ORBInitializer::pre_init(), set the policy
+	  of the ACE_Thread::self() to the policy specified by -ORBSchedPolicy, and
+	  set the priority of ACE_Thread::self() to the lowest priority
+	  of the specified policy.  If this is not done, then errors will
+	  occur on Linux, because the default policy in ACE_OS::thr_setprio()
+	  is 0 (which maps to SCHED_OTHER), which will cause strange errors
+	  when the scheduling policy is set to something else, like SCHED_RR.
+
+ 	  Since the return value of ACE_OS::thr_getprio() can be invalid for
+	  a given policy, ie. 0 is valid for SCHED_OTHER, but invalid for
+	  SCHED_RR, I then decided to set the priority to the minimum
+	  priority of the policy/scheduling class.
+
+	  In addition, in RTPortableServer's 
+	  TAO_RT_Servant_Dispatcher::post_invoke() function, the priority
+	  of the thread will be reset to what it was before the invocation.
+	  This means that on platforms which use pthread_setschedparam(),
+	  the initial priority and policy of the thread need to be
+	  set to acceptable initial values, otherwise CORBA::DATA_CONVERSION
+	  errors will be thrown in this TAO_RT_Servant_Dispatcher::post_invoke().
+
 Tue Feb 11 13:58:23 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* orbsvcs/vc7_orbsvcs.mwc: Added this temporary file that
