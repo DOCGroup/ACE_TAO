@@ -378,14 +378,14 @@ ACE_Array_Iterator<T>::done (void) const
 }
 
 template <class T> ACE_INLINE
-ACE_DLList_Node::ACE_DLList_Node (void)
+ACE_DLList_Node<T>::ACE_DLList_Node (void)
   : item_ (0),
     next_ (0),
     prev_ (0)
 {}
 
 template <class T> ACE_INLINE
-ACE_DLList_Node::ACE_DLList_Node (T *&i,
+ACE_DLList_Node<T>::ACE_DLList_Node (T *&i,
                                   ACE_DLList_Node<T> *n,
                                   ACE_DLList_Node<T> *p)
   : item_ (i),
@@ -395,36 +395,36 @@ ACE_DLList_Node::ACE_DLList_Node (T *&i,
 }
 
 template <class T> ACE_INLINE
-ACE_DLList_Node::~ACE_DLList_Node (void) 
+ACE_DLList_Node<T>::~ACE_DLList_Node (void) 
 {
 };
 
 template <class T> ACE_INLINE void
-ACE_DLList::operator= (ACE_DLList<T> &l) 
+ACE_DLList<T>::operator= (ACE_DLList<T> &l) 
 {
   *(DLList *) this = l; 
 }
 
 template <class T> ACE_INLINE int 
-ACE_DLList::is_empty (void) const
+ACE_DLList<T>::is_empty (void) const
 {
   return ACE_Double_Linked_List< ACE_DLList_Node<T> >::is_empty (); 
 }
 
 template <class T> ACE_INLINE int 
-ACE_DLList::is_full (void) const
+ACE_DLList<T>::is_full (void) const
 {
   return ACE_Double_Linked_List< ACE_DLList_Node<T> >::is_full (); 
 }
 
 template <class T> ACE_INLINE void 
-ACE_DLList::reset (void)
+ACE_DLList<T>::reset (void)
 {
   ACE_Double_Linked_List< ACE_DLList_Node<T> >::reset (); 
 }
 
 template <class T> ACE_INLINE int 
-ACE_DLList::get (T *&item, size_t index)
+ACE_DLList<T>::get (T *&item, size_t index)
 {
   DLList_NODE *node;
   int result
@@ -435,43 +435,43 @@ ACE_DLList::get (T *&item, size_t index)
 }
 
 template <class T> ACE_INLINE size_t 
-ACE_DLList::size (void) const
+ACE_DLList<T>::size (void) const
 {
   return ACE_Double_Linked_List< ACE_DLList_Node<T> >::size (); 
 }
 
 template <class T> ACE_INLINE void 
-ACE_DLList::dump (void) const
+ACE_DLList<T>::dump (void) const
 { 
   ACE_Double_Linked_List< ACE_DLList_Node<T> >::dump (); 
 }
 
 template <class T> ACE_INLINE
-ACE_DLList::ACE_DLList (ACE_Allocator *alloc )
+ACE_DLList<T>::ACE_DLList (ACE_Allocator *alloc )
   : ACE_Double_Linked_List< ACE_DLList_Node<T> > (alloc) 
 {
 }
 
 template <class T> ACE_INLINE
-ACE_DLList::ACE_DLList (ACE_DLList<T> &l)
+ACE_DLList<T>::ACE_DLList (ACE_DLList<T> &l)
   : ACE_Double_Linked_List< ACE_DLList_Node<T> > ((DLList &) l)
 {
 }
 
 template <class T> ACE_INLINE
-ACE_DLList::~ACE_DLList (void) 
+ACE_DLList<T>::~ACE_DLList (void) 
 { 
   while (this->delete_head ()) ; 
 }
 
 template <class T> ACE_INLINE
-ACE_DLList_Iterator::ACE_DLList_Iterator (ACE_DLList<T> &l)
+ACE_DLList_Iterator<T>::ACE_DLList_Iterator (ACE_DLList<T> &l)
   : ACE_Double_Linked_List_Iterator< ACE_DLList_Node<T> > (l) 
 {
 }
 
 template <class T> ACE_INLINE T *
-ACE_DLList_Iterator::next (void) const
+ACE_DLList_Iterator<T>::next (void) const
 {
   ACE_DLList_Node<T> *temp
     = ACE_Double_Linked_List_Iterator< ACE_DLList_Node<T> >::next ();
@@ -479,25 +479,25 @@ ACE_DLList_Iterator::next (void) const
 }
 
 template <class T> ACE_INLINE int 
-ACE_DLList_Iterator::advance (void)
+ACE_DLList_Iterator<T>::advance (void)
 {
   return ACE_Double_Linked_List_Iterator< ACE_DLList_Node<T> >::advance (); 
 }
 
 template <class T> ACE_INLINE int 
-ACE_DLList_Iterator::first (void)
+ACE_DLList_Iterator<T>::first (void)
 {
   return ACE_Double_Linked_List_Iterator< ACE_DLList_Node<T> >::first (); 
 }
 
 template <class T> ACE_INLINE int 
-ACE_DLList_Iterator::done (void) const
+ACE_DLList_Iterator<T>::done (void) const
 {
   return ACE_Double_Linked_List_Iterator< ACE_DLList_Node<T> >::done (); 
 }
 
 template <class T> ACE_INLINE void 
-ACE_DLList_Iterator::dump (void) const
+ACE_DLList_Iterator<T>::dump (void) const
 { 
   ACE_Double_Linked_List_Iterator< ACE_DLList_Node<T> >::dump (); 
 }
