@@ -3,7 +3,10 @@
 #define ACE_BUILD_DLL
 
 // We need this to get the status of ACE_NTRACE...
+#if !defined (ACE_USER_CONFIG_H)
+#define ACE_USER_CONFIG_H
 #include "ace/config.h"
+#endif /* ACE_USER_CONFIG_H */
 
 // Turn off tracing for the duration of this file.
 #if defined (ACE_NTRACE)
@@ -24,6 +27,8 @@
 #include "ace/Thread_Manager.h"
 #include "ace/Synch_T.h"
 #include "ace/Signal.h"
+#include "ace/streams.h"
+
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 # include "ace/Object_Manager.h"
 #endif /* ACE_MT_SAFE */
