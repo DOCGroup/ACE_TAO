@@ -119,7 +119,7 @@ sub store_file ($)
     elsif ($name =~ /\.bor$/i) {
         push @files_bor, ($name);
     }
-    elsif ($name =~ /\.(ncp|opt)$/i) {
+    elsif ($name =~ /\.(ncb|opt)$/i) {
         push @files_noncvs, ($name);
     }
 }
