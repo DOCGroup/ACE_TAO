@@ -1,3 +1,18 @@
+1999-03-18  Seth Widoff  <swidoff@cs.cmu.edu>
+
+	* orbsvcs/Trading_Service/Trading_Service.cpp:
+	  On Linux, the get_host_name call added the domain name complete
+	  with dots. Since I'm using the hostname as part of the link
+	  identifiers for the trader federation, dots are bad. I changed
+	  the dots to underscores.
+
+	* orbsvcs/tests/Trader/Offer_Importer.cpp:
+	* orbsvcs/tests/Trader/Offer_Exporter.cpp:
+	* orbsvcs/tests/Trader/Service_Type_Exporter.cpp:
+	  Some vestigial TAO_HAS_OBJECT_IN_STRUCT_MARSHAL_BUG code was
+	  being compiled and screwing up the exporter_test for federated
+	  exports. That code has been vanquished. 
+
 Thu Mar 18 16:43:44 1999  Marina Spivak  <marina@cs.wustl.edu>
 
 	* orbsvcs/tests/Simple_Naming/client.cpp (execute): fixed NT
