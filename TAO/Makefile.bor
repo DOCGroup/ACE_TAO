@@ -39,6 +39,7 @@ DIRS = \
 	orbsvcs	\
 	examples \
 	tests \
+        performance-tests \
 	utils
 
 !else
