@@ -99,11 +99,11 @@ module CosTime
       // relative time in the object.
 
       TimeComparison compare_time (in ComparisonType comparison_type,
-                                   in UTO uto);
+                                   in UTO otu);
       // Compares the time contained in the object with the time in
       // the supplied uto according to the supplied comparison type.
 
-      TIO time_to_interval (in UTO uto);
+      TIO time_to_interval (in UTO otu);
       // Returns a TIO representing the time interval between the time
       // in the object and the time in the UTO passed as a
       // parameter. The interval returned is the interval between the
