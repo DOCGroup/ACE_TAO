@@ -78,6 +78,10 @@ DRV_usage (void)
     ));
   ACE_DEBUG ((
       LM_DEBUG,
+      ACE_TEXT (" -A...\t\t\tlocal implementation-specific escape\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
       ACE_TEXT (" -u\t\t\tprints usage message and exits\n")
     ));
   ACE_DEBUG ((
@@ -114,6 +118,27 @@ DRV_parse_args (int ac, char *av[])
             {
             case 0:
               DRV_push_file ("standard input");
+              break;
+            case 'A':
+              if (av[i][2] == '\0')
+                {
+                  if (i < ac - 1)
+                    {
+                      i++;
+                      s = av[i];
+                    }
+                  else
+                    {
+                      ACE_OS::exit (99);
+                    }
+                }
+              else
+                {
+                  s = av[i] + 2;
+                }
+
+              ACE_OS::strcat (idl_global->local_escapes (), s);
+              ACE_OS::strcat (idl_global->local_escapes (), " ");
               break;
             case 'D':
             case 'U':
