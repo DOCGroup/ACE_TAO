@@ -76,7 +76,7 @@ setup_lb (CORBA::Object_ptr lb,
                       0);
 
       LoadBalancing::Criteria_var criteria = tmp;
-      
+
       criteria->length (DEFAULT_PROPERTY_COUNT);
 
       // Default initial number of replicas
@@ -253,7 +253,7 @@ main (int argc, char *argv[])
       // Set up the criteria to be used when creating the object
       // group, and activate the hasher factory.
       LoadBalancing::Criteria_var the_criteria =
-        ::setup_lb (lb,
+        ::setup_lb (lb.in (),
                     rpms_monitor,
                     hasher_factory);
 

@@ -276,7 +276,7 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)
  $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancingS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancing/LB_ObjectGroup_Map.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancing/LB_Location_Map.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -304,6 +304,12 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancing/LB_ReplicaInfo.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancing/LB_Location_Hash.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancing/LB_Location_Hash.inl \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancing/LB_Location_Equal_To.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancing/LB_Location_Equal_To.inl \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancing/LB_ObjectGroup_Map.h \
  $(TAO_ROOT)/tao/PortableServer/Key_Adapters.h \
  $(ACE_ROOT)/ace/Map.h \
  $(ACE_ROOT)/ace/Map_T.h \
@@ -323,15 +329,11 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Map_T.i \
  $(ACE_ROOT)/ace/Map_T.cpp \
  $(TAO_ROOT)/tao/PortableServer/Key_Adapters.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancing/LB_ReplicaInfo.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancing/LB_ObjectGroup_Map.inl \
  $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancing/LB_PropertyManager.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancing/LB_GenericFactory.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancing/LB_ObjectGroupManager.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancing/LB_Location_Map.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancing/LB_Location_Hash.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancing/LB_Location_Hash.inl \
- $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancing/LB_Location_Equal_To.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancing/LB_Location_Equal_To.inl
+ $(TAO_ROOT)/orbsvcs/orbsvcs/LoadBalancing/LB_Pull_Handler.h
 
 .obj/LoadBalancer_Service.o .obj/LoadBalancer_Service.so .shobj/LoadBalancer_Service.o .shobj/LoadBalancer_Service.so: LoadBalancer_Service.cpp LoadBalancer.h \
  $(TAO_ROOT)/tao/ORB.h \
