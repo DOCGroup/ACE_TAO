@@ -1,3 +1,52 @@
+Tue Aug 17 01:20:37 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/CurrentC.cpp:
+	* tao/DomainC.cpp:
+	* tao/DomainC.h:
+	* tao/DynAnyC.cpp:
+	* tao/IORC.cpp:
+	* tao/IORC.h:
+	* tao/POAC.cpp:
+	* tao/POAS.cpp:
+	* tao/POA_CORBA.h:
+	* tao/PolicyC.cpp:
+	* tao/PolicyC.h:
+	* tao/PolicyS.cpp: Made sure we enfore the locality constraint
+	  rules by removing remote method invocation code, unnecessary
+	  skeletons, and the use of null stubs for locality constraint
+	  object reference.  Otherwise, proper exceptions will be thrown.
+
+	* tao/ORB.cpp (object_to_string): We should throw an
+	  CORBA::MARSHAL exception if a user tries to externalize a
+	  locality constraint object.  Notice that I don't know how to
+	  pass an exception out of the overloaded << operator.
+
+	* tao/Object.cpp (_is_a,_non_existent): Made sure the function
+	  doesn't try to access stub data if the object is locality
+	  constraint.
+
+	  (_get_policy_overrides,_set_policy_overrides,_validate_connection):
+	  (_get_client_policy,_get_policy): We don't support per-object
+	  policies for locality contraint objects.
+
+	  (_create_request,_request): Locality constraint objects don't
+	  support DII.
+
+	  (_is_equivalent): Compare the servant pointer directly to
+	  determine equivalency for locality constraint object reference.
+
+	  (_hash): Throw an NO_IMPLEMENT exception if the objref is locality
+	  constraint.  Quite frankly, I don't really know how to implement
+	  this function for locality constraint objects.
+
+	* tao/Servant_Base.{i,cpp} (_create_stub): The implementation for
+	  Local_ServantBase should always returns 0 because a null stub is
+	  now used to identify locality constraint object reference.  This
+	  method can potentially be removed and we can always create
+	  locality constraint object with a null stub.  However, I decided
+	  to keep this method around so we can simplify Policy objects
+	  which can be either be locality constraint or regular in TAO.
+
 Mon Aug 16 21:50:23 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be_include/be_sequence.h:
@@ -54,7 +103,7 @@ Mon Aug 16 21:50:23 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	  The new node type NT_wstring is used in code generation for wstring
 	  sequences, where it has some switch cases all its own. Otherwise, now
 	  that the be_string and AST_String constructors set the pd_width
-	  member to sizeof (ACE_CDR::WChar) for wstrings, all that's 
+	  member to sizeof (ACE_CDR::WChar) for wstrings, all that's
 	  necessary in most cases is to check the node's width() function and
 	  branch accordingly.
 
