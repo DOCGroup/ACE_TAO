@@ -3,19 +3,7 @@ Microsoft Developer Studio Workspace File, Format Version 6.00
 
 ###############################################################################
 
-Project: "ORB_init"=.\ORB_init.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "portspan"=.\Portspan\portspan.dsp - Package Owner=<4>
+Project: "portspan"=.\portspan.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
