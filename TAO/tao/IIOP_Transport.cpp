@@ -65,6 +65,12 @@ TAO_IIOP_Transport::event_handler_i (void)
   return this->connection_handler_;
 }
 
+TAO_Pluggable_Messaging *
+TAO_IIOP_Transport::messaging_object (void)
+{
+  return this->messaging_object_;
+}
+
 ssize_t
 TAO_IIOP_Transport::send_i (const ACE_Message_Block *message_block,
                             const ACE_Time_Value *max_wait_time,
@@ -173,10 +179,6 @@ TAO_IIOP_Transport::send_message (TAO_OutputCDR &stream,
   if (this->messaging_object_->format_message (stream) != 0)
     return -1;
 
-  // Strictly speaking, should not need to loop here because the
-  // socket never gets set to a nonblocking mode ... some Linux
-  // versions seem to need it though.  Leaving it costs little.
-
   // This guarantees to send all data (bytes) or return an error.
   ssize_t n = this->send_or_buffer (stub,
                                     twoway,
@@ -209,43 +211,10 @@ TAO_IIOP_Transport::send_message (TAO_OutputCDR &stream,
 }
 
 
-void
-TAO_IIOP_Transport::start_request (TAO_ORB_Core * /*orb_core*/,
-                                   TAO_Target_Specification & /*spec */,
-                                   TAO_OutputCDR & /*output */,
-                                   CORBA::Environment & /*ACE_TRY_ENV*/)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  //  TAO_FUNCTION_PP_TIMEPROBE (TAO_IIOP_CLIENT_TRANSPORT_START_REQUEST_START);
-
-  // @@ This method should NO longer be required..
-
-  /*  if (this->client_mesg_factory_->write_protocol_header
-      (TAO_PLUGGABLE_MESSAGE_REQUEST,
-       output) == 0)
-       ACE_THROW (CORBA::MARSHAL ());*/
-}
-
-
-void
-TAO_IIOP_Transport::start_locate (TAO_ORB_Core * /*orb_core*/,
-                                  TAO_Target_Specification &spec,
-                                  TAO_Operation_Details &opdetails,
-                                  TAO_OutputCDR &output,
-                                  CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  if (this->messaging_object_->generate_locate_request_header (opdetails,
-                                                               spec,
-                                                               output) == -1)
-    ACE_THROW (CORBA::MARSHAL ());
-}
-
-
-CORBA::Boolean
-TAO_IIOP_Transport::send_request_header (TAO_Operation_Details &opdetails,
-                                         TAO_Target_Specification &spec,
-                                         TAO_OutputCDR &msg)
+int
+TAO_IIOP_Transport::generate_request_header (TAO_Operation_Details &opdetails,
+                                             TAO_Target_Specification &spec,
+                                             TAO_OutputCDR &msg)
 {
   // Check whether we have a Bi Dir IIOP policy set, whether the
   // messaging objects are ready to handle bidirectional connections
@@ -265,14 +234,10 @@ TAO_IIOP_Transport::send_request_header (TAO_Operation_Details &opdetails,
   // setup
   opdetails.modify_request_id (this->bidirectional_flag ());
 
-  // We are going to pass on this request to the underlying messaging
-  // layer. It should take care of this request
-  if (this->messaging_object_->generate_request_header (opdetails,
-                                                        spec,
-                                                        msg) == -1)
-    return 0;
 
-  return 1;
+  return TAO_Transport::generate_request_header (opdetails,
+                                                 spec,
+                                                 msg);
 }
 
 int
