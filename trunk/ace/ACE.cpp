@@ -2789,11 +2789,12 @@ ACE::max_handles (void)
   ACE_TRACE ("ACE::max_handles");
 #if defined (RLIMIT_NOFILE) && !defined (ACE_LACKS_RLIMIT)
   rlimit rl;
-  ACE_OS::getrlimit (RLIMIT_NOFILE, &rl);
+  int r = ACE_OS::getrlimit (RLIMIT_NOFILE, &rl);
 # if !defined (RLIM_INFINITY)
-  return rl.rlim_cur;
+  if (r == 0)
+    return rl.rlim_cur;
 #else
-  if (rl.rlim_cur != RLIM_INFINITY)
+  if (r == 0 && rl.rlim_cur != RLIM_INFINITY)
     return rl.rlim_cur;
   // If == RLIM_INFINITY, fall through to the ACE_LACKS_RLIMIT sections
 # endif /* RLIM_INFINITY */
@@ -2827,8 +2828,9 @@ ACE::set_handle_limit (int new_limit)
   struct rlimit rl;
 
   ACE_OS::memset ((void *) &rl, 0, sizeof rl);
-  ACE_OS::getrlimit (RLIMIT_NOFILE, &rl);
-  max_limit = rl.rlim_max;
+  int r = ACE_OS::getrlimit (RLIMIT_NOFILE, &rl);
+  if (r == 0)
+    max_limit = rl.rlim_max;
 #endif /* ACE_LACKS_RLIMIT */
 
   if (new_limit == -1)

@@ -21,6 +21,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#undef optind
+#undef optarg
+#undef opterr
+
 /**
  * @class ACE_Get_Opt
  *
