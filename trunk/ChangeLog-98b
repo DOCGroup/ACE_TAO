@@ -1,3 +1,9 @@
+Wed Aug 26 08:51:23 1998  Steve Huston  <shuston@riverace.com>
+
+	* ace/OS.cpp (thr_keycreate): On pthreads draft 6, the call is
+	  pthread_key_create, not pthread_keycreate.  Thanks to Arturo
+	  Montes <mitosys@colomsat.com.co> for this fix.
+
 Wed Aug 26 08:32:18 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Reactor_Performance_Test.cpp (create_reactor):
