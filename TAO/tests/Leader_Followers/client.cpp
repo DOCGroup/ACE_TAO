@@ -20,8 +20,8 @@
 
 ACE_RCSID(Leader_Followers, client, "$Id$")
 
-// Name of file contains ior.
-static const char *IOR = "file://ior";
+  // Name of file contains ior.
+  static const char *IOR = "file://ior";
 
 // Number of client threads.
 static int number_of_client_threads = 5;
@@ -100,7 +100,8 @@ class Client_Task : public ACE_Task_Base
 public:
   Client_Task (test_ptr t)
     : test_ (test::_duplicate (t)),
-      work_so_far_ (0)
+      work_so_far_ (0),
+      sleep_ (0)
     {
     }
 
@@ -111,14 +112,20 @@ public:
       ACE_TRY
         {
           u_long work_from_this_thread = 0;
+          ACE_Time_Value sleep_for_this_thread;
 
           {
             ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1);
 
             this->work_so_far_ += remote_work / number_of_client_threads;
-
             work_from_this_thread = this->work_so_far_;
+
+            sleep_for_this_thread.msec (this->sleep_);
+            this->sleep_ += 1000 / number_of_client_threads;
           }
+
+          // Small pause to avoid overrunning the server.
+          ACE_OS::sleep (sleep_for_this_thread);
 
           // Invoke the method.
           ACE_DEBUG ((LM_DEBUG,
@@ -160,6 +167,9 @@ private:
 
   ACE_SYNCH_MUTEX lock_;
   // Lock for work counter.
+
+  u_long sleep_;
+  // Small pause to avoid overrunning the server.
 };
 
 class Event_Loop_Task : public ACE_Task_Base
@@ -183,7 +193,6 @@ public:
             ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1);
 
             this->event_loop_timeout_so_far_ += event_loop_timeout / number_of_event_loop_threads;
-
             event_loop_timeout_for_this_thread = this->event_loop_timeout_so_far_;
           }
 
@@ -287,7 +296,7 @@ main (int argc, char **argv)
       Event_Loop_Task event_loop_task (orb.in ());
 
       if (event_loop_task.activate (THR_NEW_LWP | THR_JOINABLE,
-                                number_of_event_loop_threads) != 0)
+                                    number_of_event_loop_threads) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot activate event_loop threads\n"),
                           -1);
