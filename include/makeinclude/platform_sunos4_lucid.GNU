@@ -12,10 +12,10 @@ DCFLAGS		+= -g
 DCCFLAGS	+= $(DCFLAGS)
 DLD		= /bin/ld
 LD		= $(CXX)
-LIBS		+= 
+LIBS		+=
 PIC		= -pic
 ARFLAGS		= ruv
 RANLIB		= ranlib
-SOFLAGS		= -assert pure-text 
+SOFLAGS		+= -assert pure-text
 SOBUILD		= $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.o $<; \
 		  $(SOLINK.cc) -o $@ $(LDFLAGS) $(VSHDIR)$*.o

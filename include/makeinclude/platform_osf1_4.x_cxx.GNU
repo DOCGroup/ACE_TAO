@@ -96,13 +96,13 @@ else
   ifeq ($(templates), automatic)
     ifeq ($(TEMPLATES_FLAG),) # Turn on flags if none is speficied.
       TEMPLATES_FLAG = -pt
-      SOFLAGS        = -tall
+      SOFLAGS        += -tall
     endif
   else
     ifeq ($(templates), used)
       ifeq ($(TEMPLATES_FLAG),) # Turn on flags if none is speficied.
         TEMPLATES_FLAG = -pt
-        SOFLAGS        = -tused
+        SOFLAGS        += -tused
       endif
     endif # templates == used
   endif # templates == automatic

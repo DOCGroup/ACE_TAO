@@ -34,7 +34,7 @@ RANLIB   = @true
 AR       = $(CC) $(LDFLAGS)
 ARFLAGS  = -archive -o
 RANLIB   = @true
-SOFLAGS  = -shared
+SOFLAGS  += -shared
 
 ifeq ($(threads),1)
   #### Don't use g7 register with threading.

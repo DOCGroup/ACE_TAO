@@ -30,6 +30,6 @@ PIC             = -fpic
 # AR            = ar
 ARFLAGS         = rv
 RANLIB          = @true
-SOFLAGS         = -shared $(CPPFLAGS)
+SOFLAGS         += -shared $(CPPFLAGS)
 SOBUILD         = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.o $<; \
                   $(SOLINK.cc) $(LDFLAGS) -o $@ $(VSHDIR)$*.o

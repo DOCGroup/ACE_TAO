@@ -31,6 +31,6 @@ PIC     = -fPIC
 AR      = ar
 ARFLAGS = ruv
 #RANLIB  = ranlib
-SOFLAGS = $(CPPFLAGS) -shared
+SOFLAGS += $(CPPFLAGS) -shared
 SOBUILD = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<
 PRELIB  = @true

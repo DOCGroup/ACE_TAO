@@ -79,7 +79,7 @@ CCFLAGS     += $(CFLAGS) -qtempinc -qinfo
 # It relies on the preprocessor defining __xlC__ to the proper version
 # number of the compiler.
 XLCVERSION := $(shell echo "__xlC__" > ./testAIXCompilerVersion.cpp)
-XLCVERSION := $(shell $(CXX) -E ./testAIXCompilerVersion.cpp | tail -1')
+XLCVERSION := $(shell $(CXX) -E ./testAIXCompilerVersion.cpp | tail -1)
 ACE_AIX_CLEAN := $(shell $(RM) ./testAIXCompilerVersion.cpp)
 ifeq ($(XLCVERSION),0x0306)
  CCFLAGS    += -qflag=e:e
@@ -104,14 +104,17 @@ endif
 
 ARFLAGS	    = ruv
 AR	    = ar
-LDFLAGS	    += -bI:/lib/pse.exp 
+LDFLAGS	    += -bI:/lib/pse.exp
 # Default OCCFLAGS builds common code for all RS/6000 architectures but
 # this can be set to optimize for your particular computer. The commented
 # out example optimizes for RS/6000 43P.
 # OCCFLAGS is not used by default.  To used it, set optimize=1
 # either in this file or on the command line.
 #OCCFLAGS    += -qarch=ppc -qtune=604
-OCCFLAGS    += -O2 -qarch=com 
+OCCFLAGS    += -O2 -qarch=com
 RANLIB	    = ranlib
 SOFLAGS	    = -p 0
 TEMPINCDIR  = tempinc
+
+SOVERSION  =
+SONAME     =

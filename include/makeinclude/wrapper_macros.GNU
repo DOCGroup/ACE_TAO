@@ -166,6 +166,23 @@ ifndef PACE_ROOT
   PACE_ROOT = $(ACE_ROOT)/PACE
 endif # PACE_ROOT
 
+# Turn on symbol versioning. The scheme that we follow is to allow
+# applications dependent on libraries, with same version numbers (major,
+# minor and beta) to run, but applications with dependencies on libraries
+# with different minor or major or beta versions to fail.
+#
+ACE_MAJOR_VERSION := $(shell echo `perl -ne  'if (/ACE version/) { s/[^0-9]+(\d+)+\.(\d+)+\.(\d+)+.+/\1/ ; print }' ${ACE_ROOT}/VERSION`)
+ACE_MINOR_VERSION := $(shell echo `perl -ne  'if (/ACE version/) { s/[^0-9]+(\d+)+\.(\d+)+\.(\d+)+.+/\2/ ; print }' ${ACE_ROOT}/VERSION`)
+ACE_BETA_VERSION := $(shell echo `perl -ne  'if (/ACE version/) { s/[^0-9]+(\d+)+\.(\d+)+\.(\d+)+.+/\3/ ; print }' ${ACE_ROOT}/VERSION`)
+
+# Version number of the libraries
+#
+SOVERSION = .$(ACE_MAJOR_VERSION).$(ACE_MINOR_VERSION).$(ACE_BETA_VERSION)
+
+# Name that will be written into the dynamic library
+#
+SONAME = $(SHLIB).$(ACE_MAJOR_VERSION).$(ACE_MINOR_VERSION).$(ACE_BETA_VERSION)
+
 # Include this before the below variables to make it possible for
 # platform_macros.GNU to set default values for them.
 include $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
@@ -278,13 +295,7 @@ endif
 #       or shared-only builds.
 YACC            = bison
 
-# Define SOEXT trailing digits if platform needs it.
-ifeq ($(versioned_so),1)
-  ACE_LDSO_Version_Number := $(shell echo .`perl -ne  'if (/ACE version/) \
-      { s/[^0-9]+(\d+\.\d+)(\.\d+)?.+/\1/ ; print }' ${ACE_ROOT}/VERSION `)
-else
-  ACE_LDSO_Version_Number =
-endif
+
 
 #----------------------------------------------------------------------------
 #      Platform-dependent macros that require platform_macros.GNU.

@@ -16,7 +16,7 @@ AR              = CC
 ARFLAGS         = -xar -o
 PIC             = -PIC
 RANLIB          = ranlib
-SOFLAGS         = -G $(CPPFLAGS)
+SOFLAGS         += -G $(CPPFLAGS)
 SOBUILD         = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.o $<; \
                   $(SOLINK.cc) $(PIC) -o $@ $(LDFLAGS) $(VSHDIR)$*.o
 

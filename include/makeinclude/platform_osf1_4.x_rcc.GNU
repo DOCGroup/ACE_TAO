@@ -36,6 +36,6 @@ ARFLAGS         = cruvZ
 # When libraries are archived, a hash index is automatically created
 # so there is no need for ranlib
 RANLIB          = /usr/bin/true
-SOFLAGS         = -shared  # -use_ld_input $(ACELIB)
+SOFLAGS         += -shared  # -use_ld_input $(ACELIB)
 SOBUILD         = $(RM) $@; $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.o $< && \
                   ln $(VSHDIR)$*.o $@

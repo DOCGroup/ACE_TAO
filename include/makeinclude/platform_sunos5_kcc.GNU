@@ -57,7 +57,7 @@ PIC          = -KPIC
 AR           = KCC
 ARFLAGS     += -Bstatic -o
 RANLIB       = echo
-SOFLAGS      = -G $(CPPFLAGS)
+SOFLAGS      += -G $(CPPFLAGS)
 
 
 ifdef static_libs_only

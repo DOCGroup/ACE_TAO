@@ -20,6 +20,6 @@ LDFLAGS         += -L$(ACE_ROOT)/ace
 OCFLAGS		+= -O2
 PIC             = -fpic
 RANLIB          = echo
-SOFLAGS         = -shared $(CPPFLAGS)
+SOFLAGS         += -shared $(CPPFLAGS)
 SOBUILD         = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.o $<; \
                   $(SOLINK.cc) -o $@ $(LDFLAGS) $(VSHDIR)$*.o

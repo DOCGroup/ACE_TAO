@@ -35,3 +35,5 @@ LIBS            += /lib/crt0_r.o -L/usr/lib/threads -lsvld -lC_r -lpthreads
 PIC             = -fPIC
 ARFLAGS         = cruv
 RANLIB          = ranlib
+SONAME		=
+SOVERSION	=

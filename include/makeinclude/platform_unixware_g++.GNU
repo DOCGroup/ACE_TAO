@@ -44,7 +44,7 @@ AR              = ar
 ARFLAGS         = ruv
 RANLIB          = /bin/true
 #SOFLAGS        = -assert pure-text
-SOFLAGS         = -shared
+SOFLAGS         += -shared
 # SOBUILD - compile into .so directly
 SOBUILD         = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<
 # SOLINK        = $(SOLINK.cc) -o $@ $(LDFLAGS) $<
