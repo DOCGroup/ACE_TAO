@@ -12,7 +12,7 @@
 #include "tao/debug.h"
 
 #include "ace/ACE.h"
-#include "tao/target_identifier.h"
+#include "tao/target_specification.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Pluggable.i"
