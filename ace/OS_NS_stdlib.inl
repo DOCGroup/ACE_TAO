@@ -4,6 +4,7 @@
 #include "ace/Object_Manager_Base.h"
 #include "ace/OS_NS_string.h"
 #include "ace/Global_Macros.h"
+#include "ace/os_include/os_errno.h"
 
 // Doesn't need a macro since it *never* returns!
 
@@ -394,4 +395,3 @@ ACE_OS::system (const ACE_TCHAR *s)
   ACE_OSCALL_RETURN (::system (s), int, -1);
 #endif /* !CHORUS */
 }
-

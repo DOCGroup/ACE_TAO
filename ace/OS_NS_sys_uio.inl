@@ -1,5 +1,8 @@
 // -*- C++ -*-
+//
 // $Id$
+
+#include "ace/os_include/os_errno.h"
 
 ACE_INLINE ssize_t
 ACE_OS::readv (ACE_HANDLE handle,
@@ -32,4 +35,3 @@ ACE_OS::writev (ACE_HANDLE handle,
                                iovcnt), int, -1);
 #endif /* ACE_LACKS_WRITEV */
 }
-
