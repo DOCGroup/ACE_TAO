@@ -1,14 +1,21 @@
+Mon Mar  8 16:14:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* ace/Thread_Manager.cpp:
+	  Rewrote the retrieval of the thread priority so that we don't
+	  have to do a static_cast. The BCB compiler doesn't allow this
+	  cast.
+
 Mon Mar  8 13:57:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* tests/TkReactor_Test.cpp:
-          Fixed compile errors. Thanks to Robert Schiele 
+          Fixed compile errors. Thanks to Robert Schiele
           <robert.schiele@t-online.de> for reporting this.
 
 Sun Mar  7 18:35:15 2004  Olli Savia  <ops@iki.fi>
 
         * ace/config-lynxos.h
           Removed unneeded ACE_LACKS_MKTEMP macro.
-        
+
         * ace/os_include/os_stdlib.h
           Added missing mktemp() prototype for LynxOS 3.x.x
 
@@ -16,7 +23,7 @@ Sun Mar  7 17:29:33 2004  Olli Savia  <ops@iki.fi>
 
         * ace/config-lynxos.h
           Removed some unneeded ACE_LACKS_* macros.
-        
+
         * ace/os_include/os_stdlib.h
         * ace/os_include/os_strings.h
           Added missing prototypes for LynxOS 3.x.x
@@ -25,7 +32,7 @@ Sat Mar 06 12:48:39 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
         * ace/Thread_Manager.cpp:
 
-          Fixed a compilation error on Win32. 
+          Fixed a compilation error on Win32.
 
 Fri Mar  5 23:09:14 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
@@ -34,42 +41,42 @@ Fri Mar  5 23:09:14 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
           Win32 distinguishes between shutting down a socket connection
           and closing a socket.  Therefore call shutdown on the socket
           before closing down the socket. Thanks to Kitty for digging up
-          the MSDN documentation and the patch. 
+          the MSDN documentation and the patch.
 
         * ace/Task.cpp (activate):
         * ace/Task.h (activate):
-          
+
           Added an extra argument, inherit_priority which tells the thread
           manager to inherit the priority of the calling thread or use the
-          priority passed in. 
-        
+          priority passed in.
+
         * ace/Thread_Manager.cpp:
         * ace/Thread_Manager.h (spawn, spawn_n, spawn_i):
 
           Added an extra argument, inherit_priority which tells the thread
           manager to inherit the priority of the calling thread or use the
           value of the priority passed in. This argument is set to false
-          by default, which would retain the classical behaviour. 
+          by default, which would retain the classical behaviour.
 
-          Thanks to Abhijit Sachdev <abhi@qualcomm.com> for reporting the 
-          bug. Thanks to Dr. Schmidt and Kitty for motivating me to add 
-          the fix in ACE. 
+          Thanks to Abhijit Sachdev <abhi@qualcomm.com> for reporting the
+          bug. Thanks to Dr. Schmidt and Kitty for motivating me to add
+          the fix in ACE.
 
           I am not still certain whether the above fix is okay. Folks who
           call ACE_Thread::spawn* and ACE_OS::thr_create () will not get
           this feature. Still wondering whether we should propogate this
           feature down to ACE_Thread or ACE_OS level. Willing to hear any
           advise or motivation on this.
-          
+
         * ace/Thread.cpp:
 
-          Cosmetic formatting fixes. 
+          Cosmetic formatting fixes.
 
         * ace/os_include/os_langinfo.h:
         * ace/os_include/os_spawn.h:
 
           Fixed typos in the included file names. Thanks to Robert
-          Schiele<robert.schiele@t-online.de> for reporting the problem. 
+          Schiele<robert.schiele@t-online.de> for reporting the problem.
 
 Fri Mar  5 18:12:24 2004  Steve Huston  <shuston@riverace.com>
 
@@ -77,7 +84,7 @@ Fri Mar  5 18:12:24 2004  Steve Huston  <shuston@riverace.com>
           close the socket and reset listen_handle_ to ACE_INVALID_HANDLE
           before returning. Also added ACE_LIB_TEXT around the naked literal
           strings for ACE_ERROR.
-        
+
 Fri Mar  5 22:56:45 UTC 2004  Don Hinton  <dhinton@dre.vanderbilt.edu>
 
         * bin/MakeProjectCreator/templates/gnu.mpd:
@@ -86,7 +93,7 @@ Fri Mar  5 22:56:45 UTC 2004  Don Hinton  <dhinton@dre.vanderbilt.edu>
 
 Fri Mar  5 16:56:25 2004  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
-        * bin/tao_other_tests.lst: 
+        * bin/tao_other_tests.lst:
 
           Replaced the string 'RTP/UDP' with 'RTP_UDP' where specified as
           a command line argument to the AVStreams tests run_test.pl. This
