@@ -23,10 +23,6 @@ Wed Jun  5 18:05:35 2002  Mayur Deshpande  <mayur@ics.uci.edu>
              2.5) Generate the tao_marshal and tao_unmarshal methods as 
                   non-abstarct. 
           ----------------------------------------------------------------------
-	If someone feels this code is too hackish, too inelegant or that
-	  we need to create a visitor for AMH ExceptionHolders, don't
-	  hesitate to contact me.  I can show you all the files and places
-	  that need to be changed for doing this the "Right Way"[TM] :-)
 	
 	* TAO_IDL/be/be_visitor_operation/operation.cpp (is_amh_exception_holder): 
 	* TAO_IDL/be_include/be_visitor_operation/operation.h: 
