@@ -108,8 +108,8 @@ File_Manager::open_passwd_file (void)
       this->current_ptr = this->buffer_ptr;
       return this->number_of_friends;
     }
-
-  return -1;
+  else
+    return -1;
 }
 
 // This function opens up FILENAME and memory maps it in our address
@@ -167,8 +167,8 @@ File_Manager::open_friends_file (const char *filename)
 
       return this->number_of_friends;
     }
-
-  return -1;
+  else
+    return -1;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

@@ -1,3 +1,9 @@
+Thu Feb 15 06:02:55 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Naming/Bindings_Iterator_T.cpp (next_one): 
+	  Initialize the hash_entry pointer to 0 to avoid a warning from
+ 	  Compaq C++.
+
 Thu Feb 15 00:22:42 2001  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp (process_message):
@@ -54,8 +60,9 @@ Wed Feb 14 16:30:23 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 Wed Feb 14 15:36:23 2001  Pradeep Gore  <pradeep@cs.wustl.edu>
 
         * docs/orbsvcs.html: Added the Notification Service and it's tests
-        into this page.Thanks to Samuel Qi Luo
-        <Samuel.QiLuo@ericsson.com.au> for pointing out the missing documentation.
+	  into this page.Thanks to Samuel Qi Luo
+ 	  <Samuel.QiLuo@ericsson.com.au> for pointing out the missing
+ 	  documentation.
 
         * docs/releasenotes/index.html: Updated Notify Status.
 

@@ -87,7 +87,7 @@ TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::next_one (CosNaming::Binding_out b
   else
     {
       // Return a binding.
-      TABLE_ENTRY *hash_entry;
+      TABLE_ENTRY *hash_entry = 0;
       hash_iter_->next (hash_entry);
 
       if (populate_binding (hash_entry, *binding) == 0)
