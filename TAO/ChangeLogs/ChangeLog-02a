@@ -1,7 +1,12 @@
+Wed May 16 18:38:28 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * performance-tests/AMI_Latency/client.cpp:
+          Fixed stupid error, obviously I forgot to compile this.
+
 Wed May 16 20:08:39 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/CDR/basic_types.cpp: An accidental checkin :( that created
-	  havoc. I am revrting it back to normal.
+        * tests/CDR/basic_types.cpp: An accidental checkin :( that created
+          havoc. I am revrting it back to normal.
 
 Wed May 16 18:53:14 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -18,47 +23,47 @@ Wed May 16 18:53:14 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Wed May 16 16:41:17 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
-	* tao/RT_ORB_Loader.cpp:
-	  Fixed fuzz errors.
+        * tao/RT_ORB_Loader.cpp:
+          Fixed fuzz errors.
 
 Wed May 16 16:40:42 2001  Steve Totten  <totten_s@ociweb.com>
 
-	* docs/ORBEndpoint.html:
-	  Added documentation for using the portspan feature for IIOP
-	  endpoints.
+        * docs/ORBEndpoint.html:
+          Added documentation for using the portspan feature for IIOP
+          endpoints.
 
 Wed May 16 16:35:53 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Strategies/GIOP_Message_NonReactive_Handler.h:
-	* tao/Strategies/GIOP_Message_NonReactive_Base.in: Fixed fuzz
-	  errors.
+        * tao/Strategies/GIOP_Message_NonReactive_Handler.h:
+        * tao/Strategies/GIOP_Message_NonReactive_Base.in: Fixed fuzz
+          errors.
 
 Wed May 16 16:15:24 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
-	* examples/PluggableUDP/DIOP/DIOP_Connection_Handler.cpp:
-	  Commented out template instantiation of
-	  ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> since
-	  it is already instantiated in IIOP_Connection_Handler.cpp.
-	  This should clean up the warnings in the Lynx_I386 builds.
+        * examples/PluggableUDP/DIOP/DIOP_Connection_Handler.cpp:
+          Commented out template instantiation of
+          ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> since
+          it is already instantiated in IIOP_Connection_Handler.cpp.
+          This should clean up the warnings in the Lynx_I386 builds.
 
 Wed May 16 15:48:29 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
-	* tao/Strategies/SHMIOP_Acceptor.cpp:
-	* tao/Strategies/UIOP_Acceptor.cpp:
-	  Should have known that fixing the warnings under Tru64 would
-	  have caused warnings from another compiler.  Both should be
-	  fixed now.
+        * tao/Strategies/SHMIOP_Acceptor.cpp:
+        * tao/Strategies/UIOP_Acceptor.cpp:
+          Should have known that fixing the warnings under Tru64 would
+          have caused warnings from another compiler.  Both should be
+          fixed now.
 
 Wed May 16 16:34:02 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
-	* tao/Default_Protocols_Hooks.cpp:
-	* tao/Default_Protocols_Hooks.h:
+        * tao/Default_Protocols_Hooks.cpp:
+        * tao/Default_Protocols_Hooks.h:
           Fixed signature of add_rt_service_context_hook ().  Thanks to Jeff
           for catching the mistake.
 
 Wed May 16 16:21:02 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
-	* tao/PortableServer/Object_Adapter.cpp:
+        * tao/PortableServer/Object_Adapter.cpp:
         * tao/Strategies/SHMIOP_Acceptor.cpp:
         * tao/Strategies/UIOP_Acceptor.cpp:
         * tao/RT_Endpoint_Utils.cpp:
@@ -66,20 +71,20 @@ Wed May 16 16:21:02 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
 Wed May 16 16:05:59 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
-	* tao/PortableServer/Default_Servant_Dispatcher.cpp:
-	* tao/PortableServer/Default_Servant_Dispatcher.h:
-	* tao/PortableServer/RT_Servant_Dispatcher.cpp:
-	* tao/PortableServer/RT_Servant_Dispatcher.h:
-	* tao/PortableServer/Servant_Dispatcher.cpp:
-	* tao/PortableServer/Servant_Dispatcher.h:
-	* tao/PortableServer/Makefile:
-	* tao/PortableServer/Object_Adapter.cpp:
-	* tao/PortableServer/Object_Adapter.h:
-	* tao/PortableServer/Object_Adapter.i:
-	* tao/PortableServer/POA.h:
-	* tao/PortableServer/Servant_Base.h:
-	* tao/PortableServer/TAO_PortableServer.dsp:
-	* tao/PortableServer/TAO_PortableServer_Static.dsp:
+        * tao/PortableServer/Default_Servant_Dispatcher.cpp:
+        * tao/PortableServer/Default_Servant_Dispatcher.h:
+        * tao/PortableServer/RT_Servant_Dispatcher.cpp:
+        * tao/PortableServer/RT_Servant_Dispatcher.h:
+        * tao/PortableServer/Servant_Dispatcher.cpp:
+        * tao/PortableServer/Servant_Dispatcher.h:
+        * tao/PortableServer/Makefile:
+        * tao/PortableServer/Object_Adapter.cpp:
+        * tao/PortableServer/Object_Adapter.h:
+        * tao/PortableServer/Object_Adapter.i:
+        * tao/PortableServer/POA.h:
+        * tao/PortableServer/Servant_Base.h:
+        * tao/PortableServer/TAO_PortableServer.dsp:
+        * tao/PortableServer/TAO_PortableServer_Static.dsp:
           Strategized the servant dispatch logic as part of the
           RTCORBA subsetting effort.
 

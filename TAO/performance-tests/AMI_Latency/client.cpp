@@ -157,7 +157,7 @@ main (int argc, char *argv[])
 
       ACE_Throughput_Stats::dump_throughput ("Total", gsf,
                                              test_end - test_start,
-                                             stats.samples_count ());
+                                             niterations);
 
       roundtrip->shutdown (ACE_TRY_ENV);
       ACE_TRY_CHECK;
