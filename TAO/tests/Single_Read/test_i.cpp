@@ -30,6 +30,8 @@ void
 test_i::shutdown (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  ACE_DEBUG ((LM_DEBUG,
+              "(%P|%t) About to invoke shudown... "));
   this->orb_->shutdown (0,
                         ACE_TRY_ENV);
 }
