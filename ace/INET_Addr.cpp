@@ -494,16 +494,18 @@ ACE_INET_Addr::set_addr (void *addr, int /* len */, int map)
 
   if (getfamily->sin_family == AF_INET)
     {
+#if defined (ACE_HAS_IPV6)
       if (map)
         this->set_type (AF_INET6);
       else
+#endif /* ACE_HAS_IPV6 */
         this->set_type (AF_INET);
       this->set_port_number (getfamily->sin_port, 0);
       this->set_address (ACE_reinterpret_cast (const char*, &getfamily->sin_addr),
                          sizeof (getfamily->sin_addr),
                          0, map);
     }
-#if defined ACE_HAS_IPV6
+#if defined (ACE_HAS_IPV6)
   else if (getfamily->sin_family == AF_INET6)
     {
       struct sockaddr_in6 *in6 = ACE_static_cast (struct sockaddr_in6*, addr);
@@ -807,8 +809,8 @@ int ACE_INET_Addr::set_address (const char *ip_addr,
           this->base_set (AF_INET, sizeof (this->inet_addr_.in4_));
           this->inet_addr_.in4_.sin_family = AF_INET;
           this->set_size (sizeof (this->inet_addr_.in4_));
-          ACE_OS_String::memcpy (&this->inet_addr_.in4_.sin_addr,
-                                 &ip4, len);
+          ACE_OS::memcpy (&this->inet_addr_.in4_.sin_addr,
+                          &ip4, len);
         }
       // If given an IPv4 address to copy to an IPv6 object, map it to
       // an IPv4-mapped IPv6 address.

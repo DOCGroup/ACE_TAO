@@ -1,3 +1,22 @@
+Fri Nov  7 00:51:59 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/INET_Addr.cpp:
+          Added #ifdef around IPV6 specific code to remove errors on
+          platforms where AV_INET6 is not defined.  Changed and instance
+          of ACE_OS_String to ACE_OS.
+
+        * ace/Sock_Connect.cpp:
+          Added #ifdef around IPV6 specific code to remove errors on
+          platforms where AV_INET6 is not defined.
+
+        * ace/os_include/sys/os_resource.h:
+          Added #includes of sys/syscall.h and sys/systemino.h if
+          ACE_HAS_SYSCALL_H and ACE_HAS_SYSINFO are defined respectively.
+          This should clear up errors on HPUX.
+
+        * examples/IOStream/server/iostream_server.cpp:
+          Added #include of Signal.h.
+
 Thu Nov  6 17:04:22 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* ace/INET_Addr.cpp (set_address): 
