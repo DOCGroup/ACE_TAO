@@ -1,3 +1,30 @@
+Thu Aug 15 10:45:00 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_IORInterceptor.h:
+	* orbsvcs/orbsvcs/LoadBalancing/LB_IORInterceptor.cpp:
+
+	  Temporarily disabled LoadAlert object registration.  There are
+	  some order-of-execution and concurrency issues that must be
+	  resolved.  This will be fixed prior for the TAO 1.3 release.
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_Random.cpp (next_member):
+
+	  Fixed problem where the full range of object group members were
+	  not selected due to integer arithmetic overflow.  Store the
+	  value that sets the maximum random number in a "float" prior to
+	  using it in the random number computation.  This forces floating
+	  point arithmetic to be used when computing the random number.
+
+	* orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroupManager.cpp
+	  (add_member):
+
+	  Added some comments to some potentially confusing code.
+	
+	  (member_already_present):
+
+	  Compare ObjectGroupIds instead of object group hash map entry
+	  pointers.  Even though it worked, the latter was too brittle.
+
 Wed Aug 14 21:32:36 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/LoadBalancing/LB_LeastLoaded.h (get_location):
@@ -67,7 +94,7 @@ Wed Aug 14 10:57:52 2002  Ossama Othman  <ossama@uci.edu>
 
 	  Added a protected destructor to enforce proper memory management
 	  through reference counting.
-	  
+
 	* orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Monitor.cpp:
 
 	  Added a no-op destructor.
@@ -137,7 +164,7 @@ Wed Aug 14 10:57:52 2002  Ossama Othman  <ossama@uci.edu>
 
 	  The implementation of these methods has been greatly simplified
 	  due the above change.
-	
+
 	* orbsvcs/orbsvcs/LoadBalancing/LB_ORBInitializer.h:
 
 	  Removed extraneous "LoadBalancing_export.h" include.
@@ -155,7 +182,7 @@ Wed Aug 14 10:57:52 2002  Ossama Othman  <ossama@uci.edu>
 
 	  Updated Hash_Map explicit template instantiations in accordance
 	  with the above fix.
-	
+
 	  (make_object):
 
 	  Removed LoadAlert object registration code.  Registration is now
@@ -508,7 +535,7 @@ Mon Aug 12 10:18:49 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* PROBLEM-REPORT-FORM: Fixed a typo where "ASCII text" was spelled
 	  "ASCII test".  Thanks to Eric Newton <ecn@metaslash.com> for
-	  reporting this. 
+	  reporting this.
 
 Mon Aug 12 10:02:29 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
