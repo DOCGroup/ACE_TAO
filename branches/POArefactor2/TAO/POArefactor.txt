@@ -1,3 +1,8 @@
+Thu Oct 28 11:11:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Servant_Retention_Strategy.cpp:
+          Changed the id_to_servant for the non retain case
+
 Thu Oct 28 10:55:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/POA.{h,cpp}:
