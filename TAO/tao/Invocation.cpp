@@ -214,18 +214,6 @@ TAO_GIOP_Invocation::start (CORBA::Boolean is_roundtrip,
           CORBA::COMPLETED_NO));
     }
 
-  // Init the input message states in the transport object.
-  // This is necessary for the round trip call only. But it is ok to
-  // do this in all cases.
-  // @@ Alex: I think we should keep the "reading" state (message_size
-  //    and offset) separate from the writing state, i.e. those
-  //    variables should only be set by the handle_input() method and
-  //    its friends...
-  // @@ Carlos: I didnt quite understand this. What are the writing
-  //    states do we have now? (Alex).
-  this->transport_->message_size (0);
-  this->transport_->message_received (0);
-
   // Obtain unique request id from the RMS.
   this->request_id_ = this->transport_->request_id ();
 
@@ -717,14 +705,8 @@ int
 TAO_GIOP_Twoway_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  // Give the CDR stream for reading the input.
-  this->transport_->input_cdr_stream (&this->inp_stream_);
-
   // Register a reply dispatcher for this invocation. Use the
   // preallocated reply dispatcher.
-
-  // Init reply dispatcher.
-  this->rd_.request_id (this->request_id_);
 
   // Bind.
   int retval = this->transport_->bind_reply_dispatcher (this->request_id_,
@@ -850,7 +832,8 @@ TAO_GIOP_Twoway_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
       return this->location_forward (this->inp_stream_, ACE_TRY_ENV);
       // NOT REACHED.
     }
-  return 0;
+
+  return TAO_INVOKE_OK;
 }
 
 // ****************************************************************
@@ -867,6 +850,21 @@ TAO_GIOP_Locate_Request_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
   if (this->transport_ == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (),
                       TAO_INVOKE_EXCEPTION);
+
+  // Register a reply dispatcher for this invocation. Use the
+  // preallocated reply dispatcher.
+
+  // Bind.
+  int retval = this->transport_->bind_reply_dispatcher (this->request_id_,
+                                                        &this->rd_);
+  if (retval == -1)
+    {
+      // @@ What is the right way to handle this error?
+      this->close_connection ();
+      ACE_THROW_RETURN (CORBA::INTERNAL (TAO_DEFAULT_MINOR_CODE,
+                                         CORBA::COMPLETED_NO),
+                        TAO_INVOKE_EXCEPTION);
+    }
 
   int result =
     this->transport_->send_request (this->orb_core_,
@@ -897,86 +895,20 @@ TAO_GIOP_Locate_Request_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
   //    received? But what about oneways?
   this->stub_->set_valid_profile ();
 
-  TAO_GIOP_Version version;
+  // Wait for the reply. We should wait till we receive the reply
+  // fully.
+  // @@ Check for return value -1 here !!! (Alex).
+  int reply_error = this->transport_->wait_for_reply ();
 
-  TAO_GIOP::Message_Type m = TAO_GIOP::recv_message (this->transport_,
-                                                     this->inp_stream_,
-                                                     this->orb_core_,
-                                                     version,
-                                                     1);
-
-  switch (m)
+  if (reply_error == -1)
     {
-    case TAO_GIOP::Reply:
-      // Thereply is handled at the end of this switch() statement.
-      break;
-
-    case TAO_GIOP::CloseConnection:
-      // Try the same profile again, but open a new connection.
-      // If that fails then we go to the next profile.
-      this->profile_->reset_hint ();
-      return TAO_INVOKE_RESTART;
-
-    case TAO_GIOP::Request:
-    case TAO_GIOP::CancelRequest:
-    case TAO_GIOP::LocateRequest:
-    case TAO_GIOP::LocateReply:
-    default:
-      // These are all illegal messages to find.  If found, they could
-      // be indicative of client bugs (lost track of input stream) or
-      // server bugs; maybe the request was acted on, maybe not, we
-      // can't tell.
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    "TAO: (%P|%t) illegal GIOP message (%s) "
-                    "in response to my LocateRequest!\n",
-                    TAO_GIOP::message_name (m)));
-      // FALLTHROUGH ...
-
-    case TAO_GIOP::MessageError:
-      // @@ Maybe the transport should be closed by recv_request?
-      // FALLTHROUGH
-
-    case TAO_GIOP::CommunicationError:
-      // Couldn't read it for some reason ... exception's set already,
-      // so just tell the other end about the trouble (closing the
-      // connection) and return.
-      // FALLTHROUGH
-
-    case TAO_GIOP::EndOfFile:
-      // In all those cases the message was (apparently) sent, but we
-      // couldn't read the reply. To satisfy the "at most once"
-      // semantics of CORBA we must raise an exception at this point
-      // and *not* try to transparently restart the request.
-      // FALLTHROUGH
-
       this->close_connection ();
-
       ACE_THROW_RETURN (CORBA::COMM_FAILURE (TAO_DEFAULT_MINOR_CODE,
                                              CORBA::COMPLETED_MAYBE),
                         TAO_INVOKE_EXCEPTION);
     }
 
-  // Note: we only get here if the status was TAO_GIOP::LocateReply
-
-  CORBA::ULong request_id;
-  CORBA::ULong locate_status; // TAO_GIOP_LocateStatusType
-
-  if (!this->inp_stream_.read_ulong (request_id)
-      || request_id != this->request_id_
-      || !this->inp_stream_.read_ulong (locate_status))
-    {
-      // @@ Fred: Do we really want to close the connection here? This
-      //    is a problem, but we haven't lost synchronization with the
-      //    server or anything.
-      this->transport_->close_connection ();
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG, "TAO: (%P|%t) bad Response header\n"));
-      ACE_THROW_RETURN (CORBA::COMM_FAILURE (TAO_DEFAULT_MINOR_CODE,
-                                             CORBA::COMPLETED_MAYBE),
-                        TAO_INVOKE_EXCEPTION);
-    }
-
+  CORBA::ULong locate_status = this->rd_.reply_status ();
   switch (locate_status)
     {
     case TAO_GIOP_OBJECT_HERE:

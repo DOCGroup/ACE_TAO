@@ -152,7 +152,7 @@ public:
     MY_MINOR = 0
   };
 
-  CORBA::Char magic [4]; // "GIOP"
+  CORBA::Octet magic [4]; // "GIOP"
   TAO_GIOP_Version giop_version;
   CORBA::Octet byte_order; // 0 = big, 1 = little
   CORBA::Octet message_type; // MsgType above
@@ -334,21 +334,10 @@ public:
                                        TAO_ORB_Core* orb_core);
   // Build the header for a message of type <t> into stream <msg>.
 
-  static CORBA::Boolean send_request (TAO_Transport *transport,
+  static CORBA::Boolean send_message (TAO_Transport *transport,
                                       TAO_OutputCDR &stream,
                                       TAO_ORB_Core* orb_core);
   // Send message, returns TRUE if success, else FALSE.
-
-  static TAO_GIOP::Message_Type recv_message (TAO_Transport *transport,
-                                              TAO_InputCDR &msg,
-                                              TAO_ORB_Core *orb_core,
-                                              TAO_GIOP_Version &version,
-                                              int block);
-  // Reads message and returns message type from header.
-  // For reading the header, this call is *not* non-blocking. But for
-  // reading the rest of the message, it is non-blocking. Flag <block>
-  // is to force blocking for the full reply. This is useful when we
-  // want to do nothing other than wait for the reply.
 
   static void dump_msg (const char *label,
                         const u_char *ptr,
@@ -370,6 +359,67 @@ public:
   static TAO_GIOP_ReplyStatusType convert_CORBA_to_GIOP_exception (CORBA::exception_type corba_type);
   // Convert the exception type from CORBA to GIOP
 
+  static int read_header (TAO_Transport *transport,
+                          TAO_ORB_Core *orb_core,
+                          TAO_GIOP_MessageHeader &header,
+                          CORBA::ULong &header_size,
+                          ACE_Message_Block *payload);
+  static int handle_input (TAO_Transport *transport,
+                           TAO_ORB_Core *orb_core,
+                           TAO_GIOP_MessageHeader &header,
+                           CORBA::ULong &current_offset,
+                           ACE_Message_Block *payload);
+
+  static int parse_reply (TAO_Transport *transport,
+                          TAO_ORB_Core *orb_core,
+                          TAO_InputCDR& input,
+                          const TAO_GIOP_MessageHeader& header,
+                          TAO_GIOP_ServiceContextList& reply_ctx,
+                          CORBA::ULong& request_id,
+                          CORBA::ULong& reply_status);
+  static int process_server_message (TAO_Transport *transport,
+                                     TAO_ORB_Core *orb_core,
+                                     TAO_InputCDR &cdr,
+                                     const TAO_GIOP_MessageHeader& header);
+
+  static int process_server_request (TAO_Transport *transport,
+                                     TAO_ORB_Core* orb_core,
+                                     TAO_InputCDR &input,
+                                     TAO_OutputCDR &output,
+                                     CORBA::Boolean &response_required,
+                                     CORBA::ULong &request_id,
+                                     CORBA::Environment &ACE_TRY_ENV);
+  // A request was received on the server side.
+  // <transport> is the source of the message (and thus where the
+  // replies should be sent).
+  // <orb_core> is the ORB that received the message
+  // <input> contains the message
+  // <output> can be used to store any responses
+  // <request_id> and <response_required> are set as part of the
+  // message processing.
+
+  static int process_server_locate (TAO_Transport *transport,
+                                    TAO_ORB_Core* orb_core,
+                                    TAO_InputCDR &input,
+                                    TAO_OutputCDR &output,
+                                    CORBA::Boolean &response_required,
+                                    CORBA::ULong &request_id,
+                                    CORBA::Environment &ACE_TRY_ENV);
+  // A LocateRequest was received on the server side.
+  // <transport> is the source of the message (and thus where the
+  // replies should be sent).
+  // <orb_core> is the ORB that received the message
+  // <input> contains the message
+  // <output> can be used to store any responses
+  // <request_id> and <response_required> are set as part of the
+  // message processing.
+
+  static int send_reply_exception (TAO_Transport *transport,
+                                   TAO_ORB_Core* orb_core,
+                                   CORBA::ULong request_id,
+                                   CORBA::Exception *x);
+  // We must send a LocateReply through <transport>, this request
+  // resulted in some kind of exception.
 
 private:
   static CORBA::Boolean start_message_lite (TAO_GIOP::Message_Type t,
@@ -382,19 +432,13 @@ private:
   // Build the standard header for a message of type <t> into
   // stream <msg>.
 
-  static int parse_header_std (TAO_InputCDR &cdr,
-                               int& do_byte_swap,
-                               TAO_GIOP::Message_Type& message_type,
-                               CORBA::ULong& message_size);
-  static int parse_header_lite (TAO_InputCDR &cdr,
-                                int& do_byte_swap,
-                                TAO_GIOP::Message_Type& message_type,
-                                CORBA::ULong& message_size);
-  static int parse_header (TAO_InputCDR &cdr,
-                           int& do_byte_swap,
-                           TAO_GIOP::Message_Type& message_type,
-                           CORBA::ULong& message_size,
-                           TAO_ORB_Core *orb_core);
+  static int parse_header_std (ACE_Message_Block *payload,
+                               TAO_GIOP_MessageHeader& header);
+  static int parse_header_lite (ACE_Message_Block *payload,
+                                TAO_GIOP_MessageHeader& header);
+  static int parse_header (TAO_ORB_Core *orb_core,
+                           ACE_Message_Block *payload,
+                           TAO_GIOP_MessageHeader& header);
   // Parse the header, extracting all the relevant info.
 };
 

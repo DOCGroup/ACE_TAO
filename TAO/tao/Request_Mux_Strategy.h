@@ -71,20 +71,11 @@ public:
   //    the factory simply allocates a new one, in the Exclusive case
   //    the factory returns a pointer to the pre-allocated CDR.
 
-  virtual void set_cdr_stream (TAO_InputCDR *cdr) = 0;
-  // Set the CDR stream.
-
-  virtual TAO_InputCDR *get_cdr_stream (void);
-  // Get the CDR stream.
+  virtual TAO_InputCDR *get_cdr_stream (void) = 0;
+  // Get a CDR stream.
 
   virtual void destroy_cdr_stream (TAO_InputCDR *) = 0;
-  // Destroy the CDR stream.
-
-protected:
-  TAO_InputCDR *cdr_;
-  // Pointer to the CDR stream used to read the incoming message. This
-  // is obtained from the Invocation object. This is preallocated in
-  // the SMI and dynamically allocated in AMI.
+  // Destroy a CDR stream.
 };
 
 class TAO_Export TAO_Muxed_RMS : public  TAO_Request_Mux_Strategy
@@ -112,7 +103,7 @@ public:
                               const TAO_GIOP_Version& version,
                               TAO_GIOP_ServiceContextList& reply_ctx,
                               TAO_InputCDR* cdr);
-  virtual void set_cdr_stream (TAO_InputCDR *cdr);
+  virtual TAO_InputCDR *get_cdr_stream (void);
   virtual void destroy_cdr_stream (TAO_InputCDR *);
 
 protected:
@@ -144,7 +135,7 @@ public:
                               const TAO_GIOP_Version& version,
                               TAO_GIOP_ServiceContextList& reply_ctx,
                               TAO_InputCDR* cdr);
-  virtual void set_cdr_stream (TAO_InputCDR *cdr);
+  virtual TAO_InputCDR *get_cdr_stream (void);
   virtual void destroy_cdr_stream (TAO_InputCDR *);
 
 protected:

@@ -27,7 +27,8 @@ TAO_GIOP_Twoway_Invocation (TAO_Stub *stub,
   : TAO_GIOP_Invocation (stub, operation, orb_core),
     inp_stream_ (orb_core->create_input_cdr_data_block (ACE_CDR::DEFAULT_BUFSIZE),
                  TAO_ENCAP_BYTE_ORDER,
-                 orb_core)
+                 orb_core),
+    rd_ (&inp_stream_)
 {
 }
 
@@ -86,7 +87,8 @@ TAO_GIOP_Locate_Request_Invocation (TAO_Stub *stub,
   : TAO_GIOP_Invocation (stub, 0, orb_core),
     inp_stream_ (orb_core->create_input_cdr_data_block(ACE_CDR::DEFAULT_BUFSIZE),
                  TAO_ENCAP_BYTE_ORDER,
-                 orb_core)
+                 orb_core),
+    rd_ (&inp_stream_)
 {
 }
 

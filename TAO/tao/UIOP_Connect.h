@@ -17,20 +17,21 @@
 #ifndef TAO_UIOP_CONNECT_H
 #define TAO_UIOP_CONNECT_H
 
-#  include "ace/Reactor.h"
+#include "ace/Reactor.h"
 
-# if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
+#if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-# pragma once
+#pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#  include "ace/Acceptor.h"
-#  include "ace/LSOCK_Acceptor.h"
-#  include "ace/Synch.h"
-#  include "ace/Svc_Handler.h"
+#include "ace/Acceptor.h"
+#include "ace/LSOCK_Acceptor.h"
+#include "ace/Synch.h"
+#include "ace/Svc_Handler.h"
 
-#  include "tao/corbafwd.h"
+#include "tao/corbafwd.h"
+#include "tao/GIOP.h"
 
 // Forward Decls
 class TAO_Transport;
@@ -158,11 +159,6 @@ protected:
   virtual void send_response (TAO_OutputCDR &response);
   // Send <response> to the client on the other end.
 
-  void send_error (CORBA::ULong request_id,
-                   CORBA::Exception *ex);
-  // Send <error> to the client on the other end, which
-  // means basically sending the exception.
-
   // = Event Handler overloads
 
   virtual int handle_input (ACE_HANDLE = ACE_INVALID_HANDLE);
@@ -178,12 +174,18 @@ protected:
 
   TAO_ORB_Core_TSS_Resources *tss_resources_;
   // Cached tss resources of the ORB that activated this object.
+
+  TAO_GIOP_MessageHeader message_header_;
+  CORBA::ULong current_offset_;
+  ACE_Message_Block payload_;
+  // This keep the state of the current message, to enable
+  // non-blocking reads.
 };
 
 #if defined (__ACE_INLINE__)
-# include "tao/UIOP_Connect.i"
+#include "tao/UIOP_Connect.i"
 #endif /* __ACE_INLINE__ */
 
-# endif /* !ACE_LACKS_UNIX_DOMAIN_SOCKETS */
+#endif /* !ACE_LACKS_UNIX_DOMAIN_SOCKETS */
 
 #endif /* TAO_UIOP_CONNECT_H */

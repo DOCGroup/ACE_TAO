@@ -40,10 +40,10 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Server_Request_Timeprobe_Description,
 
 #endif /* ACE_ENABLE_TIMEPROBES */
 
-GIOP_ServerRequest::GIOP_ServerRequest (TAO_InputCDR &input,
-                                        TAO_OutputCDR &output,
-                                        TAO_ORB_Core *orb_core,
-                                        CORBA::Environment &env)
+TAO_GIOP_ServerRequest::TAO_GIOP_ServerRequest (TAO_InputCDR &input,
+                                                TAO_OutputCDR &output,
+                                                TAO_ORB_Core *orb_core,
+                                                CORBA::Environment &env)
   : incoming_ (&input),
     outgoing_ (&output),
     response_expected_ (0),
@@ -69,7 +69,7 @@ GIOP_ServerRequest::GIOP_ServerRequest (TAO_InputCDR &input,
 }
 
 void
-GIOP_ServerRequest::parse_header_std (CORBA::Environment &ACE_TRY_ENV)
+TAO_GIOP_ServerRequest::parse_header_std (CORBA::Environment &ACE_TRY_ENV)
 {
   // Tear out the service context ... we currently ignore it, but it
   // should probably be passed to each ORB service as appropriate
@@ -127,7 +127,7 @@ GIOP_ServerRequest::parse_header_std (CORBA::Environment &ACE_TRY_ENV)
 }
 
 void
-GIOP_ServerRequest::parse_header_lite (CORBA::Environment &ACE_TRY_ENV)
+TAO_GIOP_ServerRequest::parse_header_lite (CORBA::Environment &ACE_TRY_ENV)
 {
   TAO_InputCDR& input = *this->incoming_;
 
@@ -170,7 +170,7 @@ GIOP_ServerRequest::parse_header_lite (CORBA::Environment &ACE_TRY_ENV)
 
 
 void
-GIOP_ServerRequest::parse_header (CORBA::Environment &env)
+TAO_GIOP_ServerRequest::parse_header (CORBA::Environment &env)
 {
   if (this->orb_core_->orb_params ()->use_lite_protocol ())
     this->parse_header_lite (env);
@@ -180,13 +180,13 @@ GIOP_ServerRequest::parse_header (CORBA::Environment &env)
 
 // This constructor is used, by the locate request code
 
-GIOP_ServerRequest::GIOP_ServerRequest (CORBA::ULong &request_id,
-                                        CORBA::Boolean &response_expected,
-                                        TAO_ObjectKey &object_key,
-                                        const ACE_CString &operation,
-                                        TAO_OutputCDR &output,
-                                        TAO_ORB_Core *orb_core,
-                                        CORBA::Environment &)
+TAO_GIOP_ServerRequest::TAO_GIOP_ServerRequest (CORBA::ULong &request_id,
+                                                CORBA::Boolean &response_expected,
+                                                TAO_ObjectKey &object_key,
+                                                const ACE_CString &operation,
+                                                TAO_OutputCDR &output,
+                                                TAO_ORB_Core *orb_core,
+                                                CORBA::Environment &)
   : operation_ (operation),
     incoming_ (0),
     outgoing_ (&output),
@@ -209,7 +209,7 @@ GIOP_ServerRequest::GIOP_ServerRequest (CORBA::ULong &request_id,
 {
 }
 
-GIOP_ServerRequest::~GIOP_ServerRequest (void)
+TAO_GIOP_ServerRequest::~TAO_GIOP_ServerRequest (void)
 {
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
@@ -224,13 +224,13 @@ GIOP_ServerRequest::~GIOP_ServerRequest (void)
 }
 
 CORBA::ORB_ptr
-GIOP_ServerRequest::orb (void)
+TAO_GIOP_ServerRequest::orb (void)
 {
   return this->orb_core_->orb ();
 }
 
 TAO_POA *
-GIOP_ServerRequest::oa (void)
+TAO_GIOP_ServerRequest::oa (void)
 {
   return this->orb_core_->root_poa ();
 }
@@ -241,8 +241,8 @@ GIOP_ServerRequest::oa (void)
 // inout/out/return values later on.
 
 void
-GIOP_ServerRequest::arguments (CORBA::NVList_ptr &list,
-                               CORBA::Environment &env)
+TAO_GIOP_ServerRequest::arguments (CORBA::NVList_ptr &list,
+                                   CORBA::Environment &env)
 {
   env.clear ();
 
@@ -280,7 +280,7 @@ GIOP_ServerRequest::arguments (CORBA::NVList_ptr &list,
             param_name = "(no name given)";
 
           ACE_ERROR ((LM_ERROR,
-                      "GIOP_ServerRequest::arguments - problem while"
+                      "TAO_GIOP_ServerRequest::arguments - problem while"
                       " decoding parameter %d <%s>\n", i, param_name));
           return;
         }
@@ -314,7 +314,7 @@ GIOP_ServerRequest::arguments (CORBA::NVList_ptr &list,
   if (incoming_->length () != 0)
     {
       ACE_ERROR ((LM_ERROR,
-                  "GIOP_ServerRequest::arguments - "
+                  "TAO_GIOP_ServerRequest::arguments - "
                   "%d bytes left in buffer\n", incoming_->length ()));
       env.exception (new CORBA::BAD_PARAM ());
     }
@@ -325,7 +325,7 @@ GIOP_ServerRequest::arguments (CORBA::NVList_ptr &list,
 // only after the parameter list has been provided (maybe empty).
 
 void
-GIOP_ServerRequest::set_result (const CORBA::Any &value,
+TAO_GIOP_ServerRequest::set_result (const CORBA::Any &value,
                                 CORBA::Environment &env)
 {
   env.clear ();
@@ -343,8 +343,8 @@ GIOP_ServerRequest::set_result (const CORBA::Any &value,
 // Store the exception value.
 
 void
-GIOP_ServerRequest::set_exception (const CORBA::Any &value,
-                                   CORBA::Environment &env)
+TAO_GIOP_ServerRequest::set_exception (const CORBA::Any &value,
+                                       CORBA::Environment &env)
 {
   if (this->retval_ || this->exception_)
     env.exception (new CORBA::BAD_INV_ORDER ());
@@ -355,7 +355,7 @@ GIOP_ServerRequest::set_exception (const CORBA::Any &value,
 
     // Try to narrow to ForwardRequest
     PortableServer::ForwardRequest_ptr forward_request =
-        PortableServer::ForwardRequest::_narrow ((CORBA::Exception *) value.value ());
+      PortableServer::ForwardRequest::_narrow ((CORBA::Exception *) value.value ());
 
     // If narrowing of exception succeeded
     if (forward_request != 0)
@@ -386,7 +386,7 @@ GIOP_ServerRequest::set_exception (const CORBA::Any &value,
 // parameters
 
 void
-GIOP_ServerRequest::dsi_marshal (CORBA::Environment &env)
+TAO_GIOP_ServerRequest::dsi_marshal (CORBA::Environment &env)
 {
   // NOTE: if "env" is set, it takes precedence over exceptions
   // reported using the mechanism of the ServerRequest.  Only system
@@ -449,11 +449,11 @@ GIOP_ServerRequest::dsi_marshal (CORBA::Environment &env)
 
 // Extension
 void
-GIOP_ServerRequest::demarshal (CORBA::Environment &orb_env,
-                               // ORB related exception reporting
-                               const TAO_Call_Data_Skel *info,
-                               // call description
-                               ...)
+TAO_GIOP_ServerRequest::demarshal (CORBA::Environment &orb_env,
+                                   // ORB related exception reporting
+                                   const TAO_Call_Data_Skel *info,
+                                   // call description
+                                   ...)
 {
   CORBA::ULong i;
   const TAO_Param_Data_Skel *pdp;
@@ -475,7 +475,7 @@ GIOP_ServerRequest::demarshal (CORBA::Environment &orb_env,
 
       if (orb_env.exception ())
         {
-          orb_env.print_exception ("GIOP_ServerRequest::demarshal - parameter decode failed");
+          orb_env.print_exception ("TAO_GIOP_ServerRequest::demarshal - parameter decode failed");
           return;
         }
     }
@@ -485,13 +485,13 @@ GIOP_ServerRequest::demarshal (CORBA::Environment &orb_env,
 // Extension
 
 void
-GIOP_ServerRequest::marshal (CORBA::Environment &orb_env,
-                             // ORB related exception reporting
-                             //                             CORBA::Environment &skel_env,
-                             // skeleton related exception reporting
-                             const TAO_Call_Data_Skel *info,
-                             // call description
-                             ...)
+TAO_GIOP_ServerRequest::marshal (CORBA::Environment &orb_env,
+                                 // ORB related exception reporting
+                                 //                             CORBA::Environment &skel_env,
+                                 // skeleton related exception reporting
+                                 const TAO_Call_Data_Skel *info,
+                                 // call description
+                                 ...)
 {
   // what is "orb_env" and "skel_env"?
   // "skel_env" holds the exception that got raised inside the operation
@@ -559,7 +559,7 @@ GIOP_ServerRequest::marshal (CORBA::Environment &orb_env,
 
       if (orb_env.exception ())
         {
-          orb_env.print_exception ("GIOP_ServerRequest::marshal - parameter encode failed");
+          orb_env.print_exception ("TAO_GIOP_ServerRequest::marshal - parameter encode failed");
           return;
         }
     }
@@ -568,7 +568,7 @@ GIOP_ServerRequest::marshal (CORBA::Environment &orb_env,
 }
 
 void
-GIOP_ServerRequest::init_reply (CORBA::Environment &env)
+TAO_GIOP_ServerRequest::init_reply (CORBA::Environment &env)
 {
   // Construct a REPLY header.
   TAO_GIOP::start_message (TAO_GIOP::Reply,
@@ -591,7 +591,7 @@ GIOP_ServerRequest::init_reply (CORBA::Environment &env)
       if ((*this->outgoing_ << object_ptr) == 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "GIOP_ServerRequest::marshal - "
+                      "TAO_GIOP_ServerRequest::marshal - "
                       "encoding forwarded objref failed\n"));
           return;
         }
@@ -619,14 +619,14 @@ GIOP_ServerRequest::init_reply (CORBA::Environment &env)
 }
 
 CORBA::Object_ptr
-GIOP_ServerRequest::forward_location (void)
+TAO_GIOP_ServerRequest::forward_location (void)
 // get the forward_location
 {
   return CORBA::Object::_duplicate (this->forward_location_.in ());
 }
 
 CORBA::ULong
-GIOP_ServerRequest::exception_type (void)
+TAO_GIOP_ServerRequest::exception_type (void)
 // get the exception type
 {
   return this->exception_type_;

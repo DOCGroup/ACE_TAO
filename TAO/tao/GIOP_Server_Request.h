@@ -24,43 +24,49 @@
 #include "tao/Server_Request.h"
 #include "tao/Principal.h"
 
-class TAO_Export GIOP_ServerRequest : public CORBA_ServerRequest
+class TAO_Export TAO_GIOP_ServerRequest : public CORBA_ServerRequest
 {
   // = TITLE
   //    Class representing an GIOP ServerRequest object.
 public:
   // = Initialization and termination methods.
-  GIOP_ServerRequest (TAO_InputCDR &input,
-                      TAO_OutputCDR &output,
-                      TAO_ORB_Core *orb_core,
-                      CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+  TAO_GIOP_ServerRequest (TAO_InputCDR &input,
+                          TAO_OutputCDR &output,
+                          TAO_ORB_Core *orb_core,
+                          CORBA_Environment &TAO_IN_ENV =
+                              CORBA::default_environment ());
   // Constructor
-  GIOP_ServerRequest (CORBA::ULong &request_id,
-                      CORBA::Boolean &response_expected,
-                      TAO_ObjectKey &object_key,
-                      const ACE_CString &operation,
-                      TAO_OutputCDR &output,
-                      TAO_ORB_Core *orb_core,
-                      CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+  TAO_GIOP_ServerRequest (CORBA::ULong &request_id,
+                          CORBA::Boolean &response_expected,
+                          TAO_ObjectKey &object_key,
+                          const ACE_CString &operation,
+                          TAO_OutputCDR &output,
+                          TAO_ORB_Core *orb_core,
+                          CORBA_Environment &TAO_IN_ENV =
+                             CORBA::default_environment ());
 
-  virtual ~GIOP_ServerRequest (void);
+  virtual ~TAO_GIOP_ServerRequest (void);
   // Destructor.
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 
   // = General ServerRequest operations
   void arguments (CORBA::NVList_ptr &list,
-                  CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+                  CORBA_Environment &TAO_IN_ENV =
+                      CORBA::default_environment ());
 
   void set_result (const CORBA::Any &value,
-                   CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+                   CORBA_Environment &TAO_IN_ENV =
+                       CORBA::default_environment ());
 
   void set_exception (const CORBA::Any &value,
-                      CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+                      CORBA_Environment &TAO_IN_ENV =
+                          CORBA::default_environment ());
 
-  virtual void dsi_marshal (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
-  // does the marshaling of outgoing parameters and is used by the DSI based
-  // scheme
+  virtual void dsi_marshal (CORBA_Environment &TAO_IN_ENV =
+                                CORBA::default_environment ());
+  // does the marshaling of outgoing parameters and is used by the DSI
+  // based scheme
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
@@ -101,7 +107,8 @@ public:
   // marshal outgoing parameters and return value. This is used by the SSI
   // i.e., by the IDL compiler generated skeletons.
 
-  virtual void init_reply (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+  virtual void init_reply (CORBA_Environment &TAO_IN_ENV =
+                               CORBA::default_environment ());
   // start a Reply message
 
   virtual TAO_InputCDR &incoming (void);
@@ -121,8 +128,8 @@ public:
 
   // The pseudo object methods, not really needed because the class is
   // not in the spec, but we add them for the sake of completeness.
-  static GIOP_ServerRequest* _duplicate (GIOP_ServerRequest*);
-  static GIOP_ServerRequest* _nil (void);
+  static TAO_GIOP_ServerRequest* _duplicate (TAO_GIOP_ServerRequest*);
+  static TAO_GIOP_ServerRequest* _nil (void);
 
   // To handle System Exceptions at the lowest level,
   // a method returning the request_id_ is needed.

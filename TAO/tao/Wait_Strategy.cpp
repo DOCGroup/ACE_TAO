@@ -19,18 +19,10 @@ TAO_Wait_Strategy::~TAO_Wait_Strategy (void)
 }
 
 int
-TAO_Wait_Strategy::send_request (TAO_ORB_Core *orb_core,
-                                 TAO_OutputCDR &stream,
-                                 int /* two_way */)
+TAO_Wait_Strategy::sending_request (TAO_ORB_Core * /* orb_core */,
+                                    int /* two_way */)
 {
-  int success = (int) TAO_GIOP::send_request (this->transport_,
-                                              stream,
-                                              this->transport_->orb_core ());
-
-  if (!success)
-    return -1;
-  else
-    return 0;
+  return 0;
 }
 
 // *********************************************************************
@@ -134,9 +126,8 @@ TAO_Wait_On_Leader_Follower::~TAO_Wait_On_Leader_Follower (void)
 //    with the <Transport> object and <two_way> flag wont make sense
 //    at this level since this is common for AMI also. (Alex).
 int
-TAO_Wait_On_Leader_Follower::send_request (TAO_ORB_Core *orb_core,
-                                           TAO_OutputCDR &stream,
-                                           int two_way)
+TAO_Wait_On_Leader_Follower::sending_request (TAO_ORB_Core *orb_core,
+                                              int two_way)
 {
   {
     ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon,
@@ -170,12 +161,10 @@ TAO_Wait_On_Leader_Follower::send_request (TAO_ORB_Core *orb_core,
   // ago) about using the wrong ORB core, but that may have been
   // fixed...
 
-  // Obtain the lock.
   // Send the request
   int result =
-    TAO_Wait_Strategy::send_request (orb_core,
-                                     stream,
-                                     two_way);
+    this->TAO_Wait_Strategy::sending_request (orb_core,
+                                              two_way);
 
   if (result == -1)
     {
