@@ -1,3 +1,9 @@
+Thu Dec 13 14:11:26 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+	* ace/ace_dll.vcp:
+	  Remove Strategies.* from the WinCE project
+	  files, and add the new files that replace it.
+
 Thu Dec 13 16:41:39 2001  Steve Huston  <shuston@riverace.com>
 
         * examples/Reactor/WFMO_Reactor/test_multithreading.cpp: Changed
