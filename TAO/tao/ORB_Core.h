@@ -566,6 +566,9 @@ protected:
   ACE_Thread_Manager tm_;
   // The Thread Manager
 
+  ACE_Lock_Adapter<ACE_SYNCH_MUTEX> data_block_lock_;
+  // The data block reference counts are locked using this mutex
+
   ACE_Char_Codeset_Translator *from_iso8859_;
   ACE_Char_Codeset_Translator *to_iso8859_;
   ACE_WChar_Codeset_Translator *from_unicode_;
@@ -592,9 +595,6 @@ protected:
   int thread_per_connection_use_timeout_;
   ACE_Time_Value thread_per_connection_timeout_;
   // The value of the timeout if the flag above is not zero
-
-  ACE_Lock_Adapter<ACE_SYNCH_MUTEX> data_block_lock_;
-  // The data block reference counts are locked using this mutex
 };
 
 // ****************************************************************

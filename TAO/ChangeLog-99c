@@ -1,3 +1,13 @@
+Tue Aug 17 11:28:28 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Servant_Base.i:
+	  Removed pesky warning
+
+	* tao/ORB_Core.h:
+	  Re-arrange some declarations to avoid crashes on shutdown. The
+	  lock used for the Data_Block was getting destroyed before the
+	  Data_Blocks were.
+
 Tue Aug 17 10:53:22 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Sequence_T.cpp:
