@@ -58,8 +58,9 @@
 #define ACE_RETURN(Y) \
   do { \
     int __ace_error = ACE_OS::last_error (); \
-    ACE_Log_Msg::instance ()->set (ACE_TEXT_CHAR_TO_TCHAR (__FILE__), __LINE__, Y, __ace_error, ace___->restart (), \
-                                   ace___->msg_ostream (), ace___->msg_callback ()); \
+    ACE_Log_Msg *ace___ = ACE_Log_Msg::instance (); \
+    ace___->set (ACE_TEXT_CHAR_TO_TCHAR (__FILE__), __LINE__, Y, __ace_error, ace___->restart (), \
+                 ace___->msg_ostream (), ace___->msg_callback ()); \
     return Y; \
   } while (0)
 #define ACE_ERROR_RETURN(X, Y) \

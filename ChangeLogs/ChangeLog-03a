@@ -1,3 +1,7 @@
+Fri Sep 29 00:23:59 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Log_Msg.h (ACE_RETURN): Fixed minor error.
+
 Thu Sep 28 22:13:04 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/Log_Msg: Macros are evil! All the ACE debugging macros were
