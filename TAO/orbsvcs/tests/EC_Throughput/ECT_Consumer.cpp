@@ -107,8 +107,8 @@ Driver::run (int argc, char* argv[])
       if (ACE_OS::thr_setprio (min_priority) == -1)
         {
           ACE_ERROR ((LM_ERROR, "(%P|%t) main thr_setprio failed,"
-		      "no real-time features\n"));
-	}
+                      "no real-time features\n"));
+        }
 
       CORBA::Object_var naming_obj =
         orb->resolve_initial_references ("NameService");
@@ -122,22 +122,22 @@ Driver::run (int argc, char* argv[])
       TAO_CHECK_ENV;
 
       if (ACE_Scheduler_Factory::use_config (naming_context.in ()) == -1)
-	return -1;
+        return -1;
 
       CosNaming::Name name (1);
       name.length (1);
       name[0].id = CORBA::string_dup ("EventService");
 
       CORBA::Object_var ec_obj =
-	naming_context->resolve (name, TAO_TRY_ENV);
+        naming_context->resolve (name, TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       RtecEventChannelAdmin::EventChannel_var channel;
       if (CORBA::is_nil (ec_obj.in ()))
-	channel = RtecEventChannelAdmin::EventChannel::_nil ();
+        channel = RtecEventChannelAdmin::EventChannel::_nil ();
       else
-	channel = RtecEventChannelAdmin::EventChannel::_narrow (ec_obj.in (),
-								TAO_TRY_ENV);
+        channel = RtecEventChannelAdmin::EventChannel::_narrow (ec_obj.in (),
+                                                                TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       poa_manager->activate (TAO_TRY_ENV);
@@ -150,7 +150,7 @@ Driver::run (int argc, char* argv[])
 
       ACE_DEBUG ((LM_DEBUG, "running the test\n"));
       if (orb->run () == -1)
-	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "orb->run"), -1);
+        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "orb->run"), -1);
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
 
       channel->destroy (TAO_TRY_ENV);
@@ -158,7 +158,7 @@ Driver::run (int argc, char* argv[])
 
       this->disconnect_consumers (TAO_TRY_ENV);
       TAO_CHECK_ENV;
-      
+
     }
   TAO_CATCH (CORBA::SystemException, sys_ex)
     {
@@ -174,14 +174,14 @@ Driver::run (int argc, char* argv[])
 
 void
 Driver::push_consumer (void* consumer_cookie,
-		       ACE_hrtime_t arrival,
-		       const RtecEventComm::EventSet& events,
-		       CORBA::Environment &_env)
+                       ACE_hrtime_t arrival,
+                       const RtecEventComm::EventSet& events,
+                       CORBA::Environment &_env)
 {
-  int ID =
-    (ACE_reinterpret_cast(Test_Consumer**,consumer_cookie)
-     - this->consumers_);
-  
+  // int ID =
+  //   (ACE_reinterpret_cast(Test_Consumer**,consumer_cookie)
+  //    - this->consumers_);
+  //
   // ACE_DEBUG ((LM_DEBUG, "(%t) events received by consumer %d\n", ID));
 
   if (events.length () == 0)
@@ -204,10 +204,10 @@ Driver::push_consumer (void* consumer_cookie,
       const RtecEventComm::Event& e = events[i];
 
       if (e.data_.payload.mb () == 0)
-	{
-	  ACE_DEBUG ((LM_DEBUG, "No data in event[%d]\n", i));
-	  continue;
-	}
+        {
+          ACE_DEBUG ((LM_DEBUG, "No data in event[%d]\n", i));
+          continue;
+        }
 
       // @@ TODO this is a little messy, infortunately we have to
       // extract the first byte to determine the byte order, the CDR
@@ -220,7 +220,7 @@ Driver::push_consumer (void* consumer_cookie,
       int byte_order = e.data_.payload[0];
 
       ACE_Message_Block* mb =
-	ACE_Message_Block::duplicate (e.data_.payload.mb ());
+        ACE_Message_Block::duplicate (e.data_.payload.mb ());
       mb->rd_ptr (1); // skip the byte order
 
       TAO_InputCDR cdr (mb, byte_order);
@@ -235,24 +235,24 @@ Driver::push_consumer (void* consumer_cookie,
       CORBA::ULong n = info.trajectory.length ();
       ACE_DEBUG ((LM_DEBUG, "Payload contains <%d> elements\n", n));
       ACE_DEBUG ((LM_DEBUG, "Inventory contains <%d> elements\n",
-		  other.inventory.current_size ()));
-      
+                  other.inventory.current_size ()));
+
       for (CORBA::ULong i = 0; i < n; ++i)
-	{
-	  ECT_IDLData::Point& p = info.trajectory[i];
-	  if (p.x != i || p.y != i*i)
-	    {
-	      ACE_DEBUG ((LM_DEBUG,
-			  "invalid data in trajectory[%d] = (%f,%f)\n",
-			  i, p.x, p.y));
-	    }
-	}
+        {
+          ECT_IDLData::Point& p = info.trajectory[i];
+          if (p.x != i || p.y != i*i)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "invalid data in trajectory[%d] = (%f,%f)\n",
+                          i, p.x, p.y));
+            }
+        }
     }
 }
 
 void
 Driver::connect_consumers (RtecEventChannelAdmin::EventChannel_ptr channel,
-			   CORBA::Environment &_env)
+                           CORBA::Environment &_env)
 {
   for (int i = 0; i < this->n_consumers_; ++i)
     {
@@ -260,13 +260,13 @@ Driver::connect_consumers (RtecEventChannelAdmin::EventChannel_ptr channel,
       ACE_OS::sprintf (buf, "consumer_%02.2d", i);
 
       ACE_NEW (this->consumers_[i],
-	       Test_Consumer (this, this->consumers_ + i));
+               Test_Consumer (this, this->consumers_ + i));
 
       this->consumers_[i]->connect (buf,
-				    this->event_a_,
-				    this->event_b_,
-				    channel,
-				    _env);
+                                    this->event_a_,
+                                    this->event_b_,
+                                    channel,
+                                    _env);
       if (_env.exception () != 0) return;
     }
 }
@@ -291,13 +291,13 @@ Driver::parse_args (int argc, char *argv [])
     {
       switch (opt)
         {
-	case 'c':
-	  this->n_consumers_ = ACE_OS::atoi (get_opt.optarg);
-	  break;
+        case 'c':
+          this->n_consumers_ = ACE_OS::atoi (get_opt.optarg);
+          break;
 
-	case 'n':
-	  this->event_count_ = ACE_OS::atoi (get_opt.optarg);
-	  break;
+        case 'n':
+          this->event_count_ = ACE_OS::atoi (get_opt.optarg);
+          break;
 
         case 'h':
           {
@@ -320,7 +320,7 @@ Driver::parse_args (int argc, char *argv [])
                       "Usage: %s "
                       "[ORB options] "
                       "-s <global|local> "
-		      "-a (send data in events) "
+                      "-a (send data in events) "
                       "-h <args> "
                       "-p <pid file name> "
                       "\n",
@@ -359,9 +359,9 @@ Test_Consumer::Test_Consumer (Driver *driver, void *cookie)
 
 void
 Test_Consumer::connect (const char* name,
-			int event_a, int event_b,
-			RtecEventChannelAdmin::EventChannel_ptr ec,
-			CORBA::Environment& _env)
+                        int event_a, int event_b,
+                        RtecEventChannelAdmin::EventChannel_ptr ec,
+                        CORBA::Environment& _env)
 {
   RtecScheduler::Scheduler_ptr server =
     ACE_Scheduler_Factory::server ();
@@ -376,14 +376,14 @@ Test_Consumer::connect (const char* name,
   TimeBase::TimeT time;
   ORBSVCS_Time::Time_Value_to_TimeT (time, tv);
   server->set (rt_info,
-	       RtecScheduler::VERY_HIGH_CRITICALITY,
-	       time, time, time,
-	       0,
-	       RtecScheduler::VERY_LOW_IMPORTANCE,
-	       time,
-	       0,
-	       RtecScheduler::OPERATION,
-	       _env);
+               RtecScheduler::VERY_HIGH_CRITICALITY,
+               time, time, time,
+               0,
+               RtecScheduler::VERY_LOW_IMPORTANCE,
+               time,
+               0,
+               RtecScheduler::OPERATION,
+               _env);
   if (_env.exception () != 0) return;
 
   ACE_ConsumerQOS_Factory qos;
@@ -405,8 +405,8 @@ Test_Consumer::connect (const char* name,
   if (_env.exception () != 0) return;
 
   this->supplier_proxy_->connect_push_consumer (objref.in (),
-						qos.get_ConsumerQOS (),
-						_env);
+                                                qos.get_ConsumerQOS (),
+                                                _env);
   if (_env.exception () != 0) return;
 }
 
