@@ -1,3 +1,10 @@
+Sun Apr 25 09:22:50 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/config/taoidldefaults.mpb:
+
+          Make use of new MPC features to correctly represent the output
+          files generated with various tao_idl options.
+
 Sun Apr 25 09:57:54 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Tokens_Test.cpp:
@@ -10,66 +17,66 @@ Sun Apr 25 09:52:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Fri Apr 23 22:35:23 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/Process_Manager.cpp (wait):
-	* ace/WFMO_Reactor.cpp (dispatch_handles):
+        * ace/Process_Manager.cpp (wait):
+        * ace/WFMO_Reactor.cpp (dispatch_handles):
 
-	  Fixed "pointless comparison of unsigned integer with zero"
-	  MSVC++ 7.1 warning.
+          Fixed "pointless comparison of unsigned integer with zero"
+          MSVC++ 7.1 warning.
 
 Fri Apr 23 22:26:19 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* examples/Web_Crawler/Iterators.cpp (next):
+        * examples/Web_Crawler/Iterators.cpp (next):
 
-	  Explicitly cast offset value from size_t to off_t to address
-	  "change of sign in integer conversion" warning exhibited by
-	  MSVC++ 7.1.
+          Explicitly cast offset value from size_t to off_t to address
+          "change of sign in integer conversion" warning exhibited by
+          MSVC++ 7.1.
 
 Fri Apr 23 22:13:35 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/Token_Collection.h:
-	* ace/Token_Invariants.h:
+        * ace/Token_Collection.h:
+        * ace/Token_Invariants.h:
 
-	  Include "ace/Null_Mutex.h" to pull ACE_Null_Mutex class
-	  declaration.
+          Include "ace/Null_Mutex.h" to pull ACE_Null_Mutex class
+          declaration.
 
 Fri Apr 23 20:25:05 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* Kokyu/Kokyu_defs.h:
-	* Kokyu/Kokyu_defs.i:
+        * Kokyu/Kokyu_defs.h:
+        * Kokyu/Kokyu_defs.i:
 
-	  Changed return types for equality operators to "bool", as is the
-	  norm for modern C++.
+          Changed return types for equality operators to "bool", as is the
+          norm for modern C++.
 
 Fri Apr 23 12:50:34 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tests/Config_Test.cpp (iniCompare):
+        * tests/Config_Test.cpp (iniCompare):
 
-	  Changed type of equality flag variable from an "int" to a
-	  "bool".  Addresses a "'&=' : unsafe mix of type 'int' and type
-	  'bool' in operation" warning exhibited by MSVC++ 6.
+          Changed type of equality flag variable from an "int" to a
+          "bool".  Addresses a "'&=' : unsafe mix of type 'int' and type
+          'bool' in operation" warning exhibited by MSVC++ 6.
 
 Fri Apr 23 11:23:04 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/Local_Tokens.cpp:
-	* ace/Local_Tokens.h:
-	* ace/Timeprobe.h:
+        * ace/Local_Tokens.cpp:
+        * ace/Local_Tokens.h:
+        * ace/Timeprobe.h:
 
-	  Do not include "ace/Synch{_T}.h".  Include less expensive ones
-	  instead.  Fixes a "fuzz" error.
+          Do not include "ace/Synch{_T}.h".  Include less expensive ones
+          instead.  Fixes a "fuzz" error.
 
-	* ace/Token_Manager.h:
+        * ace/Token_Manager.h:
 
-	  Moved "ace/Map_Manager.h" inclusion within the
-	  ACE_HAS_TOKENS_LIBRARY block.  There is no need to include it if
-	  that macro isn't defined.
+          Moved "ace/Map_Manager.h" inclusion within the
+          ACE_HAS_TOKENS_LIBRARY block.  There is no need to include it if
+          that macro isn't defined.
 
 Fri Apr 23 11:14:51 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* examples/Smart_Pointers/Widget_Impl.h:
+        * examples/Smart_Pointers/Widget_Impl.h:
 
-	  Include "ace/Synch_Traits.h" and "ace/Thread_Mutex.h".
-	  Necessitated by header inclusion reductions in
-	  "ace/Refcounted_Auto_Ptr.*".
+          Include "ace/Synch_Traits.h" and "ace/Thread_Mutex.h".
+          Necessitated by header inclusion reductions in
+          "ace/Refcounted_Auto_Ptr.*".
 
 Fri Apr 23 15:01:23 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -89,12 +96,12 @@ Fri Apr 23 14:49:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Fri Apr 23 10:30:31 2004  Steve Huston  <shuston@riverace.com>
 
-	* tests/Recursive_Condition_Test.cpp: Missed a variable change.
+        * tests/Recursive_Condition_Test.cpp: Missed a variable change.
 
 Fri Apr 23 07:35:41 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/OS_NS_Thread.inl (mutex_init): Forgot some changes of type to
-	  lock_scope for Windows.
+        * ace/OS_NS_Thread.inl (mutex_init): Forgot some changes of type to
+          lock_scope for Windows.
 
 Fri Apr 23 11:24:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -127,208 +134,208 @@ Fri Apr 23 06:15:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Apr 22 22:22:59 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* bin/clone.cpp:
-	* tests/Dirent_Test.cpp:
+        * bin/clone.cpp:
+        * tests/Dirent_Test.cpp:
 
-	  Replaced "ace/OS.h" include with lighterweight "ace/OS_NS_*.h"
-	  includes.  Fixes "fuzz" errors.
+          Replaced "ace/OS.h" include with lighterweight "ace/OS_NS_*.h"
+          includes.  Fixes "fuzz" errors.
 
 Thu Apr 22 20:54:26 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/SSL/SSL_Asynch_Stream.h:
-	* ace/SSL/SSL_Context.cpp:
-	* ace/SSL/SSL_Context.h:
-	* ace/SSL/SSL_SOCK_Stream.i:
+        * ace/SSL/SSL_Asynch_Stream.h:
+        * ace/SSL/SSL_Context.cpp:
+        * ace/SSL/SSL_Context.h:
+        * ace/SSL/SSL_SOCK_Stream.i:
 
-	  Updated included headers as necessary due to removal of
-	  "ace/Synch.h" #include.
+          Updated included headers as necessary due to removal of
+          "ace/Synch.h" #include.
 
 Thu Apr 22 20:01:12 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/ATM_Addr.cpp:
-	* ace/ATM_Addr.h:
-	* ace/ATM_Addr.i:
-	* ace/Active_Map_Manager.h:
-	* ace/Active_Map_Manager.i:
-	* ace/Addr.h:
-	* ace/Addr.i:
-	* ace/Atomic_Op.h:
-	* ace/Atomic_Op.i:
-	* ace/Atomic_Op_T.h:
-	* ace/Atomic_Op_T.i:
-	* ace/Based_Pointer_T.h:
-	* ace/Based_Pointer_T.i:
-	* ace/Basic_Types.h:
-	* ace/Basic_Types.i:
-	* ace/Bound_Ptr.h:
-	* ace/Bound_Ptr.i:
-	* ace/CDR_Base.cpp:
-	* ace/CDR_Base.h:
-	* ace/Cache_Map_Manager_T.h:
-	* ace/Cache_Map_Manager_T.i:
-	* ace/Cleanup.cpp:
-	* ace/Cleanup.h:
-	* ace/Configuration.cpp:
-	* ace/Configuration.h:
-	* ace/Containers_T.cpp:
-	* ace/Containers_T.h:
-	* ace/Containers_T.i:
-	* ace/DEV_Addr.h:
-	* ace/DEV_Addr.i:
-	* ace/FILE_Addr.h:
-	* ace/FILE_Addr.i:
-	* ace/Functor_T.h:
-	* ace/Functor_T.i:
-	* ace/Future.cpp:
-	* ace/Future.h:
-	* ace/Get_Opt.h:
-	* ace/Get_Opt.i:
-	* ace/Hash_Map_Manager_T.h:
-	* ace/Hash_Map_Manager_T.i:
-	* ace/INET_Addr.cpp:
-	* ace/INET_Addr.h:
-	* ace/INET_Addr.i:
-	* ace/IOStream.h:
-	* ace/Local_Name_Space.cpp:
-	* ace/Local_Name_Space.h:
-	* ace/Local_Tokens.h:
-	* ace/Local_Tokens.i:
-	* ace/MEM_Addr.h:
-	* ace/MEM_Addr.i:
-	* ace/Map_Manager.h:
-	* ace/Map_Manager.i:
-	* ace/Map_T.h:
-	* ace/Map_T.i:
-	* ace/Name_Space.cpp:
-	* ace/Name_Space.h:
-	* ace/OS_Errno.h:
-	* ace/OS_Errno.inl:
-	* ace/OS_NS_Thread.cpp:
-	* ace/OS_NS_Thread.h:
-	* ace/Pair_T.h:
-	* ace/Pair_T.i:
-	* ace/RB_Tree.h:
-	* ace/RB_Tree.i:
-	* ace/Refcounted_Auto_Ptr.h:
-	* ace/Refcounted_Auto_Ptr.i:
-	* ace/Registry.cpp:
-	* ace/Registry.h:
-	* ace/SPIPE_Addr.h:
-	* ace/SPIPE_Addr.i:
-	* ace/SString.h:
-	* ace/SString.i:
-	* ace/Select_Reactor_Base.h:
-	* ace/Select_Reactor_Base.i:
-	* ace/Service_Config.h:
-	* ace/Service_Config.i:
-	* ace/Strategies_T.h:
-	* ace/Strategies_T.i:
-	* ace/String_Base.cpp:
-	* ace/String_Base.h:
-	* ace/String_Base.i:
-	* ace/Thread_Manager.h:
-	* ace/Thread_Manager.i:
-	* ace/Time_Value.h:
-	* ace/Time_Value.inl:
-	* ace/Timeprobe.h:
-	* ace/Timeprobe.i:
-	* ace/UNIX_Addr.h:
-	* ace/UNIX_Addr.i:
-	* ace/Unbounded_Set.cpp:
-	* ace/Unbounded_Set.h:
-	* ace/Unbounded_Set_Ex.cpp:
-	* ace/Unbounded_Set_Ex.h:
-	* ace/Vector_T.cpp:
-	* ace/Vector_T.h:
-	* ace/Vector_T.i:
-	* ace/CLASSIX/CLASSIX_Group.h:
-	* ace/CLASSIX/CLASSIX_Group.i:
-	* ace/CLASSIX/CLASSIX_Port.h:
-	* ace/CLASSIX/CLASSIX_Port.i:
-	* apps/Gateway/Gateway/Event.h:
-	* apps/JAWS/clients/Caching/Local_Locator.h:
-	* apps/JAWS/clients/Caching/Local_Locator.i:
-	* apps/JAWS/clients/Caching/URL_Properties.h:
-	* apps/JAWS/clients/Caching/URL_Properties.i:
-	* docs/tutorials/016/Condition_i.cpp:
-	* docs/tutorials/016/Condition_i.h:
-	* docs/tutorials/016/condition.cpp:
-	* examples/Web_Crawler/URL_Addr.cpp:
-	* examples/Web_Crawler/URL_Addr.h:
-	* tests/CDR_File_Test.cpp:
-	* tests/Collection_Test.cpp:
-	* tests/Collection_Test.h:
-	* tests/IOStream_Test.cpp:
-	* ACEXML/common/AttributesImpl.h:
-	* ACEXML/common/AttributesImpl.i:
-	* ACEXML/common/URL_Addr.h:
-	* ACEXML/common/URL_Addr.inl:
-	* ACEXML/parser/parser/ParserContext.h:
-	* ACEXML/parser/parser/ParserContext.inl:
+        * ace/ATM_Addr.cpp:
+        * ace/ATM_Addr.h:
+        * ace/ATM_Addr.i:
+        * ace/Active_Map_Manager.h:
+        * ace/Active_Map_Manager.i:
+        * ace/Addr.h:
+        * ace/Addr.i:
+        * ace/Atomic_Op.h:
+        * ace/Atomic_Op.i:
+        * ace/Atomic_Op_T.h:
+        * ace/Atomic_Op_T.i:
+        * ace/Based_Pointer_T.h:
+        * ace/Based_Pointer_T.i:
+        * ace/Basic_Types.h:
+        * ace/Basic_Types.i:
+        * ace/Bound_Ptr.h:
+        * ace/Bound_Ptr.i:
+        * ace/CDR_Base.cpp:
+        * ace/CDR_Base.h:
+        * ace/Cache_Map_Manager_T.h:
+        * ace/Cache_Map_Manager_T.i:
+        * ace/Cleanup.cpp:
+        * ace/Cleanup.h:
+        * ace/Configuration.cpp:
+        * ace/Configuration.h:
+        * ace/Containers_T.cpp:
+        * ace/Containers_T.h:
+        * ace/Containers_T.i:
+        * ace/DEV_Addr.h:
+        * ace/DEV_Addr.i:
+        * ace/FILE_Addr.h:
+        * ace/FILE_Addr.i:
+        * ace/Functor_T.h:
+        * ace/Functor_T.i:
+        * ace/Future.cpp:
+        * ace/Future.h:
+        * ace/Get_Opt.h:
+        * ace/Get_Opt.i:
+        * ace/Hash_Map_Manager_T.h:
+        * ace/Hash_Map_Manager_T.i:
+        * ace/INET_Addr.cpp:
+        * ace/INET_Addr.h:
+        * ace/INET_Addr.i:
+        * ace/IOStream.h:
+        * ace/Local_Name_Space.cpp:
+        * ace/Local_Name_Space.h:
+        * ace/Local_Tokens.h:
+        * ace/Local_Tokens.i:
+        * ace/MEM_Addr.h:
+        * ace/MEM_Addr.i:
+        * ace/Map_Manager.h:
+        * ace/Map_Manager.i:
+        * ace/Map_T.h:
+        * ace/Map_T.i:
+        * ace/Name_Space.cpp:
+        * ace/Name_Space.h:
+        * ace/OS_Errno.h:
+        * ace/OS_Errno.inl:
+        * ace/OS_NS_Thread.cpp:
+        * ace/OS_NS_Thread.h:
+        * ace/Pair_T.h:
+        * ace/Pair_T.i:
+        * ace/RB_Tree.h:
+        * ace/RB_Tree.i:
+        * ace/Refcounted_Auto_Ptr.h:
+        * ace/Refcounted_Auto_Ptr.i:
+        * ace/Registry.cpp:
+        * ace/Registry.h:
+        * ace/SPIPE_Addr.h:
+        * ace/SPIPE_Addr.i:
+        * ace/SString.h:
+        * ace/SString.i:
+        * ace/Select_Reactor_Base.h:
+        * ace/Select_Reactor_Base.i:
+        * ace/Service_Config.h:
+        * ace/Service_Config.i:
+        * ace/Strategies_T.h:
+        * ace/Strategies_T.i:
+        * ace/String_Base.cpp:
+        * ace/String_Base.h:
+        * ace/String_Base.i:
+        * ace/Thread_Manager.h:
+        * ace/Thread_Manager.i:
+        * ace/Time_Value.h:
+        * ace/Time_Value.inl:
+        * ace/Timeprobe.h:
+        * ace/Timeprobe.i:
+        * ace/UNIX_Addr.h:
+        * ace/UNIX_Addr.i:
+        * ace/Unbounded_Set.cpp:
+        * ace/Unbounded_Set.h:
+        * ace/Unbounded_Set_Ex.cpp:
+        * ace/Unbounded_Set_Ex.h:
+        * ace/Vector_T.cpp:
+        * ace/Vector_T.h:
+        * ace/Vector_T.i:
+        * ace/CLASSIX/CLASSIX_Group.h:
+        * ace/CLASSIX/CLASSIX_Group.i:
+        * ace/CLASSIX/CLASSIX_Port.h:
+        * ace/CLASSIX/CLASSIX_Port.i:
+        * apps/Gateway/Gateway/Event.h:
+        * apps/JAWS/clients/Caching/Local_Locator.h:
+        * apps/JAWS/clients/Caching/Local_Locator.i:
+        * apps/JAWS/clients/Caching/URL_Properties.h:
+        * apps/JAWS/clients/Caching/URL_Properties.i:
+        * docs/tutorials/016/Condition_i.cpp:
+        * docs/tutorials/016/Condition_i.h:
+        * docs/tutorials/016/condition.cpp:
+        * examples/Web_Crawler/URL_Addr.cpp:
+        * examples/Web_Crawler/URL_Addr.h:
+        * tests/CDR_File_Test.cpp:
+        * tests/Collection_Test.cpp:
+        * tests/Collection_Test.h:
+        * tests/IOStream_Test.cpp:
+        * ACEXML/common/AttributesImpl.h:
+        * ACEXML/common/AttributesImpl.i:
+        * ACEXML/common/URL_Addr.h:
+        * ACEXML/common/URL_Addr.inl:
+        * ACEXML/parser/parser/ParserContext.h:
+        * ACEXML/parser/parser/ParserContext.inl:
 
-	  Changed all return types for equality, relational and logical
-	  operators to "bool", as is the norm for modern C++.
+          Changed all return types for equality, relational and logical
+          operators to "bool", as is the norm for modern C++.
 
 Thu Apr 22 17:06:04 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/OS_NS_Thread.inl (mutex_init):
+        * ace/OS_NS_Thread.inl (mutex_init):
 
           Explicitly cast the unused returned values of an
-	  ACE_ADAPT_RETVAL macro call to "void" to address a "right-hand
+          ACE_ADAPT_RETVAL macro call to "void" to address a "right-hand
           operand of comma has no effect" warning exhibited by GNU g++ 3.4
           (pre-release).
 
 Thu Apr 22 17:06:39 2004  Steve Huston  <shuston@riverace.com>
 
-	* tests/Recursive_Condition_Test.cpp: Fixed broken log string. Also,
-	  when checking nesting level, ignore it if get_nesting_level() returns
-	  -1, ENOTSUP. This will be the case for native Pthreads recursive
-	  mutexes.
+        * tests/Recursive_Condition_Test.cpp: Fixed broken log string. Also,
+          when checking nesting level, ignore it if get_nesting_level() returns
+          -1, ENOTSUP. This will be the case for native Pthreads recursive
+          mutexes.
 
 Thu Apr 22 16:51:29 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/OS_NS_Thread.h:
-	* ace/OS_NS_Thread.inl:
-	  Reverted this change:
-	  Wed Mar 31 14:43:48 UTC 2004  Don Hinton  <dhinton@dre.vanderbilt.edu>
-	  which confused the lock scope (process vs. thread) with lock type
-	  (recursive, non-recursive, etc.). Panagiotis sent a revised patch
-	  to separately specify the lock type as an optional argument,
-	  lock_type, to ACE_OS::mutex_init(). This allows Pthreads recursive
-	  mutexes where they are available.
-	  I also renamed the 'type' argument to lock_scope to differentiate
-	  this further and avoid confusion in the future.
-	  On ACE_OS::thread_mutex_init(), the meaning of the old 'type'
-	  argument is changed. It previously combined the scope and type.
-	  Now it is just the type (e.g. recursive), as the scope is inherent
-	  in the method used.
-	  For clarification on ACE_HAS_RECURSIVE_MUTEXES, it means that the
-	  platform is capable of them, not that they always are, as one would
-	  expect. However, before Pthreads had recursion added, it was
-	  never optional. Now it is.
+        * ace/OS_NS_Thread.h:
+        * ace/OS_NS_Thread.inl:
+          Reverted this change:
+          Wed Mar 31 14:43:48 UTC 2004  Don Hinton  <dhinton@dre.vanderbilt.edu>
+          which confused the lock scope (process vs. thread) with lock type
+          (recursive, non-recursive, etc.). Panagiotis sent a revised patch
+          to separately specify the lock type as an optional argument,
+          lock_type, to ACE_OS::mutex_init(). This allows Pthreads recursive
+          mutexes where they are available.
+          I also renamed the 'type' argument to lock_scope to differentiate
+          this further and avoid confusion in the future.
+          On ACE_OS::thread_mutex_init(), the meaning of the old 'type'
+          argument is changed. It previously combined the scope and type.
+          Now it is just the type (e.g. recursive), as the scope is inherent
+          in the method used.
+          For clarification on ACE_HAS_RECURSIVE_MUTEXES, it means that the
+          platform is capable of them, not that they always are, as one would
+          expect. However, before Pthreads had recursion added, it was
+          never optional. Now it is.
 
-	* ace/config-linux.h: Only set ACE_HAS_RECURSIVE_MUTEXES if
-	  ACE_HAS_PTHREADS_UNIX98_EXT is set.
+        * ace/config-linux.h: Only set ACE_HAS_RECURSIVE_MUTEXES if
+          ACE_HAS_PTHREADS_UNIX98_EXT is set.
 
-	* ace/config-aix4.x.h:
-	* ace/config-hpux-11.00.h: Added ACE_HAS_RECURSIVE_MUTEXES. This is
-	  predicated on ACE_HAS_PTHREADS_UNIX98_EXT, which is already set.
-	  Some other configs have ACE_HAS_PTHREADS_UNIX98_EXT also, but I
-	  don't have access to them for testing, so didn't add it to those.
+        * ace/config-aix4.x.h:
+        * ace/config-hpux-11.00.h: Added ACE_HAS_RECURSIVE_MUTEXES. This is
+          predicated on ACE_HAS_PTHREADS_UNIX98_EXT, which is already set.
+          Some other configs have ACE_HAS_PTHREADS_UNIX98_EXT also, but I
+          don't have access to them for testing, so didn't add it to those.
 
-	* ace/Thread_Mutex.cpp (ctor): Pass 0 for lock_type to
-	  ACE_OS::thread_mutex_init(), not USYNC_THREAD.
+        * ace/Thread_Mutex.cpp (ctor): Pass 0 for lock_type to
+          ACE_OS::thread_mutex_init(), not USYNC_THREAD.
 
 Thu Apr 22 11:53:00 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* bin/fuzz.pl (check_for_non_bool_operators):
+        * bin/fuzz.pl (check_for_non_bool_operators):
 
-	  Improved regular expressions to catch additional cases.
+          Improved regular expressions to catch additional cases.
 
 Thu Apr 22 12:00:00 2004  Marek Brudka  <mbrudka@elka.pw.edy.pl>
 
-	* ace/TMCast/Link_Listener.hpp: removed ACE_Addr bug which led to
-	sigsegv in TMCast applications.
+        * ace/TMCast/Link_Listener.hpp: removed ACE_Addr bug which led to
+        sigsegv in TMCast applications.
 
 Thu Apr 22 12:13:52 2004  Chad Elliott  <elliott_c@ociweb.com>
 
