@@ -354,20 +354,20 @@ int TAO_PG::test_encode_decode ()
     const PortableGroup::Value *,
     ACE_SYNCH_NULL_MUTEX>;
 
-    typedef class ACE_Hash_Map_Iterator<
+   typedef class ACE_Hash_Map_Iterator<
       ACE_CString,
       const PortableGroup::Value *,
       ACE_SYNCH_NULL_MUTEX>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-# pragma instantiate ACE_Hash_Map_Manager<
-    ACE_CString,
-    const PortableGroup::Value *,
+# pragma instantiate ACE_Hash_Map_Manager<  \
+    ACE_CString,                            \
+    const PortableGroup::Value *,           \
     ACE_SYNCH_NULL_MUTEX>
-#pragma instantiate ACE_Hash_Map_Iterator<
-      ACE_CString,
-      const PortableGroup::Value *,
+#pragma instantiate ACE_Hash_Map_Iterator<  \
+      ACE_CString,                          \
+      const PortableGroup::Value *,         \
       ACE_SYNCH_NULL_MUTEX>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
