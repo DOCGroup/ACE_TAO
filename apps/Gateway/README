@@ -71,11 +71,13 @@ To run the tests do the following:
    will print out some diagnostic info and then block awaiting
    connections from the Gateway.
 
-   BTW, if you want to set the port numbers of the Peers from
+   If you want to set the port numbers of the Peers from
    the command-line do the following:
    
    a. Change the svc.conf file in the ./Peer/ directory to
-      another name (e.g., foo.conf).  
+      another name (e.g., foo.conf).  This will keep the
+      program from starting up with the svc.conf file
+      (which dynamically links in the Peers).
       
    b. Then run the peers in different windows as
    
