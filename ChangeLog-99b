@@ -1,5 +1,11 @@
 Sun Jan 31 18:19:45 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
+	* ace/Strategies_T: Changed the ACE_Process_Strategy so that
+ 	  programmers can designate to not create zombies.  Thanks to
+ 	  Garry Brother <gmbroth@romulus.ncsc.mil> for this suggestion.
+
+	* ace/ACE.cpp (daemonize): Only do a chdir if pathname != 0.
+
 	* ace/ACE: Added a "program_name" argument to daemonize() so that
  	  we can set the program name.
 

@@ -538,9 +538,12 @@ public:
   // "time" portion of <day_and_time>.
 
   static int daemonize (const char pathname[] = "/",
-                        int close_all_handles = ACE_DEFAULT_CLOSE_ALL_HANDLES);
-  // Become a daemon process.  If <close_all_handles> is non-zero then
-  // all open file handles are closed.
+                        int close_all_handles = ACE_DEFAULT_CLOSE_ALL_HANDLES,
+                        const char program_name[] = "<unknown>");
+  // Become a daemon process using the algorithm in Richard Stevens
+  // "Advanced Programming in the UNIX Environment."  If
+  // <close_all_handles> is non-zero then all open file handles are
+  // closed.
 
   // = Methods for searching and opening shared libraries.
 
