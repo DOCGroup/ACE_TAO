@@ -1016,6 +1016,26 @@ public:
   int tryacquire (void);
   // Conditionally acquire a recursive mutex (i.e., won't block).
 
+  int acquire_read (void);
+  // Acquire mutex ownership.  This calls <acquire> and is only
+  // here to make the <ACE_Recusive_Thread_Mutex> interface consistent
+  // with the other synchronization APIs.
+
+  int acquire_write (void);
+  // Acquire mutex ownership.  This calls <acquire> and is only
+  // here to make the <ACE_Recusive_Thread_Mutex> interface consistent
+  // with the other synchronization APIs.
+
+  int tryacquire_read (void);
+  // Conditionally acquire mutex (i.e., won't block).  This calls
+  // <tryacquire> and is only here to make the <ACE_Recusive_Thread_Mutex>
+  // interface consistent with the other synchronization APIs.
+
+  int tryacquire_write (void);
+  // Conditionally acquire mutex (i.e., won't block).  This calls
+  // <tryacquire> and is only here to make the <ACE_Recusive_Thread_Mutex>
+  // interface consistent with the other synchronization APIs.
+
   int release (void);
   // Releases a recursive mutex (will not release mutex until all the
   // nesting level drops to 0, which means the mutex is no longer
