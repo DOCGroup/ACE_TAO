@@ -1,5 +1,9 @@
 Thu Feb 15 06:00:12 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
+	* server.cpp: Renamed tstamp to time_stamp to avoid conflicts with
+	  the pre-processor on the Forte 5.2 compiler.  Thanks to Mike
+ 	  Curtis for reporting this.
+
 	* File_Manager.cpp: Fixed "unreachable code" errors reported by
 	  Compaq C++.
 
