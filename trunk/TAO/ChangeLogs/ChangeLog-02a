@@ -1,3 +1,8 @@
+Thu Dec 14 21:49:40 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/tests/LoadBalancing/Makefile:
+          Update dependencies.
+
 Thu Dec 14 16:44:42 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * performance-tests/Cubit/TAO/IDL_Cubit/client.dsp:
@@ -18,18 +23,18 @@ Thu Dec 14 18:22:54 2000  Jeff Parsons <parsons@cs.wustl.edu>
 
 Thu Dec 14 12:52:18 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-	* orbsvcs/tests/Event/Performance/Latency.cpp:
-	* orbsvcs/tests/Event/Performance/Latency_Server.cpp:
-	  Fixed typos in debug message
+        * orbsvcs/tests/Event/Performance/Latency.cpp:
+        * orbsvcs/tests/Event/Performance/Latency_Server.cpp:
+          Fixed typos in debug message
 
-	* */Makefile*:
-	  Update all dependencies again.
+        * */Makefile*:
+          Update all dependencies again.
 
 Thu Dec 14 13:53:14 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-	* docs/rtcorba/architecture.html:
+        * docs/rtcorba/architecture.html:
 
-	  Added description and comparison of two designs.
+          Added description and comparison of two designs.
 
 Thu Dec 14 11:39:55 2000  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -64,7 +69,7 @@ Wed Dec 13 23:57:42 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp:
 
-          Fixed a warning in MSVC about */*...*/ being mistakenly 
+          Fixed a warning in MSVC about */*...*/ being mistakenly
           recognized as a */ found outside a comment.
 
 Wed Dec 13 23:56:58 2000  Ossama Othman  <ossama@uci.edu>
@@ -190,7 +195,7 @@ Wed Dec 13 19:06:43 2000  Ossama Othman  <ossama@uci.edu>
           As dictated by the Portable Interceptor specification, return a
           CORBA::BAD_PARAM() if an IOP::ServiceContext with the given
           ServiceId doesn't exist.
-          
+
         * tao/ClientRequestInfo.inl:
 
           New file that contains short non-virtual methods.
@@ -277,11 +282,11 @@ Wed Dec 13 18:12:01 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 Wed Dec 13 17:57:28 2000  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-        * orbsvcs/tests/AVStreams/Multicast/ftp.cpp: 
-        * orbsvcs/tests/AVStreams/Pluggable/ftp.cpp: 
-        * orbsvcs/tests/AVStreams/benchmark/client.cpp: 
-        * orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp: 
-        * orbsvcs/orbsvcs/AV/AV_Core.cpp: 
+        * orbsvcs/tests/AVStreams/Multicast/ftp.cpp:
+        * orbsvcs/tests/AVStreams/Pluggable/ftp.cpp:
+        * orbsvcs/tests/AVStreams/benchmark/client.cpp:
+        * orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp:
+        * orbsvcs/orbsvcs/AV/AV_Core.cpp:
 
           Fixed compile warnings.
 
