@@ -55,7 +55,7 @@ TAO_NS_FlatFileWriter::operator <<(
   if (this->fout_ != 0)
     {
       ACE_OS::fprintf(this->fout_, "%u\n%s\n%d\n",
-                      context_name.length(),
+                      ACE_static_cast(unsigned int, context_name.length()),
                       context_name.c_str(),
                       size);
       ACE_OS::fflush(this->fout_);
@@ -76,23 +76,25 @@ TAO_NS_FlatFileWriter::operator <<(
 
       ACE_CString id = record.id();
 
-      ACE_OS::fprintf(this->fout_, "%u\n%s\n", id.length(), id.c_str());
+      ACE_OS::fprintf(this->fout_, "%u\n%s\n",
+                      ACE_static_cast (unsigned int, id.length()),
+                      id.c_str ());
 
       ACE_CString kind = record.kind();
       ACE_OS::fprintf(this->fout_, "%u\n%s\n",
-                      kind.length(),
+                      ACE_static_cast(unsigned int, kind.length()),
                       kind.c_str());
 
       ACE_CString ior = record.ior();
 
       ACE_OS::fprintf(this->fout_, "%u\n%s\n",
-                      ior.length(),
+                      ACE_static_cast(unsigned int, ior.length()),
                       ior.c_str());
 
       ACE_CString context_binding = record.context_binding();
 
       ACE_OS::fprintf(this->fout_, "%u\n%s\n",
-                      context_binding.length(),
+                      ACE_static_cast(unsigned int, context_binding.length()),
                       context_binding.c_str());
 
       ACE_OS::fflush(this->fout_);
