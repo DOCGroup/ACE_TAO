@@ -39,7 +39,7 @@
 // TAO_IDL - Generated from
 // be\be_visitor_typecode/struct_typecode.cpp:34
 
-static TAO::TypeCode::Struct_Field<char const *>  * const _tao_fields_PortableServer_Current_NoContext = 0;
+static TAO::TypeCode::Struct_Field<char const *> const * const _tao_fields_PortableServer_Current_NoContext = 0;
 static TAO::TypeCode::Struct<char const *,
                              TAO::TypeCode::Struct_Field<char const *> const *,
                              CORBA::tk_except,

@@ -38,7 +38,7 @@
 #include "tao/Any_Basic_Impl_T.h"
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/enum_typecode.cpp:34
+// be\be_visitor_typecode/enum_typecode.cpp:34
 
 static TAO::TypeCode::Enumerator<char const *> const _tao_enumerators_PortableServer_LifespanPolicyValue[] =
   {
@@ -65,7 +65,7 @@ namespace PortableServer
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/objref_typecode.cpp:73
+// be\be_visitor_typecode/objref_typecode.cpp:73
 
 static TAO::TypeCode::Objref<char const *,
                              CORBA::tk_local_interface,
@@ -83,7 +83,7 @@ namespace PortableServer
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_enum/any_op_cs.cpp:52
+// be\be_visitor_enum/any_op_cs.cpp:52
 
 void operator<<= (
     CORBA::Any &_tao_any,
@@ -111,7 +111,7 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/any_op_cs.cpp:50
+// be\be_visitor_interface/any_op_cs.cpp:50
 
 template<>
 CORBA::Boolean

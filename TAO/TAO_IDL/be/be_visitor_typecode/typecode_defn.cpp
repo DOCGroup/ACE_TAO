@@ -745,7 +745,7 @@ be_visitor_typecode_defn::visit_interface_fwd (be_interface_fwd * node)
         }
 
       os << "extern ::CORBA::TypeCode_ptr const _tc_"
-         << node->local_name ();
+         << node->local_name () << ";";
 
       if (this->gen_nested_namespace_end (module) == -1)
         {
