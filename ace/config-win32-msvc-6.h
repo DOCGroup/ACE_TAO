@@ -155,6 +155,8 @@
 // Inheritance by dominance is A-OK by us
 # pragma warning (disable:4250)
 
+// Disable warning about long names (due to templates).
+# pragma warning( disable : 4786 )
 
 # if !defined(ACE_HAS_WINCE)
 #  if defined(ACE_HAS_DLL) && (ACE_HAS_DLL != 0)
