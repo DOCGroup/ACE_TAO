@@ -1,3 +1,10 @@
+Mon Mar 13 18:20:11 2000  Darrell Brunsch  <brunsch@uci.edu>
+
+        * orbsvcs/orbscvs/orbsvcs.dsp:
+        * orbsvcs/orbsvcs/orbsvcs_static.dsp:
+          The CR/LF's were missing from the files.  Redid Pradeeps
+          changes.  
+
 Mon Mar 13 17:48:23 2000  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
 	* orbsvcs/tests/AVStreams/Pluggable/server.h: 
