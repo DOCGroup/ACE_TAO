@@ -1,3 +1,11 @@
+Fri Aug  6 21:29:14 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tests/Makefile:
+	  The Faults test does not compile under minimum corba
+
+	* orbsvcs/orbsvcs/Event/Event_Channel.cpp:
+	  Fixed warnings on single threaded environments.
+
 Fri Aug  6 20:51:07 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/examples/RtEC/Schedule/Schedule.h:
