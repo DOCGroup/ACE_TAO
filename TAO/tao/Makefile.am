@@ -93,7 +93,7 @@ ORB_CORE_FILES = \
   DLL_Parser.cpp \
   FILE_Parser.cpp \
   Object.cpp \
-  ObjectIDList.cpp \
+  ObjectIdListC.cpp \
   ORB.cpp \
   corbafwd.cpp \
   Policy_ForwardC.cpp \
@@ -320,7 +320,7 @@ HEADER_FILES = \
   ORB_Core.h \
   ORB_Table.h \
   Object.h \
-  ObjectIDList.h \
+  ObjectIdListC.h \
   Object_Adapter.h \
   Object_KeyC.h \
   Operation_Table.h \
@@ -458,7 +458,7 @@ INLINE_FILES = \
   ORB_Core.i \
   ORB_Table.inl \
   Object.i \
-  ObjectIDList.i \
+  ObjectIdListC.i \
   Object_Adapter.i \
   Object_KeyC.i \
   POA.i \
