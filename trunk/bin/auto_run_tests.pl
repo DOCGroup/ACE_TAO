@@ -10,15 +10,17 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use English;
 use Getopt::Std;
 
-if (!getopts ('ac:') || $opt_h) {
-    print "run_test.pl [-h] [-c config]\n";
+if (!getopts ('ac:s:t') || $opt_h) {
+    print "run_test.pl [-a] [-c config] [-h] [-s sandbox] [-t]\n";
     print "\n";
     print "Runs the tests listed in auto_run_tests.lst\n";
     print "\n";
     print "Options:\n";
-    print "    -a         ACE tests only\n";
-    print "    -c config  Run the tests for the <config> configuration\n";
-    print "    -h         display this help\n";
+    print "    -a          ACE tests only\n";
+    print "    -c config   Run the tests for the <config> configuration\n";
+    print "    -h          display this help\n";
+    print "    -s sandbox  Runs each program using a sandbox program\n";
+    print "    -t          TAO tests only\n";
     print "\n";
     print "Configs: MSVC\n";
     exit (1);
@@ -85,6 +87,9 @@ foreach $test (@tests) {
     if ($opt_a && $test =~ /^TAO/) {
         next;
     }
+    elsif ($opt_t && $test !~ /^TAO/) {
+        next;
+    }
 
     if ($test =~ /(.*)\/([^\/]*)$/) {
         $directory = $1;
@@ -106,9 +111,16 @@ foreach $test (@tests) {
         next;
     }
 
-    my $result = system ($program);
+    my $result = 0;
+
+    if ($opt_s) {
+        $result = system ("$opt_s \"perl $program\"");
+    } 
+    else { 
+        $result = system ($program);
+    }
 
     if ($result > 0) {
-        print "Error: $test returned with status $status\n";
+        print "Error: $test returned with status $result\n";
     }
 }
