@@ -89,7 +89,7 @@ namespace TAO
     /// Populate the given @a CORBA::Any result argument.
     /**
      * @note The default implementation is a no-op.
-     */ 
+     */
     virtual void interceptor_result (CORBA::Any *);
     //@}
 

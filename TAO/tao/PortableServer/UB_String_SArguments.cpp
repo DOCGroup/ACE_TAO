@@ -11,10 +11,10 @@ ACE_RCSID (tao,
 template class TAO::SArg_Traits<CORBA::String>;
 template class TAO::SArg_Traits<CORBA::WString>;
 
-template class TAO::UB_String_SArg_Traits_T<CORBA::Char, 
-                                            CORBA::String_var, 
+template class TAO::UB_String_SArg_Traits_T<CORBA::Char,
+                                            CORBA::String_var,
                                             CORBA::String_out>;
-template class TAO::UB_String_SArg_Traits_T<CORBA::WChar, 
+template class TAO::UB_String_SArg_Traits_T<CORBA::WChar,
                                             CORBA::WString_var,
                                             CORBA::WString_out>;
 
