@@ -14,7 +14,7 @@
 //
 // ImplRepo related.
 //
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_CORBA == 0)
 # include "tao/ImplRepoC.h"
 # include "tao/ImplRepoS.h"
 # include "tao/Acceptor_Registry.h"
@@ -24,7 +24,7 @@
 //
 // ImplRepo related.
 //
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_CORBA == 0)
 
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.
@@ -79,7 +79,7 @@ private:
 
 ACE_RCSID(tao, POA, "$Id$")
 
-#if !defined (TAO_NO_IOR_TABLE)
+#if (TAO_NO_IOR_TABLE == 0)
 // This is the TAO_Object_key-prefix that is appended to all TAO Object keys.
 // It's an array of octets representing ^t^a^o/0 in octal.
 CORBA::Octet
@@ -117,7 +117,7 @@ TAO_POA::TAO_POA (const TAO_POA::String &name,
 //
 // ImplRepo related.
 //
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_CORBA == 0)
 
     server_object_ (0),
     use_imr_ (1),
@@ -187,7 +187,7 @@ TAO_POA::TAO_POA (const TAO_POA::String &name,
 //
 // ImplRepo related.
 //
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_CORBA == 0)
   if (this->policies_.lifespan () == PortableServer::PERSISTENT)
     {
       int temp = this->use_imr_;
@@ -507,7 +507,7 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
 //
 // ImplRepo related.
 //
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_CORBA == 0)
   if (this->policies_.lifespan () == PortableServer::PERSISTENT)
   {
     this->imr_notify_shutdown ();
@@ -1791,7 +1791,7 @@ TAO_POA::id_to_reference_i (const PortableServer::ObjectId &id,
 //
 // Forwarding related.
 //
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_CORBA == 0)
 
 void
 TAO_POA::forward_object_i (const PortableServer::ObjectId &oid,
@@ -2189,7 +2189,7 @@ TAO_POA::parse_key (const TAO_ObjectKey &key,
   // Get the object key octets.
   const CORBA::Octet *key_data = key.get_buffer ();
 
-#if !defined (TAO_NO_IOR_TABLE)
+#if (TAO_NO_IOR_TABLE == 0)
   // Skip the object key prefix since we have already checked for
   // this.
   starting_at += TAO_OBJECTKEY_PREFIX_SIZE;
@@ -2252,7 +2252,7 @@ TAO_POA::parse_key (const TAO_ObjectKey &key,
   // Skip past the persistent indicator
   starting_at += TAO_POA::persistent_key_type_length ();
 
-#if !defined (POA_NO_TIMESTAMP)
+#if (POA_NO_TIMESTAMP == 0)
   // Grab the timestamp for transient POAs.
   if (!is_persistent)
     {
@@ -2318,7 +2318,7 @@ TAO_POA::create_object_key (const PortableServer::ObjectId &id)
 {
   // Calculate the prefix size.
   CORBA::ULong prefix_size = 0;
-#if !defined (TAO_NO_IOR_TABLE)
+#if (TAO_NO_IOR_TABLE == 0)
   prefix_size += TAO_OBJECTKEY_PREFIX_SIZE;
 #endif /* TAO_NO_IOR_TABLE */
 
@@ -2349,7 +2349,7 @@ TAO_POA::create_object_key (const PortableServer::ObjectId &id)
   // Calculate the space required for the timestamp and the persistent
   // byte.
   CORBA::ULong creation_time = this->persistent_key_type_length ();
-#if !defined (POA_NO_TIMESTAMP)
+#if (POA_NO_TIMESTAMP == 0)
   // Calculate the space required for the timestamp.
   CORBA::ULong creation_time_length = TAO_Creation_Time::creation_time_length ();
   if (!this->persistent_)
@@ -2373,7 +2373,7 @@ TAO_POA::create_object_key (const PortableServer::ObjectId &id)
   // Keeps track of where the next infomation goes; start at 0 byte.
   CORBA::ULong starting_at = 0;
 
-#if !defined (TAO_NO_IOR_TABLE)
+#if (TAO_NO_IOR_TABLE == 0)
   // Add the object key prefix.
   ACE_OS::memcpy (&buffer[starting_at],
                   &objectkey_prefix[0],
@@ -2394,7 +2394,7 @@ TAO_POA::create_object_key (const PortableServer::ObjectId &id)
   buffer[starting_at] = (CORBA::Octet) this->persistent_key_type ();
   starting_at += this->persistent_key_type_length ();
 
-#if !defined (POA_NO_TIMESTAMP)
+#if (POA_NO_TIMESTAMP == 0)
   // Then copy the timestamp for transient POAs.
   if (!this->persistent ())
     {
@@ -3609,7 +3609,7 @@ TAO_POA::key_to_object (const TAO_ObjectKey &key,
 //
 // ImplRepo related.
 //
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_CORBA == 0)
 
   if (this->use_imr_
       && this->policies_.lifespan () == PortableServer::PERSISTENT)
@@ -3682,7 +3682,7 @@ orbkey:
 //
 // ImplRepo related.
 //
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_CORBA == 0)
 
 void
 TAO_POA::imr_notify_startup (CORBA_Environment &ACE_TRY_ENV)
@@ -3807,7 +3807,7 @@ template class ACE_Array_Base<PortableServer::ObjectId>;
 //
 // Forwarding related.
 //
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_CORBA == 0)
 
 template class ACE_Auto_Basic_Ptr<TAO_Forwarding_Servant>;
 template class auto_ptr<TAO_Forwarding_Servant>;
@@ -3849,7 +3849,7 @@ template class ACE_Node<TAO_POA *>;
 //
 // Forwarding related.
 //
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_CORBA == 0)
 
 #pragma instantiate ACE_Auto_Basic_Ptr<TAO_Forwarding_Servant>
 #pragma instantiate auto_ptr<TAO_Forwarding_Servant>

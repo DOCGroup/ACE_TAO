@@ -352,7 +352,7 @@ be_visitor_operation_cs::gen_marshal_and_invoke (be_operation *node,
       << ");\n";
 
   // fish out the interceptor from the ORB
-  *os << "\n#if defined (TAO_HAS_INTERCEPTORS)" << be_nl
+  *os << "\n#if (TAO_HAS_INTERCEPTORS == 1)" << be_nl
       << "TAO_ClientRequestInterceptor_Adapter" << be_idt_nl
       << "_tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));\n" 
       << be_uidt;
@@ -698,7 +698,7 @@ be_visitor_operation_cs::gen_marshal_and_invoke (be_operation *node,
       << be_uidt_nl << "}\n";
 
   // Generate exception occurred interceptor code
-  *os << "#if defined (TAO_HAS_INTERCEPTORS)" << be_nl
+  *os << "#if (TAO_HAS_INTERCEPTORS == 1)" << be_nl
       << be_uidt_nl << "}" << be_uidt_nl
       << "ACE_CATCHANY" << be_idt_nl
       << "{" << be_idt_nl

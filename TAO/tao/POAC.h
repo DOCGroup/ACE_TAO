@@ -202,7 +202,7 @@ TAO_NAMESPACE PortableServer{
 
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ObjectId;
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_CORBA == 0)
 
 #if !defined (_PORTABLESERVER_FORWARDREQUEST_CH_)
 #define _PORTABLESERVER_FORWARDREQUEST_CH_
@@ -2256,7 +2256,7 @@ TAO_Export void operator<<= (CORBA::Any &, PortableServer::ObjectId*); // noncop
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, PortableServer::ObjectId *&); // deprecated
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const PortableServer::ObjectId *&);
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_CORBA == 0)
 
 TAO_Export void operator<<= (CORBA::Any &, const PortableServer::ForwardRequest &); // copying version
 TAO_Export void operator<<= (CORBA::Any &, PortableServer::ForwardRequest*); // noncopying version
@@ -2471,7 +2471,7 @@ TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, PortableServer::Current_pt
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const PortableServer::Current::NoContext &); //
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, PortableServer::Current::NoContext &);
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_CORBA == 0)
 
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const PortableServer::ForwardRequest &);
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, PortableServer::ForwardRequest &);

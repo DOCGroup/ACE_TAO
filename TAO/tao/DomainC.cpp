@@ -169,7 +169,7 @@ const char* CORBA_DomainManager::_interface_repository_id (void) const
   return "IDL:omg.org/CORBA/DomainManager:1.0";
 }
 
-#if ! defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_CORBA == 0)
 
 CORBA::ConstructionPolicy_ptr CORBA::ConstructionPolicy::_narrow (
     CORBA::Object_ptr obj,
@@ -409,7 +409,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::DomainManager_ptr
 # pragma instantiate TAO_Object_Manager<CORBA_DomainManager,CORBA_DomainManager_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-#if ! defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_CORBA == 0)
 
 void
 CORBA_ConstructionPolicy::_tao_any_destructor (void *x)

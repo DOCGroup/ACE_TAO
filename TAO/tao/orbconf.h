@@ -38,17 +38,19 @@
 #define TAO_NULL_LOCK_REACTOR ACE_Select_Reactor_T< ACE_Select_Reactor_Token_T<ACE_Noop_Token> >
 #endif /* TAO_NULL_LOCK_REACTOR */
 
-//#define POA_NO_TIMESTAMP
-//
 // Define this if you don't want POA timestamps in the IOR.  Remember,
 // without timestamps, transient and persistent POA cannot be
 // distinguished
+#if !defined (POA_NO_TIMESTAMP)
+# define POA_NO_TIMESTAMP 0
+#endif /* POA_NO_TIMESTAMP */
 
-//#define TAO_USE_DOTTED_DECIMAL_ADDRESSES
-//
 // If set the ORB will use dotted decimal addresses in the IORs it
 // exports, this is useful for platforms or environments that cannot
 // depend on a DNS beign available.
+#if !defined (TAO_USE_DOTTED_DECIMAL_ADDRESSES)
+# define TAO_USE_DOTTED_DECIMAL_ADDRESSES 0
+#endif /* TAO_USE_DOTTED_DECIMAL_ADDRESSES */
 
 // The default arguments of the resource factory for the fake service
 // configurator
@@ -358,7 +360,9 @@ enum MCAST_SERVICEID
 #define TAO_HAS_VALUETYPE
 
 // Minimum CORBA
-// #define TAO_HAS_MINIMUM_CORBA
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+# define TAO_HAS_MINIMUM_CORBA 0
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
 // UIOP support is enabled by default if the platform supports UNIX
 // domain sockets, and TAO is not configured for minimum CORBA.
@@ -394,7 +398,7 @@ enum MCAST_SERVICEID
 
 // Default RT_CORBA settings
 #if !defined (TAO_HAS_RT_CORBA)
-#  if defined (TAO_HAS_MINIMUM_CORBA)
+#  if (TAO_HAS_MINIMUM_CORBA == 1)
 #    define TAO_HAS_RT_CORBA 0
 #  else
 #    define TAO_HAS_RT_CORBA 1
@@ -411,7 +415,7 @@ enum MCAST_SERVICEID
 
 // Default MINIMUM_POA settings
 #if !defined (TAO_HAS_MINIMUM_POA)
-#  if defined (TAO_HAS_MINIMUM_CORBA)
+#  if (TAO_HAS_MINIMUM_CORBA == 1)
 #    define TAO_HAS_MINIMUM_POA 1
 #  else
 #    define TAO_HAS_MINIMUM_POA 0
@@ -445,7 +449,7 @@ enum MCAST_SERVICEID
 
 // Default CORBA_MESSAGING settings
 #if !defined (TAO_HAS_CORBA_MESSAGING)
-#  if defined (TAO_HAS_MINIMUM_CORBA)
+#  if (TAO_HAS_MINIMUM_CORBA == 1)
 #    define TAO_HAS_CORBA_MESSAGING 0
 #  else
 #    define TAO_HAS_CORBA_MESSAGING 1
@@ -725,7 +729,7 @@ enum MCAST_SERVICEID
 
 // Default REMOTE_POLICIES settings
 #if !defined (TAO_HAS_REMOTE_POLICIES)
-#  if defined (TAO_HAS_MINIMUM_CORBA)
+#  if (TAO_HAS_MINIMUM_CORBA == 1)
 #    define TAO_HAS_REMOTE_POLICIES 0
 #  else
 #    define TAO_HAS_REMOTE_POLICIES 1
@@ -744,17 +748,29 @@ and should not be set by the user. Please use TAO_HAS_REMOTE_POLICIES instead.
 # define TAO_HAS_LOCALITY_CONSTRAINT_POLICIES
 #endif /* TAO_HAS_REMOTE_POLICIES */
 
-#if defined (TAO_HAS_MINIMUM_CORBA)
 // With minimum CORBA, we don't have the ForwardRequest exception.
-// Therefore, we can't support the INS forwarding agent.
-# if !defined (TAO_NO_IOR_TABLE)
-#  define TAO_NO_IOR_TABLE
+// Therefore, we can't support the INS forwarding agent.  Otherwise,
+// we allow user to supress it.
+#if (TAO_HAS_MINIMUM_CORBA == 1)
+# if defined (TAO_NO_IOR_TABLE)
+#   undef TAO_NO_IOR_TABLE
 # endif /* TAO_NO_IOR_TABLE */
+# define TAO_NO_IOR_TABLE 1
 #else
+# if !defined (TAO_NO_IOR_TABLE)
+#  define TAO_NO_IOR_TABLE 0
+# endif /* TAO_NO_IOR_TABLE */
+#endif /* TAO_HAS_MINIMUM_CORBA */
+
 // Interceptors is supported by default if we are not building for
 // MinimumCORBA.
-# define TAO_HAS_INTERCEPTORS
-#endif /* TAO_HAS_MINIMUM_CORBA */
+#if !defined (TAO_HAS_INTERCEPTORS)
+# if (TAO_HAS_MINIMUM_CORBA == 1)
+#   define TAO_HAS_INTERCEPTORS 0
+# else
+#   define TAO_HAS_INTERCEPTORS 1
+# endif /* TAO_HAS_MINIMUM_CORBA */
+#endif
 
 // Define the policy types as literals, so they can be used in switch
 // statements

@@ -36,7 +36,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
 # define TAO_INTERCEPTOR(X) X
 # define TAO_INTERCEPTOR_CHECK ACE_TRY_CHECK
 # define TAO_INTERCEPTOR_CHECK_RETURN(X) ACE_TRY_CHECK
@@ -50,7 +50,7 @@
 # define TAO_INTERCEPTOR_THROW_RETURN(X,Y) ACE_THROW_RETURN(X,Y)
 #endif /* TAO_HAS_INTERCEPTORS */
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
 class TAO_Export TAO_ClientRequestInterceptor_Adapter
 {
   // = TITLE

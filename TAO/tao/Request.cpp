@@ -2,7 +2,7 @@
 
 #include "tao/Request.h"
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_CORBA == 0)
 
 #include "tao/Object.h"
 #include "tao/Stub.h"

@@ -542,7 +542,7 @@ TAO_GIOP_Message_Lite::
       response_required = request.response_expected ();
       sync_with_server = request.sync_with_server ();
       
-#if !defined (TAO_NO_IOR_TABLE)
+#if (TAO_NO_IOR_TABLE == 0)
       const CORBA::Octet *object_key =
         request.object_key ().get_buffer ();
       
@@ -603,7 +603,7 @@ TAO_GIOP_Message_Lite::
                                                      );
       ACE_TRY_CHECK;
     }
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_CORBA == 0)
   ACE_CATCH (PortableServer::ForwardRequest, forward_request)
     {
       // Make the GIOP header and Reply header
@@ -765,7 +765,7 @@ TAO_GIOP_Message_Lite::
       if (parse_error != 0)
         ACE_TRY_THROW (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
                                        CORBA::COMPLETED_NO));
-#if !defined (TAO_NO_IOR_TABLE)
+#if (TAO_NO_IOR_TABLE == 0)
 
       const CORBA::Octet *object_key =
         locate_request.target_address ().object_key ().get_buffer ();
@@ -881,7 +881,7 @@ TAO_GIOP_Message_Lite::
 
     }
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_CORBA == 0)
   ACE_CATCH (PortableServer::ForwardRequest, forward_request)
     {
       status_info.status = TAO_GIOP_OBJECT_FORWARD;

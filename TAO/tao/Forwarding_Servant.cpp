@@ -2,7 +2,7 @@
 
 #include "tao/Forwarding_Servant.h"
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_CORBA == 0)
 
 #include "tao/Object.h"
 #include "tao/POAC.h"

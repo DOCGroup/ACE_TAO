@@ -49,7 +49,7 @@
 //
 // ImplRepo related.
 //
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_CORBA == 0)
 // Implementation Repository
 #  include "tao/ImplRepoC.h"
 #endif /* TAO_HAS_MINIMUM_CORBA */
@@ -463,7 +463,7 @@ public:
 //
 // Forwarding related.
 //
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_CORBA == 0)
 
   void forward_object (const PortableServer::ObjectId &oid,
                        CORBA::Object_ptr forward_to,
@@ -559,7 +559,7 @@ protected:
 //
 // ImplRepo related.
 //
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_CORBA == 0)
 
   void imr_notify_startup (CORBA_Environment &ACE_TRY_ENV);
   // ImplRepo helper method, notify the ImplRepo on startup
@@ -631,7 +631,7 @@ protected:
 //
 // Forwarding related.
 //
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_CORBA == 0)
 
   void forward_object_i (const PortableServer::ObjectId &oid,
                          CORBA::Object_ptr forward_to,
@@ -744,7 +744,7 @@ protected:
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_CORBA == 0)
 
   ServerObject_i *server_object_;
   // Implementation Repository Server Object

@@ -7,7 +7,7 @@
 // Information about TAO is available at:
 //                 http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#if defined (TAO_HAS_INTERCEPTORS)
+#if (TAO_HAS_INTERCEPTORS == 1)
 
 ACE_INLINE
 PortableInterceptor::Cookie::Cookie (void) // default constructor

@@ -55,7 +55,7 @@ parse_args (int argc, char *argv[])
   return 0;
 }
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_CORBA == 0)
 
 class DII_Client
 {
@@ -150,7 +150,7 @@ main (int argc, char *argv[])
                             1);
         }
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_CORBA == 0)
 
       DII_Client client;
       client.set (server.in ());
@@ -186,7 +186,7 @@ main (int argc, char *argv[])
 
 // ****************************************************************
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_CORBA == 0)
 
 DII_Client::DII_Client (void)
 {

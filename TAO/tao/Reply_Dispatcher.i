@@ -40,7 +40,7 @@ TAO_Asynch_Reply_Dispatcher::transport (TAO_Transport *t)
 
 //*********************************************************************
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_CORBA == 0)
 
 ACE_INLINE CORBA::ULong
 TAO_DII_Deferred_Reply_Dispatcher::reply_status (void) const

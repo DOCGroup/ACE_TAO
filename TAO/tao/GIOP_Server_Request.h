@@ -61,7 +61,7 @@ public:
   virtual ~TAO_GIOP_ServerRequest (void);
   // Destructor.
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_CORBA == 0)
 
   // = General ServerRequest operations
   void arguments (CORBA::NVList_ptr &list,
@@ -203,7 +203,7 @@ private:
   int lazy_evaluation_;
   // If zero then the NVList is evaluated ASAP.
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_CORBA == 0)
 
   CORBA::NVList_ptr params_;
   // Incoming parameters.
