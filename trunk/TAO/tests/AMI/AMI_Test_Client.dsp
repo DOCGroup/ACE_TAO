@@ -128,7 +128,7 @@ InputPath=.\ami_test.idl
 InputName=ami_test
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -Ge 1 -GC $(InputName).idl
+	..\..\..\bin\Release\tao_idl -Ge 1 -GC $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)

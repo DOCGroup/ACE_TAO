@@ -1,3 +1,11 @@
+Mon May  1 10:27:48 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * bin/auto_compile_win32.pl:
+          
+          Some minor changes that should make the Win32 builds clean
+          ( which I want to see once before bugging Nanbor to switch
+          to my script :-) )
+
 Mon May 01 02:06:02 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Malloc_T.cpp (avail_chunks): Changed to use do-while loop to
