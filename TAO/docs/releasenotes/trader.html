@@ -477,6 +477,8 @@ TAO_CATCH (CosTrading::UnknownServiceType, excp)
     // Now we'll try again to register the offer.
     offer_id = reg-&gt;export (object_ref, type, this-&gt;tprops_, _env);
     TAO_CHECK_ENV_RETURN (_env, 0);
+
+    TAO_TRY_ENV.clear ();
   }
 TAO_CATCHANY
   {
