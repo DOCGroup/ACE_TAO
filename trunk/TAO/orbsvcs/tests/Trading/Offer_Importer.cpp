@@ -1,8 +1,10 @@
 // $Id$
 #include "Offer_Importer.h"
 
-TAO_Offer_Importer::TAO_Offer_Importer (CosTrading::Lookup_ptr lookup_if)
-  : lookup_ (lookup_if)
+TAO_Offer_Importer::TAO_Offer_Importer (CosTrading::Lookup_ptr lookup_if,
+                                        CORBA::Boolean verbose)
+  : verbose_ (verbose),
+    lookup_ (lookup_if)
 {
 }
 
@@ -56,19 +58,27 @@ TAO_Offer_Importer::perform_directed_queries (CORBA::Environment& _env)
   policies.return_card (16*NUM_OFFERS);
   policies.link_follow_rule (CosTrading::local_only);
 
-  ACE_DEBUG ((LM_DEBUG, "Obtaining link interface.\n"));
+  if (this->verbose_)
+    ACE_DEBUG ((LM_DEBUG, "Obtaining link interface.\n"));
   CosTrading::Link_var link_if = this->lookup_->link_if (_env);
   TAO_CHECK_ENV_RETURN_VOID (_env);
 
-  ACE_DEBUG ((LM_DEBUG, "Obtaining references to traders directly"
-              " linked to the root trader.\n"));
+  if (this->verbose_)
+    {
+      ACE_DEBUG ((LM_DEBUG, "Obtaining references to traders directly"
+                  " linked to the root trader.\n"));
+    }
   CosTrading::LinkNameSeq_var link_name_seq = link_if->list_links (_env);
   TAO_CHECK_ENV_RETURN_VOID (_env);
   
   if (link_name_seq->length () > 0)
     {
-      ACE_DEBUG ((LM_DEBUG, "Getting link information for %s\n",
-                  ACE_static_cast (const char*, link_name_seq[0])));
+      if (this->verbose_)
+        {
+          ACE_DEBUG ((LM_DEBUG, "Getting link information for %s\n",
+                      ACE_static_cast (const char*, link_name_seq[0])));
+        }
+      
       CosTrading::Link::LinkInfo_var link_info =
         link_if->describe_link (link_name_seq[0], _env);
       TAO_CHECK_ENV_RETURN_VOID (_env);
@@ -105,9 +115,12 @@ TAO_Offer_Importer::perform_directed_queries (CORBA::Environment& _env)
               CosTrading::LinkName* trader_name =
                 CosTrading::TraderName::allocbuf (2);
 
-              ACE_DEBUG ((LM_DEBUG, "First stop %s, destination %s.\n",
-                          ACE_static_cast (const char*, link_name_seq[0]),
-                          ACE_static_cast (const char*, link_name_seq2[i])));
+              if (this->verbose_)
+                {
+                  ACE_DEBUG ((LM_DEBUG, "First stop %s, destination %s.\n",
+                              ACE_static_cast (const char*, link_name_seq[0]),
+                              ACE_static_cast (const char*, link_name_seq2[i])));
+                }
               
               trader_name[0] = CORBA::string_dup (link_name_seq[0]);
               trader_name[1] = CORBA::string_dup (link_name_seq2[i]);
@@ -193,19 +206,24 @@ perform_queries_with_policies (const TAO_Policy_Manager& policies,
           CosTrading::OfferSeq_var offer_seq (offer_seq_ptr);
           CosTrading::OfferIterator_var offer_iterator (offer_iterator_ptr);
           CosTrading::PolicyNameSeq_var limits_applied (limits_applied_ptr);
-          ACE_DEBUG ((LM_DEBUG, "*** Results:\n\n"));
-          
-          this->display_results (*offer_seq_ptr,
-                                 offer_iterator_ptr,
-                                 TAO_TRY_ENV);
-          TAO_CHECK_ENV;
-          
-          if (limits_applied_out->length () > 0)
-            ACE_DEBUG ((LM_DEBUG, "*** Limits Applied:\n\n"));
-          
-          for (int length = limits_applied_out->length (), j = 0; j < length; j++)
+
+          if (this->verbose_)
             {
-              ACE_DEBUG ((LM_DEBUG, "%s\n", (const char *)(*limits_applied_out)[j]));
+              ACE_DEBUG ((LM_DEBUG, "*** Results:\n\n"));          
+              this->display_results (*offer_seq_ptr,
+                                     offer_iterator_ptr,
+                                     TAO_TRY_ENV);
+              TAO_CHECK_ENV;
+              
+              if (limits_applied_out->length () > 0)
+                ACE_DEBUG ((LM_DEBUG, "*** Limits Applied:\n\n"));
+              
+              for (int length = limits_applied_out->length (), j = 0; j < length; j++)
+                {
+                  ACE_DEBUG ((LM_DEBUG, "%s\n",
+                              ACE_static_cast (const char *,
+                                               (*limits_applied_out)[j])));
+                }
             }
         }
     }
@@ -225,7 +243,9 @@ TAO_Offer_Importer::display_results (const CosTrading::OfferSeq& offer_seq,
 {
   TAO_TRY
     {
-      ACE_DEBUG ((LM_DEBUG, "  Offers in the sequence:\n"));
+      ACE_DEBUG ((LM_DEBUG, "------------------------------\n"));
+      ACE_DEBUG ((LM_DEBUG, "Offers in the sequence:\n"));
+      ACE_DEBUG ((LM_DEBUG, "------------------------------\n"));
       for (int length = offer_seq.length (), i = 0; i < length; i++)
         {
           // Call back to the exported object.
@@ -242,8 +262,10 @@ TAO_Offer_Importer::display_results (const CosTrading::OfferSeq& offer_seq,
         }
       
       ACE_DEBUG ((LM_DEBUG, "  Offers in the iterator:\n"));
+      ACE_DEBUG ((LM_DEBUG, "------------------------------\n"));
       if (! CORBA::is_nil (offer_iterator))
 	{
+          CORBA::ULong length = offer_seq.length ();
 	  CORBA::Boolean any_left = CORBA::B_FALSE;
 
 	  do

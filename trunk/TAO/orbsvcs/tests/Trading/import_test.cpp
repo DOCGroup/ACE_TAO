@@ -4,20 +4,23 @@
 #include "tao/TAO.h"
 #include "Offer_Importer.h"
 
-int
-is_federated (int argc, char *argv[])
+void
+parse_args (int argc, char *argv[],
+            CORBA::Boolean& federated,
+            CORBA::Boolean& verbose)
 {
   int opt;
-  ACE_Get_Opt get_opt (argc, argv, "f");
+  ACE_Get_Opt get_opt (argc, argv, "fq");
 
-  CORBA::Boolean return_value = CORBA::B_FALSE;
+  verbose = CORBA::B_TRUE;
+  federated = CORBA::B_FALSE;
   while ((opt = get_opt ()) != EOF)
     {
       if (opt == 'f')
-        return_value = CORBA::B_TRUE;
+        federated = CORBA::B_TRUE;
+      else if (opt == 'q')
+        verbose = CORBA::B_FALSE;
     }
-
-  return return_value;
 }
 
 int
@@ -28,12 +31,14 @@ main (int argc, char** argv)
       TAO_ORB_Manager orb_manager;
       orb_manager.init (argc, argv, TAO_TRY_ENV);
       TAO_CHECK_ENV;
+
+      // Command line argument interpretation.
+      CORBA::Boolean federated = CORBA::B_FALSE,
+        verbose = CORBA::B_FALSE;
+      ::parse_args (argc, argv, federated, verbose);
       
-      // Initialize ORB.
+      // Initialize the ORB and bootstrap to the Lookup interface.
       CORBA::ORB_var orb = orb_manager.orb ();
-      CORBA::Boolean federated = ::is_federated (argc, argv);
-      
-      // Bootstrap to the Lookup interface.
       ACE_DEBUG ((LM_ERROR, "Bootstrap to the Lookup interface.\n"));
       CORBA::Object_var trading_obj =
 	orb->resolve_initial_references ("TradingService");
@@ -51,7 +56,7 @@ main (int argc, char** argv)
       
       // Run the Offer Importer tests
       ACE_DEBUG ((LM_DEBUG, "Running the Offer Importer tests.\n"));
-      TAO_Offer_Importer offer_importer (lookup_if);
+      TAO_Offer_Importer offer_importer (lookup_if, verbose);
       
       offer_importer.perform_queries (TAO_TRY_ENV);
       TAO_CHECK_ENV;

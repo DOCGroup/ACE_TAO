@@ -8,20 +8,23 @@
 #include "orbsvcs/Trader/Trader.h"
 #include "orbsvcs/Trader/Service_Type_Repository.h"
 
-int
-is_federated (int argc, char *argv[])
+void
+parse_args (int argc, char *argv[],
+            CORBA::Boolean& federated,
+            CORBA::Boolean& verbose)
 {
   int opt;
-  ACE_Get_Opt get_opt (argc, argv, "f");
+  ACE_Get_Opt get_opt (argc, argv, "fq");
 
-  CORBA::Boolean return_value = CORBA::B_FALSE;
+  verbose = CORBA::B_TRUE;
+  federated = CORBA::B_FALSE;
   while ((opt = get_opt ()) != EOF)
     {
       if (opt == 'f')
-        return_value = CORBA::B_TRUE;
+        federated = CORBA::B_TRUE;
+      else if (opt == 'q')
+        verbose = CORBA::B_FALSE;
     }
-
-  return return_value;
 }
 
 
@@ -34,7 +37,12 @@ main (int argc, char** argv)
       orb_manager.init (argc, argv, TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      CORBA::Boolean federated = ::is_federated (argc, argv);
+      // Command line argument interpretation.
+      CORBA::Boolean federated = CORBA::B_FALSE,
+        verbose = CORBA::B_FALSE;
+      ::parse_args (argc, argv, federated, verbose);
+
+      // Init the orb and bootstrap to the trading service.
       CORBA::ORB_var orb = orb_manager.orb ();
       ACE_DEBUG ((LM_ERROR, "*** Bootstrap to the Lookup interface.\n"));
       CORBA::Object_var trading_obj =
@@ -54,6 +62,7 @@ main (int argc, char** argv)
       // Run the Service Type Exporter tests
       ACE_DEBUG ((LM_DEBUG, "*** Running the Service Type Exporter tests.\n"));
       TAO_Service_Type_Exporter type_exporter (lookup_if.ptr (),
+                                               verbose,
                                                TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
@@ -86,9 +95,11 @@ main (int argc, char** argv)
 
       // Run the Offer Exporter tests
       ACE_DEBUG ((LM_DEBUG, "*** Running the Offer Exporter tests.\n"));
-      TAO_Offer_Exporter offer_exporter (lookup_if, TAO_TRY_ENV);
+      TAO_Offer_Exporter offer_exporter (lookup_if, verbose, TAO_TRY_ENV);
       TAO_CHECK_ENV;
-	    
+
+      // = Test series.
+      
       offer_exporter.withdraw_offers (TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
@@ -98,17 +109,17 @@ main (int argc, char** argv)
       offer_exporter.describe_offers (TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      //      offer_exporter.modify_offers (TAO_TRY_ENV);
-      //TAO_CHECK_ENV;
+      offer_exporter.modify_offers (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
-      //offer_exporter.describe_offers (TAO_TRY_ENV);
-      //TAO_CHECK_ENV;
+      offer_exporter.describe_offers (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
-      //offer_exporter.withdraw_offers_using_constraints (TAO_TRY_ENV);
-      //TAO_CHECK_ENV;
+      offer_exporter.withdraw_offers_using_constraints (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
-      //offer_exporter.describe_offers (TAO_TRY_ENV);
-      //TAO_CHECK_ENV;      
+      offer_exporter.describe_offers (TAO_TRY_ENV);
+      TAO_CHECK_ENV;      
 
       offer_exporter.withdraw_offers (TAO_TRY_ENV);
       TAO_CHECK_ENV;      

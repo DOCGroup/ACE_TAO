@@ -19,7 +19,8 @@ const char* TT_Info::REMOTE_IO_PROPERTY_NAMES[] =
   "Location",
   "Description",
   "Host_Name",
-  "Trader_Name"
+  "Trader_Name",
+  "Miscellaneous"
 };
 
 const char* TT_Info::PLOTTER_NAME = "Plotter";

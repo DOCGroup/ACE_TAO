@@ -3,8 +3,10 @@
 
 TAO_Service_Type_Exporter::
 TAO_Service_Type_Exporter (CosTrading::Lookup_ptr lookup_if,
+                           CORBA::Boolean verbose,
                            CORBA::Environment& _env)
-  : lookup_ (lookup_if)
+  : verbose_ (verbose),
+    lookup_ (lookup_if)
 {  
   // Obtain the Service Type Repository.
   CosTrading::TypeRepository_ptr obj = lookup_if->type_repos (_env);
@@ -221,7 +223,11 @@ TAO_Service_Type_Exporter::list_all_types (CORBA::Environment& _env)
       
       for (int i = type_names->length () - 1; i >= 0; i--)
 	{
-	  ACE_DEBUG ((LM_DEBUG, "type name: %s\n", (const char *)type_names[i]));
+          if (this->verbose_)
+            {
+              ACE_DEBUG ((LM_DEBUG, "type name: %s\n",
+                          ACE_static_cast (const char *, type_names[i])));
+            }
 	}
     }
   TAO_CATCHANY
@@ -250,8 +256,11 @@ TAO_Service_Type_Exporter::describe_all_types (CORBA::Environment& _env)
 					 TAO_TRY_ENV);
 	  TAO_CHECK_ENV;
 
-	  this->dump_typestruct (TT_Info::INTERFACE_NAMES[i], type_struct.in ());
-          ACE_DEBUG ((LM_DEBUG, "------------------------------\n"));
+          if (this->verbose_)
+            {
+              this->dump_typestruct (TT_Info::INTERFACE_NAMES[i], type_struct.in ());
+              ACE_DEBUG ((LM_DEBUG, "------------------------------\n"));
+            }
 	}
     }
   TAO_CATCHANY
@@ -280,9 +289,12 @@ TAO_Service_Type_Exporter::fully_describe_all_types (CORBA::Environment& _env)
 					       TAO_TRY_ENV);
 	  TAO_CHECK_ENV;
 
-	  this->dump_typestruct (TT_Info::INTERFACE_NAMES[i], type_struct.in ());
-          ACE_DEBUG ((LM_DEBUG, "------------------------------\n"));
-	}
+          if (this->verbose_)
+            {
+              this->dump_typestruct (TT_Info::INTERFACE_NAMES[i], type_struct.in ());
+              ACE_DEBUG ((LM_DEBUG, "------------------------------\n"));
+            }
+        }
     }
   TAO_CATCHANY
     {
@@ -328,7 +340,7 @@ void
 TAO_Service_Type_Exporter::create_types (void)
 {
   TT_Info::Remote_Output ro;
-  this->type_structs_[TT_Info::REMOTE_IO].props.length (5);
+  this->type_structs_[TT_Info::REMOTE_IO].props.length (6);
   this->type_structs_[TT_Info::REMOTE_IO].props[0].name       =
     TT_Info::REMOTE_IO_PROPERTY_NAMES[TT_Info::NAME];
   this->type_structs_[TT_Info::REMOTE_IO].props[0].value_type =
@@ -340,13 +352,13 @@ TAO_Service_Type_Exporter::create_types (void)
   this->type_structs_[TT_Info::REMOTE_IO].props[1].value_type =
     CORBA::TypeCode::_duplicate (CORBA::_tc_string);
   this->type_structs_[TT_Info::REMOTE_IO].props[1].mode       =
-    CosTradingRepos::ServiceTypeRepository::PROP_NORMAL;
+    CosTradingRepos::ServiceTypeRepository::PROP_MANDATORY;
   this->type_structs_[TT_Info::REMOTE_IO].props[2].name       =
     TT_Info::REMOTE_IO_PROPERTY_NAMES[TT_Info::DESCRIPTION];
   this->type_structs_[TT_Info::REMOTE_IO].props[2].value_type =
     CORBA::TypeCode::_duplicate (CORBA::_tc_string);
   this->type_structs_[TT_Info::REMOTE_IO].props[2].mode       =
-    CosTradingRepos::ServiceTypeRepository::PROP_MANDATORY;
+    CosTradingRepos::ServiceTypeRepository::PROP_NORMAL;
   this->type_structs_[TT_Info::REMOTE_IO].props[3].name       =
     TT_Info::REMOTE_IO_PROPERTY_NAMES[TT_Info::HOST_NAME];
   this->type_structs_[TT_Info::REMOTE_IO].props[3].value_type =
@@ -358,6 +370,12 @@ TAO_Service_Type_Exporter::create_types (void)
   this->type_structs_[TT_Info::REMOTE_IO].props[4].value_type =
     CORBA::TypeCode::_duplicate (CORBA::_tc_string);
   this->type_structs_[TT_Info::REMOTE_IO].props[4].mode       =
+    CosTradingRepos::ServiceTypeRepository::PROP_NORMAL;
+  this->type_structs_[TT_Info::REMOTE_IO].props[5].name       =
+    TT_Info::REMOTE_IO_PROPERTY_NAMES[TT_Info::MISCELLANEOUS];
+  this->type_structs_[TT_Info::REMOTE_IO].props[5].value_type =
+    CORBA::TypeCode::_duplicate (CORBA::_tc_string);
+  this->type_structs_[TT_Info::REMOTE_IO].props[5].mode       =
     CosTradingRepos::ServiceTypeRepository::PROP_NORMAL;
 
   this->type_structs_[TT_Info::REMOTE_IO].if_name =    
