@@ -194,7 +194,7 @@ public:
   // These are passed to the constructor of ACE_TPQ_Entry in
   // make_TSS_TYPE
 
-  ~ACE_TSS_TPQ_Entry (void);
+  virtual ~ACE_TSS_TPQ_Entry (void);
   // Destructor.
 
   virtual ACE_TPQ_Entry *make_TSS_TYPE (void) const;
@@ -210,7 +210,7 @@ public:
   ACE_TPQ_Entry *operator-> (void)
     {
       return (ACE_TPQ_Entry *) this;
-    } 
+    }
 #endif /* ACE_NO_TSS_TOKENS */
 
 private:
