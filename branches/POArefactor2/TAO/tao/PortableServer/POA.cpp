@@ -2828,7 +2828,7 @@ TAO_POA::Key_To_Object_Params::set (PortableServer::ObjectId_var &system_id,
 CORBA::ULong
 TAO_POA::waiting_servant_deactivation (void) const
 {
-  return this->active_policy_strategies_.servant_retention_strategy()->
+  return this->active_policy_strategies_.servant_retention_strategy ()->
           waiting_servant_deactivation ();
 }
 
@@ -2846,6 +2846,12 @@ TAO_POA::get_policy (CORBA::PolicyType policy
   return this->policies_.get_policy (policy ACE_ENV_ARG_PARAMETER);
 }
 
+void
+TAO_POA::check_state (ACE_ENV_SINGLE_ARG_DECL)
+{
+  this->active_policy_strategies_.lifespan_strategy ()->
+    check_state (ACE_ENV_SINGLE_ARG_PARAMETER);
+}
 
 const char *
 TAO_POA::ort_adapter_factory_name (void)

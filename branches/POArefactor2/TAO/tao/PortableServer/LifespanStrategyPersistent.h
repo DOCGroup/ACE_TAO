@@ -52,6 +52,9 @@ namespace TAO
       validate (CORBA::Boolean is_persistent,
                 const TAO::Portable_Server::Temporary_Creation_Time& creation_time) const;
 
+      /// Check the state of the POA.
+      virtual void check_state (ACE_ENV_SINGLE_ARG_DECL);
+
     private:
       /// @name Implementation repository related methods
       //@{

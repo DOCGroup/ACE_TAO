@@ -552,6 +552,9 @@ public:
 
   int is_poa_generated_id (const PortableServer::ObjectId &id);
 
+  /// Check the state of this POA
+  void check_state (ACE_ENV_SINGLE_ARG_DECL);
+
 protected:
 
 #if (TAO_HAS_MINIMUM_POA == 0)

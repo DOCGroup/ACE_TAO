@@ -65,9 +65,12 @@ namespace TAO
       virtual void create_key (CORBA::Octet *buffer, CORBA::ULong& starting_at) = 0;
 
       /// Validate whether this matches the set lifespan strategy
-      virtual
-      bool validate (CORBA::Boolean is_persistent,
-                     const TAO::Portable_Server::Temporary_Creation_Time& creation_time) const = 0;
+      virtual bool validate (
+        CORBA::Boolean is_persistent,
+        const TAO::Portable_Server::Temporary_Creation_Time& creation_time) const = 0;
+
+      /// Check the state of the POA.
+      virtual void check_state (ACE_ENV_SINGLE_ARG_DECL) = 0;
 
     protected:
       TAO_POA *poa_;

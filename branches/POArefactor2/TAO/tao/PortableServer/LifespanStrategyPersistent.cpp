@@ -10,6 +10,7 @@ ACE_RCSID (PortableServer,
 #include "tao/PortableServer/ImplRepo_i.h"
 #include "tao/PortableServer/ImplRepoC.h"
 #include "tao/PortableServer/POA.h"
+#include "tao/PortableServer/POAManager.h"
 #include "tao/ORB_Core.h"
 #include "tao/Stub.h"
 #include "tao/Profile.h"
@@ -239,6 +240,12 @@ namespace TAO
 
     LifespanStrategyPersistent::~LifespanStrategyPersistent ()
     {
+    }
+
+    void
+    LifespanStrategyPersistent::check_state (ACE_ENV_SINGLE_ARG_DECL)
+    {
+      this->poa_->tao_poa_manager().check_state (ACE_ENV_SINGLE_ARG_PARAMETER);
     }
   } /* namespace Portable_Server */
 } /* namespace TAO */

@@ -8,6 +8,9 @@ ACE_RCSID (PortableServer,
 
 #include "ace/OS_NS_sys_time.h"
 #include "ace/OS_NS_string.h"
+#include "tao/PortableServer/POAManager.h"
+#include "tao/PortableServer/POA.h"
+#include "tao/ORB_Constants.h"
 #include "Creation_Time.h"
 
 namespace TAO
@@ -89,6 +92,21 @@ namespace TAO
       // used. This still needs some work, but I want to get those info out of
       // the POA.
       return 'T';
+    }
+
+    void
+    LifespanStrategyTransient::check_state (ACE_ENV_SINGLE_ARG_DECL)
+    {
+      if (this->poa_->tao_poa_manager().get_state () ==
+            PortableServer::POAManager::INACTIVE)
+      {
+        ACE_THROW (CORBA::OBJECT_NOT_EXIST (CORBA::OMGVMCID | 4,
+                                            CORBA::COMPLETED_NO));
+      }
+      else
+      {
+        this->poa_->tao_poa_manager().check_state (ACE_ENV_SINGLE_ARG_PARAMETER);
+      }
     }
   } /* namespace Portable_Server */
 } /* namespace TAO */

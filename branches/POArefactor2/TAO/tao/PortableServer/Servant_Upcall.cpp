@@ -5,7 +5,6 @@
 #include "tao/PortableServer/POA.h"
 #include "tao/PortableServer/Default_Servant_Dispatcher.h"
 #include "tao/PortableServer/Collocated_Object_Proxy_Broker.h"
-#include "tao/PortableServer/POAManager.h"
 #include "tao/PortableServer/Active_Object_Map.h"
 
 // -- TAO Include --
@@ -118,8 +117,8 @@ namespace TAO
                                          ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (TAO_Adapter::DS_FAILED);
 
-      // Check the state of the POA Manager.
-      this->poa_->tao_poa_manager().check_state (ACE_ENV_SINGLE_ARG_PARAMETER);
+      // Check the state of the POA.
+      this->poa_->check_state (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (TAO_Adapter::DS_FAILED);
 
       // Setup current for this request.
