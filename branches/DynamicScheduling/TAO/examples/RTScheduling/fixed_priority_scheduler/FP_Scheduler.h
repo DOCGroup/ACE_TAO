@@ -4,7 +4,7 @@
 #define FIXED_PRIORITY_SCHEDULER_H
 
 #include "tao/RTScheduling/RTSchedulerC.h"
-#include "FP_SchedulingC.h"
+#include "../FP_SchedulingC.h"
 
 class Segment_Sched_Param_Policy:
 public FP_Scheduling::SegmentSchedulingParameterPolicy,
@@ -13,7 +13,7 @@ public FP_Scheduling::SegmentSchedulingParameterPolicy,
  public:
   virtual RTCORBA::Priority value (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual void value (RTCORBA::Priority value)
     ACE_THROW_SPEC ((CORBA::SystemException));
  private:
@@ -25,12 +25,12 @@ public FP_Scheduling::FP_Scheduler,
 public TAO_Local_RefCounted_Object
 {
  public:
-  
+
   Fixed_Priority_Scheduler (CORBA::ORB_ptr orb);
 
   ~Fixed_Priority_Scheduler (void);
 
-  virtual FP_Scheduling::SegmentSchedulingParameterPolicy_ptr 
+  virtual FP_Scheduling::SegmentSchedulingParameterPolicy_ptr
     create_segment_scheduling_parameter (RTCORBA::Priority segment_priority)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -41,15 +41,15 @@ public TAO_Local_RefCounted_Object
 					     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException,
 		     RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE));
-  
+
   virtual void begin_nested_scheduling_segment (const RTScheduling::Current::IdType & guid,
 						const char * name,
 						CORBA::Policy_ptr sched_param,
 						CORBA::Policy_ptr implicit_sched_param
 						ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException, 
+    ACE_THROW_SPEC ((CORBA::SystemException,
 		     RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE));
-  
+
   virtual void update_scheduling_segment (const RTScheduling::Current::IdType & guid,
 					  const char * name,
 					  CORBA::Policy_ptr sched_param,
@@ -57,12 +57,12 @@ public TAO_Local_RefCounted_Object
 					  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException,
 		     RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE));
-    
+
   virtual void end_scheduling_segment (const RTScheduling::Current::IdType & guid,
 				       const char * name
 				       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
-    
+
   virtual void end_nested_scheduling_segment (const RTScheduling::Current::IdType & guid,
 					      const char * name,
 					      CORBA::Policy_ptr outer_sched_param
@@ -82,7 +82,7 @@ public TAO_Local_RefCounted_Object
 				ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException,
 		     PortableInterceptor::ForwardRequest));
-    
+
   virtual void send_reply (PortableInterceptor::ServerRequestInfo_ptr ri
 			   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -91,48 +91,48 @@ public TAO_Local_RefCounted_Object
 			       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException,
 		     PortableInterceptor::ForwardRequest));
-    
+
   virtual void send_other (PortableInterceptor::ServerRequestInfo_ptr ri
 			   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException,
 		     PortableInterceptor::ForwardRequest));
-    
+
   virtual void receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri
 			      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
-    
+
   virtual void receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri
 				  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException,
 		     PortableInterceptor::ForwardRequest));
-    
+
   virtual void receive_other (PortableInterceptor::ClientRequestInfo_ptr ri
 			      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException,
 		     PortableInterceptor::ForwardRequest));
-    
+
   virtual void cancel (const RTScheduling::Current::IdType & guid
 		       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::PolicyList * scheduling_policies (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
-    
+
   virtual void scheduling_policies (const CORBA::PolicyList & scheduling_policies
 				    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
-      
+
   virtual CORBA::PolicyList * poa_policies (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
-    
+
   virtual char * scheduling_discipline_name (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
-    
+
   virtual RTScheduling::ResourceManager_ptr create_resource_manager (const char * name,
 								     CORBA::Policy_ptr scheduling_parameter
 								     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
-    
+
   virtual void set_scheduling_parameter (PortableServer::Servant & resource,
 					 const char * name,
 					 CORBA::Policy_ptr scheduling_parameter
@@ -146,6 +146,3 @@ public TAO_Local_RefCounted_Object
 };
 
 #endif //FIXED_PRIORITY_SCHEDULER_H
-
-
-

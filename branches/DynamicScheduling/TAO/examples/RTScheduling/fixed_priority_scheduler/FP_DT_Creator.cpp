@@ -7,18 +7,26 @@
 FP_DT_Creator::FP_DT_Creator (void)
 {
   DT_TEST::instance ()->dt_creator (this);
+
 }
 
 Thread_Task* 
 FP_DT_Creator::create_thr_task (int importance,
 				int start_time,
-				int load)
+				int load,
+				int iter,
+				int dist,
+				char *job_name
+				ACE_ENV_ARG_DECL)
 {
   FP_Task* task;
   ACE_NEW_RETURN (task, 
 		  FP_Task (importance,
 			   start_time,
 			   load,
+			   iter,
+			   dist,
+			   job_name,
 			   this),
 			   0);
   return task;
@@ -43,13 +51,19 @@ FP_DT_Creator::sched_param (int importance)
 
 void
 FP_DT_Creator::yield (int suspend_time,
-		      Thread_Task *)
+		      Thread_Task*)
 {
   //    ACE_DEBUG ((LM_DEBUG,
   //  	      "%d\n",
   //  	      suspend_time));
-  
+
   ACE_OS::sleep (suspend_time);
+}
+
+int
+FP_DT_Creator::total_load (void)
+{
+  return BUFSIZ;
 }
 
 ACE_STATIC_SVC_DEFINE(FP_DT_Creator,

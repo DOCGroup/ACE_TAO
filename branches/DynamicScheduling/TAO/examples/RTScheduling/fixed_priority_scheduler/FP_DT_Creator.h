@@ -5,7 +5,7 @@
 
 #include "../DT_Creator.h"
 #include "fp_dt_creator_export.h"
-
+#include "../Task.h"
 
 class FP_DT_Creator_Export FP_DT_Creator: public DT_Creator
 {
@@ -17,10 +17,16 @@ public:
   //virtual Task* task (void);
   virtual Thread_Task* create_thr_task (int importance,
 					int start_time,
-					int load);
+					int load,
+					int iter,
+					int dist,
+					char *job_name);
   
   virtual void yield (int suspend_time,
 		      Thread_Task* task);
+
+  virtual int total_load (void);
+
 };
 
 
