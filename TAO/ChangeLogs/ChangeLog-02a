@@ -1,3 +1,13 @@
+Thu Mar  1 10:51:14 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tests/Codec/client.cpp:
+
+	  Fixed compiler warnings.
+
+	* tests/Codec/Makefile:
+
+	  Fixed typo, and updated dependencies.
+
 Thu Mar  1 10:39:49 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/ClientRequestInfo.inl (forward_reference):
