@@ -28,7 +28,9 @@ static ACE_Malloc<ACE_SHARED_MEMORY_POOL, ACE_SV_Semaphore_Simple> allocator;
 
 const int SEM_KEY_1 = ACE_DEFAULT_SEM_KEY + 1;
 const int SEM_KEY_2 = ACE_DEFAULT_SEM_KEY + 2;
+
 const int SHMSZ = 27;
+const char SHMDATA[SHMSZ] = "abcdefghijklmnopqrstuvwxyz";
 
 static int
 parent (char *shm)
@@ -42,12 +44,8 @@ parent (char *shm)
   ACE_ASSERT (synch.open (SEM_KEY_2,
 			   ACE_SV_Semaphore_Complex::ACE_CREATE, 0) != -1);
 
-  char *s = shm;
-
-  for (char c = 'a'; c <= 'z'; c++)
-    *s++ = c;
-
-  *s = '\0';
+  for (int i = 0; i < SHMSZ; i++)
+    shm[i] = SHMDATA[i];
 
   if (mutex.release () == -1)
     ACE_ERROR ((LM_ERROR, "(%P) %p", "parent mutex.release"));
@@ -81,12 +79,8 @@ child (char *shm)
     else
       ACE_ERROR_RETURN ((LM_ERROR, "(%P) child mutex.tryacquire"), 1);
 
-  char t = 'a';
-  for (char *s = (char *) shm; *s != '\0'; s++)
-    {
-      ACE_ASSERT (t == s[0]);
-      t++;
-    }
+  for (int i = 0; i < SHMSZ; i++)
+    ACE_ASSERT (SHMDATA[i] == shm[i]);
 
   if (synch.release () == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "(%P) child synch.release"), 1);
