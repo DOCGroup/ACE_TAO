@@ -128,6 +128,7 @@
 
 #if (__GLIBC__  > 2)  || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 3)
 # define ACE_HAS_ISASTREAM_PROTO
+# define ACE_HAS_PTHREAD_SIGMASK_PROTO
 #endif /* __GLIBC__ > 2 || __GLIBC__ === 2 && __GLIBC_MINOR__ >= 3) */
 
 // Then the compiler specific parts
