@@ -133,15 +133,25 @@ AccountManager_i::shutdown (CORBA::Environment &)
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Hash_Map_Manager <ACE_CString,Account_i *,ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator <ACE_CString,Account_i *,ACE_Null_Mutex>;
+template class ACE_Hash_Map_Manager<ACE_CString,Account_i *,ACE_Null_Mutex>;
+template class ACE_Hash_Map_Manager_Ex<ACE_CString, Account_i *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator<ACE_CString,Account_i *,ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Ex<ACE_CString, Account_i *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Entry<ACE_CString, Account_i *>;
+template class ACE_Hash<ACE_CString>;
+template class ACE_Equal_To<ACE_CString>;
 template class ACE_Hash_Map_Reverse_Iterator<ACE_CString, Account_i *, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Base<ACE_CString, Account_i *, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, Account_i *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, Account_i *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Hash_Map_Manager <ACE_CString,Account_i *,ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator <ACE_CString,Account_i *,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Manager<ACE_CString,Account_i *,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_CString, Account_i *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator<ACE_CString,Account_i *,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_CString, Account_i *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Entry<ACE_CString, Account_i *>
+#pragma instantiate ACE_Hash<ACE_CString>
+#pragma instantiate ACE_Equal_To<ACE_CString>
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator<ACE_CString, Account_i *, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Base<ACE_CString, Account_i *, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, Account_i *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, Account_i *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

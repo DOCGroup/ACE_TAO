@@ -89,13 +89,30 @@ Fri Dec 25 01:55:32 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 	  tests/Conn_Test.cpp
 	  tests/Hash_Map_Manager_Test.cpp
 	  tests/Map_Manager_Test.cpp
+	  TAO/examples/Callback_Quoter/Notifier_i.cpp
+	  TAO/examples/POA/On_Demand_Loading/Servant_Manager.cpp
+	  TAO/examples/Simple/bank/AccountManager_i.cpp
+	  TAO/orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp
+	  TAO/orbsvcs/orbsvcs/Log/Logger_i.cpp
+	  TAO/orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp
+	  TAO/orbsvcs/orbsvcs/Trader/Service_Type_Repository.cpp
+	  TAO/orbsvcs/orbsvcs/Trader/Trader.cpp
+	  TAO/orbsvcs/orbsvcs/Trader/Trader_Utils.cpp
+	  TAO/tao/ORB.cpp
+	  TAO/tao/ORB_Core.cpp
+	  TAO/tao/Object_Table.cpp
+	  TAO/tao/Operation_Table.cpp
+	  TAO/tao/POA.cpp
+	  examples/Map_Manager/test_hash_map_manager.cpp
 	
 	  Thanks to Carlos for suggesting these changes.  Most of these
  	  were inspired by SGI's STL.	
 
 	  If these changes are successful (i.e., nobody is hunting me down
  	  for breaking their code ;-)), we should add a similar comparison
- 	  function object to Map_Manager.
+ 	  function object to Map_Manager, Collections in Containers_T that
+ 	  require an operator==() (typically for remove() and find()) and
+ 	  the RB_Tree.
 
 	* ace/ACE (hash_pjw): hash_pjw is now available for char *,
  	  wchar_t *, and ACE_UINT16 *.
