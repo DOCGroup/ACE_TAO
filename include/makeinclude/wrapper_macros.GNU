@@ -50,10 +50,10 @@
 #  static_link      Link only static libs to executables, e.g., uses "-static"
 #                   flag with the GNU ld linker.
 #  threads          Build with thread support.
-#  ace_xtreactor    Build the XtReactor.
-#  ace_flreactor    Build the FlReactor.
-#  ace_tkreactor    Build the TkReactor.
-#  ace_qtreactor    Build the QtReactor.
+#  xt               Build with Xt (X11 Toolkit) support.
+#  fl               Build with FlTk (Fast Light Toolkit) support.
+#  tk               Build with Tk (Tcl/Tk) support.
+#  qt               Build with Qt (Trolltech Qt) support.
 #  ssl              Build with OpenSSL support.
 #  rapi             Build with RAPI
 #  stlport          Build with STLPort support
@@ -253,10 +253,6 @@ ifndef static_libs
   static_libs = 0
 endif # static_libs
 
-#### The system has X Windows and we want to include the XtReactor in
-#### the library
-ace_xtreactor = 0
-
 #### Set up the build ACE version in case the platform_macros.GNU wants it.
 ACE_MAJOR_VERSION := $(shell awk '/ACE_MAJOR_VERSION/ { print $$3}' ${ACE_ROOT}/ace/Version.h)
 ACE_MINOR_VERSION := $(shell awk '/ACE_MINOR_VERSION/ { print $$3}' ${ACE_ROOT}/ace/Version.h)
@@ -440,47 +436,55 @@ ifeq ($(threads),0)
   override threads =
 endif # threads
 
-ifeq ($(ace_xtreactor),0)
-  override ace_xtreactor =
-endif # ace_xtreactor
+ifeq ($(xt),0)
+  override xt =
+endif # xt
 
-ifneq ($(ace_xtreactor),)
+ifneq ($(xt),)
   override x11=1
   override xt=1
-  ACE_MAKE_OPTIONS += ace_xtreactor
-endif # ace_xtreactor
+  override ace_xtreactor=1
+  override tao_xtresource=1
+  ACE_MAKE_OPTIONS += xt
+endif # xt
 
-ace_flreactor ?=
-ifeq ($(ace_flreactor),0)
-  override ace_flreactor =
-endif # ace_flreactor
+fl ?=
+ifeq ($(fl),0)
+  override fl =
+endif # fl
 
-ifneq ($(ace_flreactor),)
+ifneq ($(fl),)
   override x11=1
   override gl=1
-  ACE_MAKE_OPTIONS += ace_flreactor
-endif # ace_flreactor
+  override ace_flreactor=1
+  override tao_flresource=1
+  ACE_MAKE_OPTIONS += fl
+endif # fl
 
-ace_tkreactor ?=
-ifeq ($(ace_tkreactor),0)
-  override ace_tkreactor =
-endif # ace_tkreactor
+tk ?=
+ifeq ($(tk),0)
+  override tk =
+endif # tk
 
-ifneq ($(ace_tkreactor),)
+ifneq ($(tk),)
   override x11=1
   override tk=1
-  ACE_MAKE_OPTIONS += ace_tkreactor
-endif # ace_tkreactor
+  override ace_tkreactor=1
+  override tao_tkresource=1
+  ACE_MAKE_OPTIONS += tk
+endif # tk
 
-ace_qtreactor ?=
-ifeq ($(qt_reactor),0)
-  override ace_qtreactor =
-endif # ace_qtreactor
+qt ?=
+ifeq ($(qt),0)
+  override qt =
+endif # qt
 
-ifneq ($(ace_qtreactor),)
+ifneq ($(qt),)
   override qt=1
-  ACE_MAKE_OPTIONS += ace_qtreactor
-endif # ace_qtreactor
+  override ace_qtreactor=1
+  override tao_qtresource=1
+  ACE_MAKE_OPTIONS += qt
+endif # qt
 gtk_reactor ?=
 
 ifeq ($(gtk_reactor),0)
