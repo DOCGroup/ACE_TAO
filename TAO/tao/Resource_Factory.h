@@ -181,11 +181,21 @@ public:
   /// cache.
   virtual int purge_percentage (void) const;
 
+  /// Return the number of muxed connections that are allowed for a
+  /// remote endpoint
+  virtual int max_muxed_connections (void) const;
+
   virtual int get_parser_names (char **&names,
                                 int &number_of_names);
 
   /// Creates the lock for the lock needed in the Cache Map
+  /// @@todo: This method needs to go away as it doesnt make much
+  /// sense now.
   virtual ACE_Lock *create_cached_connection_lock (void);
+
+  /// Should the transport cache have a lock or not? Return 1 if the
+  /// transport cache needs to be locked  else return 0
+  virtual int locked_transport_cache (void);
 
   /// Creates the flushing strategy.  The new instance is owned by the
   /// caller.
