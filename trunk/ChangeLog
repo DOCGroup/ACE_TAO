@@ -1,3 +1,8 @@
+Thu Apr 11 08:30:11 UTC 2002  Don Hinton  <dhinton@ieee.org>
+
+	* ace/OS_String.inl (strnlen): 
+	Fixed compile error.
+
 Thu Apr 11 08:16:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Timer_Queue_T.cpp:
