@@ -11,6 +11,8 @@
 #include "ace/Timeprobe.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/High_Res_Timer.h"
+
 template <class ACE_LOCK>
 ACE_Timeprobe<ACE_LOCK>::ACE_Timeprobe (u_long size,
                                         ACE_Allocator *alloc)
@@ -42,7 +44,7 @@ ACE_Timeprobe<ACE_LOCK>::timeprobe (u_long event)
 
   this->timeprobes_[this->current_size_].event_.event_number_ = event;
   this->timeprobes_[this->current_size_].event_type_ = timeprobe_t::NUMBER;
-  this->timeprobes_[this->current_size_].time_ = ACE_OS::gettimeofday ();
+  this->timeprobes_[this->current_size_].time_ = ACE_OS::gethrtime ();
   this->timeprobes_[this->current_size_].thread_ = ACE_OS::thr_self ();
 
   this->current_size_++;
@@ -57,7 +59,7 @@ ACE_Timeprobe<ACE_LOCK>::timeprobe (const char *event)
 
   this->timeprobes_[this->current_size_].event_.event_description_ = event;
   this->timeprobes_[this->current_size_].event_type_ = timeprobe_t::STRING;
-  this->timeprobes_[this->current_size_].time_ = ACE_OS::gettimeofday ();
+  this->timeprobes_[this->current_size_].time_ = ACE_OS::gethrtime ();
   this->timeprobes_[this->current_size_].thread_ = ACE_OS::thr_self ();
 
   this->current_size_++;
@@ -82,7 +84,7 @@ ACE_Timeprobe<ACE_LOCK>::print_times (const char *event_descriptions[]) const
     return;
 
   ACE_DEBUG ((LM_DEBUG,
-              "\n%-50.50s %8.8s %10.10s\n\n",
+              "\n%-50.50s %8.8s %13.13s\n\n",
               "Event",
               "thread",
               "usec"));
@@ -94,15 +96,18 @@ ACE_Timeprobe<ACE_LOCK>::print_times (const char *event_descriptions[]) const
     description = event_descriptions[this->timeprobes_[0].event_.event_number_];
                                     
   ACE_DEBUG ((LM_DEBUG,
-              "%-50.50s %8.8x %10.10s\n",
+              "%-50.50s %8.8x %13.13s\n",
               description,
               this->timeprobes_[0].thread_,
               "START"));
 
   for (u_int i = 1; i < this->current_size_; i++)
     {
-      ACE_Time_Value elapsed =
+      ACE_hrtime_t time_difference = 
         this->timeprobes_[i].time_ - this->timeprobes_[i-1].time_;
+
+      float elapsed_time_in_micro_seconds = 
+        (float) time_difference / ACE_High_Res_Timer::global_scale_factor ();
 
       if (this->timeprobes_[i].event_type_ == timeprobe_t::STRING)
         description = this->timeprobes_[i].event_.event_description_;
@@ -110,10 +115,10 @@ ACE_Timeprobe<ACE_LOCK>::print_times (const char *event_descriptions[]) const
         description = event_descriptions[this->timeprobes_[i].event_.event_number_];
                                     
       ACE_DEBUG ((LM_DEBUG,
-                  "%-50.50s %8.8x %10.3d\n",
+                  "%-50.50s %8.8x %13.3f\n",
                   description,
                   this->timeprobes_[i].thread_,
-                  elapsed.msec () * 1000));
+                  elapsed_time_in_micro_seconds));
     }
 }
 

@@ -1,3 +1,7 @@
+Sat Apr 18 01:27:52 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/Timeprobe.h: Added more timeprobes to POA, ORB, and GIOP.
+
 Thu Apr 16 01:25:18 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* TAO: Change the use of time probes.  The new ACE scheme is now

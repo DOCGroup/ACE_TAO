@@ -94,7 +94,7 @@ protected:
     event_type event_type_;
     // Event type
 
-    ACE_Time_Value time_;
+    ACE_hrtime_t time_;
     // Timestamp
 
     ACE_thread_t thread_;

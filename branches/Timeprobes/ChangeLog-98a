@@ -1,3 +1,8 @@
+Sat Apr 18 01:28:36 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Timeprobe.h (class ACE_Timeprobe): Changed ACE_Timeprobe to
+ 	  use ACE_OS::gethrtime().
+
 Thu Apr 16 04:14:53 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/Timeprobe: 
