@@ -140,6 +140,10 @@
 // Linux has wcstok, but not the kind we are looking for.
 # define ACE_LACKS_WCSTOK
 
+#define ACE_LACKS_ITOW
+#define ACE_LACKS_WCSICMP
+#define ACE_LACKS_WCSNICMP
+
 #if !defined (ACE_DEFAULT_BASE_ADDR)
 # define ACE_DEFAULT_BASE_ADDR ((char *) 0x80000000)
 #endif /* ! ACE_DEFAULT_BASE_ADDR */
@@ -241,6 +245,8 @@
 #if !defined (ACE_NTRACE)
 # define ACE_NTRACE 1
 #endif /* ACE_NTRACE */
+
+#define ACE_SIZEOF_WCHAR 4
 
 #include "ace/post.h"
 
