@@ -691,7 +691,7 @@ operator () (TAO_DynSequence_i& dyn_any,
   int return_value = 0;
   TAO_TRY
     {
-      CORBA::Short value = dyn_any.get_float (TAO_TRY_ENV);
+      CORBA::Float value = dyn_any.get_float (TAO_TRY_ENV);
       TAO_CHECK_ENV;
       return_value = (value == element);
     }
