@@ -1,3 +1,12 @@
+Thu Sep 24 17:54:26 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/Asynch_IO.cpp: 
+	  Removed duplicate instantiation of a template, IRIX does not
+	  like this. Thanks to Ossama Othman
+	  <othman@astrosun.tn.cornell.edu> because his configure script
+	  detected the Asynch I/O calls on IRIX and enabled this ACE
+	  code.
+
 Thu Sep 24 16:28:32 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/config-win32-common.h: ACE_HAS_TEMPLATE_TYPEDEFS was defined

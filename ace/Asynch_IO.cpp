@@ -1974,12 +1974,10 @@ ACE_Service_Handler::open (ACE_HANDLE,
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Unbounded_Queue<ACE_Asynch_Accept::Result*>;
 template class ACE_Node<ACE_Asynch_Accept::Result*>;
-template class ACE_Unbounded_Queue<ACE_Asynch_Accept::Result*>;
 template class ACE_Unbounded_Queue_Iterator<ACE_Asynch_Accept::Result*>;
 #elif  defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Unbounded_Queue<ACE_Asynch_Accept::Result*>
 #pragma instantiate ACE_Node<ACE_Asynch_Accept::Result*>
-#pragma instantiate ACE_Unbounded_Queue<ACE_Asynch_Accept::Result*>
 #pragma instantiate ACE_Unbounded_Queue_Iterator<ACE_Asynch_Accept::Result*>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 #endif /* ACE_HAS_AIO_CALLS */
