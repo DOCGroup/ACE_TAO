@@ -1,3 +1,12 @@
+
+Sat Dec 11 13:51:14 2004  Marek Brudka  <mbrudka@aster.pl>
+
+	* include/makeinclude/wrapper_macros.GNU (Module):
+	* bin/MakeProjectCreator/config/ace_qt.mpb (Module):
+	* ACE-INSTALL.html (Module):
+	Give up using MPC::qt feature to simplify and make building
+	GUI reactor more uniform.
+
 Fri Dec 10 23:53:41 2004  Marek Brudka  <mbrudka@aster.pl>
 
 	* bin/MakeProjectCreator/config/global.features (Module):
