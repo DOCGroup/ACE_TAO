@@ -1,3 +1,7 @@
+Thu Dec 12 08:49:31 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* ace/Log_Msg.cpp: Fixed a warning in LynxOS builds.
+
 Thu Dec 12 06:18:02 2002  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/Parser.pm:
