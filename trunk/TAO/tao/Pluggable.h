@@ -317,6 +317,9 @@ public:
   virtual CORBA::ULong tag (void) = 0;
   // The tag, each concrete class will have a specific tag value.
 
+  virtual int close (void) = 0;
+  // Closes the acceptor
+
   virtual ~TAO_Acceptor (void);
   // Destructor
 };

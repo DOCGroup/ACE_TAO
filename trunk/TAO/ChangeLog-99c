@@ -1,3 +1,12 @@
+Thu May 20 15:00:37 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Pluggable.h:
+	* tao/IIOP_Acceptor.h:
+	* tao/IIOP_Acceptor.cpp:
+	* tao/default_resource.cpp:
+	  Added a close() method to the TAO_Acceptor class to orderly
+	  cleanup the resources on shutdown.
+
 Thu May 20 13:53:11 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/tests/Event/Basic/Makefile:

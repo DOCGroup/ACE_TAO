@@ -56,6 +56,9 @@ public:
   virtual ACE_Event_Handler *acceptor (void);
   // Return the underlying acceptor object, ACE_Acceptor
 
+  virtual int close (void);
+  // Closes the acceptor
+
 private:
   TAO_IIOP_BASE_ACCEPTOR base_acceptor_;
   // the concrete acceptor, as a pointer to it's base class.

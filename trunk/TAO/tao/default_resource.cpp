@@ -555,6 +555,7 @@ TAO_Allocated_Resources::~TAO_Allocated_Resources (void)
   delete this->object_adapter_;
 
   this->c_.close ();
+  this->a_.close ();
 
   delete this->r_;
 }
