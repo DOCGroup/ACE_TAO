@@ -10,7 +10,7 @@
 ACE_RCSID(tao, default_server, "$Id$")
 
 TAO_Default_Server_Strategy_Factory::TAO_Default_Server_Strategy_Factory (void)
-  : thread_flags_ (0),
+  : thread_flags_ (THR_BOUND),
     active_object_map_size_ (TAO_DEFAULT_SERVER_ACTIVE_OBJECT_MAP_SIZE),
     object_lookup_strategy_for_user_id_policy_ (TAO_DYNAMIC_HASH),
     object_lookup_strategy_for_system_id_policy_ (TAO_ACTIVE_DEMUX),

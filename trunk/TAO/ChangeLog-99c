@@ -1,3 +1,11 @@
+Sat Feb 06 01:20:53 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* performance-tests/Cubit/TAO/MT_Cubit/svc.conf: No need to
+	  specify THR_BOUND since it is now the default.
+
+	* tao/default_server.cpp (TAO_Default_Server_Strategy_Factory):
+	  Made THR_BOUND the default thread flags.
+
 Fri Feb 05 21:59:12 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
         * tao/CDR.{h,i,cpp}:
