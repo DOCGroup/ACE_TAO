@@ -1,3 +1,13 @@
+Thu Jan 07 04:06:51 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* Connect.cpp (check_unexpected_data): Made the checks for 0 and
+ 	  -1 from recv() the same. 0 is a graceful shutdown, while -1 is a
+ 	  somewhat ugly shutdown. Both will result in this function
+ 	  returning -1 and this connection getting closed.
+
+	* Invocation.cpp (invoke): Added asserts to check for failures in
+ 	  resume_handler().
+
 Wed Jan 06 16:44:06 1999  David L. Levine  <schmidt@cs.wustl.edu>
 
         * TAO version 0.2.47 released.

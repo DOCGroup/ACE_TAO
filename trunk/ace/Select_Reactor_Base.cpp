@@ -340,15 +340,27 @@ ACE_Select_Reactor_Handler_Repository::unbind (ACE_HANDLE handle,
         // We've deleted the last entry, so we need to figure out
         // the last valid place in the array that is worth looking
         // at.
-        ACE_HANDLE rd_max = this->select_reactor_.wait_set_.rd_mask_.max_set ();
-        ACE_HANDLE wr_max = this->select_reactor_.wait_set_.wr_mask_.max_set ();
-        ACE_HANDLE ex_max = this->select_reactor_.wait_set_.ex_mask_.max_set ();
+        ACE_HANDLE wait_rd_max = this->select_reactor_.wait_set_.rd_mask_.max_set ();
+        ACE_HANDLE wait_wr_max = this->select_reactor_.wait_set_.wr_mask_.max_set ();
+        ACE_HANDLE wait_ex_max = this->select_reactor_.wait_set_.ex_mask_.max_set ();
 
-        // Compute the maximum of three values.
-        this->max_handlep1_ = rd_max < wr_max ? wr_max : rd_max;
+        ACE_HANDLE suspend_rd_max = this->select_reactor_.suspend_set_.rd_mask_.max_set ();
+        ACE_HANDLE suspend_wr_max = this->select_reactor_.suspend_set_.wr_mask_.max_set ();
+        ACE_HANDLE suspend_ex_max = this->select_reactor_.suspend_set_.ex_mask_.max_set ();
 
-        if (this->max_handlep1_ < ex_max)
-          this->max_handlep1_ = ex_max;
+        // Compute the maximum of six values.
+        this->max_handlep1_ = wait_rd_max;
+        if (this->max_handlep1_ < wait_wr_max)
+          this->max_handlep1_ = wait_wr_max;
+        if (this->max_handlep1_ < wait_ex_max)
+          this->max_handlep1_ = wait_ex_max;
+
+        if (this->max_handlep1_ < suspend_rd_max)
+          this->max_handlep1_ = suspend_rd_max;
+        if (this->max_handlep1_ < suspend_wr_max)
+          this->max_handlep1_ = suspend_wr_max;
+        if (this->max_handlep1_ < suspend_ex_max)
+          this->max_handlep1_ = suspend_ex_max;
 
         this->max_handlep1_++;
       }
