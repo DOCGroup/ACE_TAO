@@ -40,7 +40,7 @@ Legend:
 [1101  ] POA/Explicit_Activation compiles
 [0100  ] 	POA/Explicit_Activation runs
 [x1xxx ] POA/Default_Servant compiles
-[xxxxx ] 	POA/Default_Servant runs
+[x0xxx ] 	POA/Default_Servant runs
 
 [1111x ] Param_Test compiles
 [111xx ] 	SII short
@@ -70,13 +70,13 @@ Legend:
 [1xx1x ] Logger compiles
 [xxx0x ] 	Logger runs
 [11x11 ] Scheduling_Service compiles
-[xxxxx ]        Scheduling_Service runs
+[x1xxx ]        Scheduling_Service runs
 [11x10 ] Event_Service compiles
-[xxxxx ]        Event_Service runs
+[x1xxx ]        Event_Service runs
 [11x10 ] Dump_Schedule compiles
-[xxxxx ]        Dump_Schedule runs
+[x1xxx ]        Dump_Schedule runs
 [11x11 ] Event_Latency compiles
-[x x0x ]        Event_Latency runs
+[x1x0x ]        Event_Latency runs
 
 [010100] MT_Cubit compiles
 [xxx0xx] 	runs for Octet
