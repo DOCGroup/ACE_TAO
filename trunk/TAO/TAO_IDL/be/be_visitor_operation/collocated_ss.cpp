@@ -155,7 +155,7 @@ int be_visitor_operation_collocated_ss::visit_operation (be_operation *node)
   if (node->argument_count () > 0)
     *os << ",\n";
   os->indent ();
-  *os << "_tao_environment";
+  *os << "ACE_TRY_ENV";
   // end the upcall
   *os << be_uidt_nl;
   *os << ");" << be_uidt_nl;

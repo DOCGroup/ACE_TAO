@@ -330,15 +330,15 @@ be_visitor_operation_cs::gen_raise_exception (be_type *bt,
   os->indent ();
   if (this->void_return_type (bt))
     {
-      *os << "TAO_THROW_ENV ("
-          << excep << " (" << completion_status << "), "
-          << "_tao_environment);\n";
+      *os << "ACE_THROW ("
+          << excep << " (" << completion_status << "));\n";
+      //        << "_tao_environment);\n";
     }
   else
     {
-      *os << "TAO_THROW_ENV_RETURN ("
-          << excep << " (" << completion_status << "), "
-          << "_tao_environment, ";
+      *os << "ACE_THROW_RETURN ("
+          << excep << " (" << completion_status << "), ";
+      //<< "_tao_environment, ";
       
       // return the appropriate return value
       ctx = *this->ctx_;
@@ -369,13 +369,13 @@ be_visitor_operation_cs::gen_check_exception (be_type *bt)
   // check if there is an exception
   if (this->void_return_type (bt))
     {
-      *os << "TAO_CHECK_ENV_RETURN_VOID ("
-          << "_tao_environment);\n";
+      *os << "ACE_CHECK;\n";
+      //<< "_tao_environment);\n";
     }
   else
     {
-      *os << "TAO_CHECK_ENV_RETURN ("
-          << "_tao_environment, ";
+      *os << "ACE_CHECK_RETURN (";
+      // << "_tao_environment, ";
       
       // return the appropriate return value
       ctx = *this->ctx_;
@@ -589,7 +589,7 @@ be_interpretive_visitor_operation_cs::gen_marshal_and_invoke (be_operation
   // call do_static_call with appropriate number of arguments
   os->indent ();
   *os << "istub->do_static_call (" << be_idt_nl
-      << "_tao_environment, " << be_nl
+      << "ACE_TRY_ENV, " << be_nl
       << "&";
   // check if we are an attribute node in disguise
   if (this->ctx_->attribute ())
@@ -696,7 +696,7 @@ be_compiled_visitor_operation_cs::gen_marshal_and_invoke (be_operation
   *os << "\"" << node->local_name () 
       << "\", TAO_ORB_Core_instance ());" << be_nl;
   // initialize the invocation
-  *os << "_tao_call.start (_tao_environment);\n";
+  *os << "_tao_call.start (ACE_TRY_ENV);\n";
 
   // check if there is an exception
   if (this->gen_check_exception (bt) == -1)
@@ -771,7 +771,7 @@ be_compiled_visitor_operation_cs::gen_marshal_and_invoke (be_operation
   if (node->flags () == AST_Operation::OP_oneway)
     {
       // oneway operation
-      *os << "_tao_call.invoke (_tao_environment);" << be_nl;
+      *os << "_tao_call.invoke (ACE_TRY_ENV);" << be_nl;
     }
   else
     {
@@ -780,11 +780,11 @@ be_compiled_visitor_operation_cs::gen_marshal_and_invoke (be_operation
           *os << "_tao_call.invoke (_tao_" << node->flatname () 
               << "_exceptiondata, "
               << node->exceptions ()->length ()
-              << ", _tao_environment);" << be_nl;
+              << ", ACE_TRY_ENV);" << be_nl;
         }
       else
         {
-          *os << "_tao_call.invoke (0, 0, _tao_environment);" << be_nl;
+          *os << "_tao_call.invoke (0, 0, ACE_TRY_ENV);" << be_nl;
         }
 
       *os << "// Exceptions will be caught here\n";
