@@ -50,8 +50,9 @@ ACE_Data_Block::flags (void) const
 }
 
 ACE_INLINE ACE_Allocator*
-ACE_Data_Block::data_block_allocator (void)
+ACE_Data_Block::data_block_allocator (void) const
 {
+  ACE_TRACE ("ACE_Message_Block::data_block_allocator");
   return this->data_block_allocator_;
 }
 
@@ -323,6 +324,13 @@ ACE_Message_Block::prev (void) const
 {
   ACE_TRACE ("ACE_Message_Block::prev");
   return this->prev_;
+}
+
+ACE_INLINE ACE_Allocator *
+ACE_Data_Block::allocator_strategy (void) const
+{
+  ACE_TRACE ("ACE_Data_Block::allocator_strategy");
+  return this->allocator_strategy_;
 }
 
 ACE_INLINE ACE_Lock *

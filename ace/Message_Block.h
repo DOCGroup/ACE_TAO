@@ -350,8 +350,9 @@ private:
 		     ACE_Allocator *data_block_allocator);
   // Perform the actual initialization.
 
-  ACE_Message_Block *release_i (ACE_Lock *lock);
+  int release_i (ACE_Lock *lock);
   // Internal release implementation
+  // Returns 1 if the data block has to be destroyed.
 
   int init_i (size_t size,
               ACE_Message_Type type,
@@ -454,9 +455,12 @@ public:
   // Set the total amount of space in the message.  Returns 0 if
   // successful, else -1.
 
-  ACE_Data_Block *clone (ACE_Message_Block::Message_Flags mask = 0) const;
+  virtual ACE_Data_Block *clone (ACE_Message_Block::Message_Flags mask = 0) const;
   // Return an exact "deep copy" of the message, i.e., create fresh
   // new copies of all the Data_Blocks and continuations.
+  // Notice that Data_Blocks can act as "Prototypes", i.e. derived
+  // classes can override this method and create instances of
+  // themselves.
 
   ACE_Data_Block *duplicate (void);
   // Return a "shallow" copy that increments our reference count by 1.
@@ -479,6 +483,9 @@ public:
   ACE_Message_Block::Message_Flags flags (void) const;
   // Get the current message flags.
 
+  ACE_Allocator *allocator_strategy (void) const;
+  // Obtain the allocator strategy.
+
   // = The locking strategy prevents race conditions.
   ACE_Lock *locking_strategy (void);
   // Get the locking strategy.
@@ -491,12 +498,21 @@ public:
   int reference_count (void) const;
   // Get the current reference count.
 
-  ACE_Allocator *data_block_allocator (void);
+  ACE_Allocator *data_block_allocator (void) const;
   // Get the allocator used to create this object
 
 private:
   ACE_Data_Block *release_i (void);
   // Internal release implementation
+
+  friend class ACE_Message_Block;
+  ACE_Data_Block *release_no_delete (ACE_Lock *lock);
+  // Decrease the reference count, but don't delete the object.
+  // Returns 0 if the object should be removed.
+  // If <lock> is equal to the locking strategy then we assume that
+  // the lock is beign held by the current thread; this is used to
+  // release all the data blocks in a chain while holding a single
+  // lock.
 
   ACE_Message_Block::ACE_Message_Type type_;
   // Type of message.
@@ -685,10 +701,10 @@ public:
   // Dump the state of the strategy.
 };
 
-
-
 #if defined (__ACE_INLINE__)
 #include "ace/Message_Block.i"
 #endif /* __ACE_INLINE__ */
+
+#include "ace/Message_Block_T.h"
 
 #endif /* ACE_MESSAGE_BLOCK_H */
