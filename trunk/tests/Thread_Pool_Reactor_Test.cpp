@@ -137,7 +137,7 @@ Request_Handler::handle_input (ACE_HANDLE fd)
   ssize_t result = this->peer ().recv (&len, sizeof (ACE_TCHAR));
 
   if (result > 0
-      && this->peer ().recv_n (buffer, len * sizeof (ACE_TCHAR)) 
+      && this->peer ().recv_n (buffer, len * sizeof (ACE_TCHAR))
           == ACE_static_cast (ssize_t, len * sizeof (ACE_TCHAR)))
     {
       ++this->nr_msgs_rcvd_;
@@ -168,9 +168,18 @@ Request_Handler::handle_close (ACE_HANDLE fd, ACE_Reactor_Mask)
     ACE_ERROR((LM_ERROR,
                "(%t) Handler 0x%x: Expected %d messages; got %d\n",
                this,
-               cli_req_no, 
+               cli_req_no,
                this->nr_msgs_rcvd_));
   this->destroy ();
+  return 0;
+}
+
+static int
+reactor_event_hook (void *)
+{
+  ACE_DEBUG ((LM_DEBUG,
+              "(%t) handling events ....\n"));
+
   return 0;
 }
 
@@ -178,20 +187,18 @@ static void *
 svr_worker (void *)
 {
   // Server thread function.
+  int result =
+    ACE_Reactor::instance ()->run_reactor_event_loop (&reactor_event_hook);
 
-  while (!ACE_Reactor::event_loop_done ())
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "(%t) handling events ....\n"));
-
-      if (ACE_Reactor::instance ()->handle_events () == -1)
-        ACE_ERROR ((LM_ERROR,
-                    "(%t) %p\n",
-                    "Error handling events"));
-    }
+  if (result == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "(%t) %p\n",
+                       "Error handling events"),
+                      0);
 
   ACE_DEBUG ((LM_DEBUG,
               "(%t) I am done handling events. Bye, bye\n"));
+
   return 0;
 }
 
@@ -342,7 +349,7 @@ main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Thread_Pool_Reactor_Test"));
 
-  ACE_ERROR ((LM_INFO, 
+  ACE_ERROR ((LM_INFO,
               "threads not supported on this platform\n"));
 
   ACE_END_TEST;
