@@ -21,7 +21,6 @@
 
 #include "tao/Protocol_Factory.h"
 
-#include "SSL_Context.h"
 #include "SSLIOP_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
