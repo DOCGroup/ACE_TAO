@@ -1,9 +1,15 @@
+Sun Nov 30 10:40:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* bin/MakeProjectCreator/modules/WorkspaceCreator.pm:
+	  When duplicates our not allowed and duplicates are found, then output
+	  an error instead of a warning
+
 Sun Nov 30 10:22:29 2003  Kobi Cohen-Arazi  <kobi-co@barak-online.net>
 
-	* tests/tests.dsw: 
-	* tests/Task_Ex_Test.icc: 
-	* tests/Task_Ex_Test.dsp: 
-	* tests/Makefile.am: 
+	* tests/tests.dsw:
+	* tests/Task_Ex_Test.icc:
+	* tests/Task_Ex_Test.dsp:
+	* tests/Makefile.am:
 	Added Task_Ex_Test to Makefile.am and tests.dsw
 	Added Task_Ex_Test.icc, Task_Ex_Test.dsp
 
