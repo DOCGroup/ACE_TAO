@@ -2556,10 +2556,10 @@ ACE_OS::inet_ntoa (const struct in_addr addr)
   // the following storage is not thread-specific!
   static char buf[32];
   // assumes that addr is already in network byte order
-  sprintf (buf, "%d.%d.%d.%d", addr.S_un.S_addr / (256*256*256) & 255,
-                               addr.S_un.S_addr / (256*256) & 255,
-                               addr.S_un.S_addr / 256 & 255,
-                               addr.S_un.S_addr & 255);
+  sprintf (buf, "%d.%d.%d.%d", addr.s_addr / (256*256*256) & 255,
+                               addr.s_addr / (256*256) & 255,
+                               addr.s_addr / 256 & 255,
+                               addr.s_addr & 255);
   return buf;
 #else
   ACE_OSCALL_RETURN (::inet_ntoa (addr), char *, 0);
@@ -2619,17 +2619,19 @@ ACE_OS::sema_destroy (ACE_sema_t *s)
 {
 // ACE_TRACE ("ACE_OS::sema_destroy");
 #if defined (ACE_HAS_POSIX_SEM)
+  int result;
   if (s->name_)
     {
       ACE_OS::free ((void *) s->name_);
-      ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sem_unlink (s->name_), _result), int, -1);
+      ACE_OSCALL (ACE_ADAPT_RETVAL (::sem_unlink (s->name_), result), int, -1, result);
       ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sem_close (s->sema_), _result), int, -1);
     }
   else
     {
-      ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sem_destroy (s->sema_), _result), int, -1);
+      ACE_OSCALL (ACE_ADAPT_RETVAL (::sem_destroy (s->sema_), result), int, -1, result);
       delete s->sema_;
       s->sema_ = 0;
+     return result;
     }
 #elif defined (ACE_HAS_THREADS)
 #if defined (ACE_HAS_STHREADS)
@@ -3171,7 +3173,7 @@ ACE_OS::thr_testcancel (void)
 #elif defined (ACE_HAS_STHREADS)
 #elif defined (ACE_HAS_WTHREADS)
 #elif defined (VXWORKS)
-  ACE_NOTSUP_RETURN (-1);
+  // no-op:  can't use ACE_NOTSUP_RETURN because there is no return value
 #endif /* ACE_HAS_STHREADS */
 #else
 #endif /* ACE_HAS_THREADS */		
@@ -3222,23 +3224,20 @@ ACE_OS::thr_sigsetmask (int how,
     case SIG_UNBLOCK:
       {
         // get the old mask
-        *osm = ::sigsetmask (nsm);
-        // create a new mask:  the following assumes that sigset_t is an int,
-        // so abitwise operations can be done simply . . .
+        *osm = ::sigsetmask (*nsm);
+        // create a new mask:  the following assumes that sigset_t is 4 bytes,
+        // which it is on VxWorks 5.2, so bit operations are done simply . . .
         ::sigsetmask (how == SIG_BLOCK ? (*osm |= *nsm) : (*osm &= ~*nsm));
         break;
       }
     case SIG_SETMASK:
-      *osm = ::sigsetmask (nsm);
+      *osm = ::sigsetmask (*nsm);
       break;
     default:
       return -1;
     }
 
   return 0;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sigprocmask (how, nsm, osm), 
-				       _result),
-		     int, -1);
 #else // Should not happen.
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_STHREADS */
@@ -3269,10 +3268,14 @@ ACE_OS::thr_min_stack (void)
 #elif defined (VXWORKS)
   TASK_DESC taskDesc;
   STATUS status;
-  ACE_OSCALL (ACE_ADAPT_RETVAL (::taskInfoGet (ACE_OS::thr_self (), &taskDesc), 
-                                _result), 
-                     int, ERROR, status);
-  return status == 0 ? taskDesc.td_stackSize : 0;
+
+  ACE_hthread_t tid;
+  ACE_OS::thr_self (tid);
+
+  ACE_OSCALL (ACE_ADAPT_RETVAL (::taskInfoGet (tid, &taskDesc), 
+                                status),
+                     STATUS, ERROR, status);
+  return status == OK ? taskDesc.td_stackSize : 0;
 #else // Should not happen...
   ACE_NOTSUP_RETURN (0);
 #endif /* ACE_HAS_STHREADS */
@@ -3297,8 +3300,8 @@ ACE_OS::thr_kill (ACE_thread_t thr_id, int signum)
 #elif defined (ACE_HAS_WTHREADS)
   ACE_NOTSUP_RETURN (-1);
 #elif defined (VXWORKS)
-  ACE_htread_t tid;
-  ACE_OSCALL (ACE_ADAPT_RETVAL (::taskNameToId (thr_id), _result),
+  ACE_hthread_t tid;
+  ACE_OSCALL (ACE_ADAPT_RETVAL (::taskNameToId (thr_id), tid),
               int, ERROR, tid);
 
   if ( tid == ERROR )
@@ -3348,7 +3351,7 @@ ACE_OS::thr_self (void)
 #elif defined (ACE_HAS_WTHREADS)
   return ::GetCurrentThreadId ();
 #elif defined (VXWORKS)
-  return ::taskIdSelf ();
+  return ::taskName (::taskIdSelf ());
 #endif /* ACE_HAS_STHREADS */
 #else
   return 1; // Might as well make it the first thread ;-)
@@ -3467,7 +3470,7 @@ ACE_OS::filesize (ACE_HANDLE handle)
 #else /* !ACE_WIN32 */
   struct stat sb;
 
-  return ACE_OS::fstat (handle, &sb) == -1 ? (long) -1 : sb.st_size;
+  return ACE_OS::fstat (handle, &sb) == -1 ? -1 : (long) sb.st_size;
 #endif /* ACE_WIN32 */
 }
 
@@ -3522,7 +3525,7 @@ ACE_OS::gettimeofday (void)
 #elif defined (VXWORKS)
   // assumes that struct timespec is same size as struct timeval,
   // which assumes that time_t is a long: it currently (v 5.2) is
-  ACE_OSCALL (ACE_ADAPT_RETVAL (::clock_gettime (CLOCK_REALTIME, (struct timespec *) &tv), _result),
+  ACE_OSCALL (ACE_ADAPT_RETVAL (::clock_gettime (CLOCK_REALTIME, (struct timespec *) &tv), result),
               int, ERROR, result);
 #else
   ACE_OSCALL (::gettimeofday (&tv), int, -1, result);

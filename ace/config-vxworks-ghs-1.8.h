@@ -2,7 +2,7 @@
 // $Id$
 
 // The following configuration file is designed to work for VxWorks
-// 5.2 platforms using the GreenHills 1.8.7 compiler.
+// 5.2 platforms using the GreenHills 1.8.8 compiler.
 
 #if !defined (ACE_CONFIG_H)
 #define ACE_CONFIG_H
@@ -16,6 +16,7 @@
 #define ACE_HAS_MSG
 #define ACE_HAS_MT_SAFE_SOCKETS
 #define ACE_HAS_POSIX_NONBLOCK
+#define ACE_HAS_POSIX_SEM
 #define ACE_HAS_POSIX_TIME
 #define ACE_HAS_SIG_ATOMIC_T
 #define ACE_HAS_SIGINFO_T
@@ -35,6 +36,7 @@
 #define ACE_LACKS_SOCKETPAIR
 #define ACE_LACKS_STRRECVFD
 #define ACE_LACKS_SYSCALL
+#define ACE_LACKS_SYSV_SHMEM
 #define ACE_LACKS_UCONTEXT_H
 #define ACE_LACKS_UTSNAME_T
 #define ACE_MT_SAFE

@@ -888,7 +888,10 @@ ACE_OS::thr_exit (void *status)
   // Cleanup the thread-specific resources and exit.
   ACE_TSS_Cleanup::instance ()->exit (status);
 #elif defined (VXWORKS)
-  *((int *) status) = ::taskDelete (ACE_OS::thr_self ());
+  ACE_hthread_t tid;
+  ACE_OS::thr_self (tid);
+
+  *((int *) status) = ::taskDelete (tid);
 #endif /* ACE_HAS_STHREADS */
 #else
   ;
@@ -1221,4 +1224,5 @@ ACE_OS::socket_fini (void)
 
 #if defined (VXWORKS)
 int sys_nerr = ERRMAX + 1;
+
 #endif /* VXWORKS */

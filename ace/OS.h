@@ -191,6 +191,18 @@
 #define ACE_ALLOC_HOOK_DEFINE(CLASS) 
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
+#if defined (VXWORKS)
+#if defined (ghs)
+// horrible hacks to get around inconsistency between ansi and VxWorks
+// stdarg.h with Green Hills 1.8.8 compiler
+#define __INCstdargh
+#include <stdarg.h>
+#endif /* ghs */
+
+typedef int key_t;
+#include <vxWorks.h>
+#endif /* VXWORKS */
+
 #include "ace/Time_Value.h"
 
 // For Win32 compatibility...
@@ -592,7 +604,6 @@ typedef ACE_mutex_t ACE_thread_mutex_t;
 #define THR_CANCEL_DEFERRED     0
 #define THR_CANCEL_ASYNCHRONOUS 0
 #elif defined(VXWORKS)
-
 #include <semLib.h>    // for mutex implementation using mutual-exclusion
                        // semaphores (which can be taken recursively)
 #include <taskLib.h>
@@ -1415,9 +1426,6 @@ extern "C"
 #endif /* ACE_WIN32 */
 
 #if defined (VXWORKS)
-typedef int key_t;
-
-#include <vxWorks.h>
 
 #if defined (ACE_HAS_GREENHILLS_SOCKETS)  
 #include <hostLib.h>
@@ -1634,7 +1642,11 @@ union semun
 #define ACE_MAXCLIENTIDLEN MAXHOSTNAMELEN + 20
 
 // Create some useful typedefs.
+#if defined (VXWORKS)
+typedef FUNCPTR ACE_THR_FUNC;  // where typedef int (*FUNCPTR) (...)
+#else /* ! VXWORKS */
 typedef void *(*ACE_THR_FUNC)(void *);
+#endif /* ! VXWORKS */
 typedef const char **SYS_SIGLIST;
 
 #if !defined (MAP_FAILED)
