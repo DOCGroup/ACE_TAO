@@ -1,3 +1,12 @@
+Tue Dec  7 18:48:39 2004  Steve Huston  <shuston@riverace.com>
+
+	* bin/Makefile.am: Comment out the TESTS for now. The auto_run_tests.pl
+	  depends on having the tests built in the same tree as the sources.
+
+	* tests/Makefile.am: Change TESTS to a list of all the test programs
+	  and TEST_ENVIRONMENT to an invocation of "run_test.pl -t" to enable
+	  it to run each test separately.
+
 Tue Dec  7 18:38:19 2004  Steve Huston  <shuston@riverace.com>
 
 	* m4/aio.m4: In the check for POSIX Realtime signals, do the
