@@ -38,19 +38,25 @@
 
 // OS-specific configuration
 
-#define ACE_CHORUS_DEFAULT_MIN_STACK_SIZE 0x2000
 // Chorus cannot grow shared memory, so this is the default size for a
 // local name space
 #define ACE_CHORUS_LOCAL_NAME_SPACE_T_SIZE 128000
 // Used in OS.i to map an actor id into a KnCap.
 #define ACE_CHORUS_MAX_ACTORS 64
 
-#if !defined(CHORUS_4)
-# define ACE_LACKS_KEY_T
-#else
+#if defined(CHORUS_4)
+# define ACE_CHORUS_DEFAULT_MIN_STACK_SIZE 0x8000
 # define ACE_HAS_4_4BSD_SENDMSG_RECVMSG
-# define ACE_NLOGGING	// Many ACE tests fail if logging is enabled
-			// I'm not quite sure why yet. elliott_c@ociweb.com
+# define ACE_HAS_TIMEZONE_GETTIMEOFDAY
+#else
+# define ACE_CHORUS_DEFAULT_MIN_STACK_SIZE 0x2000
+# define ACE_LACKS_KEY_T
+# define ACE_LACKS_ACCESS
+# define ACE_LACKS_FSYNC
+# define ACE_LACKS_GETSERVBYNAME
+# define ACE_LACKS_MKFIFO
+# define ACE_LACKS_READLINK
+# define ACE_LACKS_TRUNCATE
 #endif
 
 #define ACE_HAS_BROKEN_READV
@@ -69,27 +75,22 @@
 #define ACE_HAS_STRDUP_EMULATION
 #define ACE_HAS_STRERROR
 #define ACE_HAS_TSS_EMULATION
-#define ACE_LACKS_ACCESS
 #define ACE_LACKS_CONDATTR_PSHARED
 #define ACE_LACKS_FORK
-#define ACE_LACKS_FSYNC
 #define ACE_LACKS_GETHOSTENT
 #define ACE_LACKS_GETPGID
 #define ACE_LACKS_SETPGID
 #define ACE_LACKS_SETREGID
 #define ACE_LACKS_SETREUID
-#define ACE_LACKS_GETSERVBYNAME
 #define ACE_LACKS_LONGLONG_T
 #define ACE_LACKS_MADVISE
 #define ACE_LACKS_MALLOC_H
 #define ACE_LACKS_MEMORY_H
-#define ACE_LACKS_MKFIFO
 #define ACE_LACKS_MPROTECT
 #define ACE_LACKS_MSYNC
 #define ACE_LACKS_NAMED_POSIX_SEM
 #define ACE_LACKS_PARAM_H
 #define ACE_LACKS_READDIR_R
-#define ACE_LACKS_READLINK
 #define ACE_LACKS_READV
 #define ACE_LACKS_RLIMIT
 #define ACE_LACKS_RWLOCK_T
@@ -99,7 +100,6 @@
 #define ACE_LACKS_STRRECVFD
 #define ACE_LACKS_SYSV_MSG_H
 #define ACE_LACKS_SYSV_SHMEM
-#define ACE_LACKS_TRUNCATE
 #define ACE_LACKS_UNIX_SIGNALS
 #define ACE_LACKS_UTSNAME_T
 #define ACE_LACKS_WRITEV

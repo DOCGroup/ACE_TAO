@@ -9,9 +9,10 @@
 # You will probably need to set the following environment variables
 # or macros:
 #
-# CLX_CDSPATH       <chorus install path>/4.0/chorus-powerpc/tools
+# CPU               powerpc or sparc or ...
+# CLX_CDSPATH       <chorus install path>/4.0/chorus-$CPU/tools
 # CLX_CDSVERSION    5.00
-# MERGEDIR          <chorus install path>/4.0/chorus-powerpc/kernel
+# MERGEDIR          <chorus install path>/4.0/chorus-$CPU/kernel
 #
 
 include $(ACE_ROOT)/include/makeinclude/platform_chorus.GNU
@@ -29,11 +30,15 @@ INCLDIRS := -I$(INC_DIR)           \
             -I$(OS_INCLDIR)/CC     \
             $(INCLDIRS)
 
-DCFLAGS  += -g
+#
+# Adding debug symbols makes the binaries too
+# large to load into memory.
+#DCFLAGS  += -g
+#
 CCFLAGS  += -DCHORUS_4 -D_POSIX_THREAD_PROCESS_SHARED
 
 #
-# Special link process to get the right libraries and
+# Special link process to get the right libraries and 
 # build up the static constructors and destructors.
 #
 POSTLINK= -r $(OS_DIR)/lib/CC/libC.a $(OS_DIR)/lib/libbsd/libbsd.a    \

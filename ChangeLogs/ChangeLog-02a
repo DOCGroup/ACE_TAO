@@ -1,3 +1,12 @@
+Tue Mar 21 14:24:07 2000  Chad Elliott <elliott_c@ociweb.com>
+
+        * ace/config-chorus.h,
+          include/makeinclude/platform_chorus.GNU,
+          include/makeinclude/platform_chorus4.x_g++.GNU,
+          tests/run_tests.sh:
+          Expected ACE tests work.  Added support for Chorus 4.0
+          on the Ultra-SPARC.
+
 Tue Mar 21 10:37:17 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * Merged the non_interpretive branch.
