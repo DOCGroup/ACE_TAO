@@ -1,3 +1,8 @@
+Sun Sep 17 09:29:36 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/orbconf.h: Removed TAO_HAS_FT_CORBA definition. This
+	  shouldn't be needed henceforth.
+
 Sun Sep 17 09:23:38 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/tests/FaultTolerance/IOGR/test_i.cpp (remote_call):
