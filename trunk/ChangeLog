@@ -1,3 +1,13 @@
+Wed Aug 25 07:04:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_hpux_aCC.GNU:
+          Changed CXXVERS to CXXMINORVERS and added CXXMAJORVERS,
+          we just compare minor version at this moment, but we really
+          should also check major vers soon, major version 3 is aCC
+          on PARISC, version 5 is on Itanium. Changed the way we
+          detect itanium to a portable way that works with all
+          HPUX versions.
+
 Tue Aug 24 19:59:18 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* ace/config-netbsd.h:
