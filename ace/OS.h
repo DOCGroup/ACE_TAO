@@ -583,21 +583,21 @@ private:
 
 // This needs to go here *first* to avoid problems with AIX.
 # if defined (ACE_HAS_PTHREADS)
-extern "C" {
-#   define ACE_DONT_INCLUDE_ACE_SIGNAL_H
-#     include "ace/os_include/signal.h"
-#   undef ACE_DONT_INCLUDE_ACE_SIGNAL_H
+//extern "C" {
+//#   define ACE_DONT_INCLUDE_ACE_SIGNAL_H
+//#     include "ace/os_include/signal.h"
+//#   undef ACE_DONT_INCLUDE_ACE_SIGNAL_H
 #   include "ace/os_include/pthread.h"
-#   if defined (DIGITAL_UNIX)
-#     define pthread_self __pthread_self
-extern "C" pthread_t pthread_self (void);
-#   endif /* DIGITAL_UNIX */
-}
-#   if defined (HPUX_10)
-//    HP-UX 10 needs to see cma_sigwait, and since _CMA_NOWRAPPERS_ is defined,
-//    this header does not get included from pthreads.h.
-#     include /**/x <dce/cma_sigwait.h>
-#   endif /* HPUX_10 */
+//#   if defined (DIGITAL_UNIX)
+//#     define pthread_self __pthread_self
+//extern "C" pthread_t pthread_self (void);
+//#   endif /* DIGITAL_UNIX */
+//}
+//#   if defined (HPUX_10)
+////    HP-UX 10 needs to see cma_sigwait, and since _CMA_NOWRAPPERS_ is defined,
+////    this header does not get included from pthreads.h.
+//#     include /**/x <dce/cma_sigwait.h>
+//#   endif /* HPUX_10 */
 # endif /* ACE_HAS_PTHREADS */
 
 // There are a lot of threads-related macro definitions in the config files.
@@ -605,13 +605,13 @@ extern "C" pthread_t pthread_self (void);
 // requirements as threads evolved.  They are probably not all needed - some
 // overlap or are otherwise confused.  This is an attempt to start
 // straightening them out.
-# if defined (ACE_HAS_PTHREADS_STD)    /* POSIX.1c threads (pthreads) */
-  // ... and 2-parameter asctime_r and ctime_r
-#   if !defined (ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R) && \
-       !defined (ACE_HAS_STHREADS)
-#     define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
-#   endif
-# endif /* ACE_HAS_PTHREADS_STD */
+//# if defined (ACE_HAS_PTHREADS_STD)    /* POSIX.1c threads (pthreads) */
+//  // ... and 2-parameter asctime_r and ctime_r
+//#   if !defined (ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R) && (continuation removed)
+//       !defined (ACE_HAS_STHREADS)
+//#     define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
+//#   endif
+//# endif /* ACE_HAS_PTHREADS_STD */
 
 // By default we perform no tracing on the OS layer, otherwise the
 // coupling between the OS layer and Log_Msg is too tight.  But the
@@ -632,16 +632,16 @@ using std::timezone;
 using std::difftime;
 # endif /* ACE_USES_STD_NAMESPACE_FOR_STDC_LIB */
 
-# if !defined (ACE_HAS_CLOCK_GETTIME) && !(defined (_CLOCKID_T_) || defined (_CLOCKID_T))
-typedef int clockid_t;
-#   if !defined (CLOCK_REALTIME)
-#     define CLOCK_REALTIME 0
-#   endif /* CLOCK_REALTIME */
-# endif /* ! ACE_HAS_CLOCK_GETTIME && ! _CLOCKID_T_ */
+//# if !defined (ACE_HAS_CLOCK_GETTIME) && !(defined (_CLOCKID_T_) || defined (_CLOCKID_T))
+//typedef int clockid_t;
+//#   if !defined (CLOCK_REALTIME)
+//#     define CLOCK_REALTIME 0
+//#   endif /* CLOCK_REALTIME */
+//# endif /* ! ACE_HAS_CLOCK_GETTIME && ! _CLOCKID_T_ */
 
-#if !defined (E2BIG)
-#  define E2BIG 7
-#endif /* E2BIG */
+//#if !defined (E2BIG)  // do idea what this is for...  dah
+//#  define E2BIG 7
+//#endif /* E2BIG */
 
 /**
  * @class ACE_Countdown_Time
@@ -916,9 +916,9 @@ private:
 #   define ACE_WSOCK_VERSION 0, 0
 # endif /* ACE_WSOCK_VERSION */
 
-# if defined (ACE_HAS_BROKEN_CTIME)
-#   undef ctime
-# endif /* ACE_HAS_BROKEN_CTIME */
+//# if defined (ACE_HAS_BROKEN_CTIME)
+//#   undef ctime
+//# endif /* ACE_HAS_BROKEN_CTIME */
 
 /// Service Objects, i.e., objects dynamically loaded via the service
 /// configurator, must provide a destructor function with the
@@ -1139,86 +1139,86 @@ _make_##SERVICE_CLASS (ACE_Service_Object_Exterminator *gobbler) \
 #   define ACE_TSS_GET(I, T) (I)
 # endif /* ACE_HAS_THREADS && (ACE_HAS_THREAD_SPECIFIC_STORAGE || ACE_HAS_TSS_EMULATIOND) */
 
-# if defined (ACE_LACKS_MODE_MASKS)
-// MODE MASKS
+//# if defined (ACE_LACKS_MODE_MASKS)
+//// MODE MASKS
+//
+//// the following macros are for POSIX conformance.
+//
+//#   if !defined (ACE_HAS_USER_MODE_MASKS)
+//#     define S_IRWXU 00700         /* read, write, execute: owner. */
+//#     define S_IRUSR 00400         /* read permission: owner. */
+//#     define S_IWUSR 00200         /* write permission: owner. */
+//#     define S_IXUSR 00100         /* execute permission: owner. */
+//#   endif /* ACE_HAS_USER_MODE_MASKS */
+//#   define S_IRWXG 00070           /* read, write, execute: group. */
+//#   define S_IRGRP 00040           /* read permission: group. */
+//#   define S_IWGRP 00020           /* write permission: group. */
+//#   define S_IXGRP 00010           /* execute permission: group. */
+//#   define S_IRWXO 00007           /* read, write, execute: other. */
+//#   define S_IROTH 00004           /* read permission: other. */
+//#   define S_IWOTH 00002           /* write permission: other. */
+//#   define S_IXOTH 00001           /* execute permission: other. */
+//
+//// eVC doesn't define these bits, but MSVC does. The bit settings are copied
+//// from the MSVC defs.
+//#   if defined (ACE_HAS_WINCE)
+//#     define S_IFDIR 0040000
+//#     define S_IFREG 0100000
+//#   endif /* ACE_HAS_WINCE */
+//# endif /* ACE_LACKS_MODE_MASKS */
 
-// the following macros are for POSIX conformance.
+//# if defined (ACE_LACKS_SEMBUF_T)
+//struct sembuf
+//{
+//  /// semaphore #
+//  unsigned short sem_num;
+//
+//  /// semaphore operation
+//  short sem_op;
+//
+//  /// operation flags
+//  short sem_flg;
+//};
+//# endif /* ACE_LACKS_SEMBUF_T */
 
-#   if !defined (ACE_HAS_USER_MODE_MASKS)
-#     define S_IRWXU 00700         /* read, write, execute: owner. */
-#     define S_IRUSR 00400         /* read permission: owner. */
-#     define S_IWUSR 00200         /* write permission: owner. */
-#     define S_IXUSR 00100         /* execute permission: owner. */
-#   endif /* ACE_HAS_USER_MODE_MASKS */
-#   define S_IRWXG 00070           /* read, write, execute: group. */
-#   define S_IRGRP 00040           /* read permission: group. */
-#   define S_IWGRP 00020           /* write permission: group. */
-#   define S_IXGRP 00010           /* execute permission: group. */
-#   define S_IRWXO 00007           /* read, write, execute: other. */
-#   define S_IROTH 00004           /* read permission: other. */
-#   define S_IWOTH 00002           /* write permission: other. */
-#   define S_IXOTH 00001           /* execute permission: other. */
+//# if defined (ACE_LACKS_MSGBUF_T)
+//struct msgbuf {};
+//# endif /* ACE_LACKS_MSGBUF_T */
 
-// eVC doesn't define these bits, but MSVC does. The bit settings are copied
-// from the MSVC defs.
-#   if defined (ACE_HAS_WINCE)
-#     define S_IFDIR 0040000
-#     define S_IFREG 0100000
-#   endif /* ACE_HAS_WINCE */
-# endif /* ACE_LACKS_MODE_MASKS */
-
-# if defined (ACE_LACKS_SEMBUF_T)
-struct sembuf
-{
-  /// semaphore #
-  unsigned short sem_num;
-
-  /// semaphore operation
-  short sem_op;
-
-  /// operation flags
-  short sem_flg;
-};
-# endif /* ACE_LACKS_SEMBUF_T */
-
-# if defined (ACE_LACKS_MSGBUF_T)
-struct msgbuf {};
-# endif /* ACE_LACKS_MSGBUF_T */
-
-# if defined (ACE_LACKS_STRRECVFD)
-struct strrecvfd {};
-# endif /* ACE_LACKS_STRRECVFD */
+//# if defined (ACE_LACKS_STRRECVFD)
+//struct strrecvfd {};
+//# endif /* ACE_LACKS_STRRECVFD */
 
 # if defined (ACE_HAS_PROC_FS)
 #   include /**/x <sys/procfs.h>
 # endif /* ACE_HAS_PROC_FS */
 
-# if defined(__rtems__)
-struct iovec {
-  /// Base address.
-  char *iov_base;
-  /// Length.
-  size_t iov_len;
-};
-# endif
+//# if defined(__rtems__)
+//struct iovec {
+//  /// Base address.
+//  char *iov_base;
+//  /// Length.
+//  size_t iov_len;
+//};
+//# endif
 
-# if defined (ACE_HAS_BROKEN_WRITEV)
-typedef struct iovec ACE_WRITEV_TYPE;
-# else
-typedef const struct iovec ACE_WRITEV_TYPE;
-# endif /* ACE_HAS_BROKEN_WRITEV */
+//# if defined (ACE_HAS_BROKEN_WRITEV)
+//typedef struct iovec ACE_WRITEV_TYPE;
+//# else
+//typedef const struct iovec ACE_WRITEV_TYPE;
+//# endif /* ACE_HAS_BROKEN_WRITEV */
+//
+//# if defined (ACE_HAS_BROKEN_READV)
+//typedef const struct iovec ACE_READV_TYPE;
+//# else
+//typedef struct iovec ACE_READV_TYPE;
+//# endif /* ACE_HAS_BROKEN_READV */
 
-# if defined (ACE_HAS_BROKEN_READV)
-typedef const struct iovec ACE_READV_TYPE;
-# else
-typedef struct iovec ACE_READV_TYPE;
-# endif /* ACE_HAS_BROKEN_READV */
-
-# if defined (ACE_HAS_BROKEN_SETRLIMIT)
-typedef struct rlimit ACE_SETRLIMIT_TYPE;
-# else
-typedef const struct rlimit ACE_SETRLIMIT_TYPE;
-# endif /* ACE_HAS_BROKEN_SETRLIMIT */
+//# if defined (ACE_HAS_BROKEN_SETRLIMIT)
+//typedef struct rlimit ACE_SETRLIMIT_TYPE;
+//# else
+//typedef const struct rlimit ACE_SETRLIMIT_TYPE;
+//# endif /* ACE_HAS_BROKEN_SETRLIMIT */
 
 # if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 #   define ACE_MT(X) X
@@ -1235,48 +1235,48 @@ typedef const struct rlimit ACE_SETRLIMIT_TYPE;
 
 # if defined (ACE_HAS_POSIX_SEM)
 #   include "ace/os_include/semaphore.h"
-#   if !defined (SEM_FAILED) && !defined (ACE_LACKS_NAMED_POSIX_SEM)
-#     define SEM_FAILED ((sem_t *) -1)
-#   endif  /* !SEM_FAILED */
-
-typedef struct
-{
-  /// Pointer to semaphore handle.  This is allocated by ACE if we are
-  /// working with an unnamed POSIX semaphore or by the OS if we are
-  /// working with a named POSIX semaphore.
-  sem_t *sema_;
-
-  /// Name of the semaphore (if this is non-NULL then this is a named
-  /// POSIX semaphore, else its an unnamed POSIX semaphore).
-  char *name_;
-
-#   if defined (ACE_LACKS_NAMED_POSIX_SEM)
-  /// this->sema_ doesn't always get created dynamically if a platform
-  /// doesn't support named posix semaphores.  We use this flag to
-  /// remember if we need to delete <sema_> or not.
-  int new_sema_;
-#   endif /* ACE_LACKS_NAMED_POSIX_SEM */
-} ACE_sema_t;
+//#   if !defined (SEM_FAILED) && !defined (ACE_LACKS_NAMED_POSIX_SEM)
+//#     define SEM_FAILED ((sem_t *) -1)
+//#   endif  /* !SEM_FAILED */
+//
+//typedef struct
+//{
+//  /// Pointer to semaphore handle.  This is allocated by ACE if we are
+//  /// working with an unnamed POSIX semaphore or by the OS if we are
+//  /// working with a named POSIX semaphore.
+//  sem_t *sema_;
+//
+//  /// Name of the semaphore (if this is non-NULL then this is a named
+//  /// POSIX semaphore, else its an unnamed POSIX semaphore).
+//  char *name_;
+//
+//#   if defined (ACE_LACKS_NAMED_POSIX_SEM)
+//  /// this->sema_ doesn't always get created dynamically if a platform
+//  /// doesn't support named posix semaphores.  We use this flag to
+//  /// remember if we need to delete <sema_> or not.
+//  int new_sema_;
+//#   endif /* ACE_LACKS_NAMED_POSIX_SEM */
+//} ACE_sema_t;
 # endif /* ACE_HAS_POSIX_SEM */
 
-struct cancel_state
-{
-  /// e.g., PTHREAD_CANCEL_ENABLE, PTHREAD_CANCEL_DISABLE,
-  /// PTHREAD_CANCELED.
-  int cancelstate;
+//struct cancel_state
+//{
+//  /// e.g., PTHREAD_CANCEL_ENABLE, PTHREAD_CANCEL_DISABLE,
+//  /// PTHREAD_CANCELED.
+//  int cancelstate;
+//
+//  /// e.g., PTHREAD_CANCEL_DEFERRED and PTHREAD_CANCEL_ASYNCHRONOUS.
+//  int canceltype;
+//};
 
-  /// e.g., PTHREAD_CANCEL_DEFERRED and PTHREAD_CANCEL_ASYNCHRONOUS.
-  int canceltype;
-};
-
-# if defined (ACE_HAS_WINCE)
+//# if defined (ACE_HAS_WINCE)
 #   include "ace/os_include/sys/types.h" // /**/ <types.h>
 
-#   if (_WIN32_WCE < 400)
-typedef unsigned long  ptrdiff_t;    // evc3, PocketPC don't defined ptrdiff_t
-#   else
+//#   if (_WIN32_WCE < 400)
+//typedef unsigned long  ptrdiff_t;    // evc3, PocketPC don't defined ptrdiff_t
+//#   else
 #     include "ace/os_include/stddef.h"        // WinCE .NET puts it in stddef.h
-#   endif
+//#   endif
 
 //typedef DWORD  nlink_t;
 
@@ -1292,61 +1292,61 @@ typedef unsigned long  ptrdiff_t;    // evc3, PocketPC don't defined ptrdiff_t
 // struct is only for the CE 3.0 or later.
 // Refer to the WCHAR.H from Visual C++ and WIBASE.H from eVC 3.0.
 
-typedef unsigned int dev_t;
+//typedef unsigned int dev_t;
 
-struct stat
-{
-    /// always 0 on Windows platforms
-    dev_t st_dev;
+//struct stat
+//{
+//    /// always 0 on Windows platforms
+//    dev_t st_dev;
+//
+//    /// always 0 on Windows platforms
+//    dev_t st_rdev;
+//
+//    /// file attribute
+//    unsigned short st_mode;
+//
+//    /// number of hard links
+//    short st_nlink;
+//
+//    /// time of last access
+//    ACE_Time_Value st_atime;
+//
+//    /// time of last data modification
+//    ACE_Time_Value st_mtime;
+//
+//    /// time of creation
+//    ACE_Time_Value st_ctime;
+//
+//    /// file size, in bytes
+//    off_t st_size;
+//
+//    // Following members do not have direct conversion in Window platforms.
+////    u_long st_blksize;        // optimal blocksize for I/O
+////    u_long st_flags;          // user defined flags for file
+//};
 
-    /// always 0 on Windows platforms
-    dev_t st_rdev;
-
-    /// file attribute
-    unsigned short st_mode;
-
-    /// number of hard links
-    short st_nlink;
-
-    /// time of last access
-    ACE_Time_Value st_atime;
-
-    /// time of last data modification
-    ACE_Time_Value st_mtime;
-
-    /// time of creation
-    ACE_Time_Value st_ctime;
-
-    /// file size, in bytes
-    off_t st_size;
-
-    // Following members do not have direct conversion in Window platforms.
-//    u_long st_blksize;        // optimal blocksize for I/O
-//    u_long st_flags;          // user defined flags for file
-};
-
-# else /* ! ACE_HAS_WINCE */
-#   if defined (ACE_LACKS_SYS_TYPES_H) \
-       || (defined (__GLIBC__) && !defined (_BSD_SOURCE))
-#     if ! defined (ACE_PSOS)
-  typedef unsigned char u_char;
-  typedef unsigned short u_short;
-  typedef unsigned int u_int;
-  typedef unsigned long u_long;
-
-  typedef unsigned char uchar_t;
-  typedef unsigned short ushort_t;
-  typedef unsigned int  uint_t;
-  typedef unsigned long ulong_t;
-#     endif /* ! defined (ACE_PSOS) */
-#   else
-#     include "ace/os_include/sys/types.h"
-#   endif  /* ACE_LACKS_SYS_TYPES_H */
-
-#   if ! defined (ACE_PSOS)
-#     include "ace/os_include/sys/stat.h"
-#   endif
-# endif /* ACE_HAS_WINCE */
+//# else /* ! ACE_HAS_WINCE */
+//#   if defined (ACE_LACKS_SYS_TYPES_H)  (continuation removed)
+//       || (defined (__GLIBC__) && !defined (_BSD_SOURCE))
+//#     if ! defined (ACE_PSOS)
+//  typedef unsigned char u_char;
+//  typedef unsigned short u_short;
+//  typedef unsigned int u_int;
+//  typedef unsigned long u_long;
+//
+//  typedef unsigned char uchar_t;
+//  typedef unsigned short ushort_t;
+//  typedef unsigned int  uint_t;
+//  typedef unsigned long ulong_t;
+//#     endif /* ! defined (ACE_PSOS) */
+//#   else
+//#     include "ace/os_include/sys/types.h"
+//#   endif  /* ACE_LACKS_SYS_TYPES_H */
+//
+//#   if ! defined (ACE_PSOS)
+//#     include "ace/os_include/sys/stat.h"
+//#   endif
+//# endif /* ACE_HAS_WINCE */
 
 #if !defined (ACE_LACKS_UNISTD_H)
 #  include "ace/os_include/unistd.h"

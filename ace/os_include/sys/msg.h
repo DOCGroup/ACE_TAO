@@ -30,5 +30,9 @@
 # include /**/ <sys/msg.h>
 #endif /* !ACE_LACKS_SYS_MSG_H */
 
+# if defined (ACE_LACKS_MSGBUF_T)
+struct msgbuf {};
+# endif /* ACE_LACKS_MSGBUF_T */
+
 #include "ace/post.h"
 #endif /* ACE_OS_INCLUDE_SYS_MSG_H */

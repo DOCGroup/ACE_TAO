@@ -31,5 +31,11 @@
 # include /**/ <sys/resource.h>
 #endif /* !ACE_LACKS_SYS_RESOURCE_H */
 
+# if defined (ACE_HAS_BROKEN_SETRLIMIT)
+typedef struct rlimit ACE_SETRLIMIT_TYPE;
+# else
+typedef const struct rlimit ACE_SETRLIMIT_TYPE;
+# endif /* ACE_HAS_BROKEN_SETRLIMIT */
+
 #include "ace/post.h"
 #endif /* ACE_OS_INCLUDE_SYS_RESOURCE_H */
