@@ -19,7 +19,8 @@ Sat Mar 13 08:07:25 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * examples/IPC_SAP/SOCK_SAP/CPP-inserver-fancy.cpp (handle_events),
           C-inserver.cpp (main),
-          netsvcs/lib/Server_Logging_Handler_T.cpp (handle_logging_record):
+          netsvcs/lib/Server_Logging_Handler_T.cpp (handle_logging_record),
+          apps/Gateway/Gateway/Concrete_Connection_Handlers.cpp (svc):
           replaced NOTREACHED comment with ACE_NOTREACHED macro.  DU cxx
           started complaining about the unreached return statement.
 
