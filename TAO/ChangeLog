@@ -1,3 +1,9 @@
+Wed May 28 11:09:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/AMI_Buffering/client.bor:
+          Fixed errors in this makefile. Thanks to Branko Mijic
+          <bmijic@hotmail.com> for reporting this.
+
 Wed May 28 08:28:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
