@@ -1,3 +1,15 @@
+Thu Jul 16 15:02:55 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/Synch_T.h: 
+	  Use ACE_Condition_Thread_Mutex instead of
+	  ACE_Condition<ACE_Thread_Mutex> as the default condition
+	  variable (ACE_SYNCH_CONDITION), this removes some headaches wrt
+	  template instantiation.
+
+	* ace/IPC_SAP.cpp: 
+	  Added support for the close-on-exec flag. We use the F_SETFD
+	  macro.
+
 Thu Jul 16 12:50:42 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* netsvcs/lib/netsvcs.dsp:
