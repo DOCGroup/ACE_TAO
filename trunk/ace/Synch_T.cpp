@@ -42,7 +42,7 @@ ACE_Reverse_Lock<ACE_LOCKING_MECHANISM>::ACE_Reverse_Lock (void)
   : lock_ (0),
     delete_lock_ (1)
 {
-  ACE_NEW (this->lock_, ACE_LOCKING_MECHANISM);
+  // ACE_NEW (this->lock_, ACE_LOCKING_MECHANISM);
 }
 
 template <class ACE_LOCK, class TYPE>

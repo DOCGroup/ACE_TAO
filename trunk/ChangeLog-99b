@@ -1,3 +1,13 @@
+Mon Apr 26 10:54:23 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/High_Res_Timer.h:
+	  Moved the static method hrtime_to_tv to the public section. It
+	  is useful outside this class.
+
+	* ace/Synch_T.cpp:
+	  The default constructor for ACE_Reverse_Lock should not allocate
+	  the locking mechanism, otherwise it cannot work with ACE_Lock.
+
 Mon Apr 26 07:30:51 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/OS.i (fstat): Changed to use CE's implementation and added
