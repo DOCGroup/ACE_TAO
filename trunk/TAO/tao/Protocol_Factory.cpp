@@ -7,12 +7,19 @@ ACE_RCSID(tao, Protocol_Factory, "$Id$")
 
 static const char prefix_[] = "\0";
 
-TAO_Protocol_Factory::TAO_Protocol_Factory (void)
+TAO_Protocol_Factory::TAO_Protocol_Factory (CORBA::ULong tag)
+  : tag_ (tag)
 {
 }
 
 TAO_Protocol_Factory::~TAO_Protocol_Factory (void)
 {
+}
+
+ACE_INLINE CORBA::ULong
+TAO_Protocol_Factory::tag (void) const
+{
+  return this->tag_;
 }
 
 int

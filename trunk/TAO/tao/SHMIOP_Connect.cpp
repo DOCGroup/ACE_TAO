@@ -86,7 +86,8 @@ TAO_SHMIOP_Server_Connection_Handler::TAO_SHMIOP_Server_Connection_Handler (ACE_
 }
 
 TAO_SHMIOP_Server_Connection_Handler::TAO_SHMIOP_Server_Connection_Handler (TAO_ORB_Core *orb_core,
-                                                                            CORBA::Boolean flag)
+                                                                            CORBA::Boolean flag,
+                                                                            void *)
   : TAO_SHMIOP_Handler_Base (orb_core),
     transport_ (this, orb_core),
     acceptor_factory_ (0),
