@@ -183,6 +183,9 @@ sub check_log ($$)
                 if (/LM\_ERROR\@(.*)$/) {
                     print STDERR "Error: ($log): $1\n";
                 } 
+                if (/LM\_WARNING\@(.*)$/) {
+                    print STDERR "Warning: ($log): $1\n";
+                }
             }
 
             close (LOG); # ignore errors
