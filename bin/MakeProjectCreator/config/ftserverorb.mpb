@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project : ftorbutils {
+project : ftorbutils, portablegroup {
   after     += FT_ServerORB 
   libs      += TAO_FT_ServerORB 
   tagchecks += FT_ServerORB 
