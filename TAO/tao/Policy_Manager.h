@@ -26,6 +26,7 @@
 
 #include "tao/POA_CORBA.h"
 #include "tao/MessagingS.h"
+#include "tao/TAOS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -77,11 +78,15 @@ public:
   POA_Messaging::RelativeRoundtripTimeoutPolicy*
       relative_roundtrip_timeout (void) const;
 
+  POA_TAO::ClientPriorityPolicy*
+      client_priority (void) const;
 private:
   // The known policies are kept as pointers to the implementation
   // objects, this allow us to query the supported policies really
   // fast, without memory allocations.
   POA_Messaging::RelativeRoundtripTimeoutPolicy *relative_roundtrip_timeout_;
+
+  POA_TAO::ClientPriorityPolicy *client_priority_;
 
   CORBA::PolicyList other_policies_;
   // Other policies that are not optimized for fast querying
@@ -121,6 +126,9 @@ public:
   POA_Messaging::RelativeRoundtripTimeoutPolicy*
       relative_roundtrip_timeout (void) const;
 
+  POA_TAO::ClientPriorityPolicy*
+      client_priority (void) const;
+
 private:
   TAO_Policy_Manager_Impl impl_;
   // The implementation.
@@ -153,6 +161,9 @@ public:
       );
   POA_Messaging::RelativeRoundtripTimeoutPolicy*
       relative_roundtrip_timeout (void) const;
+
+  POA_TAO::ClientPriorityPolicy*
+      client_priority (void) const;
 
 private:
   TAO_Policy_Manager_Impl manager_impl_;
@@ -189,6 +200,9 @@ public:
       );
   POA_Messaging::RelativeRoundtripTimeoutPolicy*
       relative_roundtrip_timeout (void) const;
+
+  POA_TAO::ClientPriorityPolicy*
+      client_priority (void) const;
 
   // = Set and get the implementation.
   TAO_Policy_Current_Impl &implementation (void) const;

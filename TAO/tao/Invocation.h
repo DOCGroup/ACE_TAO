@@ -110,6 +110,16 @@ public:
   TAO_OutputCDR &out_stream (void);
   // Return the underlying output stream.
 
+  TAO_Profile *select_profile_based_on_policy (CORBA_Environment
+                                               &ACE_TRY_ENV =
+                                               TAO_default_environment
+                                               ())
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  // Select the profile we will use to in this invocation, based on
+  // policies for this object.  (Currently the decision is based on a
+  // single Policy, TAO::Client_Priority_Policy.)  I think this
+  // function may be more appropriate in TAO_Stub class.
+
 protected:
   void start (CORBA_Environment &ACE_TRY_ENV =
                     TAO_default_environment ())

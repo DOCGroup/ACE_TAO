@@ -3,6 +3,7 @@
 ACE_INLINE
 TAO_Policy_Manager_Impl::TAO_Policy_Manager_Impl (void)
   :  relative_roundtrip_timeout_ (0),
+     client_priority_ (0),
      count_ (0)
 {
 }
@@ -11,6 +12,12 @@ ACE_INLINE POA_Messaging::RelativeRoundtripTimeoutPolicy*
 TAO_Policy_Manager_Impl::relative_roundtrip_timeout (void) const
 {
   return this->relative_roundtrip_timeout_;
+}
+
+ACE_INLINE POA_TAO::ClientPriorityPolicy*
+TAO_Policy_Manager_Impl::client_priority (void) const
+{
+  return this->client_priority_;
 }
 
 // ****************************************************************
@@ -51,6 +58,12 @@ TAO_Policy_Manager::relative_roundtrip_timeout (void) const
   return this->impl_.relative_roundtrip_timeout ();
 }
 
+ACE_INLINE POA_TAO::ClientPriorityPolicy*
+TAO_Policy_Manager::client_priority (void) const
+{
+  return this->impl_.client_priority ();
+}
+
 // ****************************************************************
 
 ACE_INLINE
@@ -87,6 +100,12 @@ ACE_INLINE POA_Messaging::RelativeRoundtripTimeoutPolicy*
 TAO_Policy_Current_Impl::relative_roundtrip_timeout (void) const
 {
   return this->manager_impl_.relative_roundtrip_timeout ();
+}
+
+ACE_INLINE POA_TAO::ClientPriorityPolicy*
+TAO_Policy_Current_Impl::client_priority (void) const
+{
+  return this->manager_impl_.client_priority ();
 }
 // ****************************************************************
 
@@ -127,4 +146,12 @@ TAO_Policy_Current::relative_roundtrip_timeout (void) const
   TAO_Policy_Current_Impl &impl = this->implementation ();
 
   return impl.relative_roundtrip_timeout ();
+}
+
+ACE_INLINE POA_TAO::ClientPriorityPolicy*
+TAO_Policy_Current::client_priority (void) const
+{
+  TAO_Policy_Current_Impl &impl = this->implementation ();
+
+  return impl.client_priority ();
 }

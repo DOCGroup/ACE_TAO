@@ -14,6 +14,7 @@
 
 ACE_RCSID(tao, Policy_Manager, "$Id$")
 
+  // @@ !!! Add comments regarding Policy lifetimes, etc.
 void
 TAO_Policy_Manager_Impl::set_policy_overrides (
     const CORBA::PolicyList & policies,
@@ -23,8 +24,7 @@ TAO_Policy_Manager_Impl::set_policy_overrides (
   // @@ The spec does not say what to do on this case.
   if (set_add != CORBA::SET_OVERRIDE
       && set_add != CORBA::ADD_OVERRIDE)
-    ACE_THROW (CORBA::BAD_PARAM (TAO_DEFAULT_MINOR_CODE,
-                                 CORBA::COMPLETED_NO));
+    ACE_THROW (CORBA::BAD_PARAM ());
 
   if (set_add == CORBA::SET_OVERRIDE)
     {
@@ -39,9 +39,20 @@ TAO_Policy_Manager_Impl::set_policy_overrides (
         {
           this->relative_roundtrip_timeout_->destroy (ACE_TRY_ENV);
           ACE_CHECK;
-          this->relative_roundtrip_timeout_->_remove_ref (ACE_TRY_ENV);
+          this->relative_roundtrip_timeout_->_remove_ref
+            (ACE_TRY_ENV);
           ACE_CHECK;
+
           this->relative_roundtrip_timeout_ = 0;
+        }
+      if (this->client_priority_ != 0)
+        {
+          this->client_priority_->destroy (ACE_TRY_ENV);
+          ACE_CHECK;
+          this->client_priority_->_remove_ref (ACE_TRY_ENV);
+          ACE_CHECK;
+
+          this->client_priority_ = 0;
         }
       this->count_ = 0;
     }
@@ -57,6 +68,38 @@ TAO_Policy_Manager_Impl::set_policy_overrides (
 
       switch (slot)
         {
+        case TAO_CLIENT_PRIORITY_POLICY_TYPE:
+          {
+            CORBA::Policy_var copy = policy->copy (ACE_TRY_ENV);
+            ACE_CHECK;
+
+            TAO_ServantBase* servant = copy->_servant ();
+            if (servant == 0)
+              ACE_THROW (CORBA::INTERNAL ());
+
+            POA_TAO::ClientPriorityPolicy *tmp =
+              ACE_static_cast(POA_TAO::ClientPriorityPolicy*,
+                              servant->_downcast ("IDL:TAO/ClientPriorityPolicy:1.0"));
+            if (tmp == 0)
+              ACE_THROW (CORBA::INTERNAL ());
+
+            if (this->client_priority_ != 0)
+              {
+                this->client_priority_->destroy (ACE_TRY_ENV);
+                ACE_CHECK;
+
+                this->client_priority_->_remove_ref
+                  (ACE_TRY_ENV);
+                ACE_CHECK;
+              }
+            this->client_priority_ = tmp;
+            tmp->_add_ref (ACE_TRY_ENV);
+            ACE_CHECK;
+
+            this->count_++;
+          }
+          break;
+
         case TAO_MESSAGING_RELATIVE_RT_TIMEOUT_POLICY_TYPE:
           {
             CORBA::Policy_var copy = policy->copy (ACE_TRY_ENV);
@@ -76,12 +119,15 @@ TAO_Policy_Manager_Impl::set_policy_overrides (
               {
                 this->relative_roundtrip_timeout_->destroy (ACE_TRY_ENV);
                 ACE_CHECK;
-                this->relative_roundtrip_timeout_->_remove_ref (ACE_TRY_ENV);
+
+                this->relative_roundtrip_timeout_->_remove_ref
+                  (ACE_TRY_ENV);
                 ACE_CHECK;
               }
             this->relative_roundtrip_timeout_ = tmp;
-            this->relative_roundtrip_timeout_->_add_ref (ACE_TRY_ENV);
+            tmp->_add_ref (ACE_TRY_ENV);
             ACE_CHECK;
+
             this->count_++;
           }
           break;
@@ -133,7 +179,7 @@ TAO_Policy_Manager_Impl::set_policy_overrides (
 
 CORBA::PolicyList *
 TAO_Policy_Manager_Impl::get_policy_overrides (
-    const CORBA::PolicyTypeSeq & types,
+    const CORBA::PolicyTypeSeq &types,
     CORBA::Environment &ACE_TRY_ENV)
 {
   CORBA::ULong types_length = types.length ();
@@ -149,6 +195,13 @@ TAO_Policy_Manager_Impl::get_policy_overrides (
   CORBA::ULong n = 0;
   if (types_length == 0)
     {
+      if (this->client_priority_ != 0)
+        {
+          policy_list[n++] =
+            client_priority_->_this (ACE_TRY_ENV);
+          ACE_CHECK_RETURN (0);
+        }
+
       if (this->relative_roundtrip_timeout_ != 0)
         {
           policy_list[n++] =
@@ -172,6 +225,15 @@ TAO_Policy_Manager_Impl::get_policy_overrides (
 
           switch (slot)
             {
+            case TAO_CLIENT_PRIORITY_POLICY_TYPE:
+              if (this->client_priority_ != 0)
+                {
+                  policy_list[n++] =
+                    client_priority_->_this (ACE_TRY_ENV);
+                  ACE_CHECK_RETURN (0);
+                }
+              break;
+
             case TAO_MESSAGING_RELATIVE_RT_TIMEOUT_POLICY_TYPE:
               if (this->relative_roundtrip_timeout_ != 0)
                 {
@@ -221,12 +283,18 @@ TAO_Policy_Manager_Impl::get_policy_overrides (
 }
 
 CORBA::Policy_ptr
-TAO_Policy_Manager_Impl::get_policy (
-    CORBA::PolicyType type,
-    CORBA::Environment &ACE_TRY_ENV)
+TAO_Policy_Manager_Impl::get_policy (CORBA::PolicyType type,
+                                     CORBA::Environment &ACE_TRY_ENV)
 {
   switch (type)
     {
+    case TAO_CLIENT_PRIORITY_POLICY_TYPE:
+      if (this->client_priority_ != 0)
+        {
+          return this->client_priority_->_this (ACE_TRY_ENV);
+        }
+      return CORBA::Policy::_nil ();
+
     case TAO_MESSAGING_RELATIVE_RT_TIMEOUT_POLICY_TYPE:
       if (this->relative_roundtrip_timeout_ != 0)
         {
