@@ -236,7 +236,7 @@ main (int argc, char *argv[])
 {
   ACE_START_TEST ("Priority_Reactor_Test");
 
-  ACE_Get_Opt getopt (argc, argv, "dc:l:m:t:", 1);
+  ACE_Get_Opt getopt (argc, argv, "dc:l:m:t:");
 
   for (int c; (c = getopt ()) != -1; )
     switch (c)

@@ -106,17 +106,6 @@ public:
 
   // = Meta-type info
   typedef ACE_FILE_Addr PEER_ADDR;
-
-  int get_local_addr (ACE_Addr &) const;
-  // Return the local endpoint address in the referenced ACE_Addr.
-  // Returns 0 if successful, else -1.
-
-  int get_remote_addr (ACE_Addr &) const;
-  // Return the same thing as <get_local_addr>.
-
-private:
-  ACE_FILE_Addr addr_;
-  // File we are "connected" with...
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)

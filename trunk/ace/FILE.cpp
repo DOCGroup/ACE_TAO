@@ -87,3 +87,51 @@ ACE_FILE::position (void)
   ACE_TRACE ("ACE_FILE::position");
   return ACE_OS::lseek (this->get_handle (), 0, SEEK_CUR);
 } 
+
+// Return the local endpoint address.
+
+int 
+ACE_FILE::get_local_addr (ACE_Addr &addr) const
+{
+  ACE_TRACE ("ACE_FILE::get_local_addr");
+
+  // Perform the downcast since <addr> had better be an
+  // <ACE_FILE_Addr>.
+  ACE_FILE_Addr *file_addr =
+    ACE_dynamic_cast (ACE_FILE_Addr *, &addr);
+
+  if (file_addr == 0)
+    return -1;
+  else
+    {
+      *file_addr = this->addr_;
+      return 0;
+    }
+}
+
+// Return the same result as <get_local_addr>.
+
+int 
+ACE_FILE::get_remote_addr (ACE_Addr &addr) const
+{
+  ACE_TRACE ("ACE_FILE::get_remote_addr");
+
+  return this->get_local_addr (addr);
+}
+
+int
+ACE_FILE::remove (void)
+{
+  ACE_TRACE ("ACE_FILE::remove");
+
+  this->close ();
+  return ACE_OS::unlink (this->addr_.get_path_name ());
+}
+
+int
+ACE_FILE::unlink (void)
+{
+  ACE_TRACE ("ACE_FILE::unlink");
+
+  return ACE_OS::unlink (this->addr_.get_path_name ());
+}

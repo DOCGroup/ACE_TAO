@@ -104,7 +104,7 @@ public:
 
   int close_filemapping_handle (void);
   // Close down the internal <file_mapping_> if necessary.  This is
-  // mostly necessary on Win32, that has a different handle for
+  // mostly necessary on Win32, which has a different handle for
   // file-mapping kernel object.
 
   int operator () (void *&addr);
@@ -143,7 +143,7 @@ public:
   // starting at <addr> up to <len> bytes.
 
   int remove (void);
-  // Close down and remove the file from the file system.
+  // Close and remove the file from the file system.
 
   int advise (int behavior, int len = -1);
   // Hook into the underlying VM system.

@@ -56,11 +56,18 @@ public:
 class ACE_Export ACE_FILE : public ACE_IO_SAP
 {
   // = TITLE
-  //     Defines the member functions for the base class of the
-  //     ACE_FILE abstraction.
+  //     Defines the core methods of the <ACE_FILE> abstraction.
 public:
   int close (void);
-  // Close down the ACE_FILE
+  // Close the <ACE_FILE> handle without removing the <ACE_FILE> from
+  // the file system.
+  
+  int remove (void);
+  // Close and remove the <ACE_FILE> from the file system.
+
+  int unlink (void);
+  // Remove the <ACE_FILE> from the file system without closing the
+  // <ACE_FILE> handle.
 
   int get_info (ACE_FILE_Info *finfo);
   // Get information on this <ACE_FILE>.
@@ -69,28 +76,39 @@ public:
   // Get information on this <ACE_FILE>.
 
   int truncate (off_t length);
-  // set filesize to length byte
+  // Set filesize to length byte.
 
   off_t position (long offset, int startpos);
-  // set the filepointer to the specified position
+  // Set the filepointer to the specified position.
 
   off_t position (void);
-  // get current filepointer
-
-  void dump (void) const;
-  // Dump the state of an object.
+  // Get current filepointer.
 
   int disable (int signum) const ;
   // Disable signal <signum>
   // This is here to prevent Win32 from
   // disabling SPIPE using socket calls
 
+  int get_local_addr (ACE_Addr &) const;
+  // Return the local endpoint address in the referenced <ACE_Addr>.
+  // Returns 0 if successful, else -1.
+
+  int get_remote_addr (ACE_Addr &) const;
+  // Return the same thing as <get_local_addr>.
+
+  void dump (void) const;
+  // Dump the state of an object.
+
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
 
 protected:
   ACE_FILE (void);
-  // Ensure that this class is an abstract base class
+  // Ensure that this class is only created by the
+  // <ACE_FILE_Connector>.
+
+  ACE_FILE_Addr addr_;
+  // File we are "connected" with...
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)
