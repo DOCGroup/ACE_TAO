@@ -403,81 +403,84 @@ TAO_Connection_Handler::close_connection_eh (ACE_Event_Handler * eh)
       }
     this->transport ()->purge_entry ();
 
-
-    ACE_Reactor * eh_reactor = eh->reactor ();
-
-    // These checks are valid as long as the ORB_Core is not
-    // shutdown. It is good to have these checks and they are valid
-    // for most of the cases. Please see below for exceptions
-    if (this->orb_core_->has_shutdown () == 0)
+    // @@ This seems silly, but if we have no reason to be in the
+    // reactor, then we dont remove ourselves.
+    if (this->transport ()->wait_strategy ()->is_registered ())
       {
-        // The exception when these are not valid is for RTCORBA. With
-        // RTCORBA on, you can threads in different lanes creating
-        // handlers and registering them with reactor in those
-        // respective lanes. These threads could then even go away
-        // leaving the task of reclaiming these resources to the main
-        // thread. For the main thread that takes the responsibility
-        // of finalizing () the lanes and the pools, the calls and
-        // comparison make no sense.
-        ACE_Reactor * reactor =
-          this->transport()->orb_core()->reactor ();
-        ACE_ASSERT (eh_reactor == 0 || eh_reactor == reactor);
+        ACE_Reactor * eh_reactor = eh->reactor ();
 
-        ACE_Reactor * orb_core_reactor = this->orb_core_->reactor ();
-        ACE_ASSERT (reactor == orb_core_reactor);
+        // These checks are valid as long as the ORB_Core is not
+        // shutdown. It is good to have these checks and they are valid
+        // for most of the cases. Please see below for exceptions
+        if (this->orb_core_->has_shutdown () == 0)
+          {
+            // The exception when these are not valid is for RTCORBA. With
+            // RTCORBA on, you can threads in different lanes creating
+            // handlers and registering them with reactor in those
+            // respective lanes. These threads could then even go away
+            // leaving the task of reclaiming these resources to the main
+            // thread. For the main thread that takes the responsibility
+            // of finalizing () the lanes and the pools, the calls and
+            // comparison make no sense.
+            ACE_Reactor * reactor =
+              this->transport()->orb_core()->reactor ();
+            ACE_ASSERT (eh_reactor == 0 || eh_reactor == reactor);
 
-        if (eh_reactor == 0)
-          eh_reactor = reactor;
+            ACE_Reactor * orb_core_reactor = this->orb_core_->reactor ();
+            ACE_ASSERT (reactor == orb_core_reactor);
 
-        ACE_UNUSED_ARG (orb_core_reactor);
-        ACE_UNUSED_ARG (reactor);
+            if (eh_reactor == 0)
+              eh_reactor = reactor;
+
+            ACE_UNUSED_ARG (orb_core_reactor);
+          }
+
+        // The Reactor must not be null, otherwise something else is
+        // horribly broken.
+        ACE_ASSERT (eh_reactor != 0);
+
+        if (TAO_debug_level)
+          {
+            ACE_DEBUG  ((LM_DEBUG,
+                         "TAO (%P|%t) - Connection_Handler[%d]::"
+                         "close_connection, removing from the reactor\n",
+                         handle));
+          }
+
+        int r =
+          eh_reactor->remove_handler (handle,
+                                      (ACE_Event_Handler::ALL_EVENTS_MASK
+                                       | ACE_Event_Handler::DONT_CALL));
+        if(r == -1 && TAO_debug_level)
+          {
+            ACE_ERROR ((LM_ERROR,
+                        "TAO (%P|%t) - Connection_Handler[%d]::"
+                        "close_connection, error in remove_handler (%d)\n",
+                        handle, r));
+          }
+
+        // Also cancel any timers, we may create those for time-limited
+        // buffering
+        if (TAO_debug_level)
+          {
+            ACE_DEBUG  ((LM_DEBUG,
+                         "TAO (%P|%t) - Connection_Handler[%d]::"
+                         "close_connection, cancel all timers and refcount [%d]\n",
+                         handle, reference_count_));
+          }
+        r = eh_reactor->cancel_timer (eh);
+        if (r == -1 && TAO_debug_level)
+          {
+            ACE_ERROR ((LM_ERROR,
+                        "TAO (%P|%t) - Connection_Handler[%d]::"
+                        "close_connection, error cancelling timers\n",
+                        handle));
+          }
+
+        // @@ This seems silly, the reactor is a much better authority to
+        //    find out if a handle is registered...
+        this->transport ()->wait_strategy ()->is_registered (0);
       }
-
-    // The Reactor must not be null, otherwise something else is
-    // horribly broken.
-    ACE_ASSERT(eh_reactor != 0);
-
-    if (TAO_debug_level)
-      {
-        ACE_DEBUG  ((LM_DEBUG,
-                     "TAO (%P|%t) - Connection_Handler[%d]::"
-                     "close_connection, removing from the reactor\n",
-                     handle));
-      }
-    int r =
-      eh_reactor->remove_handler (handle,
-                                  (ACE_Event_Handler::ALL_EVENTS_MASK
-                                   | ACE_Event_Handler::DONT_CALL));
-    if(r == -1 && TAO_debug_level)
-      {
-        ACE_ERROR ((LM_ERROR,
-                    "TAO (%P|%t) - Connection_Handler[%d]::"
-                    "close_connection, error in remove_handler (%d)\n",
-                    handle, r));
-      }
-
-    // Also cancel any timers, we may create those for time-limited
-    // buffering
-    if (TAO_debug_level)
-      {
-        ACE_DEBUG  ((LM_DEBUG,
-                     "TAO (%P|%t) - Connection_Handler[%d]::"
-                     "close_connection, cancel all timers and refcount [%d]\n",
-                     handle, reference_count_));
-      }
-    r = eh_reactor->cancel_timer (eh);
-    if (r == -1 && TAO_debug_level)
-      {
-        ACE_ERROR ((LM_ERROR,
-                    "TAO (%P|%t) - Connection_Handler[%d]::"
-                    "close_connection, error cancelling timers\n",
-                    handle));
-      }
-
-    // @@ This seems silly, the reactor is a much better authority to
-    //    find out if a handle is registered...
-    this->transport ()->wait_strategy ()->is_registered (0);
-
 
 
   }
