@@ -1,3 +1,12 @@
+Wed Nov  5 05:33:44 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * TAO/performance-tests/Cubit/TAO/MT_Cubit/server.h:
+          Removed #include of OS.h which seems to cause a problem if
+          included before streams.h.  Not sure why.
+
+        * TAO/tests/RTScheduling/VoidData/testC.cpp:
+          Added #include of OS_NS_string.h.
+
 Tue Nov  4 22:14:18 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* TAO_IDL/include/idl_global.h:

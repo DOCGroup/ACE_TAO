@@ -1,3 +1,14 @@
+Wed Nov  5 05:33:44 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ACEXML/common/FileCharStream.cpp:
+          Added #include OS_NS_wchar.h when ACE_USES_WCHAR is defined.
+
+        * examples/Reactor/WFMO_Reactor/Console_Input.cpp:
+        * examples/Reactor/WFMO_Reactor/Directory_Changes.cpp:
+        * examples/Reactor/WFMO_Reactor/Multithreading.cpp:
+        * examples/Reactor/WFMO_Reactor/Registration.cpp:
+          Added #included needed on Windows due to recent subsetting.
+
 Tue Nov 04 19:37:31 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* COPYING: Modified to include CIAO in the Copyright disclaimer.
