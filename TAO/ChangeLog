@@ -1,3 +1,14 @@
+Wed Dec 18 19:45:45 2002  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/fe_declarator.cpp:
+
+	  Added a check for 0 return from a narrow to AST_Type. This
+	  check catches attempts to use constants, enum values,
+	  attributes, and operations as IDL sequence elements, and
+	  outputs an error instead of crashing. Thanks to Petr
+	  Ferschmann <pferschmann@kerio.com> for pointing out the 
+	  problem with enum values.
+
 Wed Dec 18 14:48:32 2002  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Any.h:
