@@ -1,3 +1,13 @@
+Fri Dec  5 13:03:57 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* examples/Reactor/Dgram/Dgram.cpp (main): Fixed a bug where it
+ 	  was sending a huge buffer instead of just the string size.
+  	  Also, exit once we've finished the send.  Finally, revised the
+ 	  test so that it is easier to understand and so that it exits
+ 	  properly.  Thanks to Michael Hoffman
+ 	  <Hoffman_Michael@mac-mailserver.atc.ll.mit.edu> for reporting
+ 	  this.
+
 Fri Dec 05 13:20:09 1997    David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/platform_vxworks5.x_ghs.GNU: added OFLAGS.
