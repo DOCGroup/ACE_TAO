@@ -1,3 +1,8 @@
+Sun Jan 13 15:22:10 2002  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+	* docs/releasenotes/index.html (MIOP): Added a section for
+	  MIOP.
+
 Sun Jan 13 14:35:08 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* performance-tests/AMI_Latency/client.cpp: Rearranged the code
@@ -253,12 +258,12 @@ Sat Jan 12 21:14:31 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/FT_CORBA.idl: Has only the service layer
 <<<<<<< ChangeLog
-	  interfaces. 
+	  interfaces.
 
-	* orbsvcs/orbsvcs/Makefile.FTORB: A new file for the TAO_FTORB 
-	  library. 
-	
-	* orbsvcs/orbsvcs/Makefile.FaultTolerance: Updated this file. 
+	* orbsvcs/orbsvcs/Makefile.FTORB: A new file for the TAO_FTORB
+	  library.
+
+	* orbsvcs/orbsvcs/Makefile.FaultTolerance: Updated this file.
 =======
 	  interfaces.
 
