@@ -33,16 +33,16 @@ OBJFILES = \
 	$(OBJDIR)\CEC_Reactive_SupplierControl.obj \
 	$(OBJDIR)\CEC_SupplierAdmin.obj \
 	$(OBJDIR)\CEC_SupplierControl.obj \
-	$(OBJDIR)\ConsumerAdmin_i.obj \
-	$(OBJDIR)\CosEvent_Utilities.obj \
+#	$(OBJDIR)\ConsumerAdmin_i.obj \
+#	$(OBJDIR)\CosEvent_Utilities.obj \
 	$(OBJDIR)\CosEventChannelAdminC.obj \
 	$(OBJDIR)\CosEventChannelAdminS.obj \
 	$(OBJDIR)\CosEventCommC.obj \
 	$(OBJDIR)\CosEventCommS.obj \
-	$(OBJDIR)\EventChannel_i.obj \
-	$(OBJDIR)\ProxyPushConsumer_i.obj \
-	$(OBJDIR)\ProxyPushSupplier_i.obj \
-	$(OBJDIR)\SupplierAdmin_i.obj
+#	$(OBJDIR)\EventChannel_i.obj \
+#	$(OBJDIR)\ProxyPushConsumer_i.obj \
+#	$(OBJDIR)\ProxyPushSupplier_i.obj \
+#	$(OBJDIR)\SupplierAdmin_i.obj
 
 RESOURCE = $(OBJDIR)\orbsvcs.res
 
@@ -89,4 +89,3 @@ $(IDLDIR)\CosEventChannelAdminC.cpp $(IDLDIR)\CosEventChannelAdminS.cpp: $(IDLDI
 
 $(IDLDIR)\CosEventCommC.cpp $(IDLDIR)\CosEventCommS.cpp: $(IDLDIR)\CosEventComm.idl
 	$(TAO_IDL) $**
-
