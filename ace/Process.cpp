@@ -155,7 +155,6 @@ ACE_Process::spawn (ACE_Process_Options &options)
             // user's supplied variables.
             this->child_id_ = ACE_OS::execvp (options.command_line_argv ()[0],
                                               options.command_line_argv ());
-          }
 #endif /* ghs */
           }
 
