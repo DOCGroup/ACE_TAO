@@ -1,3 +1,8 @@
+Fri Nov 07 01:46:04 1997    <irfan@TWOSTEP>
+
+	* tests/Cubit/TAO/DII_Cubit/(cubitC.cpp, cubit.cpp): Byte order
+ 	  changed from 1 to MY_BYTE_SEX.
+
 Thu Nov  6 23:59:45 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* tao/params.cpp: Moved all the inlined methods out of the header
