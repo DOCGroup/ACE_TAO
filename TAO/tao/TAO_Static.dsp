@@ -99,10 +99,6 @@ SOURCE=.\Acceptor_Registry.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Active_Object_Map.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Adapter.h
 # End Source File
 # Begin Source File
@@ -231,15 +227,15 @@ SOURCE=.\DomainC.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\DomainS.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Dynamic_Adapter.h
 # End Source File
 # Begin Source File
 
 SOURCE=.\DynamicC.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Encodable.h
 # End Source File
 # Begin Source File
 
@@ -267,11 +263,23 @@ SOURCE=.\FILE_Parser.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Forwarding_Servant.h
+SOURCE=.\giop.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\giop.h
+SOURCE=.\GIOP_Message_Accept_State.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOP_Message_Acceptors.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOP_Message_Base.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOP_Message_Connectors.h
 # End Source File
 # Begin Source File
 
@@ -279,7 +287,15 @@ SOURCE=.\GIOP_Message_Headers.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\GIOP_Message_Lite.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\GIOP_Message_State.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOP_Utils.h
 # End Source File
 # Begin Source File
 
@@ -315,6 +331,10 @@ SOURCE=.\IIOP_Factory.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\IIOP_Lite_Factory.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\IIOP_Profile.h
 # End Source File
 # Begin Source File
@@ -347,7 +367,15 @@ SOURCE=.\IOPS.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\IOPS_T.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\ior_corbaloc_export.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\ior_corbaname_export.h
 # End Source File
 # Begin Source File
 
@@ -407,10 +435,6 @@ SOURCE=.\object.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Object_Adapter.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Object_KeyC.h
 # End Source File
 # Begin Source File
@@ -435,7 +459,7 @@ SOURCE=.\OctetSeqC.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Operation_Table.h
+SOURCE=.\operation_details.h
 # End Source File
 # Begin Source File
 
@@ -479,19 +503,11 @@ SOURCE=.\Pluggable.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\poa.h
+SOURCE=.\Pluggable_Messaging.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\POA_CORBA.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\poa_macros.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\POAManager.h
+SOURCE=.\Pluggable_Messaging_Utils.h
 # End Source File
 # Begin Source File
 
@@ -512,6 +528,10 @@ SOURCE=.\PollableC.h
 # Begin Source File
 
 SOURCE=.\PollableS.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\PollableS_T.h
 # End Source File
 # Begin Source File
 
@@ -611,14 +631,6 @@ SOURCE=.\Sequence_T.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\servant_base.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Server_Request.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Server_Strategy_Factory.h
 # End Source File
 # Begin Source File
@@ -655,6 +667,10 @@ SOURCE=.\stub.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Sync_Strategies.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Synch_Reply_Dispatcher.h
 # End Source File
 # Begin Source File
@@ -664,10 +680,6 @@ SOURCE=.\Tagged_Components.h
 # Begin Source File
 
 SOURCE=.\Tagged_Profile.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\TAO.h
 # End Source File
 # Begin Source File
 
@@ -703,11 +715,27 @@ SOURCE=.\target_specification.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\TimeBaseC.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\TimeBaseS.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\TimeBaseS_T.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Timeprobe.h
 # End Source File
 # Begin Source File
 
 SOURCE=.\Transport_Mux_Strategy.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\try_macros.h
 # End Source File
 # Begin Source File
 
@@ -763,10 +791,6 @@ SOURCE=.\Acceptor_Registry.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\Active_Object_Map.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\Adapter.i
 # End Source File
 # Begin Source File
@@ -819,15 +843,15 @@ SOURCE=.\Connection_Handler.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\Context.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\CONV_FRAMEC.i
 # End Source File
 # Begin Source File
 
 SOURCE=.\CONV_FRAMES.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\CONV_FRAMES_T.i
 # End Source File
 # Begin Source File
 
@@ -844,6 +868,10 @@ SOURCE=.\CORBALOC_Parser.i
 # Begin Source File
 
 SOURCE=.\CORBANAME_Parser.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\CurrentC.i
 # End Source File
 # Begin Source File
 
@@ -868,10 +896,6 @@ SOURCE=.\DLL_Parser.i
 # Begin Source File
 
 SOURCE=.\DomainC.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\DomainS_T.i
 # End Source File
 # Begin Source File
 
@@ -903,7 +927,27 @@ SOURCE=.\giop.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\GIOP_Message_Accept_State.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOP_Message_Acceptors.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOP_Message_Base.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOP_Message_Connectors.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\GIOP_Message_Headers.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOP_Message_Lite.i
 # End Source File
 # Begin Source File
 
@@ -911,7 +955,23 @@ SOURCE=.\GIOP_Message_State.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\GIOP_Utils.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\GIOPC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOPS.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOPS_T.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\IIOP_Acceptor.i
 # End Source File
 # Begin Source File
 
@@ -927,7 +987,11 @@ SOURCE=.\iiop_endpoints.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\IIOP_ORB.i
+SOURCE=.\IIOP_Profile.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\IIOP_Transport.i
 # End Source File
 # Begin Source File
 
@@ -952,6 +1016,10 @@ SOURCE=.\IOPC.i
 # Begin Source File
 
 SOURCE=.\IOPS.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\IOPS_T.i
 # End Source File
 # Begin Source File
 
@@ -987,6 +1055,10 @@ SOURCE=.\MessagingS.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\MProfile.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\NVList.i
 # End Source File
 # Begin Source File
@@ -1008,6 +1080,10 @@ SOURCE=.\ObjectIDList.i
 # Begin Source File
 
 SOURCE=.\OctetSeqC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\operation_details.i
 # End Source File
 # Begin Source File
 
@@ -1039,7 +1115,15 @@ SOURCE=.\Parser_Registry.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\POAManager.i
+SOURCE=.\Pluggable.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Pluggable_Messaging.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Pluggable_Messaging_Utils.i
 # End Source File
 # Begin Source File
 
@@ -1048,6 +1132,18 @@ SOURCE=.\Policy_Manager.i
 # Begin Source File
 
 SOURCE=.\PolicyC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\PollableC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\PollableS.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\PollableS_T.i
 # End Source File
 # Begin Source File
 
@@ -1060,6 +1156,10 @@ SOURCE=.\PortableInterceptor.i
 # Begin Source File
 
 SOURCE=.\PortableInterceptorC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Principal.i
 # End Source File
 # Begin Source File
 
@@ -1119,10 +1219,6 @@ SOURCE=.\Sequence_T.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\Server_Request.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\Service_Callbacks.i
 # End Source File
 # Begin Source File
@@ -1144,6 +1240,10 @@ SOURCE=.\StringSeqC.i
 # Begin Source File
 
 SOURCE=.\stub.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Sync_Strategies.i
 # End Source File
 # Begin Source File
 
@@ -1179,11 +1279,23 @@ SOURCE=.\TAOS.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\TAOS_T.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\target_specification.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\Timeprobe.i
+SOURCE=.\TimeBaseC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\TimeBaseS.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\TimeBaseS_T.i
 # End Source File
 # Begin Source File
 

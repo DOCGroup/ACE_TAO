@@ -3308,6 +3308,10 @@ SOURCE=.\CONV_FRAMES.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\CONV_FRAMES_T.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\corba.h
 # End Source File
 # Begin Source File
@@ -3412,6 +3416,10 @@ SOURCE=.\GIOP_Message_Base.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\GIOP_Message_Connectors.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\GIOP_Message_Headers.h
 # End Source File
 # Begin Source File
@@ -3429,6 +3437,10 @@ SOURCE=.\GIOP_Utils.h
 # Begin Source File
 
 SOURCE=.\GIOPC.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOPS_T.h
 # End Source File
 # Begin Source File
 
@@ -3457,6 +3469,10 @@ SOURCE=.\iiop_endpoints.h
 # Begin Source File
 
 SOURCE=.\IIOP_Factory.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\IIOP_Lite_Factory.h
 # End Source File
 # Begin Source File
 
@@ -3489,6 +3505,18 @@ SOURCE=.\IOPC.h
 # Begin Source File
 
 SOURCE=.\IOPS.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\IOPS_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\ior_corbaloc_export.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\ior_corbaname_export.h
 # End Source File
 # Begin Source File
 
@@ -3572,6 +3600,10 @@ SOURCE=.\OctetSeqC.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\operation_details.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\orb.h
 # End Source File
 # Begin Source File
@@ -3612,6 +3644,14 @@ SOURCE=.\Pluggable.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Pluggable_Messaging.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Pluggable_Messaging_Utils.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Policy_Manager.h
 # End Source File
 # Begin Source File
@@ -3629,6 +3669,10 @@ SOURCE=.\PollableC.h
 # Begin Source File
 
 SOURCE=.\PollableS.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\PollableS_T.h
 # End Source File
 # Begin Source File
 
@@ -3808,6 +3852,10 @@ SOURCE=.\TAOS.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\TAOS_T.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\target_specification.h
 # End Source File
 # Begin Source File
@@ -3816,11 +3864,23 @@ SOURCE=.\TimeBaseC.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\TimeBaseS.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\TimeBaseS_T.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Timeprobe.h
 # End Source File
 # Begin Source File
 
 SOURCE=.\Transport_Mux_Strategy.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\try_macros.h
 # End Source File
 # Begin Source File
 
@@ -3876,10 +3936,6 @@ SOURCE=.\Acceptor_Registry.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\Active_Object_Map.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\Adapter.i
 # End Source File
 # Begin Source File
@@ -3932,15 +3988,15 @@ SOURCE=.\Connection_Handler.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\Context.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\CONV_FRAMEC.i
 # End Source File
 # Begin Source File
 
 SOURCE=.\CONV_FRAMES.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\CONV_FRAMES_T.i
 # End Source File
 # Begin Source File
 
@@ -3976,10 +4032,6 @@ SOURCE=.\default_server.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\Direct_Priority_Mapping.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\DLL_ORB.inl
 # End Source File
 # Begin Source File
@@ -3989,10 +4041,6 @@ SOURCE=.\DLL_Parser.i
 # Begin Source File
 
 SOURCE=.\DomainC.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\DomainS_T.i
 # End Source File
 # Begin Source File
 
@@ -4060,6 +4108,18 @@ SOURCE=.\GIOPC.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\GIOPS.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOPS_T.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\IIOP_Acceptor.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\IIOP_Connect.i
 # End Source File
 # Begin Source File
@@ -4072,7 +4132,11 @@ SOURCE=.\iiop_endpoints.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\IIOP_ORB.i
+SOURCE=.\IIOP_Profile.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\IIOP_Transport.i
 # End Source File
 # Begin Source File
 
@@ -4100,15 +4164,15 @@ SOURCE=.\IOPS.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\IOPS_T.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\IOR_Parser.i
 # End Source File
 # Begin Source File
 
 SOURCE=.\Leader_Follower.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Linear_Priority_Mapping.i
 # End Source File
 # Begin Source File
 
@@ -4136,6 +4200,10 @@ SOURCE=.\MessagingS.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\MProfile.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\NVList.i
 # End Source File
 # Begin Source File
@@ -4157,6 +4225,10 @@ SOURCE=.\ObjectIDList.i
 # Begin Source File
 
 SOURCE=.\OctetSeqC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\operation_details.i
 # End Source File
 # Begin Source File
 
@@ -4188,7 +4260,15 @@ SOURCE=.\Parser_Registry.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\POAManager.i
+SOURCE=.\Pluggable.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Pluggable_Messaging.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Pluggable_Messaging_Utils.i
 # End Source File
 # Begin Source File
 
@@ -4204,6 +4284,14 @@ SOURCE=.\PollableC.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\PollableS.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\PollableS_T.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\Pool_Per_Endpoint.i
 # End Source File
 # Begin Source File
@@ -4216,7 +4304,7 @@ SOURCE=.\PortableInterceptorC.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\PortableServerC.i
+SOURCE=.\Principal.i
 # End Source File
 # Begin Source File
 
@@ -4229,10 +4317,6 @@ SOURCE=.\Priority_Mapping_Manager.i
 # Begin Source File
 
 SOURCE=.\Profile.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Reactor_Per_Priority.i
 # End Source File
 # Begin Source File
 
@@ -4288,22 +4372,6 @@ SOURCE=.\Services.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\SHMIOP_Acceptor.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\SHMIOP_Connect.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\SHMIOP_Endpoint.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\SHMIOP_Profile.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\Single_Reactor.i
 # End Source File
 # Begin Source File
@@ -4317,6 +4385,10 @@ SOURCE=.\StringSeqC.i
 # Begin Source File
 
 SOURCE=.\stub.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Sync_Strategies.i
 # End Source File
 # Begin Source File
 
@@ -4352,31 +4424,27 @@ SOURCE=.\TAOS.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\TAOS_T.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\target_specification.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\Timeprobe.i
+SOURCE=.\TimeBaseC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\TimeBaseS.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\TimeBaseS_T.i
 # End Source File
 # Begin Source File
 
 SOURCE=.\typecode.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\UIOP_Connect.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\UIOP_Endpoint.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\uiop_endpoints.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\UIOP_Profile.i
 # End Source File
 # Begin Source File
 
