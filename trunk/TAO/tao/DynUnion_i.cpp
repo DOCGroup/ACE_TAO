@@ -76,7 +76,7 @@ TAO_DynUnion_i::~TAO_DynUnion_i (void)
 CORBA::Boolean
 TAO_DynUnion_i::set_as_default (CORBA::Environment& env)
 {
-  if ((CORBA::Long) this->index_ == this->type_->default_index (env))
+  if ((CORBA::Long) this->current_index_ == this->type_->default_index (env))
     return 1;
   else
     return 0;
@@ -114,7 +114,7 @@ TAO_DynUnion_i::member (CORBA::Environment &)
 char*
 TAO_DynUnion_i::member_name (CORBA::Environment& env)
 {
-  return CORBA::string_dup (this->type_->member_name (this->index_,
+  return CORBA::string_dup (this->type_->member_name (this->current_index_,
                                                       env));
 }
 
@@ -138,7 +138,7 @@ TAO_DynUnion_i::member_name (const char* member_name,
         {
           // No sense doing anything if we're just "resetting" to the
           // current member.
-          if (i == this->index_)
+          if (i == this->current_index_)
             return;
           else
             {
@@ -150,7 +150,7 @@ TAO_DynUnion_i::member_name (const char* member_name,
                 TAO_DynAny_i::create_dyn_any (*this->type_->member_label (i,
                                                                           env),
                                               env);
-              this->index_ = i;
+              this->current_index_ = i;
               return;
             }
         }
@@ -160,7 +160,7 @@ TAO_DynUnion_i::member_name (const char* member_name,
 CORBA::TCKind
 TAO_DynUnion_i::member_kind (CORBA::Environment& env)
 {
-  return TAO_DynAny_i::unalias (this->type_->member_type (this->index_,
+  return TAO_DynAny_i::unalias (this->type_->member_type (this->current_index_,
                                                           env),
                                 env);
 }
@@ -286,16 +286,16 @@ TAO_DynUnion_i::current_component (CORBA::Environment &)
 CORBA::Boolean
 TAO_DynUnion_i::next (CORBA::Environment &env)
 {
-  if (this->index_ + 1 == this->type_->member_count (env))
+  if (this->current_index_ + 1 == this->type_->member_count (env))
     return 0;
 
-  ++this->index_;
+  ++this->current_index_;
 
   if (!CORBA::is_nil (this->member_.in ()))
     this->member_->destroy (env);
 
   this->member_ =
-    TAO_DynAny_i::create_dyn_any (this->type_->member_type (this->index_,
+    TAO_DynAny_i::create_dyn_any (this->type_->member_type (this->current_index_,
                                                             env),
                                   env);
   return 1;
@@ -309,13 +309,13 @@ TAO_DynUnion_i::seek (CORBA::Long slot,
       || slot >= (CORBA::Long) this->type_->member_count (env))
     return 0;
 
-  this->index_ = slot;
+  this->current_index_ = slot;
 
   if (!CORBA::is_nil (this->member_.in ()))
     this->member_->destroy (env);
 
   this->member_ =
-    TAO_DynAny_i::create_dyn_any (this->type_->member_type (this->index_,
+    TAO_DynAny_i::create_dyn_any (this->type_->member_type (this->current_index_,
                                                             env),
                                   env);
   return 1;
@@ -324,16 +324,16 @@ TAO_DynUnion_i::seek (CORBA::Long slot,
 void
 TAO_DynUnion_i::rewind (CORBA::Environment &env)
 {
-  if (this->index_ == 0)
+  if (this->current_index_ == 0)
     return;
 
-  this->index_ = 0;
+  this->current_index_ = 0;
 
   if (!CORBA::is_nil (this->member_.in ()))
     this->member_->destroy (env);
 
   this->member_ =
-    TAO_DynAny_i::create_dyn_any (this->type_->member_type (this->index_,
+    TAO_DynAny_i::create_dyn_any (this->type_->member_type (this->current_index_,
                                                             env),
                                   env);
 }
@@ -381,7 +381,7 @@ TAO_DynUnion_i::insert_boolean (CORBA::Boolean value,
                 TAO_DynAny_i::create_dyn_any (*this->type_->member_label (i,
                                                                           env),
                                               env);
-              this->index_ = i;
+              this->current_index_ = i;
               return;
             }
         }
@@ -425,7 +425,7 @@ TAO_DynUnion_i::insert_octet (CORBA::Octet value,
                 TAO_DynAny_i::create_dyn_any (*this->type_->member_label (i,
                                                                           env),
                                               env);
-              this->index_ = i;
+              this->current_index_ = i;
               return;
             }
         }
@@ -469,7 +469,7 @@ TAO_DynUnion_i::insert_char (CORBA::Char value,
                 TAO_DynAny_i::create_dyn_any (*this->type_->member_label (i,
                                                                           env),
                                               env);
-              this->index_ = i;
+              this->current_index_ = i;
               return;
             }
         }
@@ -511,7 +511,7 @@ TAO_DynUnion_i::insert_short (CORBA::Short value,
                 TAO_DynAny_i::create_dyn_any (*this->type_->member_label (i,
                                                                           env),
                                               env);
-              this->index_ = i;
+              this->current_index_ = i;
               return;
             }
         }
@@ -555,7 +555,7 @@ TAO_DynUnion_i::insert_long (CORBA::Long value,
                 TAO_DynAny_i::create_dyn_any (*this->type_->member_label (i,
                                                                           env),
                                               env);
-              this->index_ = i;
+              this->current_index_ = i;
               return;
             }
         }
@@ -598,7 +598,7 @@ TAO_DynUnion_i::insert_ushort (CORBA::UShort value,
                 TAO_DynAny_i::create_dyn_any (*this->type_->member_label (i,
                                                                           env),
                                               env);
-              this->index_ = i;
+              this->current_index_ = i;
               return;
             }
         }
@@ -642,7 +642,7 @@ TAO_DynUnion_i::insert_ulong (CORBA::ULong value,
                 TAO_DynAny_i::create_dyn_any (*this->type_->member_label (i,
                                                                           env),
                                               env);
-              this->index_ = i;
+              this->current_index_ = i;
               return;
             }
         }
@@ -686,7 +686,7 @@ TAO_DynUnion_i::insert_float (CORBA::Float value,
                 TAO_DynAny_i::create_dyn_any (*this->type_->member_label (i,
                                                                           env),
                                               env);
-              this->index_ = i;
+              this->current_index_ = i;
               return;
             }
         }
@@ -730,7 +730,7 @@ TAO_DynUnion_i::insert_double (CORBA::Double value,
                 TAO_DynAny_i::create_dyn_any (*this->type_->member_label (i,
                                                                           env),
                                               env);
-              this->index_ = i;
+              this->current_index_ = i;
               return;
             }
         }
@@ -773,7 +773,7 @@ TAO_DynUnion_i::insert_string (const char* value,
                 TAO_DynAny_i::create_dyn_any (*this->type_->member_label (i,
                                                                           env),
                                               env);
-              this->index_ = i;
+              this->current_index_ = i;
               return;
             }
         }
@@ -817,7 +817,7 @@ TAO_DynUnion_i::insert_reference (CORBA::Object_ptr value,
                 TAO_DynAny_i::create_dyn_any (*this->type_->member_label (i,
                                                                           env),
                                               env);
-              this->index_ = i;
+              this->current_index_ = i;
               return;
             }
         }
@@ -861,7 +861,7 @@ TAO_DynUnion_i::insert_typecode (CORBA::TypeCode_ptr value,
                 TAO_DynAny_i::create_dyn_any (*this->type_->member_label (i,
                                                                           env),
                                               env);
-              this->index_ = i;
+              this->current_index_ = i;
               return;
             }
         }
@@ -904,7 +904,7 @@ TAO_DynUnion_i::insert_longlong (CORBA::LongLong value,
                 TAO_DynAny_i::create_dyn_any (*this->type_->member_label (i,
                                                                           env),
                                               env);
-              this->index_ = i;
+              this->current_index_ = i;
               return;
             }
         }
@@ -947,7 +947,7 @@ TAO_DynUnion_i::insert_ulonglong (CORBA::ULongLong value,
                 TAO_DynAny_i::create_dyn_any (*this->type_->member_label (i,
                                                                           env),
                                               env);
-              this->index_ = i;
+              this->current_index_ = i;
               return;
             }
         }
@@ -991,7 +991,7 @@ TAO_DynUnion_i::insert_wchar (CORBA::WChar value,
                 TAO_DynAny_i::create_dyn_any (*this->type_->member_label (i,
                                                                           env),
                                               env);
-              this->index_ = i;
+              this->current_index_ = i;
               return;
             }
         }
@@ -1033,7 +1033,7 @@ TAO_DynUnion_i::insert_any (const CORBA::Any& value,
                 TAO_DynAny_i::create_dyn_any (*this->type_->member_label (i,
                                                                           env),
                                               env);
-              this->index_ = i;
+              this->current_index_ = i;
               return;
             }
         }
@@ -1316,8 +1316,10 @@ DU_Extractor<CORBA::Char>::check_match (const CORBA_Any& inside_any,
 {
   CORBA::Any::to_char member_struct (this->member_index_);
   CORBA::Any::to_char arg_struct (this->arg_index_);
+
   inside_any >>= member_struct;
   outside_any >>= arg_struct;
+
   return member_struct.ref_ == arg_struct.ref_;
 }
 
@@ -1452,7 +1454,7 @@ TAO_DynUnion_i::set_from_any (const CORBA_Any& any,
                       0,
                       cdr.start ());
 
-  if (!CORBA::is_nil (this->discriminator_.in()))
+  if (!CORBA::is_nil (this->discriminator_.in ()))
     this->discriminator_->destroy (env);
 
   // Set the discriminator holder.
@@ -1490,7 +1492,7 @@ TAO_DynUnion_i::set_from_any (const CORBA_Any& any,
       else if (functor->check_match (disc_any,
                                      label_any))
         {
-          this->index_ = i;
+          this->current_index_ = i;
           break;
         }
     }
@@ -1502,9 +1504,9 @@ TAO_DynUnion_i::set_from_any (const CORBA_Any& any,
   else
     {
       if (i == count && default_index != -1)
-        this->index_ = default_index;
+        this->current_index_ = default_index;
 
-      CORBA_Any member_any (any.type ()->member_type (this->index_,
+      CORBA_Any member_any (any.type ()->member_type (this->current_index_,
                                                       env),
                             0,
                             cdr.start ());
