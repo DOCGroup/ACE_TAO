@@ -1,3 +1,16 @@
+Sun Feb 23 12:16:34 2003  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/WIN32_Asynch_IO.cpp (cancel): Added support for cancel() on
+	  MinGW.  Thanks to Vince for this fix.
+
+	* examples/Mem_Map/Makefile: Moved the definition of DIRS to
+	  later in the Makefile so we can exclude it from the MinGW
+	  build.  Thanks to Vince for reporting this, as well.
+
+	* ace/WIN32_Proactor.cpp (close): Make sure to check whether
+	  GetQueuedQueuedCompletion() returns false.  Thanks to Vince
+ 	  Mounts <vince@mounts.cc> for reporting this.
+
 Sat Feb 22 08:16:36 2003  Ossama Othman  <ossama@uci.edu>
 
 	* ace/Basic_Types.h (operator++, operator--):
@@ -405,3 +418,14 @@ Thu Feb 20 09:23:51 2003  Ossama Othman  <ossama@uci.edu>
 	  Removed friend declarations for the
 	  ACE_SSL_SOCK_{Acceptor,Connector} classes.  They are
 	  unnecessary.
+
+Tue Feb 11 17:14:56 2003  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/TTY_IO.cpp: Fixed several problems with DTR enabling.  Thanks to 
+	  Ray Limpus <ray.limpus@boeing.com> for reporting this.
+
+Thu Feb  6 16:36:18 2003  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/Bound_Ptr.{h,i}: Made the get() method const.  Thanks to
+	  Chris Kohlhoff for reporting this.
+  

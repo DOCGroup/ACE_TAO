@@ -275,7 +275,12 @@ ACE_TTY_IO::control (Control_Mode cmd,
       // ensure DTR is enabled
       int status;
       this->ACE_IO_SAP::control(TIOCMGET, &status);
-      status |= TIOCM_DTR;
+
+       if (arg->dtrdisable) 
+         status &= ~TIOCM_DTR;
+       else 
+         status |= TIOCM_DTR;
+
       this->ACE_IO_SAP::control(TIOCMSET,&status);
 #endif /* definded (TIOCMGET) */
 
@@ -418,7 +423,11 @@ ACE_TTY_IO::control (Control_Mode cmd,
       if (arg->xofflim != -1)
         dcb.XoffLim  = arg->xofflim;
 
-      dcb.fDtrControl = DTR_CONTROL_ENABLE;
+     if (arg->dtrdisable) 
+       dcb.fDtrControl = DTR_CONTROL_DISABLE;
+     else
+       dcb.fDtrControl = DTR_CONTROL_ENABLE;
+
       dcb.fAbortOnError = FALSE;
       dcb.fErrorChar = FALSE; 
       dcb.fNull = FALSE; 

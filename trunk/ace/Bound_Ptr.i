@@ -272,7 +272,7 @@ ACE_Strong_Bound_Ptr<X, ACE_LOCK>::operator *() const
 }
 
 template <class X, class ACE_LOCK> inline X*
-ACE_Strong_Bound_Ptr<X, ACE_LOCK>::get (void)
+ACE_Strong_Bound_Ptr<X, ACE_LOCK>::get (void) const
 {
   return this->ptr_;
 }
