@@ -1,3 +1,11 @@
+Thu Aug 26 12:22:55 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/config-ghs-common.h: on Sun, added
+          ACE_HAS_NONSTATIC_OBJECT_MANAGER.  It's necessary
+          to prevent seg fault on startup.  Thanks to
+          David Sunwall <das@planet8.tds-eagan.lmco.com> for
+          reporting this problem.
+
 Thu Aug 26 12:11:09 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * docs/ACE-guidelines.html: added guidelines to avoid
