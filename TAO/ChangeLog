@@ -1,3 +1,9 @@
+Sat Oct 16 13:22:54 MST 2004 Trevor Fields  <fields_t@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc:
+          ImR_Activator project changed to not be built when
+          the ImR_Activator_IDL prerequisites are not built.
+
 Fri Oct 15 20:37:19 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* tao/Synch_Invocation.cpp:
