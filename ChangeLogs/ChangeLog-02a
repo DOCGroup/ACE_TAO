@@ -1,3 +1,9 @@
+Fri Dec 28 05:20:29 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/Get_Opt.cpp (ACE_Get_Opt): Protect the call to ACE_OS::getenv()
+	  with a #ifndef (ACE_LACKS_GETENV).  Thanks to Bala and Venkita
+ 	  for reporting this!
+
 Fri Dec 28 10:52:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * tests/SSL/Makefile.bor:
