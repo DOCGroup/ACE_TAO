@@ -148,6 +148,8 @@
 // Platform supports System V IPC (most versions of UNIX, but not Win32)
 #define ACE_HAS_SYSV_IPC
 
+#define ACE_HAS_4_4BSD_SENDMSG_RECVMSG
+
 // Compiler/platform contains the <sys/syscall.h> file.
 #define ACE_HAS_SYSCALL_H
 
