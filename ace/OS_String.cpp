@@ -698,7 +698,7 @@ ACE_OS_String::wcsstr_emulation (const wchar_t *string,
           do
             {
               if ((sc = *string++) == 0)
-                return NULL;
+                return 0;
             } while (sc != c);
         } while (strncmp(string, charset, len) != 0);
       string--;
@@ -785,7 +785,7 @@ ACE_OS_String::strpbrk_emulation (const char *string,
           return ACE_const_cast (char *, string - 1);
     }
 
-  return NULL;
+  return 0;
 }
 #endif /* ACE_LACKS_STRPBRK */
 
@@ -804,7 +804,7 @@ ACE_OS_String::wcspbrk_emulation (const wchar_t *string,
           return ACE_const_cast (wchar_t *, string - 1);
     }
 
-  return NULL;
+  return 0;
 }
 #endif /* ACE_HAS_WCHAR && ACE_LACKS_WCSPBRK */
 
@@ -845,7 +845,7 @@ ACE_OS_String::wcschr_emulation (const wchar_t *string, wint_t c)
     if (*string == ACE_static_cast (wchar_t, c))
       return ACE_const_cast (wchar_t *, string);
 
-  return NULL;
+  return 0;
 }
 #endif /* ACE_HAS_WCHAR && ACE_LACKS_WCSCHR */
 

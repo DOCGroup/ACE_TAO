@@ -1,5 +1,4 @@
 // -*- C++ -*-
-//
 // $Id$
 
 #include "ace/CE_Screen_Output.h"
@@ -47,7 +46,7 @@ void ACE_CE_Screen_Output::SetOutputWindow(HWND hEdit)
 
 void ACE_CE_Screen_Output::clear()
 {
-    SetWindowText(handler_, NULL);
+    SetWindowText(handler_, 0);
 }
 
 ACE_CE_Screen_Output& ACE_CE_Screen_Output::operator << (ACE_TCHAR* output)
@@ -56,7 +55,7 @@ ACE_CE_Screen_Output& ACE_CE_Screen_Output::operator << (ACE_TCHAR* output)
     SendMessage(handler_, EM_SETSEL, length, length);
     SendMessage(handler_, EM_REPLACESEL, 0, (LPARAM)output);
 
-    if (pFile_ != NULL)
+    if (pFile_ != 0)
     {
         fwprintf(pFile_, L"%s", output);
     }

@@ -1,3 +1,33 @@
+Sun Jun  9 16:26:00 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/ATM_Acceptor.cpp: 
+	* ace/ATM_Addr.cpp: 
+	* ace/ATM_Connector.i: 
+	* ace/ATM_QoS.cpp: 
+	* ace/ATM_Stream.cpp: 
+	* ace/CE_Screen_Output.cpp: 
+	* ace/Configuration.cpp: 
+	* ace/Handle_Set.i: 
+	* ace/IOStream.cpp: 
+	* ace/Lib_Find.cpp: 
+	* ace/Log_Msg.cpp: 
+	* ace/Log_Record.cpp: 
+	* ace/MEM_Addr.cpp: 
+	* ace/Malloc_T.i: 
+	* ace/Memory_Pool.cpp: 
+	* ace/Message_Queue.cpp: 
+	* ace/Msg_WFMO_Reactor.cpp: 
+	* ace/OS.cpp: 
+	* ace/OS.i: 
+	* ace/OS_String.cpp: 
+	* ace/Process.cpp: 
+	* ace/SOCK_Connector.i: 
+	* ace/SPIPE_Connector.cpp: 
+	* ace/Sock_Connect.cpp: 
+	* ace/Synch_T.cpp: 
+	* ace/ace_wchar.inl: Changed improper use of NULL to
+	  0.
+
 Sun Jun  9 15:33:05 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * ace/Date_Time.i:

@@ -162,7 +162,7 @@ ACE_ATM_Stream::get_vpi_vci (ACE_UINT16 &vpi,
     }
 
   char *buf_req = (char *) ACE_OS::malloc (info.options);
-  if (buf_req == (char *) NULL) 
+  if (buf_req == 0) 
     {
       ACE_OS::fprintf (stderr,
                       "Unable to allocate %ld bytes for options\n",
@@ -171,7 +171,7 @@ ACE_ATM_Stream::get_vpi_vci (ACE_UINT16 &vpi,
     }
 
   char *buf_ret = (char *) ACE_OS::malloc (info.options);
-  if (buf_ret == (char *) NULL) 
+  if (buf_ret == 0) 
     {
       ACE_OS::fprintf (stderr,
                       "Unable to allocate %ld bytes for options\n",
@@ -226,13 +226,13 @@ ACE_ATM_Stream::get_vpi_vci (ACE_UINT16 &vpi,
   
   if (::WSAIoctl ((int) this -> get_handle (), 
                   SIO_GET_ATM_CONNECTION_ID, 
-                  NULL, 
+                  0, 
                   0, 
  (LPVOID) &connID, 
                   sizeof (ATM_CONNECTION_ID), 
                   &bytes, 
-                  NULL, 
-                  NULL) 
+                  0, 
+                  0) 
        == SOCKET_ERROR) {
     ACE_OS::printf ("Error: WSAIoctl %d\n", WSAGetLastError ());
   }

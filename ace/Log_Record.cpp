@@ -236,7 +236,7 @@ ACE_Log_Record::print (const ACE_TCHAR *host_name,
 
   if (result == 0)
     {
-      if (fp != NULL)
+      if (fp != 0)
         {
           int verbose_msg_len = ACE_OS::strlen (verbose_msg);
           int fwrite_result = ACE_OS::fprintf (fp, ACE_LIB_TEXT ("%s"), verbose_msg);

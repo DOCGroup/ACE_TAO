@@ -290,19 +290,19 @@ ACE_ATM_Addr::string_to_addr (const ACE_TCHAR sap[])
    csaBuffer.RemoteAddr.lpSockaddr = (struct sockaddr *)&atm_addr_;
 
    qsRestrictions.dwSize                  = sizeof (WSAQUERYSETW);
-   qsRestrictions.lpszServiceInstanceName = NULL;
+   qsRestrictions.lpszServiceInstanceName = 0;
    qsRestrictions.lpServiceClassId        = &FORE_NAME_CLASS;
-   qsRestrictions.lpVersion               = NULL;
-   qsRestrictions.lpszComment             = NULL;
+   qsRestrictions.lpVersion               = 0;
+   qsRestrictions.lpszComment             = 0;
    qsRestrictions.dwNameSpace             = FORE_NAME_SPACE;
-   qsRestrictions.lpNSProviderId          = NULL;
+   qsRestrictions.lpNSProviderId          = 0;
    qsRestrictions.lpszContext             = L"";
    qsRestrictions.dwNumberOfProtocols     = 0;
-   qsRestrictions.lpafpProtocols          = NULL;
+   qsRestrictions.lpafpProtocols          = 0;
    qsRestrictions.lpszQueryString         = tmpWStr;
    qsRestrictions.dwNumberOfCsAddrs       = 1;
    qsRestrictions.lpcsaBuffer             = &csaBuffer;
-   qsRestrictions.lpBlob                  = NULL; //&blob;
+   qsRestrictions.lpBlob                  = 0; //&blob;
 
    if (::WSALookupServiceBeginW (&qsRestrictions, LUP_RETURN_ALL, &hLookup) 
         == SOCKET_ERROR) {

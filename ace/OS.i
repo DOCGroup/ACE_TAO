@@ -499,7 +499,7 @@ ACE_OS::default_win32_security_attributes (LPSECURITY_ATTRIBUTES sa)
       static SECURITY_ATTRIBUTES default_sa;
       static SECURITY_DESCRIPTOR sd;
       InitializeSecurityDescriptor(&sd, SECURITY_DESCRIPTOR_REVISION);
-      SetSecurityDescriptorDacl(&sd, TRUE, NULL, FALSE);
+      SetSecurityDescriptorDacl(&sd, TRUE, 0, FALSE);
       default_sa.nLength = sizeof(SECURITY_ATTRIBUTES);
       default_sa.lpSecurityDescriptor = &sd;
       default_sa.bInheritHandle       = TRUE;
@@ -2898,7 +2898,7 @@ ACE_OS::filesize (ACE_HANDLE handle)
 {
   ACE_OS_TRACE ("ACE_OS::filesize");
 #if defined (ACE_WIN32)
-  ACE_WIN32CALL_RETURN (::GetFileSize (handle, NULL), long, -1);
+  ACE_WIN32CALL_RETURN (::GetFileSize (handle, 0), long, -1);
 #else /* !ACE_WIN32 */
   struct stat sb;
   return ACE_OS::fstat (handle, &sb) == -1 ? -1 : (long) sb.st_size;
@@ -2912,7 +2912,7 @@ ACE_OS::ftruncate (ACE_HANDLE handle, off_t offset)
 #if defined (ACE_HAS_PACE)
   ACE_OSCALL_RETURN (::pace_ftruncate (handle, offset), int, -1);
 #elif defined (ACE_WIN32)
-  if (::SetFilePointer (handle, offset, NULL, FILE_BEGIN) != (unsigned) -1)
+  if (::SetFilePointer (handle, offset, 0, FILE_BEGIN) != (unsigned) -1)
     ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::SetEndOfFile (handle), ace_result_), int, -1);
   else
     ACE_FAIL_RETURN (-1);
@@ -4362,7 +4362,7 @@ ACE_OS::event_init (ACE_event_t *event,
                            initial_state,
                            name);
 # endif /* ACE_HAS_WINCE */
-  if (*event == NULL)
+  if (*event == 0)
     ACE_FAIL_RETURN (-1);
   else
     return 0;
@@ -4411,7 +4411,7 @@ ACE_OS::event_init (ACE_event_t *event,
                            manual_reset,
                            initial_state,
                            name);
-  if (*event == NULL)
+  if (*event == 0)
     ACE_FAIL_RETURN (-1);
 
   return 0;
@@ -5840,7 +5840,7 @@ ACE_OS::truncate (const ACE_TCHAR *filename,
     ACE_FAIL_RETURN (-1);
   else if (::SetFilePointer (handle,
                              offset,
-                             NULL,
+                             0,
                              FILE_BEGIN) != (unsigned) -1)
     {
       BOOL result = ::SetEndOfFile (handle);
@@ -7581,7 +7581,7 @@ ACE_OS::thr_yield (void)
   // Note - this is a POSIX.4 function - not a POSIX.1c function...
   ::sched_yield ();
 #   elif defined (ACE_HAS_PTHREADS_DRAFT6)
-  ::pthread_yield (NULL);
+  ::pthread_yield (0);
 #   else    /* Draft 4 and 7 */
   ::pthread_yield ();
 #   endif  /* ACE_HAS_PTHREADS_STD */
@@ -8191,12 +8191,12 @@ ACE_OS::dlerror (void)
   ACE_OS::sprintf (buf, "error code %d", GetLastError());
 #   else
   ACE_TEXT_FormatMessage (FORMAT_MESSAGE_FROM_SYSTEM,
-                          NULL,
+                          0,
                           ::GetLastError (),
                           0,
                           buf,
                           sizeof buf / sizeof buf[0],
-                          NULL);
+                          0);
 #   endif /* ACE_HAS_PHARLAP */
   return buf;
 # else
@@ -8308,7 +8308,7 @@ ACE_OS::dlsym (ACE_SHLIB_HANDLE handle,
   int status;
   shl_t _handle = handle;
   ACE_OSCALL (::shl_findsym(&_handle, symbolname, TYPE_UNDEFINED, &value), int, -1, status);
-  return status == 0 ? value : NULL;
+  return status == 0 ? value : 0;
 
 # else
 
@@ -9118,7 +9118,7 @@ ACE_OS::flock_init (ACE_OS::ace_flock_t *lock,
   lock->overlapped_.Internal = 0;
   lock->overlapped_.InternalHigh = 0;
   lock->overlapped_.OffsetHigh = 0;
-  lock->overlapped_.hEvent = NULL;
+  lock->overlapped_.hEvent = 0;
 #endif /* ACE_WIN32 */
   lock->handle_ = ACE_INVALID_HANDLE;
   lock->lockname_ = 0;
@@ -9152,13 +9152,13 @@ ACE_OS::adjust_flock_params (ACE_OS::ace_flock_t *lock,
       start += SetFilePointer (lock->handle_, 0, 0, FILE_CURRENT);
       break;
     case SEEK_END:
-      start += ::GetFileSize (lock->handle_, NULL);
+      start += ::GetFileSize (lock->handle_, 0);
       break;
     }
   lock->overlapped_.Offset = start;
   if (len == 0)
     len = ::GetFileSize (lock->handle_,
-                         NULL) - start;
+                         0) - start;
 }
 #endif /* ACE_WIN32 */
 
@@ -10060,7 +10060,7 @@ ACE_OS::lseek (ACE_HANDLE handle, off_t offset, int whence)
       return ACE_static_cast (off_t, -1); // rather safe than sorry
     }
 # endif  /* SEEK_SET != FILE_BEGIN || SEEK_CUR != FILE_CURRENT || SEEK_END != FILE_END */
-  DWORD result = ::SetFilePointer (handle, offset, NULL, whence);
+  DWORD result = ::SetFilePointer (handle, offset, 0, whence);
   if (result == ACE_SYSCALL_FAILED)
     ACE_FAIL_RETURN (ACE_static_cast (off_t, -1));
   else
@@ -10624,7 +10624,7 @@ ACE_OS::mkdir (const ACE_TCHAR *path, mode_t mode)
   ACE_OSCALL_RETURN (::_mkdir ((char *) path), int, -1);
 #elif defined (ACE_HAS_WINCE)
   ACE_UNUSED_ARG (mode);
-  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::CreateDirectory (path, NULL),
+  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::CreateDirectory (path, 0),
                                           ace_result_),
                         int, -1);
 #elif defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
@@ -10859,7 +10859,7 @@ ACE_OS::sigaddset (sigset_t *s, int signum)
 #if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
   ACE_OSCALL_RETURN (::pace_sigaddset (s, signum), int, -1);
 #elif defined (ACE_LACKS_SIGSET) || defined (ACE_LACKS_SIGSET_DEFINITIONS)
-  if (s == NULL)
+  if (s == 0)
     {
       errno = EFAULT;
       return -1;
@@ -10891,7 +10891,7 @@ ACE_OS::sigdelset (sigset_t *s, int signum)
 #if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
   ACE_OSCALL_RETURN (::pace_sigdelset (s, signum), int, -1);
 #elif defined (ACE_LACKS_SIGSET) || defined (ACE_LACKS_SIGSET_DEFINITIONS)
-  if (s == NULL)
+  if (s == 0)
     {
       errno = EFAULT;
       return -1;
@@ -10923,7 +10923,7 @@ ACE_OS::sigemptyset (sigset_t *s)
 #if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
   ACE_OSCALL_RETURN (::pace_sigemptyset (s), int, -1);
 #elif defined (ACE_LACKS_SIGSET) || defined (ACE_LACKS_SIGSET_DEFINITIONS)
-  if (s == NULL)
+  if (s == 0)
     {
       errno = EFAULT;
       return -1;
@@ -10946,7 +10946,7 @@ ACE_OS::sigfillset (sigset_t *s)
 #if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
   ACE_OSCALL_RETURN (::pace_sigfillset (s), int, -1);
 #elif defined (ACE_LACKS_SIGSET) || defined (ACE_LACKS_SIGSET_DEFINITIONS)
-  if (s == NULL)
+  if (s == 0)
     {
       errno = EFAULT;
       return -1;
@@ -10969,7 +10969,7 @@ ACE_OS::sigismember (sigset_t *s, int signum)
 #if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
   ACE_OSCALL_RETURN (::pace_sigismember (s, signum), int, -1);
 #elif defined (ACE_LACKS_SIGSET) || defined (ACE_LACKS_SIGSET_DEFINITIONS)
-  if (s == NULL)
+  if (s == 0)
     {
       errno = EFAULT;
       return -1;
@@ -11099,7 +11099,7 @@ ACE_OS::bsearch (const void *key,
   ACE_UNUSED_ARG (nel);
   ACE_UNUSED_ARG (size);
   ACE_UNUSED_ARG (compar);
-  ACE_NOTSUP_RETURN (NULL);
+  ACE_NOTSUP_RETURN (0);
 #endif /* ACE_HAS_PACE */
 }
 

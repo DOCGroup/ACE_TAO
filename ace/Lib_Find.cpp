@@ -188,7 +188,7 @@ ACE_Lib_Find::ldfind (const ACE_TCHAR filename[],
         {
 #if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
           ACE_TCHAR *file_component = 0;
-          DWORD pathlen = ACE_TEXT_SearchPath(NULL,
+          DWORD pathlen = ACE_TEXT_SearchPath(0,
                                               searchfilename,
                                               dll_suffix,
                                               maxpathnamelen,
@@ -426,7 +426,7 @@ ACE_Lib_Find::get_temp_dir (ACE_TCHAR *buffer, size_t buffer_len)
   // variable is defined to be.  If it doesn't exist, just use /tmp
   const ACE_TCHAR *tmpdir = ACE_OS::getenv (ACE_LIB_TEXT ("TMPDIR"));
 
-  if (tmpdir == NULL)
+  if (tmpdir == 0)
     tmpdir = ACE_LIB_TEXT ("/tmp");
 
   size_t len = ACE_OS::strlen (tmpdir);

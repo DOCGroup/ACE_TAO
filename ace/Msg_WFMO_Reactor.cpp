@@ -60,7 +60,7 @@ ACE_Msg_WFMO_Reactor::dispatch_window_messages (void)
   MSG msg;
       
   // Process all pending message from this thread's message queue
-  while (::PeekMessage (&msg, NULL, 0, 0, PM_REMOVE))
+  while (::PeekMessage (&msg, 0, 0, 0, PM_REMOVE))
     {
       ::TranslateMessage (&msg);
       if (msg.message == WM_QUIT)

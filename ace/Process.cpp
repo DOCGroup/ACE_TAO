@@ -468,8 +468,8 @@ ACE_Process_Options::ACE_Process_Options (int ie,
 #if defined (ACE_WIN32)
     environment_inherited_ (0),
     handle_inheritence_ (TRUE),
-    process_attributes_ (NULL),
-    thread_attributes_ (NULL),
+    process_attributes_ (0),
+    thread_attributes_ (0),
 #else /* ACE_WIN32 */
     stdin_ (ACE_INVALID_HANDLE),
     stdout_ (ACE_INVALID_HANDLE),
