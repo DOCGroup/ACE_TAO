@@ -342,7 +342,7 @@ ImplRepo_i::start_server_i (const char *server
           this->process_mgr_.terminate (spawned_pid);
 
           ACE_THROW(ImplementationRepository::Administration::CannotActivate
-            (CORBA::string_dup ("Timeout")));
+            ("Timeout"));
           ACE_CHECK;
         }
     }
@@ -672,11 +672,11 @@ ImplRepo_i::server_is_running (const char *server,
     ACE_DEBUG ((LM_DEBUG, " at %s\n", location));
 
   // Get the stringified server_object_ior
-  ACE_TCHAR *server_object_ior = orb->object_to_string (server_object
-                                                        ACE_ENV_ARG_PARAMETER);
+  CORBA::String_var server_object_ior = orb->object_to_string (server_object
+                                                               ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  if (this->repository_.update (server, location, server_object_ior) == 0)
+  if (this->repository_.update (server, location, server_object_ior.in ()) == 0)
     {
       if (OPTIONS::instance()->debug () >= 1)
         ACE_DEBUG ((LM_DEBUG,

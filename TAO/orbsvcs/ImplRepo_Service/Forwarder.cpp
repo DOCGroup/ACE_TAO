@@ -71,13 +71,13 @@ ImR_Forwarder::preinvoke (const PortableServer::ObjectId &,
   CORBA::ORB_var orb = OPTIONS::instance ()->orb ();
 
   ACE_TString ior;
-  CORBA::Object_ptr forward_obj = CORBA::Object::_nil ();
+  CORBA::Object_var forward_obj;
 
   ACE_TRY
     {
       // Activate.
-
-      ior = this->imr_impl_->activate_server_i (poa->the_name (),
+      CORBA::String_var poa_name = poa->the_name();
+      ior = this->imr_impl_->activate_server_i (poa_name.in (),
                                                 1
                                                 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -118,8 +118,8 @@ ImR_Forwarder::preinvoke (const PortableServer::ObjectId &,
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
 
-  if (!CORBA::is_nil (forward_obj))
-    ACE_THROW_RETURN (PortableServer::ForwardRequest (forward_obj), 0);
+  if (!CORBA::is_nil (forward_obj.in ()))
+    ACE_THROW_RETURN (PortableServer::ForwardRequest (forward_obj.in ()), 0);
   else
     ACE_ERROR ((LM_ERROR,
                 "Error: Forward_to reference is nil.\n"));
