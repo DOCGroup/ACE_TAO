@@ -9,6 +9,17 @@ Fri Oct 17 12:32:53 2003  Huang-Ming Huang  <hh1@cse.wustl.edu>
         * orbsvcs/orbsvcs/FtRtEvent/Utils/UUID.cpp:
           Fixed problem in cygwin build.
 
+Fri Oct 17 06:52:27 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* orbsvcs/tests/RTCosScheduling/RTCosScheduling.mpc: 
+	* orbsvcs/tests/RTCosScheduling/Makefile.RTCosScheduling_Server: 
+	* orbsvcs/tests/RTCosScheduling/Makefile.RTCosScheduling_Client: 
+	* orbsvcs/tests/RTCosScheduling/Makefile: 
+	* orbsvcs/tests/RTCosScheduling/Makefile.commonlib: Fixed the mpc
+	  files - added a new project called common which will be built
+	  before client and server. Regenerated the Makefiles. The
+	  Makefile was not generated using mpc before. 
+
 Fri Oct 17 12:37:43 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ServerScheduler_i.h:
@@ -24,7 +35,7 @@ Fri Oct 17 07:40:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
         * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_ProxySupplier.cpp
         * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Replication_Strategy.cpp
           Fixed problems in emulated exception case
-
+	
 Fri Oct 17 01:28:53 2003  Huang-Ming Huang  <hh1@cse.wustl.edu>
 
         * orbsvcs/FTRT_Event_Service/Event_Service/FT_EventService.cpp
