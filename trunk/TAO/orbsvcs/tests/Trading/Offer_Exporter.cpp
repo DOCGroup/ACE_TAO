@@ -395,7 +395,7 @@ TAO_Offer_Exporter::grab_offerids (CORBA::Environment& ACE_TRY_ENV)
   if (this->verbose_)
     ACE_DEBUG ((LM_DEBUG, "TAO_Offer_Exporter::Grabbing all offer ids.\n"));
 
-  CosTrading::OfferIdSeq_ptr offer_id_seq;
+  CosTrading::OfferIdSeq *offer_id_seq;
   ACE_TRY
     {
       CORBA::ULong length = NUM_OFFERS;
@@ -410,7 +410,7 @@ TAO_Offer_Exporter::grab_offerids (CORBA::Environment& ACE_TRY_ENV)
       if ((! CORBA::is_nil (offer_id_iter)) && offer_id_seq != 0)
         {
           CORBA::Boolean any_left = 0;
-          CosTrading::OfferIdSeq_ptr id_seq;
+          CosTrading::OfferIdSeq *id_seq;
           CosTrading::OfferIdIterator_var offer_id_iter_var (offer_id_iter);
 
           do

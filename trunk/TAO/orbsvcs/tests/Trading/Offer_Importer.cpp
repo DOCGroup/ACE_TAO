@@ -173,9 +173,9 @@ perform_queries_with_policies (const TAO_Policy_Creator& policies,
           ACE_DEBUG ((LM_DEBUG, "*** Performing query for %s.\n", TT_Info::QUERIES[i][0]));
           ACE_DEBUG ((LM_DEBUG, "*** Query: %s\n", TT_Info::QUERIES[i][1]));
           ACE_DEBUG ((LM_DEBUG, "*** Preferences: %s\n", TT_Info::QUERIES[i][2]));
-          CosTrading::OfferSeq_ptr offer_seq_ptr = 0;
+          CosTrading::OfferSeq *offer_seq_ptr = 0;
           CosTrading::OfferIterator_ptr offer_iterator_ptr = 0;
-          CosTrading::PolicyNameSeq_ptr limits_applied_ptr = 0;
+          CosTrading::PolicyNameSeq *limits_applied_ptr = 0;
 
           CosTrading::OfferSeq_out offer_seq_out (offer_seq_ptr);
           CosTrading::OfferIterator_out offer_iterator_out (offer_iterator_ptr);
@@ -262,7 +262,7 @@ TAO_Offer_Importer::display_results (const CosTrading::OfferSeq& offer_seq,
 
           do
             {
-              CosTrading::OfferSeq_ptr iter_offers_ptr;
+              CosTrading::OfferSeq *iter_offers_ptr;
               CosTrading::OfferSeq_out iter_offers_out (iter_offers_ptr);
 
               any_left = offer_iterator->next_n (length,
