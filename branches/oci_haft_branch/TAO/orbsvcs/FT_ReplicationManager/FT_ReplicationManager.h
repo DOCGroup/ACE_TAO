@@ -114,6 +114,9 @@ namespace TAO
       const PortableGroup::Criteria & the_criteria,
       CORBA::UShort & initial_number_replicas) const;
 
+    /// Read and IOR from a file.
+    int readIORFile (const char * filename, CORBA::String_var & ior);
+
   public:
 
     /**
@@ -394,7 +397,8 @@ namespace TAO
     /**
     * Creates and returns a dummy IOGR for unit testing
     */
-    virtual CORBA::Object_ptr create_test_iogr (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+    virtual CORBA::Object_ptr create_test_iogr (
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
     ///////////////
     // Data Members
@@ -413,6 +417,9 @@ namespace TAO
 
     /// The orb
     CORBA::ORB_var orb_;
+
+    /// The POA.
+    PortableServer::POA_var poa_;
 
     // The ORB's IORManipulation object
     TAO_IOP::TAO_IOR_Manipulation_var iorm_;
@@ -445,12 +452,13 @@ namespace TAO
 
     /// The fault notifier.
     FT::FaultNotifier_var fault_notifier_;
+    const char * fault_notifier_ior_file_;
 
     /// The fault consumer.
     TAO::FT_FaultConsumer fault_consumer_;
 
     /// A dummy test IOGR used for unit testing (and its group id)
-    FT::ObjectGroup_var test_iogr_;
+    CORBA::Object_var test_iogr_;
     FT::ObjectGroupId test_iogr_group_id_;
   };
 

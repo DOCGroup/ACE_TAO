@@ -1,3 +1,12 @@
+Fri Oct 10 17:19:03 2003  Steve Totten  <totten_s@ociweb.com>
+
+        * orbsvcs/FT_ReplicationManager/FT_FaultConsumer.cpp:
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.cpp:
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.h:
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.mpc:
+          More clean up of Replication Manager code.
+          Integrated FT_FaultConsumer into Replication Manager.
+
 Fri Oct 10 13:58:04 2003  Steve Totten  <totten_s@ociweb.com>
 
         * orbsvcs/FT_ReplicationManager/FT_FaultConsumer.cpp:
