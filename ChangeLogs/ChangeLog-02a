@@ -1,3 +1,15 @@
+Sun Jun  4 14:38:43 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/OS_String.inl:
+
+          Some platforms (like QNX Neutrino) need strings.h to get
+          the declaration of strcasecmp. 
+
+        * ace/config-qnx-neutrino.h:
+          
+          Added a definition of ACE_HAS_STRINGS so strings.h will be
+          included in OS_String.inl.
+
 Sun Jun 04 09:40:43 2000  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-cxx-common.h: with __USE_STD_IOSTREAM, added

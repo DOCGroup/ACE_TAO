@@ -15,6 +15,12 @@
 # include /**/ <string.h>
 #endif /* !ACE_PSOS_DIAB_MIPS */
 
+// We need strings.h on some platforms (qnx-neutrino, for example)
+// to get the declaration for strcasecmp
+#if defined (ACE_HAS_STRINGS)
+# include /**/ <strings.h>
+#endif /* ACE_HAS_STRINGS */
+
 #include /**/ <ctype.h>
 
 ACE_INLINE int
