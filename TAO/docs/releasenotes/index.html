@@ -2012,20 +2012,19 @@ TAO currently implements the <CODE>RoundRobin</CODE> and
 <p>
 Point of contact: <a href="mailto:fhunleth@cs.wustl.edu">Frank Hunleth</a>
 
-<h4>Current Status:</h4>
-<p>TAO's MIOP support (located in $TAO_ROOT/orbsvcs/orbsvcs/PortableGroup)
-enables servants to receive requests sent to multicast addresses.  This is
-performed by creating a GroupId that identifies the multicast group and
-associating it with one or more servants.  Additionally, the Unreliable
-IP Multicast (UIPMC) pluggable protocol is used to send and receive
-multicast requests.  Multicast endpoints can be created dynamically at
-runtime.
+<h4>Current Status:</h4> <p> The final <A
+HREF="http://www.omg.org/cgi-bin/doc?ptc/2001-11-08"> MIOP
+specification</A> has recently been adopted by the OMG.  TAO's MIOP
+support (located in $TAO_ROOT/orbsvcs/orbsvcs/PortableGroup) enables
+servants to receive requests sent to multicast addresses.  This is
+performed by creating a GroupId that identifies the multicast group
+and associating it with one or more servants.  Additionally, the
+Unreliable IP Multicast (UIPMC) pluggable protocol is used to send and
+receive multicast requests.  Multicast endpoints can be created
+dynamically at runtime.
 
 <h4>Known Issues:</h4>
 <ul>
-<li>The final MIOP specification has not been completely implemented.
-    Despite this, applications that do not need multicast gateways or group
-    managers should be able to use the current implementation. </li>
 <li>MIOP packet reassembly is not performed yet, so the maximum
     request size is limited to about 5-6kb depending on the platform.</li>
 </ul>
