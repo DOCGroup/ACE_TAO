@@ -193,7 +193,7 @@ main (int argc, char *argv[])
 					       ACE_THR_FUNC (&worker), 
 					       (void *) count,
 					       THR_BOUND | THR_DETACHED) == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n", "ACE_Thread_Manager::spawn_n"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_Thread_Manager::spawn_n"), -1);
 
   ACE_Service_Config::thr_mgr ()->wait ();
 #else
