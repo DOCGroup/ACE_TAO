@@ -7,8 +7,10 @@ Mon Aug 25 12:00:30 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	  used when inserting variable length types in the Any return
 	  value of the operation-specific
 	  PortableInterceptor::RequestInfo::result() implementation.
-	  Thanks to Philip Leishman <leishman@rheinmetall-de.com> for
-	  detecting the original problem with sequences.
+	  Fixes a segmentation fault due to double deletion of the object
+	  inserted into the Any.  Thanks to Philip Leishman
+	  <leishman@rheinmetall-de.com> for detecting the original problem
+	  with sequences.
 
 	* tests/Portable_Interceptors/Dynamic/client.cpp:
 	* tests/Portable_Interceptors/Dynamic/interceptors.cpp:
