@@ -1,23 +1,18 @@
-##---------------------------------------------------------------------------
-##       $Id$
-##
-##       Top-level Makefile for TAO's AVStreams Tests
-##
-##---------------------------------------------------------------------------
-
-##
 ##  Process this file with automake to create Makefile.in
-##
-
-## The number in AUTOMAKE_OPTIONS is the minimum required version automake
-## needed to process this file.
-AUTOMAKE_OPTIONS = 1.4
 
 SUBDIRS = \
-        benchmark \
-        mpeg \
-        server_discovery \
-        sfp
-
-EXTRA_DIST = README
+        Asynch_Three_Stage \
+        Bidirectional_Flows \
+        Component_Switching \
+        Full_Profile \
+        Latency \
+        Modify_QoS \
+        Multicast \
+        Multicast_Full_Profile \
+        Multiple_Flows \
+        Pluggable \
+        Pluggable_Flow_Protocol \
+        Simple_Three_Stage \
+        Simple_Two_Stage \
+        Simple_Two_Stage_With_QoS
 
