@@ -21,6 +21,16 @@ Tue Dec  5 15:07:45 2000  Marina Spivak  <marina@cs.wustl.edu>
 	  double-checked locking.  This should significantly improve
 	  performance on the critical path.
 
+Tue Dec  5 14:16:38 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_operation/ami_handler_reply_stub_operation_cs.cpp:
+
+	  Removed use of '_var_type' in generated code for the exception
+	  holder. This typedef is intended for use with template 
+	  programming, which is not the case here. In addition, old g++
+	  does not see the typedef since the compiler does not scope
+	  it properly.
+
 Tue Dec  5 12:57:33 2000  Ossama Othman  <ossama@uci.edu>
 
 	* tests/Portable_Interceptors/Benchmark/server.cpp (main):
