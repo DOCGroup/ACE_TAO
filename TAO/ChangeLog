@@ -9,6 +9,15 @@ Thu Aug 14 17:55:43 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
         * orbsvcs/tests/Event/lib/Driver.cpp:
           When destroying the POA wait until completion.
 
+Thu Aug 14 16:09:55 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
+
+	* tests/RTScheduling/Thread_Cancel/Thread_Task.cpp: 
+	* tests/RTScheduling/DT_Spawn/test.cpp: 
+	* tests/RTScheduling/Current/Thread_Task.cpp: 
+
+	  Replaced ACE_PRINT_EXCEPTION with ACE_DEBUG messages so the
+	  builds will not report errors for expected exceptions.
+
 Thu Aug 14 13:22:19 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Event/Basic/Control.cpp:
