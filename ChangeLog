@@ -1,3 +1,9 @@
+Wed Feb 23 23:52:15 2000  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
+
+	* ace/Log_Msg.h: Added a hack to work around nasty libraries
+	  that #define THREAD 1.  Thanks to Pierre Oberson
+ 	  <oberson@nagra-kudelski.ch> for reporting this.
+
 Wed Feb 23 19:37:29 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/Dynamic_Priority_Test.cpp:
