@@ -225,7 +225,7 @@ public:
   TAO_Object_var (T_ptr);
   // constructor from a pointer to T
 
-  TAO_Object_var (const TAO_Object_var<T_ptr> &);
+  TAO_Object_var (const TAO_Object_var<T,T_ptr> &);
   // copy constructor
 
   ~TAO_Object_var (void);
@@ -234,7 +234,7 @@ public:
   TAO_Object_var<T_ptr> &operator= (T_ptr);
   // assignment from a pointer to T
 
-  TAO_Object_var<T_ptr> &operator= (const TAO_Object_var<T_ptr> &);
+  TAO_Object_var<T_ptr> &operator= (const TAO_Object_var<T,T_ptr> &);
   // assignment from a TAO_Object_var
 
   T_ptr operator-> (void) const;

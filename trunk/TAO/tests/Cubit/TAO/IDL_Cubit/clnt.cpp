@@ -20,6 +20,7 @@
 // ============================================================================
 
 #include "ace/Profile_Timer.h"
+#include "ace/Env_Value_T.h"
 #include "clnt.h"
 
 // Constructor.
@@ -767,3 +768,10 @@ main (int argc, char **argv)
   else
     return cubit_client.run ();
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Env_Value<unsigned long>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Env_Value<unsigned long>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+

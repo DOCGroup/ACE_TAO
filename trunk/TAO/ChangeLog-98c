@@ -1,3 +1,17 @@
+Wed Jan  7 22:41:41 1998  Carlos O'Ryan  <coryan@swarm.cs.wustl.edu>
+
+	* tao/corba.h: 
+	  Removed varout.h from the list of included files; it is no used
+	  and would abort compilation on IRIX.
+
+	* tests/Cubit/TAO/IDL_Cubit/clnt.cpp: 
+	* tao/orbobj.cpp: 
+	  Added missing template instantiations.
+
+	* tao/varout.h: 
+	  Some fixes, but actually the changes were aborted, Andy informed
+	  me that the file wasn't really used.
+
 Wed Jan 07 21:52:20 1998    <coryan@MILONGA>
 
 	* TAO_IDL/tao_idl.dsp: 
