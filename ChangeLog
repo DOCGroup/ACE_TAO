@@ -1,3 +1,15 @@
+Mon Nov 18 12:27:46 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* ace/Dev_Poll_Reactor.cpp (handler): 
+	* ace/WFMO_Reactor.i (handler):
+	* ace/Select_Reactor_Base_T.cpp (handler_i): The methods that
+	  returns a signal handler associated with a certain type of
+	  signal, does restrictive sanity checks. One of the checks that
+	  it performs is to see whether a pointer to an event_handler is 0
+	  just before assigning a new event handler pointer. This check
+	  was not required at all and hence it is now removed. Thanks to
+	  Edan Ayal for reporting this.
+
 Sat Nov 16 09:38:38 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* ace/*/Makefile:
