@@ -19,7 +19,7 @@ project(*Lib) : acelib {
 }
 
 project(*test) : aceexe {
-  exename = server
+  exename = server_test
   after  += Service_Configurator_IPC_Server_Lib
   libs   += IPC_Tests_Server
   Source_Files {
