@@ -1,3 +1,10 @@
+Wed Sep  9 15:28:24 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+	* tao/Connect.cpp:
+	* tao/GIOP.cpp:
+	* tao/Invocation.cpp:
+	  Added ORBdebug functionality to several debug messages
+
 Wed Sep  9 15:00:16 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
 	* TAO/tests/DynAny_Test/server.dsp:
