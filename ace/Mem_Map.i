@@ -43,9 +43,12 @@ ACE_Mem_Map::map (int len,
                   LPSECURITY_ATTRIBUTES sa)
 {
   ACE_TRACE ("ACE_Mem_Map::map");
+#if defined (linux)
+  // Linux doesn't seem to like MAP_FIXED for some reason.
+  addr = this->base_addr_;
+#else
   // If we're already mapped at a particular location then try to
   // remap the file using the same base address.
-#if !defined (linux)
   if (addr == 0 && this->base_addr_ != 0 && this->base_addr_ != MAP_FAILED)
     {
       share |= MAP_FIXED;
