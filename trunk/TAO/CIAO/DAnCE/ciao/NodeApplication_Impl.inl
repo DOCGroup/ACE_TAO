@@ -12,6 +12,7 @@ NodeApplication_Impl (CORBA::ORB_ptr o,
 }
 
 // Access the readonly attribute
+ACE_INLINE
 Deployment::Properties *
 CIAO::NodeApplication_Impl::properties (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
@@ -26,6 +27,7 @@ CIAO::NodeApplication_Impl::properties (ACE_ENV_SINGLE_ARG_DECL)
   return tmp;
 }
 
+ACE_INLINE
 PortableServer::POA_ptr
 CIAO::NodeApplication_Impl::_default_POA (void)
 {
@@ -33,6 +35,7 @@ CIAO::NodeApplication_Impl::_default_POA (void)
 }
 
 
+ACE_INLINE
 CORBA::Object_ptr
 CIAO::NodeApplication_Impl::get_node_application_manager (
     ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
