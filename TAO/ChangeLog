@@ -1,3 +1,10 @@
+Mon Nov 15 15:06:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/AMH_Exceptions/AMH_Exceptions.mpc:
+          Base the server on taoserver, instead of taoexe and portableserver,
+          taoserver is derived from taoexe and portableserver, but also sets
+          the exename to server
+
 Sun Nov 14 14:26:18 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* configure.ac:
