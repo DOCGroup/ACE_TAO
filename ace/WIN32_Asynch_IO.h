@@ -199,7 +199,7 @@ protected:
 /**
  * @class ACE_WIN32_Asynch_Read_Stream_Result
  *
- * @brief This is class provides concrete implementation for
+ * @brief This class provides concrete implementation for
  * ACE_Asynch_Read_Stream::Result class.
  */
 class ACE_Export ACE_WIN32_Asynch_Read_Stream_Result : public virtual ACE_Asynch_Read_Stream_Result_Impl,
@@ -264,6 +264,8 @@ public:
   int post_completion (ACE_Proactor_Impl *proactor);
 
 protected:
+  /// Constructor is protected since creation is limited to
+  /// ACE_Asynch_Read_Stream factory.
   ACE_WIN32_Asynch_Read_Stream_Result (ACE_Handler &handler,
                                        ACE_HANDLE handle,
                                        ACE_Message_Block &message_block,
@@ -272,8 +274,6 @@ protected:
                                        ACE_HANDLE event,
                                        int priority,
                                        int signal_number = 0);
-  // Constructor is protected since creation is limited to
-  // ACE_Asynch_Read_Stream factory.
 
   /// Proactor will call this method when the read completes.
   virtual void complete (u_long bytes_transferred,
@@ -359,7 +359,7 @@ protected:
 /**
  * @class ACE_WIN32_Asynch_Write_Stream_Result
  *
- * @brief This is class provides concrete implementation for
+ * @brief This class provides concrete implementation for
  *    ACE_Asynch_Write_Stream::Result class.
  */
 class ACE_Export ACE_WIN32_Asynch_Write_Stream_Result : public virtual ACE_Asynch_Write_Stream_Result_Impl,
@@ -424,6 +424,8 @@ public:
   int post_completion (ACE_Proactor_Impl *proactor);
 
 protected:
+  /// Constructor is protected since creation is limited to
+  /// ACE_Asynch_Write_Stream factory.
   ACE_WIN32_Asynch_Write_Stream_Result (ACE_Handler &handler,
                                         ACE_HANDLE handle,
                                         ACE_Message_Block &message_block,
@@ -432,8 +434,6 @@ protected:
                                         ACE_HANDLE event,
                                         int priority,
                                         int signal_number = 0);
-  // Constructor is protected since creation is limited to
-  // ACE_Asynch_Write_Stream factory.
 
   /// ACE_Proactor will call this method when the write completes.
   virtual void complete (u_long bytes_transferred,
@@ -521,7 +521,7 @@ protected:
 /**
  * @class ACE_WIN32_Asynch_Read_File_Result
  *
- * @brief This is class provides concrete implementation for
+ * @brief This class provides concrete implementation for
  *     ACE_Asynch_Read_File::Result class.
  */
 class ACE_Export ACE_WIN32_Asynch_Read_File_Result : public virtual ACE_Asynch_Read_File_Result_Impl,
@@ -592,6 +592,8 @@ public:
   int post_completion (ACE_Proactor_Impl *proactor);
 
 protected:
+  /// Constructor is protected since creation is limited to
+  /// ACE_Asynch_Read_File factory.
   ACE_WIN32_Asynch_Read_File_Result (ACE_Handler &handler,
                                      ACE_HANDLE handle,
                                      ACE_Message_Block &message_block,
@@ -602,8 +604,6 @@ protected:
                                      ACE_HANDLE event,
                                      int priority,
                                      int signal_number = 0);
-  // Constructor is protected since creation is limited to
-  // ACE_Asynch_Read_File factory.
 
   /// ACE_Proactor will call this method when the read completes.
   virtual void complete (u_long bytes_transferred,
@@ -776,6 +776,8 @@ public:
   int post_completion (ACE_Proactor_Impl *proactor);
 
 protected:
+  /// Constructor is protected since creation is limited to
+  /// ACE_Asynch_Write_File factory.
   ACE_WIN32_Asynch_Write_File_Result (ACE_Handler &handler,
                                       ACE_HANDLE handle,
                                       ACE_Message_Block &message_block,
@@ -786,8 +788,6 @@ protected:
                                       ACE_HANDLE event,
                                       int priority,
                                       int signal_number = 0);
-  // Constructor is protected since creation is limited to
-  // ACE_Asynch_Write_File factory.
 
   /// ACE_Proactor will call this method when the write completes.
   virtual void complete (u_long bytes_transferred,
@@ -947,6 +947,8 @@ public:
   int post_completion (ACE_Proactor_Impl *proactor);
 
 protected:
+  /// Constructor is protected since creation is limited to
+  /// ACE_Asynch_Accept factory.
   ACE_WIN32_Asynch_Accept_Result (ACE_Handler &handler,
                                   ACE_HANDLE listen_handle,
                                   ACE_HANDLE accept_handle,
@@ -956,8 +958,6 @@ protected:
                                   ACE_HANDLE event,
                                   int priority,
                                   int signal_number = 0);
-  // Constructor is protected since creation is limited to
-  // ACE_Asynch_Accept factory.
 
   /// ACE_Proactor will call this method when the accept completes.
   virtual void complete (u_long bytes_transferred,
@@ -1232,35 +1232,34 @@ private:
    */
   int cancel_uncompleted (int flg_notify, ACE_Handle_Set & set);
 
-  int flg_open_ ;
   /// 1 - Connect is registered in ACE_Asynch_Pseudo_Task
   /// 0 - Aceept is deregisted in ACE_Asynch_Pseudo_Task
+  int flg_open_ ;
 
-
-  /// to prevent ACE_Asynch_Pseudo_Task from deletion
-  /// while we make a call to the ACE_Asynch_Pseudo_Task 
+  /// To prevent ACE_Asynch_Pseudo_Task from deletion
+  /// while we make a call to the ACE_Asynch_Pseudo_Task
   /// This is extra cost !!!
   /// we could avoid them if all applications will follow the rule:
   /// Proactor should be deleted only after deletion all
-  ///  AsynchOperation objects connected with it 
+  ///  AsynchOperation objects connected with it
   int  task_lock_count_;
 
-  typedef ACE_Map_Manager<ACE_HANDLE, ACE_WIN32_Asynch_Connect_Result *, ACE_SYNCH_NULL_MUTEX> 
+  typedef ACE_Map_Manager<ACE_HANDLE, ACE_WIN32_Asynch_Connect_Result *, ACE_SYNCH_NULL_MUTEX>
           MAP_MANAGER;
-  typedef ACE_Map_Iterator<ACE_HANDLE, ACE_WIN32_Asynch_Connect_Result *, ACE_SYNCH_NULL_MUTEX> 
+  typedef ACE_Map_Iterator<ACE_HANDLE, ACE_WIN32_Asynch_Connect_Result *, ACE_SYNCH_NULL_MUTEX>
           MAP_ITERATOR;
   typedef ACE_Map_Entry<ACE_HANDLE, ACE_WIN32_Asynch_Connect_Result *>
           MAP_ENTRY;
 
+  /// Map of Result pointers that correspond to all the <accept>'s
+  /// pending.
   MAP_MANAGER result_map_;
-  // Map of Result pointers that correspond to all the <accept>'s
-  // pending.
 
+  /// The lock to protect the  result queue which is shared. The queue
+  /// is updated by main thread in the register function call and
+  /// through the auxillary thread  in the deregister fun. So let us
+  /// mutex it.
   ACE_SYNCH_MUTEX lock_;
-  // The lock to protect the  result queue which is shared. The queue
-  // is updated by main thread in the register function call and
-  // through the auxillary thread  in the deregister fun. So let us
-  // mutex it.
 };
 
 /**
@@ -1346,6 +1345,8 @@ public:
   int post_completion (ACE_Proactor_Impl *proactor);
 
 protected:
+  /// Constructor is protected since creation is limited to
+  /// ACE_Asynch_Transmit_File factory.
   ACE_WIN32_Asynch_Transmit_File_Result (ACE_Handler &handler,
 					 ACE_HANDLE socket,
 					 ACE_HANDLE file,
@@ -1358,9 +1359,7 @@ protected:
 					 const void *act,
 					 ACE_HANDLE event,
 					 int priority,
-                                         int signal_number = 0);
-  // Constructor is protected since creation is limited to
-  // ACE_Asynch_Transmit_File factory.
+                int signal_number = 0);
 
   /// Proactor will call this method when the write completes.
   virtual void complete (u_long bytes_transferred,
@@ -1472,7 +1471,7 @@ public:
 /**
  * @class ACE_WIN32_Asynch_Read_Dgram_Result
  *
- * @brief This is class provides concrete implementation for
+ * @brief This class provides concrete implementation for
  * ACE_Asynch_Read_Dgram::Result class.
  */
 class ACE_Export ACE_WIN32_Asynch_Read_Dgram_Result : public virtual ACE_Asynch_Read_Dgram_Result_Impl,
@@ -1664,7 +1663,7 @@ protected:
 /**
  * @class ACE_WIN32_Asynch_Write_Dgram_Result
  *
- * @brief This is class provides concrete implementation for
+ * @brief This class provides concrete implementation for
  *    ACE_Asynch_Write_Dgram::Result class.
  */
 class ACE_Export ACE_WIN32_Asynch_Write_Dgram_Result : public virtual ACE_Asynch_Write_Dgram_Result_Impl,

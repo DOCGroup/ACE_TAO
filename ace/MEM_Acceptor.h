@@ -101,8 +101,10 @@ public:
   const ACE_TCHAR *mmap_prefix (void) const;
   void mmap_prefix (const ACE_TCHAR *prefix);
 
-  // Set/get the preferred signaling strategy.
+  /// Get the preferred signaling strategy.
   ACE_MEM_IO::Signal_Strategy preferred_strategy (void) const;
+
+  /// Set the preferred signaling strategy.
   void preferred_strategy (ACE_MEM_IO::Signal_Strategy strategy);
 
   /// Return the local endpoint address in the referenced <ACE_Addr>.
@@ -164,7 +166,7 @@ private:
   /// mamory malloc upon every incoming connection.
   ACE_MEM_SAP::MALLOC_OPTIONS malloc_options_;
 
-  // Preferred signaling strategy.
+  /// Preferred signaling strategy.
   ACE_MEM_IO::Signal_Strategy preferred_strategy_;
 };
 

@@ -232,14 +232,14 @@ protected:
   // = Keeps track of all the segments being used.
   struct SHM_TABLE
   {
+    /// Shared memory segment key.
     key_t key_;
-    // Shared memory segment key.
 
+    /// Shared memory segment internal id.
     int shmid_;
-    // Shared memory segment internal id.
 
+    /// Is the segment currently used.;
     int used_;
-    // Is the segment currently used.;
   };
 
   /**
@@ -523,7 +523,6 @@ public:
    * isn't in range (yet).
    */
   virtual int remap (void *addr);
-
 
   /// Return the base address of this memory pool.
   virtual void *base_addr (void) const;
