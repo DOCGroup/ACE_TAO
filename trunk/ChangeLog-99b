@@ -1,3 +1,18 @@
+Thu Aug  5 16:27:15 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* include/makeinclude/rules.lib.GNU:
+	* include/makeinclude/wrapper_macros.GNU:
+	  Added new macro (ACE_SHLIBS) to control the final link line of
+	  shared libraries.  Use this macro to list the -l options
+	  required by your shared library that are *not* included in the
+	  system LIBS macro, for example "-lTAO -lACE"; the system will
+	  automagically change that to be "-lTAOshr -lACEshr" on AIX.
+	  This also decouples the shared library link line from the
+	  binaries, which use LDLIBS and ACELIB, allowing the application
+	  developers to easily mix shared libraries and binaries in the
+	  same directory, even if the binaries depend on the generated
+	  shared library.
+
 Thu Aug 05 15:44:39 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/platform_vxworks5.x_g++.GNU:  on
