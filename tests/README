@@ -66,7 +66,6 @@ these exceptions:
     Process_Mutex_Test                      failed: requires fork
     Process_Strategy_Test                   failed: /tmp/ace_temp_file not founc
     Reactor_Notify_Test                     unknown
-    SPIPE_Test                              ENOTSUP: ace_pipe_name not found
     Service_Config_Test                     failed: page fault
     Time_Service_Test                       failed: requires fork
     Tokens_Test                             failed: unknown
