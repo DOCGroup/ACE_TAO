@@ -37,7 +37,7 @@ main (void)
   void *data = 0; 
 
   if (shmem_request->find ("foo", data) == 0)
-    cout << (char *) data << endl;
+    ACE_OS::printf ("%s\n", data);
   else
     {
       data = shmem_request->malloc (ACE_OS::strlen (REQUEST_STRING) + 1);
@@ -47,7 +47,7 @@ main (void)
   data = 0;
 
   if (shmem_response->find ("foo", data) == 0)
-    cout << (char *) data << endl;
+    ACE_OS::printf ("%s\n", data);
   else
     {
       data = shmem_response->malloc (ACE_OS::strlen (RESPONSE_STRING) + 1);
