@@ -31,6 +31,15 @@ ifdef sun
   CLEANUP_DIRS += SunWS_cache
 endif
 
+MKDIR_NTSTYLE = 0
+ifeq ("$(OS)", "Windows_NT")
+ifneq ($(cygwin32), 1)
+ifneq ($(mingw32), 1)
+  MKDIR_NTSTYLE = 1
+endif  
+endif  
+endif
+
 #### TEMPLATE_REPOSITORY can be set in individual platform files
 #### to create template repository directories.  See
 #### platform_sunos5_sunc++.GNU for an example.
@@ -157,7 +166,7 @@ $(VSHDIR)%.$(SOEXT): $(VSHDIR)%.$(OBJEXT) $(VSHDIR)%.creation_stamp
 	$(SOLINK)
 endif # SOLINK
 
-ifeq ("$(OS)","Windows_NT")
+ifeq ($(MKDIR_NTSTYLE),1)
 $(VDIR)%.creation_stamp:
 	@if not exist $(dir $@) mkdir $(subst /,,$(dir $@))
 	@echo > $@
@@ -168,7 +177,7 @@ $(VDIR)%.creation_stamp:
 endif
 
 ifneq ($(VDIR),$(VSHDIR))
-  ifeq ("$(OS)","Windows_NT")
+  ifeq ($(MKDIR_NTSTYLE),1)
 $(VSHDIR)%.creation_stamp:
 	@if not exist $(dir $@) mkdir $(subst /,,$(dir $@))
 	@echo > $@
@@ -435,7 +444,7 @@ rcs_info.local:
 
 build.objdirs: $(CLEANUP_DIRS)
 
-ifeq ("$(OS)","Windows_NT")
+ifeq ($(MKDIR_NTSTYLE),1)
 $(CLEANUP_DIRS):
 	@if not exist $@ mkdir $@
 else
