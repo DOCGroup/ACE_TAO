@@ -3,6 +3,7 @@
 #include "ECG_Simple_Mcast_EH.h"
 #include "ace/Log_Msg.h"
 #include "ace/Reactor.h"
+#include "ace/os_include/os_fcntl.h"
 
 #if !defined(__ACE_INLINE__)
 #include "ECG_Simple_Mcast_EH.i"
