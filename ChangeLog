@@ -1,3 +1,12 @@
+Fri Feb 13 10:50:31 2004  Steve Huston  <shuston@riverace.com>
+
+	* examples/APG/Timers/Task.cpp: In main(), interval should be
+	  initialized with 100000 usecs, not 1000, to be .1 sec as the
+	  comment indicates. Thanks to Norm Whitehead
+	  <Norm_Whitehead@raytheon.com> for reporting this.
+
+	* THANKS: Added Norm Whitehead to the Hall of Fame.
+
 Thu Feb 12 10:40:40 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* docs/ACE-categories.html:
