@@ -3,20 +3,16 @@
 
 feature(!minimum_corba) {
   Source_Files(TAO_COMPONENTS) {
-    ORB_Core {
-      ServicesC.cpp
-      NVList.cpp
-      Dynamic_Adapter.cpp
-    }
+    ServicesC.cpp
+    NVList.cpp
+    Dynamic_Adapter.cpp
   }
 }
 
 feature(corba_messaging) {
   Source_Files(TAO_COMPONENTS) {
-    ORB_Core {
-      Policy_Manager.cpp
-      Buffering_Constraint_Policy.cpp
-      Messaging_PolicyValueC.cpp
-     }
+    Policy_Manager.cpp
+    Buffering_Constraint_Policy.cpp
+    Messaging_PolicyValueC.cpp
   }
 }
