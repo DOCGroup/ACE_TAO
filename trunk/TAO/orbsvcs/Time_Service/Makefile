@@ -15,8 +15,8 @@ endif
 LDLIBS = -lorbsvcs -lTAO
 
 PROG_SRCS = \
-        server.cpp \
-        clerk.cpp \
+        Time_Service_Server.cpp \
+        Time_Service_Clerk.cpp \
         Clerk_i.cpp \
         Server_i.cpp \
         IR_Helper.cpp \
@@ -25,10 +25,10 @@ SRC = $(PROG_SRCS)
 
 SIMPLE_SVR_OBJS = IR_Helper.o \
         Server_i.o \
-        server.o \
+        Time_Service_Server.o \
 
 SIMPLE_CRK_OBJS = Clerk_i.o \
-        clerk.o \
+        Time_Service_Clerk.o \
 
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 
@@ -42,8 +42,8 @@ include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 #### don't try to build here.
 TAO_ORBSVCS := $(shell $(ACE_ROOT)/bin/ace_components --orbsvcs)
 ifeq (Time,$(findstring Time,$(TAO_ORBSVCS)))
-  BIN += server \
-         clerk
+  BIN += Time_Service_Server \
+         Time_Service_Clerk
 endif # Time
 
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
@@ -62,10 +62,10 @@ include $(TAO_ROOT)/taoconfig.mk
 LDFLAGS += -L$(TAO_ROOT)/orbsvcs/orbsvcs -L$(TAO_ROOT)/tao -L$(TAO_ROOT)/orbsvcs/Naming_Service
 CPPFLAGS += -I$(TAO_ROOT)/orbsvcs
 
-server: $(addprefix $(VDIR),$(SIMPLE_SVR_OBJS))
+Time_Service_Server: $(addprefix $(VDIR),$(SIMPLE_SVR_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
-clerk:  $(addprefix $(VDIR),$(SIMPLE_CRK_OBJS))
+Time_Service_Clerk:  $(addprefix $(VDIR),$(SIMPLE_CRK_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 #----------------------------------------------------------------------------
@@ -75,7 +75,7 @@ clerk:  $(addprefix $(VDIR),$(SIMPLE_CRK_OBJS))
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
-.obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp Server_i.h \
+.obj/Time_Service_Server.o .obj/Time_Service_Server.so .shobj/Time_Service_Server.o .shobj/Time_Service_Server.so: Time_Service_Server.cpp Server_i.h \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -372,7 +372,7 @@ clerk:  $(addprefix $(VDIR),$(SIMPLE_CRK_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/PingC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/PingC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/ImplRepoC.i
-.obj/clerk.o .obj/clerk.so .shobj/clerk.o .shobj/clerk.so: clerk.cpp Clerk_i.h \
+.obj/Time_Service_Clerk.o .obj/Time_Service_Clerk.so .shobj/Time_Service_Clerk.o .shobj/Time_Service_Clerk.so: Time_Service_Clerk.cpp Clerk_i.h \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
