@@ -52,6 +52,10 @@ these exceptions:
     Conn_Test                               unknown
     MM_Shared_Memory_Test                   ENOTSUP: unknown
     Mem_Map_Test                            ENOTSUP: unknown (mmap)
+    Message_Queue_Test                      memory problem: sometimes hangs
+                                                on shutdown; usually clobbers
+                                                the shell task name in the
+                                                kernel's task table
     Mutex_Test                              ENOTSUP: unknown
     Naming_Test                             failed: (uses mmap?)
     Pipe_Test                               failed: requires fork
