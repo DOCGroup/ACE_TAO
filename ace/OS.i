@@ -1174,7 +1174,7 @@ ACE_OS::shm_open (const char *filename,
   ACE_UNUSED_ARG (sa);
   ACE_OSCALL_RETURN (::shm_open (filename, mode, perms), ACE_HANDLE, -1);
 # else  /* ! ACE_HAS_SHM_OPEN */
-  // Just used ::open.
+  // Just use ::open.
   return ACE_OS::open (filename, mode, perms,
                        sa);
 # endif /* ! ACE_HAS_SHM_OPEN */
@@ -1187,7 +1187,7 @@ ACE_OS::shm_unlink (const char *path)
 # if defined (ACE_HAS_SHM_OPEN)
   ACE_OSCALL_RETURN (::shm_unlink (path), int, -1);
 # else  /* ! ACE_HAS_SHM_OPEN */
-  // Just used ::unlink.
+  // Just use ::unlink.
   return ACE_OS::unlink (path);
 # endif /* ! ACE_HAS_SHM_OPEN */
 }
@@ -3258,7 +3258,7 @@ ACE_OS::sema_init (ACE_sema_t *s,
                       fd,
                       0);
       ACE_OS::close (fd);
-      if (s->sema_ == MAP_FAILED)
+      if (s->sema_ == (sem_t *) MAP_FAILED)
         return -1;
       if (s->name_
           // Only initialize it if we're the one who created it
@@ -3276,7 +3276,7 @@ ACE_OS::sema_init (ACE_sema_t *s,
                              O_CREAT,
                              ACE_DEFAULT_FILE_PERMS,
                              count);
-      return s->sema_ == (sem_t *) -1 ? -1 : 0;
+      return s->sema_ == SEM_FAILED ? -1 : 0;
     }
 #   endif /* ACE_LACKS_NAMED_POSIX_SEM */
   else
