@@ -578,7 +578,7 @@ be_interface:: gen_var_out_seq_decls (void)
 
   // Generate the ifdefined macro for this interface.
   os->gen_ifdef_macro (this->flat_name (),
-                       "odds_n_ends");
+                       "var_out");
 
   *os << be_nl << be_nl
       << "class " << lname << ";" << be_nl

@@ -40,7 +40,7 @@ be_visitor_interface_cs::~be_visitor_interface_cs (void)
 int
 be_visitor_interface_cs::visit_interface (be_interface *node)
 {
-  if (node->cli_stub_gen () || node->imported ())
+  if (node->imported () || node->cli_stub_gen ())
     {
       return 0;
     }
@@ -61,6 +61,52 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
 
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
+
+  *os << be_nl << be_nl
+      << "// Traits specializations for " << node->name () << ".";
+
+  *os << be_nl << be_nl
+      << "template<>" << be_nl
+      << node->name () << "_ptr" << be_nl
+      << "TAO::Objref_Traits<" << node->name () << ">::tao_duplicate ("
+      << be_idt << be_idt_nl
+      << node->name () << "_ptr p" << be_uidt_nl
+      << ")" << be_uidt_nl
+      << "{" << be_idt_nl
+      << "return " << node->name () << "::_duplicate (p);" << be_uidt_nl
+      << "}";
+
+  *os << be_nl << be_nl
+      << "template<>" << be_nl
+      << "void" << be_nl
+      << "TAO::Objref_Traits<" << node->name () << ">::tao_release ("
+      << be_idt << be_idt_nl
+      << node->name () << "_ptr p" << be_uidt_nl
+      << ")" << be_uidt_nl
+      << "{" << be_idt_nl
+      << "CORBA::release (p);" << be_uidt_nl
+      << "}";
+
+  *os << be_nl << be_nl
+      << "template<>" << be_nl
+      << node->name () << "_ptr" << be_nl
+      << "TAO::Objref_Traits<" << node->name () << ">::tao_nil (void)"
+      << be_nl
+      << "{" << be_idt_nl
+      << "return " << node->name () << "::_nil ();" << be_uidt_nl
+      << "}";
+
+  *os << be_nl << be_nl
+      << "template<>" << be_nl
+      << "CORBA::Boolean" << be_nl
+      << "TAO::Objref_Traits<" << node->name () << ">::tao_marshal ("
+      << be_idt << be_idt_nl
+      << node->name () << "_ptr p," << be_nl
+      << "TAO_OutputCDR & cdr" << be_uidt_nl
+      << ")" << be_uidt_nl
+      << "{" << be_idt_nl 
+      << "return p->marshal (cdr);" << be_uidt_nl
+      << "}";
 
   // Initialize the static narrrowing helper variable.
   *os << be_nl << be_nl
@@ -199,7 +245,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
 
   // Interceptor classes.  The interceptors helper classes must be
   // defined before the interface operations because they are used in
-  // the implementation of said operations.
+  // the implementation of these operations.
 
   ctx.state (TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_CS);
   be_visitor_interface_interceptors_cs ii_visitor (&ctx);

@@ -255,29 +255,6 @@ template<typename T,
   class TAO_Bounded_Object_Sequence;
 template<size_t MAX> class TAO_Bounded_String_Sequence;
 
-// *************************************************************
-
-namespace TAO
-{
-  /**
-   * @struct Object_Cast
-   *
-   * @brief Specialized in generated code.
-   *
-   */
-  template<typename T>
-  struct Object_Cast
-  {
-    static T * tao_narrow (
-        CORBA::Object_ptr
-        ACE_ENV_ARG_DECL
-      );
-    static CORBA::Object_ptr tao_upcast (void *);
-  };
-};
-
-// *************************************************************
-
   /**
    * @class TAO_Object_Manager
    *
@@ -606,10 +583,6 @@ public:
   virtual void _deallocate_buffer (void);
   virtual void _shrink_buffer (CORBA::ULong new_length,
                                CORBA::ULong old_length);
-  virtual void _downcast (void * target,
-                          CORBA::Object_ptr src
-                          ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-  virtual CORBA::Object_ptr _upcast (void * src) const;
 };
 
 // *************************************************************
@@ -677,10 +650,6 @@ public:
   virtual void _deallocate_buffer (void);
   virtual void _shrink_buffer (CORBA::ULong new_length,
                                CORBA::ULong old_length);
-  virtual void _downcast (void * target,
-                          CORBA::Object_ptr src
-                          ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-  virtual CORBA::Object_ptr _upcast (void * src) const;
 };
 
 // *************************************************************

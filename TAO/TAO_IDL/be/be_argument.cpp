@@ -20,6 +20,7 @@
 // ============================================================================
 
 #include "be_argument.h"
+#include "be_type.h"
 #include "be_visitor.h"
 
 ACE_RCSID (be, 
@@ -42,6 +43,8 @@ be_argument::be_argument (AST_Argument::Direction d,
     AST_Decl (AST_Decl::NT_argument,
               n)
 {
+  be_type *bt = be_type::narrow_from_decl (ft);
+  bt->seen_in_operation (I_TRUE);
 }
 
 

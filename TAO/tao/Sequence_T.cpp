@@ -385,30 +385,6 @@ TAO_Bounded_Sequence<T,MAX>::replace (CORBA::ULong max,
 }
 
 // *************************************************************
-// @@@ (JP) These can be removed after we regenerate the hand-crafted files.
-
-template<typename T>
-T *
-TAO::Object_Cast<T>::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return T::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-template<typename T>
-CORBA::Object *
-TAO::Object_Cast<T>::tao_upcast (
-    void *src
-  )
-{
-  T **tmp =
-    ACE_static_cast (T **, src);
-  return *tmp;
-}
-
-// *************************************************************
 // class TAO_Object_Manager
 // *************************************************************
 
@@ -800,32 +776,6 @@ TAO_Unbounded_Object_Sequence<T,T_var,T_life,T_cast>::_shrink_buffer (
     }
 }
 
-template <typename T, typename T_var, typename T_life, typename T_cast> 
-void
-TAO_Unbounded_Object_Sequence<T,T_var,T_life,T_cast>::_downcast (
-    void * target,
-    CORBA::Object_ptr src
-    ACE_ENV_ARG_DECL
-  )
-{
-  T ** tmp = ACE_static_cast (T **, 
-                              target);
-
-  *tmp = TAO::Object_Cast<T>::tao_narrow (src 
-                                          ACE_ENV_ARG_PARAMETER);
-
-  ACE_CHECK;
-}
-
-template <typename T, typename T_var, typename T_life, typename T_cast> 
-CORBA::Object_ptr
-TAO_Unbounded_Object_Sequence<T,T_var,T_life,T_cast>::_upcast (
-    void * src
-  ) const
-{
-  return TAO::Object_Cast<T>::tao_upcast (src);
-}
-
 // *************************************************************
 // Operations for class TAO_Bounded_Object_Sequence
 // *************************************************************
@@ -1036,40 +986,6 @@ TAO_Bounded_Object_Sequence<T,T_var,T_life,T_cast,MAX>::_shrink_buffer (
       TAO::Objref_Traits<T>::tao_release (tmp[i]);
       tmp[i] = TAO::Objref_Traits<T>::tao_nil ();
     }
-}
-
-template <typename T, 
-          typename T_var, 
-          typename T_life, 
-          typename T_cast, 
-          size_t MAX>
-void
-TAO_Bounded_Object_Sequence<T,T_var,T_life,T_cast,MAX>::_downcast (
-    void * target,
-    CORBA::Object_ptr src
-    ACE_ENV_ARG_DECL
-  )
-{
-  T ** tmp = ACE_static_cast (T **, 
-                              target);
-
-  *tmp = TAO::Object_Cast<T>::tao_narrow (src 
-                                          ACE_ENV_ARG_PARAMETER);
-
-  ACE_CHECK;
-}
-
-template <typename T, 
-          typename T_var, 
-          typename T_life, 
-          typename T_cast, 
-          size_t MAX> 
-CORBA::Object_ptr
-TAO_Bounded_Object_Sequence<T,T_var,T_life,T_cast,MAX>::_upcast (
-    void * src
-  ) const
-{
-  return TAO::Object_Cast<T>::tao_upcast (src);
 }
 
 // *************************************************************

@@ -20,6 +20,22 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+namespace TAO
+{
+  /**
+   * struct Value_Traits
+   *
+   * @brief Specialized for each valuetype in generated code.
+   *
+   */
+  template<typename T>
+  struct Value_Traits
+  {
+    static void tao_add_ref (T *);
+    static void tao_remove_ref (T *);
+  };
+};
+
 /**
  * @class TAO_Value_Var_T
  *

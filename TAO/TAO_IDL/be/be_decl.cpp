@@ -60,7 +60,8 @@ be_decl::be_decl (void)
     cli_hdr_cdr_op_gen_ (I_FALSE),
     cli_stub_cdr_op_gen_ (I_FALSE),
     cli_inline_cdr_op_gen_ (I_FALSE),
-    cli_inline_cdr_decl_gen_ (I_FALSE)
+    cli_inline_cdr_decl_gen_ (I_FALSE),
+    cli_traits_gen_ (I_FALSE)
 {
 }
 
@@ -82,7 +83,8 @@ be_decl::be_decl (AST_Decl::NodeType type,
     cli_hdr_cdr_op_gen_ (I_FALSE),
     cli_stub_cdr_op_gen_ (I_FALSE),
     cli_inline_cdr_op_gen_ (I_FALSE),
-    cli_inline_cdr_decl_gen_ (I_FALSE)
+    cli_inline_cdr_decl_gen_ (I_FALSE),
+    cli_traits_gen_ (I_FALSE)
 {
 }
 
@@ -317,6 +319,12 @@ be_decl::cli_inline_cdr_decl_gen (void)
 }
 
 idl_bool
+be_decl::cli_traits_gen (void)
+{
+  return this->cli_traits_gen_;
+}
+
+idl_bool
 be_decl::cli_inline_gen (void)
 {
   return this->cli_inline_gen_;
@@ -405,6 +413,12 @@ void
 be_decl::cli_inline_gen (idl_bool val)
 {
   this->cli_inline_gen_ = val;
+}
+
+void
+be_decl::cli_traits_gen (idl_bool val)
+{
+  this->cli_traits_gen_ = val;
 }
 
 void

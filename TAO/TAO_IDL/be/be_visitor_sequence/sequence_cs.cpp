@@ -39,13 +39,7 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
 {
   be_type *bt = be_type::narrow_from_decl (node->base_type ());
 
-  if (node->imported ())
-    {
-      bt->seen_in_sequence (I_TRUE);
-      return 0;
-    }
-
-  if (node->cli_stub_gen ())
+  if (node->imported () || node->cli_stub_gen ())
     {
       return 0;
     }
@@ -200,10 +194,11 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
           << "}";
     }
 
-  if (!bt->seen_in_sequence ())
+  if (!bt->seq_elem_tmplinst ())
     {
       // This is a no-op unless our element is a managed type.
       this->gen_managed_type_tmplinst (node, bt);
+      bt->seq_elem_tmplinst (I_TRUE);
     }
 
   if (this->ctx_->tdef () != 0)
@@ -233,7 +228,6 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
 
   os->gen_endif ();
 
-  bt->seen_in_sequence (I_TRUE);
   node->cli_stub_gen (I_TRUE);
   return 0;
 }

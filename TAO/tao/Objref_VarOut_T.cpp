@@ -39,6 +39,14 @@ TAO::Objref_Traits<T>::tao_nil (void)
   return T::_nil ();
 }
 
+template<typename T>
+CORBA::Boolean
+TAO::Objref_Traits<T>::tao_marshal (T * p,
+                                    TAO_OutputCDR & cdr)
+{
+  return p->marshal (cdr);
+}
+
 // =================================================================
 
 template <typename T, typename T_life>

@@ -511,27 +511,6 @@ TAO::Objref_Traits<CORBA::Policy>::tao_nil (void)
   return CORBA::Policy::_nil ();
 }
 
-template<>
-CORBA::Policy_ptr
-TAO::Object_Cast<CORBA::Policy>::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return CORBA::Policy::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-template<>
-CORBA::Object_ptr
-TAO::Object_Cast<CORBA::Policy>::tao_upcast (
-    void *src
-  )
-{
-  CORBA::Policy_ptr *tmp =
-    ACE_static_cast (CORBA::Policy_ptr *, src);
-  return *tmp;
-}
-
 // =================================================================
 
 // TAO_IDL - Generated from
