@@ -223,7 +223,7 @@ public:
                                 CORBA::NamedValue_ptr result,
                                 CORBA::Flags flags,
                                 CORBA::ExceptionList &exceptions,
-                                CORBA_Environment &_env = CORBA_Environment::default_environment ()) = 0;
+                                CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ()) = 0;
   // Dynamic invocations use a more costly "varargs" calling
   // convention; it's got the same input data as the (static)
   // stub-oriented one, but the data is represented somewhat
@@ -246,7 +246,7 @@ public:
   // All objref representations carry around a type ID.
 
   virtual CORBA::ULong hash (CORBA::ULong maximum,
-                             CORBA_Environment &_env = CORBA_Environment::default_environment ()) = 0;
+                             CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ()) = 0;
   // All objref representations know how to hash themselves and
   // compare themselves for equivalence to others.  It's easily
   // possible to have two objrefs that are distinct copies of data
@@ -254,7 +254,7 @@ public:
   // equivalent).
 
   virtual CORBA::Boolean is_equivalent (CORBA::Object_ptr other_obj,
-                                        CORBA_Environment &_env = CORBA_Environment::default_environment ()) = 0;
+                                        CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ()) = 0;
   // check for equivalence
 
   STUB_Object (CORBA::String p = 0);
@@ -269,7 +269,7 @@ public:
   // only supports one protocol -- the problem won't show up.
   // "Multiprotocol ORBs" will need to solve that problem though.  ]
 
-  virtual TAO_ObjectKey *key (CORBA_Environment &_env = CORBA_Environment::default_environment ()) = 0;
+  virtual TAO_ObjectKey *key (CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ()) = 0;
   // Return the object key as an out parameter.  Caller should release
   // return value when finished with it.
 

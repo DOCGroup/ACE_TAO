@@ -272,10 +272,10 @@ void POA_CORBA::_tao_collocated_Policy::destroy  (
 
 
 CORBA::Policy*
-POA_CORBA::Policy::_this (CORBA_Environment &_env)
+POA_CORBA::Policy::_this (CORBA_Environment &TAO_IN_ENV)
 {
-  STUB_Object *stub = this->_create_stub (_env);
-  if (_env.exception () != 0)
+  STUB_Object *stub = this->_create_stub (TAO_IN_ENV);
+  if (TAO_IN_ENV.exception () != 0)
     return 0;
   return new POA_CORBA::_tao_collocated_Policy (this, stub);
 }

@@ -207,12 +207,12 @@ TAO_DynUnion_i::from_any (const CORBA_Any& any,
 }
 
 CORBA::Any_ptr
-TAO_DynUnion_i::to_any (CORBA::Environment& _env)
+TAO_DynUnion_i::to_any (CORBA::Environment& TAO_IN_ENV)
 {
   // Both Dynanys must have been initialied.
   if (this->member_.in () == 0 || this->discriminator_.in () == 0)
     {
-      _env.exception (new CORBA_DynAny::Invalid);
+      TAO_IN_ENV.exception (new CORBA_DynAny::Invalid);
       return 0;
     }
 
@@ -220,9 +220,9 @@ TAO_DynUnion_i::to_any (CORBA::Environment& _env)
 
   // Add the discriminator to the CDR stream.
 
-  CORBA_TypeCode_ptr disc_tc = this->discriminator_->type (_env);
+  CORBA_TypeCode_ptr disc_tc = this->discriminator_->type (TAO_IN_ENV);
 
-  CORBA_Any_ptr disc_any = this->discriminator_->to_any (_env);
+  CORBA_Any_ptr disc_any = this->discriminator_->to_any (TAO_IN_ENV);
 
   ACE_Message_Block* disc_mb = disc_any->_tao_get_cdr ();
 
@@ -230,15 +230,15 @@ TAO_DynUnion_i::to_any (CORBA::Environment& _env)
 
   out_cdr.append (disc_tc,
                   &disc_cdr,
-                  _env);
+                  TAO_IN_ENV);
 
   delete disc_any;
 
   // Add the member to the CDR stream.
 
-  CORBA_TypeCode_ptr member_tc = this->member_->type (_env);
+  CORBA_TypeCode_ptr member_tc = this->member_->type (TAO_IN_ENV);
 
-  CORBA_Any_ptr member_any = this->member_->to_any (_env);
+  CORBA_Any_ptr member_any = this->member_->to_any (TAO_IN_ENV);
 
   ACE_Message_Block* member_mb = member_any->_tao_get_cdr ();
 
@@ -246,7 +246,7 @@ TAO_DynUnion_i::to_any (CORBA::Environment& _env)
 
   out_cdr.append (member_tc,
                   &member_cdr,
-                  _env);
+                  TAO_IN_ENV);
 
   delete member_any;
 
@@ -255,7 +255,7 @@ TAO_DynUnion_i::to_any (CORBA::Environment& _env)
 
   CORBA_Any* retval;
   ACE_NEW_THROW_RETURN (retval,
-                        CORBA_Any (this->type (_env),
+                        CORBA_Any (this->type (TAO_IN_ENV),
                                    in_cdr.start ()),
                         CORBA::NO_MEMORY (CORBA::COMPLETED_NO),
                         0);
@@ -1260,7 +1260,7 @@ TAO_DynUnion_i::Enum_extractor::check_match (const CORBA_Any& inside_any,
 // Functor factory.
 DU_Extractor_base*
 TAO_DynUnion_i::get_extractor (CORBA::TCKind kind,
-                               CORBA::Environment& _env)
+                               CORBA::Environment& TAO_IN_ENV)
 {
   DU_Extractor_base* retval;
 

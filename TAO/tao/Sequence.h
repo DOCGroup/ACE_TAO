@@ -60,7 +60,7 @@ public:
 
   virtual void _downcast (void *target,
                           CORBA_Object *src,
-                          CORBA_Environment &_env = CORBA_Environment::default_environment ());
+                          CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
   // Used for sequences of objects to downcast a recently demarshalled
   // object reference into the right type.
 

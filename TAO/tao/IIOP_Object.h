@@ -127,7 +127,7 @@ public:
                                 CORBA::NamedValue_ptr result,
                                 CORBA::Flags flags,
                                 CORBA::ExceptionList &exceptions,
-                                CORBA_Environment &_env = CORBA_Environment::default_environment ());
+                                CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
   // DII-based invocation analogue of the <do_static_call> above.
   // Differs in how the vararg calling convention is implemented --
   // DII doesn't use the normal call stack with its implicit typing,
@@ -136,11 +136,11 @@ public:
   // = Support for tables keyed by objrefs.
 
   CORBA::ULong hash (CORBA::ULong maximum,
-                     CORBA_Environment &_env = CORBA_Environment::default_environment ());
+                     CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
   // Compute a hash value for the object.
 
   CORBA::Boolean is_equivalent (CORBA::Object_ptr other_obj,
-                                CORBA_Environment &_env = CORBA_Environment::default_environment ());
+                                CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
   // XXX All objref representations should know how to marshal
   // themselves.  That will involve ensuring that the IOR that gets
   // marshaled talks a specific protocol, otherwise the target of a
@@ -167,7 +167,7 @@ public:
   virtual CORBA::ULong _incr_refcnt (void);
   virtual CORBA::ULong _decr_refcnt (void);
 
-  virtual TAO_ObjectKey *key (CORBA_Environment &_env = CORBA_Environment::default_environment ());
+  virtual TAO_ObjectKey *key (CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
   // Return the object key as an out parameter.  Caller should release
   // return value when finished with it.
 
@@ -209,7 +209,7 @@ protected:
 
   void put_params (TAO_GIOP_Invocation &call,
                    CORBA::NVList_ptr args,
-                   CORBA_Environment &_env = CORBA_Environment::default_environment ());
+                   CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
   // Helper method to factor out common code in dynamic oneway
   // vs. twoway invocations.
 

@@ -105,13 +105,13 @@ public:
   // the standard _nil method on pseudo objects
 
   virtual void arguments (CORBA::NVList_ptr &list,
-                          CORBA_Environment &_env = CORBA_Environment::default_environment ()) = 0;
+                          CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ()) = 0;
   // Implementation uses this to provide the ORB with the operation's
   // parameter list ... on return, their values are available; the
   // list fed in has typecodes and (perhap) memory assigned.
 
   virtual void set_result (const CORBA::Any &value,
-                           CORBA_Environment &_env = CORBA_Environment::default_environment ()) = 0;
+                           CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ()) = 0;
   // Implementation uses this to provide the operation result
   // ... illegal if exception() was called or params() was not called.
   //
@@ -119,7 +119,7 @@ public:
   // sent when this returns, and reclaim memory it allocated.
 
   virtual void set_exception (const CORBA::Any &value,
-                              CORBA_Environment &_env = CORBA_Environment::default_environment ()) = 0;
+                              CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ()) = 0;
   // Implementation uses this to provide the exception value which is
   // the only result of this particular invocation.
   //
@@ -160,10 +160,10 @@ public:
                         ...) = 0;
   // marshal outgoing parameters
 
-  virtual void dsi_marshal (CORBA_Environment &_env = CORBA_Environment::default_environment ()) = 0;
+  virtual void dsi_marshal (CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ()) = 0;
   // marshal outgoing parameters. Used by DSI
 
-  virtual void init_reply (CORBA_Environment &_env = CORBA_Environment::default_environment ()) = 0;
+  virtual void init_reply (CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ()) = 0;
   // Start a Reply message.
 
   virtual TAO_InputCDR &incoming (void) = 0;
@@ -185,7 +185,7 @@ public:
   IIOP_ServerRequest (TAO_InputCDR &input,
                       TAO_OutputCDR &output,
                       TAO_ORB_Core *orb_core,
-                      CORBA_Environment &_env = CORBA_Environment::default_environment ());
+                      CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
   // Constructor
   IIOP_ServerRequest (CORBA::ULong &request_id,
                       CORBA::Boolean &response_expected,
@@ -193,20 +193,20 @@ public:
                       char* operation,
                       TAO_OutputCDR &output,
                       TAO_ORB_Core *orb_core,
-                      CORBA_Environment &_env = CORBA_Environment::default_environment ());
+                      CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
 
   virtual ~IIOP_ServerRequest (void);
   // Destructor.
 
   // = General ServerRequest operations
   void arguments (CORBA::NVList_ptr &list,
-                  CORBA_Environment &_env = CORBA_Environment::default_environment ());
+                  CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
 
   void set_result (const CORBA::Any &value,
-                   CORBA_Environment &_env = CORBA_Environment::default_environment ());
+                   CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
 
   void set_exception (const CORBA::Any &value,
-                      CORBA_Environment &_env = CORBA_Environment::default_environment ());
+                      CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
 
   // = Request attributes.
 
@@ -242,11 +242,11 @@ public:
   // marshal outgoing parameters and return value. This is used by the SSI
   // i.e., by the IDL compiler generated skeletons.
 
-  virtual void dsi_marshal (CORBA_Environment &_env = CORBA_Environment::default_environment ());
+  virtual void dsi_marshal (CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
   // does the marshaling of outgoing parameters and is used by the DSI based
   // scheme
 
-  virtual void init_reply (CORBA_Environment &_env = CORBA_Environment::default_environment ());
+  virtual void init_reply (CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
   // start a Reply message
 
   virtual TAO_InputCDR &incoming (void);

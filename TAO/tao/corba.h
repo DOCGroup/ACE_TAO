@@ -166,7 +166,7 @@ typedef void (*TAO_Skeleton)(
     CORBA_ServerRequest &,
     void *,
     void *,
-    CORBA_Environment &_env
+    CORBA_Environment &TAO_IN_ENV
   );
 
 // NOTE: stub APIs are nonportable, and must be explicitly #included
