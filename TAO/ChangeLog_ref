@@ -1,3 +1,20 @@
+Sun Sep 28 11:09:35 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/AMI_Buffering/Client_Task.h:
+	* tests/MProfile_Forwarding/Servant_Locator.cpp:
+	* tests/MProfile_Forwarding/Servant_Locator.h:
+	* tests/Portable_Interceptors/Dynamic/test_i.h:
+	* tests/Portable_Interceptors/Service_Context_Manipulation/server.cpp:
+	* tests/RTCORBA/Client_Propagated/interceptors.cpp:
+	* tests/RTCORBA/ORB_init/ORB_init.cpp: Fixed compiler errors with
+	  g++. These were caused mostly due to direct inclusions of
+	  corba.h and such. 
+
+	* tests/RTScheduling/VoidData/testC.cpp: Fixed problems with
+	  generated code. This is so wrong. This test should never
+	  maintain generated code. It is maintenance PITA. The original
+	  author has been informed. 
+
 Fri Sep 26 18:25:12 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_decl.cpp:

@@ -23,7 +23,8 @@ public:
 
   virtual CORBA::Long calculate (CORBA::Long one,
                                  CORBA::Long two
-                                 ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                                 ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   void normal (CORBA::Long arg,
                CORBA::String_out msg
@@ -31,16 +32,16 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual Test_Interceptors::Visual::VarLenStruct * the_structure (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void user (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual void user (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException, Test_Interceptors::Silly));
 
-  virtual void system (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual void system (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
