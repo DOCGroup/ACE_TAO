@@ -179,6 +179,11 @@ TAO_OutputCDR::TAO_OutputCDR (ACE_Message_Block *data,
 
 TAO_OutputCDR::~TAO_OutputCDR (void)
 {
+  if (this->start_.cont () != 0)
+    {
+      ACE_Message_Block::release (this->start_.cont ());
+      this->start_.cont (0);
+    }
   this->current_ = 0;
 }
 

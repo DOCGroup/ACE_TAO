@@ -1,3 +1,10 @@
+Tue Jun 16 10:14:28 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/CDR.cpp: 
+	  Fixed memory leak on OutputCDR streams, thanks to Lothar
+	  Werzinger <lwerzinger@krones.de> for reporting and tracking down
+	  the problem.
+
 Mon Jun 15 23:13:46 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * TAO version 0.1.28 released.
