@@ -1,3 +1,13 @@
+Thu Feb 17 08:57:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * release.pl:
+          Removed.
+
+        * tao/mwc.pl:
+          We have to list all cpp/h files by hand, when we let MPC pickup just
+          all files it also get all resource factory files that shouldn't be
+          in the tao lib
+
 Wed Feb 16 14:40:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/LifespanStrategyPersistent.cpp:
