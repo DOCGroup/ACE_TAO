@@ -1,3 +1,7 @@
+Wed Apr 30 16:01:04 1997  James C Hu  <jxh@polka.cs.wustl.edu>
+
+	* ace/OS.i, ace/OS.h: added mktime().
+
 Wed Apr 30 14:17:34 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/config-vxworks*.h: added ACE_LACKS_PWD_FUNCTIONS.  Thanks
