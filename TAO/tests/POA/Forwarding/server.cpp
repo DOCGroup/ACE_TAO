@@ -13,22 +13,76 @@
 //    Irfan Pyarali
 // ===========================================================================================
 
+#include "tao/corba.h"
+#include "ace/Read_Buffer.h"
 #include "MyFooServant.h"
 
-static char *forward_to_IOR = 0;
+static char *forward_to_IOR_ = 0;
+FILE* ior_output_file_;
+
+
+int
+read_ior (char *filename)
+{
+  // Open the file for reading.
+  ACE_HANDLE f_handle_ = ACE_OS::open (filename,0);
+  
+  if (f_handle_ == ACE_INVALID_HANDLE)
+    ACE_ERROR_RETURN ((LM_ERROR,
+    "Unable to open %s for writing: %p\n",
+    filename),
+    -1);
+  ACE_Read_Buffer ior_buffer (f_handle_);
+  forward_to_IOR_ = ior_buffer.read ();
+
+  if (forward_to_IOR_ == 0)
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Unable to allocate memory to read ior: %p\n"),
+                        -1);
+
+   ACE_DEBUG ((LM_DEBUG, "read ior from the file\n"));
+
+   return 0;
+}
+
+
+
 
 static int
 parse_args (int argc, char **argv)
 {
-  ACE_Get_Opt get_opts (argc, argv, "f:O:");
+  ACE_Get_Opt get_opts (argc, argv, "f:o:O:");
   int c;
+  int result; 
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
-      case 'f':
-        forward_to_IOR = get_opts.optarg;
+      case 'f': // read the IOR from the file.
+        result = read_ior (get_opts.optarg);
+        if (result < 0)
+          ACE_ERROR_RETURN ((LM_ERROR,
+          "Unable to read ior from %s : %p\n",
+          get_opts.optarg),
+          -1);
         break;
+      case 'o': // output the IOR to a file.
+        ior_output_file_ = ACE_OS::fopen (get_opts.optarg, "w");
+        if (ior_output_file_ == 0)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Unable to open %s for writing: %p\n",
+                             get_opts.optarg), -1);
+        break;  
+      case '?':   
+      default:
+        break;
+/*        ACE_ERROR_RETURN ((LM_ERROR,
+                           "usage:  %s"
+                           "-f second_server_IOR_file"
+                           "-o file_for_IOR"
+                           "\n",
+                           argv [0]),
+                          -1);*/
       }
 
   // Indicates successful parsing of command line.
@@ -128,15 +182,27 @@ main (int argc, char **argv)
   
   CORBA::Object_var forward_to;
 
-  if (forward_to_IOR != 0)
+  if (forward_to_IOR_ != 0)
     {
-      forward_to = orb->string_to_object (forward_to_IOR, env);
+      forward_to = orb->string_to_object (forward_to_IOR_, env);
+
+      ACE_DEBUG ((LM_DEBUG,"\nFound IOR is:<%s>\n",forward_to_IOR_));
+
       
       if (env.exception () != 0)
         {
           env.print_exception ("ORB::string_to_object");
           return -1;
         }
+
+      if (CORBA::is_nil(forward_to.in()))
+      {
+          ACE_DEBUG ((LM_DEBUG,"Forward_to location is wrong\n"));
+      }
+      else
+      {
+          ACE_DEBUG ((LM_DEBUG,"Forward_to location is ok\n"));
+      }
     }
 
   // Create MyFooServant
@@ -180,8 +246,21 @@ main (int argc, char **argv)
       return -1;
     }
 
-  ACE_DEBUG ((LM_DEBUG, "%s\n", ior.in ()));
+  ACE_DEBUG ((LM_DEBUG,
+              "The IOR is: <%s>\n",
+              ior.in ()));
 
+  if (ior_output_file_)
+    {
+      ACE_OS::fprintf (ior_output_file_,
+                       "%s",
+                       ior.in ());
+      ACE_OS::fclose (ior_output_file_);
+
+      ACE_DEBUG ((LM_DEBUG, "wrote ior to the file\n"));
+    }
+
+  
   poa_manager->activate (env);
   if (env.exception () != 0)
     {
