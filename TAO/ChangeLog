@@ -1,3 +1,12 @@
+Sat Nov 16 08:22:38 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/Notify/Any/CosEC_ProxyPushConsumer.h:
+	* orbsvcs/orbsvcs/Notify/Any/ProxyPushConsumer.h: Fixed typos that
+	  lead to link errors.
+
+	* tao/Asynch_Queued_Message.cpp: Fixed a warning in the daily
+	  builds.  
+	
 Sat Nov 16 12:43:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/server.bor:
