@@ -78,8 +78,20 @@ A complete list of all modifications to TAO is available in the <A HREF="http://
 <A NAME="idl"></A>IDL Compiler</H3>
 Point of contact: <A HREF="mailto:gokhale@research.bell-labs.com">Aniruddha Gokhale</A>
 
-<P>Current status: (As of July 31st, 1998.)
+<P>Current status: (As of August  26th, 1998.)
 <UL>
+     <LI> The problem of "#include"ing the relative path of the header
+         files rather than the paths of their corresponding IDL files
+         has been fixed. <tao_idl> now generates #include path names
+         that are derived from the IDL files that are #include'd in
+         the main idl file. 
+
+      <LI>Added options to IDL compiler to specify file name endings
+          for the IDL-generated stubs, skeletons and the various
+          header files. Please refer to the <A
+          HREF="file:../compiler.html">IDL compiler options</A> for 
+          details.
+          </LI>
       <LI>Added partial native C++ exception support:
 	<UL>
 	  <LI>The ORB can be configured to catch native C++ exceptions

@@ -1,3 +1,9 @@
+Wed Aug 26 17:05:27 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* docs/releasenotes/index.html: Updated the IDL compiler portion,
+	adding a note about the recent options and the fixing of the
+	relative path name problems.  
+
 Wed Aug 26 16:32:18 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* TAO_IDL/be/be_codegen.cpp: 
@@ -6,7 +12,9 @@ Wed Aug 26 16:32:18 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 	* TAO_IDL/driver/drv_preproc.cpp: 
 		Fixed the relative #include path generation. tao_idl now
 	puts header names derived from the #include'd idl files as they
-	appear originally in the main idl file.
+	appear originally in the main idl file. 
+		Thanks to Carlos and Andy for their suggestions and
+	guidance. 
 
 Wed Aug 26 13:12:57 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 
