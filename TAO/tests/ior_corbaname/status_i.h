@@ -5,12 +5,12 @@
 #ifndef STATUS_I_H
 #define STATUS_I_H
 
-#include "corbalocS.h"
+#include "corbanameS.h"
 #include <string>
 
-class corbaloc_Status_i : public POA_corbaloc::Status {
+class corbaname_Status_i : public POA_corbaname::Status {
 public:
-  corbaloc_Status_i (CORBA::Environment & =
+  corbaname_Status_i (CORBA::Environment & =
                      TAO_default_environment());
 
   CORBA::Boolean print_status (CORBA::Environment & = TAO_default_environment()) 

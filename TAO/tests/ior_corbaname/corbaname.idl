@@ -1,6 +1,6 @@
 // $Id$
 
-module corbaloc
+module corbaname
 {
   
   interface Status
@@ -13,9 +13,8 @@ module corbaloc
     //     Prints out the status.
 
     boolean print_status ();
-    // Return <true == 0> if the server received the 
+    // Return <true> if the server received the 
     // request from the client.
         
   };
 };
-

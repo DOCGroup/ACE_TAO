@@ -4,13 +4,13 @@
 // ===========================================================
 //
 // = LIBRARY
-//    TAO/tests/ior_corbaloc/
+//    TAO/tests/ior_corbaname/
 //
 // = FILENAME
-//    ior_corbaloc_client_i.cpp
+//    ior_corbaname_client_i.cpp
 //
 // = DESCRIPTION
-//    This example implements a simple client which sends a corbaloc:
+//    This example implements a simple client which sends a corbaname:
 //    style url to the server and gets a response from the
 //    server to indicate that the server has received the request.
 //
@@ -19,21 +19,22 @@
 //
 //============================================================
 
-#include "ior_corbaloc_client_i.h"
+#include "ior_corbaname_client_i.h"
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
 
 // Constructor
-IOR_corbaloc_Client_i::IOR_corbaloc_Client_i (void)
+IOR_corbaname_Client_i::IOR_corbaname_Client_i (void)
 {
 }
 
-IOR_corbaloc_Client_i::~IOR_corbaloc_Client_i (void)
+// Destructor
+IOR_corbaname_Client_i::~IOR_corbaname_Client_i (void)
 {
 }
 
 int
-IOR_corbaloc_Client_i::run (CORBA::Environment &ACE_TRY_ENV)
+IOR_corbaname_Client_i::run (CORBA::Environment &ACE_TRY_ENV)
 {
 
   ACE_TRY
@@ -43,15 +44,31 @@ IOR_corbaloc_Client_i::run (CORBA::Environment &ACE_TRY_ENV)
       name.length (1);
       name[0].id = CORBA::string_dup ("STATUS");
 
-      // Resolve the name
+      // The corbaname URL contains the host at which an NamingContext
+      // Object can be found and also the stringified form of an entry
+      // in the Naming Service seperated by '#'. For simplicity, 
+      // in this example, we are specifying the stringified form of
+      // the binding directly without using <to_string> method on
+      // <name>. "#" refers to the seperator between the host and the
+      // entry.
+
+      ACE_CString corbaname_url (this->argv_[1], 0, 1);
+
+      // Append the seperator '#' to the host.
+      corbaname_url += "#";
+      
+      // Append the stringified name to the resultant.
+      corbaname_url += "STATUS";
+
+      // Resolve the stringified name.
       CORBA::Object_var factory_object =
-        this->naming_context_->resolve (name,
-                                        ACE_TRY_ENV);
+        this->orb_->string_to_object (corbaname_url.c_str (),
+                                      ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       // Narrow
-      corbaloc::Status_var factory =
-        corbaloc::Status::_narrow (factory_object.in (), ACE_TRY_ENV);
+      corbaname::Status_var factory =
+        corbaname::Status::_narrow (factory_object.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (factory.in ()))
@@ -70,7 +87,7 @@ IOR_corbaloc_Client_i::run (CORBA::Environment &ACE_TRY_ENV)
       if (ret_value == 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "The server has been contacted !!\n",
+                      "The server has been successfully contacted.\n",
                       0));
         }
     }
@@ -80,7 +97,7 @@ IOR_corbaloc_Client_i::run (CORBA::Environment &ACE_TRY_ENV)
     }
   ACE_CATCH (CORBA::SystemException, ex)
     {
-      ACE_PRINT_EXCEPTION (ex, "A system exception oc client side");
+      ACE_PRINT_EXCEPTION (ex, "A system exception on client side");
       return -1;
     }
   ACE_CATCHANY
@@ -95,7 +112,7 @@ IOR_corbaloc_Client_i::run (CORBA::Environment &ACE_TRY_ENV)
 }
 
 int
-IOR_corbaloc_Client_i::init (int argc, char **argv)
+IOR_corbaname_Client_i::init (int argc, char **argv)
 {
   this->argc_ = argc;
   this->argv_ = argv;
@@ -105,33 +122,21 @@ IOR_corbaloc_Client_i::init (int argc, char **argv)
     {
 
       // First initialize the ORB, that will remove some arguments...
-      CORBA::ORB_var orb =
+      this->orb_ =
         CORBA::ORB_init (this->argc_,
                          this->argv_,
                          "" /* the ORB name, it can be anything! */,
                          ACE_TRY_ENV);
-
-      // Get a reference to the Naming Service
-      CORBA::Object_var naming_context_object =
-        orb->string_to_object (this->argv_[1], 
-                               ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      if (CORBA::is_nil (naming_context_object.in ()))
+      // There must be at least one argument, the file that has to be
+      // retrieved
+      if (this->argc_ < 2)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot resolve Naming Service\n : client"),
-                          1);
-
-      // Narrow to get the correct reference
-      this->naming_context_ =
-        CosNaming::NamingContextExt::_narrow (naming_context_object.in (),
-                                              ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      if (CORBA::is_nil (this->naming_context_.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot narrow Naming Service\n :client"),
-                          1);
+                           "Address of naming context not specified\n",
+                           this->argv_[0]),
+                           -1);
+      
     }
   ACE_CATCHANY
     {
