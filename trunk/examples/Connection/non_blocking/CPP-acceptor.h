@@ -11,6 +11,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Svc_Handler.h"
+#include "ace/Signal.h"
 
 
 template <ACE_PEER_STREAM_1>

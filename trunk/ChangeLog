@@ -1,3 +1,12 @@
+Thu Nov 13 16:10:54 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * apps/Gateway/Gateway/File_Parser.cpp:
+          Added #include OS_NS_stdlib.h to fix compile errors on HP.
+
+        * examples/Connection/non_blocking/CPP-acceptor.h:
+        * examples/Connection/non_blocking/CPP-connector.h:
+          Added #include Signal.h to fix compile errors on HP.
+
 Thu Nov 13 16:11:07 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/OS_TLI.h:
