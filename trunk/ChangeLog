@@ -1,3 +1,15 @@
+Fri Apr 19 12:05:42 2002  Ossama Othman  <ossama@uci.edu>
+
+	* examples/Bounded_Packet_Relay/bpr_thread.cpp:
+	* examples/Timer_Queue/main_async.cpp:
+	* examples/Timer_Queue/main_reactor.cpp:
+	* examples/Timer_Queue/main_thread.cpp:
+
+	  The recent "ace/OS.h" inclusion reductions prevented a pragma
+	  that disables a MSVC 6 warning about an overly long debugging
+	  symbol from occurring.  Explicitly disable that warning in this
+	  file to silence the warning.
+
 Fri Apr 19 11:41:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Typed_SV_Message_Queue.h:
