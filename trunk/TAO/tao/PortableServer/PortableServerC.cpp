@@ -1094,8 +1094,6 @@ const char* PortableServer::POAManager::_interface_repository_id (void) const
   return "IDL:PortableServer/POAManager:1.0";
 }
 
-#if (TAO_HAS_MINIMUM_POA == 0)
-
 // default constructor
 PortableServer::POAManager::AdapterInactive::AdapterInactive (void)
 {
@@ -1160,6 +1158,8 @@ CORBA::Exception *PortableServer::POAManager::AdapterInactive::_alloc (void)
   ACE_NEW_RETURN (retval, ::PortableServer::POAManager::AdapterInactive, 0);
   return retval;
 }
+
+#if (TAO_HAS_MINIMUM_POA == 0)
 
 // default constructor
 PortableServer::AdapterActivator::AdapterActivator (void)
