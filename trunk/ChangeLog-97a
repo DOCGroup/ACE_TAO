@@ -1,5 +1,41 @@
 Mon Apr 28 11:17:26 1997  David L. Levine  <levine@cs.wustl.edu>
 
+	* tests/Conn_Test.cpp,Message_{Block,Queue}_Test.cpp,
+	  Process_Strategy_Test.cpp:
+	  fixed template specializations for platforms without threads.
+	  Thanks to Nanbor Wang <nw1@cs.wustl.edu> for pointing out this
+	  problem.
+
+	* ace/Connector.h: use ACE_SYNCH_RW_MUTEX in Map typedefs instead
+          of old ACE_RW_Mutex (which should have been ACE_Thread_RW_Mutex)
+	  and ACE_Null_Mutex, depending on whether the platform has threads.
+	  This way, individual programs don't have to specialize these.
+
+	* ace/Service_Record.cpp: added ACE_NULL_SYNCH template
+	  specializations with threads, because they're still needed even
+	  with threads.
+
+	* ace/Task.cpp: added ACE_TSS<ACE_Task_Exit> and
+	  ACE_TSS<ACE_Dynamic> template specializations, if the platform
+	  has threads and TSS.  This way, individual programs don't have
+	  to specialize them.
+
+	* apps/Gateway/Gateway/Event_Channel.cpp,
+	  Proxy_Handler{,_Connector}.cpp,apps/JAWS/server/HTTP_Server.cpp,
+	  examples/ASX/Event_Server/Transceiver/transceiver.cpp,
+	  examples/ASX/UPIPE_Event_Server/Consumer_Router.cpp,
+	  examples/Connection/blocking/SPIPE-connector.cpp,
+	  examples/Connection/misc/{Connection_Handler,test_upipe}.cpp,
+	  examples/Connection/non_blocking/test_*.cpp,
+	  examples/IOStream/server/iostream_server.cpp,
+	  examples/Logger/Acceptor-server/server_loggerd.cpp,
+	  examples/Service_Configurator/IPC-tests/server/Handle_Thr_Stream.cpp,
+	  netsvcs/lib/Client_Logging_Handler.cpp,
+	  netsvcs/lib/TS_{Clerk,Server}_Handler.cpp:
+	  removed template instantiations that are now in
+	  ace/Service_Record.cpp and ace/Task.cpp.  This should help
+	  on platforms without threads.
+
 	* examples/ASX/UPIPE_Event_Server/Supplier_Router.cpp: fixed
 	  typos in template specializations.
 
