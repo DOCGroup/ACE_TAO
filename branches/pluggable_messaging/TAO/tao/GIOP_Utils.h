@@ -10,7 +10,7 @@
 //     GIOP_Message.h
 //
 // = DESCRIPTION
-//     Interface for the GIOP messaging protocol
+//     GIOP utility definitions
 //
 // = AUTHOR
 //     Balachandran Natarajan <bala@cs.wustl.edu>
@@ -233,53 +233,6 @@ private:
   // Append <current> to the list of fragments
   // Also resets the state, because the current message was consumed.
 
-};
-
-
-
-class TAO_Export TAO_GIOP_Utils
-{
-  // = TITLE
-  //   Some utility methods for GIOP independent of versions of GIOP
-  //
-  // = DESCRIPTION
-  //   Utility methods that would be used by both the Client and
-  //   Server side methods in GIOP factory
-
-public:
-  
-  static void dump_msg (const char *label,
-                        const u_char *ptr,
-                        size_t len);
-  // Print out a debug messages..  
-
-//  static CORBA::Boolean start_message (const TAO_GIOP_Version &version,
-//                                       TAO_GIOP_Message_Type t,
-//                                       TAO_OutputCDR &msg);  
-//                                                             
-//  // Build the header for a message of type <t> into stream <msg>.
-//                                                             
-//                                                             
-//  static int send_message (TAO_Transport *transport,         
-//                           TAO_OutputCDR &output,            
-//                           const size_t header_len,          
-//                           const size_t message_offset,      
-//                           ACE_Time_Value *max_wait_time = 0,
-//                           TAO_Stub *stub = 0);              
-//  // Send the message on the wire using the right transport. 
-//                                                             
-//  static int read_bytes_input (TAO_Transport *transport,     
-//                               TAO_InputCDR &input,          
-//                               CORBA::ULong read_size,       
-//                               ACE_Time_Value *max_wait_time);
-//                                                             
-//  static int parse_giop_header (TAO_GIOP_Message_State *state,
-//                                TAO_InputCDR &input);        
-//                                                             
-//  static ssize_t read_buffer (TAO_Transport *transport,      
-//                              char *buf,                     
-//                              size_t len,                    
-//                              ACE_Time_Value *max_wait_time);
 };
 
 

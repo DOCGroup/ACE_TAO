@@ -168,11 +168,11 @@ TAO_GIOP_Message_Base::send_message (TAO_Transport *transport,
   // Strictly speaking, should not need to loop here because the
   // socket never gets set to a nonblocking mode ... some Linux
   // versions seem to need it though.  Leaving it costs little.
-  TAO_GIOP_Utils::dump_msg ("send",
-                            ACE_reinterpret_cast (u_char *,
-                                                  buf),
-                            stream.length ());
-
+  this->dump_msg ("send",
+                  ACE_reinterpret_cast (u_char *,
+                                        buf),
+                  stream.length ());
+  
   // This guarantees to send all data (bytes) or return an error.
   ssize_t n = transport->send (stub,
                                two_way,
@@ -306,16 +306,72 @@ TAO_GIOP_Message_Base::
           char *buf = state->cdr.rd_ptr ();
           buf -= header_len;
           size_t msg_len = state->cdr.length () + header_len;
-          TAO_GIOP_Utils::dump_msg ("recv",
-                                    ACE_reinterpret_cast (u_char *,
-                                                          buf),
-                                    msg_len);
+          this->dump_msg ("recv",
+                          ACE_reinterpret_cast (u_char *,
+                                                buf),
+                          msg_len);
         }
     }
 
   return state->is_complete ();
 }
 
+void
+TAO_GIOP_Message_Base::dump_msg (const char *label,
+                                 const u_char *ptr,
+                                 size_t len)
+{
+  static const char digits [] = "0123456789ABCD";
+  static const char *names [] =
+  {
+    "Request",
+    "Reply",
+    "CancelRequest",
+    "LocateRequest",
+    "LocateReply",
+    "CloseConnection",
+    "MessageError"
+    "Fragment"
+  };
+  
+  if (TAO_debug_level >= 5)
+    {
+      // Message name.
+      const char *message_name = "UNKNOWN MESSAGE";
+      u_long slot = ptr[this->message_type_offset ()];
+      if (slot < sizeof (names)/sizeof(names[0]))
+        message_name = names [slot];
+      
+      // Byte order.
+      int byte_order = ptr[this->flags_offset ()] & 0x01;
+
+      // request/reply id.
+      CORBA::ULong tmp = 0;
+      CORBA::ULong *id = &tmp;
+      
+      if (ptr[this->message_type_offset ()] == TAO_GIOP_REQUEST ||
+          ptr[this->message_type_offset ()] == TAO_GIOP_REPLY)
+        {
+          // @@ Only works if ServiceContextList is empty....
+          id = ACE_reinterpret_cast (CORBA::ULong *,
+                                     (char * ) (ptr + this->header_len () + 4));
+        }
+
+      // Print.
+      ACE_DEBUG ((LM_DEBUG,
+                  ASYS_TEXT ("(%P | %t):%s GIOP v%c.%c msg, ")
+                  ASYS_TEXT ("%d data bytes, %s endian, %s = %d\n"),
+                  label,
+                  digits[ptr[this->major_version_offset ()]],
+                  digits[ptr[this->minor_version_offset ()]],
+                  len - this->header_len (),
+                  (byte_order == TAO_ENCAP_BYTE_ORDER) ? "my" : "other",
+                  message_name,
+                  *id));
+
+
+    }
+}
 
 int
 TAO_GIOP_Message_Base::read_bytes_input (TAO_Transport *transport,
@@ -512,10 +568,10 @@ TAO_GIOP_Message_Base::send_error (TAO_Transport *transport)
   // @@ Q: How does this works with GIOP lite?
   //    A: It doesn't
 
-  TAO_GIOP_Utils::dump_msg ("send_error",
-                            (const u_char *) error_message,
-                            this->header_len ());
-
+  this->dump_msg ("send_error",
+                  (const u_char *) error_message,
+                  this->header_len ());
+  
   ACE_HANDLE which = transport->handle ();
 
   int result = transport->send ((const u_char *)error_message,
@@ -577,9 +633,9 @@ TAO_GIOP_Message_Base::
   // @@ should recv and discard queued data for portability; note
   // that this won't block (long) since we never set SO_LINGER
 
-  TAO_GIOP_Utils::dump_msg ("send_close_connection",
-                            (const u_char *) close_message,
-                            TAO_GIOP_HEADER_LEN);
+  this->dump_msg ("send_close_connection",
+                  (const u_char *) close_message,
+                  TAO_GIOP_HEADER_LEN);
   
   ACE_HANDLE which = transport->handle ();
   if (which == ACE_INVALID_HANDLE)
