@@ -157,17 +157,9 @@ be_visitor_interface_tie_si::visit_interface (be_interface *node)
       << fulltiename << "<T>::_default_POA (CORBA::Environment &env)" << be_nl
       << "{" << be_idt_nl
       << "if (!CORBA::is_nil (this->poa_.in ()))" << be_idt_nl
-      << "return PortableServer::POA::_duplicate (this->poa_.in ());"
+      << "return PortableServer::POA::_duplicate (this->poa_.in ());\n"
       << be_uidt_nl
-      << "else" << be_nl
-      << "{" << be_idt_nl
-      << "TAO_POA *poa = TAO_ORB_Core_instance ()->root_poa ();" << be_nl
-      << "PortableServer::POA_var result = poa->_this (env);" << be_nl
-      << "if (env.exception () != 0)" << be_idt_nl
-      << "return PortableServer::POA::_nil ();" << be_uidt_nl
-      << "else" << be_idt_nl
-      << "return result._retn ();" << be_uidt << be_uidt_nl
-      << "}" << be_uidt_nl
+      << "return this->" << node->local_name () << "::_default_POA (env);" << be_uidt_nl
       << "}\n\n";
 
   if (node->traverse_inheritance_graph (be_visitor_interface_tie_si::method_helper, os) == -1)
