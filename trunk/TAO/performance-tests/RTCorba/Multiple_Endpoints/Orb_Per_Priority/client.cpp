@@ -146,8 +146,9 @@ main (int argc, char *argv[])
         return 1;
 
       // Obtain Priority Mapping used by the ORB.
-      object = orb->resolve_initial_references ("PriorityMappingManager",
-                                                ACE_TRY_ENV);
+      CORBA::Object_var object =
+        orb->resolve_initial_references ("PriorityMappingManager",
+                                         ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       TAO::PriorityMappingManager_var mapping_manager =
