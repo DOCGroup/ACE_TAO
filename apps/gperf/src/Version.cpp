@@ -25,4 +25,4 @@ USA.  */
 
 ACE_RCSID(src, Version, "$Id$")
 
-char *version_string = "2.6 (GNU C++ version)";
+char *version_string = "2.7 (GNU C++ version)";
