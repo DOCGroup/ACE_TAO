@@ -1,3 +1,10 @@
+Thu May  3 08:00:56 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* examples/ASX/Event_Server/Event_Server/Options.cpp:
+	* examples/ASX/UPIPE_Event_Server/Options.cpp: Warning fixes that
+	  missed my earlier fix. This warning will appear only in the
+	  evening SUNOS EGCS build result. Just a proactive fix. :)
+
 Thu May  3 07:42:01 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* examples/IPC_SAP/FILE_SAP/client.cpp: Fixed a warning with Linux
