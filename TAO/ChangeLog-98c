@@ -1,6 +1,24 @@
+Wed Apr  1 09:46:53 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	The following fix was also made by Carlos simultaneously. Here is
+	the reason what was going wrong.
+
+	* tao/IIOP_Interpreter.cpp: In calc_nested_size_alignment_i, there
+	was a bug in which we were initializing the CDR stream for nested
+	parameters with an incorrect size. This was due to the fact that
+	we were computing the byte order outside and then initializing the
+	stream with 4 less bytes. However, the constructor of the
+	TAO_InputCDR was also computing the byteorder using wrong
+	locations in the bytestream. This is now fixed.
+
+	* tests/Param_Test: Added barebones implementation to test
+	Anys. This is still not complete because we still have to work on
+	getting Anys in TAO to work correctly and get rid of the memory
+	management problems we are having.
+
 Wed Apr  1 09:41:07 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/IIOP_Interpreter.cpp (calc_nested_size_and_alignment_i): 
+	* tao/IIOP_Interpreter.cpp (calc_nested_size_and_alignment_i):
 	   Fixed nested strem interpretation.
 
 Wed Apr  1 08:56:24 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>

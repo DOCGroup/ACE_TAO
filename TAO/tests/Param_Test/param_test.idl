@@ -130,10 +130,12 @@ interface Param_Test
 
   // object references
   Coffee make_coffee (); // make a Coffee object
+
+  // test the parameter passing conventions for ObjRefs
   Coffee test_objref (in Coffee o1, inout Coffee o2, out Coffee o3);
 
-  // Any
-  //  any test_any (in any a1, inout any a2, out any a3);
+  // Anys. We try to pump in all kinds of data types thru these Anys
+  any test_any (in any a1, inout any a2, out any a3);
 
   // test simple objects
   //  Object test_object (in Object o1, inout Object o2, out Object o3);

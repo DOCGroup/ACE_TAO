@@ -99,6 +99,8 @@ Options::parse_args (int argc, char **argv)
           this->test_type_ = Options::TEST_STRUCT_SEQUENCE;
         else if (!ACE_OS::strcmp (get_opts.optarg, "objref"))
           this->test_type_ = Options::TEST_OBJREF;
+        else if (!ACE_OS::strcmp (get_opts.optarg, "any"))
+          this->test_type_ = Options::TEST_ANY;
         break;
       case '?':
       default:
