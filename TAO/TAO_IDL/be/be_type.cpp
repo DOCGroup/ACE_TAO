@@ -93,6 +93,12 @@ be_type::nested_type_name (be_decl *d)
   // we emit a macro defined in the ACE library.
   //
 
+  // The tricky part here is that it is not enough to check if the
+  // typename we are using was defined in the current scope. But we
+  // need to ensure that it was not defined in any of our ancestor
+  // scopes as well. If that is the case, then we can generate a fully
+  // scoped name for that type, else we use the ACE_NESTED_CLASS macro
+
   static char macro [NAMEBUFSIZE];
   be_decl *t = 0;  // our enclosing scope
 
@@ -102,23 +108,33 @@ be_type::nested_type_name (be_decl *d)
 
   if (this->is_nested ()) // if we are nested
     {
-      t = be_decl::narrow_from_decl (ScopeAsDecl (this->defined_in ()));
+	  // get our enclosing scope
+	  t = be_decl::narrow_from_decl (ScopeAsDecl (this->defined_in ()));
 
-      // now we need to make sure that "t" is not the same as "d" i.e., the
-      // scope in which we are using ourselves.
-      if (!ACE_OS::strcmp (t->fullname (), d->fullname ()))
-        {
-          // we are the same, generate the ACE_NESTED_CLASS macro
-          ACE_OS::memset (macro, '\0', NAMEBUFSIZE);
-          ACE_OS::sprintf (macro, "ACE_NESTED_CLASS (");
-          ACE_OS::strcat (macro, t->fullname ());
-          ACE_OS::strcat (macro, ",");
-          ACE_OS::strcat (macro, this->local_name ()->get_string ());
-          ACE_OS::strcat (macro, ")");
-          return macro;
-        }
-    }
-  // not nested OR not defined in the same scope as "d"
+	  // now check if the scope in which we were defined is the same
+	  // as the current scope in which we are used or one of its ancestors
+	  while (d->node_type () != AST_Decl::NT_root) // keep moving up
+                                            	   // the chain
+		{
+		  // now we need to make sure that "t" is not the same as "d" i.e., the
+		  // scope in which we are using ourselves.
+		  if (!ACE_OS::strcmp (t->fullname (), d->fullname ()))
+			{
+			  // we are the same, generate the ACE_NESTED_CLASS macro
+			  ACE_OS::memset (macro, '\0', NAMEBUFSIZE);
+			  ACE_OS::sprintf (macro, "ACE_NESTED_CLASS (");
+			  ACE_OS::strcat (macro, t->fullname ());
+			  ACE_OS::strcat (macro, ",");
+			  ACE_OS::strcat (macro, this->local_name ()->get_string ());
+			  ACE_OS::strcat (macro, ")");
+			  return macro;
+			}
+		  d = be_decl::narrow_from_decl (ScopeAsDecl (d->defined_in ()));
+		}
+	} // end of if is_nested
+
+  // not nested OR not defined in the same scope as "d" or its
+  // ancestors
   return (char *) this->fullname ();
 }
 
