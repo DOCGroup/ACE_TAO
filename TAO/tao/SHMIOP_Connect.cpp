@@ -156,13 +156,16 @@ TAO_SHMIOP_Server_Connection_Handler::open (void*)
   if (this->peer ().get_remote_addr (addr) == -1)
     return -1;
 
-  char client[MAXHOSTNAMELEN + 16];
-  (void) addr.addr_to_string (client, sizeof (client));
-
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("TAO (%P|%t) SHMIOP connection from client <%s> on %d\n"),
-                client, this->peer ().get_handle ()));
+    {
+      char client[MAXHOSTNAMELEN + 16];
+      (void) addr.addr_to_string (client, sizeof (client));
+
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("TAO (%P|%t) SHMIOP connection from ")
+                  ACE_TEXT ("client <%s> on %d\n"),
+                  client, this->peer ().get_handle ()));
+    }
 
   return 0;
 }
@@ -414,14 +417,17 @@ TAO_SHMIOP_Client_Connection_Handler::open (void *)
   if (this->peer ().get_remote_addr (addr) == -1)
     return -1;
 
-  char server[MAXHOSTNAMELEN + 16];
-
-  (void) addr.addr_to_string (server, sizeof (server));
-
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("TAO (%P|%t) SHMIOP connection to server <%s> on %d\n"),
-                server, this->peer ().get_handle ()));
+    {
+      char server[MAXHOSTNAMELEN + 16];
+
+      (void) addr.addr_to_string (server, sizeof (server));
+
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("TAO (%P|%t) SHMIOP connection to ")
+                  ACE_TEXT ("server <%s> on %d\n"),
+                  server, this->peer ().get_handle ()));
+    }
 
   // Register the handler with the Reactor if necessary.
   return this->transport ()->wait_strategy ()->register_handler ();
