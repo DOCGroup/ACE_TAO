@@ -22,6 +22,9 @@
 #define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
 #define ACE_HAS_UNION_WAIT
 #define ACE_HAS_TID_T
+// Optimize ACE_Handle_Set for select().
+#define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
+
 #define ACE_HAS_SIGWAIT
 #define ACE_HAS_H_ERRNO
 #define ACE_LACKS_SETSCHED

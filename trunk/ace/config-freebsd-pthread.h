@@ -22,6 +22,8 @@
 #define ACE_LACKS_GETPGID
 #define ACE_LACKS_RWLOCK_T
 #define ACE_HAS_SIG_MACROS
+// Optimize ACE_Handle_Set for select().
+#define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
 #define ACE_HAS_CHARPTR_DL
 #define ACE_USES_ASM_SYMBOL_IN_DLSYM	  
 #define ACE_LACKS_SIGSET  

@@ -117,6 +117,9 @@
 // Platform supports ACE_TLI.
 #define ACE_HAS_TLI
 
+// Optimize ACE_Handle_Set for select().
+#define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
+
 // Turns off the tracing feature.
 #if !defined (ACE_NTRACE)
 #define ACE_NTRACE 1

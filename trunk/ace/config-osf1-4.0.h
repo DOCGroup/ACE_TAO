@@ -16,6 +16,9 @@
 // DEC's CXX supports explicit template specialization.
 #define ACE_HAS_TEMPLATE_SPECIALIZATION
 
+// Optimize ACE_Handle_Set for select().
+#define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
+
 #define ACE_POLL_IS_BROKEN
 #define ACE_HAS_STRING_CLASS
 #define ACE_LACKS_LINEBUFFERED_STREAMBUF

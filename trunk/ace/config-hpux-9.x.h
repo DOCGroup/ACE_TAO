@@ -20,6 +20,8 @@
 #define ACE_HAS_IP_MULTICAST
 #define ACE_LACKS_GETPGID
 #define ACE_HAS_BROKEN_CONVERSIONS
+// Optimize ACE_Handle_Set for select().
+#define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
 
 // They forgot a const in the prototype of const_timewait...
 #define ACE_LACKS_CONST_TIMESPEC_PTR

@@ -16,6 +16,9 @@
 #define ACE_HAS_BROKEN_MSG_H
 #define ACE_LACKS_SYSV_MSQ_PROTOS
 
+// Optimize ACE_Handle_Set for select().
+#define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
+
 // Platform supports <sys/procfs.h>
 #define ACE_HAS_PROC_FS
 

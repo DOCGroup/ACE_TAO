@@ -48,6 +48,9 @@
 #define msg_accrightslen msg_controllen
 #endif
 
+// Optimize ACE_Handle_Set for select().
+#define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
+
 #define ACE_HAS_POSIX_TIME
 
 // Platform defines struct timespec but not timespec_t

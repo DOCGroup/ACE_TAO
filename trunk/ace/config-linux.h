@@ -12,11 +12,14 @@
 #endif /* ! __ACE_INLINE__ */
 
 // Do we really need this #define here?
-#define LINUX 2.0.29
+#define LINUX
 // ONLY define this if you have config'd multicast into a 2.x kernel.
 // If you do anything else, we've never tested it!
 #define ACE_HAS_IP_MULTICAST
 #define ACE_HAS_LONG_FDMASK
+
+// Optimize ACE_Handle_Set for select().
+#define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
 
 #define ACE_HAS_PENTIUM
 #define ACE_HAS_LONGLONG_T

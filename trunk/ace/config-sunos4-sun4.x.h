@@ -14,6 +14,9 @@
 #define ACE_LACKS_POSIX_PROTOTYPES
 // #define ACE_HAS_UNION_WAIT
 
+// Optimize ACE_Handle_Set for select().
+#define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
+
 // Platform supports System V IPC (most versions of UNIX, but not Win32)
 #define ACE_HAS_SYSV_IPC			
 

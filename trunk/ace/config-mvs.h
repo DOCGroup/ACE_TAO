@@ -19,6 +19,9 @@
 #undef log			 /* conflicts with log function in ACE */
 #endif /* log */
 
+// Optimize ACE_Handle_Set for select().
+#define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
+
 // See the README file in this directory 
 // for a description of the following ACE_ macros
 

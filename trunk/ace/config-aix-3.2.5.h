@@ -22,6 +22,8 @@
 #define ACE_HAS_AIX_GETTIMEOFDAY
 #define ACE_HAS_NO_SYSCALL_H
 #define ACE_NEEDS_DEV_IO_CONVERSION
+// Optimize ACE_Handle_Set for select().
+#define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
 
 // Compiler/platform has the getrusage() system call.
 #define ACE_HAS_GETRUSAGE

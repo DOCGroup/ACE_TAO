@@ -74,6 +74,9 @@
 #define ACE_HAS_SSIZE_T
 #define ACE_HAS_UALARM
 
+// Optimize ACE_Handle_Set for select().
+#define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
+
 #include "ace/config-hpux-10.x.h"	/* OS information */
 
 #endif /* ACE_CONFIG_H */
