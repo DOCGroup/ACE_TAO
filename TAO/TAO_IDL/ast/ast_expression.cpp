@@ -644,7 +644,6 @@ coerce_value(AST_Expression::AST_ExprValue *ev, AST_Expression::ExprType t)
       return ev;
     case AST_Expression::EV_longlong:
       return ev;
-      return ev;
     case AST_Expression::EV_ulonglong:
       if (ev->u.ullval > ACE_INT64_MAX)
 	      return NULL;
