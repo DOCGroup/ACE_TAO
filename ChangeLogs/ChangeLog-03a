@@ -1,3 +1,11 @@
+Sat Nov 30 09:18:51 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/ACE.{h,cpp}: Added a new crc32() method that works on
+	  an iovec.  Thanks to Tufan Oruk <toruk@usa.net> for contributing
+ 	  this.
+
+	* THANKS: Just added our 1,600 contributor to ACE+TAO!
+
 Mon Dec 02 18:59:33 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/DLL.h:
@@ -41,7 +49,7 @@ Thu Nov 28 06:36:04 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* apps/soreduce/Makefile: Changed INSBIN from $ACE_ROOT/bin/soreduce/
 	  to $ACE_ROOT/bin/.  Thanks to Jaroslaw Nozderko
- 	  <jaroslaw.nozderko@polkomtel.com.pl> fo
+ 	  <jaroslaw.nozderko@polkomtel.com.pl> for reporting this.
 
 Thu Nov 28 07:54:28 2002  Craig Rodrigues  <crodrigu@bbn.com>
 

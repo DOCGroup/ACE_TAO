@@ -494,6 +494,10 @@ public:
   /// buffer (the length is included in the CRC).
   static u_long crc32 (const char *buf, ACE_UINT32 len);
 
+  /// Computes the ISO 8802-3 standard 32 bits CRC for the 
+  /// @ len iovec buffers.
+  static u_long crc32 (iovec *iov, int len);
+
   /// Euclid's greatest common divisor algorithm.
   static u_long gcd (u_long x, u_long y);
 
