@@ -1,3 +1,8 @@
+Thu Jul 31 16:19:43 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* tao/corba.h: Removed incorrect #include "tao/corba.h" in this
+ 	file.  Bad form.
+	
 Thu Jul 31 15:19:43 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* tests/Cubit/TAO/*.{h,i,cpp}: Changed all #include of specific
