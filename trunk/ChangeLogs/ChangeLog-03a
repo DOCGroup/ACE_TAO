@@ -1,7 +1,9 @@
 Wed Apr 19 07:04:13 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Containers_T.cpp (copy_nodes): insert_head() should have
-	  been insert_tail().  Thanks to Umar for clarifying this.
+	  been insert_tail().  Thanks to Umar Syyid for clarifying this.
+  	  Also, added some comments to explain what's going on in 
+	  insert_tail() since the code was somewhat non-intuitive ;-).
 
 Wed Apr 19 15:00:44 2000  Carlos O'Ryan  <coryan@uci.edu>
 
