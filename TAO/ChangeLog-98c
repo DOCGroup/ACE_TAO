@@ -23,6 +23,9 @@ Tue Aug 25 11:11:54 1998  David L. Levine  <levine@cs.wustl.edu>
         * orbsvcs/tests/Simulator/DOVEBrowser/PushConsumer.java:
           initialize ulonglong with (0) instead of (0, 0) now.
 
+        * tests/Quoter/Makefile: added VBIN so that the executables
+          will build now.
+
 Tue Aug 25 11:03:12 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_union/union_ci.cpp:
