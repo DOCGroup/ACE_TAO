@@ -1,3 +1,12 @@
+Tue Jan  8 10:43:48 2002  Ossama Othman  <ossama@uci.edu>
+
+	* ace/config-sunos5.5.h (ACE_LACKS_INET_ATON):
+
+	  Solaris does indeed implement the inet_aton() function, but it
+	  is found in `libresolv.*'.  It doesn't seem worth it to link
+	  another library just for that function.  Just use the emulation
+	  in ACE that has been used for years.
+
 Tue Jan  8 11:31:22 2002  Steve Huston  <shuston@riverace.com>
 
         * tests/Makefile: When doing realclean, use the DLL_Test and
