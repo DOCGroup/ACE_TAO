@@ -30,6 +30,8 @@ USELIB("..\ace\aced.lib");
 //---------------------------------------------------------------------------
 #endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
 
+#if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
+
 class CDR_Test
 {
   // = TITLE
@@ -288,3 +290,19 @@ main (int, ASYS_TCHAR *[])
 // #pragma instantiate ACE_Auto_Basic_Array_Ptr<ACE_CDR::Char>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+#else  /* ! ACE_LACKS_IOSTREAM_TOTALLY */
+
+int
+main (int, ASYS_TCHAR *[])
+{
+  ACE_START_TEST (ASYS_TEXT ("CDR_File_Test"));
+
+  ACE_ERROR ((LM_INFO,
+              ASYS_TEXT ("iostreams not supported on this platform\n")));
+
+  ACE_END_TEST;
+  return 0;
+}
+
+#endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
