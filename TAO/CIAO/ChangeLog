@@ -1,3 +1,41 @@
+Thu Sep 26 15:20:13 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ciao/CCMCore.dsp:
+	* ciao/CIAO_Base.pidl:
+	* ciao/CIAO_BaseC.cpp:
+	* ciao/CIAO_BaseC.h:
+	* ciao/CIAO_BaseC.i:
+	* ciao/CIAO_Component.pidl:
+	* ciao/CIAO_ComponentC.cpp:
+	* ciao/CIAO_ComponentC.h:
+	* ciao/CIAO_ComponentC.i:
+	* ciao/CIAO_Container.pidl:
+	* ciao/CIAO_ContainerC.cpp:
+	* ciao/CIAO_ContainerC.h:
+	* ciao/CIAO_ContainerC.i:
+	* ciao/CIAO_Container_Ex.pidl:
+	* ciao/CIAO_Container_ExC.cpp:
+	* ciao/CIAO_Container_ExC.h:
+	* ciao/CIAO_Container_ExC.i:
+	* ciao/CIAO_Deployment.pidl:
+	* ciao/CIAO_DeploymentC.cpp:
+	* ciao/CIAO_DeploymentC.h:
+	* ciao/CIAO_DeploymentC.i:
+	* ciao/CIAO_Event.pidl:
+	* ciao/CIAO_EventC.cpp:
+	* ciao/CIAO_EventC.h:
+	* ciao/CIAO_EventC.i:
+	* ciao/CIAO_Transaction.pidl:
+	* ciao/CIAO_TransactionC.cpp:
+	* ciao/CIAO_TransactionC.h:
+	* ciao/CIAO_TransactionC.i: Changed to split the component idl
+	  file into severl smaller idl files.
+
+	* ciao/Makefile: An empty place holder for now.
+
+	* ciao/Version.h:
+	* ciao/ciao.rc: Added version information files.
+
 Thu Jul 18 22:14:59 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* examples/handcrafted/Philosophers/Philosophers.idl (Example):
