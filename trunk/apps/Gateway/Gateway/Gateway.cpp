@@ -54,6 +54,8 @@ protected:
 int
 Gateway::handle_signal (int signum, siginfo_t *, ucontext_t *)
 {
+  ACE_UNUSED_ARG (signum);
+
   // Shut down the main event loop.
   ACE_Reactor::end_event_loop ();
   return 0;
@@ -93,8 +95,8 @@ Gateway::init (int argc, char *argv[])
   // Register this handler to receive events on stdin.  We use this to
   // shutdown the Gateway gracefully.
   if (ACE_Event_Handler::register_stdin_handler (this,
-						 ACE_Reactor::instance (),
-						 ACE_Thread_Manager::instance ()) == -1)
+                                                 ACE_Reactor::instance (),
+                                                 ACE_Thread_Manager::instance ()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "(%t) %p\n",
                        "register_stdin_handler"),
@@ -105,19 +107,19 @@ Gateway::init (int argc, char *argv[])
   if (Options::instance ()->performance_window () > 0)
     {
       if (ACE_Reactor::instance ()->schedule_timer
-	  (&this->event_channel_, 0,
-	   Options::instance ()->performance_window ()) == -1)
-	ACE_ERROR ((LM_ERROR,
+          (&this->event_channel_, 0,
+           Options::instance ()->performance_window ()) == -1)
+        ACE_ERROR ((LM_ERROR,
                     "(%t) %p\n",
                     "schedule_timer"));
       else
-	ACE_DEBUG ((LM_DEBUG,
+        ACE_DEBUG ((LM_DEBUG,
                     "starting timer for %d seconds...\n",
-		   Options::instance ()->performance_window ()));
+                   Options::instance ()->performance_window ()));
     }
 
   // Are we running as a connector?
-  if (Options::instance ()->enabled 
+  if (Options::instance ()->enabled
       (Options::CONSUMER_CONNECTOR | Options::SUPPLIER_CONNECTOR))
     {
       // Parse the proxy configuration file.
@@ -140,7 +142,7 @@ Gateway::fini (void)
   // Remove the handler that receive events on stdin.  Otherwise, we
   // will crash on shutdown.
   ACE_Event_Handler::remove_stdin_handler (ACE_Reactor::instance (),
-					   ACE_Thread_Manager::instance ());
+                                           ACE_Thread_Manager::instance ());
 
   // Close down the event channel.
   this->event_channel_.close ();
@@ -158,7 +160,7 @@ Gateway::info (char **strp, size_t length) const
   char buf[BUFSIZ];
 
   ACE_OS::sprintf (buf, "%s\t %s", "Gateway daemon",
-	     "# Application-level gateway\n");
+             "# Application-level gateway\n");
 
   if (*strp == 0 && (*strp = ACE_OS::strdup (buf)) == 0)
     return -1;
@@ -179,9 +181,9 @@ Gateway::parse_connection_config_file (void)
 
   if (connection_file.open (Options::instance ()->connection_config_file ()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-		       "(%t) %p\n",
-		       Options::instance ()->connection_config_file ()),
-		      -1);
+                       "(%t) %p\n",
+                       Options::instance ()->connection_config_file ()),
+                      -1);
 
   // Keep track of the previous connection id to make sure the
   // connection config file isn't corrupted.
@@ -216,21 +218,21 @@ Gateway::parse_connection_config_file (void)
       previous_connection_id = pci.connection_id_;
 
       if (Options::instance ()->enabled (Options::DEBUG))
-	ACE_DEBUG ((LM_DEBUG,
-		    "(%t) conn id = %d, "
+        ACE_DEBUG ((LM_DEBUG,
+                    "(%t) conn id = %d, "
                     "host = %s, "
                     "remote port = %d, "
                     "proxy role = %c, "
-		    "max retry timeout = %d, "
+                    "max retry timeout = %d, "
                     "local port = %d, "
                     "priority = %d\n",
-		    pci.connection_id_,
-		    pci.host_,
-		    pci.remote_port_,
-		    pci.connection_role_,
-		    pci.max_retry_timeout_,
-		    pci.local_port_,
-		    pci.priority_));
+                    pci.connection_id_,
+                    pci.host_,
+                    pci.remote_port_,
+                    pci.connection_role_,
+                    pci.max_retry_timeout_,
+                    pci.local_port_,
+                    pci.priority_));
 
       pci.event_channel_ = &this->event_channel_;
 
@@ -251,7 +253,7 @@ Gateway::parse_connection_config_file (void)
 
   if (file_empty)
     ACE_ERROR ((LM_WARNING,
-	       "warning: connection connection_handler configuration file was empty\n"));
+               "warning: connection connection_handler configuration file was empty\n"));
   return 0;
 }
 
@@ -277,20 +279,20 @@ Gateway::parse_consumer_config_file (void)
       file_empty = 0;
 
       if (Options::instance ()->enabled (Options::DEBUG))
-	{
-	  ACE_DEBUG ((LM_DEBUG,
+        {
+          ACE_DEBUG ((LM_DEBUG,
                       "(%t) connection id = %d, payload = %d, "
-		      "number of consumers = %d\n",
-		      cci_entry.connection_id_,
-		      cci_entry.type_,
-		      cci_entry.total_consumers_));
+                      "number of consumers = %d\n",
+                      cci_entry.connection_id_,
+                      cci_entry.type_,
+                      cci_entry.total_consumers_));
 
-	  for (int i = 0; i < cci_entry.total_consumers_; i++)
-	    ACE_DEBUG ((LM_DEBUG,
+          for (int i = 0; i < cci_entry.total_consumers_; i++)
+            ACE_DEBUG ((LM_DEBUG,
                         "(%t) destination[%d] = %d\n",
                         i,
                         cci_entry.consumers_[i]));
-	}
+        }
 
       Consumer_Dispatch_Set *dispatch_set;
       ACE_NEW_RETURN (dispatch_set,
@@ -298,31 +300,31 @@ Gateway::parse_consumer_config_file (void)
                       -1);
 
       Event_Key event_addr (cci_entry.connection_id_,
-			    cci_entry.type_);
+                            cci_entry.type_);
 
       // Add the Consumers to the Dispatch_Set.
       for (int i = 0; i < cci_entry.total_consumers_; i++)
-	{
-	  Connection_Handler *connection_handler = 0;
+        {
+          Connection_Handler *connection_handler = 0;
 
-	  // Lookup destination and add to Consumer_Dispatch_Set set
-	  // if found.
-	  if (this->event_channel_.find_proxy (cci_entry.consumers_[i],
-					       connection_handler) != -1)
-	    dispatch_set->insert (connection_handler);
-	  else
-	    ACE_ERROR ((LM_ERROR,
+          // Lookup destination and add to Consumer_Dispatch_Set set
+          // if found.
+          if (this->event_channel_.find_proxy (cci_entry.consumers_[i],
+                                               connection_handler) != -1)
+            dispatch_set->insert (connection_handler);
+          else
+            ACE_ERROR ((LM_ERROR,
                         "(%t) not found: destination[%d] = %d\n",
                         i,
                         cci_entry.consumers_[i]));
-	}
+        }
 
       this->event_channel_.subscribe (event_addr, dispatch_set);
     }
 
   if (file_empty)
     ACE_ERROR ((LM_WARNING,
-	       "warning: consumer map configuration file was empty\n"));
+               "warning: consumer map configuration file was empty\n"));
   return 0;
 }
 
@@ -338,4 +340,3 @@ template class ACE_Unbounded_Set<Connection_Handler *>;
 #pragma instantiate ACE_Node<Connection_Handler *>
 #pragma instantiate ACE_Unbounded_Set<Connection_Handler *>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
