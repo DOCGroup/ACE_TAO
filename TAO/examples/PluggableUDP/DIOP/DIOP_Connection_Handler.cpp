@@ -213,7 +213,9 @@ TAO_DIOP_Connection_Handler::handle_close (ACE_HANDLE handle,
   --this->pending_upcalls_;
   if (this->pending_upcalls_ <= 0)
     {
-      if (this->is_registered ())
+      // @@ Why are we doing checks for is_registered flags here if the
+      // handlers are not registered with the reactor? - Bala
+      if (this->transport ()->wait_strategy ()->is_registered ())
         {
           // @@ Frank: Added reactor check.  not sure if this is right?
           if (this->reactor ())
@@ -225,7 +227,7 @@ TAO_DIOP_Connection_Handler::handle_close (ACE_HANDLE handle,
           // Set the flag to indicate that it is no longer registered with
           // the reactor, so that it isn't included in the set that is
           // passed to the reactor on ORB destruction.
-          this->is_registered (0);
+          this->transport ()->wait_strategy()->is_registered (0);
         }
 
       // Close the handle..

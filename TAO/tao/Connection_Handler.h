@@ -72,8 +72,8 @@ public:
 
   /// Get and set method for the flag that indicates whether the
   /// handler has been registered with the reactor or not.
-  CORBA::Boolean is_registered (void);
-  void is_registered (CORBA::Boolean);
+  //  CORBA::Boolean is_registered (void);
+  // void is_registered (CORBA::Boolean);
 
   /// Return the underlying transport object
   TAO_Transport *transport (void);
@@ -117,7 +117,7 @@ private:
   TAO_ORB_Core_TSS_Resources *tss_resources_;
 
   /// Are we registered with the reactor?
-  CORBA::Boolean is_registered_;
+  // CORBA::Boolean is_registered_;
 };
 
 #if defined (__ACE_INLINE__)

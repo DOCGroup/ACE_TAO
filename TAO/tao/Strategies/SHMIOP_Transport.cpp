@@ -138,18 +138,9 @@ TAO_SHMIOP_Transport::register_handler_i (void)
   if (TAO_debug_level > 4)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t) - IIOP_Transport::register_handler %d\n",
+                  "TAO (%P|%t) - SHMIOP_Transport::register_handler %d\n",
                   this->id ()));
     }
-  if (this->connection_handler_->is_registered ())
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t) - IIOP_Transport::register_handler %d"
-                  ", already registered\n",
-                  this->id ()));
-      return 0;
-    }
-
   // @@ It seems like this method should go away, the right reactor is
   //    picked at object creation time.
   ACE_Reactor *r = this->orb_core_->reactor ();
@@ -158,7 +149,6 @@ TAO_SHMIOP_Transport::register_handler_i (void)
     return 0;
 
   // Set the flag in the Connection Handler
-  this->connection_handler_->is_registered (1);
   this->ws_->is_registered (1);
 
   // Register the handler with the reactor
