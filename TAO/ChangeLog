@@ -1,3 +1,11 @@
+Wed Aug 28 16:27:05 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/IFRService/Repository_i.cpp:
+
+          Changed a check to look for a different error return
+          value, to correspond with recent changes to 
+          ACE_Configuration.
+
 Wed Aug 28 14:55:43 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_interface/any_op_cs.cpp:
