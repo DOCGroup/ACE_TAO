@@ -171,6 +171,10 @@ SOURCE=.\Naming\Entries.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Naming\Flat_File_Persistence.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Naming\Hash_Naming_Context.cpp
 # End Source File
 # Begin Source File
@@ -180,6 +184,10 @@ SOURCE=.\Naming\Naming_Context_Interface.cpp
 # Begin Source File
 
 SOURCE=.\Naming\Naming_Loader.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Naming\Naming_Service_Container.cpp
 # End Source File
 # Begin Source File
 
@@ -196,6 +204,14 @@ SOURCE=.\Naming\Persistent_Entries.cpp
 # Begin Source File
 
 SOURCE=.\Naming\Persistent_Naming_Context.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Naming\Storable.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Naming\Storable_Naming_Context.cpp
 # End Source File
 # Begin Source File
 
@@ -223,6 +239,10 @@ SOURCE=.\Naming\Entries.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Naming\Flat_File_Persistence.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Naming\Hash_Naming_Context.h
 # End Source File
 # Begin Source File
@@ -232,6 +252,10 @@ SOURCE=.\Naming\Naming_Context_Interface.h
 # Begin Source File
 
 SOURCE=.\Naming\Naming_Loader.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Naming\Naming_Service_Container.h
 # End Source File
 # Begin Source File
 
@@ -248,6 +272,14 @@ SOURCE=.\Naming\Persistent_Entries.h
 # Begin Source File
 
 SOURCE=.\Naming\Persistent_Naming_Context.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Naming\Storable.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Naming\Storable_Naming_Context.h
 # End Source File
 # Begin Source File
 
@@ -398,6 +430,10 @@ SOURCE=.\CosNamingC.i
 # Begin Source File
 
 SOURCE=.\CosNamingS.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Naming\Storable.inl
 # End Source File
 # End Group
 # Begin Group "Template Files"
