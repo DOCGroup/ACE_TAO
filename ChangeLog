@@ -1,3 +1,28 @@
+Tue Jan 13 16:33:12 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* Makefile (CONTROLLED_FILES):
+
+	  Added `aux' directory to the list of controlled files.  It is a
+	  directory generated at autotool bootstrap-time via the
+	  bin/bootstrap script, and must be available in order for ACE's
+	  autoconf support to work.
+
+	  Added `configure' to the list of controlled files.  Users can't
+	  run the `configure' script if it isn't shipped with the
+	  distribution.
+
+	* bin/bootstrap:
+
+	  Invoke `autoreconf' without the "--symlink" option.  Auxiliary
+	  files should be copied into the distribution, not symbolic
+	  pointing to them.
+
+	* bin/make_release:
+
+	  Prepend "/usr/local/bin" to the GNU tool path.  That directory
+	  on our release host now contains some specific versions of GNU
+	  autotools.
+
 Tue Jan 13 16:42:37 2004  Steve Huston  <shuston@riverace.com>
 
 	* ACE-INSTALL.html: Correct the autoconf section to direct the user

@@ -95,7 +95,8 @@ if test -d m4; then
 #   echo "Running automake"
 #   automake --add-missing
 
-    autoreconf -I m4 --install --symlink --verbose
+#    autoreconf -I m4 --install --symlink --verbose
+    autoreconf -I m4 --install --verbose
 
 #   # Generate the man pages.
 #   # Only generate man pages if bootstrapping a release.
