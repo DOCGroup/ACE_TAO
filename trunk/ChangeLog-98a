@@ -1,3 +1,11 @@
+Wed Dec 31 14:56:06 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/Obstack.cpp: Fixed a stupid bug in the ACE_Obstack
+ 	  constructor.  Thanks to David Levine for reporting this.
+
+	* ace/Local_Name_Space_T.h: Updated the documentation for class
+ 	  ACE_Name_Space_Map to make it more clear.
+
 Tue Dec 30 22:07:44 1997  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/High_Res_Timer.cpp (elapsed_time): added a cast in

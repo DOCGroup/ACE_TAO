@@ -54,15 +54,16 @@ ACE_Obstack::new_chunk (void)
 ACE_Obstack::ACE_Obstack (size_t size,
                           ACE_Allocator *allocator_strategy)
   : allocator_strategy_ (allocator_strategy),
-    size_ (size), 
-    head_ (this->new_chunk ()),
-    curr_ (head_)
+    size_ (size)
 {
   ACE_TRACE ("ACE_Obstack::ACE_Obstack");
 
   if (this->allocator_strategy_ == 0)
     ACE_ALLOCATOR (this->allocator_strategy_,
                    ACE_Allocator::instance ());
+
+  this->head_ = this->new_chunk ();
+  this->curr_ = this->head_;
 }
 
 ACE_Obstack::~ACE_Obstack (void)

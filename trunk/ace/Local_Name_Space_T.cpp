@@ -16,7 +16,7 @@ ACE_Name_Space_Map<ALLOCATOR>::ACE_Name_Space_Map (ALLOCATOR *alloc)
 }
 
 template <class ALLOCATOR> int 
-ACE_Name_Space_Map<ALLOCATOR>::close (ALLOCATOR* alloc)
+ACE_Name_Space_Map<ALLOCATOR>::close (ALLOCATOR *alloc)
 {
   ACE_TRACE ("ACE_Name_Space_Map::close");
 
@@ -233,8 +233,8 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::unbind_i (const ACE_WString &nam
 
 template <ACE_MEM_POOL_1, class ACE_LOCK> int 
 ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::bind (const ACE_WString &name,
-					    const ACE_WString &value, 
-					    const char *type)
+                                                      const ACE_WString &value, 
+                                                      const char *type)
 {
   ACE_TRACE ("ACE_Local_Name_Space::bind");
   ACE_WRITE_GUARD_RETURN (ACE_RW_Process_Mutex, ace_mon, *this->lock_, -1);
@@ -244,8 +244,8 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::bind (const ACE_WString &name,
 
 template <ACE_MEM_POOL_1, class ACE_LOCK> int 
 ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::rebind (const ACE_WString &name, 
-					      const ACE_WString &value, 
-					      const char *type)
+                                                        const ACE_WString &value, 
+                                                        const char *type)
 {
   ACE_TRACE ("ACE_Local_Name_Space::rebind");
   ACE_WRITE_GUARD_RETURN (ACE_RW_Process_Mutex, ace_mon, *this->lock_, -1);
@@ -255,8 +255,8 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::rebind (const ACE_WString &name,
 
 template <ACE_MEM_POOL_1, class ACE_LOCK> int 
 ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::resolve (const ACE_WString &name,
-						     ACE_WString &value, 
-						     char *&type)
+                                                         ACE_WString &value, 
+                                                         char *&type)
 {
   // Note that we *must* use structured exception handling here
   // because (1) we may need to commit virtual memory pages and (2)
@@ -275,8 +275,8 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::resolve (const ACE_WString &name
 
 template <ACE_MEM_POOL_1, class ACE_LOCK> int 
 ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::resolve_i (const ACE_WString &name,
-						       ACE_WString &value, 
-						       char *&type)
+                                                           ACE_WString &value, 
+                                                           char *&type)
 {
   ACE_TRACE ("ACE_Local_Name_Space::resolve");
   ACE_READ_GUARD_RETURN (ACE_RW_Process_Mutex, ace_mon, *this->lock_, -1);
@@ -285,7 +285,9 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::resolve_i (const ACE_WString &na
   ACE_NS_Internal ns_internal;
   ACE_NS_String nbc_string; // Note the classy variable name! :)
 
-  if (this->name_space_map_->find (ns_name, ns_internal, this->allocator_) != 0)
+  if (this->name_space_map_->find (ns_name,
+                                   ns_internal,
+                                   this->allocator_) != 0)
     return -1;
   else
     {
@@ -295,11 +297,13 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::resolve_i (const ACE_WString &na
       nbc_string = ns_internal.value ();
       value = nbc_string;
 
-      // Gets type and then the actual reprsentation which is a ACE_USHORT16
+      // Gets type and then the actual reprsentation which is a
+      // ACE_USHORT16
       const char *temp = ns_internal.type ();
 
       size_t len = ACE_OS::strlen (ns_internal.type ());
-      // Makes a copy here. Caller needs to call delete to free up memory
+      // Makes a copy here. Caller needs to call delete to free up
+      // memory.
       char *new_type;
       ACE_NEW_RETURN (new_type, char [len + 1], -1);
 
@@ -330,7 +334,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::ACE_Local_Name_Space (void)
 
 template <ACE_MEM_POOL_1, class ACE_LOCK> 
 ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::ACE_Local_Name_Space (ACE_Naming_Context::Context_Scope_Type scope_in, 
-							    ACE_Name_Options *name_options)
+                                                                      ACE_Name_Options *name_options)
   : name_options_ (name_options)
 {  
   ACE_TRACE ("ACE_Local_Name_Space::ACE_Local_Name_Space");

@@ -50,12 +50,11 @@ class ACE_Name_Space_Map : public MAP_MANAGER
   //     that accesses or updates the Map Manager.
   //
   // = DESCRIPTION
-  //     We need this class because otherwise the SHARED_MALLOC
+  //     We need this class because otherwise the ALLOCATOR
   //     pointer will be stored in the Map_Manager that resides within
   //     shared memory.  Naturally, this will cause horrible problems
   //     since only the first process to set that pointer will be
-  //     guaranteed the address of the SHARED_MALLOC allocator is
-  //     meaningful!
+  //     guaranteed the address of the ALLOCATOR is meaningful!
 public:
   ACE_Name_Space_Map (ALLOCATOR *alloc);
   // Constructor.
@@ -83,8 +82,6 @@ public:
             ALLOCATOR *alloc);
 
   int close (ALLOCATOR *alloc);
-
-private:
 };
 
 template <ACE_MEM_POOL_1, class ACE_LOCK>
