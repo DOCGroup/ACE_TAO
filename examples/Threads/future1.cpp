@@ -394,7 +394,7 @@ main (int, char *[])
 template class ACE_Atomic_Op<ACE_Thread_Mutex, int>;
 template class ACE_Future<const char *>;
 template class ACE_Future<u_long>;
-template class ACE_Future_Rep<char const *>;
+template class ACE_Future_Rep<const char *>;
 template class ACE_Future_Rep<u_long>;
 template class auto_ptr<ACE_Method_Request>;
 template class ACE_Auto_Basic_Ptr<ACE_Method_Request>;
@@ -408,7 +408,7 @@ template class ACE_Unbounded_Set_Iterator<ACE_Future_Observer<u_long> *>;
 #pragma instantiate ACE_Atomic_Op<ACE_Thread_Mutex, int>
 #pragma instantiate ACE_Future<const char *>
 #pragma instantiate ACE_Future<u_long>
-#pragma instantiate ACE_Future_Rep<char const *>
+#pragma instantiate ACE_Future_Rep<const char *>
 #pragma instantiate ACE_Future_Rep<u_long>
 #pragma instantiate auto_ptr<ACE_Method_Request>
 #pragma instantiate ACE_Auto_Basic_Ptr<ACE_Method_Request>
