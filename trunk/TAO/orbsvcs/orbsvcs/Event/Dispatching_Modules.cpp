@@ -474,8 +474,35 @@ ACE_ES_Dispatch_Queue::open_queue (RtecScheduler::Period &period,
     }
   else
     {
-      // Allocate a message queue that does not notify.
-      ACE_ES_MQ *mq = new ACE_ES_MQ;
+      // quick hack to test dynamic queue performance (to be replaced soon)
+	  ACE_ES_QUEUE *mq = 0;
+      #if defined (TAO_USES_STRATEGY_SCHEDULER)
+        #if defined (TAO_USES_EDF_SCHEDULING)
+
+          ACE_Deadline_Message_Strategy *adms = new ACE_Deadline_Message_Strategy;
+          
+          if (adms)
+          {
+            mq = new ACE_ES_QUEUE (*adms);
+          }
+
+        #elif defined (TAO_USES_MLF_SCHEDULING) || defined (TAO_USES_MUF_SCHEDULING)
+
+          ACE_Laxity_Message_Strategy *alms = new ACE_Laxity_Message_Strategy;
+
+          if (alms)
+          {
+            mq = new ACE_ES_QUEUE (*alms);
+          }
+
+        #else
+          mq = new ACE_ES_QUEUE;
+        #endif
+      #else
+        // Allocate a message queue that does not notify.
+        mq = new ACE_ES_MQ;
+      #endif
+
       if (mq == 0)
         ACE_ERROR_RETURN ((LM_ERROR, "%p.\n",
                            "ACE_ES_Dispatch_Queue::open_queue"), -1);
