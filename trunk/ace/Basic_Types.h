@@ -59,6 +59,7 @@
 # include /**/ <stdlib.h>   // Other types
 
 # if defined(ACE_LACKS_LONGLONG_T)
+#   include /**/ <stdarg.h> // LynxOS requires this before stdio.h
 #   include /**/ <stdio.h>  // For long long emulation
 # endif  /* ACE_LACKS_LONGLONG_T */
 
