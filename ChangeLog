@@ -1,3 +1,10 @@
+Wed Apr 14 10:04:43 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/config/ifrservice.mpb:
+
+          Added minimum_corba to the inheritance list.  The IFRService
+          library won't build with minimum poa enabled.
+
 Wed Apr 14 06:54:32 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Tokens_Test.cpp:
@@ -12,67 +19,67 @@ Tue Apr 13 12:51:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue Apr 13 08:44:22 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/Select_Reactor_T.cpp (check_handles): Fixed typo.
+        * ace/Select_Reactor_T.cpp (check_handles): Fixed typo.
 
 Wed Apr  7 12:27:19 2004  Steve Huston  <shuston@riverace.com>
 
-	* ASNMP/asnmp/target.cpp (operator==): Removed the lhs==rhs check at
-	  the top. This is a nice-to-have optimization, but MSVC7.1 reports
-	  all control paths are recursive.
+        * ASNMP/asnmp/target.cpp (operator==): Removed the lhs==rhs check at
+          the top. This is a nice-to-have optimization, but MSVC7.1 reports
+          all control paths are recursive.
 
-	* ASNMP/tests/Integer_Test.cpp: Changed 'si' from short to unsigned
-	  short. It's initialized with 32768, which doesn't fit in 16 bits,
-	  and the comments on its use inside the test itself say it's
-	  unsigned short. There are not other comments to explain what this
-	  is trying to do, so I may have this wrong... Anyone with more info
-	  on this, please feel free to contact me.
+        * ASNMP/tests/Integer_Test.cpp: Changed 'si' from short to unsigned
+          short. It's initialized with 32768, which doesn't fit in 16 bits,
+          and the comments on its use inside the test itself say it's
+          unsigned short. There are not other comments to explain what this
+          is trying to do, so I may have this wrong... Anyone with more info
+          on this, please feel free to contact me.
 
-	* examples/Log_Msg/Log_Msg_MFC/MFC_Log.h: Formatting adjustment.
+        * examples/Log_Msg/Log_Msg_MFC/MFC_Log.h: Formatting adjustment.
 
-	* examples/TMCast/Member/member.cpp: static_cast ACE_UINT64 to
-	  unsigned long to avert a VC7.1 compiler warning about truncation.
+        * examples/TMCast/Member/member.cpp: static_cast ACE_UINT64 to
+          unsigned long to avert a VC7.1 compiler warning about truncation.
 
 Tue Apr 13 00:47:43 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/Global_Macros.h (ACE_NEW_MALLOC_RETURN, ACE_NEW_MALLOC):
-	  (ACE_NEW_MALLOC_NORETURN, ACE_NEW_MALLOC_ARRAY_RETURN):
-	  (ACE_NEW_MALLOC_ARRAY):
+        * ace/Global_Macros.h (ACE_NEW_MALLOC_RETURN, ACE_NEW_MALLOC):
+          (ACE_NEW_MALLOC_NORETURN, ACE_NEW_MALLOC_ARRAY_RETURN):
+          (ACE_NEW_MALLOC_ARRAY):
 
-	  Explicitly cast the return value of the placement new operator
-	  call to "void" to address a "statement has no effect" warning
-	  exhibited by GNU g++ 3.4 (pre-release).
+          Explicitly cast the return value of the placement new operator
+          call to "void" to address a "statement has no effect" warning
+          exhibited by GNU g++ 3.4 (pre-release).
 
-	* ace/Arg_Shifter.cpp:
-	* ace/OS_NS_strings.h:
-	* ace/Unbounded_Set.h:
+        * ace/Arg_Shifter.cpp:
+        * ace/OS_NS_strings.h:
+        * ace/Unbounded_Set.h:
 
-	  Nuked trailing whitespace.
+          Nuked trailing whitespace.
 
-	* ace/README:
+        * ace/README:
 
-	  Updated autoconf support comments.
+          Updated autoconf support comments.
 
 Mon Apr 12 17:43:51 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/config-linux-common.h: In the newer-glibc section, add a
-	  #define ACE_POSIX_SIG_PROACTOR. This is a (possibly incomplete)
-	  attempt to make Linux use the sig proactor for newer linuxes such
-	  as Red Hat Linux 9 and Enterprise Linux 3, where it is possible to
-	  send a signal across threads in a process. I'm not terribly worried
-	  if the check is imperfect, since there's no chance for asynch I/O to
-	  work any other way, and not at all on Linux versions that can't do
-	  the cross-thread signals.
+        * ace/config-linux-common.h: In the newer-glibc section, add a
+          #define ACE_POSIX_SIG_PROACTOR. This is a (possibly incomplete)
+          attempt to make Linux use the sig proactor for newer linuxes such
+          as Red Hat Linux 9 and Enterprise Linux 3, where it is possible to
+          send a signal across threads in a process. I'm not terribly worried
+          if the check is imperfect, since there's no chance for asynch I/O to
+          work any other way, and not at all on Linux versions that can't do
+          the cross-thread signals.
 
 Mon Apr 12 16:40:33 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/config-hpux-11.00.h: Force the Proactor implementation to
-	  ACE_POSIX_AIOCB_Proactor if the user didn't select one. The CB
-	  approach is not supported at HP-UX 11.00.
+        * ace/config-hpux-11.00.h: Force the Proactor implementation to
+          ACE_POSIX_AIOCB_Proactor if the user didn't select one. The CB
+          approach is not supported at HP-UX 11.00.
 
-	Also this from the 5.4 support stream:
+        Also this from the 5.4 support stream:
         Fri Mar 26 16:24:39 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/config-hpux-11.00.h: Added ACE_HAS_SIGACTION_CONSTP2.
+        * ace/config-hpux-11.00.h: Added ACE_HAS_SIGACTION_CONSTP2.
 
 Mon Apr 12 13:55:46 2004  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -151,14 +158,14 @@ Sat Apr 10 23:39:54 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 Fri Apr  9 16:07:33 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/Select_Reactor_T.cpp (check_handles): The previous method of
-	  locating handles to check -- iterating the handler repository for
-	  ACE_Event_Handler pointers and calling get_handle() -- didn't work
-	  if the handler didn't do get_handle() as we expected. Changed this
-	  to build a union of the read/write/exception wait_set masks and
-	  iterate through that. If a bad handle is found, call
-	  remove_handler_i() based on the handle, not the event handler
-	  pointer.
+        * ace/Select_Reactor_T.cpp (check_handles): The previous method of
+          locating handles to check -- iterating the handler repository for
+          ACE_Event_Handler pointers and calling get_handle() -- didn't work
+          if the handler didn't do get_handle() as we expected. Changed this
+          to build a union of the read/write/exception wait_set masks and
+          iterate through that. If a bad handle is found, call
+          remove_handler_i() based on the handle, not the event handler
+          pointer.
 
 Thu Apr  8 20:12:30 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
