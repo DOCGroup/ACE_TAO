@@ -1,6 +1,26 @@
+Sun Apr 28 16:52:19 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/Connect_Strategy_Test/Connect_Strategy_Test.dsw:
+	* tests/Connect_Strategy_Test/Hello.cpp:
+	* tests/Connect_Strategy_Test/Hello.h:
+	* tests/Connect_Strategy_Test/Makefile:
+	* tests/Connect_Strategy_Test/Makefile.bor:
+	* tests/Connect_Strategy_Test/README:
+	* tests/Connect_Strategy_Test/Test.idl:
+	* tests/Connect_Strategy_Test/blocked.conf:
+	* tests/Connect_Strategy_Test/client.bor:
+	* tests/Connect_Strategy_Test/client.cpp:
+	* tests/Connect_Strategy_Test/client.dsp:
+	* tests/Connect_Strategy_Test/reactor.conf:
+	* tests/Connect_Strategy_Test/run_test.pl:
+	* tests/Connect_Strategy_Test/server.bor:
+	* tests/Connect_Strategy_Test/server.cpp:
+	* tests/Connect_Strategy_Test/server.dsp: A simple test for
+	  testing the different connection establishment strategies.
+
 Sun Apr 28 09:19:17 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Strategies/DIOP_Connector.cpp: Do not derement the refcount
+	* tao/Strategies/DIOP_Connector.cpp: Do not decrement the refcount
 	  on the handler since we dont use the new non-blocking connect
 	  scheme here. Rather there is no connection per-se. This should
 	  fix runtime errors in the examples using this protocol.
