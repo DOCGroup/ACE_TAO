@@ -171,6 +171,8 @@
 // DJT modified 6/5/96
 // Defines the page size of the system.
 //#define ACE_PAGE_SIZE 4096
+// This should really be set with the getpagesize() function since
+// this is machine configurable on Digital UNIX, etc..
 #define ACE_PAGE_SIZE 8192
 
 // DJT added 6/6/96
@@ -178,8 +180,12 @@
 #define ACE_HAS_ONLY_TWO_PARAMS_FOR_ASCTIME_R_AND_CTIME_R
 
 #define ACE_HAS_BROKEN_IF_HEADER
-#define ACE_HAS_REENTRANT_FUNCTIONS
+//#define ACE_HAS_REENTRANT_FUNCTIONS
 #define DIGITAL_UNIX
 #define ACE_LACKS_T_ERRNO
 #define ACE_HAS_BROKEN_T_ERRNO
+#define ACE_HAS_BROKEN_R_ROUTINES
+// We need a larger per-thread stack size in order to run ACE_Log_Msg::log
+// TK, 11 Nov 96
+#define ACE_NEEDS_HUGE_THREAD_STACKSIZE 65536
 #endif /* ACE_CONFIG_H */

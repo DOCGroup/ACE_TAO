@@ -1,7 +1,7 @@
 /* -*- C++ -*- */
 // $Id$
 
-// Digital UNIX V4.0a platforms with the G+C+compiler.  It is
+// Digital UNIX V4.0a platforms with the G++ C++ compiler.  It is
 // configured to use the IEEE Std 1003.1c-1995, POSIX System
 // Application Program Interface.  By 4.0a the version is meant that
 // is called "V4.0 464" by uname -a.
@@ -10,7 +10,7 @@
 #define ACE_CONFIG_H
 
 /////////////////////////////////////////////////////////////////////////////
-/
+//
 //
 // The following lines are copied from the sunos5.5-g+configuration.
 // (This is the GNU-specific part.)
@@ -30,7 +30,7 @@
 #define ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
 
 /////////////////////////////////////////////////////////////////////////////
-/
+//
 
 // DJT removed this due to some minor issues related to the
 // definitions of timestruc_t and tid_t in procfs.h not sure what
@@ -76,7 +76,7 @@
 // Compiler/platform has thread-specific storage
 #define ACE_HAS_THREAD_SPECIFIC_STORAGE
 
-// Platform supports C+headers
+// Platform supports C++ headers
 #define ACE_HAS_CPLUSPLUS_HEADERS
 
 // Compiler/platform has the getrusage() system call.
@@ -202,5 +202,9 @@
 #define DIGITAL_UNIX
 #define ACE_LACKS_T_ERRNO
 #define ACE_HAS_BROKEN_T_ERRNO
+#define ACE_HAS_BROKEN_R_ROUTINES
 
+// We need a larger per-thread stack size in order to run ACE_Log_Msg::log
+// TK, 11 Nov 96
+#define ACE_NEEDS_HUGE_THREAD_STACKSIZE 65536
 #endif /* ACE_CONFIG_H */
