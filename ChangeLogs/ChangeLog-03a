@@ -1,3 +1,10 @@
+Wed Oct 16 10:55:11 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* ace/config-linux-common.h: Added support for ACE_CC_NAME,
+	  ACE_CC_MAJOR_VERSION and ACE_CC_MINOR_VERSION for linux. Thanks
+	  to Jaroslaw Nozderko <jaroslaw.nozderko@polkomtel.com.pl> for
+	  suggesting this. 
+
 Wed Oct 16 10:55:44 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* ace/config-win32-msvc.h (ACE_HAS_ALLOCA): Enabled alloca support
