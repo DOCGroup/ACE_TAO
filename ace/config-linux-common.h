@@ -108,7 +108,9 @@
 
 // ONLY define this if you have config'd multicast into a 2.x kernel.
 // If you do anything else, we've never tested it!
+#if ! defined(ACE_HAS_IP_MULTICAST)
 #define ACE_HAS_IP_MULTICAST
+#endif /* #if ! defined(ACE_HAS_IP_MULTICAST) */
 
 #define ACE_HAS_LONG_FDMASK
 
