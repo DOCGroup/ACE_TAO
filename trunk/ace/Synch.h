@@ -1448,9 +1448,12 @@ class ACE_Guard;
 class ACE_Export ACE_Guard<ACE_Null_Mutex>
 {
   // = TITLE
+  //     Template specialization of <ACE_Guard> for the
+  //     <ACE_Null_Mutex>. 
   //
   // = DESCRIPTION
-  //
+  //     This specialization is useful since it helps to speedup
+  //     performance of the "Null_Mutex" considerably.
 public:
   // = Initialization and termination methods.
   ACE_Guard (ACE_Null_Mutex &) {}
