@@ -6,6 +6,7 @@ common_defines   = WIN32 _CONSOLE
 subsystem        = console
 pch_defines      = ACE_USING_PCH
 ssl_libs         = libeay32 ssleay32
+pdb              = 1
 
 Release {
   use_debug_libraries   = 0
@@ -23,7 +24,6 @@ Debug {
   defines               = _DEBUG
   compile_flags_removed = /YX
   intermediate_dir      = Debug
+  output_dir            = .
   lib_modifier          = d
-  pdb                   = 1
 }
-

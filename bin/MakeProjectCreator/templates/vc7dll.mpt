@@ -10,6 +10,7 @@ Release {
   output_dir       = Release
   intermediate_dir = Release
   runtime_library  = 2
+  pdb              = 1
 }
 
 Debug {
@@ -18,6 +19,7 @@ Debug {
   optimization     = 0
   debug            = 1
   defines          = _DEBUG
+  output_dir       = .
   intermediate_dir = Debug
   lib_modifier     = d
   runtime_library  = 3
