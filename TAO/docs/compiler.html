@@ -481,20 +481,20 @@ also receives other options that are specific to it. <P>
     <td><tt>-Cw</tt></td>
 
     <td>Output a warning if two identifiers in the same scope differ in
-        spelling only by case (default for now).</td>
-    <td>&nbsp;</td>
+        spelling only by case (default is output of error message).</td>
+
+    <td>This option has been added as a nicety for dealing with legacy
+        IDL files, written when the CORBA rules for name resolution
+        were not as stringent.</td>
   </tr>
 
   <tr><a name="Ce">
     <td><tt>-Ce</tt></td>
 
     <td>Output an error if two indentifiers in the same scope differ in
-        spelling only by case. Default output is warning (for now).</td>
+        spelling only by case (default).</td>
 
-    <td>Since there is at least one OMG IDL file (sfp.idl, part of the
-        AVStreams specification) that is inconsistent with its own spelling
-        rule, we have made a warning the default output until the issue
-        is resolved.</td>
+    <td>&nbsp;</td>
   </tr>
 
   <tr><a name="Gi">
@@ -617,6 +617,22 @@ also receives other options that are specific to it. <P>
     <td><tt>-St</tt></td>
 
     <td>Suppress generation of the TypeCodes</td>
+
+    <td>Also suppresses the generation of the Any operators, since the Any >>= operator needs the
+        associated typecode.</td>
+  </tr>
+
+  <tr><a name="Sc">
+    <td><tt>-Sd</tt></td>
+
+    <td>Suppress generation of the tie classes, and the *S_T.* files that contain them.</td>
+    <td>&nbsp;</td>
+  </tr>
+
+  <tr><a name="So">
+    <td><tt>-Sd</tt></td>
+
+    <td>Suppress generation of the ostream operator for exceptions.</td>
     <td>&nbsp;</td>
   </tr>
 </table> <P>
