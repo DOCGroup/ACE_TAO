@@ -36,6 +36,7 @@
 #include "be_argument.h"
 #include "utl_identifier.h"
 #include "nr_extern.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID (be, 
            be_visitor_ami_pre_proc, 

@@ -34,6 +34,7 @@
 #include "be_helper.h"
 #include "be_extern.h"
 #include "utl_identifier.h"
+#include "ace/Log_Msg.h"
 
 #include "be_visitor_array.h"
 #include "be_visitor_context.h"

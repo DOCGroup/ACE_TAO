@@ -69,6 +69,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "ast_decl.h"
 #include "utl_scope.h"
+#include "ace/Unbounded_Set.h"
 
 // Representation of module.
 //

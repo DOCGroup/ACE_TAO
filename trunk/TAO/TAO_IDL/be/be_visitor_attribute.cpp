@@ -27,6 +27,7 @@
 #include "be_visitor_attribute.h"
 #include "be_visitor_context.h"
 #include "be_visitor_operation.h"
+#include "ace/Log_Msg.h"
 
 #include "be_visitor_attribute/attribute.cpp"
 
