@@ -1,3 +1,10 @@
+Thu Jun 15 13:49:14 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* pace/config/defaults.h
+
+	  Removed superfluous defaults originally copied
+	  from ACE_OS.
+
 Mon Jun 12 17:23:59 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/config/constants.h:

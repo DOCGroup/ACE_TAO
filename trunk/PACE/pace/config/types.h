@@ -17,6 +17,7 @@
 #ifndef PACE_CONFIG_TYPES_H
 #define PACE_CONFIG_TYPES_H
 
+
 #define pace_dev_t dev_t
 #define pace_gid_t gid_t
 #define pace_ino_t ino_t
@@ -34,5 +35,6 @@
 #define pace_pthread_once_t pthread_once_t
 #define pace_ssize_t ssize_t
 #define pace_uid_t uid_t
+
 
 #endif /* PACE_CONFIG_TYPES_H */
