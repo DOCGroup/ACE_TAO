@@ -26,21 +26,21 @@ Naming_Service::Naming_Service (void)
 {
 }
 
-// Constructor taking command-line arguments
+// Constructor taking command-line arguments.
 
 Naming_Service::Naming_Service (int argc,
                                 char* argv[])
   : ior_output_file_ (0),
     pid_file_name_ (0)
 {
-   this->init (argc, argv);
+  this->init (argc, argv);
 }
 
 int
 Naming_Service::parse_args (int argc,
                             char *argv[])
 {
-  ACE_Get_Opt get_opts (argc,argv,"o:p:");
+  ACE_Get_Opt get_opts (argc, argv, "o:p:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -60,6 +60,7 @@ Naming_Service::parse_args (int argc,
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s "
+                           "-NScontextname <contextname> "
                            "-o <ior_output_file> "
 			   "-p <pid_file_name> "
 			   "\n",
