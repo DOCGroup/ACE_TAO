@@ -1,4 +1,14 @@
+Wed Oct 15 13:16:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_mingw32.GNU:
+        * include/makeinclude/platform_cygwin32.GNU:
+          Instead of setting SONAME and SOVERSION to empty, set
+          versioned_so to 0 to indicate that versioned dll's should
+          be used because cygwin and mingw have problem with this.
+          This makes Cygwin/MinGW working again.
+
 Wed Oct 15 08:45:20 EDT 2003  Kevin Bryank <bryank@cs.uri.edu>
+
         * bin/MakeProjectCreator/config/rtcosscheduling.mpb:
           Adding base project for using the RTC 1.0 Scheduling Service
 
