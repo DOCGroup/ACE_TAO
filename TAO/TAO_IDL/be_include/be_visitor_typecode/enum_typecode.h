@@ -15,8 +15,6 @@
 #ifndef TAO_BE_VISITOR_ENUM_TYPECODE_H
 #define TAO_BE_VISITOR_ENUM_TYPECODE_H
 
-#include "ace/pre.h"
-
 #include "typecode_defn.h"
 
 namespace TAO
