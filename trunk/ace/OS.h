@@ -1799,6 +1799,11 @@ struct stat
 
 # if defined (ACE_HAS_EXCEPTIONS)
 #   define ACE_THROW_SPEC(X) throw X
+#   if defined (ACE_WIN32)
+// @@ MSVC "supports" the keyword but doesn't implement it (Huh?).
+//    Therefore, we simply supress the warning for now.
+#     pragma warning( disable : 4290 )
+#   endif /* ACE_WIN32 */
 # else  /* ! ACE_HAS_EXCEPTIONS */
 #   define ACE_THROW_SPEC(X)
 # endif /* ! ACE_HAS_EXCEPTIONS */
