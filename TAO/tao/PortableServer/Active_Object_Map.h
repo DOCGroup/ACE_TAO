@@ -49,7 +49,7 @@ public:
    * @brief Value field of the active object map.
    *
    * We need a mapping from and to all of the following fields:
-   * <user_id>, <system_id>, and <servant>.  Therefore, we keep
+   * user_id, system_id, and servant.  Therefore, we keep
    * all the fields together in the map.
    */
   struct Map_Entry
@@ -92,7 +92,7 @@ public:
                          int &deactivated);
 
   /// Can be used with any policy.  With the SYSTEM_ID policy,
-  /// <user_id> is actually <system_id>.
+  /// user_id is actually system_id.
   int is_user_id_in_map (const PortableServer::ObjectId &user_id,
                          CORBA::Short priority,
                          int &priorities_match,
@@ -109,13 +109,13 @@ public:
                                               PortableServer::ObjectId_out user_id);
 
   /// Can be used with any policy.  With the SYSTEM_ID policy,
-  /// <user_id> is actually <system_id>.
+  /// user_id is actually system_id.
   int bind_using_user_id (PortableServer::Servant servant,
                           const PortableServer::ObjectId &user_id,
                           CORBA::Short priority);
 
   /// Can be used with any policy.  With the SYSTEM_ID policy,
-  /// <user_id> is actually <system_id>.
+  /// user_id is actually system_id.
   int find_system_id_using_user_id (const PortableServer::ObjectId &user_id,
                                     CORBA::Short priority,
                                     PortableServer::ObjectId_out system_id);
@@ -127,22 +127,22 @@ public:
                                           TAO_Active_Object_Map::Map_Entry *&entry);
 
   /// Can be used with any policy.  With the SYSTEM_ID policy,
-  /// <user_id> is actually <system_id>.
+  /// user_id is actually system_id.
   int unbind_using_user_id (const PortableServer::ObjectId &user_id);
 
   /// Must be used with UNIQUE_ID policy.  With the SYSTEM_ID policy,
-  /// <user_id> is actually <system_id>.
+  /// user_id is actually system_id.
   int find_user_id_using_servant (PortableServer::Servant servant,
                                   PortableServer::ObjectId_out user_id);
 
   /// Must be used with UNIQUE_ID policy.  With the SYSTEM_ID policy,
-  /// <user_id> is actually <system_id>.
+  /// user_id is actually system_id.
   int find_system_id_using_servant (PortableServer::Servant servant,
                                     PortableServer::ObjectId_out system_id,
                                     CORBA::Short &priority);
 
   /// Can be used with any policy. With the SYSTEM_ID policy,
-  /// <user_id> is actually <system_id>.
+  /// user_id is actually system_id.
   int find_servant_using_user_id (const PortableServer::ObjectId &user_id,
                                   PortableServer::Servant &servant);
 
@@ -153,7 +153,7 @@ public:
                                                 TAO_Active_Object_Map::Map_Entry *&entry);
 
   /// Can be used with any policy.  With the SYSTEM_ID policy,
-  /// <user_id> is identical to <system_id>.
+  /// @a user_id is identical to @a system_id.
   int find_servant_and_system_id_using_user_id (const PortableServer::ObjectId &user_id,
                                                 PortableServer::Servant &servant,
                                                 PortableServer::ObjectId_out system_id,
