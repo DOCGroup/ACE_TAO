@@ -51,18 +51,6 @@
 
 # define ACE_TEXT_STRING ACE_TString
 
-# if !defined (ACE_WIN32)
-#   if (defined (ACE_HAS_UNICODE) && (defined (UNICODE)))
-typedef const wchar_t *LPCTSTR;
-typedef wchar_t *LPTSTR;
-typedef wchar_t TCHAR;
-#   else
-typedef const char *LPCTSTR;
-typedef char *LPTSTR;
-typedef char TCHAR;
-#   endif /* ACE_HAS_UNICODE && UNICODE */
-# endif /* ACE_WIN32 */
-
 #endif /* ACE_LEGACY_MODE */
 
 #if defined (ACE_HAS_WCHAR)

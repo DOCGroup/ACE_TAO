@@ -1,3 +1,35 @@
+Sun Oct 29 23:46:54 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/ace_wchar.h:
+
+          Removed the definitions for LPTSTR and LPCTSTR. They 
+          will need to be defined outside of ace or in config.h
+          to be made available on other platforms.  Here is a
+          sample block which can be added to a non-Win32 config.h:
+
+          typedef char *LPSTR;
+          typedef const char *LPCSTR;
+          typedef wchar_t *LPWSTR;
+          typedef const wchar_t *LPCWSTR;
+
+          #if defined (UNICODE)
+          typedef const wchar_t *LPCTSTR;
+          typedef wchar_t *LPTSTR;
+          typedef wchar_t TCHAR;
+          #define __TEXT(literal) L##literal
+          #else
+          typedef const char *LPCTSTR;
+          typedef char *LPTSTR;
+          typedef char TCHAR;
+          #define __TEXT(literal) literal
+          #endif 
+
+          #define TEXT(literal) __TEXT(literal)
+
+        * ace/config-vxworks5.x.h:
+
+          Added ACE_LACKS_WCSDUP.
+
 Sun Oct 29 01:59:11 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * bin/doxygen-convert-h.pl: (added)
