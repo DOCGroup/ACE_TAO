@@ -1,3 +1,14 @@
+Sun Nov 14 19:08:52 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* tao/PortableServer/Local_Servant_Base.h:
+
+	  Changed .i to .inl
+	
+	* tao/PortableServer/ServantRetentionStrategyNonRetain.cpp:
+	* tao/PortableServer/ThreadPolicyValueORBControl.cpp:
+
+	  Added a comment for Johnny.
+	
 Fri Nov 12 13:27:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/ServerInterceptorAdapter.h:

@@ -50,7 +50,7 @@ protected:
 };
 
 #if defined (__ACE_INLINE__)
-# include "Local_Servant_Base.i"
+# include "Local_Servant_Base.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

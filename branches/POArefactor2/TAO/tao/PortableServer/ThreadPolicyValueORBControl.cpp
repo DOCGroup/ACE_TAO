@@ -22,6 +22,8 @@ namespace TAO
       return ::PortableServer::ORB_CTRL_MODEL;
     }
 
+    // @@ Johnny, probably you could use the namespace defines here at
+    // a later stage.
     ACE_STATIC_SVC_DEFINE (
         ORB_CTRL_Thread_Policy,
         ACE_TEXT ("ORB_CTRL_Thread_Policy"),

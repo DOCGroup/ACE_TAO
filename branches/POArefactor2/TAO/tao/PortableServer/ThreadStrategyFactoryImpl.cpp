@@ -18,6 +18,7 @@ namespace TAO
     ThreadStrategyFactoryImpl::~ThreadStrategyFactoryImpl (void)
     {
     }
+
     ThreadStrategy*
     ThreadStrategyFactoryImpl::create (
       ::PortableServer::ThreadPolicyValue value)
@@ -65,4 +66,3 @@ namespace TAO
 }
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
-
