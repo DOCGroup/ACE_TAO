@@ -790,12 +790,6 @@ private:
   TAO_ORB_Core *orb_core_;
   // The ORB_Core that created us....
 
-  int argc_;
-  // To be used in <create_object>
-
-  char *argv_ [];
-  // To be used in <create_object> 
-  
 #if defined (TAO_HAS_VALUETYPE)
   TAO_ValueFactory_Map *valuetype_factory_map_;
   // If non-0 then this is the Factory for OBV unmarshaling
