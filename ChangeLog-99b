@@ -1,3 +1,9 @@
+Sat Aug 14 15:20:27 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Process.h: Added a virtual to ~ACE_Process so that it
+	  can be used for subclassing more readily.  Thanks to Zoran
+ 	  Ivanovic <zorani@pathcom.com> for suggesting this.
+
 Sat Aug 14 14:11:25 1999  Everett Anderson  <eea1@cs.wustl.edu>
 
 	* ace/Remote_Tokens.cpp (tryacquire): Fixed so that it uses
