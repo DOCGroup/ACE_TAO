@@ -104,7 +104,7 @@ reader (void *)
 
       if (current_writers > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    "(%t) writers found!!!\n"));
+                    "(%t) reader error: writers found!!!\n"));
 
       ACE_thread_t data = shared_data;
 
@@ -114,12 +114,12 @@ reader (void *)
 
           if (ACE_OS::thr_equal (shared_data, data) == 0)
             ACE_DEBUG ((LM_DEBUG,
-                        "(%t) somebody changed %d to %d\n",
+                        "(%t) reader error: somebody changed %d to %d\n",
                         data,
                         shared_data));
         }
 
-      if (rw_mutex.tryacquire_write_upgrade () == 0)
+      if (rw_mutex.tryacquire_write_upgrade () != -1)
         {
           current_writers++;
 
@@ -129,12 +129,13 @@ reader (void *)
           ACE_thread_t self = ACE_Thread::self ();
           
           shared_data = self;
+          data = self;
 
           for (size_t loop = 1; loop <= n_loops; loop++)
             {
               if (ACE_OS::thr_equal (shared_data, data) == 0)
                 ACE_DEBUG ((LM_DEBUG,
-                            "(%t) somebody changed %d to %d\n",
+                            "(%t) upgraded writer error: somebody changed %d to %d\n",
                             data,
                             shared_data));
             }
@@ -145,7 +146,7 @@ reader (void *)
       --current_readers;
 
       ACE_DEBUG ((LM_DEBUG,
-                  "(%t) read %d done at %T\n",
+                  "(%t) reader finished %d iterations at %T\n",
                   iterations));
     }
   return 0;
@@ -160,7 +161,7 @@ writer (void *)
   ACE_DEBUG ((LM_DEBUG, 
               "(%t) writer starting\n"));
 
-  // We use a random pause, around 2msec with 1msec jittering.
+  // We use a random pause, around 2 msec with 1 msec jittering.
   int usecs = 1000 + ACE_OS::rand () % 2000;
   ACE_Time_Value pause (0, usecs);
 
@@ -179,11 +180,11 @@ writer (void *)
 
         if (current_writers > 1)
           ACE_DEBUG ((LM_DEBUG,
-                      "(%t) other writers found!!!\n"));
+                      "(%t) writer error: other writers found!!!\n"));
 
         if (current_readers > 0)
           ACE_DEBUG ((LM_DEBUG,
-                      "(%t) readers found!!!\n"));
+                      "(%t) writer error: readers found!!!\n"));
 
         ACE_thread_t self = ACE_Thread::self ();
 
@@ -197,7 +198,7 @@ writer (void *)
 
             if (ACE_OS::thr_equal (shared_data, self) == 0)
               ACE_DEBUG ((LM_DEBUG,
-                          "(%t) somebody wrote on my data %d\n",
+                          "(%t) writer error: somebody wrote on my data %d\n",
                           shared_data));
           }
 
@@ -205,7 +206,7 @@ writer (void *)
       }
 
       ACE_DEBUG ((LM_DEBUG,
-                  "(%t) write %d done at %T\n",
+                  "(%t) writer done after %d iterations at %T\n",
                   iterations));
     }
 
