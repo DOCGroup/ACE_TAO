@@ -130,7 +130,9 @@ PREDEFINED            = __ACE_INLINE__ ACE_TEMPLATES_REQUIRE_SOURCE
 EXPAND_AS_DEFINED     = ACE_RCSID \
 			ACE_UNIMPLEMENTED_FUNC \
                         ACE_CACHE_MAP_MANAGER \
-                        ACE_THROW_SPEC
+                        ACE_THROW_SPEC \
+                        ACE_T1 \
+                        ACE_T2
 
 #---------------------------------------------------------------------------
 # Configuration::addtions related to external references

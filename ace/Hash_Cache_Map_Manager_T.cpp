@@ -17,11 +17,11 @@ ACE_RCSID(ace, Hash_Cache_Map_Manager_T, "$Id$")
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Hash_Cache_Map_Manager)
 
-#define T_1 class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class CACHING_STRATEGY, class ATTRIBUTES
-#define T_2 KEY, VALUE,  HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY, ATTRIBUTES
+#define ACE_T1 class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class CACHING_STRATEGY, class ATTRIBUTES
+#define ACE_T2 KEY, VALUE,  HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY, ATTRIBUTES
 
-template <T_1>
-ACE_Hash_Cache_Map_Manager<T_2>::ACE_Hash_Cache_Map_Manager (CACHING_STRATEGY &caching_s,
+template <ACE_T1>
+ACE_Hash_Cache_Map_Manager<ACE_T2>::ACE_Hash_Cache_Map_Manager (CACHING_STRATEGY &caching_s,
                                                              size_t size,
                                                              ACE_Allocator *alloc)
   : ACE_HCMM_BASE (caching_s,
@@ -30,13 +30,13 @@ ACE_Hash_Cache_Map_Manager<T_2>::ACE_Hash_Cache_Map_Manager (CACHING_STRATEGY &c
 {
 }
 
-template <T_1>
-ACE_Hash_Cache_Map_Manager<T_2>::~ACE_Hash_Cache_Map_Manager (void)
+template <ACE_T1>
+ACE_Hash_Cache_Map_Manager<ACE_T2>::~ACE_Hash_Cache_Map_Manager (void)
 {
 }
 
-template <T_1> int
-ACE_Hash_Cache_Map_Manager<T_2>:: bind (const KEY &key,
+template <ACE_T1> int
+ACE_Hash_Cache_Map_Manager<ACE_T2>:: bind (const KEY &key,
                                         const VALUE &value,
                                         CACHE_ENTRY *&entry)
 {
@@ -71,8 +71,8 @@ ACE_Hash_Cache_Map_Manager<T_2>:: bind (const KEY &key,
   return bind_result;
 }
 
-template <T_1> int
-ACE_Hash_Cache_Map_Manager<T_2>::rebind (const KEY &key,
+template <ACE_T1> int
+ACE_Hash_Cache_Map_Manager<ACE_T2>::rebind (const KEY &key,
                                          const VALUE &value,
                                          CACHE_ENTRY *&entry)
 {
@@ -109,8 +109,8 @@ ACE_Hash_Cache_Map_Manager<T_2>::rebind (const KEY &key,
   return rebind_result;
 }
 
-template <T_1> int
-ACE_Hash_Cache_Map_Manager<T_2>::trybind (const KEY &key,
+template <ACE_T1> int
+ACE_Hash_Cache_Map_Manager<ACE_T2>::trybind (const KEY &key,
                                           VALUE &value,
                                           CACHE_ENTRY *&entry)
 {
@@ -152,8 +152,8 @@ ACE_Hash_Cache_Map_Manager<T_2>::trybind (const KEY &key,
   return trybind_result;
 }
 
-template <T_1> int
-ACE_Hash_Cache_Map_Manager<T_2>::find (const KEY &key,
+template <ACE_T1> int
+ACE_Hash_Cache_Map_Manager<ACE_T2>::find (const KEY &key,
                                        CACHE_ENTRY *&entry)
 {
   // Lookup the key and populate the <value>.
@@ -178,8 +178,8 @@ ACE_Hash_Cache_Map_Manager<T_2>::find (const KEY &key,
   return find_result;
 }
 
-template <T_1> int
-ACE_Hash_Cache_Map_Manager<T_2>::find (const KEY &key,
+template <ACE_T1> int
+ACE_Hash_Cache_Map_Manager<ACE_T2>::find (const KEY &key,
                                        VALUE &value)
 {
   CACHE_ENTRY *entry = 0;
@@ -195,8 +195,8 @@ ACE_Hash_Cache_Map_Manager<T_2>::find (const KEY &key,
   return result;
 }
 
-template <T_1> int
-ACE_Hash_Cache_Map_Manager<T_2>::find (const KEY &key)
+template <ACE_T1> int
+ACE_Hash_Cache_Map_Manager<ACE_T2>::find (const KEY &key)
 {
   CACHE_ENTRY *entry = 0;
 
@@ -204,8 +204,8 @@ ACE_Hash_Cache_Map_Manager<T_2>::find (const KEY &key)
                      entry);
 }
 
-template <T_1> int
-ACE_Hash_Cache_Map_Manager<T_2>::unbind (CACHE_ENTRY *entry)
+template <ACE_T1> int
+ACE_Hash_Cache_Map_Manager<ACE_T2>::unbind (CACHE_ENTRY *entry)
 {
   // Remove the entry from the cache.
   int unbind_result = this->map_.unbind (entry);
@@ -224,7 +224,7 @@ ACE_Hash_Cache_Map_Manager<T_2>::unbind (CACHE_ENTRY *entry)
   return unbind_result;
 }
 
-#undef T_1
-#undef T_2
+#undef ACE_T1
+#undef ACE_T2
 
 #endif /* ACE_HASH_CACHE_MAP_MANAGER_T_C */
