@@ -100,29 +100,29 @@ OPTIONS default_options =
 };
 
 ACE_Flow_Spec default_notraffic (
-								 QOS_NOT_SPECIFIED,
-								 QOS_NOT_SPECIFIED,
-								 QOS_NOT_SPECIFIED,
-								 QOS_NOT_SPECIFIED,
-								 QOS_NOT_SPECIFIED,
-								 SERVICETYPE_NOTRAFFIC,
-								 QOS_NOT_SPECIFIED,
-								 QOS_NOT_SPECIFIED,
-								 25,
-								 1);
+                                 QOS_NOT_SPECIFIED,
+                                 QOS_NOT_SPECIFIED,
+                                 QOS_NOT_SPECIFIED,
+                                 QOS_NOT_SPECIFIED,
+                                 QOS_NOT_SPECIFIED,
+                                 SERVICETYPE_NOTRAFFIC,
+                                 QOS_NOT_SPECIFIED,
+                                 QOS_NOT_SPECIFIED,
+                                 25,
+                                 1);
     
 
 ACE_Flow_Spec default_g711 (
-							9200,
-							708,
-							18400,
-							0,
-							0,
-							SERVICETYPE_CONTROLLEDLOAD,
-							368,
-							368,
-							25,
-							1);
+                            9200,
+                            708,
+                            18400,
+                            0,
+                            0,
+                            SERVICETYPE_CONTROLLEDLOAD,
+                            368,
+                            368,
+                            25,
+                            1);
 
 /*
 
@@ -163,9 +163,9 @@ extern SOCKADDR_IN g_destaddr;
 #endif
 
 extern int FindServiceProvider(
-                                int iProtocol,
-                                int bQos,
-                                int bMulticast,
-                                ACE_Protocol_Info *pProtocolInfo);
+                               int iProtocol,
+                               int bQos,
+                               int bMulticast,
+                               ACE_Protocol_Info *pProtocolInfo);
 
 #endif
