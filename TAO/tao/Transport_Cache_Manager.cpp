@@ -41,8 +41,8 @@ TAO_Transport_Cache_Manager::open (TAO_ORB_Core *orb_core,
   if (this->cache_lock_ == 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("TAO (%P|%t) ERROR TAO_Transport_Cache_Manager::open "),
-                         ACE_TEXT ("Lock creation error \n")),
+                         ACE_TEXT ("TAO (%P|%t) ERROR TAO_Transport_Cache_Manager::open: "),
+                         ACE_TEXT ("Lock creation error\n")),
                         -1);
     }
 
@@ -79,7 +79,7 @@ TAO_Transport_Cache_Manager::bind_i (TAO_Cache_ExtId &ext_id,
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t) TAO_Transport_Cache_Manager::bind_i")
                       ACE_TEXT (" unable to bind in the first attempt \n")
-                      ACE_TEXT (" So trying with a new index \n")));
+                      ACE_TEXT (" So trying with a new index\n")));
         }
 
 
@@ -104,11 +104,13 @@ TAO_Transport_Cache_Manager::bind_i (TAO_Cache_ExtId &ext_id,
   return retval;
 }
 
-// Used to be in the .inl, but moved here b/c the use of TAO_Transport::_duplicate()
-// caused an include file cycle with inlining turned on.
+// Used to be in the .inl, but moved here b/c the use of
+// TAO_Transport::_duplicate() caused an include file cycle with
+// inlining turned on.
 int
-TAO_Transport_Cache_Manager::find_transport (TAO_Transport_Descriptor_Interface *prop,
-                                             TAO_Transport *&transport)
+TAO_Transport_Cache_Manager::find_transport (
+  TAO_Transport_Descriptor_Interface *prop,
+  TAO_Transport *&transport)
 {
   if (prop == 0)
     {
@@ -124,7 +126,7 @@ TAO_Transport_Cache_Manager::find_transport (TAO_Transport_Descriptor_Interface 
                            int_id);
   if (retval == 0)
     {
-      transport = TAO_Transport::_duplicate (int_id.transport ());
+      transport = int_id.relinquish_transport ();
     }
 
   return retval;
@@ -132,7 +134,7 @@ TAO_Transport_Cache_Manager::find_transport (TAO_Transport_Descriptor_Interface 
 
 int
 TAO_Transport_Cache_Manager::find_i (const TAO_Cache_ExtId &key,
-                                      TAO_Cache_IntId &value)
+                                     TAO_Cache_IntId &value)
 {
   HASH_MAP_ENTRY *entry = 0;
 
@@ -160,13 +162,17 @@ TAO_Transport_Cache_Manager::find_i (const TAO_Cache_ExtId &key,
 
           if (idle)
             {
-              // We have a succesful entry
+              // Successfully found a TAO_Transport.
+
+              // NOTE: This assignment operator indirectly incurs two
+              //       lock operations since it duplicates and releases
+              //       TAO_Transport objects.
               value = entry->int_id_;
 
               if (TAO_debug_level > 4)
                 {
                   ACE_DEBUG ((LM_DEBUG,
-                              ACE_TEXT ("(%P |%t) index in find <%d> \n"),
+                              ACE_TEXT ("(%P |%t) index in find <%d>\n"),
                               entry->ext_id_.index ()));
                 }
               return 0;
@@ -182,7 +188,7 @@ TAO_Transport_Cache_Manager::find_i (const TAO_Cache_ExtId &key,
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("(%P|%t) TAO_Transport_Cache_Manager::find_i")
-                  ACE_TEXT (" unable to locate a free connection \n")));
+                  ACE_TEXT (" unable to locate a free connection\n")));
     }
 
   return retval;
@@ -239,8 +245,8 @@ TAO_Transport_Cache_Manager::make_idle_i (HASH_MAP_ENTRY *&entry)
   else if (TAO_debug_level > 0 && retval != 0)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P|%t) TAO_Transport_Cache_Manager::make_idle_i")
-                  ACE_TEXT ("unable to locate the entry to make it idle \n")));
+                  ACE_TEXT ("(%P|%t) TAO_Transport_Cache_Manager::make_idle_i:\n")
+                  ACE_TEXT ("(%P|%t)     unable to locate the entry to make it idle\n")));
     }
 
   return retval;
