@@ -1,3 +1,12 @@
+Fri Mar 21 13:22:06 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Any.cpp:
+
+	  Moved the template specializations to the top of the file. This
+	  eliminates a problem with BCB seeing the specializations whe
+	  compiling the Any operators later in the file. Thanks to
+	  Johnny Willemsen <jwillemsen@rememdy.nl> for suggesting the fix.
+
 Fri Mar 21 11:41:10 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Policy_ForwardC.cpp:
