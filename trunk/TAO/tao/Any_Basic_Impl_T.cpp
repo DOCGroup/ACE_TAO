@@ -100,8 +100,11 @@ TAO::Any_Basic_Impl_T<T>::extract (const CORBA::Any & any,
           _tao_elem = replacement->value_;
           ACE_const_cast (CORBA::Any &, any).replace (replacement);
           replacement_safety.release ();
-          return result;
+          return 1;
         }
+
+      // Duplicated by Any_Impl base class constructor.
+      CORBA::release (any_tc);
     }
   ACE_CATCHANY
     {

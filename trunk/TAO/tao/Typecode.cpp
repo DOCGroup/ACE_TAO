@@ -2779,8 +2779,7 @@ CORBA::TypeCode::private_member_label (CORBA::ULong n
                         TAO::Unknown_IDL_Type (
                             CORBA::TypeCode::_duplicate (label_tc),
                             out.begin (),
-                            ACE_CDR_BYTE_ORDER,
-                            1
+                            ACE_CDR_BYTE_ORDER
                           ),
                         CORBA::NO_MEMORY ());
       ACE_CHECK_RETURN (0);
