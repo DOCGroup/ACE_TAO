@@ -3,6 +3,7 @@
 #include "ace/Local_Tokens.h"
 #include "ace/Token_Manager.h"
 #include "ace/Task.h"
+#include "ace/OS_NS_time.h"
 
 #if defined (ACE_HAS_TOKENS_LIBRARY)
 
