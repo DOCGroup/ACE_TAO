@@ -54,7 +54,7 @@
 #include "tao/Stub.h"
 #include "tao/IFR_Client_Adapter.h"
 #include "tao/Object_T.h"
-#include "tao/Typecode.h"
+#include "tao/TypeCode.h"
 #include "tao/DynamicC.h"
 #include "tao/CDR.h"
 #include "tao/operation_details.h"
@@ -1091,7 +1091,7 @@ public:
 };
 
 /* C++ code produced by gperf version 2.8 (ACE version) */
-/* Command-line: c:\ace\POAmerge\ace_wrappers\bin\gperf.exe -m -M -J -c -C -D -E -T -f 0 -F 0,0 -a -o -t -p -K opname -L C++ -Z TAO_CORBA_Repository_Perfect_Hash_OpTable -N lookup  */
+/* Command-line: c:\ace\latest\ACE_wrappers\bin\gperf.exe -m -M -J -c -C -D -E -T -f 0 -F 0,0 -a -o -t -p -K opname -L C++ -Z TAO_CORBA_Repository_Perfect_Hash_OpTable -N lookup  */
 unsigned int
 TAO_CORBA_Repository_Perfect_Hash_OpTable::hash (const char *str, unsigned int len)
 {
@@ -2539,7 +2539,7 @@ public:
 };
 
 /* C++ code produced by gperf version 2.8 (ACE version) */
-/* Command-line: c:\ace\POAmerge\ace_wrappers\bin\gperf.exe -m -M -J -c -C -D -E -T -f 0 -F 0,0 -a -o -t -p -K opname -L C++ -Z TAO_CORBA_ModuleDef_Perfect_Hash_OpTable -N lookup  */
+/* Command-line: c:\ace\latest\ACE_wrappers\bin\gperf.exe -m -M -J -c -C -D -E -T -f 0 -F 0,0 -a -o -t -p -K opname -L C++ -Z TAO_CORBA_ModuleDef_Perfect_Hash_OpTable -N lookup  */
 unsigned int
 TAO_CORBA_ModuleDef_Perfect_Hash_OpTable::hash (const char *str, unsigned int len)
 {
@@ -3160,7 +3160,7 @@ public:
 };
 
 /* C++ code produced by gperf version 2.8 (ACE version) */
-/* Command-line: c:\ace\POAmerge\ace_wrappers\bin\gperf.exe -m -M -J -c -C -D -E -T -f 0 -F 0,0 -a -o -t -p -K opname -L C++ -Z TAO_CORBA_ConstantDef_Perfect_Hash_OpTable -N lookup  */
+/* Command-line: c:\ace\latest\ACE_wrappers\bin\gperf.exe -m -M -J -c -C -D -E -T -f 0 -F 0,0 -a -o -t -p -K opname -L C++ -Z TAO_CORBA_ConstantDef_Perfect_Hash_OpTable -N lookup  */
 unsigned int
 TAO_CORBA_ConstantDef_Perfect_Hash_OpTable::hash (const char *str, unsigned int len)
 {
@@ -4225,7 +4225,7 @@ public:
 };
 
 /* C++ code produced by gperf version 2.8 (ACE version) */
-/* Command-line: c:\ace\POAmerge\ace_wrappers\bin\gperf.exe -m -M -J -c -C -D -E -T -f 0 -F 0,0 -a -o -t -p -K opname -L C++ -Z TAO_CORBA_StructDef_Perfect_Hash_OpTable -N lookup  */
+/* Command-line: c:\ace\latest\ACE_wrappers\bin\gperf.exe -m -M -J -c -C -D -E -T -f 0 -F 0,0 -a -o -t -p -K opname -L C++ -Z TAO_CORBA_StructDef_Perfect_Hash_OpTable -N lookup  */
 unsigned int
 TAO_CORBA_StructDef_Perfect_Hash_OpTable::hash (const char *str, unsigned int len)
 {
@@ -5045,7 +5045,7 @@ public:
 };
 
 /* C++ code produced by gperf version 2.8 (ACE version) */
-/* Command-line: c:\ace\POAmerge\ace_wrappers\bin\gperf.exe -m -M -J -c -C -D -E -T -f 0 -F 0,0 -a -o -t -p -K opname -L C++ -Z TAO_CORBA_UnionDef_Perfect_Hash_OpTable -N lookup  */
+/* Command-line: c:\ace\latest\ACE_wrappers\bin\gperf.exe -m -M -J -c -C -D -E -T -f 0 -F 0,0 -a -o -t -p -K opname -L C++ -Z TAO_CORBA_UnionDef_Perfect_Hash_OpTable -N lookup  */
 unsigned int
 TAO_CORBA_UnionDef_Perfect_Hash_OpTable::hash (const char *str, unsigned int len)
 {
@@ -6148,7 +6148,7 @@ public:
 };
 
 /* C++ code produced by gperf version 2.8 (ACE version) */
-/* Command-line: c:\ace\POAmerge\ace_wrappers\bin\gperf.exe -m -M -J -c -C -D -E -T -f 0 -F 0,0 -a -o -t -p -K opname -L C++ -Z TAO_CORBA_EnumDef_Perfect_Hash_OpTable -N lookup  */
+/* Command-line: c:\ace\latest\ACE_wrappers\bin\gperf.exe -m -M -J -c -C -D -E -T -f 0 -F 0,0 -a -o -t -p -K opname -L C++ -Z TAO_CORBA_EnumDef_Perfect_Hash_OpTable -N lookup  */
 unsigned int
 TAO_CORBA_EnumDef_Perfect_Hash_OpTable::hash (const char *str, unsigned int len)
 {
@@ -6943,7 +6943,7 @@ public:
 };
 
 /* C++ code produced by gperf version 2.8 (ACE version) */
-/* Command-line: c:\ace\POAmerge\ace_wrappers\bin\gperf.exe -m -M -J -c -C -D -E -T -f 0 -F 0,0 -a -o -t -p -K opname -L C++ -Z TAO_CORBA_AliasDef_Perfect_Hash_OpTable -N lookup  */
+/* Command-line: c:\ace\latest\ACE_wrappers\bin\gperf.exe -m -M -J -c -C -D -E -T -f 0 -F 0,0 -a -o -t -p -K opname -L C++ -Z TAO_CORBA_AliasDef_Perfect_Hash_OpTable -N lookup  */
 unsigned int
 TAO_CORBA_AliasDef_Perfect_Hash_OpTable::hash (const char *str, unsigned int len)
 {
@@ -7738,7 +7738,7 @@ public:
 };
 
 /* C++ code produced by gperf version 2.8 (ACE version) */
-/* Command-line: c:\ace\POAmerge\ace_wrappers\bin\gperf.exe -m -M -J -c -C -D -E -T -f 0 -F 0,0 -a -o -t -p -K opname -L C++ -Z TAO_CORBA_NativeDef_Perfect_Hash_OpTable -N lookup  */
+/* Command-line: c:\ace\latest\ACE_wrappers\bin\gperf.exe -m -M -J -c -C -D -E -T -f 0 -F 0,0 -a -o -t -p -K opname -L C++ -Z TAO_CORBA_NativeDef_Perfect_Hash_OpTable -N lookup  */
 unsigned int
 TAO_CORBA_NativeDef_Perfect_Hash_OpTable::hash (const char *str, unsigned int len)
 {
@@ -8345,7 +8345,7 @@ public:
 };
 
 /* C++ code produced by gperf version 2.8 (ACE version) */
-/* Command-line: c:\ace\POAmerge\ace_wrappers\bin\gperf.exe -m -M -J -c -C -D -E -T -f 0 -F 0,0 -a -o -t -p -K opname -L C++ -Z TAO_CORBA_PrimitiveDef_Perfect_Hash_OpTable -N lookup  */
+/* Command-line: c:\ace\latest\ACE_wrappers\bin\gperf.exe -m -M -J -c -C -D -E -T -f 0 -F 0,0 -a -o -t -p -K opname -L C++ -Z TAO_CORBA_PrimitiveDef_Perfect_Hash_OpTable -N lookup  */
 unsigned int
 TAO_CORBA_PrimitiveDef_Perfect_Hash_OpTable::hash (const char *str, unsigned int len)
 {
@@ -9005,7 +9005,7 @@ public:
 };
 
 /* C++ code produced by gperf version 2.8 (ACE version) */
-/* Command-line: c:\ace\POAmerge\ace_wrappers\bin\gperf.exe -m -M -J -c -C -D -E -T -f 0 -F 0,0 -a -o -t -p -K opname -L C++ -Z TAO_CORBA_StringDef_Perfect_Hash_OpTable -N lookup  */
+/* Command-line: c:\ace\latest\ACE_wrappers\bin\gperf.exe -m -M -J -c -C -D -E -T -f 0 -F 0,0 -a -o -t -p -K opname -L C++ -Z TAO_CORBA_StringDef_Perfect_Hash_OpTable -N lookup  */
 unsigned int
 TAO_CORBA_StringDef_Perfect_Hash_OpTable::hash (const char *str, unsigned int len)
 {
@@ -9778,7 +9778,7 @@ public:
 };
 
 /* C++ code produced by gperf version 2.8 (ACE version) */
-/* Command-line: c:\ace\POAmerge\ace_wrappers\bin\gperf.exe -m -M -J -c -C -D -E -T -f 0 -F 0,0 -a -o -t -p -K opname -L C++ -Z TAO_CORBA_WstringDef_Perfect_Hash_OpTable -N lookup  */
+/* Command-line: c:\ace\latest\ACE_wrappers\bin\gperf.exe -m -M -J -c -C -D -E -T -f 0 -F 0,0 -a -o -t -p -K opname -L C++ -Z TAO_CORBA_WstringDef_Perfect_Hash_OpTable -N lookup  */
 unsigned int
 TAO_CORBA_WstringDef_Perfect_Hash_OpTable::hash (const char *str, unsigned int len)
 {
@@ -10551,7 +10551,7 @@ public:
 };
 
 /* C++ code produced by gperf version 2.8 (ACE version) */
-/* Command-line: c:\ace\POAmerge\ace_wrappers\bin\gperf.exe -m -M -J -c -C -D -E -T -f 0 -F 0,0 -a -o -t -p -K opname -L C++ -Z TAO_CORBA_SequenceDef_Perfect_Hash_OpTable -N lookup  */
+/* Command-line: c:\ace\latest\ACE_wrappers\bin\gperf.exe -m -M -J -c -C -D -E -T -f 0 -F 0,0 -a -o -t -p -K opname -L C++ -Z TAO_CORBA_SequenceDef_Perfect_Hash_OpTable -N lookup  */
 unsigned int
 TAO_CORBA_SequenceDef_Perfect_Hash_OpTable::hash (const char *str, unsigned int len)
 {
@@ -11605,7 +11605,7 @@ public:
 };
 
 /* C++ code produced by gperf version 2.8 (ACE version) */
-/* Command-line: c:\ace\POAmerge\ace_wrappers\bin\gperf.exe -m -M -J -c -C -D -E -T -f 0 -F 0,0 -a -o -t -p -K opname -L C++ -Z TAO_CORBA_ArrayDef_Perfect_Hash_OpTable -N lookup  */
+/* Command-line: c:\ace\latest\ACE_wrappers\bin\gperf.exe -m -M -J -c -C -D -E -T -f 0 -F 0,0 -a -o -t -p -K opname -L C++ -Z TAO_CORBA_ArrayDef_Perfect_Hash_OpTable -N lookup  */
 unsigned int
 TAO_CORBA_ArrayDef_Perfect_Hash_OpTable::hash (const char *str, unsigned int len)
 {
@@ -12659,7 +12659,7 @@ public:
 };
 
 /* C++ code produced by gperf version 2.8 (ACE version) */
-/* Command-line: c:\ace\POAmerge\ace_wrappers\bin\gperf.exe -m -M -J -c -C -D -E -T -f 0 -F 0,0 -a -o -t -p -K opname -L C++ -Z TAO_CORBA_ExceptionDef_Perfect_Hash_OpTable -N lookup  */
+/* Command-line: c:\ace\latest\ACE_wrappers\bin\gperf.exe -m -M -J -c -C -D -E -T -f 0 -F 0,0 -a -o -t -p -K opname -L C++ -Z TAO_CORBA_ExceptionDef_Perfect_Hash_OpTable -N lookup  */
 unsigned int
 TAO_CORBA_ExceptionDef_Perfect_Hash_OpTable::hash (const char *str, unsigned int len)
 {
@@ -13561,7 +13561,7 @@ public:
 };
 
 /* C++ code produced by gperf version 2.8 (ACE version) */
-/* Command-line: c:\ace\POAmerge\ace_wrappers\bin\gperf.exe -m -M -J -c -C -D -E -T -f 0 -F 0,0 -a -o -t -p -K opname -L C++ -Z TAO_CORBA_AttributeDef_Perfect_Hash_OpTable -N lookup  */
+/* Command-line: c:\ace\latest\ACE_wrappers\bin\gperf.exe -m -M -J -c -C -D -E -T -f 0 -F 0,0 -a -o -t -p -K opname -L C++ -Z TAO_CORBA_AttributeDef_Perfect_Hash_OpTable -N lookup  */
 unsigned int
 TAO_CORBA_AttributeDef_Perfect_Hash_OpTable::hash (const char *str, unsigned int len)
 {
@@ -14626,7 +14626,7 @@ public:
 };
 
 /* C++ code produced by gperf version 2.8 (ACE version) */
-/* Command-line: c:\ace\POAmerge\ace_wrappers\bin\gperf.exe -m -M -J -c -C -D -E -T -f 0 -F 0,0 -a -o -t -p -K opname -L C++ -Z TAO_CORBA_ExtAttributeDef_Perfect_Hash_OpTable -N lookup  */
+/* Command-line: c:\ace\latest\ACE_wrappers\bin\gperf.exe -m -M -J -c -C -D -E -T -f 0 -F 0,0 -a -o -t -p -K opname -L C++ -Z TAO_CORBA_ExtAttributeDef_Perfect_Hash_OpTable -N lookup  */
 unsigned int
 TAO_CORBA_ExtAttributeDef_Perfect_Hash_OpTable::hash (const char *str, unsigned int len)
 {
@@ -15701,7 +15701,7 @@ public:
 };
 
 /* C++ code produced by gperf version 2.8 (ACE version) */
-/* Command-line: c:\ace\POAmerge\ace_wrappers\bin\gperf.exe -m -M -J -c -C -D -E -T -f 0 -F 0,0 -a -o -t -p -K opname -L C++ -Z TAO_CORBA_OperationDef_Perfect_Hash_OpTable -N lookup  */
+/* Command-line: c:\ace\latest\ACE_wrappers\bin\gperf.exe -m -M -J -c -C -D -E -T -f 0 -F 0,0 -a -o -t -p -K opname -L C++ -Z TAO_CORBA_OperationDef_Perfect_Hash_OpTable -N lookup  */
 unsigned int
 TAO_CORBA_OperationDef_Perfect_Hash_OpTable::hash (const char *str, unsigned int len)
 {
@@ -17383,7 +17383,7 @@ public:
 };
 
 /* C++ code produced by gperf version 2.8 (ACE version) */
-/* Command-line: c:\ace\POAmerge\ace_wrappers\bin\gperf.exe -m -M -J -c -C -D -E -T -f 0 -F 0,0 -a -o -t -p -K opname -L C++ -Z TAO_CORBA_InterfaceDef_Perfect_Hash_OpTable -N lookup  */
+/* Command-line: c:\ace\latest\ACE_wrappers\bin\gperf.exe -m -M -J -c -C -D -E -T -f 0 -F 0,0 -a -o -t -p -K opname -L C++ -Z TAO_CORBA_InterfaceDef_Perfect_Hash_OpTable -N lookup  */
 unsigned int
 TAO_CORBA_InterfaceDef_Perfect_Hash_OpTable::hash (const char *str, unsigned int len)
 {
@@ -18697,7 +18697,7 @@ public:
 };
 
 /* C++ code produced by gperf version 2.8 (ACE version) */
-/* Command-line: c:\ace\POAmerge\ace_wrappers\bin\gperf.exe -m -M -J -c -C -D -E -T -f 0 -F 0,0 -a -o -t -p -K opname -L C++ -Z TAO_CORBA_InterfaceAttrExtension_Perfect_Hash_OpTable -N lookup  */
+/* Command-line: c:\ace\latest\ACE_wrappers\bin\gperf.exe -m -M -J -c -C -D -E -T -f 0 -F 0,0 -a -o -t -p -K opname -L C++ -Z TAO_CORBA_InterfaceAttrExtension_Perfect_Hash_OpTable -N lookup  */
 unsigned int
 TAO_CORBA_InterfaceAttrExtension_Perfect_Hash_OpTable::hash (const char *str, unsigned int len)
 {
@@ -19500,7 +19500,7 @@ public:
 };
 
 /* C++ code produced by gperf version 2.8 (ACE version) */
-/* Command-line: c:\ace\POAmerge\ace_wrappers\bin\gperf.exe -m -M -J -c -C -D -E -T -f 0 -F 0,0 -a -o -t -p -K opname -L C++ -Z TAO_CORBA_ExtInterfaceDef_Perfect_Hash_OpTable -N lookup  */
+/* Command-line: c:\ace\latest\ACE_wrappers\bin\gperf.exe -m -M -J -c -C -D -E -T -f 0 -F 0,0 -a -o -t -p -K opname -L C++ -Z TAO_CORBA_ExtInterfaceDef_Perfect_Hash_OpTable -N lookup  */
 unsigned int
 TAO_CORBA_ExtInterfaceDef_Perfect_Hash_OpTable::hash (const char *str, unsigned int len)
 {
@@ -20146,7 +20146,7 @@ public:
 };
 
 /* C++ code produced by gperf version 2.8 (ACE version) */
-/* Command-line: c:\ace\POAmerge\ace_wrappers\bin\gperf.exe -m -M -J -c -C -D -E -T -f 0 -F 0,0 -a -o -t -p -K opname -L C++ -Z TAO_CORBA_AbstractInterfaceDef_Perfect_Hash_OpTable -N lookup  */
+/* Command-line: c:\ace\latest\ACE_wrappers\bin\gperf.exe -m -M -J -c -C -D -E -T -f 0 -F 0,0 -a -o -t -p -K opname -L C++ -Z TAO_CORBA_AbstractInterfaceDef_Perfect_Hash_OpTable -N lookup  */
 unsigned int
 TAO_CORBA_AbstractInterfaceDef_Perfect_Hash_OpTable::hash (const char *str, unsigned int len)
 {
@@ -20785,7 +20785,7 @@ public:
 };
 
 /* C++ code produced by gperf version 2.8 (ACE version) */
-/* Command-line: c:\ace\POAmerge\ace_wrappers\bin\gperf.exe -m -M -J -c -C -D -E -T -f 0 -F 0,0 -a -o -t -p -K opname -L C++ -Z TAO_CORBA_ExtAbstractInterfaceDef_Perfect_Hash_OpTable -N lookup  */
+/* Command-line: c:\ace\latest\ACE_wrappers\bin\gperf.exe -m -M -J -c -C -D -E -T -f 0 -F 0,0 -a -o -t -p -K opname -L C++ -Z TAO_CORBA_ExtAbstractInterfaceDef_Perfect_Hash_OpTable -N lookup  */
 unsigned int
 TAO_CORBA_ExtAbstractInterfaceDef_Perfect_Hash_OpTable::hash (const char *str, unsigned int len)
 {
@@ -21436,7 +21436,7 @@ public:
 };
 
 /* C++ code produced by gperf version 2.8 (ACE version) */
-/* Command-line: c:\ace\POAmerge\ace_wrappers\bin\gperf.exe -m -M -J -c -C -D -E -T -f 0 -F 0,0 -a -o -t -p -K opname -L C++ -Z TAO_CORBA_LocalInterfaceDef_Perfect_Hash_OpTable -N lookup  */
+/* Command-line: c:\ace\latest\ACE_wrappers\bin\gperf.exe -m -M -J -c -C -D -E -T -f 0 -F 0,0 -a -o -t -p -K opname -L C++ -Z TAO_CORBA_LocalInterfaceDef_Perfect_Hash_OpTable -N lookup  */
 unsigned int
 TAO_CORBA_LocalInterfaceDef_Perfect_Hash_OpTable::hash (const char *str, unsigned int len)
 {
@@ -22075,7 +22075,7 @@ public:
 };
 
 /* C++ code produced by gperf version 2.8 (ACE version) */
-/* Command-line: c:\ace\POAmerge\ace_wrappers\bin\gperf.exe -m -M -J -c -C -D -E -T -f 0 -F 0,0 -a -o -t -p -K opname -L C++ -Z TAO_CORBA_ExtLocalInterfaceDef_Perfect_Hash_OpTable -N lookup  */
+/* Command-line: c:\ace\latest\ACE_wrappers\bin\gperf.exe -m -M -J -c -C -D -E -T -f 0 -F 0,0 -a -o -t -p -K opname -L C++ -Z TAO_CORBA_ExtLocalInterfaceDef_Perfect_Hash_OpTable -N lookup  */
 unsigned int
 TAO_CORBA_ExtLocalInterfaceDef_Perfect_Hash_OpTable::hash (const char *str, unsigned int len)
 {
