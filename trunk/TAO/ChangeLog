@@ -1,3 +1,13 @@
+Mon Dec 16 23:26:50 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/Policy_Validator.cpp: Reset the last_ to zero during
+	  destruction. If not reset, it starts creating problem during
+	  reloading of libraries since they see that last_ is not zero but
+	  pointing to a stale location. Thanks to Guan
+	  Joe <annieg608@hotmail.com> for reporting this. Having a static
+	  member is not the way to go. But let me hold on till 1.3 goes
+	  out of the way.
+
 Mon Dec 16 17:09:55 2002  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/CORBALOC_Parser.cpp:

@@ -18,7 +18,10 @@ TAO_Policy_Validator::TAO_Policy_Validator (TAO_ORB_Core &orb_core)
 
 TAO_Policy_Validator::~TAO_Policy_Validator (void)
 {
-  delete this->next_;
+  if (this == this->last_)
+    this-> last_ = 0;
+  if (this->next_)
+    delete this->next_;
 }
 
 void
