@@ -63,7 +63,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableServer_ServantManager (
     sizeof (_oc_PortableServer_ServantManager),
     (char *) &_oc_PortableServer_ServantManager,
     0,
-    sizeof (PortableServer::ServantManager)
+    0
   );
 
 namespace PortableServer

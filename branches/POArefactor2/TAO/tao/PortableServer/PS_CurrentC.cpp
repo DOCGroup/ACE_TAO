@@ -225,7 +225,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableServer_Current_NoContext (
     sizeof (_oc_PortableServer_Current_NoContext),
     (char *) &_oc_PortableServer_Current_NoContext,
     0,
-    sizeof (PortableServer::Current::NoContext)
+    0
   );
 
 ::CORBA::TypeCode_ptr PortableServer::Current::_tc_NoContext =

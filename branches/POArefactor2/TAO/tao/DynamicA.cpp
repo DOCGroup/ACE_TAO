@@ -123,7 +123,7 @@ static CORBA::TypeCode _tc_TAO_tc_Dynamic_ParameterList (
     sizeof (_oc_Dynamic_ParameterList),
     (char *) &_oc_Dynamic_ParameterList,
     0,
-    sizeof (Dynamic::ParameterList)
+    0
   );
 
 namespace Dynamic
@@ -183,7 +183,7 @@ static CORBA::TypeCode _tc_TAO_tc_Dynamic_ContextList (
     sizeof (_oc_Dynamic_ContextList),
     (char *) &_oc_Dynamic_ContextList,
     0,
-    sizeof (Dynamic::ContextList)
+    0
   );
 
 namespace Dynamic
@@ -228,7 +228,7 @@ static CORBA::TypeCode _tc_TAO_tc_Dynamic_ExceptionList (
     sizeof (_oc_Dynamic_ExceptionList),
     (char *) &_oc_Dynamic_ExceptionList,
     0,
-    sizeof (Dynamic::ExceptionList)
+    0
   );
 
 namespace Dynamic
@@ -290,7 +290,7 @@ static CORBA::TypeCode _tc_TAO_tc_Dynamic_RequestContext (
     sizeof (_oc_Dynamic_RequestContext),
     (char *) &_oc_Dynamic_RequestContext,
     0,
-    sizeof (Dynamic::RequestContext)
+    0
   );
 
 namespace Dynamic

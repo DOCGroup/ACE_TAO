@@ -250,7 +250,7 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_PolicyError (
     sizeof (_oc_CORBA_PolicyError),
     (char *) &_oc_CORBA_PolicyError,
     0,
-    sizeof (CORBA::PolicyError)
+    0
   );
 
 namespace CORBA
@@ -440,7 +440,7 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_InvalidPolicies (
     sizeof (_oc_CORBA_InvalidPolicies),
     (char *) &_oc_CORBA_InvalidPolicies,
     0,
-    sizeof (CORBA::InvalidPolicies)
+    0
   );
 
 namespace CORBA

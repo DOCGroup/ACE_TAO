@@ -1,5 +1,5 @@
---- orig/ImplicitActivationPolicyC.h	2004-11-15 09:12:35.848566400 +0100
-+++ ImplicitActivationPolicyC.h	2004-11-15 09:12:47.305040000 +0100
+--- orig/ImplicitActivationPolicyC.h	2004-11-17 09:22:00.456534400 +0100
++++ ImplicitActivationPolicyC.h	2004-11-17 09:22:11.171942400 +0100
 @@ -96,6 +96,7 @@
      NO_IMPLICIT_ACTIVATION
    };
@@ -31,8 +31,8 @@
  // TAO_IDL - Generated from
  // be\be_codegen.cpp:958
  
---- orig/ImplicitActivationPolicyC.cpp	2004-11-15 09:12:35.848566400 +0100
-+++ ImplicitActivationPolicyC.cpp	2004-11-15 09:12:47.425212800 +0100
+--- orig/ImplicitActivationPolicyC.cpp	2004-11-17 09:22:00.456534400 +0100
++++ ImplicitActivationPolicyC.cpp	2004-11-17 09:22:11.332172800 +0100
 @@ -45,6 +45,8 @@
  // TAO_IDL - Generated from
  // be\be_visitor_arg_traits.cpp:64
@@ -48,8 +48,8 @@
  #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
 +
 +#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
---- orig/ImplicitActivationPolicyA.cpp	2004-11-15 09:12:35.868595200 +0100
-+++ ImplicitActivationPolicyA.cpp	2004-11-15 09:12:47.495313600 +0100
+--- orig/ImplicitActivationPolicyA.cpp	2004-11-17 09:22:00.476563200 +0100
++++ ImplicitActivationPolicyA.cpp	2004-11-17 09:22:11.392259200 +0100
 @@ -33,6 +33,8 @@
  // TAO_IDL - Generated from
  // be\be_visitor_typecode/typecode_defn.cpp:295

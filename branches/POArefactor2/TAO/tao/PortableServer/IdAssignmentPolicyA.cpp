@@ -73,7 +73,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableServer_IdAssignmentPolicyValue (
     sizeof (_oc_PortableServer_IdAssignmentPolicyValue),
     (char *) &_oc_PortableServer_IdAssignmentPolicyValue,
     0,
-    sizeof (PortableServer::IdAssignmentPolicyValue)
+    0
   );
 
 namespace PortableServer
@@ -115,7 +115,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableServer_IdAssignmentPolicy (
     sizeof (_oc_PortableServer_IdAssignmentPolicy),
     (char *) &_oc_PortableServer_IdAssignmentPolicy,
     0,
-    sizeof (PortableServer::IdAssignmentPolicy)
+    0
   );
 
 namespace PortableServer

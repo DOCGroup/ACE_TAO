@@ -75,7 +75,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableServer_POAManager_State (
     sizeof (_oc_PortableServer_POAManager_State),
     (char *) &_oc_PortableServer_POAManager_State,
     0,
-    sizeof (PortableServer::POAManager::State)
+    0
   );
 
 ::CORBA::TypeCode_ptr PortableServer::POAManager::_tc_State =
@@ -110,7 +110,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableServer_POAManager (
     sizeof (_oc_PortableServer_POAManager),
     (char *) &_oc_PortableServer_POAManager,
     0,
-    sizeof (PortableServer::POAManager)
+    0
   );
 
 namespace PortableServer

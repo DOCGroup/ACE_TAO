@@ -330,7 +330,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableServer_POA_AdapterAlreadyExists (
     sizeof (_oc_PortableServer_POA_AdapterAlreadyExists),
     (char *) &_oc_PortableServer_POA_AdapterAlreadyExists,
     0,
-    sizeof (PortableServer::POA::AdapterAlreadyExists)
+    0
   );
 
 ::CORBA::TypeCode_ptr PortableServer::POA::_tc_AdapterAlreadyExists =
@@ -467,7 +467,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableServer_POA_AdapterNonExistent (
     sizeof (_oc_PortableServer_POA_AdapterNonExistent),
     (char *) &_oc_PortableServer_POA_AdapterNonExistent,
     0,
-    sizeof (PortableServer::POA::AdapterNonExistent)
+    0
   );
 
 ::CORBA::TypeCode_ptr PortableServer::POA::_tc_AdapterNonExistent =
@@ -625,7 +625,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableServer_POA_InvalidPolicy (
     sizeof (_oc_PortableServer_POA_InvalidPolicy),
     (char *) &_oc_PortableServer_POA_InvalidPolicy,
     0,
-    sizeof (PortableServer::POA::InvalidPolicy)
+    0
   );
 
 ::CORBA::TypeCode_ptr PortableServer::POA::_tc_InvalidPolicy =
@@ -760,7 +760,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableServer_POA_NoServant (
     sizeof (_oc_PortableServer_POA_NoServant),
     (char *) &_oc_PortableServer_POA_NoServant,
     0,
-    sizeof (PortableServer::POA::NoServant)
+    0
   );
 
 ::CORBA::TypeCode_ptr PortableServer::POA::_tc_NoServant =
@@ -899,7 +899,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableServer_POA_ObjectAlreadyActive (
     sizeof (_oc_PortableServer_POA_ObjectAlreadyActive),
     (char *) &_oc_PortableServer_POA_ObjectAlreadyActive,
     0,
-    sizeof (PortableServer::POA::ObjectAlreadyActive)
+    0
   );
 
 ::CORBA::TypeCode_ptr PortableServer::POA::_tc_ObjectAlreadyActive =
@@ -1034,7 +1034,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableServer_POA_ObjectNotActive (
     sizeof (_oc_PortableServer_POA_ObjectNotActive),
     (char *) &_oc_PortableServer_POA_ObjectNotActive,
     0,
-    sizeof (PortableServer::POA::ObjectNotActive)
+    0
   );
 
 ::CORBA::TypeCode_ptr PortableServer::POA::_tc_ObjectNotActive =
@@ -1172,7 +1172,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableServer_POA_ServantAlreadyActive (
     sizeof (_oc_PortableServer_POA_ServantAlreadyActive),
     (char *) &_oc_PortableServer_POA_ServantAlreadyActive,
     0,
-    sizeof (PortableServer::POA::ServantAlreadyActive)
+    0
   );
 
 ::CORBA::TypeCode_ptr PortableServer::POA::_tc_ServantAlreadyActive =
@@ -1308,7 +1308,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableServer_POA_ServantNotActive (
     sizeof (_oc_PortableServer_POA_ServantNotActive),
     (char *) &_oc_PortableServer_POA_ServantNotActive,
     0,
-    sizeof (PortableServer::POA::ServantNotActive)
+    0
   );
 
 ::CORBA::TypeCode_ptr PortableServer::POA::_tc_ServantNotActive =
@@ -1442,7 +1442,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableServer_POA_WrongAdapter (
     sizeof (_oc_PortableServer_POA_WrongAdapter),
     (char *) &_oc_PortableServer_POA_WrongAdapter,
     0,
-    sizeof (PortableServer::POA::WrongAdapter)
+    0
   );
 
 ::CORBA::TypeCode_ptr PortableServer::POA::_tc_WrongAdapter =
@@ -1575,7 +1575,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableServer_POA_WrongPolicy (
     sizeof (_oc_PortableServer_POA_WrongPolicy),
     (char *) &_oc_PortableServer_POA_WrongPolicy,
     0,
-    sizeof (PortableServer::POA::WrongPolicy)
+    0
   );
 
 ::CORBA::TypeCode_ptr PortableServer::POA::_tc_WrongPolicy =

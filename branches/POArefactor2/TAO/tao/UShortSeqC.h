@@ -73,22 +73,22 @@
 
 namespace CORBA
 {
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_sequence/sequence_ch.cpp:101
 
 #if !defined (_CORBA_USHORTSEQ_CH_)
 #define _CORBA_USHORTSEQ_CH_
-
+  
   class UShortSeq;
-
+  
   typedef
     TAO_FixedSeq_Var_T<
         UShortSeq,
         CORBA::UShort
       >
     UShortSeq_var;
-
+  
   typedef
     TAO_Seq_Out_T<
         UShortSeq,
@@ -96,7 +96,7 @@ namespace CORBA
         CORBA::UShort
       >
     UShortSeq_out;
-
+  
   class TAO_Export UShortSeq
     : public
         TAO_Unbounded_Sequence<
@@ -109,22 +109,22 @@ namespace CORBA
     UShortSeq (
         CORBA::ULong max,
         CORBA::ULong length,
-        CORBA::UShort* buffer,
+        CORBA::UShort* buffer, 
         CORBA::Boolean release = 0
       );
     UShortSeq (const UShortSeq &);
     ~UShortSeq (void);
-
+    
     static void _tao_any_destructor (void *);
-
+    
     typedef UShortSeq_var _var_type;
   };
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
-
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_UShortSeq;
 
 // TAO_IDL - Generated from

@@ -63,7 +63,7 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_WStringSeq (
     sizeof (_oc_CORBA_WStringSeq),
     (char *) &_oc_CORBA_WStringSeq,
     0,
-    sizeof (CORBA::WStringSeq)
+    0
   );
 
 namespace CORBA

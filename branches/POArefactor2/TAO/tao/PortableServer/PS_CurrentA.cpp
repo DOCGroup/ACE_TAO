@@ -57,7 +57,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableServer_Current (
     sizeof (_oc_PortableServer_Current),
     (char *) &_oc_PortableServer_Current,
     0,
-    sizeof (PortableServer::Current)
+    0
   );
 
 namespace PortableServer

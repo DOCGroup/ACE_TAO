@@ -50,6 +50,7 @@
 #include "tao/Seq_Var_T.h"
 #include "tao/Seq_Out_T.h"
 
+#include "tao/Policy_ForwardC.h"
 #include "tao/OctetSeqC.h"
 #include "tao/PortableServer/PS_ForwardC.h"
 #include "tao/PortableServer/IdAssignmentPolicyC.h"
@@ -1272,69 +1273,6 @@ namespace TAO
     static ::PortableServer::POA_ptr nil (void);
     static CORBA::Boolean marshal (
         ::PortableServer::POA_ptr p,
-        TAO_OutputCDR & cdr
-      );
-  };
-
-#endif /* end #if !defined */
-
-#if !defined (_PORTABLESERVER_POAMANAGER__TRAITS_CH_)
-#define _PORTABLESERVER_POAMANAGER__TRAITS_CH_
-  
-  ACE_TEMPLATE_SPECIALIZATION
-  struct TAO_PortableServer_Export Objref_Traits< ::PortableServer::POAManager>
-  {
-    static ::PortableServer::POAManager_ptr duplicate (
-        ::PortableServer::POAManager_ptr
-      );
-    static void release (
-        ::PortableServer::POAManager_ptr
-      );
-    static ::PortableServer::POAManager_ptr nil (void);
-    static CORBA::Boolean marshal (
-        ::PortableServer::POAManager_ptr p,
-        TAO_OutputCDR & cdr
-      );
-  };
-
-#endif /* end #if !defined */
-
-#if !defined (_PORTABLESERVER_ADAPTERACTIVATOR__TRAITS_CH_)
-#define _PORTABLESERVER_ADAPTERACTIVATOR__TRAITS_CH_
-  
-  ACE_TEMPLATE_SPECIALIZATION
-  struct TAO_PortableServer_Export Objref_Traits< ::PortableServer::AdapterActivator>
-  {
-    static ::PortableServer::AdapterActivator_ptr duplicate (
-        ::PortableServer::AdapterActivator_ptr
-      );
-    static void release (
-        ::PortableServer::AdapterActivator_ptr
-      );
-    static ::PortableServer::AdapterActivator_ptr nil (void);
-    static CORBA::Boolean marshal (
-        ::PortableServer::AdapterActivator_ptr p,
-        TAO_OutputCDR & cdr
-      );
-  };
-
-#endif /* end #if !defined */
-
-#if !defined (_PORTABLESERVER_SERVANTMANAGER__TRAITS_CH_)
-#define _PORTABLESERVER_SERVANTMANAGER__TRAITS_CH_
-  
-  ACE_TEMPLATE_SPECIALIZATION
-  struct TAO_PortableServer_Export Objref_Traits< ::PortableServer::ServantManager>
-  {
-    static ::PortableServer::ServantManager_ptr duplicate (
-        ::PortableServer::ServantManager_ptr
-      );
-    static void release (
-        ::PortableServer::ServantManager_ptr
-      );
-    static ::PortableServer::ServantManager_ptr nil (void);
-    static CORBA::Boolean marshal (
-        ::PortableServer::ServantManager_ptr p,
         TAO_OutputCDR & cdr
       );
   };

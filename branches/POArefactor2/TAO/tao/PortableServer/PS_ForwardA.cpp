@@ -80,7 +80,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableServer_ObjectId (
     sizeof (_oc_PortableServer_ObjectId),
     (char *) &_oc_PortableServer_ObjectId,
     0,
-    sizeof (PortableServer::ObjectId)
+    0
   );
 
 namespace PortableServer

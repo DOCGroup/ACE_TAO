@@ -77,7 +77,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableServer_ServantRetentionPolicyValue (
     sizeof (_oc_PortableServer_ServantRetentionPolicyValue),
     (char *) &_oc_PortableServer_ServantRetentionPolicyValue,
     0,
-    sizeof (PortableServer::ServantRetentionPolicyValue)
+    0
   );
 
 namespace PortableServer
@@ -121,7 +121,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableServer_ServantRetentionPolicy (
     sizeof (_oc_PortableServer_ServantRetentionPolicy),
     (char *) &_oc_PortableServer_ServantRetentionPolicy,
     0,
-    sizeof (PortableServer::ServantRetentionPolicy)
+    0
   );
 
 namespace PortableServer

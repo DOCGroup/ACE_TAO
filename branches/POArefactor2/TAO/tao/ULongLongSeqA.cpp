@@ -64,7 +64,7 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_ULongLongSeq (
     sizeof (_oc_CORBA_ULongLongSeq),
     (char *) &_oc_CORBA_ULongLongSeq,
     0,
-    sizeof (CORBA::ULongLongSeq)
+    0
   );
 
 namespace CORBA

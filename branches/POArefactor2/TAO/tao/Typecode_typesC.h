@@ -157,8 +157,13 @@ namespace CORBA
 // Traits specializations.
 namespace TAO
 {
-
 }
+
+// TAO_IDL - Generated from
+// be\be_visitor_enum/cdr_op_ch.cpp:50
+
+TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA::TCKind &);
+TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::TCKind &);
 
 // Workaround for a Visual Studio .NET bug where this class is not
 // properly imported by an application if typedef'd or subclassed,
@@ -168,12 +173,6 @@ namespace TAO
 #if defined ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT
   template class TAO_Export TAO_Unbounded_Pseudo_Sequence<CORBA::TypeCode>;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT */
-
-// TAO_IDL - Generated from
-// be\be_visitor_enum/cdr_op_ch.cpp:50
-
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA::TCKind &);
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::TCKind &);
 
 // TAO_IDL - Generated from
 // be\be_codegen.cpp:958

@@ -108,7 +108,7 @@ static CORBA::TypeCode _tc_TAO_tc_Messaging_PolicyValue (
     sizeof (_oc_Messaging_PolicyValue),
     (char *) &_oc_Messaging_PolicyValue,
     0,
-    sizeof (Messaging::PolicyValue)
+    0
   );
 
 namespace Messaging
@@ -222,7 +222,7 @@ static CORBA::TypeCode _tc_TAO_tc_Messaging_PolicyValueSeq (
     sizeof (_oc_Messaging_PolicyValueSeq),
     (char *) &_oc_Messaging_PolicyValueSeq,
     0,
-    sizeof (Messaging::PolicyValueSeq)
+    0
   );
 
 namespace Messaging

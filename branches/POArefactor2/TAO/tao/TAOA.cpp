@@ -63,7 +63,7 @@ static CORBA::TypeCode _tc_TAO_tc_TAO_BufferingConstraintMode (
     sizeof (_oc_TAO_BufferingConstraintMode),
     (char *) &_oc_TAO_BufferingConstraintMode,
     0,
-    sizeof (TAO::BufferingConstraintMode)
+    0
   );
 
 namespace TAO
@@ -164,7 +164,7 @@ static CORBA::TypeCode _tc_TAO_tc_TAO_BufferingConstraint (
     sizeof (_oc_TAO_BufferingConstraint),
     (char *) &_oc_TAO_BufferingConstraint,
     0,
-    sizeof (TAO::BufferingConstraint)
+    0
   );
 
 namespace TAO
@@ -206,7 +206,7 @@ static CORBA::TypeCode _tc_TAO_tc_TAO_BufferingConstraintPolicy (
     sizeof (_oc_TAO_BufferingConstraintPolicy),
     (char *) &_oc_TAO_BufferingConstraintPolicy,
     0,
-    sizeof (TAO::BufferingConstraintPolicy)
+    0
   );
 
 namespace TAO

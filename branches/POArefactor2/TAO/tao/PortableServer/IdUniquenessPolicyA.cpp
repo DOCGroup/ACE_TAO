@@ -74,7 +74,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableServer_IdUniquenessPolicyValue (
     sizeof (_oc_PortableServer_IdUniquenessPolicyValue),
     (char *) &_oc_PortableServer_IdUniquenessPolicyValue,
     0,
-    sizeof (PortableServer::IdUniquenessPolicyValue)
+    0
   );
 
 namespace PortableServer
@@ -116,7 +116,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableServer_IdUniquenessPolicy (
     sizeof (_oc_PortableServer_IdUniquenessPolicy),
     (char *) &_oc_PortableServer_IdUniquenessPolicy,
     0,
-    sizeof (PortableServer::IdUniquenessPolicy)
+    0
   );
 
 namespace PortableServer

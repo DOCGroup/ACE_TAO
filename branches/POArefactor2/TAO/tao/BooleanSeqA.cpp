@@ -63,7 +63,7 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_BooleanSeq (
     sizeof (_oc_CORBA_BooleanSeq),
     (char *) &_oc_CORBA_BooleanSeq,
     0,
-    sizeof (CORBA::BooleanSeq)
+    0
   );
 
 namespace CORBA

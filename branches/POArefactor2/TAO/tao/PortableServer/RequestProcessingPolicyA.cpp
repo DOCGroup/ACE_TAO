@@ -89,7 +89,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableServer_RequestProcessingPolicyValue (
     sizeof (_oc_PortableServer_RequestProcessingPolicyValue),
     (char *) &_oc_PortableServer_RequestProcessingPolicyValue,
     0,
-    sizeof (PortableServer::RequestProcessingPolicyValue)
+    0
   );
 
 namespace PortableServer
@@ -135,7 +135,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableServer_RequestProcessingPolicy (
     sizeof (_oc_PortableServer_RequestProcessingPolicy),
     (char *) &_oc_PortableServer_RequestProcessingPolicy,
     0,
-    sizeof (PortableServer::RequestProcessingPolicy)
+    0
   );
 
 namespace PortableServer

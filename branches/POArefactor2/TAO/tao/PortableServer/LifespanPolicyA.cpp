@@ -72,7 +72,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableServer_LifespanPolicyValue (
     sizeof (_oc_PortableServer_LifespanPolicyValue),
     (char *) &_oc_PortableServer_LifespanPolicyValue,
     0,
-    sizeof (PortableServer::LifespanPolicyValue)
+    0
   );
 
 namespace PortableServer
@@ -112,7 +112,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableServer_LifespanPolicy (
     sizeof (_oc_PortableServer_LifespanPolicy),
     (char *) &_oc_PortableServer_LifespanPolicy,
     0,
-    sizeof (PortableServer::LifespanPolicy)
+    0
   );
 
 namespace PortableServer

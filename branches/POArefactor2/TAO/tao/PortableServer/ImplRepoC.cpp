@@ -523,7 +523,7 @@ static CORBA::TypeCode _tc_TAO_tc_ImplementationRepository_AlreadyRegistered (
     sizeof (_oc_ImplementationRepository_AlreadyRegistered),
     (char *) &_oc_ImplementationRepository_AlreadyRegistered,
     0,
-    sizeof (ImplementationRepository::AlreadyRegistered)
+    0
   );
 
 namespace ImplementationRepository
@@ -693,7 +693,7 @@ static CORBA::TypeCode _tc_TAO_tc_ImplementationRepository_CannotActivate (
     sizeof (_oc_ImplementationRepository_CannotActivate),
     (char *) &_oc_ImplementationRepository_CannotActivate,
     0,
-    sizeof (ImplementationRepository::CannotActivate)
+    0
   );
 
 namespace ImplementationRepository
@@ -838,7 +838,7 @@ static CORBA::TypeCode _tc_TAO_tc_ImplementationRepository_NotFound (
     sizeof (_oc_ImplementationRepository_NotFound),
     (char *) &_oc_ImplementationRepository_NotFound,
     0,
-    sizeof (ImplementationRepository::NotFound)
+    0
   );
 
 namespace ImplementationRepository

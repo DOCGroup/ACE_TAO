@@ -228,7 +228,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableServer_POAManager_AdapterInactive (
     sizeof (_oc_PortableServer_POAManager_AdapterInactive),
     (char *) &_oc_PortableServer_POAManager_AdapterInactive,
     0,
-    sizeof (PortableServer::POAManager::AdapterInactive)
+    0
   );
 
 ::CORBA::TypeCode_ptr PortableServer::POAManager::_tc_AdapterInactive =

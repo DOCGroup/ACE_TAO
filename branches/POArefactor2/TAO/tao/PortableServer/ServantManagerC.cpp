@@ -376,7 +376,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableServer_ForwardRequest (
     sizeof (_oc_PortableServer_ForwardRequest),
     (char *) &_oc_PortableServer_ForwardRequest,
     0,
-    sizeof (PortableServer::ForwardRequest)
+    0
   );
 
 namespace PortableServer

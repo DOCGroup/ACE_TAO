@@ -62,7 +62,7 @@ static CORBA::TypeCode _tc_TAO_tc_ImplementationRepository_ServerObject (
     sizeof (_oc_ImplementationRepository_ServerObject),
     (char *) &_oc_ImplementationRepository_ServerObject,
     0,
-    sizeof (ImplementationRepository::ServerObject)
+    0
   );
 
 namespace ImplementationRepository
@@ -116,7 +116,7 @@ static CORBA::TypeCode _tc_TAO_tc_ImplementationRepository_EnvironmentVariable (
     sizeof (_oc_ImplementationRepository_EnvironmentVariable),
     (char *) &_oc_ImplementationRepository_EnvironmentVariable,
     0,
-    sizeof (ImplementationRepository::EnvironmentVariable)
+    0
   );
 
 namespace ImplementationRepository
@@ -198,7 +198,7 @@ static CORBA::TypeCode _tc_TAO_tc_ImplementationRepository_EnvironmentList (
     sizeof (_oc_ImplementationRepository_EnvironmentList),
     (char *) &_oc_ImplementationRepository_EnvironmentList,
     0,
-    sizeof (ImplementationRepository::EnvironmentList)
+    0
   );
 
 namespace ImplementationRepository
@@ -253,7 +253,7 @@ static CORBA::TypeCode _tc_TAO_tc_ImplementationRepository_ActivationMode (
     sizeof (_oc_ImplementationRepository_ActivationMode),
     (char *) &_oc_ImplementationRepository_ActivationMode,
     0,
-    sizeof (ImplementationRepository::ActivationMode)
+    0
   );
 
 namespace ImplementationRepository
@@ -430,7 +430,7 @@ static CORBA::TypeCode _tc_TAO_tc_ImplementationRepository_StartupOptions (
     sizeof (_oc_ImplementationRepository_StartupOptions),
     (char *) &_oc_ImplementationRepository_StartupOptions,
     0,
-    sizeof (ImplementationRepository::StartupOptions)
+    0
   );
 
 namespace ImplementationRepository
@@ -646,7 +646,7 @@ static CORBA::TypeCode _tc_TAO_tc_ImplementationRepository_ServerInformation (
     sizeof (_oc_ImplementationRepository_ServerInformation),
     (char *) &_oc_ImplementationRepository_ServerInformation,
     0,
-    sizeof (ImplementationRepository::ServerInformation)
+    0
   );
 
 namespace ImplementationRepository
@@ -893,7 +893,7 @@ static CORBA::TypeCode _tc_TAO_tc_ImplementationRepository_ServerInformationList
     sizeof (_oc_ImplementationRepository_ServerInformationList),
     (char *) &_oc_ImplementationRepository_ServerInformationList,
     0,
-    sizeof (ImplementationRepository::ServerInformationList)
+    0
   );
 
 namespace ImplementationRepository
@@ -939,7 +939,7 @@ static CORBA::TypeCode _tc_TAO_tc_ImplementationRepository_ServerInformationIter
     sizeof (_oc_ImplementationRepository_ServerInformationIterator),
     (char *) &_oc_ImplementationRepository_ServerInformationIterator,
     0,
-    sizeof (ImplementationRepository::ServerInformationIterator)
+    0
   );
 
 namespace ImplementationRepository
@@ -979,7 +979,7 @@ static CORBA::TypeCode _tc_TAO_tc_ImplementationRepository_Administration (
     sizeof (_oc_ImplementationRepository_Administration),
     (char *) &_oc_ImplementationRepository_Administration,
     0,
-    sizeof (ImplementationRepository::Administration)
+    0
   );
 
 namespace ImplementationRepository

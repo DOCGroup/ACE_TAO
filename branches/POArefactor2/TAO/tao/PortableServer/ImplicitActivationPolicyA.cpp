@@ -85,7 +85,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableServer_ImplicitActivationPolicyValue (
     sizeof (_oc_PortableServer_ImplicitActivationPolicyValue),
     (char *) &_oc_PortableServer_ImplicitActivationPolicyValue,
     0,
-    sizeof (PortableServer::ImplicitActivationPolicyValue)
+    0
   );
 
 namespace PortableServer
@@ -130,7 +130,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableServer_ImplicitActivationPolicy (
     sizeof (_oc_PortableServer_ImplicitActivationPolicy),
     (char *) &_oc_PortableServer_ImplicitActivationPolicy,
     0,
-    sizeof (PortableServer::ImplicitActivationPolicy)
+    0
   );
 
 namespace PortableServer

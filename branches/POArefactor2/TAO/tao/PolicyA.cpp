@@ -61,7 +61,7 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_PolicyErrorCode (
     sizeof (_oc_CORBA_PolicyErrorCode),
     (char *) &_oc_CORBA_PolicyErrorCode,
     0,
-    sizeof (CORBA::PolicyErrorCode)
+    0
   );
 
 namespace CORBA
@@ -95,7 +95,7 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_Policy (
     sizeof (_oc_CORBA_Policy),
     (char *) &_oc_CORBA_Policy,
     0,
-    sizeof (CORBA::Policy)
+    0
   );
 
 namespace CORBA
@@ -132,7 +132,7 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_PolicyManager (
     sizeof (_oc_CORBA_PolicyManager),
     (char *) &_oc_CORBA_PolicyManager,
     0,
-    sizeof (CORBA::PolicyManager)
+    0
   );
 
 namespace CORBA
@@ -169,7 +169,7 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_PolicyCurrent (
     sizeof (_oc_CORBA_PolicyCurrent),
     (char *) &_oc_CORBA_PolicyCurrent,
     0,
-    sizeof (CORBA::PolicyCurrent)
+    0
   );
 
 namespace CORBA

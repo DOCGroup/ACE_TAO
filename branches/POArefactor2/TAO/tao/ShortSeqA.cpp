@@ -62,7 +62,7 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_ShortSeq (
     sizeof (_oc_CORBA_ShortSeq),
     (char *) &_oc_CORBA_ShortSeq,
     0,
-    sizeof (CORBA::ShortSeq)
+    0
   );
 
 namespace CORBA

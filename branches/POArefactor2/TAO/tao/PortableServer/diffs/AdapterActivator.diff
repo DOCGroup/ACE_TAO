@@ -1,5 +1,5 @@
---- orig/AdapterActivatorC.h	2004-11-15 09:12:33.194750400 +0100
-+++ AdapterActivatorC.h	2004-11-15 09:12:47.024636800 +0100
+--- orig/AdapterActivatorC.h	2004-11-17 09:21:58.954374400 +0100
++++ AdapterActivatorC.h	2004-11-17 09:22:10.591107200 +0100
 @@ -73,6 +73,8 @@
  // TAO_IDL - Generated from 
  // be\be_visitor_root/root_ch.cpp:63
@@ -18,8 +18,8 @@
  // TAO_IDL - Generated from
  // be\be_codegen.cpp:958
  
---- orig/AdapterActivatorC.cpp	2004-11-15 09:12:33.194750400 +0100
-+++ AdapterActivatorC.cpp	2004-11-15 09:12:47.114766400 +0100
+--- orig/AdapterActivatorC.cpp	2004-11-17 09:21:58.954374400 +0100
++++ AdapterActivatorC.cpp	2004-11-17 09:22:10.731308800 +0100
 @@ -45,6 +45,8 @@
  // TAO_IDL - Generated from
  // be\be_visitor_arg_traits.cpp:64
@@ -35,8 +35,8 @@
  #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
 +
 +#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
---- orig/AdapterActivatorA.cpp	2004-11-15 09:12:33.214779200 +0100
-+++ AdapterActivatorA.cpp	2004-11-15 09:12:47.184867200 +0100
+--- orig/AdapterActivatorA.cpp	2004-11-17 09:21:58.974403200 +0100
++++ AdapterActivatorA.cpp	2004-11-17 09:22:10.841467200 +0100
 @@ -32,6 +32,8 @@
  // TAO_IDL - Generated from
  // be\be_visitor_typecode/typecode_defn.cpp:295

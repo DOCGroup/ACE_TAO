@@ -2,6 +2,7 @@ tao_idl.exe -o orig -Gp -Gd -Ge 1 -GT -GA -Sc -Wb,export_macro=TAO_Export -Wb,ex
 tao_idl.exe -o orig -Ge 1 -GT -GA -Sc -Wb,export_macro=TAO_Export -Wb,export_include=tao/TAO_Export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" -I c:\ace\poarefactor\ace_wrappers\tao WStringSeq.pidl
 tao_idl.exe -o orig -Ge 1 -GT -GA -Sc -Wb,export_macro=TAO_Export -Wb,export_include=tao/TAO_Export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" -I c:\ace\poarefactor\ace_wrappers\tao WCharSeq.pidl
 tao_idl.exe -o orig -Ge 1 -GT -GA -Sc -Wb,export_macro=TAO_Export -Wb,export_include=tao/TAO_Export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" -I c:\ace\poarefactor\ace_wrappers\tao ULongSeq.pidl
+tao_idl.exe -o orig -Ge 1 -GT -GA -Sc -Wb,export_macro=TAO_Export -Wb,export_include=tao/TAO_Export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" -I c:\ace\poarefactor\ace_wrappers\tao ULongLongSeq.pidl
 tao_idl.exe -o orig -Ge 1 -GT -GA -Sc -Wb,export_macro=TAO_Export -Wb,export_include=tao/TAO_Export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" -I c:\ace\poarefactor\ace_wrappers\tao UShortSeq.pidl
 tao_idl.exe -o orig -Ge 1 -GT -GA -Sc -Wb,export_macro=TAO_Export -Wb,export_include=tao/TAO_Export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" -I c:\ace\poarefactor\ace_wrappers\tao ShortSeq.pidl
 tao_idl.exe -o orig -Ge 1 -GT -GA -Sc -Wb,export_macro=TAO_Export -Wb,export_include=tao/TAO_Export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" -I c:\ace\poarefactor\ace_wrappers\tao BooleanSeq.pidl
@@ -32,3 +33,4 @@ patch < diffs/PortableInterceptor.diff
 patch < diffs/Policy.diff
 patch < diffs/Typecode_types.diff
 patch < diffs/UShortSeq.diff
+patch < diffs/Domain.diff

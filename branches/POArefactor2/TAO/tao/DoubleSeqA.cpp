@@ -62,7 +62,7 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_DoubleSeq (
     sizeof (_oc_CORBA_DoubleSeq),
     (char *) &_oc_CORBA_DoubleSeq,
     0,
-    sizeof (CORBA::DoubleSeq)
+    0
   );
 
 namespace CORBA

@@ -1,5 +1,5 @@
---- orig/ServantManagerC.h	2004-11-15 09:12:41.056054400 +0100
-+++ ServantManagerC.h	2004-11-15 09:12:49.388035200 +0100
+--- orig/ServantManagerC.h	2004-11-17 09:22:04.832827200 +0100
++++ ServantManagerC.h	2004-11-17 09:22:13.154793600 +0100
 @@ -70,6 +70,8 @@
  // TAO_IDL - Generated from 
  // be\be_visitor_root/root_ch.cpp:63
@@ -18,8 +18,8 @@
  // TAO_IDL - Generated from
  // be\be_codegen.cpp:958
  
---- orig/ServantManagerC.cpp	2004-11-15 09:12:41.056054400 +0100
-+++ ServantManagerC.cpp	2004-11-15 09:12:49.488179200 +0100
+--- orig/ServantManagerC.cpp	2004-11-17 09:22:04.832827200 +0100
++++ ServantManagerC.cpp	2004-11-17 09:22:13.224894400 +0100
 @@ -51,6 +51,7 @@
  {
  }
@@ -34,8 +34,8 @@
  #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
 +
 +#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
---- orig/ServantManagerA.cpp	2004-11-15 09:12:41.076083200 +0100
-+++ ServantManagerA.cpp	2004-11-15 09:12:49.568294400 +0100
+--- orig/ServantManagerA.cpp	2004-11-17 09:22:04.852856000 +0100
++++ ServantManagerA.cpp	2004-11-17 09:22:13.284980800 +0100
 @@ -30,6 +30,8 @@
  #include "tao/Any_Impl_T.h"
  #include "tao/Any_Dual_Impl_T.h"

@@ -189,7 +189,7 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_WrongTransaction (
     sizeof (_oc_CORBA_WrongTransaction),
     (char *) &_oc_CORBA_WrongTransaction,
     0,
-    sizeof (CORBA::WrongTransaction)
+    0
   );
 
 namespace CORBA

@@ -58,7 +58,7 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_DomainManager (
     sizeof (_oc_CORBA_DomainManager),
     (char *) &_oc_CORBA_DomainManager,
     0,
-    sizeof (CORBA::DomainManager)
+    0
   );
 
 namespace CORBA
@@ -98,7 +98,7 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_ConstructionPolicy (
     sizeof (_oc_CORBA_ConstructionPolicy),
     (char *) &_oc_CORBA_ConstructionPolicy,
     0,
-    sizeof (CORBA::ConstructionPolicy)
+    0
   );
 
 namespace CORBA
@@ -161,7 +161,7 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_DomainManagerList (
     sizeof (_oc_CORBA_DomainManagerList),
     (char *) &_oc_CORBA_DomainManagerList,
     0,
-    sizeof (CORBA::DomainManagerList)
+    0
   );
 
 namespace CORBA

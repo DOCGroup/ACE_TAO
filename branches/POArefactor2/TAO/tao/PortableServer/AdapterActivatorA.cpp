@@ -63,7 +63,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableServer_AdapterActivator (
     sizeof (_oc_PortableServer_AdapterActivator),
     (char *) &_oc_PortableServer_AdapterActivator,
     0,
-    sizeof (PortableServer::AdapterActivator)
+    0
   );
 
 namespace PortableServer

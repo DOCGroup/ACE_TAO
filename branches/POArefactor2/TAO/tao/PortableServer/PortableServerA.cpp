@@ -62,7 +62,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableServer_POAList (
     sizeof (_oc_PortableServer_POAList),
     (char *) &_oc_PortableServer_POAList,
     0,
-    sizeof (PortableServer::POAList)
+    0
   );
 
 namespace PortableServer
@@ -98,7 +98,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableServer_POA (
     sizeof (_oc_PortableServer_POA),
     (char *) &_oc_PortableServer_POA,
     0,
-    sizeof (PortableServer::POA)
+    0
   );
 
 namespace PortableServer

@@ -134,27 +134,6 @@ namespace PortableServer
 // Traits specializations.
 namespace TAO
 {
-
-#if !defined (_PORTABLESERVER_POA__TRAITS_CH_)
-#define _PORTABLESERVER_POA__TRAITS_CH_
-  
-  ACE_TEMPLATE_SPECIALIZATION
-  struct TAO_PortableServer_Export Objref_Traits< ::PortableServer::POA>
-  {
-    static ::PortableServer::POA_ptr duplicate (
-        ::PortableServer::POA_ptr
-      );
-    static void release (
-        ::PortableServer::POA_ptr
-      );
-    static ::PortableServer::POA_ptr nil (void);
-    static CORBA::Boolean marshal (
-        ::PortableServer::POA_ptr p,
-        TAO_OutputCDR & cdr
-      );
-  };
-
-#endif /* end #if !defined */
 }
 
 // TAO_IDL - Generated from

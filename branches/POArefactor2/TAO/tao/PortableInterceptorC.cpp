@@ -383,7 +383,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableInterceptor_ForwardRequest (
     sizeof (_oc_PortableInterceptor_ForwardRequest),
     (char *) &_oc_PortableInterceptor_ForwardRequest,
     0,
-    sizeof (PortableInterceptor::ForwardRequest)
+    0
   );
 
 namespace PortableInterceptor
@@ -529,7 +529,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableInterceptor_InvalidSlot (
     sizeof (_oc_PortableInterceptor_InvalidSlot),
     (char *) &_oc_PortableInterceptor_InvalidSlot,
     0,
-    sizeof (PortableInterceptor::InvalidSlot)
+    0
   );
 
 namespace PortableInterceptor
@@ -1774,7 +1774,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableInterceptor_ORBInitInfo_DuplicateName 
     sizeof (_oc_PortableInterceptor_ORBInitInfo_DuplicateName),
     (char *) &_oc_PortableInterceptor_ORBInitInfo_DuplicateName,
     0,
-    sizeof (PortableInterceptor::ORBInitInfo::DuplicateName)
+    0
   );
 
 ::CORBA::TypeCode_ptr PortableInterceptor::ORBInitInfo::_tc_DuplicateName =
@@ -1910,7 +1910,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableInterceptor_ORBInitInfo_InvalidName (
     sizeof (_oc_PortableInterceptor_ORBInitInfo_InvalidName),
     (char *) &_oc_PortableInterceptor_ORBInitInfo_InvalidName,
     0,
-    sizeof (PortableInterceptor::ORBInitInfo::InvalidName)
+    0
   );
 
 ::CORBA::TypeCode_ptr PortableInterceptor::ORBInitInfo::_tc_InvalidName =

@@ -184,7 +184,7 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_Bounds (
     sizeof (_oc_CORBA_Bounds),
     (char *) &_oc_CORBA_Bounds,
     0,
-    sizeof (CORBA::Bounds)
+    0
   );
 
 namespace CORBA

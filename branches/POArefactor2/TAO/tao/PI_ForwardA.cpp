@@ -60,7 +60,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableInterceptor_ServerId (
     sizeof (_oc_PortableInterceptor_ServerId),
     (char *) &_oc_PortableInterceptor_ServerId,
     0,
-    sizeof (PortableInterceptor::ServerId)
+    0
   );
 
 namespace PortableInterceptor
@@ -99,7 +99,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableInterceptor_ORBId (
     sizeof (_oc_PortableInterceptor_ORBId),
     (char *) &_oc_PortableInterceptor_ORBId,
     0,
-    sizeof (PortableInterceptor::ORBId)
+    0
   );
 
 namespace PortableInterceptor
@@ -162,7 +162,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableInterceptor_AdapterName (
     sizeof (_oc_PortableInterceptor_AdapterName),
     (char *) &_oc_PortableInterceptor_AdapterName,
     0,
-    sizeof (PortableInterceptor::AdapterName)
+    0
   );
 
 namespace PortableInterceptor
@@ -225,7 +225,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableInterceptor_ObjectId (
     sizeof (_oc_PortableInterceptor_ObjectId),
     (char *) &_oc_PortableInterceptor_ObjectId,
     0,
-    sizeof (PortableInterceptor::ObjectId)
+    0
   );
 
 namespace PortableInterceptor
@@ -270,7 +270,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableInterceptor_AdapterManagerId (
     sizeof (_oc_PortableInterceptor_AdapterManagerId),
     (char *) &_oc_PortableInterceptor_AdapterManagerId,
     0,
-    sizeof (PortableInterceptor::AdapterManagerId)
+    0
   );
 
 namespace PortableInterceptor
@@ -313,7 +313,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableInterceptor_AdapterState (
     sizeof (_oc_PortableInterceptor_AdapterState),
     (char *) &_oc_PortableInterceptor_AdapterState,
     0,
-    sizeof (PortableInterceptor::AdapterState)
+    0
   );
 
 namespace PortableInterceptor

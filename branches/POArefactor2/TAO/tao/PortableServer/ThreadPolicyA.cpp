@@ -77,7 +77,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableServer_ThreadPolicyValue (
     sizeof (_oc_PortableServer_ThreadPolicyValue),
     (char *) &_oc_PortableServer_ThreadPolicyValue,
     0,
-    sizeof (PortableServer::ThreadPolicyValue)
+    0
   );
 
 namespace PortableServer
@@ -116,7 +116,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableServer_ThreadPolicy (
     sizeof (_oc_PortableServer_ThreadPolicy),
     (char *) &_oc_PortableServer_ThreadPolicy,
     0,
-    sizeof (PortableServer::ThreadPolicy)
+    0
   );
 
 namespace PortableServer

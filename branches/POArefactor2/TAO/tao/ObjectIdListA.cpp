@@ -58,7 +58,7 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_ORB_ObjectId (
     sizeof (_oc_CORBA_ORB_ObjectId),
     (char *) &_oc_CORBA_ORB_ObjectId,
     0,
-    sizeof (CORBA::ORB_ObjectId)
+    0
   );
 
 namespace CORBA
@@ -123,7 +123,7 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_ORB_ObjectIdList (
     sizeof (_oc_CORBA_ORB_ObjectIdList),
     (char *) &_oc_CORBA_ORB_ObjectIdList,
     0,
-    sizeof (CORBA::ORB_ObjectIdList)
+    0
   );
 
 namespace CORBA
