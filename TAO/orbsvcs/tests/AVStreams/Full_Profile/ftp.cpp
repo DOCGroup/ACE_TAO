@@ -120,7 +120,7 @@ Client::parse_args (int argc,
           break;
         case 'l':
           this->address_ = ACE_OS::strdup (opts.opt_arg ());
-		  l_addr = 1; 
+		  l_addr = 1;
           break;
         case 'a':
           this->peer_addr_ = ACE_OS::strdup (opts.opt_arg ());
@@ -145,7 +145,7 @@ Client::parse_args (int argc,
       address_ = buf;
       address_ += ":5000";
     }
-  
+
   if (p_addr == 0)
     {
       char buf [BUFSIZ];
@@ -154,7 +154,7 @@ Client::parse_args (int argc,
       peer_addr_ = buf;
       peer_addr_ += ":5050";
     }
-  
+
   return 0;
 }
 
@@ -252,7 +252,11 @@ Client::init (int argc,char **argv)
         {
           ACE_DEBUG ((LM_DEBUG,"file opened successfully\n"));
         }
-
+      else
+        {
+          ACE_ERROR_RETURN ((LM_ERROR, "file %s could not be opened\n",
+                                       this->filename_), -1);
+        }
     }
   ACE_CATCHANY
     {
@@ -303,12 +307,12 @@ Client::run (void)
 
       CORBA::Boolean result =
         this->streamctrl_.bind (sep_a_.in(),
-				sep_b.in(), 
-				the_qos.inout(), 
-				flow_spec 
+				sep_b.in(),
+				the_qos.inout(),
+				flow_spec
 				ACE_ENV_ARG_PARAMETER );
       ACE_TRY_CHECK;
-      
+
       timer.stop ();
       timer.elapsed_time (elapsed);
       elapsed.dump ();
