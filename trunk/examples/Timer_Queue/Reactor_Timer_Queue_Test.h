@@ -1,3 +1,23 @@
+/* -*- C++ -*- */
+
+// $Id$
+
+// ============================================================================
+//
+// = LIBRARY
+//    examples
+// 
+// = FILENAME
+//    Async_Timer_Queue_Test.h
+//
+// = DESCRIPTION
+//   // @@ Please comment me
+//
+// = AUTHORS
+//    Sergio Flores-Gaitan <sergio@cs.wustl.edu>
+// 
+// ============================================================================
+
 #if !defined (_REACTOR_TIMER_QUEUE_TEST_H_)
 #define _REACTOR_TIMER_QUEUE_TEST_H_
 

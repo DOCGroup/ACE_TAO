@@ -1,3 +1,23 @@
+/* -*- C++ -*- */
+
+// $Id$
+
+// ============================================================================
+//
+// = LIBRARY
+//    examples
+// 
+// = FILENAME
+//    Driver.h
+//
+// = DESCRIPTION
+//   // @@ Please comment me
+//
+// = AUTHORS
+//    Sergio Flores-Gaitan <sergio@cs.wustl.edu>
+// 
+// ============================================================================
+
 #if !defined (_DRIVER_H_)
 #define _DRIVER_H_
 
@@ -33,6 +53,7 @@ public:
     {
       return (receiver_.*action_) (arg);
     }
+
 private:
   Receiver &receiver_;
   Action action_;
@@ -66,4 +87,4 @@ protected:
 
 };
 
-#endif
+#endif /* _DRIVER_H_ */

@@ -1,3 +1,5 @@
+// $Id$
+
 // ============================================================================
 //
 // = LIBRARY
@@ -16,8 +18,8 @@
 //    Sergio Flores-Gaitan <sergio@cs.wustl.edu>  
 // 
 // ============================================================================
-#include <ace/Auto_Ptr.h>
 
+#include "ace/Auto_Ptr.h"
 #include "Driver.h"
 #include "Async_Timer_Queue_Test.h"
 
@@ -34,8 +36,7 @@ main (int, char *[])
   ACE_NEW_RETURN (tqtd, Async_Timer_Queue_Test_Driver, -1);
   driver = tqtd;
   
-  driver->run_test ()			;
-  return 0				;
+  return driver->run_test ();
 }
 
 

@@ -1,22 +1,5 @@
 // $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    examples
-// 
-// = FILENAME
-//    Async_Timer_Queue_Test.cpp
-//
-// = DESCRIPTION
-//      This test exercises the <ACE_Asynch_Timer_Queue_Adapter> 
-//      using an <ACE_Timer_Heap>.
-//
-// = AUTHORS
-//    Douglas C. Schmidt
-// 
-// ============================================================================
-
 #include "ace/Signal.h"
 #include "ace/Timer_Heap.h"
 #include "ace/Timer_Queue_Adapters.h"
