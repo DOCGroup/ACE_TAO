@@ -234,15 +234,16 @@ characteristics is documented later in this documentation.</LI>
 </OL>
 
 <P>
-<H3><FONT COLOR=RED><STRONG>NOTE:</STRONG></FONT> It is <EM>not</EM> necessary
-to make any changes to ACE or TAO to implement a pluggable
-protocol.  In fact, doing so would defeat the goal of having a
-truly pluggable protocol.</H3>
 
-<P>
-The next section goes into detail about TAO's pluggable protocol framework components
-and their public interfaces.
-
+The next section goes into detail about TAO's pluggable protocol
+framework components and their public interfaces.  It is our goal that
+no changes to ACE or TAO should be necessary to implement a pluggable
+protocol.  Naturally, as with all frameworks, it's only possible to
+achieve this goal if (1) all possible use-cases are understood in
+advance or (2) the framework is generalized when confronted with new
+use-cases that weren't handled before.  Therefore, we describe the
+conditions that must currently hold in order to develop and integrate
+a pluggable protocol for TAO.
 <P>
 <HR>
 <P>
@@ -3322,7 +3323,7 @@ examples of the Layers architecture.
     <ADDRESS><a href="mailto:ossama@uci.edu">Ossama Othman</a></ADDRESS>
 <!-- Created: Tue Dec 14 16:53:58 CST 1999 -->
 <!-- hhmts start -->
-Last modified: Tue Jan 25 14:21:33 PST 2000
+Last modified: Wed Feb  2 19:19:01 CST 2000
 <!-- hhmts end -->
 </BODY>
 </HTML>
