@@ -171,7 +171,7 @@ public:
   DEF_NARROW_FROM_SCOPE(UTL_Scope);
 
   // AST Dumping.
-  virtual void dump (ostream &o);
+  virtual void dump (ACE_OSTREAM_TYPE &o);
 
   // Other Operations.
 
@@ -330,13 +330,13 @@ private:
 };
 
 // Active iterator for a UTL_Scope node
-class TAO_IDL_FE_Export UTL_ScopeActiveIterator 
+class TAO_IDL_FE_Export UTL_ScopeActiveIterator
 {
 public:
   // Operations.
 
   // Constructor.
-  UTL_ScopeActiveIterator (UTL_Scope *s, 
+  UTL_ScopeActiveIterator (UTL_Scope *s,
                            UTL_Scope::ScopeIterationKind ik);
 
   // Advance to next item.

@@ -103,7 +103,7 @@ public:
   void decrease();
   // Decrease indentation level
 
-  void skip_to (ostream &o);
+  void skip_to (ACE_OSTREAM_TYPE &o);
   // Skip to indentation level stop
 
   void skip_to (FILE *fp);

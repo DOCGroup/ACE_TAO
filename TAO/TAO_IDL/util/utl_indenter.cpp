@@ -53,8 +53,8 @@ Technical Data and Computer Software clause at DFARS 252.227-7013 and FAR
 Sun, Sun Microsystems and the Sun logo are trademarks or registered
 trademarks of Sun Microsystems, Inc.
 
-SunSoft, Inc.  
-2550 Garcia Avenue 
+SunSoft, Inc.
+2550 Garcia Avenue
 Mountain View, California  94043
 
 NOTE:
@@ -67,8 +67,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // utl_indenter.cc - Implementation of indenter for dumping IDL AST
 //
 
-#include	"idl.h"
-#include	"idl_extern.h"
+#include        "idl.h"
+#include        "idl_extern.h"
 
 ACE_RCSID(util, utl_indenter, "$Id$")
 
@@ -112,7 +112,7 @@ UTL_Indenter::decrease ()
 
 // Produce white space to indent to current indentation level on ostream o
 void
-UTL_Indenter::skip_to (ostream &o)
+UTL_Indenter::skip_to (ACE_OSTREAM_TYPE &o)
 {
   long i;
 

@@ -65,10 +65,10 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 */
 
 // utl_string.cc - Implementation of quick and dirty TEMPORARY String
-//		   for IDL compiler
+//                 for IDL compiler
 
-#include	"idl.h"
-#include	"idl_extern.h"
+#include        "idl.h"
+#include        "idl_extern.h"
 
 ACE_RCSID(util, utl_string, "$Id$")
 
@@ -168,22 +168,22 @@ UTL_String::compare (UTL_String *s)
   char *s_c_str;
   long result;
 
-  if (this->c_str == 0 
-      || s == 0 
+  if (this->c_str == 0
+      || s == 0
       || (s_c_str = s->get_canonical_rep ()) == 0)
     {
       result = I_FALSE;
     }
   else
     {
-      result = 
+      result =
         (ACE_OS::strcmp (this->c_str, s_c_str) == 0) ? I_TRUE : I_FALSE;
     }
 
   /*
    * Check that the names are typed consistently.
    */
-  if (result == I_TRUE 
+  if (result == I_TRUE
       && ACE_OS::strcmp (this->p_str, s->get_string ()) != 0)
     {
       // Prevents redundant error reporting if we're in this branch.
@@ -191,12 +191,12 @@ UTL_String::compare (UTL_String *s)
 
       if (idl_global->case_diff_error ())
         {
-          idl_global->err ()->name_case_error (this->p_str, 
+          idl_global->err ()->name_case_error (this->p_str,
                                                s->get_string ());
         }
       else
         {
-          idl_global->err ()->name_case_warning (this->p_str, 
+          idl_global->err ()->name_case_warning (this->p_str,
                                                  s->get_string ());
         }
     }
@@ -207,11 +207,11 @@ UTL_String::compare (UTL_String *s)
 long
 UTL_String::compare_quiet (UTL_String *s)
 {
-  char	*s_c_str;
-  long	result;
+  char  *s_c_str;
+  long  result;
 
-  if (this->c_str == 0 
-      || s == 0 
+  if (this->c_str == 0
+      || s == 0
       || (s_c_str = s->get_canonical_rep ()) == 0)
     {
       result = I_FALSE;
@@ -274,7 +274,7 @@ UTL_String::get_canonical_rep (void)
 
 // AST Dumping.
 void
-UTL_String::dump (ostream &o)
+UTL_String::dump (ACE_OSTREAM_TYPE &o)
 {
   o << this->p_str;
 }

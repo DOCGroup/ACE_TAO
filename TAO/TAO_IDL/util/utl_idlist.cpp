@@ -70,23 +70,23 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 // NOTE: This list class only works correctly because we use single public
 //       inheritance, as opposed to multiple inheritance or public virtual.
-//	 It relies on a type-unsafe cast from UTL_List to subclasses, which
-//	 will cease to operate correctly if you use either multiple or
-//	 public virtual inheritance.
+//       It relies on a type-unsafe cast from UTL_List to subclasses, which
+//       will cease to operate correctly if you use either multiple or
+//       public virtual inheritance.
 //
-//	 For portability reasons we have decided to provide both this and
-//	 an implementation of the list classes in terms of templates. If
-//	 your compiler supports templates, please use the files in the
-//	 include/utl_tmpl and util/utl_tmpl directories instead of the
-//	 files by the same names in the include and util directories.
+//       For portability reasons we have decided to provide both this and
+//       an implementation of the list classes in terms of templates. If
+//       your compiler supports templates, please use the files in the
+//       include/utl_tmpl and util/utl_tmpl directories instead of the
+//       files by the same names in the include and util directories.
 
-#include	"idl.h"
-#include	"idl_extern.h"
+#include        "idl.h"
+#include        "idl_extern.h"
 
 ACE_RCSID(util, utl_idlist, "$Id$")
 
 // Constructor
-UTL_IdList::UTL_IdList (Identifier *s, 
+UTL_IdList::UTL_IdList (Identifier *s,
                         UTL_IdList *cdr)
   : UTL_List ((UTL_List *) cdr),
     pd_car_data (s)
@@ -109,7 +109,7 @@ UTL_IdList::copy ()
   if (this->tail () == 0)
     {
       ACE_NEW_RETURN (retval,
-                      UTL_IdList (id, 
+                      UTL_IdList (id,
                                   0),
                       0);
     }
@@ -142,7 +142,7 @@ UTL_IdList::last_component ()
 
 // AST Dumping
 void
-UTL_IdList::dump (ostream &o)
+UTL_IdList::dump (ACE_OSTREAM_TYPE &o)
 {
   UTL_IdListActiveIterator *i = 0;
   ACE_NEW (i,
@@ -214,4 +214,3 @@ UTL_IdListActiveIterator::item ()
         return NULL;
     return ((UTL_IdList *) source)->head ();
 }
-

@@ -102,7 +102,7 @@ class TAO_IDL_FE_Export UTL_IdList : public UTL_List
   //  Used to maintain a list of identifiers. The primary usage of this class
   //  is to maintain a scoped name.
 public:
-  UTL_IdList (Identifier *car, 
+  UTL_IdList (Identifier *car,
               UTL_IdList *cdr);
   // Constructor(s)
 
@@ -111,7 +111,7 @@ public:
 
   // =AST Dumping
 
-  virtual void dump (ostream &o);
+  virtual void dump (ACE_OSTREAM_TYPE &o);
   // dump to ostream
 
   virtual void destroy (void);
@@ -133,7 +133,7 @@ private:
 
 // Active iterator for UTL_IdList
 
-class TAO_IDL_FE_Export UTL_IdListActiveIterator 
+class TAO_IDL_FE_Export UTL_IdListActiveIterator
   : public UTL_ListActiveIterator
 {
   // =TITLE
