@@ -5,6 +5,7 @@
 #include "ace/Hash_Map_Manager_T.h"
 #include "ace/Containers_T.h"
 #include "ace/Null_Mutex.h"
+#include "ace/SString.h"
 
 class AST_Decl;
 class AST_Field;
