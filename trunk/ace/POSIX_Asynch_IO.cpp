@@ -183,19 +183,7 @@ ACE_POSIX_Asynch_Operation::cancel (void)
 {
   if (!posix_aiocb_proactor_)
     return -1;
-
-  switch (posix_aiocb_proactor_->get_impl_type ())
-  {
-    case ACE_POSIX_Proactor::PROACTOR_SUN:
-    case ACE_POSIX_Proactor::PROACTOR_AIOCB:
-    case ACE_POSIX_Proactor::PROACTOR_SIG:
-      return posix_aiocb_proactor_->cancel_aio (this->handle_);
-
-    default:
-      break;
-  }
-
-  return -1;
+  return posix_aiocb_proactor_->cancel_aio (this->handle_);
 }
 
 ACE_Proactor *

@@ -1,3 +1,11 @@
+Mon Sep  9 16:57:41 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/POSIX_Asynch_IO.cpp (cancel): Don't sanity-check the
+          proactor type - just call cancel_aio and let the proactor impl
+          figure it out.
+
+        * examples/Reactor/Proactor/test_aiocb.cpp: Fixes to not crash.
+
 Mon Sep 09 11:37:13 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/OS.cpp (cond_timedwait): Changed to pass absolute time when
