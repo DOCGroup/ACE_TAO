@@ -309,12 +309,14 @@ ECM_Driver::open_receivers (RtecEventChannelAdmin::EventChannel_ptr ec
 {
   for (int i = 0; i < this->local_federations_count_; ++i)
     {
-      TAO_ECG_UDP_Out_Endpoint* clone;
+      TAO_ECG_Refcounted_Endpoint endpoint;
+      TAO_ECG_UDP_Out_Endpoint* clone = 0;
       ACE_NEW (clone,
                TAO_ECG_UDP_Out_Endpoint (this->endpoint_));
+      endpoint.reset (clone);
 
       this->local_federations_[i]->open_receiver (ec,
-                                                  clone
+                                                  endpoint
                                                   ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
@@ -615,9 +617,11 @@ ECM_Federation::open (TAO_ECG_UDP_Out_Endpoint *endpoint,
     this->addr_server (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
+  TAO_ECG_Refcounted_Endpoint ref_endpoint (endpoint);
+
   this->sender_->init (ec,
                        addr_server.in (),
-                       endpoint
+                       ref_endpoint
                        ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
