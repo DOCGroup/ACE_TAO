@@ -1,3 +1,8 @@
+Fri Nov 25 16:16:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
+
+        * examples/System_V_IPC/SV_Message_Queues/TMQ_Client.cpp:
+	  Fixed compile problems.
+
 Fri Nov 25 12:00:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
 
 	* ace/config-vxworks5.x.h:
