@@ -145,7 +145,7 @@ A complete list of all modifications to TAO is available in the <a href="../../C
 <a NAME="idl"></a>IDL Compiler</h3>
 Point of contact: <a href="mailto:parsons@cs.wustl.edu">
 Jeff Parsons</a>
-<p>Current status: (As of August 23, 2000.)
+<p>Current status: (As of April 30, 2001.)
 <ul>
 <li>
 Generated code closely follows the C++ Mapping specified in the latest
@@ -393,7 +393,24 @@ be_global - pointer to instance of above class.<br>
 All the code in the executable that may need to be modified for different back
 ends in contained in the file drv_args.cpp. Code in this file processes the
 command line arguments, outputs a usage message, and performs other miscellaneous
-BE initiialization.</li>
+BE initialization.</li>
+
+<li>
+The IDL compiler can how handle interfaces forward declared in one IDL
+file and defined in another. It will handle interfaces that are
+mutually dependent across two IDL files, as long as code generated from both IDL 
+files is included in the same C++ build. </li>
+
+<li>
+Generation of template tie class declarations has been moved from the *S.h file to the
+*S_T.h file. The new SunCC 5.2 compiler does not require that template source code
+be included in the header file, but it does require that template declarations and
+implementations be in the same 'compilation unit' that is, the same header/source
+file combination. Generated ifdef guards prevent the compilation of tie class
+code if the target platform does not support namespaces. For such platforms, TAO
+maps the IDL 'module' keyword to a class instead of to 'namespace', and C++ does
+not allow template class declarations to occur inside another class. </li>
+
 </ul>
 
 <p><br>Known bugs/unimplemented constructs:
