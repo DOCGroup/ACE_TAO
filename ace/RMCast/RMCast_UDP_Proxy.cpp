@@ -2,6 +2,7 @@
 
 #include "RMCast_UDP_Proxy.h"
 #include "RMCast_Module.h"
+#include "RMCast_IO_UDP.h"
 #include "ace/Message_Block.h"
 
 #if !defined (__ACE_INLINE__)
@@ -11,11 +12,9 @@
 ACE_RCSID(ace, RMCast_UDP_Proxy, "$Id$")
 
 ACE_RMCast_UDP_Proxy::ACE_RMCast_UDP_Proxy (ACE_RMCast_IO_UDP *io_udp,
-                                            const ACE_INET_Addr &addr,
-                                            ACE_RMCast_Module *module)
+                                            const ACE_INET_Addr &addr)
   : io_udp_ (io_udp)
   , peer_addr_ (addr)
-  , module_ (module)
 {
 }
 
@@ -36,7 +35,7 @@ ACE_RMCast_UDP_Proxy::receive_message (char *buffer, size_t size)
   if (type == ACE_RMCast::MT_POLL)
     {
       ACE_RMCast::Poll poll;
-      return this->module ()->poll (poll);
+      return this->next ()->poll (poll);
     }
 
   else if (type == ACE_RMCast::MT_ACK_JOIN)
@@ -54,13 +53,13 @@ ACE_RMCast_UDP_Proxy::receive_message (char *buffer, size_t size)
       ACE_OS::memcpy (&tmp, buffer + 1,
                       sizeof(tmp));
       ack_join.next_sequence_number = ACE_NTOHL (tmp);
-      return this->module ()->ack_join (ack_join);
+      return this->next ()->ack_join (ack_join);
     }
 
   else if (type == ACE_RMCast::MT_ACK_LEAVE)
     {
       ACE_RMCast::Ack_Leave ack_leave;
-      return this->module ()->ack_leave (ack_leave);
+      return this->next ()->ack_leave (ack_leave);
     }
 
   else if (type == ACE_RMCast::MT_DATA)
@@ -94,21 +93,21 @@ ACE_RMCast_UDP_Proxy::receive_message (char *buffer, size_t size)
       mb->copy (buffer + header_size, size - header_size);
 
       data.payload = mb;
-      return this->module ()->data (data);
+      return this->next ()->data (data);
     }
 
   else if (type == ACE_RMCast::MT_JOIN)
     {
       ACE_RMCast::Join join;
-      return this->module ()->join (join);
+      return this->next ()->join (join);
     }
-      
+
   else if (type == ACE_RMCast::MT_LEAVE)
     {
       ACE_RMCast::Leave leave;
-      return this->module ()->leave (leave);
+      return this->next ()->leave (leave);
     }
-      
+
   else if (type == ACE_RMCast::MT_ACK)
     {
       ACE_RMCast::Ack ack;
@@ -129,8 +128,51 @@ ACE_RMCast_UDP_Proxy::receive_message (char *buffer, size_t size)
                       sizeof(tmp));
       ack.highest_received = ACE_NTOHL (tmp);
 
-      return this->module ()->ack (ack);
+      return this->next ()->ack (ack);
     }
-      
+
   return 0;
 }
+
+int
+ACE_RMCast_UDP_Proxy::reply_data (ACE_RMCast::Data &data)
+{
+  return this->io_udp_->send_data (data, this->peer_addr_);
+}
+
+int
+ACE_RMCast_UDP_Proxy::reply_poll (ACE_RMCast::Poll &poll)
+{
+  return this->io_udp_->send_poll (poll, this->peer_addr_);
+}
+
+int
+ACE_RMCast_UDP_Proxy::reply_ack_join (ACE_RMCast::Ack_Join &ack)
+{
+  return this->io_udp_->send_ack_join (ack, this->peer_addr_);
+}
+
+int
+ACE_RMCast_UDP_Proxy::reply_ack_leave (ACE_RMCast::Ack_Leave &ack_leave)
+{
+  return this->io_udp_->send_ack_leave (ack_leave, this->peer_addr_);
+}
+
+int
+ACE_RMCast_UDP_Proxy::reply_ack (ACE_RMCast::Ack &ack)
+{
+  return this->io_udp_->send_ack (ack, this->peer_addr_);
+}
+
+int
+ACE_RMCast_UDP_Proxy::reply_join (ACE_RMCast::Join &join)
+{
+  return this->io_udp_->send_join (join, this->peer_addr_);
+}
+
+int
+ACE_RMCast_UDP_Proxy::reply_leave (ACE_RMCast::Leave &leave)
+{
+  return this->io_udp_->send_leave (leave, this->peer_addr_);
+}
+
