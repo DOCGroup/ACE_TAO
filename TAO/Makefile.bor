@@ -38,6 +38,7 @@ DIRS = \
         ..\performance-tests \
         ..\ACEXML \
         ..\ACEXML\tests \
+        ..\Kokyu \
 	tao \
 	TAO_IDL	\
 	orbsvcs	\
