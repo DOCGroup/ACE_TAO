@@ -36,18 +36,18 @@ class ACE_Handle_Gobbler
   //     testing purposes.
 public:
 
-  ~ACE_Handle_Gobbler (void);
+  inline ~ACE_Handle_Gobbler (void);
   // Destructor.  Cleans up any remaining handles.
 
-  int consume_handles (size_t n_handles_to_keep_available);
+  inline int consume_handles (size_t n_handles_to_keep_available);
   // Handles are opened continously until the process runs out of
   // them, and then <n_handles_to_keep_available> handles are closed
   // (freed) thereby making them usable in the future.
 
-  int free_handles (size_t n_handles);
+  inline int free_handles (size_t n_handles);
   // Free up <n_handles>.
 
-  void close_remaining_handles (void);
+  inline void close_remaining_handles (void);
   // All remaining handles are closed.
 
 private:

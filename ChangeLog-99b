@@ -1,9 +1,14 @@
+Thu Jul 22 23:23:26 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Handle_Gobbler.h (class ACE_Handle_Gobbler): Inlined
+	  declaration of the functions.
+
 Thu Jul 22 20:03:54 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Acceptor.cpp: For sanity's sake, initialize all the data
 	  members to 0 in the ACE_Strategy_Acceptor constructor.  Thanks
  	  to Jody Hagins <jody@atdesk.com> for reporting this.
-	
+
 	* ace/Acceptor.cpp: The service_port_ data member in the
 	  ACE_Strategy_Acceptor wasn't being initialized to 0.  Thanks to
  	  Jody Hagins <jody@atdesk.com> for reporting this.
