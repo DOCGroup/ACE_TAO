@@ -1,3 +1,66 @@
+Mon Aug 16 21:50:23 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be_include/be_sequence.h:
+	* TAO_IDL/util/utl_scope.cpp:
+	* TAO_IDL/ast/ast_redef.cpp:
+	* TAO_IDL/be/be_sequence.cpp:
+	* TAO_IDL/be/be_visitor_rettype.cpp:
+	* TAO_IDL/be/be_visitor_argument/ami_arglist.cpp:
+	* TAO_IDL/be/be_visitor_argument/ami_handle_arglist.cpp:
+	* TAO_IDL/be/be_visitor_argument/ami_handler_compiled_marshal_cs.cpp:
+	* TAO_IDL/be/be_visitor_argument/ami_handler_result_arg.cpp:
+	* TAO_IDL/be/be_visitor_argument/ami_handler_upcall_cs.cpp:
+	* TAO_IDL/be/be_visitor_argument/arglist.cpp:
+	* TAO_IDL/be/be_visitor_argument/ami_handler_vardecl.cpp:
+	* TAO_IDL/be/be_visitor_argument/compiled_marshal_cs.cpp:
+	* TAO_IDL/be/be_visitor_argument/compiled_marshal_ss.cpp:
+	* TAO_IDL/be/be_visitor_argument/docall_cs.cpp:
+	* TAO_IDL/be/be_visitor_argument/marshal_ss.cpp:
+	* TAO_IDL/be/be_visitor_argument/post_docall_compiled_cs.cpp:
+	* TAO_IDL/be/be_visitor_argument/post_docall_cs.cpp:
+	* TAO_IDL/be/be_visitor_argument/vardecl_ss.cpp:
+	* TAO_IDL/be/be_visitor_array/array.cpp:
+	* TAO_IDL/be/be_visitor_array/cdr_op_ci.cpp:
+	* TAO_IDL/be/be_visitor_exception/ctor_assign.cpp:
+	* TAO_IDL/be/be_visitor_exception/exception_ctor.cpp:
+	* TAO_IDL/be/be_visitor_field/cdr_op_cicpp:
+	* TAO_IDL/be/be_visitor_exception/field_ch.cpp:
+	* TAO_IDL/be/be_visitor_operation/ami_handler_result_arg.cpp:
+	* TAO_IDL/be/be_visitor_operation/compiled_marshal.cpp:
+	* TAO_IDL/be/be_visitor_operation/rettype.cpp:
+	* TAO_IDL/be/be_visitor_operation/rettype_assign_ss.cpp:
+	* TAO_IDL/be/be_visitor_operation/rettype_is.cpp:
+	* TAO_IDL/be/be_visitor_operation/rettype_marshal_ss.cpp:
+	* TAO_IDL/be/be_visitor_operation/rettype_post_upcall_ss.cpp:
+	* TAO_IDL/be/be_visitor_operation/rettype_return_cs.cpp:
+	* TAO_IDL/be/be_visitor_operation/rettype_vardecl_cs.cpp:
+	* TAO_IDL/be/be_visitor_operation/rettype_vardecl_ss.cpp:
+	* TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+	* TAO_IDL/be/be_visitor_sequence/sequence_ci.cpp:
+	* TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
+	* TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
+	* TAO_IDL/be/be_visitor_sequence/buffer_type.cpp:
+	* TAO_IDL/be/be_visitor_sequence/elemtype.cpp:
+	* TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+	* TAO_IDL/be/be_visitor_typedef/typedef_ch.cpp:
+	* TAO_IDL/be/be_visitor_union_branch/cdr_op_ci.cpp:
+	* TAO_IDL/be/be_visitor_union_branch/private_ch.cpp:
+	* TAO_IDL/be/be_visitor_union_branch/public_assign_cs.cpp:
+	* TAO_IDL/be/be_visitor_union_branch/public_ch.cpp:
+	* TAO_IDL/be/be_visitor_union_branch/public_ci.cpp:
+	* TAO_IDL/be/be_visitor_union_branch/public_reset_cs.cpp:
+	* TAO_IDL/be/be_visitor_valuetype/field_ch.cpp:
+	* TAO_IDL/be/be_visitor_valuetype/field_cs.cpp:
+	  The new node type NT_wstring is used in code generation for wstring
+	  sequences, where it has some switch cases all its own. Otherwise, now
+	  that the be_string and AST_String constructors set the pd_width
+	  member to sizeof (ACE_CDR::WChar) for wstrings, all that's 
+	  necessary in most cases is to check the node's width() function and
+	  branch accordingly.
+
+	  Several of these files also have had #if 0 blocks and commented-out code
+	  removed for this checkin.
+
 Mon Aug 16 20:16:35 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/ORB_Core.h:
