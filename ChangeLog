@@ -1,3 +1,28 @@
+Fri Oct  1 23:30:06 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/OS_NS_stdlib.h (mkstemp, mkstemp_emulation):
+	* ace/OS_NS_stdlib.inl (mkstemp):
+	* ace/OS_NS_stdlib.cpp (mkstemp_emulation):
+
+	  Added new mkstemp(3) implementation for the case where
+	  ACE_LACKS_MKSTEMP is defined.  It attempts to retain all of the
+	  security features that vendor supplied mkstemp() implementation
+	  provide, such as preventing symbolic link attacks.  A race
+	  condition, however, may exist when attempting to use this
+	  implementation to create a temporary file on a network
+	  filesystem.
+
+	  ACE_OS::mkstemp() is now available when ACE_LACKS_MKSTEMP is
+	  defined.
+
+	From Ganesh Pai <GPai at sonusnet dot com>
+	* ace/Hash_Map_Manager_T.h:
+	* ace/Map_Manager.h:
+	* ace/RB_Tree.h:
+
+	  Added new "lock_type" type trait.  Allows one to more easily
+	  determine the type of the underlying map/table lock.
+
 Fri Oct  1 11:54:17 MST 2004  Trevor Fields  <fields_t@ociweb.com>
 
         * bin/MakeProjectCreator/config/messaging.mpb:
@@ -532,15 +557,10 @@ Fri Sep 24 22:35:25 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
           New ICMP and "ping" support, and accompanying test.
 
-<<<<<<< ChangeLog
 	* ace/Makefile.am (libACE_Sockets_la_SOURCES):
 	* ace/ace.mpc:
 	* tests/Makefile.am:
 	* tests/tests.mpc:
-=======
-        * ace/ace.mpc:
-        * tests/tests.mpc:
->>>>>>> 4.7677
 
           Added new ICMP and "ping" source files to the appropriate
           source lists.
