@@ -1,3 +1,8 @@
+Fri Apr  1 12:35:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/examples/RtEC/MCast/MCast.cpp:
+          Fixed compile error
+
 Fri Apr  1 00:27:15 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/append.cpp (append):
