@@ -14,6 +14,7 @@ BIN = 	Barrier_Test \
 	Enum_Interfaces_Test \
 	Future_Test \
 	Handle_Set_Test \
+	Hash_Map_Manager_Test \
 	IOStream_Test \
 	MM_Shared_Memory_Test \
 	Map_Manager_Test \
