@@ -10,13 +10,7 @@
 
 // #include the SunOS 5.5 config file, then add SunOS 5.6 updates below.
 
-#if defined (__SUNPRO_CC)
-# include "ace/config-sunos5.5-sunc++-4.x.h"
-#elif defined (__GNUG__)
-# include "ace/config-sunos5.5-g++.h"
-#else  /* ! __SUNPRO_GNUG__ && ! __KCC */
-# error unsupported compiler in ace/config-sunos5.6.h
-#endif /* ! __GNUG__ && ! __KCC */
+#include "ace/config-sunos5.5.h"
 
 #if (defined(_POSIX_C_SOURCE) && _POSIX_C_SOURCE >= 199506L) || \
     defined (__EXTENSIONS__)
