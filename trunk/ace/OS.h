@@ -854,6 +854,7 @@ typedef ACE_HANDLE ACE_SOCKET;
 #   define ACE_INVALID_HANDLE -1
 
 typedef ACE_HANDLE ACE_SHLIB_HANDLE;
+const ACE_SHLIB_HANDLE ACE_SHLIB_INVALID_HANDLE = ACE_INVALID_HANDLE;
 const int ACE_DEFAULT_SHLIB_MODE = 0;
 
 #   define ACE_INVALID_SEM_KEY -1
@@ -2986,8 +2987,8 @@ typedef int ACE_pri_t;
 #     define RTLD_LAZY 1
 #   endif /* !RTLD_LAZY */
 typedef HINSTANCE ACE_SHLIB_HANDLE;
+const ACE_SHLIB_HANDLE ACE_SHLIB_INVALID_HANDLE = 0;
 const int ACE_DEFAULT_SHLIB_MODE = 0;
-
 
 # elif defined (ACE_PSOS)
 
@@ -3426,6 +3427,7 @@ extern "C" {
 }
 #     endif /* ACE_HAS_DLFCN_H_BROKEN_EXTERN_C */
   typedef void *ACE_SHLIB_HANDLE;
+  const ACE_SHLIB_HANDLE ACE_SHLIB_INVALID_HANDLE = 0;
 #     if !defined (RTLD_LAZY)
 #       define RTLD_LAZY 1
 #     endif /* !RTLD_LAZY */
@@ -3437,12 +3439,15 @@ extern "C" {
 #       include /**/ <cxxdl.h>
 #     endif /* (g++ || HP aC++) vs. HP C++ */
   typedef shl_t ACE_SHLIB_HANDLE;
+  // @@ Steve: can you please fill the correct value for an invalid shl_t.
+  const ACE_SHLIB_HANDLE ACE_SHLIB_INVALID_HANDLE;
   const int ACE_DEFAULT_SHLIB_MODE = BIND_DEFERRED;
 #   else
 #     if !defined(RTLD_LAZY)
 #       define RTLD_LAZY 1
 #     endif /* !RTLD_LAZY */
   typedef void *ACE_SHLIB_HANDLE;
+  const ACE_SHLIB_HANDLE ACE_SHLIB_INVALID_HANDLE = 0;
   const int ACE_DEFAULT_SHLIB_MODE = RTLD_LAZY;
 #   endif /* ACE_HAS_SVR4_DYNAMIC_LINKING */
 
