@@ -237,5 +237,15 @@ template class ACE_Thr_Server_Logging_Handler<Synch_Receiver>;
   // That specialization is in TS_Server_Handler.cpp, so we don't need it
   // here.
   #endif /* ACE_HAS_TLI */
+#elif defined (__GNUC__) && defined (_AIX)
+template ACE_Server_Logging_Handler_T<LOGGING_PEER_STREAM,
+                                      u_long,
+                                      ACE_NULL_SYNCH,
+                                      Null_Synch_Static_Receiver> *
+  ACE_Server_Logging_Handler_T<LOGGING_PEER_STREAM,
+                               u_long,
+                               ACE_NULL_SYNCH,
+                               Null_Synch_Static_Receiver>::request_count_;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 #endif /* ACE_SERVER_LOGGING_HANDLER_C */
+
