@@ -6,7 +6,11 @@ Wed Mar 31 00:25:17 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
 Wed Mar 31 00:14:53 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* * examples/POA/DSI/Database_i.cpp
+	* examples/POA/Default_Servant/File_i.cpp (destroy): 
+	* examples/POA/Default_Servant/server.cpp
+	* examples/POA/Default_Servant/client.cpp
+	
+	* examples/POA/DSI/Database_i.cpp
           examples/POA/DSI/server.cpp
           examples/POA/DSI/client.cpp
           MAde some cosmetic changes to the ACETRY macros
