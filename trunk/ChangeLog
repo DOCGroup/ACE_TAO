@@ -1,3 +1,34 @@
+Sun Sep 12 17:20:39 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* bin/MakeProjectCreator/config/rteventlogadmin.mpb
+
+          Update *.mpb files to reflect new libraries.
+
+	* bin/MakeProjectCreator/config/dseventlogadmin.mpb
+	* bin/MakeProjectCreator/config/dseventlogadmin_serv.mpb
+	* bin/MakeProjectCreator/config/dseventlogadmin_skel.mpb
+	* bin/MakeProjectCreator/config/dslogadmin.mpb
+	* bin/MakeProjectCreator/config/dslogadmin_serv.mpb
+	* bin/MakeProjectCreator/config/dslogadmin_skel.mpb
+	* bin/MakeProjectCreator/config/dsnotifylogadmin.mpb
+	* bin/MakeProjectCreator/config/dsnotifylogadmin_serv.mpb
+	* bin/MakeProjectCreator/config/dsnotifylogadmin_skel.mpb
+
+          Split Logging, Event Logging, and Notify Logging Services into
+	  client stub, servant skeleton, and service implementation
+	  libraries.
+
+	* bin/MakeProjectCreator/config/ec_use_typed_events_serv.mpb:
+	* bin/MakeProjectCreator/config/event_serv.mpb
+	* bin/MakeProjectCreator/config/event_skel.mpb
+
+	  Updated dependencies.
+
+	* bin/MakeProjectCreator/config/ec_use_typed_events_skel.mpb:
+
+	  Removed file, events skeleton w/typed events does not require
+	  any additional dependencies.  They have been moved to _serv.
+
 Sun Sep 12 17:20:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Log_Msg.cpp (log):
