@@ -1,3 +1,12 @@
+Sat Oct 14 15:04:16 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * ace/OS.h:
+        * ace/Naming_Context.h:
+          Static services must be exported from the library, so they
+          require the right export directives.
+          Added a new ACE_STATIC_SVC_DECLARE_EXPORT() macro for that
+          purpose and use it for the Naming_Context.
+
 Sat Oct 14 09:55:43 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * ace/Makefile.bor:
