@@ -624,6 +624,7 @@ Client::get_cubit_from_naming (void)
       return 1;
     }
   TAO_ENDTRY;
+  return 0;
 }
 
 int
@@ -715,6 +716,7 @@ Client::get_cubit (void)
       return 1;
     }
   TAO_ENDTRY;
+  return 0;
 }
 
 int
