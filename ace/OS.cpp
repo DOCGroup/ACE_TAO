@@ -1879,20 +1879,11 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 {
   // ACE_TRACE ("ACE_OS::thr_create");
 
-#if defined (ACE_NO_THREAD_ADAPTER)
-#define  ACE_THREAD_FUNCTION  func
-#define  ACE_THREAD_ARGUMENT  args
-#else
-#define  ACE_THREAD_FUNCTION  thread_args->entry_point ()
-#define  ACE_THREAD_ARGUMENT  thread_args
-
   ACE_Thread_Adapter *thread_args;
   if (thread_adapter == 0)
     ACE_NEW_RETURN (thread_args, ACE_Thread_Adapter (func, args, (ACE_THR_C_FUNC) ace_thread_adapter), -1);
   else
     thread_args = thread_adapter;
-
-#endif /* ACE_NO_THREAD_ADAPTER */
 
 #if defined (ACE_HAS_THREADS)
 
@@ -2270,13 +2261,13 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 #    if defined (ACE_HAS_DCETHREADS)
 #       if defined (ACE_HAS_DCE_DRAFT4_THREADS)
   ACE_OSCALL (::pthread_create (thr_id, attr,
-                                ACE_THREAD_FUNCTION,
-                                ACE_THREAD_ARGUMENT),
+                                thread_args->entry_point (),
+                                thread_args),
               int, -1, result);
 #       else
   ACE_OSCALL (ACE_ADAPT_RETVAL (::pthread_create (thr_id, attr,
-                                                  ACE_THREAD_FUNCTION,
-                                                  ACE_THREAD_ARGUMENT),
+                                                  thread_args->entry_point (),
+                                                  thread_args),
                                 result),
               int, -1, result);
 #       endif /* ACE_HAS_DCE_DRAFT4_THREADS */
@@ -2284,8 +2275,8 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 #    else /* !ACE_HAS_DCETHREADS */
   ACE_OSCALL (ACE_ADAPT_RETVAL (::pthread_create (thr_id,
                                                   &attr,
-                                                  ACE_THREAD_FUNCTION,
-                                                  ACE_THREAD_ARGUMENT),
+                                                  thread_args->entry_point (),
+                                                  thread_args),
                                 result),
               int, -1, result);
   ::pthread_attr_destroy (&attr);
@@ -2350,8 +2341,8 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
     ACE_SET_BITS (flags, THR_SUSPENDED);
 
   ACE_OSCALL (ACE_ADAPT_RETVAL (::thr_create (stack, stacksize,
-                                              ACE_THREAD_FUNCTION,
-                                              ACE_THREAD_ARGUMENT,
+                                              thread_args->entry_point (),
+                                              thread_args,
                                               flags, thr_id), result),
               int, -1, result);
 
@@ -2388,8 +2379,8 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
   if (ACE_BIT_ENABLED (flags, THR_USE_AFX))
     {
       CWinThread *cwin_thread =
-        ::AfxBeginThread ((AFX_THREADPROC) &ACE_THREAD_FUNCTION,
-                          ACE_THREAD_ARGUMENT, priority, 0,
+        ::AfxBeginThread ((AFX_THREADPROC) &thread_args->entry_point (),
+                          thread_args, priority, 0,
                           flags | THR_SUSPENDED);
       // Have to duplicate the handle because
       // CWinThread::~CWinThread() closes the original handle.
@@ -2423,8 +2414,8 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
       *thr_handle = (void *) ::_beginthreadex
         (0,
          stacksize,
-         (unsigned (__stdcall *) (void *)) ACE_THREAD_FUNCTION,
-         ACE_THREAD_ARGUMENT,
+         (unsigned (__stdcall *) (void *)) thread_args->entry_point (),
+         thread_args,
          flags,
          (unsigned int *) thr_id);
 
@@ -2443,8 +2434,8 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
   *thr_handle = ::CreateThread
     (0,
      stacksize,
-     LPTHREAD_START_ROUTINE (ACE_THREAD_FUNCTION),
-     ACE_THREAD_ARGUMENT,
+     LPTHREAD_START_ROUTINE (thread_args->entry_point ()),
+     thread_args,
      flags,
      thr_id);
 #    endif /* 0 */
@@ -2491,8 +2482,8 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
                          priority,
                          (int) flags,
                          (int) stacksize,
-                         ACE_THREAD_FUNCTION,
-                         (int) ACE_THREAD_ARGUMENT,
+                         thread_args->entry_point (),
+                         (int) thread_args,
                          0, 0, 0, 0, 0, 0, 0, 0, 0);
 #if 0 /* Don't support setting of stack, because it doesn't seem to work. */
     }
@@ -2512,8 +2503,8 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
                                (int) flags,
                                (char *) stack + sizeof (WIND_TCB),
                                (int) (stacksize - sizeof (WIND_TCB)),
-                               ACE_THREAD_FUNCTION,
-                               (int) ACE_THREAD_ARGUMENT,
+                               thread_args->entry_point (),
+                               (int) thread_args,
                                0, 0, 0, 0, 0, 0, 0, 0, 0);
 
       if (status == OK)
@@ -3774,7 +3765,7 @@ ACE_CE_Bridge::set_self_default (void)
   ACE_CE_Bridge::default_text_bridge_ = this;
 }
 
-int 
+int
 ACE_CE_Bridge::notification (void)
 {
   return this->notification_;
