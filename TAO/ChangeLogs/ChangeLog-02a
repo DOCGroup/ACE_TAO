@@ -1,3 +1,9 @@
+Sat Jun 17 20:57:52 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Naming/Bindings_Iterator_T.cpp (next_one):
+	  Out parameter <b> wasn't initialized if the method returned 0.
+	  This fixes bug [BUGID:596] reported by Joachim Achtzehnter.
+
 Sat Jun 17 15:18:44 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/ast/ast_expression.cpp ast/ast_string.cpp:
@@ -29,7 +35,7 @@ Sat Jun 17 15:18:44 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	* TAO_IDL/be/be_visitor_valuetype/field_ch.cpp:
 	* TAO_IDL/be/be_visitor_valuetype/field_cs.cpp:
 
-	  Minor changes to get rid of warnings in BCB, mostly 
+	  Minor changes to get rid of warnings in BCB, mostly
 	  signed/unsigned comparisons.
 
 Sat Jun 17 09:44:57 2000  Carlos O'Ryan  <coryan@uci.edu>
@@ -42,7 +48,7 @@ Sat Jun 17 09:44:57 2000  Carlos O'Ryan  <coryan@uci.edu>
 	  We don't want to use the -GC flag unless AMI is enabled.
 
 Sat Jun 17 07:46:44 2000  Chris Kohlhoff <chris@kohlhoff.com>
-  
+
         * tao/Makefile.bor:
 	  Added missing file Policy_Factory.cpp.
 
@@ -51,7 +57,7 @@ Sat Jun 17 07:46:44 2000  Chris Kohlhoff <chris@kohlhoff.com>
 	* orbsvcs/LoadBalancer/Makefile.bor:
 	* orbsvcs/Makefile.bor:
 	  Added new LoadBalancing orbsvcs library.
-  
+
 Fri Jun 16 23:18:21 2000  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/LoadBalancing/ReplicaLocator.cpp (preinvoke):
@@ -59,7 +65,7 @@ Fri Jun 16 23:18:21 2000  Ossama Othman  <ossama@uci.edu>
 	  Added missing TAO_ENV_ARG_DEFN macro.  This fixes a compile
 	  error that occured due to the fact that a CORBA Environment
 	  variable wasn't declared (nor should one be) when exception
-	  support was enabled. 
+	  support was enabled.
 
 Fri Jun 16 18:41:50 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
@@ -74,7 +80,7 @@ Fri Jun 16 18:41:50 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	  references. So a new cast operator was added to
 	  TAO_Object_Manager<T> which casts to const T_var,
 	  prompting the T_var lhs to use operator= (const T_var &),
-	  which makes a copy. Thanks to Greg Hall 
+	  which makes a copy. Thanks to Greg Hall
 	  <Greg.Hall@Australia.Boeing.com> for reporting this bug.
 
 Fri Jun 16 15:00:17 2000  Carlos O'Ryan  <coryan@uci.edu>
