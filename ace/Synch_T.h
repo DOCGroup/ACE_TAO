@@ -722,6 +722,7 @@ class ACE_Thread_Condition : public ACE_Condition<MUTEX>
   // = TITLE
   //     ACE_Condition variable wrapper that works within processes.
   //
+  // = DESCRIPTION
   //     A condition variable enables threads to atomically block and
   //     test the condition under the protection of a mutual exclu-
   //     sion lock (mutex) until the condition is satisfied.  That is,
@@ -733,7 +734,6 @@ class ACE_Thread_Condition : public ACE_Condition<MUTEX>
   //     up waiting threads by signaling the associated condition
   //     variable.  The waiting threads, upon awakening, reacquire the
   //     mutex and re-evaluate the condition.
-  //
 {
 public:
   // = Initialization method.

@@ -206,3 +206,8 @@ Reactor_Timer_Queue_Test_Driver::run_test (void)
   ACE_DEBUG ((LM_DEBUG, "TIMER TEST ENDED\n"));
   return 0;
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class Timer_Queue_Test_Driver <ACE_Timer_Heap, Input_Handler, Input_Handler::ACTION>;
+template class Command<Input_Handler, Input_Handler::ACTION>;
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

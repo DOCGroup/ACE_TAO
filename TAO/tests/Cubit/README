@@ -1,7 +1,7 @@
 		Cubit 
 
 This is the example from the SunSoft's IIOP 1.4 distribution modified
-to work with TAO. There is a Cubit example for Orbix and
+to work with TAO.  In addition, there is a Cubit example for Orbix and
 VisiBroker.
 
 Benchmarking results are under results and tnf directories.
