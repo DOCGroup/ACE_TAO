@@ -21,6 +21,17 @@
 	  src="images/CORBA.png"
 	  width="640" height="480">
       </P>
+    </DIV>
+    <HR>
+    <P>The tests below are all located in
+      <CODE>$TAO_ROOT/performance-tests</CODE>.
+      Each test has a driver script that runs it,
+      these scripts run the tests over the loopback network
+      interface.
+      Unless indicated otherwise, the tests use the default ORB
+      configuration.
+    </P>
+    <DIV align="center">
       <P>
 	<TABLE BORDER="2">
 	<THEAD>
@@ -33,7 +44,7 @@
 	</THEAD>
         <TBODY>
 	<TR>
-	  <TD>AMI</TD>
+	  <TD>AMI_Latency</TD>
 	    <TD><A HREF="images/AMI.png">
 		<IMG ALT="AMI" SRC="images/thumbnails/AMI.png">
 		</A>
@@ -48,7 +59,7 @@
 	  </TD>
 	</TR>
 	<TR>
-	  <TD>DII</TD>
+	  <TD>DII_Latency</TD>
 	    <TD><A HREF="images/DII.png">
 		<IMG ALT="DII" SRC="images/thumbnails/DII.png">
 		</A>
@@ -63,7 +74,7 @@
 	  </TD>
 	</TR>
 	<TR>
-	  <TD>DSI</TD>
+	  <TD>DSI_Latency</TD>
 	    <TD><A HREF="images/DSI.png">
 		<IMG ALT="DSI" SRC="images/thumbnails/DSI.png">
 		</A>
@@ -78,7 +89,7 @@
 	  </TD>
 	</TR>
 	<TR>
-	  <TD>Deferred</TD>
+	  <TD>Deferred_Latency</TD>
 	    <TD><A HREF="images/Deferred.png">
 		<IMG ALT="Deferred" SRC="images/thumbnails/Deferred.png">
 		</A>
@@ -93,7 +104,10 @@
 	  </TD>
 	</TR>
 	<TR>
-	  <TD>Single_Threaded</TD>
+	  <TD>Single_Threaded_Latency<BR>
+	      Configuration optimized<BR>
+	      for single-threaded apps<BR>
+	    </TD>
 	    <TD><A HREF="images/Single_Threaded.png">
 		<IMG ALT="Single_Threaded" SRC="images/thumbnails/Single_Threaded.png">
 		</A>
@@ -108,7 +122,7 @@
 	  </TD>
 	</TR>
 	<TR>
-	  <TD>Single_Threaded (Defaults)</TD>
+	  <TD>Single_Threaded_Latency</TD>
 	    <TD><A HREF="images/Default.png">
 		<IMG ALT="Default" SRC="images/thumbnails/Default.png">
 		</A>
@@ -123,7 +137,7 @@
 	  </TD>
 	</TR>
 	<TR>
-	  <TD>Thread_Per_Connection</TD>
+	  <TD>Thread_Per_Connection_Latency</TD>
 	    <TD><A HREF="images/Thread_Per_Connection.png">
 		<IMG ALT="Thread_Per_Connection" SRC="images/thumbnails/Thread_Per_Connection.png">
 		</A>
@@ -138,7 +152,7 @@
 	  </TD>
 	</TR>
 	<TR>
-	  <TD>Thread_Pool</TD>
+	  <TD>Thread_Pool_Latency</TD>
 	    <TD><A HREF="images/Thread_Pool.png">
 		<IMG ALT="Thread_Pool" SRC="images/thumbnails/Thread_Pool.png">
 		</A>
