@@ -1,3 +1,11 @@
+Mon Jan 20 10:00:22 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Makefile.CosTrading:
+        * orbsvcs/orbsvcs/Makefile.CosTime:
+        * orbsvcs/orbsvcs/Makefile.CosProperty:
+          Set the correct x_BUILD_DLL defines. These are needed for the
+          Cygwin/MingW and Kylix compiler.
+
 Sun Jan 19 16:56:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Makefile.CosConcurrency:
