@@ -441,8 +441,8 @@ TAO_OutputCDR::write_octet_array_mb (const ACE_Message_Block* mb)
                             length);
 #else
   // If the mb does not own its data we are forced to make a copy.
-  if (ACE_BIT_DISABLED (mb->flags (),
-			ACE_Message_Block::DONT_DELETE))
+  if (ACE_BIT_ENABLED (mb->flags (),
+		       ACE_Message_Block::DONT_DELETE))
     {
       return this->write_array (mb->rd_ptr (),
 				CDR::OCTET_SIZE,
