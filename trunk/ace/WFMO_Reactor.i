@@ -173,6 +173,8 @@ ACE_WFMO_Reactor_Handler_Repository::Current_Info::dump (ACE_HANDLE event_handle
               this->suspend_entry_));
 
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* !ACE_HAS_DUMP */
+  ACE_UNUSED_ARG (event_handle);
 #endif /* ACE_HAS_DUMP */
 }
 
