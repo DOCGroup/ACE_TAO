@@ -4,8 +4,8 @@
 #include "tao/corba.h"
 #include "Naming_Utils.h"
 #include "ace/Arg_Shifter.h"
-#include "Hash_Naming_Context.h"
-#include "Persistent_Context_Index_T.h"
+#include "Transient_Naming_Context.h"
+#include "Persistent_Context_Index.h"
 #include "ace/Auto_Ptr.h"
 
 ACE_RCSID(Naming, Naming_Utils, "$Id$")
@@ -124,18 +124,12 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
     {
       if (persistence_location != 0)
         {
-          // 1.  Please do not change to ACE_NEW_RETURN, 2.  This
-          // needs to be cleaned up (currently a memory leak) when
+          // This needs to be cleaned up (currently a memory leak) when
           // TAO_Naming_Server dies.
-          TAO_Persistent_Context_Index<ACE_MMAP_MEMORY_POOL, ACE_SYNCH_MUTEX> *context_index =
-            new TAO_Persistent_Context_Index<ACE_MMAP_MEMORY_POOL, ACE_SYNCH_MUTEX> (orb,
-                                                                                     poa);
-
-          if (context_index == 0)
-            {
-              errno = ENOMEM;
-              return -1;
-            }
+          TAO_Persistent_Context_Index *context_index;
+          ACE_NEW_RETURN (context_index,
+                          TAO_Persistent_Context_Index (orb, poa),
+                          -1);
 
           if (context_index->open (persistence_location) == -1)
             ACE_DEBUG ((LM_DEBUG,
@@ -165,37 +159,41 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
         }
       else
         {
-          TAO_Naming_Context *c = 0;
-          TAO_Hash_Naming_Context *c_impl = 0;
-
-          // To keep compilers warnings away.
-          ACE_UNUSED_ARG (c_impl);
-
-          ACE_NEW_RETURN (c,
-                          TAO_Naming_Context,
+          TAO_Transient_Naming_Context *context_impl = 0;
+          ACE_NEW_RETURN (context_impl,
+                          TAO_Transient_Naming_Context (poa,
+                                                        "NameService",
+                                                        context_size),
                           -1);
 
-          // Put <c> into the auto pointer temporarily, in case
+          // Put <context_impl> into the auto pointer temporarily, in case
           // next allocation fails.
-          ACE_Auto_Basic_Ptr<TAO_Naming_Context> temp (c);
+          ACE_Auto_Basic_Ptr<TAO_Transient_Naming_Context> temp (context_impl);
 
-          ACE_NEW_RETURN (c_impl,
-                          TAO_Hash_Naming_Context (c,
-                                                   poa,
-                                                   "NameService",
-                                                   context_size,
-                                                   1),
+          TAO_Naming_Context *context = 0;
+          ACE_NEW_RETURN (context,
+                          TAO_Naming_Context (context_impl),
                           -1);
+
+          // Change what we hold in auto pointer.
+          temp.release ();
+          ACE_Auto_Basic_Ptr<TAO_Naming_Context> temp2 (context);
+
+          // Register with the POA.
           PortableServer::ObjectId_var id =
-           PortableServer::string_to_ObjectId ("NameService");
+            PortableServer::string_to_ObjectId ("NameService");
 
           poa->activate_object_with_id (id.in (),
-                                        c,
+                                        context,
                                         ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
           this->naming_context_ =
-            c->_this (ACE_TRY_ENV);
+            context->_this (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+
+          // Give POA the ownership of this servant.
+          context->_remove_ref (ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
           // To make NS locatable through iioploc.  Right now not
@@ -217,7 +215,8 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
                         this->naming_service_ior_.in ()));
 
           // everything succeeded, so set the pointer, get rid of Auto_Ptr.
-          this->naming_context_impl_ = temp.release ();
+          this->naming_context_impl_ = context;
+          temp2.release ();
         }
 #if defined (ACE_HAS_IP_MULTICAST)
       // Get reactor instance from TAO.
@@ -366,15 +365,3 @@ TAO_Naming_Client::~TAO_Naming_Client (void)
 {
   // Do nothing
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  template class ACE_Auto_Basic_Ptr<TAO_Naming_Context>;
-  template class TAO_Persistent_Context_Index<ACE_MMAP_MEMORY_POOL, ACE_SYNCH_MUTEX>;
-  template class ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_SYNCH_MUTEX>;
-  template class ACE_Allocator_Adapter<ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_SYNCH_MUTEX> >;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-  #pragma instantiate ACE_Auto_Basic_Ptr<TAO_Naming_Context>
-  #pragma instantiate TAO_Persistent_Context_Index<ACE_MMAP_MEMORY_POOL, ACE_SYNCH_MUTEX>
-  #pragma instantiate ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_SYNCH_MUTEX>
-  #pragma instantiate ACE_Allocator_Adapter<ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_SYNCH_MUTEX> >
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
