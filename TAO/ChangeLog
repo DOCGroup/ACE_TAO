@@ -1,3 +1,11 @@
+Thu Apr  3 10:57:23 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/Bug_1482_Regression: A regression test for bug 
+
+	  http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1482
+	  
+	  Please see the bugzilla entry for details. 
+	
 Thu Apr 03 08:13:32 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/Collocation_Tests/Collocation.dsw:
