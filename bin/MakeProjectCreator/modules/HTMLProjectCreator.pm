@@ -123,7 +123,7 @@ sub fill_value {
     my($margin) = 0;
     my($start)  = 100;
     my($max)    = 255;
-    my($inc)    = int(($max - $start) / $count);
+    my($inc)    = ($count ne 0 ? int(($max - $start) / $count) : $max);
 
     ## Push each tree style onto the value array
     $value = [];

@@ -1,19 +1,50 @@
+Tue Feb 24 07:49:17 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/GNUACEProjectCreator.pm:
+
+          Added a fill_value() template value called mpc_files which returns
+          an array of mpb files and the mpc file that is currently being
+          processed.
+
+        * bin/MakeProjectCreator/modules/HTMLProjectCreator.pm:
+
+          Fixed a divide by zero error that would arise when there is no
+          inheritance at all.
+
+        * bin/MakeProjectCreator/README:
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+        * bin/MakeProjectCreator/templates/bmake.mpd:
+        * bin/MakeProjectCreator/templates/bor.mpd:
+        * bin/MakeProjectCreator/templates/em3vcp.mpd:
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+        * bin/MakeProjectCreator/templates/html.mpd:
+        * bin/MakeProjectCreator/templates/make.mpd:
+        * bin/MakeProjectCreator/templates/nmake.mpd:
+        * bin/MakeProjectCreator/templates/va4icc.mpd:
+        * bin/MakeProjectCreator/templates/vc6dsp.mpd:
+        * bin/MakeProjectCreator/templates/vc7.mpd:
+
+          Added a new keyword called pure_libs which is similar to lit_libs
+          however no file extension is added to the name.  So, it is
+          expected that the user will provide the complete library name when
+          using pure_libs.
+
 Mon Feb 23 16:57:19 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/OS_NS_unistd.inl (write): On Windows with overlapped mode in
-	  an error condition, need to use ACE_FAIL_RETURN, not naked return,
-	  to properly set errno to GetLastError.
+        * ace/OS_NS_unistd.inl (write): On Windows with overlapped mode in
+          an error condition, need to use ACE_FAIL_RETURN, not naked return,
+          to properly set errno to GetLastError.
 
 Mon Feb 23 17:33:04 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* bin/msvc_static_order.lst:
-	  Added some more project files that must be build first
+        * bin/msvc_static_order.lst:
+          Added some more project files that must be build first
 
 Mon Feb 23 16:08:43 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* ace/ACE_export.h:
-	  When using Cygwin and MinGW GCC version 3.3.1 or later we get dozens
-	  of warnings about methods that are defined locally after being
+        * ace/ACE_export.h:
+          When using Cygwin and MinGW GCC version 3.3.1 or later we get dozens
+          of warnings about methods that are defined locally after being
           referenced with dllimport. So, when using Cygwin or MinGW, when
           building with inlining enabled, make sure the methods in the ACE_OS
           namespace are marked as inline and not with dllimport. This fixes
