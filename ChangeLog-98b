@@ -1,3 +1,8 @@
+Fri Aug 28 08:33:20 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* ace/OS.h (FILE_FLAG_SEQUENTIAL_SCAN):  Given null definitions for
+	FILE_FLAG_SEQUENTIAL_SCAN for Non Win32  platforms. 
+
 Thu Aug 27 19:40:32 1998  Steve Huston  <shuston@riverace.com>
 
         * ace/OS.i: Changed an erroneous ACE_HAS_PTHREAD_DRAFT6 to
