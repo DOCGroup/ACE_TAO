@@ -23,8 +23,8 @@
 
 ACE_RCSID(Leader_Followers, client, "$Id$")
 
-  // Name of file contains ior.
-  static const char *IOR = "file://ior";
+// Name of file contains ior.
+static const char *IOR = "file://ior";
 
 // Number of client threads.
 static int number_of_client_threads = 3;
@@ -162,17 +162,17 @@ public:
     }
 
 private:
-  test_var test_;
   // server reference.
+  test_var test_;
 
-  u_long work_so_far_;
   // Work counter.
+  u_long work_so_far_;
 
-  TAO_SYNCH_MUTEX lock_;
   // Lock for work counter.
+  TAO_SYNCH_MUTEX lock_;
 
-  u_long sleep_;
   // Small pause to avoid overrunning the server.
+  long sleep_;
 };
 
 class Event_Loop_Task : public ACE_Task_Base
@@ -225,14 +225,14 @@ public:
     }
 
 private:
-  CORBA::ORB_var orb_;
   // ORB reference.
+  CORBA::ORB_var orb_;
 
-  u_long event_loop_timeout_so_far_;
   // Event loop timeout counter.
+  u_long event_loop_timeout_so_far_;
 
-  TAO_SYNCH_MUTEX lock_;
   // Lock for event loop timeout counter.
+  TAO_SYNCH_MUTEX lock_;
 };
 
 int
