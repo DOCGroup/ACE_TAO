@@ -249,7 +249,7 @@ TAO_CORBA_Policy_Perfect_Hash_OpTable::hash (const char *str, unsigned int len)
   return len + asso_values[(int) str[len - 1]] + asso_values[(int) str[0]];
 }
 
-const struct TAO_operation_db_entry *
+const TAO_operation_db_entry *
 TAO_CORBA_Policy_Perfect_Hash_OpTable::lookup (const char *str, unsigned int len)
 {
   enum
@@ -264,7 +264,7 @@ TAO_CORBA_Policy_Perfect_Hash_OpTable::lookup (const char *str, unsigned int len
       WORDLIST_SIZE = 11
     };
 
-  static const struct TAO_operation_db_entry  wordlist[] =
+  static const TAO_operation_db_entry  wordlist[] =
     {
       {"",0,0},{"",0,0},{"",0,0},{"",0,0},
       {"copy", &POA_CORBA::Policy::copy_skel, &POA_CORBA::_TAO_Policy_Direct_Proxy_Impl::copy},
