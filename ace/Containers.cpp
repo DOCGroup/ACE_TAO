@@ -684,7 +684,7 @@ ACE_Double_Linked_List_Iterator<T>::advance (void)
 template <class T> int
 ACE_Double_Linked_List_Iterator<T>::first (void)
 {
-  this->current_ = dllist_.head_->next_; 
+  this->current_ = dllist_.head_->next_;
   return this->not_done () ? 1 : 0;
 }
 
@@ -1131,7 +1131,7 @@ ACE_Fixed_Set_Iterator<T, SIZE>::done (void) const
 {
   ACE_TRACE ("ACE_Fixed_Set_Iterator<T, SIZE>::done");
 
-  return ACE_static_cast (const size_t, this->next_) >= this->s_.cur_size_;
+  return ACE_static_cast (size_t, this->next_) >= this->s_.cur_size_;
 }
 
 template <class T, size_t SIZE> int
