@@ -79,7 +79,7 @@ CM_Client::receive (int timeout)
 	}
     }
 
-  for (char *host_name;
+  for (const char *host_name;
        Multicast_Manager::get_next_non_responding_host (host_name); 
        )
     ACE_DEBUG ((LM_DEBUG, 
