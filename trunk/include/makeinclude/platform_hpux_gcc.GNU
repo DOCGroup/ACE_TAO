@@ -1,5 +1,7 @@
-CC		= gcc -w
-CXX		= g++ -w -I.
+CC		= gcc
+CXX		= g++
+CFLAGS		+= -w
+CCFLAGS		+= -w
 DLD		= $(CXX)
 LD		= $(CXX)
 PIC		= -fPIC

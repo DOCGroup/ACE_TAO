@@ -8,7 +8,7 @@ INC_DIR         = $(CLASSIXDIR)/include
 BIN_DIR		= 
 LIB_DIR		= $(CLASSIXDIR)/lib
 
-CC		= gcc -w
+CC		= gcc
 CXX		= g++
 		
 CFLAGS		+= -w
