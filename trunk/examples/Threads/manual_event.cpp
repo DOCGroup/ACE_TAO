@@ -62,7 +62,7 @@ Pseudo_Barrier::wait (void)
 static void *
 worker (void *arg)
 {
-  Pseudo_Barrier &barrier = *(Pseudo_Barrier *) arg;
+  Pseudo_Barrier &thread_barrier = *(Pseudo_Barrier *) arg;
 
   // work
   ACE_DEBUG ((LM_DEBUG, "(%t) working (%d secs)\n", ++::amount_of_work));
@@ -70,7 +70,7 @@ worker (void *arg)
 
   // synch with everybody else
   ACE_DEBUG ((LM_DEBUG, "(%t) waiting to synch with others \n"));
-  barrier.wait ();
+  thread_barrier.wait ();
 
   // more work
   ACE_DEBUG ((LM_DEBUG, "(%t) more work (%d secs)\n", ++::amount_of_work));
@@ -89,10 +89,10 @@ ACE_TMAIN (int argc, ACE_TCHAR **argv)
   ACE_Thread_Manager &tm = *ACE_Thread_Manager::instance ();
 
   // synch object shared by all threads
-  Pseudo_Barrier barrier (n_threads);
+  Pseudo_Barrier thread_barrier (n_threads);
 
   // create workers
-  if (tm.spawn_n (n_threads, (ACE_THR_FUNC) worker, &barrier) == -1)
+  if (tm.spawn_n (n_threads, (ACE_THR_FUNC) worker, &thread_barrier) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "thread creates for worker failed"), -1);
 
   // wait for all workers to exit
