@@ -322,9 +322,11 @@ Thread_Per_Request_Task::REAPER (void *task)
   Thread_Per_Request_Task *tpr_task = (Thread_Per_Request_Task *) task;
   tpr_task = tpr_task;
 
+#if !defined (ACE_WIN32)
   while (1)
     if (::thr_join(0, 0, 0) == 0)
       ACE_DEBUG ((LM_DEBUG, " (%t) REAPER joined a thread\n"));
+#endif
 
   return 0;
 }
