@@ -1,6 +1,13 @@
+Wed Jul 14 12:34:46 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * examples/Callback_Quoter/Makefile: reverted
+          change that disabled on LynxOS.  It seems to build
+          fine, with inlining and debug enabled.  See
+          Wed Jul 14 12:34:46 1999  David L. Levine  <levine@cs.wustl.edu>
+
 Thu Jul 15 11:02:57 1999  David L. Levine  <levine@cs.wustl.edu>
 
-        * examples/Callback_Quoater/Notifier_i.cpp: removed
+        * examples/Callback_Quoter/Notifier_i.cpp: removed
           ACE_Hash<ACE_CString> and ACE_Equal_To<ACE_CString>
           explicit instantiations, because they're in tao/POA.cpp.
           Thanks to Denis Ouellet <douellet@gel.ulaval.ca> for
