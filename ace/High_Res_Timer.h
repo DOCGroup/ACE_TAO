@@ -19,12 +19,23 @@
 
 #include "ace/ACE.h"
 
-#if defined (ACE_HAS_HI_RES_TIMER) || defined (ACE_HAS_AIX_HI_RES_TIMER)
-
 class ACE_Export ACE_High_Res_Timer
   // = TITLE
   //     A high resolution timer class wrapper that encapsulates
-  //     Solaris timers. 
+  //     OS-specific high-resolution timers, such as those found on
+  //     Solaris, AIX, Win32, and VxWorks.
+  //
+  // = DESCRIPTION
+  //     Many of the member functions return -1 if the OS does not
+  //     provide high-resolution time support.  On success, these functions
+  //     return other than -1, but not any number in particular (they don't
+  //     return 0 in order to maximize performance as much as possible,
+  //     while still providing a -1 return value on unsupported platforms).
+  //
+  //     NOTE:  the elapsed time calculations in the print methods use
+  //     hrtime_t values.  If hrtime_t is not a 64-bit type
+  //     (ACE_HAS_LONGLONG_T), then those calculations are more susceptible
+  //     to overflow.  Those methods do _not_ check for overflow!
 {
 public:
   // = Initialization method.
@@ -35,25 +46,36 @@ public:
   void reset (void);
   // Reinitialize the timer.
 
-  void start (void);
-  // Start timing.
+  int start (void);
+  // Start timing.  Returns -1 if high resolution timers are
+  // not implemented on the platform.
 
-  void stop (void);
-  // Stop timing.
+  int stop (void);
+  // Stop timing.  Returns -1 if high resolution timers are
+  // not implemented on the platform.
 
-  void start_incr (void);
-  // Start incremental timing.
-
-  void stop_incr (void);
-  // Stop incremental timing.
+  void elapsed_time (ACE_Time_Value &tv);
+  // Set <tv> to the number of microseconds elapsed.
 
 #if defined (ACE_HAS_POSIX_TIME)
-  const timespec_t &elapsed_time (void);
+  void elapsed_time (timespec_t &);
   // returns the elapsed (stop - start) time in a timespec_t (sec, nsec)
 #endif /* ACE_HAS_POSIX_TIME */
 
   void elapsed_microseconds (hrtime_t &usecs) const;
-  // Sets <usecs> to the elapsed (stop - start) time in microseconds
+  // Sets <usecs> to the elapsed (stop - start) time in microseconds.
+
+  int start_incr (void);
+  // Start incremental timing.  Returns -1 if high resolution timers are
+  // not implemented on the platform.
+
+  int stop_incr (void);
+  // Stop incremental timing.  Returns -1 if high resolution timers are
+  // not implemented on the platform.
+
+  void elapsed_time_incr (ACE_Time_Value &tv);
+  // Set <tv> to the number of microseconds elapsed between all
+  // calls to start_incr and stop_incr.
 
   void print_total (const char *message,
 		    const int iterations = 1,
@@ -82,17 +104,12 @@ private:
   hrtime_t total_;
   // Total elapsed time.
 
-  hrtime_t temp_;
-  // Temp time used for incremental timing.
-
-#if defined (ACE_HAS_POSIX_TIME)
-  timespec_t elapsed_time_;
-#endif /* ACE_HAS_POSIX_TIME */
+  hrtime_t start_incr_;
+  // Start time of incremental timing.
 };
 
 #if defined (__ACE_INLINE__)
 #include "ace/High_Res_Timer.i"
 #endif /* __ACE_INLINE__ */
 
-#endif /* ACE_HAS_HI_RES_TIMER || ACE_HAS_AIX_HI_RES_TIMER */
 #endif /* ACE_HIGH_RES_TIMER_H */
