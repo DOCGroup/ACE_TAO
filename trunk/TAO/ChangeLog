@@ -1,3 +1,11 @@
+Tue Aug 27 15:56:05 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/tests/Security/Callback/server_i.cpp (test_request):
+
+	  Removed default value in emulated exception parameter.  The
+	  implementation should not use default arguments.  Fixes a
+	  warning.
+
 Tue Aug 27 16:22:27 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/util/utl_global.cpp:
@@ -18,21 +26,21 @@ Tue Aug 27 15:41:57 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderb
 	
 Tue Aug 27 15:48:17 2002  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tao\PortableServer\PortableServer_PolicyFactory.cpp: New class
+	* tao/PortableServer/PortableServer_PolicyFactory.cpp: New class
 	  for creating POA Policies.
 
-	* tao\PortableServer\PortableServer_ORBInitializer.cpp:  New
+	* tao/PortableServer/PortableServer_ORBInitializer.cpp:  New
 	  initialization class that adds TAO_PortableServer_PolicyFactory
 	  as a factory for POA Policies.
 
-	* tao\PortableServer\PortableServer.cpp (init): Registered 
+	* tao/PortableServer/PortableServer.cpp (init): Registered 
 	  TAO_PortableServer_ORBInitializer with the PortableInterceptor.
 
-	* tao\PortableServer\POA_Policies.cpp (create): Added create
+	* tao/PortableServer/POA_Policies.cpp (create): Added create
 	  methods to the policy classes so that they can be created from
 	  Any values.
 
-	* tests\POA\Policies: This program tests the construction of POA
+	* tests/POA/Policies: This program tests the construction of POA
 	  policies, both through the generic ORB::create_policy interface
 	  and the PortableServer specific interfaces.  
 
@@ -54,7 +62,7 @@ Tue Aug 27 15:48:17 2002  Irfan Pyarali  <irfan@oomworks.com>
 	  - tests/POA/README		
 	  - $ACE_ROOT/bin/auto_run_tests.lst
 
-	* tao\PortableServer: Added new files
+	* tao/PortableServer: Added new files
 	  PortableServer_PolicyFactory.{cpp,h} and
 	  PortableServer_ORBInitializer.{cpp,h} to:
 
@@ -65,7 +73,7 @@ Tue Aug 27 15:48:17 2002  Irfan Pyarali  <irfan@oomworks.com>
 
 Tue Aug 27 12:42:58 2002  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tests\POA\Default_Servant\Makefile (BIN_UNCHECKED): Changed
+	* tests/POA/Default_Servant/Makefile (BIN_UNCHECKED): Changed
 	  Makefile such that the test program is not compiled with minimum
 	  CORBA.  Thanks to Ossama for pointing this out.
 
@@ -92,7 +100,7 @@ Tue Aug 27 12:40:12 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderb
 
 	* tao/ORB.cpp (shutdown): Added a comment as to why we cannot lock
 	  exceptions within this method. 
-	 
+
 Tue Aug 27 10:22:50 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderbilt.edu>
 
 	* tests/ORB_shutdown/server.cpp: Fixed a compile error in builds
