@@ -31,27 +31,27 @@ ACE_RCSID(tao, STUB_Object, "$Id$")
 #if defined (ACE_ENABLE_TIMEPROBES)
 
 static const char *TAO_STUB_Object_Timeprobe_Description[] =
-{
-  "STUB_Object::do_static_call - start",
-  "STUB_Object::do_static_call - end",
-  "STUB_Object::do_static_call - set_cancel",
-  "STUB_Object::do_static_call - grab_orb_core",
-  "STUB_Object::do_static_call - invocation_ctor",
-  "STUB_Object::do_static_call - invocation_start",
-  "STUB_Object::do_static_call - put_params"
-};
+  {
+    "STUB_Object::do_static_call - start",
+    "STUB_Object::do_static_call - end",
+    "STUB_Object::do_static_call - set_cancel",
+    "STUB_Object::do_static_call - grab_orb_core",
+    "STUB_Object::do_static_call - invocation_ctor",
+    "STUB_Object::do_static_call - invocation_start",
+    "STUB_Object::do_static_call - put_params"
+  };
 
 enum
-{
-  // Timeprobe description table start key
-  TAO_STUB_OBJECT_DO_STATIC_CALL_START = 500,
-  TAO_STUB_OBJECT_DO_STATIC_CALL_END,
-  TAO_STUB_OBJECT_DO_STATIC_CALL_SET_CANCEL,
-  TAO_STUB_OBJECT_DO_STATIC_CALL_GRAB_ORB_CORE,
-  TAO_STUB_OBJECT_DO_STATIC_CALL_INVOCATION_CTOR,
-  TAO_STUB_OBJECT_DO_STATIC_CALL_INVOCATION_START,
-  TAO_STUB_OBJECT_DO_STATIC_CALL_PUT_PARAMS
-};
+  {
+    // Timeprobe description table start key
+    TAO_STUB_OBJECT_DO_STATIC_CALL_START = 500,
+    TAO_STUB_OBJECT_DO_STATIC_CALL_END,
+    TAO_STUB_OBJECT_DO_STATIC_CALL_SET_CANCEL,
+    TAO_STUB_OBJECT_DO_STATIC_CALL_GRAB_ORB_CORE,
+    TAO_STUB_OBJECT_DO_STATIC_CALL_INVOCATION_CTOR,
+    TAO_STUB_OBJECT_DO_STATIC_CALL_INVOCATION_START,
+    TAO_STUB_OBJECT_DO_STATIC_CALL_PUT_PARAMS
+  };
 
 // Setup Timeprobes
 ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_STUB_Object_Timeprobe_Description,
