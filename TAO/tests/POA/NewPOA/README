@@ -16,5 +16,5 @@ Comments :
 
    It takes the default instances of the Resource and Strategy Factories.
 
-   Default factories are ok for this simple application.
+   These Default factories are ok for this simple application.
 
