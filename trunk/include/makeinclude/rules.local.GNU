@@ -216,7 +216,7 @@ endif
 
 clean.local:
 	-$(RM) *.$(OBJEXT) *~ *.bak *.rpo *.sym lib*.*_pure_* Makefile.old core
-	-$(RM) -r $(OBJDIRS) $(TEMPINCDIR) cxx_repository ptrepository
+	-$(RM) -r $(OBJDIRS) $(TEMPINCDIR) cxx_repository ptrepository ti_files
 	-$(RM) -r Templates.DB gcctemp.c gcctemp so_locations *.ics
 	-$(RM) -r SunWS_cache ir.out
 
