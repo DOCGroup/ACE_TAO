@@ -19,7 +19,7 @@ PROG_SRCS 	= $(IDL_SRC) client.cpp ttcp_i.cpp server.cpp utils.cpp tmplinst.cpp
 
 LSRC = $(PROG_SRCS)
 
-TTCP_CLIENT_OBJS = ttcpC.o client.o utils.o tmplinst.o
+TTCP_CLIENT_OBJS = ttcpC.o client.o utils.o tmplinst.o ttcpS.o
 
 TTCP_SERVER_OBJS = ttcpC.o ttcpS.o server.o ttcp_i.o utils.o tmplinst.o
 

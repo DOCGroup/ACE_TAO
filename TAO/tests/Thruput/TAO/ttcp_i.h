@@ -16,10 +16,10 @@
 
 #include "ttcpS.h"
 
-class ttcp_sequence_i: public virtual POA_ttcp_sequence 
+class ttcp_sequence_i: public POA_ttcp_sequence 
 {
 public:
-  ttcp_sequence_i(const char *obj_name = 0);
+  ttcp_sequence_i();
 
   virtual void sendShortSeq (const ttcp_sequence::ShortSeq& ttcp_seq, 
 	CORBA::Environment &IT_env);

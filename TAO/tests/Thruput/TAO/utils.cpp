@@ -325,7 +325,7 @@ FillPattern (register CORBA::Char *cp, register CORBA::Long bufLen, CORBA::ULong
     break;
   case SEND_LONG:
     {
-       register long *SeqPtr = (long *)cp;
+       register CORBA::Long *SeqPtr = (CORBA::Long *)cp;
        num = bufLen/sizeof(long);
        for (i=0; i < num; i++)
 		SeqPtr[i] = lrand48(); 
