@@ -1,6 +1,11 @@
+Tue Mar 15 10:32:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/ServantRetentionStrategyNonRetain.cpp:
+          Use the correct typedef in system_id_to_object_id
+
 Tue Mar 15 15:24:37 (IST) 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/Hang_Shutdown/test_i.h : 
+	* tests/Hang_Shutdown/test_i.h :
 
 	  Fixed compilation errors in VC6.
 
