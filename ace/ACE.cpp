@@ -196,12 +196,14 @@ ACE::process_active (pid_t pid)
   else
     {
       DWORD status;
+      int result = 1;
       if (::GetExitCodeProcess (process_handle,
                                 &status) == 0
           || status != STILL_ACTIVE)
-        return 0;
-      else
-        return 1;
+        result = 0;
+
+      ::CloseHandle (process_handle);
+      return result;
     }
 #endif /* ACE_HAS_PACE */
 }
