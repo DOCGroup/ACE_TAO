@@ -1,3 +1,17 @@
+Tue Oct  1 19:49:36 2002  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * ace/Exception_Macros.h:
+
+          Fixed some documentation for using the Exception macros.
+
+        * ace/OS.i:
+        * ace/config-aix-4.x.h:
+        * ace/config-hpux-11.00.h:
+        * ace/config-linux-common.h:
+        * ace/config-linux.h:
+
+          Enable support for using native rwlocks on Linux.
+
 Tue Oct  1 05:06:18 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/WIN32_Asynch_IO.cpp: Minor cosmetic changes.

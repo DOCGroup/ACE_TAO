@@ -6268,14 +6268,14 @@ ACE_OS::thr_continue (ACE_hthread_t target_thread)
 # if defined (ACE_HAS_STHREADS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_continue (target_thread), ace_result_), int, -1);
 # elif defined (ACE_HAS_PTHREADS)
-#  if defined (ACE_HAS_PTHREADS_UNIX98_EXT)
+#  if defined (ACE_HAS_PTHREAD_CONTINUE)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_continue (target_thread),
                                        ace_result_),
                      int, -1);
 #  else
   ACE_UNUSED_ARG (target_thread);
   ACE_NOTSUP_RETURN (-1);
-#  endif /* ACE_HAS_PTHREADS_UNIX98_EXT */
+#  endif /* ACE_HAS_PTHREAD_CONTINUE */
 # elif defined (ACE_HAS_WTHREADS)
   DWORD result = ::ResumeThread (target_thread);
   if (result == ACE_SYSCALL_FAILED)
@@ -7192,14 +7192,14 @@ ACE_OS::thr_suspend (ACE_hthread_t target_thread)
 # if defined (ACE_HAS_STHREADS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_suspend (target_thread), ace_result_), int, -1);
 # elif defined (ACE_HAS_PTHREADS)
-#  if defined (ACE_HAS_PTHREADS_UNIX98_EXT)
+#  if defined (ACE_HAS_PTHREAD_SUSPEND)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_suspend (target_thread),
                                        ace_result_),
                      int, -1);
 #  else
   ACE_UNUSED_ARG (target_thread);
   ACE_NOTSUP_RETURN (-1);
-#  endif /* ACE_HAS_PTHREADS_UNIX98_EXT */
+#  endif /* ACE_HAS_PTHREAD_SUSPEND */
 # elif defined (ACE_HAS_WTHREADS)
   if (::SuspendThread (target_thread) != ACE_SYSCALL_FAILED)
     return 0;

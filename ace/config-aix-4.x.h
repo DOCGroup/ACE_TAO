@@ -112,7 +112,7 @@
 #  if (ACE_AIX_VERS == 402)
 #    define ACE_HAS_SIZET_SOCKET_LEN
 #  else
-#    define ACE_HAS_SOCKLEN_T   
+#    define ACE_HAS_SOCKLEN_T
 #  endif
 #  define ACE_HAS_4_4BSD_SENDMSG_RECVMSG
 #endif /* ACE_AIX_VERS < 402 */
@@ -264,6 +264,8 @@
 #  if (ACE_AIX_VERS >= 403)
 #    define ACE_HAS_PTHREADS_STD
 #    define ACE_HAS_PTHREADS_UNIX98_EXT
+#    define ACE_HAS_PTHREAD_CONTINUE
+#    define ACE_HAS_PTHREAD_SUSPEND
 #  else
 #    define ACE_HAS_PTHREADS_DRAFT7
 #    define ACE_LACKS_RWLOCK_T

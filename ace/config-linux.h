@@ -27,9 +27,6 @@
 #define ACE_HAS_PTHREADS_STD
 #define ACE_HAS_THREAD_SPECIFIC_STORAGE     // jcej 12/22/96         #2
 
-#define ACE_LACKS_THREAD_STACK_ADDR             // JCEJ 12/17/96
-
-#define ACE_LACKS_RWLOCK_T                      // JCEJ 12/23/96        #1
 #define ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS    // JCEJ 1/7-8/96
 
 #if defined(__GLIBC__)
