@@ -507,16 +507,15 @@ TAO_Marshal_Union::encode (CORBA::TypeCode_ptr tc,
       void *member_val;
 
       // encode the discriminator value
+      discrim_val = base_union->_discriminant ();
       CORBA::TypeCode::traverse_status retval =
-        stream->encode (discrim_tc, data, data2, env);
+        stream->encode (discrim_tc, discrim_val, data2, env);
 
       if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
         {
           discrim_size_with_pad = tc->TAO_discrim_pad_size (env);
           if (env.exception () == 0)
             {
-              discrim_val = data; // save the pointer to the discriminator
-                                  // value
               // move the pointer to point to the actual value
               data = (char *) data + discrim_size_with_pad;
               data2 = (char *) data2 + discrim_size_with_pad;

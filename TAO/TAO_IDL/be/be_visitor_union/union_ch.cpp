@@ -141,13 +141,16 @@ int be_visitor_union_ch::visit_union (be_union *node)
         }
 
       os->decr_indent ();
-      *os << "}; // end of union" << be_nl;
+      *os << "} u_; // end of union" << be_nl;
 
       // the reset method (TAO extension)
       *os << "// TAO extensions" << be_nl;
       *os << "void _reset (" << bt->nested_type_name (node)
           << ", CORBA::Boolean);" << be_nl;
       *os << "// Frees any allocated storage" << be_nl << be_nl;
+      // the virtual overloaded _discriminant method
+      *os << "virtual void *_discriminant (void);" << be_nl;
+      *os << "// returns pointer to the discriminant" << be_nl << be_nl;
       // the overloaded virtual reset method
       *os << "virtual void _reset (void);" << be_nl;
       *os << "// calls the above reset with finalize=1" << be_nl << be_nl;

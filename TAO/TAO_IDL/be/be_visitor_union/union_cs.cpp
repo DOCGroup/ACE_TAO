@@ -181,14 +181,6 @@ int be_visitor_union_cs::visit_union (be_union *node)
           << "}" << be_uidt_nl
           << "}\n\n";
 
-      // the virtual reset method
-      os->indent ();
-      *os << "// this reset method is used by the decoding engine" << be_nl;
-      *os << "void " << node->name () << "::_reset (void)" << be_nl;
-      *os << "{" << be_idt_nl;
-      *os << "this->_reset (this->disc_, 1);" << be_uidt_nl;
-      *os << "}\n\n";
-
       // the access method
       os->indent ();
       *os << "// the virtual overloaded access method" << be_nl;
