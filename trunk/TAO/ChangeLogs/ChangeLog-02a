@@ -1,3 +1,19 @@
+Wed Jun 05 10:46:04 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/PortableGroup/PG_PropertyManager.cpp
+	  (get_type_properties):
+
+	  Use ACE_THROW_RETURN instead of ACE_THROW.  This method returns
+	  a value.  Fixes an emulated exceptionm build problem.
+
+	  (set_properties_dynamically):
+
+	  Fixed unused argument warning.
+
+	  (get_properties):
+
+	  Fixed g++ "better conversion" warning.
+
 Wed Jun 05 10:41:43 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroupManager.cpp
