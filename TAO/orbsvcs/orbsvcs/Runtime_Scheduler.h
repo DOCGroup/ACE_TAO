@@ -137,6 +137,11 @@ public:
   // of scheduled priorities.  All scheduled priorities range from 0
   // to the number returned, inclusive.
 
+  virtual void get_config_infos (RtecScheduler::Config_Info_Set_out configs
+				 ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+		     RtecScheduler::NOT_SCHEDULED));
+
 private:
   int config_count_;
   // The number of elements in the config array.

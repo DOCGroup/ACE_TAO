@@ -222,6 +222,13 @@ public:
   // of scheduled priorities.  All scheduled priorities range from 0
   // to the number returned, inclusive.
 
+  virtual void get_config_infos (RtecScheduler::Config_Info_Set_out configs
+				 ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+		     RtecScheduler::SYNCHRONIZATION_FAILURE,
+		     RtecScheduler::NOT_SCHEDULED));
+  // Provides the set of Config_Infos associated with the current schedule.
+
   // = Accessors that allow controlled relaxations of encapsulation.
 
   RECONFIG_SCHED_STRATEGY & sched_strategy ();
