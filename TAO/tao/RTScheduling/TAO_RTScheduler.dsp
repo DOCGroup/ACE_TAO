@@ -164,6 +164,10 @@ SOURCE=.\Distributable_Thread.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Request_Interceptor.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\RTScheduler.cpp
 # End Source File
 # Begin Source File
@@ -182,10 +186,6 @@ SOURCE=.\RTScheduler_Manager.cpp
 
 SOURCE=.\RTSchedulerC.cpp
 # End Source File
-# Begin Source File
-
-SOURCE=.\Scheduler.cpp
-# End Source File
 # End Group
 # Begin Group "Header Files"
 
@@ -197,6 +197,10 @@ SOURCE=.\Current.h
 # Begin Source File
 
 SOURCE=.\Distributable_Thread.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Request_Interceptor.h
 # End Source File
 # Begin Source File
 
@@ -221,10 +225,6 @@ SOURCE=.\RTScheduler_Manager.h
 # Begin Source File
 
 SOURCE=.\RTSchedulerC.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Scheduler.h
 # End Source File
 # End Group
 # Begin Group "Template Files"
