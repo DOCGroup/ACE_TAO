@@ -128,8 +128,6 @@ public:
   // only supports one protocol -- the problem won't show up.
   // "Multiprotocol ORBs" will need to solve that problem though.  ]
 
-  IIOP::Profile profile;
-
   // = Thread-safe accessors for the forwarding profile
   IIOP::Profile *fwd_profile (void);
   // THREAD-SAFE.  Returns the current forwarding profile.
@@ -157,7 +155,7 @@ public:
                const IIOP::Profile &profile);
   // Construct from a repository ID and a profile ID.
 
-  IIOP_Object (const char *host = "localhost",
+  IIOP_Object (const char *host = ACE_DEFAULT_SERVER_HOST,
                const CORBA::UShort p = TAO_DEFAULT_SERVER_PORT,
                const char *objkey = "0",
                char *repository_id = 0);
@@ -176,7 +174,9 @@ public:
 				    void **ppv);
 
   virtual char *_get_name (CORBA::Environment &env);
-  // get the underlying key
+  // Get the underlying object key.
+
+  IIOP::Profile profile;
 
 private:
   CORBA::Object base;
