@@ -27,7 +27,9 @@ READMEs on how to run the following performance tests:
 
         . RTCorba
 
-          Tests for various real-time features (RT CORBA spec & TAO-specific).
+          Tests for various (TAO-specific) real-time features. Tests
+          for RT CORBA spec real-time features can be found in
+          $TAO_ROOT/tests/RTCORBA.
 
         . Thruput
 
