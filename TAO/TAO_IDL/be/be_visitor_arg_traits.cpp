@@ -486,7 +486,40 @@ be_visitor_arg_traits::visit_array (be_array *node)
 
   // This should be generated even for imported nodes. The ifdef guard prevents
   // multiple declarations.
-  os->gen_ifdef_macro (node->flat_name (), "arg_traits");
+//  os->gen_ifdef_macro (node->flat_name (), "arg_traits");
+
+  // Generate the array traits specialization definitions,
+  // guarded by #ifdef on unaliased array element type and length.
+
+  ACE_CString unique;
+  be_type *bt = be_type::narrow_from_decl (node->base_type ());
+  AST_Decl::NodeType nt = bt->node_type ();
+
+  if (nt == AST_Decl::NT_typedef)
+    {
+      be_typedef *td = be_typedef::narrow_from_decl (bt);
+      unique = td->primitive_base_type ()->flat_name ();
+    }
+  else
+    {
+      unique = bt->flat_name ();
+    }
+
+  char buf[NAMEBUFSIZE];
+
+  for (unsigned long i = 0; i < node->n_dims (); ++i)
+    {
+      ACE_OS::memset (buf,
+                      '\0',
+                      NAMEBUFSIZE);
+      ACE_OS::sprintf (buf,
+                       "_%ld",
+                       node->dims ()[i]->ev ()->u.ulval);
+      unique += buf;
+    }
+
+  unique += "_traits";
+  os->gen_ifdef_macro (unique.fast_rep ());
 
   *os << be_nl << be_nl
       << "ACE_TEMPLATE_SPECIALIZATION" << be_nl
