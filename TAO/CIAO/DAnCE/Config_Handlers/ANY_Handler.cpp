@@ -18,7 +18,7 @@ namespace CIAO
 
 
     void
-    ANY_Handler::get_any (CORBA::Any& toconfig,
+    ANY_Handler::get_Any (CORBA::Any& toconfig,
                           Any& desc)
     {
 
@@ -33,7 +33,7 @@ namespace CIAO
         {
           // @@ Jules, please try using regular C++ casts
           toconfig <<=
-            static_cast <CORBA::Short> (value.short ());
+            static_cast <CORBA::Short> (value.short_ ());
         }
       else if (value.ushort_p ())
         {
@@ -43,7 +43,7 @@ namespace CIAO
       else if (value.long_p ())
         {
           toconfig <<=
-            static_cast <CORBA::UShort> (value.long ());
+            static_cast <CORBA::UShort> (value.long_ ());
         }
       else if (value.ulong_p ())
         {
@@ -58,7 +58,7 @@ namespace CIAO
       else if (value.double_p ())
         {
           toconfig <<=
-            static_cast <CORBA::Double> (value.double ());
+            static_cast <CORBA::Double> (value.double_ ());
         }
       else if (value.float_p ())
         {
@@ -85,12 +85,7 @@ namespace CIAO
           toconfig <<=
             static_cast <CORBA::ULongLong> (value.ulonglong ());
         }
- //if(value.longdouble_p()){
- //   toconfig <<= ACE_static_cast (CORBA::LongDouble,
- //                               CORBA::LongDouble(value.longdouble()));
- // }
-
-      return toconfig;
+        
     }
   }
 }

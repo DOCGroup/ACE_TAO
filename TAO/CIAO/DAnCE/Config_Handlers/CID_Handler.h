@@ -21,7 +21,7 @@
 
 namespace Deployment
 {
-  namespace ComponentInterfaceDescription;
+  class ComponentInterfaceDescription;
 }
 
 namespace CIAO
@@ -41,6 +41,7 @@ namespace CIAO
     class CID_Handler
     {
       public:
+
 
       CID_Handler (void);
       virtual ~CID_Handler(void);

@@ -41,16 +41,14 @@ namespace CIAO{
  
     public:
        
-    Prop_Handler();
-    virtual ~Prop_Handler();
-            
-    ///This method maps the values from the
-    ///XSC object <CIAO::Config_Handlers::Property> to
-    ///the CORBA IDL type <Deployment::Property>.    
-    Deployment::Property&
-    get_Property(
-        Deployment::Property& toconfig,
-        Property& desc);
+      Prop_Handler (void);
+      virtual ~Prop_Handler (void);
+              
+      ///This method maps the values from the
+      ///XSC object <CIAO::Config_Handlers::Property> to
+      ///the CORBA IDL type <Deployment::Property>.    
+      void get_Property (Deployment::Property& toconfig,
+                         Property& desc);
    };
 
  }
