@@ -30,6 +30,12 @@ JAWS_HTTP_10_Read_Task::handle_put (JAWS_Data_Block *data, ACE_Time_Value *)
 
   JAWS_IO *io = policy->io ();
 
+  if (data->length () > 0)
+    {
+      JAWS_TRACE ("JAWS_HTTP_10_Read_Task::handle_put, have data");
+      return 0;
+    }
+
   io->read (handler, data, data->size ());
   if (handler->status () == JAWS_IO_Handler::READ_OK)
     {
