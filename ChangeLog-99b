@@ -1,3 +1,11 @@
+Tue Oct 12 14:26:15 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/config-qnx-neutrino.h: added #define of
+          ACE_THR_PRI_FIFO_DEF.  This allows us to easily set a
+          thread priority (10) that's lower the the TCP service
+          threads (17) in tests.  Thanks to Sean Boudreau <seanb@qnx.com>
+          for suggesting that.
+
 Tue Oct 12 14:16:18 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * etc/purify.solaris2: added some more UMR suppressions
