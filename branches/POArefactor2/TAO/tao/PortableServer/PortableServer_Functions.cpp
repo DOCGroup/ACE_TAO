@@ -40,28 +40,6 @@ namespace TAO
     }
 
     PortableServer::ObjectId *
-    string_to_ObjectId (const char *string,
-                          int size)
-    {
-      // Create the buffer for the Id
-      CORBA::Octet *buffer = PortableServer::ObjectId::allocbuf (size);
-
-      // Copy the contents
-      ACE_OS::memcpy (buffer, string, size);
-
-      // Create and return a new ID
-      PortableServer::ObjectId *id = 0;
-      ACE_NEW_RETURN (id,
-                      PortableServer::ObjectId (size,
-                                                size,
-                                                buffer,
-                                                1),
-                      0);
-
-      return id;
-    }
-
-    PortableServer::ObjectId *
     wstring_to_ObjectId (const CORBA::WChar *string)
     {
       // Size of Id

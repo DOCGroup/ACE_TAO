@@ -2,11 +2,11 @@
 
 //=============================================================================
 /**
- *  @file    Root_POA.h
+ *  @file    PortableServer_Functions.h
  *
  *  $Id$
  *
- *  Header file for CORBA's ORB type.
+ *  PortableServer helper functions
  *
  *  @author  Irfan Pyarali <irfan@cs.wustl.edu>
  */
@@ -59,10 +59,6 @@ namespace TAO
 
     TAO_NAMESPACE_STORAGE_CLASS PortableServer::ObjectId *string_to_ObjectId (
       const char *id);
-
-    TAO_NAMESPACE_STORAGE_CLASS PortableServer::ObjectId *string_to_ObjectId (
-      const char *string,
-      int size);
 
     TAO_NAMESPACE_STORAGE_CLASS PortableServer::ObjectId *wstring_to_ObjectId (
       const CORBA::WChar *id);
