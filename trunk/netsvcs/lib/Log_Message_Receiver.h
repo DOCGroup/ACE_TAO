@@ -5,13 +5,13 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    Log_Message_Receiver
 //
 // = AUTHOR
 //    Per Andersson
-// 
+//
 // ============================================================================
 
 #if !defined (LOG_MESSAGE_RECEIVER_H)
@@ -36,17 +36,17 @@
 //
 //
 //  The semantics are also simple. A log message receiver should
-//  behave as an accessor object (smart pointer or envelope class). 
-//  It should be very cheap to copy and the should be no noticeable 
-//  difference when using either the new copy or the old log message 
+//  behave as an accessor object (smart pointer or envelope class).
+//  It should be very cheap to copy and the should be no noticeable
+//  difference when using either the new copy or the old log message
 //  receiver.
 //
 //  Methods:
 //    void log_record(char const* hostname,
 //                    ACE_Log_Record& record)
-//  Description: 
+//  Description:
 //    Processes the log record "record" from the host "hostname"
-//  Precondition: 
+//  Precondition:
 //    hostname != 0;
 //  Requirements:
 //    Record must be a valid ACE_Log_Record.
@@ -63,13 +63,13 @@
 //  and forwards them to some operation and maintenance system (PATROL).
 //
 //  The client logging handler and server logging handler are responsible
-//  for forwarding, receiving, framing, processing log records. 
+//  for forwarding, receiving, framing, processing log records.
 //  That is a very usable service, but it should also be possible to change
-//  how log records are processed without having to rewrite code in 
-//  the server log handler. This code should instead be written as a  
-//  separate entity, a Log Message Receiver. 
+//  how log records are processed without having to rewrite code in
+//  the server log handler. This code should instead be written as a
+//  separate entity, a Log Message Receiver.
 //
-//  A simple LMR should be very easy to write but it should also 
+//  A simple LMR should be very easy to write but it should also
 //  be possible to write more complex LMRs, like one that creates
 //  a new log file each day or keeps a fixed size, round robin,
 //  log file. It should also be possible to have separate LMRs
@@ -79,7 +79,7 @@
 
 
 // Type based log message receiver
-template<ACE_SYNCH_DECL> 
+template<ACE_SYNCH_DECL>
 class Static_Log_Message_Receiver
   // = TITLE
   //  Static_Log_Message_Receiver is a simple log message receiver. It
@@ -91,10 +91,15 @@ class Static_Log_Message_Receiver
   //  prints the content of log_records on stderr.
 {
 public:
-  static void log_record(const char *hostname, 
+  static void log_record(const char *hostname,
                          ACE_Log_Record &record);
   // Prints the log_record to stderr using record.print (hostname, 0, stderr).
   // Serializes the output by using a ACE_SYNCH_MUTEX.
+
+  static void log_output(const char *hostname,
+                         ACE_Log_Record &record,
+                         ostream *output);
+  // Prints the log_record to a user specified ostream.
 };
 
 // Instance based log message receiver
@@ -104,22 +109,22 @@ public:
 //  Log_Message_Receiver is little more complicated log message receiver.
 //  It is instance based and have a reference counted implementation.
 //  Log_Message_Receiver is the envelope class for Log_Message_Receiver_Impl.
-//  
+//
 // ------------------------------------------------------------------------- //
 
 
 //Forward declaration
 template<ACE_SYNCH_DECL> class Log_Message_Receiver_Impl;
 
-template<ACE_SYNCH_DECL> 
+template<ACE_SYNCH_DECL>
 class Log_Message_Receiver
   // = TITLE
   //  Log_Message_Receiver is a little more complicated log message receiver.
   //  It is instance based and have a reference counted implementation.
   //  Log_Message_Receiver is the envelope class for Log_Message_Receiver_Impl.
-  //  The difference between Static_Log_Message_Receiver and 
+  //  The difference between Static_Log_Message_Receiver and
   //  Log_Message_Receiver is that is possible to have instance data
-  //  in Log_Message_Receiver. 
+  //  in Log_Message_Receiver.
   //
   //  Comment:
   //  The practical usage of this is limited with the current
@@ -139,19 +144,23 @@ public:
   // Creates a new Log_Message_Receiver
   Log_Message_Receiver(Log_Message_Receiver<ACE_SYNCH_USE> const &rhs);
   ~Log_Message_Receiver (void);
-  
+
   void log_record (const char *hostname,
-                   ACE_Log_Record &record);  
+                   ACE_Log_Record &record);
+
+  void log_output(const char *hostname,
+                  ACE_Log_Record &record,
+                  ostream *output);
 private:
   ACE_UNIMPLEMENTED_FUNC (void operator= (const Log_Message_Receiver<ACE_SYNCH_USE> &rhs))
-  
+
   // Attributes.
   Log_Message_Receiver_Impl<ACE_SYNCH_USE> *receiver_impl_;
 };
 
 // Implementation with reference count.
 
-template<ACE_SYNCH_DECL> 
+template<ACE_SYNCH_DECL>
 class Log_Message_Receiver_Impl
 {
   friend class ACE_Shutup_GPlusPlus;  // Turn off g++ warning
@@ -160,14 +169,18 @@ public:
   static Log_Message_Receiver_Impl *create (void);
   static Log_Message_Receiver_Impl *attach (Log_Message_Receiver_Impl<ACE_SYNCH_USE> *body);
   static void detach (Log_Message_Receiver_Impl<ACE_SYNCH_USE> *body);
-  
+
   void log_record (const char *hostname,
                    ACE_Log_Record &record);
+
+  void log_output(const char *hostname,
+                  ACE_Log_Record &record,
+                  ostream *output);
 
 private:
   Log_Message_Receiver_Impl (void);
   ~Log_Message_Receiver_Impl (void);
-  
+
   typedef ACE_Guard<ACE_SYNCH_MUTEX_T> Guard;
   // Attributes
   int count_;
