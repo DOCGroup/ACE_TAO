@@ -30,7 +30,7 @@ void CompIntrDesc_Handler::process_ComponentInterfaceDescription
     {
       XStr node_name (node->getNodeName());
 
-      else if (node_name == XStr
+      if (node_name == XStr
                (ACE_TEXT ("Deployment:ComponentInterfaceDescription")))
         {
         }
@@ -83,7 +83,7 @@ void CompIntrDesc_Handler::process_comp_property (DOMNodeIterator* iter,
     {
       XStr node_name (node->getNodeName());
 
-      else if (node_name == XStr
+      if (node_name == XStr
                (ACE_TEXT ("Deployment:ComponentPropertyDescription")))
         {
         }
@@ -114,7 +114,7 @@ void CompIntrDesc_Handler::process_port (DOMNodeIterator* iter,
     {
       XStr node_name (node->getNodeName());
 
-      else if (node_name == XStr
+      if (node_name == XStr
                (ACE_TEXT ("Deployment:ComponentPortDescription")))
         {
         }
