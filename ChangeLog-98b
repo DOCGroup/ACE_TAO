@@ -1,46 +1,50 @@
+Sun Jun 07 09:51:02 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Timeprobe_T.cpp: added #include of ace/Timeprobe.h.
+
 Sun Jun  7 01:06:12 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/config-freebsd-pthread.h: Added the 
-	  ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS flag to work around problems
-	  with pthreads on FreeBSD.  Thanks to Amancio Hasty
-	  <hasty@rah.star-gate.com> for reporting this.
+        * ace/config-freebsd-pthread.h: Added the
+          ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS flag to work around problems
+          with pthreads on FreeBSD.  Thanks to Amancio Hasty
+          <hasty@rah.star-gate.com> for reporting this.
 
 Sat Jun  6 22:00:54 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* ace/Message_Queue.cpp: Added code so that advance() is more
-	  thread-safe.
+        * ace/Message_Queue.cpp: Added code so that advance() is more
+          thread-safe.
 
-	* apps/gperf/src/Options.cpp (operator): Changed ACE_OS::exit()
-	  to ACE_OS::_exit() so we'll leave no trace...
+        * apps/gperf/src/Options.cpp (operator): Changed ACE_OS::exit()
+          to ACE_OS::_exit() so we'll leave no trace...
 
-	* apps/gperf/src/Key_List.cpp (output_switch): Fixed another bug
-	  where strcmp() should be generated instead of strncmp().
+        * apps/gperf/src/Key_List.cpp (output_switch): Fixed another bug
+          where strcmp() should be generated instead of strncmp().
 
-	* apps/gperf/src: We no longer call the inline option "GNU" but
-	  now call it "INLINE".
+        * apps/gperf/src: We no longer call the inline option "GNU" but
+          now call it "INLINE".
 
-	* apps/gperf/src/{Options.h,Key_List.cpp,Gen_Perf.cpp}: Revised
- 	  the LARGE_STACK_ARRAY code so that it only gets compiled if
- 	  we're using GCC.
+        * apps/gperf/src/{Options.h,Key_List.cpp,Gen_Perf.cpp}: Revised
+          the LARGE_STACK_ARRAY code so that it only gets compiled if
+          we're using GCC.
 
-	* apps/gperf/src/Key_List.cpp (output_switch): Fixed a bug where
-	  strcmp() was being used instead of strncmp().  Thanks to C++
-	  for finding this!
+        * apps/gperf/src/Key_List.cpp (output_switch): Fixed a bug where
+          strcmp() was being used instead of strncmp().  Thanks to C++
+          for finding this!
 
-	* apps/gperf/src/Key_List.cpp: Removed all uses of "register"
- 	  since C++ compilers can do this automagically...
+        * apps/gperf/src/Key_List.cpp: Removed all uses of "register"
+          since C++ compilers can do this automagically...
 
-	* apps/gperf/tests/test.cpp (main): Modified the test program to
- 	  use C++ rather than C (ugh!).
+        * apps/gperf/tests/test.cpp (main): Modified the test program to
+          use C++ rather than C (ugh!).
 
-	* ace: Added two new files: Timeprobe_T.h and Timeprobe_T.cpp in
- 	  order to solve problems with multiply defined symbols.  Thanks
- 	  to Brian Mendel, David Levine, and Irfan for tracing this down.
+        * ace: Added two new files: Timeprobe_T.h and Timeprobe_T.cpp in
+          order to solve problems with multiply defined symbols.  Thanks
+          to Brian Mendel, David Levine, and Irfan for tracing this down.
 
 Sat Jun  6 19:10:54 1998  Sergio Flores  <sergio@cs.wustl.edu>
 
-	* ace/config-vxworks5.x.h: changes the default thread priority
- 	from 6 to 101.
+        * ace/config-vxworks5.x.h: changes the default thread priority
+        from 6 to 101.
 
 Sat Jun 06 16:43:01 1998  David L. Levine  <levine@cs.wustl.edu>
 
