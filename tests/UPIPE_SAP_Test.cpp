@@ -194,11 +194,11 @@ main (int, char *[])
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Stream<ACE_Thread_Mutex,ACE_Condition_Thread_Mutex>;
+template class ACE_Stream<ACE_SYNCH>;
 template class ACE_Double_Linked_List<ACE_Thread_Descriptor>;
 template class ACE_Unbounded_Queue<ACE_Thread_Descriptor*>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Stream<ACE_Thread_Mutex,ACE_Condition_Thread_Mutex>
+#pragma instantiate ACE_Stream<ACE_SYNCH>
 #pragma instantiate ACE_Double_Linked_List<ACE_Thread_Descriptor>
 #pragma instantiate ACE_Unbounded_Queue<ACE_Thread_Descriptor*>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
