@@ -1,9 +1,15 @@
+Mon Dec 31 14:40:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * ace/Get_Opt.cpp:
+          Replaced ACE_TEXT by ACE_LIB_TEXT because ACE_LIB_TEXT must be used
+          within the ACE library instead of ACE_TEXT
+
 Sun Dec 30 16:54:18 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* ace/Parse_Node.cpp: Now that ACE::strnew() checks for a NULL
 	  parameter, we can remove the checks in the ACE code.
 
-	* ace/ACE.i (strnew): Check to see if the pointer passed to 
+	* ace/ACE.i (strnew): Check to see if the pointer passed to
 	  ACE::strnew() is non-NULL.  Thanks to Don Hinton for reporting
  	  this.
 
@@ -11,18 +17,18 @@ Sat Dec 29 18:36:13 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/OS.i (putenv): Fixed a typo.  Thanks to Venkita for
  	  reporting this.
-	
+
 	* ace/OS.i (getenv): Return ACE_NOTSUP_RETURN(0) if we're
 	  compiling on a platform that lacks getenv(), e.g., WinCE.
   	  Thanks to Venkita for reporting this.
 
 Sat Dec 29 16:14:41 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/OS.h: 
+	* ace/OS.h:
 	* ace/Default_Constants.h: Moved some constants from this file to
 	  OS.h as it needed includes in OS.h. Need to take a better look
 	  before any other dissection can be performed.
-	  
+
 Sat Dec 29 12:08:40 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/ace_dll.dsp:
@@ -33,14 +39,14 @@ Sat Dec 29 11:57:40 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* ace/Default_Constants.h: A new header file that houses some of
 	  the constants that are used widely by ACE and applications based
 	  on ACE. The motivation for this one is the same as that of
-	  creating Global_Macros.h. 
-	
+	  creating Global_Macros.h.
+
 	* ace/Global_Macros.h: Moved some constant definitions from this
 	  file to Default_Constants.h.
 
 	* ace/OS.h: Moved some constant definitions out of this
 	  file. There are some more that needs moving and will be done
-	  over a period of time hopefully. 
+	  over a period of time hopefully.
 
 Sat Dec 29 06:31:50 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
