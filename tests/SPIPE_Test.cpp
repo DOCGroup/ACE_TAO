@@ -103,8 +103,8 @@ server (void *)
   return 0;
 }
 
-void
-spawn ()
+static void
+spawn (void)
 {
 #if !defined (ACE_WIN32)
   switch (ACE_OS::fork ())
@@ -136,7 +136,7 @@ spawn ()
 int
 main (int, char *argv[])
 {
-  ACE_START_TEST;
+  ACE_START_TEST ("SPIPE_Test.cpp");
 
   spawn ();
 

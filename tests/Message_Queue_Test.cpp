@@ -1,14 +1,34 @@
+// ============================================================================
+// $Id$
+
+//
+// = LIBRARY
+//    tests
+// 
+// = FILENAME
+//    Message_Queue_Test.cpp
+//
+// = DESCRIPTION
+//      This is a simple test of the ACE_Message_Queue that
+//      illustrates how to use the forward and reverse iterators. 
+//
+// = AUTHOR
+//    Irfan Pyarali
+// 
+// ============================================================================
+
 #include "ace/Message_Queue.h"
 #include "ace/Synch.h"
-#include <iostream.h>
 
 typedef ACE_Message_Queue <ACE_NULL_SYNCH> QUEUE;
 typedef ACE_Message_Queue_Iterator <ACE_NULL_SYNCH> ITERATOR;
 typedef ACE_Message_Queue_Reverse_Iterator <ACE_NULL_SYNCH> REVERSE_ITERATOR;
 
 int 
-main ()
+main (int argc, char *argv[])
 {
+  ACE_START_TEST ("Message_Queue_Test.cpp");
+
   const int ITERATIONS = 5;
   QUEUE queue;
 
@@ -65,5 +85,6 @@ main ()
       }  
   }
 
+  ACE_END_TEST;
   return 0;
 }

@@ -21,14 +21,12 @@
 
 #include "ace/Log_Msg.h"
 #include "ace/Message_Queue.h"
-#include "ace/Thread_Manager.h"
 #include "ace/Service_Config.h"
 #include "test_config.h"
 
 #if defined (ACE_HAS_THREADS)
 
 // Global thread manager.
-static ACE_Thread_Manager thr_mgr;
 static int count = 0;
 
 // Make the queue be capable of being *very* large.
@@ -87,7 +85,7 @@ static void *
 producer (ACE_Message_Queue<ACE_MT_SYNCH> *msg_queue)
 {
   // Insert thread into thr_mgr.
-  ACE_Thread_Control thread_control (&thr_mgr);
+  ACE_Thread_Control thread_control (ACE_Service_Config::thr_mgr ());
   ACE_NEW_THREAD;
 
   ACE_Message_Block *mb = 0;
@@ -133,17 +131,18 @@ producer (ACE_Message_Queue<ACE_MT_SYNCH> *msg_queue)
 int 
 main (int argc, char *argv[])
 {
-  ACE_START_TEST;
+  ACE_START_TEST ("Priority_Buffer_Test.cpp");
 
   // Message queue.
   ACE_Message_Queue<ACE_MT_SYNCH> msg_queue (max_queue);
 
-  if (thr_mgr.spawn (ACE_THR_FUNC (producer), (void *) &msg_queue,
-		     THR_NEW_LWP | THR_DETACHED) == -1)
+  if (ACE_Service_Config::thr_mgr ()->spawn (ACE_THR_FUNC (producer), 
+					     (void *) &msg_queue,
+					     THR_NEW_LWP | THR_DETACHED) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn"), 1);
 
   // Wait for producer and consumer threads to exit.
-  thr_mgr.wait ();
+  ACE_Service_Config::thr_mgr ()->wait ();
 
   ACE_END_TEST;
   return 0;

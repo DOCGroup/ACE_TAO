@@ -182,8 +182,7 @@ run_test (ACE_Token_Proxy *A,
 int
 main (int argc, char* argv[])
 {
-  ACE_DEBUG ((LM_DEBUG, "%s starting.\n", argv[0]));
-  ACE_START_TEST;
+  ACE_START_TEST ("Tokens_Test.cpp");
   ACE_Token_Proxy *A, *B, *R, *W;
 
   A = new ACE_Local_Mutex ("L Mutex A", 0, 0);

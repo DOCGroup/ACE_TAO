@@ -189,7 +189,7 @@ produce (Thread_Pool &thread_pool)
 int 
 main (int argc, char *argv[])
 {
-  ACE_START_TEST;
+  ACE_START_TEST ("Thread_Pool_Test.cpp");
   int n_threads = ACE_MAX_THREADS;
   
   ACE_DEBUG ((LM_DEBUG, "(%t) argc = %d, threads = %d\n", 

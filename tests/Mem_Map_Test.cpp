@@ -87,7 +87,7 @@ create_test_file ()
 int
 main (int, char **argv)
 {
-  ACE_START_TEST;
+  ACE_START_TEST ("Mem_Map_Test.cpp");
 
   ACE_LOG_MSG->open (argv[0]);
 

@@ -66,7 +66,7 @@ tester (Tester_Args *args)
 int 
 main (int argc, char *argv[])
 {
-  ACE_START_TEST;
+  ACE_START_TEST ("Barrier_Test.cpp");
 
   ACE_Service_Config daemon (argv[0]);
 

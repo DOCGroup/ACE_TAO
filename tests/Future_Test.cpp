@@ -308,7 +308,7 @@ static int n_loops = 100;
 int
 main (int argc, char *argv[]) 
 {
-  ACE_START_TEST;
+  ACE_START_TEST ("Future_Test.cpp");
 
   Scheduler *andres, *peter, *helmut, *matias;
 
