@@ -1181,13 +1181,13 @@ Test_Struct_Sequence::compare (const Param_Test::StructSeq &s1,
       const Param_Test::Fixed_Struct& vs2 = s2[i];
 
       if (vs1.l != vs2.l
-	  || vs1.c != vs2.c
-	  || vs1.s != vs2.s
-	  || vs1.o != vs2.o
-	  || vs1.f != vs2.f
-	  || vs1.b != vs2.b
-	  || vs1.d != vs2.d )
-	return 0;
+          || vs1.c != vs2.c
+          || vs1.s != vs2.s
+          || vs1.o != vs2.o
+          || vs1.f != vs2.f
+          || vs1.b != vs2.b
+          || vs1.d != vs2.d )
+        return 0;
     }
 
   return 1; // success
@@ -1208,15 +1208,15 @@ Test_Struct_Sequence::print_sequence (const Param_Test::StructSeq &s)
 
       ACE_DEBUG ((LM_DEBUG,
                   "Element #%d\n"
-		  "\tl = %d\n"
-		  "\tc = %c\n"
-		  "\ts = %d\n"
-		  "\to = %x\n"
-		  "\tf = %f\n"
-		  "\tb = %d\n"
-		  "\td = %f\n",
+                  "\tl = %d\n"
+                  "\tc = %c\n"
+                  "\ts = %d\n"
+                  "\to = %x\n"
+                  "\tf = %f\n"
+                  "\tb = %d\n"
+                  "\td = %f\n",
                   i,
-		  vs.l, vs.c, vs.s, vs.o, vs.f, vs.b, vs.d));
+                  vs.l, vs.c, vs.s, vs.o, vs.f, vs.b, vs.d));
     }
 }
 
@@ -1722,7 +1722,8 @@ Test_Any::check_validity (void)
   char *str_in, *str_inout, *str_out, *str_ret;
   Coffee_ptr obj_in, obj_inout, obj_out, obj_ret;
 
-  if ((this->inout_ >>= short_inout) &&
+  if ((this->in_ >>= short_in) &&
+      (this->inout_ >>= short_inout) &&
       (this->out_.in () >>= short_out) &&
       (this->ret_.in () >>= short_ret))
     {
