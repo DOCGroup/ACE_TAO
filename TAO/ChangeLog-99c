@@ -1,3 +1,60 @@
+Sun Jul  4 13:59:05 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* orbsvcs/tests/AVStreams/Pluggable/ftp.{h,cpp}: 
+	  This is a simple file transfer example to test the Pluggable
+	  Data protocols feature provided by the AV service. It currently
+	  implements handler for UDP,TCP and SFP_UDP. This streams a given
+	  file at the rate of 0.5kbytes/sec. 
+
+	* orbsvcs/tests/AVStreams/Pluggable/server.{h,cpp}: 
+	  This is the receiver side of the file transfer example and also
+	  provides protocol specific handler to receive data from the
+	  client and saves it to a file.
+	
+	* orbsvcs/orbsvcs/AV/sfp.{h,cpp}: 
+	  The SFP implementation has been remodelled similar to the GIOP
+	  implementation since it plays a similar role in AV framework as
+	  GIOP in the ORB. There is a TAO_SFP_Base class which contains
+	  only static methods and works on generic TAO_AV_Transport
+	  classes so that the SFP specific code can be reused for
+	  mappings over different transport like TCP and UDP. This design
+	  may not entirely work out since the mapping of SFP over
+	  different transport especially protocols like RTP may differ
+	  unlike GIOP which imposes a uniform restriction on the transport.
+	
+	* orbsvcs/orbsvcs/AV/AVStreams_i.{h,cpp}: 
+	  The TAO_Client_StreamEndPoint and TAO_Server_StreamEndPoint have
+	  been renamed to TAO_StreamEndPoint_A and TAO_StreamEndPoint_B as
+	  there is no notion of client and server in the streaming model,
+	  rather both are identical except in the multicast case. Also
+	  they're distinguished for type identification to the user. 
+
+	  The TAO_StreamEndPoint class now makes use of the Pluggable Data
+	  Protocols to instantiate a given protocol handler and has hooks
+	  for the user to supply a user-defined handler. Right now the
+	  user has to supply different handlers for different protocols
+	  but can use the same code to send and receive data using the
+	  generic TAO_AV_Transport class interface.
+
+	  Also in the case of SFP the SFP_Object is the interface to be
+	  used by the sender and TAO_SFP_Callback is the interface on the
+	  receiver side to which the framework makes an upcall when a
+	  frame is received.
+		
+	* orbsvcs/orbsvcs/AV/Transport.{h,cpp}: 
+	  These new files contain all the classes necessary for the A/V
+	  Service's Pluggable Data protocols used by the
+	  TAO_StreamEndPoint classes. This architecture is very similar to
+	  the ORB Pluggable protocols architecture except for the Profile
+	  specific and ORB specific code. The equivalent of a Profile in
+	  AV is the TAO_AV_FlowSpec_Entry which can either be a forward or
+	  reverse entry.
+
+	  Currently this file contains the TCP and UDP Pluggable Data
+	  protocols implementation. It also contains the implementation of
+	  a TAO_AV_Core class similar in spirit to the ORB_Core class so
+	  as to centralize all the Pluggable Protocol data structures. 
+	
 Fri Jun 18 15:12:15 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/GIOP.cpp (process_server_request): Removed extra
