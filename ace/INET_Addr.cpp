@@ -294,10 +294,19 @@ ACE_INET_Addr::ACE_INET_Addr (u_short port_number,
 {
   ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
   if (this->set (port_number, host_name) == -1)
+#if defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS)
+    ACE_ERROR ((LM_ERROR,
+                (char *) "ACE_INET_Addr::ACE_INET_Addr: %p\n",
+                (((char *) host_name == 0) ?
+                 ((char *) "<unknown>") :
+                 ((char *) (host_name)))));
+#else /* ! defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS) */
     ACE_ERROR ((LM_ERROR,
                 ASYS_TEXT ("ACE_INET_Addr::ACE_INET_Addr: %p\n"),
-                host_name == 0 ? ASYS_TEXT ("<unknown>") :
-                ASYS_WIDE_STRING (host_name)));
+                ((host_name == 0) ?
+                 (ASYS_TEXT ("<unknown>")) :
+                 (ASYS_WIDE_STRING (host_name)))));
+#endif /* ! defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS) */
 }
 
 // Creates a ACE_INET_Addr from a sockaddr_in structure.

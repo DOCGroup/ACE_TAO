@@ -666,21 +666,44 @@ ACE::ldfind (const ASYS_TCHAR filename[],
 #endif /* ACE_DIRECTORY_SEPARATOR_CHAR */
           // First, try matching the filename *without* adding a
           // prefix.
+#if defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS)
+          ACE_OS::sprintf (pathname,
+                           ASYS_TEXT ("%s%s%s"),
+                           searchpathname,
+                           searchfilename,
+                           got_suffix ? ACE_static_cast (char *, 
+                                                         ASYS_TEXT ("")) 
+                                      : ACE_static_cast (char *, 
+                                                         dll_suffix));
+#else /* ! defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS) */
           ACE_OS::sprintf (pathname,
                            ASYS_TEXT ("%s%s%s"),
                            searchpathname,
                            searchfilename,
                            got_suffix ? ASYS_TEXT ("") : dll_suffix);
+#endif /* ! defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS) */
           if (ACE_OS::access (pathname, F_OK) == 0)
             return 0;
 
           // Second, try matching the filename *with* adding a prefix.
+#if defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS)
+          ACE_OS::sprintf (pathname,
+                           ASYS_TEXT ("%s%s%s%s"),
+                           searchpathname,
+                           ACE_DLL_PREFIX,
+                           searchfilename,
+                           got_suffix ? ACE_static_cast (char *,
+                                                         ASYS_TEXT (""))
+                                      : ACE_static_cast (char *,
+                                                         dll_suffix));
+#else /* ! defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS) */
           ACE_OS::sprintf (pathname,
                            ASYS_TEXT ("%s%s%s%s"),
                            searchpathname,
                            ACE_DLL_PREFIX,
                            searchfilename,
                            got_suffix ? ASYS_TEXT ("") : dll_suffix);
+#endif /* ! defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS) */
           if (ACE_OS::access (pathname, F_OK) == 0)
             return 0;
         }
@@ -743,17 +766,41 @@ ACE::ldfind (const ASYS_TCHAR filename[],
 
               // First, try matching the filename *without* adding a
               // prefix.
+#if defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS)
+              ACE_OS::sprintf (pathname,
+                               ASYS_TEXT ("%s%c%s%s"),
+                               path_entry,
+                               ACE_DIRECTORY_SEPARATOR_CHAR,
+                               searchfilename,
+                               got_suffix ? ACE_static_cast (char *,
+                                                             ASYS_TEXT (""))
+                                          : ACE_static_cast (char *,
+                                                             dll_suffix));
+#else /* ! defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS) */
               ACE_OS::sprintf (pathname,
                                ASYS_TEXT ("%s%c%s%s"),
                                path_entry,
                                ACE_DIRECTORY_SEPARATOR_CHAR,
                                searchfilename,
                                got_suffix ? ASYS_TEXT ("") : dll_suffix);
+#endif /* ! defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS) */
               if (ACE_OS::access (pathname, F_OK) == 0)
                 break;
 
               // Second, try matching the filename *with* adding a
               // prefix.
+#if defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS)
+              ACE_OS::sprintf (pathname,
+                               ASYS_TEXT ("%s%c%s%s%s"),
+                               path_entry,
+                               ACE_DIRECTORY_SEPARATOR_CHAR,
+                               ACE_DLL_PREFIX,
+                               searchfilename,
+                               got_suffix ? ACE_static_cast (char *,
+                                                            ASYS_TEXT (""))
+                                          : ACE_static_cast (char *,
+                                                             dll_suffix));
+#else /* ! defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS) */
               ACE_OS::sprintf (pathname,
                                ASYS_TEXT ("%s%c%s%s%s"),
                                path_entry,
@@ -761,6 +808,7 @@ ACE::ldfind (const ASYS_TCHAR filename[],
                                ACE_DLL_PREFIX,
                                searchfilename,
                                got_suffix ? ASYS_TEXT ("") : dll_suffix);
+#endif /* ! defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS) */
               if (ACE_OS::access (pathname, F_OK) == 0)
                 break;
 
@@ -2870,7 +2918,7 @@ ACE::get_ip_interfaces (size_t &count,
   ACE_UNUSED_ARG (count);
   ACE_UNUSED_ARG (addrs);
   ACE_NOTSUP_RETURN (-1);;                      // no implementation
-#endif /* ACE_WIN32 */
+#endif /* ACE_WIN32 */}
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) && (defined (__unix) || defined (__Lynx__))

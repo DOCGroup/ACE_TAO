@@ -25,8 +25,8 @@
 
 enum ACE_Filecache_Flag
 {
-  NOMAP = 0,
-  MAPIT = 1
+  ACE_NOMAP = 0,
+  ACE_MAPIT = 1
 };
 
 class ACE_Filecache_Object;
@@ -88,13 +88,13 @@ class ACE_Export ACE_Filecache_Handle
 public:
 
   ACE_Filecache_Handle (const char *filename,
-                        ACE_Filecache_Flag mapit = MAPIT);
+                        ACE_Filecache_Flag mapit = ACE_MAPIT);
   // Query cache for file, and acquire it.  Assumes the file is being
   // opened for reading.
 
   ACE_Filecache_Handle (const char *filename,
                         int size,
-                        ACE_Filecache_Flag mapit = MAPIT);
+                        ACE_Filecache_Flag mapit = ACE_MAPIT);
   // Create new entry, and acquire it.  Presence of SIZE assumes the
   // file is being opened for writing.
 
@@ -126,13 +126,13 @@ public:
   // These come from ACE_Filecache_Object, which is an internal class.
   enum
   {
-    SUCCESS = 0,
-    ACCESS_FAILED,
-    OPEN_FAILED,
-    COPY_FAILED,
-    STAT_FAILED,
-    MEMMAP_FAILED,
-    WRITE_FAILED
+    ACE_SUCCESS = 0,
+    ACE_ACCESS_FAILED,
+    ACE_OPEN_FAILED,
+    ACE_COPY_FAILED,
+    ACE_STAT_FAILED,
+    ACE_MEMMAP_FAILED,
+    ACE_WRITE_FAILED
   };
 
 private:
@@ -203,11 +203,11 @@ public:
 
   enum
   {
-    DEFAULT_VIRTUAL_FILESYSTEM_TABLE_SIZE = 512,
+    ACE_DEFAULT_VIRTUAL_FILESYSTEM_TABLE_SIZE = 512,
     // For this stupid implementation, use an array.  Someday, use a
     // balanced search tree, or real hash table.
 
-    DEFAULT_VIRTUAL_FILESYSTEM_CACHE_SIZE = 20
+    ACE_DEFAULT_VIRTUAL_FILESYSTEM_CACHE_SIZE = 20
     // This determines the highwater mark in megabytes for the cache.
     // This will be ignored for now.
   };
@@ -226,8 +226,8 @@ private:
   // The reference to the instance
 
   // = Synchronization variables.
-  ACE_SYNCH_RW_MUTEX hash_lock_[DEFAULT_VIRTUAL_FILESYSTEM_TABLE_SIZE];
-  ACE_SYNCH_RW_MUTEX file_lock_[DEFAULT_VIRTUAL_FILESYSTEM_TABLE_SIZE];
+  ACE_SYNCH_RW_MUTEX hash_lock_[ACE_DEFAULT_VIRTUAL_FILESYSTEM_TABLE_SIZE];
+  ACE_SYNCH_RW_MUTEX file_lock_[ACE_DEFAULT_VIRTUAL_FILESYSTEM_TABLE_SIZE];
 };
 
 class ACE_Export ACE_Filecache_Object
@@ -297,19 +297,19 @@ public:
 
   enum Creation_States
   {
-    READING = 1,
-    WRITING = 2
+    ACE_READING = 1,
+    ACE_WRITING = 2
   };
 
   enum Error_Conditions
   {
-    SUCCESS = 0,
-    ACCESS_FAILED,
-    OPEN_FAILED,
-    COPY_FAILED,
-    STAT_FAILED,
-    MEMMAP_FAILED,
-    WRITE_FAILED
+    ACE_SUCCESS = 0,
+    ACE_ACCESS_FAILED,
+    ACE_OPEN_FAILED,
+    ACE_COPY_FAILED,
+    ACE_STAT_FAILED,
+    ACE_MEMMAP_FAILED,
+    ACE_WRITE_FAILED
   };
 
 private:

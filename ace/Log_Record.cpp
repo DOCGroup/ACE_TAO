@@ -6,7 +6,7 @@
 #include "ace/streams.h"
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/LOG_Record.i"
+#include "ace/Log_Record.i"
 #endif
 
 ACE_RCSID(ace, Log_Record, "$Id$")
@@ -142,8 +142,13 @@ ACE_Log_Record::print (const ASYS_TCHAR *host_name,
       ctp[19] = '\0'; // NUL-terminate after the time.
       ctp[24] = '\0'; // NUL-terminate after the date.
 
+#if defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS)
+      const ASYS_TCHAR *lhost_name =  (const ASYS_TCHAR *) ((host_name == 0) 
+        ? ((char *) "<local_host>") : ((char *) host_name));
+#else /* ! defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS) */
       const ASYS_TCHAR *lhost_name = host_name ==
         0 ? ASYS_TEXT ("<local_host>") : host_name;
+#endif /* ! defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS) */
 
       ret =  ACE_OS::fprintf (fp,
                               ASYS_TEXT ("%s.%d %s@%s@%d@%s@%s"),
@@ -191,8 +196,14 @@ ACE_Log_Record::print (const ASYS_TCHAR host_name[],
       ctp[19] = '\0'; // NUL-terminate after the time.
       ctp[24] = '\0'; // NUL-terminate after the date.
 
+#if defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS)
+      const ASYS_TCHAR *lhost_name = 
+        (const ASYS_TCHAR *) ((host_name == 0)
+        ? ((char *) "<local_host>") : ((char *) host_name));
+#else /* ! defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS) */
       const ASYS_TCHAR *lhost_name = host_name ==
         0 ? ASYS_TEXT ("<local_host>") : host_name;
+#endif /* ! defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS) */
 
       s << (ctp + 4) << '.'
 	// The following line isn't portable, so I've commented it out...

@@ -841,5 +841,8 @@ ACE_TSS_Read_Guard<ACE_LOCK>::dump (void) const
   ACE_TSS_Guard<ACE_LOCK>::dump ();
 }
 
+
 #endif /* defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION)) */
+
 #endif /* ACE_SYNCH_T_C */
+

@@ -29,7 +29,13 @@ ACE_SOCK_Dgram_Mcast::ACE_SOCK_Dgram_Mcast (void)
 int
 ACE_SOCK_Dgram_Mcast::subscribe (const ACE_INET_Addr &mcast_addr,
 				 int reuse_addr,
+#if defined (ACE_PSOS)
+                                 // pSOS supports numbers, not 
+                                 // names for network interfaces
+		                 long net_if,
+#else
 				 const ASYS_TCHAR *net_if,
+#endif /* defined (ACE_PSOS) */
 				 int protocol_family,
 				 int protocol)
 {
@@ -158,7 +164,14 @@ ACE_SOCK_Dgram_Mcast::unsubscribe (void)
 
 int
 ACE_SOCK_Dgram_Mcast::make_multicast_address (const ACE_INET_Addr &mcast_addr,
-					      const ASYS_TCHAR *net_if)
+#if defined (ACE_PSOS)
+                                              // pSOS supports numbers, not 
+                                              // names for network interfaces
+	      	                              long net_if
+#else
+					      const ASYS_TCHAR *net_if
+#endif /* defined (ACE_PSOS) */
+                                             )
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Mcast::make_multicast_address");
 
@@ -167,7 +180,12 @@ ACE_SOCK_Dgram_Mcast::make_multicast_address (const ACE_INET_Addr &mcast_addr,
 #if !defined (ACE_WIN32)
       struct ifreq if_address;
 
+#if defined (ACE_PSOS)
+      // look up the interface by number, not name
+      if_address.ifr_ifno = net_if;
+#else
       ACE_OS::strcpy (if_address.ifr_name, net_if);
+#endif /* defined (ACE_PSOS) */
 
       if (ACE_OS::ioctl (this->get_handle (), SIOCGIFADDR, &if_address) == -1)
 	return -1;
@@ -189,6 +207,10 @@ ACE_SOCK_Dgram_Mcast::make_multicast_address (const ACE_INET_Addr &mcast_addr,
   else
     multicast_address_.imr_interface.s_addr = INADDR_ANY;
   
+#if defined (ACE_PSOS) && !defined (ACE_PSOS_TM)
+  multicast_address_.imr_mcastaddr.s_addr = htonl (mcast_addr.get_ip_address ());
+#else
   multicast_address_.imr_multiaddr.s_addr = htonl (mcast_addr.get_ip_address ());
+#endif /* defined (ACE_PSOS) */
   return 0;
 }  
