@@ -48,7 +48,7 @@ TAO_Naming_Service::init (int argc,
       // '-1' in case of an exception.
       result = this->my_naming_server_.init_with_orb (this->argc_,
                                                       this->argv_,
-                                                      this->orb_);
+                                                      this->orb_.in ());
 
       if (result == -1)
         return result;
