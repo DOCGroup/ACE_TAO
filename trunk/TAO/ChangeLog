@@ -1,3 +1,11 @@
+Tue Oct  1 14:53:46 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_Location_Index_Map.cpp:
+
+	  Correct explicit template instantiations so that the template
+	  parameters match those in the typedef in the corresponding
+	  header file.
+
 Tue Oct  1 14:47:42 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
 
         * docs/releasenotes/index.html:
