@@ -1,3 +1,10 @@
+Wed May 16 16:34:02 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+	* tao/Default_Protocols_Hooks.cpp:
+	* tao/Default_Protocols_Hooks.h:
+          Fixed signature of add_rt_service_context_hook ().  Thanks to Jeff
+          for catching the mistake.
+
 Wed May 16 16:21:02 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
 	* tao/PortableServer/Object_Adapter.cpp:
