@@ -590,14 +590,14 @@ TAO_NAMESPACE CORBA
   TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (TypeCode_ptr);
   TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (ORB_ptr);
   TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (Principal_ptr);
-  TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (ServerRequest_ptr req);
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 
-  TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (Request_ptr);
+  TAO_NAMESPACE_STORAGE_CLASS Boolean is_nil (Request_ptr);
+  TAO_NAMESPACE_STORAGE_CLASS Boolean is_nil (ServerRequest_ptr req);
   TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (NamedValue_ptr);
   TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (NVList_ptr);
-  TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (Context_ptr);
+  TAO_NAMESPACE_STORAGE_CLASS Boolean is_nil (Context_ptr);
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
@@ -607,14 +607,14 @@ TAO_NAMESPACE CORBA
   TAO_NAMESPACE_INLINE_FUNCTION void release (Principal_ptr);
   TAO_NAMESPACE_INLINE_FUNCTION void release (TypeCode_ptr);
   TAO_NAMESPACE_INLINE_FUNCTION void release (ORB_ptr);
-  TAO_NAMESPACE_INLINE_FUNCTION void release (ServerRequest_ptr req);
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 
-  TAO_NAMESPACE_INLINE_FUNCTION void release (Request_ptr);
+  TAO_NAMESPACE_STORAGE_CLASS void release (Request_ptr);
+  TAO_NAMESPACE_STORAGE_CLASS void release (ServerRequest_ptr req);
   TAO_NAMESPACE_INLINE_FUNCTION void release (NamedValue_ptr);
   TAO_NAMESPACE_INLINE_FUNCTION void release (NVList_ptr);
-  TAO_NAMESPACE_INLINE_FUNCTION void release (Context_ptr);
+  TAO_NAMESPACE_STORAGE_CLASS void release (Context_ptr);
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
