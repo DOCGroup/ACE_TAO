@@ -1,74 +1,78 @@
+Wed Jul 12 11:45:34 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * include/makeinclude/rules.commmon.GNU: added OSF1 support.
+
 Wed Jul 12 10:53:01 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/win32/pace.dsw:
+        * pace/win32/pace.dsw:
 
-	  Added the PACE/pace/*.h files. These currently contain
-	  the interface we need to compile into our code. Maybe
-	  we can change the following, but we now have
-	  PACE/pace/aio.h and PACE/pace/win32/aio.h
-	  both showing up in the VC++ list as aio.h and aio.h.
-	  The PACE/pace/win32 files always show up second :-)
+          Added the PACE/pace/*.h files. These currently contain
+          the interface we need to compile into our code. Maybe
+          we can change the following, but we now have
+          PACE/pace/aio.h and PACE/pace/win32/aio.h
+          both showing up in the VC++ list as aio.h and aio.h.
+          The PACE/pace/win32 files always show up second :-)
 
 Wed Jul 12 10:24:20 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/win32/wait.h:
-	* pace/win32/utsname.h:
-	* pace/win32/utime.h:
-	* pace/win32/unistd.h:
-	* pace/win32/types.h:
-	* pace/win32/times.h:
-	* pace/win32/time.h:
-	* pace/win32/termios.h:
-	* pace/win32/string.h:
-	* pace/win32/stdlib.h:
-	* pace/win32/stdio.h:
-	* pace/win32/stat.h:
-	* pace/win32/signal.h:
-	* pace/win32/setjmp.h:
-	* pace/win32/semaphore.h:
-	* pace/win32/sched.h:
-	* pace/win32/pwd.h:
-	* pace/win32/pthread.h:
-	* pace/win32/mqueue.h:
-	* pace/win32/mman.h:
-	* pace/win32/math.h:
-	* pace/win32/locale.h:
-	* pace/win32/limits.h:
-	* pace/win32/grp.h:
-	* pace/win32/fcntl.h:
-	* pace/win32/dirent.h:
-	* pace/win32/ctype.h:
-	* pace/win32/assert.h:
-	* pace/win32/aio.h:
+        * pace/win32/wait.h:
+        * pace/win32/utsname.h:
+        * pace/win32/utime.h:
+        * pace/win32/unistd.h:
+        * pace/win32/types.h:
+        * pace/win32/times.h:
+        * pace/win32/time.h:
+        * pace/win32/termios.h:
+        * pace/win32/string.h:
+        * pace/win32/stdlib.h:
+        * pace/win32/stdio.h:
+        * pace/win32/stat.h:
+        * pace/win32/signal.h:
+        * pace/win32/setjmp.h:
+        * pace/win32/semaphore.h:
+        * pace/win32/sched.h:
+        * pace/win32/pwd.h:
+        * pace/win32/pthread.h:
+        * pace/win32/mqueue.h:
+        * pace/win32/mman.h:
+        * pace/win32/math.h:
+        * pace/win32/locale.h:
+        * pace/win32/limits.h:
+        * pace/win32/grp.h:
+        * pace/win32/fcntl.h:
+        * pace/win32/dirent.h:
+        * pace/win32/ctype.h:
+        * pace/win32/assert.h:
+        * pace/win32/aio.h:
 
-	  Removed function prototypes. These were moved to the PACE/*.h files.
-	  Removed #include *.inl files. These are inluded by the PACE/*.h files.
-	  Postfixed the protective preprocessor guards with _WIN32
-	  (ie: PACE_CTYPE_H_WIN32).
+          Removed function prototypes. These were moved to the PACE/*.h files.
+          Removed #include *.inl files. These are inluded by the PACE/*.h files.
+          Postfixed the protective preprocessor guards with _WIN32
+          (ie: PACE_CTYPE_H_WIN32).
 
 Wed Jul 12 01:25:44 2000  John Heitmann  <jwh1@cs.wustl.edu>
 
-	* pace/emulation/time.c:
-	  Removed since it is currently empty.
+        * pace/emulation/time.c:
+          Removed since it is currently empty.
 
-	* pace/emulation/time.h:
-	  Minor changes to how this file is included in:
+        * pace/emulation/time.h:
+          Minor changes to how this file is included in:
 
-	* pace/posix/time.h:
-	  Changed how emulation/time.h is included on Linux
+        * pace/posix/time.h:
+          Changed how emulation/time.h is included on Linux
 
-	* pace/config/compiler.h
-	* pace/posix/string.inl
-	* pace/posix/unistd.inl
-	  Changed to quell odd compiler warnings from gcc. Added
-	  PACE_BROKEN_INLINE.
+        * pace/config/compiler.h
+        * pace/posix/string.inl
+        * pace/posix/unistd.inl
+          Changed to quell odd compiler warnings from gcc. Added
+          PACE_BROKEN_INLINE.
 
-	* pace/emulation/mqueue.*
-	  Improved and updated code, but it is still not complete.
+        * pace/emulation/mqueue.*
+          Improved and updated code, but it is still not complete.
 
-	* pace/tests/mqueue_test.c
-	* pace/tests/Makefile
-	  Added a very simple test to verify mqueue works.
+        * pace/tests/mqueue_test.c
+        * pace/tests/Makefile
+          Added a very simple test to verify mqueue works.
 
 Tue Jul 11 21:05:58 2000  David L. Levine  <levine@cs.wustl.edu>
 
