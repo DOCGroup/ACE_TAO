@@ -62,6 +62,16 @@ endif
 #----------------------------------------------------------------------------
 
 include	$(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+
+ifeq ($(ACE_HAS_GNUG_PRE_2_8),1)
+
+  # Since older g++ cannot handle nested classes properly, this test
+  # will not build on g++ prior to 2.8.0.
+  all clean realclean:
+	@echo examples/Quoter is not built with older versions of g++
+
+else # ! ACE_HAS_GNUG_PRE_2_8
+
 include	$(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
 include	$(ACE_ROOT)/include/makeinclude/rules.common.GNU
@@ -95,6 +105,7 @@ Factory_Finder: $(addprefix $(VDIR),$(FACTORY_FINDER_OBJS))
 Generic_Factory: $(addprefix $(VDIR),$(GENERIC_FACTORY_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
+endif # ! ACE_HAS_GNUG_PRE_2_8
 
 #----------------------------------------------------------------------------
 #	Dependencies
