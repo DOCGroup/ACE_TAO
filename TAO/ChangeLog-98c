@@ -9,8 +9,8 @@ Tue Sep 22 07:12:31 1998  David L. Levine  <levine@cs.wustl.edu>
         * orbsvcs/tests/Event_Latency/Makefile,
           orbsvcs/tests/EC_Multiple/Makefile,
           orbsvcs/tests/EC_Throughput/Makefile,
-          orbsvcs/tests/EC_Custom_Marshal/Makefile: removed
-          Quantify support, now that it's in wrapper_macros.GNU.
+          orbsvcs/tests/EC_Custom_Marshal/Makefile: removed Quantify
+          support, now that it's in wrapper_macros.GNU.
 
 Tue Sep 22 03:22:56 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
