@@ -68,7 +68,10 @@ module RTCORBA
 
   native PriorityMapping;
   native PriorityTransform;
-
+ 
+  typedef long NetworkPriority;	
+  native NetworkPriorityMapping;	
+	
   // Threadpool types.
   typedef unsigned long ThreadpoolId;
 
@@ -146,6 +149,7 @@ module RTCORBA
     attribute boolean keep_alive;
     attribute boolean dont_route;
     attribute boolean no_delay;
+    attribute boolean enable_network_priority;	
   };
 
   local interface GIOPProtocolProperties : ProtocolProperties {};
