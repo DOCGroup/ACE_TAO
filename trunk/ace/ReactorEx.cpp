@@ -16,7 +16,7 @@ ACE_ReactorEx_Handler_Repository::ACE_ReactorEx_Handler_Repository (ACE_ReactorE
 }
 
 int
-ACE_ReactorEx_Handler_Repository::invalid_handle (ACE_HANDLE handle)
+ACE_ReactorEx_Handler_Repository::invalid_handle (ACE_HANDLE handle) const
 {
   ACE_TRACE ("ACE_ReactorEx_Handler_Repository::invalid_handle");
   // It's too expensive to perform more exhaustive validity checks on
@@ -31,7 +31,7 @@ ACE_ReactorEx_Handler_Repository::invalid_handle (ACE_HANDLE handle)
 }
 
 int
-ACE_ReactorEx_Handler_Repository::handle_in_range (size_t handle_index)
+ACE_ReactorEx_Handler_Repository::handle_in_range (size_t handle_index) const
 {
   ACE_TRACE ("ACE_Reactor_Handler_Repository::handle_in_range");
   if (handle_index >= 0 
