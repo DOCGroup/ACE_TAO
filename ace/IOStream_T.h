@@ -31,6 +31,10 @@
 #  include "ace/Handle_Set.h"
 #  include "ace/Global_Macros.h"
 
+#  if defined (ACE_LACKS_IOSTREAM_FX)
+#   include "ace/os_include/os_ctype.h"
+#  endif /**/
+
 #  if defined (ACE_HAS_STRING_CLASS)
 template <class STREAM> STREAM & operator>> (STREAM &stream, ACE_Quoted_String &str);
 template <class STREAM> STREAM & operator<< (STREAM &stream, ACE_Quoted_String &str);
