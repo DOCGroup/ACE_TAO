@@ -1,3 +1,18 @@
+Sun Apr 06 20:01:57 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* include/makeinclude/wrapper_macros.GNU: added "purify" and
+	  "quantify" make command options.  To build Purified versions
+	  of all executables in the current direction, for example:
+
+		% make purify=1
+
+	* ace/Task.{h,cpp}: removed ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
+	  from ACE_Task_Exit declaration and ACE_Task_Exit::instance ().
+	  ACE_Task_Exit is no longer a template class, so we don't need that.
+
+	* tests/IOStream.cpp (server): added check for 0 strlen of
+	  "buf" to avoid out-of-bound array reference.
+
 Sun Apr  6 14:16:18 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/OS.cpp: Deleted a useless return.  Thanks to Gonzalo
