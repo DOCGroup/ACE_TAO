@@ -17,31 +17,37 @@ namespace TAO
       ::PortableServer::IdUniquenessPolicyValue value)
     {
       IdUniquenessStrategy* strategy = 0;
-      const char * strategy_name = 0;
-
       switch (value)
       {
         case ::PortableServer::MULTIPLE_ID :
         {
-          strategy_name = "IdUniquenessStrategyMultiple";
+          strategy =
+            ACE_Dynamic_Service<IdUniquenessStrategy>::instance ("IdUniquenessStrategyMultiple");
+
+          if (strategy == 0)
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("(%P|%t) %p\n"),
+                        ACE_TEXT ("Unable to get ")
+                        ACE_TEXT ("IdUniquenessStrategyMultiple")));
+
           break;
         }
         case ::PortableServer::UNIQUE_ID :
         {
-          strategy_name = "IdUniquenessStrategyUniqueFactory";
+          IdUniquenessStrategyFactory *strategy_factory =
+            ACE_Dynamic_Service<IdUniquenessStrategyFactory>::instance ("IdUniquenessStrategyUniqueFactory");
+
+          if (strategy_factory != 0)
+            strategy = strategy_factory->create (value);
+          else
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("(%P|%t) %p\n"),
+                        ACE_TEXT ("Unable to get ")
+                        ACE_TEXT ("IdUniquenessStrategyUniqueFactory")));
+
           break;
         }
       }
-
-      IdUniquenessStrategyFactory *strategy_factory =
-        ACE_Dynamic_Service<IdUniquenessStrategyFactory>::instance (strategy_name);
-
-      if (strategy_factory != 0)
-        strategy = strategy_factory->create (value);
-      else
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) Unable to get %s\n"),
-                    strategy_name));
 
       return strategy;
     }
