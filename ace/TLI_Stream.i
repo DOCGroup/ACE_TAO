@@ -5,7 +5,8 @@
 
 #include "ace/TLI_Stream.h"
 
-inline ssize_t
+ACE_INLINE
+ssize_t
 ACE_TLI_Stream::send (const void *buf,
                       size_t n,
                       const ACE_Time_Value *timeout) const
@@ -17,7 +18,8 @@ ACE_TLI_Stream::send (const void *buf,
                     timeout);
 }
 
-inline ssize_t
+ACE_INLINE
+ssize_t
 ACE_TLI_Stream::send (const void *buf,
                       size_t n,
                       int flags,
@@ -31,7 +33,8 @@ ACE_TLI_Stream::send (const void *buf,
                      timeout);
 }
 
-inline ssize_t
+ACE_INLINE
+ssize_t
 ACE_TLI_Stream::recv (void *buf,
                       size_t n,
                       const ACE_Time_Value *timeout) const
@@ -43,7 +46,8 @@ ACE_TLI_Stream::recv (void *buf,
                     timeout);
 }
 
-inline ssize_t
+ACE_INLINE
+ssize_t
 ACE_TLI_Stream::recv (void *buf,
                       size_t n,
                       int *flags,
@@ -62,7 +66,8 @@ ACE_TLI_Stream::recv (void *buf,
                      timeout);
 }
 
-inline ssize_t
+ACE_INLINE
+ssize_t
 ACE_TLI_Stream::send_n (const void *buf,
                         size_t n,
                         const ACE_Time_Value *timeout,
@@ -76,7 +81,8 @@ ACE_TLI_Stream::send_n (const void *buf,
                       bytes_transferred);
 }
 
-inline ssize_t
+ACE_INLINE
+ssize_t
 ACE_TLI_Stream::send_n (const void *buf,
                         size_t n,
                         int flags,
@@ -93,7 +99,8 @@ ACE_TLI_Stream::send_n (const void *buf,
                        bytes_transferred);
 }
 
-inline ssize_t
+ACE_INLINE
+ssize_t
 ACE_TLI_Stream::recv_n (void *buf,
                         size_t n,
                         const ACE_Time_Value *timeout,
@@ -107,7 +114,8 @@ ACE_TLI_Stream::recv_n (void *buf,
                       bytes_transferred);
 }
 
-inline ssize_t
+ACE_INLINE
+ssize_t
 ACE_TLI_Stream::recv_n (void *buf,
                         size_t n,
                         int *flags,
@@ -124,14 +132,16 @@ ACE_TLI_Stream::recv_n (void *buf,
                        bytes_transferred);
 }
 
-inline void
+ACE_INLINE
+void
 ACE_TLI_Stream::set_rwflag (int value)
 {
   ACE_TRACE ("ACE_TLI_Stream::set_rwflag");
   this->rwflag_ = value;
 }
 
-inline int
+ACE_INLINE
+int
 ACE_TLI_Stream::get_rwflag (void)
 {
   ACE_TRACE ("ACE_TLI_Stream::get_rwflag");

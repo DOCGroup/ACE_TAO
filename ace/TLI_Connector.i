@@ -3,7 +3,7 @@
 
 // TLI_Connector.i
 
-inline
+ACE_INLINE
 ACE_TLI_Connector::ACE_TLI_Connector (ACE_TLI_Stream &new_stream, 
 				      const ACE_Addr &remote_sap, 
 				      ACE_Time_Value *timeout,
@@ -34,7 +34,8 @@ ACE_TLI_Connector::ACE_TLI_Connector (ACE_TLI_Stream &new_stream,
     ACE_ERROR ((LM_ERROR,  ACE_TEXT ("%p\n"),  ACE_TEXT ("ACE_TLI_Stream::ACE_TLI_Stream")));
 }
 
-inline int
+ACE_INLINE
+int
 ACE_TLI_Connector::reset_new_handle (ACE_HANDLE handle)
 {
   ACE_UNUSED_ARG (handle);

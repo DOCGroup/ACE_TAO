@@ -110,7 +110,9 @@ public:
   // Declare the dynamic allocation hooks.
 };
 
+#if defined (__ACE_INLINE__)
 #include "ace/TLI_Connector.i"
+#endif /* __ACE_INLINE__ */
 
 #endif /* ACE_HAS_TLI */
 #include "ace/post.h"
