@@ -1,9 +1,18 @@
+Sat Aug 28 21:53:30 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Trader/Constraint_Interpreter.h (TAO_Interpreter):
+	* orbsvcs/orbsvcs/Trader/Constraint_Interpreter.cpp (TAO_Interpreter):
+
+	  Fixed single-threaded build problem.  Code was using
+	  ACE_Thread_Mutex instead of ACE_SYNCH_MUTEX, and ACE_Guard
+	  instead of ACE_GUARD_RETURN.
+
 Sat Aug 28 16:40:29 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Trader/Constraint_Interpreter.h (TAO_Interpreter):
 	* orbsvcs/orbsvcs/Trader/Constraint_Interpreter.cpp (TAO_Interpreter):
 	  Fix for Bug#:236 - Added a Guard in the <build_tree> method to
-	  protect it from reentrance.Thanks to <ujaehrig@desys.com> for
+	  protect it from reentrance.  Thanks to <ujaehrig@desys.com> for
 	  reporting this bug and providing a fix.
 
 Sat Aug 28 16:26:00 1999  Jeff Parsons  <parsons@cs.wustl.edu>
