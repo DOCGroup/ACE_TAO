@@ -135,7 +135,6 @@ template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_UINT32,ACE_RMCast_Partial_Me
 template class ACE_Hash_Map_Iterator_Base_Ex<ACE_UINT32,ACE_RMCast_Partial_Message*,ACE_Hash<ACE_UINT32>,ACE_Equal_To<ACE_UINT32>,ACE_Null_Mutex >;
 template class ACE_Hash_Map_Entry<ACE_UINT32,ACE_RMCast_Partial_Message*>;
 
-template class ACE_Equal_To<ACE_UINT32>;
 template class ACE_Less_Than<ACE_UINT32>;
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

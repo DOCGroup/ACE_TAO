@@ -1,3 +1,19 @@
+Tue Dec 18 14:45:34 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/Synch_T.cpp:
+	* ace/Synch_T.h: Removed ACE_Atomic_Op to a new file.  
+
+	* ace/Atomic_Op.h:
+	* ace/Atomic_Op.i:
+	* ace/Atomic_Op.cpp: The class ACE_Atomic_Op is in this file now. 
+
+	* ace/Functor.h:
+	* ace/Functor.i: Added template specializations for some base
+	  types like ACE_UINT16. 
+	
+	* ace/RMCast/RMCast_Reassembly.cpp: Removed a template
+	  instantation for ACE_Equal_To.
+
 Sat Dec 15 11:17:35 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* bin/dep.pl: Script to generate dependecies. To be run as "dep.pl
