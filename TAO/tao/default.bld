@@ -4,6 +4,7 @@ default:
 	:cx_template_option=noautomatic
 	:debuglevel=multi
 	:cx_template=never
+	:defines=TAO_PLATFORM_SVC_CONF_FILE_NOTSUP
 tao.bld
 	library
 	:cx_e_option=msgnumbers
