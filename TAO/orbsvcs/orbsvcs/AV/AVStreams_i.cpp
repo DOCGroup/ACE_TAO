@@ -85,9 +85,9 @@ TAO_Basic_StreamCtrl::destroy (const AVStreams::flowSpec &the_spec,
 // Changes the QoS associated with the stream
 // Empty the_spec means apply operation to all flows
 CORBA::Boolean
-TAO_Basic_StreamCtrl::modify_QoS (AVStreams::streamQoS &/* new_qos */,
-                                  const AVStreams::flowSpec &/* the_spec */,
-                                  CORBA::Environment &/* ACE_TRY_ENV */)
+TAO_Basic_StreamCtrl::modify_QoS (AVStreams::streamQoS & /* new_qos */,
+                                  const AVStreams::flowSpec & /* the_spec */,
+                                  CORBA::Environment & /* ACE_TRY_ENV */)
 {
   return 0;
 }
@@ -95,18 +95,18 @@ TAO_Basic_StreamCtrl::modify_QoS (AVStreams::streamQoS &/* new_qos */,
 // Used by StreamEndPoint and VDev to inform StreamCtrl of events.
 // E.g., loss of flow, reestablishment of flow, etc..
 void
-TAO_Basic_StreamCtrl::push_event (const struct CosPropertyService::Property &/* the_event */,
-                                  CORBA::Environment &/* ACE_TRY_ENV */)
+TAO_Basic_StreamCtrl::push_event (const struct CosPropertyService::Property & /* the_event */,
+                                  CORBA::Environment & /* ACE_TRY_ENV */)
 {
   ACE_DEBUG ((LM_DEBUG,"\n(%P|%t) Recieved event \""));
 }
 
 // @@ Need to throw not-supported exception here
 void
-TAO_Basic_StreamCtrl::set_FPStatus (const AVStreams::flowSpec &/* the_spec */,
-                                    const char  */*  fp_name  */,
-                                    const CORBA::Any &/* fp_settings */,
-                                    CORBA::Environment &/* ACE_TRY_ENV */)
+TAO_Basic_StreamCtrl::set_FPStatus (const AVStreams::flowSpec & /* the_spec */,
+                                    const char  * /*  fp_name  */,
+                                    const CORBA::Any & /* fp_settings */,
+                                    CORBA::Environment & /* ACE_TRY_ENV */)
 {
 }
 
