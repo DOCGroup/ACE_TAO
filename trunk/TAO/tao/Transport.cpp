@@ -698,9 +698,10 @@ TAO_Transport::close_connection_shared (int purge,
 
   int retval = 0;
 
-  // The famous hack for 1020. We drive the Leader_Follower for
-  // a short period.
-  if (this->ws_->is_registered ())
+  // NOTE: If the wait strategy is in blocking mode, then there is no
+  // chance that it could be inside the reactor. We can safely skip
+  // driving the LF.
+  if (this->ws_->non_blocking ())
     {
       // NOTE: This is a work around for BUG 1020. We drive the leader
       // follower for a predetermined amount of time. Ideally this
@@ -712,11 +713,12 @@ TAO_Transport::close_connection_shared (int purge,
         this->orb_core_->leader_follower ().wait_for_event (eh,
                                                             this,
                                                             &tv);
+
     }
 
   // We need to explicitly shut it down to avoid memory leaks.
   if (retval == -1 ||
-      !this->ws_->is_registered ())
+      !this->ws_->non_blocking ())
     {
       eh->close_connection ();
     }
