@@ -181,8 +181,25 @@ which uses <tt>select</TT> or a similar event demultiplexing
         in the thread pool has an ORB that accepts and processes
             requests reactively. <P>
 
-        <li><tt>leader/follower</tt>: 
-        <!-- Carlos, can you please describe this thread pool use-case -->
+        <li><P><tt>leader/follower</tt>: In this model, the user must
+	  create several threads, all of which invoke
+	  <CODE>ORB::run</CODE>, the ORB will select one of the threads
+	  to wait for incoming requests.
+	  This thread is called the leader thread and will process the
+	  first request that arrives to the ORB, but before 
+	  doing so the ORB will selects another thread in the pool to
+	  become the leader.
+	  In other words the threads in the pool take turns to
+	  process the events.
+	</p>
+	<p>
+	  Notice that this configuration requires the
+	  <CODE>ACE_TP_Reactor</CODE>, i.e.
+	  you must use the <CODE>-ORBReactorType tp</CODE> in the
+	  configuration file.
+	</p>
+	</li>
+	
       </UL><P>
 
   <!--
