@@ -87,7 +87,8 @@ libTAO_Svc_Utils_la_SOURCES = \
   RtecBaseS.cpp \
   TimeBaseC.cpp \
   TimeBaseS.cpp \
-  Time_Utilities.cpp
+  Time_Utilities.cpp \
+  Shutdown_Utils.cpp
 
 libTAO_Svc_Utils_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
