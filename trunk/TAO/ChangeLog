@@ -1,3 +1,12 @@
+Wed Mar 10 19:41:01 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* orbsvcs/LoadBalancer/Signal_Handler.cpp:
+	* orbsvcs/LoadBalancer/Signal_Handler.h:
+	* orbsvcs/orbsvcs/Event/RT_Task.cpp:
+	* orbsvcs/orbsvcs/Event/RT_Task.h:
+
+	  Fixed warnings from SunCC and Borland builds.
+
 Tue Mar  9 17:25:17 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* orbsvcs/orbsvcs/PortableGroup/PG_Properties_Encoder.inl:
