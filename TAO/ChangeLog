@@ -2,6 +2,8 @@ Tue Sep  3 14:48:55 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/RTEvent_Static.dsp:
 	* orbsvcs/orbsvcs/RTSched_Static.dsp:
+	* orbsvcs/orbsvcs/SSLIOP.dsp:
+	* orbsvcs/orbsvcs/SSLIOP_Static.dsp:
 	* orbsvcs/orbsvcs/Svc_Utils_Static.dsp:
 
 	  Removed redundant "-I" preprocessor directives again.
