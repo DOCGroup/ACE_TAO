@@ -471,7 +471,7 @@ ACE_Stream<ACE_SYNCH_2>::unlink (void)
   return this->unlink_i ();
 }
 
-template <ACE_SYNCH_1> ACE_INLINE
+template <ACE_SYNCH_1>
 ACE_Stream<ACE_SYNCH_2>::ACE_Stream (void * a, 
 				     ACE_Module<ACE_SYNCH_2> *head, 
 				     ACE_Module<ACE_SYNCH_2> *tail)
@@ -485,7 +485,6 @@ ACE_Stream<ACE_SYNCH_2>::ACE_Stream (void * a,
 }
 
 #if 0
-ACE_INLINE
 ACE_Stream<ACE_SYNCH_2>::ACE_Stream (void *a, 
 				     ACE_Multiplexor &muxer, 
 				     ACE_Module<ACE_SYNCH_2> *head)
@@ -499,7 +498,7 @@ ACE_Stream<ACE_SYNCH_2>::ACE_Stream (void *a,
 }
 #endif 
 
-template <ACE_SYNCH_1> ACE_INLINE
+template <ACE_SYNCH_1>
 ACE_Stream<ACE_SYNCH_2>::~ACE_Stream (void)
 {
   ACE_TRACE ("ACE_Stream<ACE_SYNCH_2>::~ACE_Stream");
@@ -508,7 +507,7 @@ ACE_Stream<ACE_SYNCH_2>::~ACE_Stream (void)
     this->close ();
 }
 
-template <ACE_SYNCH_1> ACE_INLINE
+template <ACE_SYNCH_1>
 ACE_Stream_Iterator<ACE_SYNCH_2>::ACE_Stream_Iterator (const ACE_Stream<ACE_SYNCH_2> &sr)
   : next_ (sr.stream_head_)
 {

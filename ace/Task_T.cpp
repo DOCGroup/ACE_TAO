@@ -13,7 +13,7 @@
 #include "ace/Task_T.i"
 #endif /* __ACE_INLINE__ */
 
-template <ACE_SYNCH_1> ACE_INLINE void
+template <ACE_SYNCH_1> void
 ACE_Task<ACE_SYNCH_2>::dump (void) const
 {
   ACE_TRACE ("ACE_Task<ACE_SYNCH_2>::dump");

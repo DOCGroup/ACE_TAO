@@ -160,7 +160,7 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_2>::dump (void) const
   ACE_TRACE ("ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_2>::dump");
 }
 
-template <PR_ST_1, ACE_SYNCH_1> ACE_INLINE ACE_PEER_STREAM &
+template <PR_ST_1, ACE_SYNCH_1> ACE_PEER_STREAM &
 ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_2>::peer (void) const
 {
   ACE_TRACE ("ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_2>::peer");
