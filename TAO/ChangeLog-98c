@@ -1,10 +1,16 @@
+Sun Oct 11 17:59:32 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* examples/Callback_Quoter/Client_i.cpp (CLient_i::run ()):
+	changed the argument wrongly passed to the unregister_callback
+	from Consumer_var to Consumer_var.in ().
+
 Sun Oct 11 17:09:16 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp: 
-	* tao/POAC.cpp: 
-	* tao/PolicyC.cpp: 
-	* tao/DynAnyC.cpp: 
-	* tao/CurrentC.cpp: 
+	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+	* tao/POAC.cpp:
+	* tao/PolicyC.cpp:
+	* tao/DynAnyC.cpp:
+	* tao/CurrentC.cpp:
 	  Optimized _narrow() it does not need to call _create_stub() on
 	  the collocated case, using the CORBA::Object stub is good
 	  enough.
