@@ -73,8 +73,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_argument.h"
 #include "ast_visitor.h"
 
-ACE_RCSID (ast, 
-           ast_argument, 
+ACE_RCSID (ast,
+           ast_argument,
            "$Id$")
 
 // Static functions.
@@ -119,7 +119,7 @@ AST_Argument::~AST_Argument (void)
 
 // Dump this AST_Argument node to the ostream o.
 void
-AST_Argument::dump (ostream &o)
+AST_Argument::dump (ACE_OSTREAM_TYPE &o)
 {
   o << direction_to_string (pd_direction) << " ";
   AST_Field::dump (o);
