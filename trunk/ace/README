@@ -71,6 +71,7 @@ ACE_USE_POLL                            The OS platform supports the
 ACE_USES_ASM_SYMBOL_IN_DLSYM            Platform uses assembly symbols
                                         instead of C symbols in
                                         dlsym()
+ACE_USES_STATIC_MFC                     When linking MFC as a static library is desired
 ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB   Platform has its standard c++
                                         library in the namespace std.
 ACE_WSOCK_VERSION                       A parameter list indicating
