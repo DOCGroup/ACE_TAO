@@ -3857,7 +3857,7 @@ typedef FUNCPTR ACE_THR_FUNC_INTERNAL;  // where typedef int (*FUNCPTR) (...)
 # elif defined (ACE_PSOS)
 typedef void (*ACE_THR_FUNC_INTERNAL)(void *);
 # else
-typedef void *(*ACE_THR_FUNC_INTERNAL)(void *);
+typedef ACE_THR_FUNC ACE_THR_FUNC_INTERNAL;
 # endif /* VXWORKS */
 
 extern "C" {
