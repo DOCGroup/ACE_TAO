@@ -23,6 +23,7 @@
 
 #include "ace/Synch.h"
 #include "ace/Hash_Map_Manager.h"
+#include "tao/Utils/Servant_Var.h"
 #include "DomainApplicationManager/DomainApplicationManager_Impl.h"
 
 /**
@@ -120,12 +121,8 @@ namespace CIAO
 
       Deployment::DomainApplicationManager_var dam_;
 
-      // @@ (OO) You may want to consider caching this->dam_servant_
-      //         into a TAO::Utils::Servant_Var<> to ease memory
-      //         management, e.g. automatically decreasing reference
-      //         counts, etc.
       /// Cached servant of the DomainApplicaitonmanager.
-      CIAO::DomainApplicationManager_Impl * dam_servant_;
+      TAO::Utils::Servant_Var<CIAO::DomainApplicationManager_Impl> dam_servant_;
     };
 
 };

@@ -49,7 +49,6 @@ parse_args (int argc, char *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, "o:c:m:i:n");
   int c;
-
   while ((c = get_opts ()) != -1)
     switch (c)
       {
