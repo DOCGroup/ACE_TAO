@@ -1,3 +1,10 @@
+Fri Jun 20 10:10:07 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/QtTests/QtTests.mpc:
+
+          Added a project for the QtTests.  This will only get built if the
+          qt feature is enabled.
+
 Fri Jun 20 14:50:32 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * tao/RTCORBA/RTCORBA.h:
@@ -110,59 +117,59 @@ Fri Jun 20 04:22:37 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Thu Jun 19 20:45:06 2003  Pradeep Gore  <pradeep@oomworks.com>
 
-	* orbsvcs/tests/Notify/lib/Peer_T.cpp:
-	* orbsvcs/tests/Notify/lib/Supplier_T.cpp:
-	* orbsvcs/tests/Notify/lib/Consumer_T.cpp:
+        * orbsvcs/tests/Notify/lib/Peer_T.cpp:
+        * orbsvcs/tests/Notify/lib/Supplier_T.cpp:
+        * orbsvcs/tests/Notify/lib/Consumer_T.cpp:
 
-	  Added ACE_TYPENAME to stop compiler warnings.
+          Added ACE_TYPENAME to stop compiler warnings.
 
 Thu Jun 19 18:29:28 2003  Gan Deng  <gan.deng@vanderbilt.edu>
 
-	* performance-test/Sequence_Latency/AMH/Single_Threaded/run_test.pl
+        * performance-test/Sequence_Latency/AMH/Single_Threaded/run_test.pl
 
-	  Fixed some wrong output information.
+          Fixed some wrong output information.
 
 Thu Jun 19 17:32:38 2003  Gan Deng  <gan.deng@vanderbilt.edu>
 
-	* performance-test/Sequence_Latency/DSI/client.cpp
+        * performance-test/Sequence_Latency/DSI/client.cpp
 
-	  Removed an unused dummy variable in the source code.
+          Removed an unused dummy variable in the source code.
 
 Thu Jun 19 16:05:09 2003  Gan Deng  <gan.deng@vanderbilt.edu>
 
-	* performance-tests/Sequence_Latency/DII/Makefile
-	* performance-tests/Sequence_Latency/DSI/Makefile
+        * performance-tests/Sequence_Latency/DII/Makefile
+        * performance-tests/Sequence_Latency/DSI/Makefile
 
-	  Added the missing dependency relation to the old makefiles.
+          Added the missing dependency relation to the old makefiles.
 
 Thu Jun 19 14:08:22 2003  Pradeep Gore  <pradeep@oomworks.com>
 
-	* orbsvcs/orbsvcs/.depend.Makefile.RT_Notification:
-	* orbsvcs/tests/Notify/RT_lib/.depend.Makefile:
-	* orbsvcs/tests/Notify/Test_Filter/.depend.Makefile:
-	* orbsvcs/tests/Notify/lib/.depend.Makefile:
+        * orbsvcs/orbsvcs/.depend.Makefile.RT_Notification:
+        * orbsvcs/tests/Notify/RT_lib/.depend.Makefile:
+        * orbsvcs/tests/Notify/Test_Filter/.depend.Makefile:
+        * orbsvcs/tests/Notify/lib/.depend.Makefile:
 
-	  Updated dependencies.
+          Updated dependencies.
 
-	* orbsvcs/tests/Notify/Blocking/Notify_Structured_Push_Consumer.cpp:
-	* orbsvcs/tests/Notify/Discarding/Notify_Sequence_Push_Consumer.cpp:
-	* orbsvcs/tests/Notify/Discarding/Notify_Structured_Push_Consumer.cpp:
-	* orbsvcs/tests/Notify/Ordering/Notify_Sequence_Push_Consumer.cpp:
-	* orbsvcs/tests/Notify/Ordering/Notify_Structured_Push_Consumer.cpp:
-	* orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Notify_Sequence_Push_Consumer.cpp:
-	* orbsvcs/tests/Notify/Sequence_Multi_Filter/Notify_Sequence_Push_Consumer.cpp:
-	* orbsvcs/tests/Notify/Structured_Multi_Filter/Notify_Push_Consumer.cpp:
-	* orbsvcs/tests/Notify/Structured_Multi_Filter/Notify_Push_Supplier.cpp:
-	* orbsvcs/tests/Notify/performance-tests/Filter/Notify_Sequence_Push_Consumer.cpp:
-	* orbsvcs/tests/Notify/performance-tests/Filter/Notify_Structured_Push_Consumer.cpp:
-	* orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.cpp:
+        * orbsvcs/tests/Notify/Blocking/Notify_Structured_Push_Consumer.cpp:
+        * orbsvcs/tests/Notify/Discarding/Notify_Sequence_Push_Consumer.cpp:
+        * orbsvcs/tests/Notify/Discarding/Notify_Structured_Push_Consumer.cpp:
+        * orbsvcs/tests/Notify/Ordering/Notify_Sequence_Push_Consumer.cpp:
+        * orbsvcs/tests/Notify/Ordering/Notify_Structured_Push_Consumer.cpp:
+        * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Notify_Sequence_Push_Consumer.cpp:
+        * orbsvcs/tests/Notify/Sequence_Multi_Filter/Notify_Sequence_Push_Consumer.cpp:
+        * orbsvcs/tests/Notify/Structured_Multi_Filter/Notify_Push_Consumer.cpp:
+        * orbsvcs/tests/Notify/Structured_Multi_Filter/Notify_Push_Supplier.cpp:
+        * orbsvcs/tests/Notify/performance-tests/Filter/Notify_Sequence_Push_Consumer.cpp:
+        * orbsvcs/tests/Notify/performance-tests/Filter/Notify_Structured_Push_Consumer.cpp:
+        * orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.cpp:
 
-	  Use <proxy_id_> instead of <supplier_proxy_id_> and
-	  <consumer_proxy_id_>.
-	  Use <proxy_> instead of <supplier_proxy_> and
-	  <consumer_proxy_>.
-	  This is required due to changes to implementation of Test
-	  Supplier and Consumers.
+          Use <proxy_id_> instead of <supplier_proxy_id_> and
+          <consumer_proxy_id_>.
+          Use <proxy_> instead of <supplier_proxy_> and
+          <consumer_proxy_>.
+          This is required due to changes to implementation of Test
+          Supplier and Consumers.
 
 Thu Jun 19 11:54:31 2003  Gan Deng <gan.deng@vanderbilt.edu>
 
