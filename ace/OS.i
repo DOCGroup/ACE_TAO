@@ -10457,7 +10457,7 @@ ACE_OS::bsearch (const void *key,
   ACE_UNUSED_ARG (nel);
   ACE_UNUSED_ARG (size);
   ACE_UNUSED_ARG (compar);
-  ACE_NOTSUP_RETURN (-1);
+  ACE_NOTSUP_RETURN (NULL);
 #endif /* ACE_LACKS_BSEARCH */
 }
 
