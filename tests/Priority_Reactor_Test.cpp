@@ -310,9 +310,25 @@ int main (int argc, char * argv[])
 template class ACE_Connector<Write_Handler, ACE_SOCK_CONNECTOR>;
 template class ACE_Acceptor<Read_Handler, ACE_SOCK_ACCEPTOR>;
 template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_SYNCH>;
+template class auto_ptr<ACE_Reactor>;
+template class ACE_Auto_Basic_Ptr<ACE_Reactor>;
+template class auto_ptr<ACE_Select_Reactor>;
+template class ACE_Auto_Basic_Ptr<ACE_Select_Reactor>;
+template class ACE_Map_Manager<int,ACE_Svc_Tuple<Write_Handler>*,ACE_SYNCH_RW_MUTEX>;
+template class ACE_Map_Iterator<int,ACE_Svc_Tuple<Write_Handler>*,ACE_SYNCH_RW_MUTEX>;
+template class ACE_Map_Entry<int,ACE_Svc_Tuple<Write_Handler>*>;
+template class ACE_Svc_Tuple<Write_Handler>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Connector<Write_Handler, ACE_SOCK_CONNECTOR>
 #pragma instantiate ACE_Acceptor<Read_Handler, ACE_SOCK_ACCEPTOR>
 #pragma instantiate ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_SYNCH>
+#pragma instantiate auto_ptr<ACE_Reactor>
+#pragma instantiate ACE_Auto_Basic_Ptr<ACE_Reactor>
+#pragma instantiate auto_ptr<ACE_Select_Reactor>
+#pragma instantiate ACE_Auto_Basic_Ptr<ACE_Select_Reactor>
+#pragma instantiate ACE_Map_Manager<int,ACE_Svc_Tuple<Write_Handler>*,ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Map_Iterator<int,ACE_Svc_Tuple<Write_Handler>*,ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Map_Entry<int,ACE_Svc_Tuple<Write_Handler>*>
+#pragma instantiate ACE_Svc_Tuple<Write_Handler>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
