@@ -53,7 +53,7 @@ public:
 
   virtual void cleanup (CORBA::Environment & )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  // Do a clean up of the memory map 
+  // Do a clean up of the memory map
 
   void orb (CORBA::ORB_ptr o);
   // Set the ORB pointer.
@@ -70,6 +70,9 @@ private:
 
   pool_t *pool_t_;
   // Hold the pool of name pool_name_
+
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const Grid_Factory_i &));
+  // Keeping g++2.7.2
 };
 
 
@@ -144,7 +147,7 @@ private:
 
   CORBA::Long **array_;
   // Pointer to the matrix.  This is organized as an "array of arrays."
-  
+
   pool_t *pool_t_;
   //Pointer to the memory pool..
 };

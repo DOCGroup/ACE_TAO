@@ -1,6 +1,7 @@
 Sun Mar 11 09:53:13 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* examples/Simple/grid/Grid_i.h:
+	* examples/Persistent_Grid/Grid_i.h:
 	* examples/Simple/time/Time_i.h: Added a operator= to
 	  keep g++ 2.7.2 happy. 
 
