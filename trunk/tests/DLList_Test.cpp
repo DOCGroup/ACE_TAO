@@ -109,7 +109,7 @@ run_test (void)
 int
 main (int, ASYS_TCHAR *[])
 {
-  ACE_START_TEST (ASYS_TEXT ("ACE_DLList_Test"));
+  ACE_START_TEST (ASYS_TEXT ("DLList_Test"));
 
   run_test ();
 
