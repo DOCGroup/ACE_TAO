@@ -14,7 +14,7 @@
 #include "ace/Message_Block.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_sys_select.h"
-#include "ace/OS_NS_sys_socket.h"
+#include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_signal.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_sys_resource.h"
@@ -3482,7 +3482,7 @@ ACE::strnew (const wchar_t *s)
     return 0;
   wchar_t *t = 0;
   ACE_NEW_RETURN (t,
-                  wchar_t[ACE_OS_String::strlen (s) + 1],
+                  wchar_t[ACE_OS::strlen (s) + 1],
                   0);
   if (t == 0)
     return 0;

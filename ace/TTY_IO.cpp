@@ -4,6 +4,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_strings.h"
 #include "ace/os_include/os_termios.h"
+#include "ace/OS_NS_errno.h"
 
 ACE_RCSID (ace,
            TTY_IO,

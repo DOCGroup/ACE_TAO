@@ -228,7 +228,7 @@ public:
   /// For <ACE_OS::atexit> support.
   int at_exit (ACE_EXIT_HOOK func);
 
-private:
+//private:
   /// Singleton instance pointer.
   static ACE_OS_Object_Manager *instance_;
 

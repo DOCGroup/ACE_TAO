@@ -4,6 +4,7 @@
 // SPIPE_Stream.i
 
 #include "ace/OS_NS_sys_uio.h"
+#include "ace/OS_NS_errno.h"
 
 // Create an ACE_SPIPE_Stream.
 

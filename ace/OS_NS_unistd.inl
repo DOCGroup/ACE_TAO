@@ -290,6 +290,7 @@ ACE_OS::fork (void)
 #endif /* ACE_LACKS_FORK */
 }
 
+#if !defined (ACE_WIN32)
 ACE_INLINE int
 ACE_OS::fsync (ACE_HANDLE handle)
 {
@@ -301,6 +302,7 @@ ACE_OS::fsync (ACE_HANDLE handle)
   ACE_OSCALL_RETURN (::fsync (handle), int, -1);
 # endif /* ACE_LACKS_FSYNC */
 }
+#endif /* ACE_WIN32 */
 
 ACE_INLINE int
 ACE_OS::ftruncate (ACE_HANDLE handle, off_t offset)

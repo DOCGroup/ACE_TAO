@@ -9,6 +9,28 @@ ACE_RCSID(ace, OS_NS_stdio, "$Id$")
 # include "ace/OS_NS_stdio.inl"
 #endif /* ACE_HAS_INLINED_OS_CALLS */
 
+# if defined (ACE_WIN32)
+
+OSVERSIONINFO ACE_OS::win32_versioninfo_;
+HINSTANCE ACE_OS::win32_resource_module_;
+
+#   if defined (ACE_OS_HAS_DLL) && (ACE_OS_HAS_DLL == 1) && !defined (ACE_HAS_WINCE)
+// This function is called by the OS when the ACE DLL is loaded. We
+// use it to determine the default module containing ACE's resources.
+BOOL WINAPI DllMain(HINSTANCE instance, DWORD reason, LPVOID)
+{
+  if (reason == DLL_PROCESS_ATTACH)
+    {
+#     if defined (ACE_DISABLES_THREAD_LIBRARY_CALLS) && (ACE_DISABLES_THREAD_LIBRARY_CALLS == 1)
+      ::DisableThreadLibraryCalls (instance);
+#     endif /* ACE_DISABLES_THREAD_LIBRARY_CALLS */
+      ACE_OS::set_win32_resource_module(instance);
+    }
+  return TRUE;
+}
+#   endif /* ACE_OS_HAS_DLL && ACE_OS_HAS_DLL == 1 */
+# endif /* ACE_WIN32 */
+
 void
 ACE_OS::ace_flock_t::dump (void) const
 {

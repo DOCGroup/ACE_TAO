@@ -10,6 +10,10 @@
 #include "ace/OS_Memory.h"
 #include "ace/OS_NS_fcntl.h"
 
+#if defined (ACE_WIN32)
+#  include "ace/OS_NS_strings.h"
+#endif /* ACE_WIN32 */
+
 ACE_RCSID(ace, Lib_Find, "$Id$")
 
 

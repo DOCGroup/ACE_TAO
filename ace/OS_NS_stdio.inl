@@ -934,3 +934,25 @@ ACE_OS::vsprintf (wchar_t *buffer, const wchar_t *format, va_list argptr)
 # endif /* ACE_HAS_VSWPRINTF */
 }
 #endif /* ACE_HAS_WCHAR */
+
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
+#if defined (ACE_WIN32)
+ACE_INLINE const OSVERSIONINFO &
+ACE_OS::get_win32_versioninfo ()
+{
+  return ACE_OS::win32_versioninfo_;
+}
+
+ACE_INLINE HINSTANCE
+ACE_OS::get_win32_resource_module ()
+{
+  return ACE_OS::win32_resource_module_;
+}
+
+ACE_INLINE void
+ACE_OS::set_win32_resource_module (HINSTANCE instance)
+{
+  ACE_OS::win32_resource_module_ = instance;
+}
+#endif /* ACE_WIN32 */
+#endif

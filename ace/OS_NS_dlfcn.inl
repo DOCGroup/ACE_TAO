@@ -1,6 +1,9 @@
 // -*- C++ -*-
 // $Id$
 
+#include "ace/OS_NS_macros.h"
+
+
 ACE_INLINE int
 ACE_OS::dlclose (ACE_SHLIB_HANDLE handle)
 {

@@ -13,6 +13,7 @@ ACE_RCSID (ace,
 #include "ace/Thread_Hook.h"
 #include "ace/Object_Manager_Base.h"
 #include "ace/Global_Macros.h"
+#include "ace/OS_NS_Thread.h"
 
 ACE_OS_Thread_Adapter::ACE_OS_Thread_Adapter (
      ACE_THR_FUNC user_func

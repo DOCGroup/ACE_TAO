@@ -30,13 +30,12 @@
 
 class ACE_Accept_QoS_Params;
 class ACE_QoS_Params;
-class ACE_Protocol_Info;
 
 namespace ACE_OS {
 
 # if defined (ACE_WIN32)
   /// Keeps track of whether we've already initialized WinSock...
-  int socket_initialized_;
+  extern int socket_initialized_;
 # endif /* ACE_WIN32 */
 
   //@{ @name A set of wrappers for sockets.

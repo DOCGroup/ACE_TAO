@@ -31,6 +31,8 @@
 #   undef getpwnam_r
 # endif /* ACE_HAS_BROKEN_R_ROUTINES */
 
+struct passwd;
+
 namespace ACE_OS {
 
 

@@ -37,14 +37,6 @@ extern "C"
 {
 #endif /* __cplusplus */
 
-#if defined (ACE_HAS_PRUSAGE_T)
-   typedef prusage_t ACE_Rusage;
-#elif defined (ACE_HAS_GETRUSAGE)
-   typedef rusage ACE_Rusage;
-#else
-   typedef int ACE_Rusage;
-#endif /* ACE_HAS_PRUSAGE_T */
-
 // There must be a better way to do this...
 #if !defined (RLIMIT_NOFILE)
 #  if defined (linux) || defined (AIX) || defined (SCO)
@@ -81,6 +73,14 @@ extern "C"
   int getrlimit (int resource, struct rlimit *rlp);
   int setrlimit (int resource, const struct rlimit *rlp);
 #endif /* ACE_LACKS_RLIMIT_PROTOTYPE */
+
+#if defined (ACE_HAS_PRUSAGE_T)
+   typedef prusage_t ACE_Rusage;
+#elif defined (ACE_HAS_GETRUSAGE)
+   typedef rusage ACE_Rusage;
+#else
+   typedef int ACE_Rusage;
+#endif /* ACE_HAS_PRUSAGE_T */
 
 #if !defined (ACE_WIN32)
 // These prototypes are chronically lacking from many versions of

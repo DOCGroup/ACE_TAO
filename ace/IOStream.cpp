@@ -9,6 +9,9 @@ ACE_RCSID(ace, IOStream, "$Id$")
 
 #if !defined (ACE_LACKS_ACE_IOSTREAM)
 
+#  include "ace/OS_NS_errno.h"
+#  include "ace/OS_Memory.h"
+
 ///////////////////////////////////////////////////////////////////////////
 
 /* Here's a simple example of how iostream's non-virtual operators can

@@ -5,6 +5,7 @@
 
 #include "ace/OS_NS_sys_shm.h"
 #include "ace/Global_Macros.h"
+#include "ace/OS_NS_errno.h"
 
 ACE_INLINE size_t
 ACE_SV_Shared_Memory::round_up (size_t len)
