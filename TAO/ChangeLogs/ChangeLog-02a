@@ -1,102 +1,112 @@
+Tue May  9 20:37:29 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/Param_Test/client.cpp:
+        * tests/Param_Test/param_test_i.cpp:
+        * tests/Param_Test/results.cpp:
+        * tests/Param_Test/server.cpp:
+        * tests/Param_Test/var_array.cpp:
+          The test was too noisy, now it only prints out stuff if there
+          are errors or the debugging level is greater than 0.
+
 Tue May  9 20:01:41 2000  Ossama Othman  <ossama@uci.edu>
 
-	* tao/Acceptor_Registry.h (TAO_Acceptor_Registry):
-	* tao/Connector_Registry.h (TAO_Connector_Registry):
-	* tao/ORB_Core.h (TAO_ORB_Core, TAO_ORB_Core_TSS_Resources,
-	                  TAO_TSS_Resources, TAO_ORB_Table):
-	* tao/Pluggable.h (TAO_Transport):
-	* tao/Profile.h (TAO_Profile):
-	* tao/Resource_Factory.h (TAO_Protocol_Item):
-	
+        * tao/Acceptor_Registry.h (TAO_Acceptor_Registry):
+        * tao/Connector_Registry.h (TAO_Connector_Registry):
+        * tao/ORB_Core.h (TAO_ORB_Core, TAO_ORB_Core_TSS_Resources,
+                          TAO_TSS_Resources, TAO_ORB_Table):
+        * tao/Pluggable.h (TAO_Transport):
+        * tao/Profile.h (TAO_Profile):
+        * tao/Resource_Factory.h (TAO_Protocol_Item):
 
-	  Declared the copy constructor and the assignment operator to be
-	  private and unimplemented.
 
-	* tao/Acceptor_Registry.cpp (open):
+          Declared the copy constructor and the assignment operator to be
+          private and unimplemented.
 
-	  Removed assignment from ACE_CString to temporary `const char *'
-	  pointer.  The temporary wasn't necessaery since the ACE_CString
-	  class has an array "[]" operator, which is what the temporary
-	  was being used for, i.e. individual element access.
+        * tao/Acceptor_Registry.cpp (open):
 
-	* tao/IIOP_Connector.cpp (connect):
-	* tao/SHMIOP_Connector.cpp (connect):
-	* tao/UIOP_Connector.cpp (connect):
+          Removed assignment from ACE_CString to temporary `const char *'
+          pointer.  The temporary wasn't necessaery since the ACE_CString
+          class has an array "[]" operator, which is what the temporary
+          was being used for, i.e. individual element access.
 
-	  Verify that the remote Addr was initialized properly.  Failure
-	  can occur, for example, if hostname lookup failed when
-	  initializing the remote Addr.
+        * tao/IIOP_Connector.cpp (connect):
+        * tao/SHMIOP_Connector.cpp (connect):
+        * tao/UIOP_Connector.cpp (connect):
 
-	* tao/IIOP_Connector.cpp (connect):
+          Verify that the remote Addr was initialized properly.  Failure
+          can occur, for example, if hostname lookup failed when
+          initializing the remote Addr.
 
-	  Don't bother using addr_to_string() to determine host and port
-	  to display in debugging output.  Simply use host() and port()
-	  instead.  Pluggable protocol neutrality isn't an issue here
-	  since this code is only used by the IIOP pluggable protocol.
+        * tao/IIOP_Connector.cpp (connect):
 
-	* tao/IIOP_Profile.cpp (decode):
-	* tao/SHMIOP_Profile.cpp (decode):
+          Don't bother using addr_to_string() to determine host and port
+          to display in debugging output.  Simply use host() and port()
+          instead.  Pluggable protocol neutrality isn't an issue here
+          since this code is only used by the IIOP pluggable protocol.
 
-	  Delayed binding of hostname and port until first access.  This
-	  improves TAO's behavior in the presence of dynamically IP
-	  addresses, and also delays hostname lookups until the INET_Addr
-	  is actually needed, which may be never!
+        * tao/IIOP_Profile.cpp (decode):
+        * tao/SHMIOP_Profile.cpp (decode):
 
-	  Make sure the underlying INET_Addr is invalid, until it is first
-	  accessed by explicitly setting the family type to -1.
+          Delayed binding of hostname and port until first access.  This
+          improves TAO's behavior in the presence of dynamically IP
+          addresses, and also delays hostname lookups until the INET_Addr
+          is actually needed, which may be never!
 
-	* tao/IIOP_Profile.i (object_addr):
-	* tao/SHMIOP_Profile.i (object_addr):
+          Make sure the underlying INET_Addr is invalid, until it is first
+          accessed by explicitly setting the family type to -1.
 
-	  The object_addr_ is now initialized here, rather than at IOR
-	  decode time for several reasons:
+        * tao/IIOP_Profile.i (object_addr):
+        * tao/SHMIOP_Profile.i (object_addr):
 
-		1. A request on the object may never be invoked.
-		2. The DNS setup may have changed dynamically.
-		...etc..
+          The object_addr_ is now initialized here, rather than at IOR
+          decode time for several reasons:
 
-	* tao/IIOP_Profile.h:
-	* tao/SHMIOP_Profile.h:
-	* tao/UIOP_Profile.h:
+                1. A request on the object may never be invoked.
+                2. The DNS setup may have changed dynamically.
+                ...etc..
 
-	  Removed private declarations of the copy constructor and the
-	  assignment operator.  There is no need to have them in the
-	  derived class since the base class (TAO_Profile) already has
-	  private declarations of these methods.
+        * tao/IIOP_Profile.h:
+        * tao/SHMIOP_Profile.h:
+        * tao/UIOP_Profile.h:
 
-	* tao/UIOP_Profile.cpp (decode):
+          Removed private declarations of the copy constructor and the
+          assignment operator.  There is no need to have them in the
+          derived class since the base class (TAO_Profile) already has
+          private declarations of these methods.
 
-	  If the call fails (this should never happen), allow the profile
-	  to be created, and rely on TAO's connection handling to throw
-	  the appropriate exception.
+        * tao/UIOP_Profile.cpp (decode):
+
+          If the call fails (this should never happen), allow the profile
+          to be created, and rely on TAO's connection handling to throw
+          the appropriate exception.
 
 Tue May  9 20:00:49 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_valuetype/field_ci.cpp:
-	  Removed unused variable TAO_OutStream *os from some 
-	  several functions in the file.
+        * TAO_IDL/be/be_visitor_valuetype/field_ci.cpp:
+          Removed unused variable TAO_OutStream *os from some
+          several functions in the file.
 
 Tue May  9 13:33:39 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_factory.cpp be/be_visitor_valuetype.cpp:
-	* TAO_IDL/be/be_visitor_valuetype/cdr_op_ch.cpp:
-	* TAO_IDL/be/be_visitor_valuetype/field_cdr_ci.cpp:
-	* TAO_IDL/be/be_visitor_valuetype/field_cs.cpp:
-	* TAO_IDL/be/be_visitor_valuetype/marshal_ch.cpp:
-	* TAO_IDL/be/be_visitor_valuetype/valuetype_ci.cpp:
-	* TAO_IDL/be/be_visitor_valuetype/valuetype_obv_ci.cpp:
-	* TAO_IDL/be/be_visitor_valuetype/valuetype_obv_cs.cpp:
-	* TAO_IDL/be_include/be_visitor_valuetype.h:
-	* TAO_IDL/be_include/be_visitor_valuetype/field_cs.h:
-	  Added Files:
-	* TAO_IDL/be/be_visitor_valuetype/field_cdr_ch.cpp:
-	* TAO_IDL/be/be_visitor_valuetype/field_ci.cpp:
-	* TAO_IDL/be_include/be_visitor_valuetype/field_cdr_ch.h:
-	* TAO_IDL/be_include/be_visitor_valuetype/field_ci.h:
-	  Anonymous sequence members of valuetypes were getting 
-	  their inline functions generated in the C.cpp file. Also, there
-	  was no delcaration of their CDR operators. This fix closes
-	  out [BUGID:554].
+        * TAO_IDL/be/be_visitor_factory.cpp be/be_visitor_valuetype.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/cdr_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/field_cdr_ci.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/field_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/marshal_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_ci.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_obv_ci.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_obv_cs.cpp:
+        * TAO_IDL/be_include/be_visitor_valuetype.h:
+        * TAO_IDL/be_include/be_visitor_valuetype/field_cs.h:
+          Added Files:
+        * TAO_IDL/be/be_visitor_valuetype/field_cdr_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/field_ci.cpp:
+        * TAO_IDL/be_include/be_visitor_valuetype/field_cdr_ch.h:
+        * TAO_IDL/be_include/be_visitor_valuetype/field_ci.h:
+          Anonymous sequence members of valuetypes were getting
+          their inline functions generated in the C.cpp file. Also, there
+          was no delcaration of their CDR operators. This fix closes
+          out [BUGID:554].
 
 Tue May 09 10:19:35 2000  Carlos O'Ryan  <coryan@uci.edu>
 
