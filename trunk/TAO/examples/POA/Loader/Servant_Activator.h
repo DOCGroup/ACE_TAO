@@ -84,13 +84,6 @@ public:
   // destroy the servant associated with the object.
 
 private:
-  ACE_CString dllname_;
-  // The name of the dll containing the servant.
-  
-  ACE_CString create_symbol_;
-  // The symbol which on getting invoked will give us the servant
-  // pointer.
-
   ACE_DLL dll_;
   // The ACE_DLL object which performs the task of loading the dll
   // and accessing it.

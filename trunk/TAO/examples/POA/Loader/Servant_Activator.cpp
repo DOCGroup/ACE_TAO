@@ -36,7 +36,7 @@ ServantActivator_i::ServantActivator_i (CORBA::ORB_ptr orb,
   // The dll is opened using the dllname passed.
    if (this->dll_.open (dllname) == -1)
      ACE_ERROR ((LM_ERROR,
-                 "%p",
+                 "%p\n",
                  this->dll_.error ()));
                    
 
