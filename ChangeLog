@@ -1,8 +1,16 @@
+Thu Feb 17 09:38:06 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/Reader_Writer_Test.cpp: use default n_iterations
+          of 25 and n_loops of 10 on VxWorks.  With the old defaults,
+          the test took too long, e.g., 7 minutes on a 450 MHz
+          Pentium.  With the new defaults, it takes about 20 seconds.
+          Thanks to Dave Hall <David.Hall@grc.nasa.gov> for reporting this.
+
 Thu Feb 17 08:10:08 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Service_Config.cpp (close_singletons): Don't bother calling
-	  ACE_Proactor::close_singleton() on WinCE, Win95/98, or if
-	  these's no support for AIO calls.  Thanks to Sangwoo Jin <swjinjin@sei.co.kr> for reporting this.
+        * ace/Service_Config.cpp (close_singletons): Don't bother calling
+          ACE_Proactor::close_singleton() on WinCE, Win95/98, or if
+          these's no support for AIO calls.  Thanks to Sangwoo Jin <swjinjin@sei.co.kr> for reporting this.
 
 Wed Feb 16 17:03:31 2000  Steve Huston  <shuston@riverace.com>
 
@@ -10,23 +18,23 @@ Wed Feb 16 17:03:31 2000  Steve Huston  <shuston@riverace.com>
 
 Wed Feb 16 14:53:05 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* ace/OS.h:
-	  Added ACE_GLOBAL_COLONS macro. In certain cases in IDL files
-	  where nested scoped names repeat (after skipping a scope so
-	  it's legal), all comilers except SucCC 5.0 need the fully
-	  scoped name with the global double colon in order to resolve
-	  the name. SunCC 5.0, on the other hand, not only doesn't
-	  need it, but outputs an error whenever it sees these global
-	  double colons just inside an open paranthesis, for example,
-	  (::foo::...). This macro is used in generating code in 
-	  just these instances so all comilers can be happy.
+        * ace/OS.h:
+          Added ACE_GLOBAL_COLONS macro. In certain cases in IDL files
+          where nested scoped names repeat (after skipping a scope so
+          it's legal), all comilers except SucCC 5.0 need the fully
+          scoped name with the global double colon in order to resolve
+          the name. SunCC 5.0, on the other hand, not only doesn't
+          need it, but outputs an error whenever it sees these global
+          double colons just inside an open paranthesis, for example,
+          (::foo::...). This macro is used in generating code in
+          just these instances so all comilers can be happy.
 
 Tue Feb 15 22:57:59 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/MEM_IO.h:
-	* ace/MEM_IO.cpp (send): Added a new method that sends a chain of
-	  Message_Block.  This function aggregates the data in
-	  Message_Block and copies them directly into shared memory.
+        * ace/MEM_IO.h:
+        * ace/MEM_IO.cpp (send): Added a new method that sends a chain of
+          Message_Block.  This function aggregates the data in
+          Message_Block and copies them directly into shared memory.
 
 Tue Feb 15 21:26:00 2000  David L. Levine  <levine@cs.wustl.edu>
 
