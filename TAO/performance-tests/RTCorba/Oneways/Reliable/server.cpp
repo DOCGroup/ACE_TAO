@@ -12,7 +12,6 @@ int
 main (int argc, char *argv[])
 {
   int policy = ACE_SCHED_FIFO;
-  int flags  = THR_SCHED_FIFO|THR_NEW_LWP|THR_JOINABLE;
   int priority =
     (ACE_Sched_Params::priority_min (policy)
      + ACE_Sched_Params::priority_max (policy)) / 2;
@@ -30,8 +29,6 @@ main (int argc, char *argv[])
           ACE_DEBUG ((LM_DEBUG,
                       "server (%P|%t): user is not superuser, "
                       "test runs in time-shared class\n"));
-          policy = ACE_SCHED_OTHER;
-          flags = THR_NEW_LWP|THR_JOINABLE;
         }
       else
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -39,9 +36,17 @@ main (int argc, char *argv[])
                           1);
     }
 
+  // Get our thread handle.
   ACE_hthread_t self;
   ACE_OS::thr_self (self);
 
+  // Set our thread priority.
+  if (ACE_OS::thr_setprio (self, priority) != 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "server (%P|%t):thr_setprio failed\n"),
+                      1);
+
+  // Do a sanity check.
   if (ACE_OS::thr_getprio (self, priority) == 0)
     ACE_DEBUG ((LM_DEBUG, 
                 "server (%P|%t): thread priority = %d.\n", 
