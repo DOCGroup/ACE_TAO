@@ -81,6 +81,7 @@ public:
    * @retval 0 if the attribute is not a valid combo.
    */
   virtual int validAttr (void) = 0;
+
 };
 
 /**
@@ -109,7 +110,16 @@ public:
     //    ACE_THROW_SPEC ((ACEXML_SAXException))
     = 0;
 
+  /**
+   * Acquire an Attribute_Builder.
+   */
+  virtual ACEXML_Attribute_Def_Builder *getAttribute_Def_Builder () = 0;
 
+  /**
+   * Add a definition for one attribute.
+   */
+  virtual int insertAttribute (ACEXML_Attribute_Def_Builder *def,
+                               ACEXML_Env &xmlenv) = 0;
 
 };
 
