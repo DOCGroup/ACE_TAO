@@ -32,7 +32,7 @@ dnl things going with the auto{conf,make}/libtool integration into the
 dnl ACE source tree.
 
 dnl Platform specific flags
-case "$host" in
+case "$target" in
   *aix3*)
     AC_DEFINE([AIX])
     AC_DEFINE([ACE_DEFAULT_BASE_ADDR], [((char *) 0x80000000)])
@@ -153,7 +153,7 @@ dnl FIXME: "FSU" isn't a platform!  We need to move this somewhere.
     dnl _MODERN_C_ : Enable modern features in SGI C++ compiler
     ACE_CPPFLAGS="$ACE_CPPFLAGS -D_SGI_MP_SOURCE -D_MODERN_C_"
 
-    case "$host" in
+    case "$target" in
       *irix6.2*)
         dnl Recent versions of IRIX do not appear to require this macro.
         if test "$ace_user_enable_threads" = yes; then
@@ -330,7 +330,7 @@ dnl    AC_DEFINE(ACE_USE_SELECT_REACTOR_FOR_REACTOR_IMPL)
                                                        # filename
     ACE_CPPFLAGS="$ACE_CPPFLAGS -D_POSIX_PATH_MAX=256" # Num. bytes in
                                                        # pathname (excl. NULL)
-    case "$host" in
+    case "$target" in
       i[[3456]]86*)
         if test "$GXX" = yes; then
           # Neutrino defines memcpy as a macro on x86, which then
