@@ -529,6 +529,7 @@ TAO_GIOP_Message_Base::process_request (TAO_Transport *transport,
                                        CORBA::COMPLETED_NO));
       request_id = request.request_id ();
 
+      cout << "Processing request id " << request_id <<endl;
       response_required = request.response_expected ();
 
       CORBA::Object_var forward_to;
