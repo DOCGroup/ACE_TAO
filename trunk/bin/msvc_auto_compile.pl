@@ -14,7 +14,8 @@ else {
 
 @directories = ();
 
-@ace_dirs = ("$ACE_ROOT\\ace",
+@ace_dirs = ("$ACE_ROOT\\PACE",
+             "$ACE_ROOT\\ace",
              "$ACE_ROOT\\apps",
              "$ACE_ROOT\\ASNMP",
              "$ACE_ROOT\\examples",

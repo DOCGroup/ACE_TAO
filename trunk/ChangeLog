@@ -1,3 +1,10 @@
+Wed Jan 17 11:48:42 2001  Darrell Brunsch <brunsch@uci.edu>
+
+        * bin/msvc_auto_compile.pl:
+
+          Added PACE to the list of ACE directories so PACE is
+          compiled in full auto builds.
+
 Wed Jan 17 10:00:42 2001  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/Handle_Ops.cpp: (handle_timed_open)
