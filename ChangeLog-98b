@@ -1,7 +1,18 @@
+Fri Oct  2 00:19:04 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/Thread_Pool_Reactor_Test.cpp: Fixed explicit template
+	  instantiation.
+
+	* ace/Strategies_T.{h,i,cpp}: Removed classes
+	  ACE_Thread_Pool_Strategy and ACE_Svc_Handler_Pool_Strategy.
+
+	* tests/run_tests.{sh,bat}: Added Thread_Pool_Reactor_Test into
+	  one-buttoned test scripts.
+
 Thu Oct 01 12:04:30 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tests/Thread_Pool_Reactor_Test.cpp: Added command line argument
-	  parser. 
+	* tests/Thread_Pool_Reactor_Test.cpp: Added a command line argument
+	  parser.
 
 Thu Oct  1 08:51:00 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
@@ -11,7 +22,7 @@ Thu Oct  1 08:51:00 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 Thu Oct 01 01:05:49 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/tests.dsw:
-	* tests/version_tests/version_tests.dsw: 
+	* tests/version_tests/version_tests.dsw:
 	* tests/Thread_Pool_Reactor_Test.{cpp,dsp}: Added a new test that
  	  torture tests the new ACE_TP_Reactor.
 
@@ -22,8 +33,8 @@ Thu Oct 01 00:09:35 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 	* tests/Conn_Test: Removed template specialization for
  	  INET_Addr.hash().
 
-	* ace/Addr.i (hash): 
-	* ace/INET_Addr.i (hash): 
+	* ace/Addr.i (hash):
+	* ace/INET_Addr.i (hash):
 
 	  Finally gave up with template specialization hell and freak'in
  	  broken compilers and simply added a hash() method to ACE_Addr
@@ -52,12 +63,12 @@ Wed Sep 30 01:56:54 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	  - Removed the use of ACE_Hash_Addr inside the
  	    ACE_Cached_Connect_Strategy.  This allows us to reduce
- 	    implicit type conversions inside connect_svc_handler().  
+ 	    implicit type conversions inside connect_svc_handler().
 
 	    Users are now required to specialize
  	    ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>::hash_i (void) instead
  	    of ACE_Hash_Addr<ACE_INET_Addr>::hash_i(const ACE_INET_Addr&addr)
-	
+
  	* tests/Conn_Test.cpp: Changed template specialization of
  	  ACE_Hash_Addr<ACE_INET_Addr>::hash_i(const ACE_INET_Addr&addr)
  	  to ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>::hash_i (void).
@@ -70,15 +81,15 @@ Wed Sep 30 01:56:54 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 Wed Sep 30 02:29:48 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* performance-tests/TTCP/ACE-C++/Makefile: 
-	* performance-tests/TTCP/ACE-C++/wrapper-new-ttcp.cpp: 
+	* performance-tests/TTCP/ACE-C++/Makefile:
+	* performance-tests/TTCP/ACE-C++/wrapper-new-ttcp.cpp:
 	  Hacked so it would compile, don't know anything further than
 	  that.
 
 Tue Sep 29 21:55:52 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/ace.dsw: Removed Connector.cpp from the compile list since
-	  it is a files with template classes only.	  
+	  it is a files with template classes only.
 
 Tue Sep 29 21:14:02 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
@@ -91,16 +102,16 @@ Tue Sep 29 19:16:57 1998  James CE Johnson  <jcej@chiroptera.tragus.org>
 	* docs/tutorials/007/thread_pool.h
 	* docs/tutorials/007/thread_pool.cpp
 	Added virtual methods for open() and close() that match the
-	baseclass.  This will keep some compilers from complaining about a 
+	baseclass.  This will keep some compilers from complaining about a
 	partial-overload attempt.  Thanks to Bob McWhirter for catching this.
 
 Tue Sep 29 16:13:10 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/Strategies_T: 
-	* ace/Connector: 
+	* ace/Strategies_T:
+	* ace/Connector:
 
 	  Added accessors for the strategy.
-	
+
 Tue Sep 29 14:04:49 EDT 1998  James CE Johnson  <jcej@lads.com>
 
         * docs/tutorials/013/page08.html:  Removed link to message_queue.
