@@ -1,3 +1,13 @@
+Fri Jan  1 11:51:42 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
+
+	Removed some VxWorks errors like 'TAO_TRY_LABEL unreferenced' in
+	the following files.
+
+	* orbsvcs/orbsvcs/Time/TAO_Time_Service_Server.cpp:
+	* orbsvcs/orbsvcs/Time/TAO_TIO.cpp:
+	* orbsvcs/orbsvcs/Time//TAO_UTO.cpp:
+	* orbsvcs/orbsvcs/Time//TAO_Time_Service_Clerk.cpp:
+
 Fri Jan 01 02:45:18 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_array/array_ci.cpp (gen_forany_impl and
@@ -177,18 +187,18 @@ Thu Dec 31 03:54:05 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 Thu Dec 31 00:11:32 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* performance-tests/POA/Object_Creation_And_Registration/registration.cpp (main): 
+	* performance-tests/POA/Object_Creation_And_Registration/registration.cpp (main):
 	  Added timing stats for calls to servant_to_id().
-	
-	* orbsvcs/tests/Time/Time.dsp: 
-	* orbsvcs/Time_Service/Time_Service.dsp: 
-	* orbsvcs/orbsvcs/orbsvcs.dsp: 
+
+	* orbsvcs/tests/Time/Time.dsp:
+	* orbsvcs/Time_Service/Time_Service.dsp:
+	* orbsvcs/orbsvcs/orbsvcs.dsp:
 
 	  Added new Time Service files.
 
 	* orbsvcs/orbsvcs/Runtime_Scheduler.cpp: Fixed comment typo.
 
-	* performance-tests/POA/Object_Creation_And_Registration/registration.cpp (main): 
+	* performance-tests/POA/Object_Creation_And_Registration/registration.cpp (main):
 	  Added code to check the effectiveness of the hashing of
  	  servants.
 
