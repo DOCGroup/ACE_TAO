@@ -2,6 +2,7 @@
 // $Id$
 
 #include "StructDef_i.h"
+#include "RecursDef_i.h"
 #include "Repository_i.h"
 #include "IFR_Service_Utils.h"
 #include "ace/Auto_Ptr.h"
@@ -75,6 +76,25 @@ TAO_StructDef_i::type_i (ACE_ENV_SINGLE_ARG_DECL)
   this->repo_->config ()->get_string_value (this->section_key_,
                                             "id",
                                             id);
+
+  //---------------------------------------------------------------------------
+  // Have we already seen this structure definition at an outer scope?
+  // If yes, return a recursive type code to signal the nesting.
+  // If not, record this new structure id in our stack (it will automatically
+  // be removed when NowSeenThis goes out of scope).
+  //---------------------------------------------------------------------------
+
+  if (TAO_RecursiveDef_OuterScopes::SeenBefore( id ))
+    return this->repo_->tc_factory ()->
+                 create_recursive_tc ( id.c_str () ACE_ENV_ARG_PARAMETER);
+
+  TAO_RecursiveDef_OuterScopes NowSeenThis( id );
+
+  //---------------------------------------------------------------------------
+  // Create a new type code for this structure; the create_struct_tc() call
+  // that follows may recursivly call this method again if one of its children
+  // refers to a structure (which is the point of the above NowSeenThis stack).
+  //---------------------------------------------------------------------------
 
   ACE_TString name;
   this->repo_->config ()->get_string_value (this->section_key_,

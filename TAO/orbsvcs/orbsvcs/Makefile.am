@@ -4222,6 +4222,7 @@ IFRService = \
   IFRService/PrimitiveDef_i.cpp \
   IFRService/ProvidesDef_i.cpp \
   IFRService/PublishesDef_i.cpp \
+  IFRService/RecursDef_i.cpp \
   IFRService/Repository_i.cpp \
   IFRService/SequenceDef_i.cpp \
   IFRService/StringDef_i.cpp \
@@ -4311,6 +4312,7 @@ nobase_include_HEADERS += \
   IFRService/PrimitiveDef_i.h \
   IFRService/ProvidesDef_i.h \
   IFRService/PublishesDef_i.h \
+  IFRService/RecursDef_i.h \
   IFRService/Repository_i.h \
   IFRService/SequenceDef_i.h \
   IFRService/StringDef_i.h \
