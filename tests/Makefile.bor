@@ -21,6 +21,7 @@ TESTS = \
 	CDR_Test \
 	Collection_Test \
 	Conn_Test \
+        Config_Test \
 	DLL_Test \
 	DLList_Test \
 	Dynamic_Priority_Test \
