@@ -69,7 +69,6 @@ Thread_Pool::svc (void)
   // Note that the ACE_Task::svc_run () method automatically adds us to
   // the Thread_Manager when the thread begins.
 
-  int result = 0;
   int count = 1;
 
   // Keep looping, reading a message out of the queue, until we get a
