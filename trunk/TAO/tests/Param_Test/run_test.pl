@@ -4,11 +4,11 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
     & eval 'exec perl -S $0 $argv:q'
     if 0;
 
-unshift @INC, '../../../bin';
-require Process;
+use lib "../../../bin";
+require ACEutils;
 
 $port = 0;
-$iorfile = "theior";
+$iorfile = "server.ior";
 $invocation = "sii";
 $num = 5;
 $other = "";
@@ -22,8 +22,8 @@ sub run_test
   $SV = Process::Create (".".$DIR_SEPARATOR."server".$Process::EXE_EXT,
                          "$debug -ORBobjrefstyle url -ORBport $port -o ".
                          $iorfile);
-
-  sleep (5);     # Give the server a chance to start up
+  
+  ACE::waitforfile ($iorfile);
 
   system (".".$DIR_SEPARATOR."client $debug -f $iorfile  -i $invocation -t ".
           "$type -n $num");
@@ -34,6 +34,7 @@ sub run_test
   # Unix, but on NT ???
 
   $SV->Kill (); $SV->Wait ();
+  unlink ($iorfile);
 }
 
 # Parse the arguments
