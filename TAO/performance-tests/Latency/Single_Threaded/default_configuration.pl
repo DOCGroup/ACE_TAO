@@ -5,14 +5,14 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # $Id$
 # -*- perl -*-
 
-use lib "../../../bin";
+use lib "../../../../bin";
 use PerlACE::Run_Test;
 
 $status = 0;
 $iorfile     = PerlACE::LocalFile ("test.ior");
 $defaultconf = PerlACE::LocalFile ("default.conf");
 
-print STDERR "================ Single-threaded Latency Test\n";
+print STDERR "================ Single-threaded (default) Latency Test\n";
 
 unlink $iorfile;
 
