@@ -1,20 +1,27 @@
+Fri Oct 29 13:31:31 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * performance-tests/Protocols/distributor.cpp:
+        * performance-tests/Protocols/receiver.cpp:
+
+          Getting rid of more g++ warnings.
+
 Fri Oct 29 17:03:46 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* orbsvcs/orbsvcs/Trader/Constraint_Visitors.cpp:
+        * orbsvcs/orbsvcs/Trader/Constraint_Visitors.cpp:
 
-	  Applied a patch from Bill Somerville <bill@classdesign.com>
-	  which fixes an incorrect implementation of ~ (twiddle) option. 
+          Applied a patch from Bill Somerville <bill@classdesign.com>
+          which fixes an incorrect implementation of ~ (twiddle) option.
 
-	  a ~ b
+          a ~ b
 
           should be true if a is a substring of b, it is implemented as
-	  true if b is a substring of a. The OMG spec is no help, but the
-	  TAO TradingService docs, code comments, and other sources all
-	  seem to agree with this interpretation.
-	
-	* orbsvcs/tests/Trading/TT_Info.cpp:
+          true if b is a substring of a. The OMG spec is no help, but the
+          TAO TradingService docs, code comments, and other sources all
+          seem to agree with this interpretation.
 
-	  Enhanced the test for the above.
+        * orbsvcs/tests/Trading/TT_Info.cpp:
+
+          Enhanced the test for the above.
 
 Fri Oct 29 10:09:56 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -24,7 +31,7 @@ Fri Oct 29 10:09:56 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/include/ast_union_branch.h:
         * TAO_IDL/include/utl_scope.h:
         * TAO_IDL/util/utl_scope.cpp:
-        
+
           When a union has an enum discriminator, each label name is
           added to an existing list of identifiers for the union
           scope, so that when a union member is added to the AST,
