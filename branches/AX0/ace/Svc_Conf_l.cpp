@@ -38,7 +38,7 @@
 #endif	/* __STDC__ */
 #endif	/* ! __cplusplus */
 
-#if defined (ACE_HAS_CLASSIC_SVC_CONF) && (ACE_HAS_CLASSIC_SVC_CONF == 1)
+#if defined (ACE_USES_CLASSIC_SVC_CONF) && (ACE_USES_CLASSIC_SVC_CONF == 1)
 
 #ifdef __TURBOC__
  #pragma warn -rch
@@ -1841,4 +1841,4 @@ ace_yy_pop_buffer (ace_yy_buffer_state *buffer)
 
   ace_yy_switch_to_buffer (buffer);
 }
-#endif /* ACE_HAS_CLASSIC_SVC_CONF && ACE_HAS_CLASSIC_SVC_CONF == 1 */
+#endif /* ACE_USES_CLASSIC_SVC_CONF && ACE_USES_CLASSIC_SVC_CONF == 1 */

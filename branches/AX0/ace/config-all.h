@@ -615,17 +615,22 @@ typedef void *(*ACE_THR_C_FUNC)(void *);
 #endif /* ACE_HAS_PACE */
 
 // ============================================================================
-// ACE_HAS_CLASSIC_SVC_CONF macro
+// ACE_USES_CLASSIC_SVC_CONF macro
 // ============================================================================
 
 // For now, default is to use the classic svc.conf format.
-#if !defined (ACE_HAS_CLASSIC_SVC_CONF)
+#if !defined (ACE_USES_CLASSIC_SVC_CONF)
+# if defined (ACE_HAS_CLASSIC_SVC_CONF) && defined (ACE_HAS_XML_SVC_CONF)
+#   error You can only use either CLASSIC or XML svc.conf, not both.
+# endif
+// Change the ACE_HAS_XML_SVC_CONF to ACE_HAS_CLASSIC_SVC_CONF when
+// we switch ACE to use XML svc.conf as default format.
 # if defined (ACE_HAS_XML_SVC_CONF)
-#   define ACE_HAS_CLASSIC_SVC_CONF 0
+#   define ACE_USES_CLASSIC_SVC_CONF 0
 # else
-#   define ACE_HAS_CLASSIC_SVC_CONF 1
+#   define ACE_USES_CLASSIC_SVC_CONF 1
 # endif /* ACE_HAS_XML_SVC_CONF */
-#endif /* ACE_HAS_CLASSIC_SVC_CONF */
+#endif /* ACE_USES_CLASSIC_SVC_CONF */
 
 // ============================================================================
 // Miscellaneous macros
