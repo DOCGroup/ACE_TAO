@@ -578,6 +578,11 @@ public:
   int release (void);
   // Instruct the memory pool to release all of its resources.
 
+  virtual int seh_selector (void *);
+  // Win32 Structural exception selector.  The return value decides
+  // how to handle memory pool related structural exceptions.  Returns
+  // 1, 0, or , -1.
+
   int remap (void *addr);
   // Try to extend the virtual address space so that <addr> is now
   // covered by the address mapping.  The method succeeds and returns
