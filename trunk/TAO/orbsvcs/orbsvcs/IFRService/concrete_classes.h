@@ -38,8 +38,8 @@
 #include "ValueDef_i.h"
 #include "ExceptionDef_i.h"
 #include "ModuleDef_i.h"
-#include "AbstractInterfaceDef_i.h"
-#include "LocalInterfaceDef_i.h"
+#include "ExtAbstractInterfaceDef_i.h"
+#include "ExtLocalInterfaceDef_i.h"
 
 #include "ComponentDef_i.h"
 #include "HomeDef_i.h"
