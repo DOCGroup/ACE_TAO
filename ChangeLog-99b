@@ -1,3 +1,11 @@
+Wed Jul  7 14:03:31 1999  Steve Huston  <shuston@riverace.com>
+
+        * ace/Caching_Strategies_T.h:
+        * ace/Cleanup_Strategies_T.h: Removed "ace/" from #pragma impl.
+
+        * tests/Map_Manager_Test.cpp: Replaced typedef size_t TYPE with
+          ACE_UINT32 to make it match ACE_Hash<> specialization.
+
 Wed Jul  7 13:27:53 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* config-aix-4.x.h,
