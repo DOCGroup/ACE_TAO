@@ -1,3 +1,8 @@
+Sat Jan  9 22:05:07 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* bin/tao_env.pl: A new perl script that help you translate _env
+	  to TAO_IN_ENV.
+
 Sat Jan 09 10:53:37 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Name_Proxy.cpp (open): swapped branches of conditional

@@ -1,4 +1,46 @@
-Sat Jan  9 18:53:47 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+Sat Jan  9 22:06:09 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* Any.h:
+	* CDR.h:
+	* Connect.h:
+	* CurrentC.h:
+	* CurrentS.cpp:
+	* DynAnyS.cpp:
+	* DynAny_i.cpp:
+	* DynArray_i.cpp:
+	* DynEnum_i.cpp:
+	* DynSequence_i.cpp:
+	* DynStruct_i.cpp:
+	* DynUnion_i.cpp:
+	* Exception.h:
+	* Forwarding_Servant.h:
+	* GIOP.h:
+	* IIOP_Interpreter.h:
+	* IIOP_ORB.h:
+	* IIOP_Object.h:
+	* Invocation.h:
+	* Marshal.h:
+	* NVList.h:
+	* ORB.cpp:
+	* ORB.h:
+	* Object.h:
+	* POA.h:
+	* POAC.h:
+	* POAS.cpp:
+	* POAS.h:
+	* POA_CORBA.h:
+	* PolicyC.h:
+	* PolicyS.cpp:
+	* Sequence.h:
+	* Sequence_T.h:
+	* Servant_Base.h:
+	* Server_Request.h:
+	* Stub.h:
+	* TAO.h:
+	* Typecode.h:
+	* corba.h:
+	* poa_T.h:
+	* varout.h: Replaced all occurances of <_env> to TAO_IN_ENV.
 
 	* orbsvcs/orbsvcs/CosEvent/ProxyPushConsumer_i.cpp
 	  (connect_push_supplier): Changed to use TAO_IN_ENV.
