@@ -1,3 +1,13 @@
+Wed Oct 22 17:53:26 1997  Steve Huston  <shuston@riverace.com>
+
+	* ace/SOCK_Connector.cpp: In connect(), changed the
+	  (local != ACE_Addr::sap_any) to be value comparison,
+	  not pointer comparison.  Works on compilers which construct
+	  temporaries when a const reference is passed (like HP aC++), and
+	  also when a user passes an ACE_Addr which they construct to look
+	  just like an ACE_Addr::sap_any.  Thanks to Stephen Coy 
+	  <stevec@magna.com.au> for finding this.
+
 Wed Oct 22 16:43:25 1997  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
 
 	* tests/Reactor_Performance_Test.cpp (client): Corrected some code
