@@ -22,10 +22,10 @@ init (const char *nodeapp_location,
 		   Deployment::InvalidProperty))
 {
   if (nodeapp_location == 0)
-    ACE_THROW_RETURN (CORBA::BAD_PARAM (), CORBA::Object::_nil ());
+    ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);
 
   if (spawn_delay_ == 0)
-    ACE_THROW_RETURN (CORBA::BAD_PARAM (), CORBA::Object::_nil ());
+    ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);
 
   this->nodeapp_path_.set (nodeapp_location);
   this->spawn_delay_ = delay;

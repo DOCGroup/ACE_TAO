@@ -1,3 +1,10 @@
+Tue Jun  1 17:52:29 2004  Gan Deng  <dengg@dre.vanderbilt.edu>
+
+        * DnC/NodeApplicationManager/NodeApplicationManager.mpc
+
+          Modify this to fix linking errors.
+
+
 Tue Jun  1 17:39:57 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DnC/Config_Handlers/CompPortDesc_Handler.cpp:
