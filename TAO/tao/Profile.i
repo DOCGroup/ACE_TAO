@@ -74,3 +74,13 @@ TAO_Profile::tagged_components (void)
 {
   return this->tagged_components_;
 }
+
+#if (TAO_HAS_FT_CORBA == 1)
+
+ACE_INLINE CORBA::Boolean
+TAO_Profile::is_primary (void) const
+{
+  return this->tagged_components_.is_primary ();
+}
+
+#endif /*TAO_HAS_FT_CORBA */
