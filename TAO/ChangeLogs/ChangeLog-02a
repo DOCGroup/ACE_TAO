@@ -1,3 +1,10 @@
+Mon Mar  5 20:11:49 2001  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/examples/Security/Send_File/server.cpp (main): 
+	* orbsvcs/examples/Security/SecurityLevel1/server.cpp (main):
+
+	  More missing ACE_TRY_ENV parameter fixes.
+
 Mon Mar  5 19:32:56 2001  Ossama Othman  <ossama@uci.edu>
 
 	* TAO_IDL/be/be_visitor_array/any_op_cs.cpp (visit_array): 
