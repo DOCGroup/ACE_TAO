@@ -30,5 +30,28 @@
 # include /**/ <string.h>
 #endif /* !ACE_LACKS_STRING_H */
 
+#if defined (ACE_LACKS_STRTOK_R_PROTOTYPE) && !defined (_POSIX_SOURCE)
+extern "C" char *strtok_r (char *s, const char *delim, char **save_ptr);
+#endif  /* ACE_LACKS_STRTOK_R_PROTOTYPE */
+
+#if defined (__BORLANDC__)
+#  define _stricmp stricmp
+#  define _strnicmp strnicmp
+#endif /* __BORLANDC__ */
+
+#if defined (ACE_HAS_CHARPTR_SPRINTF)
+#  define ACE_SPRINTF_ADAPTER(X) ::strlen (X)
+#else
+#  define ACE_SPRINTF_ADAPTER(X) X
+#endif /* ACE_HAS_CHARPTR_SPRINTF */
+
+#if defined (ACE_PSOS_SNARFS_HEADER_INFO)
+   // Header information snarfed from compiler provided header files
+   // that are not included because there is already an identically
+   // named file provided with pSOS, which does not have this info
+   // from compiler supplied header
+   extern char *strdup (const char *);  // string.h
+#endif /* ACE_PSOS_SNARFS_HEADER_INFO */
+
 #include "ace/post.h"
 #endif /* ACE_OS_INCLUDE_STRING_H */

@@ -28,6 +28,23 @@
 # include /**/ <stdint.h>
 #endif /* !ACE_LACKS_STDINT_H */
 
+// BSD style types
+#if defined (ACE_LACKS_SYS_TYPES_H) \
+       || (defined (__GLIBC__) && !defined (_BSD_SOURCE))
+#  if ! defined (ACE_PSOS)
+      typedef unsigned char u_char;
+      typedef unsigned short u_short;
+      typedef unsigned int u_int;
+      typedef unsigned long u_long;
+
+      typedef unsigned char uchar_t;
+      typedef unsigned short ushort_t;
+      typedef unsigned int  uint_t;
+      typedef unsigned long ulong_t;
+#  endif /* ! defined (ACE_PSOS) */
+#endif  /* ACE_LACKS_SYS_TYPES_H */
+
+
 
 /* Define required types if missing */
 

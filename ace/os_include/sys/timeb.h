@@ -30,5 +30,10 @@
 # include /**/ <sys/timeb.h>
 #endif /* !ACE_LACKS_SYS_TIMEB_H */
 
+#   if defined (__BORLANDC__)
+#     define _ftime ftime
+#     define _timeb timeb
+#   endif /* __BORLANDC__ */
+
 #include "ace/post.h"
 #endif /* ACE_OS_INCLUDE_TIMEB_H */

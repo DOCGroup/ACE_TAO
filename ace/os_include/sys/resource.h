@@ -31,5 +31,22 @@
 # include /**/ <sys/resource.h>
 #endif /* !ACE_LACKS_SYS_RESOURCE_H */
 
+# if defined (ACE_HAS_BROKEN_SETRLIMIT)
+typedef struct rlimit ACE_SETRLIMIT_TYPE;
+# else
+typedef const struct rlimit ACE_SETRLIMIT_TYPE;
+# endif /* ACE_HAS_BROKEN_SETRLIMIT */
+
+#if defined (ACE_WIN32)
+#   define RUSAGE_SELF 1
+/// Fake the UNIX rusage structure.  Perhaps we can add more to this
+/// later on?
+struct rusage
+{
+  FILETIME ru_utime;
+  FILETIME ru_stime;
+};
+#endif /* ACE_WIN32 */
+
 #include "ace/post.h"
 #endif /* ACE_OS_INCLUDE_SYS_RESOURCE_H */

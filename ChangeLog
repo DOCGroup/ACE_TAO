@@ -1,3 +1,298 @@
+Sun May 11 15:51:51 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        Merged dre_osh_01 up to the main and rebranched to dre_osh_01
+
+        * ace/Basic_Types.h:
+          Resolved conflicts.
+
+Sun May 11 14:42:23 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/OS.h:
+          Moved more code, as listed below.
+
+        * ace/Basic_Types.h:
+          Changed #includes to use new headers.  Moved MAXPATHLEN
+          to ace/os_include/limits.h.
+
+        * ace/Malloc.h:
+        * ace/Default_Constants.h:
+          Moved ACE_DEFAULT_BASE_ADDR here.
+
+        * ace/os_include/limits.h:
+          Added conditional include of <sys/param.h>.  Moved howmany
+          macro and MAXPATHLEN here.  Added POSIX PATH_MAX.
+
+        * ace/os_include/time.h:
+          Moved timespec_t typedef for ACE_PSOS here.
+
+Sat May 10 21:39:05 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/OS.h:
+          Removed commented and moved more code, as listed below.
+
+        * ace/Handle_Set.h:
+          Moved ACE_FD_SETSIZE and ACE_DEFAULT_SELECT_REACTOR_SIZE
+          defines here.
+
+        * ace/Malloc.h:
+          Moved ACE_DEFAULT_BASE_ADDR define here.  Fixed #ifdef
+          indentation.
+
+        * ace/Timer_Queue_T.cpp:
+          Moved ACE_TIMER_SKEW define here.
+
+        * ace/os_include/pthread.h:
+          Moved a large section of pthread defines and typedefs here.
+
+        * ace/os_include/stdio.h:
+          Moved ACE_PSOS_SNARFS_HEADER_INFO decl's for fdopen(), tempnam(),
+          and fileno() here.
+
+        * ace/os_include/stdlib.h:
+          Moved ACE_PSOS_SNARFS_HEADER_INFO decl for putenv() here.
+
+        * ace/os_include/string.h:
+          Moved ACE_PSOS_SNARFS_HEADER_INFO decl for strdup() here.
+
+        * ace/os_include/unistd.h:
+          Moved ACE_PSOS_SNARFS_HEADER_INFO decl's for getopt() and
+          isatty() here.
+
+        * ace/os_include/sys/stat.h:
+          Moved ACE_PSOS_SNARFS_HEADER_INFO decl's for umask(), mkfifo(),
+          and mkdir() here.
+
+        * apps/gperf/src/Vectors.h:
+          Moved ACE_ASCII_SIZE, ACE_EBCDIC_SIZE, and
+          ACE_STANDARD_CHARACTER_SET_SIZE defines here.
+
+Sat May 10 18:59;32 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/config-cygwin32.h:
+          Added ACE_LACKS_SYS_IPC_H ACE_LACKS_SYS_MSG_H.
+
+Sat May 10 16:18:24 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/OS.h:
+          Commented and moved more code, as listed below.
+
+        * ace/SV_Semaphore_Simple.h:
+          Moved ACE_DEFAULT_SEM_KEY define here.
+
+        * ace/os_include/fcntl.h:
+          Moved O_NDELAY, ACE_NONBLOCK, and O_* defines for __BORLANDC__
+          here.
+
+        * ace/os_include/signal.h:
+          Moved SIG* and ACE_SIG* defines here.
+
+        * ace/os_include/stddef.h:
+          Moved size_t for ACE_PSOS_DIAB_MIPS here.
+
+        * ace/os_include/stdio.h:
+          Moved ACE_MAX_USERID, BUFSIZ, ACE_STRBUF_SIZE, and ACE_STD*
+          defines here.
+
+        * ace/os_include/string.h:
+          Moved str[n]imp() for __BORLANDC__ and ACE_SPRINTF_ADAPTER 
+          defines here.
+
+        * ace/os_include/unistd.h:
+          Moved _SC_AIO_MAX, chdir(), access(), getcwd(), and isatty() 
+          defines for __BORLANDC__ here.
+
+        * ace/os_include/sys/mman.h:
+          Moved PROT_RDWR define here.
+
+        * ace/os_include/sys/socket.h:
+          Moved CMSG_DATA define here.
+
+        * ace/os_include/sys/stat.h:
+          Moved stat(), umask(), and fstat() defines for __BORLANDC__ here.
+
+        * ace/os_include/sys/timeb.h:
+          Moved ftime() and timeb defines for __BORLANDC__ here.
+
+        * ace/os_include/sys/types.h:
+          Moved longlong_t, key_t, and pid_t here.
+
+Sat May 10 19:19:09 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/OS.h:
+          Commented and moved more code, as listed below.
+
+        * ace/os_include/sys/types.h:
+          Added ACE_LACKS_SYS_MMAN_H define.
+
+        * ace/os_include/sys/types.h:
+          Moved nlink_t, uid_t, gid_t, and caddr_t typedefs for
+          ACE_WIN32 here.
+
+Fri May  9 22:45:24 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/OS.h:
+          Commented and moved more code, as listed below.
+
+        * ace/os_include/signal.h:
+          Moved ACE_HAS_SIG_MACROS and ACE_HAS_SIG_ATOMIC_T ifdefs, 
+          sigemptyset undefs, and SCO SIGIO def and include of 
+          sys/regset.h here.
+
+        * ace/os_include/stdlib.h:
+          Move rand_r() declaration here.
+
+        * ace/os_include/string.h:
+          Moved strtok_r() declaration here.
+
+        * ace/os_include/time.h:
+          Moved strptime() declaration here.
+
+        * ace/os_include/unistd.h:
+          Moved ualarm(), pread/pwrite(), getpgid(), and lseek64/llseek() 
+          declarations here.
+
+        * ace/os_include/sys/mman.h:
+          Moved MAP_* and PROT_* defines for ACE_WIN32 here.
+
+        * ace/os_include/sys/msg.h:
+          Moved struct msqid_sh declaration for ACE_WIN32 here.
+
+        * ace/os_include/sys/resource.h:
+          Moved struct rusage declaration for ACE_WIN32 here.
+
+        * ace/os_include/sys/select.h:
+          Moved NFDBITS define for ACE_WIN32 here.
+
+        * ace/os_include/sys/shm.h:
+          Moved struct shmaddr declaration for ACE_WIN32 here.
+
+        * ace/os_include/sys/socket.h:
+          Moved struct msghdr and related declarations here.
+
+        * ace/os_include/sys/uio.h:
+          Moved [ACE_]IOV_MAX defines here.
+        
+Fri May  9 16:10:50 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/OS.h:
+          Commented and moved more code, as listed below.
+
+        * ace/config-sunos5.5.h:
+          Added ACE_LACKS_STDINT_H.
+
+        * ace/os_include/stropts.h:
+          Moved includes of [sys/]timod.h, sys/filio.h, and sys/sockio.h
+          here.
+
+        * ace/os_include/sys/msg.h:
+          Moved ACE_HAS_BROKEN_MSG_H and ACE_LACKS_SYSV_MSQ_PROTOS
+          #ifdef's here.
+
+Fri May  9 01:20:49 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/config-cygwin32.h:
+          Added ACE_LACKS_SYS_SEM_H macro.
+
+Fri May  9 00:20:32 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/config-win32-msvc.h:
+          Added following ACE_LACKS macros: INTTYPES_H, STROPTS_H,
+          SYS_IOCTL_H, SYS_IPC_H, and SYS_SEM_H.
+ 
+        * ace/SV_Semaphore_Complex.cpp:
+        * ace/SV_Semaphore_Simple.cpp:
+          Added #include "ace/os_include/sys/sem.h".
+
+        * ace/SPIPE_Stream.h:
+          Added #include "ace/os_include/stropts.h".
+
+Thu May  8 23:24:43 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/OS.h:
+          Commented out a ton of code and moved it into the following
+          files as noted.  The commented out code will be removed once the
+          other platforms have been tested and we are ready to commit to
+          the main trunk.
+
+        * ace/Thread.h:
+          Moved struct cancel_state here.
+
+        * ace/os_include/pthread.h:
+          Moved pthead_self() declaration here.
+
+        * ace/os_include/semaphore.h:
+          Moved struct ACE_sema_t and SEM_FAILED here.
+
+        * ace/os_include/stdint.h:
+          Moved BSD style types, e.g., u_char, here.
+
+        * ace/os_include/stropts.h:
+          Moved struct strrecvfd declaration here.
+
+        * ace/os_include/time.h:
+          Moved ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R define and
+          undef of ctime when ACE_HAS_BROKEN_CTIME here.
+
+        * ace/os_include/sys/msg.h:
+          Moved struct msgbuf declaration here.
+
+        * ace/os_include/sys/resource.h:
+          Moved rlimit typedef here.
+
+        * ace/os_include/sys/sem.h:
+          Moved struct sembuf declartion here.
+
+        * ace/os_include/sys/stat.h:
+          Moved ACE_LACKS_MODE_MASK, e.g., S_IRWXG, definitions
+          and struct stat here.
+
+        * ace/os_include/sys/types.h:
+          Moved clockid_t and dev_t typedefs and conditional include
+          of <types.h> here.
+
+        * ace/os_include/sys/uio.h:
+          Moved struct iovec and related typedefs here.
+
+Thu May  7 02:04:00 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/OS.h:
+          Replaced Windows specific includes for ws2tcpip.h, direct.h,
+          process.h, and io.h with the appropriate new headers listed
+          below.		  
+
+        * ace/config-cygwin32.h:
+          Added following ACE_LACKS macros:  STDINT_H, INTTYPES_H,
+          STROPTS_H, and UCONTEXT_H.
+
+		* ace/config-win32-msvc.h:
+          Added several ACE_LACKS macros: UCONTEXT_H, STDINT_H,
+          SYS_SELECT_H, TIME_H, SYS_RESOURCE_H, SYS_WAIT_H,
+          SYS_UIO_H, SYS_SOCKET_H, and NETINET_IN_H.
+
+		* ace/os_include/unistd.h:
+          Added include for <process.h> and <io.h> on Windows,
+          but not WINCE.
+ 
+		* ace/os_include/sys/stat.h:
+          Added include for <direct.h> on Windows, but not WINCE.
+
+		* ace/os_include/netinet/in.h:
+          Added include for <ws2tcpip.h> when ACE_HAS_WINSOCK2 is 
+          defined and != 0.
+
+Wed May  7 00:02:10 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/OS.{i,h}:
+        * ace/os_include/signal.h:
+        * ace/os_include/stropts.h:
+          Modified most of the #includes of systems headers to use the 
+          ace/os_include/*.h headers, and started moving some of the
+          #ifdef'd code to the new headers.
+
+        * ace/config-linux-common.h:
+          Removed #define ACE_LACKS_STRRECVFD and added #define 
+          ACE_HAS_STRBUF_T.  
+
 Fri May  9 16:55:17 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* THANKS: Added Thomas Wiegert to the hal of fame.
