@@ -1,3 +1,10 @@
+Sat Apr 29 13:20:11 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * apps/drwho/PMS_All.cpp:
+        * apps/drwho/PMS_Ruser.cpp:
+
+          Was still using some ACE::strecpy, changed to ACE_OS::strecpy.
+
 Fri Apr 28 21:30:46 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * bin/msvc_auto_compile.pl:
