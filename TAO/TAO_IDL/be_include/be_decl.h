@@ -87,6 +87,9 @@ public:
   idl_bool cli_inline_cdr_op_gen (void);
   idl_bool cli_inline_cdr_decl_gen (void);
   idl_bool cli_traits_gen (void);
+  idl_bool cli_arg_traits_gen (void);
+  idl_bool srv_arg_traits_gen (void);
+  idl_bool srv_sarg_traits_gen (void);
   idl_bool cli_tmpl_class_gen (void);
   idl_bool cli_pragma_inst_gen (void);
   idl_bool cli_inarg_tmpl_class_gen (void);
@@ -124,6 +127,9 @@ public:
   void cli_inline_cdr_op_gen (idl_bool);
   void cli_inline_cdr_decl_gen (idl_bool);
   void cli_traits_gen (idl_bool);
+  void cli_arg_traits_gen (idl_bool);
+  void srv_arg_traits_gen (idl_bool);
+  void srv_sarg_traits_gen (idl_bool);
   void cli_tmpl_class_gen (idl_bool);
   void cli_pragma_inst_gen (idl_bool);
   void cli_inarg_tmpl_class_gen (idl_bool);
@@ -171,6 +177,9 @@ private:
   idl_bool cli_inline_cdr_op_gen_;
   idl_bool cli_inline_cdr_decl_gen_;
   idl_bool cli_traits_gen_;
+  idl_bool cli_arg_traits_gen_;
+  idl_bool srv_arg_traits_gen_;
+  idl_bool srv_sarg_traits_gen_;
   idl_bool cli_tmpl_class_gen_;
   idl_bool cli_pragma_inst_gen_;
   idl_bool cli_inarg_tmpl_class_gen_;

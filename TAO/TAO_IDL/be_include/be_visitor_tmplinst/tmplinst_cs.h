@@ -32,6 +32,8 @@ public:
 
   virtual int visit_enum (be_enum *node);
 
+  virtual int visit_exception(be_exception *node);
+
   virtual int visit_interface (be_interface *node);
 
   virtual int visit_valuetype (be_valuetype *node);

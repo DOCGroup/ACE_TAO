@@ -657,6 +657,12 @@ TAO_CodeGen::start_server_skeletons (const char *fname)
   this->gen_standard_include (this->server_skeletons_,
                               "tao/IFR_Client_Adapter.h");
 
+  if (be_global->gen_thru_poa_collocation () 
+      || be_global->gen_direct_collocation ())
+    {
+      this->gen_arg_file_includes (this->server_skeletons_);
+    }
+
   // The following header must always be included.
   this->gen_standard_include (this->server_skeletons_,
                               "tao/PortableInterceptor.h");
@@ -1332,6 +1338,14 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
     }
 
   if (ACE_BIT_ENABLED (idl_global->decls_seen_info_,
+                       idl_global->decls_seen_masks.interface_seen_))
+    {
+      // Include the AbstractBase file from the Valuetype library.
+      this->gen_standard_include (this->client_header_,
+                                  "tao/Object_T.h");
+    }
+
+  if (ACE_BIT_ENABLED (idl_global->decls_seen_info_,
                        idl_global->decls_seen_masks.abstract_iface_seen_))
     {
       // Include the AbstractBase file from the Valuetype library.
@@ -1360,7 +1374,6 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
 
   this->gen_seq_file_includes ();
   this->gen_var_file_includes ();
-  this->gen_arg_file_includes ();
 }
 
 void
@@ -1393,7 +1406,7 @@ TAO_CodeGen::gen_stub_src_includes (void)
                            idl_global->decls_seen_masks.valuetype_seen_))
         {
           // Include files from the Valuetype library.
-          this->gen_standard_include (this->client_header_,
+          this->gen_standard_include (this->client_stubs_,
                                       "tao/Valuetype/ValueBase.h");
         }
     }
@@ -1406,6 +1419,7 @@ TAO_CodeGen::gen_stub_src_includes (void)
     }
 
   this->gen_any_file_includes ();
+  this->gen_arg_file_includes (this->client_stubs_);
 }
 
 void
@@ -1500,60 +1514,60 @@ TAO_CodeGen::gen_var_file_includes (void)
 }
 
 void
-TAO_CodeGen::gen_arg_file_includes (void)
+TAO_CodeGen::gen_arg_file_includes (TAO_OutStream *stream)
 {
   this->gen_cond_file_include (
       idl_global->decls_seen_masks.basic_arg_seen_,
       "tao/Basic_Arguments.h",
-      this->client_header_
+      stream
     );
 
   this->gen_cond_file_include (
       idl_global->decls_seen_masks.bd_string_arg_seen_,
       "tao/BD_String_Argument_T.h",
-      this->client_header_
+      stream
     );
 
   this->gen_cond_file_include (
       idl_global->decls_seen_masks.fixed_array_arg_seen_,
       "tao/Fixed_Array_Argument_T.h",
-      this->client_header_
+      stream
     );
 
   this->gen_cond_file_include (
       idl_global->decls_seen_masks.fixed_size_arg_seen_,
       "tao/Fixed_Size_Argument_T.h",
-      this->client_header_
+      stream
     );
 
   this->gen_cond_file_include (
       idl_global->decls_seen_masks.object_arg_seen_,
       "tao/Object_Argument_T.h",
-      this->client_header_
+      stream
     );
 
   this->gen_cond_file_include (
       idl_global->decls_seen_masks.special_basic_arg_seen_,
       "tao/Special_Basic_Arguments.h",
-      this->client_header_
+      stream
     );
 
   this->gen_cond_file_include (
       idl_global->decls_seen_masks.ub_string_arg_seen_,
       "tao/UB_String_Arguments.h",
-      this->client_header_
+      stream
     );
 
   this->gen_cond_file_include (
       idl_global->decls_seen_masks.var_array_arg_seen_,
       "tao/Var_Array_Argument_T.h",
-      this->client_header_
+      stream
     );
 
   this->gen_cond_file_include (
       idl_global->decls_seen_masks.var_size_arg_seen_,
       "tao/Var_Size_Argument_T.h",
-      this->client_header_
+      stream
     );
 }
 

@@ -67,6 +67,9 @@ be_decl::be_decl (void)
     cli_inline_cdr_op_gen_ (I_FALSE),
     cli_inline_cdr_decl_gen_ (I_FALSE),
     cli_traits_gen_ (I_FALSE),
+    cli_arg_traits_gen_ (I_FALSE),
+    srv_arg_traits_gen_ (I_FALSE),
+    srv_sarg_traits_gen_ (I_FALSE),
     cli_tmpl_class_gen_ (I_FALSE),
     cli_pragma_inst_gen_ (I_FALSE),
     cli_inarg_tmpl_class_gen_ (I_FALSE),
@@ -111,6 +114,9 @@ be_decl::be_decl (AST_Decl::NodeType type,
     cli_inline_cdr_op_gen_ (I_FALSE),
     cli_inline_cdr_decl_gen_ (I_FALSE),
     cli_traits_gen_ (I_FALSE),
+    cli_arg_traits_gen_ (I_FALSE),
+    srv_arg_traits_gen_ (I_FALSE),
+    srv_sarg_traits_gen_ (I_FALSE),
     cli_tmpl_class_gen_ (I_FALSE),
     cli_pragma_inst_gen_ (I_FALSE),
     cli_inarg_tmpl_class_gen_ (I_FALSE),
@@ -371,6 +377,24 @@ be_decl::cli_traits_gen (void)
 }
 
 idl_bool
+be_decl::cli_arg_traits_gen (void)
+{
+  return this->cli_arg_traits_gen_;
+}
+
+idl_bool
+be_decl::srv_arg_traits_gen (void)
+{
+  return this->srv_arg_traits_gen_;
+}
+
+idl_bool
+be_decl::srv_sarg_traits_gen (void)
+{
+  return this->srv_sarg_traits_gen_;
+}
+
+idl_bool
 be_decl::cli_tmpl_class_gen (void)
 {
   return this->cli_tmpl_class_gen_;
@@ -585,6 +609,24 @@ void
 be_decl::cli_traits_gen (idl_bool val)
 {
   this->cli_traits_gen_ = val;
+}
+
+void
+be_decl::cli_arg_traits_gen (idl_bool val)
+{
+  this->cli_arg_traits_gen_ = val;
+}
+
+void
+be_decl::srv_arg_traits_gen (idl_bool val)
+{
+  this->srv_arg_traits_gen_ = val;
+}
+
+void
+be_decl::srv_sarg_traits_gen (idl_bool val)
+{
+  this->srv_sarg_traits_gen_ = val;
 }
 
 void

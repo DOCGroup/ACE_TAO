@@ -47,6 +47,51 @@ int be_visitor_root::visit_root (be_root *node)
                         -1);
     }
 
+  int status = 0;
+  be_visitor_context ctx = *this->ctx_;
+
+  switch (this->ctx_->state ())
+    {
+      case TAO_CodeGen::TAO_ROOT_CS:
+        {
+          be_visitor_arg_traits arg_visitor ("", &ctx);
+          status = node->accept (&arg_visitor);
+
+          if (status == -1)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "(%N:%l) be_visitor_root::"
+                                 "visit_root - "
+                                 "failed to generate stub arg traits\n"),
+                                -1);
+            }
+        }
+
+        break;
+      case TAO_CodeGen::TAO_ROOT_SS:
+        {
+          if (be_global->gen_thru_poa_collocation ()
+              || be_global->gen_direct_collocation ())
+            {
+              be_visitor_arg_traits arg_visitor ("", &ctx);
+              status = node->accept (&arg_visitor);
+
+              if (status == -1)
+                {
+                  ACE_ERROR_RETURN ((LM_ERROR,
+                                     "(%N:%l) be_visitor_root::"
+                                     "visit_root - "
+                                     "failed to generate stub arg traits\n"),
+                                    -1);
+                }
+            }
+        }
+
+        break;
+      default:
+        break;
+    }
+
   if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -160,13 +205,11 @@ int be_visitor_root::visit_root (be_root *node)
         }
     }
 
-  be_visitor_context ctx (*this->ctx_);
-
   // Make one more pass over the entire tree and generate the OBV_ namespaces
   // and OBV_ classes.
 
   idl_bool obv = 1;
-  int status = 0;
+  status = 0;
 
   switch (this->ctx_->state ())
     {
@@ -203,19 +246,26 @@ int be_visitor_root::visit_root (be_root *node)
   status = 0;
   ctx = *this->ctx_;
 
-  if (this->ctx_->state () == TAO_CodeGen::TAO_ROOT_CH)
+  switch (this->ctx_->state ())
     {
-      be_visitor_traits visitor (&ctx);
-      status = node->accept (&visitor);
-
-      if (status == -1)
+      case TAO_CodeGen::TAO_ROOT_CH:
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_root::"
-                             "visit_root - "
-                             "failed to generate traits\n"),
-                            -1);
+          be_visitor_traits visitor (&ctx);
+          status = node->accept (&visitor);
+
+          if (status == -1)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "(%N:%l) be_visitor_root::"
+                                 "visit_root - "
+                                 "failed to generate traits\n"),
+                                -1);
+            }
         }
+
+        break;
+      default:
+        break;
     }
 
   // The next thing we need to do is make one more pass thru the entire tree
@@ -227,46 +277,46 @@ int be_visitor_root::visit_root (be_root *node)
 
   switch (this->ctx_->state ())
     {
-    case TAO_CodeGen::TAO_ROOT_CH:
-      {
-        ctx.state (TAO_CodeGen::TAO_ROOT_ANY_OP_CH);
+      case TAO_CodeGen::TAO_ROOT_CH:
+        {
+          ctx.state (TAO_CodeGen::TAO_ROOT_ANY_OP_CH);
 
-        if (be_global->any_support ())
-          {
-            be_visitor_root_any_op visitor (&ctx);
-            status = node->accept (&visitor);
-          }
+          if (be_global->any_support ())
+            {
+              be_visitor_root_any_op visitor (&ctx);
+              status = node->accept (&visitor);
+            }
 
+          break;
+        }
+      case TAO_CodeGen::TAO_ROOT_CS:
+        {
+          ctx.state (TAO_CodeGen::TAO_ROOT_ANY_OP_CS);
+
+          if (be_global->any_support ())
+            {
+              be_visitor_root_any_op visitor (&ctx);
+              status = node->accept (&visitor);
+            }
+
+          break;
+        }
+      case TAO_CodeGen::TAO_ROOT_IH:
+      case TAO_CodeGen::TAO_ROOT_SH:
+      case TAO_CodeGen::TAO_ROOT_CI:
+      case TAO_CodeGen::TAO_ROOT_IS:
+      case TAO_CodeGen::TAO_ROOT_SI:
+      case TAO_CodeGen::TAO_ROOT_SS:
+      case TAO_CodeGen::TAO_ROOT_TIE_SH:
         break;
-      }
-    case TAO_CodeGen::TAO_ROOT_CS:
-      {
-        ctx.state (TAO_CodeGen::TAO_ROOT_ANY_OP_CS);
-
-        if (be_global->any_support ())
-          {
-            be_visitor_root_any_op visitor (&ctx);
-            status = node->accept (&visitor);
-          }
-
-        break;
-      }
-    case TAO_CodeGen::TAO_ROOT_IH:
-    case TAO_CodeGen::TAO_ROOT_SH:
-    case TAO_CodeGen::TAO_ROOT_CI:
-    case TAO_CodeGen::TAO_ROOT_IS:
-    case TAO_CodeGen::TAO_ROOT_SI:
-    case TAO_CodeGen::TAO_ROOT_SS:
-    case TAO_CodeGen::TAO_ROOT_TIE_SH:
-      break;
-    default:
-      {
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "(%N:%l) be_visitor_root::"
-                           "visit_constant - "
-                           "Bad context state\n"),
-                          -1);
-      }
+      default:
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_root::"
+                             "visit_constant - "
+                             "Bad context state\n"),
+                            -1);
+        }
     }
 
   if (status == -1)

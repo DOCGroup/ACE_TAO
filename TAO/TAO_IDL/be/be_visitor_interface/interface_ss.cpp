@@ -518,9 +518,15 @@ be_visitor_interface_ss::this_method (be_interface *node)
 
   *os << "CORBA::Object_var obj = tmp;" << be_nl
       << "(void) safe_stub.release ();" << be_nl
-      << "return " << "::" << node->full_name ()
-      << "::_unchecked_narrow (obj.in ());"
-      << be_uidt_nl
+      << "typedef ::" << node->name () << " STUB_SCOPED_NAME;" << be_nl
+      << "return" << be_idt_nl
+      << "TAO::Narrow_Utils<STUB_SCOPED_NAME>::unchecked_narrow ("
+      << be_idt << be_idt_nl
+      << "obj.in ()," << be_nl
+      << node->flat_client_enclosing_scope ()
+      << node->base_proxy_broker_name ()
+      << "_Factory_function_pointer" << be_uidt_nl
+      << ");" << be_uidt << be_uidt << be_uidt_nl
       << "}";
 }
 

@@ -116,16 +116,18 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
   // Generate the body.
 
   *os << "{" << be_nl
-      << "public:" << be_idt_nl
+      << "public:" << be_idt_nl;
 
-      // Generate the _ptr_type and _var_type typedefs.
-      << "typedef " << node->local_name () << "_ptr _ptr_type;"
+  if (!node->is_local ())
+    {
+      *os << "friend class TAO::Narrow_Utils<" 
+          << node->local_name () << ">;" << be_nl;
+    }
+
+  *os << "typedef " << node->local_name () << "_ptr _ptr_type;"
       << be_nl
       << "typedef " << node->local_name () << "_var _var_type;"
-      << be_nl;
-
-  // Generate the static variable that we use for narrowing.
-  *os << "static int _tao_class_id;" << be_nl << be_nl;
+      << be_nl << be_nl;
 
   // Generate the static _duplicate, _narrow, and _nil operations.
   *os << "// The static operations." << be_nl
@@ -133,23 +135,6 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
       << node->local_name () << "_ptr obj);" << be_nl << be_nl
       << "static " << node->local_name () << "_ptr "
       << "_narrow (" << be_idt << be_idt_nl;
-
-  if (node->is_abstract ())
-    {
-      *os << "CORBA::AbstractBase_ptr obj" << be_nl;
-    }
-  else
-    {
-      *os << "CORBA::Object_ptr obj" << be_nl;
-    }
-
-  *os << "ACE_ENV_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
-      << ");" << be_uidt_nl << be_nl;
-
-  // There's no need for an _unchecked_narrow for locality
-  // constrained object.
-  *os << "static " << node->local_name () << "_ptr "
-      << "_unchecked_narrow (" << be_idt << be_idt_nl;
 
   if (node->is_abstract ())
     {

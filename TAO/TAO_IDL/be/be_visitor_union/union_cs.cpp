@@ -182,10 +182,11 @@ int be_visitor_union_cs::visit_union (be_union *node)
           << node->name ()
           << "::_tao_any_destructor (void *_tao_void_pointer)" << be_nl
           << "{" << be_idt_nl
-          << node->local_name () << " *tmp = ACE_static_cast ("
-          << node->local_name () << "*, _tao_void_pointer);" << be_nl
+          << node->local_name () << " *tmp =" << be_idt_nl
+          << "ACE_static_cast ("
+          << node->local_name () << " *, _tao_void_pointer);" << be_uidt_nl
           << "delete tmp;" << be_uidt_nl
-          << "}\n" << be_nl;
+          << "}" << be_nl << be_nl;
     }
 
   this->ctx_->state (TAO_CodeGen::TAO_UNION_PUBLIC_ASSIGN_CS);
