@@ -1,3 +1,16 @@
+Sun Feb 20 11:33:09 2000  Ossama Othman  <ossama@uci.edu>
+
+	* THANKS:
+
+	  Added Todd Gruhn <tgruhn2@mail.com> to the list of
+	  contributors.
+	
+	* ace/config-netbsd.h:
+
+	  Defined ACE_HAS_DIRENT, and undefined ACE_LACKS_SIGSET.  Thanks
+	  to Todd Gruhn <tgruhn2@mail.com> for confirming that these
+	  changes were necessary.
+
 Sat Feb 19 17:53:47 2000  Ossama Othman  <ossama@uci.edu>
 
 	* bin/make_release (create_kit): 
