@@ -1,5 +1,10 @@
 Mon Sep 21 18:20:35 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
+	* tao/ORB.cpp: 
+	* tao/Connect.cpp: 
+
+	  g++ cannot gork templates typedefs.
+
 	* orbsvcs/orbsvcs/Naming/CosNaming_i.cpp (new_context and list):
  	  Cannot call _this() directly since the POA has the USER_ID
  	  policy.  Therefore, added a simple scheme for producing names
