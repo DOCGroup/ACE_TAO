@@ -48,35 +48,44 @@ int
 Send_Task::svc (void)
 {
   ACE_DECLARE_NEW_CORBA_ENV;
-
-  if (this->barrier_ == 0)
-    return -1;
-
-  this->barrier_->wait ();
-
-  RtecEventComm::EventSet event (1);
-  event.length (1);
-  event[0].header.type   = this->event_type_;
-  event[0].header.source = this->event_source_;
-  event[0].header.ttl    = 1;
-
-  ACE_Time_Value period (0, this->period_in_usecs_);
-
-  for (int i = 0; i != this->iterations_; ++i)
+  ACE_TRY
     {
-      ACE_OS::sleep (period);
-      {
-        ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, -1);
-        if (this->stop_)
-          return 0;
-      }
-      ACE_hrtime_t creation = ACE_OS::gethrtime ();
-      ORBSVCS_Time::hrtime_to_TimeT (event[0].header.creation_time,
-                                     creation);
-      // push one event...
-      this->supplier_->push (event ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      if (this->barrier_ == 0)
+        return -1;
+
+      this->barrier_->wait ();
+
+      RtecEventComm::EventSet event (1);
+      event.length (1);
+      event[0].header.type   = this->event_type_;
+      event[0].header.source = this->event_source_;
+      event[0].header.ttl    = 1;
+
+      ACE_Time_Value period (0, this->period_in_usecs_);
+
+      for (int i = 0; i != this->iterations_; ++i)
+        {
+          ACE_OS::sleep (period);
+          {
+            ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, -1);
+            if (this->stop_)
+              return 0;
+          }
+          ACE_hrtime_t creation = ACE_OS::gethrtime ();
+          ORBSVCS_Time::hrtime_to_TimeT (event[0].header.creation_time,
+                                         creation);
+          // push one event...
+          this->supplier_->push (event ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
     }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "Caught exception:");
+      return 1;
+    }
+  ACE_ENDTRY;
   return 0;
 }
 
