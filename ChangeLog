@@ -1,3 +1,34 @@
+Tue Mar 25 21:08:04 2003  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/CDR_Stream.cpp:
+        * ace/CDR_Stream.h:
+        * ace/CDR_Stream.i:
+
+          Added the value wchar_maxbytes_ to the ACE_OutputCDR which is
+          used to control the size of the wchar on the wire when no
+          translator is being used. This is because it is valid to use a
+          wchar codeset for which the maximum size is smaller than the
+          size of a wchar_t.
+
+        * ace/OS.h:
+
+          When defining the ACE-specific type WChar, added the existance
+          of the ACE_HAS_XPG4_MULTIBYTE_CHAR as a condition to allow WChar
+          to be an alias of wchar_t, rather than of ACE_UINT16.
+
+        * ace/OS.i:
+        * ace/config-linux-common.h:
+
+          As part of the wchar changes, it was discovered that older linux
+          platforms lack fgetwc() and ungetwc(), although all other wide
+          char related functions are supported. Added ACE_LACKS_FGETWC to
+          guard against this condition.
+
+        * ace/ace_wchar.h:
+
+          Rework the ifdef sieve to ensure that platforms such as solaris
+          that really do support wchar get initialized properly.
+
 Tue Mar 25 09:01:00 2003  Ossama Othman  <ossama@uci.edu>
 
 	* ace/Default_Constants.h (ACE_CONNECTOR_HANDLER_MAP_SIZE):

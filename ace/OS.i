@@ -7315,7 +7315,7 @@ ACE_OS::thr_setprio (ACE_hthread_t thr_id, int prio, int thr_policy)
   if (result != 0)
     result = -1;
 
-  return result; 
+  return result;
 #   endif /* ACE_HAS_PTHREADS_DRAFT4 */
 # elif defined (ACE_HAS_STHREADS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_setprio (thr_id, prio),
@@ -9953,13 +9953,24 @@ ACE_OS::clearerr (FILE* fp)
 ACE_INLINE wint_t
 ACE_OS::fgetwc (FILE* fp)
 {
+#if defined (ACE_LACKS_FGETWC)
+  ACE_UNUSED_ARG (fp);
+  ACE_NOTSUP_RETURN (0);
+#else
   ACE_OSCALL_RETURN (::fgetwc (fp), wint_t, WEOF);
+#endif /* ACE_LACKS_FGETWC */
 }
 
 ACE_INLINE wint_t
 ACE_OS::ungetwc (wint_t c, FILE* fp)
 {
+#if defined (ACE_LACKS_FGETWC)
+  ACE_UNUSED_ARG (c);
+  ACE_UNUSED_ARG (fp);
+  ACE_NOTSUP_RETURN (0);
+#else
   ACE_OSCALL_RETURN (::ungetwc (c, fp), wint_t, WEOF);
+#endif /* ACE_LACKS_FGETWC */
 }
 
 #endif /* ACE_HAS_WCHAR */

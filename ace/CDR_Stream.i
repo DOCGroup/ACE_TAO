@@ -278,14 +278,21 @@ ACE_INLINE ACE_CDR::Boolean
 ACE_OutputCDR::write_wchar_array (const ACE_CDR::WChar* x,
                                   ACE_CDR::ULong length)
 {
-  if (this->wchar_translator_ == 0)
+  if (this->wchar_translator_)
+    return this->wchar_translator_->write_wchar_array (*this, x, length);
+  if (ACE_OutputCDR::wchar_maxbytes_ == 0)
+    {
+      errno = EACCES;
+      return (this->good_bit_ = 0);
+    }
+  if (ACE_OutputCDR::wchar_maxbytes_ == sizeof (ACE_CDR::WChar))
     return this->write_array (x,
                               sizeof (ACE_CDR::WChar),
                               sizeof (ACE_CDR::WChar) == 2
                               ? ACE_CDR::SHORT_ALIGN
                               : ACE_CDR::LONG_ALIGN,
                               length);
-  return this->wchar_translator_->write_wchar_array (*this, x, length);
+  return this->write_wchar_array_i (x,length);
 }
 
 ACE_INLINE ACE_CDR::Boolean
@@ -528,13 +535,6 @@ ACE_INLINE void
 ACE_OutputCDR::wchar_translator (ACE_WChar_Codeset_Translator * wctran)
 {
   this->wchar_translator_ = wctran;
-  this->wchar_allowed_ = 1;
-}
-
-ACE_INLINE void
-ACE_OutputCDR::wchar_allowed (int allowed)
-{
-  this->wchar_allowed_ = allowed;
 }
 
 // ****************************************************************
@@ -659,20 +659,22 @@ ACE_InputCDR::read_wchar_array (ACE_CDR::WChar* x,
 {
   // Make sure the length of the array isn't greater than the length of
   // the stream.
-  if (length * sizeof (ACE_CDR::WChar) > this->length())
+  if (length * ACE_OutputCDR::wchar_maxbytes_ > this->length())
     {
       this->good_bit_ = 0;
       return 0;
     }
 
-  if (this->wchar_translator_ == 0)
-    return this->read_array (x,
-                             sizeof (ACE_CDR::WChar),
-                             sizeof (ACE_CDR::WChar) == 2
-                             ? ACE_CDR::SHORT_ALIGN
-                             : ACE_CDR::LONG_ALIGN,
-                             length);
-  return this->wchar_translator_->read_wchar_array (*this, x, length);
+  if (this->wchar_translator_ != 0)
+    return this->wchar_translator_->read_wchar_array (*this, x, length);
+  if (ACE_OutputCDR::wchar_maxbytes_ != sizeof (ACE_CDR::WChar))
+    return this->read_wchar_array_i (x, length);
+  return this->read_array (x,
+			   sizeof (ACE_CDR::WChar),
+			   sizeof (ACE_CDR::WChar) == 2
+			   ? ACE_CDR::SHORT_ALIGN
+			   : ACE_CDR::LONG_ALIGN,
+			   length);
 }
 
 ACE_INLINE ACE_CDR::Boolean
@@ -1464,14 +1466,8 @@ ACE_INLINE void
 ACE_InputCDR::wchar_translator (ACE_WChar_Codeset_Translator * wctran)
 {
   this->wchar_translator_ = wctran;
-  this->wchar_allowed_ = 1;
 }
 
-ACE_INLINE void
-ACE_InputCDR::wchar_allowed (int allowed)
-{
-  this->wchar_allowed_ = allowed;
-}
 // ****************************************************************
 
 ACE_INLINE ACE_CDR::Boolean
