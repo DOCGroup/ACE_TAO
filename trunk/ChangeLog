@@ -1,3 +1,12 @@
+Wed Jun 23 06:52:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-lite.h:
+        * ace/README:
+          Changed ACE_HAS_MEMORY_PROFILER to ACE_INITIALIZE_MEMORY_BEFORE_USE.
+          The last says better what we do. This define is then set when
+          running with valgrind or purify. Thanks to Chris Cleeland for
+          the suggestion
+
 Tue Jun 22 16:54:35 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* configure.ac:

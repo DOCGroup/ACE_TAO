@@ -1723,14 +1723,14 @@ CORBA::ORB::object_to_string (CORBA::Object_ptr obj
       // XXX there should be a simple way to reuse this code in other
       // ORB implementations ...
 
-#if defined (ACE_HAS_MEMORY_PROFILER)
+#if defined (ACE_INITIALIZE_MEMORY_BEFORE_USE)
       char buf [ACE_CDR::DEFAULT_BUFSIZE] = { 0 };
 #else
       // Avoid the initialization overhead if not compiling with
       // support for a memory profiler.  There is no need to actually perform
       // initialization otherwise.
       char buf [ACE_CDR::DEFAULT_BUFSIZE];
-#endif /* ACE_HAS_PURIFY */
+#endif /* ACE_INITIALIZE_MEMORY_BEFORE_USE */
 
       TAO_OutputCDR cdr (buf,  sizeof buf,
                          TAO_ENCAP_BYTE_ORDER,
