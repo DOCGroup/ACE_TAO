@@ -3,8 +3,6 @@
 // $Id$
 //
 
-#if (TAO_HAS_MINIMUM_CORBA == 0)
-
 ACE_INLINE
 TAO_GIOP_Asynch_Invocation::TAO_GIOP_Asynch_Invocation (
     TAO_Stub *stub,
@@ -21,8 +19,6 @@ TAO_GIOP_Asynch_Invocation::TAO_GIOP_Asynch_Invocation (
     rd_	(0)
 {
 }
-
-#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
 
 // ********************************************************************
 

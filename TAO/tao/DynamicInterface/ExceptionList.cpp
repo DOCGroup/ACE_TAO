@@ -4,8 +4,6 @@
 
 ACE_RCSID(DynamicInterface, ExceptionList, "$Id$")
 
-#if (TAO_HAS_MINIMUM_CORBA == 0)
-
 #include "tao/Typecode.h"
 #include "tao/Environment.h"
 
@@ -114,4 +112,3 @@ template class ACE_Atomic_Op<ACE_SYNCH_MUTEX, CORBA::ULong>;
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-#endif /* TAO_HAS_MINIMUM_CORBA */

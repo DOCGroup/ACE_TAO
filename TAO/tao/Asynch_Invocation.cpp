@@ -14,8 +14,6 @@ ACE_RCSID(tao, Asynch_Invocation, "$Id$")
 # include "tao/Asynch_Invocation.i"
 #endif /* ! __ACE_INLINE__ */
 
-#if (TAO_HAS_MINIMUM_CORBA == 0)
-
 #if defined (ACE_ENABLE_TIMEPROBES)
 
 static const char *TAO_Asynch_Invocation_Timeprobe_Description[] =
@@ -120,4 +118,3 @@ TAO_GIOP_Twoway_Asynch_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
 
 #endif /* (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1) == 0 */
 
-#endif /* TAO_HAS_MINIMUM_CORBA == 0 */

@@ -27,8 +27,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if (TAO_HAS_MINIMUM_CORBA == 0)
-
 #include "dynamicinterface_export.h"
 #include "ace/Service_Config.h"
 
@@ -110,6 +108,5 @@ TAO_Requires_Request_Factory_Initializer =
 
 #endif /* ACE_HAS_BROKEN_STATIC_CONSTRUCTORS */
 
-#endif /* TAO_HAS_MINIMUM_CORBA */
 #include "ace/post.h"
 #endif /* TAO_DYNAMIC_ADAPTER_IMPL_H */

@@ -4,8 +4,6 @@
 
 ACE_RCSID(DynamicInterface, Request, "$Id$")
 
-#if (TAO_HAS_MINIMUM_CORBA == 0)
-
 #include "ExceptionList.h"
 #include "DII_Invocation.h"
 #include "tao/Object.h"
@@ -445,4 +443,3 @@ template class TAO_Pseudo_Object_Manager<CORBA_Request,CORBA_Request_var>;
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-#endif /* TAO_HAS_MINIMUM_CORBA */

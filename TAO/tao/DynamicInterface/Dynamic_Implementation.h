@@ -27,8 +27,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if (TAO_HAS_MINIMUM_CORBA == 0)
-
 #include "dynamicinterface_export.h"
 
 class TAO_DynamicInterface_Export TAO_DynamicImplementation 
@@ -83,6 +81,5 @@ protected:
   // Turns around and calls invoke.
 };
 
-#endif /* TAO_HAS_MINIMUM_CORBA */
 #include "ace/post.h"
 #endif /* TAO_DYNAMIC_IMPLEMENTATION_H */
