@@ -1069,7 +1069,10 @@ IDL_GlobalData::stripped_preproc_include (const char *name)
           // that *would* have been added for concatenation.
           char prefix_cap = this->idl_flags_[end - 1];
           size_t skip_slash = (prefix_cap != '\\' && prefix_cap != '/');
-          return c_name.substr (end - start + skip_slash).rep ();
+          char *retval = c_name.substr (end - start + skip_slash).rep ();
+
+          // The Sun preprocessor adds a concatenating slash no matter what.
+          return retval + (retval[0] == '/');
         }
     }
 
