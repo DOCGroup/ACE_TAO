@@ -51,6 +51,13 @@ class TAO_ServerRequest;
  * application.
  */
 class TAO_PortableServer_Export TAO_AMH_Response_Handler
+// @@ Mayur, this is not the correct way to use
+//    TAO_LocalRefCounted_Object.  Application code is supposed to use
+//    it when necessary.  You're forcing applications to use a
+//    reference counted version of their AMH_Response_Handler.  This
+//    isn't consistent with the specified semantics detailed in the
+//    CCM spec.  Please remove this and place it where appropriate in
+//    your AMH tests and examples.
   : virtual public TAO_Local_RefCounted_Object
 {
 public:

@@ -65,9 +65,37 @@ AMH_Servant::test_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
                                   ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  // @@ Mayur, the below Timer_Handler instance will leak if your
+  //    schedule_timer() call below fails (which you do not check
+  //    for).  If the schedule_timer() call fails, then you should
+  //    delete() the Timer_Handler instance.
+
   // Handler will 'kill' itself when it is done.
   Timer_Handler *handler = new Timer_Handler (send_time);
+
+  // @@ Mayur, why do you obtain the reactor each time this method is
+  //    called?  Why not just cache it once in the constructor.
+  //    Furthermore, you don't appear to need the ORB pseudo-reference
+  //    anything other than to obtain the Reactor.  Why not just
+  //    remove the cached ORB pseudo-reference altogether?
   ACE_Reactor *reactor = this->orb_->orb_core ()->reactor ();
+
+  // @@ Mayur, you never check the return value of the below
+  //    schedule_timer() call.
+
+  // @@ Mayur, it's not clear why you're passing a response handler
+  //    reference as the argument to the handle_timeout() method.
+  //    There doesn't appear any point in doing so since you create a
+  //    new Timer_Handler each time this method is executed.  Why
+  //    don't you just cache the reference in the Timer_Handler
+  //    itself inside a "_var"?  That way you can duplicate the
+  //    reference in the "right" place, i.e. the callee duplicate the
+  //    object reference if it wants to hold on to it, not the caller.
+  //    While this isn't strictly necessary since schedule_timer()
+  //    isn't an IDL-defined method, it does make the code clearer for
+  //    those who understand the C++ mapping.  Doing so also helps
+  //    close a potential memory leak that can occur if the below
+  //    schedule_timer() call fails (which you do not check for!).
 
   // We assume the schedule_timer method is thread-safe
   reactor->schedule_timer (handler,
@@ -86,6 +114,7 @@ AMH_Servant::start_test (Test::AMH_RoundtripResponseHandler_ptr _tao_rh
                          ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  // @@ Mayur you're not passing the emulated exception parameter.
   _tao_rh->start_test ();
 }
 
@@ -94,6 +123,7 @@ AMH_Servant::end_test (Test::AMH_RoundtripResponseHandler_ptr _tao_rh
                          ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  // @@ Mayur you're not passing the emulated exception parameter.
   _tao_rh->end_test ();
 }
 

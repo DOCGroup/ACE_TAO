@@ -13,6 +13,11 @@
 #include "tao/Strategies/advanced_resource.h"
 
 
+// @@ Mayur, please do not program like a Java programmer.  Please
+//    move the class declaration to a separate header file, and keep
+//    the implementation code in another file preferrably separate
+//    from this one.
+
 // Helper class for common client functionalities
 class Client_Task : public ACE_Task_Base
 {
@@ -20,6 +25,8 @@ public:
   /// Constructor
   Client_Task (int argc, char ** argv);
 
+  // @@ Mayur, empty parameter lists should be denoted with "(void)",
+  //    not "()".  Again, this is detailed in the guidelines.
   int parse_args ();
 
   void try_RT_scheduling (void);
@@ -112,6 +119,8 @@ Client_Task::try_RT_scheduling (void)
                                               priority,
                                               ACE_SCOPE_PROCESS)) != 0)
     {
+      // @@ Mayur, is there some reason why you don't just check
+      //    errno?  ACE_OS::last_error() seems to be unnecessary.
       if (ACE_OS::last_error () == EPERM)
         {
           ACE_DEBUG ((LM_DEBUG,
@@ -151,7 +160,10 @@ Client_Task::narrow_servant (void)
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception caught trying to narrow servant \n");
+      // @@ Mayur, what use is there in placing a space before a
+      //    newline character?
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "Exception caught trying to narrow servant \n");
       return 0;
     }
   ACE_ENDTRY;
@@ -186,20 +198,20 @@ Client_Task::run_test (void)
     }
   ACE_ENDTRY;
 
-  
+
   // High resolution timer calibration
   ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
 
   ACE_Basic_Stats totals;
-  
+
   this->accumulate_and_dump (totals, "Task", gsf);
-  
+
   totals.dump_results ("Total", gsf);
-  
+
   ACE_Throughput_Stats::dump_throughput ("Total", gsf,
                                          test_end - test_start,
                                          totals.samples_count ());
-  
+
   return 1;
 }
 
