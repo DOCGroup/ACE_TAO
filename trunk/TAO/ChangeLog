@@ -1,3 +1,12 @@
+Mon Dec 29 11:02:16 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/Bug_1568_Regression/Makefile.bor:
+	* tests/Bug_1568_Regression/client.bor:
+	* tests/Bug_1568_Regression/server.bor:
+	* tests/Makefile.bor:
+	
+	  Updated borland files.
+
 Mon Dec 29 10:52:04 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/Bug_1568_Regression/Bug_1568_Regression.mpc:
