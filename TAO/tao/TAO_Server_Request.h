@@ -214,8 +214,10 @@ public:
   // Get the operation details for the current request.
   TAO_Operation_Details const * operation_details (void) const;
 
-  /// Get/Set operations for the argument_flag
+  /// Set the argument_flag
   void argument_flag (CORBA::Boolean flag);
+
+  /// Get the argument_flag
   CORBA::Boolean argument_flag (void);
 
   /// Returns @c true if the current request is collocated.

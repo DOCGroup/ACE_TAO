@@ -1,3 +1,44 @@
+Mon Mar 07 18:50:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+          Most changes below are for fixing some problems with through POA
+          collocation. With the skeleton refactoring the invocation path
+          is changed and we pass through the POA. It can happen that in the
+          server code a user exception is thrown and this must be passed
+          back to the client which is collocated. We now go through several
+          TAO classes which had a throw specification of CORBA::SystemException.
+          When this is declared then we can only throw system exceptions and
+          the user exception we rethrowed caused the TAO unexpected exception
+          handler to be invoked and then an unknown exception was thrown
+          instead of the user exception. We removed the throw specification
+          for the methods involved, that way the user exception is passed
+          correctly to the client. When you get an unknown exception in the
+          client in a collocated case, then look for methods in the invocation
+          path that have a throw specification and remove it.
+
+        * tao/Adapter.h:
+        * tao/Adapter_Registry.{h,cpp}:
+        * tao/Request_Dispatcher.{h,cpp}:
+        * tao/PortableServer/Object_Adapter.{h,cpp}:
+          Removed ACE_THROW_SPEC for the dispatch method
+
+        * tao/Collocated_Invocation.{h,cpp}:
+          Removed ACE_THROW_SPEC for the invoke method
+
+        * tao/Service_Context.h:
+          Declared private copy constructor/assignment operator. We don't
+          want to risk that we copy this by accident with a deep copy, costs
+          too much performance
+
+        * tao/TAO_Server_Request.h:
+          Doxygen changes
+
+        * tao/TAO_Server_Request.i:
+          In the collocated case we have set the operation_details_, at
+          that moment get the reply/request service context from the
+          operation_details instead from our own members.
+
+          This is the last bugfix for bugzilla bug 586
+
 Mon Mar 07 14:26:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/IdAssignmentStrategyFactoryImpl.cpp:
