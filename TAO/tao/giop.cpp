@@ -726,12 +726,14 @@ TAO_GIOP_Invocation::invoke (CORBA::ExceptionList &exceptions,
                              CORBA::Environment &env)
 {
   // Send Request, return on error or if we're done
-
   TAO_SVC_HANDLER *handler = this->handler_;
 
-  if (TAO_GIOP::send_request (handler, this->stream_) == 0)
+  if (TAO_GIOP::send_request (handler, this->stream_) == CORBA::B_FALSE)
     {
-      // send_request () closed the connection; we just release it here.
+      // send_request () closed the connection; we just set the
+      // handler to 0 here.
+      this->handler_ = 0;
+
       //
       // XXX highly desirable to know whether we wrote _any_ data; if
       // we wrote none, then there's no chance the call completed and
