@@ -1682,34 +1682,34 @@ struct cancel_state
 
 typedef DWORD  nlink_t;
 
-// CE's add-on for c-style fstat/stat functionalities.
-// This struct is by no mean complete compared to
-// what you usually find in UNIX platforms.
-// Only members that have direct conversion using Win32's
-// BY_HANDLE_FILE_INFORMATION are defined so that users
-// can discover non-supported members at compile time.
-// Time values are of type ACE_Time_Value for easy comparison.
+// CE's add-on for c-style fstat/stat functionalities.  This struct is
+// by no mean complete compared to what you usually find in UNIX
+// platforms.  Only members that have direct conversion using Win32's
+// BY_HANDLE_FILE_INFORMATION are defined so that users can discover
+// non-supported members at compile time.  Time values are of type
+// ACE_Time_Value for easy comparison.
 
-struct stat {
-  //  mode_t   st_mode;              /* UNIX styled file attribute */
-  //  nlink_t  st_nlink;             /* number of hard links */
-  ACE_Time_Value st_atime;       /* time of last access */
-  ACE_Time_Value st_mtime;       /* time of last data modification */
-  off_t    st_size;              /* file size, in bytes */
-  //  u_long   st_blksize;           /* optimal blocksize for I/O */
-  //  u_long   st_flags;             /* user defined flags for file */
+struct stat 
+{
+  //  mode_t   st_mode;    // UNIX styled file attribute 
+  //  nlink_t  st_nlink;   // number of hard links 
+  ACE_Time_Value st_atime; // time of last access 
+  ACE_Time_Value st_mtime; // time of last data modification 
+  off_t st_size;           // file size, in bytes 
+  //  u_long   st_blksize; // optimal blocksize for I/O
+  //  u_long   st_flags;   // user defined flags for file
 };
 
 # else /* ! ACE_HAS_WINCE */
 #   if defined (ACE_LACKS_SYS_TYPES_H)
 #     if ! defined (ACE_PSOS)
   typedef unsigned char u_char;
-  typedef unsigned short        u_short;
-  typedef unsigned int  u_int;
+  typedef unsigned short u_short;
+  typedef unsigned int u_int;
   typedef unsigned long u_long;
 
   typedef unsigned char uchar_t;
-  typedef unsigned short        ushort_t;
+  typedef unsigned short ushort_t;
   typedef unsigned int  uint_t;
   typedef unsigned long ulong_t;
 #     endif /* ! defined (ACE_PSOS) */
