@@ -407,6 +407,8 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::~ACE_Cach
   if (this->delete_lock_)
     delete this->lock_;
 
+  delete this->reverse_lock_;
+
   if (this->delete_creation_strategy_)
     delete this->creation_strategy_;
   this->delete_creation_strategy_ = 0;
@@ -424,7 +426,7 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::~ACE_Cach
 
   // Close down all cached service handlers.
   CONNECTION_MAP_ENTRY *entry;
-  for (CONNECTION_MAP_ITERATOR iterator (connection_cache_);
+  for (CONNECTION_MAP_ITERATOR iterator (connection_map_);
        iterator.next (entry);
        iterator.advance ())
     {
@@ -626,7 +628,7 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::find_or_c
       else
         {
           // Insert the new SVC_HANDLER instance into the cache.
-          if (this->connection_cache_.bind (search_addr,
+          if (this->connection_map_.bind (search_addr,
                                             sh,
                                             entry) == -1)
             return -1;
@@ -924,7 +926,7 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::purge_i (
   // The wonders and perils of ACT
   CONNECTION_MAP_ENTRY *entry = (CONNECTION_MAP_ENTRY *) recycling_act;
 
-  return this->connection_cache_.unbind (entry);
+  return this->connection_map_.unbind (entry);
 }
 
 template<class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class MUTEX> int
@@ -1008,14 +1010,14 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::find (ACE
                                        ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDRESS>,
                                        ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDRESS>,
                                        ACE_Null_Mutex>
-    CONNECTION_CACHE_BUCKET_ITERATOR;
+    CONNECTION_MAP_BUCKET_ITERATOR;
 
-  CONNECTION_CACHE_BUCKET_ITERATOR iterator (this->connection_cache_,
-                                             search_addr);
+  CONNECTION_MAP_BUCKET_ITERATOR iterator (this->connection_map_,
+                                           search_addr);
 
-  CONNECTION_CACHE_BUCKET_ITERATOR end (this->connection_cache_,
-                                        search_addr,
-                                        1);
+  CONNECTION_MAP_BUCKET_ITERATOR end (this->connection_map_,
+                                      search_addr,
+                                      1);
 
   for (;
        iterator != end;

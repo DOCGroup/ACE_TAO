@@ -851,7 +851,7 @@ protected:
                                      int perms,
                                      int &found);
 
-  CONNECTION_MAP connection_cache_;
+  CONNECTION_MAP connection_map_;
   // Table that maintains the cache of connected <SVC_HANDLER>s.
 
   MUTEX *lock_;

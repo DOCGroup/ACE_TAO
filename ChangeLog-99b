@@ -1,3 +1,21 @@
+Wed Jul 21 18:38:00 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Strategies_T.h (ACE_Cached_Connect_Strategy): Renamed
+	  <connection_cache_> to <connection_map_>.
+
+	* ace/Hash_Cache_Map_Manager_T.cpp (find): Finding and updating
+	  the attributes is faster through the find() that uses an entry.
+	  Therefore, for find (key, value) and find (key) we go to
+	  find (key, entry) instead of going to the base class.
+
+	* ace/Cached_Connect_Strategy_T.cpp:
+
+	  - ACE_Cached_Connect_Strategy_Ex::check_hint_i
+	  - ACE_Cached_Connect_Strategy_Ex::find
+
+	  Update the caching attributes directly since we don't do a
+	  find() on the cache map.
+
 Wed Jul 21 15:54:25 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * ace/DLL.cpp: ACE_HAS_MOSTLY_UNICODE_APIS fixes.

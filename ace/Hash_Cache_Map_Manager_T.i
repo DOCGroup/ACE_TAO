@@ -8,7 +8,7 @@ template <T_1> ACE_INLINE int
 ACE_Hash_Cache_Map_Manager<T_2>::bind (const KEY &key,
                                        const VALUE &value)
 {
-  return ACE_HCMM_BASE::bind (key, 
+  return ACE_HCMM_BASE::bind (key,
                               value);
 }
 
@@ -16,8 +16,8 @@ template <T_1> ACE_INLINE int
 ACE_Hash_Cache_Map_Manager<T_2>::rebind (const KEY &key,
                                          const VALUE &value)
 {
-  return ACE_HCMM_BASE::rebind (key, 
-                                value);                      
+  return ACE_HCMM_BASE::rebind (key,
+                                value);
 }
 
 template <T_1> ACE_INLINE int
@@ -25,7 +25,7 @@ ACE_Hash_Cache_Map_Manager<T_2>::rebind (const KEY &key,
                                          const VALUE &value,
                                          VALUE &old_value)
 {
-  return ACE_HCMM_BASE::rebind (key, 
+  return ACE_HCMM_BASE::rebind (key,
                                 value,
                                 old_value);
 }
@@ -48,20 +48,6 @@ ACE_Hash_Cache_Map_Manager<T_2>::trybind (const KEY &key,
 {
   return ACE_HCMM_BASE::trybind (key,
                                  value);
-}
-
-template <T_1> ACE_INLINE int
-ACE_Hash_Cache_Map_Manager<T_2>::find (const KEY &key,
-                                       VALUE &value)
-{
-  return ACE_HCMM_BASE::find (key,
-                              value);
-}
-
-template <T_1> ACE_INLINE int
-ACE_Hash_Cache_Map_Manager<T_2>::find (const KEY &key)
-{
-  return ACE_HCMM_BASE::find (key);
 }
 
 template <T_1> ACE_INLINE int

@@ -230,8 +230,6 @@ template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE int
 ACE_LFU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::notify_find (int result,
                                                                     ATTRIBUTES &attr)
 {
-  ACE_UNUSED_ARG (attr);
-
   if (result == 0)
     ++attr;
 
@@ -255,6 +253,7 @@ ACE_LFU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::notify_rebind (int result
 
   return result;
 }
+
 template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE int
 ACE_LFU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::notify_unbind (int result,
                                                                       const ATTRIBUTES &attr)
@@ -286,6 +285,7 @@ ACE_FIFO_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::attributes (void)
 {
   return this->order_;
 }
+
 template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE double
 ACE_FIFO_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::purge_percent (void)
 {
@@ -309,7 +309,6 @@ ACE_FIFO_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::notify_bind (int result,
 
   return result;
 }
-
 
 template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE int
 ACE_FIFO_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::notify_find (int result,
