@@ -12,8 +12,11 @@ ACE_RCSID(DLL, test_dll, "$Id$")
 typedef Magazine* (*Magazine_Creator) (void);
   
 int 
-main (void)
+main (int argc, char *argv[])
 {
+  ACE_UNUSED_ARG (argc);
+  ACE_UNUSED_ARG (argv);
+
   ACE_DLL dll;
 
   int retval = dll.open ("./" ACE_DLL_PREFIX "Today" ACE_DLL_SUFFIX);
