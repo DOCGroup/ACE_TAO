@@ -1792,10 +1792,11 @@ ACE_OS::mutex_lock (ACE_mutex_t *m)
   switch (m->type_)
     {
     case USYNC_PROCESS:
-      // Timeout can't occur, so don't bother checking...
-
       switch (::WaitForSingleObject (m->proc_mutex_, INFINITE))
         {
+          //
+          // Timeout can't occur, so don't bother checking...
+          //
         case WAIT_OBJECT_0:
         case WAIT_ABANDONED:
           // We will ignore abandonments in this method
@@ -1842,10 +1843,11 @@ ACE_OS::mutex_lock (ACE_mutex_t *m,
   switch (m->type_)
     {
     case USYNC_PROCESS:
-      // Timeout can't occur, so don't bother checking...
-
       switch (::WaitForSingleObject (m->proc_mutex_, INFINITE))
         {
+          //
+          // Timeout can't occur, so don't bother checking...
+          //
         case WAIT_OBJECT_0:
           return 0;
         case WAIT_ABANDONED:
@@ -2028,10 +2030,8 @@ ACE_OS::mutex_lock (ACE_mutex_t *m,
   switch (m->type_)
     {
     case USYNC_PROCESS:
-      // Timeout can't occur, so don't bother checking...
-
-      // @@ Irfan, can you please make sure this is correct?
-      switch (::WaitForSingleObject (m->proc_mutex_, timeout.msec ()))
+      switch (::WaitForSingleObject (m->proc_mutex_,
+                                     timeout.msec ()))
         {
         case WAIT_OBJECT_0:
         case WAIT_ABANDONED:
@@ -2047,8 +2047,7 @@ ACE_OS::mutex_lock (ACE_mutex_t *m,
           return -1;
         }
     case USYNC_THREAD:
-      // @@ Irfan, can you please check this out to see if it's supported by Win32 CRITICAL_SECTIONS?
-      return ACE_NOTSUP_RETURN (-1);
+      ACE_NOTSUP_RETURN (-1);
     default:
       errno = EINVAL;
       return -1;
