@@ -89,17 +89,28 @@ ACE_TMAIN (int, ACE_TCHAR *[])
       }
     ACE_ASSERT (it1.done ());
     ACE_ASSERT (it2.done ());
+    // Verify that a set may be emptied while an iterator on the set is
+    // in-scope but inactive:
+    ubs.reset ();
+    // Restore original set from ubs2
+    ubs = ubs2;
   }
 
   // Selective deletion of elements and element retrieval.
   {
-    MySet::iterator end = ubs2.end();
+    MySet::iterator it (ubs2);
     int deleted = 0;
-    for (MySet::iterator i = ubs2.begin (); i != end; i++)
+    while (! it.done ())
       {
-        if ((*i).k % 2 == 1)
+        MyNode n = *it;
+        it.advance ();  /* Being friendly here: Move the iterator on
+                           so that element removal does not interfere
+                           with the current iterator position.
+                           The less friendly case, removal under the
+                           current iterator position, is below.  */
+        if (n.k % 2 == 1)
           {
-            r = ubs2.remove (*i);
+            r = ubs2.remove (n);
             deleted++;
           }
       }
@@ -111,7 +122,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
     MyNode node3 (3);
     ACE_ASSERT (ubs2.find (node3) != 0);
 
-    ubs2.insert(node3);
+    ubs2.insert (node3);
   }
 
   size_t s = count_const_set (ubs);
