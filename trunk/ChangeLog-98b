@@ -10,7 +10,7 @@ Fri Jun 19 22:17:35 1998  David L. Levine  <levine@cs.wustl.edu>
           as releases, that are added to these directories.
 
           Filter ^U from checkout output, so that release need not be
-          based on the latest repository versions.  Instead the release
+          based on the latest repository versions.  Instead, the release
           is based on the contents of the /project/adapative/ACE_wrappers
           workspace.  It need not be brought up-to-date with the repository,
           though it cannot contain any modified files.  This change allows
