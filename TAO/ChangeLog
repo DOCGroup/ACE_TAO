@@ -1,3 +1,10 @@
+Fri Mar  7 17:20:24 2003  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/tests/InterfaceRepo/Application_Test/ifr_dii_client.cpp
+          (lookup_interface_def): Replaced several ACE_CHECK; macros with
+          ACE_CHECK_RETURN (-1); so that the non-exception builds don't
+          complain about not returning a value.
+
 Fri Mar  7 14:17:10 2003  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/Param_Test/svc.conf.xml: I neglected add the change for
