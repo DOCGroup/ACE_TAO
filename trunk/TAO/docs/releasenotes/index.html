@@ -276,7 +276,7 @@ WFMO_Reactor_Test, Timer_Cancellation_Test</ul>
 <h3>
 <a NAME="idl"></a>IDL Compiler</h3>
 Point of contact: <a href="mailto:j.parsons@vanderbilt.edu">Jeff Parsons</a>
-<p>Current status: (As of July 6, 2004.)
+<p>Current status: (As of August 14, 2004.)
 <ul>
 <li>
 Generated code closely follows the C++ Mapping specified in the latest
@@ -626,6 +626,15 @@ changed. Instead of spawning a separate process for each IDL file, the
 IDL compiler now processes the files sequentially in a single process.
 Note that, for each file, execution of the preprocessor spawns a new
 process, as it always has.
+</li>
+
+<li>
+Added command line option -Sm to suppress the action of CCM preprocessing
+visitor, which is by default launched before the C++ generating visitors,
+in order to add CCM equivalent IDL to the AST. There is a new tool in CIAO
+which converts IDL files by replacing IDL3 constructs with equivalent IDL2
+constructs, and if the IDL compiler is run on these files, we do not want
+the CCM preprocessing to occur.
 </li>
 </ul>
 

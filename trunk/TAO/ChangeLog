@@ -1,3 +1,14 @@
+Sun Aug 15 18:07:04 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * docs/compiler.html:
+        * docs/releasenotes/index.html:
+        
+          Added items for a new IDL compiler command line option -Sm, that
+          disables the visitor that converts IDL3 constructs to the
+          equivalent IDL2. This option is for use in IDL files where such 
+          conversions are already present explicitly, for example if the
+          IDL file is the product of a converstion tool.
+
 Sat Aug 14 20:21:34 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_OpenSSL_st_T.h (OpenSSL_traits):
