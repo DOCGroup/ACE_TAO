@@ -1,3 +1,17 @@
+Wed Mar 30 19:51:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* orbsvcs/orbsvcs/SSLIOP/ssl_endpoints.{h,cpp,i}:
+	  Removed these generated files, replaced with the new files below
+
+	* orbsvcs/orbsvcs/SSLIOP/ssl_endpoints.pidl:
+	  Updated regeneration instructions
+
+	* orbsvcs/orbsvcs/SSLIOP/ssl_endpointsC.{h,cpp,inl}:
+	  New generated files
+
+	* orbsvcs/orbsvcs/Makefile.am:
+	  Updated for change above
+
 Wed Mar 30 11:41:53 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:

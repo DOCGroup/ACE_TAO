@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:302
+// be\be_codegen.cpp:291
 
 
 #include "htiop_endpointsC.h"
@@ -37,7 +37,6 @@
 #include "tao/Sequence_TypeCode.h"
 #include "tao/String_TypeCode.h"
 #include "tao/Struct_TypeCode.h"
-#include "tao/Any_Dual_Impl_T.h"
 
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
@@ -82,15 +81,7 @@ static TAO::TypeCode::Struct<char const *,
 // TAO_IDL - Generated from 
 // be\be_visitor_structure/structure_cs.cpp:68
 
-void 
-HTIOP_Endpoint_Info::_tao_any_destructor (
-    void *_tao_void_pointer
-  )
-{
-  HTIOP_Endpoint_Info *_tao_tmp_pointer =
-    static_cast<HTIOP_Endpoint_Info *> (_tao_void_pointer);
-  delete _tao_tmp_pointer;
-}
+
 
 // TAO_IDL - Generated from 
 // be\be_visitor_sequence/sequence_cs.cpp:65
@@ -134,15 +125,6 @@ HTIOPEndpointSequence::HTIOPEndpointSequence (
 HTIOPEndpointSequence::~HTIOPEndpointSequence (void)
 {}
 
-void HTIOPEndpointSequence::_tao_any_destructor (
-    void * _tao_void_pointer
-  )
-{
-  HTIOPEndpointSequence * _tao_tmp_pointer =
-    static_cast<HTIOPEndpointSequence *> (_tao_void_pointer);
-  delete _tao_tmp_pointer;
-}
-
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
@@ -178,122 +160,6 @@ static TAO::TypeCode::Alias<char const *,
   
 ::CORBA::TypeCode_ptr const _tc_HTIOPEndpointSequence =
   &_tao_tc_HTIOPEndpointSequence;
-
-// TAO_IDL - Generated from 
-// be\be_visitor_structure/any_op_cs.cpp:54
-
-// Copying insertion.
-void operator<<= (
-    CORBA::Any &_tao_any,
-    const HTIOP_Endpoint_Info &_tao_elem
-  )
-{
-  TAO::Any_Dual_Impl_T<HTIOP_Endpoint_Info>::insert_copy (
-      _tao_any,
-      HTIOP_Endpoint_Info::_tao_any_destructor,
-      _tc_HTIOP_Endpoint_Info,
-      _tao_elem
-    );
-}
-
-// Non-copying insertion.
-void operator<<= (
-    CORBA::Any &_tao_any,
-    HTIOP_Endpoint_Info *_tao_elem
-  )
-{
-  TAO::Any_Dual_Impl_T<HTIOP_Endpoint_Info>::insert (
-      _tao_any,
-      HTIOP_Endpoint_Info::_tao_any_destructor,
-      _tc_HTIOP_Endpoint_Info,
-      _tao_elem
-    );
-}
-
-// Extraction to non-const pointer (deprecated).
-CORBA::Boolean operator>>= (
-    const CORBA::Any &_tao_any,
-    HTIOP_Endpoint_Info *&_tao_elem
-  )
-{
-  return _tao_any >>= const_cast<
-      const HTIOP_Endpoint_Info *&> (
-      _tao_elem
-    );
-}
-
-// Extraction to const pointer.
-CORBA::Boolean operator>>= (
-    const CORBA::Any &_tao_any,
-    const HTIOP_Endpoint_Info *&_tao_elem
-  )
-{
-  return
-    TAO::Any_Dual_Impl_T<HTIOP_Endpoint_Info>::extract (
-        _tao_any,
-        HTIOP_Endpoint_Info::_tao_any_destructor,
-        _tc_HTIOP_Endpoint_Info,
-        _tao_elem
-      );
-}
-
-// TAO_IDL - Generated from 
-// be\be_visitor_sequence/any_op_cs.cpp:54
-
-// Copying insertion.
-void operator<<= (
-    CORBA::Any &_tao_any,
-    const HTIOPEndpointSequence &_tao_elem
-  )
-{
-  TAO::Any_Dual_Impl_T<HTIOPEndpointSequence>::insert_copy (
-      _tao_any,
-      HTIOPEndpointSequence::_tao_any_destructor,
-      TAO::TypeCode::tc_HTIOPEndpointSequence_0,
-      _tao_elem
-    );
-}
-
-// Non-copying insertion.
-void operator<<= (
-    CORBA::Any &_tao_any,
-    HTIOPEndpointSequence *_tao_elem
-  )
-{
-  TAO::Any_Dual_Impl_T<HTIOPEndpointSequence>::insert (
-      _tao_any,
-      HTIOPEndpointSequence::_tao_any_destructor,
-      TAO::TypeCode::tc_HTIOPEndpointSequence_0,
-      _tao_elem
-    );
-}
-
-// Extraction to non-const pointer (deprecated).
-CORBA::Boolean operator>>= (
-    const CORBA::Any &_tao_any,
-    HTIOPEndpointSequence *&_tao_elem
-  )
-{
-  return _tao_any >>= const_cast<
-      const HTIOPEndpointSequence *&> (
-      _tao_elem
-    );
-}
-
-// Extraction to const pointer.
-CORBA::Boolean operator>>= (
-    const CORBA::Any &_tao_any,
-    const HTIOPEndpointSequence *&_tao_elem
-  )
-{
-  return
-    TAO::Any_Dual_Impl_T<HTIOPEndpointSequence>::extract (
-        _tao_any,
-        HTIOPEndpointSequence::_tao_any_destructor,
-        TAO::TypeCode::tc_HTIOPEndpointSequence_0,
-        _tao_elem
-      );
-}
 
 // TAO_IDL - Generated from
 // be\be_visitor_structure/cdr_op_cs.cpp:61
