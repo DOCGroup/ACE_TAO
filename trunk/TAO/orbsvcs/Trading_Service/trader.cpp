@@ -15,18 +15,13 @@
 // ======================================================================= 
 
 #include "tao/corba.h"
-#include "tao/orbobj.h"
-#include "orbsvcs/CosNamingC.h"
-#include "orbsvcs/Naming/Ior_Multicast.h"
+#include "ace/Auto_Ptr.h"
+#include "orbsvcs/IOR_Multicast.h"
 #include "orbsvcs/Trader/Trader.h"
 #include "orbsvcs/Trader/Service_Type_Repository.h"
 
-const char* service_name = "TradingService";
-
-typedef TAO_Trader<ACE_Null_Mutex, ACE_Null_Mutex> TRADER;
-typedef TAO_Service_Type_Repository<ACE_Null_Mutex> TYPE_REPOS;
-
-int main(int argc, char * const *argv)
+int
+main(int argc, char * const *argv)
 { 
   TAO_TRY
     {      
@@ -45,17 +40,17 @@ int main(int argc, char * const *argv)
       PortableServer::POA_var root_poa =
 	PortableServer::POA::_narrow (poa_object.in (), TAO_TRY_ENV);
       TAO_CHECK_ENV;
-
+      
       PortableServer::POAManager_var poa_manager =
 	root_poa->the_POAManager (TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       // Create a Service Type Repository and a Trader Object.
-      TYPE_REPOS type_repos;
-      TRADER trader ((TRADER::Trader_Components)
-		     (TRADER::LOOKUP | TRADER::REGISTER | TRADER::ADMIN)); 
-      TAO_Support_Attributes_Impl& sup_attr = trader.support_attributes ();
-      TAO_Trading_Components_Impl& trd_comp = trader.trading_components ();
+      TAO_Service_Type_Repository type_repos;
+      auto_ptr<TAO_Trader_Factory::TAO_TRADER> trader =
+	TAO_Trader_Factory::create_linked_trader ();
+      TAO_Support_Attributes_Impl& sup_attr = trader->support_attributes ();
+      TAO_Trading_Components_Impl& trd_comp = trader->trading_components ();
 
       // Set the service type repository
       sup_attr.type_repos (type_repos._this (TAO_TRY_ENV));
@@ -89,11 +84,11 @@ int main(int argc, char * const *argv)
 	orb->object_to_string (lookup.in (), TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      // Instantiate a server which will receive requests for an ior
-      IOR_Multicast ior_multicast ((char *) trading_ior.in (),
-				   port,
-				   ACE_DEFAULT_MULTICAST_ADDR,
-				   TAO_SERVICEID_TRADINGSERVICE);
+      // Instantiate a server that will receive requests for an ior
+      TAO_IOR_Multicast ior_multicast ((char *) trading_ior.in (),
+				       port,
+				       ACE_DEFAULT_MULTICAST_ADDR,
+				       TAO_SERVICEID_TRADINGSERVICE);
       
       // Register event handler for the ior multicast.
       if (reactor->register_handler (&ior_multicast,
@@ -103,6 +98,10 @@ int main(int argc, char * const *argv)
       else
 	ACE_DEBUG ((LM_DEBUG,
                     "The multicast server setup is done.\n"));
+#else  /* ACE_HAS_IP_MULTICAST */
+
+      // Should dump the IOR somewhere.
+      
 #endif /* ACE_HAS_IP_MULTICAST */
 
       
