@@ -470,7 +470,8 @@ CORBA_PolicyList * CORBA_PolicyManager::get_policy_overrides (
   )
 {
   CORBA_PolicyList* _tao_retval = 0;
-  ACE_UNUSED_ARG(_tao_retval);
+  ACE_UNUSED_ARG (_tao_retval);
+  ACE_UNUSED_ARG (ts);
   ACE_THROW_RETURN (CORBA::MARSHAL (), _tao_retval);
 }
 
@@ -480,6 +481,9 @@ void CORBA_PolicyManager::set_policy_overrides (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
+  ACE_UNUSED_ARG (policies);
+  ACE_UNUSED_ARG (set_add);
+
   ACE_THROW (CORBA::MARSHAL ());
 }
 

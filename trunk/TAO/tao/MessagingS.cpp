@@ -63,7 +63,7 @@ void* POA_Messaging::RebindPolicy::_downcast (
   return 0;
 }
 
-void POA_Messaging::RebindPolicy::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
+void POA_Messaging::RebindPolicy::_dispatch (CORBA::ServerRequest & /* req */, void * /* context */, CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_THROW (CORBA_BAD_OPERATION ());
 }
@@ -160,7 +160,7 @@ void* POA_Messaging::SyncScopePolicy::_downcast (
   return 0;
 }
 
-void POA_Messaging::SyncScopePolicy::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
+void POA_Messaging::SyncScopePolicy::_dispatch (CORBA::ServerRequest & /* req */, void * /* context */, CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_THROW (CORBA_BAD_OPERATION ());
 }
@@ -257,7 +257,7 @@ void* POA_Messaging::RequestPriorityPolicy::_downcast (
   return 0;
 }
 
-void POA_Messaging::RequestPriorityPolicy::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
+void POA_Messaging::RequestPriorityPolicy::_dispatch (CORBA::ServerRequest & /* req */, void * /* context */, CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_THROW (CORBA_BAD_OPERATION ());
 }
@@ -354,7 +354,7 @@ void* POA_Messaging::ReplyPriorityPolicy::_downcast (
   return 0;
 }
 
-void POA_Messaging::ReplyPriorityPolicy::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
+void POA_Messaging::ReplyPriorityPolicy::_dispatch (CORBA::ServerRequest & /* req */, void * /* context */, CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_THROW (CORBA_BAD_OPERATION ());
 }
@@ -451,7 +451,7 @@ void* POA_Messaging::RequestStartTimePolicy::_downcast (
   return 0;
 }
 
-void POA_Messaging::RequestStartTimePolicy::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
+void POA_Messaging::RequestStartTimePolicy::_dispatch (CORBA::ServerRequest & /* req */, void * /* context */, CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_THROW (CORBA_BAD_OPERATION ());
 }
@@ -548,7 +548,7 @@ void* POA_Messaging::RequestEndTimePolicy::_downcast (
   return 0;
 }
 
-void POA_Messaging::RequestEndTimePolicy::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
+void POA_Messaging::RequestEndTimePolicy::_dispatch (CORBA::ServerRequest & /* req */, void * /* context */, CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_THROW (CORBA_BAD_OPERATION ());
 }
@@ -645,7 +645,7 @@ void* POA_Messaging::ReplyStartTimePolicy::_downcast (
   return 0;
 }
 
-void POA_Messaging::ReplyStartTimePolicy::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
+void POA_Messaging::ReplyStartTimePolicy::_dispatch (CORBA::ServerRequest & /* req */, void * /* context */, CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_THROW (CORBA_BAD_OPERATION ());
 }
@@ -742,7 +742,7 @@ void* POA_Messaging::ReplyEndTimePolicy::_downcast (
   return 0;
 }
 
-void POA_Messaging::ReplyEndTimePolicy::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
+void POA_Messaging::ReplyEndTimePolicy::_dispatch (CORBA::ServerRequest & /* req */, void * /* context */, CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_THROW (CORBA_BAD_OPERATION ());
 }
@@ -839,7 +839,7 @@ void* POA_Messaging::RelativeRequestTimeoutPolicy::_downcast (
   return 0;
 }
 
-void POA_Messaging::RelativeRequestTimeoutPolicy::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
+void POA_Messaging::RelativeRequestTimeoutPolicy::_dispatch (CORBA::ServerRequest & /* req */, void * /* context */, CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_THROW (CORBA_BAD_OPERATION ());
 }
@@ -936,7 +936,7 @@ void* POA_Messaging::RelativeRoundtripTimeoutPolicy::_downcast (
   return 0;
 }
 
-void POA_Messaging::RelativeRoundtripTimeoutPolicy::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
+void POA_Messaging::RelativeRoundtripTimeoutPolicy::_dispatch (CORBA::ServerRequest & /* req */, void * /* context */, CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_THROW (CORBA_BAD_OPERATION ());
 }
@@ -1033,7 +1033,7 @@ void* POA_Messaging::RoutingPolicy::_downcast (
   return 0;
 }
 
-void POA_Messaging::RoutingPolicy::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
+void POA_Messaging::RoutingPolicy::_dispatch (CORBA::ServerRequest & /* req */, void * /* context */, CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_THROW (CORBA_BAD_OPERATION ());
 }
@@ -1130,7 +1130,7 @@ void* POA_Messaging::MaxHopsPolicy::_downcast (
   return 0;
 }
 
-void POA_Messaging::MaxHopsPolicy::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
+void POA_Messaging::MaxHopsPolicy::_dispatch (CORBA::ServerRequest & /* req */, void * /* context */, CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_THROW (CORBA_BAD_OPERATION ());
 }
@@ -1227,7 +1227,7 @@ void* POA_Messaging::QueueOrderPolicy::_downcast (
   return 0;
 }
 
-void POA_Messaging::QueueOrderPolicy::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
+void POA_Messaging::QueueOrderPolicy::_dispatch (CORBA::ServerRequest & /* req */, void * /* context */, CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_THROW (CORBA_BAD_OPERATION ());
 }
@@ -1321,7 +1321,7 @@ void* POA_Messaging::ReplyHandler::_downcast (
   return 0;
 }
 
-void POA_Messaging::ReplyHandler::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
+void POA_Messaging::ReplyHandler::_dispatch (CORBA::ServerRequest & /* req */, void * /* context */, CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_THROW (CORBA_BAD_OPERATION ());
 }
@@ -1728,7 +1728,7 @@ void* POA_Messaging::Poller::_downcast (
   return 0;
 }
 
-void POA_Messaging::Poller::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
+void POA_Messaging::Poller::_dispatch (CORBA::ServerRequest & /* req */, void * /* context */, CORBA::Environment &ACE_TRY_ENV)
 {
   TAO_Skeleton skel; // pointer to skeleton for operation
   const char *opname = req.operation (); // retrieve operation name
