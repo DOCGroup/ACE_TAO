@@ -1,3 +1,11 @@
+Thu May 27 10:05:28 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Managed_Types.i:
+	  Fixed initialization of TAO_String_Manager, unfortunately we
+	  still don't have a portable fix for TAO_WString_Manager.
+	  Thanks to Tim Stack <stack@cs.utah.edu> for reporting this
+	  problem.
+
 Thu May 27 09:55:10 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_argument/compiled_marshal_ss.cpp:
