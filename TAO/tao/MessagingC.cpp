@@ -1573,7 +1573,7 @@ Messaging::ExceptionHolder_init::tao_repository_id ()
 
 
 ///////////////////////////////////////////////////////////////////////
-//                Base & Remote Proxy  Implementation. 
+//                Base & Remote Proxy  Implementation.
 //
 
 Messaging::_TAO_ReplyHandler_Proxy_Impl::~_TAO_ReplyHandler_Proxy_Impl (void)
@@ -1583,7 +1583,7 @@ Messaging::_TAO_ReplyHandler_Remote_Proxy_Impl::~_TAO_ReplyHandler_Remote_Proxy_
 {}
 
 //
-//            End  Base & Remote  Proxy Implemeentation. 
+//            End  Base & Remote  Proxy Implemeentation.
 ///////////////////////////////////////////////////////////////////////
 
 
@@ -1608,7 +1608,7 @@ Messaging::_TAO_ReplyHandler_Remote_Proxy_Broker::~_TAO_ReplyHandler_Remote_Prox
 
 Messaging::_TAO_ReplyHandler_Proxy_Impl&
 Messaging::_TAO_ReplyHandler_Remote_Proxy_Broker::select_proxy (
-  
+
     ::Messaging::ReplyHandler *object,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -1643,8 +1643,8 @@ Messaging::ReplyHandler::setup_collocation (int collocated)
   else
     this->the_TAO_ReplyHandler_Proxy_Broker_ =
       ::Messaging::the_TAO_ReplyHandler_Remote_Proxy_Broker ();
-  
-  
+
+
 }
 
 
@@ -1678,6 +1678,7 @@ Messaging::ReplyHandler_ptr Messaging::ReplyHandler::_unchecked_narrow (
 {
   if (CORBA::is_nil (obj))
     return ReplyHandler::_nil ();
+
   if (! obj->_is_local ())
     {
       TAO_Stub* stub = obj->_stubobj ();
@@ -1692,32 +1693,38 @@ Messaging::ReplyHandler_ptr Messaging::ReplyHandler::_unchecked_narrow (
         )
       {
         ACE_NEW_RETURN (
-          default_proxy,
-          ::Messaging::ReplyHandler (
-            stub,
-            1,
-            obj->_servant ()),
-            
-          ReplyHandler::_nil ());
-        }
+                        default_proxy,
+                        ::Messaging::ReplyHandler (
+                                                   stub,
+                                                   1,
+                                                   obj->_servant ()),
+
+                        ReplyHandler::_nil ());
+      }
       if (CORBA::is_nil (default_proxy))
         ACE_NEW_RETURN (default_proxy, ::Messaging::ReplyHandler (stub, 0, obj->_servant ()), ReplyHandler::_nil ());
-        return TAO_Messaging_ReplyHandler_PROXY_FACTORY_ADAPTER::instance ()->create_proxy (default_proxy);
-      }
-    else 
-      return
+
+#if (TAO_HAS_SMART_PROXIES == 1)
+      return TAO_Messaging_ReplyHandler_PROXY_FACTORY_ADAPTER::instance ()->create_proxy (default_proxy);
+# else
+     return default_proxy;
+#endif /* TAO_HAS_SMART_PROXIES == 1 */
+    }
+  else
+    return
+      ACE_reinterpret_cast
+      (
+       ReplyHandler_ptr,
+       obj->_tao_QueryInterface
+       (
         ACE_reinterpret_cast
-          (
-            ReplyHandler_ptr,
-              obj->_tao_QueryInterface
-                (
-                  ACE_reinterpret_cast
-                    (
-                      ptr_arith_t,
-                      &ReplyHandler::_narrow
-                    )
-                )
-          );
+        (
+         ptr_arith_t,
+         &ReplyHandler::_narrow
+         )
+        )
+       );
+
 }
 
 

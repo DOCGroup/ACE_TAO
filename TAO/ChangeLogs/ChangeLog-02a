@@ -1,3 +1,10 @@
+Mon Nov 20 01:32:48 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
+
+	* tao/MessagingC.cpp (_unchecked_narrow):
+
+	  Added guard to check weather TAO is has support for
+	  portable incerceptors.
+
 Mon Nov 20 00:30:50 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
 	* TAO_IDL\be\be_visitor_interface\remote_proxy_broker_cs.h:
