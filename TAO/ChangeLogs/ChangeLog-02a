@@ -1,3 +1,11 @@
+Tue Jan 29 09:01:41 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* TAO_IDL/be/be_interface.cpp:
+	  Removed bogus semicolon.
+
+	* TAO_IDL/be_include/be_visitor_interface/amh_ch.h:
+	  Changed broken private inheritance to public inheritance.
+
 Tue Jan 29 08:57:31 2002  Carlos O'Ryan  <coryan@uci.edu>
 
 	* tao/Messaging.h:
