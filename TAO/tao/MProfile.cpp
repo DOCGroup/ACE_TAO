@@ -126,17 +126,16 @@ TAO_MProfile::add_profile (TAO_Profile *pfile)
 }
 
 CORBA::Boolean
-TAO_MProfile::is_equivalent (TAO_MProfile *first,
-                             TAO_MProfile *second,
+TAO_MProfile::is_equivalent (TAO_MProfile *rhs,
                              CORBA::Environment &env)
 {
   // Two profile lists are equivalent iff at least one of the profiles
   // form the first list is_equivalent to at least one of the profiles
   // from the second list!!
-  TAO_Profile_ptr *pfiles1 = first->pfiles ();
-  TAO_Profile_ptr *pfiles2 = second->pfiles ();
-  TAO_PHandle first_cnt = first->profile_count ();
-  TAO_PHandle second_cnt = second->profile_count ();
+  TAO_Profile_ptr *pfiles1 = this->pfiles_;
+  TAO_Profile_ptr *pfiles2 = rhs->pfiles_;
+  TAO_PHandle first_cnt = this->profile_count ();
+  TAO_PHandle second_cnt = rhs->profile_count ();
 
   for (TAO_PHandle h1 = 0; h1 < first_cnt;h1++)
     for (TAO_PHandle h2 = 0; h2 < second_cnt; h2++ )
