@@ -9,15 +9,19 @@
 
 <H2>Overview</H2>
 
-<P>Certain components in TAO are tuneable by the user by handing the components
-options. These options are commonly specified as a string or on the command
-line and are passed to the components initialization methods for consumption.</P>
+<P>Certain components in TAO can be tuned by users by passing options
+to components.  
+<!-- Chris, can you please define what is meant by a "component", -->
+<!-- e.g., ORB Core, Object Adapter, etc. --> 
+These options are commonly specified as strings (<EM>e.g.</EM>, passed
+on the command-line) and are passed to component initialization
+methods for consumption.</P>
 
-<P><EM>Programmer's Note:</EM> the internal structure for these options
-is the traditional <CODE>argc</CODE>/<CODE>argv</CODE> vector of strings
-style popularized by C and Unix. Also, by convention any initialization
-method will consume, <EM>i.e.</EM> remove from the vector, any options which
-it recognizes.</P>
+<P><EM>Programmer's Note:</EM> the internal structure for these
+options is the traditional <CODE>argc</CODE>/<CODE>argv</CODE> vector
+of strings style popularized by C and Unix.  By convention, any
+initialization method will consume, <EM>i.e.</EM> ,remove from the
+vector, any options that it recognizes.</P>
 
 <H2>Types of Options</H2>
 
