@@ -1,4 +1,4 @@
-#include "FT_IOGR_Property.h"
+#include "FT_Service_Activate.h"
 #include "tao/MProfile.h"
 #include "tao/Stub.h"
 #include "tao/ORB_Core.h"

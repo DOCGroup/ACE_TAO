@@ -1,3 +1,12 @@
+Sat Sep 23 11:18:18 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/ORB_Core.cpp:
+	* orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.h:
+	* orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.cpp:
+	* orbsvcs/orbsvcs/FaultTolerance/FT_Service_Activate.h:
+	* orbsvcs/orbsvcs/FaultTolerance/FT_Service_Activate.cpp: Added
+	  some fixes for static_lib builds.
+
 Sat Sep 23 08:15:02 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/orbsvcs/AV/Endpoint_Strategy.cpp:
