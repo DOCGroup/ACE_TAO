@@ -132,12 +132,12 @@ ACE_OS::ctime_r (const time_t *t, ACE_TCHAR *buf, int buflen)
   bufp = buf;
 #   endif /* ACE_USES_WCHAR */
 
-#   if defined (ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R)
   if (buflen < ctime_buf_size)
     {
       errno = ERANGE;
       return 0;
     }
+#   if defined (ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R)
 #      if defined (DIGITAL_UNIX)
   ACE_OSCALL (::_Pctime_r (t, bufp), ACE_TCHAR *, 0, bufp);
 #      else /* DIGITAL_UNIX */
