@@ -1,3 +1,9 @@
+Thu Jun 10 11:07:30 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp
+	* TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp: Fixed a problem
+	in NT. Thanks to Chris & Andy for pointing this out.
+
 Thu Jun 10 09:41:06 EDT 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
 	* tao/Sequence_T.{i, cpp}:
