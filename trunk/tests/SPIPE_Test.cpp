@@ -105,7 +105,7 @@ server (void *)
 #endif /* TEST_HAS_STREAM_PIPES */
 
 int
-main (int, ACE_TCHAR *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("SPIPE_Test"));
 

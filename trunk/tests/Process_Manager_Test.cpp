@@ -96,7 +96,7 @@ spawn_child (const ACE_TCHAR *argv0,
 }
 
 int
-main (int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt args (argc, argv, ACE_TEXT ("d"));
 
@@ -304,7 +304,7 @@ main (int argc, ACE_TCHAR *argv[])
 
 #else /* (!ACE_LACKS_FORK || ACE_WIN32) && ACE_HAS_THREADS */
 int
-main (int, ACE_TCHAR *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Process_Manager_Test"));
   ACE_ERROR ((LM_ERROR,

@@ -30,7 +30,7 @@ static const int DEFAULT_THREADS = ACE_DEFAULT_THREADS;
 static const int DEFAULT_ITERATIONS = 100000;
 
 int
-main (int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_Service_Config daemon;
 
@@ -67,7 +67,7 @@ main (int argc, ACE_TCHAR *argv[])
 }
 #else
 int
-main (int, ACE_TCHAR *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_ERROR_RETURN ((LM_ERROR, "threads not supported on this platform\n"), -1);
 }

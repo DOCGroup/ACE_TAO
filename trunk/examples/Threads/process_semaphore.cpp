@@ -19,7 +19,7 @@ handler (int)
 }
 
 int
-main (int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   const ACE_TCHAR *name = argc == 1 ? ACE_TEXT("hello") : argv[1];
   int iterations =  argc > 2 ? ACE_OS::atoi (argv[2]) : 100;

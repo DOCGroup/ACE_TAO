@@ -74,7 +74,7 @@ run_test (SVC_HANDLER &svc_handler,
 }
 
 int
-main (int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_START_TEST (ACE_TEXT ("Svc_Handler_Test"));
   {

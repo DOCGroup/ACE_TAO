@@ -27,7 +27,7 @@ ACE_RCSID(tests, Atomic_Op_Test, "$Id$")
 #if defined (ACE_HAS_THREADS)
 
 int
-main (int, ACE_TCHAR *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Atomic_Op_Test"));
 
@@ -64,7 +64,7 @@ template class ACE_Atomic_Op_Ex<ACE_Thread_Mutex, long>;
 
 #else
 int
-main (int, ACE_TCHAR *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Atomic_Op_Test"));
 

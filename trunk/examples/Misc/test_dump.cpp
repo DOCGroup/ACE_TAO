@@ -12,7 +12,7 @@
 ACE_RCSID(Misc, test_dump, "$Id$")
 
 int
-main (int, ACE_TCHAR *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   SOCK outer_sock;
   // Note that the SOCK superclass is *not* printed.

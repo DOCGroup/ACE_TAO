@@ -11,7 +11,7 @@ ACE_RCSID(ATM_SAP, CPP_ATM_server, "$Id$")
 // ACE_ATM Server
 
 int
-main (int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_Time_Value timeout (ACE_DEFAULT_TIMEOUT);
 
@@ -146,7 +146,7 @@ main (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 #else
-int main (int, ACE_TCHAR *[])
+int ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_ERROR_RETURN ((LM_ERROR,
                      "your platform isn't configured to support ATM\n"),

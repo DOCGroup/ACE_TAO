@@ -123,7 +123,7 @@ acquire_release (void)
 #endif /* ! ACE_LACKS_FORK */
 
 int
-main (int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
 #if defined (ACE_LACKS_FORK)
   ACE_UNUSED_ARG (argc);

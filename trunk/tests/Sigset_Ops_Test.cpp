@@ -46,7 +46,7 @@ siglistset(sigset_t x, int *sigset)
 }
 
 int
-main (int, ACE_TCHAR *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Sigset_Ops_Test"));
 

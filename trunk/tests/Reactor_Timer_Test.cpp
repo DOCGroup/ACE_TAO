@@ -234,7 +234,7 @@ test_resetting_timer_intervals (void)
 // If any command line arg is given, run the test with high res timer
 // queue. Else run it normally.
 int
-main (int argc, ACE_TCHAR *[])
+ACE_TMAIN (int argc, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Reactor_Timer_Test"));
 

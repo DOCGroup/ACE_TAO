@@ -58,7 +58,7 @@ check (const ACE_TCHAR *message, u_int i, u_int j)
 
 
 int
-main (int, ACE_TCHAR *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Basic_Types_Test"));
 

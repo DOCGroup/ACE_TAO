@@ -85,7 +85,7 @@ Task_Test::svc (void)
 }
 
 int
-main (int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   n_threads = argc > 1 ? ACE_OS::atoi (argv[1]) : default_threads;
   int n_iterations = argc > 2 ? ACE_OS::atoi (argv[2]) : default_iterations;
@@ -148,7 +148,7 @@ template class ACE_Atomic_Op<ACE_Thread_Mutex, int>;
 
 #else
 int
-main (int, ACE_TCHAR *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
   return 0;

@@ -30,7 +30,7 @@ static int update_counter (HKEY predefined,
 static void setup_names ();
 
 int
-main (int, ACE_TCHAR *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   int result;
   u_long current_counter = 0;

@@ -5,7 +5,7 @@
 
 ACE_RCSID(Naming, test_non_existent, "$Id$")
 
-int main (int, ACE_TCHAR *[])
+int ACE_TMAIN (int, ACE_TCHAR *[])
 {
   int i;
 

@@ -83,7 +83,7 @@ WFMO_Test::svc (void)
 }
 
 int
-main (int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   int thread_count = THREAD_COUNT;
 
@@ -123,7 +123,7 @@ main (int argc, ACE_TCHAR *argv[])
 }
 #else
 int
-main (int, ACE_TCHAR *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_DEBUG ((LM_DEBUG, "this test only runs on Win32\n"));
 }

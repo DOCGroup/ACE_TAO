@@ -6,7 +6,7 @@
 ACE_RCSID(FIFO_SAP, FIFO_client, "$Id$")
 
 int
-main (int, ACE_TCHAR *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_FIFO_Send client (ACE_DEFAULT_RENDEZVOUS);
   ACE_TCHAR     buf[BUFSIZ];

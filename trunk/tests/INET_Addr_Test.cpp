@@ -24,7 +24,7 @@
 #include "ace/Log_Msg.h"
 
 
-int main (int argc, ACE_TCHAR *argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_UNUSED_ARG (argc);
   ACE_UNUSED_ARG (argv);

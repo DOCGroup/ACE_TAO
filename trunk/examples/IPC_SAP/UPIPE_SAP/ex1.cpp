@@ -156,7 +156,7 @@ peer2 (void *)
 }
 
 int
-main (int, ACE_TCHAR *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   // Spawn a peer2 thread.
   if (ACE_Thread_Manager::instance ()->spawn (ACE_THR_FUNC (peer2),
@@ -172,7 +172,7 @@ main (int, ACE_TCHAR *[])
 }
 #else
 int
-main (int, ACE_TCHAR *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_ERROR_RETURN ((LM_ERROR,
                      "threads not supported on this platform\n"),

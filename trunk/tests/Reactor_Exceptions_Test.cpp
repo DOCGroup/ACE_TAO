@@ -160,7 +160,7 @@ worker (void)
 #endif /* ACE_HAS_EXCEPTIONS */
 
 int
-main (int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_START_TEST (ACE_TEXT ("Reactor_Exceptions_Test"));
 

@@ -393,7 +393,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-int main (int argc, ACE_TCHAR *argv [])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv [])
 {
   ACE_START_TEST (ACE_TEXT ("Logging_Strategy_Test"));
 

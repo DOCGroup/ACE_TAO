@@ -566,7 +566,7 @@ Handler_Factory::handle_events (void)
 }
 
 int
-main (int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   OPTIONS::instance ()->parse_args (argc, argv);
 

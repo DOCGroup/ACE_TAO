@@ -96,7 +96,7 @@ int static_singleton_creator = create_singleton ();
 #endif /* ! ACE_HAS_PURIFY */
 
 int
-main (int, ACE_TCHAR *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Timeprobe_Test"));
 

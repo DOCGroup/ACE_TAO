@@ -142,7 +142,7 @@ template class ACE_Read_Guard<ACE_SV_Semaphore_Simple>;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 #endif /* ACE_HAS_SYSV_IPC */
 int
-main (int, ACE_TCHAR *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("SV_Shared_Memory_Test"));
 

@@ -278,7 +278,7 @@ Worker_Task<BARRIER>::input (ACE_Message_Block *mb)
 }
 
 int
-main (int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   int n_threads = argc > 1 ? ACE_OS::atoi (argv[1]) : ACE_DEFAULT_THREADS;
 
@@ -309,7 +309,7 @@ template class Worker_Task<ACE_Null_Barrier>;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 #else
 int
-main (int, ACE_TCHAR *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
   return 0;

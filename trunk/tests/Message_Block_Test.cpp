@@ -288,7 +288,7 @@ template class ACE_Lock_Adapter<ACE_SYNCH_MUTEX>;
 #endif /* ACE_HAS_THREADS */
 
 int
-main (int, ACE_TCHAR *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Message_Block_Test"));
 #if defined (ACE_HAS_THREADS)

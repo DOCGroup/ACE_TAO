@@ -158,7 +158,7 @@ run_test (int argc, ACE_TCHAR *argv[])
 }
 
 int
-main (int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_START_TEST (ACE_TEXT ("Service_Config_Test"));
 

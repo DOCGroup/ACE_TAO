@@ -263,7 +263,7 @@ Dispatch_Count_Handler::verify_results (void)
 }
 
 int
-main (int, ACE_TCHAR *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("MT_Reactor_Timer_Test"));
 

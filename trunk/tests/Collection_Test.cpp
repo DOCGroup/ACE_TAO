@@ -68,7 +68,7 @@ void iterate_const(const UNBOUNDED_SET& set)
 
 int dummyfunc() { return 0; }
 
-int main (int, ACE_TCHAR *[])
+int ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Collection_Test"));
 

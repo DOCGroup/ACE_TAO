@@ -448,7 +448,7 @@ template class ACE_Weak_Bound_Ptr<Printer, ACE_Null_Mutex>;
 
 
 int
-main (int, ACE_TCHAR *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Bound_Ptr_Test"));
 

@@ -61,7 +61,7 @@ My_Task::svc (void)
 }
 
 int
-main (int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   My_Task tasks (argc > 1 ? ACE_OS::atoi (argv[1]) : 4);
 
@@ -69,7 +69,7 @@ main (int argc, ACE_TCHAR *argv[])
 }
 #else
 int
-main (int, ACE_TCHAR *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_ERROR_RETURN ((LM_ERROR, "your platform doesn't support threads\n"), -1);
 }

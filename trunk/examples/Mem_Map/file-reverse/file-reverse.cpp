@@ -35,7 +35,7 @@ print_array_in_reverse (char *array,
 }
 
 int
-main (int argc, ACE_TCHAR **argv)
+ACE_TMAIN (int argc, ACE_TCHAR **argv)
 {
   ACE_LOG_MSG->open (argv[0]);
 

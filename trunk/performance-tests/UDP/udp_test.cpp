@@ -594,7 +594,7 @@ Server::handle_close (ACE_HANDLE,
 }
 
 int
-main (int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   int c, dstport = DEFPORT;
   int so_bufsz = 0;

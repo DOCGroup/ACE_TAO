@@ -6,7 +6,7 @@
 ACE_RCSID(Naming, test_open, "$Id$")
 
 int
-main (int argc, ACE_TCHAR **argv)
+ACE_TMAIN (int argc, ACE_TCHAR **argv)
 {
   const ACE_TCHAR *host = argc > 1 ? argv[1] : ACE_TEXT("-hlocalhost");
   const ACE_TCHAR *port = argc > 2 ? argv[2] : ACE_TEXT("-p20012");

@@ -207,7 +207,7 @@ Server_Events::handle_input (ACE_HANDLE)
 }
 
 int
-main (int, ACE_TCHAR *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   // Instantiate a server which will receive messages for DURATION
   // seconds.

@@ -349,7 +349,7 @@ worker (void *)
 }
 
 int
-main (int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_START_TEST (ACE_TEXT ("Thread_Pool_Reactor_Resume_Test"));
   parse_arg (argc, argv);
@@ -405,7 +405,7 @@ template class ACE_Lock_Adapter<ACE_SYNCH_MUTEX>;
 
 #else
 int
-main (int, ACE_TCHAR *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Thread_Pool_Reactor_Test"));
 

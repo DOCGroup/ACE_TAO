@@ -24,7 +24,7 @@
 ACE_RCSID(Log_Msg, test_ostream, "$Id$")
 
 int
-main (int, ACE_TCHAR *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   // This message should show up in stderr.
   ACE_DEBUG ((LM_DEBUG,

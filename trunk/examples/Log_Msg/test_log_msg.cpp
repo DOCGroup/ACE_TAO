@@ -39,7 +39,7 @@ cause_error (void)
 }
 
 int
-main (int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   // Note that the default behavior is to log to STDERR...
 

@@ -257,7 +257,7 @@ template class ACE_Guard<ACE_RW_Mutex>;
 
 // Spawn off threads.
 
-int main (int argc, ACE_TCHAR *argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_START_TEST (ACE_TEXT ("Reader_Writer_Test"));
 

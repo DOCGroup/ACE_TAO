@@ -19,7 +19,7 @@
 ACE_RCSID(tests, Arg_Shifter_Test, "$Id$")
 
 int
-main (int, ACE_TCHAR *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Arg_Shifter_Test"));
 

@@ -79,7 +79,7 @@ worker (void *arg)
 }
 
 int
-main (int argc, ACE_TCHAR **argv)
+ACE_TMAIN (int argc, ACE_TCHAR **argv)
 {
   int n_threads = argc == 2 ? ACE_OS::atoi (argv[1]) : 5;
 
@@ -111,7 +111,7 @@ template class ACE_Atomic_Op<ACE_Thread_Mutex, int>;
 
 #else
 int
-main (int, ACE_TCHAR *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
   return 0;

@@ -635,7 +635,7 @@ server (void *)
 #endif /* !ACE_LACKS_FORK || ACE_HAS_THREADS */
 
 int
-main (int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_START_TEST (ACE_TEXT ("Process_Strategy_Test"));
 

@@ -190,7 +190,7 @@ worker (void *)
 
 // Test semaphore functionality.
 
-int main (int argc, ACE_TCHAR *argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_START_TEST (ACE_TEXT ("Semaphore_Test"));
 

@@ -11,7 +11,7 @@ ACE_RCSID(SPIPE_SAP, consumer_msg, "$Id$")
 #include "shared.h"
 
 int
-main (int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_SPIPE_Acceptor peer_acceptor;
   ACE_SPIPE_Stream	 new_stream;
@@ -47,7 +47,7 @@ main (int argc, ACE_TCHAR *argv[])
 }
 #else
 #include <stdio.h>
-int main (int, ACE_TCHAR *[])
+int ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_OS::fprintf (stderr, "This feature is not supported\n");
   return 0;

@@ -237,7 +237,7 @@ client (void *arg)
 #endif
 
 int
-main (int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_START_TEST (ACE_TEXT ("Priority_Reactor_Test"));
 

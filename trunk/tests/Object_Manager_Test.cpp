@@ -48,7 +48,7 @@ hook2 (void * /* object */, void *param)
 }
 
 int
-main (int, ACE_TCHAR *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE::init ();
 

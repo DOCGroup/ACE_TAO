@@ -185,7 +185,7 @@ handler (int signum)
 }
 
 int
-main (int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   // The Service_Config must be the first object defined in main...
   ACE_Service_Config daemon (argv[0]);
@@ -224,7 +224,7 @@ template class ACE_TSS<Errno>;
 
 #else
 int
-main (int, ACE_TCHAR *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_ERROR_RETURN ((LM_ERROR,
                      "ACE doesn't support support threads on this platform (yet)\n"),

@@ -433,7 +433,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 
 /*******************************************************************/
 int
-main (int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   int result = parse_args (argc, argv);
   if (result != 0)
