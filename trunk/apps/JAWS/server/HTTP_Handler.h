@@ -161,7 +161,6 @@ public:
 #if defined (ACE_WIN32)
 class Asynch_HTTP_Handler_Factory : public HTTP_Handler_Factory, public ACE_Service_Handler
   // = TITLE
-  //     
   //     This class is used to create new HTTP handlers that will use
   //     Asynchronous IO.  This only works on Win32.
   //
@@ -174,9 +173,9 @@ public:
   // tell the factory to reap up the handler as it is now done with
   // the protocol
 
-  void open (ACE_HANDLE handle,
-	     ACE_Message_Block &message_block);
-  // <open> is called by ACE_Asynch_Acceptor to initialize a new
+  virtual void open (ACE_HANDLE handle,
+                     ACE_Message_Block &message_block);
+  // <open> is called by <ACE_Asynch_Acceptor> to initialize a new
   // instance of ACE_Service_Handler that has been created after the a
   // new connection is accepted.
   //
