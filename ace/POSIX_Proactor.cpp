@@ -512,9 +512,9 @@ ACE_POSIX_AIOCB_Proactor::ACE_POSIX_AIOCB_Proactor (size_t max_aio_operations)
     aiocb_list_max_size_ = 8192;
 
   ACE_NEW (aiocb_list_, 
-           (aiocb *)[aiocb_list_max_size_]);
+           aiocb *[aiocb_list_max_size_]);
   ACE_NEW (result_list_,
-           (ACE_POSIX_Asynch_Result *)[aiocb_list_max_size_]);
+           ACE_POSIX_Asynch_Result *[aiocb_list_max_size_]);
 
   // Initialize the array.
   for (size_t ai = 0; ai < this->aiocb_list_max_size_; ai++)
@@ -542,9 +542,9 @@ ACE_POSIX_AIOCB_Proactor::ACE_POSIX_AIOCB_Proactor (size_t max_aio_operations,in
     aiocb_list_max_size_ = 8192;
 
   ACE_NEW (aiocb_list_, 
-           (aiocb *)[aiocb_list_max_size_]);
+           aiocb *[aiocb_list_max_size_]);
   ACE_NEW (result_list_,
-           (ACE_POSIX_Asynch_Result *)[aiocb_list_max_size_]);
+           ACE_POSIX_Asynch_Result *[aiocb_list_max_size_]);
 
   // Initialize the array.
   for (size_t ai = 0; ai < this->aiocb_list_max_size_; ai++)
