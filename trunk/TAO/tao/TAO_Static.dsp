@@ -22,11 +22,9 @@ CFG=TAO Static - Win32 Debug
 !MESSAGE 
 
 # Begin Project
-# PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
 CPP=cl.exe
-RSC=rc.exe
 
 !IF  "$(CFG)" == "TAO Static - Win32 Release"
 
@@ -40,11 +38,12 @@ RSC=rc.exe
 # PROP Output_Dir ""
 # PROP Intermediate_Dir "LIB\Release"
 # PROP Target_Dir ""
+RSC=rc.exe
+# ADD BASE RSC /l 0x409
+# ADD RSC /l 0x409
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /YX /FD /c
 # ADD CPP /nologo /MD /W3 /GX /O2 /I "..\..\\" /I "..\\" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /D TAO_HAS_DLL=0 /D __ACE_INLINE__=0 /FD /c
 # SUBTRACT CPP /YX
-# ADD BASE RSC /l 0x409
-# ADD RSC /l 0x409
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
@@ -64,10 +63,11 @@ LIB32=link.exe -lib
 # PROP Output_Dir ""
 # PROP Intermediate_Dir "LIB\Debug"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /W3 /GX /Z7 /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /YX /FD /c
-# ADD CPP /nologo /MDd /W3 /GX /Z7 /Od /I "..\..\\" /I "..\\" /D TAO_HAS_DLL=0 /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /YX /FD /c
+RSC=rc.exe
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
+# ADD BASE CPP /nologo /W3 /GX /Z7 /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /YX /FD /c
+# ADD CPP /nologo /MDd /W3 /GX /Z7 /Od /I "..\..\\" /I "..\\" /D TAO_HAS_DLL=0 /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /YX /FD /c
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
@@ -135,6 +135,10 @@ SOURCE=.\deep_free.cpp
 # Begin Source File
 
 SOURCE=.\default_client.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\default_resource.cpp
 # End Source File
 # Begin Source File
 
@@ -294,6 +298,10 @@ SOURCE=.\Request.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Resource_Factory.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Sequence.cpp
 # End Source File
 # Begin Source File
@@ -391,6 +399,10 @@ SOURCE=.\debug.h
 # Begin Source File
 
 SOURCE=.\default_client.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\default_resource.h
 # End Source File
 # Begin Source File
 
@@ -558,6 +570,10 @@ SOURCE=.\request.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Resource_Factory.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\sequence.h
 # End Source File
 # Begin Source File
@@ -631,6 +647,10 @@ SOURCE=.\CurrentC.i
 # Begin Source File
 
 SOURCE=.\default_client.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\default_resource.i
 # End Source File
 # Begin Source File
 
