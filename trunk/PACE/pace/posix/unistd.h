@@ -40,11 +40,11 @@ extern "C" {
 
   PACE_INLINE int pace_dup2 (int fildes, int fildes2);
 
-  int execl (const char* path, const char* arg, ...);
+  int pace_execl (const char* path, const char* arg, ...);
 
-  int execle (const char* path, const char* arg, ...);
+  int pace_execle (const char* path, const char* arg, ...);
 
-  int execlp (const char* file, const char* arg,  ...);
+  int pace_execlp (const char* file, const char* arg,  ...);
 
   PACE_INLINE int pace_execv (const char * path, char * const argv[]);
 
