@@ -848,7 +848,7 @@ Fri May  3 02:24:19 1996  Douglas C. Schmidt  (schmidt@tango.cs.wustl.edu)
 
 	* ace: Removed a stray file called Svc_Conf_tokens.h.  This was
 	  causing problems on Win32 due to name clashes...  Thanks to Adam
-	  Miller for pointing this out.
+	  Miller <adam@royalblueny.com> for pointing this out.
 
 	* ace/SString.cpp (strstr): there were some for (size_t j; ...) {}
 	  if (j == x) constructs in the code that have as of recently
@@ -1410,7 +1410,8 @@ Wed Apr 10 01:56:52 1996  Douglas C. Schmidt  (schmidt@mambo.cs.wustl.edu)
 
         * ace: Added the ACE_TEMPLATES_REQUIRE_SPECIALIZATION to
 	  config-sunos5.5-g++.h file.  This should allow ACE to build
-	  correctly.  Thanks to Adam Miller for pointing this out.
+	  correctly.  Thanks to Adam Miller <adam@royalblueny.com> for
+          pointing this out.
 
         * ace: Installed SunOS 5.5, so now we can finally test pthreads!
 

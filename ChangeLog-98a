@@ -1,3 +1,10 @@
+Thu Dec 18 14:35:24 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/OS.h: The server logging daemon is implemented using TCP/IP
+ 	  under Win32.  Therefore, we can simplify the creation of the
+ 	  ACE_DEFAULT_LOGGER_KEY.  Thanks to Patrick J. McNerthney
+ 	  <pat@thememedia.com> for reporting this problem.
+
 Thu Dec 18 09:59:33 1997  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.h: on Digital Unix 4.0, only declare sigwait () with cxx,
