@@ -1,3 +1,11 @@
+1999-05-15  Vishal Kachroo  <vishal@cs.wustl.edu>
+
+	* performance-tests/POA/Demux/demux_test_server.h
+	* performance-tests/POA/Demux/demux_test_server.cpp
+
+	Removed the restriction on the no. of servants on the server
+	side.
+
 Sat May 15 16:51:08 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 
 	* tao/ObjectIDList.i : Fixed some warnings on VxWorks. Thanks to 
