@@ -1,3 +1,8 @@
+Fri Apr  6 17:11:34 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* bin/auto_run_tests.lst: Added the Single_Read test to the
+	  nightly build list.  
+
 Fri Apr  6 14:45:52 2001  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/Basic_Types.h:
