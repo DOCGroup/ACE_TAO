@@ -884,7 +884,8 @@ AC_CHECK_HEADER([regexpr.h],
   [AC_DEFINE([ACE_HAS_REGEX])],)
 
 AC_CHECK_HEADER([stropts.h],
-  [AC_DEFINE([ACE_HAS_STREAMS])],)
+  [AC_DEFINE([ACE_HAS_STREAMS])],
+  [AC_DEFINE([ACE_LACKS_STROPTS_H])])
 
 AC_CHECK_HEADER([siginfo.h],
   ,
@@ -3289,6 +3290,10 @@ main ()
   ],)
 
 AC_CHECK_FUNC([gethostbyaddr],,)
+
+AC_CHECK_FUNC([gethostent],
+  ,
+  [AC_DEFINE([ACE_LACKS_GETHOSTENT])])
 
 AC_CHECK_FUNC([difftime],
   ,
