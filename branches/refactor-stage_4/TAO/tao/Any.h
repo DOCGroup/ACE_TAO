@@ -402,7 +402,7 @@ TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
                                        CORBA::TypeCode_ptr &);
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
-                                       const char *&);
+                                       const CORBA::Char *&);
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
                                        const CORBA::WChar *&);
 

@@ -63,7 +63,7 @@ namespace TAO
     virtual CORBA::Boolean interceptor_replace (CORBA::Any &);
 
   private:
-    mutable S *& x_;
+    S *& x_;
   };
 
   /**
@@ -207,7 +207,7 @@ namespace TAO
   struct TAO_Export UB_String_Tag {};
 
   /**
-   * @struct Basic_Arg_Traits_T
+   * @struct UB_String_Arg_Traits_T
    *
    * @brief Template class for argument traits of unbounded (w)strings.
    *

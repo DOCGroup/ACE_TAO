@@ -33,6 +33,7 @@ namespace TAO
   template<>
   class TAO_Export Arg_Traits<void>
   {
+    public:
     typedef void        ret_type;
 
     typedef Argument    stub_ret_val;
