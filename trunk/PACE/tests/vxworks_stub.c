@@ -16,7 +16,6 @@
 /* ===================================================================== */
 
 # define main post_pace_main
-# define PACE_NEEDS_HUGE_THREAD_STACKSIZE 64000
 # include /**/ <usrLib.h>   /* for ::sp() */
 # include /**/ "pace/pthread.h"
 
@@ -83,7 +82,7 @@ spa (FUNCPTR entry, ...)
   ret = taskSpawn (argv[0],    /* task name */
                    100,        /* task priority */
                    VX_FP_TASK, /* task options */
-                   PACE_NEEDS_HUGE_THREAD_STACKSIZE, /* stack size */
+                   PTHREAD_DEFAULT_STACK_SIZE, /* stack size */
                    entry,      /* entry point */
                    argc,       /* first argument to main () */
                    (int) argv, /* second argument to main () */
@@ -97,7 +96,7 @@ spa (FUNCPTR entry, ...)
 }
 
 int
-pace_main(unsigned int argc, char* argv[])
+pace_main(int argc, char* argv[])
 {
   /* Setup information for VxWorks emulation */ 
   if (pacevx_vxworks_init() == ERROR)
