@@ -532,8 +532,8 @@ TAO_FTEC_Event_Channel_Impl::find_proxy_push_supplier(const FtRtecEventChannelAd
   ACE_TRY_NEW_ENV {
     PortableServer::POA_var poa = consumer_poa();
 
-    PortableServer::Servant servant = poa->id_to_servant(
-      ACE_reinterpret_cast(PortableServer::ObjectId& ,id)
+    const PortableServer::Servant servant = poa->id_to_servant(
+      ACE_reinterpret_cast(const PortableServer::ObjectId& ,id)
       ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
     POA_RtecEventChannelAdmin::ProxyPushSupplier_ptr obj =
@@ -556,8 +556,8 @@ TAO_FTEC_Event_Channel_Impl::find_proxy_push_consumer(const FtRtecEventChannelAd
   ACE_TRY_NEW_ENV {
     PortableServer::POA_var poa= supplier_poa();
 
-    PortableServer::Servant servant = poa->id_to_servant(
-      ACE_reinterpret_cast(PortableServer::ObjectId& ,id)
+    const PortableServer::Servant servant = poa->id_to_servant(
+      ACE_reinterpret_cast(const PortableServer::ObjectId& ,id)
       ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
