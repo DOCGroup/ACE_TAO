@@ -250,16 +250,16 @@ main (int argc, ACE_TCHAR *argv[])
         opt_priority_reactor = 0;
         break;
       case 'c':
-        opt_nchildren = ACE_OS::atoi (getopt.optarg);
+        opt_nchildren = ACE_OS::atoi (getopt.opt_arg ());
         break;
       case 'l':
-        opt_nloops = ACE_OS::atoi (getopt.optarg);
+        opt_nloops = ACE_OS::atoi (getopt.opt_arg ());
         break;
       case 'm':
-        max_retries = ACE_OS::atoi (getopt.optarg);
+        max_retries = ACE_OS::atoi (getopt.opt_arg ());
         break;
       case 't':
-        opt_max_duration = ACE_OS::atoi (getopt.optarg);
+        opt_max_duration = ACE_OS::atoi (getopt.opt_arg ());
         break;
       case '?':
       default:

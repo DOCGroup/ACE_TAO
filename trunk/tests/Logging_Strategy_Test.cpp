@@ -331,18 +331,18 @@ parse_args (int argc, ACE_TCHAR *argv[])
       switch (c)
         {
         case 's':
-          file_name = get_opt.optarg;
+          file_name = get_opt.opt_arg ();
           ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("File name: %s\n"),
                       file_name));
           break;
         case 'i':
-          interval_time = ACE_OS::atoi (get_opt.optarg);
+          interval_time = ACE_OS::atoi (get_opt.opt_arg ());
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("Interval time (s): %d\n"),
                       interval_time));
           break;
         case 'm':
-          max_size_files = ACE_OS::atoi (get_opt.optarg);
+          max_size_files = ACE_OS::atoi (get_opt.opt_arg ());
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("Maximum size (KB): %d\n"),
                       max_size_files));
@@ -350,10 +350,10 @@ parse_args (int argc, ACE_TCHAR *argv[])
         case 'f':
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("Modes: %s\n"),
-                      get_opt.optarg));
+                      get_opt.opt_arg ()));
           break;
         case 'N':
-          max_num_files = ACE_OS::atoi (get_opt.optarg);
+          max_num_files = ACE_OS::atoi (get_opt.opt_arg ());
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("Maximum files number: %d\n"),
                       max_num_files));

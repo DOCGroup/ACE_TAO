@@ -580,30 +580,30 @@ parse_args (int argc, ACE_TCHAR *argv[])
         debug = 1;
         break;
       case 'l':
-        listen_once = ACE_OS::atoi (get_opt.optarg);
+        listen_once = ACE_OS::atoi (get_opt.opt_arg ());
         break;
       case 'i':
-        iterations = ACE_OS::atoi (get_opt.optarg);
+        iterations = ACE_OS::atoi (get_opt.opt_arg ());
         user_has_specified_iterations = 1;
         break;
       case 'p':
-        purge_percentage = ACE_OS::atoi (get_opt.optarg);
+        purge_percentage = ACE_OS::atoi (get_opt.opt_arg ());
         break;
       case 'c':
         // Note that if null caching strategy is used then this test
         // will fail if the number of servers exceed number of open
         // files allowed for the process.
-        if (ACE_OS::strcmp (get_opt.optarg, ACE_TEXT ("null")) == 0)
+        if (ACE_OS::strcmp (get_opt.opt_arg (), ACE_TEXT ("null")) == 0)
           caching_strategy_type = ACE_NULL;
-        if (ACE_OS::strcmp (get_opt.optarg, ACE_TEXT ("lru")) == 0)
+        if (ACE_OS::strcmp (get_opt.opt_arg (), ACE_TEXT ("lru")) == 0)
           caching_strategy_type = ACE_LRU;
-        if (ACE_OS::strcmp (get_opt.optarg, ACE_TEXT ("lfu")) == 0)
+        if (ACE_OS::strcmp (get_opt.opt_arg (), ACE_TEXT ("lfu")) == 0)
           caching_strategy_type = ACE_LFU;
-        if (ACE_OS::strcmp (get_opt.optarg, ACE_TEXT ("fifo")) == 0)
+        if (ACE_OS::strcmp (get_opt.opt_arg (), ACE_TEXT ("fifo")) == 0)
           caching_strategy_type = ACE_FIFO;
         break;
       case 'a':
-        keep_handles_available = ACE_OS::atoi (get_opt.optarg);
+        keep_handles_available = ACE_OS::atoi (get_opt.opt_arg ());
         break;
       case '?':
       case 'h':

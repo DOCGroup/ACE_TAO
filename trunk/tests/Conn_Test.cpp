@@ -821,13 +821,13 @@ main (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 'c':
-        n_clients = ACE_OS::atoi (getopt.optarg);
+        n_clients = ACE_OS::atoi (getopt.opt_arg ());
         break;
       case 'i':
-        n_client_iterations = ACE_OS::atoi (getopt.optarg);
+        n_client_iterations = ACE_OS::atoi (getopt.opt_arg ());
         break;
       case 's':
-        n_servers = ACE_OS::atoi (getopt.optarg);
+        n_servers = ACE_OS::atoi (getopt.opt_arg ());
         break;
       }
 

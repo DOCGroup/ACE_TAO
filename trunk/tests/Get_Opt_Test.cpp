@@ -133,7 +133,7 @@ parse_args (int test_number,
         case 'r':
           // This one has a required argument, we wouldn't be here if the 
           // arg were missing.  Note that we call get_opt.opt_arg () to return the 
-          // argument, but we could have used get_opt.optarg since optarg 
+          // argument, but we could have used get_opt.opt_arg () since.opt_arg () 
           // is defined as "opt_arg ()".
           ACE_DEBUG ((LM_INFO, 
                       "   Found option '%c' with required argument \"%s\"\n", 

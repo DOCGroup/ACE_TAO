@@ -89,22 +89,22 @@ parse_arg (int argc, ACE_TCHAR *argv[])
       switch (c)
         {
         case 'r':                   // hostname:port
-          rendezvous = getopt.optarg;
+          rendezvous = getopt.opt_arg ();
           break;
         case 's':
-          svr_thrno = ACE_OS::atoi (getopt.optarg);
+          svr_thrno = ACE_OS::atoi (getopt.opt_arg ());
           break;
         case 'c':
-          cli_thrno = ACE_OS::atoi (getopt.optarg);
+          cli_thrno = ACE_OS::atoi (getopt.opt_arg ());
           break;
         case 'd':
-          req_delay = ACE_OS::atoi (getopt.optarg);
+          req_delay = ACE_OS::atoi (getopt.opt_arg ());
           break;
         case 'i':
-          cli_conn_no = ACE_OS::atoi (getopt.optarg);
+          cli_conn_no = ACE_OS::atoi (getopt.opt_arg ());
           break;
         case 'n':
-          cli_req_no = ACE_OS::atoi (getopt.optarg);
+          cli_req_no = ACE_OS::atoi (getopt.opt_arg ());
           break;
         default:
           ACE_ERROR ((LM_ERROR,

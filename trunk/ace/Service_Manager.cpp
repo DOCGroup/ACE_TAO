@@ -93,10 +93,10 @@ ACE_Service_Manager::init (int argc, ACE_TCHAR *argv[])
          this->debug_ = 1;
          break;
        case 'p':
-         local_addr.set ((u_short) ACE_OS::atoi (getopt.optarg));
+         local_addr.set ((u_short) ACE_OS::atoi (getopt.opt_arg ()));
          break;
        case 's':
-         this->signum_ = ACE_OS::atoi (getopt.optarg);
+         this->signum_ = ACE_OS::atoi (getopt.opt_arg ());
          break;
        default:
          break;

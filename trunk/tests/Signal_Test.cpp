@@ -376,16 +376,16 @@ parse_args (int argc, char *argv[])
     switch (c)
     {
     case 'i':
-      n_iterations = ACE_OS::atoi (get_opt.optarg);
+      n_iterations = ACE_OS::atoi (get_opt.opt_arg ());
       break;
     case 'c':
       child = 1;
       break;
     case 'p':
-      parent_pid = ACE_OS::atoi (get_opt.optarg);
+      parent_pid = ACE_OS::atoi (get_opt.opt_arg ());
       break;
     case 't':
-      test_number = ACE_OS::atoi (get_opt.optarg);
+      test_number = ACE_OS::atoi (get_opt.opt_arg ());
       break;
     case 'h':
     default:

@@ -198,16 +198,16 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 'c':
-        if (ACE_OS::strcmp (get_opt.optarg,
+        if (ACE_OS::strcmp (get_opt.opt_arg (),
                             ACE_TEXT ("REACTIVE")) == 0)
           OPTIONS::instance ()->concurrency_type (Options::REACTIVE);
 #if !defined (ACE_LACKS_FORK)
-        else if (ACE_OS::strcmp (get_opt.optarg,
+        else if (ACE_OS::strcmp (get_opt.opt_arg (),
                                  ACE_TEXT ("PROCESS")) == 0)
           OPTIONS::instance ()->concurrency_type (Options::PROCESS);
 #endif /* !ACE_LACKS_FORK */
 #if defined (ACE_HAS_THREADS)
-        else if (ACE_OS::strcmp (get_opt.optarg,
+        else if (ACE_OS::strcmp (get_opt.opt_arg (),
                                  ACE_TEXT ("THREAD")) == 0)
           OPTIONS::instance ()->concurrency_type (Options::THREAD);
 #endif /* ACE_HAS_THREADS */
@@ -215,10 +215,10 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("WARNING: concurrency strategy \"%s\" ")
                       ACE_TEXT ("is not supported\n"),
-                      get_opt.optarg));
+                      get_opt.opt_arg ()));
         break;
       case 'f':
-        ACE_OS::strcpy (this->filename_, get_opt.optarg);
+        ACE_OS::strcpy (this->filename_, get_opt.opt_arg ());
         break;
       default:
         ACE_DEBUG ((LM_DEBUG,

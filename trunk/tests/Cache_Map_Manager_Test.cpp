@@ -485,26 +485,26 @@ parse_args (int argc, ACE_TCHAR *argv[])
     switch (cc)
       {
       case 'c':
-        if (ACE_OS::strcmp (get_opt.optarg, ACE_TEXT ("null")) == 0)
+        if (ACE_OS::strcmp (get_opt.opt_arg (), ACE_TEXT ("null")) == 0)
           caching_strategy_type = ACE_NULL;
-        if (ACE_OS::strcmp (get_opt.optarg, ACE_TEXT ("lru")) == 0)
+        if (ACE_OS::strcmp (get_opt.opt_arg (), ACE_TEXT ("lru")) == 0)
           caching_strategy_type = ACE_LRU;
-        if (ACE_OS::strcmp (get_opt.optarg, ACE_TEXT ("lfu")) == 0)
+        if (ACE_OS::strcmp (get_opt.opt_arg (), ACE_TEXT ("lfu")) == 0)
           caching_strategy_type = ACE_LFU;
-        if (ACE_OS::strcmp (get_opt.optarg, ACE_TEXT ("fifo")) == 0)
+        if (ACE_OS::strcmp (get_opt.opt_arg (), ACE_TEXT ("fifo")) == 0)
           caching_strategy_type = ACE_FIFO;
         break;
       case 'i':
-        iterations = ACE_OS::atoi (get_opt.optarg);
+        iterations = ACE_OS::atoi (get_opt.opt_arg ());
         break;
       case 'f':
-        no_of_lookups = ACE_OS::atoi (get_opt.optarg);
+        no_of_lookups = ACE_OS::atoi (get_opt.opt_arg ());
         break;
       case 'r':
-        randomize_lookups = ACE_OS::atoi (get_opt.optarg);
+        randomize_lookups = ACE_OS::atoi (get_opt.opt_arg ());
         break;
       case 'p':
-        purge_percent = ACE_OS::atoi (get_opt.optarg);
+        purge_percent = ACE_OS::atoi (get_opt.opt_arg ());
         break;
       case 'd':
         debug = 1;

@@ -108,9 +108,9 @@ main (int argc, ACE_TCHAR *argv[])
         break;
       }
 
-  if (args.optind == argc - 1)
+  if (args.opt_ind () == argc - 1)
     {     // child process: sleep & exit
-      int secs = ACE_OS::atoi (argv[args.optind]);
+      int secs = ACE_OS::atoi (argv[args.opt_ind ()]);
       ACE_OS::sleep (secs ? secs : 1);
       if (debug_test)
         ACE_DEBUG ((LM_DEBUG,
@@ -119,7 +119,7 @@ main (int argc, ACE_TCHAR *argv[])
       return secs;
     }
 
-  if (args.optind != argc)      // incorrect usage
+  if (args.opt_ind () != argc)      // incorrect usage
     usage (argv[0]);
 
   ACE_START_TEST (ACE_TEXT ("Process_Manager_Test"));
