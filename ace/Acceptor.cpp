@@ -1,4 +1,3 @@
-// Acceptor.cpp
 // $Id$
 
 #ifndef ACE_ACCEPTOR_C
@@ -1074,6 +1073,15 @@ ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_input (ACE_HANDLE
   // associations.
   int reset_new_handle = this->reactor ()->uses_event_associations ();
 
+  // There is a use-case whereby this object will be gone upon return
+  // from shared_accept - if the Svc_Handler deletes this Oneshot_Acceptor
+  // during the shared_accept/activation steps. So, do whatever we need
+  // to do with this object before calling shared_accept.
+  if (this->reactor ())
+    this->reactor ()->remove_handler
+      (this,
+       ACE_Event_Handler::ACCEPT_MASK | ACE_Event_Handler::DONT_CALL);
+
   if (this->shared_accept (this->svc_handler_, // stream
                            0, // remote address
                            0, // timeout
@@ -1081,11 +1089,7 @@ ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_input (ACE_HANDLE
                            reset_new_handle // reset new handle
                            ) == -1)
     result = -1;
-  if (this->reactor ()
-      && this->reactor ()->remove_handler
-      (this,
-       ACE_Event_Handler::ACCEPT_MASK | ACE_Event_Handler::DONT_CALL) == -1)
-    result = -1;
+
   return result;
 }
 
