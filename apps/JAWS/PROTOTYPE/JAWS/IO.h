@@ -207,4 +207,5 @@ typedef ACE_Singleton<JAWS_Asynch_IO, ACE_SYNCH_MUTEX>
         JAWS_Asynch_IO_Singleton;
 
 #endif /* ACE_WIN32 */
+
 #endif /* JAWS_IO_H */

@@ -437,14 +437,15 @@ JAWS_Asynch_IO::send_message (JAWS_IO_Handler *ioh,
 
 #endif /* ACE_WIN32 */
 
-// #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-// template class ACE_Singleton<JAWS_VFS, ACE_SYNCH_MUTEX>;
-// #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-// #pragma instantiate ACE_Singleton<JAWS_VFS, ACE_SYNCH_MUTEX>
-// #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Singleton<JAWS_Synch_IO, ACE_SYNCH_MUTEX>;
+  #if defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS)
+  template class ACE_Singleton<JAWS_Asynch_IO, ACE_SYNCH_MUTEX>;
+  #endif /* defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS)*/
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate  ACE_Singleton<JAWS_Synch_IO, ACE_SYNCH_MUTEX>
+  #if defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS)
+  #pragma instantiate  ACE_Singleton<JAWS_Asynch_IO, ACE_SYNCH_MUTEX>
+  #endif /* defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS)*/
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
