@@ -109,7 +109,7 @@ public:
 
   ACE_Message_Block (const char *data,
                      size_t size = 0,
-                     u_long priority = 0);
+                     u_long priority = ACE_DEFAULT_MESSAGE_BLOCK_PRIORITY);
   // Create a Message Block that assumes ownership of <data> without
   // copying it (i.e., we don't delete it since we don't malloc it!).
   // Note that the <size> of the <Message_Block> will be <size>, but
@@ -121,7 +121,7 @@ public:
                      const char *data = 0,
                      ACE_Allocator *allocator_strategy = 0,
                      ACE_Lock *locking_strategy = 0,
-                     u_long priority = 0,
+                     u_long priority = ACE_DEFAULT_MESSAGE_BLOCK_PRIORITY,
                      const ACE_Time_Value & execution_time = ACE_Time_Value::zero,
                      const ACE_Time_Value & deadline_time = ACE_Time_Value::max_time,
                      ACE_Allocator *data_block_allocator = 0,
@@ -160,7 +160,7 @@ public:
             const char *data = 0,
             ACE_Allocator *allocator_strategy = 0,
             ACE_Lock *locking_strategy = 0,
-            u_long priority = 0,
+            u_long priority = ACE_DEFAULT_MESSAGE_BLOCK_PRIORITY,
             const ACE_Time_Value & execution_time = ACE_Time_Value::zero,
             const ACE_Time_Value & deadline_time = ACE_Time_Value::max_time,
             ACE_Allocator *data_block_allocator = 0,
