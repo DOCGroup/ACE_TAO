@@ -1,3 +1,14 @@
+Mon Sep  3 18:52:03 2001  Craig Rodrigues  <crodrigu@bbn.com>
+
+        * orbsvcs/tests/AVStreams/Multicast/Makefile:
+        * orbsvcs/tests/AVStreams/Multicast/server.h:
+        * orbsvcs/tests/AVStreams/Multicast/server.cpp:
+        * orbsvcs/tests/AVStreams/Multicast/ftp.h:
+        * orbsvcs/tests/AVStreams/Multicast/ftp.cpp:
+          Use service configurator to select reactor type.  Fix some typos.
+         
+        * orbsvcs/tests/AVStreams/Multicast/components_svc.conf: (Added)
+
 Fri Aug 31 19:28:26 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Faults/server.cpp:

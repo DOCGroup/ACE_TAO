@@ -2,6 +2,7 @@
 // $Id$
 
 #include "ace/Get_Opt.h"
+#include "tao/Strategies/advanced_resource.h"
 #include "orbsvcs/orbsvcs/CosNamingC.h"
 #include "orbsvcs/Naming/Naming_Utils.h"
 #include "orbsvcs/AV/AVStreams_i.h"
