@@ -56,11 +56,20 @@
 #  define TAO_SINGLETON_DECLARATION(T)
 #endif /* TAO_HAS_DLL */
 
+// @@ NW: Disable messing with the alignment for now.
+// For some reason, PC compilers don't implement "natural" alignment,
+// but only use fixed alignment policies.  The following #pragmas
+// configure fixed one-byte alignment policy, since some fixed policy
+// needs to apply throughout an ORB.
+
 #if defined (_MSC_VER)
+//# pragma  pack (push, 1)          // VC++, stack 1-byte alignment policy
 # ifdef   _DEBUG                  // convert from VC++ convention ...
-#  define  DEBUG           // ... to normal convention
+#   define  TAO_DEBUG             // ... to normal convention
 # endif
-#endif /* _MSC_VER */
+#elif defined (__BORLANDC__)
+# pragma option -a                // BC++, use 1 byte alignment
+#endif  /* _MSC_VER */
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO

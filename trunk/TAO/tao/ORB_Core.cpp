@@ -218,7 +218,7 @@ TAO_ORB_Core::init (int &argc, char *argv[])
   // -1 is unknown, default to what the resource factory sets.
   // @@ This is just for backwards compatibility.
 
-#if defined (DEBUG)
+#if defined (TAO_DEBUG)
   // Make it a little easier to debug programs using this code.
   {
     TAO_debug_level = ACE_Env_Value<u_int> ("TAO_ORB_DEBUG", 0);
@@ -234,7 +234,7 @@ TAO_ORB_Core::init (int &argc, char *argv[])
                     "TAO_debug_level == %d", TAO_debug_level));
       }
   }
-#endif  /* DEBUG */
+#endif  /* TAO_DEBUG */
 
   while (arg_shifter.is_anything_left ())
     {
