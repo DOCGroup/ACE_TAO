@@ -278,7 +278,7 @@ Routing_Slip_Persistence_Manager::Block_Header::Block_Header(Header_Type type)
 
 size_t
 Routing_Slip_Persistence_Manager::Block_Header::extract_header(
-  Persistent_Storage_Block& psb, const size_t offset)
+  Persistent_Storage_Block& psb, size_t offset)
 {
   size_t pos = offset;
   unsigned char* data = psb.data();
@@ -346,7 +346,7 @@ Routing_Slip_Persistence_Manager::Routing_Slip_Header::Routing_Slip_Header()
 
 size_t
 Routing_Slip_Persistence_Manager::Routing_Slip_Header::extract_header(
-  Persistent_Storage_Block& psb, const size_t offset)
+  Persistent_Storage_Block& psb, size_t offset)
 {
   size_t pos = offset;
   pos = this->Block_Header::extract_header(psb, pos);
@@ -372,7 +372,7 @@ Routing_Slip_Persistence_Manager::Routing_Slip_Header::extract_header(
 
 size_t
 Routing_Slip_Persistence_Manager::Routing_Slip_Header::put_header(
-  Persistent_Storage_Block& psb, const size_t offset)
+  Persistent_Storage_Block& psb, size_t offset)
 {
   // Assume that our psb can hold our small amount of data...
   size_t pos = offset;
@@ -514,8 +514,8 @@ Routing_Slip_Persistence_Manager::store_event(
 
 size_t
 Routing_Slip_Persistence_Manager::fill_block(Persistent_Storage_Block& psb,
-  const size_t offset_into_block, const ACE_Message_Block* data,
-  const size_t offset_into_msg)
+  size_t offset_into_block, const ACE_Message_Block* data,
+  size_t offset_into_msg)
 {
   unsigned char* ptr = (unsigned char*)data->rd_ptr();
   return this->fill_block(psb, offset_into_block, ptr + offset_into_msg,
@@ -524,7 +524,7 @@ Routing_Slip_Persistence_Manager::fill_block(Persistent_Storage_Block& psb,
 
 size_t
 Routing_Slip_Persistence_Manager::fill_block(Persistent_Storage_Block& psb,
-  const size_t offset_into_block, unsigned char* data, const size_t data_size)
+  size_t offset_into_block, unsigned char* data, size_t data_size)
 {
   size_t result = 0;
   if (data_size > 0)
