@@ -20,6 +20,7 @@
 #include "testS.h"
 #include "ace/Task.h"
 #include "ace/Get_Opt.h"
+#include "ace/SString.h"
 
 static int debug = 1;
 

@@ -3,6 +3,7 @@
 #include "Client_Task.h"
 #include "ace/Get_Opt.h"
 #include "ace/Argv_Type_Converter.h"
+#include "ace/SString.h"
 
 const char *output = "test.ior";
 const char *input = "file://test.ior";

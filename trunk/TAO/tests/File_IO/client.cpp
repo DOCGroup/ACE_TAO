@@ -21,6 +21,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
 #include "ace/OS.h"
+#include "ace/SString.h"
 #include "ace/Thread_Manager.h"
 
 ACE_RCSID(Default_Servant, client, "client.cpp,v 1.8 2001/03/26 21:16:52 coryan Exp")
