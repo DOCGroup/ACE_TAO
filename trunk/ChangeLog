@@ -1,3 +1,13 @@
+Sun Feb  1 17:06:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_unistd.inl:
+        * ace/README:
+          Some platforms have a swab function where the first argument is
+          non const, added ACE_HAS_NONCONST_SWAB which then must be set.
+
+        * ace/config-win32-borland.h:
+          Added ACE_HAS_NONCONST_SWAB
+
 Sun Feb  1 15:15:44 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_linux.GNU:
