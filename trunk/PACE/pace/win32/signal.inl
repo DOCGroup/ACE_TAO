@@ -81,8 +81,13 @@ PACE_INLINE
 int
 pace_sigfillset (pace_sigset_t * set)
 {
-  PACE_UNUSED_ARG (set);
-  PACE_ERRNO_NO_SUPPORT_RETURN (-1);
+  /* PACE_SIG_BITS is an enum defined in PACE/pace/win32/signal.inl */
+  int i = 0;
+  for ( ; i < PACE_SIG_BITS; ++i)
+  {
+    set->sigbits_[i] = ~(unsigned int)0;
+  }
+  return 0;
 }
 #endif /* PACE_HAS_POSIX_SIG_UOF */
 
