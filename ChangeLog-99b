@@ -1,69 +1,74 @@
+Thu Jul 01 08:46:10 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * bin/check_build_logs: filter out lines from IDL_Cubit
+          that contain "0 errors".
+
 Thu Jul 01 00:24:52 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* docs/ACE-guidelines.html: Added a table explaining how to use
-	  all the different ACE_*_STRING macros.
+        * docs/ACE-guidelines.html: Added a table explaining how to use
+          all the different ACE_*_STRING macros.
 
-	* tests/DLList_Test.cpp:
-	* tests/Hash_Map_Manager_Test.cpp:
-	* tests/Map_Manager_Test.cpp:
-	* tests/Message_Block_Test.cpp:
-	* tests/Notify_Performance_Test.cpp:
-	* tests/Priority_Task_Test.cpp:
-	* tests/Thread_Pool_Reactor_Test.cpp:
-	* tests/test_config.h: UNICODE fixes.  The usage of ASYS_TCHAR and
-	  LPCTSTR were mistaken in many places.
+        * tests/DLList_Test.cpp:
+        * tests/Hash_Map_Manager_Test.cpp:
+        * tests/Map_Manager_Test.cpp:
+        * tests/Message_Block_Test.cpp:
+        * tests/Notify_Performance_Test.cpp:
+        * tests/Priority_Task_Test.cpp:
+        * tests/Thread_Pool_Reactor_Test.cpp:
+        * tests/test_config.h: UNICODE fixes.  The usage of ASYS_TCHAR and
+          LPCTSTR were mistaken in many places.
 
 Wed Jun 30 16:31:11 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* tests/Cache_Map_Manager_Test.cpp (purge_test_cache): Solved
-	  VxWorks compiler warnings by declaring ACE_USED_ARG where
-	  needed.
-	* tests/DLL_Test.cpp (cdecl_decoration): Removed "static" off the
-	  method declaration to make VxWorks happy.
+        * tests/Cache_Map_Manager_Test.cpp (purge_test_cache): Solved
+          VxWorks compiler warnings by declaring ACE_USED_ARG where
+          needed.
+        * tests/DLL_Test.cpp (cdecl_decoration): Removed "static" off the
+          method declaration to make VxWorks happy.
 
 Wed Jun 30 16:13:58 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tests/Future_Set_Test.cpp: Added missing template instantiation
-	  for ACE_Hash_Map_Reverse_Iterator_Ex.  Also, added some fixes
-	  from John Tucker <jtucker@infoglide.com>.
+        * tests/Future_Set_Test.cpp: Added missing template instantiation
+          for ACE_Hash_Map_Reverse_Iterator_Ex.  Also, added some fixes
+          from John Tucker <jtucker@infoglide.com>.
 
 Wed Jun 30 12:09:22 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/ace_bcc.ide:
-	* tests/tests_bcc.ide:
-	* *.{bpr,bpg}: Removed unused BCB project files.
+        * ace/ace_bcc.ide:
+        * tests/tests_bcc.ide:
+        * *.{bpr,bpg}: Removed unused BCB project files.
 
 Tue Jun 29 23:12:58 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/OS.i:
-	  Use ACE_CAST_CONST to keep the silly Sun/CC 4.2 from
-	  complaining.
+        * ace/OS.i:
+          Use ACE_CAST_CONST to keep the silly Sun/CC 4.2 from
+          complaining.
 
 Tue Jun 29 22:48:43 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/OS.i (strncasecmp): Changed <n> to <len>.
+        * ace/OS.i (strncasecmp): Changed <n> to <len>.
 
 Tue Jun 29 22:33:55 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/OS.i:
-	  Fixed warnings in green hills and possibly othre EDG-based
-	  compilers.
+        * ace/OS.i:
+          Fixed warnings in green hills and possibly othre EDG-based
+          compilers.
 
-	* tests/run_tests.sh:
-	* tests/run_tests.vxworks:
-	  Take Future_Set_Test out, it does not work in too many
-	  platforms.
+        * tests/run_tests.sh:
+        * tests/run_tests.vxworks:
+          Take Future_Set_Test out, it does not work in too many
+          platforms.
 
 Tue Jun 29 21:24:13 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/SOCK.cpp (open): Removed an unused variable.  Thanks
-	  to Carlos for reporting this.
+        * ace/SOCK.cpp (open): Removed an unused variable.  Thanks
+          to Carlos for reporting this.
 
 Tue Jun 29 20:53:41 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/config-irix5.3-g++.h:
-	  IRIX 5.3 (!) has a DIRENT structure, thanks to Isaac Stoddard
-	  <i_stoddard@hso.link.com> for providing this fix.
+        * ace/config-irix5.3-g++.h:
+          IRIX 5.3 (!) has a DIRENT structure, thanks to Isaac Stoddard
+          <i_stoddard@hso.link.com> for providing this fix.
 
 Tue Jun 28 20:19:11 1999  Darrell Brunsch  <brunsch@cs.wustl.edu>
 
@@ -74,83 +79,83 @@ Tue Jun 28 20:19:11 1999  Darrell Brunsch  <brunsch@cs.wustl.edu>
 
 Tue Jun 29 18:48:22 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/Functor_T.h (class ACE_Pointer_Hash): Added new class for
-	  hashing pointers on their values.
+        * ace/Functor_T.h (class ACE_Pointer_Hash): Added new class for
+          hashing pointers on their values.
 
-	* ace/Future_Set: Restored future map to be a
-	  ACE_Hash_Map_Manager_Ex.
+        * ace/Future_Set: Restored future map to be a
+          ACE_Hash_Map_Manager_Ex.
 
 Tue Jun 29 14:45:38 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tests/run_tests.bat: Removed New_Fail_Test from the
-	  run_tests.bat (the script for NT).  This tests takes too long to
-	  run and swaps out the entire machine making is impossible to do
-	  useful things while the test is running.  Note that the test is
-	  still there and can be run by hand (i.e., on its own, without
-	  the run_tests.bat script).
+        * tests/run_tests.bat: Removed New_Fail_Test from the
+          run_tests.bat (the script for NT).  This tests takes too long to
+          run and swaps out the entire machine making is impossible to do
+          useful things while the test is running.  Note that the test is
+          still there and can be run by hand (i.e., on its own, without
+          the run_tests.bat script).
 
-	* ace/Future: Changed the observer collection to be an unbounded
-	  set and changed the future map to map manager.  These are
-	  temporary changes to get things compiling again.  Once we figure
-	  out the correct hashing functions, we can restore the original
-	  code.
+        * ace/Future: Changed the observer collection to be an unbounded
+          set and changed the future map to map manager.  These are
+          temporary changes to get things compiling again.  Once we figure
+          out the correct hashing functions, we can restore the original
+          code.
 
 Tue Jun 29 13:38:52 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* AUTHORS:
+        * AUTHORS:
 
-	  Added an AUTHORS file to bring ACE closer to recent software
-	  distribution conventions.
+          Added an AUTHORS file to bring ACE closer to recent software
+          distribution conventions.
 
-	* Makefile:
+        * Makefile:
 
-	  Added Carlos' websvcs directory to the release, in addition to
-	  the missing top-level ACE Configuration project files and
-	  directories.
+          Added Carlos' websvcs directory to the release, in addition to
+          the missing top-level ACE Configuration project files and
+          directories.
 
-	* config.guess:
-	* config.sub:
-	* ltconfig:
-	* ltmain.sh:
-	* missing:
-	* mkinstalldirs:
+        * config.guess:
+        * config.sub:
+        * ltconfig:
+        * ltmain.sh:
+        * missing:
+        * mkinstalldirs:
 
-	  Updated from latest GNU libtool and GNU automake.
+          Updated from latest GNU libtool and GNU automake.
 
 Tue Jun 29 12:07:08 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* README:
-	* THANKS:
+        * README:
+        * THANKS:
 
-	  Moved list of contributors to the file `THANKS' to bring the
-	  distribution closer to conventional distribution standards.
+          Moved list of contributors to the file `THANKS' to bring the
+          distribution closer to conventional distribution standards.
 
-	* Makefile:
+        * Makefile:
 
-	  Added the THANKS file to the list of controlled files so that it
-	  gets distributed with ACE.
+          Added the THANKS file to the list of controlled files so that it
+          gets distributed with ACE.
 
 Tue Jun 29 11:27:23 1999  Matthew J Braun  <mjb2@cs.wustl.edu>
 
-	* ace/Containers_T.i: Modified next method in ACE_DLList_Iterator
-	  to avoid segfaults (a bad thing).
+        * ace/Containers_T.i: Modified next method in ACE_DLList_Iterator
+          to avoid segfaults (a bad thing).
 
 Tue Jun 29 10:54:15 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/OS.i:
-	  Sun/CC was not pleased with a cast from "void* const" to "const
-	  char*", and rightly so.
+        * ace/OS.i:
+          Sun/CC was not pleased with a cast from "void* const" to "const
+          char*", and rightly so.
 
 Tue Jun 29 09:21:06 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/OS.h:
-	* ace/OS.i:
-	* ace/SOCK_Dgram.h:
-	* ace/SOCK_Dgram.i:
-	  Fixed the unix version ACE_OS::sendto() call.
-	  Also fixed the Win32 version and the Win32 version of
-	  ACE_OS::recvfrom, had to change the signatures to make them safe
-	  and fit the WinSock2 interfaces.
+        * ace/OS.h:
+        * ace/OS.i:
+        * ace/SOCK_Dgram.h:
+        * ace/SOCK_Dgram.i:
+          Fixed the unix version ACE_OS::sendto() call.
+          Also fixed the Win32 version and the Win32 version of
+          ACE_OS::recvfrom, had to change the signatures to make them safe
+          and fit the WinSock2 interfaces.
 
 Tue Jun 29 07:07:30 1999  David L. Levine  <levine@cs.wustl.edu>
 
