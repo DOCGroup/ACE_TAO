@@ -401,7 +401,8 @@ TAO_SHMIOP_Transport::send (TAO_Stub *stub,
 
 ssize_t
 TAO_SHMIOP_Transport::send (const ACE_Message_Block *message_block,
-                            const ACE_Time_Value *max_wait_time)
+                            const ACE_Time_Value *max_wait_time,
+			    size_t *)
 {
   TAO_FUNCTION_PP_TIMEPROBE (TAO_SHMIOP_TRANSPORT_SEND_START);
   return this->handler_->peer ().send (message_block,
