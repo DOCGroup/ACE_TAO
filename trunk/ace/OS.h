@@ -1210,14 +1210,6 @@ typedef unsigned int *ACE_RANDR_TYPE;
 struct msghdr {};
 #endif /* ACE_HAS_MSG */
 
-#if !defined (ACE_WIN32)
-#if defined (ACE_HAS_AIX_HIRES_TIMER)
-typedef long long hrtime_t;
-#elif !defined (ACE_HAS_HI_RES_TIMER)
-typedef long hrtime_t;
-#endif /* ACE_HAS_HI_RES_TIMER */
-#endif /* !ACE_WIN32 */
-
 #if !defined (ACE_HAS_SIG_ATOMIC_T)
 typedef int sig_atomic_t;
 #endif /* !ACE_HAS_SIG_ATOMIC_T */
@@ -1858,6 +1850,15 @@ typedef pri_t ACE_pri_t;
 typedef long ACE_id_t;
 typedef short ACE_pri_t;
 #endif /* ACE_HAS_STHREADS */
+
+#if !defined (ACE_HAS_HI_RES_TIMER)
+#if defined (ACE_HAS_LONGLONG_T)
+typedef long long hrtime_t;
+#else
+typedef long hrtime_t;
+#endif /* ACE_HAS_LONGLONG_T */
+/* hrtime_t is defined on systems (Suns) with ACE_HAS_HI_RES_TIMER */
+#endif /* ! ACE_HAS_HI_RES_TIMER */
 
 #endif /* ACE_WIN32 */
 
