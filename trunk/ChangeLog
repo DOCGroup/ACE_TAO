@@ -1,15 +1,24 @@
+Tue Oct  5 08:54:20 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/bor.mpd:
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Allow the addition to 'postcommand' within the scope of a custom
+          section.  This is part of the MPC change from Tue Oct  5 08:53:10
+          2004.
+
 Mon Oct  4 13:34:08 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/OS_NS_stdlib.cpp:
+        * ace/OS_NS_stdlib.cpp:
 
-	  Added missing "ace/OS_NS_ctype.h" include.
+          Added missing "ace/OS_NS_ctype.h" include.
 
-	  (mkstemp_emulation):
+          (mkstemp_emulation):
 
-	  ACE_OS::rand_r() accepts a reference to a non-const
-	  ACE_RANDR_TYPE, not a pointer to a const one.  Removed
-	  "address-of" "&" from ACE_OS::rand_r() seed argument, and
-	  removed the "const" qualifier from "seed" variable declaration.
+          ACE_OS::rand_r() accepts a reference to a non-const
+          ACE_RANDR_TYPE, not a pointer to a const one.  Removed
+          "address-of" "&" from ACE_OS::rand_r() seed argument, and
+          removed the "const" qualifier from "seed" variable declaration.
 
 Mon Oct  4 14:22:03 2004  Martin Corino  <mcorino@remedy.nl>
 
