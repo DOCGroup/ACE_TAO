@@ -1,3 +1,13 @@
+Wed Jan 21 04:43:57 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* tao/corbacom.h: Added Object_var and ORB_var to the CORBA class
+	(i.e., to the namespace)
+
+	* tao/sequence.cpp: Operator= for string sequence still had bugs
+	where we were not allocating a larger buffer of the assigned
+	quantity was larger than us. Similar bugs *might* be present in
+	other sequence classes and I have not tested them yet.
+
 Wed Jan 21 01:34:07 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/Cubit/TAO/MT_Cubit/{server,client}.cpp: Ifdef'ed out
@@ -6,13 +16,13 @@ Wed Jan 21 01:34:07 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 	* orbsvcs/Naming_Service/Naming_Service.cpp: We should use
  	  "ace/streams.h" to include iostream definition instead of using
  	  <iostream.h> directly.  It is not compatible with the new
- 	  standard CPP libraries.	
+ 	  standard CPP libraries.
 
 	* orbsvcs/Event_Service/Event_Service.dsp:
 	* orbsvcs/Naming_Service/Naming_Service.dsp:
 	* orbsvcs/Scheduling_Service/Scheduling_Service.dsp: It used the
- 	  wrong libraries. 
-	
+ 	  wrong libraries.
+
 Tue Jan 20 22:59:42 1998  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
 
 	* tao/sequence_T.cpp: Fixed more typos where it was referring to
@@ -20,34 +30,34 @@ Tue Jan 20 22:59:42 1998  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
 
 Tue Jan 20 22:38:10 1998    <coryan@MILONGA>
 
-	* tests/Param_Test/tests.cpp: 
+	* tests/Param_Test/tests.cpp:
 	  No need to call CORBA::string_free() on opname_, since it is a
 	  String_var
 
-	* tao/sequence_T.cpp: 
+	* tao/sequence_T.cpp:
 	  Fixed typo in object sequences.
 
 Tue Jan 20 21:53:52 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Makefile: 
-	* orbsvcs/orbsvcs/TAO_IDL_templates.cpp: 
+	* orbsvcs/orbsvcs/Makefile:
+	* orbsvcs/orbsvcs/TAO_IDL_templates.cpp:
 	  Added missing template instantiations, they go into their own
 	  file because I could not think of a "natural" place to put them.
 
 Tue Jan 20 20:25:41 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/sequence.h: 
-	* tao/sequence.i: 
-	* tao/sequence.cpp: 
-	* tao/sequence_T.i: 
-	* tao/sequence_T.cpp: 
+	* tao/sequence.h:
+	* tao/sequence.i:
+	* tao/sequence.cpp:
+	* tao/sequence_T.i:
+	* tao/sequence_T.cpp:
 	  Another round of changes, this time fixing several bugs reported
 	  by Andy and Irfan.
 
 Tue Jan 20 20:23:57 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/nvlist.h: 
-	* tao/nvlist.i: 
+	* tao/nvlist.h:
+	* tao/nvlist.i:
 	  Fixed warnings for IRIX and follow the spec, use const methods
 	  but return non-const types!
 
