@@ -1,3 +1,29 @@
+Thu Nov  6 17:57:10 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/OS_Log_Msg_Attributes.h:
+        * ace/Basic_Types.h:
+          Moved #include config-all.h outside header guard to avoid circular
+          include problem due to including OS_main.h in config-all.h on
+          Windows.
+
+        * ace/Base_Thread_Adapter.h:
+        * ace/Cleanup.h:
+        * ace/Global_Macros.h:
+        * ace/OS_Dirent.h:
+        * ace/OS_Errno.h:
+        * ace/OS_Log_Msg_Attributes.h:
+        * ace/OS_Memory.h:
+        * ace/OS_NS_Thread.h:
+        * ace/OS_QoS.h:
+        * ace/OS_String.h:
+        * ace/OS_Thread_Adapter.h:
+        * ace/Object_Manager_Base.h:
+        * ace/Thread_Hook.h:
+        * ace/Time_Value.h:
+        * ace/os_include/os_pthread.h:
+          Changed the rest of the #include OS_Export.h to ACE_export.h and
+          ACE_OS_Export to ACE_Export.
+
 Thu Nov  6 17:53:35 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/INET_Addr.{h,i} (set_addr):

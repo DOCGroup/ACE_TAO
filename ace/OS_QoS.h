@@ -16,7 +16,7 @@
 #define ACE_OS_QOS_H
 #include /**/ "ace/pre.h"
 
-#include "ace/OS_Export.h"
+#include "ace/ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -101,7 +101,7 @@ typedef unsigned long ACE_SERVICE_TYPE;
  * @brief Wrapper class that defines the flow spec QoS information,
  *    which is used by IntServ (RSVP) and DiffServ.
  */
-class ACE_OS_Export ACE_Flow_Spec
+class ACE_Export ACE_Flow_Spec
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
   : public FLOWSPEC
 #endif /* ACE_HAS_WINSOCK2 */
@@ -206,7 +206,7 @@ private:
  * @brief Wrapper class that holds the sender and receiver flow spec
  *     information, which is used by IntServ (RSVP) and DiffServ.
  */
-class ACE_OS_Export ACE_QoS
+class ACE_Export ACE_QoS
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
   : public QOS
 #endif /* ACE_HAS_WINSOCK2 */
@@ -249,7 +249,7 @@ private:
  * @brief Wrapper class that simplifies the information passed to the QoS
  * enabled <ACE_OS::connect> and <ACE_OS::join_leaf> methods.
  */
-class ACE_OS_Export ACE_QoS_Params
+class ACE_Export ACE_QoS_Params
 {
 public:
   /**
@@ -338,7 +338,7 @@ typedef int (*ACE_QOS_CONDITION_FUNC) (iovec *caller_id,
  * @brief Wrapper class that simplifies the information passed to the QoS
  * enabled <ACE_OS::accept> method.
  */
-class ACE_OS_Export ACE_Accept_QoS_Params
+class ACE_Export ACE_Accept_QoS_Params
 {
 public:
   /**

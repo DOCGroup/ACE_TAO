@@ -24,7 +24,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/OS_Export.h"
+#include "ace/ACE_export.h"
 #include "ace/Cleanup.h"
 #include "ace/os_include/sys/os_types.h"
 #include "ace/os_include/os_signal.h"
@@ -43,7 +43,7 @@ class ACE_Thread_Hook;
  *
  * Encapsulates the most useful ACE_Object_Manager data structures.
  */
-class ACE_OS_Export ACE_Object_Manager_Base
+class ACE_Export ACE_Object_Manager_Base
 {
 # if (defined (ACE_PSOS) && defined (__DIAB))  || \
      (defined (__DECCXX_VER) && __DECCXX_VER < 60000000)
@@ -132,7 +132,7 @@ ACE_OS_Object_Manager_Internal_Exit_Hook (void);
 // @@ This forward declaration should go away.
 class ACE_Log_Msg;
 
-class ACE_OS_Export ACE_OS_Object_Manager : public ACE_Object_Manager_Base
+class ACE_Export ACE_OS_Object_Manager : public ACE_Object_Manager_Base
 {
 public:
   /// Explicitly initialize.
