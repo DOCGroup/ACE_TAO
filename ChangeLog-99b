@@ -7,7 +7,7 @@ Sun Jan 31 16:09:55 1999  Jeff Parswons >parsons@cs.wustl.edu>
 
         * ACE_wrappers/tests/CDR_Test.cpp:
           Plugged a memory leak in a string read from the CDR stream.
-          Thanks to Sangwoo Jin for pointing this out.
+          Thanks to Sangwoo Jin <swjinjin@sei.co.kr> for pointing this out.
 
         * ace/CDR.{h,i,cpp}:
           Changed the name of the "base" class holding the constants to
