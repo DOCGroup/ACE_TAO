@@ -105,6 +105,8 @@ Cubit_Server::run (CORBA::Environment& env)
 
 Cubit_Server::~Cubit_Server (void)
 {
-  this->orb_manager_.deactivate_under_child_poa (this->factory_id_.in ());
+  if (this->factory_id_.in ())
+    this->orb_manager_.deactivate_under_child_poa (this->factory_id_.in ());
+
   delete this->factory_impl_;
 }
