@@ -39,10 +39,6 @@ using xercesc::DOMNodeFilter;
 
 namespace Config_Handler_Test
 {
-  template <typename HANDLER, typename DATA>
-    int run_test (int argc, 
-		  ACE_TCHAR *argv[], 
-		  void (HANDLER::*func) (DATA&));
 }
 
 
