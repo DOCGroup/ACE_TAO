@@ -1,3 +1,17 @@
+Tue Dec 28 18:32:02 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
+
+	* ace/QoS_Session_Impl.cpp: Added a comment for get qos().
+	
+	* examples/QOS/Receiver_QOS_Event_Handler.cpp:
+	* examples/QOS/Receiver_QOS_Event_Handler.h:
+	* examples/QOS/server.cpp:
+	  
+	  Changed the server of the GQoS example to use the newly added
+	  QoS classes of ACE. The program structure has changed to reflect
+	  the abstractness of the ACE QoS API. The final goal is to remove
+	  all the GQoSisms from the applications, even if this means
+	  constraining it by the granularity provided by RAPI.
+
 Tue Dec 28 15:50:46 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/test_config.h (set_output): removed the flags
