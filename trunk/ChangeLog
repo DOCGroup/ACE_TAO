@@ -1,3 +1,20 @@
+Wed Aug 13 23:43:24 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/Bound_Ptr.i:
+          Added #include Log_Msg.h when ACE_NEW_THROWS_EXCEPTIONS is
+          defined to pickup ACE_ASSERT.
+
+        * apps/JAWS/server/HTTP_Server.cpp:
+          Added a JAWS_ prefix the enums to get around conflict on Windows
+          where ASYNCH is defined as a macro.
+
+        * apps/soreduce/Obj_Module.cpp:
+          Added #include Log_Msg.h to pickup ACE_ASSERT.
+
+        * performance-tests/Synch-Benchmarks/Perf_Test/Performance_Test_Options.cpp:
+          Added #ifdef around ACE_Trace::start/stop_tracing() based on
+          ACE_HAS_TRACE.
+
 Wed Aug 13 20:27:46 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * tests/tests.mpc:

@@ -11,6 +11,7 @@
 #include <ace/Process.h>
 #include <ace/Pipe.h>
 #include <ace/Message_Block.h>
+#include "ace/Log_Msg.h"
 
 #include "Obj_Module.h"
 
