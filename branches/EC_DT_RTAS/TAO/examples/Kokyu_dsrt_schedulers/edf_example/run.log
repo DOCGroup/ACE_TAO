@@ -1,0 +1,422 @@
+execve("./dt_oneway_server", ["./dt_oneway_server"], [/* 28 vars */]) = 0
+uname({sys="Linux", node="bhangra.doc.wustl.edu", ...}) = 0
+brk(0)                                  = 0x8060dc8
+open("/etc/ld.so.preload", O_RDONLY)    = -1 ENOENT (No such file or directory)
+open("/usr/src/ACE_CS520/TAO/examples/Kokyu_dsrt_schedulers/tls/i686/mmx/libKokyu_DSRT_Schedulers.so.1.3.5", O_RDONLY) = -1 ENOENT (No such file or directory)
+stat64("/usr/src/ACE_CS520/TAO/examples/Kokyu_dsrt_schedulers/tls/i686/mmx", 0xbffff030) = -1 ENOENT (No such file or directory)
+open("/usr/src/ACE_CS520/TAO/examples/Kokyu_dsrt_schedulers/tls/i686/libKokyu_DSRT_Schedulers.so.1.3.5", O_RDONLY) = -1 ENOENT (No such file or directory)
+stat64("/usr/src/ACE_CS520/TAO/examples/Kokyu_dsrt_schedulers/tls/i686", 0xbffff030) = -1 ENOENT (No such file or directory)
+open("/usr/src/ACE_CS520/TAO/examples/Kokyu_dsrt_schedulers/tls/mmx/libKokyu_DSRT_Schedulers.so.1.3.5", O_RDONLY) = -1 ENOENT (No such file or directory)
+stat64("/usr/src/ACE_CS520/TAO/examples/Kokyu_dsrt_schedulers/tls/mmx", 0xbffff030) = -1 ENOENT (No such file or directory)
+open("/usr/src/ACE_CS520/TAO/examples/Kokyu_dsrt_schedulers/tls/libKokyu_DSRT_Schedulers.so.1.3.5", O_RDONLY) = -1 ENOENT (No such file or directory)
+stat64("/usr/src/ACE_CS520/TAO/examples/Kokyu_dsrt_schedulers/tls", 0xbffff030) = -1 ENOENT (No such file or directory)
+open("/usr/src/ACE_CS520/TAO/examples/Kokyu_dsrt_schedulers/i686/mmx/libKokyu_DSRT_Schedulers.so.1.3.5", O_RDONLY) = -1 ENOENT (No such file or directory)
+stat64("/usr/src/ACE_CS520/TAO/examples/Kokyu_dsrt_schedulers/i686/mmx", 0xbffff030) = -1 ENOENT (No such file or directory)
+open("/usr/src/ACE_CS520/TAO/examples/Kokyu_dsrt_schedulers/i686/libKokyu_DSRT_Schedulers.so.1.3.5", O_RDONLY) = -1 ENOENT (No such file or directory)
+stat64("/usr/src/ACE_CS520/TAO/examples/Kokyu_dsrt_schedulers/i686", 0xbffff030) = -1 ENOENT (No such file or directory)
+open("/usr/src/ACE_CS520/TAO/examples/Kokyu_dsrt_schedulers/mmx/libKokyu_DSRT_Schedulers.so.1.3.5", O_RDONLY) = -1 ENOENT (No such file or directory)
+stat64("/usr/src/ACE_CS520/TAO/examples/Kokyu_dsrt_schedulers/mmx", 0xbffff030) = -1 ENOENT (No such file or directory)
+open("/usr/src/ACE_CS520/TAO/examples/Kokyu_dsrt_schedulers/libKokyu_DSRT_Schedulers.so.1.3.5", O_RDONLY) = 3
+read(3, "\177ELF\1\1\1\0\0\0\0\0\0\0\0\0\3\0\3\0\1\0\0\0\10\7\3"..., 512) = 512
+fstat64(3, {st_mode=S_IFREG|0755, st_size=3122937, ...}) = 0
+old_mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x40016000
+old_mmap(NULL, 486780, PROT_READ|PROT_EXEC, MAP_PRIVATE, 3, 0) = 0x40017000
+old_mmap(0x40086000, 32768, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED, 3, 0x6f000) = 0x40086000
+close(3)                                = 0
+open("/usr/src/ACE_CS520/TAO/examples/Kokyu_dsrt_schedulers/libTAO_RTScheduler.so.1.3.5", O_RDONLY) = -1 ENOENT (No such file or directory)
+open("/usr/src/ACE_CS520/ace/tls/i686/mmx/libTAO_RTScheduler.so.1.3.5", O_RDONLY) = -1 ENOENT (No such file or directory)
+stat64("/usr/src/ACE_CS520/ace/tls/i686/mmx", 0xbffff020) = -1 ENOENT (No such file or directory)
+open("/usr/src/ACE_CS520/ace/tls/i686/libTAO_RTScheduler.so.1.3.5", O_RDONLY) = -1 ENOENT (No such file or directory)
+stat64("/usr/src/ACE_CS520/ace/tls/i686", 0xbffff020) = -1 ENOENT (No such file or directory)
+open("/usr/src/ACE_CS520/ace/tls/mmx/libTAO_RTScheduler.so.1.3.5", O_RDONLY) = -1 ENOENT (No such file or directory)
+stat64("/usr/src/ACE_CS520/ace/tls/mmx", 0xbffff020) = -1 ENOENT (No such file or directory)
+open("/usr/src/ACE_CS520/ace/tls/libTAO_RTScheduler.so.1.3.5", O_RDONLY) = -1 ENOENT (No such file or directory)
+stat64("/usr/src/ACE_CS520/ace/tls", 0xbffff020) = -1 ENOENT (No such file or directory)
+open("/usr/src/ACE_CS520/ace/i686/mmx/libTAO_RTScheduler.so.1.3.5", O_RDONLY) = -1 ENOENT (No such file or directory)
+stat64("/usr/src/ACE_CS520/ace/i686/mmx", 0xbffff020) = -1 ENOENT (No such file or directory)
+open("/usr/src/ACE_CS520/ace/i686/libTAO_RTScheduler.so.1.3.5", O_RDONLY) = -1 ENOENT (No such file or directory)
+stat64("/usr/src/ACE_CS520/ace/i686", 0xbffff020) = -1 ENOENT (No such file or directory)
+open("/usr/src/ACE_CS520/ace/mmx/libTAO_RTScheduler.so.1.3.5", O_RDONLY) = -1 ENOENT (No such file or directory)
+stat64("/usr/src/ACE_CS520/ace/mmx", 0xbffff020) = -1 ENOENT (No such file or directory)
+open("/usr/src/ACE_CS520/ace/libTAO_RTScheduler.so.1.3.5", O_RDONLY) = 3
+read(3, "\177ELF\1\1\1\0\0\0\0\0\0\0\0\0\3\0\3\0\1\0\0\0\320Q\1"..., 512) = 512
+fstat64(3, {st_mode=S_IFREG|0755, st_size=1755237, ...}) = 0
+old_mmap(NULL, 195668, PROT_READ|PROT_EXEC, MAP_PRIVATE, 3, 0) = 0x4008e000
+old_mmap(0x400ba000, 16384, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED, 3, 0x2b000) = 0x400ba000
+close(3)                                = 0
+open("/usr/src/ACE_CS520/TAO/examples/Kokyu_dsrt_schedulers/libKokyu.so.5.3.5", O_RDONLY) = -1 ENOENT (No such file or directory)
+open("/usr/src/ACE_CS520/ace/libKokyu.so.5.3.5", O_RDONLY) = 3
+read(3, "\177ELF\1\1\1\0\0\0\0\0\0\0\0\0\3\0\3\0\1\0\0\0|v\0\000"..., 512) = 512
+fstat64(3, {st_mode=S_IFREG|0755, st_size=670758, ...}) = 0
+old_mmap(NULL, 72300, PROT_READ|PROT_EXEC, MAP_PRIVATE, 3, 0) = 0x400be000
+old_mmap(0x400cf000, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED, 3, 0x11000) = 0x400cf000
+close(3)                                = 0
+open("/usr/src/ACE_CS520/TAO/examples/Kokyu_dsrt_schedulers/libTAO_RTCORBA.so.1.3.5", O_RDONLY) = -1 ENOENT (No such file or directory)
+open("/usr/src/ACE_CS520/ace/libTAO_RTCORBA.so.1.3.5", O_RDONLY) = 3
+read(3, "\177ELF\1\1\1\0\0\0\0\0\0\0\0\0\3\0\3\0\1\0\0\0$k\3\000"..., 512) = 512
+fstat64(3, {st_mode=S_IFREG|0755, st_size=4366049, ...}) = 0
+old_mmap(NULL, 536092, PROT_READ|PROT_EXEC, MAP_PRIVATE, 3, 0) = 0x400d0000
+old_mmap(0x40146000, 49152, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED, 3, 0x75000) = 0x40146000
+old_mmap(0x40152000, 3612, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x40152000
+close(3)                                = 0
+open("/usr/src/ACE_CS520/TAO/examples/Kokyu_dsrt_schedulers/libTAO_PortableServer.so.1.3.5", O_RDONLY) = -1 ENOENT (No such file or directory)
+open("/usr/src/ACE_CS520/ace/libTAO_PortableServer.so.1.3.5", O_RDONLY) = 3
+read(3, "\177ELF\1\1\1\0\0\0\0\0\0\0\0\0\3\0\3\0\1\0\0\0\210\305"..., 512) = 512
+fstat64(3, {st_mode=S_IFREG|0755, st_size=9538597, ...}) = 0
+old_mmap(NULL, 1609080, PROT_READ|PROT_EXEC, MAP_PRIVATE, 3, 0) = 0x40153000
+old_mmap(0x402bb000, 126976, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED, 3, 0x168000) = 0x402bb000
+old_mmap(0x402da000, 7544, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x402da000
+close(3)                                = 0
+open("/usr/src/ACE_CS520/TAO/examples/Kokyu_dsrt_schedulers/libTAO_IORInterceptor.so.1.3.5", O_RDONLY) = -1 ENOENT (No such file or directory)
+open("/usr/src/ACE_CS520/ace/libTAO_IORInterceptor.so.1.3.5", O_RDONLY) = 3
+read(3, "\177ELF\1\1\1\0\0\0\0\0\0\0\0\0\3\0\3\0\1\0\0\0XG\0\000"..., 512) = 512
+fstat64(3, {st_mode=S_IFREG|0755, st_size=774824, ...}) = 0
+old_mmap(NULL, 39620, PROT_READ|PROT_EXEC, MAP_PRIVATE, 3, 0) = 0x402dc000
+old_mmap(0x402e5000, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED, 3, 0x8000) = 0x402e5000
+close(3)                                = 0
+open("/usr/src/ACE_CS520/TAO/examples/Kokyu_dsrt_schedulers/libTAO_Valuetype.so.1.3.5", O_RDONLY) = -1 ENOENT (No such file or directory)
+open("/usr/src/ACE_CS520/ace/libTAO_Valuetype.so.1.3.5", O_RDONLY) = 3
+read(3, "\177ELF\1\1\1\0\0\0\0\0\0\0\0\0\3\0\3\0\1\0\0\0\334\\\0"..., 512) = 512
+fstat64(3, {st_mode=S_IFREG|0755, st_size=938916, ...}) = 0
+old_mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x402e6000
+old_mmap(NULL, 55236, PROT_READ|PROT_EXEC, MAP_PRIVATE, 3, 0) = 0x402e7000
+old_mmap(0x402f4000, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED, 3, 0xd000) = 0x402f4000
+close(3)                                = 0
+open("/usr/src/ACE_CS520/TAO/examples/Kokyu_dsrt_schedulers/libTAO_ObjRefTemplate.so.1.3.5", O_RDONLY) = -1 ENOENT (No such file or directory)
+open("/usr/src/ACE_CS520/ace/libTAO_ObjRefTemplate.so.1.3.5", O_RDONLY) = 3
+read(3, "\177ELF\1\1\1\0\0\0\0\0\0\0\0\0\3\0\3\0\1\0\0\0\374T\0"..., 512) = 512
+fstat64(3, {st_mode=S_IFREG|0755, st_size=350093, ...}) = 0
+old_mmap(NULL, 48108, PROT_READ|PROT_EXEC, MAP_PRIVATE, 3, 0) = 0x402f5000
+old_mmap(0x40300000, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED, 3, 0xa000) = 0x40300000
+close(3)                                = 0
+open("/usr/src/ACE_CS520/TAO/examples/Kokyu_dsrt_schedulers/libTAO.so.1.3.5", O_RDONLY) = -1 ENOENT (No such file or directory)
+open("/usr/src/ACE_CS520/ace/libTAO.so.1.3.5", O_RDONLY) = 3
+read(3, "\177ELF\1\1\1\0\0\0\0\0\0\0\0\0\3\0\3\0\1\0\0\0H\247\n"..., 512) = 512
+fstat64(3, {st_mode=S_IFREG|0755, st_size=25223732, ...}) = 0
+old_mmap(NULL, 2170064, PROT_READ|PROT_EXEC, MAP_PRIVATE, 3, 0) = 0x40301000
+old_mmap(0x404fb000, 77824, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED, 3, 0x1f9000) = 0x404fb000
+old_mmap(0x4050e000, 19664, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x4050e000
+close(3)                                = 0
+open("/usr/src/ACE_CS520/TAO/examples/Kokyu_dsrt_schedulers/libACE.so.5.3.5", O_RDONLY) = -1 ENOENT (No such file or directory)
+open("/usr/src/ACE_CS520/ace/libACE.so.5.3.5", O_RDONLY) = 3
+read(3, "\177ELF\1\1\1\0\0\0\0\0\0\0\0\0\3\0\3\0\1\0\0\0\310\337"..., 512) = 512
+fstat64(3, {st_mode=S_IFREG|0755, st_size=15814175, ...}) = 0
+old_mmap(NULL, 1526848, PROT_READ|PROT_EXEC, MAP_PRIVATE, 3, 0) = 0x40513000
+old_mmap(0x4067a000, 49152, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED, 3, 0x166000) = 0x4067a000
+old_mmap(0x40686000, 7232, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x40686000
+close(3)                                = 0
+open("/usr/src/ACE_CS520/TAO/examples/Kokyu_dsrt_schedulers/libdl.so.2", O_RDONLY) = -1 ENOENT (No such file or directory)
+open("/usr/src/ACE_CS520/ace/libdl.so.2", O_RDONLY) = -1 ENOENT (No such file or directory)
+open("/etc/ld.so.cache", O_RDONLY)      = 3
+fstat64(3, {st_mode=S_IFREG|0644, st_size=58101, ...}) = 0
+old_mmap(NULL, 58101, PROT_READ, MAP_PRIVATE, 3, 0) = 0x40688000
+close(3)                                = 0
+open("/lib/libdl.so.2", O_RDONLY)       = 3
+read(3, "\177ELF\1\1\1\0\0\0\0\0\0\0\0\0\3\0\3\0\1\0\0\0\340\30"..., 512) = 512
+fstat64(3, {st_mode=S_IFREG|0755, st_size=15900, ...}) = 0
+old_mmap(NULL, 13176, PROT_READ|PROT_EXEC, MAP_PRIVATE, 3, 0) = 0x40697000
+old_mmap(0x4069a000, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED, 3, 0x2000) = 0x4069a000
+close(3)                                = 0
+open("/usr/src/ACE_CS520/TAO/examples/Kokyu_dsrt_schedulers/libpthread.so.0", O_RDONLY) = -1 ENOENT (No such file or directory)
+open("/usr/src/ACE_CS520/ace/libpthread.so.0", O_RDONLY) = -1 ENOENT (No such file or directory)
+open("/lib/i686/libpthread.so.0", O_RDONLY) = 3
+read(3, "\177ELF\1\1\1\0\0\0\0\0\0\0\0\0\3\0\3\0\1\0\0\0\360A\0"..., 512) = 512
+fstat64(3, {st_mode=S_IFREG|0755, st_size=93412, ...}) = 0
+old_mmap(NULL, 325120, PROT_READ|PROT_EXEC, MAP_PRIVATE, 3, 0) = 0x4069b000
+old_mmap(0x406a8000, 12288, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED, 3, 0xd000) = 0x406a8000
+old_mmap(0x406ab000, 259584, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x406ab000
+close(3)                                = 0
+open("/usr/src/ACE_CS520/TAO/examples/Kokyu_dsrt_schedulers/librt.so.1", O_RDONLY) = -1 ENOENT (No such file or directory)
+open("/usr/src/ACE_CS520/ace/librt.so.1", O_RDONLY) = -1 ENOENT (No such file or directory)
+open("/lib/i686/librt.so.1", O_RDONLY)  = 3
+read(3, "\177ELF\1\1\1\0\0\0\0\0\0\0\0\0\3\0\3\0\1\0\0\0\200\33"..., 512) = 512
+fstat64(3, {st_mode=S_IFREG|0755, st_size=37592, ...}) = 0
+old_mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x406eb000
+old_mmap(NULL, 73720, PROT_READ|PROT_EXEC, MAP_PRIVATE, 3, 0) = 0x406ec000
+old_mmap(0x406f2000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED, 3, 0x5000) = 0x406f2000
+old_mmap(0x406f4000, 40952, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x406f4000
+close(3)                                = 0
+open("/usr/src/ACE_CS520/TAO/examples/Kokyu_dsrt_schedulers/libstdc++.so.5", O_RDONLY) = -1 ENOENT (No such file or directory)
+open("/usr/src/ACE_CS520/ace/libstdc++.so.5", O_RDONLY) = -1 ENOENT (No such file or directory)
+open("/usr/lib/libstdc++.so.5", O_RDONLY) = 3
+read(3, "\177ELF\1\1\1\0\0\0\0\0\0\0\0\0\3\0\3\0\1\0\0\0\0\253\3"..., 512) = 512
+fstat64(3, {st_mode=S_IFREG|0755, st_size=710608, ...}) = 0
+old_mmap(NULL, 729660, PROT_READ|PROT_EXEC, MAP_PRIVATE, 3, 0) = 0x406fe000
+old_mmap(0x407a7000, 20480, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED, 3, 0xa9000) = 0x407a7000
+old_mmap(0x407ac000, 16956, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x407ac000
+close(3)                                = 0
+open("/usr/src/ACE_CS520/TAO/examples/Kokyu_dsrt_schedulers/libm.so.6", O_RDONLY) = -1 ENOENT (No such file or directory)
+open("/usr/src/ACE_CS520/ace/libm.so.6", O_RDONLY) = -1 ENOENT (No such file or directory)
+open("/lib/i686/libm.so.6", O_RDONLY)   = 3
+read(3, "\177ELF\1\1\1\0\0\0\0\0\0\0\0\0\3\0\3\0\1\0\0\0\2004\0"..., 512) = 512
+fstat64(3, {st_mode=S_IFREG|0755, st_size=212020, ...}) = 0
+old_mmap(NULL, 138496, PROT_READ|PROT_EXEC, MAP_PRIVATE, 3, 0) = 0x407b1000
+old_mmap(0x407d2000, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED, 3, 0x20000) = 0x407d2000
+close(3)                                = 0
+open("/usr/src/ACE_CS520/TAO/examples/Kokyu_dsrt_schedulers/libgcc_s.so.1", O_RDONLY) = -1 ENOENT (No such file or directory)
+open("/usr/src/ACE_CS520/ace/libgcc_s.so.1", O_RDONLY) = -1 ENOENT (No such file or directory)
+open("/lib/libgcc_s.so.1", O_RDONLY)    = 3
+read(3, "\177ELF\1\1\1\0\0\0\0\0\0\0\0\0\3\0\3\0\1\0\0\0\10\23\0"..., 512) = 512
+fstat64(3, {st_mode=S_IFREG|0755, st_size=30324, ...}) = 0
+old_mmap(NULL, 29116, PROT_READ|PROT_EXEC, MAP_PRIVATE, 3, 0) = 0x407d3000
+old_mmap(0x407da000, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED, 3, 0x7000) = 0x407da000
+close(3)                                = 0
+open("/usr/src/ACE_CS520/TAO/examples/Kokyu_dsrt_schedulers/libc.so.6", O_RDONLY) = -1 ENOENT (No such file or directory)
+open("/usr/src/ACE_CS520/ace/libc.so.6", O_RDONLY) = -1 ENOENT (No such file or directory)
+open("/lib/i686/libc.so.6", O_RDONLY)   = 3
+read(3, "\177ELF\1\1\1\0\0\0\0\0\0\0\0\0\3\0\3\0\1\0\0\0 [\1\000"..., 512) = 512
+fstat64(3, {st_mode=S_IFREG|0755, st_size=1552740, ...}) = 0
+old_mmap(NULL, 1279684, PROT_READ|PROT_EXEC, MAP_PRIVATE, 3, 0) = 0x407db000
+old_mmap(0x4090e000, 12288, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED, 3, 0x133000) = 0x4090e000
+old_mmap(0x40911000, 9924, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x40911000
+close(3)                                = 0
+old_mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x40914000
+mprotect(0x40017000, 454656, PROT_READ|PROT_WRITE) = 0
+mprotect(0x40017000, 454656, PROT_READ|PROT_EXEC) = 0
+munmap(0x40688000, 58101)               = 0
+brk(0)                                  = 0x8060dc8
+brk(0x8061dc8)                          = 0x8061dc8
+brk(0)                                  = 0x8061dc8
+brk(0x8062000)                          = 0x8062000
+set_thread_area({entry_number:-1 -> -1, base_addr:0x8061020, limit:1048575, seg_32bit:1, contents:0, read_exec_only:0, limit_in_pages:1, seg_not_present:0, useable:1}) = -1 ENOSYS (Function not implemented)
+modify_ldt(1, {entry_number:0, base_addr:0x8061020, limit:1048575, seg_32bit:1, contents:0, read_exec_only:0, limit_in_pages:1, seg_not_present:0, useable:1}, 16) = 0
+getpid()                                = 21398
+rt_sigaction(SIGRTMIN, {0x406a2e80, [], SA_RESTORER, 0x408035a8}, NULL, 8) = 0
+rt_sigaction(SIGRT_1, {0x406a2ed0, [], SA_RESTORER, 0x408035a8}, NULL, 8) = 0
+rt_sigaction(SIGRT_2, {0x406a3960, [], SA_RESTORER, 0x408035a8}, NULL, 8) = 0
+rt_sigprocmask(SIG_BLOCK, [RTMIN], NULL, 8) = 0
+rt_sigprocmask(SIG_UNBLOCK, [33], NULL, 8) = 0
+_sysctl({{CTL_KERN, KERN_VERSION}, 2, 0xbffff62c, 31, (nil), 0}) = 0
+open("/etc/mtab", O_RDONLY)             = 3
+fstat64(3, {st_mode=S_IFREG|0644, st_size=252, ...}) = 0
+mmap2(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x40688000
+read(3, "/dev/hdb3 / ext3 rw 0 0\nnone /pr"..., 4096) = 252
+close(3)                                = 0
+munmap(0x40688000, 4096)                = 0
+open("/proc/stat", O_RDONLY)            = 3
+fstat64(3, {st_mode=S_IFREG|0444, st_size=0, ...}) = 0
+mmap2(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x40688000
+read(3, "cpu  1495815 3543 100581 5052241"..., 4096) = 732
+read(3, "", 4096)                       = 0
+close(3)                                = 0
+munmap(0x40688000, 4096)                = 0
+brk(0x8064000)                          = 0x8064000
+brk(0x8065000)                          = 0x8065000
+brk(0x8066000)                          = 0x8066000
+brk(0x8067000)                          = 0x8067000
+brk(0x8068000)                          = 0x8068000
+brk(0x8069000)                          = 0x8069000
+brk(0x806a000)                          = 0x806a000
+brk(0x806b000)                          = 0x806b000
+brk(0x806c000)                          = 0x806c000
+brk(0x806d000)                          = 0x806d000
+brk(0x806e000)                          = 0x806e000
+brk(0x806f000)                          = 0x806f000
+brk(0x8070000)                          = 0x8070000
+brk(0x8071000)                          = 0x8071000
+brk(0x8072000)                          = 0x8072000
+brk(0x8073000)                          = 0x8073000
+brk(0x8074000)                          = 0x8074000
+mmap2(NULL, 401408, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x40915000
+mmap2(NULL, 401408, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x40977000
+brk(0)                                  = 0x8074000
+brk(0x8075000)                          = 0x8075000
+brk(0)                                  = 0x8075000
+brk(0x8076000)                          = 0x8076000
+brk(0)                                  = 0x8076000
+brk(0x8077000)                          = 0x8077000
+brk(0)                                  = 0x8077000
+brk(0x8078000)                          = 0x8078000
+brk(0)                                  = 0x8078000
+brk(0x8079000)                          = 0x8079000
+brk(0)                                  = 0x8079000
+brk(0x807c000)                          = 0x807c000
+brk(0)                                  = 0x807c000
+brk(0x807d000)                          = 0x807d000
+brk(0)                                  = 0x807d000
+brk(0x807e000)                          = 0x807e000
+getrlimit(0x7, 0xbffff528)              = 0
+brk(0)                                  = 0x807e000
+brk(0x807f000)                          = 0x807f000
+brk(0)                                  = 0x807f000
+brk(0x8080000)                          = 0x8080000
+getrlimit(0x7, 0xbffff3a8)              = 0
+getrlimit(0x7, 0xbffff3d0)              = 0
+setrlimit(RLIMIT_NOFILE, {rlim_cur=1024, rlim_max=1024}) = 0
+socketpair(PF_UNIX, SOCK_STREAM, 0, [3, 4]) = 0
+setsockopt(3, SOL_SOCKET, SO_RCVBUF, [65535], 4) = 0
+setsockopt(4, SOL_SOCKET, SO_SNDBUF, [65535], 4) = 0
+fcntl64(3, F_SETFD, FD_CLOEXEC)         = 0
+fcntl64(4, F_SETFD, FD_CLOEXEC)         = 0
+fcntl64(3, F_GETFL)                     = 0x2 (flags O_RDWR)
+fcntl64(3, F_SETFL, O_RDWR|O_NONBLOCK)  = 0
+rt_sigprocmask(SIG_BLOCK, ~[33], [RTMIN], 8) = 0
+rt_sigprocmask(SIG_SETMASK, [RTMIN], NULL, 8) = 0
+brk(0)                                  = 0x8080000
+brk(0x8081000)                          = 0x8081000
+rt_sigaction(SIGHUP, {0x406a66b0, [], SA_RESTORER|SA_SIGINFO, 0x408035a0}, NULL, 8) = 0
+brk(0)                                  = 0x8081000
+brk(0x8082000)                          = 0x8082000
+open("./svc.conf", O_RDONLY)            = -1 ENOENT (No such file or directory)
+brk(0)                                  = 0x8082000
+brk(0x8083000)                          = 0x8083000
+getrlimit(0x7, 0xbffff458)              = 0
+brk(0)                                  = 0x8083000
+brk(0x808a000)                          = 0x808a000
+brk(0)                                  = 0x808a000
+brk(0x808e000)                          = 0x808e000
+brk(0)                                  = 0x808e000
+brk(0x8097000)                          = 0x8097000
+rt_sigaction(SIGPIPE, {SIG_IGN}, {SIG_DFL}, 8) = 0
+brk(0)                                  = 0x8097000
+brk(0x8098000)                          = 0x8098000
+getrlimit(0x7, 0xbffff258)              = 0
+getrlimit(0x7, 0xbffff280)              = 0
+setrlimit(RLIMIT_NOFILE, {rlim_cur=1024, rlim_max=1024}) = 0
+socketpair(PF_UNIX, SOCK_STREAM, 0, [5, 6]) = 0
+setsockopt(5, SOL_SOCKET, SO_RCVBUF, [65535], 4) = 0
+setsockopt(6, SOL_SOCKET, SO_SNDBUF, [65535], 4) = 0
+fcntl64(5, F_SETFD, FD_CLOEXEC)         = 0
+fcntl64(6, F_SETFD, FD_CLOEXEC)         = 0
+fcntl64(5, F_GETFL)                     = 0x2 (flags O_RDWR)
+fcntl64(5, F_SETFL, O_RDWR|O_NONBLOCK)  = 0
+rt_sigprocmask(SIG_BLOCK, ~[33], [RTMIN], 8) = 0
+rt_sigprocmask(SIG_SETMASK, [RTMIN], NULL, 8) = 0
+brk(0)                                  = 0x8098000
+brk(0x8099000)                          = 0x8099000
+brk(0)                                  = 0x8099000
+brk(0x809a000)                          = 0x809a000
+brk(0)                                  = 0x809a000
+brk(0x809b000)                          = 0x809b000
+access("/usr/src/ACE_CS520/TAO/examples/Kokyu_dsrt_schedulers//TAO_RTPortableServer.so", F_OK) = -1 ENOENT (No such file or directory)
+access("/usr/src/ACE_CS520/TAO/examples/Kokyu_dsrt_schedulers//libTAO_RTPortableServer.so", F_OK) = -1 ENOENT (No such file or directory)
+access("/usr/src/ACE_CS520/ace/TAO_RTPortableServer.so", F_OK) = -1 ENOENT (No such file or directory)
+access("/usr/src/ACE_CS520/ace/libTAO_RTPortableServer.so", F_OK) = 0
+open("/usr/src/ACE_CS520/ace/libTAO_RTPortableServer.so", O_RDONLY) = 7
+read(7, "\177ELF\1\1\1\0\0\0\0\0\0\0\0\0\3\0\3\0\1\0\0\0\214\362"..., 512) = 512
+fstat64(7, {st_mode=S_IFREG|0755, st_size=1867689, ...}) = 0
+old_mmap(NULL, 138004, PROT_READ|PROT_EXEC, MAP_PRIVATE, 7, 0) = 0x409d9000
+old_mmap(0x409f8000, 12288, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED, 7, 0x1e000) = 0x409f8000
+close(7)                                = 0
+socket(PF_INET, SOCK_DGRAM, IPPROTO_IP) = 7
+brk(0)                                  = 0x809b000
+brk(0x809c000)                          = 0x809c000
+ioctl(7, 0x8912, 0xbffff250)            = 0
+ioctl(7, 0x8912, 0xbffff290)            = 0
+close(7)                                = 0
+socket(PF_UNIX, SOCK_STREAM, 0)         = 7
+connect(7, {sa_family=AF_UNIX, path="/var/run/.nscd_socket"}, 110) = -1 ENOENT (No such file or directory)
+close(7)                                = 0
+open("/etc/nsswitch.conf", O_RDONLY)    = 7
+fstat64(7, {st_mode=S_IFREG|0644, st_size=436, ...}) = 0
+mmap2(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x40688000
+read(7, "# CFENGINE STATIC FILE\npasswd:  "..., 4096) = 436
+read(7, "", 4096)                       = 0
+close(7)                                = 0
+munmap(0x40688000, 4096)                = 0
+open("/usr/src/ACE_CS520/TAO/examples/Kokyu_dsrt_schedulers/libnss_files.so.2", O_RDONLY) = -1 ENOENT (No such file or directory)
+open("/usr/src/ACE_CS520/ace/libnss_files.so.2", O_RDONLY) = -1 ENOENT (No such file or directory)
+open("/etc/ld.so.cache", O_RDONLY)      = 7
+fstat64(7, {st_mode=S_IFREG|0644, st_size=58101, ...}) = 0
+old_mmap(NULL, 58101, PROT_READ, MAP_PRIVATE, 7, 0) = 0x40688000
+close(7)                                = 0
+open("/lib/libnss_files.so.2", O_RDONLY) = 7
+read(7, "\177ELF\1\1\1\0\0\0\0\0\0\0\0\0\3\0\3\0\1\0\0\0\20\35\0"..., 512) = 512
+fstat64(7, {st_mode=S_IFREG|0755, st_size=52492, ...}) = 0
+old_mmap(NULL, 47068, PROT_READ|PROT_EXEC, MAP_PRIVATE, 7, 0) = 0x409fb000
+old_mmap(0x40a06000, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED, 7, 0xa000) = 0x40a06000
+close(7)                                = 0
+munmap(0x40688000, 58101)               = 0
+gettimeofday({1069365377, 245673}, NULL) = 0
+getpid()                                = 21398
+open("/etc/resolv.conf", O_RDONLY)      = 7
+fstat64(7, {st_mode=S_IFREG|0644, st_size=189, ...}) = 0
+mmap2(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x40688000
+read(7, "search cse.wustl.edu cs.wustl.ed"..., 4096) = 189
+read(7, "", 4096)                       = 0
+close(7)                                = 0
+munmap(0x40688000, 4096)                = 0
+open("/etc/host.conf", O_RDONLY)        = 7
+fstat64(7, {st_mode=S_IFREG|0644, st_size=17, ...}) = 0
+mmap2(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x40688000
+read(7, "order hosts,bind\n", 4096)     = 17
+read(7, "", 4096)                       = 0
+close(7)                                = 0
+munmap(0x40688000, 4096)                = 0
+open("/etc/hosts", O_RDONLY)            = 7
+fcntl64(7, F_GETFD)                     = 0
+fcntl64(7, F_SETFD, FD_CLOEXEC)         = 0
+fstat64(7, {st_mode=S_IFREG|0644, st_size=368, ...}) = 0
+mmap2(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x40688000
+read(7, "# Do not remove the following li"..., 4096) = 368
+close(7)                                = 0
+munmap(0x40688000, 4096)                = 0
+socket(PF_INET, SOCK_STREAM, IPPROTO_IP) = 7
+setsockopt(7, SOL_SOCKET, SO_REUSEADDR, [1], 4) = 0
+bind(7, {sa_family=AF_INET, sin_port=htons(0), sin_addr=inet_addr("0.0.0.0")}, 16) = 0
+listen(7, 5)                            = 0
+getpid()                                = 21398
+fcntl64(7, F_GETFL)                     = 0x2 (flags O_RDWR)
+fcntl64(7, F_SETFL, O_RDWR|O_NONBLOCK)  = 0
+fcntl64(7, F_GETFL)                     = 0x802 (flags O_RDWR|O_NONBLOCK)
+fcntl64(7, F_SETFL, O_RDWR|O_NONBLOCK)  = 0
+rt_sigprocmask(SIG_BLOCK, ~[33], [RTMIN], 8) = 0
+rt_sigprocmask(SIG_SETMASK, [RTMIN], NULL, 8) = 0
+getsockname(7, {sa_family=AF_INET, sin_port=htons(35659), sin_addr=inet_addr("0.0.0.0")}, [16]) = 0
+fcntl64(7, F_SETFD, FD_CLOEXEC)         = 0
+brk(0)                                  = 0x809c000
+brk(0x80a4000)                          = 0x80a4000
+gettimeofday({1069365377, 253836}, NULL) = 0
+brk(0)                                  = 0x80a4000
+brk(0x80a5000)                          = 0x80a5000
+brk(0)                                  = 0x80a5000
+brk(0x80a6000)                          = 0x80a6000
+sched_get_priority_min(0x2)             = 1
+sched_get_priority_max(0x2)             = 99
+sched_get_priority_min(0x2)             = 1
+sched_get_priority_max(0x2)             = 99
+brk(0)                                  = 0x80a6000
+brk(0x80af000)                          = 0x80af000
+brk(0)                                  = 0x80af000
+brk(0x80b0000)                          = 0x80b0000
+brk(0)                                  = 0x80b0000
+brk(0x80b1000)                          = 0x80b1000
+brk(0)                                  = 0x80b1000
+brk(0x80b2000)                          = 0x80b2000
+brk(0)                                  = 0x80b2000
+brk(0x80b3000)                          = 0x80b3000
+getpid()                                = 21398
+gettimeofday({1069365377, 261638}, NULL) = 0
+rt_sigprocmask(SIG_BLOCK, ~[33], [RTMIN], 8) = 0
+write(2, "Activated as <IOR:01000000170000"..., 424Activated as <IOR:010000001700000049444c3a53696d706c655f536572766572313a312e30000001000000000000009e00000001010200160000006268616e6772612e646f632e777573746c2e656475004b8b1b00000014010f005253548138bd3f8cdf03000000000001000000010000000003000000000000000800000001000000004f415401000000140000000114914001000100000000000901010000000000024f4154260000000100000001000000160000006268616e6772612e646f632e777573746c2e656475004b8bffff>
+) = 424
+rt_sigprocmask(SIG_SETMASK, [RTMIN], NULL, 8) = 0
+open("test1.ior", O_WRONLY|O_CREAT|O_TRUNC, 0666) = 8
+fstat64(8, {st_mode=S_IFREG|0644, st_size=0, ...}) = 0
+mmap2(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x40688000
+write(8, "IOR:010000001700000049444c3a5369"..., 408) = 408
+close(8)                                = 0
+munmap(0x40688000, 4096)                = 0
+sched_get_priority_max(0x2)             = 99
+sched_get_priority_max(0x2)             = 99
+sched_get_priority_min(0x2)             = 1
+sched_get_priority_max(0x2)             = 99
+sched_get_priority_min(0x2)             = 1
+getrlimit(0x3, 0xbffff388)              = 0
+brk(0)                                  = 0x80b3000
+brk(0x80b5000)                          = 0x80b5000
+pipe([8, 9])                            = 0
+clone(child_stack=0x80b4250, flags=CLONE_VM|CLONE_FS|CLONE_FILES|CLONE_SIGHAND) = 21399
+write(9, "\373\230\0@\5\0\0\0\220j.@\0\0\0\0\260\364\377\277\215"..., 148) = 148
+rt_sigprocmask(SIG_SETMASK, NULL, [RTMIN], 8) = 0
+write(9, " \20\6\10\0\0\0\0P\366\377\277$hY@P\"\v\10\0\0\0\200\0"..., 148) = 148
+rt_sigprocmask(SIG_SETMASK, NULL, [RTMIN], 8) = 0
+rt_sigsuspend([] <unfinished ...>
+--- SIGRTMIN (Unknown signal 32) @ 0 (0) ---
+<... rt_sigsuspend resumed> )           = -1 EINTR (Interrupted system call)
+sigreturn()                             = ? (mask now [RTMIN])
+kill(21400, SIGRTMIN)                   = 0
+rt_sigprocmask(SIG_SETMASK, NULL, [RTMIN], 8) = 0
+rt_sigsuspend([] <unfinished ...>
+--- SIGSEGV (Segmentation fault) @ 0 (0) ---
++++ killed by SIGSEGV +++

@@ -1,0 +1,570 @@
+Activated as <IOR:010000001600000049444c3a53696d706c655f5365727665723a312e3000000001000000000000009c000000010102001300000068617272792e63732e777573746c2e65647500000a8000001b00000014010f005253543597ca3f17a80b000000000001000000010000000003000000000000000800000001000000004f415401000000140000000144914001000100000000000901010000000000024f41542400000001000000010000001300000068617272792e63732e777573746c2e65647500000a80ffff>
+(16384| 19:19:49.766068) NOW I AM IN THE MAIN THREAD!
+(49156| 19:20:02.234655):entered EDF_Scheduler::receive_request
+(49156| 19:20:02.234762): receive_request from "test_method"
+(49156| 19:20:02.235098): Importance = 0, guid = 1 in recvd service context
+(49156| 19:20:02.235296): TIMER IS IN THIS THREAD!
+(49156| 19:20:02.235334):schedule_i enter
+(49156| 19:20:02.235441) about to insert 49156 in sched queue
+(49156| 19:20:02.235488) 49156 not found in hashmap
+(49156| 19:20:02.235524): item bound in rbtree
+(49156| 19:20:02.235551): item bound in hashmap
+<===Hash Table contents Begin===>
+<===Hash Table contents End=====>
+(49156| 19:20:02.235598):##########################
+(49156| 19:20:02.235620):##########################
+(49156| 19:20:02.235640):schedule_i after ready_q.insert
+(49156| 19:20:02.235680):curr thr handle = 49156
+(49156| 19:20:02.235700):curr scheduled thr handle = 0
+(49156| 19:20:02.235721):most eligible thr handle = 49156 
+(49156| 19:20:02.235743): 49156 is currently running
+(49156| 19:20:02.235865):schedule_i exit
+(49156| 19:20:02.235901): receive_request interceptor done
+Request in thread 49156
+Request in thread 49156, prio = 2,exec duration = 30
+(16386| 19:20:03.235368) Timer timeout at 1070241603!!!!!
+I AM JUST TEST?????
+(49156| 19:20:03.571918): update_sched_seg::guid is 1
+(49156| 19:20:03.571968):schedule_i enter
+(49156| 19:20:03.572000) about to insert 49156 in sched queue
+(49156| 19:20:03.572031) 49156 found in hashmap
+(49156| 19:20:03.572069) 49156 removed from hashmap and rbtree
+(49156| 19:20:03.572092) 49156 bound to rbtree
+(49156| 19:20:03.572114) 49156 bound to hashmap
+<===Hash Table contents Begin===>
+<===Hash Table contents End===>
+(49156| 19:20:03.572158):##########################
+(49156| 19:20:03.572179):##########################
+(49156| 19:20:03.572199):schedule_i after ready_q.insert
+(49156| 19:20:03.572222):curr thr handle = 49156
+(49156| 19:20:03.572242):curr scheduled thr handle = 49156
+(49156| 19:20:03.572262):most eligible thr handle = 49156 
+(49156| 19:20:03.572284): 49156 is currently running
+(49156| 19:20:03.572306):schedule_i exit
+(32771| 19:20:04.217903):entered EDF_Scheduler::receive_request
+(32771| 19:20:04.217959): receive_request from "test_method"
+(32771| 19:20:04.218053): Importance = 0, guid = 2 in recvd service context
+(32771| 19:20:04.218152): TIMER IS IN THIS THREAD!
+(32771| 19:20:04.218180):schedule_i enter
+(32771| 19:20:04.218226) about to insert 32771 in sched queue
+(32771| 19:20:04.218251) 32771 not found in hashmap
+(32771| 19:20:04.218282): MoreEligible:: qos_comparator returned -1
+(32771| 19:20:04.218304): MoreEligible:: qos_comparator returned 1
+(32771| 19:20:04.218331): item bound in rbtree
+(32771| 19:20:04.218354): item bound in hashmap
+<===Hash Table contents Begin===>
+<===Hash Table contents End=====>
+(32771| 19:20:04.218399):##########################
+(32771| 19:20:04.218421):##########################
+(32771| 19:20:04.218440):schedule_i after ready_q.insert
+(32771| 19:20:04.218463):curr thr handle = 32771
+(32771| 19:20:04.218483):curr scheduled thr handle = 49156
+(32771| 19:20:04.218503):most eligible thr handle = 32771 
+(32771| 19:20:04.218525): About to block on cv
+(49156| 19:20:04.903667): update_sched_seg::guid is 1
+(49156| 19:20:04.903706):schedule_i enter
+(49156| 19:20:04.903734) about to insert 49156 in sched queue
+(49156| 19:20:04.903757) 49156 found in hashmap
+(49156| 19:20:04.903782) 49156 removed from hashmap and rbtree
+(49156| 19:20:04.903804): MoreEligible:: qos_comparator returned 1
+(49156| 19:20:04.903827) 49156 bound to rbtree
+(49156| 19:20:04.903848) 49156 bound to hashmap
+<===Hash Table contents Begin===>
+<===Hash Table contents End===>
+(49156| 19:20:04.903918):##########################
+(49156| 19:20:04.903945):##########################
+(49156| 19:20:04.903965):schedule_i after ready_q.insert
+(49156| 19:20:04.903987):curr thr handle = 49156
+(49156| 19:20:04.904007):curr scheduled thr handle = 49156
+(49156| 19:20:04.904027):most eligible thr handle = 32771 
+(49156| 19:20:04.904048):curr sched thr handle = thr_handle & most eligible thr handle != curr thr handle. about to do a broadcast on CV to wake up most eligible
+(49156| 19:20:04.904086): About to block on cv
+(32771| 19:20:04.904124): 32771 is currently running
+(32771| 19:20:04.904148):schedule_i exit
+(32771| 19:20:04.904169): receive_request interceptor done
+Request in thread 32771
+Request in thread 32771, prio = 2,exec duration = 10
+(16386| 19:20:05.218205) Timer timeout at 1070241605!!!!!
+I AM JUST TEST?????
+(32771| 19:20:06.238289): update_sched_seg::guid is 2
+(32771| 19:20:06.238321):schedule_i enter
+(32771| 19:20:06.238350) about to insert 32771 in sched queue
+(32771| 19:20:06.238372) 32771 found in hashmap
+(32771| 19:20:06.238397) 32771 removed from hashmap and rbtree
+(32771| 19:20:06.238419): MoreEligible:: qos_comparator returned -1
+(32771| 19:20:06.238440): MoreEligible:: qos_comparator returned 1
+(32771| 19:20:06.238463) 32771 bound to rbtree
+(32771| 19:20:06.238485) 32771 bound to hashmap
+<===Hash Table contents Begin===>
+<===Hash Table contents End===>
+(32771| 19:20:06.238529):##########################
+(32771| 19:20:06.238551):##########################
+(32771| 19:20:06.238570):schedule_i after ready_q.insert
+(32771| 19:20:06.238593):curr thr handle = 32771
+(32771| 19:20:06.238613):curr scheduled thr handle = 32771
+(32771| 19:20:06.238634):most eligible thr handle = 32771 
+(32771| 19:20:06.238656): 32771 is currently running
+(32771| 19:20:06.238678):schedule_i exit
+(32771| 19:20:07.573001): update_sched_seg::guid is 2
+(32771| 19:20:07.573029):schedule_i enter
+(32771| 19:20:07.573055) about to insert 32771 in sched queue
+(32771| 19:20:07.573078) 32771 found in hashmap
+(32771| 19:20:07.573102) 32771 removed from hashmap and rbtree
+(32771| 19:20:07.573123): MoreEligible:: qos_comparator returned -1
+(32771| 19:20:07.573145): MoreEligible:: qos_comparator returned 1
+(32771| 19:20:07.573167) 32771 bound to rbtree
+(32771| 19:20:07.573188) 32771 bound to hashmap
+<===Hash Table contents Begin===>
+<===Hash Table contents End===>
+(32771| 19:20:07.573233):##########################
+(32771| 19:20:07.573254):##########################
+(32771| 19:20:07.573274):schedule_i after ready_q.insert
+(32771| 19:20:07.573295):curr thr handle = 32771
+(32771| 19:20:07.573315):curr scheduled thr handle = 32771
+(32771| 19:20:07.573336):most eligible thr handle = 32771 
+(32771| 19:20:07.573358): 32771 is currently running
+(32771| 19:20:07.573380):schedule_i exit
+(32771| 19:20:08.907625): update_sched_seg::guid is 2
+(32771| 19:20:08.907652):schedule_i enter
+(32771| 19:20:08.907678) about to insert 32771 in sched queue
+(32771| 19:20:08.907700) 32771 found in hashmap
+(32771| 19:20:08.907723) 32771 removed from hashmap and rbtree
+(32771| 19:20:08.907745): MoreEligible:: qos_comparator returned -1
+(32771| 19:20:08.907766): MoreEligible:: qos_comparator returned 1
+(32771| 19:20:08.907788) 32771 bound to rbtree
+(32771| 19:20:08.907810) 32771 bound to hashmap
+<===Hash Table contents Begin===>
+<===Hash Table contents End===>
+(32771| 19:20:08.907855):##########################
+(32771| 19:20:08.907876):##########################
+(32771| 19:20:08.907896):schedule_i after ready_q.insert
+(32771| 19:20:08.907917):curr thr handle = 32771
+(32771| 19:20:08.907937):curr scheduled thr handle = 32771
+(32771| 19:20:08.907958):most eligible thr handle = 32771 
+(32771| 19:20:08.907979): 32771 is currently running
+(32771| 19:20:08.908001):schedule_i exit
+(32771| 19:20:10.241050): update_sched_seg::guid is 2
+(32771| 19:20:10.241078):schedule_i enter
+(32771| 19:20:10.241105) about to insert 32771 in sched queue
+(32771| 19:20:10.241127) 32771 found in hashmap
+(32771| 19:20:10.241150) 32771 removed from hashmap and rbtree
+(32771| 19:20:10.241171): MoreEligible:: qos_comparator returned -1
+(32771| 19:20:10.241209): MoreEligible:: qos_comparator returned 1
+(32771| 19:20:10.241231) 32771 bound to rbtree
+(32771| 19:20:10.241253) 32771 bound to hashmap
+<===Hash Table contents Begin===>
+<===Hash Table contents End===>
+(32771| 19:20:10.241298):##########################
+(32771| 19:20:10.241319):##########################
+(32771| 19:20:10.241339):schedule_i after ready_q.insert
+(32771| 19:20:10.241360):curr thr handle = 32771
+(32771| 19:20:10.241380):curr scheduled thr handle = 32771
+(32771| 19:20:10.241401):most eligible thr handle = 32771 
+(32771| 19:20:10.241423): 32771 is currently running
+(32771| 19:20:10.241445):schedule_i exit
+(32771| 19:20:11.576690): update_sched_seg::guid is 2
+(32771| 19:20:11.576716):schedule_i enter
+(32771| 19:20:11.576741) about to insert 32771 in sched queue
+(32771| 19:20:11.576763) 32771 found in hashmap
+(32771| 19:20:11.576787) 32771 removed from hashmap and rbtree
+(32771| 19:20:11.576808): MoreEligible:: qos_comparator returned -1
+(32771| 19:20:11.576830): MoreEligible:: qos_comparator returned 1
+(32771| 19:20:11.576852) 32771 bound to rbtree
+(32771| 19:20:11.576874) 32771 bound to hashmap
+<===Hash Table contents Begin===>
+<===Hash Table contents End===>
+(32771| 19:20:11.576918):##########################
+(32771| 19:20:11.576939):##########################
+(32771| 19:20:11.576959):schedule_i after ready_q.insert
+(32771| 19:20:11.576980):curr thr handle = 32771
+(32771| 19:20:11.577000):curr scheduled thr handle = 32771
+(32771| 19:20:11.577021):most eligible thr handle = 32771 
+(32771| 19:20:11.577043): 32771 is currently running
+(32771| 19:20:11.577064):schedule_i exit
+(32771| 19:20:12.911423): update_sched_seg::guid is 2
+(32771| 19:20:12.911451):schedule_i enter
+(32771| 19:20:12.911477) about to insert 32771 in sched queue
+(32771| 19:20:12.911500) 32771 found in hashmap
+(32771| 19:20:12.911524) 32771 removed from hashmap and rbtree
+(32771| 19:20:12.911545): MoreEligible:: qos_comparator returned -1
+(32771| 19:20:12.911566): MoreEligible:: qos_comparator returned 1
+(32771| 19:20:12.911588) 32771 bound to rbtree
+(32771| 19:20:12.911610) 32771 bound to hashmap
+<===Hash Table contents Begin===>
+<===Hash Table contents End===>
+(32771| 19:20:12.911655):##########################
+(32771| 19:20:12.911676):##########################
+(32771| 19:20:12.911695):schedule_i after ready_q.insert
+(32771| 19:20:12.911717):curr thr handle = 32771
+(32771| 19:20:12.911737):curr scheduled thr handle = 32771
+(32771| 19:20:12.911757):most eligible thr handle = 32771 
+(32771| 19:20:12.911779): 32771 is currently running
+(32771| 19:20:12.911801):schedule_i exit
+(32771| 19:20:14.247141): update_sched_seg::guid is 2
+(32771| 19:20:14.247168):schedule_i enter
+(32771| 19:20:14.247193) about to insert 32771 in sched queue
+(32771| 19:20:14.247215) 32771 found in hashmap
+(32771| 19:20:14.247239) 32771 removed from hashmap and rbtree
+(32771| 19:20:14.247260): MoreEligible:: qos_comparator returned -1
+(32771| 19:20:14.247282): MoreEligible:: qos_comparator returned 1
+(32771| 19:20:14.247304) 32771 bound to rbtree
+(32771| 19:20:14.247326) 32771 bound to hashmap
+<===Hash Table contents Begin===>
+<===Hash Table contents End===>
+(32771| 19:20:14.247370):##########################
+(32771| 19:20:14.247391):##########################
+(32771| 19:20:14.247412):schedule_i after ready_q.insert
+(32771| 19:20:14.247433):curr thr handle = 32771
+(32771| 19:20:14.247453):curr scheduled thr handle = 32771
+(32771| 19:20:14.247474):most eligible thr handle = 32771 
+(32771| 19:20:14.247496): 32771 is currently running
+(32771| 19:20:14.247518):schedule_i exit
+(32771| 19:20:15.582007): update_sched_seg::guid is 2
+(32771| 19:20:15.582034):schedule_i enter
+(32771| 19:20:15.582059) about to insert 32771 in sched queue
+(32771| 19:20:15.582081) 32771 found in hashmap
+(32771| 19:20:15.582105) 32771 removed from hashmap and rbtree
+(32771| 19:20:15.582126): MoreEligible:: qos_comparator returned -1
+(32771| 19:20:15.582148): MoreEligible:: qos_comparator returned 1
+(32771| 19:20:15.582170) 32771 bound to rbtree
+(32771| 19:20:15.582203) 32771 bound to hashmap
+<===Hash Table contents Begin===>
+<===Hash Table contents End===>
+(32771| 19:20:15.582248):##########################
+(32771| 19:20:15.582269):##########################
+(32771| 19:20:15.582289):schedule_i after ready_q.insert
+(32771| 19:20:15.582310):curr thr handle = 32771
+(32771| 19:20:15.582331):curr scheduled thr handle = 32771
+(32771| 19:20:15.582351):most eligible thr handle = 32771 
+(32771| 19:20:15.582373): 32771 is currently running
+(32771| 19:20:15.582395):schedule_i exit
+(32771| 19:20:16.916678): update_sched_seg::guid is 2
+(32771| 19:20:16.916705):schedule_i enter
+(32771| 19:20:16.916731) about to insert 32771 in sched queue
+(32771| 19:20:16.916753) 32771 found in hashmap
+(32771| 19:20:16.916777) 32771 removed from hashmap and rbtree
+(32771| 19:20:16.916798): MoreEligible:: qos_comparator returned -1
+(32771| 19:20:16.916820): MoreEligible:: qos_comparator returned 1
+(32771| 19:20:16.916842) 32771 bound to rbtree
+(32771| 19:20:16.916864) 32771 bound to hashmap
+<===Hash Table contents Begin===>
+<===Hash Table contents End===>
+(32771| 19:20:16.916908):##########################
+(32771| 19:20:16.916929):##########################
+(32771| 19:20:16.916949):schedule_i after ready_q.insert
+(32771| 19:20:16.916971):curr thr handle = 32771
+(32771| 19:20:16.916991):curr scheduled thr handle = 32771
+(32771| 19:20:16.917012):most eligible thr handle = 32771 
+(32771| 19:20:16.917033): 32771 is currently running
+(32771| 19:20:16.917055):schedule_i exit
+Request processing in thread 32771 done, prio = 2, load = 10, elapsed time = 13264msec
+Thread Not Cancelled
+(32771| 19:20:18.168709): send_reply from "test_method"
+(32771| 19:20:18.168742):sched_policy not nil. (32771| 19:20:18.168902):reply sc added
+(32771): update schedule for block entered
+(32771| 19:20:18.168952): 32771 found in ready queue
+(32771| 19:20:18.168973): update schedule: 32771 found
+(32771| 19:20:18.168998): about to remove guid
+<===Hash Table contents Begin===>
+<===Hash Table contents End===>
+(32771| 19:20:18.169052):##########################
+(32771| 19:20:18.169077):##########################
+(32771): update schedule for block done
+(32771| 19:20:18.169122): send_reply interceptor done
+(49156| 19:20:18.170572): 49156 is currently running
+(49156| 19:20:18.170608):schedule_i exit
+(49156| 19:20:19.507159): update_sched_seg::guid is 1
+(49156| 19:20:19.507210):schedule_i enter
+(49156| 19:20:19.507242) about to insert 49156 in sched queue
+(49156| 19:20:19.507265) 49156 found in hashmap
+(49156| 19:20:19.507291) 49156 removed from hashmap and rbtree
+(49156| 19:20:19.507314) 49156 bound to rbtree
+(49156| 19:20:19.507336) 49156 bound to hashmap
+<===Hash Table contents Begin===>
+<===Hash Table contents End===>
+(49156| 19:20:19.507380):##########################
+(49156| 19:20:19.507400):##########################
+(49156| 19:20:19.507420):schedule_i after ready_q.insert
+(49156| 19:20:19.507442):curr thr handle = 49156
+(49156| 19:20:19.507462):curr scheduled thr handle = 49156
+(49156| 19:20:19.507482):most eligible thr handle = 49156 
+(49156| 19:20:19.507504): 49156 is currently running
+(49156| 19:20:19.507526):schedule_i exit
+(49156| 19:20:20.843033): update_sched_seg::guid is 1
+(49156| 19:20:20.843061):schedule_i enter
+(49156| 19:20:20.843087) about to insert 49156 in sched queue
+(49156| 19:20:20.843108) 49156 found in hashmap
+(49156| 19:20:20.843132) 49156 removed from hashmap and rbtree
+(49156| 19:20:20.843153) 49156 bound to rbtree
+(49156| 19:20:20.843175) 49156 bound to hashmap
+<===Hash Table contents Begin===>
+<===Hash Table contents End===>
+(49156| 19:20:20.843219):##########################
+(49156| 19:20:20.843239):##########################
+(49156| 19:20:20.843259):schedule_i after ready_q.insert
+(49156| 19:20:20.843280):curr thr handle = 49156
+(49156| 19:20:20.843300):curr scheduled thr handle = 49156
+(49156| 19:20:20.843320):most eligible thr handle = 49156 
+(49156| 19:20:20.843342): 49156 is currently running
+(49156| 19:20:20.843364):schedule_i exit
+(49156| 19:20:22.175497): update_sched_seg::guid is 1
+(49156| 19:20:22.175556):schedule_i enter
+(49156| 19:20:22.175583) about to insert 49156 in sched queue
+(49156| 19:20:22.175605) 49156 found in hashmap
+(49156| 19:20:22.175628) 49156 removed from hashmap and rbtree
+(49156| 19:20:22.175650) 49156 bound to rbtree
+(49156| 19:20:22.175671) 49156 bound to hashmap
+<===Hash Table contents Begin===>
+<===Hash Table contents End===>
+(49156| 19:20:22.175715):##########################
+(49156| 19:20:22.175735):##########################
+(49156| 19:20:22.175755):schedule_i after ready_q.insert
+(49156| 19:20:22.175776):curr thr handle = 49156
+(49156| 19:20:22.175796):curr scheduled thr handle = 49156
+(49156| 19:20:22.175816):most eligible thr handle = 49156 
+(49156| 19:20:22.175838): 49156 is currently running
+(49156| 19:20:22.175860):schedule_i exit
+(49156| 19:20:23.510846): update_sched_seg::guid is 1
+(49156| 19:20:23.510873):schedule_i enter
+(49156| 19:20:23.510899) about to insert 49156 in sched queue
+(49156| 19:20:23.510920) 49156 found in hashmap
+(49156| 19:20:23.510943) 49156 removed from hashmap and rbtree
+(49156| 19:20:23.510965) 49156 bound to rbtree
+(49156| 19:20:23.510987) 49156 bound to hashmap
+<===Hash Table contents Begin===>
+<===Hash Table contents End===>
+(49156| 19:20:23.511030):##########################
+(49156| 19:20:23.511050):##########################
+(49156| 19:20:23.511070):schedule_i after ready_q.insert
+(49156| 19:20:23.511091):curr thr handle = 49156
+(49156| 19:20:23.511111):curr scheduled thr handle = 49156
+(49156| 19:20:23.511131):most eligible thr handle = 49156 
+(49156| 19:20:23.511153): 49156 is currently running
+(49156| 19:20:23.511175):schedule_i exit
+(49156| 19:20:24.846534): update_sched_seg::guid is 1
+(49156| 19:20:24.846561):schedule_i enter
+(49156| 19:20:24.846586) about to insert 49156 in sched queue
+(49156| 19:20:24.846608) 49156 found in hashmap
+(49156| 19:20:24.846632) 49156 removed from hashmap and rbtree
+(49156| 19:20:24.846653) 49156 bound to rbtree
+(49156| 19:20:24.846674) 49156 bound to hashmap
+<===Hash Table contents Begin===>
+<===Hash Table contents End===>
+(49156| 19:20:24.846718):##########################
+(49156| 19:20:24.846738):##########################
+(49156| 19:20:24.846758):schedule_i after ready_q.insert
+(49156| 19:20:24.846779):curr thr handle = 49156
+(49156| 19:20:24.846799):curr scheduled thr handle = 49156
+(49156| 19:20:24.846819):most eligible thr handle = 49156 
+(49156| 19:20:24.846841): 49156 is currently running
+(49156| 19:20:24.846862):schedule_i exit
+(49156| 19:20:26.181859): update_sched_seg::guid is 1
+(49156| 19:20:26.181884):schedule_i enter
+(49156| 19:20:26.181909) about to insert 49156 in sched queue
+(49156| 19:20:26.181931) 49156 found in hashmap
+(49156| 19:20:26.181954) 49156 removed from hashmap and rbtree
+(49156| 19:20:26.181975) 49156 bound to rbtree
+(49156| 19:20:26.181997) 49156 bound to hashmap
+<===Hash Table contents Begin===>
+<===Hash Table contents End===>
+(49156| 19:20:26.182040):##########################
+(49156| 19:20:26.182060):##########################
+(49156| 19:20:26.182080):schedule_i after ready_q.insert
+(49156| 19:20:26.182101):curr thr handle = 49156
+(49156| 19:20:26.182121):curr scheduled thr handle = 49156
+(49156| 19:20:26.182141):most eligible thr handle = 49156 
+(49156| 19:20:26.182163): 49156 is currently running
+(49156| 19:20:26.182185):schedule_i exit
+(49156| 19:20:27.516801): update_sched_seg::guid is 1
+(49156| 19:20:27.516827):schedule_i enter
+(49156| 19:20:27.516852) about to insert 49156 in sched queue
+(49156| 19:20:27.516874) 49156 found in hashmap
+(49156| 19:20:27.516897) 49156 removed from hashmap and rbtree
+(49156| 19:20:27.516918) 49156 bound to rbtree
+(49156| 19:20:27.516940) 49156 bound to hashmap
+<===Hash Table contents Begin===>
+<===Hash Table contents End===>
+(49156| 19:20:27.516983):##########################
+(49156| 19:20:27.517004):##########################
+(49156| 19:20:27.517023):schedule_i after ready_q.insert
+(49156| 19:20:27.517045):curr thr handle = 49156
+(49156| 19:20:27.517064):curr scheduled thr handle = 49156
+(49156| 19:20:27.517085):most eligible thr handle = 49156 
+(49156| 19:20:27.517119): 49156 is currently running
+(49156| 19:20:27.517141):schedule_i exit
+(49156| 19:20:28.847716): update_sched_seg::guid is 1
+(49156| 19:20:28.847742):schedule_i enter
+(49156| 19:20:28.847767) about to insert 49156 in sched queue
+(49156| 19:20:28.847789) 49156 found in hashmap
+(49156| 19:20:28.847812) 49156 removed from hashmap and rbtree
+(49156| 19:20:28.847833) 49156 bound to rbtree
+(49156| 19:20:28.847855) 49156 bound to hashmap
+<===Hash Table contents Begin===>
+<===Hash Table contents End===>
+(49156| 19:20:28.847899):##########################
+(49156| 19:20:28.847919):##########################
+(49156| 19:20:28.847939):schedule_i after ready_q.insert
+(49156| 19:20:28.847960):curr thr handle = 49156
+(49156| 19:20:28.847980):curr scheduled thr handle = 49156
+(49156| 19:20:28.848000):most eligible thr handle = 49156 
+(49156| 19:20:28.848021): 49156 is currently running
+(49156| 19:20:28.848043):schedule_i exit
+(49156| 19:20:30.181891): update_sched_seg::guid is 1
+(49156| 19:20:30.181917):schedule_i enter
+(49156| 19:20:30.181942) about to insert 49156 in sched queue
+(49156| 19:20:30.181964) 49156 found in hashmap
+(49156| 19:20:30.181987) 49156 removed from hashmap and rbtree
+(49156| 19:20:30.182008) 49156 bound to rbtree
+(49156| 19:20:30.182030) 49156 bound to hashmap
+<===Hash Table contents Begin===>
+<===Hash Table contents End===>
+(49156| 19:20:30.182073):##########################
+(49156| 19:20:30.182094):##########################
+(49156| 19:20:30.182113):schedule_i after ready_q.insert
+(49156| 19:20:30.182134):curr thr handle = 49156
+(49156| 19:20:30.182154):curr scheduled thr handle = 49156
+(49156| 19:20:30.182174):most eligible thr handle = 49156 
+(49156| 19:20:30.182195): 49156 is currently running
+(49156| 19:20:30.182217):schedule_i exit
+(49156| 19:20:31.515914): update_sched_seg::guid is 1
+(49156| 19:20:31.515941):schedule_i enter
+(49156| 19:20:31.515966) about to insert 49156 in sched queue
+(49156| 19:20:31.515988) 49156 found in hashmap
+(49156| 19:20:31.516011) 49156 removed from hashmap and rbtree
+(49156| 19:20:31.516032) 49156 bound to rbtree
+(49156| 19:20:31.516054) 49156 bound to hashmap
+<===Hash Table contents Begin===>
+<===Hash Table contents End===>
+(49156| 19:20:31.516098):##########################
+(49156| 19:20:31.516118):##########################
+(49156| 19:20:31.516137):schedule_i after ready_q.insert
+(49156| 19:20:31.516159):curr thr handle = 49156
+(49156| 19:20:31.516179):curr scheduled thr handle = 49156
+(49156| 19:20:31.516199):most eligible thr handle = 49156 
+(49156| 19:20:31.516220): 49156 is currently running
+(49156| 19:20:31.516243):schedule_i exit
+(49156| 19:20:32.849084): update_sched_seg::guid is 1
+(49156| 19:20:32.849111):schedule_i enter
+(49156| 19:20:32.849136) about to insert 49156 in sched queue
+(49156| 19:20:32.849158) 49156 found in hashmap
+(49156| 19:20:32.849181) 49156 removed from hashmap and rbtree
+(49156| 19:20:32.849203) 49156 bound to rbtree
+(49156| 19:20:32.849224) 49156 bound to hashmap
+<===Hash Table contents Begin===>
+<===Hash Table contents End===>
+(49156| 19:20:32.849268):##########################
+(49156| 19:20:32.849288):##########################
+(49156| 19:20:32.849307):schedule_i after ready_q.insert
+(49156| 19:20:32.849328):curr thr handle = 49156
+(49156| 19:20:32.849348):curr scheduled thr handle = 49156
+(49156| 19:20:32.849368):most eligible thr handle = 49156 
+(49156| 19:20:32.849390): 49156 is currently running
+(49156| 19:20:32.849412):schedule_i exit
+(49156| 19:20:34.185549): update_sched_seg::guid is 1
+(49156| 19:20:34.185574):schedule_i enter
+(49156| 19:20:34.185600) about to insert 49156 in sched queue
+(49156| 19:20:34.185621) 49156 found in hashmap
+(49156| 19:20:34.185645) 49156 removed from hashmap and rbtree
+(49156| 19:20:34.185666) 49156 bound to rbtree
+(49156| 19:20:34.185687) 49156 bound to hashmap
+<===Hash Table contents Begin===>
+<===Hash Table contents End===>
+(49156| 19:20:34.185731):##########################
+(49156| 19:20:34.185751):##########################
+(49156| 19:20:34.185771):schedule_i after ready_q.insert
+(49156| 19:20:34.185803):curr thr handle = 49156
+(49156| 19:20:34.185823):curr scheduled thr handle = 49156
+(49156| 19:20:34.185843):most eligible thr handle = 49156 
+(49156| 19:20:34.185864): 49156 is currently running
+(49156| 19:20:34.185887):schedule_i exit
+(49156| 19:20:35.518112): update_sched_seg::guid is 1
+(49156| 19:20:35.518139):schedule_i enter
+(49156| 19:20:35.518165) about to insert 49156 in sched queue
+(49156| 19:20:35.518187) 49156 found in hashmap
+(49156| 19:20:35.518210) 49156 removed from hashmap and rbtree
+(49156| 19:20:35.518231) 49156 bound to rbtree
+(49156| 19:20:35.518253) 49156 bound to hashmap
+<===Hash Table contents Begin===>
+<===Hash Table contents End===>
+(49156| 19:20:35.518296):##########################
+(49156| 19:20:35.518317):##########################
+(49156| 19:20:35.518336):schedule_i after ready_q.insert
+(49156| 19:20:35.518357):curr thr handle = 49156
+(49156| 19:20:35.518377):curr scheduled thr handle = 49156
+(49156| 19:20:35.518398):most eligible thr handle = 49156 
+(49156| 19:20:35.518419): 49156 is currently running
+(49156| 19:20:35.518441):schedule_i exit
+(49156| 19:20:36.848891): update_sched_seg::guid is 1
+(49156| 19:20:36.848917):schedule_i enter
+(49156| 19:20:36.848942) about to insert 49156 in sched queue
+(49156| 19:20:36.848963) 49156 found in hashmap
+(49156| 19:20:36.848987) 49156 removed from hashmap and rbtree
+(49156| 19:20:36.849008) 49156 bound to rbtree
+(49156| 19:20:36.849029) 49156 bound to hashmap
+<===Hash Table contents Begin===>
+<===Hash Table contents End===>
+(49156| 19:20:36.849073):##########################
+(49156| 19:20:36.849094):##########################
+(49156| 19:20:36.849113):schedule_i after ready_q.insert
+(49156| 19:20:36.849134):curr thr handle = 49156
+(49156| 19:20:36.849154):curr scheduled thr handle = 49156
+(49156| 19:20:36.849175):most eligible thr handle = 49156 
+(49156| 19:20:36.849196): 49156 is currently running
+(49156| 19:20:36.849218):schedule_i exit
+Request processing in thread 49156 done, prio = 2, load = 30, elapsed time = 35466msec
+Thread Not Cancelled
+(49156| 19:20:37.702795): send_reply from "test_method"
+(49156| 19:20:37.702818):sched_policy not nil. (49156| 19:20:37.702878):reply sc added
+(49156): update schedule for block entered
+(49156| 19:20:37.702921): 49156 found in ready queue
+(49156| 19:20:37.702942): update schedule: 49156 found
+(49156| 19:20:37.702966): about to remove guid
+<===Hash Table contents Begin===>
+<===Hash Table contents End===>
+(49156| 19:20:37.703012):##########################
+(49156| 19:20:37.703032):##########################
+(49156): update schedule for block done
+(49156| 19:20:37.703069): send_reply interceptor done
+(16386| 19:20:37.705075):entered EDF_Scheduler::receive_request
+(16386| 19:20:37.705129): receive_request from "shutdown"
+(16386| 19:20:37.705222): Importance = 0, guid = 3 in recvd service context
+(16386| 19:20:37.705313): TIMER IS IN THIS THREAD!
+(16386| 19:20:37.705339):schedule_i enter
+(16386| 19:20:37.705367) about to insert 16386 in sched queue
+(16386| 19:20:37.705390) 16386 not found in hashmap
+(16386| 19:20:37.705413): item bound in rbtree
+(16386| 19:20:37.705435): item bound in hashmap
+<===Hash Table contents Begin===>
+<===Hash Table contents End=====>
+(16386| 19:20:37.705480):##########################
+(16386| 19:20:37.705500):##########################
+(16386| 19:20:37.705519):schedule_i after ready_q.insert
+(16386| 19:20:37.705540):curr thr handle = 16386
+(16386| 19:20:37.705560):curr scheduled thr handle = 0
+(16386| 19:20:37.705580):most eligible thr handle = 16386 
+(16386| 19:20:37.705602): 16386 is currently running
+(16386| 19:20:37.705703):schedule_i exit
+(16386| 19:20:37.705728): receive_request interceptor done
+shutdown request from client
+(32771| 19:20:37.706047): Worker thread exiting...
+(49156| 19:20:37.706308): Worker thread exiting...
+Thread Not Cancelled
+(16386| 19:20:37.706570): send_reply from "shutdown"
+(16386| 19:20:37.706598):sched_policy not nil. (16386| 19:20:37.706663):reply sc added
+(16386): update schedule for block entered
+(16386| 19:20:37.706710): 16386 found in ready queue
+(16386| 19:20:37.706751): update schedule: 16386 found
+(16386| 19:20:37.706780): about to remove guid
+<===Hash Table contents Begin===>
+<===Hash Table contents End===>
+(16386| 19:20:37.706829):##########################
+(16386| 19:20:37.706849):##########################
+(16386): update schedule for block done
+(16386| 19:20:37.706886): send_reply interceptor done
+(16386| 19:20:37.707134): Worker thread exiting...
+event loop finished
+shutting down scheduler
+kokyu DSRT dispatcher shutdown
+(16384| 19:20:37.712411) NOW I AM ABOUT TO EXIT MAIN!
+Exiting main...
+Samples are ready to be viewed

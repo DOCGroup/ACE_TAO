@@ -48,16 +48,16 @@ Simple_Server1_i::test_method (CORBA::Long exec_duration, CORBA::Long deadline A
   if (ACE_Thread::getprio (thr_handle, prio) == -1)
     {
       if (errno == ENOTSUP)
-	{
-	  ACE_DEBUG((LM_DEBUG,
-		     ACE_TEXT ("getprio not supported on this platform\n")
-		     ));
-	  return;
-	}
+        {
+          ACE_DEBUG((LM_DEBUG,
+                     ACE_TEXT ("getprio not supported on this platform\n")
+                     ));
+          return;
+        }
       ACE_ERROR ((LM_ERROR,
-			 ACE_TEXT ("%p\n"),
-			 ACE_TEXT ("getprio failed"))
-			);
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("getprio failed"))
+                        );
     }
 
   ACE_DEBUG ((LM_DEBUG, 
@@ -81,8 +81,8 @@ Simple_Server1_i::test_method (CORBA::Long exec_duration, CORBA::Long deadline A
   while (compute_count_down_time > ACE_Time_Value::zero)
     {
       ACE::is_prime (prime_number,
-		     2,
-		     prime_number / 2);
+                     2,
+                     prime_number / 2);
       
       ++j;
 
@@ -134,9 +134,9 @@ Simple_Server1_i::test_method (CORBA::Long exec_duration, CORBA::Long deadline A
  
  
   ACE_DEBUG ((LM_DEBUG, 
-	      "Request processing in thread %t done, "
-	      "prio = %d, load = %d, elapsed time = %umsec, deadline_missed = %d\n", 
-	      prio, exec_duration, elapsed_time.msec (),Deadline_missed ));
+              "Request processing in thread %t done, "
+              "prio = %d, load = %d, elapsed time = %umsec, deadline_missed = %d\n", 
+              prio, exec_duration, elapsed_time.msec (),Deadline_missed ));
 /*DTTIME:
   recording the finishing time on the server side. please also record the deadline_missed variable.
 */

@@ -1,0 +1,98 @@
+<?xml version = "1.0" encoding="iso-8859-1" standalone="no"?>
+<!DOCTYPE COMPOSITE_STREAM SYSTEM "composite_stream.dtd">
+<COMPOSITE_STREAM>
+<ENTITY number="1" time_stamp="386145518692901" tag="1" type="Event">
+<EVENT  name="START" family="MAIN_GROUP" id="64" />
+</ENTITY>
+<ENTITY number="2" time_stamp="386145518780138" tag="1" type="Event">
+<EVENT  name="SCHEDULE_SETUP" family="MAIN_GROUP" id="66" />
+</ENTITY>
+<ENTITY number="3" time_stamp="386145524610792" tag="1" type="Event">
+<EVENT  name="SCHEDULER_STARTED" family="MAIN_GROUP" id="72" />
+</ENTITY>
+<ENTITY number="4" time_stamp="386145525141997" tag="1" type="Event">
+<EVENT  name="WORKER_ACTIVATED" family="MAIN_GROUP" id="67" />
+</ENTITY>
+<ENTITY number="5" time_stamp="386145525308785" tag="1" type="Event">
+<EVENT  name="WORKER_STARTED" family="WORKER_GROUP" id="128" />
+</ENTITY>
+<ENTITY number="6" time_stamp="386145525609043" tag="0" type="Event">
+<EVENT  name="CREATE_SCHED_PARAM" family="EDF_SCHED" id="259" />
+</ENTITY>
+<ENTITY number="7" time_stamp="386145525653706" tag="1" type="Event">
+<EVENT  name="BEGIN_SCHED_SEGMENT" family="WORKER_GROUP" id="129" />
+</ENTITY>
+<ENTITY number="8" time_stamp="386145525809465" tag="1" type="Event">
+<EVENT  name="BEGIN_SCHED_SEGMENT" family="EDF_SCHED" id="258" />
+</ENTITY>
+<ENTITY number="9" time_stamp="386145525855488" tag="0" type="Event">
+<EVENT  name="SCHEDULE" family="DSRT_DISPATCH" id="320" />
+</ENTITY>
+<ENTITY number="10" time_stamp="386145526029681" tag="1" type="Event">
+<EVENT  name="END_SCHED_SEGMENT" family="EDF_SCHED" id="257" />
+</ENTITY>
+<ENTITY number="11" time_stamp="386145526103595" tag="1" type="Event">
+<EVENT  name="END_SCHED_SEGMENT" family="WORKER_GROUP" id="130" />
+</ENTITY>
+<ENTITY number="12" time_stamp="386145526191445" tag="1" type="Event">
+<EVENT  name="ONE_WAY_CALL_START" family="WORKER_GROUP" id="131" />
+</ENTITY>
+<ENTITY number="13" time_stamp="386145529491825" tag="0" type="Event">
+<EVENT  name="ENTER_CLIENT_SCHED_TIME" family="EDF_SCHED" id="261" />
+</ENTITY>
+<ENTITY number="14" time_stamp="386145529702469" tag="0" type="Event">
+<EVENT  name="CALL_KOKYU_DISPATCH_UPDATE_SCHEDULE" family="EDF_SCHED" id="262" />
+</ENTITY>
+<ENTITY number="15" time_stamp="386145529748643" tag="0" type="Event">
+<EVENT  name="LEAVE_KOKYU_DISPATCH_UPDATE_SCHEDULE" family="EDF_SCHED" id="263" />
+</ENTITY>
+<ENTITY number="16" time_stamp="386145529766624" tag="0" type="Event">
+<EVENT  name="LEAVE_CLIENT_SCHED_TIME" family="EDF_SCHED" id="264" />
+</ENTITY>
+<ENTITY number="17" time_stamp="386145566064797" tag="1" type="Event">
+<EVENT  name="ONE_WAY_CALL_DONE" family="WORKER_GROUP" id="132" />
+</ENTITY>
+<ENTITY number="18" time_stamp="386145566515995" tag="0" type="Event">
+<EVENT  name="CREATE_SCHED_PARAM" family="EDF_SCHED" id="259" />
+</ENTITY>
+<ENTITY number="19" time_stamp="386145566557187" tag="3" type="Event">
+<EVENT  name="BEGIN_SCHED_SEGMENT" family="EDF_SCHED" id="258" />
+</ENTITY>
+<ENTITY number="20" time_stamp="386145566580872" tag="0" type="Event">
+<EVENT  name="SCHEDULE" family="DSRT_DISPATCH" id="320" />
+</ENTITY>
+<ENTITY number="21" time_stamp="386145566648325" tag="3" type="Event">
+<EVENT  name="END_SCHED_SEGMENT" family="EDF_SCHED" id="257" />
+</ENTITY>
+<ENTITY number="22" time_stamp="386145566724983" tag="1" type="Event">
+<EVENT  name="CALL_SERVER_SHUTDOWN" family="MAIN_GROUP" id="69" />
+</ENTITY>
+<ENTITY number="23" time_stamp="386145566892607" tag="0" type="Event">
+<EVENT  name="ENTER_CLIENT_SCHED_TIME" family="EDF_SCHED" id="261" />
+</ENTITY>
+<ENTITY number="24" time_stamp="386145566969249" tag="0" type="Event">
+<EVENT  name="CALL_KOKYU_DISPATCH_UPDATE_SCHEDULE" family="EDF_SCHED" id="262" />
+</ENTITY>
+<ENTITY number="25" time_stamp="386145567024705" tag="0" type="Event">
+<EVENT  name="LEAVE_KOKYU_DISPATCH_UPDATE_SCHEDULE" family="EDF_SCHED" id="263" />
+</ENTITY>
+<ENTITY number="26" time_stamp="386145567042942" tag="0" type="Event">
+<EVENT  name="LEAVE_CLIENT_SCHED_TIME" family="EDF_SCHED" id="264" />
+</ENTITY>
+<ENTITY number="27" time_stamp="386163410265734" tag="0" type="Event">
+<EVENT  name="SCHEDULE" family="DSRT_DISPATCH" id="320" />
+</ENTITY>
+<ENTITY number="28" time_stamp="386163410384867" tag="1" type="Event">
+<EVENT  name="AFTER_SERVER_SHUTDOWN" family="MAIN_GROUP" id="70" />
+</ENTITY>
+<ENTITY number="29" time_stamp="386163410482921" tag="0" type="Event">
+<EVENT  name="DISPATCHER_SHUTDOWN" family="EDF_SCHED" id="260" />
+</ENTITY>
+<ENTITY number="30" time_stamp="386163410543719" tag="1" type="Event">
+<EVENT  name="SCHEDULER_SHUTDOWN" family="MAIN_GROUP" id="71" />
+</ENTITY>
+<ENTITY number="31" time_stamp="386163410745063" tag="1" type="Event">
+<EVENT  name="STOP" family="MAIN_GROUP" id="65" />
+</ENTITY>
+<!--Not in the boundary-->
+</COMPOSITE_STREAM>

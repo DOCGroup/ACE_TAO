@@ -1,0 +1,8 @@
+<?xml version = "1.0" encoding="iso-8859-1" standalone="no"?>
+<!DOCTYPE COMPOSITE_STREAM SYSTEM "composite_stream.dtd">
+<COMPOSITE_STREAM>
+<ENTITY number="1" time_stamp="1003888223207087" tag="0" type="Event">
+<EVENT  name="INIT" family="DSRT_CV_DISPATCH" id="389" />
+</ENTITY>
+<!--Not in the boundary-->
+</COMPOSITE_STREAM>
