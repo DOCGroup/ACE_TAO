@@ -9,6 +9,9 @@ Fri Dec 11 08:51:07 1998  David L. Levine  <levine@cs.wustl.edu>
           could lose data.  cxx V6.1-029 spews out a bunch of them,
           otherwise.
 
+        * tests/Time_Value_Test.cpp: protected definition of __ACE_INLINE__.
+          Thanks to Ossama for reporting this.
+
 1998-12-11  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * ace/Message_Queue.{h,i,cpp} (ACE_Message_Queue_Base): Added a
