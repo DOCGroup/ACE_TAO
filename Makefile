@@ -13,7 +13,6 @@ INFO	= README \
 	  VERSION
 
 DIRS	= ace \
-          etc \
 	  netsvcs \
 	  tests \
           apps \
