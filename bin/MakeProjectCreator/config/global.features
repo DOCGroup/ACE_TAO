@@ -27,3 +27,5 @@ zlib          = 0
 zzip          = 0
 mfc           = 0
 rpc           = 0
+sctp 	      = 0
+xt_reactor    = 0

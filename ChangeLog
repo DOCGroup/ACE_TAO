@@ -1,3 +1,9 @@
+Tue Nov 25 15:01:28 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* bin/MakeProjectCreator/config/global.features:
+
+	  Added sctp and xt_reactor to the list of features.
+
 Tue Nov 25 12:34:15 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* ace/DLL.h: Made the constructors explicit.
