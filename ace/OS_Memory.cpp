@@ -12,6 +12,8 @@ static int shut_up_aCC = 0;
 #endif /* HPUX && !g++ */
 #endif /* !ACE_HAS_INLINED_OS_CALLS */
 
+#include "ace/os_include/os_stdlib.h"
+
 void *
 ACE_OS_Memory::malloc (size_t nbytes)
 {

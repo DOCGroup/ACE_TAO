@@ -579,7 +579,7 @@ typedef void (*ACE_THR_DEST)(void *);
     // vxWorks.h.
     // Also, be sure that these #includes come _after_ the key_t typedef, and
     // before the #include of time.h.
-#     include /**/ <stdarg.h>
+#     include "ace/os_inlcude/os_stdarg.h"
 #   endif /* ghs */
 
 #   include /**/ <vxWorks.h>
@@ -672,8 +672,7 @@ extern "C" u_long CLS##_Export _get_dll_unload_policy (void) \
 # if defined (ACE_HAS_STANDARD_CPP_LIBRARY) && (ACE_HAS_STANDARD_CPP_LIBRARY != 0)
 #   include /**/ <cstdio>
 # else
-#   include /**/ <stdarg.h> // LynxOS requires this before stdio.h
-#   include /**/ <stdio.h>
+#   include "acd/os_include/os_stdio.h"
 # endif
 # define ACE_NOTSUP_RETURN(FAILVALUE) do { errno = ENOTSUP; fprintf (stderr, ACE_LIB_TEXT ("ACE_NOTSUP: %s, line %d\n"), __FILE__, __LINE__); return FAILVALUE; } while (0)
 # define ACE_NOTSUP do { errno = ENOTSUP; fprintf (stderr, ACE_LIB_TEXT ("ACE_NOTSUP: %s, line %d\n"), __FILE__, __LINE__); return; } while (0)
