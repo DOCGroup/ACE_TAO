@@ -134,7 +134,8 @@ HTTP_Handler::svc (void)
                     &this->response_size_) == 1))
     {
       ACE_Filecache_Handle afh (this->filename_,
-				this->response_size_);
+				this->response_size_,
+                                1);
 
       this->peer ().recv_n (afh.address (), this->response_size_);
 
@@ -247,4 +248,3 @@ template class ACE_Map_Iterator<ACE_HANDLE, ACE_Svc_Tuple<HTTP_Handler>*, ACE_SY
 #pragma instantiate ACE_Map_Manager<ACE_HANDLE, ACE_Svc_Tuple<HTTP_Handler>*, ACE_SYNCH_RW_MUTEX>
 #pragma instantiate ACE_Map_Iterator<ACE_HANDLE, ACE_Svc_Tuple<HTTP_Handler>*, ACE_SYNCH_RW_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
