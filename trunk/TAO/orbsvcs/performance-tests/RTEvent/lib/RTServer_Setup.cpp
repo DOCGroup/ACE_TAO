@@ -27,7 +27,7 @@ RTServer_Setup::RTServer_Setup (int use_rt_corba,
                     orb,
                     rt_class,
                     nthreads
-                    ACE_ENV_ARG_DECL)
+                    ACE_ENV_ARG_PARAMETER)
 {
   ACE_CHECK;
 
