@@ -1,3 +1,21 @@
+Wed Aug 13 19:48:17 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* Kokyu/tests/FIFO/test.cpp: 
+	* Kokyu/tests/EDF/test.cpp: 
+	* Kokyu/Kokyu_defs.h: 
+	* Kokyu/Kokyu_defs.cpp: 
+	* Kokyu/Kokyu.h: 
+	* Kokyu/Kokyu.cpp: 
+	* Kokyu/Dispatcher_Task.cpp: 
+	* Kokyu/Dispatcher_Impl.i: 
+	* Kokyu/Dispatcher_Impl.h: 
+	* Kokyu/Default_Dispatcher_Impl.h: 
+	* Kokyu/Default_Dispatcher_Impl.cpp: 
+
+	  Separated activation of the dispatcher and setting up of
+	  dispatching lanes. Added an activate () method to the dispatcher
+	  and associated classes. 
+
 Wed Aug 13 23:43:24 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/Bound_Ptr.i:

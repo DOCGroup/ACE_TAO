@@ -76,6 +76,14 @@ namespace Kokyu
 
   typedef ACE_Array<ConfigInfo> ConfigInfoSet;
 
+  struct Dispatcher_Attributes
+  {
+    Dispatcher_Attributes();
+    ConfigInfoSet config_info_set_;
+    int immediate_activation_;
+  };
+
+  
   struct QoSDescriptor
   {
     Priority_t preemption_priority_;

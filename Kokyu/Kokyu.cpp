@@ -23,6 +23,10 @@ int Dispatcher::shutdown ()
   return dispatcher_impl_->shutdown ();
 }
 
+int Dispatcher::activate ()
+{
+  return dispatcher_impl_->activate ();
+}
 
 void Dispatcher::implementation (Dispatcher_Impl* impl)
 {
@@ -37,7 +41,7 @@ void Dispatcher::implementation (Dispatcher_Impl* impl)
 
 Dispatcher_Auto_Ptr
 Dispatcher_Factory::
-create_dispatcher(const ConfigInfoSet& config_info_set)
+create_dispatcher(const Dispatcher_Attributes& attrs)
 {
   Dispatcher* disp;
   Dispatcher_Auto_Ptr nil_ptr((Dispatcher*)0);
@@ -46,7 +50,7 @@ create_dispatcher(const ConfigInfoSet& config_info_set)
   ACE_NEW_RETURN (disp, Dispatcher, nil_ptr);
   Dispatcher_Auto_Ptr disp_auto_ptr(disp);
   disp->implementation (tmp);
-  tmp->init (config_info_set);
+  tmp->init (attrs);
   return disp_auto_ptr;
 }
 
