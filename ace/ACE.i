@@ -140,6 +140,7 @@ ACE::strnew (const char *s)
     return ACE_OS::strcpy (t, s);
 }
 
+#if defined (ACE_WIN32)
 ASYS_INLINE wchar_t *
 ACE::strnew (const wchar_t *s)
 {
@@ -150,3 +151,4 @@ ACE::strnew (const wchar_t *s)
   else
     return ACE_OS::strcpy (t, s);
 }
+#endif /* ACE_WIN32 */

@@ -456,9 +456,11 @@ public:
   // This method is just like <strdup>, except that it uses <operator
   // new> rather than <malloc>.
 
+#   if defined (ACE_WIN32)
   static wchar_t *strnew (const wchar_t *s); 
   // This method is just like <strdup>, except that it uses <operator
   // new> rather than <malloc>.
+#endif /* ACE_WIN32 */
 
   static char *strndup (const char *str, size_t n);
   // Create a fresh new copy of <str>, up to <n> chars long.  Uses
