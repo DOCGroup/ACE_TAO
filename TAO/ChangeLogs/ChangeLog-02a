@@ -1,3 +1,8 @@
+Tue Jan 17 08:12:22 2002  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Security.bor:
+          Added missing IDL build rule for SecurityReplaceable.idl
+
 Wed Jan 16 22:46:12 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.h (ssliop_connect):
