@@ -1,3 +1,22 @@
+Thu Sep 17 02:45:53 PDT 1998  James Hu  <jxh@entera.com>
+
+	* ace/Containers_T.h:
+	* ace/Containers_T.i:
+	* ace/Containers_T.cpp:
+	  Added these files so that I could include some explicit
+	  template instantiations inside Containers.cpp.  Removed
+	  #if guards around ACE_DLList since it no longer relies
+	  on the feature that was being guarded against.
+
+	* ace/Containers.h:
+	  Simply #includes Containers_T.h.
+
+	* ace/Containers.cpp:
+	  Only contains some explicit template instantiations.
+
+	* ace/Containers.i:
+	  Removed, since it was no longer needed.
+
 Thu Sep 17 01:20:53 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/Msg_WFMO_Reactor.cpp (dispatch_window_messages): There was a
