@@ -1,3 +1,9 @@
+Tue Oct 14 21:11:20 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* tao/xdr.h: Changed int _fd to ACE_HANDLE _fd to work on NT.
+  	  Thanks to Satheesh Kumar <satheesh@aspectdv.com> for reporting
+ 	  this.
+
 Tue Oct 14 02:48:21 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* TAO version 0.0.11, released Tue Oct 14 02:48:21 1997.
