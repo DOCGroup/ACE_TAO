@@ -21,9 +21,10 @@ bgcolor="#ffffff">
 
 Thanks to Graham Dumpleton &lt;grahamd@nms.otc.com.au&gt; for providing
 corrections to the OSE Classtools link and description.  Thanks also
-to Graham for providing the OSE tools!
+to Graham for providing the OSE tools!<p>
 
-<p><HR><P>
+
+<hr>
 <h3>Coding Guidelines</h3>
 <ul>
   <li><strong>General</strong><p>
@@ -66,7 +67,7 @@ to Graham for providing the OSE tools!
     <li>Avoid use of floating point types (float and double) and operations
         unless absolutely necessary.  Not all ACE platforms support them.
         Therefore, whereever they are used, ACE_LACKS_FLOATING_POINT
-        conditional code must be also be used.
+        conditional code must be also be used.<p>
   </ul>
 
   <li><strong>Code Documentation</strong><p>
@@ -193,6 +194,12 @@ to Graham for providing the OSE tools!
         Therefore, the inline functions in the .i file should be arranged
         properly.  Some compilers, such as <code>g++</code> with the
         <code>-Wall</code> option, will issue warnings for violations.<p>
+
+    <li><code>ACE_Export</code> must be inserted between the
+        <code>class</code> keyword and class name for all classes that
+        are exported from libraries, as shown in the example above.
+        <strong>However</strong>, do <strong>not</strong> use
+        <code>ACE_Export</code> for template classes!<p>
 
     <li>Mutators and accessors should be of this form:<p>
 
@@ -390,10 +397,10 @@ to Graham for providing the OSE tools!
 
   </ul><p>
 
-</ul><p>
+</ul>
 
-<p><HR><P>
 
+<hr>
 <h3><a href="http://www.cs.wustl.edu/~schmidt/ACE-overview.html">ACE</a>
   Usage Guidelines</h3>
 <ul>
@@ -453,9 +460,10 @@ to Graham for providing the OSE tools!
 
   <li>Avoid using the C++ Standard Template Library (STL) in our
       applications.  Some platforms do not support it yet.<p>
-</ul><p>
+</ul>
 
 
+<hr>
 <h3><a href="http://www.cs.wustl.edu/~levine/CVS.html">CVS</a>
   Usage Guidelines</h3>
 <ul>
@@ -463,8 +471,8 @@ to Graham for providing the OSE tools!
       on at least one platform before checking it into the CVS repository.<p>
 </ul>
 
-<p><HR><P>
 
+<hr>
 <h3>Software Engineering Guidelines</h3>
 <ul>
   <li><strong>Advise</strong>:  Keep other developers informed of problems
@@ -486,16 +494,17 @@ to Graham for providing the OSE tools!
   <li><strong>Synthesize</strong>:  Build stubs and scaffolding early to
       simulate the complete system.  Maintain a checked-in version of the
       system that cleanly builds and tests at all times.<p>
-</ul><p>
+</ul>
 
-<p>
-<HR><P>
+
+<hr>
 <h3><a href="http://www.cs.wustl.edu/~schmidt/rules.html">ACE
   Design Rules</a></h3>
 
+
 <hr>
 <!-- hhmts start -->
-Last modified: Thu Apr 30 12:36:31 CDT 1998
+Last modified: Tue Jun 30 09:26:57 CDT 1998
 <!-- hhmts end -->
 
 </body>
