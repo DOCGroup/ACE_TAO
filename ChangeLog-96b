@@ -8,6 +8,8 @@ Tue Nov  5 14:26:32 1996  David Levine  <levine@cs.wustl.edu>
 	  for maintaining it, and to Alan Stewart <axs2@osi.com> for
 	  suggesting fixes/enhancements.
 	* tests/run_tests.ksh:  added, at suggestion of Alan Stewart
+	* tests/Time_Service_Test.cpp and Tokens_Test.cpp:  changed to
+	  return 0 on success instead of 42
 
 Fri Nov  1 03:53:39 1996  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
 
