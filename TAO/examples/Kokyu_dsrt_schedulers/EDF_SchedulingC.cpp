@@ -26,21 +26,14 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:351
+// be/be_codegen.cpp:302
 
 
 #include "EDF_SchedulingC.h"
-#include "tao/Stub.h"
-#include "tao/ORB_Core.h"
-#include "tao/Invocation.h"
-#include "tao/PortableInterceptor.h"
-
-#if TAO_HAS_INTERCEPTORS == 1
-#include "tao/RequestInfo_Util.h"
-#include "tao/ClientRequestInfo_i.h"
-#include "tao/ClientInterceptorAdapter.h"
-#endif  /* TAO_HAS_INTERCEPTORS == 1 */
-
+#include "tao/Typecode.h"
+#include "tao/Any_Impl_T.h"
+#include "tao/Any_Dual_Impl_T.h"
+#include "ace/OS_NS_string.h"
 
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
@@ -49,6 +42,14 @@
 #if !defined (__ACE_INLINE__)
 #include "EDF_SchedulingC.i"
 #endif /* !defined INLINE */
+
+// TAO_IDL - Generated from
+// be/be_visitor_arg_traits.cpp:60
+
+// Arg traits specializations.
+namespace TAO
+{
+};
 
 // TAO_IDL - Generated from
 // be/be_visitor_typecode/typecode_defn.cpp:284
@@ -113,134 +114,70 @@ static CORBA::TypeCode _tc_TAO_tc_EDF_Scheduling_SchedulingParameter (
     sizeof (EDF_Scheduling::SchedulingParameter)
   );
 
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (EDF_Scheduling)
-TAO_NAMESPACE_DEFINE (
-    ::CORBA::TypeCode_ptr,
-    _tc_SchedulingParameter,
-    &_tc_TAO_tc_EDF_Scheduling_SchedulingParameter
-  )
-TAO_NAMESPACE_END
+namespace EDF_Scheduling
+{
+  ::CORBA::TypeCode_ptr _tc_SchedulingParameter =
+    &_tc_TAO_tc_EDF_Scheduling_SchedulingParameter;
+}
 
 // TAO_IDL - Generated from 
 // be/be_visitor_structure/structure_cs.cpp:66
 
-void EDF_Scheduling::SchedulingParameter::_tao_any_destructor (void *_tao_void_pointer)
-{
-  SchedulingParameter *tmp = ACE_static_cast (SchedulingParameter*, _tao_void_pointer);
-  delete tmp;
-}
-
-// TAO_IDL - Generated from
-// be/be_type.cpp:297
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class
-  TAO_Fixed_Var_T<
-      EDF_Scheduling::SchedulingParameter
-    >;
-
-template class TAO_Var_Base_T<
-    EDF_Scheduling::SchedulingParameter
-  >;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-# pragma instantiate \
-  TAO_Fixed_Var_T< \
-      EDF_Scheduling::SchedulingParameter \
-    >
-
-#pragma instantiate TAO_Var_Base_T<
-    EDF_Scheduling::SchedulingParameter
-  >
-
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
-
-// TAO_IDL - Generated from
-// be/be_visitor_interface/interface_cs.cpp:63
-
-int EDF_Scheduling::SchedulingParameterPolicy::_tao_class_id = 0;
-
-EDF_Scheduling::SchedulingParameterPolicy_ptr
-EDF_Scheduling::tao_SchedulingParameterPolicy_life::tao_duplicate (
-    SchedulingParameterPolicy_ptr p
+void 
+EDF_Scheduling::SchedulingParameter::_tao_any_destructor (
+    void *_tao_void_pointer
   )
 {
-  return SchedulingParameterPolicy::_duplicate (p);
+  SchedulingParameter *_tao_tmp_pointer =
+    ACE_static_cast (SchedulingParameter *, _tao_void_pointer);
+  delete _tao_tmp_pointer;
 }
 
+// TAO_IDL - Generated from
+// be/be_visitor_interface/interface_cs.cpp:60
+
+// Traits specializations for EDF_Scheduling::SchedulingParameterPolicy.
+
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+EDF_Scheduling::SchedulingParameterPolicy_ptr
+TAO::Objref_Traits<EDF_Scheduling::SchedulingParameterPolicy>::tao_duplicate (
+    EDF_Scheduling::SchedulingParameterPolicy_ptr p
+  )
+{
+  return EDF_Scheduling::SchedulingParameterPolicy::_duplicate (p);
+}
+
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 void
-EDF_Scheduling::tao_SchedulingParameterPolicy_life::tao_release (
-    SchedulingParameterPolicy_ptr p
+TAO::Objref_Traits<EDF_Scheduling::SchedulingParameterPolicy>::tao_release (
+    EDF_Scheduling::SchedulingParameterPolicy_ptr p
   )
 {
   CORBA::release (p);
 }
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 EDF_Scheduling::SchedulingParameterPolicy_ptr
-EDF_Scheduling::tao_SchedulingParameterPolicy_life::tao_nil (
-    void
-  )
+TAO::Objref_Traits<EDF_Scheduling::SchedulingParameterPolicy>::tao_nil (void)
 {
-  return SchedulingParameterPolicy::_nil ();
+  return EDF_Scheduling::SchedulingParameterPolicy::_nil ();
 }
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 CORBA::Boolean
-EDF_Scheduling::tao_SchedulingParameterPolicy_life::tao_marshal (
-    SchedulingParameterPolicy_ptr p,
-    TAO_OutputCDR &cdr
+TAO::Objref_Traits<EDF_Scheduling::SchedulingParameterPolicy>::tao_marshal (
+    EDF_Scheduling::SchedulingParameterPolicy_ptr p,
+    TAO_OutputCDR & cdr
   )
 {
   return p->marshal (cdr);
 }
 
-EDF_Scheduling::SchedulingParameterPolicy_ptr
-EDF_Scheduling::tao_SchedulingParameterPolicy_cast::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return SchedulingParameterPolicy::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-EDF_Scheduling::tao_SchedulingParameterPolicy_cast::tao_upcast (
-    void *src
-  )
-{
-  SchedulingParameterPolicy **tmp =
-    ACE_static_cast (SchedulingParameterPolicy **, src);
-  return *tmp;
-}
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  template class
-    TAO_Objref_Var_T<
-        EDF_Scheduling::SchedulingParameterPolicy,
-        EDF_Scheduling::tao_SchedulingParameterPolicy_life
-      >;
-  template class
-    TAO_Objref_Out_T<
-        EDF_Scheduling::SchedulingParameterPolicy,
-        EDF_Scheduling::tao_SchedulingParameterPolicy_life
-      >;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate \
-    TAO_Objref_Var_T< \
-        EDF_Scheduling::SchedulingParameterPolicy, \
-        EDF_Scheduling::tao_SchedulingParameterPolicy_life \
-      >
-# pragma instantiate \
-    TAO_Objref_Out_T< \
-        EDF_Scheduling::SchedulingParameterPolicy, \
-        EDF_Scheduling::tao_SchedulingParameterPolicy_life \
-      >
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-// TAO_IDL - Generated from 
-// be/be_visitor_interface/interface_cs.cpp:245
+// Function pointer for collocation factory initialization.
+TAO::Collocation_Proxy_Broker * 
+(*EDF_Scheduling__TAO_SchedulingParameterPolicy_Proxy_Broker_Factory_function_pointer) (
+    CORBA::Object_ptr obj
+  ) = 0;
 
 EDF_Scheduling::SchedulingParameterPolicy::SchedulingParameterPolicy (void)
 {}
@@ -251,40 +188,26 @@ EDF_Scheduling::SchedulingParameterPolicy::~SchedulingParameterPolicy (void)
 void 
 EDF_Scheduling::SchedulingParameterPolicy::_tao_any_destructor (void *_tao_void_pointer)
 {
-  SchedulingParameterPolicy *tmp = ACE_static_cast (SchedulingParameterPolicy *, _tao_void_pointer);
-  CORBA::release (tmp);
+  SchedulingParameterPolicy *_tao_tmp_pointer =
+    ACE_static_cast (SchedulingParameterPolicy *, _tao_void_pointer);
+  CORBA::release (_tao_tmp_pointer);
 }
 
 EDF_Scheduling::SchedulingParameterPolicy_ptr
 EDF_Scheduling::SchedulingParameterPolicy::_narrow (
-    CORBA::Object_ptr obj
-    ACE_ENV_ARG_DECL
-  )
-{
-  return SchedulingParameterPolicy::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
-}
-
-EDF_Scheduling::SchedulingParameterPolicy_ptr 
-EDF_Scheduling::SchedulingParameterPolicy::_unchecked_narrow (
-    CORBA::Object_ptr obj
+    CORBA::Object_ptr _tao_objref
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (obj))
+  if (CORBA::is_nil (_tao_objref))
     {
       return SchedulingParameterPolicy::_nil ();
     }
   
-  return
-      ACE_reinterpret_cast (
-          SchedulingParameterPolicy_ptr,
-          obj->_tao_QueryInterface (
-              ACE_reinterpret_cast (
-                  ptrdiff_t,
-                  &SchedulingParameterPolicy::_tao_class_id
-                )
-            )
-        );
+  SchedulingParameterPolicy_ptr proxy =
+    dynamic_cast<SchedulingParameterPolicy_ptr> (_tao_objref);
+  
+  return SchedulingParameterPolicy::_duplicate (proxy);
 }
 
 EDF_Scheduling::SchedulingParameterPolicy_ptr
@@ -298,49 +221,37 @@ EDF_Scheduling::SchedulingParameterPolicy::_duplicate (SchedulingParameterPolicy
   return obj;
 }
 
-void *EDF_Scheduling::SchedulingParameterPolicy::_tao_QueryInterface (ptrdiff_t type)
+CORBA::Boolean
+EDF_Scheduling::SchedulingParameterPolicy::_is_a (
+    const char *value
+    ACE_ENV_ARG_DECL_NOT_USED
+  )
 {
-  void *retv = 0;
-  
-  if (type == ACE_reinterpret_cast (
-              ptrdiff_t,
-              &::CORBA::Policy::_tao_class_id)
-            )
+  if (
+      !ACE_OS::strcmp (
+          (char *)value,
+          "IDL:omg.org/CORBA/Policy:1.0"
+        ) ||
+      !ACE_OS::strcmp (
+          (char *)value,
+          "IDL:EDF_Scheduling/SchedulingParameterPolicy:1.0"
+        ) ||
+      !ACE_OS::strcmp (
+          (char *)value,
+          "IDL:omg.org/CORBA/LocalObject:1.0"
+        ) ||
+      !ACE_OS::strcmp (
+          (char *)value,
+          "IDL:omg.org/CORBA/Object:1.0"
+        )
+     )
     {
-      retv =
-        ACE_reinterpret_cast (
-            void *,
-            ACE_static_cast (
-                CORBA::Policy_ptr,
-                this
-              )
-          );
+      return 1; // success using local knowledge
     }
-  else if (type == ACE_reinterpret_cast (
-              ptrdiff_t,
-              &ACE_NESTED_CLASS (::EDF_Scheduling, SchedulingParameterPolicy)::_tao_class_id)
-            )
+  else
     {
-      retv = ACE_reinterpret_cast (void*, this);
+      return 0;
     }
-  else if (type == ACE_reinterpret_cast (
-               ptrdiff_t,
-               &CORBA::Object::_tao_class_id)
-             )
-    {
-      retv =
-        ACE_reinterpret_cast (
-            void *,
-            ACE_static_cast (CORBA::Object_ptr, this)
-          );
-    }
-  
-  if (retv != 0)
-    {
-      this->_add_ref ();
-    }
-  
-  return retv;
 }
 
 const char* EDF_Scheduling::SchedulingParameterPolicy::_interface_repository_id (void) const
@@ -392,98 +303,57 @@ static CORBA::TypeCode _tc_TAO_tc_EDF_Scheduling_SchedulingParameterPolicy (
     sizeof (EDF_Scheduling::SchedulingParameterPolicy)
   );
 
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (EDF_Scheduling)
-TAO_NAMESPACE_DEFINE (
-    ::CORBA::TypeCode_ptr,
-    _tc_SchedulingParameterPolicy,
-    &_tc_TAO_tc_EDF_Scheduling_SchedulingParameterPolicy
-  )
-TAO_NAMESPACE_END
-
-// TAO_IDL - Generated from
-// be/be_visitor_interface/interface_cs.cpp:63
-
-int EDF_Scheduling::Scheduler::_tao_class_id = 0;
-
-EDF_Scheduling::Scheduler_ptr
-EDF_Scheduling::tao_Scheduler_life::tao_duplicate (
-    Scheduler_ptr p
-  )
+namespace EDF_Scheduling
 {
-  return Scheduler::_duplicate (p);
+  ::CORBA::TypeCode_ptr _tc_SchedulingParameterPolicy =
+    &_tc_TAO_tc_EDF_Scheduling_SchedulingParameterPolicy;
 }
 
+// TAO_IDL - Generated from
+// be/be_visitor_interface/interface_cs.cpp:60
+
+// Traits specializations for EDF_Scheduling::Scheduler.
+
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+EDF_Scheduling::Scheduler_ptr
+TAO::Objref_Traits<EDF_Scheduling::Scheduler>::tao_duplicate (
+    EDF_Scheduling::Scheduler_ptr p
+  )
+{
+  return EDF_Scheduling::Scheduler::_duplicate (p);
+}
+
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 void
-EDF_Scheduling::tao_Scheduler_life::tao_release (
-    Scheduler_ptr p
+TAO::Objref_Traits<EDF_Scheduling::Scheduler>::tao_release (
+    EDF_Scheduling::Scheduler_ptr p
   )
 {
   CORBA::release (p);
 }
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 EDF_Scheduling::Scheduler_ptr
-EDF_Scheduling::tao_Scheduler_life::tao_nil (
-    void
-  )
+TAO::Objref_Traits<EDF_Scheduling::Scheduler>::tao_nil (void)
 {
-  return Scheduler::_nil ();
+  return EDF_Scheduling::Scheduler::_nil ();
 }
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 CORBA::Boolean
-EDF_Scheduling::tao_Scheduler_life::tao_marshal (
-    Scheduler_ptr p,
-    TAO_OutputCDR &cdr
+TAO::Objref_Traits<EDF_Scheduling::Scheduler>::tao_marshal (
+    EDF_Scheduling::Scheduler_ptr p,
+    TAO_OutputCDR & cdr
   )
 {
   return p->marshal (cdr);
 }
 
-EDF_Scheduling::Scheduler_ptr
-EDF_Scheduling::tao_Scheduler_cast::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return Scheduler::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-EDF_Scheduling::tao_Scheduler_cast::tao_upcast (
-    void *src
-  )
-{
-  Scheduler **tmp =
-    ACE_static_cast (Scheduler **, src);
-  return *tmp;
-}
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  template class
-    TAO_Objref_Var_T<
-        EDF_Scheduling::Scheduler,
-        EDF_Scheduling::tao_Scheduler_life
-      >;
-  template class
-    TAO_Objref_Out_T<
-        EDF_Scheduling::Scheduler,
-        EDF_Scheduling::tao_Scheduler_life
-      >;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate \
-    TAO_Objref_Var_T< \
-        EDF_Scheduling::Scheduler, \
-        EDF_Scheduling::tao_Scheduler_life \
-      >
-# pragma instantiate \
-    TAO_Objref_Out_T< \
-        EDF_Scheduling::Scheduler, \
-        EDF_Scheduling::tao_Scheduler_life \
-      >
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-// TAO_IDL - Generated from 
-// be/be_visitor_interface/interface_cs.cpp:245
+// Function pointer for collocation factory initialization.
+TAO::Collocation_Proxy_Broker * 
+(*EDF_Scheduling__TAO_Scheduler_Proxy_Broker_Factory_function_pointer) (
+    CORBA::Object_ptr obj
+  ) = 0;
 
 EDF_Scheduling::Scheduler::Scheduler (void)
 {}
@@ -494,40 +364,26 @@ EDF_Scheduling::Scheduler::~Scheduler (void)
 void 
 EDF_Scheduling::Scheduler::_tao_any_destructor (void *_tao_void_pointer)
 {
-  Scheduler *tmp = ACE_static_cast (Scheduler *, _tao_void_pointer);
-  CORBA::release (tmp);
+  Scheduler *_tao_tmp_pointer =
+    ACE_static_cast (Scheduler *, _tao_void_pointer);
+  CORBA::release (_tao_tmp_pointer);
 }
 
 EDF_Scheduling::Scheduler_ptr
 EDF_Scheduling::Scheduler::_narrow (
-    CORBA::Object_ptr obj
-    ACE_ENV_ARG_DECL
-  )
-{
-  return Scheduler::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
-}
-
-EDF_Scheduling::Scheduler_ptr 
-EDF_Scheduling::Scheduler::_unchecked_narrow (
-    CORBA::Object_ptr obj
+    CORBA::Object_ptr _tao_objref
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (obj))
+  if (CORBA::is_nil (_tao_objref))
     {
       return Scheduler::_nil ();
     }
   
-  return
-      ACE_reinterpret_cast (
-          Scheduler_ptr,
-          obj->_tao_QueryInterface (
-              ACE_reinterpret_cast (
-                  ptrdiff_t,
-                  &Scheduler::_tao_class_id
-                )
-            )
-        );
+  Scheduler_ptr proxy =
+    dynamic_cast<Scheduler_ptr> (_tao_objref);
+  
+  return Scheduler::_duplicate (proxy);
 }
 
 EDF_Scheduling::Scheduler_ptr
@@ -541,49 +397,37 @@ EDF_Scheduling::Scheduler::_duplicate (Scheduler_ptr obj)
   return obj;
 }
 
-void *EDF_Scheduling::Scheduler::_tao_QueryInterface (ptrdiff_t type)
+CORBA::Boolean
+EDF_Scheduling::Scheduler::_is_a (
+    const char *value
+    ACE_ENV_ARG_DECL_NOT_USED
+  )
 {
-  void *retv = 0;
-  
-  if (type == ACE_reinterpret_cast (
-              ptrdiff_t,
-              &::RTScheduling::Scheduler::_tao_class_id)
-            )
+  if (
+      !ACE_OS::strcmp (
+          (char *)value,
+          "IDL:RTScheduling/Scheduler:1.0"
+        ) ||
+      !ACE_OS::strcmp (
+          (char *)value,
+          "IDL:EDF_Scheduling/Scheduler:1.0"
+        ) ||
+      !ACE_OS::strcmp (
+          (char *)value,
+          "IDL:omg.org/CORBA/LocalObject:1.0"
+        ) ||
+      !ACE_OS::strcmp (
+          (char *)value,
+          "IDL:omg.org/CORBA/Object:1.0"
+        )
+     )
     {
-      retv =
-        ACE_reinterpret_cast (
-            void *,
-            ACE_static_cast (
-                RTScheduling::Scheduler_ptr,
-                this
-              )
-          );
+      return 1; // success using local knowledge
     }
-  else if (type == ACE_reinterpret_cast (
-              ptrdiff_t,
-              &ACE_NESTED_CLASS (::EDF_Scheduling, Scheduler)::_tao_class_id)
-            )
+  else
     {
-      retv = ACE_reinterpret_cast (void*, this);
+      return 0;
     }
-  else if (type == ACE_reinterpret_cast (
-               ptrdiff_t,
-               &CORBA::Object::_tao_class_id)
-             )
-    {
-      retv =
-        ACE_reinterpret_cast (
-            void *,
-            ACE_static_cast (CORBA::Object_ptr, this)
-          );
-    }
-  
-  if (retv != 0)
-    {
-      this->_add_ref ();
-    }
-  
-  return retv;
 }
 
 const char* EDF_Scheduling::Scheduler::_interface_repository_id (void) const
@@ -627,14 +471,11 @@ static CORBA::TypeCode _tc_TAO_tc_EDF_Scheduling_Scheduler (
     sizeof (EDF_Scheduling::Scheduler)
   );
 
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (EDF_Scheduling)
-TAO_NAMESPACE_DEFINE (
-    ::CORBA::TypeCode_ptr,
-    _tc_Scheduler,
-    &_tc_TAO_tc_EDF_Scheduling_Scheduler
-  )
-TAO_NAMESPACE_END
+namespace EDF_Scheduling
+{
+  ::CORBA::TypeCode_ptr _tc_Scheduler =
+    &_tc_TAO_tc_EDF_Scheduling_Scheduler;
+}
 
 // TAO_IDL - Generated from 
 // be/be_visitor_structure/any_op_cs.cpp:54
@@ -694,15 +535,32 @@ CORBA::Boolean operator>>= (
       );
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
-    defined (ACE_HAS_GNU_REPO)
-  template class TAO::Any_Dual_Impl_T<EDF_Scheduling::SchedulingParameter>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO::Any_Dual_Impl_T<EDF_Scheduling::SchedulingParameter>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
 // TAO_IDL - Generated from
 // be/be_visitor_interface/any_op_cs.cpp:50
+
+ACE_TEMPLATE_SPECIALIZATION
+CORBA::Boolean
+TAO::Any_Impl_T<EDF_Scheduling::SchedulingParameterPolicy>::to_object (
+    CORBA::Object_ptr &_tao_elem
+  ) const
+{
+  _tao_elem = CORBA::Object::_duplicate (this->value_);
+  return 1;
+}
+
+ACE_TEMPLATE_SPECIALIZATION
+CORBA::Boolean
+TAO::Any_Impl_T<EDF_Scheduling::SchedulingParameterPolicy>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+ACE_TEMPLATE_SPECIALIZATION
+CORBA::Boolean
+TAO::Any_Impl_T<EDF_Scheduling::SchedulingParameterPolicy>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
+}
 
 // Copying insertion.
 void
@@ -746,15 +604,32 @@ operator>>= (
       );
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
-    defined (ACE_HAS_GNU_REPO)
-  template class TAO::Any_Impl_T<EDF_Scheduling::SchedulingParameterPolicy>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO::Any_Impl_T<EDF_Scheduling::SchedulingParameterPolicy>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
 // TAO_IDL - Generated from
 // be/be_visitor_interface/any_op_cs.cpp:50
+
+ACE_TEMPLATE_SPECIALIZATION
+CORBA::Boolean
+TAO::Any_Impl_T<EDF_Scheduling::Scheduler>::to_object (
+    CORBA::Object_ptr &_tao_elem
+  ) const
+{
+  _tao_elem = CORBA::Object::_duplicate (this->value_);
+  return 1;
+}
+
+ACE_TEMPLATE_SPECIALIZATION
+CORBA::Boolean
+TAO::Any_Impl_T<EDF_Scheduling::Scheduler>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+ACE_TEMPLATE_SPECIALIZATION
+CORBA::Boolean
+TAO::Any_Impl_T<EDF_Scheduling::Scheduler>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
+}
 
 // Copying insertion.
 void
@@ -797,11 +672,4 @@ operator>>= (
         _tao_elem
       );
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
-    defined (ACE_HAS_GNU_REPO)
-  template class TAO::Any_Impl_T<EDF_Scheduling::Scheduler>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO::Any_Impl_T<EDF_Scheduling::Scheduler>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
