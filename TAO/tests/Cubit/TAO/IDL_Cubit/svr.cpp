@@ -38,6 +38,9 @@ parse_args (int argc, char *argv[])
       case 'n':	// number of cubit objects we hold
         num_of_objs = ACE_OS::atoi (get_opts.optarg);
         break;
+      case 'O':
+        // Assume this is an -ORB or -OA option...
+        break;
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
