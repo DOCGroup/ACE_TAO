@@ -1178,13 +1178,13 @@ IDL_GlobalData::temp_dir (const char* s)
 {
   // Delete the old pointer.
   delete [] this->temp_dir_;
-  
+
   // Allocate memory, 1 for the end of string.
-  ACE_NEW_RETURN (this->temp_dir_,
-                  char [ACE_OS::strlen (s) + 
-                       ACE_OS::strlen (ACE_DIRECTORY_SEPARATOR_STR_A) +
-                       1]);
-  
+  ACE_NEW (this->temp_dir_,
+           char [ACE_OS::strlen (s) +
+                ACE_OS::strlen (ACE_DIRECTORY_SEPARATOR_STR_A) +
+                1]);
+
   // Copy the strings.
   ACE_OS::sprintf (this->temp_dir_,
                    "%s%s",
