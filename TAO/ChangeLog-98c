@@ -1,21 +1,42 @@
+Mon Oct 27 22:22:22 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* TAO_IDL/be_decl.cpp: Added a ptr () function to the _var classes
+	hat returns the underlying ptr_ data member. This ptr () member
+	function is now used to pass a pointer type to constructor and
+	assignment operator from a T_var class.
+
+	* TAO_IDL/be_state.cpp: Important changes related to generation of
+	return values of operations in the stubs. In addition, an & was
+	missing for passing string types. Some additional bugs arising out
+	of operations with void return type have been fixed.
+
+	* ./tests/IDL_Cubit: This test has been modified to include a
+	factory interface that reads a key for the cubit object and
+	produces an obj reference for Cubit. In addition, a preliminary
+	version of the _bind call has been tested with IDL_Cubit.
+
+	*MAXNAMELEN : Carlos informed me that MAXNAMELEN was a small
+	constant on some platforms. This has been changed to
+	TAO_CodeGen::MAXNAMELEN with a value of 100.
+
 Mon Oct 27 22:07:58 1997  Carlos O'Ryan  <coryan@MILONGA>
 
-	* TAO_IDL/be/be_array.cpp: 
-	* TAO_IDL/be/be_helper.cpp: 
-	* TAO_IDL/be/be_sequence.cpp: 
-	* TAO_IDL/be/be_structure.cpp: 
-	* TAO_IDL/be/be_typedef.cpp: 
-	* TAO_IDL/be/be_union.cpp: 
+	* TAO_IDL/be/be_array.cpp:
+	* TAO_IDL/be/be_helper.cpp:
+	* TAO_IDL/be/be_sequence.cpp:
+	* TAO_IDL/be/be_structure.cpp:
+	* TAO_IDL/be/be_typedef.cpp:
+	* TAO_IDL/be/be_union.cpp:
 	  Set this->cli_stub_gen_ to I_TRUE once the code has been
 	  emitted.
 
 Mon Oct 27 19:34:08 1997  Carlos O'Ryan  <coryan@MILONGA>
 
-	* TAO_IDL/be/be_exception.cpp: 
-	* TAO_IDL/be/be_enum.cpp: 
+	* TAO_IDL/be/be_exception.cpp:
+	* TAO_IDL/be/be_enum.cpp:
 	  Set this->cli_stub_gen_ to I_TRUE at the end.
 
-	* TAO_IDL/be/be_typedef.cpp: 
+	* TAO_IDL/be/be_typedef.cpp:
 	  Set the state to TAO_CodeGen::TAO_TYPEDEF_CH instead of just
 	  struct.
 
@@ -103,7 +124,7 @@ Sun Oct 26 01:05:36 1997    <nw1@COYOTE>
 
 	* tao/connect.cpp:  Removed a template argument from explicit
 	  instantiation of ACE_Hash_Addr.
-	  
+
 	* tests/Cubit/TAO/clnt.cpp (main): Added a simple class
 	  ACE_Winsock_proper_shutdown here to shutdown winsock properly.
   	  This class should be removed later once we figure out how to
@@ -115,72 +136,72 @@ Sun Oct 26 01:05:36 1997    <nw1@COYOTE>
 
 Sun Oct 26 01:47:04 1997  Sergio Flores  <sergio@macarena.cs.wustl.edu>
 
-	* TAO_IDL/be/be_codegen.cpp (upcase): 
-	* TAO_IDL/util/utl_string.cpp (canonicalize): 
-	* TAO_IDL/be/be_decl.cpp (tc_name2long): 
+	* TAO_IDL/be/be_codegen.cpp (upcase):
+	* TAO_IDL/util/utl_string.cpp (canonicalize):
+	* TAO_IDL/be/be_decl.cpp (tc_name2long):
 	Added "unsigned" to index variable "i" used in for() loop,
 	to avoid warning "comparison between unsigned and signed"
 
-	* TAO_IDL/be/be_decl.cpp (compute_flatname): 
-	* TAO_IDL/be/be_decl.cpp (compute_repoID): 
-	* TAO_IDL/be/be_interface.cpp (compute_fullskelname): 
+	* TAO_IDL/be/be_decl.cpp (compute_flatname):
+	* TAO_IDL/be/be_decl.cpp (compute_repoID):
+	* TAO_IDL/be/be_interface.cpp (compute_fullskelname):
 	Fixed error "second - I_FALSE;", should be "second = I_FALSE;"
 
-	* TAO_IDL/be/be_operation.cpp (gen_server_skeletons): 
-	* TAO_IDL/be/be_state.cpp (gen_code): 
+	* TAO_IDL/be/be_operation.cpp (gen_server_skeletons):
+	* TAO_IDL/be/be_state.cpp (gen_code):
 	Initialized pointers to 0
-	
-	* TAO_IDL/driver/drv_preproc.cpp (DRV_pre_proc): 
-	* TAO_IDL/be/be_operation.cpp (gen_server_header): 
-	* TAO_IDL/be/be_operation.cpp (gen_client_header): 
-	* TAO_IDL/be/be_decl.cpp (gen_out_defn): 
-	* TAO_IDL/be/be_decl.cpp (gen_var_defn): 
-	* TAO_IDL/be/be_scope.cpp (gen_client_header): 
-	* TAO_IDL/be/be_state.cpp (gen_code): 
-	* TAO_IDL/be/be_helper.cpp (operator<<): 
-	* TAO_IDL/be/be_union.cpp (tc_encap_len): 
-	* TAO_IDL/be/be_typedef.cpp (gen_client_stubs): 
-	* TAO_IDL/be/be_string.cpp (gen_client_header): 
-	* TAO_IDL/be/be_root.cpp (gen_idl2cplusplus_mapping): 
-	* TAO_IDL/be/be_predefined_type.cpp (gen_typecode): 
-	* TAO_IDL/be/be_interface.cpp (gen_client_stubs): 
-	* TAO_IDL/be/be_interface.cpp (gen_server_skeletons): 
-	* TAO_IDL/be/be_interface.cpp (gen_operation_table): 
-	* TAO_IDL/be/be_interface.cpp (gen_server_inline): 
-	* TAO_IDL/be/be_interface.cpp (tc_encap_len): 
-	* TAO_IDL/be/be_field.cpp (gen_encapsulation): 
+
+	* TAO_IDL/driver/drv_preproc.cpp (DRV_pre_proc):
+	* TAO_IDL/be/be_operation.cpp (gen_server_header):
+	* TAO_IDL/be/be_operation.cpp (gen_client_header):
+	* TAO_IDL/be/be_decl.cpp (gen_out_defn):
+	* TAO_IDL/be/be_decl.cpp (gen_var_defn):
+	* TAO_IDL/be/be_scope.cpp (gen_client_header):
+	* TAO_IDL/be/be_state.cpp (gen_code):
+	* TAO_IDL/be/be_helper.cpp (operator<<):
+	* TAO_IDL/be/be_union.cpp (tc_encap_len):
+	* TAO_IDL/be/be_typedef.cpp (gen_client_stubs):
+	* TAO_IDL/be/be_string.cpp (gen_client_header):
+	* TAO_IDL/be/be_root.cpp (gen_idl2cplusplus_mapping):
+	* TAO_IDL/be/be_predefined_type.cpp (gen_typecode):
+	* TAO_IDL/be/be_interface.cpp (gen_client_stubs):
+	* TAO_IDL/be/be_interface.cpp (gen_server_skeletons):
+	* TAO_IDL/be/be_interface.cpp (gen_operation_table):
+	* TAO_IDL/be/be_interface.cpp (gen_server_inline):
+	* TAO_IDL/be/be_interface.cpp (tc_encap_len):
+	* TAO_IDL/be/be_field.cpp (gen_encapsulation):
 	* TAO_IDL/be/be_field.cpp (tc_encap_len):
-	* TAO_IDL/be/be_enum_val.cpp (gen_encapsulation): 
-	* TAO_IDL/be/be_enum.cpp (tc_encap_len): 
-	* TAO_IDL/be/be_constant.cpp (gen_client_header): 
-	* TAO_IDL/be/be_constant.cpp (gen_client_stubs): 
-	* TAO_IDL/be/be_argument.cpp (gen_client_header): 
-	* TAO_IDL/be/be_argument.cpp (gen_client_stubs): 
-	* TAO_IDL/be/be_argument.cpp (gen_server_header): 
-	* TAO_IDL/be/be_argument.cpp (gen_server_skeletons): 
-	* TAO_IDL/be/be_array.cpp (be_array): 
-	* TAO_IDL/be/be_array.cpp (gen_client_header): 
-	* TAO_IDL/be/be_array.cpp (gen_client_inline): 
-	* TAO_IDL/be/be_array.cpp (gen_forany_defn): 
-	* TAO_IDL/be/be_array.cpp (gen_forany_impl): 
-	* TAO_IDL/util/utl_stack.cpp (push): 
+	* TAO_IDL/be/be_enum_val.cpp (gen_encapsulation):
+	* TAO_IDL/be/be_enum.cpp (tc_encap_len):
+	* TAO_IDL/be/be_constant.cpp (gen_client_header):
+	* TAO_IDL/be/be_constant.cpp (gen_client_stubs):
+	* TAO_IDL/be/be_argument.cpp (gen_client_header):
+	* TAO_IDL/be/be_argument.cpp (gen_client_stubs):
+	* TAO_IDL/be/be_argument.cpp (gen_server_header):
+	* TAO_IDL/be/be_argument.cpp (gen_server_skeletons):
+	* TAO_IDL/be/be_array.cpp (be_array):
+	* TAO_IDL/be/be_array.cpp (gen_client_header):
+	* TAO_IDL/be/be_array.cpp (gen_client_inline):
+	* TAO_IDL/be/be_array.cpp (gen_forany_defn):
+	* TAO_IDL/be/be_array.cpp (gen_forany_impl):
+	* TAO_IDL/util/utl_stack.cpp (push):
 	Added ACE_UNUSED_ARG macro to avoid unused variable warning,
 	for variable slen.
 
-	* TAO_IDL/be_include/be_helper.h (class TAO_OutStream): 
+	* TAO_IDL/be_include/be_helper.h (class TAO_OutStream):
 	Made destructor virtual; we have virtual member functions.
 
-	* TAO_IDL/be/be_codegen.cpp (TAO_CodeGen): 	
-	* TAO_IDL/be/be_decl.cpp (be_decl): 
-	* TAO_IDL/util/utl_stack.cpp (UTL_ScopeStack): 
-	* TAO_IDL/util/utl_scope.cpp (UTL_ScopeActiveIterator): 
+	* TAO_IDL/be/be_codegen.cpp (TAO_CodeGen):
+	* TAO_IDL/be/be_decl.cpp (be_decl):
+	* TAO_IDL/util/utl_stack.cpp (UTL_ScopeStack):
+	* TAO_IDL/util/utl_scope.cpp (UTL_ScopeActiveIterator):
 	Reordered member initializers to match declaration order to
 	satisfy the compiler.
-	
-	* TAO_IDL/util/utl_scope.cpp (lookup_primitive_type): 
+
+	* TAO_IDL/util/utl_scope.cpp (lookup_primitive_type):
 	Added "default" case to switch to return NULL.
 
-	* TAO_IDL/util/utl_scope.cpp (add_attribute): 
+	* TAO_IDL/util/utl_scope.cpp (add_attribute):
 	* TAO_IDL/util/utl_scope.cpp (add_operation):
 	* TAO_IDL/util/utl_scope.cpp (add_argument):
 	* TAO_IDL/util/utl_scope.cpp (add_union_branch):
@@ -226,10 +247,10 @@ Sat Oct 25 18:14:14 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* TAO_IDL/fe/idl.ll: Added a new rule to handle the fact
 	that the Microsoft C++ preprocessor generates tags of the
-	form 
+	form
 
 	#line 1 "bar.idl"
-	
+
 	rather than
 
 	#1 "bar.idl"
@@ -270,23 +291,23 @@ Sat Oct 25 22:28:42 1997  Carlos O'Ryan  <coryan@MILONGA>
 
 Sat Oct 25 22:05:43 1997  Sergio Flores  <sergio@macarena.cs.wustl.edu>
 
-	* TAO_IDL/ast/ast_constant.cpp (exprtype_to_string): 
+	* TAO_IDL/ast/ast_constant.cpp (exprtype_to_string):
 	Added case statements to handle the rest of un-handled
 	enumerations from AST_Expression::ExprType.  These will
 	handle a default value (i.e. the same case as
-	AST_Expression::EV_none).  
-	
-	* TAO_IDL/ast/ast_expression.cpp (operator==): 
-	* TAO_IDL/ast/ast_expression.cpp (compare): 
-	Make the default return value I_FALSE instead of NULL which 
+	AST_Expression::EV_none).
+
+	* TAO_IDL/ast/ast_expression.cpp (operator==):
+	* TAO_IDL/ast/ast_expression.cpp (compare):
+	Make the default return value I_FALSE instead of NULL which
 	was  giving "lacks a cast" warning.
-	
-	* TAO_IDL/ast/ast_expression.cpp (fill_definition_details): 
+
+	* TAO_IDL/ast/ast_expression.cpp (fill_definition_details):
 	Use 0 instead of NULL to initialize pointers in the
 	member initialization list, again to avoid ANSI C++ forbids
 	implicit (void *) conversions warnings.
 
-	* TAO_IDL/ast/ast_expression.cpp (eval_symbol): 
+	* TAO_IDL/ast/ast_expression.cpp (eval_symbol):
 	Initialized pointers to 0.
 
 Sat Oct 25 17:45:17 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
@@ -324,151 +345,151 @@ Sat Oct 25 14:14:53 1997  Carlos O'Ryan  <coryan@MILONGA>
 	  protection for the parent; this feature is only used if more
 	  than one IDL file is compiled at the same time.
 
-	* TAO_IDL/be/be_decl.cpp: 
+	* TAO_IDL/be/be_decl.cpp:
 	  Fixed minor bug, it said "second - I_FALSE;", it should be
 	  "second = I_FALSE
 
-	* TAO_IDL/ast/ast_argument.cpp: 
-	* TAO_IDL/ast/ast_array.cpp: 
-	* TAO_IDL/ast/ast_attribute.cpp: 
-	* TAO_IDL/ast/ast_check.cpp: 
-	* TAO_IDL/ast/ast_concrete_type.cpp: 
-	* TAO_IDL/ast/ast_constant.cpp: 
-	* TAO_IDL/ast/ast_decl.cpp: 
-	* TAO_IDL/ast/ast_enum.cpp: 
-	* TAO_IDL/ast/ast_enum_val.cpp: 
-	* TAO_IDL/ast/ast_exception.cpp: 
-	* TAO_IDL/ast/ast_expression.cpp: 
-	* TAO_IDL/ast/ast_field.cpp: 
-	* TAO_IDL/ast/ast_generator.cpp: 
-	* TAO_IDL/ast/ast_interface.cpp: 
-	* TAO_IDL/ast/ast_interface_fwd.cpp: 
-	* TAO_IDL/ast/ast_module.cpp: 
-	* TAO_IDL/ast/ast_operation.cpp: 
-	* TAO_IDL/ast/ast_predefined_type.cpp: 
-	* TAO_IDL/ast/ast_recursive.cpp: 
-	* TAO_IDL/ast/ast_redef.cpp: 
-	* TAO_IDL/ast/ast_root.cpp: 
-	* TAO_IDL/ast/ast_sequence.cpp: 
-	* TAO_IDL/ast/ast_string.cpp: 
-	* TAO_IDL/ast/ast_structure.cpp: 
-	* TAO_IDL/ast/ast_type.cpp: 
-	* TAO_IDL/ast/ast_union.cpp: 
-	* TAO_IDL/ast/ast_union_branch.cpp: 
-	* TAO_IDL/ast/ast_union_label.cpp: 
-	* TAO_IDL/be/be_args.cpp: 
-	* TAO_IDL/be/be_constant.cpp: 
-	* TAO_IDL/be/be_generator.cpp: 
-	* TAO_IDL/be/be_init.cpp: 
-	* TAO_IDL/be/be_produce.cpp: 
-	* TAO_IDL/be_include/be.h: 
-	* TAO_IDL/be_include/be_generator.h: 
-	* TAO_IDL/driver/drv_args.cpp: 
-	* TAO_IDL/driver/drv_fork.cpp: 
-	* TAO_IDL/driver/drv_init.cpp: 
-	* TAO_IDL/driver/drv_main.cpp: 
-	* TAO_IDL/driver/drv_preproc.cpp: 
-	* TAO_IDL/driver/drv_private.cpp: 
-	* TAO_IDL/fe/fe_declarator.cpp: 
-	* TAO_IDL/fe/fe_extern.cpp: 
-	* TAO_IDL/fe/fe_init.cpp: 
-	* TAO_IDL/fe/fe_interface_header.cpp: 
-	* TAO_IDL/fe/fe_private.cpp: 
-	* TAO_IDL/fe/lex.yy.cpp: 
-	* TAO_IDL/fe/y.tab.cpp: 
-	* TAO_IDL/include/ast.h: 
-	* TAO_IDL/include/ast_argument.h: 
-	* TAO_IDL/include/ast_array.h: 
-	* TAO_IDL/include/ast_attribute.h: 
-	* TAO_IDL/include/ast_concrete_type.h: 
-	* TAO_IDL/include/ast_constant.h: 
-	* TAO_IDL/include/ast_decl.h: 
-	* TAO_IDL/include/ast_enum.h: 
-	* TAO_IDL/include/ast_enum_val.h: 
-	* TAO_IDL/include/ast_exception.h: 
-	* TAO_IDL/include/ast_expression.h: 
-	* TAO_IDL/include/ast_extern.h: 
-	* TAO_IDL/include/ast_field.h: 
-	* TAO_IDL/include/ast_generator.h: 
-	* TAO_IDL/include/ast_interface.h: 
-	* TAO_IDL/include/ast_interface_fwd.h: 
-	* TAO_IDL/include/ast_module.h: 
-	* TAO_IDL/include/ast_operation.h: 
-	* TAO_IDL/include/ast_predefined_type.h: 
-	* TAO_IDL/include/ast_root.h: 
-	* TAO_IDL/include/ast_sequence.h: 
-	* TAO_IDL/include/ast_string.h: 
-	* TAO_IDL/include/ast_structure.h: 
-	* TAO_IDL/include/ast_type.h: 
-	* TAO_IDL/include/ast_typedef.h: 
-	* TAO_IDL/include/ast_union.h: 
-	* TAO_IDL/include/ast_union_branch.h: 
-	* TAO_IDL/include/ast_union_label.h: 
-	* TAO_IDL/include/be_extern.h: 
-	* TAO_IDL/include/drv_extern.h: 
-	* TAO_IDL/include/drv_private.h: 
-	* TAO_IDL/include/fe_declarator.h: 
-	* TAO_IDL/include/fe_extern.h: 
-	* TAO_IDL/include/fe_interface_header.h: 
-	* TAO_IDL/include/fe_private.h: 
-	* TAO_IDL/include/global_extern.h: 
-	* TAO_IDL/include/idl.h: 
-	* TAO_IDL/include/idl_bool.h: 
-	* TAO_IDL/include/idl_defines.h: 
-	* TAO_IDL/include/idl_extern.h: 
-	* TAO_IDL/include/idl_fwd.h: 
-	* TAO_IDL/include/idl_global.h: 
-	* TAO_IDL/include/idl_narrow.h: 
-	* TAO_IDL/include/intlmacros.h: 
-	* TAO_IDL/include/nr_extern.h: 
-	* TAO_IDL/include/util.h: 
-	* TAO_IDL/include/utl_decllist.h: 
-	* TAO_IDL/include/utl_error.h: 
-	* TAO_IDL/include/utl_exceptlist.h: 
-	* TAO_IDL/include/utl_exprlist.h: 
-	* TAO_IDL/include/utl_identifier.h: 
-	* TAO_IDL/include/utl_idlist.h: 
-	* TAO_IDL/include/utl_indenter.h: 
-	* TAO_IDL/include/utl_labellist.h: 
-	* TAO_IDL/include/utl_list.h: 
-	* TAO_IDL/include/utl_namelist.h: 
-	* TAO_IDL/include/utl_scope.h: 
-	* TAO_IDL/include/utl_scoped_name.h: 
-	* TAO_IDL/include/utl_stack.h: 
-	* TAO_IDL/include/utl_string.h: 
-	* TAO_IDL/include/utl_strlist.h: 
-	* TAO_IDL/include/utl_tmpl/utl_decllist.h: 
-	* TAO_IDL/include/utl_tmpl/utl_exceptlist.h: 
-	* TAO_IDL/include/utl_tmpl/utl_exprlist.h: 
-	* TAO_IDL/include/utl_tmpl/utl_idlist.h: 
-	* TAO_IDL/include/utl_tmpl/utl_labellist.h: 
-	* TAO_IDL/include/utl_tmpl/utl_list.h: 
-	* TAO_IDL/include/utl_tmpl/utl_namelist.h: 
-	* TAO_IDL/include/utl_tmpl/utl_strlist.h: 
-	* TAO_IDL/narrow/narrow.cpp: 
-	* TAO_IDL/util/utl_decllist.cpp: 
-	* TAO_IDL/util/utl_error.cpp: 
-	* TAO_IDL/util/utl_exceptlist.cpp: 
-	* TAO_IDL/util/utl_exprlist.cpp: 
-	* TAO_IDL/util/utl_global.cpp: 
-	* TAO_IDL/util/utl_identifier.cpp: 
-	* TAO_IDL/util/utl_idlist.cpp: 
-	* TAO_IDL/util/utl_indenter.cpp: 
-	* TAO_IDL/util/utl_labellist.cpp: 
-	* TAO_IDL/util/utl_list.cpp: 
-	* TAO_IDL/util/utl_namelist.cpp: 
-	* TAO_IDL/util/utl_scope.cpp: 
-	* TAO_IDL/util/utl_stack.cpp: 
-	* TAO_IDL/util/utl_string.cpp: 
-	* TAO_IDL/util/utl_strlist.cpp: 
-	* TAO_IDL/util/utl_tmpl/utl_decllist.cpp: 
-	* TAO_IDL/util/utl_tmpl/utl_exceptlist.cpp: 
-	* TAO_IDL/util/utl_tmpl/utl_exprlist.cpp: 
-	* TAO_IDL/util/utl_tmpl/utl_idlist.cpp: 
-	* TAO_IDL/util/utl_tmpl/utl_labellist.cpp: 
-	* TAO_IDL/util/utl_tmpl/utl_list.cpp: 
-	* TAO_IDL/util/utl_tmpl/utl_namelist.cpp: 
-	* TAO_IDL/util/utl_tmpl/utl_strlist.cpp: 
+	* TAO_IDL/ast/ast_argument.cpp:
+	* TAO_IDL/ast/ast_array.cpp:
+	* TAO_IDL/ast/ast_attribute.cpp:
+	* TAO_IDL/ast/ast_check.cpp:
+	* TAO_IDL/ast/ast_concrete_type.cpp:
+	* TAO_IDL/ast/ast_constant.cpp:
+	* TAO_IDL/ast/ast_decl.cpp:
+	* TAO_IDL/ast/ast_enum.cpp:
+	* TAO_IDL/ast/ast_enum_val.cpp:
+	* TAO_IDL/ast/ast_exception.cpp:
+	* TAO_IDL/ast/ast_expression.cpp:
+	* TAO_IDL/ast/ast_field.cpp:
+	* TAO_IDL/ast/ast_generator.cpp:
+	* TAO_IDL/ast/ast_interface.cpp:
+	* TAO_IDL/ast/ast_interface_fwd.cpp:
+	* TAO_IDL/ast/ast_module.cpp:
+	* TAO_IDL/ast/ast_operation.cpp:
+	* TAO_IDL/ast/ast_predefined_type.cpp:
+	* TAO_IDL/ast/ast_recursive.cpp:
+	* TAO_IDL/ast/ast_redef.cpp:
+	* TAO_IDL/ast/ast_root.cpp:
+	* TAO_IDL/ast/ast_sequence.cpp:
+	* TAO_IDL/ast/ast_string.cpp:
+	* TAO_IDL/ast/ast_structure.cpp:
+	* TAO_IDL/ast/ast_type.cpp:
+	* TAO_IDL/ast/ast_union.cpp:
+	* TAO_IDL/ast/ast_union_branch.cpp:
+	* TAO_IDL/ast/ast_union_label.cpp:
+	* TAO_IDL/be/be_args.cpp:
+	* TAO_IDL/be/be_constant.cpp:
+	* TAO_IDL/be/be_generator.cpp:
+	* TAO_IDL/be/be_init.cpp:
+	* TAO_IDL/be/be_produce.cpp:
+	* TAO_IDL/be_include/be.h:
+	* TAO_IDL/be_include/be_generator.h:
+	* TAO_IDL/driver/drv_args.cpp:
+	* TAO_IDL/driver/drv_fork.cpp:
+	* TAO_IDL/driver/drv_init.cpp:
+	* TAO_IDL/driver/drv_main.cpp:
+	* TAO_IDL/driver/drv_preproc.cpp:
+	* TAO_IDL/driver/drv_private.cpp:
+	* TAO_IDL/fe/fe_declarator.cpp:
+	* TAO_IDL/fe/fe_extern.cpp:
+	* TAO_IDL/fe/fe_init.cpp:
+	* TAO_IDL/fe/fe_interface_header.cpp:
+	* TAO_IDL/fe/fe_private.cpp:
+	* TAO_IDL/fe/lex.yy.cpp:
+	* TAO_IDL/fe/y.tab.cpp:
+	* TAO_IDL/include/ast.h:
+	* TAO_IDL/include/ast_argument.h:
+	* TAO_IDL/include/ast_array.h:
+	* TAO_IDL/include/ast_attribute.h:
+	* TAO_IDL/include/ast_concrete_type.h:
+	* TAO_IDL/include/ast_constant.h:
+	* TAO_IDL/include/ast_decl.h:
+	* TAO_IDL/include/ast_enum.h:
+	* TAO_IDL/include/ast_enum_val.h:
+	* TAO_IDL/include/ast_exception.h:
+	* TAO_IDL/include/ast_expression.h:
+	* TAO_IDL/include/ast_extern.h:
+	* TAO_IDL/include/ast_field.h:
+	* TAO_IDL/include/ast_generator.h:
+	* TAO_IDL/include/ast_interface.h:
+	* TAO_IDL/include/ast_interface_fwd.h:
+	* TAO_IDL/include/ast_module.h:
+	* TAO_IDL/include/ast_operation.h:
+	* TAO_IDL/include/ast_predefined_type.h:
+	* TAO_IDL/include/ast_root.h:
+	* TAO_IDL/include/ast_sequence.h:
+	* TAO_IDL/include/ast_string.h:
+	* TAO_IDL/include/ast_structure.h:
+	* TAO_IDL/include/ast_type.h:
+	* TAO_IDL/include/ast_typedef.h:
+	* TAO_IDL/include/ast_union.h:
+	* TAO_IDL/include/ast_union_branch.h:
+	* TAO_IDL/include/ast_union_label.h:
+	* TAO_IDL/include/be_extern.h:
+	* TAO_IDL/include/drv_extern.h:
+	* TAO_IDL/include/drv_private.h:
+	* TAO_IDL/include/fe_declarator.h:
+	* TAO_IDL/include/fe_extern.h:
+	* TAO_IDL/include/fe_interface_header.h:
+	* TAO_IDL/include/fe_private.h:
+	* TAO_IDL/include/global_extern.h:
+	* TAO_IDL/include/idl.h:
+	* TAO_IDL/include/idl_bool.h:
+	* TAO_IDL/include/idl_defines.h:
+	* TAO_IDL/include/idl_extern.h:
+	* TAO_IDL/include/idl_fwd.h:
+	* TAO_IDL/include/idl_global.h:
+	* TAO_IDL/include/idl_narrow.h:
+	* TAO_IDL/include/intlmacros.h:
+	* TAO_IDL/include/nr_extern.h:
+	* TAO_IDL/include/util.h:
+	* TAO_IDL/include/utl_decllist.h:
+	* TAO_IDL/include/utl_error.h:
+	* TAO_IDL/include/utl_exceptlist.h:
+	* TAO_IDL/include/utl_exprlist.h:
+	* TAO_IDL/include/utl_identifier.h:
+	* TAO_IDL/include/utl_idlist.h:
+	* TAO_IDL/include/utl_indenter.h:
+	* TAO_IDL/include/utl_labellist.h:
+	* TAO_IDL/include/utl_list.h:
+	* TAO_IDL/include/utl_namelist.h:
+	* TAO_IDL/include/utl_scope.h:
+	* TAO_IDL/include/utl_scoped_name.h:
+	* TAO_IDL/include/utl_stack.h:
+	* TAO_IDL/include/utl_string.h:
+	* TAO_IDL/include/utl_strlist.h:
+	* TAO_IDL/include/utl_tmpl/utl_decllist.h:
+	* TAO_IDL/include/utl_tmpl/utl_exceptlist.h:
+	* TAO_IDL/include/utl_tmpl/utl_exprlist.h:
+	* TAO_IDL/include/utl_tmpl/utl_idlist.h:
+	* TAO_IDL/include/utl_tmpl/utl_labellist.h:
+	* TAO_IDL/include/utl_tmpl/utl_list.h:
+	* TAO_IDL/include/utl_tmpl/utl_namelist.h:
+	* TAO_IDL/include/utl_tmpl/utl_strlist.h:
+	* TAO_IDL/narrow/narrow.cpp:
+	* TAO_IDL/util/utl_decllist.cpp:
+	* TAO_IDL/util/utl_error.cpp:
+	* TAO_IDL/util/utl_exceptlist.cpp:
+	* TAO_IDL/util/utl_exprlist.cpp:
+	* TAO_IDL/util/utl_global.cpp:
+	* TAO_IDL/util/utl_identifier.cpp:
+	* TAO_IDL/util/utl_idlist.cpp:
+	* TAO_IDL/util/utl_indenter.cpp:
+	* TAO_IDL/util/utl_labellist.cpp:
+	* TAO_IDL/util/utl_list.cpp:
+	* TAO_IDL/util/utl_namelist.cpp:
+	* TAO_IDL/util/utl_scope.cpp:
+	* TAO_IDL/util/utl_stack.cpp:
+	* TAO_IDL/util/utl_string.cpp:
+	* TAO_IDL/util/utl_strlist.cpp:
+	* TAO_IDL/util/utl_tmpl/utl_decllist.cpp:
+	* TAO_IDL/util/utl_tmpl/utl_exceptlist.cpp:
+	* TAO_IDL/util/utl_tmpl/utl_exprlist.cpp:
+	* TAO_IDL/util/utl_tmpl/utl_idlist.cpp:
+	* TAO_IDL/util/utl_tmpl/utl_labellist.cpp:
+	* TAO_IDL/util/utl_tmpl/utl_list.cpp:
+	* TAO_IDL/util/utl_tmpl/utl_namelist.cpp:
+	* TAO_IDL/util/utl_tmpl/utl_strlist.cpp:
 	  Removed a *big* number of warnings, in an attempt to surface
 	  real problems. The main one was "#pragma ident" and some unused
 	  variables.
