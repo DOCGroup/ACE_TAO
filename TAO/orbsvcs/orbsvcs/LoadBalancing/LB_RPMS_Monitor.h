@@ -79,7 +79,7 @@ private:
 
   /// Interceptor responsible for keeping track of the number of
   /// requests arriving per second.
-  TAO_LB_RPMS_Monitor_Interceptor_var interceptor_;
+  TAO_LB_RPMS_Monitor_Interceptor *interceptor_;
 
 };
 

@@ -1,7 +1,7 @@
 // -*- C++ -*-
 
 #include "LB_Round_Robin_Strategy.h"
-#include "ReplicaProxy.h"
+//#include "ReplicaProxy.h"
 
 ACE_RCSID (LoadBalancing,
            LB_Round_Robin_Strategy,

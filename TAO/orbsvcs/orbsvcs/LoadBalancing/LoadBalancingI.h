@@ -26,7 +26,7 @@
 #include "LB_ObjectGroup_Map.h"
 
 class TAO_LoadBalancing_Export TAO_LoadBalancing_ReplicationManager_i
-  : public virtual POA_TAO_LoadBalancing::ReplicationManager
+  : public virtual POA_LoadBalancing::ReplicationManager
 {
 public:
 

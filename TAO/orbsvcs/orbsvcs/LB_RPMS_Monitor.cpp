@@ -1,6 +1,7 @@
 // -*- C++ -*-
 
 #include "LB_RPMS_Monitor.h"
+#include "LB_RPMS_Monitor_ORBInitializer.h"
 
 
 ACE_RCSID (LoadBalancing,
@@ -8,6 +9,7 @@ ACE_RCSID (LoadBalancing,
            "$Id$")
 
 TAO_LB_RPMS_Monitor::TAO_LB_RPMS_Monitor (void)
+  : interceptor_ (0)
 {
 }
 
