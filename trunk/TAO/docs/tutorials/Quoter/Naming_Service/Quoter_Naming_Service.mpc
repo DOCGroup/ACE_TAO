@@ -3,6 +3,8 @@
 
 project(*client) : orbsvcsexe, portableserver, naming  {
   requires += exceptions
+  libs += Quoter_Idl_Lib
+  after += Quoter_Idl_Lib
   includes += ../idl
   source_files {
     client.cpp
@@ -11,6 +13,8 @@ project(*client) : orbsvcsexe, portableserver, naming  {
 
 project(*server) : orbsvcsexe, portableserver, naming {
   requires += exceptions
+  libs += Quoter_Idl_Lib
+  after += Quoter_Idl_Lib
   includes += ../idl
   source_files {
     server.cpp
