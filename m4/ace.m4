@@ -410,7 +410,7 @@ AC_DEFUN([ACE_CONFIGURATION_OPTIONS],
       ace_user_enable_wfmo=no
       ;;
     *)
-      AC_MSG_ERROR([bad value ${enableval} for --enable-rtti])
+      AC_MSG_ERROR([bad value ${enableval} for --enable-wfmo])
       ;;
    esac
   ],
@@ -814,7 +814,10 @@ dnl    fi
       AC_MSG_ERROR([bad value ${enableval} for --enable-rtti])
       ;;
    esac
-  ],)
+  ],
+  [
+   ace_user_enable_rtti=yes
+  ])
 
  AC_ARG_ENABLE([stdcpplib],
   AS_HELP_STRING([--enable-stdcpplib],[enable standard C++ library [[yes]]]),
