@@ -1,3 +1,8 @@
+Thu Jan  1 18:50:45 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* tests/Smart_Proxies/Makefile.bor:
+	  Added collocation directory
+
 Thu Jan  1 17:52:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* performance-tests/Sequence_Latency/DII/DII.mpc:
