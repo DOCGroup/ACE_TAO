@@ -2,6 +2,8 @@
 
 #include "ace/OS_Dirent.h"
 #include "ace/OS_String.h"
+#include "ace/OS_Memory.h" 
+#include "ace/Log_Msg.h" 
 
 ACE_RCSID(ace, OS_Dirent, "$Id$")
 
@@ -76,7 +78,7 @@ ACE_OS_Dirent::closedir_emulation (ACE_DIR *d)
 #endif /* ACE_WIN32 */
 }
 
-struct dirent *
+dirent *
 ACE_OS_Dirent::readdir_emulation (ACE_DIR *d)
 {
 #if defined (ACE_WIN32)
@@ -116,8 +118,11 @@ ACE_OS_Dirent::readdir_emulation (ACE_DIR *d)
 
   if (d->current_handle_ != INVALID_HANDLE_VALUE)
     {
-      d->dirent_.d_name = d->fdata_.cFileName;
-      return &d->dirent_;
+      d->dirent_ = (dirent *) ACE_OS_Memory::malloc (sizeof (dirent) +
+                                                     ACE_OS_String::strlen (d->fdata_.cFileName)); 
+      ACE_OS_String::strcpy ((char *) d->dirent_->d_name, d->fdata_.cFileName); 
+      d->dirent_->d_reclen = sizeof (dirent) + ACE_OS_String::strlen (d->dirent_->d_name); 
+      return d->dirent_; 
     }
   else
     return 0;
@@ -125,4 +130,98 @@ ACE_OS_Dirent::readdir_emulation (ACE_DIR *d)
   ACE_UNUSED_ARG (d);
   ACE_NOTSUP_RETURN (0);
 #endif /* ACE_WIN32 */
+}
+
+extern "C" 
+{
+  typedef int (*ACE_SCANDIR_COMPARATOR) (const void *, const void *); 
+}
+
+int 
+ACE_OS_Dirent::scandir_emulation (const ACE_TCHAR *dirname, 
+                                  dirent **namelist[], 
+                                  int (*selector) (const dirent *entry), 
+                                  int (*comparator) (const dirent **f1,
+                                                     const dirent **f2))
+{ 
+  ACE_DIR *dirp = ACE_OS_Dirent::opendir (dirname);
+
+  if (dirp == 0) 
+    ACE_ERROR_RETURN ((LM_ERROR, 
+                       ACE_LIB_TEXT ("scandir_emulation cannot open directory %s"),
+                       dirname), 
+                      -1); 
+       
+  // A sanity check here.  "namelist" had better not be zero. 
+  if (namelist == 0) 
+    ACE_ERROR_RETURN ((LM_ERROR, 
+                       ACE_LIB_TEXT ("scandir_emulation namelist == 0!")), 
+                      -1); 
+       
+  dirent **vector = 0; 
+  dirent *dp; 
+  int arena_size = 0; 
+       
+  int nfiles = 0; 
+  int fail = 0;
+ 
+  // @@ This code shoulduse readdir_r() rather than readdir().
+  for (dp = ACE_OS_Dirent::readdir (dirp);
+       dp != 0; 
+       dp = ACE_OS_Dirent::readdir (dirp))
+    {
+      if (selector && (*selector)(dp) == 0)
+        continue; 
+               
+      // If we get here, we have a dirent that the user likes.
+      if (nfiles == arena_size) 
+        {
+          dirent **newv; 
+          if (arena_size == 0) 
+            arena_size = 10; 
+          else 
+            arena_size *= 2; 
+                       
+          newv = (dirent **) ACE_OS_Memory::realloc (vector,
+                                                     arena_size * sizeof (dirent *));
+          if (newv == 0) 
+            {
+              fail = 1;
+              break; 
+            } 
+          vector = newv; 
+        } 
+
+      int dsize = sizeof (dirent) + ACE_OS_String::strlen (dp->d_name) + 1;
+      dirent *newdp = (dirent *) ACE_OS_Memory::malloc (dsize); 
+               
+      if (newdp == 0) 
+        {
+          fail = 1; 
+          break; 
+        } 
+ 
+      vector[nfiles++] = (dirent *) ACE_OS_String::memcpy (newdp, dp, dsize); 
+    } 
+       
+  if (fail) 
+    { 
+      ACE_OS_Dirent::closedir (dirp); 
+      while (nfiles-- > 0)
+        ACE_OS_Memory::free (vector[nfiles]); 
+      ACE_OS_Memory::free (vector); 
+      return -1; 
+    } 
+  
+  ACE_OS_Dirent::closedir (dirp); 
+
+  *namelist = vector; 
+
+  if (comparator) 
+    ACE_OS::qsort (*namelist,
+                   nfiles,
+                   sizeof (dirent *),
+                   (ACE_SCANDIR_COMPARATOR) comparator); 
+
+  return nfiles; 
 }

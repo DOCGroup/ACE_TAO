@@ -1,3 +1,8 @@
+Mon Jul  9 14:56:26 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* docs/components.html (bgcolor): Fixed a typo.  Thanks to
+	  John Ashmun for reporting this.
+
 Mon Jul 09 10:56:30 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/DynamicInterface/Server_Request.h:

@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_OS_MEMORY_H
 #define ACE_OS_MEMORY_H
 #include "ace/pre.h"
@@ -100,8 +99,7 @@ typedef void *ACE_MALLOC_T;
 /**
  * @class ACE_OS_Memory
  *
- * @brief This class is a wrapper for memory operations, like
- * malloc, memcpy, etc.
+ * @brief This class is a wrapper for dynamic memory operations.
  *
  */
 class ACE_OS_Export ACE_OS_Memory
