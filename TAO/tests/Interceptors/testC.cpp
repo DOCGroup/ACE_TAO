@@ -227,7 +227,7 @@ void Test_Interceptors::Visual::normal (
     ACE_CHECK;
 
     CORBA::String_var name ("normal");
-
+    // us e<< this->compute_operation_name (node) for above
     ClientRequest_Info_normal ri (ACE_const_cast (char *,
                                                   name.in()),
                                   _tao_call.service_info (), 
