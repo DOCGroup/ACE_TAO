@@ -7,7 +7,7 @@ Tue Mar 16 09:36:42 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tao/CORBA_String.cpp:
 
 	  Applied patches from Oliver Kellog and Paolo Carlini
-	  <pcarlini@suse.de> which helps TAO to get compiling with 
+	  <pcarlini@suse.de> which helps TAO to get compiling with
 	  g++ 3.4 (prerelease). Paolo mentions that this should make things
 	  more portable. It compiles fine with g++ atleast. We need to see how
 	  things go on other platforms.
@@ -25,29 +25,29 @@ Tue Mar 16 09:40:54 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL be/be_visitor_valuetype/valuetype_init_cs.cpp:
         * TAO_IDL be_include/be_decl.h:
         * TAO_IDL be_include/be_interface.h:
-        
+
           - Added code generation that redeclares operations that a local
             interface has inherited from a non-local one as pure virtual.
             Thanks to Gautam Thaker <gthaker@atl.lmco.com> for reporting
             the problem.
-            
+
           - Added '::' prefix to the generation of some fully scoped
             names in code generation for AMH-related classes, helping
             some compilers that get confused when a namespace name is
             repeated at some more deeply nested level.
-            
+
           - Fixed indentation in code generation of collocation classes
             in the skeleton header file.
-            
+
         * tests/IDL_Test/IDL_Test.mpc:
-        
+
           Added source files (and thus indirectly the IDL files that
           generate them) to the project file. Also removed the source file
           namespace_check.cpp, which was originally added as a workaround
           for platforms that did not support namespaces.
-          
+
         * tests/IDL_Test/namespace_check.cpp:
-        
+
           Removed this file from the repository, since it is a legacy from
           the time when ACE+TAO supported compilers that did not support
           namespaces.
@@ -58,7 +58,7 @@ Thu Jan 06 15:20:39 2000  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	  Removed UlongSeqS.cpp and UShortSeqS.cpp from the project file
 	  since including them would necessitate inclusion of the POA
-	  library. 
+	  library.
 
 Tue Mar 16 01:28:26 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
@@ -198,7 +198,7 @@ Tue Mar 16 00:49:15 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_codegen.cpp (gen_skel_src_includes):
 
-	  No need to include "tao/PICurrent.h".
+	  No need to generated include directive for "tao/PICurrent.h".
 	  "tao/PortableServer/PICurrent_Guard.h" is enough.  This may also
 	  help with compile times, at least slightly.
 
@@ -212,7 +212,7 @@ Tue Mar 16 00:07:21 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/IFR_Client_Adapter.h:
 
-	  Include "tao/orbconf.h" to pull TAO_HAS_MINIMUM_CORBA macro
+	  Include "tao/orbconf.h" to pull in TAO_HAS_MINIMUM_CORBA macro
 	  definition.  Addresses a warning when using the GNU g++
 	  "-Wundef" flag regarding an undefined preprocessor symbol.
 
