@@ -1,3 +1,11 @@
+Mon Nov 24 14:31:45 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/FTORB_Utils.dsp:
+        * orbsvcs/orbsvcs/FT_ClientORB.dsp:
+        * orbsvcs/orbsvcs/FT_ServerORB.dsp:
+
+          Fixed output directory settings.
+
 Mon Nov 24 14:27:19 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/tests/Security/Secure_invocation/Makefile:

@@ -33,7 +33,7 @@ RSC=rc.exe
 
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
-# PROP Output_Dir "..\..\..\bin\Release"
+# PROP Output_Dir ""
 # PROP Intermediate_Dir "Release\FT_ServerORB"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
@@ -45,14 +45,14 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo /o"..\..\..\lib\TAO_FT_ServerORB.bsc"
 LINK32=link.exe
 # ADD BASE LINK32 /machine:IX86
-# ADD LINK32 TAO_FTORB_Utils.lib TAO_PortableServer.lib TAO_IORInterceptor.lib TAO_ObjRefTemplate.lib TAO_Valuetype.lib TAO_IORManip.lib TAO.lib ACE.lib /nologo /subsystem:windows /dll /pdb:"..\..\..\lib\TAO_FT_ServerORB.pdb" /machine:I386 /out:"..\..\..\lib\TAO_FT_ServerORB.dll" /libpath:"..\..\..\ace" /libpath:"..\..\tao" /libpath:"..\..\orbsvcs\orbsvcs" /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao\IORInterceptor" /libpath:"..\..\tao\ObjRefTemplate" /libpath:"..\..\tao\Valuetype" /libpath:"..\..\tao\IORManipulation" /version:1.3.5
+# ADD LINK32 TAO_FTORB_Utils.lib TAO_PortableServer.lib TAO_IORInterceptor.lib TAO_ObjRefTemplate.lib TAO_Valuetype.lib TAO_IORManip.lib TAO.lib ACE.lib /nologo /subsystem:windows /dll /pdb:"..\..\..\lib\TAO_FT_ServerORB.pdb" /machine:I386 /out:"..\..\..\bin\Release\TAO_FT_ServerORB.dll" /libpath:"..\..\..\ace" /libpath:"..\..\tao" /libpath:"..\..\orbsvcs\orbsvcs" /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao\IORInterceptor" /libpath:"..\..\tao\ObjRefTemplate" /libpath:"..\..\tao\Valuetype" /libpath:"..\..\tao\IORManipulation" /version:1.3.5
 # SUBTRACT LINK32 /pdb:none
 
 !ELSEIF  "$(CFG)" == "FT_ServerORB - Win32 Debug"
 
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir "..\..\..\bin"
+# PROP Output_Dir ""
 # PROP Intermediate_Dir "Debug\FT_ServerORB"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
@@ -64,7 +64,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo /o"..\..\..\lib\TAO_FT_ServerORB.bsc"
 LINK32=link.exe
 # ADD BASE LINK32 /machine:IX86
-# ADD LINK32 TAO_FTORB_Utilsd.lib TAO_PortableServerd.lib TAO_IORInterceptord.lib TAO_ObjRefTemplated.lib TAO_Valuetyped.lib TAO_IORManipd.lib TAOd.lib ACEd.lib /nologo /subsystem:windows /dll /incremental:no /pdb:"..\..\..\lib\TAO_FT_ServerORBd.pdb" /debug /machine:I386 /out:"..\..\..\lib\TAO_FT_ServerORBd.dll" /libpath:"..\..\..\ace" /libpath:"..\..\tao" /libpath:"..\..\orbsvcs\orbsvcs" /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao\IORInterceptor" /libpath:"..\..\tao\ObjRefTemplate" /libpath:"..\..\tao\Valuetype" /libpath:"..\..\tao\IORManipulation" /version:1.3.5
+# ADD LINK32 TAO_FTORB_Utilsd.lib TAO_PortableServerd.lib TAO_IORInterceptord.lib TAO_ObjRefTemplated.lib TAO_Valuetyped.lib TAO_IORManipd.lib TAOd.lib ACEd.lib /nologo /subsystem:windows /dll /incremental:no /pdb:"..\..\..\lib\TAO_FT_ServerORBd.pdb" /debug /machine:I386 /out:"..\..\..\bin\TAO_FT_ServerORBd.dll" /libpath:"..\..\..\ace" /libpath:"..\..\tao" /libpath:"..\..\orbsvcs\orbsvcs" /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao\IORInterceptor" /libpath:"..\..\tao\ObjRefTemplate" /libpath:"..\..\tao\Valuetype" /libpath:"..\..\tao\IORManipulation" /version:1.3.5
 # SUBTRACT LINK32 /pdb:none
 
 !ENDIF 
