@@ -960,8 +960,8 @@ realclean: clean
   $(TAO_ROOT)/tao/IORTable/iortable_export.h \
   $(TAO_ROOT)/tao/IORTable/IORTableC.h \
   $(TAO_ROOT)/tao/IORTable/IORTableC.i \
-  $(TAO_ROOT)/tao/debug.h BankC.h \
-  BankC.i
+  $(TAO_ROOT)/tao/debug.h \
+  BankC.h BankC.i
 
 .obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp ../Simple_util.h \
   $(TAO_ROOT)/tao/PortableServer/ORB_Manager.h \
@@ -1427,7 +1427,8 @@ realclean: clean
   BankS_T.h BankS_T.i BankS_T.cpp BankS.i
 
 .obj/AccountManager_i.o .obj/AccountManager_i.so .shobj/AccountManager_i.o .shobj/AccountManager_i.so: AccountManager_i.cpp AccountManager_i.h BankS.h \
-  BankC.h $(TAO_ROOT)/tao/corba.h \
+  BankC.h \
+  $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
@@ -1899,8 +1900,8 @@ realclean: clean
   $(TAO_ROOT)/tao/IORTable/iortable_export.h \
   $(TAO_ROOT)/tao/IORTable/IORTableC.h \
   $(TAO_ROOT)/tao/IORTable/IORTableC.i \
-  $(TAO_ROOT)/tao/debug.h BankC.h \
-  BankC.i
+  $(TAO_ROOT)/tao/debug.h \
+  BankC.h BankC.i
 
 .obj/Simple_util.o .obj/Simple_util.so .shobj/Simple_util.o .shobj/Simple_util.so: ../Simple_util.cpp ../Simple_util.h \
   $(TAO_ROOT)/tao/PortableServer/ORB_Manager.h \

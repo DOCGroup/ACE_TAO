@@ -830,7 +830,8 @@ realclean: clean
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   $(TAO_ROOT)/tao/LocalObject.h \
   $(TAO_ROOT)/tao/LocalObject.i \
-  testC.h $(TAO_ROOT)/tao/corba.h \
+  testC.h \
+  $(TAO_ROOT)/tao/corba.h \
   $(TAO_ROOT)/tao/NVList.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.inl \
@@ -1180,7 +1181,8 @@ realclean: clean
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   $(TAO_ROOT)/tao/LocalObject.h \
   $(TAO_ROOT)/tao/LocalObject.i \
-  testC.h $(TAO_ROOT)/tao/corba.h \
+  testC.h \
+  $(TAO_ROOT)/tao/corba.h \
   $(TAO_ROOT)/tao/NVList.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.inl \

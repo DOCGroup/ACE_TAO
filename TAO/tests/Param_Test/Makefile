@@ -3119,8 +3119,8 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
   $(TAO_ROOT)/tao/DynamicInterface/Request.inl \
   $(ACE_ROOT)/ace/Singleton.h \
   $(ACE_ROOT)/ace/Singleton.i \
-  $(ACE_ROOT)/ace/Singleton.cpp any.h \
-  $(TAO_ROOT)/tao/debug.h
+  $(ACE_ROOT)/ace/Singleton.cpp \
+  any.h $(TAO_ROOT)/tao/debug.h
 
 .obj/bd_long_seq.o .obj/bd_long_seq.so .shobj/bd_long_seq.o .shobj/bd_long_seq.so: bd_long_seq.cpp helper.h param_testCli.h \
   $(TAO_ROOT)/tao/corba.h \
