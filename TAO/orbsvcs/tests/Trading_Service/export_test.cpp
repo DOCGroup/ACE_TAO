@@ -33,43 +33,31 @@ main (int argc, char** argv)
 	root_poa->the_POAManager (TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      // Bootstrap to the Lookup interface.
       ACE_DEBUG ((LM_ERROR, "Bootstrap to the Lookup interface.\n"));
       CORBA::Object_var trading_obj =
-	orb->resolve_initial_references ("TradingService");
+      	orb->resolve_initial_references ("TradingService");
       
       if (CORBA::is_nil (trading_obj.in ()))
-	ACE_ERROR_RETURN ((LM_ERROR,
-			   " (%P|%t) Unable to initialize the POA.\n"),
-			  -1);
+      	ACE_ERROR_RETURN ((LM_ERROR,
+      			   " (%P|%t) Unable to initialize the POA.\n"),
+			   -1);
+
       
       // Narrow the lookup interface.
       ACE_DEBUG ((LM_DEBUG, "Narrowing the lookup interface.\n"));
       CosTrading::Lookup_var lookup_if = 
-	CosTrading::Lookup::_narrow (trading_obj.in (), TAO_TRY_ENV);
+      	CosTrading::Lookup::_narrow (trading_obj.in (), TAO_TRY_ENV);
       TAO_CHECK_ENV;
       
       // Obtain the register interface
       ACE_DEBUG ((LM_DEBUG, "Obtaining the register interface.\n"));
-      CosTrading::Register_var register_if =
-	lookup_if->register_if (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-
-      // Create a Service Type Repository and a Trader Object.
-      TAO_Service_Type_Repository type_repos;
-      auto_ptr<TAO_Trader_Factory::TAO_TRADER> trader =
-	TAO_Trader_Factory::create_linked_trader ();
-      TAO_Support_Attributes_Impl& sup_attr = trader->support_attributes ();
-      TAO_Trading_Components_Impl& trd_comp = trader->trading_components ();
-
-      // Set the service type repository
-      sup_attr.type_repos (type_repos._this (TAO_TRY_ENV));
+      CosTrading::Register_ptr register_if =
+      	lookup_if->register_if (TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       // Obtain the Service Type Repository.
       ACE_DEBUG ((LM_DEBUG, "Obtaining the Service Type Repository.\n"));
       CosTrading::TypeRepository_ptr obj = lookup_if->type_repos (TAO_TRY_ENV);
-      //CosTrading::TypeRepository_ptr obj = sup_attr.type_repos ();
       TAO_CHECK_ENV;
       
       // Narrow the Service Type Repository.
@@ -88,7 +76,7 @@ main (int argc, char** argv)
       type_exporter.add_all_types (TAO_TRY_ENV);
       TAO_CHECK_ENV;
       
-      type_exporter.list_all_types (TAO_TRY_ENV);
+      //type_exporter.list_all_types (TAO_TRY_ENV);
       TAO_CHECK_ENV;
       
       type_exporter.describe_all_types (TAO_TRY_ENV);
@@ -99,10 +87,9 @@ main (int argc, char** argv)
 
       // Run the Offer Exporter tests
       ACE_DEBUG ((LM_DEBUG, "Running the Offer Exporter tests.\n"));
-      TAO_Offer_Exporter offer_exporter (register_if.in (), TAO_TRY_ENV);
-      //      TAO_Offer_Exporter offer_exporter
-      //	(CosTrading::Register::_duplicate (trd_comp.register_if ()),
-      //	 TAO_TRY_ENV);
+      TAO_Offer_Exporter offer_exporter (root_poa.ptr (),
+					 register_if,
+					 TAO_TRY_ENV);
       TAO_CHECK_ENV;
 	    
       offer_exporter.withdraw_offers (TAO_TRY_ENV);
@@ -138,19 +125,9 @@ main (int argc, char** argv)
       poa_manager->activate (TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      // Run the Offer Importer tests
-      //ACE_DEBUG ((LM_DEBUG, "Running the Offer Exporter tests.\n"));
-      //      TAO_Offer_Exporter offer_exporter (register_if.in (), TAO_TRY_ENV);
-      //TAO_Offer_Importer offer_importer
-      //	(CosTrading::Lookup::_duplicate (trd_comp.lookup_if ()));
-      //      TAO_CHECK_ENV;
-
-      //      offer_importer.perform_queries (TAO_TRY_ENV);
-      //      TAO_CHECK_ENV;
-      
       // Begin trading! 
-      if (orb->run () == -1)
-      	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "CORBA::ORB::run"), -1);
+      //if (orb->run () == -1)
+      //ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "CORBA::ORB::run"), -1);
     }
   TAO_CATCHANY
     {

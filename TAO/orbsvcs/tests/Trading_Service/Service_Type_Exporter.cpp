@@ -17,7 +17,7 @@ TAO_Service_Type_Exporter::remove_all_types (CORBA::Environment& _env)
 {
   ACE_DEBUG ((LM_DEBUG, "removing all types from the Repository.\n"));
 
-  for (int i = 0; i < NUM_TYPES; i++)
+  for (int i = NUM_TYPES - 1; i >= 0; i--)
     {
       TAO_TRY
 	{
@@ -113,7 +113,7 @@ TAO_Service_Type_Exporter::list_all_types (CORBA::Environment& _env)
     }
   TAO_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("TAO_Service_Type_Exporter::remove_all_types");
+      TAO_TRY_ENV.print_exception ("TAO_Service_Type_Exporter::list_all_types");
       TAO_RETHROW;
     }
   TAO_ENDTRY;
@@ -141,7 +141,7 @@ TAO_Service_Type_Exporter::describe_all_types (CORBA::Environment& _env)
     }
   TAO_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("TAO_Service_Type_Exporter::remove_all_types");
+      TAO_TRY_ENV.print_exception ("TAO_Service_Type_Exporter::describe_all_types");
       TAO_RETHROW;
     }
   TAO_ENDTRY;
@@ -169,7 +169,7 @@ TAO_Service_Type_Exporter::fully_describe_all_types (CORBA::Environment& _env)
     }
   TAO_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("TAO_Service_Type_Exporter::remove_all_types");
+      TAO_TRY_ENV.print_exception ("TAO_Service_Type_Exporter::fully_describe_all_types");
       TAO_RETHROW;
     }
   TAO_ENDTRY;
