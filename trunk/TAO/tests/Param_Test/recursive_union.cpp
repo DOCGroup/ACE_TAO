@@ -247,7 +247,7 @@ Test_Recursive_Union::deep_init (Param_Test::Recursive_Union &ru,
 
       ru.nested_member (nru);
 
-      Param_Test::Recursive_Union::_rec_member_seq tmp (MAX_SEQ_LENGTH);
+      Param_Test::Recursive_Union::_tao_seq_Recursive_Union tmp (MAX_SEQ_LENGTH);
 
       ru.rec_member (tmp);
 
