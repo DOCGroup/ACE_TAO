@@ -1,3 +1,27 @@
+Mon Aug 02 18:38:37 1999  Joe Hoffert  <joeh@cs.wustl.edu>
+
+	* ace/ATM_Acceptor.{h,i,cpp} :
+	* ace/ATM_Connector.{h,i,cpp} :
+	* ace/ATM_Params.{h,i,cpp} :
+	* ace/ATM_QoS.{h,i,cpp} :
+	* ace/ATM_Stream.{h,i,cpp} :
+	* ace/XTI_ATM_Mcast.{h,i,cpp} :
+        * ace/ATM_Addr.{h,cpp}:
+        * ace/Makefile:
+        * ace/TLI_Connector.i:
+	  Added new ATM wrapper files to make the mechanism of sockets or
+          XTI transparent when using the ATM protocol. Modified existing
+          files to take advantage of these wrapper classes.
+
+	* examples/IPC_SAP/ATM_SAP :
+	* examples/IPC_SAP/ATM_SAP/CPP-client.cpp :
+	* examples/IPC_SAP/ATM_SAP/CPP-server.cpp :
+	* examples/IPC_SAP/ATM_SAP/Makefile :
+          Added new test directory and programs to test ATM wrapper classes.
+
+        * examples/IPC_SAP/TLI_SAP/CPP-ATM-client.cpp:
+          Modified existing test program to utilize new ATM_QoS class.
+
 Mon Aug 02 17:24:05 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/OS.h (ACE_DL_TYPE): Only WinCE uses wchar_t DL type, we'll
