@@ -1,5 +1,6 @@
 // $Id$
 
+#include "tao/CDR.h"
 #include "Set_Update_Interceptor.h"
 #include "orbsvcs/orbsvcs/FTRTC.h"
 #include "Request_Context_Repository.h"

@@ -4,12 +4,13 @@
 #include "Admin_Client.h"
 
 #include "tao/Any_Unknown_IDL_Type.h"
+#include "tao/CDR.h"
 
 #include "ace/Get_Opt.h"
 #include "ace/SString.h"
 
-ACE_RCSID (IFR_Test, 
-           Admin_Client, 
+ACE_RCSID (IFR_Test,
+           Admin_Client,
            "$Id$")
 
 Admin_Client::Admin_Client (void)
