@@ -31,8 +31,6 @@
 #include "tao/orbconf.h"
 #include "ace/Containers_T.h"
 
-class TAO_POA;
-class TAO_Object_Adapter;
 class TAO_Acceptor_Registry;
 class TAO_Connector_Registry;
 
@@ -104,20 +102,11 @@ public:
   virtual ACE_Reactor *get_reactor (void);
   // Return an <ACE_Reactor> to be utilized.
 
-  virtual ACE_Thread_Manager *get_thr_mgr (void);
-  // Return an <ACE_Thread_Manager> to be utilized.
-
   virtual TAO_Acceptor_Registry *get_acceptor_registry (void);
   // return a reference to the acceptor registry.
 
   virtual TAO_Connector_Registry *get_connector_registry (void);
   // Return an Connector to be utilized.
-
-  virtual TAO_POA *get_root_poa (void);
-  // Return a root poa to be utilized.
-
-  virtual TAO_Object_Adapter *object_adapter (void);
-  // Return a object adapter to be utilized.
 
   virtual ACE_Allocator* input_cdr_dblock_allocator (void);
   virtual ACE_Allocator* input_cdr_buffer_allocator (void);

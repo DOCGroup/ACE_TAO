@@ -54,9 +54,6 @@ public:
 
   // = Resources
 
-  ACE_Thread_Manager tm_;
-  // The Thread Manager
-
   TAO_Acceptor_Registry ar_;
   // The Acceptor Registry!
 
@@ -65,12 +62,6 @@ public:
 
   ACE_Reactor *r_;
   // The Reactor.
-
-  TAO_Object_Adapter *object_adapter_;
-  // Object Adapter.
-
-  TAO_POA *poa_;
-  // Pointer to application-created POA.
 
   ACE_Allocator *input_cdr_dblock_allocator_;
   ACE_Allocator *input_cdr_buffer_allocator_;
@@ -143,11 +134,8 @@ public:
 
   // = Resource Retrieval
   virtual ACE_Reactor *get_reactor (void);
-  virtual ACE_Thread_Manager *get_thr_mgr (void);
   virtual TAO_Acceptor_Registry  *get_acceptor_registry (void);
   virtual TAO_Connector_Registry *get_connector_registry (void);
-  virtual TAO_POA *get_root_poa (void);
-  virtual TAO_Object_Adapter *object_adapter (void);
   virtual ACE_Allocator* input_cdr_dblock_allocator (void);
   virtual ACE_Allocator* input_cdr_buffer_allocator (void);
   virtual ACE_Allocator* output_cdr_dblock_allocator (void);

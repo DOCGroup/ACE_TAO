@@ -1,3 +1,21 @@
+Fri Jun 04 19:47:30 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/ORB_Core.cpp
+	* tao/ORB_Core.h
+	* tao/ORB_Core.i
+	* tao/Resource_Factory.cpp
+	* tao/Resource_Factory.h
+	* tao/default_resource.cpp
+	* tao/default_resource.h
+
+	  The following changes are related to the rearchitecture of
+	  resource management inside the ORB:
+
+	  - Moved the object adapter, root POA, and the thread manager
+	    from the default resources to the ORB Core.
+
+	  - Removed the root POA and thread manager set methods.
+
 Fri Jun  4 18:57:02 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_array/cdr_op_ci.cpp: Removed incorrect
@@ -14,7 +32,7 @@ Fri Jun 04 17:30:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
           performance-tests/Cubit/TAO/IDL_Cubit/collocation_test.dsp
           performance-tests/Cubit/TAO/IDL_Cubit/server.dsp: added
           relative paths to projects.
-	
+
 Fri Jun 04 16:11:30 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* Context.{i,cpp}:

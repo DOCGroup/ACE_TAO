@@ -41,8 +41,7 @@ TAO_default_environment ()
 // ****************************************************************
 
 TAO_ORB_Core::TAO_ORB_Core (const char* orbid)
-  : thr_mgr_ (0),
-    connector_registry_ (0),
+  : connector_registry_ (0),
     acceptor_registry_ (0),
     protocol_factories_ (0),
     root_poa_ (0),
@@ -61,10 +60,16 @@ TAO_ORB_Core::TAO_ORB_Core (const char* orbid)
     // @@ This is not needed since the default server factory, fredk
     //    is staticaly added to the service configurator.
     opt_for_collocation_ (1),
-    use_global_collocation_ (1)
+    use_global_collocation_ (1),
+    poa_current_ (0),
+    object_adapter_ (0),
+    tm_ ()
 {
   ACE_NEW (this->poa_current_,
            TAO_POA_Current);
+
+  // Make sure that the thread manager does not wait for threads
+  this->tm_.wait_on_exit (0);
 }
 
 TAO_ORB_Core::~TAO_ORB_Core (void)
@@ -75,6 +80,8 @@ TAO_ORB_Core::~TAO_ORB_Core (void)
   ACE_OS::free (this->orbid_);
 
   delete this->poa_current_;
+
+  delete this->object_adapter_;
 }
 
 int
@@ -677,7 +684,6 @@ TAO_ORB_Core::init (int &argc, char *argv[])
                       -1);
 
   this->reactor (trf->get_reactor ());
-  this->thr_mgr (trf->get_thr_mgr ());
 
   TAO_Server_Strategy_Factory *ssf = this->server_factory ();
 
@@ -1001,31 +1007,23 @@ TAO_ORB_Core::orb (CORBA::ORB_ptr op)
   return old_orb;
 }
 
-TAO_POA *
-TAO_ORB_Core::root_poa (TAO_POA *np)
-{
-  // Shouldn't need to check for ptr validity at this point b/c
-  // we already did in ::init()
-  TAO_POA *old_poa = this->root_poa_;
-  this->root_poa_ = np;
-  this->root_poa_reference_ = PortableServer::POA::_nil ();
-  return old_poa;
-}
-
 PortableServer::POA_ptr
-TAO_ORB_Core::root_poa_reference (CORBA::Environment &TAO_IN_ENV,
+TAO_ORB_Core::root_poa_reference (CORBA::Environment &ACE_TRY_ENV,
                                   const char *adapter_name,
                                   TAO_POA_Manager *poa_manager,
                                   const TAO_POA_Policies *policies)
 {
+  // @@ Double check??
   if (CORBA::is_nil (this->root_poa_reference_.in ()))
     {
-      TAO_POA *poa = this->root_poa (adapter_name,
+      TAO_POA *poa = this->root_poa (ACE_TRY_ENV,
+                                     adapter_name,
                                      poa_manager,
                                      policies);
+      ACE_CHECK_RETURN (PortableServer::POA::_nil ());
 
-      this->root_poa_reference_ = poa->_this (TAO_IN_ENV);
-      TAO_CHECK_RETURN (PortableServer::POA::_nil ());
+      this->root_poa_reference_ = poa->_this (ACE_TRY_ENV);
+      ACE_CHECK_RETURN (PortableServer::POA::_nil ());
     }
 
   return PortableServer::POA::_duplicate (this->root_poa_reference_.in ());
@@ -1050,9 +1048,11 @@ TAO_ORB_Core::inherit_from_parent_thread (TAO_ORB_Core_TSS_Resources *tss_resour
 void
 TAO_ORB_Core::create_and_set_root_poa (const char *adapter_name,
                                        TAO_POA_Manager *poa_manager,
-                                       const TAO_POA_Policies *policies)
+                                       const TAO_POA_Policies *policies,
+                                       CORBA::Environment &ACE_TRY_ENV)
 {
-  CORBA::Environment env;
+  // @@ Locking??
+
   TAO_POA *poa = 0;
   int delete_policies = 0;
 
@@ -1073,21 +1073,33 @@ TAO_ORB_Core::create_and_set_root_poa (const char *adapter_name,
     }
 
   // Construct a new POA
-  poa = new TAO_POA (adapter_name,
-                     *poa_manager,
-                     *policies,
-                     0,
-                     this->object_adapter ()->lock (),
-                     this->object_adapter ()->thread_lock (),
-                     *this,
-                     env);
+  this->root_poa_ = new TAO_POA (adapter_name,
+                                 *poa_manager,
+                                 *policies,
+                                 0,
+                                 this->object_adapter ()->lock (),
+                                 this->object_adapter ()->thread_lock (),
+                                 *this,
+                                 ACE_TRY_ENV);
+  ACE_CHECK;
 
   if (delete_policies)
     delete root_poa_policies;
+}
 
-  if (env.exception () == 0)
-    // set the poa in the orbcore instance
-    this->root_poa (poa);
+TAO_Object_Adapter *
+TAO_ORB_Core::object_adapter (void)
+{
+  // @@ Double check??
+  if (this->object_adapter_ == 0)
+    {
+      ACE_NEW_RETURN (this->object_adapter_,
+                      TAO_Object_Adapter (this->server_factory ()->active_object_map_creation_parameters (),
+                                          *this),
+                      0);
+    }
+
+  return this->object_adapter_;
 }
 
 int
