@@ -48,7 +48,7 @@ namespace TAO
             if (this->value_ == 0)
               {
                 ACE_Service_Config::process_directive (
-                  ACE_TEXT("dynamic ThreadPolicyValue Service_Object *")
+                  ACE_TEXT("dynamic ORB_CTRL_Thread_Policy Service_Object *")
                   ACE_TEXT("TAO_PortableServer:_make_ORB_CTRL_Thread_Policy()"));
 
                 this->value_ =
@@ -64,7 +64,7 @@ namespace TAO
             if (this->value_ == 0)
               {
                 ACE_Service_Config::process_directive (
-                  ACE_TEXT("dynamic ThreadPolicyValue Service_Object *")
+                  ACE_TEXT("dynamic SINGLE_THREAD_Thread_Policy Service_Object *")
                   ACE_TEXT("TAO_PortableServer:_make_SINGLE_THREAD_Thread_Policy()"));
 
                 this->value_ =

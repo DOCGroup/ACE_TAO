@@ -22,8 +22,6 @@ namespace TAO
       return ::PortableServer::ORB_CTRL_MODEL;
     }
 
-    ACE_FACTORY_DEFINE (TAO_PortableServer, ORB_CTRL_Thread_Policy)
-
     ACE_STATIC_SVC_DEFINE (
         ORB_CTRL_Thread_Policy,
         ACE_TEXT ("ORB_CTRL_Thread_Policy"),
@@ -32,6 +30,8 @@ namespace TAO
         ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
         0
       )
+
+    ACE_FACTORY_DEFINE (TAO_PortableServer, ORB_CTRL_Thread_Policy)
 
     #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
