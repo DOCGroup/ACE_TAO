@@ -5,11 +5,10 @@
 // = FILENAME
 //    CosEventChannelFactory.idl
 //
-// = DESCRIPTION
-//
-//
 // = AUTHOR
 //    Pradeep Gore <pradeep@cs.wustl.edu>
+//
+// ============================================================================
 
 #ifndef TAO_COSEVENTCHANNELFACTORY_IDL
 #define TAO_COSEVENTCHANNELFACTORY_IDL
@@ -19,7 +18,7 @@
 module CosEventChannelFactory
 {
   // = TITLE
-  //    Module that describes the Channel Factory.
+  //   Module that describes the Channel Factory.
   //
   exception DuplicateChannel
   {
@@ -45,10 +44,11 @@ module CosEventChannelFactory
   interface ChannelFactory
   {
     // = TITLE
-    //    Interface definition of the ChannelFactory.
+    //   Interface definition of the ChannelFactory.
+    //
     // = DESCRIPTION
-    //    The ChannelFactory is used to create,destroy and
-    //    locate CosEventChannels.
+    //   The ChannelFactory is used to create,destroy and
+    //   locate CosEventChannels.
 
     CosEventChannelAdmin::EventChannel create (
       in string channel_id,

@@ -3,7 +3,6 @@
 
 #include "FactoryCosEventChannel_i.h"
 
-// @@ Pradeep: remember to use "" not <> in your includes.
 #include "ace/Auto_Ptr.h"
 
 // @@ Pradeep: if you are using the new TAO_EC_Event_Channel you
@@ -77,6 +76,7 @@ FactoryCosEventChannel_i::init (PortableServer::POA_ptr poa,
   return 0; // success.
 }
 
+// @@ Pradeep: should we remove this? After all it is kept by CVS.
 #if 0
 int
 FactoryCosEventChannel_i::activate (ACE_CString& str_channel_id,

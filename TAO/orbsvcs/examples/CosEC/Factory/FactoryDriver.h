@@ -24,6 +24,11 @@
 #include "CosEventChannelFactory_i.h"
 #include "orbsvcs/Naming/Naming_Utils.h"
 
+// @@ Pradeep: I know this is just an example, but could you talk to
+//    Vishal about making this a service that could be bootstraped
+//    using the -ORBInitRef mechanisms?  That way we can run this
+//    stuff without the naming service running.
+
 class FactoryDriver
 {
   // = TITLE
