@@ -1,3 +1,8 @@
+Fri Jul 23 13:04:15 1999  Steve Huston  <shuston@riverace.com>
+
+        * ace/Malloc_T.cpp (ACE_Malloc<> ctor): Added missing newline in error
+          message.
+
 Fri Jul 23 12:09:18 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/OS.i: Fixed some mismatched ifdef/endif comments.
