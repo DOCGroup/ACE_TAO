@@ -10,20 +10,25 @@ ACE_RCSID(ace, DLL, "$Id$")
 // dynamically linked library.
 
 // The close_on_destruction flag feature is added on object constuction.
+
 ACE_DLL::ACE_DLL (int close_on_destruction)
 {
-  // This flag closes the library automagically on destruction of the object.
-  // The default value is zero.
+  // This flag closes the library automagically on destruction of the
+  // object.  The default value is zero.
+
+  // @@ Kirthika, please move this into the "base/member"
+  // initialization section...
   this->close_mode_ = close_on_destruction;
 }
   
-// The library is closed before the class gets destroyed depending
-// on the close_on_destruction value specified which is stored in close_mode_.
+// The library is closed before the class gets destroyed depending on
+// the close_on_destruction value specified which is stored in
+// close_mode_.
 
 ACE_DLL::~ACE_DLL (void)
 {
   // CLose the library only if it hasnt been already.
-  if (this->close_mode_ == 0 && this->handle_ !=0)
+  if (this->close_mode_ == 0 && this->handle_ != 0)
     this->close ();
 }
   
@@ -66,9 +71,9 @@ ACE_DLL::symbol (ACE_DL_TYPE sym_name)
 int 
 ACE_DLL::close (void)
 {
-  // The handle is checked to see whether the library is closed already.
-  // If not, it is closed an dthe handle is made 0 which portrays that it is
-  // closed.
+  // The handle is checked to see whether the library is closed
+  // already.  If not, it is closed an dthe handle is made 0 which
+  // portrays that it is closed.
   if (this->handle_ != 0)
     {
       int retval = ACE_OS::dlclose (this->handle_);

@@ -1,5 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
+
 // ============================================================================
 //
 // = LIBRARY
@@ -72,8 +73,8 @@ private:
   // This is the reference to the library.
   
   int close_mode_;
-  // This is the flag representing the special close_on_destruction feature.
-  
+  // This is the flag representing the special close_on_destruction
+  // feature.
 };
 
 #endif /* ACE_DLL_H */
