@@ -1,11 +1,17 @@
+Mon May 18 12:34:57 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+        * tao/Connect.cpp: Debug messages now check 
+          Service_Configurator::debug() to see if -ORBdebug
+          is specified.
+
 Mon May 18 09:00:00 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Sched/Config_Scheduler.h: added forward
-	  declarations of scheduling strategy and dynamic scheduler
-	  classes
+        * orbsvcs/orbsvcs/Sched/Config_Scheduler.h: added forward
+          declarations of scheduling strategy and dynamic scheduler
+          classes
 
         * orbsvcs/Scheduling_Service/Scheduling_Service.cpp: added
-	  conditional inclusion of strategy scheduler header file.
+          conditional inclusion of strategy scheduler header file.
 
 Sat May 16 13:56:01 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -15,7 +21,7 @@ Sat May 16 13:56:01 1998  David L. Levine  <levine@cs.wustl.edu>
           needs them, to avoid missing definitions of the copy
           constructors when linking with orbsvcs/EC_Gateway.cpp.
 
-        * orbsvcs/orbsvcs/tmplinst-orbsvcs.cpp: added TAO_Object_Mnaager
+        * orbsvcs/orbsvcs/tmplinst-orbsvcs.cpp: added TAO_Object_Manager
           instantiations.  g++/LynxOS 2.5.0 needs them.
 
         * orbsvcs/tests/EC_Multiple/EC_Multiple.cpp (print_priority_info):
