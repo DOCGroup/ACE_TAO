@@ -1,3 +1,11 @@
+Sat Aug  9 17:22:59 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_visitor_interface/strategized_proxy_broker_sh.cpp: 
+	* TAO_IDL/be/be_visitor_interface/strategized_proxy_broker_ss.cpp: 
+
+	  Changed the exception specification from SystemException to
+	  simple CORBA Exception.
+
 Fri Aug  8 08:58:02 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
         * TAO_IDL/be/be_codegen.cpp: #included config-all.h for getting
