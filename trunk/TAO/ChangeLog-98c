@@ -14,6 +14,14 @@ Mon Feb 16 10:18:25 1998  David L. Levine  <levine@cs.wustl.edu>
         * tao/poa.cpp (decode_string_to_sequence): moved declaration of
           local "i" outside of loop because it is used after the loop.
 
+        * orbsvcs/Event_Service/RT_Task.cpp (synch_threads): try two
+          fallback strategies if the task activiation fails:
+          ACE_SCHED_OTHER scheduling class with requested priority, then
+          ACE_SCHED_OTHER scheduling class with minimum thread priority.
+          Thanks to Robert Olson <olson@mcs.anl.gov> for reporting the
+          problem in Irix, which doesn't have a thread priority of 0
+          with ACE_SCHED_OTHER.
+
 Mon Feb 16 10:14:34 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * TAO_IDL/be/be_array.cpp:
