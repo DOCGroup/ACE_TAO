@@ -1,3 +1,16 @@
+Thu Jul 10 15:11:55 2003  Irfan Pyarali  <irfan@oomworks.com>
+
+	* tests\MT_Reference_Counted_Event_Handler_Test.dsp
+	* tests\MT_Reference_Counted_Notify_Test.dsp
+	* tests\NonBlocking_Conn_Test.dsp
+	* tests\Reactor_Registration_Test.dsp
+	* tests\Reference_Counted_Event_Handler_Test.dsp
+	* tests\Timer_Cancellation_Test.dsp
+	* tests\Timer_Queue_Reference_Counting_Test.dsp
+	* tests\WFMO_Reactor_Test.dsp
+
+	  Updated project files to add Main.cpp.
+
 Wed Jul 09 22:48:48 2003  Irfan Pyarali  <irfan@oomworks.com>
 
 	* tests\Thread_Pool_Reactor_Resume_Test: 
