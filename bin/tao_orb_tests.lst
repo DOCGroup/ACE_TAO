@@ -147,3 +147,5 @@ TAO/tests/Portable_Interceptors/AMI/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS
 TAO/tests/ORT/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS
 TAO/tests/Object_Loader/run_test.pl: !STATIC
 TAO/tests/Two_Objects/run_test.pl: !ST
+TAO/tests/UNKNOWN_Exception/run_test.pl: Exceptions
+TAO/tests/Native_Exceptions/run_test.pl: Exceptions

@@ -92,6 +92,7 @@ DIRS = \
         Strategies \
 	Timed_Buffered_Oneways \
         Timeout \
-        Two_Objects
+        Two_Objects \
+	UNKNOWN_Exception
 
 !include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
