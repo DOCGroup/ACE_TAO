@@ -10,6 +10,7 @@
 #include "ace/Argv_Type_Converter.h"
 #include "tao/ORB_Core.h"
 #include "ace/Dynamic_Service.h"
+#include "../orbsvcs/Notify/Notify_Service.h"
 
 TAO_Notify_Service::TAO_Notify_Service (void)
   : notify_service_ (0),

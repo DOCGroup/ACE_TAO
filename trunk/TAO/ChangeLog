@@ -1,3 +1,10 @@
+Wed Nov 20 16:14:31 2002  Irfan Pyarali  <irfan@oomworks.com>
+
+	* orbsvcs\Notify_Service\Notify_Service.cpp: Added
+	  ../orbsvcs/Notify/Notify_Service.h so that the static
+	  initializer can run and add the service objects to the service
+	  repository.  Thanks to Bala for helping with this.
+
 Wed Nov 20 12:48:35 2002  Irfan Pyarali  <irfan@oomworks.com>
 
 	* orbsvcs\tests\Notify\performance-tests\RedGreen\Makefile.bor:
