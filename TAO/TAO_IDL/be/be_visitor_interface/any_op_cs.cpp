@@ -25,6 +25,8 @@
 
 #include "be_visitor_interface.h"
 
+ACE_RCSID(be_visitor_interface, any_op_cs, "$Id$")
+
 
 // ***************************************************************************
 // Interface visitor for generating Any operator declarations in the client

@@ -24,6 +24,9 @@
 #include "be.h"
 #include "be_visitor_sequence.h"
 
+ACE_RCSID(be, be_sequence, "$Id$")
+
+
 /*
  * BE_Sequence
  */

@@ -6,6 +6,8 @@
 
 #include        "be_sunsoft.h"
 
+ACE_RCSID(be, be_factory, "$Id$")
+
 // destructor
 TAO_Visitor_Factory::~TAO_Visitor_Factory (void)
 {

@@ -1,7 +1,6 @@
-/* -*- c++ -*- */
-// ============================================================================
-//
 // $Id$
+
+// ============================================================================
 //
 // = LIBRARY
 //    TAO IDL
@@ -20,6 +19,8 @@
 #include        "idl.h"
 #include        "idl_extern.h"
 #include        "be.h"
+
+ACE_RCSID(be, be_codegen, "$Id$")
 
 TAO_CodeGen *tao_cg = TAO_CODEGEN::instance ();
 

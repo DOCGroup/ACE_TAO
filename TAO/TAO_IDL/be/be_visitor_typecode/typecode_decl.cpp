@@ -24,6 +24,8 @@
 
 #include "be_visitor_typecode.h"
 
+ACE_RCSID(be_visitor_typecode, typecode_decl, "$Id$")
+
 
 // ******************************************************
 // TypeCode declarations

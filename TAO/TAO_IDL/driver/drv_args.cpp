@@ -75,6 +75,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include        "be.h"
 #include	<stdio.h>
 
+ACE_RCSID(driver, drv_args, "$Id$")
+
 /*
  * Push a file into the list of files to be processed
  */

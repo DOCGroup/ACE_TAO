@@ -19,6 +19,10 @@
 #include	"idl.h"
 #include	"idl_extern.h"
 #include	"be.h"
+#include	"be_state.h"
+
+ACE_RCSID(be, be_state_sequence, "$Id$")
+
 
 // return type for sequence
 be_state_sequence::be_state_sequence (void)

@@ -24,6 +24,8 @@
 
 #include "be_visitor_structure.h"
 
+ACE_RCSID(be_visitor_structure, structure_cs, "$Id$")
+
 
 // ***************************************************************************
 // for client stubs

@@ -67,6 +67,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include	"idl.h"
 #include	"idl_extern.h"
 
+ACE_RCSID(narrow, narrow, "$Id$")
+
 // Narrowing functions for AST
 
 /*

@@ -81,6 +81,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include	"drv_private.h"
 #include        "drv_link.h"
 
+ACE_RCSID(TAO_IDL, tao_idl, "$Id$")
+
 static void
 DRV_version()
 {

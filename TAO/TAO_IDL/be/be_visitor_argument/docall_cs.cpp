@@ -22,6 +22,9 @@
 #include "be.h"
 #include "be_visitor_argument.h"
 
+ACE_RCSID(be_visitor_argument, docall_cs, "$Id$")
+
+
 // ****************************************************************************
 // visitor for argument passing to do_static_call. The do_static_call method takes a variable
 // number of parameters. The total number of parameters is determined by the

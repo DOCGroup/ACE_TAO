@@ -1,4 +1,3 @@
-/* -*- c++ -*- */
 // $Id$
 
 // ============================================================================
@@ -23,6 +22,8 @@
 #include	"idl.h"
 #include	"idl_extern.h"
 #include	"be.h"
+
+ACE_RCSID(be, be_interface_fwd, "$Id$")
 
 /*
  * BE_InterfaceFwd

@@ -23,6 +23,9 @@
 #include	"idl_extern.h"
 #include	"be.h"
 
+ACE_RCSID(be, be_typedef, "$Id$")
+
+
 be_typedef::be_typedef (void)
 {
 }

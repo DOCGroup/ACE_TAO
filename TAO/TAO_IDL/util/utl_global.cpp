@@ -1,6 +1,5 @@
-//
 // $Id$
-//
+
 /*
 
 COPYRIGHT
@@ -70,6 +69,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include	"idl.h"
 #include	"idl_extern.h"
+
+ACE_RCSID(util, utl_global, "$Id$")
 
 // Define an increment for the size of the array used to store names of
 // included files

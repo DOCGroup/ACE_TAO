@@ -31,3 +31,6 @@
 #include "be_visitor_typedef/typedef_ch.cpp"
 #include "be_visitor_typedef/typedef_ci.cpp"
 #include "be_visitor_typedef/typedef_cs.cpp"
+
+ACE_RCSID(be, be_visitor_typedef, "$Id$")
+

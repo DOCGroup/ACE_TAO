@@ -24,6 +24,8 @@
 #include "be_visitor_interface.h"
 #include "be.h"
 
+ACE_RCSID(be, be_interface, "$Id$")
+
 /*
  * BE_Interface
  */

@@ -24,6 +24,8 @@
 
 #include "be_visitor_operation.h"
 
+ACE_RCSID(be_visitor_operation, operation_ch, "$Id$")
+
 
 // ******************************************************
 // primary visitor for "operation" in client header

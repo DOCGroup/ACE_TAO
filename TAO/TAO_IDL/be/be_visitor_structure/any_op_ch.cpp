@@ -24,6 +24,8 @@
 
 #include "be_visitor_structure.h"
 
+ACE_RCSID(be_visitor_structure, any_op_ch, "$Id$")
+
 
 // ***************************************************************************
 // Structure visitor for generating Any operator declarations in the client header

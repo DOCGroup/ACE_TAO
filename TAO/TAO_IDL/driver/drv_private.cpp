@@ -71,6 +71,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include	"drv_private.h"
 
+ACE_RCSID(driver, drv_private, "$Id$")
+
 // Storage for file names
 
 #define		NFILES	1024

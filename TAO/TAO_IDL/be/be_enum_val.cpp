@@ -23,6 +23,8 @@
 #include	"idl_extern.h"
 #include	"be.h"
 
+ACE_RCSID(be, be_enum_val, "$Id$")
+
 be_enum_val::be_enum_val (void)
 {
 }

@@ -5,6 +5,9 @@
 #include	"idl_extern.h"
 #include	"be.h"
 
+ACE_RCSID(be, be_scope, "$Id$")
+
+
 // Default Constructor
 be_scope::be_scope (void)
   : comma_ (0)

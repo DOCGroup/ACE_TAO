@@ -28,3 +28,5 @@
 #include "be_visitor_constant/constant_ch.cpp"
 #include "be_visitor_constant/constant_cs.cpp"
 
+ACE_RCSID(be, be_visitor_constant, "$Id$")
+

@@ -25,6 +25,8 @@
 
 #include "be_visitor_operation.h"
 
+ACE_RCSID(be_visitor_operation, rettype_vardecl_ss, "$Id$")
+
 
 // ********************************************************************************
 //    be_visitor_operation_rettype_vardecl_ss

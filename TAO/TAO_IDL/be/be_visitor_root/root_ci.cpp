@@ -24,6 +24,8 @@
 
 #include "be_visitor_root.h"
 
+ACE_RCSID(be_visitor_root, root_ci, "$Id$")
+
 
 // *********************************
 // Root visitor for client inline

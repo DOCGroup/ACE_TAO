@@ -24,6 +24,8 @@
 
 #include "be_visitor_operation.h"
 
+ACE_RCSID(be_visitor_operation, tie_si, "$Id$")
+
 
 // ************************************************************
 // Operation visitor for server inline for TIE class operations
