@@ -1,3 +1,9 @@
+Wed Dec 30 10:36:36 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/Env_Value_Test.cpp: protected tests of doubles with
+          #ifndef ACE_LACKS_FLOATING_POINT, so that the test will
+          build for our Chorus platform.
+
 Tue Dec 29 16:24:24 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * bin/Service_Config.perl,auto_ptr.perl,corba-boolean.perl,
