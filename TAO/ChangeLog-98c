@@ -1,3 +1,8 @@
+Wed Jul 15 11:44:57 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* orbsvcs/tests/CosPropertyService/Makefile: Removed STL stuff and
+	did a make depend.
+
 Wed Jul 15 10:55:33 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Quoter/run_tests.pl: removed hard-coded perl path.
