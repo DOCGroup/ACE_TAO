@@ -37,7 +37,7 @@ public:
   ACE_Svc_Tuple (SVC_HANDLER *, 
 		 ACE_HANDLE,
 		 const void * = 0, 
-		 int timer_id = -1);
+		 long timer_id = -1);
 
   // = Get SVC_HANDLER.
   SVC_HANDLER *svc_handler (void);
@@ -54,10 +54,10 @@ public:
   void arg (const void *);
   // Set argument.
 
-  // = Set/get cancellation handle.
-  int cancellation_id (void);
+  // = Set/get timer cancellation handle.
+  long cancellation_id (void);
   // Get cancellation id.
-  void cancellation_id (int timer_id);
+  void cancellation_id (long timer_id);
   // Set cancellation id.
 
   void dump (void) const;
@@ -76,7 +76,7 @@ private:
   const void *arg_;
   // Associated argument.
 
-  int cancellation_id_;
+  long cancellation_id_;
   // Associated cancellation id.
 };
 
