@@ -1,6 +1,7 @@
 Mon Apr 05 14:17:31 1999  David L. Levine  <levine@cs.wustl.edu>
 
-        * ace/Trace.cpp: removed unnecessary #include of ace/ACE.h.
+        * ace/Trace.cpp: removed unnecessary (and complicated)
+          #include of ace/ACE.h.
 
 Mon Apr  5 13:21:49 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
