@@ -188,7 +188,7 @@ Options::~Options (void)
                        "\nSTRCASECMP is..: %s"
                        "\nOPTIMIZE is....: %s"
                        "\nLINEARSEARCH is: %s"
-		       "\nBINARYSEARCH is: %s"
+                       "\nBINARYSEARCH is: %s"
                        "\niterations = %d"
                        "\nlookup function name = %s"
                        "\nfill default = %s"
@@ -278,17 +278,17 @@ Options::parse_args (int argc, char *argv[])
             break;
           }
           // Generate code for Linear Search.
-	case 'b':
-	  {
-	    ACE_SET_BITS (option_word_, LINEARSEARCH);
+        case 'b':
+          {
+            ACE_SET_BITS (option_word_, LINEARSEARCH);
             break;
-	  }
+          }
           // Generate code for Binary Search.
         case 'B':
-	  {
-	    ACE_SET_BITS (option_word_, BINARYSEARCH);
-	    break;
-	  }
+          {
+            ACE_SET_BITS (option_word_, BINARYSEARCH);
+            break;
+          }
           // Generate strncmp rather than strcmp.
         case 'c':
           {
@@ -356,7 +356,7 @@ Options::parse_args (int argc, char *argv[])
           {
             ACE_OS::fprintf (stderr,
                              "-a\tGenerate ANSI standard C output code, i.e., function prototypes.\n"
-			     "-b\tGenerate code for Linear Search.\n"
+                             "-b\tGenerate code for Linear Search.\n"
                              "-B\tGenerate code for Binary Search.\n"
                              "-c\tGenerate comparison code using strncmp rather than strcmp.\n"
                              "-C\tMake the contents of generated lookup tables constant, i.e., readonly.\n"
@@ -610,11 +610,11 @@ Options::parse_args (int argc, char *argv[])
             ACE_SET_BITS (option_word_, ORDER);
             break;
           }
- 	case 'O':
- 	  {
- 	    ACE_SET_BITS (option_word_, OPTIMIZE);
- 	    break;
- 	  }
+        case 'O':
+          {
+            ACE_SET_BITS (option_word_, OPTIMIZE);
+            break;
+          }
         // Generated lookup function now a pointer instead of int.
         case 'p':
           {
