@@ -202,6 +202,8 @@ be_visitor_operation_thru_poa_proxy_impl_ss::visit_operation (be_operation *node
 
   *os << "}\n\n";
 
+  os->decr_indent (0);
+
   return 0;
 }
 
