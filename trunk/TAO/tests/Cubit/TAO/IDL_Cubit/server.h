@@ -28,7 +28,7 @@
 #include "cubit_i.h"
 #include "orbsvcs/Naming/Naming_Utils.h"
 
-class Cubit_Server : public TAO_ORB_Manager
+class Cubit_Server
 {
   // = TITLE
   //   Defines a Cubit Server class that implements the functionality
@@ -71,6 +71,9 @@ private:
 
   FILE* ior_output_file_;
   // File to output the cubit factory IOR.
+
+  TAO_ORB_Manager orb_manager_;
+  // The ORB manager
 
   TAO_Naming_Server my_name_server_;
   // An instance of the name server used for registering the factory

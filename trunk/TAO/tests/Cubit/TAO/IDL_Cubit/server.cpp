@@ -58,21 +58,22 @@ Cubit_Server::init (int argc,
 {
   // Call the init of TAO_ORB_Manager to create a child POA
   // under the root POA.
-  this->init_child_poa (argc,
-                        argv,
-                        "child_poa",
-                        env);
+  this->orb_manager_.init_child_poa (argc,
+                                     argv,
+                                     "child_poa",
+                                     env);
 
   TAO_CHECK_ENV_RETURN (env,-1);
   this->argc_ = argc;
   this->argv_ = argv;
 
   this->parse_args ();
+  // ~~ check for the return value here
 
   CORBA::String_var str  =
-    this->activate_under_child_poa ("factory",
-                                    &this->factory_impl_,
-                                    env);
+    this->orb_manager_.activate_under_child_poa ("factory",
+                                                 &this->factory_impl_,
+                                                 env);
   ACE_DEBUG ((LM_DEBUG,
               "The IOR is: <%s>\n",
               str.in ()));
@@ -98,8 +99,14 @@ int
 Cubit_Server::init_naming_service (CORBA::Environment& env)
 {
   int result;
-  result = this->my_name_server_.init (this->orb_,
-                              this->child_poa_);
+  CORBA::ORB_var orb;
+  PortableServer::POA_var child_poa;
+
+  orb = this->orb_manager_.orb ();
+  child_poa = this->orb_manager_.child_poa ();
+
+  result = this->my_name_server_.init (orb,
+                                       child_poa);
   if (result < 0)
     return result;
   factory = this->factory_impl_._this (env);
@@ -128,13 +135,9 @@ Cubit_Server::init_naming_service (CORBA::Environment& env)
 int
 Cubit_Server::run (CORBA::Environment& env)
 {
-  this->poa_manager_->activate (env);
-  TAO_CHECK_ENV_RETURN (env,1);
-
-  if (this->orb_->run () == -1)
+  if (this->orb_manager_.run (env) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "run"),
+                       "Cubit_Server::run"),
                       -1);
   return 0;
 }
