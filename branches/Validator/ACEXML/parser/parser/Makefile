@@ -339,6 +339,7 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/Obstack_T.cpp \
   Entity_Manager.h \
   Entity_Manager.i \
+  ParserErrors.h \
   Parser.i \
   $(ACE_ROOT)/ACEXML/common/Transcode.h \
   $(ACE_ROOT)/ACEXML/common/Transcode.i \

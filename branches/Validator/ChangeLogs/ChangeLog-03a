@@ -1,3 +1,45 @@
+Wed Oct 23 17:27:14 2002  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * ACEXML/common/Encoding.cpp:
+        * ACEXML/common/Encoding.h:
+
+          Use UTF-16 instead of UTF-16LE/UTF-16BE as the specification
+          doesn't require mentioning the endianness of the input.
+
+        * ACEXML/common/Transcode.h: Fixed some minor typos.
+
+        * ACEXML/examples/SAXPrint/namespaces.xml: New file which tests
+          out the namespaces feature much better.
+
+        * ACEXML/apps/svcconf/Makefile:
+        * ACEXML/parser/parser/Makefile:
+
+          Updated dependencies.
+
+        * ACEXML/parser/parser/ParserErrors.h: New file which contains the
+          error codes of all the error spit out by the parser.
+
+        * ACEXML/examples/SAXPrint/Print_Handler.cpp:
+        * ACEXML/examples/SAXPrint/SAXPrint_Handler.cpp:
+
+          Make sure that the characters() function describes the arguments
+          as start and length instead of start and end.
+
+        * ACEXML/parser/parser/Parser.dsp: Added ParserErrors.h to the
+          project file.
+
+        * ACEXML/parser/parser/Parser.cpp:
+        * ACEXML/parser/parser/Parser.h:
+
+          Use minor codes when reporting error in the parser. This cleans
+          up a lot of repeated error messages and indenting so that we
+          don't need to spill over 80 columns and have a standardized way
+          of reporting errors. Rewrote parse_cdata() so that is is much
+          simpler. Removed try_grow_cdata() as it is no longer needed.
+          Handle the case when the parser was accepting invalid character
+          references().
+
+
 Wed Oct 23 17:20:18 UTC 2002  Don Hinton  <dhinton@ieee.org>
 
 	* ace/Service_Object.{h,cpp} (suspend, resume, fini):
@@ -6,11 +48,11 @@ Wed Oct 23 17:20:18 UTC 2002  Don Hinton  <dhinton@ieee.org>
 	  propagated.
 
 	* ace/Service_Repository.cpp (suspend, resume, fini):
-	  Changed to propagate the return value from the 
+	  Changed to propagate the return value from the
 	  ACE_Service_Type instead of always 0.
 
 Tue Oct 22 16:26:56 2002  Rich Seibel  <seibel_r@ociweb.com>
-	
+
         * ace/Basic_Types.h:
           Added a test for _BYTE_ORDER, same as BYTE_ORDER and
           __BYTE_ORDER.  VxWorks defines this.  Also note, compilers

@@ -7,8 +7,8 @@ const ACEXML_Char* ACEXML_Encoding::encoding_names_[8] = {
   ACE_TEXT ("UCS-4LE"),
   ACE_TEXT ("UCS-4_2143"),
   ACE_TEXT ("UCS-4_3412"),
-  ACE_TEXT ("UTF-16BE"),
-  ACE_TEXT ("UTF-16LE"),
+  ACE_TEXT ("UTF-16"),
+  ACE_TEXT ("UTF-16"),
   ACE_TEXT ("UTF-8"),
   ACE_TEXT ("Unsupported Encoding")
 };

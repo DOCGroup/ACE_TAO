@@ -395,6 +395,7 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/Obstack_T.cpp \
   $(ACE_ROOT)/ACEXML/parser/parser/Entity_Manager.h \
   $(ACE_ROOT)/ACEXML/parser/parser/Entity_Manager.i \
+  $(ACE_ROOT)/ACEXML/parser/parser/ParserErrors.h \
   $(ACE_ROOT)/ACEXML/parser/parser/Parser.i \
   Svcconf_Handler.h \
   $(ACE_ROOT)/ACEXML/common/DefaultHandler.h \
