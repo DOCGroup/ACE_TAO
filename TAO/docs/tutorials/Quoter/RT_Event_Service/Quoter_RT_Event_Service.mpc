@@ -3,6 +3,7 @@
 
 project(*client) : orbsvcsexe, portableserver, rtevent, naming  {
   requires += exceptions
+  avoids += minimum_corba
   source_files {
     client.cpp
     Stock_Consumer.cpp
@@ -11,6 +12,7 @@ project(*client) : orbsvcsexe, portableserver, rtevent, naming  {
 
 project(*server) : orbsvcsexe, portableserver, rtevent, naming {
   requires += exceptions
+  avoids += minimum_corba
   source_files {
     server.cpp
     Stock_Factory_i.cpp
