@@ -1,3 +1,9 @@
+Tue Jun 22 08:38:12 EDT 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
+
+	* orbsvcs/orbsvcs/Makefile:
+
+	  Updated dependencies.
+
 Tue Jun 22 07:59:11 EDT 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
 	* tao/ORB.cpp:
