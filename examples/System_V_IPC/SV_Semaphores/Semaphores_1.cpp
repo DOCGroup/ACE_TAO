@@ -3,6 +3,7 @@
 #include "ace/SV_Shared_Memory.h"
 #include "ace/SV_Semaphore_Simple.h"
 #include "ace/Malloc.h"
+#include "ace/OS_NS_unistd.h"
 
 ACE_RCSID(SV_Semaphores, Semaphores_1, "$Id$")
 
