@@ -1956,7 +1956,6 @@ template class TAO_Unbounded_Sequence<CORBA::Octet>;
 
 template class ACE_Dynamic_Service<TAO_Server_Strategy_Factory>;
 template class ACE_Dynamic_Service<TAO_Client_Strategy_Factory>;
-template class ACE_Guard<TAO_Cached_Connector_Lock>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
@@ -1966,6 +1965,5 @@ template class ACE_Guard<TAO_Cached_Connector_Lock>;
 
 #pragma instantiate ACE_Dynamic_Service<TAO_Server_Strategy_Factory>
 #pragma instantiate ACE_Dynamic_Service<TAO_Client_Strategy_Factory>
-#pragma instantiate ACE_Guard<TAO_Cached_Connector_Lock>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -352,6 +352,10 @@ TAO_UIOP_Connector::object_key_delimiter (void) const
   return TAO_UIOP_Profile::object_key_delimiter;
 }
 
+
+// The TAO_Cached_Connector_Lock template instantiations are in
+// Resource_Factory.cpp.
+
 #define TAO_UIOP_SVC_TUPLE ACE_Svc_Tuple<TAO_UIOP_Client_Connection_Handler>
 #define UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR ACE_Refcounted_Hash_Recyclable<ACE_UNIX_Addr>
 
@@ -385,10 +389,6 @@ template class ACE_Map_Entry<int, TAO_UIOP_SVC_TUPLE*>;
 template class ACE_Hash_Map_Entry<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_UIOP_Client_Connection_Handler *>;
 template class ACE_Hash<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR>;
 template class ACE_Equal_To<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR>;
-
-//
-// Instantiation for the reverse lock is in the IIOP Connector.
-//
 
 #if defined(ACE_HAS_THREADS)
 template class ACE_Hash_Map_Manager<UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_UIOP_Client_Connection_Handler *, ACE_SYNCH_MUTEX>;
