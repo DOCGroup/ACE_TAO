@@ -305,13 +305,15 @@ public:
   // = Activation control methods.
 
   /**
-   * Deactivate the queue and wakeup all threads waiting on the queue
-   * so they can continue.  No messages are removed from the queue,
-   * however.  Any other operations called until the queue is
-   * activated again will immediately return -1 with <errno> ==
-   * ESHUTDOWN.  Returns WAS_INACTIVE if queue was inactive before the
-   * call and WAS_ACTIVE if queue was active before the call.
-   */
+   * Notifies all waiting threads that the queue has been deactivated
+   * so they can wakeup and continue other processing.  If <pulse> is
+   * 0 then the queue's state is changed to deactivated and any other
+   * operations called until the queue is activated again will
+   * immediately return -1 with <errno> == ESHUTDOWN.  If <pulse> is
+   * non-0 then only the waiting threads are notified and the queue's state
+   * is not changed.  In either case, however, no messages are removed
+   * from the queue.  Returns WAS_INACTIVE if queue was inactive before
+   * the call and WAS_ACTIVE if queue was active before the call.  */
   virtual int deactivate (void);
 
   /**
@@ -404,8 +406,17 @@ protected:
 
   // These methods assume locks are held.
 
-  /// Deactivate the queue.
-  virtual int deactivate_i (void);
+  /**
+   * Notifies all waiting threads that the queue has been deactivated
+   * so they can wakeup and continue other processing.  If <pulse> is
+   * 0 then the queue's state is changed to deactivated and any other
+   * operations called until the queue is activated again will
+   * immediately return -1 with <errno> == ESHUTDOWN.  If <pulse> is
+   * non-0 then only the waiting threads are notified and the queue's state
+   * is not changed.  In either case, however, no messages are removed
+   * from the queue.  Returns WAS_INACTIVE if queue was inactive before
+   * the call and WAS_ACTIVE if queue was active before the call.  */
+  virtual int deactivate_i (int pulse);
 
   /// Activate the queue.
   virtual int activate_i (void);
