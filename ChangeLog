@@ -1,5 +1,6 @@
 Sat Apr 21 19:02:27 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
+	* netsvcs/clients/Naming/Dump_Restore/Makefile:
 	* netsvcs/clients/Naming/Client/Makefile: Removed duplicated ACE
 	  library.  I thought I removed them all.
 
