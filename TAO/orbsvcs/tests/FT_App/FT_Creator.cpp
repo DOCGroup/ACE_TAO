@@ -92,14 +92,14 @@ FTAPP::FT_Creator::parse_args (int argc, char *argv[])
 
       default:
       {
-        cerr << "Creator: Unknown argument -" << (char) c << endl;
-        usage(cerr);
+        ACE_OS::fprintf (stderr, "Creator: Unknown argument -%c\n", (char) c);
+        usage(stderr);
         result = 1;
         break;
       }
       case '?':
       {
-        usage(cerr);
+        usage(stderr);
         result = 1;
         break;
       }
@@ -108,25 +108,25 @@ FTAPP::FT_Creator::parse_args (int argc, char *argv[])
 
   if ( this->create_roles_.size() == 0 && this->unregister_roles_.size() == 0)
   {
-    cerr << "Creator: neither create (-t) nor kill (-u) specified.  Nothing to do." << endl;
-    usage (cerr);
+    ACE_OS::fprintf (stderr, "Creator: neither create (-t) nor kill (-u) specified.  Nothing to do.\n");
+    usage (stderr);
     result = -1;
   }
 
   return result;
 }
 
-void FTAPP::FT_Creator::usage(ostream & out)const
+void FTAPP::FT_Creator::usage(FILE* out)const
 {
-  out << "usage\n"
-      << " -r <role for objects to be created>\n"
-      << " -f <factory registry ior file> (if not specified, ReplicationManager is used.)\n"
-      << " -u <role to be unregistered (for testing factory registry)>\n"
-      << " -i (toggle write ior for each object (default false))\n"
-      << " -p <prefix for registration & file names>\n"
-      << " -g (toggle write iogr to file (default false))\n"
-      << " -n (toggle register iogr with name service (default true))\n"
-      ;
+  ACE_OS::fprintf (out, "usage\n"
+      				" -r <role for objects to be created>\n"
+      				" -f <factory registry ior file> (if not specified, ReplicationManager is used.)\n"
+      				" -u <role to be unregistered (for testing factory registry)>\n"
+      				" -i (toggle write ior for each object (default false))\n"
+      				" -p <prefix for registration & file names>\n"
+      				" -g (toggle write iogr to file (default false))\n"
+      				" -n (toggle register iogr with name service (default true))\n")
+      			   ;
 }
 
 
@@ -186,7 +186,7 @@ int FTAPP::FT_Creator::run (ACE_ENV_SINGLE_ARG_DECL)
   for ( nType = 0; result == 0 && nType < typeCount; ++nType)
   {
     const char * role = this->create_roles_[nType].c_str();
-    cout << endl << "Creator: Creating group of " << role << endl;
+    ACE_OS::fprintf (stdout, "\nCreator: Creating group of %s\n", role);
     PortableGroup::ObjectGroup_var group = this->creator_.create_group (
       role,
       this->write_iors_
@@ -212,7 +212,7 @@ int FTAPP::FT_Creator::run (ACE_ENV_SINGLE_ARG_DECL)
       }
       else
       {
-        cerr << "Can't open iogr output file " << iogr_filename << endl;
+        ACE_OS::fprintf (stderr, "Can't open iogr output file %s\n", iogr_filename);
         result = 1;
       }
     }

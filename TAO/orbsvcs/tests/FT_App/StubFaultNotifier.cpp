@@ -196,7 +196,7 @@ int StubFaultNotifier::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
   this->factory_ = ::FT::FaultDetectorFactory::_narrow(obj.in ());
   if (CORBA::is_nil(this->factory_.in ()))
   {
-    cerr << "Can't resolve Detector Factory IOR " << this->detector_ior_ << endl;
+    ACE_OS::fprintf (stderr, "Can't resolve Detector Factory IOR %s\n", this->detector_ior_);
     result = -1;
   }
   if (result == 0)
@@ -211,7 +211,7 @@ int StubFaultNotifier::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
       FT::PullMonitorable_var replica = FT::PullMonitorable::_narrow(obj.in ());
       if (CORBA::is_nil(replica.in ()))
       {
-        cerr << "Can't resolve Replica IOR " << iorName << endl;
+        ACE_OS::fprintf (stderr, "Can't resolve Replica IOR %s\n", iorName);
         result = -1;
       }
       else
