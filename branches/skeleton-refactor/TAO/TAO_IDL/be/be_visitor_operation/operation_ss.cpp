@@ -244,10 +244,11 @@ be_visitor_operation_ss::gen_skel_operation_body (be_operation * node,
 
   // Get the right object implementation.
   *os << intf->full_skel_name () << " * const impl =" << be_idt_nl
-      << "static_cast<" << be_idt << be_idt_nl
-      << intf->full_skel_name () << " *> (" << be_nl
-      << "servant_upcall->servant ()" << be_uidt_nl
-      << ");" << be_uidt << be_uidt_nl << be_nl;
+      << "static_cast<" << be_idt_nl
+      << intf->full_skel_name () << " *> (" << be_idt_nl
+      << "static_cast<TAO_Object_Adapter::Servant_Upcall *> (" << be_idt_nl
+      << "servant_upcall)->servant ()" << be_uidt_nl
+      << ");" << be_uidt << be_uidt << be_uidt_nl << be_nl;
 
   // Upcall_Command instantiation.
   *os << be_nl
