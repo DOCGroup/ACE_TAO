@@ -1,24 +1,24 @@
 Fri Sep 18 17:39:03 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
-	* TAO/tests/DynAny_Test/DynUnion_i.{h,cpp}:
-	* TAO/tests/DynAny_Test/README:
-	  Checked in the finished DynUnion code and updated the
-	  README file.
+        * TAO/tests/DynAny_Test/DynUnion_i.{h,cpp}:
+        * TAO/tests/DynAny_Test/README:
+          Checked in the finished DynUnion code and updated the
+          README file.
 
-	  Quickly tested what I could of DynUnion functions, but TAO
-	  IDL compiler doesn't yet deal with a union default case or
-	  with more than one label for the same element. There were
-	  also problems with insertion into an Any for unions with a
-	  string or typecode active member, but these are also IDL
-	  problems and are also present with structs. 
+          Quickly tested what I could of DynUnion functions, but TAO
+          IDL compiler doesn't yet deal with a union default case or
+          with more than one label for the same element. There were
+          also problems with insertion into an Any for unions with a
+          string or typecode active member, but these are also IDL
+          problems and are also present with structs.
 
-	  Aside from the above limitations, preliminary check on 
-	  DynUnion is a thumbs-up.
+          Aside from the above limitations, preliminary check on
+          DynUnion is a thumbs-up.
 
 Fri Sep 18 16:44:42 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* utils: Added the latest and greatest IOR parser.  Thanks to
- 	  Priya Narasimhan <priya@lambda.ece.ucsb.edu> for this.
+        * utils: Added the latest and greatest IOR parser.  Thanks to
+          Priya Narasimhan <priya@lambda.ece.ucsb.edu> for this.
 
 Fri Sep 18 11:27:00 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
@@ -34,6 +34,9 @@ Fri Sep 18 08:39:13 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * performance-tests/Cubit/TAO/MT_Cubit/Cubit_Task.cpp (svc):
           (svc): print out errno string if ORB initialization fails.
+
+        * tao/POA.i (operator ==,!=): added ACE_UNUSED_ARG (rhs) with
+          POA_NO_TIMESTAMP.
 
 Fri Sep 18 02:15:23 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
