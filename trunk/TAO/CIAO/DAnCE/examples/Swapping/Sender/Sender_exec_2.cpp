@@ -133,7 +133,7 @@ Sender_Impl::Sender_exec_2_i::ccm_remove (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_DEBUG ((LM_DEBUG, "Sender_Impl::Sender_exec_2_i::ccm_remove\n"));
 }
 
-extern "C" SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr
+extern "C" SENDER_EXEC_2_Export ::Components::EnterpriseComponent_ptr
 createSenderExec_Impl (Sender_Impl::SenderSwap_exec_i *p)
 {
   Sender_Impl::Sender_exec_2_i *tmp =
