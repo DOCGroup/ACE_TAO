@@ -1,464 +1,468 @@
+Sat May 15 14:35:48 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/ObjectIDList.*: fixed RCS Id string.
+
 Sat May 15 14:11:37 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* TAO_IDL/Makefile:
-	* TAO_IDL/be/be_visitor_argument/compiled_marshal_ss.cpp:
-	* TAO_IDL/be/be_visitor_argument/marshal_ss.cpp:
-	* TAO_IDL/be/be_visitor_argument/post_upcall_ss.cpp:
-	* TAO_IDL/be/be_visitor_argument/vardecl_ss.cpp:
-	* TAO_IDL/be/be_visitor_operation/argument.cpp:
-	* TAO_IDL/be/be_visitor_operation/argument_marshal.cpp:
-	* TAO_IDL/be/be_visitor_operation/compiled_marshal.cpp:
-	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
-	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
-	* TAO_IDL/be/be_visitor_operation/rettype_post_docall_cs.cpp:
-	* TAO_IDL/be/be_visitor_operation/rettype_post_upcall_ss.cpp:
-	* TAO_IDL/be/be_visitor_operation/rettype_vardecl_cs.cpp:
-	* TAO_IDL/be/be_visitor_operation/rettype_vardecl_ss.cpp:
-	* TAO_IDL/be_include/be_visitor_argument.h:
-	* TAO_IDL/be_include/be_visitor_argument/post_upcall_ss.h:
-	* TAO_IDL/be_include/be_visitor_operation/rettype_post_docall_cs.h:
-	* TAO_IDL/be_include/be_visitor_operation/rettype_post_upcall_ss.h:
-	  Fixed warnings in generated code if the arguments of an
-	  operation where arrays.  The changes have been tested for both
-	  fixed sized and variable sized arrays in Param_Test.
-	  This should also fix the compilation problem on HP-UX and other
-	  platforms.
+        * TAO_IDL/Makefile:
+        * TAO_IDL/be/be_visitor_argument/compiled_marshal_ss.cpp:
+        * TAO_IDL/be/be_visitor_argument/marshal_ss.cpp:
+        * TAO_IDL/be/be_visitor_argument/post_upcall_ss.cpp:
+        * TAO_IDL/be/be_visitor_argument/vardecl_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/argument.cpp:
+        * TAO_IDL/be/be_visitor_operation/argument_marshal.cpp:
+        * TAO_IDL/be/be_visitor_operation/compiled_marshal.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/rettype_post_docall_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/rettype_post_upcall_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/rettype_vardecl_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/rettype_vardecl_ss.cpp:
+        * TAO_IDL/be_include/be_visitor_argument.h:
+        * TAO_IDL/be_include/be_visitor_argument/post_upcall_ss.h:
+        * TAO_IDL/be_include/be_visitor_operation/rettype_post_docall_cs.h:
+        * TAO_IDL/be_include/be_visitor_operation/rettype_post_upcall_ss.h:
+          Fixed warnings in generated code if the arguments of an
+          operation where arrays.  The changes have been tested for both
+          fixed sized and variable sized arrays in Param_Test.
+          This should also fix the compilation problem on HP-UX and other
+          platforms.
 
 Sat May 15 11:38:59 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* TAO_IDL/fe/lex.yy.cpp (TAO_YY_BREAK): Reapplied my old change
-	  that handles not-reached break statement.  How did it get lost?
+        * TAO_IDL/fe/lex.yy.cpp (TAO_YY_BREAK): Reapplied my old change
+          that handles not-reached break statement.  How did it get lost?
 
 Sat May 15 10:22:52 EDT 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
-	* TAO_IDL/be/be_array.cpp:
-	  TAO_IDL/be_include/be_array.h:
-	  TAO_IDL/be/be_enum.cpp:
-	  TAO_IDL/be_include/be_enum.h:
-	  TAO_IDL/be/be_enum_val.cpp:
-	  TAO_IDL/be_include/be_enum_val.h:
-	  TAO_IDL/be/be_exception.cpp:
-	  TAO_IDL/be_include/be_exception.h:
-	  TAO_IDL/be/be_field.cpp:
-	  TAO_IDL/be_include/be_field.h:
-	  TAO_IDL/be/be_interface.cpp:
-	  TAO_IDL/be_include/be_interface.h:
-	  TAO_IDL/be/be_interface_fwd.cpp:
-	  TAO_IDL/be_include/be_interface_fwd.h:
-	  TAO_IDL/be/be_predefined_type.cpp:
-	  TAO_IDL/be_include/be_predefined_type.h:
-	  TAO_IDL/be/be_scope.cpp:
-	  TAO_IDL/be_include/be_scope.h:
-	  TAO_IDL/be/be_sequence.cpp:
-	  TAO_IDL/be_include/be_sequence.h:
-	  TAO_IDL/be/be_string.cpp:
-	  TAO_IDL/be_include/be_string.h:
-	  TAO_IDL/be/be_structure.cpp:
-	  TAO_IDL/be_include/be_structure.h:
-	  TAO_IDL/be/be_typedef.cpp:
-	  TAO_IDL/be_include/be_typedef.h:
-	  TAO_IDL/be/be_union.cpp:
-	  TAO_IDL/be_include/be_union.h:
-	  TAO_IDL/be/be_union_branch.cpp:
-	  TAO_IDL/be_include/be_union_branch.h:
+        * TAO_IDL/be/be_array.cpp:
+          TAO_IDL/be_include/be_array.h:
+          TAO_IDL/be/be_enum.cpp:
+          TAO_IDL/be_include/be_enum.h:
+          TAO_IDL/be/be_enum_val.cpp:
+          TAO_IDL/be_include/be_enum_val.h:
+          TAO_IDL/be/be_exception.cpp:
+          TAO_IDL/be_include/be_exception.h:
+          TAO_IDL/be/be_field.cpp:
+          TAO_IDL/be_include/be_field.h:
+          TAO_IDL/be/be_interface.cpp:
+          TAO_IDL/be_include/be_interface.h:
+          TAO_IDL/be/be_interface_fwd.cpp:
+          TAO_IDL/be_include/be_interface_fwd.h:
+          TAO_IDL/be/be_predefined_type.cpp:
+          TAO_IDL/be_include/be_predefined_type.h:
+          TAO_IDL/be/be_scope.cpp:
+          TAO_IDL/be_include/be_scope.h:
+          TAO_IDL/be/be_sequence.cpp:
+          TAO_IDL/be_include/be_sequence.h:
+          TAO_IDL/be/be_string.cpp:
+          TAO_IDL/be_include/be_string.h:
+          TAO_IDL/be/be_structure.cpp:
+          TAO_IDL/be_include/be_structure.h:
+          TAO_IDL/be/be_typedef.cpp:
+          TAO_IDL/be_include/be_typedef.h:
+          TAO_IDL/be/be_union.cpp:
+          TAO_IDL/be_include/be_union.h:
+          TAO_IDL/be/be_union_branch.cpp:
+          TAO_IDL/be_include/be_union_branch.h:
 
           Removed the gen_encapsulation, gen_typecode, tc_size, and
-	  tc_encap_len methods. All this has been moved to the typecode
-	  visitor (be_visitor_typecode_defn).
+          tc_encap_len methods. All this has been moved to the typecode
+          visitor (be_visitor_typecode_defn).
 
-	* TAO_IDL/be/be_decl.cpp:
-	  TAO_IDL/be_include/be_decl.h:
+        * TAO_IDL/be/be_decl.cpp:
+          TAO_IDL/be_include/be_decl.h:
 
-	  Removed the data members encap_len_, and the methods
-	  gen_encapsulation, gen_typecode, tc_encap_len, tc_size,
-	  tc_name2long, repoID_encap_len, and name_encap_len. All this has
-	  been moved to the be_visitor_typecode_defn visitor.
+          Removed the data members encap_len_, and the methods
+          gen_encapsulation, gen_typecode, tc_encap_len, tc_size,
+          tc_name2long, repoID_encap_len, and name_encap_len. All this has
+          been moved to the be_visitor_typecode_defn visitor.
 
-	* TAO_IDL/be/be_helper.cpp:
-	  TAO_IDL/be_include/be_helper.h:
+        * TAO_IDL/be/be_helper.cpp:
+          TAO_IDL/be_include/be_helper.h:
 
-	  Added more operator<< for various ACE_CDR types.
+          Added more operator<< for various ACE_CDR types.
 
-	* TAO_IDL/be/be_sequence.cpp:
-	  TAO_IDL/be_include/be_sequence.h:
-	  TAO_IDL/be/be_structure.cpp:
-	  TAO_IDL/be_include/be_structure.h:
-	  TAO_IDL/be/be_type.cpp:
-	  TAO_IDL/be_include/be_type.h:
-	  TAO_IDL/be/be_union.cpp:
-	  TAO_IDL/be_include/be_union.h:
+        * TAO_IDL/be/be_sequence.cpp:
+          TAO_IDL/be_include/be_sequence.h:
+          TAO_IDL/be/be_structure.cpp:
+          TAO_IDL/be_include/be_structure.h:
+          TAO_IDL/be/be_type.cpp:
+          TAO_IDL/be_include/be_type.h:
+          TAO_IDL/be/be_union.cpp:
+          TAO_IDL/be_include/be_union.h:
 
-	  Added a method (in_recursion) that returns a boolean result that
-	  indicates whether the sequence's element type is involved in a
-	  direct or indirect recursion. An example of such a scenario is:
+          Added a method (in_recursion) that returns a boolean result that
+          indicates whether the sequence's element type is involved in a
+          direct or indirect recursion. An example of such a scenario is:
 
-	  struct foo
-	  {
-	     // other fields
-	     sequence <foo> bar;
-	  };
+          struct foo
+          {
+             // other fields
+             sequence <foo> bar;
+          };
 
-	  The be_type's in_recursion method always returns 0 because all
-	  other subclasses of be_type except be_sequence, be_structure,
-	  and be_union will never be involved in the limited recursion
-	  allowed by the CORBA spec.
+          The be_type's in_recursion method always returns 0 because all
+          other subclasses of be_type except be_sequence, be_structure,
+          and be_union will never be involved in the limited recursion
+          allowed by the CORBA spec.
 
-	* TAO_IDL/be/be_visitor_typecode.cpp:
+        * TAO_IDL/be/be_visitor_typecode.cpp:
 
-	  Added explicit template instantiations for templates used in the
-	  typecode_defn.cpp file. See below.
+          Added explicit template instantiations for templates used in the
+          typecode_defn.cpp file. See below.
 
-	* TAO_IDL/be/be_visitor_argument_post_docall_cs.cpp:
+        * TAO_IDL/be/be_visitor_argument_post_docall_cs.cpp:
 
-	  In the visit interface method, we were not handling the out
-	  type. Now we correctly narrow the type and release the base type.
+          In the visit interface method, we were not handling the out
+          type. Now we correctly narrow the type and release the base type.
 
-	* TAO_IDL/be/be_visitor_array/cdr_op_cs.cpp:
-	  TAO_IDL/be/be_visitor_attribute/attribute.cpp:
-	  TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_array/cdr_op_cs.cpp:
+          TAO_IDL/be/be_visitor_attribute/attribute.cpp:
+          TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
 
-	  Added default cases to switch statements to eliminate warnings
-	  produced by EGCS about enums not handled.
+          Added default cases to switch statements to eliminate warnings
+          produced by EGCS about enums not handled.
 
-	* TAO_IDL/be_include/be_codegen.h:
+        * TAO_IDL/be_include/be_codegen.h:
 
-	  Added new substate enumerations for use in typecode generation.
+          Added new substate enumerations for use in typecode generation.
 
-	* TAO_IDL/be/be_valuetype.cpp:
-	  TAO_IDL/be_include/be_valuetype.h:
+        * TAO_IDL/be/be_valuetype.cpp:
+          TAO_IDL/be_include/be_valuetype.h:
 
-	  Commented out the typecode related methods. These need to be
-	  added later to the typecode visitor. This is still TO-DO.
+          Commented out the typecode related methods. These need to be
+          added later to the typecode visitor. This is still TO-DO.
 
-	* TAO_IDL/be/be_visitor_enum/enum_cs.cpp:
-	  TAO_IDL/be/be_visitor_enum/exception_cs.cpp:
-	  TAO_IDL/be/be_visitor_enum/interface_cs.cpp:
-	  TAO_IDL/be/be_visitor_enum/structure_cs.cpp:
-	  TAO_IDL/be/be_visitor_enum/typedef_cs.cpp:
-	  TAO_IDL/be/be_visitor_enum/union_cs.cpp:
+        * TAO_IDL/be/be_visitor_enum/enum_cs.cpp:
+          TAO_IDL/be/be_visitor_enum/exception_cs.cpp:
+          TAO_IDL/be/be_visitor_enum/interface_cs.cpp:
+          TAO_IDL/be/be_visitor_enum/structure_cs.cpp:
+          TAO_IDL/be/be_visitor_enum/typedef_cs.cpp:
+          TAO_IDL/be/be_visitor_enum/union_cs.cpp:
 
-	  Added a step where we set the context substate to typecode
-	  generation. This way we can then generate the top-level typecode
-	  encapsulation for the type we are dealing with. Nested typecodes
-	  are then generated by the visitor itself by setting the
-	  appropriate substate.
+          Added a step where we set the context substate to typecode
+          generation. This way we can then generate the top-level typecode
+          encapsulation for the type we are dealing with. Nested typecodes
+          are then generated by the visitor itself by setting the
+          appropriate substate.
 
-	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
 
-	  Rearranged the invocation of the POST_INVOKE_CS
-	  visitor. Otherwise some code was getting duplicated.
-	  This was also necessary because for interpreted marshaling, we
-	  had to do some cleaning up of local variables. However, this was
-	  not required for the compiled marshaling stubs.
+          Rearranged the invocation of the POST_INVOKE_CS
+          visitor. Otherwise some code was getting duplicated.
+          This was also necessary because for interpreted marshaling, we
+          had to do some cleaning up of local variables. However, this was
+          not required for the compiled marshaling stubs.
 
-	* TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
-	  TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+          TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
 
-	  Commented out the code that generates typecodes for anonymous
-	  sequences. Once we are sure that nothing breaks, we will remove
-	  this code.
+          Commented out the code that generates typecodes for anonymous
+          sequences. Once we are sure that nothing breaks, we will remove
+          this code.
 
-	* TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
-	  TAO_IDL/be_include/be_visitor_typecode/typecode_defn.h:
+        * TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+          TAO_IDL/be_include/be_visitor_typecode/typecode_defn.h:
 
-	  All the typecode generation is now handled by this visitor
-	  rather than individual files such as be_array.cpp, and
-	  others. Added all the methods for typecode generation such as
-	  gen_typecode, gen_encapsulation, tc_size, tc_encap_len,
-	  repoID_encap_len, name_ID_len, and name2long. Also added data
-	  members to track the computed sizes. We were required to add all
-	  the visit_* methods to deal with all the types.
+          All the typecode generation is now handled by this visitor
+          rather than individual files such as be_array.cpp, and
+          others. Added all the methods for typecode generation such as
+          gen_typecode, gen_encapsulation, tc_size, tc_encap_len,
+          repoID_encap_len, name_ID_len, and name2long. Also added data
+          members to track the computed sizes. We were required to add all
+          the visit_* methods to deal with all the types.
 
-	  The most prominent addition to this visitor is the capability to
-	  generate typecodes for recursive types and the ability to
-	  generate optimized typecodes. Optimized typecodes use sharing of
-	  typecodes for repeated types. This is achieved via
-	  indirections. We do not optimize for typecodes of primitive
-	  types.
+          The most prominent addition to this visitor is the capability to
+          generate typecodes for recursive types and the ability to
+          generate optimized typecodes. Optimized typecodes use sharing of
+          typecodes for repeated types. This is achieved via
+          indirections. We do not optimize for typecodes of primitive
+          types.
 
-	* TAO_IDL/be/be_visitor_union_branch/public_access.cpp
-	(visit_interface):
+        * TAO_IDL/be/be_visitor_union_branch/public_access.cpp
+        (visit_interface):
 
-	  The access method for object references was incorrect. We have
-	  now come up we a new way of returning the value from the acces
-	  method. In particular, instead of casting the value to
-	  CORBA::Object_ptr and then to void *, we simply return a pointer
-	  to TAO_Object_Field_T<TYPE>. In the decode and encode methods of
-	  the marshaling engine (see ChangeLog entry below), we invoke the
-	  appropriate upcast method to give us the right CORBA::Object_ptr
-	  value. This fix has now led to successful working of the
-	  Param_Test test for obj references that use interpretive
-	  marshaling.
+          The access method for object references was incorrect. We have
+          now come up we a new way of returning the value from the acces
+          method. In particular, instead of casting the value to
+          CORBA::Object_ptr and then to void *, we simply return a pointer
+          to TAO_Object_Field_T<TYPE>. In the decode and encode methods of
+          the marshaling engine (see ChangeLog entry below), we invoke the
+          appropriate upcast method to give us the right CORBA::Object_ptr
+          value. This fix has now led to successful working of the
+          Param_Test test for obj references that use interpretive
+          marshaling.
 
-	* TAO_IDL/driver/drv_args.cpp:
+        * TAO_IDL/driver/drv_args.cpp:
 
-	  Enabled optimized typecode handling. Also, we were checking for
-	  -Go option instead of -Gt option. This is now fixed.
+          Enabled optimized typecode handling. Also, we were checking for
+          -Go option instead of -Gt option. This is now fixed.
 
-	* tao/CDR_Interpreter.cpp:
+        * tao/CDR_Interpreter.cpp:
 
-	  Handled indirected streams properly so that it will allow us to
-	  cross encapsulation boundaries. Previously, it wouldn't allow us
-	  to do so.
+          Handled indirected streams properly so that it will allow us to
+          cross encapsulation boundaries. Previously, it wouldn't allow us
+          to do so.
 
-	* tao/Typecode.h:
-	  tao/Typecode.cpp:
+        * tao/Typecode.h:
+          tao/Typecode.cpp:
 
-	  Added two data members called tc_base_ and root_tc_base_. The
-	  tc_base_ points to our tk_kind field in the CDR
-	  representation. The root_tc_base_ is for children typecodes
-	  (i.e., nested typecodes who have parents) and it points to the
-	  tk_kind field of the topmost level typecode.
+          Added two data members called tc_base_ and root_tc_base_. The
+          tc_base_ points to our tk_kind field in the CDR
+          representation. The root_tc_base_ is for children typecodes
+          (i.e., nested typecodes who have parents) and it points to the
+          tk_kind field of the topmost level typecode.
 
-	  Also note that in the CTOR for complex typecodes, we now
-	  allocate 8 bytes in addition to the length parameter. The first
-	  two words occupy the top-level typecode's tk_kind value and the
-	  encapsulation length. The buffer_ member still points to the
-	  encapsulation so that no other change in the entire file is
-	  required. The reason why we had to have these extra 8 bytes at
-	  the start is to handle the recursive typecodes. For example
+          Also note that in the CTOR for complex typecodes, we now
+          allocate 8 bytes in addition to the length parameter. The first
+          two words occupy the top-level typecode's tk_kind value and the
+          encapsulation length. The buffer_ member still points to the
+          encapsulation so that no other change in the entire file is
+          required. The reason why we had to have these extra 8 bytes at
+          the start is to handle the recursive typecodes. For example
 
-	  struct foo
-	  {
-	      // fields
-	      sequence <foo> bar;
-	  };
+          struct foo
+          {
+              // fields
+              sequence <foo> bar;
+          };
 
-	  The encaspulation for the above will generate an indirection
-	  whose offset will point to the tk_kind field of "foo". However,
-	  prior to the change described here, we only maintained the CDR
-	  representation of the encapsulation. So the offset would have
-	  pointed to 8 bytes before the encapsulation which really diod
-	  not exist. We would have required unnecessary code to handle
-	  such a case. So the best way was to maintain the entire typecode
-	  representation.
+          The encaspulation for the above will generate an indirection
+          whose offset will point to the tk_kind field of "foo". However,
+          prior to the change described here, we only maintained the CDR
+          representation of the encapsulation. So the offset would have
+          pointed to 8 bytes before the encapsulation which really diod
+          not exist. We would have required unnecessary code to handle
+          such a case. So the best way was to maintain the entire typecode
+          representation.
 
-	* tao/decode.cpp:
-	  tao/encode.cpp:
+        * tao/decode.cpp:
+          tao/encode.cpp:
 
-	  Indirected streams are now constructed properly such that we can
-	  cross encapsulation boundaries. We were not required to make any
-	  changes to the CTORs of ACE_InputCDR.
+          Indirected streams are now constructed properly such that we can
+          cross encapsulation boundaries. We were not required to make any
+          changes to the CTORs of ACE_InputCDR.
 
-	  We also properly handle the object reference fields of
-	  unions. The access method gives us a TAO_Object_Field_T<>
-	  pointer and then we invoke the _upcast method to give us the
-	  CORBA::Object_ptr.
+          We also properly handle the object reference fields of
+          unions. The access method gives us a TAO_Object_Field_T<>
+          pointer and then we invoke the _upcast method to give us the
+          CORBA::Object_ptr.
 
-	* tests/Param_Test/param_test.idl:
-	  tests/Param_Test/big_union.cpp:
+        * tests/Param_Test/param_test.idl:
+          tests/Param_Test/big_union.cpp:
 
-	  cosmetic changes.
+          cosmetic changes.
 
-	TO-DO
+        TO-DO
 
-	  for anonymous sequences whose element type gives rise to a
-	  recursion, we must generate the <<, >> compiled marshaling
-	  operators in the *.cpp file else we get a circular dependency.
+          for anonymous sequences whose element type gives rise to a
+          recursion, we must generate the <<, >> compiled marshaling
+          operators in the *.cpp file else we get a circular dependency.
 
 Fri May 14 23:55:47 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/Request.{h,i,cpp}:
-	  Added Context_ptr member ctx_ to class CORBA_Request, along
-	  with accessor and mutator methods. Although Contexts are not
-	  implmented by TAO, these methods do not throw
-	  CORBA::NO_IMPLEMENT. Since I didn't see any functions in
-	  CORBA_Request using environment variables, I kept to that
-	  scheme and therefore could not use ACE_THROW or related
-	  macros. The accessor simply returns the member (which is
-	  set to 0 in all constructors) and the mutator does nothing
-	  but throw away its arg. For the record, these were actually
-	  checked in a few days ago, but I neglected to make a
-	  ChangeLog entry at the time.
+        * tao/Request.{h,i,cpp}:
+          Added Context_ptr member ctx_ to class CORBA_Request, along
+          with accessor and mutator methods. Although Contexts are not
+          implmented by TAO, these methods do not throw
+          CORBA::NO_IMPLEMENT. Since I didn't see any functions in
+          CORBA_Request using environment variables, I kept to that
+          scheme and therefore could not use ACE_THROW or related
+          macros. The accessor simply returns the member (which is
+          set to 0 in all constructors) and the mutator does nothing
+          but throw away its arg. For the record, these were actually
+          checked in a few days ago, but I neglected to make a
+          ChangeLog entry at the time.
 
 Fri May 14 20:27:59 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
-	* orbsvcs/examples/CosEC/Factory/CosEventChannelFactory_i.{h,cpp}:
-	* orbsvcs/examples/CosEC/Factory/FactoryCosEventChannel_i.{h,cpp}:
- 	* orbsvcs/examples/CosEC/Factory/FactoryClient.cpp:
-	* orbsvcs/examples/CosEC/Factory/main.cpp:
-	  code review changes and compile error fixes.
+        * orbsvcs/examples/CosEC/Factory/CosEventChannelFactory_i.{h,cpp}:
+        * orbsvcs/examples/CosEC/Factory/FactoryCosEventChannel_i.{h,cpp}:
+        * orbsvcs/examples/CosEC/Factory/FactoryClient.cpp:
+        * orbsvcs/examples/CosEC/Factory/main.cpp:
+          code review changes and compile error fixes.
 
 Fri May 14 17:00:43 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tao/IIOP_Transport.cpp (send),
-	  tao/UIOP_Transport.cpp (send): Removed the local const for
-	  TAO_WRITEV_MAX and replaced it with the new
-	  ACE_DEFAULT_WRITEV_MAX.
+        * tao/IIOP_Transport.cpp (send),
+          tao/UIOP_Transport.cpp (send): Removed the local const for
+          TAO_WRITEV_MAX and replaced it with the new
+          ACE_DEFAULT_WRITEV_MAX.
 
 Fri May 14 17:14:12 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Event/EC_Priority_Dispatching.cpp:
-	  Removed bogus ACE_INLINE, left over when moved from .i file.
+        * orbsvcs/orbsvcs/Event/EC_Priority_Dispatching.cpp:
+          Removed bogus ACE_INLINE, left over when moved from .i file.
 
 Fri May 14 16:15:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
         * orbsvcs\orbsvcs\Sched\Reconfig_Scheduler.{cpp, h}: more on a
-	  very rough draft of the initial implementation.
+          very rough draft of the initial implementation.
 
 Fri May 14 15:25:18 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/orbsvcs.dsp:
-	* orbsvcs/orbsvcs/orbsvcs_static.dsp: Added new files in the EC
- 	  implementation
+        * orbsvcs/orbsvcs/orbsvcs.dsp:
+        * orbsvcs/orbsvcs/orbsvcs_static.dsp: Added new files in the EC
+          implementation
 
-	* orbsvcs/tests/Event/Event.dsw:
-	* orbsvcs/tests/Event/Basic/Basic.dsw:
-	* orbsvcs/tests/Event/Basic/Schedule.dsp: Added new project for
- 	  the Schedule test.
+        * orbsvcs/tests/Event/Event.dsw:
+        * orbsvcs/tests/Event/Basic/Basic.dsw:
+        * orbsvcs/tests/Event/Basic/Schedule.dsp: Added new project for
+          the Schedule test.
 
-	* orbsvcs/orbsvcs/Event/EC_Sched_Filter_Builder.cpp: Fixed type
- 	  conversions problem.
+        * orbsvcs/orbsvcs/Event/EC_Sched_Filter_Builder.cpp: Fixed type
+          conversions problem.
 
 Fri May 14 15:06:47 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* docs/releasenotes/OBV.html: Added releases notes contributed by
- 	  Torsten Kuepper.
+        * docs/releasenotes/OBV.html: Added releases notes contributed by
+          Torsten Kuepper.
 
 Fri May 14 12:34:27 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/DomainC.i:
-	* tao/DomainC.cpp: Moved CORBA_DomainManager::_nil () from
- 	  DomainC.i to DomainC.cpp file.
+        * tao/DomainC.i:
+        * tao/DomainC.cpp: Moved CORBA_DomainManager::_nil () from
+          DomainC.i to DomainC.cpp file.
 
-	* tao/Request.i:
-	* tao/Request.cpp: Moved two methods CORBA::release () and
- 	  CORBA_Request::_nil () from the Request.i to Request.cpp. This
- 	  would help us to avoid annoying warnings with Sun_g++ which was
- 	  complaining about these two methods being inline as they were
- 	  used before they were declared so. This seems to be a easier way
- 	  to get around this.
+        * tao/Request.i:
+        * tao/Request.cpp: Moved two methods CORBA::release () and
+          CORBA_Request::_nil () from the Request.i to Request.cpp. This
+          would help us to avoid annoying warnings with Sun_g++ which was
+          complaining about these two methods being inline as they were
+          used before they were declared so. This seems to be a easier way
+          to get around this.
 
 Fri May 14 12:20:38 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/ValueBase.h:
-	* tao/ValueBase.i:
-	* tao/ValueBase.cpp: Added new patches from Torsten Kuepper, this
- 	  should eliminate the warnings about enums.
+        * tao/ValueBase.h:
+        * tao/ValueBase.i:
+        * tao/ValueBase.cpp: Added new patches from Torsten Kuepper, this
+          should eliminate the warnings about enums.
 
-	* */Makefile: Updated all the dependencies
+        * */Makefile: Updated all the dependencies
 
 Fri May 14 09:30:14 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* Integrated scheduling back into the EC, this is still
- 	  experimental.
+        * Integrated scheduling back into the EC, this is still
+          experimental.
 
-	* orbsvcs/orbsvcs/Event/EC_Scheduling_Strategy.h:
-	* orbsvcs/orbsvcs/Event/EC_Scheduling_Strategy.i:
-	* orbsvcs/orbsvcs/Event/EC_Scheduling_Strategy.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Null_Scheduling.h:
-	* orbsvcs/orbsvcs/Event/EC_Null_Scheduling.i:
-	* orbsvcs/orbsvcs/Event/EC_Null_Scheduling.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Priority_Scheduling.h:
-	* orbsvcs/orbsvcs/Event/EC_Priority_Scheduling.i:
-	* orbsvcs/orbsvcs/Event/EC_Priority_Scheduling.cpp: The scheduling
- 	  strategy parametrize the aspects of the EC that relate to the
- 	  Scheduler.  When using the Null_Scheduling the EC does not
- 	  update dependencies in the Scheduler, making that a suitable
- 	  choice for run-time execution (once the dependencies have been
- 	  computed in configuration runs) and for systems that do not
- 	  require scheduling.  The Priority_Scheduling strategy does
- 	  update the dependencies in the scheduler.  Notice that many
- 	  real-time properties of the EC do *not* depend on this, for
- 	  example, locks are bounded to minimize priority inversion in any
- 	  case.  Thus application that require real-time behavior but no
- 	  scheduling can use the EC too.
+        * orbsvcs/orbsvcs/Event/EC_Scheduling_Strategy.h:
+        * orbsvcs/orbsvcs/Event/EC_Scheduling_Strategy.i:
+        * orbsvcs/orbsvcs/Event/EC_Scheduling_Strategy.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Null_Scheduling.h:
+        * orbsvcs/orbsvcs/Event/EC_Null_Scheduling.i:
+        * orbsvcs/orbsvcs/Event/EC_Null_Scheduling.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Priority_Scheduling.h:
+        * orbsvcs/orbsvcs/Event/EC_Priority_Scheduling.i:
+        * orbsvcs/orbsvcs/Event/EC_Priority_Scheduling.cpp: The scheduling
+          strategy parametrize the aspects of the EC that relate to the
+          Scheduler.  When using the Null_Scheduling the EC does not
+          update dependencies in the Scheduler, making that a suitable
+          choice for run-time execution (once the dependencies have been
+          computed in configuration runs) and for systems that do not
+          require scheduling.  The Priority_Scheduling strategy does
+          update the dependencies in the scheduler.  Notice that many
+          real-time properties of the EC do *not* depend on this, for
+          example, locks are bounded to minimize priority inversion in any
+          case.  Thus application that require real-time behavior but no
+          scheduling can use the EC too.
 
-	* orbsvcs/orbsvcs/Event/EC_QOS_Info.h:
-	* orbsvcs/orbsvcs/Event/EC_QOS_Info.i: Add fields to carry RT_Info
- 	  and Preemption priority information.
+        * orbsvcs/orbsvcs/Event/EC_QOS_Info.h:
+        * orbsvcs/orbsvcs/Event/EC_QOS_Info.i: Add fields to carry RT_Info
+          and Preemption priority information.
 
-	* orbsvcs/orbsvcs/Event/EC_Per_Supplier_Filter.cpp: Use the
- 	  scheduling strategy to update the dependencies.
+        * orbsvcs/orbsvcs/Event/EC_Per_Supplier_Filter.cpp: Use the
+          scheduling strategy to update the dependencies.
 
-	* orbsvcs/orbsvcs/Event/EC_Factory.h:
-	* orbsvcs/orbsvcs/Event/EC_Basic_Factory.h:
-	* orbsvcs/orbsvcs/Event/EC_Basic_Factory.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Default_Factory.h:
-	* orbsvcs/orbsvcs/Event/EC_Default_Factory.i:
-	* orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Null_Factory.h:
-	* orbsvcs/orbsvcs/Event/EC_Null_Factory.cpp: Added new methods to
- 	  the factory to obtain the scheduling strategy.
+        * orbsvcs/orbsvcs/Event/EC_Factory.h:
+        * orbsvcs/orbsvcs/Event/EC_Basic_Factory.h:
+        * orbsvcs/orbsvcs/Event/EC_Basic_Factory.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Default_Factory.h:
+        * orbsvcs/orbsvcs/Event/EC_Default_Factory.i:
+        * orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Null_Factory.h:
+        * orbsvcs/orbsvcs/Event/EC_Null_Factory.cpp: Added new methods to
+          the factory to obtain the scheduling strategy.
 
-	* orbsvcs/orbsvcs/Event/EC_Event_Channel.h:
-	* orbsvcs/orbsvcs/Event/EC_Event_Channel.i:
-	* orbsvcs/orbsvcs/Event/EC_Event_Channel.cpp: The event channel
- 	  receives an scheduler and an scheduling strategy from the
- 	  attributes and the factory respectively.  The scheduler may be a
- 	  nil object reference in it is not used.
+        * orbsvcs/orbsvcs/Event/EC_Event_Channel.h:
+        * orbsvcs/orbsvcs/Event/EC_Event_Channel.i:
+        * orbsvcs/orbsvcs/Event/EC_Event_Channel.cpp: The event channel
+          receives an scheduler and an scheduling strategy from the
+          attributes and the factory respectively.  The scheduler may be a
+          nil object reference in it is not used.
 
-	* orbsvcs/orbsvcs/Event/EC_Filter.h:
-	* orbsvcs/orbsvcs/Event/EC_Filter.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Filter_Builder.h:
-	* orbsvcs/orbsvcs/Event/EC_Filter_Builder.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Basic_Filter_Builder.h:
-	* orbsvcs/orbsvcs/Event/EC_Basic_Filter_Builder.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Conjunction_Filter.h:
-	* orbsvcs/orbsvcs/Event/EC_Conjunction_Filter.i:
-	* orbsvcs/orbsvcs/Event/EC_Conjunction_Filter.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Disjunction_Filter.h:
-	* orbsvcs/orbsvcs/Event/EC_Disjunction_Filter.i:
-	* orbsvcs/orbsvcs/Event/EC_Disjunction_Filter.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Timeout_Filter.h:
-	* orbsvcs/orbsvcs/Event/EC_Timeout_Filter.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Type_Filter.h:
-	* orbsvcs/orbsvcs/Event/EC_Type_Filter.cpp: In some cases the
- 	  Filter_Builder may need to make CORBA calls and thus requires an
- 	  CORBA::Environment.  Added new operation to add dependencies
- 	  between leaves of the filter tree and RT_Infos.  This operation
- 	  is a noop if no scheduling is enabled, and in fact it is not
- 	  even invoked.
+        * orbsvcs/orbsvcs/Event/EC_Filter.h:
+        * orbsvcs/orbsvcs/Event/EC_Filter.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Filter_Builder.h:
+        * orbsvcs/orbsvcs/Event/EC_Filter_Builder.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Basic_Filter_Builder.h:
+        * orbsvcs/orbsvcs/Event/EC_Basic_Filter_Builder.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Conjunction_Filter.h:
+        * orbsvcs/orbsvcs/Event/EC_Conjunction_Filter.i:
+        * orbsvcs/orbsvcs/Event/EC_Conjunction_Filter.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Disjunction_Filter.h:
+        * orbsvcs/orbsvcs/Event/EC_Disjunction_Filter.i:
+        * orbsvcs/orbsvcs/Event/EC_Disjunction_Filter.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Timeout_Filter.h:
+        * orbsvcs/orbsvcs/Event/EC_Timeout_Filter.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Type_Filter.h:
+        * orbsvcs/orbsvcs/Event/EC_Type_Filter.cpp: In some cases the
+          Filter_Builder may need to make CORBA calls and thus requires an
+          CORBA::Environment.  Added new operation to add dependencies
+          between leaves of the filter tree and RT_Infos.  This operation
+          is a noop if no scheduling is enabled, and in fact it is not
+          even invoked.
 
-	* orbsvcs/orbsvcs/Event/EC_Sched_Filter.h:
-	* orbsvcs/orbsvcs/Event/EC_Sched_Filter.i:
-	* orbsvcs/orbsvcs/Event/EC_Sched_Filter.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Sched_Filter_Builder.h:
-	* orbsvcs/orbsvcs/Event/EC_Sched_Filter_Builder.i:
-	* orbsvcs/orbsvcs/Event/EC_Sched_Filter_Builder.cpp: Added new
- 	  type of filter, it decorates a regular filter to inform the
- 	  scheduling service of the dependencies between the filter
- 	  elements and finally between suppliers and consumers.
+        * orbsvcs/orbsvcs/Event/EC_Sched_Filter.h:
+        * orbsvcs/orbsvcs/Event/EC_Sched_Filter.i:
+        * orbsvcs/orbsvcs/Event/EC_Sched_Filter.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Sched_Filter_Builder.h:
+        * orbsvcs/orbsvcs/Event/EC_Sched_Filter_Builder.i:
+        * orbsvcs/orbsvcs/Event/EC_Sched_Filter_Builder.cpp: Added new
+          type of filter, it decorates a regular filter to inform the
+          scheduling service of the dependencies between the filter
+          elements and finally between suppliers and consumers.
 
-	* orbsvcs/orbsvcs/Event/EC_Dispatching_Task.h:
-	* orbsvcs/orbsvcs/Event/EC_Dispatching_Task.i:
-	* orbsvcs/orbsvcs/Event/EC_Dispatching_Task.cpp: Allocates the
- 	  message blocks from a per-queue thread, also use a per-thread
- 	  data block to minimize memory allocations.
+        * orbsvcs/orbsvcs/Event/EC_Dispatching_Task.h:
+        * orbsvcs/orbsvcs/Event/EC_Dispatching_Task.i:
+        * orbsvcs/orbsvcs/Event/EC_Dispatching_Task.cpp: Allocates the
+          message blocks from a per-queue thread, also use a per-thread
+          data block to minimize memory allocations.
 
-	* orbsvcs/orbsvcs/Event/EC_Priority_Dispatching.h:
-	* orbsvcs/orbsvcs/Event/EC_Priority_Dispatching.i:
-	* orbsvcs/orbsvcs/Event/EC_Priority_Dispatching.cpp: Use the
- 	  TAO_EC_QOS_Info and the scheduling service to determine on which
- 	  queue we should dispatch the event.
+        * orbsvcs/orbsvcs/Event/EC_Priority_Dispatching.h:
+        * orbsvcs/orbsvcs/Event/EC_Priority_Dispatching.i:
+        * orbsvcs/orbsvcs/Event/EC_Priority_Dispatching.cpp: Use the
+          TAO_EC_QOS_Info and the scheduling service to determine on which
+          queue we should dispatch the event.
 
-	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.h:
-	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp: Update the filtering
- 	  aspects of this class.
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.h:
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp: Update the filtering
+          aspects of this class.
 
-	* orbsvcs/tests/Event/Basic/Makefile:
-	* orbsvcs/tests/Event/Basic/Schedule.h:
-	* orbsvcs/tests/Event/Basic/Schedule.cpp:
-	* orbsvcs/tests/Event/Basic/sched.conf:
-	* orbsvcs/tests/Event/Basic/Reconnect.cpp:
-	* orbsvcs/tests/Event/lib/Driver.h:
-	* orbsvcs/tests/Event/lib/Driver.cpp: Added new test that creates
- 	  an scheduler and uses the scheduling strategies.
+        * orbsvcs/tests/Event/Basic/Makefile:
+        * orbsvcs/tests/Event/Basic/Schedule.h:
+        * orbsvcs/tests/Event/Basic/Schedule.cpp:
+        * orbsvcs/tests/Event/Basic/sched.conf:
+        * orbsvcs/tests/Event/Basic/Reconnect.cpp:
+        * orbsvcs/tests/Event/lib/Driver.h:
+        * orbsvcs/tests/Event/lib/Driver.cpp: Added new test that creates
+          an scheduler and uses the scheduling strategies.
 
-	* orbsvcs/orbsvcs/Event/EC_Trivial_Supplier_Filter.cpp: Loop over
- 	  consumers and then over events, not vice-versa. That improves
- 	  throughput by reducing the locking overhead.
+        * orbsvcs/orbsvcs/Event/EC_Trivial_Supplier_Filter.cpp: Loop over
+          consumers and then over events, not vice-versa. That improves
+          throughput by reducing the locking overhead.
 
-	* orbsvcs/orbsvcs/Makefile: Added the new files, updated
- 	  dependencies
+        * orbsvcs/orbsvcs/Makefile: Added the new files, updated
+          dependencies
 
-	* orbsvcs/Event_Service/Makefile: Added depedencies
+        * orbsvcs/Event_Service/Makefile: Added depedencies
 
 Fri May 14 07:18:31 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/tests/Concurrency/Makefile,lex.CC_command.cpp,
- 	  lex.CC_command.cpp.diff: hacked scanner a bit to remove
- 	  unreachable code warning with ace_yy_wrap() #defined to 1.
+          lex.CC_command.cpp.diff: hacked scanner a bit to remove
+          unreachable code warning with ace_yy_wrap() #defined to 1.
 
 Thu May 13 22:58:38 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
@@ -467,19 +471,19 @@ Thu May 13 22:58:38 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 Thu May 13 22:46:05 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * examples/OBV/Typed_Events/Event_Types_impl.h: added "class" to a
- 	  bunch of friend declarations.
+          bunch of friend declarations.
 
         * examples/OBV/Typed_Events/Makefile: updated dependencies.
 
 Thu May 13 19:33:27 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/examples/CosEC/Factory/Makefile: don't built if either
- 	  CosEvent or Naming weren't built.
+          CosEvent or Naming weren't built.
 
 Thu May 13 18:18:50 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * tao/DomainC.cpp: Added instantiation for
- 	  TAO_Object_Manager<CORBA_DomainManager>
+          TAO_Object_Manager<CORBA_DomainManager>
 
 Thu May 13 14:48:22 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
@@ -490,7 +494,7 @@ Thu May 13 11:44:02 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * tao/ORB.h:
         * tao/ORB.cpp: Fixed const violation in
- 	  resolve_initial_references()
+          resolve_initial_references()
 
 Thu May 13 09:55:52 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
@@ -505,45 +509,45 @@ Thu May 13 09:55:52 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
         * orbsvcs/examples/CosEC/Factory/FactoryCosEventChannel_i.cpp:
         * orbsvcs/examples/CosEC/Factory/FactoryCosEventChannel_i.h:
         * orbsvcs/examples/CosEC/Factory/FactoryDriver.h: Added several @@
- 	  comments in the new CosEC/Factory example.
+          comments in the new CosEC/Factory example.
 
 Thu May 13 00:42:38 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
         * tao/ORB.h (CORBA_ORB): Rewrote the comments for <perform_work>.
-  	  Previously, it was somewhat unclear what this function was
- 	  doing. Thanks to Trey Grubbs <t-grubbs1@raytheon.com> for
- 	  pointing this out.
+          Previously, it was somewhat unclear what this function was
+          doing. Thanks to Trey Grubbs <t-grubbs1@raytheon.com> for
+          pointing this out.
 
 Wed May 12 19:40:12 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
         * tao/Object.{h,cpp}: Changed the name of the second
- 	  create_request function to be identical to the name of the
- 	  first. The spec clearly indicates in some places that it is to
- 	  be called 'create_request2', but that's wrong.
+          create_request function to be identical to the name of the
+          first. The spec clearly indicates in some places that it is to
+          be called 'create_request2', but that's wrong.
 
 Wed May 12 19:22:28 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
         * tao/corba.h: Added some missing #includes which turned up in the
- 	  branding tests.
+          branding tests.
 
 Wed May 12 18:02:20 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
         * tao/Any.{h,i}: Added a non-copying version of <<= for Any into
- 	  Any, as required by the CORBA spec (see CORBA 2.3a, section
- 	  20.16.2, page 20-58).
+          Any, as required by the CORBA spec (see CORBA 2.3a, section
+          20.16.2, page 20-58).
 
 Wed May 12 16:26:14 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
         * tao/ORB.cpp (resolve_initial_references): Changed the const
- 	  CORBA::String to const char * as is expected by the test suite
- 	  and also by the CORBA v2.2 spec vide page 20-115, section
- 	  20-39-20.
+          CORBA::String to const char * as is expected by the test suite
+          and also by the CORBA v2.2 spec vide page 20-115, section
+          20-39-20.
 
 Wed May 12 16:04:39 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
         * tao/TAO.dsp:
         * tao/TAO_Static.dsp: Added Bala's new files (below) to the MSVC
- 	  projects.
+          projects.
 
 Wed May 12 15:46:57 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
@@ -558,13 +562,13 @@ Wed May 12 15:46:57 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
         * tao/Pluggable.h
         * tao/corbafwd.cpp (New file)
         * tao/corbafwd.i (New file) Added a new method
- 	  get_service_information in to ORB.h. This added a few circular
- 	  dependencies which was resolved by Carlos by adding new files
- 	  viz. corbafwd.cpp & corbafwd.i. Updated the Services.* files
- 	  with some new headers and removed the "tao/corba.h" file
- 	  inclusion from them as this would add a high dependency on these
- 	  files. Managed_Types.h included ORB.h for just a few operations
- 	  which has now been moved to corbafwd.i
+          get_service_information in to ORB.h. This added a few circular
+          dependencies which was resolved by Carlos by adding new files
+          viz. corbafwd.cpp & corbafwd.i. Updated the Services.* files
+          with some new headers and removed the "tao/corba.h" file
+          inclusion from them as this would add a high dependency on these
+          files. Managed_Types.h included ORB.h for just a few operations
+          which has now been moved to corbafwd.i
 
 Wed May 12 15:41:39 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
