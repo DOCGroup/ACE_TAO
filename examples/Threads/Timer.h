@@ -50,8 +50,6 @@ public:
       printTimerStats (message);
     }
 
-  unsigned long get_time () const { return getTime (); }
-
 private:
   // the following functions are not implemented . . .
   Timer (const Timer &);
@@ -73,7 +71,7 @@ public:
 		  const int /* iterations */ = 1,
                   ACE_HANDLE /* handle */ = ACE_STDOUT) {}
 
-  unsigned long get_time () const { return -1; }
+  void elapsed_microseconds (hrtime_t &usecs) const {}
 
 private:
   // the following functions are not implemented . . .

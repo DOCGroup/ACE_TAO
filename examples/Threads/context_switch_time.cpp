@@ -192,7 +192,7 @@ public:
 
   virtual int svc ();
 
-  unsigned long elapsed_time () const { return elapsed_time_; }
+  hrtime_t elapsed_time () const { return elapsed_time_; }
 private:
   const unsigned long iterations_;
 
@@ -200,7 +200,7 @@ private:
 
   Timer timer_;
 
-  unsigned long elapsed_time_;
+  hrtime_t elapsed_time_;
 
   // force proper construction of independent instances
   Suspend_Resume_Test ();
@@ -258,7 +258,7 @@ Suspend_Resume_Test::svc ()
     }
 
   timer_.stop ();
-  elapsed_time_ = timer_.get_time ();
+  timer_.elapsed_microseconds (elapsed_time_);
 
   low_.close ();
 
@@ -386,7 +386,7 @@ public:
 
   virtual int svc ();
 
-  unsigned long elapsed_time () const { return elapsed_time_; }
+  hrtime_t elapsed_time () const { return elapsed_time_; }
 private:
   const unsigned long iterations_;
 
@@ -394,7 +394,7 @@ private:
 
   Timer timer_;
 
-  unsigned long elapsed_time_;
+  hrtime_t elapsed_time_;
 
   // force proper construction of independent instances
   Ping_Suspend_Resume_Test ();
@@ -464,7 +464,7 @@ Ping_Suspend_Resume_Test::svc ()
     }
 
   timer_.stop ();
-  elapsed_time_ = timer_.get_time ();
+  timer_.elapsed_microseconds (elapsed_time_);
 
   high_.close ();
 #if DEBUG > 0
@@ -506,13 +506,13 @@ public:
 
   virtual int svc ();
 
-  unsigned long elapsed_time () const { return elapsed_time_; }
+  hrtime_t elapsed_time () const { return elapsed_time_; }
 private:
   const unsigned long iterations_;
 
   Timer timer_;
 
-  unsigned long elapsed_time_;
+  hrtime_t elapsed_time_;
 
   // force proper construction of independent instances
   Yield_Test ();
@@ -567,7 +567,7 @@ Yield_Test::svc ()
     }
 
   timer_.stop ();
-  elapsed_time_ = timer_.get_time ();
+  timer_.elapsed_microseconds (elapsed_time_);
 
 #if DEBUG > 0
   cout << "Yield_Test::svc, finishing" << endl;
