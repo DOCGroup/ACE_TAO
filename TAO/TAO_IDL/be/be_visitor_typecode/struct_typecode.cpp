@@ -38,7 +38,7 @@ TAO::be_visitor_struct_typecode::visit_structure (AST_Structure * node)
                                  + node->flat_name ());
 
   // Generate array containing struct field characteristics.
-  os << "static TAO::TypeCode::Field<char const *> const "
+  os << "static TAO::TypeCode::Struct_Field<char const *> const "
      << fields_name.c_str ()
      << "[] =" << be_idt_nl
      << "{" << be_idt_nl;
@@ -52,7 +52,7 @@ TAO::be_visitor_struct_typecode::visit_structure (AST_Structure * node)
   // Generate the TypeCode instantiation.
   os
     << "static TAO::TypeCode::Struct<char const *," << be_nl
-    << "                             TAO::TypeCode::Field<char const *> const *," << be_nl
+    << "                             TAO::TypeCode::Struct_Field<char const *> const *," << be_nl
     << "                             CORBA::tk_"
     << (this->is_exception_ ? "except" : "struct") << "," << be_nl
     << "                             TAO::Null_RefCount_Policy> const"
