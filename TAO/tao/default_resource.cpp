@@ -562,12 +562,6 @@ template class ACE_Select_Reactor_T< ACE_Select_Reactor_Token_T<ACE_Noop_Token> 
 #pragma instantiate ACE_TSS_Singleton<TAO_Allocated_Resources, ACE_SYNCH_MUTEX>
 #pragma instantiate ACE_TSS<TAO_Allocated_Resources>
 
-#pragma instantiate ACE_Guard<TAO_Collocation_Table_Lock>
-#pragma instantiate ACE_Read_Guard<TAO_Collocation_Table_Lock>
-#pragma instantiate ACE_Write_Guard<TAO_Collocation_Table_Lock>
-#pragma instantiate ACE_Read_Guard<ACE_SYNCH_MUTEX>
-#pragma instantiate ACE_Write_Guard<ACE_SYNCH_MUTEX>
-
 #pragma instantiate ACE_Select_Reactor_Token_T<ACE_Noop_Token>
 #pragma instantiate ACE_Lock_Adapter< ACE_Select_Reactor_Token_T<ACE_Noop_Token> >
 #pragma instantiate ACE_Select_Reactor_T< ACE_Select_Reactor_Token_T<ACE_Noop_Token> >
