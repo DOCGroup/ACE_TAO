@@ -3,10 +3,6 @@
 #include "SenderC.h"
 #include "ReceiverC.h"
 #include "ace/Get_Opt.h"
-#include "ace/Task.h"
-#include "tao/RTCORBA/RTCORBA.h"
-#include "tao/ORB_Core.h"
-#include "tests/RTCORBA/check_supported_priorities.cpp"
 
 static const char *sender_ior = "file://sender.ior";
 static const char *receiver_ior = "file://receiver.ior";
@@ -61,63 +57,6 @@ parse_args (int argc, char *argv[])
   return 0;
 }
 
-class Task : public ACE_Task_Base
-{
-public:
-
-  Task (ACE_Thread_Manager &thread_manager,
-        CORBA::ORB_ptr orb);
-
-  int svc (void);
-
-  CORBA::ORB_var orb_;
-
-};
-
-Task::Task (ACE_Thread_Manager &thread_manager,
-            CORBA::ORB_ptr orb)
-  : ACE_Task_Base (&thread_manager),
-    orb_ (CORBA::ORB::_duplicate (orb))
-{
-}
-
-int
-Task::svc (void)
-{
-  try
-    {
-      CORBA::Object_var object =
-        this->orb_->string_to_object (sender_ior);
-
-      DiffServ::Sender_var sender =
-        DiffServ::Sender::_narrow (object.in ());
-
-      object =
-        this->orb_->string_to_object (receiver_ior);
-
-      DiffServ::Receiver_var receiver =
-        DiffServ::Receiver::_narrow (object.in ());
-
-      sender->start (iterations,
-                     corba_priority);
-
-      sender->shutdown ();
-
-      receiver->shutdown ();
-
-      return 0;
-    }
-  catch (CORBA::Exception &exception)
-    {
-      ACE_ERROR ((LM_ERROR,
-                  "Unexpected exception caught by client: %s (%s)\n",
-                  exception._name (),
-                  exception._rep_id ()));
-
-      return -1;
-    }
-}
-
 int
 main (int argc, char *argv[])
 {
@@ -131,42 +70,24 @@ main (int argc, char *argv[])
       if (result != 0)
         return result;
 
-      // Thread Manager for managing task.
-      ACE_Thread_Manager thread_manager;
+      CORBA::Object_var object =
+        orb->string_to_object (sender_ior);
 
-      // Create task.
-      Task task (thread_manager,
-                 orb.in ());
+      DiffServ::Sender_var sender =
+        DiffServ::Sender::_narrow (object.in ());
 
-      // Task activation flags.
-      long flags =
-        THR_NEW_LWP |
-        THR_JOINABLE |
-        orb->orb_core ()->orb_params ()->thread_creation_flags ();
+      object =
+        orb->string_to_object (receiver_ior);
 
-      // Activate task.
-      result =
-        task.activate (flags);
-      if (result == -1)
-        {
-          if (errno == EPERM)
-            {
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "Cannot create thread with scheduling policy %s\n"
-                                 "because the user does not have the appropriate privileges, terminating program....\n"
-                                 "Check svc.conf options and/or run as root\n",
-                                 sched_policy_name (orb->orb_core ()->orb_params ()->ace_sched_policy ())),
-                                2);
-            }
-          else
-            // Unexpected error.
-            ACE_ASSERT (0);
-        }
+      DiffServ::Receiver_var receiver =
+        DiffServ::Receiver::_narrow (object.in ());
 
-      // Wait for task to exit.
-      result =
-        thread_manager.wait ();
-      ACE_ASSERT (result != -1);
+      sender->start (iterations,
+                     corba_priority);
+
+      sender->shutdown ();
+
+      receiver->shutdown ();
 
       return 0;
     }
