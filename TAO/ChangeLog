@@ -1,3 +1,14 @@
+Sat Nov 29 12:45:02 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAOACE.dsw:
+
+          Changes to project dependencies.
+
+        * orbsvcs/orbsvcs/FTORB_Utils.dsp:
+
+          Added dependeny on IDL compiler executable so code will get
+          regnerated whenever the IDL compiler itself is updated.
+
 Sat Nov 29 11:42:48 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/TypeCodeFactory/TypeCodeFactory_i.cpp:

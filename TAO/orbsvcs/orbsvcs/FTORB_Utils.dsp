@@ -108,6 +108,10 @@ SOURCE=".\FT_CORBA_ORBS.h"
 
 SOURCE=".\FaultTolerance\FT_IOGR_Property.h"
 # End Source File
+# Begin Source File
+
+SOURCE=.\FaultTolerance\FT_ORB_Utils_export.h
+# End Source File
 # End Group
 # Begin Group "Inline Files"
 
@@ -148,14 +152,13 @@ SOURCE=".\FT_CORBA_ORB.idl"
 !IF  "$(CFG)" == "FTORB_Utils - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
+USERDEP__FT_CO="..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking IDL Compiler on $(InputPath)
 InputPath=".\FT_CORBA_ORB.idl"
 InputName=FT_CORBA_ORB
 
 BuildCmds= \
-	PATH=%PATH%;..\..\..\lib \
-	..\..\..\bin\tao_idl -o . -Wb,export_macro=TAO_FT_ORB_Utils_Export -Wb,export_include=FaultTolerance\FT_ORB_Utils_export.h -Wb,skel_export_include=tao\PortableServer\PolicyS.h -Gv -I..\.. -I..\..\orbsvcs -Ge 1 -Sc -Wb,pre_include=ace\pre.h -Wb,post_include=ace\post.h $(InputPath) \
-	
+	..\..\..\bin\tao_idl -o . -Wb,export_macro=TAO_FT_ORB_Utils_Export -Wb,export_include=FaultTolerance\FT_ORB_Utils_export.h -Wb,skel_export_include=tao\PortableServer\PolicyS.h -Gv -I..\.. -I..\..\orbsvcs -Ge 1 -Sc -Wb,pre_include=ace\pre.h -Wb,post_include=ace\post.h $(InputPath)
 
 ".\$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -179,14 +182,13 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "FTORB_Utils - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
+USERDEP__FT_CO="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking IDL Compiler on $(InputPath)
 InputPath=".\FT_CORBA_ORB.idl"
 InputName=FT_CORBA_ORB
 
 BuildCmds= \
-	PATH=%PATH%;..\..\..\lib \
-	..\..\..\bin\tao_idl -o . -Wb,export_macro=TAO_FT_ORB_Utils_Export -Wb,export_include=FaultTolerance\FT_ORB_Utils_export.h -Wb,skel_export_include=tao\PortableServer\PolicyS.h -Gv -I..\.. -I..\..\orbsvcs -Ge 1 -Sc -Wb,pre_include=ace\pre.h -Wb,post_include=ace\post.h $(InputPath) \
-	
+	..\..\..\bin\tao_idl -o . -Wb,export_macro=TAO_FT_ORB_Utils_Export -Wb,export_include=FaultTolerance\FT_ORB_Utils_export.h -Wb,skel_export_include=tao\PortableServer\PolicyS.h -Gv -I..\.. -I..\..\orbsvcs -Ge 1 -Sc -Wb,pre_include=ace\pre.h -Wb,post_include=ace\post.h $(InputPath)
 
 ".\$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
