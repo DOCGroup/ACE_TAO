@@ -10,6 +10,10 @@
 #include "ace/config.h"
 #include "ace/Timer_Hash.h"
 
+#if defined (ACE_HPUX_BROKEN_TEMPLATES)
+#include "ace/Timer_Hash_T.cpp"
+#endif /* ACE_HPUX_BROKEN_TEMPLATES */
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Free_List<ACE_Timer_Node_T<ACE_Event_Handler *> >;
 template class ACE_Locked_Free_List<ACE_Timer_Node_T<ACE_Event_Handler *>,

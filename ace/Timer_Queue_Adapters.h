@@ -115,7 +115,7 @@ public:
   virtual void deactivate (void);
   // Inform the dispatching thread that it should terminate.
 
-  ACE_SYNCH_MUTEX &lock (void);
+  ACE_SYNCH_MUTEX &mutex (void);
   // Access the locking mechanism, useful for iteration.
 
   TQ &timer_queue (void);
