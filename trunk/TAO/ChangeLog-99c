@@ -1,11 +1,19 @@
+Tue Jan 12 10:48:15 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/Sequence_T.{i,cpp} (TAO_Unbounded_Sequence::operator[]):
+          uninlined to avoid build (template instantiation) problems with
+          Sun C++ 4.2 patch 104631-07.  Thanks to Magnus Karlsson
+          <magnus.karlsson@syncom.se> for confirming that this solves the
+          problem.
+
 Tue Jan 12 08:46:42 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
-	* TAO_IDL/util/utl_scope.cpp:
+        * TAO_IDL/util/utl_scope.cpp:
 
-	  In the patch applied mentioned in the ChangeLog below, we were
-	  using the keyword "true" in a while loop. Unfortunately, it is
-	  not supported by SunCC. So we use the value 1 to represent a
-	  "true" value.
+          In the patch applied mentioned in the ChangeLog below, we were
+          using the keyword "true" in a while loop. Unfortunately, it is
+          not supported by SunCC. So we use the value 1 to represent a
+          "true" value.
 
 Mon Jan 11 22:56:26 1999  Jeff Parsons <jp4@cs.wustl.edu>
 
@@ -18,13 +26,13 @@ Mon Jan 11 22:56:26 1999  Jeff Parsons <jp4@cs.wustl.edu>
 
 Mon Jan 11 21:20:23 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/GIOP.cpp (send_request): Fixed typos.
+        * tao/GIOP.cpp (send_request): Fixed typos.
 
 Mon Jan 11 19:40:25 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/CosEvent:
-	  for all files in this directory -
-	  replaced TAO_TRY_ENV with TAO_IN_ENV
+        * orbsvcs/orbsvcs/CosEvent:
+          for all files in this directory -
+          replaced TAO_TRY_ENV with TAO_IN_ENV
 
 Mon Jan 11 16:55:57 1999  David L. Levine  <levine@cs.wustl.edu>
 
