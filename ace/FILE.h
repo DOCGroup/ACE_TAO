@@ -78,11 +78,24 @@ public:
   int truncate (off_t length);
   // Set filesize to length byte.
 
+  off_t seek (off_t offset, int whence = SEEK_CUR);
+  // Sets the file pointer as follows:
+  //    o If <whence> is <SEEK_SET>, the pointer is set to <offset>
+  //      bytes.
+  // 
+  //    o  If <whence> is <SEEK_CUR>, the pointer is set to its
+  //       current location plus <offset>.
+  //
+  //    o  If <whence> is <SEEK_END>, the pointer is set to the size
+  //       of the file plus offset.
   off_t position (long offset, int startpos);
-  // Set the filepointer to the specified position.
+  // Same as <seek>, but <position> is deprecated.
+
+  off_t tell (void);
+  // Return an offset for the file handle.
 
   off_t position (void);
-  // Get current filepointer.
+  // Same as <tell>, but <position> is deprecated.
 
   int disable (int signum) const ;
   // Disable signal <signum>
