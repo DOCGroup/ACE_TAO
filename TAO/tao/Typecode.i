@@ -49,7 +49,7 @@ CORBA::TypeCode::_nil (void)
 }
 
 ACE_INLINE CORBA::TCKind
-CORBA_TypeCode::kind (CORBA::Environment &env) const
+CORBA_TypeCode::kind (CORBA::Environment &) const
 {
   return this->kind_;
 }
