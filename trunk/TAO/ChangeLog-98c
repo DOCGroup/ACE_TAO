@@ -1,3 +1,10 @@
+Mon Mar  9 15:23:19 1998  Sumedh Mungee  <sumedh@cs.wustl.edu>
+
+	* orbsvcs/tests/AVStreams/mpeg/source/server/server.cpp (open):
+	Temporarily disabled use of threads, and reverted back to the
+	forking model. The threaded model needs more work before it can
+	safely support multiple clients.
+
 Mon Mar  9 14:57:13 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/sequence.h: 

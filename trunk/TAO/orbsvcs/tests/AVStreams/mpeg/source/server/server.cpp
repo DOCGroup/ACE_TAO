@@ -3,15 +3,29 @@
 Mpeg_Svc_Handler::Mpeg_Svc_Handler (ACE_Reactor *r)
   : ACE_Svc_Handler <ACE_SOCK_STREAM, ACE_NULL_SYNCH> (0, 0, r)
 {
-
+  
 }
 
 // Client connected to our control port
 int
 Mpeg_Svc_Handler::open (void *)
 {
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t)Mpeg_Svc_Handler::open called\n"));
-  this->activate (THR_BOUND);
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) Mpeg_Svc_Handler::open called\n"));
+  // Lets use threads at a later point. The current scheme works fine with fork..
+  //  this->activate (THR_BOUND);
+  switch (ACE_OS:: fork ())
+    {
+    case -1:
+      ACE_ERROR_RETURN ((LM_ERROR, 
+                         "(%P|%t) %p: fork failed",
+                         "server"),
+                        -1);
+    case 0:
+      return 0;
+    default:
+      this-> svc ();
+    }
+  
   return 0;
 }
 
