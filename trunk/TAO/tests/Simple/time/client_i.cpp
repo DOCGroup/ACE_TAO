@@ -1,52 +1,56 @@
 // $Id$
 
-#include "client_impl.h"
+#include "client_i.h"
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
 
-ACE_RCSID(Time, client_impl, "$Id$")
+ACE_RCSID(Time, client_i, "$Id$")
 
 // Constructor.
-Client_Impl::Client_Impl (void)
-  : server_key_ (ACE_OS::strdup ("key0")),
+client_i::client_i (void)
+  : ior_ (0),
     loop_count_ (10),
     shutdown_ (0),
-    server_ (Time::_nil ())
+    server_ ()
 {
 }
 
 // Reads the Server factory ior from a file
 
 int
-Client_Impl::read_ior (char *filename)
+client_i::read_ior (char *filename)
 {
   // Open the file for reading.
-  ACE_HANDLE f_handle_ = ACE_OS::open (filename, 0);
+  ACE_HANDLE f_handle = ACE_OS::open (filename, 0);
 
-  if (f_handle_ == ACE_INVALID_HANDLE)
+  if (f_handle == ACE_INVALID_HANDLE)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Unable to open %s for writing: %p\n",
                        filename),
                       -1);
 
-  ACE_Read_Buffer ior_buffer (f_handle_);
-  this->server_key_ = ior_buffer.read ();
+  ACE_Read_Buffer ior_buffer (f_handle);
+  char *data = ior_buffer.read ();
 
-  if (this->server_key_ == 0)
+  if (data == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "Unable to allocate memory to read ior: %p\n"),
+                       "Unable to read ior: %p\n"),
                       -1);
 
-  ACE_OS::close (f_handle_);
+  this->ior_ = ACE_OS::strdup (data);
+  ior_buffer.alloc ()->free (data);
+
+  ACE_OS::close (f_handle);
+
   return 0;
 }
 
 // Parses the command line arguments and returns an error status.
 
 int
-Client_Impl::parse_args (void)
+client_i::parse_args (void)
 {
-  ACE_Get_Opt get_opts (argc_, argv_, "dn:f:x");
+  ACE_Get_Opt get_opts (argc_, argv_, "dn:f:xk:");
   int c;
   int result;
 
@@ -59,6 +63,9 @@ Client_Impl::parse_args (void)
       case 'n':  // loop count
         this->loop_count_ = (u_int) ACE_OS::atoi (get_opts.optarg);
         break;
+      case 'k':  // ior provide on command line
+        this->ior_ = ACE_OS::strdup (get_opts.optarg);
+        break;
       case 'f': // read the IOR from the file.
         result = this->read_ior (get_opts.optarg);
         if (result < 0)
@@ -66,7 +73,7 @@ Client_Impl::parse_args (void)
                              "Unable to read ior from %s : %p\n",
                              get_opts.optarg),
                             -1);
-            break;
+        break;
       case 'x':
         this->shutdown_ = 1;
         break;
@@ -76,7 +83,8 @@ Client_Impl::parse_args (void)
                            "usage:  %s"
                            " [-d]"
                            " [-n loopcount]"
-                           " [-f server-obj-ref-key-file]"
+                           " [-f ior-file]"
+                           " [-k ior]"
                            " [-x]"
                            "\n",
                            this->argv_ [0]),
@@ -90,7 +98,7 @@ Client_Impl::parse_args (void)
 // Compute the time on a server.
 
 void
-Client_Impl::time (void)
+client_i::time (void)
 {
   // Make the RMI.
   CORBA::Long timedate = this->server_->time (this->env_);
@@ -99,8 +107,6 @@ Client_Impl::time (void)
     this->env_.print_exception ("from time");
   else
     {
-      dmsg1 ("time: %d\n", timedate);
-
       char *ascii_timedate =
         ACE_OS::ctime (ACE_static_cast (time_t *, &timedate));
 
@@ -113,7 +119,7 @@ Client_Impl::time (void)
 // Execute client example code.
 
 int
-Client_Impl::run (void)
+client_i::run (void)
 {
   u_int i;
 
@@ -129,16 +135,13 @@ Client_Impl::run (void)
   return 0;
 }
 
-Client_Impl::~Client_Impl (void)
+client_i::~client_i (void)
 {
-  // Free resources and close the IOR files.
-  CORBA::release (this->server_);
-
-  ACE_OS::free (this->server_key_);
+  ACE_OS::free (this->ior_);
 }
 
 int
-Client_Impl::init (int argc, char **argv)
+client_i::init (int argc, char **argv)
 {
   this->argc_ = argc;
   this->argv_ = argv;
@@ -156,31 +159,32 @@ Client_Impl::init (int argc, char **argv)
       if (this->parse_args () == -1)
         return -1;
 
-      if (this->server_key_ == 0)
+      if (this->ior_ == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "%s: no server key specified\n",
+                           "%s: no ior specified\n",
                            this->argv_[0]),
                           -1);
 
 
       CORBA::Object_var server_object =
-        this->orb_->string_to_object (this->server_key_,
+        this->orb_->string_to_object (this->ior_,
                                       TAO_TRY_ENV);
       TAO_CHECK_ENV;
+
+      if (CORBA::is_nil (server_object.in ()))
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "invalid ior <%s>\n",
+                           this->ior_),
+                          -1);
 
       this->server_ = Time::_narrow (server_object.in (),
                                      TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      if (CORBA::is_nil (server_object.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "invalid server key <%s>\n",
-                           this->server_key_),
-                          -1);
     }
   TAO_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("Client_Impl::init");
+      TAO_TRY_ENV.print_exception ("client_i::init");
       return -1;
     }
   TAO_ENDTRY;

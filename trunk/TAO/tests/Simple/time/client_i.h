@@ -7,7 +7,7 @@
 //    TAO/tests/Simple
 //
 // = FILENAME
-//    client_impl.h
+//    client_i.h
 //
 // = DESCRIPTION
 //    This class implements a simple CORBA client that access a Time
@@ -19,9 +19,8 @@
 // ============================================================================
 
 #include "TimeC.h"
-#include "tao/corba.h"
 
-class Client_Impl
+class client_i
 {
   // = TITLE
   //     Simple Client implementation.
@@ -32,10 +31,10 @@ class Client_Impl
   //     it down.
 public:
   // = Initialization and termination methods.
-  Client_Impl (void);
+  client_i (void);
   // Constructor.
 
-  ~Client_Impl (void);
+  ~client_i (void);
   // Destructor.
 
   int run (void);
@@ -60,8 +59,8 @@ private:
   char **argv_;
   // arguments from command line.
 
-  char *server_key_;
-  // Key of the obj ref of the server.
+  char *ior_;
+  // IOR of the obj ref of the server.
 
   u_int loop_count_;
   // Number of times to invoke the <time> operation.
@@ -72,7 +71,7 @@ private:
   CORBA::Environment env_;
   // Environment variable.
 
-  Time_ptr server_;
+  Time_var server_;
   // Server object ptr.
 
   CORBA::ORB_var orb_;

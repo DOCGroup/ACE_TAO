@@ -7,7 +7,7 @@
 //    TAO/tests/Simple
 //
 // = FILENAME
-//    server_impl.h
+//    server_i.h
 //
 // = DESCRIPTION
 //    A CORBA server that initializes the time server implementation
@@ -18,32 +18,33 @@
 //
 // ============================================================================
 
-#if !defined (SERVER_IMPL_H)
-#define SERVER_IMPL_H
+#if !defined (SERVER_I_H)
+#define SERVER_I_H
 
-#include "Time_impl.h"
+#include "Time_i.h"
 #include "tao/TAO.h"
 
-class Server_Impl
+class server_i
 {
   // = TITLE
   //   CORBA Server implementation.
 public:
   // = Initialization and termination methods.
-  Server_Impl (void);
+  server_i (void);
   // Constructor.
 
-  ~Server_Impl (void);
+  ~server_i (void);
   // Destructor.
 
-  int init (int argc, char *argv[], CORBA::Environment& env);
+  int init (int argc, char *argv[], CORBA::Environment &env);
   // Initialize the Server state - parsing arguments and waiting.
 
-  int run (CORBA::Environment& env);
+  int run (CORBA::Environment &env);
   // Run the orb 
 
 private:
-  Time_Impl server_impl;
+  Time_i *servant_;
+  // Servant 
 
   int parse_args (void);
   // Parses the commandline arguments.

@@ -99,19 +99,19 @@ SOURCE=.\server.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\server_impl.cpp
+SOURCE=.\server_i.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\simple_object_impl.cpp
+SOURCE=.\Time_i.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Simple_ObjectC.cpp
+SOURCE=.\TimeC.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Simple_ObjectS.cpp
+SOURCE=.\TimeS.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -119,15 +119,11 @@ SOURCE=.\Simple_ObjectS.cpp
 # PROP Default_Filter "h;hpp;hxx;hm;inl;fi;fd"
 # Begin Source File
 
-SOURCE=.\server.h
+SOURCE=.\server_i.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\simple_object_impl.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Simple_ObjectS.h
+SOURCE=.\Time_i.h
 # End Source File
 # End Group
 # Begin Group "IDL Files"
@@ -135,17 +131,18 @@ SOURCE=.\Simple_ObjectS.h
 # PROP Default_Filter ".idl"
 # Begin Source File
 
-SOURCE=.\Simple_Object.idl
+SOURCE=.\Time.idl
 
 !IF  "$(CFG)" == "Simple Time Server Static - Win32 Debug"
 
-USERDEP__SIMPL="..\..\tao_idl\tao_idl_static.exe"	
-# Begin Custom Build - Invoking TAO_IDL compiler
-InputPath=.\Simple_Object.idl
-InputName=Simple_Object
+# PROP Ignore_Default_Tool 1
+USERDEP__TIME_="..\..\..\tao_idl\tao_idl.exe"	
+# Begin Custom Build - Invoking TAO_IDL Compiler
+InputPath=.\Time.idl
+InputName=Time
 
 BuildCmds= \
-	..\..\tao_idl\tao_idl_static $(InputName).idl
+	..\..\..\tao_idl\tao_idl $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -177,14 +174,13 @@ BuildCmds= \
 
 !ELSEIF  "$(CFG)" == "Simple Time Server Static - Win32 Release"
 
-# PROP Ignore_Default_Tool 1
-USERDEP__SIMPL="..\..\tao_idl\Release\tao_idl_static.exe"	
-# Begin Custom Build - Invoking TAO_IDL compiler
-InputPath=.\Simple_Object.idl
-InputName=Simple_Object
+USERDEP__TIME_="..\..\..\tao_idl\Release\tao_idl.exe"	
+# Begin Custom Build - Invoking TAO_IDL Compiler
+InputPath=.\Time.idl
+InputName=Time
 
 BuildCmds= \
-	..\..\tao_idl\Release\tao_idl_static $(InputName).idl
+	..\..\..\tao_idl\Release\tao_idl $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)

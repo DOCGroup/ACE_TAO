@@ -1,6 +1,6 @@
 // $Id$
 
-#include "client_impl.h"
+#include "client_i.h"
 
 ACE_RCSID(Time, client, "$Id$")
 
@@ -9,13 +9,13 @@ ACE_RCSID(Time, client, "$Id$")
 int
 main (int argc, char **argv)
 {
-  Client_Impl client;
+  client_i client;
 
   ACE_DEBUG ((LM_DEBUG,
               "\n\ttime and date test\n\n"));
 
   if (client.init (argc, argv) == -1)
-    return 1;
+    return -1;
   else
     return client.run ();
 }

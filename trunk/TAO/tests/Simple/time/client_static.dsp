@@ -99,15 +99,15 @@ SOURCE=.\client.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\client_impl.cpp
+SOURCE=.\client_i.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Simple_ObjectC.cpp
+SOURCE=.\TimeC.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Simple_ObjectS.cpp
+SOURCE=.\TimeS.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -115,19 +115,7 @@ SOURCE=.\Simple_ObjectS.cpp
 # PROP Default_Filter "h;hpp;hxx;hm;inl;fi;fd"
 # Begin Source File
 
-SOURCE=.\client_impl.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\ServerC.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Simple_ObjectS.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Simple_ObjectS_T.h
+SOURCE=.\client_i.h
 # End Source File
 # End Group
 # Begin Group "IDL Files"
@@ -135,18 +123,18 @@ SOURCE=.\Simple_ObjectS_T.h
 # PROP Default_Filter ".idl"
 # Begin Source File
 
-SOURCE=.\Simple_Object.idl
+SOURCE=.\Time.idl
 
 !IF  "$(CFG)" == "Simple Time Client Static - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__SIMPL="..\..\..\tao_idl\tao_idl_static.exe"	
+USERDEP__TIME_="..\..\..\tao_idl\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
-InputPath=.\Simple_Object.idl
-InputName=Simple_Object
+InputPath=.\Time.idl
+InputName=Time
 
 BuildCmds= \
-	..\..\..\tao_idl\tao_idl_static $(InputName).idl
+	..\..\..\tao_idl\tao_idl $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -179,13 +167,13 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "Simple Time Client Static - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__SIMPL="..\..\..\tao_idl\Release\tao_idl_static.exe"	
+USERDEP__TIME_="..\..\..\tao_idl\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
-InputPath=.\Simple_Object.idl
-InputName=Simple_Object
+InputPath=.\Time.idl
+InputName=Time
 
 BuildCmds= \
-	..\..\..\tao_idl\Release\tao_idl_static $(InputName).idl
+	..\..\..\tao_idl\Release\tao_idl $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
