@@ -1,3 +1,9 @@
+Wed May 29 12:54:23 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* ace/DLL_Manager.cpp:
+	* ace/Framework_Component.cpp:
+	  Fixed msvc wchar compile errors
+
 Wed May 29 08:41:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* ace/Codecs.h:
