@@ -106,9 +106,5 @@ public:
   virtual void successful_transmission (PortableServer::ServantBase* proxy);
 };
 
-#if defined (__ACE_INLINE__)
-#include "CEC_SupplierControl.i"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 #endif /* TAO_CEC_SUPPLIERCONTROL_H */

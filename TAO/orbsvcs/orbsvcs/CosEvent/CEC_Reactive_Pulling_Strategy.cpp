@@ -190,8 +190,3 @@ TAO_CEC_Pull_Event::work (TAO_CEC_ProxyPullConsumer *consumer
     }
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

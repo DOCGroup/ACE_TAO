@@ -2,10 +2,6 @@
 
 #include "CEC_SupplierControl.h"
 
-#if ! defined (__ACE_INdLINE__)
-#include "CEC_SupplierControl.i"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID(CosEvent, CEC_SupplierControl, "$Id$")
 
 TAO_CEC_SupplierControl::TAO_CEC_SupplierControl (void)
@@ -66,8 +62,3 @@ TAO_CEC_SupplierControl::successful_transmission (PortableServer::ServantBase*)
 {
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -1,3 +1,23 @@
+Wed Jan  5 11:21:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_ConsumerControl.{h,cpp,i}:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Dispatching.{h,cpp,i}:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Factory.{h,cpp,i}:
+        * orbsvcs/orbsvcs/CosEvent/CEC_MT_Dispatching.{h,cpp,i}:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Pulling_Strategy.{h,cpp,i}:
+        * orbsvcs/orbsvcs/CosEvent/CEC_SupplierControl.{h,cpp,i}:
+          Removed i file and updated h/cpp file.
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_TypedProxyPushConsumer.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushConsumer.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_ConsumerControl.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_Pulling_Strategy.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_SupplierControl.cpp:
+          Removed empty explicit instantiation block
+
+        * orbsvcs/orbsvcs/Makefile.am
+          Updated for changes above
+
 Wed Jan  5 11:07:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Event/ECG_Address_Server_Base.{h,cpp,i}:
