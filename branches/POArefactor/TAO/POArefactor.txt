@@ -1,3 +1,8 @@
+Thu Sep  9 13:32:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/POA_Policy.{h,cpp}:
+          Base for the new loadable policies
+
 Thu Sep  9 13:25:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/GOA.{h,cpp}:
