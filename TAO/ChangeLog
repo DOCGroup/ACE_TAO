@@ -1,3 +1,8 @@
+Mon Feb 21 18:20:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/ThreadStrategy.cpp:
+          Removed ifdef TAO_HAS_MINIMUM_POA
+
 Mon Feb 21 18:16:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/*Strategy*.{h,cpp}:
