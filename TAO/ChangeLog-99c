@@ -1,12 +1,19 @@
+Wed Jun 16 03:13:22 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* TAO_IDL/ast/ast_expression.cpp (eval_un_op): Fixed an obscure
+ 	  bug in TAO's IDL compiler whereby negative constants weren't
+ 	  being evaluated correctly.  Thanks to Hata Yoshiaki
+ 	  <hatay@alpha.co.jp> for reporting this.
+
 Wed Jun 16 01:12:55 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* docs/releasenotes/orbcore.html: Updated information wrt
 	  collocation support.
 
 	* docs/poa_migration.html:
-	* docs/compiler.html: Removed section about having to
-	  include both stubs and skeletons in the client side and how to
-	  generate "pure client" code.
+	* docs/compiler.html: Removed section about having to include both
+ 	  stubs and skeletons in the client side and how to generate "pure
+ 	  client" code.
 
 	* TAO-INSTALL.html: Updated intructions on creating MSVC
 	  projects.  Removed VC 4.2 section.
@@ -16,16 +23,15 @@ Tue Jun 15 22:16:57 1999  Matthew J Braun  <mjb2@cs.wustl.edu>
 	* orbsvcs/tests/Concurrency/CC_command.cpp 
 	* orbsvcs/tests/Concurrency/CC_test_utils.cpp 
 	* orbsvcs/tests/Concurrency/CC_tests.cpp 
-	* orbsvcs/Logging_Service/Logging_Service_i.h,cpp 
-	  Added ACE_const_cast statements. Those should have been checked
-	  in a while ago, but I screwed up. Also, I migrated the TAO_THROW
-	  macros to ACE_THROW macros in the Concurrency files.
+	* orbsvcs/Logging_Service/Logging_Service_i.h,cpp: Added
+ 	  ACE_const_cast statements. Those should have been checked in a
+ 	  while ago, but I screwed up. Also, I migrated the TAO_THROW
+ 	  macros to ACE_THROW macros in the Concurrency files.
 	
 Tue Jun 15 20:19:43 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/Any.cpp:
-	  Removed a comment to me that I had left after fixing
-	  what the comment referred to.
+	* tao/Any.cpp: Removed a comment to me that I had left after
+ 	  fixing what the comment referred to.
 
 	* TAO/performance-tests/Pluggable/PP_Test_Server.cpp:
 	* TAO/performace-tests/Cubit/TAO/IDL_Cubit/Cubit_Server.cpp:
@@ -41,9 +47,8 @@ Tue Jun 15 20:15:27 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* orbsvcs/tests/Trading/Service_Type_Exporter.h:
 	* orbsvcs/tests/Trading/Simple_Dynamic.cpp:
 	* orbsvcs/tests/Trading/Simple_Dynamic.h:
-	* orbsvcs/tests/Trading/TT_Info.h:
-	  More TAO_THROW_SPEC converted to ACE_THROW_SPEC, easy job thanks
-	  to Seth forevision...
+	* orbsvcs/tests/Trading/TT_Info.h: More TAO_THROW_SPEC converted
+ 	  to ACE_THROW_SPEC, easy job thanks to Seth foresight...
 
 Tue Jun 15 18:49:56 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
