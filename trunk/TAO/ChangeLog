@@ -1,3 +1,15 @@
+Tue Jun 22 08:04:14 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Exception.cpp:
+	* tao/orbconf.h:
+
+	  Removed # define's for  TAO_NAMESPACE_BEGIN, TAO_NAMESPACE_END,
+	  TAO_NAMESPACE_TYPE,  and TAO_NAMESPACE_DEFINE.
+
+	* orbsvcs/orbsvcs/Notify/Notify_Extensions.cpp:
+
+	  Changed usage of these macros to vanilla c++ keywords. 
+
 Tue Jun 22 12:44:31 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * performance-tests/Sequence_Latency/AMH/Single_Threaded:
