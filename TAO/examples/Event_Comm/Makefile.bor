@@ -1,8 +1,0 @@
-
-#
-# Makefile for building the Event_Comm example
-# 
-
-MAKEFILES = notifier.bor consumer.bor supplier.bor
-
-!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

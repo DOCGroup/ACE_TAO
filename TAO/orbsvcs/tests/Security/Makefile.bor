@@ -1,9 +1,0 @@
-#
-# Makefile for building the TAO Security obsvcs tests
-# $Id$
-#
-
-DIRS = \
-        Secure_Invocation
-
-!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
