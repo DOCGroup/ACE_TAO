@@ -39,9 +39,14 @@ TAO_LB_LoadManager::push_loads (
     const PortableGroup::Location & /* the_location */,
     const CosLoadBalancing::LoadList & /* loads */
     ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   CosLoadBalancing::StrategyNotAdaptive))
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
+#if 0
+  // Only the first load is used by this load balancing strategy.
+  if (loads.length () == 0)
+    ACE_THROW (CORBA::BAD_PARAM ());
+#endif  /* 0 */
+
   ACE_THROW (CORBA::NO_IMPLEMENT ());
 }
 
