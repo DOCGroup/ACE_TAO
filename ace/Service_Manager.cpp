@@ -191,10 +191,8 @@ ACE_Service_Manager::list_services (void)
 
       if (len > 0)
         {
-          ssize_t n = this->client_stream_.send_n (buf,
-                                                   len);
-
-          if (n != len || (n == -1 && errno != EPIPE))
+          ssize_t n = this->client_stream_.send_n (buf, len);
+          if (n <= 0 && errno != EPIPE))
             ACE_ERROR ((LM_ERROR,
                         ACE_LIB_TEXT ("%p\n"),
                         ACE_LIB_TEXT ("send_n")));
