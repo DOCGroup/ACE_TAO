@@ -56,27 +56,27 @@ is known to support well.<P>
 
 <table width="100%" border=1>
         <tr valign=top>
-          <td><b>Fully supported (i.e., continually tested and used daily)</b></td>
+          <td><b>Fully supported, i.e., continually tested and used daily</b></td>
           <td>Solaris 2.5, Windows NT (MSVC++ 4.x and 5.0),
-              Linux, DEC Alpha Windows NT (MSVC++ 5.0),
-              DEC Alpha Linux, VxWorks, LynxOS, Digital UNIX 4.0,
+              DEC Alpha Windows NT (MSVC++ 5.0), Linux/Intel,
+              Linux/Alpha, VxWorks, LynxOS, Digital UNIX 4.0,
               HP/UX, AIX
           </td>
         </tr>
         <tr valign=top bgcolor="#AFAFAF">
-          <td><b>Nearly fully supported (i.e., periodically tested)</b></td>
+          <td><b>Nearly fully supported, i.e., periodically tested</b></td>
           <td>Solaris 2.6, Windows 95, IRIX 6.x, MVS
           </td>
         </tr>
         <tr valign=top>
-          <td><b>Partially supported (i.e., infrequently tested)</b></td>
+          <td><b>Partially supported, i.e., infrequently tested</b></td>
           <td>
-              PSoS, Tandem, Chorus, SCO, UnixWare, SunOS 4.x, OSF/1,
+              PSoS, Tandem, Chorus, SCO, UnixWare, SunOS 4.x,
               FreeBSD, NetBSD
           </td>
         </tr>
         <tr valign=top bgcolor="#AFAFAF">
-          <td><b>Planned support (i.e., pending)</b></td>
+          <td><b>Planned support, i.e., pending</b></td>
           <td>
               Windows CE
           </td>
@@ -84,7 +84,7 @@ is known to support well.<P>
 </table>
 
 <P>In general, any UNIX/POSIX variation is a potential target platform
-for ACE.  Ideally, ACE will compile on any POSIX conforming OS. 
+for ACE.  Ideally, ACE will compile on any POSIX conforming OS.
 
 <P><HR><P>
 <H3><A NAME="installnotes">Installation Notes for Supported Platforms</A></H3>
@@ -178,11 +178,21 @@ HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/ace/Makefile">Makefile</a>
 <LI><B>Linux</B><P>
 
 ACE has been ported to <A
-HREF="http://www.cs.wustl.edu/~cleeland/ace/">Linux</A> using the GNU
-g++ 2.7.2 compiler.  However, you may need to apply a number <A
-HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/os-patches/linux-patches.html">patches
-    to Linux</A> to get ACE working with LinuxThreads and with Alpha
-CPUs. <P>
+HREF="http://www.cs.wustl.edu/~cleeland/ace/">Linux</A> on both Intel
+and Alpha platforms.  With glibc 2 distributions, such as RedHat 5.0,
+you'll need at least the following additions:<p>
+
+    <ul>
+      <li>egcs 1.0.1 or later
+      <li>glibc-2.0.7-7 (from ftp://sunsite.unc.edu/pub/gnu)
+    </ul><p>
+
+With some glibc-2.0.6 versions, you may need to apply some <A
+HREF="os-patches/linux-patches.html">patches</A> to get ACE working with
+LinuxThreads.  Some of the patches are necessary with Alpha CPUs and
+with some older kernels.<P>
+
+Some of the ACE tests fail on older, pre-glibc-2 Linux platforms.<p>
 
 <LI> <B> SCO UNIX </B><P>
 
@@ -260,11 +270,11 @@ for help with this port.<P>
 <LI><B>LynxOS</B> <P>
 
      Dave Mayerhoefer &lt<A HREF="mailto:davem@lynx.com">davem@lynx.com</A>&gt
-	has ported ACE to LynxOS 2.5 using GNU g++ 2.7.2.    However, you may need to apply a number <A
-HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/os-patches/lynxos-patches.html">patches
-    to Lynxos</A> to get ACE working. <P>
+     has ported ACE to LynxOS 2.5 using GNU g++ 2.7.2.  However, you may need
+     to apply some <A HREF="os-patches/lynxos-patches.html">patches
+     to LynxOS</A> to get ACE working.<P>
 
-<LI><STRONG>VxWorks</STRONG> <P>
+<LI><STRONG>VxWorks</STRONG><P>
 
      <A HREF="http://www.cs.wustl.edu/~levine/">David Levine</A> &lt<A
 HREF="mailto:levine@cs.wustl.edu">levine@cs.wustl.edu</A>&gt has
@@ -661,7 +671,7 @@ A few notes on VxWorks builds (thanks to
 <a href="mailto:Paul_von_Behren@stortek.com">Paul von Behren</a>
 for these notes):<p>
 <UL>
-  <LI>VxWorks builds are done with a cross compiler - i.e. the compiles
+  <LI>VxWorks builds are done with a cross compiler, i.e., the compiles
       are done on a workstation creating object modules which are
       downloaded and loaded into the VxWorks target system.<p>
   <LI>C++ object modules must be post-processed by a VxWorks
