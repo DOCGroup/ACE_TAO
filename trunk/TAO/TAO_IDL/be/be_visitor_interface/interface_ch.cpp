@@ -181,11 +181,11 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
 
           // generate the _ptr_type and _var_type typedefs
           // but we must protect against certain versions of g++
-          << "#if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8"
+          << "#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)"
           << be_idt_nl
           << "typedef " << node->local_name () << "_ptr _ptr_type;" << be_nl
           << "typedef " << node->local_name () << "_var _var_type;" << be_uidt_nl
-          << "#endif /* __GNUC__ */\n" << be_idt_nl
+          << "#endif /* ! __GNUC__ || g++ >= 2.8 */\n" << be_idt_nl
 
           // generate the static _duplicate, _narrow, and _nil operations
           << "// the static operations" << be_nl

@@ -8,7 +8,8 @@
 #ifndef ACE_GNUG_COMMON_H
 #define ACE_GNUG_COMMON_H
 
-#if __GNUC__ > 2 || ( __GNUC__ == 2 && __GNUC_MINOR__ >= 8)
+#if __GNUC__ > 2  ||  ( __GNUC__ == 2 && __GNUC_MINOR__ >= 8)  || \
+    (defined (ACE_VXWORKS) && ACE_VXWORKS >= 0x540)
   // egcs or g++ >= 2.8.0
 
 # define ACE_HAS_ANSI_CASTS
