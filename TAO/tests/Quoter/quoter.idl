@@ -19,7 +19,7 @@ module Stock
   exception Invalid_Stock {};
   exception Invalid_Quoter {};
 
-  interface Quoter
+  interface Quoter : CosLifeCycle::LifeCycleObject
   {
     // = TITLE
     //   Access Stock information.
