@@ -22,13 +22,14 @@ IMPLEMENTATION
 The architecture for TAO's implementation of CosNaming::NamingContext
 interface follows the Bridge pattern.
 
- * TAO_Naming_Context (in Naming_Context.h) inherits from
+ * TAO_Naming_Context (in Naming_Context_Interface.h) inherits from
    POA skeleton, and plays the role of 'Abstraction' (aka 'Interface')
-   in the Bridge architecture - it forwards all client
-   requests to a 'ConcreteImplementor' through an 'Implementor' pointer.
+   in the Bridge architecture - it forwards all client requests to a
+   'ConcreteImplementor' through an 'Implementor' pointer.
 
- * TAO_Naming_Context_Impl (in Naming_Context.h) is an abstract base class for all
-   concrete implementations of NamingContext functionality (i.e., 'Implementor').
+ * TAO_Naming_Context_Impl (in Naming_Context_Interface.h) is an
+   abstract base class for all concrete implementations of
+   NamingContext functionality (i.e., 'Implementor').
 
  * Currently, TAO Naming Service has two 'ConcreteImplementors':
    TAO_Transient_Naming_Context (in Transient_Naming_Context.h), and
