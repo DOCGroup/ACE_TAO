@@ -1,3 +1,10 @@
+Sun Feb 20 23:43:22 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/ace_dll.dsp:
+        * ace/ace_lib.dsp:
+          Changed Base_Pointer_T.cpp to Based_Pointer_T.cpp.
+          Also synced ace_lib with ace_dll to bring up to date.
+
 Sun Feb 20 11:33:09 2000  Ossama Othman  <ossama@uci.edu>
 
 	* THANKS:
