@@ -48,6 +48,10 @@ namespace CIAO_GLUE_HUDisplay
     virtual CORBA::Long pos (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
+    // get_component implementation.
+    virtual CORBA::Object_ptr _get_component (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
   protected:
     // Facet executor.
     HUDisplay::CCM_position_var executor_;
