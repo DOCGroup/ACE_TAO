@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*sender): avstreamsexe, strategies {
+project(*send): avstreamsexe, strategies {
   exename  = sender
 
   Source_Files {
@@ -10,7 +10,7 @@ project(*sender): avstreamsexe, strategies {
   }
 }
 
-project(*distributer): avstreamsexe, strategies {
+project(*dist): avstreamsexe, strategies {
   exename  = distributer
 
   Source_Files {
@@ -19,7 +19,7 @@ project(*distributer): avstreamsexe, strategies {
   }
 }
 
-project(*receiver): avstreamsexe, strategies {
+project(*recv): avstreamsexe, strategies {
   exename  = receiver
 
   Source_Files {

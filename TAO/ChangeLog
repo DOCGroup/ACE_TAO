@@ -1,4 +1,23 @@
 
+Thu May 7 1:00:00 2004  Marek Brudka  <mbrudka@elka.pw.edu.pl>
+
+	* orbsvcs/tests/Notify/*.mpc:
+          *Sequence*.mpc moved to *Seq*.mpc
+          *Structured*.mpc moved to *Struct*.mpc
+          Project names inside *mpc changed according to rules:
+            *Notify*     -> *Ntf*
+            *Structured* -> *Struct*
+            *Sequence*   -> *Seq*
+            *Consumer*   -> *Cons*
+            *Supplier*   -> *Supp*
+        * orbsvcs/tests/AVStreams/*mpc:
+          AVStreams*.mpd moved tt AVS*.mpc
+          Projects names inside *mp changed according to rules:
+          *sender*   -> *send*
+          *receiver* -> *recv* 
+        * orbsvcs/tests/InterfaceRepo/*mpc:
+          InterfaceRepo*.mpc moved to IFR*.mpc
+
 Thu May 6 23:00:00 2004  Marek Brudka  <mbrudka@elka.pw.edu.pl>
 
 	* tests/Smart_Proxies/Smart_Proxies*.mpc: truncated to SP_*.mpc 

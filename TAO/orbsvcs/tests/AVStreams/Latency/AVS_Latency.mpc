@@ -17,7 +17,7 @@ project(*pong): avstreamsexe, strategies {
   }
 }
 
-project(*control): avstreamsexe, strategies {
+project(*cntl): avstreamsexe, strategies {
   exename  = control
 
   Source_Files {

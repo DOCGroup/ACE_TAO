@@ -10,7 +10,7 @@ project(*ts) : orbsvcslib, portableserver, avstreams, naming {
   }
 }
 
-project(*sender): avstreamsexe {
+project(*send): avstreamsexe {
   exename  = sender
 
   Source_Files {
@@ -18,7 +18,7 @@ project(*sender): avstreamsexe {
   }
 }
 
-project(*receiver): avstreamsexe {
+project(*recv): avstreamsexe {
   exename  = receiver
 
   Source_Files {
