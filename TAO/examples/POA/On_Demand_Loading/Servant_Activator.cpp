@@ -86,22 +86,19 @@ Dir_Service_Activator::activate_servant (const char *str,
   // The string format is function@dll which needs to be parsed.
   parse_string (str);
 
-  // Now that the library name is available we try to create an dll object
-  // which also opens the library on creation.
-  ACE_NEW_RETURN (dll_,
-                  ACE_DLL (dllname_.in ()),
-                  0);
+  // Now that the library name is available we open teh library.
+  dll_.open (dllname_);
 
   // The next step is to obtain the symbol for the function whihc will create
   // the servant object and return it to us.
   Servant_Creator_Prototype servant_creator;
-  servant_creator = (Servant_Creator_Prototype) dll_->symbol (create_symbol_.in ());
+  servant_creator = (Servant_Creator_Prototype) dll_.symbol (create_symbol_.in ());
   
   // Checking whether it is possible to create the servant.
   if (servant_creator == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%s",
-                       dll_->error ()),
+                       dll_.error ()),
                       0);
    
   // Now create and return the servant.
@@ -119,24 +116,24 @@ Dir_Service_Activator::deactivate_servant (PortableServer::Servant servant)
   delete servant;
 
   // The library loaded is now closed and destroyed.
-  delete dll_;
+  //delete dll_;
   
 }
 
-// The objectID is in a format of factory_method@library which has to be parsed and separated
+// The objectID is in a format of library:factory_method which has to be parsed and separated
 // into tokens to be used.
 
 void
 Dir_Service_Activator::parse_string (const char *s)
 {
-  // The format of the object name: function@dll 
+  // The format of the object library:factory_method
   // This string is parsed to obatin the library name and the
   // function name which will create trhe servant and return it to us.
 
   char str[BUFSIZ],func[BUFSIZ], libname [BUFSIZ];
   char at[2];
 
-  at[0]= '@';
+  at[0]= ':';
   at[1]= '\0';
   strcpy (func, "");
   // As strtok () puts a NULL in the position after it gives back a token,
@@ -144,10 +141,10 @@ Dir_Service_Activator::parse_string (const char *s)
   strcpy (str, s);
 
   // The strtok() method returns the string until '@' i.e. the function name.
-   ACE_OS::strcpy (func, ACE_OS::strtok(str, at));
+   ACE_OS::strcpy (libname, ACE_OS::strtok(str, at));
    
-   // Get to '@' and make the libname point to the next location in the string.
-   ACE_OS::strcpy (libname, ACE_OS::strchr (s,'@') + 1);
+   // Get to ':' and make the libname point to the next location in the string.
+   ACE_OS::strcpy (func, ACE_OS::strchr (s,':') + 1);
   
    // Assign the respective strings obtained.
 
