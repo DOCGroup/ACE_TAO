@@ -744,6 +744,9 @@ ACE_Asynch_Connect::ACE_Asynch_Connect (void)
 
 ACE_Asynch_Connect::~ACE_Asynch_Connect (void)
 {
+  // Delete the implementation.
+  delete this->implementation_;
+  this->implementation_ = 0;
 }
 
 int
