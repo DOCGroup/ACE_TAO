@@ -1,3 +1,10 @@
+Thu May 22 11:29:54 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-cygwin32.h:
+        * ace/config-cygwin32-common.h:
+          Moved the contents of the cygwin32-common file to the cygwin32
+          file. It doesn't make sense to have two files for cygwin.
+
 Thu May 22 07:51:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-vxworks5.x.h:
