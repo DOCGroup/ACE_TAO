@@ -5011,10 +5011,10 @@ class ACE_Export ACE_QoS_Params
   //   enabled <ACE_OS::connect> and <ACE_OS::join_leaf> methods.
 public:
   ACE_QoS_Params (iovec *caller_data = 0,
-                          iovec *callee_data = 0,
-                          ACE_QoS *socket_qos = 0,
-                          ACE_QoS *group_socket_qos = 0,
-                          u_long flags = 0);
+                  iovec *callee_data = 0,
+                  ACE_QoS *socket_qos = 0,
+                  ACE_QoS *group_socket_qos = 0,
+                  u_long flags = 0);
   // Initialize the data members.  The <caller_data> is a pointer to
   // the user data that is to be transferred to the peer during
   // connection establishment.  The <callee_data> is a pointer to the
