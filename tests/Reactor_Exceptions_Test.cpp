@@ -126,8 +126,7 @@ main (int argc, char *argv[])
 
   ACE_INET_Addr local_addr (port);
   ACE_INET_Addr remote_addr (port,
-			     "localhost");
-
+			     ACE_DEFAULT_SERVER_HOST);
   MemoryEx ex (local_addr);
 
   if (ACE_Reactor::instance()->register_handler 

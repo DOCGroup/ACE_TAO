@@ -306,7 +306,8 @@ main (int argc, char *argv[])
   ACE_DEBUG ((LM_DEBUG, "(%t) starting server at port %d\n",
               server_addr.get_port_number ()));
 
-  ACE_INET_Addr connection_addr (server_addr.get_port_number (), "localhost");
+  ACE_INET_Addr connection_addr (server_addr.get_port_number (), 
+                                 ACE_DEFAULT_SERVER_HOST);
 
   if (ACE_Thread_Manager::instance ()->spawn
       (ACE_THR_FUNC (client),

@@ -34,7 +34,8 @@ static void *
 client (void *arg)
 {
   ACE_INET_Addr *remote_addr = (ACE_INET_Addr *) arg;
-  ACE_INET_Addr server_addr (remote_addr->get_port_number (), "localhost");
+  ACE_INET_Addr server_addr (remote_addr->get_port_number (),
+                             ACE_DEFAULT_SERVER_HOST);
   ACE_INET_Addr client_addr;
   ACE_SOCK_Stream cli_stream;
   ACE_SOCK_Connector con;

@@ -1494,7 +1494,7 @@ int
 ACE::set_handle_limit (int new_limit)
 {
   ACE_TRACE ("ACE::set_handle_limit");
-#if defined (RLIMIT_NOFILE)
+#if defined (RLIMIT_NOFILE) 
   struct rlimit rl;
 
   if (ACE_OS::getrlimit (RLIMIT_NOFILE, &rl) != -1)
