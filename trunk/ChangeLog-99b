@@ -1,3 +1,8 @@
+Tue Jun 22 07:45:59 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Event_Handler_T.i: fixed some occurrences of
+          ACE_INLINE that were after the function return type.
+
 Tue Jun 22 07:30:12 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Stats.cpp: fixed for ACE_LACKS_LONGLONG_T platforms.
