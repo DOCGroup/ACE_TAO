@@ -12,9 +12,10 @@
 
 #ifndef TAO_GIOP_MESSAGE_GENERATOR_PARSER_12_H
 #define TAO_GIOP_MESSAGE_GENERATOR_PARSER_12_H
-#include /**/ "ace/pre.h"
-#include "tao/GIOP_Message_Generator_Parser.h"
 
+#include /**/ "ace/pre.h"
+
+#include "tao/GIOP_Message_Generator_Parser.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

@@ -13,21 +13,31 @@
 
 #ifndef TAO_IFR_CLIENT_ADAPTER_H
 #define TAO_IFR_CLIENT_ADAPTER_H
-#include /**/ "ace/pre.h"
 
-#include "tao/corbafwd.h"
+#include /**/ "ace/pre.h"
+#include "ace/CORBA_macros.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Service_Object.h"
-#include "ace/CORBA_macros.h"
+
+#include "tao/TAO_Export.h"
+#include "tao/Basic_Types.h"
+
+class TAO_OutputCDR;
 
 namespace CORBA
 {
   class InterfaceDef;
   typedef InterfaceDef *InterfaceDef_ptr;
+
+  class Any;
+  class ORB;
+  typedef ORB *ORB_ptr;
+  class Object;
+  typedef Object *Object_ptr;
 };
 
 /**

@@ -3,7 +3,9 @@
 #include "tao/Endpoint_Selector_Factory.h"
 #include "ace/Dynamic_Service.h"
 
-ACE_RCSID(tao, Endpoint_Selector_Factory, "$Id$")
+ACE_RCSID (tao, 
+           Endpoint_Selector_Factory, 
+           "$Id$")
 
 TAO_Endpoint_Selector_Factory::~TAO_Endpoint_Selector_Factory (void)
 {

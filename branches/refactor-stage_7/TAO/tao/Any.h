@@ -13,7 +13,6 @@
 #define TAO_ANY_H
 
 #include /**/ "ace/pre.h"
-
 #include "ace/CDR_Stream.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

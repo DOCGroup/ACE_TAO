@@ -16,16 +16,17 @@
 
 #ifndef TAO_ENDPOINT_SELECTOR_FACTORY_H
 #define TAO_ENDPOINT_SELECTOR_FACTORY_H
-#include /**/ "ace/pre.h"
 
-#include "tao/corbafwd.h"
+#include /**/ "ace/pre.h"
+#include "ace/CORBA_macros.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Service_Object.h"
-#include "ace/CORBA_macros.h"
+
+#include "tao/TAO_Export.h"
 
 class TAO_Invocation_Endpoint_Selector;
 

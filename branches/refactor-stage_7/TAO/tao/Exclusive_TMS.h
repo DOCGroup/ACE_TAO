@@ -13,6 +13,7 @@
 
 #ifndef TAO_EXCLUSIVE_TMS_H
 #define TAO_EXCLUSIVE_TMS_H
+
 #include /**/ "ace/pre.h"
 
 #include "tao/Transport_Mux_Strategy.h"

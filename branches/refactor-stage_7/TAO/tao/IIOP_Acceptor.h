@@ -17,19 +17,19 @@
 
 #ifndef TAO_IIOP_ACCEPTOR_H
 #define TAO_IIOP_ACCEPTOR_H
-#include /**/ "ace/pre.h"
 
-#include "tao/Transport_Acceptor.h"
+#include /**/ "ace/pre.h"
+#include "ace/Acceptor.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/SOCK_Acceptor.h"
+
+#include "tao/Transport_Acceptor.h"
 #include "tao/IIOP_Connection_Handler.h"
 #include "tao/Acceptor_Impl.h"
-
-#include "ace/Acceptor.h"
-#include "ace/SOCK_Acceptor.h"
 #include "tao/GIOP_Message_Version.h"
 
 // TAO IIOP_Acceptor concrete call defination

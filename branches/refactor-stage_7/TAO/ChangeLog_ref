@@ -1,3 +1,100 @@
+Fri Sep 19 11:34:16 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Adapter.cpp:
+        * tao/Any.h:
+        * tao/Any_Impl.h:
+        * tao/Any_Impl_T.h:
+        * tao/Asynch_Queued_Message.cpp:
+        * tao/Asynch_Queued_Message.h:
+        * tao/Asynch_Reply_Dispatcher_Base.cpp:
+        * tao/Base_Transport_Property.cpp:
+        * tao/Basic_Argument_T.h:
+        * tao/Basic_Arguments.h:
+        * tao/Basic_SArgument_T.h:
+        * tao/Basic_SArguments.h:
+        * tao/Connector_Registry.cpp:
+        * tao/Connector_Registry.h:
+        * tao/Endpoint.cpp:
+        * tao/Endpoint.h:
+        * tao/Endpoint_Selector_Factory.cpp:
+        * tao/Endpoint_Selector_Factory.h:
+        * tao/Environment.cpp:
+        * tao/Environment.h:
+        * tao/Exception.cpp:
+        * tao/Exclusive_TMS.cpp:
+        * tao/Exclusive_TMS.h:
+        * tao/FILE_Parser.cpp:
+        * tao/FILE_Parser.h:
+        * tao/Fault_Tolerance_Service.cpp:
+        * tao/Fault_Tolerance_Service.h:
+        * tao/Flushing_Strategy.cpp:
+        * tao/GIOPC.cpp:
+        * tao/GIOPC.h:
+        * tao/GIOP_Message_Base.cpp:
+        * tao/GIOP_Message_Base.h:
+        * tao/GIOP_Message_Generator_Parser.cpp:
+        * tao/GIOP_Message_Generator_Parser.h:
+        * tao/GIOP_Message_Generator_Parser_10.cpp:
+        * tao/GIOP_Message_Generator_Parser_10.h:
+        * tao/GIOP_Message_Generator_Parser_11.cpp:
+        * tao/GIOP_Message_Generator_Parser_11.h:
+        * tao/GIOP_Message_Generator_Parser_12.cpp:
+        * tao/GIOP_Message_Generator_Parser_12.h:
+        * tao/GIOP_Message_Generator_Parser_Impl.cpp:
+        * tao/GIOP_Message_Generator_Parser_Impl.h:
+        * tao/GIOP_Message_Lite.cpp:
+        * tao/GIOP_Message_Lite.h:
+        * tao/GIOP_Message_Locate_Header.cpp:
+        * tao/GIOP_Message_Locate_Header.h:
+        * tao/GIOP_Message_State.cpp:
+        * tao/GIOP_Message_State.h:
+        * tao/GIOP_Message_Version.cpp:
+        * tao/GIOP_Message_Version.h:
+        * tao/GIOP_Utils.h:
+        * tao/IFR_Client_Adapter.h:
+        * tao/IIOP_Acceptor.cpp:
+        * tao/IIOP_Acceptor.h:
+        * tao/IIOP_Connection_Handler.cpp:
+        * tao/IIOP_Connection_Handler.h:
+        * tao/IIOP_Connector.cpp:
+        * tao/IIOP_Connector.h:
+        * tao/IIOP_Endpoint.cpp:
+        * tao/IIOP_Endpoint.h:
+        * tao/NVList.h:
+        * tao/Object.h:
+        * tao/RTCORBA/RT_Endpoint_Selector_Factory.h:
+
+	  Cleanup of #include structure.
+
+        * tao/IIOP_EndpointsC.cpp:
+        * tao/IIOP_EndpointsC.h:
+        * tao/IIOP_EndpointsC.inl:
+        * tao/IIOP_Endpoints.pidl:
+
+	  New files, replacing the four below.
+
+        * tao/iiop_endpoints.cpp:
+        * tao/iiop_endpoints.h:
+        * tao/iiop_endpoints.i:
+        * tao/iiop_endpoints.pidl:
+
+	  Removed these files, replaced with the new ones above.
+
+        * tao/Strategies/DIOP_Profile.cpp:
+        * tao/Strategies/SHMIOP_Profile.cpp:
+        * tao/IIOP_Profile.cpp:
+
+	  Updated these files with the new #include name and new
+	  class name resulting from the file replacement above.
+
+        * tao/Makefile.bor:
+        * tao/Makefile.tao:
+        * tao/TAO.dsp:
+        * tao/TAO_Static.dsp:
+        * tao/tao.mpc:
+
+	  Updated with the new filenames.
+
 Thu Sep 18 21:00:50 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_arg_traits.cpp (visit_sequence):

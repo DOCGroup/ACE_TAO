@@ -17,6 +17,7 @@
 
 #ifndef TAO_IIOP_CONNECTOR_H
 #define TAO_IIOP_CONNECTOR_H
+
 #include /**/ "ace/pre.h"
 #include "ace/SOCK_Connector.h"
 
@@ -24,11 +25,11 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Connector.h"
+
 #include "tao/Transport_Connector.h"
 #include "tao/Connector_Impl.h"
 #include "tao/IIOP_Connection_Handler.h"
-#include "ace/Connector.h"
-
 
 class TAO_IIOP_Endpoint;
 

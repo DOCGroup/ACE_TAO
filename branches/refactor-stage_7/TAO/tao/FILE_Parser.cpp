@@ -1,19 +1,18 @@
 // $Id$
 
 #include "FILE_Parser.h"
-#include "tao/Object_Loader.h"
-#include "tao/Object.h"
 #include "tao/ORB.h"
-#include "tao/Exception.h"
 #include "tao/Environment.h"
+
 #include "ace/Read_Buffer.h"
-#include "ace/Malloc_Base.h"
 
 #if !defined(__ACE_INLINE__)
 #include "FILE_Parser.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(tao, FILE_Parser, "$Id$")
+ACE_RCSID (tao, 
+           FILE_Parser, 
+           "$Id$")
 
 TAO_FILE_Parser::~TAO_FILE_Parser (void)
 {
@@ -40,7 +39,8 @@ TAO_FILE_Parser::parse_string (const char *ior,
   const char *filename =
     ior + sizeof (::file_prefix)+1;
 
-  FILE* file = ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR(filename), ACE_LIB_TEXT("r"));
+  FILE* file = ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR (filename), 
+                              ACE_LIB_TEXT("r"));
 
   if (file == 0)
     return CORBA::Object::_nil ();

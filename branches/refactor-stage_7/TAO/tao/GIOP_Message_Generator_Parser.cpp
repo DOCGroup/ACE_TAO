@@ -1,10 +1,6 @@
 #include "tao/GIOP_Message_Generator_Parser.h"
 #include "tao/Pluggable_Messaging_Utils.h"
 #include "tao/GIOP_Utils.h"
-#include "tao/CDR.h"
-#include "tao/Object_KeyC.h"
-#include "tao/IOPC.h"
-#include "tao/Tagged_Profile.h"
 #include "tao/debug.h"
 
 #include "ace/Log_Msg.h"

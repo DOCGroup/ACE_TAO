@@ -9,7 +9,7 @@
 #include "tao/ORB.h"
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
-#include "tao/iiop_endpoints.h"
+#include "tao/IIOP_EndpointsC.h"
 
 ACE_RCSID (Strategies,
            SHMIOP_Profile,
@@ -419,7 +419,7 @@ TAO_SHMIOP_Profile::encode_endpoints (void)
   // together with other endpoints because even though its addressing
   // info is transmitted using standard ProfileBody components, its
   // priority is not!
-  TAO_IIOPEndpointSequence endpoints;
+  TAO::IIOPEndpointSequence endpoints;
   endpoints.length (this->count_);
 
   TAO_SHMIOP_Endpoint *endpoint = &this->endpoint_;
@@ -487,7 +487,7 @@ TAO_SHMIOP_Profile::decode_endpoints (void)
       in_cdr.reset_byte_order (ACE_static_cast(int, byte_order));
 
       // Extract endpoints sequence.
-      TAO_IIOPEndpointSequence endpoints;
+      TAO::IIOPEndpointSequence endpoints;
 
       if ((in_cdr >> endpoints) == 0)
         return -1;

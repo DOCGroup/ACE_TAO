@@ -1,7 +1,6 @@
 // $Id$
 
 #include "tao/Asynch_Reply_Dispatcher_Base.h"
-
 #include "tao/Pluggable_Messaging_Utils.h"
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"

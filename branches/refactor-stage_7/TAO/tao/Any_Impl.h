@@ -13,7 +13,6 @@
 #define TAO_ANY_IMPL_H
 
 #include /**/ "ace/pre.h"
-
 #include "ace/CORBA_macros.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

@@ -23,14 +23,13 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/GIOP_Utils.h"
-#include "tao/GIOP_Message_State.h"
-#include "tao/CDR.h"
 
 class TAO_Operation_Details;
 class TAO_Pluggable_Reply_Params;
 class TAO_GIOP_Locate_Request_Header;
 class TAO_Queued_Data;
 class TAO_ServerRequest;
+class TAO_GIOP_Message_Version;
 
 /**
  * @class TAO_GIOP_Message_Lite
@@ -253,7 +252,7 @@ private:
   TAO_ORB_Core *orb_core_;
 
   /// The message type that we are going to process..
-  CORBA::Octet  message_type_;
+  CORBA::Octet message_type_;
 
   /// The pay load size
   CORBA::ULong message_size_;

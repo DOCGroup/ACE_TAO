@@ -19,26 +19,31 @@
 
 #ifndef TAO_ENVIRONMENT_H
 #define TAO_ENVIRONMENT_H
-#include /**/ "ace/pre.h"
 
-#include "tao/corbafwd.h"
+#include /**/ "ace/pre.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include <stdarg.h> // LynxOS requires this before stdio.h
-#include <stdio.h>  // Pull in "stdout" definition.
-
+#include "tao/TAO_Export.h"
+#include "tao/Basic_Types.h"
+#include "tao/orbconf.h"
 #include "tao/Pseudo_VarOut_T.h"
 
 class TAO_ORB_Core;
 
 namespace CORBA
 {
+  class Exception;
+
   class Environment;
+  typedef Environment *Environment_ptr;
   typedef TAO_Pseudo_Var_T<Environment> Environment_var;
   typedef TAO_Pseudo_Out_T<Environment, Environment_var> Environment_out;
+
+  TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (Environment_ptr);
+  TAO_NAMESPACE_INLINE_FUNCTION void release (Environment_ptr);
 
   /**
    * @class Environment

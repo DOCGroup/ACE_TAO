@@ -4,18 +4,13 @@
 // on all of these data structures.
 
 #include "Exception.h"
-#include "Typecode.h"
 #include "Environment.h"
-#include "Any.h"
-#include "CDR.h"
 #include "Any_SystemException.h"
-#include "CORBA_String.h"
 #include "Any_Dual_Impl_T.h"
 
 #include "ace/Malloc.h"
 #include "ace/SString.h"
 #include "ace/streams.h"
-#include "ace/Malloc.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Exception.i"

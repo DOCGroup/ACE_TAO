@@ -109,6 +109,7 @@ OBJFILES = \
 	$(OBJDIR)\IIOP_Connection_Handler.obj \
 	$(OBJDIR)\IIOP_Connector.obj \
 	$(OBJDIR)\IIOP_Endpoint.obj \
+	$(OBJDIR)\IIOP_EndpointsC.obj \
 	$(OBJDIR)\IIOP_Factory.obj \
 	$(OBJDIR)\IIOP_Lite_Factory.obj \
 	$(OBJDIR)\IIOP_Profile.obj \
@@ -236,7 +237,6 @@ OBJFILES = \
 	$(OBJDIR)\default_client.obj \
 	$(OBJDIR)\default_resource.obj \
 	$(OBJDIR)\default_server.obj \
-	$(OBJDIR)\iiop_endpoints.obj \
 	$(OBJDIR)\operation_details.obj \
 	$(OBJDIR)\operation_details.obj \
 	$(OBJDIR)\params.obj \

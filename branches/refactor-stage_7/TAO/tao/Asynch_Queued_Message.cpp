@@ -1,14 +1,15 @@
 #include "Asynch_Queued_Message.h"
 #include "debug.h"
-#include "ace/Malloc_T.h"
+
+#include "ace/OS_Memory.h"
+#include "ace/OS_String.h"
+#include "ace/os_include/sys/os_uio.h"
 #include "ace/Log_Msg.h"
 #include "ace/Message_Block.h"
-
 
 ACE_RCSID (tao,
            Asynch_Queued_Message,
            "$Id$")
-
 
 TAO_Asynch_Queued_Message::
     TAO_Asynch_Queued_Message (const ACE_Message_Block *contents,
@@ -26,9 +27,9 @@ TAO_Asynch_Queued_Message::
        i != 0;
        i = i->cont ())
     {
-      ACE_OS::memcpy (this->buffer_ + copy_offset,
-                      i->rd_ptr (),
-                      i->length ());
+      ACE_OS_String::memcpy (this->buffer_ + copy_offset,
+                             i->rd_ptr (),
+                             i->length ());
       copy_offset += i->length ();
     }
 }
@@ -111,9 +112,9 @@ TAO_Asynch_Queued_Message::clone (ACE_Allocator *alloc)
                   char[sz],
                   0);
 
-  ACE_OS::memcpy (buf,
-                  this->buffer_ + this->offset_,
-                  sz);
+  ACE_OS_String::memcpy (buf,
+                         this->buffer_ + this->offset_,
+                         sz);
 
   TAO_Asynch_Queued_Message *qm = 0;
 

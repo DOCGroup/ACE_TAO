@@ -15,6 +15,7 @@
 #define TAO_BASIC_SARGUMENT_T_H
 
 #include "ace/pre.h"
+
 #include "tao/Argument.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

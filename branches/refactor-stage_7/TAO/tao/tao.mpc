@@ -24,7 +24,6 @@ project(TAO) : acelib, taoversion, core, tao_output {
       Acceptor_Registry.cpp
       Protocol_Factory.cpp
       Acceptor_Filter.cpp
-      iiop_endpoints.cpp
       IIOP_Factory.cpp
       IIOP_Lite_Factory.cpp
       IIOP_Profile.cpp
@@ -33,6 +32,7 @@ project(TAO) : acelib, taoversion, core, tao_output {
       IIOP_Acceptor.cpp
       IIOP_Connection_Handler.cpp
       IIOP_Endpoint.cpp
+      IIOP_EndpointsC.cpp
       IIOPC.cpp
     }
 

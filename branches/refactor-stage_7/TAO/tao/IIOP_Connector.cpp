@@ -2,17 +2,14 @@
 #include "IIOP_Profile.h"
 #include "debug.h"
 #include "ORB_Core.h"
-#include "Client_Strategy_Factory.h"
 #include "Environment.h"
-#include "Base_Transport_Property.h"
 #include "Protocols_Hooks.h"
-#include "Transport_Cache_Manager.h"
 #include "Connect_Strategy.h"
 #include "Thread_Lane_Resources.h"
 #include "Transport.h"
 #include "Wait_Strategy.h"
 
-#include "ace/Strategies_T.h"
+//#include "ace/Strategies_T.h"
 
 ACE_RCSID (TAO,
            IIOP_Connector,
