@@ -1,3 +1,10 @@
+Mon Sep 21 18:15:13 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/ORB.cpp: 
+	* tao/Connect.cpp: 
+	  Fixed template instantiations, thanks to Irfan for his help
+	  tracking this down.
+
 Mon Sep 21 01:38:46 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* performance-tests/Cubit/TAO/DII_Cubit/client.cpp (init_naming_service): 
