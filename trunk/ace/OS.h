@@ -1637,6 +1637,12 @@ struct stat {
 #   include /**/ <new>
 # endif /* ACE_NEW_THROWS_EXCEPTIONS */
 
+#if defined (ACE_HAS_EXCEPTIONS)
+# define ACE_THROW_SPEC(X) throw (X)
+#else  /* ! ACE_HAS_EXCEPTIONS */
+# define ACE_THROW_SPEC(X)
+#endif /* ! ACE_HAS_EXCEPTIONS */
+
 # if defined (ACE_HAS_THREADS)
 
 #   if defined (ACE_HAS_STHREADS)
