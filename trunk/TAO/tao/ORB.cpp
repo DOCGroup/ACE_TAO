@@ -1937,14 +1937,17 @@ operator<< (TAO_OutputCDR& cdr, const TAO_opaque& x)
 {
   CORBA::ULong length = x.length ();
   cdr.write_ulong (length);
-#if (TAO_NO_COPY_OCTET_SEQUENCES == 0)
-  cdr.write_octet_array (x.get_buffer (), length);
-#else /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
-  if (x.mb () == 0)
-    cdr.write_octet_array (x.get_buffer (), length);
+
+#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
+  if (x.mb () != 0)
+    {
+      cdr.write_octet_array_mb (x.mb ());
+    }
   else
-    cdr.write_octet_array_mb (x.mb ());
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
+    {
+      cdr.write_octet_array (x.get_buffer (), length);
+    }
   return (CORBA::Boolean) cdr.good_bit ();
 }
 
@@ -1953,19 +1956,31 @@ operator>>(TAO_InputCDR& cdr, TAO_opaque& x)
 {
   CORBA::ULong length;
   cdr.read_ulong (length);
-#if (TAO_NO_COPY_OCTET_SEQUENCES == 0)
-  x.length (length);
-  cdr.read_octet_array (x.get_buffer (), length);
-#else /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
-  x.replace (length, cdr.start ());
-  x.mb ()->wr_ptr (x.mb ()->rd_ptr () + length);
-  cdr.skip_bytes (length);
-#endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
+#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
+  if(ACE_BIT_DISABLED(cdr.start()->flags(),
+                      ACE_Message_Block::DONT_DELETE)
+     && (cdr.orb_core() == 0
+         || 1 == cdr.orb_core()->
+         resource_factory()->
+         input_cdr_allocator_type_locked()
+         )
+     )
+    {
+      x.replace (length, cdr.start ());
+      x.mb ()->wr_ptr (x.mb ()->rd_ptr () + length);
+      cdr.skip_bytes (length);
+    }
+  else
+#endif /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
+    {
+      x.length (length);
+      cdr.read_octet_array (x.get_buffer (), length);
+    }
   return (CORBA::Boolean) cdr.good_bit ();
 }
 
 CORBA::Boolean operator<< (TAO_OutputCDR &strm,
-                                      const CORBA::TCKind &_tao_enumval)
+                           const CORBA::TCKind &_tao_enumval)
 {
   CORBA::ULong _tao_temp = _tao_enumval;
   return strm << _tao_temp;
