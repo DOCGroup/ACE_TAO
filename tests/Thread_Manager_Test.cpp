@@ -43,7 +43,8 @@ static u_int n_threads = ACE_MAX_THREADS;
 // array, and updates if requested with the t_id.
 extern "C"
 int
-been_signalled (const ACE_thread_t t_id, const u_int update = 0)
+been_signalled (const ACE_thread_t t_id,
+                const u_int update = 0)
 {
   u_int unused_slot = n_threads;
   for (u_int i = 0; i < n_threads; ++i)
@@ -54,7 +55,8 @@ been_signalled (const ACE_thread_t t_id, const u_int update = 0)
 
       if (update  &&
           unused_slot == n_threads  &&
-          ACE_OS::thr_equal (signalled[i], ACE_OS::NULL_thread))
+          ACE_OS::thr_equal (signalled[i],
+                             ACE_OS::NULL_thread))
         unused_slot = i;
     }
 
@@ -154,13 +156,17 @@ main (int, ASYS_TCHAR *[])
   // Dynamically allocate signalled so that we can control when it
   // gets deleted.  Specifically, we need to delete it before the main
   // thread's TSS is cleaned up.
-  ACE_NEW_RETURN (signalled, ACE_thread_t[n_threads], 1);
+  ACE_NEW_RETURN (signalled, 
+                  ACE_thread_t[n_threads], 
+                  1);
   // Initialize each ACE_thread_t to avoid Purify UMR's.
   for (i = 0; i < n_threads; ++i)
     signalled[i] = ACE_OS::NULL_thread;
 
   // And similarly, dynamically allocate the thread_start barrier.
-  ACE_NEW_RETURN (thread_start, ACE_Barrier (n_threads + 1), -1);
+  ACE_NEW_RETURN (thread_start,
+                  ACE_Barrier (n_threads + 1),
+                  -1);
 
   // Register a signal handler.
   ACE_Sig_Action sa ((ACE_SignalHandler) handler, SIGINT);
@@ -228,19 +234,22 @@ main (int, ASYS_TCHAR *[])
   // group.
   ACE_OS::sleep (ACE_Time_Value (1));
 
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%t) resuming group\n")));
+  ACE_DEBUG ((LM_DEBUG,
+              ASYS_TEXT ("(%t) resuming group\n")));
 
   if (thr_mgr->resume_grp (grp_id) == -1)
     {
       ACE_ASSERT (errno == ENOTSUP);
-      ACE_DEBUG((LM_DEBUG, ASYS_TEXT (" OK: resume_grp isn't supported with Pthreads\n")));
+      ACE_DEBUG ((LM_DEBUG,
+                  ASYS_TEXT (" OK: resume_grp isn't supported with Pthreads\n")));
     }
 
   // Wait for 1 more second and then send a SIGINT to every thread in
   // the group.
   ACE_OS::sleep (ACE_Time_Value (1));
 
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%t) signaling group\n")));
+  ACE_DEBUG ((LM_DEBUG,
+              ASYS_TEXT ("(%t) signaling group\n")));
 
 #if defined (ACE_HAS_WTHREADS)
   thr_mgr->kill_grp (grp_id, SIGINT);
@@ -281,7 +290,8 @@ main (int, ASYS_TCHAR *[])
   ACE_OS::sleep (5);
 #endif /* sun */
 
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%t) main thread finished\n")));
+  ACE_DEBUG ((LM_DEBUG,
+              ASYS_TEXT ("(%t) main thread finished\n")));
 
 #if defined (VXWORKS)
   for (i = 0; i < n_threads - 1; ++i)

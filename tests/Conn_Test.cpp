@@ -228,7 +228,9 @@ timed_blocking_connect (CONNECTOR &con,
   // Perform a timed-blocking connect to the server (this should
   // connect quickly since we're in the same address space or same
   // host).
-  if (con.connect (svc_handler, server_addr, options) == -1)
+  if (con.connect (svc_handler,
+                   server_addr,
+                   options) == -1)
     ACE_ERROR ((LM_ERROR,
                 ASYS_TEXT ("(%P|%t) %p\n"),
                 ASYS_TEXT ("connection failed")));
@@ -254,7 +256,8 @@ blocking_connect (CONNECTOR &con,
            Svc_Handler);
 
   // Perform a blocking connect to the server.
-  if (con.connect (svc_handler, server_addr) == -1)
+  if (con.connect (svc_handler,
+                   server_addr) == -1)
     ACE_ERROR ((LM_ERROR,
                 ASYS_TEXT ("(%P|%t) %p\n"),
                 ASYS_TEXT ("connection failed")));
@@ -287,7 +290,8 @@ cached_connect (STRAT_CONNECTOR &con,
       // connecting to the same <server_addr> these calls will return
       // the same dynamically allocated <Svc_Handler> for each
       // <connect>.
-      if (con.connect (svc_handler, server_addr) == -1)
+      if (con.connect (svc_handler,
+                       server_addr) == -1)
         {
           ACE_ERROR ((LM_ERROR,
                       ASYS_TEXT ("(%P|%t) %p\n"),
@@ -360,7 +364,6 @@ client_connections (void *arg)
               ASYS_TEXT ("(%P|%t) **** starting cached blocking connect\n")));
   cached_connect (*info->strat_connector_,
                   *info->server_addr_);
-
   return 0;
 }
 
