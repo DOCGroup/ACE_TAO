@@ -296,7 +296,8 @@ be_visitor_array_cdr_op_cs::visit_predefined_type (be_predefined_type *node)
   // We generate optimized code based on an optimized interface available from
   // the CDR class. These optimizations are applicable only to primitive
   // types.
-  *os << " return strm.";
+  *os << "return" << be_idt_nl
+      << "strm.";
 
   // Based on our substate, we may be reading from a stream or writing into a
   // stream.
@@ -370,10 +371,12 @@ be_visitor_array_cdr_op_cs::visit_predefined_type (be_predefined_type *node)
   switch (this->ctx_->sub_state ())
     {
     case TAO_CodeGen::TAO_CDR_INPUT:
-      *os << " ((";
+      *os << " (" << be_idt << be_idt_nl
+          << "reinterpret_cast <";
       break;
     case TAO_CodeGen::TAO_CDR_OUTPUT:
-      *os << " ((const ";
+      *os << " (" << be_idt << be_idt_nl
+          << "reinterpret_cast <const ";
       break;
     default:
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -386,43 +389,43 @@ be_visitor_array_cdr_op_cs::visit_predefined_type (be_predefined_type *node)
   switch (node->pt ())
     {
     case AST_PredefinedType::PT_long:
-      *os << "ACE_CDR::Long *)";
+      *os << "ACE_CDR::Long";
       break;
     case AST_PredefinedType::PT_ulong:
-      *os << "ACE_CDR::ULong *)";
+      *os << "ACE_CDR::ULong";
       break;
     case AST_PredefinedType::PT_short:
-      *os << "ACE_CDR::Short *)";
+      *os << "ACE_CDR::Short";
       break;
     case AST_PredefinedType::PT_ushort:
-      *os << "ACE_CDR::UShort *)";
+      *os << "ACE_CDR::UShort";
       break;
     case AST_PredefinedType::PT_octet:
-      *os << "ACE_CDR::Octet *)";
+      *os << "ACE_CDR::Octet";
       break;
     case AST_PredefinedType::PT_char:
-      *os << "ACE_CDR::Char *)";
+      *os << "ACE_CDR::Char";
       break;
     case AST_PredefinedType::PT_wchar:
-      *os << "ACE_CDR::WChar *)";
+      *os << "ACE_CDR::WChar";
       break;
     case AST_PredefinedType::PT_float:
-      *os << "ACE_CDR::Float *)";
+      *os << "ACE_CDR::Float";
       break;
     case AST_PredefinedType::PT_double:
-      *os << "ACE_CDR::Double *)";
+      *os << "ACE_CDR::Double";
       break;
     case AST_PredefinedType::PT_longlong:
-      *os << "ACE_CDR::LongLong *)";
+      *os << "ACE_CDR::LongLong";
       break;
     case AST_PredefinedType::PT_ulonglong:
-      *os << "ACE_CDR::ULongLong *)";
+      *os << "ACE_CDR::ULongLong";
       break;
     case AST_PredefinedType::PT_longdouble:
-      *os << "ACE_CDR::LongDouble *)";
+      *os << "ACE_CDR::LongDouble";
       break;
     case AST_PredefinedType::PT_boolean:
-      *os << "ACE_CDR::Boolean *)";
+      *os << "ACE_CDR::Boolean";
       break;
     default:
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -436,10 +439,10 @@ be_visitor_array_cdr_op_cs::visit_predefined_type (be_predefined_type *node)
   switch (this->ctx_->sub_state ())
     {
     case TAO_CodeGen::TAO_CDR_INPUT:
-      *os << " _tao_array.out (), ";
+      *os << " *> (_tao_array.out ())," << be_nl;
       break;
     case TAO_CodeGen::TAO_CDR_OUTPUT:
-      *os << "_tao_array.in (), ";
+      *os << " *> (_tao_array.in ())," << be_nl;
       break;
     default:
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -488,7 +491,8 @@ be_visitor_array_cdr_op_cs::visit_predefined_type (be_predefined_type *node)
         }
     }
 
-  *os << ");" << be_uidt_nl;
+  *os << be_uidt_nl
+      << ");" << be_uidt << be_uidt << be_uidt_nl;
 
   return 0;
 }

@@ -1,3 +1,13 @@
+Wed Feb  2 22:17:49 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_arg_traits.cpp:
+        * TAO_IDL/be/be_visitor_array/array_cs.cpp:
+        * TAO_IDL/be/be_visitor_array/cdr_op_cs.cpp:
+        
+          Changed C-style casts in generated code for arrays
+          to c++-style casts. Thanks again to Johhny Willemsen
+          <jwillemsen@remedy.nl> for digging these up.
+
 Wed Feb  2 20:25:18 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_arg_traits.cpp:
