@@ -19,6 +19,7 @@
 // ============================================================================
 
 #include "ace/Service_Config.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID(Misc, main, "$Id$")
 

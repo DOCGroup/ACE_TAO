@@ -1,3 +1,10 @@
+Mon May 29 22:38:29 2000  Ossama Othman  <ossama@uci.edu>
+
+	* examples/Simple/time-date/server.cpp:
+
+	  Added missing "ace/Log_Msg.h" include.  This fixes a compile
+	  error with Sun C++.
+
 Mon May 29 16:56:24 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* utils/NamingViewer: Added some fixes to the NamingObject.{h,cpp}
