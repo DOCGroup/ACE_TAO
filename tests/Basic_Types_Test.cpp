@@ -153,11 +153,11 @@ main (int, ASYS_TCHAR *[])
   else
     ACE_ERROR ((LM_ERROR, ASYS_TEXT ("sizeof (long) != sizeof (void*)\n")));
 
-  // ACE assumes sizeof (long) >= sizeof (a_function_pointer)
-  if (sizeof (long) >= sizeof (a_function_pointer))
-    ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("sizeof (long) >= sizeof (a_function_pointer)\n")));
+  // ACE assumes sizeof (long) == sizeof (a_function_pointer)
+  if (sizeof (long) == sizeof (a_function_pointer))
+    ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("sizeof (long) == sizeof (a_function_pointer)\n")));
   else
-    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("sizeof (long) < sizeof (a_function_pointer)\n")));
+    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("sizeof (long) != sizeof (a_function_pointer)\n")));
 
 #if defined (ACE_LITTLE_ENDIAN)
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("little endian\n")));
