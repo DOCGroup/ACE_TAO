@@ -1,4 +1,3 @@
-V1spr1anj
 // $Id$
 
 #include "ORB_Core.h"
@@ -1685,7 +1684,7 @@ TAO_ORB_Core::run (ACE_Time_Value *tv,
 
   // This method should only be called by servers, so now we set up
   // for listening!
-  int ret = this->open (TAO_ENV_SINGLE_ARG_DECL);
+  int ret = this->open (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   if (ret == -1)
@@ -1905,7 +1904,7 @@ TAO_ORB_Core::open (TAO_ENV_SINGLE_ARG_DECL)
   /// Open the Acceptor Registry.
   int ret=
     this->lane_resources ().open_acceptor_registry (0
-                                                    TAO_ENV_ARG_DECL);
+                                                    TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   if (ret == -1)
@@ -2005,7 +2004,7 @@ TAO_ORB_Core::resolve_ior_table_i (TAO_ENV_SINGLE_ARG_DECL)
 
 int
 TAO_ORB_Core::set_endpoint_helper (const char *current_arg
-                                   TAO_ENV_ARG_PARAMETER)
+                                   TAO_ENV_ARG_DECL)
 {
   ACE_CString endpts (current_arg);
 
