@@ -14,7 +14,8 @@
 #endif /* __ACE_INLINE__ */
 
 ACE_SUN_Proactor::ACE_SUN_Proactor (size_t max_aio_operations)
-  : ACE_POSIX_AIOCB_Proactor (max_aio_operations , 0),
+  : ACE_POSIX_AIOCB_Proactor (max_aio_operations, 
+                              ACE_POSIX_Proactor::PROACTOR_SUN),
     condition_ (mutex_)
 {
   // To provide correct virtual calls.
@@ -63,6 +64,7 @@ int ACE_SUN_Proactor::wait_for_start (ACE_Time_Value * abstime)
 int
 ACE_SUN_Proactor::handle_events (u_long milli_seconds)
 {
+  int retval = 0;
   aio_result_t *result = 0;
 
   if (milli_seconds == ACE_INFINITE)
@@ -90,16 +92,18 @@ ACE_SUN_Proactor::handle_events (u_long milli_seconds)
     }
 
   if (ACE_reinterpret_cast (long, result) == 0)
-    return 0; // timeout
-
-  if (ACE_reinterpret_cast (long, result) == -1)
-   {
-    // Check errno  for  EINVAL,EAGAIN,EINTR ??
-     switch (errno)
+    {
+      // timeout, do nothing,
+      // we should process "post_completed" queue 
+    }
+  else if (ACE_reinterpret_cast (long, result) == -1)
+    { 
+      // Check errno  for  EINVAL,EAGAIN,EINTR ??
+      switch (errno)
        {
        case EINTR :     // aiowait() was interrupted by a signal.
-       case EINVAL:     //There are no outstanding asynchronous I/O requests.
-         return 0;
+       case EINVAL:     // there are no outstanding asynchronous I/O requests.
+         break;         // we should process "post_completed" queue 
 
        default:         // EFAULT
          ACE_ERROR_RETURN ((LM_ERROR,
@@ -108,26 +112,35 @@ ACE_SUN_Proactor::handle_events (u_long milli_seconds)
                         num_started_aio_),
                       -1);
        }
-   }
+    }
+  else
+    {
+      int error_status = 0;
+      int return_status = 0;
 
-  int error_status = 0;
-  int return_status = 0;
+      ACE_POSIX_Asynch_Result *asynch_result =
+        find_completed_aio (result,
+                            error_status,
+                            return_status);
 
-  ACE_POSIX_Asynch_Result *asynch_result =
-    find_completed_aio (result,
-                        error_status,
-                        return_status);
+      if (asynch_result != 0)
+        {
+          // Call the application code.
+          this->application_specific_code (asynch_result,
+                                       return_status, // Bytes transferred.
+                                       1,             // Success
+                                       0,             // No completion key.
+                                       error_status); // Error
+          retval ++ ;
 
-  if (asynch_result == 0)
-    return 0;
+        }
+    }
 
-  // Call the application code.
-  this->application_specific_code (asynch_result,
-                                   return_status, // Bytes transferred.
-                                   1,             // Success
-                                   0,             // No completion key.
-                                   error_status); // Error
-  return 1;    
+  // process post_completed results
+  retval += this->process_result_queue ();
+
+  return retval > 0 ? 1 : 0 ;
+
 }
 
 ACE_POSIX_Asynch_Result *
@@ -296,49 +309,54 @@ ACE_SUN_Proactor::cancel_aio (ACE_HANDLE handle)
 {
   ACE_TRACE ("ACE_SUN_Proactor::cancel_aio");
 
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->mutex_, -1));
-        
   int    num_total     = 0;
   int    num_cancelled = 0;
-  size_t ai = 0;
 
-  for (ai = 0; ai < aiocb_list_max_size_; ai++)
-    {
-      if (result_list_[ai] == 0)    //skip empty slot
-        continue ;
+  {
+    ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->mutex_, -1));
+          
+    size_t ai = 0;
 
-      if (result_list_[ai]->aio_fildes != handle)  //skip not our slot
-        continue ;
+    for (ai = 0; ai < aiocb_list_max_size_; ai++)
+      {
+        if (result_list_[ai] == 0)    //skip empty slot
+          continue ;
 
-      num_total++ ;  
+        if (result_list_[ai]->aio_fildes != handle)  //skip not our slot
+          continue ;
 
-      ACE_POSIX_Asynch_Result *asynch_result = result_list_[ai];
+        num_total++ ;  
 
-      int rc_cancel = 0 ;   // let assume canceled 
-    
-      if (aiocb_list_ [ai] == 0)  //deferred aio
-        num_deferred_aiocb_--;
-      else      //cancel started aio
-        rc_cancel = this->cancel_aiocb (asynch_result);
+        ACE_POSIX_Asynch_Result *asynch_result = result_list_[ai];
 
-      if (rc_cancel == 0)
-        {  
-          num_cancelled ++ ;   
+        int rc_cancel = 0 ;   // let assume canceled 
+      
+        if (aiocb_list_ [ai] == 0)  //deferred aio
+          num_deferred_aiocb_--;
+        else      //cancel started aio
+          rc_cancel = this->cancel_aiocb (asynch_result);
 
-          aiocb_list_[ai] = 0;
-          result_list_[ai] = 0;
-          aiocb_list_cur_size_--;
+        if (rc_cancel == 0)
+          {  
+            num_cancelled ++ ;   
 
-          // after aiocancel Sun does not notify us
-          // so we should send notification  
-          // to save POSIX behavoir.
-          // Also we should do this for deffered aio's
+            aiocb_list_[ai] = 0;
+            result_list_[ai] = 0;
+            aiocb_list_cur_size_--;
 
-          asynch_result->set_error (ECANCELED);
-          asynch_result->set_bytes_transferred (0);
-          this->post_completion (asynch_result);
-        }
-    }
+            // after aiocancel Sun does not notify us
+            // so we should send notification  
+            // to save POSIX behavoir.
+            // Also we should do this for deffered aio's
+
+            asynch_result->set_error (ECANCELED);
+            asynch_result->set_bytes_transferred (0);
+            this->putq_result (asynch_result);
+          }
+      }
+
+  } // release mutex_ 
+
 
   if (num_total == 0)
     return 1;  // ALLDONE

@@ -411,12 +411,12 @@ ACE_Proactor::run_event_loop (void)
   }
 
   // Run the event loop.
-  while (1)
+  for (;;)
     {
       // Check the end loop flag. It is ok to do this without lock,
       // since we care just whether it is zero or non-zero.
       if (ACE_Proactor::end_event_loop_ != 0)
-          break;
+        break;
 
       // <end_event_loop> is not set. Ready to do <handle_events>.
       result = ACE_Proactor::instance ()->handle_events ();
@@ -437,6 +437,10 @@ ACE_Proactor::run_event_loop (void)
 
   // Decrement the thread count.
   ACE_Proactor::event_loop_thread_count_ --;
+
+  if (ACE_Proactor::event_loop_thread_count_ > 0
+      && ACE_Proactor::end_event_loop_ != 0)
+    ACE_Proactor::post_wakeup_completions (1);
 
   return result;
 }
@@ -459,8 +463,8 @@ ACE_Proactor::run_event_loop (ACE_Time_Value &tv)
 
   // Early check. It is ok to do this without lock, since we care just
   // whether it is zero or non-zero.
-  if (ACE_Proactor::end_event_loop_ != 0 ||
-      tv == ACE_Time_Value::zero)
+  if (ACE_Proactor::end_event_loop_ != 0
+      || tv == ACE_Time_Value::zero)
     return 0;
 
   // First time you are in. Increment the thread count.
@@ -475,12 +479,12 @@ ACE_Proactor::run_event_loop (ACE_Time_Value &tv)
   }
 
   // Run the event loop.
-  while (1)
+  for (;;)
     {
       // Check for end of loop. It is ok to do this without lock,
       // since we care just whether it is zero or non-zero.
-      if (ACE_Proactor::end_event_loop_ != 0 ||
-          tv == ACE_Time_Value::zero)
+      if (ACE_Proactor::end_event_loop_ != 0 
+          || tv == ACE_Time_Value::zero)
         break;
 
       // <end_event_loop> is not set. Ready to do <handle_events>.
@@ -503,6 +507,10 @@ ACE_Proactor::run_event_loop (ACE_Time_Value &tv)
 
   // Decrement the thread count.
   ACE_Proactor::event_loop_thread_count_ --;
+
+  if (ACE_Proactor::event_loop_thread_count_  > 0 
+      && ACE_Proactor::end_event_loop_ != 0)
+    ACE_Proactor::post_wakeup_completions (1);
 
   return result;
 }
@@ -545,8 +553,11 @@ ACE_Proactor::end_event_loop (void)
   // Number of completions to post.
   int how_many = ACE_Proactor::event_loop_thread_count_;
 
+  if (how_many == 0)
+    return 0;
+
   // Reset the thread count.
-  ACE_Proactor::event_loop_thread_count_ = 0;
+  // ACE_Proactor::event_loop_thread_count_ = 0;
 
   // Post completions to all the threads so that they will all wake
   // up.
@@ -856,8 +867,6 @@ ACE_Proactor::create_asynch_write_stream_result (ACE_Handler &handler,
                                                                      signal_number);
 }
 
-
-
 ACE_Asynch_Read_File_Result_Impl *
 ACE_Proactor::create_asynch_read_file_result (ACE_Handler &handler,
                                               ACE_HANDLE handle,
@@ -882,8 +891,6 @@ ACE_Proactor::create_asynch_read_file_result (ACE_Handler &handler,
                                                                   priority,
                                                                   signal_number);
 }
-
-
 
 ACE_Asynch_Write_File_Result_Impl *
 ACE_Proactor::create_asynch_write_file_result (ACE_Handler &handler,
