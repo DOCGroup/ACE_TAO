@@ -27,12 +27,6 @@
 #include "ace/Reverse_Lock_T.h"
 #include "ace/Condition_Thread_Mutex.h"
 
-// Policy Validators
-#include "Default_Policy_Validator.h"
-
-// Policy Set
-#include "POA_Policy_Set.h"
-
 #include "PS_CurrentC.h"
 #include "ServantLocatorC.h"
 

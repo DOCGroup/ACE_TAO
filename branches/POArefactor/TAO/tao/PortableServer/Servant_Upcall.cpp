@@ -17,26 +17,13 @@
 #include "tao/ORB.h"
 #include "tao/ORB_Core.h"
 #include "tao/TSS_Resources.h"
-#include "tao/TAO_Server_Request.h"
-#include "tao/Stub.h"
-#include "tao/Profile.h"
-#include "tao/MProfile.h"
 #include "tao/debug.h"
-#include "tao/PortableInterceptor.h"
-#include "tao/ORBInitializer_Registry.h"
-#include "tao/Thread_Lane_Resources_Manager.h"
-#include "tao/Thread_Lane_Resources.h"
-#include "tao/Protocols_Hooks.h"
-
-#include "Policy_Creator_T.h"
 
 #if !defined (__ACE_INLINE__)
 # include "Servant_Upcall.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/OS_NS_string.h"
-
-#include "ace/Dynamic_Service.h"
 
 #include "Thread_Strategy.h"
 
