@@ -1,3 +1,9 @@
+Mon Nov  9 02:52:11 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* README: Fixed a typo where ACE-install.html was misspelled as
+ 	  ACE-Install.  Thanks to Michael Thomas
+ 	  <Michael.Thomas@Australia.Boeing.com> for reporting this.
+
 Sun Nov 08 22:00:22 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Message_Block.h: changed ACE_Message_Type to int, to
