@@ -1,5 +1,9 @@
 Tue Mar 16 19:48:57 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
+	* ace/Makefile and tests/Makefile: Reverted these files to the
+	  pre-Cache_Manager state.  The Cache_Manager files don't compile
+	  on g++ and vxworks and we need to make a release now.
+
 	* ace/Map_T.h (class ACE_Noop_Key_Generator): Added new class.
 	  This class makes it easy to use the map adapters when you don't
 	  care about generating new keys.
