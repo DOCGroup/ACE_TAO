@@ -1,3 +1,10 @@
+Wed Jan 21 20:12:38 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* configure.ac (ACE_CONFIG_COMMANDS):
+
+	  Include ACE version in configuration completion message to
+	  improve clarity.
+
 Wed Jan 21 20:17:34 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* ace/Message_Queue.i: Fixed ACE_Message_Queue_NT::is_empty()
