@@ -134,9 +134,10 @@ TAO_CEC_Default_Factory::init (int argc, char* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              const char* opt = arg_shifter.get_current ();
-              this->consumer_collection_ =
-                this->parse_collection_arg (opt);
+              const char *current_arg = arg_shifter.get_current ();
+              char *opt = ACE_OS::strdup (current_arg);
+              this->consumer_collection_ = this->parse_collection_arg (opt);
+              ACE_OS::free (opt);
               arg_shifter.consume_arg ();
             }
         }
