@@ -87,13 +87,14 @@ g++ -MM -DACE_LACKS_PRAGMA_ONCE $* | \
 if [ $DO_ACE_MAKE_DEPEND -eq 1 ]
 then
   SCRIPT=${TMP}_script
-  echo "s;\([-a-zA-Z0-9._]*\)\.o:;\\" > $SCRIPT
+  echo "s;\([-a-zA-Z0-9._+]*\)\.o:;\\" > $SCRIPT
   echo ".obj/\1.o .obj/\1.${SOEXT} ${VSHDIR}\1.o ${VSHDIR}\1.${SOEXT}:;" >> $SCRIPT
   TMP2=${TMP}_2
   cat $TMP | \
   sed \
       -e '/$(ACE_ROOT)\/ace\/config[^\.]*\.h/d' \
-      -e "s; /[-a-zA-Z0-9_./]*\.h;;g" \
+      -e "s; /[-a-zA-Z0-9_./+]*\.h;;g" \
+      -e 's/\\[ \t][ \t]*\\/\\/g' \
       -f $SCRIPT > $TMP2
   mv $TMP2 $TMP
   rm -f $TMP2
