@@ -254,7 +254,7 @@ public:
 
   static int gen_skel_helper (be_interface *,
                               be_interface *,
-                              TAO_OutStream *os);
+                              TAO_OutStream *);
   // Helper method passed to the template method to generate code for the
   // skeletons in the header and inline files.
 

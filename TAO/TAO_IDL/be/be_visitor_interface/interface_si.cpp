@@ -76,6 +76,11 @@ be_visitor_interface_si::visit_interface (be_interface *node)
                         -1);
     }
 
+  if (this->generate_amh_classes (node) == -1)
+    {
+      return -1;
+    }
+
   if (be_global->gen_thru_poa_collocation () 
       || be_global->gen_direct_collocation ())
     {
@@ -116,3 +121,16 @@ be_visitor_interface_si::visit_interface (be_interface *node)
 
   return 0;
 }
+
+int
+be_visitor_interface_si::generate_amh_classes (be_interface *node)
+{
+   if (be_global->gen_amh_classes ())
+    {
+      be_visitor_amh_interface_si amh_intf (this->ctx_);
+      return amh_intf.visit_interface (node);
+    }
+
+  return 0;
+}
+

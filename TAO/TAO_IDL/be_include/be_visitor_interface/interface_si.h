@@ -41,6 +41,9 @@ public:
 
   virtual int visit_interface (be_interface *node);
   // set the right context and make a visitor
+
+protected:
+  virtual int generate_amh_classes (be_interface *node);
 };
 
 #endif /* _BE_INTERFACE_INTERFACE_SI_H_ */

@@ -1,3 +1,25 @@
+Fri Nov 21 14:57:06 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_interface/amh_si.cpp:
+        * TAO_IDL/be_include/be_visitor_interface/amh_si.h:
+
+          New files containing a visitor that generates calls to
+          base skeleton methods for base classes in AMH. These
+          methods were not getting generated before.
+
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_visitor_interface.cpp:
+        * TAO_IDL/be/be_visitor_interface/amh_ss.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_si.cpp:
+        * TAO_IDL/be_include/be_interface.h:
+        * TAO_IDL/be_include/be_visitor_interface.h:
+        * TAO_IDL/be_include/be_visitor_interface/amh_sh.h:
+        * TAO_IDL/be_include/be_visitor_interface/interface_si.h:
+
+          Changes related to the bug fix above. Thanks to Malcolm
+          McRoberts <mmcroberts@ideorlando.org> for pointing out
+          the problem.
+
 Fri Nov 21 11:16:50 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/DynamicAny/DynSequence_i.cpp (equal):
