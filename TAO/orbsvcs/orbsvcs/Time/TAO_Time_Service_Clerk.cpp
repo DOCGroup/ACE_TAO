@@ -37,10 +37,10 @@ CosTime::UTO_ptr
 TAO_Time_Service_Clerk::universal_time (CORBA::Environment &TAO_IN_ENV)
 {
   TAO_UTO *uto = 0;
-
+  
   ACE_NEW_THROW_RETURN (uto,
 			TAO_UTO (this->get_time (),
-				 0,
+				 this->inaccuracy (),
 				 this->time_displacement_factor ()),
 			CORBA::NO_MEMORY (CORBA::COMPLETED_NO),
 			CosTime::UTO::_nil ());
@@ -87,9 +87,16 @@ TAO_Time_Service_Clerk::uto_from_utc (const TimeBase::UtcT &utc,
 {
   TAO_UTO *uto = 0;
 
+  // Use the low and high values of inaccuracy 
+  // to calculate the total inaccuracy.
+
+  TimeBase::InaccuracyT inaccuracy = utc.inacchi;
+  inaccuracy <<= 32;
+  inaccuracy |= utc.inacclo;
+  
   ACE_NEW_THROW_RETURN (uto,
 			TAO_UTO (utc.time,
-				 utc.inacclo + utc.inacchi,
+				 inaccuracy,
 				 utc.tdf),
 			CORBA::NO_MEMORY (CORBA::COMPLETED_NO),
 			CosTime::UTO::_nil ());
@@ -142,6 +149,18 @@ TAO_Time_Service_Clerk::time_displacement_factor (CORBA::Short tdf)
   this->time_displacement_factor_ = tdf;
 }
 
+// GET method for inaccuracy.
+TimeBase::InaccuracyT
+TAO_Time_Service_Clerk::inaccuracy (void)
+{
+  return this->inaccuracy_;
+}
 
+// SET method for inaccuracy.
+void
+TAO_Time_Service_Clerk::inaccuracy (TimeBase::InaccuracyT inaccuracy)
+{
+  this->inaccuracy_ = inaccuracy;
+}
 
 
