@@ -1061,7 +1061,7 @@ struct strrecvfd {};
 #if defined (ACE_HAS_UNICODE)
 #  if defined (ACE_HAS_STANDARD_CPP_LIBRARY) && (ACE_HAS_STANDARD_CPP_LIBRARY != 0)
 #    include /**/ <cwchar>
-#  elif defined (_MSC_VER) /* ACE_HAS_STANDARD_CPP_LIBRARY */
+#  elif !defined (__BORLANDC__) /* ACE_HAS_STANDARD_CPP_LIBRARY */
 #    include /**/ <wchar.h>
 #  endif /* ACE_HAS_STANDARD_CPP_LIBRARY */
 #elif defined (ACE_HAS_XPG4_MULTIBYTE_CHAR)
