@@ -51,7 +51,7 @@ class TAO_ORBSVCS_Export TAO_EC_Basic_Factory : public TAO_EC_Factory
   //   this class.
   //
 public:
-  TAO_EC_Basic_Factory (PortableServer::POA_ptr poa);
+  TAO_EC_Basic_Factory (void);
   // Constructor
 
   virtual ~TAO_EC_Basic_Factory (void);
@@ -95,11 +95,6 @@ public:
   virtual void
       destroy_proxy_push_supplier_set (TAO_EC_ProxyPushSupplier_Set*);
 
-  virtual PortableServer::POA_ptr
-       consumer_poa (CORBA::Environment& env);
-  virtual PortableServer::POA_ptr
-       supplier_poa (CORBA::Environment& env);
-
   virtual ACE_Lock* create_consumer_lock (void);
   virtual void destroy_consumer_lock (ACE_Lock*);
   virtual ACE_Lock* create_supplier_lock (void);
@@ -111,9 +106,6 @@ public:
   virtual void destroy_supplier_admin_lock (ACE_Lock*);
 
 private:
-  PortableServer::POA_var poa_;
-  // The POA
-
   TAO_EC_SupplierFiltering* supplier_filtering_;
   // The filtering strategy
 };

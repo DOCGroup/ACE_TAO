@@ -67,27 +67,15 @@ TAO_EC_Event_Channel::destroy_proxy_push_consumer (TAO_EC_ProxyPushConsumer* con
 }
 
 ACE_INLINE PortableServer::POA_ptr
-TAO_EC_Event_Channel::supplier_poa (CORBA::Environment &ACE_TRY_ENV)
+TAO_EC_Event_Channel::supplier_poa (CORBA::Environment&)
 {
-  return this->factory_->supplier_poa (ACE_TRY_ENV);
+  return PortableServer::POA::_duplicate (this->supplier_poa_.in ());
 }
 
 ACE_INLINE PortableServer::POA_ptr
-TAO_EC_Event_Channel::consumer_poa (CORBA::Environment &ACE_TRY_ENV)
+TAO_EC_Event_Channel::consumer_poa (CORBA::Environment &)
 {
-  return this->factory_->consumer_poa (ACE_TRY_ENV);
-}
-
-ACE_INLINE int
-TAO_EC_Event_Channel::supplier_poa (PortableServer::POA_ptr poa)
-{
-  return this->factory_->supplier_poa (poa);
-}
-
-ACE_INLINE int
-TAO_EC_Event_Channel::consumer_poa (PortableServer::POA_ptr poa)
-{
-  return this->factory_->consumer_poa (poa);
+  return PortableServer::POA::_duplicate (this->consumer_poa_.in ());
 }
 
 ACE_INLINE ACE_Lock*
