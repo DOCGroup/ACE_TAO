@@ -1,3 +1,8 @@
+Sat Jul 29 08:41:48 2000  David L. Levine <levine@cs.wustl.edu>
+
+        * tests/Makefile: don't build CDR_Array_Test with
+          ACE_HAS_GNUG_PRE_2_8.   Build it on LynxOS >= 3.1.0.
+
 Fri Jul 28 15:58:37 2000  Joe Hoffert  <joeh@cs.wustl.edu>
 
         * bin/pace_components:
@@ -7,7 +12,7 @@ Fri Jul 28 15:58:37 2000  Joe Hoffert  <joeh@cs.wustl.edu>
         * bin/ace_components:
           Adding commands for pace.
 
-        * include/makeinclude/wrapper_macros.GNU: 
+        * include/makeinclude/wrapper_macros.GNU:
           For PACE, modified so that it doesn't include the PACE
           library if we are inlining.
 
