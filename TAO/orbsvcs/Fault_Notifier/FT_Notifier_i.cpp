@@ -41,16 +41,30 @@
 
 // Implementation skeleton constructor
 TAO::FT_FaultNotifier_i::FT_FaultNotifier_i ()
-  : ior_output_file_(0)
+  : orb_ (0)
+  , poa_ (0)
+  , object_id_ (0)
+  , ior_ (0)
+  , ior_output_file_(0)
   , ns_name_(0)
+  . naming_context_ (0)
+  , this_name_ (1)
+  , rm_register_ (1)
+  , replication_manager_ (0)
+  , registered_ (0)
+  , identity_ ("")
+  , proxy_infos_ (0)
   , consumer_connects_(0)
   , consumer_disconnects_(0)
+  , notify_channel_ (0)
+  , filter_factory_ (0)
+  , supplier_admin_ (0)
+  , consumer_admin_ (0)
+  , structured_proxy_push_consumer_ (0)
+  , sequence_proxy_push_consumer_ (0)
   , quit_on_idle_(0)
   , quitting_(0)
   , gone_(0)
-  , rm_register_(1)
-  , registered_(0)
-  , replication_manager_(0)
 {
 }
 
@@ -165,7 +179,7 @@ const char * TAO::FT_FaultNotifier_i::identity () const
 
 PortableServer::POA_ptr TAO::FT_FaultNotifier_i::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
 {
-  return poa_.in();
+  return this->poa_.in();
 }
 
 
@@ -242,7 +256,7 @@ int TAO::FT_FaultNotifier_i::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL )
 
   ACE_CHECK_RETURN (-1);
 
-  if (CORBA::is_nil(this->poa_))
+  if (CORBA::is_nil(this->poa_.in ()))
   {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT (" (%P|%t) Unable to narrow the POA.\n")),
@@ -309,10 +323,10 @@ int TAO::FT_FaultNotifier_i::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL )
   ACE_CHECK_RETURN(-1);
 
   structured_proxy_push_consumer_
-    = ::CosNotifyChannelAdmin::StructuredProxyPushConsumer::_narrow(consumer
+    = ::CosNotifyChannelAdmin::StructuredProxyPushConsumer::_narrow(consumer.in ()
       ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN(-1);
-  if (CORBA::is_nil (this->structured_proxy_push_consumer_))
+  if (CORBA::is_nil (this->structured_proxy_push_consumer_.in ()))
   {
     ACE_ERROR_RETURN ((LM_ERROR,
        "%T %n (%P|%t) Should not occur: Unable to narrow Structured Proxy Push Consumer\n"),
@@ -337,10 +351,10 @@ int TAO::FT_FaultNotifier_i::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL )
   ACE_CHECK_RETURN (-1);
 
   this->sequence_proxy_push_consumer_
-    = ::CosNotifyChannelAdmin::SequenceProxyPushConsumer::_narrow(consumer
+    = ::CosNotifyChannelAdmin::SequenceProxyPushConsumer::_narrow(consumer.in ()
       ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
-  if (CORBA::is_nil (this->sequence_proxy_push_consumer_))
+  if (CORBA::is_nil (this->sequence_proxy_push_consumer_.in ()))
   {
     ACE_ERROR_RETURN ((LM_ERROR,
        "%T %n (%P|%t) Should not occur: Unable to narrow Sequence Proxy Push Consumer\n"),
@@ -360,7 +374,7 @@ int TAO::FT_FaultNotifier_i::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL )
   // find the channel administrator for consumers
   this->consumer_admin_ = this->notify_channel_->default_consumer_admin (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN(-1);
-  if (CORBA::is_nil (this->consumer_admin_))
+  if (CORBA::is_nil (this->consumer_admin_.in ()))
   {
     ACE_ERROR ((LM_ERROR,
       "%T %n (%P|%t) NIL consumer admin\n"
@@ -379,11 +393,11 @@ int TAO::FT_FaultNotifier_i::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL )
       ACE_TRY_CHECK;
       this->replication_manager_ = ::FT::ReplicationManager::_narrow(rm_obj.in() ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      if (!CORBA::is_nil (replication_manager_))
+      if (!CORBA::is_nil (replication_manager_.in ()))
       {
         // @@: should we check to see if there's already one registered?
-        FT::FaultNotifier_var notifier = FT::FaultNotifier::_narrow (this_obj);
-        if (! CORBA::is_nil (notifier))
+        FT::FaultNotifier_var notifier = FT::FaultNotifier::_narrow (this_obj.in ());
+        if (! CORBA::is_nil (notifier.in ()))
         {
           this->replication_manager_->register_fault_notifier(notifier.in ());
           ACE_DEBUG ((LM_DEBUG,
@@ -450,7 +464,7 @@ int TAO::FT_FaultNotifier_i::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL )
       this->naming_context_ =
         CosNaming::NamingContext::_narrow (naming_obj.in () ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
-      if (CORBA::is_nil(this->naming_context_))
+      if (CORBA::is_nil(this->naming_context_.in ()))
       {
         ACE_ERROR_RETURN ((LM_ERROR,
            "%T %n (%P|%t) Should not occur: Can't narrow initial reference to naming context.\n"),
@@ -506,6 +520,7 @@ void TAO::FT_FaultNotifier_i::push_sequence_fault (
   ACE_THROW_SPEC ((CORBA::SystemException, CosNotifyFilter::InvalidGrammar))
 {
   METHOD_ENTRY(TAO::FT_FaultNotifier_i::create_subscription_filter);
+  ACE_UNUSED_ARG (constraint_grammar); //@@todo
 
   CosNotifyFilter::Filter_var filter = this->filter_factory_->create_filter ("ETCL");
   METHOD_RETURN(TAO::FT_FaultNotifier_i::create_subscription_filter)
@@ -530,7 +545,7 @@ FT::FaultNotifier::ConsumerId TAO::FT_FaultNotifier_i::connect_structured_fault_
   for ( size_t pos = 0; looking && pos < this->proxy_infos_.size (); ++pos)
   {
     ProxyInfo & pi = this->proxy_infos_[pos];
-    if (CORBA::is_nil(pi.proxyVar_))
+    if (CORBA::is_nil(pi.proxyVar_.in ()))
     {
       infoPos = pos;
       looking = 0;
@@ -555,10 +570,10 @@ FT::FaultNotifier::ConsumerId TAO::FT_FaultNotifier_i::connect_structured_fault_
   this->consumer_connects_ += 1;
 
   ::CosNotifyChannelAdmin::StructuredProxyPushSupplier_var proxySupplier
-    = ::CosNotifyChannelAdmin::StructuredProxyPushSupplier::_narrow(info.proxyVar_
+    = ::CosNotifyChannelAdmin::StructuredProxyPushSupplier::_narrow(info.proxyVar_.in ()
         ACE_ENV_ARG_PARAMETER);
 
-  if ( CORBA::is_nil (proxySupplier))
+  if ( CORBA::is_nil (proxySupplier.in ()))
   {
     // this is a shoould-not-occur situation.  The consumer admin returned
     // the wrong kind of object.
@@ -597,7 +612,7 @@ FT::FaultNotifier::ConsumerId TAO::FT_FaultNotifier_i::connect_sequence_fault_co
   for ( size_t pos = 0; looking && pos < this->proxy_infos_.size (); ++pos)
   {
     ProxyInfo & pi = this->proxy_infos_[pos];
-    if (CORBA::is_nil(pi.proxyVar_))
+    if (CORBA::is_nil(pi.proxyVar_.in ()))
     {
       infoPos = pos;
       looking = 0;
@@ -622,9 +637,9 @@ FT::FaultNotifier::ConsumerId TAO::FT_FaultNotifier_i::connect_sequence_fault_co
   this->consumer_connects_ += 1;
 
   ::CosNotifyChannelAdmin::SequenceProxyPushSupplier_var proxySupplier
-    = ::CosNotifyChannelAdmin::SequenceProxyPushSupplier::_narrow(info.proxyVar_
+    = ::CosNotifyChannelAdmin::SequenceProxyPushSupplier::_narrow(info.proxyVar_.in ()
       ACE_ENV_ARG_PARAMETER);
-  if ( CORBA::is_nil (proxySupplier))
+  if ( CORBA::is_nil (proxySupplier.in ()))
   {
     // this is a shoould-not-occur situation.  The consumer admin returned
     // the wrong kind of object.
@@ -657,16 +672,16 @@ void TAO::FT_FaultNotifier_i::disconnect_consumer (
   if (index < this->proxy_infos_.size())
   {
     ProxyInfo & info = this->proxy_infos_[index];
-    if (CORBA::is_nil(info.proxyVar_) )
+    if (CORBA::is_nil(info.proxyVar_.in ()) )
     {
       ACE_THROW(CosEventComm::Disconnected());
     }
     else
     {
       ::CosNotifyChannelAdmin::StructuredProxyPushSupplier_var proxySupplier
-        = ::CosNotifyChannelAdmin::StructuredProxyPushSupplier::_narrow(info.proxyVar_
+        = ::CosNotifyChannelAdmin::StructuredProxyPushSupplier::_narrow(info.proxyVar_.in ()
             ACE_ENV_ARG_PARAMETER);
-      if (! CORBA::is_nil (proxySupplier))
+      if (! CORBA::is_nil (proxySupplier.in ()))
       {
         proxySupplier->disconnect_structured_push_supplier ();
         info.proxyVar_ = ::CosNotifyChannelAdmin::ProxySupplier::_nil();
@@ -674,9 +689,9 @@ void TAO::FT_FaultNotifier_i::disconnect_consumer (
       else
       {
         ::CosNotifyChannelAdmin::SequenceProxyPushSupplier_var proxySupplier
-          = ::CosNotifyChannelAdmin::SequenceProxyPushSupplier::_narrow(info.proxyVar_
+          = ::CosNotifyChannelAdmin::SequenceProxyPushSupplier::_narrow(info.proxyVar_.in ()
               ACE_ENV_ARG_PARAMETER);
-        if (! CORBA::is_nil (proxySupplier))
+        if (! CORBA::is_nil (proxySupplier.in ()))
         {
           proxySupplier->disconnect_sequence_push_supplier ();
           info.proxyVar_ = ::CosNotifyChannelAdmin::ProxySupplier::_nil();
