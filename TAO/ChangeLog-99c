@@ -1,3 +1,23 @@
+Sat Jun 26 18:38:26 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* tao/{IIOP,UIOP}_Connect.cpp:
+
+	  Clarified connection handler output.
+
+	* tao/UIOP_Connect.cpp (enum): 
+
+	  Fixed duplicate starting enumeration value (for use with
+	  timeprobes).
+
+	* tao/UIOP_Connect.cpp (open):
+
+	  Fixed incorrect array size used when making call to
+	  addr_to_string().
+
+	* tao/UIOP_Transport.h:
+
+	  Comment updates.
+
 Sat Jun 26 16:24:39 1999  Marina Spivak  <marina@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/orbsvcs.dsp
