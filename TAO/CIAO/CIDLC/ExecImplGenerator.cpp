@@ -163,7 +163,7 @@ ExecImplGenerator::configure_stream (string const& suffix_option,
                                         default_suffix);
     string file_expr =
       cl_.get_value (regex_option,
-                     "/(\\.(idl|cidl))?$/" + file_suffix + "/");
+                     "/(\\.(idl|cidl|cdl))?$/" + file_suffix + "/");
 
     string file_name = regex::perl_s (file_name_, file_expr);
 

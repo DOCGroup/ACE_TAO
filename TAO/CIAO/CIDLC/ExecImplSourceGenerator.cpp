@@ -1289,7 +1289,7 @@ ExecImplSourceEmitter::pre (TranslationUnit& u)
                                       "_exec.h");
 
   file_name = regex::perl_s (file_name,
-                             "/(\\.(idl|cidl))?$/"
+                             "/(\\.(idl|cidl|cdl))?$/"
                              + file_suffix
                              + "/");
 

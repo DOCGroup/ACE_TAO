@@ -2048,7 +2048,7 @@ namespace
     {
       os << "#include \""
          << regex::perl_s (qi.file ().string (),
-                           "/(\\.(idl|cidl))?$/S.h/")
+                           "/(\\.(idl|cidl|cdl))?$/S.h/")
          << "\""
          << endl;
     }
@@ -2058,7 +2058,7 @@ namespace
     {
       os << "#include \""
          << regex::perl_s (bi.file ().string (),
-                           "/(\\.(idl|cidl))?$/S.h/")
+                           "/(\\.(idl|cidl|cdl))?$/S.h/")
          << "\""
          << endl;
     }
@@ -2135,7 +2135,7 @@ ServantHeaderEmitter::pre (TranslationUnit& u)
   // they are in synch with the IDL compiler's options.
   os << "#include \""
      << regex::perl_s (file_name,
-                       "/(\\.(idl|cidl))?$/" + suffix + "C.h/")
+                       "/(\\.(idl|cidl|cdl))?$/" + suffix + "C.h/")
      << "\""
      << endl << endl;
 
