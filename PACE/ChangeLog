@@ -1,3 +1,8 @@
+Fri Jun 29 15:52:28 2001  Joe Hoffert  <joeh@cs.wustl.edu>
+
+        * pace/config/platform.h: 
+          Remove "#error "Here in platform.h for Win32" message.
+
 Tue Jun 12 14:46:48 2001  Joe Hoffert  <joeh@cs.wustl.edu>
 
         * pace/vxworks/unistd.inl: 

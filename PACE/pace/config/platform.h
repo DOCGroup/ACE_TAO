@@ -81,7 +81,6 @@
 # define PACE_LYNXOS 0
 # define PACE_SUNOS 0
 # define PACE_VXWORKS 0
-#error "Here in platform.h for Win32"
 #endif
 
 #endif /* PACE_CONFIG_PLATFORM_H */
