@@ -24,18 +24,15 @@
 
 #include "ace/pre.h"
 #include "tao/orbconf.h"
-#include "tao/corba.h"
-
-#if (TAO_HAS_CORBA_MESSAGING == 1)
 
 #include "tao/corbafwd.h"
 
 #include "messaging_export.h"
 
-#if (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1)
+
 #include "tao/ValueBase.h"
 #include "tao/ValueFactory.h"
-#endif /* TAO_HAS_AMI_CALLBACK == 1 || TAO_HAS_AMI_POLLER == 1 */
+
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -2058,7 +2055,7 @@ TAO_NAMESPACE  Messaging
   
 #endif /* TAO_HAS_MAX_HOPS_POLICY == 1 */
 
-#if (TAO_HAS_QUEUE_ORDER_POLICY == 1)
+
   
   TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong QUEUE_ORDER_POLICY_TYPE;
   
@@ -2071,7 +2068,7 @@ TAO_NAMESPACE  Messaging
   
 #endif /* end #if !defined */
   
-#endif /* TAO_HAS_QUEUE_ORDER_POLICY == 1 */
+
   
   
 #if !defined (_MESSAGING_QUEUEORDERPOLICY___VAR_CH_)
@@ -2895,5 +2892,4 @@ TAO_Messaging_Export CORBA::Boolean operator>> (TAO_InputCDR &, Messaging::Reply
 
 #include "ace/post.h"
 
-#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 #endif /* ifndef */
