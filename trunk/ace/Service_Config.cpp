@@ -641,9 +641,6 @@ ACE_Service_Config::close (void)
 {
   ACE_TRACE ("ACE_Service_Config::close");
 
-  if (!ACE_Service_Config::debug_)
-    ACE_Log_Msg::disable_debug_messages ();
-
   // ACE_Service_Config must be deleted before the Singletons are
   // closed so that an object's fini() method may reference a
   // valid ACE_Reactor.
@@ -656,9 +653,6 @@ ACE_Service_Config::close (void)
   // Delete the dynamically allocated static_svcs instance.
   delete ACE_Service_Config::static_svcs_;
   ACE_Service_Config::static_svcs_ = 0;
-
-  if (!ACE_Service_Config::debug_)
-    ACE_Log_Msg::enable_debug_messages ();
 
   return 0;
 }
