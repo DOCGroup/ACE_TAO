@@ -73,6 +73,9 @@ private:
   u_char input_available_;
   // Flag indicating whether or not input is available.  Only valid
   // when <expecting_response_> is non-zero.
+
+  u_char reactive_;
+  // Flag indicating whether or not we are running reactively.
 };
 
 class TAO_ORB_Core;
@@ -136,7 +139,7 @@ protected:
 
   virtual void send_response (TAO_OutputCDR &response);
   // Send <response> to the client on the other end.
-  
+
   void send_error (CORBA::ULong request_id, CORBA::Environment &env);
   // Send <error> to the client on the other end, which
   // means basically sending the exception.
