@@ -1,3 +1,15 @@
+Fri Sep 11 08:54:41 EDT 1998  James CE Johnson <jcej@lads.com>
+
+        * docs/tutorials/001/logger.h
+	  Logging_Handler::open() should return 0 on success.
+
+        * docs/tutorials/002/server.cpp
+          docs/tutorials/002/page02.html
+	  Provide 'g_reactor' to the acceptor's open().  If you
+	  don't do this, the app will core dump on ^C
+
+	  Thanks to Krishna Padmasola for helping me see these.
+
 Thu Sep 10 16:53:21 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tests/Upgradable_RW_Test.cpp: 
