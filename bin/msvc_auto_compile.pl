@@ -268,6 +268,9 @@ while ( $#ARGV >= 0  &&  $ARGV[0] =~ /^(-|\/)/ )
     elsif ($ARGV[0] =~ '-TAO') {       # Build TAO and its programs
         print "Building TAO\n" if ( $verbose );
         $use_custom_dir = 1;
+	# Other tests depend on the lib in this dir so we need to force it 
+	# to the front of the build list. This is pretty ugly.
+	push @directories, ("$ACE_ROOT\\TAO\\orbsvcs\\tests\\Notify\\lib");
 	push @directories, ("$ACE_ROOT\\TAO");
     }
     elsif ($ARGV[0] =~ '-dir') {        # Compile only a specific directory
