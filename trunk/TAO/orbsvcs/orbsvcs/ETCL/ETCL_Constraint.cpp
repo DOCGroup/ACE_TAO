@@ -108,7 +108,7 @@ TAO_ETCL_Literal_Constraint::TAO_ETCL_Literal_Constraint (CORBA::Any * any)
       break;
     case TAO_ETCL_BOOLEAN:
       {
-        CORBA_Any::to_boolean tmp (this->op_.bool_);
+        CORBA::Any::to_boolean tmp (this->op_.bool_);
         (*any) >>= tmp;
       }
       break;
