@@ -1,3 +1,12 @@
+Thu Nov 20 00:36:34 1997  James C Hu  <jxh@cs.wustl.edu>
+
+	* server/Pipeline.h: Added methods and members so that the
+	  pipeline can be both push and pull driven.
+
+	* server/Pipeline.cpp: Made the pipeline a doubly linked list of
+	  components, so that it can be operated as push-driven or
+	  pull-driven pipelines.
+
 Wed Nov 19 05:10:38 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* server/HTTP_Handler.h: Added the keyword "virtual" on the open()
