@@ -236,7 +236,7 @@ TAO_Property_Evaluator::property_value (int index,
   else if (this->supports_dp_)
     {
       // Property is defined at this point.
-      DP_Eval* dp_eval;
+      CosTradingDynamic::DynamicPropEval_var dp_eval;
       CosTradingDynamic::DynamicProp* dp_struct;
       const CORBA::String_var name = this->props_[index].name;
       const CORBA::Any& value = this->props_[index].value;
@@ -246,16 +246,23 @@ TAO_Property_Evaluator::property_value (int index,
 
 #if defined TAO_HAS_OBJECT_IN_STRUCT_MARSHAL_BUG
       CORBA::ORB_ptr orb = TAO_ORB_Core_instance ()->orb ();
-      CORBA::Object_ptr obj = orb->string_to_object (dp_struct->eval_if, _env);
+      CORBA::Object_var obj = orb->string_to_object (dp_struct->eval_if, _env);
       TAO_CHECK_ENV_RETURN (_env, 0);
       dp_eval = CosTradingDynamic::DynamicPropEval::_narrow (obj, _env);
       TAO_CHECK_ENV_RETURN (_env, 0);
 #else
-      dp_eval = dp_struct->eval_if;
+      dp_eval = 
+	CosTradingDynamic::DynamicPropEval::_duplicate (dp_struct->eval_if);
 #endif /* TAO_HAS_OBJECT_IN_STRUCT_MARSHAL_BUG */
 	  
-      if (CORBA::is_nil (dp_eval))
-	TAO_THROW_RETURN (CosTradingDynamic::DPEvalFailure (), prop_val);
+      if (CORBA::is_nil (dp_eval.ptr ()))
+	{
+	  TAO_THROW_RETURN (CosTradingDynamic::
+			    DPEvalFailure (name, 
+					   CORBA::TypeCode::_nil (), 
+					   CORBA::Any ()),
+			    prop_val);
+	}
       else
 	{
 	  CORBA::TypeCode* type = dp_struct->returned_type;
