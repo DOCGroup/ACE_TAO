@@ -1,3 +1,9 @@
+Wed Sep  1 20:27:47 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
+	* orbsvcs/orbsvcs/AV/sfp.cpp : Fixed warnings on SunOS EGCS. This
+	  is with native exceptions disabled.
+
 Wed Sep  1 19:18:53 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Makefile :  Added the missing AV files to the AV
