@@ -711,9 +711,10 @@ CORBA_ORB::multicast_query (char *buf,
   
   // Start listening.
   if (acceptor.accept (stream, 0, &tv) == -1)
-    ACE_ERROR_RETURN ((LM_DEBUG,
-		       "multicast_query : Unable to accept\n"),
-		      0);
+    if (TAO_debug_level > 0)
+      ACE_ERROR_RETURN ((LM_DEBUG,
+			 "multicast_query : Unable to accept\n"),
+			0);
   
   // Receive the IOR.  
   n_bytes = stream.recv (buf,
