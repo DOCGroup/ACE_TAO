@@ -51,7 +51,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo
-# ADD LIB32 /nologo /out:"TypeCodeFactorys.lib"
+# ADD LIB32 /nologo /out:"TAO_TypeCodeFactorys.lib"
 
 !ELSEIF  "$(CFG)" == "TypeCodeFactory_Static - Win32 Static Debug"
 
@@ -76,7 +76,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo
-# ADD LIB32 /nologo /out:"TypeCodeFactorysd.lib"
+# ADD LIB32 /nologo /out:"TAO_TypeCodeFactorysd.lib"
 
 !ENDIF 
 
