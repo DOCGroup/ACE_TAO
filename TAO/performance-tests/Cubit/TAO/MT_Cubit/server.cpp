@@ -511,7 +511,7 @@ Server::start_servants (ACE_Thread_Manager *serv_thr_mgr,
 {
 
   ACE_ARGV tmp_args (this->argv_);
-  char *arg_buf = tmp_args.buf ();
+  const char *arg_buf = tmp_args.buf ();
 
   char *low_thread_args;
 
@@ -540,7 +540,7 @@ Server::start_servants (ACE_Thread_Manager *serv_thr_mgr,
 
   for (i = 0; i < this->argc_ ; i++)
     {
-      if (ACE_OS::strcmp (this->argv_[i], "-p" == 0)
+      if (ACE_OS::strcmp (this->argv_[i], "-p") == 0
           && i - 1 < this->argc_)
         {
           GLOBALS::instance ()->base_port =
