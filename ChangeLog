@@ -1,3 +1,12 @@
+Wed Feb 11 15:31:06 GMT 2004  Paul Morrison  <epm@prismtechnologies.com>
+        * TAO/orbsvcs/Logging_Service/Basic_Logging_Service/Makefile
+        * TAO/orbsvcs/Logging_Service/Event_Logging_Service/Makefile
+        * TAO/orbsvcs/Logging_Service/Notify_Logging_Service/Makefile
+        * TAO/orbsvcs/examples/Log/RTEvent/Makefile
+
+          Added -lTAO_Svc_Utils to LDLIBS line to remove link errors with
+          LynxOS build.
+
 Wed Feb 11 07:36:16 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/config/default.rel:
