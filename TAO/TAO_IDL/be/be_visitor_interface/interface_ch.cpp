@@ -205,14 +205,13 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
           << ");" << be_uidt_nl;
 
       // There's no need for an _unchecked_narrow for locality constraint object.
-      if (!idl_global->gen_locality_constraint ())
-        *os << "static " << node->local_name () << "_ptr "
-            << "_unchecked_narrow (" << be_idt << be_idt_nl
-            << "CORBA::Object_ptr obj," << be_nl
-            << "CORBA::Environment &env = " << be_idt_nl
-            << "TAO_default_environment ()"
-            << be_uidt << be_uidt_nl
-            << ");" << be_uidt_nl;
+      *os << "static " << node->local_name () << "_ptr "
+          << "_unchecked_narrow (" << be_idt << be_idt_nl
+          << "CORBA::Object_ptr obj," << be_nl
+          << "CORBA::Environment &env = " << be_idt_nl
+          << "TAO_default_environment ()"
+          << be_uidt << be_uidt_nl
+          << ");" << be_uidt_nl;
 
       // This method is defined in the header file to workaround old
       // g++ problems
