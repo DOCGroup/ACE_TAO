@@ -105,6 +105,7 @@
 // #define      ACE_HAS_POSIX_TIME
 #define ACE_HAS_IP_MULTICAST
 #define ACE_HAS_DIRENT
+#define ACE_LACKS_READDIR_R
 #define ACE_HAS_GPERF
 
 #endif /* ACE_CONFIG_SCO_5_0_0_H */
