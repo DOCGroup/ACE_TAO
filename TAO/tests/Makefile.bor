@@ -23,7 +23,8 @@ DIRS = \
         Bug_1482_Regression \
 	Bug_1551_Regression \
 	Bug_1568_Regression \
-	Bug_1694_Test \
+	Bug_1670_Regression \
+	Bug_1693_Test \
 	CDR \
 	Client_Leaks \
 	Codec \

@@ -1,3 +1,22 @@
+Mon Dec 29 11:15:39 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/Bug_1670_Regression/Makefile:
+	* tests/Bug_1670_Regression/Makefile.bor:
+	* tests/Bug_1670_Regression/Test.idl:
+	* tests/Bug_1670_Regression/client.bor:
+	* tests/Bug_1670_Regression/client.cpp:
+	* tests/Bug_1670_Regression/run_test.pl:
+	* tests/Bug_1670_Regression/server.bor:
+	* tests/Bug_1670_Regression/server.cpp:
+
+	  Regression test for Bug 1670 which  was also fixed long
+	  back. Thanks to Carlos O'Ryan for providing this test.
+	
+	* tests/Makefile:
+	* tests/Makefile.bor:
+
+	  Updates for the daily builds.
+
 Mon Dec 29 11:02:16 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/Bug_1568_Regression/Makefile.bor:
