@@ -8,8 +8,9 @@
 #include	<assert.h>
 #include	<limits.h>
 #include	<string.h>
-#include	<orb.h>
-#include "object.h"
+#include	"orb.h"
+#include    "object.h"
+#include    "optable.h"
 
 #include	<stub.h>
 #include	"debug.h"
