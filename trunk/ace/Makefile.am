@@ -481,6 +481,7 @@ nobase_include_HEADERS = \
   Future_Set.h \
   Get_Opt.h \
   Global_Macros.h \
+  Guard_T.h \
   Handle_Gobbler.h \
   Handle_Ops.h \
   Handle_Set.h \
@@ -494,6 +495,7 @@ nobase_include_HEADERS = \
   INET_Addr.h \
   IOStream.h \
   IOStream_T.h \
+  IO_Cntl_Msg.h \
   IO_SAP.h \
   IPC_SAP.h \
   If_Then_Else.h \
@@ -944,6 +946,7 @@ nobase_include_HEADERS = \
   Functor_String.inl \
   Functor_T.inl \
   Get_Opt.inl \
+  Guard_T.inl \
   Handle_Gobbler.inl \
   Handle_Set.inl \
   Hash_Cache_Map_Manager_T.inl \
@@ -1167,6 +1170,7 @@ nobase_include_HEADERS = \
   Functor_T.cpp \
   Future.cpp \
   Future_Set.cpp \
+  Guard_T.cpp \
   Hash_Cache_Map_Manager_T.cpp \
   Hash_Map_Manager_T.cpp \
   Hash_Map_With_Allocator_T.cpp \
