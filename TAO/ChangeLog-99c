@@ -1,8 +1,9 @@
-Sun May 30 13:47:27 1999  Ossama Othman  <othman@cs.wustl.edu>
+Sun May 30 13:51:18 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* tao/Acceptor_Registry.cpp:
 	* tao/Connector_Registry.cpp:
 	* tao/Protocol_Factory.cpp:
+	* tao/Resource_Factory.cpp:
 
 	  Removed semi-colons at end of pragma template instantiations.
 
