@@ -75,10 +75,6 @@ namespace CIAO
       /// Process the Bridge type when the iterator is not passed
       void process_bridge (::Deployment::Bridge &bridge);
 
-      /// Process the Bridge type when the iterator is passed
-      static void process_bridge_with_iter (DOMNodeIterator * iter,
-                                            ::Deployment::Bridge &bridge);
-
       /// Process the name attribute
       void process_name (const XMLCh* name, ::Deployment::Bridge &bridge);
 

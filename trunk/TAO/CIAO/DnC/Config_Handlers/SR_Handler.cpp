@@ -8,9 +8,9 @@
 #include "ace/Log_Msg.h"
 
 #include "Node_Handler.h"
-#include "IC_handler.h"
-#include "SP_handler.h"
-#include "SR_handler.h"
+#include "IC_Handler.h"
+#include "SP_Handler.h"
+#include "SR_Handler.h"
 
 #include <iostream>
 
