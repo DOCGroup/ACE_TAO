@@ -110,24 +110,10 @@ be_visitor_args_pre_docall_cs::visit_array (be_array *node)
       if (node->size_type () == be_decl::VARIABLE)
         {
           os->indent ();
-#if 0 /* ASG */
-          *os << bt->name () << "_slice *&_tao_base_" << arg->local_name ()
-              << " = " << arg->local_name () << ".ptr ();" << be_nl;
-          if (!this->void_return_type ())
-            {
-              *os << "ACE_ALLOCATOR_RETURN (_tao_base_" << arg->local_name ()
-                  << ", " << bt->name () << "_alloc (), _tao_retval);\n";
-            }
-          else
-            {
-              *os << "ACE_ALLOCATOR (_tao_base_" << arg->local_name ()
-                  << ", " << bt->name () << "_alloc ());\n";
-            }
-#endif
           if (!this->void_return_type ())
             {
               *os << "ACE_ALLOCATOR_RETURN (" << arg->local_name ()
-                  << ".ptr (), " << bt->name () << "_alloc (), _tao_retval);\n";
+                  << ".ptr (), " << bt->name () << "_alloc (), 0);\n";
             }
           else
             {
@@ -200,14 +186,6 @@ be_visitor_args_pre_docall_cs::visit_predefined_type (be_predefined_type *node)
   // get the argument node
   be_argument *arg = this->ctx_->be_node_as_argument ();
 
-#if 0
-  // if the current type is an alias, use that
-  be_type *bt;
-  if (this->ctx_->alias ())
-    bt = this->ctx_->alias ();
-  else
-    bt = node;
-#endif
 
   // pre do_static_call processing is valid only for pseudo objects and for Any
   switch (node->pt ())
@@ -217,11 +195,6 @@ be_visitor_args_pre_docall_cs::visit_predefined_type (be_predefined_type *node)
       switch (this->direction ())
         {
         case AST_Argument::dir_OUT:
-#if 0
-          os->indent ();
-          *os << bt->name () << "_ptr &_tao_base_" << arg->local_name ()
-              << " = " << arg->local_name () << ".ptr ();\n";
-#endif
           break;
         default:
           break;
@@ -234,24 +207,10 @@ be_visitor_args_pre_docall_cs::visit_predefined_type (be_predefined_type *node)
         {
         case AST_Argument::dir_OUT:
           os->indent ();
-#if 0 /* ASG */
-          *os << bt->name () << " *&_tao_base_" << arg->local_name ()
-              << " = " << arg->local_name () << ".ptr ();" << be_nl;
-          if (!this->void_return_type ())
-            {
-              *os << "ACE_NEW_RETURN (_tao_base_" << arg->local_name ()
-                  << ", CORBA::Any, _tao_retval);\n";
-            }
-          else
-            {
-              *os << "ACE_NEW (_tao_base_" << arg->local_name ()
-                  << ", CORBA::Any);\n";
-            }
-#endif
           if (!this->void_return_type ())
             {
               *os << "ACE_NEW_RETURN (" << arg->local_name ()
-                  << ".ptr (), CORBA::Any, _tao_retval);\n";
+                  << ".ptr (), CORBA::Any, 0);\n";
             }
           else
             {
@@ -288,24 +247,10 @@ be_visitor_args_pre_docall_cs::visit_sequence (be_sequence *node)
     case AST_Argument::dir_OUT:
       // caller must have allocated the pointer
       os->indent ();
-#if 0 /* ASG */
-      *os << bt->name () << " *&_tao_base_" << arg->local_name ()
-          << " = " << arg->local_name () << ".ptr ();" << be_nl;
-      if (!this->void_return_type ())
-        {
-          *os << "ACE_NEW_RETURN (_tao_base_" << arg->local_name ()
-              << ", " << bt->name () << ", _tao_retval);\n";
-        }
-      else
-        {
-          *os << "ACE_NEW (_tao_base_" << arg->local_name ()
-              << ", " << bt->name () << ");\n";
-        }
-#endif
       if (!this->void_return_type ())
         {
           *os << "ACE_NEW_RETURN (" << arg->local_name ()
-              << ".ptr (), " << bt->name () << ", _tao_retval);\n";
+              << ".ptr (), " << bt->name () << ", 0);\n";
         }
       else
         {
@@ -345,24 +290,10 @@ be_visitor_args_pre_docall_cs::visit_structure (be_structure *node)
         case AST_Argument::dir_OUT:
           // caller must have allocated the pointer
           os->indent ();
-#if 0 /* ASG */
-          *os << bt->name () << " *&_tao_base_" << arg->local_name ()
-              << " = " << arg->local_name () << ".ptr ();" << be_nl;
-          if (!this->void_return_type ())
-            {
-              *os << "ACE_NEW_RETURN (_tao_base_" << arg->local_name ()
-                  << ", " << bt->name () << ", _tao_retval);\n";
-            }
-          else
-            {
-              *os << "ACE_NEW (_tao_base_" << arg->local_name ()
-                  << ", " << bt->name () << ");\n";
-            }
-#endif
           if (!this->void_return_type ())
             {
               *os << "ACE_NEW_RETURN (" << arg->local_name ()
-                  << ".ptr (), " << bt->name () << ", _tao_retval);\n";
+                  << ".ptr (), " << bt->name () << ", 0);\n";
             }
           else
             {
@@ -396,24 +327,10 @@ be_visitor_args_pre_docall_cs::visit_union (be_union *node)
         {
         case AST_Argument::dir_OUT:
           os->indent ();
-#if 0 /* ASG */
-          *os << bt->name () << " *&_tao_base_" << arg->local_name ()
-              << " = " << arg->local_name () << ".ptr ();" << be_nl;
-          if (!this->void_return_type ())
-            {
-              *os << "ACE_NEW_RETURN (_tao_base_" << arg->local_name ()
-                  << ", " << bt->name () << ", _tao_retval);\n";
-            }
-          else
-            {
-              *os << "ACE_NEW (_tao_base_" << arg->local_name ()
-                  << ", " << bt->name () << ");\n";
-            }
-#endif
           if (!this->void_return_type ())
             {
               *os << "ACE_NEW_RETURN (" << arg->local_name ()
-                  << ".ptr (), " << bt->name () << ", _tao_retval);\n";
+                  << ".ptr (), " << bt->name () << ", 0);\n";
             }
           else
             {

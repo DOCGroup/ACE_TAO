@@ -111,7 +111,7 @@ int be_visitor_operation_thru_poa_collocated_ss::visit_operation (be_operation *
   if (!visitor)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_operation_cs::"
+                         "be_visitor_operation_ss::"
                          "visit_operation - "
                          "Bad visitor to return type\n"),
                         -1);
@@ -121,7 +121,7 @@ int be_visitor_operation_thru_poa_collocated_ss::visit_operation (be_operation *
     {
       delete visitor;
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_operation_cs::"
+                         "(%N:%l) be_visitor_operation_ss::"
                          "visit_operation - "
                          "codegen for argument list failed\n"),
                         -1);
@@ -134,7 +134,7 @@ int be_visitor_operation_thru_poa_collocated_ss::visit_operation (be_operation *
     {
       // Declare a return type
       ctx = *this->ctx_;
-      ctx.state (TAO_CodeGen::TAO_OPERATION_RETVAL_DECL_CS);
+      ctx.state (TAO_CodeGen::TAO_OPERATION_RETVAL_DECL_SS);
       visitor = tao_cg->make_visitor (&ctx);
       if (!visitor || (bt->accept (visitor) == -1))
         {
@@ -157,7 +157,7 @@ int be_visitor_operation_thru_poa_collocated_ss::visit_operation (be_operation *
             {
               delete visitor;
               ACE_ERROR_RETURN ((LM_ERROR,
-                                 "(%N:%l) be_visitor_operation_thru_poa_collocated_cs::"
+                                 "(%N:%l) be_visitor_operation_thru_poa_collocated_ss::"
                                  "gen_check_exception - "
                                  "codegen failed\n"),
                                 -1);
