@@ -56,6 +56,11 @@ public:
 
   TAO_IIOP_Profile (const char* host,
                     CORBA::UShort port,
+                    const TAO_ObjectKey& object_key,
+		    const ACE_INET_Addr& addr);
+
+  TAO_IIOP_Profile (const char* host,
+                    CORBA::UShort port,
                     const TAO_ObjectKey& object_key);
 
   TAO_IIOP_Profile (const char* host,

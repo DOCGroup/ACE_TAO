@@ -830,22 +830,41 @@ CORBA_ORB::create_stub_object (const TAO_ObjectKey &key,
   else
     id = 0;
 
-  // First we create a profile list, well actually a list
-  // of one!
-  TAO_IIOP_Profile *pfile =
-    new TAO_IIOP_Profile (TAO_ORB_Core_instance ()->orb_params ()->addr (),
-                          key);
+  TAO_ORB_Core *orb_core = TAO_ORB_Core_instance ();
 
-  STUB_Object *data = 0;
-  // @@ replace IIOP::Profile with something more appropriate!!
-  data = new STUB_Object (id, pfile);
+  // First we create a profile list, well actually a list of one!
+  // @@ should go to the acceptor for this, the orb delegates to the acceptor
+  // to create Profiles!
+  // We do not use ACE_NEW cause we want to return an exception if this
+  // fails.
+  TAO_IIOP_Profile *pfile = 
+      new TAO_IIOP_Profile (orb_core->orb_params ()->host (),
+                            orb_core->orb_params ()->addr ().get_port_number (),
+                            key,
+                            TAO_ORB_Core_instance ()->orb_params ()->addr ());
+
+  STUB_Object *data =0;
+
+  if ( ! pfile )
+    {
+      env.exception (new CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
+      return 0;
+    }
+  else
+    {
+      // We do not use ACE_NEW_RETURN or ACE_NEW since we need 
+      // to dealicate pfile
+      // Plus we want to return an exception.
+      data = new STUB_Object (id, pfile);
+    
+      if (data == 0)
+        env.exception (new CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
+
+    }
 
   pfile->_decr_refcnt ();
   // STUB_Object will increment the reference count.
-
-  if (data == 0)
-    env.exception (new CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
-
+    
   return data;
 }
 

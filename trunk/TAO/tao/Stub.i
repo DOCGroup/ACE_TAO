@@ -2,6 +2,7 @@
 
 // @@ Get rid of profile specific stuff, it is now in it's own class and
 // file. fredk
+#include <tao/debug.h>
 
 ACE_INLINE
 STUB_Object::~STUB_Object (void)
@@ -267,7 +268,8 @@ STUB_Object::set_fwd_profiles (TAO_MProfile *mprofiles)
   
     if (this->fwd_profiles_)
     {
-      ACE_DEBUG ((LM_DEBUG, "** Overwriting fwd profiles!\n"));
+      if (TAO_orbdebug)
+        ACE_DEBUG ((LM_DEBUG, "** Overwriting fwd profiles!\n"));
       TAO_MProfile *old = this->fwd_profiles_;
       TAO_MProfile *prev = old->fwded_mprofile ();
       if (prev->get_current_profile ())

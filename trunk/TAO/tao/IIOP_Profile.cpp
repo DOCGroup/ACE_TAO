@@ -139,6 +139,33 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const char* host,
 
 TAO_IIOP_Profile::TAO_IIOP_Profile (const char* host,
                                     CORBA::UShort port,
+                                    const TAO_ObjectKey& object_key,
+				    const ACE_INET_Addr& addr)
+  : host_ (0),
+    port_ (port),
+    tag_ (TAO_IOP_TAG_INTERNET_IOP),
+    body_ (),
+    version_ (DEF_IIOP_MAJOR, DEF_IIOP_MINOR),
+    object_key_ (object_key),
+    object_addr_ (addr),
+    hint_ (0),
+    // what about refcount_lock_ (),
+    refcount_ (1),
+    fwd_profiles_ (0)
+{
+
+  if (host)
+  {
+    ACE_NEW (this->host_,
+             char[ACE_OS::strlen (host) + 1]);
+    ACE_OS::strcpy (this->host_, host);
+  }
+
+  this->create_body ();
+}
+
+TAO_IIOP_Profile::TAO_IIOP_Profile (const char* host,
+                                    CORBA::UShort port,
                                     const Version& version,
                                     const TAO_ObjectKey& object_key)
   : host_ (0),

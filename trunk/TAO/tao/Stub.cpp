@@ -375,8 +375,7 @@ STUB_Object::do_static_call (CORBA::Environment &TAO_IN_ENV,
               // need to go back to the original profile and try that.
               if (this->fwd_profile_ != 0)
                 {
-                  this->fwd_profile_->_decr_refcnt ();
-                  this->fwd_profile_ = 0;
+		  this->set_fwd_profile (0);
 
                   // See if we need to try again.
                   if (this->fwd_profile_success_ == 1)
@@ -410,8 +409,7 @@ STUB_Object::do_static_call (CORBA::Environment &TAO_IN_ENV,
               // need to go back to the original profile and try that.
               if (this->fwd_profile_ != 0)
                 {
-                  this->fwd_profile_->_decr_refcnt ();
-                  this->fwd_profile_ = 0;
+		  this->set_fwd_profile (0);
 
                   // See if we need to try again.
                   if (this->fwd_profile_success_ == 1)
@@ -539,9 +537,7 @@ STUB_Object::do_static_call (CORBA::Environment &TAO_IN_ENV,
               // need to go back to the original profile and try that.
               if (this->fwd_profile_ != 0)
                 {
-                  // @@ DB: Memory leak?
-                  this->fwd_profile_->_decr_refcnt ();
-                  this->fwd_profile_ = 0;
+		  this->set_fwd_profile (0);
 
                   // See if we need to try again.
                   if (this->fwd_profile_success_ == 1)
