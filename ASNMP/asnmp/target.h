@@ -113,10 +113,10 @@ class ACE_Export SnmpTarget
     void get_default_max_pdu_size(const unsigned long max_pdu_sz); 
     // all classes constructed will have this write community string
 
-    const snmp_version get_version() const;
+    snmp_version get_version() const;
     // get the version
 
-    const snmp_version get_default_version() const;
+    snmp_version get_default_version() const;
  
     int get_retry() const;
     // return send retry number for this instancd

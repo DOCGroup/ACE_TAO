@@ -20,7 +20,7 @@
 //   Michael R MacFaden  mrm@cisco.com - rework & ACE port
 // ============================================================================
 /**********************************************************************
-  /*
+// *
    * Abstract Syntax Notation One, ASN.1
    * As defined in ISO/IS 8824 and ISO/IS 8825
    * This implements a subset of the above International Standards that
@@ -376,7 +376,7 @@ u_char *asn1::parse_header( u_char *data,
 {
   ACE_TRACE("asn1::parse_header");
   u_char *bufp = data;
-  register header_len;
+  register int header_len;
   u_long	    asn_length;
 
   /* this only works on data types < 30, i.e. no extension octets */
@@ -777,7 +777,7 @@ u_char *asn1::parse_bitstring( u_char *data,
     ASNERROR("Invalid bitstring");
     return NULL;
   }
-  if (*bufp < 0 || *bufp > 7){
+  if (*bufp > 7){
     ASNERROR("Invalid bitstring");
     return NULL;
   }
@@ -810,7 +810,7 @@ u_char *asn1::build_bitstring( u_char *data,
   /*
    * ASN.1 bit string ::= 0x03 asnlength unused {byte}*
    */
-  if (strlength < 1 || *string < 0 || *string > 7){
+  if (strlength < 1 || *string || *string > 7){
     ASNERROR("Building invalid bitstring");
     return NULL;
   }

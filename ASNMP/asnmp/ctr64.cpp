@@ -52,8 +52,8 @@ Counter64::Counter64( unsigned long hiparm, unsigned long loparm)
 Counter64::Counter64( unsigned long long llw )
 {
   smival.syntax = sNMP_SYNTAX_CNTR64;
-  smival.value.hNumber.hipart = (unsigned long) llw >> 32;
-  smival.value.hNumber.lopart = (unsigned long) llw;
+  smival.value.hNumber.hipart = (unsigned long) (llw >> 32);
+  smival.value.hNumber.lopart = (unsigned long) llw & 0xffffffff;
 }
 
 //------------------[ copy constructor ]--------------------------------- 

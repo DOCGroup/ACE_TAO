@@ -1025,7 +1025,7 @@ void NetbiosAddress::set_service_type(nb_service nbservice)
   NetbiosAddress::format_output();
 }
  
-char *NetbiosAddress::operator const char *() const
+NetbiosAddress::operator const char *() const
 {
   return (char *)output_buffer;
 }

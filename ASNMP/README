@@ -2,7 +2,7 @@ Sat Jul  5 15:20:20 PDT 1997
 
 ====================================================================
 ASNMP = ACE+SNMP++ Version 1.0
-By Michael R. MacFaden mrm@acm.org mrm@cisco.com
+By Michael R. MacFaden mrm@acm.org, mrm@cisco.com
 ====================================================================
 
 What is ASNMP ? ==> ACE+SNMP! aka Another SNMP API
@@ -55,7 +55,7 @@ Any Support for ASNMP?
    As time permits from the mailing list.
 
 Where to ask questions?
-  Please use ace-users@cs.wustl.edu mailing list or mrm@acm.org
+  Please use ace-users@cs.wustl.edu mailing list or macfaden@acm.org
 
 NOTE: Please do not bother Eric Mellquist unless you are using 
    the original HP version of this library.
