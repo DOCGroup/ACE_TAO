@@ -1,5 +1,9 @@
 Mon Oct  5 18:24:15 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* src/Gen_Perf: Created a new function that allows us to split the
+ 	  binary search and perfect hash logic apart.  Thanks to Vishal
+ 	  and Alex for reporting this.
+
 	* src/Key_List.cpp (dump): Fixed the unsigned problems with line
  	  1502 YET again...  Thanks to David/Darrell for reporting this.
 
