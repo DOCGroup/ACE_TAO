@@ -12,6 +12,7 @@ use PerlACE::Run_Test;
 
 $sleeptime = 2;
 $distributor_time = 5;
+$sender_time = 8;
 $status = 0;
 
 $nsior = PerlACE::LocalFile ("ns.ior");
@@ -21,14 +22,17 @@ $makefile = PerlACE::LocalFile ("input");
 unlink $nsior;
 
 $NS  = new PerlACE::Process ("../../../Naming_Service/Naming_Service", "-o $nsior");
-$SV  = new PerlACE::Process ("sender", "-ORBInitRef NameService=file://$nsior -s sender");
+$SV1  = new PerlACE::Process ("sender", "-ORBInitRef NameService=file://$nsior -s sender -r 1");
+$SV2  = new PerlACE::Process ("sender", "-ORBInitRef NameService=file://$nsior -s sender -r 1");
+$SV3  = new PerlACE::Process ("sender", "-ORBInitRef NameService=file://$nsior -s sender -r 1");
 $RE1 = new PerlACE::Process ("receiver", "-ORBInitRef NameService=file://$nsior -s distributer -r receiver1 -f output1");
 $RE2 = new PerlACE::Process ("receiver", "-ORBInitRef NameService=file://$nsior -s distributer -r receiver2 -f output2");
 $DI1 = new PerlACE::Process ("distributer", "-ORBInitRef NameService=file://$nsior -s sender -r distributer");
 $DI2 = new PerlACE::Process ("distributer", "-ORBInitRef NameService=file://$nsior -s sender -r distributer");
 $DI3 = new PerlACE::Process ("distributer", "-ORBInitRef NameService=file://$nsior -s sender -r distributer");
+$DI4 = new PerlACE::Process ("distributer", "-ORBInitRef NameService=file://$nsior -s sender -r distributer");
 
-print STDERR "\nReceiver 1 --> Receiver 2 --> Distributer 1 --> Sender --> Distributer 2 --> Distributer 3\n\n";
+print STDERR "\nReceiver 1 --> Receiver 2 --> Distributer 1 --> Sender1 --> Distributer 2 --> Distributer 3 --> Sender2 --> Sender3 --> Distributer4\n\n";
 
 print STDERR "Starting Naming Service\n";
 
@@ -58,9 +62,9 @@ $DI1->Spawn ();
 
 sleep $sleeptime;
 
-print STDERR "Starting Sender\n";
+print STDERR "Starting Sender1\n";
 
-$SV->Spawn ();
+$SV1->Spawn ();
 
 sleep $distributor_time;
 
@@ -72,7 +76,46 @@ sleep $distributor_time;
 
 print STDERR "\nStarting Distributer 3\n\n";
 
-$distributer3 = $DI3->SpawnWaitKill (60);
+$DI3->Spawn ();
+
+sleep $sender_time;
+
+print STDERR "Starting Sender2\n";
+
+$SV2->Spawn ();
+
+sleep $sender_time;
+
+print STDERR "Starting Sender3\n";
+
+$SV3->Spawn ();
+
+sleep $distributer_time;
+
+print STDERR "\nStarting Distributer 4\n\n";
+
+$distributer4 = $DI4->SpawnWaitKill (120);
+
+if ($distributer4 != 0) {
+    print STDERR "ERROR: distributer4 returned $distributer4\n";
+    $status = 1;
+}
+
+$sender2 = $SV2->TerminateWaitKill (5);
+
+if ($sender2 != 0) {
+    print STDERR "ERROR: sender2 returned $sender2\n";
+    $status = 1;
+}
+
+$sender3 = $SV3->TerminateWaitKill (5);
+
+if ($sender3 != 0) {
+    print STDERR "ERROR: sender3 returned $sender3\n";
+    $status = 1;
+}
+
+$distributer3 = $DI3->TerminateWaitKill (5);
 
 if ($distributer3 != 0) {
     print STDERR "ERROR: distributer3 returned $distributer3\n";
@@ -107,7 +150,7 @@ if ($receiver2 != 0) {
     $status = 1;
 }
 
-$sender = $SV->TerminateWaitKill (5);
+$sender = $SV1->TerminateWaitKill (5);
 
 if ($sender != 0) {
     print STDERR "ERROR: sender returned $sender\n";
