@@ -1900,17 +1900,19 @@ be_interface::copy_ctor_helper (be_interface *derived,
       return 0;
     }
 
+  *os << "," << be_nl;
+
   if (base->is_nested ())
     {
       be_decl *scope;
       scope = be_scope::narrow_from_scope (base->defined_in ())->decl ();
 
-      *os << "  ACE_NESTED_CLASS (POA_" << scope->name () << ","
-          << base->local_name () << ") (rhs)," << be_nl;
+      *os << "  ACE_NESTED_CLASS (POA_" << scope->name () << ", "
+          << base->local_name () << ") (rhs)";
     }
   else
     {
-      *os << "  " << base->full_skel_name () << " (rhs)," << be_nl;
+      *os << "  " << base->full_skel_name () << " (rhs)" << be_nl;
     }
 
   return 0;
