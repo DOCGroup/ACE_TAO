@@ -68,7 +68,9 @@ ACE::get_flags (ACE_HANDLE handle)
 inline u_long
 ACE::log2 (u_long num)
 {
-  for (u_long log = 0;
+  u_long log = 0;
+
+  for (;
        num > 0;
        log++)
     num >>= 1;
