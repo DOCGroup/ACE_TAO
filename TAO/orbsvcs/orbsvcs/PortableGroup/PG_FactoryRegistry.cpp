@@ -176,7 +176,8 @@ void TAO::PG_FactoryRegistry::init (CORBA::ORB_ptr orb, PortableServer::POA_ptr 
 
 }
 
-int TAO::PG_FactoryRegistry::init (CORBA::ORB_ptr orb  ACE_ENV_ARG_DECL)
+int TAO::PG_FactoryRegistry::init (CORBA::ORB_ptr orb
+                                   ACE_ENV_ARG_DECL)
 {
   int result = 0;
 
@@ -235,7 +236,8 @@ int TAO::PG_FactoryRegistry::init (CORBA::ORB_ptr orb  ACE_ENV_ARG_DECL)
   {
     this->identity_ = "file:";
     this->identity_ += this->ior_output_file_;
-    result = write_ior_file (this->ior_output_file_, this->ior_);
+    result = write_ior_file (this->ior_output_file_,
+                             this->ior_.in ());
   }
 
   if (this->ns_name_ != 0)

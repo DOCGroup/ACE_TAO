@@ -1,3 +1,10 @@
+Sun Dec 28 17:30:40 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/PortableGroup/PG_FactoryRegistry.cpp:
+	* orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.cpp:
+
+	  Used .in () for String_var's.
+
 Sun Dec 28 17:09:04 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* docs/tutorials/Quoter/Event_Service/Quoter_Event_Service.mpc:
