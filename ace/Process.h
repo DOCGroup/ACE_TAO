@@ -238,8 +238,9 @@ public:
   int passed_handles (ACE_Handle_Set &set) const;
 
   /// Set value for avoid_zombies (has no real effect except on *nix).
-  /// Get current value for avoid_zombies.
   void avoid_zombies (int);
+
+  /// Get current value for avoid_zombies.
   int avoid_zombies (void);
 
 #if defined (ACE_WIN32)
@@ -552,15 +553,15 @@ class ACE_Export ACE_Managed_Process : public ACE_Process
 public:
   ACE_Managed_Process ();
 
+  /// Cleanup by deleting <this>.
   virtual void unmanage (void);
-  // Cleanup by deleting <this>.
 
 private:
+  /// Make sure that we're allocated dynamically!
   virtual ~ACE_Managed_Process (void);
-  // Make sure that we're allocated dynamically!
 
+  /// Keep G++ happy...
   friend class ace_dewarn_gplusplus;
-  // Keep G++ happy...
 };
 
 #include "ace/SString.h"
