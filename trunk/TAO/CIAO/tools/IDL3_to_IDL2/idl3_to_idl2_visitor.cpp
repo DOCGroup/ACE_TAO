@@ -241,7 +241,8 @@ idl3_to_idl2_visitor::visit_valuetype (AST_ValueType *node)
   AST_Interface **parents = node->inherits ();
   long ninherits = node->n_inherits ();
   
-  for (long i = 0; i < ninherits; ++i)
+  long i = 0; 
+  for (i = 0; i < ninherits; ++i)
     {
       if (i == 0)
         {
@@ -263,7 +264,7 @@ idl3_to_idl2_visitor::visit_valuetype (AST_ValueType *node)
     
   AST_Interface **supports = node->supports ();
   
-  for (long i = 0; i < node->n_supports (); ++i)
+  for (i = 0; i < node->n_supports (); ++i)
     {
       if (i == 0)
         {
