@@ -1,3 +1,10 @@
+Sat Dec  4 15:57:36 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* docs/compiler.html:
+	  As far as i know, and i tried this out, the -Gt option is
+	  working now (Andy fixed this long time ago). I updated the
+	  documentation because it was listed as not implemented.
+
 Sat Dec  4 15:47:55 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * tao/ORB.h:
