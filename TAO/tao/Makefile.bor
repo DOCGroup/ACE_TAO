@@ -77,6 +77,9 @@ OBJFILES = \
 	$(OBJDIR)\Fault_Tolerance_Service.obj \
 	$(OBJDIR)\FILE_Parser.obj \
 	$(OBJDIR)\Flushing_Strategy.obj \
+	$(OBJDIR)\LF_Follower.obj \
+	$(OBJDIR)\LF_Follower_Auto_Ptr.obj \
+	$(OBJDIR)\LF_Follower_Auto_Adder.obj \
 	$(OBJDIR)\GIOP_Message_Base.obj \
 	$(OBJDIR)\GIOP_Message_Lite.obj \
 	$(OBJDIR)\GIOP_Message_Generator_Parser.obj \
@@ -108,7 +111,13 @@ OBJFILES = \
 	$(OBJDIR)\IOPC.obj \
 	$(OBJDIR)\IOR_Parser.obj \
 	$(OBJDIR)\IORInfo.obj \
+	$(OBJDIR)\LF_Event.obj \
+	$(OBJDIR)\LF_Event_Binder.obj \
+	$(OBJDIR)\LF_Event_Loop_Thread_Helper.obj \
+	$(OBJDIR)\LF_Strategy.obj \
+	$(OBJDIR)\LF_Strategy_Complete.obj \
 	$(OBJDIR)\Leader_Follower.obj \
+	$(OBJDIR)\Leader_Follower_Flushing_Strategy.obj \
 	$(OBJDIR)\LocalObject.obj \
 	$(OBJDIR)\LRU_Connection_Purging_Strategy.obj \
 	$(OBJDIR)\Managed_Types.obj \

@@ -219,6 +219,66 @@ Package=<4>
 
 ###############################################################################
 
+Project: "RTCORBA"=.\RTCORBA\TAO_RTCORBA.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "RTCORBA_Static"=.\RTCORBA\TAO_RTCORBA_Static.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "RTPortableServer"=.\RTPortableServer\TAO_RTPortableServer.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name PortableServer
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name RTCORBA
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "RTPortableServer_Static"=.\RTPortableServer\TAO_RTPortableServer_Static.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "SmartProxies"=.\SmartProxies\SmartProxies.dsp - Package Owner=<4>
 
 Package=<5>
@@ -291,7 +351,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "TypeCodeFactory_Static"=.\TYPECODEFACTORY\TypeCodeFactory_Static\TypeCodeFactory_Static.dsp - Package Owner=<4>
+Project: "TypeCodeFactory_Static"=H:\fix_886\ACE_wrappers\TAO\tao\TypeCodeFactory\TypeCodeFactory_Static.dsp - Package Owner=<4>
 
 Package=<5>
 {{{

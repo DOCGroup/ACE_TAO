@@ -1,3 +1,307 @@
+Wed Aug  1 16:05:36 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * Merged changes from the fix_886 branch
+
+        * tao/Transport.cpp:
+          There was a subtle race condition in the handle_output() method:
+          the state of the queue was checked in drain_queue(), while
+          holding the mutex, if the queue was empty the decision was made
+          to call cancel_output().
+          However, that was performed *outside* the context of the mutex,
+          so another thread could attempt to send data, queue it,
+          schedule_output() only to find out that is was cancelled right
+          after it did...
+          Before the patches below it was not possible to move the
+          cancel_output() to the context of the mutex, the ORB would
+          deadlock for other reasons. I took us (Bala and myself) a couple
+          of days to track this one down, obviously I still don't know how
+          to write MT-safe code :-)
+
+        Tue Jul 31 12:55:07 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Follower.h:
+        * tao/Follower.inl:
+        * tao/Follower.cpp:
+        * tao/Follower_Auto_Ptr.h:
+        * tao/Follower_Auto_Ptr.inl:
+        * tao/Follower_Auto_Ptr.cpp:
+        * tao/LF_Follower.h:
+        * tao/LF_Follower.inl:
+        * tao/LF_Follower.cpp:
+        * tao/LF_Follower_Auto_Ptr.h:
+        * tao/LF_Follower_Auto_Ptr.inl:
+        * tao/LF_Follower_Auto_Ptr.cpp:
+        * tao/Makefile:
+        * tao/Makefile.am:
+        * tao/Makefile.bor:
+        * tao/TAO.dsp:
+        * tao/TAO_Static.dsp:
+          Renamed TAO_Follower to TAO_LF_Follower and
+          TAO_Follower_Auto_Ptr to TAO_LF_Follower_Auto_Ptr, I think this
+          is more consistent with the other files in the project.
+
+        * tao/LF_Follower_Auto_Adder.h:
+        * tao/LF_Follower_Auto_Adder.inl:
+        * tao/LF_Follower_Auto_Adder.cpp:
+          Remove unused code from the Auto_Adder files.
+
+        * tao/LF_Event.h:
+        * tao/LF_Event.inl:
+        * tao/LF_Event.cpp:
+        * tao/LF_Event_Binder.h:
+        * tao/LF_Event_Binder.inl:
+        * tao/Leader_Follower.h:
+        * tao/Leader_Follower.i:
+        * tao/Leader_Follower.cpp:
+          Use the new class names and #includes.
+
+        Mon Jul 30 14:41:43 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/LF_Follower_Auto_Adder.h:
+        * tao/LF_Follower_Auto_Adder.inl:
+        * tao/LF_Follower_Auto_Adder.cpp:
+          Automatically manipulate the L/F follower set: its constructor
+          inserts a follower into the set and the destructor removes it.
+
+        * tao/Leader_Follower.cpp:
+          Use the new LF_Follower_Auto_Adder class.
+
+        * tao/Makefile:
+        * tao/Makefile.am:
+        * tao/Makefile.bor:
+        * tao/TAO.dsp:
+        * tao/TAO_Static.dsp:
+          Add the new files to Makefiles and projects.
+
+        Sun Jul 29 11:58:51 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Leader_Follower.cpp:
+          If an error is detected while waiting as a follower the loop
+          should return -1.
+
+        * tao/Transport.cpp:
+          Merged in some bug fixes from the main trunk.
+
+        Sun Jul 29 09:00:57 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/LF_Event.cpp:
+          Fixed the error_detected() function
+
+        Fri Jul 27 17:34:40 2001  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+        * tao/Leader_Follower.h:
+        * tao/default_resource.cpp:
+          Fixed warnings and compilation errors for gcc-2.7.2
+
+        Fri Jul 27 10:59:50 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/LF_Event.h:
+        * tao/LF_Event.inl:
+          Add new method to unbind a LF_Event and its Follower:
+          Reply_Dispatchers can be used multiple times to wait for several
+          replys, mostly when a LOCATION_FORWARD message is received.
+
+        * tao/LF_Event.cpp:
+          Modify the state machine: the state can go back to ACTIVE from
+          CONNECTION_CLOSED or SUCCESSFUL.  This represents the location
+          forward scenario described above.
+
+        * tao/LF_Event_Binder.h:
+        * tao/LF_Event_Binder.inl:
+        * tao/LF_Event_Binder.cpp:
+          Helper class to automate the bind/unbind calls to a LF_Event.
+
+        * tao/Leader_Follower.cpp:
+          Use LF_Event_Binder to handle the bind/unbind calls into the
+          LF_Event.
+
+        * tao/Makefile:
+        * tao/Makefile.bor:
+        * tao/TAO.dsp:
+        * tao/TAO_Static.dsp:
+          Add new files to the projects and Makefiles.
+
+        * tao/Invocation.cpp:
+        * tao/Wait_On_Read.cpp:
+        * tao/Wait_On_Reactor.cpp:
+        * tao/Synch_Reply_Dispatcher.h:
+        * tao/Synch_Reply_Dispatcher.cpp:
+          Remove the reply_received() flag from Synch_Reply_Dispatcher,
+          the LF_Event state is enough to know what happens.
+
+        Thu Jul 26 18:00:12 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Strategies/advanced_resource.cpp:
+          Fixed typo in last commit.
+
+        Thu Jul 26 16:50:46 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * Part of the fixes for
+          http://ace.cs.wustl.edu/bugzilla/show_bug.cgi?id=886
+
+          the changes also close the following bug:
+
+          http://ace.cs.wustl.edu/bugzilla/show_bug.cgi?id=296
+
+        * tao/Leader_Follower_Flushing_Strategy.h:
+        * tao/Leader_Follower_Flushing_Strategy.cpp:
+          New flushing strategy that participates in the Leader/Followers
+          protocol.
+          To support this several changes to the Leader/Followers
+          implementation were required.  The most important involved using
+          some abstract representation for the events that the
+          Leader/Followers wait for, in the old days there were only reply
+          events, so there was no need to abstract anything, but now the
+          Leader/Followers set can wait for both 'message flushed' events,
+          as well as 'reply received'.
+          With this explicit representation for events at hand it was
+          easier to encapsulate the Leader/Followers wait loop in
+          TAO_Leader_Follower class, instead of hidden in
+          Wait_On_Leader_Follower.
+          To match the events that L/F waits for and the threads waiting
+          for them we addd a class that represents a Follower thread.
+          These TAO_Follower objects had to implement an intrusive list
+          for fast addition into the follower set, once that intrusive
+          list was implemented adding a free list was trivial, and thus we
+          could solve bug 296 easily too.
+
+        * tao/Asynch_Queued_Message.cpp:
+        * tao/Synch_Queued_Message.cpp:
+          Use the TAO_LF_Event methods to signal any waiters when the
+          state changes.
+
+        * tao/Follower.h:
+        * tao/Follower.inl:
+        * tao/Follower.cpp:
+          This class represents a thread playing the Follower role.  It
+          contains the condition variable used by the thread.
+          The class provides the necessary hooks to implement an intrusive
+          linked list.
+
+        * tao/Invocation.cpp:
+          The waiting strategy wants the complete Synch_Reply_Dispatcher,
+          not just the reply_received flag.
+
+        * tao/LF_Event.h:
+        * tao/LF_Event.inl:
+        * tao/LF_Event.cpp:
+          New class to represent events that the Leader/Followers loop
+          waits for.  Used as a base class for both TAO_Queued_Message and
+          for TAO_Synch_Reply.
+
+        * tao/LF_Event_Loop_Thread_Helper.h:
+        * tao/LF_Event_Loop_Thread_Helper.inl:
+        * tao/LF_Event_Loop_Thread_Helper.cpp:
+          Move helper class to its own file, no sense in exposing it to
+          everybody through the Leader_Follower.h file.
+
+        * tao/Leader_Follower.h:
+        * tao/Leader_Follower.i:
+        * tao/Leader_Follower.cpp:
+          Add free list for TAO_Follower, as well as allocation and
+          deallocation methods.
+          Move Leader/Followers main loop to this class.
+          Move LF_Strategy and friends to their own files.
+
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.i:
+        * tao/ORB_Core.cpp:
+          Removed the TSS Leader/Followers condition variable, the
+          Leader/Followers free list implements the same optimization with
+          less problems (i.e. without bug 296).
+
+        * tao/Queued_Message.h:
+        * tao/Queued_Message.cpp:
+        * tao/Synch_Reply_Dispatcher.h:
+        * tao/Synch_Reply_Dispatcher.cpp:
+          This class derives from TAO_LF_Event now.  Any state or methods
+          required to detect timeouts, closed connections or transmition
+          errors are in the base class.
+
+        * tao/Reply_Dispatcher.h:
+        * tao/Asynch_Reply_Dispatcher.h:
+        * tao/Asynch_Reply_Dispatcher.cpp:
+          Remove the dispatcher_bound() calls, they are no longer required
+          to match follower threads and their reply dispatchers, this is
+          now done in the TAO_LF_Event::bind() method, called from
+          TAO_Leader_Follower::wait_for_event()
+
+        * tao/Transport.h:
+        * tao/Transport.cpp:
+
+        * tao/Transport_Mux_Strategy.h:
+        * tao/Transport_Mux_Strategy.cpp:
+        * tao/Muxed_TMS.cpp:
+        * tao/Exclusive_TMS.cpp:
+          Since there is no need to call dispatcher_bound() anymore the
+          bind_dispatcher() methods were simplified.
+
+        * tao/Wait_On_Leader_Follower.h:
+        * tao/Wait_On_Leader_Follower.cpp:
+        * tao/Wait_On_Reactor.h:
+        * tao/Wait_On_Reactor.cpp:
+        * tao/Wait_On_Read.h:
+        * tao/Wait_On_Read.cpp:
+        * tao/Wait_Strategy.h:
+        * tao/Wait_Strategy.cpp:
+          Use a TAO_Synch_Reply_Dispatcher to wait for a reply.  The hack
+          using a reply_received flag + a cond.var. was too ugly, plus it
+          was tightly coupling the Leader/Followers loop to the reply
+          dispatching logic.
+
+        * tao/default_resource.h:
+        * tao/default_resource.cpp:
+          Made Leader_Follower_Flushing_Strategy the default.
+
+        * tao/orbconf.h:
+        * tao/default_client.cpp:
+          Made Muxed_TMS the default
+
+        * tao/LF_Strategy.h:
+        * tao/LF_Strategy.inl:
+        * tao/LF_Strategy.cpp:
+        * tao/LF_Strategy_Complete.h:
+        * tao/LF_Strategy_Complete.inl:
+        * tao/LF_Strategy_Complete.cpp:
+          Move the LF_Strategy classes to their own files, no sense in
+          exposing them to everybody through the Leader_Follower.h file.
+
+        * tao/Follower_Auto_Ptr.h:
+        * tao/Follower_Auto_Ptr.inl:
+        * tao/Follower_Auto_Ptr.cpp:
+          Helper class to automatically allocate and deallocate
+          TAO_Follower objects from the Leader/Followers set.
+
+        * tao/GIOP_Message_Base.cpp:
+        * tao/GIOP_Message_Lite.cpp:
+        * tao/Reactor_Registry.cpp:
+          Must #include the "LF_Strategy.h" file explicitly.
+
+        * tao/TAO.dsp:
+        * tao/TAO_Static.dsp:
+        * tao/Makefile:
+        * tao/Makefile.bor:
+        * tao/Strategies/TAO_Strategies.dsp:
+        * tao/Strategies/TAO_Strategies_Static.dsp:
+        * tao/Strategies/Makefile:
+        * tao/Strategies/Makefile.bor:
+          Add new files to the projects and Makefile
+
+
+        * tao/Strategies/advanced_resource.cpp:
+        * tao/Strategies/LF_Strategy_Null.h:
+        * tao/Strategies/LF_Strategy_Null.inl:
+        * tao/Strategies/LF_Strategy_Null.cpp:
+          Move the Null Leader/Follower Strategy to the TAO_Strategies
+          library, it was in TAO, but was only used here.
+
+        * tao/RTPortableServer/TAO_RTPortableServer.dsp:
+          Fixed missing libraries in link line.
+
+        * tao/TAO.dsw:
+          Add missing dependencies for RTPortableServer and RTCORBA
+
+
 Wed Aug  1 13:15:10 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_operation/ami_exception_holder_operation_cs.cpp:
@@ -13,20 +317,20 @@ Wed Aug  1 13:15:10 2001  Jeff Parsons <parsons@cs.wustl.edu>
           furnish the repo id string. The twoway invoke() method and generated
           code have been modified accordingly. Also, the interceptor method
           exceptions() now creates a simple array of type codes instead of
-          an array of TAO_Exception_Data structs. If type codes are suppressed 
+          an array of TAO_Exception_Data structs. If type codes are suppressed
           in generated code, the interceptor methods result() (which returns an
           Any) and exception() (from which the spec requires a list of type
           codes as the return value) will throw CORBA::NO_IMPLEMENT(). If only
           Anys are suppressed in generated code, only result() will throw the
           exception. Thanks to Russell Mora <rd.mora@econz.co.nz> for reporting
-          the clash of type code suppression and exceptions, and to Ossama Othman 
+          the clash of type code suppression and exceptions, and to Ossama Othman
           <othman@cs.wustl.edu> and Carlos O'Ryan <coryan@ece.uci.edu> for
           their suggestions.
 
 Wed Aug  1 11:32:26 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Strategies/UIOP_Connection_Handler.cpp:Fixed a compile error
-	  with g++.  
+        * tao/Strategies/UIOP_Connection_Handler.cpp:Fixed a compile error
+          with g++.
 
 Wed Aug  1 09:36:37 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -37,46 +341,46 @@ Wed Aug  1 09:36:37 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Wed Aug 1 8:38:06 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/orbconf.h: Removed the #define TAO_DOESNT_YADA_YADA as there
-	  is no use for it.
+        * tao/orbconf.h: Removed the #define TAO_DOESNT_YADA_YADA as there
+          is no use for it.
 
-	* tao/Connection_Handler.h: Removed the fetch_handle () as there
-	  is no use for it.
+        * tao/Connection_Handler.h: Removed the fetch_handle () as there
+          is no use for it.
 
-	* tao/IIOP_Connection_Handler.h:
-	* tao/IIOP_Connection_Handler.cpp:
-	* tao/Strategies/DIOP_Connection_Handler.cpp:
-	* tao/Strategies/DIOP_Connection_Handler.h:
-	* tao/Strategies/SHMIOP_Connection_Handler.h:
-	* tao/Strategies/SHMIOP_Connection_Handler.cpp:
-	* tao/Strategies/UIOP_Connection_Handler.h:
-	* tao/Strategies/UIOP_Connection_Handler.cpp:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.h:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp: Removed
-	  the implementation of fetch_handle (). Thanks to Carlos, the
-	  foot-print police!!, for motivating this change.
+        * tao/IIOP_Connection_Handler.h:
+        * tao/IIOP_Connection_Handler.cpp:
+        * tao/Strategies/DIOP_Connection_Handler.cpp:
+        * tao/Strategies/DIOP_Connection_Handler.h:
+        * tao/Strategies/SHMIOP_Connection_Handler.h:
+        * tao/Strategies/SHMIOP_Connection_Handler.cpp:
+        * tao/Strategies/UIOP_Connection_Handler.h:
+        * tao/Strategies/UIOP_Connection_Handler.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp: Removed
+          the implementation of fetch_handle (). Thanks to Carlos, the
+          foot-print police!!, for motivating this change.
 
 Wed Aug 1 8:02:06 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/IIOP_Connection_Handler.h:
-	* tao/IIOP_Connection_Handler.cpp: Removed the flag <resume_flag_>
-	  that was  introduced so that the input and output datapath would
-	  behave differently. The output data path would allow the reactor
-	  to resume the handler whereas the input data path would resume
-	  the handle. This was creating more confusion than
-	  necessary. Hence zapped the the flag and made the input and
-	  output data path consistent. Thanks to Carlos for motivating
-	  this stuff.
+        * tao/IIOP_Connection_Handler.h:
+        * tao/IIOP_Connection_Handler.cpp: Removed the flag <resume_flag_>
+          that was  introduced so that the input and output datapath would
+          behave differently. The output data path would allow the reactor
+          to resume the handler whereas the input data path would resume
+          the handle. This was creating more confusion than
+          necessary. Hence zapped the the flag and made the input and
+          output data path consistent. Thanks to Carlos for motivating
+          this stuff.
 
-	* tao/Strategies/DIOP_Connection_Handler.cpp:
-	* tao/Strategies/DIOP_Connection_Handler.h:
-	* tao/Strategies/SHMIOP_Connection_Handler.h:
-	* tao/Strategies/SHMIOP_Connection_Handler.cpp:
-	* tao/Strategies/UIOP_Connection_Handler.h:
-	* tao/Strategies/UIOP_Connection_Handler.cpp:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.h:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp: Appled the
-	  same changes to the above mentioned protocols.
+        * tao/Strategies/DIOP_Connection_Handler.cpp:
+        * tao/Strategies/DIOP_Connection_Handler.h:
+        * tao/Strategies/SHMIOP_Connection_Handler.h:
+        * tao/Strategies/SHMIOP_Connection_Handler.cpp:
+        * tao/Strategies/UIOP_Connection_Handler.h:
+        * tao/Strategies/UIOP_Connection_Handler.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp: Appled the
+          same changes to the above mentioned protocols.
 
 Tue Jul 31 12:53:06 2001  Carlos O'Ryan  <coryan@uci.edu>
 
@@ -115,51 +419,51 @@ Tue Jul 31 08:25:46 2001  Jeff Parsons <parsons@cs.wustl.edu>
         * TAO_IDL/fe/y.tab.h:
 
           Removed OBV-related token IDL_INIT and replaced it with
- 	  IDL_FACTORY, which is returned when the string 'factory' is seen
- 	  in an IDL file. This string signals the declaration of an value
- 	  type's initializing member function. Also changed the production
- 	  rule 'init_decl' to be closer to the correct grammar for this
- 	  type of function, although this feature is still completely
- 	  unimplemented. And finally, modified two production rules to
- 	  eliminate long-standing shift/reduce error messages when
- 	  generating y.tab.* from idl.yy. Thanks to Russ Noseworthy
- 	  <j.russell.noseworthy@objectsciences.com> for reporting that an
- 	  'init' identifier string in an IDL file caused an error when
- 	  compiled with the -Gv option (value types) enabled.
+          IDL_FACTORY, which is returned when the string 'factory' is seen
+          in an IDL file. This string signals the declaration of an value
+          type's initializing member function. Also changed the production
+          rule 'init_decl' to be closer to the correct grammar for this
+          type of function, although this feature is still completely
+          unimplemented. And finally, modified two production rules to
+          eliminate long-standing shift/reduce error messages when
+          generating y.tab.* from idl.yy. Thanks to Russ Noseworthy
+          <j.russell.noseworthy@objectsciences.com> for reporting that an
+          'init' identifier string in an IDL file caused an error when
+          compiled with the -Gv option (value types) enabled.
 
 Tue Jul 31 06:58:59 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	This checkin is for fixing a race condition while trying to
-	manipulate the number of upcalls. This was not a problem before
-	575 fix, as the manipulation was done when there was an implicit
-	synchronisation in the TP Reactor. As the implicit synchronisation
-	has been broken, we had a race condition. The surpsising element
-	was the fact that it took sometime to figure out this race
-	condition. We have now added a lock that will be held by the
-	thread  before the variable is manipulated.
+        This checkin is for fixing a race condition while trying to
+        manipulate the number of upcalls. This was not a problem before
+        575 fix, as the manipulation was done when there was an implicit
+        synchronisation in the TP Reactor. As the implicit synchronisation
+        has been broken, we had a race condition. The surpsising element
+        was the fact that it took sometime to figure out this race
+        condition. We have now added a lock that will be held by the
+        thread  before the variable is manipulated.
 
-	* tao/Connection_Handler.cpp:
-	* tao/Connection_Handler.h:
-	* tao/ Connection_Handler.inl: Added a lock to the class. Also
-	  added three methods, incr_pending_upcalls (),
-	  decr_pending_upcalls () and pending_upcalls (). The first two
-	  does the manipulation of the pending_upcalls_ variable after
-	  holding the lock.
+        * tao/Connection_Handler.cpp:
+        * tao/Connection_Handler.h:
+        * tao/ Connection_Handler.inl: Added a lock to the class. Also
+          added three methods, incr_pending_upcalls (),
+          decr_pending_upcalls () and pending_upcalls (). The first two
+          does the manipulation of the pending_upcalls_ variable after
+          holding the lock.
 
-	* tao/IIOP_Connection_Handler.cpp:
-	* tao/IIOP_Connection_Handler.h: Removed he peding_upcalls_
-	  variable and called the incr_pending_upcalls () and
-	  decr_pending_upcalls () to achieve what needs to be done.
+        * tao/IIOP_Connection_Handler.cpp:
+        * tao/IIOP_Connection_Handler.h: Removed he peding_upcalls_
+          variable and called the incr_pending_upcalls () and
+          decr_pending_upcalls () to achieve what needs to be done.
 
-	* tao/Strategies/DIOP_Connection_Handler.cpp
-	* tao/Strategies/DIOP_Connection_Handler.h
-	* tao/Strategies/SHMIOP_Connection_Handler.cpp
-	* tao/Strategies/SHMIOP_Connection_Handler.h
-	* tao/Strategies/UIOP_Connection_Handler.cpp
-	* tao/Strategies/UIOP_Connection_Handler.h:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.h:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
-	  Replicated the changes from IIOP to the above protocols.
+        * tao/Strategies/DIOP_Connection_Handler.cpp
+        * tao/Strategies/DIOP_Connection_Handler.h
+        * tao/Strategies/SHMIOP_Connection_Handler.cpp
+        * tao/Strategies/SHMIOP_Connection_Handler.h
+        * tao/Strategies/UIOP_Connection_Handler.cpp
+        * tao/Strategies/UIOP_Connection_Handler.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
+          Replicated the changes from IIOP to the above protocols.
 
 Sun Jul 29 19:31:34 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 

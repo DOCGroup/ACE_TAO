@@ -3,6 +3,7 @@
 #include "tao/Reactor_Registry.h"
 #include "tao/ORB_Core.h"
 #include "tao/Leader_Follower.h"
+#include "tao/LF_Strategy.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Reactor_Registry.i"

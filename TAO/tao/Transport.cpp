@@ -1,8 +1,6 @@
 // -*- C++ -*-
 // $Id$
 
-
-
 #include "Transport.h"
 
 #include "Exception.h"
@@ -28,7 +26,6 @@
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(tao, Transport, "$Id$")
-
 
 TAO_Synch_Refcountable::TAO_Synch_Refcountable (ACE_Lock *lock, int refcount)
   : ACE_Refcountable (refcount)
@@ -107,7 +104,7 @@ TAO_Transport::~TAO_Transport (void)
     {
       // @@ This is a good point to insert a flag to indicate that a
       // CloseConnection message was successfully received.
-      i->connection_closed ();
+      i->state_changed (TAO_LF_Event::LFS_CONNECTION_CLOSED);
 
       TAO_Queued_Message *tmp = i;
       i = i->next ();
@@ -128,7 +125,7 @@ TAO_Transport::~TAO_Transport (void)
 int
 TAO_Transport::handle_output (void)
 {
-  if (TAO_debug_level > 4)
+  if (TAO_debug_level > 3)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "TAO (%P|%t) - Transport[%d]::handle_output\n",
@@ -140,27 +137,13 @@ TAO_Transport::handle_output (void)
   // more sending...
   int retval = this->drain_queue ();
 
-  if (TAO_debug_level > 4)
+  if (TAO_debug_level > 3)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "TAO (%P|%t) - Transport[%d]::handle_output, "
                   "drain_queue returns %d/%d\n",
                   this->id (),
                   retval, errno));
-    }
-
-  if (retval == 1)
-    {
-      // ... there is no current message or it was completely
-      // sent, cancel output...
-      TAO_Flushing_Strategy *flushing_strategy =
-        this->orb_core ()->flushing_strategy ();
-
-      ACE_MT (ACE_GUARD_RETURN (ACE_Lock, guard, *this->handler_lock_, -1));
-
-      flushing_strategy->cancel_output (this);
-
-      return 0;
     }
 
   // Any errors are returned directly to the Reactor
@@ -558,12 +541,6 @@ TAO_Transport::idle_after_reply (void)
   return this->tms ()->idle_after_reply ();
 }
 
-TAO_SYNCH_CONDITION *
-TAO_Transport::leader_follower_condition_variable (void)
-{
-  return this->wait_strategy ()->leader_follower_condition_variable ();
-}
-
 int
 TAO_Transport::tear_listen_point_list (TAO_InputCDR &)
 {
@@ -705,7 +682,7 @@ TAO_Transport::close_connection_i (void)
 
   for (TAO_Queued_Message *i = this->head_; i != 0; i = i->next ())
     {
-      i->connection_closed ();
+      i->state_changed (TAO_LF_Event::LFS_CONNECTION_CLOSED);
     }
 }
 
@@ -792,6 +769,13 @@ TAO_Transport::handle_input_i (TAO_Resume_Handle &rh,
                                ACE_Time_Value * max_wait_time,
                                int /*block*/)
 {
+  if (TAO_debug_level > 3)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO (%P|%t) - Transport[%d]::handle_input\n",
+                  this->id ()));
+    }
+
   // First try to process messages of the head of the incoming queue.
   int retval = this->process_queue_head (rh);
 
@@ -1624,7 +1608,7 @@ TAO_Transport::cancel_output_i (void)
   if (TAO_debug_level > 3)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t) - Transport[%d]::cancel output\n",
+                  "TAO (%P|%t) - Transport[%d]::cancel_output\n",
                   this->id ()));
     }
 
@@ -1664,7 +1648,21 @@ TAO_Transport::drain_queue (void)
 {
   ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->handler_lock_, -1);
 
-  return this->drain_queue_i ();
+  int retval = this->drain_queue_i ();
+
+  if (retval == 1)
+    {
+      // ... there is no current message or it was completely
+      // sent, cancel output...
+      TAO_Flushing_Strategy *flushing_strategy =
+        this->orb_core ()->flushing_strategy ();
+
+      flushing_strategy->cancel_output (this);
+
+      return 0;
+    }
+
+  return retval;
 }
 
 int

@@ -15,9 +15,12 @@
 #include "FIFO_Connection_Purging_Strategy.h"
 #include "NULL_Connection_Purging_Strategy.h"
 
+#include "LF_Strategy_Null.h"
+
 #include "tao/debug.h"
 #include "tao/Single_Reactor.h"
 #include "tao/LRU_Connection_Purging_Strategy.h"
+#include "tao/LF_Strategy_Complete.h"
 #include "tao/Leader_Follower.h"
 #include "tao/StringSeqC.h"
 
@@ -82,7 +85,7 @@ TAO_Advanced_Resource_Factory::init (int argc, char **argv)
     return 0;
   }
   this->options_processed_ = 1;
-  
+
   // If the default resource factory exists, then disable it.
   // This causes any directives for the "Resource_Factory" to
   // report warnings.
@@ -101,7 +104,7 @@ TAO_Advanced_Resource_Factory::init (int argc, char **argv)
   unused_argv.length (argc);
 
   for (curarg = 0; curarg < argc; curarg++)
-    {    
+    {
       if (ACE_OS::strcasecmp (argv[curarg],
                               "-ORBReactorRegistry") == 0)
         {
@@ -222,10 +225,10 @@ TAO_Advanced_Resource_Factory::init (int argc, char **argv)
           unused_argc++;
         }
     }
-  
+
   unused_argv.length (unused_argc);  // "Trim" the string sequence to
                                      // the actual size.
-  
+
   this->TAO_Default_Resource_Factory::init (unused_argc,
                                             unused_argv.get_buffer ());
   return 0;
@@ -711,13 +714,13 @@ TAO_Advanced_Resource_Factory::create_lf_strategy (void)
   if (this->reactor_type_ == TAO_REACTOR_SELECT_ST)
     {
       ACE_NEW_RETURN (strategy,
-                      TAO_Null_LF_Strategy,
+                      TAO_LF_Strategy_Null,
                       0);
     }
   else
     {
       ACE_NEW_RETURN (strategy,
-                      TAO_Complete_LF_Strategy,
+                      TAO_LF_Strategy_Complete,
                       0);
     }
   return strategy;
