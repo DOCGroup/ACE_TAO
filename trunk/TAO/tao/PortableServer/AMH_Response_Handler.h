@@ -18,6 +18,7 @@
 
 #include "tao/Service_Context.h"
 #include "tao/CDR.h"
+#include "tao/LocalObject.h"
 #include "ace/Synch_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -50,6 +51,7 @@ class TAO_ServerRequest;
  * application.
  */
 class TAO_PortableServer_Export TAO_AMH_Response_Handler
+  : virtual public TAO_Local_RefCounted_Object
 {
 public:
 
