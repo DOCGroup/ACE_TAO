@@ -140,7 +140,7 @@ namespace TAO
     typedef out_type                    ret_arg_type;
 
   };
-};
+}
 
 #if defined (__ACE_INLINE__)
 #include "tao/PortableServer/Basic_SArgument_T.inl"
