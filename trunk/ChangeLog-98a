@@ -1,3 +1,7 @@
+Thu Feb 26 21:36:27 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+        * ACE version 4.4.31, released Thu Feb 26 21:36:27 1998.
+
 Thu Feb 26 16:48:53 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/OS.h: Added new macros for ACE_FILE_STREAM and
