@@ -1,3 +1,8 @@
+Thu Jun 19 06:35:26 2003  John Michael Zorko <j.zorko@att.net>
+
+	* ace/config-macosx.h: Patches to get ACE building on OSX10.2
+	  again. 
+
 Wed Junr 19 00:27:38 2003  Stephen Torri <storri@cs.wustl.edu>
 
         * orbsvcs/tests/Metrics/Makefile:
