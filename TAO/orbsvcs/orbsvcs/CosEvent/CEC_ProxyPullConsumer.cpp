@@ -47,7 +47,7 @@ TAO_CEC_ProxyPullConsumer::try_pull_from_supplier (
             ACE_Lock, ace_mon, *this->lock_,
             CORBA::INTERNAL ());
     // @@ CosEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
-    ACE_CHECK;
+    ACE_CHECK_RETURN (0);
 
     if (this->is_connected_i () == 0)
       return 0; // ACE_THROW (CosEventComm::Disconnected ());????
