@@ -1,3 +1,17 @@
+Thu Apr 29 01:23:03 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/POA (policies): Fixed destroy() methods of the policies by
+	  (a) removing "delete this" from the destroy() function, and (b)
+	  using servant/POA reference counting.
+
+	  The new destroy() function simply removes self from POA.
+	  Because of reference counting, the POA will automatically delete
+	  the servant when all pending requests on this servant are
+	  complete.
+
+	* tao/Object_Adapter.cpp (TAO_Object_Adapter): Fixed memory leak
+	  by deleting dynamically allocated lock.
+
 Wed Apr 28 21:16:55 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/MessagingS.h: Removed inclusion of MessagingS_T.h.  Old g++
