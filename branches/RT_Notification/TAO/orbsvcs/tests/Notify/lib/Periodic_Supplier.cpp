@@ -19,6 +19,7 @@ TAO_NS_Periodic_Supplier::TAO_NS_Periodic_Supplier (void)
   :barrier_ (0),
    priority_ (0),
    period_ (0),
+   run_time_ (0),
    exec_time_ (0),
    phase_ (0),
    iter_ (0),
@@ -130,6 +131,11 @@ TAO_NS_Periodic_Supplier::init_state (ACE_Arg_Shifter& arg_shifter)
           load_ = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
         }
+      else if ((current_arg = arg_shifter.get_the_parameter ("-RunTime"))) // in seconds
+        {
+          run_time_ = ACE_OS::atoi (current_arg);
+          arg_shifter.consume_arg ();
+        }
       else
         {
           ACE_DEBUG ((LM_DEBUG, "parse Task unknown option %s\n",
@@ -203,13 +209,6 @@ TAO_NS_Periodic_Supplier::svc (void)
   // now wait till the phase_ period expires.
   ACE_OS::sleep (ACE_Time_Value (0, phase_));
 
-  ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
-
-  ACE_hrtime_t before, after;
-
-  // This event is special. its not counted to make the performance stats.
-  //TAO_NS_StructuredEvent zeroth_event;
-
   // populate event.
   // send the base time and max count.
   TimeBase::TimeT base_time;
@@ -247,6 +246,12 @@ TAO_NS_Periodic_Supplier::svc (void)
     }
   ACE_ENDTRY;
 
+  ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
+
+  ACE_hrtime_t before, after;
+
+  ACE_Time_Value run_time = ACE_Time_Value (this->run_time_) + ACE_OS::gettimeofday ();
+
   for (int i = 0; i < iter_ ; ++i)
     {
       before = ACE_OS::gethrtime ();
@@ -258,6 +263,16 @@ TAO_NS_Periodic_Supplier::svc (void)
       buffer <<= base_time;
 
       this->event_.payload (buffer);
+
+          if (this->run_time_ != 0 && ACE_OS::gettimeofday () > run_time)
+        {
+          // Time up, send a "Stop" event.
+          CORBA::Any buffer;
+          buffer <<= (long) 1;
+          this->event_.opt_header ("Stop", buffer);
+
+                  i = iter_;  // Load the iter so that the loop exits.
+        }
 
       ACE_TRY
         {
@@ -325,6 +340,7 @@ TAO_NS_Periodic_Supplier::svc (void)
           ACE_Time_Value t_sleep (0, sleep_time);
           ACE_OS::sleep (t_sleep);
         } /* period != 0 */
+
     } /* for */
 
   stats_.end_time (ACE_OS::gethrtime ());

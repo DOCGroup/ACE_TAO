@@ -88,6 +88,9 @@ protected:
   /// Period
   long period_;
 
+  /// RunTime - The Max. time to run the supplier.
+  long run_time_;
+
   /// Worst case exec. time.
   unsigned long exec_time_;
 
