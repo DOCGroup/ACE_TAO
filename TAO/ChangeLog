@@ -1,3 +1,10 @@
+Wed Mar 23 14:20:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/RequestProcessingStrategyDefaultServant.cpp:
+        * tao/PortableServer/RequestProcessingStrategyServantActivator.cpp:
+        * tao/PortableServer/RequestProcessingStrategyServantLocator.cpp:
+          Added missing ACE_CHECK_RETURN in locate_servant()
+
 Tue Mar 22 15:42:00 2005  Gary Maxey  <gary.maxey@hp.com>
 
         * orbsvcs/orbsvcs/Shutdown_Utilities.cpp
