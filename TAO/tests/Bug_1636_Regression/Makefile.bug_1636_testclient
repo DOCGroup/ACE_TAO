@@ -10,7 +10,6 @@
 #
 #----------------------------------------------------------------------------
 MAKEFILE        = Makefile.bug_1636_testclient
-DEPENDENCY_FILE = .depend.Makefile.bug_1636_testclient
 BIN_UNCHECKED   = client
 
 ifndef TAO_ROOT

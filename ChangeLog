@@ -1,3 +1,40 @@
+Wed Dec 24 17:10:45 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * bin/fuzz.pl:
+          Modified the regular expression for matching Makefiles to better
+          filter out unwanted files.
+
+        * examples/C++NPv1/Makefile.Iterative_Logging_Server:
+        * examples/C++NPv1/Makefile.Logging_Client:
+        * examples/C++NPv1/Makefile.Process_Per_Connection_Logging_Server:
+        * examples/C++NPv1/Makefile.RT_Thread_Per_Connection_Logging_Server:
+        * examples/C++NPv1/Makefile.Reactive_Logging_Server:
+        * examples/C++NPv1/Makefile.Reactive_Logging_Server_Ex:
+        * examples/C++NPv1/Makefile.Thread_Per_Connection_Logging_Server:
+        * examples/C++NPv2/Makefile.AC_CLD:
+        * examples/C++NPv2/Makefile.AIO_CLD:
+        * examples/C++NPv2/Makefile.CLD:
+        * examples/C++NPv2/Makefile.Configurable_Logging_Server:
+        * examples/C++NPv2/Makefile.Reactor_Logging_Server:
+        * examples/C++NPv2/Makefile.SLD:
+        * examples/C++NPv2/Makefile.SLDex:
+        * examples/C++NPv2/Makefile.SR_Configurable_Logging_Server:
+        * examples/C++NPv2/Makefile.Select_Reactor_Logging_Server:
+        * examples/C++NPv2/Makefile.TPCLS:
+        * examples/C++NPv2/Makefile.TPLS:
+        * examples/C++NPv2/Makefile.TP_Reactor_Logging_Server:
+        * examples/C++NPv2/Makefile.display_logfile:
+        * examples/DLL/Makefile.Newsweek:
+        * examples/DLL/Makefile.Today:
+        * examples/Service_Configurator/Misc/Makefile.Timer:
+        * examples/Service_Configurator/Misc/Makefile.main:
+        * examples/Timer_Queue/Makefile.TQTD:
+        * examples/Timer_Queue/Makefile.main:
+        * include/makeinclude/Makefile.rtems:
+        * performance-tests/Synch-Benchmarks/Makefile.driver:
+        * performance-tests/Synch-Benchmarks/Makefile.synch_tests:
+          Fixed Fuzz errors.
+
 Wed Dec 24 12:51:23 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * apps/Gateway/Gateway/Config_Files.cpp:

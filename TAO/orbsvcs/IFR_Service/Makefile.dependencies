@@ -1,8 +1,12 @@
+# -*- Makefile -*-
+
 #----------------------------------------------------------------------------
 #       $Id$
 #
 #       Touches the executable if any of the libraries have changed
 #----------------------------------------------------------------------------
+
+MAKEFILE = Makefile.dependencies
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO

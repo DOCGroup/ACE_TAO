@@ -1,3 +1,5 @@
+# -*- Makefile -*-
+
 #----------------------------------------------------------------------------
 #	$Id$
 #
@@ -5,6 +7,8 @@
 #       program in "C++ Network Programming, Vol. 1, Resolving Complexity
 #       Using Patterns and ACE"
 #----------------------------------------------------------------------------
+
+MAKEFILE = Makefile.Process_Per_Connection_Logging_Server
 
 #----------------------------------------------------------------------------
 #	Local macros
