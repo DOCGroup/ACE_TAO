@@ -1,3 +1,21 @@
+Wed Dec 03 00:17:50 1997    <irfan@TWOSTEP>
+
+        * ACE: Removed the explicit iostream.h inclusion from these:
+
+	  examples/ASX/UPIPE_Event_Server/event_server.cpp
+	  examples/Log_Msg/test_log_msg.cpp
+	  examples/Logger/Acceptor-server/server_loggerd.cpp
+	  examples/Reactor/Misc/test_time_value.cpp
+	  examples/Shared_Malloc/test_persistence.cpp
+	  examples/Threads/task_three.cpp
+	  netsvcs/lib/Logging_Strategy.cpp
+	
+	* ace/IOStream.h: Darrell missed removing this explicit iostream.h
+ 	  inclusion.
+
+	* ace/Future.cpp: Removed template instantiation of Atomic_Op
+ 	  since Atomic_Op is not used by Future.
+
 Fri Dec 02 11:46:17 1997    <nw1@CHA-CHA>
 
 	* ace/Proactor.cpp (ACE_Proactor): Reenabled Proactor's thread
