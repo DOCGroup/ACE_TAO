@@ -1131,7 +1131,7 @@ ACE_DynScheduler::schedule_threads (void)
   if (status == SUCCEEDED)
   {
     // assign priorities to the thread dispatch entries
-    status == assign_priorities (ordered_thread_dispatch_entries_, threads_);
+    status = assign_priorities (ordered_thread_dispatch_entries_, threads_);
   }
 
   return status;
