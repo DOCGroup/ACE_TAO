@@ -13,7 +13,6 @@
 #define DYNAMIC_BITSET_H
 
 #include "ace/config-all.h"
-#include <memory.h>
 
 /**
  *

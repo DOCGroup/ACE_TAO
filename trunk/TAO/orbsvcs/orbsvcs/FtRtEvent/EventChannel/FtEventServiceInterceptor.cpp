@@ -1,5 +1,5 @@
 // $Id$
-
+#include "ace/OS_NS_string.h"
 #include "orbsvcs/FT_CORBA_ORBC.h"
 #include "FtEventServiceInterceptor.h"
 #include "Request_Context_Repository.h"
@@ -57,7 +57,7 @@ CachedRequestTable::get_state(FtRtecEventChannelAdmin::CachedOptionResults& stat
     ++first)
   {
     TableImpl::ENTRY& entry = *first;
-    state[i].client_id = strdup(entry.ext_id_.c_str());
+    state[i].client_id = ACE_OS::strdup(entry.ext_id_.c_str());
     state[i].cached_result = entry.int_id_;
     ++i;
   }
