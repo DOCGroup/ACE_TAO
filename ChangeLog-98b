@@ -1,5 +1,19 @@
 Sun Sep  6 15:49:46 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/Containers: Merged the ACE_Array class entirely into the
+ 	  Containers files, which is more consistent with the general
+ 	  design of ACE.  Also, removed ace/Array.i and Array.cpp since
+ 	  they are no longer needed.  We'll keep Array.h around for a
+ 	  while for backwards compatibility, but it just #includes
+ 	  "ace/Containers.h" now...
+
+        * ace/config-sunos5*.h: Added ACE_HAS_DIRENT.  We'll need help
+ 	  figuring this out on the other platforms...
+
+	* ace/OS: Began adding "Dirent" support to ACE_OS.  This will
+ 	  provide the UNIX/POSIX directory iterator routines when the
+ 	  ACE_HAS_DIRENT macro is enabled.  
+
 	* ace/OS: Added fputs() to ACE_OS.  I'm not sure why this was
 	  missing...
 

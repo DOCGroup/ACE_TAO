@@ -13,7 +13,7 @@
 //    Define a portable directory-entry manipulation interface.    
 //
 // = AUTHOR
-//    Douglas C. Schmidt
+//    Douglas C. Schmidt <schmidt@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -21,10 +21,6 @@
 #define ACE_DIRENT_H
 
 #include "ace/OS.h"
-
-#if defined rewinddir
-#undef rewinddir
-#endif /* rewinddir */
 
 class ACE_Dirent
 {
@@ -66,10 +62,11 @@ public:
   // update the st_atime field of the directory each time the
   // directory is actually read.
 
-  struct dirent *readdir_r (dirent *entry);
+  int readdir_r (struct dirent *entry,
+                 struct dirent **result);
   // Has the equivalent functionality as <readdir> except that an
-  // <entry> buffer result must be supplied by the caller to store the
-  // result.
+  // <entry> and <result> buffer must be supplied by the caller to
+  // store the result.
 
   // = Manipulators.
   long telldir (void);
@@ -99,8 +96,8 @@ private:
   // Pointer to the directory stream.
 };
 
-#if defined (__ACE_INLINE__)
-#include "Dirent.i"
-#endif /* __ACE_INLINE__ */
+#if !defined (ACE_LACKS_INLINE_FUNCTIONS)
+#include "ace/Dirent.i"
+#endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
 #endif /* ACE_DIRENT_H */

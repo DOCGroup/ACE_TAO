@@ -1171,11 +1171,8 @@ int ACE_OS::socket_initialized_;
 
 #if defined (ACE_WIN32) || defined (ACE_HAS_TSS_EMULATION)
 
-# include "ace/Array.h"
-
-// moved class ACE_TSS_Ref declaration 
-// to OS.h so it can be visible to the
-// single file of template instantiations
+// Moved class ACE_TSS_Ref declaration to OS.h so it can be visible to
+// the single file of template instantiations.
 
 ACE_TSS_Ref::ACE_TSS_Ref (ACE_thread_t id)
   : tid_(id)
