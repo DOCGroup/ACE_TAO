@@ -115,7 +115,7 @@ ACEXML_Parser::get (void)
   if (this->instream_ != 0)
     {
       ACEXML_Char ch;
-      if (this->instream_->get (ch) == -1)
+      if (this->instream_->get (ch) == -1) // EOF reached.
         return 0;
       this->locator_.incrColumnNumber();
       if (ch == 0x0A) {
