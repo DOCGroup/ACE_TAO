@@ -14,7 +14,8 @@ Server_Info::Server_Info (const ACE_TString POA_name,
                           const ACE_TString logical_server_name,
                           const ACE_TString startup_command,
                           const ACE_TString working_dir)
-: logical_server_name_ (logical_server_name),
+: starting_up_ (0),
+  logical_server_name_ (logical_server_name),
   POA_name_ (POA_name),
   startup_command_ (startup_command),
   working_dir_ (working_dir),
@@ -148,6 +149,42 @@ Server_Repository::get_running_info (const ACE_TString POA_name,
   // Only fill in data if it was found
   if (retval == 0)
     server->get_running_info (host, port, ping_ior);
+
+  return retval;
+}
+
+
+// Checks the starting_up_ variable in the Server_Info and 
+// returns the previous value or -1 if the POA_name wasn't found
+
+int 
+Server_Repository::starting_up (const ACE_TString POA_name, int new_value)
+{
+  Server_Info *server;
+  int retval = this->repository_.find (POA_name, server);
+
+  // Only fill in data if it was found
+  if (retval == 0)
+  {
+    retval = server->starting_up_;
+    server->starting_up_ = new_value;
+  }
+
+  return retval;
+}
+
+
+// Same as above but does not alter the value
+
+int 
+Server_Repository::starting_up (const ACE_TString POA_name)
+{
+  Server_Info *server;
+  int retval = this->repository_.find (POA_name, server);
+
+  // Only fill in data if it was found
+  if (retval == 0)
+    retval = server->starting_up_;
 
   return retval;
 }
