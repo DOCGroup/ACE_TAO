@@ -127,8 +127,8 @@ ACEXML_SAXPrint_Handler::startDocument (ACEXML_Env &xmlenv)
 {
   ACE_UNUSED_ARG (xmlenv);
 
-//    ACE_DEBUG ((LM_DEBUG,
-//                ACE_LIB_TEXT ("* Event startDocument () ***************\n")));
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_LIB_TEXT ("* Event startDocument () ***************\n")));
 }
 
 void
@@ -157,12 +157,16 @@ ACEXML_SAXPrint_Handler::startElement (const ACEXML_Char *,
 }
 
 void
-ACEXML_SAXPrint_Handler::startPrefixMapping (const ACEXML_Char *,
-                                             const ACEXML_Char *,
+ACEXML_SAXPrint_Handler::startPrefixMapping (const ACEXML_Char * prefix,
+                                             const ACEXML_Char * uri,
                                              ACEXML_Env &)
   //    ACE_THROW_SPEC ((ACEXML_SAXException))
 {
-  // No-op.
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_LIB_TEXT ("* Event startPrefixMapping () ***************\n")));
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_LIB_TEXT ("Prefix = %s, URI = %s\n"), prefix, uri));
+
 }
 
 // *** Methods inherited from ACEXML_DTDHandler.

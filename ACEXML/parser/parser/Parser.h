@@ -412,11 +412,31 @@ protected:
    * @var simple_parsing_name_
    *
    * This constant string defines the name of "simple XML parsing"
-   * feature.  When this feature is enable, ACEXML parser is allowed
+   * feature.  When this feature is enabled, ACEXML parser is allowed
    * to parse a simple XML stream without mandated XML prolog
    * and no DTD defintion.
    */
-  static const ACEXML_Char simple_parsing_name_[];
+  static const ACEXML_Char simple_parsing_feature_[];
+
+  /**
+   * @var namespaces_feature_
+   *
+   * This constant string defines the SAX XML Namespace feature. When this
+   * feature is enabled, ACEXML parser allows access by namespace qualified
+   * names.
+   */
+  static const ACEXML_Char namespaces_feature_[];
+
+  /**
+   *  @var namespace_prefixes_feature_
+   *
+   *  This constant string defines the SAX XML Namespace prefixes feature.
+   *  Normally the list of attributes returned by the parser will not
+   *  contain attributes used as namespace declarations (xmlns*). When this
+   *  feature is enabled, the list of attributes contains the namespace
+   *  declarations also.
+   */
+  static const ACEXML_Char namespace_prefixes_feature_[];
 
   /* @} */
 
@@ -472,6 +492,8 @@ private:
 
   // Feature flags &
   int simple_parsing_;
+  int namespaces_;
+  int namespace_prefixes_;
 
 };
 
