@@ -1,3 +1,8 @@
+Thu Apr 09 17:55:21 1998  Steve Huston  <shuston@riverace.com>
+
+	* ace/config-hpux-10.x.h, config-hpux11.h, config-aix-4.2.x.h:
+	  Added ACE_HAS_WILDCARD_BIND.
+
 Thu Apr 09 16:43:26 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/ACE.*: Changed *_version() functions to be non-inlined.
