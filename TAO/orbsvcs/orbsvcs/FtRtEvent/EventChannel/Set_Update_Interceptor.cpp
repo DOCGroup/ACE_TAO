@@ -3,6 +3,7 @@
 #include "Set_Update_Interceptor.h"
 #include "orbsvcs/FTRTC.h"
 #include "Request_Context_Repository.h"
+#include "../Utils/Log.h"
 
 ACE_RCSID (EventChannel,
            Set_Update_Intercetpor,
@@ -92,7 +93,7 @@ TAO_Set_Update_Interceptor::send_request (
       FTRT::SequenceNumber sequence_number =
         Request_Context_Repository().get_sequence_number(ri ACE_ENV_ARG_PARAMETER);
 
-      ACE_DEBUG((LM_DEBUG, "send_request : sequence_number = %d\n", sequence_number));
+      TAO_FTRTEC::Log(3, "send_request : sequence_number = %d\n", sequence_number);
       if (sequence_number != 0) {
         if (!(cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER)))
           ACE_THROW (CORBA::MARSHAL ());

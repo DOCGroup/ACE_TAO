@@ -129,7 +129,7 @@ module FtRtecEventChannelAdmin
 
 
   struct Operation {
-     ObjectId object_id;
+    ObjectId object_id;
     OperationParam param;
   };
 

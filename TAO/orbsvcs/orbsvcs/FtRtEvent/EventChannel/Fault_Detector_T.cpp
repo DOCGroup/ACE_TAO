@@ -1,5 +1,5 @@
-
 /// $Id$
+#include "../Utils/Log.h"
 
 template <class ACCEPTOR, class CONNECTOR, class DETECTION_HANDLER>
 Fault_Detector_T<ACCEPTOR, CONNECTOR, DETECTION_HANDLER>::Fault_Detector_T()
@@ -23,8 +23,8 @@ Fault_Detector_T<ACCEPTOR, CONNECTOR, DETECTION_HANDLER>::init_acceptor()
   if (acceptor_.acceptor().get_local_addr(listen_addr) !=0)
     ACE_ERROR_RETURN((LM_ERROR, "Connot get local addr\n"), -1);
 
-  ACE_DEBUG((LM_DEBUG, "listening at %s:%d\n", listen_addr.get_host_name(),
-                                               listen_addr.get_port_number()));
+  TAO_FTRTEC::Log(1, "listening at %s:%d\n", listen_addr.get_host_name(),
+                                               listen_addr.get_port_number());
   char* buf = CORBA::string_alloc(MAXHOSTNAMELEN);
   listen_addr.addr_to_string(buf, MAXHOSTNAMELEN, 0);
   location_.length(1);
@@ -45,7 +45,7 @@ Fault_Detector_T<ACCEPTOR, CONNECTOR, DETECTION_HANDLER>::connect(const FTRT::Lo
     ACE_NEW_RETURN(handler, DETECTION_HANDLER(listener_), 0) ;
 
     handler->reactor(&reactor_task_.reactor_);
-    ACE_DEBUG((LM_DEBUG, "connecting to %s\n", location[0].id.in()));
+    TAO_FTRTEC::Log(1, "connecting to %s\n", location[0].id.in());
 
     int result = connector_.connect(handler->peer(), prev_addr);
 

@@ -1,4 +1,5 @@
 // $Id$
+#include "../Utils/Log.h"
 
 template <ACE_PEER_STREAM_1>
 int ConnectionAcceptHandler<ACE_PEER_STREAM_2>::open (void * acceptor)
@@ -18,9 +19,9 @@ int ConnectionAcceptHandler<ACE_PEER_STREAM_2>::open (void * acceptor)
     "(%P|%t) can't register with reactor\n"),
     -1);
 
-  ACE_DEBUG ((LM_DEBUG,
+  TAO_FTRTEC::Log (1,
     "(%P|%t) connected with %s\n",
-    addr.get_host_name ()));
+    addr.get_host_name ());
 
   return 0;
 }

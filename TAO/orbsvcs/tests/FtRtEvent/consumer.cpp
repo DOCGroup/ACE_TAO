@@ -7,6 +7,7 @@
 #include "ace/Get_Opt.h"
 #include "orbsvcs/FtRtEvent/Utils/resolve_init.h"
 #include "orbsvcs/FtRtEvent/Utils/FTEC_Gateway.h"
+#include "orbsvcs/FtRtEvent/Utils/Log.h"
 
 /// include this file to statically linked with FT ORB
 #include "orbsvcs/FaultTolerance/FT_ClientService_Activate.h"
@@ -20,12 +21,13 @@ ACE_RCSID (FtRtEvent,
 
 CORBA::ORB_var orb;
 auto_ptr<TAO_FTRTEC::FTEC_Gateway> gateway;
+int NUM_ITERATIONS = 100;
 
 RtecEventChannelAdmin::EventChannel_ptr
 get_event_channel(int argc, ACE_TCHAR** argv ACE_ENV_ARG_DECL)
 {
     FtRtecEventChannelAdmin::EventChannel_var channel;
-    ACE_Get_Opt get_opt (argc, argv, ACE_LIB_TEXT("hi:n"));
+    ACE_Get_Opt get_opt (argc, argv, ACE_LIB_TEXT("d:hi:k:n"));
     int opt;
     int use_gateway = 1;
 
@@ -33,6 +35,9 @@ get_event_channel(int argc, ACE_TCHAR** argv ACE_ENV_ARG_DECL)
     {
       switch (opt)
       {
+      case 'd':
+        TAO_FTRTEC::Log::level(ACE_OS::atoi(get_opt.opt_arg ()));
+        break;
       case 'i':
         {
           CORBA::Object_var obj = orb->string_to_object(get_opt.opt_arg ()
@@ -42,6 +47,9 @@ get_event_channel(int argc, ACE_TCHAR** argv ACE_ENV_ARG_DECL)
                                                                 ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN(0);
         }
+        break;
+      case 'k':
+        NUM_ITERATIONS = atoi(get_opt.opt_arg ());
         break;
       case 'n':
          use_gateway = 0;
@@ -112,13 +120,6 @@ int main(int argc, ACE_TCHAR** argv)
     ACE_TRY_CHECK;
 
     PushConsumer_impl push_consumer_impl(orb.in());
-    RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
-      channel->for_consumers(ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_TRY_CHECK;
-
-    RtecEventChannelAdmin::ProxyPushSupplier_var supplier =
-      consumer_admin->obtain_push_supplier(ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_TRY_CHECK;
 
     RtecEventChannelAdmin::ConsumerQOS qos;
     qos.is_gateway = 1;
@@ -132,9 +133,22 @@ int main(int argc, ACE_TCHAR** argv)
     RtecEventComm::PushConsumer_var push_consumer =
       push_consumer_impl._this();
 
-    supplier->connect_push_consumer(push_consumer.in(),
+    ACE_Time_Value time_val = ACE_OS::gettimeofday ();
+
+    RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
+      channel->for_consumers(ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_TRY_CHECK;
+
+    push_consumer_impl.supplier_ =
+      consumer_admin->obtain_push_supplier(ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_TRY_CHECK;
+    push_consumer_impl.supplier_->connect_push_consumer(push_consumer.in(),
       qos   ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
+
+    time_val = ACE_OS::gettimeofday () - time_val;
+
+    ACE_DEBUG((LM_DEBUG, "connected to proxy_push_supplier, subscription latency = %d\n", time_val.sec () * 10000000 + time_val.usec ()* 10));
 
     orb->run(ACE_ENV_SINGLE_ARG_PARAMETER);
 

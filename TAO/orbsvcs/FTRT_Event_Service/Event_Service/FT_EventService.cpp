@@ -10,6 +10,7 @@
 #include "orbsvcs/Sched/Config_Scheduler.h"
 #include "orbsvcs/Scheduler_Factory.h"
 #include "orbsvcs/FtRtEvent/EventChannel/FTRTEC_ServiceActivate.h"
+#include "orbsvcs/FtRtEvent/Utils/Log.h"
 
 ACE_RCSID (Event_Service,
            FT_EventService,
@@ -142,13 +143,16 @@ FT_EventService::parse_args (int argc, ACE_TCHAR* argv [])
   if (n_threads)
     this->num_threads_ = ACE_OS::atoi(n_threads);
 
-  ACE_Get_Opt get_opt (argc, argv, ACE_LIB_TEXT("jn:ps:"));
+  ACE_Get_Opt get_opt (argc, argv, ACE_LIB_TEXT("d:jn:ps:"));
   int opt;
 
   while ((opt = get_opt ()) != EOF)
   {
     switch (opt)
     {
+    case 'd':
+      TAO_FTRTEC::Log::level(ACE_OS::atoi(get_opt.opt_arg ()));
+      break;
     case 'j':
       this->membership_ = TAO_FTEC_Event_Channel::BACKUP;
       break;

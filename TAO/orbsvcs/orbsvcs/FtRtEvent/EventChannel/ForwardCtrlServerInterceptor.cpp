@@ -5,6 +5,7 @@
 #include "GroupInfoPublisher.h"
 #include "IOGR_Maker.h"
 #include "../Utils/resolve_init.h"
+#include "../Utils/Log.h"
 #include "orbsvcs/FTRTC.h"
 
 ACE_RCSID (EventChannel,
@@ -186,11 +187,11 @@ void ForwardCtrlServerInterceptor::send_reply (PortableInterceptor::ServerReques
   // pass a new IOGR if the client use an outdated version
 
   IOGR_Maker* maker = IOGR_Maker::instance();
-  ACE_DEBUG((LM_DEBUG, "Current GROUP Version = %d, received version = %d\n",
-    maker->get_ref_version(), version));
+  TAO_FTRTEC::Log(2, "Current GROUP Version = %d, received version = %d\n",
+    maker->get_ref_version(), version);
 
   if (version < maker->get_ref_version()) {
-    ACE_DEBUG((LM_DEBUG, "Outdated IOGR version, passing new IOGR\n"));
+    TAO_FTRTEC::Log(1, "Outdated IOGR version, passing new IOGR\n");
 
     ACE_TRY_EX(block2) {
       CORBA::Object_var forward = get_forward(ri
@@ -213,8 +214,6 @@ void ForwardCtrlServerInterceptor::send_reply (PortableInterceptor::ServerReques
 
       ri->add_reply_service_context (sc, 0 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK_EX(block2);
-
-      ACE_DEBUG((LM_DEBUG, "reply_service_context added\n"));
     }
     ACE_CATCHALL {
     }

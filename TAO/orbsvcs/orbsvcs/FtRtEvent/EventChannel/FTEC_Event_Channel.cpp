@@ -14,6 +14,7 @@
 #include "create_persistent_poa.h"
 #include "tao/Utils/PolicyList_Destroyer.h"
 #include "GroupInfoPublisher.h"
+#include "../Utils/Log.h"
 
 ACE_RCSID (EventChannel,
            TAO_FTEC_Event_Channel,
@@ -56,7 +57,7 @@ void setup_object_group(TAO_FTEC_Event_Channel* es,
             ACE_ENV_ARG_PARAMETER);
         ACE_CHECK;
 
-        ACE_DEBUG((LM_DEBUG, "Got Primary address from Naming Service\n"));
+        TAO_FTRTEC::Log(1, "Got Primary address from Naming Service\n");
 
         primary->join_group(member_list[0] ACE_ENV_ARG_PARAMETER);
       }
@@ -193,7 +194,6 @@ void
 TAO_FTEC_Event_Channel::set_state (const FTRT::State & s ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException, FTRT::InvalidState))
 {
-  ACE_DEBUG((LM_DEBUG, "TAO_FTEC_Event_Channel::set_state\n"));
   ec_impl_->set_state(s ACE_ENV_ARG_PARAMETER);
 }
 

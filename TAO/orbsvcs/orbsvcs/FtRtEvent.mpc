@@ -19,15 +19,15 @@ project (FtRtEvent) : orbsvcslib, core, ftorbutils, rtevent, naming {
     commandflags += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs -Wb,export_macro=TAO_FtRtEvent_Export -Wb,export_include=FtRtEvent/Utils/ftrtevent_export.h
     FTRT.idl
     FtRtecEventComm.idl
+    FTRT_GroupManager.idl
   }
 
   verbatim(gnuace,bottom) {
-    idl_stubs : FTRTC.h FtRtecEventCommC.h
+    idl_stubs : FTRTC.h FtRtecEventCommC.h FTRT_GroupManagerC.h
   }
 
   IDL_Files  {
     FtRtecEventChannelAdmin.idl
-    FTRT_GroupManager.idl
   }
 
   Source_Files (ORBSVCS_COMPONENTS) {

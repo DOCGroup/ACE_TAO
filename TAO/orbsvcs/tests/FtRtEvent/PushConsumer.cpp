@@ -8,6 +8,9 @@ ACE_RCSID (FtRtEvent,
            PushConsumer,
            "$Id$")
 
+extern int NUM_ITERATIONS;
+
+
 PushConsumer_impl::PushConsumer_impl(CORBA::ORB_ptr orb)
 : orb_(CORBA::ORB::_duplicate(orb))
 {
@@ -30,6 +33,11 @@ PushConsumer_impl::push (const RtecEventComm::EventSet & event
       time_val.sec () * 10000000 + time_val.usec ()* 10 - event[0].header.ec_send_time;
     event[0].data.any_value >>= x;
     printf("Received data : %d,  single trip time = %d usec\n", x, static_cast<int>(elaps/10));
+
+    if (NUM_ITERATIONS-1 == x) {
+      supplier_->disconnect_push_supplier();
+      orb_->shutdown();
+    }
   }
 }
 

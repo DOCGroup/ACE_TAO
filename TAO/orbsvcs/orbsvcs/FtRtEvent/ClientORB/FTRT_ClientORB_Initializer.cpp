@@ -7,8 +7,6 @@ ACE_RCSID (ClientORB,
            FTRT_ClientORB_Initializer,
            "$Id$")
 
-#include "tao/debug.h"
-
 
 FTRT_ClientORB_Initializer::FTRT_ClientORB_Initializer (int transaction_depth)
 : client_interceptor_ ( new FTRT_ClientORB_Interceptor(transaction_depth) )

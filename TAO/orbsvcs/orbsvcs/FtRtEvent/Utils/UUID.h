@@ -16,17 +16,6 @@
 #include "ace/OS.h"
 #include "ace/SString.h"
 
-#if defined(TAO_EXPORT_MACRO)
-#undef TAO_EXPORT_MACRO
-#endif
-#define TAO_EXPORT_MACRO  FtRtEvent_Export
-
-#if defined(TAO_EXPORT_NESTED_CLASSES)
-#if defined(TAO_EXPORT_NESTED_MACRO)
-#undef TAO_EXPORT_NESTED_MACRO
-#endif /* defined (TAO_EXPORT_NESTED_MACRO) */
-#define TAO_EXPORT_NESTED_MACRO FtRtEvent_Export
-#endif /* TAO_EXPORT_NESTED_CLASSES */
 
 /**
  * This is an implementation of Global Unique Identifier

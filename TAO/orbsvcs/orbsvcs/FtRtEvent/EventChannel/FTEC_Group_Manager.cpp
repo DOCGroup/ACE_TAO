@@ -6,6 +6,8 @@
 #include "Fault_Detector.h"
 #include "IOGR_Maker.h"
 #include "GroupInfoPublisher.h"
+#include "Replication_Service.h"
+#include "../Utils/Log.h"
 
 ACE_RCSID (EventChannel,
            TAO_FTEC_Group_Manager,
@@ -98,7 +100,7 @@ void TAO_FTEC_Group_Manager::create_group (
     CORBA::ULong object_group_ref_version
     ACE_ENV_ARG_DECL)
 {
-  ACE_DEBUG((LM_DEBUG, "create_group\n"));
+  TAO_FTRTEC::Log(1, "create_group\n");
   IOGR_Maker::instance()->set_ref_version( object_group_ref_version );
 
   impl_->info_list = info_list;
@@ -133,7 +135,7 @@ void TAO_FTEC_Group_Manager::join_group (
     const FTRT::ManagerInfo & info
     ACE_ENV_ARG_DECL)
 {
-  ACE_DEBUG((LM_DEBUG, "join group\n"));
+  TAO_FTRTEC::Log(1, "join group\n");
   if (impl_->my_position == 0) {
     FTRTEC::Replication_Service* svc = FTRTEC::Replication_Service::instance();
     ACE_Write_Guard<FTRTEC::Replication_Service> lock(*svc);
@@ -147,8 +149,8 @@ void TAO_FTEC_Group_Manager::add_member (
     CORBA::ULong object_group_ref_version
     ACE_ENV_ARG_DECL)
 {
-  ACE_DEBUG((LM_DEBUG, "add_member location = <%s>\n",
-    (const char*)info.the_location[0].id));
+  TAO_FTRTEC::Log(1, "add_member location = <%s>\n",
+    (const char*)info.the_location[0].id);
 
   size_t pos = impl_->info_list.length();
   impl_->info_list.length(pos+1);
@@ -165,8 +167,8 @@ void TAO_FTEC_Group_Manager::add_member (
     // I am not the last of replica, tell my successor that
     // a new member has joined in.
     ACE_TRY_EX(block) {
-      publisher->successor()->add_member(info, object_group_ref_version
-        ACE_ENV_ARG_PARAMETER);
+      FTRTEC::Replication_Service::instance()->add_member(info, object_group_ref_version
+                                                          ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK_EX(block);
       return;
     }
@@ -204,10 +206,10 @@ void TAO_FTEC_Group_Manager::add_member (
   else
     s.replace(cdr.begin()->length(), cdr.begin());
 
-  ACE_DEBUG((LM_DEBUG, "Setting state\n"));
+  TAO_FTRTEC::Log(2, "Setting state\n");
   info.ior->set_state(s ACE_ENV_ARG_PARAMETER);
   info.ior->create_group(impl_->info_list, object_group_ref_version);
-  ACE_DEBUG((LM_DEBUG, "After create_group\n"));
+  TAO_FTRTEC::Log(2, "After create_group\n");
 }
 
 template <class SEQ>
@@ -224,7 +226,7 @@ void TAO_FTEC_Group_Manager::replica_crashed (
     const FTRT::Location & location
     ACE_ENV_ARG_DECL)
 {
-  ACE_DEBUG((LM_DEBUG, "TAO_FTEC_Group_Manager::replica_crashed\n"));
+  TAO_FTRTEC::Log(1, "TAO_FTEC_Group_Manager::replica_crashed\n");
   FTRTEC::Replication_Service* svc = FTRTEC::Replication_Service::instance();
     ACE_Write_Guard<FTRTEC::Replication_Service> lock(*svc);
     remove_member(location, IOGR_Maker::instance()->increment_ref_version()
@@ -266,14 +268,14 @@ void TAO_FTEC_Group_Manager::remove_member (
     ACE_CHECK;
   }
 
-  ACE_DEBUG((LM_DEBUG, "2. my_position = %d, crashed_pos = %d\n", impl_->my_position, crashed_pos));
+  TAO_FTRTEC::Log(3, "my_position = %d, crashed_pos = %d\n", impl_->my_position, crashed_pos);
   if (impl_->my_position == crashed_pos && impl_->my_position > 0)
     Fault_Detector::instance()->connect(impl_->info_list[impl_->my_position-1].the_location);
 }
 
 void TAO_FTEC_Group_Manager::connection_closed()
 {
-  ACE_DEBUG((LM_DEBUG, "TAO_FTEC_Group_Manager::connection_closed\n"));
+  TAO_FTRTEC::Log(1, "TAO_FTEC_Group_Manager::connection_closed\n");
   ACE_ASSERT(impl_->my_position > 0);
 
   // do not use referere here, because the the value pointed by the pointer to

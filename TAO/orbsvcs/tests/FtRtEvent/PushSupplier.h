@@ -14,6 +14,7 @@
 
 #include "orbsvcs/RtecEventCommS.h"
 #include "orbsvcs/RtecEventChannelAdminC.h"
+#include "orbsvcs/Channel_Clients_T.h"
 #include "ace/Event_Handler.h"
 #include "ace/Task.h"
 #include "ace/Reactor.h"
@@ -21,9 +22,7 @@
 
 class ACE_Reactor;
 
-class PushSupplier_impl :
-public ACE_Event_Handler
-,public virtual POA_RtecEventComm::PushSupplier
+class PushSupplier_impl : public ACE_Event_Handler
 {
 public:
   PushSupplier_impl(CORBA::ORB_ptr orb);
@@ -51,9 +50,11 @@ private:
     ACE_Event_Handler* handler_;
   };
 
-    virtual int handle_timeout (const ACE_Time_Value &current_time,
+  virtual int handle_timeout (const ACE_Time_Value &current_time,
                               const void *act = 0);
+
   CORBA::ORB_var orb_;
+  ACE_PushSupplier_Adapter<PushSupplier_impl> supplier_servant_;
   CORBA::ULong seq_no_;
   ReactorTask reactor_task_;
   RtecEventChannelAdmin::ProxyPushConsumer_var consumer_;

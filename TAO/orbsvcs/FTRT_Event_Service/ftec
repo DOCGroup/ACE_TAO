@@ -16,7 +16,9 @@ do
     -p)     ARGS="$ARGS -p";;
     -j)     ARGS="$ARGS -j";;
     -ns)    ORBNameServicePort=${ORBNameServicePort=10000}
-            export NameServiceIOR=${NameServiceIOR=corbaloc:iiop:$2:$ORBNameServicePort/NameService};
+            export NameServiceIOR=${NameServiceIOR=corbaloc:iiop:$2:$ORBNameServicePort/NameService}
+            shift;;
+    -d)     ARGS="$ARGS -d $2"
             shift;;
     esac
   shift

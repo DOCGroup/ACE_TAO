@@ -11,7 +11,7 @@
 
 #ifndef PUSHCONSUMERIMPL_H
 #define PUSHCONSUMERIMPL_H
-
+#include "orbsvcs/RtecEventChannelAdminC.h"
 #include "orbsvcs/RtecEventCommS.h"
 
 class PushConsumer_impl :
@@ -34,6 +34,7 @@ public:
       ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
+  RtecEventChannelAdmin::ProxyPushSupplier_var supplier_;
 private:
   CORBA::ORB_var orb_;
   PushConsumer_impl(const PushConsumer_impl&);

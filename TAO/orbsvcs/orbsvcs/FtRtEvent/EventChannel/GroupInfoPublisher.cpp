@@ -5,6 +5,7 @@
 #include "IOGR_Maker.h"
 #include "Identification_Service.h"
 #include "FTEC_Become_Primary_Listener.h"
+#include "../Utils/Log.h"
 
 ACE_RCSID (EventChannel,
            GroupInfoPublisher,
@@ -85,7 +86,7 @@ GroupInfoPublisherBase::update(const FTRT::ManagerInfoList & info_list,
   ACE_CHECK;
 
   if (primary_ && !CORBA::is_nil(naming_context_.in())) {
-    ACE_DEBUG((LM_DEBUG, "Registering to the Name Service\n"));
+    TAO_FTRTEC::Log(1, "Registering to the Name Service\n");
     naming_context_->rebind(FTRTEC::Identification_Service::instance()->name(),
                             iogr_.in() ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;

@@ -3,6 +3,7 @@
 #include "UUID.h"
 #include "resolve_init.h"
 #include "FtRtecEventCommS.h"
+#include "Log.h"
 
 ACE_RCSID (Utils,
            FTEC_Gateway,
@@ -355,6 +356,8 @@ void FTEC_Gateway_ProxyPushSupplier::connect_push_consumer (
 void FTEC_Gateway_ProxyPushSupplier::disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+
+  TAO_FTRTEC::Log(3, "FTEC_Gateway_ProxyPushSupplier::disconnect_push_supplier\n");
   PortableServer::ObjectId** oid_ptr = get_remote_oid_ptr(impl_->orb.in() ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   impl_->ftec->disconnect_push_supplier(**oid_ptr ACE_ENV_ARG_PARAMETER);
@@ -402,7 +405,7 @@ void FTEC_Gateway_ProxyPushConsumer::push (const RtecEventComm::EventSet & data
   PortableServer::ObjectId** oid_ptr = get_remote_oid_ptr(impl_->orb.in() ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  /*
+  /*  
   if (CORBA::is_nil(impl_->push_handler.in())) {
     impl_->push_handler = impl_->push_handler_servant._this(ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK;
@@ -412,6 +415,7 @@ void FTEC_Gateway_ProxyPushConsumer::push (const RtecEventComm::EventSet & data
                            **oid_ptr,
                            data ACE_ENV_ARG_PARAMETER);
  */
+
   impl_->ftec->push(**oid_ptr, data ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
@@ -432,6 +436,8 @@ void FTEC_Gateway_ProxyPushConsumer::connect_push_supplier (
 void FTEC_Gateway_ProxyPushConsumer::disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  TAO_FTRTEC::Log(3, "FTEC_Gateway_ProxyPushSupplier::disconnect_push_consumer\n");
+
   PortableServer::ObjectId** oid_ptr = get_remote_oid_ptr(impl_->orb.in() ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   impl_->ftec->disconnect_push_consumer(**oid_ptr ACE_ENV_ARG_PARAMETER);
@@ -451,6 +457,7 @@ PushConsumerHandler::~PushConsumerHandler()
 void PushConsumerHandler::push (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  ACE_DEBUG((LM_DEBUG, "Received push result\n"));
 }
 
 void PushConsumerHandler::push_excep (FtRtecEventComm::AMI_PushConsumerExceptionHolder * excep_holder ACE_ENV_ARG_DECL_NOT_USED)

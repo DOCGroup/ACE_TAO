@@ -26,7 +26,7 @@
 namespace FTRTEC
 {
   class Replication_Service : public TAO_FTEC_Become_Primary_Listener,
-    public ACE_Service_Object
+                              public ACE_Service_Object
   {
   public:
     static Replication_Service* instance();
@@ -45,8 +45,12 @@ namespace FTRTEC
       (const FtRtecEventChannelAdmin::ObjectId& ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     void replicate_request(const FtRtecEventChannelAdmin::Operation& update,
-      RollbackOperation rollback
-      ACE_ENV_ARG_DECL);
+         RollbackOperation rollback
+         ACE_ENV_ARG_DECL);
+
+    void add_member(const FTRT::ManagerInfo & info,
+                    CORBA::ULong object_group_ref_version
+                    ACE_ENV_ARG_DECL);
 
     int  acquire_read (void);
     int  acquire_write (void);

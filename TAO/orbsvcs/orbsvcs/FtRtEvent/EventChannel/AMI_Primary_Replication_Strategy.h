@@ -26,13 +26,16 @@ class AMI_Primary_Replication_Strategy : public Replication_Strategy
                                , public ACE_Task_Base
 {
 public:
-    AMI_Primary_Replication_Strategy();
-    virtual ~AMI_Primary_Replication_Strategy();
-    virtual int init();
-    virtual void replicate_request(const FTRT::State& state,
-                                   RollbackOperation rollback,
-                                   const FtRtecEventChannelAdmin::ObjectId& oid
-                                   ACE_ENV_ARG_DECL);
+  AMI_Primary_Replication_Strategy();
+  virtual ~AMI_Primary_Replication_Strategy();
+  virtual int init();
+  virtual void replicate_request(const FTRT::State& state,
+                                 RollbackOperation rollback,
+                                 const FtRtecEventChannelAdmin::ObjectId& oid
+                                 ACE_ENV_ARG_DECL);
+  virtual void add_member(const FTRT::ManagerInfo & info,
+                          CORBA::ULong object_group_ref_version
+                          ACE_ENV_ARG_DECL);
   virtual int  acquire_read (void);
   virtual int  acquire_write (void);
   virtual int  release (void);
@@ -41,6 +44,7 @@ public:
 private:
   virtual int svc (void);
   CORBA::ORB_var orb_;
+  PortableServer::POA_var root_poa_;
   PortableServer::POA_var poa_;
   PortableServer::POAManager_var mgr_;
   bool running_;
