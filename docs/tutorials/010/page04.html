@@ -19,7 +19,6 @@ and reads from the message queue it contains.
 
 <HR WIDTH="100%">
 <PRE>
-
 <font color=red>// $Id$</font>
 
 <font color=blue>#ifndef</font> <font color=purple>TASK_H</font>
@@ -31,51 +30,40 @@ and reads from the message queue it contains.
 # pragma once
 <font color=blue>#endif</font> <font color=red>/* ACE_LACKS_PRAGMA_ONCE */</font>
 
-<font color=red>/*
-  Like the thread-pool server tutorial, we'll derive from ACE_Task&lt;>.
+<font color=red>/* Like the thread-pool server tutorial, we'll derive from ACE_Task&lt;>.
   Our goal here is to show off the ACE_Message_Queue and the best way
   to do that is to use one to pass data between threads.  The easiest
-  way to create threads is with ACE_Task&lt;>
- */</font>
-class Task : public ACE_Task &lt; ACE_MT_SYNCH >
+  way to create threads is with ACE_Task&lt;> */</font>
+class Task : public ACE_Task &lt;ACE_MT_SYNCH>
 {
 public:
 
-  typedef ACE_Task &lt; ACE_MT_SYNCH > inherited;
+  typedef ACE_Task &lt;ACE_MT_SYNCH> inherited;
 
-    <font color=red>/*
-      The constructor/destructor are simple but take care of some
-      necessary housekeeping.
-    */</font>
-    Task (void);
-   ~Task (void);
+  <font color=red>/* The constructor/destructor are simple but take care of some
+    necessary housekeeping.  */</font>
+  Task (size_t n_threads);
+  ~Task (void);
 
-    <font color=red>/*
-      I really wanted this to be called open() but that was already
-      claimed by the Task framework.  start() will kick off our thread 
-      pool for us.
-    */</font>
-  int start (int threads = 1);
+  <font color=red>/* open() will kick off our thread pool for us.  */</font>
+  int open (void * = 0);
 
-  <font color=red>/*
-    Our worker method
-  */</font>
+  <font color=red>/* Our worker method */</font>
   int svc (void);
 
-  <font color=red>/*
-    All we'll do here is print a message to the user.
-  */</font>
+  <font color=red>/* All we'll do here is print a message to the user.  */</font>
   int close (u_long flags = 0);
 
 protected:
-    <font color=red>/*
-      Just to be clever, I'll use an ACE_Barrier to cause the threads
-      to sync in svc() before doing any real work.
-    */</font>
-    ACE_Barrier *barrier_;
+  <font color=red>/* Just to be clever, jI'll use an ACE_Barrier to cause the threads
+    to sync in svc() before doing any real work.  */</font>
+  ACE_Barrier *barrier_;
+
+  size_t n_threads_;
+  <font color=red>// Number of threads in the pool.</font>
 };
 
-<font color=blue>#endif</font>
+<font color=blue>#endif</font> <font color=red>/* TASK_H */</font>
 </PRE>
 <HR WIDTH="100%">
 <P>

@@ -19,88 +19,89 @@ the same as before, so I've only commented the changes.
 
 <HR WIDTH="100%">
 <PRE>
-
 <font color=red>// $Id$</font>
 
-<font color=red>/*
-   Most of this is the same as the previous tutorial, so I'll just point out
-   the differences. 
- */</font>
+<font color=red>/* Most of this is the same as the previous tutorial, so I'll just
+   point out the differences.  */</font>
 <font color=blue>#include</font> "<font color=green>task.h</font>"
 <font color=blue>#include</font> "<font color=green>block.h</font>"
 <font color=blue>#include</font> "<font color=green>data.h</font>"
 
-int run_test (int iterations, int threads)
+statuc int 
+run_test (int iterations,
+          int threads)
 {
-    Task task;
+  Task task (threads);
 
-    if (task.start (threads) == -1)
+  if (task.open () == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "<font color=green>%p\n</font>",
+                       "<font color=green>open</font>"),
+                      -1);
+
+  <font color=#008888>ACE_OS::sleep</font> (ACE_Time_Value (1));
+
+  int i;
+  for (i = 0; i &lt; iterations; ++i)
     {
-        ACE_ERROR_RETURN ((LM_ERROR, "<font color=green>%p\n</font>", "<font color=green>start</font>"), -1);
+      <font color=red>/* Construct a Data object that we'll put into the Queue.  */</font>
+      Data data (i);
+
+      <font color=red>/* Create a block large enough for our Data object as well as a
+        text message.  */</font>
+      Block *message;
+
+      ACE_NEW_RETURN (message,
+                      Block (sizeof (data) + 128),
+                      -1);
+
+      <font color=red>/* As before, put a text message into the block.  */</font>
+      <font color=#008888>ACE_OS::sprintf</font> (message->wr_ptr (), "<font color=green>This is message %d.</font>", i);
+      message->wr_ptr (strlen (message->rd_ptr ()));
+
+      *(message->wr_ptr ()) = 0;  <font color=red>// Null-terminate the string we just wrote</font>
+
+      message->wr_ptr (1);        <font color=red>// Move beyond the NULL</font>
+
+      <font color=red>/* To copy arbitrary data into a message block, we use the
+        copy() method.  Since it wants a 'const char*', we have to
+        cast our Data pointer.
+
+        Note that copy() will advance the wr_ptr() for us.  This means
+        we don't have to do it ourselves!  If you do advance it, it
+        will be way beyond what you want.  */</font>
+      message->copy ((const char *) &data,
+                     sizeof (data));
+
+      if (task.putq (message) == -1)
+        break;
     }
 
-    <font color=#008888>ACE_OS::sleep</font> (ACE_Time_Value (1));
+  Block *message;
+  ACE_NEW_RETURN (message,
+                  Block,
+                  -1);
+  message->msg_type (<font color=#008888>ACE_Message_Block::MB_HANGUP</font>);
+  task.putq (message);
 
-    int i;
-    for (i = 0; i &lt; iterations; ++i)
-    {
-            <font color=red>/*
-              Construct a Data object that we'll put into the Queue. 
-            */</font>
-        Data data (i);
+  task.wait ();
 
-            <font color=red>/*
-              Create a block large enough for our Data object as well as a text
-              message. 
-            */</font>
-        Block *message = new Block (sizeof (data) + 128);
-
-            <font color=red>/*
-              As before, put a text message into the block. 
-            */</font>
-        <font color=#008888>ACE_OS::sprintf</font> (message->wr_ptr (), "<font color=green>This is message %d.</font>", i);
-        message->wr_ptr (strlen (message->rd_ptr ()));
-
-        *(message->wr_ptr ()) = 0;  <font color=red>// Null-terminate the string we just wrote</font>
-
-        message->wr_ptr (1);        <font color=red>// Move beyond the NULL</font>
-
-            <font color=red>/*
-              To copy arbitrary data into a message block, we use the copy() method.
-              Since it wants a 'const char*', we have to cast our Data
-              pointer. 
-
-              Note that copy() will advance the wr_ptr() for us.  This means
-              we don't have to do it ourselves!  If you do advance it, it
-              will be way beyond what you want.
-            */</font>
-        message->copy ((const char *) &data, sizeof (data));
-
-        if (task.putq (message) == -1)
-        {
-            break;
-        }
-    }
-
-    Block *message = new Block ();
-    message->msg_type (<font color=#008888>ACE_Message_Block::MB_HANGUP</font>);
-    task.putq (message);
-
-    task.wait ();
-
-    return (0);
+  return 0;
 }
 
-int main (int argc, char *argv[])
+int 
+main (int argc, char *argv[])
 {
-    int iterations = argc > 1 ? atoi (argv[1]) : 4;
-    int threads = argc > 2 ? atoi (argv[2]) : 2;
+  int iterations = argc > 1 ? atoi (argv[1]) : 4;
+  int threads = argc > 2 ? atoi (argv[2]) : 2;
 
-    (void) run_test (iterations, threads);
+  run_test (iterations,
+            threads);
 
-    ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) Application exiting\n</font>"));
+  ACE_DEBUG ((LM_DEBUG,
+              "<font color=green>(%P|%t) Application exiting\n</font>"));
 
-    return (0);
+  return 0;
 }
 </PRE>
 <HR WIDTH="100%">
