@@ -194,10 +194,6 @@ BuildCmds= \
 
 SOURCE=.\timeC.i
 # End Source File
-# Begin Source File
-
-SOURCE=.\timeS.i
-# End Source File
 # End Group
 # End Target
 # End Project

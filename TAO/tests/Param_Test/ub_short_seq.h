@@ -19,7 +19,7 @@
 #ifndef PARAM_TEST_UNBOUNDED_SHORT_SEQUENCE_H
 #define PARAM_TEST_UNBOUNDED_SHORT_SEQUENCE_H
 
-#include "param_testCli.h"
+#include "param_testC.h"
 
 // =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
 //           test sequences of shorts

@@ -20,7 +20,7 @@
 #ifndef PARAM_TEST_CLIENT_H
 #define PARAM_TEST_CLIENT_H
 
-#include "param_testCli.h"
+#include "param_testC.h"
 #include "results.h"
 
 template <class T>

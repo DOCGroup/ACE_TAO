@@ -19,7 +19,7 @@
 #ifndef PARAM_TEST_FIXED_STRUCT_H
 #define PARAM_TEST_FIXED_STRUCT_H
 
-#include "param_testCli.h"
+#include "param_testC.h"
 
 // =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
 //                        test fixed structs

@@ -1,3 +1,59 @@
+Fri Dec 21 11:25:36 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+	* orbsvcs/Naming_Service/NT_Naming_Server.cpp:
+	  Add missing #include for non-Win32 builds.
+
+	* tests/Explicit_Event_Loop/client.dsp:
+	  Remove unused reference to testS.i
+
+	* tests/Param_Test/Makefile:
+	* tests/Param_Test/any.h:
+	* tests/Param_Test/anyop.cpp:
+	* tests/Param_Test/anyop.dsp:
+	* tests/Param_Test/bd_array_seq.h:
+	* tests/Param_Test/bd_long_seq.h:
+	* tests/Param_Test/bd_short_seq.h:
+	* tests/Param_Test/bd_str_seq.h:
+	* tests/Param_Test/bd_string.h:
+	* tests/Param_Test/bd_struct_seq.h:
+	* tests/Param_Test/bd_wstr_seq.h:
+	* tests/Param_Test/bd_wstring.h:
+	* tests/Param_Test/big_union.h:
+	* tests/Param_Test/client.dsp:
+	* tests/Param_Test/client.h:
+	* tests/Param_Test/complex_any.h:
+	* tests/Param_Test/driver.h:
+	* tests/Param_Test/except.h:
+	* tests/Param_Test/fixed_array.h:
+	* tests/Param_Test/fixed_struct.h:
+	* tests/Param_Test/helper.h:
+	* tests/Param_Test/multdim_array.h:
+	* tests/Param_Test/nested_struct.h:
+	* tests/Param_Test/objref.h:
+	* tests/Param_Test/objref_struct.h:
+	* tests/Param_Test/param_test_i.h:
+	* tests/Param_Test/recursive_struct.h:
+	* tests/Param_Test/recursive_union.h:
+	* tests/Param_Test/server.dsp:
+	* tests/Param_Test/short.h:
+	* tests/Param_Test/small_union.h:
+	* tests/Param_Test/tmplinst.cpp:
+	* tests/Param_Test/typecode.h:
+	* tests/Param_Test/ub_any_seq.h:
+	* tests/Param_Test/ub_array_seq.h:
+	* tests/Param_Test/ub_long_seq.h:
+	* tests/Param_Test/ub_objref_seq.h:
+	* tests/Param_Test/ub_short_seq.h:
+	* tests/Param_Test/ub_str_seq.h:
+	* tests/Param_Test/ub_string.h:
+	* tests/Param_Test/ub_struct_seq.h:
+	* tests/Param_Test/ub_wstr_seq.h:
+	* tests/Param_Test/ub_wstring.h:
+	* tests/Param_Test/ulonglong.h:
+	* tests/Param_Test/var_array.h:
+	* tests/Param_Test/var_struct.h:
+	  Use the canonical IDL extensions for the generated files.
+
 Wed Dec 19 15:36:14 2001 Pradeep Gore  <pradeep@cs.wustl.edu>
 
 	* examples/RTCORBA/Activity/Job.idl:
@@ -20,7 +76,7 @@ Wed Dec 19 15:36:14 2001 Pradeep Gore  <pradeep@cs.wustl.edu>
 	* examples/RTCORBA/Activity/README:
 
 	  An example to showcase RTCORBA priority preservation
-	  feature. This example reads conf. files and generates a data 
+	  feature. This example reads conf. files and generates a data
 	  file containing latency numbers. As the data output is in a 2
 	  column format,  gnuplot can be used to plot nice invocation
 	  graphs. See the README  for further details.
@@ -29,14 +85,14 @@ Wed Dec 19 15:36:14 2001 Pradeep Gore  <pradeep@cs.wustl.edu>
 	* orbsvcs/tests/Notify/performance-tests/README:
 
 	  Added new commandline parameters - payload_size, expected_count
-	  and channel name.  
+	  and channel name.
 
 Tue Dec 18 17:03:45 2001  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* orbsvcs/examples/Log/Client/TLS_Client.cpp: 
+	* orbsvcs/examples/Log/Client/TLS_Client.cpp:
 	  Changed CORBA::Long to CORBA::ULongLong to fix compiler
 	  warnings.
-	
+
 Tue Dec 18 12:12:24 2001  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* tests/ior_corbaloc/ior_corbaloc_client.dsp:

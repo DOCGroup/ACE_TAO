@@ -19,7 +19,7 @@
 #ifndef PARAM_TEST_ULONGLONG_H
 #define PARAM_TEST_ULONGLONG_H
 
-#include "param_testCli.h"
+#include "param_testC.h"
 
 class Test_ULongLong
 {
