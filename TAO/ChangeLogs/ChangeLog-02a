@@ -1,3 +1,23 @@
+Tue Jul  2 14:57:27 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tao/append.cpp:
+
+          Fixed a bug in TAO_Marshal_Union::append where an
+          implicit default case was causing an inappropriate
+          throw of CORBA::MARSHAL. Thanks to Adee Ran 
+          <adeeran@yahoo.com> for reporting the failure and
+          sending in an example.
+
+        * tao/skip.cpp:
+
+          Fixed a comment.
+
+        * tao/Any.cpp:
+
+          Added missing check for the return status of 
+          TAO_Marshal_Object::perform_append() in the
+          CDR insertion operator for CORBA::Any.
+
 Tue Jul  2 13:24:33 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
