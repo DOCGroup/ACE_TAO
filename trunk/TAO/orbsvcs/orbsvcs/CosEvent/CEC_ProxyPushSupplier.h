@@ -58,11 +58,11 @@ public:
   virtual ~TAO_CEC_ProxyPushSupplier (void);
   // destructor...
 
-  virtual CosEventChannelAdmin::ProxyPushSupplier_ptr activate (CORBA::Environment &ACE_TRY_ENV) ACE_THROW_SPEC (());
+  virtual CosEventChannelAdmin::ProxyPushSupplier_ptr activate (CORBA::Environment &ACE_TRY_ENV) ACE_THROW_SPEC ((CORBA::SystemException));
   // Activate in the POA
 
   virtual void deactivate (CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC (());
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // Deactivate from the POA
 
   CORBA::Boolean is_connected (void) const;

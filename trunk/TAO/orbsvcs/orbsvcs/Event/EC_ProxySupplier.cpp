@@ -138,7 +138,8 @@ TAO_EC_ProxyPushSupplier::cleanup_i (void)
 }
 
 RtecEventChannelAdmin::ProxyPushSupplier_ptr
-TAO_EC_ProxyPushSupplier::activate (CORBA::Environment &ACE_TRY_ENV) ACE_THROW_SPEC (())
+TAO_EC_ProxyPushSupplier::activate (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   RtecEventChannelAdmin::ProxyPushSupplier_var result;
   ACE_TRY

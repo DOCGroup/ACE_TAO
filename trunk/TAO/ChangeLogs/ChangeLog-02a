@@ -1,3 +1,19 @@
+Fri May 11 12:13:42 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.cpp:
+	* orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.h:
+	* orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushConsumer.cpp:
+	* orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushConsumer.h:
+	* orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushSupplier.cpp:
+	* orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushSupplier.h:
+	* orbsvcs/orbsvcs/ESF/ESF_Proxy_Admin.cpp:
+	* orbsvcs/orbsvcs/ESF/ESF_Proxy_Admin.h:
+	* orbsvcs/orbsvcs/ESF/ESF_Proxy_Admin.i:
+	* orbsvcs/orbsvcs/Event/EC_ProxyConsumer.cpp:
+	* orbsvcs/orbsvcs/Event/EC_ProxyConsumer.h:
+	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
+	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.h: More fixes for FORTE 6.1. 
+
 Fri May 11 07:52:02 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * performance-tests/DSI_Latency/server.bor:
