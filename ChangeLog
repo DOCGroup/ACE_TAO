@@ -1,3 +1,9 @@
+Tue Mar 29 18:44:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* ace/Refcounted_Auto_Ptr.h:
+	  Removed the explicit again, it seems to give a problem in RMCast, will
+	  check this later
+
 Tue Mar 29 15:12:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* ace/SOCK_Dgram.{h,cpp}:
