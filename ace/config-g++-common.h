@@ -24,8 +24,11 @@
 # define ACE_HAS_STD_TEMPLATE_SPECIALIZATION
 # define ACE_HAS_STANDARD_CPP_LIBRARY 1
 # define ACE_USES_OLD_IOSTREAMS
-// For some reason EGCS doesn't define this in its stdlib.
+
+#if (__GNUC__ == 2 && __GNUC_MINOR__ <= 91)
+// EGCS (gcc 2.91) doesn't define this in its C++ standard library.
 # define ACE_LACKS_AUTO_PTR
+#endif
 
 # if __GNUC__ > 2 || ( __GNUC__ == 2 && __GNUC_MINOR__ >= 91 )
 #   define ACE_HAS_USING_KEYWORD
