@@ -1,5 +1,9 @@
 Mon Jan 12 14:55:53 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
 
+	* tao/current.h (class TAO_POA_Current_Impl): Added this as the
+ 	beginning of the implementation for the POA Current.  More to
+ 	come...
+
 	* tao/default_server.*: Added implementations of create_poa_lock()
  	and create_poa_mgr_lock() to obtain their values from -ORBpoalock
  	and -ORBpoamgrlock options, respectively, to the Default Server
