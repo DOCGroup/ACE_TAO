@@ -34,32 +34,32 @@ class be_root : public virtual AST_Root,
                 public virtual be_decl
 {
   // = TITLE
-  //   The back end extension of the AST_Root class
+  //    The back end extension of the AST_Root class
   //
   // = DESCRIPTION
   //
 public:
-  // Operations
   be_root (void);
-  // Default constructor
+  // Default constructor.
 
-  be_root (UTL_ScopedName *n, UTL_StrList *p);
-  // Constructor that sets its scoped name <n>, and any pragmas <p>
+  be_root (UTL_ScopedName *n, 
+           UTL_StrList *p);
+  // Constructor that sets its scoped name <n>, and any pragmas <p>.
 
-  // =Scope management functions that override the AST scope management methods
+  // Scope management functions that override the AST scope management methods
   // since the AST methods set the names of the sequences, strings, and arrays
-  // to a fixed value which interferes with our back-end code generation
+  // to a fixed value which interferes with our back-end code generation.
   AST_Sequence *fe_add_sequence (AST_Sequence *);
-  AST_String   *fe_add_string (AST_String *);
-  AST_Array    *fe_add_array (AST_Array *);
+  AST_String *fe_add_string (AST_String *);
+  AST_Array *fe_add_array (AST_Array *);
 
   virtual void destroy (void);
   // Cleanup method.
 
-  // Visiting
+  // Visiting.
   virtual int accept (be_visitor *visitor);
 
-  // Narrowing
+  // Narrowing.
   DEF_NARROW_METHODS3 (be_root, AST_Root, be_scope, be_decl);
   DEF_NARROW_FROM_DECL (be_root);
   DEF_NARROW_FROM_SCOPE (be_root);

@@ -27,25 +27,23 @@
 
 class TAO_OutStream;
 
-/*
- * BE_Type
- */
 class be_type : public virtual AST_Type,
                 public virtual be_decl
 {
 public:
-  // =Operations
-
   be_type (void);
-  // default constructor
+  // Default constructor.
 
-  be_type (AST_Decl::NodeType nt, UTL_ScopedName *n, UTL_StrList *p);
-  // constructor
+  be_type (AST_Decl::NodeType nt, 
+           UTL_ScopedName *n, 
+           UTL_StrList *p);
+  // Constructor.
 
   virtual ~be_type (void);
+  // Destructor.
 
   virtual int gen_var_defn (char *interface_local_name = 0);
-  // generate the _var class definition.
+  // Generate the _var class definition.
   // generate the var definition. If <interface_name> is not 0, generate
   // the var defn for that name. Otherwise, do it for the interface you
   // are visiting (this).
@@ -65,7 +63,7 @@ public:
                             char *interface_full_name = 0);
   // Generate the out class implementation.
   // If any one of the argument is 0, then use the name giin this
-  // node, else use the arguments. );
+  // node, else use the arguments.
 
   UTL_ScopedName *tc_name (const char *prefix = 0,
                            const char *suffix = 0);
@@ -76,12 +74,12 @@ public:
   virtual const char *nested_type_name (be_decl *d,
                                         const char *suffix = 0,
                                         const char *prefix = 0);
-  // type name of a node used when generating declarations
+  // Type name of a node used when generating declarations.
 
   virtual const char *nested_sp_type_name (be_decl *use_scope, 
                                            const char *suffix = 0, 
                                            const char *prefix = 0);
-  // type name of a node used when generating declarations for smart
+  // Type name of a node used when generating declarations for smart
   // proxies.
 
   virtual AST_Decl::NodeType base_node_type (void) const;
@@ -91,23 +89,23 @@ public:
   // the most "unaliased" type is needed.
 
   virtual idl_bool in_recursion (be_type *node = 0);
-  // determine if we are involved in some kind of limited recursion. Most types
+  // Determine if we are involved in some kind of limited recursion. Most types
   // cannot be involved except structs and unions.
   // If the parameter is 0, we are trying to determine this for ourselves.
 
   virtual void destroy (void);
   // Clean up allocated members.
 
-  // Visiting
+  // Visiting.
   virtual int accept (be_visitor* visitor);
 
-  // Narrowing
+  // Narrowing.
   DEF_NARROW_METHODS2 (be_type, AST_Type, be_decl);
   DEF_NARROW_FROM_DECL (be_type);
 
 protected:
   virtual void compute_tc_name (void);
-  // computes the fully scoped typecode name
+  // Computes the fully scoped typecode name.
 
   virtual UTL_ScopedName * compute_tc_name (const char *prefix,
                                             const char *suffix);
@@ -118,16 +116,16 @@ protected:
                                    be_decl *use_scope, 
                                    const char *suffix, 
                                    const char *prefix);
-  // type name of a node used when generating declarations
+  // Type name of a node used when generating declarations.
 
   UTL_ScopedName *tc_name_;
-  // typecode name
+  // Typecode name.
 
   char *type_name_;
-  // type name (this uses the ACE NESTED macro)
+  // Type name (this uses the ACE NESTED macro).
 
   char *nested_type_name_;
-  // for the corresponding method.
+  // For the corresponding method.
 };
 
 #endif // end of if !defined

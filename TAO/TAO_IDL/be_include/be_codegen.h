@@ -24,7 +24,7 @@
 #include "TAO_IDL_BE_Export.h"
 
 #define NAMEBUFSIZE 1024
-// maximum length of static buffers used to store names
+// Maximum length of static buffers used to store names.
 
 class TAO_Visitor_Factory;
 class TAO_OutStream;
@@ -35,28 +35,29 @@ class be_decl;
 class TAO_IDL_BE_Export TAO_CodeGen
 {
   // = TITLE
-  //   TAO_CodeGen
+  //    TAO_CodeGen
   //
   // = DESCRIPTION
-  //   Holds global parameters for the Back End and generates the C++ mapping
+  //    Holds global parameters for the Back End and 
+  //    generates the C++ mapping.
   //
 public:
 
-  // define all the code generation states.
+  // Define all the code generation states.
   // The first letter C/S of the suffix stands for client/server-side
   // The second letter H/I/S stands for header/inline/impl file.
   // These are used to denote the state or the context of code
   // generation we are in and serves to produce the right kind of
-  // visitor for us
+  // visitor for us.
 
   enum CG_STATE
   {
-    // initial state
+    // Initial state.
     TAO_INITIAL,
 
-    // rest of the state in alphabetical order of the types
+    // Rest of the state in alphabetical order of the types.
 
-    // emitting code for arguments of an operation. No distinction between
+    // Emitting code for arguments of an operation. No distinction between
     // headers, inlines, stubs.
     TAO_ARGUMENT_ARGLIST_CH,                  // argument in op signature of
                                               // ... client header
@@ -110,7 +111,7 @@ public:
     TAO_ATTRIBUTE_TIE_SH,
     TAO_ATTRIBUTE_TIE_SI,
 
-    // emitting code for array defn
+    // Emitting code for array defn.
     TAO_ARRAY_CH,
     TAO_ARRAY_CI,
     TAO_ARRAY_CS,
@@ -120,12 +121,12 @@ public:
     TAO_ARRAY_CDR_OP_CI,
     TAO_ARRAY_CDR_OP_CS,
 
-    // emitting code for the constants
+    // Emitting code for the constants.
     TAO_CONSTANT_CH,                          // in client header
     TAO_CONSTANT_CI,                          // XXXASG rm?
     TAO_CONSTANT_CS,                          // in client stub
 
-    // emitting code for enums
+    // Emitting code for enums.
     TAO_ENUM_CH,                              // in client header
     TAO_ENUM_CS,                              // in client stubs
     TAO_ENUM_ANY_OP_CH,
@@ -134,7 +135,7 @@ public:
     TAO_ENUM_CDR_OP_CI,
     TAO_ENUM_CDR_OP_CS,
 
-    // emitting code for exceptions
+    // Emitting code for exceptions.
     TAO_EXCEPTION_CH,
     TAO_EXCEPTION_CTOR_CH,
     TAO_EXCEPTION_CI,
@@ -147,7 +148,7 @@ public:
     TAO_EXCEPTION_CDR_OP_CI,
     TAO_EXCEPTION_CDR_OP_CS,
 
-    // emitting fields i.e., struct members
+    // Emitting fields i.e., struct members.
     TAO_FIELD_CH,
     TAO_FIELD_CI,
     TAO_FIELD_CS,
@@ -156,7 +157,7 @@ public:
     TAO_FIELD_CDR_OP_CS,
     TAO_FIELD_OBV_CH,
 
-    // emitting code for the interface
+    // Emitting code for the interface.
     TAO_INTERFACE_CH,
     TAO_INTERFACE_CI,
     TAO_INTERFACE_CS,
@@ -183,7 +184,7 @@ public:
     TAO_INTERFACE_INTERCEPTORS_SH,
     TAO_INTERFACE_INTERCEPTORS_SS,
 
-    // emitting code for the interface forward declaration
+    // Emitting code for the interface forward declaration.
     TAO_INTERFACE_FWD_CH,
     TAO_INTERFACE_FWD_CI,
     TAO_INTERFACE_FWD_CS,
@@ -191,7 +192,7 @@ public:
     TAO_INTERFACE_FWD_CDR_OP_CI,
     TAO_INTERFACE_FWD_CDR_OP_CS,
 
-    // emitting code for the valuetype
+    // Emitting code for the valuetype.
     TAO_VALUETYPE_CH,
     TAO_VALUETYPE_CI,
     TAO_VALUETYPE_CS,
@@ -207,15 +208,13 @@ public:
     TAO_VALUETYPE_COLLOCATED_SS,
     TAO_VALUETYPE_ANY_OP_CH,
     TAO_VALUETYPE_ANY_OP_CS,
-    TAO_VALUETYPE_MARSHAL_CH,             // the actual generation of CDR in header
-    TAO_VALUETYPE_MARSHAL_CS,             // and the implementation, activated from:
+    TAO_VALUETYPE_MARSHAL_CH,     // the actual generation of CDR in header
+    TAO_VALUETYPE_MARSHAL_CS,     // and the implementation, activated from:
     TAO_VALUETYPE_CDR_OP_CH,
     TAO_VALUETYPE_CDR_OP_CI,
     TAO_VALUETYPE_CDR_OP_CS,
-    //TAO_VALUETYPE_TIE_SH,
-    //TAO_VALUETYPE_TIE_SI,
 
-    // emitting code for the valuetype forward declaration
+    // Emitting code for the valuetype forward declaration.
     TAO_VALUETYPE_FWD_CH,
     TAO_VALUETYPE_FWD_CI,
     TAO_VALUETYPE_FWD_CS,
@@ -223,7 +222,7 @@ public:
     TAO_VALUETYPE_FWD_CDR_OP_CI,
     TAO_VALUETYPE_FWD_CDR_OP_CS,
 
-    // emitting code for the module
+    // Emitting code for the module,
     TAO_MODULE_CH,
     TAO_MODULE_CI,
     TAO_MODULE_CS,
@@ -241,7 +240,7 @@ public:
     TAO_MODULE_OBV_CI,
     TAO_MODULE_OBV_CS,
 
-    // emitting code for an operation.
+    // Emitting code for an operation.
     TAO_OPERATION_CH,                       // in client header
     TAO_OPERATION_CS,                       // in client stubs
     TAO_OPERATION_SH,                       // in server header
@@ -353,7 +352,7 @@ public:
     TAO_ROOT_CDR_OP_CI,
     TAO_ROOT_CDR_OP_CS,
 
-    // emitting sequences
+    // Emitting sequences.
     TAO_SEQUENCE_CH,
     TAO_SEQUENCE_CI,
     TAO_SEQUENCE_CS,
@@ -363,22 +362,22 @@ public:
     TAO_SEQUENCE_CDR_OP_CI,
     TAO_SEQUENCE_CDR_OP_CS,
 
-    // emitting code for sequence base type
+    // Emitting code for sequence base type.
     TAO_SEQUENCE_BASE_CH,
     TAO_SEQUENCE_BASE_CI,
     TAO_SEQUENCE_BASE_CS,
 
-    // for special sequnce elements
+    // For special sequnce elements.
     TAO_SEQELEM_RETTYPE_CH,
     TAO_SEQELEM_RETTYPE_CI,
     TAO_SEQELEM_RETTYPE_CS,
 
-    // for sequence buffer types
+    // For sequence buffer types.
     TAO_SEQUENCE_BUFFER_TYPE_CH,
     TAO_SEQUENCE_BUFFER_TYPE_CI,
     TAO_SEQUENCE_BUFFER_TYPE_CS,
 
-    // emitting code for struct and its members
+    // Emitting code for struct and its members.
     TAO_STRUCT_CH,
     TAO_STRUCT_CI,
     TAO_STRUCT_CS,
@@ -388,7 +387,7 @@ public:
     TAO_STRUCT_CDR_OP_CI,
     TAO_STRUCT_CDR_OP_CS,
 
-    // emitting code for typedefs
+    // Emitting code for typedefs.
     TAO_TYPEDEF_CH,
     TAO_TYPEDEF_CI,
     TAO_TYPEDEF_CS,
@@ -398,7 +397,7 @@ public:
     TAO_TYPEDEF_CDR_OP_CI,
     TAO_TYPEDEF_CDR_OP_CS,
 
-    // emitting code for unions
+    // Emitting code for unions.
     TAO_UNION_CH,
     TAO_UNION_CI,
     TAO_UNION_CS,
@@ -408,12 +407,12 @@ public:
     TAO_UNION_CDR_OP_CI,
     TAO_UNION_CDR_OP_CS,
 
-    // emitting code for the discriminant
+    // Emitting code for the discriminant.
     TAO_UNION_DISCTYPEDEFN_CH,
     TAO_UNION_DISCTYPEDEFN_CI,
     TAO_UNION_DISCTYPEDEFN_CS,
 
-    // emitting code for the public members of the union
+    // Emitting code for the public members of the union.
     TAO_UNION_PUBLIC_CH,
     TAO_UNION_PUBLIC_CI,
     TAO_UNION_PUBLIC_CS,
@@ -421,25 +420,25 @@ public:
     TAO_UNION_PUBLIC_RESET_CS,
     TAO_UNION_PUBLIC_ACCESS_CS,
 
-    // emitting code for private members of the union
+    // Emitting code for private members of the union.
     TAO_UNION_PRIVATE_CH,
 
-    // emitting code for CDR operators for types defined inside unions
+    // Emitting code for CDR operators for types defined inside unions.
     TAO_UNION_BRANCH_CDR_OP_CH,
     TAO_UNION_BRANCH_CDR_OP_CI,
     TAO_UNION_BRANCH_CDR_OP_CS,
 
-    // emitting code for typecodes
+    // Emitting code for typecodes.
     TAO_TYPECODE_DECL,
     TAO_TYPECODE_DEFN,
 
-    // Always must be last
+    // Always must be last.
     TAO_UNKNOWN
   };
 
   enum LOOKUP_STRATEGY
   {
-    // various lookup strategies
+    // Various lookup strategies.
     TAO_LINEAR_SEARCH,
     TAO_DYNAMIC_HASH,
     TAO_PERFECT_HASH,
@@ -450,39 +449,39 @@ public:
 
   enum CG_SUB_STATE
   {
-    // sub states
+    // Sub states.
 
-    // these are for the CDR operators
+    // These are for the CDR operators.
     TAO_CDR_INPUT,
     TAO_CDR_OUTPUT,
     TAO_CDR_SCOPE,
 
-    // these are for typecode generation
-    TAO_TC_DEFN_TYPECODE, // top level typecode
-    TAO_TC_DEFN_TYPECODE_NESTED, // nested tc
+    // These are for typecode generation.
+    TAO_TC_DEFN_TYPECODE,                   // top level typecode
+    TAO_TC_DEFN_TYPECODE_NESTED,            // nested tc
 
-    TAO_TC_DEFN_ENCAPSULATION, // encapsulation
-    TAO_AMI_HANDLER_TC_DEFN_ENCAPSULATION, // encapsulation
+    TAO_TC_DEFN_ENCAPSULATION,              // encapsulation
+    TAO_AMI_HANDLER_TC_DEFN_ENCAPSULATION,  // encapsulation
 
-    TAO_TC_DEFN_SCOPE, // scope
-    TAO_TC_DEFN_TC_SIZE, // tc size computation
-    TAO_TC_DEFN_ENCAP_LEN, // encap size computation
-    TAO_TC_DEFN_SCOPE_LEN, // scope size computation
+    TAO_TC_DEFN_SCOPE,                      // scope
+    TAO_TC_DEFN_TC_SIZE,                    // tc size computation
+    TAO_TC_DEFN_ENCAP_LEN,                  // encap size computation
+    TAO_TC_DEFN_SCOPE_LEN,                  // scope size computation
 
-    // means the upcall has arguments.
+    // Means the upcall has arguments.
     TAO_USE_FULL_NAME,
 
-    // means we are not generating the assignment operator
+    // Means we are not generating the assignment operator.
     TAO_UNION_COPY_CONSTRUCTOR,
 
-    // generating the _var template parameter in sequence of arrays.
+    // Generating the _var template parameter in sequence of arrays.
     TAO_ARRAY_SEQ_CH_TEMPLATE_VAR,
 
-    // generating the arglist for the stub version of the
-    // interceptors request info class constructor
+    // Generating the arglist for the stub version of the
+    // interceptors request info class constructor.
     TAO_INTERCEPTORS_INFO_ARGUMENT_STUB,
 
-    // used to denote either error or don't care
+    // Used to denote either error or don't care.
     TAO_SUB_STATE_UNKNOWN
   };
 
@@ -490,99 +489,99 @@ public:
   // Constructor
 
   ~TAO_CodeGen (void);
-  // destructor
+  // Destructor
 
   be_visitor *make_visitor (be_visitor_context *);
   // Factory that makes the right visitor based on the contex. This
-  // delegates the task to its factory data member
+  // delegates the task to its factory data member.
 
   int gen_cplusplus_mapping (void);
-  // generate the C++ mapping for CORBA IDL
+  // Generate the C++ mapping for CORBA IDL.
 
   int start_client_header (const char *fname);
-  // set the client header stream
+  // Set the client header stream.
 
   int start_client_inline (const char *fname);
-  // set the client inline stream
+  // Set the client inline stream.
 
   int start_client_stubs (const char *fname);
-  // set the client stub stream
+  // Set the client stub stream.
 
   int start_server_header (const char *fname);
-  // set the server header stream
+  // Set the server header stream.
 
   int start_implementation_header (const char *fname);
-  // set the implementation header stream
+  // Set the implementation header stream.
 
   int start_implementation_skeleton (const char *fname);
-  // set the implementation skeleton stream
+  // Set the implementation skeleton stream.
 
   int start_server_template_header (const char *fname);
-  // set the server template header stream
+  // Set the server template header stream.
 
   int start_server_inline (const char *fname);
-  // set the server inline stream
+  // Set the server inline stream.
 
   int start_server_template_inline (const char *fname);
-  // set the server template inline stream
+  // Set the server template inline stream.
 
   int start_server_skeletons (const char *fname);
-  // set the server skeletons stream
+  // Set the server skeletons stream.
 
   int start_server_template_skeletons (const char *fname);
-  // set the server template skeletons stream
+  // Set the server template skeletons stream.
 
   int end_client_header (void);
-  // generate code at the end such as the <<= and >>= operators alongwith the
-  // ending #endif statement
+  // Generate code at the end such as the <<= and >>= operators alongwith the
+  // ending #endif statement.
 
   int end_server_header (void);
-  // put a last #endif in the server header
+  // Put a last #endif in the server header.
 
   int end_implementation_header (const char *fname);
-  // put a last #endif in the server header
+  // Put a last #endif in the server header.
 
   int end_implementation_skeleton (const char *fname);
-  // put a last #endif in the server header
+  // Put a last #endif in the server header.
 
   int end_server_template_header (void);
-  // put a last #endif in the server template header
+  // Put a last #endif in the server template header.
 
   int end_server_template_skeletons (void);
-  // put a last #endif in the server skeletons
+  // Put a last #endif in the server skeletons.
 
   TAO_OutStream *client_header (void);
-  // get the client header stream
+  // Get the client header stream.
 
   TAO_OutStream *client_stubs (void);
-  // get the client stubs stream
+  // Get the client stubs stream.
 
   TAO_OutStream *client_inline (void);
-  // get the client inline stream
+  // Get the client inline stream.
 
   TAO_OutStream *server_header (void);
-  // get the server header stream
+  // get the server header stream.
 
   TAO_OutStream *implementation_header (void);
-  // get the implementation header stream
+  // Get the implementation header stream.
 
   TAO_OutStream *implementation_skeleton (void);
-  // get the implementation skeleton stream
+  // Get the implementation skeleton stream.
 
   TAO_OutStream *server_template_header (void);
-  // get the server header template stream
+  // Get the server header template stream.
 
   TAO_OutStream *server_skeletons (void);
   // Get the server skeletons stream.
 
   TAO_OutStream *server_template_skeletons (void);
-  // get the server template skeletons stream
+  // Get the server template skeletons stream.
 
   TAO_OutStream *server_inline (void);
-  // get the server inline stream
+  // Get the server inline stream.
 
   TAO_OutStream *server_template_inline (void);
-  // get the server template inline stream
+  // Get the server template inline stream.
 
   void gperf_input_stream (TAO_OutStream *gperf_input);
   // Set the gperf input file stream.
@@ -600,24 +599,24 @@ public:
   // ACE_HANDLE for the file instead FILE*.
 
   void outstream (TAO_OutStream *os);
-  // set current out stream
+  // Set current out stream.
 
   TAO_OutStream *outstream (void);
-  // retrieve current out stream being used
+  // Retrieve current out stream being used.
 
   void config_visitor_factory (void);
-  // set the visitor factory  object. In this respect, this behaves as the
+  // Set the visitor factory  object. In this respect, this behaves as the
   // "strategy" pattern in which the TAO_CodeGen object is the context and the
-  // visitor_factory is the strategy object
+  // visitor_factory is the strategy object.
 
   void node (be_decl *n);
-  // pass info
+  // Pass info.
 
   be_decl *node (void);
-  // retrieve passed info
+  // Retrieve passed info.
 
   const char *upcase (const char *str);
-  // convert input string to all upcase
+  // Convert input string to all upcase.
 
   void lookup_strategy (LOOKUP_STRATEGY s);
   // Set the lookup strategy.
@@ -628,37 +627,37 @@ public:
 
 private:
   TAO_OutStream *client_header_;
-  // client header stream
+  // Client header stream.
 
   TAO_OutStream *client_stubs_;
-  // client stub file stream
+  // Client stub file stream
 
   TAO_OutStream *client_inline_;
-  // client side inline definitions
+  // Client side inline definitions.
 
   TAO_OutStream *server_header_;
-  // server header stream
+  // Server header stream.
 
   TAO_OutStream *implementation_header_;
-  // implementation header stream
+  // Implementation header stream.
 
   TAO_OutStream *implementation_skeleton_;
-  // implementation skeleton stream
+  // Implementation skeleton stream.
 
   TAO_OutStream *server_template_header_;
-  // server header template stream
+  // Server header template stream.
 
   TAO_OutStream *server_skeletons_;
-  // server skeleton stream.
+  // Server skeleton stream.
 
   TAO_OutStream *server_template_skeletons_;
-  // server skeleton template stream
+  // Server skeleton template stream.
 
   TAO_OutStream *server_inline_;
-  // server side inline file
+  // Server side inline file.
 
   TAO_OutStream *server_template_inline_;
-  // server side template inline file.
+  // Server side template inline file.
 
   TAO_OutStream *gperf_input_stream_;
   // TAO_OutStream to collect the input for gperf program.
@@ -669,20 +668,20 @@ private:
   // ACE_HANDLE for the file instead FILE*.
 
   TAO_OutStream *curr_os_;
-  // currently used out stream.
+  // Currently used out stream.
 
   be_decl *node_;
-  // save current node in this.
+  // Save current node in this.
 
   TAO_Visitor_Factory *visitor_factory_;
-  // visitor factory object.
+  // Visitor factory object.
 
   LOOKUP_STRATEGY strategy_;
   // The enumerated value indicating the lookup strategy.
 };
 
 typedef ACE_Singleton<TAO_CodeGen, ACE_SYNCH_RECURSIVE_MUTEX> TAO_CODEGEN;
-// Singleton instance of the BE code generator
+// Singleton instance of the BE code generator.
 
 extern TAO_IDL_BE_Export TAO_CodeGen *tao_cg; 
 // Code generator instance which is used everywhere.

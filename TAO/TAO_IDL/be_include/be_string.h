@@ -28,34 +28,30 @@
 class AST_Expression;
 class be_visitor;
 
-/*
- * BE_String
- */
 class be_string : public virtual AST_String,
                   public virtual be_type
 {
 public:
-  // Operations
-
   be_string (void);
-  //  default constructor
+  //  Default constructor.
 
   be_string (AST_Expression *v);
-  // constructor
+  // Constructor.
 
-  be_string (AST_Expression *v, long wide);
-  // constructor
+  be_string (AST_Expression *v, 
+             long wide);
+  // Constructor.
 
-  // Visiting
+  // Visiting.
   virtual int accept (be_visitor *visitor);
 
-  // Narrowing
+  // Narrowing.
   DEF_NARROW_METHODS2 (be_string, AST_String, be_type);
   DEF_NARROW_FROM_DECL (be_string);
 
 protected:
   virtual void compute_tc_name (void);
-  // overridden method to compute typecode name
+  // Overridden method to compute typecode name.
 
   virtual UTL_ScopedName * compute_tc_name (const char *prefix,
                                             const char *suffix);

@@ -30,22 +30,18 @@ class UTL_Type;
 class UTL_StrList;
 class be_visitor;
 
-/*
- * BE_UnionBranch
- */
 class be_union_branch : public virtual AST_UnionBranch,
                         public virtual be_decl
 {
 public:
-  // Operations
   be_union_branch (void);
-  // default constructor
+  // default constructor.
 
   be_union_branch (UTL_LabelList *ll, 
                    AST_Type *ft, 
                    UTL_ScopedName *n,
                    UTL_StrList *p);
-  // constructor
+  // Constructor.
 
   int gen_label_value (TAO_OutStream *os, 
                        unsigned long index = 0);
@@ -55,16 +51,16 @@ public:
                                be_union *bu);
   // Generate the default label value (as in a switch/case statement).
 
-  // Visiting
+  // Visiting.
   virtual int accept (be_visitor *visitor);
 
-  // Narrowing
+  // Narrowing.
   DEF_NARROW_METHODS2 (be_union_branch, AST_UnionBranch, be_decl);
   DEF_NARROW_FROM_DECL (be_union_branch);
 
 protected:
   virtual int compute_size_type (void);
-  // compute the size type if it is unknown
+  // Compute the size type if it is unknown.
 };
 
 #endif

@@ -28,28 +28,23 @@
 class UTL_StrList;
 class be_visitor;
 
-/*
- * BE_Typedef
- */
 class be_typedef : public virtual AST_Typedef,
                    public virtual be_type
 {
 public:
-  // =Operations
-
   be_typedef (void);
-  // default constructor
+  // Default constructor.
 
   be_typedef (AST_Type *bt,
               UTL_ScopedName *n,
               UTL_StrList *p,
               idl_bool l,
               idl_bool a);
-  // constructor
+  // Constructor.
 
   be_type *primitive_base_type (void);
-  // return the most primitive base type by traversing the chain of typedefed
-  // base types
+  // Return the most primitive base type by traversing the chain of typedefed
+  // base types.
 
   virtual AST_Decl::NodeType base_node_type (void) const;
   // Return the most "unaliased" type node for the base type (see
@@ -58,16 +53,16 @@ public:
   virtual void destroy (void);
   // Cleanup function.
 
-  // Visiting
+  // Visiting.
   virtual int accept (be_visitor *visitor);
 
-  // Narrowing
+  // Narrowing.
   DEF_NARROW_METHODS2 (be_typedef, AST_Typedef, be_type);
   DEF_NARROW_FROM_DECL (be_typedef);
 
 protected:
   virtual int compute_size_type (void);
-  // compute the size type if it is unknown
+  // Compute the size type if it is unknown.
 
 };
 

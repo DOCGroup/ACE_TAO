@@ -30,31 +30,26 @@
 class UTL_StrList;
 class be_visitor;
 
-/*
- * BE_Constant
- */
-class be_constant : public virtual AST_Constant , public virtual be_decl
+class be_constant : public virtual AST_Constant, 
+                    public virtual be_decl
 {
 public:
-  // Operations
-
   be_constant (void);
-  // constructor
+  // Constructor.
 
   be_constant (AST_Expression::ExprType et,
                AST_Expression *v,
                UTL_ScopedName *n,
                UTL_StrList *p);
-  // constructor
+  // Constructor.
 
-  // = helper
   const char *exprtype_to_string (void);
-  // returns the appropriate type
+  // Returns the appropriate type.
 
-  // Visiting
+  // Visiting.
   virtual int accept (be_visitor *visitor);
 
-  // Narrowing
+  // Narrowing.
   DEF_NARROW_METHODS2 (be_constant, AST_Constant, be_decl);
   DEF_NARROW_FROM_DECL (be_constant);
 

@@ -29,26 +29,23 @@ class AST_Type;
 class UTL_StrList;
 class be_visitor;
 
-/*
- * BE_Argument
- */
 class be_argument : public virtual AST_Argument,
                     public virtual be_decl
 {
 public:
-  // =Operations
-
+  // Default constructor.
   be_argument (void);
-  // default constructor
 
-  be_argument (AST_Argument::Direction d, AST_Type *ft, UTL_ScopedName *n,
+  // Constructor.
+  be_argument (AST_Argument::Direction d, 
+               AST_Type *ft, 
+               UTL_ScopedName *n,
                UTL_StrList *p);
-  // constructor
 
-  // Visiting
+  // Visiting.
   virtual int accept (be_visitor *visitor);
 
-  // Narrowing
+  // Narrowing.
   DEF_NARROW_METHODS2 (be_argument, AST_Argument, be_decl);
   DEF_NARROW_FROM_DECL (be_argument);
 };
