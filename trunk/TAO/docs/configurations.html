@@ -486,6 +486,13 @@ NAME="multiorb-tpool"></A> (Not yet implemented.)
 	  IIOP interoperable the option <CODE>-ORBiioplite</CODE> can
 	  be used to reduce the message size and the processing time.
 	</P>
+	<P>Some embedded systems run without the benefit of a DNS
+	  server, in that case they can use the
+	  <CODE>-ORBdotteddecimaladdresses</CODE> option;
+	  the ORB will avoid the use of hostnames in the profiles it
+	  generates,
+	  thus clients don't need to do any name resolution.
+	</P>
       </LI>
     </UL>
 
