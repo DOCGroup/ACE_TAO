@@ -2,9 +2,7 @@
 
 #include "PortableServer_ORBInitializer.h"
 #include "PortableServer_PolicyFactory.h"
-#define TAO_PORTABLESERVER_SAFE_INCLUDE
-#include "PortableServerC.h"
-#undef TAO_PORTABLESERVER_SAFE_INCLUDE
+#include "PortableServer.h"
 #include "POA_Current.h"
 #include "tao/ORBInitInfo.h"
 #include "tao/debug.h"

@@ -43,9 +43,7 @@
 
 #include "ORT_Adapter.h"
 
-#define TAO_PORTABLESERVER_SAFE_INCLUDE
-#include "PortableServerC.h"
-#undef TAO_PORTABLESERVER_SAFE_INCLUDE
+#include "PortableServer.h"
 
 // Object_Key
 #include "tao/Object_KeyC.h"

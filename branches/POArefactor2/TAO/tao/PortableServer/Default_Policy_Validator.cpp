@@ -3,11 +3,7 @@
 #include "Default_Policy_Validator.h"
 #include "tao/ORB_Core.h"
 #include "tao/Policy_Set.h"
-
-// @@Johnny, why this hack again?
-#define TAO_PORTABLESERVER_SAFE_INCLUDE
-#include "PortableServerC.h"
-#undef TAO_PORTABLESERVER_SAFE_INCLUDE
+#include "PortableServer.h"
 
 ACE_RCSID (PortableServer,
            Default_Policy_Validator,

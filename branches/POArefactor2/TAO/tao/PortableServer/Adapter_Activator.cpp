@@ -10,12 +10,7 @@ ACE_RCSID (PortableServer,
 
 #include "AdapterActivatorC.h"
 #include "POAManagerC.h"
-
-  // @@Johnny, why can't you simply include PortableServer.h. This
-  // looks like a mega hack..
-#define TAO_PORTABLESERVER_SAFE_INCLUDE
-#include "PortableServerC.h"
-#undef TAO_PORTABLESERVER_SAFE_INCLUDE
+#include "PortableServer.h"
 
 namespace TAO
 {

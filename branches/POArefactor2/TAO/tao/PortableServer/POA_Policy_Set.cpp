@@ -2,9 +2,7 @@
 
 #include "POA_Policy_Set.h"
 #include "POA_Cached_Policies.h"
-#define TAO_PORTABLESERVER_SAFE_INCLUDE
-#include "PortableServerC.h"
-#undef TAO_PORTABLESERVER_SAFE_INCLUDE
+#include "PortableServer.h"
 
 #include "tao/Policy_Validator.h"
 #include "tao/ORB_Core.h"
