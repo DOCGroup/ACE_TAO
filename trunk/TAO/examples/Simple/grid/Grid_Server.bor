@@ -2,7 +2,7 @@
 # Makefile for building the Grid example
 #
 
-NAME = Grid_Server
+NAME = server
 
 OBJFILES = \
 	$(OBJDIR)\GridC.obj \

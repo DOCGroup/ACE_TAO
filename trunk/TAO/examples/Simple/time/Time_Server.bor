@@ -2,7 +2,7 @@
 # Makefile for building the Time example
 #
 
-NAME = Time_Server
+NAME = server
 
 OBJFILES = \
 	$(OBJDIR)\TimeC.obj \
