@@ -1,20 +1,27 @@
+Wed Nov 18 15:51:42 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * *.cpp: changed include protection from #if !defined to ifndef.
+          Added #pragma once, if possible, i.e., after #include of
+          an ace/ header.  It can only be done after ace/config.h
+          is included, because some platforms don't allow #pragma once.
+
 Wed Nov 18 15:54:09 EST 1998  James CE Johnson  <jcej@chiroptera.tragus.org>
 
-	* docs/tutorials/007/client_handler.cpp
-	* docs/tutorials/007/page06.html
+        * docs/tutorials/007/client_handler.cpp
+        * docs/tutorials/007/page06.html
 
-	  Jeff Donner (jdonner@schedsys.com) points out that Susan Liebskind's
-	  fix to Tutorial 6 should also be applied to this one.
+          Jeff Donner (jdonner@schedsys.com) points out that Susan Liebskind's
+          fix to Tutorial 6 should also be applied to this one.
 
-	  The fix is:
-	  Don't call baseclass close() from Client_handler::close().  Doing
-	  so will result in double-delete of the handler object.
+          The fix is:
+          Don't call baseclass close() from Client_handler::close().  Doing
+          so will result in double-delete of the handler object.
 
 Wed Nov 18 00:25:08 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* ace/DLL.{h,cpp} (ACE_DLL): 
-	  Wrapper for dynamically linked library operations.
-	
+        * ace/DLL.{h,cpp} (ACE_DLL):
+          Wrapper for dynamically linked library operations.
+
 Tue Nov 17 11:15:00 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
         * tests/version_tests/RB_Tree_Test.dsp
@@ -1286,7 +1293,7 @@ Mon Oct 19 21:40:56 1998  David L. Levine  <levine@cs.wustl.edu>
         * *.h: changed include protection from #if !defined to ifndef.
           Added #pragma once, if possible, i.e., after #include of
           an ace/ header.  It can only be done after ace/config.h
-          is included, becase some platforms don't allow #pragma once.
+          is included, because some platforms don't allow #pragma once.
 
         * include/makeinclude/wrapper_macros.GNU: removed -DACE_LACKS_PRAGMA
           for g++ because it's now in config-g++-common.h.

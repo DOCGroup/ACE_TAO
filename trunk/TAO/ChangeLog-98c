@@ -1,3 +1,13 @@
+Wed Nov 18 15:49:52 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/ORB_Strategies_T.cpp: added ifndef protection against
+          multiple inclusion.
+
+        * *.cpp: changed include protection from #if !defined to ifndef.
+          Added #pragma once, if possible, i.e., after #include of
+          an ace/ header.  It can only be done after ace/config.h
+          is included, because some platforms don't allow #pragma once.
+
 Tue Nov 17 22:00:26 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_sequence/gen_unbounded_sequence_ch.cpp:
@@ -11,9 +21,9 @@ Tue Nov 17 22:00:26 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
 Tue Nov 17 21:34:13 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* orbsvcs/ImplRepo_Service/Makefile:
-	* orbsvcs/tests/ImplRepo/Makefile: New makefiles for UNIX.
-	  Notice that the second makefile depends on the first makefile.
+        * orbsvcs/ImplRepo_Service/Makefile:
+        * orbsvcs/tests/ImplRepo/Makefile: New makefiles for UNIX.
+          Notice that the second makefile depends on the first makefile.
 
 Tue Nov 17 20:10:41 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
@@ -23,24 +33,24 @@ Tue Nov 17 20:10:41 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
 Tue Nov 17 11:28:20 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/decode.cpp:
-	  Fixed problems with Any demarshaling, the buffer allocated could
-	  be misaligned and sometimes too small. Thanks to Arturo Montes
-	  <mitosys@colomsat.com.co> for pointing this out.
+        * tao/decode.cpp:
+          Fixed problems with Any demarshaling, the buffer allocated could
+          be misaligned and sometimes too small. Thanks to Arturo Montes
+          <mitosys@colomsat.com.co> for pointing this out.
 
-	* orbsvcs/orbsvcs/Event/Dispatching_Modules.i:
-	* orbsvcs/orbsvcs/Event/Dispatching_Modules.cpp:
-	  When dispatching events the push() method may raise an
-	  exception, it is a oneway but it could raise a
-	  CORBA::SystemException.
-	  For debugging purpose we print the exception in case it is
-	  raised, instead on the uninformative error message it was
-	  there.
-	  Thanks to J. Russell Noseworthy <rnosewor@objectsciences.com>
-	  for pointing this out.
+        * orbsvcs/orbsvcs/Event/Dispatching_Modules.i:
+        * orbsvcs/orbsvcs/Event/Dispatching_Modules.cpp:
+          When dispatching events the push() method may raise an
+          exception, it is a oneway but it could raise a
+          CORBA::SystemException.
+          For debugging purpose we print the exception in case it is
+          raised, instead on the uninformative error message it was
+          there.
+          Thanks to J. Russell Noseworthy <rnosewor@objectsciences.com>
+          for pointing this out.
 
-	* orbsvcs/tests/EC_Multiple/EC_Multiple.cpp:
-	  Removed a few problems with invocations through nil references.
+        * orbsvcs/tests/EC_Multiple/EC_Multiple.cpp:
+          Removed a few problems with invocations through nil references.
 
 Tue Nov 17 10:25:25 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -1499,14 +1509,14 @@ Mon Oct 19 21:40:56 1998  David L. Levine  <levine@cs.wustl.edu>
         * *.h: changed include protection from #if !defined to ifndef.
           Added #pragma once, if possible, i.e., after #include of
           an ace/ header.  It can only be done after ace/config.h
-          is included, becase some platforms don't allow #pragma once.
+          is included, because some platforms don't allow #pragma once.
 
         * tests/Param_Test/Makefile: don't build with g++ versions prior
-          to 2.8, becase they can't handle nested classes.  Thanks to
+          to 2.8, because they can't handle nested classes.  Thanks to
           JM Strauss <jms97@club-internet.fr> for confirming this.
 
         * examples/Quoter/Makefile: don't build with g++ versions prior
-          to 2.8, becase they can't handle nested classes.
+          to 2.8, because they can't handle nested classes.
 
         * orbsvcs/tests/EC_Mcast/EC_Mcast.cpp (disconnect_push_supplier):
           added ACE_UNUSED_ARG (_env).
