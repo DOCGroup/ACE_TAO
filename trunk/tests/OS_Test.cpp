@@ -708,6 +708,57 @@ string_strsncpy_test (void)
   return 0;
 }
 
+
+// Test conversion between narrow and wide chars.
+int
+string_convert_test (void)
+{
+#if defined (ACE_HAS_WCHAR)
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("Testing narrow/wide string conversion\n")));
+
+  int result = 0;
+  const char *test1_n = "abcdefg";
+  const wchar_t *test1_w = ACE_TEXT_WIDE ("abcdefg");
+  const char *test2_n = "יטאשך";
+  const wchar_t *test2_w = ACE_TEXT_WIDE ("יטאשך");
+  wchar_t str_w[10];
+  char str_n[10];
+  ACE_OS::strcpy (str_w, ACE_Ascii_To_Wide (test1_n).wchar_rep ());
+  if (0 != ACE_OS::strcmp (test1_w, str_w))
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Simple narrow->wide failed: ")
+                  ACE_TEXT ("Expected \"%W\"; Got \"%W\"\n"), test1_w, str_w));
+      result = 1;
+    }
+  ACE_OS::strcpy (str_n, ACE_Wide_To_Ascii (test1_w).char_rep ());
+  if (0 != ACE_OS::strcmp (test1_n, str_n))
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Simple wide->narrow failed: ")
+                  ACE_TEXT ("Expected \"%C\"; Got \"%C\"\n"), test1_n, str_n));
+      result = 1;
+    }
+  ACE_OS::strcpy (str_w, ACE_Ascii_To_Wide (test2_n).wchar_rep ());
+  if (0 != ACE_OS::strcmp (test2_w, str_w))
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Complex narrow->wide failed: ")
+                  ACE_TEXT ("Expected \"%W\"; Got \"%W\"\n"), test2_w, str_w));
+      result = 1;
+    }
+  ACE_OS::strcpy (str_n, ACE_Wide_To_Ascii (test2_w).char_rep ());
+  if (0 != ACE_OS::strcmp (test2_n, str_n))
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Complex wide->narrow failed: ")
+                  ACE_TEXT ("Expected \"%C\"; Got \"%C\"\n"), test2_n, str_n));
+      result = 1;
+    }
+  return result;
+#else
+  return 0;
+#endif /* ACE_HAS_WCHAR */
+}
+
+
 int
 run_main (int, ACE_TCHAR *[])
 {
