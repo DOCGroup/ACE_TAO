@@ -79,7 +79,7 @@ Consumer_Handler::nonblk_put (ACE_Message_Block *event)
       this->handle_close ();
       return -1;
     }
-  eise if (errno == EWOULDBLOCK) 
+  else if (errno == EWOULDBLOCK) 
     {
       // We didn't manage to send everything, so we need to queue
       // things up.
