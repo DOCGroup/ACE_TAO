@@ -1,3 +1,10 @@
+Wed May 12 17:42:09 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/Message_Block.h:
+	* ace/Message_Block.cpp:
+	  The message blocks can be obtained from an allocator now. Thanks 
+	  to John Aughey <Aughey@concentric.net> for this cool feature.
+
 Wed May 12 16:24:17 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* examples/Reactor/Proactor/Makefile: 
