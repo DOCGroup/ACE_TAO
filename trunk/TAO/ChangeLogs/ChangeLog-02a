@@ -1,3 +1,18 @@
+Mon Feb 19 16:04:21 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
+
+          Added ACE_UNUSED_ARG (ACE_TRY_ENV) at the end of the
+          generated *_skel functions. There is a combination
+          of circumstances - TAO_HAS_INTERCEPTORS not defined,
+          IDL operation has no in, inout, out or return args
+          (as in a oneway shutdown operation) and native
+          exception use is enforced by passing -Ge 0 to the 
+          IDL compiler - where this argument is not used. If
+          it is used, adding the final line above does no
+          harm. The situation described was arising in the
+          Native_Exception test in the Debian Linux builds.
+
 Mon Feb 19 15:58:03 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
 	* orbsvcs/examples/RtEC/Schedule/Service.cpp:
