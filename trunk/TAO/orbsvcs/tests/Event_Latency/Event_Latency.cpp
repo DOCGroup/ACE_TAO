@@ -2,7 +2,7 @@
 
 #include <limits.h>
 #if defined (quantify)
-  #include <quantify.h>
+# include <quantify.h>
 #endif /* quantify */
 
 #include "ace/Get_Opt.h"
@@ -90,7 +90,7 @@ Latency_Consumer::open_consumer (RtecEventChannelAdmin::EventChannel_ptr ec,
       dependencies.insert_type (ACE_ES_EVENT_SHUTDOWN, rt_info_);
 
       this->channel_admin_ =
-	RtecEventChannelAdmin::EventChannel::_duplicate (ec);
+        RtecEventChannelAdmin::EventChannel::_duplicate (ec);
 
       // = Connect as a consumer.
       this->consumer_admin_ =
@@ -182,20 +182,21 @@ Latency_Consumer::push (const RtecEventComm::EventSet &events,
               const ACE_hrtime_t elapsed = now - creation;
               // Note: the division by 1 provides transparent support of
               // ACE_U_LongLong.
-              ACE_Time_Value latency (elapsed / ACE_ONE_SECOND_IN_NSECS,
-                                      (elapsed / 1 % ACE_ONE_SECOND_IN_NSECS) / 1000);
+              ACE_Time_Value latency ((long) (elapsed / ACE_ONE_SECOND_IN_NSECS),
+                                      (long) (elapsed / 1 % ACE_ONE_SECOND_IN_NSECS) / 1000);
 
-              const ACE_hrtime_t to_ec_nsecs = ec_recv - creation;
+              const long to_ec_nsecs =
+                ACE_static_cast (long, ec_recv - creation);
               ACE_Time_Value to_ec (to_ec_nsecs / ACE_ONE_SECOND_IN_NSECS,
                                     (to_ec_nsecs / 1 % ACE_ONE_SECOND_IN_NSECS) / 1000);
 
               const ACE_hrtime_t in_ec_nsecs = ec_send - ec_recv;
-              ACE_Time_Value in_ec (in_ec_nsecs / ACE_ONE_SECOND_IN_NSECS,
-                                    (in_ec_nsecs / 1 % ACE_ONE_SECOND_IN_NSECS) / 1000);
+              ACE_Time_Value in_ec ((long) (in_ec_nsecs / ACE_ONE_SECOND_IN_NSECS),
+                                    (long) (in_ec_nsecs / 1 % ACE_ONE_SECOND_IN_NSECS) / 1000);
 
               const ACE_hrtime_t from_ec_nsecs = now - ec_send;
-              ACE_Time_Value from_ec (from_ec_nsecs / ACE_ONE_SECOND_IN_NSECS,
-                                      (from_ec_nsecs / 1 % ACE_ONE_SECOND_IN_NSECS) / 1000);
+              ACE_Time_Value from_ec ((long) (from_ec_nsecs / ACE_ONE_SECOND_IN_NSECS),
+                                      (long) (from_ec_nsecs / 1 % ACE_ONE_SECOND_IN_NSECS) / 1000);
 
               if (! shutting_down)
                 {
@@ -351,7 +352,7 @@ Latency_Supplier::open_supplier (RtecEventChannelAdmin::EventChannel_ptr ec,
   TAO_TRY
     {
       this->channel_admin_ =
-	RtecEventChannelAdmin::EventChannel::_duplicate (ec);
+        RtecEventChannelAdmin::EventChannel::_duplicate (ec);
 
       RtecScheduler::Scheduler_ptr server =
         ACE_Scheduler_Factory::server ();
@@ -424,7 +425,8 @@ int
 Latency_Supplier::start_generating_events (void)
 {
   const ACE_hrtime_t now = ACE_OS::gethrtime ();
-  test_start_time_.set (now / 1000000000, (now / 1 % 1000000000) / 1000);
+  test_start_time_.set (ACE_static_cast (long, now / 1000000000),
+                        ACE_static_cast (long, (now / 1 % 1000000000) / 1000));
 
   TAO_TRY
     {
@@ -595,8 +597,8 @@ Latency_Supplier::shutdown (void)
   #endif /* quantify */
 
   const ACE_hrtime_t now = ACE_OS::gethrtime ();
-  test_stop_time_.set (now / ACE_ONE_SECOND_IN_NSECS,
-                       (now / 1 % ACE_ONE_SECOND_IN_NSECS) / 1000);
+  test_stop_time_.set (ACE_static_cast (long, now / ACE_ONE_SECOND_IN_NSECS),
+                       ACE_static_cast (long, (now / 1 % ACE_ONE_SECOND_IN_NSECS) / 1000));
 
   static int total_iterations = 1;
   if (--total_iterations > 0)
