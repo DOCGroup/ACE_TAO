@@ -213,7 +213,7 @@ TAO_IIOP_SSL_Connector::make_connection (
       // failure) within timeout.
       result =
         this->active_connect_strategy_->wait (svc_handler,
-                                              0);
+                                              max_wait_time);
 
       if (TAO_debug_level > 2)
         {

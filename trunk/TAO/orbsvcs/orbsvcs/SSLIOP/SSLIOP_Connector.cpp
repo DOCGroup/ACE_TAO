@@ -542,7 +542,7 @@ TAO_SSLIOP_Connector::ssliop_connect (TAO_SSLIOP_Endpoint *ssl_endpoint,
           // failure) within timeout.
           result =
             this->active_connect_strategy_->wait (svc_handler,
-                                                  0);
+                                                  max_wait_time);
 
           if (TAO_debug_level > 2)
             {
