@@ -70,11 +70,13 @@ public:
   virtual CORBA::Long get (CORBA::Short,
                            CORBA::Short,
                            CORBA::Environment &)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     Grid::RANGE_ERROR));
   // Gets the grid value.
 
   virtual void destroy (CORBA::Environment &)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     Grid::RANGE_ERROR));
   // Destroy the grid.
 
 private:
