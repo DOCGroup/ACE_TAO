@@ -344,7 +344,9 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::shared_malloc (size_t nbytes)
                   ACE_MALLOC_STATS (++this->cb_ptr_->malloc_stats_.nblocks_);
                   currp->size_ -= nunits;
                   currp += currp->size_;
-                  MALLOC_HEADER::init_ptr (&currp->next_block_, 0, this->cb_ptr_);
+                  MALLOC_HEADER::init_ptr (&currp->next_block_,
+                                           0,
+                                           this->cb_ptr_);
                   currp->size_ = nunits;
                 }
               this->cb_ptr_->freep_ = prevp;
@@ -354,9 +356,9 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::shared_malloc (size_t nbytes)
             }
           else if (currp == this->cb_ptr_->freep_)
             {
-              // We've wrapped around freelist without finding a block.
-              // Therefore, we need to ask the memory pool for a new chunk
-              // of bytes.
+              // We've wrapped around freelist without finding a
+              // block.  Therefore, we need to ask the memory pool for
+              // a new chunk of bytes.
 
               size_t chunk_bytes = 0;
 
@@ -369,8 +371,9 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::shared_malloc (size_t nbytes)
                   ACE_MALLOC_STATS (++this->cb_ptr_->malloc_stats_.nchunks_);
                   ACE_MALLOC_STATS (++this->cb_ptr_->malloc_stats_.ninuse_);
 
-                  MALLOC_HEADER::init_ptr (&currp->next_block_, 0, this->cb_ptr_);
-
+                  MALLOC_HEADER::init_ptr (&currp->next_block_,
+                                           0,
+                                           this->cb_ptr_);
                   // Compute the chunk size in MALLOC_HEADER units.
                   currp->size_ = chunk_bytes / sizeof (MALLOC_HEADER);
 
@@ -661,7 +664,7 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::unbind (const char *name, void *
           else
             prev->next_ = curr->next_;
 
-          if (curr->next_ != 0)
+          if (curr->next_)
             curr->next_->prev_ = prev;
               
           // This will free up both the node and the name due to our
