@@ -173,7 +173,10 @@
 #define ACE_NEEDS_LWP_PRIO_SET
 
 #define ACE_HAS_SIGWAIT
-#define ACE_LACKS_CONDATTR_PSHARED
+// If ACE doesn't compile due to the lack of these methods, please
+// send email to schmidt@cs.wustl.edu reporting this. 
+// #define ACE_LACKS_CONDATTR_PSHARED
+// #define ACE_LACKS_MUTEXATTR_PSHARED
 
 // Platform supports TLI timod STREAMS module.
 #define ACE_HAS_TIMOD_H
