@@ -226,6 +226,7 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
     }
 
   TAO_Transport *base_transport = 0;
+
   TAO_Transport_Cache_Manager &tcm =
     this->orb_core ()->lane_resources ().transport_cache ();
 
@@ -245,6 +246,9 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
                                     timeout);
     }
 
+  // When we get a connected transport from the cache, than things are easy,
+  // return that, in case it is not connected we have to do several extra
+  // things
   if (base_transport->is_connected())
     return base_transport;
 
@@ -270,12 +274,31 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
                     "wait done result = %d\n",
                     result));
 
-      // todo, how to do this in a generic way?
-      // @@ Johnny, we will get back here soon.
+      // There are three possibilities when wait() returns: (a)
+      // connection succeeded; (b) connection failed; (c) wait()
+      // failed because of some other error.  It is easy to deal with
+      // (a) and (b).  (c) is tricky since the connection is still
+      // pending and may get completed by some other thread.  The
+      // following method deals with (c).
       result =
          this->check_connection_closure (base_transport->connection_handler(),
                                          result);
-// handle failure
+
+      // In case of errors.
+      if (result == -1)
+        {
+          // Give users a clue to the problem.
+          if (TAO_debug_level > 3)
+            {
+              ACE_ERROR ((LM_ERROR,
+                          "TAO (%P|%t) - Transport_Connector::connect, "
+                          "connection failed (%p)\n",
+                          ACE_TEXT("errno")));
+            }
+
+          return 0;
+        }
+
       return base_transport;
     }
 
@@ -291,7 +314,10 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
       // We now have a connection, register it
       result = this->register_transport (base_transport);
 
-      return 0;
+      if (result != 0)
+        {
+          return 0;
+        }
     }
 
   // Connection not ready yet, just use this base_transport, if
