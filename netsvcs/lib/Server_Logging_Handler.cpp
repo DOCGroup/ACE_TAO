@@ -19,6 +19,7 @@ ACE_SVC_FACTORY_DEFINE (ACE_Thr_Server_Logging_Acceptor)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class Log_Message_Receiver_Impl<ACE_NULL_SYNCH>;
+#if defined (ACE_HAS_THREADS)
 template class Static_Log_Message_Receiver<ACE_NULL_SYNCH>;
 template class ACE_Acceptor<Null_Synch_Logging_Handler_Static_Receiver, LOGGING_PEER_ACCEPTOR>;
 template class ACE_Accept_Strategy<Null_Synch_Logging_Handler_Static_Receiver, LOGGING_PEER_ACCEPTOR>;
@@ -36,7 +37,7 @@ template class ACE_Server_Logging_Handler<Null_Synch_Static_Receiver>;
   template class Base_Optimizer<Null_Synch_Static_Receiver, ACE_CString>;
   template class Base_Optimizer<Null_Synch_Static_Receiver, ACE_Schedule_All_Reactive_Strategy<Null_Synch_Logging_Handler_Static_Receiver> >;
 #endif /* ! (ACE_HAS_BROKEN_HPUX_TEMPLATES) && ! (__GNUG__) */
-
+#endif /* ACE_HAS_THREADS */
 
 template class Static_Log_Message_Receiver<ACE_LOGGER_SYNCH>;
 template class Log_Message_Receiver<ACE_LOGGER_SYNCH>;
@@ -125,6 +126,7 @@ template class ACE_Thr_Server_Logging_Handler<Synch_Receiver>;
   #endif /* ACE_HAS_TLI */
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate Log_Message_Receiver_Impl<ACE_NULL_SYNCH>
+#if defined (ACE_HAS_THREADS)
 #pragma instantiate Static_Log_Message_Receiver<ACE_NULL_SYNCH>
 #pragma instantiate ACE_Acceptor<Null_Synch_Logging_Handler_Static_Receiver, LOGGING_PEER_ACCEPTOR>
 #pragma instantiate ACE_Accept_Strategy<Null_Synch_Logging_Handler_Static_Receiver, LOGGING_PEER_ACCEPTOR>
@@ -142,7 +144,7 @@ template class ACE_Thr_Server_Logging_Handler<Synch_Receiver>;
   #pragma instantiate Base_Optimizer<Null_Synch_Static_Receiver, ACE_CString>
   #pragma instantiate Base_Optimizer<Null_Synch_Static_Receiver, ACE_Schedule_All_Reactive_Strategy<Null_Synch_Logging_Handler_Static_Receiver> >
 #endif /* ! (ACE_HAS_BROKEN_HPUX_TEMPLATES) && ! (__GNUG__) */
-
+#endif /* ACE_HAS_THREADS */
 
 #pragma instantiate Static_Log_Message_Receiver<ACE_LOGGER_SYNCH>
 #pragma instantiate Log_Message_Receiver<ACE_LOGGER_SYNCH>
