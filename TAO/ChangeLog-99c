@@ -1,3 +1,13 @@
+Thu Oct  7 04:48:28 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Makefile:
+	  added -
+	  Trader/Interpreter \
+	  Trader/Trader_Constraint_Visitors \
+	  Trader/Interpreter_Utils_T \
+	  Trader/Interpreter_Utils
+	  to the Trader compile section and updated dependencies.
+
 Thu Oct  7 04:31:44 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Trader/Interpreter.{h,cpp}:
