@@ -1,3 +1,12 @@
+Mon Aug 21 14:17:45 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/Typecode.cpp:
+
+	  In the CDR insertion operator, added a check for a
+	  nil typecode pointer. If found, CORBA::MARSHAL is
+	  thrown. Thanks to Johnny Willemsen 
+	  <johnny.willemsen@meco.nl> for reporting this bug.
+
 Mon Aug 21 11:46:16 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * rules.tao.GNU:
