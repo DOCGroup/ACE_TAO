@@ -8,8 +8,12 @@
 #include "ace/Reactor.h"
 #include "ace/Message_Block.h"
 #include "ace/Log_Msg.h"
+#include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_fcntl.h"
 
-ACE_RCSID(Misc, test_XtReactor1, "$Id$")
+ACE_RCSID (Misc,
+           test_XtReactor1,
+           "$Id$")
 
 #if defined (ACE_HAS_XT)
 //#define String XtString
@@ -127,8 +131,10 @@ ACE_TMAIN (int argc, ACE_TCHAR**argv)
                                         argv,
                                         NULL,
                                         NULL);
+  char change[] = "change"; // XmCreatePushButton() wants a non-const
+                            // string.
   Widget button = XmCreatePushButton (top_level,
-                                      "change",
+                                      change,
                                       0,
                                       0);
   XtManageChild (button);
