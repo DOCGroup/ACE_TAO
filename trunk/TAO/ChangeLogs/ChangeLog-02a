@@ -1,3 +1,8 @@
+Sat May 26 18:50:32 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* docs/tutorials/Quoter/RT_Event_Service/Stock_i.cpp: Fixed a few
+	  compile errors with g++.  
+
 Sat May 26 18:23:04 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.cpp: Commented out the
