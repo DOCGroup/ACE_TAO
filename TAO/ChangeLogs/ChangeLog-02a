@@ -1,3 +1,10 @@
+Tue Sep 18 17:18:35 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* performance-tests/RTCorba/Thread_Pool/client.cpp: Added priority
+	  information to max throughput testing.  Also,
+	  <Continuous_Worker::time_for_test_> has the max time of all the
+	  continuous workers.
+
 Tue Sep 18 15:55:18 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tests/RTCORBA/README: Updated with information about new tests.

@@ -453,8 +453,10 @@ Continuous_Worker::svc (void)
 
       // Collective samples.
       history.collect_basic_stats (this->collective_stats_);
-      this->time_for_test_ =
+      ACE_hrtime_t elapsed_time_for_current_thread =
         test_end - test_start;
+      if (elapsed_time_for_current_thread > this->time_for_test_)
+        this->time_for_test_ = elapsed_time_for_current_thread;
     }
   ACE_CATCHANY
     {
@@ -469,12 +471,29 @@ Continuous_Worker::svc (void)
 
 int
 max_throughput (test_ptr test,
+                RTCORBA::Current_ptr current,
+                RTCORBA::PriorityMapping &priority_mapping,
                 CORBA::ULong &max_rate)
 {
   CORBA::ULong calls_made = 0;
+  CORBA::Short CORBA_priority = 0;
+  CORBA::Short native_priority = 0;
 
   ACE_TRY_NEW_ENV
     {
+      CORBA_priority =
+        current->the_priority (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      CORBA::Boolean result =
+        priority_mapping.to_native (CORBA_priority,
+                                    native_priority);
+      if (!result)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Error in converting CORBA priority %d to native priority\n",
+                           CORBA_priority),
+                          -1);
+
       ACE_Time_Value start =
         ACE_OS::gettimeofday ();
 
@@ -508,7 +527,9 @@ max_throughput (test_ptr test,
     calls_made / max_throughput_timeout;
 
   ACE_DEBUG ((LM_DEBUG,
-              "\nMax rate calculations => %d calls in %d seconds; Max rate = %d\n",
+              "\nPriority = %d/%d; Max rate calculations => %d calls in %d seconds; Max rate = %d\n",
+              CORBA_priority,
+              native_priority,
               calls_made,
               max_throughput_timeout,
               max_rate));
@@ -577,6 +598,8 @@ main (int argc, char *argv[])
       CORBA::ULong max_rate = 0;
       result =
         max_throughput (test.in (),
+                        current.in (),
+                        priority_mapping,
                         max_rate);
       if (result != 0)
         return result;
