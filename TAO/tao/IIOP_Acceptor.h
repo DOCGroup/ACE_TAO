@@ -77,10 +77,8 @@ public:
                             const char *options = 0);
   virtual int close (void);
   virtual int create_mprofile (const TAO_ObjectKey &object_key,
-                               TAO_MProfile &mprofile);
-
-  virtual int create_endpoint_for_mprofile (const TAO_ObjectKey &object_key,
-                                    TAO_MProfile &mprofile);
+                               TAO_MProfile &mprofile,
+                               CORBA::Boolean share_profile);
   virtual int is_collocated (const TAO_Endpoint *endpoint);
   virtual CORBA::ULong endpoint_count (void);
 
@@ -140,6 +138,16 @@ protected:
   /// Obtain tcp properties that must be used by this acceptor, i.e.,
   /// initialize <tcp_properties_>.
   int init_tcp_properties (void);
+
+  /// Helper method to add a new profile to the mprofile for
+  /// each endpoint.
+  int create_new_profiles (const TAO_ObjectKey &object_key,
+                           TAO_MProfile &mprofile);
+
+  /// Helper method to create a profile that contains all of
+  /// our endpoints.
+  int create_shared_profile (const TAO_ObjectKey &object_key,
+                             TAO_MProfile &mprofile);
 
 protected:
 

@@ -43,7 +43,7 @@ TAO_PolicyFactory_Registry::register_policy_factory (
     {
       // PolicyFactory of given type already exists.
 
-      ACE_THROW (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 12,
+      ACE_THROW (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 16,
                                        CORBA::COMPLETED_NO));
     }
   else if (result == -1)

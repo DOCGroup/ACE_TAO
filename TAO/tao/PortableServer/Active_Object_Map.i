@@ -13,6 +13,24 @@ TAO_Active_Object_Map::bind_using_system_id_returning_system_id (PortableServer:
                                                                  CORBA::Short priority,
                                                                  PortableServer::ObjectId_out system_id)
 {
+  if (servant == 0 &&
+      !this->using_active_maps_)
+    {
+      PortableServer::ObjectId id;
+
+      int result =
+        this->user_id_map_->create_key (id);
+
+      if (result == 0)
+        {
+          ACE_NEW_RETURN (system_id,
+                          PortableServer::ObjectId (id),
+                          -1);
+        }
+
+      return result;
+    }
+
   Map_Entry *entry = 0;
 
   int result = this->id_assignment_strategy_->bind_using_system_id (servant,
@@ -59,6 +77,15 @@ TAO_Active_Object_Map::find_system_id_using_user_id (const PortableServer::Objec
                                                      CORBA::Short priority,
                                                      PortableServer::ObjectId_out system_id)
 {
+  if (!this->using_active_maps_)
+    {
+      ACE_NEW_RETURN (system_id,
+                      PortableServer::ObjectId (user_id),
+                      -1);
+
+      return 0;
+    }
+
   Map_Entry *entry = 0;
   int result = this->id_uniqueness_strategy_->bind_using_user_id (0,
                                                                   user_id,

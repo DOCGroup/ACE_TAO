@@ -97,7 +97,6 @@ TAO_IORInfo::add_ior_component_to_profile (
   // supposed to throw a CORBA::BAD_PARAM exception if no profile
   // matched the given ProfileId.
   if (found_profile == 0)
-    ACE_THROW (CORBA::BAD_PARAM (
-                 TAO_OMG_VMCID | 26,
-                 CORBA::COMPLETED_NO));
+    ACE_THROW (CORBA::BAD_PARAM (TAO_OMG_VMCID | 29,
+                                 CORBA::COMPLETED_NO));
 }
