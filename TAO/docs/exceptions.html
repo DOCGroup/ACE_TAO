@@ -182,7 +182,11 @@ definition of macros discussed here.
       cases, <code>CATCHANY</code> may accidentally deal with the
       wrong exception.  This is especially true if you are working on
       the internal of TAO.  A reasonable alternative in this case will
-      be to catch "CORBA_Exception" class.<p>
+      be to catch "CORBA_Exception" class.  For this reason, when
+      building non-release version programs on
+      platforms that support c++ native exceptions,
+      <code>TAO_CATCHANY</code> is replaced with a catch clause to
+      catch an exception that'll never happen. <p>
 
   <li>Don't catch an exception just to rethrow it.  Exceptions cost
       you performance.<p>
