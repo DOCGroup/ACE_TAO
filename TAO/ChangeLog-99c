@@ -1,3 +1,19 @@
+Fri Jun 04 16:11:30 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* Context.{i,cpp}:
+	* Environment.{i,cpp}:
+	* NVList.{i,cpp}:
+	* ORB.{i,cpp}:
+	* Object.{i,cpp}:
+	* Principal.{i,cpp}:
+	* ValueBase.{i,cpp}:
+	* Request.{i,cpp}:
+	* Server_Request.{i,cpp}:
+	* Typecode.{i,cpp}:
+	* corbafwd.{i,cpp}: Unlined a bunch of methods in CORBA namespace
+	  to avoid duplicate definitions on platforms with namespace
+	  support.
+
 Fri Jun 04 15:25:38 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_interface/tie_si.cpp (visit_interface):
