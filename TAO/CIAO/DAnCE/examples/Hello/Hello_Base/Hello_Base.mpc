@@ -17,25 +17,19 @@ project(Hello_Base_DnC_stub): ciao_client_dnc {
 }
 
 project(Hello_Base_DnC_svnt) : ciao_servant_dnc {
-  after +=  Hello_Base_stub
+  after +=  Hello_Base_DnC_stub
   sharedname  = Hello_Base_svnt
   libs    += Hello_Base_stub 
   
-  idlflags  +=  -Wb,export_macro=HELLO_BASE_SVNT_Export -Wb,export_include=Hello_Base_svnt_export.h
+  idlflags  += -Wb,stub_export_macro=HELLO_BASE_STUB_Export -Wb,stub_export_include=Hello_Base_stub_export.h -Wb,skel_export_macro=HELLO_BASE_SVNT_Export -Wb,skel_export_include=Hello_Base_svnt_export.h
   dynamicflags = HELLO_BASE_SVNT_BUILD_DLL
 
-  CIDL_Files {
-    Hello_Base.cidl
-  }
-
   IDL_Files {
-    Hello_BaseE.idl
+    Hello_Base.idl
   }
 
   Source_Files {
-    Hello_BaseEC.cpp
     Hello_BaseS.cpp
-    Hello_Base_svnt.cpp
   }
 }
 
