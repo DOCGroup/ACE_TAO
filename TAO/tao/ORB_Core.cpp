@@ -2070,7 +2070,7 @@ TAO_ORB_Core::destroy_interceptors (CORBA::Environment &ACE_TRY_ENV)
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
 #ifdef TAO_HAS_EXCEPTIONS
-  ACE_UNUSED_ARG (ACE_TRY_ENV);
+  ACE_UNUSED_ARG (ACE_TRY_ENV); // FUZZ: ignore check_for_ace_check
 #endif  /* TAO_HAS_EXCEPTIONS */
 
   TAO_IORInterceptor_List::TYPE &ior_interceptors =

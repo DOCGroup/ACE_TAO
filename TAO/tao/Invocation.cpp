@@ -568,7 +568,7 @@ TAO_GIOP_Invocation::add_rt_service_context (CORBA_Environment &ACE_TRY_ENV)
   this->rt_context_initialized_ = 1;
 
 #else
-  ACE_UNUSED_ARG (ACE_TRY_ENV);
+  ACE_UNUSED_ARG (ACE_TRY_ENV); // FUZZ: ignore check_for_ace_check
 
 #endif /* TAO_HAS_RT_CORBA == 1 */
 }
