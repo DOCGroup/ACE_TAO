@@ -1,7 +1,13 @@
+Mon May 22 21:07:57 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * BS_Server.cpp (insert): initialize local cmp to 0, to
+          prevent warning from g++ 2.91.66 (on Linux) about possible
+          use without initialization.
+
 Fri May  5 10:40:46 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* Fixed a coule of errors due to mismatches between int and size_t.
-	  Thanks to David Levine and Darrell Brunsch for reporting these.
+        * Fixed a coule of errors due to mismatches between int and size_t.
+          Thanks to David Levine and Darrell Brunsch for reporting these.
 
 Thu Apr 20 09:20:28 2000  Carlos O'Ryan  <coryan@uci.edu>
 
