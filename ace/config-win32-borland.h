@@ -3,25 +3,25 @@
 
 // The following configuration file contains defines for Borland compilers.
 
-#ifndef	ACE_WIN32_BORLAND_H
-#define	ACE_WIN32_BORLAND_H
+#ifndef ACE_WIN32_BORLAND_H
+#define ACE_WIN32_BORLAND_H
 #include "ace/pre.h"
 
 #if defined (__BORLANDC__)
 
 # if (__BORLANDC__ == 0x540)
-// The linker in C++Builder 4 has trouble with the large number	of DLL
+// The linker in C++Builder 4 has trouble with the large number of DLL
 // function exports created when you compile without inline
-// functions. Therefore	we will	use inline functions by	default	with
-// this	version	of the compiler.
-#  if !	defined	(__ACE_INLINE__)
+// functions. Therefore we will use inline functions by default with
+// this version of the compiler.
+#  if ! defined (__ACE_INLINE__)
 #   define __ACE_INLINE__ 1
 #  endif /* __ACE_INLINE__ */
-# endif	/* __BORLANDC__	== 0x540 */
+# endif /* __BORLANDC__ == 0x540 */
 
 # include "ace/config-win32-common.h"
 
-# define ACE_CC_NAME ACE_TEXT ("Borland	C++ Builder")
+# define ACE_CC_NAME ACE_TEXT ("Borland C++ Builder")
 # define ACE_CC_MAJOR_VERSION (__BORLANDC__ / 0x100)
 # define ACE_CC_MINOR_VERSION (__BORLANDC__ % 0x100)
 # define ACE_CC_BETA_VERSION (0)
@@ -54,7 +54,8 @@
 # define ACE_HAS_TYPENAME_KEYWORD 1
 # define ACE_HAS_USER_MODE_MASKS 1
 # define ACE_HAS_USING_KEYWORD 1
-# define ACE_LACKS_ACE_IOSTREAM	1
+# define ACE_LACKS_ACE_IOSTREAM 1
+# define ACE_LACKS_INLINE_ASSEMBLY 1
 # define ACE_LACKS_LINEBUFFERED_STREAMBUF 1
 # define ACE_LACKS_MODE_MASKS 1
 # define ACE_LACKS_NATIVE_STRPTIME 1
@@ -62,15 +63,15 @@
 # define ACE_LACKS_PRAGMA_ONCE 1
 # define ACE_LACKS_STRRECVFD 1
 # define ACE_NEW_THROWS_EXCEPTIONS 1
-# define ACE_SIZEOF_LONG_DOUBLE	10
+# define ACE_SIZEOF_LONG_DOUBLE 10
 # define ACE_TEMPLATES_REQUIRE_SOURCE 1
 # define ACE_UINT64_FORMAT_SPECIFIER ACE_TEXT ("%Lu")
 # define ACE_INT64_FORMAT_SPECIFIER ACE_TEXT ("%Ld")
 # define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
 # define ACE_USES_STD_NAMESPACE_FOR_STDC_LIB 1
-# define ACE_WSTRING_HAS_USHORT_SUPPORT	1
+# define ACE_WSTRING_HAS_USHORT_SUPPORT 1
 
-#endif /* defined(__BORLANDC__)	*/
+#endif /* defined(__BORLANDC__) */
 
 #include "ace/post.h"
 #endif /* ACE_WIN32_BORLAND_H */

@@ -18,6 +18,8 @@
 
 TARGET = $(BINDIR)\$(NAME)$(LIB_DECORATOR).lib
 
+all: $(TARGET)
+
 $(TARGET): $(OBJFILES)
 	@$(MAKE_BINDIR)
 	$(AR) $(LIB_LFLAGS) $(TARGET) @&&!

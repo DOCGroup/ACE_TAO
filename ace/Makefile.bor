@@ -5,6 +5,8 @@
 
 NAME = ace
 
+DIRS = SSL
+
 OBJFILES = \
 	$(OBJDIR)\ACE.obj \
 	$(OBJDIR)\Activation_Queue.obj \
@@ -93,16 +95,14 @@ OBJFILES = \
 	$(OBJDIR)\Object_Manager.obj \
 	$(OBJDIR)\Obstack.obj \
 	$(OBJDIR)\OS.obj \
-        $(OBJDIR)\OS_Dirent.obj \
-        $(OBJDIR)\OS_Memory.obj \
-        $(OBJDIR)\OS_String.obj \
-        $(OBJDIR)\OS_TLI.obj \
-        $(OBJDIR)\Thread_Hook.obj \
-        $(OBJDIR)\Base_Thread_Adapter.obj \
-        $(OBJDIR)\OS_Thread_Adapter.obj \
-        $(OBJDIR)\Thread_Adapter.obj \
-        $(OBJDIR)\Thread_Exit.obj \
-        $(OBJDIR)\Thread_Control.obj \
+	$(OBJDIR)\OS_Dirent.obj \
+	$(OBJDIR)\OS_Memory.obj \
+	$(OBJDIR)\OS_String.obj \
+	$(OBJDIR)\OS_TLI.obj \
+	$(OBJDIR)\Thread_Hook.obj \
+	$(OBJDIR)\Thread_Adapter.obj \
+	$(OBJDIR)\Thread_Exit.obj \
+	$(OBJDIR)\Thread_Control.obj \
 	$(OBJDIR)\Pair.obj \
 	$(OBJDIR)\Parse_Node.obj \
 	$(OBJDIR)\Pipe.obj \
@@ -229,3 +229,4 @@ INCLUDES = \
 	Typed_SV_Message_Queue.cpp
 
 !include <$(ACE_ROOT)\include\makeinclude\build_core_library.bor>
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
