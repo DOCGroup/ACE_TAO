@@ -1,3 +1,9 @@
+Wed Feb 25 16:04:49 1998  Sumedh Mungee  <sumedh@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp,h: Added support for making
+	upcalls into the application when connection is established,
+	requested etc..
+
 Wed Feb 25 12:58:04 1998  Nagarajan Surendran  <naga@tango.cs.wustl.edu>
 
 	* tao/tao_util.cpp: Added the implementation for the 2 new methods
