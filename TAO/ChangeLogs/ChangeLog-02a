@@ -1,4 +1,7 @@
-Sun Apr 30 14:29:52 2000  Marina Spivak  <marina@cs.wustl.edu>
+Sun Apr 30 17:07:57 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* utils/NamingViewer/NamingTreeCtrl.cpp:
+	  added a patch from Chris Hafey.
 
 	* orbsvcs/orbsvcs/Naming/Persistent_Naming_Context.cpp (list):
 	  A pointer was incremented instead of the value it was pointing
