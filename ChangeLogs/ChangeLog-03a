@@ -1,3 +1,8 @@
+Fri Feb  1 23:42:03 2002  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* ace/config-all.h: 
+	  Removed extra ).
+
 Fri Feb  1 21:08:37 2002  Steve Huston  <shuston@riverace.com>
 
         * tests/Framework_Component_Test.icc:
