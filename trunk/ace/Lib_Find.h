@@ -1,7 +1,7 @@
 // $Id$
 
-#ifndef ACE_ACE_LIB_FIND_H
-#define ACE_ACE_LIB_FINE_H
+#ifndef ACE_LIB_FIND_H
+#define ACE_LIB_FINE_H
 #include "ace/pre.h"
 
 #include "ace/OS.h"
@@ -12,9 +12,9 @@ class ACE_Export ACE_Lib_Find
   // needed to search and open shared libraries.
 
  public:
-  
+
   // = Methods for searching and opening shared libraries.
-  
+
   static int ldfind (const ACE_TCHAR *filename,
                      ACE_TCHAR *pathname,
                      size_t maxlen);
@@ -57,7 +57,7 @@ class ACE_Export ACE_Lib_Find
   static size_t strrepl (char *s, char search, char replace);
   // Replace all instances of <search> in <s> with <replace>.  Returns
   // the number of replacements made.
-  
+
   static char *strsplit_r (char *s, const char *token, char *&next_start);
   // Splits string <s> into pieces separated by the string <token>.
   // <next_start> is an opaque cookie handed back by the call to store
@@ -76,8 +76,8 @@ class ACE_Export ACE_Lib_Find
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/ACE_Lib_Find.i"
+#include "ace/Lib_Find.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
 #include "ace/post.h"
-#endif  /* ACE_ACE_LIB_FIND_H */
+#endif  /* ACE_LIB_FIND_H */

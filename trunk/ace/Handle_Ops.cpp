@@ -1,9 +1,9 @@
 // $Id$
 
-#include "ace/ACE_Handle_Ops.h"
+#include "ace/Handle_Ops.h"
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/ACE_Handle_Ops.h"
+#include "ace/Handle_Ops.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
 ACE_RCSID(ace, ACE, "$Id$")
@@ -15,7 +15,7 @@ ACE_Handle_Ops::handle_timed_open (ACE_Time_Value *timeout,
                                    int perms)
 {
   ACE_TRACE ("ACE_Handle_Ops::handle_timed_open");
-  
+
   if (timeout != 0)
     {
       // Open the named pipe or file using non-blocking mode...

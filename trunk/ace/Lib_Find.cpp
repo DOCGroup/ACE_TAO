@@ -1,9 +1,10 @@
 // $Id$
 
-#include "ace/ACE_Lib_Find.h"
+#include "ace/Lib_Find.h"
 #include "ace/Log_Msg.h"
 
-ACE_RCSID(ace, ACE_Lib_Find, "$Id$")
+ACE_RCSID(ace, Lib_Find, "$Id$")
+
 
 #if ! defined (ACE_PSOS_DIAB_MIPS)
 int

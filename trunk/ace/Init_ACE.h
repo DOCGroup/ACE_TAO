@@ -1,7 +1,7 @@
 // $Id$
 
-#ifndef ACE_ACE_INVOKE_H
-#define ACE_ACE_INVOKE_H
+#ifndef ACE_INIT_ACE_H
+#define ACE_INIT_ACE_H
 #include "ace/pre.h"
 
 #include "ace/OS.h"
@@ -10,7 +10,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class ACE_Export ACE_Init
+class ACE_Export ACE_Init_ACE
 {
 
   // DESCRIPTION: This class implements the fucntions for the
@@ -38,8 +38,8 @@ class ACE_Export ACE_Init
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/ACE_Init.i"
+#include "ace/Init_ACE.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
 #include "ace/post.h"
-#endif  /* ACE_ACE_INVOKE_H */
+#endif  /* ACE_INIT_ACE_H */

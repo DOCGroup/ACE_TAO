@@ -1,12 +1,12 @@
 // $Id$
 
-#include "ACE_Flag_Manip.h"
+#include "Flag_Manip.h"
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/ACE_Flag_Manip.i"
+#include "ace/Flag_Manip.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
-ACE_RCSID(ace, ACE, "$Id$")
+ACE_RCSID(ace, Flag_Manip, "$Id$")
 
 // Flags are file status flags to turn on.
 
