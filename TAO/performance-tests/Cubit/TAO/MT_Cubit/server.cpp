@@ -618,19 +618,10 @@ start_servants ()
                               0), //task id 0.
                   -1);
 
-  ACE_Sched_Priority priority;
-
-  // @@ The ifdef here is temporarily placed here until
-  // I figure out how to map NT's thread priorities
-  // into pthread's priorities.
-#if defined (ACE_THR_PRI_FIFO_DEF)
-  priority = ACE_THR_PRI_FIFO_DEF;
-#else
-  priority = ACE_DEFAULT_THREAD_PRIORITY;
-#endif /* ACE_THR_PRI_FIFO_DEF */
+  ACE_Sched_Priority priority = ACE_THR_PRI_FIFO_DEF;
 
   ACE_DEBUG ((LM_DEBUG,
-              "Creating servant with high priority\n"));
+              "Creating servant with high priority %d\n", priority));
 
   // Make the high priority task an active object.
   high_priority_task->activate (THR_BOUND | ACE_SCHED_FIFO,
@@ -645,9 +636,14 @@ start_servants ()
                   Cubit_Task *[num_of_objs],
                   -1);
 
-  priority = ACE_Sched_Params::previous_priority (ACE_SCHED_FIFO,
-                                                  priority,
-                                                  ACE_SCOPE_THREAD);
+  // Drop the priority, so that the priority of clients will increase
+  // with increasing client number.
+  for (i = 0; i < num_of_objs; i++)
+    {
+      priority = ACE_Sched_Params::previous_priority (ACE_SCHED_FIFO,
+                                                      priority,
+                                                      ACE_SCOPE_THREAD);
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               "Creating %d servants with low priority\n",
@@ -667,15 +663,15 @@ start_servants ()
                       Cubit_Task (args, "internet", 1, &barrier_, i+1),
                       -1);
 
-      priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,
-                                                  priority,
-                                                  ACE_SCOPE_THREAD);
-
       // Make the low priority task an active object.
       low_priority_task [i]->activate (THR_BOUND | ACE_SCHED_FIFO,
                                        1,
                                        0,
                                        priority);
+
+      priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,
+                                                  priority,
+                                                  ACE_SCOPE_THREAD);
     }
 
   char * args = new char [4096];
