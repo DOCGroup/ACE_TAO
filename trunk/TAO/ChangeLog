@@ -12,6 +12,30 @@ Tue Feb 25 11:17:47 2003  Ossama Othman  <ossama@uci.edu>
 	* tao/IFR_Client/IFR_ExtendedC.cpp:
 	* tao/IFR_Client/IFR_ExtendedC.h:
 	* tao/IFR_Client/IFR_ExtendedC.i:
+	* orbsvcs/orbsvcs/IFR_Service/IFR_BaseS.cpp:
+	* orbsvcs/orbsvcs/IFR_Service/IFR_BaseS.h:
+	* orbsvcs/orbsvcs/IFR_Service/IFR_BaseS.i:
+	* orbsvcs/orbsvcs/IFR_Service/IFR_BaseS_T.cpp:
+	* orbsvcs/orbsvcs/IFR_Service/IFR_BaseS_T.h:
+	* orbsvcs/orbsvcs/IFR_Service/IFR_BaseS_T.i:
+	* orbsvcs/orbsvcs/IFR_Service/IFR_BasicS.cpp:
+	* orbsvcs/orbsvcs/IFR_Service/IFR_BasicS.h:
+	* orbsvcs/orbsvcs/IFR_Service/IFR_BasicS.i:
+	* orbsvcs/orbsvcs/IFR_Service/IFR_BasicS_T.cpp:
+	* orbsvcs/orbsvcs/IFR_Service/IFR_BasicS_T.h:
+	* orbsvcs/orbsvcs/IFR_Service/IFR_BasicS_T.i:
+	* orbsvcs/orbsvcs/IFR_Service/IFR_ComponentsS.cpp:
+	* orbsvcs/orbsvcs/IFR_Service/IFR_ComponentsS.h:
+	* orbsvcs/orbsvcs/IFR_Service/IFR_ComponentsS.i:
+	* orbsvcs/orbsvcs/IFR_Service/IFR_ComponentsS_T.cpp:
+	* orbsvcs/orbsvcs/IFR_Service/IFR_ComponentsS_T.h:
+	* orbsvcs/orbsvcs/IFR_Service/IFR_ComponentsS_T.i:
+	* orbsvcs/orbsvcs/IFR_Service/IFR_ExtendedS.cpp:
+	* orbsvcs/orbsvcs/IFR_Service/IFR_ExtendedS.h:
+	* orbsvcs/orbsvcs/IFR_Service/IFR_ExtendedS.i:
+	* orbsvcs/orbsvcs/IFR_Service/IFR_ExtendedS_T.cpp:
+	* orbsvcs/orbsvcs/IFR_Service/IFR_ExtendedS_T.h:
+	* orbsvcs/orbsvcs/IFR_Service/IFR_ExtendedS_T.i:
 	* tao/TypeCodeFactory/TypeCodeFactoryC.cpp:
 	* tao/TypeCodeFactory/TypeCodeFactoryC.h:
 	* tao/TypeCodeFactory/TypeCodeFactoryC.inl:
