@@ -25,13 +25,13 @@ CD_Entity::~CD_Entity ()
   cd_->on_entity_destroyed ();
 }
 
-CD_IMPLEMENT_ENTITY(PushConsumer);
-CD_IMPLEMENT_ENTITY(StructuredPushConsumer);
-CD_IMPLEMENT_ENTITY(SequencePushConsumer);
+CD_IMPLEMENT_ENTITY(PushConsumer)
+CD_IMPLEMENT_ENTITY(StructuredPushConsumer)
+CD_IMPLEMENT_ENTITY(SequencePushConsumer)
 
-CD_IMPLEMENT_ENTITY(PushSupplier);
-CD_IMPLEMENT_ENTITY(StructuredPushSupplier);
-CD_IMPLEMENT_ENTITY(SequencePushSupplier);
+CD_IMPLEMENT_ENTITY(PushSupplier)
+CD_IMPLEMENT_ENTITY(StructuredPushSupplier)
+CD_IMPLEMENT_ENTITY(SequencePushSupplier)
 
 //*****************************************************************************************************
 

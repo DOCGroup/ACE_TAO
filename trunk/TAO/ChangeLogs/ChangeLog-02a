@@ -1,10 +1,17 @@
+Fri Aug 18 10:20:22 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* orbsvcs/tests/Notify/Basic/ConnectDisconnect.cpp:
+	* orbsvcs/tests/Notify/Basic/ConnectDisconnect.h:
+	  Removed ";" at the end of CD_DECLARE_ENTITY
+	  macros as it was raising warnings.
+
 Fri Aug 18 10:06:05 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.cpp: 
-	* orbsvcs/orbsvcs/Naming/Naming_Loader.cpp: 
-	* orbsvcs/orbsvcs/Trader/Trading_Loader.cpp: 
+	* orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.cpp:
+	* orbsvcs/orbsvcs/Naming/Naming_Loader.cpp:
+	* orbsvcs/orbsvcs/Trader/Trading_Loader.cpp:
 	  Removed the ";" following the ACE_SVC_FACTORY_DEFINE macro.
-	
+
 Thu Aug 17 14:55:25 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* orbsvcs/orbsvcs/Naming/Naming_Loader.cpp (init):
