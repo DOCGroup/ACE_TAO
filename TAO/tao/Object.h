@@ -159,7 +159,10 @@ public:
   // different ORB protocols are in use) there is no default
   // implementation.
 
-  virtual CORBA::Boolean _is_equivalent (CORBA::Object_ptr other_obj);
+  virtual CORBA::Boolean _is_equivalent (CORBA::Object_ptr other_obj,
+                                         CORBA_Environment &TAO_IN_ENV =
+                                             TAO_default_environment ())
+    ACE_THROW_SPEC (());
   // Try to determine if this object is the same as <other_obj>.  This
   // method relies on the representation of the object reference's
   // private state.  Since that changes easily (when different ORB
