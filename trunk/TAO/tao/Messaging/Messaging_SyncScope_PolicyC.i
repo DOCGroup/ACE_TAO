@@ -26,11 +26,3 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 
-// TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ci.cpp:63
-
-#if !defined (_MESSAGING_SYNCSCOPEPOLICY___CI_)
-#define _MESSAGING_SYNCSCOPEPOLICY___CI_
-
-#endif /* end #if !defined */
-

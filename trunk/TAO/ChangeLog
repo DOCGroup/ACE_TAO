@@ -1,3 +1,45 @@
+Mon Nov  3 21:28:31 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/CurrentC.cpp: Cosmetic fix.
+
+	* tao/Domain.pidl: Fixed the comments in the pidl file. 
+
+	* tao/DomainC.cpp:
+	* tao/DomainC.h:
+	* tao/DomainC.i: 
+	* tao/BiDir_GIOP/BiDirPolicyC.cpp:
+	* tao/BiDir_GIOP/BiDirPolicyC.h:
+	* tao/BiDir_GIOP/BiDirPolicyC.i:
+	* tao/Messaging/Messaging_No_ImplC.cpp:
+	* tao/Messaging/Messaging_No_ImplC.h:
+	* tao/Messaging/Messaging_No_ImplC.i:
+	* tao/Messaging/Messaging_RT_PolicyC.cpp:
+	* tao/Messaging/Messaging_RT_PolicyC.h:
+	* tao/Messaging/Messaging_RT_PolicyC.i:
+	* tao/Messaging/Messaging_SyncScope_PolicyC.cpp:
+	* tao/Messaging/Messaging_SyncScope_PolicyC.h:
+	* tao/Messaging/Messaging_SyncScope_PolicyC.i:
+	* tao/PortableServer/Default_ORTC.cpp:
+	* tao/PortableServer/Default_ORTC.h:
+	* tao/PortableServer/Default_ORTC.i:
+	* tao/Messaging/TAO_ExtC.cpp:
+	* tao/Messaging/TAO_ExtC.h:
+	* tao/Messaging/TAO_ExtC.i: Regenerated code to get the new IDL
+	  compiler change.
+	
+	* tao/Messaging/diffs/Messaging_No_Impl.diff:
+	* tao/Messaging/diffs/Messaging_RT_Policy.diff:
+	* tao/Messaging/diffs/Messaging_SyncScope_Policy.diff:
+	* tao/Messaging/diffs/TAO_ExtC.diff:
+	* tao/PortableServer/diffs/Default_ORT.diff:
+	* tao/diffs/Domain.diff: Updated diffs with new stuff. This should
+	  now be minimal.
+
+	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+	* TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp;
+
+	  Cosmetic fix.
+
 Mon Nov  3 19:42:49 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp

@@ -26,28 +26,27 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:151
+// be/be_codegen.cpp:150
 
 #ifndef _TAO_IDL_ORIG_MESSAGING_RT_POLICYC_H_
 #define _TAO_IDL_ORIG_MESSAGING_RT_POLICYC_H_
 
 #include /**/ "ace/pre.h"
 
-#include "messaging_export.h"
+#include "tao/ORB.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
-#include "tao/Sequence_T.h"
+#include "messaging_export.h"
+#include "tao/CDR.h"
+#include "tao/Environment.h"
+#include "tao/Object.h"
 #include "tao/Objref_VarOut_T.h"
-#include "tao/Seq_Var_T.h"
-#include "tao/Seq_Out_T.h"
-#include "tao/VarOut_T.h"
+
 #include "tao/TimeBaseC.h"
 #include "tao/PolicyC.h"
-
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -72,12 +71,15 @@
 #pragma option push -w-rvl -w-rch -w-ccc -w-inl
 #endif /* __BORLANDC__ */
 
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be/be_visitor_root/root_ch.cpp:63
 
 namespace TAO
 {
   class Collocation_Proxy_Broker;
+  
+  template<typename T> class Narrow_Utils;
+  template<typename T> class AbstractBase_Narrow_Utils;
 }
 
 // TAO_IDL - Generated from
@@ -85,38 +87,38 @@ namespace TAO
 
 namespace Messaging
 {
-
+  
   // TAO_IDL - Generated from
-  // be/be_visitor_typedef/typedef_ch.cpp:333
-
+  // be/be_visitor_typedef/typedef_ch.cpp:342
+  
   typedef TimeBase::TimeT Timeout;
   typedef TimeBase::TimeT_out Timeout_out;
-
+  
   // TAO_IDL - Generated from
   // be/be_visitor_typecode/typecode_decl.cpp:44
-
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_Timeout;
-
+  
   // TAO_IDL - Generated from
   // be/be_visitor_constant/constant_ch.cpp:52
-
+  
   const CORBA::PolicyType RELATIVE_RT_TIMEOUT_POLICY_TYPE = 32U;
-
+  
   // TAO_IDL - Generated from
-  // be/be_interface.cpp:601
+  // be/be_interface.cpp:610
 
 #if !defined (_MESSAGING_RELATIVEROUNDTRIPTIMEOUTPOLICY__VAR_OUT_CH_)
 #define _MESSAGING_RELATIVEROUNDTRIPTIMEOUTPOLICY__VAR_OUT_CH_
-
+  
   class RelativeRoundtripTimeoutPolicy;
   typedef RelativeRoundtripTimeoutPolicy *RelativeRoundtripTimeoutPolicy_ptr;
-
+  
   typedef
     TAO_Objref_Var_T<
         RelativeRoundtripTimeoutPolicy
       >
     RelativeRoundtripTimeoutPolicy_var;
-
+  
   typedef
     TAO_Objref_Out_T<
         RelativeRoundtripTimeoutPolicy
@@ -124,70 +126,74 @@ namespace Messaging
     RelativeRoundtripTimeoutPolicy_out;
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
-  // be/be_visitor_interface/interface_ch.cpp:53
+  // be/be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_MESSAGING_RELATIVEROUNDTRIPTIMEOUTPOLICY_CH_)
 #define _MESSAGING_RELATIVEROUNDTRIPTIMEOUTPOLICY_CH_
-
+  
   class TAO_Messaging_Export RelativeRoundtripTimeoutPolicy
     : public virtual CORBA::Policy
   {
   public:
     typedef RelativeRoundtripTimeoutPolicy_ptr _ptr_type;
     typedef RelativeRoundtripTimeoutPolicy_var _var_type;
-
+    
     // The static operations.
     static RelativeRoundtripTimeoutPolicy_ptr _duplicate (RelativeRoundtripTimeoutPolicy_ptr obj);
-
+    
     static RelativeRoundtripTimeoutPolicy_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     static RelativeRoundtripTimeoutPolicy_ptr _nil (void)
-      {
-        return (RelativeRoundtripTimeoutPolicy_ptr)0;
-      }
-
+    {
+      return (RelativeRoundtripTimeoutPolicy_ptr)0;
+    }
+    
     static void _tao_any_destructor (void *);
-
+    
     // TAO_IDL - Generated from
     // be/be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual TimeBase::TimeT relative_expiry (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
-    // be/be_visitor_interface/interface_ch.cpp:185
-
+    // be/be_visitor_interface/interface_ch.cpp:192
+    
     virtual CORBA::Boolean _is_a (
         const char *type_id
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     virtual const char* _interface_repository_id (void) const;
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-
+  
   protected:
+    // Abstract or local interface only.
     RelativeRoundtripTimeoutPolicy (void);
+    
     virtual ~RelativeRoundtripTimeoutPolicy (void);
-
+  
   private:
+    // Private and unimplemented for concrete interfaces.
     RelativeRoundtripTimeoutPolicy (const RelativeRoundtripTimeoutPolicy &);
+    
     void operator= (const RelativeRoundtripTimeoutPolicy &);
   };
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // be/be_visitor_typecode/typecode_decl.cpp:44
-
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_RelativeRoundtripTimeoutPolicy;
 
 // TAO_IDL - Generated from
@@ -201,6 +207,27 @@ namespace Messaging
 // Traits specializations.
 namespace TAO
 {
+
+#if !defined (_MESSAGING_RELATIVEROUNDTRIPTIMEOUTPOLICY__TRAITS_CH_)
+#define _MESSAGING_RELATIVEROUNDTRIPTIMEOUTPOLICY__TRAITS_CH_
+  
+  ACE_TEMPLATE_SPECIALIZATION
+  struct TAO_Messaging_Export Objref_Traits<Messaging::RelativeRoundtripTimeoutPolicy>
+  {
+    static Messaging::RelativeRoundtripTimeoutPolicy_ptr tao_duplicate (
+        Messaging::RelativeRoundtripTimeoutPolicy_ptr
+      );
+    static void tao_release (
+        Messaging::RelativeRoundtripTimeoutPolicy_ptr
+      );
+    static Messaging::RelativeRoundtripTimeoutPolicy_ptr tao_nil (void);
+    static CORBA::Boolean tao_marshal (
+        Messaging::RelativeRoundtripTimeoutPolicy_ptr p,
+        TAO_OutputCDR & cdr
+      );
+  };
+
+#endif /* end #if !defined */
 };
 
 // TAO_IDL - Generated from
@@ -221,7 +248,7 @@ TAO_Messaging_Export CORBA::Boolean operator>>= (const CORBA::Any &, Messaging::
 #endif /* __ACE_INLINE__ */
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:969
+// be/be_codegen.cpp:911
 
 #if defined (__ACE_INLINE__)
 #include "Messaging_RT_PolicyC.i"
@@ -235,5 +262,5 @@ TAO_Messaging_Export CORBA::Boolean operator>>= (const CORBA::Any &, Messaging::
 #pragma option pop
 #endif /* __BORLANDC__ */
 
-#include /**/ "ace/post.h"
 #endif /* ifndef */
+

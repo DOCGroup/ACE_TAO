@@ -30,7 +30,7 @@
 
 
 #include "CurrentC.h"
-#include "tao/Typecode.h"
+#include "Typecode.h"
 #include "ace/OS_NS_string.h"
 
 #if defined (__BORLANDC__)

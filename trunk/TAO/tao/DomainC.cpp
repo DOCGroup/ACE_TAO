@@ -26,18 +26,21 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:301
+// be/be_codegen.cpp:302
 
 
 #include "DomainC.h"
+#include "IFR_Client_Adapter.h"
+#include "Exception_Data.h"
 #include "Invocation_Adapter.h"
-#include "ORB_Core.h"
 #include "Object_T.h"
 #include "Basic_Arguments.h"
+#include "Object_Argument_T.h"
 #include "Special_Basic_Arguments.h"
-#include "IFR_Client_Adapter.h"
-
+#include "ORB_Core.h"
+#include "ace/OS_NS_string.h"
 #include "ace/Dynamic_Service.h"
+
 
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
@@ -47,6 +50,7 @@
 #include "DomainC.i"
 #endif /* !defined INLINE */
 
+// TAO specific stuff.
 namespace CORBA
 {
   class InterfaceDef;
@@ -81,28 +85,10 @@ TAO::In_Object_Argument_T<CORBA::InterfaceDef_ptr>::marshal (TAO_OutputCDR & cdr
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_arg_traits.cpp:59
-
+// be/be_visitor_arg_traits.cpp:60
 // Arg traits specializations.
 namespace TAO
 {
-
-#if !defined (_CORBA_POLICY__ARG_TRAITS_CS_)
-#define _CORBA_POLICY__ARG_TRAITS_CS_
-
-  ACE_TEMPLATE_SPECIALIZATION
-  class TAO_Export Arg_Traits<CORBA::Policy>
-    : public
-        Object_Arg_Traits_T<
-            CORBA::Policy_ptr,
-            CORBA::Policy_var,
-            CORBA::Policy_out,
-            TAO::Objref_Traits<CORBA::Policy>
-          >
-  {
-  };
-
-#endif /* end #if !defined */
 
 #if !defined (_CORBA_POLICY__ARG_TRAITS_CS_)
 #define _CORBA_POLICY__ARG_TRAITS_CS_
@@ -140,10 +126,11 @@ namespace TAO
 };
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:60
+// be/be_visitor_interface/interface_cs.cpp:60
 
 // Traits specializations for CORBA::DomainManager.
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::DomainManager_ptr
 TAO::Objref_Traits<CORBA::DomainManager>::tao_duplicate (
     CORBA::DomainManager_ptr p
@@ -152,6 +139,7 @@ TAO::Objref_Traits<CORBA::DomainManager>::tao_duplicate (
   return CORBA::DomainManager::_duplicate (p);
 }
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<CORBA::DomainManager>::tao_release (
     CORBA::DomainManager_ptr p
@@ -160,12 +148,14 @@ TAO::Objref_Traits<CORBA::DomainManager>::tao_release (
   CORBA::release (p);
 }
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::DomainManager_ptr
 TAO::Objref_Traits<CORBA::DomainManager>::tao_nil (void)
 {
   return CORBA::DomainManager::_nil ();
 }
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<CORBA::DomainManager>::tao_marshal (
     CORBA::DomainManager_ptr p,
@@ -182,7 +172,7 @@ TAO::Collocation_Proxy_Broker *
   ) = 0;
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_cs.cpp:78
+// be/be_visitor_operation/operation_cs.cpp:78
 
 ::CORBA::Policy_ptr CORBA::DomainManager::get_domain_policy (
     CORBA::PolicyType policy_type
@@ -313,10 +303,11 @@ CORBA::DomainManager::marshal (TAO_OutputCDR &cdr)
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:60
+// be/be_visitor_interface/interface_cs.cpp:60
 
 // Traits specializations for CORBA::ConstructionPolicy.
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::ConstructionPolicy_ptr
 TAO::Objref_Traits<CORBA::ConstructionPolicy>::tao_duplicate (
     CORBA::ConstructionPolicy_ptr p
@@ -325,6 +316,7 @@ TAO::Objref_Traits<CORBA::ConstructionPolicy>::tao_duplicate (
   return CORBA::ConstructionPolicy::_duplicate (p);
 }
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<CORBA::ConstructionPolicy>::tao_release (
     CORBA::ConstructionPolicy_ptr p
@@ -333,12 +325,14 @@ TAO::Objref_Traits<CORBA::ConstructionPolicy>::tao_release (
   CORBA::release (p);
 }
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::ConstructionPolicy_ptr
 TAO::Objref_Traits<CORBA::ConstructionPolicy>::tao_nil (void)
 {
   return CORBA::ConstructionPolicy::_nil ();
 }
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<CORBA::ConstructionPolicy>::tao_marshal (
     CORBA::ConstructionPolicy_ptr p,
@@ -355,7 +349,7 @@ TAO::Collocation_Proxy_Broker *
   ) = 0;
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_cs.cpp:78
+// be/be_visitor_operation/operation_cs.cpp:78
 
 void CORBA::ConstructionPolicy::make_domain_manager (
     CORBA::InterfaceDef_ptr object_type,
@@ -493,7 +487,7 @@ CORBA::ConstructionPolicy::marshal (TAO_OutputCDR &cdr)
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_cs.cpp:66
+// be/be_visitor_sequence/sequence_cs.cpp:65
 
 #if !defined (_CORBA_DOMAINMANAGERLIST_CS_)
 #define _CORBA_DOMAINMANAGERLIST_CS_
@@ -540,7 +534,7 @@ CORBA::DomainManagerList::~DomainManagerList (void)
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:63
+// be/be_visitor_interface/cdr_op_cs.cpp:63
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
@@ -576,7 +570,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:63
+// be/be_visitor_interface/cdr_op_cs.cpp:63
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
@@ -612,7 +606,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:95
+// be/be_visitor_sequence/cdr_op_cs.cpp:95
 
 #if !defined _TAO_CDR_OP_CORBA_DomainManagerList_CPP_
 #define _TAO_CDR_OP_CORBA_DomainManagerList_CPP_
@@ -685,14 +679,17 @@ CORBA::Boolean operator>> (
 #endif /* _TAO_CDR_OP_CORBA_DomainManagerList_CPP_ */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/root.cpp:1703
+// be/be_visitor_root/root.cpp:1702
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-#if !defined (_CORBA_POLICY__ARG_TRAITS_EXPLICIT_CS_)
-#define _CORBA_POLICY__ARG_TRAITS_EXPLICIT_CS_
+#if !defined (_CORBA_POLICY__ARG_TRAITS_TMPLINST_CS_)
+#define _CORBA_POLICY__ARG_TRAITS_TMPLINST_CS_
 
-  template class TAO::Arg_Traits<CORBA::Policy>;
+  template class
+    TAO::Arg_Traits<
+        CORBA::Policy
+      >;
 
   template class
     TAO::Object_Arg_Traits_T<
@@ -704,10 +701,13 @@ CORBA::Boolean operator>> (
 
 #endif /* end #if !defined */
 
-#if !defined (_CORBA_INTERFACEDEF__ARG_TRAITS_EXPLICIT_CS_)
-#define _CORBA_INTERFACEDEF__ARG_TRAITS_EXPLICIT_CS_
+#if !defined (_CORBA_INTERFACEDEF__ARG_TRAITS_TMPLINST_CS_)
+#define _CORBA_INTERFACEDEF__ARG_TRAITS_TMPLINST_CS_
 
-  template class TAO::Arg_Traits<CORBA::InterfaceDef>;
+  template class
+    TAO::Arg_Traits<
+        CORBA::InterfaceDef
+      >;
 
   template class
     TAO::Object_Arg_Traits_T<
@@ -726,12 +726,22 @@ CORBA::Boolean operator>> (
       >;
 
   template class
+    TAO::Objref_Traits<
+        CORBA::DomainManager
+      >;
+
+  template class
     TAO_Objref_Var_T<
         CORBA::DomainManager
       >;
 
   template class
     TAO_Objref_Out_T<
+        CORBA::DomainManager
+      >;
+
+  template class
+    TAO::Narrow_Utils<
         CORBA::DomainManager
       >;
 
@@ -741,12 +751,22 @@ CORBA::Boolean operator>> (
       >;
 
   template class
+    TAO::Objref_Traits<
+        CORBA::ConstructionPolicy
+      >;
+
+  template class
     TAO_Objref_Var_T<
         CORBA::ConstructionPolicy
       >;
 
   template class
     TAO_Objref_Out_T<
+        CORBA::ConstructionPolicy
+      >;
+
+  template class
+    TAO::Narrow_Utils<
         CORBA::ConstructionPolicy
       >;
 
@@ -784,8 +804,8 @@ CORBA::Boolean operator>> (
           >
       >;
 
-#if !defined (_CORBA_DOMAINMANAGERLIST_CS_)
-#define _CORBA_DOMAINMANAGERLIST_CS_
+#if !defined (_CORBA_DOMAINMANAGER__EXPLICIT_CS_)
+#define _CORBA_DOMAINMANAGER__EXPLICIT_CS_
 
   template class
     TAO_Unbounded_Object_Sequence<
@@ -800,13 +820,17 @@ CORBA::Boolean operator>> (
 #if !defined (_CORBA_POLICY__ARG_TRAITS_TMPLINST_CS_)
 #define _CORBA_POLICY__ARG_TRAITS_TMPLINST_CS_
 
-# pragma instantiate TAO::Arg_Traits<CORBA::Policy>
+# pragma instantiate \
+    TAO::Arg_Traits< \
+        CORBA::Policy \
+      >
 
 # pragma instantiate \
     TAO::Object_Arg_Traits_T< \
         CORBA::Policy_ptr, \
         CORBA::Policy_var, \
-        CORBA::Policy_out \
+        CORBA::Policy_out, \
+        TAO::Objref_Traits<CORBA::Policy> \
       >
 
 #endif /* end #if !defined */
@@ -814,27 +838,39 @@ CORBA::Boolean operator>> (
 #if !defined (_CORBA_INTERFACEDEF__ARG_TRAITS_TMPLINST_CS_)
 #define _CORBA_INTERFACEDEF__ARG_TRAITS_TMPLINST_CS_
 
-# pragma instantiate TAO::Arg_Traits<CORBA::InterfaceDef>
+# pragma instantiate \
+    TAO::Arg_Traits< \
+        CORBA::InterfaceDef \
+      >
 
 # pragma instantiate \
     TAO::Object_Arg_Traits_T< \
         CORBA::InterfaceDef_ptr, \
         CORBA::InterfaceDef_var, \
-        CORBA::InterfaceDef_out \
+        CORBA::InterfaceDef_out, \
+        TAO::Objref_Traits<CORBA::InterfaceDef> \
       >
 
 #endif /* end #if !defined */
 
 # pragma instantiate \
+    TAO::Objref_Traits< \
+        CORBA::DomainManager \
+      >
+
+# pragma instantiate \
     TAO_Objref_Var_T< \
-        CORBA::DomainManager, \
-        TAO::Objref_Traits<CORBA::DomainManager> \
+        CORBA::DomainManager
       >
 
 # pragma instantiate \
     TAO_Objref_Out_T< \
-        CORBA::DomainManager, \
-        TAO::Objref_Traits<CORBA::DomainManager> \
+        CORBA::DomainManager
+      >
+
+# pragma instantiate \
+    TAO::Narrow_Utils< \
+        CORBA::DomainManager \
       >
 
 # pragma instantiate \
@@ -843,15 +879,23 @@ CORBA::Boolean operator>> (
       >
 
 # pragma instantiate \
+    TAO::Objref_Traits< \
+        CORBA::ConstructionPolicy \
+      >
+
+# pragma instantiate \
     TAO_Objref_Var_T< \
-        CORBA::ConstructionPolicy, \
-        TAO::Objref_Traits<CORBA::ConstructionPolicy> \
+        CORBA::ConstructionPolicy
       >
 
 # pragma instantiate \
     TAO_Objref_Out_T< \
-        CORBA::ConstructionPolicy, \
-        TAO::Objref_Traits<CORBA::ConstructionPolicy> \
+        CORBA::ConstructionPolicy
+      >
+
+# pragma instantiate \
+    TAO::Narrow_Utils< \
+        CORBA::ConstructionPolicy \
       >
 
 # pragma instantiate \
@@ -882,8 +926,8 @@ CORBA::Boolean operator>> (
           > \
       >
 
-#if !defined (_CORBA_DOMAINMANAGERLIST_CS_)
-#define _CORBA_DOMAINMANAGERLIST_CS_
+#if !defined (_CORBA_DOMAINMANAGER__EXPLICIT_CS_)
+#define _CORBA_DOMAINMANAGER__EXPLICIT_CS_
 
 # pragma instantiate \
     TAO_Unbounded_Object_Sequence< \

@@ -32,6 +32,7 @@
 #include "TAO_ExtC.h"
 #include "tao/Typecode.h"
 #include "tao/Any_Impl_T.h"
+#include "ace/OS_NS_string.h"
 
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
@@ -54,6 +55,7 @@ namespace TAO
 
 // Traits specializations for TAO::ConnectionTimeoutPolicy.
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 TAO::ConnectionTimeoutPolicy_ptr
 TAO::Objref_Traits<TAO::ConnectionTimeoutPolicy>::tao_duplicate (
     TAO::ConnectionTimeoutPolicy_ptr p
@@ -62,6 +64,7 @@ TAO::Objref_Traits<TAO::ConnectionTimeoutPolicy>::tao_duplicate (
   return TAO::ConnectionTimeoutPolicy::_duplicate (p);
 }
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 void
 TAO::Objref_Traits<TAO::ConnectionTimeoutPolicy>::tao_release (
     TAO::ConnectionTimeoutPolicy_ptr p
@@ -70,12 +73,14 @@ TAO::Objref_Traits<TAO::ConnectionTimeoutPolicy>::tao_release (
   CORBA::release (p);
 }
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 TAO::ConnectionTimeoutPolicy_ptr
 TAO::Objref_Traits<TAO::ConnectionTimeoutPolicy>::tao_nil (void)
 {
   return TAO::ConnectionTimeoutPolicy::_nil ();
 }
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 CORBA::Boolean
 TAO::Objref_Traits<TAO::ConnectionTimeoutPolicy>::tao_marshal (
     TAO::ConnectionTimeoutPolicy_ptr p,
@@ -291,18 +296,19 @@ operator>>= (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-  template class TAO::Objref_Traits<TAO::ConnectionTimeoutPolicy>;
+  template class
+    TAO::Objref_Traits<
+        TAO::ConnectionTimeoutPolicy
+      >;
 
   template class
     TAO_Objref_Var_T<
         TAO::ConnectionTimeoutPolicy
-        
       >;
   
   template class
     TAO_Objref_Out_T<
         TAO::ConnectionTimeoutPolicy
-        
       >;
 
   template class
@@ -312,18 +318,19 @@ operator>>= (
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-# pragma instantiate TAO::Objref_Traits<TAO::ConnectionTimeoutPolicy>
+# pragma instantiate \
+    TAO::Objref_Traits< \
+        TAO::ConnectionTimeoutPolicy \
+      >
 
 # pragma instantiate \
     TAO_Objref_Var_T< \
         TAO::ConnectionTimeoutPolicy
-        
       >
   
 # pragma instantiate \
     TAO_Objref_Out_T< \
         TAO::ConnectionTimeoutPolicy
-        
       >
 
 # pragma instantiate \
