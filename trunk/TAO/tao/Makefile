@@ -11,7 +11,7 @@ SHLIB    = $(LIBNAME).$(SOEXT)
 
 # These are headers for things which are exported and must be
 # installed.  (Currently not used).
-PUB_HDRS = align cdr giop iiopobj iioporb xdr connect params marshal debug \
+PUB_HDRS = align cdr giop iiopobj iioporb connect params marshal debug \
 	   default_client default_server server_factory client_factory orb_core
 
 ORBCORE_SRCS = \
@@ -67,7 +67,7 @@ endif
 COMPATDIR = $(TAO_ROOT)/tao/compat
 COMPATFILES = objbase.h initguid.h
 
-BIN = # t-xdr t-sizes
+BIN = # t-sizes
 
 DEFS  	= $(addsuffix .h,$(PUB_HDRS))
 LSRC	= $(addsuffix .cpp,$(FILES))

@@ -1,4 +1,5 @@
 // This may look like C, but it's really -*- C++ -*-
+// $Id$
 //
 // ============================================================================
 //
@@ -123,10 +124,10 @@ extern CORBA::TypeCode TC_opaque;
 #include "tao/poa.h"
 
 extern TAO_Export int operator== (const PortableServer::ObjectId &l,
-				  const PortableServer::ObjectId &r);
+                                  const PortableServer::ObjectId &r);
 
 extern TAO_Export int operator== (const TAO_ObjectKey &l,
-				  const TAO_ObjectKey &r);
+                                  const TAO_ObjectKey &r);
 
 // TAO specific includes
 #include "tao/connect.h"
@@ -140,8 +141,6 @@ extern TAO_Export int operator== (const TAO_ObjectKey &l,
 #include "tao/iiopobj.h"
 #include "tao/iioporb.h"
 #include "tao/giop.h"
-
-//#include "tao/xdr.h"
 
 // The following *.i files are always included here
 #  if !defined(__ACE_INLINE__)
