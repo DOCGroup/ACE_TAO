@@ -162,9 +162,16 @@ main (int argc, char *argv[])
             if (!(any >>= o)
                 || i != o)
               {
+#if defined (ACE_LACKS_LONGLONG_T)
+                ACE_DEBUG ((LM_DEBUG,
+                            "Failure for CORBA::ULongLong (%s,%s)\n",
+                            i.as_string ().c_str (),
+                            o.as_string ().c_str ()));
+#else
                 ACE_DEBUG ((LM_DEBUG,
                             "Failure for CORBA::ULongLong (%Q,%Q)\n",
                             i, o));
+#endif
               }
           }
 
