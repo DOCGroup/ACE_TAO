@@ -5130,16 +5130,13 @@ class ACE_OS_Export ACE_QoS
 #endif /* ACE_HAS_WINSOCK2 */
 {
 public:
-  
-  ACE_QoS (void);
-
   // = Get/set the flow spec for data sending.
-  ACE_Flow_Spec *sending_flowspec (void) const;
-  void sending_flowspec (ACE_Flow_Spec *fs);
+  ACE_Flow_Spec sending_flowspec (void) const;
+  void sending_flowspec (const ACE_Flow_Spec &fs);
 
   // = Get/set the flow spec for data receiving.
-  ACE_Flow_Spec *receiving_flowspec (void) const;
-  void receiving_flowspec (ACE_Flow_Spec *fs);
+  ACE_Flow_Spec receiving_flowspec (void) const;
+  void receiving_flowspec (const ACE_Flow_Spec &fs);
 
   // = Get/set the provider specific information.
   iovec provider_specific (void) const;
@@ -5149,8 +5146,8 @@ public:
 #else
 private:
 
-  ACE_Flow_Spec *sending_flowspec_;
-  ACE_Flow_Spec *receiving_flowspec_;
+  ACE_Flow_Spec sending_flowspec_;
+  ACE_Flow_Spec receiving_flowspec_;
 #endif
 
 };
