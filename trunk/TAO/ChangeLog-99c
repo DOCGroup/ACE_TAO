@@ -2,7 +2,13 @@ Fri Jun 25 10:01:20 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Any.cpp:
 	  Added an ACE_CHECK to the type() set method.
-	  Also Fixed some DU warnings.
+	  Also fixed some DU warnings.
+
+	* tao/CurrentC.cpp:
+	* tao/DynAny_i.cpp:
+	* tao/DynSequence_i.cpp:
+	* tao/DynStruct_i.cpp:
+	  Fixed some DU warnings.
 
 	* tao/DynAnyS.cpp:
 	  Fixed ACE_CHECK related stuff.
