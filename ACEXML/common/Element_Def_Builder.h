@@ -122,6 +122,11 @@ public:
                               ACEXML_Env &xmlenv)
     //    ACE_THROW_SPEC ((ACEXML_SAXException))
     = 0;
+
+  /**
+   * Dump the content of the attribute definition.
+   */
+  virtual void dump (void) = 0;
 };
 
 #endif /* _ACEXML_ELEMENT_DEF_BUILDER_H_ */

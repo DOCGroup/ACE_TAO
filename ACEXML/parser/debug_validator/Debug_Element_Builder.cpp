@@ -125,3 +125,30 @@ ACEXML_Debug_Element_Builder::insertElement  (const ACEXML_Char *namespaceURI,
 
   return this->active_list_.top ()->insert (node);
 }
+
+void
+ACEXML_Debug_Element_Builder::dump ()
+{
+  cout << "<!ELEMENT " << this->element_;
+
+  // @@ Also dump element contentspec here.
+  switch (this->type_)
+    {
+    case EMPTY:
+      cout << "EMPTY";
+      break;
+    case ANY:
+      cout << "ANY";
+      break;
+    case MIXED:
+    case CHILDREN:
+      // @@ Dump the content of this->root_
+      cout << "*** not implemented ***";
+      break;
+    default:
+      cout << "*** Unidentified element type ***";
+      break;
+    }
+
+  cout << ">" << endl;
+}
