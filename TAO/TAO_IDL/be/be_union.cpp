@@ -142,7 +142,6 @@ be_union::gen_client_header (void)
       TAO_CodeGen *cg = TAO_CODEGEN::instance ();
 
       ch = cg->client_header ();
-      cg->node (this); // pass ourselves
 
       ch->indent (); // start with the current indentation level
       *ch << "class " << local_name () << nl;
@@ -546,7 +545,6 @@ be_union::gen_var_impl (void)
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
 
   ci = cg->client_inline ();
-  cg->outstream (ci);
 
   ci->indent (); // start with whatever was our current indent level
 
@@ -829,7 +827,6 @@ be_union::gen_out_impl (void)
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
 
   ci = cg->client_inline ();
-  cg->outstream (ci);
 
   // generate the var implementation in the inline file
 

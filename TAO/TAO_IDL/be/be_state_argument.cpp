@@ -531,7 +531,7 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                     break;
                   case TAO_CodeGen::TAO_ARGUMENT_POST_DOCALL_CS:
                     {
-                      // nothing
+                      // TODO
                     }
                     break;
                   case TAO_CodeGen::TAO_ARGUMENT_UPCALL_SS:
@@ -726,7 +726,7 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                     // declare an Any
                       *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
                         bt->tc_name () << ", &" << arg->local_name () <<
-                        ", 1); // ORB owns" << nl;
+                        ", 0); // ORB doesn't own" << nl;
                     }
                     break;
                   case TAO_CodeGen::TAO_ARGUMENT_PRE_DOCALL_CS:
@@ -760,7 +760,10 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                     break;
                   case TAO_CodeGen::TAO_ARGUMENT_POST_UPCALL_SS:
                     {
-                      // nothing
+                      *os << "nv_" << arg->local_name () <<
+                        "->value ()->replace (" << bt->tc_name () << ", " <<
+                        arg->local_name () <<
+                        "_out.ptr (), 1, _tao_environment);\n";
                     }
                     break;
                   case TAO_CodeGen::TAO_ARGUMENT_CH:
@@ -1645,7 +1648,7 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                     // declare an Any
                       *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
                         bt->tc_name () << ", " << arg->local_name () <<
-                        ", 1); // ORB owns" << nl;
+                        ", 0); // ORB does not own" << nl;
                     }
                   else
                     {
@@ -1658,7 +1661,7 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                     // declare an Any
                       *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
                         bt->tc_name () << ", &" << arg->local_name () <<
-                        ", 1); // ORB owns" << nl;
+                        ", 0); // ORB does not own" << nl;
                     } // end else
                 }
                 break;
@@ -1711,7 +1714,13 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                 break;
               case TAO_CodeGen::TAO_ARGUMENT_POST_UPCALL_SS:
                 {
-                  // nothing
+                  if (bt->size_type () == be_decl::VARIABLE)
+                    {
+                      *os << "nv_" << arg->local_name () <<
+                        "->value ()->replace (" << bt->tc_name () << ", "
+                          << arg->local_name () <<
+                        "_out.ptr (), 1, _tao_environment);\n";
+                    }
                 }
                 break;
               case TAO_CodeGen::TAO_ARGUMENT_CH:

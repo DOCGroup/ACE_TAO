@@ -2,7 +2,7 @@
 //
 // = LIBRARY
 //    TAO IDL
-// 
+//
 // = FILENAME
 //    be_typedef.h
 //
@@ -12,9 +12,9 @@
 //
 // = AUTHOR
 //    Copyright 1994-1995 by Sun Microsystems, Inc.
-//    and 
+//    and
 //    Aniruddha Gokhale
-// 
+//
 // ============================================================================
 
 #if !defined (BE_TYPEDEF_H)
@@ -40,13 +40,13 @@ public:
   // base types
 
   virtual int gen_client_header (void);
-  // Generates the client-side header information for the typedef 
+  // Generates the client-side header information for the typedef
 
   virtual int gen_client_stubs (void);
   // Generates the client-side stubs for the typedef
 
   virtual int gen_server_header (void);
-  // Generates the server-side header information for the typedef 
+  // Generates the server-side header information for the typedef
 
   virtual int gen_server_skeletons (void);
   // Generates the server-side skeletons for the typedef
@@ -72,6 +72,10 @@ public:
   // Narrowing
   DEF_NARROW_METHODS2 (be_typedef, AST_Typedef, be_type);
   DEF_NARROW_FROM_DECL (be_typedef);
+
+protected:
+  virtual int compute_size_type (void);
+  // compute the size type if it is unknown
 
 };
 

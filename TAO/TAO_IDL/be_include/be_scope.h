@@ -3,7 +3,7 @@
 //
 // = LIBRARY
 //    TAO IDL
-// 
+//
 // = FILENAME
 //    be_scope.h
 //
@@ -12,9 +12,9 @@
 //
 // = AUTHOR
 //    Copyright 1994-1995 by Sun Microsystems, Inc.
-//    and 
+//    and
 //    Aniruddha Gokhale
-// 
+//
 // ============================================================================
 
 #if !defined (TAO_BE_SCOPE_H)
@@ -43,13 +43,13 @@ public:
   // destructor
 
   virtual int gen_client_header (void);
-  // Generates the client-side header information for the scope 
+  // Generates the client-side header information for the scope
 
   virtual int gen_client_stubs (void);
   // Generates the client-side stubs for the scope
 
   virtual int gen_server_header (void);
-  // Generates the server-side header information for the scope 
+  // Generates the server-side header information for the scope
 
   virtual int gen_server_skeletons (void);
   // Generates the server-side skeletons for the scope
@@ -69,6 +69,7 @@ public:
   // Narrowing
   DEF_NARROW_METHODS1 (be_scope, UTL_Scope);
   DEF_NARROW_FROM_SCOPE (be_scope);
+
 };
 
 #endif // if !defined

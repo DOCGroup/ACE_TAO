@@ -197,6 +197,14 @@ be_module::gen_server_inline (void)
   return 0;
 }
 
+// compute the size type of the node in question
+int
+be_module::compute_size_type (void)
+{
+  // our size does not matter
+  return 0;
+}
+
 // Narrowing
 IMPL_NARROW_METHODS3 (be_module, AST_Module, be_scope, be_decl)
 IMPL_NARROW_FROM_DECL (be_module)

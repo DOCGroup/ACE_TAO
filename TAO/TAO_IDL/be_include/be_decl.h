@@ -34,6 +34,7 @@ class be_decl : public virtual AST_Decl
 public:
   enum SIZE_TYPE
   {
+    SIZE_UNKNOWN,
     FIXED,
     VARIABLE
   };
@@ -72,7 +73,7 @@ public:
   virtual void size_type (SIZE_TYPE);
   // set the size type
 
-  virtual SIZE_TYPE size_type (void) const;
+  virtual SIZE_TYPE size_type (void);
   // return our size type
 
   const char *repoID (void);
@@ -99,6 +100,9 @@ public:
 
 protected:
   // =helper
+
+  virtual int compute_size_type (void);
+  // determine our size type and set it if it is unknown
 
   virtual void compute_repoID (void);
   // computes the repoID

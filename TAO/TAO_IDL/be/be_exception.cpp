@@ -30,6 +30,7 @@
  */
 be_exception::be_exception (void)
 {
+  this->size_type (be_decl::VARIABLE); // always the case
 }
 
 be_exception::be_exception (UTL_ScopedName *n, UTL_StrList *p)
@@ -38,6 +39,7 @@ be_exception::be_exception (UTL_ScopedName *n, UTL_StrList *p)
 	      UTL_Scope (AST_Decl::NT_except),
               member_count_ (-1)
 {
+  this->size_type (be_decl::VARIABLE); // always the case
 }
 
 // compute total number of members
@@ -75,7 +77,6 @@ be_exception::member_count (void)
   return this->member_count_;
 }
 
-
 int
 be_exception::gen_client_header (void)
 {
@@ -87,7 +88,6 @@ be_exception::gen_client_header (void)
       TAO_NL  nl;        // end line
 
 
-      cg->outstream (ch);
       ch->indent (); // start from whatever indentation level we were at
 
       ch->gen_ifdef_macro (this->flatname (), "_ptr");
@@ -167,9 +167,6 @@ be_exception::gen_client_stubs (void)
       cg->push (TAO_CodeGen::TAO_STRUCT_CS); // set current code gen state
 
       cs = cg->client_stubs ();
-      // pass info
-      cg->outstream (cs);
-      cg->node (this);
 
       // generate the typecode information here
       cs->indent (); // start from current indentation level

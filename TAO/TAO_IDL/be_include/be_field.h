@@ -2,7 +2,7 @@
 //
 // = LIBRARY
 //    TAO IDL
-// 
+//
 // = FILENAME
 //    be_field.h
 //
@@ -12,9 +12,9 @@
 //
 // = AUTHOR
 //    Copyright 1994-1995 by Sun Microsystems, Inc.
-//    and 
+//    and
 //    Aniruddha Gokhale
-// 
+//
 // ============================================================================
 
 #if !defined (BE_FIELD_H)
@@ -36,13 +36,13 @@ public:
   // constructor
 
   virtual int gen_client_header (void);
-  // Generates the client-side header information for the field 
+  // Generates the client-side header information for the field
 
   virtual int gen_client_stubs (void);
   // Generates the client-side stubs for the field
 
   virtual int gen_server_header (void);
-  // Generates the server-side header information for the field 
+  // Generates the server-side header information for the field
 
   virtual int gen_server_skeletons (void);
   // Generates the server-side skeletons for the field
@@ -63,6 +63,9 @@ public:
   DEF_NARROW_METHODS2 (be_field, AST_Field, be_decl);
   DEF_NARROW_FROM_DECL (be_field);
 
+protected:
+  virtual int compute_size_type (void);
+  // compute the size type if it is unknown
 };
 
 #endif

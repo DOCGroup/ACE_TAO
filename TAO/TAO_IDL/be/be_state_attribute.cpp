@@ -627,20 +627,6 @@ be_state_attribute::gen_code (be_type *bt, be_decl *d, be_type *type)
                 ", retval, 1); // ORB owns" << nl;
             }
             break;
-          case TAO_CodeGen::TAO_ATTRIBUTE_INPARAM_TYPE_SS:
-            {
-                    // declare a variable
-              *os << "char *" << attr->local_name () << ";" <<
-                nl;
-                    // now define a NamedValue_ptr
-              *os << "CORBA::NamedValue_ptr nv_" << attr->local_name () <<
-                ";" << nl;
-                    // declare an Any
-              *os << "CORBA::Any \t any_" << attr->local_name () << " (" <<
-                bt->tc_name () << ", &" << attr->local_name () <<
-                "); // ORB does not own" << nl;
-            }
-            break;
           case TAO_CodeGen::TAO_ATTRIBUTE_PRE_DOCALL_CS:
             {
               // nothing
@@ -697,8 +683,23 @@ be_state_attribute::gen_code (be_type *bt, be_decl *d, be_type *type)
                 }
             }
           break;
+          case TAO_CodeGen::TAO_ATTRIBUTE_INPARAM_TYPE_SS:
+            {
+                    // declare a variable
+              *os << "char *" << attr->local_name () << ";" <<
+                nl;
+                    // now define a NamedValue_ptr
+              *os << "CORBA::NamedValue_ptr nv_" << attr->local_name () <<
+                ";" << nl;
+                    // declare an Any
+              *os << "CORBA::Any \t any_" << attr->local_name () << " (" <<
+                bt->tc_name () << ", &" << attr->local_name () <<
+                "); // ORB does not own" << nl;
+            }
+            break;
           case TAO_CodeGen::TAO_ATTRIBUTE_INPARAM_TYPE_SH:
           case TAO_CodeGen::TAO_ATTRIBUTE_INPARAM_TYPE_CS:
+          case TAO_CodeGen::TAO_ATTRIBUTE_INPARAM_TYPE_CH:
             {
               *os << "const char *" << attr->local_name ();
             }

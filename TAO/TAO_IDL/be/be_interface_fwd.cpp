@@ -28,6 +28,7 @@
 
 be_interface_fwd::be_interface_fwd (void)
 {
+  this->size_type (be_decl::VARIABLE); // always the case
 }
 
 be_interface_fwd::be_interface_fwd (UTL_ScopedName *n, UTL_StrList *p)
@@ -258,7 +259,6 @@ be_interface_fwd::gen_var_impl (void)
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
 
   ci = cg->client_inline ();
-  cg->outstream (ci);
 
   // generate the var implementation in the inline file
   // Depending upon the data type, there are some differences which we account
@@ -498,7 +498,6 @@ be_interface_fwd::gen_out_impl (void)
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
 
   ci = cg->client_inline ();
-  cg->outstream (ci);
 
   // generate the var implementation in the inline file
   // Depending upon the data type, there are some differences which we account

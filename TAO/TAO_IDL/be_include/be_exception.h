@@ -7,7 +7,7 @@
 class be_exception : public virtual AST_Exception,
                      public virtual be_scope,
                      public virtual be_type
-                       
+
 {
 public:
   // Operations
