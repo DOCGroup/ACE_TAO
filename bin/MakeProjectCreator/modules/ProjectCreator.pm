@@ -1749,13 +1749,11 @@ sub add_corresponding_component_files {
     foreach my $comp (keys %{$$names{$name}}) {
       my($array)   = $$names{$name}->{$comp};
       my(%scfiles) = ();
+      @scfiles{@$array} = ();
       foreach my $sfile (@all) {
         my($found) = 0;
         foreach my $ext (@exts) {
-          $scfiles{"$sfile$ext"} = 1;
-        }
-        foreach my $file (@$array) {
-          if (defined $scfiles{$file}) {
+          if (exists $scfiles{"$sfile$ext"}) {
             $found = 1;
             last;
           }

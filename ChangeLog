@@ -1,24 +1,38 @@
+Tue Mar  9 08:01:20 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+
+          Fixed a bug where generated files were not added to the list of
+          output files for a custom command.
+
+        * bin/MakeProjectCreator/README:
+        * bin/MakeProjectCreator/modules/Creator.pm:
+        * bin/MakeProjectCreator/modules/WorkspaceCreator.pm:
+
+          Added the ability to combine multiple workspaces into one by
+          listing them within a workspace declaration.
+
 Tue Mar  9 09:07:43 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* ace/POSIX_Proactor.cpp:
-	  Added ACE_UNUSED_ARG to silence unused parameter warning
+        * ace/POSIX_Proactor.cpp:
+          Added ACE_UNUSED_ARG to silence unused parameter warning
 
 Tue Mar  9 09:03:04 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* bin/msvc_static_order.lst:
+        * bin/msvc_static_order.lst:
           Added an other dsp to build first
 
 Tue Mar  9 08:25:15 2004  Olli Savia  <ops@iki.fi>
 
-	* ace/config-lynxos.h
+        * ace/config-lynxos.h
           Readded ALIGNBYTES and ALIGN macros. LSOCK.cpp uses these
-	  which I missed due to macro expansion.
+          which I missed due to macro expansion.
 
 Mon Mar  8 18:03:41 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/Timer_Queue_Adapters.i (activate): Remove erroneous
-	  ACE_UNUSED_ARG lines. Someone removed the arg names from the
-	  signature, making ACE_UNUSED_ARG unnecessary.
+        * ace/Timer_Queue_Adapters.i (activate): Remove erroneous
+          ACE_UNUSED_ARG lines. Someone removed the arg names from the
+          signature, making ACE_UNUSED_ARG unnecessary.
 
 Mon Mar  8 17:03:18 2004  Chad Elliott  <elliott_c@ociweb.com>
 
