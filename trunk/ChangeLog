@@ -1,3 +1,8 @@
+Mon Jun 28 08:06:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ASNMP/tests/Integer_Test.cpp:
+          Fixed warnings in MinGW build
+
 Mon Jun 28 08:01:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/PerlACE/Process_Unix.pm:
