@@ -1,3 +1,27 @@
+Sat Jul 12 17:43:36 2003  Irfan Pyarali  <irfan@oomworks.com>
+
+	* tao\RTCORBA\RT_Transport_Descriptor.cpp: 
+
+ 	  Zero time value should be specified as ACE_Time_Value::zero and
+	  not 0.
+	
+	* tao\RTCORBA\RT_Transport_Descriptor_Property.h:
+	  
+	  Based class destructor should be virtual.
+
+	* tests\RTCORBA\Priority_Inversion_With_Bands\client.cpp: 
+
+	  Fixed member initialization.
+
+	* tao\RTCORBA\RT_Transport_Descriptor.cpp: 
+
+	  Must add "tao/" in front of TAO include files.
+
+	* tests\RTCORBA\Priority_Inversion_With_Bands\Makefile: 
+	* tao\RTCORBA\Makefile: 
+
+	  Updated Makefile dependencies.
+
 Sat Jul 12 14:01:47 2003  Irfan Pyarali and Pradeep Gore <irfan@oomworks.com and pradeep@oomworks.com>
 
 	* RTCORBA thread pools are assigned a single endpoint. When bands are

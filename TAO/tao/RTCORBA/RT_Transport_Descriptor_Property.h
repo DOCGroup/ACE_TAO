@@ -36,7 +36,7 @@ public:
   TAO_RT_Transport_Descriptor_Property (void);
 
   /// Destructor
-  ~TAO_RT_Transport_Descriptor_Property ();
+  virtual ~TAO_RT_Transport_Descriptor_Property (void);
 
   virtual TAO_RT_Transport_Descriptor_Property *duplicate (void) = 0;
 
@@ -71,7 +71,7 @@ public:
   TAO_RT_Transport_Descriptor_Private_Connection_Property (long object_id);
 
   /// Destructor
-  ~TAO_RT_Transport_Descriptor_Private_Connection_Property ();
+  ~TAO_RT_Transport_Descriptor_Private_Connection_Property (void);
 
   /// Init
   void init (long object_id);
@@ -110,7 +110,7 @@ public:
                                                           CORBA::Short high_priority);
 
   /// Destructor
-  ~TAO_RT_Transport_Descriptor_Banded_Connection_Property ();
+  ~TAO_RT_Transport_Descriptor_Banded_Connection_Property (void);
 
   /// Init
   void init (CORBA::Short low_priority, CORBA::Short high_priority);
