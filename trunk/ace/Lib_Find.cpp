@@ -15,10 +15,10 @@
 #endif /* ACE_WIN32 */
 
 #if defined (ACE_OPENVMS)
-#include "descrip.h"
-#include "chfdef.h"
-#include "stsdef.h"
-#include "libdef.h"
+#include /**/ "descrip.h"
+#include /**/ "chfdef.h"
+#include /**/ "stsdef.h"
+#include /**/ "libdef.h"
 
 extern "C" int LIB$FIND_IMAGE_SYMBOL(...);
 #endif
