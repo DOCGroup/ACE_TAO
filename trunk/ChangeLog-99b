@@ -1,3 +1,13 @@
+Tue Feb 23 15:19:33 1999  Steve Huston  <shuston@riverace.com>
+
+        * ace/NT_Service.(h cpp): Added two new methods:
+          state (DWORD *, ACE_Time_Value * = 0) as an alternate way to get the
+          service's state, with definite indication of error.  Also changed
+          comments on the other state() method to clarify the return value.
+          test_access (DWORD) tests caller's access to the service.
+          Thanks to Martin Krumpolec <krumpo@pobox.sk> for these ideas and
+          suggestions!
+
 Tue Feb 23 14:12:52 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/Active_Map_Manager_T.h (npos): Added a new static member
