@@ -119,7 +119,7 @@ Activity::init (int& argc, char *argv []
 }
 
 int
-Activity::resolve_naming_service (TAO_ENV_ARG_DECL)
+Activity::resolve_naming_service (TAO_ENV_SINGLE_ARG_DECL)
 {
   CORBA::Object_var naming_obj =
     this->orb_->resolve_initial_references ("NameService"
