@@ -27,7 +27,6 @@ parse_args (int argc, char *argv[],
     }
 }
 
-
 int
 main (int argc, char** argv)
 {
@@ -93,6 +92,8 @@ main (int argc, char** argv)
       type_exporter.fully_describe_all_types (TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
+      ACE_DEBUG ((LM_DEBUG, "*** Service Type Exporter tests complete.\n"));
+
       // Run the Offer Exporter tests
       ACE_DEBUG ((LM_DEBUG, "*** Running the Offer Exporter tests.\n"));
       TAO_Offer_Exporter offer_exporter (lookup_if, verbose, TAO_TRY_ENV);
@@ -135,8 +136,10 @@ main (int argc, char** argv)
       
       offer_exporter.describe_offers (TAO_TRY_ENV);
       TAO_CHECK_ENV;      
-      
-      // Begin trading!
+
+      ACE_DEBUG ((LM_DEBUG, "*** Offer Exporter tests complete.\n"));
+      ACE_DEBUG ((LM_DEBUG, "*** Now serving dynamic properties.\n"));
+
       orb_manager.run (TAO_TRY_ENV);
       TAO_CHECK_ENV;
     }
