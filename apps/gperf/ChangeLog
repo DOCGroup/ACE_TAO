@@ -1,11 +1,28 @@
+Fri Oct  2 21:38:54 1998  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
+
+	* src/Options.cpp (parse_args): Added the -b option for the binary
+	search.
+
+	* src/Options.h (enum Option_Type): Added the BINARYSEARCH in the
+	enumeration.
+
+	* src/Key_List.cpp : Added the function output_binary_search_function
+	(void). Changed the output function to include the Binary Search option.
+	Used option[BINARYSEARCH] to distinguish the binary search case from the
+	hashing case.
+
+	* src/Key_List.h : Added the prototype for output_binary_search_function.
+	Also added the key_sort variable to enable sorting based on key values.
+
+
 Thu Oct  1 12:40:59 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* src/Options.cpp (parse_args): Comments for Vishal to incorporate
-	Binary Seach on to GPERF. 
+	Binary Seach on to GPERF.
 
 Wed Sep 30 16:55:53 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/Makefile: 
+	* tests/Makefile:
 	  Updated dependencies, added a realclean target to remove the
 	  output from the tests.
 
@@ -16,7 +33,7 @@ Wed Sep 30 12:41:29 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 Mon Sep 28 13:18:05 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tests: Updated all the test-*.exp files to reflect the 
+	* tests: Updated all the test-*.exp files to reflect the
 	  latest "unsigned" changes.
 
 	* src/Key_List.cpp (output_hash_function): Fixed another use of
