@@ -1,3 +1,16 @@
+Wed Dec 23 03:41:07 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/Param_Test/*.{h,cpp} (dii_req_invoke): Added a new mehtod
+	  for all test classes.  All of them but Test_Exception simply
+	  invoke the passed-in DII request.  But for Test_Exception, we
+	  need to catch the exceptions from the server and check if the
+	  exceptions are what we are waiting for.
+
+	* tests/Param_Test/objref.cpp (init_parameters): Although
+	  <out_courier_> and <ret_courier_> are pointers to return values,
+	  they still need to be initialized to nil object reference.
+	  Otherwise, any can't encode it.
+
 Tue Dec 23 02:07:14 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* examples/POA/Explicit_Activation/Makefile:
@@ -5,7 +18,7 @@ Tue Dec 23 02:07:14 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 	* examples/POA/On_Demand_Loading/Makefile:
 
 	  Removed dependency on libserver.a from all the above Makefiles.
-	 	
+
 Tue Dec 22 13:43:35 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_array/array_ch.cpp (visit_array): We
