@@ -735,7 +735,7 @@ ACE_Shared_Memory_Pool::commit_backing_store_name (size_t rounded_bytes,
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_LIB_TEXT ("(%P|%t) %p\n"),
                            ACE_LIB_TEXT ("shmget")),
-                          0);
+                          -1);
       st[counter].shmid_ = shmid;
       st[counter].used_ = 1;
 
@@ -750,7 +750,7 @@ ACE_Shared_Memory_Pool::commit_backing_store_name (size_t rounded_bytes,
                            "shmat",
                            shmem,
                            address),
-                          0);
+                          -1);
     }
   return 0;
 }
@@ -824,7 +824,7 @@ ACE_Shared_Memory_Pool::handle_signal (int , siginfo_t *siginfo, ucontext_t *)
                          "shmat",
                          shmem,
                          address),
-                        0);
+                        -1);
 
   // NOTE: this won't work if we dont have SIGINFO_T or SI_ADDR
 #else
