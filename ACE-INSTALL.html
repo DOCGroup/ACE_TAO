@@ -60,7 +60,7 @@ Mistakes page</a>.<P>
   <tr valign=top bgcolor="#AFAFAF">
    <td><b>Nearly fully supported, i.e., periodically tested</b></td>
    <td>Windows 95, MVS, DEC Alpha Windows NT (MSVC++ 5.0), Chorus,
-     QNX Neutrino 2.0
+     QNX Neutrino 2.0, PharLap TNT Embedded ToolSuite 9.1
    </td>
   </tr>
   <tr valign=top>
@@ -525,7 +525,7 @@ make: *** [libACE.so] Error 8
       <A HREF="#mvs">additional build tips for MVS</A> for more on
       this.<P>
 
-  <li><strong>QNX Neutrino</strong></p>
+  <li><strong>QNX Neutrino</strong><p>
     ACE has been ported to
     <a href="http://www.qnx.com/products/os/neutrino.html">QNX Neutrino
     2.0</a>.  We cross-compile for Neutrino on a QNX4 host using g++ 2.8.1,
@@ -533,7 +533,22 @@ make: *** [libACE.so] Error 8
     and <a href="include/makeinclude/platform_qnx_neutrino.GNU">include/makeinclude/platform_qnx_neutrino.GNU</a> configuration files.  Many of the
     ACE tests succeed, though some fail.  As the porting effort progresses,
     we hope to eliminate these failures.  If you know of fixes, please
-    send them to us.
+    send them to us.<p>
+
+  <li><strong>PharLap TNT Embedded ToolSuite (ETS)</strong><p>
+    ACE has been ported to <a href="http://www.pharlap.com">PharLap's</a>
+    TNT Embedded ToolSuite (ETS) version 9.1. The port is being tested with
+    Microsoft Visual C++ 6.<p>
+    To build for PharLap, use the ace/config-pharlap.h configuration file,
+    and the instructions for building on Win32. Building the ACE library is
+    the same as for regular Win32 platforms. For an example of how to build
+    binaries, see the tests directory. The tests_pharlap_msvc.lnk file is
+    a LinkLoc commands file that the ACE tests are built with. It is likely
+    that local sites may need to adjust this file for their target environment.
+    <p>
+    If you have any fixes or suggestions for improving
+    this port, please contact <a href="mailto:shuston@riverace.com">Steve
+    Huston</a>.
 </UL>
 
 <HR>
