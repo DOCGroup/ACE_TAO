@@ -1,8 +1,12 @@
 Sun Mar 22 02:39:54 1998  Sergio Flores  <sergio@lambada.cs.wustl.edu>
 
+	* tao/CORBA.cpp (ORB_init): made change to check for the return
+ 	value when initializing the ORB Core instance.  Also, changed the
+ 	TAO_Marshal::initialize() to be called before the initialization
+ 	of standard exceptions, where we need the marshal factory for CDR
+ 	streams.	
 	* tao/ORB_Core.cpp (TAO_ORB_Core::init): made change to check for
- 	the return value when initializing service configurator and the ORB
- 	Core instance.	
+ 	the return value when initializing service configurator.
 	* tao/ORB_Core.cpp (TAO_Resource_Factory::parse_args): changes to
  	correctly parse the options for "-ORBresources" and "-ORBpoa"	
 
