@@ -16,6 +16,11 @@ Fri Dec 05 13:20:09 1997    David L. Levine  <levine@cs.wustl.edu>
         * include/makeinclude/platform_vxworks5.x_ghs.GNU: added OFLAGS.
           Thanks to Brian Mendel for suggesting these.
 
+        * tests/IOStream_Test.cpp: updated to work with the standard C++
+          library version of iostreams.  That primarily involved not
+          using operator>>(char& c) and operator>>(char* c) for C strings.
+          Thanks to Ben Eng <ben@jetpen.com> for the patch.
+
         * ace/OS.{h,i},config-osf1-4.0.h: fixed sigwait on DEC CXX 6.0/
           recent DEC UNIX 4.0.  The fix keys off the compiler version,
           though it probably should depend on the OS.  It adds a
