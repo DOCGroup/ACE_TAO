@@ -78,7 +78,7 @@ sub parse_line {
   }
   else {
     $status = 0;
-    $errorString = "ERROR: Unrecognized line: $line";
+    $errorString = "Unrecognized line: $line";
   }
 
   return $status, $errorString;
@@ -91,7 +91,7 @@ sub optionError {
   my($base) = $self->{'name'};
 
   if (defined $line) {
-    print STDERR "ERROR: $line\n";
+    $self->error($line);
   }
   my($spaces) = (' ' x (length($base) + 8));
   print STDERR "$base v" . Version::get() . "\n" .
@@ -237,8 +237,8 @@ sub run {
       ## If no files were found above, then we issue a warning
       ## that we are going to use the default input
       if (!defined $options->{'input'}->[0]) {
-        print "WARNING: No files were found using the -recurse option.\n" .
-              "         Using the default input.\n";
+        $self->information('No files were found using the -recurse option. ' .
+                           'Using the default input.');
       }
     }
   }
@@ -277,7 +277,7 @@ sub run {
     if (-r $rel) {
       my($srel, $errorString) = $self->read_file($rel);
       if (!$srel) {
-        print STDERR "$errorString\nin $rel\n";
+        $self->error("$errorString\nin $rel");
         return $status;
       }
     }
@@ -353,7 +353,7 @@ sub run {
       if ($base ne $file) {
         my($dir) = ($base eq '' ? $file : dirname($file));
         if (!$creator->cd($dir)) {
-          print STDERR "ERROR: Unable to change to directory: $dir\n";
+          $self->error("Unable to change to directory: $dir");
           $status++;
           last;
         }
@@ -371,8 +371,8 @@ sub run {
       }
       print "\n" . 'Start Time: ' . scalar(localtime(time())) . "\n";
       if (!$creator->generate($file)) {
-        print STDERR "ERROR: Unable to process: " .
-                     ($file eq '' ? 'default input' : $file) . "\n";
+        $self->error("Unable to process: " .
+                     ($file eq '' ? 'default input' : $file));
         $status++;
         last;
       }

@@ -280,7 +280,7 @@ sub begin_project {
         foreach my $currently (@{$self->{'reading_parent'}}) {
           if ($currently eq $file) {
             $status = 0;
-            $error = 'ERROR: Cyclic inheritance detected: ' .
+            $error = 'Cyclic inheritance detected: ' .
                      $parent;
           }
         }
@@ -294,14 +294,25 @@ sub begin_project {
             pop(@{$self->{'reading_parent'}});
 
             if (!$status) {
-              $error = "ERROR: Invalid parent: $parent";
+              $error = "Invalid parent: $parent";
+            }
+          }
+          else {
+            ## The base project has already been read.  So, if
+            ## we are reading the original project (not a parent base
+            ## project), then the current base project is redundant.
+            if (!defined $self->{'reading_parent'}->[0]) {
+              $file =~ s/\.[^\.]+$//;
+              $self->information("Inheriting from '" . basename($file) .
+                                 "' in " . $self->get_current_input() .
+                                 " is redundant.");
             }
           }
         }
       }
       else {
         $status = 0;
-        $error = "ERROR: Unable to locate parent: $parent";
+        $error = "Unable to locate parent: $parent";
       }
     }
   }
@@ -364,7 +375,7 @@ sub parse_line {
               }
             }
             else {
-              $errorString = 'ERROR: Invalid ' .
+              $errorString = 'Invalid ' .
                              "assignment modification name: $ap";
               $status = 0;
             }
@@ -382,7 +393,7 @@ sub parse_line {
                 if (defined $self->{'verbatim_accessed'}->{$key}) {
                   foreach my $ikey (keys %{$self->{'verbatim'}->{$key}}) {
                     if (!defined $self->{'verbatim_accessed'}->{$key}->{$ikey}) {
-                      print "WARNING: Marker $ikey does not exist.\n";
+                      $self->warning("Marker $ikey does not exist.");
                     }
                   }
                 }
@@ -415,7 +426,7 @@ sub parse_line {
           if (defined $name) {
             if ($name =~ /[\/\\]/) {
               $status = 0;
-              $errorString = 'ERROR: Projects can not have a slash ' .
+              $errorString = 'Projects can not have a slash ' .
                              'or a back slash in the name';
             }
             else {
@@ -445,7 +456,7 @@ sub parse_line {
         $self->process_assignment($name, $value);
       }
       else {
-        $errorString = "ERROR: Invalid assignment name: $name";
+        $errorString = "Invalid assignment name: $name";
         $status = 0;
       }
     }
@@ -456,7 +467,7 @@ sub parse_line {
         $self->process_assignment_add($name, $value);
       }
       else {
-        $errorString = "ERROR: Invalid addition name: $name";
+        $errorString = "Invalid addition name: $name";
         $status = 0;
       }
     }
@@ -467,7 +478,7 @@ sub parse_line {
         $self->process_assignment_sub($name, $value);
       }
       else {
-        $errorString = "ERROR: Invalid subtraction name: $name";
+        $errorString = "Invalid subtraction name: $name";
         $status = 0;
       }
     }
@@ -485,7 +496,7 @@ sub parse_line {
       my($vc) = $self->{'valid_components'};
       if (defined $$vc{$comp}) {
         if (!$self->parse_components($ih, $comp, $name)) {
-          $errorString = "ERROR: Unable to process $comp";
+          $errorString = "Unable to process $comp";
           $status = 0;
         }
       }
@@ -493,7 +504,7 @@ sub parse_line {
         if ($comp eq 'verbatim') {
           my($type, $loc) = split(/\s*,\s*/, $name);
           if (!$self->parse_verbatim($ih, $comp, $type, $loc)) {
-            $errorString = "ERROR: Unable to process $comp";
+            $errorString = "Unable to process $comp";
             $status = 0;
           }
         }
@@ -506,7 +517,7 @@ sub parse_line {
           ($status, $errorString) = $self->parse_define_custom($ih, $name);
         }
         else {
-          $errorString = "ERROR: Invalid component name: $comp";
+          $errorString = "Invalid component name: $comp";
           $status = 0;
         }
       }
@@ -515,12 +526,12 @@ sub parse_line {
       $self->{'feature_defined'} = 1;
       $self->process_feature($ih, $values[1], $values[2]);
       if ($self->{'feature_defined'}) {
-        $errorString = "ERROR: Did not find the end of the feature";
+        $errorString = "Did not find the end of the feature";
         $status = 0;
       }
     }
     else {
-      $errorString = "ERROR: Unrecognized line: $line";
+      $errorString = "Unrecognized line: $line";
       $status = 0;
     }
   }
@@ -844,14 +855,14 @@ sub parse_define_custom {
   my($fh)          = shift;
   my($tag)         = shift;
   my($status)      = 0;
-  my($errorString) = "ERROR: Unable to process $tag";
+  my($errorString) = "Unable to process $tag";
   my(%flags)       = ();
 
   ## Make the tag something _files
   $tag = lc($tag) . '_files';
 
   if (defined $self->{'valid_components'}->{$tag}) {
-    $errorString = "ERROR: $tag has already been defined";
+    $errorString = "$tag has already been defined";
   }
   else {
     ## Update the custom_types assignment
@@ -964,7 +975,7 @@ sub parse_define_custom {
           }
           else {
             $status = 0;
-            $errorString = "ERROR: Invalid assignment name: $name";
+            $errorString = "Invalid assignment name: $name";
             last;
           }
         }
@@ -976,7 +987,7 @@ sub parse_define_custom {
           if ($keyword eq 'keyword') {
             if (defined $self->{'valid_names'}->{$newkey}) {
               $status = 0;
-              $errorString = "ERROR: Cannot map $newkey onto an " .
+              $errorString = "Cannot map $newkey onto an " .
                              "existing keyword";
               last;
             }
@@ -989,26 +1000,26 @@ sub parse_define_custom {
               }
               else {
                 $status = 0;
-                $errorString = "ERROR: Cannot map $newkey to an " .
+                $errorString = "Cannot map $newkey to an " .
                                "undefined custom keyword: $mapkey";
                 last;
               }
             }
             else {
               $status = 0;
-              $errorString = "ERROR: Cannot map $newkey to $mapkey";
+              $errorString = "Cannot map $newkey to $mapkey";
               last;
             }
           }
           else {
             $status = 0;
-            $errorString = "ERROR: Unrecognized line: $line";
+            $errorString = "Unrecognized line: $line";
             last;
           }
         }
         else {
           $status = 0;
-          $errorString = "ERROR: Unrecognized line: $line";
+          $errorString = "Unrecognized line: $line";
           last;
         }
       }
@@ -2204,7 +2215,7 @@ sub write_output_file {
             &$cb($name, $pjname, @list);
           }
           else {
-            print "WARNING: Ignoring callback: $cb\n";
+            $self->warning("Ignoring callback: $cb.");
           }
         }
 
@@ -2233,7 +2244,7 @@ sub write_output_file {
               }
             }
             else {
-              $error = "ERROR: Unable to open $tmp for output.";
+              $error = "Unable to open $tmp for output.";
               $status = 0;
             }
 
@@ -2245,7 +2256,7 @@ sub write_output_file {
                   $self->add_file_written($name);
                 }
                 else {
-                  $error = "ERROR: Unable to open $name for output.";
+                  $error = "Unable to open $name for output.";
                   $status = 0;
                 }
               }
@@ -2266,7 +2277,7 @@ sub write_output_file {
               $self->add_file_written($name);
             }
             else {
-              $error = "ERROR: Unable to open $name for output.";
+              $error = "Unable to open $name for output.";
               $status = 0;
             }
           }
@@ -2275,7 +2286,7 @@ sub write_output_file {
     }
   }
   else {
-    $error = "ERROR: Unable to locate the template file: $template.";
+    $error = "Unable to locate the template file: $template.";
     $status = 0;
   }
 

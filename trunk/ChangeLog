@@ -1,3 +1,26 @@
+Mon Feb  2 13:53:08 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/OutputMessage.pm:
+
+          Added an interface for printing informational, warning and error
+          messages.  This allows messages to be manipulated prior to being
+          printed.  Informational messages are off by default and can be
+          enabled by setting the MPC_INFORMATION environment variable.  The
+          informational and warning messages can be turned off by setting the
+          MPC_SILENT environment variable.
+
+        * bin/MakeProjectCreator/modules/Creator.pm:
+        * bin/MakeProjectCreator/modules/Driver.pm:
+        * bin/MakeProjectCreator/modules/FeatureParser.pm:
+        * bin/MakeProjectCreator/modules/Parser.pm:
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/StringProcessor.pm:
+        * bin/MakeProjectCreator/modules/TemplateInputReader.pm:
+        * bin/MakeProjectCreator/modules/TemplateParser.pm:
+        * bin/MakeProjectCreator/modules/WorkspaceCreator.pm:
+
+          Use the OutputMessage interface instead of print for messages.
+
 Mon Feb  2 13:48:23 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/templates/bor.mpd:

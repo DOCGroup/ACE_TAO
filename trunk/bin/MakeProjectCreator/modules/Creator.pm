@@ -117,7 +117,7 @@ sub generate_default_input {
   ($status, $error) = $self->parse_line(undef, '}');
 
   if (!$status) {
-    print STDERR "$error\n";
+    $self->error($error);
   }
 
   return $status;
@@ -135,15 +135,17 @@ sub parse_file {
   if (!$status) {
     print STDERR $self->getcwd() .
                  "/$input: line " . $self->get_line_number() .
-                 ":\n$errorString\n";
+                 ":\n";
+    $self->error($errorString);
   }
   elsif ($status && $self->{$self->{'type_check'}}) {
     ## If we are at the end of the file and the type we are looking at
     ## is still defined, then we have an error
     print STDERR $self->getcwd() .
                  "/$input: line " . $self->get_line_number() .
-                 ":\nERROR: Did not " .
-                 "find the end of the $self->{'grammar_type'}\n";
+                 ":\n";
+    $self->error("Did not " .
+                 "find the end of the $self->{'grammar_type'}");
     $status = 0;
   }
   $self->set_line_number($oline);
@@ -237,7 +239,7 @@ sub parse_known {
     my($name)    = $1;
     my($parents) = $2;
     if ($self->{$self->{'type_check'}}) {
-      $errorString = "ERROR: Did not find the end of the $type";
+      $errorString = "Did not find the end of the $type";
       $status = 0;
     }
     else {
@@ -254,7 +256,7 @@ sub parse_known {
         if (!defined $parents[0]) {
           ## The : was used, but no parents followed.  This
           ## is an error.
-          $errorString = 'ERROR: No parents listed';
+          $errorString = 'No parents listed';
           $status = 0;
         }
         $parents = \@parents;
@@ -267,7 +269,7 @@ sub parse_known {
       push(@values, $type, $line);
     }
     else {
-      $errorString = "ERROR: Did not find the beginning of the $type";
+      $errorString = "Did not find the beginning of the $type";
       $status = 0;
     }
   }
@@ -290,7 +292,7 @@ sub parse_known {
       if (!defined $parents[0]) {
         ## The : was used, but no parents followed.  This
         ## is an error.
-        $errorString = 'ERROR: No parents listed';
+        $errorString = 'No parents listed';
         $status = 0;
       }
       $parents = \@parents;
@@ -298,7 +300,7 @@ sub parse_known {
     push(@values, $type, \@names, $parents);
   }
   elsif (!$self->{$self->{'type_check'}}) {
-    $errorString = "ERROR: No $type was defined";
+    $errorString = "No $type was defined";
     $status = 0;
   }
   elsif ($self->parse_assignment($line, \@values)) {
@@ -318,7 +320,7 @@ sub parse_known {
     push(@values, 'component', $comp, $name);
   }
   else {
-    $errorString = "ERROR: Unrecognized line: $line";
+    $errorString = "Unrecognized line: $line";
     $status = -1;
   }
 
@@ -334,7 +336,7 @@ sub parse_scope {
   my($validNames)  = shift;
   my($flags)       = shift;
   my($status)      = 0;
-  my($errorString) = "ERROR: Unable to process $name";
+  my($errorString) = "Unable to process $name";
 
   if (!defined $flags) {
     $flags = {};
@@ -367,7 +369,7 @@ sub parse_scope {
         }
         else {
           $status = 0;
-          $errorString = "ERROR: Invalid assignment name: $values[1]";
+          $errorString = "Invalid assignment name: $values[1]";
           last;
         }
       }
@@ -463,13 +465,14 @@ sub add_file_written {
 
   foreach my $written (@{$self->{'files_written'}}) {
     if ($written eq $file) {
-      print "WARNING: $file has been overwritten by a " .
-            "$self->{'grammar_type'} with a duplicate name.\n";
+      $self->warning("$file has been overwritten by a " .
+                     "$self->{'grammar_type'} with a duplicate name.");
       last;
     }
     elsif (lc($written) eq lc($file)) {
-      print "WARNING: $file has been overwritten by a " .
-            "$self->{'grammar_type'} with different casing: $written.\n";
+      $self->warning("$file has been overwritten by a " .
+                     "$self->{'grammar_type'} with different casing: " .
+                     "$written.");
       last;
     }
   }
@@ -859,7 +862,7 @@ sub handle_scoped_unknown {
   my($type)  = shift;
   my($flags) = shift;
   my($line)  = shift;
-  return 0, "ERROR: Unrecognized line: $line";
+  return 0, "Unrecognized line: $line";
 }
 
 
