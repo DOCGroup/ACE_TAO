@@ -277,7 +277,7 @@ realclean: clean
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- Sched/sched_export.h \
+ Naming/naming_export.h \
  CosNamingC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
@@ -491,7 +491,7 @@ realclean: clean
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- Sched/sched_export.h \
+ Naming/naming_export.h \
  CosNamingC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
@@ -706,7 +706,7 @@ realclean: clean
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- Sched/sched_export.h \
+ Naming/naming_export.h \
  CosNamingC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
@@ -954,7 +954,7 @@ realclean: clean
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- Sched/sched_export.h \
+ Naming/naming_export.h \
  CosNamingC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
@@ -1227,7 +1227,7 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  CosNamingC.h \
- Sched/sched_export.h \
+ Naming/naming_export.h \
  CosNamingC.i \
  Naming/naming_export.h
 
@@ -1452,7 +1452,7 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  CosNamingC.h \
- Sched/sched_export.h \
+ Naming/naming_export.h \
  CosNamingC.i \
  Naming/naming_export.h
 
@@ -1682,7 +1682,7 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  CosNamingC.h \
- Sched/sched_export.h \
+ Naming/naming_export.h \
  CosNamingC.i \
  Naming/naming_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
@@ -1898,7 +1898,7 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  CosNamingC.h \
- Sched/sched_export.h \
+ Naming/naming_export.h \
  CosNamingC.i \
  IOR_Multicast.h \
  svc_utils_export.h \
@@ -2219,7 +2219,7 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  CosNamingC.h \
- Sched/sched_export.h \
+ Naming/naming_export.h \
  CosNamingC.i \
  IOR_Multicast.h \
  svc_utils_export.h \
@@ -2264,15 +2264,13 @@ realclean: clean
  CosNamingS_T.i \
  CosNamingS_T.cpp \
  CosNamingS.i \
- Naming/naming_export.h \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/Dynamic_Service_Base.h \
  $(ACE_ROOT)/ace/Dynamic_Service.i \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp
 
 .obj/CosNamingS.o .obj/CosNamingS.so .shobj/CosNamingS.o .shobj/CosNamingS.so: CosNamingS.cpp CosNamingS.h \
- $(ACE_ROOT)/ace/pre.h \
- CosNamingC.h \
+ $(ACE_ROOT)/ace/pre.h CosNamingC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -2463,7 +2461,7 @@ realclean: clean
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- Sched/sched_export.h CosNamingC.i \
+ Naming/naming_export.h CosNamingC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -2802,7 +2800,7 @@ realclean: clean
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- Sched/sched_export.h CosNamingC.i \
+ Naming/naming_export.h CosNamingC.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(TAO_ROOT)/tao/Pluggable.i \

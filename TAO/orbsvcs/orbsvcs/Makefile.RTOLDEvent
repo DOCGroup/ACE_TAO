@@ -106,8 +106,8 @@ CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
  $(ACE_ROOT)/ace/Init_ACE.i \
  $(ACE_ROOT)/ace/Sock_Connect.h \
  $(ACE_ROOT)/ace/Sock_Connect.i \
- $(ACE_ROOT)/ace/ACE.i \
- Event/BCU.h Event/old_event_export.h
+ $(ACE_ROOT)/ace/ACE.i Event/BCU.h \
+ Event/old_event_export.h
 
 .obj/Dispatching_Modules.o .obj/Dispatching_Modules.so .shobj/Dispatching_Modules.o .shobj/Dispatching_Modules.so: Event/Dispatching_Modules.cpp \
  $(ACE_ROOT)/ace/Sched_Params.h \
@@ -305,9 +305,10 @@ CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- Sched/sched_export.h \
+ Naming/naming_export.h \
  CosNamingC.i \
  RtecSchedulerC.h \
+ Sched/sched_export.h \
  TimeBaseC.h \
  svc_utils_export.h \
  TimeBaseC.i \
@@ -678,9 +679,10 @@ CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- Sched/sched_export.h \
+ Naming/naming_export.h \
  CosNamingC.i \
  RtecSchedulerC.h \
+ Sched/sched_export.h \
  TimeBaseC.h \
  svc_utils_export.h \
  TimeBaseC.i \
@@ -1232,9 +1234,10 @@ CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
  TimeBaseC.i \
  Time_Utilities.i \
  CosNamingC.h \
- Sched/sched_export.h \
+ Naming/naming_export.h \
  CosNamingC.i \
  RtecSchedulerC.h \
+ Sched/sched_export.h \
  RtecBaseC.h \
  RtecBaseC.i \
  RtecSchedulerC.i \
@@ -1525,9 +1528,10 @@ CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- Sched/sched_export.h \
+ Naming/naming_export.h \
  CosNamingC.i \
  RtecSchedulerC.h \
+ Sched/sched_export.h \
  TimeBaseC.h \
  svc_utils_export.h \
  TimeBaseC.i \
@@ -1843,9 +1847,10 @@ CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- Sched/sched_export.h \
+ Naming/naming_export.h \
  CosNamingC.i \
  RtecSchedulerC.h \
+ Sched/sched_export.h \
  TimeBaseC.h \
  svc_utils_export.h \
  TimeBaseC.i \
@@ -1853,8 +1858,7 @@ CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
  RtecBaseC.i \
  RtecSchedulerC.i \
  Scheduler_Factory.i \
- Event/RT_Task.h \
- $(ACE_ROOT)/ace/Task.h \
+ Event/RT_Task.h $(ACE_ROOT)/ace/Task.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
@@ -2203,9 +2207,10 @@ CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- Sched/sched_export.h \
+ Naming/naming_export.h \
  CosNamingC.i \
  RtecSchedulerC.h \
+ Sched/sched_export.h \
  TimeBaseC.h \
  svc_utils_export.h \
  TimeBaseC.i \
@@ -2537,9 +2542,10 @@ CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- Sched/sched_export.h \
+ Naming/naming_export.h \
  CosNamingC.i \
  RtecSchedulerC.h \
+ Sched/sched_export.h \
  TimeBaseC.h \
  svc_utils_export.h \
  TimeBaseC.i \
@@ -2914,9 +2920,10 @@ CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
  TimeBaseC.i \
  Time_Utilities.i \
  CosNamingC.h \
- Sched/sched_export.h \
+ Naming/naming_export.h \
  CosNamingC.i \
  RtecSchedulerC.h \
+ Sched/sched_export.h \
  RtecBaseC.h \
  RtecBaseC.i \
  RtecSchedulerC.i \
