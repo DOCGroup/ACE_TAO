@@ -1,3 +1,7 @@
+Mon Jan 26 15:01:49 1998  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
+
+	* tests/POA/RootPOA.cpp: Added Comments
+
 Mon Jan 26 14:31:46 1998  Sumedh Mungee  <sumedh@cs.wustl.edu>
 
 	* tests/POA/FindPOA.cpp: Added CVS ID
@@ -18,7 +22,7 @@ Sun Jan 25 14:30:04 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 Sat Jan 24 21:55:55 1998  Sumedh Mungee  <sumedh@cs.wustl.edu>
 
-	* orbsvcs/orbsvc/{AVStreams_i.h, AVStreams_i.cpp}: 
+	* orbsvcs/orbsvc/{AVStreams_i.h, AVStreams_i.cpp}:
 	  Made changes for new POA
 
 Sat Jan 24 21:46:23 1998  Sumedh Mungee  <sumedh@cs.wustl.edu>
@@ -29,20 +33,20 @@ Sat Jan 24 21:46:23 1998  Sumedh Mungee  <sumedh@cs.wustl.edu>
 
 Sat Jan 24 21:01:00 1998    <coryan@MILONGA>
 
-	* orbsvcs/Dump_Schedule/Dump_Schedule.cpp: 
-	* orbsvcs/Event_Service/Event_Service.cpp: 
-	* orbsvcs/Naming_Service/Naming_Service.cpp: 
-	* orbsvcs/Scheduling_Service/Scheduling_Service.cpp: 
-	* orbsvcs/tests/Event_Latency/Event_Latency.cpp: 
+	* orbsvcs/Dump_Schedule/Dump_Schedule.cpp:
+	* orbsvcs/Event_Service/Event_Service.cpp:
+	* orbsvcs/Naming_Service/Naming_Service.cpp:
+	* orbsvcs/Scheduling_Service/Scheduling_Service.cpp:
+	* orbsvcs/tests/Event_Latency/Event_Latency.cpp:
 	  Fixed several minor error and sources of non-complaince.
 
-	* TAO_IDL/tao_idl.dsp: 
-	* tao/TAO.dsp: 
+	* TAO_IDL/tao_idl.dsp:
+	* tao/TAO.dsp:
 	  CVS does not merge binary files properly.
 
 Sat Jan 24 15:51:41 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/objtable.cpp: 
+	* tao/objtable.cpp:
 	  Another merge problem.
 
 Sat Jan 24 11:20:42 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
@@ -62,7 +66,7 @@ Sat Jan 24 11:20:42 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 Sat Jan 24 11:08:28 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* TAO_IDL/be_include/be_visitor.h: 
+	* TAO_IDL/be_include/be_visitor.h:
 	  The forward declaration of TAO_OutStream was missing; I guess it
 	  was some slopiness in the merge.
 
@@ -71,9 +75,9 @@ Sat Jan 24 10:30:40 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* The POA branch is merged back into the main trunk. For the
 	  record we reproduce the ChangeLog in the branch.
 
-	* ============ 
+	* ============
 	* ============ Start of POA branch changes.
-	* ============ 
+	* ============
 
 	Fri Jan 23 17:13:14 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
@@ -82,8 +86,8 @@ Sat Jan 24 10:30:40 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	Fri Jan 23 17:08:45 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/Event_Service/Event_Channel.h: 
-	* orbsvcs/Event_Service/Event_Channel.i: 
+	* orbsvcs/Event_Service/Event_Channel.h:
+	* orbsvcs/Event_Service/Event_Channel.i:
 	  Fixed problem with Event Channel, it was using _this
 	  unproperly.
 
@@ -102,19 +106,19 @@ Sat Jan 24 10:30:40 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	Fri Jan 23 16:43:12 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/Dump_Schedule/Dump_Schedule.cpp: 
-	* orbsvcs/Event_Service/Event_Channel.cpp: 
-	* orbsvcs/Event_Service/Event_Channel.i: 
-	* orbsvcs/Event_Service/Event_Service.cpp: 
-	* orbsvcs/Naming_Service/CosNaming_i.cpp: 
-	* orbsvcs/Naming_Service/CosNaming_i.h: 
-	* orbsvcs/Naming_Service/Naming_Service.cpp: 
-	* orbsvcs/Scheduling_Service/Config_Scheduler.cpp: 
-	* orbsvcs/Scheduling_Service/Scheduling_Service.cpp: 
-	* orbsvcs/orbsvcs/Runtime_Scheduler.cpp: 
-	* orbsvcs/orbsvcs/Scheduler_Factory.cpp: 
-	* orbsvcs/tests/Event_Latency/Event_Latency.cpp: 
-	* orbsvcs/tests/Event_Latency/Event_Latency.h: 
+	* orbsvcs/Dump_Schedule/Dump_Schedule.cpp:
+	* orbsvcs/Event_Service/Event_Channel.cpp:
+	* orbsvcs/Event_Service/Event_Channel.i:
+	* orbsvcs/Event_Service/Event_Service.cpp:
+	* orbsvcs/Naming_Service/CosNaming_i.cpp:
+	* orbsvcs/Naming_Service/CosNaming_i.h:
+	* orbsvcs/Naming_Service/Naming_Service.cpp:
+	* orbsvcs/Scheduling_Service/Config_Scheduler.cpp:
+	* orbsvcs/Scheduling_Service/Scheduling_Service.cpp:
+	* orbsvcs/orbsvcs/Runtime_Scheduler.cpp:
+	* orbsvcs/orbsvcs/Scheduler_Factory.cpp:
+	* orbsvcs/tests/Event_Latency/Event_Latency.cpp:
+	* orbsvcs/tests/Event_Latency/Event_Latency.h:
 	  "Ported" the orbsvcs and the Event_Latency test to POA, with
 	  little success though, things will compile and it seems that the
 	  Naming_Service and Scheduling_Services run properly, but
@@ -123,7 +127,7 @@ Sat Jan 24 10:30:40 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	  is easier to set an enviroment variable or command line to the
 	  NameService IOR.
 
-	* tests/Cubit/TAO/IDL_Cubit/svr.cpp: 
+	* tests/Cubit/TAO/IDL_Cubit/svr.cpp:
 	  Removed some extra (and unwanted) code.
 
 	Fri Jan 23 14:47:18 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
@@ -131,9 +135,9 @@ Sat Jan 24 10:30:40 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* tests/POA/{FindPOA,RootPOA,NewPOA}/Makefile: Added
  	-L$(TAO_ROOT)/tao to LDFLAGS.
 
-	* tests/POA/NewPOA/NewPOA.cpp: 
-	* tests/POA/RootPOA/RootPOA.cpp: 
-	* tests/POA/FindPOA/FindPOA.cpp: 
+	* tests/POA/NewPOA/NewPOA.cpp:
+	* tests/POA/RootPOA/RootPOA.cpp:
+	* tests/POA/FindPOA/FindPOA.cpp:
 	Used the ::in() method as first	argument to _narrow() calls.
 
 	* tests/{Makefile,README}: Updated for new tests.
@@ -142,18 +146,18 @@ Sat Jan 24 10:30:40 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	Fri Jan 23 14:30:19 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/poa.h: 
-	* tao/poa.cpp: 
-	* tao/servant_base.cpp: 
+	* tao/poa.h:
+	* tao/poa.cpp:
+	* tao/servant_base.cpp:
 	  _this() was using the object id for the current servant in *all*
 	  objects, now it only does so for the servant invoked.
 
-	* tests/Cubit/TAO/IDL_Cubit/Makefile: 
-	* tests/Cubit/TAO/IDL_Cubit/clnt.cpp: 
-	* tests/Cubit/TAO/IDL_Cubit/clnt.h: 
-	* tests/Cubit/TAO/IDL_Cubit/cubit_i.cpp: 
-	* tests/Cubit/TAO/IDL_Cubit/cubit_i.h: 
-	* tests/Cubit/TAO/IDL_Cubit/svr.cpp: 
+	* tests/Cubit/TAO/IDL_Cubit/Makefile:
+	* tests/Cubit/TAO/IDL_Cubit/clnt.cpp:
+	* tests/Cubit/TAO/IDL_Cubit/clnt.h:
+	* tests/Cubit/TAO/IDL_Cubit/cubit_i.cpp:
+	* tests/Cubit/TAO/IDL_Cubit/cubit_i.h:
+	* tests/Cubit/TAO/IDL_Cubit/svr.cpp:
 	  Ported the Cubit test to POA, including some funky persistent
 	  policies to simplify its use.
 
@@ -164,12 +168,12 @@ Sat Jan 24 10:30:40 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	Fri Jan 23 10:55:40 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/objtable.cpp: 
+	* tao/objtable.cpp:
 	  Linear object tables were not using the initial size to
 	  pre-allocate a buffer.
 
-	* TAO_IDL/be/be_interface.cpp: 
-	* TAO_IDL/be/be_state_argument.cpp: 
+	* TAO_IDL/be/be_interface.cpp:
+	* TAO_IDL/be/be_state_argument.cpp:
 	  Fixed the mapping for native as OUT or INOUT parameters, also
 	  fixed the name for the _dispatch() method.
 
@@ -184,7 +188,7 @@ Sat Jan 24 10:30:40 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	Fri Jan 23 00:14:03 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/poa: 
+	* tao/poa:
 
 	  - Added support for transient and persistent POAs by changing
  	    the ObjectKey.  From now on, each key will contain an
@@ -193,7 +197,7 @@ Sat Jan 24 10:30:40 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
  	    decide the value of the activate_it flag while finding the
  	    POA.  If the key is from a persistent POA, the activate_it
  	    flag will be true, else the flag will be set to false.
-	    
+
 	  - All operations on the parent POA will check for a valid parent
  	    before executing the call.  Remember that the RootPOA does not
  	    have a parent POA.
@@ -214,7 +218,7 @@ Sat Jan 24 10:30:40 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
  	    changed such that when the object is closing down, we are
  	    currently iterating over our poa collection and there is not
  	    need to remove the item from our collection.
-	    
+
 	  - Changed use of substr from starting_at/ending_at to
  	    starting_at/now_many.
 
@@ -223,7 +227,7 @@ Sat Jan 24 10:30:40 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
  	    avoid memory leaks.
 
 	  - For find methods, always use != -1 for success.
-	  
+
 	  - Added code to create_POA_i and find_POA_i_optimized to check
  	    when topmost_poa_name == this->name_.
 
@@ -255,13 +259,13 @@ Sat Jan 24 10:30:40 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	  - Added support for servant managers (both servant locators and
  	    servant activators), default servants and DSI.
-	
+
 	* tao/poaC.h: Added DynamicImplementation class to the
  	  PortableServer.
 
 	* tao/poaS: Changed dispatch to _dispatch.
 
-	* tao/servant_base: 
+	* tao/servant_base:
 
 	  - Added TAO_DynamicImplementation class
  	    (a.k.a. PortableServer::DynamicImplementation).  Users will
@@ -269,7 +273,7 @@ Sat Jan 24 10:30:40 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	  - Added prefix _ to all methods names in the ServantBase class
  	    to avoid potential crashes with user specified method names.
-	  
+
 	  - Made TAO_POA a friend of ServantBase.
 
 	* tao/connect.cpp (handle_locate): Changed to use latest version
@@ -305,30 +309,30 @@ Sat Jan 24 10:30:40 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	Thu Jan 22 16:56:32 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* TAO_IDL/be_include/be_interface.h: 
-	* TAO_IDL/be/be_interface.cpp: 
-	* TAO_IDL/be/be_visitor_interface.cpp: 
+	* TAO_IDL/be_include/be_interface.h:
+	* TAO_IDL/be/be_interface.cpp:
+	* TAO_IDL/be/be_visitor_interface.cpp:
 	  Fixed some relative name problems for the server header file.
 
-	* TAO_IDL/be/be_visitor_sequence.cpp: 
-	* TAO_IDL/be/be_visitor_root.cpp: 
-	* TAO_IDL/be/be_visitor_args.cpp: 
+	* TAO_IDL/be/be_visitor_sequence.cpp:
+	* TAO_IDL/be/be_visitor_root.cpp:
+	* TAO_IDL/be/be_visitor_args.cpp:
 	  Get rid of some "unused arg" warnings.
 
 	Thu Jan 22 15:26:55 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* tao/object.i: CORBA::Object --> CORBA_Object for internal stuff.
-	
+
 	* tao/object.i (CORBA_Object): Re-ordered member initialization to
  	match declaration order.
 
 	Thu Jan 22 14:40:01 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/corbacom.h: 
+	* tao/corbacom.h:
 	  Fixed multiple definitions of ORB_var and ORB_out due to a
 	  simplistic merge.
 
-	* TAO_IDL/be/be_interface.cpp: 
+	* TAO_IDL/be/be_interface.cpp:
 	  Generate _find() to locate operations; using just find() is not
 	  complaint.
 
@@ -339,64 +343,64 @@ Sat Jan 24 10:30:40 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	Wed Jan 21 17:35:20 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_interface.cpp: 
+	* TAO_IDL/be/be_visitor_interface.cpp:
 	  Generate CORBA_Object instead of CORBA::Object to keep NT
 	  happy.
 
-	* TAO_IDL/be/be_visitor_args.cpp: 
+	* TAO_IDL/be/be_visitor_args.cpp:
 	  Fixed mapping for strings as arguments, they should always be
 	  char*.
 
 	Mon Jan 19 22:03:38 1998    <coryan@MILONGA>
 
-	* tao/sequence_T.i: 
+	* tao/sequence_T.i:
 	  Object_Manager constructor was calling _duplicate(). That is not
 	  the right semantics, and produces a crash when working on an
 	  unitialized buffer.
 
-	* tests/POA/NewPOA/NewPOA.cpp: 
-	* tests/POA/NewPOA/NewPOA.dsp: 
+	* tests/POA/NewPOA/NewPOA.cpp:
+	* tests/POA/NewPOA/NewPOA.dsp:
 	  Fixed signed/unsigned warning.
 
-	* tests/POA/NewPOA/NewPOA.dsp: 
+	* tests/POA/NewPOA/NewPOA.dsp:
 	  Fixed missing options to find ACE.
 
 	Mon Jan 19 16:36:22 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/iiopobj.h: 
-	* tao/iiopobj.cpp: 
+	* tao/iiopobj.h:
+	* tao/iiopobj.cpp:
 	  Added a missed in action key() method to IIOP_Object.
 
-	* tao/stub.h: 
-	* tao/objkeyC.h: 
-	* tao/object.h: 
-	* tao/object.cpp: 
+	* tao/stub.h:
+	* tao/objkeyC.h:
+	* tao/object.h:
+	* tao/object.cpp:
 	  Removed the non-complaint ObjectKey_ptr type.
 
 	Mon Jan 19 16:19:28 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/deep_free.cpp: 
+	* tao/deep_free.cpp:
 	  A reinterpret cast was dropping constness also, thanks to Irfan
 	  for pointing this one out.
 
 	Mon Jan 19 15:36:10 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/sequence_T.i: 
-	* tao/sequence_T.cpp: 
+	* tao/sequence_T.i:
+	* tao/sequence_T.cpp:
 	  The last merge was too smart, it kept some changes on this
 	  branch that should have gone away.
 
 	Mon Jan 19 13:58:01 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_interface.cpp: 
-	* TAO_IDL/be/be_interface.cpp: 
+	* TAO_IDL/be/be_visitor_interface.cpp:
+	* TAO_IDL/be/be_interface.cpp:
 	  Fixed operation table initialization, also called proper
 	  constructor for CORBA::Object in collocated classes.
 
-	* tao/corba.h: 
+	* tao/corba.h:
 	  More include reordering.
 
-	* tao/servant_base.h: 
+	* tao/servant_base.h:
 	  The operation table was not properly initialized.
 
 	Mon Jan 19 11:28:47 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
@@ -406,52 +410,52 @@ Sat Jan 24 10:30:40 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	Sun Jan 18 01:04:22 1998    <coryan@MILONGA>
 
-	* TAO_IDL/be/be_attribute.cpp: 
-	* TAO_IDL/be/be_codegen.cpp: 
-	* TAO_IDL/be/be_interface.cpp: 
-	* TAO_IDL/be_include/be_interface.h: 
-	* tao/servant_base.h: 
+	* TAO_IDL/be/be_attribute.cpp:
+	* TAO_IDL/be/be_codegen.cpp:
+	* TAO_IDL/be/be_interface.cpp:
+	* TAO_IDL/be_include/be_interface.h:
+	* tao/servant_base.h:
 	  Added support for collocation in the _narrow method, this
 	  required a complete implementation of _downcast() for each
 	  skeleton.
 
 	Sat Jan 17 20:54:26 1998    <coryan@MILONGA>
 
-	* TAO_IDL/be/be_attribute.cpp: 
-	* TAO_IDL/be/be_interface.cpp: 
-	* TAO_IDL/be/be_sequence.cpp: 
-	* TAO_IDL/be/be_visitor_interface.cpp: 
-	* TAO_IDL/be/be_visitor_sequence.cpp: 
+	* TAO_IDL/be/be_attribute.cpp:
+	* TAO_IDL/be/be_interface.cpp:
+	* TAO_IDL/be/be_sequence.cpp:
+	* TAO_IDL/be/be_visitor_interface.cpp:
+	* TAO_IDL/be/be_visitor_sequence.cpp:
 	  More bug fixes in code generation for sequences, attributes,
 	  etc. Most of them were minor inconsitencies. Also fixed
 	  constructors for collocated classes on NT (working around MSVC++
 	  bug).
 
-	* tao/servant_base.cpp: 
-	* tao/servant_base.h: 
+	* tao/servant_base.cpp:
+	* tao/servant_base.h:
 	  Added default implementation for _downcast(), it just works if
 	  downcasting to "Object".
 
-	* tao/sequence_T.cpp: 
-	* tao/sequence_T.h: 
-	* tao/sequence_T.i: 
+	* tao/sequence_T.cpp:
+	* tao/sequence_T.h:
+	* tao/sequence_T.i:
 	  Fixed some problems with managed sequences.
 
 	Sat Jan 17 19:27:12 1998    <coryan@MILONGA>
 
-	* tao/servant_base.h: 
-	* tao/servant_base.cpp: 
+	* tao/servant_base.h:
+	* tao/servant_base.cpp:
 	  Added the new _is_a() method on TAO_ServantBase.
 
-	* TAO_IDL/tao_idl.dsp: 
-	* TAO_IDL/be/be_interface.cpp: 
-	* TAO_IDL/be/be_string.cpp: 
-	* TAO_IDL/be/be_visitor_args.cpp: 
-	* TAO_IDL/be/be_visitor_interface.cpp: 
-	* TAO_IDL/be/be_visitor_sequence.cpp: 
-	* TAO_IDL/be_include/be_visitor.h: 
-	* TAO_IDL/be_include/be_visitor_args.h: 
-	* TAO_IDL/be_include/be_visitor_interface.h: 
+	* TAO_IDL/tao_idl.dsp:
+	* TAO_IDL/be/be_interface.cpp:
+	* TAO_IDL/be/be_string.cpp:
+	* TAO_IDL/be/be_visitor_args.cpp:
+	* TAO_IDL/be/be_visitor_interface.cpp:
+	* TAO_IDL/be/be_visitor_sequence.cpp:
+	* TAO_IDL/be_include/be_visitor.h:
+	* TAO_IDL/be_include/be_visitor_args.h:
+	* TAO_IDL/be_include/be_visitor_interface.h:
 	  Added a new _is_a to the generated servants, also implemented
 	  the _is_a method on the collocated classes by invoking that
 	  _is_a().
@@ -460,13 +464,13 @@ Sat Jan 24 10:30:40 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	Sat Jan 17 15:44:43 1998    <coryan@MILONGA>
 
-	* tao/corba.h: 
-	* tao/iiopobj.cpp: 
+	* tao/corba.h:
+	* tao/iiopobj.cpp:
 	  Fixed undetected inconsistencies in the last merge.
 
-	* tao/objkeyC.cpp: 
-	* tao/objkeyC.h: 
-	* tao/objkeyC.i: 
+	* tao/objkeyC.cpp:
+	* tao/objkeyC.h:
+	* tao/objkeyC.i:
 	  I regenrated from the IDL file to use the new sequences.
 
 	Sat Jan 17 11:49:15 1998    <coryan@MILONGA>
@@ -477,7 +481,7 @@ Sat Jan 24 10:30:40 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tests/POA: Added new tests: Explicit_Activation_POA_Ids and
  	  NewPOA.
-	
+
 	* tao/servant_base.h (TAO_ServantBase): Added a _downcast method
  	  that gets the servant with the correct vtable.  Also added a new
  	  class TAO_Local_ServantBase that overwrites _create_stub.
@@ -509,7 +513,7 @@ Sat Jan 24 10:30:40 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	Fri Jan 16 03:27:30 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao:
-	 
+
 	    BOA begone: CORBA::POA and all BOA related code has been
  	    removed from TAO.
 
@@ -519,7 +523,7 @@ Sat Jan 24 10:30:40 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
  	  the TAO_GIOP_RequestHeader parameter by reference rather than by
  	  value.
 
-	* tao/corba.h: Rearranged header to accommodate the new POA. 
+	* tao/corba.h: Rearranged header to accommodate the new POA.
 
 	* tao/corbacom.h (CORBA): Added typedefs for Object_var Object_out
  	  in the CORBA class.
@@ -554,9 +558,9 @@ Sat Jan 24 10:30:40 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	Tue Jan 13 12:15:54 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* TAO_IDL/be_include/be_operation.h: 
-	* TAO_IDL/be/be_operation.cpp: 
-	* TAO_IDL/be/be_state_operation.cpp: 
+	* TAO_IDL/be_include/be_operation.h:
+	* TAO_IDL/be/be_operation.cpp:
+	* TAO_IDL/be/be_state_operation.cpp:
 	  The stubs and skeletons for operations that have a "native"
 	  argument or return value simply "throw" a CORBA::MARSHAL
 	  exception; those methods cannot be called for remote objects.
@@ -571,22 +575,22 @@ Sat Jan 24 10:30:40 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	Mon Jan 12 19:47:42 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/poa.h: 
-	* tao/poa.cpp: 
+	* tao/poa.h:
+	* tao/poa.cpp:
 	  Added a _get_stub() method that encapsulates code common to all
 	  _this implementations.
 
-	* TAO_IDL/be/be_interface.cpp: 
-	* TAO_IDL/be/be_visitor_interface.cpp: 
+	* TAO_IDL/be/be_interface.cpp:
+	* TAO_IDL/be/be_visitor_interface.cpp:
 	  The _this() method implementation was changed to use the new
 	  _get_stub finally adding full support for the standard poa, some
 	  changes were required in the _tao_collocated classes and their
 	  constructors.
 
-	* TAO_IDL/be_include/be_helper.h: 
-	* TAO_IDL/be/be_helper.cpp: 
+	* TAO_IDL/be_include/be_helper.h:
+	* TAO_IDL/be/be_helper.cpp:
 	  Added "manipulators" to increase and decrement indentation
-	  level. 
+	  level.
 
 	Mon Jan 12 14:55:53 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
 
@@ -607,7 +611,7 @@ Sat Jan 24 10:30:40 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	Mon Jan 12 12:10:58 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/objtable.cpp: 
+	* tao/objtable.cpp:
 	  Fixed some problems with misused auto_ptr and dynamic cast that
 	  was taking away constness at the same time.
 
@@ -619,29 +623,29 @@ Sat Jan 24 10:30:40 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	Sun Jan 11 14:09:48 1998    <coryan@MILONGA>
 
-	* orbsvcs/Dump_Schedule/Dump_Schedule.dsp: 
-	* orbsvcs/Event_Service/CORBA_Utils_T.cpp: 
-	* orbsvcs/Event_Service/Dispatching_Modules.cpp: 
-	* orbsvcs/Event_Service/Event_Channel.cpp: 
-	* orbsvcs/Event_Service/Event_Service.cpp: 
-	* orbsvcs/tests/Event_Latency/Event_Latency.cpp: 
+	* orbsvcs/Dump_Schedule/Dump_Schedule.dsp:
+	* orbsvcs/Event_Service/CORBA_Utils_T.cpp:
+	* orbsvcs/Event_Service/Dispatching_Modules.cpp:
+	* orbsvcs/Event_Service/Event_Channel.cpp:
+	* orbsvcs/Event_Service/Event_Service.cpp:
+	* orbsvcs/tests/Event_Latency/Event_Latency.cpp:
 	  Adapted so they compile with the new POA mapping.
 
 	Sun Jan 11 11:33:36 1998    <coryan@MILONGA>
 
-	* tao/connect.cpp: 
+	* tao/connect.cpp:
 	  On this branch the find() method for POA's require a
 	  PortableServer::Servant parameter.
 
-	* orbsvcs/Scheduling_Service/Scheduling_Service.cpp: 
-	* orbsvcs/Naming_Service/Naming_Service.cpp: 
-	* orbsvcs/Naming_Service/CosNaming_i.cpp: 
+	* orbsvcs/Scheduling_Service/Scheduling_Service.cpp:
+	* orbsvcs/Naming_Service/Naming_Service.cpp:
+	* orbsvcs/Naming_Service/CosNaming_i.cpp:
 	  Modified to use the new POA mapping for servers.
 
-	* TAO_IDL/tao_idl.dsp: 
+	* TAO_IDL/tao_idl.dsp:
 	  Replaced the old drv_main.cpp with tao_idl.cpp.
 
-	* orbsvcs/orbsvcs/orbsvcs_lib.dsp: 
+	* orbsvcs/orbsvcs/orbsvcs_lib.dsp:
 	  The final library is not generated inside Debug and its name is
 	  orbsvcs.lib, not orbsvcs_lib.lib
 
@@ -1311,9 +1315,9 @@ Sat Jan 24 10:30:40 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	can set it. Also, changed the variable from _type to type_ to
 	stick to the ACE design standards.
 
-	* ============ 
+	* ============
 	* ============ End of POA branch changes.
-	* ============ 
+	* ============
 
 Fri Jan 23 10:29:17 1998  David L. Levine  <@cs.wustl.edu>
 
