@@ -181,7 +181,6 @@ namespace CIAO_GLUE_BasicSP
 
     ::Components::Cookie * push_timeout_cookie_;
 
-    ::Components::Cookie * timeout_service_cookie_;
   };
 
   class EC_SVNT_Export EC_Servant

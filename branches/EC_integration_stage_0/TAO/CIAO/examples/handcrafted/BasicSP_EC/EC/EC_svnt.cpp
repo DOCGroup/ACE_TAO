@@ -30,8 +30,7 @@ namespace CIAO_GLUE_BasicSP
   : home_ (::Components::CCMHome::_duplicate (home)),
   container_ (c),
   servant_ (sv),
-  push_timeout_cookie_ (0),
-  timeout_service_cookie_ (0)
+  push_timeout_cookie_ (0)
   {
   }
 
@@ -179,7 +178,7 @@ namespace CIAO_GLUE_BasicSP
   ACE_THROW_SPEC ((CORBA::SystemException))
   {
     this->container_->_ciao_push_event (ev,
-                                        this->push_timeout_cookie_
+                                        0101
                                         ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
     
@@ -229,32 +228,28 @@ namespace CIAO_GLUE_BasicSP
   ::CORBA::SystemException,
   ::Components::ExceededConnectionLimit))
   {
-
-    if (this->timeout_service_cookie_ == 0)
-      {
-        this->timeout_service_cookie_ =
-          this->container_->_ciao_specify_event_service (
-            "TimeOut",
-            "timeout",
-            "RTEC"
-            ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK;
-      }
-
-    if (this->push_timeout_cookie_ == 0)
-      {
-        this->push_timeout_cookie_ =
-          this->container_->_ciao_connect_event_supplier (
-            this->timeout_service_cookie_
-            ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK;
-      }
-
-    return this->container_->_ciao_connect_event_consumer (
-      c,
-      this->timeout_service_cookie_
-      ACE_ENV_ARG_PARAMETER);
+    CIAO_Events::Supplier_Config_var supplier_config =
+      this->container_->_ciao_create_event_supplier_config ("RTEC" ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
+    supplier_config->set_supplier_id (0101 ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+
+    CIAO_Events::Consumer_Config_var consumer_config =
+      this->container_->_ciao_create_event_consumer_config ("RTEC" ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+    consumer_config->set_supplier_id (0101 ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+    consumer_config->set_consumer_id (0102 ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+    consumer_config->set_consumer (c ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+
+    this->container_->_ciao_connect_event_supplier (supplier_config.in () ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+    this->container_->_ciao_connect_event_consumer (consumer_config.in () ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+
+    return 0;
 
     /*
     // START new event code
@@ -371,7 +366,7 @@ namespace CIAO_GLUE_BasicSP
   ::Components::InvalidConnection))
   {
 
-    this->container_->_ciao_disconnect_event_consumer (ck ACE_ENV_ARG_PARAMETER);
+    this->container_->_ciao_disconnect_event_consumer (0102 ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
 
     return ::BasicSP::TimeOutConsumer::_nil ();

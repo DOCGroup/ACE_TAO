@@ -22,7 +22,7 @@
 #include "tao/PortableServer/Servant_Base.h"
 #include "CCM_ContainerC.h"
 #include "CCM_DeploymentC.h"
-#include "ace/Hash_Map_Manager.h"
+#include "ace/Active_Map_Manager.h"
 #include "CIAO_Events.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -84,62 +84,50 @@ namespace CIAO
 
     // Events methods
 
-    virtual ::Components::Cookie * _ciao_specify_event_service (
-        const char * event_name,
-        const char * publisher_name,
-        const char * service_name
+    CIAO_Events::Consumer_Config_ptr _ciao_create_event_consumer_config (
+        const char * service_type
         ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((
         CORBA::SystemException));
 
-    virtual ::Components::Cookie * _ciao_connect_event_consumer (
-        ::Components::EventConsumerBase_ptr c,
-        ::Components::Cookie * ck
+    CIAO_Events::Supplier_Config_ptr _ciao_create_event_supplier_config (
+        const char * service_type
         ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((
         CORBA::SystemException));
 
-    virtual ::Components::Cookie * _ciao_connect_event_supplier (
-        ::Components::Cookie * ck
+    virtual void _ciao_connect_event_consumer (
+        CIAO_Events::Consumer_Config_ptr consumer_config
+        ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((
+        CORBA::SystemException));
+
+    virtual void _ciao_connect_event_supplier (
+        CIAO_Events::Supplier_Config_ptr supplier_config
         ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((
         CORBA::SystemException));
 
     virtual void _ciao_disconnect_event_consumer (
-      ::Components::Cookie *ck
-       ACE_ENV_ARG_DECL)
+        CIAO_Events::CONNECTION_ID connection_id
+        ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((::CORBA::SystemException,
                        ::Components::InvalidName,
                        ::Components::InvalidConnection));
 
     virtual void _ciao_disconnect_event_supplier (
-      ::Components::Cookie *ck
-       ACE_ENV_ARG_DECL)
+        CIAO_Events::CONNECTION_ID connection_id
+        ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((::CORBA::SystemException,
                        ::Components::InvalidName,
                        ::Components::InvalidConnection));
 
     virtual void _ciao_push_event (::Components::EventBase *ev,
-                                   ::Components::Cookie *ck
+                                   CIAO_Events::CONNECTION_ID connection_id
                                    ACE_ENV_ARG_DECL)
                                  ACE_THROW_SPEC ((CORBA::SystemException));
 
   protected:
-
-    ::Components::Cookie * connect_rt_event_consumer (
-        ::Components::EventConsumerBase_ptr c,
-        ::CIAO::EventServiceInfo service_info
-        ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((
-        CORBA::SystemException));
-
-    ::Components::Cookie * connect_rt_event_supplier (
-        ::CIAO::EventServiceInfo service_info
-        ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((
-        CORBA::SystemException));
-
-    void CIAO::Container::create_rt_event_channel (void);
 
     // Reference to the ORB
     CORBA::ORB_var orb_;
@@ -147,12 +135,15 @@ namespace CIAO
     // Reference to the POA
     PortableServer::POA_var poa_;
 
-    // Reference to the Root POA
-    PortableServer::POA_var root_poa_;
+    ACE_Hash_Map_Manager<CIAO_Events::CONNECTION_ID,
+                         CIAO_Events::EventServiceBase *,
+                         ACE_Null_Mutex> event_service_map_;
 
-    // Map of CIAO event services
-    ACE_Hash_Map_Manager<long, CIAO_EventServiceBase *>
-      event_services_map;
+    ACE_Hash_Map_Manager<CIAO_Events::CONNECTION_ID,
+                         CIAO_Events::EventServiceInfo,
+                         ACE_Null_Mutex> event_info_map_;
+
+    CIAO_Events::Events_Manager events_manager_;
   };
 
   class CIAO_SERVER_Export Session_Container : public Container

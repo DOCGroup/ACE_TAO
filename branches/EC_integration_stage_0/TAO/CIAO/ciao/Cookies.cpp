@@ -123,6 +123,7 @@ CIAO::ObjectId_Cookie::get_cookie (ACE_ENV_SINGLE_ARG_DECL)
   return &this->cookieValue ();
 }
 
+/*
 CIAO::EventServiceInfo_Cookie::EventServiceInfo_Cookie ()
 {
 
@@ -133,14 +134,14 @@ CIAO::EventServiceInfo_Cookie::~EventServiceInfo_Cookie ()
 
 }
 
-CIAO::EventServiceInfo_Cookie::EventServiceInfo_Cookie (const CIAO::EventServiceInfo &info)
+CIAO::EventServiceInfo_Cookie::EventServiceInfo_Cookie (const CIAO::CIAO_EventServiceInfo &info)
 {
   this->cookieValue ().length (sizeof (info));
   ACE_OS::memcpy (this->cookieValue ().get_buffer (0), (void *)&info, this->cookieValue ().length ());
 }
 
 int
-CIAO::EventServiceInfo_Cookie::insert (const CIAO::EventServiceInfo &info)
+CIAO::EventServiceInfo_Cookie::insert (const CIAO::CIAO_EventServiceInfo &info)
 {
   this->cookieValue ().length (sizeof (info));
   ACE_OS::memcpy (this->cookieValue ().get_buffer (0), (void *)&info, this->cookieValue ().length ());
@@ -149,7 +150,7 @@ CIAO::EventServiceInfo_Cookie::insert (const CIAO::EventServiceInfo &info)
 
 int
 CIAO::EventServiceInfo_Cookie::extract (::Components::Cookie *ck,
-                                        CIAO::EventServiceInfo &info)
+                                        CIAO::CIAO_EventServiceInfo &info)
 {
   CIAO::Cookie *c = CIAO::Cookie::_downcast (ck);
 
@@ -161,7 +162,7 @@ CIAO::EventServiceInfo_Cookie::extract (::Components::Cookie *ck,
   if (x == 0)
     return -1;
 
-  info = *((CIAO::EventServiceInfo *) x->get_buffer ());
+  info = *((CIAO::CIAO_EventServiceInfo *) x->get_buffer ());
   return 0;
 }
 
@@ -181,3 +182,4 @@ CIAO::EventServiceInfo_Cookie::get_cookie (ACE_ENV_SINGLE_ARG_DECL)
 {
   return &this->cookieValue ();
 }
+*/

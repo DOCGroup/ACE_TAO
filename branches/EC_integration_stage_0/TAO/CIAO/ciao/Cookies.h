@@ -114,6 +114,7 @@ namespace CIAO
    *
    * @brief A CIAO internal Cookie valuetype implementation.
    */
+  /*
   class CIAO_CONTAINER_Export EventServiceInfo_Cookie
     : public virtual OBV_CIAO::Cookie
   {
@@ -124,16 +125,16 @@ namespace CIAO
     EventServiceInfo_Cookie ();
 
     /// Initialize a @c Cookie with an object reference.
-    EventServiceInfo_Cookie (const CIAO::EventServiceInfo &info);
+    EventServiceInfo_Cookie (const CIAO::CIAO_EventServiceInfo &info);
 
     virtual ::CORBA::OctetSeq * get_cookie (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
     ~EventServiceInfo_Cookie ();
 
-    int insert (const CIAO::EventServiceInfo &info);
+    int insert (const CIAO::CIAO_EventServiceInfo &info);
 
     static int extract (::Components::Cookie *ck,
-                        CIAO::EventServiceInfo &info);
+                        CIAO::CIAO_EventServiceInfo &info);
   };
 
   class EventServiceInfo_Cookie_init : public virtual ::Components::Cookie_init
@@ -146,6 +147,7 @@ namespace CIAO
 
     virtual CORBA::ValueBase * create_for_unmarshal (void);
   };
+  */
 }
 
 #if defined (__ACE_INLINE__)

@@ -252,7 +252,7 @@ namespace CIAO_GLUE_BasicSP
   ACE_THROW_SPEC ((CORBA::SystemException))
   {
     this->container_->_ciao_push_event (ev,
-                                        this->push_out_avail_cookie_
+                                        0301
                                         ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
 
@@ -288,31 +288,28 @@ namespace CIAO_GLUE_BasicSP
   ::CORBA::SystemException,
   ::Components::ExceededConnectionLimit))
   {
-    if (this->out_avail_service_cookie_ == 0)
-      {
-        this->out_avail_service_cookie_ =
-          this->container_->_ciao_specify_event_service (
-            "DataAvailable",
-            "out_avail",
-            "RTEC"
-            ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK;
-      }
-
-    if (this->push_out_avail_cookie_ == 0)
-      {
-        this->push_out_avail_cookie_ =
-          this->container_->_ciao_connect_event_supplier (
-            this->out_avail_service_cookie_
-            ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK;
-      }
-
-    return this->container_->_ciao_connect_event_consumer (
-      c,
-      this->out_avail_service_cookie_
-      ACE_ENV_ARG_PARAMETER);
+    CIAO_Events::Supplier_Config_var supplier_config =
+      this->container_->_ciao_create_event_supplier_config ("RTEC" ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
+    supplier_config->set_supplier_id (0301 ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+
+    CIAO_Events::Consumer_Config_var consumer_config =
+      this->container_->_ciao_create_event_consumer_config ("RTEC" ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+    consumer_config->set_supplier_id (0301 ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+    consumer_config->set_consumer_id (0302 ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+    consumer_config->set_consumer (c ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+
+    this->container_->_ciao_connect_event_supplier (supplier_config.in () ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+    this->container_->_ciao_connect_event_consumer (consumer_config.in () ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+
+    return 0;
 
     /*
 
@@ -343,7 +340,7 @@ namespace CIAO_GLUE_BasicSP
   ::Components::InvalidConnection))
   {
 
-    this->container_->_ciao_disconnect_event_consumer (ck ACE_ENV_ARG_PARAMETER);
+    this->container_->_ciao_disconnect_event_consumer (0302 ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
 
     return ::BasicSP::DataAvailableConsumer::_nil ();
