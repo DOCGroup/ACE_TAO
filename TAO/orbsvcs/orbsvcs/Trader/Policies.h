@@ -237,18 +237,6 @@ public:
   // Return the request_id passed to the query method across a link to
   // another trader. 
   
-  // = Return the limits applied.  
-  CosTrading::PolicyNameSeq* limits_applied (void);
-  // BEGIN SPEC
-  // If any cardinality or other limits were applied by one or more
-  // traders in responding to a particular query, then the
-  // "limits_applied" parameter will contain the names of the policies
-  // which limited the query. The sequence of names returned in
-  // "limits_applied" from any federated or proxy queries must be
-  // concatenated onto the names of limits applied locally and
-  // returned. 
-  // END SPEC
-
   CosTrading::PolicySeq* policies_to_forward (void);
   // Policies to forward to the next trader in a directed federated query.
   
@@ -263,7 +251,6 @@ public:
 private:
 
   typedef vector <CosTrading::Policy*> POL_VECTOR;
-  typedef set <string, less<string> > POL_SET;
     
   CORBA::ULong ulong_prop (POLICY_TYPE pol,
 			   CORBA::Environment& _env)
@@ -274,10 +261,7 @@ private:
 			       CORBA::Environment& _env)
     TAO_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch));
   // Reconcile a Boolean property with its debault.
- 
-  POL_SET limits_;
-  // The policies employed to date.
-  
+   
   POL_VECTOR policies_;
   // The policies indexable from the enumerated type.
   

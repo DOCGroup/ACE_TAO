@@ -102,6 +102,26 @@ TAO_Trader_Base::is_valid_identifier_name (const char* ident)
   return return_value;
 }
 
+int
+operator< (const SERVICE_TYPE_REPOS::IncarnationNumber &l,
+	   const SERVICE_TYPE_REPOS::IncarnationNumber &r)
+{
+  if (l.high < r.high)
+    return 1;
+  else if (l.high == r.high) 
+    return (l.low < r.low);
+  else
+    return 0;
+}
+
+
+int
+operator> (const SERVICE_TYPE_REPOS::IncarnationNumber &l,
+	   const SERVICE_TYPE_REPOS::IncarnationNumber &r)
+{
+  return (r < l);
+}
+
 #include "Trader_T.h"
 
 TAO_Trader_Factory::TAO_TRADER*

@@ -24,6 +24,8 @@
 
 #include "Attributes.h"
 
+typedef CosTradingRepos::ServiceTypeRepository SERVICE_TYPE_REPOS;
+
 // Forward Declaration.
 class TAO_Trader_Base;
 
@@ -105,6 +107,14 @@ protected:
   TAO_Link_Attributes_Impl link_attributes_;
   // Stores and allows access/modification of trader's link attributes.
 };
+
+int
+operator> (const SERVICE_TYPE_REPOS::IncarnationNumber &l,
+	   const SERVICE_TYPE_REPOS::IncarnationNumber &r);
+
+int
+operator< (const SERVICE_TYPE_REPOS::IncarnationNumber &l,
+	   const SERVICE_TYPE_REPOS::IncarnationNumber &r);
 
 
 #endif /* TAO_TRADER_BASE_H */

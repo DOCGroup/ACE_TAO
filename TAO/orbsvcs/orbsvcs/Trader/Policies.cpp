@@ -132,8 +132,6 @@ TAO_Policies::ulong_prop (POLICY_TYPE pol,
 
       if (max_value < return_value)
 	return_value = max_value;
-      else
-	this->limits_.insert (string(POLICY_NAMES[pol]));
     }
   
   return return_value;
@@ -200,8 +198,6 @@ TAO_Policies::boolean_prop (POLICY_TYPE pol,
 
       if (def_value == CORBA::B_FALSE)
 	return_value = CORBA::B_FALSE;
-      else
-	this->limits_.insert (string (POLICY_NAMES[pol]));
     }
   else
     return_value = def_value;
@@ -259,7 +255,6 @@ TAO_Policies::starting_trader (CORBA::Environment& _env)
 	{
 	  ACE_NEW_RETURN (trader_name, CosTrading::TraderName, 0);
 	  //	  value >>= *trader_name;
-	  this->limits_.insert (string (POLICY_NAMES[STARTING_TRADER]));
 	}
     }
 
@@ -291,15 +286,11 @@ TAO_Policies::link_follow_rule (CORBA::Environment& _env)
 	;
 
       if (return_value > max_follow_policy)
-	{
-	  this->limits_.insert (string (POLICY_NAMES[LINK_FOLLOW_RULE]));
-	  return_value = max_follow_policy;
-	}
+	return_value = max_follow_policy;
     }
 
   return return_value;
 }
-
 
 CosTrading::FollowOption
 TAO_Policies::link_follow_rule (const char* link_name,
@@ -335,8 +326,9 @@ TAO_Policies::link_follow_rule (const char* link_name,
 	    TAO_THROW_RETURN (CosTrading::Lookup::PolicyTypeMismatch (*policy),
 			      return_value);
 	  else
-	    //	    value >>= query_link_follow_rule;
-	    ;
+	    {
+	      //	    value >>= query_link_follow_rule;
+	    }
 
 	  return_value = (query_link_follow_rule < trader_max_follow_policy) 
 	    ? query_link_follow_rule : trader_max_follow_policy;
@@ -383,26 +375,9 @@ TAO_Policies::request_id (CORBA::Environment& _env)
 	  ACE_NEW_RETURN (request_id, CosTrading::Admin::OctetSeq, 0);
 	  //	value >>= *request_id;
 	}
-	;
     }
 
   return request_id;
-}
-
-CosTrading::PolicyNameSeq*
-TAO_Policies::limits_applied (void)
-{
-  int i = 0;
-  CORBA::ULong size = this->limits_.size ();
-  CosTrading::PolicyName* temp =
-    CosTrading::PolicyNameSeq::allocbuf (size);
-
-  for (POL_SET::iterator p_iter = this->limits_.begin();
-       p_iter != this->limits_.end ();
-       p_iter++)  
-    temp[i++] = CORBA::string_dup ((*p_iter).data ());
-  
-  return new CosTrading::PolicyNameSeq (i, i, temp, 1);
 }
 
 CosTrading::PolicySeq*
