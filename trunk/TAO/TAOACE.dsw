@@ -959,6 +959,9 @@ Package=<4>
     Begin Project Dependency
     Project_Dep_Name gperf_lib
     End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ACE DLL
+    End Project Dependency
 }}}
 
 ###############################################################################

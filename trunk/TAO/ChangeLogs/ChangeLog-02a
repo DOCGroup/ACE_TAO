@@ -1,3 +1,28 @@
+Mon Mar 19 15:09:52 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* examples/POA/On_Demand_Loading/Server_Manager.cpp (create_activator): 
+	* examples/POA/On_Demand_Loading/Server_Manager.cpp (create_locator): 
+	* examples/POA/Loader/Server_Manager.cpp (create_activator): 
+	* examples/POA/Loader/Server_Manager.cpp (create_locator): 
+
+	  Fixed Servant Managers and Servant Activators leaks.  
+	
+	* tao/ORB_Core.cpp (collocation_strategy): When looking for a
+	  valid servant ORB, the following code was used:
+
+	  stub->servant_orb_ptr () != 0
+
+	  Unfortunately, servant_orb_ptr() duplicated the ORB.  Correct
+	  solution is to use:
+
+	  stub->servant_orb_var ().in () != CORBA::ORB::_nil ()
+
+	* tests/POA/wait_for_completion/wait_for_completion.cpp (main):
+	  The servant was not removed from the POA at the end of the
+	  program.  When the POA died in the static destructors, it tried
+	  to reach for the dead servant causing a seg fault.  This was
+	  fixed by destroying the POA before the servant died.
+
 Mon Mar 19 14:20:38 2001  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/tests/Makefile (DIRS):
