@@ -1,3 +1,9 @@
+Wed Mar 22 12:01:22 2000  Steve Huston  <shuston@riverace.com>
+
+        * ace/NT_Service.{h i cpp}: Added support for operating on services
+          on a host other than the local host. Thanks to Stephen Moon
+          <smoon@oxmol.co.uk> for adding this new functionality!
+
 Wed Mar 22 10:19:47 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Thread.i: In ACE_Thread::setcancelstate() the code is
