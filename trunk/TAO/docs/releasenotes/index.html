@@ -1011,16 +1011,100 @@ encounter an object whose interface was not known when the program was
 compiled, yet, be able to determine what operations are valid on the
 object and make invocations on it using the DII.
 
-<p>Current Status: TDB
-<p>Known Issues: TDB
-<p>Recent Work: TDB
-<p>Future Work: TDB
+<p>Current Status (as of July 6, 2000): 
+<ul>
+
+<li> Implementation of Interface.idl completed, for types fully supported
+by TAO. This excludes valuetypes and all types related to components. </li><p>
+
+<li> TypeCodeFactory methods completed except for the types mentioned above
+and for recursive types.</li><p>
+
+<li> Test code for Interface.idl methods and for
+resolve_initial_references ("InterfaceRespository") completed.</li><p>
+
+</ul>
+
+<p>Known Issues:
+<ul>
+<li> With the chosen design, calling move() on a Contained IR object will
+invalidate the object reference, since the object ID is based on the path
+to the object in the database. This is not expected to be a serious problem
+in the forthcoming implementation of automatic IFR administration, but users
+should be aware of this, if they attempt to write their own IFR administration
+code.</li><p>
+
+</ul>
+
+<p>Recent Work:
+<ul>
+<li> The Interface Repository Service has been added to TAO, in 
+ACE_wrappers/TAO/orbsvcs/IFR_Service. The implementation follows the
+expanded IDL found in CORBA Components vol. III. The database used to store
+IR objects is an ACE tool called ACE_Configuration, written by
+<a href="mailto:chafey@stentorsoft.com">Chris Hafey</a>. This 
+class represents its contents to the user as a tree of hash maps.
+By specifying a disk file to read from at startup, the storage may
+be made persistent. There is also an option to use a win32 registry
+to store the data, although persistence is not available with this
+option.</li><p>
+
+<li> The create_*_tc functions have been moved from the ORB (CORBA 2.x) to
+a new class TypeCodeFactory (CORBA 3.0). The TypeCodeFactory is built as
+a separate DLL, and can be dynamically loaded into a running TAO ORB
+by calling resolve_initial_references ("TypeCodeFactory").</li><p>
+
+<li> Several methods have been added to class TypeCodeFactory, including
+create_exception_tc, create_alias_tc, create_native_tc, create_wstring_tc,
+create_value_box_tc, and create_union_tc. Union typecodes with both
+multiple and default case labels have been tested.</li><p>
+
+<li> Test code for the IFR service has been added in the directory
+ACE_wrappers/TAO/orbsvcs/tests/InterfaceRepo/IFR_Test.</li><p>
+
+<li> Code to support the acquisition of an object reference for the
+Interface Repository using multicast or 
+resolve_initial_references ("InterfaceRepository") has been added to
+TAO. Multicast has not yet been tested.</li><p>
+
+</ul>
+
+<p>Future Work:
+<ul>
+<li> Implement administration of the IFR. The current plan is to modify the
+IDL compiler to generate an XML file in a special directory for each IDL
+file processed. Then these XML files can be parsed and the IFR populated
+with their contents at any time.</li><p>
+
+<li> Implement the CORBA::Object methods get_interface_def (CORBA 3.0) and
+get_interface (CORBA 2.x), the latter for backward compatibility.</li><p>
+
+<li> Run tests on a persistent IFR.</li><p>
+
+<li> Test the IFR's IOR availability through multicast.</li><p>
+
+<li> Add support for recursive structs and unions to the IFR, and for
+their typecodes to the TypeCodeFactory.</li><p>
+
+<li> Make the IFR thread-safe by adding read/write locks to its methods.</li><p>
+
+<li> When Object By Value is fully supported in TAO (support is rudimentary at
+present), implement methods for classes ValueDef and ValueMemberDef in the IFR,
+and implement create_value_tc in TypeCodeFactory.</li><p>
+
+<li> When component support is added to TAO, implement methods for ComponentDef,
+ComponentRepository and related classes in the IFR, and create_component_tc and
+create_home_tc in TypeCodeFactory.</li><p>
+
+<li> Add pluggability for commonly used OTS databases.</li><p>
+
+</ul>
+
 <p>
 
 <hr>
 
 <br><!--#include virtual="OBV.html" -->
-<hr>
 
 <h3>
 <a NAME="nservices"></a>CORBA Naming Service and Interoperable Naming Service</h3>
