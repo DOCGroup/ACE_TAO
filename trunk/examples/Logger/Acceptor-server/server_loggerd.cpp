@@ -228,4 +228,11 @@ template class ACE_Test_and_Set<ACE_Null_Mutex, sig_atomic_t>;
 #pragma instantiate ACE_Singleton<Options, ACE_Null_Mutex>
 #pragma instantiate ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 #pragma instantiate ACE_Test_and_Set<ACE_Null_Mutex, sig_atomic_t>
+#elif defined (__GNUC__) && defined (_AIX)
+template ACE_Singleton<ACE_Reactor, ACE_Null_Mutex> *
+  ACE_Singleton<ACE_Reactor, ACE_Null_Mutex>::singleton_;
+template ACE_Singleton<Options, ACE_Null_Mutex> *
+  ACE_Singleton<Options, ACE_Null_Mutex>::singleton_;
+template ACE_Singleton<ACE_Test_and_Set <ACE_Null_Mutex, sig_atomic_t>, ACE_Null_Mutex> *
+  ACE_Singleton<ACE_Test_and_Set <ACE_Null_Mutex, sig_atomic_t>, ACE_Null_Mutex>::singleton_;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -1,3 +1,15 @@
+Mon Dec 30 18:44:20  Steve Huston  <shuston@riverace.com>
+
+        * examples/C++NPv2/TP_Logging_Server.cpp:
+        * examples/IPC_SAP/SOCK_SAP/CPP-inclient.cpp:
+        * examples/IPC_SAP/SOCK_SAP/CPP-inserver-fancy.cpp:
+        * examples/Logger/Acceptor-server/server_loggerd.cpp:
+        * examples/Logger/simple-server/server_loggerd.cpp:
+        * examples/Threads/auto_event.cpp:
+        * examples/Threads/tss2.cpp:
+        * performance-tests/Misc/test_singleton.cpp:
+          More singleton_ instantiations for g++ on AIX.
+
 Mon Dec 30 18:11:39 2002  Steve Huston  <shuston@riverace.com>
 
         * apps/drwho/File_Manager.cpp:  Add explicit instantiation of
