@@ -47,17 +47,22 @@ class ACE_Export ACE_Registry
 {
 public:
   
+// International string
 #if defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB) && \
             (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB != 0)
-
+#if defined (ACE_LACKS_STL_DEFAULT_TEMPLATE_PARAMETER) && \
+	    (ACE_LACKS_STL_DEFAULT_TEMPLATE_PARAMETER != 0)
+  typedef std::basic_string<TCHAR, char_traits<TCHAR>, allocator<TCHAR> > Istring;
+#else /* ACE_LACKS_STL_DEFAULT_TEMPLATE_PARAMETER */
   typedef std::basic_string<TCHAR> Istring;
-  // International string
-
-#else
-
+#endif /* ACE_LACKS_STL_DEFAULT_TEMPLATE_PARAMETER */
+#else /* ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB */
+#if defined (ACE_LACKS_STL_DEFAULT_TEMPLATE_PARAMETER) && \
+	    (ACE_LACKS_STL_DEFAULT_TEMPLATE_PARAMETER != 0)
+  typedef basic_string<TCHAR, char_traits<TCHAR>, allocator<TCHAR> > Istring;
+#else /* ACE_LACKS_STL_DEFAULT_TEMPLATE_PARAMETER */
   typedef basic_string<TCHAR> Istring;
-  // International string
-
+#endif /* ACE_LACKS_STL_DEFAULT_TEMPLATE_PARAMETER */
 #endif /* ACE_HAS_STD_NAMESPACE_FOR_STDCPP_LIB */
 
   struct ACE_Export Name_Component 
@@ -68,17 +73,22 @@ public:
   // The <id_> field is used,
   // but the <kind_> field is currently ignored
 
+// A Name is an ordered collections of components (ids)
 #if defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB) && \
             (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB != 0)
-
+#if defined (ACE_LACKS_STL_DEFAULT_TEMPLATE_PARAMETER) && \
+	    (ACE_LACKS_STL_DEFAULT_TEMPLATE_PARAMETER != 0)
+  typedef std::vector<Name_Component, allocator<Name_Component> > Name;
+#else /* ACE_LACKS_STL_DEFAULT_TEMPLATE_PARAMETER */
   typedef std::vector<Name_Component> Name;
-  // A Name is an ordered collections of components (ids)
-
-#else
-
+#endif /* ACE_LACKS_STL_DEFAULT_TEMPLATE_PARAMETER */
+#else /* ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB */
+#if defined (ACE_LACKS_STL_DEFAULT_TEMPLATE_PARAMETER) && \
+	    (ACE_LACKS_STL_DEFAULT_TEMPLATE_PARAMETER != 0)
+  typedef vector<Name_Component, allocator<Name_Component> > Name;
+#else /* ACE_LACKS_STL_DEFAULT_TEMPLATE_PARAMETER */
   typedef vector<Name_Component> Name;
-  // A Name is an ordered collections of components (ids)
-
+#endif /* ACE_LACKS_STL_DEFAULT_TEMPLATE_PARAMETER */
 #endif /* ACE_HAS_STD_NAMESPACE_FOR_STDCPP_LIB */
 
   static LPCTSTR STRING_SEPARATOR;
@@ -126,17 +136,22 @@ public:
     // A binding has a name and a type
   };
   
+// A list of bindings
 #if defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB) && \
             (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB != 0)
-
+#if defined (ACE_LACKS_STL_DEFAULT_TEMPLATE_PARAMETER) && \
+	    (ACE_LACKS_STL_DEFAULT_TEMPLATE_PARAMETER != 0)
+  typedef std::vector<Binding, allocator<Binding> > Binding_List;
+#else /* ACE_LACKS_STL_DEFAULT_TEMPLATE_PARAMETER */
   typedef std::vector<Binding> Binding_List;
-  // A list of bindings
-
-#else
-
+#endif /* ACE_LACKS_STL_DEFAULT_TEMPLATE_PARAMETER */
+#else /* ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB */
+#if defined (ACE_LACKS_STL_DEFAULT_TEMPLATE_PARAMETER) && \
+	    (ACE_LACKS_STL_DEFAULT_TEMPLATE_PARAMETER != 0)
+  typedef vector<Binding, allocator<Binding> > Binding_List;
+#else /* ACE_LACKS_STL_DEFAULT_TEMPLATE_PARAMETER */
   typedef vector<Binding> Binding_List;
-  // A list of bindings
-
+#endif /* ACE_LACKS_STL_DEFAULT_TEMPLATE_PARAMETER */
 #endif /* ACE_HAS_STD_NAMESPACE_FOR_STDCPP_LIB */
 
   class Binding_Iterator;
@@ -537,15 +552,7 @@ public:
 private:
   static int is_local_host (LPCTSTR machine_name);
   // Check if <machine_name> is the local host
-
 };
-
-#if (_MSC_VER) && (_MSC_VER > 1020) && \
-    (ACE_HAS_STANDARD_CPP_LIBRARY != 0)
-  typedef ACE_Registry::Name_Component Name_Component;
-  typedef ACE_Registry::Binding Binding;
-  const int NPOS = ACE_Registry::Istring::npos;
-#endif
 
 #endif /* ACE_WIN32 */
 #endif /* ACE_REGISTRY_H */

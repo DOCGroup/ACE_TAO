@@ -148,6 +148,11 @@
                                 #undef ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB
                         #endif /* ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB */
                         #define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 0
+
+                        #if defined (ACE_LACKS_STL_DEFAULT_TEMPLATE_PARAMETER)
+                                #undef ACE_LACKS_STL_DEFAULT_TEMPLATE_PARAMETER
+                        #endif /* ACE_LACKS_STL_DEFAULT_TEMPLATE_PARAMETER */
+                        #define ACE_LACKS_STL_DEFAULT_TEMPLATE_PARAMETER 1
                 #endif /* (_MSC_VER > 1020) */
 	#endif /* _MSC_VER */
 

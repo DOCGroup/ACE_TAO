@@ -22,7 +22,7 @@
 
 // Separator for components in a name 
 /* static */
-LPCTSTR ACE_Registry::STRING_SEPARATOR = __TEXT ("\\");
+      LPCTSTR ACE_Registry::STRING_SEPARATOR = __TEXT ("\\");
 
 // Simple binding constructor
 ACE_Registry::Binding::Binding ()
@@ -608,12 +608,12 @@ ACE_Registry::make_name (const Istring &string)
   Name name;
 
   // Rememeber: NPOS is -1
-  while (new_position != NPOS)
+  while (new_position != Istring::npos)
     {
       Name_Component component;
       // Find the separator
       new_position = string.find (ACE_Registry::STRING_SEPARATOR, new_position);
-      if (new_position != NPOS)
+      if (new_position != Istring::npos)
 	// If we have not gone past the end
 	{
 	  // Get the substring
@@ -721,7 +721,7 @@ ACE_Registry::Naming_Context::name (Istring &name)
 int 
 ACE_Registry::Naming_Context::list (u_long how_many, 
 				    Binding_List &list, 
-				    Binding_Iterator &iterator)
+				    Binding_Iterator &iter)
 {
   // Empty list
   static const ACE_Registry::Binding_List empty_list;
@@ -729,16 +729,16 @@ ACE_Registry::Naming_Context::list (u_long how_many,
   list = empty_list;
 
   // Correctly initalize the iterator  
-  iterator.reset ();  
+  iter.reset ();  
 
   // Make sure that the iterator uses <this> naming context
-  iterator.naming_context (*this);
+  iter.naming_context (*this);
   
   // Start iterations from the objects
-  iterator.current_enumeration (iterator.object_iteration_);
+  iter.current_enumeration (iter.object_iteration_);
 
   // Get the next <how_many> values
-  long result = iterator.next_n (how_many,
+  long result = iter.next_n (how_many,
 				 list);
   return result;
 }
@@ -804,27 +804,27 @@ ACE_Registry::Binding_Iterator::Iteration_State::reset ()
 }
 
 
-ACE_Registry::Binding_Iterator::Iteration_State::Iteration_State (Binding_Iterator &iterator)
-  : parent_ (&iterator),
+ACE_Registry::Binding_Iterator::Iteration_State::Iteration_State (Binding_Iterator &iter)
+  : parent_ (&iter),
     index_ (0)
 {
 }
 
  
-ACE_Registry::Binding_Iterator::Object_Iteration::Object_Iteration (Binding_Iterator &iterator)
-  : Iteration_State (iterator)
+ACE_Registry::Binding_Iterator::Object_Iteration::Object_Iteration (Binding_Iterator &iter)
+  : Iteration_State (iter)
 {
 }
 
  
-ACE_Registry::Binding_Iterator::Context_Iteration::Context_Iteration (Binding_Iterator &iterator)
-  : Iteration_State (iterator)
+ACE_Registry::Binding_Iterator::Context_Iteration::Context_Iteration (Binding_Iterator &iter)
+  : Iteration_State (iter)
 {
 }
 
  
-ACE_Registry::Binding_Iterator::Iteration_Complete::Iteration_Complete (Binding_Iterator &iterator)
-  : Iteration_State (iterator)
+ACE_Registry::Binding_Iterator::Iteration_Complete::Iteration_Complete (Binding_Iterator &iter)
+  : Iteration_State (iter)
 {
 }
 
