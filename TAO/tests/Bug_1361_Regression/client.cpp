@@ -19,23 +19,23 @@ class Client_Timer : public ACE_Event_Handler
 {
 public:
   /// Constructor
-  Client_Timer (ACE_Reactor * reactor) 
+  Client_Timer (ACE_Reactor * reactor)
     : ACE_Event_Handler (reactor)
   {
   }
 
-  void activate (void) 
+  void activate (void)
   {
     ACE_Time_Value tv (4, 20000);
     this->reactor()->schedule_timer (this, 0, tv, tv);
   }
 
   /// Thread entry point
-  int handle_timeout(ACE_Time_Value const & tv, void const *)
+  int handle_timeout (ACE_Time_Value const & , void const *)
   {
     // kill the application
-    raise(9);
-    this->reactor()->cancel_timer(this);
+    raise (9);
+    this->reactor ()->cancel_timer (this);
     return 0;
   }
   int handle_close (ACE_HANDLE, ACE_Reactor_Mask)
@@ -57,8 +57,8 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA"
-                                        ACE_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("RootPOA"
+                                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POA_var root_poa =
@@ -146,23 +146,33 @@ main (int argc, char *argv[])
       poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      ORB_Task worker( orb.in( ) );
-      worker.activate(THR_NEW_LWP | THR_JOINABLE, serverthreads);
+      ORB_Task worker (orb.in());
+      worker.activate (THR_NEW_LWP | THR_JOINABLE,
+                       serverthreads);
 
-      try {
-        for(int i = serverthreads; i; --i) {
-          server->start_task(echo.in()
-                             ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_EX (BL)
+        {
+          for(int i = serverthreads; i; --i)
+            {
+              server->start_task(echo.in()
+                                 ACE_ENV_ARG_PARAMETER);
+              ACE_TRY_CHECK_EX (BL);
+            }
         }
-      } catch (...) {
-      }
+      ACE_CATCHALL
+        {
+        }
+      ACE_ENDTRY;
 
-      Client_Timer * task = new Client_Timer(orb->orb_core()->reactor());
-      task->activate();
+      Client_Timer * task = new Client_Timer (orb->orb_core()->reactor());
+      task->activate ();
 
-      orb->run(ACE_ENV_ARG_PARAMETER);
-      worker.wait();
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) client - event loop finished\n"));
+      orb->run (ACE_ENV_ARG_PARAMETER);
+
+      worker.wait ();
+
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%P|%t) client - event loop finished\n"));
 
       // Actually the code here should never be reached.
       root_poa->destroy (1, 1
