@@ -1,6 +1,7 @@
 Fri Nov 22 15:30:28 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_ami_pre_proc.cpp:
+        * TAO_IDL/be_include/be_visitor_ami_pre_proc.h:
 
           Fixed the creation of the inheritance list for the implied
           AMI reply handler interface. It now inherits from the
