@@ -26,7 +26,7 @@ ACE_SOCK_IO::dump (void) const
 
 ssize_t
 ACE_SOCK_IO::recvv (iovec *io_vec,
-                    const ACE_Time_Value *timeout)
+                    const ACE_Time_Value *timeout) const
 {
   ACE_TRACE ("ACE_SOCK_IO::recvv");
 #if defined (FIONREAD)
@@ -147,8 +147,8 @@ ACE_SOCK_IO::recv (size_t n, ...) const
       iovp[i].iov_len = va_arg (argp, ssize_t);
     }
 
-  ssize_t result = ACE_OS::recvv (this->get_handle (), 
-                                  iovp, 
+  ssize_t result = ACE_OS::recvv (this->get_handle (),
+                                  iovp,
                                   total_tuples);
 #if !defined (ACE_HAS_ALLOCA)
   delete [] iovp;

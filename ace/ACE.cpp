@@ -8,6 +8,7 @@
 #include "ace/Object_Manager.h"
 #include "ace/SString.h"
 #include "ace/Version.h"
+#include "ace/Message_Block.h"
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/ACE.i"
@@ -1066,41 +1067,339 @@ ACE::basename (const wchar_t *pathname, wchar_t delim)
 }
 #endif /* ACE_HAS_UNICODE */
 
-// Send N char *ptrs and int lengths.  Note that the char *'s precede
-// the ints (basically, an varargs version of writev).  The count N is
-// the *total* number of trailing arguments, *not* a couple of the
-// number of tuple pairs!
+ssize_t
+ACE::recv (ACE_HANDLE handle,
+           void *buf,
+           size_t len,
+           int flags,
+           const ACE_Time_Value *timeout)
+{
+  if (timeout == 0)
+    return ACE_OS::recv (handle, (char *) buf, len, flags);
+  else
+    {
+#if defined (ACE_HAS_RECV_TIMEDWAIT)
+      ACE_Time_Value copy = *timeout;
+      copy += ACE_OS::gettimeofday ();
+      timespec_t ts = copy;
+      return ::recv_timedwait (handle, buf, len, flags, &ts);
+#else
+      int val = 0;
+      if (ACE::enter_recv_timedwait (handle, timeout, val) ==-1)
+        return -1;
+      else
+        {
+          ssize_t bytes_transferred = ACE_OS::recv (handle, (char *) buf, len, flags);
+          ACE::restore_non_blocking_mode (handle, val);
+          return bytes_transferred;
+        }
+#endif /* ACE_HAS_RECV_TIMEDWAIT */
+    }
+}
 
 ssize_t
-ACE::send (ACE_HANDLE handle, size_t n, ...)
+ACE::recv (ACE_HANDLE handle,
+           void *buf,
+           size_t n,
+           const ACE_Time_Value *timeout)
 {
-  ACE_TRACE ("ACE_SOCK_IO::send");
-
-  va_list argp;
-  size_t total_tuples = n / 2;
-  iovec *iovp;
-#if defined (ACE_HAS_ALLOCA)
-  iovp = (iovec *) alloca (total_tuples * sizeof (iovec));
-#else
-  ACE_NEW_RETURN (iovp,
-                  iovec[total_tuples],
-                  -1);
-#endif /* !defined (ACE_HAS_ALLOCA) */
-
-  va_start (argp, n);
-
-  for (size_t i = 0; i < total_tuples; i++)
+  if (timeout == 0)
+    return ACE::recv_i (handle, buf, n);
+  else
     {
-      iovp[i].iov_base = va_arg (argp, char *);
-      iovp[i].iov_len = va_arg (argp, ssize_t);
+#if defined (ACE_HAS_READ_TIMEDWAIT)
+      ACE_Time_Value copy = *timeout;
+      copy += ACE_OS::gettimeofday ();
+      timespec_t ts = copy;
+      return ::read_timedwait (handle, buf, n, &ts);
+#else
+      int val = 0;
+      if (ACE::enter_recv_timedwait (handle, timeout, val) == -1)
+        return -1;
+      else
+        {
+          ssize_t bytes_transferred = ACE::recv_i (handle, buf, n);
+          ACE::restore_non_blocking_mode (handle, val);
+          return bytes_transferred;
+        }
+#endif /* ACE_HAS_READ_TIMEDWAIT */
+    }
+}
+
+ssize_t
+ACE::recvmsg (ACE_HANDLE handle,
+              struct msghdr *msg,
+              int flags,
+              const ACE_Time_Value *timeout)
+{
+  if (timeout == 0)
+    return ACE_OS::recvmsg (handle, msg, flags);
+  else
+    {
+#if defined (ACE_HAS_RECVMSG_TIMEDWAIT)
+      ACE_Time_Value copy = *timeout;
+      copy += ACE_OS::gettimeofday ();
+      timespec_t ts = copy;
+      return ::recvmsg_timedwait (handle, msg, flags, &ts);
+#else
+      int val = 0;
+      if (ACE::enter_recv_timedwait (handle, timeout, val) == -1)
+        return -1;
+      else
+        {
+          int bytes_transferred = ACE_OS::recvmsg (handle, msg, flags);
+          ACE::restore_non_blocking_mode (handle, val);
+          return bytes_transferred;
+        }
+#endif /* ACE_HAS_RECVMSG_TIMEDWAIT */
+    }
+}
+
+ssize_t
+ACE::recvfrom (ACE_HANDLE handle,
+               char *buf,
+               int len,
+               int flags,
+               struct sockaddr *addr,
+               int *addrlen,
+               const ACE_Time_Value *timeout)
+{
+  if (timeout == 0)
+    return ACE_OS::recvfrom (handle, buf, len, flags, addr, addrlen);
+  else
+    {
+#if defined (ACE_HAS_RECVFROM_TIMEDWAIT)
+      ACE_Time_Value copy = *timeout;
+      copy += ACE_OS::gettimeofday ();
+      timespec_t ts = copy;
+      return ::recvfrom_timedwait (handle, buf, len, flags, addr, addrlen, &ts);
+#else
+      int val = 0;
+      if (ACE::enter_recv_timedwait (handle, timeout, val) == -1)
+        return -1;
+      else
+        {
+          int bytes_transferred = ACE_OS::recvfrom (handle, buf, len, flags, addr, addrlen);
+          ACE::restore_non_blocking_mode (handle, val);
+          return bytes_transferred;
+        }
+#endif /* ACE_HAS_RECVFROM_TIMEDWAIT */
+    }
+}
+
+ssize_t
+ACE::recv_n (ACE_HANDLE handle,
+             void *buf,
+             size_t len,
+             int flags,
+             const ACE_Time_Value *timeout)
+{
+  if (timeout == 0)
+    return ACE::recv_n_i (handle,
+                          buf,
+                          len,
+                          flags);
+  else
+    return ACE::recv_n_i (handle,
+                          buf,
+                          len,
+                          flags,
+                          timeout);
+}
+
+ssize_t
+ACE::recv_n_i (ACE_HANDLE handle,
+               void *buf,
+               size_t len,
+               int flags)
+{
+  size_t bytes_transferred;
+  ssize_t n;
+
+  for (bytes_transferred = 0;
+       bytes_transferred < len;
+       bytes_transferred += n)
+    {
+      n = ACE_OS::recv (handle,
+                        (char *) buf + bytes_transferred,
+                        len - bytes_transferred,
+                        flags);
+      if (n == -1)
+        {
+          // If blocked, try again.
+          if (errno == EWOULDBLOCK)
+            n = 0;
+
+          //
+          // No timeouts in this version.
+          //
+
+          // Other errors.
+          return -1;
+        }
+      else if (n == 0)
+        return 0;
     }
 
-  ssize_t result = ACE_OS::sendv (handle, iovp, total_tuples);
-#if !defined (ACE_HAS_ALLOCA)
-  delete [] iovp;
-#endif /* !defined (ACE_HAS_ALLOCA) */
-  va_end (argp);
-  return result;
+  return bytes_transferred;
+}
+
+ssize_t
+ACE::recv_n_i (ACE_HANDLE handle,
+               void *buf,
+               size_t len,
+               int flags,
+               const ACE_Time_Value *timeout)
+{
+  int val = 0;
+  ACE::record_and_set_non_blocking_mode (handle, val);
+
+  size_t bytes_transferred;
+  ssize_t n;
+  int error = 0;
+
+  for (bytes_transferred = 0;
+       bytes_transferred < len;
+       bytes_transferred += n)
+    {
+      int result = ACE::handle_read_ready (handle,
+                                           timeout);
+
+      if (result == -1)
+        {
+          // Timed out; return bytes transferred.
+          if (errno == ETIME)
+            break;
+
+          // Other errors.
+          error = 1;
+          break;
+        }
+
+      n = ACE_OS::recv (handle,
+                        (char *) buf + bytes_transferred,
+                        len - bytes_transferred,
+                        flags);
+
+      // Errors (note that errno cannot be EWOULDBLOCK since select()
+      // just told us that data is available to read).
+      if (n == -1 || n == 0)
+        {
+          error = 1;
+          break;
+        }
+    }
+
+  ACE::restore_non_blocking_mode (handle, val);
+
+  if (error)
+    return -1;
+  else
+    return bytes_transferred;
+}
+
+ssize_t
+ACE::recv_n (ACE_HANDLE handle,
+             void *buf,
+             size_t len,
+             const ACE_Time_Value *timeout)
+{
+  if (timeout == 0)
+    return ACE::recv_n_i (handle,
+                          buf,
+                          len);
+  else
+    return ACE::recv_n_i (handle,
+                          buf,
+                          len,
+                          timeout);
+}
+
+ssize_t
+ACE::recv_n_i (ACE_HANDLE handle,
+               void *buf,
+               size_t len)
+{
+  size_t bytes_transferred;
+  ssize_t n;
+
+  for (bytes_transferred = 0;
+       bytes_transferred < len;
+       bytes_transferred += n)
+    {
+      n = ACE::recv_i (handle,
+                       (char *) buf + bytes_transferred,
+                       len - bytes_transferred);
+      if (n == -1)
+        {
+          // If blocked, try again.
+          if (errno == EWOULDBLOCK)
+            n = 0;
+
+          //
+          // No timeouts in this version.
+          //
+
+          // Other errors.
+          return -1;
+        }
+      else if (n == 0)
+        return 0;
+    }
+
+  return bytes_transferred;
+}
+
+ssize_t
+ACE::recv_n_i (ACE_HANDLE handle,
+               void *buf,
+               size_t len,
+               const ACE_Time_Value *timeout)
+{
+  int val = 0;
+  ACE::record_and_set_non_blocking_mode (handle, val);
+
+  size_t bytes_transferred;
+  ssize_t n;
+  int error = 0;
+
+  for (bytes_transferred = 0;
+       bytes_transferred < len;
+       bytes_transferred += n)
+    {
+      int result = ACE::handle_read_ready (handle,
+                                           timeout);
+
+      if (result == -1)
+        {
+          // Timed out; return bytes transferred.
+          if (errno == ETIME)
+            break;
+
+          // Other errors.
+          error = 1;
+          break;
+        }
+
+      n = ACE::recv_i (handle,
+                       (char *) buf + bytes_transferred,
+                       len - bytes_transferred);
+
+      // Errors (note that errno cannot be EWOULDBLOCK since select()
+      // just told us that data is available to read).
+      if (n == -1 || n == 0)
+        {
+          error = 1;
+          break;
+        }
+    }
+
+  ACE::restore_non_blocking_mode (handle, val);
+
+  if (error)
+    return -1;
+  else
+    return bytes_transferred;
 }
 
 // This is basically an interface to ACE_OS::readv, that doesn't use
@@ -1112,8 +1411,6 @@ ACE::send (ACE_HANDLE handle, size_t n, ...)
 ssize_t
 ACE::recv (ACE_HANDLE handle, size_t n, ...)
 {
-  ACE_TRACE ("ACE_SOCK_IO::recv");
-
   va_list argp;
   size_t total_tuples = n / 2;
   iovec *iovp;
@@ -1141,239 +1438,368 @@ ACE::recv (ACE_HANDLE handle, size_t n, ...)
   return result;
 }
 
-// Miscellaneous static methods used throughout ACE.
-
 ssize_t
-ACE::send_n (ACE_HANDLE handle,
-             const void *buf,
-             size_t len,
-             int flags)
+ACE::recvv (ACE_HANDLE handle,
+            iovec *iov,
+            int iovcnt,
+            const ACE_Time_Value *timeout)
 {
-  ACE_TRACE ("ACE::send_n");
-  size_t bytes_written;
-  ssize_t n;
-
-  for (bytes_written = 0; bytes_written < len; bytes_written += n)
-    {
-      n = ACE_OS::send (handle,
-                        (const char *) buf + bytes_written,
-                        len - bytes_written,
-                        flags);
-      if (n == -1)
-        {
-          if (errno == EWOULDBLOCK)
-            n = 0; // Keep trying to send.
-          else
-            return -1;
-        }
-    }
-
-  return bytes_written;
-}
-
-ssize_t
-ACE::recv_n (ACE_HANDLE handle, void *buf, size_t len)
-{
-  ACE_TRACE ("ACE::recv_n");
-  size_t bytes_read;
-  ssize_t n;
-
-  for (bytes_read = 0; bytes_read < len; bytes_read += n)
-    {
-      n = ACE::recv (handle,
-                     (char *) buf + bytes_read,
-                     len - bytes_read);
-      if (n == -1)
-        {
-          if (errno == EWOULDBLOCK)
-            n = 0; // Keep trying to read.
-          else
-            return -1;
-        }
-      else if (n == 0)
-        break;
-    }
-
-  return bytes_read;
-}
-
-ssize_t
-ACE::recv_n (ACE_HANDLE handle, void *buf, size_t len, int flags)
-{
-  ACE_TRACE ("ACE::recv_n");
-  size_t bytes_read;
-  ssize_t n;
-
-  for (bytes_read = 0; bytes_read < len; bytes_read += n)
-    {
-      n = ACE::recv (handle,
-                     (char *) buf + bytes_read,
-                     len - bytes_read,
-                     flags);
-
-      if (n == -1)
-        {
-          if (errno == EWOULDBLOCK)
-            n = 0; // Keep trying to read.
-          else
-            return -1;
-        }
-      else if (n == 0)
-        break;
-    }
-
-  return bytes_read;
-}
-
-int
-ACE::enter_recv_timedwait (ACE_HANDLE handle,
-                           const ACE_Time_Value *timeout,
-                           int &val)
-{
-  // Give value a default value to keep Purify happy!
-  val = 0;
-
   if (timeout == 0)
-    return 0;
-
-#if defined (ACE_HAS_POLL) && defined (ACE_HAS_LIMITED_SELECT)
-
-  struct pollfd fds;
-
-  fds.fd = handle;
-  fds.events = POLLIN;
-  fds.revents = 0;
-
-  int a = ACE_OS::poll (&fds, 1, *timeout);
-
-#else
-  ACE_Handle_Set handle_set;
-  handle_set.set_bit (handle);
-
-  // Wait for input to arrive or for the timeout to elapse.
-  int a = ACE_OS::select (int (handle) + 1,
-                          (fd_set *) handle_set, // read_fds.
-                          (fd_set *) 0, // write_fds.
-                          (fd_set *) 0, // exception_fds.
-                          timeout);
-#endif /* ACE_HAS_POLL && ACE_HAS_LIMITED_SELECT */
-
-   switch ( a )
-   {
-   case 0:  // Timer expired.  return -1
-      errno = ETIME;
-      /* FALLTHRU */
-   case -1: // we got here directly - select() returned -1.
-      return -1;
-   case 1: // OK to read now.
-      /* FALLTHRU */
-   default: // default is case a > 0; return a
-      // really should assert if a != 1
-      //assert( a == 1 );
-      // We need to record whether we are already *in* nonblocking
-      // mode, so that we can correctly reset the state when we're
-      // done.
-      val = ACE::get_flags (handle);
-
-      if (ACE_BIT_DISABLED (val, ACE_NONBLOCK))
-        // Set the handle into non-blocking mode if it's not
-        // already in it.
-        ACE::set_flags (handle, ACE_NONBLOCK);
-      return a;
-   }
-}
-
-void
-ACE::leave_recv_timedwait (ACE_HANDLE handle,
-                           const ACE_Time_Value *timeout,
-                           int val)
-{
-  if (timeout != 0
-      && ACE_BIT_DISABLED (val,
-                           ACE_NONBLOCK))
+    return ACE_OS::recvv (handle, iov, iovcnt);
+  else
     {
-      // Save/restore errno.
-      ACE_Errno_Guard error (errno);
-      // Only disable ACE_NONBLOCK if we weren't in non-blocking mode
-      // originally.
-      ACE::clr_flags (handle, ACE_NONBLOCK);
+#if defined (ACE_HAS_READV_TIMEDWAIT)
+      ACE_Time_Value copy = *timeout;
+      copy += ACE_OS::gettimeofday ();
+      timespec_t ts = copy;
+      return ::readv_timedwait (handle, iov, iovcnt, &ts);
+#else
+      int val = 0;
+      if (ACE::enter_recv_timedwait (handle, timeout, val) == -1)
+        return -1;
+      else
+        {
+          ssize_t bytes_transferred = ACE_OS::recvv (handle, iov, iovcnt);
+          ACE::restore_non_blocking_mode (handle, val);
+          return bytes_transferred;
+        }
+#endif /* ACE_HAS_READV_TIMEDWAIT */
     }
 }
 
-int
-ACE::enter_send_timedwait (ACE_HANDLE handle,
-                           const ACE_Time_Value* timeout,
-                           int &val)
+ssize_t
+ACE::recvv_n (ACE_HANDLE handle,
+              iovec *iov,
+              int iovcnt,
+              const ACE_Time_Value *timeout)
 {
-  // Give value a default value to keep Purify happy!
-  val = 0;
+  if (timeout == 0)
+    return ACE::recvv_n_i (handle,
+                           iov,
+                           iovcnt);
+  else
+    return ACE::recvv_n_i (handle,
+                           iov,
+                           iovcnt,
+                           timeout);
+}
 
-  if (timeout==0)
-    return 0;
+ssize_t
+ACE::recvv_n_i (ACE_HANDLE handle,
+                iovec *iov,
+                int iovcnt)
+{
+  ssize_t bytes_transferred = 0;
 
-#if defined (ACE_HAS_POLL) && defined (ACE_HAS_LIMITED_SELECT)
+  for (int s = 0;
+       s < iovcnt;
+       )
+    {
+      ssize_t n = ACE_OS::recvv (handle,
+                                 iov + s,
+                                 iovcnt - s);
+      if (n == -1)
+        {
+          // If blocked, try again.
+          if (errno == EWOULDBLOCK)
+            n = 0;
 
-  struct pollfd fds;
+          //
+          // No timeouts in this version.
+          //
 
-  fds.fd = handle;
-  fds.events = POLLOUT;
-  fds.revents = 0;
+          // Other errors.
+          return -1;
+        }
+      else if (n == 0)
+        return 0;
 
-  int a = ACE_OS::poll (&fds, 1, *timeout);
+      for (bytes_transferred += n;
+           s < iovcnt
+             && n >= ACE_static_cast (ssize_t,
+                                      iov[s].iov_len);
+           s++)
+        n -= iov[s].iov_len;
 
+      if (n != 0)
+        {
+          char *base = ACE_reinterpret_cast (char *,
+                                             iov[s].iov_base);
+          iov[s].iov_base = base + n;
+          iov[s].iov_len = iov[s].iov_len - n;
+        }
+    }
+
+  return bytes_transferred;
+}
+
+ssize_t
+ACE::recvv_n_i (ACE_HANDLE handle,
+                iovec *iov,
+                int iovcnt,
+                const ACE_Time_Value *timeout)
+{
+  int val = 0;
+  ACE::record_and_set_non_blocking_mode (handle, val);
+
+  ssize_t bytes_transferred = 0;
+  int error = 0;
+
+  for (int s = 0;
+       s < iovcnt;
+       )
+    {
+      int result = ACE::handle_read_ready (handle,
+                                           timeout);
+
+      if (result == -1)
+        {
+          // Timed out; return bytes transferred.
+          if (errno == ETIME)
+            break;
+
+          // Other errors.
+          error = 1;
+          break;
+        }
+
+      ssize_t n = ACE_OS::recvv (handle,
+                                 iov + s,
+                                 iovcnt - s);
+
+      // Errors (note that errno cannot be EWOULDBLOCK since select()
+      // just told us that data is available to read).
+      if (n == -1 || n == 0)
+        {
+          error = 1;
+          break;
+        }
+
+      for (bytes_transferred += n;
+           s < iovcnt
+             && n >= ACE_static_cast (ssize_t,
+                                      iov[s].iov_len);
+           s++)
+        n -= iov[s].iov_len;
+
+      if (n != 0)
+        {
+          char *base = ACE_reinterpret_cast (char *,
+                                             iov[s].iov_base);
+          iov[s].iov_base = base + n;
+          iov[s].iov_len = iov[s].iov_len - n;
+        }
+    }
+
+  ACE::restore_non_blocking_mode (handle, val);
+
+  if (error)
+    return -1;
+  else
+    return bytes_transferred;
+}
+
+ssize_t
+ACE::recv (ACE_HANDLE handle,
+           ACE_Message_Block *message_block,
+           const ACE_Time_Value *timeout)
+{
+  return ACE::recv_i (handle,
+                      message_block,
+                      timeout,
+                      0);
+}
+
+ssize_t
+ACE::recv_n (ACE_HANDLE handle,
+             ACE_Message_Block *message_block,
+             const ACE_Time_Value *timeout)
+{
+  return ACE::recv_i (handle,
+                      message_block,
+                      timeout,
+                      1);
+}
+
+ssize_t
+ACE::recv_i (ACE_HANDLE handle,
+             ACE_Message_Block *message_block,
+             const ACE_Time_Value *timeout,
+             int loop)
+{
+  iovec iov[IOV_MAX];
+  int iovcnt = 0;
+  ssize_t n = 0;
+  ssize_t nbytes = 0;
+  ssize_t recv_size = 0;
+
+  while (message_block != 0)
+    {
+      // Check if this block has any space for incoming data.
+      if (message_block->length () > 0)
+        {
+          // Collect the data in the iovec.
+          iov[iovcnt].iov_base = message_block->rd_ptr ();
+          iov[iovcnt].iov_len  = message_block->length ();
+
+          // Increment iovec counter.
+          iovcnt++;
+
+          // Keep track of the number of bytes for this recv.
+          recv_size += message_block->length ();
+
+          // The buffer is full make a OS call.  @@ TODO find a way to
+          // find IOV_MAX for platforms that do not define it rather
+          // than simply setting IOV_MAX to some arbitrary value such
+          // as 16.
+          if (iovcnt == IOV_MAX)
+            {
+              if (loop)
+                n = ACE::recvv_n (handle,
+                                  iov,
+                                  iovcnt,
+                                  timeout);
+              else
+                n = ACE::recvv (handle,
+                                iov,
+                                iovcnt,
+                                timeout);
+
+              // Errors.
+              if (n <= 0)
+                return n;
+
+              // Success. Add to total bytes transferred.
+              nbytes += n;
+
+              // Reset iovec counter.
+              iovcnt = 0;
+
+              // If we sent everything we had accumulated in the last
+              // call, then keep going.  If it was a partial recv, we
+              // won't continue.
+              if (recv_size == n)
+                recv_size = 0;
+              else
+                break;
+            }
+        }
+
+      // Selection of the next message block: first check the
+      // continuation chain; then look at the next message block in
+      // the queue.
+      if (message_block->cont ())
+        message_block = message_block->cont ();
+      else
+        message_block = message_block->next ();
+    }
+
+  // Check for remaining buffers to be sent.  This will happen when
+  // IOV_MAX is not a multiple of the number of message blocks.
+  if (iovcnt != 0)
+    {
+      n = ACE::recvv (handle,
+                      iov,
+                      iovcnt,
+                      timeout);
+
+      // Errors.
+      if (n <= 0)
+        return n;
+
+      // Success. Add to total bytes transferred.
+      nbytes += n;
+    }
+
+  // Return total bytes transferred.
+  return nbytes;
+}
+
+ssize_t
+ACE::send (ACE_HANDLE handle,
+           const void *buf,
+           size_t n,
+           int flags,
+           const ACE_Time_Value *timeout)
+{
+  if (timeout == 0)
+    return ACE_OS::send (handle, (const char *) buf, n, flags);
+  else
+    {
+#if defined (ACE_HAS_SEND_TIMEDWAIT)
+      ACE_Time_Value copy = *timeout;
+      copy += ACE_OS::gettimeofday();
+      timespec_t ts = copy;
+      return ::send_timedwait (handle, buf, n, flags, &ts);
 #else
-  ACE_Handle_Set handle_set;
-  handle_set.set_bit (handle);
-
-  // On timed writes we always go into select(); only if the
-  // handle is available for writing within the specified amount
-  // of time do we put it in non-blocking mode
-
-  int a = ACE_OS::select (int (handle) + 1,
-                          (fd_set *) 0,
-                          (fd_set *) handle_set,
-                          (fd_set *) 0,
-                          timeout);
-#endif /* ACE_HAS_POLL && ACE_HAS_LIMITED_SELECT */
-
-   switch ( a )
-   {
-   case 0: // Timer expired.
-      errno = ETIME;
-      /* FALLTHRU */
-   case -1: // we got here directly - select() returned -1.
-      return -1;
-   case 1: // Ok to write now.
-      /* FALLTHRU */
-   default: // default is case a > 0; return a
-      // really should assert if a != 1
-      //assert( a == 1 );
-      // We need to record whether we are already *in* nonblocking
-      // mode, so that we can correctly reset the state when we're
-      // done.
-      val = ACE::get_flags (handle);
-
-      if (ACE_BIT_DISABLED (val, ACE_NONBLOCK))
-        // Set the handle into non-blocking mode if it's not
-        // already in it.
-        ACE::set_flags (handle, ACE_NONBLOCK);
-      return a;
+      int val = 0;
+      if (ACE::enter_send_timedwait (handle, timeout, val) == -1)
+        return -1;
+      else
+        {
+          ssize_t bytes_transferred = ACE_OS::send (handle, (const char *) buf, n, flags);
+          ACE::restore_non_blocking_mode (handle, val);
+          return bytes_transferred;
+        }
+#endif /* ACE_HAS_SEND_TIMEDWAIT */
     }
 }
 
-void
-ACE::leave_send_timedwait (ACE_HANDLE handle,
-                           const ACE_Time_Value *timeout,
-                           int val)
+ssize_t
+ACE::send (ACE_HANDLE handle,
+           const void *buf,
+           size_t n,
+           const ACE_Time_Value *timeout)
 {
-  if (timeout != 0
-      && ACE_BIT_DISABLED (val, ACE_NONBLOCK))
+  if (timeout == 0)
+    return ACE::send_i (handle, buf, n);
+  else
     {
-      // Save/restore errno.
-      ACE_Errno_Guard error (errno);
-      // Only disable ACE_NONBLOCK if we weren't in non-blocking mode
-      // originally.
-      ACE::clr_flags (handle, ACE_NONBLOCK);
+#if defined (ACE_HAS_WRITE_TIMEDWAIT)
+      ACE_Time_Value copy = *timeout;
+      copy += ACE_OS::gettimeofday ();
+      timespec_t ts = copy;
+      return ::write_timedwait (handle, buf, n, &ts);
+#else
+      int val = 0;
+      if (ACE::enter_send_timedwait (handle, timeout, val) == -1)
+        return -1;
+      else
+        {
+          ssize_t bytes_transferred = ACE::send_i (handle, buf, n);
+          ACE::restore_non_blocking_mode (handle, val);
+          return bytes_transferred;
+        }
+#endif /* ACE_HAS_WRITE_TIMEDWAIT */
+    }
+}
+
+ssize_t
+ACE::sendmsg (ACE_HANDLE handle,
+              const struct msghdr *msg,
+              int flags,
+              const ACE_Time_Value *timeout)
+{
+  if (timeout == 0)
+    return ACE_OS::sendmsg (handle, msg, flags);
+  else
+    {
+#if defined (ACE_HAS_SENDMSG_TIMEDWAIT)
+      ACE_Time_Value copy = *timeout;
+      copy += ACE_OS::gettimeofday ();
+      timespec_t ts = copy;
+      return ::sendmsg_timedwait (handle, msg, flags, &ts);
+#else
+      int val = 0;
+      if (ACE::enter_send_timedwait (handle, timeout, val) == -1)
+        return -1;
+      else
+        {
+          int bytes_transferred = ACE_OS::sendmsg (handle, msg, flags);
+          ACE::restore_non_blocking_mode (handle, val);
+          return bytes_transferred;
+        }
+#endif /* ACE_HAS_SENDMSG_TIMEDWAIT */
     }
 }
 
@@ -1386,206 +1812,743 @@ ACE::sendto (ACE_HANDLE handle,
              int addrlen,
              const ACE_Time_Value *timeout)
 {
-  // ACE_TRACE ("ACE::sendto");
+  if (timeout == 0)
+    return ACE_OS::sendto (handle, buf, len, flags, addr, addrlen);
+  else
+    {
 #if defined (ACE_HAS_SENDTO_TIMEDWAIT)
-  if (timeout == 0)
-     return ACE_OS::sendto (handle, buf, len, flags, addr, addrlen);
-  else
-    {
       ACE_Time_Value copy = *timeout;
       copy += ACE_OS::gettimeofday ();
       timespec_t ts = copy;
-      return ::sendto_timedwait (handle,
-                                 buf,
-                                 len,
-                                 flags,
-                                 addr,
-                                 addrlen,
-                                 &ts);
-    }
+      return ::sendto_timedwait (handle, buf, len, flags, addr, addrlen, ts);
 #else
-  int val;
-  if (ACE::enter_send_timedwait (handle, timeout, val) == -1)
-    return -1;
-  else
-    {
-      int bytes_written = ACE_OS::sendto (handle,
-                                          buf,
-                                          len,
-                                          flags,
-                                          addr,
-                                          addrlen);
-      ACE::leave_send_timedwait (handle, timeout, val);
-      return bytes_written;
-    }
+      int val = 0;
+      if (ACE::enter_send_timedwait (handle, timeout, val) == -1)
+        return -1;
+      else
+        {
+          int bytes_transferred = ACE_OS::sendto (handle, buf, len, flags, addr, addrlen);
+          ACE::restore_non_blocking_mode (handle, val);
+          return bytes_transferred;
+        }
 #endif /* ACE_HAS_SENDTO_TIMEDWAIT */
+    }
 }
 
 ssize_t
-ACE::sendmsg (ACE_HANDLE handle,
-              const struct msghdr *msg,
-              int flags,
-              const ACE_Time_Value *timeout)
+ACE::send_n (ACE_HANDLE handle,
+             const void *buf,
+             size_t len,
+             int flags,
+             const ACE_Time_Value *timeout)
 {
-  // ACE_TRACE ("ACE::sendmsg");
-#if defined (ACE_HAS_SENDMSG_TIMEDWAIT)
   if (timeout == 0)
-     return ACE_OS::sendmsg (handle, msg, flags);
+    return ACE::send_n_i (handle,
+                          buf,
+                          len,
+                          flags);
   else
+    return ACE::send_n_i (handle,
+                          buf,
+                          len,
+                          flags,
+                          timeout);
+}
+
+ssize_t
+ACE::send_n_i (ACE_HANDLE handle,
+               const void *buf,
+               size_t len,
+               int flags)
+{
+  size_t bytes_transferred;
+  ssize_t n;
+
+  for (bytes_transferred = 0;
+       bytes_transferred < len;
+       bytes_transferred += n)
     {
-      ACE_Time_Value copy = *timeout;
-      copy += ACE_OS::gettimeofday ();
-      timespec_t ts = copy;
-      return ::sendmsg_timedwait (handle, msg, flags, &ts);
+      n = ACE_OS::send (handle,
+                        (char *) buf + bytes_transferred,
+                        len - bytes_transferred,
+                        flags);
+      if (n == -1)
+        {
+          // If blocked, try again.
+          if (errno == EWOULDBLOCK)
+            n = 0;
+
+          //
+          // No timeouts in this version.
+          //
+
+          // Other errors.
+          return -1;
+        }
+      else if (n == 0)
+        return 0;
     }
-#else
-  int val;
-  if (ACE::enter_send_timedwait (handle, timeout, val) == -1)
+
+  return bytes_transferred;
+}
+
+ssize_t
+ACE::send_n_i (ACE_HANDLE handle,
+               const void *buf,
+               size_t len,
+               int flags,
+               const ACE_Time_Value *timeout)
+{
+  int val = 0;
+  ACE::record_and_set_non_blocking_mode (handle, val);
+
+  size_t bytes_transferred;
+  ssize_t n;
+  int error = 0;
+
+  for (bytes_transferred = 0;
+       bytes_transferred < len;
+       bytes_transferred += n)
+    {
+      int result = ACE::handle_write_ready (handle,
+                                            timeout);
+
+      if (result == -1)
+        {
+          // Timed out; return bytes transferred.
+          if (errno == ETIME)
+            break;
+
+          // Other errors.
+          error = 1;
+          break;
+        }
+
+      n = ACE_OS::send (handle,
+                        (char *) buf + bytes_transferred,
+                        len - bytes_transferred,
+                        flags);
+
+      // Errors (note that errno cannot be EWOULDBLOCK since select()
+      // just told us that data can be written).
+      if (n == -1 || n == 0)
+        {
+          error = 1;
+          break;
+        }
+    }
+
+  ACE::restore_non_blocking_mode (handle, val);
+
+  if (error)
     return -1;
   else
-    {
-      int bytes_written = ACE_OS::sendmsg (handle, msg, flags);
-      ACE::leave_send_timedwait (handle, timeout, val);
-      return bytes_written;
-    }
-#endif /* ACE_HAS_SENDMSG_TIMEDWAIT */
+    return bytes_transferred;
 }
 
 ssize_t
-ACE::readv (ACE_HANDLE handle,
-            iovec *iov,
+ACE::send_n (ACE_HANDLE handle,
+             const void *buf,
+             size_t len,
+             const ACE_Time_Value *timeout)
+{
+  if (timeout == 0)
+    return ACE::send_n_i (handle,
+                          buf,
+                          len);
+  else
+    return ACE::send_n_i (handle,
+                          buf,
+                          len,
+                          timeout);
+}
+
+ssize_t
+ACE::send_n_i (ACE_HANDLE handle,
+               const void *buf,
+               size_t len)
+{
+  size_t bytes_transferred;
+  ssize_t n;
+
+  for (bytes_transferred = 0;
+       bytes_transferred < len;
+       bytes_transferred += n)
+    {
+      n = ACE::send_i (handle,
+                       (char *) buf + bytes_transferred,
+                       len - bytes_transferred);
+      if (n == -1)
+        {
+          // If blocked, try again.
+          if (errno == EWOULDBLOCK)
+            n = 0;
+
+          //
+          // No timeouts in this version.
+          //
+
+          // Other errors.
+          return -1;
+        }
+      else if (n == 0)
+        return 0;
+    }
+
+  return bytes_transferred;
+}
+
+ssize_t
+ACE::send_n_i (ACE_HANDLE handle,
+               const void *buf,
+               size_t len,
+               const ACE_Time_Value *timeout)
+{
+  int val = 0;
+  ACE::record_and_set_non_blocking_mode (handle, val);
+
+  size_t bytes_transferred;
+  ssize_t n;
+  int error = 0;
+
+  for (bytes_transferred = 0;
+       bytes_transferred < len;
+       bytes_transferred += n)
+    {
+      int result = ACE::handle_write_ready (handle,
+                                            timeout);
+
+      if (result == -1)
+        {
+          // Timed out; return bytes transferred.
+          if (errno == ETIME)
+            break;
+
+          // Other errors.
+          error = 1;
+          break;
+        }
+
+      n = ACE::send_i (handle,
+                       (char *) buf + bytes_transferred,
+                       len - bytes_transferred);
+
+      // Errors (note that errno cannot be EWOULDBLOCK since select()
+      // just told us that data can be written).
+      if (n == -1 || n == 0)
+        {
+          error = 1;
+          break;
+        }
+    }
+
+  ACE::restore_non_blocking_mode (handle, val);
+
+  if (error)
+    return -1;
+  else
+    return bytes_transferred;
+}
+
+// Send N char *ptrs and int lengths.  Note that the char *'s precede
+// the ints (basically, an varargs version of writev).  The count N is
+// the *total* number of trailing arguments, *not* a couple of the
+// number of tuple pairs!
+
+ssize_t
+ACE::send (ACE_HANDLE handle, size_t n, ...)
+{
+  va_list argp;
+  size_t total_tuples = n / 2;
+  iovec *iovp;
+#if defined (ACE_HAS_ALLOCA)
+  iovp = (iovec *) alloca (total_tuples * sizeof (iovec));
+#else
+  ACE_NEW_RETURN (iovp,
+                  iovec[total_tuples],
+                  -1);
+#endif /* !defined (ACE_HAS_ALLOCA) */
+
+  va_start (argp, n);
+
+  for (size_t i = 0; i < total_tuples; i++)
+    {
+      iovp[i].iov_base = va_arg (argp, char *);
+      iovp[i].iov_len = va_arg (argp, ssize_t);
+    }
+
+  ssize_t result = ACE_OS::sendv (handle, iovp, total_tuples);
+#if !defined (ACE_HAS_ALLOCA)
+  delete [] iovp;
+#endif /* !defined (ACE_HAS_ALLOCA) */
+  va_end (argp);
+  return result;
+}
+
+ssize_t
+ACE::sendv (ACE_HANDLE handle,
+            const iovec *iov,
             int iovcnt,
             const ACE_Time_Value *timeout)
 {
-  // ACE_TRACE ("ACE::readv");
-#if defined (ACE_HAS_READV_TIMEDWAIT)
   if (timeout == 0)
-     return ACE_OS::readv (handle, iov, iovcnt);
-  else {
-     ACE_Time_Value copy = *timeout;
-     copy += ACE_OS::gettimeofday ();
-     timespec_t ts = copy;
-     return ::readv_timedwait (handle, iov, iovcnt, &ts);
-  }
-#else
-  int val;
-  if (ACE::enter_recv_timedwait (handle, timeout, val) == -1)
-     return -1;
+    return ACE_OS::sendv (handle, iov, iovcnt);
   else
     {
-      ssize_t bytes_read = ACE_OS::readv (handle, iov, iovcnt);
-      ACE::leave_recv_timedwait (handle, timeout, val);
-      return bytes_read;
-    }
-#endif /* ACE_HAS_READV_TIMEDWAIT */
-}
-
-ssize_t
-ACE::writev (ACE_HANDLE handle,
-             const iovec *iov,
-             int iovcnt,
-             const ACE_Time_Value *timeout)
-{
-  // ACE_TRACE ("ACE::writev");
 #if defined (ACE_HAS_WRITEV_TIMEDWAIT)
-  if (timeout == 0)
-     return ACE_OS::writev (handle, iov, iovcnt);
-  else {
-     ACE_Time_Value copy = *timeout;
-     copy += ACE_OS::gettimeofday ();
-     timespec_t ts = copy;
-     return ::writev_timedwait (handle, iov, iovcnt, &ts);
-  }
+      ACE_Time_Value copy = *timeout;
+      copy += ACE_OS::gettimeofday ();
+      timespec_t ts = copy;
+      return ::sendv_timedwait (handle, iov, iovcnt, &ts);
 #else
-  int val;
-  if (ACE::enter_send_timedwait (handle, timeout, val) == -1)
-     return -1;
-  else
-    {
-      ssize_t bytes_written = ACE_OS::writev (handle, iov, iovcnt);
-      ACE::leave_send_timedwait (handle, timeout, val);
-      return bytes_written;
-    }
-#endif /* ACE_HAS_WRITEV_TIMEDWAIT */
-}
-
-ssize_t
-ACE::writev_n (ACE_HANDLE h,
-               const iovec *i,
-               int iovcnt)
-{
-  ssize_t writelen = 0;
-  iovec *iov = ACE_const_cast (iovec *, i);
-
-  for (int s = 0;
-       s < iovcnt;
-       )
-    {
-      ssize_t n = ACE_OS::writev (h,
-                                  iov + s,
-                                  iovcnt - s);
-      if (n == -1)
-        return n;
+      int val = 0;
+      if (ACE::enter_send_timedwait (handle, timeout, val) == -1)
+        return -1;
       else
         {
-          for (writelen += n;
-               s < iovcnt
-                 && n >= ACE_static_cast (ssize_t,
-                                          iov[s].iov_len);
-               s++)
-            n -= iov[s].iov_len;
-
-          if (n != 0)
-            {
-              char *base = ACE_reinterpret_cast (char *,
-                                                 iov[s].iov_base);
-              iov[s].iov_base = base + n;
-              iov[s].iov_len = iov[s].iov_len - n;
-            }
+          ssize_t bytes_transferred = ACE_OS::sendv (handle, iov, iovcnt);
+          ACE::restore_non_blocking_mode (handle, val);
+          return bytes_transferred;
         }
+#endif /* ACE_HAS_WRITEV_TIMEDWAIT */
     }
-
-  return writelen;
 }
 
 ssize_t
-ACE::sendv_n (ACE_HANDLE h,
-              const iovec *i,
-              int iovcnt)
+ACE::sendv_n (ACE_HANDLE handle,
+              const iovec *iov,
+              int iovcnt,
+              const ACE_Time_Value *timeout)
 {
-  ssize_t writelen = 0;
+  if (timeout == 0)
+    return ACE::sendv_n_i (handle,
+                           iov,
+                           iovcnt);
+  else
+    return ACE::sendv_n_i (handle,
+                           iov,
+                           iovcnt,
+                           timeout);
+}
+
+ssize_t
+ACE::sendv_n_i (ACE_HANDLE handle,
+                const iovec *i,
+                int iovcnt)
+{
   iovec *iov = ACE_const_cast (iovec *, i);
+
+  ssize_t bytes_transferred = 0;
 
   for (int s = 0;
        s < iovcnt;
        )
     {
-      ssize_t n = ACE_OS::sendv (h,
+      ssize_t n = ACE_OS::sendv (handle,
                                  iov + s,
                                  iovcnt - s);
       if (n == -1)
-        return n;
-      else
         {
-          for (writelen += n;
-               s < iovcnt
-                 && n >= ACE_static_cast (ssize_t,
-                                          iov[s].iov_len);
-               s++)
-            n -= iov[s].iov_len;
+          // If blocked, try again.
+          if (errno == EWOULDBLOCK)
+            n = 0;
 
-          if (n != 0)
-            {
-              char *base = ACE_reinterpret_cast (char *,
-                                                 iov[s].iov_base);
-              iov[s].iov_base = base + n;
-              iov[s].iov_len = iov[s].iov_len - n;
-            }
+          //
+          // No timeouts in this version.
+          //
+
+          // Other errors.
+          return -1;
+        }
+      else if (n == 0)
+        return 0;
+
+      for (bytes_transferred += n;
+           s < iovcnt
+             && n >= ACE_static_cast (ssize_t,
+                                      iov[s].iov_len);
+           s++)
+        n -= iov[s].iov_len;
+
+      if (n != 0)
+        {
+          char *base = ACE_reinterpret_cast (char *,
+                                             iov[s].iov_base);
+          iov[s].iov_base = base + n;
+          iov[s].iov_len = iov[s].iov_len - n;
         }
     }
 
-  return writelen;
+  return bytes_transferred;
 }
+
+ssize_t
+ACE::sendv_n_i (ACE_HANDLE handle,
+                const iovec *i,
+                int iovcnt,
+                const ACE_Time_Value *timeout)
+{
+  iovec *iov = ACE_const_cast (iovec *, i);
+
+  int val = 0;
+  ACE::record_and_set_non_blocking_mode (handle, val);
+
+  ssize_t bytes_transferred = 0;
+  int error = 0;
+
+  for (int s = 0;
+       s < iovcnt;
+       )
+    {
+      int result = ACE::handle_write_ready (handle,
+                                            timeout);
+
+      if (result == -1)
+        {
+          // Timed out; return bytes transferred.
+          if (errno == ETIME)
+            break;
+
+          // Other errors.
+          error = 1;
+          break;
+        }
+
+      ssize_t n = ACE_OS::sendv (handle,
+                                 iov + s,
+                                 iovcnt - s);
+
+      // Errors (note that errno cannot be EWOULDBLOCK since select()
+      // just told us that data can be written).
+      if (n == -1 || n == 0)
+        {
+          error = 1;
+          break;
+        }
+
+      for (bytes_transferred += n;
+           s < iovcnt
+             && n >= ACE_static_cast (ssize_t,
+                                      iov[s].iov_len);
+           s++)
+        n -= iov[s].iov_len;
+
+      if (n != 0)
+        {
+          char *base = ACE_reinterpret_cast (char *,
+                                             iov[s].iov_base);
+          iov[s].iov_base = base + n;
+          iov[s].iov_len = iov[s].iov_len - n;
+        }
+    }
+
+  ACE::restore_non_blocking_mode (handle, val);
+
+  if (error)
+    return -1;
+  else
+    return bytes_transferred;
+}
+
+ssize_t
+ACE::send (ACE_HANDLE handle,
+           const ACE_Message_Block *message_block,
+           const ACE_Time_Value *timeout)
+{
+  return ACE::send_i (handle,
+                      message_block,
+                      timeout,
+                      0);
+}
+
+ssize_t
+ACE::send_n (ACE_HANDLE handle,
+             const ACE_Message_Block *message_block,
+             const ACE_Time_Value *timeout)
+{
+  return ACE::send_i (handle,
+                      message_block,
+                      timeout,
+                      1);
+}
+
+ssize_t
+ACE::send_i (ACE_HANDLE handle,
+             const ACE_Message_Block *message_block,
+             const ACE_Time_Value *timeout,
+             int loop)
+{
+  iovec iov[IOV_MAX];
+  int iovcnt = 0;
+  ssize_t n = 0;
+  ssize_t nbytes = 0;
+  ssize_t send_size = 0;
+
+  while (message_block != 0)
+    {
+      // Check if this block has any data to be sent.
+      if (message_block->length () > 0)
+        {
+          // Collect the data in the iovec.
+          iov[iovcnt].iov_base = message_block->rd_ptr ();
+          iov[iovcnt].iov_len  = message_block->length ();
+
+          // Increment iovec counter.
+          iovcnt++;
+
+          // Keep track of the number of bytes for this send.
+          send_size += message_block->length ();
+
+          // The buffer is full make a OS call.  @@ TODO find a way to
+          // find IOV_MAX for platforms that do not define it rather
+          // than simply setting IOV_MAX to some arbitrary value such
+          // as 16.
+          if (iovcnt == IOV_MAX)
+            {
+              if (loop)
+                n = ACE::sendv_n (handle,
+                                  iov,
+                                  iovcnt,
+                                  timeout);
+              else
+                n = ACE::sendv (handle,
+                                iov,
+                                iovcnt,
+                                timeout);
+
+              // Errors.
+              if (n <= 0)
+                return n;
+
+              // Success. Add to total bytes transferred.
+              nbytes += n;
+
+              // Reset iovec counter.
+              iovcnt = 0;
+
+              // If we sent everything we had accumulated in the last
+              // call, then keep going.  If it was a partial send, we
+              // won't continue.
+              if (send_size == n)
+                send_size = 0;
+              else
+                break;
+            }
+        }
+
+      // Selection of the next message block: first check the
+      // continuation chain; then look at the next message block in
+      // the queue.
+      if (message_block->cont ())
+        message_block = message_block->cont ();
+      else
+        message_block = message_block->next ();
+    }
+
+  // Check for remaining buffers to be sent.  This will happen when
+  // IOV_MAX is not a multiple of the number of message blocks.
+  if (iovcnt != 0)
+    {
+      n = ACE::sendv (handle,
+                      iov,
+                      iovcnt,
+                      timeout);
+
+      // Errors.
+      if (n <= 0)
+        return n;
+
+      // Success. Add to total bytes transferred.
+      nbytes += n;
+    }
+
+  // Return total bytes transferred.
+  return nbytes;
+}
+
+ssize_t
+ACE::readv_n (ACE_HANDLE handle,
+              iovec *iov,
+              int iovcnt)
+{
+  ssize_t bytes_transferred = 0;
+
+  for (int s = 0;
+       s < iovcnt;
+       )
+    {
+      ssize_t n = ACE_OS::readv (handle,
+                                 iov + s,
+                                 iovcnt - s);
+      if (n == -1 || n == 0)
+        return n;
+
+      for (bytes_transferred += n;
+           s < iovcnt
+             && n >= ACE_static_cast (ssize_t,
+                                      iov[s].iov_len);
+           s++)
+        n -= iov[s].iov_len;
+
+      if (n != 0)
+        {
+          char *base = ACE_reinterpret_cast (char *,
+                                             iov[s].iov_base);
+          iov[s].iov_base = base + n;
+          iov[s].iov_len = iov[s].iov_len - n;
+        }
+    }
+
+  return bytes_transferred;
+}
+
+ssize_t
+ACE::writev_n (ACE_HANDLE handle,
+               const iovec *i,
+               int iovcnt)
+{
+  iovec *iov = ACE_const_cast (iovec *, i);
+
+  ssize_t bytes_transferred = 0;
+
+  for (int s = 0;
+       s < iovcnt;
+       )
+    {
+      ssize_t n = ACE_OS::writev (handle,
+                                  iov + s,
+                                  iovcnt - s);
+      if (n == -1 || n == 0)
+        return n;
+
+      for (bytes_transferred += n;
+           s < iovcnt
+             && n >= ACE_static_cast (ssize_t,
+                                      iov[s].iov_len);
+           s++)
+        n -= iov[s].iov_len;
+
+      if (n != 0)
+        {
+          char *base = ACE_reinterpret_cast (char *,
+                                             iov[s].iov_base);
+          iov[s].iov_base = base + n;
+          iov[s].iov_len = iov[s].iov_len - n;
+        }
+    }
+
+  return bytes_transferred;
+}
+
+int
+ACE::handle_ready (ACE_HANDLE handle,
+                   const ACE_Time_Value *timeout,
+                   int read_ready,
+                   int write_ready,
+                   int exception_ready)
+{
+#if defined (ACE_HAS_POLL) && defined (ACE_HAS_LIMITED_SELECT)
+
+  struct pollfd fds;
+
+  fds.fd = handle;
+  fds.events = read_ready ? POLLIN : POLLOUT;
+  fds.revents = 0;
+
+  int result = ACE_OS::poll (&fds, 1, *timeout);
+
+#else
+
+  ACE_Handle_Set handle_set;
+  handle_set.set_bit (handle);
+
+  // Wait for data or for the timeout to elapse.
+  int result = ACE_OS::select (int (handle) + 1,
+                               read_ready ? handle_set.fdset () : 0, // read_fds.
+                               write_ready ? handle_set.fdset () : 0, // write_fds.
+                               exception_ready ? handle_set.fdset () : 0, // exception_fds.
+                               timeout);
+
+#endif /* ACE_HAS_POLL && ACE_HAS_LIMITED_SELECT */
+
+  switch (result)
+    {
+    case 0:  // Timer expired.
+      errno = ETIME;
+      /* FALLTHRU */
+    case -1: // we got here directly - select() returned -1.
+      return -1;
+    case 1: // Handle has data.
+      /* FALLTHRU */
+    default: // default is case result > 0; return a
+      // ACE_ASSERT (result == 1);
+      return result;
+    }
+}
+
+int
+ACE::enter_recv_timedwait (ACE_HANDLE handle,
+                           const ACE_Time_Value *timeout,
+                           int &val)
+{
+  int result = ACE::handle_read_ready (handle,
+                                       timeout);
+
+  if (result == -1)
+    return -1;
+
+  ACE::record_and_set_non_blocking_mode (handle,
+                                         val);
+
+  return result;
+}
+
+int
+ACE::enter_send_timedwait (ACE_HANDLE handle,
+                           const ACE_Time_Value *timeout,
+                           int &val)
+{
+  int result = ACE::handle_write_ready (handle,
+                                        timeout);
+
+  if (result == -1)
+    return -1;
+
+  ACE::record_and_set_non_blocking_mode (handle,
+                                         val);
+
+  return result;
+}
+
+void
+ACE::record_and_set_non_blocking_mode (ACE_HANDLE handle,
+                                       int &val)
+{
+  // We need to record whether we are already *in* nonblocking mode,
+  // so that we can correctly reset the state when we're done.
+  val = ACE::get_flags (handle);
+
+  if (ACE_BIT_DISABLED (val, ACE_NONBLOCK))
+    // Set the handle into non-blocking mode if it's not already in
+    // it.
+    ACE::set_flags (handle, ACE_NONBLOCK);
+}
+
+void
+ACE::restore_non_blocking_mode (ACE_HANDLE handle,
+                                int val)
+{
+  if (ACE_BIT_DISABLED (val,
+                        ACE_NONBLOCK))
+    {
+      // Save/restore errno.
+      ACE_Errno_Guard error (errno);
+      // Only disable ACE_NONBLOCK if we weren't in non-blocking mode
+      // originally.
+      ACE::clr_flags (handle, ACE_NONBLOCK);
+    }
+}
+
 
 // Format buffer into printable format.  This is useful for debugging.
 // Portions taken from mdump by J.P. Knight (J.P.Knight@lut.ac.uk)
@@ -2311,329 +3274,6 @@ ACE::map_errno (int error)
 
   return error;
 }
-
-ssize_t
-ACE::send (ACE_HANDLE handle,
-           const void *buf,
-           size_t n,
-           int flags,
-           const ACE_Time_Value *timeout)
-{
-#if defined (ACE_HAS_SEND_TIMEDWAIT)
-  if (timeout == 0)
-    return ACE::send (handle, buf, n, flags);
-  else
-    {
-      ACE_Time_Value copy = *timeout;
-      copy += ACE_OS::gettimeofday();
-      timespec_t ts = copy;
-      return ::send_timedwait (handle, buf, n, flags, &ts);
-    }
-#else
-  int val;
-
-  if (ACE::enter_send_timedwait (handle, timeout, val) == -1)
-    return -1;
-  else
-    {
-      ssize_t bytes_written = ACE::send (handle, buf, n, flags);
-      ACE::leave_send_timedwait (handle, timeout, val);
-      return bytes_written;
-    }
-#endif /* ACE_HAS_SEND_TIMEDWAIT */
-}
-
-ssize_t
-ACE::send (ACE_HANDLE handle,
-           const void *buf,
-           size_t n,
-           const ACE_Time_Value *timeout)
-{
-  // ACE_TRACE ("ACE_OS::write");
-#if defined (ACE_HAS_WRITE_TIMEDWAIT)
-  if (timeout == 0)
-    return ACE::send (handle, buf, n);
-  else
-    {
-      ACE_Time_Value copy = *timeout;
-      copy += ACE_OS::gettimeofday ();
-      timespec_t ts = copy;
-      return ::write_timedwait (handle, buf, n, &ts);
-    }
-#else
-  int val;
-
-  if (ACE::enter_send_timedwait (handle, timeout, val) == -1)
-    return -1;
-  else
-    {
-      ssize_t bytes_written = ACE::send (handle, buf, n);
-      ACE::leave_send_timedwait (handle, timeout, val);
-      return bytes_written;
-    }
-#endif /* ACE_HAS_WRITE_TIMEDWAIT */
-}
-
-ssize_t
-ACE::send_n (ACE_HANDLE handle,
-             const void *buf,
-             size_t len,
-             int flags,
-             const ACE_Time_Value *timeout)
-{
-  // Total number of bytes written.
-  size_t bytes_written;
-
-  // Actual number of bytes written in each <send> attempt.
-  ssize_t n;
-
-  for (bytes_written = 0;
-       bytes_written < len;
-       bytes_written += n)
-    {
-      n = ACE::send (handle,
-                     (char *) buf + bytes_written,
-                     len - bytes_written,
-                     flags,
-                     timeout);
-      if (n == -1)
-        if (errno == EWOULDBLOCK)
-          n = 0; // Keep trying to send.
-        else
-          return -1;
-    }
-
-  return bytes_written;
-}
-
-ssize_t
-ACE::send_n (ACE_HANDLE handle,
-             const void *buf,
-             size_t len,
-             const ACE_Time_Value *timeout)
-{
-  // Total number of bytes written.
-  size_t bytes_written;
-
-  // Actual number of bytes written in each <send> attempt.
-  ssize_t n;
-
-  for (bytes_written = 0;
-       bytes_written < len;
-       bytes_written += n)
-    {
-      n = ACE::send (handle, (char *) buf + bytes_written,
-                     len - bytes_written, timeout);
-      if (n == -1)
-        if (errno == EWOULDBLOCK)
-          n = 0; // Keep trying to send.
-        else
-          return -1;
-    }
-
-  return bytes_written;
-}
-
-ssize_t
-ACE::recvfrom (ACE_HANDLE handle,
-               char *buf,
-               int len,
-               int flags,
-               struct sockaddr *addr,
-               int *addrlen,
-               const ACE_Time_Value *timeout)
-{
-  // ACE_TRACE ("ACE::recvfrom");
-#if defined (ACE_HAS_RECVFROM_TIMEDWAIT)
-  if (timeout == 0)
-     return ACE_OS::recvfrom (handle,
-                              buf,
-                              len,
-                              flags,
-                              addr,
-                              addrlen);
-  else
-    {
-      ACE_Time_Value copy = *timeout;
-      copy += ACE_OS::gettimeofday ();
-      timespec_t ts = copy;
-      return ::recvfrom_timedwait (handle,
-                                   buf,
-                                   len,
-                                   flags,
-                                   addr,
-                                   addrlen,
-                                   &ts)a
-;
-    }
-#else
-  int val;
-  if (ACE::enter_recv_timedwait (handle,
-                                 timeout,
-                                 val) == -1)
-     return -1;
-  else
-    {
-      int bytes_read = ACE_OS::recvfrom (handle,
-                                         buf,
-                                         len,
-                                         flags,
-                                         addr,
-                                         addrlen);
-      ACE::leave_recv_timedwait (handle,
-                                 timeout,
-                                 val);
-      return bytes_read;
-    }
-#endif /* ACE_HAS_RECVFROM_TIMEDWAIT */
-}
-
-ssize_t
-ACE::recvmsg (ACE_HANDLE handle,
-              struct msghdr *msg,
-              int flags,
-              const ACE_Time_Value *timeout)
-{
-  // ACE_TRACE ("ACE::recvmsg");
-#if defined (ACE_HAS_RECVMSG_TIMEDWAIT)
-  if (timeout == 0)
-     return ACE_OS::recvmsg (handle, msg, flags);
-  else
-    {
-      ACE_Time_Value copy = *timeout;
-      copy += ACE_OS::gettimeofday ();
-      timespec_t ts = copy;
-      return ::recvmsg_timedwait (handle, msg, flags, &ts);
-    }
-#else
-  int val;
-  if (ACE::enter_recv_timedwait (handle, timeout, val) == -1)
-    return -1;
-  else
-    {
-      int bytes_read = ACE_OS::recvmsg (handle, msg, flags);
-      ACE::leave_recv_timedwait (handle, timeout, val);
-      return bytes_read;
-    }
-#endif /* ACE_HAS_RECVMSG_TIMEDWAIT */
-}
-
-ssize_t
-ACE::recv (ACE_HANDLE handle,
-           void *buf,
-           size_t n,
-           const ACE_Time_Value *timeout)
-{
-  // ACE_TRACE ("ACE::read");
-#if defined (ACE_HAS_READ_TIMEDWAIT)
-  if (timeout == 0)
-     return ACE::recv (handle, buf, n);
-  else
-    {
-      ACE_Time_Value copy = *timeout;
-      copy += ACE_OS::gettimeofday ();
-      timespec_t ts = copy;
-      return ::read_timedwait (handle, buf, n, &ts);
-    }
-#else
-  int val;
-
-  if (ACE::enter_recv_timedwait (handle, timeout, val) == -1)
-    return -1;
-  else
-    {
-      ssize_t bytes_read = ACE::recv (handle, buf, n);
-      ACE::leave_recv_timedwait (handle, timeout, val);
-      return bytes_read;
-    }
-#endif /* ACE_HAS_READ_TIMEDWAIT */
-}
-
-ssize_t
-ACE::recv (ACE_HANDLE handle,
-           void *buf,
-           size_t len,
-           int flags,
-           const ACE_Time_Value *timeout)
-{
-  // ACE_TRACE ("ACE::recv");
-#if defined (ACE_HAS_RECV_TIMEDWAIT)
-  if (timeout == 0)
-     return ACE::recv (handle, buf, len, flags);
-  else
-    {
-      ACE_Time_Value copy = *timeout;
-      copy += ACE_OS::gettimeofday ();
-      timespec_t ts = copy;
-      return ::recv_timedwait (handle, buf, len, flags, &ts);
-    }
-#else
-  int val;
-  if (ACE::enter_recv_timedwait (handle, timeout, val)==-1)
-     return -1;
-  else
-    {
-      ssize_t bytes_recv = ACE::recv (handle, buf, len, flags);
-      ACE::leave_recv_timedwait (handle, timeout, val);
-      return bytes_recv;
-    }
-#endif /* ACE_HAS_RECV_TIMEDWAIT */
-}
-
-ssize_t
-ACE::recv_n (ACE_HANDLE handle,
-             void *buf,
-             size_t len,
-             int flags,
-             const ACE_Time_Value *timeout)
-{
-  size_t bytes_received;
-
-  // Actual number of bytes read in each attempt.
-  ssize_t n;
-
-  for (bytes_received = 0;
-       bytes_received < len;
-       bytes_received += n)
-    {
-      n = ACE::recv (handle,
-                     (char *) buf + bytes_received,
-                     len - bytes_received,
-                     flags,
-                     timeout);
-      if (n == -1 || n == 0)
-        break;
-    }
-
-  return bytes_received;
-}
-
-ssize_t
-ACE::recv_n (ACE_HANDLE handle,
-             void *buf,
-             size_t len,
-             const ACE_Time_Value *timeout)
-{
-  size_t bytes_received;
-
-  // Actual number of bytes read in each attempt.
-  ssize_t n;
-
-  for (bytes_received = 0;
-       bytes_received < len;
-       bytes_received += n)
-    {
-      n = ACE::recv (handle,
-                     (char *) buf + bytes_received,
-                     len - bytes_received,
-                     timeout);
-      if (n == -1 || n == 0)
-        break;
-    }
-
-  return bytes_received;
-}
-
 
 // Euclid's greatest common divisor algorithm.
 u_long

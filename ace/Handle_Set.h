@@ -27,7 +27,7 @@ class ACE_Export ACE_Handle_Set
 {
   // = TITLE
   //     C++ wrapper facade for the socket <fd_set> abstraction.
-  // 
+  //
   // = DESCRIPTION
   //     This abstraction is a very efficient wrapper facade over
   //     <fd_set>.  In particular, no range checking is performed, so
@@ -82,6 +82,10 @@ public:
   // <size>.
 
   operator fd_set *();
+  // Returns a pointer to the underlying <fd_set>.  Returns 0 if
+  // <size_> == 0.
+
+  fd_set *fdset (void);
   // Returns a pointer to the underlying <fd_set>.  Returns 0 if
   // <size_> == 0.
 

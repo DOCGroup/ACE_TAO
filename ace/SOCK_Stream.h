@@ -33,6 +33,25 @@ class ACE_Export ACE_SOCK_Stream : public ACE_SOCK_IO
   // = DESCRIPTION
   //     This adds additional wrapper methods atop the <ACE_SOCK_IO>
   //     class.
+  //
+  // = NOTES
+  //
+  //     The "_n" I/O methods keep looping until all the data has been
+  //     transferred.  These methods also work for sockets in
+  //     non-blocking mode i.e., they keep looping on EWOULDBLOCK.
+  //     <timeout> is used to make sure we keep making progress, i.e.,
+  //     the same timeout value is used for every I/O operation in the
+  //     loop and the timeout is not counted down.  If the transfer
+  //     times out, the number of bytes transferred so far are
+  //     returned.
+  //
+  //     Errors are reported by -1 and 0 return values.
+  //
+  //     Methods with the extra <flags> argument will always result in
+  //     <send> getting called. Methods without the extra <flags>
+  //     argument will result in <send> getting called on Win32
+  //     platforms, and <write> getting called on non-Win32 platforms.
+  //
 public:
   // Initialization and termination methods.
   ACE_SOCK_Stream (void);
@@ -44,55 +63,48 @@ public:
   ~ACE_SOCK_Stream (void);
   // Destructor.
 
-  //= The following two methods use write and read system calls.
-  ssize_t send_n (const void *buf, int n) const;
-  // Send n bytes, keep trying until n are sent.
-  ssize_t recv_n (void *buf, int n) const;
-  // Recv n bytes, keep trying until n are received.
-
-  // = The following two methods use the send and recv system calls.
-  ssize_t send_n (const void *buf, int n, int flags) const;
-  // Send n bytes, keep trying until n are sent.
-  ssize_t recv_n (void *buf, int n, int flags) const;
-  // Recv n bytes, keep trying until n are received.
-
-  ssize_t send_n (const void *buf,
-                  size_t len,
-                  int flags,
-                  const ACE_Time_Value *timeout);
-  // Try to send exactly <len> bytes into <buf> from <handle> (uses
-  // the <send> call).  If <send> blocks for longer than <timeout> the
-  // number of bytes actually sent is returned with <errno == ETIME>.
-  // If a timeout does not occur, <send_n> return <len> (i.e., the
-  // number of bytes requested to be sent).
+  // = I/O functions.
 
   ssize_t recv_n (void *buf,
                   size_t len,
                   int flags,
-                  const ACE_Time_Value *timeout);
-  // Try to recv exactly <len> bytes into <buf> from <handle> (uses
-  // the <ACE::recv_n> call).  The <ACE_Time_Value> indicates how long
-  // to blocking trying to receive.  If <timeout> == 0, the caller
-  // will block until action is possible, else will wait until the
-  // relative time specified in *<timeout> elapses).  If <recv> blocks
-  // for longer than <timeout> the number of bytes actually read is
-  // returned with <errno == ETIME>.  If a timeout does not occur,
-  // <recv_n> return <len> (i.e., the number of bytes requested to be
-  // read).
+                  const ACE_Time_Value *timeout = 0) const;
+  // Try to recv exactly <len> bytes into <buf> from <handle>.
 
-  ssize_t sendv_n (const iovec iov[],
-                   size_t n) const;
-  // Send an <iovec> of size <n> to the connected socket (uses
-  // <ACE::sendv_n>).  Will block until all bytes are sent or an error
-  // occurs.
+  ssize_t recv_n (void *buf,
+                  size_t len,
+                  const ACE_Time_Value *timeout = 0) const;
+  // Try to recv exactly <len> bytes into <buf> from <handle>.
 
   ssize_t recvv_n (iovec iov[],
-                   size_t n) const;
-  // Receive an <iovec> of size <n> to the connected socket.
+                   size_t iovcnt,
+                   const ACE_Time_Value *timeout = 0) const;
+  // Receive an <iovec> of size <iovcnt> to the connected socket.
 
-  // = Send/receive an ``urgent'' character (see TCP specs...).
-  ssize_t send_urg (void *ptr, int len = sizeof (char));
-  ssize_t recv_urg (void *ptr, int len = sizeof (char));
+  ssize_t send_n (const void *buf,
+                  size_t len,
+                  int flags,
+                  const ACE_Time_Value *timeout = 0) const;
+  // Try to send exactly <len> bytes into <buf> from <handle>.
+
+  ssize_t send_n (const void *buf,
+                  size_t len,
+                  const ACE_Time_Value *timeout = 0) const;
+  // Try to send exactly <len> bytes into <buf> from <handle>.
+
+  ssize_t sendv_n (iovec iov[],
+                   size_t iovcnt,
+                   const ACE_Time_Value *timeout = 0) const;
+  // Send an <iovec> of size <iovcnt> to the connected socket.
+
+  // = Send/receive ``urgent'' data (see TCP specs...).
+  ssize_t send_urg (const void *ptr,
+                    size_t len = sizeof (char),
+                    const ACE_Time_Value *timeout = 0) const;
+
+  ssize_t recv_urg (void *ptr,
+                    size_t len = sizeof (char),
+                    const ACE_Time_Value *timeout = 0) const;
 
   // = Selectively close endpoints.
   int close_reader (void);

@@ -1,6 +1,33 @@
+Mon Dec 06 21:16:53 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/IIOP_Transport.cpp (send/recv):
+        * tao/UIOP_Transport.cpp (send/recv):
+
+	  - Changed to use the new timed I/O APIs in ACE.
+
+	  - The <timeout> parameter was made const.
+
+	  - Changed how the destructor handles buffered oneways.
+
+	* tao/UIOP_Connect.cpp (handle_timeout):
+	* tao/IIOP_Connect.cpp (handle_timeout):
+
+	  Changed how timeouts handle buffered oneways.
+
+	* tao/Pluggable.cpp (send_buffered_messages): Some of the methods
+	  were moved from the sync strategies to the transport class.
+	  This makes them easier to use without the presence of the stub,
+	  e.g., during the destruction of the transport and when timeouts
+	  occur.
+
+	* examples/Buffered_Oneways/client.cpp (main): Initialized all the
+	  fields of the <buffering_constraint> structure.  This will
+	  prevent UMRs from purify.  Thanks to Jeff for pointing out the
+	  source of the UMRs.
+
 Mon Dec  6 13:16:21 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/GIOP1_2.pidl (GIOP ): 
+	* tao/GIOP1_2.pidl (GIOP ):
 	* tao/GIOPC.h:
 	* tao/GIOPC.cpp:
 	* tao/GIOPC.i: Some new data types that have been added to GIOP
@@ -8,7 +35,7 @@ Mon Dec  6 13:16:21 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  problem for the CORBA namespace.
 
 	* tao/Makefile: Added GIOPC.cpp to the list of files and also
-	  updated the dependencies. 
+	  updated the dependencies.
 
 Sun Dec  5 14:43:42 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 

@@ -6345,11 +6345,8 @@ public:
                        ACE_OVERLAPPED_COMPLETION_FUNC func);
   static int send (ACE_HANDLE handle,
                    const char *buf,
-                   int len, int
-                   flags = 0);
-  static ssize_t send_n (ACE_HANDLE handle,
-                         const void *buf,
-                         size_t len);
+                   int len,
+                   int flags = 0);
   static int sendto (ACE_HANDLE handle,
                      const char *buf,
                      int len,
@@ -7141,16 +7138,19 @@ int putchar (int c);
 # endif /* ACE_HAS_WINCE */
 
 # if defined (ACE_LACKS_TIMEDWAIT_PROTOTYPES)
-extern "C" ssize_t send_timedwait (ACE_HANDLE handle,
-                                   const char *buf,
-                                   int len,
-                                   int flags,
-                                   struct timespec *timeout);
 extern "C" ssize_t recv_timedwait (ACE_HANDLE handle,
                                    char *buf,
                                    int len,
                                    int flags,
                                    struct timespec *timeout);
+extern "C" ssize_t read_timedwait (ACE_HANDLE handle,
+                                   char *buf,
+                                   size_t n,
+                                   struct timespec *timeout);
+extern "C" ssize_t recvmsg_timedwait (ACE_HANDLE handle,
+                                      struct msghdr *msg,
+                                      int flags,
+                                      struct timespec *timeout);
 extern "C" ssize_t recvfrom_timedwait (ACE_HANDLE handle,
                                        char *buf,
                                        int len,
@@ -7159,14 +7159,23 @@ extern "C" ssize_t recvfrom_timedwait (ACE_HANDLE handle,
                                        int
                                        *addrlen,
                                        struct timespec *timeout);
-extern "C" ssize_t recvmsg_timedwait (ACE_HANDLE handle,
-                                      struct msghdr *msg,
+extern "C" ssize_t readv_timedwait (ACE_HANDLE handle,
+                                    iovec *iov,
+                                    int iovcnt,
+                                    struct timespec* timeout);
+extern "C" ssize_t send_timedwait (ACE_HANDLE handle,
+                                   const char *buf,
+                                   int len,
+                                   int flags,
+                                   struct timespec *timeout);
+extern "C" ssize_t write_timedwait (ACE_HANDLE handle,
+                                    const void *buf,
+                                    size_t n,
+                                    struct timespec *timeout);
+extern "C" ssize_t sendmsg_timedwait (ACE_HANDLE handle,
+                                      ACE_SENDMSG_TYPE *msg,
                                       int flags,
                                       struct timespec *timeout);
-extern "C" ssize_t read_timedwait (ACE_HANDLE handle,
-                                   void *buf,
-                                   size_t len,
-                                   struct timespec *timeout);
 extern "C" ssize_t sendto_timedwait (ACE_HANDLE handle,
                                      const char *buf,
                                      int len,
@@ -7174,18 +7183,6 @@ extern "C" ssize_t sendto_timedwait (ACE_HANDLE handle,
                                      const struct sockaddr *addr,
                                      int addrlen,
                                      struct timespec *timeout);
-extern "C" ssize_t sendmsg_timedwait (ACE_HANDLE handle,
-                                      ACE_SENDMSG_TYPE *msg,
-                                      int flags,
-                                      struct timespec *timeout);
-extern "C" ssize_t write_timedwait (ACE_HANDLE handle,
-                                    const void *buf,
-                                    size_t n,
-                                    struct timespec *timeout);
-extern "C" ssize_t readv_timedwait (ACE_HANDLE handle,
-                                    iovec *iov,
-                                    int iovcnt,
-                                    struct timespec* timeout);
 extern "C" ssize_t writev_timedwait (ACE_HANDLE handle,
                                      ACE_WRITEV_TYPE *iov,
                                      int iovcnt,

@@ -14,6 +14,20 @@
 
 // ---------------- platform features or lack of them -------------
 
+//
+// It seems like Win32 does not have a limit on the number of buffers
+// that can be transferred by the scatter/gather type of I/O
+// functions, e.g., WSASend and WSARecv.  We are arbitrarily setting
+// this to be 1k for now.  The typically use case is to create an I/O
+// vector array of size IOV_MAX on the stack and then filled in.  Note
+// that we probably don't want too big a value for IOV_MAX since it
+// may mostly go to waste or the size of the activation record may
+// become excessively large.
+//
+# if !defined (IOV_MAX)
+#  define IOV_MAX 1024
+# endif /* IOV_MAX */
+
 #if !defined (ACE_HAS_WINCE)
 // Platform supports pread() and pwrite()
 #define ACE_HAS_P_READ_WRITE
@@ -400,11 +414,11 @@ typedef unsigned __int64 ACE_UINT64;
                 #include /**/ <winsock2.h>
         #endif /* _WINSOCK2API */
 
-				#if defined (ACE_HAS_FORE_ATM_WS2)
-					#include /**/ <ws2atm.h>
-				#endif /*ACE_HAS_FORE_ATM_WS2 */
+                                #if defined (ACE_HAS_FORE_ATM_WS2)
+                                        #include /**/ <ws2atm.h>
+                                #endif /*ACE_HAS_FORE_ATM_WS2 */
 
-				#if !defined _MSWSOCK_
+                                #if !defined _MSWSOCK_
                 #include /**/ <mswsock.h>
         #endif /* _MSWSOCK_ */
 
