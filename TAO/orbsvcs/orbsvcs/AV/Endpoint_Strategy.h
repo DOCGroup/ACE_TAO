@@ -241,10 +241,6 @@ public:
   // runs the ORB event loop
 
  protected:
-  const char *stream_endpoint_name_;
-  // The name of the stream endpoint. Subclasses
-  // can override this to define their own name
-
   int activate_objects (int argc, 
                         char **argv,
                         CORBA::Environment &env);
@@ -282,6 +278,12 @@ public:
 
   CosNaming::NamingContext_var naming_context_;
   // The root Naming Context of the TAO naming service
+
+  CosNaming::Name vdev_name_;
+  // Name of the vdev
+
+  CosNaming::Name stream_endpoint_name_;
+  // Name of the stream_endpoint
 
   T_StreamEndpoint *stream_endpoint_;
   // The stream endpoint member

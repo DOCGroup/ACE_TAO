@@ -850,7 +850,6 @@ TAO_AV_Child_Process  <T_StreamEndpoint, T_VDev, T_MediaCtrl>::~TAO_AV_Child_Pro
   TAO_CATCHANY
     {
       TAO_TRY_ENV.print_exception ("TAO_Endpoint_Process_Strategy::activate");
-      return -1;
     }      
   TAO_ENDTRY;
     
@@ -870,7 +869,6 @@ TAO_AV_Child_Process  <T_StreamEndpoint, T_VDev, T_MediaCtrl>::~TAO_AV_Child_Pro
 // the  naming service
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
 TAO_AV_Child_Process_A  <T_StreamEndpoint, T_VDev, T_MediaCtrl>::TAO_AV_Child_Process_A ()
-  : stream_endpoint_name_ (1)
 {  
   this->stream_endpoint_name_.length (1);
   this->stream_endpoint_name_ [0].id = CORBA::string_dup ("Stream_Endpoint_A");
@@ -884,7 +882,6 @@ TAO_AV_Child_Process_A  <T_StreamEndpoint, T_VDev, T_MediaCtrl>::TAO_AV_Child_Pr
 // the  naming service
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
 TAO_AV_Child_Process_B  <T_StreamEndpoint, T_VDev, T_MediaCtrl>::TAO_AV_Child_Process_B ()
-  : stream_endpoint_name_ (1)
 {  
   this->stream_endpoint_name_.length (1);
   this->stream_endpoint_name_ [0].id = CORBA::string_dup ("Stream_Endpoint_B");
