@@ -29,6 +29,7 @@
 #include "ace/pre.h"
 
 #include "ace/Containers.h"
+#include "ace/Unbounded_Set_Ex.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -725,8 +726,8 @@ public:
   /// Free up dynamic resources.
   ~ACE_ES_Subscription_Info (void);
 
-  typedef ACE_Unbounded_Set_Iterator<ACE_ES_Consumer_Rep *> Subscriber_Set_Iterator;
-  typedef ACE_Unbounded_Set<ACE_ES_Consumer_Rep *> Subscriber_Set;
+  typedef ACE_Unbounded_Set_Ex_Iterator<ACE_ES_Consumer_Rep *> Subscriber_Set_Iterator;
+  typedef ACE_Unbounded_Set_Ex<ACE_ES_Consumer_Rep *> Subscriber_Set;
 
 /**
  * @class Type_Subscribers
@@ -1017,8 +1018,8 @@ public:
   void fill_qos (RtecEventChannelAdmin::ConsumerQOS& c_qos);
 
 private:
-  typedef ACE_Unbounded_Set_Iterator<ACE_Push_Consumer_Proxy *> Consumer_Iterator;
-  typedef ACE_Unbounded_Set<ACE_Push_Consumer_Proxy *> Consumers;
+  typedef ACE_Unbounded_Set_Ex_Iterator<ACE_Push_Consumer_Proxy *> Consumer_Iterator;
+  typedef ACE_Unbounded_Set_Ex<ACE_Push_Consumer_Proxy *> Consumers;
 
   /// Protects access to all_consumers_.
   ACE_ES_MUTEX lock_;
@@ -1226,8 +1227,8 @@ private:
   /// Next module down stream.
   ACE_ES_Supplier_Module *down_;
 
-  typedef ACE_Unbounded_Set_Iterator<ACE_Push_Supplier_Proxy *> Supplier_Iterator;
-  typedef ACE_Unbounded_Set<ACE_Push_Supplier_Proxy *> Suppliers;
+  typedef ACE_Unbounded_Set_Ex_Iterator<ACE_Push_Supplier_Proxy *> Supplier_Iterator;
+  typedef ACE_Unbounded_Set_Ex<ACE_Push_Supplier_Proxy *> Suppliers;
 
   /// All suppliers.
   Suppliers all_suppliers_;
@@ -1297,8 +1298,8 @@ public:
   void fill_qos (RtecEventChannelAdmin::SupplierQOS& s_qos);
 
 private:
-  typedef ACE_Unbounded_Set_Iterator<ACE_Push_Supplier_Proxy *> Supplier_Iterator;
-  typedef ACE_Unbounded_Set<ACE_Push_Supplier_Proxy *> Suppliers;
+  typedef ACE_Unbounded_Set_Ex_Iterator<ACE_Push_Supplier_Proxy *> Supplier_Iterator;
+  typedef ACE_Unbounded_Set_Ex<ACE_Push_Supplier_Proxy *> Suppliers;
 
   /// All suppliers.
   Suppliers all_suppliers_;
