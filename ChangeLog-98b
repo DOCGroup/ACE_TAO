@@ -1,3 +1,8 @@
+Tue Jun 09 11:51:17 1998 Chris Gill  <cdgill@tango.cs.wustl.edu>
+
+	* tests/MM_Shared_Memory_Test: added a null pointer check so
+	  test complains rather than crashing when shared allocator fails.
+
 Mon Jun  8 21:03:23 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Select_Reactor.cpp (any_ready): Fixed a more unrighteous bug
