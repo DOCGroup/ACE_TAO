@@ -182,9 +182,8 @@ ACE_Configuration::expand_path (const ACE_Configuration_Section_Key& key,
                         temp, 
                         create, 
                         key_out)) 
-        { 
-          return -1; 
-        } 
+        return -1; 
+
       current_section = key_out; 
     } 
 
@@ -225,9 +224,9 @@ ACE_Configuration::root_section (void) const
  */
 int ACE_Configuration::operator== (const ACE_Configuration& rhs) const
 {
-  int                rc           = 1;
-  int                sectionIndex = 0;
-  ACE_TString        sectionName;
+  int rc = 1;
+  int sectionIndex = 0;
+  ACE_TString sectionName;
   ACE_Configuration *nonconst_this = ACE_const_cast (ACE_Configuration*, this);
   ACE_Configuration &nonconst_rhs  = ACE_const_cast (ACE_Configuration&, rhs);
 
@@ -237,8 +236,8 @@ int ACE_Configuration::operator== (const ACE_Configuration& rhs) const
 
   // loop through each section in this object
   while ((rc) && (!nonconst_this->enumerate_sections (this->root_,
-                                                    sectionIndex,
-                                                    sectionName)))
+                                                      sectionIndex,
+                                                      sectionName)))
     {
       // find that section in the rhs object
       if (nonconst_rhs.open_section (rhsRoot,
@@ -405,10 +404,10 @@ int ACE_Configuration::operator== (const ACE_Configuration& rhs) const
   // Finally, make sure that there are no sections in rhs that do not
   // exist in this
   sectionIndex = 0;
-  while ((rc) &&
- (!nonconst_rhs.enumerate_sections (rhsRoot,
-                                            sectionIndex,
-                                            sectionName)))
+  while ((rc) 
+         && (!nonconst_rhs.enumerate_sections (rhsRoot,
+                                               sectionIndex,
+                                               sectionName)))
     {
       // find the section in this
       if (nonconst_this->open_section (this->root_,
@@ -615,14 +614,17 @@ ACE_Configuration_Win32Registry::enumerate_sections (const ACE_Configuration_Sec
 
   ACE_TCHAR name_buffer[ACE_DEFAULT_BUFSIZE];
   DWORD buffer_size = ACE_DEFAULT_BUFSIZE;
-  if (ACE_TEXT_RegEnumKeyEx (base_key,
-                             Index,
-                             name_buffer,
-                             &buffer_size,
-                             NULL,
-                             NULL,
-                             NULL,
-                             NULL) != ERROR_SUCCESS)
+  int rc = ACE_TEXT_RegEnumKeyEx (base_key,
+                                  Index,
+                                  name_buffer,
+                                  &buffer_size,
+                                  NULL,
+                                  NULL,
+                                  NULL,
+                                  NULL);
+  if (rc == ERROR_NO_MORE_ITEMS)
+    return 1;
+  else if (rc != ERROR_MORE_DATA && rc != ERROR_SUCCESS)
     return -2;
 
   name = name_buffer;
@@ -643,11 +645,11 @@ ACE_Configuration_Win32Registry::set_string_value (const ACE_Configuration_Secti
     return -1;
 
   if (ACE_TEXT_RegSetValueEx (base_key,
-                                name,
-                                0,
-                                REG_SZ,
- (BYTE *) value.fast_rep (),
-                                value.length () + 1) != ERROR_SUCCESS)
+                              name,
+                              0,
+                              REG_SZ,
+                              (BYTE *) value.fast_rep (),
+                              value.length () + 1) != ERROR_SUCCESS)
     return -2;
 
   return 0;
@@ -693,7 +695,7 @@ ACE_Configuration_Win32Registry::set_binary_value (const ACE_Configuration_Secti
                               name,
                               0,
                               REG_BINARY,
-                              (BYTE*) data,
+                              (BYTE *) data,
                               length) != ERROR_SUCCESS)
     return -2;
 
@@ -719,7 +721,7 @@ ACE_Configuration_Win32Registry::get_string_value (const ACE_Configuration_Secti
                                 name,
                                 NULL,
                                 &type,
-                                (BYTE*) 0,
+                                (BYTE *) 0,
                                 &buffer_length) != ERROR_SUCCESS)
     return -2;
 
@@ -732,7 +734,7 @@ ACE_Configuration_Win32Registry::get_string_value (const ACE_Configuration_Secti
                                 name,
                                 NULL,
                                 &type,
-                                (BYTE*) buffer.get (),
+                                (BYTE *) buffer.get (),
                                 &buffer_length) != ERROR_SUCCESS)
   {
     return -5;
@@ -760,7 +762,7 @@ ACE_Configuration_Win32Registry::get_integer_value (const ACE_Configuration_Sect
                                 name,
                                 NULL,
                                 &type,
-                                (BYTE*) &value,
+                                (BYTE *) &value,
                                 &length) != ERROR_SUCCESS)
     return -2;
 
@@ -790,7 +792,7 @@ ACE_Configuration_Win32Registry::get_binary_value (const ACE_Configuration_Secti
                                 name,
                                 NULL,
                                 &type,
-                                (BYTE*) 0,
+                                (BYTE *) 0,
                                 &buffer_length) != ERROR_SUCCESS)
     return -2;
 
@@ -805,20 +807,21 @@ ACE_Configuration_Win32Registry::get_binary_value (const ACE_Configuration_Secti
                                 name,
                                 NULL,
                                 &type,
-                                (BYTE*) data,
+                                (BYTE *) data,
                                 &buffer_length) != ERROR_SUCCESS)
-  {
-    delete[] data;
-    data = 0;
-    return -5;
-  }
+    {
+      delete[] data;
+      data = 0;
+      return -5;
+    }
 
   return 0;
 }
 
-int ACE_Configuration_Win32Registry::find_value (const ACE_Configuration_Section_Key& key,
-                         const ACE_TCHAR* name,
-                         VALUETYPE& type_out)
+int 
+ACE_Configuration_Win32Registry::find_value (const ACE_Configuration_Section_Key& key,
+                                             const ACE_TCHAR* name,
+                                             VALUETYPE& type_out)
 {
   if (validate_name (name))
     return -1;
@@ -830,30 +833,28 @@ int ACE_Configuration_Win32Registry::find_value (const ACE_Configuration_Section
   DWORD buffer_length=0; 
   DWORD type;
   int result=ACE_TEXT_RegQueryValueEx (base_key,
-                                name,
-                                NULL,
-                                &type,
-                                NULL,
-                                &buffer_length);
+                                       name,
+                                       NULL,
+                                       &type,
+                                       NULL,
+                                       &buffer_length);
   if (result != ERROR_SUCCESS)
-  {
     return -1;
-  }
 
   switch (type)
-  {
-  case REG_SZ:
-    type_out = STRING;
-    break;
-  case REG_DWORD:
-    type_out = INTEGER;
-    break;
-  case REG_BINARY:
-    type_out = BINARY;
-    break;
-  default:
-    return -1; // unknown type
-  }
+    {
+    case REG_SZ:
+      type_out = STRING;
+      break;
+    case REG_DWORD:
+      type_out = INTEGER;
+      break;
+    case REG_BINARY:
+      type_out = BINARY;
+      break;
+    default:
+      return -1; // unknown type
+    }
 
   return 0;
 }
@@ -910,7 +911,6 @@ ACE_Configuration_Win32Registry::resolve_key (HKEY hKey,
        temp != 0; 
        temp = parser.next ()) 
     { 
-
       // Open the key 
       HKEY subkey; 
       if (ACE_TEXT_RegOpenKey (result, 
@@ -946,7 +946,7 @@ ACE_Configuration_Win32Registry::resolve_key (HKEY hKey,
   return result; 
 } 
 
-#endif // WIN_32
+#endif /* WIN_32 */
 
 ///////////////////////////////////////////////////////////////
 
