@@ -1,3 +1,8 @@
+Thu Jan 20 15:46:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Connector.cpp:
+          Replaced C-style cast with C++ const_cast
+
 Thu Jan 20 07:00:15 2005  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/AutomakeWorkspaceHelper.pm:
