@@ -17,9 +17,9 @@
 
 #ifndef TAO_REGISTER_OFFER_ITERATOR_H
 #define TAO_REGISTER_OFFER_ITERATOR_H
-    
+
+#include "ace/Containers.h"
 #include "Offer_Iterator.h"
-#include "stl.h"
 
 template <class TRADER>
 class TAO_Register_Offer_Iterator : public TAO_Offer_Iterator
@@ -68,7 +68,7 @@ private:
   TRADER &trader_;
   // A reference to the trader is needed for access to the map of offers.
 
-  deque <CosTrading::OfferId_var> offer_ids_;
+  ACE_Unbounded_Queue <CosTrading::OfferId_var> offer_ids_;
   // Offer ids of offers to iterate over.
 };
 

@@ -43,13 +43,6 @@ TAO_Lookup<TRADER>::~TAO_Lookup (void)
 {
 }
 
-class Yadda
-{
-public:
-  Yadda (void) {}
-  ~Yadda (void) { new char [10]; }
-};
-
 template <class TRADER> void
 TAO_Lookup<TRADER>::
 query (const char *type,
@@ -206,7 +199,8 @@ perform_lookup (const char* type,
   // determines whether an offer meets those constraints.
   // TAO_Preference_Interpreter -- parses the preference string and
   // orders offers according to those constraints.
-  CosTradingRepos::ServiceTypeRepository::TypeStruct_var type_struct (rep->fully_describe_type (type, env));
+  CosTradingRepos::ServiceTypeRepository::TypeStruct_var
+    type_struct (rep->fully_describe_type (type, env));
   TAO_CHECK_ENV_RETURN_VOID (env);
   TAO_Offer_Filter offer_filter (type_struct.ptr (), policies, env);
   TAO_CHECK_ENV_RETURN_VOID (env);
@@ -329,24 +323,7 @@ lookup_all_subtypes (const char* type,
   // subtype) service type requested are returned.  
   // END SPEC
 
-  // The algorithm works as follows:
-  // Starting with the asked for type, iterate through all other types
-  // looking for those that have it as their direct supertype. Upon
-  // finding a direct subtype of the top-level types, consider all of
-  // that type's offer and stick it onto the list of subtypes. On the
-  // second iteration, locate subtypes of those subtypes. This
-  // proceeds until all of the subtypes for the original class have
-  // been located and their offers considered, or we've exhausted the
-  // cardinality constraints.
-
-  typedef deque<char*> TYPE_LIST;
-  typedef deque< pair
-    <CosTradingRepos::ServiceTypeRepository::IncarnationNumber, char*> >
-    TYPE_NUM_LIST;
-
-  TYPE_NUM_LIST sub_types;
-  TYPE_LIST unconsidered_types;
-    CosTradingRepos::ServiceTypeRepository::SpecifiedServiceTypes sst;
+  CosTradingRepos::ServiceTypeRepository::SpecifiedServiceTypes sst;
   CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq_var all_types;
   
   // Optimization: Since a subtype can't have a higher incarnation
@@ -363,83 +340,47 @@ lookup_all_subtypes (const char* type,
   //    }
   //  TAO_CATCHANY { return; }
   //  TAO_ENDTRY;  
-  
-  // All types save the supertype are initially unconsidered.
-  sub_types.push_back (make_pair (inc_num, (char *) type));
-  for (int i = all_types->length () - 1; i >= 0; i--)
+
+  // Scan all types inserted after the super types. If the transitive
+  // closure of a type's super type relation includes the super type
+  // being considered, then perform a search on that type.
+  CORBA::ULong num_types = all_types->length ();
+  for (int i = 0;
+       i < num_types && offer_filter.ok_to_consider_more ();
+       i++)
     {
-      if (ACE_OS::strcmp (type, all_types[i]) != 0)
-	unconsidered_types.push_back ((char *) (const char *) all_types[i]);
-    }
+      CosTradingRepos::ServiceTypeRepository::TypeStruct_var type_struct;
+      
+      TAO_TRY
+	{
+	  // Obtain a description of the prospective type.
+	  type_struct = rep->fully_describe_type (all_types[i], TAO_TRY_ENV);
+	  TAO_CHECK_ENV;
+	}
+      TAO_CATCHANY
+	{
+	  break;
+	}
+      TAO_ENDTRY;
 
-  // Iterate over the remaining subtypes to locate their subtypes.
-  // We could meet our cardinality constraints prior searching all
-  // types, at which point the algorithm ends gracefully.
-  while (! sub_types.empty () && offer_filter.ok_to_consider_more ())  
-  {
-    // For each potential supertype, iterate over the remaining types.
-    const char* super_type = sub_types.front ().second;
-    CosTradingRepos::ServiceTypeRepository::IncarnationNumber in =
-      sub_types.front ().first;
+      CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq&
+	super_types = type_struct->super_types;
+      CORBA::ULong num_super_types = super_types.length ();
 
-    sub_types.pop_front ();    
-    for (int j = unconsidered_types.size () - 1;
-	 j >= 0 && offer_filter.ok_to_consider_more ();
-	 j--)
-      {
-	CosTradingRepos::ServiceTypeRepository::TypeStruct_var type_struct;
-	CORBA::Boolean is_sub_type = 0;
-	const char* type_name = unconsidered_types.front ();
-	unconsidered_types.pop_front ();
-	
-	TAO_TRY
-	  {
-	    // Obtain a description of the prospective type.
-	    type_struct = rep->describe_type (type_name, TAO_TRY_ENV);
-	    TAO_CHECK_ENV;
-	  }
-	TAO_CATCHANY
-	  {
-	    break;
-	  }
-	TAO_ENDTRY;
-
-	// If this incarnation number is less than the supertype's,
-	// this can't be a subtype. 
-	if (type_struct->incarnation > in)
-	  {	  	  	
-	    // Determine if the prospective type is a subtype of the
-	    // current one -- that is, has the current one as its
-	    // supertype. 
-	    for (int k = type_struct->super_types.length () - 1;
-		 k >= 0; k--)
-	      {
-		is_sub_type = (ACE_OS::strcmp
-			       ((const char *) type_struct->super_types[k],
-				super_type) == 0);
-
-		if (is_sub_type)
-		  break;
-	      }
-	  }
-
-	// If this type isn't a subtype, return it to the queue for
-	// later consideration.
-	if (is_sub_type)
-	  {
-	    // Otherwise, perform a constraint match on the type, and
-	    // add it to the queue of potential supertypes.
-	    this->lookup_one_type (type_name,
-				   service_type_map,
-				   constr_inter,
-				   pref_inter,
-				   offer_filter);
-	    sub_types.push_back (make_pair (in, (char *) type_name));
-	  }
-	else
-	  unconsidered_types.push_back ((char *) type_name);
-      }
-  }
+      for (int j = 0; j < num_super_types; j++)
+	{
+	  if (ACE_OS::strcmp (type_struct->super_types[j], type) == 0)
+	    {
+	      // Egads, a subtype!
+	      this->lookup_one_type (all_types[i],
+				     service_type_map,
+				     constr_inter,
+				     pref_inter,
+				     offer_filter);
+	      break;
+	    }
+	}
+    }  
 }
 
 
@@ -586,7 +527,7 @@ TAO_Lookup<TRADER>::retrieve_links (TAO_Policies& policies,
     {
       // Grab the names of all the links in the trader, and push
       // the suitable ones onto <valid_links>.
-      CosTrading::Link_var link_interface
+      CosTrading::Link_ptr link_interface
 	= this->trader_.trading_components ().link_if ();
       deque<CosTrading::LinkName> valid_links;
       CosTrading::LinkNameSeq_var link_path =
@@ -608,7 +549,7 @@ TAO_Lookup<TRADER>::retrieve_links (TAO_Policies& policies,
       // Collect those valid links into a sequence suitable for
       // passing into the federated_query method.
       links = new CosTrading::LinkNameSeq (valid_links.size ());
-      for (i = valid_links.size (); i >= 0; i--, valid_links.pop_front ())
+      for (i = valid_links.size () - 1; i >= 0; i--, valid_links.pop_front ())
 	links[i] = valid_links.front ();
     }
 
@@ -653,9 +594,9 @@ federated_query (const CosTrading::LinkNameSeq& links,
   // federated query.
   CORBA::ULong total_returned = 0,
     return_card = policies.return_card (_env);
-  CosTrading::Link_var link_interface
+  CosTrading::Link_ptr link_interface
     = this->trader_.trading_components ().link_if ();
-  CosTrading::Admin_var admin_interface
+  CosTrading::Admin_ptr admin_interface
     = this->trader_.trading_components ().admin_if ();
 
   // Begin collecting all the various offer_iterators into a
@@ -689,7 +630,7 @@ federated_query (const CosTrading::LinkNameSeq& links,
 	  CosTrading::PolicySeq_var new_pols =
 	    policies.policies_to_pass (link_info->def_pass_on_follow_rule,
 				       total_returned,
-				       admin_interface.in ());
+				       admin_interface);
 	  
 	  // Perform the federated query.
 	  link_info->target->
@@ -760,10 +701,8 @@ TAO_Lookup<TRADER>
 		   CosTrading::DuplicatePolicyName))
 {
   // Forward this query to the next link in the starting_trader sequence.
-  CosTrading::Link_var link_interface
+  CosTrading::Link_ptr link_interface
     = this->trader_.trading_components ().link_if ();
-  CosTrading::Admin_var admin_interface
-    = this->trader_.trading_components ().admin_if ();
 
   TAO_TRY
     {  

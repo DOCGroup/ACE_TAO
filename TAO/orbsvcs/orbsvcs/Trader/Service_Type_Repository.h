@@ -18,7 +18,6 @@
 #ifndef TAO_SERVICE_TYPE_REPOSITORY_H
 #define TAO_SERVICE_TYPE_REPOSITORY_H
 
-#include "stl.h"
 #include "Trader.h"
 #include "Monitor.h"
 
@@ -205,80 +204,91 @@ public:
 
 private:
   
-  struct Type_Info {
+  struct Type_Info
+  {
     // storage structure for information pertinent to the type.
 
-    typedef list<string> TYPE_LIST;
+    typedef ACE_Unbounded_Set <TAO_String_Hash_Key> Type_List;
 
-    CosTradingRepos::ServiceTypeRepository::TypeStruct type_info_; 
+    CosTradingRepos::ServiceTypeRepository::TypeStruct type_struct_; 
     // standard type info.
-
-    CosTradingRepos::ServiceTypeRepository::PropStructSeq all_prop_; 
-    // complete listing of the type's properties (including inherited).
     
-    TYPE_LIST sub_types_;
+    Type_List sub_types_;
     // names of subtypes.
   };
   
-  typedef map< string, Type_Info, less <string> > SERVICE_TYPE_MAP;
-  typedef SERVICE_TYPE_MAP::iterator SERVICE_TYPE_ITERATOR;
-  
-  typedef map
+  typedef ACE_Hash_Map_Manager
     <
-    string,
-    CosTradingRepos::ServiceTypeRepository::PropStruct*,
-    less < string >
-    > PROP_MAP;
+    TAO_String_Hash_Key,
+    Type_Info,
+    ACE_Null_Mutex
+    >
+    Service_Type_Map;
   
-  typedef map
+  typedef ACE_Hash_Map_Manager
     <
-    string,
-    SERVICE_TYPE_MAP::iterator,
-    less < string >
-    > SUPER_TYPE_MAP;
+    TAO_String_Hash_Key,
+    CosTradingRepos::ServiceTypeRepository::PropStruct,
+    ACE_Null_Mutex
+    >
+    Prop_Map;
   
-  void validate_properties (const CosTradingRepos::ServiceTypeRepository::PropStructSeq& props,
-			    PROP_MAP& prop_map,
+  typedef ACE_Hash_Map_Manager
+    <
+    TAO_String_Hash_Key,
+    Type_Info*,
+    ACE_Null_Mutex
+    > Super_Type_Map;
+
+  void fully_describe_type_i (const CosTradingRepos::ServiceTypeRepository::TypeStruct& type_struct,
+			      CosTradingRepos::ServiceTypeRepository::PropStructSeq& props,
+			      CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq& super_types);
+  // Build a sequence aggregating the property names from all
+  // supertypes of the type, and a sequence representing the
+  // transitive closure of the super type relation.
+			      
+  void validate_properties (Prop_Map& prop_map,
+			    const CosTradingRepos::ServiceTypeRepository::PropStructSeq& props,
 			    CORBA::Environment& _env)
     TAO_THROW_SPEC ((CosTrading::IllegalPropertyName,
 		     CosTrading::DuplicatePropertyName));
   // Confirm that the properties in props have valid names, and aren't
   // duplicated. Cram those properties into the prop_map.
   
-  void validate_supertypes (const CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq& super_types,
-			    SUPER_TYPE_MAP& super_map,
+  void validate_supertypes (Super_Type_Map& super_map,
+			    const CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq& super_types,
 			    CORBA::Environment& _env)
     TAO_THROW_SPEC ((CosTrading::IllegalServiceType,
 		    CosTrading::UnknownServiceType,
 		    CosTrading::DuplicatePropertyName));   
   // Confirm that the each super type exists, and cram them into super_map. 
   
-  void validate_inheritance (PROP_MAP& prop_map,
-			     SUPER_TYPE_MAP& super_map,
+  void validate_inheritance (Prop_Map& prop_map,
+			     const CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq& super_types,
 			     CORBA::Environment& _env)
     TAO_THROW_SPEC ((CosTradingRepos::ServiceTypeRepository::ValueTypeRedefinition));
   // Ensure that properties of a super_type aren't having their types
   // or retstrictions redefined.
 
   //  void validate_interface (const char* if_name,
-  //			   SUPER_TYPE_MAP& super_map,
+  //			   Super_Type_Map& super_map,
   //			   CORBA::Environment& _env)
   //    TAO_THROW_SPEC ((CosTradingRepos::ServiceTypeRepository::InterfaceTypeMismatch));
   // Ensure that the interface type derives from its superclasses'.
   
-  void  update_type_map (const char* name,
-			 const char * if_name, 
-			 const CosTradingRepos::ServiceTypeRepository::PropStructSeq& props,
-			 const CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq& super_types,
-			 PROP_MAP& prop_map,
-			 SUPER_TYPE_MAP& super_map);
+  void update_type_map (const char* name,
+			const char * if_name, 
+			const CosTradingRepos::ServiceTypeRepository::PropStructSeq& props,
+			const CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq& super_types,
+			Prop_Map& prop_map,
+			Super_Type_Map& super_map);
   // Update the type map with the information contained in the
   // TypeStruct, prop_map, and super_map.
 
   ACE_Lock* lock_;
   // Lock with which to serialize access to the service type map.
   
-  SERVICE_TYPE_MAP type_map_;
+  Service_Type_Map type_map_;
   // Stores information for each service type in the repository.
   // This is a mapping from service type name to a Type_Info struct
   // which serves as a storage for various information for the given type.

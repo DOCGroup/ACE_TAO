@@ -43,7 +43,7 @@ template <class TRADER> void
 TAO_Register_Offer_Iterator<TRADER>::add_offer (CosTrading::OfferId id,
 						CosTrading::Offer* offer)
 {
-  this->offer_ids_.push_back (id);
+  this->offer_ids_.enqueue_tail (id);
 }
 
 template <class TRADER> CORBA::ULong 
@@ -74,18 +74,19 @@ TAO_Register_Offer_Iterator<TRADER>::next_n (CORBA::ULong n,
   
   // While there are entries left and we haven't filled <offers>
   // with requested number.
-  while (! this->offer_ids_.empty () 
+  while (! this->offer_ids_.is_empty () 
 	 && n > ret_offers)
     {
       // If offer is found, put it into the sequence.	  
       // remove this id irrespective of whether the offer is found
-      // or not.      
-      CosTrading::OfferId_var id = this->offer_ids_.front ();
+      // or not.
+      CosTrading::OfferId_var id;
+      this->offer_ids_.dequeue_head (id);
       
       TAO_TRY
 	{
 	  CosTrading::Offer* offer =
-	    service_type_map.lookup_offer (id, TAO_TRY_ENV);
+	    service_type_map.lookup_offer ((CosTrading::OfferId) id, TAO_TRY_ENV);
 	  TAO_CHECK_ENV;
 	  
 	  if (offer != 0)
@@ -95,9 +96,7 @@ TAO_Register_Offer_Iterator<TRADER>::next_n (CORBA::ULong n,
 	    }
 	}
       TAO_CATCHANY {}
-      TAO_ENDTRY;
-      
-      this->offer_ids_.pop_front ();
+      TAO_ENDTRY;      
     }
   
   // Reset the length to the correct value

@@ -119,7 +119,7 @@ TAO_Link<TRADER,MAP_LOCK_TYPE>::describe_link (const char *name,
     TAO_THROW_RETURN (CosTrading::Link::IllegalLinkName (name), 0);
   
   // Ensure this isn't a duplicate link name.
-  LINKS::ENTRY* link_entry;
+  Links::ENTRY* link_entry;
   TAO_String_Hash_Key link_name (name);
   if (this->links_.find (link_name, link_entry) == -1)
     TAO_THROW_RETURN (CosTrading::Link::UnknownLinkName (name), 0);
@@ -138,7 +138,7 @@ TAO_Link<TRADER,MAP_LOCK_TYPE>::list_links (CORBA::Environment& _env)
     CosTrading::LinkNameSeq::allocbuf (size);
 
   // Copy the link names into the buffer.
-  for (LINKS::iterator links_iter (this->links_);
+  for (Links::iterator links_iter (this->links_);
        ! links_iter.done ();
        links_iter++)
     link_seq[i++] = CORBA::string_dup ((*links_iter).ext_id_.in ());
@@ -164,7 +164,7 @@ modify_link (const char *name,
     TAO_THROW (CosTrading::Link::IllegalLinkName (name));
 
   // Ensure this isn't a duplicate link name.
-  LINKS::ENTRY* link_entry = 0;
+  Links::ENTRY* link_entry = 0;
   TAO_String_Hash_Key link_name (name);
   if (this->links_.find (link_name, link_entry) == -1)
     TAO_THROW (CosTrading::Link::UnknownLinkName (name));
