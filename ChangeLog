@@ -1,8 +1,19 @@
+Thu Mar  6 11:41:46 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/USAGE:
+        * bin/MakeProjectCreator/modules/Creator.pm:
+        * bin/MakeProjectCreator/modules/Driver.pm:
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/WorkspaceCreator.pm:
+
+          Added a -notoplevel option to allow processing to occur with no
+          top level file created.
+
 Thu Mar  6 10:56:09 2003  Phil Mesnier  <mesnier_p@ociweb.com>
 
-	* ace/Makefile.am: 
+        * ace/Makefile.am:
 
-	Adding codeset files to yet another makefile variant.
+        Adding codeset files to yet another makefile variant.
 
 Thu Mar  6 09:58:41 2003  Chad Elliott  <elliott_c@ociweb.com>
 

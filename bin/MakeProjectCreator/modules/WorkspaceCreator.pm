@@ -40,10 +40,11 @@ sub new {
   my($addtemp)   = shift;
   my($addproj)   = shift;
   my($progress)  = shift;
+  my($toplevel)  = shift;
   my($self)      = Creator::new($class, $global, $inc,
                                 $template, $ti, $relative,
                                 $addtemp, $addproj,
-                                $progress, 'workspace');
+                                $progress, $toplevel, 'workspace');
   my($typecheck) = $self->{'type_check'};
 
   $self->{'workspace_name'} = undef;
@@ -231,22 +232,25 @@ sub write_workspace {
   my($self)      = shift;
   my($generator) = shift;
   my($status)    = 1;
-  my($fh)        = new FileHandle();
-  my($name)      = $self->transform_file_name($self->workspace_file_name());
-  my($dir)       = dirname($name);
 
-  if ($dir ne '.') {
-    mkpath($dir, 0, 0777);
-  }
-  if (open($fh, ">$name")) {
-    $self->pre_workspace($fh);
-    $self->write_comps($fh, $generator);
-    $self->post_workspace($fh);
-    close($fh);
-  }
-  else {
-    print STDERR "ERROR: Unable to open $name for output\n";
-    $status = 0;
+  if ($self->get_toplevel()) {
+    my($fh)   = new FileHandle();
+    my($name) = $self->transform_file_name($self->workspace_file_name());
+    my($dir)  = dirname($name);
+
+    if ($dir ne '.') {
+      mkpath($dir, 0, 0777);
+    }
+    if (open($fh, ">$name")) {
+      $self->pre_workspace($fh);
+      $self->write_comps($fh, $generator);
+      $self->post_workspace($fh);
+      close($fh);
+    }
+    else {
+      print STDERR "ERROR: Unable to open $name for output\n";
+      $status = 0;
+    }
   }
 
   return $status;
@@ -417,6 +421,9 @@ sub project_creator {
 
   $str =~ s/Workspace/Project/;
   $str =~ s/=HASH.*//;
+
+  ## For the toplevel parameter, we always pass 1 since the workspace
+  ## creator always wants the ProjectCreator to generate projects.
   return $str->new($self->get_global_cfg(),
                    $self->get_include_path(),
                    $self->get_template_override(),
@@ -426,7 +433,8 @@ sub project_creator {
                    $self->get_relative(),
                    $self->get_addtemp(),
                    $self->get_addproj(),
-                   $self->get_progress_callback());
+                   $self->get_progress_callback(),
+                   1);
 }
 
 
