@@ -1,9 +1,14 @@
+Mon Aug 30 17:10:24 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/Interceptors/interceptors.cpp: Fixed erronous format
+	  specifiers.
+
 Mon Aug 30 10:43:21 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* PROBLEM-REPORT-FORM:
 
 	  Updated to point to refer reports tao-bugs mailing list.
-	
+
 	* tao/Exception.h:
 	* tao/orbconf.h:
 
