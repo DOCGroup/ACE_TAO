@@ -1,21 +1,42 @@
-Thu Mar 06 17:23:46 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+Thu Mar 06 20:29:42 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	  The following changes integrate the XML parsing of softpkg
+	  descriptors with the daemon management framework so we can now
+	  instantiate and test a single component implementation using
+	  its softpkg descriptor.
 
 	* ciao/ComponentServer_Impl.cpp:
 	* ciao/ComponentServer_Impl.h:
-	* ciao/ComponentServer_Impl.inl:
+	* ciao/ComponentServer_Impl.inl: Added a cached
+	  ComponentInstallation reference so we can pass it to the
+	  containers this ComponentServer creates.
+
 	* ciao/Container_Impl.cpp:
-	* ciao/Container_Impl.h:
+	* ciao/Container_Impl.h: Added an extra argument in init for
+	  taking in the ComponentInstallation reference.  Also modified
+	  the install_home related mechanisms to use ComponentInstallation
+	  interface to acquire the actual implementation "locations".
+
+	* tools/ServerActivator/ServerActivator_test_client.cpp:
+	* tools/ComponentServer/ComponentServer_test_client.cpp: Changed
+	  to use UUID.
+
+	* tools/XML_Helpers/Cascadable_DocHandler.h: Removed a redundant
+	  export decl.
+
+	* tools/Daemon/DaemonController.dsp: Added files from the
+	  XML_Helpers directories.
+
+	* tools/Daemon/CIAO_Daemon.cpp:
+	* tools/Daemon/Softpkg_Commands.cpp:
+	* tools/Daemon/Softpkg_Commands.h: Added new commands to start and
+	  terminate ComponentServer for running one component home.
+
 	* examples/handcrafted/Hello/CIAO_Installation_Data.ini:
 	* examples/handcrafted/Hello/client.cpp:
 	* examples/handcrafted/Hello/hello.ssd:
-	* examples/handcrafted/Hello/run_test.pl:
-	* tools/ComponentServer/ComponentServer_test_client.cpp:
-	* tools/Daemon/CIAO_Daemon.cpp:
-	* tools/Daemon/DaemonController.dsp:
-	* tools/Daemon/Softpkg_Commands.cpp:
-	* tools/Daemon/Softpkg_Commands.h:
-	* tools/ServerActivator/ServerActivator_test_client.cpp:
-	* tools/XML_Helpers/Cascadable_DocHandler.h:
+	* examples/handcrafted/Hello/run_test.pl: Changed and set up the
+	  test to start up a ComponentServer via Daemon.
 
 Wed Mar 05 21:43:44 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
