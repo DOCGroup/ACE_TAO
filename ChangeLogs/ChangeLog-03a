@@ -1,3 +1,10 @@
+Tue Sep 10 12:28:41 2002  Carlos O'Ryan  <coryan@atdesk.com>
+
+	* ace/Connector.cpp:
+	  Be more paranoid about using AST's returned from cleanup_AST()
+	  and always check the return value of that function.  This fixes:
+	    http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1303
+
 Mon Sep  9 16:44:00 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderbilt.edu>
 
 	* THANKS: Suprirse of surprise, Gautam Thakers name was not there
