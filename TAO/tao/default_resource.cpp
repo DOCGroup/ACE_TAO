@@ -40,9 +40,7 @@ TAO_Default_Resource_Factory::~TAO_Default_Resource_Factory (void)
          this->protocol_factories_.begin ();
        iterator != end;
        ++iterator)
-    {
-      delete *iterator;
-    }
+    delete *iterator;
 
   this->protocol_factories_.reset ();
 }
@@ -73,61 +71,74 @@ TAO_Default_Resource_Factory::init (int argc, char **argv)
   int local_resource_source = -1;
 
   for (int curarg = 0; curarg < argc; curarg++)
-    if (ACE_OS::strcmp (argv[curarg], "-ORBresources") == 0)
+    if (ACE_OS::strcasecmp (argv[curarg],
+                            "-ORBResources") == 0)
       {
         curarg++;
         if (curarg < argc)
           {
             char *name = argv[curarg];
 
-            if (ACE_OS::strcasecmp (name, "global") == 0)
+            if (ACE_OS::strcasecmp (name,
+                                    "global") == 0)
               local_resource_source = TAO_GLOBAL;
-            else if (ACE_OS::strcasecmp (name, "tss") == 0)
+            else if (ACE_OS::strcasecmp (name,
+                                         "tss") == 0)
               local_resource_source = TAO_TSS;
           }
       }
-    else if (ACE_OS::strcmp (argv[curarg], "-ORBpoa") == 0)
+    else if (ACE_OS::strcasecmp (argv[curarg],
+                                 "-ORBPOA") == 0)
       {
         curarg++;
         if (curarg < argc)
           {
             char *name = argv[curarg];
 
-            if (ACE_OS::strcasecmp (name, "global") == 0)
+            if (ACE_OS::strcasecmp (name,
+                                    "global") == 0)
               local_poa_source = TAO_GLOBAL;
-            else if (ACE_OS::strcasecmp (name, "tss") == 0)
+            else if (ACE_OS::strcasecmp (name,
+                                         "tss") == 0)
               local_poa_source = TAO_TSS;
           }
       }
-    else if (ACE_OS::strcmp (argv[curarg], "-ORBreactorlock") == 0)
+    else if (ACE_OS::strcasecmp (argv[curarg],
+                                 "-ORBReactorLock") == 0)
       {
         ACE_DEBUG ((LM_DEBUG,
-                    "TAO_Default_Resource obsolete -ORBreactorlock "
-                    "option, please use -ORBreactortype\n"));
+                    "TAO_Default_Resource obsolete -ORBReactorLock "
+                    "option, please use -ORBReactorType\n"));
         curarg++;
         if (curarg < argc)
           {
             char *name = argv[curarg];
 
-            if (ACE_OS::strcasecmp (name, "null") == 0)
+            if (ACE_OS::strcasecmp (name,
+                                    "null") == 0)
               reactor_type_ = TAO_REACTOR_SELECT_MT;
-            else if (ACE_OS::strcasecmp (name, "token") == 0)
+            else if (ACE_OS::strcasecmp (name,
+                                         "token") == 0)
               reactor_type_= TAO_REACTOR_SELECT_ST;
           }
       }
 
-    else if (ACE_OS::strcmp (argv[curarg], "-ORBreactortype") == 0)
+    else if (ACE_OS::strcasecmp (argv[curarg],
+                                 "-ORBReactorType") == 0)
       {
         curarg++;
         if (curarg < argc)
           {
             char *name = argv[curarg];
 
-            if (ACE_OS::strcasecmp (name, "select_mt") == 0)
+            if (ACE_OS::strcasecmp (name,
+                                    "select_mt") == 0)
               reactor_type_ = TAO_REACTOR_SELECT_MT;
-            else if (ACE_OS::strcasecmp (name, "select_st") == 0)
+            else if (ACE_OS::strcasecmp (name,
+                                         "select_st") == 0)
               reactor_type_ = TAO_REACTOR_SELECT_ST;
-            else if (ACE_OS::strcasecmp (name, "fl_reactor") == 0)
+            else if (ACE_OS::strcasecmp (name,
+                                         "fl_reactor") == 0)
 #if defined(ACE_HAS_FL)
               reactor_type_ = TAO_REACTOR_FL;
 #else
@@ -135,7 +146,8 @@ TAO_Default_Resource_Factory::init (int argc, char **argv)
                           "TAO_Default_Factory - FlReactor"
                           " not supported on this platform\n"));
 #endif /* ACE_HAS_FL */
-            else if (ACE_OS::strcasecmp (name, "xt_reactor") == 0)
+            else if (ACE_OS::strcasecmp (name,
+                                         "xt_reactor") == 0)
 #if defined(ACE_HAS_XT)
               reactor_type_ = TAO_REACTOR_XT;
 #else
@@ -143,7 +155,8 @@ TAO_Default_Resource_Factory::init (int argc, char **argv)
                           "TAO_Default_Factory - XtReactor"
                           " not supported on this platform\n"));
 #endif /* ACE_HAS_XT */
-            else if (ACE_OS::strcasecmp (name, "WFMO") == 0)
+            else if (ACE_OS::strcasecmp (name,
+                                         "WFMO") == 0)
 #if defined(ACE_WIN32)
               reactor_type_ = TAO_REACTOR_WFMO;
 #else
@@ -151,7 +164,8 @@ TAO_Default_Resource_Factory::init (int argc, char **argv)
                           "TAO_Default_Factory - WFMO Reactor"
                           " not supported on this platform\n"));
 #endif /* ACE_WIN32 */
-            else if (ACE_OS::strcasecmp (name, "MsgWFMO") == 0)
+            else if (ACE_OS::strcasecmp (name,
+                                         "MsgWFMO") == 0)
 #if defined(ACE_WIN32)
               reactor_type_ = TAO_REACTOR_MSGWFMO;
 #else
@@ -166,54 +180,60 @@ TAO_Default_Resource_Factory::init (int argc, char **argv)
           }
       }
 
-    else if (ACE_OS::strcmp (argv[curarg], "-ORBinputcdrallocator") == 0)
+    else if (ACE_OS::strcasecmp (argv[curarg],
+                                 "-ORBInputCDRAllocator") == 0)
       {
         curarg++;
         if (curarg < argc)
           {
             char *name = argv[curarg];
 
-            if (ACE_OS::strcasecmp (name, "global") == 0)
+            if (ACE_OS::strcasecmp (name,
+                                    "global") == 0)
               this->cdr_allocator_source_ = TAO_GLOBAL;
-            else if (ACE_OS::strcasecmp (name, "tss") == 0)
+            else if (ACE_OS::strcasecmp (name,
+                                         "tss") == 0)
               this->cdr_allocator_source_ = TAO_TSS;
           }
       }
-    else if (ACE_OS::strcmp (argv[curarg], "-ORBprotocolfactory") == 0)
+    else if (ACE_OS::strcasecmp (argv[curarg],
+                                 "-ORBProtocolFactory") == 0)
       {
         TAO_ProtocolFactorySet *pset = this->get_protocol_factories ();
         curarg++;
         if (curarg < argc)
           {
-            TAO_Protocol_Item *item = new TAO_Protocol_Item (argv[curarg]);
+            TAO_Protocol_Item *item;
+            ACE_NEW_RETURN (item,
+                            TAO_Protocol_Item (argv[curarg]),
+                            -1);
             if (pset->insert (item) == -1)
-              {
-                ACE_ERROR ((LM_ERROR,
-                  "(%P|%t) Unable to add protocol factories for %s: %p\n", argv[curarg]));
-              }
+              ACE_ERROR ((LM_ERROR,
+                          "(%P|%t) Unable to add protocol factories for %s: %p\n",
+                          argv[curarg]));
           }
       }
 
   // Don't allow a global ORB and a tss POA.
-  if ( (local_resource_source == TAO_GLOBAL) &&
-       (local_poa_source == TAO_TSS) )
+  if (local_resource_source == TAO_GLOBAL
+      && local_poa_source == TAO_TSS)
     return -1;
 
-  // make poa=tss the default, if ORB is tss and the user didn't
+  // Make poa=tss the default, if ORB is tss and the user didn't
   // specify a value.
-  if ( (local_resource_source == TAO_TSS) &&
-       (local_poa_source      == -1) )
+  if (local_resource_source == TAO_TSS
+      && local_poa_source == -1)
     local_poa_source = TAO_TSS;
 
-  // update the object data members.
+  // Update the object data members.
   if (local_resource_source != -1)
     this->resource_source_ = local_resource_source;
   if (local_poa_source != -1)
-    this->poa_source_      = local_poa_source;
+    this->poa_source_ = local_poa_source;
 
   // Don't allow a global ORB and a tss POA.
-  if ( (this->resource_source_ == TAO_GLOBAL) &&
-       (this->poa_source_      == TAO_TSS) )
+  if (this->resource_source_ == TAO_GLOBAL
+      && this->poa_source_ == TAO_TSS)
     return -1;
 
   return 0;
@@ -225,8 +245,8 @@ TAO_Default_Resource_Factory::init_protocol_factories (void)
   TAO_ProtocolFactorySetItor end = protocol_factories_.end ();
   TAO_ProtocolFactorySetItor factory = protocol_factories_.begin ();
 
-  // @@ Ossama, if you want to be very paranoid, you could get memory leak
-  // if insert operations failed.
+  // @@ Ossama, if you want to be very paranoid, you could get memory
+  // leak if insert operations failed.
 
   if (factory == end)
     {

@@ -229,7 +229,8 @@ TAO_ORB_Core::init (int &argc, char *argv[])
     {
       char *current_arg = arg_shifter.get_current ();
 
-      if (ACE_OS::strcmp (current_arg, "-ORBsvcconf") == 0)
+      if (ACE_OS::strcasecmp (current_arg,
+                              "-ORBSvcConf") == 0)
         {
           // Specify the name of the svc.conf file to be used.
           svc_config_argv[svc_config_argc++] =
@@ -243,14 +244,16 @@ TAO_ORB_Core::init (int &argc, char *argv[])
               arg_shifter.consume_arg();
             }
         }
-      else if (ACE_OS::strcmp (current_arg, "-ORBdaemon") == 0)
+      else if (ACE_OS::strcasecmp (current_arg,
+                                   "-ORBDaemon") == 0)
         {
           // Be a daemon
           svc_config_argv[svc_config_argc++] =
             CORBA::string_dup ("-b");
           arg_shifter.consume_arg ();
         }
-      else if (ACE_OS::strcmp (current_arg, "-ORBdotteddecimaladdresses") == 0)
+      else if (ACE_OS::strcasecmp (current_arg,
+                                   "-ORBDottedDecimalAddresses") == 0)
         {
           // Use dotted decimal addresses
           // @@ this should be renamed.  See above comment. fredk
@@ -261,14 +264,16 @@ TAO_ORB_Core::init (int &argc, char *argv[])
               arg_shifter.consume_arg ();
             }
         }
-      else if (ACE_OS::strcmp (current_arg, "-ORBdebug") == 0)
+      else if (ACE_OS::strcasecmp (current_arg,
+                                   "-ORBDebug") == 0)
         {
           // Turn on debugging
           ACE::debug (1);
           TAO_orbdebug = 1;
           arg_shifter.consume_arg ();
         }
-      else if (ACE_OS::strcmp (current_arg, "-ORBdebuglevel") == 0)
+      else if (ACE_OS::strcasecmp (current_arg,
+                                   "-ORBDebugLevel") == 0)
         {
           arg_shifter.consume_arg ();
 
@@ -280,7 +285,8 @@ TAO_ORB_Core::init (int &argc, char *argv[])
             }
         }
 
-      else if (ACE_OS::strcmp (current_arg, "-ORBendpoint") == 0)
+      else if (ACE_OS::strcasecmp (current_arg,
+                                   "-ORBEndpoint") == 0)
         {
           // Each "endpoint" is of the form:
           //
@@ -320,7 +326,8 @@ TAO_ORB_Core::init (int &argc, char *argv[])
             }
         }
 
-      else if (ACE_OS::strcmp (current_arg, "-ORBhost") == 0)
+      else if (ACE_OS::strcasecmp (current_arg,
+                                   "-ORBHost") == 0)
         {
           // @@ Fred&Carlos: This option now has the same effect as specifying
           //                 an extra -ORBendpoint.  Ideally, this option
@@ -347,7 +354,8 @@ TAO_ORB_Core::init (int &argc, char *argv[])
               arg_shifter.consume_arg ();
             }
         }
-      else if (ACE_OS::strcmp (current_arg, "-ORBnameserviceior") == 0)
+      else if (ACE_OS::strcasecmp (current_arg,
+                                   "-ORBNameServiceIOR") == 0)
         {
           // Specify the IOR of the NameService.
 
@@ -358,7 +366,8 @@ TAO_ORB_Core::init (int &argc, char *argv[])
               arg_shifter.consume_arg ();
             }
         }
-      else if (ACE_OS::strcmp (current_arg, "-ORBnameserviceport") == 0)
+      else if (ACE_OS::strcasecmp (current_arg,
+                                   "-ORBNameServicePort") == 0)
         {
           // Specify the port number for the NameService.
           // Unrelated to ORB Protocols, this is used for multicast.
@@ -370,7 +379,8 @@ TAO_ORB_Core::init (int &argc, char *argv[])
               arg_shifter.consume_arg ();
             }
         }
-      else if (ACE_OS::strcmp (current_arg, "-ORBtradingserviceior") == 0)
+      else if (ACE_OS::strcasecmp (current_arg,
+                                   "-ORBTradingServiceIOR") == 0)
         {
           // Specify the IOR of the NameService.
 
@@ -381,7 +391,8 @@ TAO_ORB_Core::init (int &argc, char *argv[])
               arg_shifter.consume_arg ();
             }
         }
-      else if (ACE_OS::strcmp (current_arg, "-ORBtradingserviceport") == 0)
+      else if (ACE_OS::strcasecmp (current_arg,
+                                   "-ORBTradingServicePort") == 0)
         {
           // Specify the port number for the NameService.
 
@@ -392,15 +403,16 @@ TAO_ORB_Core::init (int &argc, char *argv[])
               arg_shifter.consume_arg ();
             }
         }
-      else if (ACE_OS::strcmp (current_arg, "-ORBport") == 0)
+      else if (ACE_OS::strcasecmp (current_arg,
+                                   "-ORBPort") == 0)
         {
           // Issue a warning since this backward compatibilty support
           // may be dropped in future releases.
 
           old_style_endpoint = 1;
           ACE_DEBUG ((LM_WARNING,
-                      "(%P|%t) \nWARNING: The `-ORBport' option is obsolete.\n"
-                      "In the future, use the `-ORBendpoint' option.\n"));
+                      "(%P|%t) \nWARNING: The `-ORBPort' option is obsolete.\n"
+                      "In the future, use the `-ORBEndpoint' option.\n"));
 
           // Specify the port number/name on which we should listen
           arg_shifter.consume_arg ();
@@ -412,7 +424,8 @@ TAO_ORB_Core::init (int &argc, char *argv[])
               arg_shifter.consume_arg ();
             }
         }
-      else if (ACE_OS::strcmp (current_arg, "-ORBrcvsock") == 0)
+      else if (ACE_OS::strcasecmp (current_arg,
+                                   "-ORBRcvSock") == 0)
         {
           // @@ All protocol implementation may not use sockets, so
           //    this can either be a generic I/O Buffer size or
@@ -427,7 +440,8 @@ TAO_ORB_Core::init (int &argc, char *argv[])
               arg_shifter.consume_arg ();
             }
         }
-      else if (ACE_OS::strcmp (current_arg, "-ORBsndsock") == 0)
+      else if (ACE_OS::strcasecmp (current_arg,
+                                   "-ORBSndSock") == 0)
         {
           // @@ All protocol implementation may not use sockets, so
           //    this can either be a generic I/O Buffer size or
@@ -441,7 +455,8 @@ TAO_ORB_Core::init (int &argc, char *argv[])
               arg_shifter.consume_arg ();
             }
         }
-      else if (ACE_OS::strcmp (current_arg, "-ORBobjrefstyle") == 0)
+      else if (ACE_OS::strcasecmp (current_arg,
+                                   "-ORBObjRefStyle") == 0)
         {
           // Specifies the style of printed objrefs: URL or IOR
           //
@@ -466,14 +481,16 @@ TAO_ORB_Core::init (int &argc, char *argv[])
           if (arg_shifter.is_parameter_next ())
             {
               char* opt = arg_shifter.get_current ();
-              if (ACE_OS::strcasecmp (opt, "URL") == 0)
+              if (ACE_OS::strcasecmp (opt,
+                                      "URL") == 0)
                 use_ior = 0;
 
               arg_shifter.consume_arg ();
             }
         }
 
-      else if (ACE_OS::strcmp (current_arg, "-ORBcollocation") == 0)
+      else if (ACE_OS::strcasecmp (current_arg,
+                                   "-ORBCollocation") == 0)
         // Specify whether we want to optimize against collocation
         // objects.  Valid arguments are: "yes" and "no".  Default is
         // yes.
@@ -482,9 +499,11 @@ TAO_ORB_Core::init (int &argc, char *argv[])
           if (arg_shifter.is_parameter_next ())
             {
               char *opt = arg_shifter.get_current ();
-              if (ACE_OS::strcasecmp (opt, "YES") == 0)
+              if (ACE_OS::strcasecmp (opt,
+                                      "YES") == 0)
                 this->opt_for_collocation_ = 1;
-              else if (ACE_OS::strcasecmp (opt, "NO") == 0)
+              else if (ACE_OS::strcasecmp (opt,
+                                           "NO") == 0)
                 this->opt_for_collocation_ = 0;
 
               arg_shifter.consume_arg ();
@@ -511,7 +530,8 @@ TAO_ORB_Core::init (int &argc, char *argv[])
       //    file?  And could you also remove from the .html file the
       //    stuff we took out of the default server strategy factory
       //    and the default resource factory?
-      else if (ACE_OS::strcmp (current_arg, "-ORBglobalcollocation") == 0)
+      else if (ACE_OS::strcasecmp (current_arg,
+                                   "-ORBGlobalCollocation") == 0)
         // Specify whether we want to use collocation across ORBs;
         // i.e. all the ORBs in the same address space use collocated
         // calls.
@@ -520,16 +540,19 @@ TAO_ORB_Core::init (int &argc, char *argv[])
           if (arg_shifter.is_parameter_next ())
             {
               char *opt = arg_shifter.get_current ();
-              if (ACE_OS::strcasecmp (opt, "YES") == 0)
+              if (ACE_OS::strcasecmp (opt,
+                                      "YES") == 0)
                 this->use_global_collocation_ = 1;
-              else if (ACE_OS::strcasecmp (opt, "NO") == 0)
+              else if (ACE_OS::strcasecmp (opt,
+                                           "NO") == 0)
                 this->use_global_collocation_ = 0;
 
               arg_shifter.consume_arg ();
             }
         }
 
-      else if (ACE_OS::strcmp (current_arg, "-ORBpreconnect") == 0)
+      else if (ACE_OS::strcasecmp (current_arg,
+                                   "-ORBPreconnect") == 0)
         {
           arg_shifter.consume_arg ();
 
@@ -582,7 +605,8 @@ TAO_ORB_Core::init (int &argc, char *argv[])
             }
         }
 
-      else if (ACE_OS::strcmp (current_arg, "-ORBcdrtradeoff") == 0)
+      else if (ACE_OS::strcasecmp (current_arg,
+                                   "-ORBCDRTradeoff") == 0)
         {
           arg_shifter.consume_arg ();
           if (arg_shifter.is_parameter_next ())
@@ -591,7 +615,8 @@ TAO_ORB_Core::init (int &argc, char *argv[])
               arg_shifter.consume_arg ();
             }
         }
-       else if (ACE_OS::strcmp (current_arg, "-ORBsvcconfdirective") == 0)
+       else if (ACE_OS::strcasecmp (current_arg,
+                                    "-ORBSvcConfDirective") == 0)
          {
            // This is used to pass arguments to the Service
            // Configurator using the "command line" to provide
@@ -609,7 +634,8 @@ TAO_ORB_Core::init (int &argc, char *argv[])
                arg_shifter.consume_arg ();
              }
          }
-      else if (ACE_OS::strcmp (current_arg, "-ORBgioplite") == 0)
+      else if (ACE_OS::strcasecmp (current_arg,
+                                   "-ORBGIOPlite") == 0)
         {
           // @@ This will have to change since gioplite will be considered
           //    as an alternate ORB messaging protocols.
@@ -620,20 +646,23 @@ TAO_ORB_Core::init (int &argc, char *argv[])
       // A new <ObjectID>:<IOR> mapping has been specified. This will be
       // used by the resolve_initial_references ().
 
-      else if (ACE_OS::strcmp (current_arg, "-ORBInitRef") == 0)
+      else if (ACE_OS::strcasecmp (current_arg,
+                                   "-ORBInitRef") == 0)
         {
           arg_shifter.consume_arg ();
           if (arg_shifter.is_parameter_next ())
             {
               init_ref = arg_shifter.get_current ();
-              if (this->add_to_ior_table (init_ref,*ior_lookup_table) != 0)
+              if (this->add_to_ior_table (init_ref,
+                                          *ior_lookup_table) != 0)
                 ACE_ERROR_RETURN ((LM_ERROR,
                                    "Unable to add IOR to the Table\n"),
                                   -1);
               arg_shifter.consume_arg ();
             }
         }
-      else if (ACE_OS::strcmp (current_arg, "-ORBDefaultInitRef") == 0)
+      else if (ACE_OS::strcasecmp (current_arg,
+                                   "-ORBDefaultInitRef") == 0)
         {
           arg_shifter.consume_arg ();
           if (arg_shifter.is_parameter_next ())
@@ -642,13 +671,19 @@ TAO_ORB_Core::init (int &argc, char *argv[])
               arg_shifter.consume_arg ();
             }
         }
-      else if (ACE_OS::strcmp (current_arg, "-ORBSkipServiceConfigOpen") == 0)
+      else if (ACE_OS::strcasecmp (current_arg,
+                                   "-ORBSkipServiceConfigOpen") == 0)
         {
           arg_shifter.consume_arg ();
           skip_service_config_open = 1;
         }
       else
-        arg_shifter.ignore_arg ();
+        {
+          if (TAO_debug_level > 0)
+            ACE_DEBUG ((LM_DEBUG,
+                        "warning: arg %s unknown, consuming arg\n"));
+          arg_shifter.consume_arg ();
+        }
     }
 
 #if defined (DEBUG)
