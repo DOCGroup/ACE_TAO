@@ -8,6 +8,7 @@
 #include "ace/Log_Msg.h"
 
 #include "Node_Handler.h"
+#include "Resource_Handler.h"
 #include "IC_Handler.h"
 #include "SR_Handler.h"
 
