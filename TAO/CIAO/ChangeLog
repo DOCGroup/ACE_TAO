@@ -1,3 +1,12 @@
+Wed May 26 17:08:21 2004  Gan Deng  <dengg@dre.vanderbilt.edu>
+
+	* DnC/DomainApplicationManager/DomainApplicationManager_Impl.h
+        * DnC/DomainApplicationManager/DomainApplicationManager_Impl.cpp
+
+          Changed the member functions signature in accordance with the 
+          modified DomainApplicationManager IDL interface.
+
+
 Wed May 26 16:24:54 2004  Gan Deng  <dengg@dre.vanderbilt.edu>
 
 	* DnC/Core/Deployment.idl
