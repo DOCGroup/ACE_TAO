@@ -1,5 +1,4 @@
 project {
   after += IORInterceptor
-  libs    += TAO_IORInterceptor
-  libpaths += $(TAO_ROOT)/tao/IORInterceptor
+  libs  += TAO_IORInterceptor
 }
