@@ -2693,6 +2693,7 @@ public:
 #undef ctime_r
 #undef asctime_r
 #undef rand_r   
+#undef getpwnam_r
 #endif /* ACE_HAS_BROKEN_R_ROUTINES */
 
   // = A set of wrappers for operations on time.

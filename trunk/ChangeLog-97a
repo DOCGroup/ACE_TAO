@@ -1,4 +1,15 @@
+Tue Apr 29 00:58:06 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/OS: Added patches for Digital UNIX to handle the
+ 	  getpwnam_r() name.  Thanks to Thilo Kielmann
+ 	  <kielmann@informatik.uni-siegen.de> for these patches.
+
 Tue Apr 29 00:33:46 1997    <irfan@TWOSTEP>
+
+	* ace: Removed config-win32-msvc2.0.h,  config-win32-msvc4.0.h
+	  config-win32-msvc4.x.h, and config-winnt-4.0-msvc.h from the
+	  repository. These files have been replaced by config-win32.h
+	  and config-win32-common.h.
 
 	* IOStream_Test.cpp (main): Added return 0 at the end of main().
 
@@ -29,15 +40,6 @@ Tue Apr 29 00:16:27 1997  James C Hu  <jxh@polka.cs.wustl.edu>
 
 	* JAWS/stress_testing: Changed the Makefile to link in the math
 	  library (-lm).
-
-Mon Apr 28 22:11:05 1997  Irfan Pyarali <irfan@cs.wustl.edu>
-
-	* ace: Removed config-win32-msvc2.0.h,  config-win32-msvc4.0.h
-	  config-win32-msvc4.x.h, and config-winnt-4.0-msvc.h from the
-	  repository. These files have been replaced by config-win32.h
-	  and config-win32-common.h.
-
-Mon Apr 28 22:11:05 1997  James C Hu  <jxh@polka.cs.wustl.edu>
 
 	* ace/OS.h and ace/OS.i: Added support for memmove().
 

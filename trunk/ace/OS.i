@@ -584,6 +584,8 @@ extern "C" {
   extern struct tm *_Pgmtime_r (const time_t *, struct tm *);
   extern char *_Pasctime_r (const struct tm *, char *);
   extern int _Prand_r (unsigned int *seedptr);
+  extern int _Pgetpwnam_r (const char *, struct passwd *,
+                           char *, size_t, struct passwd **);
 }
 #endif /* DIGITAL_UNIX */
 
@@ -3082,7 +3084,17 @@ ACE_OS::getpwnam_r (const char *name, struct passwd *pwent,
 #if !defined (ACE_LACKS_PWD_FUNCTIONS)
 #if defined (ACE_HAS_REENTRANT_FUNCTIONS) && defined (ACE_MT_SAFE)
 #if !defined (ACE_LACKS_PWD_REENTRANT_FUNCTIONS)
+#if defined (ACE_HAS_PTHREADS_1003_DOT_1C)
+  struct passwd *result;
+#if defined (DIGITAL_UNIX)
+  ::_Pgetpwnam_r (name, pwent, buffer, buflen, &result);
+#else
+  ::getpwnam_r (name, pwent, buffer, buflen, &result);
+#endif /* (DIGITAL_UNIX) */
+  return result;
+#else
   return ::getpwnam_r (name, pwent, buffer, buflen);
+#endif /* ACE_HAS_PTHREADS_1003_DOT_1C */
 #else 
   ACE_UNUSED_ARG (name);
   ACE_UNUSED_ARG (pwent);
