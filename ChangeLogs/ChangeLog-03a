@@ -1,6 +1,17 @@
+Sun Jun 30 12:22:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* etc/tao_portablegroup.doxygen:
+	  Added this file that configures the doxygen configuration of the TAO
+	  PortableGroup library.
+
+        * html/index.html:
+	* bin/generate_doxygen.pl:
+	  Updated these files so that the new PortableGroup doxygen
+	  documentation is generated and listed in the index page.
+
 Fri Jun 28 08:07:12 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/Logging_Strategy.cpp: Added the ability to toggle 
+	* ace/Logging_Strategy.cpp: Added the ability to toggle
 	  the LM_STARTUP and LM_SHUTDOWN messages.  Thanks to
 	  Adee Ran <adeeran@yahoo.com> for the patch.
 

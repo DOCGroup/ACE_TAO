@@ -44,6 +44,7 @@ $dot_path = '/usr/local/bin';
              ,'tao_cosnaming'
              ,'tao_costime'
              ,'tao_costrader'
+             ,'tao_portablegroup'
             );
 
 # Modify defaults using the command line arguments
