@@ -474,6 +474,77 @@ ACE::basename (const wchar_t *pathname, wchar_t delim)
 }
 #endif /* ACE_HAS_UNICODE */
 
+// Send N char *ptrs and int lengths.  Note that the char *'s precede
+// the ints (basically, an varargs version of writev).  The count N is
+// the *total* number of trailing arguments, *not* a couple of the
+// number of tuple pairs!
+
+ssize_t
+ACE::send (ACE_HANDLE handle, size_t n, ...)
+{
+  ACE_TRACE ("ACE_SOCK_IO::send");
+
+  va_list argp;  
+  size_t total_tuples = n / 2;
+  iovec *iovp;
+#if defined (ACE_HAS_ALLOCA)
+  iovp = (iovec *) alloca (total_tuples * sizeof (iovec));
+#else 
+  ACE_NEW_RETURN (iovp, iovec[total_tuples], -1);
+#endif /* !defined (ACE_HAS_ALLOCA) */
+
+  va_start (argp, n);
+
+  for (size_t i = 0; i < total_tuples; i++)
+    {
+      iovp[i].iov_base = va_arg (argp, char *);
+      iovp[i].iov_len  = va_arg (argp, int);
+    }
+
+  ssize_t result = ACE_OS::writev (handle, iovp, total_tuples);
+#if !defined (ACE_HAS_ALLOCA)
+  delete [] iovp;
+#endif /* !defined (ACE_HAS_ALLOCA) */
+  va_end (argp);
+  return result;
+}
+
+// This is basically an interface to ACE_OS::readv, that doesn't use
+// the struct iovec explicitly.  The ... can be passed as an arbitrary
+// number of (char *ptr, int len) tuples.  However, the count N is the
+// *total* number of trailing arguments, *not* a couple of the number
+// of tuple pairs!
+
+ssize_t
+ACE::recv (ACE_HANDLE handle, size_t n, ...)
+{
+  ACE_TRACE ("ACE_SOCK_IO::recv");
+
+  va_list argp;  
+  size_t total_tuples = n / 2;
+  iovec *iovp;
+#if defined (ACE_HAS_ALLOCA)
+  iovp = (iovec *) alloca (total_tuples * sizeof (iovec));
+#else
+  ACE_NEW_RETURN (iovp, iovec[total_tuples], -1);
+#endif /* !defined (ACE_HAS_ALLOCA) */
+
+  va_start (argp, n);
+
+  for (size_t i = 0; i < total_tuples; i++)
+    {
+      iovp[i].iov_base = va_arg (argp, char *);
+      iovp[i].iov_len  = va_arg (argp, int);
+    }
+
+  ssize_t result = ACE_OS::readv (handle, iovp, total_tuples);
+#if !defined (ACE_HAS_ALLOCA)
+  delete [] iovp;
+#endif /* !defined (ACE_HAS_ALLOCA) */
+  va_end (argp);
+  return result;
+}
+
 // Miscellaneous static methods used throughout ACE.
 
 ssize_t

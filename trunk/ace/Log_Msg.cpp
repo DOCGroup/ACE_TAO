@@ -38,15 +38,19 @@
 // IPC conduit between sender and client daemon.  This should be
 // included in the <ACE_Log_Msg> class, but due to "order of include"
 // problems it can't be...
-#if defined (ACE_LACKS_FIFO)
-# include "ace/SOCK_Connector.h"
-typedef ACE_SOCK_Stream ACE_LOG_MSG_IPC;
+#if defined (ACE_HAS_STREAM_PIPES)
+# include "ace/SPIPE_Connector.h"
+typedef ACE_SPIPE_Stream ACE_LOG_MSG_IPC_STREAM;
+typedef ACE_SPIPE_Connector ACE_LOG_MSG_IPC_CONNECTOR;
+typedef ACE_SPIPE_Addr ACE_LOG_MSG_IPC_ADDR;
 #else
-# include "ace/FIFO_Send_Msg.h"
-typedef ACE_FIFO_Send_Msg ACE_LOG_MSG_IPC;
-#endif /* ACE_LACKS_FIFO */
+# include "ace/SOCK_Connector.h"
+typedef ACE_SOCK_Stream ACE_LOG_MSG_IPC_STREAM;
+typedef ACE_SOCK_Connector ACE_LOG_MSG_IPC_CONNECTOR;
+typedef ACE_INET_Addr ACE_LOG_MSG_IPC_ADDR;
+#endif /* ACE_HAS_STREAM_PIPES */
 
-static ACE_LOG_MSG_IPC *ACE_Log_Msg_message_queue = 0;
+static ACE_LOG_MSG_IPC_STREAM *ACE_Log_Msg_message_queue = 0;
 
 #if defined (ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION)
 # include /**/ <iostream.h>
@@ -104,7 +108,7 @@ ACE_Log_Msg_Manager::get_lock (void)
       ACE_NEW_RETURN_I (ACE_Log_Msg_Manager::lock_, ACE_Thread_Mutex, 0);
 
       // Allocated the ACE_Log_Msg IPC instance.
-      ACE_NEW_RETURN (ACE_Log_Msg_message_queue, ACE_LOG_MSG_IPC, 0);
+      ACE_NEW_RETURN (ACE_Log_Msg_message_queue, ACE_LOG_MSG_IPC_STREAM, 0);
     }
 
   return ACE_Log_Msg_Manager::lock_;
@@ -459,19 +463,14 @@ ACE_Log_Msg::open (const char *prog_name,
       if (logger_key == 0)
         status = -1;
       else
-#if defined (ACE_LACKS_FIFO)
         {
           if (ACE_Log_Msg_message_queue->get_handle () != ACE_INVALID_HANDLE)
             ACE_Log_Msg_message_queue->close ();
-          ACE_SOCK_Connector con;
+
+          ACE_LOG_MSG_IPC_CONNECTOR con;
           status = con.connect (*ACE_Log_Msg_message_queue,
-                                ACE_INET_Addr (ACE_MULTIBYTE_STRING (logger_key)));
+                                ACE_LOG_MSG_IPC_ADDR (ACE_MULTIBYTE_STRING (logger_key)));
         }
-#else
-        if (ACE_Log_Msg_message_queue->get_handle () != ACE_INVALID_HANDLE)
-          ACE_Log_Msg_message_queue->close ();
-        status = ACE_Log_Msg_message_queue->open (logger_key);
-#endif /* ACE_LACKS_FIFO */
 
       if (status == -1)
         ACE_SET_BITS (ACE_Log_Msg::flags_, ACE_Log_Msg::STDERR);
@@ -871,25 +870,22 @@ ACE_Log_Msg::log (const char *format_str,
                           stderr);
       if (ACE_BIT_ENABLED (ACE_Log_Msg::flags_, ACE_Log_Msg::LOGGER))
         {
-#if defined (ACE_LACKS_FIFO)
+#if defined (ACE_HAS_STREAM_PIPES)
+          ACE_Str_Buf log_msg ((void *) &log_record,
+                               int (log_record.length ()));
+
+          // Try to use the <putpmsg> API if possible in order to
+          // ensure correct message queueing according to priority.
+          result = ACE_Log_Msg_message_queue->send ((const ACE_Str_Buf *) 0,
+						    &log_msg,
+						    int (log_record.priority ()),
+						    MSG_BAND);
+#else
 	  // We're running over sockets, so we'll need to indicate the
 	  // number of bytes to send.
           result = ACE_Log_Msg_message_queue->send ((void *) &log_record,
 						    log_record.length ());
-#else
-          ACE_Str_Buf log_msg ((void *) &log_record,
-                               int (log_record.length ()));
-
-#if defined (ACE_HAS_STREAM_PIPES)
-          // Try to use the <putpmsg> API if possible in order to
-          // ensure correct message queueing according to priority.
-          result = ACE_Log_Msg_message_queue->send (int (log_record.priority ()),
-						    &log_msg);
-#else
-	  // Use the FIFO API that uses the ol' 2-write trick.
-          result = ACE_Log_Msg_message_queue->send (log_msg);
 #endif /* ACE_HAS_STREAM_PIPES */
-#endif /* ACE_LACKS_FIFO */
         }
       // Format the message and print it to stderr and/or ship it off
       // to the log_client daemon, and/or print it to the ostream.

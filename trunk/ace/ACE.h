@@ -264,6 +264,12 @@ public:
   // returned with <errno == ETIME>.  If it succeeds the number of
   // bytes receieved is returned.
 
+  static ssize_t send (ACE_HANDLE handle, size_t n, ...);
+  // Send varargs messages to the <handle> using <writev>.
+
+  static ssize_t recv (ACE_HANDLE handle, size_t n, ...);
+  // Recv varargs messages to the <handle> using <readv>.
+
   // = File system I/O functions.
 
   // These encapsulate differences between UNIX and Win32 and also

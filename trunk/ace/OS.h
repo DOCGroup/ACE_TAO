@@ -161,10 +161,10 @@
 
 // Used by the FIFO tests and the Client_Logging_Handler netsvc.
 #if !defined (ACE_DEFAULT_RENDEZVOUS)
-#if defined (ACE_LACKS_FIFO)
-#define ACE_DEFAULT_RENDEZVOUS "localhost:10012"
-#else
+#if defined (ACE_HAS_STREAM_PIPES)
 #define ACE_DEFAULT_RENDEZVOUS "/tmp/fifo.ace"
+#else
+#define ACE_DEFAULT_RENDEZVOUS "localhost:10012"
 #endif /* ACE_LACKS_FIFO */
 #endif /* ACE_DEFAULT_RENDEZVOUS */
 
