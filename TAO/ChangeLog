@@ -1,3 +1,14 @@
+Wed Jun 30 11:55:46 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_root.cpp:
+        * TAO_IDLinclude/ast_root.h:
+        * TAO_IDLinclude/utl_scope.h:
+        
+          Made the nmembers() method of UTL_Scope virtual and
+          added an override in AST_Root, so we can get a member
+          count of the global scope without the predefined types
+          and other keyword entries that are added at startup.
+
 Wed Jun 30 06:50:37 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/IFR_Service/IFR_Service.mpc:
