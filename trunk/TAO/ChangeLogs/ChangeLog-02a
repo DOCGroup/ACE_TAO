@@ -4,6 +4,12 @@ Sun Mar  3 10:19:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
         * examples/Content_Server/SMI_Iterator/server.bor:
           Added TAO_Messaging library
 
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/*.bor:
+          Created BCB makefiles for this test
+
+        * orbsvcs/tests/AVStreams/Makefile.bor:
+          Added the Simple_Two_Stage_With_QoS directory
+
 Sat Mar  2 17:08:47 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 
 	* docs/releasenotes/amh.html:
