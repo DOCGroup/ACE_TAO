@@ -41,7 +41,7 @@ Smart_Diamond_Top_Proxy::shape ( ACE_ENV_SINGLE_ARG_DECL)
     {
       ans =
         ACE_OS::strdup (
-            Diamond::TAO_Diamond_Top_Smart_Proxy_Base::shape (
+		ACE_NESTED_CLASS (Diamond,TAO_Diamond_Top_Smart_Proxy_Base)::shape (
                 ACE_ENV_SINGLE_ARG_PARAMETER
               )
           );

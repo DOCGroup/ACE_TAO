@@ -51,7 +51,8 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
-# ADD LINK32 Diamond.lib coll_test_stubs.lib TAO_SmartProxies.lib TAO_PortableServer.lib TAO.lib ace.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\..\ace" /libpath:"..\..\..\tao" /libpath:"..\..\..\tao\PortableServer" /libpath:"..\..\..\tao\SmartProxies"
+# ADD LINK32 Diamond.lib coll_test_stubs.lib TAO_Strategies.lib TAO_SmartProxies.lib TAO_PortableServer.lib TAO_Valuetype.lib TAO_IORInterceptor.lib TAO_ObjRefTemplate.lib TAO.lib ace.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\..\ace" /libpath:"..\..\..\tao" /libpath:"..\..\..\tao\PortableServer" /libpath:"..\..\..\tao\SmartProxies" /libpath:"..\..\..\tao\Strategies" /libpath:"..\..\..\tao\Valuetype" /libpath:"..\..\..\tao\IORInterceptor" /libpath:"..\..\..\tao\ObjRefTemplate"
+# SUBTRACT LINK32 /pdb:none
 
 !ELSEIF  "$(CFG)" == "Collocation - Win32 Debug"
 
@@ -76,7 +77,8 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 Diamondd.lib coll_test_stubsd.lib TAO_SmartProxiesd.lib TAO_PortableServerd.lib TAOd.lib aced.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"..\..\..\..\ace" /libpath:"..\..\..\tao" /libpath:"..\..\..\tao\PortableServer" /libpath:"..\..\..\tao\SmartProxies"
+# ADD LINK32 Diamondd.lib coll_test_stubsd.lib TAO_SmartProxiesd.lib TAO_PortableServerd.lib TAO_ObjRefTemplated.lib TAO_IORInterceptord.lib TAO_Valuetyped.lib TAO_Strategiesd.lib TAOTAOd.lib aced.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"..\..\..\..\ace" /libpath:"..\..\..\tao" /libpath:"..\..\..\tao\PortableServer" /libpath:"..\..\..\tao\ObjRefTemplate" /libpath:"..\..\..\tao\IORInterceptor" /libpath:"..\..\..\tao\Valuetype" /libpath:"..\..\..\tao\SmartProxies"
+# SUBTRACT LINK32 /pdb:none
 
 !ENDIF 
 
