@@ -12,7 +12,7 @@
 //    The classe define the templates for the client and server.
 //
 // = AUTHOR
-//    @@ Bala, please add yourself here!
+//   Balachandran Natarajan <bala@cs.wustl.edu> 
 //
 // ============================================================================
 
@@ -31,15 +31,17 @@ class Server
   //   A set of useful class Templates for using the TAO CORBA implementation.
   //
   // = DESCRIPTION
-  //   @@ Bala, please fill in a brief description here.
+  //   A template server definition. This template can be used by 
+  //   single server/client projects for defintion of their server/
+  //   clients. Pl. see the directories time, bank, echo for further
+  //   details of implemenatation.
 public:
   // = Initialization and termination methods.
 
-  // @@ Bala, please use "Server (void)", etc. for all "()" in your code!
-  Server ();
+  Server (void);
   // Constructor.
 
-  ~Server ();
+  ~Server (void);
   // Destructor.
 
   int init (const char *servant_name, 
@@ -49,7 +51,7 @@ public:
   // Initialize the Server state - parsing arguments and waiting.
   // interface_name is the name used to register the Servant.
 
-  void register_name ();
+  void register_name (void);
   // after calling init(), this method will register the server with
   // the TAO Naming Service using the servant_name passed to init().
 
@@ -63,7 +65,7 @@ protected:
   const char *name;
   // name of the servant to be used for TAO Naming Service
 
-  int parse_args ();
+  int parse_args (void);
   // Parses the commandline arguments.
 
   TAO_ORB_Manager orb_manager_;
@@ -87,63 +89,60 @@ template <class InterfaceObj, class Var>
 class Client
 {
   // = TITLE
-  //   @@ Bala, please fill in a brief description here.
+  //   Template Client class
   //
   // = DESCRIPTION
-  //   @@ Bala, please fill in a brief description here.
+  //   A template client implementation for a single server/client
+  //   model. The example usage of these usage can be found in the 
+  //   sub-directories below
 public:
 
-  // @@ Bala, please reformat this stuff to use ACE indenting and map
-  // "()" to "(void)"!
+  // = Initialization and termination methods.
+  Client (void);
+  // Constructor.
 
-	// = Initialization and termination methods.
-	Client ();
-	// Constructor.
+  ~Client (void);
+  // Destructor.
 
-	~Client ();
-	// Destructor.
+  int init (int argc, char *argv[]);
+  // Initialize the client communication endpoint with server.
 
-	int init (int argc, char *argv[]);
-	// Initialize the client communication endpoint with server.
+  InterfaceObj *operator-> () { return server_.in ();};
+  // Return the interface object pointer.
 
-  // @@ Bala, please don't inline this in the header file, and also
-  // remove the inline keyword.
-	inline InterfaceObj *operator-> () { return server_.in ();};
-        // Return the interface object pointer.
-
-        int shutdown (void );
-        // Returns the shutdown flag.
-
-        void shutdown (int);
-        // Fills in the shutdwon flag.
+  int shutdown (void );
+  // Returns the shutdown flag.
+  
+  void shutdown (int);
+  // Fills in the shutdwon flag.
 
 protected:
-	int read_ior (char *filename);
-	// Function to read the server IOR from a file.
+  int read_ior (char *filename);
+  // Function to read the server IOR from a file.
 
-	int parse_args ();
-	// Parses the arguments passed on the command line.
+  int parse_args (void);
+  // Parses the arguments passed on the command line.
 
-	int argc_;
-	// # of arguments on the command line.
+  int argc_;
+  // # of arguments on the command line.
 
-	char **argv_;
-	// arguments from command line.
+  char **argv_;
+  // arguments from command line.
 
-	char *ior_;
-	// IOR of the obj ref of the server.
+  char *ior_;
+  // IOR of the obj ref of the server.
 
-	CORBA::Environment env_;
-	// Environment variable.
+  CORBA::Environment env_;
+  // Environment variable.
 
-        Var server_;
-        // Server object
+  Var server_;
+  // Server object
 
-        int shutdown_;
-        // Flag for shutting down the server
-
-	CORBA::ORB_var orb_;
-	// Remember our orb.
+  int shutdown_;
+  // Flag for shutting down the server
+  
+  CORBA::ORB_var orb_;
+  // Remember our orb.
 };
 
 #endif /* TAO_UTIL_H */
