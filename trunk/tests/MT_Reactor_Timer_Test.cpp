@@ -75,19 +75,10 @@ int
 Time_Handler::handle_timeout (const ACE_Time_Value &tv,
                               const void *arg)
 {
-  long time_tag = long (arg);
+  long time_tag = ACE_reinterpret_cast (long, arg);
   ACE_UNUSED_ARG(tv);
 
-  if (time_tag < 0)
-    {
-      // This case just tests to make sure the Reactor is counting
-      // timer expiration correctly.
-      ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("%T (%t): expiration %d\n"),
-                  -time_tag));
-      return 0;
-    }
-  else if (time_tag == 0) 
+  if (time_tag == 0) 
     {	// Heartbeat.
       int i;
 
@@ -127,29 +118,96 @@ Time_Handler::handle_timeout (const ACE_Time_Value &tv,
 
 #endif /* ACE_HAS_THREADS */
 
+Dispatch_Count_Handler::Dispatch_Count_Handler (void)
+{
+  // Initialize the pipe.
+  if (this->pipe_.open () == -1)
+    ACE_ERROR ((LM_ERROR,
+                ASYS_TEXT ("%p\n"),
+                ASYS_TEXT ("ACE_Pipe::open")));
+  // Register the "read" end of the pipe.
+  else if (the_reactor->register_handler (this->pipe_.read_handle (),
+                                          this,
+                                          ACE_Event_Handler::READ_MASK) == -1)
+    ACE_ERROR ((LM_ERROR,
+                ASYS_TEXT ("%p\n"),
+                ASYS_TEXT ("register_handler")));
+  // Put something in our pipe and smoke it... ;-)
+  else if (ACE_OS::write (this->pipe_.write_handle (), "z", 1) == -1)
+    ACE_ERROR ((LM_ERROR,
+                ASYS_TEXT ("%p\n"),
+                ASYS_TEXT ("write")));
+  // Call notify to prime the pump for this, as well.
+  else if (the_reactor->notify (this) == -1)
+    ACE_ERROR ((LM_ERROR,
+                ASYS_TEXT ("%p\n"),
+                ASYS_TEXT ("notify")));
+}
+
+int 
+Dispatch_Count_Handler::handle_input (ACE_HANDLE h)
+{
+  char c;
+  if (ACE_OS::read (h, &c, 1) != 1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ASYS_TEXT ("%p\n"),
+                       ASYS_TEXT ("read")),
+                      -1);
+  ACE_ASSERT (c == 'z');
+  ACE_DEBUG ((LM_DEBUG,
+              ASYS_TEXT ("%T (%t): handle_input\n")));
+  return 0;
+}
+
+int 
+Dispatch_Count_Handler::handle_exception (ACE_HANDLE h)
+{
+  ACE_DEBUG ((LM_DEBUG,
+              ASYS_TEXT ("%T (%t): handle_exception\n")));
+  return 0;
+}
+
+int 
+Dispatch_Count_Handler::handle_timeout (const ACE_Time_Value &tv,
+                                        const void *arg)
+{
+  long value = ACE_reinterpret_cast (long, arg);
+  
+  // This case just tests to make sure the Reactor is counting timer
+  // expiration correctly.
+  ACE_DEBUG ((LM_DEBUG,
+              ASYS_TEXT ("%T (%t): expiration %d\n"),
+              value));
+  return 0;
+}
+
 int
 main (int, ASYS_TCHAR *[])
 {
   ACE_START_TEST (ASYS_TEXT ("MT_Reactor_Timer_Test"));
 
-#if defined (ACE_HAS_THREADS)
-
   the_reactor = ACE_Reactor::instance ();
-  Time_Handler other_thread;
+
+  Dispatch_Count_Handler callback;
 
   for (int i = ACE_MAX_TIMERS; i > 0; i--)
-    // Schedule a timeout to expire in 5 seconds.
-    if (the_reactor->schedule_timer (&other_thread,
-                                     (const void *) -i,
-                                     ACE_Time_Value (2)) == -1)
+    // Schedule a timeout to expire immediately.
+    if (the_reactor->schedule_timer (&callback,
+                                     (const void *) i,
+                                     ACE_Time_Value (0)) == -1)
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "%p\n",
-                         "schedule_timer"),
+                         ASYS_TEXT ("%p\n"),
+                         ASYS_TEXT ("schedule_timer")),
                         1);
   
   int result = the_reactor->handle_events ();
-  // All <ACE_MAX_TIMERS> should be counted in the return value.
-  ACE_ASSERT (result == ACE_MAX_TIMERS);
+  // All <ACE_MAX_TIMERS> should be counted in the return value + 2
+  // I/O dispatches (one for <handle_input> and the other for
+  // <handle_exception>).
+  ACE_ASSERT (result == ACE_MAX_TIMERS + 2);
+
+#if defined (ACE_HAS_THREADS)
+  Time_Handler other_thread;
 
   // Set up initial set of timers.
   other_thread.setup ();
