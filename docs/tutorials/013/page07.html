@@ -48,13 +48,13 @@ cpp file as with task.
 <font color=blue>#ifndef</font> <font color=purple>WORK_H</font>
 <font color=blue>#define</font> <font color=purple>WORK_H</font>
 
-<font color=blue>#include</font> "<font color=green>ace/Log_Msg.h</font>"
+<font color=blue>#include</font> "<A HREF="../../../ace/Log_Msg.h">ace/Log_Msg.h</A>"
 
 <font color=blue>#if !defined</font> (<font color=purple>ACE_LACKS_PRAGMA_ONCE</font>)
-# pragma once
+<font color=blue># pragma</font> <font color=purple>once</font>
 <font color=blue>#endif</font> <font color=red>/* ACE_LACKS_PRAGMA_ONCE */</font>
 
-<font color=blue>#include</font> "<font color=green>ace/Synch.h</font>"
+<font color=blue>#include</font> "<A HREF="../../../ace/Synch.h">ace/Synch.h</A>"
 <font color=blue>#include</font> "<font color=green>mld.h</font>"
 
 <font color=red>/*
@@ -234,6 +234,7 @@ int <font color=#008888>Work::fini</font> (void)
 {
     while (state_.value () &lt; 3)
     {
+        ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) 0x%x <font color=#008888>Work::fini</font>() state %d\n</font>", (void *) this,state_.value()));
         if (this->process () == -1)
         {
             ACE_ERROR_RETURN ((LM_ERROR, "<font color=green>%p\n</font>", "<font color=green>process</font>"), -1);

@@ -3,7 +3,7 @@
 # To extract the files from this archive, save it to some FILE, remove
 # everything before the `!/bin/sh' line above, then type `sh FILE'.
 #
-# Made on 1998-12-28 18:00 EST by <jcej@chiroptera.tragus.org>.
+# Made on 1999-04-03 17:08 EST by <jcej@chiroptera.tragus.org>.
 # Source directory was `/var/home/jcej/projects/ACE_wrappers/docs/tutorials/020'.
 #
 # Existing files will *not* be overwritten unless `-c' is specified.
@@ -13,7 +13,7 @@
 # ------ ---------- ------------------------------------------
 #    426 -rw-rw-r-- hdr
 #     69 -rw-rw-r-- bodies
-#    509 -rw-rw-r-- page01.pre
+#   1395 -rw-rw-r-- page01.pre
 #    524 -rw-rw-r-- page02.pre
 #    115 -rw-rw-r-- page03.pre
 #    411 -rw-rw-r-- page04.pre
@@ -66,7 +66,7 @@ else
 fi
 rm -f 1231235999 $$.touch
 #
-if mkdir _sh07707; then
+if mkdir _sh12949; then
   $echo 'x -' 'creating lock directory'
 else
   $echo 'failed to create lock directory'
@@ -151,20 +151,41 @@ X    <p>
 X      Like the shared memory tutorial, this one is also very basic and 
 X      primitive.  I'm assuming you've read that one, so I'll just hit
 X      the high points this time through..
+<P>
+Kirthika's abstract:
+<UL>
+Here, the ACE_Shared_Memory_MM class has been used to provide
+persistence of the contents of the shared memory resource used by 
+the server and client. A memory_map which is really a file mapped onto
+memory appears like an array which can be
+easily manipulated  while actually the data is stored in a file thus
+making the contents permanent. In the previous tutorial, this wasnt
+possible as we were dealing with shared memory allocated from the RAM.
+<P>
+Again, here too, the example consists of a server and a client sharing
+memory
+(the mem_map) and the server writing a a-z string to it which will
+be successfully converted to uppercase by the client.
+<P>
+Notice that, similarities in usage abound between the previous and the
+current tutorial which will prove to be a force for templatisation.
+For that we need to go ahead -- to the next tutorial!
+X
+</UL>
 SHAR_EOF
-  $shar_touch -am 1228173898 'page01.pre' &&
+  $shar_touch -am 0403170599 'page01.pre' &&
   chmod 0664 'page01.pre' ||
   $echo 'restore of' 'page01.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'page01.pre:' 'MD5 check failed'
-333a5e5f8be0a5b8dc66424a50e5b4bd  page01.pre
+dce708188357c329c4d68d4799f5511b  page01.pre
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page01.pre'`"
-    test 509 -eq "$shar_count" ||
-    $echo 'page01.pre:' 'original size' '509,' 'current size' "$shar_count!"
+    test 1395 -eq "$shar_count" ||
+    $echo 'page01.pre:' 'original size' '1395,' 'current size' "$shar_count!"
   fi
 fi
 # ============= page02.pre ==============
@@ -339,5 +360,5 @@ SHAR_EOF
     $echo 'page02.pst:' 'original size' '132,' 'current size' "$shar_count!"
   fi
 fi
-rm -fr _sh07707
+rm -fr _sh12949
 exit 0

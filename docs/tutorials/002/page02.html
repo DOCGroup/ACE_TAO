@@ -66,9 +66,9 @@ the various ACE components judiciously.
 
 <font color=red>/* As before, we need a few ACE objects as well as our Logging_Handler
   declaration.  */</font>
-<font color=blue>#include</font> "<font color=green>ace/Acceptor.h</font>"
-<font color=blue>#include</font> "<font color=green>ace/SOCK_Acceptor.h</font>"
-<font color=blue>#include</font> "<font color=green>ace/Reactor.h</font>"
+<font color=blue>#include</font> "<A HREF="../../../ace/Acceptor.h">ace/Acceptor.h</A>"
+<font color=blue>#include</font> "<A HREF="../../../ace/SOCK_Acceptor.h">ace/SOCK_Acceptor.h</A>"
+<font color=blue>#include</font> "<A HREF="../../../ace/Reactor.h">ace/Reactor.h</A>"
 <font color=blue>#include</font> "<font color=green>handler.h</font>"
 
 <font color=red>/* We'll still use the global reactor pointer.  There's a snappy way
@@ -85,11 +85,15 @@ typedef ACE_Acceptor &lt;Logging_Handler, ACE_SOCK_ACCEPTOR> Logging_Acceptor;
 <font color=red>/* One of the new things will be a signal handler so that we can exit
   the application somewhat cleanly.  The 'finished' flag is used
   instead of the previous infninite loop and the 'handler' will set
-  that flag in respose to SIGINT (CTRL-C).  */</font>
+  that flag in respose to SIGINT (CTRL-C). 
+  The invocation of <font color=#008888>ACE_Reactor::notify</font>() will cause the
+  handle_events() to return so that we can see the new value of 'finished'.
+*/</font>
 static sig_atomic_t finished = 0;
 extern "<font color=green>C</font>" void handler (int)
 {
   finished = 1;
+  g_reactor->notify();
 }
 
 static const u_short PORT = ACE_DEFAULT_SERVER_PORT;
