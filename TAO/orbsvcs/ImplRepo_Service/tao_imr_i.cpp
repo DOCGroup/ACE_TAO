@@ -132,7 +132,7 @@ TAO_IMR_i::parse_args (void)
   }
 
   // Adjust argc and argv so only the command specific args are passed
-  return this->op_->parse (this->argc_ - 2, this->argv_ + 2);
+  return this->op_->parse (this->argc_ - 1, this->argv_ + 1);
 }
 
 
@@ -1139,7 +1139,7 @@ TAO_IMR_Op_Add::print_usage (void)
                         "    -h            Displays this\n"
                         "    -c command    Startup command\n"
                         "    -w dir        Working directory\n"
-                        "    -a mode       Set activate mode (NORMAL|MANUAL|PER_CLIENT|AUTO_START)"));
+                        "    -a mode       Set activate mode (NORMAL|MANUAL|PER_CLIENT|AUTO_START)\n"));
 }
 
 void
@@ -1216,7 +1216,7 @@ TAO_IMR_Op_Update::print_usage (void)
                         "    -h            Displays this\n"
                         "    -c command    Startup command\n"
                         "    -w dir        Working directory\n"
-                        "    -a mode       Set activate mode (NORMAL|MANUAL|PER_CLIENT|AUTO_START)"));
+                        "    -a mode       Set activate mode (NORMAL|MANUAL|PER_CLIENT|AUTO_START)\n"));
 }
 
 
