@@ -831,9 +831,9 @@ nobase_include_HEADERS += \
   Tagged_Components.i \
   Tagged_Profile.i \
   Thread_Lane_Resources_Manager.i \
-  TimeBaseC.i \
-  TimeBaseS.i \
-  TimeBaseS_T.i \
+  TimeBaseC.inl \
+  TimeBaseS.inl \
+  TimeBaseS_T.inl \
   Transport.inl \
   Transport_Acceptor.inl \
   Transport_Cache_Manager.inl \
