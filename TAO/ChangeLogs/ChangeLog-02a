@@ -1,3 +1,12 @@
+Sat Jun  2 18:44:28 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tao/DynamicAny/DynAny_i.cpp (set_to_default_value):
+
+          Changed code for the typecode case to avoid taking the
+          address of a temporary. Also changed code for the wstring
+          case to force CORBA::WChar* to be passed to the Any
+          insertion operator.
+
 Sat Jun  2 15:44:27 2001  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.cpp (is_equivalent):
