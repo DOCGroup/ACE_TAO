@@ -15,6 +15,7 @@ autoconf or Larry Wall's metaconfig...
 Macro					Description
 -----					-----------
 
+ACE_DEFAULT_THREAD_KEYS                 Number of TSS keys, with ACE_HAS_TSS_EMULATION _only_.  Defaults to 64.
 ACE_HAS_BROKEN_EXPLICIT_TEMPLATE_DESTRUCTOR     When calling a template class'es destructor explicitly, we must use ptr->FOO<BAR>::~FOO () but not ptr->FOO<BAR>::~FOO<BAR> ().
 ACE_THREADS_DONT_INHERIT_LOG_MSG		Specify this if you don't want threads to inherit parent thread's ACE_Log_Msg properties.
 ACE_HAS_RECV_TIMEDWAIT			Platform has the MIT pthreads APIs for
@@ -172,6 +173,7 @@ ACE_HAS_TIMOD_H				Platform supports TLI timod STREAMS module
 ACE_HAS_TIUSER_H			Platform supports TLI tiuser header
 ACE_HAS_TLI				Platform supports TLI
 ACE_HAS_TLI_PROTOTYPES			Platform provides TLI function prototypes
+ACE_HAS_TSS_EMULATION                   ACE provides TSS emulation.  See also ACE_DEFAULT_THREAD_KEYS.
 ACE_HAS_UALARM				Platform supports ualarm()
 ACE_HAS_UCONTEXT_T			Platform supports ucontext_t (which is used in the extended signal API).
 ACE_HAS_UNION_WAIT			The wait() system call takes a (union wait *) rather than int *
