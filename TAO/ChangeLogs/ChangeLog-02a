@@ -1,3 +1,14 @@
+Fri Sep 15 16:55:01 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/Portable_Interceptors/Benchmark/interceptors.h:
+	* tests/Portable_Interceptors/Benchmark/interceptors.cpp:
+	* tests/Portable_Interceptors/Dynamic/interceptors.h:
+	* tests/Portable_Interceptors/Dynamic/interceptors.cpp:
+	* tests/Portable_Interceptors/Service_Context_Manipulation/interceptors.h:
+	* tests/Portable_Interceptors/Service_Context_Manipulation/interceptors.cpp:
+	  Fixed mismatched exception declarations in <send_reply>.
+	  Removed useless forward class declarations and unused variables.
+
 Fri Sep 15 16:47:12 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_argument/arglist.cpp:
@@ -45,7 +56,7 @@ Fri Sep 15 14:37:22 2000  Marina Spivak  <marina@cs.wustl.edu>
 	* orbsvcs/orbsvcs/SSLIOP.dsp:
 
 	  Included new files from the Endpoint component addition to pp
-	  framework.     
+	  framework.
 
 Fri Sep 15 14:27:31 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 

@@ -18,9 +18,6 @@
 
 // Forward Declarations
 #if (TAO_HAS_INTERCEPTORS == 1)
-class PortableInterceptor::ClientRequestInfo;
-class PortableInterceptor::ServerRequestInfo;
-
 
 class Vault_Client_Request_Interceptor
 :  public PortableInterceptor::ClientRequestInterceptor//,
@@ -98,8 +95,7 @@ public:
   virtual void send_reply (PortableInterceptor::ServerRequestInfo_ptr ri,
                            CORBA::Environment &ACE_TRY_ENV =
                            TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableInterceptor::ForwardRequest));
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void send_exception (PortableInterceptor::ServerRequestInfo_ptr ri,
                                 CORBA::Environment &ACE_TRY_ENV =
@@ -189,8 +185,7 @@ public:
   virtual void send_reply (PortableInterceptor::ServerRequestInfo_ptr ri,
                            CORBA::Environment &ACE_TRY_ENV =
                            TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableInterceptor::ForwardRequest));
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void send_exception (PortableInterceptor::ServerRequestInfo_ptr ri,
                                 CORBA::Environment &ACE_TRY_ENV =
@@ -281,8 +276,7 @@ public:
   virtual void send_reply (PortableInterceptor::ServerRequestInfo_ptr ri,
                            CORBA::Environment &ACE_TRY_ENV =
                            TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableInterceptor::ForwardRequest));
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void send_exception (PortableInterceptor::ServerRequestInfo_ptr ri,
                                 CORBA::Environment &ACE_TRY_ENV =
@@ -373,8 +367,7 @@ public:
   virtual void send_reply (PortableInterceptor::ServerRequestInfo_ptr ri,
                            CORBA::Environment &ACE_TRY_ENV =
                            TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableInterceptor::ForwardRequest));
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void send_exception (PortableInterceptor::ServerRequestInfo_ptr ri,
                                 CORBA::Environment &ACE_TRY_ENV =
