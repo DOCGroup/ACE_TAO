@@ -1,3 +1,10 @@
+Sun Jun 01 22:21:28 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* examples/Threads/tss1.cpp: made some globals non-static or
+	  const so that tss1 will link with Sun C++ 4.2 -O3.  I don't
+	  know what the problem is; it only shows up with optimization
+	  enabled.  These fixes work around it.
+
 Sun Jun 01 20:29:20 1997  James CE Johnson <jcej@lads.com>
 
 	* ace/IOStream*:
