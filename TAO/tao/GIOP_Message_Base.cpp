@@ -46,7 +46,7 @@ TAO_GIOP_Message_Base::init (CORBA::Octet major,
 
 
 void
-TAO_GIOP_Message_Base::reset (void)
+TAO_GIOP_Message_Base::reset (int /* reset_flag */)
 {
   // no-op
 }
