@@ -11,7 +11,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-//ACE_RCSID(ace, IOStream_T, "$Id$")
+ACE_RCSID(ace, IOStream_T, "$Id$")
 
 #if !defined (ACE_LACKS_ACE_IOSTREAM)
 
@@ -63,32 +63,6 @@ ACE_Streambuf_T<STREAM>::ACE_Streambuf_T (STREAM *peer,
 #endif /* ! ACE_LACKS_LINEBUFFERED_STREAMBUF */
 }
 
-template <class STREAM>
-ACE_Streambuf_T<STREAM>::ACE_Streambuf_T (u_int streambuf_size,
-                                          int io_mode)
-  : ACE_Streambuf (streambuf_size, io_mode)
-{
-  ACE_NEW (peer_, STREAM );
-
-  // A streambuf allows for unbuffered IO where every character is
-  // read as requested and written as provided.  To me, this seems
-  // terribly inefficient for socket-type operations, so I've disabled
-  // it.  All of the work would be done by the underflow/overflow
-  // functions anyway and I haven't implemented anything there to
-  // support unbuffered IO.
-
-#if !defined (ACE_LACKS_UNBUFFERED_STREAMBUF)
-  this->unbuffered (0);
-#endif /* ! ACE_LACKS_UNBUFFERED_STREAMBUF */
-
-  // Linebuffered is similar to unbuffered.  Again, I don't have any
-  // need for this and I don't see the advantage.  I believe this
-  // would have to be supported by underflow/overflow to be effective.
-#if !defined (ACE_LACKS_LINEBUFFERED_STREAMBUF)
-  this->linebuffered (0);
-#endif /* ! ACE_LACKS_LINEBUFFERED_STREAMBUF */
-}
-
 // The typical constructor.  This will initiailze your STREAM and then
 // setup the iostream baseclass to use a custom streambuf based on
 // STREAM.
@@ -96,22 +70,32 @@ ACE_Streambuf_T<STREAM>::ACE_Streambuf_T (u_int streambuf_size,
 template <class STREAM>
 ACE_IOStream<STREAM>::ACE_IOStream (STREAM &stream,
                                     u_int streambuf_size)
-  : STREAM (stream),
-    ACE_Streambuf_T<STREAM> ( this, streambuf_size ),
-    iostream ((ACE_Streambuf_T<STREAM> *)this)
+  : iostream (0),
+    STREAM (stream)
 {
+  ACE_NEW (streambuf_,
+           ACE_Streambuf_T<STREAM> ((STREAM *) this,
+                                    streambuf_size));
+  iostream::init (this->streambuf_);
 }
 
 template <class STREAM>
 ACE_IOStream<STREAM>::ACE_IOStream (u_int streambuf_size)
-  : ACE_Streambuf_T<STREAM> ( this, streambuf_size ),
-    iostream ((ACE_Streambuf_T<STREAM> *)this)
+  : iostream (0)
 {
+  ACE_NEW (this->streambuf_,
+           ACE_Streambuf_T<STREAM> ((STREAM *) this,
+                                    streambuf_size));
+  iostream::init (this->streambuf_);
 }
+
+// We have to get rid of the streambuf_ ourselves since we gave it to
+// iostream ()
 
 template <class STREAM>
 ACE_IOStream<STREAM>::~ACE_IOStream (void)
 {
+  delete this->streambuf_;
 }
 
 // The only ambituity in the multiple inheritance is the close ()
@@ -126,7 +110,7 @@ ACE_IOStream<STREAM>::close (void)
 template <class STREAM> ACE_IOStream<STREAM> &
 ACE_IOStream<STREAM>::operator>> (ACE_Time_Value *&tv)
 {
-  ACE_Time_Value *old_tv = ACE_Streambuf_T<STREAM>::recv_timeout (tv);
+  ACE_Time_Value *old_tv = this->streambuf_->recv_timeout (tv);
   tv = old_tv;
   return *this;
 }
@@ -226,4 +210,3 @@ operator<< (STREAM &stream,
 #endif /* ACE_HAS_STRING_CLASS */
 #endif /* ACE_LACKS_ACE_IOSTREAM */
 #endif /* ACE_IOSTREAM_T_C */
-
