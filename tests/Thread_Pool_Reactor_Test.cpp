@@ -58,14 +58,22 @@ USELIB("..\ace\aced.lib");
 #include "tests/Thread_Pool_Reactor_Test.h"
 typedef ACE_Strategy_Acceptor <Acceptor_Handler, ACE_SOCK_ACCEPTOR> ACCEPTOR;
 
-static ASYS_TCHAR *rendezvous = ASYS_TEXT ("localhost:10010");
-// Accepting end point.
+static ASYS_TCHAR *rendezvous = ASYS_TEXT ("127.0.0.1:10010");
+// Accepting end point.  This is actually "localhost:10010",
+// but some platform couldn't resolve the name so we use the
+// IP address directly here.
 
 static size_t svr_thrno = ACE_MAX_THREADS;
 // Total number of server threads.
 
-static size_t cli_thrno = ACE_MAX_ITERATIONS;
+static size_t cli_thrno =
 // Total number of client threads.
+#if defined (CHORUS) // Add platforms that can't handle too many
+                     // connection simultaneously here.
+  ACE_MAX_THREADS;
+#else
+  ACE_MAX_ITERATIONS; // Otherwise, we'll try to torture the platform.
+#endif
 
 static size_t cli_conn_no = ACE_MAX_ITERATIONS;
 // Total connection attemps of a client thread.
