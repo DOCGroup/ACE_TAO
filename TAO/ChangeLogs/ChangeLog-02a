@@ -1,3 +1,9 @@
+Tue Jul 18 11:41:42 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/NativeExceptions/Makefile: Updated the dependencies. The
+	  Makefile did not have the dependencies for the client. So, this
+	  was giving compile errors on a few platforms.
+
 Tue Jul 18 10:45:50 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Client_Priority_Policy.cpp: 
