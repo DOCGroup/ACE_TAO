@@ -1,3 +1,13 @@
+Fri Jan  7 18:42:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Hello/Hello.mpc:
+          Use taoserver and taoclient as base projects to simplify this file
+
+        * tests/Muxing/Muxing.mpc:
+          Use taoserver and taoclient as base projects to simplify this file.
+          Added TestC.cpp explicitly to the client, so that we don't get
+          TestS.cpp and then we also don't need portableserver for the client
+
 Fri Jan  7 17:49:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Event/Event_Channel.h:
