@@ -18,7 +18,7 @@ ROA_Handler::ROA_Handler(ACE_Thread_Manager* t)
   // Grab the singleton...at some later point in time
   // we can provide an argumented CTOR to have per-instance
   // parameters.
-  params_ = ROA_PARAMS::instance();
+  params_ = TAO_OA_PARAMS::instance();
   ACE_ASSERT (params_ != 0);
 }
 

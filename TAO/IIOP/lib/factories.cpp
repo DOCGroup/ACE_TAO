@@ -4,6 +4,16 @@
 #  include "factories.i"
 #endif
 
+int
+TAO_Client_Connection_Handler::open(void *)
+{
+  // Here is where we could enable all sorts of things such as
+  // nonblock I/O, sock buf sizes, TCP no-delay, etc.
+
+  // For now, we just return success
+  return 0;
+}
+
 // Determine the appropriate default thread flags, based on system.
 // When I put the concurrency strategy into the factory, then this will
 // go away b/c the concurrency strategy will do this appropriate
@@ -19,45 +29,45 @@
 #  endif
 
 TAO_Server_Factory::CONCURRENCY_STRATEGY*
-TAO_Server_Factory::server_concurrency_strategy()
+TAO_Server_Factory::concurrency_strategy()
 {
-  OA_Parameters* p = OA_PARAMS::instance();
+  TAO_OA_Parameters* p = TAO_OA_PARAMS::instance();
 
 
   if (p->using_threads())
     {
       // Set the strategy parameters
       threaded_strategy_.open(ACE_Service_Config::thr_mgr(), ROA_DEFAULT_THREADFLAGS);
-      server_concurrency_strategy_ = &threaded_strategy_;
+      concurrency_strategy_ = &threaded_strategy_;
     }
   else
     {
       reactive_strategy_.open(ACE_Service_Config::reactor());
-      server_concurrency_strategy_ = &reactive_strategy_;
+      concurrency_strategy_ = &reactive_strategy_;
     }
 
-  return server_concurrency_strategy_;
+  return concurrency_strategy_;
 }
 
 TAO_Object_Table*
 TAO_Server_Factory::object_lookup_strategy()
 {
-  OA_Parameters* p = OA_PARAMS::instance();
+  TAO_OA_Parameters* p = TAO_OA_PARAMS::instance();
 
   // Since these are dynamically created, when do they get destroyed?
   switch(p->demux_strategy())
     {
-    case OA_Parameters::TAO_LINEAR:
+    case TAO_OA_Parameters::TAO_LINEAR:
       this->objtable_ = new TAO_Linear_ObjTable (p->tablesize());
       break;
-    case OA_Parameters::TAO_USER_DEFINED:
+    case TAO_OA_Parameters::TAO_USER_DEFINED:
       // it is assumed that the user would have used the hooks to supply a
       // user-defined instance of the object table
       ACE_ASSERT(this->objtable_ != 0);
       break;
-    case OA_Parameters::TAO_ACTIVE_DEMUX:
+    case TAO_OA_Parameters::TAO_ACTIVE_DEMUX:
       break;
-    case OA_Parameters::TAO_DYNAMIC_HASH:
+    case TAO_OA_Parameters::TAO_DYNAMIC_HASH:
     default:
       this->objtable_ = new TAO_Dynamic_Hash_ObjTable (p->tablesize());
     }
@@ -72,7 +82,12 @@ TAO_Client_Factory::TAO_Client_Factory()
   connector_.open(ACE_Service_Config::reactor(),
 		  &null_creation_strategy_,
 		  &caching_connect_strategy_,
-		  client_concurrency_strategy_());
+#if defined(TAO_HAS_CLIENT_CONCURRENCY)
+		  concurrency_strategy_()
+#else
+                  0
+#endif                  
+                  );
 }
 
 #if defined(ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
@@ -82,4 +97,8 @@ template class ACE_Reactive_Strategy<ROA_Handler>;
 template class ACE_Creation_Strategy<ROA_Handler>;
 template class ACE_Scheduling_Strategy<ROA_Handler>;
 template class ACE_Accept_Strategy<ROA_Handler, ACE_SOCK_ACCEPTOR>;
+#define CLIENT_HANDLER Svc_Handler
+template class ACE_Cached_Connect_Strategy<CLIENT_HANDLER, ACE_SOCK_STREAM, ACE_SYNCH_RW_MUTEX>;
+template class ACE_NOOP_Creation_Strategy<CLIENT_HANDLER>;
+template class ACE_Strategy_Connector<CLIENT_HANDLER, ACE_SOCK_STREAM>;
 #endif

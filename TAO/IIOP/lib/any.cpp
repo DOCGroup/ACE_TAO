@@ -1,4 +1,5 @@
-// @(#)any.cpp	1.9 95/11/04
+// @(#) $Id$
+//
 // Copyright 1994-1995 by Sun Microsystems Inc.
 // All Rights Reserved
 //
@@ -30,15 +31,19 @@
 // fully exposed.  Factories for these are not normally used in C++.
 //
 
-#include	<assert.h>
-#include	<limits.h>
-#include	<string.h>
-#include	<orb.h>
+#include <assert.h>
+#include <limits.h>
+#include <string.h>
+#include <orb.h>
 
-#include	"debug.h"
-#include	"thread.h"
+#include "debug.h"
+#include "thread.h"
 
-#include	<initguid.h>
+#include <initguid.h>
+
+#if !defined(__ACE_INLINE__)
+#  include "any.i"
+#endif
 
 CORBA_TypeCode_ptr
 CORBA_Any::type () const
