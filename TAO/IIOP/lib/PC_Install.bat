@@ -14,11 +14,13 @@ copy iiopobj.hh  ..\proto\include
 copy iioporb.hh  ..\proto\include
 copy roa.hh      ..\proto\include
 copy roa.i       ..\proto\include
-copy tcpoa.hh    ..\proto\include
+copy params.h    ..\proto\include
+copy connect.h   ..\proto\include
 copy xdr.hh      ..\proto\include
 
 mkdir ..\proto\include\corba
 copy  any.hh      ..\proto\include\corba
+copy  boa.hh      ..\proto\include
 copy  corbacom.hh ..\proto\include\corba
 copy  except.hh   ..\proto\include\corba
 copy  nvlist.hh   ..\proto\include\corba
@@ -27,7 +29,6 @@ copy  orbobj.hh   ..\proto\include\corba
 copy  principa.hh ..\proto\include\corba
 copy  request.hh  ..\proto\include\corba
 copy  svrrqst.hh  ..\proto\include\corba
-copy  toa.hh      ..\proto\include\corba
 copy  typecode.hh ..\proto\include\corba
 copy  orb.hh      ..\proto\include\corba
 copy  sequence.hh ..\proto\include\corba
