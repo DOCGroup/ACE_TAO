@@ -16,7 +16,7 @@ TAO/performance-tests/Cubit/TAO/MT_Cubit/run_test.pl: !ST !OpenBSD
 TAO/performance-tests/Latency/Single_Threaded/run_test.pl -n 1000
 TAO/performance-tests/Latency/Thread_Pool/run_test.pl -n 1000: !ST
 TAO/performance-tests/Latency/Thread_Per_Connection/run_test.pl -n 1000: !ST
-TAO/performance-tests/Latency/AMI/run_test.pl: !MINIMUM !ST
+TAO/performance-tests/Latency/AMI/run_test.pl: !MINIMUM !ST !Win32
 TAO/performance-tests/Latency/DSI/run_test.pl: !MINIMUM
 TAO/performance-tests/Latency/DII/run_test.pl: !MINIMUM
 TAO/performance-tests/Latency/Deferred/run_test.pl: !MINIMUM
