@@ -29,7 +29,7 @@
 #include "Transport_Descriptor_Interface.h"
 #include "Transport_Cache_Manager.h"
 #include "Transport_Timer.h"
-#include "ace/Strategies.h"
+#include "ace/Refcountable.h"
 #include "Incoming_Message_Queue.h"
 
 class TAO_ORB_Core;
