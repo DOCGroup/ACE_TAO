@@ -28,7 +28,7 @@ DomainApplicationManager_Impl (CORBA::ORB_ptr orb,
 
 CIAO::DomainApplicationManager_Impl::~DomainApplicationManager_Impl ()
 {
-
+  this->artifact_map_.unbind_all ();
 }
 
 void
