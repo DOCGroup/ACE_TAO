@@ -38,6 +38,8 @@ Tue Jun 16 10:33:20 1998  David L. Levine  <levine@cs.wustl.edu>
           on Solaris 2.6.  Thanks to Frederic ANDRES <andres@rd.nacsis.ac.jp>
           for reporting this.
 
+        * ACE-INSTALL.html: updated Linux RedHat info.
+
 Mon Jun 15 23:17:27 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * Makefile: added os-patches/ to distribution.
