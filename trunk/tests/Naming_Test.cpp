@@ -20,11 +20,27 @@
 
 #include "ace/SString.h"
 #include "ace/Naming_Context.h"
+#include "ace/Profile_Timer.h"
 #include "test_config.h"
 
 static char name[BUFSIZ];
 static char value[BUFSIZ];
 static char type[BUFSIZ];
+
+static void print_time (ACE_Profile_Timer &timer,
+			const char *test)
+{
+  ACE_Profile_Timer::ACE_Elapsed_Time et;
+  timer.stop ();
+  timer.elapsed_time (et);
+  
+  ACE_DEBUG ((LM_DEBUG, "\n     *****  %s  *****     \n", test));
+  ACE_DEBUG ((LM_DEBUG, "real time = %f secs, user time = %f secs, system time = %f secs\n",
+	      et.real_time, et.user_time, et.system_time));
+  ACE_DEBUG ((LM_DEBUG, "time per call = %f usecs\n\n", 
+	      (et.real_time / double (ACE_NS_MAX_ENTRIES)) * 1000000));
+}
+
 
 static void
 test_bind (ACE_Naming_Context &ns_context)
@@ -104,13 +120,15 @@ test_find (ACE_Naming_Context &ns_context, int sign, int result)
       if (value)
 	{
 	  ACE_ASSERT (w_value == val);
-	  if (type_out)
-	    ACE_DEBUG ((LM_DEBUG, "Name: %s\tValue: %s\tType: %s\n",
-			name, value, type_out));
-	  else
-	    ACE_DEBUG ((LM_DEBUG, "Name: %s\tValue: %s\n",
-			name, value));
-
+	  if (ns_context.name_options ()->debug ())
+	    {
+	      if (type_out)
+		ACE_DEBUG ((LM_DEBUG, "Name: %s\tValue: %s\tType: %s\n",
+			    name, value, type_out));
+	      else
+		ACE_DEBUG ((LM_DEBUG, "Name: %s\tValue: %s\n",
+			    name, value));
+	    }
 	  if (type_out)
 	    {
 	      ACE_ASSERT (::strcmp (type_out, temp_type) == 0);
@@ -155,24 +173,35 @@ main (int argc, char *argv[])
 
   ACE_ASSERT (ns_context->open (ACE_Naming_Context::PROC_LOCAL, 1) != -1);
 
+  ACE_DEBUG ((LM_DEBUG, "time to test %d iterations using %s\n", 
+	      ACE_NS_MAX_ENTRIES, name_options->use_registry () ? "Registry" : "ACE"));
+
+  ACE_Profile_Timer timer;
+
+  timer.start ();
   // Add some bindings to the database
   test_bind (*ns_context);
-  
+  print_time (timer, "Binds");
+
+  timer.start ();
   // Should find the entries
   test_find (*ns_context, 1, 0);
+  print_time (timer, "Successful Finds");
 
+  timer.start ();
   // Rebind with negative values
   test_rebind (*ns_context);
+  print_time (timer, "Rebinds");
 
-  // Should find the entries
-  test_find (*ns_context, -1, 0);
-
+  timer.start ();
   // Remove all bindings from database
   test_unbind (*ns_context); 
-  
+  print_time (timer, "Unbinds");
+
+  timer.start ();
   // Should not find the entries
   test_find (*ns_context,  1, -1);
-  test_find (*ns_context, -1, -1);
+  print_time (timer, "UnSuccessful Finds");
 
   ACE_OS::sprintf (temp_file, __TEXT ("%s%s%s"),
 		   name_options->namespace_dir (),

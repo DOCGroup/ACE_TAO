@@ -1,3 +1,10 @@
+Mon Feb  3 21:16:19 1997  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
+
+	* tests/Naming_Test.cpp: Added timing and made debug print outs
+ 	  optional.
+
+	* ace/OS.h: Fixed prototype for gethrtime ()
+
 Mon Feb 03 21:00:56 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/OS.h: define ACE_SCOPE_PROCESS and ACE_SCOPE_THREAD

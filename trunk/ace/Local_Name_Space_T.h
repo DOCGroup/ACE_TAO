@@ -21,20 +21,26 @@
 #if !defined (ACE_LOCAL_NAME_SPACE_T_H)
 #define ACE_LOCAL_NAME_SPACE_T_H
 
-#include "ace/Hash_Map_Manager.h"
 #include "ace/Name_Space.h"
 #include "ace/Naming_Context.h"
 #include "ace/SString.h"
-#include "ace/Local_Name_Space.h"
 
 // A short-hand name for our set of name/value/type tuples passed back
 // to callers.
 typedef ACE_Unbounded_Set<ACE_WString> ACE_WSTRING_SET;
 
 // Simplify later usage by defining typedefs.
+#if (1)
+#include "ace/Hash_Map_Manager.h"
 typedef ACE_Hash_Map_Manager<ACE_NS_String, ACE_NS_Internal, ACE_Null_Mutex> MAP_MANAGER;
 typedef ACE_Hash_Map_Iterator<ACE_NS_String, ACE_NS_Internal, ACE_Null_Mutex> MAP_ITERATOR;
 typedef ACE_Hash_Map_Entry <ACE_NS_String, ACE_NS_Internal> MAP_ENTRY;
+#else
+#include "ace/Map_Manager.h"
+typedef ACE_Map_Manager<ACE_NS_String, ACE_NS_Internal, ACE_Null_Mutex> MAP_MANAGER;
+typedef ACE_Map_Iterator<ACE_NS_String, ACE_NS_Internal, ACE_Null_Mutex> MAP_ITERATOR;
+typedef ACE_Map_Entry <ACE_NS_String, ACE_NS_Internal> MAP_ENTRY;
+#endif /* 0 */
 
 template <class ALLOCATOR>
 class ACE_Name_Space_Map : public MAP_MANAGER
