@@ -75,22 +75,23 @@ main (int argc, char *argv[])
 void
 run_tests (Cubit_var cb, int loop_count) 
 {
-    //
+  //
   // Make the calls in a loop.
   //
   unsigned i;
   unsigned call_count, error_count;
 
-  call_count = 0;
-  error_count = 0;
-
   Profile_Timer pt;
+  Elapsed_Time et;
 
-  pt.start();
   //
   // Cube an octet.
   //
   
+  call_count = 0;
+  error_count = 0;
+  pt.start();
+
   for (i = 0; i < loop_count; i++)
     {
 
@@ -115,11 +116,40 @@ run_tests (Cubit_var cb, int loop_count)
         printf ("** cube_octet(%d)  (--> %d)\n", arg_octet , ret_octet);
         error_count++;
       }
+    }
+    
+  pt.stop();
+  pt.elapsed_time(et);
+  
+  if (call_count > 0) 
+    {
+      if (error_count == 0)
+        {
+          unsigned long	us = et.real_time * 1000 * 1000;
+          
+          us /= call_count;
+          
+          if (us > 0)
+            printf ("cube octet average call ACE_OS::time\t= %ld.%.03ldms, \t"
+                    "%ld calls/second\n",
+                    us / 1000, us % 1000,
+                    1000000L / us);
+        }
+      
+      printf ("%d calls, %d errors\n", call_count, error_count);
+    }
     
   
   //
   // Cube a short.
   //
+  call_count = 0;
+  error_count = 0;
+  pt.start();
+
+  for (i = 0; i < loop_count; i++)
+    {
+
       call_count++;
 
       CORBA::Short arg_short = func (i), ret_short;
@@ -141,11 +171,40 @@ run_tests (Cubit_var cb, int loop_count)
         printf ("** cube_short(%d)  (--> %d)\n", arg_short , ret_short);
         error_count++;
       }
+    }
+    
+  pt.stop();
+  pt.elapsed_time(et);
+  
+  if (call_count > 0) 
+    {
+      if (error_count == 0)
+        {
+          unsigned long	us = et.real_time * 1000 * 1000;
+          
+          us /= call_count;
+          
+          if (us > 0)
+            printf ("cube short average call ACE_OS::time\t= %ld.%.03ldms, \t"
+                    "%ld calls/second\n",
+                    us / 1000, us % 1000,
+                    1000000L / us);
+        }
+      
+      printf ("%d calls, %d errors\n", call_count, error_count);
+    }
 
   //
   // Cube a long.
   //
   
+  call_count = 0;
+  error_count = 0;
+  pt.start();
+
+  for (i = 0; i < loop_count; i++)
+    {
+
       call_count++;
 
       CORBA::Long arg_long = func (i), ret_long;
@@ -166,48 +225,9 @@ run_tests (Cubit_var cb, int loop_count)
         printf ("** cube_long(%d)  (--> %d)\n", arg_long , ret_long);
         error_count++;
       }
-
-
-      //
-      // Cube a "struct" ...
-      //
-      Cubit::Many	arg_struct, ret_struct;
-      
-       call_count++;
-       
-       arg_struct.l = func (i);
-       arg_struct.s = func (i);
-       arg_struct.o = func (i);
-       
-       try {
-         ret_struct = cb->cube_struct (arg_struct);
-
-       } catch (const CORBA::Exception &sysEx) {
-	 cerr << "Call failed: " << endl;
-	 cerr << sysEx;
-	 error_count++;
-       } catch (...) {
-	 cerr << "Unexpected exception" << endl;
-	 error_count++;
-       }       
-
-
-       arg_struct.l = arg_struct.l  * arg_struct.l  * arg_struct.l ;
-       arg_struct.s = arg_struct.s  * arg_struct.s  * arg_struct.s ;
-       arg_struct.o = arg_struct.o  * arg_struct.o  * arg_struct.o ;
-       
-       if (arg_struct.l  != ret_struct.l 
-           || arg_struct.s  != ret_struct.s 
-           || arg_struct.o  != ret_struct.o )
-         {
-           cerr << "** cube_struct ERROR\n";
-           error_count++;
-         }
     }
     
   pt.stop();
-
-  Elapsed_Time et;
   pt.elapsed_time(et);
   
   if (call_count > 0) 
@@ -219,10 +239,76 @@ run_tests (Cubit_var cb, int loop_count)
           us /= call_count;
           
           if (us > 0)
-            printf ("cube average call ACE_OS::time\t= %ld.%.03ldms, \t"
-                            "%ld calls/second\n",
-                            us / 1000, us % 1000,
-                            1000000L / us);
+            printf ("cube long average call ACE_OS::time\t= %ld.%.03ldms, \t"
+                    "%ld calls/second\n",
+                    us / 1000, us % 1000,
+                    1000000L / us);
+        }
+      
+      printf ("%d calls, %d errors\n", call_count, error_count);
+    }
+
+
+  //
+  // Cube a "struct" ...
+  //
+  Cubit::Many	arg_struct, ret_struct;
+      
+  call_count = 0;
+  error_count = 0;
+  pt.start();
+
+  for (i = 0; i < loop_count; i++)
+    {
+
+      call_count++;
+       
+      arg_struct.l = func (i);
+      arg_struct.s = func (i);
+      arg_struct.o = func (i);
+       
+      try {
+        ret_struct = cb->cube_struct (arg_struct);
+
+      } catch (const CORBA::Exception &sysEx) {
+        cerr << "Call failed: " << endl;
+        cerr << sysEx;
+        error_count++;
+      } catch (...) {
+        cerr << "Unexpected exception" << endl;
+        error_count++;
+      }       
+
+
+      arg_struct.l = arg_struct.l  * arg_struct.l  * arg_struct.l ;
+      arg_struct.s = arg_struct.s  * arg_struct.s  * arg_struct.s ;
+      arg_struct.o = arg_struct.o  * arg_struct.o  * arg_struct.o ;
+       
+      if (arg_struct.l  != ret_struct.l 
+          || arg_struct.s  != ret_struct.s 
+          || arg_struct.o  != ret_struct.o )
+        {
+          cerr << "** cube_struct ERROR\n";
+          error_count++;
+        }
+    }
+    
+  pt.stop();
+  pt.elapsed_time(et);
+  
+  if (call_count > 0) 
+    {
+      if (error_count == 0)
+        {
+          unsigned long	us = et.real_time * 1000 * 1000;
+          
+          us /= call_count;
+          
+          if (us > 0)
+            printf ("cube struuct average call ACE_OS::time\t= %ld.%.03ldms, \t"
+                    "%ld calls/second\n",
+                    us / 1000, us % 1000,
+                    1000000L / us);
         }
       
       printf ("%d calls, %d errors\n", call_count, error_count);

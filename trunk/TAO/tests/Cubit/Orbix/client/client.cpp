@@ -94,23 +94,23 @@ main (int argc, char *argv[])
 void
 run_tests (Cubit_var cb, int loop_count) 
 {
-    //
+  //
   // Make the calls in a loop.
   //
   unsigned i;
   unsigned call_count, error_count;
 
-  call_count = 0;
-  error_count = 0;
-
   ACE_Time_Value before, after;
 
-  before = ACE_OS::gettimeofday();
   
   //
   // Cube an octet.
   //
   
+  call_count = 0;
+  error_count = 0;
+  before = ACE_OS::gettimeofday();
+
   for (i = 0; i < loop_count; i++)
     {
 
@@ -119,7 +119,7 @@ run_tests (Cubit_var cb, int loop_count)
       CORBA::Octet arg_octet = func (i), ret_octet;
 
       TRY {
-      ret_octet = cb->cube_octet (arg_octet);
+        ret_octet = cb->cube_octet (arg_octet);
       } 
       CATCHANY {
         cerr << "Call failed: " << IT_X;
@@ -131,17 +131,23 @@ run_tests (Cubit_var cb, int loop_count)
         ACE_OS::printf ("** cube_octet(%d)  (--> %d)\n", arg_octet , ret_octet);
         error_count++;
       }
-    
+    }
   
   //
   // Cube a short.
   //
+  call_count = 0;
+  error_count = 0;
+  before = ACE_OS::gettimeofday();
+
+  for (i = 0; i < loop_count; i++)
+    {
       call_count++;
 
       CORBA::Short arg_short = func (i), ret_short;
 
       TRY {
-      ret_short = cb->cube_short (arg_short);
+        ret_short = cb->cube_short (arg_short);
       } 
       CATCHANY {
         cerr << "Call failed: " << IT_X;
@@ -154,61 +160,7 @@ run_tests (Cubit_var cb, int loop_count)
         error_count++;
       }
 
-  //
-  // Cube a long.
-  //
-  
-      call_count++;
-
-      CORBA::Long arg_long = func (i), ret_long;
-
-      TRY {
-      ret_long = cb->cube_long (arg_long);
-      } 
-      CATCHANY {
-        cerr << "Call failed: " << IT_X;
-      } 
-      ENDTRY;
-      arg_long = arg_long * arg_long * arg_long;
-      if (arg_long != ret_long) {
-        ACE_OS::printf ("** cube_long(%d)  (--> %d)\n", arg_long , ret_long);
-        error_count++;
-      }
-
-
-      //
-      // Cube a "struct" ...
-      //
-      Cubit::Many	arg_struct, ret_struct;
-      
-       call_count++;
-       
-       arg_struct.l = func (i);
-       arg_struct.s = func (i);
-       arg_struct.o = func (i);
-       
-       TRY {
-         ret_struct = cb->cube_struct (arg_struct);
-       }
-       CATCHANY {
-         cerr << "Call failed: " << IT_X;
-         error_count++;
-       } 
-       ENDTRY;
-       arg_struct.l = arg_struct.l  * arg_struct.l  * arg_struct.l ;
-       arg_struct.s = arg_struct.s  * arg_struct.s  * arg_struct.s ;
-       arg_struct.o = arg_struct.o  * arg_struct.o  * arg_struct.o ;
-       
-       if (arg_struct.l  != ret_struct.l 
-           || arg_struct.s  != ret_struct.s 
-           || arg_struct.o  != ret_struct.o )
-         {
-           cerr << "** cube_struct ERROR\n";
-           error_count++;
-         }
     }
-    
-  
   after = ACE_OS::gettimeofday();
   
   if (call_count > 0) 
@@ -229,4 +181,115 @@ run_tests (Cubit_var cb, int loop_count)
       
       ACE_OS::printf ("%d calls, %d errors\n", call_count, error_count);
     }
+
+  //
+  // Cube a long.
+  //
+  
+  call_count = 0;
+  error_count = 0;
+  before = ACE_OS::gettimeofday();
+
+  for (i = 0; i < loop_count; i++)
+    {
+
+      call_count++;
+
+      CORBA::Long arg_long = func (i), ret_long;
+
+      TRY {
+        ret_long = cb->cube_long (arg_long);
+      } 
+      CATCHANY {
+        cerr << "Call failed: " << IT_X;
+      } 
+      ENDTRY;
+      arg_long = arg_long * arg_long * arg_long;
+      if (arg_long != ret_long) {
+        ACE_OS::printf ("** cube_long(%d)  (--> %d)\n", arg_long , ret_long);
+        error_count++;
+      }
+
+    }
+  after = ACE_OS::gettimeofday();
+  
+  if (call_count > 0) 
+    {
+      if (error_count == 0)
+        {
+          ACE_Time_Value diff = after - before;
+          unsigned long	us = diff.sec() * 1000 * 1000 + diff.usec();
+          
+          us /= call_count;
+          
+          if (us > 0)
+            ACE_OS::printf ("cube average call ACE_OS::time\t= %ld.%.03ldms, \t"
+                            "%ld calls/second\n",
+                            us / 1000, us % 1000,
+                            1000000L / us);
+        }
+      
+      ACE_OS::printf ("%d calls, %d errors\n", call_count, error_count);
+    }
+
+  //
+  // Cube a "struct" ...
+  //
+  Cubit::Many	arg_struct, ret_struct;
+      
+  call_count = 0;
+  error_count = 0;
+  before = ACE_OS::gettimeofday();
+
+  for (i = 0; i < loop_count; i++)
+    {
+
+      call_count++;
+       
+      arg_struct.l = func (i);
+      arg_struct.s = func (i);
+      arg_struct.o = func (i);
+       
+      TRY {
+        ret_struct = cb->cube_struct (arg_struct);
+      }
+      CATCHANY {
+        cerr << "Call failed: " << IT_X;
+        error_count++;
+      } 
+      ENDTRY;
+      arg_struct.l = arg_struct.l  * arg_struct.l  * arg_struct.l ;
+      arg_struct.s = arg_struct.s  * arg_struct.s  * arg_struct.s ;
+      arg_struct.o = arg_struct.o  * arg_struct.o  * arg_struct.o ;
+       
+      if (arg_struct.l  != ret_struct.l 
+          || arg_struct.s  != ret_struct.s 
+          || arg_struct.o  != ret_struct.o )
+        {
+          cerr << "** cube_struct ERROR\n";
+          error_count++;
+        }
+    }
+    
+  after = ACE_OS::gettimeofday();
+  
+  if (call_count > 0) 
+    {
+      if (error_count == 0)
+        {
+          ACE_Time_Value diff = after - before;
+          unsigned long	us = diff.sec() * 1000 * 1000 + diff.usec();
+          
+          us /= call_count;
+          
+          if (us > 0)
+            ACE_OS::printf ("cube average call ACE_OS::time\t= %ld.%.03ldms, \t"
+                            "%ld calls/second\n",
+                            us / 1000, us % 1000,
+                            1000000L / us);
+        }
+      
+      ACE_OS::printf ("%d calls, %d errors\n", call_count, error_count);
+    }
+  
 }
