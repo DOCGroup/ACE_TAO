@@ -1,3 +1,17 @@
+Wed Sep  1 13:14:09 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_argument/pre_docall_cs.cpp:
+	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
+	* TAO_IDL/be/be_visitor_operation/rettype_pre_docall_cs.cpp:
+	* TAO_IDL/be/be_visitor_operation/rettype_vardecl_cs.cpp:
+	* TAO_IDL/be/be_visitor_operation/rettype_post_docall_cs.cpp:
+	* TAO_IDL/be/be_visitor_operation/compiled_marshal.cpp:
+	  Changed generated operation code so that ACE_NEW_RETURN
+	  returns _tao_retval instead of 0, which does not work
+	  for enum return types. Had to change some other names
+	  around to avoid clashes. Thanks to rasb@eci.esys.com
+	  (no name on bugzilla entry) for pointing this out.
+
 Wed Sep  1 12:37:25 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/Makefile:
