@@ -30,6 +30,8 @@ int ACE_Scheduler_Factory::use_runtime (int ec,
 
   entry_count = ec;
   rt_info = rti;
+
+  return 0;
 }
 
 RtecScheduler::Scheduler_ptr static_server ()
@@ -212,7 +214,7 @@ int ACE_Scheduler_Factory::dump_schedule
   ACE_OS::fprintf(file, header);
 
   ACE_OS::fprintf(file, start_infos);
-  for (int i = 0; i < infos.length (); ++i)
+  for (u_int i = 0; i < infos.length (); ++i)
     {
       if (i != 0)
 	{
