@@ -4,7 +4,7 @@
 #ifndef ACE_PERFORMANCE_TEST_H
 #define ACE_PERFORMANCE_TEST_H
 
-#include "../Benchmark_Base.h"
+#include "Synch_Lib/Benchmark_Base.h"
 
 class ACE_Svc_Export Performance_Test : public Benchmark_Method_Base
 {
