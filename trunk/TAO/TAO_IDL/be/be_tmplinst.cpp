@@ -52,5 +52,9 @@ template class ACE_Unbounded_Queue_Iterator <be_interface_fwd *>;
 #pragma instantiate ACE_Unbounded_Queue <be_interface_fwd *>
 #pragma instantiate ACE_Unbounded_Queue_Iterator <be_interface_fwd *>
 
+#elif defined (__GNUC__) && defined (__hpux)
+template class ACE_Singleton<TAO_CodeGen, ACE_SYNCH_RECURSIVE_MUTEX>;
+template class ACE_Singleton<TAO_OutStream_Factory,ACE_SYNCH_RECURSIVE_MUTEX>;
+template class ACE_Singleton<TAO_Visitor_Factory,ACE_SYNCH_RECURSIVE_MUTEX>;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 

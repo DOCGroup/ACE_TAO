@@ -1,3 +1,10 @@
+Sat Jun  7 11:12:16 2003  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* performance-tests/Synch-Benchmarks/Synch_Lib/Benchmark_Base.h: Added a 
+	  #include for "ace/Atomic_Op.h" to solve a compilation problem.
+  	  Thanks to Nick Kukuczka <nickk@appliedepi.com> for reporting
+ 	  this.
+
 Fri Jun  6 09:31:21 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/ProjectCreator.pm:

@@ -385,4 +385,7 @@ template class ACE_Hash_Map_Entry<char const *, void (*)(CORBA_ServerRequest &, 
 #pragma instantiate ACE_Hash_Map_Manager_Ex<const char *, TAO_Skeleton, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Entry<const char *, TAO_Skeleton>
 #pragma instantiate TAO_Singleton<TAO_Operation_Table_Parameters, TAO_SYNCH_RECURSIVE_MUTEX>
+
+#elif defined (__GNUC__) && defined (__hpux)
+template class TAO_Singleton<TAO_Operation_Table_Parameters,TAO_SYNCH_RECURSIVE_MUTEX>;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
