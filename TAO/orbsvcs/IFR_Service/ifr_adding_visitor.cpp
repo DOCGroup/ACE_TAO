@@ -1791,9 +1791,7 @@ ifr_adding_visitor::visit_structure (AST_Structure *node)
 
       if (CORBA::is_nil (prev_def.in ()))
         {
-          ifr_adding_visitor_structure visitor (node,
-                                                0);
-
+          ifr_adding_visitor_structure visitor (node, 0);
           int retval = visitor.visit_structure (node);
 
           if (retval == 0)

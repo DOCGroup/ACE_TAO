@@ -74,8 +74,7 @@ ifr_adding_visitor_structure::visit_scope (UTL_Scope *node)
                   // Since the enclosing scope hasn't been created yet,
                   // we make a special visitor to create this member
                   // at global scope and move it into the struct later.
-                  ifr_adding_visitor_structure visitor (ft,
-                                                        1);
+                  ifr_adding_visitor_structure visitor (ft, 1);
 
                   if (ft->ast_accept (&visitor) == -1)
                     {
@@ -94,7 +93,7 @@ ifr_adding_visitor_structure::visit_scope (UTL_Scope *node)
 
                   CORBA::Contained_ptr tmp =
                     CORBA::Contained::_narrow (visitor.ir_current ()
-                                              ACE_ENV_ARG_PARAMETER);
+                                               ACE_ENV_ARG_PARAMETER);
                   ACE_TRY_CHECK;
 
                   this->move_queue_.enqueue_tail (tmp);
@@ -221,14 +220,17 @@ ifr_adding_visitor_structure::visit_structure (AST_Structure *node)
 
               CORBA::Container_var new_container =
                 CORBA::Container::_narrow (this->ir_current_.in ()
-                                          ACE_ENV_ARG_PARAMETER);
+                                           ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
               for (size_t i = 0; i < size; ++i)
                 {
                   this->move_queue_.dequeue_head (traveller);
-
-                  CORBA::String_var name = traveller->name (ACE_ENV_SINGLE_ARG_PARAMETER);
+                  
+                  char *repo_id = traveller->id ();
+                  
+                  CORBA::String_var name =
+                    traveller->name (ACE_ENV_SINGLE_ARG_PARAMETER);
                   ACE_TRY_CHECK;
 
                   CORBA::String_var version =
