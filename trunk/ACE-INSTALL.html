@@ -52,7 +52,7 @@ try to fix it for you.
 
 <DD> All of ACE has been ported to the Win32 API (which includes
 	  Windows NT and Windows '95).  The entire release now
-	  compiles using the Microsoft Visual C++ 4.x and 5.0 compilers 
+	  compiles using the Microsoft Visual C++ 4.x and 5.0 compilers
 	  (the 2.0 compiler may also work, but we haven't tested it
 	  recently).  ACE can be built as both a static and dynamic
 	  library, using the Win32 installation process described
@@ -62,7 +62,7 @@ try to fix it for you.
      C++ 4.0.x, Centerline C++ 2.x, and GNU gcc 2.7.x. </B> <BR><BR>
 
 <DD> All the source code and tests should build and run without
-	  any problems on the Solaris and SunOS platforms using the 
+	  any problems on the Solaris and SunOS platforms using the
 	  Sun C++ compilers. <P>
 
 <DT> <B> Sun OS 4.1.x using Centerline C++ 2.x, Sun CC 3.x, and Lucid
@@ -111,7 +111,7 @@ try to fix it for you.
 	  and linking will not be present on the system. <P>
 
 	  BTW, here's a technique from Rob Jordan &lt<A
-     HREF="mailto:jordan@hursley.ibm.com">jordan@hursley.ibm.com</A>&gt  
+     HREF="mailto:jordan@hursley.ibm.com">jordan@hursley.ibm.com</A>&gt
      that can reduce the size of the ACE libraries by
 	  about one third, and can also be applied to applications.  It works
 	  by optimising the sharing of template functions, which are created in an
@@ -161,8 +161,20 @@ using the GNU G++
 <DD> The current OSF/1 C++ 5.4 compiler still seems to have problems
 with ACE's templates. It compiles the lib and test programs, although
 giving warnings about template usage.  Most tests run, some dump core.
-Hopefully newer compiler releases will alleviate these problems.  <P>
- 
+Hopefully newer compiler releases will alleviate these problems.<P>
+
+CXX 6.0 is _much_ improved in this regard.  Please note that
+include/makeinclude/platform_osf1_4.0.GNU has a WARNING_FLAGS
+macro that is disabled by default, because most users probably
+don't have 6.0 yet.  If you do, uncomment that macro definition
+for a nearly clean compile.  (There are a few warnings that appear
+to be harmless.)<P>
+
+The following ACE tests do not run properly with CXX 6.0:
+Naming_Test, Mutex_Test, Conn_Test, and Message_Queue_Test.
+If you have the facilities and time to debug these, please
+let us know.<P>
+
 GNU gcc 2.7.2.1 compiles without problems. All tests run (besides
 minor problems).  Thanks to Thilo Kielmann &lt<A
 HREF="mailto:kielmann@informatik.uni-siegen.de">
@@ -248,14 +260,14 @@ clean.  There are still some problems that need to be ironed out: <P>
    service objects) do not work, however, most of these apps can be built/run
    statically.  Also, the Svc_Conf_l.cpp and Svc_Conf_y.cpp files are generated
    using flex and yacc on a ascii (not ebcdic) machine and as a result they don't
-   work very well with ebcdic svc.conf files.  We should be able to regenerate 
+   work very well with ebcdic svc.conf files.  We should be able to regenerate
    these files on MVS but MVS doesn't have flex.  This is something that needs
    to be done. <P>
 
    Some of the tests do not execute properly.  This is a minority and over time
    the goal is to get to 100%. <P>
 
-   The make scheme for some of the apps still doesn't work perfectly on MVS. 
+   The make scheme for some of the apps still doesn't work perfectly on MVS.
    This is mainly due to the way shared libraries are handled on MVS.  See
    <A HREF="#mvs">additional build tips for MVS</A> for more on
    this. <P>
@@ -265,7 +277,7 @@ clean.  There are still some problems that need to be ironed out: <P>
 <H4><A NAME="g++">Compiling ACE with GNU C++</A></H4>
 
 If you use the GNU GCC C++ compiler please note the following: <P>
-	
+
 <UL>
  	<LI> Earlier versions of G++ may not compile certain
 	  parts of ACE correctly due to compiler bugs.  Please
@@ -276,8 +288,8 @@ If you use the GNU GCC C++ compiler please note the following: <P>
 	  example, Solaris's "/usr/ccs/bin" binary utils or
 	  GNU binary utils. <P>
 
-        <LI> Make sure that the linker invoked by GCC produces code 
-	  that initializes static objects.  Please see GCC's 
+        <LI> Make sure that the linker invoked by GCC produces code
+	  that initializes static objects.  Please see GCC's
 	  documentation for using <CODE>collect2</CODE>.<P>
 
 	<LI> By default, gcc (thru version 2.7.2, at least) uses
@@ -346,7 +358,7 @@ need to do: <P>
 
 <LI> Add an environment variable called ACE_ROOT that contains the
    name of the root of the directory where you keep the ACE wrapper
-   source tree.  The ACE recursive Makefile scheme needs this information. 
+   source tree.  The ACE recursive Makefile scheme needs this information.
    There are several ways to set the ACE_ROOT variable.  For
      instance, in my .login file I have the following entry: <P>
 
@@ -359,13 +371,13 @@ different OS platforms or for different releases of ACE) you might use
 the following approach:
 
 <pre><code>
-% setenv ACE_ROOT $cwd 
+% setenv ACE_ROOT $cwd
 </code></pre>
 
 <LI> Edit the $ACE_ROOT/ace/OS.h file to update things like default
    hostname and port numbers you'd like the programs in the
    $ACE_ROOT/{apps,tests} directories to use by default. <P>
- 
+
 <LI> Set the $ACE_ROOT/ace/config.h file to point to the appropriate
    platform/compiler-specific header configurations (such as
    config-sunos5-sunc++-4.x.h).  This file contains the #defines that
@@ -417,36 +429,36 @@ ACE contains project files for Microsoft Visual C++ 4.x (*.mdp) and
 5.0 (*.dsw).<P>
 
 <OL>
-<LI> Create a directory (e.g., C:\ACE) and copy all of the ACE 
+<LI> Create a directory (e.g., C:\ACE) and copy all of the ACE
      distribution into it.  This directory will be referred to as
      ACE_ROOT in the rest of this discussion.<BR><BR>
-<LI> Create a file called config.h in the ACE_ROOT\ace directory 
+<LI> Create a file called config.h in the ACE_ROOT\ace directory
      that contains: <BR>
      <BR>
      <CODE>#include "config-win32.h"</CODE><BR>
      <BR>
 <LI> Now load up the project file for ACE (ACE_ROOT\ace\ace.mdp or
      ACE_ROOT\ace\ace.dsw).  If you are using MSVC 4.x, you will
-     need to add paths to your global settings.  In 
-     Tools|Options|Directories, add ACE_ROOT to your include path 
+     need to add paths to your global settings.  In
+     Tools|Options|Directories, add ACE_ROOT to your include path
      and ACE_ROOT\ace to your library path. <BR><BR>
 <LI> Each project will contain 8 different configurations.  These
      are a mixture of Debug/Release, Unicode/non-Unicode, and
      Static/Dynamic library versions.  <STRONG>Note:</STRONG> If you
-     use the dynamic libraries, make sure you include ACE_ROOT\ace 
+     use the dynamic libraries, make sure you include ACE_ROOT\ace
      in your PATH whenever you run programs that use ACE.<BR><BR>
-<LI> If you are building for Windows NT and plan to use the STL 
+<LI> If you are building for Windows NT and plan to use the STL
      implementation that comes with ACE, then you can start building
      now.  If you are building on Windows 95, then you should add
      the line <BR>
      <BR>
      <CODE>#define ACE_HAS_WINNT4 0</CODE><BR>
      <BR>
-     before the #include statement in ACE_ROOT\ace\config.h and it 
+     before the #include statement in ACE_ROOT\ace\config.h and it
      will turn off Windows NT 4 specific code.<BR>
      <BR>
      If you want to use the standard C++ headers (iostream, cstdio, ...
-     as defined by the C++ Standard Draft 2) that comes with MSVC 5, 
+     as defined by the C++ Standard Draft 2) that comes with MSVC 5,
      then add the line <BR>
      <BR>
      <CODE>#define ACE_HAS_STANDARD_CPP_LIBRARY 1</CODE><BR>
@@ -468,7 +480,7 @@ ACE contains project files for Microsoft Visual C++ 4.x (*.mdp) and
      before the #include statement in ACE_ROOT\ace\config.h to disable
      inline function and reduce the size of static libraries (and your
      executables.)<BR><BR>
-</Ol>      
+</Ol>
 
 <B>ACE TESTS</B> <P>
 
@@ -476,7 +488,7 @@ The tests are located in ACE_ROOT\tests.  There are two corresponding
 project files in that directory also (tests.mdp and tests.dsp).<P>
 
 Once you build all the tests (Batch Build works well for this) you can
-run the batch file run_tests.bat in that directory to try all the 
+run the batch file run_tests.bat in that directory to try all the
 tests.<P>
 
 <B> BUILDING ACE ON A WIN32 MACHINE THAT LACKS A NETWORK CARD </B><P>
@@ -670,7 +682,7 @@ the Network Services.<P>
 
 If you are using MSVC 4.x, you will need to add another directory to
 your global include and library paths, ACE_ROOT/netsvcs/lib.  When you
-use the dynamic libraries, make sure to also include ACE_ROOT/netsvcs/lib 
+use the dynamic libraries, make sure to also include ACE_ROOT/netsvcs/lib
 in your PATH.<P>
 
 <HR><P>
@@ -692,9 +704,9 @@ using the $(ACE_ROOT)/bin/clone.c program.  To build clone,
 perform the following steps: <P>
 
 <pre>
-% cd $ACE_ROOT/bin 
-% make 
-% mv clone ~/bin 
+% cd $ACE_ROOT/bin
+% make
+% mv clone ~/bin
 % rehash
 </pre><P>
 
@@ -703,11 +715,11 @@ $ACE_ROOT), and then invoke the top-level Makefile with the
 "clone" target, e.g.: <P>
 
 <pre>
-% cd $ACE_ROOT 
+% cd $ACE_ROOT
 % mkdir build-SunOS5
-% cd build-SunOS5 
-% make -f ../Makefile clone 
-% setenv ACE_ROOT $cwd 
+% cd build-SunOS5
+% make -f ../Makefile clone
+% setenv ACE_ROOT $cwd
 % make
 </pre><P>
 
@@ -765,12 +777,12 @@ additional tips: <P>
 
    Shared objects are built a little different on MVS than on
    other UNIX implementations.  This has been accounted for in the makefiles
-   that come with ACE   When the linker (via the cxx command) builds the 
-   libACE.so file it will also create a file called libACE.x.  This is a 
-   side-deck file and it must be included in subsequent link edits with 
-   application code.  For more information on this see the C/C++ MVS 
-   Programming Guide.  If you want to build your application statically, 
-   i.e., using libACE.a instead of libACE.so, you can set ACELIB to 
+   that come with ACE   When the linker (via the cxx command) builds the
+   libACE.so file it will also create a file called libACE.x.  This is a
+   side-deck file and it must be included in subsequent link edits with
+   application code.  For more information on this see the C/C++ MVS
+   Programming Guide.  If you want to build your application statically,
+   i.e., using libACE.a instead of libACE.so, you can set ACELIB to
    ACELIB_STATIC in platform_mvs.GNU. <P>
 
    When the libACE.so file is built (via the MVS pre-linker and binder), you
@@ -785,5 +797,5 @@ Back to the <A HREF="http://www.cs.wustl.edu/~schmidt/ACE.html">
 ACE</A> home page.
 
 <!--#include virtual="/~schmidt/cgi-sig.html" -->
-</BODY> 
+</BODY>
 </HTML>
