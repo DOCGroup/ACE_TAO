@@ -585,9 +585,9 @@ be_visitor_operation_ss::gen_demarshal_params (be_operation *node,
       *os << be_uidt_nl << "))\n" << be_idt;
 
       // If marshaling fails, raise exception.
-      if (this->gen_raise_exception (bt, "CORBA::MARSHAL",
-                                     "",
-                                     "ACE_TRY_ENV") == -1)
+      if (this->gen_raise_exception (bt,
+                                     "CORBA::MARSHAL",
+                                     "") == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_compiled_visitor_operation_ss::"
@@ -715,9 +715,9 @@ be_visitor_operation_ss::gen_marshal_params (be_operation *node,
 
   *os << be_uidt_nl << "))\n";
   // if marshaling fails, raise exception
-  if (this->gen_raise_exception (bt, "CORBA::MARSHAL",
-                                 "",
-                                 "ACE_TRY_ENV") == -1)
+  if (this->gen_raise_exception (bt,
+                                 "CORBA::MARSHAL",
+                                 "") == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_compiled_visitor_operation_ss::"

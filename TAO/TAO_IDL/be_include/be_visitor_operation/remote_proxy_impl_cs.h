@@ -60,22 +60,10 @@ public:
   virtual int post_process (be_decl *);
   // stuff to output after every member of the scope is handled
 
-  virtual int gen_raise_exception (be_type *,
-                                   const char *excep,
-                                   const char *status);
-  // helper that generates code for raising an exception
-
-  virtual int gen_check_exception (be_type *);
-  // helper that generates code for checking for an exception
-
-  virtual int gen_raise_interceptor_exception (be_type *,
-                                               const char *excep,
-                                               const char *status);
+  virtual int gen_raise_interceptor_exception (be_type *return_type,
+                                               const char *exception_name,
+                                               const char *exception_arguments);
   // helper that generates code for raising an exception within
-  // interceptor's try block
-
-  virtual int gen_check_interceptor_exception (be_type *);
-  // helper that generates code for checking for an exception within
   // interceptor's try block
 
   virtual const char *compute_operation_name (be_operation *node);

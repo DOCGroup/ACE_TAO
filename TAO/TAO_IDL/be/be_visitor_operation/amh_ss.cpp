@@ -190,7 +190,6 @@ be_visitor_amh_operation_ss::demarshal_params (be_operation *node)
       // If marshaling fails, raise exception.
       if (this->gen_raise_exception (0,
                                      "CORBA::MARSHAL",
-                                     "",
                                      "") == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,

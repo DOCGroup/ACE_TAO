@@ -1,6 +1,8 @@
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+// $Id$
+
+#include "idl.h"
+#include "idl_extern.h"
+#include "be.h"
 
 #include "be_visitor_operation.h"
 
@@ -133,7 +135,7 @@ be_visitor_operation_direct_proxy_impl_ss::visit_operation (be_operation *node)
 
 int
 be_visitor_operation_direct_proxy_impl_ss::gen_invoke (be_visitor_context &ctx,
-						       be_operation *node)
+                                                       be_operation *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
@@ -156,43 +158,6 @@ be_visitor_operation_direct_proxy_impl_ss::gen_invoke (be_visitor_context &ctx,
   // end the upcall
   *os << be_uidt_nl
       << ");" << be_uidt << be_uidt <<  be_uidt_nl;
-  return 0;
-}
-
-
-int
-be_visitor_operation_direct_proxy_impl_ss::gen_check_exception (be_type *bt)
-{
-  TAO_OutStream *os = this->ctx_->stream ();
-  be_visitor *visitor;
-  be_visitor_context ctx;
-
-  os->indent ();
-  // check if there is an exception
-  if (!this->void_return_type (bt))
-    {
-      *os << "ACE_CHECK_RETURN (";
-
-      // return the appropriate return value
-      ctx = *this->ctx_;
-      ctx.state (TAO_CodeGen::TAO_OPERATION_RETVAL_RETURN_CS);
-      visitor = tao_cg->make_visitor (&ctx);
-      if (!visitor || (bt->accept (visitor) == -1))
-        {
-          delete visitor;
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_operation_direct_collocated_cs::"
-                             "gen_check_exception - "
-                             "codegen failed\n"),
-                            -1);
-        }
-      *os << ");\n";
-    }
-  else
-    {
-      *os << "ACE_CHECK;\n";
-    }
-
   return 0;
 }
 

@@ -252,35 +252,6 @@ be_visitor_operation_thru_poa_proxy_impl_ss::gen_invoke (
   return 0;
 }
 
-
-int
-be_visitor_operation_thru_poa_proxy_impl_ss::gen_check_exception (be_type *bt)
-{
-  TAO_OutStream *os = this->ctx_->stream ();
-
-  os->indent ();
-  // check if there is an exception
-  if (!this->void_return_type (bt))
-    {
-      if (bt->size_type () == be_decl::VARIABLE
-          || bt->base_node_type () == AST_Decl::NT_array)
-        {
-          *os << "ACE_CHECK_RETURN (0);" << be_nl;
-        }
-      else
-        {
-          *os << "ACE_CHECK_RETURN  (_tao_retval);" << be_nl;
-        }
-    }
-  else
-    {
-      *os << "ACE_CHECK;" << be_nl;
-    }
-
-  return 0;
-}
-
-
 int
 be_visitor_operation_thru_poa_proxy_impl_ss::void_return_type (be_type *bt)
 {

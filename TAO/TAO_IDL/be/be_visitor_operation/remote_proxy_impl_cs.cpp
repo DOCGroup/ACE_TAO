@@ -150,7 +150,8 @@ be_visitor_operation_remote_proxy_impl_cs::visit_operation (be_operation *node)
 
   if (node->has_native ()) // native exists => no stub
     {
-      if (this->gen_raise_exception (bt, "CORBA::MARSHAL",
+      if (this->gen_raise_exception (bt,
+                                     "CORBA::MARSHAL",
                                      "") == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -169,7 +170,8 @@ be_visitor_operation_remote_proxy_impl_cs::visit_operation (be_operation *node)
           << "if (istub == 0)" << be_idt_nl;
 
       // if the stub object was bad, then we raise a system exception
-      if (this->gen_raise_exception (bt, "CORBA::INTERNAL",
+      if (this->gen_raise_exception (bt,
+                                     "CORBA::INTERNAL",
                                      "") == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -928,44 +930,6 @@ be_visitor_operation_remote_proxy_impl_cs::gen_marshal_and_invoke (
 }
 
 int
-be_visitor_operation_remote_proxy_impl_cs::gen_raise_exception (be_type *bt,
-                                              const char *excep,
-                                              const char *completion_status)
-{
-  TAO_OutStream *os = this->ctx_->stream ();
-
-  if (this->void_return_type (bt))
-    {
-      if (be_global->use_raw_throw ())
-        *os << "throw ";
-      else
-        *os << "ACE_THROW (";
-
-      *os << excep << " (" << completion_status << ")";
-
-      if (be_global->use_raw_throw ())
-        *os << ";\n";
-      else
-        *os << ");\n";
-    }
-  else
-    {
-      if (bt->size_type () == be_decl::VARIABLE
-          || bt->base_node_type () == AST_Decl::NT_array)
-        {
-          *os << "ACE_THROW_RETURN (" << excep
-              << " (" << completion_status << "), 0);\n";
-        }
-      else
-        {
-          *os << "ACE_THROW_RETURN (" << excep
-              << " (" << completion_status << "), _tao_retval);\n";
-        }
-    }
-  return 0;
-}
-
-int
 be_visitor_operation_remote_proxy_impl_cs::gen_raise_interceptor_exception (be_type *bt,
                                                           const char *excep,
                                                           const char *completion_status)
@@ -1002,58 +966,6 @@ be_visitor_operation_remote_proxy_impl_cs::gen_raise_interceptor_exception (be_t
               << excep << " (" << completion_status << ")," << be_nl
               <<  "_tao_retval" << be_uidt_nl
               << ");" << be_nl;
-        }
-    }
-
-  return 0;
-}
-
-int
-be_visitor_operation_remote_proxy_impl_cs::gen_check_exception (be_type *bt)
-{
-  TAO_OutStream *os = this->ctx_->stream ();
-
-  // check if there is an exception
-  if (this->void_return_type (bt))
-    {
-      *os << "ACE_CHECK;" << be_nl;
-    }
-  else
-    {
-      if (bt->size_type () == be_decl::VARIABLE
-          || bt->base_node_type () == AST_Decl::NT_array)
-        {
-          *os << "ACE_CHECK_RETURN (0);" << be_nl;
-        }
-      else
-        {
-          *os << "ACE_CHECK_RETURN  (_tao_retval);" << be_nl;
-        }
-    }
-
-  return 0;
-}
-
-int
-be_visitor_operation_remote_proxy_impl_cs::gen_check_interceptor_exception (be_type *bt)
-{
-  TAO_OutStream *os = this->ctx_->stream ();
-
-  // Check if there is an exception.
-  if (this->void_return_type (bt))
-    {
-      *os << "TAO_INTERCEPTOR_CHECK;" << be_nl;
-    }
-  else
-    {
-      if (bt->size_type () == be_decl::VARIABLE
-          || bt->base_node_type () == AST_Decl::NT_array)
-        {
-          *os << "TAO_INTERCEPTOR_CHECK_RETURN (0);" << be_nl;
-        }
-      else
-        {
-          *os << "TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);" << be_nl;
         }
     }
 

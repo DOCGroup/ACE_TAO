@@ -60,15 +60,6 @@ public:
   // =helper
   virtual int post_process (be_decl *);
   // stuff to output after every member of the scope is handled
-
-  virtual int gen_raise_exception (be_type *,
-                                   const char * excep,
-                                   const char * status);
-  // helper that generates code for raising an exception
-
-  virtual int gen_check_exception (be_type *);
-  // helper that generates code for checking for an exception
-
 };
 
 // specialized visitors

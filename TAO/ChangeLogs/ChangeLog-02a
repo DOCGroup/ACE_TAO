@@ -1,3 +1,42 @@
+Tue Jan 22 15:32:10 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* TAO_IDL/be_include/be_visitor_operation/operation.h:
+	* TAO_IDL/be/be_visitor_operation/operation.cpp:
+	* TAO_IDL/be/be_visitor_factory.cpp:
+	* TAO_IDL/be/be_visitor_operation/amh_rh_ss.cpp:
+	* TAO_IDL/be/be_visitor_operation/amh_ss.cpp:
+	* TAO_IDL/be/be_visitor_operation/ami_cs.cpp:
+	* TAO_IDL/be/be_visitor_operation/ami_handler_reply_stub_operation_cs.cpp:
+	* TAO_IDL/be/be_visitor_operation/direct_collocated_ss.cpp:
+	* TAO_IDL/be/be_visitor_operation/direct_proxy_impl_ss.cpp:
+	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
+	* TAO_IDL/be/be_visitor_operation/remote_proxy_impl_cs.cpp:
+	* TAO_IDL/be/be_visitor_operation/thru_poa_collocated_ss.cpp:
+	* TAO_IDL/be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:
+	* TAO_IDL/be_include/be_visitor_operation/ami_cs.h:
+	* TAO_IDL/be_include/be_visitor_operation/ami_handler_reply_stub_operation_cs.h:
+	* TAO_IDL/be_include/be_visitor_operation/direct_collocated_ss.h:
+	* TAO_IDL/be_include/be_visitor_operation/direct_proxy_impl_ss.h:
+	* TAO_IDL/be_include/be_visitor_operation/remote_proxy_impl_cs.h:
+	* TAO_IDL/be_include/be_visitor_operation/thru_poa_collocated_ss.h:
+	* TAO_IDL/be_include/be_visitor_operation/thru_poa_proxy_impl_ss.h:
+	  I found multiple copies of the following routines:
+	  gen_raise_exception(): generate the code to raise exceptions
+	  using either 'throw', 'ACE_THROW' or 'ACE_THROW_RETURN'.
+	  gen_check_interceptor_exception(): generate the code to check
+	  for exceptions (in interceptors) using either
+	  'TAO_INTERCEPTOR_CHECK or 'TAO_INTERCEPTOR_CHECK_RETURN_RETURN'.
+	  gen_check_exception(): generate the code to check
+	  for exceptions (in interceptors) using either 'ACE_CHECK' or
+	  'ACE_CHECK_RETURN'.
+	  Interestingly the implementations of these routines were all
+	  slightly different, for example, some did not deal with non-void
+	  routines properly, while others did not deal with the
+	  use_raw_throw() IDL-compiler option.
+	  The changes were motivated by some Borland warnings, another
+	  lesson on why we need to keep looking at warnings carefully, and
+	  not simply shut them up using some hack.
+
 Tue Jan 22 13:36:05 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/ClientRequestInfo_i.h (~TAO_ClientRequestInfo_i):
@@ -20,7 +59,7 @@ Tue Jan 22 12:42:13 2002  Venkita Subramonian  <venkita@cs.wustl.edu>
 	* performance-tests/Cubit/TAO/MT_Cubit/Makefile:
 	* performance-tests/Cubit/TAO/IDL_Cubit/Makefile:
 	  Regenerated dependencies.
-	
+
 Tue Jan 22 12:25:31 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tests/Strategies/simple_test.idl:
