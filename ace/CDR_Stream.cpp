@@ -198,12 +198,11 @@ ACE_OutputCDR::write_wchar (ACE_CDR::WChar x)
   if (ACE_static_cast (ACE_CDR::Short, major_version_) == 1
           && ACE_static_cast (ACE_CDR::Short, minor_version_) == 2)
     {
-      int len = ACE_OS::strlen (ACE_reinterpret_cast (const ACE_CDR::Char*, &x));
-      if (this->write_1 (ACE_reinterpret_cast (const ACE_CDR::Octet*, &len)) )
-      {
+      ACE_CDR::Octet len = ACE_static_cast (ACE_CDR::Octet, sizeof(x));
+      if (this->write_1 (&len))
         return this->write_octet_array (ACE_reinterpret_cast
-                                         (const ACE_CDR::Octet*, &x), len);
-      }
+                                         (const ACE_CDR::Octet*, &x),
+                                         ACE_static_cast (ACE_CDR::ULong, len));
     }
   else
     if (this->wchar_translator_ == 0)
@@ -740,9 +739,9 @@ ACE_InputCDR::read_wchar (ACE_CDR::WChar& x)
           && ACE_static_cast (ACE_CDR::Short, minor_version_) == 2)
   {
     ACE_CDR::Octet len;
-    if (this->read_1(ACE_reinterpret_cast (ACE_CDR::Octet*, &len)))
-      return this->read_octet_array(ACE_reinterpret_cast (ACE_CDR::Octet*, &x),
-                                       ACE_static_cast (ACE_CDR::ULong, len));
+    if (this->read_1 (&len))
+    return this->read_octet_array(ACE_reinterpret_cast (ACE_CDR::Octet*, &x),
+                                    ACE_static_cast (ACE_CDR::ULong, len));
   }
   else
     if (this->wchar_translator_ == 0)
