@@ -19,14 +19,14 @@ ACE_RCSID (tao,
 
 
 TAO_Transport_Cache_Manager::TAO_Transport_Cache_Manager (TAO_ORB_Core &orb_core)
-  : percent_ (orb_core.resource_factory ()->purge_percentage ()),
-    purging_strategy_ (orb_core.resource_factory ()->create_purging_strategy ()),
-    cache_map_ (static_cast<size_t> (ACE::max_handles ())),
-    condition_ (0),
-    cache_lock_ (0),
-    muxed_number_ (orb_core.resource_factory ()->max_muxed_connections ()),
-    no_waiting_threads_ (0),
-    last_entry_returned_ (0)
+  : percent_ (orb_core.resource_factory ()->purge_percentage ())
+  , purging_strategy_ (orb_core.resource_factory ()->create_purging_strategy ())
+  , cache_map_ (orb_core.resource_factory ()->cache_maximum ())
+  , condition_ (0)
+  , cache_lock_ (0)
+  , muxed_number_ (orb_core.resource_factory ()->max_muxed_connections ())
+  , no_waiting_threads_ (0)
+  , last_entry_returned_ (0)
 {
   if (orb_core.resource_factory ()->locked_transport_cache ())
     {
