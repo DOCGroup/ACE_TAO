@@ -1,5 +1,7 @@
 # $Id$
 
+# Hint: use picture-mode to make editing this easier (C-c . will set
+# the direction to "down".
 
 Legend:
 	Platforms are indicated by position within square brackets, i.e.,
@@ -40,7 +42,7 @@ Legend:
         [11    ] SII nested_struct
         [00    ] SII struct_seq
         [00    ] SII objref
-[110   ] MT_Test compiles
+[110   ] MT_Cubit compiles
         [10    ] runs for Octet
         [10    ] runs for Short
         [10    ] runs for Long
@@ -49,9 +51,24 @@ Legend:
         [10    ] Event_Latency runs
 	[0x    ] Simple_Naming runs
 	[xx    ] Logger runs
-	  
+	
+NOTES
+* Solaris/CC
+* NT
+** Warnings on libTAO and tao_idl compilation.
+** Param_Test with struct_seq segfaults server.
+** MT_Cubit client segfaults after transactions made.
+* Solaris/g++
+** Warnings during tao_idl compilation.
+** orbsvcs fails with missing stuff in ACE_Map_Manager.
+** MT_Cubit doesn't compile template instantiation source.
+* IRIX
+* Linux/g++
+* Other (Linux/egcs, Solaris/egcs, etc.)
 
+  
+
+# eval:(overwrite-mode nil)
 # Local Variables:
 # mode:indented-text
-# eval:(overwrite-mode nil)
 # End:
