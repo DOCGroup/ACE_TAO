@@ -92,6 +92,8 @@ single_thread_performance_test (int queue_type = 0)
                   ACE_Message_Block *[max_messages],
                   -1);
 
+  int i;
+
   for (i = 0; i < max_messages; ++i)
     ACE_NEW_RETURN (send_block[i],
                     ACE_Message_Block (test_message,
@@ -379,5 +381,7 @@ main (int argc, ACE_TCHAR *argv[])
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Message_Queue_Ex<ACE_Message_Block, ACE_NULL_SYNCH>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Message_Queue_Ex<ACE_Message_Block, ACE_NULL_SYNCH>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

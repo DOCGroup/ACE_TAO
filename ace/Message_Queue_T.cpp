@@ -59,7 +59,7 @@ ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::ACE_Message_Queue_Ex (siz
 
   if (this->open (hwm, lwm, ns) == -1)
     ACE_ERROR ((LM_ERROR,
-                ASYS_TEXT ("open")));
+                ACE_TEXT ("open")));
 }
 
 template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL>
