@@ -110,7 +110,7 @@ document</a>.</p><p>
         TAO service offerings. Besides the standard DOC group platforms
         we also support Borland C++ Builder 6, CBuilderX 1.0, MinGW,
         Cygwin, VxWorks 5.5, OpenVMS 7.3-2, Linux 64bit Alpha, Tru64,
-        and HPUX 11i 32/64 bit.
+        HPUX 11i 32/64 bit on PA-RISC, and HPUX 11i v2 on Itanium.
     </td>
     <td>Remedy IT <a href="http://www.theaceorb.nl/">web site</a> and
         the TAO <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/TAO/TAO-INSTALL.html">install document</a>
@@ -2404,12 +2404,17 @@ below.</p>
 </ol>
 <h3>Borland C++</h3>
 <p>Support for building ACE's ACE_SSL library and TAO's SSLIOP
-   pluggable protocol with Borland C++ does exist. First get a patch for the Open SSL makefile from <a href="http://www.tenermerx.com/tao_bcb/index.html">
-   http://www.tenermerx.com/tao_bcb/index.html</a>. Then build the OpenSSL
-   library. When you use the DLL version of ACE+TAO you have to build a DLL
-   version of OpenSSL. Then you must set the environment variable SSL_ROOT
-   to the location of your OpenSSL and then build ACE and TAO as you
-   would normally.
+   pluggable protocol with Borland C++ does exist. 
+<ol>
+  <li>Set the <code>SSL_ROOT</code> environment variable to the location
+      of the directory containing the OpenSSL <code>inc32</code> and
+      <code>out32</code> directories.
+  <li>Add <code>ssl=1</code> to your MPC
+      <code>$ACE_ROOT/bin/MakeProjectCreator/config/default.features</code>
+      or <code>$ACE_ROOT/local.features</code> file, and re-run MPC to add
+      support for building the ACE_SSL library to your Borland C++ makefiles.
+  <li>Build ACE and TAO.
+</ol>
 </p>
 
 
