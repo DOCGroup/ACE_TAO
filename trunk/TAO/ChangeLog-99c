@@ -1,3 +1,9 @@
+Wed Jun 30 16:44:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/RtecScheduler.idl,
+          orbsvcs/orbsvcs/Sched/Reconfig_Scheduler.{cpp, h}: fixed throw
+          exception discrepancies.
+
 Wed Jun 30 16:18:03 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/Connector_Registry.cpp:
