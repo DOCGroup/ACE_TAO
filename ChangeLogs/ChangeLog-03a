@@ -23,8 +23,8 @@ Sat Jul 28 23:03:24 2001  Ossama Othman  <ossama@uci.edu>
 
 	  (yy_delete_parse_buffer):
 
-	  No longer any need for this function.  The lexer buffer stack
-	  implementation handles memory management of lexer buffers.
+	  There is no longer any need for this function.  The lexer buffer
+	  stack implementation handles memory management of lexer buffers.
 
 	  (yywrap):
 
