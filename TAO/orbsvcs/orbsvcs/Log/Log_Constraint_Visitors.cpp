@@ -430,15 +430,13 @@ TAO_Log_Constraint_Visitor::visit_component_assoc (
       this->queue_.enqueue_head (result);
       return 0;
     }
-  else
-    {
-      CORBA::Any *any_ptr = 0;
-      ACE_NEW_RETURN (any_ptr,
-                      CORBA::Any (any.in ()),
-                      -1);
-      this->current_member_ = any_ptr;
-      return comp->accept (this);
-    }
+
+  CORBA::Any *any_ptr = 0;
+  ACE_NEW_RETURN (any_ptr,
+                  CORBA::Any (any.in ()),
+                  -1);
+  this->current_member_ = any_ptr;
+  return comp->accept (this);
 }
 
 int

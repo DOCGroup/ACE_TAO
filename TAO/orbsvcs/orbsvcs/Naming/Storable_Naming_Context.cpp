@@ -1144,49 +1144,47 @@ TAO_Storable_Naming_Context::bind_new_context (const CosNaming::Name& n
       ACE_CHECK_RETURN (CosNaming::NamingContext::_nil ());
     }
   // If we received a simple name, we need to bind it in this context.
-  else
-  {
-    // This had been a read on the file so now we are done with it
-    flck.release();
 
-    // Stores our new Naming Context.
-    CosNaming::NamingContext_var result =
-      CosNaming::NamingContext::_nil ();
+  // This had been a read on the file so now we are done with it
+  flck.release();
 
-    // Create new context.
-    result = new_context (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK_RETURN (CosNaming::NamingContext::_nil ());
+  // Stores our new Naming Context.
+  CosNaming::NamingContext_var result =
+    CosNaming::NamingContext::_nil ();
 
-    // Bind the new context to the name.
-    ACE_TRY
+  // Create new context.
+  result = new_context (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (CosNaming::NamingContext::_nil ());
+
+  // Bind the new context to the name.
+  ACE_TRY
+    {
+      bind_context (n,
+                    result.in ()
+                    ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
       {
-        bind_context (n,
-                      result.in ()
-                      ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+        ACE_DECLARE_NEW_CORBA_ENV;
+        ACE_TRY_EX(DESTROY)
+          {
+            result->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+            ACE_TRY_CHECK_EX(DESTROY);
+          }
+        ACE_CATCHANY
+          {
+            // Do nothing?
+          }
+        ACE_ENDTRY;
       }
-    ACE_CATCHANY
-      {
-        {
-          ACE_DECLARE_NEW_CORBA_ENV;
-          ACE_TRY_EX(DESTROY)
-            {
-              result->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-              ACE_TRY_CHECK_EX(DESTROY);
-            }
-          ACE_CATCHANY
-            {
-              // Do nothing?
-            }
-          ACE_ENDTRY;
-        }
-        // Re-raise the exception in bind_context()
-        ACE_RE_THROW;
-      }
-    ACE_ENDTRY;
-    ACE_CHECK_RETURN (CosNaming::NamingContext::_nil ());
-    return result._retn ();
-  }
+      // Re-raise the exception in bind_context()
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (CosNaming::NamingContext::_nil ());
+  return result._retn ();
 }
 
 void

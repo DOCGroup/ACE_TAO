@@ -485,14 +485,12 @@ TAO_Notify_Constraint_Visitor::visit_component_assoc (
 
       return 0;
     }
-  else
-    {
-      ACE_NEW_RETURN (any_ptr,
-                      CORBA::Any (*any),
-                      -1);
-      this->current_value_ = any_ptr;
-      return comp->accept (this);
-    }
+
+  ACE_NEW_RETURN (any_ptr,
+                  CORBA::Any (*any),
+                  -1);
+  this->current_value_ = any_ptr;
+  return comp->accept (this);
 }
 
 int
@@ -1226,11 +1224,11 @@ TAO_Notify_Constraint_Visitor::sequence_does_contain (const CORBA::Any *any,
   ACE_TRY
     {
       CORBA::TypeCode_var type = any->type ();
-      CORBA::TypeCode_var base_type = 
+      CORBA::TypeCode_var base_type =
 	TAO_DynAnyFactory::strip_alias (type.in () ACE_ENV_ARG_PARAMETER);
-      CORBA::TypeCode_var content_type = 
+      CORBA::TypeCode_var content_type =
 	base_type->content_type (ACE_ENV_SINGLE_ARG_PARAMETER);
-      CORBA::TCKind kind = 
+      CORBA::TCKind kind =
 	TAO_DynAnyFactory::unalias (content_type.in() ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 

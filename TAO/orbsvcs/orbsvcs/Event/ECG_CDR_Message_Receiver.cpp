@@ -13,8 +13,8 @@
 #include "ECG_CDR_Message_Receiver.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (Event, 
-           ECG_CDR_Message_Receiver, 
+ACE_RCSID (Event,
+           ECG_CDR_Message_Receiver,
            "$Id$")
 
 
@@ -357,10 +357,7 @@ TAO_ECG_CDR_Message_Receiver::handle_input (
         return 1;
     }
 
-  else
-    {
-      return this->process_fragment (from, header, data_buf, cdr_processor);
-    }
+  return this->process_fragment (from, header, data_buf, cdr_processor);
 }
 
 int
