@@ -1,3 +1,11 @@
+Sun Jul 29 19:06:11 2001  Ossama Othman  <ossama@uci.edu>
+
+	* ace/Svc_Conf.y (ace_obstack):
+	* ace/Svc_Conf_y.cpp:
+	* ace/Svc_Conf_l.cpp:
+
+	  UNICODE updates and fixes.
+
 Sun Jul 29 10:50:45 2001  Ossama Othman  <ossama@uci.edu>
 
 	* ace/Svc_Conf_Lexer_Guard.cpp: 
