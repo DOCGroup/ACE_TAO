@@ -588,6 +588,7 @@ TAO_Compiled_Visitor_Factory::make_visitor (be_visitor_context *ctx)
     case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARGLIST_CH:
     case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARGLIST_CS:
     case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARG_INFO_CS: 
+    case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_PARAMLIST: 
     case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_SH:
     case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_SS:
     case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARGLIST_SH:
@@ -626,6 +627,9 @@ TAO_Compiled_Visitor_Factory::make_visitor (be_visitor_context *ctx)
     case TAO_CodeGen::TAO_ARGUMENT_INTERCEPTORS_ARGLIST_CS:
     case TAO_CodeGen::TAO_ARGUMENT_INTERCEPTORS_INFO_ARGLIST_CS:
        return new be_visitor_args_request_info_cs (new_ctx);
+    case TAO_CodeGen::TAO_ARGUMENT_INTERCEPTORS_PARAMLIST_CS:
+    case TAO_CodeGen::TAO_ARGUMENT_INTERCEPTORS_PARAMLIST_SS:
+       return new be_visitor_args_paramlist (new_ctx);
     case TAO_CodeGen::TAO_ARGUMENT_INTERCEPTORS_ARGLIST_SH:
        return new be_visitor_args_request_info_sh (new_ctx);
     case TAO_CodeGen::TAO_ARGUMENT_INTERCEPTORS_ARGLIST_SS:
