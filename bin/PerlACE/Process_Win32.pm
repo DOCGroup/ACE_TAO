@@ -97,17 +97,19 @@ sub Executable
 
     my $executable = $self->{EXECUTABLE};
 
-    if ($self->{IGNOREEXESUBDIR}) {
-        return $executable;
+    if ($self->{IGNOREEXESUBDIR} == 0) {
+
+      my $basename = basename ($executable);
+      my $dirname = dirname ($executable). '/';
+
+      $executable = $dirname.$PerlACE::Process::ExeSubDir.$basename.".EXE";
+
+    }
+    else {
+      $executable = $executable.".EXE";
     }
 
-    my $basename = basename ($executable);
-    my $dirname = dirname ($executable). '/';
-
-    $executable = $dirname.$PerlACE::Process::ExeSubDir.$basename.".EXE";
-
     $executable =~ s/\//\\/g; # / <- # color coding issue in devenv
-
     return $executable;
 }
 
