@@ -2,6 +2,7 @@
 
 	* orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp:
 	* orbsvcs/orbsvcs/Trader/Trader_Utils.cpp:
+	* orbsvcs/tests/Trading/colocated_test.cpp:
 	  In an effort to be efficient, in certain methods I was stealing
 	  sequence buffers from 'in' parameters that would have otherwise
 	  needed to have been copied. However, this doesn't work in the

@@ -1180,8 +1180,8 @@ TAO_Offer_Modifier::affect_change (void)
   CORBA::ULong prop_length = this->offer_->properties.length ();
   CORBA::ULong merge_length = this->merge_props_.length ();
   // Scrap the existing property sequence and begin a new one
-  CosTrading::Property* prop_buf =
-    this->offer_->properties.get_buffer (0);
+  CosTrading::PropertySeq prop_seq (prop_length, prop_length, this->offer_->properties.get_buffer (), 0);
+  prop_seq._allocate_buffer (prop_length);
   this->offer_->properties.length (total_length);
 
   // Copy in the unaffected and modified props into the offer,
@@ -1190,7 +1190,8 @@ TAO_Offer_Modifier::affect_change (void)
   for (i = 0; i < prop_length; i++)
     {
       CosTrading::Property* prop_value = 0;
-      const char* name = prop_buf[i].name;
+      //    const char* name = prop_buf[i].name;
+      const char* name = prop_seq[i].name;
       TAO_String_Hash_Key prop_name (name);
       if (this->props_.unbind (prop_name, prop_value) == 0)
         this->offer_->properties[num_modified++] = *prop_value;
@@ -1206,7 +1207,7 @@ TAO_Offer_Modifier::affect_change (void)
     }
 
   // Free the old, orphaned sequence.
-  CosTrading::PropertySeq::freebuf (prop_buf);
+  //  CosTrading::PropertySeq::freebuf (prop_buf);
 }
 
 
