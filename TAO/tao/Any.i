@@ -1,5 +1,5 @@
-// $Id$
 // This may look like C, but it's really -*- C++ -*-
+// $Id$
 
 // Insertion from special types.
 
@@ -76,15 +76,6 @@ CORBA_Any::operator<<= (const CORBA_Any& a)
 {
   CORBA::Environment env;
   this->replace (CORBA::_tc_any, new CORBA_Any (a), 1, env);
-}
-
-// this is a copying version for unbounded strings
-ACE_INLINE void
-CORBA_Any::operator<<= (const char* s)
-{
-  CORBA::Environment env;
-  this->replace (CORBA::_tc_string, new char* (CORBA::string_dup (s)),
-                 1, env);
 }
 
 // implementing the special types
