@@ -1,3 +1,13 @@
+Wed Mar  5 12:53:22 2003  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/TAO.dsp:
+        * tao/TAO_Static.dsp:
+        * tao/tao-dll.icc:
+        * tao/tao-lib.icc:
+
+        Added Codeset_manager and Codeset_Translator_Factory source to
+        makefiles.
+
 Wed Mar  5 11:00:51 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * tao/IIOP_Acceptor.cpp:

@@ -267,6 +267,14 @@ SOURCE=.\CodecFactory_ORBInitializer.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Codeset_Manager.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Codeset_Translator_Factory.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Collocation_Resolver.cpp
 # End Source File
 # Begin Source File
@@ -1072,6 +1080,14 @@ SOURCE=.\CodecFactory.h
 # Begin Source File
 
 SOURCE=.\CodecFactory_ORBInitializer.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Codeset_Manager.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Codeset_Translator_Factory.h
 # End Source File
 # Begin Source File
 
