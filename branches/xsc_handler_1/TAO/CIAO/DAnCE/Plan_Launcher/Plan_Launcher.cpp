@@ -101,7 +101,7 @@ namespace CIAO
                              ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-          if (!parse_args || package_url == 0)
+          if (!parse_args (argc, argv) || package_url == 0)
             {
               usage (argv[0]);
               return -1;
