@@ -18,6 +18,7 @@
 #define ACE_CONTAINERS_H
 
 #include "ace/OS.h"
+#include "ace/Malloc_Base.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
