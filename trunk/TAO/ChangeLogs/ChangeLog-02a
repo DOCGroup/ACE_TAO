@@ -1,3 +1,11 @@
+Tue Nov 21 21:13:18 2000  Ossama Othman  <ossama@uci.edu>
+
+	* tao/Object_Ref_Table.h (TAO_Object_Ref_Table):
+
+	  Made the Table and Iterator typedefs public.  Some compilers
+	  complain if they are private since they aren't visible at the
+	  file level.
+
 Tue Nov 21 23:25:57 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp (visit_interface):
