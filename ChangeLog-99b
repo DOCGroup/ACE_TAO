@@ -1,3 +1,10 @@
+Thu Dec  2 22:42:53 1999  James Hu <jxh@entera.com>
+
+        * ace/TP_Reactor.cpp:
+          Instead of setting suspend_set_ and wait_set_ both all the time,
+          try to determine whether or not the handler is suspended and
+          choose one of the sets to do the bit_ops on.
+
 Thu Dec  2 22:41:53 1999  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
 	* ace/OS.i: 
