@@ -16,7 +16,7 @@ IDLFILES = \
 	$(IDLDIR)\CosNotifyComm.idl \
 	$(IDLDIR)\CosNotifyFilter.idl \
         $(IDLDIR)\NotifyExt.idl \     
-        $(IDLDIR)\Notify\Event_Forwarder.idl
+        $(IDLDIR)\Event_Forwarder.idl
 
 OBJFILES = \
 	$(OBJDIR)\CosNotificationC.obj \
@@ -156,5 +156,5 @@ $(IDLDIR)\CosNotifyFilterC.cpp $(IDLDIR)\CosNotifyFilterS.cpp: $(IDLDIR)\CosNoti
 $(IDLDIR)\NotifyExtC.cpp $(IDLDIR)\NotifyExtS.cpp: $(IDLDIR)\NotifyExt.idl
 	$(TAO_IDL) $**
 
-$(IDLDIR)\Notify\Event_ForwarderC.cpp $(IDLDIR)\Notify\Event_ForwarderS.cpp: $(IDLDIR)\Notify\Event_Forwarder.idl
+$(IDLDIR)\Event_ForwarderC.cpp $(IDLDIR)\Event_ForwarderS.cpp: $(IDLDIR)\Event_Forwarder.idl
 	$(TAO_IDL) $**
