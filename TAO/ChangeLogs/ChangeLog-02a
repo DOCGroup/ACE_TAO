@@ -1,3 +1,22 @@
+Thu Feb  3 17:47:14 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/DomainC.cpp:
+	* tao/GIOP.cpp:
+	* tao/ImplRepoC.cpp:
+	* tao/InterfaceC.cpp:
+	* tao/MessagingC.cpp:
+	* tao/Object.cpp:
+	* tao/POAC.cpp:
+	* tao/PolicyC.cpp:
+	* tao/PollableC.cpp:
+	* tao/Stub.cpp:
+	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
+	  Another temporary workaround to enable the coexistence of
+	  reliable oneways requests and regular twoway requests until
+	  we have GIOP 1.2 fully in place. There were compatibility
+	  problems with Java servers. Thanks to Lothar Werzinger
+	  <werzinger.lothar@krones.de> for reporting this problem.
+
 Thu Feb 03 16:12:01 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/Leader_Follower.i (~TAO_LF_Server_Thread_Helper): The
