@@ -190,28 +190,28 @@ release_guard_i (Guid_t guid, const DSRT_QoSDescriptor& qos)
   ACE_DEBUG((LM_DEBUG,"(%t|%T):release guard enter and current task id is %d and period is %d.\n",qos.task_id_,qos.period_));
 #endif
 
-      ACE_Time_Value cur_time;
-      TimeBase::TimeT tv, cur_v;
+      ACE_Time_Value cur_time, tv, proper_t;
+//      TimeBase::TimeT tv, cur_v;
 
 //Need a period information. Hope I can get it from QoS.
       TimeBase::TimeT period = qos.period_;
       cur_time = ACE_OS::gettimeofday ();
-      cur_v = cur_time.sec()*10000000+cur_time.usec()*10 ;
 
 //If I change the guid to Task ID, will it work?
       if(this->release_map_.find(qos.task_id_, tv)==0)
       {
 #ifdef KOKYU_DSRT_LOGGING
            ACE_DEBUG ((LM_DEBUG,
-                  "(%t|%T): Get the previous release time is %d and current time is %d\n",tv, cur_v));
+                  "(%t|%T): Get the previous release time is %d\n",tv.sec()));
 #endif
-        if( tv + period >= cur_v )
+        proper_t = tv + ACE_Time_Value (period/10000000, (period%10000000)/1000);
+        if( proper_t  <= cur_time )
            {
 #ifdef KOKYU_DSRT_LOGGING
            ACE_DEBUG ((LM_DEBUG,
                   "(%t|%T): Over the proper release time\n"));
 #endif
-             this->release_map_.rebind(qos.task_id_, cur_v);
+             this->release_map_.rebind(qos.task_id_, cur_time);
              this->schedule_i (guid, qos);
            }
         else
@@ -219,9 +219,10 @@ release_guard_i (Guid_t guid, const DSRT_QoSDescriptor& qos)
            ACE_Time_Value left_time;
 //           left_time.sec = (cur_v-tv-period)/10000000;
 //           left_time.usec = (cur_v-tv-period)/10;
-           left_time.set (ACE_static_cast(ACE_UINT32, (cur_v-tv-period) / 10000000),
-           ACE_static_cast(ACE_UINT32, ((cur_v-tv-period) % 10000000) / 1000));
+//           left_time.set (ACE_static_cast(ACE_UINT32, (cur_v-tv-period) / 10000000),
+//           ACE_static_cast(ACE_UINT32, ((cur_v-tv-period) % 10000000) / 1000));
 
+           left_time = proper_t - cur_time;
 #ifdef KOKYU_DSRT_LOGGING
            ACE_DEBUG ((LM_DEBUG,
                   "(%t|%T): About to block on release guard cond\n"));
@@ -231,13 +232,12 @@ release_guard_i (Guid_t guid, const DSRT_QoSDescriptor& qos)
              ACE_ERROR ((LM_ERROR,
                       "(%t|%T): release_cond.wait timed out \n"));
              cur_time = ACE_OS::gettimeofday ();
-             cur_v = cur_time.sec()*10000000+cur_time.usec()*10 ;
 #ifdef KOKYU_DSRT_LOGGING
            ACE_DEBUG ((LM_DEBUG,
-                  "(%t|%T): And Current time %d is set in the map.\n",cur_v));
+                  "(%t|%T): And Current time is set in the map.\n"));
 #endif
 
-             this->release_map_.rebind(qos.task_id_, cur_v);
+             this->release_map_.rebind(qos.task_id_, cur_time);
              this->schedule_i (guid, qos);
              }
            }
@@ -249,7 +249,7 @@ release_guard_i (Guid_t guid, const DSRT_QoSDescriptor& qos)
                   "(%t|%T): Can not find release information in map\n"));
 #endif
 
-             this->release_map_.bind(qos.task_id_, cur_v);
+             this->release_map_.bind(qos.task_id_, cur_time);
              this->schedule_i (guid, qos);
       }
 
