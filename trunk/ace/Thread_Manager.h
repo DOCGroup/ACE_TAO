@@ -50,6 +50,9 @@ public:
   ACE_Task_Base *task_;
   // Pointer to an ACE_Task;
 
+  void dump (void) const;
+  // Dump the state of an object.
+
 private:
 
   ACE_thread_t thr_id_;

@@ -14,6 +14,7 @@ BIN     = auto_event \
 	  future1 \
 	  future2 \
 	  manual_event \
+	  process_manager \
 	  process_mutex \
 	  process_semaphore \
 	  reader_writer \

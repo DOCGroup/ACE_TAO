@@ -45,15 +45,17 @@ public:
 	       ACE_HANDLE std_err = ACE_INVALID_HANDLE,
 	       char *envp[] = 0);
   // Set the standard handles of the new process to the respective
-  // handles and start the new process.  <argv> must be specified.  It
+  // handles and start the new process.  If <argv> is non-NULL it
   // should be of the following form: argv = {
-  // "c:\full\path\to\foo.exe", "-a", "arg1", "etc", 0 } Returns the
-  // new process id on success, -1 on failure.  If you want to affect
-  // a subset of the handles, make sure to set the others to
+  // "c:\full\path\to\foo.exe", "-a", "arg1", "etc", 0 }.  If <argv>
+  // is NULL then no <exec> is performed.  If <argv> is non-NULL and
+  // <envp> is specified, it is passed as the environment for the new
+  // process, according to the rules for execve().  If you want to
+  // affect a subset of the handles, make sure to set the others to
   // ACE_INVALID_HANDLE.
 
   ~ACE_Process (void);
-  // Death incarnate.
+  // Destructor.
 
   int set_handles (ACE_HANDLE std_in,
 		   ACE_HANDLE std_out = ACE_INVALID_HANDLE,
@@ -67,9 +69,10 @@ public:
   // Set the working directory for the process.
 
   pid_t start (char *argv[], char *envp[] = 0);
-  // Start the new process.  <argv> must be specified.  It should be
-  // of the following form: argv = { "c:\full\path\to\foo.exe", "-a",
-  // "arg1", "etc", 0 }.  If <envp> is specified, it is passed as the
+  // Start the new process.  If <argv> is non-NULL it should be of the
+  // following form: argv = { "c:\full\path\to\foo.exe", "-a", "arg1",
+  // "etc", 0 }.  If <argv> is NULL then no <exec> is performed.  If
+  // <argv> is non-NULL and <envp> is specified, it is passed as the
   // environment for the new process, according to the rules for
   // execve().  Returns the new process id on success, -1 on failure.
 

@@ -6137,6 +6137,20 @@ ACE_OS::getpid (void)
 #endif /* ACE_WIN32 */
 }
 
+ACE_INLINE pid_t 
+ACE_OS::getpgid (pid_t pid)
+{
+  // ACE_TRACE ("ACE_OS::getpid");
+#if defined (ACE_WIN32) || defined (CHORUS)
+  return ACE_NOTSUP_RETURN (-1);
+#elif defined (VXWORKS) 
+  // getpid() is not supported:  just one process anyways
+  return 0;
+#else
+  ACE_OSCALL_RETURN (::getpgid (pid), pid_t, -1);
+#endif /* ACE_WIN32 */
+}
+
 ACE_INLINE off_t 
 ACE_OS::lseek (ACE_HANDLE handle, off_t offset, int whence)
 {
