@@ -9,7 +9,7 @@
 #include "tao/Transport.h"
 
 #if !defined (__ACE_INLINE__)
-#include "tao/Asynch_Reply_Dispatcher.i"
+#include "Asynch_Reply_Dispatcher.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(Messaging, Asynch_Reply_Dispatcher, "$Id$")

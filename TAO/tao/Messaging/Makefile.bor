@@ -1,0 +1,39 @@
+#
+# Makefile for building the TAO Messaging library
+#
+
+NAME = TAO_Messaging
+
+OBJFILES = \
+        $(OBJDIR)\Messaging.obj \
+        $(OBJDIR)\MessagingC.obj \
+        $(OBJDIR)\MessagingS.obj \
+        $(OBJDIR)\Asynch_Reply_Dispatcher.obj \
+        $(OBJDIR)\Asynch_Timeout_Handler.obj \
+        $(OBJDIR)\Messaging_ORBInitializer.obj \
+        $(OBJDIR)\Messaging_PolicyFactory.obj \
+        $(OBJDIR)\Messaging_Policy_i.obj
+
+RESOURCE = $(OBJDIR)\TAO_Messaging.res
+
+CFLAGS = \
+        $(ACE_CFLAGS) \
+        $(TAO_CFLAGS) \
+        $(TAO_PORTABLESERVER_CFLAGS) \
+        $(TAO_MESSAGING_CFLAGS) \
+        -DTAO_MESSAGING_BUILD_DLL
+
+CPPDIR = .
+
+INCDIR_NAME = tao\Messaging
+INCLUDES = \
+	*.h *.i \
+         Messaging.pidl
+
+LIBFILES = \
+        $(ACE_LIB) \
+        $(TAO_LIB) \
+        $(TAO_PORTABLESERVER_LIB)
+
+!include <$(ACE_ROOT)\include\makeinclude\build_core_library.bor>
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
