@@ -27,7 +27,7 @@ const char *ior = "file://test.ior";
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "i");
+  ACE_Get_Opt get_opts (argc, argv, "i:");
   int c;
 
   while ((c = get_opts ()) != -1)
