@@ -1,3 +1,10 @@
+Sun Mar 30 15:21:18 2003  Balachandran Natarajan <bala@isis-server.isis.vanderbilt.edu> 
+
+	* examples/ior_corbaloc/ior_corbaloc_client.dsp:
+	* examples/ior_corbaloc/ior_corbaloc_server.dsp:
+	* examples/ior_corbaloc/ior_corbaname_client.dsp: Added RTTI to
+	  some of he files in the above projects.
+
 Sun Mar 30 15:12:20 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* orbsvcs/tests/Bug_1395_Regression/Bug_1395_Client.dsp:
