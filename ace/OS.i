@@ -227,18 +227,6 @@ ACE_CE_Errno::operator= (int x)
 }
 #endif /* ACE_HAS_WINCE_BROKEN_ERRNO */
 
-ACE_INLINE ACE_Time_Value
-operator * (double d, const ACE_Time_Value &tv)
-{
-  return ACE_Time_Value (tv) *= d;
-}
-
-ACE_INLINE ACE_Time_Value
-operator * (const ACE_Time_Value &tv, double d)
-{
-  return ACE_Time_Value (tv) *= d;
-}
-
 // Returns the value of the object as a timeval.
 
 ACE_INLINE
@@ -398,6 +386,18 @@ ACE_Time_Value::operator *= (double d)
   this->usec (((long)time) % ACE_ONE_SECOND_IN_USECS);
 
   return *this;
+}
+
+ACE_INLINE ACE_Time_Value
+operator * (double d, const ACE_Time_Value &tv)
+{
+  return ACE_Time_Value (tv) *= d;
+}
+
+ACE_INLINE ACE_Time_Value
+operator * (const ACE_Time_Value &tv, double d)
+{
+  return ACE_Time_Value (tv) *= d;
 }
 
 // True if tv1 > tv2.
