@@ -1089,7 +1089,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Thread_Manager_Test"=.\Thread_Manager_Test.dsp - Package Owner=<4>
+Project: "Thread_Manager_Test"=.\Framework_Component_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
