@@ -317,4 +317,3 @@ main (int argc, char ** argv)
     csdb.fini_output ("Codeset_Registry_db.cpp");
   return 0;
 }
-
