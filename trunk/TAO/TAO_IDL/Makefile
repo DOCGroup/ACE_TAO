@@ -11,7 +11,7 @@
 INFO	= 
 DIRS	= driver fe ast util narrow be
 BIN	= tao
-LIBS	= -ldrv -lfe -last -lutil -lnarrow -lbe
+TAOLIBS	= -ldrv -lfe -last -lutil -lnarrow -lbe
 CLONE	= 
 
 #----------------------------------------------------------------------------
@@ -29,7 +29,9 @@ include $(WRAPPER_ROOT)/include/makeinclude/rules.nolocal.GNU
 #----------------------------------------------------------------------------
 
 all:
-	$(CXX) -g -o tao $(LIBS) -lthread
+	cp ./driver/libdrv.so ./fe/libfe.so ./ast/libast.so ./util/libutil.so \
+	./narrow/libnarrow.so ./be/libbe.so /project/mambo/gokhale/lib
+	$(CXX) -g -o tao $(TAOLIBS) $(LIBS) -lthread
 
 tags:
 	rm -f TAGS

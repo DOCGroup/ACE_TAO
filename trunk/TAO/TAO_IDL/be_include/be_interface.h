@@ -43,14 +43,14 @@ public:
   void gen_client_header();
   // Generates the client-side header information for the interface 
 
-  void gen_client_impl();
-  // Generates the client-side implementation for the interface
+  void gen_client_stubs();
+  // Generates the client-side stubs for the interface
 
   void gen_server_header();
   // Generates the server-side header information for the interface 
 
-  void gen_server_impl();
-  // Generates the server-side implementation for the interface
+  void gen_server_skeletons();
+  // Generates the server-side skeletons for the interface
 
   // Narrowing
   DEF_NARROW_METHODS1(be_interface, AST_Interface);

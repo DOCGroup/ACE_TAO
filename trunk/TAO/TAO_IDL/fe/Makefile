@@ -34,7 +34,7 @@ LDLIBS	= -lfe
 LIBS = -lACE
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 
-BUILD	= $(VSHLIB) $(VLIB)
+BUILD	= $(VSHLIB) #$(VLIB)
 
 
 #----------------------------------------------------------------------------
@@ -58,6 +58,7 @@ YACC	= yacc
 LEX	= lex
 YFLAGS	= -t -d
 LFLAGS	= -t
+
 # Create the parser and lexer
 y.tab.hh y.tab.cpp: idl.yy
 	@-$(RM) $@
@@ -277,6 +278,6 @@ lex.yy.cpp: idl.ll y.tab.h
  ../include/drv_extern.h ../include/ast_extern.h \
  ../include/nr_extern.h ../include/global_extern.h \
  ../include/fe_private.h ../include/fe_interface_header.h \
- ../include/fe_declarator.h
+ ../include/fe_declarator.h y.tab.h
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

@@ -78,6 +78,41 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 void
 BE_produce()
 {
+
+#if 0
+  // let us print all the global values
+  cout << "filename is " << endl;
+  idl_global->filename()->dump(cout);
+  cout << endl;
+  cout << "main filename is " << endl;
+  idl_global->main_filename()->dump(cout);
+  cout << endl;
+  cout << "real filename is " << endl;
+  idl_global->real_filename()->dump(cout);
+  cout << endl;
+  cout << "stripped filename is " << endl;
+  idl_global->stripped_filename()->dump(cout);
+  cout << endl;
+  cout << "IDL source filename is " << endl;
+  idl_global->idl_src_file()->dump(cout);
+  cout << endl;
+  cout << "prog_name is " << idl_global->prog_name() << endl;
+#endif
+  be_root *root;   // root of the AST made up of BE nodes
+  AST_Decl *d = idl_global->root();
+  root = be_root::narrow_from_decl(d);
+  if (root == NULL)
+    {
+      cerr << "No root" << endl;
+      BE_abort();
+    }
+
+  // start the code generation process
+  if (root->gen_idl2cplusplus_mapping() == -1)
+    {
+      cerr << "Mapping process failed" << endl;
+      BE_abort();
+    }
 }
 
 /*
@@ -86,4 +121,6 @@ BE_produce()
 void
 BE_abort()
 {
+  cerr << "Fatal Error" << endl;
+  exit (1);
 }
