@@ -44,6 +44,7 @@ while ($line = <fp>)
 
     print "$in_sin_b $line $in_sin_e<BR>"
         if ($line =~/^[-A-Z_a-z0-9.\/\\:]+\([0-9]+\) : / ||
+            $line =~/^[-A-Z_a-z0-9.\/\\:]+.*, line [0-9]+: / ||
             $line =~/^[-A-Z_a-z0-9.\\:]+\.obj : / ||
             $line =~/^fatal error/ ||
             $line =~/^Error executing/ ||
