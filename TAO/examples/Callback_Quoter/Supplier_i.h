@@ -23,7 +23,6 @@
 #include "orbsvcs/orbsvcs/CosNamingC.h"
 #include "ace/Reactor.h"
 #include "ace/Read_Buffer.h"
-#include "ace/OS.h"
 #include "NotifierC.h"
 #include "Supplier_Timer_Handler.h"
 
@@ -38,8 +37,8 @@ class Supplier
   //     Market feed  daemon implementation.
   //
   // = DESCRIPTION
-  //    This class feeds stock information to the Callback Quoter 
-  //    notifier. 
+  //    This class feeds stock information to the Callback Quoter
+  //    notifier.
 public:
   // = Initialization and termination methods.
   Supplier (void);
@@ -75,7 +74,7 @@ private:
   int via_naming_service(void);
   // This method initialises the naming service and registers the
   // object with the POA.
-  
+
    ACE_Reactor *reactor_used (void) const;
   // returns the TAO instance of the singleton Reactor.
 
@@ -90,7 +89,7 @@ private:
 
   char *ior_;
   // IOR of the obj ref of the Notifier.
-  
+
   TAO_Naming_Client naming_services_client_;
   // An instance of the name client used for resolving the factory
   // objects.
@@ -98,7 +97,7 @@ private:
   int use_naming_service_;
   // This variable denotes whether the naming service
   // is used or not.
-  
+
   Notifier_var notifier_;
   // Notifier object reference.
 
@@ -107,7 +106,7 @@ private:
 
   int loop_count_;
   // Iteration count.
-  
+
   long  period_value_;
   // Time period between two succesive market feeds to the Notifier.
 };
