@@ -958,7 +958,7 @@ CORBA_ORB::resolve_initial_references (const CORBA::String name,
 
 // Unimplemented at this time.
 CORBA_ORB_ObjectIdList_ptr
-CORBA_ORB::list_initial_services (void)
+CORBA_ORB::list_initial_services (CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
                                          CORBA::COMPLETED_NO),
