@@ -863,7 +863,7 @@ public:
 
 class TAO_Export NameValuePairSeq : public 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) \
-       || !defined (TAO_LACKS_TEMPLATE_SPECIALIZATION)
+       || !defined (ACE_HAS_TEMPLATE_SPECIALIZATION)
   _TAO_Unbounded_Sequence_NameValuePairSeq
 #else /* AHETI */
   TAO_Unbounded_Sequence<NameValuePair>
@@ -1413,7 +1413,7 @@ public:
 
 class TAO_Export AnySeq : public 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) \
-       || !defined (TAO_LACKS_TEMPLATE_SPECIALIZATION)
+       || !defined (ACE_HAS_TEMPLATE_SPECIALIZATION)
   _TAO_Unbounded_Sequence_AnySeq
 #else /* AHETI */
   TAO_Unbounded_Sequence<CORBA::Any>
