@@ -95,11 +95,8 @@ Cubit_Server::init (int argc,char **argv,CORBA::Environment& env)
 int
 Cubit_Server::init_naming_service (CORBA::Environment& env)
 {
-  this->my_name_server_.init (this->orb_,this->my_poa_);
-  //      this->naming_context_ =
-  //	this->my_name_server_->GetNamingContext ()._this (env);
-  //      TAO_CHECK_ENV_RETURN (env,-1);
-
+  this->my_name_server_.init (this->orb_, 
+                              this->my_poa_);
   factory = this->factory_impl_._this (env);
   TAO_CHECK_ENV_RETURN (env,-1);
 
@@ -109,9 +106,6 @@ Cubit_Server::init_naming_service (CORBA::Environment& env)
   this->cubit_context_ =
     this->my_name_server_->bind_new_context (cubit_context_name,
                                              env);
-    //	this->naming_context_->bind_new_context
-    //(cubit_context_name,
-    //					  env);
   TAO_CHECK_ENV_RETURN (env,-1);
 
   //Register the cubit_factory name with the IDL_Cubit Naming
