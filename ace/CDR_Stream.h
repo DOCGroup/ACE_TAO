@@ -104,17 +104,17 @@ public:
   static void swap_8 (const char *orig, char *target);
   static void swap_16 (const char *orig, char *target);
   static void swap_2_array (const char *orig,
-			    char *target,
-			    size_t length);
+                            char *target,
+                            size_t length);
   static void swap_4_array (const char *orig,
-			    char *target,
-			    size_t length);
+                            char *target,
+                            size_t length);
   static void swap_8_array (const char *orig,
-			    char *target,
-			    size_t length);
+                            char *target,
+                            size_t length);
   static void swap_16_array (const char *orig,
-			     char *target,
-			     size_t length);
+                             char *target,
+                             size_t length);
   // Do byte swapping for each basic IDL type size.  There exist only
   // routines to put byte, halfword (2 bytes), word (4 bytes),
   // doubleword (8 bytes) and quadword (16 byte); because those are
@@ -255,6 +255,8 @@ public:
   #  endif /* ACE_SIZEOF_LONG_DOUBLE != 16 */
 
 };
+
+class ACE_InputCDR;
 
 class ACE_Export ACE_OutputCDR
 {
