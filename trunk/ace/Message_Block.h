@@ -235,7 +235,8 @@ public:
   int copy (const char *buf, size_t n);
   // Copies <n> bytes from <buf> into the Message_Block starting at
   // the wr_ptr() offset.  Return 0 if succeeds and -1 if the size of
-  // the message is too small...
+  // the message is too small, i.e., for this to work correct, <end>
+  // must be >= <wr_ptr>.
 
   int copy (const char *buf);
   // Copies <buf> into the Message_Block starting at the wr_ptr()
