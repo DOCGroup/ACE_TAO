@@ -14,6 +14,10 @@
 #	include	<unistd.h>
 #	include	<sys/time.h>
 
+#elif defined (VXWORKS)
+#	include	<unistd.h>
+#	include	<time.h>
+
 #else	// windows
 
 #endif	// unix
@@ -49,14 +53,24 @@ main (int    argc, char   *argv[])
     CORBA_ORB_ptr	orb_ptr;
     CORBA_Environment	env;
     CORBA_Object_ptr	objref = CORBA_Object::_nil();
-    unsigned		loop_count = 1;
+    unsigned		loop_count = 50;
     int			exit_later = 0;
 
-    orb_ptr = CORBA_ORB_init (argc, argv, "internet", env);
-    if (env.exception () != 0) {
-	print_exception (env.exception (), "ORB initialisation");
-	return 1;
-    }
+#if defined (VXWORKS)
+
+    loop_count = 50;
+    int dummy = 1;
+    orb_ptr = CORBA_ORB_init (dummy, (char **)0, "internet", env);
+
+    //
+    // Parse command line and verify parameters.
+    //
+
+    hostAdd( "mv2604d", "130.38.183.132" ); 
+
+    objref = orb_ptr->string_to_object (
+		(CORBA_String)"iiop:1.0//mv2604d:1000/key0", env);
+#else
 
     //
     // Parse command line and verify parameters.
@@ -101,11 +115,19 @@ main (int    argc, char   *argv[])
 			    );
 	    return 1;
         }
-    
+
+    orb_ptr = CORBA_ORB_init (argc, argv, "internet", env);
+    if (env.exception () != 0) {
+       print_exception (env.exception (), "ORB initialisation");
+       return 1;
+    }
+
+#endif
+
     if (CORBA_is_nil (objref) == CORBA_B_TRUE) {
-	ACE_OS::fprintf (stderr, "%s:  must identify non-null target objref\n",
-			 argv [0]);
-	return 1;
+       ACE_OS::fprintf (stderr, "%s:  must identify non-null target objref\n",
+          argv [0]);
+       return 1;
     }
 
     //
@@ -117,13 +139,13 @@ main (int    argc, char   *argv[])
 
     type_ok = objref->_is_a (Cubit__id, env);
     if (env.exception () != 0) {
-	print_exception (env.exception (), "check type of target");
-	return -1;
+       print_exception (env.exception (), "check type of target");
+       return -1;
     } else if (type_ok != CORBA_B_TRUE) {
-	ACE_OS::fprintf (stderr, "%s:  target objref is of wrong type\n",
-		argv [0]);
-	ACE_OS::printf ("type_ok = %d\n", type_ok);
-	return 1;
+       ACE_OS::fprintf (stderr, "%s:  target objref is of wrong type\n",
+          argv [0]);
+       ACE_OS::printf ("type_ok = %d\n", type_ok);
+       return 1;
     }
 
     //
@@ -150,20 +172,20 @@ main (int    argc, char   *argv[])
 	//
 	CORBA_Octet	arg_octet, ret_octet;
 
-	call_count++;
-	ret_octet = Cubit_cube_octet (objref, arg_octet = func (i), env);
-	if (env.exception () != 0) {
-	    print_exception (env.exception (), "from cube_octet");
-	    error_count++;
-	} else {
-	    dmsg2 ("cube octet:  %d --> %d\n", arg_octet, ret_octet);
-	    arg_octet = arg_octet * arg_octet * arg_octet;
-	    if (arg_octet != ret_octet) {
-		ACE_OS::printf ("** cube_octet(%d) ERROR (--> %d)\n",
-			(CORBA_Octet) func (i), ret_octet);
-		error_count++;
-	    }
-	}
+   call_count++;
+   ret_octet = Cubit_cube_octet (objref, arg_octet = func (i), env);
+   if (env.exception () != 0) {
+      print_exception (env.exception (), "from cube_octet");
+      error_count++;
+   } else {
+      dmsg2 ("cube octet:  %d --> %d\n", arg_octet, ret_octet);
+      arg_octet = arg_octet * arg_octet * arg_octet;
+      if (arg_octet != ret_octet) {
+         ACE_OS::printf ("** cube_octet(%d) ERROR (--> %d)\n",
+            (CORBA_Octet) func (i), ret_octet);
+         error_count++;
+      }
+   }
 
 	//
 	// Cube a short.
@@ -172,18 +194,18 @@ main (int    argc, char   *argv[])
 
 	call_count++;
 	ret_short = Cubit_cube_short (objref, arg_short = func (i), env);
-	if (env.exception () != 0) {
-	    print_exception (env.exception (), "from cube_short");
-	    error_count++;
-	} else {
-	    dmsg2 ("cube short:  %d --> %d\n", arg_short, ret_short);
-	    arg_short = arg_short * arg_short * arg_short;
-	    if (arg_short != ret_short) {
-		ACE_OS::printf ("** cube_short(%d) ERROR (--> %d)\n",
-				(CORBA_Short) func (i), ret_short);
-		error_count++;
-	    }
-	}
+   if (env.exception () != 0) {
+      print_exception (env.exception (), "from cube_short");
+      error_count++;
+   } else {
+      dmsg2 ("cube short:  %d --> %d\n", arg_short, ret_short);
+      arg_short = arg_short * arg_short * arg_short;
+      if (arg_short != ret_short) {
+         ACE_OS::printf ("** cube_short(%d) ERROR (--> %d)\n",
+            (CORBA_Short) func (i), ret_short);
+         error_count++;
+      }
+   }
 
 	//
 	// Cube a long.
@@ -192,18 +214,18 @@ main (int    argc, char   *argv[])
 
 	call_count++;
 	ret_long = Cubit_cube_long (objref, arg_long = func (i), env);
-	if (env.exception () != 0) {
-	    print_exception (env.exception (), "from cube_long");
-	    error_count++;
-	} else {
-	    dmsg2 ("cube long:  %d --> %d\n", arg_long, ret_long);
-	    arg_long = arg_long * arg_long * arg_long;
-	    if (arg_long != ret_long) {
-		ACE_OS::printf ("** cube_long(%ld) ERROR (--> %ld)\n",
-			(CORBA_Long) func (i), ret_long);
-		error_count++;
-	    }
-	}
+   if (env.exception () != 0) {
+      print_exception (env.exception (), "from cube_long");
+      error_count++;
+   } else {
+      dmsg2 ("cube long:  %d --> %d\n", arg_long, ret_long);
+      arg_long = arg_long * arg_long * arg_long;
+      if (arg_long != ret_long) {
+         ACE_OS::printf ("** cube_long(%ld) ERROR (--> %ld)\n",
+            (CORBA_Long) func (i), ret_long);
+         error_count++;
+      }
+   }
 
 	//
 	// Cube a "struct" ...
@@ -217,26 +239,26 @@ main (int    argc, char   *argv[])
 	arg_struct.o = func (i);
 
 	ret_struct = Cubit_cube_struct (objref, arg_struct, env);
-	if (env.exception () != 0) {
-	    print_exception (env.exception (), "from cube_struct");
-	    error_count++;
-	} else {
-	    dmsg ("cube struct ...");
-	    arg_struct.l = arg_struct.l * arg_struct.l * arg_struct.l;
-	    arg_struct.s = arg_struct.s * arg_struct.s * arg_struct.s;
-	    arg_struct.o = arg_struct.o * arg_struct.o * arg_struct.o;
-
-	    if (arg_struct.l != ret_struct->l
-		    || arg_struct.s != ret_struct->s
-		    || arg_struct.o != ret_struct->o) {
-		ACE_OS::printf ("** cube_struct ERROR\n");
-		error_count++;
-	    }
-	    delete ret_struct;
-	}
-
+   if (env.exception () != 0) {
+      print_exception (env.exception (), "from cube_struct");
+      error_count++;
+   } else {
+      dmsg ("cube struct ...");
+      arg_struct.l = arg_struct.l * arg_struct.l * arg_struct.l;
+      arg_struct.s = arg_struct.s * arg_struct.s * arg_struct.s;
+      arg_struct.o = arg_struct.o * arg_struct.o * arg_struct.o;
+      
+      if (arg_struct.l != ret_struct->l
+         || arg_struct.s != ret_struct->s
+         || arg_struct.o != ret_struct->o) {
+         ACE_OS::printf ("** cube_struct ERROR\n");
+         error_count++;
+      }
+      delete ret_struct;
+   }
+   
     }
-
+    
     after = ACE_OS::gettimeofday();
 
     if (call_count > 0) 
