@@ -177,7 +177,7 @@ if ($^O eq "MSWin32") {
       'TAO/tests/ORB_init , run_test.pl',
       'TAO/tests/DSI_Gateway , run_test.pl',
       'TAO/tests/DynAny_Test , run_test.pl',
-      'TAO/tests/Connection_Purging , run_test.pl',
+# NOT ST 'TAO/tests/Connection_Purging , run_test.pl',
       'TAO/examples/Buffered_Oneways , run_test.pl',
 # REQUIRES AMI 'TAO/examples/Buffered_AMI , run_test.pl',
       'TAO/examples/POA/Adapter_Activator , run_test.pl',
