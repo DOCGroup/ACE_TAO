@@ -247,13 +247,13 @@ Event_List_Link_factory::create_for_unmarshal ()
 
 // Event_List implementation  ===================================
 
-Event_List_impl::Event_List_impl ()
+Event_List_impl::Event_List_impl (void)
 {
   this->first_link (0);
-  last_link_cache_ = 0;
+  this->last_link_cache_ = 0;
 }
 
-Event_List_impl::~Event_List_impl ()
+Event_List_impl::~Event_List_impl (void)
 {
   // Destructor does nothing explicit, because the _var types do care.
 }
@@ -265,8 +265,10 @@ Event_List_impl::store_event (Event* e ACE_ENV_ARG_DECL_NOT_USED)
   // guard against the access to the list from another thread.
   // But this is omitted in this example.
 
-  Event_List_Link_var new_link (ACE_static_cast(Event_List_Link*,
-                                                new Event_List_Link_impl (e)));
+  Event_List_Link_impl *new_link_impl = 0;
+  ACE_NEW (new_link_impl,
+           Event_List_Link_impl (e));
+  Event_List_Link_var new_link = new_link_impl;
 
    // We need a new link to store the reference to the event e.
    // But if we'd had assigned the newly created instance directly through
@@ -275,36 +277,36 @@ Event_List_impl::store_event (Event* e ACE_ENV_ARG_DECL_NOT_USED)
    // increased, but the modifier does.
 
 
-  if (last_link_cache_ == 0)
+  if (this->last_link_cache_ == 0)
     {
       // Search the end.
       for (Event_List_Link *i = this->first_link ();
            i != 0;
            i = i->get_next_link ())
         {
-          last_link_cache_ = i;
+          this->last_link_cache_ = i;
         }
     }
 
 
   // If still null then the list is empty.
-  if (last_link_cache_ == 0)
+  if (this->last_link_cache_ == 0)
     {
       this->first_link (new_link);
     }
   else
     {
-      last_link_cache_->attach_next_link (new_link);
-      last_link_cache_ = new_link;
+      this->last_link_cache_->attach_next_link (new_link);
+      this->last_link_cache_ = new_link.in ();
     }
 }
 
-Event_List_factory::~Event_List_factory ()
+Event_List_factory::~Event_List_factory (void)
 {
 }
 
 TAO_OBV_CREATE_RETURN_TYPE (Event_List)
-Event_List_factory::create_for_unmarshal ()
+Event_List_factory::create_for_unmarshal (void)
 {
   return new Event_List_impl;
 }
@@ -315,12 +317,12 @@ Event_List_Iterator::Event_List_Iterator (Event_List *list)
   this->init (list);
 }
 
-Event_List_Iterator::Event_List_Iterator ()
+Event_List_Iterator::Event_List_Iterator (void)
 {
   // current_ is a _var and set itself to null.
 }
 
-Event_List_Iterator::~Event_List_Iterator ()
+Event_List_Iterator::~Event_List_Iterator (void)
 {
   // nothing
 }
