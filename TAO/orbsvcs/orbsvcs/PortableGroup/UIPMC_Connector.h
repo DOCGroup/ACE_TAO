@@ -63,7 +63,8 @@ protected:
   int set_validate_endpoint (TAO_Endpoint *endpoint);
 
   int make_connection (TAO_GIOP_Invocation *,
-                       TAO_Transport_Descriptor_Interface *);
+                       TAO_Transport_Descriptor_Interface *,
+                       ACE_Time_Value *timeout);
 
   virtual TAO_Profile * make_profile (ACE_ENV_SINGLE_ARG_DECL);
 

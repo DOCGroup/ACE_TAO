@@ -1,3 +1,16 @@
+Thu Oct 31 15:42:04 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Connector.cpp:
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Connector.h:
+	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.h: Replicated the
+	  changes from "Thu Oct 31 14:48:39 2002  Balachandran Natarajan
+	  <bala@isis-server.isis.vanderbilt.edu>" for the remaining
+	  protocols.
+
+
 Thu Oct 31 15:40:31 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp (handle_timeout): Fixed
@@ -29,7 +42,7 @@ Thu Oct 31 14:48:39 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 	* tao/Transport_Connector.h: Added another connect () method with
 	  a timeout value. Made the connect () methods non-pure-virtual,
 	  such that we could share some code and maintain backward
-	  comaptibility. Further, the pure-virtual method make_connection
+	  compatibility. Further, the pure-virtual method make_connection
 	  () passes a timeout value. This shouldnt break backward
 	  compatibility either.
 	
