@@ -1,3 +1,7 @@
+Mon Jan 26 14:31:46 1998  Sumedh Mungee  <sumedh@cs.wustl.edu>
+
+	* FindPOA.cpp: Added $Id$
+
 Mon Jan 26 00:57:56 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tao/connect.cpp (open): Conditionally compile the code for
