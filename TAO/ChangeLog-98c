@@ -1,3 +1,13 @@
+Fri Apr 10 04:38:36 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_typedef.cpp: The changes made by me in the
+	log entry mentioned just below had some flaws. I had sort of
+	blidly applied it to a case in the "visit_typedef" node of the
+	be_visitor_typedef_ci class. I was resetting the alias context
+	before the code generation action was taken as aooposed to doing
+	it after the action was taken. Thanks to Seth Widoff for sending
+	the bug report.
+
 Thu Apr  9 21:57:52 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tao/POAS.cpp: Fixed up the POA to use the new
@@ -59,7 +69,7 @@ Thu Apr  9 19:25:44 1998  Michael Kircher <mk1@cs.wustl.edu>
 		  Had to conform to the new RtecScheduler.set ( ..) method,
 		  some parameters were added.
 
-        * docs/releasenotes/index.html: Enhanced description of the DOVE 
+        * docs/releasenotes/index.html: Enhanced description of the DOVE
 
 Thu Apr  9 10:07:34 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
