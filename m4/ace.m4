@@ -487,7 +487,7 @@ dnl line, then "no_x" is set to "yes."
  ACE_WITH_RMCAST
  ACE_WITH_QOS
  ACE_WITH_SSL
- ACE_WITH_USES_WCHAR
+ ACE_WITH_ACEXML
 
  AC_ARG_WITH([tao],
   AS_HELP_STRING(--with-tao,build TAO (the ACE ORB) [[[yes]]]),
@@ -830,27 +830,25 @@ dnl    fi
    ace_user_enable_stdcpplib=yes
   ])
 
-])
-
-AC_DEFUN([ACE_WITH_USES_WCHAR],
-[AC_ARG_ENABLE([uses-wchar],
-             AS_HELP_STRING([--enable-uses-wchar],
+ AC_ARG_ENABLE([uses-wchar],
+               AS_HELP_STRING([--enable-uses-wchar],
                             [enable use of wide characters [[no]]]),
-             [case "${withval}" in
-               yes) 
-                AC_DEFINE([ACE_USES_WCHAR])
-                ace_user_enable_wide_char=yes
-                ;;
-               no)
-                ace_user_enable_wide_char=no
-                ;;
-               *)
-                AC_MSG_ERROR(bad value ${enableval} for --enable-uses-wchar)
-                ;;
-              esac])
-AC_CACHE_CHECK([whether to use wide characters internally],
-               [ace_user_enable_wide_char], [ace_user_enable_wide_char=no])
-AM_CONDITIONAL([BUILD_USES_WCHAR], [test X$ace_user_enable_wide_char = Xyes])
+               [case "${withval}" in
+                 yes) 
+                  AC_DEFINE([ACE_USES_WCHAR])
+                  ace_user_enable_wide_char=yes
+                  ;;
+                 no)
+                  ace_user_enable_wide_char=no
+                  ;;
+                 *)
+                  AC_MSG_ERROR([bad value ${enableval} for --enable-uses-wchar])
+                  ;;
+                esac])
+ AC_CACHE_CHECK([whether to use wide characters internally],
+                [ace_user_enable_wide_char], [ace_user_enable_wide_char=no])
+ AM_CONDITIONAL([BUILD_USES_WCHAR], [test X$ace_user_enable_wide_char = Xyes])
+
 ])
 
 AC_DEFUN([ACE_WITH_RMCAST],
