@@ -20,6 +20,7 @@
 
 #include "tao/Typecode.h"
 #include "tao/CORBA_String.h"
+#include "tao/SystemException.h"
 
 #include "orbsvcs/Trader/trading_export.h"
 
