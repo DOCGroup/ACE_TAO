@@ -106,7 +106,8 @@ public:
   // Create an <ACE_Message_Block> that owns the <ACE_Data_Block> *.
 
   ACE_Message_Block (const char *data,
-                     size_t size = 0);
+                     size_t size = 0,
+                     u_long priority = 0);
   // Create a Message Block that assumes ownership of <data> without
   // copying it (i.e., we don't delete it since we don't malloc it!).
   // Note that the <size> of the <Message_Block> will be <size>, but
@@ -559,20 +560,19 @@ private:
   ACE_Data_Block (const ACE_Data_Block &);
 };
 
-
 class ACE_Export ACE_Dynamic_Message_Strategy
 {
   // = TITLE
-  //     An abstract base class which provides dynamic priority evaluation
-  //     methods for use by the ACE_Dynamic_Message_Queue class
-  //     or any other class which needs to manage the priorities
-  //     of a collection of ACE_Message_Blocks dynamically
+  //     An abstract base class which provides dynamic priority
+  //     evaluation methods for use by the <ACE_Dynamic_Message_Queue>
+  //     class or any other class which needs to manage the priorities
+  //     of a collection of <ACE_Message_Block>s dynamically.
   //
   // = DESCRIPTION
-  //     Methods for deadline and laxity based priority evaluation
-  //     are provided.  These methods assume a specific partitioning
-  //     of the message priority number into a higher order dynamic
-  //     bit field and a lower order static priority bit field.  The
+  //     Methods for deadline and laxity based priority evaluation are
+  //     provided.  These methods assume a specific partitioning of
+  //     the message priority number into a higher order dynamic bit
+  //     field and a lower order static priority bit field.  The
   //     default partitioning assumes an unsigned dynamic message
   //     priority field of 22 bits and an unsigned static message
   //     priority field of 10 bits.  This corresponds to the initial
@@ -581,6 +581,11 @@ class ACE_Export ACE_Dynamic_Message_Strategy
   //     class memebers before using the static member functions.
 public:
 
+  // = Message priority status
+
+  // Values are defined as bit flags so that status combinations may
+  // be specified easily.
+
   enum Priority_Status
   {
     PENDING     = 0x01, // message can still make its deadline
@@ -588,8 +593,6 @@ public:
     BEYOND_LATE = 0x04, // message is so late its priority is undefined
     ANY_STATUS  = 0x07  // mask to match any priority status
   };
-  // message priority status: values are defined as bit flags
-  // so that status combinations may be specified easily.
 
   ACE_Dynamic_Message_Strategy (u_long static_bit_field_mask,
                                 u_long static_bit_field_shift,
@@ -602,104 +605,109 @@ public:
 
   Priority_Status priority_status (ACE_Message_Block & mb,
                                    const ACE_Time_Value & tv);
-  // updates the message's priority and returns its priority status
+  // Updates the message's priority and returns its priority status.
 
   u_long static_bit_field_mask (void);
-  // get static bit field mask
+  // Get static bit field mask.
 
   void static_bit_field_mask (u_long);
-  // set static bit field mask
+  // Set static bit field mask.
 
   u_long static_bit_field_shift (void);
-  // get left shift value to make room for static bit field
+  // Get left shift value to make room for static bit field.
 
   void static_bit_field_shift (u_long);
-  // set left shift value to make room for static bit field
+  // Set left shift value to make room for static bit field.
 
   u_long dynamic_priority_max (void);
-  // get maximum supported priority value
+  // Get maximum supported priority value.
 
   void dynamic_priority_max (u_long);
-  // set maximum supported priority value
+  // Set maximum supported priority value.
 
   u_long dynamic_priority_offset (void);
-  // get offset to boundary between signed range and unsigned range
+  // Get offset to boundary between signed range and unsigned range.
 
   void dynamic_priority_offset (u_long);
-  // set offset to boundary between signed range and unsigned range
+  // Set offset to boundary between signed range and unsigned range.
 
   virtual void dump (void) const;
   // Dump the state of the strategy.
 
 protected:
-
   virtual void convert_priority (ACE_Time_Value & priority,
                                  const ACE_Message_Block & mb) = 0;
-  // hook method for dynamic priority conversion
+  // Hook method for dynamic priority conversion.
 
   u_long static_bit_field_mask_;
-  // this is a bit mask with all ones in the static bit field
+  // This is a bit mask with all ones in the static bit field.
 
   u_long static_bit_field_shift_;
-  // this is a left shift value to make room for static bit
-  // field: this value should be the logarithm base 2 of
-  // (static_bit_field_mask_ + 1)
+  // This is a left shift value to make room for static bit field:
+  // this value should be the logarithm base 2 of
+  // (static_bit_field_mask_ + 1).
 
   u_long dynamic_priority_max_;
-  // maximum supported priority value
+  // Maximum supported priority value.
 
   u_long dynamic_priority_offset_;
-  // offset to boundary between signed range and unsigned range
+  // Offset to boundary between signed range and unsigned range.
 
   ACE_Time_Value max_late_;
-  // maximum late time value that can be represented
+  // Maximum late time value that can be represented.
 
   ACE_Time_Value min_pending_;
-  // minimum pending time value that can be represented
+  // Minimum pending time value that can be represented.
 
   ACE_Time_Value pending_shift_;
-  // time value by which to shift pending priority
+  // Time value by which to shift pending priority.
 };
 
 class ACE_Export ACE_Deadline_Message_Strategy : public ACE_Dynamic_Message_Strategy
 {
+  // = TITLE
+  //   @@ Please fill in here.
+  //
+  // = DESCRIPTION
+  //   @@ Please fill in here.
 public:
-
   ACE_Deadline_Message_Strategy (u_long static_bit_field_mask = 0x3FFUL,       // 2^(10) - 1
                                  u_long static_bit_field_shift = 10,           // 10 low order bits
                                  u_long dynamic_priority_max = 0x3FFFFFUL,     // 2^(22)-1
                                  u_long dynamic_priority_offset = 0x200000UL); // 2^(22-1)
-  // ctor, with all arguments defaulted
+  // Ctor, with all arguments defaulted.
 
-  virtual ~ACE_Deadline_Message_Strategy ();
-  // virtual dtor
+  virtual ~ACE_Deadline_Message_Strategy (void);
+  // Virtual dtor.
 
   virtual void convert_priority (ACE_Time_Value & priority,
                                  const ACE_Message_Block & mb);
-  // dynamic priority conversion function based on time to deadline
+  // Dynamic priority conversion function based on time to deadline.
 
   virtual void dump (void) const;
   // Dump the state of the strategy.
 };
 
-
 class ACE_Export ACE_Laxity_Message_Strategy : public ACE_Dynamic_Message_Strategy
 {
+  // = TITLE
+  //   @@ Please fill in here.
+  //
+  // = DESCRIPTION
+  //   @@ Please fill in here.
 public:
-
   ACE_Laxity_Message_Strategy (u_long static_bit_field_mask = 0x3FFUL,       // 2^(10) - 1
                                u_long static_bit_field_shift = 10,           // 10 low order bits
                                u_long dynamic_priority_max = 0x3FFFFFUL,     // 2^(22)-1
                                u_long dynamic_priority_offset = 0x200000UL); // 2^(22-1)
-  // ctor, with all arguments defaulted
+  // Ctor, with all arguments defaulted.
 
-  virtual ~ACE_Laxity_Message_Strategy ();
-  // virtual dtor
-
+  virtual ~ACE_Laxity_Message_Strategy (void);
+  // virtual dtor.
 
   virtual void convert_priority (ACE_Time_Value & priority,
                                  const ACE_Message_Block & mb);
-  // dynamic priority conversion function based on laxity
+  // Dynamic priority conversion function based on laxity.
 
   virtual void dump (void) const;
   // Dump the state of the strategy.
@@ -710,5 +718,4 @@ public:
 #endif /* __ACE_INLINE__ */
 
 #include "ace/Message_Block_T.h"
-
 #endif /* ACE_MESSAGE_BLOCK_H */
