@@ -88,6 +88,10 @@ LINK32=link.exe
 # PROP Default_Filter "cpp"
 # Begin Source File
 
+SOURCE=.\IR_Helper.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\server.cpp
 # End Source File
 # Begin Source File
@@ -100,7 +104,31 @@ SOURCE=.\Server_i.cpp
 # PROP Default_Filter "h"
 # Begin Source File
 
+SOURCE=.\IR_Helper.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Server_i.h
+# End Source File
+# End Group
+# Begin Group "Generated Files"
+
+# PROP Default_Filter "cpp"
+# Begin Source File
+
+SOURCE=..\ImplRepo_Service\ImplRepoC.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\ImplRepo_Service\ImplRepoS.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\ImplRepo_Service\PingC.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\ImplRepo_Service\PingS.cpp
 # End Source File
 # End Group
 # End Target
