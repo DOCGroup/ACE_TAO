@@ -1,3 +1,11 @@
+Sun Nov  9 13:36:07 1997  Nanbor Wang  <nw1@merengue.cs.wustl.edu>
+
+	* ace/config-win32-common.h (ACE_LACKS_RLIMIT): Added this flags
+	  so we don't need to treat ACE_WIN32 specially.
+
+	* ace/OS.i (getrlimit,setrlimit): Removed unnecessary conditional
+	  flag ACE_WIN32.
+
 Sun Nov 09 09:27:24 1997  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Thread_manager.cpp (wait): removed unused local,
