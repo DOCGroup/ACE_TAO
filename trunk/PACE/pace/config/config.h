@@ -77,6 +77,7 @@
    The following macros correspond to the following POSIX
    Unit of Functionality:
 
+   PACE_HAS_POSIX_SOCK_UOF     -> POSIX Socket UoF
    PACE_HAS_POSIX_SP_UOF       -> POSIX Single Process UoF
    PACE_HAS_POSIX_MP_UOF       -> POSIX Multiple Process UoF
    PACE_HAS_POSIX_SIG_UOF      -> POSIX Signals UoF
