@@ -7,16 +7,20 @@
 #define ACE_BUILD_DLL
 #include "ace/IOStream_T.h"
 
-///////////////////////////////////////////////////////////////////////////
-
+#if !defined (__ACE_INLINE__)
+#include "ace/IOStream_T.i"
+#endif /* !__ACE_INLINE__ */
 
 // We will be given a STREAM by the iostream object which creates us.
 // See the ACE_IOStream_T template for how that works.  Like other
 // streambuf objects, we can be input-only, output-only or both.
 
 template <class STREAM>
-ACE_Streambuf_T<STREAM>::ACE_Streambuf_T (STREAM *peer, u_int streambuf_size, int io_mode)
-  : ACE_Streambuf (streambuf_size, io_mode), peer_ (peer)
+ACE_Streambuf_T<STREAM>::ACE_Streambuf_T (STREAM *peer,
+					  u_int streambuf_size,
+					  int io_mode)
+  : ACE_Streambuf (streambuf_size, io_mode),
+    peer_ (peer)
 {
   // A streambuf allows for unbuffered IO where every character is
   // read as requested and written as provided.  To me, this seems
@@ -33,19 +37,15 @@ ACE_Streambuf_T<STREAM>::ACE_Streambuf_T (STREAM *peer, u_int streambuf_size, in
 #if !defined (ACE_LACKS_LINEBUFFERED_STREAMBUF)
   this->linebuffered (0);
 #endif /* ! ACE_LACKS_LINEBUFFERED_STREAMBUF */
-
 }
-
-
-///////////////////////////////////////////////////////////////////////////
-
 
 // The typical constructor.  This will initiailze your STREAM and then
 // setup the iostream baseclass to use a custom streambuf based on
 // STREAM.
 
 template <class STREAM>
-ACE_IOStream_T<STREAM>::ACE_IOStream_T (STREAM & stream, u_int streambuf_size)
+ACE_IOStream_T<STREAM>::ACE_IOStream_T (STREAM &stream,
+					u_int streambuf_size)
   : iostream (streambuf_ = new ACE_Streambuf_T<STREAM> ((STREAM *) this, streambuf_size)),
     STREAM (stream)
 {
@@ -78,11 +78,11 @@ ACE_IOStream_T<STREAM>::close (void)
 }
 
 template <class STREAM> ACE_IOStream_T<STREAM> &
-ACE_IOStream_T<STREAM>::operator>> (ACE_Time_Value *& tv)
+ACE_IOStream_T<STREAM>::operator>> (ACE_Time_Value *&tv)
 {
-	ACE_Time_Value * old_tv = this->streambuf_->recv_timeout (tv);
-	tv = old_tv;
-	return *this;
+  ACE_Time_Value *old_tv = this->streambuf_->recv_timeout (tv);
+  tv = old_tv;
+  return *this;
 }
 
 #if defined (ACE_HAS_STRING_CLASS)
@@ -92,84 +92,84 @@ ACE_IOStream_T<STREAM>::operator>> (ACE_Time_Value *& tv)
 // our own here, we may not get what we want.
 
 template <class STREAM> ACE_IOStream_T<STREAM> &
-ACE_IOStream_T<STREAM>::operator>> (ACE_IOStream_String & v)
+ACE_IOStream_T<STREAM>::operator>> (ACE_IOStream_String &v)
 {
   if (ipfx0 ())
-  {
-    char c;
-    iostream::operator>> (c);
+    {
+      char c;
+      iostream::operator>> (c);
 
-    for (v = c ; this->get (c) && !isspace (c) ; v += c)
-      continue;
-  }
+      for (v = c; this->get (c) && !isspace (c); v += c)
+	continue;
+    }
 
   isfx ();
 
   return *this;
 }
 
-
 template <class STREAM> ACE_IOStream_T<STREAM> &
-ACE_IOStream_T<STREAM>::operator<< (ACE_IOStream_String & v)
+ACE_IOStream_T<STREAM>::operator<< (ACE_IOStream_String &v)
 {
   if (opfx ())
     {
 #if defined (ACE_WIN32)
-      for (int i = 0 ; i < v.GetLength () ; ++i)
+      for (int i = 0; i < v.GetLength (); ++i)
 #else
-	for (u_int i = 0 ; i < (u_int) v.length () ; ++i)
-#endif
-	  this->put (v[i]);
+      for (u_int i = 0; i < (u_int) v.length (); ++i)
+#endif /* ACE_WIN32 */
+	this->put (v[i]);
     }
 
   osfx ();
 
   return *this;
 }
+// A more clever put operator for strings that knows how to deal with
+// quoted strings containing back-quoted quotes.
 
-
-//////////////////////////////////////////////////////////////////
-// A more clever put operator for strings that knows how to
-// deal with quoted strings containing back-quoted quotes.
-//
 template <class STREAM> STREAM &
-operator>> (STREAM & stream, QuotedString & str)
+operator>> (STREAM &stream,
+	    ACE_Quoted_String &str)
 {
-      char c;
+  char c;
 
-      if (! (stream >> c)) // eat space up to the first char
-	// stream.set (ios::eofbit|ios::failbit);
-	return stream;
+  if (!(stream >> c)) // eat space up to the first char
+    // stream.set (ios::eofbit|ios::failbit);
+    return stream;
 
-      str = "";	// Initialize the string
+  str = "";	// Initialize the string
 
-      // if we don't have a quote, append until we see space
-      if (c != '"')
-	for (str = c ; stream.get (c) && !isspace (c) ; str += c)
-	  continue;
-      else
-	for (; stream.get (c) && c != '"' ; str += c)
-	  if (c == '\\')
-	    {
-	      stream.get (c);
-	      if (c != '"')
-		str += '\\';
-	    }
+  // if we don't have a quote, append until we see space
+  if (c != '"')
+    for (str = c; stream.get (c) && !isspace (c); str += c)
+      continue;
+  else
+    for (; stream.get (c) && c != '"'; str += c)
+      if (c == '\\')
+	{
+	  stream.get (c);
+	  if (c != '"')
+	    str += '\\';
+	}
 	
   return stream;
 }
 
 template <class STREAM> STREAM &
-operator<< ( STREAM & stream, QuotedString & str)
+operator<< (STREAM &stream,
+	    ACE_Quoted_String &str)
 {
-	stream.put ('"');
-	for (u_int i = 0 ; i < str.length () ; ++i)
-	{
-		if (str[i] == '"')
-			stream.put ('\\');
-		stream.put (str[i]);
-	}
-	stream.put ('"');
+  stream.put ('"');
+
+  for (u_int i = 0; i < str.length (); ++i)
+    {
+      if (str[i] == '"')
+	stream.put ('\\');
+      stream.put (str[i]);
+    }
+
+  stream.put ('"');
 
   return stream;
 }

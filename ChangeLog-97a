@@ -1,3 +1,31 @@
+Sun Jun 22 09:58:36 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* Released version 4.2.9 for testing.
+
+	* ace/Log_Msg.cpp (open): Changed the use of ACE_LOG_MSG-> within
+ 	  the open() method to use this-> in order to avoid deadlocks.
+	  Thanks to Per Andersson for reporting this.
+
+	* ace/ACE.cpp: Changed the use of __SVR4 and __unix to sparc and
+ 	  unix to work better with various UNIX environments.  Thanks to
+ 	  Michael R. MacFaden <mrm@cisco.com> for these changes.
+
+	* ace/Handle_Set.cpp (count_bits): Added special code to handle
+ 	  the case where fdmask is typedef'd as a long rather than an int.
+  	  Thanks to Eric Newton <ecn@smart.net> and James Johnson for
+	  reporting this.
+
+	* ace/IOStream.h: Changed the name of QuotedString to
+ 	  ACE_Quoted_String to be consistent with the ACE naming scheme.
+  	  Thanks to James Johnson for suggesting this.
+
+	* ace/IOStream_T.i: Added this new file to split off the inlined
+ 	  code from the header file.
+
+	* ace/ACE.cpp (terminate_process): Remove the
+ 	  ACE_UNUSED_ARG(signum) from terminate_process().  Thanks to Wei
+ 	  Chiang for reporting this.
+
 Sun Jun 22 17:19:18 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* examples/Threads/process_manager.cpp (main): replaced call to
