@@ -7,6 +7,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 
 use lib "../../../../../../../bin";
 use PerlACE::Run_Test;
+use File::Copy;
 
 $experiment_timeout = 60;
 $startup_timeout = 60;
@@ -91,5 +92,25 @@ unlink $notify_ior;
 
 $Naming->Kill ();
 unlink $naming_ior;
+
+if ($#ARGV > -1)
+  {
+    $results_directory = $ARGV[0];
+    print STDERR "Saving results to $results_directory\n";
+
+    mkdir $results_directory, 0777;
+
+    @list=glob("*.dat");
+    for $file (@list)
+      {
+        copy ("$file", "$results_directory/$file");  
+      }
+
+    @list=glob("*.conf");
+    for $file (@list)
+      {
+        copy ("$file", "$results_directory/$file");  
+      }
+  }
 
 exit $status;
