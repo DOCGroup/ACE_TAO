@@ -164,12 +164,12 @@ main (int argc, char *argv [])
 
       CORBA::Object_var vRootPOABase =
         orb->resolve_initial_references ("RootPOA"
-                                         TAO_ENV_ARG_DECL);
+                                         TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (vRootPOABase.in ()
-                                      TAO_ENV_ARG_DECL);
+                                      TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (root_poa.in ()))
@@ -178,7 +178,7 @@ main (int argc, char *argv [])
                           1);
 
       PortableServer::POAManager_ptr pRootPOAManager =
-        root_poa->the_POAManager (TAO_ENV_SINGLE_ARG_DECL);
+        root_poa->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Instantiate the server
@@ -192,7 +192,7 @@ main (int argc, char *argv [])
       PortableServer::ServantBase_var owner_transfer(servant);
 
       Server_var server =
-        servant->_this (TAO_ENV_SINGLE_ARG_DECL);
+        servant->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Announce the server
