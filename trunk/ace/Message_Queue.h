@@ -181,18 +181,19 @@ public:
 protected:
   // = Routines that actually do the enqueueing and dequeueing.
   // These routines assume that locks are held by the corresponding
-  // public methods.
+  // public methods.  Since they are virtual, you can change the
+  // queueing mechanism by subclassing from <ACE_Message_Queue>.
 
-  int enqueue_i (ACE_Message_Block *new_item);
+  virtual int enqueue_i (ACE_Message_Block *new_item);
   // Enqueue an <ACE_Message_Block *> in accordance with its priority.
 
-  int enqueue_tail_i (ACE_Message_Block *new_item);
+  virtual int enqueue_tail_i (ACE_Message_Block *new_item);
   // Enqueue an <ACE_Message_Block *> at the end of the queue.
 
-  int enqueue_head_i (ACE_Message_Block *new_item);
+  virtual int enqueue_head_i (ACE_Message_Block *new_item);
   // Enqueue an <ACE_Message_Block *> at the head of the queue.
 
-  int dequeue_head_i (ACE_Message_Block *&first_item);
+  virtual int dequeue_head_i (ACE_Message_Block *&first_item);
   // Dequeue and return the <ACE_Message_Block *> at the head of the
   // queue.
 
