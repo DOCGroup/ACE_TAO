@@ -10,7 +10,7 @@ require ACEutils;
 use Cwd;
 
 $cwd = getcwd();
-$client_conf="$cwd$DIR_SEPARATOR" . "muxed.conf";
+$client_conf="$DIR_SEPARATOR" . "muxed.conf";
 $client_process="simple_client";
 $debug_level='5';
 $threads='2';
@@ -27,8 +27,8 @@ foreach $i (@ARGV) {
   }
 }
 
-$iorfile = "$cwd$DIR_SEPARATOR" . "server.ior";
-$SV = Process::Create ($EXEPREFIX."server$EXE_EXT ",
+$iorfile = "server.ior";
+$SV = Process::Create ($EXEPREFIX."server$EXE_EXT",
 			  " -ORBdebuglevel $debug_level"
 			  . "-d -o $iorfile");
 
@@ -38,7 +38,7 @@ if (ACE::waitforfile_timed ($iorfile, 5) == -1) {
   exit 1;
 }
 
-$CL = Process::Create ($EXEPREFIX."$client_process$EXE_EXT ",
+$CL = Process::Create ($EXEPREFIX."$client_process$EXE_EXT",
 			  " -ORBsvcconf $client_conf "
 			  . "-ORBdebuglevel $debug_level"
 			  . " -k file://$iorfile "

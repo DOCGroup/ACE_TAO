@@ -11,16 +11,15 @@
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
-#include "tao/MessagingS.h"
-#include "tao/POA_CORBA.h"
-#include "tao/Operation_Table.h"
-#include "tao/Server_Request.h"
-#include "tao/Stub.h"
-#include "tao/ORB_Core.h"
-#include "tao/Object_Adapter.h"
+#include "MessagingS.h"
+#include "Operation_Table.h"
+#include "Server_Request.h"
+#include "Stub.h"
+#include "ORB_Core.h"
+#include "Object_Adapter.h"
 
 #if !defined (__ACE_INLINE__)
-#include "tao/MessagingS.i"
+#include "MessagingS.i"
 #endif /* !defined INLINE */
 
 ACE_RCSID(tao, MessagingS, "$Id$")
@@ -34,9 +33,9 @@ private:
 public:
  const TAO_operation_db_entry * lookup (const char *str, unsigned int len);
 };
-/* starting time is 14:51:17 */
+/* starting time is 12:21:06 */
 /* C++ code produced by gperf version 2.8 (ACE version) */
-/* Command-line: /export/kelvar/coryan/head/ACE_wrappers/build/Linux/bin/gperf -m -M -J -c -C -D -E -T -f 0 -F 0 -a -o -t -p -K opname_ -L C++ -Z TAO_Messaging_ReplyHandler_Perfect_Hash_OpTable -N lookup  */
+/* Command-line: gperf -m -M -J -c -C -D -E -T -f 0 -F 0 -a -o -t -p -K opname_ -L C++ -Z TAO_Messaging_ReplyHandler_Perfect_Hash_OpTable -N lookup  */
 unsigned int
 TAO_Messaging_ReplyHandler_Perfect_Hash_OpTable::hash (const char *str, unsigned int len)
 {
@@ -124,7 +123,7 @@ TAO_Messaging_ReplyHandler_Perfect_Hash_OpTable::lookup (const char *str, unsign
     }
   return 0;
 }
-/* ending time is 14:51:17 */
+/* ending time is 12:21:06 */
 static TAO_Messaging_ReplyHandler_Perfect_Hash_OpTable tao_Messaging_ReplyHandler_optable;
 
 Messaging::ReplyHandler_ptr _TAO_collocation_POA_Messaging_ReplyHandler_Stub_Factory (

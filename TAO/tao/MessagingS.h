@@ -7,17 +7,20 @@
 // Information about TAO is available at:
 //                 http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#ifndef _TAO_IDL_TMP_MESSAGINGS_H_
-#define _TAO_IDL_TMP_MESSAGINGS_H_
+#ifndef _TAO_IDL_ORIG_MESSAGINGS_H_
+#define _TAO_IDL_ORIG_MESSAGINGS_H_
+
 #include "ace/pre.h"
 
-#include "tao/orbconf.h"
+#include "orbconf.h"
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
-#include "tao/TimeBaseS.h"
-#include "tao/POA_CORBA.h"
-#include "tao/MessagingC.h"
+#include "TimeBaseS.h"
+#include "MessagingC.h"
+#include "POAC.h"
+#include "Servant_Base.h"
+
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

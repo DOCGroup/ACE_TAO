@@ -94,6 +94,7 @@
 #include "tao/BoundsC.h"
 #include "tao/TAOC.h"
 #include "tao/MessagingC.h"
+#include "tao/MessagingS.h"
 
 #if !defined (ACE_NESTED_CLASS)
 #if defined (ACE_WIN32)

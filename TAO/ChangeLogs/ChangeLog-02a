@@ -1,37 +1,59 @@
+Sun Apr 30 17:45:29 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Messaging.pidl:
+        * tao/MessagingC.h:
+        * tao/MessagingC.i:
+        * tao/MessagingC.cpp:
+        * tao/MessagingS.h:
+        * tao/MessagingS.i:
+        * tao/MessagingS.cpp:
+        * tao/MessagingS_T.h:
+        * tao/MessagingS_T.i:
+        * tao/MessagingS_T.cpp:
+          Regenerate the code with support for valuetypes.  It compiles
+          with AMI enabled and also with AMI disabled on NT.
+
+        * tao/corba.h:
+          Add MessagingS.h again.
+
+        * tests/AMI/run_test.pl:
+          The test was using absolute paths for the IOR files and the
+          programs.
+
 Sun Apr 30 17:07:57 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-	* utils/NamingViewer/NamingTreeCtrl.cpp:
-	  added a patch from Chris Hafey.
+        * utils/NamingViewer/NamingTreeCtrl.cpp:
+          added a patch from Chris Hafey.
 
-	* orbsvcs/orbsvcs/Naming/Persistent_Naming_Context.cpp (list):
-	  A pointer was incremented instead of the value it was pointing
-	  too, causing corruption of the memory-mapped file.  Thanks to
-	  Mathew.Samuel@msdw.com for reporting the problem.  This fixes
-	  bugzilla bug 551.
+        * orbsvcs/orbsvcs/Naming/Persistent_Naming_Context.cpp (list):
+          A pointer was incremented instead of the value it was pointing
+          too, causing corruption of the memory-mapped file.  Thanks to
+          Mathew.Samuel@msdw.com for reporting the problem.  This fixes
+          bugzilla bug 551.
 
-	* orbsvcs/orbsvcs/Naming/Hash_Naming_Context.cpp (destroy):
-	  When Persistent_Naming_Contexts were <destroyed>, their entries weren't
-	  removed from the Persistent_Context_Index.  Changed <destroy>
-	  method to set <destroyed_> variable to a higher value to insure 
-	  complete cleanup.
+        * orbsvcs/orbsvcs/Naming/Hash_Naming_Context.cpp (destroy):
+          When Persistent_Naming_Contexts were <destroyed>, their entries weren't
+          removed from the Persistent_Context_Index.  Changed <destroy>
+          method to set <destroyed_> variable to a higher value to insure
+          complete cleanup.
 
-	* docs/releasenotes/index.html:
-	  Naming section.
+        * docs/releasenotes/index.html:
+          Naming section.
 
 Sun Apr 30 10:48:31 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/Pluggable_Messaging.h:
-	* tao/GIOP_Message_Connectors.h:
-	* tao/GIOP_Message_Accept_State.h: Added inclusion of
-	  "Excepption.h" to prevent KCC 3.3e from complaining.
+        * tao/Pluggable_Messaging.h:
+        * tao/GIOP_Message_Connectors.h:
+        * tao/GIOP_Message_Accept_State.h: Added inclusion of
+          "Excepption.h" to prevent KCC 3.3e from complaining.
 
 Sat Apr 29 23:41:02 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/diffs/InterceptorC.h.diff:
-	* tao/diffs/InterceptorC.cpp.diff:
-	* tao/InterceptorC.h: Some compilers require the type specified in
-	  throw spec be well defined.  Included "Exception.h" in this
-	  file.  Regenerated Interceptor.pidl.
+        * tao/diffs/InterceptorC.h.diff:
+        * tao/diffs/InterceptorC.cpp.diff:
+        * tao/InterceptorC.h: Some compilers require the type specified in
+          throw spec be well defined.  Included "Exception.h" in this
+          file.  Regenerated Interceptor.pidl.
 
 Sat Apr 29 20:57:34 2000  Carlos O'Ryan  <coryan@uci.edu>
 
