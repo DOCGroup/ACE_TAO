@@ -96,21 +96,6 @@ CORBA_ValueFactoryBase_var::operator= (const CORBA_ValueFactoryBase_var &p)
   return *this;
 }
 
-// cast
-ACE_INLINE
-CORBA_ValueFactoryBase_var::operator const CORBA::ValueFactoryBase *&() const
-{
-  return ACE_const_cast (const CORBA::ValueFactoryBase *&,
-                         this->ptr_);
-}
-
-// cast
-ACE_INLINE
-CORBA_ValueFactoryBase_var::operator CORBA::ValueFactoryBase *&()
-{
-  return this->ptr_;
-}
-
 ACE_INLINE CORBA::ValueFactoryBase *
 CORBA_ValueFactoryBase_var::operator-> (void) const
 {

@@ -95,13 +95,13 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
           << "{" << be_idt_nl
           << "_tao_elem = " << node->full_name () << "::_nil ();" << be_nl
           << "CORBA::TypeCode_var type = _tao_any.type ();" << be_nl << be_nl
-          << "CORBA::Boolean result =" << be_idt_nl
+          << "CORBA::Boolean _tao_result =" << be_idt_nl
           << "type->equivalent (" << be_idt << be_idt_nl
           << node->tc_name () << be_nl
           << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
           << ");" << be_uidt << be_uidt_nl
           << "ACE_TRY_CHECK;" << be_nl << be_nl
-          << "if (!result)" << be_idt_nl
+          << "if (!_tao_result)" << be_idt_nl
           << "{" << be_idt_nl
           << "return 0; // not equivalent" << be_uidt_nl 
           << "}" << be_uidt_nl << be_nl
@@ -165,13 +165,13 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
           << "{" << be_idt_nl
           << "_tao_elem = " << node->full_name () << "::_nil ();" << be_nl
           << "CORBA::TypeCode_var type = _tao_any.type ();" << be_nl << be_nl
-          << "CORBA::Boolean result =" << be_idt_nl
+          << "CORBA::Boolean _tao_result =" << be_idt_nl
           << "type->equivalent (" << be_idt << be_idt_nl
           << node->tc_name () << be_nl
           << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
           << ");" << be_uidt << be_uidt_nl
           << "ACE_TRY_CHECK;" << be_nl << be_nl
-          << "if (!result)" << be_idt_nl
+          << "if (!_tao_result)" << be_idt_nl
           << "{" << be_idt_nl
           << "return 0; // not equivalent" << be_uidt_nl 
           << "}" << be_uidt_nl << be_nl

@@ -861,7 +861,7 @@ be_visitor_root::visit_interface_fwd (be_interface_fwd *node)
     case TAO_CodeGen::TAO_ROOT_ANY_OP_CH:
       {
         ctx.state (TAO_CodeGen::TAO_INTERFACE_FWD_ANY_OP_CH);
-        be_visitor_interface_fwd_cdr_op_ch visitor (&ctx);
+        be_visitor_interface_fwd_any_op_ch visitor (&ctx);
         status = node->accept (&visitor);
         break;
       }
