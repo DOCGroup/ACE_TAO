@@ -314,7 +314,7 @@ DynAny_i::insert_wchar (CORBA::WChar value, CORBA::Environment &env)
 }
 
 void
-DynAny_i::insert_any (CORBA::Any& value, CORBA::Environment &env)
+DynAny_i::insert_any (const CORBA::Any& value, CORBA::Environment &env)
 {
   if (this->value_.type ()->kind (env) == CORBA::tk_any)
     this->value_ <<= value;
