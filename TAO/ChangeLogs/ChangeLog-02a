@@ -1,3 +1,15 @@
+Fri Mar 16 15:48:03 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * examples/PluggableUDP/DIOP/Makefile:
+          Define ACE_SHLIBS, otherwise Tru64/CXX is unhappy.
+
+        * examples/PluggableUDP/DIOP/DIOP_Connector.cpp:
+          Regroup code to use a single #if 0/#endif instead of multiple
+          sections of commented out code, easier to work that way.
+
+        * tests/Client_Leaks/Process_Factory.cpp:
+          Fixed Fuzz warning (i.e. missing ACE_CHECK_RETURN)
+
 Fri Mar 16 15:11:04 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/tests/Event/lib/Makefile.bor:
