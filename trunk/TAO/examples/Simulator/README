@@ -8,7 +8,8 @@ Purpose: To show how the event service can be used to as a media to
          by TAO objects.
          An other purpose is also to show the feasability of
          the DOVE framework as mentioned in
-         "http://wwww.cs.wustl.edu/~schmidt/dove.html".
+         http://www.cs.wustl.edu/~schmidt/dove.html and
+         http://www.cs.wustl.edu/~schmidt/DOVE_and_LifeCycleService.ps.gz
 
 Application: Using the Event Service as distribution media, event
              consumers and event suppliers are needed. The central
