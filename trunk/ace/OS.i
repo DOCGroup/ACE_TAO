@@ -1493,6 +1493,9 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
       && ::pthread_mutexattr_setkind_np (&attributes, type) == 0
 #endif /* ACE_HAS_DCETHREADS */
       && ::pthread_mutex_init (m, attributes) == 0)
+#elif defined (ACE_HAS_PTHREADS_1003_DOT_1C) || defined (AIX)
+    if (ACE_ADAPT_RETVAL(::pthread_mutexattr_init (&attributes), result) == 0
+        && ACE_ADAPT_RETVAL(::pthread_mutex_init (m, &attributes), result)== 0)
 #else
     if (::pthread_mutexattr_init (&attributes) == 0
 #if defined (ACE_HAS_PTHREAD_MUTEXATTR_SETKIND_NP)
@@ -1501,6 +1504,8 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
         && ::pthread_mutex_init (m, &attributes) == 0)
 #endif /* ACE_HAS_DCETHREADS */
       result = 0;
+  else
+    result = -1;	// ACE_ADAPT_RETVAL used it for intermediate status
 
 #if !defined (ACE_HAS_PTHREAD_MUTEXATTR_SETKIND_NP)
   ACE_UNUSED_ARG (type);
@@ -1984,6 +1989,9 @@ ACE_OS::cond_init (ACE_cond_t *cv, int type, LPCTSTR name, void *arg)
 #if defined  (ACE_HAS_DCETHREADS)
   if (::pthread_condattr_create (&attributes) == 0
       && ::pthread_cond_init (cv, attributes) == 0
+#elif defined (ACE_HAS_PTHREADS_1003_DOT_1C) || defined (AIX)
+  if (ACE_ADAPT_RETVAL(::pthread_condattr_init (&attributes), result) == 0
+      && ACE_ADAPT_RETVAL(::pthread_cond_init (cv, &attributes), result) == 0
 #else
   if (::pthread_condattr_init (&attributes) == 0
       && ::pthread_cond_init (cv, &attributes) == 0
@@ -1992,11 +2000,13 @@ ACE_OS::cond_init (ACE_cond_t *cv, int type, LPCTSTR name, void *arg)
 #  endif /* ACE_HAS_PTHREAD_CONDATTR_SETKIND_NP */
 #endif /* ACE_HAS_DCETHREADS */
 #if !defined (ACE_LACKS_CONDATTR_PSHARED)
-      && ::pthread_condattr_setpshared (&attributes, type) == 0
+      && ACE_ADAPT_RETVAL(::pthread_condattr_setpshared (&attributes, type),
+			  result) == 0
 #endif /* ACE_LACKS_CONDATTR_PSHARED */
       )
-  result = 0;
-
+     result = 0;
+  else
+     result = -1;	// ACE_ADAPT_RETVAL used it for intermediate status
 #if defined (ACE_HAS_DCETHREADS)
   ::pthread_condattr_delete (&attributes);
 #else
