@@ -388,7 +388,7 @@ Test_Supplier::connect (const char* name,
   TAO_CHECK_ENV_RETURN_VOID (_env);
 
   ACE_Time_Value tv (0, burst_pause);
-  RtecScheduler::Period rate = tv.usec () * 10;
+  RtecScheduler::Period_t rate = tv.usec () * 10;
 
   // The execution times are set to reasonable values, but
   // actually they are changed on the real execution, i.e. we
