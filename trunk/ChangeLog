@@ -1,3 +1,12 @@
+Wed Oct  9 23:43:51 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/WIN32_Asynch_IO.cpp (ACE_Asynch_Read_Stream::readv,
+          ACE_Asynch_Write_Stream::writev, ACE_Asynch_Read_Dgram::recv,
+          ACE_Asynch_Write_Dgram::send): Don't double-increment iovcnt
+          while checking for the need for multiple iov per message block.
+          Fixes bug introduced in:
+          Fri Oct  4 20:22:41 2002  Steve Huston  <shuston@riverace.com>
+
 Wed Oct  9 23:08:19 2002  Steve Huston  <shuston@riverace.com>
 
         * include/makeinclude/rules.lib.GNU: For the funky AIX shr.o/lib*.a

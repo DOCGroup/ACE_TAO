@@ -450,8 +450,9 @@ ACE_WIN32_Asynch_Read_Stream::readv (ACE_Message_Block &message_block,
         msg_space -= this_chunk_length;
         wr_ptr_offset += this_chunk_length;
 
-        // Increment iovec counter.
-        iovcnt++;
+        // Increment iovec counter if there's more to do.
+        if (msg_space > 0)
+          iovcnt++;
       }
     if (msg_space > 0)       // Ran out of iovecs before msg_space exhausted
       {
@@ -864,8 +865,9 @@ ACE_WIN32_Asynch_Write_Stream::writev (ACE_Message_Block &message_block,
         msg_len -= this_chunk_length;
         rd_ptr_offset += this_chunk_length;
 
-        // Increment iovec counter.
-        iovcnt++;
+        // Increment iovec counter if there's more to do.
+        if (msg_len > 0)
+          iovcnt++;
       }
     if (msg_len > 0)       // Ran out of iovecs before msg_space exhausted
       {
@@ -3294,8 +3296,9 @@ ACE_WIN32_Asynch_Read_Dgram::recv (ACE_Message_Block *message_block,
         msg_space -= this_chunk_length;
         wr_ptr_offset += this_chunk_length;
 
-        // Increment iovec counter.
-        iovcnt++;
+        // Increment iovec counter if there's more to do.
+        if (msg_space > 0)
+          iovcnt++;
       }
     if (msg_space > 0)       // Ran out of iovecs before msg_space exhausted
       {
@@ -3611,8 +3614,9 @@ ACE_WIN32_Asynch_Write_Dgram::send (ACE_Message_Block *message_block,
         msg_len -= this_chunk_length;
         rd_ptr_offset += this_chunk_length;
 
-        // Increment iovec counter.
-        iovcnt++;
+        // Increment iovec counter if there's more to do.
+        if (msg_len > 0)
+          iovcnt++;
       }
     if (msg_len > 0)       // Ran out of iovecs before msg_space exhausted
       {
