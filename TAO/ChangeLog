@@ -1,3 +1,8 @@
+Fri Feb  6 14:43:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/examples/CosEC/Factory/CosEventChannelFactory.idl:
+          Fixed include path
+
 Fri Feb  6 13:34:32 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/tutorials/Quoter/Event_Service/Stock_Consumer.h:
