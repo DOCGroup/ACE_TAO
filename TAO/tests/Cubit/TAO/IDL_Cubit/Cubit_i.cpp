@@ -17,7 +17,6 @@
 #include "ace/Auto_Ptr.h"
 #include "Cubit_Client.h"
 #include "Cubit_i.h"
-#include "ace/streams.h"
 
 #include "tao/Timeprobe.h"
 #include "RTI_IO.h"
@@ -315,7 +314,7 @@ Cubit_i::cube_rti_data (const Cubit::RtiPacket &input,
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Output: \n"));
-      print_RtiPacket (*output);
+      print_RtiPacket (*output.ptr ());
     }
 }
 
