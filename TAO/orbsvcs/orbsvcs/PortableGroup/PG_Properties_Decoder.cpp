@@ -66,9 +66,9 @@ void TAO_PG::Properties_Decoder::decode (const PortableGroup::Properties & prope
     const CosNaming::NameComponent & nc = nsName[0];
     ACE_CString name = ACE_static_cast (const char *, nc.id);
 
-    PortableGroup::Value * value_copy;
+    const PortableGroup::Value * value_copy;
     ACE_NEW_THROW_EX (value_copy, PortableGroup::Value (property.val), CORBA::NO_MEMORY ());
-    PortableGroup::Value * replaced_value;
+    const PortableGroup::Value * replaced_value;
     if (0 == this->values_.rebind (name, value_copy, replaced_value))
     {
       if (0 != replaced_value)
@@ -122,7 +122,7 @@ void TAO_PG::Properties_Decoder::remove (const PortableGroup::Properties & prope
     const CosNaming::NameComponent & nc = nsName[0];
     ACE_CString name = ACE_static_cast (const char *, nc.id);
 
-    PortableGroup::Value * deleted_value;
+    const PortableGroup::Value * deleted_value;
     if ( 0 == this->values_.unbind (name, deleted_value))
     {
       delete deleted_value;

@@ -1,10 +1,17 @@
+Fri Nov 28 08:33:56 2003  Dale Wilson  <wilson_d@ociweb.com>
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Properties_Decoder.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Typeid_Properties_Map.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Typeid_Properties_Map.cpp:
+          Build problems on Linux: const correctness.
+
 Wed Nov 26 19:20:54 2003  Dale Wilson  <wilson_d@ociweb.com>
 
         * orbsvcs/orbsvcs/PortableGroup/PG_Properties_Decoder.h:
         * orbsvcs/orbsvcs/PortableGroup/PG_Properties_Decoder.cpp:
           Enhance Properties_Decoder to provide everything necessary
-          to implement the PropertyManager interface.  
-          --the name is no longer ideal.  
+          to implement the PropertyManager interface.
+          --the name is no longer ideal.
 
         * orbsvcs/orbsvcs/PortableGroup/PG_Typeid_Properties_Map.h:
         * orbsvcs/orbsvcs/PortableGroup/PG_Typeid_Properties_Map.cpp:
