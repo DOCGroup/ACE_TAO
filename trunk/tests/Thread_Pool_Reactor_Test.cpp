@@ -115,8 +115,6 @@ protected:
 };
 
 typedef ACE_Strategy_Acceptor <Acceptor_Handler, ACE_SOCK_ACCEPTOR> ACCEPTOR;
-typedef ACE_Thread_Pool_Strategy <Acceptor_Handler> CONCURRENCY_STRATEGY;
-typedef ACE_Svc_Handler_Pool_Strategy <Acceptor_Handler> CREATION_STRATEGY;
 
 Acceptor_Handler::Acceptor_Handler (ACE_Thread_Manager *thr_mgr)
   : ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_MT_SYNCH> (thr_mgr)
@@ -146,7 +144,7 @@ Acceptor_Handler::handle_input (ACE_HANDLE fd)
           main_reactor->notify ();
           ACE_Reactor::end_event_loop ();
         }
-      
+
       return 0;
     }
   else
@@ -178,7 +176,7 @@ svr_worker (void *)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "(%t) handling events ....\n"));
-      
+
       result = ACE_Reactor::instance ()->handle_events ();
       if (result < 0)
         ACE_DEBUG ((LM_DEBUG, "(%t) Error handling events\n"));
@@ -186,7 +184,7 @@ svr_worker (void *)
 
   ACE_DEBUG ((LM_DEBUG,
               "(%t) I am done handling events. Bye, bye\n"));
-      
+
   return 0;
 }
 
@@ -207,7 +205,7 @@ cli_worker (void *)
                       ASYS_TEXT ("(%t) %p\n"), ASYS_TEXT ("connect")));
           continue;
         }
-  
+
       ASYS_TCHAR *buf = ASYS_TEXT ("Message from Connection worker\n");
 
       for (size_t j = 0; j < cli_req_no; ACE_OS::sleep (delay), j++)
@@ -226,7 +224,7 @@ void *
 worker (void *)
 {
   ACE_OS::sleep (3);
-  
+
   ACE_INET_Addr addr (rendezvous);
   int grp = ACE_Thread_Manager::instance ()->spawn_n (cli_thrno,
                                                       &cli_worker,
@@ -234,7 +232,7 @@ worker (void *)
   ACE_ASSERT (grp != -1);
 
   ACE_Thread_Manager::instance ()->wait_grp (grp);
-  
+
   ACE_OS::sleep (1);
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("Shutting down...\n")));
   ACE_SOCK_Stream stream;
@@ -243,7 +241,7 @@ worker (void *)
     ACE_ERROR ((LM_ERROR,
                 ASYS_TEXT ("%p Error while connecting\n"),
                 ASYS_TEXT ("connect")));
-      
+
   char *buf = "shutdown";
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("shutdown stream handle = %x\n"),
               stream.get_handle ()));
@@ -258,7 +256,7 @@ main (int argc, ASYS_TCHAR *argv[])
   ACE_START_TEST (ASYS_TEXT ("Thread_Pool_Reactor_Test"));
   parse_arg (argc, argv);
 
-  // Changed the default 
+  // Changed the default
   ACE_TP_Reactor sr;
   ACE_Reactor new_reactor (&sr);
   ACE_Reactor::instance (&new_reactor);
@@ -271,15 +269,10 @@ main (int argc, ASYS_TCHAR *argv[])
   ACE_Reactor mreactor (&slr);
   main_reactor =  &mreactor;
   ACCEPTOR acceptor;
-  CONCURRENCY_STRATEGY tp_strategy;
-  CREATION_STRATEGY new_strategy;
   ACE_INET_Addr accept_addr (rendezvous);
   acceptor.open (accept_addr,
-                 main_reactor,
-                 &new_strategy,
-                 0,
-                 0, //&tp_strategy,
-                 0, 0, 0, 0);
+                 main_reactor);
+
 
   ACE_Thread_Manager::instance ()->spawn_n (svr_thrno,
                                             svr_worker);
@@ -290,7 +283,7 @@ main (int argc, ASYS_TCHAR *argv[])
     {
       result = slr.handle_events ();
     }
-  
+
   ACE_ASSERT (result != -1);
 
   ACE_Thread_Manager::instance ()->wait ();
@@ -300,6 +293,25 @@ main (int argc, ASYS_TCHAR *argv[])
   ACE_END_TEST;
   return 0;
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Accept_Strategy<Acceptor_Handler, ACE_SOCK_ACCEPTOR>;
+template class ACE_Concurrency_Strategy<Acceptor_Handler>;
+template class ACE_Creation_Strategy<Acceptor_Handler>;
+template class ACE_Scheduling_Strategy<Acceptor_Handler>;
+template class ACE_Acceptor<Acceptor_Handler, ACE_SOCK_ACCEPTOR>;
+template class ACE_Strategy_Acceptor<Acceptor_Handler, ACE_SOCK_ACCEPTOR>;
+template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_MT_SYNCH>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate  ACE_Accept_Strategy<Acceptor_Handler, ACE_SOCK_ACCEPTOR>
+#pragma instantiate  ACE_Concurrency_Strategy<Acceptor_Handler>
+#pragma instantiate  ACE_Creation_Strategy<Acceptor_Handler>
+#pragma instantiate  ACE_Scheduling_Strategy<Acceptor_Handler>
+#pragma instantiate  ACE_Acceptor<Acceptor_Handler, ACE_SOCK_ACCEPTOR>
+#pragma instantiate  ACE_Strategy_Acceptor<Acceptor_Handler, ACE_SOCK_ACCEPTOR>
+#pragma instantiate  ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_MT_SYNCH>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
 #else
 int
 main (int, ASYS_TCHAR *[])
@@ -312,5 +324,3 @@ main (int, ASYS_TCHAR *[])
   return 0;
 }
 #endif /* ACE_HAS_THREADS */
-
-
