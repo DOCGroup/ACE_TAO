@@ -1,0 +1,32 @@
+#!build
+default:
+	nobuild
+	:c_option=slashcomment
+	:cx_e_option=msgnumbers
+	:object_dir=./obj
+	:target=vxwppc
+	:cx_silent=21
+	:cx_silent=191
+	:cx_silent=610
+	:sourcedirs=VME_DRV/src
+	:sourcedirs=VME_DRV/api/include
+	:sourcedirs=../../../../orbsvcs
+	:sourcedirs=/home/ace/ACE_wrappers.latest
+	:sourcedirs=../../../../tao/compat
+	:sourcedirs=../../../..
+	:libdirs=VME_DRV/vmeXportu
+	:libdirs=../../../../orbsvcs
+	:libdirs=../../../../tao
+	:libdirs=/home/ace/ACE_wrappers.latest/ace
+	:libraries=vmeXportNoLogging.a
+	:libraries=orbsvcs.a
+	:libraries=tao.a
+	:libraries=libACE.a
+	:libraries=/appl/newgreen/vxppc603/ghsbltin.o
+	:defines=DEBUG
+	:defines=VME_DRIVER
+client.bld
+	program
+server.bld
+	program
+	:defines=USE_ACE_EVENT_HANDLING
