@@ -1,3 +1,24 @@
+Mon Apr 12 13:58:32 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/corba.h:
+        
+          Added inclusion of the stub header files for all the 
+          sequences of CORBA basic types that have been added to
+          TAO so far. Sequences of CORBA basic types are now required
+          to be contained in a compliant ORB, so users should be
+          able to employ them in applications even if they do not
+          appear in any IDL files. These inclusions in corba.h
+          enable users to get access to these sequences and several
+          other types in the ORB, without requiring any knowledge
+          of TAO internals to determine the specific include files
+          needed.
+          
+        * tao/DynamicAny/DynamicAny.mpc:
+        
+          Added valuetype dependency to generated project and makefiles.
+          The absence of this dependency is a legacy from the days 
+          when TAO did not support valuetypes.
+
 Mon Apr 12 13:54:32 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/orbsvcs/FTORB.mpc:
