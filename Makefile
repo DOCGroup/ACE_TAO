@@ -75,7 +75,7 @@ RELEASE_FILES = ACE_wrappers/ACE-categories \
 		ACE_wrappers/tests
 
 cleanrelease:
-	(make realclean; cd ..; /bin/rm -r ACE.tar.gz; tar cvf ACE.tar $(RELEASE_FILES); gzip -9 ACE.tar; chmod a+r ACE.tar.gz)
+	(make realclean; cd ..; /bin/rm -f ACE.tar.gz; tar cvf ACE.tar $(RELEASE_FILES); gzip -9 ACE.tar; chmod a+r ACE.tar.gz)
 
 release:
-	(cd ..; /bin/rm -r ACE.tar.gz; tar cvf ACE.tar $(RELEASE_FILES); gzip -9 ACE.tar; chmod a+r ACE.tar.gz)
+	(cd ..; /bin/rm -f ACE.tar.gz; tar cvf ACE.tar $(RELEASE_FILES); gzip -9 ACE.tar; chmod a+r ACE.tar.gz)
