@@ -37,18 +37,15 @@ ACE_URL_Local_Locator::url_query (const ACE_URL_Locator::ACE_Selection_Criteria 
       size_t i_db;
       int found = 0;
 
-      // Now this is a stupid implementation.  Perhaps we can implement this
-      // using Hash_Map.  Better yet, I think we should put this in a database
-      // and put SQL query here.
+      // Now this is a stupid implementation.  Perhaps we can
+      // implement this using Hash_Map.  Better yet, I think we should
+      // put this in a database and put SQL query here.
       for (i_query = 0; found == 0 && i_query < pseq->size (); i_query++)
 	for (i_db = 0; i_db < item->offer_->url_properties ().size (); i_db++)
 	  {
 	    if ((*pseq)[i_query].name () == item->offer_->url_properties ()[i_db].name ())
 	      if (how == ACE_URL_Locator::SOME)
-		{
-		  
-
-	  }
+                ;
 
       // if match and Some, copy to <offer>, inc <num_query>, advance iterator
 

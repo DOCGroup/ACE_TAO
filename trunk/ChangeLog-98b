@@ -1,5 +1,11 @@
 Fri Oct 16 15:45:08 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* tests/Upgradable_RW_Test.cpp: Revised the programming style ;-).
+
+	* tests/Map_Manager_Test.cpp: Replaced all uses of postfix ++
+ 	  operators with prefix ++ operators because they are faster when
+ 	  iterating over the various Maps.
+
         * ace/[Hash_]Map_Manager: Today we decided to remove the use of
           locking for the ACE[_Hash]_Map_Manager Iterators.  The original
           scheme acquired the mutex of the [Hash_]Map_Manager on every

@@ -37,9 +37,7 @@ TAO_Object_Table_Iterator::TAO_Object_Table_Iterator (const TAO_Object_Table_Ite
   : impl_ (0)
 {
   if (x.impl_ != 0)
-    {
-      this->impl_ = x.impl_->clone ();
-    }
+    this->impl_ = x.impl_->clone ();
 }
 
 ACE_INLINE TAO_Object_Table_Iterator &
@@ -49,13 +47,9 @@ TAO_Object_Table_Iterator::operator= (const TAO_Object_Table_Iterator &x)
     {
       delete this->impl_;
       if (x.impl_ == 0)
-        {
-          this->impl_ = 0;
-        }
+        this->impl_ = 0;
       else
-        {
-          this->impl_ = x.impl_->clone ();
-        }
+        this->impl_ = x.impl_->clone ();
     }
   return *this;
 }
@@ -230,7 +224,12 @@ TAO_Dynamic_Hash_ObjTable::begin (void) const
 {
   TAO_Dynamic_Hash_ObjTable *non_const =
     ACE_const_cast(TAO_Dynamic_Hash_ObjTable*, this);
-  return new TAO_Dynamic_Hash_ObjTable_Iterator (Iterator (non_const->hash_map_));
+
+  TAO_Object_Table_Iterator_Impl *tmp;
+  ACE_NEW_RETURN (tmp,
+                  TAO_Dynamic_Hash_ObjTable_Iterator (Iterator (non_const->hash_map_)),
+                  0);
+  return tmp;
 }
 
 ACE_INLINE TAO_Object_Table_Iterator_Impl *
@@ -242,20 +241,28 @@ TAO_Dynamic_Hash_ObjTable::end (void) const
 ACE_INLINE TAO_Object_Table_Iterator_Impl*
 TAO_Dynamic_Hash_ObjTable_Iterator::clone (void) const
 {
-  return new TAO_Dynamic_Hash_ObjTable_Iterator (*this);
+  TAO_Object_Table_Iterator_Impl *tmp;
+  ACE_NEW_RETURN (tmp,
+                  TAO_Dynamic_Hash_ObjTable_Iterator (*this),
+                  0);
+  return tmp;
 }
 
 ACE_INLINE const TAO_Object_Table_Entry &
 TAO_Dynamic_Hash_ObjTable_Iterator::item (void) const
 {
   TAO_Object_Table_Entry &entry =
-    ACE_const_cast(TAO_Object_Table_Entry&, this->entry_);
+    ACE_const_cast (TAO_Object_Table_Entry &,
+                    this->entry_);
   ACE_Hash_Map_Entry<PortableServer::ObjectId,PortableServer::Servant> *tmp;
-  if (ACE_const_cast(TAO_Dynamic_Hash_ObjTable_Iterator*,this)->impl_.next (tmp) == 1)
+
+  if (ACE_const_cast (TAO_Dynamic_Hash_ObjTable_Iterator*,
+                      this)->impl_.next (tmp) == 1)
     {
       entry.servant_ = tmp->int_id_;
       entry.id_ = tmp->ext_id_;
     }
+
   return entry;
 }
 
@@ -280,7 +287,11 @@ TAO_Array_ObjTable_Iterator::TAO_Array_ObjTable_Iterator (TAO_Object_Table_Entry
 ACE_INLINE TAO_Object_Table_Iterator_Impl *
 TAO_Array_ObjTable_Iterator::clone (void) const
 {
-  return new TAO_Array_ObjTable_Iterator (*this);
+  TAO_Object_Table_Iterator_Impl *tmp;
+  ACE_NEW_RETURN (tmp,
+                  TAO_Array_ObjTable_Iterator (*this),
+                  0);
+  return tmp;
 }
 
 ACE_INLINE const TAO_Object_Table_Entry &
@@ -292,21 +303,21 @@ TAO_Array_ObjTable_Iterator::item (void) const
 ACE_INLINE void
 TAO_Array_ObjTable_Iterator::advance (void)
 {
-  this->pos_++;
+  ++this->pos_;
 }
 
 ACE_INLINE int
 TAO_Array_ObjTable_Iterator::done (const TAO_Object_Table_Iterator_Impl *end) const
 {
   const TAO_Array_ObjTable_Iterator *tmp =
-    ACE_dynamic_cast(const TAO_Array_ObjTable_Iterator*, end);
-  return (this->pos_ == tmp->pos_);
+    ACE_dynamic_cast (const TAO_Array_ObjTable_Iterator*, end);
+  return this->pos_ == tmp->pos_;
 }
 
 ACE_INLINE
 TAO_Linear_ObjTable::~TAO_Linear_ObjTable (void)
 {
-  delete[] this->table_;
+  delete [] this->table_;
 }
 
 ACE_INLINE int
@@ -337,13 +348,21 @@ TAO_Linear_ObjTable::system_id_size (void) const
 ACE_INLINE TAO_Object_Table_Iterator_Impl *
 TAO_Linear_ObjTable::begin (void) const
 {
-  return new TAO_Array_ObjTable_Iterator (this->table_);
+  TAO_Object_Table_Iterator_Impl *tmp;
+  ACE_NEW_RETURN (tmp,
+                  TAO_Array_ObjTable_Iterator (this->table_),
+                  0);
+  return tmp;
 }
 
 ACE_INLINE TAO_Object_Table_Iterator_Impl*
 TAO_Linear_ObjTable::end (void) const
 {
-  return new TAO_Array_ObjTable_Iterator (this->table_ + this->next_);
+  TAO_Object_Table_Iterator_Impl *tmp;
+  ACE_NEW_RETURN (tmp,
+                  TAO_Array_ObjTable_Iterator (this->table_ + this->next_),
+                  0);
+  return tmp;
 }
 
 ACE_INLINE
@@ -381,8 +400,10 @@ TAO_Active_Demux_ObjTable::parse_object_id (const PortableServer::ObjectId &id,
                   id.get_buffer (),
                   sizeof id_data);
 
-  index = id_data[TAO_Active_Demux_ObjTable::INDEX_FIELD];
-  generation = id_data[TAO_Active_Demux_ObjTable::GENERATION_FIELD];
+  index =
+    id_data[TAO_Active_Demux_ObjTable::INDEX_FIELD];
+  generation =
+    id_data[TAO_Active_Demux_ObjTable::GENERATION_FIELD];
 
   return 0;
 }
