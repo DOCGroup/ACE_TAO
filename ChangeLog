@@ -1,8 +1,13 @@
+Tue Oct 19 17:58:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-win32-dmc.h:
+          Improved Digital Mars C++ support
+
 Tue Oct 19 06:47:04 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/tao_other_tests.lst:
 
-          Reverted my previous change and removed 
+          Reverted my previous change and removed
           TAO/orbsvcs/examples/Notify/Lanes/run_test.pl and
           TAO/orbsvcs/examples/Notify/ThreadPool/run_test.pl from the list.
           These are the ones that require root privileges.
