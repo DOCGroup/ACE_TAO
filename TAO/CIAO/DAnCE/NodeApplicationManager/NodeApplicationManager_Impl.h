@@ -102,7 +102,7 @@ namespace CIAO
 
   protected:
     /// Destructor
-    virtual ~NodeApplicationManager_Impl (ACE_ENV_SINGLE_ARG_DECL);
+    virtual ~NodeApplicationManager_Impl (void);
 
     // Internal help function to create new NodeApplicationProcess
     virtual Deployment::NodeApplication_ptr
