@@ -1,3 +1,34 @@
+Thu Sep 26 09:14:22 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_Location_Index_Map.h:
+	* orbsvcs/orbsvcs/LoadBalancing/LB_Location_Index_Map.cpp:
+
+	  New table that maps object group ID to the index
+	  of the next element in a "locations of object group members"
+	  sequence.
+	
+	* orbsvcs/orbsvcs/LoadBalancing/LB_RoundRobin.h:
+
+	  Added location index map that maps object group ID to the index
+	  of the next element in the "locations of members" sequence.
+
+	  Added lock member to be used for synchronization of the location
+	  index map.
+	
+	* orbsvcs/orbsvcs/LoadBalancing/LB_RoundRobin.cpp
+	  (TAO_LB_RoundRobin):
+
+	  Initialize the lock and location index members in the base
+	  member initializer list.
+
+	  (next_member):
+
+	  Implemented this method.
+
+	* orbsvcs/orbsvcs/Makefile.CosLoadBalancing (CPP_SRCS):
+
+	  Added "LB_Location_Index_Map" to the list of C++ sources.
+
 Thu Sep 26 11:55:05 2002  Carlos O'Ryan  <coryan@atdesk.com>
 
 	* tao/Connection_Handler.h:
