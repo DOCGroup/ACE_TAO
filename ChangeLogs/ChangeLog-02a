@@ -1,3 +1,9 @@
+Fri Jun 30 10:59:23 2000  Joe Hoffert  <joeh@cs.wustl.edu>
+
+        * include/makeinclude/platform_lynxos.GNU:
+          Added PACE_SYSNAME = LynxOS so that PACE can set the
+          appropriate platform subdirectory when building.
+
 Fri Jun 30 03:21:58 2000  John Heitmann  <jwh1@cs.wustl.edu>
 
         * ace/OS.{h,i}:
