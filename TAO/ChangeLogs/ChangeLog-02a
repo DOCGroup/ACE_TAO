@@ -1,3 +1,10 @@
+Tue Feb 13 18:44:19 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/Event/EC_Reactive_Timeout_Generator.cpp:
+          Reset the reactor after deactivating the timeout adapter,
+          otherwise it tries to use it during shutdown, but at that point
+          the reactor is already destroyed.
+
 Tue Feb 13 17:42:16 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/tests/Event/Performance/Latency.dsp:
