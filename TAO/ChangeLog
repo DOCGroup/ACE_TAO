@@ -1,3 +1,14 @@
+Sat Nov  8 23:19:13 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs//examples/Security/Send_File/Makefile:
+
+	  Updated dependencies. 
+
+	* orbsvcs/orbsvcs/CosEvent/CEC_TypedEvent.h:
+	* orbsvcs/orbsvcs/CosEvent/CEC_TypedEventChannel.h:
+
+	  #included tao/NVList.h
+
 Sat Nov  8 22:31:01 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/examples/RtEC/Schedule/Makefile: 
