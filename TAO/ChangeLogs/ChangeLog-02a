@@ -1,3 +1,7 @@
+Fri Mar  9 07:25:26 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/tests/FaultTolerance/IOGR/Makefile: Fixed a error.
+
 Fri Mar  9 07:00:26 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/POA/Single_Threaded_POA/Single_Threaded_POA.cpp: Fixed
