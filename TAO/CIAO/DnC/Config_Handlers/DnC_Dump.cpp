@@ -12,7 +12,7 @@
 
 namespace Deployment
 {
-#if 0 
+#ifndef ACE_HAS_BROKEN_NESTED_TEMPLATES
   /*
    *  Generic dump functions
    */
@@ -1043,7 +1043,7 @@ namespace Deployment
         ACE_THROW (CORBA::INTERNAL ());
       }
   }
-#endif /*if 0*/
+#endif // ACE_HAS_BROKEN_NESTED_TEMPLATES
 }
 
 #endif /* DNC_DUMP_C */
