@@ -1,3 +1,39 @@
+Mon Feb 21 20:43:31 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/Asynch_Invocation.h:
+	* tao/Asynch_Invocation.i:
+	* tao/Asynch_Invocation.cpp:
+	* tao/GIOP.h:
+	* tao/GIOP.cpp:
+	* tao.Invocation.h:
+	* tao/Invocation.i:
+	* tao/Invocation.cpp:
+	* tao/Object.cpp:
+	* tao/Stub.cpp:
+	* tao/DomainC.cpp:
+	* tao/ImplRepoC.cpp:
+	* tao/InterfaceC.cpp:
+	* tao/MessagingC.cpp:
+	* tao/POAC.cpp:
+	* tao/PolicyC.cpp:
+	* tao/PollableC.cpp:
+	* TAO_IDL/be/be_visitor_operation/ami_cs.cpp:
+	* TAO_IDL/be/be_visitor_operation/operation.cpp:
+	  Optimization suggested by Irfan. Instead of marshaling the
+	  operation name into the request header by using the
+	  overloaded << operator for strings (which contains a
+	  call to strlen), we use the version of write_string that
+	  takes a length argument. The length then has to be
+	  precomputed. The signatures of the TAO_GIOP_*_Invocation
+	  constructors has been modified to carry this value,
+	  as has the write_request_header* functions of TAO_GIOP.
+	  For regular oneway, twoway, and AMI requests, this
+	  value is calculated by the IDL compiler and plugged in
+	  to the constructor call in the stub. For interpreted stubs
+	  and regular DII requests, the Stub object calculates the length.
+	  For deferred synchronous DII request, the length is calculated
+	  in the invocation constructor.
+
 Mon Feb 21 16:19:59 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/Any.cpp:
