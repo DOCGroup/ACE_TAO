@@ -1615,7 +1615,7 @@ ACE::get_handle (void)
 // Solaris 2.x
   ACE_HANDLE handle = ACE_INVALID_HANDLE;
 #if defined(__SVR4)
-  handle = ACE_OS::open ("/dev/ip", O_RDONLY);
+  handle = ACE_OS::open ("/dev/udp", O_RDONLY);
 #elif defined(__unix)
 // BSD compatible OS: HP UX, AIX, SunOS 4.x
   handle = ACE_OS::socket (PF_INET, SOCK_DGRAM, 0);
