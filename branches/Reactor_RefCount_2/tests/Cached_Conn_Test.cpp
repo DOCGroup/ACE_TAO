@@ -145,16 +145,11 @@ template class ACE_Creation_Strategy<Svc_Handler>;
 template class ACE_Hash_Map_Entry<ACE_ADDR, Svc_Handler *>;
 template class ACE_Hash<ACE_ADDR>;
 template class ACE_Equal_To<ACE_ADDR>;
-template class ACE_Map_Entry<ACE_HANDLE, ACE_Svc_Tuple<Svc_Handler> *>;
-template class ACE_Map_Manager<ACE_HANDLE, ACE_Svc_Tuple<Svc_Handler> *, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Map_Iterator_Base<ACE_HANDLE, ACE_Svc_Tuple<Svc_Handler> *, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Map_Iterator<ACE_HANDLE, ACE_Svc_Tuple<Svc_Handler> *, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Map_Reverse_Iterator<ACE_HANDLE, ACE_Svc_Tuple<Svc_Handler> *, ACE_SYNCH_RW_MUTEX>;
 template class ACE_NOOP_Concurrency_Strategy<Svc_Handler>;
 template class ACE_Recycling_Strategy<Svc_Handler>;
 template class ACE_Strategy_Connector<Svc_Handler, ACE_SOCK_CONNECTOR>;
-template class ACE_Svc_Tuple<Svc_Handler>;
 template class ACE_Oneshot_Acceptor<Svc_Handler, ACE_SOCK_ACCEPTOR>;
+template class ACE_NonBlocking_Connect_Handler<Svc_Handler>;
 
 template class ACE_Pair<Svc_Handler *, ATTRIBUTES>;
 template class ACE_Reference_Pair<ACE_ADDR, Svc_Handler *>;
@@ -232,16 +227,11 @@ template class ACE_Guard<ACE_Reverse_Lock<ACE_SYNCH_NULL_MUTEX> >;
 #pragma instantiate ACE_Hash_Map_Entry<ACE_ADDR, Svc_Handler *>
 #pragma instantiate ACE_Hash<ACE_ADDR>
 #pragma instantiate ACE_Equal_To<ACE_ADDR>
-#pragma instantiate ACE_Map_Entry<ACE_HANDLE, ACE_Svc_Tuple<Svc_Handler> *>
-#pragma instantiate ACE_Map_Manager<ACE_HANDLE, ACE_Svc_Tuple<Svc_Handler> *, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Map_Iterator_Base<ACE_HANDLE, ACE_Svc_Tuple<Svc_Handler> *, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Map_Iterator<ACE_HANDLE, ACE_Svc_Tuple<Svc_Handler> *, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Map_Reverse_Iterator<ACE_HANDLE, ACE_Svc_Tuple<Svc_Handler> *, ACE_SYNCH_RW_MUTEX>
 #pragma instantiate ACE_NOOP_Concurrency_Strategy<Svc_Handler>
 #pragma instantiate ACE_Recycling_Strategy<Svc_Handler>
 #pragma instantiate ACE_Strategy_Connector<Svc_Handler, ACE_SOCK_CONNECTOR>
-#pragma instantiate ACE_Svc_Tuple<Svc_Handler>
 #pragma instantiate ACE_Oneshot_Acceptor<Svc_Handler, ACE_SOCK_ACCEPTOR>
+#pragma instantiate ACE_NonBlocking_Connect_Handler<Svc_Handler>
 
 #pragma instantiate ACE_Pair<Svc_Handler *, ATTRIBUTES>
 #pragma instantiate ACE_Reference_Pair<ACE_ADDR, Svc_Handler *>

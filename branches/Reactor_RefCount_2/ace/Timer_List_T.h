@@ -33,7 +33,7 @@ class ACE_Timer_List_T;
  * node of a timer queue.
  */
 template <class TYPE, class FUNCTOR, class ACE_LOCK>
-class ACE_Timer_List_Iterator_T 
+class ACE_Timer_List_Iterator_T
 : public ACE_Timer_Queue_Iterator_T <TYPE, FUNCTOR, ACE_LOCK>
 {
 public:
@@ -116,26 +116,6 @@ public:
   virtual const ACE_Time_Value& earliest_time (void) const;
 
   /**
-   * Schedule <type> that will expire at <future_time>,
-   * which is specified in absolute time.  If it expires then <act> is
-   * passed in as the value to the <functor>.  If <interval> is != to
-   * <ACE_Time_Value::zero> then it is used to reschedule the <type>
-   * automatically, using relative time to the current <gettimeofday>.
-   * This method returns a <timer_id> that uniquely identifies the the
-   * <type> entry in an internal list.  This <timer_id> can be used to
-   * cancel the timer before it expires.  The cancellation ensures
-   * that <timer_ids> are unique up to values of greater than 2
-   * billion timers.  As long as timers don't stay around longer than
-   * this there should be no problems with accidentally deleting the
-   * wrong timer.  Returns -1 on failure (which is guaranteed never to
-   * be a valid <timer_id>).
-   */
-  virtual long schedule (const TYPE& type,
-                         const void* act,
-                         const ACE_Time_Value& future_time,
-                         const ACE_Time_Value& interval = ACE_Time_Value::zero);
-
-  /**
    * Resets the interval of the timer represented by <timer_id> to
    * <interval>, which is specified in relative time to the current
    * <gettimeofday>.  If <interval> is equal to
@@ -184,10 +164,34 @@ public:
 
 private:
 
+  /**
+   * Schedule <type> that will expire at <future_time>, which is
+   * specified in absolute time.  If it expires then <act> is passed
+   * in as the value to the <functor>.  If <interval> is != to
+   * <ACE_Time_Value::zero> then it is used to reschedule the <type>
+   * automatically, using relative time to the current <gettimeofday>.
+   * This method returns a <timer_id> that uniquely identifies the the
+   * <type> entry in an internal list.  This <timer_id> can be used to
+   * cancel the timer before it expires.  The cancellation ensures
+   * that <timer_ids> are unique up to values of greater than 2
+   * billion timers.  As long as timers don't stay around longer than
+   * this there should be no problems with accidentally deleting the
+   * wrong timer.  Returns -1 on failure (which is guaranteed never to
+   * be a valid <timer_id>).
+   */
+  virtual long schedule_i (const TYPE& type,
+                           const void* act,
+                           const ACE_Time_Value& future_time,
+                           const ACE_Time_Value& interval);
+
   void schedule_i(ACE_Timer_Node_T<TYPE>* n, const ACE_Time_Value& exp);
+
   ACE_Timer_Node_T<TYPE>* find_node(long timer_id) const;
+
   void cancel_i (ACE_Timer_Node_T<TYPE>* n, int skip_close);
+
   void unlink (ACE_Timer_Node_T<TYPE>* n);
+
   ACE_Timer_Node_T<TYPE>* get_first_i(void) const;
 
 private:

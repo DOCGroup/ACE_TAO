@@ -21,29 +21,49 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Map_Manager.h"
 #include "ace/Strategies_T.h"
 #include "ace/Synch_Options.h"
 
-
 /**
- * @class ACE_Svc_Tuple
+ * @class ACE_Connector_Base
  *
- * @brief Holds the ACE_Svc_Handler and its argument and
- * <ACE_Timer_Handle> until an asynchronous connection completes.
- *
- * This is a no-brainer...
+ * @brief This base interface allows ACE_NonBlocking_Connect_Handler
+ * to only care about the SVC_HANDLER template parameter of the
+ * ACE_Connector.  Otherwise, ACE_NonBlocking_Connect_Handler would
+ * have to be configured with all the template parameters that
+ * ACE_Connector is configured with.
  */
 template <class SVC_HANDLER>
-class ACE_Svc_Tuple
+class ACE_Connector_Base
 {
 public:
 
-  // = Initialization methods.
-  ACE_Svc_Tuple (SVC_HANDLER *,
-                 ACE_HANDLE,
-                 const void * = 0,
-                 long timer_id = -1);
+  /// Initialize the Svc_Handler.
+  virtual void initialize_svc_handler (ACE_HANDLE handle,
+                                       SVC_HANDLER *svc_handler) = 0;
+
+  /// Return the handle set representing the non-blocking connects in
+  /// progress.
+  virtual ACE_Handle_Set &non_blocking_handles (void) = 0;
+};
+
+/**
+ * @class ACE_NonBlocking_Connect_Handler
+ *
+ * @brief Performs non-blocking connects on behalf of the Connector.
+ */
+template <class SVC_HANDLER>
+class ACE_NonBlocking_Connect_Handler : public ACE_Event_Handler
+{
+public:
+
+  // Constructor.
+  ACE_NonBlocking_Connect_Handler (ACE_Connector_Base<SVC_HANDLER> &connector,
+                                   SVC_HANDLER *,
+                                   long timer_id);
+
+  /// Close up and return underlying SVC_HANDLER *.
+  SVC_HANDLER *close (void);
 
   /// Get SVC_HANDLER.
   SVC_HANDLER *svc_handler (void);
@@ -55,25 +75,31 @@ public:
   /// Set handle.
   void handle (ACE_HANDLE);
 
-  // = Get/set argument.
-  /// Get argument.
-  const void *arg (void);
+  // = Set/get timer id.
+  /// Get timer id.
+  long timer_id (void);
 
-  /// Set argument.
-  void arg (const void *);
+  /// Set timer id.
+  void timer_id (long timer_id);
 
-  // = Set/get timer cancellation handle.
-  /// Get cancellation id.
-  long cancellation_id (void);
+  /// Called by ACE_Reactor when asynchronous connections fail.
+  virtual int handle_input (ACE_HANDLE);
 
-  /// Set cancellation id.
-  void cancellation_id (long timer_id);
+  /// Called by ACE_Reactor when asynchronous connections succeed.
+  virtual int handle_output (ACE_HANDLE);
 
-  /// Increment and decrement refcount within the context of the lock
-  /// on the ACE_Connector
-  long incr_refcount (void);
+  /// Called by ACE_Reactor when asynchronous connections suceeds (on
+  /// some platforms only).
+  virtual int handle_exception (ACE_HANDLE fd);
 
-  long decr_refcount (void);
+  /// This method is called if a connection times out before
+  /// completing.
+  virtual int handle_timeout (const ACE_Time_Value &tv,
+                              const void *arg);
+
+  /// Should Reactor resume us if we have been suspended before the
+  /// upcall?
+  virtual int resume_handler (void);
 
   /// Dump the state of an object.
   void dump (void) const;
@@ -81,27 +107,16 @@ public:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
-protected:
-  /// Prevent direct deletion
-  ~ACE_Svc_Tuple (void);
-
 private:
+
+  /// Connector base.
+  ACE_Connector_Base<SVC_HANDLER> &connector_;
+
   /// Associated SVC_HANDLER.
   SVC_HANDLER *svc_handler_;
 
-  /// IPC <HANDLE> that we are trying to connect.
-  ACE_HANDLE handle_;
-
-  /// Associated argument.
-  const void *arg_;
-
-  /// Associated cancellation id.
-  long cancellation_id_;
-
-  /// Reference count manipulated within the context of the connector
-  /// lock.
-  /// @@ TODO: Things will change after 5.3 goes out of the way.
-  long refcount_;
+  /// Associated timer id.
+  long timer_id_;
 };
 
 /**
@@ -110,22 +125,17 @@ private:
  * @brief Generic factory for actively connecting clients and creating
  * service handlers (SVC_HANDLERs).
  *
- * Implements the strategy for actively establishing connections
- * with clients.  An ACE_Connector is parameterized by concrete
- * types that conform to the interfaces of PEER_CONNECTOR and
- * SVC_HANDLER.  The PEER_CONNECTOR is instantiated with a
- * transport mechanism that passively establishes connections.
- * The SVC_HANDLER is instantiated with a concrete type that
- * performs the application-specific service.  An ACE_Connector
- * inherits from ACE_Service_Object, which in turn inherits from
- * ACE_Event_Handler.  This enables the ACE_Reactor to dispatch
- * the ACE_Connector's handle_output method when connections
- * complete asynchronously.  The handle_output method performs
- * the connector's active connection establishment and service
- * activation strategy.
+ * Implements the strategy for actively establishing connections with
+ * clients.  An ACE_Connector is parameterized by concrete types that
+ * conform to the interfaces of PEER_CONNECTOR and SVC_HANDLER.  The
+ * PEER_CONNECTOR is instantiated with a transport mechanism that
+ * actively establishes connections.  The SVC_HANDLER is instantiated
+ * with a concrete type that performs the application-specific
+ * service.  Both blocking and non-blocking connects are supported.
+ * Further, non-blocking connects support timeouts.
  */
 template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1>
-class ACE_Connector : public ACE_Service_Object
+class ACE_Connector : public ACE_Connector_Base<SVC_HANDLER>, public ACE_Service_Object
 {
 public:
 
@@ -135,14 +145,13 @@ public:
   typedef SVC_HANDLER                            handler_type;
   typedef ACE_TYPENAME SVC_HANDLER::stream_type  stream_type;
 
-
   // typedef ACE_TYPENAME ACE_PEER_CONNECTOR_ADDR PEER_ADDR;
 #if defined (ACE_HAS_TYPENAME_KEYWORD)
   typedef ACE_PEER_CONNECTOR_ADDR ACE_PEER_ADDR_TYPEDEF;
 #endif /* ACE_HAS_TYPENAME_KEYWORD */
 
   typedef ACE_TYPENAME _ACE_PEER_CONNECTOR::PEER_ADDR
-          ACE_TYPENAME_ACE_PEER_CONNECTOR_PEER_ADDR;
+  ACE_TYPENAME_ACE_PEER_CONNECTOR_PEER_ADDR;
 
   /**
    * Initialize a connector.  @a flags indicates how <SVC_HANDLER>'s
@@ -182,7 +191,7 @@ public:
                        const ACE_PEER_CONNECTOR_ADDR &remote_addr,
                        const ACE_Synch_Options &synch_options = ACE_Synch_Options::defaults,
                        const ACE_PEER_CONNECTOR_ADDR &local_addr
-                         = (ACE_TYPENAME_ACE_PEER_CONNECTOR_PEER_ADDR &) ACE_PEER_CONNECTOR_ADDR_ANY,
+                       = (ACE_TYPENAME_ACE_PEER_CONNECTOR_PEER_ADDR &) ACE_PEER_CONNECTOR_ADDR_ANY,
                        int reuse_addr = 0,
                        int flags = O_RDWR,
                        int perms = 0);
@@ -202,7 +211,7 @@ public:
                        const ACE_PEER_CONNECTOR_ADDR &remote_addr,
                        const ACE_Synch_Options &synch_options = ACE_Synch_Options::defaults,
                        const ACE_PEER_CONNECTOR_ADDR &local_addr
-                         = (ACE_TYPENAME_ACE_PEER_CONNECTOR_PEER_ADDR &) ACE_PEER_CONNECTOR_ADDR_ANY,
+                       = (ACE_TYPENAME_ACE_PEER_CONNECTOR_PEER_ADDR &) ACE_PEER_CONNECTOR_ADDR_ANY,
                        int reuse_addr = 0,
                        int flags = O_RDWR,
                        int perms = 0);
@@ -230,11 +239,22 @@ public:
    */
   virtual int cancel (SVC_HANDLER *svc_handler);
 
-  /// Close down the Connector
+  /// Close down the Connector.  All pending non-blocking connects are
+  /// canceled and the corresponding svc_handler is closed.
   virtual int close (void);
 
   /// Return the underlying PEER_CONNECTOR object.
   virtual ACE_PEER_CONNECTOR &connector (void) const;
+
+  /// Initialize Svc_Handler.
+  virtual void initialize_svc_handler (ACE_HANDLE handle,
+                                       SVC_HANDLER *svc_handler);
+
+  /// Set Reactor.
+  virtual void reactor (ACE_Reactor *reactor);
+
+  /// Get Reactor.
+  virtual ACE_Reactor *reactor (void) const;
 
   /// Dump the state of an object.
   void dump (void) const;
@@ -244,16 +264,7 @@ public:
 
 protected:
   // = Helpful typedefs.
-
-  typedef ACE_Svc_Tuple<SVC_HANDLER>
-          AST;
-
-  typedef ACE_Map_Manager<ACE_HANDLE, ACE_Svc_Tuple<SVC_HANDLER> *, ACE_SYNCH_RW_MUTEX>
-          MAP_MANAGER;
-  typedef ACE_Map_Iterator<ACE_HANDLE, ACE_Svc_Tuple<SVC_HANDLER> *, ACE_SYNCH_RW_MUTEX>
-          MAP_ITERATOR;
-  typedef ACE_Map_Entry<ACE_HANDLE, ACE_Svc_Tuple<SVC_HANDLER> *>
-          MAP_ENTRY;
+  typedef ACE_NonBlocking_Connect_Handler<SVC_HANDLER> NBCH;
 
   // = The following two methods define the Connector's strategies for
   // creating, connecting, and activating SVC_HANDLER's, respectively.
@@ -302,17 +313,23 @@ protected:
    */
   virtual int activate_svc_handler (SVC_HANDLER *svc_handler);
 
-  /// Called by ACE_Reactor when asynchronous connections fail.
-  virtual int handle_input (ACE_HANDLE);
+  /// Creates and registers ACE_NonBlocking_Connect_Handler.
+  int nonblocking_connect (SVC_HANDLER *,
+                           const ACE_Synch_Options &);
 
-  /// Called by ACE_Reactor when asynchronous connections succeed.
-  virtual int handle_output (ACE_HANDLE);
+  /// Implementation the <connect> methods.
+  virtual int connect_i (SVC_HANDLER *&svc_handler,
+                         SVC_HANDLER **sh_copy,
+                         const ACE_PEER_CONNECTOR_ADDR &remote_addr,
+                         const ACE_Synch_Options &synch_options,
+                         const ACE_PEER_CONNECTOR_ADDR &local_addr,
+                         int reuse_addr,
+                         int flags,
+                         int perms);
 
-  virtual int resume_handler (void);
-
-  /// Called by ACE_Reactor when asynchronous connections complete (on
-  /// some platforms only).
-  virtual int handle_exception (ACE_HANDLE fd = ACE_INVALID_HANDLE);
+  /// Return the handle set representing the non-blocking connects in
+  /// progress.
+  ACE_Handle_Set &non_blocking_handles (void);
 
   // = Dynamic linking hooks.
   /// Default version does no work and returns -1.  Must be overloaded
@@ -325,20 +342,6 @@ protected:
   /// Default version returns address info in <buf>.
   virtual int info (ACE_TCHAR **, size_t) const;
 
-  // = Demultiplexing hooks.
-  /**
-   * Terminate the Client ACE_Connector by iterating over any
-   * unconnected ACE_Svc_Handler's and removing them from the
-   * ACE_Reactor.
-   */
-  virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
-                            ACE_Reactor_Mask = ACE_Event_Handler::ALL_EVENTS_MASK);
-
-  /// This method is called if a connection times out before
-  /// completing.
-  virtual int handle_timeout (const ACE_Time_Value &tv,
-                              const void *arg);
-
   // = Service management hooks.
   /// Default version does no work and returns -1.  Must be overloaded
   /// by application developer to do anything meaningful.
@@ -348,42 +351,9 @@ protected:
   /// by application developer to do anything meaningful.
   virtual int resume (void);
 
-  /// Creates and inserts an ACE_Svc_Tuple into the <handler_map_>.
-  /// so that we can continue accepting this connection asynchronously.
-  int create_AST (SVC_HANDLER *,
-                  const ACE_Synch_Options &);
-
-  /// Cleanup the <handler_map_> and returns the appropriate
-  /// ACE_Svc_Tuple (which is 0 if there is no associated tuple).
-  int cleanup_AST (ACE_HANDLE handle, AST *&ast);
-
-  /// Implementation the <connect> methods.
-  virtual int connect_i (SVC_HANDLER *&svc_handler,
-                         SVC_HANDLER **sh_copy,
-                         const ACE_PEER_CONNECTOR_ADDR &remote_addr,
-                         const ACE_Synch_Options &synch_options,
-                         const ACE_PEER_CONNECTOR_ADDR &local_addr,
-                         int reuse_addr,
-                         int flags,
-                         int perms);
-
-
-  /// Helper method for manipulating the refcount on AST. It holds the
-  /// lock before manipulating the refcount on AST.
-  /// @@ TODO: Needs to be out after 5.3
-  long incr_ast_refcount (AST *ast);
-  long decr_ast_refcount (AST *ast);
-
-  /// Lookup table that maps an I/O handle to a SVC_HANDLER *.
-  MAP_MANAGER handler_map_;
 private:
-  /// This is the concrete connector factory (it keeps no state so the
-  /// <ACE_Connector> is reentrant).
+  /// This is the peer connector factory.
   ACE_PEER_CONNECTOR connector_;
-
-  /// Keeps track of whether we are in the process of closing (required
-  /// to avoid circular calls to <handle_close>).
-  char closing_;
 
   /**
    * Flags that indicate how <SVC_HANDLER>'s should be initialized
@@ -393,10 +363,12 @@ private:
    */
   int flags_;
 
-  /// Lock to synchronize access to the internal state of the
-  /// connector.
-  /// @@TODO: This needs to go after 1.3
-  ACE_SYNCH_MUTEX mutex_;
+  /// Pointer to the Reactor.
+  ACE_Reactor *reactor_;
+
+  /// Handle set representing the non-blocking connects in progress.
+  ACE_Handle_Set non_blocking_handles_;
+
 };
 
 /**
@@ -421,23 +393,23 @@ public:
 
   // Useful STL-style traits.
   typedef ACE_Creation_Strategy<SVC_HANDLER>
-          creation_strategy_type;
+  creation_strategy_type;
   typedef ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2>
-          connect_strategy_type;
+  connect_strategy_type;
   typedef ACE_Concurrency_Strategy<SVC_HANDLER>
-          concurrency_strategy_type;
+  concurrency_strategy_type;
   typedef ACE_Connector <SVC_HANDLER, ACE_PEER_CONNECTOR_2>
-          base_type;
+  base_type;
 
   // = Define some useful (old style) traits.
   typedef ACE_Creation_Strategy<SVC_HANDLER>
-          CREATION_STRATEGY;
+  CREATION_STRATEGY;
   typedef ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2>
-          CONNECT_STRATEGY;
+  CONNECT_STRATEGY;
   typedef ACE_Concurrency_Strategy<SVC_HANDLER>
-          CONCURRENCY_STRATEGY;
+  CONCURRENCY_STRATEGY;
   typedef ACE_Connector <SVC_HANDLER, ACE_PEER_CONNECTOR_2>
-          SUPER;
+  SUPER;
 
   /**
    * Initialize a connector.  <flags> indicates how <SVC_HANDLER>'s
