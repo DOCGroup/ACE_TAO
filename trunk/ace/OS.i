@@ -9783,13 +9783,13 @@ ACE_OS::ungetc (int c, FILE* fp)
 ACE_INLINE wint_t
 ACE_OS::fgetwc (FILE* fp)
 {
-  ACE_OSCALL_RETURN (::fgetwc (fp), wint_t, -1);
+  ACE_OSCALL_RETURN (::fgetwc (fp), wint_t, WEOF);
 }
 
 ACE_INLINE wint_t
 ACE_OS::ungetwc (wint_t c, FILE* fp)
 {
-  ACE_OSCALL_RETURN (::ungetwc (c, fp), wint_t, -1);
+  ACE_OSCALL_RETURN (::ungetwc (c, fp), wint_t, WEOF);
 }
 
 #endif /* ACE_HAS_WCHAR */
