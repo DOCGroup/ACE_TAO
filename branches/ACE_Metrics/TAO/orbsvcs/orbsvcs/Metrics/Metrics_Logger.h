@@ -164,15 +164,14 @@ protected:
   int generate_log_;
   // Indicates whether or not to generate a text log.
 
+  const char *log_filename_;
+  // Name of the text log file (if any)
+
   int generate_totals_;
   // Indicates whether information of totals are logged.
 
   int generate_export_file_;
   // Indicates whether information of totals are logged.
-
-  //DCL:Move code here to remove Linux compiler warning
-  const char *log_filename_;
-  // Name of the text log file (if any)
 
   int log_started_;
   // Indicates whether or not the log has been started already.
