@@ -58,6 +58,21 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException,
                      LoadBalancing::InterfaceNotFound));
 
+  /// Register a load monitor with the load balancer
+  /// ReplicationManager.
+  virtual void register_load_monitor (
+      LoadBalancing::LoadMonitor_ptr load_monitor,
+      const LoadBalancing::Location & the_location,
+      CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  /// Return a reference to the load notifier in use.
+  virtual LoadBalancing::LoadMonitor_ptr get_load_monitor (
+      const LoadBalancing::Location & the_location,
+      CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     LoadBalancing::InterfaceNotFound));
+
   /**
    * @name LoadBalancing::PropertyManager methods
    */

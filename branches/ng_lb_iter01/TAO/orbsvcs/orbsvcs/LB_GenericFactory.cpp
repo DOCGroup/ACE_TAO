@@ -35,12 +35,14 @@ TAO_LB_GenericFactory::create_object (
                    LoadBalancing::InvalidProperty,
                    LoadBalancing::CannotMeetCriteria))
 {
-  LoadBalancing::Criteria_var creation_criteria =
-    this->property_manager_.process_criteria (the_criteria,
-                                              ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
+//   LoadBalancing::Criteria_var creation_criteria =
+//     this->property_manager_.process_criteria (the_criteria,
+//                                               ACE_TRY_ENV);
+//   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   CORBA::ULong factory_infos_count = factory_infos.length ();
+
+  const CORBA::UShort initial_number_replicas = 3;  // @@ REMOVE ME!
 
   // If the number of factories is less than the initial number of
   // replicas, then the desired number of replicas cannot possibly be
