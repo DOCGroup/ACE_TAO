@@ -15,7 +15,7 @@ endif # ! TAO_ROOT
 BIN2 =  MCast
 
 SRC=MCast.cpp Consumer.cpp Supplier.cpp AddrServer.cpp
-LDLIBS = -lTAO_RTEvent -lTAO_RTSched -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable -lTAO_Messaging -lTAO_PortableServer -lTAO
+LDLIBS = -lTAO_RTEvent -lTAO_RTSched -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable -lTAO_Messaging $(TAO_SRVR_LIBS)
 CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs \
         $(foreach svc, $(TAO_ORBSVCS), -DTAO_ORBSVCS_HAS_$(svc))
 

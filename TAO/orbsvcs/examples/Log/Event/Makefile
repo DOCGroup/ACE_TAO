@@ -18,7 +18,7 @@ BIN2 =  Event_Consumer \
 	Event_Supplier
 
 PSRC=$(addsuffix .cpp,$(BIN2))
-LDLIBS = -lTAO_DsEventLogAdmin -lTAO_DsLogAdmin -lTAO_CosEvent -lTAO_CosNaming -lTAO_PortableServer -lTAO
+LDLIBS = -lTAO_DsEventLogAdmin -lTAO_DsLogAdmin -lTAO_CosEvent -lTAO_CosNaming $(TAO_SRVR_LIBS)
 CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs \
         $(foreach svc, $(TAO_ORBSVCS), -DTAO_ORBSVCS_HAS_$(svc))
 
