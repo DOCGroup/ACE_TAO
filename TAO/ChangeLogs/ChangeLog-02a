@@ -1,3 +1,14 @@
+Thu Aug 24 12:49:11 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_generator.cpp:
+
+	  Cosmetic changes.
+
+	* TAO_IDL/fe/fe_extern.cpp:
+
+	  Found a mistake in FE_new_UTL_String() and put back some
+	  code removed from FE_yyparse().
+
 Thu Aug 24 12:08:04 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/ast/ast_decl.cpp:
