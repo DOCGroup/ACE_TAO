@@ -2,7 +2,7 @@
 // $Id$
 
 // The following configuration file is designed to work for VxWorks
-// 5.2 platforms using the GNU g++ 2.7.2 compiler, without repo patch
+// 5.2/5.3 platforms using the GNU g++ 2.7.2 compiler, without repo patch
 
 #if !defined (ACE_CONFIG_H)
 #define ACE_CONFIG_H
@@ -14,6 +14,7 @@
 #define ACE_HAS_CPLUSPLUS_HEADERS
 #define ACE_HAS_GNU_CSTRING_H
 #define ACE_HAS_GREENHILLS_SOCKETS
+#define ACE_HAS_INLINED_OSCALLS
 #define ACE_HAS_MSG
 #define ACE_HAS_MT_SAFE_SOCKETS
 #define ACE_HAS_POSIX_NONBLOCK
