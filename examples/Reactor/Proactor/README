@@ -1,9 +1,10 @@
-This file describes the behavior of the POSIX <aio_> calls on the
-various platforms it is being tested on.
+This README file lists all the example applications for the Proactor framework. 
 
-Test Suits:
-==========
+Test/Example Applications for Proactor:
+=========================================
 
+The following tests are available.
+        
 o $ACE_ROOT/tests/Aio_Platform_Test.cpp : Tests basic limits
         pertaining to the  POSIX features 
 
@@ -16,22 +17,57 @@ o $ACE_ROOT/examples/Reactor/Proactor/test_aiosig.cpp   : This is a
         C++ program for testing the Signal based completion approach
         that uses <sigtimedwait> for completion querying. 
 
-o $ACE_ROOT/examples/Reactor/Proactor/test_aiosig_ace.cpp: (Same as
-        test_aiosig.cpp, but uses ACE_DEBUGs instead of printf's and
-        ACE_Message_Blocks instead of char*'s. 
+o $ACE_ROOT/examples/Reactor/Proactor/test_aiocb_ace.cpp: Portable
+        version of test_aiocb.cpp. (Same as test_aiocb.cpp, but uses
+        ACE_DEBUGs instead of printf's and ACE_Message_Blocks instead
+        of char*'s. 
+
+o $ACE_ROOT/examples/Reactor/Proactor/test_aiosig_ace.cpp: Portable
+        version of test_aiosig.cpp. (Same as test_aiosig.cpp, but uses
+        ACE_DEBUGs instead of printf's and ACE_Message_Blocks instead
+        of char*'s. 
 
 o test_proactor.cpp (with ACE_POSIX_AIOCB_Proactor)     : Test for
         ACE_Proactor which uses AIOCB (AIO Control Blocks) based
-        completions strategy Proactor. (#define ACE_POSIX_AIOCB_PROACTOR)
+        completions strategy Proactor. (#define
+        ACE_POSIX_AIOCB_PROACTOR in the config file, but this is the
+        default option)
 
 o test_proactor.cpp (with ACE_POSIX_SIG_Proactor)     : Test for
         ACE_Proactor which uses real time signal based completion
-        strategy proactor. (#define ACE_POSIX_SIG_PROACTOR)
+        strategy proactor. (#define ACE_POSIX_SIG_PROACTOR in the
+        config file)
+
+o test_multiple_loops.cpp       : This example application shows how
+        to write programs that combine the Proactor and Reactor event
+        loops. This is possible only on WIN32 platform.
+       
+o test_timeout.cpp      : Multithreaded application testing the Timers
+        mechanism of the Proactor.
+
+o test_timeout_st.cpp   : Sinle threaded version of test_timeout.cpp.
 
 
 
 Behavior of POSIX AIO of various platforms:
 ==========================================
+
+
+
+Summary:
+======
+                        Sun     Sun     Lynx
+                        5.6     5.7     
+                        
+test_aiocb_ace          Good    Good    Good    
+(test_aiocb)
+
+test_aiosig_ace         Inconst Inconst Inconst
+
+
+Inconst.: Inconsistent execution.
+
+
 
 Aio_Platform_Test:
 ================
@@ -142,5 +178,3 @@ Lynx g++:
           
         TO-DO   : 1. Run <gdb> and watch for <errno> and figure when
                         it is changing over to 77.
-          
-

@@ -8,14 +8,17 @@
 //     This program helps you to test the <aio_*> calls on a
 //     platform. 
 //     Before running this test, make sure the platform can
-//     support POSIX <aio_> calls. use $ACE_ROOT/tests for this.
-//     This is for testing the Signal based completion approach which 
+//     support POSIX <aio_> calls, using ACE_ROOT/tests/Aio_Plaform_Test.cpp
+// 
+//     This  program tests the Signal based completion approach which 
 //     uses <sigtimedwait> for completion querying. 
 //     If this test is successful, ACE_POSIX_SIG_PROACTOR
 //     can be used on this platform.
+// 
 //     This program is a ACE version of the 
 //     $ACE_ROOT/examples/Reactor/Proactor/test_aiosig.cpp, with
 //     ACE_DEBUGs and Message_Blocks.
+//
 //     This test does the following:
 //     Issue two <aio_read>s.
 //     Assign SIGRTMIN as the notification signal.
@@ -49,28 +52,51 @@ static int setup_signal_delivery (void);
 static int issue_aio_calls (void);
 static int query_aio_completions (void);
 static int test_aio_calls (void);
+static void null_handler (int signal_number, siginfo_t *info, void *context);
+static int setup_signal_handler (int signal_number);
 
 static int
 setup_signal_delivery (void)
 {
-  // Make the sigset_t consisting of the completion signal.
-  if (sigemptyset (&completion_signal) < 0)
+  // = Mask all the signals.
+  
+  sigset_t full_set;
+  
+  // Get full set.
+  if (sigfillset (&full_set) != 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "Error:(%P | %t):%p\n",
+                       "sigfillset failed"),
+                      -1);
+  
+  // Mask them.
+  if (pthread_sigmask (SIG_SETMASK, &full_set, 0) != 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "Error:(%P | %t):%p\n",
+                       "pthread_sigmask failed"),
+                      -1);
+  
+  // = Make a mask with SIGRTMIN only. We use only that signal to
+  //   issue <aio_>'s.
+  
+  if (sigemptyset (&completion_signal) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Error:%p:Couldnt init the RT completion signal set\n"),
                       -1);
 
   if (sigaddset (&completion_signal,
-                 SIGRTMIN) < 0)
+                 SIGRTMIN) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Error:%p:Couldnt init the RT completion signal set\n"),
                       -1);
 
-  // Mask them.
-  if (sigprocmask (SIG_BLOCK, &completion_signal, 0) < 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Error:%p:Couldnt maks the RT completion signals\n"),
-                      -1);
+  // Set up signal handler for this signal.
+  return setup_signal_handler (SIGRTMIN);
+}
 
+static int
+setup_signal_handler (int signal_number)
+{
   // Setting up the handler(!) for these signals.
   struct sigaction reaction;
   sigemptyset (&reaction.sa_mask);   // Nothing else to mask.
@@ -79,7 +105,7 @@ setup_signal_delivery (void)
   // Lynx says, it is better to set this bit to be portable.
   reaction.sa_flags &= SA_SIGACTION;
 #endif /* SA_SIGACTION */
-  reaction.sa_sigaction = 0;         // No handler.
+  reaction.sa_sigaction = null_handler; // Null handler.
   int sigaction_return = sigaction (SIGRTMIN,
                                     &reaction,
                                     0);
@@ -89,6 +115,7 @@ setup_signal_delivery (void)
                       -1);
   return 0;
 }
+
 
 static int
 issue_aio_calls (void)
@@ -142,10 +169,10 @@ query_aio_completions (void)
       timespec timeout;
       timeout.tv_sec = ACE_INFINITE;
       timeout.tv_nsec = 0;
-
+      
       // To get back the signal info.
       siginfo_t sig_info;
-
+      
       // Await the RT completion signal.
       int sig_return = sigtimedwait (&completion_signal,
                                      &sig_info,
@@ -158,7 +185,7 @@ query_aio_completions (void)
       if (sig_return == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Error:%p:Error waiting for RT completion signals\n"),
-                          0);
+                          -1);
 
       // RT completion signals returned.
       if (sig_return != SIGRTMIN)
@@ -248,16 +275,28 @@ test_aio_calls (void)
                        "ACE_OS::open"),
                       -1);
 
-  if (setup_signal_delivery () < 0)
+  if (setup_signal_delivery () == -1)
     return -1;
 
-  if (issue_aio_calls () < 0)
+  if (issue_aio_calls () == -1)
     return -1;
 
-  if (query_aio_completions () < 0)
+  if (query_aio_completions () == -1)
     return -1;
 
   return 0;
+}
+
+static void
+null_handler (int signal_number,
+              siginfo_t */* info */,
+              void * /* context */)
+{
+  ACE_ERROR ((LM_ERROR,
+              "Error:%s:Signal number %d\n"
+              "Mask all the RT signals for this thread",
+              "ACE_POSIX_SIG_Proactor::null_handler called",
+              signal_number));
 }
 
 int
