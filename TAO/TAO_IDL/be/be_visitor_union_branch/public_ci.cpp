@@ -871,30 +871,6 @@ be_visitor_union_branch_public_ci::visit_sequence (be_sequence *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  // If bt is not a typedef and is defined inside the union.
-  if (bt->node_type () != AST_Decl::NT_typedef
-      && bt->is_child (bu))
-    {
-      // Instantiate a visitor context with a copy of our context. This info
-      // will be modified based on what type of node we are visiting.
-      be_visitor_context ctx (*this->ctx_);
-
-      // Set the node to be the node being visited. Scope is still the same.
-      ctx.node (node);
-
-      // First generate inline operations for this anonymous sequence type.
-      be_visitor_sequence_ci visitor (&ctx);
-
-      if (node->accept (&visitor) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_union_branch_public_ci::"
-                             "visit_sequence - "
-                             "codegen failed\n"),
-                            -1);
-        }
-    }
-
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 

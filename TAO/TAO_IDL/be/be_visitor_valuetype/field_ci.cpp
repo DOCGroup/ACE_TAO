@@ -152,46 +152,6 @@ be_visitor_valuetype_field_ci::visit_predefined_type (be_predefined_type *)
 int
 be_visitor_valuetype_field_ci::visit_sequence (be_sequence *node)
 {
-  be_decl *ub = this->ctx_->node ();
-  be_valuetype *bu = be_valuetype::narrow_from_decl (this->ctx_->scope ());
-  be_type *bt;
-
-  // Check if we are visiting this node via a visit to a typedef node.
-  if (this->ctx_->alias ())
-    {
-      bt = this->ctx_->alias ();
-    }
-  else
-    {
-      bt = node;
-    }
-
-  if (!ub || !bu)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_valuetype_field_ci::"
-                         "visit_sequence - "
-                         "bad context information\n"), 
-                        -1);
-    }
-
-  if (bt->node_type () != AST_Decl::NT_typedef
-      && bt->is_child (bu))
-    {
-      be_visitor_context ctx (*this->ctx_);
-      ctx.node (node);
-      be_visitor_sequence_ci visitor (&ctx);
-
-      if (node->accept (&visitor) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_valuetype_field_ci::"
-                             "visit_sequence - "
-                             "codegen failed\n"), 
-                            -1);
-        }
-    }
-
   return 0;
 }
 
