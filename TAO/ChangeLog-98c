@@ -1,3 +1,8 @@
+Tue Mar 24 14:51:33 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/IIOP_Object.cpp: Initialze
+ 	  TAO_Synchronous_Cancellation_Required::dont_care.
+	
 Tue Mar 24 14:07:08 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* tao/Server_Request.{h, i, cpp}: Made the class compliant with
