@@ -231,7 +231,7 @@ main (int argc, ACE_TCHAR *argv[])
 // The ACE_Node<ACE_INT32> instantation is in ace/Stats.cpp.
 template class ACE_Unbounded_Set<ACE_HANDLE>;
 template class ACE_Unbounded_Set_Iterator<ACE_HANDLE>;
-# if defined(_CRAYMPP)
+# if defined(_CRAYMPP) || defined(ghs) && defined (ACE_WIN32)
 // MPP Cray ACE_HANDLE is 64-bit, defined as int, but ACE_INT32 is short
 // so instantiation in ace/Stats.cpp isn't used in this case
 template class ACE_Node<ACE_HANDLE>;

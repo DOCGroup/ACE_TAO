@@ -37,12 +37,12 @@ typedef ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex> MALLOC;
 #define MMAP_FILENAME ACE_TEXT ("test_file")
 #define MUTEX_NAME ACE_TEXT ("test_lock")
 
-#if !defined (linux)
+#if !defined (linux) && !(defined (ACE_WIN32) && defined (ghs))
 #define ACE_TEST_REMAP_ON_FAULT
-// Linux seems to have problem when calling mmap from the signal
-// handler.  On this plarform, we make sure the remapping will never
-// occur.
-#endif /* linux */
+// Linux seems to have problem when calling mmap from the signal handler.
+// The Green Hills Native x86 compiler does not support structural exceptions.
+// On these plarforms, we make sure the remapping will never occur.
+#endif /* linux && Win32 GHS*/
 
 #if defined (ACE_WIN32)
 // When looking for the file to execute a process on Win32, the directory from
