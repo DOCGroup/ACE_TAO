@@ -1,8 +1,14 @@
+Fri Oct  5 14:04:39 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* THANKS: Added Hagen Ulrich to the Hall of Fame.
+
 Fri Oct  5 13:55:02 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/Makefile: Removed the SUPPRESS_DASH_G option. Not really
 	  sure where it is used. Further, added a tab to the place where
-	  rules for CHORUS are set.
+	  rules for CHORUS are set. This should fix BUGID 1049. Thanks to
+	  Hagen Ulrich <ulrich.hagen@siemens.com> and Dr.David Levine for
+	  reporting and verifying the fix.
 
 Fri Oct 05 05:56:50 2001  Balachandran  <bala@cs.wustl.edu>
 
