@@ -210,7 +210,7 @@ ACE::sendv_n (ACE_HANDLE handle,
 ASYS_INLINE ssize_t
 ACE::send_i (ACE_HANDLE handle, const void *buf, size_t len)
 {
-#if defined (ACE_WIN32) || defined (ACE_PSOS)
+#if defined (ACE_WIN32) || defined (ACE_PSOS) || defined (HPUX)
   return ACE_OS::send (handle, (const char *) buf, len);
 #else
   return ACE_OS::write (handle, (const char *) buf, len);

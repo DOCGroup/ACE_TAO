@@ -6009,11 +6009,29 @@ ACE_INLINE int
 ACE_OS::send (ACE_HANDLE handle, const char *buf, int len, int flags)
 {
   ACE_OS_TRACE ("ACE_OS::send");
-#if defined (VXWORKS) || defined (HPUX) || defined (ACE_PSOS)
-  ACE_SOCKCALL_RETURN (::send ((ACE_SOCKET) handle, (char *) buf, len, flags), int, -1);
-#else
+
+  // On UNIX, a non-blocking socket with no data to receive, this
+  // system call will return EWOULDBLOCK or EAGAIN, depending on the
+  // platform.  UNIX 98 allows either errno, and they may be the same
+  // numeric value.  So to make life easier for upper ACE layers as
+  // well as application programmers, always change EAGAIN to
+  // EWOULDBLOCK.  Rather than hack the ACE_OSCALL_RETURN macro, it's
+  // handled explicitly here.  If the ACE_OSCALL macro ever changes,
+  // this function needs to be reviewed.  On Win32, the regular macros
+  // can be used, as this is not an issue.
+#if defined (ACE_WIN32)
   ACE_SOCKCALL_RETURN (::send ((ACE_SOCKET) handle, buf, len, flags), int, -1);
-#endif /* VXWORKS */
+#else
+  int ace_result_;
+#  if defined (VXWORKS) || defined (HPUX) || defined (ACE_PSOS)
+  ace_result_ = ::send ((ACE_SOCKET) handle, (char *) buf, len, flags);
+#  else
+  ace_result_ = ::send ((ACE_SOCKET) handle, buf, len, flags);
+#  endif /* VXWORKS */
+  if (ace_result_ == -1 && errno == EAGAIN)
+    errno = EWOULDBLOCK;
+  return ace_result_;
+#endif /* defined (ACE_WIN32) */
 }
 
 ACE_INLINE int

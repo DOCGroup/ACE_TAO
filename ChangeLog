@@ -1,3 +1,19 @@
+Fri Mar 02 19:36:22 2001  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS.i (ACE_OS::send): (only non-Win32), if call fails and
+          errno is EAGAIN, change it to EWOULDBLOCK. Improve portability for
+          platforms where EAGAIN and EWOULDBLOCK are different values and
+          both used, like HP-UX.
+          Thanks to snowymike@aol.com for reporting this problem.
+
+        * ace/ACE.i (send_i): Call ACE_OS::send, not ACE_OS::write, on HP-UX.
+          This makes it pick up the EAGAIN->EWOULDBLOCK change.
+
+        * tests/TSS_Test.cpp: Avoid doing ACE_Thread::keyfree on where
+          ACE_HAS_PTHREADS_DRAFT4 or ACE_HAS_PTHREADS_DRAFT6 (unless
+          ACE_HAS_TSS_EMULATION is also defined) since ACE_Thread::keyfree
+          will get ENOTSUP anyway.
+
 Fri Mar 02 17:50:40 2001  Sharath R. Cholleti  <sharath@cs.wustl.edu>
 
         * ace/QtReactor.cpp:
