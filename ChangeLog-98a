@@ -1,3 +1,9 @@
+Thu Feb 19 10:41:05 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/SOCK.cpp (open): It appears that we don't need to do
+ 	  SO_REUSEADDR if protocol_family != PF_UNIX.  Thanks to Chuck
+ 	  Gehr <gehr@sweng.stortek.com> for reporting this.
+
 Wed Feb 18 22:34:40 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* examples/Reactor/Dgram/Dgram.dsw:
