@@ -74,7 +74,7 @@ public:
   // Access the underlying control operations.
 
   // = Get/set the underly internal id.
-  int get_id (void);
+  int get_id (void) const;
   void set_id (int);
 
   void dump (void) const;

@@ -56,6 +56,9 @@ public:
   int send (const ACE_Typed_SV_Message<T> &mb, int mflags = 0);
   int recv (ACE_Typed_SV_Message<T> &mb, int mflags = 0);
 
+  int get_id (void) const;
+  // Return the id of the underlying <ACE_SV_Message_Queue>.
+
   int control (int option, void *arg = 0);
   // Control the underlying message queue.
 
