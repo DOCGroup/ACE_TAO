@@ -3126,6 +3126,8 @@ struct iovec
 {
   size_t iov_len; // byte count to read/write
   char *iov_base; // data to be read/written
+
+  operator WSABUF &(void) { return *((WSABUF *) this); }
 };
 
 struct msghdr
@@ -4692,7 +4694,7 @@ extern "C" {
   typedef int (*ACE_COMPARE_FUNC)(const void *, const void *);
 }
 
-class ACE_Errno_Guard
+class ACE_Export ACE_Errno_Guard
 {
   // = TITLE
   //   Provides a wrapper to improve performance when thread-specific
@@ -4716,37 +4718,222 @@ class ACE_Errno_Guard
   //   avoids an unnecessary second access to thread-specific storage
   //   by caching a pointer to the value of errno in TSS.  
 public:
-  ACE_Errno_Guard (int &e, int error):
-#if defined (ACE_MT_SAFE)
-    ep_ (&e),
-#endif /* ACE_MT_SAFE */
-    error_ (error) { }
+  // = Initialization and termination methods.
+  ACE_Errno_Guard (int &errno_ref,
+		   int error);
+  //  Stash the value of <error> into <error_> and initialize the
+  //  <errno_ptr_> to the address of <errno_ref>.
 
-  ACE_Errno_Guard (int &e):
-#if defined (ACE_MT_SAFE)
-    ep_ (&e),
-#endif /* ACE_MT_SAFE */
-    error_ (e) { }
+  ACE_Errno_Guard (int &errno_ref);
+  //  Stash the value of <errno> into <error_> and initialize the
+  //  <errno_ptr_> to the address of <errno_ref>.
+  
+  ~ACE_Errno_Guard (void);
+  // Reset the value of <errno> to <error>.  
 
-  ~ACE_Errno_Guard (void)
-  {
-#if defined (ACE_MT_SAFE)
-    *ep_ = error_;
-#else
-    errno = error_;
-#endif /* ACE_MT_SAFE */
-  }
+  int operator= (int error);
+  // Assign <error> to <error_>.
 
-  int operator= (int error)
-  {
-    return this->error_ = error;
-  }
+  int operator== (int error);
+  // Compare <error> with <error_> for equality.
+
+  int operator!= (int error);
+  // Compare <error> with <error_> for inequality.
 
 private:
 #if defined (ACE_MT_SAFE)
-  int *ep_;
+  int *errno_ptr_;
 #endif /* ACE_MT_SAFE */
   int error_;
+};
+
+// @@ We might want a smarter way to do this...
+#if !defined (SERVICETYPE)
+typedef u_long ACE_SERVICE_TYPE;
+#else
+typedef SERVICETYPE ACE_SERVICE_TYPE;
+#endif /* SERVICETYPE */
+
+class ACE_Export ACE_Flow_Spec
+#if defined (ACE_HAS_WINSOCK2)
+  : public FLOWSPEC
+#endif /* ACE_HAS_WINSOCK2 */
+{
+  // = TITLE
+  //   Wrapper class that defines the flow spec QoS information, which
+  //   is used by RSVP.
+public:
+  // = Get/set the token rate in bytes/sec.
+  u_long token_rate (void);
+  void token_rate (u_long tr);
+
+  // = Get/set the token bucket size in bytes.
+  u_long token_bucket_size (void);
+  void token_bucket_size (u_long tbs);
+  
+  // = Get/set the PeakBandwidth in bytes/sec.
+  u_long peak_bandwidth (void);
+  void peak_bandwidth (u_long pb);
+
+  // = Get/set the latency in microseconds.
+  u_long latency (void);
+  void latency (u_long l);
+
+  // = Get/set the delay variation in microseconds.
+  u_long delay_variation (void);
+  void delay_variation (u_long dv);
+
+  // = Get/set the service type.
+  ACE_SERVICE_TYPE service_type (void);
+  void service_type (ACE_SERVICE_TYPE st);
+
+  // = Get/set the maximum SDU size in bytes.
+  u_long max_sdu_size (void);
+  void max_sdu_size (u_long mss);
+
+  // = Get/set the minimum policed size in bytes.
+  u_long minimum_policed_size (void);
+  void minimum_policed_size (u_long mps);
+};
+
+class ACE_Export ACE_QoS 
+#if defined (ACE_HAS_WINSOCK2)
+  : public QOS
+#endif /* ACE_HAS_WINSOCK2 */
+{
+  // = TITLE
+  //   Wrapper class that holds the sender and receiver flow spec
+  //   information, which is used by RSVP.
+public:
+  // = Get/set the flow spec for data sending.
+  ACE_Flow_Spec sending_flowspec (void);
+  void sending_flowspec (const ACE_Flow_Spec &fs);
+
+  // = Get/set the flow spec for data receiving.
+  ACE_Flow_Spec receiving_flowspec (void);
+  void receiving_flowspec (const ACE_Flow_Spec &fs);
+
+  // = Get/set the provider specific information.
+  iovec provider_specific (void);
+  void provider_specific (const iovec &ps);
+};
+
+class ACE_Export ACE_Connect_QoS_Params
+{
+  // = TITLE
+  //   Wrapper class that simplifies the information passed to the QoS
+  //   enabled <ACE_OS::connect> and <ACE_OS::join_leaf> methods.
+public:
+  ACE_Connect_QoS_Params (iovec *caller_data = 0,
+			  iovec *callee_data = 0,
+			  ACE_QoS *socket_qos = 0,
+			  ACE_QoS *group_socket_qos = 0,
+			  u_long flags = 0);
+  // Initialize the data members.  The <caller_data> is a pointer to
+  // the user data that is to be transferred to the peer during
+  // connection establishment.  The <callee_data> is a pointer to the
+  // user data that is to be transferred back from the peer during
+  // connection establishment.  The_<socket_qos> is a pointer to the
+  // flow speicfications for the socket, one for each direction.  The
+  // <group_socket_qos> is a pointer to the flow speicfications for
+  // the socket group, if applicable.  The_<flags> indicate if we're a
+  // sender, receiver, or both.
+
+  // = Get/set caller data.
+  iovec *caller_data (void);
+  void caller_data (iovec *);
+
+  // = Get/set callee data.
+  iovec *callee_data (void);
+  void callee_data (iovec *);
+
+  // = Get/set socket qos.
+  ACE_QoS *socket_qos (void);
+  void socket_qos (ACE_QoS *);
+
+  // = Get/set group socket qos.
+  ACE_QoS *group_socket_qos (void);
+  void group_socket_qos (ACE_QoS *);
+
+  // = Get/set flags.
+  u_long flags (void);
+  void flags (u_long);
+
+private:
+  iovec *caller_data_;
+  // A pointer to the user data that is to be transferred to the peer
+  // during connection establishment.
+
+  iovec *callee_data_;
+  // A pointer to the user data that is to be transferred back from
+  // the peer during connection establishment.
+
+  ACE_QoS *socket_qos_;
+  // A pointer to the flow speicfications for the socket, one for each
+  // direction.
+
+  ACE_QoS *group_socket_qos_;
+  // A pointer to the flow speicfications for the socket group, if
+  // applicable.
+
+  u_long flags_;
+  // Flags that indicate if we're a sender, receiver, or both.
+};
+
+// Callback function that's used by the QoS-enabled <ACE_OS::accept>
+// method.
+typedef int (*ACE_QOS_CONDITION_FUNC) (iovec *caller_id,
+				       iovec *caller_data,
+				       ACE_QoS *socket_qos,
+				       ACE_QoS *group_socket_qos,
+				       iovec *callee_id,
+				       iovec *callee_data,
+				       u_long *g, /* unused */
+				       u_long callbackdata);
+
+// Callback function that's used by the QoS-enabled <ACE_OS::ioctl>
+// method.
+typedef void (*ACE_OVERLAPPED_COMPLETION_FUNC) (u_long error,
+						u_long bytes_transferred,
+						ACE_OVERLAPPED *overlapped,
+						u_long flags);
+class ACE_Export ACE_Accept_QoS_Params
+{
+  // = TITLE
+  //   Wrapper class that simplifies the information passed to the QoS
+  //   enabled <ACE_OS::accept> method.
+public:
+  ACE_Accept_QoS_Params (ACE_QOS_CONDITION_FUNC qos_condition_callback = 0,
+			 u_long callback_data = 0);
+  // Initialize the data members.  The <qos_condition_callback> is the
+  // address of an optional, application-supplied condition function
+  // that will make an accept/reject decision based on the caller
+  // information pass in as parameters, and optionally create or join
+  // a socket group by assinging an appropriate value to the result
+  // parameter <g> of this function.  The <callback_data> data is
+  // passed back to the application as a condition function parameter,
+  // i.e., it is an Asynchronous Completion Token (ACT).
+
+  // = Get/set QoS condition callback.
+  ACE_QOS_CONDITION_FUNC qos_condition_callback (void);
+  void qos_condition_callback (ACE_QOS_CONDITION_FUNC qcc);
+
+  // = Get/Set callback data.
+  u_long callback_data (void);
+  void callback_data (u_long cd);
+
+private:
+  ACE_QOS_CONDITION_FUNC qos_condition_callback_;
+  // This is the address of an optional, application-supplied
+  // condition function that will make an accept/reject decision based
+  // on the caller information pass in as parameters, and optionally
+  // create or join a socket group by assinging an appropriate value
+  // to the result parameter <g> of this function.
+
+  u_long callback_data_;
+  // This data is passed back to the application as a condition
+  // function parameter, i.e., it is an Asynchronous Completion Token
+  // (ACT).
 };
 
 class ACE_Export ACE_OS
@@ -5260,6 +5447,16 @@ public:
   static int ioctl (ACE_HANDLE handle,
                     int cmd,
                     void * = 0);
+  static int ioctl (ACE_HANDLE socket,
+		    u_long io_control_code,
+		    void *in_buffer_p,
+		    u_long in_buffer,
+		    void *out_buffer_p,
+		    u_long out_buffer,
+		    u_long *bytes_returned,
+		    ACE_OVERLAPPED *overlapped,
+		    ACE_OVERLAPPED_COMPLETION_FUNC func);
+  // QoS-enabled <ioctl>.
   static int isastream (ACE_HANDLE handle);
   static int isatty (ACE_HANDLE handle);
   static off_t lseek (ACE_HANDLE handle,
@@ -5488,12 +5685,25 @@ public:
   static ACE_HANDLE accept (ACE_HANDLE handle,
                             struct sockaddr *addr,
                             int *addrlen);
+  // BSD-style <accept> (no QoS).
+  static ACE_HANDLE accept (ACE_HANDLE handle,
+                            struct sockaddr *addr,
+                            int *addrlen,
+			    ACE_Accept_QoS_Params qos_params);
+  // QoS-enabled <accept>.
   static int bind (ACE_HANDLE s,
                    struct sockaddr *name,
                    int namelen);
   static int connect (ACE_HANDLE handle,
                       struct sockaddr *addr,
                       int addrlen);
+  // BSD-style <connect> (no QoS).
+  static int connect (ACE_HANDLE handle,
+                      const sockaddr *addr,
+                      int addrlen,
+		      ACE_Connect_QoS_Params qos_params);
+  // QoS-enabled <connect>.
+
   static int closesocket (ACE_HANDLE s);
   static struct hostent *gethostbyaddr (const char *addr,
                                         int length,
@@ -5539,7 +5749,6 @@ public:
   static char *inet_ntoa (const struct in_addr addr);
   static int inet_aton (const char *strptr,
                         struct in_addr *addr);
-
   static const char *inet_ntop (int family,
                                 const void *addrptr,
                                 char *strptr,
@@ -5547,8 +5756,11 @@ public:
   static int inet_pton (int family,
                         const char *strptr,
                         void *addrptr);
-
-
+  static ACE_HANDLE join_leaf (ACE_HANDLE socket,
+			       const sockaddr *name,
+			       int namelen,
+			       ACE_Connect_QoS_Params qos_params);
+  // Joins a leaf node into a QoS-enabled multi-point session.
   static int listen (ACE_HANDLE handle,
                      int backlog);
   static int recv (ACE_HANDLE handle,
@@ -5579,6 +5791,7 @@ public:
                          int optname,
                          const char *optval,
                          int optlen);
+  // QoS-enabled <ioctl> wrapper.
   static int shutdown (ACE_HANDLE handle,
                        int how);
   static ACE_HANDLE socket (int domain,
