@@ -720,7 +720,7 @@ TAO_Stub::get_policy (CORBA::PolicyType type,
   // for this scope.
   if (type == RTCORBA::THREADPOOL_POLICY_TYPE
       || type == RTCORBA::SERVER_PROTOCOL_POLICY_TYPE)
-    ACE_THROW_RETURN (CORBA::NO_PERMISSION (),
+    ACE_THROW_RETURN (CORBA::INV_POLICY (),
                       CORBA::Policy::_nil ());
 
   // If we are dealing with a client exposed policy, check if any
@@ -772,7 +772,7 @@ TAO_Stub::get_client_policy (CORBA::PolicyType type,
   if (type == RTCORBA::THREADPOOL_POLICY_TYPE
       || type == RTCORBA::SERVER_PROTOCOL_POLICY_TYPE
       || type == RTCORBA::PRIORITY_MODEL_POLICY_TYPE)
-    ACE_THROW_RETURN (CORBA::NO_PERMISSION (),
+    ACE_THROW_RETURN (CORBA::INV_POLICY (),
                       CORBA::Policy::_nil ());
 
 #endif /* TAO_HAS_RT_CORBA == 1 */
@@ -893,23 +893,6 @@ CORBA::PolicyList *
 TAO_Stub::get_policy_overrides (const CORBA::PolicyTypeSeq &types,
                                 CORBA::Environment &ACE_TRY_ENV)
 {
-#if (TAO_HAS_RT_CORBA == 1)
-
-  // Validity check.  Make sure policies of interest are allowed
-  // at this scope.
-  for (CORBA::ULong i = 0; i < types.length ();  ++i)
-    {
-      CORBA::ULong type = types[i];
-
-      if (type == RTCORBA::THREADPOOL_POLICY_TYPE
-          || type == RTCORBA::SERVER_PROTOCOL_POLICY_TYPE
-          || type == RTCORBA::PRIORITY_MODEL_POLICY_TYPE)
-        ACE_THROW_RETURN (CORBA::NO_PERMISSION (),
-                          0);
-    }
-
-#endif /* TAO_HAS_RT_CORBA == 1 */
-
   if (this->policies_ == 0)
     return 0;
 

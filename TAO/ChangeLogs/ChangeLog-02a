@@ -1,3 +1,29 @@
+Mon Aug 28 00:33:21 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* tao/IOP.pidl
+	* tao/IOPC.cpp:
+
+	  Constant TAG_MULTIPLE_COMPONENTS was incorrectly defined as 0.
+	  Changed it to be 1 in accordance with CORBA specification.
+
+	* tao/Policy_Manager.cpp
+	* tao/Stub.cpp:
+
+	  - Removed code throwing CORBA::NO_PERMISSION exception from
+	  <get_policy_overrides> method implementations for
+	  PolicyCurrent and Object in case a policy that's not valid at
+	  these scopes is queried.  This is more in tune with the spec.
+
+	  - Changed implementations of <get_policy> and
+	  <get_client_policy> methods in TAO_Stub to throw
+	  CORBA::INV_POLICY instead of CORBA::NO_PERMISSION if the policy
+	  requested is not valid at the Object scope.  This is more in
+	  tune with Section 4.3 of CORBA 2.4 draft.
+
+	* tao/ORB.cpp (create_policy):
+
+	  Removed unused piece of code.
+
 Sun Aug 27 22:11:43 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * TAOACE.dsw:
@@ -874,7 +900,6 @@ Wed Aug 23 00:28:09 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
           TAO_POA_Policies, improved the memory management of the policies
           obtained from the ORB Core.
 
->>>>>>> 1.1301
 Tue Aug 22 16:41:02 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 
         * orbsvcs/tests/Notify/Basic/IdAssignment.cpp:
