@@ -422,6 +422,20 @@ Driver::run (void)
         delete client;
       }
       break;
+
+    case Options::TEST_EXCEPTION:
+      {
+        Param_Test_Client<Test_Exception> *client = new
+          Param_Test_Client<Test_Exception> (this->orb_.in (),
+                                             this->objref_.in(),
+                                             new Test_Exception);
+        if (opt->invoke_type () == Options::SII)
+          retstatus = client->run_sii_test ();
+        else
+          retstatus = client->run_dii_test ();
+        delete client;
+      }
+      break;
     default:
       break;
     }
@@ -468,6 +482,7 @@ template class Param_Test_Client<Test_Long_Sequence>;
 template class Param_Test_Client<Test_Bounded_Long_Sequence>;
 template class Param_Test_Client<Test_Fixed_Array>;
 template class Param_Test_Client<Test_Var_Array>;
+template class Param_Test_Client<Test_Exception>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Singleton<Driver, ACE_SYNCH_RECURSIVE_MUTEX>
 #pragma instantiate Param_Test_Client<Test_Short>
@@ -493,4 +508,5 @@ template class Param_Test_Client<Test_Var_Array>;
 #pragma instantiate Param_Test_Client<Test_Bounded_Long_Sequence>
 #pragma instantiate Param_Test_Client<Test_Fixed_Array>
 #pragma instantiate Param_Test_Client<Test_Var_Array>
+#pragma instantiate Param_Test_Client<Test_Exception>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

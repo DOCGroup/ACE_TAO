@@ -20,6 +20,8 @@
 #if !defined (TAO_EXCEPTION_H)
 #  define TAO_EXCEPTION_H
 
+class CORBA_Any;
+
 class TAO_Export CORBA_Exception
 {
   // = TITLE
@@ -57,6 +59,9 @@ public:
   // = To implement the narrow method.
   virtual int _is_a (const char* repository_id) const;
 
+  // = To throw the exception (when using the standard mapping.
+  virtual void _raise (void);
+
   // = Methods required for memory management support.
   CORBA::ULong _incr_refcnt (void);
   CORBA::ULong _decr_refcnt (void);
@@ -85,9 +90,6 @@ class TAO_Export CORBA_UserException : public CORBA_Exception
   //   User exceptions are those defined by application developers
   //   using OMG-IDL.
 public:
-  CORBA_UserException (void);
-  // default constructor
-
   CORBA_UserException (const CORBA_UserException &src);
   // copy ctor
 
@@ -107,6 +109,10 @@ public:
 
   virtual int _is_a (const char *interface_id) const;
   // used for narrowing
+
+protected:
+  CORBA_UserException (void);
+  // default constructor
 };
 
 class TAO_Export CORBA_SystemException : public CORBA_Exception
@@ -172,12 +178,13 @@ private:
 #define TAO_SYSTEM_EXCEPTION(name) \
 class TAO_Export CORBA_ ## name : public CORBA_SystemException { \
 public: \
+  CORBA_ ## name (void); \
   CORBA_ ## name (CORBA::CompletionStatus completed, \
                   CORBA::ULong code = 0xffff0000L) \
     : CORBA_SystemException (CORBA::_tc_ ## name, code, completed) \
     { } \
-  virtual int _is_a (const char* type_id) const; \
   static CORBA_##name * _narrow (CORBA_Exception* exception); \
+  virtual int _is_a (const char* type_id) const; \
 }
 
 TAO_SYSTEM_EXCEPTION(UNKNOWN);
@@ -208,6 +215,33 @@ TAO_SYSTEM_EXCEPTION(OBJ_ADAPTER);
 TAO_SYSTEM_EXCEPTION(DATA_CONVERSION);
 
 #undef TAO_SYSTEM_EXCEPTION
+
+class TAO_Export CORBA_UnknownUserException : public CORBA_UserException
+{
+  // = TITLE
+  //   CORBA_UnknownUserException
+  //
+  // = DESCRIPTION
+  //   When user exceptions are received by a DII invocation the ORB
+  //   is unable to create the exception with the right dynamic
+  //   type; to workaround this problem it throws a
+  //   CORBA::UnknownUserException that contains the exception inside
+  //   an Any.
+public:
+  CORBA_UnknownUserException (void);
+  CORBA_UnknownUserException (CORBA_Any& exception);
+  virtual ~CORBA_UnknownUserException (void);
+  // Constructor
+
+  CORBA_Any& exception (void);
+  // Return the any containing the user exception.
+
+  static CORBA_UnknownUserException* _narrow (CORBA_Exception *ex);
+  virtual int _is_a (const char* type_id) const;
+  //
+private:
+  CORBA_Any* exception_;
+};
 
 class TAO_Export CORBA_Environment
 {
@@ -271,12 +305,22 @@ public:
   // correctly, initializing system exceptions is only an exercise
   // in CPU time; it allocates no new memory.
 
+  static void make_unknown_user_typecode (CORBA::TypeCode_ptr &tcp,
+					  CORBA::Environment &env);
+  // Make the TypeCode for the CORBA::UnknownUserException standard
+  // exception.
+
   static void init (CORBA::Environment &env);
   // Runtime initialization of all standard exception typecodes.
   // Called from <CORBA::ORB_init>.
 
   static void fini (void);
   // Runtime finalization of all standard exception typecodes.
+
+  static CORBA_Exception *create_system_exception (const char* id,
+						   CORBA::Environment& env);
+  // Create a CORBA::SystemException given the interface repository
+  // ID.
 
   enum
   {
