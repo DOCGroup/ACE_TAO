@@ -387,6 +387,8 @@ public:
     ADMIN = 0x010
   }; 
 
+  virtual ~TAO_Trader_Base (void);
+  
   // = Accessors for objects that manage trader's configuration.
 
   TAO_Trading_Components_Impl &trading_components (void);

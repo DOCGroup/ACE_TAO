@@ -61,6 +61,9 @@ public:
   // Construct an instance of TAO_Property_Evaluator that operates on
   // an <offer> where the support for dynamic properties is dictated
   // by <supports_dynamic_properties>.
+
+  virtual ~TAO_Property_Evaluator (void);
+  // Clean up dynamic properties.
   
   int is_dynamic_property(int index);
   // Returns 1 if the property at index <index> is dynamic. Returns a
@@ -77,7 +80,7 @@ public:
   // CosTradingDynamic::DPEvalFailure exception on failure. If the
   // property index is undefined, the method returns a null pointer.
   
-  CORBA::TypeCode* property_type(int index);
+  CORBA::TypeCode* property_type (int index);
   // Returns the type of the property whose index is <index>. If the
   // property is dynamic and the trader supports dynamic properties,
   // then the method returns the <returned_type> field of the
@@ -89,12 +92,21 @@ public:
   
   typedef CosTradingDynamic::DynamicProp DP_Struct;
   typedef CosTradingDynamic::DynamicPropEval DP_Eval;
+
   
   const CosTrading::PropertySeq& props_;
   // The offer from which the TAO_Property_Evaluator extracts property 
   // information.
 
   int supports_dp_;
+
+  CORBA::Any** dp_cache_;
+  // In order to the result of property_value uniformly, we need to
+  // collect the dynamically allocated anys retrieved from dynamic
+  // properties in order to free them upon deletion. If we didn't do
+  // this, then the property_value method would leak or cause seg
+  // faults, since the client wouldn't be able to tell whether or not
+  // the return value should be freed.  
 
  private:
 

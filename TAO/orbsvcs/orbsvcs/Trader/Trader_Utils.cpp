@@ -189,8 +189,14 @@ TAO_Property_Evaluator::
 TAO_Property_Evaluator(const CosTrading::PropertySeq& props,
 		       CORBA::Boolean supports_dp)
   : props_ (props),
-    supports_dp_ (supports_dp)
+    supports_dp_ (supports_dp),
+    dp_cache_ (new CORBA::Any*[props.length ()])
 {
+  if (this->dp_cache_ != 0)
+    {
+      for (int i = 0; i < this->props_.length (); i++)
+        this->dp_cache_[i] = 0;
+    }
 }
 
 
@@ -198,8 +204,26 @@ TAO_Property_Evaluator::
 TAO_Property_Evaluator(CosTrading::Offer& offer,
 		       CORBA::Boolean supports_dp)
   : props_ (offer.properties),
-    supports_dp_ (supports_dp)
+    supports_dp_ (supports_dp),
+    dp_cache_ (new CORBA::Any*[offer.properties.length ()])
 {
+  if (this->dp_cache_ != 0)
+    {
+      for (int i = 0; i < this->props_.length (); i++)
+        this->dp_cache_[i] = 0;
+    }
+}
+
+TAO_Property_Evaluator::~TAO_Property_Evaluator (void)
+{
+  // Clean up the results of any dynamic properties.
+  for (int i = 0; i < this->props_.length (); i++)
+    {
+      if (this->dp_cache_[i] != 0)
+        delete this->dp_cache_[i];
+    }
+
+  delete [] this->dp_cache_;
 }
 
 int
@@ -230,9 +254,13 @@ TAO_Property_Evaluator::property_value (int index,
     TAO_THROW_SPEC ((CosTradingDynamic::DPEvalFailure))
 {
   CORBA::Any* prop_val = 0;
+  CORBA::Boolean in_cache =
+    this->dp_cache_ != 0 && this->dp_cache_[index] != 0;
   
-  if (! this->is_dynamic_property(index))
+  if (! this->is_dynamic_property (index))
     prop_val = (CORBA::Any *) &(this->props_[index].value);
+  else if (this->supports_dp_ && in_cache)
+    prop_val = this->dp_cache_[index];
   else if (this->supports_dp_)
     {
       // Property is defined at this point.
@@ -273,6 +301,9 @@ TAO_Property_Evaluator::property_value (int index,
 	      // Retrieve the value of the dynamic property.
 	      prop_val = dp_eval->evalDP(name, type, info, TAO_TRY_ENV);
 	      TAO_CHECK_ENV;
+
+              if (this->dp_cache_ != 0)
+                this->dp_cache_[index] = prop_val;
 	    }
 	  TAO_CATCH (CORBA::SystemException, excp)
 	    {
@@ -895,7 +926,6 @@ TAO_Policies::copy_to_forward (CosTrading::PolicySeq& policy_seq,
               // Allocating here avoids copying in the policy
               // any.
               CORBA::ULong length = trader_name.length ();
-              CosTrading::TraderName* new_name = 0;
               CosTrading::LinkName* buf =
                 CosTrading::TraderName::allocbuf (length - 1);
               
@@ -905,10 +935,11 @@ TAO_Policies::copy_to_forward (CosTrading::PolicySeq& policy_seq,
                     buf[j - 1] = CORBA::string_dup (trader_name[j]);
 
                   new_policy.name = this->policies_[i]->name;
-                  ACE_NEW (new_name, CosTrading::TraderName (length - 1,
-                                                             length -1,
-                                                             buf,
-                                                             CORBA::B_TRUE));
+                  CosTrading::TraderName new_name (length - 1,
+                                                   length - 1,
+                                                   buf,
+                                                   CORBA::B_TRUE);
+              
                   new_policy.value <<= new_name;
                   counter++;
                 }
@@ -1289,10 +1320,10 @@ TAO_Property_Filter::filter_offer (CosTrading::Offer& source,
   Prop_Queue prop_queue;
   CosTrading::PropertySeq& s_props = source.properties;
   CosTrading::PropertySeq& d_props = destination.properties;
-  int length = s_props.length (), elem = 0;
+  CORBA::ULong length = s_props.length (), elem = 0;
 
   destination.reference = source.reference->_duplicate (source.reference);
-  if (this->policy_ != CosTrading::Lookup::none)
+  if (this->policy_ == CosTrading::Lookup::some)
     {
       for (int i = 0; i < length; i++)
 	{
@@ -1321,6 +1352,11 @@ TAO_Property_Filter::filter_offer (CosTrading::Offer& source,
 	  prop_iter.next (prop_ptr);
 	  d_props[elem] = **prop_ptr;
 	}
+    }
+  else if (this->policy_ == CosTrading::Lookup::all)
+    {
+      CosTrading::Property* props = s_props.get_buffer (CORBA::B_FALSE);
+      d_props.replace (length, length, props, CORBA::B_FALSE);
     }
 }
 
