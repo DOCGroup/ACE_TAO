@@ -1,3 +1,16 @@
+Fri Apr  6 02:02:01 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/OS.h:
+	* ace/OS.h: The implementation for process semaphore on platforms
+	  lacking named POSIX semaphores was broken.  On these platforms,
+	  semaphores are allocated in MMAP file so they should never be
+	  deleted.  Added a flag <new_sema_> to remember if a semaphore
+	  can be deleted (USYNC_THREAD) or not (USYNC_PROCESS).
+
+	* ace/config-sunos5.6.h: According to the man pages, SunOS started
+	  supporting POSIX semaphores from 5.6.  Defined ACE_HAS_POSIX_SEM
+	  and ACE_LACKS_NAMED_POSIX_SEM.
+
 Thu Apr  5 11:23:05 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 	* html/index.html:
