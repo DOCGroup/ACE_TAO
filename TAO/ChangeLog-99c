@@ -1,3 +1,13 @@
+Thu Sep 16 15:50:24 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tests/Param_Test/bd_string.cpp:
+	* tests/Param_Test/bd_wstring.cpp:
+	* tests/Param_Test/ub_wstring.cpp:
+	  Was looking for something that would cause Linux to
+	  fail on test_bounded_wstring only. Didn't find
+	  anything, but made these cosmetic changes to some
+	  files anyway.
+
 Thu Sep 16 13:56:05 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_codegen.cpp:
