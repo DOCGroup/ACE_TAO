@@ -32,6 +32,8 @@ namespace CORBA
   class PolicyList;
 }
 
+class TAO_POA;
+
 namespace TAO
 {
   namespace Portable_Server
@@ -42,10 +44,7 @@ namespace TAO
     public:
       virtual ~Servant_Retention_Strategy (void);
 
-      virtual void strategy_init (TAO_POA *poa, CORBA::PolicyList *policy_list)
-      {
-        // dependent on type create the correct strategy.
-      }
+      virtual void strategy_init (TAO_POA *poa, CORBA::PolicyList *policy_list);
 
       virtual bool is_servant_in_map (PortableServer::Servant servant,
                                       int &wait_occurred_restart_call) = 0;
@@ -53,6 +52,8 @@ namespace TAO
       virtual void deactivate_object (const PortableServer::ObjectId &id
                                       ACE_ENV_ARG_DECL) = 0;
 
+    protected:
+      TAO_POA* poa_;
     };
 
     class TAO_PortableServer_Export Retain_Servant_Retention_Strategy :

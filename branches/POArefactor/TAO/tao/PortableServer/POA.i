@@ -743,3 +743,4 @@ TAO_POA::thread_pool (void) const
 {
   return 0;
 }
+

@@ -147,6 +147,11 @@ namespace TAO
 {
   class ORT_Adapter;
   class ORT_Adapter_Factory;
+
+  namespace Portable_Server
+  {
+    class Servant_Retention_Strategy;
+  }
 }
 
 /**
@@ -163,6 +168,7 @@ class TAO_PortableServer_Export TAO_POA
 public:
 
   friend class TAO_Object_Adapter;
+  friend class TAO::Portable_Server::Servant_Retention_Strategy;
   friend class TAO::Portable_Server::Servant_Upcall;
   friend class TAO::Portable_Server::Non_Servant_Upcall;
   friend class TAO::Portable_Server::POA_Current_Impl;

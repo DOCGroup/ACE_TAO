@@ -10,6 +10,8 @@
 //=============================================================================
 
 #include "Servant_Retention_Strategy.h"
+#include "Non_Servant_Upcall.h"
+#include "POA.h"
 
 ACE_RCSID (PortableServer,
            Servant_Retention_Strategy,
@@ -21,13 +23,22 @@ namespace TAO
 {
   namespace Portable_Server
   {
+      void
+      Servant_Retention_Strategy::strategy_init (
+        TAO_POA *poa,
+        CORBA::PolicyList *policy_list)
+      {
+        poa_ = poa;
+        // dependent on type create the correct strategy.
+      }
+
     void
     Retain_Servant_Retention_Strategy::deactivate_object (
       const PortableServer::ObjectId &id
       ACE_ENV_ARG_DECL)
     {
-/*      TAO_Active_Object_Map::Map_Entry *active_object_map_entry = 0;
-      int result = this->active_object_map_->
+      TAO_Active_Object_Map::Map_Entry *active_object_map_entry = 0;
+      int result = this->poa_->active_object_map ().
         find_servant_and_system_id_using_user_id (id,
                                                   active_object_map_entry);
 
@@ -40,7 +51,7 @@ namespace TAO
 
       this->deactivate_map_entry (active_object_map_entry
                                   ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;*/
+      ACE_CHECK;
     }
 
     void
@@ -79,7 +90,7 @@ namespace TAO
       TAO_Active_Object_Map::Map_Entry *active_object_map_entry
       ACE_ENV_ARG_DECL)
     {
-/*      // If a servant manager is associated with the POA,
+      // If a servant manager is associated with the POA,
       // ServantLocator::etherealize will be invoked with the oid and the
       // servant. (The deactivate_object operation does not wait for the
       // etherealize operation to complete before deactivate_object
@@ -96,19 +107,19 @@ namespace TAO
       // implementation calls _remove_ref when all operation invocations
       // have completed. If there is a ServantActivator, the Servant is
       // consumed by the call to ServantActivator::etherealize instead.
-
+/*
       // First check for a non-zero servant.
       if (active_object_map_entry->servant_)
         {
 
-//    #if (TAO_HAS_MINIMUM_POA == 0)
+    #if (TAO_HAS_MINIMUM_POA == 0)
 
-          if (this->etherealize_objects_ &&
-              this->cached_policies_.request_processing () == PortableServer::USE_SERVANT_MANAGER &&
-              !CORBA::is_nil (this->servant_activator_.in ()))
+          if (this->poa_->etherealize_objects_ &&
+              this->poa_->cached_policies_.request_processing () == PortableServer::USE_SERVANT_MANAGER &&
+              !CORBA::is_nil (this->poa_->servant_activator_.in ()))
             {
               CORBA::Boolean remaining_activations =
-                this->active_object_map ().
+                this->poa_->active_object_map ().
                 remaining_activations (active_object_map_entry->servant_);
 
               // A recursive thread lock without using a recursive thread
@@ -119,7 +130,7 @@ namespace TAO
               // the lock, other threads will not be able to make progress
               // since <Object_Adapter::non_servant_upcall_in_progress_>
               // has been set.
-              TAO_Object_Adapter::Non_Servant_Upcall non_servant_upcall (*this);
+              TAO::Portable_Server::Non_Servant_Upcall non_servant_upcall (*this);
               ACE_UNUSED_ARG (non_servant_upcall);
 
               // If the cleanup_in_progress parameter is TRUE, the reason
@@ -138,7 +149,7 @@ namespace TAO
             }
           else
 
-//    #endif
+    #endif
 
             {
               // A recursive thread lock without using a recursive thread
@@ -156,17 +167,17 @@ namespace TAO
               ACE_CHECK;
             }
         }
-
+  */
       // This operation causes the association of the Object Id specified
       // by the oid parameter and its servant to be removed from the
       // Active Object Map.
-      int result = this->active_object_map ().
+      int result = this->poa_->active_object_map ().
         unbind_using_user_id (active_object_map_entry->user_id_);
 
       if (result != 0)
         {
           ACE_THROW (CORBA::OBJ_ADAPTER ());
-        }*/
+        }
     }
   }
 }
