@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(RTEventLogAdmin) : orbsvcslib, core, naming, rtoldevent, dslogadmin {
+project(RTEventLogAdmin) : orbsvcslib, core, naming, rtoldevent, dslogadmin_serv {
   sharedname   = TAO_RTEventLogAdmin
   idlflags    += -Wb,export_macro=TAO_RTEventLog_Export -Wb,export_include=orbsvcs/Log/rteventlog_export.h
   dynamicflags = TAO_RTEVENTLOG_BUILD_DLL

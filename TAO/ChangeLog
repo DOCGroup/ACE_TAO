@@ -1,3 +1,13 @@
+Mon Sep 13 06:40:36 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/RTEventLogAdmin.mpc:
+
+	  Changed to inherit from dslogadmin_serv.
+
+	* orbsvcs/orbsvcs/DsLogAdmin.mpc:
+
+	  Changed to inherit from svc_utils.
+
 Mon Sep 13 12:29:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
 
         * tao/orbsvcs/tests/AVStreams/Asynch_Three_Stage/run_test.pl:
