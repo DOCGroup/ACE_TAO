@@ -34,6 +34,7 @@
 
 // Cached POA Policies
 #include "POA_Cached_Policies.h"
+#include "Active_Policy_Strategies.h"
 
 // Object_Key
 #include "tao/Object_KeyC.h"
