@@ -67,19 +67,19 @@ be_visitor_interface_ci::visit_interface (be_interface *node)
   if (! node->is_local ())
     {
       os->gen_ifdef_macro (node->flat_name (), "");
-      *os << "ACE_INLINE" << be_nl;
-      *os << node->name () << "::" << node->local_name () << " ("
+      *os << "ACE_INLINE" << be_nl
+          << node->name () << "::" << node->local_name () << " ("
           << be_idt << be_idt_nl
           << "TAO_Stub *objref," << be_nl
           << "CORBA::Boolean _tao_collocated," << be_nl
-                << "TAO_Abstract_ServantBase *servant" << be_uidt_nl
-                << ")" // constructor
-                << be_nl;
-      *os << ": CORBA_Object (objref, _tao_collocated, servant)" << be_uidt_nl;
-      *os << "{" << be_idt_nl
-                << "this->_tao_setup_collocation (_tao_collocated);";
-      *os << be_uidt_nl // idt = 0
-                << "}" << be_nl;
+          << "TAO_Abstract_ServantBase *servant" << be_uidt_nl
+          << ")" << be_nl
+          << ": CORBA_Object (objref, _tao_collocated, servant)" 
+          << be_uidt_nl
+          << "{" << be_idt_nl
+          << "this->" << node->flat_name () 
+          << "_setup_collocation (_tao_collocated);" << be_uidt_nl
+          << "}" << be_nl;
       os->gen_endif ();
     }
 

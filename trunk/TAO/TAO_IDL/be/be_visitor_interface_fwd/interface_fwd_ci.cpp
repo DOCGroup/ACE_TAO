@@ -64,7 +64,8 @@ be_visitor_interface_fwd_ci::visit_interface_fwd (be_interface_fwd *node)
 	        << be_nl;
       *os << ": CORBA_Object (objref, _tao_collocated, servant)" << be_uidt_nl;
       *os << "{" << be_idt_nl
-	        << "this->_tao_setup_collocation (_tao_collocated);" << be_uidt_nl;
+	        << "this->" << node->flat_name () 
+          << "_setup_collocation (_tao_collocated);" << be_uidt_nl;
       *os << "}" << be_nl << be_nl;
       
       os->gen_endif ();
