@@ -115,6 +115,7 @@ FILES = tao_idl \
         be/be_stream_factory \
         be/be_visitor_factory \
         be/be_visitor \
+        be/be_visitor_ami_pre_proc \
         be/be_visitor_argument \
         be/be_visitor_array \
         be/be_visitor_attribute \
