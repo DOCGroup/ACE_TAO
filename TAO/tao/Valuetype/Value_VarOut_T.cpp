@@ -6,10 +6,6 @@
 #include "tao/Valuetype/Value_VarOut_T.h"
 #include "tao/Valuetype/Value_CORBA_methods.h"
 
-ACE_RCSID (Valuetype,
-           Value_VarOut_T,
-           "$Id$")
-
 
 template<typename T>
 void
@@ -57,9 +53,8 @@ TAO_Value_Var_T<T>::ptr (void) const
 }
 
 template <typename T>
-TAO_Value_Var_T<T>::TAO_Value_Var_T (
-    const TAO_Value_Var_T<T> & p
-  )
+TAO_Value_Var_T<T>::TAO_Value_Var_T (const TAO_Value_Var_T<T> & p)
+  : TAO_Base_var ()
 {
   TAO::Value_Traits<T>::add_ref (p.ptr ());
   this->ptr_ = p.ptr ();

@@ -850,6 +850,7 @@ protected:
   static TAO_POA_Policy_Set &default_poa_policies (void);
 
 protected:
+
   /// Accessor methods to ObjectReferenceTemplate
   PortableInterceptor::ObjectReferenceTemplate *
     get_adapter_template (ACE_ENV_SINGLE_ARG_DECL)
@@ -867,7 +868,6 @@ protected:
   void set_obj_ref_factory (
     PortableInterceptor::ObjectReferenceFactory *current_factory
     ACE_ENV_ARG_DECL);
-
 
   TAO_SERVANT_LOCATION locate_servant_i (const PortableServer::ObjectId &id,
                                          PortableServer::Servant &servant

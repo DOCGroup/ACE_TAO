@@ -42,7 +42,9 @@ namespace TAO
     : public ORT_Adapter
   {
   public:
-    ORT_Adapter_Impl (void);
+
+    /// Destructor
+    virtual ~ORT_Adapter_Impl (void);
 
     /// Activate this adapter
     virtual int activate (const char *server_id,
@@ -51,16 +53,21 @@ namespace TAO
                           PortableServer::POA_ptr poa
                           ACE_ENV_ARG_DECL);
 
-    /// Set a different ort_factory to be used.
-    virtual int set_obj_ref_factory (
-      PortableInterceptor::ObjectReferenceFactory *current_factory
-      ACE_ENV_ARG_DECL);
-
     /// Accessor methods to ObjectReferenceTemplate template
     virtual PortableInterceptor::ObjectReferenceTemplate *get_adapter_template (void);
 
     /// Accessor methods to PortableInterceptor::ObjectReferenceFactory
     virtual PortableInterceptor::ObjectReferenceFactory * get_obj_ref_factory (void);
+
+    /// Set a different ort_factory to be used.
+    virtual int set_obj_ref_factory (
+      PortableInterceptor::ObjectReferenceFactory * current_factory
+      ACE_ENV_ARG_DECL);
+
+    /**
+     * @see @c TAO::ORT_Adapter for details.
+     */
+    virtual void release (PortableInterceptor::ObjectReferenceTemplate * ort);
 
     /**
      * @name Adapter methods for PortableInterceptor::ObjectReferenceTemplate
@@ -92,29 +99,20 @@ namespace TAO
     ACE_THROW_SPEC ((CORBA::SystemException));
     //@}
 
-  protected:
-
-    /// Destructor
-    /**
-     * Protected destructor to enforce proper memory management via
-     * reference counting.
-     */
-    virtual ~ORT_Adapter_Impl (void);
-
   private:
-    /// The ORT Template, this is the factory and its identify
+
+    /// The ORT Template, this is the factory and its identity.
     PortableInterceptor::ObjectReferenceTemplate_var ort_template_;
 
-    /// The ORT Factory
+    /// The ORT Factory.
     PortableInterceptor::ObjectReferenceFactory_var ort_factory_;
 
-    /// TAO specific ORT Template
-    ObjectReferenceTemplate* tao_ort_template_;
   };
 
 }
+
 #if defined(_MSC_VER)
-#pragma warning(pop)
+# pragma warning(pop)
 #endif /* _MSC_VER */
 
 #include /**/ "ace/post.h"
