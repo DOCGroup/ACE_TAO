@@ -1,3 +1,12 @@
+Tue Mar 18 07:24:26 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+
+          If files are listed in "Template_Files" and "Source_Files" is
+          omitted, then "Source_Files" could have duplicated values from
+          "Template_Files".  A new method has been added to correct this
+          situation.
+
 Mon Mar 17 17:38:05 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
         * include/makeinclude/platform_linux_icc.GNU: The GNU file can now
