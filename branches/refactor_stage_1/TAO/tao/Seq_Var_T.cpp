@@ -6,7 +6,7 @@
 #include "tao/Seq_Var_T.h"
 
 #if !defined (__ACE_INLINE__)
-#include "tao/Seq_VarOut_T.inl"
+#include "tao/Seq_Var_T.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (tao,

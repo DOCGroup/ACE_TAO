@@ -1,3 +1,7 @@
+Tue Apr 22 09:10:23 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Seq_Var_T.cpp: Fixed a wroong inclusion of inlined file.
+
 Tue Apr 22 06:30:52 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* be/be_visitor_sequence/sequence_ch.cpp: 
