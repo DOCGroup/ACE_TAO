@@ -104,6 +104,8 @@ Read_Handler::handle_input (ACE_HANDLE h)
       waiting_--;
       if (waiting_ == 0)
 	{
+	  ACE_DEBUG ((LM_DEBUG,
+		      "last svc_handler closed, shutting down"));
 	  ACE_Reactor::instance()->end_event_loop();
 	}
       
