@@ -22,7 +22,7 @@
 
 #include "orbsvcs/TimeServiceS.h"
 
-class TAO_Time_Service_Server : public POA_CosTime::TimeService
+class TAO_ORBSVCS_Export TAO_Time_Service_Server : public POA_CosTime::TimeService
 {
   // = TITLE
   //    TimeService Object Implementation.

@@ -22,7 +22,7 @@
 
 #include "orbsvcs/TimeServiceS.h"
 
-class TAO_UTO : public POA_CosTime::UTO
+class TAO_ORBSVCS_Export TAO_UTO : public POA_CosTime::UTO
 {
   // = TITLE
   //    Universal Time Object Implementation.
