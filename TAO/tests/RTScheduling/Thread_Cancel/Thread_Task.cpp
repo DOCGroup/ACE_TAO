@@ -131,10 +131,10 @@ Thread_Task::svc (void)
 
 
     }
-  ACE_CATCHANY
+  ACE_CATCH (CORBA::THREAD_CANCELLED, thr_ex)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Caught exception:");
+      ACE_DEBUG ((LM_DEBUG,
+		  "Distributable Thread Cancelled - Expected Exception\n"));
       {
         ACE_GUARD_RETURN (ACE_Lock, ace_mon, *shutdown_lock_,-1);
         --active_thread_count_;
@@ -142,8 +142,14 @@ Thread_Task::svc (void)
           orb_->shutdown ();
         return 0;
       }
-
+      
       return 1;
+   
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "Caught exception:");
     }
   ACE_ENDTRY;
   return 0;

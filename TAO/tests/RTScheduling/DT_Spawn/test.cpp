@@ -65,11 +65,15 @@ main (int argc, char* argv [])
 			  ACE_ENV_ARG_PARAMETER);
 	  ACE_TRY_CHECK_EX (block1);
 	}
+      ACE_CATCH (CORBA::BAD_INV_ORDER, thr_ex)
+	{
+	  ACE_DEBUG ((LM_DEBUG,
+		      "Spawn should be in the context of a Scheduling Segment\n"));
+	}
       ACE_CATCHANY
 	{
-
 	  ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-			       "Spawn should be in the context of a Scheduling Segment\n");
+			       "\n");
 	}
       ACE_ENDTRY;
       
