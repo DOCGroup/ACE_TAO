@@ -39,7 +39,8 @@ namespace CIAO
   public:
     Dynamic_Component_Servant (Components::EnterpriseComponent_ptr ec,
                                Components::CCMHome_ptr home,
-                               Swapping_Container *c);
+                               Home_Servant_Impl_Base *home_servant,
+                               Session_Container *c);
 
     virtual ~Dynamic_Component_Servant (void);
 
@@ -47,6 +48,7 @@ namespace CIAO
 
   protected:
     Components::EnterpriseComponent_var executor_;
+    Home_Servant_Impl_Base *home_servant_;
     Components::CCMHome_var home_;
   };
 }

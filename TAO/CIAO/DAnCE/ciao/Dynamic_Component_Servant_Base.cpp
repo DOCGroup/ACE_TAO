@@ -15,7 +15,7 @@ namespace CIAO
   }
 
   Dynamic_Component_Servant_Base::Dynamic_Component_Servant_Base
-    (Swapping_Container * c)
+    (Session_Container * c)
     : container_ (c)
   {
   }

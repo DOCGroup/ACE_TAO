@@ -391,7 +391,7 @@ CIAO::NodeApplication_Impl::init (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_NEW_THROW_EX (this->container_,
-                    CIAO::Session_Container (this->orb_.in (), 0, 0),
+                    CIAO::Swapping_Container (this->orb_.in ()),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (-1);
 

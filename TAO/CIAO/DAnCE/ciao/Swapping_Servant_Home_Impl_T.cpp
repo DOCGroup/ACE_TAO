@@ -25,8 +25,8 @@ namespace CIAO
                     COMP_EXEC_VAR,
                     COMP_SVNT>::Swapping_Servant_Home_Impl (
       EXEC * exe,
-      Swapping_Container * c, const char* obj_id, const char* repo_id)
-    : Swapping_Servant_Home_Impl_Base (c),
+      Session_Container * c, const char* obj_id, const char* repo_id)
+    : Home_Servant_Impl_Base (c),
       executor_ (EXEC::_duplicate (exe)), obj_id_ (obj_id), repo_id_ (repo_id)
   {
   }
@@ -217,7 +217,7 @@ namespace CIAO
     Dynamic_Component_Servant_Base *svt =
       new Dynamic_Component_Servant
        <COMP_SVNT, COMP_EXEC, COMP_EXEC_VAR, EXEC, EXEC_VAR, COMP>
-          (ec, home, this->container_);
+          (ec, home, this, this->container_);
 
     this->container_->update_servant_map (oid, svt);
 
@@ -227,6 +227,27 @@ namespace CIAO
     ACE_CHECK_RETURN (COMP::_nil ());
 
     return ho._retn ();
+  }
+
+  template <typename BASE_SKEL,
+            typename EXEC,
+            typename EXEC_VAR,
+            typename COMP,
+            typename COMP_VAR,
+            typename COMP_EXEC,
+            typename COMP_EXEC_VAR,
+            typename COMP_SVNT>
+  void
+  Swapping_Servant_Home_Impl<BASE_SKEL,
+                    EXEC,
+                    EXEC_VAR,
+                    COMP,
+                    COMP_VAR,
+                    COMP_EXEC,
+                    COMP_EXEC_VAR,
+                    COMP_SVNT>::update_component_map (
+    PortableServer::ObjectId &)
+  {
   }
 
   template <typename BASE_SKEL,
