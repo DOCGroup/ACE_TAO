@@ -269,40 +269,19 @@ TAO_Transport_Cache_Manager::make_idle_i (HASH_MAP_ENTRY *&entry)
   if (entry == 0)
     return -1;
 
-  // First get the entry again (if at all things had changed in the
-  // cache map in the mean time)
+  entry->int_id_.recycle_state (ACE_RECYCLABLE_IDLE_AND_PURGABLE);
 
-  // @todo: Is this required? Looks like a legacy one..
-
-  HASH_MAP_ENTRY *new_entry = 0;
-  int retval = this->cache_map_.find (entry->ext_id_,
-                                      new_entry);
-  if (retval == 0)
+  // Does any one need waking?
+  if (this->no_waiting_threads_)
     {
+      // We returned this entry to the map
+      this->last_entry_returned_ = &entry->ext_id_;
 
-      new_entry->int_id_.
-        recycle_state (ACE_RECYCLABLE_IDLE_AND_PURGABLE);
-
-      entry = new_entry;
-
-      // Does any one need waking?
-      if (this->no_waiting_threads_)
-        {
-          // We returned this entry to the map
-          this->last_entry_returned_ = &new_entry->ext_id_;
-
-          // Wake up a thread
-          this->condition_->signal ();
-        }
-    }
-  else if (TAO_debug_level > 0 && retval != 0)
-    {
-      ACE_ERROR ((LM_ERROR,
-                  "TAO (%P|%t) - Transport_Cache_Manager::make_idle_i, "
-                  "unable to locate the entry to make it idle\n"));
+      // Wake up a thread
+      this->condition_->signal ();
     }
 
-  return retval;
+  return 0;
 }
 
 
