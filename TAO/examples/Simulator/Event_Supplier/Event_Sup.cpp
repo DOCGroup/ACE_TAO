@@ -291,9 +291,10 @@ Demo_Supplier::insert_event_data (CORBA::Any &data1, CORBA::Any &data2)
       navigation_.pitch =  (navigation_.pitch == 90) ? -90 : navigation_.pitch + 1;
       navigation_.utilitzation = ((double)(ACE_OS::rand() %50))/100.0;
       navigation_.overhead = ((double)(ACE_OS::rand() %20))/100.0;
-      navigation_.arrival_time = ACE_OS::rand();
-      navigation_.deadline_time = navigation_.arrival_time + (ACE_OS::rand() % 1000);
-      navigation_.dispatch_time = navigation_.arrival_time + (ACE_OS::rand() % 1000);
+      navigation_.arrival_time = ACE_OS::rand()+200;
+      navigation_.deadline_time = navigation_.arrival_time + (ACE_OS::rand() % 500)-100;
+      navigation_.completion_time = navigation_.deadline_time - (ACE_OS::rand() % 100);
+      navigation_.computation_time = (ACE_OS::rand() % 100)+10;
 
 
 	
@@ -304,18 +305,22 @@ Demo_Supplier::insert_event_data (CORBA::Any &data1, CORBA::Any &data2)
       weapons_.weapon2.identifier = CORBA::string_alloc (30);
       strcpy (weapons_.weapon2.identifier,"Quantum Torpedoes");
       weapons_.weapon2.status = (ACE_OS::rand() % 4) == 0 ? 0 : 1;
-      weapons_.weapon3.identifier = 0;
+      weapons_.weapon3.identifier = CORBA::string_alloc (1);
+      weapons_.weapon3.identifier[0] = 0;
       weapons_.weapon3.status = 0;
-      weapons_.weapon4.identifier = 0;
+      weapons_.weapon4.identifier = CORBA::string_alloc (1);
+      weapons_.weapon4.identifier[0] = 0;
       weapons_.weapon4.status = 0; 
-      weapons_.weapon5.identifier = 0;	    
+      weapons_.weapon5.identifier = CORBA::string_alloc (1);
+      weapons_.weapon5.identifier[0] = 0;	    
       weapons_.weapon5.status = 0;
 
       weapons_.utilitzation = ((double)(ACE_OS::rand() %50))/100.0;
       weapons_.overhead = ((double)(ACE_OS::rand() %20))/100.0;
-      weapons_.arrival_time = ACE_OS::rand();
-      weapons_.deadline_time = weapons_.arrival_time + (ACE_OS::rand() % 1000);
-      weapons_.dispatch_time = weapons_.arrival_time + (ACE_OS::rand() % 1000);
+      weapons_.arrival_time = ACE_OS::rand()+200;
+      weapons_.deadline_time = weapons_.arrival_time + (ACE_OS::rand() % 500)-100;
+      weapons_.completion_time = weapons_.deadline_time - (ACE_OS::rand() % 100);
+      weapons_.computation_time = (ACE_OS::rand() % 100)+10;
 
       data1.replace (_tc_Navigation, &navigation_, CORBA::B_TRUE, TAO_TRY_ENV);
       data2.replace (_tc_Weapons, &weapons_, CORBA::B_TRUE, TAO_TRY_ENV);
@@ -505,10 +510,7 @@ main (int argc, char *argv [])
       TAO_CHECK_ENV;
 
     }
-  TAO_CATCH (RtecEventComm::Disconnected, d)
-    {
-      ACE_ERROR ((LM_ERROR, "(%t) Main:  Demo_Supplier::push: disconnected.\n"));
-    }
+
   TAO_CATCHANY
     {
       TAO_TRY_ENV.print_exception ("SYS_EX");
