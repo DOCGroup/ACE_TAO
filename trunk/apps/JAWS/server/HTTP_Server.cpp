@@ -92,7 +92,8 @@ HTTP_Server::parse_args (int argc,
     this->backlog_ = this->threads_;
 
   this->strategy_ = thr_strategy + io_strategy;
-  
+
+  prog = prog;
   ACE_DEBUG ((LM_DEBUG,
               "in HTTP_Server::init, %s port = %d, number of threads = %d\n",
               prog, this->port_, this->threads_));
@@ -209,15 +210,22 @@ HTTP_Server::thread_per_request (void)
 {
   int grp_id = -1;
 
+#if 0
+  ::thr_create (0, 0,
+                Thread_Per_Request_Task::REAPER, (void *) this,
+                THR_NEW_LWP, 0);
+#endif
+
   // thread per request
   if (this->acceptor_.open (ACE_INET_Addr (this->port_), 1,
                             PF_INET, this->backlog_) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "HTTP_Acceptor::open"), -1);
   
+  ACE_SOCK_Stream stream;
+  const ACE_Time_Value wait_time (0,10);
+
   for (;;) 
     {
-      ACE_SOCK_Stream stream;
-
       if (this->acceptor_.accept (stream) == -1)
 	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "HTTP_Acceptor::accept"), -1);
 
@@ -235,8 +243,6 @@ HTTP_Server::thread_per_request (void)
       // Should really use some sort of condition variable here.
       if (!this->throttle_) 
 	continue;
-
-      const ACE_Time_Value wait_time (0,10);
 
       // This works because each task has only one thread.
       while (this->tm_.num_tasks_in_group (grp_id) > this->threads_)
@@ -269,10 +275,16 @@ Thread_Per_Request_Task::open (void *args)
   if (args != 0)
     grp_id = (int *) args;
 
+#if 0
   if (*grp_id == -1)
     status = *grp_id = this->activate (THR_DETACHED | THR_NEW_LWP);
   else
     status = this->activate (THR_DETACHED | THR_NEW_LWP, 1, 0, -1, *grp_id, 0);
+#else
+  status = ::thr_create (0, 0,
+                         Thread_Per_Request_Task::DEBUG_TPR, (void *) this,
+                         THR_DETACHED | THR_DAEMON | THR_NEW_LWP, 0);
+#endif
 
   if (status == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "Thread_Per_Request_Task::open"),
@@ -298,6 +310,21 @@ Thread_Per_Request_Task::DEBUG_TPR (void *task)
 {
   Thread_Per_Request_Task *tpr_task = (Thread_Per_Request_Task *) task;
   tpr_task->svc ();
+  tpr_task->close (0);
+  ::thr_exit (0);
+  return 0;
+}
+
+void *
+Thread_Per_Request_Task::REAPER (void *task)
+{
+  Thread_Per_Request_Task *tpr_task = (Thread_Per_Request_Task *) task;
+  tpr_task = tpr_task;
+
+  while (1)
+    if (::thr_join(0, 0, 0) == 0)
+      ACE_DEBUG ((LM_DEBUG, " (%t) REAPER joined a thread\n"));
+
   return 0;
 }
 

@@ -3,11 +3,11 @@
 // HTTP_Service.cpp -- simple implementation of the HTTP protocol
 
 #include "ace/Message_Block.h"
+#include "ace/Filecache.h"
 
 #include "HTTP_Handler.h"
 #include "HTTP_Helpers.h"
 #include "IO.h"
-#include "JAWS_File.h"
 
 HTTP_Handler::HTTP_Handler (JAWS_IO &io,
 			    HTTP_Handler_Factory &factory)
@@ -120,14 +120,14 @@ HTTP_Handler::receive_file_error (int result)
   int status_code;
   switch (result)
     {
-    case JAWS_File::ACCESS_FAILED:
-    case JAWS_File::WRITE_FAILED:
-    case JAWS_File::OPEN_FAILED:
+    case ACE_Filecache_Handle::ACCESS_FAILED:
+    case ACE_Filecache_Handle::WRITE_FAILED:
+    case ACE_Filecache_Handle::OPEN_FAILED:
       status_code = HTTP_Status_Code::STATUS_NOT_FOUND;
       break;
-    case JAWS_File::COPY_FAILED:
-    case JAWS_File::STAT_FAILED:
-    case JAWS_File::MEMMAP_FAILED:
+    case ACE_Filecache_Handle::COPY_FAILED:
+    case ACE_Filecache_Handle::STAT_FAILED:
+    case ACE_Filecache_Handle::MEMMAP_FAILED:
       status_code = HTTP_Status_Code::STATUS_FORBIDDEN;
       break;
     default:
@@ -176,14 +176,14 @@ HTTP_Handler::transmit_file_error (int result)
 
   switch (result)
     {
-    case JAWS_File::ACCESS_FAILED:
-    case JAWS_File::WRITE_FAILED:
-    case JAWS_File::OPEN_FAILED:
+    case ACE_Filecache_Handle::ACCESS_FAILED:
+    case ACE_Filecache_Handle::WRITE_FAILED:
+    case ACE_Filecache_Handle::OPEN_FAILED:
       status_code = HTTP_Status_Code::STATUS_NOT_FOUND;
       break;
-    case JAWS_File::COPY_FAILED:
-    case JAWS_File::STAT_FAILED:
-    case JAWS_File::MEMMAP_FAILED:
+    case ACE_Filecache_Handle::COPY_FAILED:
+    case ACE_Filecache_Handle::STAT_FAILED:
+    case ACE_Filecache_Handle::MEMMAP_FAILED:
       status_code = HTTP_Status_Code::STATUS_FORBIDDEN;
       break;
     default:
