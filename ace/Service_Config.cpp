@@ -866,6 +866,7 @@ template class ACE_Unbounded_Queue_Iterator<ACE_CString>;
 template class ACE_Unbounded_Set<ACE_CString>;
 template class ACE_Unbounded_Set_Iterator<ACE_CString>;
 template class ACE_Malloc<ACE_LOCAL_MEMORY_POOL, ACE_Null_Mutex>;
+template class ACE_Malloc_T<ACE_LOCAL_MEMORY_POOL, ACE_Null_Mutex, ACE_Control_Block>;
 template class ACE_Allocator_Adapter<ACE_Malloc<ACE_LOCAL_MEMORY_POOL, ACE_Null_Mutex> >;
 template class auto_ptr<ACE_Obstack>;
 template class ACE_Auto_Basic_Ptr<ACE_Obstack>;
@@ -879,6 +880,7 @@ template class ACE_Auto_Basic_Ptr<ACE_Obstack>;
 #pragma instantiate ACE_Unbounded_Set<ACE_CString>
 #pragma instantiate ACE_Unbounded_Set_Iterator<ACE_CString>
 #pragma instantiate ACE_Malloc<ACE_LOCAL_MEMORY_POOL, ACE_Null_Mutex>
+#pragma instantiate ACE_Malloc_T<ACE_LOCAL_MEMORY_POOL, ACE_Null_Mutex, ACE_Control_Block>
 #pragma instantiate ACE_Allocator_Adapter<ACE_Malloc<ACE_LOCAL_MEMORY_POOL, ACE_Null_Mutex> >
 #pragma instantiate auto_ptr<ACE_Obstack>
 #pragma instantiate ACE_Auto_Basic_Ptr<ACE_Obstack>

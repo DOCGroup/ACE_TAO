@@ -9,8 +9,8 @@
 #include "Semaphore_Test.h"
 
 ACE_Malloc<ACE_Shared_Memory_Pool, ACE_SV_Semaphore_Simple> allocator;
-ACE_SV_Semaphore_Complex *mutex = 0; 
-ACE_SV_Semaphore_Complex *synch = 0; 
+ACE_SV_Semaphore_Complex *mutex = 0;
+ACE_SV_Semaphore_Complex *synch = 0;
 
 /* Pointer to memory shared by both the client and server. */
 static char *shm;
@@ -72,23 +72,23 @@ main (void)
       return do_child ();
     default:
       {
-	int result = do_parent ();
+        int result = do_parent ();
 
-	if (wait (0) == -1)
-	  ACE_ERROR_RETURN ((LM_ERROR, "wait"), -1);
+        if (wait (0) == -1)
+          ACE_ERROR_RETURN ((LM_ERROR, "wait"), -1);
 
-	allocator.remove ();
+        allocator.remove ();
 
-	if (mutex->remove () == -1)
-	  ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "mutex.remove"), -1);
-	else if (synch->remove () == -1)
-	  ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "synch.remove"), -1);
-	return result;
+        if (mutex->remove () == -1)
+          ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "mutex.remove"), -1);
+        else if (synch->remove () == -1)
+          ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "synch.remove"), -1);
+        return result;
       }
     }
 }
 
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
 template class ACE_Malloc<ACE_Shared_Memory_Pool, ACE_SV_Semaphore_Simple>;
+template class ACE_Malloc_T<ACE_Shared_Memory_Pool, ACE_SV_Semaphore_Simple, ACE_Control_Block>;
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
-

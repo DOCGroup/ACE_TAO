@@ -60,6 +60,7 @@ template class ACE_Allocator_Adapter<M_ALLOCATOR>;
 #if !defined (ACE_LACKS_SBRK)
 template class ACE_Allocator_Adapter<SB_ALLOCATOR>;
 template class ACE_Malloc <ACE_SBRK_MEMORY_POOL, ACE_SYNCH_MUTEX>;
+template class ACE_Malloc_T <ACE_SBRK_MEMORY_POOL, ACE_SYNCH_MUTEX, ACE_Control_Block>;
 #endif /* ! ACE_LACKS_SBRK */
 #if !defined (ACE_LACKS_SYSV_SHMEM)
 template class ACE_Allocator_Adapter<SP_ALLOCATOR>;
@@ -67,6 +68,8 @@ template class ACE_Allocator_Adapter<SP_ALLOCATOR>;
 template class ACE_Allocator_Adapter<ST_ALLOCATOR>;
 template class ACE_Malloc <ACE_LOCAL_MEMORY_POOL, ACE_SYNCH_MUTEX>;
 template class ACE_Malloc <ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex>;
+template class ACE_Malloc_T <ACE_LOCAL_MEMORY_POOL, ACE_SYNCH_MUTEX, ACE_Control_Block>;
+template class ACE_Malloc_T <ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex, ACE_Control_Block>;
 template class ACE_Read_Guard<ACE_Process_Mutex>;
 template class ACE_Write_Guard<ACE_Process_Mutex>;
 #if !defined (ACE_HAS_THREADS)
@@ -76,9 +79,12 @@ template class ACE_Write_Guard<ACE_SYNCH_MUTEX>;
 
 #if defined (ACE_LACKS_SYSV_SHMEM)
 template class ACE_Malloc <ACE_MMAP_MEMORY_POOL, ACE_SYNCH_MUTEX>;
+template class ACE_Malloc_T <ACE_MMAP_MEMORY_POOL, ACE_SYNCH_MUTEX, ACE_Control_Block>;
 #else
 template class ACE_Malloc <ACE_SHARED_MEMORY_POOL, ACE_Process_Mutex>;
 template class ACE_Malloc <ACE_SHARED_MEMORY_POOL, ACE_SYNCH_MUTEX>;
+template class ACE_Malloc_T <ACE_SHARED_MEMORY_POOL, ACE_Process_Mutex, ACE_Control_Block>;
+template class ACE_Malloc_T <ACE_SHARED_MEMORY_POOL, ACE_SYNCH_MUTEX, ACE_Control_Block>;
 #endif /* ACE_LACKS_SYSV_SHMEM */
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
@@ -87,6 +93,7 @@ template class ACE_Malloc <ACE_SHARED_MEMORY_POOL, ACE_SYNCH_MUTEX>;
 #if !defined (ACE_LACKS_SBRK)
 #pragma instantiate ACE_Allocator_Adapter<SB_ALLOCATOR>
 #pragma instantiate ACE_Malloc <ACE_SBRK_MEMORY_POOL, ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Malloc_T <ACE_SBRK_MEMORY_POOL, ACE_SYNCH_MUTEX, ACE_Control_Block>
 #endif /* ! ACE_LACKS_SYSV_SHMEM */
 #if !defined (ACE_LACKS_SBRK)
 #pragma instantiate ACE_Allocator_Adapter<SP_ALLOCATOR>
@@ -94,6 +101,8 @@ template class ACE_Malloc <ACE_SHARED_MEMORY_POOL, ACE_SYNCH_MUTEX>;
 #pragma instantiate ACE_Allocator_Adapter<ST_ALLOCATOR>
 #pragma instantiate ACE_Malloc <ACE_LOCAL_MEMORY_POOL, ACE_SYNCH_MUTEX>
 #pragma instantiate ACE_Malloc <ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex>
+#pragma instantiate ACE_Malloc_T <ACE_LOCAL_MEMORY_POOL, ACE_SYNCH_MUTEX, ACE_Control_Block>
+#pragma instantiate ACE_Malloc_T <ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex, ACE_Control_Block>
 #pragma instantiate ACE_Read_Guard<ACE_Process_Mutex>
 #pragma instantiate ACE_Write_Guard<ACE_Process_Mutex>
 #if !defined (ACE_HAS_THREADS)
@@ -103,9 +112,12 @@ template class ACE_Malloc <ACE_SHARED_MEMORY_POOL, ACE_SYNCH_MUTEX>;
 
 #if defined (ACE_LACKS_SYSV_SHMEM)
 #pragma instantiate ACE_Malloc <ACE_MMAP_MEMORY_POOL, ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Malloc_T <ACE_MMAP_MEMORY_POOL, ACE_SYNCH_MUTEX, ACE_Control_Block>
 #else
 #pragma instantiate ACE_Malloc <ACE_SHARED_MEMORY_POOL, ACE_Process_Mutex>
 #pragma instantiate ACE_Malloc <ACE_SHARED_MEMORY_POOL, ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Malloc_T <ACE_SHARED_MEMORY_POOL, ACE_Process_Mutex, ACE_Control_Block>
+#pragma instantiate ACE_Malloc_T <ACE_SHARED_MEMORY_POOL, ACE_SYNCH_MUTEX, ACE_Control_Block>
 #endif /* ACE_LACKS_SYSV_SHMEM */
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
