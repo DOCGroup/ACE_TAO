@@ -20,6 +20,13 @@
 #include "orbsvcs/CosNotifyCommC.h"
 #include "orbsvcs/CosNamingC.h"
 
+#if defined(_MSC_VER)
+#if (_MSC_VER >= 1200)
+#pragma warning(push)
+#endif /* _MSC_VER >= 1200 */
+#pragma warning(disable:4250)
+#endif /* _MSC_VER */
+
 class Filter_StructuredPushConsumer;
 class Filter_StructuredPushSupplier;
 
@@ -256,4 +263,9 @@ protected:
 };
 
 /*****************************************************************/
+
+#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#pragma warning(pop)
+#endif /* _MSC_VER */
+
 #endif /* NOTIFY_FILTER_CLIENT_H */

@@ -21,6 +21,13 @@
 #include "Notify_StructuredPushConsumer.h"
 #include "Notify_StructuredPushSupplier.h"
 
+#if defined(_MSC_VER)
+#if (_MSC_VER >= 1200)
+#pragma warning(push)
+#endif /* _MSC_VER >= 1200 */
+#pragma warning(disable:4250)
+#endif /* _MSC_VER */
+
 class Events_Test;
 
 class Event_StructuredPushConsumer : public TAO_Notify_StructuredPushConsumer
@@ -115,4 +122,9 @@ private:
 };
 
 /***************************************************************************/
+
+#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#pragma warning(pop)
+#endif /* _MSC_VER */
+
 #endif /* NOTIFY_TESTS_EventS_H */
