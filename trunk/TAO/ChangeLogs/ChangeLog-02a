@@ -1,3 +1,8 @@
+Thu May 10 07:11:16 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* performance-tests/DSI_Latency/Roundtrip.h: Added exception
+	  specification.  
+
 Thu May 10 08:06:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * tests/Makefile.bor
