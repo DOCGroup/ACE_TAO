@@ -9,7 +9,7 @@ Wed May 13 06:58:38 1998  David L. Levine  <levine@cs.wustl.edu>
           decode.cpp,encode.cpp,skip.cpp:
           changed ~0 to ~0u to avoid signed/unsigned comparisons.
 
-        * many files:  inserted RCS keyword string.
+        * many *.{h,i,cpp,idl} files:  inserted RCS keyword string.
 
 Wed May 13 00:05:52 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
