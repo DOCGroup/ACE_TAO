@@ -1,3 +1,11 @@
+Fri Apr 26 19:06:34 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
+
+	* TAO_ACE.dsw:
+	* orbsvcs/IFR_Service/IFR_Service.dsp:
+	* orbsvcs/orbsvcs/IFRService.dsp:
+	* orbsvcs/orbsvcs/IFRService.dsw:
+	  Added new .dsp and .dsw files for the new IFR Service library.
+
 Fri Apr 26 18:07:17 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
 
 	* orbsvcs/orbsvcs/IFRService/AbstractInterfaceDef_i.cpp:
