@@ -168,13 +168,13 @@ Server_Events::handle_input (ACE_HANDLE)
       total_bytes_received_ += retcode;
       last_sequence_number_ =
         ntohl (log_record_->sequence_number);
-      
+
       for (char *message_end = this->message_ + ACE_OS::strlen (this->message_) - 1;
            ACE_OS::strchr ("\r\n \t", *message_end) != 0;
            )
         {
           *message_end-- = '\0';
-          if (message_end == this->message_) 
+          if (message_end == this->message_)
             break;
         }
 
@@ -207,7 +207,7 @@ Server_Events::handle_input (ACE_HANDLE)
 }
 
 int
-main (int, char *[])
+main (int, ACE_TCHAR *[])
 {
   // Instantiate a server which will receive messages for DURATION
   // seconds.
