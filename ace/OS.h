@@ -3529,9 +3529,6 @@ struct sigaction
 #define ACE_DEFAULT_TIMERS _SC_TIMER_MAX
 #endif /* ACE_DEFAULT_TIMERS */
 
-// Note that this assumes shorts are 16 bits.
-typedef u_short ACE_USHORT16;
-
 #if defined (ACE_HAS_STRUCT_NETDB_DATA)
 typedef char ACE_HOSTENT_DATA[sizeof(struct hostent_data)];
 typedef char ACE_SERVENT_DATA[sizeof(struct servent_data)];
