@@ -446,8 +446,8 @@ ACE_OS::execlp (const char * /* file */, const char * /* arg0 */, ...)
 }
 
 #if defined (ACE_HAS_STHREADS)
-#include <sys/rtpriocntl.h>
-#include <sys/tspriocntl.h>
+#include /**/ <sys/rtpriocntl.h>
+#include /**/ <sys/tspriocntl.h>
 #endif /* ACE_HAS_STHREADS */
 
 int
@@ -1978,7 +1978,7 @@ writev (ACE_HANDLE handle, ACE_WRITEV_TYPE iov[], int n)
 // ACE_TRACE ("::writev");
 
   size_t length = 0;
-  size_t i;
+  int i;
 
   // Determine the total length of all the buffers in <iov>.
   for (i = 0; i < n; i++)
@@ -2021,7 +2021,7 @@ readv (ACE_HANDLE handle, struct iovec *iov, int n)
 // ACE_TRACE ("::readv");
 
   ssize_t length = 0;
-  size_t i;
+  int i;
 
   for (i = 0; i < n; i++)
     if (iov[i].iov_len < 0)
