@@ -162,9 +162,9 @@ enum Caching_Strategy_Type
 };
 
 // Default number of clients/servers.
-static int default_iterations = 2000;
 static int listen_once = 1;
-static int iterations = default_iterations;
+static int iterations = 2000;
+static int user_has_specified_iterations = 0;
 static double purge_percentage = 20;
 static Caching_Strategy_Type caching_strategy_type = ACE_ALL;
 static CACHED_CONNECT_STRATEGY *connect_strategy = 0;
@@ -395,6 +395,7 @@ parse_args (int argc, char *argv[])
         break;
       case 'i':
         iterations = atoi (get_opt.optarg);
+        user_has_specified_iterations = 1;
         break;
       case 'p':
         purge_percentage = atoi (get_opt.optarg);
@@ -438,12 +439,13 @@ main (int argc,
   if (result != 0)
     return result;
 
-  if (iterations == default_iterations &&
+#if defined (ACE_WIN32)
+  // Somehow, on Win32, the <listen once> option allows us to create
+  // more handles.
+  if (!user_has_specified_iterations &&
       listen_once)
-    {
-      default_iterations *= 2;
-      iterations = default_iterations;
-    }
+    iterations *= 2;
+#endif /* ACE_WIN32 */
 
   // Start the test only if options are valid.
   ACE_START_TEST (ASYS_TEXT ("Cached_Conn_Test"));
@@ -458,10 +460,10 @@ main (int argc,
       caching_strategy_type = ACE_LRU;
       test_caching_strategy_type ();
 
-      // Default iterations are too many; we the user hasn't specified
+      // Default iterations are too many; if the user hasn't specified
       // otherwise, we'll shrink the iterations for LFU and FIFO.
-      if (iterations == default_iterations)
-        iterations = default_iterations / 100;
+      if (!user_has_specified_iterations)
+        iterations /= 100;
 
       caching_strategy_type = ACE_LFU;
       test_caching_strategy_type ();
