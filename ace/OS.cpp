@@ -7111,3 +7111,27 @@ ACE_OS::strptime (char *buf,
 #endif /* ! ACE_HAS_WINCE */
 }
 #endif /* ACE_HAS_STRPTIME */
+
+
+// You may be asking yourself, why are we doing this?  Well, in winbase.h,
+// MS didn't follow their normal Api_FunctionA and Api_FunctionW style,
+// so we have to #undef their define to get access to the unicode version.
+// And because we don't want to #undef this for the users code, we keep
+// this method in the .cpp file.
+#if defined (ACE_WIN32) && defined (UNICODE) && !defined (ACE_USES_TCHAR)
+#undef GetEnvironmentStrings
+#endif /* ACE_WIN32 && UNICODE !ACE_USES_TCHAR */
+
+ACE_TCHAR *
+ACE_OS::getenvstrings (void)
+{
+#if defined (ACE_WIN32)
+# if defined (ACE_USES_WCHAR)
+  return ::GetEnvironmentStringsW ();
+# else /* ACE_USES_WCHAR */
+  return ::GetEnvironmentStrings ();
+# endif /* ACE_USES_WCHAR */
+#else /* ACE_WIN32 */
+  ACE_NOTSUP_RETURN (0);
+#endif /* ACE_WIN32 */
+}
