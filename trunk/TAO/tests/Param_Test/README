@@ -26,12 +26,13 @@ before using this application.
 
 To run the server, type
 
-   server [arguments to ORB_init] [-d]
+   server [arguments to ORB_init] [-d] [-o <ior_output_file>]
 
           arguments to ORB_init start with the letters -ORB. Please
           see TAO documentattion on all the supported arguments
 
-          -d for debugging. It outputs the IOR used by the servant.
+          -d for debugging. 
+	  -o <ior_output_file> for outputting the servant IOR to a file.
 
 To run the client, type
 
@@ -41,6 +42,7 @@ To run the client, type
 
    [-d]                                 debugging
    [-n loopcount]                       number of times to run the test
+   [-f servant-IOR-file]		reads the servant-IOR from the specified file.
    [-k Param_Test-obj-ref-key]          object key of Param_Test object
    [-h hostname]                        host to bind to
    [-p port]                            port number of server
@@ -57,3 +59,11 @@ To run the client, type
        nested_struct        for nested structs
        struct_seq           for sequences of structs
        objref               for object references
+
+
+
+
+
+
+
+

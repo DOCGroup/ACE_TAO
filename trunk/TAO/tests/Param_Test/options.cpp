@@ -18,6 +18,8 @@
 
 #include "options.h"
 
+#define MAX_IOR_SIZE 512
+
 // Constructor.p
 Options::Options (void)
   : ior_ (0),
@@ -41,6 +43,9 @@ Options::parse_args (int argc, char **argv)
 {
   ACE_Get_Opt get_opts (argc, argv, "dn:f:i:t:");
   int c;
+  char temp_buf[MAX_IOR_SIZE];
+  char *result;
+  FILE *ior_file;
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -53,9 +58,21 @@ Options::parse_args (int argc, char **argv)
         this->loop_count_ = (CORBA::ULong) ACE_OS::atoi (get_opts.optarg);
         break;
       case 'f':
-        CORBA::string_free (this->ior_);
-        this->ior_ = CORBA::string_copy (get_opts.optarg);
-        break;
+	ior_file = ACE_OS::fopen (get_opts.optarg,"r");
+	if (ior_file == 0)
+	  ACE_ERROR_RETURN ((LM_ERROR,
+                             "Unable to open %s for writing: %p\n",
+                             get_opts.optarg), -1);
+	result = ACE_OS::fgets (temp_buf,MAX_IOR_SIZE,ior_file);
+	if ( result == 0 )
+	  ACE_ERROR_RETURN ((LM_ERROR,
+			     "Unable to read cubit_factory_ior from file %s: %p\n",
+			     get_opts.optarg), -1);
+	this->ior_ = ACE_OS::strdup (temp_buf);
+	ACE_OS::fclose (ior_file);
+	break;
+	//        CORBA::string_free (this->ior_);
+	//        this->ior_ = CORBA::string_copy (get_opts.optarg);
       case 'i':  // invocation
         if (!ACE_OS::strcmp (get_opts.optarg, "dii"))
           this->invoke_type_ = Options::DII;
@@ -84,7 +101,7 @@ Options::parse_args (int argc, char **argv)
                            "usage:  %s"
                            " [-d]"
                            " [-n loopcount]"
-                           " [-f servant-IOR]"
+                           " [-f servant-IOR-file]"
                            " [-i invocation (sii/dii)]"
                            " [-t data type]"
                            "\n",

@@ -1,5 +1,8 @@
 Sun Feb 15 16:15:49 1998  Nagarajan Surendran  <naga@tango.cs.wustl.edu>
 
+	* tests/Param_Test/options.cpp (parse_args): Changed the -f option to read
+	the servant-IOR from a file.
+
 	* tests/Cubit/TAO/IDL_Cubit/clnt.cpp: Changed the -f <cubit_factory_key> to -f <cubit_factory_ior_file>. Reads the ior from that file.
 	
 
