@@ -250,7 +250,7 @@ blocking_connect (CONNECTOR &con,
                   const ACE_INET_Addr &server_addr)
 {
   Svc_Handler *svc_handler;
-  ACE_NEW (svc_handler, 
+  ACE_NEW (svc_handler,
            Svc_Handler);
 
   // Perform a blocking connect to the server.
@@ -432,8 +432,8 @@ server (void *arg)
   ACE_Synch_Options options (ACE_Synch_Options::USE_TIMEOUT, tv);
 
   Svc_Handler *svc_handler;
-  ACE_NEW_RETURN (svc_handler, 
-                  Svc_Handler, 
+  ACE_NEW_RETURN (svc_handler,
+                  Svc_Handler,
                   0);
 
   // Keep looping until we timeout on <accept> or fail.
@@ -491,7 +491,7 @@ spawn_processes (ACCEPTOR *acceptor,
 {
   pid_t *children_ptr;
   ACE_NEW_RETURN (children_ptr,
-                  pid_t[n_servers], 
+                  pid_t[n_servers],
                   -1);
   ACE_Auto_Basic_Array_Ptr<pid_t> children (children_ptr);
   int i;
@@ -560,7 +560,7 @@ spawn_threads (ACCEPTOR *acceptor,
 #if defined (VXWORKS)
   // Assign thread (VxWorks task) names to test that feature.
   ACE_thread_t *server_name;
-  ACE_NEW (server_name, 
+  ACE_NEW (server_name,
            ACE_thread_t[n_servers]);
 
   // And test ability to provide stacks.
@@ -568,7 +568,7 @@ spawn_threads (ACCEPTOR *acceptor,
   ACE_NEW (stack_size,
            size_t[n_servers]);
   char **stack;
-  ACE_NEW (stack, 
+  ACE_NEW (stack,
            char *[n_servers]);
 
   int i;
@@ -581,7 +581,7 @@ spawn_threads (ACCEPTOR *acceptor,
                        ASYS_TEXT ("server%u"),
                        i);
       stack_size[i] = 40000;
-      ACE_NEW (stack[i], 
+      ACE_NEW (stack[i],
                char[stack_size[i]]);
 
       // Initialize the stack for checkStack.
@@ -698,7 +698,7 @@ main (int argc, ASYS_TCHAR *argv[])
 }
 
 #define CACHED_CONNECT_STRATEGY ACE_Cached_Connect_Strategy<Svc_Handler, ACE_SOCK_CONNECTOR, ACE_SYNCH_MUTEX>
-#define REFCOUNTED_HASH_RECYCLABLE_ADDR ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> 
+#define REFCOUNTED_HASH_RECYCLABLE_ADDR ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class CACHED_CONNECT_STRATEGY;
