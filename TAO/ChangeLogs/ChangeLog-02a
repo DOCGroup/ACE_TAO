@@ -1,3 +1,26 @@
+Wed Mar 15 19:10:55 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Acceptor_Impl.h (TAO_ACCEPTOR_IMPL_H)
+	* tao/Acceptor_Impl.i:
+	* tao/Acceptor_Impl.cpp:Added an argument to the constructor of
+	  TAO_Creation_Strategy. 
+
+Wed Mar 15 19:05:53 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Protocol_Factory.h
+       	* tao/Transport_Mux_Strategy.h: 
+	* tao/ORB.cpp
+       	* tao/ORB.h
+	* tao/skip.cpp
+	* tao/decode.cpp
+	* tao/append.cpp
+	* tao/SHMIOP_Profile.h
+	* tao/SHMIOP_Profile.cpp
+	* tao/Object.cpp
+	* tao/Stub.cpp
+	* tao/Typecode_Constants.cpp: Removed the header file GIOP.h from
+	  these files. GIOP.h would be retired now. 
+
 Wed Mar 15 18:22:52 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 	
 	* tao/GIOPC.cpp
@@ -52,7 +75,6 @@ Wed Mar 15 18:22:52 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* tao/UIOP_Connect.i
 	* tao/UIOP_Acceptor.h
 	* tao/UIOP_Acceptor.cpp
-	* tao/Protocol_Factory.h
 	* tao/Pluggable.h
 	* tao/Pluggable.i
 	* tao/Pluggable.cpp: Changed the way GIOP code is handled by these
@@ -84,6 +106,7 @@ Wed Mar 15 18:22:52 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  just been commented out. At a later stage we should be removing
 	  them. We shouldn't be doing any GIOP version specific processing
 	  in this piece of code.
+	
 Wed Mar 15 17:34:47 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Pluggable_Messaging.cpp

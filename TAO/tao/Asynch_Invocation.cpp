@@ -1,5 +1,6 @@
 // $Id$
 
+
 #include "tao/Asynch_Invocation.h"
 
 #include "tao/Timeprobe.h"
@@ -58,8 +59,9 @@ TAO_GIOP_Twoway_Asynch_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
   this->TAO_GIOP_Invocation::start (ACE_TRY_ENV);
   ACE_CHECK;
 
+  this->target_spec_.target_specifier (this->profile_->object_key ());
   this->transport_->start_request (this->orb_core_,
-                                   this->profile_,
+                                   this->target_spec_,
                                    this->out_stream_,
                                    ACE_TRY_ENV);
 }
@@ -82,7 +84,7 @@ TAO_GIOP_Twoway_Asynch_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
   // heap allocated reply dispatcher.
 
   int retval =
-    this->transport_->tms ()->bind_dispatcher (this->request_id_,
+    this->transport_->tms ()->bind_dispatcher (this->op_details_.request_id (),
                                                this->rd_);
   if (retval == -1)
     {
@@ -122,8 +124,9 @@ TAO_GIOP_DII_Deferred_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
   this->TAO_GIOP_Invocation::start (ACE_TRY_ENV);
   ACE_CHECK;
 
+  this->target_spec_.target_specifier (this->profile_->object_key ());
   this->transport_->start_request (this->orb_core_,
-                                   this->profile_,
+                                   this->target_spec_,
                                    this->out_stream_,
                                    ACE_TRY_ENV);
   ACE_CHECK;
@@ -147,7 +150,7 @@ TAO_GIOP_DII_Deferred_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
   // heap allocated reply dispatcher.
 
   int retval =
-    this->transport_->tms ()->bind_dispatcher (this->request_id_,
+    this->transport_->tms ()->bind_dispatcher (this->op_details_.request_id (),
                                                this->rd_);
   if (retval == -1)
     {
