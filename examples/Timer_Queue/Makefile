@@ -350,7 +350,8 @@ endif
  $(ACE_ROOT)/ace/Timer_Heap.h \
  $(ACE_ROOT)/ace/Timer_Heap_T.h \
  $(ACE_ROOT)/ace/Timer_Heap_T.cpp \
- $(ACE_ROOT)/ace/Select_Reactor_T.i Driver.h \
+ $(ACE_ROOT)/ace/Select_Reactor_T.i \
+ Driver.h \
  $(ACE_ROOT)/ace/Task.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
@@ -422,10 +423,12 @@ endif
  $(ACE_ROOT)/ace/Stream_Modules.cpp \
  $(ACE_ROOT)/ace/Timer_Queue_Adapters.h \
  $(ACE_ROOT)/ace/Timer_Queue_Adapters.i \
- $(ACE_ROOT)/ace/Timer_Queue_Adapters.cpp Driver.cpp \
+ $(ACE_ROOT)/ace/Timer_Queue_Adapters.cpp \
+ Driver.cpp \
  $(ACE_ROOT)/ace/Auto_Ptr.h \
  $(ACE_ROOT)/ace/Auto_Ptr.i \
- $(ACE_ROOT)/ace/Auto_Ptr.cpp Reactor_Timer_Queue_Test.h
+ $(ACE_ROOT)/ace/Auto_Ptr.cpp \
+ Reactor_Timer_Queue_Test.h
 
 .obj/Thread_Timer_Queue_Test.o .obj/Thread_Timer_Queue_Test.so .shobj/Thread_Timer_Queue_Test.o .shobj/Thread_Timer_Queue_Test.so: Thread_Timer_Queue_Test.cpp \
  $(ACE_ROOT)/ace/Task.h \
@@ -607,7 +610,8 @@ endif
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp
 
-.obj/Driver.o .obj/Driver.so .shobj/Driver.o .shobj/Driver.so: Driver.cpp $(ACE_ROOT)/ace/Auto_Ptr.h \
+.obj/Driver.o .obj/Driver.so .shobj/Driver.o .shobj/Driver.so: Driver.cpp \
+ $(ACE_ROOT)/ace/Auto_Ptr.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
@@ -633,7 +637,8 @@ endif
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Auto_Ptr.i \
- $(ACE_ROOT)/ace/Auto_Ptr.cpp Driver.h \
+ $(ACE_ROOT)/ace/Auto_Ptr.cpp \
+ Driver.h \
  $(ACE_ROOT)/ace/Task.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
@@ -783,9 +788,11 @@ endif
  $(ACE_ROOT)/ace/Timer_Heap_T.cpp \
  $(ACE_ROOT)/ace/Timer_Queue_Adapters.h \
  $(ACE_ROOT)/ace/Timer_Queue_Adapters.i \
- $(ACE_ROOT)/ace/Timer_Queue_Adapters.cpp Driver.cpp
+ $(ACE_ROOT)/ace/Timer_Queue_Adapters.cpp \
+ Driver.cpp
 
-.obj/main_async.o .obj/main_async.so .shobj/main_async.o .shobj/main_async.so: main_async.cpp $(ACE_ROOT)/ace/Auto_Ptr.h \
+.obj/main_async.o .obj/main_async.so .shobj/main_async.o .shobj/main_async.so: main_async.cpp \
+ $(ACE_ROOT)/ace/Auto_Ptr.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
@@ -811,7 +818,8 @@ endif
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Auto_Ptr.i \
- $(ACE_ROOT)/ace/Auto_Ptr.cpp Driver.h \
+ $(ACE_ROOT)/ace/Auto_Ptr.cpp \
+ Driver.h \
  $(ACE_ROOT)/ace/Task.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
@@ -961,8 +969,9 @@ endif
  $(ACE_ROOT)/ace/Timer_Heap_T.cpp \
  $(ACE_ROOT)/ace/Timer_Queue_Adapters.h \
  $(ACE_ROOT)/ace/Timer_Queue_Adapters.i \
- $(ACE_ROOT)/ace/Timer_Queue_Adapters.cpp Driver.cpp \
- Async_Timer_Queue_Test.h $(ACE_ROOT)/ace/Timer_Heap.h
+ $(ACE_ROOT)/ace/Timer_Queue_Adapters.cpp \
+ Driver.cpp Async_Timer_Queue_Test.h \
+ $(ACE_ROOT)/ace/Timer_Heap.h
 
 .obj/main_reactor.o .obj/main_reactor.so .shobj/main_reactor.o .shobj/main_reactor.so: main_reactor.cpp \
  $(ACE_ROOT)/ace/Auto_Ptr.h \
@@ -991,7 +1000,8 @@ endif
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Auto_Ptr.i \
- $(ACE_ROOT)/ace/Auto_Ptr.cpp Driver.h \
+ $(ACE_ROOT)/ace/Auto_Ptr.cpp \
+ Driver.h \
  $(ACE_ROOT)/ace/Task.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
@@ -1141,8 +1151,9 @@ endif
  $(ACE_ROOT)/ace/Timer_Heap_T.cpp \
  $(ACE_ROOT)/ace/Timer_Queue_Adapters.h \
  $(ACE_ROOT)/ace/Timer_Queue_Adapters.i \
- $(ACE_ROOT)/ace/Timer_Queue_Adapters.cpp Driver.cpp \
- Reactor_Timer_Queue_Test.h $(ACE_ROOT)/ace/Timer_Heap.h
+ $(ACE_ROOT)/ace/Timer_Queue_Adapters.cpp \
+ Driver.cpp Reactor_Timer_Queue_Test.h \
+ $(ACE_ROOT)/ace/Timer_Heap.h
 
 .obj/main_thread.o .obj/main_thread.so .shobj/main_thread.o .shobj/main_thread.so: main_thread.cpp \
  $(ACE_ROOT)/ace/Auto_Ptr.h \
@@ -1171,7 +1182,8 @@ endif
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Auto_Ptr.i \
- $(ACE_ROOT)/ace/Auto_Ptr.cpp Driver.h \
+ $(ACE_ROOT)/ace/Auto_Ptr.cpp \
+ Driver.h \
  $(ACE_ROOT)/ace/Task.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
@@ -1321,7 +1333,7 @@ endif
  $(ACE_ROOT)/ace/Timer_Heap_T.cpp \
  $(ACE_ROOT)/ace/Timer_Queue_Adapters.h \
  $(ACE_ROOT)/ace/Timer_Queue_Adapters.i \
- $(ACE_ROOT)/ace/Timer_Queue_Adapters.cpp Driver.cpp \
- Thread_Timer_Queue_Test.h
+ $(ACE_ROOT)/ace/Timer_Queue_Adapters.cpp \
+ Driver.cpp Thread_Timer_Queue_Test.h
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

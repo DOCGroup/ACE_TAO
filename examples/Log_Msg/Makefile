@@ -41,7 +41,8 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/test_log_msg.o .obj/test_log_msg.so .shobj/test_log_msg.o .shobj/test_log_msg.so: test_log_msg.cpp $(ACE_ROOT)/ace/OS.h \
+.obj/test_log_msg.o .obj/test_log_msg.so .shobj/test_log_msg.o .shobj/test_log_msg.so: test_log_msg.cpp \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -72,7 +73,8 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl
 
-.obj/test_ostream.o .obj/test_ostream.so .shobj/test_ostream.o .shobj/test_ostream.so: test_ostream.cpp $(ACE_ROOT)/ace/OS.h \
+.obj/test_ostream.o .obj/test_ostream.so .shobj/test_ostream.o .shobj/test_ostream.so: test_ostream.cpp \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -103,7 +105,8 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl
 
-.obj/test_callback.o .obj/test_callback.so .shobj/test_callback.o .shobj/test_callback.so: test_callback.cpp $(ACE_ROOT)/ace/OS.h \
+.obj/test_callback.o .obj/test_callback.so .shobj/test_callback.o .shobj/test_callback.so: test_callback.cpp \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \

@@ -241,7 +241,8 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl
 
-.obj/FIFO-test.o .obj/FIFO-test.so .shobj/FIFO-test.o .shobj/FIFO-test.so: FIFO-test.cpp $(ACE_ROOT)/ace/FIFO_Recv.h \
+.obj/FIFO-test.o .obj/FIFO-test.so .shobj/FIFO-test.o .shobj/FIFO-test.so: FIFO-test.cpp \
+ $(ACE_ROOT)/ace/FIFO_Recv.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/FIFO.h \
  $(ACE_ROOT)/ace/IPC_SAP.h \

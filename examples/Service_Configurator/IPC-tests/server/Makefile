@@ -165,7 +165,8 @@ endif
  $(ACE_ROOT)/ace/LSOCK.i \
  $(ACE_ROOT)/ace/LSOCK_Dgram.i \
  $(ACE_ROOT)/ace/UNIX_Addr.h \
- $(ACE_ROOT)/ace/UNIX_Addr.i Handle_L_Dgram.i \
+ $(ACE_ROOT)/ace/UNIX_Addr.i \
+ Handle_L_Dgram.i \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i
 
@@ -278,7 +279,8 @@ endif
  $(ACE_ROOT)/ace/SOCK_CODgram.i \
  $(ACE_ROOT)/ace/LSOCK_CODgram.i \
  $(ACE_ROOT)/ace/UNIX_Addr.h \
- $(ACE_ROOT)/ace/UNIX_Addr.i Handle_L_CODgram.i \
+ $(ACE_ROOT)/ace/UNIX_Addr.i \
+ Handle_L_CODgram.i \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i
 
@@ -383,7 +385,8 @@ endif
  $(ACE_ROOT)/ace/IPC_SAP.i \
  $(ACE_ROOT)/ace/FIFO.i \
  $(ACE_ROOT)/ace/FIFO_Recv.i \
- $(ACE_ROOT)/ace/FIFO_Recv_Msg.i Handle_L_FIFO.i \
+ $(ACE_ROOT)/ace/FIFO_Recv_Msg.i \
+ Handle_L_FIFO.i \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i
 
@@ -502,7 +505,8 @@ endif
  $(ACE_ROOT)/ace/LSOCK_Stream.h \
  $(ACE_ROOT)/ace/LSOCK.h \
  $(ACE_ROOT)/ace/LSOCK.i \
- $(ACE_ROOT)/ace/LSOCK_Stream.i Handle_L_Pipe.i \
+ $(ACE_ROOT)/ace/LSOCK_Stream.i \
+ Handle_L_Pipe.i \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i
 
@@ -621,7 +625,8 @@ endif
  $(ACE_ROOT)/ace/LSOCK_Stream.h \
  $(ACE_ROOT)/ace/LSOCK.h \
  $(ACE_ROOT)/ace/LSOCK.i \
- $(ACE_ROOT)/ace/LSOCK_Stream.i Handle_L_Stream.i \
+ $(ACE_ROOT)/ace/LSOCK_Stream.i \
+ Handle_L_Stream.i \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i
 
@@ -728,7 +733,8 @@ endif
  $(ACE_ROOT)/ace/IPC_SAP.h \
  $(ACE_ROOT)/ace/IPC_SAP.i \
  $(ACE_ROOT)/ace/SOCK.i \
- $(ACE_ROOT)/ace/SOCK_Dgram.i Handle_R_Dgram.i \
+ $(ACE_ROOT)/ace/SOCK_Dgram.i \
+ Handle_R_Dgram.i \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i
 
@@ -840,7 +846,8 @@ endif
  $(ACE_ROOT)/ace/SOCK_Stream.i \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/Time_Value.h \
- $(ACE_ROOT)/ace/SOCK_Acceptor.i Handle_R_Stream.i \
+ $(ACE_ROOT)/ace/SOCK_Acceptor.i \
+ Handle_R_Stream.i \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/WFMO_Reactor.h \
@@ -1003,7 +1010,8 @@ endif
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Service_Types.h \
- $(ACE_ROOT)/ace/Service_Types.i Handle_Timeout.i \
+ $(ACE_ROOT)/ace/Service_Types.i \
+ Handle_Timeout.i \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i
 
@@ -1110,7 +1118,8 @@ endif
  $(ACE_ROOT)/ace/IPC_SAP.h \
  $(ACE_ROOT)/ace/IPC_SAP.i \
  $(ACE_ROOT)/ace/SOCK.i \
- $(ACE_ROOT)/ace/SOCK_Dgram.i Handle_Broadcast.i \
+ $(ACE_ROOT)/ace/SOCK_Dgram.i \
+ Handle_Broadcast.i \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i
 
@@ -1268,7 +1277,8 @@ endif
  $(ACE_ROOT)/ace/IPC_SAP.h \
  $(ACE_ROOT)/ace/IPC_SAP.i \
  $(ACE_ROOT)/ace/Time_Value.h \
- $(ACE_ROOT)/ace/TLI_Stream.h Handle_Thr_Stream.h \
+ $(ACE_ROOT)/ace/TLI_Stream.h \
+ Handle_Thr_Stream.h \
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Service_Config.h \
  $(ACE_ROOT)/ace/Service_Object.h \
@@ -1407,8 +1417,9 @@ endif
  $(ACE_ROOT)/ace/Svc_Handler.cpp \
  $(ACE_ROOT)/ace/Dynamic.h \
  $(ACE_ROOT)/ace/Dynamic.i \
- $(ACE_ROOT)/ace/Acceptor.cpp Handle_Thr_Stream.i \
- Handle_Thr_Stream.cpp $(ACE_ROOT)/ace/SOCK_Stream.h \
+ $(ACE_ROOT)/ace/Acceptor.cpp \
+ Handle_Thr_Stream.i Handle_Thr_Stream.cpp \
+ $(ACE_ROOT)/ace/SOCK_Stream.h \
  $(ACE_ROOT)/ace/SOCK_IO.h \
  $(ACE_ROOT)/ace/SOCK.h \
  $(ACE_ROOT)/ace/SOCK.i \

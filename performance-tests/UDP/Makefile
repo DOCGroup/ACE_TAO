@@ -40,7 +40,8 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/udp_test.o .obj/udp_test.so .shobj/udp_test.o .shobj/udp_test.so: udp_test.cpp $(ACE_ROOT)/ace/Reactor.h \
+.obj/udp_test.o .obj/udp_test.so .shobj/udp_test.o .shobj/udp_test.so: udp_test.cpp \
+ $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
  $(ACE_ROOT)/ace/ACE.h \

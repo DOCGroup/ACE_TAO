@@ -44,7 +44,8 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/writer.o .obj/writer.so .shobj/writer.o .shobj/writer.so: writer.cpp $(ACE_ROOT)/ace/DEV_Connector.h \
+.obj/writer.o .obj/writer.so .shobj/writer.o .shobj/writer.so: writer.cpp \
+ $(ACE_ROOT)/ace/DEV_Connector.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/DEV_IO.h \
  $(ACE_ROOT)/ace/DEV.h \

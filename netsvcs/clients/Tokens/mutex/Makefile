@@ -48,7 +48,8 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/test_mutex.o .obj/test_mutex.so .shobj/test_mutex.o .shobj/test_mutex.so: test_mutex.cpp $(ACE_ROOT)/ace/OS.h \
+.obj/test_mutex.o .obj/test_mutex.so .shobj/test_mutex.o .shobj/test_mutex.so: test_mutex.cpp \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \

@@ -213,6 +213,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Sched_Params.i \
  $(ACE_ROOT)/ace/Profile_Timer.h \
  $(ACE_ROOT)/ace/Time_Value.h \
- $(ACE_ROOT)/ace/Profile_Timer.i ../Latency_Stats.h
+ $(ACE_ROOT)/ace/Profile_Timer.i \
+ ../Latency_Stats.h
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY
