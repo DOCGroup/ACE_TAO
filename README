@@ -53,7 +53,7 @@ The lower-level portions of ACE provide a set of portable and
 type-secure C++ wrappers that encapsulate the following C language OS
 interfaces:
 
-        . IPC mechanisms 
+        . IPC mechanisms
                 -- e.g., Internet- and UNIX-domain sockets, TLI, Named
 		   Pipes (for UNIX and Win32) and STREAM pipes;
 
@@ -63,7 +63,7 @@ interfaces:
 
         . Multi-threading and synchronization
                 -- e.g., Solaris threads, POSIX Pthreads, and Win32
-		   threads;  
+		   threads;
 
         . Explicit dynamic linking
                 -- e.g., dlopen/dlsym on UNIX and LoadLibrary/GetProc
@@ -73,7 +73,7 @@ interfaces:
 		-- e.g., BSD mmap(), SYSV shared memory, and Win32
 		   shared memory;
 
-        . System V IPC 
+        . System V IPC
                 -- e.g., shared memory, semaphores, message queues.
 
 The OS Adaptation Layer shields the upper levels of ACE from platform
@@ -109,8 +109,8 @@ following class categories:
 		-- Components for managing dynamically allocation
 		   of shared and local memory;
 
-	. CORBA integration 
-		-- Integrates ACE with CORBA implementations 
+	. CORBA integration
+		-- Integrates ACE with CORBA implementations
 		   (such as single-threaded and multi-threaded
 		   Orbix and Visibroker for C++).
 
@@ -123,7 +123,7 @@ are packaged as components.  These service components play two roles
 in ACE:
 
 	1. They provide reusable components for common distributed
-	   system tasks such as logging, naming, locking, and time 
+	   system tasks such as logging, naming, locking, and time
 	   synchronization.
 
 	2. They illustrate how to utilize ACE features such as the
@@ -143,11 +143,11 @@ applications provided with the ACE release include:
 
         1. The ACE ORB (TAO) -- TAO is a real-time implementation of
            CORBA built using the framework components and patterns
-           provided by ACE. 
+           provided by ACE.
 
         2. JAWS -- JAWS is a high-performance, adaptive Web server
            built using the components in ACE.
-	   
+
 ----------------------------------------
 
 OBTAINING ACE
@@ -196,7 +196,7 @@ BIBLIOGRAPHY file contains information on where to obtain articles
 that describe the ACE wrappers and the ADAPTIVE system in more detail.
 
 The current release has been tested extensively, but if you find any
-bugs, please report them to me.  
+bugs, please report them to me.
 
 ACE MAILING LIST AND NEWSGROUP
 
@@ -206,7 +206,7 @@ ace-users-request@cs.wustl.edu if you'd like to join the mailing list.
 There is also a USENET newsgroup called comp.soft-sys.ace.
 
 ACKNOWLEDGEMENTS
-        
+
 ACE has been deeply influenced and improved by the following members
 of my research group at Washington University:
 
@@ -269,7 +269,7 @@ George Reynolds <george@dvcorp.com>
 Hans Rohnert <Hans.Rohnert@zfe.siemens.de>
 Alex V. Maclinovsky <alexm@teltrunk1.tait.co.nz>
 Todd Blanchard <tblancha@evolving.com>
-Rob Clairmont <rclairmo@bnr.ca> 
+Rob Clairmont <rclairmo@bnr.ca>
 Christian Millour <chris@etca.fr>
 Neil Cohen <nbc@metsci.com>
 Dieter Quehl <quehl@csaserv.erlh.siemens.de>
@@ -289,22 +289,22 @@ Aurelio Nocerino <aurelio@irsipcs2-27-le0.irsip.na.cnr.it>
 Walt Akers <akers@cebaf.gov>
 Greg Baker <GBaker@p01.az15m.iac.honeywell.com>
 Alexandre Karev <karev@vxcern.cern.ch>
-Pramod Kumar Singh <pramod@saturn.miel.mot.com> 
+Pramod Kumar Singh <pramod@saturn.miel.mot.com>
 Bryon Rigg <bryon_rigg@mail.telecorpsys.com>
 Brad Brown <bbrown@rdxsunhost.aud.alcatel.com>
 Patty Genualdi <genualdp@agcs.com>
-Eshel Liran <liran@bimacs.cs.biu.ac.il> 
+Eshel Liran <liran@bimacs.cs.biu.ac.il>
 Mick Adams <eeimas@eei.ericsson.se>
 Chris Eich <Chris_Eich@optilink.optilink.dsccc.com>
 Mike Flinn <mike.flinn@smtpgate.aws.waii.com>
 Audun Tornquist <Audun.Tornquist@iu.hioslo.no>
 Sandeep Joshi <sandeepj@emailbox.att.com>
 Kirk Sinnard <1764@mn.lawson.lawson.com>
-Bernd Hofner <hofner@pd.et-inf.uni-siegen.de> 
+Bernd Hofner <hofner@pd.et-inf.uni-siegen.de>
 Craig Perras <craigp@wolfenet.com>
 Kirk Sinnard <kirk.sinnard@lawson.com>
 Matthew Newhook <matthew@neweast.ca>
-Gerolf Wendland <wendland@hpp015.mch2.scn.de> 
+Gerolf Wendland <wendland@hpp015.mch2.scn.de>
 Phil Mesnier <phil@envision.com>
 Ross Dargahi <rossd@krinfo.com>
 Richard Orr <rorr@costello.den.csci.csc.com>
@@ -371,13 +371,13 @@ Alexander Smundak <sasha@migration.com>
 Thilo Kielmann <kielmann@informatik.uni-siegen.de>
 Matthias Kerkhoff <make@cs.tu-berlin.de>
 Fred LaBar <flabar@fallschurch.esys.com>
-Hanan Herzog <hanan@wallenda.stanford.edu> 
+Hanan Herzog <hanan@wallenda.stanford.edu>
 Eric Parker <eparker@credence.com>
 James Michael Dwyer <jdwyer@knox.edu>
 Arun Katkere <katkere@praja.com>
 Bob Dunmire <bobd@titan.com>
 Sandro Doro <alex@aureus.sublink.org>
-Robert Lyng <RLyng@msmail.hsii.ccare.com>
+Robert Lyng <<rlyng@synertech.highmark.com>
 Phil Logan <phill@in.ot.com.au>
 John Cosby <John.D.Cosby@cpmx.saic.com>
 Wayne Vucenic <wvucenic@netgate.net>
@@ -439,7 +439,7 @@ Jan Perman <uabjjpp@osd.ericsson.se>
 Shankar Krishnamoorthy <kshankar@lucent.com>
 Reza Roodsari <reza@sprynet.com>
 Jim Crossley <jim@lads.com>
-Johannes Gutleber <Johannes.Gutleber@cern.ch> 
+Johannes Gutleber <Johannes.Gutleber@cern.ch>
 Marina Spivak <marina@cs.wustl.edu>
 Yigong Liu <ygl@emailbox.lucent.com>
 Erik Urdang <erik@bhi.com>
@@ -476,7 +476,7 @@ Evgeny Beskrovny <evgeny_beskrovny@icomverse.com>
 Kirill Rybaltchenko <Kirill.Rybaltchenko@cern.ch>
 Laura Paterno <lpaterno@d0chb.fnal.gov>
 Ben Eng <ben@jetpen.com>
-	
+
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson and is now at ObjectSpace.  Paul devised the recursive
 Makefile scheme that underlies this distribution and also spent
@@ -493,6 +493,6 @@ is freely available to researchers and developers.  If you have any
 improvements, suggestions, and or comments, I'd like to hear about it.
 
         Thanks,
-        
+
 		Douglas C. Schmidt
-	        schmidt@cs.wustl.edu 
+	        schmidt@cs.wustl.edu
