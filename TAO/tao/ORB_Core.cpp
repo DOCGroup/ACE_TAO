@@ -1612,8 +1612,8 @@ TAO_ORB_Core::create_stub_object (const TAO_ObjectKey &key,
       ACE_THROW_RETURN (CORBA::INTERNAL (
                           CORBA::SystemException::_tao_minor_code (
                             TAO_MPROFILE_CREATION_ERROR,
-			    0),
-			  CORBA::COMPLETED_NO),
+                            0),
+                          CORBA::COMPLETED_NO),
                         0);
     }
 
@@ -1625,8 +1625,8 @@ TAO_ORB_Core::create_stub_object (const TAO_ObjectKey &key,
       ACE_THROW_RETURN (CORBA::BAD_PARAM (
                           CORBA::SystemException::_tao_minor_code (
                             TAO_MPROFILE_CREATION_ERROR,
-			    0 ),
-			  CORBA::COMPLETED_NO),
+                            0 ),
+                          CORBA::COMPLETED_NO),
                         0);
     }
 
@@ -1672,8 +1672,8 @@ TAO_ORB_Core::create_stub_object (const TAO_ObjectKey &key,
 
 void
 TAO_ORB_Core::establish_components (TAO_MProfile &mp,
-				    CORBA::PolicyList *policy_list,
-				    CORBA::Environment &ACE_TRY_ENV)
+                                    CORBA::PolicyList *policy_list,
+                                    CORBA::Environment &ACE_TRY_ENV)
 {
   // Iterate over the registered IOR interceptors so that they may be
   // given the opportunity to add tagged components to the profiles
@@ -2961,6 +2961,8 @@ template class ACE_Hash_Map_Reverse_Iterator<ACE_CString, ACE_CString, ACE_Null_
 template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, ACE_CString, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, ACE_CString, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
 
+template class ACE_Array_Base<void *>;
+
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate ACE_Lock_Adapter<ACE_Null_Mutex>
@@ -2988,4 +2990,5 @@ template class ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, ACE_CString, ACE_Hash<
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, ACE_CString, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, ACE_CString, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
 
+#pragma instantiate ACE_Array_Base<void *>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

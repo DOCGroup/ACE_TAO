@@ -10,11 +10,11 @@ ACE_RCSID(tao, ORBInitInfo, "$Id$")
 
 
 TAO_ORBInitInfo::TAO_ORBInitInfo (TAO_ORB_Core *orb_core,
-                                  int argc,
+                                  int  argc ,
                                   char *argv[])
   : orb_core_ (orb_core),
-    argc_ (0),
-    argv_ (0)
+    argc_ (argc),
+    argv_ (argv)
 {
 }
 
