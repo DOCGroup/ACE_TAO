@@ -1193,6 +1193,13 @@ template class ACE_Singleton<TAO_Resource_Factory::App_Allocated, ACE_SYNCH_MUTE
 template class ACE_TSS_Singleton<TAO_Resource_Factory::App_Allocated, ACE_SYNCH_MUTEX>;
 template class ACE_TSS<TAO_Resource_Factory::App_Allocated>;
 template class ACE_Hash_Map_Manager<ACE_Hash_Addr<ACE_INET_Addr>, TAO_POA*, TAO_COLTBL_Lock>;
+template class ACE_Hash_Map_Entry<ACE_Hash_Addr<ACE_INET_Addr>, TAO_POA *>;
+template class ACE_Hash_Map_Iterator_Base<ACE_Hash_Addr<ACE_INET_Addr>, TAO_POA *, TAO_COLTBL_Lock>;
+template class ACE_Hash_Map_Iterator<ACE_Hash_Addr<ACE_INET_Addr>, TAO_POA *, TAO_COLTBL_Lock>;
+template class ACE_Hash_Map_Reverse_Iterator<ACE_Hash_Addr<ACE_INET_Addr>, TAO_POA *, TAO_COLTBL_Lock>;
+template class ACE_Guard<TAO_COLTBL_Lock>;
+template class ACE_Read_Guard<TAO_COLTBL_Lock>;
+template class ACE_Write_Guard<TAO_COLTBL_Lock>;
 template class ACE_Singleton<TAO_GLOBAL_COLTBL, ACE_SYNCH_MUTEX>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
@@ -1224,7 +1231,14 @@ template class ACE_Singleton<TAO_GLOBAL_COLTBL, ACE_SYNCH_MUTEX>;
 #pragma instantiate ACE_Singleton<TAO_Resource_Factory::App_Allocated, ACE_SYNCH_MUTEX>
 #pragma instantiate ACE_TSS_Singleton<TAO_Resource_Factory::App_Allocated, ACE_SYNCH_MUTEX>
 #pragma instantiate ACE_TSS<TAO_Resource_Factory::App_Allocated>
-#parama instantiate ACE_Hash_Map_Manager<ACE_Hash_Addr<ACE_INET_Addr>, TAO_POA*, TAO_COLTBL_Lock>
+#pragma instantiate ACE_Hash_Map_Manager<ACE_Hash_Addr<ACE_INET_Addr>, TAO_POA*, TAO_COLTBL_Lock>
+#pragma instantiate ACE_Hash_Map_Entry<ACE_Hash_Addr<ACE_INET_Addr>, TAO_POA *>
+#pragma instantiate ACE_Hash_Map_Iterator_Base<ACE_Hash_Addr<ACE_INET_Addr>, TAO_POA *, TAO_COLTBL_Lock>
+#pragma instantiate ACE_Hash_Map_Iterator<ACE_Hash_Addr<ACE_INET_Addr>, TAO_POA *, TAO_COLTBL_Lock>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator<ACE_Hash_Addr<ACE_INET_Addr>, TAO_POA *, TAO_COLTBL_Lock>
+#pragma instantiate ACE_Guard<TAO_COLTBL_Lock>
+#pragma instantiate ACE_Read_Guard<TAO_COLTBL_Lock>
+#pragma instantiate ACE_Write_Guard<TAO_COLTBL_Lock>
 #pragma instantiate ACE_Singleton<TAO_GLOBAL_COLTBL, ACE_SYNCH_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
