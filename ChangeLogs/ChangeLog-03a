@@ -1,3 +1,9 @@
+Tue Jan 28 15:47:29 2003  Steve Huston  <shuston@riverace.com>
+
+        * include/makeinclude/platform_hpux_aCC.GNU: For distrib builds,
+          changed the +h option to not specify the whole path; put the path
+          in the path search option (+b).
+
 Mon Jan 27 14:28:16 2003  Heather Drury  <drury_h@ociweb.com>
 
 	* include/makeinclude/wrapper_macros.GNU: Remove unnecessary use
