@@ -1,3 +1,18 @@
+Sat May  2 09:58:41 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_exception.cpp: We now make the *_alloc
+	method as a static method of the generated Exception class. The
+	reason for doing this was that some exceptions get borrowed from
+	included files. Now if we make the _alloc method as a static
+	method in the generated *C.cpp file, we don't see it in other
+	files where it is needed. The best way to do this was to make a
+	_alloc method as a static method on the generated exception class.
+
+	* TAO_IDL/be/be_visitor_operation.cpp: Changes made above required
+	some trivial modifications. However, it remains to be see if
+	MSVC++ accepts the generated code or not OR whether it needs the
+	ACE_NESTED_CLASS macro. I am waiting for reports on this.
+
 Fri May 01 17:56:07 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/orbsvcs/orbsvcs/Naming/Naming_Utils.cpp: Moved #include of
