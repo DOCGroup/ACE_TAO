@@ -20,6 +20,7 @@
 #define FreeBSD
 #define _THREAD_SAFE
 #define ACE_LACKS_GETPGID
+#define ACE_LACKS_RWLOCK_T
 #define ACE_HAS_SIG_MACROS
 // Platform supports POSIX timers via timestruct_t.
 #define ACE_HAS_POSIX_TIME
