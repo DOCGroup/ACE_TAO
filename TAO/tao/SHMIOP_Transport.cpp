@@ -248,12 +248,9 @@ TAO_SHMIOP_Client_Transport::handle_client_input (int /* block */,
 
   // OK, the complete message is here...
 
-  TAO_Pluggable_Connector_Params params;
-  CORBA::ULong reply_status;
-
   result = this->client_mesg_factory_->parse_reply (*message_state,
-                                                    params,
-                                                    reply_status);
+                                                    this->params_);
+                                                    
   if (result == -1)
     {
       if (TAO_debug_level > 0)
@@ -265,10 +262,10 @@ TAO_SHMIOP_Client_Transport::handle_client_input (int /* block */,
     }
 
   result =
-    this->tms_->dispatch_reply (params.request_id,
-                                reply_status,
+    this->tms_->dispatch_reply (this->params_.request_id_,
+                                this->params_.reply_status_,
                                 message_state->giop_version,
-                                params.svc_ctx,
+                                this->params_.svc_ctx_,
                                 message_state);
 
   if (result == -1)

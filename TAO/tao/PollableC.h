@@ -1,7 +1,6 @@
 /* -*- C++ -*- */
 //
 // $Id$
-
 //
 // ================================================================
 //
@@ -312,6 +311,11 @@ public:
 
     virtual void _raise (void);
 
+    virtual void _tao_encode (TAO_OutputCDR &cdr,
+                              CORBA::Environment &) const;
+    virtual void _tao_decode (TAO_InputCDR &cdr,
+                              CORBA::Environment &);
+
     static NoPossiblePollable *_narrow (CORBA::Exception *);
 
 
@@ -342,6 +346,11 @@ public:
 
 
     virtual void _raise (void);
+
+    virtual void _tao_encode (TAO_OutputCDR &cdr,
+                              CORBA::Environment &) const;
+    virtual void _tao_decode (TAO_InputCDR &cdr,
+                              CORBA::Environment &);
 
     static UnknownPollable *_narrow (CORBA::Exception *);
 
@@ -396,20 +405,38 @@ private:
 };
 
 // Any operators for interface CORBA_Pollable
-TAO_Export void operator<<= (CORBA::Any &, CORBA_Pollable_ptr);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA_Pollable *&);
+TAO_Export void operator<<= (CORBA::Any &, 
+                             CORBA_Pollable_ptr);
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+                                       CORBA_Pollable *&);
+
 // Any operators for interface CORBA::DIIPollable
-TAO_Export void operator<<= (CORBA::Any &, CORBA::DIIPollable_ptr);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::DIIPollable *&);
+TAO_Export void operator<<= (CORBA::Any &, 
+                             CORBA::DIIPollable_ptr);
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+                                       CORBA::DIIPollable *&);
+
 // Any operators for interface CORBA_PollableSet
-TAO_Export void operator<<= (CORBA::Any &, CORBA_PollableSet_ptr);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA_PollableSet *&);
-TAO_Export void operator<<= (CORBA::Any &, const CORBA_PollableSet::NoPossiblePollable &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, CORBA_PollableSet::NoPossiblePollable*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA_PollableSet::NoPossiblePollable *&);
-TAO_Export void operator<<= (CORBA::Any &, const CORBA_PollableSet::UnknownPollable &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, CORBA_PollableSet::UnknownPollable*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA_PollableSet::UnknownPollable *&);
+TAO_Export void operator<<= (CORBA::Any &, 
+                             CORBA_PollableSet_ptr);
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+                                       CORBA_PollableSet *&);
+TAO_Export void operator<<= (CORBA::Any &, 
+                             const CORBA_PollableSet::NoPossiblePollable &); // copying version
+TAO_Export void operator<<= (CORBA::Any &, 
+                             CORBA_PollableSet::NoPossiblePollable*); // noncopying version
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+                                       CORBA_PollableSet::NoPossiblePollable *&);
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+                                       const CORBA::PollableSet::NoPossiblePollable *&);
+TAO_Export void operator<<= (CORBA::Any &, 
+                             const CORBA_PollableSet::UnknownPollable &); // copying version
+TAO_Export void operator<<= (CORBA::Any &, 
+                             CORBA_PollableSet::UnknownPollable*); // noncopying version
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+                                       CORBA_PollableSet::UnknownPollable *&);
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+                                       const CORBA::PollableSet::UnknownPollable *&);
 
 #ifndef __ACE_INLINE__
 

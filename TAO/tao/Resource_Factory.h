@@ -57,6 +57,10 @@ public:
   // creator method, the protocol name can only be set when the
   // object is created.
 
+  ~TAO_Protocol_Item (void);
+  // destructor that deallocates the factory object if the
+  // Protocol_Item retains ownership.
+
   const ACE_CString &protocol_name (void);
   // return a reference to the character representation of the protocol
   // factories name.
@@ -64,7 +68,7 @@ public:
   TAO_Protocol_Factory *factory (void);
   // return a pointer to the protocol factory.
 
-  void factory (TAO_Protocol_Factory *factory);
+  void factory (TAO_Protocol_Factory *factory, int owner = 0);
   // set the factory pointer's value.
 
 private:
@@ -73,6 +77,9 @@ private:
 
   TAO_Protocol_Factory *factory_;
   // pointer to factory object.
+
+  int factory_owner_;
+  // whether we own (and therefore have to delete) the factory object.
 };
 
 // typedefs for containers containing the list of loaded protocol

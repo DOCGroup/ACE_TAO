@@ -1,6 +1,5 @@
 // $Id$
 
-
 #include "tao/orbconf.h"
 
 #if (TAO_HAS_RT_CORBA == 1)
@@ -12,7 +11,6 @@
 #endif /* ! __ACE_INLINE__ */
 
 ACE_RCSID(tao, Priority_Mapping, "$Id$")
-
 
 TAO_Priority_Mapping::TAO_Priority_Mapping (void)
 {

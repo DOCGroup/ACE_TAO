@@ -12,9 +12,7 @@
 #include "tao/Environment.h"
 #include "ace/Auto_Ptr.h"
 
-
 ACE_RCSID(tao, UIOP_Connector, "$Id$")
-
 
 #if defined (TAO_USES_ROBUST_CONNECTION_MGMT)
 int

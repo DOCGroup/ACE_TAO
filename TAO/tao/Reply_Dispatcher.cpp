@@ -1,7 +1,6 @@
 // $Id$
 
 
-
 #include "tao/Reply_Dispatcher.h"
 #include "tao/ORB_Core.h"
 #include "tao/Leader_Follower.h"
@@ -55,7 +54,7 @@ TAO_Synch_Reply_Dispatcher::~TAO_Synch_Reply_Dispatcher (void)
 // Dispatch the reply.
 int
 TAO_Synch_Reply_Dispatcher::dispatch_reply (CORBA::ULong reply_status,
-                                            const TAO_GIOP_Version &version,
+                                            const TAO_GIOP_Version & /*version*/,
                                             IOP::ServiceContextList &reply_ctx,
                                             TAO_GIOP_Message_State *message_state)
 {
@@ -160,12 +159,12 @@ TAO_Asynch_Reply_Dispatcher::~TAO_Asynch_Reply_Dispatcher (void)
 // Dispatch the reply.
 int
 TAO_Asynch_Reply_Dispatcher::dispatch_reply (CORBA::ULong reply_status,
-                                             const TAO_GIOP_Version &version,
+                                             const TAO_GIOP_Version & /*version*/,
                                              IOP::ServiceContextList &reply_ctx,
                                              TAO_GIOP_Message_State *message_state)
 {
   this->reply_status_ = reply_status;
-  this->version_ = version;
+  //  this->version_ = version;
   this->message_state_ = message_state;
 
   // Steal the buffer, that way we don't do any unnecesary copies of
@@ -185,17 +184,17 @@ TAO_Asynch_Reply_Dispatcher::dispatch_reply (CORBA::ULong reply_status,
   CORBA::ULong reply_error = TAO_AMI_REPLY_NOT_OK;
   switch (reply_status)
     {
-    case TAO_GIOP_NO_EXCEPTION:
+    case TAO_PLUGGABLE_MESSAGE_NO_EXCEPTION:
       reply_error = TAO_AMI_REPLY_OK;
       break;
-    case TAO_GIOP_USER_EXCEPTION:
+    case TAO_PLUGGABLE_MESSAGE_USER_EXCEPTION:
       reply_error = TAO_AMI_REPLY_USER_EXCEPTION;
       break;
-    case TAO_GIOP_SYSTEM_EXCEPTION:
+    case TAO_PLUGGABLE_MESSAGE_SYSTEM_EXCEPTION:
       reply_error = TAO_AMI_REPLY_SYSTEM_EXCEPTION;
       break;
     default:
-    case TAO_GIOP_LOCATION_FORWARD:
+    case TAO_PLUGGABLE_MESSAGE_LOCATION_FORWARD:
       // @@ Michael: Not even the spec mentions this case.
       //             We have to think about this case.
       // Handle the forwarding and return so the stub restarts the
@@ -260,7 +259,7 @@ TAO_DII_Deferred_Reply_Dispatcher::~TAO_DII_Deferred_Reply_Dispatcher (void)
 int
 TAO_DII_Deferred_Reply_Dispatcher::dispatch_reply (
     CORBA::ULong reply_status,
-    const TAO_GIOP_Version &version,
+    const TAO_GIOP_Version & /*version*/,
     IOP::ServiceContextList &reply_ctx,
     TAO_GIOP_Message_State *message_state
   )

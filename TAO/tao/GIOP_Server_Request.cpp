@@ -55,6 +55,7 @@ TAO_GIOP_ServerRequest::
        incoming_ (&input),
        outgoing_ (&output),
        response_expected_ (0),
+       sync_with_server_ (0),
        lazy_evaluation_ (0),
        
 #if !defined (TAO_HAS_MINIMUM_CORBA)
@@ -74,7 +75,7 @@ TAO_GIOP_ServerRequest::
        requesting_principal_ (0)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_SERVER_REQUEST_START);
-  //  parse_error = this->parse_header ();
+  //no-op
 }
 
 // This constructor is used, by the locate request code
@@ -93,6 +94,7 @@ TAO_GIOP_ServerRequest::
         operation_ (operation),
         incoming_ (0),
         outgoing_ (&output),
+        sync_with_server_ (0),
         response_expected_ (response_expected),
         lazy_evaluation_ (0),
         
@@ -172,7 +174,10 @@ TAO_GIOP_ServerRequest::set_result (const CORBA::Any &value,
   if (this->retval_ || this->exception_)
     ACE_THROW (CORBA::BAD_INV_ORDER ());
 
-  this->retval_ = new CORBA::Any (value);
+  ACE_NEW_THROW_EX (this->retval_,
+                    CORBA::Any (value),
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK;
 }
 
 // Store the exception value.
@@ -212,7 +217,10 @@ TAO_GIOP_ServerRequest::set_exception (const CORBA::Any &value,
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
       {
-        this->exception_ = new CORBA::Any (value);
+        ACE_NEW_THROW_EX (this->exception_,
+                          CORBA::Any (value),
+                          CORBA::NO_MEMORY ());
+        ACE_CHECK;
 
         this->exception_type_ = TAO_GIOP_USER_EXCEPTION;
 
@@ -461,8 +469,7 @@ TAO_GIOP_ServerRequest::init_reply (CORBA::Environment &ACE_TRY_ENV)
         this->params_->_tao_target_alignment ();
 
       ptr_arith_t current =
-        ptr_arith_t(this->outgoing_->current ()->wr_ptr ())
-        % ACE_CDR::MAX_ALIGNMENT;
+        ptr_arith_t(this->outgoing_->current_alignment ()) % ACE_CDR::MAX_ALIGNMENT;
 
       CORBA::ULong pad = 0;
       if (target == 0)

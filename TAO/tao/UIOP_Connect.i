@@ -1,8 +1,8 @@
 // -*- C++ -*-
 // $Id$
 
-
 #if TAO_HAS_UIOP == 1
+
 
 ACE_INLINE TAO_Transport *
 TAO_UIOP_Server_Connection_Handler::transport (void)

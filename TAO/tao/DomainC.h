@@ -315,8 +315,10 @@ TAO_Export void operator<<= (CORBA::Any &,
                              const CORBA_DomainManagerList &); // copying version
 TAO_Export void operator<<= (CORBA::Any &,
                              CORBA_DomainManagerList*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
-                                       CORBA_DomainManagerList *&);
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+                                       CORBA::DomainManagerList *&); // deprecated
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+                                       const CORBA::DomainManagerList *&);
 
 #ifndef __ACE_INLINE__
 

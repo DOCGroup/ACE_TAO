@@ -4,6 +4,7 @@ ACE_INLINE
 TAO_GIOP_Locate_Request_Header::TAO_GIOP_Locate_Request_Header (TAO_InputCDR &msg)
   : request_id_ (0),
     addressing_disposition_ (0),
+    target_address_ (),
     incoming_ (&msg)
 {
 }

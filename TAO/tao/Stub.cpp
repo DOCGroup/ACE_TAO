@@ -1,8 +1,5 @@
 // $Id$
 
-
-
-
 // @ (#)iiopobj.cpp     1.9 95/11/04
 // Copyright 1995 by Sun Microsystems Inc.
 // All Rights Reserved
@@ -36,8 +33,6 @@
 #include "tao/Timeprobe.h"
 
 ACE_RCSID(tao, TAO_Stub, "$Id$")
-
-
 
 #if defined (ACE_ENABLE_TIMEPROBES)
 
@@ -342,7 +337,7 @@ TAO_Stub::do_static_call (CORBA::Environment &ACE_TRY_ENV,
 
   if (info->is_roundtrip)
     {
-      TAO_GIOP_Twoway_Invocation call (this, 
+      TAO_GIOP_Twoway_Invocation call (this,
                                        info->opname,
                                        ACE_OS::strlen (info->opname),
                                        this->orb_core_);
@@ -489,7 +484,7 @@ TAO_Stub::do_static_call (CORBA::Environment &ACE_TRY_ENV,
     } // if (two way)
   else
     {
-      TAO_GIOP_Oneway_Invocation call (this, 
+      TAO_GIOP_Oneway_Invocation call (this,
                                        info->opname,
                                        ACE_OS::strlen (info->opname),
                                        this->orb_core_);

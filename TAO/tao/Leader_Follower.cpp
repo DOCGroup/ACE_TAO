@@ -1,6 +1,5 @@
 // $Id$
 
-
 #include "tao/Leader_Follower.h"
 #include "tao/Resource_Factory.h"
 
@@ -8,9 +7,7 @@
 # include "tao/Leader_Follower.i"
 #endif /* ! __ACE_INLINE__ */
 
-
 ACE_RCSID(tao, Leader_Follower, "$Id$")
-
 
 TAO_Leader_Follower::~TAO_Leader_Follower (void)
 {

@@ -1,6 +1,5 @@
 // $Id$
 
-
 // ============================================================================
 //
 // = LIBRARY
@@ -27,7 +26,6 @@
 #include "tao/debug.h"
 
 ACE_RCSID(tao, skip, "$Id$")
-
 
 CORBA::TypeCode::traverse_status
 TAO_Marshal_Primitive::skip (CORBA::TypeCode_ptr  tc,

@@ -1,7 +1,6 @@
 /* -*- C++ -*- */
 //
 // $Id$
-
 //
 // ================================================================
 //
@@ -31,11 +30,7 @@
 #include "tao/PollableC.i"
 #endif /* !defined INLINE */
 
-<<<<<<< PollableC.cpp
 ACE_RCSID(tao, PollableC, "$Id$")
-=======
-ACE_RCSID(tao, PollableC, "$Id$")
->>>>>>> 1.14.2.3
 
 CORBA_Pollable_ptr CORBA_Pollable::_narrow (
     CORBA::Object_ptr obj,
@@ -462,9 +457,25 @@ CORBA_PollableSet::NoPossiblePollable::_narrow (CORBA::Exception *exc)
 }
 
 
-void CORBA_PollableSet::NoPossiblePollable::_raise ()
+void CORBA_PollableSet::NoPossiblePollable::_raise (void)
 {
   TAO_RAISE(*this);
+}
+
+void CORBA_PollableSet::NoPossiblePollable::_tao_encode (TAO_OutputCDR &cdr,
+                                                         CORBA::Environment &ACE_TRY_ENV) const
+{
+  if (cdr << *this)
+    return;
+  ACE_THROW (CORBA::MARSHAL ());
+}
+
+void CORBA_PollableSet::NoPossiblePollable::_tao_decode (TAO_InputCDR &cdr,
+                                                         CORBA::Environment &ACE_TRY_ENV)
+{
+  if (cdr >> *this)
+    return;
+  ACE_THROW (CORBA::MARSHAL ());
 }
 
 // TAO extension - the _alloc method
@@ -526,9 +537,25 @@ CORBA_PollableSet::UnknownPollable::_narrow (CORBA::Exception *exc)
 }
 
 
-void CORBA_PollableSet::UnknownPollable::_raise ()
+void CORBA_PollableSet::UnknownPollable::_raise (void)
 {
   TAO_RAISE(*this);
+}
+
+void CORBA_PollableSet::UnknownPollable::_tao_encode (TAO_OutputCDR &cdr,
+                                                      CORBA::Environment &ACE_TRY_ENV) const
+{
+  if (cdr << *this)
+    return;
+  ACE_THROW (CORBA::MARSHAL ());
+}
+
+void CORBA_PollableSet::UnknownPollable::_tao_decode (TAO_InputCDR &cdr,
+                                                      CORBA::Environment &ACE_TRY_ENV)
+{
+  if (cdr >> *this)
+    return;
+  ACE_THROW (CORBA::MARSHAL ());
 }
 
 // TAO extension - the _alloc method
@@ -862,15 +889,30 @@ const char* CORBA_PollableSet::_interface_repository_id (void) const
   return "IDL:omg.org/CORBA/PollableSet:1.0";
 }
 
-void operator<<= (CORBA::Any &_tao_any, CORBA_Pollable_ptr _tao_elem)
+void operator<<= (CORBA::Any &_tao_any, CORBA::Pollable_ptr _tao_elem)
 {
   CORBA::Object_ptr *_tao_obj_ptr = 0;
   ACE_TRY_NEW_ENV
   {
     ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
-    *_tao_obj_ptr = CORBA_Pollable::_duplicate (_tao_elem);
-    _tao_any.replace (CORBA::_tc_Pollable, _tao_obj_ptr, 1, ACE_TRY_ENV);
-    ACE_TRY_CHECK;
+    *_tao_obj_ptr = CORBA::Pollable::_duplicate (_tao_elem);
+    TAO_OutputCDR stream;
+    if (stream << *_tao_obj_ptr)
+    {
+      _tao_any._tao_replace (
+          CORBA::_tc_Pollable, 
+          TAO_ENCAP_BYTE_ORDER,
+          stream.begin (),
+          1,
+          _tao_obj_ptr,
+          ACE_TRY_ENV
+        );
+      ACE_TRY_CHECK;
+    }
+    else
+    {
+      delete _tao_obj_ptr;
+    }
   }
   ACE_CATCHANY
   {
@@ -879,48 +921,67 @@ void operator<<= (CORBA::Any &_tao_any, CORBA_Pollable_ptr _tao_elem)
   ACE_ENDTRY;
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA_Pollable_ptr &_tao_elem)
+CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::Pollable_ptr &_tao_elem)
 {
   CORBA::Object_ptr *tmp = 0;
+  ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
   ACE_TRY_NEW_ENV
   {
-    _tao_elem = CORBA_Pollable::_nil ();
+    _tao_elem = CORBA::Pollable::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equal (CORBA::_tc_Pollable, ACE_TRY_ENV)) return 0; // not equal
+    if (!type->equivalent (CORBA::_tc_Pollable, ACE_TRY_ENV)) // not equal
+      {
+        delete tmp;
+        return 0;
+      }
     ACE_TRY_CHECK;
-    TAO_InputCDR stream (_tao_any._tao_get_cdr (),
-                         _tao_any._tao_byte_order ());
+    TAO_InputCDR stream (
+        _tao_any._tao_get_cdr (),
+        _tao_any._tao_byte_order ()
+      );
     CORBA::Object_var _tao_obj_var;
-    ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
-    if (stream.decode (CORBA::_tc_Pollable, &_tao_obj_var.out (), 0, ACE_TRY_ENV)
-       == CORBA::TypeCode::TRAVERSE_CONTINUE)
+    if (stream >> _tao_obj_var.out ())
     {
-      _tao_elem = CORBA_Pollable::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
+      _tao_elem = CORBA::Pollable::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
       *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
-      ((CORBA::Any *)&_tao_any)->replace (CORBA::_tc_Pollable, tmp, 1, ACE_TRY_ENV);
+      ((CORBA::Any *)&_tao_any)->_tao_replace (
+          CORBA::_tc_Pollable,
+          1,
+          tmp,
+          ACE_TRY_ENV
+        );
       ACE_TRY_CHECK;
       return 1;
     }
-    // failure
+    else    // failure
+    {
+      delete tmp;
+    }
   }
   ACE_CATCHANY
   {
     delete tmp;
+    _tao_elem = CORBA::Pollable::_nil ();
     return 0;
   }
   ACE_ENDTRY;
+  _tao_elem = CORBA::Pollable::_nil ();
   return 0;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  template class TAO_Object_Field_T<CORBA_Pollable,CORBA_Pollable_var>;
-  template class TAO_Object_Manager<CORBA_Pollable,CORBA_Pollable_var>;
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
+    defined (ACE_HAS_GNU_REPO)
+    template class TAO_Object_Field_T<CORBA::Pollable,CORBA::Pollable_var>;
+  template class TAO_Object_Manager<CORBA::Pollable,CORBA::Pollable_var>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  pragma instantiate TAO_Object_Field_T<CORBA_Pollable,CORBA_Pollable_var>
-#  pragma instantiate TAO_Object_Manager<CORBA_Pollable,CORBA_Pollable_var>
+#  pragma instantiate TAO_Object_Field_T<CORBA::Pollable,CORBA::Pollable_var>
+#  pragma instantiate TAO_Object_Manager<CORBA::Pollable,CORBA::Pollable_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
+CORBA::DIIPollable_ptr (*_TAO_collocation_CORBA_DIIPollable_Stub_Factory_function_pointer) (
+    CORBA::Object_ptr obj
+  ) = 0;
 void operator<<= (CORBA::Any &_tao_any, CORBA::DIIPollable_ptr _tao_elem)
 {
   CORBA::Object_ptr *_tao_obj_ptr = 0;
@@ -928,8 +989,23 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::DIIPollable_ptr _tao_elem)
   {
     ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
     *_tao_obj_ptr = CORBA::DIIPollable::_duplicate (_tao_elem);
-    _tao_any.replace (CORBA::_tc_DIIPollable, _tao_obj_ptr, 1, ACE_TRY_ENV);
-    ACE_TRY_CHECK;
+    TAO_OutputCDR stream;
+    if (stream << *_tao_obj_ptr)
+    {
+      _tao_any._tao_replace (
+          CORBA::_tc_DIIPollable, 
+          TAO_ENCAP_BYTE_ORDER,
+          stream.begin (),
+          1,
+          _tao_obj_ptr,
+          ACE_TRY_ENV
+        );
+      ACE_TRY_CHECK;
+    }
+    else
+    {
+      delete _tao_obj_ptr;
+    }
   }
   ACE_CATCHANY
   {
@@ -941,54 +1017,88 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::DIIPollable_ptr _tao_elem)
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::DIIPollable_ptr &_tao_elem)
 {
   CORBA::Object_ptr *tmp = 0;
+  ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
   ACE_TRY_NEW_ENV
   {
     _tao_elem = CORBA::DIIPollable::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equal (CORBA::_tc_DIIPollable, ACE_TRY_ENV)) return 0; // not equal
+    if (!type->equivalent (CORBA::_tc_DIIPollable, ACE_TRY_ENV)) // not equal
+      {
+        delete tmp;
+        return 0;
+      }
     ACE_TRY_CHECK;
-    TAO_InputCDR stream (_tao_any._tao_get_cdr (),
-                         _tao_any._tao_byte_order ());
+    TAO_InputCDR stream (
+        _tao_any._tao_get_cdr (),
+        _tao_any._tao_byte_order ()
+      );
     CORBA::Object_var _tao_obj_var;
-    ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
-    if (stream.decode (CORBA::_tc_DIIPollable, &_tao_obj_var.out (), 0, ACE_TRY_ENV)
-       == CORBA::TypeCode::TRAVERSE_CONTINUE)
+    if (stream >> _tao_obj_var.out ())
     {
       _tao_elem = CORBA::DIIPollable::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
       *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
-      ((CORBA::Any *)&_tao_any)->replace (CORBA::_tc_DIIPollable, tmp, 1, ACE_TRY_ENV);
+      ((CORBA::Any *)&_tao_any)->_tao_replace (
+          CORBA::_tc_DIIPollable,
+          1,
+          tmp,
+          ACE_TRY_ENV
+        );
       ACE_TRY_CHECK;
       return 1;
     }
-    // failure
+    else    // failure
+    {
+      delete tmp;
+    }
   }
   ACE_CATCHANY
   {
     delete tmp;
+    _tao_elem = CORBA::DIIPollable::_nil ();
     return 0;
   }
   ACE_ENDTRY;
+  _tao_elem = CORBA::DIIPollable::_nil ();
   return 0;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  template class TAO_Object_Field_T<CORBA::DIIPollable,CORBA::DIIPollable_var>;
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
+    defined (ACE_HAS_GNU_REPO)
+    template class TAO_Object_Field_T<CORBA::DIIPollable,CORBA::DIIPollable_var>;
   template class TAO_Object_Manager<CORBA::DIIPollable,CORBA::DIIPollable_var>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #  pragma instantiate TAO_Object_Field_T<CORBA::DIIPollable,CORBA::DIIPollable_var>
 #  pragma instantiate TAO_Object_Manager<CORBA::DIIPollable,CORBA::DIIPollable_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-void operator<<= (CORBA::Any &_tao_any, CORBA_PollableSet_ptr _tao_elem)
+CORBA::PollableSet_ptr (*_TAO_collocation_CORBA_PollableSet_Stub_Factory_function_pointer) (
+    CORBA::Object_ptr obj
+  ) = 0;
+void operator<<= (CORBA::Any &_tao_any, CORBA::PollableSet_ptr _tao_elem)
 {
   CORBA::Object_ptr *_tao_obj_ptr = 0;
   ACE_TRY_NEW_ENV
   {
     ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
-    *_tao_obj_ptr = CORBA_PollableSet::_duplicate (_tao_elem);
-    _tao_any.replace (CORBA::_tc_PollableSet, _tao_obj_ptr, 1, ACE_TRY_ENV);
-    ACE_TRY_CHECK;
+    *_tao_obj_ptr = CORBA::PollableSet::_duplicate (_tao_elem);
+    TAO_OutputCDR stream;
+    if (stream << *_tao_obj_ptr)
+    {
+      _tao_any._tao_replace (
+          CORBA::_tc_PollableSet, 
+          TAO_ENCAP_BYTE_ORDER,
+          stream.begin (),
+          1,
+          _tao_obj_ptr,
+          ACE_TRY_ENV
+        );
+      ACE_TRY_CHECK;
+    }
+    else
+    {
+      delete _tao_obj_ptr;
+    }
   }
   ACE_CATCHANY
   {
@@ -997,179 +1107,363 @@ void operator<<= (CORBA::Any &_tao_any, CORBA_PollableSet_ptr _tao_elem)
   ACE_ENDTRY;
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA_PollableSet_ptr &_tao_elem)
+CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::PollableSet_ptr &_tao_elem)
 {
   CORBA::Object_ptr *tmp = 0;
+  ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
   ACE_TRY_NEW_ENV
   {
-    _tao_elem = CORBA_PollableSet::_nil ();
+    _tao_elem = CORBA::PollableSet::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equal (CORBA::_tc_PollableSet, ACE_TRY_ENV)) return 0; // not equal
+    if (!type->equivalent (CORBA::_tc_PollableSet, ACE_TRY_ENV)) // not equal
+      {
+        delete tmp;
+        return 0;
+      }
     ACE_TRY_CHECK;
-    TAO_InputCDR stream (_tao_any._tao_get_cdr (),
-                         _tao_any._tao_byte_order ());
+    TAO_InputCDR stream (
+        _tao_any._tao_get_cdr (),
+        _tao_any._tao_byte_order ()
+      );
     CORBA::Object_var _tao_obj_var;
-    ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
-    if (stream.decode (CORBA::_tc_PollableSet, &_tao_obj_var.out (), 0, ACE_TRY_ENV)
-       == CORBA::TypeCode::TRAVERSE_CONTINUE)
+    if (stream >> _tao_obj_var.out ())
     {
-      _tao_elem = CORBA_PollableSet::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
+      _tao_elem = CORBA::PollableSet::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
       *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
-      ((CORBA::Any *)&_tao_any)->replace (CORBA::_tc_PollableSet, tmp, 1, ACE_TRY_ENV);
+      ((CORBA::Any *)&_tao_any)->_tao_replace (
+          CORBA::_tc_PollableSet,
+          1,
+          tmp,
+          ACE_TRY_ENV
+        );
       ACE_TRY_CHECK;
       return 1;
     }
-    // failure
+    else    // failure
+    {
+      delete tmp;
+    }
   }
   ACE_CATCHANY
   {
     delete tmp;
+    _tao_elem = CORBA::PollableSet::_nil ();
     return 0;
   }
   ACE_ENDTRY;
+  _tao_elem = CORBA::PollableSet::_nil ();
   return 0;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  template class TAO_Object_Field_T<CORBA_PollableSet,CORBA_PollableSet_var>;
-  template class TAO_Object_Manager<CORBA_PollableSet,CORBA_PollableSet_var>;
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
+    defined (ACE_HAS_GNU_REPO)
+    template class TAO_Object_Field_T<CORBA::PollableSet,CORBA::PollableSet_var>;
+  template class TAO_Object_Manager<CORBA::PollableSet,CORBA::PollableSet_var>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  pragma instantiate TAO_Object_Field_T<CORBA_PollableSet,CORBA_PollableSet_var>
-#  pragma instantiate TAO_Object_Manager<CORBA_PollableSet,CORBA_PollableSet_var>
+#  pragma instantiate TAO_Object_Field_T<CORBA::PollableSet,CORBA::PollableSet_var>
+#  pragma instantiate TAO_Object_Manager<CORBA::PollableSet,CORBA::PollableSet_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-void operator<<= (CORBA::Any &_tao_any, const CORBA_PollableSet::NoPossiblePollable &_tao_elem) // copying
+void operator<<= (CORBA::Any &_tao_any, const CORBA::PollableSet::NoPossiblePollable &_tao_elem) // copying
 {
-  CORBA_PollableSet::NoPossiblePollable *_tao_any_val = 0;
-  ACE_NEW (_tao_any_val,
-           CORBA_PollableSet::NoPossiblePollable (_tao_elem));
+  CORBA::PollableSet::NoPossiblePollable *_tao_any_val = 0;
+  ACE_NEW (_tao_any_val, CORBA::PollableSet::NoPossiblePollable (_tao_elem));
   if (!_tao_any_val) return;
   ACE_TRY_NEW_ENV
   {
-    _tao_any.replace (CORBA_PollableSet::_tc_NoPossiblePollable, _tao_any_val, 1, ACE_TRY_ENV);
+    TAO_OutputCDR stream;
+    stream << *_tao_any_val;
+    _tao_any._tao_replace (
+        CORBA::PollableSet::_tc_NoPossiblePollable,
+        TAO_ENCAP_BYTE_ORDER,
+        stream.begin (),
+        1,
+        _tao_any_val,
+        ACE_TRY_ENV
+      );
     ACE_TRY_CHECK;
   }
-  ACE_CATCHANY
+  ACE_CATCHANY 
   {
     delete _tao_any_val;
   }
   ACE_ENDTRY;
 }
 
-void operator<<= (CORBA::Any &_tao_any, CORBA_PollableSet::NoPossiblePollable *_tao_elem) // non copying
+void operator<<= (CORBA::Any &_tao_any, CORBA::PollableSet::NoPossiblePollable *_tao_elem) // non copying
 {
   ACE_TRY_NEW_ENV
   {
-    _tao_any.replace (CORBA_PollableSet::_tc_NoPossiblePollable, _tao_elem, 1, ACE_TRY_ENV); // consume it
+    TAO_OutputCDR stream;
+    stream << *_tao_elem;
+    _tao_any._tao_replace (
+        CORBA::PollableSet::_tc_NoPossiblePollable,
+        TAO_ENCAP_BYTE_ORDER,
+        stream.begin (),
+        1,
+        _tao_elem,
+        ACE_TRY_ENV
+      );
     ACE_TRY_CHECK;
   }
-  ACE_CATCHANY {}
+  ACE_CATCHANY
+  {
+    delete _tao_elem;
+    _tao_elem = 0;
+  }
   ACE_ENDTRY;
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA_PollableSet::NoPossiblePollable *&_tao_elem)
+CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::PollableSet::NoPossiblePollable *&_tao_elem)
 {
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equal (CORBA_PollableSet::_tc_NoPossiblePollable, ACE_TRY_ENV)) return 0; // not equal
+    if (!type->equivalent (CORBA::PollableSet::_tc_NoPossiblePollable, ACE_TRY_ENV)) // not equal
+      {
+        _tao_elem = 0;
+        return 0;
+      }
     ACE_TRY_CHECK;
     if (_tao_any.any_owns_data ())
     {
-      _tao_elem = (CORBA_PollableSet::NoPossiblePollable *)_tao_any.value ();
+      _tao_elem = (CORBA::PollableSet::NoPossiblePollable *)_tao_any.value ();
       return 1;
     }
     else
     {
-      ACE_NEW_RETURN (_tao_elem, CORBA_PollableSet::NoPossiblePollable, 0);
-      TAO_InputCDR stream (_tao_any._tao_get_cdr (),
-                           _tao_any._tao_byte_order ());
-      if (stream.decode (CORBA_PollableSet::_tc_NoPossiblePollable, _tao_elem, 0, ACE_TRY_ENV)
-        == CORBA::TypeCode::TRAVERSE_CONTINUE)
+      ACE_NEW_RETURN (_tao_elem, CORBA::PollableSet::NoPossiblePollable, 0);
+      TAO_InputCDR stream (
+          _tao_any._tao_get_cdr (),
+          _tao_any._tao_byte_order ()
+        );
+      if (stream >> *_tao_elem)
       {
-        ((CORBA::Any *)&_tao_any)->replace (CORBA_PollableSet::_tc_NoPossiblePollable, _tao_elem, 1, ACE_TRY_ENV);
+        ((CORBA::Any *)&_tao_any)->_tao_replace (
+            CORBA::PollableSet::_tc_NoPossiblePollable,
+            1,
+            ACE_reinterpret_cast (void *, _tao_elem),
+            ACE_TRY_ENV
+          );
         ACE_TRY_CHECK;
         return 1;
       }
       else
       {
         delete _tao_elem;
+        _tao_elem = 0;
       }
     }
   }
   ACE_CATCHANY
   {
     delete _tao_elem;
-    return 0;
+    _tao_elem = 0;
+    return 0; 
   }
   ACE_ENDTRY;
   return 0;
 }
 
-void operator<<= (CORBA::Any &_tao_any, const CORBA_PollableSet::UnknownPollable &_tao_elem) // copying
+CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const CORBA::PollableSet::NoPossiblePollable *&_tao_elem)
 {
-  CORBA_PollableSet::UnknownPollable *_tao_any_val = 0;
-  ACE_NEW (_tao_any_val,
-           CORBA_PollableSet::UnknownPollable (_tao_elem));
+  ACE_TRY_NEW_ENV
+  {
+    CORBA::TypeCode_var type = _tao_any.type ();
+    if (!type->equivalent (CORBA::PollableSet::_tc_NoPossiblePollable, ACE_TRY_ENV)) // not equal
+      {
+        _tao_elem = 0;
+        return 0;
+      }
+    ACE_TRY_CHECK;
+    if (_tao_any.any_owns_data ())
+    {
+      _tao_elem = (CORBA::PollableSet::NoPossiblePollable *)_tao_any.value ();
+      return 1;
+    }
+    else
+    {
+      ACE_NEW_RETURN (_tao_elem, CORBA::PollableSet::NoPossiblePollable, 0);
+      TAO_InputCDR stream (
+          _tao_any._tao_get_cdr (),
+          _tao_any._tao_byte_order ()
+        );
+      if (stream >> *(CORBA::PollableSet::NoPossiblePollable *)_tao_elem)
+      {
+        ((CORBA::Any *)&_tao_any)->_tao_replace (
+            CORBA::PollableSet::_tc_NoPossiblePollable,
+            1,
+            ACE_reinterpret_cast (void *, ACE_const_cast (CORBA::PollableSet::NoPossiblePollable *&, _tao_elem)),
+            ACE_TRY_ENV
+          );
+        ACE_TRY_CHECK;
+        return 1;
+      }
+      else
+      {
+        delete ACE_const_cast (CORBA::PollableSet::NoPossiblePollable *&, _tao_elem);
+        _tao_elem = 0;
+      }
+    }
+  }
+  ACE_CATCHANY
+  {
+    delete ACE_const_cast (CORBA::PollableSet::NoPossiblePollable *&, _tao_elem);
+    _tao_elem = 0;
+    return 0; 
+  }
+  ACE_ENDTRY;
+  return 0;
+}
+
+void operator<<= (CORBA::Any &_tao_any, const CORBA::PollableSet::UnknownPollable &_tao_elem) // copying
+{
+  CORBA::PollableSet::UnknownPollable *_tao_any_val = 0;
+  ACE_NEW (_tao_any_val, CORBA::PollableSet::UnknownPollable (_tao_elem));
   if (!_tao_any_val) return;
   ACE_TRY_NEW_ENV
   {
-    _tao_any.replace (CORBA_PollableSet::_tc_UnknownPollable, _tao_any_val, 1, ACE_TRY_ENV);
+    TAO_OutputCDR stream;
+    stream << *_tao_any_val;
+    _tao_any._tao_replace (
+        CORBA::PollableSet::_tc_UnknownPollable,
+        TAO_ENCAP_BYTE_ORDER,
+        stream.begin (),
+        1,
+        _tao_any_val,
+        ACE_TRY_ENV
+      );
     ACE_TRY_CHECK;
   }
-  ACE_CATCHANY
+  ACE_CATCHANY 
   {
     delete _tao_any_val;
   }
   ACE_ENDTRY;
 }
 
-void operator<<= (CORBA::Any &_tao_any, CORBA_PollableSet::UnknownPollable *_tao_elem) // non copying
+void operator<<= (CORBA::Any &_tao_any, CORBA::PollableSet::UnknownPollable *_tao_elem) // non copying
 {
   ACE_TRY_NEW_ENV
   {
-    _tao_any.replace (CORBA_PollableSet::_tc_UnknownPollable, _tao_elem, 1, ACE_TRY_ENV); // consume it
+    TAO_OutputCDR stream;
+    stream << *_tao_elem;
+    _tao_any._tao_replace (
+        CORBA::PollableSet::_tc_UnknownPollable,
+        TAO_ENCAP_BYTE_ORDER,
+        stream.begin (),
+        1,
+        _tao_elem,
+        ACE_TRY_ENV
+      );
     ACE_TRY_CHECK;
   }
-  ACE_CATCHANY {}
+  ACE_CATCHANY
+  {
+    delete _tao_elem;
+    _tao_elem = 0;
+  }
   ACE_ENDTRY;
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA_PollableSet::UnknownPollable *&_tao_elem)
+CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::PollableSet::UnknownPollable *&_tao_elem)
 {
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equal (CORBA_PollableSet::_tc_UnknownPollable, ACE_TRY_ENV)) return 0; // not equal
+    if (!type->equivalent (CORBA::PollableSet::_tc_UnknownPollable, ACE_TRY_ENV)) // not equal
+      {
+        _tao_elem = 0;
+        return 0;
+      }
     ACE_TRY_CHECK;
     if (_tao_any.any_owns_data ())
     {
-      _tao_elem = (CORBA_PollableSet::UnknownPollable *)_tao_any.value ();
+      _tao_elem = (CORBA::PollableSet::UnknownPollable *)_tao_any.value ();
       return 1;
     }
     else
     {
-      ACE_NEW_RETURN (_tao_elem, CORBA_PollableSet::UnknownPollable, 0);
-      TAO_InputCDR stream (_tao_any._tao_get_cdr (),
-                           _tao_any._tao_byte_order ());
-      if (stream.decode (CORBA_PollableSet::_tc_UnknownPollable, _tao_elem, 0, ACE_TRY_ENV)
-        == CORBA::TypeCode::TRAVERSE_CONTINUE)
+      ACE_NEW_RETURN (_tao_elem, CORBA::PollableSet::UnknownPollable, 0);
+      TAO_InputCDR stream (
+          _tao_any._tao_get_cdr (),
+          _tao_any._tao_byte_order ()
+        );
+      if (stream >> *_tao_elem)
       {
-        ((CORBA::Any *)&_tao_any)->replace (CORBA_PollableSet::_tc_UnknownPollable, _tao_elem, 1, ACE_TRY_ENV);
+        ((CORBA::Any *)&_tao_any)->_tao_replace (
+            CORBA::PollableSet::_tc_UnknownPollable,
+            1,
+            ACE_reinterpret_cast (void *, _tao_elem),
+            ACE_TRY_ENV
+          );
         ACE_TRY_CHECK;
         return 1;
       }
       else
       {
         delete _tao_elem;
+        _tao_elem = 0;
       }
     }
   }
   ACE_CATCHANY
   {
     delete _tao_elem;
-    return 0;
+    _tao_elem = 0;
+    return 0; 
+  }
+  ACE_ENDTRY;
+  return 0;
+}
+
+CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const CORBA::PollableSet::UnknownPollable *&_tao_elem)
+{
+  ACE_TRY_NEW_ENV
+  {
+    CORBA::TypeCode_var type = _tao_any.type ();
+    if (!type->equivalent (CORBA::PollableSet::_tc_UnknownPollable, ACE_TRY_ENV)) // not equal
+      {
+        _tao_elem = 0;
+        return 0;
+      }
+    ACE_TRY_CHECK;
+    if (_tao_any.any_owns_data ())
+    {
+      _tao_elem = (CORBA::PollableSet::UnknownPollable *)_tao_any.value ();
+      return 1;
+    }
+    else
+    {
+      ACE_NEW_RETURN (_tao_elem, CORBA::PollableSet::UnknownPollable, 0);
+      TAO_InputCDR stream (
+          _tao_any._tao_get_cdr (),
+          _tao_any._tao_byte_order ()
+        );
+      if (stream >> *(CORBA::PollableSet::UnknownPollable *)_tao_elem)
+      {
+        ((CORBA::Any *)&_tao_any)->_tao_replace (
+            CORBA::PollableSet::_tc_UnknownPollable,
+            1,
+            ACE_reinterpret_cast (void *, ACE_const_cast (CORBA::PollableSet::UnknownPollable *&, _tao_elem)),
+            ACE_TRY_ENV
+          );
+        ACE_TRY_CHECK;
+        return 1;
+      }
+      else
+      {
+        delete ACE_const_cast (CORBA::PollableSet::UnknownPollable *&, _tao_elem);
+        _tao_elem = 0;
+      }
+    }
+  }
+  ACE_CATCHANY
+  {
+    delete ACE_const_cast (CORBA::PollableSet::UnknownPollable *&, _tao_elem);
+    _tao_elem = 0;
+    return 0; 
   }
   ACE_ENDTRY;
   return 0;

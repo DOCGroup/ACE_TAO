@@ -1,6 +1,5 @@
 // @(#) $Id$
 
-
 // auto_ptr class
 #include "ace/Auto_Ptr.h"
 
@@ -79,7 +78,6 @@ private:
 #endif /* ! __ACE_INLINE__ */
 
 ACE_RCSID(tao, POA, "$Id$")
-
 
 #if !defined (TAO_NO_IOR_TABLE)
 // This is the TAO_Object_key-prefix that is appended to all TAO Object keys.
@@ -1251,7 +1249,13 @@ TAO_POA::create_reference_i (const char *intf,
     {
       // Otherwise, it is the NON_RETAIN policy.  Therefore, any ol'
       // object id will do (even an empty one).
-      system_id = new PortableServer::ObjectId;
+      PortableServer::ObjectId *sys_id;
+      ACE_NEW_THROW_EX (sys_id,
+                        PortableServer::ObjectId,
+                        CORBA::NO_MEMORY ());
+      ACE_CHECK_RETURN (CORBA::Object::_nil ());
+
+      system_id = sys_id;
     }
 
   // Create object key.
@@ -1311,14 +1315,20 @@ TAO_POA::create_reference_with_id_i (const PortableServer::ObjectId &user_id,
                                                                    system_id.out ()) != 0)
         {
           ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
-                            CORBA::Object::_nil ());
+                            CORBA::Object::_nil ());    
         }
     }
   else
     {
       // Otherwise, it is the NON_RETAIN policy.  Therefore, user id
       // is the same as system id.
-      system_id = new PortableServer::ObjectId (user_id);
+      PortableServer::ObjectId *sys_id;
+      ACE_NEW_THROW_EX (sys_id,
+                        PortableServer::ObjectId (user_id),
+                        CORBA::NO_MEMORY ());
+      ACE_CHECK_RETURN (CORBA::Object::_nil ());
+
+      system_id = sys_id;
     }
 
   // Create object key.
@@ -3678,7 +3688,7 @@ void
 TAO_POA::imr_notify_startup (CORBA_Environment &ACE_TRY_ENV)
 {
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG, "Notifing IMR of Startup\n"));
+    ACE_DEBUG ((LM_DEBUG, "Notifying IMR of startup\n"));
 
   CORBA::Object_var imr = this->orb_core ().implrepo_service ();
 

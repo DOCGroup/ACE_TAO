@@ -126,6 +126,9 @@ public:
   void operator<<= (CORBA::Double);
   // insert a double
 
+  void operator<<= (CORBA::LongDouble);
+  // insert a long double
+
   void operator<<= (const CORBA_Any&);
   // insert an Any, copying
 
@@ -173,6 +176,9 @@ public:
 
   CORBA::Boolean operator>>= (CORBA::Double&) const;
   // extract a double
+
+  CORBA::Boolean operator>>= (CORBA::LongDouble&) const;
+  // extract a long double
 
   CORBA::Boolean operator>>= (CORBA_Any&) const; // non-spec
   CORBA::Boolean operator>>= (const CORBA_Any*&) const;

@@ -26,8 +26,15 @@ TAO_Cached_Connector_Lock::~TAO_Cached_Connector_Lock (void)
 
 TAO_Protocol_Item::TAO_Protocol_Item (const ACE_CString &name)
   :   name_ (name),
-      factory_ (0)
+      factory_ (0),
+      factory_owner_ (0)
 {
+}
+
+TAO_Protocol_Item::~TAO_Protocol_Item (void)
+{
+  if (this->factory_owner_ == 1)
+    delete this->factory_;
 }
 
 const ACE_CString &
@@ -43,9 +50,11 @@ TAO_Protocol_Item::factory (void)
 }
 
 void
-TAO_Protocol_Item::factory (TAO_Protocol_Factory *factory)
+TAO_Protocol_Item::factory (TAO_Protocol_Factory *factory,
+                            int owner)
 {
   this->factory_ = factory;
+  this->factory_owner_ = owner;
 }
 
 

@@ -1,6 +1,5 @@
 // $Id$
 
-
 #include "tao/Object_Adapter.h"
 #include "tao/POA.h"
 #include "tao/ORB.h"
@@ -12,9 +11,7 @@
 # include "tao/Object_Adapter.i"
 #endif /* __ACE_INLINE__ */
 
-
 ACE_RCSID(tao, Object_Adapter, "$Id$")
-
 
 // Timeprobes class
 #include "tao/Timeprobe.h"
@@ -1098,8 +1095,13 @@ TAO_POA_Current_Impl::get_POA (CORBA::Environment &ACE_TRY_ENV)
 PortableServer::ObjectId *
 TAO_POA_Current_Impl::get_object_id (CORBA::Environment &)
 {
+  PortableServer::ObjectId *objid = 0;
+  
   // Create a new one and pass it back
-  return new PortableServer::ObjectId (this->object_id_);
+  ACE_NEW_RETURN (objid,
+                  PortableServer::ObjectId (this->object_id_),
+                  0);
+  return objid;
 }
 
 TAO_ORB_Core &

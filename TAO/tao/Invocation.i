@@ -1,6 +1,8 @@
 // This may look like C, but it's really -*- C++ -*-
 //
 // $Id$
+//
+
 ACE_INLINE IOP::ServiceContextList &
 TAO_GIOP_Invocation::service_info (void)
 {

@@ -1,7 +1,6 @@
 // This may look like C, but it's really -*- C++ -*-
 // $Id$
 
-
 // ============================================================================
 //
 // = LIBRARY
@@ -163,6 +162,9 @@ private:
   
   CORBA::Boolean lite_flag_;
   // Are we using lite?
+  
+  TAO_Pluggable_Connector_Params params_;
+  // The reply data that is sent back by the server
 };
 
 // ****************************************************************

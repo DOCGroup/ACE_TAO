@@ -77,6 +77,19 @@ void CORBA_ORB_InconsistentTypeCode::_raise ()
   TAO_RAISE(*this);
 }
 
+void CORBA_ORB_InconsistentTypeCode::_tao_encode (TAO_OutputCDR &cdr,
+                                                  CORBA::Environment &ACE_TRY_ENV) const
+{
+  if (cdr << this->_id ())
+    return;
+  ACE_THROW (CORBA::MARSHAL ());
+}
+
+void CORBA_ORB_InconsistentTypeCode::_tao_decode (TAO_InputCDR &,
+                                                  CORBA::Environment &)
+{
+}
+
 // TAO extension - the _alloc method
 CORBA::Exception *CORBA_ORB_InconsistentTypeCode::_alloc (void)
 {

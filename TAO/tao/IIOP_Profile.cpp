@@ -1,6 +1,7 @@
 // This may look like C, but it's really -*- C++ -*-
 // $Id$
 
+
 #include "tao/IIOP_Profile.h"
 #include "tao/IIOP_Connect.h"
 #include "tao/CDR.h"
@@ -20,11 +21,12 @@ static const char prefix_[] = "iiop";
 
 const char TAO_IIOP_Profile::object_key_delimiter_ = '/';
 
-char 
+char
 TAO_IIOP_Profile::object_key_delimiter (void) const
 {
   return TAO_IIOP_Profile::object_key_delimiter_;
 }
+
 
 TAO_IIOP_Profile::TAO_IIOP_Profile (const ACE_INET_Addr &addr,
                                     const TAO_ObjectKey &object_key,
@@ -147,7 +149,7 @@ TAO_IIOP_Profile::decode (TAO_InputCDR& cdr)
   // profiles whose versions we don't understand.
   //
   CORBA::Octet major, minor;
-  
+
   if (!(cdr.read_octet (major)
         && (major == TAO_DEF_GIOP_MAJOR)
         && cdr.read_octet (minor)))
@@ -163,7 +165,7 @@ TAO_IIOP_Profile::decode (TAO_InputCDR& cdr)
   }
 
   this->version_.major = major;
-  
+
   if (minor <= TAO_DEF_GIOP_MINOR)
     this->version_.minor = minor;
 
@@ -180,8 +182,17 @@ TAO_IIOP_Profile::decode (TAO_InputCDR& cdr)
       return -1;
     }
 
-  this->object_addr_.set (this->port_, this->host_.in ());
-
+  if (this->object_addr_.set (this->port_, 
+                              this->host_.in ()) == -1)
+    {
+      if (TAO_debug_level > 0)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ASYS_TEXT ("TAO (%P|%t) IIOP_Profile::decode - \n")
+                      ASYS_TEXT ("TAO (%P|%t) ACE_INET_Addr::set () failed")));
+        }
+      return -1;
+    }
   // ... and object key.
 
   if ((cdr >> this->object_key_) == 0)
@@ -300,7 +311,17 @@ TAO_IIOP_Profile::parse_string (const char *string,
 
   this->host_ = tmp._retn ();
 
-  this->object_addr_.set (this->port_, this->host_.in ());
+  if (this->object_addr_.set (this->port_, 
+                              this->host_.in ()) == -1)
+    {
+      if (TAO_debug_level > 0)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ASYS_TEXT ("TAO (%P|%t) IIOP_Profile::parse_string - \n")
+                      ASYS_TEXT ("TAO (%P|%t) ACE_INET_Addr::set () failed")));
+        }
+      return -1;
+    }
 
   start = ++okd;  // increment past the object key separator
 
@@ -388,7 +409,7 @@ TAO_IIOP_Profile::operator= (const TAO_IIOP_Profile &src)
   this->version_ = src.version_;
 
   this->object_key_ = src.object_key_;
-
+  
   this->object_addr_.set (src.object_addr_);
 
   this->port_ = src.port_;

@@ -1,6 +1,5 @@
 // $Id$
 
-
 #include "tao/default_client.h"
 #include "tao/ORB_Core.h"
 #include "tao/Wait_Strategy.h"
@@ -11,7 +10,6 @@
 #endif /* ! __ACE_INLINE__ */
 
 ACE_RCSID(tao, default_client, "$Id$")
-
 
 TAO_Default_Client_Strategy_Factory::TAO_Default_Client_Strategy_Factory (void)
   : profile_lock_type_ (TAO_THREAD_LOCK),

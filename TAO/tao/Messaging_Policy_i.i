@@ -11,4 +11,3 @@ TAO_Sync_Scope_Policy::synchronization (void)
 {
   return this->synchronization_;
 }
-

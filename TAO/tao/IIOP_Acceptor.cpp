@@ -1,8 +1,6 @@
 // This may look like C, but it's really -*- C++ -*-
 // $Id$
 
-
-
 #include "tao/IIOP_Acceptor.h"
 #include "tao/IIOP_Profile.h"
 #include "tao/MProfile.h"
@@ -10,10 +8,11 @@
 #include "tao/Server_Strategy_Factory.h"
 #include "tao/debug.h"
 
+#include "ace/Auto_Ptr.h"
+
 #if !defined(__ACE_INLINE__)
 #include "tao/IIOP_Acceptor.i"
 #endif /* __ACE_INLINE__ */
-
 
 ACE_RCSID(tao, IIOP_Acceptor, "$Id$")
 
@@ -45,6 +44,9 @@ template class TAO_Accept_Strategy<TAO_IIOP_Server_Connection_Handler, ACE_SOCK_
 
 TAO_IIOP_Acceptor::TAO_IIOP_Acceptor (CORBA::Boolean flag)
   : TAO_Acceptor (TAO_TAG_IIOP_PROFILE),
+    addrs_ (0),
+    hosts_ (0),
+    num_hosts_ (0),
     version_ (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR),
     orb_core_ (0),
     base_acceptor_ (),
@@ -60,54 +62,57 @@ TAO_IIOP_Acceptor::~TAO_IIOP_Acceptor (void)
   delete this->creation_strategy_;
   delete this->concurrency_strategy_;
   delete this->accept_strategy_;
+
+  delete [] this->addrs_;
+  delete [] this->hosts_;
 }
 
 // TODO =
 //    2) For V1.[1,2] there are tagged components
-//    3) Create multiple profiles for wild carded endpoints (may be multiple
-//       interfaces over which we can receive requests.  Thus a profile
-//       must be made for each one.
 
 int
 TAO_IIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
                                     TAO_MProfile &mprofile)
 {
-  // @@ we only make one for now
+  // Adding this->num_hosts_ to the TAO_MProfile.
   int count = mprofile.profile_count ();
-  if ((mprofile.size () - count) < 1
-      && mprofile.grow (count + 1) == -1)
+  if ((mprofile.size () - count) < this->num_hosts_
+      && mprofile.grow (count + this->num_hosts_) == -1)
     return -1;
 
-  TAO_IIOP_Profile *pfile = 0;
-  ACE_NEW_RETURN (pfile,
-                  TAO_IIOP_Profile (this->host_.c_str (),
-                                    this->address_.get_port_number (),
-                                    object_key,
-                                    this->address_,
-                                    this->version_,
-                                    this->orb_core_),
-                  -1);
-
-  if (mprofile.give_profile (pfile) == -1)
+  for (size_t i = 0; i < this->num_hosts_; ++i)
     {
-      pfile->_decr_refcnt ();
-      pfile = 0;
-      return -1;
+      TAO_IIOP_Profile *pfile = 0;
+      ACE_NEW_RETURN (pfile,
+                      TAO_IIOP_Profile (this->hosts_[i].c_str (),
+                                        this->addrs_[i].get_port_number (),
+                                        object_key,
+                                        this->addrs_[i],
+                                        this->version_,
+                                        this->orb_core_),
+                      -1);
+
+      if (mprofile.give_profile (pfile) == -1)
+        {
+          pfile->_decr_refcnt ();
+          pfile = 0;
+          return -1;
+        }
+
+      if (this->orb_core_->orb_params ()->std_profile_components () == 0)
+        continue;
+
+      pfile->tagged_components ().set_orb_type (TAO_ORB_TYPE);
+
+      CONV_FRAME::CodeSetComponentInfo code_set_info;
+      code_set_info.ForCharData.native_code_set  =
+        TAO_DEFAULT_CHAR_CODESET_ID;
+      code_set_info.ForWcharData.native_code_set =
+        TAO_DEFAULT_WCHAR_CODESET_ID;
+      pfile->tagged_components ().set_code_sets (code_set_info);
+
+      pfile->tagged_components ().set_tao_priority (this->priority ());
     }
-
-  if (this->orb_core_->orb_params ()->std_profile_components () == 0)
-    return 0;
-
-  pfile->tagged_components ().set_orb_type (TAO_ORB_TYPE);
-
-  CONV_FRAME::CodeSetComponentInfo code_set_info;
-  code_set_info.ForCharData.native_code_set  =
-    TAO_DEFAULT_CHAR_CODESET_ID;
-  code_set_info.ForWcharData.native_code_set =
-    TAO_DEFAULT_WCHAR_CODESET_ID;
-  pfile->tagged_components ().set_code_sets (code_set_info);
-
-  pfile->tagged_components ().set_tao_priority (this->priority ());
 
   return 0;
 }
@@ -116,11 +121,17 @@ int
 TAO_IIOP_Acceptor::is_collocated (const TAO_Profile *pfile)
 {
   const TAO_IIOP_Profile *profile =
-    ACE_dynamic_cast(const TAO_IIOP_Profile *,
-                     pfile);
+    ACE_dynamic_cast (const TAO_IIOP_Profile *,
+                      pfile);
 
-  // compare the port and sin_addr (numeric host address)
-  return profile->object_addr () == this->address_;
+  for (size_t i = 0; i < this->num_hosts_; ++i)
+    {
+      // compare the port and sin_addr (numeric host address)
+      if (profile->object_addr () == this->addrs_[i])
+        return 1;  // Collocated
+    }
+
+  return 0;  // Not collocated
 }
 
 int
@@ -136,6 +147,17 @@ TAO_IIOP_Acceptor::open (TAO_ORB_Core *orb_core,
                          const char *address,
                          const char *options)
 {
+  if (this->hosts_ != 0)
+    {
+      // The hostname cache has already been set!
+      // This is bad mojo, i.e. an internal TAO error.
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ASYS_TEXT ("TAO (%P|%t) ")
+                         ASYS_TEXT ("IIOP_Acceptor::open - "),
+                         ASYS_TEXT ("hostname already set\n\n")),
+                        -1);
+    }
+
   if (address == 0)
     return -1;
 
@@ -181,6 +203,27 @@ TAO_IIOP_Acceptor::open (TAO_ORB_Core *orb_core,
     // Host and port were specified.
     return -1;
 
+
+  this->num_hosts_ = 1;  // Only one hostname to store
+
+  ACE_NEW_RETURN (this->addrs_,
+                  ACE_INET_Addr[this->num_hosts_],
+                  -1);
+
+  ACE_NEW_RETURN (this->hosts_,
+                  ACE_CString[this->num_hosts_],
+                  -1);
+
+  if (this->hostname (orb_core,
+                      addr,
+                      this->hosts_[0]) != 0)
+    return -1;
+
+  // Copy the addr.  The port is (re)set in
+  // TAO_IIOP_Acceptor::open_i().
+  if (this->addrs_[0].set (addr) != 0)
+    return -1;
+
   return this->open_i (orb_core, addr);
 }
 
@@ -188,26 +231,120 @@ int
 TAO_IIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
                                  const char *options)
 {
+  if (this->hosts_ != 0)
+    {
+      // The hostname cache has already been set!
+      // This is bad mojo, i.e. an internal TAO error.
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ASYS_TEXT ("TAO (%P|%t) ")
+                         ASYS_TEXT ("IIOP_Acceptor::open_default - "),
+                         ASYS_TEXT ("hostname already set\n\n")),
+                        -1);
+    }
+
   // Parse options
   if (this->parse_options (options) == -1)
     return -1;
 
-  // @@ Until we can support multihomed machines correctly we must
-  //    pick the "default interface" and only listen on that IP
-  //    address.
+  // Extract the hostname for each network interface, and then cache
+  // it.  The hostnames will then be used when creating a
+  // TAO_IIOP_Profile for each endpoint setup on the probed
+  // network interfaces.
+  ACE_INET_Addr *if_addrs = 0;
+  size_t if_cnt = 0;
 
-  ACE_INET_Addr addr;
-  char buffer[MAXHOSTNAMELEN + 1];
-  if (addr.get_host_name (buffer,
-                          sizeof (buffer)) != 0)
+  if (ACE::get_ip_interfaces (if_cnt,
+                              if_addrs) != 0)
     return -1;
 
-  if (addr.set (u_short(0),
-                buffer,
+  if (if_cnt == 0 || if_addrs == 0)
+    {
+      if (TAO_debug_level > 0)
+        {
+          ACE_DEBUG ((LM_WARNING,
+                      ASYS_TEXT ("TAO (%P|%t) Unable to probe network ")
+                      ASYS_TEXT ("interfaces.  Using default.")));
+        }
+
+      if_cnt = 1; // Force the network interface count to be one.
+      delete [] if_addrs;
+      ACE_NEW_RETURN (if_addrs,
+                      ACE_INET_Addr[if_cnt],
+                      -1);
+    }
+
+  // Scan for the loopback interface since it shouldn't be included in
+  // the list of cached hostnames unless it is the only interface.
+  size_t lo_cnt = 0;  // Loopback interface count
+  for (size_t j = 0; j < if_cnt; ++j)
+    if (if_addrs[j].get_ip_address() == INADDR_LOOPBACK)
+      lo_cnt++;
+
+
+  { // Begin ACE_Auto_Basic_Array_Ptr<ACE_INET_Addr> scope.
+
+    // @@ It's either this or release the array from the
+    //    ACE_Auto_Basic_Array_Ptr<> and delete it manually.  This
+    //    seemed like a more elegant solution, i.e. create a scope for
+    //    it.
+    //          -Ossama
+
+    // The instantiation for this template is in
+    // tao/IIOP_Connector.cpp.
+    ACE_Auto_Basic_Array_Ptr<ACE_INET_Addr> safe_if_addrs (if_addrs);
+
+    // If the loopback interface is the only interface then include it
+    // in the list of interfaces to query for a hostname, otherwise
+    // exclude it from the list.
+    if (if_cnt == lo_cnt)
+      this->num_hosts_ = if_cnt;
+    else
+      this->num_hosts_ = if_cnt - lo_cnt;
+
+    ACE_NEW_RETURN (this->addrs_,
+                    ACE_INET_Addr[this->num_hosts_],
+                    -1);
+
+    ACE_NEW_RETURN (this->hosts_,
+                    ACE_CString[this->num_hosts_],
+                    -1);
+
+    // The number of hosts/interfaces we want to cache may not be the
+    // same as the number of detected interfaces so keep a separate
+    // count.
+    size_t host_cnt = 0;
+
+    for (size_t i = 0; i < if_cnt; ++i)
+      {
+        // Ignore any loopback interface if there are other
+        // non-loopback interfaces.
+        if (if_cnt != lo_cnt &&
+            if_addrs[i].get_ip_address() == INADDR_LOOPBACK)
+          continue;
+
+        if (this->hostname (orb_core,
+                            if_addrs[i],
+                            this->hosts_[host_cnt]) != 0)
+          return -1;
+
+        // Copy the addr.  The port is (re)set in
+        // TAO_IIOP_Acceptor::open_i().
+        if (this->addrs_[host_cnt].set (if_addrs[i]) != 0)
+          return -1;
+
+        host_cnt++;
+      }
+  } // End ACE_Auto_Basic_Array_Ptr<ACE_INET_Addr> scope.
+
+  // Now that each network interface's hostname has been cached, open
+  // an endpoint on each network interface using the INADDR_ANY
+  // address.
+  ACE_INET_Addr addr;
+
+  if (addr.set (ACE_static_cast(u_short, 0),
+                ACE_static_cast(ACE_UINT32, INADDR_ANY),
                 1) != 0)
     return -1;
-
-  this->host_ = buffer;
 
   return this->open_i (orb_core,
                        addr);
@@ -240,21 +377,55 @@ TAO_IIOP_Acceptor::open_i (TAO_ORB_Core* orb_core,
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("\n\nTAO (%P|%t) IIOP_Acceptor::open_i - %p\n\n"),
+                    ASYS_TEXT ("\n\nTAO (%P|%t) IIOP_Acceptor::open_i ")
+                    ASYS_TEXT ("- %p\n\n"),
                     ASYS_TEXT ("cannot open acceptor")));
       return -1;
     }
 
-  // @@ Should this be a catastrophic error???
-  if (this->base_acceptor_.acceptor ().get_local_addr (this->address_) != 0)
+  ACE_INET_Addr address;
+
+  // We do this make sure the port number the endpoint is listening on
+  // gets set in the addr.
+  if (this->base_acceptor_.acceptor ().get_local_addr (address) != 0)
     {
+      // @@ Should this be a catastrophic error???
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("\n\nTAO (%P|%t) IIOP_Acceptor::open_i - %p\n\n"),
+                    ASYS_TEXT ("\n\nTAO (%P|%t) IIOP_Acceptor::open_i ")
+                    ASYS_TEXT ("- %p\n\n"),
                     ASYS_TEXT ("cannot get local addr")));
       return -1;
     }
 
+  // Set the port for each addr.  If there is more than one network
+  // interface then the endpoint created on each interface will be on
+  // the same port.  This is how a wildcard socket bind() is supposed
+  // to work.
+  u_short port = address.get_port_number ();
+  for (size_t j = 0; j < this->num_hosts_; ++j)
+    this->addrs_[j].set_port_number (port, 1);
+
+  if (TAO_debug_level > 5)
+    {
+      for (size_t i = 0; i < this->num_hosts_; ++i)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ASYS_TEXT ("\nTAO (%P|%t) IIOP_Acceptor::open_i - ")
+                      ASYS_TEXT ("listening on: <%s:%u>\n"),
+                      this->hosts_[i].c_str (),
+                      this->addrs_[i].get_port_number ()));
+        }
+    }
+
+  return 0;
+}
+
+int
+TAO_IIOP_Acceptor::hostname (TAO_ORB_Core *orb_core,
+                             ACE_INET_Addr &addr,
+                             ACE_CString &host)
+{
   if (orb_core->orb_params ()->use_dotted_decimal_addresses ())
     {
       const char *tmp = addr.get_host_addr ();
@@ -262,45 +433,40 @@ TAO_IIOP_Acceptor::open_i (TAO_ORB_Core* orb_core,
         {
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG,
-                        ASYS_TEXT ("\n\nTAO (%P|%t) IIOP_Acceptor::open_i - %p\n\n"),
+                        ASYS_TEXT ("\n\nTAO (%P|%t) ")
+                        ASYS_TEXT ("IIOP_Acceptor::hostname ")
+                        ASYS_TEXT ("- %p\n\n"),
                         ASYS_TEXT ("cannot cache hostname")));
           return -1;
         }
-      this->host_ = tmp;
+
+      host = tmp;
     }
   else
     {
-      char tmp_host[MAXHOSTNAMELEN+1];
+      char tmp_host[MAXHOSTNAMELEN + 1];
       if (addr.get_host_name (tmp_host,
-                              sizeof tmp_host) != 0)
+                              sizeof (tmp_host)) != 0)
         {
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG,
-                        ASYS_TEXT ("\n\nTAO (%P|%t) IIOP_Acceptor::open_i - %p\n\n"),
+                        ASYS_TEXT ("\n\nTAO (%P|%t) ")
+                        ASYS_TEXT ("IIOP_Acceptor::hostname ")
+                        ASYS_TEXT ("- %p\n\n"),
                         ASYS_TEXT ("cannot cache hostname")));
           return -1;
         }
-      this->host_ = tmp_host;
+
+      host = tmp_host;
     }
 
-  if (TAO_debug_level > 5)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("\nTAO (%P|%t) IIOP_Acceptor::open_i - ")
-                  ASYS_TEXT ("listening on: <%s:%u>\n"),
-                  this->host_.c_str (),
-                  this->address_.get_port_number ()));
-    }
   return 0;
 }
 
 CORBA::ULong
 TAO_IIOP_Acceptor::endpoint_count (void)
 {
-  // @@ for now just assume one!
-  // we should take a look at the local address, if it is zero then
-  // get the list of available IP interfaces and return this number.
-  return 1;
+  return this->num_hosts_;
 }
 
 int

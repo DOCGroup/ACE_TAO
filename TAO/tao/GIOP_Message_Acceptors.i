@@ -51,7 +51,6 @@ TAO_GIOP_Message_Acceptors::
   this->write_protocol_header (TAO_PLUGGABLE_MESSAGE_LOCATEREPLY,
                                this->output_);             
 
-  
   // This writes the header & body
   this->accept_state_->write_locate_reply_mesg (this->output_,
                                                 request.request_id (),
@@ -60,7 +59,7 @@ TAO_GIOP_Message_Acceptors::
   // Send the message
   int result = this->send_message (transport,
                                    this->output_);
-                                   
+                   
   // Print out message if there is an error
   if (result == -1)
     {

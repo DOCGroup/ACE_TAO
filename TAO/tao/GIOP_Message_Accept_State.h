@@ -14,8 +14,8 @@
 // = AUTHOR
 //     Balachandran Natarajan <bala@cs.wustl.edu>
 // ============================================================================
-#ifndef _TAO_GIOP_MESSAGE_ACCEPT_STATE_H_
-#define _TAO_GIOP_MESSAGE_ACCEPT_STATE_H_
+#ifndef TAO_GIOP_MESSAGE_ACCEPT_STATE_H
+#define TAO_GIOP_MESSAGE_ACCEPT_STATE_H
 #include "tao/GIOP_Server_Request.h"
 #include "tao/GIOP_Assorted_Headers.h"
 

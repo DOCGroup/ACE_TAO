@@ -1,6 +1,5 @@
 // $Id$
 
-
 // Exception macros
 #include "tao/poa_macros.h"
 #include "tao/Environment.h"

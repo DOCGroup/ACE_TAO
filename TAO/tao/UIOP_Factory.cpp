@@ -1,7 +1,6 @@
 // -*- C++ -*-
 // $Id$
 
-
 #include "tao/UIOP_Factory.h"
 
 #if TAO_HAS_UIOP == 1
@@ -11,7 +10,6 @@
 #include "ace/Dynamic_Service.h"
 
 ACE_RCSID(tao, UIOP_Factory, "$Id$")
-
 
 static const char prefix_[] = "uiop";
 

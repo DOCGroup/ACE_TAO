@@ -16,8 +16,8 @@
 //     Balachandran Natarajan <bala@cs.wustl.edu>
 //
 // ============================================================================
-#ifndef _TAO_PLUGGABLE_MESSAGE_H_
-#define _TAO_PLUGGABLE_MESSAGE_H_
+#ifndef TAO_PLUGGABLE_MESSAGE_H
+#define TAO_PLUGGABLE_MESSAGE_H
 
 #include "tao/corbafwd.h"
 #include "tao/Pluggable.h"
@@ -77,8 +77,7 @@ public:
 
   
   virtual int parse_reply (TAO_Message_State_Factory &state,
-                           TAO_Pluggable_Connector_Params &params,
-                           CORBA::ULong &reply_status) = 0;
+                           TAO_Pluggable_Connector_Params &params) = 0;
   // Parse the reply.. 
 
   virtual int process_connector_messages (TAO_Transport *transport,
@@ -134,4 +133,4 @@ public:
 # include "tao/Pluggable_Messaging.i"
 #endif /* __ACE_INLINE__ */
 
-#endif /*_TAO_PLUGGABLE_MESSAGE_H_*/
+#endif /*TAO_PLUGGABLE_MESSAGE_H*/

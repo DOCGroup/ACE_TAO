@@ -1,7 +1,6 @@
 // This may look like C, but it's really -*- C++ -*-
 // @ (#) $Id$
 
-
 // ============================================================================
 //
 // = LIBRARY
@@ -526,7 +525,6 @@ enum MCAST_SERVICEID
 #    define TAO_HAS_REMOTE_POLICIES 1
 #  endif  /* TAO_HAS_MINIMUM_CORBA */
 #endif  /* !TAO_HAS_REMOTE_POLICIES */
-
 
 // TAO_HAS_LOCALITY_CONSTRAINT_POLICIES is an internal macro and
 // should not be set by the user.

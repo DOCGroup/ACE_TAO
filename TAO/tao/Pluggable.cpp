@@ -1,8 +1,6 @@
 // This may look like C, but it's really -*- C++ -*-
 // $Id$
 
-
-
 #include "tao/Pluggable.h"
 #include "tao/Stub.h"
 #include "tao/Environment.h"
@@ -22,7 +20,6 @@
 
 
 ACE_RCSID(tao, Pluggable, "$Id$")
-
 
 // ****************************************************************
 

@@ -1,7 +1,6 @@
 // -*- C++ -*-
 // $Id$
 
-
 ACE_INLINE TAO_AcceptorSetIterator
 TAO_Acceptor_Registry::begin (void)
 {

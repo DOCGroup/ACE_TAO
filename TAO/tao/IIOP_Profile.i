@@ -1,7 +1,6 @@
 // -*- C++ -*-
 // $Id$
 
-
 ACE_INLINE const TAO_ObjectKey &
 TAO_IIOP_Profile::object_key (void) const
 {

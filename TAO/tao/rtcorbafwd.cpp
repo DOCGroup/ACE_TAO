@@ -1,6 +1,5 @@
 // $Id$
 
-
 #include "tao/rtcorbafwd.h"
 
 #if (TAO_HAS_RT_CORBA == 1)
@@ -10,7 +9,6 @@
 #endif /* ! __ACE_INLINE__ */
 
 ACE_RCSID(tao, rtcorbafwd, "$Id$")
-
 
 TAO_NAMESPACE_TYPE (const RTCORBA::Priority)
 TAO_NAMESPACE_BEGIN (RTCORBA)

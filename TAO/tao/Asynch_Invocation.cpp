@@ -16,8 +16,6 @@
 
 ACE_RCSID(tao, Asynch_Invocation, "$Id$")
 
-
-
 #if defined (ACE_ENABLE_TIMEPROBES)
 
 static const char *TAO_Asynch_Invocation_Timeprobe_Description[] =
@@ -86,7 +84,7 @@ TAO_GIOP_Twoway_Asynch_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
   // heap allocated reply dispatcher.
 
   int retval =
-    this->transport_->tms ()->bind_dispatcher (this->request_id_,
+    this->transport_->tms ()->bind_dispatcher (this->op_details_.request_id (),
                                                this->rd_);
   if (retval == -1)
     {

@@ -1,6 +1,6 @@
 // This may look like C, but it's really -*- C++ -*-
-
 // $Id$
+
 // Insertion from special types.
 
 ACE_INLINE

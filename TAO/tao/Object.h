@@ -2,7 +2,6 @@
 // $Id$
 
 
-
 // ============================================================================
 //
 // = LIBRARY
@@ -51,6 +50,9 @@ public:
   static CORBA_Object_ptr _narrow (CORBA_Object_ptr obj,
                                    CORBA_Environment &ACE_TRY_ENV =
                                      TAO_default_environment ());
+  static CORBA_Object_ptr _unchecked_narrow (CORBA_Object_ptr obj,
+                                             CORBA_Environment &ACE_TRY_ENV =
+                                                 TAO_default_environment ());
   // no-op it is just here to simplify some templates.
 
   // These calls correspond to over-the-wire operations, or at least

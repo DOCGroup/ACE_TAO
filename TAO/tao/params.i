@@ -1,7 +1,6 @@
 // -*- C++ -*-
 // $Id$
 
-
 ACE_INLINE TAO_EndpointSet &
 TAO_ORB_Parameters::preconnects (void)
 {

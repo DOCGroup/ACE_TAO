@@ -1,7 +1,6 @@
 // This may look like C, but it's really -*- C++ -*-
 // $Id$
 
-
 // ============================================================================
 //
 // = LIBRARY
@@ -475,7 +474,7 @@ private:
   // ordered list of profiles for this object.
 
   TAO_MProfile *forward_profiles_;
-  // The list of forwarding profiles.  This is actually iimplemented as a
+  // The list of forwarding profiles.  This is actually implemented as a
   // linked list of TAO_MProfile objects.
 
   TAO_Profile *profile_in_use_;

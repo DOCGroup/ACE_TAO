@@ -34,7 +34,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 
-
 # if TAO_HAS_UIOP == 1
 
 // Forward decls.
@@ -172,6 +171,9 @@ private:
   
   CORBA::Boolean lite_flag_;
   // We using GIOP lite?
+  
+  TAO_Pluggable_Connector_Params params_;
+  // The reply data that is sent back by the server
 };
 
 // ****************************************************************

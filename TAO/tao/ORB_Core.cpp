@@ -1,8 +1,6 @@
 // $Id$
 
 
-
-
 #include "tao/ORB_Core.h"
 
 #include "ace/Env_Value_T.h"
@@ -42,9 +40,7 @@
 # include "tao/ORB_Core.i"
 #endif /* ! __ACE_INLINE__ */
 
-
 ACE_RCSID(tao, ORB_Core, "$Id$")
-
 
 // ****************************************************************
 
@@ -67,7 +63,7 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     root_poa_ (0),
     root_poa_reference_ (),
     orb_params_ (),
-    orbid_ (ACE_OS::strdup (orbid?orbid:"")),
+    orbid_ (ACE_OS::strdup (orbid ? orbid : "")),
     resource_factory_ (0),
     resource_factory_from_service_config_ (0),
     // @@ This is not needed since the default resource factory, fredk
@@ -345,7 +341,6 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
           // warning this turns on a daemon
           ACE::debug (1);
           TAO_orbdebug = 1;
-
           arg_shifter.consume_arg ();
         }
 
@@ -1268,11 +1263,13 @@ TAO_ORB_Core::fini (void)
   //    is statically added to the service configurator, fredk
   if (!this->resource_factory_from_service_config_)
     delete resource_factory_;
+  
 
   // @@ This is not needed since the default client factory
   //    is statically added to the service configurator, fredk
   if (!this->client_factory_from_service_config_)
     delete client_factory_;
+
 
   // @@ This is not needed since the default server factory
   //    is statically added to the service configurator, fredk
@@ -1286,6 +1283,7 @@ TAO_ORB_Core::fini (void)
   }
 
   delete this->reactor_registry_;
+
 #if (TAO_HAS_RT_CORBA == 1)
   delete this->priority_mapping_;
 #endif /* TAO_HAS_RT_CORBA == 1 */

@@ -1,7 +1,5 @@
 // $Id$
 
-
-
 #include "tao/Messaging_Policy_i.h"
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
@@ -13,7 +11,6 @@
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(TAO, Messaging_Policy_i, "$Id$")
-
 
 TAO_RelativeRoundtripTimeoutPolicy::TAO_RelativeRoundtripTimeoutPolicy (PortableServer::POA_ptr poa,
                                                                         const TimeBase::TimeT& relative_expiry)

@@ -1095,4 +1095,215 @@ PortableInterceptor::ClientRequestInterceptor_out::operator-> (void)
 
 #endif /* end #if !defined */
 
+ACE_INLINE CORBA::Boolean
+operator<< (
+    TAO_OutputCDR &,
+    const PortableInterceptor::Cookie_ptr
+  );
+ACE_INLINE CORBA::Boolean
+operator>> (
+    TAO_InputCDR &,
+    PortableInterceptor::Cookie_ptr &
+  );
+
+ACE_INLINE CORBA::Boolean
+operator<< (
+    TAO_OutputCDR &strm,
+    const PortableInterceptor::Cookie_ptr _tao_objref
+  )
+{
+  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
+  return (strm << _tao_corba_obj);
+}
+
+ACE_INLINE CORBA::Boolean
+operator>> (
+    TAO_InputCDR &strm,
+    PortableInterceptor::Cookie_ptr &_tao_objref
+  )
+{
+  ACE_TRY_NEW_ENV
+  {
+    CORBA::Object_var obj;
+    if ((strm >> obj.inout ()) == 0)
+      return 0;
+    // narrow to the right type
+    _tao_objref =
+      PortableInterceptor::Cookie::_narrow (
+          obj.in (),
+          ACE_TRY_ENV
+        );
+    ACE_TRY_CHECK;
+    return 1;
+  }
+  ACE_CATCHANY
+  {
+    // do nothing
+  }
+  ACE_ENDTRY;
+  return 0;
+}
+
+
+#if !defined _TAO_CDR_OP_PortableInterceptor_Cookies_I_
+#define _TAO_CDR_OP_PortableInterceptor_Cookies_I_
+
+CORBA::Boolean  operator<< (
+    TAO_OutputCDR &,
+    const PortableInterceptor::Cookies &
+  );
+CORBA::Boolean  operator>> (
+    TAO_InputCDR &,
+    PortableInterceptor::Cookies &
+  );
+
+#endif /* _TAO_CDR_OP_PortableInterceptor_Cookies_I_ */
+
+ACE_INLINE CORBA::Boolean
+operator<< (
+    TAO_OutputCDR &,
+    const PortableInterceptor::Interceptor_ptr
+  );
+ACE_INLINE CORBA::Boolean
+operator>> (
+    TAO_InputCDR &,
+    PortableInterceptor::Interceptor_ptr &
+  );
+
+ACE_INLINE CORBA::Boolean
+operator<< (
+    TAO_OutputCDR &strm,
+    const PortableInterceptor::Interceptor_ptr _tao_objref
+  )
+{
+  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
+  return (strm << _tao_corba_obj);
+}
+
+ACE_INLINE CORBA::Boolean
+operator>> (
+    TAO_InputCDR &strm,
+    PortableInterceptor::Interceptor_ptr &_tao_objref
+  )
+{
+  ACE_TRY_NEW_ENV
+  {
+    CORBA::Object_var obj;
+    if ((strm >> obj.inout ()) == 0)
+      return 0;
+    // narrow to the right type
+    _tao_objref =
+      PortableInterceptor::Interceptor::_narrow (
+          obj.in (),
+          ACE_TRY_ENV
+        );
+    ACE_TRY_CHECK;
+    return 1;
+  }
+  ACE_CATCHANY
+  {
+    // do nothing
+  }
+  ACE_ENDTRY;
+  return 0;
+}
+
+ACE_INLINE CORBA::Boolean
+operator<< (
+    TAO_OutputCDR &,
+    const PortableInterceptor::ServerRequestInterceptor_ptr
+  );
+ACE_INLINE CORBA::Boolean
+operator>> (
+    TAO_InputCDR &,
+    PortableInterceptor::ServerRequestInterceptor_ptr &
+  );
+
+ACE_INLINE CORBA::Boolean
+operator<< (
+    TAO_OutputCDR &strm,
+    const PortableInterceptor::ServerRequestInterceptor_ptr _tao_objref
+  )
+{
+  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
+  return (strm << _tao_corba_obj);
+}
+
+ACE_INLINE CORBA::Boolean
+operator>> (
+    TAO_InputCDR &strm,
+    PortableInterceptor::ServerRequestInterceptor_ptr &_tao_objref
+  )
+{
+  ACE_TRY_NEW_ENV
+  {
+    CORBA::Object_var obj;
+    if ((strm >> obj.inout ()) == 0)
+      return 0;
+    // narrow to the right type
+    _tao_objref =
+      PortableInterceptor::ServerRequestInterceptor::_narrow (
+          obj.in (),
+          ACE_TRY_ENV
+        );
+    ACE_TRY_CHECK;
+    return 1;
+  }
+  ACE_CATCHANY
+  {
+    // do nothing
+  }
+  ACE_ENDTRY;
+  return 0;
+}
+
+ACE_INLINE CORBA::Boolean
+operator<< (
+    TAO_OutputCDR &,
+    const PortableInterceptor::ClientRequestInterceptor_ptr
+  );
+ACE_INLINE CORBA::Boolean
+operator>> (
+    TAO_InputCDR &,
+    PortableInterceptor::ClientRequestInterceptor_ptr &
+  );
+
+ACE_INLINE CORBA::Boolean
+operator<< (
+    TAO_OutputCDR &strm,
+    const PortableInterceptor::ClientRequestInterceptor_ptr _tao_objref
+  )
+{
+  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
+  return (strm << _tao_corba_obj);
+}
+
+ACE_INLINE CORBA::Boolean
+operator>> (
+    TAO_InputCDR &strm,
+    PortableInterceptor::ClientRequestInterceptor_ptr &_tao_objref
+  )
+{
+  ACE_TRY_NEW_ENV
+  {
+    CORBA::Object_var obj;
+    if ((strm >> obj.inout ()) == 0)
+      return 0;
+    // narrow to the right type
+    _tao_objref =
+      PortableInterceptor::ClientRequestInterceptor::_narrow (
+          obj.in (),
+          ACE_TRY_ENV
+        );
+    ACE_TRY_CHECK;
+    return 1;
+  }
+  ACE_CATCHANY
+  {
+    // do nothing
+  }
+  ACE_ENDTRY;
+  return 0;
+}
+
 #endif /* TAO_HAS_INTERCEPTORS */

@@ -155,7 +155,8 @@ TAO_SHMIOP_Profile::decode (TAO_InputCDR& cdr)
     if (TAO_debug_level > 0)
       {
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("TAO (%P|%t) SHMIOP_Profile::decode - v%d.%d\n"),
+                    ASYS_TEXT ("TAO (%P|%t) SHMIOP_Profile::decode - ")
+                    ASYS_TEXT ("v%d.%d\n"),
                     this->version_.major,
                     this->version_.minor));
       }
@@ -174,8 +175,17 @@ TAO_SHMIOP_Profile::decode (TAO_InputCDR& cdr)
       return -1;
     }
 
-  this->object_addr_.set (this->port_, this->host_.in ());
-
+    if (this->object_addr_.set (this->port_, 
+                                this->host_.in ()) == -1)
+    {
+      if (TAO_debug_level > 0)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ASYS_TEXT ("TAO (%P|%t) SHMIOP_Profile::decode - \n")
+                      ASYS_TEXT ("TAO (%P|%t) ACE_INET_Addr::set () failed")));
+        }
+      return -1;
+    }
   // ... and object key.
 
   if ((cdr >> this->object_key_) == 0)
@@ -193,7 +203,8 @@ TAO_SHMIOP_Profile::decode (TAO_InputCDR& cdr)
       // If there is extra data in the profile we are supposed to
       // ignore it, but print a warning just in case...
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("%d bytes out of %d left after IIOP profile data\n"),
+                  ASYS_TEXT ("%d bytes out of %d left after SHMIOP ")
+                  ASYS_TEXT ("profile data\n"),
                   cdr.length (),
                   encap_len));
     }
@@ -294,7 +305,17 @@ TAO_SHMIOP_Profile::parse_string (const char *string,
 
   this->host_ = tmp._retn ();
 
-  this->object_addr_.set (this->port_, this->host_.in ());
+  if (this->object_addr_.set (this->port_, 
+                              this->host_.in ()) == -1)
+    {
+      if (TAO_debug_level > 0)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ASYS_TEXT ("TAO (%P|%t) SHMIOP_Profile::parse_string () - \n")
+                      ASYS_TEXT ("TAO (%P|%t) ACE_INET_Addr::set () failed")));
+        }
+      return -1;
+    }
 
   start = ++okd;  // increment past the object key separator
 
@@ -384,7 +405,7 @@ TAO_SHMIOP_Profile::operator= (const TAO_SHMIOP_Profile &src)
   this->object_key_ = src.object_key_;
 
   this->object_addr_.set (src.object_addr_);
-
+  
   this->port_ = src.port_;
 
   this->host_ = src.host_;

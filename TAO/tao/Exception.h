@@ -86,6 +86,11 @@ public:
   // Returns a string containing information about the exception. This
   // function is not CORBA compliant.
 
+  virtual void _tao_encode (TAO_OutputCDR &cdr,
+                            CORBA::Environment &) const = 0;
+  virtual void _tao_decode (TAO_InputCDR &cdr,
+                            CORBA::Environment &) = 0;
+
   // = Methods required for memory management support.
   CORBA::ULong _incr_refcnt (void);
   CORBA::ULong _decr_refcnt (void);
@@ -132,9 +137,6 @@ public:
 
   CORBA_UserException &operator= (const CORBA_UserException &src);
   // Assignment operator.
-
-  virtual void _raise (void);
-  // To throw an exception of this type.
 
   static CORBA_UserException *_narrow (CORBA_Exception *exception);
   // The narrow operation.
@@ -205,6 +207,11 @@ public:
   ACE_CString _info (void) const;
   // Returns a string containing information about the exception. This
   // function is not CORBA compliant.
+
+  virtual void _tao_encode (TAO_OutputCDR &cdr,
+                            CORBA::Environment &) const;
+  virtual void _tao_decode (TAO_InputCDR &cdr,
+                            CORBA::Environment &);
 
   static CORBA::ULong _tao_minor_code (u_int location,
                                        int errno_value);
@@ -314,6 +321,11 @@ public:
 
   virtual void _raise (void);
   // To throw an UnknownUserException of this type.
+
+  virtual void _tao_encode (TAO_OutputCDR &cdr,
+                            CORBA::Environment &) const;
+  virtual void _tao_decode (TAO_InputCDR &cdr,
+                            CORBA::Environment &);
 
   static CORBA_UnknownUserException *_narrow (CORBA_Exception *ex);
   // Narrow to an UnknowUserException
