@@ -40,8 +40,8 @@ CORBA::Object::Object (TAO_Stub * protocol_proxy,
                        CORBA::Boolean collocated,
                        TAO_Abstract_ServantBase * servant,
                        TAO_ORB_Core *orb_core)
-  : is_collocated_ (collocated)
-    , servant_ (servant)
+  : servant_ (servant)
+    , is_collocated_ (collocated)
     , is_local_ (0)
     , proxy_broker_ (0)
     , is_evaluated_ (1)
@@ -75,8 +75,8 @@ CORBA::Object::Object (TAO_Stub * protocol_proxy,
 
 CORBA::Object::Object (IOP::IOR *ior,
                        TAO_ORB_Core *orb_core)
-  : is_collocated_ (0)
-    , servant_ (0)
+  : servant_ (0)
+    , is_collocated_ (0)
     , is_local_ (0)
     , proxy_broker_ (0)
     , is_evaluated_ (0)

@@ -1,3 +1,14 @@
+Mon Mar 24 13:57:09 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/Object.h:
+	* tao/Object.cpp (_is_local): 
+	* tao/Object.i: Cosmetic fixes like improved documentation, making
+	  most of the member variables private instead of protected
+	  etc. Changed the member initializations to suit the above
+	  cosmetic fix. 
+	
+	* tao/PortableServer/Collocated_Object.cpp: Cosmetic fixes.
+
 Mon Mar 24 09:16:11 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tao/Object.cpp: The return value from the call to
