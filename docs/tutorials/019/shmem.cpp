@@ -1,29 +1,30 @@
-
 // $Id$
 
 #include "shmem.h"
 
-#if ! defined(ACE_LACKS_SYSV_SHMEM)
+#if ! defined (ACE_LACKS_SYSV_SHMEM)
+
 /*
   Set the available_ flag to zero & optionally initialize the buf_
   area.
 */
-SharedData::SharedData(int _initialize)
-    : available_(0)
+
+SharedData::SharedData (int initialize)
+  : available_ (0)
 {
-    if( _initialize )
-    {
-        ACE_OS::sprintf(buf_,"UNSET\n");
-    }
+  if (initialize)
+    ACE_OS::sprintf (buf_, "UNSET\n");
 }
 
 /*
   Write the process ID into the buffer.  This will prove to us that
   the data really is shared between the client and server.
 */
-void SharedData::set(void)
+void SharedData::set (void)
 {
-    ACE_OS::sprintf(buf_,"My PID is (%d)\n",ACE_OS::getpid());
+  ACE_OS::sprintf (buf_,
+                   "My PID is (%d)\n",
+                   ACE_OS::getpid ());
 }
 
 /*
@@ -31,19 +32,21 @@ void SharedData::set(void)
 */
 void SharedData::show(void)
 {
-    ACE_DEBUG ((LM_INFO, "(%P|%t) Shared Data text is (%s)\n",
-                buf_ ));
+  ACE_DEBUG ((LM_INFO,
+              "(%P|%t) Shared Data text is (%s)\n",
+              buf_));
 }
 
 // Show flag
 int SharedData::available(void)
 {
-    return available_;
+  return available_;
 }
 
 // Set flag
-void SharedData::available(int _available)
+void SharedData::available(int a)
 {
-    available_ = _available;
+  available_ = a;
 }
-#endif // ACE_LACKS_SYSV_SHMEM
+
+#endif /* ACE_LACKS_SYSV_SHMEM */

@@ -1,4 +1,3 @@
-
 // $Id$
 
 #ifndef XMIT_H
@@ -15,35 +14,33 @@ class ACE_SOCK_Stream;
 class Xmit : public Protocol_Task
 {
 public:
+  typedef Protocol_Task inherited;
 
-    typedef Protocol_Task inherited;
+  // We must be given a valid peer when constructed.  Without that we
+  // don't know who to send data to.
+  Xmit (ACE_SOCK_Stream &peer);
+  ~Xmit (void);
 
-     // We must be given a valid peer when constructed.  Without that
-     // we don't know who to send data to.
-    Xmit( ACE_SOCK_Stream & _peer );
-
-    ~Xmit(void);
-
-     // As you know, close() will be called in a couple of ways by the
-     // ACE framework.  We use that opportunity to terminate the
-     // connection to the peer.
-    int close(u_long flags);
+  // As you know, close() will be called in a couple of ways by the
+  // ACE framework.  We use that opportunity to terminate the
+  // connection to the peer.
+  int close (u_long flags);
 
 protected:
 
-    ACE_SOCK_Stream & peer(void)
-        {
-            return this->peer_;
-        }
+  ACE_SOCK_Stream &peer (void)
+  {
+    return this->peer_;
+  }
 
-     // Send the data to the peer.  By now it will have been
-     // completely protocol-ized by other tasks in the stream.
-    int send(ACE_Message_Block *message,
-             ACE_Time_Value *timeout);
+  // Send the data to the peer.  By now it will have been completely
+  // protocol-ized by other tasks in the stream.
+  int send (ACE_Message_Block *message,
+            ACE_Time_Value *timeout);
 
 private:
-     // A representation of the peer we're talking to.
-    ACE_SOCK_Stream & peer_;
+  // A representation of the peer we're talking to.
+  ACE_SOCK_Stream &peer_;
 };
 
-#endif // XMIT_H
+#endif /* XMIT_H */
