@@ -20,10 +20,11 @@ ACE_RCSID(tao, Asynch_Reply_Dispatcher, "$Id$")
 TAO_Asynch_Reply_Dispatcher::
     TAO_Asynch_Reply_Dispatcher (const TAO_Reply_Handler_Skeleton &reply_handler_skel,
                                  Messaging::ReplyHandler_ptr reply_handler)
-  : message_state_ (0),
-    reply_handler_skel_ (reply_handler_skel),
-    reply_handler_ (Messaging::ReplyHandler::_duplicate (reply_handler)),
-    transport_ (0)
+      : reply_status_ (100), // Something really vague
+        message_state_ (0),
+        reply_handler_skel_ (reply_handler_skel),
+        reply_handler_ (Messaging::ReplyHandler::_duplicate (reply_handler)),
+        transport_ (0)
 {
 }
 
@@ -128,7 +129,7 @@ TAO_Asynch_Reply_Dispatcher::connection_closed (void)
       ACE_TRY_CHECK;
       // Turn into an output CDR
       TAO_InputCDR cdr (out_cdr);
-      
+
       this->reply_handler_skel_ (cdr,
                                  this->reply_handler_.in (),
                                  TAO_AMI_REPLY_SYSTEM_EXCEPTION,

@@ -1,3 +1,10 @@
+Fri Sep  8 18:54:32 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Asynch_Reply_Dispatcher.cpp (TAO_Asynch_Reply_Dispatcher):
+	* tao/Synch_Reply_Dispatcher.cpp: Initialised the reply_status_
+	  member in the constructor. Thanks to Ossama and his preying eyes
+	  for reporting this :-)
+
 Fri Sep  8 17:35:01 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* Updated dependenices in orbsvcs
