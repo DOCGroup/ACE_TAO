@@ -10,7 +10,7 @@
  *
  */
 #include <string.h>
-struct resword { char *name; short token; short iclass;};
+struct resword { const char *name; short token; short iclass;};
 
 #define TOTAL_KEYWORDS 35
 #define MIN_WORD_LENGTH 2

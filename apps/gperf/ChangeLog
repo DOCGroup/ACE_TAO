@@ -1,3 +1,12 @@
+Sun Jun  6 15:47:23 1999  Douglas C. Schmidt  <schmidt@danzon.cs.wustl.edu>
+
+	* src/Key_List.cpp (output_switch): Make sure to generate "const
+ 	  char *resword;" rather than "char *resword" since otherwise C++
+ 	  compilers correctly complain.
+
+	* tests: Fixed a bunch of warnings related to misuses of "const
+	  char *".
+
 Sun Jun  6 10:30:09 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tests/test-4.exp: Fixed another use of "index".  Thanks to David

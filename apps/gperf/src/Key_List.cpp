@@ -31,10 +31,10 @@ ACE_RCSID(src, Key_List, "$Id$")
 #include "Hash_Table.h"
 
 // Default type for generated code.
-char *const Key_List::default_array_type = "char *";
+const char *const Key_List::default_array_type = "char *";
 
 // in_word_set return type, by default.
-char *const Key_List::default_return_type = "char *";
+const char *const Key_List::default_return_type = "char *";
 
 // How wide the printed field width must be to contain the maximum
 // hash value.
@@ -105,7 +105,10 @@ Key_List::special_input (char delimiter)
                 continue;
 
               if (i == 0)
-                return "";
+                {
+                  buf[0] = '\0';
+                  return buf;
+                }
               else
                 {
                   buf[delimiter == '%' && buf[i - 2] == ';'
@@ -154,7 +157,7 @@ Key_List::save_include_src (void)
                        0);
   else
     return special_input ('}');
-  return "";
+  return (char *) "";
 }
 
 // Determines from the input file whether the user wants to build a
@@ -211,7 +214,7 @@ Key_List::output_types (void)
         }
     }
   else if (option[POINTER])     // Return a char *.
-    return_type = Key_List::default_array_type;
+    return_type = (char *) Key_List::default_array_type;
   return 0;
 }
 
@@ -560,12 +563,12 @@ Key_List::output_switch (int use_keyword_table)
     {
       if (option[COMP])
         comp_buffer = option[STRCASECMP]
-          ? "charmap[*str] == *resword && !strncasecmp (str + 1, resword + 1, len - 1)"
-          : "*str == *resword && !strncmp (str + 1, resword + 1, len - 1)";
+          ? (char *) "charmap[*str] == *resword && !strncasecmp (str + 1, resword + 1, len - 1)"
+          : (char *) "*str == *resword && !strncmp (str + 1, resword + 1, len - 1)";
       else
         comp_buffer = option[STRCASECMP]
-          ? "charmap[*str] == *resword && !strncasecmp (str + 1, resword + 1, len - 1)"
-          : "*str == *resword && !strcmp (str + 1, resword + 1)";
+          ? (char *) "charmap[*str] == *resword && !strncasecmp (str + 1, resword + 1, len - 1)"
+          : (char *) "*str == *resword && !strcmp (str + 1, resword + 1)";
     }
   if (!option[OPTIMIZE])
     ACE_OS::printf ("  if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)\n    {\n");
@@ -603,7 +606,7 @@ Key_List::output_switch (int use_keyword_table)
           int i = 0;
 
           ACE_OS::printf ("              %s%s *resword; %s\n\n",
-                  option[CONSTANT] ? "const " : "",
+                  option[CONSTANT] || pointer_and_type_enabled == 0 ? "const " : "",
                   pointer_and_type_enabled ? struct_tag : "char",
                   option[LENTABLE] && !option[DUP] ? "unsigned int key_len;" : "");
           if (total_switches == 1)
@@ -746,15 +749,17 @@ Key_List::output_keylength_table (void)
   const int max_column = 15;
   int slot = 0;
   int column = 0;
-  char *indent = option[GLOBAL] ? "" : "  ";
+  const char *indent = option[GLOBAL] ? "" : "  ";
   List_Node *temp;
 
   if (!option[DUP] && !option[SWITCH])
     {
       ACE_OS::printf ("\n%sstatic %sunsigned %s lengthtable[] =\n%s%s{\n    ",
-              indent, option[CONSTANT] ? "const " : "",
-              max_key_len <= UCHAR_MAX ? "char" : (max_key_len <= USHRT_MAX ? "short" : "long"),
-              indent, indent);
+                      indent,
+                      option[CONSTANT] ? "const " : "",
+                      max_key_len <= UCHAR_MAX ? "char" : (max_key_len <= USHRT_MAX ? "short" : "long"),
+                      indent,
+                      indent);
 
       for (temp = head; temp; temp = temp->next, slot++)
         {
@@ -766,7 +771,9 @@ Key_List::output_keylength_table (void)
           ACE_OS::printf ("%3d,%s", temp->length, ++column % (max_column - 1 ) ? "" : "\n    ");
         }
 
-      ACE_OS::printf ("\n%s%s};\n", indent, indent);
+      ACE_OS::printf ("\n%s%s};\n",
+                      indent,
+                      indent);
     }
 }
 
@@ -776,15 +783,16 @@ Key_List::output_keylength_table (void)
 void
 Key_List::output_keyword_table (void)
 {
-  char *l_brace = *head->rest ? "{" : "";
-  char *r_brace = *head->rest ? "}," : "";
-  char *indent = option[GLOBAL] ? "" : "  ";
+  const char *l_brace = *head->rest ? "{" : "";
+  const char *r_brace = *head->rest ? "}," : "";
+  const char *indent = option[GLOBAL] ? "" : "  ";
   int slot = 0;
   List_Node *temp;
 
+  int pointer_and_type_enabled = option[POINTER] && option[TYPE];
   ACE_OS::printf ("%sstatic %s%swordlist[] =\n%s%s{\n",
           indent,
-          option[CONSTANT] ? "const " : "",
+          option[CONSTANT] || pointer_and_type_enabled == 0 ? "const " : "",
           struct_tag,
           indent,
           indent);
@@ -1350,7 +1358,7 @@ Key_List::output_lookup_array (void)
             max = val;
         }
 
-      char *indent = option[GLOBAL] ? "" : "  ";
+      const char *indent = option[GLOBAL] ? "" : "  ";
 
       ACE_OS::printf ("%sstatic %ssigned %s lookup[] =\n%s%s{\n      ", indent, option[CONSTANT] ? "const " : "",
               max <= SCHAR_MAX ? "char" : (max <= SHRT_MAX ? "short" : "int"),
@@ -1397,6 +1405,8 @@ Key_List::output_lookup_function (void)
 
   if (option[DUP] && total_duplicates > 0)
     {
+      int pointer_and_type_enabled = option[POINTER] && option[TYPE];
+
       ACE_OS::printf ("          int slot = lookup[key];\n\n"
               "          if (slot >= 0 && slot < MAX_HASH_VALUE)\n");
       if (option[OPTIMIZE])
@@ -1404,7 +1414,7 @@ Key_List::output_lookup_function (void)
       else
         {
           ACE_OS::printf ("            {\n"
-                  "              %schar *s = wordlist[slot]", option[CONSTANT] ? "const " : "");
+                  "              %schar *s = wordlist[slot]", option[CONSTANT] || pointer_and_type_enabled == 0 ? "const " : "");
           if (array_type_ != Key_List::default_array_type)
             ACE_OS::printf (".%s", option.key_name ());
 
@@ -1422,8 +1432,8 @@ Key_List::output_lookup_function (void)
               "              %s%s*base = &wordlist[-lookup[offset]];\n"
               "              %s%s*ptr = base + -lookup[offset + 1];\n\n"
               "              while (--ptr >= base)\n                ",
-              option[CONSTANT] ? "const " : "", struct_tag,
-              option[CONSTANT] ? "const " : "", struct_tag);
+              option[CONSTANT] || pointer_and_type_enabled == 0 ? "const " : "", struct_tag,
+              option[CONSTANT] || pointer_and_type_enabled == 0 ? "const " : "", struct_tag);
       if (array_type_ != Key_List::default_array_type)
         {
           if (option[COMP])
@@ -1450,7 +1460,9 @@ Key_List::output_lookup_function (void)
         ACE_OS::printf ("          return %swordlist[key]", option[TYPE] && option[POINTER] ? "&" : "");
       else
         {
-          ACE_OS::printf ("          %schar *s = wordlist[key]", option[CONSTANT] ? "const " : "");
+          int pointer_and_type_enabled = option[POINTER] && option[TYPE];
+
+          ACE_OS::printf ("          %schar *s = wordlist[key]", option[CONSTANT] || pointer_and_type_enabled == 0 ? "const " : "");
 
           if (array_type_ != Key_List::default_array_type)
             ACE_OS::printf (".%s", option.key_name ());
@@ -1597,7 +1609,11 @@ Key_List::output (void)
       if (option[INLINE])
 	ACE_OS::printf ("inline\n");
 
-      ACE_OS::printf ("%s%s\n", option[CONSTANT] ? "const " : "", return_type);
+      int pointer_and_type_enabled = option[POINTER] && option[TYPE];
+
+      ACE_OS::printf ("%s%s\n",
+                      option[CONSTANT] || pointer_and_type_enabled == 0 ? "const " : "",
+                      return_type);
       if (option[CPLUSPLUS])
 	ACE_OS::printf ("%s::", option.class_name ());
 
@@ -1795,9 +1811,9 @@ Key_List::dump (void)
 Key_List::Key_List (void)
   : head (0),
     total_duplicates (0),
-    array_type_ (Key_List::default_array_type),
-    return_type (Key_List::default_return_type),
-    struct_tag (Key_List::default_array_type),
+    array_type_ ((char *) Key_List::default_array_type),
+    return_type ((char *) Key_List::default_return_type),
+    struct_tag ((char *) Key_List::default_array_type),
     max_key_len (INT_MIN),
     min_key_len (INT_MAX),
     key_sort (0),

@@ -2,7 +2,7 @@
 /* Command-line: ../src/gperf -D -p -t  */
 /* Command-line: gperf -p -j1 -i 1 -o -t -N is_reserved_word -k1,3,$ c-parse.gperf  */ 
 #include <string.h>
-struct resword { char *name; short token; enum rid rid; };
+struct resword { const char *name; short token; enum rid rid; };
 
 #define TOTAL_KEYWORDS 51
 #define MIN_WORD_LENGTH 2
