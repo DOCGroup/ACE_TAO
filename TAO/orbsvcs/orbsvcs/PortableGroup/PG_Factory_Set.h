@@ -40,9 +40,8 @@
  */
 struct TAO_PG_Factory_Node
 {
-
-  /// Reference to the GenericFactory that created the member.
-  PortableGroup::GenericFactory_var factory;
+  /// Member factory information.
+  PortableGroup::FactoryInfo factory_info;
 
   /// FactoryCreationId assigned to the member.
   PortableGroup::GenericFactory::FactoryCreationId_var factory_creation_id;
