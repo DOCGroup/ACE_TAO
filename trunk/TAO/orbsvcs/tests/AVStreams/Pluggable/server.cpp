@@ -201,9 +201,7 @@ main (int argc,
   
   ACE_TRY
     {
-      TAO_AV_CORE::instance ()->init (argc,
-                                      argv,
-                                      orb.in (),
+      TAO_AV_CORE::instance ()->init (orb.in (),
                                       poa.in (),
                                       ACE_TRY_ENV);
       ACE_TRY_CHECK;
