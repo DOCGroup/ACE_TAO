@@ -29,8 +29,9 @@ class TAO_Export IIOP_ORB : public CORBA_ORB
   //    Bridge implementation of <IIOP_ORB>.
   //
   // = DESCRIPTION
-  //    This is one of the two main hooks into IIOP in this C/C++
-  //    based implementation; the other being <IIOP_Object>.
+  //   Just implement some IIOP aspects of the ORB. This will be
+  //   removed as the pluggable protocols changes are propagated.
+  //
 public:
   IIOP_ORB (void);
   // constructor
