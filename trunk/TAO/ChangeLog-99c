@@ -26,6 +26,9 @@ Mon Jun 21 23:34:48 1999  Darrell Brunsch  <brunsch@cs.wustl.edu>
           Added member variables implrepo_service_ior_ and 
           implrepo_service_port_ and accessors for them.
 
+        * docs/Options.html:
+          Updated docs to list the two new ORB options.
+
 Mon Jun 21 23:34:06 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/IORManipulation.h:
