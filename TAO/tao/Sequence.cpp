@@ -146,7 +146,11 @@ TAO_Unbounded_String_Sequence::operator[] (CORBA::ULong slot) const
 char* *
 TAO_Unbounded_String_Sequence::allocbuf (CORBA::ULong nelems)
 {
-  char* *buf = new char*[nelems];
+  char **buf;
+  ACE_NEW_RETURN (buf,
+                  char *[nelems],
+                  0);
+  //char* *buf = new char*[nelems];
   for (CORBA::ULong i=0; i < nelems; i++)
     buf[i] = 0;
   return buf;
@@ -367,7 +371,11 @@ TAO_Unbounded_WString_Sequence::operator[] (CORBA::ULong slot) const
 CORBA::WChar* *
 TAO_Unbounded_WString_Sequence::allocbuf (CORBA::ULong nelems)
 {
-  CORBA::WChar* *buf = new CORBA::WChar*[nelems];
+  CORBA::WChar **buf;
+  ACE_NEW_RETURN (buf,
+                  CORBA::WChar *[nelems],
+                  0);
+  //  CORBA::WChar* *buf = new CORBA::WChar*[nelems];
   for (CORBA::ULong i=0; i < nelems; i++)
     buf[i] = 0;
   return buf;
