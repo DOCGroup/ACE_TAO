@@ -1,3 +1,40 @@
+Mon May  9 10:02:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        For AMH and AMI TAO allocates response handlers currently from the
+        heap. This checkin adds the needed code to retrieve allocators for
+        allocating the AMH/AMI response handlers and to make things
+        configurable. The needed changes to use these allocators will be
+        added soon.
+
+        * tao/Resource_Factory.{h,cpp}:
+          Added methods to get an amh or ami response handler
+          allocator. This allocator is then used later to allocate the
+          amh/ami response handlers.
+
+        * tao/default_resource.{h,cpp}:
+          Overruled the amh/ami response handler allocator methods to
+          give back a heap allocator or a local memory pool allocator
+          dependent on the define TAO_USE_LOCAL_MEMORY_POOL
+
+        * tao/Thread_Lane_Resources.{h,cpp}:
+          Added accessors and members for storing the amh/ami allocators.
+          The allocators are stored in a instance of this class. When no
+          allocator is set then we get one from the resource factory.
+
+        * tao/Thread_Lane_Resources.i:
+          Removed this file, it is empty and when we need it, we will add
+          it again.
+
+        * tao/Strategies/advanced_resource.{h,cpp}:
+          Added option to configure a not locked version of the local
+          memory pool allocator just the same way we can do for the other
+          allocators. New options are -ORBAMIResponseHandlerAllocator and
+          -ORBAMHResponseHandlerAllocator
+
+        * docs/Options.html:
+          Documented -ORBAMIResponseHandlerAllocator and
+          -ORBAMHResponseHandlerAllocator
+
 Sat May  8 00:41:20 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/examples/LoadBalancing/ServerRequestInterceptor.h:
