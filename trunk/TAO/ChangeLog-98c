@@ -1,3 +1,17 @@
+Mon Jul 27 16:59:14 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
+
+	* orbsvcs/orbsvcs/Naming/Naming_Utils.{h,cpp}: Added minor
+	formating changes
+	* orbsvcs/tests/Logger/README: Added minor formatting changes
+	* orbsvcs/tests/Logger/client.cpp: Added minor formatting changes
+	* orbsvcs/tests/Logger/server.cpp: Added minor formatting changes
+	* orbscvs/tests/Logger/client_i.{h,cpp}: Added minor formatting
+	changes
+	* orbsvcs/tests/Logger/server_i.{h,cpp}: Added minor formatting
+	changes
+	* orbsvcs/tests/Logger/run_test.pl: Fixed a small error where
+	script tried to kill a non-existant process.
+	
 Mon Jul 27 17:15:25 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/tests/EC_Multiple/dyn_plot: added this perl script,
@@ -369,6 +383,15 @@ Wed Jul 22 16:26:34 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 Wed Jul 22 15:58:11 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * TAO version 0.1.41 released.
+
+Wed Jul 22 15:00:00 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
+
+	* orbsvcs/tests/Logger/client_i.cpp: Did a little cleaning up,
+	that's all. 
+
+	* orbsvcs/orbsvcs/Log/Logger_i.cpp: Adjusted the
+	<Logger_i::verbosity_conversion> method to work properly.
+
 
 Wed Jul 22 14:16:53 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 

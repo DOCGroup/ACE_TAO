@@ -35,8 +35,8 @@ Logger_Server::parse_args (void)
 
 int
 Logger_Server::init (int argc,
-		     char** argv,
-		     CORBA::Environment& env)
+		     char *argv[],
+		     CORBA::Environment &env)
 {
   this->argc_ = argc;
   this->argv_ = argv;
@@ -54,15 +54,15 @@ Logger_Server::init (int argc,
   
   TAO_CHECK_ENV_RETURN (env,-1);
   
-  // Parse the command line arguments
+  // Parse the command line arguments.
   if (this->parse_args () != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
 		       "%p\n",
 		       "parse_args"),
 		      -1);
 
-  // Activate the logger_factory
-  CORBA::String_var str  =
+  // Activate the logger_factory.
+  CORBA::String_var str =
     this->orb_manager_.activate_under_child_poa ("logger_factory",
 						 &this->factory_impl_,
 						 env);

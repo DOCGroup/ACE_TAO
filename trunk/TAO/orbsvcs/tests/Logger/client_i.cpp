@@ -68,7 +68,6 @@ Logger_Client::init (int argc, char **argv)
   return 0;
   
 }
-  
 
 int
 Logger_Client::init_naming_service (CORBA::Environment &env)
@@ -127,7 +126,6 @@ Logger_Client::init_naming_service (CORBA::Environment &env)
   return 0;
 }
 
-
 int
 Logger_Client::init_loggers (CORBA::Environment &env)
 {
@@ -147,6 +145,7 @@ Logger_Client::init_loggers (CORBA::Environment &env)
     ACE_ERROR_RETURN ((LM_ERROR,
 		       "nil logger2"),
 		      -1);
+
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
 		"Created two loggers\n"));      
@@ -187,7 +186,7 @@ Logger_Client::run (void)
           this->show_record (rec2);
         }
 
-      // Change the verbosity
+      // Change the verbosity.
       this->logger_1_->verbosity (Logger::VERBOSE_LITE, TAO_TRY_ENV);
       TAO_CHECK_ENV;
       
@@ -195,7 +194,7 @@ Logger_Client::run (void)
       this->logger_1_->log (rec1, TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      // Change the verbosity again    
+      // Change the verbosity again.
       this->logger_2_->verbosity (Logger::VERBOSE, TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
@@ -211,7 +210,6 @@ Logger_Client::run (void)
   TAO_ENDTRY;
   return 0;
 }
-
 
 // Parses the command line arguments and returns an error status.
 

@@ -2,7 +2,7 @@
 
 #include "client_i.h"
 
-// This function runs the test.
+// This function runs the Logging service test.
 
 int
 main (int argc, char **argv)
@@ -15,7 +15,5 @@ main (int argc, char **argv)
   if (logger_client.init (argc, argv) == -1)
     return 1;
 
-  int retval = logger_client.run ();
-
-  return retval;
+  return logger_client.run ();
 }

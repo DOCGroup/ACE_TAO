@@ -13,7 +13,8 @@
 //      a Naming Context for TAO NameService.
 //
 // = AUTHOR
-//    Nagarajan Surendran (naga@cs.wustl.edu)
+//    Nagarajan Surendran <naga@cs.wustl.edu>
+//    Matthew Braun <mjb2@cec.wustl.edu>
 //
 // ============================================================================
 
@@ -118,12 +119,12 @@ TAO_Naming_Server::init (CORBA::ORB_ptr orb,
 	  ACE_DEBUG ((LM_DEBUG,
 		      "NameService IOR is <%s>\n",
 		      this->naming_service_ior_.in ()));
-
+	  
 #if defined (ACE_HAS_IP_MULTICAST)
 	  // Get reactor instance from TAO.
 	  ACE_Reactor *reactor =
 	    TAO_ORB_Core_instance ()->reactor ();
-
+	  
 	  // First, see if the user has given us a multicast port number
 	  // for the name service on the command-line;
 	  u_short port =
@@ -306,8 +307,10 @@ TAO_Naming_Client::init (CORBA::ORB_ptr orb,
 
 TAO_Naming_Client::TAO_Naming_Client (void)
 {
+  // Do nothing
 }
 
 TAO_Naming_Client::~TAO_Naming_Client (void)
 {
+  // Do nothing
 }

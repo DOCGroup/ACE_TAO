@@ -11,35 +11,30 @@ log_server has its own NamingServer implementation, so it doesn't
 require you to start the NamingService before starting the client and
 server.
 
-The test demonstrates the functionality of the logging
-service. The client program will generate 2 logging messages which
-will be logged to the screen. First message will be in the
-"verbose_lite" format. The second will be a fully verbose message. 
+The test demonstrates the functionality of the logging service. The
+client program will generate 2 logging messages which will be logged
+to the screen. First message will be in the "verbose_lite" format. The
+second will be a fully verbose message.
 
-server:
-------
+server: ------
 
-% server [-d] 
+% server [-d]
 
-client:
--------
+client: -------
 
 % client [-d]
 
-Options:
--------
--d	Debug flag. It is an additive flag, so more -d's will increase 
-the debugging level. Only one flag is necessary to enable the 
-debugging output from the executables, but the debug level
-affects how the utilized TAO methods act (including mysterious
-debugging messages).	
+Options: -------
 
-
+-d Debug flag. It is an additive flag, so more -d's will increase
+	the debugging level. Only one flag is necessary to enable the
+	debugging output from the executables, but the debug level
+	affects how the utilized TAO methods act (including mysterious
+	debugging messages).
 
 That's all there is to it. If you desire, feel free to change the
 logging priorities, verbosity levels and messages in the client
-program but note that the maximum length of the message is 1023 characters. 
+program but note that the maximum length of the message is 1023
+characters.
 
--Matt Braun
-mjb2@cec.wustl.edu
-Monday July 06, 1998
+-Matt Braun mjb2@cec.wustl.edu Monday July 06, 1998

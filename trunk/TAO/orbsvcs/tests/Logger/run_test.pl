@@ -77,6 +77,5 @@ sleep $sleeptime;
 if ($leave)
 {
   $SV->Kill ();
-  $NS->Kill ();
   $CL->Kill ();
 }
