@@ -1,3 +1,13 @@
+Thu Jul  5 20:41:00 2001  Craig Rodrigues <crodrigu@bbn.com>
+
+         * tao/CONV_FRAMEC.h
+         * tao/DynamicC.h
+         * tao/PolicyC.h
+            Added export macros for some Unbounded Sequence types.
+
+         * TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_ch.cpp
+            Add export macro for unbounded object sequence types
+
 Thu Jul  5 09:22:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/AVStreams/Makefile.bor
