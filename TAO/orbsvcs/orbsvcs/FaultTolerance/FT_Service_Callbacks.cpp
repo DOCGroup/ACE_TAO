@@ -189,7 +189,7 @@ TAO_FT_Service_Callbacks::raise_comm_failure (
           TAO_INVOCATION_RECV_REQUEST_MINOR_CODE,
           errno),
       CORBA::COMPLETED_MAYBE),
-      TAO_INVOKE_EXCEPTION);
+      TAO::TAO_INVOKE_SYSTEM_EXCEPTION);
 }
 
 TAO::Invocation_Status
@@ -209,7 +209,7 @@ TAO_FT_Service_Callbacks::raise_transient_failure (
           TAO_INVOCATION_RECV_REQUEST_MINOR_CODE,
           errno),
       CORBA::COMPLETED_MAYBE),
-      TAO_INVOKE_EXCEPTION);
+      TAO::TAO_INVOKE_SYSTEM_EXCEPTION);
 }
 
 CORBA::Boolean
