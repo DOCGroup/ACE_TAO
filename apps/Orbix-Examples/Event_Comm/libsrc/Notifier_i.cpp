@@ -8,13 +8,10 @@ ACE_RCSID(libsrc, Notifier_i, "$Id$")
 #if defined (ACE_HAS_ORBIX) && (ACE_HAS_ORBIX != 0)
 
 class Notification_Receiver_Entry
+{
   // = TITLE
   //   Keeps track of context information associated with 
   //   a <Event_Comm::Notification_Receiver> entry.
-  //
-  // = DESCRIPTION
-  //   
-{
 public:
   Notification_Receiver_Entry (Event_Comm::Notification_Receiver *notification_receiver,
 			       const char *filtering_criteria);
@@ -100,7 +97,9 @@ Notification_Receiver_Entry::Notification_Receiver_Entry (Event_Comm::Notificati
   // Check for wildcard case first.
   if (ACE_OS::strcmp (filtering_criteria, "") == 0)
     compile_buffer = ACE_OS::strdup ("");
-  else // Compile the regular expression (the 0's cause ACE_OS::compile to allocate space).
+  else 
+    // Compile the regular expression (the 0's cause ACE_OS::compile
+    // to allocate space).
     compile_buffer = ACE_OS::compile (filtering_criteria, 0, 0);
 
   // Should throw an exception here!
@@ -140,7 +139,8 @@ Notifier_i::subscribe (Event_Comm::Notification_Receiver *receiver_ref,
 {
   ACE_DEBUG ((LM_DEBUG, 
 	      "in Notifier_i::subscribe for %s with filtering criteria \"%s\"\n",
-	      receiver_ref->_marker (), filtering_criteria));
+	      receiver_ref->_marker (),
+              filtering_criteria));
   ACE_SString key (receiver_ref->_marker ());
   MAP_ITERATOR mi (this->map_);
 
@@ -166,7 +166,8 @@ Notifier_i::subscribe (Event_Comm::Notification_Receiver *receiver_ref,
 	  errno = EADDRINUSE;
 	  ACE_ERROR ((LM_ERROR, 
 		      "duplicate entry for receiver %s with criteria \"%s\"",
-		     receiver_ref->_marker (), filtering_criteria));
+		     receiver_ref->_marker (),
+                      filtering_criteria));
 	  // Raise exception here???
 	  return;
 	}
@@ -174,22 +175,19 @@ Notifier_i::subscribe (Event_Comm::Notification_Receiver *receiver_ref,
 
   // If we get this far then we didn't find a duplicate, so add the
   // new entry!
-  Notification_Receiver_Entry *nr_entry = 
-    new Notification_Receiver_Entry (receiver_ref, filtering_criteria);
-
-  if (nr_entry == 0)
-    {
-      errno = ENOMEM;
-      ACE_ERROR ((LM_ERROR, "%p\n", "new failed"));
-      // Raise exception here...
-    }
+  Notification_Receiver_Entry *nr_entry;
+  ACE_NEW (nr_entry,
+           Notification_Receiver_Entry (receiver_ref,
+                                        filtering_criteria));
   // Try to add new <Notification_Receiver_Entry> to the map.
   else if (this->map_.bind (key, nr_entry) == -1)
     {
       // Prevent memory leaks.
       delete nr_entry;
       // Raise exception here...
-      ACE_ERROR ((LM_ERROR, "%p\n", "bind failed"));
+      ACE_ERROR ((LM_ERROR,
+                  "%p\n",
+                  "bind failed"));
     }
 }
 
@@ -200,12 +198,13 @@ Notifier_i::unsubscribe (Event_Comm::Notification_Receiver *receiver_ref,
 			 const char *filtering_criteria,
 			 CORBA::Environment &IT_env)
 {
-  ACE_DEBUG ((LM_DEBUG, "in Notifier_i::unsubscribe for %s\n",
+  ACE_DEBUG ((LM_DEBUG, 
+              "in Notifier_i::unsubscribe for %s\n",
 	     receiver_ref->_marker ()));
   Notification_Receiver_Entry *nr_entry = 0;
-  ACE_SString		      key;
-  MAP_ITERATOR		      mi (this->map_);
-  int			      found = 0;
+  ACE_SString key;
+  MAP_ITERATOR mi (this->map_);
+  int found = 0;
 
   // Don't make a copy since we are deleting...
   key.rep ((char *) receiver_ref->_marker ());
@@ -219,12 +218,15 @@ Notifier_i::unsubscribe (Event_Comm::Notification_Receiver *receiver_ref,
 	  && (ACE_OS::strcmp (filtering_criteria, "") == 0
 	      || ACE_OS::strcmp (filtering_criteria, nr_entry->criteria ()) == 0))
 	{
-	  ACE_DEBUG ((LM_DEBUG, "removed entry %s with criteria \"%s\"\n",
-		     receiver_ref->_marker (), filtering_criteria));		     
+	  ACE_DEBUG ((LM_DEBUG,
+                      "removed entry %s with criteria \"%s\"\n",
+                      receiver_ref->_marker (),
+                      filtering_criteria));		     
 	  found = 1;
 	  // @@ This is a hack, we need a better approach!
 	  if (this->map_.unbind (key, nr_entry) == -1)
-	    ACE_ERROR ((LM_ERROR, "unbind failed for %s\n", 
+	    ACE_ERROR ((LM_ERROR,
+                        "unbind failed for %s\n", 
 		       receiver_ref->_marker ()));
 	  else
 	    delete nr_entry;
@@ -232,8 +234,10 @@ Notifier_i::unsubscribe (Event_Comm::Notification_Receiver *receiver_ref,
     }
 
   if (found == 0)
-    ACE_ERROR ((LM_ERROR, "entry %s with criteria \"%s\" not found\n",
-	       receiver_ref->_marker (), filtering_criteria));
+    ACE_ERROR ((LM_ERROR,
+                "entry %s with criteria \"%s\" not found\n",
+	       receiver_ref->_marker (),
+                filtering_criteria));
 }
 
 // Disconnect all the receivers, giving them the <reason>.
@@ -242,10 +246,11 @@ void
 Notifier_i::send_disconnect (const char *reason,
 			     CORBA::Environment &IT_env)
 {
-  ACE_DEBUG ((LM_DEBUG, "in Notifier_i::send_disconnect = %s\n", reason));
-  
+  ACE_DEBUG ((LM_DEBUG,
+              "in Notifier_i::send_disconnect = %s\n",
+              reason));
   MAP_ITERATOR mi (this->map_);
-  int	       count = 0;
+  int count = 0;
 
   // Notify all the receivers, taking into account the filtering criteria.
 
@@ -253,13 +258,17 @@ Notifier_i::send_disconnect (const char *reason,
     {
       Event_Comm::Notification_Receiver *receiver_ref = me->int_id_->receiver ();
       ACE_ASSERT (receiver_ref->_marker () != 0);
-      ACE_DEBUG ((LM_DEBUG, "disconnecting client %s\n", receiver_ref->_marker ()));
-      TRY {
-	receiver_ref->disconnect (reason, IT_X);
-      }
-      CATCHANY {
-	cerr << "Unexpected exception " << IT_X << endl;
-      }
+      ACE_DEBUG ((LM_DEBUG,
+                  "disconnecting client %s\n",
+                  receiver_ref->_marker ()));
+      TRY 
+        {
+          receiver_ref->disconnect (reason, IT_X);
+        }
+      CATCHANY 
+        {
+          cerr << "Unexpected exception " << IT_X << endl;
+        }
       ENDTRY;
       delete me->int_id_;
       delete me->ext_id_.rep ();
@@ -268,9 +277,12 @@ Notifier_i::send_disconnect (const char *reason,
 
   this->map_.close ();
   if (count == 1)
-    ACE_DEBUG ((LM_DEBUG, "there was 1 receiver\n"));
+    ACE_DEBUG ((LM_DEBUG,
+                "there was 1 receiver\n"));
   else
-    ACE_DEBUG ((LM_DEBUG, "there were %d receivers\n", count));
+    ACE_DEBUG ((LM_DEBUG,
+                "there were %d receivers\n",
+                count));
 }
 
 // Notify all receivers whose filtering criteria match the event.
@@ -279,10 +291,11 @@ void
 Notifier_i::send_notification (const Event_Comm::Notification &notification,
 			       CORBA::Environment &IT_env)
 {
-  ACE_DEBUG ((LM_DEBUG, "in Notifier_i::send_notification = %s\n", 
+  ACE_DEBUG ((LM_DEBUG,
+              "in Notifier_i::send_notification = %s\n", 
 	     notification.tag_));
   MAP_ITERATOR mi (this->map_);
-  int	       count = 0;
+  int count = 0;
 
   // Notify all the receivers.
   // @@ Later on we need to consider the filtering_criteria!
@@ -301,25 +314,31 @@ Notifier_i::send_notification (const Event_Comm::Notification &notification,
 //	  || ACE_OS::strcmp (notification.tag_, regexp) == 0)
 	  || ACE_OS::step (notification.tag_, regexp) != 0)
 	{
-	  ACE_DEBUG ((LM_DEBUG, "string %s matched regexp \"%s\" for client %s\n",
+	  ACE_DEBUG ((LM_DEBUG,
+                      "string %s matched regexp \"%s\" for client %s\n",
 		     notification.tag_, me->int_id_->criteria (), 
 		     receiver_ref->_marker ()));
-	  TRY {
-	    receiver_ref->receive_notification (notification, IT_X);
-	  }
-	  CATCHANY {
-	    cerr << "Unexpected exception " << IT_X << endl;
-	    continue;
-	  }
+	  TRY 
+            {
+              receiver_ref->receive_notification (notification, IT_X);
+            }
+	  CATCHANY 
+            {
+              cerr << "Unexpected exception " << IT_X << endl;
+              continue;
+            }
 	  ENDTRY;
 	  count++;
 	}
     }
 
   if (count == 1)
-    ACE_DEBUG ((LM_DEBUG, "there was 1 receiver\n"));
+    ACE_DEBUG ((LM_DEBUG,
+                "there was 1 receiver\n"));
   else
-    ACE_DEBUG ((LM_DEBUG, "there were %d receivers\n", count));
+    ACE_DEBUG ((LM_DEBUG,
+                "there were %d receivers\n",
+                count));
 }
 
 #endif /* ACE_HAS_ORBIX */

@@ -19,7 +19,8 @@ Notification_Receiver_Handler::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
 
   if (this->receiver_ != 0)
     {
-      ACE_DEBUG ((LM_DEBUG, "closing down Notification_Receiver_Handler\n"));
+      ACE_DEBUG ((LM_DEBUG,
+                  "closing down Notification_Receiver_Handler\n"));
       CORBA_HANDLER::instance ()->deactivate_service (Event_Comm_Notification_Receiver_IMPL, 
 						      this->receiver_->_marker ());
       CORBA::release (this->receiver_);
@@ -36,7 +37,8 @@ Notification_Receiver_Handler::Notification_Receiver_Handler (int argc, char *ar
   : notifier_ (0), 
     receiver_ (0)
 {
-  const char *server_name = Event_Comm_Notification_Receiver_IMPL;
+  const char *server_name =
+    Event_Comm_Notification_Receiver_IMPL;
   char buf[BUFSIZ];
   char *receiver_marker = buf;
   char *filtering_criteria;
@@ -56,42 +58,50 @@ Notification_Receiver_Handler::Notification_Receiver_Handler (int argc, char *ar
 
   CORBA::Orbix.setDiagnostics (0);
 
-  struct utsname name;
+  utsname name;
 
   // Make the marker name be the "/hostname/processid"
   ACE_OS::uname (&name);
   sprintf (buf, "/%s/%d", name.nodename, ACE_OS::getpid ());
 
   CORBA_HANDLER::instance ()->activate_service (Event_Comm_Notification_Receiver_IMPL, 
-						receiver_marker, service_location);
+						receiver_marker,
+                                                service_location);
 
   // Create the receiver object.
-  this->receiver_ = new TIE_Event_Comm_Notification_Receiver (Notification_Receiver_i) 
-    (new Notification_Receiver_i);
+  ACE_NEW (this->receiver_,
+           TIE_Event_Comm_Notification_Receiver (Notification_Receiver_i) 
+           (new Notification_Receiver_i));
   
   this->receiver_->_marker (receiver_marker);
 
   ACE_ASSERT (this->receiver_);
 
-  TRY {
-    // Get a binding to the notifier.
-    this->notifier_ = Event_Comm::Notifier::_bind (notifier_marker, host, IT_X);
+  TRY 
+    {
+      // Get a binding to the notifier.
+      this->notifier_ = Event_Comm::Notifier::_bind (notifier_marker, host, IT_X);
 
-    if (this->notifier_ != CORBA::OBJECT_NIL)
-      // Subscribe ourselves with the notifier's broker.
-      this->notifier_->subscribe (this->receiver_, 
-				  filtering_criteria, IT_X);
-  } CATCHANY {
-    cerr << "Unexpected exception " << IT_X << endl;
-    ACE_OS::exit (1);
-  } ENDTRY;
+      if (this->notifier_ != CORBA::OBJECT_NIL)
+        // Subscribe ourselves with the notifier's broker.
+        this->notifier_->subscribe (this->receiver_, 
+                                    filtering_criteria, IT_X);
+    } 
+  CATCHANY 
+    {
+      cerr << "Unexpected exception " << IT_X << endl;
+      ACE_OS::exit (1);
+    }
+  ENDTRY;
   // Print out context.
 
   receiver_marker = (char *) this->receiver_->_marker ();
   CORBA::BOA::activationMode mode = CORBA::Orbix.myActivationMode ();
-  ACE_DEBUG ((LM_DEBUG, "starting up a %spersistent server in mode %d with marker name %s\n",
-	    mode == CORBA::BOA::persistentActivationMode ? "" : "non-", 
-	    mode, receiver_marker));
+  ACE_DEBUG ((LM_DEBUG,
+              "starting up a %spersistent server in mode %d with marker name %s\n",
+              mode == CORBA::BOA::persistentActivationMode ? "" : "non-", 
+              mode,
+              receiver_marker));
 }
 
 Event_Comm::Notification_Receiver *
@@ -110,7 +120,8 @@ Notification_Receiver_Handler::notifier (void)
 
 Notification_Receiver_Handler::~Notification_Receiver_Handler (void)
 {
-  this->handle_close (-1, ACE_Event_Handler::ALL_EVENTS_MASK);
+  this->handle_close (-1,
+                      ACE_Event_Handler::ALL_EVENTS_MASK);
 }
 
 #endif /* ACE_HAS_ORBIX */

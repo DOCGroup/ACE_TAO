@@ -1,7 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-
 // ============================================================================
 //
 // = LIBRARY
@@ -25,14 +24,16 @@
 #include "Event_Comm.hh"
 
 class Notification_Receiver_i
+{
   // = TITLE
   //   Defines the implementation class for event <Notification_Receivers>.
-  //
-  // = DESCRIPTION
-{
 public:
+  // = Initialization and termination methods.
   Notification_Receiver_i (void);
+  // Constructor.
+
   ~Notification_Receiver_i (void);
+  // Destructor.
 
   virtual void receive_notification (const Event_Comm::Notification &notification,
 				     CORBA::Environment &IT_env);
