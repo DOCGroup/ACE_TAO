@@ -33,6 +33,11 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#if defined(TRANSPARENT)
+// Some platforms define this macro for ioctl()
+#undef TRANSPARENT
+#endif
+
 #include "messaging_export.h"
 #include "tao/PolicyC.h"
 #include "tao/TimeBaseC.h"
