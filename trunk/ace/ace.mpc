@@ -62,6 +62,7 @@ project(ACE) : acedefaults, aceversion, core, qt_moc, qt_reactor {
       String_Base_Const.cpp
       SString.cpp
       Stats.cpp
+      Container_Instantiations.cpp
       Sample_History.cpp
     }
 
