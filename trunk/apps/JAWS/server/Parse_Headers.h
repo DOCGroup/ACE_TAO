@@ -78,7 +78,11 @@ public:
   void recognize (const char * const header);
 
   void parse_header_line (char * const header_line);
+
   int complete_header_line (char * const header_line);
+  // -1 -> end of line but not complete header line
+  //  0 -> no end of line marker
+  //  1 -> complete header line
 
   int end_of_headers (void) const;
 
