@@ -155,22 +155,20 @@ int TextListener::play_message (ACE_FILE_Addr &addr)
       Command *c = new Command ();
       c->command_ = Command::CMD_PLAY_MESSAGE;
       c->extra_data_ = &addr;
-
       c = this->command_stream_->execute (c);
       return c->numeric_result_;
     }
 
   ACE_FILE_Addr temp ("/tmp/outgoing_message.text");
   ACE_FILE_IO *file;
-
   if (type->is_audio ())
     file = Util::audio_to_text (addr, temp);
   else if (type->is_video ())
     file = Util::video_to_text (addr, temp);
   else
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Invalid message type %d\n"),
-                       type->get_codec ()),
-                      -1);
+    ACE_ERROR_RETURN
+      ((LM_ERROR, ACE_TEXT ("Invalid message type %d\n"),
+        type->get_codec ()), -1);
   int rval = this->play_message (temp);
   file->remove ();
   return rval;
@@ -183,13 +181,9 @@ MessageType *TextListener::record_message (ACE_FILE_Addr &addr)
   Command *c = new Command ();
   c->command_ = Command::CMD_RECORD_MESSAGE;
   c->extra_data_ = &addr;
-
   c = this->command_stream_->execute (c);
-
   if (c->numeric_result_ == -1)
-    {
-      return 0;
-    }
+    return 0;
 
   return new MessageType (MessageType::RAWTEXT, addr);
 }
