@@ -1,3 +1,11 @@
+Thu Aug 19 12:57:12 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Sequence_T.i:
+	* tao/Sequence_T.cpp:
+	  Moved some methods of TAO_Object_Manager<> to the .cpp file,
+	  they were causing problems with forward declared
+	  interfaces. Thanks to David for pointing this out.
+
 Thu Aug 19 11:24:35 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * rules.tao.GNU,tao/Makefile: don't include the Interface

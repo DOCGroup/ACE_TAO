@@ -257,22 +257,6 @@ TAO_Object_Manager<T,T_var>::inout (void)
   return *this->ptr_;
 }
 
-template <class T, class T_var> ACE_INLINE T *&
-TAO_Object_Manager<T,T_var>::out (void)
-{
-  CORBA::release (*this->ptr_);
-  *this->ptr_ = T::_nil ();
-  return *this->ptr_;
-}
-
-template <class T, class T_var> ACE_INLINE T *
-TAO_Object_Manager<T,T_var>::_retn (void)
-{
-  T *temp = *this->ptr_;
-  *this->ptr_ = T::_nil ();
-  return temp;
-}
-
 // *************************************************************
 // Inline operations for class TAO_Pseudo_Object_Manager<T>
 // *************************************************************
