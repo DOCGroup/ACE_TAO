@@ -15,7 +15,8 @@ Tue Aug 27 12:40:12 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderb
 	  exceptions to the caller. 
 
   	  Please see the discussions in BUG 1265 and chapter 2 of
-	  "Exceptional C++" by Herb Sutter for details. 
+	  "Exceptional C++" by Herb Sutter for details on why this is a
+	  good idea. 
 
 	* tao/ORB.cpp (shutdown): Added a comment as to why we cannot lock
 	  exceptions within this method. Doing so would render us
