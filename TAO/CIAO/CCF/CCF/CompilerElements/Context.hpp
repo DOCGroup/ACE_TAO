@@ -15,6 +15,10 @@ namespace CCF
   {
     class Context
     {
+      typedef
+      std::map<std::string, Utility::Hetero::Container>
+      Map;
+      
     public:
       Context ()
       {
@@ -24,9 +28,15 @@ namespace CCF
       class NotFound {};
       class Typing {};
 
+      Map::size_type
+      count (char const* key) const throw ()
+      {
+        return map_.count (key) != 0;
+      }
+
       template <typename T>
       T const&
-      get (std::string key) const throw (NotFound, Typing)
+      get (char const* key) const throw (NotFound, Typing)
       {
         Map::const_iterator i = map_.find (key);
         if (i == map_.end ()) throw NotFound ();
@@ -44,7 +54,7 @@ namespace CCF
 
       template <typename T>
       T const&
-      get (std::string key, T const& def) const throw (Typing)
+      get (char const* key, T const& def) const throw (Typing)
       {
         Map::const_iterator i = map_.find (key);
         if (i == map_.end ()) return def;
@@ -61,7 +71,7 @@ namespace CCF
 
       template <typename T>
       void
-      set (std::string key, T const& value) throw (Typing)
+      set (char const* key, T const& value) throw (Typing)
       {
         try
         {
@@ -77,12 +87,8 @@ namespace CCF
           throw Typing ();
         }
       }
-
+      
     private:
-      typedef
-      std::map<std::string, Utility::Hetero::Container>
-      Map;
-
       Map map_;
 
     private:
