@@ -1,15 +1,31 @@
+Mon Oct 11 14:42:46 2004  Dale Wilson  <wilson_d@ociweb.com>
+
+        * tao/Codeset_Manager.cpp:
+        * tao/Codeset_Translator_Factory_T.h:
+        * tao/UTF16_BOM_Factory.h:
+        * tao/UTF16_BOM_Factory.cpp:
+        * tao/UTF16_BOM_Translator.h:
+        * tao/UTF16_BOM_Translator.cpp:
+          Bugzilla 1902: The ORB released with Java JDK 1.4.x has an
+          error in the way it marshals wide strings when they are
+          contained in sequence of structures.  Customers were
+          blaming TAO for the incompatibility.  This change
+          provides a service config option to force compatibility
+          with the JDK ORB.  It does not have any impact on
+          compatibility or performance with other orbs.
+
 Mon Oct 11 10:26:59 2004  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.{cpp,h}:
-	* orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils_T.{cpp,h}:
+        * orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.{cpp,h}:
+        * orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils_T.{cpp,h}:
 
-	  Added utilization bound checking to the Reconfig scheduler. If
-	  the total critical utilization exceeds the critical utilization
-	  threshold or the total non-critical utilization exceeds the
-	  non-critical utilization threshold, then the anomaly set is
-	  filled with an appropriate error message. Thanks to
-	  natodf@yahoo.com for pointing this out.
-	
+          Added utilization bound checking to the Reconfig scheduler. If
+          the total critical utilization exceeds the critical utilization
+          threshold or the total non-critical utilization exceeds the
+          non-critical utilization threshold, then the anomaly set is
+          filled with an appropriate error message. Thanks to
+          natodf@yahoo.com for pointing this out.
+
 Sat Oct  9 19:03:53 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* tests/Typedef_String_Array/testImpl.cpp:
@@ -31,7 +47,7 @@ Sat Oct  9 12:38:38 2004  Huang-Ming Huang <hh1@cs.wustl.edu>
 Thu Oct  7 16:07:36 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Typecode.h:
-        
+
           Added patch sent in by Frank Pilhofer <fp@mc.com> that makes
           a guarded explicit template instantiation of
           TAO_Unbounded_Pseudo_Sequence<CORBA::TypeCode>, as a
