@@ -1,3 +1,10 @@
+Thu Jun 17 14:21:21 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp
+	  (visit_interface): The collocated factory should have used
+	  static_cast to downcast the collocated stubs.  Thanks to Carlos
+	  for pointing this out.
+
 Thu Jun 17 14:05:10 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* examples/POA/Forwarding/MyFooServant.cpp (MyFirstFooServant):
