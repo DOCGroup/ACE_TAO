@@ -1,3 +1,22 @@
+Thu Apr 10 22:44:04 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/PortableInterceptor.pidl:
+        * tao/PortableInterceptorC.h:
+        * tao/PortableInterceptorC.i:
+        * tao/PortableInterceptorC.cpp:
+
+          Removed IORInterceptor and IORInfo from these files.
+
+        * tao/IORInterceptor/IORInterceptor.pidl:
+        * tao/IORInterceptor/IORInterceptorC.cpp:
+        * tao/IORInterceptor/IORInterceptorC.h:
+        * tao/IORInterceptor/IORInterceptorC.i:
+        * tao/IORInterceptor/TAO_IORInterceptor.dsp:
+        * tao/IORInterceptor/iorinterceptor_export.h:
+
+          Started a new library with the interfaces removed from
+          PortableInterceptor.pidl.
+
 Thu Apr 10 15:01:18 2003  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * docs/Options.html:
