@@ -103,6 +103,26 @@ TAO_IFR_Generic_Utils<TAO_FactoryDef_i>::set_initializers (
 {
 }
 
+ACE_TEMPLATE_SPECIALIZATION
+void
+TAO_IFR_Generic_Utils<CORBA::InitializerSeq>::destroy_special (
+    const char *,
+    TAO_Repository_i *,
+    ACE_Configuration_Section_Key &
+    ACE_ENV_ARG_DECL_NOT_USED)
+{
+}
+
+ACE_TEMPLATE_SPECIALIZATION
+void
+TAO_IFR_Generic_Utils<CORBA::ExtInitializerSeq>::destroy_special (
+    const char *,
+    TAO_Repository_i *,
+    ACE_Configuration_Section_Key &
+    ACE_ENV_ARG_DECL_NOT_USED)
+{
+}
+
 #endif
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
