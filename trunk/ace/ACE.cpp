@@ -108,11 +108,7 @@ ACE::register_stdin_handler (ACE_Event_Handler *eh,
 #if defined (ACE_WIN32)
   ACE_UNUSED_ARG (reactor);
 
-  ACE_Stdin_Args *args = 0;
-  ACE_NEW_RETURN (args, ACE_Stdin_Args, -1);
-  args->handler_ = eh;
-  args->thr_mgr_ = thr_mgr;
-  return thr_mgr->spawn (&ACE::read_adapter, args, flags);
+  return thr_mgr->spawn (&ACE::read_adapter, (void *) eh, flags);
 #else
   // Keep compilers happy.
   ACE_UNUSED_ARG (flags);
@@ -133,10 +129,7 @@ ACE::register_stdin_handler (ACE_Event_Handler *eh,
 void *
 ACE::read_adapter (void *args)
 {
-  ACE_Stdin_Args *stdin_adapter_args = (ACE_Stdin_Args *) args;
-  ACE_Thread_Control tc (stdin_adapter_args->thr_mgr_);
-
-  ACE_Event_Handler *this_ptr = stdin_adapter_args->handler_;
+  ACE_Event_Handler *this_ptr = (ACE_Event_Handler *) args;
   ACE_HANDLE handle = ACE_STDIN;
 
   while (this_ptr->handle_input (handle) != -1)
@@ -144,7 +137,6 @@ ACE::read_adapter (void *args)
 
   this_ptr->handle_close (handle, ACE_Event_Handler::READ_MASK);
 
-  delete stdin_adapter_args;
   return 0;
 }
 
