@@ -715,6 +715,9 @@ AH_TEMPLATE([ACE_LACKS_CMSG_DATA_MEMBER],
    (This may be 'unsigned char __cmsg_data[0]' on some platforms, in
    which case we need another macro.)])
 
+AH_TEMPLATE([ACE_LACKS_FGETWC],
+[Compiler/platform lacks the fgetwc() function])
+
 AH_TEMPLATE([ACE_LACKS_QSORT],
 [Compiler/platform lacks the standard C library qsort() function])
 

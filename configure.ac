@@ -3333,6 +3333,10 @@ AC_CHECK_FUNCS([execv execvp execve],
   ,
   [AC_DEFINE([ACE_LACKS_EXEC])])
 
+AC_CHECK_FUNC([fgetwc],
+  ,
+  [AC_DEFINE([ACE_LACKS_FGETWC])])
+
 AC_CHECK_FUNC([fcntl],
   ,
   [AC_DEFINE([ACE_LACKS_FCNTL])])
