@@ -200,7 +200,7 @@ be_visitor_sequence_ci::gen_bounded_str_sequence (be_sequence *node)
       << be_nl;
 
   // operator[]
-  *os << "ACE_INLINE TAO_String_Manager " << be_nl
+  *os << "ACE_INLINE TAO_SeqElem_String_Manager " << be_nl
       << full_class_name << "::operator[] (CORBA::ULong index) const" << be_nl
       << "// read-write accessor" << be_nl
       << "{" << be_idt_nl

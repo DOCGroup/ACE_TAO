@@ -784,6 +784,7 @@ private:
   // Points to the "default ORB."
 };  // end of class (namespace) CORBA
 
+#include "tao/Managed_Types.h"
 #include "tao/Sequence.h"
 #include "tao/Sequence_T.h"
 #include "tao/Object_KeyC.h"

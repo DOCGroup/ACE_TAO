@@ -650,7 +650,7 @@ public:
   // If release=TRUE, the destructor destroys each of the current
   // elements (items zero through length-1).
 
-  TAO_String_Manager operator[] (CORBA::ULong index) const;
+  TAO_SeqElem_String_Manager operator[] (CORBA::ULong index) const;
   // read-write accessor
 
   static char **allocbuf (CORBA::ULong length);
