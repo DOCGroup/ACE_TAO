@@ -10,11 +10,6 @@ READMEs on how to run the following performance tests:
           measure the latency, jitter, CPU utilization, and
           priority inversion of these ORBs.
 
-        . Latency
-
-          This is a simple latency test, single threaded and
-          multi-threaded clients and servers are included.  
-
         . AMI_Latency
 
           A latency test for AMI requests
