@@ -3957,8 +3957,6 @@ dnl Check for POSIX Semaphore functions
 dnl We only check for a few of them since some platforms don't have these.
 AC_CHECK_FUNC(sem_init,,) dnl
 AC_CHECK_FUNC(sem_destroy,,) dnl
-AC_CHECK_FUNC(sem_open,,) dnl
-AC_CHECK_FUNC(sem_close,,) dnl
 
 dnl We only enable POSIX semaphores if we are not using UNIX International
 dnl threads.  Enabling POSIX semaphores on Solaris seems to cause problems
@@ -3968,6 +3966,9 @@ if test "$ac_cv_func_sem_init" = yes &&
    test "$ace_cv_type_sem_t" = yes &&
    test "$ace_has_sthreads" != yes; then
   AC_DEFINE(ACE_HAS_POSIX_SEM)
+
+  AC_CHECK_FUNC(sem_open,,) dnl
+  AC_CHECK_FUNC(sem_close,,) dnl
 
   if test "$ac_cv_func_sem_open" != yes ||
      test "$ac_cv_func_sem_close" != yes; then
