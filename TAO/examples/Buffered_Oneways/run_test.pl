@@ -29,7 +29,7 @@ print STDERR "\nFlushing based on implicit message counts\n\n";
 
 $CL->Arguments ("-k file://$iorfile -c 5 -b -1 -f -1 -t -1");
 
-$client = $CL->SpawnWaitKill (60);
+$client = $CL->SpawnWaitKill (300);
 
 if ($client != 0) {
     print STDERR "ERROR: client returned $client\n";
@@ -40,7 +40,7 @@ print STDERR "\nFlushing based on implicit message bytes\n\n";
 
 $CL->Arguments ("-k file://$iorfile -b 250 -c -1 -f -1 -t -1");
 
-$client = $CL->SpawnWaitKill (60);
+$client = $CL->SpawnWaitKill (300);
 
 if ($client != 0) {
     print STDERR "ERROR: client returned $client\n";
@@ -51,7 +51,7 @@ print STDERR "\nFlushing based on implicit timeout\n\n";
 
 $CL->Arguments ("-k file://$iorfile -t 5000 -b -1 -c -1 -f -1");
 
-$client = $CL->SpawnWaitKill (60);
+$client = $CL->SpawnWaitKill (300);
 
 if ($client != 0) {
     print STDERR "ERROR: client returned $client\n";
@@ -62,7 +62,7 @@ print STDERR "\nExplicit queue flushing (and server shutdown)\n\n";
 
 $CL->Arguments ("-k file://$iorfile -f 5 -b -1 -c 100 -t -1 -x");
 
-$client = $CL->SpawnWaitKill (60);
+$client = $CL->SpawnWaitKill (300);
 
 if ($client != 0) {
     print STDERR "ERROR: client returned $client\n";

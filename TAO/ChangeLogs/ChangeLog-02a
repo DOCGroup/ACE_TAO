@@ -1,3 +1,1028 @@
+Tue Apr 24 00:21:54 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+	* Merged in all the changes required to fix [BUGID:132]
+
+	Mon Apr 23 22:05:56 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * examples/PluggableUDP/DIOP/DIOP_Transport.cpp:
+        * examples/PluggableUDP/DIOP/DIOP_Transport.h:
+        * examples/PluggableUDP/DIOP/DIOP_Connection_Handler.cpp:
+          Update to match the new Transport classes.
+
+        * tao/IIOP_Transport.cpp:
+          Cosmetic fixes
+
+	Mon Apr 23 21:10:40 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/AMI_Buffering/client.cpp:
+        * tests/Big_Oneways/Coordinator.cpp:
+        * tests/Big_Twoways/Coordinator.cpp:
+          Fixed ACE_CHECK/ACE_TRY_CHECK mismatches.
+
+	Mon Apr 23 16:40:07 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Transport.h:
+        * tao/Transport.cpp:
+        * tao/Reactive_Flushing_Strategy.cpp:
+          The schedule_output() and cancel_output() methods are invoked
+          while the handle_mutex_ is held, so there is no need to grab it
+          again.
+          The methods are renamed schedule_output_i() and
+          cancel_output_i() and they are made private, because only the
+          Reactive_Flushing_Strategy should invoke them.
+
+        * tao/Transport.cpp:
+        * tao/PortableServer/Object_Adapter.cpp:
+          Move the instantiation of ACE_Reverse_Lock<ACE_Lock> to the
+          Transport.cpp file.
+
+        * tests/AMI/muxed.conf:
+        * tests/AMI/exclusive.conf:
+          Fixed use of obsolete options
+
+        * tests/AMI/run_test.pl:
+          Cosmetic fixes
+
+	Mon Apr 23 11:54:23 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/AMI_Buffering/AMI_Buffering.dsw:
+        * tests/AMI_Buffering/admin.dsp:
+        * tests/AMI_Buffering/client.dsp:
+        * tests/AMI_Buffering/server.dsp:
+          Add MSVC project files for this test
+
+	Mon Apr 23 11:47:07 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/AMI_Buffering/Client_Task.h:
+        * tests/AMI_Buffering/Client_Task.cpp:
+        * tests/AMI_Buffering/client.cpp:
+          The client event loop can be explicitly terminated now.
+
+        * tests/AMI_Buffering/run_timeout_reactive.pl:
+          Add new driver script for timeout based flushing, but initiated
+          via the Reactor.
+
+        * tests/Oneway_Buffering/client.cpp:
+          Renamed the second part of the test, 'liveness' is a more
+          descriptive term.
+
+	Mon Apr 23 10:38:28 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/AMI_Buffering/svc.conf:
+          Without connection muxing the test runs out of resources pretty
+          fast, plus flushing does not work exactly as expected.
+
+        * tests/AMI_Buffering/Client_Task.h:
+        * tests/AMI_Buffering/Client_Task.cpp:
+          Add thread on the client to invoke the reply handler.  Without
+          this feature the ORB would soon dead-lock.
+
+	Mon Apr 23 10:03:31 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Transport.h:
+        * tao/Transport.inl:
+        * tao/Transport.cpp:
+          Reduce locking overhead by sharing the event handler mutex and
+          the queue mutex.  Since we need to lock the queue just before we
+          do any I/O it is a very natural fit, and saves us one mutex
+          per-call.
+
+	Sun Apr 22 19:54:09 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/TAO.dsp:
+          Update list of files.
+
+	Sun Apr 22 19:32:55 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/README:
+        * tests/Makefile:
+        * tests/Makefile.bor:
+        * tests/AMI_Buffering/README:
+        * tests/AMI_Buffering/Makefile:
+        * tests/AMI_Buffering/Makefile.bor:
+        * tests/AMI_Buffering/admin.bor:
+        * tests/AMI_Buffering/client.bor:
+        * tests/AMI_Buffering/server.bor:
+        * tests/AMI_Buffering/run_test.pl:
+        * tests/AMI_Buffering/run_timeout.pl:
+        * tests/AMI_Buffering/run_buffer_size.pl:
+        * tests/AMI_Buffering/run_message_count.pl:
+        * tests/AMI_Buffering/Test.idl:
+        * tests/AMI_Buffering/AMI_Buffering.h:
+        * tests/AMI_Buffering/AMI_Buffering.cpp:
+        * tests/AMI_Buffering/AMI_Buffering_Admin.h:
+        * tests/AMI_Buffering/AMI_Buffering_Admin.cpp:
+        * tests/AMI_Buffering/Reply_Handler.h:
+        * tests/AMI_Buffering/Reply_Handler.cpp:
+        * tests/AMI_Buffering/admin.cpp:
+        * tests/AMI_Buffering/client.cpp:
+        * tests/AMI_Buffering/server.cpp:
+
+	Fri Apr 20 15:29:13 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Makefile:
+        * tao/Makefile.bor:
+        * tao/Queued_Message.h:
+        * tao/Transport.h:
+        * tao/Transport.inl:
+        * tao/Transport.cpp:
+        * tao/Transport_Timer.h:
+        * tao/Transport_Timer.cpp:
+          Add support for timeout notifications from the Reactor.  This is
+          used to implement the TIMEOUT buffering constraints when the
+          application does not send events continously.
+
+        * tests/Oneway_Buffering/client.cpp:
+        * tests/Oneway_Buffering/run_test.pl:
+        * tests/Oneway_Buffering/run_timeout_reactive.pl:
+          Add new regression test to verify that the TIMEOUT buffering
+          constraints work.
+
+	Thu Apr 19 14:17:38 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Transport.h:
+        * tao/Transport.cpp:
+          Factor out common code in drain_queue_i() into
+          drain_queue_helper().
+          Factor out code in send_message_queue(), incidentally
+          send_message_queue() did not grab the queue lock, fixed that
+          oversight.
+          Made TAO_Block_Flushing_Strategy a friend class to access a
+          couple of _i() methods.
+
+        * tao/Synch_Queued_Message.cpp:
+          Sometimes the message block chain contain trailing empty
+          elements.  Those elements must be skipped, otherwise the
+          current_block_ field never becomes 0, even though there is no
+          more data to send.
+
+        * tao/Block_Flushing_Strategy.cpp:
+          In the blocking flush strategy we need to drain the queue as
+          soon as schedule_output() is called, otherwise it is possible
+          that the queue will never be drained.
+
+        * tests/Queued_Message_Test/Queued_Message_Test.cpp:
+          Use the TAO_Async_Queued_Message class for the test, the base
+          class is abstract now.
+
+        * tests/Oneway_Buffering/client.cpp:
+          Initialize payload with non-zero bytes for easier debugging
+
+        * tests/LongWrites/Makefile:
+          Add files missed during the merge
+
+        * tests/Big_Request_Muxing/Makefile:
+          Update dependencies
+
+        * tests/Big_Request_Muxing/client.cpp:
+          Made request payload smaller, it was taking too long to run
+          otherwise.
+
+        * tests/Big_Request_Muxing/Client_Task.cpp:
+          Made the test less verbose
+
+        * tests/Makefile:
+          Add a couple of missing tests Big_Twoways and Big_Request_Muxing
+
+        * performance-tests/Latency/client.conf:
+          Made output path blocking, using reactive out with blocking
+          input does not quite work.
+
+        * examples/Buffered_AMI/test.idl:
+        * tests/Reliable_Oneways/Test.idl:
+        * tests/Blocking_Sync_None/Test.idl:
+          Made shutdown() operation a twoway.
+
+        * examples/Buffered_AMI/client.cpp:
+          Change ReplyHandler to receive the shutdown() callback.
+
+        * tests/Muxing/run_test.pl:
+        * examples/Buffered_AMI/run_test.pl:
+          Increased wait time for the IOR file.
+
+	Tue Apr 17 19:12:31 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Transport.cpp:
+          Reset the current deadline as soon as the queue is empty.
+
+        * tao/Sync_Strategies.cpp:
+          Add debugging messages
+
+        * tao/Makefile:
+        * tao/Message_Sent_Callback.h:
+        * tao/Message_Sent_Callback.inl:
+        * tao/Message_Sent_Callback.cpp:
+        * tao/Queued_Message.h:
+        * tao/Queued_Message.cpp:
+          Removed the TAO_Message_Sent_Callback class, it was not required
+          at all.
+
+        * tao/Strategies/UIOP_Transport.cpp:
+          Add missing function (removed during the merge).
+
+	Tue Apr 17 14:21:23 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Queued_Message.h:
+        * tao/Asynch_Queued_Message.h:
+        * tao/Asynch_Queued_Message.cpp:
+        * tao/Synch_Queued_Message.h:
+          The bytes_transferred() method does not need to return anything,
+          the return value was ignored anyway, so change it to return
+          void.
+
+        * tao/Synch_Queued_Message.cpp:
+          Fixed implementation of bytes_transferred(), the byte_count
+          argument was not updated on all exit branches.
+
+        * tao/GIOP_Message_Handler.cpp:
+          Fixed inconsistency with main trunk.
+
+        * tao/Sync_Strategies.cpp:
+          Set the must_flush and set_timer flags to zero if there is no
+          buffering constraint policy.
+
+        * tao/Transport.cpp:
+          Cosmetic fixes.  Return 1 from drain_queue_i() even if the flush
+          operation returned 0, the return value is supposed to represent
+          what happened to the message, not if there was a generic problem
+          with the ORB.
+
+	Tue Apr 17 09:59:38 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Sync_Strategies.h:
+        * tao/Sync_Strategies.cpp:
+          Add an argument in buffering_constraints_reached(), this new
+          argument represents the current deadline for the transport.
+          The current deadline is used to determine if the timer needs to
+          be reset or if the timer has already expired.
+          Unless the flushing strategy is turned on we need to check the
+          timers on all exit paths.
+
+          Change TAO_Transport_Sync_Strategy to *always* flush and always
+          schedule output on every request.
+
+        * tao/Transport.h:
+        * tao/Transport.cpp:
+          Use the new interface in the sync strategies to activate the
+          output as soon as the timer expires.  Keep track of the current
+          deadline for scheduling output.
+          Fixed boundary condition in drain_queue_i(), there is a while()
+          loop to fill iovecs with the contents of the queue, it is
+          possible to exit the loop without anything in the iovec.  In
+          this case we don't want to attempt a send() call.
+          Remove unused argument from the send_synchronous_message_i()
+          method.
+
+	Sat Apr 14 17:04:21 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Transport.cpp (send_synchronous_message_i):
+          The message was left in the queue even if a problem was detected
+          in the write() operation.
+
+	Sat Apr 14 17:01:05 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/TAO.dsp:
+          Complete merge for Win32, CVS' automatic merge was not quite the
+          right thing for this file.
+
+        * tao/BiDir_Policy_i.cpp:
+          This file was removed in the main trunk but was accidentally
+          resurrected during the merge.
+
+	Sat Apr 14 12:59:39 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Block_Flushing_Strategy.h:
+        * tao/Block_Flushing_Strategy.cpp:
+        * tao/Flushing_Strategy.h:
+        * tao/Flushing_Strategy.cpp:
+        * tao/Message_Sent_Callback.h:
+        * tao/Message_Sent_Callback.inl:
+        * tao/Message_Sent_Callback.cpp:
+        * tao/Queued_Message.h:
+        * tao/Queued_Message.inl:
+        * tao/Queued_Message.cpp:
+        * tao/Reactive_Flushing_Strategy.h:
+        * tao/Reactive_Flushing_Strategy.cpp:
+          Add files lost during merge
+
+        * tao/IIOP_Transport.cpp:
+          Solve merging problems.
+
+        * tests/Big_Oneways/Makefile:
+        * tests/Big_Twoways/Makefile:
+          Update dependencies
+
+	Sat Apr 14 10:33:47 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * Another merge for the bug 132 fixes.
+
+        Fri Apr 13 18:49:32 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Flushing_Strategy.h:
+        * tao/Block_Flushing_Strategy.h:
+        * tao/Block_Flushing_Strategy.cpp:
+        * tao/Reactive_Flushing_Strategy.h:
+        * tao/Reactive_Flushing_Strategy.cpp:
+          Add timeout to the flush_message() operation.
+
+        * tao/Transport.cpp:
+          Use the new timeout of flush_message() to implement timeouts
+          for twoways blocked during writes.
+
+        * tao/Queued_Message.h:
+        * tao/Queued_Message.cpp:
+          Add method to insert message at the head of the queue.
+
+        * tao/Synch_Queued_Message.h:
+        * tao/Synch_Queued_Message.cpp:
+          Add accessor to obtain the current message block.
+
+        Thu Apr 12 20:15:22 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Sync_Strategies.h:
+        * tao/Sync_Strategies.cpp:
+          Use two separate flags to return if:
+          (1) the queue should be immediately flushed
+          (2) and/or the ORB should start draining the queue
+
+        * tao/Transport.h:
+        * tao/Transport.cpp:
+          Use the new interface in TAO_Sync_Strategy to correctly
+          implement TAO::BUFFER_MESSAGE_COUNT and the TAO::BUFFER_SIZE
+          buffering constraint policies.
+
+        Wed Apr 11 10:21:35 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * With the following changes the semantics of oneways are
+          bug-compatible with the main trunk.
+
+        * tao/Transport.cpp:
+          Add new method to check if the transport queue has any data
+          pending.
+
+        * tao/Flushing_Strategy.h:
+          Add new operation to block until the queue becomes completely
+          empty.
+
+        * tao/Block_Flushing_Strategy.h:
+        * tao/Block_Flushing_Strategy.cpp:
+        * tao/Reactive_Flushing_Strategy.h:
+        * tao/Reactive_Flushing_Strategy.cpp:
+          Implement flush_transport() in each concrete strategy.
+
+        * tao/Transport.h:
+          Remove old code that was commented out anyway.
+
+        Mon Apr 09 00:41:20 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Invocation.cpp:
+          The default scope should be SYNC_WITH_TRANSPORT, but was
+          overriden and became SYNC_NONE.
+
+        * tao/Reactive_Flushing_Strategy.cpp:
+          Fixed conditions to terminate the loop.
+
+        * tao/Transport.cpp:
+          Initialize byte_count to zero before calling send(), add more
+          ACE_ASSERT() calls to debug the system.
+
+        Sat Apr  7 21:13:48 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Transport.cpp:
+          Separate the path for synchronous and asynchronous requests more
+          cleanly.
+          Merge the close_connection() changes from the main trunk, the
+          ORB was dead-locking on me.
+          Improve output for sent iovectors, now it is only generated if
+          TAO_debug_level==2 and the Log_Msg is locked to prevent other
+          threads from dumping the same messages.
+
+        * tao/Transport.cpp (drain_queue_i):
+          New method used by the synchronous path to send data ASAP.
+
+        * tao/Invocation.h:
+        * tao/Invocation.cpp (invoke):
+          Clarify the semantics of the <twoway_flag> argument, actually it
+          means that the ORB should wait until the data is delivered to
+          the wire.
+          Oneway invocations with the SYNC_WITH_TRANSPORT policy should
+          block until the data is delivered to the wire.
+
+        * tao/GIOP_Message_Handler.cpp:
+          Only print the full contents of the received data when the debug
+          level is *exactly* 2.
+
+        * tests/Big_Oneways/Session.cpp:
+          Fill up the messages with a repeating pattern, this is useful
+          during debugging.
+
+        Thu Apr 05 10:36:57 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Queued_Message.h:
+          Remove the declaration of the done() method, the semantics were
+          not clear and it was removed a couple of iterations ago.
+
+        * tao/Block_Flushing_Strategy.cpp:
+        * tao/Reactive_Flushing_Strategy.cpp:
+          Wait until all_data_sent() returns.
+
+        * tao/Transport.cpp:
+          Cleanup handle_output() no need to loop, the drain_queue()
+          method does that.
+          After trying to send a message and blocking the send_message_i()
+          method was not updating the new Asynch_Queued_Message with the
+          number of bytes sent.
+          drain_queue() loop was too complicated for its own sake.
+
+        * tests/Big_Oneways/Session.h:
+        * tests/Big_Oneways/Test.idl:
+        * tests/Big_Oneways/Session.cpp:
+          Add methods to prime the connections among multiple clients.
+
+        * tests/Big_Oneways/server.cpp:
+          Increase timeout for initial session registration.  Important
+          for manual executions.
+
+        Wed Apr  4 10:53:27 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Transport.h:
+        * tao/Transport.cpp:
+          Remove dead code.
+          Rename some methods to more clearly reflect their intent.
+          Simplify the management for the outgoing data queue.  The
+          cleanup_queue() method removes any element that is completely
+          sent, while the drain_queue() method simply tries to send as
+          much data as possible.
+
+        * tao/Queued_Message.h:
+        * tao/Queued_Message.inl:
+        * tao/Queued_Message.cpp:
+          Each derived class can decided if the message has been
+          completely sent very efficiently, no need to keep a local
+          variable for that.
+          We do need variables to keep track of closed connections, failed
+          sends and timeouts.
+
+        * tao/Messaging_Policy_i.cpp:
+        * tao/Invocation.cpp:
+          Improved debugging messages for timeouts
+
+        Sun Apr 01 15:34:32 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Makefile:
+        * tao/TAO.dsp:
+        * tao/TAO_Static.dsp:
+        * tao/Asynch_Queued_Message.h:
+        * tao/Asynch_Queued_Message.cpp:
+        * tao/Synch_Queued_Message.h:
+        * tao/Synch_Queued_Message.cpp:
+        * tao/Queued_Message.h:
+        * tao/Queued_Message.inl:
+        * tao/Queued_Message.cpp:
+          Specialize the Queue_Message class for Synchronous and
+          Asynchronous messages.  Their behavior is completely different:
+          synchronous messages (twoways and reliable oneways) are
+          allocated from the stack, they should not copy the CDR stream
+          and thus have to deal with message block chains.
+          Asynchronous messages (oneways and AMIs with SYNC_NONE policy)
+          are allocated from the heap, they must copy their data and thus
+          can reassemble it in a single buffer.
+
+        * tao/Transport.h:
+        * tao/Transport.cpp:
+          Changed the transport to use the new interface in the
+          Queued_Message class.
+          Completely separate the synchronous and asynchronous operation
+          path.
+          The new implementation recovers some functionality lost in
+          previous revisions: multiple messages can be sent in a single
+          iovector.
+
+        * tests/Big_Oneways/Test.idl:
+        * tests/Big_Oneways/Session.h:
+        * tests/Big_Oneways/Session.cpp:
+          Add ping() operation to the Session IDL interface.
+          This is used to validate the session during startup, i.e. ensure
+          that enough connections are available for all the threads.
+
+        Sat Mar 31 14:56:37 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Transport.cpp:
+          Fixed memory management and synchronization problems.
+          Invoke the connection_closed() method on all the pending
+          messages if the connection is closed.
+
+        * tao/Queued_Message.h:
+        * tao/Queued_Message.inl:
+        * tao/Queued_Message.cpp:
+          If the connection is closed there is no sense in trying to
+          continue sending the message.
+          The done() method returns 1 if the connection was closed or if
+          the message was completely sent.
+
+        * tao/Reactive_Flushing_Strategy.cpp:
+          Propagate any errors from Transport::schedule_output() and
+          Transport::cancel_output()
+
+        * tests/Big_Request_Muxing/Big_Request_Muxing.dsw:
+        * tests/Big_Request_Muxing/client.dsp:
+        * tests/Big_Request_Muxing/server.dsp:
+          Add MSVC project files
+
+        Fri Mar 30 17:06:33 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/README:
+        * tests/Big_Request_Muxing/README:
+        * tests/Big_Request_Muxing/Test.idl:
+        * tests/Big_Request_Muxing/run_test.pl:
+        * tests/Big_Request_Muxing/Makefile:
+        * tests/Big_Request_Muxing/Client_Task.h:
+        * tests/Big_Request_Muxing/Client_Task.cpp:
+        * tests/Big_Request_Muxing/Payload_Receiver.h:
+        * tests/Big_Request_Muxing/Payload_Receiver.cpp:
+        * tests/Big_Request_Muxing/client.cpp:
+        * tests/Big_Request_Muxing/server.cpp:
+        * tests/Big_Request_Muxing/svc.conf:
+          Another regression tests, use the same connection to the big
+          oneways at different levels of reliability.
+
+        * tests/README:
+        * tests/Big_Twoways/README:
+        * tests/Big_Twoways/Test.idl:
+        * tests/Big_Twoways/run_test.pl:
+        * tests/Big_Twoways/Makefile:
+        * tests/Big_Twoways/Coordinator.h:
+        * tests/Big_Twoways/Coordinator.cpp:
+        * tests/Big_Twoways/Peer.h:
+        * tests/Big_Twoways/Peer.cpp:
+        * tests/Big_Twoways/Session.h:
+        * tests/Big_Twoways/Session.cpp:
+        * tests/Big_Twoways/Session_Control.h:
+        * tests/Big_Twoways/Session_Control.cpp:
+        * tests/Big_Twoways/Session_Task.h:
+        * tests/Big_Twoways/Session_Task.cpp:
+        * tests/Big_Twoways/client.cpp:
+        * tests/Big_Twoways/server.cpp:
+          Another regression test, similar to Big_Oneways, but this one
+          uses a long request *and* a long reply.
+
+        * tests/LongWrites/Sender.cpp:
+          Fixed warning about unused variable
+
+        * tests/LongWrites/Makefile:
+          Fixed Makefile
+
+        * tests/Timeout/client.cpp:
+          Verify that at least some of the messages timeout and others
+          complete the test successfully.
+
+        Thu Mar 29 08:38:42 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/IIOP_Transport.cpp:
+        * tao/Strategies/SHMIOP_Transport.cpp:
+        * tao/Strategies/UIOP_Transport.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp:
+          Do not close the connection if it sends 0 bytes.  This is
+          perfectly possible when using non-blocking I/O.
+
+        Wed Mar 28 10:42:12 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * Another merge for the branch fixing bug 132
+
+        Tue Mar 20 09:34:53 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Transport.cpp:
+          Improved error checking for Queued_Message allocations.
+
+        Sat Mar 17 17:52:27 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Transport.h:
+        * tao/Transport.cpp:
+          Removed the current_message_ field, using the head of the queue
+          works just as well, at least as long as we always push events to
+          the end of the queue.
+
+        * tao/IIOP_Transport.h:
+        * tao/IIOP_Transport.cpp:
+        * tao/Reactive_Flushing_Strategy.cpp:
+          Use the Flushing Strategy to schedule output and cancel output
+          with the reactor.
+
+        Sat Mar 17 15:34:14 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/Big_Oneways/Session.h:
+        * tests/Big_Oneways/Session.cpp:
+          Fixed signed/unsigned warnings
+
+        * tests/Big_Oneways/Coordinator.cpp:
+          Print error messages in all exception cases
+
+        * tests/Big_Oneways/run_test.pl:
+          Run 3 peers to cause failures.
+
+        Fri Mar 16 15:49:26 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/IIOP_Transport.cpp:
+          Fixed debugging message for cancel_output.
+
+        * tests/Big_Oneways/Big_Oneways.dsw:
+        * tests/Big_Oneways/client.dsp:
+        * tests/Big_Oneways/server.dsp:
+          Fixed project files, the first version commited missed some
+          changes.
+
+        Thu Mar 15 10:46:52 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/Big_Oneways/Makefile:
+        * tests/Big_Oneways/Test.idl:
+        * tests/Big_Oneways/run_test.pl:
+        * tests/Big_Oneways/Coordinator.h:
+        * tests/Big_Oneways/Coordinator.cpp:
+        * tests/Big_Oneways/Peer.h:
+        * tests/Big_Oneways/Peer.cpp:
+        * tests/Big_Oneways/Session.h:
+        * tests/Big_Oneways/Session.cpp:
+        * tests/Big_Oneways/client.cpp:
+        * tests/Big_Oneways/server.cpp:
+          Changed the test to work more predictably on multi-CPU boxes.
+          The sessions are configured at creation time, and they don't
+          start sending events until start() is called.
+          Instead of automatically destroy them on shutdown we wait until
+          they all stop and then explicitly use a destroy() method to take
+          them down.
+
+        Tue Mar 13 15:08:06 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/README:
+        * tests/Makefile:
+        * tests/Big_Oneways/README:
+        * tests/Big_Oneways/Test.idl:
+        * tests/Big_Oneways/Makefile:
+        * tests/Big_Oneways/Big_Oneways.dsw:
+        * tests/Big_Oneways/server.dsp:
+        * tests/Big_Oneways/client.dsp:
+        * tests/Big_Oneways/run_test.pl:
+        * tests/Big_Oneways/Coordinator.h:
+        * tests/Big_Oneways/Coordinator.cpp:
+        * tests/Big_Oneways/Peer.h:
+        * tests/Big_Oneways/Peer.cpp:
+        * tests/Big_Oneways/Session.h:
+        * tests/Big_Oneways/Session.cpp:
+        * tests/Big_Oneways/Session_Control.h:
+        * tests/Big_Oneways/Session_Control.cpp:
+        * tests/Big_Oneways/Session_Task.h:
+        * tests/Big_Oneways/Session_Task.cpp:
+        * tests/Big_Oneways/client.cpp:
+        * tests/Big_Oneways/server.cpp:
+          Add new stress test for the non-blocking I/O features in the
+          ORB.  This test is more focussed than LongWrites, and its
+          shutdown sequence is better designed (LongWrites tends to crash
+          after running successfully.)
+
+        * tao/GIOP_Message_Handler.cpp:
+          Fixed unsigned/signed warning
+
+        Thu Mar  8 19:12:48 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/GIOP_Message_Base.cpp:
+        * tao/GIOP_Message_Handler.h:
+        * tao/GIOP_Message_Handler.cpp:
+          Had to manually merge Bala's changes from Sat Feb 17 23:08:44
+          2001.
+
+        * tao/IIOP_Connection_Handler.cpp:
+          Cosmetic fixes.
+
+        * tao/IIOP_Transport.cpp:
+          Print debugging messages when output is scheduled, and alse when
+          it is canceled.
+          Do not register the handler more than once on the reactor.
+
+        * tao/Queued_Message.inl:
+          The done() condition was reversed.
+
+        * tao/Transport.cpp:
+          Add a ton of debugging mesages, including detailed messages of
+          outgoing and incoming data, information about each queued
+          message, etc.
+
+        * tao/Transport.cpp (send_message_block_chain):
+          Always add the number of bytes transferred on each send() call,
+          even when it returns an error.
+
+        * tao/Transport.cpp (send_message_i):
+          Use easier to read code when deciding what messages are queued.
+          Before calling schedule_output() and returning we must queue the
+          message, forgot to do that in the previous version.
+
+        * tests/LongWrites/Receiver.cpp:
+        * tests/LongWrites/Sender.cpp:
+        * tests/LongWrites/Sender.h:
+        * tests/LongWrites/Sender_Task.cpp:
+        * tests/LongWrites/Sender_Task.h:
+        * tests/LongWrites/client.cpp:
+          I'm tweaking the test trying to make the termination condition
+          more reliable.  Unfortunately after one of the clients finishes
+          the rest does not receive all the required messages.
+          I will probably have to change the protocol, which is probably a
+          good idea anyway, so we can control the number of threads too.
+
+        * tests/LongWrites/run_test.pl:
+          In the haste to merge the fix_bug132 bug I forgot to incorporate
+          the support for the multiple test types.
+
+        * tao/Makefile:
+        * tao/Domain/Makefile:
+        * tao/DynamicAny/Makefile:
+        * tao/DynamicInterface/Makefile:
+        * tao/IFR_Client/Makefile:
+        * tao/IORManipulation/Makefile:
+        * tao/IORTable/Makefile:
+        * tao/PortableServer/Makefile:
+        * tao/SmartProxies/Makefile:
+        * tao/Strategies/Makefile:
+        * tests/LongWrites/Makefile:
+          Update dependencies.
+
+        Wed Mar 07 08:48:11 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Queued_Message.inl:
+          Both done() and mb() were using contents_, but the flow has
+          changed to use current_message_.
+
+        * tao/Transport.cpp:
+          Simplify code flow in send_current_message()
+          Simplify code in dequeue_head()
+
+        * tao/TAO.dsp:
+        * tao/TAO_Static.dsp:
+          Update project files so they work on the branch.
+
+        Tue Mar  6 19:44:44 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/GIOP_Message_Handler.cpp:
+          When printing an invalid GIOP magic number use hex values, not
+          the character representation, because the latter can print out
+          garbage.
+
+        * tao/ORB_Core.cpp:
+          Print the return value of each handle_events() call, on an
+          attempt to figure out why it is spinning.
+
+        * tao/Transport.cpp:
+          Print handle, return value and errno after each call to
+          send_current_message()
+
+        * tao/Wait_On_Leader_Follower.cpp:
+          Don't enter the event loop if the reply has been received
+          already.
+
+        Tue Mar  6 11:02:43 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * Merged in changes from the fix_bug132 branch.  I need several
+          bug fixes from the main trunk.  In my experience the easiest way
+          to do this is to create a new branch higher up in the main
+          trunk, close the old branch and propagate its changes to the new
+          one.
+          In this case we created fix_bug132_iter02 (today) merge the
+          changes from fix_bug132 into that branch, and close fix_bug132.
+
+        Mon Mar  5 11:32:14 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Transport.cpp:
+        * tao/IIOP_Transport.cpp:
+          Add debugging messages
+
+        * tests/LongWrites/Makefile:
+          Updates dependencies and object files for the client.
+
+        Fri Mar 02 15:29:17 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Transport.h:
+        * tao/Transport.cpp:
+          Continue implementation of reactive output.
+          On this pass I fixed the code to deal with several error
+          conditions, invoke schedule_output() if the connection returns
+          an EWOULDBLOCK, also cancel the output if there is no data to
+          send.
+          Fix syncronization on send_queued_message()
+          Fix memory allocation for message blocks contained in
+          Queued_Message, they cannot be cloned() because that would
+          allocate from TSS.
+
+        * tao/IIOP_Transport.h:
+        * tao/IIOP_Transport.cpp:
+          Implement schedule_output() and cancel_output() methods.
+
+        * tao/Wait_On_Leader_Follower.cpp:
+          Do not re-insert the transport into the reactor on each wait,
+          once is enough.
+
+        * tao/IIOP_Connection_Handler.h:
+        * tao/IIOP_Connection_Handler.cpp:
+          Implement a handle_output() callback, delegate on the
+          TAO_Transport
+
+        * tao/IIOP_Endpoint.cpp:
+          Remove unused #include
+
+        * tests/LongWrites/Coordinator.h:
+        * tests/LongWrites/Coordinator.cpp:
+        * tests/LongWrites/Receiver.h:
+        * tests/LongWrites/Receiver.cpp:
+        * tests/LongWrites/Sender.h:
+        * tests/LongWrites/Sender.cpp:
+        * tests/LongWrites/client.cpp:
+        * tests/LongWrites/client.dsp:
+        * tests/LongWrites/run_test.pl:
+        * tests/LongWrites/server.cpp:
+        * tests/LongWrites/svc.conf:
+        * tests/LongWrites/Sender_Task.h:
+        * tests/LongWrites/Sender_Task.cpp:
+          Add support for multi-threaded clients.
+          Try to count the number of incoming messages and only exit when
+          all have been received.
+
+        * tests/Queued_Message_Test/Queued_Message_Test.dsp:
+          Removed a number of unused files from this unit test.
+
+        Sun Feb 25 10:22:59 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Queued_Message.h:
+        * tao/Queued_Message.cpp:
+        * tao/Transport.cpp:
+          Instead of releasing the message blocks as soon as possible we
+          delay until the queued message is deallocated.  This will make
+          it possible to release all the data in the same thread that
+          allocated it, preserving the support for TSS allocators.
+
+        * tests/LongWrites/Test.idl:
+        * tests/LongWrites/Receiver.h:
+        * tests/LongWrites/Receiver.cpp:
+        * tests/LongWrites/Sender.h:
+        * tests/LongWrites/Sender.cpp:
+        * tests/LongWrites/client.cpp:
+        * tests/LongWrites/run_test.pl:
+          The test can now send big oneways, big twoways and big twoways
+          with big responses.
+
+        Wed Feb 14 18:38:11 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Queued_Message.cpp:
+          Fixed queue manipulation logic
+
+        * tests/Queued_Message_Test/Queued_Message_Test.cpp:
+          The test was miscounting remove operations from the queue.
+
+        * tests/Queued_Message_Test/Queued_Message_Test.dsw:
+        * tests/Queued_Message_Test/Queued_Message_Test.dsp:
+          Add MSVC project files.
+
+        Wed Feb 14 10:02:44 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Queued_Message.h:
+        * tao/Queued_Message.cpp:
+          Add flag to control message block ownership, used to minimize
+          memory allocations.
+
+        * tao/Transport.cpp:
+          Use the ownership flags for the Queued_Message.
+
+        * tests/Makefile:
+        * tests/Queued_Message_Test/Makefile:
+        * tests/Queued_Message_Test/Queued_Message_Test.cpp:
+          Add new unit test for the TAO_Queued_Message class.
+
+        * tao/Makefile:
+        * tao/Domain/Makefile:
+        * tao/DynamicAny/Makefile:
+        * tao/DynamicInterface/Makefile:
+        * tao/IFR_Client/Makefile:
+          Update dependencies
+
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp:
+          The ACE_SSL_SOCK_Stream does not support sendv()
+
+        Mon Feb 12 15:44:54 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Makefile:
+          Update makefile to include new files
+
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp:
+        * tao/Strategies/SHMIOP_Transport.h:
+        * tao/Strategies/SHMIOP_Transport.cpp:
+        * tao/Strategies/UIOP_Transport.h:
+        * tao/Strategies/UIOP_Transport.cpp:
+          Fixed all protocols to use the new send() method with iovec
+          parameters.
+
+        * tao/GIOP_Message_Lite.cpp:
+          Use the send() method with iovec arguments.
+
+        * tao/Sync_Strategies.h:
+        * tao/Sync_Strategies.cpp:
+        * tao/Transport.cpp:
+          More cleanup for the Sync_Strategies, the must_queue() method
+          does not require a Stub argument.
+
+        Mon Feb 12 10:15:47 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Transport.h:
+        * tao/Transport.cpp:
+          Add new method to send a message block chain.
+          The template method to send data takes an iovec argument.
+
+        * tao/IIOP_Transport.h:
+        * tao/IIOP_Transport.cpp:
+          Implement the iovec-based send() template method.
+
+        * tao/Queued_Message.cpp:
+          The cleanup code was broken.
+
+        * tao/GIOP_Message_Base.cpp:
+          Use the message block chain method to send short critical
+          messages.
+
+        Fri Feb 09 10:50:47 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Queued_Message.h:
+        * tao/Queued_Message.inl:
+        * tao/Queued_Message.cpp:
+          Add new class to represent a queued message in the outgoing
+          path.  This class has to keep more than just the message block,
+          it also takes care of timeouts and signaling any waiting thread
+          when the message is sent.
+
+        * tao/Message_Sent_Callback.h:
+        * tao/Message_Sent_Callback.inl:
+        * tao/Message_Sent_Callback.cpp:
+          Define interface to signal threads waiting for a message to be
+          sent out, e.g. twoway requests blocked waiting for a queued
+          message.
+
+        * tao/Flushing_Strategy.h:
+        * tao/Flushing_Strategy.cpp:
+        * tao/Block_Flushing_Strategy.h:
+        * tao/Block_Flushing_Strategy.cpp:
+        * tao/Reactive_Flushing_Strategy.h
+        * tao/Reactive_Flushing_Strategy.cpp:
+          New classes to control how the outgoing data is flushed,
+          either by blocking on write() or by using the reactor.
+
+        * tao/Resource_Factory.h:
+        * tao/default_resource.h:
+        * tao/default_resource.cpp:
+          Add new methods to create the flushing strategy.
+
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.i:
+        * tao/ORB_Core.cpp:
+          Add accessor for the flushing strategy.  Notice that the
+          strategy is stateless so a single instance (per-ORB) is needed.
+
+        * tao/Sync_Strategies.h:
+        * tao/Sync_Strategies.cpp:
+          The Sync_Strategies have been simplified.  They are now
+          stateless, and they only need to answer a couple of questions
+          (1) should a message be buffered, (2) should the ORB flush a
+          queue.
+
+        * performance-tests/Latency/st_client.cpp:
+          Destroy the ORB on shutdown.
+
+        * tao/TAO.dsp:
+        * tao/TAO_Static.dsp:
+          Add the new files to the TAO project files.
+
+        * tao/Transport.h:
+        * tao/Transport.inl:
+        * tao/Transport.cpp:
+          Move much of the functionality of sending and outgoing message
+          queue up to the base transport class.  Remove a lot of code
+          deailing with the previous (blocking) queues.
+
+        * tao/IIOP_Transport.cpp:
+        * tao/IIOP_Connection_Handler.cpp:
+        * tao/Strategies/SHMIOP_Transport.cpp:
+        * tao/Strategies/SHMIOP_Connection_Handler.cpp:
+        * tao/Strategies/UIOP_Transport.cpp:
+        * tao/Strategies/UIOP_Connection_Handler.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
+          Change the transport and connection handlers to use the new
+          outgoing message queue, the flushing strategy and the changes to
+          the SyncStrategy.
+
+        * tao/GIOP_Message_Base.cpp:
+          Propagate a few interface changes.
+
+        * tests/LongWrites/LongWrites.dsw:
+        * tests/LongWrites/client.dsp:
+        * tests/LongWrites/server.dsp:
+        * tests/LongWrites/run_test.pl:
+          Got the test to compile (and run) under NT.
+
 Mon Apr 23 11:49:01 2001  Joe Hoffert  <joeh@cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:

@@ -1,6 +1,10 @@
 // This may look like C, but it's really -*- C++ -*-
 // $Id$
 
+#include "DIOP_Transport.h"
+#include "DIOP_Connection_Handler.h"
+#include "DIOP_Acceptor.h"
+#include "DIOP_Profile.h"
 #include "tao/Acceptor_Registry.h"
 #include "tao/operation_details.h"
 #include "tao/Timeprobe.h"
@@ -13,12 +17,6 @@
 #include "tao/debug.h"
 #include "tao/GIOP_Message_Base.h"
 #include "tao/GIOP_Message_Lite.h"
-
-
-#include "DIOP_Transport.h"
-#include "DIOP_Connection_Handler.h"
-#include "DIOP_Acceptor.h"
-#include "DIOP_Profile.h"
 
 #if !defined (__ACE_INLINE__)
 # include "DIOP_Transport.i"
@@ -69,155 +67,17 @@ TAO_DIOP_Transport::messaging_object (void)
   return this->messaging_object_;
 }
 
-
 ssize_t
-TAO_DIOP_Transport::send_i (const ACE_Message_Block *message_block,
-                            const ACE_Time_Value * /*max_wait_time*/,
-                            size_t *bt)
+TAO_DIOP_Transport::send_i (iovec *iov, int iovcnt,
+                            size_t &bytes_transferred,
+                            const ACE_Time_Value *max_wait_time)
 {
-  const ACE_INET_Addr &addr = this->connection_handler_->addr ();
+  ssize_t retval = this->connection_handler_->peer ().sendv (iov, iovcnt,
+                                                             max_wait_time);
+  if (retval > 0)
+    bytes_transferred = retval;
 
-  /*size_t temp = 0;
-  size_t &bytes_transferred = bt == 0 ? temp : *bt;
-  bytes_transferred = 0;*/
-  ssize_t bytes_transferred = 0;
-  if (bt)
-    {
-      bytes_transferred = *bt;
-    }
-
-  char stack_buffer[ACE_MAX_DGRAM_SIZE];
-  size_t stack_offset=0;
-  size_t message_length=0;
-
-  iovec iov[IOV_MAX];
-  int iovcnt = 0;
-
-  while (message_block != 0)
-    {
-      // Our current message block chain.
-      const ACE_Message_Block *current_message_block = message_block;
-
-      while (current_message_block != 0)
-        {
-          size_t current_message_block_length =
-                        current_message_block->length ();
-
-          message_length += current_message_block_length;
-
-          if(message_length > ACE_MAX_DGRAM_SIZE)
-            {
-              // This is an error as we do not send more.
-              // Silently drop the message but log an error.
-
-              // Pluggable_Messaging::transport_message only
-              // cares if it gets -1 or 0 so we can return a
-              // partial length and it will think all has gone
-              // well.
-
-
-              if (TAO_debug_level > 0)
-                {
-                  ACE_DEBUG ((LM_DEBUG,
-                              ACE_TEXT ("\n\nTAO (%P|%t) ")
-                              ACE_TEXT ("DIOP_Transport::send ")
-                              ACE_TEXT ("Message length %d exceeds ACE_MAX_DGRAM_SIZE=%d\n"),
-                              message_length,
-                              ACE_MAX_DGRAM_SIZE));
-                }
-
-              return 1;                 // Pretend it is o.k.
-              // This is a problem in the message
-              // catalogue.
-            }
-
-          // Check if this block has any data to be sent.
-          if (current_message_block_length > 0)
-            {
-              if(iovcnt < (IOV_MAX-1))
-                {
-                  // Collect the data in the iovec.
-                  iov[iovcnt].iov_base = current_message_block->rd_ptr ();
-                  iov[iovcnt].iov_len  = current_message_block_length;
-
-                  // Increment iovec counter.
-                  iovcnt++;
-
-                  // The buffer is full make a OS call.  @@ TODO find a way to
-                  // find IOV_MAX for platforms that do not define it rather
-                  // than simply setting IOV_MAX to some arbitrary value such
-                  // as 16.
-                }
-              else
-                {
-                  // @@ John Mackenzie. If we reach IOVMAX-1 we need to pack
-                  // the remanining blocks into the last available buffer.
-
-                  ACE_OS::memcpy(stack_buffer+stack_offset,
-                  current_message_block->rd_ptr (),
-                  current_message_block_length);
-                  stack_offset +=  current_message_block_length;
-
-                  iovcnt = IOV_MAX;     // We just stay with the last buffer.
-                  iov[iovcnt-1].iov_base = stack_buffer;
-                  iov[iovcnt-1].iov_len  = stack_offset;
-                }
-            }
-
-          // Select the next message block in the chain.
-          current_message_block = current_message_block->cont ();
-        }
-
-      // Selection of the next message block chain.
-      message_block = message_block->next ();
-    }
-
-  if (TAO_debug_level > 0)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("\n\nTAO (%P|%t) ")
-                  ACE_TEXT ("iovcnt is %d \n."),iovcnt));
-    }
-
-  // Send the buffers.
-
-  if (iovcnt != 0)
-    {
-      bytes_transferred =
-        this->connection_handler_->dgram ().send (iov,
-                                                  iovcnt,
-                                                  addr);
-
-      if (TAO_debug_level > 0)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      "TAO_DIOP_Transport::send_i: sent %d bytes to %s:%d\n",
-                      bytes_transferred,
-                      addr.get_host_name (),
-                      addr.get_port_number ()));
-        }
-
-      // Errors.
-      // @@ John Mackenzie. We cannot propogate errors up in DIOP
-      // as it will cause transport recycle which makes no sense
-      // Error could be ECONNREFUSED if transport reports ICMP errors.
-    }
-
-   if (bytes_transferred == -1 || bytes_transferred == 0)
-    {
-      if (TAO_debug_level > 0)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("\n\nTAO (%P|%t) ")
-                      ACE_TEXT ("DIOP_Transport::send")
-                      ACE_TEXT (" %p\n\n"),
-                      ACE_TEXT ("Error returned from transport:")));
-        }
-      return 1; // Fake a good return.
-    }
-
-  // Return total bytes transferred.
-  return bytes_transferred;
+  return retval;
 }
 
 ssize_t
@@ -288,7 +148,7 @@ int
 TAO_DIOP_Transport::register_handler_i (void)
 {
   // @@ Michael:
-  // 
+  //
   // We do never register register the handler with the reactor
   // as we never need to be informed about any incoming data,
   // assuming we only use one-ways.
@@ -352,7 +212,7 @@ TAO_DIOP_Transport::send_message (TAO_OutputCDR &stream,
   // versions seem to need it though.  Leaving it costs little.
 
   // This guarantees to send all data (bytes) or return an error.
-  ssize_t n = this->send_or_buffer (stub,
+  ssize_t n = this->send_message_i (stub,
                                     twoway,
                                     stream.begin (),
                                     max_wait_time);
@@ -365,17 +225,6 @@ TAO_DIOP_Transport::send_message (TAO_OutputCDR &stream,
                     this->id (),
                     ACE_TEXT ("send_message ()\n")));
 
-      return -1;
-    }
-
-  // EOF.
-  if (n == 0)
-    {
-      if (TAO_debug_level)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO: (%P|%t|%N|%l) send_message () \n")
-                    ACE_TEXT ("EOF, closing transport %d\n"),
-                    this->id ()));
       return -1;
     }
 
@@ -675,4 +524,3 @@ TAO_DIOP_Transport::transition_handler_state_i (void)
 {
   this->connection_handler_ = 0;
 }
-

@@ -1,6 +1,5 @@
 // $Id$
 
-
 #include "tao/IIOP_Connection_Handler.h"
 #include "tao/Timeprobe.h"
 #include "tao/debug.h"
@@ -18,9 +17,7 @@
 # include "tao/IIOP_Connection_Handler.i"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID(tao, IIOP_Connect, "$Id$")
-
-
+ACE_RCSID(tao, IIOP_Connection_Handler, "$Id$")
 
 TAO_IIOP_Connection_Handler::TAO_IIOP_Connection_Handler (ACE_Thread_Manager *t)
   : TAO_IIOP_SVC_HANDLER (t, 0 , 0),
@@ -58,21 +55,7 @@ TAO_IIOP_Connection_Handler::TAO_IIOP_Connection_Handler (TAO_ORB_Core *orb_core
 
 TAO_IIOP_Connection_Handler::~TAO_IIOP_Connection_Handler (void)
 {
-  if (this->transport () != 0) {
-    // If the socket has not already been closed.
-    if (this->get_handle () != ACE_INVALID_HANDLE)
-      {
-        // Cannot deal with errors, and therefore they are ignored.
-        this->transport ()->send_buffered_messages ();
-      }
-    else
-      {
-        // Dequeue messages and delete message blocks.
-        this->transport ()->dequeue_all ();
-      }
-  }
 }
-
 
 int
 TAO_IIOP_Connection_Handler::open (void*)
@@ -237,9 +220,6 @@ TAO_IIOP_Connection_Handler::handle_close (ACE_HANDLE handle,
       // Close the handle..
       if (this->get_handle () != ACE_INVALID_HANDLE)
         {
-          // Send the buffered messages first
-          this->transport ()->send_buffered_messages ();
-
           // Mark the entry as invalid
           this->transport ()->mark_invalid ();
 
@@ -263,25 +243,23 @@ TAO_IIOP_Connection_Handler::fetch_handle (void)
   return this->get_handle ();
 }
 
-
 int
 TAO_IIOP_Connection_Handler::handle_timeout (const ACE_Time_Value &,
                                              const void *)
 {
-  // This method is called when buffering timer expires.
-  //
-  ACE_Time_Value *max_wait_time = 0;
-
-  TAO_Stub *stub = 0;
-  int has_timeout;
-  this->orb_core ()->call_timeout_hook (stub,
-                                        has_timeout,
-                                        *max_wait_time);
-
   // Cannot deal with errors, and therefore they are ignored.
-  this->transport ()->send_buffered_messages (max_wait_time);
+  if (this->transport ()->handle_output () == -1)
+    {
+      return -1;
+    }
 
   return 0;
+}
+
+int
+TAO_IIOP_Connection_Handler::handle_output (ACE_HANDLE)
+{
+  return this->transport ()->handle_output ();
 }
 
 int
