@@ -1,3 +1,8 @@
+Thu Jun 17 13:15:47 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* TAO_IDL/fe/fe_lookup.cpp (lookup): Changed {"",} to {"",0} to
+	  keep the HP compiler happy.
+
 Thu Jun 17 12:58:20 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/GIOP_Server_Request.cpp: Fixed operation demarshaling for
@@ -29,10 +34,10 @@ Thu Jun 17 12:04:50 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 	* TAO_IDL/be_include/be_union.h:
 	* TAO_IDL/be_include/be_valuetype.h:
 	* TAO_IDL/be_include/be_valuetype_fwd.h:
-	
+
 	Changed the signature of various "gen_out_impl", "gen_out_defn",
 	"gen_var_impl" and "gen_var_defn" signatures from "void" to char
-	*'s with default values 0. 
+	*'s with default values 0.
 
 	Thanks to Carlos again for reporting the warnings from IRIX.
 
@@ -85,8 +90,8 @@ Thu Jun 17 00:47:30 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 	* TAO_IDL/be/be_interface.cpp:
 	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
 	* TAO_IDL/include/ast_decl.h:
-	
-	Fixed the warnings in IRIX. Thanks to Carlos for reporting this.   
+
+	Fixed the warnings in IRIX. Thanks to Carlos for reporting this.
 
 Thu Jun 17 00:13:03 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
