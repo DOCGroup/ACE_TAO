@@ -746,6 +746,25 @@ SOURCE=.\DomainS.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\DynamicC.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\DynAny_i.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
@@ -1412,44 +1431,6 @@ SOURCE=.\ImplRepoS_T.cpp
 # Begin Source File
 
 SOURCE=.\InconsistentTypeCodeC.cpp
-
-!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\Interceptor.cpp
-
-!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\InterceptorC.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
@@ -2247,6 +2228,44 @@ SOURCE=.\Pool_Per_Endpoint.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\PortableInterceptor.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\PortableInterceptorC.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\PortableServerC.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
@@ -2419,6 +2438,25 @@ SOURCE=.\Reply_Dispatcher.cpp
 # Begin Source File
 
 SOURCE=.\Request.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Request_Info.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
@@ -3556,6 +3594,10 @@ SOURCE=.\DomainC.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\DynamicC.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\DynAny_i.h
 # End Source File
 # Begin Source File
@@ -3681,14 +3723,6 @@ SOURCE=.\ImplRepoS_T.h
 # Begin Source File
 
 SOURCE=.\InconsistentTypeCodeC.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Interceptor.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\InterceptorC.h
 # End Source File
 # Begin Source File
 
@@ -3852,6 +3886,14 @@ SOURCE=.\Pool_Per_Endpoint.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\PortableInterceptor.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\PortableInterceptorC.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\PortableServerC.h
 # End Source File
 # Begin Source File
@@ -3889,6 +3931,10 @@ SOURCE=.\Reply_Dispatcher.h
 # Begin Source File
 
 SOURCE=.\request.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Request_Info.h
 # End Source File
 # Begin Source File
 
@@ -4196,6 +4242,10 @@ SOURCE=.\DomainS_T.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\DynamicC.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\DynAnyC.i
 # End Source File
 # Begin Source File
@@ -4253,14 +4303,6 @@ SOURCE=.\ImplRepoS.i
 # Begin Source File
 
 SOURCE=.\ImplRepoS_T.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Interceptor.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\InterceptorC.i
 # End Source File
 # Begin Source File
 
@@ -4373,6 +4415,14 @@ SOURCE=.\PollableC.i
 # Begin Source File
 
 SOURCE=.\Pool_Per_Endpoint.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\PortableInterceptor.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\PortableInterceptorC.i
 # End Source File
 # Begin Source File
 
