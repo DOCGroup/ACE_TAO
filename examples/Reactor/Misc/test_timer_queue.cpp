@@ -13,11 +13,9 @@ public:
 
   virtual int handle_timeout (const ACE_Time_Value &, const void *arg)
   {
-#if defined (ACE_HAS_64BIT_LONGS)
-    int times = long (arg);
-#else /* ! ACE_HAS_64BIT_LONGS */
-    int times = int (arg);
-#endif /* ! ACE_HAS_64BIT_LONGS */
+    // Cast the arg to a long, first, because a pointer is the same
+    // size as a long on all current ACE platforms.
+    int times = (int) (long) arg;
 
     ACE_DEBUG ((LM_DEBUG, 
 		"yow, the time has come and gone %d times %d, Horatio!\n", 
