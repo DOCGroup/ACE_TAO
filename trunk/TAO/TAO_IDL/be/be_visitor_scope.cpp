@@ -71,6 +71,43 @@ be_visitor_scope::visit_scope (be_scope *node)
 
             }
 
+          // If this is a forward delcared interface that is later defined,
+          // we can skip this node altogether.
+          if (d->node_type () == AST_Decl::NT_interface_fwd)
+            {
+              AST_InterfaceFwd *ifd = AST_InterfaceFwd::narrow_from_decl (d);
+              AST_Interface *fd = ifd->full_definition ();
+
+              if (fd->is_defined ())
+                {
+                  be_interface_fwd *node = be_interface_fwd::narrow_from_decl (ifd);
+
+                  if (!node->cli_hdr_gen () && !node->imported ())
+                    {
+                      TAO_OutStream *os = this->ctx_->stream ();
+
+                      os->indent (); // start from the current
+
+                      // generate a forward declaration of the class
+                      *os << "class " << node->local_name () << ";" << be_nl;
+
+                      // generate the ifdefined macro for the _ptr type
+                      os->gen_ifdef_macro (node->flat_name (), "_ptr");
+
+                      // generate the _ptr _var and _out declarations
+                      *os << "typedef " << node->local_name () << " *" << node->local_name ()
+                          << "_ptr;" << be_nl;
+                      *os << "class " << node->local_name () << "_var;" << be_nl;
+                      *os << "class " << node->local_name () << "_out;" << be_nl;
+
+                      os->gen_endif ();
+                    }
+
+                  si->next ();
+                  continue;
+                }
+            }
+
           be_decl *bd = be_decl::narrow_from_decl (d);
 
           // set the scope node as "node" in which the code is being

@@ -147,10 +147,6 @@ DRV_drive(const char *s)
          << "\n";
   (*DRV_FE_yyparse)();
   /*
-   * All forward declared interfaces defined?
-   */
-  AST_check_fwd_interface ();
-  /*
    * If there were any errors, stop
    */
   if (idl_global->err_count() > 0) {
