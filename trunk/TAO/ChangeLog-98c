@@ -1,3 +1,8 @@
+Mon Jan 04 17:48:17 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/CosEvent/EventChannel_i.cpp (for_suppliers):
+ 	  Fixed typos.
+
 Mon Jan  4 16:52:08 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
 	Added the following project files for Time Service on NT.
