@@ -20,6 +20,7 @@
 #ifndef REPOSITORY_H
 #define REPOSITORY_H
 
+#include "ace/Functor.h"
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Synch.h"
 #include "ace/SString.h"
@@ -35,7 +36,7 @@ class Server_Info
 {
 public:
   // = Constructors
-  
+
   Server_Info (const ACE_TString POA_name,
                const ACE_TString logical_server_name,
                const ACE_TString startup_command,
@@ -46,7 +47,7 @@ public:
 
   ~Server_Info ();
   // The only destructor there is.
-  
+
   void update_running_info (const ACE_TString host,
                             const unsigned short port,
                             const ACE_TString server_object_ior);
@@ -67,7 +68,7 @@ public:
   //  int startup ();
   // Starts up the server based on the information.
   // Returns:  0  if successful
-  //           -1 if there is no registration command (it has to be manually 
+  //           -1 if there is no registration command (it has to be manually
   //              restarted)
 
   int starting_up_;
@@ -76,7 +77,7 @@ public:
 
 private:
   ACE_TString logical_server_name_;
-  // Which server process this poa is grouped in. 
+  // Which server process this poa is grouped in.
 
   ACE_TString POA_name_;
   // The name of the POA.
@@ -115,19 +116,19 @@ public:
   Server_Repository ();
   // Default Constructor
 
-  typedef ACE_Hash_Map_Entry<ACE_TString, 
+  typedef ACE_Hash_Map_Entry<ACE_TString,
                              Server_Info *> HASH_IR_ENTRY;
 
-  typedef ACE_Hash_Map_Manager_Ex<ACE_TString, 
-                                  Server_Info *, 
-                                  ACE_Hash<ACE_TString>, 
-                                  ACE_Equal_To<ACE_TString>, 
+  typedef ACE_Hash_Map_Manager_Ex<ACE_TString,
+                                  Server_Info *,
+                                  ACE_Hash<ACE_TString>,
+                                  ACE_Equal_To<ACE_TString>,
                                   ACE_Null_Mutex> HASH_IR_MAP;
 
   typedef ACE_Hash_Map_Iterator_Ex<ACE_TString,
-                                   Server_Info *, 
-                                   ACE_Hash<ACE_TString>, 
-                                   ACE_Equal_To<ACE_TString>, 
+                                   Server_Info *,
+                                   ACE_Hash<ACE_TString>,
+                                   ACE_Equal_To<ACE_TString>,
                                    ACE_Null_Mutex> HASH_IR_ITER;
 
   int add (const ACE_TString POA_name,
@@ -147,15 +148,15 @@ public:
                         ACE_TString &startup_command,
                         ACE_TString &working_dir);
   // Returns information related to startup.
-  
+
   int get_running_info (const ACE_TString POA_name,
                         ACE_TString &host,
                         unsigned short &port,
                         ACE_TString &server_object_ior);
   // Returns information related to a running copy.
-  
+
   int starting_up (const ACE_TString POA_name, int new_value);
-  // Checks the starting_up_ variable in the Server_Info and 
+  // Checks the starting_up_ variable in the Server_Info and
   // returns the previous value or -1 if the POA_name wasn't found
 
   int starting_up (const ACE_TString POA_name);

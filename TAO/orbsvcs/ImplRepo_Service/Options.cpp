@@ -1,7 +1,7 @@
 // $Id$
 #include "Options.h"
 #include "ace/Get_Opt.h"
- 
+
 // Default Constructor
 Options::Options ()
 : debug_ (1),
@@ -44,9 +44,9 @@ Options::parse_args (int argc, ASYS_TCHAR *argv[])
   return 0;
 }
 
-// Returns the debug level for the IR.  
+// Returns the debug level for the IR.
 
-int 
+int
 Options::debug (void) const
 {
   return this->debug_;
@@ -63,5 +63,5 @@ Options::output_file (void) const
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Singleton <Options, ACE_Null_Mutex>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragme instantiate ACE_Singleton <Options, ACE_Null_Mutex>;
+#pragma instantiate ACE_Singleton <Options, ACE_Null_Mutex>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
