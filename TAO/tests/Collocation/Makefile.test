@@ -13,11 +13,6 @@ ifndef TAO_ROOT
 endif # ! TAO_ROOT
 MAKEFILE = Makefile.test
 
-LDLIBS = -lCollocation_Test_Stub \
-         -lCollocation_Diamond \
-         -lTAO_Strategies \
-         -lTAO_PortableServer \
-         -lTAO
 
 SRC = Collocation_Tester.cpp
 
@@ -36,6 +31,10 @@ include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 include $(TAO_ROOT)/taoconfig.mk
 
+LDLIBS = -lCollocation_Test_Stub \
+         -lCollocation_Diamond \
+         -lTAO_Strategies \
+	 $(TAO_SRVR_LIBS)
 #----------------------------------------------------------------------------
 #       Local targets
 #----------------------------------------------------------------------------
