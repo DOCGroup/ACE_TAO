@@ -1,4 +1,16 @@
-Thu Jan 27 16:52:40 2000
+Thu Jan 27 20:25:37 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Token.cpp (shared_acquire and renew): Must decrement
+	  <waiters_> in case of condition variable wait errors and
+	  timeouts.
+
+	* ace/TP_Reactor.cpp (handle_events): If the user gives us a
+	  timeout, we must call <token_.acquire_read> with that timeout.
+	  Also, we must be more careful when dealing with the return value
+	  from <token_.acquire_read> to distinguish timeouts from errors.
+
+Thu Jan 27 16:52:40 2000  James Hu <jxh@entera.com>
+
         * ace/Message_Block.*:
           Added a ACE_Message_Block::reset() method that puts the
           rd_ptr() and wr_ptr() back to the beginning of the message

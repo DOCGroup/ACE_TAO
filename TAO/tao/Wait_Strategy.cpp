@@ -55,15 +55,28 @@ TAO_Wait_On_Reactor::wait (ACE_Time_Value *max_wait_time,
     this->transport_->orb_core ()->reactor ();
 
   // Do the event loop, till we fully receive a reply.
-
-  int result = 1; // Optimize the first iteration [no access to errno]
-  while (reply_received == 0
-         && (result > 0
-             || (result == 0
-                 && max_wait_time != 0
-                 && *max_wait_time != ACE_Time_Value::zero)))
+  int result = 0;
+  while (1)
     {
+      // Run the event loop.
       result = reactor->handle_events (max_wait_time);
+
+      // If we got our reply, no need to run the event loop any
+      // further.
+      if (reply_received)
+        break;
+
+      // Did we timeout? If so, stop running the loop.
+      if (result == 0 &&
+          max_wait_time != 0 &&
+          *max_wait_time == ACE_Time_Value::zero)
+        break;
+
+      // Other errors? If so, stop running the loop.
+      if (result == -1)
+        break;
+
+      // Otherwise, keep going...
     }
 
   if (result == -1 || reply_received == -1)
@@ -217,8 +230,7 @@ TAO_Exclusive_Wait_On_Leader_Follower::wait (ACE_Time_Value *max_wait_time,
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon,
                     leader_follower.lock (), -1);
 
-  // Optmize the first iteration [no access to errno]
-  int result = 1;
+  int result = 0;
 
   //
   // Begin artificial scope for auto_ptr like helpers calling:
@@ -369,12 +381,28 @@ TAO_Exclusive_Wait_On_Leader_Follower::wait (ACE_Time_Value *max_wait_time,
                   this->transport_));
 #endif /* TAO_DEBUG_LEADER_FOLLOWER */
 
-      while (this->reply_received_ == 0
-             && (result > 0
-                 || (result == 0
-                     && max_wait_time != 0
-                     && *max_wait_time != ACE_Time_Value::zero)))
-        result = orb_core->reactor ()->handle_events (max_wait_time);
+      while (1)
+        {
+          // Run the event loop.
+          result = orb_core->reactor ()->handle_events (max_wait_time);
+
+          // If we got our reply, no need to run the event loop any
+          // further.
+          if (this->reply_received_)
+            break;
+
+          // Did we timeout? If so, stop running the loop.
+          if (result == 0 &&
+              max_wait_time != 0 &&
+              *max_wait_time == ACE_Time_Value::zero)
+            break;
+
+          // Other errors? If so, stop running the loop.
+          if (result == -1)
+            break;
+
+          // Otherwise, keep going...
+        }
 
 #if defined (TAO_DEBUG_LEADER_FOLLOWER)
       ACE_DEBUG ((LM_DEBUG,
@@ -756,8 +784,28 @@ TAO_Muxed_Wait_On_Leader_Follower::wait (ACE_Time_Value *max_wait_time,
                     ASYS_TEXT ("TAO (%P|%t) - wait (leader):to enter reactor event loop on <%x>\n"),
                     this->transport_));
 
-      while (result > 0 && reply_received == 0)
-        result = orb_core->reactor ()->handle_events (max_wait_time);
+      while (1)
+        {
+          // Run the event loop.
+          result = orb_core->reactor ()->handle_events (max_wait_time);
+
+          // If we got our reply, no need to run the event loop any
+          // further.
+          if (reply_received)
+            break;
+
+          // Did we timeout? If so, stop running the loop.
+          if (result == 0 &&
+              max_wait_time != 0 &&
+              *max_wait_time == ACE_Time_Value::zero)
+            break;
+
+          // Other errors? If so, stop running the loop.
+          if (result == -1)
+            break;
+
+          // Otherwise, keep going...
+        }
 
       if (TAO_debug_level >= 5)
         ACE_DEBUG ((LM_DEBUG,

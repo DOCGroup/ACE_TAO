@@ -47,30 +47,24 @@ TAO_Leader_Follower::get_next_follower (void)
 int
 TAO_Leader_Follower::wait_for_client_leader_to_complete (ACE_Time_Value *max_wait_time)
 {
+  int result = 0;
   ACE_Countdown_Time countdown (max_wait_time);
 
-  while (this->client_thread_is_leader_)
+  // Note that we are waiting.
+  ++this->server_threads_waiting_;
+
+  while (this->client_thread_is_leader_ &&
+         result != -1)
     {
-      ACE_SYNCH_CONDITION *condition_variable =
-        this->orb_core_->leader_follower_condition_variable ();
-
-      if (this->add_follower (condition_variable) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Cannot add to condition variable collection\n"),
-                            -1);
-        }
-
       if (max_wait_time == 0)
         {
-          if (condition_variable->wait () == -1)
+          if (this->server_threads_condition_.wait () == -1)
             {
-              // Cleanup.
-              this->remove_follower (condition_variable);
+              ACE_ERROR ((LM_ERROR,
+                          ASYS_TEXT ("TAO (%P|%t): TAO_Leader_Follower::wait_for_client_leader_to_complete - ")
+                          ASYS_TEXT ("Condition variable wait failed\n")));
 
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "Condition variable wait failed\n"),
-                                -1);
+              result = -1;
             }
         }
       else
@@ -78,21 +72,22 @@ TAO_Leader_Follower::wait_for_client_leader_to_complete (ACE_Time_Value *max_wai
           countdown.update ();
           ACE_Time_Value tv = ACE_OS::gettimeofday ();
           tv += *max_wait_time;
-          if (condition_variable->wait (&tv) == -1)
+          if (this->server_threads_condition_.wait (&tv) == -1)
             {
-              // Cleanup.
-              this->remove_follower (condition_variable);
-
               if (errno != ETIME)
                 ACE_ERROR ((LM_ERROR,
-                            "Condition variable wait failed\n"));
+                            ASYS_TEXT ("TAO (%P|%t): TAO_Leader_Follower::wait_for_client_leader_to_complete - ")
+                            ASYS_TEXT ("Condition variable wait failed\n")));
 
-              return -1;
+              result = -1;
             }
         }
     }
 
-  return 0;
+  // Reset waiting state.
+  --this->server_threads_waiting_;
+
+  return result;
 }
 
 ACE_Reactor *

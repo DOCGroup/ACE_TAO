@@ -1,11 +1,89 @@
+Thu Jan 27 20:25:37 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/Leader_Follower:
+
+	  wait_for_client_leader_to_complete: If a client thread (a thread
+	  making a remote request) is currently running the event loop, an
+	  event loop thread (a thread running ORB->run or
+	  ORB->perform_work) must wait for that client thread to complete.
+
+	  Additional state: <client_thread_is_leader_> keep track of
+	  whether a client thread the current leader.
+	  <server_threads_waiting_> keeps track of whether server threads
+	  waiting for the client leader to complete.
+	  <server_threads_condition_> is the condition variable used by
+	  event loop threads waiting for the client leader to complete.
+
+	  TAO_LF_Server_Thread_Helper: Auto-pointer like class similar to
+	  TAO_LF_Client_Thread_Helper and TAO_LF_Leader_Thread_Helper that
+	  helps manage the leader follower object.  This class helps with
+	  grabbing the lock and calling set_server_thread and grabbing the
+	  lock, calling reset_server_thread, and electing a new leader.
+
+	  set_server_thread: This method now calls
+	  wait_for_client_leader_to_complete if needed.  Also it now has a
+	  relevant return value for timeouts and errors.
+
+	  set_leader_thread and reset_leader_thread: Added the setting and
+	  resetting <client_thread_is_leader_>.
+
+	  elect_new_leader: Election of new leader must first consider
+	  event loop threads before considering waiting clients.  If
+	  server threads are waiting, we wake them all up.  Note that it
+	  is necessary to give precedence to server threads over client
+	  threads since only one client runs at any given time; with a tp
+	  reactor, multiple server threads can execute simultaneously.
+
+	* tao/ORB_Core.cpp (run): Use of TAO_LF_Server_Thread_Helper
+	  helped with abstracting and simplifying some of the leader
+	  follower code.  In additions, timeouts are determined by
+	  examining the <timeout> variable.  Therefore, we don't need
+	  <break_on_timeouts> anymore.
+
+	* tao/ORB (run and perform_work): The new ORB_Core::run simplified
+	  ORB::run and ORB::perform_work.
+
+	* tao/Wait_Strategy.cpp (TAO_Wait_On_Reactor::wait,
+	  TAO_Exclusive_Wait_On_Leader_Follower::wait, and
+	  TAO_Muxed_Wait_On_Leader_Follower::wait): The while loop in
+	  TAO_Wait_On_Reactor::wait and
+	  TAO_Exclusive_Wait_On_Leader_Follower::wait was incorrect.
+
+	  This:
+
+	  *max_wait_time != ACE_Time_Value::zero
+
+	  should have been:
+
+	  *max_wait_time == ACE_Time_Value::zero
+
+	  While fixing this, I simplified the while loop making it easier
+	  to read and understand.
+
+	  Also fixed TAO_Muxed_Wait_On_Leader_Follower::wait which did not
+	  handle timeouts correctly.
+
+	* tests/Leader_Followers: This is a test for server applications
+	  that have client threads (threads making remote calls) starting
+	  before server threads (threads running the event loop).
+
+	  The event loop threads should wait for the client threads that
+	  become leaders to give up leadership before continuing.
+
+	* version_tests.dsw:
+	* tests/Makefile (DIRS):
+	* run_all_list.pm:
+
+	  Added new test Leader_Followers.
+
 Thu Jan 27 08:36:17 2000  Darrell Brunsch <brunsch@uci.edu>
 
 	* orbsvcs/ImplRepo_Service/tao_imr_i.cpp: The help messages
           were still displaying "tao_ir" instead of "tao_imr".  Also,
           if an Implementation Repository wasn't running, tao_imr
           wouldn't get a chance to parse the command line arguments -
-          so it wouldn't even display the help messages unless an 
-          ImplRepo was running.  Thanks to Dave Zumbro 
+          so it wouldn't even display the help messages unless an
+          ImplRepo was running.  Thanks to Dave Zumbro
           <zumbro_d@ociweb.com> for reporting these.  [Bugs 412, 413]
 
 Wed Jan 26 16:17:24 2000  Jeff Parsons  <parsons@cs.wustl.edu>
@@ -28,7 +106,7 @@ Wed Jan 26 16:17:24 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 Tue Jan 25 19:42:54 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/UIOP_Profile.cpp (decode): 
+	* tao/UIOP_Profile.cpp (decode):
 	* tao/IIOP_Profile.cpp : A problem when TAO clients were
 	  interacting with GIOP 1.2 servers. The profile received by the
 	  TAO client is parsed in decode (). In the code for IIOP_Profile,
@@ -43,7 +121,7 @@ Tue Jan 25 19:42:54 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  classes would highest minor version that we support. This
 	  information gets passed on through the invocation classes to the
 	  transport and then to the messaging classes. Thanks to Klemen
-	  Zagar <klemen.zagar@irj.si> for reporting this problem. 
+	  Zagar <klemen.zagar@irj.si> for reporting this problem.
 
 Tue Jan 25 19:27:24 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 

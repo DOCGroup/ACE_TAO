@@ -220,62 +220,48 @@ CORBA_ORB::destroy (CORBA::Environment &ACE_TRY_ENV)
 }
 
 int
-CORBA_ORB::run (ACE_Time_Value *tv,
-                int break_on_timeouts,
-                CORBA::Environment &ACE_TRY_ENV)
+CORBA_ORB::run (CORBA::Environment &ACE_TRY_ENV)
 {
-  this->check_shutdown (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (-1);
-
-  return this->orb_core ()->run (tv, break_on_timeouts, 0, ACE_TRY_ENV);
+  return this->run (0, ACE_TRY_ENV);
 }
 
 int
 CORBA_ORB::run (ACE_Time_Value &tv, CORBA::Environment &ACE_TRY_ENV)
 {
-  return this->run (&tv, 1, ACE_TRY_ENV);
+  return this->run (&tv, ACE_TRY_ENV);
 }
 
 int
-CORBA_ORB::run (ACE_Time_Value *tv, CORBA::Environment &ACE_TRY_ENV)
+CORBA_ORB::run (ACE_Time_Value *tv,
+                CORBA::Environment &ACE_TRY_ENV)
 {
-  return this->run (tv, 1, ACE_TRY_ENV);
+  this->check_shutdown (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+
+  return this->orb_core ()->run (tv, 0, ACE_TRY_ENV);
 }
 
 int
-CORBA_ORB::run (CORBA::Environment &ACE_TRY_ENV)
+CORBA_ORB::perform_work (CORBA::Environment &ACE_TRY_ENV)
 {
-  return this->run (0, 0, ACE_TRY_ENV);
+  return this->perform_work (0, ACE_TRY_ENV);
+}
+
+int
+CORBA_ORB::perform_work (ACE_Time_Value &tv, CORBA::Environment &ACE_TRY_ENV)
+{
+  return this->perform_work (&tv, ACE_TRY_ENV);
 }
 
 int
 CORBA_ORB::perform_work (ACE_Time_Value *tv,
-                         int break_on_timeouts,
                          CORBA::Environment &ACE_TRY_ENV)
 {
   // This method should not be called if the ORB has been shutdown.
   this->check_shutdown (ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
 
-  return this->orb_core ()->run (tv, break_on_timeouts, 1, ACE_TRY_ENV);
-}
-
-int
-CORBA_ORB::perform_work (ACE_Time_Value &tv, CORBA::Environment &ACE_TRY_ENV)
-{
-  return this->perform_work (&tv, 1, ACE_TRY_ENV);
-}
-
-int
-CORBA_ORB::perform_work (ACE_Time_Value *tv, CORBA::Environment &ACE_TRY_ENV)
-{
-  return this->perform_work (tv, 1, ACE_TRY_ENV);
-}
-
-int
-CORBA_ORB::perform_work (CORBA::Environment &ACE_TRY_ENV)
-{
-  return this->perform_work (0, 0, ACE_TRY_ENV);
+  return this->orb_core ()->run (tv, 1, ACE_TRY_ENV);
 }
 
 CORBA::Boolean

@@ -737,16 +737,6 @@ protected:
   CORBA_Object_ptr resolve_ior_manipulation (CORBA::Environment&);
   // Resolve the IOR Manipulation reference for this ORB.
 
-  int run (ACE_Time_Value *tv,
-           int break_on_timeouts,
-           CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
-  // Implements the run routine
-
-  int perform_work (ACE_Time_Value *tv,
-                    int break_on_timeouts,
-                    CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
-  // Implements the run routine
-
 private:
 
   CORBA_Object_ptr resolve_service (MCAST_SERVICEID service_id,

@@ -23,7 +23,8 @@ DIRS  = CDR \
         IORManipulation \
         Connection_Purging \
         ORB_init \
-        Smart_Proxies
+        Smart_Proxies \
+        Leader_Followers
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
