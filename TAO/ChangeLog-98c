@@ -1,3 +1,10 @@
+Sun Jan 03 23:05:08 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/TAO_Static.dsp: 
+	* tao/TAO.dsp: 
+
+	  Added Managed_Types.cpp to build.
+	
 Sun Jan 03 22:42:22 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Time/TAO_UTO.cpp (TAO_UTO): moved "/2" out of
