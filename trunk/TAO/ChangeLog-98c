@@ -1,3 +1,56 @@
+Thu Nov 26 01:08:00 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+        * orbsvcs/ImplRepo_Service/ImplRepo.idl: All methods are now 
+          available.
+
+        * orbsvcs/ImplRepo_Service/Repository.{h,cpp}: Only stores the
+          host/port of the server, not the entire object IOR.  This
+          allows the use of more than one object in the same POA.
+
+        * orbsvcs/ImplRepo_Service/ImplRepo_i.{h,cpp}: Support for all
+          methods and made switch to host/port instead of ior.
+
+        * orbsvcs/tests/ImplRepo/Repository_Test.cpp: Tests with 
+          host/port instead of IOR now.
+
+        * orbsvcs/ImplRepo_Service/ImplRepo.{dsp,dsw}: Updated the 
+          MSVC project files.  Mainly cosmetic changes.
+
+        * orbsvcs/tests/ImplRepo/svc.conf:
+        * orbsvcs/tests/ImplRepo/implrepo.conf:
+          Split the conf files up since IR needs -ORBpoalock null and
+          thread-per-connection, but the tests don't necessarily need it.
+
+        * orbsvcs/tests/ImplRepo/IR_Helper.{h,cpp}: New helper class 
+          that contains the logic for using the IR from a server.
+
+        * orbsvcs/tests/ImplRepo/Airplane.idl:
+        * orbsvcs/tests/ImplRepo/airplane_client.cpp:
+        * orbsvcs/tests/ImplRepo/airplane_client.dsp:
+        * orbsvcs/tests/ImplRepo/airplane_client_i.cpp:
+        * orbsvcs/tests/ImplRepo/airplane_client_i.h:
+        * orbsvcs/tests/ImplRepo/airplane_i.cpp:
+        * orbsvcs/tests/ImplRepo/airplane_i.h:
+        * orbsvcs/tests/ImplRepo/airplane_server.cpp:
+        * orbsvcs/tests/ImplRepo/airplane_server.dsp:
+        * orbsvcs/tests/ImplRepo/airplane_server_i.cpp:
+        * orbsvcs/tests/ImplRepo/airplane_server_i.h:
+          New Paper Airplane Server!  The purpose is to show off the 
+          IR_Helper class use and to have a different server to test
+          the IR with.
+
+        * orbsvcs/tests/ImplRepo/ImplRepo_Test.dsw: Now includes the 
+          Paper Airplane Server.
+
+        * orbsvcs/tests/ImplRepo/run_test.pl: Updated to perform different 
+          types of tests.
+        
+        * orbsvcs/tests/ImplRepo/server.dsp: Removed server.h, a file that 
+          doesn't exist anymore.
+        
+        * orbsvcs/tests/ImplRepo/server_impl.cpp: Cleaned up a bit. 
+          Removed unnecessary code.
+
 Wed Nov 25 20:50:55 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/Invocation.cpp: The ORB was raising incorrect exceptions
