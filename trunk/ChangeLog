@@ -1,3 +1,9 @@
+Sat Feb  7 19:33:56 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* examples/RMCast/Send_File/Sender.cpp (ACE_TMAIN): 
+	  Fixed a typo in the comments.  Thanks to Olli Savia <ops@iki.fi>
+ 	  for the patch.
+
 Fri Feb  6 15:49:37 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * bin/MakeProjectCreator/config/ciao_client.mpb:
