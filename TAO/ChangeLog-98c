@@ -1,3 +1,13 @@
+Mon Oct 27 19:34:08 1997  Carlos O'Ryan  <coryan@MILONGA>
+
+	* TAO_IDL/be/be_exception.cpp: 
+	* TAO_IDL/be/be_enum.cpp: 
+	  Set this->cli_stub_gen_ to I_TRUE at the end.
+
+	* TAO_IDL/be/be_typedef.cpp: 
+	  Set the state to TAO_CodeGen::TAO_TYPEDEF_CH instead of just
+	  struct.
+
 Mon Oct 27 15:22:24 1997  Sergio Flores  <sergio@polka.cs.wustl.edu>
 
 	* TAO_IDL/be/be_state.cpp:
