@@ -136,7 +136,7 @@ public:
     virtual void _tao_decode (TAO_InputCDR &cdr,
                               CORBA::Environment &);
 
-    static Invalid *_narrow (CORBA::Exception *);
+    static Invalid *_downcast (CORBA::Exception *);
 
 
     // = TAO extension
@@ -164,7 +164,7 @@ public:
     virtual void _tao_decode (TAO_InputCDR &cdr,
                               CORBA::Environment &);
 
-    static InvalidValue *_narrow (CORBA::Exception *);
+    static InvalidValue *_downcast (CORBA::Exception *);
 
 
     // = TAO extension
@@ -192,7 +192,7 @@ public:
     virtual void _tao_decode (TAO_InputCDR &cdr,
                               CORBA::Environment &);
 
-    static TypeMismatch *_narrow (CORBA::Exception *);
+    static TypeMismatch *_downcast (CORBA::Exception *);
 
 
     // = TAO extension
@@ -220,7 +220,7 @@ public:
     virtual void _tao_decode (TAO_InputCDR &cdr,
                               CORBA::Environment &);
 
-    static InvalidSeq *_narrow (CORBA::Exception *);
+    static InvalidSeq *_downcast (CORBA::Exception *);
 
 
     // = TAO extension

@@ -2,7 +2,7 @@
 // $Id$
 
 ACE_INLINE CORBA_Exception*
-CORBA_Exception::_narrow (CORBA_Exception* x)
+CORBA_Exception::_downcast (CORBA_Exception* x)
 {
   return x;
 }

@@ -40,7 +40,7 @@ public:
   virtual void _tao_decode (TAO_InputCDR &cdr,
                             CORBA::Environment &);
 
-  static CORBA_PolicyError *_narrow (CORBA::Exception *);
+  static CORBA_PolicyError *_downcast (CORBA::Exception *);
   static void _tao_any_destructor (void*);
 
   CORBA_PolicyError(
@@ -89,7 +89,7 @@ public:
   virtual void _tao_decode (TAO_InputCDR &cdr,
                             CORBA::Environment &);
 
-  static CORBA_InvalidPolicies *_narrow (CORBA::Exception *);
+  static CORBA_InvalidPolicies *_downcast (CORBA::Exception *);
   static void _tao_any_destructor (void*);
 
   CORBA_InvalidPolicies(

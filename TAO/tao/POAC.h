@@ -225,7 +225,7 @@ TAO_NAMESPACE PortableServer{
     virtual void _tao_decode (TAO_InputCDR &cdr,
                               CORBA::Environment &);
 
-    static ForwardRequest *_narrow (CORBA::Exception *);
+    static ForwardRequest *_downcast (CORBA::Exception *);
     static void _tao_any_destructor (void*);
 
     ForwardRequest(
@@ -1176,7 +1176,7 @@ TAO_NAMESPACE PortableServer{
       virtual void _tao_decode (TAO_InputCDR &cdr,
                                 CORBA::Environment &);
 
-      static AdapterInactive *_narrow (CORBA::Exception *);
+      static AdapterInactive *_downcast (CORBA::Exception *);
       static void _tao_any_destructor (void*);
 
       // = TAO extension
@@ -1738,7 +1738,7 @@ TAO_NAMESPACE PortableServer{
       virtual void _tao_decode (TAO_InputCDR &cdr,
                                 CORBA::Environment &);
 
-      static AdapterAlreadyExists *_narrow (CORBA::Exception *);
+      static AdapterAlreadyExists *_downcast (CORBA::Exception *);
       static void _tao_any_destructor (void*);
 
       // = TAO extension
@@ -1771,7 +1771,7 @@ TAO_NAMESPACE PortableServer{
       virtual void _tao_decode (TAO_InputCDR &cdr,
                                 CORBA::Environment &);
 
-      static AdapterInactive *_narrow (CORBA::Exception *);
+      static AdapterInactive *_downcast (CORBA::Exception *);
       static void _tao_any_destructor (void*);
 
       // = TAO extension
@@ -1805,7 +1805,7 @@ TAO_NAMESPACE PortableServer{
       virtual void _tao_decode (TAO_InputCDR &cdr,
                                 CORBA::Environment &);
 
-      static AdapterNonExistent *_narrow (CORBA::Exception *);
+      static AdapterNonExistent *_downcast (CORBA::Exception *);
       static void _tao_any_destructor (void*);
 
       // = TAO extension
@@ -1837,7 +1837,7 @@ TAO_NAMESPACE PortableServer{
       virtual void _tao_decode (TAO_InputCDR &cdr,
                                 CORBA::Environment &);
 
-      static InvalidPolicy *_narrow (CORBA::Exception *);
+      static InvalidPolicy *_downcast (CORBA::Exception *);
       static void _tao_any_destructor (void*);
 
       InvalidPolicy(
@@ -1877,7 +1877,7 @@ TAO_NAMESPACE PortableServer{
       virtual void _tao_decode (TAO_InputCDR &cdr,
                                 CORBA::Environment &);
 
-      static NoServant *_narrow (CORBA::Exception *);
+      static NoServant *_downcast (CORBA::Exception *);
       static void _tao_any_destructor (void*);
 
       // = TAO extension
@@ -1911,7 +1911,7 @@ TAO_NAMESPACE PortableServer{
       virtual void _tao_decode (TAO_InputCDR &cdr,
                                 CORBA::Environment &);
 
-      static ObjectAlreadyActive *_narrow (CORBA::Exception *);
+      static ObjectAlreadyActive *_downcast (CORBA::Exception *);
       static void _tao_any_destructor (void*);
 
       // = TAO extension
@@ -1943,7 +1943,7 @@ TAO_NAMESPACE PortableServer{
       virtual void _tao_decode (TAO_InputCDR &cdr,
                                 CORBA::Environment &);
 
-      static ObjectNotActive *_narrow (CORBA::Exception *);
+      static ObjectNotActive *_downcast (CORBA::Exception *);
       static void _tao_any_destructor (void*);
 
       // = TAO extension
@@ -1975,7 +1975,7 @@ TAO_NAMESPACE PortableServer{
       virtual void _tao_decode (TAO_InputCDR &cdr,
                                 CORBA::Environment &);
 
-      static ServantAlreadyActive *_narrow (CORBA::Exception *);
+      static ServantAlreadyActive *_downcast (CORBA::Exception *);
       static void _tao_any_destructor (void*);
 
       // = TAO extension
@@ -2007,7 +2007,7 @@ TAO_NAMESPACE PortableServer{
       virtual void _tao_decode (TAO_InputCDR &cdr,
                                 CORBA::Environment &);
 
-      static ServantNotActive *_narrow (CORBA::Exception *);
+      static ServantNotActive *_downcast (CORBA::Exception *);
       static void _tao_any_destructor (void*);
 
       // = TAO extension
@@ -2039,7 +2039,7 @@ TAO_NAMESPACE PortableServer{
       virtual void _tao_decode (TAO_InputCDR &cdr,
                                 CORBA::Environment &);
 
-      static WrongAdapter *_narrow (CORBA::Exception *);
+      static WrongAdapter *_downcast (CORBA::Exception *);
       static void _tao_any_destructor (void*);
 
       // = TAO extension
@@ -2071,7 +2071,7 @@ TAO_NAMESPACE PortableServer{
       virtual void _tao_decode (TAO_InputCDR &cdr,
                                 CORBA::Environment &);
 
-      static WrongPolicy *_narrow (CORBA::Exception *);
+      static WrongPolicy *_downcast (CORBA::Exception *);
       static void _tao_any_destructor (void*);
 
       // = TAO extension
@@ -2252,7 +2252,7 @@ TAO_NAMESPACE PortableServer{
       virtual void _tao_decode (TAO_InputCDR &cdr,
                                 CORBA::Environment &);
 
-      static NoContext *_narrow (CORBA::Exception *);
+      static NoContext *_downcast (CORBA::Exception *);
       static void _tao_any_destructor (void*);
 
       // = TAO extension

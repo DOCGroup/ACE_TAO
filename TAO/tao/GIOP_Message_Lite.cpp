@@ -422,7 +422,7 @@ TAO_GIOP_Message_Lite::
 
 // @@ Bala: if you use ACE_UNUSED_ARG *please* put it at the beginning
 // of the function, where there is some hope that somebody will find
-// it! 
+// it!
 CORBA::Boolean
 TAO_GIOP_Message_Lite::
   write_reply_header (TAO_OutputCDR &output,
@@ -1067,7 +1067,7 @@ TAO_GIOP_Message_Lite::
   // Store it in the Locate request classes
   request.request_id (req_id);
 
-  TAO_ObjectKey &object_key = 
+  TAO_ObjectKey &object_key =
     request.object_key ();
 
   // Note that here there are no unions and so no problems
@@ -1124,7 +1124,7 @@ TAO_GIOP_Message_Lite::
       CORBA::exception_type extype =
         CORBA::USER_EXCEPTION;
 
-      if (CORBA::SystemException::_narrow (x) != 0)
+      if (CORBA::SystemException::_downcast (x) != 0)
         extype = CORBA::SYSTEM_EXCEPTION;
 
       // write the reply_status

@@ -76,7 +76,7 @@ CORBA_PolicyError::operator= (const CORBA_PolicyError &_tao_excp)
 
 // narrow
 CORBA_PolicyError_ptr
-CORBA_PolicyError::_narrow (CORBA::Exception *exc)
+CORBA_PolicyError::_downcast (CORBA::Exception *exc)
 {
   if (!ACE_OS::strcmp ("IDL:omg.org/CORBA/PolicyError:1.0", exc->_id ())) // same type
     return ACE_dynamic_cast (CORBA_PolicyError_ptr, exc);
@@ -156,7 +156,7 @@ CORBA_InvalidPolicies::operator= (const CORBA_InvalidPolicies &_tao_excp)
 
 // narrow
 CORBA_InvalidPolicies_ptr
-CORBA_InvalidPolicies::_narrow (CORBA::Exception *exc)
+CORBA_InvalidPolicies::_downcast (CORBA::Exception *exc)
 {
   if (!ACE_OS::strcmp ("IDL:omg.org/CORBA/InvalidPolicies:1.0", exc->_id ())) // same type
     return ACE_dynamic_cast (CORBA_InvalidPolicies_ptr, exc);

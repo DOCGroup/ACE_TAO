@@ -473,7 +473,7 @@ public:
       TAO_InputCDR &,
       CORBA::Environment &);
 
-  static NoPossiblePollable *_narrow (CORBA::Exception *);
+  static NoPossiblePollable *_downcast (CORBA::Exception *);
 
 
   // = TAO extension
@@ -508,7 +508,7 @@ virtual void _tao_decode (
     TAO_InputCDR &,
     CORBA::Environment &);
 
-static UnknownPollable *_narrow (CORBA::Exception *);
+static UnknownPollable *_downcast (CORBA::Exception *);
 
 
 // = TAO extension

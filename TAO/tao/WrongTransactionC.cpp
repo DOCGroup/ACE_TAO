@@ -42,7 +42,7 @@ CORBA_WrongTransaction::operator= (const CORBA_WrongTransaction &_tao_excp)
 
 // narrow
 CORBA_WrongTransaction_ptr
-CORBA_WrongTransaction::_narrow (CORBA::Exception *exc)
+CORBA_WrongTransaction::_downcast (CORBA::Exception *exc)
 {
   if (!ACE_OS::strcmp ("IDL:omg.org/CORBA/WrongTransaction:1.0", exc->_id ())) // same type
     return ACE_dynamic_cast (CORBA_WrongTransaction_ptr, exc);
