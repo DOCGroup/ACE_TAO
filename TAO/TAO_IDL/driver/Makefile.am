@@ -19,17 +19,16 @@ INCLUDES = -I$(top_builddir) -I$(top_srcdir) \
 noinst_LIBRARIES = libdriver.a
 
 libdriver_a_SOURCES = \
-         drv_args.cpp  \
-         drv_fork.cpp  \
-         drv_init.cpp  \
-         drv_link.cpp  \
-         drv_preproc.cpp  \
-         drv_private.cpp
+  drv_args.cpp \
+  drv_fork.cpp \
+  drv_init.cpp \
+  drv_link.cpp \
+  drv_preproc.cpp \
+  drv_private.cpp
 
-## FIXME: What should TAO_IDL_PREPROCESSOR be?
-##        Is the "+=" a portable make feature?
-CXXFLAGS += \
-           -DTAO_IDL_PREPROCESSOR=\"$(CXX)\"
+## Additional C++ preprocessor flags to define for the TAO IDL compiler.
+AM_CPPFLAGS = \
+  -DTAO_IDL_PREPROCESSOR=\"$(CXX)\"
 
 ## Clean up some additional files/directories possibly created during
 ## the configure script tests.

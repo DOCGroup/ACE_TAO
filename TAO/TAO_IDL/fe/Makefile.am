@@ -18,14 +18,15 @@ INCLUDES = -I$(top_builddir) -I$(top_srcdir) \
 noinst_LIBRARIES = libfe.a
 
 libfe_a_SOURCES = \
-         fe_declarator.cpp  \
-         fe_extern.cpp  \
-         fe_init.cpp  \
-         fe_interface_header.cpp  \
-         fe_lookup.cpp  \
-         fe_private.cpp  \
-         lex.yy.cpp  \
-         y.tab.cpp
+  fe_declarator.cpp \
+  fe_extern.cpp \
+  fe_init.cpp \
+  fe_interface_header.cpp \
+  fe_lookup.cpp \
+  fe_private.cpp \
+  lex.yy.cpp \
+  y.tab.cpp
+
 
 noinst_HEADERS = y.tab.h
 
@@ -57,7 +58,7 @@ lex.yy.cpp.target:
             -e "/#include </d" \
             -e "s@ECHO@TAO_YY_ECHO@" \
             -e 's/\$$Hea''der.*\$$/$$I''d$$/' > lex.yy.cpp
-        patch < lex.yy.cpp.diff
+	patch < lex.yy.cpp.diff
 	echo timestamp > $@
 
 y.tab.cpp: idl.yy
@@ -86,7 +87,7 @@ y.tab: idl.yy
 
 noinst_DATA = keywords.dat
 
-EXTRA_DIST = idl.ll idl.yy keywords.dat y.tab.cpp.diff
+EXTRA_DIST = idl.ll idl.yy keywords.dat lex.yy.cpp.diff y.tab.cpp.diff
 
 ## Clean up some additional files/directories possibly created during
 ## the configure script tests.
