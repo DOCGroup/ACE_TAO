@@ -1,3 +1,9 @@
+Sat Nov 23 17:43:29 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/ACE.cpp (send_n): Properly update byte count for each message
+          block in the chain to send. Thanks to Venkita Subramonian
+          <venkita@cse.wustl.edu> for reporting this and sending a fix.
+
 Sat Nov 23 16:55:39 2002  Steve Huston  <shuston@riverace.com>
 
         * tests/MEM_Stream_Test.cpp:
