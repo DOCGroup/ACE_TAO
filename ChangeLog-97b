@@ -1,13 +1,10 @@
-Fri Sep 05 16:17:50 1997  David L. Levine  <levine@cs.wustl.edu>
+Fri Sep  5 19:05:02 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* performance-tests/Misc/preempt.cpp: added command line options,
-	  and explanation on how to interpret the results.
-
-Fri Sep 05 15:04:40 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
-
-	* ACE version 4.3.4, released Fri Sep 05 15:04:40 1997.
-
-Fri Sep  5 14:51:56 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+	* ace/Reactor.cpp (check_handles): When handle_error was optimized
+ 	  with fstat we put NULL value to second argument.  It requires a
+ 	  value to SCO OpenServer to work.  Therefore, I added struct stat
+ 	  temp and changed ACE_OS::fstat(handle, NULL) by
+ 	  ACE_OS::fstat(handle, &temp);  Thanks to Arturo for fixing this.
 
 	* examples/Threads/process_manager.cpp (sig_handler): Fixed a bug
  	  where the thread was exiting if no more children existed.
@@ -42,6 +39,11 @@ Fri Sep  5 14:51:56 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
  	  conditional compile for NSIG should have been > 0 rather than ==
  	  0.  Thanks to fixing this codeKaren Amestoy
  	  <kamestoy@CCGATE.HAC.COM> for reporting this fix.
+
+Fri Sep 05 16:17:50 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* performance-tests/Misc/preempt.cpp: added command line options,
+	  and explanation on how to interpret the results.
 
 Thu Sep 04 10:26:11 1997  David L. Levine  <levine@cs.wustl.edu>
 
