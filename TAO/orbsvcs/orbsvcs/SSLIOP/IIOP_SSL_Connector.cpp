@@ -3,11 +3,14 @@
 // $Id$
 
 #include "IIOP_SSL_Connector.h"
+#include "SSLIOP_Endpoint.h"
+
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
 #include "tao/Environment.h"
 #include "tao/Base_Connection_Property.h"
 #include "tao/IIOP_Endpoint.h"
+
 #include "ace/Strategies_T.h"
 
 ACE_RCSID(TAO_SSLIOP, IIOP_SSL_Connector, "$Id$")
@@ -106,9 +109,15 @@ TAO_IIOP_SSL_Connector::connect (TAO_Connection_Descriptor_Interface *desc,
   if (endpoint->tag () != TAO_TAG_IIOP_PROFILE)
     return -1;
 
-  TAO_IIOP_Endpoint *iiop_endpoint =
-    ACE_dynamic_cast (TAO_IIOP_Endpoint *,
+  TAO_SSLIOP_Endpoint *ssliop_endpoint =
+    ACE_dynamic_cast (TAO_SSLIOP_Endpoint *,
                       endpoint );
+
+  if (ssliop_endpoint == 0)
+    return -1;
+
+  TAO_IIOP_Endpoint *iiop_endpoint = ssliop_endpoint->iiop_endpoint ();
+
   if (iiop_endpoint == 0)
     return -1;
 
