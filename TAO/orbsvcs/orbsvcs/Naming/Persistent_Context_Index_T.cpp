@@ -118,8 +118,6 @@ TAO_Persistent_Context_Index<ACE_MEM_POOL_2, ACE_LOCK>::open (LPCTSTR file_name,
 {
   this->base_address_ = base_address;
 
-  ACE_DEBUG ((LM_DEBUG, "The base mapping address is : %X \n", base_address_));
-
   index_file_ = ACE_OS::strdup (file_name);
   if (index_file_ == 0)
     return -1;
@@ -206,15 +204,21 @@ TAO_Persistent_Context_Index<ACE_MEM_POOL_2, ACE_LOCK>::init (void)
 template <ACE_MEM_POOL_1, class ACE_LOCK> int
 TAO_Persistent_Context_Index<ACE_MEM_POOL_2, ACE_LOCK>::recreate_all (void)
 {
-  INDEX::ITERATOR * index_iter = 0;
+  ACE_Shared_Hash_Map<TAO_Persistent_Index_ExtId,
+    TAO_Persistent_Index_IntId>::ITERATOR * index_iter = 0;
 
   ACE_NEW_RETURN (index_iter,
-                  INDEX::ITERATOR (*index_),
+                  (ACE_Shared_Hash_Map<TAO_Persistent_Index_ExtId, TAO_Persistent_Index_IntId>::ITERATOR) (*index_),
                   -1);
 
-  ACE_Auto_Basic_Ptr<INDEX::ITERATOR> it (index_iter);
+  ACE_Auto_Basic_Ptr<ACE_Shared_Hash_Map<TAO_Persistent_Index_ExtId,
+    TAO_Persistent_Index_IntId>::ITERATOR> it (index_iter);
 
-  INDEX::ENTRY *entry = 0;
+  ACE_Shared_Hash_Map<TAO_Persistent_Index_ExtId,
+    TAO_Persistent_Index_IntId>::ENTRY *entry = 0;
+
+   if (TAO_debug_level > 0)
+     ACE_DEBUG ((LM_DEBUG, "Starting to recreate Naming Contexts from the file... \n"));
 
   do
     {
@@ -263,9 +267,11 @@ TAO_Persistent_Context_Index<ACE_MEM_POOL_2, ACE_LOCK>::recreate_all (void)
               orb_->object_to_string (result.in (), ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
-          ACE_DEBUG ((LM_DEBUG, "Context_Index init from file: poa_id %s \n", entry->ext_id_.poa_id_));
-          ACE_DEBUG ((LM_DEBUG, "Context_Index init from file: counter %d \n", (*(c_impl->counter_))));
-
+          if (TAO_debug_level > 0)
+            ACE_DEBUG ((LM_DEBUG,
+                        "Recreating Naming Context with poa_id %s and counter %d\n",
+                        entry->ext_id_.poa_id_,
+                        (*(c_impl->counter_))));
         }
       ACE_CATCHANY
         {
