@@ -1,4 +1,5 @@
 // $Id$
+
 // ================================================================
 //
 // = FILENAME
@@ -59,4 +60,4 @@ class GENERIC_SERVANT_Export Dir_Service_i : public POA_Dir_Service
 
 };
 
-#endif /*DIR_SERVICE_I_H*/
+#endif /* DIR_SERVICE_I_H */

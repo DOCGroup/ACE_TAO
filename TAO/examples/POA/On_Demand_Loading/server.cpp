@@ -1,12 +1,14 @@
 // $Id$
+
 //============================================================================
 //
 //  =FILENAME
 //     server.cpp
 //
 //  =DESCRIPTION
-//     Server to test the Servant Activator. The servant activator loads a servant 
-//     on demand and makes its association with the object.
+//     Server to test the Servant Activator. The servant activator
+//     loads a servant on demand and makes its association with the
+//     object.
 //
 //  =AUTHOR
 //     Kirthika Parameswaran <kirthika@cs.wustl.edu>
@@ -189,9 +191,8 @@ main (int argc, char **argv)
       }
   }
   
-  
-  // Destroy the policy objects as they have been passed to
-  // create_POA and no longer needed.
+  // Destroy the policy objects as they have been passed to create_POA
+  // and no longer needed.
   for (CORBA::ULong i = 0;
        i < policies.length () && env.exception () == 0;
        ++i)
@@ -253,7 +254,6 @@ main (int argc, char **argv)
   // Print the ior's of first_dir_service 
   ACE_DEBUG((LM_DEBUG,"%s\n",
 	     first_dir_service_ior.in ()));
-
 
   int write_result = write_iors_to_file (first_dir_service_ior.in ());
 
