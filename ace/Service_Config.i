@@ -10,7 +10,7 @@ ACE_INLINE int
 ACE_Service_Config::open (int argc,
                           ASYS_TCHAR *argv[],
                           LPCTSTR logger_key,
-                          int ingore_static_svcs)
+                          int ignore_static_svcs)
 {
   ACE_TRACE ("ACE_Service_Config::open");
 
