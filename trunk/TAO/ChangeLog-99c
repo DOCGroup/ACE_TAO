@@ -1,3 +1,19 @@
+Sat Sep 18 19:22:49 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_union_branch/public_assign_cs.cpp:
+	  Added missing code for copy constructor of a union
+	  containing a typecode. _duplicate was called, but the
+	  assignment wasn't made. 
+
+	* TAO_IDL/be/be_visitor_array/array_ci.cpp:
+	  Moved an #if defined (ACE_HAS_BROKEN_IMPLICIT_CONST_CAST)
+	  from TAO_IDL code to generated code, so that IDL 
+	  compiler built on one platform can generate code for
+	  another platform.
+
+	  Thanks to Christopher Kohlhoff <chris@kohlhoff.com> for
+	  suggesting both these fixes.
+
 Sat Sep 18 18:24:40 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* tao/Object.cpp (_get_interface):
