@@ -23,6 +23,10 @@
 #include "ace/Malloc_Base.h"
 #include "ace/Null_Mutex.h"
 
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#  include "tao/Sequence_T.h"
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION || ACE_HAS_TEMPLATE_INSTANTIATION_PRAGM */
+
 #if !defined (__ACE_INLINE__)
 # include "tao/Typecode.i"
 #endif /* ! __ACE_INLINE__ */
