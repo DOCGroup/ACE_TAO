@@ -1,3 +1,12 @@
+Wed Mar 25 11:11:47 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/ORB.{h,cpp}: changed type of open_called_ and
+          should_shutdown_ flags from CORBA::Boolean to u_int, because
+          they're ACE_Atomic_Ops.  This allows CORBA::Boolean to be
+          a typedef of bool.  Without this change, bool would be required
+          to support all of the arithmetic operations that ACE_Atomic_Op
+          needs, and that's not standard.
+
 Wed Mar 25 09:08:44 1998  Torben Worm  <tworm@cumbia.cs.wustl.edu>
 
 	* docs/releasenotes/index.html: Added comment to the concurrency
