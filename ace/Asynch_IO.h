@@ -597,7 +597,7 @@ public:
   // Forward declaration.
 
   ACE_Asynch_Transmit_File (void);
-  // A do nothing constructor.
+  // A "do-nothing" constructor.
 
   int transmit_file (ACE_HANDLE file,
                      Header_And_Trailer *header_and_trailer = 0,
@@ -880,6 +880,7 @@ public:
   int transmit (void);
   // Do the transmission. All the info to do the transmission is in
   // the <result> member.
+
 protected:
   virtual void handle_write_stream (const ACE_Asynch_Write_Stream::Result &result);
   // This is called when asynchronous writes from the socket complete.
@@ -909,9 +910,10 @@ private:
     DATA_ACT    = 2,
     TRAILER_ACT = 3
   };
-  ACT * header_act_;
-  ACT * data_act_;
-  ACT * trailer_act_;
+
+  ACT *header_act_;
+  ACT *data_act_;
+  ACT *trailer_act_;
   // ACT to transmit header, data and trailer.
 
   size_t file_offset_;
