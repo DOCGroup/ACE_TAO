@@ -1,3 +1,9 @@
+Fri Jun 29 09:24:36 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tao/DynamicAny/DynUnion_i.cpp:
+
+          Fixed an uninitialized variable.
+
 Fri Jun 29 07:09:16 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/DynamicAny/DynUnion_i.cpp: Fixed a warning in g++.
