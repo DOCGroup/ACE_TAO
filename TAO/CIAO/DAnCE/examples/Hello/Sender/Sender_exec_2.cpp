@@ -76,7 +76,7 @@ Sender_Impl::Sender_exec_2_i::ciao_preactivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED
 }
 
 void
-Sender_Impl::Sender_exec_2_i::ccm_activate (ACE_ENV_SINGLE_ARG_DECL)
+Sender_Impl::Sender_exec_2_i::ccm_activate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
@@ -86,12 +86,20 @@ Sender_Impl::Sender_exec_2_i::ccm_activate (ACE_ENV_SINGLE_ARG_DECL)
   ::Components::ConsumerDescriptions_var c =
       this->base_exec_->consumers ();
 
+  ACE_DEBUG ((LM_DEBUG, "i got the consumer list\n"));
+
+  ACE_DEBUG ((LM_DEBUG, "length of consumers is %d\n", c->length ()));
+
   CORBA::Object_var o =
-    this->context_->get_CCM_object ();
+    this->context_->get_CCM_object (ACE_ENV_SINGLE_ARG_PARAMETER);
+
+  ACE_DEBUG ((LM_DEBUG, "i got the context and the object \n"));
 
   Hello::Sender_var sender =
     Hello::Sender::_narrow (o.in ()
                             ACE_ENV_ARG_PARAMETER);
+
+  ACE_DEBUG ((LM_DEBUG, "length of consumers is %d\n", c->length ()));
 
   for (CORBA::ULong cnt = 0;
        cnt != c->length ();
