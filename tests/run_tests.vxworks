@@ -50,6 +50,12 @@ ld < TSS_Test
 write 2, "TSS_Test ", 9
 ace_main; unld "TSS_Test"
 
+#### Page faults with ghs on Pentium.  It appears that the STL-style
+#### iterator usage in ACE_Timeprobe isn't handled properly by the compiler.
+#### ld < Timeprobe_Test
+#### write 2, "Timeprobe_Test ", 15
+#### ace_main; unld "Timeprobe_Test"
+
 ld < Time_Value_Test
 write 2, "Time_Value_Test ", 16
 ace_main; unld "Time_Value_Test"
