@@ -1,3 +1,9 @@
+Thu Feb 18 11:49:18 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/CORBA_macros.h (ACE_THROW_INT): This should return a new
+	  instance of the exception.  Thanks to Andy for pointing this
+	  out.
+
 Wed Feb 17 16:40:56 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/OS.h (ACE_NEW_THROW_EX): A new ACE_NEW_THROW macro which
