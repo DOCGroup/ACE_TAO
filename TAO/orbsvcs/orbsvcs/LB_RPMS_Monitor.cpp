@@ -19,15 +19,14 @@ TAO_LB_RPMS_Monitor::init (CORBA::Environment &ACE_TRY_ENV)
   // Possibly no CORBA exceptions instantiated yet so don't attempt
   // to throw one if allocation fails.
 
-  TAO_LB_RPMS_Monitor_Interceptor *& interceptor =
-    this->interceptor_.out ();
+  ACE_NEW (this->interceptor_,
+           TAO_LB_RPMS_Monitor_Interceptor);
 
-  ACE_NEW (interceptor,
-           TAO_LB_RPMS_Monitor_Interceptor (this->object_group_.in ()));
+  PortableInterceptor::ServerRequestInterceptor_var tmp = this->interceptor_;
 
   TAO_LB_RPMS_Monitor_ORBInitializer *initializer = 0;
   ACE_NEW (temp_initializer,
-           TAO_LB_RPMS_Monitor_ORBInitializer (this->interceptor_.in ()));
+           TAO_LB_RPMS_Monitor_ORBInitializer (this->interceptor_));
 
   PortableInterceptor::ORBInitializer_var orb_initializer =
     temp_initializer;
@@ -59,7 +58,7 @@ TAO_LB_RPMS_Monitor::current_load (CORBA::Environment &ACE_TRY_ENV)
                       CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (0);
 
-  LoadBalancing::LoadList_var loads = tmps_loads;
+  LoadBalancing::LoadList_var loads = tmp_loads;
 
   loads->length (1);
 
