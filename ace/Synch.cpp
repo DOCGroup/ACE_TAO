@@ -919,7 +919,6 @@ ACE_RW_Thread_Mutex::dump (void) const
 void
 ACE_Static_Object_Lock::close_singleton (void)
 {
-  ACE_Allocator::close_singleton ();
   delete ACE_Static_Object_Lock::mutex_;
   ACE_Static_Object_Lock::mutex_ = 0;
 }
