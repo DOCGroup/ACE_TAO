@@ -357,7 +357,7 @@ CORBA_ORB::_get_client_interceptor (CORBA_Environment &)
 }
 
 ACE_INLINE PortableInterceptor::ServerRequestInterceptor_ptr
-CORBA_ORB::_get_server_interceptor (CORBA_Environment &ACE_TRY_ENV)
+CORBA_ORB::_get_server_interceptor (CORBA_Environment &)
 {
   return
     PortableInterceptor::ServerRequestInterceptor::_duplicate (this->server_interceptor_);
