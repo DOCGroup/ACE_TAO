@@ -56,11 +56,6 @@ public:
 
   virtual void load_attrs (const TAO_Notify::NVPList& attrs);
 
-  // override and hide derived init methods and
-  // explicitly direct the init call down the correct
-  // leg of the d**n diamond.
-  virtual void init (TAO_Notify_SupplierAdmin *supplier_admin ACE_ENV_ARG_DECL);
-
 protected:
   ///= Data Members
   TAO_Notify_Property_Time pacing_interval_;

@@ -1,8 +1,26 @@
+Tue Nov 23 13:33:35 2004  Dale Wilson  <wilson_d@ociweb.com>
+
+        * orbsvcs/orbsvcs/Notify/Any/ProxyPushConsumer.h:
+        * orbsvcs/orbsvcs/Notify/Any/ProxyPushConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Object.h:
+        * orbsvcs/orbsvcs/Notify/Object.cpp:
+        * orbsvcs/orbsvcs/Notify/Sequence/SequenceProxyPushConsumer.h:
+        * orbsvcs/orbsvcs/Notify/Sequence/SequenceProxyPushConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredProxyPushConsumer.h:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredProxyPushConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Topology_Object.cpp:
+          Diamond inheritance is bad news.
+          Diamond inheritence mixed with templates, and child classes overloading
+          (not overriding) base class methods (mea culpa) is really bad news.
+          Thanks to a suggestion by Chad I got rid of the method overload.  That
+          should make the various compilers that care about such things happier.
+
+
 Tue Nov 23 11:30:53 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/tests/FaultTolerance/IOGR/run_test.pl:
+        * orbsvcs/tests/FaultTolerance/IOGR/run_test.pl:
 
-	  New file.
+          New file.
 
 Tue Nov 23 10:43:59 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
