@@ -100,12 +100,11 @@ public:
   ACE_Reactor *reactor (void);
 
   // = Set/get the <ACE_Thread_Manager>.
-  ACE_Thread_Manager *thr_mgr (ACE_Thread_Manager *tm);
   ACE_Thread_Manager *thr_mgr (void);
 
   // = Set/get <rootPOA>.
-  TAO_POA *root_poa (TAO_POA *np);
-  TAO_POA *root_poa (const char *adapter_name = TAO_DEFAULT_ROOTPOA_NAME,
+  TAO_POA *root_poa (CORBA::Environment &TAO_IN_ENV = TAO_default_environment (),
+                     const char *adapter_name = TAO_DEFAULT_ROOTPOA_NAME,
                      TAO_POA_Manager *poa_manager = 0,
                      const TAO_POA_Policies *policies = 0);
   PortableServer::POA_ptr root_poa_reference (CORBA::Environment &TAO_IN_ENV = TAO_default_environment (),
@@ -279,13 +278,12 @@ protected:
 
   void create_and_set_root_poa (const char *adapter_name,
                                 TAO_POA_Manager *poa_manager,
-                                const TAO_POA_Policies *policies);
+                                const TAO_POA_Policies *policies,
+                                CORBA::Environment &TAO_IN_ENV);
   // Initialize the root POA.
 
 protected:
   // = Data members.
-  ACE_Thread_Manager *thr_mgr_;
-  // Used to manage threads within the ORB
 
   TAO_Connector_Registry *connector_registry_;
   // The connector registry which all active connecters must register
@@ -370,6 +368,12 @@ protected:
   // Note that this is a pointer in order to reduce the include file
   // dependencies.
   //
+
+  TAO_Object_Adapter *object_adapter_;
+  // Object Adapter.
+
+  ACE_Thread_Manager tm_;
+  // The Thread Manager
 };
 
 // ****************************************************************
