@@ -1,9 +1,10 @@
 // $Id$
 
 #include "ace/Message_Block.h"
-#include "JAWS/server/HTTP_Request.h"
 
+#include "JAWS/server/HTTP_Request.h"
 #include "JAWS/server/HTTP_Helpers.h"
+#include "JAWS/server/HTTP_Config.h"
 
 const char * const
 HTTP_Request::static_header_strings_[HTTP_Request::NUM_HEADER_STRINGS]
@@ -20,10 +21,17 @@ HTTP_Request::static_method_strings_[HTTP_Request::NUM_METHOD_STRINGS]
 // null-terminated, and buflen does NOT include the \0
 
 HTTP_Request::HTTP_Request (void)
-  : got_request_line_(0),
-    method_(0), uri_(0), version_(0),
-    header_strings_(HTTP_Request::static_header_strings_),
-    method_strings_(HTTP_Request::static_method_strings_)
+  : got_request_line_ (0),
+    method_ (0),
+    uri_ (0),
+    version_ (0),
+    cgi_ (0),
+    cgi_env_ (0),
+    cgi_args_ (0),
+    query_string_ (0),
+    path_info_ (0),
+    header_strings_ (HTTP_Request::static_header_strings_),
+    method_strings_ (HTTP_Request::static_method_strings_)
 {
   for (int i = 0; i < HTTP_Request::NUM_HEADER_STRINGS; i++)
     this->headers_.recognize (this->header_strings_[i]);
@@ -31,9 +39,11 @@ HTTP_Request::HTTP_Request (void)
 
 HTTP_Request::~HTTP_Request (void)
 {
-  ACE_OS::free(this->method_);
-  ACE_OS::free(this->uri_);
-  ACE_OS::free(this->version_);
+  ACE_OS::free (this->method_);
+  ACE_OS::free (this->uri_);
+  ACE_OS::free (this->version_);
+  ACE_OS::free (this->query_string_);
+  ACE_OS::free (this->path_info_);
 }
 
 int
@@ -163,6 +173,18 @@ const char *
 HTTP_Request::cgi_args (void) const
 {
   return this->cgi_args_;
+}
+
+const char *
+HTTP_Request::query_string (void) const
+{
+  return this->query_string_;
+}
+
+const char *
+HTTP_Request::path_info (void) const
+{
+  return this->path_info_;
 }
 
 int HTTP_Request::got_request_line (void) const
@@ -339,13 +361,60 @@ HTTP_Request::cgi (char *uri_string)
   this->cgi_env_ = 0;
   this->cgi_args_ = 0;
 
-  char *cgi_question = ACE_OS::strchr (uri_string, '?');
+  // There are 2 cases where a file could be a CGI script
+  //
+  // (1) the file has a CGI extension.
+  // (2) the file resides in a CGI bin directory.
+
+  char *cgi_path = ACE_OS::strdup (HTTP_Config::instance ()->cgi_path ());
+  char *cgi_path_next, *lasts;
+  char *extra_path_info = 0;
+
+  cgi_path_next = ACE_OS::strtok_r (cgi_path, ":", &lasts);
+  do
+    {
+      int len = ACE_OS::strlen (cgi_path_next);
+      if ((*cgi_path_next == '/')
+          ? ! ACE_OS::strncmp (extra_path_info = uri_string,
+                               cgi_path_next, len)
+          : (int)(extra_path_info = ACE_OS::strstr (uri_string,
+                                                    cgi_path_next)))
+        {
+          if (extra_path_info[len] == '/')
+            {
+              this->cgi_ = 1;
+              extra_path_info += len;
+
+              // move past the executable name
+              do
+                {
+                  extra_path_info++;
+                }
+              while (*extra_path_info != '/'
+                     && *extra_path_info != '?'
+                     && *extra_path_info != '\0');
+
+              if (*extra_path_info == '\0')
+                extra_path_info = 0;
+
+              break;
+            }
+        }
+      extra_path_info = 0;
+    }
+  while ((cgi_path_next = ACE_OS::strtok_r (NULL, ":", &lasts)));
+
+  ACE_OS::free (cgi_path);
+
+  char *cgi_question = 0;
+  if (extra_path_info)
+    cgi_question = ACE_OS::strchr (extra_path_info, '?');
+  if (extra_path_info == cgi_question)
+    extra_path_info = 0;
+
   if (cgi_question)
     {
-      this->cgi_ = 1;
       *cgi_question++ = '\0';
-
-
       if (*cgi_question != '\0')
         {
           if (ACE_OS::strchr (cgi_question, '='))
@@ -353,9 +422,28 @@ HTTP_Request::cgi (char *uri_string)
           else
             this->cgi_args_ = cgi_question;
 
+          // We need the ``original'' QUERY_STRING for the environment.
+          // We will substitute '+'s for spaces in the other copy.
+
+          this->query_string_ = ACE_OS::strdup (cgi_question);
+
+          char *ptr = cgi_question;
+          do
+            {
+              if (*ptr == '+') *ptr = ' ';
+            }
+          while (*++ptr);
+
           HTTP_Helper::HTTP_decode_string (cgi_question);
         }
     }
+
+  HTTP_Helper::HTTP_decode_string (uri_string);
+
+  if (extra_path_info)
+    this->path_info_ = ACE_OS::strdup (extra_path_info);
+
+  *extra_path_info = '\0';
 
   return this->cgi_;
 }
