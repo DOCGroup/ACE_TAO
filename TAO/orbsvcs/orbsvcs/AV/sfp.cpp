@@ -96,7 +96,8 @@ SFP_Encoder::encode_simple_frame (ACE_Message_Block *data)
       // construct the frame header
       SFP::frame_header frame_header;
       // copy the magic number into the message
-      for (int i = 0; i < sizeof frame_header.magic_number; i++)
+      //      frame_header.magic_number.length (4);
+      for (int i = 0; i < 3; i++)
         frame_header.magic_number [i] = TAO_SFP_MAGIC_NUMBER [i];
       
       // flags field is all zeroes
