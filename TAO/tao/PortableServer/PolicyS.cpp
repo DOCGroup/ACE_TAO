@@ -29,6 +29,7 @@
 #include "tao/TAO_Server_Request.h"
 #include "tao/ORB_Core.h"
 #include "tao/Stub.h"
+#include "tao/Profile.h"
 #include "tao/IFR_Client_Adapter.h"
 #include "tao/PortableInterceptor.h"
 
@@ -647,7 +648,7 @@ CORBA::PolicyType POA_CORBA::_TAO_Policy_ThruPOA_Proxy_Impl::policy_type (
     );
   CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
-      _collocated_tao_target_->_object_key (),
+      _collocated_tao_target_->_stubobj ()->profile_in_use ()->object_key (),
       "policy_type",
       forward_to.out ()
       ACE_ENV_ARG_PARAMETER
@@ -680,7 +681,7 @@ CORBA::PolicyType POA_CORBA::_TAO_Policy_ThruPOA_Proxy_Impl::policy_type (
     );
   CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
-      _collocated_tao_target_->_object_key (),
+      _collocated_tao_target_->_stubobj ()->profile_in_use ()->object_key (),
       "copy",
       forward_to.out ()
       ACE_ENV_ARG_PARAMETER
@@ -711,7 +712,7 @@ void POA_CORBA::_TAO_Policy_ThruPOA_Proxy_Impl::destroy (
     );
   CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
-      _collocated_tao_target_->_object_key (),
+      _collocated_tao_target_->_stubobj ()->profile_in_use ()->object_key (),
       "destroy",
       forward_to.out ()
       ACE_ENV_ARG_PARAMETER

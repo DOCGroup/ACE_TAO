@@ -35,20 +35,22 @@ ACE_RCSID (tao,
            "$Id$")
 
 TAO_Default_Resource_Factory::TAO_Default_Resource_Factory (void)
-  : use_locked_data_blocks_ (1),
-    parser_names_count_ (0),
-    parser_names_ (0),
-    protocol_factories_ (),
-    connection_purging_type_ (TAO_CONNECTION_PURGING_STRATEGY),
-    cache_maximum_ (TAO_CONNECTION_CACHE_MAXIMUM),
-    purge_percentage_ (TAO_PURGE_PERCENT),
-    max_muxed_connections_ (0),
-    reactor_mask_signals_ (1),
-    dynamically_allocated_reactor_ (0),
-    options_processed_ (0),
-    factory_disabled_ (0),
-    cached_connection_lock_type_ (TAO_THREAD_LOCK),
-    flushing_strategy_type_ (TAO_LEADER_FOLLOWER_FLUSHING)
+  : use_locked_data_blocks_ (1)
+    , parser_names_count_ (0)
+    , parser_names_ (0)
+    , protocol_factories_ ()
+    , connection_purging_type_ (TAO_CONNECTION_PURGING_STRATEGY)
+    , cache_maximum_ (TAO_CONNECTION_CACHE_MAXIMUM)
+    , purge_percentage_ (TAO_PURGE_PERCENT)
+    , max_muxed_connections_ (0)
+    , reactor_mask_signals_ (1)
+    , dynamically_allocated_reactor_ (0)
+    , options_processed_ (0)
+    , factory_disabled_ (0)
+    , cached_connection_lock_type_ (TAO_THREAD_LOCK)
+    , corba_object_lock_type_ (TAO_THREAD_LOCK)
+    , flushing_strategy_type_ (TAO_LEADER_FOLLOWER_FLUSHING)
+    , resource_usage_strategy_ (TAO_Resource_Factory::TAO_EAGER)
 {
 }
 
@@ -279,6 +281,49 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
               }
             else
               this->report_option_value_error (ACE_LIB_TEXT("-ORBConnectionCacheLock"), name);
+          }
+      }
+    else if (ACE_OS::strcasecmp (argv[curarg],
+                                 ACE_LIB_TEXT("-ORBCorbaObjectLock")) == 0)
+      {
+        curarg++;
+        if (curarg < argc)
+          {
+            ACE_TCHAR* name = argv[curarg];
+
+            if (ACE_OS::strcasecmp (name,
+                                    ACE_LIB_TEXT("thread")) == 0)
+              this->corba_object_lock_type_ = TAO_THREAD_LOCK;
+            else if (ACE_OS::strcasecmp (name,
+                                         ACE_LIB_TEXT("null")) == 0)
+              {
+                // @@ Bug 940 :This is a sort of hack now. We need to put
+                // this in a common place once we get the common
+                // switch that is documented in bug 940...
+                this->corba_object_lock_type_ = TAO_NULL_LOCK;
+              }
+            else
+              this->report_option_value_error (ACE_LIB_TEXT("-ORBCorbaObjectLock"), name);
+          }
+      }
+    else if (ACE_OS::strcasecmp (argv[curarg],
+                                 ACE_LIB_TEXT("-ORBResourceUsage")) == 0)
+      {
+        curarg++;
+        if (curarg < argc)
+          {
+            ACE_TCHAR* name = argv[curarg];
+
+            if (ACE_OS::strcasecmp (name,
+                                    ACE_LIB_TEXT("eager")) == 0)
+              this->resource_usage_strategy_ = TAO_EAGER;
+            else if (ACE_OS::strcasecmp (name,
+                                         ACE_LIB_TEXT("lazy")) == 0)
+              {
+                this->resource_usage_strategy_ = TAO_LAZY;
+              }
+            else
+              this->report_option_value_error (ACE_LIB_TEXT("-ORBResourceUsage"), name);
           }
       }
     else if (ACE_OS::strcasecmp (argv[curarg],
@@ -734,6 +779,22 @@ TAO_Default_Resource_Factory::locked_transport_cache (void)
   return 1;
 }
 
+ACE_Lock *
+TAO_Default_Resource_Factory::create_corba_object_lock (void)
+{
+  ACE_Lock *the_lock = 0;
+
+  if (this->corba_object_lock_type_ == TAO_NULL_LOCK)
+    ACE_NEW_RETURN (the_lock,
+                    ACE_Lock_Adapter<ACE_SYNCH_NULL_MUTEX>,
+                    0);
+  else
+    ACE_NEW_RETURN (the_lock,
+                    ACE_Lock_Adapter<TAO_SYNCH_MUTEX>,
+                    0);
+
+  return the_lock;
+}
 
 TAO_Flushing_Strategy *
 TAO_Default_Resource_Factory::create_flushing_strategy (void)
@@ -810,6 +871,12 @@ TAO_Default_Resource_Factory::disable_factory (void)
                   ACE_LIB_TEXT ("TAO (%P|%t) Warning: Resource_Factory options ignored\n")
                   ACE_LIB_TEXT ("Default Resource Factory is disabled\n")));
     }
+}
+
+TAO_Resource_Factory::Resource_Usage
+TAO_Default_Resource_Factory::resource_usage_strategy (void)const
+{
+  return this->resource_usage_strategy_;
 }
 
 // ****************************************************************

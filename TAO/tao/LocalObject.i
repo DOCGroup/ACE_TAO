@@ -228,4 +228,3 @@ TAO_Local_RefCounted_Object::TAO_Local_RefCounted_Object (void)
     refcount_ (1)
 {
 }
-

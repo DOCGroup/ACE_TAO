@@ -10,11 +10,15 @@ CORBA::Object::Object (int)
     servant_ (0),
     is_local_ (1),
     proxy_broker_ (0),
+    is_evaluated_ (1),
+    ior_ (),
+    orb_core_ (0),
     protocol_proxy_ (0),
     refcount_ (1),
     refcount_lock_ (0)
 {
 }
+
 
 ACE_INLINE CORBA::Object_ptr
 CORBA::Object::_duplicate (CORBA::Object_ptr obj)

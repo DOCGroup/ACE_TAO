@@ -5,7 +5,7 @@
 
 #include "tao/ORB_Core.h"
 #include "tao/Stub.h"
-
+#include "tao/Profile.h"
 
 ACE_RCSID(tao, TAO_ThruPOA_Object_Proxy_Impl, "$Id$")
 
@@ -30,7 +30,7 @@ TAO_ThruPOA_Object_Proxy_Impl::_is_a (const CORBA::Object_ptr target,
 
   CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
-    target->_object_key (),
+    target->_stubobj ()->profile_in_use ()->object_key (),
     "_is_a",
     forward_to.out ()
     ACE_ENV_ARG_PARAMETER
@@ -61,7 +61,7 @@ TAO_ThruPOA_Object_Proxy_Impl::_non_existent (const CORBA::Object_ptr target
       CORBA::Object_var forward_to;
 
       servant_upcall.prepare_for_upcall (
-         target->_object_key (),
+         target->_stubobj ()->profile_in_use ()->object_key (),
          "_non_existent",
          forward_to.out ()
          ACE_ENV_ARG_PARAMETER
@@ -99,7 +99,7 @@ TAO_ThruPOA_Object_Proxy_Impl::_get_interface (const CORBA::Object_ptr target
       CORBA::Object_var forward_to;
 
       servant_upcall.prepare_for_upcall (
-         target->_object_key (),
+         target->_stubobj ()->profile_in_use ()->object_key (),
          "_interface",
          forward_to.out ()
          ACE_ENV_ARG_PARAMETER
@@ -136,7 +136,7 @@ TAO_ThruPOA_Object_Proxy_Impl::_get_component (const CORBA::Object_ptr target
       CORBA::Object_var forward_to;
 
       servant_upcall.prepare_for_upcall (
-         target->_object_key (),
+         target->_stubobj ()->profile_in_use ()->object_key (),
          "_component",
          forward_to.out ()
          ACE_ENV_ARG_PARAMETER);
