@@ -1,3 +1,15 @@
+Mon Jun  5 16:47:32 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* [inl,c]
+	 
+	  Moved files from root directory to pace/sunos.
+	
+	* aio, dirent, fcntl, grp, in, inet, mman, mqueue,
+	  netdb, pthread, pwd, sched, semaphore, setjmp,
+	  signal, socket, stat, stdio, stdlib, string,
+	  strings, termios, time, times, unistd, utime,
+	  utsname, wait
+
 Mon Jun  5 15:23:53 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* /pace/linux
