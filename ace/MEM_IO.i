@@ -33,7 +33,9 @@ ACE_MEM_IO::fetch_recv_buf (int flag, const ACE_Time_Value *timeout)
                         flag,
                         timeout);
 
-  if (retv != sizeof (off_t))
+  if (retv == 0)
+    return 0;
+  else if (retv != sizeof (off_t))
     {
       //  Nothing available or we are really screwed.
       this->buf_size_ = 0;
@@ -96,8 +98,10 @@ ACE_MEM_IO::recv (void *buf,
       size_t buf_len = this->buf_size_ - this->cur_offset_;
       if (buf_len == 0)
         {
-          if (this->fetch_recv_buf (flags, timeout) == -1)
-            return -1;
+          ssize_t blen =         // Buffer length
+            this->fetch_recv_buf (flags, timeout);
+          if (blen <= 0)
+            return blen;
           buf_len = this->buf_size_;
         }
 

@@ -22,6 +22,7 @@ ACE_MEM_Connector::dump (void) const
 }
 
 ACE_MEM_Connector::ACE_MEM_Connector (void)
+  : malloc_options_ (ACE_DEFAULT_BASE_ADDR, 0)
 {
   ACE_TRACE ("ACE_MEM_Connector::ACE_MEM_Connector");
 }
@@ -35,6 +36,7 @@ ACE_MEM_Connector::ACE_MEM_Connector (ACE_MEM_Stream &new_stream,
                                       int flags,
                                       int perms,
                                       int protocol)
+  : malloc_options_ (ACE_DEFAULT_BASE_ADDR, 0)
 {
   ACE_TRACE ("ACE_MEM_Connector::ACE_MEM_Connector");
   // This is necessary due to the weird inheritance relationships of

@@ -334,6 +334,7 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::shared_malloc (size_t nbytes)
     }
   ACE_SEH_EXCEPT (this->memory_pool_.seh_selector (GetExceptionInformation ()))
     {
+      currp = prevp->next_block_;
     }
 
   // Search the freelist to locate a block of the appropriate size.
