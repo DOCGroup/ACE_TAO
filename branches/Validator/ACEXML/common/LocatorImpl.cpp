@@ -25,8 +25,8 @@ ACEXML_LocatorImpl::ACEXML_LocatorImpl (const ACEXML_Char* systemId,
 
 
 ACEXML_LocatorImpl::ACEXML_LocatorImpl (const ACEXML_Locator& locator)
-  : publicId_ (ACE::strnew (locator.getPublicId ())),
-    systemId_ (ACE::strnew (locator.getSystemId ())),
+  : publicId_ (locator.getPublicId() ? ACE::strnew(locator.getPublicId ()): 0),
+    systemId_ (locator.getSystemId() ? ACE::strnew(locator.getSystemId ()): 0),
     lineNumber_ (locator.getLineNumber ()),
     columnNumber_ (locator.getColumnNumber ())
 {
