@@ -1,3 +1,19 @@
+Sat Dec  6 19:36:19 2003  Steve Huston  <shuston@riverace.com>
+
+	* ace/os_include/sys/os_stat.h: Added #include "ace/Time_Value.h"
+	  in the ACE_HAS_WINCE section because the WinCE version of struct
+	  stat uses ACE_Time_Value for time fields.
+
+	* ace/config-WinCE.h: Added ACE_LACKS_FCNTL_H. eVC doesn't supply this,
+	  at least thru version 4.1.
+
+	* ace/iosfwd.h: Disable most of this file if ACE_LACKS_IOSTREAM_TOTALLY
+	  is set.
+
+	* ace/QtReactor.h:
+	* ace/os_include/os_errno.h: Added /**/ to #include statements to
+	  keep eVC from complaining about files not being there.
+
 Sat Dec  6 19:27:26 2003  Steve Huston  <shuston@riverace.com>
 
 	* tests/aix_hack_for_main.cpp: New file that is here to be

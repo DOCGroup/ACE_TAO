@@ -76,6 +76,8 @@ extern "C"
 #endif /* ACE_LACKS_MODE_MASKS */
 
 #if defined (ACE_HAS_WINCE)
+#  include "ace/Time_Value.h"
+
    struct stat
    {
       /// always 0 on Windows platforms
