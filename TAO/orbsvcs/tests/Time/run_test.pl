@@ -12,6 +12,7 @@ require ACEutils;
 $server_ior = "server_ior";
 $clerk_ior = "clerk_ior";
 $implrepo_ior = "implrepo.ior";
+$status = 0;
 
 # Make sure the files are gone, so we can wait on them.
 
@@ -31,13 +32,18 @@ sub time_service_test_using_naming_service
 
     sleep 10;
 
-    $status = system ($EXEPREFIX."client".$EXE_EXT.
-                      "");
+    $CL = system ($EXEPREFIX."client".$EXE_EXT, "");
+    
+    if ($CL->TimedWait (60) == -1) {
+      print STDERR "ERROR: client timedout\n";
+      $status = 1;
+      $CL->Kill (); $CL->TimedWait (1);
+    }
 
     $SV1->Kill ();
     $SV2->Kill ();
-    $SV1->Wait ();
-    $SV2->Wait ();
+    $SV1->TimedWait (1);
+    $SV2->TimedWait (1);
 }
 
 sub time_service_test_using_files
@@ -45,24 +51,41 @@ sub time_service_test_using_files
     $SV1 = Process::Create ($time_dir."server".$EXE_EXT,
                             "-o $server_ior");
 
-    ACE::waitforfile ($server_ior);
-    sleep 5;
-
-    $SV2 = Process::Create ($time_dir."clerk".$EXE_EXT,
-                            "-f $server_ior -o clerk_ior -t 2");
-
-    ACE::waitforfile ($clerk_ior);
-
-    sleep 10;
-
-    $status = system ($EXEPREFIX."client".$EXE_EXT.
-                      " -f clerk_ior");
-
-    $SV1->Kill ();
-    $SV2->Kill ();
-    $SV1->Wait ();
-    $SV2->Wait ();
-
+    if (ACE::waitforfile_timed ($server_ior, 5) == -1) {
+      print STDERR "ERROR: timedout waiting for file <$server_ior>\n";
+      $status = 1;
+      $SV1->Kill (); $SV1->TimedWait (1);
+    }
+    else {
+      
+      sleep 5;
+      
+      $SV2 = Process::Create ($time_dir."clerk".$EXE_EXT,
+                              "-f $server_ior -o clerk_ior -t 2");
+      
+      if (ACE::waitforfile_timed ($clerk_ior, 5) == -1) {
+        print STDERR "ERROR: timedout waiting for file <$clerk_ior>\n";
+        $status = 1;
+        $SV2->Kill (); $SV2->TimedWait (1);
+      }
+      else {
+        
+        sleep 10;
+        
+        $CL = Process::Create ($EXEPREFIX."client".$EXE_EXT,
+                          " -f clerk_ior");
+        if ($CL->TimedWait (60) == -1) {
+          print STDERR "ERROR: client timedout\n";
+          $status = 1;
+          $CL->Kill (); $CL->TimedWait (1);
+        }
+      
+        $SV1->Kill ();
+        $SV2->Kill ();
+        $SV1->TimedWait (1);
+        $SV2->TimedWait (1);
+      }
+    }
     unlink $clerk_ior;
     unlink $server_ior;
 }
@@ -73,12 +96,21 @@ sub time_service_test_using_ir
   $IR = Process::Create ($ir_dir."ImplRepo_Service".$EXE_EXT,
                          "-ORBsvcconf implrepo.conf -d 1");
 
-  ACE::waitforfile ($implrepo_ior);
+  if (ACE::waitforfile_timed ($implrepo_ior, 5) == -1) {
+    print STDERR "ERROR: timedout waiting for file <$implrepo_ior>\n";
+    $IR->Kill (); $IR->TimedWait (1);
+    exit 1;
+  } 
 
   $SV1 = Process::Create ($time_dir."server".$EXE_EXT,
                          "-o $server_ior -i -r");
 
-  ACE::waitforfile ($server_ior);
+  if (ACE::waitforfile_timed ($server_ior, 5) == -1) {
+    print STDERR "ERROR: timedout waiting for file <$implerepo_ior>\n";
+    $IR->Kill (); $IR->TimedWait (1);
+    $SV1->Kill (); $SV1->TimedWait (1);
+    exit 1;
+  }
 
   sleep 10;
 
@@ -87,14 +119,20 @@ sub time_service_test_using_ir
 
   sleep 10;
 
-  system($EXEPREFIX."client.$EXE_EXT -f $clerk_ior");
-
+  $CL = Process::Create ($EXEPREFIX."client.$EXE_EXT", "-f $clerk_ior");
+  
+  if ($CL->TimedWait (60) == -1) {
+    print STDERR "ERROR: client timedout\n";
+    $status = 1;
+    $CL->Kill (); $CL->TimedWait (1);
+  }
+    
   $IR->Kill ();
-  $IR->Wait ();
+  $IR->TimedWait (1);
   $SV1->Kill ();
-  $SV1->Wait ();
+  $SV1->TimedWait (1);
   $SV2->Kill ();
-  $SV2->Wait ();
+  $SV2->TimedWait (1);
 
   unlink $clerk_ior;
   unlink $server_ior;
@@ -137,3 +175,5 @@ for ($i = 0; $i <= $#ARGV; $i++)
     print "run_test: Unknown Option: ".$ARGV[$i]."\n";
   }
 }
+
+exit $status;
