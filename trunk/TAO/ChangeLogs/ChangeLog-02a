@@ -1,24 +1,36 @@
+Fri Jun 30 07:49:51 2000  Anders Olsson <epkanol@s1.epk.ericsson.se>
+
+        * utils/catior/catior.cpp (main): if catior was fed a file
+          containing several IORs, it would only process the first
+          one it finds. I've changed it so that it processes each
+          one in sequence (each IOR still has to be on a line of its own).
+
+          Also, there were a small bug related to the POOP object reference
+          parsing (if a line didn't include IOR or iiop, it would be
+          regarded as a POOP reference, regardless if it contained :IR: or
+           not).
+
 Fri Jun 30 00:57:06 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-	* tao/ORB_Core.cpp:
+        * tao/ORB_Core.cpp:
 
-	  Fixed RTCORBA #ifdef.
+          Fixed RTCORBA #ifdef.
 
 Thu Jun 29 14:42:06 2000  Ossama Othman  <ossama@uci.edu>
 
-	* tao/UIOP_Profile.cpp (create_tagged_profile):
+        * tao/UIOP_Profile.cpp (create_tagged_profile):
 
-	  Added missing definition of "length" variable.  This fixes a
-	  compile-time error.
+          Added missing definition of "length" variable.  This fixes a
+          compile-time error.
 
 Thu Jun 29 12:00:00 2000  Ossama Othman  <ossama@uci.edu>
 
-	* tao/Stub.h (TAO_Stub_Auto_Ptr):
+        * tao/Stub.h (TAO_Stub_Auto_Ptr):
 
-	  Added "TAO_Export" macro to this class declaration.  It is
-	  needed to make it have dllexport linkage on Win32.  This solves
-	  "unresolved symbol" link errors that occur when utilizing this
-	  class outside of the TAO library.
+          Added "TAO_Export" macro to this class declaration.  It is
+          needed to make it have dllexport linkage on Win32.  This solves
+          "unresolved symbol" link errors that occur when utilizing this
+          class outside of the TAO library.
 
 Thu Jun 29 11:53:48 2000  Carlos O'Ryan  <coryan@uci.edu>
 
