@@ -1,3 +1,16 @@
+Wed Oct 27 23:42:45 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/tests/Event_Latency/Event_Latency.cpp:
+	  I missed one variable in the latest change to remove the
+	  dependencies on the Event Channel timestamps.
+
+	* tao/Pluggable.h:
+	* tao/UIOP_Acceptor.h:
+	* tao/UIOP_Acceptor.cpp:
+	* tao/IIOP_Acceptor.h:
+	* tao/IIOP_Acceptor.cpp:
+	  Removed the acceptor() method, it wasn't used in any place.
+
 Wed Oct 27 20:24:29 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/corbafwd.h:
