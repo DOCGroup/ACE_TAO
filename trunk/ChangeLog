@@ -1,3 +1,9 @@
+Mon Sep 27 15:34:35 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* bin/MakeProjectCreator/config/ciao_deployment_stub.mpb:
+
+	  Added CIAO_DnC_Client to the list of libraries being linked in. 
+
 Mon Sep 27 09:25:37 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * performance-tests/Server_Concurrency/Leader_Follower/RT_CORBA_Leader_Follower.cpp:
