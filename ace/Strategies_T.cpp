@@ -790,7 +790,7 @@ ACE_Hash_Addr<ADDR_T,SVC_HANDLER>::operator== (const ACE_Hash_Addr<ADDR_T, SVC_H
 }
 
 template <class SVC_HANDLER> int
-ACE_NOOP_Creation_Strategy<SVC_HANDLER>::make_svc_handler (SVC_HANDLER *&sh)
+ACE_NOOP_Creation_Strategy<SVC_HANDLER>::make_svc_handler (SVC_HANDLER *&)
 {
   ACE_TRACE ("ACE_NOOP_Creation_Strategy<SVC_HANDLER>::make_svc_handler");
   return 0;
