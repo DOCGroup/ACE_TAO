@@ -2726,7 +2726,9 @@ struct iovec
   size_t iov_len; // byte count to read/write
 };
 
+typedef int ACE_idtype_t;
 typedef DWORD ACE_id_t;
+#define ACE_SELF (-1)
 typedef int ACE_pri_t;
 
 // Dynamic loading-related types - used for dlopen and family.
@@ -3254,17 +3256,24 @@ extern "C"
 }
 #endif /* ACE_LACKS_SYSV_MSQ_PROTOS */
 
-#if defined (ACE_HAS_STHREADS)
-#include /**/ <sys/priocntl.h>
-#if defined (ACE_LACKS_PRI_T)
-typedef int pri_t;
-#endif /* ACE_LACKS_PRI_T */
-typedef id_t ACE_id_t;
-typedef pri_t ACE_pri_t;
-#else
-typedef long ACE_id_t;
-typedef short ACE_pri_t;
-#endif /* ACE_HAS_STHREADS */
+#if defined (ACE_HAS_PRIOCNTL)
+# include /**/ <sys/priocntl.h>
+#endif /* ACE_HAS_PRIOCNTL */
+
+#if defined (ACE_HAS_STHREADS) || defined (DIGITAL_UNIX)
+# if defined (ACE_LACKS_PRI_T)
+    typedef int pri_t;
+# endif /* ACE_LACKS_PRI_T */
+  typedef idtype_t ACE_idtype_t;
+  typedef id_t ACE_id_t;
+# define ACE_SELF P_MYID
+  typedef pri_t ACE_pri_t;
+#else  /* ! ACE_HAS_STHREADS && ! DIGITAL_UNIX */
+  typedef int ACE_idtype_t;
+  typedef long ACE_id_t;
+# define ACE_SELF (-1)
+  typedef short ACE_pri_t;
+#endif /* ! ACE_HAS_STHREADS && ! DIGITAL_UNIX */
 
 #if defined (ACE_HAS_HI_RES_TIMER)
   /* hrtime_t is defined on systems (Suns) with ACE_HAS_HI_RES_TIMER */
@@ -4536,7 +4545,9 @@ public:
                     size_t nsops);
 
   // = Thread scheduler interface.
-  static int sched_params (const ACE_Sched_Params &);
+  static int sched_params (const ACE_Sched_Params &, ACE_id_t id = ACE_SELF);
+  // Set scheduling parameters.  An id of ACE_SELF indicates, e.g.,
+  // set the parameters on the calling thread.
 
   // = A set of wrappers for System V shared memory.
   static void *shmat (int int_id,
@@ -4994,6 +5005,7 @@ public:
                         ACE_thread_t t2);
   static void thr_exit (void *status = 0);
   static int thr_getconcurrency (void);
+  static int lwp_getparams (ACE_Sched_Params &);
   static int thr_getspecific (ACE_thread_key_t key,
                               void **data);
   static int thr_keyfree (ACE_thread_key_t key);
@@ -5010,6 +5022,7 @@ public:
   static int thr_key_used (ACE_thread_key_t key);
   static size_t thr_min_stack (void);
   static int thr_setconcurrency (int hint);
+  static int lwp_setparams (const ACE_Sched_Params &);
   static int thr_setspecific (ACE_thread_key_t key,
                               void *data);
   static int thr_sigsetmask (int how,
@@ -5053,6 +5066,17 @@ public:
   static int netdb_acquire (void);
   static int netdb_release (void);
 #endif /* defined (ACE_MT_SAFE) && ACE_LACKS_NETDB_REENTRANT_FUNCTIONS */
+
+  static int scheduling_class (const char *class_name, ACE_id_t &);
+  // Find the schedling class ID that corresponds to the class name.
+
+  static int set_scheduling_params (const ACE_Sched_Params &,
+                                    ACE_id_t id = ACE_SELF);
+  // Friendly interface to priocntl (2).
+
+  // Can't call the following priocntl, because that's a macro on Solaris.
+  static int priority_control (ACE_idtype_t, ACE_id_t, int, void *);
+  // Low-level interface to priocntl (2).
 
 #if defined (ACE_HAS_WINCE)
 private:
