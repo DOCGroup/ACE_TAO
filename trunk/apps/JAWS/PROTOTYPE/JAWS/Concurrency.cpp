@@ -120,13 +120,15 @@ JAWS_Concurrency_Base::svc_hook (JAWS_Data_Block *db)
 
   // Each time we iterate, we create a handler to maintain
   // our state for us.
-  handler = policy->ioh_factory ()->create_io_handler ();
-  if (handler == 0)
+  JAWS_IO_Handler *ts_handler;
+  ts_handler = policy->ioh_factory ()->create_io_handler ();
+  if (ts_handler == 0)
     {
       ACE_DEBUG ((LM_DEBUG, "JAWS_Server::open, can't create handler\n"));
       ts_db->release ();
       return -1;
     }
+  handler = ts_handler;
 
   // Set the initial task in the handler
   handler->task (db->task ());
@@ -158,6 +160,14 @@ JAWS_Concurrency_Base::svc_hook (JAWS_Data_Block *db)
           JAWS_TRACE ("JAWS_Concurrency_Base::svc_hook, waiting");
           // need to wait for an asynchronous event
 
+          // In the case of asynchronous accepts, the handler we just
+          // created was useless.  This is ok, because we know that it
+          // will not be used by another thread.  Just save the
+          // reference around so that it can be destroyed later.
+
+          // This means we need a way to destroy all the handlers
+          // created by the Asynch_Acceptor.  Figure this out later.
+
           JAWS_IO_Handler *h;
           h = waiter->wait_for_completion (waiter_index);
           if (h == 0)
@@ -165,7 +175,6 @@ JAWS_Concurrency_Base::svc_hook (JAWS_Data_Block *db)
           else
             {
               handler = h;
-              db->io_handler (handler);
               result = 0;
             }
         }
@@ -181,7 +190,7 @@ JAWS_Concurrency_Base::svc_hook (JAWS_Data_Block *db)
     }
   while (result == 0);
 
-  policy->ioh_factory ()->destroy_io_handler (handler);
+  policy->ioh_factory ()->destroy_io_handler (ts_handler);
   delete ts_db;
 
   return result;

@@ -178,8 +178,6 @@ protected:
   // This is a reference to the next stage of the pipeline when the IO
   // request completes.
 
-  int waiter_index_;
-
   JAWS_IO_Handler_Factory *factory_;
   // The reference to the handler's factory.
 };
