@@ -1,5 +1,21 @@
+Tue Aug 22 18:59:41 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* PACE/ChangeLog:
+
+	  Updated.
+
 Tue Aug 22 18:51:34 2000  Luther J Baker  <luther@cs.wustl.edu>
 
+	* pace/win32/dirent.h:
+	* pace/win32/signal.h:
+	* stdio.h:
+	* stdlib.h:
+	* time.h:
+	* types.h:
+	* unistd.h:
+	* utsname.h:
+
+	  Update to compile.
 
 Tue Aug 22 17:58:38 2000  Luther J Baker  <luther@cs.wustl.edu>
 
