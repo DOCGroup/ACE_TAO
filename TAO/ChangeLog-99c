@@ -15,7 +15,8 @@ Fri Mar 12 10:38:18 EST 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell
 	  are dealing with fields that are object references, we cast the
 	  data to TAO_Object_Field_T<CORBA_Object>* instead of simply
 	  TAO_Object_Field*. These changes were made during the bug fix
-	  described aove.
+	  described aove. These fixes also removed the Array Bounds Read
+	  (ABR) error message produced by Purify.
 
 Fri Mar 12 00:35:47 1999  Marina Spivak  <marina@cs.wustl.edu>
 
