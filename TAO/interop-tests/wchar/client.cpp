@@ -20,9 +20,9 @@
 #include "interop_wcharC.h"
 #include "wchar_reference.h"
 
-#include <ace/streams.h>
-#include <ace/Get_Opt.h>
-#include <ace/Argv_Type_Converter.h>
+#include "ace/streams.h"
+#include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 
 const int WCHAR_TO_SERVER = 0x0001;
 const int WSTRING_TO_SERVER = 0x0002;
@@ -53,7 +53,7 @@ const char * test_name[] =
   };
 
 const int LAST_TEST = sizeof (test_name) / sizeof (test_name[0]);
-ACE_TCHAR *ior = ACE_TEXT("file://IOR");
+const ACE_TCHAR *ior = ACE_TEXT("file://IOR");
 int tests_to_run = 0;
 int verbose = 0;
 int kill_server = 0;
@@ -334,7 +334,7 @@ ACE_TMAIN( int argc, ACE_TCHAR *argv[] )
       ACE_TRY_CHECK;
     }
   }
-  ACE_CATCH( const CORBA::Exception ,ex )
+  ACE_CATCH(CORBA::Exception, ex)
   {
     ACE_PRINT_EXCEPTION(ex, "Uncaught CORBA exception: ");
     return 1;

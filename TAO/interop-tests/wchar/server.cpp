@@ -17,9 +17,9 @@
 //
 // ============================================================================
 #include "interop_wchar_i.h"
-#include <ace/streams.h>
-#include <ace/Get_Opt.h>
-#include <ace/Argv_Type_Converter.h>
+#include "ace/streams.h"
+#include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 
 const ACE_TCHAR *ior_output_file = ACE_TEXT("IOR");
 int verbose = 0;
@@ -136,7 +136,7 @@ ACE_TMAIN( int argc, ACE_TCHAR *argv[] )
         orb->destroy( ACE_ENV_SINGLE_ARG_PARAMETER );
         ACE_TRY_CHECK;
       }
-    ACE_CATCH(const CORBA::Exception,ex )
+    ACE_CATCH(CORBA::Exception, ex)
       {
         ACE_PRINT_EXCEPTION(ex, "uncaught exception");
         return 1;
