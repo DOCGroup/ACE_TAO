@@ -1,3 +1,18 @@
+Tue Dec 10 18:10:41 2002  Steve Huston  <shuston@riverace.com>
+
+        * tests/Proactor_Test.cpp: Changed the default proactor type to
+          DEFAULT. If a specific proactor implementation type is desired, that
+          must be specified now. This matches ACE's behavior that users will
+          get unless they specifically change it. Also, changed loglevel to
+          be 0 (only highlights and errors), 1 (more progress information),
+          and 2 (all operation parameters and result information). The default
+          is 0, allowing for increased load on this test without creating
+          gigantic log files. All platforms now use the same test parameters
+          (clients, byte counts, threads, etc.) except that if the SUN
+          proactor is selected, the test will run with one thread regardless
+          of user selection. The ACE_SUN_Proactor's completion detector
+          (aiowait) is not multithread safe.
+
 Tue Dec 10 17:19:06 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tests/OS_Test.cpp (ACE_TMAIN): Integrated the latest tests from
