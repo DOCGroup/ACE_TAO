@@ -129,10 +129,6 @@ class test_impl :
   
   CORBA::ORB_var orb_;
   
-  int num_clients_;
-  
-  ACE_Thread_Mutex lock_;
-  
 };
 
 #endif /* TAO_SUPPORTS_TEST_IMPL_H */
