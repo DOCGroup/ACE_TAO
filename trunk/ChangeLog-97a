@@ -3,6 +3,11 @@ Tue Apr 29 07:25:25 1997  David L. Levine  <levine@cs.wustl.edu>
 	* apps/JAWS/server/HTTP_Request.h (HTTP_Request): added destructor
 	  declaration.
 
+	* apps/JAWS/server/Parse_Headers.cpp (parse_header_line): assign local
+	  "value" to value_ field of map_[header].
+
+	* apps/JAWS: added CVS header to all .h, .i, and .cpp files.
+
 Tue Apr 29 00:58:06 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/Reactor.cpp: It looks as if Windows NT isn't returning
