@@ -1,21 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO
-//
-// = FILENAME
-//    Direct_Object_Proxy_Impl.h
-//
-// = DESCRIPTION
-//    This files contains the definition of the direct proxy
-//    for the CORBA::Object class.
-//
-// = AUTHOR
-//     Angelo Corsaro <corsaro@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Direct_Object_Proxy_Impl.h
+ *
+ *  $Id$
+ *
+ *  This files contains the definition of the direct proxy
+ *  for the CORBA::Object class.
+ *
+ *
+ *  @author  Angelo Corsaro <corsaro@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_DIRECT_OBJECT_PROXY_IMPL_H_
 #define TAO_DIRECT_OBJECT_PROXY_IMPL_H_
@@ -34,15 +31,14 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+/**
+ * @class TAO_Direct_Object_Proxy_Impl
+ *
+ * @brief This class implements the direct proxy for the CORBA::Object class.
+ */
 class TAO_PortableServer_Export TAO_Direct_Object_Proxy_Impl :
   public virtual TAO_Object_Proxy_Impl
 {
-  // = TITLE
-  //     TAO_Direct_Object_Proxy_Impl
-  //
-  // = DESCRIPTION
-  //     This class implements the direct proxy for the CORBA::Object
-  //     class.
 public:
 
   TAO_Direct_Object_Proxy_Impl (void);

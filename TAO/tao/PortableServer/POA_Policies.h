@@ -1,21 +1,18 @@
 // -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO
-//
-// = FILENAME
-//    POA_Policies.h
-//
-// = DESCRIPTION
-//     POA
-//
-// = AUTHOR
-//     Irfan Pyarali
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    POA_Policies.h
+ *
+ *  $Id$
+ *
+ *   POA
+ *
+ *
+ *  @author  Irfan Pyarali
+ */
+//=============================================================================
+
 
 #ifndef TAO_POA_POLICIES_H
 #define TAO_POA_POLICIES_H
@@ -59,10 +56,10 @@ public:
   CORBA::PolicyType policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  // Return the cached policy type for this policy.
+  /// Return the cached policy type for this policy.
   virtual TAO_Cached_Policy_Type _tao_cached_type (void) const;
 
-  // Returns the scope at which this policy can be applied. See orbconf.h.
+  /// Returns the scope at which this policy can be applied. See orbconf.h.
   virtual TAO_Policy_Scope _tao_scope (void) const;
 
 protected:
@@ -90,10 +87,10 @@ public:
   CORBA::PolicyType policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-    // Return the cached policy type for this policy.
+  /// Return the cached policy type for this policy.
   virtual TAO_Cached_Policy_Type _tao_cached_type (void) const;
 
-  // Returns the scope at which this policy can be applied. See orbconf.h.
+  /// Returns the scope at which this policy can be applied. See orbconf.h.
   virtual TAO_Policy_Scope _tao_scope (void) const;
 
 protected:
@@ -119,10 +116,10 @@ public:
   CORBA::PolicyType policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  // Return the cached policy type for this policy.
+  /// Return the cached policy type for this policy.
   virtual TAO_Cached_Policy_Type _tao_cached_type (void) const;
 
-  // Returns the scope at which this policy can be applied. See orbconf.h.
+  /// Returns the scope at which this policy can be applied. See orbconf.h.
   virtual TAO_Policy_Scope _tao_scope (void) const;
 
 protected:
@@ -148,10 +145,10 @@ public:
   CORBA::PolicyType policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  // Return the cached policy type for this policy.
+  /// Return the cached policy type for this policy.
   virtual TAO_Cached_Policy_Type _tao_cached_type (void) const;
 
-  // Returns the scope at which this policy can be applied. See orbconf.h.
+  /// Returns the scope at which this policy can be applied. See orbconf.h.
   virtual TAO_Policy_Scope _tao_scope (void) const;
 
 protected:
@@ -179,10 +176,10 @@ public:
   CORBA::PolicyType policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  // Return the cached policy type for this policy.
+  /// Return the cached policy type for this policy.
   virtual TAO_Cached_Policy_Type _tao_cached_type (void) const;
 
-  // Returns the scope at which this policy can be applied. See orbconf.h.
+  /// Returns the scope at which this policy can be applied. See orbconf.h.
   virtual TAO_Policy_Scope _tao_scope (void) const;
 
 protected:
@@ -208,10 +205,10 @@ public:
   CORBA::PolicyType policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  // Return the cached policy type for this policy.
+  /// Return the cached policy type for this policy.
   virtual TAO_Cached_Policy_Type _tao_cached_type (void) const;
 
-  // Returns the scope at which this policy can be applied. See orbconf.h.
+  /// Returns the scope at which this policy can be applied. See orbconf.h.
   virtual TAO_Policy_Scope _tao_scope (void) const;
 
 protected:
@@ -237,10 +234,10 @@ public:
   CORBA::PolicyType policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  // Return the cached policy type for this policy.
+  /// Return the cached policy type for this policy.
   virtual TAO_Cached_Policy_Type _tao_cached_type (void) const;
 
-  // Returns the scope at which this policy can be applied. See orbconf.h.
+  /// Returns the scope at which this policy can be applied. See orbconf.h.
   virtual TAO_Policy_Scope _tao_scope (void) const;
 
 protected:

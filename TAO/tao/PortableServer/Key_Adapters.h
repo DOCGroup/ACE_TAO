@@ -1,18 +1,15 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO
-//
-// = FILENAME
-//    Key_Adapters.h
-//
-// = AUTHOR
-//    Irfan Pyarali
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Key_Adapters.h
+ *
+ *  $Id$
+ *
+ *  @author Irfan Pyarali
+ */
+//=============================================================================
+
 
 #ifndef TAO_KEY_ADAPTERS_H
 #define TAO_KEY_ADAPTERS_H
@@ -28,13 +25,15 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 
+/**
+ * @class TAO_Incremental_Key_Generator
+ *
+ * @brief Defines a key generator.
+ *
+ * This class is used in adapters of maps that do not produce keys.
+ */
 class TAO_Incremental_Key_Generator
 {
-  // = TITLE
-  //     Defines a key generator.
-  //
-  // = DESCRIPTION
-  //     This class is used in adapters of maps that do not produce keys.
 public:
 
   TAO_Incremental_Key_Generator (void);
@@ -48,30 +47,34 @@ protected:
 
 ////////////////////////////////////////////////////////////////////////////////
 
+/**
+ * @class TAO_ObjectId_Hash
+ *
+ * @brief Hashing class for Object Ids.
+ *
+ * Define the hash() method for Object Ids.
+ */
 class TAO_PortableServer_Export TAO_ObjectId_Hash
 {
-  // = TITLE
-  //     Hashing class for Object Ids.
-  //
-  // = DESCRIPTION
-  //     Define the hash() method for Object Ids.
 public:
 
+  /// Returns hash value.
   u_long operator () (const PortableServer::ObjectId &id) const;
-  // Returns hash value.
 };
 
 ////////////////////////////////////////////////////////////////////////////////
 
+/**
+ * @class TAO_Ignore_Original_Key_Adapter
+ *
+ * @brief A key adapter (encode/decode) class.
+ *
+ * Define the encoding and decoding methods for converting
+ * between Object Ids and active keys.  This class ignores the
+ * <original_key> passed to it.
+ */
 class TAO_Ignore_Original_Key_Adapter
 {
-  // = TITLE
-  //     A key adapter (encode/decode) class.
-  //
-  // = DESCRIPTION
-  //     Define the encoding and decoding methods for converting
-  //     between Object Ids and active keys.  This class ignores the
-  //     <original_key> passed to it.
 public:
 
   int encode (const PortableServer::ObjectId &original_key,
@@ -87,15 +90,17 @@ public:
 
 ////////////////////////////////////////////////////////////////////////////////
 
+/**
+ * @class TAO_Preserve_Original_Key_Adapter
+ *
+ * @brief A key adapter (encode/decode) class.
+ *
+ * Define the encoding and decoding methods for converting
+ * between Object Ids and active keys.  This class remembers the
+ * <original_key> passed to it.
+ */
 class TAO_Preserve_Original_Key_Adapter
 {
-  // = TITLE
-  //     A key adapter (encode/decode) class.
-  //
-  // = DESCRIPTION
-  //     Define the encoding and decoding methods for converting
-  //     between Object Ids and active keys.  This class remembers the
-  //     <original_key> passed to it.
 public:
 
   int encode (const PortableServer::ObjectId &original_key,
