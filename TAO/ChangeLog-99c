@@ -1,3 +1,12 @@
+Fri Jul 16 14:22:01 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* orbsvcs/tests/Simple_Naming/run_test.pl: Fixed the location of
+	  Naming_Server.
+
+	* orbsvcs/Naming_Service/Naming_Service.dsp: Added
+	  Naming_Server.cpp and renamed the executables to
+	  Naming_Server.exe.
+
 Fri Jul 16 14:05:33 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* docs/configurations.html:
@@ -14,10 +23,10 @@ Fri Jul 16 13:59:10 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 	* examples/Borland: Updated the examples to contain several minor
 	  fixes for Borland C++ Builder.  Thanks to Christopher Kohlhoff
  	  <chris@kohlhoff.com> for reporting this.
-  
+
 Fri Jul 16 12:21:58 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 
-          Fixed a CORBA::TRANSIENT exception thrown by an _narrow () by 
+          Fixed a CORBA::TRANSIENT exception thrown by an _narrow () by
 	  adding activate_poa_manager () in init () of the following:
 	* orbsvcs/Time_Service/Server_i.cpp.
 
@@ -34,7 +43,7 @@ Fri Jul 16 12:21:58 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 	  <zerbst@tu-harburg.de> for pointing this out and Mark
 	  Laffoon<mark.laffoon@centraxcorp.com> for contributing the magic
 	  offset.
-	
+
 	* orbsvcs/orbsvcs/Time/TAO_Time_Service_Server.cpp.
 
 Fri Jul 16 10:08:22 1999  Jeff Parsons  <parsons@cs.wustl.edu>
