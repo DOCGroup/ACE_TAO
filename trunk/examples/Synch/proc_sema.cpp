@@ -11,7 +11,7 @@ int producer (ACE_SYNCH_PROCESS_SEMAPHORE &sema,
   for (int i = iter; i > 0; --i)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "Try acquiring the semaphore (%d): ",
+                  "Try releasing the semaphore (%d): ",
                   i));
 
       int result = sema.release ();
