@@ -151,15 +151,15 @@ public:
   int strstr (const ACE_CString &s) const;
 
   /// Find <str> starting at pos.  Returns the slot of the first
-  /// location that matches, else npos.
+  /// location that matches (will be >= pos), else npos.
   int find (const ACE_CString &str, int pos = 0) const;
 
   /// Find <s> starting at pos.  Returns the slot of the first
-  /// location that matches, else npos.
+  /// location that matches (will be >= pos), else npos.
   int find (const char *s, int pos = 0) const;
 
   /// Find <c> starting at pos.  Returns the slot of the first
-  /// location that matches, else npos.
+  /// location that matches (will be >= pos), else npos.
   int find (char c, int pos = 0) const;
 
   /// Find <c> starting at pos (counting from the end).  Returns the
@@ -328,15 +328,15 @@ public:
   int strstr (const ACE_WString &s) const;
 
   /// Find <str> starting at pos.  Returns the slot of the first
-  /// location that matches, else npos.
+  /// location that matches (will be >= pos), else npos.
   int find (const ACE_WString &str, int pos = 0) const;
 
   /// Find <s> starting at pos.  Returns the slot of the first
-  /// location that matches, else npos.
+  /// location that matches (will be >= pos), else npos.
   int find (const ACE_WSTRING_TYPE *s, int pos = 0) const;
 
   /// Find <c> starting at pos.  Returns the slot of the first
-  /// location that matches, else npos.
+  /// location that matches (will be >= pos), else npos.
   int find (ACE_WSTRING_TYPE c, int pos = 0) const;
 
   /// Find <c> starting at pos (counting from the end).  Returns the
@@ -485,15 +485,15 @@ public:
   int strstr (const ACE_SString &s) const;
 
   /// Find <str> starting at pos.  Returns the slot of the first
-  /// location that matches, else npos.
+  /// location that matches (will be >= pos), else npos.
   int find (const ACE_SString &str, int pos = 0) const;
 
   /// Find <s> starting at pos.  Returns the slot of the first
-  /// location that matches, else npos.
+  /// location that matches (will be >= pos), else npos.
   int find (const char *s, int pos = 0) const;
 
   /// Find <c> starting at pos.  Returns the slot of the first
-  /// location that matches, else npos.
+  /// location that matches (will be >= pos), else npos.
   int find (char c, int pos = 0) const;
 
   /// Find <c> starting at pos (counting from the end).  Returns the

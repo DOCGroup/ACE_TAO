@@ -265,7 +265,7 @@ ACE_CString::find (const char *s, int pos) const
   if (pointer == 0)
     return ACE_CString::npos;
   else
-    return pointer - substr;
+    return pointer - this->rep_;
 }
 
 ACE_INLINE int
@@ -276,7 +276,7 @@ ACE_CString::find (char c, int pos) const
   if (pointer == 0)
     return ACE_CString::npos;
   else
-    return pointer - substr;
+    return pointer - this->rep_;
 }
 
 ACE_INLINE int
@@ -444,7 +444,7 @@ ACE_SString::find (const char *s, int pos) const
   if (pointer == 0)
     return ACE_SString::npos;
   else
-    return pointer - substr;
+    return pointer - this->rep_;
 }
 
 ACE_INLINE int
@@ -455,7 +455,7 @@ ACE_SString::find (char c, int pos) const
   if (pointer == 0)
     return ACE_SString::npos;
   else
-    return pointer - substr;
+    return pointer - this->rep_;
 }
 
 ACE_INLINE int
@@ -632,7 +632,7 @@ ACE_WString::find (const ACE_WSTRING_TYPE *s, int pos) const
   if (pointer == 0)
     return ACE_WString::npos;
   else
-    return pointer - substr;
+    return pointer - this->rep_;
 }
 
 ACE_INLINE int

@@ -65,7 +65,7 @@ main (int, ACE_TCHAR *[])
     // Forward search.
     ACE_ASSERT (s1.find (s3) == 2);
     ACE_ASSERT (s3.find (s1) == ACE_CString::npos);
-    ACE_ASSERT (s1.find (s3, 2) == 0);
+    ACE_ASSERT (s1.find (s3, 2) == 2);
     ACE_ASSERT (s3.find (s1, 1) == ACE_CString::npos);
     ACE_ASSERT (s1.find (s2) == ACE_CString::npos);
     ACE_ASSERT (s1.find ('o') == 4);
@@ -121,7 +121,7 @@ main (int, ACE_TCHAR *[])
     // Forward search.
     ACE_ASSERT (s1.find (s3) == 2);
     ACE_ASSERT (s3.find (s1) == ACE_CString::npos);
-    ACE_ASSERT (s1.find (s3, 2) == 0);
+    ACE_ASSERT (s1.find (s3, 2) == 2);
     ACE_ASSERT (s3.find (s1, 1) == ACE_CString::npos);
     ACE_ASSERT (s1.find (s2) == ACE_CString::npos);
     ACE_ASSERT (s1.find ('o') == 4);
@@ -177,7 +177,7 @@ main (int, ACE_TCHAR *[])
     // Forward search.
     ACE_ASSERT (s1.find (s3) == 2);
     ACE_ASSERT (s3.find (s1) == ACE_WString::npos);
-    ACE_ASSERT (s1.find (s3, 2) == 0);
+    ACE_ASSERT (s1.find (s3, 2) == 2);
     ACE_ASSERT (s3.find (s1, 1) == ACE_WString::npos);
     ACE_ASSERT (s1.find (s2) == ACE_WString::npos);
     ACE_ASSERT (s1.find ('o') == 4);
