@@ -278,6 +278,12 @@ ACE_Sock_Connect::bind_port (ACE_HANDLE handle,
     ACE_UNUSED_ARG (address_family);
 #endif /* ACE_HAS_IPV6 */
     addr = ACE_INET_Addr ((u_short)0, ip_addr);
+#if defined (ACE_HAS_IPV6)
+ else if (ip_addr != INADDR_ANY)
+ // address_family == PF_INET6 and a non default IP address means to bind
+ // to the IPv4-mapped IPv6 address
+   addr.set ((u_short)0, ip_addr, 1, 1);
+#endif /* ACE_HAS_IPV6 */
 
 #if !defined (ACE_LACKS_WILDCARD_BIND)
   // The OS kernel should select a free port for us.
