@@ -1,3 +1,9 @@
+Fri Feb 25 16:50:37 2000  Steve Huston  <shuston@riverace.com>
+
+        * ace/Profile_Timer.cpp (ACE_Profile_Timer ctor):
+        * ace/Log_Msg.cpp (format_msg):
+          Fixed to avoid a gcc 2.95 warning about mismatch format/arg types.
+
 Fri Feb 25 14:56:41 2000  Steve Huston  <shuston@riverace.com>
 
         * include/makeinclude/platform_aix_vacpp.GNU: New file for use
@@ -147,7 +153,8 @@ Thu Feb 24 12:35:31 2000  Steve Huston  <shuston@riverace.com>
 
 Thu Feb 24 12:15:46 2000  Steve Huston  <shuston@riverace.com>
 
-        * tests/makeicc.pl: Corrected to write $Id$ in .icc file properly.
+        * tests/makeicc.pl: Corrected to write Id variable in new .icc
+          file properly.
 
 Thu Feb 24 01:52:51 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
