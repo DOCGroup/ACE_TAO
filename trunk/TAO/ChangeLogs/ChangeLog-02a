@@ -1,3 +1,13 @@
+Sun Apr 16 21:23:43 2000  Krishnakumar Elakkara Pathayapura  <krish@polka.cs.wustl.edu>
+
+	* orbsvcs/examples/Log/test/BasicLog_Test.cpp (init):
+	Fixed a warning by removing an unused variable
+
+Sun Apr 16 21:20:19 2000  Krishnakumar Elakkara Pathayapura  <krish@polka.cs.wustl.edu>
+
+	* orbsvcs/examples/Log/test/BasicLog_Test.cpp:
+	Fixed a warning by removing an unused variable
+
 Sun Apr 16 17:15:33 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/ifrfwd.h:
