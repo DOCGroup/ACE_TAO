@@ -47,7 +47,7 @@ Event_Logging_Service::init_ORB  (int& argc, char *argv []
   ACE_CHECK;
 }
 
-void
+int
 Event_Logging_Service::startup (int argc, char *argv[]
                           ACE_ENV_ARG_DECL)
 {
@@ -57,23 +57,23 @@ Event_Logging_Service::startup (int argc, char *argv[]
   // initalize the ORB.
   this->init_ORB (argc, argv
                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (-1);
 
   // Resolve the naming service.
   this->resolve_naming_service (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (-1);
 
   // Activate the event log factory
   // CORBA::Object_var obj =
   DsEventLogAdmin::EventLogFactory_var obj =
     this->event_log_factory_.activate (this->poa_.in ()
                                        ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (-1);
   ACE_ASSERT (!CORBA::is_nil (obj.in ()));
 
   CORBA::String_var str =
     this->orb_->object_to_string (obj.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (-1);
 
   ACE_DEBUG ((LM_DEBUG,
               "The Event Log Factory IOR is <%s>\n", str.in ()));
@@ -88,11 +88,13 @@ Event_Logging_Service::startup (int argc, char *argv[]
   this->naming_->rebind (name,
                          obj.in ()
                          ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (-1);
 
   ACE_DEBUG ((LM_DEBUG,
               "Registered with the naming service as: %s\n",
               this->event_log_factory_name_));
+
+  return 0;
 }
 
 void
@@ -108,7 +110,7 @@ Event_Logging_Service::resolve_naming_service (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW (CORBA::UNKNOWN ());
 
   this->naming_ =
-    CosNaming::NamingContext::_narrow (naming_obj.in ()//,
+    CosNaming::NamingContext::_narrow (naming_obj.in ()
                                        ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
@@ -161,7 +163,7 @@ Event_Logging_Service::shutdown (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   TAO_CEC_Default_Factory::init_svcs ();
 
@@ -169,15 +171,16 @@ main (int argc, char *argv[])
 
   Event_Logging_Service service;
 
-  service.startup (argc,
-                   argv
-                   ACE_ENV_ARG_PARAMETER);
+  if (service.startup (argc, argv ACE_ENV_ARG_PARAMETER) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "Failed to start the Event Logging Service.\n"),
+                      1);
 
   if (service.run () == -1)
     {
-      service.shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
+      service.shutdown ();
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "Failed to run the Telecom EventLog Service.\n"),
+                         "Failed to run the Telecom Log Service.\n"),
                         1);
     }
 

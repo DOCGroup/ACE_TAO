@@ -5,7 +5,7 @@ ACE_RCSID (Basic_Log_Test,
            "$Id$")
 
 int
-main(int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   BasicLog_Test log_test;
 

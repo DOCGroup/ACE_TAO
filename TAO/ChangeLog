@@ -1,3 +1,18 @@
+Wed Nov 27 13:48:19 2002  D A Hanvey  <d.hanvey@qub.ac.uk>
+
+	* orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.cpp:
+	* orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.h:
+	* orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.cpp:
+	* orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.h:
+	* orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.cpp:
+	* orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.h:
+	* orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Server.cpp:
+	* orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Service.cpp:
+	* orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Service.cpp:
+
+	Documentation changes to files.
+	
+
 Wed Nov 27 13:36:11 2002  D A Hanvey  <d.hanvey@qub.ac.uk>
 
 	* orbsvcs/examples/Log/Basic/main.cpp: 

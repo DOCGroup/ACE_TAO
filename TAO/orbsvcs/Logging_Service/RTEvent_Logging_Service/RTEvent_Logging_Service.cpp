@@ -13,7 +13,8 @@ ACE_RCSID (RTEvent_Logging_Service,
            RTEvent_Logging_Service,
            "$Id$")
 
-int main (int argc, char *argv[])
+int
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   TAO_EC_Default_Factory::init_svcs ();
 
@@ -62,7 +63,7 @@ RTEvent_Logging_Service::run (int argc, char* argv[])
         return 1;
 
       ACE_NEW_RETURN (factory_servant_,
-                      RTEventLogFactory_i (),
+                      TAO_RTEventLogFactory_i (),
                       -1);
 
       CORBA::Object_var poa_object =
