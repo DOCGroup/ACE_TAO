@@ -117,7 +117,7 @@ static void  TestCounter()
   c1 = def; // unsigned long
   ACE_ASSERT(c1 == def);
   c1 = us; // unsigned short
-  ACE_ASSERT(c1 == us);
+  ACE_ASSERT(c1 == static_cast<unsigned long> (us));
   c1 = si; // unsigned short
   ACE_ASSERT(c1 == static_cast<unsigned long> (si));
 #endif /*ACE_WIN32*/

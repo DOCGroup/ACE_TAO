@@ -114,7 +114,7 @@ TestGuage (void)
   g1 = def; // unsigned long
   ACE_ASSERT(g1 == def);
   g1 = us; // unsigned short
-  ACE_ASSERT(g1 == us);
+  ACE_ASSERT(g1 == static_cast<unsigned long> (us));
   g1 = si; // unsigned short
   ACE_ASSERT(g1 == static_cast<unsigned long> (si));
 #endif /*ACE_WIN32*/
