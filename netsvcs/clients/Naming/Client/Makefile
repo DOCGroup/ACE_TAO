@@ -14,20 +14,17 @@ PSRC    = $(addsuffix .cpp,$(BIN))
 OBJ     = $(SRC:%.cpp=$(VDIR)%.o)
 
 LSRC    = $(addsuffix .cpp,$(FILES))
-LOBJ    = $(LSRC:%.cpp=$(VDIR)%.o)
-SHOBJ   = $(addsuffix .$(SOEXT),$(FILES))
 
-BIN2    = main
-LIB2    = libClient_Test.a
-SHLIB2  = libClient_Test.$(SOEXT)
+# This is needed to add ACE to the libs for the shared library.
+LIBS    += $(ACELIB)
 
 #### If the ACE library wasn't built with sufficient components, don't
 #### try to build here.
 ACE_BUILD_COMPONENTS := $(shell sh $(ACE_ROOT)/bin/ace_components --ace)
 ifeq (Other,$(findstring Other,$(ACE_BUILD_COMPONENTS)))
-  BIN = $(BIN2)
-  LIB = $(LIB2)
-  SHLIB = $(SHLIB2)
+  BIN = main
+  SHLIB = libClient_Test.$(SOEXT)
+  BUILD = $(VSHLIB) $(VBIN)
 endif # Other
 
 #----------------------------------------------------------------------------

@@ -1,3 +1,34 @@
+Tue Dec  3 20:47:39 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/SSL/SSL_Context.cpp: Add explicit instantiation of
+          ACE_Singleton<ACE_SSL_Context, ACE_SYNCH_MUTEX>::singleton_.
+        * netsvcs/lib/Name_Handler.cpp: Add explicit instantiation of
+          ACE_Singleton<Naming_Context, ACE_SYNCH_NULL_MUTEX>::singleton_.
+        * netsvcs/lib/Server_Logging_Handler.cpp: Add explicit instantiation of
+          ACE_Server_Logging_Handler_T<LOGGING_PEER_STREAM, u_long,
+          ACE_NULL_SYNCH, Null_Synch_Static_Receiver>::request_count_;
+        * tests/Framework_Component_DLL.cpp: Add explicit instantiation of
+          ACE_DLL_Singleton_T<FWCT_DLL_Singleton_Adapter_T <Simple_Service>,
+          ACE_SYNCH_MUTEX>::singleton_.
+        * tests/MEM_Stream_Test.cpp: Add explicit instantiation of
+          ACE_Singleton<ACE_Atomic_Op<ACE_SYNCH_MUTEX, u_short>,
+                        ACE_SYNCH_RECURSIVE_MUTEX>::singleton_.
+        * tests/Process_Strategy_TEst.cpp: Add explicit instantiation of
+          ACE_Singleton<Options, ACE_Null_Mutex>::singleton_.
+        * tests/Timeprobe_Test.cpp: Add explicit instantiation of
+          ACE_Singleton<int, ACE_SYNCH_RECURSIVE_MUTEX>::singleton_.
+
+          These are similar to those done in:
+          Sat Nov 23 18:12:37 2002  Steve Huston  <shuston@riverace.com>
+
+        * netsvcs/clients/Naming/Client/Makefile:
+        * netsvcs/clients/Naming/Dump_Restore/Makefile: Add ACELIB to LIBS
+          to include -lACE for building the shared libs. rules.lib.GNU
+          doesn't add VLDLIBS when linking a shared lib, but rules.bin.GNU
+          adds it for binaries. This should probably be changed, but it's a
+          quagmire to wade into at this point, and autoconf is coming.
+          This fix is needed now to get this stuff building with g++ on AIX.
+
 Mon Dec  2 20:09:29 2002  Steve Huston  <shuston@riverace.com>
 
         * examples/C++NPv1/Reactive_Logging_Server_Ex.cpp:

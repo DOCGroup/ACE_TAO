@@ -524,4 +524,9 @@ template class ACE_Singleton<ACE_SSL_Context, ACE_SYNCH_MUTEX>;
 
 #pragma instantiate ACE_Singleton<ACE_SSL_Context, ACE_SYNCH_MUTEX>
 
+#elif defined (__GNUC__) && defined (_AIX)
+
+template ACE_Singleton<ACE_SSL_Context, ACE_SYNCH_MUTEX> *
+  ACE_Singleton<ACE_SSL_Context, ACE_SYNCH_MUTEX>::singleton_;
+
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

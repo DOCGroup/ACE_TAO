@@ -28,6 +28,9 @@ template class ACE_Strategy_Acceptor<ACE_Name_Handler, ACE_SOCK_ACCEPTOR>;
 #pragma instantiate ACE_Schedule_All_Reactive_Strategy<ACE_Name_Handler>
 #pragma instantiate ACE_Scheduling_Strategy<ACE_Name_Handler>
 #pragma instantiate ACE_Strategy_Acceptor<ACE_Name_Handler, ACE_SOCK_ACCEPTOR>
+#elif defined (__GNUC__) && defined (_AIX)
+template ACE_Singleton<Naming_Context, ACE_SYNCH_NULL_MUTEX> *
+      ACE_Singleton<Naming_Context, ACE_SYNCH_NULL_MUTEX>::singleton_;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 // Simple macro that does bitwise AND -- useful in table lookup
