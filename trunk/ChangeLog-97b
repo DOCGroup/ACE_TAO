@@ -1,16 +1,20 @@
 Tue Nov 18 19:28:36 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* ace/WFMO_Reactor.cpp (handle_signal): Fixed a large number of
- 	  bugs with non-portable scope of the loop counter...  Thanks to
- 	  Valik Solorzano Barboza <valik@xs4all.nl> for reporting this.
+	* ace/Select_Reactor.cpp (unbind),
+	  ace/WFMO_Reactor.cpp (handle_signal): Fixed a large number of
+ 	  bugs with non-portable "scope of the for loop counter"...
+  	  Thanks to Valik Solorzano Barboza <valik@xs4all.nl> for
+ 	  reporting this.
+
+	* ace/Thread_Manager: Added == and != operators for
+ 	  ACE_Thread_Descriptor to fix things with BORLANDC's template
+ 	  mechanism.  Thanks to Valik Solorzano Barboza <valik@xs4all.nl>
+ 	  for reporting this.
 
 	* ace/Select_Reactor: Added == and != operators for
- 	  ACE_Event_Tuple to fix things with BORLANDC.  Thanks to Valik
- 	  Solorzano Barboza <valik@xs4all.nl> for reporting this.
-
-	* ace/Select_Reactor.cpp (unbind): Fixed a stupid bug with the
- 	  scope of the loop counter...  Thanks to Valik Solorzano Barboza
- 	  <valik@xs4all.nl> for reporting this.
+ 	  ACE_Event_Tuple to fix things with BORLANDC's template
+ 	  mechanism.  Thanks to Valik Solorzano Barboza <valik@xs4all.nl>
+ 	  for reporting this.
 
 	* ace/OS.i (tempnam): Fixed a typo -- WIN32 should be ACE_WIN32.
   	  Thanks to Valik Solorzano Barboza <valik@xs4all.nl> for
@@ -21,8 +25,9 @@ Tue Nov 18 19:28:36 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
  	  <valik@xs4all.nl> for reporting this.
 
 	* ace/OS: Added operator== and operator!= for ACE_Cleanup_Info so
- 	  that it will work correctly with BORLANDC.  Thanks to Valik
- 	  Solorzano Barboza <valik@xs4all.nl> for reporting this.
+ 	  that it will work correctly with BORLANDC's template mechanism.
+  	  Thanks to Valik Solorzano Barboza <valik@xs4all.nl> for
+ 	  reporting this.
 
 	* ace/config-win32-common.h: Added
  	  ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION for BORLANDC.  Thanks to
