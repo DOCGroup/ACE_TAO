@@ -8,29 +8,29 @@ ACE_RCSID(ace, Filecache, "$Id$")
 
 #if defined (__BORLANDC__) //VSB
 // Third parameter will be ignored in ACE_OS::open
-static const int R_MASK = 0;
-static const int W_MASK = 0;
+#define R_MASK 0
+#define W_MASK 0
 #else
-static const int R_MASK = S_IRUSR|S_IRGRP|S_IROTH;
-static const int W_MASK = S_IRUSR|S_IRGRP|S_IROTH|S_IWUSR|S_IWGRP|S_IWOTH;
+#define R_MASK S_IRUSR|S_IRGRP|S_IROTH
+#define W_MASK S_IRUSR|S_IRGRP|S_IROTH|S_IWUSR|S_IWGRP|S_IWOTH
 #endif /* __BORLANDC__ */
 
 #if defined (ACE_WIN32)
 // See if you can get rid of some of these.
-static const int READ_FLAGS = (FILE_FLAG_SEQUENTIAL_SCAN |
-                               FILE_FLAG_OVERLAPPED |
-                               O_RDONLY);
+#define READ_FLAGS (FILE_FLAG_SEQUENTIAL_SCAN | \
+		    FILE_FLAG_OVERLAPPED | \
+		    O_RDONLY)
 // static const int RCOPY_FLAGS = (FILE_FLAG_SEQUENTIAL_SCAN |
 //                                 O_RDONLY);
-static const int WRITE_FLAGS = (FILE_FLAG_SEQUENTIAL_SCAN |
-                                FILE_FLAG_OVERLAPPED |
-                                O_RDWR | O_CREAT | O_TRUNC);
+#define WRITE_FLAGS (FILE_FLAG_SEQUENTIAL_SCAN | \
+		     FILE_FLAG_OVERLAPPED | \
+		     O_RDWR | O_CREAT | O_TRUNC)
 // static const int WCOPY_FLAGS = (FILE_FLAG_SEQUENTIAL_SCAN |
 //                                 O_RDWR | O_CREAT | O_TRUNC);
 #else
-static const int READ_FLAGS = O_RDONLY;
+#define READ_FLAGS O_RDONLY
 // static const int RCOPY_FLAGS = O_RDONLY;
-static const int WRITE_FLAGS = O_RDWR | O_CREAT | O_TRUNC;
+#define WRITE_FLAGS (O_RDWR | O_CREAT | O_TRUNC)
 // static const int WCOPY_FLAGS = O_RDWR | O_CREAT | O_TRUNC;
 #endif /* ACE_WIN32 */
 
