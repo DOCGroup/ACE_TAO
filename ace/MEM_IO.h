@@ -187,7 +187,7 @@ public:
    * Finalizing the MEM_IO object.  This method doesn't invoke
    * the <remove> method.
    */
-  int fini ();
+  int fini (void);
 
   /// Send an <n> byte buffer to the other process using shm_malloc_
   /// connected thru the socket.
