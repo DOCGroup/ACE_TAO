@@ -9,6 +9,8 @@
 //                 http://www.cs.wustl.edu/~schmidt/TAO.html
 
 #include "tao/WrongTransactionC.h"
+#include "tao/Environment.h"
+#include "tao/CDR.h"
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 
@@ -49,12 +51,27 @@ CORBA_WrongTransaction::_narrow (CORBA::Exception *exc)
 }
 
 
-void CORBA_WrongTransaction::_raise ()
+void CORBA_WrongTransaction::_raise (void)
 {
   TAO_RAISE(*this);
 }
 
-// TAO extension - the _alloc method
+void CORBA_WrongTransaction::_tao_encode (TAO_OutputCDR &cdr,
+                                          CORBA::Environment &ACE_TRY_ENV) const
+{
+  if (cdr << *this)
+    return;
+  ACE_THROW (CORBA::MARSHAL ());
+}
+
+void CORBA_WrongTransaction::_tao_decode (TAO_InputCDR &cdr,
+                                          CORBA::Environment &ACE_TRY_ENV)
+{
+  if (cdr >> *this)
+    return;
+  ACE_THROW (CORBA::MARSHAL ());
+}
+
 CORBA::Exception *CORBA_WrongTransaction::_alloc (void)
 {
   CORBA::Exception *retval = 0;
@@ -64,6 +81,20 @@ CORBA::Exception *CORBA_WrongTransaction::_alloc (void)
                   0);
 
   return retval;
+}
+
+CORBA::Boolean
+operator<< (TAO_OutputCDR &cdr, const CORBA_WrongTransaction &wt)
+{
+  if (cdr << wt._id ())
+    return 1;
+  return 0;
+}
+
+CORBA::Boolean
+operator>> (TAO_InputCDR &, CORBA_WrongTransaction &)
+{
+  return 1;
 }
 
 #endif /* TAO_HAS_MINIMUM_CORBA */

@@ -1092,125 +1092,12 @@ TAO_Marshal_Alias::encode (CORBA::TypeCode_ptr tc,
 
 // encode exception
 CORBA::TypeCode::traverse_status
-TAO_Marshal_Except::encode (CORBA::TypeCode_ptr tc,
-                            const void *data,
+TAO_Marshal_Except::encode (CORBA::TypeCode_ptr,
                             const void *,
-                            void *context,
+                            const void *,
+                            void *,
                             CORBA::Environment &ACE_TRY_ENV)
 {
-  CORBA::TypeCode::traverse_status retval = CORBA::TypeCode::TRAVERSE_CONTINUE;
-  CORBA::Boolean continue_encoding = 1;
-  TAO_OutputCDR *stream = (TAO_OutputCDR *) context;
-
-  CORBA::TypeCode_var param;
-  CORBA::Long size, alignment;
-
-  // first encode the RepositoryID which we can grab from the
-  // typecode pointer
-  continue_encoding = stream->write_string (tc->id (ACE_TRY_ENV));
-  ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
-
-#if defined (__BORLANDC__)
-  // Borland C++ Builder 4.0 doesn't seem to align caught exceptions
-  // along the correct boundaries!  Therefore we will assume that the
-  // data pointer passed in is already aligned correctly and we will
-  // calculate member alignments relative to this pointer.
-  char *base_ptr = (char *) data;
-#endif /* __BORLANDC__ */
-
-  data = (char *) data + sizeof (CORBA::Exception);
-  // @@ (ASG) The reason this is done is because we want to skip the size
-  // of the the base class and its private data members (type_ and
-  // refcount_). After skipping these data members, we will have the data
-  // members of the derived class which must be encoded.
-
-  int member_count = tc->member_count (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
-
-  for (int i = 0;
-       i < member_count && retval == CORBA::TypeCode::TRAVERSE_CONTINUE
-         && continue_encoding == 1;
-       i++)
-    {
-      param = tc->member_type (i, ACE_TRY_ENV);
-      ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
-
-      size = param->size (ACE_TRY_ENV);
-      ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
-
-      alignment = param->alignment (ACE_TRY_ENV);
-      ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
-
-#if defined (__BORLANDC__)
-      ptrdiff_t offset = (char *) data - base_ptr;
-      offset = (ptrdiff_t) ACE_ptr_align_binary (offset, alignment);
-      data = base_ptr + offset;
-#else
-      data = ACE_ptr_align_binary (data, alignment);
-#endif /* __BORLANDC__ */
-
-      switch (param->kind_)
-        {
-        case CORBA::tk_null:
-        case CORBA::tk_void:
-          break;
-        case CORBA::tk_short:
-        case CORBA::tk_ushort:
-          continue_encoding = stream->write_short (*(CORBA::Short *) data);
-          break;
-        case CORBA::tk_long:
-        case CORBA::tk_ulong:
-        case CORBA::tk_float:
-        case CORBA::tk_enum:
-          continue_encoding = stream->write_long (*(CORBA::Long *) data);
-          break;
-        case CORBA::tk_double:
-        case CORBA::tk_longlong:
-        case CORBA::tk_ulonglong:
-          continue_encoding = stream->write_longlong (*(CORBA::LongLong *) data);
-          break;
-        case CORBA::tk_boolean:
-          continue_encoding = stream->write_boolean (*(CORBA::Boolean *) data);
-          break;
-        case CORBA::tk_char:
-        case CORBA::tk_octet:
-          continue_encoding = stream->write_char (*(CORBA::Char *) data);
-          break;
-        case CORBA::tk_longdouble:
-          continue_encoding = stream->write_longdouble (*(CORBA::LongDouble *) data);
-          break;
-        case CORBA::tk_wchar:
-          continue_encoding = stream->write_wchar (*(CORBA::WChar *) data);
-          break;
-        case CORBA::tk_any:
-        case CORBA::tk_TypeCode:
-        case CORBA::tk_Principal:
-        case CORBA::tk_objref:
-        case CORBA::tk_struct:
-        case CORBA::tk_union:
-        case CORBA::tk_string:
-        case CORBA::tk_sequence:
-        case CORBA::tk_array:
-        case CORBA::tk_alias:
-        case CORBA::tk_except:
-        case CORBA::tk_wstring:
-          retval = stream->encode (param.in (), data, 0, ACE_TRY_ENV);
-          ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
-          break;
-        default:
-          break;
-        }
-      data = (char *) data + size;
-    }
-
-  if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE
-      && continue_encoding == 1)
-    return CORBA::TypeCode::TRAVERSE_CONTINUE;
-
-  if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "TAO_Marshal_Except::encode detected error\n"));
-
   ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
                                     CORBA::COMPLETED_MAYBE),
                     CORBA::TypeCode::TRAVERSE_STOP);

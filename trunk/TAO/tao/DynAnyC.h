@@ -127,6 +127,11 @@ public:
 
     virtual void _raise (void);
 
+    virtual void _tao_encode (TAO_OutputCDR &cdr,
+                              CORBA::Environment &) const;
+    virtual void _tao_decode (TAO_InputCDR &cdr,
+                              CORBA::Environment &);
+
     static Invalid *_narrow (CORBA::Exception *);
 
 
@@ -155,6 +160,11 @@ public:
 
 
     virtual void _raise (void);
+
+    virtual void _tao_encode (TAO_OutputCDR &cdr,
+                              CORBA::Environment &) const;
+    virtual void _tao_decode (TAO_InputCDR &cdr,
+                              CORBA::Environment &);
 
     static InvalidValue *_narrow (CORBA::Exception *);
 
@@ -185,6 +195,11 @@ public:
 
     virtual void _raise (void);
 
+    virtual void _tao_encode (TAO_OutputCDR &cdr,
+                              CORBA::Environment &) const;
+    virtual void _tao_decode (TAO_InputCDR &cdr,
+                              CORBA::Environment &);
+
     static TypeMismatch *_narrow (CORBA::Exception *);
 
 
@@ -213,6 +228,11 @@ public:
 
 
     virtual void _raise (void);
+
+    virtual void _tao_encode (TAO_OutputCDR &cdr,
+                              CORBA::Environment &) const;
+    virtual void _tao_decode (TAO_InputCDR &cdr,
+                              CORBA::Environment &);
 
     static InvalidSeq *_narrow (CORBA::Exception *);
 

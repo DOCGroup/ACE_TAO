@@ -105,6 +105,22 @@ void TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList::_raise ()
   TAO_RAISE(*this);
 }
 
+void TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList::_tao_encode (TAO_OutputCDR &cdr,
+                                                                   CORBA::Environment &ACE_TRY_ENV) const
+{
+  if (cdr << *this)
+    return;
+  ACE_THROW (CORBA::MARSHAL ());
+}
+
+void TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList::_tao_decode (TAO_InputCDR &cdr,
+                                                                   CORBA::Environment &ACE_TRY_ENV)
+{
+  if (cdr >> *this)
+    return;
+  ACE_THROW (CORBA::MARSHAL ());
+}
+
 // TAO extension - the _alloc method
 CORBA::Exception *TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList::_alloc (void)
 {
@@ -167,6 +183,22 @@ TAO_IOP::TAO_IOR_Manipulation::NotFound::_narrow (CORBA::Exception *exc)
 void TAO_IOP::TAO_IOR_Manipulation::NotFound::_raise ()
 {
   TAO_RAISE(*this);
+}
+
+void TAO_IOP::TAO_IOR_Manipulation::NotFound::_tao_encode (TAO_OutputCDR &cdr,
+                                                           CORBA::Environment &ACE_TRY_ENV) const
+{
+  if (cdr << *this)
+    return;
+  ACE_THROW (CORBA::MARSHAL ());
+}
+
+void TAO_IOP::TAO_IOR_Manipulation::NotFound::_tao_decode (TAO_InputCDR &cdr,
+                                                           CORBA::Environment &ACE_TRY_ENV)
+{
+  if (cdr >> *this)
+    return;
+  ACE_THROW (CORBA::MARSHAL ());
 }
 
 // TAO extension - the _alloc method
@@ -233,6 +265,22 @@ void TAO_IOP::TAO_IOR_Manipulation::Duplicate::_raise ()
   TAO_RAISE(*this);
 }
 
+void TAO_IOP::TAO_IOR_Manipulation::Duplicate::_tao_encode (TAO_OutputCDR &cdr,
+                                                            CORBA::Environment &ACE_TRY_ENV) const
+{
+  if (cdr << *this)
+    return;
+  ACE_THROW (CORBA::MARSHAL ());
+}
+
+void TAO_IOP::TAO_IOR_Manipulation::Duplicate::_tao_decode (TAO_InputCDR &cdr,
+                                                            CORBA::Environment &ACE_TRY_ENV)
+{
+  if (cdr >> *this)
+    return;
+  ACE_THROW (CORBA::MARSHAL ());
+}
+
 // TAO extension - the _alloc method
 CORBA::Exception *TAO_IOP::TAO_IOR_Manipulation::Duplicate::_alloc (void)
 {
@@ -295,6 +343,22 @@ TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR::_narrow (CORBA::Exception *exc)
 void TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR::_raise ()
 {
   TAO_RAISE(*this);
+}
+
+void TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR::_tao_encode (TAO_OutputCDR &cdr,
+                                                              CORBA::Environment &ACE_TRY_ENV) const
+{
+  if (cdr << *this)
+    return;
+  ACE_THROW (CORBA::MARSHAL ());
+}
+
+void TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR::_tao_decode (TAO_InputCDR &cdr,
+                                                              CORBA::Environment &ACE_TRY_ENV)
+{
+  if (cdr >> *this)
+    return;
+  ACE_THROW (CORBA::MARSHAL ());
 }
 
 // TAO extension - the _alloc method

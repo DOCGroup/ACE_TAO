@@ -989,6 +989,22 @@ void ImplementationRepository::Administration::AlreadyRegistered::_raise ()
   TAO_RAISE(*this);
 }
 
+void ImplementationRepository::Administration::AlreadyRegistered::_tao_encode (TAO_OutputCDR &cdr,
+                                                                               CORBA::Environment &ACE_TRY_ENV) const
+{
+  if (cdr << *this)
+    return;
+  ACE_THROW (CORBA::MARSHAL ());
+}
+
+void ImplementationRepository::Administration::AlreadyRegistered::_tao_decode (TAO_InputCDR &cdr,
+                                                                               CORBA::Environment &ACE_TRY_ENV)
+{
+  if (cdr >> *this)
+    return;
+  ACE_THROW (CORBA::MARSHAL ());
+}
+
 // TAO extension - the _alloc method
 CORBA::Exception *ImplementationRepository::Administration::AlreadyRegistered::_alloc (void)
 {
@@ -1049,6 +1065,22 @@ ImplementationRepository::Administration::CannotActivate::_narrow (CORBA::Except
 void ImplementationRepository::Administration::CannotActivate::_raise ()
 {
   TAO_RAISE(*this);
+}
+
+void ImplementationRepository::Administration::CannotActivate::_tao_encode (TAO_OutputCDR &cdr,
+                                                                            CORBA::Environment &ACE_TRY_ENV) const
+{
+  if (cdr << *this)
+    return;
+  ACE_THROW (CORBA::MARSHAL ());
+}
+
+void ImplementationRepository::Administration::CannotActivate::_tao_decode (TAO_InputCDR &cdr,
+                                                                            CORBA::Environment &ACE_TRY_ENV)
+{
+  if (cdr >> *this)
+    return;
+  ACE_THROW (CORBA::MARSHAL ());
 }
 
 // TAO extension - the _alloc method
@@ -1120,6 +1152,22 @@ ImplementationRepository::Administration::NotFound::_narrow (CORBA::Exception *e
 void ImplementationRepository::Administration::NotFound::_raise ()
 {
   TAO_RAISE(*this);
+}
+
+void ImplementationRepository::Administration::NotFound::_tao_encode (TAO_OutputCDR &cdr,
+                                                                      CORBA::Environment &ACE_TRY_ENV) const
+{
+  if (cdr << *this)
+    return;
+  ACE_THROW (CORBA::MARSHAL ());
+}
+
+void ImplementationRepository::Administration::NotFound::_tao_decode (TAO_InputCDR &cdr,
+                                                                      CORBA::Environment &ACE_TRY_ENV)
+{
+  if (cdr >> *this)
+    return;
+  ACE_THROW (CORBA::MARSHAL ());
 }
 
 // TAO extension - the _alloc method

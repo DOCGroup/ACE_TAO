@@ -116,15 +116,27 @@ be_visitor_exception_cdr_op_ci::visit_exception (be_exception *node)
 
   // set the substate as generating code for the input operator
   this->ctx_->sub_state(TAO_CodeGen::TAO_CDR_INPUT);
-  *os << "ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, "
-      << node->name () << " &_tao_aggregate)" << be_nl
-      << "{" << be_idt_nl;
-  // retrieve the repository ID and compare with what we have
-  *os << "// retrieve  RepoID and verify if we are of that type" << be_nl;
-  *os << "char *_tao_repoID;" << be_nl;
-  *os << "if ((strm >> _tao_repoID) &&" << be_nl
-      << "    (_tao_aggregate._is_a (_tao_repoID)))" << be_nl
-      << "{" << be_idt_nl;
+  *os << "ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &";
+
+  if (node->nmembers () > 0)
+    {
+      *os << "strm,"
+          << node->name () << " &_tao_aggregate)" << be_nl;
+    }
+  else
+    {
+      *os << ","
+          << node->name () << ")" << be_nl;
+    }
+
+  *os  << "{" << be_idt_nl;
+
+  // WARNING: This method is not symmetric with respect to the
+  // encoding function!
+  // Exceptions are strange.... the repository ID is retrieved by the
+  // caller, and they invoke this method only to demarshal the
+  // members.  While the marshaling method encodes both...
+
   // do we have any members?
   if (node->nmembers () > 0)
     {
@@ -155,10 +167,7 @@ be_visitor_exception_cdr_op_ci::visit_exception (be_exception *node)
     {
       *os << "return 1;" << be_uidt_nl;
     }
-  *os << "}" << be_nl
-      << "else" << be_idt_nl
-      << "return 0;" << be_uidt << be_uidt_nl
-      << "}\n\n";
+  *os << "}\n\n";
 
   // Generate the iostream operator overload for this exception,
   // unless it is suppressed

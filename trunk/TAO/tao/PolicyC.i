@@ -269,7 +269,7 @@ CORBA_PolicyList_var::operator= (const CORBA_PolicyList_var &p) // deep copy
     delete this->ptr_;
     ACE_NEW_RETURN (this->ptr_,
                     CORBA_PolicyList (*p.ptr_),
-		    *this);
+                    *this);
   }
   return *this;
 }
@@ -453,7 +453,7 @@ CORBA_PolicyTypeSeq_var::operator= (const CORBA_PolicyTypeSeq_var &p) // deep co
     delete this->ptr_;
     ACE_NEW_RETURN (this->ptr_,
                     CORBA_PolicyTypeSeq (*p.ptr_),
-		    *this);
+                    *this);
   }
   return *this;
 }
@@ -990,21 +990,12 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const CORBA_PolicyErr
 
 ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, CORBA_PolicyError &_tao_aggregate)
 {
-  // retrieve  RepoID and verify if we are of that type
-  char *_tao_repoID;
-  if ((strm >> _tao_repoID) &&
-      (_tao_aggregate._is_a (_tao_repoID)))
-  {
-    // now marshal the members
-    if (
+  // now marshal the members
+  if (
       (strm >> _tao_aggregate.reason)
-    )
-      return 1;
-    else
-      return 0;
-  }
-  else
-    return 0;
+      )
+    return 1;
+  return 0;
 }
 
 ACE_INLINE CORBA::Boolean operator<< (
@@ -1052,21 +1043,12 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const CORBA_InvalidPo
 
 ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, CORBA_InvalidPolicies &_tao_aggregate)
 {
-  // retrieve  RepoID and verify if we are of that type
-  char *_tao_repoID;
-  if ((strm >> _tao_repoID) &&
-      (_tao_aggregate._is_a (_tao_repoID)))
-  {
-    // now marshal the members
-    if (
+  // now marshal the members
+  if (
       (strm >> _tao_aggregate.indices)
-    )
-      return 1;
-    else
-      return 0;
-  }
-  else
-    return 0;
+      )
+    return 1;
+  return 0;
 }
 
 CORBA::Boolean TAO_Export

@@ -1,120 +1,189 @@
+Wed Mar  1 18:01:37 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Exception.h:
+        * tao/Exception.cpp:
+          New virtual methods _tao_encode() and _tao_decode() added.  The
+          ORB uses those methods to marshal and demarshal exceptions
+          polymorphically.  Notice that the methods use compiled
+          marshaling, so this continues the quest to decouple the ORB from
+          compiled marshaling.
+
+
+        * TAO_IDL/be/be_visitor_exception/cdr_op_ci.cpp:
+          The CDR extraction operator for Exceptions should not extract
+          the repository ID, this is done by the caller, who first extract
+          the id, then creates the right Exception, and only then calls
+          the extraction operator (indirectly, through the _tao_decode()
+          method).
+
+        * TAO_IDL/be/be_visitor_exception/exception_ch.cpp:
+        * TAO_IDL/be/be_visitor_exception/exception_cs.cpp:
+          Generate the _tao_encode() and _tao_decode() methods for each
+          user exception.
+
+        * tao/GIOP.cpp:
+          Use the _tao_encode() method to marshal exceptions and send them
+          across the wire.
+
+        * tao/Any.cpp:
+          Insertion operator for exceptions into anys uses the
+          _tao_encode() method now.
+
+        * tao/BoundsC.h:
+        * tao/BoundsC.i:
+        * tao/BoundsC.cpp:
+        * tao/DynAnyC.h:
+        * tao/DynAnyC.cpp:
+        * tao/IORC.h:
+        * tao/IORC.i:
+        * tao/IORC.cpp:
+        * tao/ImplRepoC.h:
+        * tao/ImplRepoC.i:
+        * tao/ImplRepoC.cpp:
+        * tao/InconsistentTypeCodeC.h:
+        * tao/InconsistentTypeCodeC.cpp:
+        * tao/Invocation.cpp:
+        * tao/ORB.h:
+        * tao/ORB.cpp:
+        * tao/POAC.h:
+        * tao/POAC.i:
+        * tao/POAC.cpp:
+        * tao/PolicyC.h:
+        * tao/PolicyC.i:
+        * tao/PolicyC.cpp:
+        * tao/PollableC.h:
+        * tao/PollableC.i:
+        * tao/PollableC.cpp:
+        * tao/Typecode.h:
+        * tao/Typecode.cpp:
+        * tao/WrongTransactionC.h:
+        * tao/WrongTransactionC.cpp:
+          Add the _tao_encode and _tao_decode methods.
+
+        * tao/decode.cpp:
+        * tao/encode.cpp:
+          Removed support for marshaling and demarshaling of exceptions.
+
+        * tao/Stub.cpp:
+          Cosmetic fixes.
+
 Wed Mar  1 17:47:19 2000  Ossama Othman  <ossama@uci.edu>
 
-	* tao/ORB.cpp:
+        * tao/ORB.cpp:
 
-	  Cosmetic update.
+          Cosmetic update.
 
-	* tao/POA.cpp (create_reference_i, create_reference_with_id_i):
+        * tao/POA.cpp (create_reference_i, create_reference_with_id_i):
 
-	  Corrected "optimal conversion" warnings from gcc 2.95.2 by
-	  using a temporary pointer variable in the ACE_NEW_THROW_EX
-	  expression, and then assigning that variable to the "_var"
-	  variable.
+          Corrected "optimal conversion" warnings from gcc 2.95.2 by
+          using a temporary pointer variable in the ACE_NEW_THROW_EX
+          expression, and then assigning that variable to the "_var"
+          variable.
 
 Wed Mar  1 17:27:45 2000  Ossama Othman  <ossama@uci.edu>
 
-	* tao/IIOP_Acceptor.h (hostname):
+        * tao/IIOP_Acceptor.h (hostname):
 
-	  Added new helper method to the TAO_IIOP_Acceptor class.
+          Added new helper method to the TAO_IIOP_Acceptor class.
 
-	* tao/IIOP_Acceptor.cpp (open_default):
+        * tao/IIOP_Acceptor.cpp (open_default):
 
-	  Make sure number of probed network interfaces returned from
-	  ACE::get_ip_interfaces() is greater than zero.  If no network
-	  interfaces were found then assume one exists and use the default
-	  interface.  The use of the default interface in this situation
-	  basically reverts back to the pre-multi-homed support behavior,
-	  so it should always work on properly configured systems.
+          Make sure number of probed network interfaces returned from
+          ACE::get_ip_interfaces() is greater than zero.  If no network
+          interfaces were found then assume one exists and use the default
+          interface.  The use of the default interface in this situation
+          basically reverts back to the pre-multi-homed support behavior,
+          so it should always work on properly configured systems.
 
-	  (open, open_default):
+          (open, open_default):
 
-	  Use ACE_INET_Addr::set() to initialize the TAO_IIOP_Acceptor
-	  member addr(s), instead of performing memberwise assignment.
+          Use ACE_INET_Addr::set() to initialize the TAO_IIOP_Acceptor
+          member addr(s), instead of performing memberwise assignment.
 
-	  Note that the open() method was missing a copy/assignment
-	  altogether.  This buglet was introduced when I added support for
-	  multi-homed hosts.  The only affect this bug should have had is
-	  to break the check for collocation in
-	  TAO_IIOP_Acceptor::is_collocated().
+          Note that the open() method was missing a copy/assignment
+          altogether.  This buglet was introduced when I added support for
+          multi-homed hosts.  The only affect this bug should have had is
+          to break the check for collocation in
+          TAO_IIOP_Acceptor::is_collocated().
 
-	  (open_i):
+          (open_i):
 
-	  Cosmetic update.
+          Cosmetic update.
 
-	  (hostname):
+          (hostname):
 
-	  Added this helper method.  It factors out the code common to
-	  both the open() and the open_default() methods that cache the
-	  hostname(s) extracted from the ACE_INET_Addr(s).
+          Added this helper method.  It factors out the code common to
+          both the open() and the open_default() methods that cache the
+          hostname(s) extracted from the ACE_INET_Addr(s).
 
-	* tao/ORB_Core.cpp (TAO_ORB_Core):
-	* tao/Stub.h:
+        * tao/ORB_Core.cpp (TAO_ORB_Core):
+        * tao/Stub.h:
 
-	  Cosmetic updates.
+          Cosmetic updates.
 
 Wed Mar  1 17:30:14 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_array/any_op_cs.cpp:
-	* TAO_IDL/be/be_visitor_enum/any_op_cs.cpp:
-	* TAO_IDL/be/be_visitor_exception/any_op_cs.cpp:
-	* TAO_IDL/be/be_visitor_interface/any_op_cs.cpp:
-	* TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp:
-	* TAO_IDL/be/be_visitor_structure/any_op_cs.cpp:
-	* TAO_IDL/be/be_visitor_union/any_op_cs.cpp:
-	  Removed all calls to decode(), and replaced calls
-	  to Any::replace() (which calls encode()) with calls
-	  to Any::_tao_replace() (which does not). This is
-	  the first step in ridding TAO of interpreted
-	  (de)marshaling. Also added some memory cleanup if a
-	  CDR stream operation is not successful for some
-	  reason.
+        * TAO_IDL/be/be_visitor_array/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_enum/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_exception/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_structure/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_union/any_op_cs.cpp:
+          Removed all calls to decode(), and replaced calls
+          to Any::replace() (which calls encode()) with calls
+          to Any::_tao_replace() (which does not). This is
+          the first step in ridding TAO of interpreted
+          (de)marshaling. Also added some memory cleanup if a
+          CDR stream operation is not successful for some
+          reason.
 
 Wed Mar  1 16:38:14 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ch.cpp:
-	* TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ci.cpp:
-	* TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_cs.cpp:
-	* TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_ch.cpp:
-	* TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_ci.cpp:
-	* TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_cs.cpp:
-	* TAO_IDL/be/be_visitor_sequence/gen_bounded_sequence_ch.cpp:
-	* TAO_IDL/be/be_visitor_sequence/gen_bounded_sequence_ci.cpp:
-	* TAO_IDL/be/be_visitor_sequence/gen_bounded_sequence_cs.cpp:
-	* TAO_IDL/be/be_visitor_sequence/gen_unbounded_sequence_ch.cpp:
-	* TAO_IDL/be/be_visitor_sequence/gen_unbounded_sequence_ci.cpp:
-	* TAO_IDL/be/be_visitor_sequence/gen_unbounded_sequence_cs.cpp:
-	  Code generation for sequences of a typedef now use the 
-	  typedef's name instead of the unaliased type name. The former
-	  behavior was causing a problem when the typedef in question
-	  is #included from another IDL file. Thanks to
-	  David O'Farrell <eeidofl@eei.ericsson.se> for sending in the
-	  example IDL file that exposed this problem.
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ci.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_ci.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_sequence_ci.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_sequence_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_unbounded_sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_unbounded_sequence_ci.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_unbounded_sequence_cs.cpp:
+          Code generation for sequences of a typedef now use the
+          typedef's name instead of the unaliased type name. The former
+          behavior was causing a problem when the typedef in question
+          is #included from another IDL file. Thanks to
+          David O'Farrell <eeidofl@eei.ericsson.se> for sending in the
+          example IDL file that exposed this problem.
 
 Wed Mar  1 12:47:41 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Policy_Manager.cpp (get_policy_overrides): 
-	* tao/GIOP_Server_Request.cpp:
-	* tao/POA.cpp:
-	* tao/decode.cpp:
-	* tao/Object_Adapter.cpp:
-	* tao/ORB.cpp:
-	* tao/IORC.cpp:Removed the naked "new" operators. This is for bug
-	  #259. The bug refers only to ORB_Core, but other things were
-	  also added to make things cleaner. BTW, it was also observed
-	  that there were no naked new operators in ORB_Core.cpp. 
-	  
+        * tao/Policy_Manager.cpp (get_policy_overrides):
+        * tao/GIOP_Server_Request.cpp:
+        * tao/POA.cpp:
+        * tao/decode.cpp:
+        * tao/Object_Adapter.cpp:
+        * tao/ORB.cpp:
+        * tao/IORC.cpp:Removed the naked "new" operators. This is for bug
+          #259. The bug refers only to ORB_Core, but other things were
+          also added to make things cleaner. BTW, it was also observed
+          that there were no naked new operators in ORB_Core.cpp.
+
 Wed Mar  1 08:29:42 2000  Ossama Othman  <ossama@uci.edu>
 
-	* tao/default_resource.cpp:
+        * tao/default_resource.cpp:
 
-	  Added missing template instantation for
-	  ACE_Auto_Basic_Ptr<TAO_Protocol_Factory>.
+          Added missing template instantation for
+          ACE_Auto_Basic_Ptr<TAO_Protocol_Factory>.
 
 Wed Mar  1 09:59:46 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
-	  Removed redundant generation of an ACE_CHECK statement,
-	  found as a byproduct of looking for another bug.
+        * TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
+          Removed redundant generation of an ACE_CHECK statement,
+          found as a byproduct of looking for another bug.
 
 Tue Feb 29 16:44:47 2000  Carlos O'Ryan  <coryan@uci.edu>
 
@@ -146,9 +215,9 @@ Tue Feb 29 10:37:53 2000  Michael Kircher <Michael.Kircher@mchp.siemens.de>
 Mon Feb 28 17:37:53 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * TAO_IDL/driver/drv_args.cpp:
-          
+
           Wasn't checking for the correct error value for get_temp_dir (),
-          and this revealed a inconsistency in how it worked on Unix and 
+          and this revealed a inconsistency in how it worked on Unix and
           Win32.
 
 Mon Feb 28 09:20:27 2000  Darrell Brunsch <brunsch@uci.edu>
@@ -165,9 +234,9 @@ Mon Feb 28 09:20:27 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Mon Feb 28 10:35:10 2000  Ossama Othman  <ossama@uci.edu>
 
-	* Makefile:
+        * Makefile:
 
-	  Updated dependencies.
+          Updated dependencies.
 
 Mon Feb 28 09:56:34 2000  Ossama Othman  <ossama@uci.edu>
 
@@ -209,7 +278,7 @@ Sat Feb 26 17:29:50 2000  Darrell Brunsch <brunsch@uci.edu>
 Fri Feb 25 19:59:33 2000  Vishal Kachroo  <vishal@cs.wustl.edu>
 
         * tao/GIOP.cpp (process_server_request): Removed a memory leak.
-          Thanks to Klemen Zagar <klemen.zagar@ijs.si> for reporting 
+          Thanks to Klemen Zagar <klemen.zagar@ijs.si> for reporting
           this.
 
 Fri Feb 25 18:39:17 2000  Jeff Parsons  <parsons@cs.wustl.edu>
