@@ -1,3 +1,13 @@
+Fri Aug 24 20:32:39 2001  Steve Huston  <shuston@riverace.com>
+
+        * tests/MEM_Stream_Test.cpp: Changed this test to use multiple
+          processes on any platform without ACE_LACKS_FORK. It actually
+          could be broader than this if desired. This is motivated by the
+          fact that HP-UX can't mmap() (the call underlying ACE_MEM_IO)
+          the same file more than once in the same process. With this,
+          MEM_Stream_Test goes a lot better on HP-UX, though not perfectly
+          yet.
+
 Fri Aug 24 16:54:02 2001  Ossama Othman  <ossama@uci.edu>
 
 	* ace/SSL/SSL_SOCK_Stream.h (recv_i):
