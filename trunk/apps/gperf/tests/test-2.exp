@@ -13,7 +13,7 @@
 static unsigned int
 hash (str, len)
      char *str;
-     int unsigned len;
+     unsigned int len;
 {
   static unsigned short asso_values[] =
     {
@@ -176,7 +176,7 @@ in_word_set (str, len)
           char *s = wordlist[key];
 
           if (len == lengthtable[key]
-              && *s == *str && !strcmp (str + 1, s + 1))
+              && *str == *s && !strcmp (str + 1, s + 1))
             return s;
         }
     }

@@ -119,7 +119,7 @@ in_word_set (str, len)
             {
               char *s = wordlist[index].name;
 
-              if (*s == *str && !strcmp (str + 1, s + 1))
+              if (*str == *s && !strcmp (str + 1, s + 1))
                 return &wordlist[index];
             }
           else if (index < 0 && index >= -MAX_HASH_VALUE)
