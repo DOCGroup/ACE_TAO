@@ -91,15 +91,19 @@ LINK32=link.exe
 # PROP Default_Filter "cpp;idl"
 # Begin Source File
 
-SOURCE=.\Cubit_Client.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\collocation_test.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=.\Cubit_Client.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Cubit_i.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Cubit_Server.cpp
 # End Source File
 # Begin Source File
 
@@ -111,7 +115,7 @@ SOURCE=.\cubitS.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Cubit_Server.cpp
+SOURCE=.\RTI_IO.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -127,15 +131,15 @@ SOURCE=.\Cubit_Client.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Cubit_Server.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\cubitC.h
 # End Source File
 # Begin Source File
 
 SOURCE=.\cubitS.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Cubit_Server.h
 # End Source File
 # End Group
 # Begin Group "IDL Files"

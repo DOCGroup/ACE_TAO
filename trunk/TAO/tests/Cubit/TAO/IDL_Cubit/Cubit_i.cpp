@@ -17,6 +17,7 @@
 #include "ace/Auto_Ptr.h"
 #include "Cubit_Client.h"
 #include "Cubit_i.h"
+#include "ace/streams.h"
 
 #include "tao/Timeprobe.h"
 #include "RTI_IO.h"
@@ -296,7 +297,10 @@ Cubit_i::cube_rti_data (const Cubit::RtiPacket &input,
   ACE_FUNCTION_TIMEPROBE (CUBIT_I_CUBE_LONG_SEQUENCE_START);
 
   if (TAO_debug_level > 0)
-    cout << "input:\n" << input << endl;
+    {
+      ACE_DEBUG ((LM_DEBUG, "Input: \n"));
+      print_RtiPacket (input);
+    }
 
   if (output.ptr () == 0)
     output = new Cubit::RtiPacket (input);
@@ -307,7 +311,10 @@ Cubit_i::cube_rti_data (const Cubit::RtiPacket &input,
     * input.packetHeader.packetColor;
 
   if (TAO_debug_level > 0)
-    cout << "output\n" <<  *output << endl;
+    {
+      ACE_DEBUG ((LM_DEBUG, "Output: \n"));
+      print_RtiPacket (*output);
+    }
 }
 
 // Shutdown.
