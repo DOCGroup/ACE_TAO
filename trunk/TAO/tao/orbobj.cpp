@@ -18,7 +18,7 @@
 #include "tao/stub.h"
 #include "tao/iioporb.h"		// XXX
 #include "tao/params.h"
-#include "tao/boa.h"
+#include "tao/poa.h"
 #include "tao/nvlist.h"
 #include "tao/debug.h"
 #endif /* 0 */

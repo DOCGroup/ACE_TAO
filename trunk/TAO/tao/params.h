@@ -20,7 +20,7 @@
 #  include "ace/OS.h"
 
 #  include "tao/orb.h" // get types
-#  include "tao/boa.h" // Need the DSI Handler
+#  include "tao/poa.h" // Need the DSI Handler
 #  include "tao/sequence.h" // for CORBA::OctetSeq
 #endif /* 0 */
 

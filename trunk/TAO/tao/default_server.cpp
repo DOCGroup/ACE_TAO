@@ -11,7 +11,7 @@
 // ============================================================================
 
 #include "tao/default_server.h"
-#include "tao/Orb_Core.h"
+#include "tao/orb_core.h"
 
 TAO_Default_Server_Strategy_Factory::TAO_Default_Server_Strategy_Factory (void)
   : thread_flags_ (0),
