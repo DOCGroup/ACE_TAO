@@ -1,14 +1,11 @@
-project: namingexe {
-  depends += CosNaming
-  libs    += TAO_CosNaming
-
+project(*server): namingexe, naming {
   Source_Files {
     status_i.cpp
     server.cpp
   }
 }
 
-project(client): namingexe {
+project(*client): namingexe {
   exename = client
 
   Source_Files {

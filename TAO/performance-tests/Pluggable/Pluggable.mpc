@@ -1,4 +1,4 @@
-project: server {
+project(*server): taoserver {
   Source_Files {
     PP_Test_Server.cpp
     PP_Test_i.cpp
@@ -6,7 +6,7 @@ project: server {
   }
 }
 
-project: client {
+project(*client) : taoclient {
   Source_Files {
     PP_TestC.cpp
     PP_Test_Client.cpp

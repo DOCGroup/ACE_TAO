@@ -1,5 +1,5 @@
-project(supplier): messaging, rteventexe {
-  depends  += ECMcastTests_Lib CosNaming IORTable
+project(*supplier): messaging, rteventexe {
+  after  += ECMcastTests_Lib CosNaming IORTable
   libs     += ECMcastTests TAO_CosNaming TAO_IORTable
   includes += ../Common
   exename   = supplier
@@ -9,8 +9,8 @@ project(supplier): messaging, rteventexe {
   }
 }
 
-project(consumer): messaging, rteventexe {
-  depends  += ECMcastTests_Lib CosNaming IORTable
+project(*consumer): messaging, rteventexe {
+  after  += ECMcastTests_Lib CosNaming IORTable
   libs     += ECMcastTests TAO_CosNaming TAO_IORTable
   includes += ../Common
   exename   = consumer
@@ -20,8 +20,8 @@ project(consumer): messaging, rteventexe {
   }
 }
 
-project(gateway-ec): messaging, rteventexe {
-  depends  += ECMcastTests_Lib CosNaming IORTable
+project(*gateway-ec): messaging, rteventexe {
+  after  += ECMcastTests_Lib CosNaming IORTable
   libs     += ECMcastTests TAO_CosNaming TAO_IORTable
   includes += ../Common
   exename   = gateway-ec

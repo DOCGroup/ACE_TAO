@@ -1,4 +1,4 @@
-project(Multiple Server): server {
+project(*Server): taoserver {
   idlflags += -Gd
 
   Source_Files {
@@ -8,7 +8,7 @@ project(Multiple Server): server {
   }
 }
 
-project(Multiple Client): server {
+project(*Client): taoserver {
   exename   = client
   idlflags += -Gd
 

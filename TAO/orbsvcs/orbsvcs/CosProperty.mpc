@@ -1,11 +1,10 @@
-project(CosProperty) : orbsvcslib, core {
-  depends    += PortableServer
-  sharedname  = TAO_CosProperty
-  libs       += TAO_PortableServer TAO
-  idlflags   += -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_Property_Export -Wb,export_include=Property/property_export.h
-  dllflags    = TAO_PROPERTY_BUILD_DLL
-  tagchecks   = Property
-  include_dir = orbsvcs
+project(CosProperty) : orbsvcslib, core, portableserver {
+  sharedname   = TAO_CosProperty
+  idlflags    += -Wb,export_macro=TAO_Property_Export -Wb,export_include=Property/property_export.h
+  dynamicflags = TAO_PROPERTY_BUILD_DLL
+  tagchecks    = Property
+  pch_header   =
+  pch_source   =
 
   IDL_Files {
     CosPropertyService.idl

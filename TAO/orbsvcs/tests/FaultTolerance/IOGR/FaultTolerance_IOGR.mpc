@@ -1,20 +1,12 @@
-project: server, orbsvcsexe {
-  depends += FTORB IORManip
-  libs    += TAO_FTORB TAO_IORManip
-  comps   += FTORB
-
+project(*server): server, orbsvcsexe, iormanip, ftorb {
   Source_Files {
     test_i.cpp
     server.cpp
   }
 }
 
-project(Manager): server, orbsvcsexe {
-  depends += FTORB IORManip
-  libs    += TAO_FTORB TAO_IORManip
+project(*Manager): taoserver, orbsvcsexe, iormanip, ftorb {
   exename  = Manager
-  comps   += FTORB
-
   Source_Files {
     testC.cpp
     Manager.cpp

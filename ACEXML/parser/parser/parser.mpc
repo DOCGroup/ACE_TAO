@@ -1,7 +1,6 @@
 project(ACEXML_Parser): acelib {
-  sharedname = ACEXML_Parser
-  depends   += ACEXML
-  libs      += ACEXML
-  libpaths  += $(ACE_ROOT)/ACEXML/common
-  dllflags  += ACEXML_PARSER_BUILD_DLL
+  sharedname    = ACEXML_Parser
+  after        += ACEXML
+  libs         += ACEXML
+  dynamicflags += ACEXML_PARSER_BUILD_DLL
 }

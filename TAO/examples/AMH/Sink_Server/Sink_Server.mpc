@@ -1,4 +1,4 @@
-project(st_server): server, strategies {
+project(*st_server): taoserver, strategies {
   idlflags += -GH
   exename   = st_server
   requires += ami
@@ -11,7 +11,7 @@ project(st_server): server, strategies {
   }
 }
 
-project(mt_server): server, strategies  {
+project(*mt_server): taoserver, strategies  {
   idlflags += -GH
   exename   = mt_server
   requires += ami
@@ -25,7 +25,7 @@ project(mt_server): server, strategies  {
   }
 }
 
-project: client, strategies  {
+project(*client): taoclient, strategies  {
   idlflags += -GH
   requires += ami
 

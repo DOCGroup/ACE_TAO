@@ -3,10 +3,10 @@
 // This file has been manually modified to add a second component implementation.
 
 project(GPS_stub): ciao_client {
-  depends += HUDisplay_stub
+  after += HUDisplay_stub
   sharedname = GPS_stub
   idlflags += -Wb,stub_export_macro=GPS_STUB_Export -Wb,stub_export_include=GPS_stub_export.h -Wb,skel_export_macro=GPS_SVNT_Export -Wb,skel_export_include=GPS_svnt_export.h
-  dllflags   = GPS_STUB_BUILD_DLL
+  dynamicflags   = GPS_STUB_BUILD_DLL
 
   IDL_Files {
     GPS.idl
@@ -18,12 +18,12 @@ project(GPS_stub): ciao_client {
 }
 
 project(GPS_svnt) : ciao_servant {
-  depends += HUDisplay_svnt GPS_stub
+  after += HUDisplay_svnt GPS_stub
   sharedname  = GPS_svnt
   libs    += GPS_stub HUDisplay_stub HUDisplay_svnt
   libpaths += ..
   idlflags  +=  -Wb,export_macro=GPS_SVNT_Export -Wb,export_include=GPS_svnt_export.h
-  dllflags = GPS_SVNT_BUILD_DLL
+  dynamicflags = GPS_SVNT_BUILD_DLL
 
   CIDL_Files {
     GPS.cidl
@@ -42,12 +42,12 @@ project(GPS_svnt) : ciao_servant {
 
 
 project(GPS_exec) : ciao_component {
-  depends   += GPS_svnt
+  after   += GPS_svnt
   sharedname = GPS_exec
   libs      += GPS_stub GPS_svnt HUDisplay_stub HUDisplay_svnt
   libpaths += ..
   idlflags  +=  -Wb,export_macro=GPS_EXEC_Export -Wb,export_include=GPS_exec_export.h
-  dllflags   = GPS_EXEC_BUILD_DLL
+  dynamicflags   = GPS_EXEC_BUILD_DLL
 
   IDL_Files {
     GPSEI.idl
@@ -60,12 +60,12 @@ project(GPS_exec) : ciao_component {
 }
 
 project(GPS_tracing_exec) : ciao_component {
-  depends   += GPS_svnt
+  after   += GPS_svnt
   sharedname = GPS_tracing_exec
   libs      += GPS_stub GPS_svnt HUDisplay_stub HUDisplay_svnt
   libpaths += ..
   idlflags  +=  -Wb,export_macro=GPS_EXEC_Export -Wb,export_include=GPS_exec_export.h
-  dllflags   = GPS_EXEC_BUILD_DLL
+  dynamicflags   = GPS_EXEC_BUILD_DLL
 
   IDL_Files {
     GPSEI.idl

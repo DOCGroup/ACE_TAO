@@ -1,4 +1,4 @@
-project(Portable Interceptors Benchmark Server): server {
+project(*Server): taoserver {
   requires += interceptors
   Source_Files {
     test_i.cpp
@@ -10,7 +10,7 @@ project(Portable Interceptors Benchmark Server): server {
   }
 }
 
-project(Portable Interceptors Benchmark Client): client {
+project(*Client): taoclient {
   requires += interceptors
   Source_Files {
     testC.cpp

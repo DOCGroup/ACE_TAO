@@ -2,10 +2,10 @@
 // This file is generated with "generate_component_mpc.pl -l .. -p BasicSP -i -c EC"
 
 project(EC_stub): ciao_client {
-  depends += BasicSP_stub
+  after += BasicSP_stub
   sharedname = EC_stub
   idlflags += -Wb,stub_export_macro=EC_STUB_Export -Wb,stub_export_include=EC_stub_export.h -Wb,skel_export_macro=EC_SVNT_Export -Wb,skel_export_include=EC_svnt_export.h
-  dllflags   = EC_STUB_BUILD_DLL
+  dynamicflags   = EC_STUB_BUILD_DLL
 
   IDL_Files {
     EC.idl
@@ -17,12 +17,12 @@ project(EC_stub): ciao_client {
 }
 
 project(EC_svnt) : ciao_servant {
-  depends += BasicSP_svnt EC_stub
+  after += BasicSP_svnt EC_stub
   sharedname  = EC_svnt
-  libs    += EC_stub BasicSP_stub BasicSP_svnt TAO_Valuetype
-  libpaths += .. $(TAO_ROOT)/tao/Valuetype
+  libs    += EC_stub BasicSP_stub BasicSP_svnt
+  libpaths += ..
   idlflags  +=  -Wb,export_macro=EC_SVNT_Export -Wb,export_include=EC_svnt_export.h
-  dllflags = EC_SVNT_BUILD_DLL
+  dynamicflags = EC_SVNT_BUILD_DLL
 
   CIDL_Files {
     EC.cidl
@@ -41,12 +41,12 @@ project(EC_svnt) : ciao_servant {
 
 
 project(EC_exec) : ciao_component {
-  depends   += EC_svnt
+  after += EC_svnt
   sharedname = EC_exec
   libs      += EC_stub BasicSP_stub EC_svnt
   libpaths += ..
   idlflags  +=  -Wb,export_macro=EC_EXEC_Export -Wb,export_include=EC_exec_export.h
-  dllflags   = EC_EXEC_BUILD_DLL
+  dynamicflags   = EC_EXEC_BUILD_DLL
 
   IDL_Files {
     ECEI.idl
@@ -60,11 +60,11 @@ project(EC_exec) : ciao_component {
 
 
 
-project (EC_client) : ciao_client {
+project (EC_client) : ciao_client, valuetype {
   exename = client
-  depends += EC_stub
-  libs += EC_stub BasicSP_stub TAO_Valuetype
-  libpaths += .. $(TAO_ROOT)/tao/Valuetype
+  after += EC_stub
+  libs += EC_stub BasicSP_stub
+  libpaths += ..
 
   IDL_Files {
   }
@@ -75,11 +75,11 @@ project (EC_client) : ciao_client {
 }
 
 
-project (EC_controller) : ciao_client {
+project (EC_controller) : ciao_client, valuetype {
   exename = controller
-  depends += EC_stub
-  libs += EC_stub BasicSP_stub TAO_Valuetype
-  libpaths += .. $(TAO_ROOT)/tao/Valuetype
+  after += EC_stub
+  libs += EC_stub BasicSP_stub
+  libpaths += ..
 
   IDL_Files {
   }
@@ -88,3 +88,4 @@ project (EC_controller) : ciao_client {
     controller.cpp
   }
 }
+

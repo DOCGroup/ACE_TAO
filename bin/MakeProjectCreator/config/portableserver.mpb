@@ -1,0 +1,4 @@
+project : taolib {
+  after   += PortableServer
+  libs    += TAO_PortableServer
+}

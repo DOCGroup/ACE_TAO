@@ -1,47 +1,35 @@
-project: namingexe {
-  libs     += TAO_CosLifeCycle
-  depends  += CosLifeCycle
-  idlflags += -I$(TAO_ROOT)/orbsvcs/orbsvcs
-  includes += $(TAO_ROOT)/orbsvcs/orbsvcs
-
+// todo : Once MPC is used for everything, we should consider
+//        removing the includes += lines below, and updating
+//        the source code instead.
+project(*server): namingexe, lifecycle {
+  idlflags += -I../../orbsvcs/orbsvcs
+  includes += ../../orbsvcs/orbsvcs
   Source_Files {
     server.cpp
     Quoter_i.cpp
   }
 }
 
-project(client): namingexe {
-  libs     += TAO_CosLifeCycle
-  depends  += CosLifeCycle
-  idlflags += -I$(TAO_ROOT)/orbsvcs/orbsvcs
-  includes += $(TAO_ROOT)/orbsvcs/orbsvcs
-  exename   = client
-
+project(*client): namingexe, lifecycle {
+  idlflags += -I../../orbsvcs/orbsvcs
+  includes += ../../orbsvcs/orbsvcs
   Source_Files {
     client.cpp
   }
 }
 
-project(Factory Finder): namingexe {
-  libs     += TAO_CosLifeCycle
-  depends  += CosLifeCycle
-  idlflags += -I$(TAO_ROOT)/orbsvcs/orbsvcs
-  includes += $(TAO_ROOT)/orbsvcs/orbsvcs
-  exename   = Factory_Finder
-
+project(*Factory Finder): namingexe, lifecycle {
+  idlflags += -I../../orbsvcs/orbsvcs
+  includes += ../../orbsvcs/orbsvcs
   Source_Files {
     Factory_Finder.cpp
     Factory_Finder_i.cpp
   }
 }
 
-project(Generic Factory): namingexe {
-  libs     += TAO_CosLifeCycle
-  depends  += CosLifeCycle
-  idlflags += -I$(TAO_ROOT)/orbsvcs/orbsvcs
-  includes += $(TAO_ROOT)/orbsvcs/orbsvcs
-  exename   = Generic_Factory
-
+project(*Generic Factory): namingexe, lifecycle {
+  idlflags += -I../../orbsvcs/orbsvcs
+  includes += ../../orbsvcs/orbsvcs
   Source_Files {
     Generic_Factory.cpp
     Generic_Factory_i.cpp

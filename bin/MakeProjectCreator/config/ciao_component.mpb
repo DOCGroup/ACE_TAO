@@ -1,5 +1,5 @@
 project : ciao_client {
-  depends += CIAO_Container
+  after += CIAO_Container
   libs       += TAO_PortableServer TAO_IORInterceptor TAO_ObjRefTemplate CIAO_Container
   libpaths += $(TAO_ROOT)/tao/PortableServer $(TAO_ROOT)/tao/IORInterceptor $(TAO_ROOT)/tao/ObjRefTemplate
 

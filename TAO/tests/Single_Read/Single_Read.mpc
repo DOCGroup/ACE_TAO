@@ -1,11 +1,11 @@
-project(Single Read Server): server {
+project(*Server): taoserver {
   Source_Files {
     test_i.cpp
     server.cpp
   }
 }
 
-project(Single Read Client): client {
+project(*Client): taoclient {
   Source_Files {
     testC.cpp
     client.cpp

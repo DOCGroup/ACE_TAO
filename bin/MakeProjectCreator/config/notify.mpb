@@ -1,5 +1,2 @@
-project {
-  depends += CosNotification ETCL CosNaming Svc_Utils IORTable DynamicAny PortableServer TAO
-  libs    += TAO_CosNotification TAO_ETCL TAO_CosNaming TAO_Svc_Utils TAO_IORTable TAO_DynamicAny TAO_PortableServer TAO
-  comps   += Notify Naming
+project : notification {
 }

@@ -1,7 +1,5 @@
 project : taolib, core {
-  sharedname  = TAO_SmartProxies
-  libs       += TAO
-  dllflags    = TAO_SMARTPROXIES_BUILD_DLL
-  libout      = ..
-  include_dir = tao/SmartProxies
+  sharedname   = TAO_SmartProxies
+  dynamicflags = TAO_SMARTPROXIES_BUILD_DLL
+  include_dir  = tao/SmartProxies
 }

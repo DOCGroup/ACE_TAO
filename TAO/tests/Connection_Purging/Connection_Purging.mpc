@@ -1,11 +1,11 @@
-project(Connection Purging Server): strategies, server {
+project(*Server): strategies, taoserver {
   Source_Files {
     test_i.cpp
     server.cpp
   }
 }
 
-project(Connection Purging Client): strategies, client {
+project(*Client): strategies, taoclient {
   Source_Files {
     testC.cpp
     client.cpp

@@ -1,7 +1,6 @@
 project(gperf_exe) : aceexe, core {
+  install = $(ACE_ROOT)/bin
   exename = gperf
-  install = ../../../bin
-
   Source_Files {
     gperf.cpp
     Options.cpp

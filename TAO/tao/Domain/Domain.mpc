@@ -1,8 +1,5 @@
-project : taolib, core {
-  depends    += IFR_Client PortableServer
-  sharedname  = TAO_Domain
-  libs       += TAO_IFR_Client TAO_PortableServer TAO
-  dllflags    = TAO_DOMAIN_BUILD_DLL
-  libout      = ..
-  include_dir = tao/Domain
+project : taolib, core, ifr_client, portableserver {
+  sharedname   = TAO_Domain
+  dynamicflags = TAO_DOMAIN_BUILD_DLL
+  include_dir  = tao/Domain
 }

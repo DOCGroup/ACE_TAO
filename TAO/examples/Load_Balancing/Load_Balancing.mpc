@@ -1,4 +1,4 @@
-project: server {
+project(*server): taoserver {
   avoids += repo
 
   IDL_Files {
@@ -15,7 +15,7 @@ project: server {
   }
 }
 
-project(client): server {
+project(*Client): taoserver {
   exename = client
   avoids += repo
 
@@ -31,7 +31,7 @@ project(client): server {
   }
 }
 
-project(load balancer): server {
+project(*Balancer): taoserver {
   exename = load_balancer
   avoids += repo
 

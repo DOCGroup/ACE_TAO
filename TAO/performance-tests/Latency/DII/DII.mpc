@@ -1,4 +1,4 @@
-project: server, strategies {
+project(*latency server): taoserver, strategies {
   avoids += minimum_corba
 
   Source_Files {
@@ -7,10 +7,8 @@ project: server, strategies {
   }
 }
 
-project(client): server, strategies {
+project(*latency client): taoserver, strategies, dynamicinterface {
   exename  = client
-  depends += DynamicInterface
-  libs    += TAO_DynamicInterface
   avoids  += minimum_corba
 
   Source_Files {

@@ -1,4 +1,4 @@
-project: server, orbsvcsexe {
+project(*server): server, orbsvcsexe {
   comps += PortableGroup
 
   Source_Files {
@@ -7,7 +7,7 @@ project: server, orbsvcsexe {
   }
 }
 
-project: client, orbsvcsexe {
+project(*client): client, orbsvcsexe {
   comps += PortableGroup
 
   Source_Files {

@@ -1,8 +1,4 @@
-project(CIAO_Daemon): ciao_server {
-
-  libs += TAO_IORTable
-  libpaths += $(TAO_ROOT)/tao/IORTable
-
+project(CIAO_Daemon): ciao_server, iortable {
   IDL_Files {
     Daemon.idl
   }
@@ -19,7 +15,7 @@ project(DaemonController) : ciao_server, acexml {
 
   libs += CIAO_XML_Helpers
   libpaths += ../XML_Helpers
-  depends += XML_Helpers
+  after += XML_Helpers
 
   IDL_Files {
     Daemon.idl

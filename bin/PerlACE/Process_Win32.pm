@@ -339,16 +339,28 @@ sub TerminateWaitKill ($)
 
 
 # Wait until a process exits.
+# return -1 if the process is still alive.
 
-sub Wait ()
+sub Wait ($)
 {
     my $self = shift;
-
-    if ($self->{RUNNING}) {
-        Win32::Process::Wait ($self->{PROCESS}, INFINITE);
+    my $timeout = shift;
+    if (!defined $timeout || $timeout < 0) {
+      $timeout = INFINITE;
+    } else {
+      $timeout = $timeout * 1000 * $PerlACE::Process::WAIT_DELAY_FACTOR; 
     }
 
-    $self->{RUNNING} = 0;
+    my $result = 0;
+
+    if ($self->{RUNNING}) {
+      $result = Win32::Process::Wait ($self->{PROCESS}, $timeout);
+      if ($result == 0) {
+        return -1;
+      }
+    }
+    Win32::Process::GetExitCode ($self->{PROCESS}, $result);    
+    return $result;    
 }
 
 
@@ -356,36 +368,9 @@ sub Wait ()
 
 sub TimedWait ($)
 {
-    my $self = shift;
-    my $timeout = shift;
-
-    if (!$self->{RUNNING}) {
-        return 0;
-    }
-
-    if (Win32::Process::Wait ($self->{PROCESS},
-                              $timeout * 1000 * $PerlACE::Process::WAIT_DELAY_FACTOR) == 0) {
-        return -1;
-    }
-
-    my $status = 0;
-    Win32::Process::GetExitCode ($self->{PROCESS}, $status);
-
-    # If this was a WinCE test, the log file was copied back to the log
-    # directory but is named .txt, not .log. Rename it so the log analyzer
-    # can find it.
-    if (defined $self->{WINCE_CTL}) {
-        my $log_name_txt;
-        $log_name_txt = dirname($self->{EXECUTABLE})."\\log\\";
-        $log_name_txt .= basename($self->{EXECUTABLE},'.EXE').".txt";
-        if (-e $log_name_txt) {
-            my $log_name = $log_name_txt;
-            $log_name =~ s/\.txt$/.log/i;
-            rename($log_name_txt, $log_name);
-        }
-    }
-
-    return $status;
+    my($self) = shift;
+    my($timeout) = shift;
+    return $self->Wait($timeout);
 }
 
 1;

@@ -1,8 +1,8 @@
 project : aceexe, taoversion {
-  depends  += tao TAO_IDL_EXE
-  includes += $(TAO_ROOT) $(TAO_ROOT)/tao
-  libpaths += $(TAO_ROOT)/tao
-  idlflags  = -Ge 1 -Sc
-  libflags += TAO_AS_STATIC_LIBS
-  libs     += TAO
+  after       += TAO TAO_IDL_EXE
+  includes    += $(TAO_ROOT) $(TAO_ROOT)/tao
+  libpaths    += $(ACE_ROOT)/lib
+  idlflags    += -Ge 1 -Sc -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h 
+  staticflags += TAO_AS_STATIC_LIBS
+  libs        += TAO
 }

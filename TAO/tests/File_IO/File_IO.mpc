@@ -1,11 +1,11 @@
-project(File IO Server): server, minimum_corba {
+project(*Server): taoserver, minimum_corba {
   Source_Files {
     File_i.cpp
     server.cpp
   }
 }
 
-project(File IO Client): client, minimum_corba {
+project(*Client): taoclient, minimum_corba {
   Source_Files {
     FileC.cpp
     client.cpp

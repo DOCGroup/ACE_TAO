@@ -1,4 +1,4 @@
-project(progress): server, strategies {
+project(*progress): taoserver, strategies, messaging {
   exename   = progress
   idlflags -= -Sc
   idlflags += -GC
@@ -10,7 +10,7 @@ project(progress): server, strategies {
   }
 }
 
-project(peer): server, strategies {
+project(*peer): taoserver, strategies, messaging {
   exename   = peer
   idlflags -= -Sc
   idlflags += -GC

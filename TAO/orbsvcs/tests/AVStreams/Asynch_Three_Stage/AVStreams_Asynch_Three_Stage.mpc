@@ -1,4 +1,4 @@
-project(sender): avstreamsexe {
+project(*sender): avstreamsexe {
   exename  = sender
 
   Source_Files {
@@ -7,7 +7,7 @@ project(sender): avstreamsexe {
   }
 }
 
-project(distributer): avstreamsexe {
+project(*distributer): avstreamsexe {
   exename  = distributer
 
   Source_Files {
@@ -16,7 +16,7 @@ project(distributer): avstreamsexe {
   }
 }
 
-project(receiver): avstreamsexe {
+project(*receiver): avstreamsexe {
   exename  = receiver
 
   Source_Files {

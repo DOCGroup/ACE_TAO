@@ -1,25 +1,21 @@
-project(CosLoadManager): namingexe, messaging, core {
-  libs     += TAO_CosLoadBalancing TAO_PortableGroup
-  depends  += LoadBalancing PortableGroup
+project(CosLoadManager): namingexe, server, core, loadbalancing {
   requires += ami interceptors
-  comps    += CosLoadBalancing
   exename   = LoadManager
 
   Source_Files {
-    LoadBalancer.cpp
     LoadManager.cpp
+    Signal_Handler.cpp
   }
 }
 
-project(CosLoadMonitor): namingexe, messaging, core {
-  libs     += TAO_CosLoadBalancing TAO_PortableGroup
-  depends  += LoadBalancing PortableGroup
+project(CosLoadMonitor): namingexe, server, core, loadbalancing {
   requires += ami interceptors
-  comps    += CosLoadBalancing
   exename   = LoadMonitor
 
   Source_Files {
     LoadMonitor.cpp
     Push_Handler.cpp
+    Monitor_Signal_Handler.cpp
+    Signal_Handler.cpp
   }
 }

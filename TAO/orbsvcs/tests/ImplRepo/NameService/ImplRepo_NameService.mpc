@@ -1,4 +1,4 @@
-project(ImplRepo NameService) : namingexe, minimum_corba {
+project: namingexe, minimum_corba {
   exename  = test
 }
 

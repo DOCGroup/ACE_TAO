@@ -1,0 +1,4 @@
+project : taolib {
+  after   += BiDir_GIOP
+  libs    += TAO_BiDirGIOP
+}

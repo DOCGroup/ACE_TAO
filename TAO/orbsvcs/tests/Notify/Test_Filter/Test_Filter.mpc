@@ -1,16 +1,8 @@
-project(TAO_RT_NotifyTests_Filter): orbsvcslib, notify {
+project(TAO_RT_NotifyTests_Filter): orbsvcslib, notify, rtcorba, etcl, dynamicany, portableserver, iortable {
 				    
   sharedname = TAO_RT_NotifyTests_Filter
-  libs       += TAO_CosNotification TAO_RTCORBA
-  requires += rt_corba
 
-  dllflags    = TAO_RT_Test_Filter_BUILD_DLL
-
-  libpaths += $(TAO_ROOT)/orbsvcs/orbsvcs/ETCL
-  libpaths += $(TAO_ROOT)/tao/DynamicAny
-  libpaths += $(TAO_ROOT)/tao/PortableServer
-  libpaths += $(TAO_ROOT)/tao/IORTable
-  libpaths += $(TAO_ROOT)/tao/RTCORBA
+  dynamicflags    = TAO_RT_Test_Filter_BUILD_DLL
 
   IDL_Files {  
   }

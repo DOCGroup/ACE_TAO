@@ -1,17 +1,11 @@
-project: server {
-  depends += IFR_Client
-  libs    += TAO_IFR_Client
-
+project(*server): taoserver, ifr_client {
   Source_Files {
     test_i.cpp
     server.cpp
   }
 }
 
-project(client): server {
-  depends += IFR_Client DynamicInterface
-  libs    += TAO_IFR_Client TAO_DynamicInterface
-
+project(*client): taoserver, ifr_client, dynamicinterface {
   IDL_Files {
   }
 

@@ -1,2 +1,4 @@
-project : server, messaging_only {
+project : portableserver {
+  after   += Messaging
+  libs    += TAO_Messaging
 }

@@ -1,3 +1,3 @@
-project(Policies Manipulation): messaging, corba_messaging {
+project(Policies Manipulation): taoserver, messaging, corba_messaging {
   exename = Manipulation
 }

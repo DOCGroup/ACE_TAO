@@ -61,7 +61,7 @@ LINK32=link.exe -lib
 RSC=rc.exe
 # ADD RSC /l 0x409 /d UNDER_CE=$(CEVersion) /d _WIN32_WCE=$(CEVersion) /d "$(CePlatform)"<%foreach(defines common_defines cpu_defines macros)%> /d <%define%><%endfor%><%foreach(includes)%> /i "<%include%>"<%endfor%> /r
 CPP=<%cpp("cl.exe")%>
-# ADD CPP /nologo <%compile_flags%> <%foreach(includes)%>/I "<%include%>" <%endfor%>/D _WIN32_WCE=$(CEVersion) /D "$(CePlatform)" /D UNDER_CE=$(CEVersion) <%foreach(defines common_defines cpu_defines macros)%>/D <%define%> <%endfor%><%if(type_is_dynamic)%><%foreach(dllflags)%>/D <%dllflag%> <%endfor%><%endif%><%if(zzip)%><%foreach(zzip_defines)%> /D <%zzip_define%> <%endfor%> /I "$(ZZIP_ROOT)\include" <%endif%><%if(need_libflags)%><%foreach(libflags)%>/D <%libflag%> <%endfor%><%endif%><%if(pch_header)%><%foreach(pch_defines)%>/D <%pch_define%> <%endfor%><%if(pch_source)%>/Yu<%else%>/YX<%endif%>"<%pch_header%>" /Fp"<%intermediate_dir%>\<%noextension(project_file)%>\<%noextension(pch_header)%>.pch" <%endif%>/FR /FD /c
+# ADD CPP /nologo <%compile_flags%> <%foreach(includes)%>/I "<%include%>" <%endfor%>/D _WIN32_WCE=$(CEVersion) /D "$(CePlatform)" /D UNDER_CE=$(CEVersion) <%foreach(defines common_defines cpu_defines macros)%>/D <%define%> <%endfor%><%if(type_is_dynamic)%><%foreach(dynamicflags)%>/D <%dllflag%> <%endfor%><%endif%><%if(zzip)%><%foreach(zzip_defines)%> /D <%zzip_define%> <%endfor%> /I "$(ZZIP_ROOT)\include" <%endif%><%if(need_staticflags)%><%foreach(staticflags)%>/D <%libflag%> <%endfor%><%endif%><%if(pch_header)%><%foreach(pch_defines)%>/D <%pch_define%> <%endfor%><%if(pch_source)%>/Yu<%else%>/YX<%endif%>"<%pch_header%>" /Fp"<%intermediate_dir%>\<%noextension(project_file)%>\<%noextension(pch_header)%>.pch" <%endif%>/FR /FD /c
 <%if(compile_flags_removed)%>
 # SUBTRACT CPP <%compile_flags_removed%>
 <%endif%>
@@ -197,7 +197,8 @@ InputName=<%basenoextension(idl_file)%>
 InputDir=<%dirname(idl_file)%>
 
 BuildCmds= \
-	<%idl_compiler("$(ACE_ROOT)\\bin\\tao_idl")%> -o <%if(flag_overrides(idl_file, idlgendir))%><%flag_overrides(idl_file, idlgendir)%><%else%><%if(idlgendir)%><%idlgendir%><%else%><%if(dirname_found)%>$(InputDir)<%else%>.<%endif%><%endif%><%endif%> <%if(flag_overrides(idl_file, idlflags))%><%flag_overrides(idl_file, idlflags)%><%else%><%idlflags("-Sc")%><%endif%> $(InputPath)
+    PATH=%PATH%;<%idl_compiler_libs%> \
+	<%idl_compiler%> -o <%if(flag_overrides(idl_file, idlgendir))%><%flag_overrides(idl_file, idlgendir)%><%else%><%if(idlgendir)%><%idlgendir%><%else%><%if(dirname_found)%>$(InputDir)<%else%>.<%endif%><%endif%><%endif%> <%if(flag_overrides(idl_file, idlflags))%><%flag_overrides(idl_file, idlflags)%><%else%><%idlflags("-Sc")%><%endif%> $(InputPath)
 
 "<%if(flag_overrides(idl_file, idlgendir))%><%flag_overrides(idl_file, idlgendir)%><%else%><%if(idlgendir)%><%idlgendir%><%else%><%if(dirname_found)%>$(InputDir)<%else%>.<%endif%><%endif%><%endif%>\$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)

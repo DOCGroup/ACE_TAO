@@ -1,4 +1,4 @@
-project(load balancer): server {
+project(*balancer): taoserver {
   avoids += minimum_corba repo
   exename = load_balancer
 
@@ -14,7 +14,7 @@ project(load balancer): server {
   }
 }
 
-project: server {
+project(*server): taoserver {
   avoids += minimum_corba repo
 
   Source_Files {
@@ -26,7 +26,7 @@ project: server {
   }
 }
 
-project(client): server {
+project(*client): taoserver {
   avoids += minimum_corba repo
   exename = client
 

@@ -1,10 +1,10 @@
-project(RTCORBA Explicit Binding Server): strategies, rt_server {
+project(*Server): strategies, rt_server {
   Source_Files {
     server.cpp
   }
 }
 
-project(RTCORBA Explicit Binding Client): strategies, rt_client {
+project(*Client): strategies, rt_client {
   Source_Files {
     testC.cpp
     client.cpp

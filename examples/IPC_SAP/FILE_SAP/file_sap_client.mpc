@@ -1,0 +1,7 @@
+project : aceexe {
+  exename = client
+  Source_Files {
+    client.cpp
+  }
+}
+

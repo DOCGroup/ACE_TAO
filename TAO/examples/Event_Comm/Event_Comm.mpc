@@ -1,4 +1,4 @@
-project(notifier): namingexe {
+project(*notifier): namingexe {
   exename = notifier
 
   Source_Files {
@@ -8,7 +8,7 @@ project(notifier): namingexe {
   }
 }
 
-project(consumer): namingexe {
+project(*consumer): namingexe {
   exename = consumer
 
   Source_Files {
@@ -19,7 +19,7 @@ project(consumer): namingexe {
   }
 }
 
-project(supplier): namingexe {
+project(*supplier): namingexe {
   exename = supplier
 
   Source_Files {

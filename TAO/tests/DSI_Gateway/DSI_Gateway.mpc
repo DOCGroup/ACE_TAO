@@ -1,29 +1,20 @@
-project(DSI Gateway Server): messaging, minimum_corba {
-  depends  += Dynamic_Interface
-  libs     += TAO_DynamicInterface
-
+project(*Server): taoserver, messaging, minimum_corba, dynamicinterface {
   Source_Files {
     test_i.cpp
     server.cpp
   }  
 }
  
-project(DSI Gateway Client): messaging, minimum_corba {
+project(*Client): taoclient, messaging, minimum_corba, dynamicinterface {
   exename   = client
-  depends  += Dynamic_Interface
-  libs     += TAO_DynamicInterface
-
   Source_Files {
     testC.cpp
     client.cpp
   }  
 }
 
-project(DSI Gateway Gateway): messaging, minimum_corba {
+project(*Gateway): taoserver, messaging, minimum_corba, dynamicinterface {
   exename   = gateway
-  depends  += Dynamic_Interface
-  libs     += TAO_DynamicInterface
-
   Source_Files {
     test_dsi.cpp
     gateway.cpp

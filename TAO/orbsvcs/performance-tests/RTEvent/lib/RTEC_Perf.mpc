@@ -1,12 +1,7 @@
-project(RTEC_Perf): strategies, messaging_only, orbsvcslib {
-  sharedname = TAO_RTEC_Perf
-  libs      += TAO_RTCORBAEvent TAO_RTEvent TAO_CosNaming TAO_Svc_Utils \
-               TAO_IORTable TAO_RTPortableServer TAO_RTCORBA \
-               TAO_PortableServer TAO
-  idlflags  += -Wb,export_macro=TAO_RTEC_Perf_Export \
-               -Wb,export_include=rtec_perf_export.h \
-               -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h
-  dllflags  += TAO_RTEC_PERF_BUILD_DLL
+project(RTEC_Perf): strategies, messaging, orbsvcslib, rtcorbaevent, rtevent, naming, svc_utils, iortable, rtportableserver, rtcorba {
+  sharedname     = TAO_RTEC_Perf
+  idlflags      += -Wb,export_macro=TAO_RTEC_Perf_Export -Wb,export_include=rtec_perf_export.h
+  dynamicflags  += TAO_RTEC_PERF_BUILD_DLL
 
   Template_Files {
     Auto_Disconnect.cpp

@@ -22,3 +22,4 @@ repo          = 0
 minimum_corba = 0
 java          = 0
 qt            = 0
+wxwindows     = 0

@@ -1,4 +1,4 @@
-project: server, strategies {
+project(*server): taoserver, strategies {
   Source_Files {
     Receiver_Factory.cpp
     Receiver.cpp
@@ -6,7 +6,7 @@ project: server, strategies {
   }
 }
 
-project: client, strategies {
+project(*client):taoclient, strategies {
   Source_Files {
     TestC.cpp
     client.cpp

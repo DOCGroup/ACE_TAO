@@ -1,0 +1,45 @@
+project(CosLoadBalancing) : orbsvcslib, core, naming, portablegroup, messaging {
+  sharedname   = TAO_CosLoadBalancing
+  requires    += ami
+  idlflags    += -GC -Wb,pch_include=CosLoadBalancing_pch.h -Wb,export_macro=TAO_LoadBalancing_Export -Wb,export_include=LoadBalancing/LoadBalancing_export.h
+  dynamicflags = TAO_LOADBALANCING_BUILD_DLL
+  tagchecks    = CosLoadBalancing
+  // Add this include path for precompiled headers
+  includes    += $(TAO_ROOT)/orbsvcs/orbsvcs
+
+  IDL_Files {
+    CosLoadBalancing.idl
+    LB_ORT.idl
+  }
+
+  Source_Files(ORBSVCS_COMPONENTS) {
+    CosLoadBalancing {
+      CosLoadBalancingC.cpp
+      CosLoadBalancingS.cpp
+      LB_ORTC.cpp
+      LoadBalancing/LB_LeastLoaded.cpp
+      LoadBalancing/LB_LoadAlert.cpp
+      LoadBalancing/LB_LoadAlertInfo.cpp
+      LoadBalancing/LB_LoadAlertMap.cpp
+      LoadBalancing/LB_LoadAlert_Handler.cpp
+      LoadBalancing/LB_LoadListMap.cpp
+      LoadBalancing/LB_LoadManager.cpp
+      LoadBalancing/LB_LoadMap.cpp
+      LoadBalancing/LB_Location_Index_Map.cpp
+      LoadBalancing/LB_MemberLocator.cpp
+      LoadBalancing/LB_MonitorMap.cpp
+      LoadBalancing/LB_Pull_Handler.cpp
+      LoadBalancing/LB_Random.cpp
+      LoadBalancing/LB_RoundRobin.cpp
+      LoadBalancing/LB_ClientComponent.cpp
+      LoadBalancing/LB_ClientORBInitializer.cpp
+      LoadBalancing/LB_ClientRequestInterceptor.cpp
+      LoadBalancing/LB_ServerRequestInterceptor.cpp
+      LoadBalancing/LB_IORInterceptor.cpp
+      LoadBalancing/LB_ObjectReferenceFactory.cpp
+      LoadBalancing/LB_ORBInitializer.cpp
+      LoadBalancing/LB_Component.cpp
+      LoadBalancing/LB_CPU_Monitor.cpp
+    }
+  }
+}

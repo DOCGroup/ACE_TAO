@@ -1,6 +1,4 @@
-project(DynAny Basic Test): server {
-  depends += DynamicAny
-  libs    += TAO_DynamicAny
+project(*Basic): taoserver, dynamicany {
   exename  = basic_test
 
   Source_Files {

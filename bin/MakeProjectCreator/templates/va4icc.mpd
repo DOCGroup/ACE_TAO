@@ -12,13 +12,13 @@ if $__TOS_WIN__ {
 <%endfor%>
 <%endif%>
 <%if(type_is_dynamic)%>
-<%foreach(dllflags)%>
-                define ("<%dllflag%>", "1"),
+<%foreach(dynamicflags)%>
+                define ("<%dynamicflag%>", "1"),
 <%endfor%>
 <%endif%>
-<%if(need_libflags)%>
-<%foreach(libflags)%>
-                define ("<%libflag%>", "1"),
+<%if(need_staticflags)%>
+<%foreach(staticflags)%>
+                define ("<%staticflag%>", "1"),
 <%endfor%>
 <%endif%>
                 define ("_stricmp", "stricmp"),

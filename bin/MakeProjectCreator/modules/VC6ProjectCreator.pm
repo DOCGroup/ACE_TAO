@@ -46,7 +46,7 @@ sub translate_value {
   my($key)  = shift;
   my($val)  = shift;
 
-  if ($key eq 'depends' && $val ne '') {
+  if ($key eq 'after' && $val ne '') {
     my($arr) = $self->create_array($val);
     $val = '';
 

@@ -1,11 +1,11 @@
-project(Timed Buffered Oneways Server): messaging, corba_messaging {
+project(*Server): messaging, taoserver, corba_messaging {
   Source_Files {
     test_i.cpp
     server.cpp
   }
 }
 
-project(Timed Buffered Oneways Client): messaging, corba_messaging {
+project(*Client): messaging, taoserver, corba_messaging {
   exename = client
 
   Source_Files {

@@ -1,0 +1,4 @@
+project : taolib {
+  after   += IORManipulation
+  libs    += TAO_IORManip
+}

@@ -1,2 +1,2 @@
-project(RTCORBA RTMutex Server): rt_server {
+project(*Server): rt_server {
 }

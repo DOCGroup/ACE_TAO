@@ -1,11 +1,11 @@
-project(Muxed GIOP Versions Server): server {
+project(*Server): taoserver {
   Source_Files {
     test_i.cpp
     server.cpp
   }
 }
 
-project(Muxed GIOP Versions Client): client {
+project(*Client): taoclient {
   Source_Files {
     testC.cpp
     client.cpp

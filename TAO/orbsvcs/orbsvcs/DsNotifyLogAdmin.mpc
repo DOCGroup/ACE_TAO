@@ -1,11 +1,12 @@
-project(DsNotifyLogAdmin) : orbsvcslib, core {
-  depends    += CosNotification DsEventLogAdmin DsLogAdmin ETCL CosTrading Svc_Utils DynamicAny PortableServer
-  sharedname  = TAO_DsNotifyLogAdmin
-  libs       += TAO_CosNotification TAO_DsEventLogAdmin TAO_DsLogAdmin TAO_ETCL TAO_CosTrading TAO_Svc_Utils TAO_DynamicAny TAO_PortableServer TAO
-  idlflags   += -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_NotifyLog_Export -Wb,export_include=Log/notifylog_export.h
-  dllflags    = TAO_NOTIFYLOG_BUILD_DLL
-  tagchecks   = Log
-  include_dir = orbsvcs
+project(DsNotifyLogAdmin) : orbsvcslib, core, dslogadmin, notification {
+  after       += DsEventLogAdmin
+  sharedname   = TAO_DsNotifyLogAdmin
+  libs        += TAO_DsEventLogAdmin
+  idlflags    += -Wb,export_macro=TAO_NotifyLog_Export -Wb,export_include=Log/notifylog_export.h
+  dynamicflags = TAO_NOTIFYLOG_BUILD_DLL
+  tagchecks    = Log
+  pch_header   =
+  pch_source   =
 
   IDL_Files {
     DsNotifyLogAdmin.idl
