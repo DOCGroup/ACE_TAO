@@ -222,11 +222,14 @@ void ABprocess(int dataSocket)
     int bytes;
     if (conn_tag >= 0) {
       bytes = sizeof(*packet);
+
+
       len = wait_read_bytes(dataSocket, (char *)packet, bytes);
       if (exit_tag) exit_on_kill();
     }
     else {  /* discard mode packet stream, read all bytes */
       bytes = PACKET_SIZE;
+      //ACE_DEBUG ((LM_DEBUG,"(%P|%t) ABprocess: waiting for %d sized packet\n",bytes));
       len = read(dataSocket, (char *)packet, bytes);
       if (exit_tag) exit_on_kill();
       if (len == -1) {
@@ -251,7 +254,8 @@ void ABprocess(int dataSocket)
     packet->dataBytes = ntohl(packet->dataBytes);
 #endif
 
-    if (packet->dataBytes <= 0) {
+    //    ACE_DEBUG ((LM_DEBUG,"(%P|%t) ABprocess: Received  %d sized packet\n",len));
+      if (packet->dataBytes <= 0) {
       fprintf(stderr, "AB Error: pkt->dataBytes %d, len %d\n",
 	      packet->dataBytes,
 	      len);
