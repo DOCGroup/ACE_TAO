@@ -1,3 +1,11 @@
+Sun May 23 17:31:49 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_argument/vardecl_ss.cpp:
+        
+          Added yet another leading double colon to the declarations
+          of the arguments inside the skeleton method body. Thanks
+          to Tao Lu <lu@dre.vanderbilt.edu> for finding the bug.
+
 Sun May 23 14:46:52 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_operation/operation_cs.cpp:

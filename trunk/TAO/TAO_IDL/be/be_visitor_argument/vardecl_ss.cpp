@@ -55,7 +55,8 @@ int be_visitor_args_vardecl_ss::visit_argument (be_argument *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl;
+  *os << be_nl
+      << "::";
 
   // Different types have different mappings when used as in/out or
   // inout parameters. Let this visitor deal with the type
@@ -85,7 +86,7 @@ int be_visitor_args_vardecl_ss::visit_array (be_array *node)
     {
       bt = node;
     }
-
+    
   switch (this->direction ())
     {
     case AST_Argument::dir_IN:
