@@ -1,3 +1,9 @@
+Mon Mar  3 22:38:03 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/util/utl_global.cpp:
+
+	  Changed char* arg argument to retain the const qualifier.
+
 Mon Mar  3 17:23:55 2003  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/tests/Bug_1395_Regression/Test_i.cpp:
