@@ -1,3 +1,15 @@
+Mon Feb  5 12:27:14 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tao/ORB_Core.cpp (fini):
+
+	  Removed debugging statement that accidentally got committed.
+
+	* tests/Portable_Interceptors/Dynamic/interceptors.cpp
+	  (receive_request):
+
+	  Corrected use of TAO_ENV_ARG_DECL_NOT_USED macro.  The
+	  TAO_ENV_ARG_DECL macro should have been used instead.
+
 Mon Feb  5 12:17:02 2001  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/Trader/Trading_Loader.cpp (TAO_Trading_Loader):

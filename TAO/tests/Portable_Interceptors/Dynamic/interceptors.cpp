@@ -228,7 +228,7 @@ Echo_Server_Request_Interceptor::receive_request_service_contexts (
 void
 Echo_Server_Request_Interceptor::receive_request (
   PortableInterceptor::ServerRequestInfo_ptr ri
-  TAO_ENV_ARG_DECL_NOT_USED)
+  TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
