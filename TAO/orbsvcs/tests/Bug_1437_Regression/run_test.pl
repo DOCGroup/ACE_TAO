@@ -12,14 +12,7 @@ use PerlACE::Run_Test;
 $imr_bin_path  = "../../ImplRepo_Service";
 
 # The location of the tao_imr IMR utility 
-if ($^O eq "MSWin32") 
-{
-   $tao_imr_bin_path = "../../../../bin";
-}
-else 
-{
-   $tao_imr_bin_path = $imr_bin_path;
-}
+$tao_imr_bin_path = "../../../../bin";
 
 # IOR file names
 $imr_ior_file        = PerlACE::LocalFile("impl.ior");
@@ -67,31 +60,33 @@ sub test_body
       $LOCATOR->Kill ();
       return 1;
    }
- 
-   # Add the persistent POA name to the IMR
-   $TAO_IMR->Arguments("-ORBInitRef ImplRepoService=file://$imr_ior_file &> $log_file add \"\"");
-   $result = $TAO_IMR->SpawnWaitKill (30);
-   
-   if (PerlACE::waitforfile_timed ($log_file, 10) == -1) 
-   {
-      print STDERR "ERROR: cannot find $log_file\n";
-      $ACTIVATOR->Kill ();
-      $LOCATOR->Kill ();
-      return 1;
-   }
 
-   $match = 0;
-   open (FILE, $log_file) or return -1;
-   while (<FILE>) {
-       $match = /must be at least one character long/;
-       last if $match;
-      }
-   close FILE;
+   # Redirect STDERR to a log file so that the ERROR
+   # message does not get printed to the terminal 
+   open(SAVEERR, '>&STDERR');
+   open(STDERR, ">$log_file");
+
+   # Add the illegal persistent POA name to the IMR
+   $TAO_IMR->Arguments("-ORBInitRef ImplRepoService=file://$imr_ior_file add \"\"");
+   $result = $TAO_IMR->SpawnWaitKill (30);
+
+   # Close the log file and restore STDERR
+   close(STDERR);
+   open(STDERR, '>&SAVEERR');
+
+   # If the add of an empty string failed, then
+   # the test of the tao_imr succeeded.   
+   if ($result != 0) {
+     $result = 0;
+   }
+   else {
+      $result = -1;
+   }
 
    # Tidy up
    $ACTIVATOR->TerminateWaitKill (5);
    $LOCATOR->TerminateWaitKill (5);
-   return $match ? 0 : -1;
+   return $result;
 }   
 
 # Run regression for bug #1437
