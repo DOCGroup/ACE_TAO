@@ -27,7 +27,8 @@
 
 #include "tao/UserException.h"
 #include "tao/Basic_Types.h"
-#include "tao/OBV_Constants.h"
+#include "tao/ValueModifierC.h"
+#include "tao/VisibilityC.h"
 #include "tao/CORBA_methods.h"
 #include "tao/Pseudo_VarOut_T.h"
 
