@@ -190,6 +190,20 @@ struct value_sequence_tester
     BOOST_CHECK_MESSAGE(f.expect(2), f);
   }
 
+  void test_get_buffer_const()
+  {
+    tested_sequence a; a.length(4);
+    tested_sequence const & b = a;
+
+    value_type const * buffer = b.get_buffer();
+    a[0] = 1; a[1] = 4; a[2] = 9; a[3] = 16;
+
+    BOOST_CHECK_EQUAL(1,  buffer[0]);
+    BOOST_CHECK_EQUAL(4,  buffer[1]);
+    BOOST_CHECK_EQUAL(9,  buffer[2]);
+    BOOST_CHECK_EQUAL(16, buffer[3]);
+  }
+
   void add_all(boost::unit_test_framework::test_suite * ts)
   {
     boost::shared_ptr<value_sequence_tester> shared_this(self_);
@@ -225,6 +239,10 @@ struct value_sequence_tester
                 shared_this));
     ts->add(BOOST_CLASS_TEST_CASE(
                 &value_sequence_tester::test_exception_in_assignment,
+                shared_this));
+
+    ts->add(BOOST_CLASS_TEST_CASE(
+                &value_sequence_tester::test_get_buffer_const,
                 shared_this));
   }
 
