@@ -3,13 +3,12 @@ Thu Nov 20 14:19:57 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 	* tests/Priority_Reactor_Test.h: 
 	* tests/Priority_Reactor_Test.cpp: 
 	  The test has a limited execution time now, and only reports a
-	  warning if runs out of time. This may be due to some failed
-	  connections, but it is hard to avoid that.
-	  On the other hand the default time should be large enough, in
-	  our machines the test only takes 14 seconds, so 60 seconds
-	  should be enough.
-	  NOTE: this problem reveals a problem *only* in the test itself
-	  not in ACE_Priority_Reactor.
+ 	  warning if runs out of time. This may be due to some failed
+ 	  connections, but it is hard to avoid that.  On the other hand
+ 	  the default time should be large enough, in our machines the
+ 	  test only takes 14 seconds, so 60 seconds should be enough.
+  	  NOTE: this problem reveals a problem *only* in the test itself
+ 	  not in ACE_Priority_Reactor.
 
 Thu Nov 20 11:29:51 1997  David L. Levine  <levine@cs.wustl.edu>
 
