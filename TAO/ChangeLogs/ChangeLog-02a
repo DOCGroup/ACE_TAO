@@ -1,3 +1,77 @@
+Tue Aug 21 13:55:31 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_interface.cpp:
+
+          Added prefix "tao_" to the recently added static
+          methods in the generated interface _var class, to 
+          avoid possible name clashes.
+
+        * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+
+         Cosmetic changes to generated code and comments.
+
+        * tao/CurrentC.cpp:
+        * tao/CurrentC.h:
+        * tao/CurrentC.i:
+        * tao/DomainC.cpp:
+        * tao/DomainC.h:
+        * tao/DomainC.i:
+        * tao/IOPC.cpp:
+        * tao/IOPC.h:
+        * tao/IOPC.i:
+        * tao/MessagingC.cpp:
+        * tao/MessagingC.h:
+        * tao/Object.h:
+        * tao/Object.i:
+        * tao/PolicyC.cpp:
+        * tao/PolicyC.h:
+        * tao/PollableC.cpp:
+        * tao/PollableC.h:
+        * tao/PortableInterceptorC.cpp:
+        * tao/PortableInterceptorC.h:
+        * tao/Sequence_T.cpp:
+        * tao/TAOC.cpp:
+        * tao/TAOC.h:
+        * tao/BiDir_GIOP/BiDirPolicyC.cpp:
+        * tao/BiDir_GIOP/BiDirPolicyC.h:
+        * tao/DynamicAny/DynamicAnyC.cpp:
+        * tao/DynamicAny/DynamicAnyC.h:
+        * tao/IFR_Client/IFR_BaseC.cpp:
+        * tao/IFR_Client/IFR_BaseC.h:
+        * tao/IFR_Client/IFR_BasicC.cpp:
+        * tao/IFR_Client/IFR_BasicC.h:
+        * tao/IFR_Client/IFR_ComponentsC.cpp:
+        * tao/IFR_Client/IFR_ComponentsC.h:
+        * tao/IFR_Client/IFR_ExtendedC.cpp:
+        * tao/IFR_Client/IFR_ExtendedC.h:
+        * tao/IORManipulation/IORC.cpp:
+        * tao/IORManipulation/IORC.h:
+        * tao/IORTable/IORTableC.cpp:
+        * tao/IORTable/IORTableC.h:
+        * tao/PortableServer/ImplRepoC.cpp:
+        * tao/PortableServer/ImplRepoC.h:
+        * tao/PortableServer/PortableServerC.cpp:
+        * tao/PortableServer/PortableServerC.h:
+        * tao/RTCORBA/RTCORBAC.cpp:
+        * tao/RTCORBA/RTCORBAC.h:
+        * tao/RTPortableServer/RTPortableServerC.cpp:
+        * tao/RTPortableServer/RTPortableServerC.h:
+        * tao/TypeCodeFactory/TypeCodeFactoryC.cpp:
+        * tao/TypeCodeFactory/TypeCodeFactoryC.h:
+        * tao/diffs/Current.pidl.diff:
+        * tao/diffs/CurrentC.cpp.diff:
+        * tao/diffs/CurrentC.h.diff:
+        * tao/diffs/CurrentC.i.diff:
+        * tao/diffs/DomainC.h.diff:
+
+          Updated these files to reflect the changes made above to
+          the IDL compiler, in addition to the recent change of
+          adding a static int member to interface classes and
+          using it's address in _unchecked_narrow() and
+          _tao_Queryinterface, instead of the address of the
+          _narrow() method.
+
 Tue Aug 21 09:41:17 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/IORManipulation/TAO_IORManip.dsp:
