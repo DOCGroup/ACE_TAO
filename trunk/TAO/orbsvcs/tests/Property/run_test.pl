@@ -43,21 +43,21 @@ print STDERR "Starting Client\n";
 $client = $CL->SpawnWaitKill (60);
 
 if ($client != 0) {
-    print STDERR "ERROR: client returned $client";
+    print STDERR "ERROR: client returned $client\n";
     $status = 1;
 }
 
 $server = $SV->TerminateWaitKill (5);
 
 if ($server != 0) {
-    print STDERR "ERROR: server returned $server";
+    print STDERR "ERROR: server returned $server\n";
     $status = 1;
 }
 
 $nserver = $NS->TerminateWaitKill (5);
 
 if ($nserver != 0) {
-    print STDERR "ERROR: name server returned $nserver";
+    print STDERR "ERROR: name server returned $nserver\n";
     $status = 1;
 }
 
