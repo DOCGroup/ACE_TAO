@@ -132,7 +132,9 @@ TAO_AMH_Response_Handler::_tao_rh_send_reply (ACE_ENV_SINGLE_ARG_DECL)
   }
 
   // Send the message.
-  int result = this->transport_->send_message (this->_tao_out);
+  int result = this->transport_->send_message (this->_tao_out, 
+                                               0,
+                                               TAO_Transport::TAO_REPLY);
 
   if (result == -1)
     {
@@ -191,7 +193,9 @@ TAO_AMH_Response_Handler::_tao_rh_send_exception (CORBA::Exception &ex
     }
 
   // Send the Exception
-  if (this->transport_->send_message (this->_tao_out) == -1)
+  if (this->transport_->send_message (this->_tao_out,
+                                      0,
+                                      TAO_Transport::TAO_REPLY) == -1)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("TAO: (%P|%t|%N|%l):  ")
