@@ -1,3 +1,15 @@
+Sun Jun 16 20:22:28 2002  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * ACEXML/common/AttributesImpl.i (qName):
+
+          Fixed memory leaks caused by mismatched delete/delete[]. Caught
+          by Valgrind.
+
+        * /ACEXML/examples/SAXPrint/main.cpp:
+
+          Give useful usage messages.
+
+
 Sat Jun 15 20:56:29 2002  Steve Huston  <shuston@riverace.com>
 
         * tests/tests.dsw: Added Proactor_Timer_Test.dsp.
