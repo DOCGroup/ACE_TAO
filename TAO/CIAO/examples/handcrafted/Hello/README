@@ -109,23 +109,10 @@ hello_executors This library contains the CIDL generated executor definitions an
 How to Run:
 ----------
 
-1. Start the Name Service and store the name service IOR in some file
-   <w:\ior>.
+Run with
 
-   Naming_Service -o w:\ior
+  run_test.pl to start the test using CIAO_Daemon and ComponentServer
 
-2. Start the Component servier with the config file and the
-   NameService IOR we stored in the previous step:
+or
 
-   w:\ACE_wrappers\bin\Simple_Component_Server -ORBInitRef \
-         NameService=file://w:\ior -i config -o ior
-
-   The component server we use here will create the HomeFinder IOR.
-   Store the IOR in a file <ior>.
-
-3. Finally, start the client program as:
-
-   client -ORBInitRef HomeFinder=file://ior
-
-   The client will try to use all thru operations to find the
-   HelloHome interface.
+  run_simple_test.pl to start the test using Simple_Component_Server
