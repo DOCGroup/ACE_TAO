@@ -86,8 +86,11 @@ ACE_Mem_Map::map_it (ACE_HANDLE handle,
   if (this->length_ < ACE_static_cast (size_t, len_request))
     extend_backing_store = 1;
 
-  // Set the correct length
-  this->length_ = len_request;
+  if (len_request > 0)
+    {
+      // Set the correct length
+      this->length_ = len_request;
+    }
 
   if (extend_backing_store)
     // Extend the backing store.
