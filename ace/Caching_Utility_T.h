@@ -75,6 +75,9 @@ protected:
 
   /// Whether the cleanup_strategy should be destroyed or not.
   int delete_cleanup_strategy_;
+
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Pair_Caching_Utility<KEY,VALUE,CONTAINER,ITERATOR,ATTRIBUTES> &))
+  ACE_UNIMPLEMENTED_FUNC (ACE_Pair_Caching_Utility (const ACE_Pair_Caching_Utility<KEY,VALUE,CONTAINER,ITERATOR,ATTRIBUTES> &))
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -132,6 +135,9 @@ protected:
   /// Whether the cleanup_strategy should be destroyed or not.
   int delete_cleanup_strategy_;
 
+private:
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Recyclable_Handler_Caching_Utility<KEY,VALUE,CONTAINER,ITERATOR,ATTRIBUTES> &))
+  ACE_UNIMPLEMENTED_FUNC (ACE_Recyclable_Handler_Caching_Utility (const ACE_Recyclable_Handler_Caching_Utility<KEY,VALUE,CONTAINER,ITERATOR,ATTRIBUTES> &))
 };
 
 ///////////////////////////////////////////////////////////////////////////
@@ -197,6 +203,9 @@ protected:
    */
   size_t marked_as_closed_entries_;
 
+private:
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Refcounted_Recyclable_Handler_Caching_Utility<KEY,VALUE,CONTAINER,ITERATOR,ATTRIBUTES> &))
+  ACE_UNIMPLEMENTED_FUNC (ACE_Refcounted_Recyclable_Handler_Caching_Utility (const ACE_Refcounted_Recyclable_Handler_Caching_Utility<KEY,VALUE,CONTAINER,ITERATOR,ATTRIBUTES> &))
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -257,6 +266,9 @@ protected:
   /// Whether the cleanup_strategy should be destroyed or not.
   int delete_cleanup_strategy_;
 
+private:
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Handler_Caching_Utility<KEY,VALUE,CONTAINER,ITERATOR,ATTRIBUTES> &))
+  ACE_UNIMPLEMENTED_FUNC (ACE_Handler_Caching_Utility (const ACE_Handler_Caching_Utility<KEY,VALUE,CONTAINER,ITERATOR,ATTRIBUTES> &))
 };
 
 ///////////////////////////////////////////////////////////////////////////
@@ -314,6 +326,10 @@ protected:
 
   /// Whether the cleanup_strategy should be destroyed or not.
   int delete_cleanup_strategy_;
+
+private:
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Null_Caching_Utility<KEY,VALUE,CONTAINER,ITERATOR,ATTRIBUTES> &))
+  ACE_UNIMPLEMENTED_FUNC (ACE_Null_Caching_Utility (const ACE_Null_Caching_Utility<KEY,VALUE,CONTAINER,ITERATOR,ATTRIBUTES> &))
 };
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)

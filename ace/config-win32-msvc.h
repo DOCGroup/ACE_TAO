@@ -208,6 +208,9 @@ inline void *operator new (unsigned int, void *p) { return p; }
 # define ACE_INT64_FORMAT_SPECIFIER ACE_LIB_TEXT ("%I64d")
 # define ACE_UINT64_FORMAT_SPECIFIER ACE_LIB_TEXT ("%I64u")
 
+# if !defined (ACE_LD_DECORATOR_STR) && defined (_DEBUG)
+#  define ACE_LD_DECORATOR_STR ACE_LIB_TEXT ("d")
+# endif
 #endif /* _MSC_VER */
 
 #include "ace/post.h"

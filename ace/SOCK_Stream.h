@@ -39,8 +39,8 @@
  * blocking sockets, the call will block until action is possible;
  * for non-blocking sockets, EWOULDBLOCK will be returned if no
  * action is immediately possible.
- * If <timeout> != 0, the call will wait until the relative time
- * specified in *<timeout> elapses.
+ * If <timeout> != 0, the call will wait for data to arrive no longer
+ * than the relative time specified in *<timeout>.
  * The "_n()" I/O methods keep looping until all the data has been
  * transferred.  These methods also work for sockets in non-blocking
  * mode i.e., they keep looping on EWOULDBLOCK.  <timeout> is used

@@ -140,6 +140,9 @@ private:
 
   /// Holds the option string.
   const ACE_TCHAR *optstring_;
+
+  ACE_UNIMPLEMENTED_FUNC (ACE_Get_Opt (const ACE_Get_Opt &))
+  ACE_UNIMPLEMENTED_FUNC (ACE_Get_Opt &operator= (const ACE_Get_Opt &))
 };
 
 #if defined (__ACE_INLINE__)

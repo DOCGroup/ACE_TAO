@@ -20,7 +20,7 @@ static void
 print_usage_and_die (void)
 {
   ACE_OS::fprintf (stderr, "usage: %s [-p broadcast portnum]\n",
-	     program_name);
+                   program_name);
   ACE_OS::exit (1);
 }
 

@@ -72,9 +72,12 @@ main (int argc, char *argv[])
   ACE_LOG_MSG->open (argv[0]);
 
   if (argc != 2)
-    ACE_ERROR ((LM_ERROR,
-                "usage: %n input-file\n%a",
-                1));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "usage: %n input-file\n",
+                  1));
+      ACE_OS::exit (1);
+    }
 
   ACE_FIFO_Recv fifo_reader (FIFO_NAME, O_RDONLY | O_CREAT, PERMS, 0);
 

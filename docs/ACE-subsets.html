@@ -16,7 +16,9 @@
 
 We are currently subsetting ACE+TAO to make them more flexible and to
 reduce their footprint for embedded systems.  This document describes
-what we're doing and how to leverage our efforts. <P>
+what we've done thus far, what we're planning to do next, and how to
+leverage our efforts to minimize the size of your ACE+TAO
+applications. <P>
 
 <HR><P>
 <font size=+2><strong>Contents</strong></font>
@@ -25,12 +27,12 @@ what we're doing and how to leverage our efforts. <P>
     Libraries</a>
   <li><a href="#Configuration Management">Configuration Management</a>
   <li><a href="#Classes">Classes in Each ACE Library Subset</a>
-  <li><a href="#Status">Current ACE Subsetting Status</a>
   <li><a href="#ACE Library Size Breakdown">ACE Library Size Breakdown</a>
   <li><a href="#Building ACE Subsets">Building ACE Subsets</a>
   <li><a href="#ACE_OS Adaptation Layer">ACE_OS Adaptation Layer</a>
-  <li><a href="#minimumTAO">Minimum TAO</a>
   <li><a href="#PACE">POSIX ACE (PACE)</a>
+  <li><a href="#minimumTAO">Minimum TAO</a>
+  <li><a href="#Status">ACE+TAO Subsetting Work in Progress</a>
 </ol><p>
 
 
@@ -434,32 +436,6 @@ XtReactor
 </code></pre>
 
 <hr><p>
-<h3><a name="Status">Current ACE Subsetting Status</a></h3>
-
-The ACE subsetting effort has identified a few areas for
-improvement.  These will be addressed in the future:<p>
-
-  <ul>
-    <li>Log_Msg cleanup:  We have a good start on this, but it needs work
-      to finish.  It might be easiest to make an abstract
-      base class, then have ACE_Log_Msg derive from it.  That way
-      we could remove the exposure of all the #includes in Log_Msg.cpp
-      to applications that don't need it.  Another alternative would
-      be to disable compilation of Log_Msg.cpp when ACE_NLOGGING is
-      enabled.<p>
-
-    <li>Higher layer interdependencies:  we haven't exhaustively
-      tested all possible combinations of subsets.  It's possible
-      that there are interdependencies between some layers that
-      we haven't yet identified.<p>
-
-    <li>Remove use of multiple inheritance:  its only used in a few
-      places, in one of the SOCK classes and Service Config.  This
-      isn't really a subsetting problem, but is necessary to
-      support Embedded C++.<p>
-  </ul><P>
-
-
 <hr><p>
 <h3><a name="ACE Library Size Breakdown">ACE Library Size Breakdown</a></h3>
 
@@ -829,8 +805,6 @@ the <code>ACE_OS</code> member functions, ACE's
 <a href="../tests/Basic_Types_Test.cpp">Basic_Types_Test.cpp</a>
 for an example of usage.<p>
 
-<a name="minimumTAO"><!--#include virtual="../TAO/docs/minimumTAO.html" --></a>
-
 <P><HR><P>
 <a name="PACE">
 The <A
@@ -841,17 +815,19 @@ verified systems.  When complete, it will offer these benefits: <P>
 <OL>
 <LI> A strict POSIX.1-like, low-level interface. Its interface is
     ``POSIX compatible'' by that we mean as close to POSIX.1
-    as it can be, given that PACE is not an operating system. And,
-    to avoid name conflicts with OS APIs, all low-level
-    PACE function names have the <CODE>pace_</CODE> prefix.
+    as it can be, given that PACE is not an operating system. 
+    To avoid name conflicts with OS APIs, all low-level
+    PACE function names have the <CODE>pace_</CODE> prefix. <P>
         
 <LI> The low-level interface is a C file, so that it can be used in
-    both C and C++ programs. 
+    both C and C++ programs.  <P>
     
 <LI> The low-level interface is partitioned into multiple files, one
     per POSIX.1 section, which will help linkers reduce the footprint for
-    statically linked applications.
+    statically linked applications. 
 </OL><P>
+
+<a name="minimumTAO"><!--#include virtual="../TAO/docs/minimumTAO.html" --></a>
 
 <P><HR><P>
 Back to the <A HREF="http://www.cs.wustl.edu/~schmidt/ACE.html">ACE</A>

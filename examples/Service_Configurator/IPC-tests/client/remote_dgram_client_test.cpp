@@ -25,9 +25,9 @@ static const char *file_name = "./remote_data";
 static void print_usage_and_die (void)
 {
   ACE_ERROR ((LM_ERROR,
-              "usage: %s [-p portnum] [-h host_name] [-f file]\n%a",
-              program_name,
-              -1));
+              "usage: %s [-p portnum] [-h host_name] [-f file]\n",
+              program_name));
+  ACE_OS::exit (1);
 }
 
 void

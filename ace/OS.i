@@ -2906,7 +2906,7 @@ ACE_OS_TRACE ("ACE_Recursive_Thread_Mutex::release");
               // the mutex into a known state...
               m->owner_id_ = ACE_OS::NULL_thread;
 
-              // Inform waiters that the lock is free.
+              // Inform a waiter that the lock is free.
               if (ACE_OS::cond_signal (&m->lock_available_) == -1)
                 result = -1;
             }

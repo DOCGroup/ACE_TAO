@@ -29,7 +29,7 @@ ACE_MEM_Stream::close_reader (void)
 {
   ACE_TRACE ("ACE_MEM_Stream::close_reader");
   if (this->get_handle () != ACE_INVALID_HANDLE)
-    return ACE_OS::shutdown (this->get_handle (), 0);
+    return ACE_OS::shutdown (this->get_handle (), ACE_SHUTDOWN_READ);
   else
     return 0;
 }
@@ -41,7 +41,7 @@ ACE_MEM_Stream::close_writer (void)
 {
   ACE_TRACE ("ACE_MEM_Stream::close_writer");
   if (this->get_handle () != ACE_INVALID_HANDLE)
-    return ACE_OS::shutdown (this->get_handle (), 1);
+    return ACE_OS::shutdown (this->get_handle (), ACE_SHUTDOWN_WRITE);
   else
     return 0;
 }
