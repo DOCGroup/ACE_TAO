@@ -54,19 +54,19 @@ namespace CIAO
     //@@ The return type is NodeApplication_ptr actually.
     virtual Deployment::Application_ptr
     startLaunch (const Deployment::Properties & configProperty,
-		 Deployment::Connections_out providedReference,
-		 CORBA::Boolean start
-		 ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+	            Deployment::Connections_out providedReference,
+				 CORBA::Boolean start
+		        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
-		       Deployment::ResourceNotAvailable,
-		       Deployment::StartError,
-		       Deployment::InvalidProperty));
+		              Deployment::ResourceNotAvailable,
+		              Deployment::StartError,
+		              Deployment::InvalidProperty));
 
     //@@ Destroy the whole applicaton.
-    virtual void destroyApplication (Deployment::Application_ptr app
-				     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    virtual void destroyApplication (Deployment::Application_ptr
+		                           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
-		       Deployment::StopError));
+		              Deployment::StopError));
 
     /**
      * Initialize the NodeApplicationManager.  The currently implementation
@@ -89,9 +89,9 @@ namespace CIAO
      *
      * @param callback_poa contains child poa created for the callback interface.
      *
-     * @return the created chile poa pointer.
+     * @return void.
      **/
-    virtual PortableServer::POA_ptr
+    virtual void
     init (const char *nodeapp_location,
 	  const CORBA::ULong delay,
 	  const Deployment::DeploymentPlan & plan,

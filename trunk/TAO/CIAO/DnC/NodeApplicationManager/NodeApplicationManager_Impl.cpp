@@ -10,10 +10,9 @@
 
 CIAO::NodeApplicationManager_Impl::~NodeApplicationManager_Impl ()
 {
-  ACE_DEBUG ((LM_DEBUG, "NAM:Dtor\n"));
 }
 
-PortableServer::POA_ptr
+void
 CIAO::NodeApplicationManager_Impl::
 init (const char *nodeapp_location,
       const CORBA::ULong delay,
@@ -37,55 +36,23 @@ init (const char *nodeapp_location,
     // Make a copy of the plan for later usage.
     this->plan_ =  plan;
 
-    // Create a separate POA for callback objects if this is the first
-    // time.
-    this->callback_poa_ = callback_poa;
-    ACE_DEBUG ((LM_DEBUG, "NAM:init 05\n"));
-
-    if (CORBA::is_nil (this->callback_poa_.in ()))
-    {
-      ACE_DEBUG ((LM_DEBUG, "NAM:init callback poa is nil!!!\n"));
-
-      PortableServer::POAManager_var mgr
-	= this->poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      CORBA::PolicyList policies (0);
-
-      ACE_DEBUG ((LM_DEBUG, "NAM:init before creat poa\n"));
-
-      this->callback_poa_ =
-	this->poa_->create_POA ("callback_poa",
-				mgr.in (),
-				policies
-				ACE_ENV_ARG_PARAMETER);
-      ACE_DEBUG ((LM_DEBUG, "NAM:init after creat poa\n"));
-
-      ACE_TRY_CHECK;
-    }
-
-    ACE_DEBUG ((LM_DEBUG, "NAM:init 1\n"));
-
+    // Cache the call back POA for callback object.
+    this->callback_poa_ = PortableServer::POA::_duplicate (callback_poa);
+    
     // Activate the ourself.
     PortableServer::ObjectId_var oid
       = this->poa_->activate_object (this
 				     ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
-    ACE_DEBUG ((LM_DEBUG, "NAM:init 2\n"));
-
     CORBA::Object_var obj = this->poa_->id_to_reference (oid.in ()
 							 ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
-    ACE_DEBUG ((LM_DEBUG, "NAM:init 3\n"));
 
     // And cache the object reference.
     this->objref_ = Deployment::NodeApplicationManager::_narrow (obj.in ()
 								 ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
-    ACE_DEBUG ((LM_DEBUG, "NAM:init 4\n"));
-
-    return PortableServer::POA::_duplicate (this->callback_poa_);
   }
   ACE_CATCHANY
   {
@@ -117,7 +84,6 @@ create_node_application (const ACE_CString & options
 		   Deployment::StartError,
 		   Deployment::InvalidProperty))
 {
-  ACE_DEBUG ((LM_DEBUG, "CIAO::NodeApplicationManager_Impl::create_node_application\n"));
   Deployment::NodeApplication_var retval;
   Deployment::Properties_var prop;
 
@@ -138,7 +104,7 @@ create_node_application (const ACE_CString & options
 
   PortableServer::ServantBase_var servant_var (callback_servant);
   PortableServer::ObjectId_var cb_id
-    = this->callback_poa_->activate_object (callback_servant
+    = this->callback_poa_->activate_object (callback_servant 
                                             ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::_nil ());
 
@@ -219,7 +185,7 @@ create_node_application (const ACE_CString & options
 
   this->callback_poa_->deactivate_object (cb_id.in ());
   ACE_CHECK_RETURN (0);
-
+  ACE_DEBUG ((LM_DEBUG, "CIAO::NodeApplicationManager_Impl::NodeApplication spawned!\n"));
   return retval._retn ();
 }
 
@@ -307,8 +273,8 @@ startLaunch (const Deployment::Properties & configProperty,
   } //@@ I am not sure about which exception to throw. I will come back to this.
 
   // Now spawn the NodeApplication process.
-  ACE_CString cmd_option;
-  create_node_application (cmd_option ACE_ENV_ARG_PARAMETER);
+  ACE_CString cmd_option ("");
+  create_node_application (cmd_option.c_str () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   // This is what we will get back, a sequence of compoent object refs.

@@ -47,11 +47,12 @@ namespace CIAO
 
     /// Constructor
     NodeDaemon_Impl (const char *name,
-		     CORBA::ORB_ptr orb,
-		     PortableServer::POA_ptr p,
-                     const char * nodeapp_loc,
-                     int spawn_delay);
-
+		            CORBA::ORB_ptr orb,
+		            PortableServer::POA_ptr p,
+                   const char * nodeapp_loc,
+                   int spawn_delay
+                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+		ACE_THROW_SPEC ((CORBA::SystemException));
     /// Destructor
     virtual ~NodeDaemon_Impl (void);
 
@@ -110,16 +111,20 @@ namespace CIAO
     // NodeApplication location
     CORBA::String_var nodeapp_location_;
 
-    // Cache reference of last NodeAppManager
-    Deployment::NodeApplicationManager_var manager_;
-
     // Cached callback POA.
     PortableServer::POA_var callback_poa_;
 
     // Spawn delay for the NodeAppMgr
     int spawn_delay_;
+
+    // Cache reference of last NodeAppManager
+    Deployment::NodeApplicationManager_var manager_;
+
   };
 }
+#if defined (__ACE_INLINE__)
+# include "NodeDaemon_Impl.inl"
+#endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
 #endif /* CIAO_NODEDAEMON_IMPL_H */

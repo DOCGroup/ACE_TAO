@@ -68,8 +68,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       DOMDocument* dup_doc = parser->parseURI (plan_url);
       auto_ptr<DOMBuilder> cleanup_parser (parser);
       CIAO::Config_Handler::Plan_Handler plan_handler (dup_doc,
-                                                DOMNodeFilter::SHOW_ELEMENT |
-                                                DOMNodeFilter::SHOW_TEXT);
+                                                  DOMNodeFilter::SHOW_ELEMENT |
+                                                  DOMNodeFilter::SHOW_TEXT);
       Deployment::DeploymentPlan plan;
       plan_handler.process_plan (plan);
 
@@ -91,7 +91,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Deployment Process.
 
       CORBA::Object_var obj = orb->string_to_object (exec_ior
-                                                     ACE_ENV_ARG_PARAMETER);
+                                                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       Deployment::ExecutionManager_var exec_mgr =

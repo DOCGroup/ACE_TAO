@@ -4,18 +4,44 @@
 #include "../NodeApplicationManager/NodeApplicationManager_Impl.h"
 
 CIAO::NodeDaemon_Impl::NodeDaemon_Impl (const char *name,
-                                        CORBA::ORB_ptr orb,
-                                        PortableServer::POA_ptr poa,
-                                        const char * nodapp_loc,
-                                        int spawn_delay)
+                                    CORBA::ORB_ptr orb,
+                                    PortableServer::POA_ptr poa,
+                                    const char * nodapp_loc,
+                                    int spawn_delay
+                                    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  ACE_THROW_SPEC ((CORBA::SystemException))
   : orb_ (CORBA::ORB::_duplicate (orb)),
     poa_ (PortableServer::POA::_duplicate (poa)),
     name_ (CORBA::string_dup (name)),
     nodeapp_location_ (CORBA::string_dup (nodapp_loc)),
-    manager_ (Deployment::NodeApplicationManager::_nil ()),
-    spawn_delay_ (spawn_delay)
-
+    callback_poa_ (PortableServer::POA::_nil ()),
+    spawn_delay_ (spawn_delay),
+    manager_ (Deployment::NodeApplicationManager::_nil ())
 {
+  ACE_TRY
+  {
+    //create the call back poa for NAM.
+    PortableServer::POAManager_var mgr
+      = this->poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_TRY_CHECK;
+
+    CORBA::PolicyList policies (0);
+
+    this->callback_poa_ =
+      this->poa_->create_POA ("callback_poa",
+                            mgr.in (),
+                            policies
+                            ACE_ENV_ARG_PARAMETER);
+    ACE_TRY_CHECK;
+  }
+  ACE_CATCHANY
+  {
+    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+			 "NodeDaemon_Impl::constructor\t\n");
+    ACE_RE_THROW;
+  }
+  ACE_ENDTRY;
+
 }
 
 CIAO::NodeDaemon_Impl::~NodeDaemon_Impl ()
@@ -46,9 +72,9 @@ CIAO::NodeDaemon_Impl::shutdown (ACE_ENV_SINGLE_ARG_DECL)
 
 void
 CIAO::NodeDaemon_Impl::joinDomain (const Deployment::Domain & ,
-                                   Deployment::TargetManager_ptr ,
-                                   Deployment::Logger_ptr
-                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                               Deployment::TargetManager_ptr ,
+                               Deployment::Logger_ptr
+                               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
@@ -64,11 +90,11 @@ CIAO::NodeDaemon_Impl::leaveDomain (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
 Deployment::NodeApplicationManager_ptr
 CIAO::NodeDaemon_Impl::preparePlan (const Deployment::DeploymentPlan &plan
-                                    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
   ACE_THROW_SPEC ((CORBA::SystemException,
-                   Deployment::StartError,
-                   Deployment::PlanError))
-{
+                 Deployment::StartError,
+                 Deployment::PlanError))
+{  
   // Return cached manager
   ACE_TRY
   {
@@ -78,25 +104,19 @@ CIAO::NodeDaemon_Impl::preparePlan (const Deployment::DeploymentPlan &plan
       CIAO::NodeApplicationManager_Impl *app_mgr;
       ACE_NEW_THROW_EX (app_mgr,
                         CIAO::NodeApplicationManager_Impl (this->orb_.in (),
-                                                           this->poa_.in ()),
+                                                       this->poa_.in ()),
                         CORBA::NO_MEMORY ());
       ACE_TRY_CHECK;
 
-      ACE_DEBUG ((LM_DEBUG, "NM:prepare before init on NAM\n"));
       PortableServer::ServantBase_var safe (app_mgr);
-
-      //@@ Note: after the init call the servant ref count would become 2. so
+	   
+	   //@@ Note: after the init call the servant ref count would become 2. so
       //   we can leave the safeservant along and be dead. Also note that I added
-      //   the callback poa as the last augment. Letting the NDeamon to create the
-      //   poa and pass it to the NAM is a better idea, so I will come back here. --Tao
-      this->callback_poa_ =
-	app_mgr->init (this->nodeapp_location_,
-		       this->spawn_delay_,
-		       plan,
-		       this->callback_poa_.in ()
-		       ACE_ENV_ARG_PARAMETER);
-      ACE_DEBUG ((LM_DEBUG, "NM:prepare 3\n"));
-
+	  app_mgr->init (this->nodeapp_location_,
+					 this->spawn_delay_,
+					 plan,
+					 this->callback_poa_.in ()
+					 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Obtain the Object Reference
@@ -105,11 +125,11 @@ CIAO::NodeDaemon_Impl::preparePlan (const Deployment::DeploymentPlan &plan
       ACE_TRY_CHECK;
 
       this->manager_ =
-        Deployment::NodeApplicationManager::_narrow (obj. in ());
+        Deployment::NodeApplicationManager::_narrow (obj.in ());
 
       if (CORBA::is_nil (this->manager_.in ()))
         {
-          ACE_DEBUG ((LM_DEBUG, "preparePlan: NodeApplicationManager ref is nil\n"));
+            ACE_DEBUG ((LM_DEBUG, "NodeDaemon_Impl:preparePlan: NodeApplicationManager ref is nil\n"));
           ACE_THROW (Deployment::StartError ());
         }
     }
@@ -133,11 +153,23 @@ CIAO::NodeDaemon_Impl::destroyManager (Deployment::NodeApplicationManager_ptr
                                        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
   ACE_THROW_SPEC ((CORBA::SystemException, Deployment::StopError))
 {
-  // Deactivate this object
-  PortableServer::ObjectId_var id =
-    this->poa_->reference_to_id (this->manager_.in ());
-  this->poa_->deactivate_object (id.in ());
+  ACE_TRY
+  {
+	// Deactivate this object
+	PortableServer::ObjectId_var id =
+		this->poa_->reference_to_id (this->manager_.in () ACE_ENV_ARG_PARAMETER);
+	ACE_TRY_CHECK;
 
-  // This causes the POA to delete the actual ApplicationManager
-  this->manager_ = Deployment::NodeApplicationManager::_nil ();
+	this->poa_->deactivate_object (id.in () ACE_ENV_ARG_PARAMETER);
+	ACE_TRY_CHECK;
+
+	this->manager_ = Deployment::NodeApplicationManager::_nil ();
+  }
+  ACE_CATCHANY
+  {
+    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+			 "NodeDaemon_Impl::destroyManager\t\n");
+    ACE_RE_THROW;
+  }
+  ACE_ENDTRY;
 }
