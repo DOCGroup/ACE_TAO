@@ -133,6 +133,7 @@
 // ============================================================================
 
 #include "ace/Reactor.h"
+#include "ace/Reactor_Notification_Strategy.h"
 #include "ace/WIN32_Proactor.h"
 #include "ace/Proactor.h"
 #include "ace/SOCK_Connector.h"
