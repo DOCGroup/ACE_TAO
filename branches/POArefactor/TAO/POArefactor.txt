@@ -1,3 +1,23 @@
+Fri Oct  8 08:12:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/POA_Current_Impl.{h,cpp,inl}:
+        * tao/PortableServer/Servant_Upcall.{h,cpp,inl}:
+          Moved Servant_Upcall and POA_Current_Impl to its own files and to
+          the TAO::Portable_Server namespace. I have to reduce includes and
+          change to TAO_IDL compiler to generate Servant_Upcall in the new
+          namepace
+
+        * tao/PortableServer/Collocated_Object_Proxy_Broker.cpp:
+        * tao/PortableServer/Default_Servant_Dispatcher.{h,cpp}:
+        * tao/PortableServer/Object_Adapter.{cpp,h,i}:
+        * tao/PortableServer/POA.{h,cpp}
+        * tao/PortableServer/Servant_Base.cpp:
+        * tao/PortableServer/Servant_Dispatcher.h:
+        * tao/PortableServer/ServerRequestInfo.h:
+        * tao/DynamicInterface/Dynamic_Implementation.cpp:
+        * tao/RTPortableServer/RT_Servant_Dispatcher.cpp:
+          Updated because of the change above
+
 Thu Oct  7 14:40:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Non_Servant_Upcall.{h,cpp,inl}:
