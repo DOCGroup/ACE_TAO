@@ -1,9 +1,9 @@
 Tue Nov 17 10:15:10 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Map_Manager.cpp (resize_i): Made sure the new elements in
-	  resize_i get constructed properly so we can use more complex
-	  classes with it.  Thanks to Knut Johannessen <knutj@funcom.com>
-	  for providing the patch.
+        * ace/Map_Manager.cpp (resize_i): Made sure the new elements in
+          resize_i get constructed properly so we can use more complex
+          classes with it.  Thanks to Knut Johannessen <knutj@funcom.com>
+          for providing the patch.
 
 Tue Nov 17 09:37:32 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -14,6 +14,12 @@ Tue Nov 17 09:37:32 1998  David L. Levine  <levine@cs.wustl.edu>
         * ace/IOStream_T.i (eof): fixed return value calculation
           logic.  Thanks to Arturo and James Johnson for providing
           and verifying the fix.
+
+        * include/makeinclude/platform_vxworks5.x_ghs.GNU:
+          added -DVXWORKS to CFLAGS, because GHS 1.8.9 needs it.
+          (GHS 1.8.8 had a built-in processor define for it.  Adding
+          -DVXWORKS doesn't seem to bother 1.8.8.)  Thanks to Steve
+          Kay <slk1@icore.ih.lucent.com> for reporting this.
 
 Tue Nov 17 09:12:00 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
