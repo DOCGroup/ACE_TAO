@@ -269,7 +269,7 @@ ifneq ($(GHS),)
   endif # 86
 endif # GHS
 
-ifneq ($(ssl),)
+ifeq ($(ssl),1)
   DIRS += SSL
 endif # ssl
 
