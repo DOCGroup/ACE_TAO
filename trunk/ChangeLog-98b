@@ -1,3 +1,18 @@
+Tue May 12 12:11:36 1998  Bob Laferriere  <laferrie@gsao.med.ge.com>
+
+        * ace/Process.{h,cpp}: modifications to make the environment buffer
+          and number of environment variables tunable in the constructor.
+          I also fixed a logic error which previously attempted to write
+          beyond an array bounds of the array of pointers into the
+          environment buffer. I made the environment_argv_ buffer tunable
+          as well. The new constructor takes the old hardcoded static sizes
+          as the default dynamic sizes for backwards compatiblity.
+          The behavior is to return -1 if the maximum buffer size or
+          maximum number of environment arguments has been reached in
+          following with the prior behavior. I opted not to make the members
+          grow as needed so the class would still follow it's prior behavior.
+          This would be simple to add, however.
+
 Tue May 12 08:29:50 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Malloc.cpp (ACE_Allocator::instance): replaced dynamic
