@@ -1,8 +1,9 @@
+Wed May 10 21:21:15 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 Wed May 10 20:45:11 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* TAO_IDL/ast/ast_structure.cpp (is_local): Disabled the recursive
-	  search for type localness for now.  It is mis-identifying some
-	  structure as local.
+	* TAO_IDL/ast/ast_structure.cpp: I forgot to initialized the data
+	  members in the default constructor, which was causing TAO_IDL to
+	  mis-identify some struct's as local.
 
 Wed May 10 16:23:37 2000  Carlos O'Ryan  <coryan@uci.edu>
 

@@ -81,6 +81,8 @@ ACE_RCSID(ast, ast_structure, "$Id$")
  * Constructor(s) and destructor
  */
 AST_Structure::AST_Structure()
+  : member_count_ (-1),
+    local_struct_ (-1)
 {
 }
 
@@ -153,37 +155,36 @@ AST_Structure::member_count (void)
 idl_bool
 AST_Structure::is_local ()
 {
-//    if (this->local_struct_ == -1)
-//      {
-//        if (this->is_local_)
-//          this->local_struct_ = this->is_local_;
-//        else
-//          {
-//            this->local_struct_ = 0;
-//            UTL_ScopeActiveIterator *si;  // iterator
+    if (this->local_struct_ == -1)
+      {
+        if (this->is_local_)
+          this->local_struct_ = this->is_local_;
+        else
+          {
+            this->local_struct_ = 0;
+            UTL_ScopeActiveIterator *si;  // iterator
 
-//            if (this->nmembers () > 0)
-//              {
-//                // instantiate a scope iterator.
-//                si = new UTL_ScopeActiveIterator (this,
-//                                                  UTL_Scope::IK_decls);
+            if (this->nmembers () > 0)
+              {
+                // instantiate a scope iterator.
+                si = new UTL_ScopeActiveIterator (this,
+                                                  UTL_Scope::IK_decls);
 
-//                while (!(si->is_done ()))
-//                  {
-//                    if (si->item ()->is_local ())
-//                      {
-//                        this->local_struct_ = I_TRUE;
-//                        break;
-//                      }
-//                    si->next ();
-//                  } // end of while
+                while (!(si->is_done ()))
+                  {
+                    if (si->item ()->is_local ())
+                      {
+                        this->local_struct_ = I_TRUE;
+                        break;
+                      }
+                    si->next ();
+                  } // end of while
 
-//                delete si; // free the iterator object
-//              }
-//          }
-//      }
-//    return this->local_struct_;
-  return this->is_local_;
+                delete si; // free the iterator object
+              }
+          }
+      }
+    return this->local_struct_;
 }
 
 /*
