@@ -19,6 +19,7 @@
  * =====================================================================
  */
 
+#include "pace/stdio.h"
 #include "pace/unistd.h"
 #include "pace/time.h"
 #include "pace/sys/utsname.h"
