@@ -71,6 +71,8 @@
 //#define ACE_LACKS_RECVMSG
 #define ACE_LACKS_MSYNC
 #define ACE_LACKS_MADVISE
+//#define ACE_LACKS_POSIX_PROTO
+#define ACE_LACKS_POSIX_PROTO_FOR_SOME_FUNCS
 
 // Compiler/platform has <alloca.h>
 #define ACE_HAS_ALLOCA_H

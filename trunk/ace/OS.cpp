@@ -208,6 +208,11 @@ ACE_OS::gethrtime (void)
   //
   // This function can't be inline because it depends on the location
   // of the following variables on the stack.
+  //
+  // Moreover, the GCC compiler with -Wall will flag these as
+  // potentially being used without being initialized, but the
+  // assembly code insures that they ARE initialized.  So, that
+  // warning can be ignored.
   unsigned long least, most;
 
   asm ("rdtsc");
@@ -1344,6 +1349,8 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 #      endif /* ACE_HAS_SETKIND_NP */
 	  return -1;
 	}
+#    else
+      ACE_UNUSED_ARG (size);
 #    endif /* !ACE_LACKS_THREAD_STACK_SIZE */
     }
 
@@ -1361,6 +1368,8 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 	  return -1;
 	}
     }
+#    else
+  ACE_UNUSED_ARG (stack);
 #    endif /* !ACE_LACKS_THREAD_STACK_ADDR */
 
 

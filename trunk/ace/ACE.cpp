@@ -1003,7 +1003,7 @@ ACE::max_handles (void)
 #elif defined (RLIMIT_NOFILE)
   rlimit rl;
   ACE_OS::getrlimit (RLIMIT_NOFILE, &rl);
-  rl.rlim_cur;
+  return rl.rlim_cur;
 #else
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_WIN32 */
@@ -1595,8 +1595,6 @@ ACE::count_interfaces (ACE_HANDLE handle,
   struct ifconf ifcfg;
   struct ifreq *p_ifs = NULL;
   size_t ifreq_size = 0;
-  ACE_UINT32 addr;
-  struct in_addr if_addr, if_test; 
 
   ifreq_size = num_ifs * sizeof (struct ifreq);
   p_ifs = (struct ifreq *) ACE_OS::malloc (ifreq_size);
