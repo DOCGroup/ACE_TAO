@@ -1,5 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project : rt_server, rtscheduling {
-}

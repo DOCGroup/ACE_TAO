@@ -1,4 +1,0 @@
-// $Id$
-project : taoexe, rtcorba {
-  install = $(ACE_ROOT)/bin
-}

@@ -1,5 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-conditional_include "makedll"
-

@@ -1,8 +1,0 @@
-#
-# $Id$
-#
-
-NAME = test_mutex
-OBJFILES = $(OBJDIR)\$(NAME).obj
-!include <$(ACE_ROOT)\netsvcs\build.bor>
-
