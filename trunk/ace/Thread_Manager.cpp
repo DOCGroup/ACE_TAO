@@ -73,11 +73,11 @@ ACE_Thread_Descriptor::dump (void) const
 }
 
 ACE_Thread_Descriptor::ACE_Thread_Descriptor (void)
-  : task_ (0),
-    thr_id_ (ACE_OS::NULL_thread),
+  : thr_id_ (ACE_OS::NULL_thread),
     thr_handle_ (ACE_OS::NULL_hthread),
     grp_id_ (0),
-    thr_state_ (ACE_THR_IDLE)
+    thr_state_ (ACE_THR_IDLE),
+    task_ (0)
 {
   ACE_TRACE ("ACE_Thread_Descriptor::ACE_Thread_Descriptor");
 
@@ -509,6 +509,8 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
                                   0, 
                                   TRUE,
                                   DUPLICATE_SAME_ACCESS);
+#else
+      ACE_UNUSED_ARG (t_handle);
 #endif /* ACE_HAS_WTHREADS */
       
       return this->append_thr (*t_id,
