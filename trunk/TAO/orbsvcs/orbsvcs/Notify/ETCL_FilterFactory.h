@@ -37,10 +37,10 @@
  * @brief
  *
  */
-class TAO_Notify_Export TAO_Notify_ETCL_FilterFactory 
-  : public virtual PortableServer::RefCountServantBase, 
-    public virtual POA_CosNotifyFilter::FilterFactory, 
-    public TAO_Notify_FilterFactory
+class TAO_Notify_Export TAO_Notify_ETCL_FilterFactory
+  : public virtual PortableServer::RefCountServantBase,
+    public virtual POA_CosNotifyFilter::FilterFactory,
+    public virtual TAO_Notify_FilterFactory
 {
 public:
   /// Constuctor
@@ -52,7 +52,7 @@ public:
   ///= TAO_Notify_FilterFactory methods.
 
   virtual CosNotifyFilter::FilterFactory_ptr create (
-      PortableServer::POA_var& filter_poa 
+      PortableServer::POA_var& filter_poa
       ACE_ENV_ARG_DECL
     );
 
