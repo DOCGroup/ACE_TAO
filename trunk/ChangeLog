@@ -1,3 +1,16 @@
+Thu Nov  6 16:40:35 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ACEXML/common/FileCharStream.h:
+        * ACEXML/common/HttpCharStream.h:
+        * apps/soreduce/Library.h:
+          Removed #include of streams.h.
+
+        * ace/ACE_export.h:
+          Moved the #include of config-all.h up and outside the
+          ACE_EXPORT_H include guard to avoid circular include problems on
+          Windows caused by including OS_main.h in config-all.h to pick up
+          the main macros.  OS_main.h includes Object_Manager.h.
+
 Thu Nov  6 10:12:50 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* ace/INET_Addr.cpp:
