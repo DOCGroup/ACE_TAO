@@ -17,7 +17,7 @@
 //
 // ============================================================================
 
-#if !defined (IMPLREPO_I_H)
+#ifndef IMPLREPO_I_H
 #define IMPLREPO_I_H
 
 #include "orbsvcs/ImplRepoS.h"
@@ -47,7 +47,7 @@ public:
 
   virtual CORBA::Boolean unknown_adapter (PortableServer::POA_ptr parent,
                                           const char *name,
-                                          CORBA_Environment &ACE_TRY_ENV 
+                                          CORBA_Environment &ACE_TRY_ENV
                                             = CORBA_Environment::default_environment ());
   // Called by the POA when the incoming requested object/POA isn't found.  This will
   // create POAs when needed and will also put a DSI object (IR_Forwarder) in that POA
@@ -73,9 +73,9 @@ public:
   // = Interface methods
 
   virtual CORBA::Object_ptr activate_object (CORBA::Object_ptr obj,
-                                             CORBA_Environment &ACE_TRY_ENV 
+                                             CORBA_Environment &ACE_TRY_ENV
                                                = CORBA_Environment::default_environment ());
-  // Starts up the server containing the object <obj> if not already running.  
+  // Starts up the server containing the object <obj> if not already running.
 
   virtual Implementation_Repository::INET_Addr *activate_server (const char *server,
                                                                  CORBA::Environment &env);
@@ -83,40 +83,40 @@ public:
 
   virtual void register_server (const char *server,
                                 const Implementation_Repository::Process_Options &options,
-                                CORBA_Environment &ACE_TRY_ENV 
+                                CORBA_Environment &ACE_TRY_ENV
                                   = CORBA_Environment::default_environment ());
-  // Adds the server to the repository and registers the startup information about 
+  // Adds the server to the repository and registers the startup information about
   // the server <server>.
 
   virtual void reregister_server (const char *server,
                                   const Implementation_Repository::Process_Options &options,
-                                  CORBA_Environment &ACE_TRY_ENV 
+                                  CORBA_Environment &ACE_TRY_ENV
                                     = CORBA_Environment::default_environment ());
   // Updates the startup information about the server <server>.
 
   virtual void remove_server (const char *server,
-                              CORBA_Environment &ACE_TRY_ENV 
+                              CORBA_Environment &ACE_TRY_ENV
                                 = CORBA_Environment::default_environment ());
   // Removes the server <server> from the repository.
 
-  virtual Implementation_Repository::INET_Addr  
+  virtual Implementation_Repository::INET_Addr
     *server_is_running (const char *server,
                         const Implementation_Repository::INET_Addr &addr,
                         CORBA::Object_ptr ping,
-                        CORBA_Environment &ACE_TRY_ENV 
+                        CORBA_Environment &ACE_TRY_ENV
                           = CORBA_Environment::default_environment ());
   // Called by the server to update transient information such as current location of
   // the <server> and its ping object.
 
   virtual void server_is_shutting_down (const char * server,
-                                        CORBA_Environment &ACE_TRY_ENV 
+                                        CORBA_Environment &ACE_TRY_ENV
                                           = CORBA_Environment::default_environment ());
   // What the server should call before it shutsdown.
 
   // = Other methods
 
-  int init (int argc, char **argv, 
-            CORBA_Environment &ACE_TRY_ENV 
+  int init (int argc, char **argv,
+            CORBA_Environment &ACE_TRY_ENV
               = CORBA_Environment::default_environment ());
   // Initialize the Server state - parsing arguments and waiting.
 
