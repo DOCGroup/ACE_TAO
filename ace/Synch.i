@@ -482,7 +482,7 @@ ACE_INLINE int
 ACE_Thread_Mutex::acquire (ACE_Time_Value &tv)
 {
   // ACE_TRACE ("ACE_Thread_Mutex::acquire");
-  return ACE_OS::mutex_lock (&this->lock_, tv);
+  return ACE_OS::thread_mutex_lock (&this->lock_, tv);
 }
 
 ACE_INLINE int

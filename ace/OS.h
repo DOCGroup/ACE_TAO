@@ -5723,7 +5723,6 @@ public:
   static int mutex_lock (ACE_mutex_t *m,
                          const ACE_Time_Value &timeout);
 
-
   /// Win32 note: Abandoned mutexes are not treated differently. 0 is
   /// returned since the calling thread does get the ownership.
   static int mutex_trylock (ACE_mutex_t *m);
@@ -5749,6 +5748,8 @@ public:
 #endif /* ACE_HAS_WCHAR */
   static int thread_mutex_destroy (ACE_thread_mutex_t *m);
   static int thread_mutex_lock (ACE_thread_mutex_t *m);
+  static int thread_mutex_lock (ACE_thread_mutex_t *m,
+                                const ACE_Time_Value &timeout);
   static int thread_mutex_trylock (ACE_thread_mutex_t *m);
   static int thread_mutex_unlock (ACE_thread_mutex_t *m);
   //@}
