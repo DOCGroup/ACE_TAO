@@ -5,14 +5,15 @@
 </HEAD>
 <BODY>
 
-<H1 ALIGN=CENTER>Release Information</H1>
+<H2 ALIGN=CENTER>Release Information for The ACE ORB (TAO) </H2>
 
 <H3 ALIGN=CENTER>Version 0.8b</H3>
 <H3 ALIGN=CENTER>30-September-1997</H3>
 
-<H2><HR ALIGN=LEFT>Roadmap</H2>
+<HR><P>
+<H3>Roadmap</H3>
 
-<P>Information is available on the following topics:</P>
+<P>Information is available on the following topics related to the current release of <A HREF="TAO.html">TAO</A>:</P>
 
 <UL>
   <LI><A HREF="#orb">ORB &amp; ORB Core</A>
@@ -23,53 +24,59 @@
   <LI><A HREF="#services">CORBA Services</A>
 </UL>
 
-<H2><HR ALIGN=LEFT><A NAME="orb"></A>ORB &amp; ORB Core</H2>
+<HR><P>
+<H3><A NAME="orb"></A>ORB &amp; ORB Core</H3>
+
+Point of contact: <A HREF="mailto:cleeland@cs.wustl.edu">Chris Cleeland</A>
 
 <BLOCKQUOTE>
   <P>Current status:</P>
   <UL>
     <LI>There is a bug in the ORB-per-thread concurrency model caused by its
     use of the ACE Service Configurator.  The bug is understood,
-    and a patch being readied and should be released no later than week's end.
+    and a patch is being readied and should be released no later than October 3rd.
     <LI>Provides dynamically linked wholesale strategy assignment using the
     ACE Service Configurator framework.
-    <LI>Supports several concurrency models out of the box: Reactive, Thread-per-connection,
-    and ORB-per-thread. Others can be easily crafted.
-    <LI>The ORB-per-thread model is not well integrated with the other concurrency
+    <LI>Supports several concurrency models out of the box: Reactive, Thread-per-Connection,
+    and ORB-per-thread. We're in the process of creating new models, e.g., Thread-per-Request
+    <LI>The ORB-per-thread model is not yet integrated with the other concurrency
     models; it must be selected at <EM>compile time</EM> rather than run time.
     In order to use it, one must add <CODE>-DTAO_HAS_TSS_ORBCORE</CODE> to the compile
     line in both the library (<code>$(TAO_ROOT)/tao</code>) and the application
-    (<em>e.g.</em>, <code>$(TAO_ROOT)/tests/multiCubit</code>).
+    (<em>e.g.</em>, <code>$(TAO_ROOT)/tests/multiCubit</code>).  Future releases of
+    TAO will fix this restriction so that all threading models are available at run-time. 
   </UL>
   <P>Future work:</P>
   <UL>
-    <LI>Add Orbix-like <CODE>bind</CODE> calls.
-    <LI>Better integrate ORB-per-thread.
+    <LI>Add Orbix-like <CODE>_bind</CODE> calls in lieu of always needing a Naming Service.
+    <LI>Better integrate ORB-per-thread so it can be selected at run-time.
     <LI>Clean up the internals and analyze for performance bottlenecks using
     Quantify.
-    <LI>Integrate with <A HREF="#poa">POA</A> work.
-    <LI>Add support for <CODE>resolve_initial_references</CODE>.
+    <LI>Integrate the <A HREF="#poa">POA</A> implementation.
+    <LI>Add support for <CODE>resolve_initial_references</CODE> using ACE support for UDP broadcast.
     <LI>Assist in porting higher level services (e.g., <A HREF="#eventchannel">Event
     Channel</A>) to TAO.
   </UL>
 </BLOCKQUOTE>
 
-<H2><HR ALIGN=LEFT><A NAME="idl"></A>IDL Compiler</H2>
+<HR><P>
+<H3><A NAME="idl"></A>IDL Compiler</H3>
+
+Point of contact: <A HREF="mailto:gokhale@cs.wustl.edu">Andy Gokhale</A>
 
 <BLOCKQUOTE>
   <P>Current status</P>
   <UL>
-    <LI>Generates stubs and skeletons which use the interpretive IIOP marshaling
-    engine.
-    <LI>Works with <EM>most</EM> IDL constructs. Although code is generated
+    <LI>Generates C++ stubs and skeletons that use TAO's <A HREF="HICSS-97.ps.gz">interpretive IIOP protocol engine</A>. 
+    <LI>Works for <EM>most</EM> IDL constructs. Although code is generated
     for everything, support for unions, sequences whose element types are anonymous
     sequences or strings, arrays of strings, and other very complicated types
-    may result in compilation errors.
+    may result in C++ compilation errors.
   </UL>
   <P>Future work:</P>
   <UL>
-    <LI>Improve IDL compiler
-    <LI>Fix bugs in the SunSoft IDL front-end uncovered by us.
+    <LI>Improve IDL compiler to support complete IDL-to-C++ mapping.
+    <LI>Fix bugs in the SunSoft IDL front-end we've uncovered.
     <LI>Use <A HREF="http://www.cs.utah.edu/projects/flux/flick/">Flick</A>
     (from the University of Utah) to generate compiled stubs.
     <LI>Goal is to measure the code size of the interpretive stubs generated
@@ -83,7 +90,10 @@
   </UL>
 </BLOCKQUOTE>
 
-<H2><HR ALIGN=LEFT><A NAME="eventchannel"></A>Event Channel</H2>
+<HR><P>
+<H3><A NAME="eventchannel"></A>Event Channel</H3>
+
+Point of contact: <A HREF="mailto:coryan@cs.wustl.edu">Carlos O'Ryan</A>
 
 <BLOCKQUOTE>
   <P>Current status:</P>
@@ -92,7 +102,7 @@
     the main test I've running has three processes, one runs the EC itself,
     one a Supplier and yet another a Consumer.
     <LI>The configuration runs can be done even on the distributed scenario,using
-    a IDL &quot;Scheduling Service&quot;.
+    an IDL &quot;Scheduling Service.&quot;
     <LI>At run-time (no config runs) there is no need to use the Scheduling
     Service, a faster, collocated implementation for the service is available.
     Obviously the information is generated on the config runs and linked into
@@ -100,8 +110,8 @@
   </UL>
   <P>Future work:</P>
   <UL>
-    <LI>Port to TAO (on availability of stable IDL compiler).
-    <LI>Change to use standard naming service rather than current Orbix <CODE>_bind</CODE>/<CODE>_marker</CODE>
+    <LI>Port to TAO (once IDL compiler is available and stable).
+    <LI>Change to use standard Naming Service rather than current Orbix <CODE>_bind</CODE>/<CODE>_marker</CODE>
     calls.
     <LI>The <A HREF="#naming">Naming Service</A> must be ported to TAO in order
     for suppliers and consumers to obtain an object reference to the Event
@@ -113,7 +123,10 @@
   </UL>
 </BLOCKQUOTE>
 
-<H2><HR ALIGN=LEFT><A NAME="apps"></A>Test &amp; Example Applications</H2>
+<HR><P>
+<H3><A NAME="apps"></A>Test &amp; Example Applications</H3>
+
+Point of contact: <A HREF="mailto:sumedh@cs.wustl.edu">Sumedh Mungee</A>
 
 <BLOCKQUOTE>
   <P>Current status:</P>
@@ -146,12 +159,16 @@
   </UL>
 </BLOCKQUOTE>
 
-<H2><HR ALIGN=LEFT><A NAME="poa"></A>Portable Object Adapter</H2>
+<HR><P>
+<H3><A NAME="poa"></A>Portable Object Adapter</H3>
+
+Point of contact: <A HREF="mailto:irfan@cs.wustl.edu">Irfan Pyrarli</A>
 
 <BLOCKQUOTE>
   <P>Current Status:</P>
   <UL>
-    <LI>The POA is not integrated into this release.
+    <LI>The POA is not integrated into this release, though we've
+	 begun migrating TAO's OA to use POA method names.  
   </UL>
   <P>Future work:</P>
   <UL>
@@ -162,11 +179,14 @@
   </UL>
 </BLOCKQUOTE>
 
-<H2><HR ALIGN=LEFT><A NAME="services"></A>CORBA Services</H2>
+<HR><P>
+<H3><A NAME="services"></A>CORBA Services</H3>
+
+Point of contact: <A HREF="mailto:marina@cs.wustl.edu">Marina Spivak</A>
 
 <BLOCKQUOTE>
   <H4><A NAME="naming"></A>NAMING SERVICE</H4>
-  <P>The Naming Service is a nonpersistent implementation of the OMG Naming
+  <P>The Naming Service is a non-persistent implementation of the OMG Naming
   Service specification.</P>
   <P>Current status:</P>
   <UL>
@@ -174,7 +194,7 @@
   </UL>
   <P>Future work:</P>
   <UL>
-    <LI>Port to TAO (on availability of stable IDL compiler).
+    <LI>Port to TAO (once IDL compiler is available and stable).
   </UL>
   <H4><A NAME="trading"></A>TRADING SERVICE</H4>
   <P>The Trading Service is an implementation conforming to OMG Trading Service
