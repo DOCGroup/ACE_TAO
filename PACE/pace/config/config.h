@@ -35,7 +35,7 @@
 #   else  /* ! __USE_POSIX */
 #   endif /* ! __USE_POSIX */
 # elif defined (PACE_LYNXOS)
-    // LynxOS uses _POSIX_REENTRANT_FUNCTIONS, but not _REENTRANT
+/* LynxOS uses _POSIX_REENTRANT_FUNCTIONS, but not _REENTRANT */
 # elif defined (PACE_SUNOS)
 #   if defined (__EXTENSIONS__) || defined (_REENTRANT) || \
        (_POSIX_C_SOURCE - 0 >= 199506L)
