@@ -104,30 +104,32 @@ module TAO
   exception Not_Found {};
   // Object not found in the Reactivator  
   
-  interface Process_Options
-    {
-      struct Environment_Variable
-      {
-        string name_;
-        string value_;
-      };
-      // One environment variable
+  struct Environment_Variable
+  {
+    string name_;
+    string value_;
+  };
+  // One environment variable
       
-      typedef sequence<Environment_Variable> Environment;
-      attribute Environment environment_; 
-      // Complete environment
-      
-      typedef sequence<string> Command_Line_Options;
-      attribute Command_Line_Options command_line_options_; 
-      // Command line options
+  typedef sequence<Environment_Variable> Environment;
 
-      attribute string executable_name_;
+  typedef sequence<string> Command_Line_Options;
+
+  struct Process_Options
+    {
+      string executable_name_;
       // Executable name
 
-      attribute string working_directory_;  
+      Command_Line_Options command_line_options_; 
+      // Command line options
+
+      Environment environment_; 
+      // Complete environment
+      
+      string working_directory_;  
       // Working directory
 
-      attribute unsigned long creation_flags_;
+      unsigned long creation_flags_;
       // Creation flags
     };
 
