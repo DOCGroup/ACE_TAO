@@ -5633,12 +5633,18 @@ public:
   static int priority_control (ACE_idtype_t, ACE_id_t, int, void *);
   // Low-level interface to priocntl (2).
 
-# if defined (ACE_HAS_WINCE)
+# if defined (ACE_WIN32)
 private:
+#   if defined (ACE_HAS_WINCE)
   static const wchar_t *day_of_week_name[7];
   static const wchar_t *month_name[12];
   // Supporting data for ctime and ctime_r functions on WinCE.
-# endif /* ACE_HAS_WINCE */
+#   endif /* ACE_HAS_WINCE */
+
+  static void fopen_mode_to_open_mode_converter (char x, int &hmode);
+  // Translate fopen's mode char to open's mode.  This helper function
+  // is here to avoid maintaining several pieces of identical code.
+# endif /* ACE_WIN32 */
 };
 
 # if defined (ACE_HAS_WINCE)
