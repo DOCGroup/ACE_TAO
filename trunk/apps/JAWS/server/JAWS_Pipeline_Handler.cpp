@@ -16,7 +16,7 @@ JAWS_Pipeline_Handler<TYPE>::put (ACE_Message_Block *mb, ACE_Time_Value *tv)
   TYPE *data = ACE_dynamic_cast (TYPE *, 
                                  mb->data_block ());
 
-  status = this->handle_input (data, tv);
+  int status = this->handle_input (data, tv);
 
   return (status != -1) ? this->put_next (mb, tv) : -1;
 }
