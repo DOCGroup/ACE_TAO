@@ -178,9 +178,10 @@ IIOP_Object::QueryInterface (REFIID riid,
 //TAO extensions
 const char *IIOP_Object::_get_name (CORBA::Environment &)
 {
-  char name [TAO_MAXBUFSIZE];
+  char *name;
 
-  ACE_OS::memset (name, '\0', TAO_MAXBUFSIZE);
+  name = CORBA::string_alloc (this->profile.object_key.length);
+  ACE_OS::memset (name, '\0', this->profile.object_key.length+1);
   ACE_OS::memcpy (name, this->profile.object_key.buffer,
                   this->profile.object_key.length);
   return name;

@@ -162,7 +162,7 @@ public:
   HRESULT __stdcall QueryInterface (REFIID type_id,
 				    void **ppv);
 
-  virtual const char *_get_name (CORBA::Environment &env);
+  virtual char *_get_name (CORBA::Environment &env);
   // get the underlying key
 
 private:
