@@ -1413,10 +1413,10 @@ template class ACE_Unbounded_Set_Iterator<ACE_SYNCH_CONDITION*>;
 #pragma instantiate ACE_Node<ACE_SYNCH_CONDITION*>
 #pragma instantiate ACE_Unbounded_Set<ACE_SYNCH_CONDITION*>
 #pragma instantiate ACE_Unbounded_Set_Iterator<ACE_SYNCH_CONDITION*>
-# if !defined (ACE_HAS_TEMPLATE_TYPEDEFS)
+//# if !defined (ACE_HAS_TEMPLATE_TYPEDEFS)
 #   pragma instantiate ACE_Thread_Condition<ACE_Thread_Mutex>
 #   pragma instantiate ACE_Condition<ACE_Thread_Mutex>
-# endif /* ! ACE_HAS_TEMPLATE_TYPEDEFS */
+//# endif /* ! ACE_HAS_TEMPLATE_TYPEDEFS */
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 ACE_FACTORY_DEFINE (TAO, TAO_Resource_Factory)
