@@ -11,6 +11,12 @@ Tue Jul 14 11:26:40 1998  David L. Levine  <levine@cs.wustl.edu>
 	* tests/Dynamic_Priority_Test.cpp: commented out unused global
           FIFO_receipt_order.
 
+        * ace/Basic_Types.h: added ACE_UINT64_LITERAL macro.  Thanks to
+          Nanbor for suggesting it.
+
+        * ace/Stats.cpp: use ACE_UINT64_LITERAL to replace platform-specific
+          code.
+
 Mon Jul 13 22:29:20 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Dynamic_Priority_Test.cpp: swapped "const" and "static"
