@@ -70,9 +70,9 @@ Notifier_i::register_callback (const char *stock_name,
        ACE_THROW ( Callback_Quoter::Invalid_Stock ("Insertion failed! Invalid Stock!\n"));
      else
       ACE_DEBUG ((LM_DEBUG,
-		  "Inserted map entry: stockname %s threshold %d",
-		  stock_name,
-		  threshold_value));
+                  "Inserted map entry: stockname %s threshold %d",
+                  stock_name,
+                  threshold_value));
     }
   else
     {
@@ -86,12 +86,12 @@ Notifier_i::register_callback (const char *stock_name,
       // fails an exception is raised.
       if (consumers->insert (consumer_data) == -1)
         ACE_THROW ( Callback_Quoter::Invalid_Stock ("Insertion failed! Invalid Stock!\n"));
-       
+
       // The bond between the stockname <hash_key> and the consumers <hash_value>
       // is fused.
       if (this->consumer_map_.bind (stock_name, consumers) == -1)
          ACE_ERROR ((LM_ERROR,
-		   "register_callback: Bind failed!/n"));
+                   "register_callback: Bind failed!/n"));
       else
         ACE_DEBUG ((LM_DEBUG,
                     "new map entry: stockname %s threshold %d\n",
@@ -149,7 +149,7 @@ Notifier_i::unregister_callback (Callback_Quoter::Consumer_ptr consumer,
          ACE_THROW (Callback_Quoter::Invalid_Handle ( "Unregistration failed! Invalid Consumer Handle!\n"));
        else
         ACE_DEBUG ((LM_DEBUG,
-		    "unregister_callback:consumer removed\n"));
+                    "unregister_callback:consumer removed\n"));
     }
 }
 
@@ -163,8 +163,8 @@ Notifier_i::market_status (const char *stock_name,
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
-	      "Notifier_i:: The stockname is %s with price %d\n",
-	      stock_name,
+              "Notifier_i:: The stockname is %s with price %d\n",
+              stock_name,
               stock_value));
 
   CONSUMERS *consumers;
@@ -185,17 +185,17 @@ Notifier_i::market_status (const char *stock_name,
               Callback_Quoter::Info interested_consumer_data;
 
               interested_consumer_data.stock_name =
-		CORBA::string_dup (stock_name);
+                CORBA::string_dup (stock_name);
               interested_consumer_data.value =
-		stock_value;
+                stock_value;
 
-	      ACE_DEBUG ((LM_DEBUG,
-			  "pushing information to consumer\n"));
+              ACE_DEBUG ((LM_DEBUG,
+                          "pushing information to consumer\n"));
 
-	      // The status desired by the consumer is then passed to
-	      // it.
+              // The status desired by the consumer is then passed to
+              // it.
               (*iter).consumer_->push (interested_consumer_data);
-	    }
+            }
         }
     }
   else
@@ -212,14 +212,14 @@ Notifier_i::shutdown (CORBA::Environment &)
 {
   if ( this->consumer_map_.close () > 0)
     ACE_ERROR ((LM_ERROR,
-		"Consumer_map_close error!\n"));
+                "Consumer_map_close error!\n"));
   else
   // This marks the exit of the notifier. This should be taken care of
   // before the consumer tries to unregister after the notifier quits.
   notifier_exited_ = 1;
 
   ACE_DEBUG ((LM_DEBUG,
-	      "The Callback Quoter server is shutting down...\n"));
+              "The Callback Quoter server is shutting down...\n"));
 
 
   // Instruct the ORB to shutdown.
@@ -245,8 +245,6 @@ template class ACE_Unbounded_Set<Notifier_i::Consumer_Data>;
 template class ACE_Unbounded_Set_Iterator<Notifier_i::Consumer_Data>;
 
 template class ACE_Hash_Map_Entry<ACE_CString,ACE_Unbounded_Set<Notifier_i::Consumer_Data>*>;
-template class ACE_Hash<ACE_CString>;
-template class ACE_Equal_To<ACE_CString>;
 template class ACE_Hash_Map_Manager<ACE_CString,ACE_Unbounded_Set<Notifier_i::Consumer_Data>*,ACE_Null_Mutex>;
 template class ACE_Hash_Map_Manager_Ex<ACE_CString, ACE_Unbounded_Set<Notifier_i::Consumer_Data>*, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, ACE_Unbounded_Set<Notifier_i::Consumer_Data>*, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
@@ -262,8 +260,6 @@ template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, ACE_Unbounded_Set<N
 #pragma instantiate ACE_Unbounded_Set_Iterator<Notifier_i::Consumer_Data>
 
 #pragma instantiate ACE_Hash_Map_Entry<ACE_CString,ACE_Unbounded_Set<Notifier_i::Consumer_Data>*>
-#pragma instantiate ACE_Hash<ACE_CString>
-#pragma instantiate ACE_Equal_To<ACE_CString>
 #pragma instantiate ACE_Hash_Map_Manager<ACE_CString,ACE_Unbounded_Set<Notifier_i::Consumer_Data>*,ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_CString, ACE_Unbounded_Set<Notifier_i::Consumer_Data>*, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, ACE_Unbounded_Set<Notifier_i::Consumer_Data>*, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
