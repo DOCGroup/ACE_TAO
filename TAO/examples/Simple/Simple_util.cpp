@@ -205,8 +205,10 @@ Server<Servant>::register_name (void)
   bindName.length (1);
   bindName[0].id = CORBA::string_dup (name);
 
+  ACE_DECLARE_NEW_CORBA_ENV;
+
   // (re)Bind the object.
-  ACE_TRY_NEW_ENV
+  ACE_TRY
     {
       CORBA::Object_var object = servant_._this (ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -329,8 +331,9 @@ Client<InterfaceObj, Var>::init (const char *name,
   this->argv_ = argv;
 
 
-
-  ACE_TRY_NEW_ENV
+  ACE_DECLARE_NEW_CORBA_ENV;
+ 
+  ACE_TRY
     {
       // Retrieve the ORB.
       this->orb_ = CORBA::ORB_init (this->argc_,
