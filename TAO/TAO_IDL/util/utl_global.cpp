@@ -471,7 +471,6 @@ IDL_GlobalData::seen_include_file_before (char *n)
   unsigned long i;
   char *incl = 0;
   char *tmp = n;
-  static retval = 0;
 
   if (n[0] == '.')
     {
@@ -485,9 +484,6 @@ IDL_GlobalData::seen_include_file_before (char *n)
       if (ACE_OS::strcmp (tmp, incl) == 0)
         {
           return seen_once[i]++;
-          // We use the index value in the function below. We
-          // add 1 so a match on the first try will not return 0.
-//          return (long)i + 1;
         }
     }
 
