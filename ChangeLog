@@ -1,3 +1,11 @@
+Thu Oct 14 21:03:00 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* ace/CDR_Base.cpp:
+	* ace/CDR_Base.inl:
+
+	  Added AMD64 optimized versions of ACE_CDR::swap_{2, 4, 8}, and
+	  ACE_CDR::swap_{2, 4}_array.
+
 Thu Oct 14 08:07:36 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/Profile_Timer.inl:
