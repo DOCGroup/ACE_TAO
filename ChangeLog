@@ -1,3 +1,15 @@
+Sun Jun  1 19:05:41 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* bin/make_release: The following changes were made to the release
+	  scripts.  
+
+	  - CIAO distribution has been integrated
+	  - Generation of doxygen documentation has been moved out. 
+	  - Added checks to see whether the user of the script has got
+	    write permissions in the output directory
+	  - Removed the option to create releases with no zipped
+	    libraries. 
+
 Sun Jun 01 18:02:24 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* bin/generate_rel_manpages: A new script for man page
