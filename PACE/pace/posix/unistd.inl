@@ -358,6 +358,20 @@ pace_sysconf (int name)
 }
 
 PACE_INLINE
+pid_t
+pace_tcgetpgrp (int fildes)
+{
+  return tcgetpgrp (fldes);
+}
+
+PACE_INLINE
+int
+pace_tcsetpgrp (int fildes, pid_t pgrp_id)
+{
+  return tcsetpgrp (fildes, pgrp_id);
+}
+
+PACE_INLINE
 char *
 pace_ttyname (int fildes)
 {
