@@ -28,6 +28,12 @@ PLANNED MAJOR CHANGES TARGETED FOR ACE-5.4.3
 - (Johnny) Ported to HPUX 11i v2 on Itanium
   Finished, Mon Aug 23 17:53:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
+- (OCI) Added new streaming protocol that tunnels through HTTP
+  proxies, ace/HTBP
+  Finished.
+  Mon Oct 25 21:27:03 2004  Phil Mesnier  <mesnier_p@ociweb.com>
+
+
 *** not user visible, but probably significant anyway
 - Added code to ace for platform RedHat AS 3.0 on Opteron.
   Wed Aug 25 14:58:51 2004  Rich Seibel <seibel_r@ociweb.com>
