@@ -1199,6 +1199,56 @@ template <class T, size_t ACE_SIZE>
 class ACE_Fixed_Set;
 
 /**
+ * @class ACE_Fixed_Set_Iterator_Base
+ *
+ * @brief Implements a common base class for iterators for a unordered set.
+ */
+template <class T, size_t ACE_SIZE>
+class ACE_Fixed_Set_Iterator_Base
+{
+public:
+  // = Iteration methods.
+
+  /// Pass back the <next_item> that hasn't been seen in the Set.
+  /// Returns 0 when all items have been seen, else 1.
+  int next (T *&next_item);
+
+  /// Move forward by one element in the set.  Returns 0 when all the
+  /// items in the set have been seen, else 1.
+  int advance (void);
+
+  /// Move to the first element in the set.  Returns 0 if the
+  /// set is empty, else 1.
+  int first (void);
+
+  /// Returns 1 when all items have been seen, else 0.
+  int done (void) const;
+
+  /// Declare the dynamic allocation hooks.
+  ACE_ALLOC_HOOK_DECLARE;
+
+protected:
+  // = Initialization method.
+  ACE_Fixed_Set_Iterator_Base (ACE_Fixed_Set<T, ACE_SIZE> &s);
+  
+  /// Set we are iterating over.
+  ACE_Fixed_Set<T, ACE_SIZE> &s_;
+
+  /// How far we've advanced over the set.
+  ssize_t next_;
+  
+  /// The number of non free items that the iterator had pointed at.
+  size_t iterated_items_;
+  
+  /// Dump the state of an object.
+  void dump_i (void) const;
+  
+  /// Pass back the <next_item> that hasn't been seen in the Set.
+  /// Returns 0 when all items have been seen, else 1.
+  int next_i (T *&next_item);
+}; 
+
+/**
  * @class ACE_Fixed_Set_Iterator
  *
  * @brief Iterates through an unordered set.
@@ -1207,7 +1257,7 @@ class ACE_Fixed_Set;
  * Allows deletions while iteration is occurring.
  */
 template <class T, size_t ACE_SIZE>
-class ACE_Fixed_Set_Iterator
+class ACE_Fixed_Set_Iterator : public ACE_Fixed_Set_Iterator_Base <T, ACE_SIZE>
 {
 public:
   // = Initialization method.
@@ -1219,29 +1269,20 @@ public:
   /// Returns 0 when all items have been seen, else 1.
   int next (T *&next_item);
 
-  /// Move forward by one element in the set.  Returns 0 when all the
-  /// items in the set have been seen, else 1.
-  int advance (void);
-
-  /// Move to the first element in the set.  Returns 0 if the
-  /// set is empty, else 1.
-  int first (void);
-
-  /// Returns 1 when all items have been seen, else 0.
-  int done (void) const;
-
   /// Dump the state of an object.
   void dump (void) const;
+  
+  /// Remove the item where the itearetor is located at.
+  /// Returns 1 if it removes a item, else 0.
+  /// Pass back the removed <item>.
+  int remove (T *&item);
+  
+  /// STL-like iterator dereference operator: returns a reference
+  /// to the node underneath the iterator.
+  T & operator* (void);
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
-
-private:
-  /// Set we are iterating over.
-  ACE_Fixed_Set<T, ACE_SIZE> &s_;
-
-  /// How far we've advanced over the set.
-  ssize_t next_;
 };
 
 /**
@@ -1252,7 +1293,7 @@ private:
  * This implementation of an unordered set uses a fixed array.
  */
 template <class T, size_t ACE_SIZE>
-class ACE_Fixed_Set_Const_Iterator
+class ACE_Fixed_Set_Const_Iterator : public ACE_Fixed_Set_Iterator_Base <T, ACE_SIZE>
 {
 public:
   // = Initialization method.
@@ -1262,33 +1303,18 @@ public:
 
   /// Pass back the <next_item> that hasn't been seen in the Set.
   /// Returns 0 when all items have been seen, else 1.
-  int next (T *&next_item);
-
-  /// Move forward by one element in the set.  Returns 0 when all the
-  /// items in the set have been seen, else 1.
-  int advance (void);
-
-  /// Move to the first element in the set.  Returns 0 if the
-  /// set is empty, else 1.
-  int first (void);
-
-  /// Returns 1 when all items have been seen, else 0.
-  int done (void) const;
+  int next (const T *&next_item);
 
   /// Dump the state of an object.
   void dump (void) const;
+  
+  /// STL-like iterator dereference operator: returns a reference
+  /// to the node underneath the iterator.
+  const T & operator* (void) const ;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
-
-private:
-  /// Set we are iterating over.
-  const ACE_Fixed_Set<T, ACE_SIZE> &s_;
-
-  /// How far we've advanced over the set.
-  ssize_t next_;
 };
-
 
 /**
  * @class ACE_Fixed_Set
@@ -1327,12 +1353,13 @@ template <class T, size_t ACE_SIZE>
 class ACE_Fixed_Set
 {
 public:
+  friend class ACE_Fixed_Set_Iterator_Base<T, ACE_SIZE>;
   friend class ACE_Fixed_Set_Iterator<T, ACE_SIZE>;
   friend class ACE_Fixed_Set_Const_Iterator<T, ACE_SIZE>;
 
-  // Trait definition.
+  // Trait definitions.
   typedef ACE_Fixed_Set_Iterator<T, ACE_SIZE> ITERATOR;
-  typedef ACE_Fixed_Set_Iterator<T, ACE_SIZE> CONST_ITERATOR;
+  typedef ACE_Fixed_Set_Const_Iterator<T, ACE_SIZE> CONST_ITERATOR;
 
   // = Initialization and termination methods.
   /// Default Constructor.
