@@ -1,3 +1,9 @@
+Mon Jan 11 13:15:15 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tao/GIOP.cpp: Changed the implementation to use the new
+ 	  sendv_n() method on SOCK_Stream.  This enabled me to be able to
+ 	  remove the adhoc use of writev_n() in this file.
+
 Mon Jan 11 12:37:23 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
 	Dereferenced the _var pointers in the following.
