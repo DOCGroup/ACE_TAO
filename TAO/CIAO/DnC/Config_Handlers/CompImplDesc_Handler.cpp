@@ -48,7 +48,7 @@ namespace CIAO
         this->iter_->release();
     }
 
-    /// handle the monolithic deployment description and populate it
+    /// handle the component implementation description and populate it
     void CompImplDesc_Handler::process_ComponentImplementationDescription
     (::Deployment::ComponentImplementationDescription &cid)
     {
@@ -104,11 +104,9 @@ namespace CIAO
               CORBA::ULong i (cid.dependsOn.length ());
               cid.dependsOn.length (i + 1);
               
-              // fetch the handler
-              ID_Handler id_handler (iter_, false);
-
               // delegate the populating process
-              id_handler.process_ImplementationDependency (cid.dependsOn[i]);
+              ID_Handler::process_ImplementationDependency
+              (this->iter_, cid.dependsOn[i]);
             }
           else if (node_name == XStr (ACE_TEXT ("configProperty")))
             {
@@ -137,7 +135,7 @@ namespace CIAO
               cid.capability.length (i + 1);
               
               // fetch the handler
-              Capability_Handler cap_handler (iter_, false);
+              Cap_Handler cap_handler (iter_, false);
 
               // delegate the populating process
               cap_handler.process_Capability (cid.capability[i]);
@@ -145,10 +143,10 @@ namespace CIAO
           else if (node_name == XStr (ACE_TEXT ("implements")))
             {
               // fetch the handler
-              CompIntfDesc_Handler compIntfDesc_handler (iter_, false);
+              CompIntrDesc_Handler compIntrDesc_handler (iter_, false);
 
               // delegate the populating process
-              compIntfDesc_handler.process_ComponentInterfaceDescription (cid.implements);
+              compIntrDesc_handler.process_ComponentInterfaceDescription (cid.implements);
             }
           else
             {
