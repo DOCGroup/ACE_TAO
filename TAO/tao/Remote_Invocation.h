@@ -37,6 +37,16 @@ namespace TAO
   class Profile_Transport_Resolver;
   class Argument;
 
+
+    enum Invocation_Status
+      {
+        TAO_INVOKE_START,
+        /// The request must be restarted, a temporary failure has ocurred.
+        TAO_INVOKE_RESTART,
+        /// invoke() call successful.
+        TAO_INVOKE_SUCCESS,
+        TAO_INVOKE_FAILURE
+      };
   /**
    * @class Synch_Invocation
    *
@@ -52,7 +62,7 @@ namespace TAO
   protected:
 
     void init_target_spec (TAO_Target_Specification &spec
-		           ACE_ENV_ARG_DECL);
+                           ACE_ENV_ARG_DECL);
 
     void write_header (TAO_Target_Specification &spec,
                        TAO_OutputCDR &out_stream
