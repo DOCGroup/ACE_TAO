@@ -30,6 +30,11 @@ TAO_EC_Null_SupplierFiltering::bind (TAO_EC_ProxyPushConsumer*)
 }
 
 void
+TAO_EC_Null_SupplierFiltering::unbind (TAO_EC_ProxyPushConsumer*)
+{
+}
+
+void
 TAO_EC_Null_SupplierFiltering::connected (TAO_EC_ProxyPushSupplier*,
                                           CORBA::Environment &)
 {

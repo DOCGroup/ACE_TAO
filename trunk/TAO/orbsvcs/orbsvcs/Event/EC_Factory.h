@@ -55,6 +55,8 @@ class TAO_EC_Factory
   // = MEMORY MANAGMENT
   //   The objects it creates are owned by this class, the client must
   //   invoke the corresponding destroy() method to release them.
+  //   Some implementations may require a different instance for the
+  //   EC_Factory for each instance of Event_Channel.
   //
 public:
   virtual ~TAO_EC_Factory (void);

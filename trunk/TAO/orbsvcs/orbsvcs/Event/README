@@ -150,3 +150,19 @@ components:
 Event Service will be equal or better than the previous
 implementation. Initial experiments suggest that this is going to be
 the case.
+
+= Locking revisited
+
+  There are several ways to support strategized locking, for example:
+  
+  - Each class is implemented without any locking, all the locks must
+    be taken outside the context of the class.
+  - Each class is implemented as a base class without any locking,
+    derived classes provide the right kind of locking [inflexible]
+  - Each class can be Decorated with a version that supports locking
+    [inefficient]
+  - Each class parametric over the kind of locking [complex]
+  - Each class has an strategy (ACE_Lock) to do the locking [easier]
+
+	we will try the last alternative first, if the performance
+penalty proves to be too high we can explore the other solutions.

@@ -7,14 +7,14 @@
 //   ORBSVCS Real-time Event Channel
 //
 // = FILENAME
-//   EC_Null_Factory
+//   EC_Basic_Factory
 //
 // = AUTHOR
 //   Carlos O'Ryan (coryan@cs.wustl.edu)
 //
 // = DESCRIPTION
-//   A factory for a simple event channel: no filtering or any
-//   real-time features.
+//   A factory for a basic event channel: it provides filtering and
+//   correlation, but only at the consumer level.
 //
 // = CREDITS
 //   Based on previous work by Tim Harrison (harrison@cs.wustl.edu)
@@ -26,8 +26,8 @@
 //
 // ============================================================================
 
-#ifndef TAO_EC_NULL_FACTORY_H
-#define TAO_EC_NULL_FACTORY_H
+#ifndef TAO_EC_BASIC_FACTORY_H
+#define TAO_EC_BASIC_FACTORY_H
 
 #include "EC_Factory.h"
 
@@ -37,15 +37,16 @@
 
 class TAO_EC_SupplierFiltering;
 
-class TAO_EC_Null_Factory : public TAO_EC_Factory
+class TAO_EC_Basic_Factory : public TAO_EC_Factory
 {
   // = TITLE
   //   The factory for a simple event channel.
   //
   // = DESCRIPTION
-  //   The simplest configuration for an event channel does no
-  //   filtering and uses reactive dispatching. This class is used to
-  //   configure such an event channel.
+  //   An slightly more advanced configuration than the
+  //   EC_Null_Factory, this class configure an event channel that can 
+  //   support filtering and correlation. Still dispatching is not
+  //   prioritized and all the filtering is done at the consumer level.
   //   A fixed POA is used for servant activation.
   //   This object creates a single instance of the Supplier
   //
@@ -54,10 +55,10 @@ class TAO_EC_Null_Factory : public TAO_EC_Factory
   //   this class.
   //
 public:
-  TAO_EC_Null_Factory (PortableServer::POA_ptr poa);
+  TAO_EC_Basic_Factory (PortableServer::POA_ptr poa);
   // Constructor
 
-  virtual ~TAO_EC_Null_Factory (void);
+  virtual ~TAO_EC_Basic_Factory (void);
   // destructor...
 
   // = The EC_Factory methods
@@ -103,7 +104,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "EC_Null_Factory.i"
+#include "EC_Basic_Factory.i"
 #endif /* __ACE_INLINE__ */
 
-#endif /* TAO_EC_NULL_FACTORY_H */
+#endif /* TAO_EC_BASIC_FACTORY_H */

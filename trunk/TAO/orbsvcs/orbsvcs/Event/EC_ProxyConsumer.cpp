@@ -102,5 +102,8 @@ TAO_EC_ProxyPushConsumer::disconnect_push_consumer (
   poa->deactivate_object (id.in (), ACE_TRY_ENV);
   ACE_CHECK;
 
+  this->supplier_filtering_->unbind (this);
+  this->supplier_filtering_ = 0;
+
   this->event_channel_->destroy_proxy_push_consumer (this);
 }

@@ -51,7 +51,7 @@ class TAO_EC_ProxyPushSupplier : public POA_RtecEventChannelAdmin::ProxyPushSupp
   //   used to communicate with a particular consumer.
   //
   // = MEMORY MANAGMENT
-  //   This object is reference counted.
+  //   This object will be reference counted.
   //   It does not assume ownership of the TAO_EC_Dispatching object.
   //   It makes a copy of the ConsumerQOS and the consumer object
   //   reference.
