@@ -1,3 +1,11 @@
+Wed Nov 15 03:57:26 2000  Ossama Othman  <ossama@uci.edu>
+
+	* tao/Profile.cpp (add_tagged_component):
+
+	  Removed throw spec so that the method signature matches the
+	  declaration in Profile.h.
+	  Reported by Johnny Willemsen <Johnny.Willemsen@meco.nl>
+
 Wed Nov 15 03:51:53 2000  Ossama Othman  <ossama@uci.edu>
 
 	* tao/IORInfo.cpp (add_ior_component_to_profile):
