@@ -113,7 +113,7 @@ public:
                        = METRICS_DEFAULT_TIMEPROBE_TABLE_SIZE,
                      u_long number_of_probes
                        = METRICS_DEFAULT_TIMEPROBE_COUNT,
-                     ALLOCATOR * allocatorPtr = 0);
+                     ALLOCATOR * allocatorPtr = (ALLOCATOR*)ALLOCATOR::instance());
   // Default constructor.
 
   ~ACE_Metrics_Cache ();
