@@ -1,8 +1,8 @@
 #
-# Makefile for building the Time example
-# 
+# Makefile for building the PluggableUDP tests example
+#
 
-MAKEFILES = Time_Client.bor Time_Server.bor
+MAKEFILES = client.bor server.bor
 
 !include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
 
