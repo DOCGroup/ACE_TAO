@@ -8,12 +8,13 @@ OBJFILES = \
 	$(OBJDIR)\Active_Object_Map.obj \
 	$(OBJDIR)\Collocated_Object.obj \
 	$(OBJDIR)\Default_Acceptor_Filter.obj \
+	$(OBJDIR)\Direct_Object_Proxy_Impl \
 	$(OBJDIR)\DomainS.obj \
 	$(OBJDIR)\Forwarding_Servant.obj \
 	$(OBJDIR)\ImplRepoC.obj \
 	$(OBJDIR)\ImplRepoS.obj \
 	$(OBJDIR)\Key_Adapters.obj \
-	$(OBJDIR)\MessagingS.obj \
+ 	$(OBJDIR)\MessagingS.obj \
 	$(OBJDIR)\Object_Adapter.obj \
 	$(OBJDIR)\Operation_Table.obj \
 	$(OBJDIR)\ORB_Manager.obj \
@@ -22,13 +23,15 @@ OBJFILES = \
 	$(OBJDIR)\PolicyS.obj \
 	$(OBJDIR)\PortableServer.obj \
 	$(OBJDIR)\PortableServerC.obj \
-	$(OBJDIR)\Servant_Base.obj
+	$(OBJDIR)\Servant_Base.obj \
+	$(OBJDIR)\Strategized_Object_Proxy_Broker.obj \
+	$(OBJDIR)\ThruPOA_Object_Proxy_Impl
 
 !ifdef STATIC
 CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) $(TAO_PORTABLESERVER_CFLAGS)
 !else
 CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) $(TAO_PORTABLESERVER_CFLAGS) \
-	-DTAO_PORTABLESERVER_BUILD_DLL 
+	-DTAO_PORTABLESERVER_BUILD_DLL
 !endif
 
 CPPDIR = .
