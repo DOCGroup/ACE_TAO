@@ -1,0 +1,61 @@
+
+
+INTRODUCTION
+
+This directory contains the C++ wrapper facade for using 
+group scheduling library developed by University of 
+Kansas as well as a simple example to demonstrate how
+to use the wrapper facade. 
+
+For more information about group scheduling, please see the 
+following references.
+
+Michael Frisbie, Douglas Niehaus, Venkita Subramonian and Christopher 
+Gill, Group Scheduling in Systems Software 
+<http://csdl.computer.org/comp/proceedings/ipdps/2004/2132/03/213230120aabs.htm>, 
+Workshop on Parallel and Distributed Real-Time Systems 2004 (WPDRTS04), 
+April 26th and 27th, 2004, Santa Fe, New Mexico.
+
+Tejasvi Aswathanarayana, Venkita Subramonian, Douglas Niehaus, 
+Christopher Gill, Design and Performance of Configurable Endsystem 
+Scheduling Mechanisms, 
+<http://www.cse.seas.wustl.edu/techreportfiles/getreport.asp?395>  IEEE 
+RTAS 2005.
+
+
+Notice : The group scheduling library only works on 
+         LINUX. 
+
+SETUP
+
+1. In current stage, KUSP is required to compile the programs
+   in this directory. You can obtain KUSP from
+   http://kusp.ittc.ku.edu/archive/kusp.tar.gz.
+
+2. Uncompress the file downloaded.
+   tar zxvf kusp.tar.gz
+ 
+3. Follow the instruction in the README file from KUSP package 
+   to install the LINUX kernel.
+   
+4. Set the environment variable KUSP to the directory that 
+   contains the KUSP tree. 
+   e.g.   export KUSP=~/kusp
+   
+5. cd $KUSP/src/group_scheduling; make
+
+6. Generate Makefiles using MPC and make the targets.
+   cd $ACE_ROOT/examples/Group_Schedule
+   $ACE_ROOT/bin/mwc.pl 
+   make
+   
+How TO RUN THE SIMPLE EXAMPLE
+
+1. Start the group scheduling server
+   $KUSP/src/group_scheduling/libgroupsched/middleware/group_server
+   
+2. Run the senarioa program
+   $ACE_ROOT/examples/Group_Schedule/simple/scenarioa
+   
+
+ 

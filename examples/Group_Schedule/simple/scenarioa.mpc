@@ -1,0 +1,21 @@
+project(Scenarioa) {
+  exename  = scenarioa
+  includes += $(KUSP)/src/datastreams/dsui/libdsui $(KUSP)/src/datastreams/shared/include $(KUSP)/src/group_scheduling/libgroupsched/middleware ../lib
+  libpaths += $(KUSP)/src/group_scheduling/libgroupsched/middleware/libs ../lib
+  lit_libs += groupschedmiddlewareclient dsui
+  libs     += GrpSchedWrapper
+  macros   += CONFIG_DSUI
+
+  Define_Custom(DSUI) {
+    automatic        = 0
+    command          = $(KUSP)/src/datastreams/dsui/utils/dsui-parse.py
+    commandflags     = -z $(KUSP)/src/datastreams/shared/utils/dstream_admin.ns  -t scenarioa -n
+    inputext         = .ns
+    pre_extension    = _dsui_table , _dsui_families , _dsui_vars
+    header_outputext = .h
+  }
+
+  DSUI_Files {
+    scenarioa.ns
+  }
+}
