@@ -1,3 +1,14 @@
+Sun Mar 26 20:20:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_interface/smart_proxy_ch.cpp:
+	* TAO_IDL/be/be_visitor_interface/smart_proxy_cs.cpp:
+	  Generated an implementation for <_stubobj> method in 
+	  the Smart_Proxy_Base class which delegated this call 
+	  to the underlying <base_proxy_> member. This allows
+	  <_narrow> on a smart proxy object to succeed. Thanks 
+	  to Brian Wallis <brian.wallis@ot.com.au> for reporting
+	  this bug.
+	  
 Sun Mar 26 14:57:38 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/fe/idl.ll:
@@ -48,6 +59,10 @@ Sat Mar 25 22:10:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 	  <protocol_proxy_> member for a smart proxy is nil and it was
 	  used to increment its reference count. Thanks to Brian Wallis
 	  <brian.wallis@ot.com.au> for reporting this bug.
+	  
+	  This did not solve the bug, more changes had to be made. Please
+	  see ChangeLogTag:Sun Mar 26 20:20:00 2000  Kirthika Parameswaran
+	  <kirthika@cs.wustl.edu>
 			
 Sat Mar 25 15:24:06 2000  Carlos O'Ryan  <coryan@uci.edu>
 
