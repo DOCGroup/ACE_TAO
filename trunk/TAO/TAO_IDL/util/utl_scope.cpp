@@ -417,14 +417,24 @@ UTL_Scope::redef_clash (AST_Decl::NodeType new_nt,
       return scope_elem_nt != AST_Decl::NT_union_fwd;
     case AST_Decl::NT_interface:
       return scope_elem_nt != AST_Decl::NT_interface_fwd;
+    case AST_Decl::NT_component:
+      return scope_elem_nt != AST_Decl::NT_component_fwd;
     case AST_Decl::NT_interface_fwd:
       return (scope_elem_nt != AST_Decl::NT_interface_fwd
               && scope_elem_nt != AST_Decl::NT_interface);
+    case AST_Decl::NT_component_fwd:
+      return (scope_elem_nt != AST_Decl::NT_component_fwd
+              && scope_elem_nt != AST_Decl::NT_component);
     case AST_Decl::NT_valuetype:
       return scope_elem_nt != AST_Decl::NT_valuetype_fwd;
+    case AST_Decl::NT_eventtype:
+      return scope_elem_nt != AST_Decl::NT_eventtype_fwd;
     case AST_Decl::NT_valuetype_fwd:
       return (scope_elem_nt != AST_Decl::NT_valuetype_fwd
               && scope_elem_nt != AST_Decl::NT_valuetype);
+    case AST_Decl::NT_eventtype_fwd:
+      return (scope_elem_nt != AST_Decl::NT_eventtype_fwd
+              && scope_elem_nt != AST_Decl::NT_eventtype);
     default:
       return I_TRUE;
   }
@@ -1817,13 +1827,15 @@ UTL_Scope::add_to_referenced (AST_Decl *e,
     {
       return;
     }
+    
+  AST_Decl::NodeType nt = e->node_type ();
 
   // Special case for forward declared interfaces in the
   // scope in which they're defined. Cannot add before full
   // definition is seen.
-  if (e->node_type () == AST_Decl::NT_interface)
+  if (nt == AST_Decl::NT_interface || nt == AST_Decl::NT_component)
     {
-      itf = AST_Interface::narrow_from_decl(e);
+      itf = AST_Interface::narrow_from_decl (e);
 
       if (itf != 0
           && itf->defined_in () == this

@@ -1,3 +1,34 @@
+Fri Mar 26 16:45:50 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/util/utl_scope.cpp (redef_clash):
+        
+          This method bypasses the redefinition error for interfaces
+          and valuetypes that are forward declared and then defined
+          in the same opening of a module, or at global scope. Added
+          missing cases for components and eventtypes.
+        
+        * TAO_IDL/be/be_visitor_component/component_ci.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/marshal_cs.cpp:
+        
+          Cosmetic changes to indentation of generated code.
+        
+        * TAO_IDL/be/be_visitor_field/cdr_op_ci.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/field_cdr_ci.cpp:
+        * TAO_IDL/be_include/be_visitor_field/cdr_op_ci.h:
+        * TAO_IDL/be_include/be_visitor_valuetype/field_cdr_ci.h:
+        
+          Added missing methods to marshal and unmarshal component and
+          eventtype members of structs, unions, exceptions and valuetypes.
+
+        * TAO_IDL/be/be_visitor_valuetype.cpp:
+          
+          Added include files for component, component_fwd, eventtype and
+          eventtype_fwd node classes.
+          
+        Thanks to Jingbin An <anjb@sina.com> for reporting the code
+        generation and compile errors that uncovered the above bugs, and
+        for sending in an example IDL file.
+          
 Fri Mar 26 14:32:35 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/IORInterceptor_Adapter.h (destroy_interceptor):

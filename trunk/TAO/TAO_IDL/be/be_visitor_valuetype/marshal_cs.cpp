@@ -90,21 +90,14 @@ be_visitor_valuetype_marshal_cs::visit_valuetype (be_valuetype *node)
   be_visitor_valuetype_field_cdr_decl field_out_cdr (&new_ctx);
   field_out_cdr.visit_scope (node);
 
-  *os << "if (" << be_idt_nl;
+  *os << "return (" << be_idt << be_idt_nl;
 
   // All we have to do is to visit the scope and generate code.
   this->gen_fields (node, 
                     *this->ctx_);
 
   *os << be_uidt_nl 
-      << " )" << be_idt_nl
-      << "{" << be_idt_nl
-      << "return 1;" << be_uidt_nl
-      << "}" << be_uidt_nl
-      << "else" << be_idt_nl
-      << "{" << be_idt_nl
-      << "return 0;" << be_uidt_nl 
-      << "}" << be_uidt << be_uidt_nl
+      << ");" << be_uidt << be_uidt_nl 
       << "}" << be_nl << be_nl;
 
   // Set the substate as generating code for the input operator.
@@ -153,21 +146,14 @@ be_visitor_valuetype_marshal_cs::visit_valuetype (be_valuetype *node)
   be_visitor_valuetype_field_cdr_decl field_in_cdr (&new_ctx);
   field_in_cdr.visit_scope (node);
 
-  *os << "if (" << be_idt_nl;
+  *os << "return (" << be_idt_nl;
 
   // All we have to do is to visit the scope and generate code.
   this->gen_fields (node, 
                     *this->ctx_);
 
   *os << be_uidt_nl 
-      << " )" << be_idt_nl
-      << "{" << be_idt_nl
-      << "return 1;" << be_uidt_nl
-      << "}" << be_uidt_nl
-      << "else" << be_idt_nl
-      << "{" << be_idt_nl
-      << "return 0;" << be_uidt_nl
-      << "}" << be_uidt << be_uidt_nl
+      << ");" << be_uidt << be_uidt_nl 
       << "}";
 
   return 0;

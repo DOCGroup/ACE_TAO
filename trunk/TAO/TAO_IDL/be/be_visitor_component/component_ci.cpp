@@ -60,11 +60,9 @@ be_visitor_component_ci::visit_component (be_component *node)
       << be_idt << be_idt_nl
       << "IOP::IOR *ior," << be_nl
       << "TAO_ORB_Core *oc" << be_uidt_nl
-      << ")"
-      << be_nl;
-  *os << ": ACE_NESTED_CLASS (CORBA, Object) (ior, oc)";
-
-  *os << be_nl << "{" << be_idt_nl
+      << ")" << be_uidt_nl
+      << ": ACE_NESTED_CLASS (CORBA, Object) (ior, oc)" << be_uidt_nl
+      << "{" << be_nl
       << "}" ;
 
   os->gen_endif ();
