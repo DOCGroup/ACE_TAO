@@ -48,9 +48,13 @@ HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/VERSION">current release
     <H3><A NAME="idl"></A>IDL Compiler</H3>
     Point of contact: <A HREF="mailto:gokhale@cs.wustl.edu">Aniruddha Gokhale</A>
 
-    <P> Current status: (As of Dec 10th, 1997.)
+    <P> Current status: (As of Dec 11th, 1997.)
     <UL>
-      <LI> Latest success story: Sequences as out parameters have been
+      <LI> Support for handling exceptions added. TAO does not use
+          direct C++ exceptions. Instead it uses the
+          CORBA::Environment based approach. </LI>
+
+      <LI> Sequences as out parameters have been
           tested in the IDL_Cubit example. A test suite is currently
           being built to test all the parameter passing modes on a
           variety of IDL data types. </LI>
@@ -106,11 +110,6 @@ HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/VERSION">current release
   <UL>
 	<LI> Some of the known bugs/incomplete tasks are:
             <UL>
-              <LI>
-                  Exceptions are not well-supported. TAO does not use
-                  C++ Exceptions. Instead we use the alternative
-                  mapping that uses CORBA::Environment. </LI>
-
               <LI>
                   Sequences of strings and object references still
                   pose problems </LI>

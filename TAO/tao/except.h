@@ -30,7 +30,7 @@ class TAO_Export CORBA_Exception : public TAO_IUnknown
   //   Repositories.  Think of it as a "globally scoped" name
   //   distinguishing each exception.
 {
-public:
+ public:
   CORBA_Exception (const CORBA_Exception &src);
   CORBA_Exception &operator = (const CORBA_Exception &src);
 
@@ -55,10 +55,11 @@ public:
   CORBA_Exception (CORBA::TypeCode_ptr type);
   virtual ~CORBA_Exception (void);
 
-private:
-  CORBA::TypeCode_ptr _type;
+ protected:
+  CORBA::TypeCode_ptr type_;
   // Type of the Exception.
 
+ private:
   u_int refcount_;
   // Reference count to avoid copying overhead.
 

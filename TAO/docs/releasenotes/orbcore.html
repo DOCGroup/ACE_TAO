@@ -34,7 +34,7 @@
     <dl>
       <dt><em>No <b>LOCATION_FORWARD</b> support.</em></dt>
 
-      <dd>The <b>LOCATION_FORWARD</b> capabilities as described in the
+      <dd><p>The <b>LOCATION_FORWARD</b> capabilities as described in the
       CORBA 2.0 Specification are currently not supported.  They will
       be supported in a future release of TAO.</dd>
       
@@ -57,6 +57,28 @@
       manually specify that dynamically-created objects bind to a
       specific interface so that their IIOP Profile has the desired
       hostname.  A more desirable fix is being investigated.</dd>
+
+      <dt><em>ORB-per-thread and thread-per-connection models cannot
+      be mixed.</em></dt>
+
+      <dd>
+	<p>
+	  These two concurrency models do not currently mix because
+	  there is no way for the connection-handling threads to gain
+	  access to the resources held by the ORB in thread-specific
+	  storage (TSS).  In order to do this, the Resource Manager
+	  will have to implement some sort of inheritance of
+	  resources.
+	<p>
+	  There are other problems which will need to be solved as
+	  well for this to work properly.  For example, similar to the
+	  problems encountered with
+	  <code>ACE_Reactive_Strategy</code>, we will likely also
+	  encounter problems with the single
+	  <code>ACE_Threaded_Strategy</code>.  Various solutions are
+	  possible, some more generalizable into ACE, other (like the
+	  solution taken with the reactive strategy) localized to TAO.
+      </dd>
     </dl>
 
     Recently Completed Work:

@@ -202,7 +202,7 @@ public:
 
   IIOP_Object (char *repository_id,
                const ACE_INET_Addr &addr, 
-               const char *objkey = "0"); // @@ (IRFAN) We may need to remove this def arg
+               const char *objkey /*= "0"*/); // @@ (IRFAN) We may need to remove this def arg
   // Constructor used typically by the server side.
 
   // = COM stuff
