@@ -615,8 +615,8 @@ CORBA_ORB::resolve_trading_service (ACE_Time_Value *timeout)
 
 char *
 CORBA_ORB::multicast_query (TAO_Service_ID service_id,
-                                     u_short port,
-                                     ACE_Time_Value *timeout)
+                            u_short port,
+                            ACE_Time_Value *timeout)
 {
     // This is the code that implements the multicast
   // Naming Service locator.
@@ -652,6 +652,15 @@ CORBA_ORB::multicast_query (TAO_Service_ID service_id,
                       "IIOP get_local_addr failed.\n"), 0);
   }
     
+  // @@ Vishal, please update this code and the server-side code in
+  // $TAO_ROOT/orbsvcs/Naming_Service/ so that it (1) sends a string
+  // rather than a u_short (the string should contain the name passed
+  // in by the user to resolve_initial_references()) and (2) the
+  // client doesn't explicitly send the port number, but instead the
+  // Naming_Service implementation will use the ACE_SOCK_Dgram::recv() 
+  // method that returns the port number of the client, so we can use
+  // that to reply.
+
   struct
   {
     u_short reply_port;
