@@ -1,5 +1,4 @@
-/* -*- C++ -*- */
-// $Id: Asynch_Acceptor.h,v
+// $Id$
 
 // ============================================================================
 //
@@ -53,7 +52,8 @@ public:
                     int reuse_addr = 1,
                     ACE_Proactor *proactor = 0,
                     int validate_new_connection = 0,
-                    int reissue_accept = 1);
+                    int reissue_accept = 1,
+                    int number_of_initial_accepts = -1);
   // This starts the listening process at the port specified by
   // <address>.  ACE_Asynch_Acceptor initiates the AcceptEx calls with
   // <bytes_to_read>.  The buffer for the initial data will be created
@@ -65,6 +65,20 @@ public:
   // <ACE_Service_Handler::addresses> before calling
   // <ACE_Service_Handler::open>.  The <backlog> parameter specifies
   // the listen backlog and the outstanding AcceptEx calls.
+  // <number_of_initial_accepts> is the number of asynchronous accepts
+  // that are started at the end of <open>.  If
+  // <number_of_initial_accepts> is -1, then
+  // <number_of_initial_accepts> is set to <backlog> and hence
+  // <backlog> number of asynchronous accepts are started.
+
+  virtual ACE_HANDLE get_handle (void) const;
+  // Get the underlying handle. 
+
+  virtual void set_handle (ACE_HANDLE handle);
+  // Set the underlying listen handle. It is the user's responsibility
+  // to make sure that the old listen handle has been appropriately
+  // closed and the all outstanding asynchronous operations have
+  // either completed or have been canceled on the old listen handle.
 
   virtual int accept (size_t bytes_to_read = 0);
   // This initiates a new asynchronous accept through the <AcceptEx>

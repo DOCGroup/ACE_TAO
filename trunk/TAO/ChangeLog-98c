@@ -1,3 +1,10 @@
+Wed Jul 29 13:55:20 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/Connect.cpp: Fixed indentation.
+
+	* tao/TAO_Internal.cpp (close_services): service_open_count_
+ 	  should be reduced by one.
+
 Wed Jul 29 12:32:48 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tests/Param_Test/run_test.pl: 

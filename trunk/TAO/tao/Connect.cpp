@@ -251,11 +251,11 @@ TAO_Server_Connection_Handler::handle_locate (TAO_InputCDR &input,
 
   env.clear ();
   if (! locateRequestHeader.init (input, env))
-  {
-    request_id = locateRequestHeader.request_id;
-    response_required = 0;
-    return -1;
-  }
+    {
+      request_id = locateRequestHeader.request_id;
+      response_required = 0;
+      return -1;
+    }
 
   // Copy the request ID to be able to respond in case of an exception
   request_id = locateRequestHeader.request_id;
@@ -288,61 +288,61 @@ TAO_Server_Connection_Handler::handle_locate (TAO_InputCDR &input,
   TAO_GIOP_LocateStatusType status;
 
   if (serverRequest.exception_type () == TAO_GIOP_NO_EXCEPTION
-     && env.exception () == 0)
-  {
-    // we got no exception, so the object is here
-    status = TAO_GIOP_OBJECT_HERE;
-    ACE_DEBUG ((LM_DEBUG, "handle_locate has been called: found\n"));
-  }
+      && env.exception () == 0)
+    {
+      // we got no exception, so the object is here
+      status = TAO_GIOP_OBJECT_HERE;
+      ACE_DEBUG ((LM_DEBUG, "handle_locate has been called: found\n"));
+    }
   else if (serverRequest.exception_type () != TAO_GIOP_NO_EXCEPTION)
-  {
-    forward_location_var = serverRequest.forward_location ();
-    if (!CORBA::is_nil (forward_location_var.in ()))
     {
-      status = TAO_GIOP_OBJECT_FORWARD;
-      ACE_DEBUG ((LM_DEBUG, "handle_locate has been called: forwarding\n"));
-    }
-    else
-    {
-      // Normal exception, so the object is not here
-      status = TAO_GIOP_UNKNOWN_OBJECT;
-      ACE_DEBUG ((LM_DEBUG, "handle_locate has been called: not here\n"));
-    }
+      forward_location_var = serverRequest.forward_location ();
+      if (!CORBA::is_nil (forward_location_var.in ()))
+        {
+          status = TAO_GIOP_OBJECT_FORWARD;
+          ACE_DEBUG ((LM_DEBUG, "handle_locate has been called: forwarding\n"));
+        }
+      else
+        {
+          // Normal exception, so the object is not here
+          status = TAO_GIOP_UNKNOWN_OBJECT;
+          ACE_DEBUG ((LM_DEBUG, "handle_locate has been called: not here\n"));
+        }
 
-    // the locate_servant call might have thrown an exception
-    // but we don't want to marshal it because it is no failure.
-    // The proper Locacte_Reply will tell the client what is going on.
+      // the locate_servant call might have thrown an exception
+      // but we don't want to marshal it because it is no failure.
+      // The proper Locacte_Reply will tell the client what is going on.
 
-    // Remove the exception
-    env.clear ();
-  }
+      // Remove the exception
+      env.clear ();
+    }
   else
-  {
-     // Try to narrow to ForwardRequest
-    PortableServer::ForwardRequest_ptr forward_request_ptr =
+    {
+      // Try to narrow to ForwardRequest
+      PortableServer::ForwardRequest_ptr forward_request_ptr =
         PortableServer::ForwardRequest::_narrow (env.exception ());
 
-    // If narrowing of exception succeeded
-    if (forward_request_ptr != 0)
-    {
-      status = TAO_GIOP_OBJECT_FORWARD;
-      forward_location_var = forward_request_ptr->forward_reference;
-      ACE_DEBUG ((LM_DEBUG, "handle_locate has been called: forwarding\n"));
-    }
-    else
-    {
-      // Normal exception, so the object is not here
-      status = TAO_GIOP_UNKNOWN_OBJECT;
-      ACE_DEBUG ((LM_DEBUG, "handle_locate has been called: not here\n"));
-    }
+      // If narrowing of exception succeeded
+      if (forward_request_ptr != 0)
+        {
+          status = TAO_GIOP_OBJECT_FORWARD;
+          forward_location_var = forward_request_ptr->forward_reference;
+          ACE_DEBUG ((LM_DEBUG, "handle_locate has been called: forwarding\n"));
+        }
+      else
+        {
+          // Normal exception, so the object is not here
+          status = TAO_GIOP_UNKNOWN_OBJECT;
+          ACE_DEBUG ((LM_DEBUG, "handle_locate has been called: not here\n"));
+        }
 
-    // the locate_servant call might have thrown an exception
-    // but we don't want to marshal it because it is no failure.
-    // The proper Locacte_Reply will tell the client what is going on.
+      // the locate_servant call might have thrown an exception
+      // but we don't want to marshal it because it is no failure.
+      // The proper Locacte_Reply will tell the client what is going on.
 
     // Remove the exception
-    env.clear ();
-  }
+      env.clear ();
+    }
   
   
   // Create the response.
@@ -351,23 +351,23 @@ TAO_Server_Connection_Handler::handle_locate (TAO_InputCDR &input,
   output.write_ulong (status);
 
   if (status == TAO_GIOP_OBJECT_FORWARD)
-  {
-    CORBA::Object_ptr object_ptr = forward_location_var.in ();
-    output.encode (CORBA::_tc_Object,
-                    &object_ptr,
-                    0,
-                    env);
-
-    // If encoding went fine
-    if (env.exception () != 0)
     {
-      dexc (env, 
-            "TAO_Server_Connection_Handler::handle_locate:"
-            "forwarding parameter encode failed");
-      response_required = 0;
-      return -1;
+      CORBA::Object_ptr object_ptr = forward_location_var.in ();
+      output.encode (CORBA::_tc_Object,
+                     &object_ptr,
+                     0,
+                     env);
+
+      // If encoding went fine
+      if (env.exception () != 0)
+        {
+          dexc (env, 
+                "TAO_Server_Connection_Handler::handle_locate:"
+                "forwarding parameter encode failed");
+          response_required = 0;
+          return -1;
+        }
     }
-  }
 
   return 0;
 }
@@ -390,77 +390,77 @@ TAO_Server_Connection_Handler::send_error (CORBA::ULong request_id,
 
   // The request_id is going to be not 0, if it was sucessfully read
   if (request_id != 0)
-  {
-    // Create a new output CDR stream
-    TAO_OutputCDR output;
-
-    // Construct a REPLY header.
-    TAO_GIOP::start_message (TAO_GIOP::Reply, output);
-
-    // A new envrionment, if something goes wrong now -> no hope!
-    CORBA::Environment env2;
-
-    // create and write a dummy context
-    TAO_GIOP_ServiceContextList resp_ctx;
-    resp_ctx.length (0);
-    output.encode (TC_ServiceContextList,
-                   &resp_ctx,
-                   0,
-                   env2);
-
-    if (env2.exception() == 0)
     {
-      // Write the request ID
-      output.write_ulong (request_id);
+      // Create a new output CDR stream
+      TAO_OutputCDR output;
 
-      // Write the exception
-      CORBA::Exception *x = env.exception ();
-      CORBA::TypeCode_ptr except_tc = x->_type ();
+      // Construct a REPLY header.
+      TAO_GIOP::start_message (TAO_GIOP::Reply, output);
 
-      // Now we check for Forwarding ***************************
+      // A new envrionment, if something goes wrong now -> no hope!
+      CORBA::Environment env2;
 
-      // Try to narrow to ForwardRequest
-      PortableServer::ForwardRequest_ptr forward_request_ptr =
-        PortableServer::ForwardRequest::_narrow (env.exception());
+      // create and write a dummy context
+      TAO_GIOP_ServiceContextList resp_ctx;
+      resp_ctx.length (0);
+      output.encode (TC_ServiceContextList,
+                     &resp_ctx,
+                     0,
+                     env2);
 
-      // If narrowing of exception succeeded
-      if (forward_request_ptr != 0 &&
-          !CORBA::is_nil (forward_request_ptr->forward_reference.in ()))
-      {
-        // write the reply_status
-        output.write_ulong (TAO_GIOP_LOCATION_FORWARD);
-
-        // write the object reference into the stream
-        CORBA::Object_ptr object_ptr = forward_request_ptr->forward_reference.in();
-
-        output.encode (CORBA::_tc_Object,
-                       &object_ptr,
-                       0,
-                       env2);
-      }
-      // end of the forwarding code ****************************
-      else
-      {
-        // write the reply_status
-        output.write_ulong (TAO_GIOP::convert_CORBA_to_GIOP_exception (env.exception_type ()));
-
-        // write the actual exception
-        output.encode (except_tc, x, 0, env2);
-      }
-
-      // exception handling for both alternatives
       if (env2.exception() == 0)
-      {
-        // hand it to the next lower layer
-        TAO_SVC_HANDLER *this_ptr = this;
-        TAO_GIOP::send_request (this_ptr, output);
-        // now we have done all what was possible,
-        // send_request might have had an error
-        // and closed the connection, but we are done.
-        return;
-      }
+        {
+          // Write the request ID
+          output.write_ulong (request_id);
+
+          // Write the exception
+          CORBA::Exception *x = env.exception ();
+          CORBA::TypeCode_ptr except_tc = x->_type ();
+
+          // Now we check for Forwarding ***************************
+
+          // Try to narrow to ForwardRequest
+          PortableServer::ForwardRequest_ptr forward_request_ptr =
+            PortableServer::ForwardRequest::_narrow (env.exception());
+
+          // If narrowing of exception succeeded
+          if (forward_request_ptr != 0 &&
+              !CORBA::is_nil (forward_request_ptr->forward_reference.in ()))
+            {
+              // write the reply_status
+              output.write_ulong (TAO_GIOP_LOCATION_FORWARD);
+
+              // write the object reference into the stream
+              CORBA::Object_ptr object_ptr = forward_request_ptr->forward_reference.in();
+
+              output.encode (CORBA::_tc_Object,
+                             &object_ptr,
+                             0,
+                             env2);
+            }
+          // end of the forwarding code ****************************
+          else
+            {
+              // write the reply_status
+              output.write_ulong (TAO_GIOP::convert_CORBA_to_GIOP_exception (env.exception_type ()));
+
+              // write the actual exception
+              output.encode (except_tc, x, 0, env2);
+            }
+
+          // exception handling for both alternatives
+          if (env2.exception() == 0)
+            {
+              // hand it to the next lower layer
+              TAO_SVC_HANDLER *this_ptr = this;
+              TAO_GIOP::send_request (this_ptr, output);
+              // now we have done all what was possible,
+              // send_request might have had an error
+              // and closed the connection, but we are done.
+              return;
+            }
+        }
     }
-  }
   // now we know, that while handling the error an other
   // error happened -> no hope, close connection.
 
@@ -556,15 +556,15 @@ TAO_Server_Connection_Handler::handle_input (ACE_HANDLE)
     // Something happened and we know why
     this->send_error (request_id, env);
   else if (error_encountered)
-  {
-    // Now we are completely lost
-    ACE_ERROR ((LM_ERROR,
-                "(%P|%t) closing conn %d after fault %p\n",
-                this->peer().get_handle (),
-                "TAO_Server_ConnectionHandler::handle_input"));
-    this->close ();
-    result = -1;
-  }
+    {
+      // Now we are completely lost
+      ACE_ERROR ((LM_ERROR,
+                  "(%P|%t) closing conn %d after fault %p\n",
+                  this->peer().get_handle (),
+                  "TAO_Server_ConnectionHandler::handle_input"));
+      this->close ();
+      result = -1;
+    }
   // else there was no repsonse expected and no error happened
 
   return result;
@@ -662,12 +662,12 @@ TAO_Client_Connection_Handler::send_request (TAO_OutputCDR &stream,
   // be dynamically linked in (wouldn't that be cool/freaky?)
 
   if (!is_twoway)
-  {
-    int success  = (int) TAO_GIOP::send_request (this, stream);
+    {
+      int success  = (int) TAO_GIOP::send_request (this, stream);
     
-    if (!success)
-      return -1;
-  }
+      if (!success)
+        return -1;
+    }
   else // is_twoway
     {
       TAO_ORB_Core *orb_Core_ptr = TAO_ORB_Core_instance ();
@@ -687,44 +687,44 @@ TAO_Client_Connection_Handler::send_request (TAO_OutputCDR &stream,
       int success  = (int) TAO_GIOP::send_request (this, stream);
       
       if (!success)
-      {
-        orb_Core_ptr->leader_follower_lock ().release ();
-        return -1;
-      }
+        {
+          orb_Core_ptr->leader_follower_lock ().release ();
+          return -1;
+        }
       
       // check if there is a leader, but the leader is not us
       if (orb_Core_ptr->leader_available ()
           && !orb_Core_ptr->I_am_the_leader_thread ())
         {
-	        // wait as long as no input is available and/or 
-	        // no leader is available
-	        while (!this->input_available_ 
-		             && orb_Core_ptr->leader_available ())
-	          {
-	             if (orb_Core_ptr->add_follower (this->cond_response_available_) == -1)
-		             ACE_ERROR ((LM_ERROR,
-			                       "(%P|%t) TAO_Client_Connection_Handler::send_request: "
-			                       "Failed to add a follower thread\n"));
-               this->cond_response_available_->wait ();  
-	          }
-	        // now somebody woke us up to become a leader or
-	        // to handle our input. We are already removed from the 
-	        // follower queue
+          // wait as long as no input is available and/or 
+          // no leader is available
+          while (!this->input_available_ 
+                 && orb_Core_ptr->leader_available ())
+            {
+              if (orb_Core_ptr->add_follower (this->cond_response_available_) == -1)
+                ACE_ERROR ((LM_ERROR,
+                            "(%P|%t) TAO_Client_Connection_Handler::send_request: "
+                            "Failed to add a follower thread\n"));
+              this->cond_response_available_->wait ();  
+            }
+          // now somebody woke us up to become a leader or
+          // to handle our input. We are already removed from the 
+          // follower queue
           if (this->input_available_)
-	          {
-	            // there is input waiting for me
-	            if (orb_Core_ptr->leader_follower_lock ().release () == -1)
-		            ACE_ERROR_RETURN ((LM_ERROR,
-				                           "(%P|%t) TAO_Client_Connection_Handler::send_request: "
-				                           "Failed to release the lock.\n"),
-				                          -1);
+            {
+              // there is input waiting for me
+              if (orb_Core_ptr->leader_follower_lock ().release () == -1)
+                ACE_ERROR_RETURN ((LM_ERROR,
+                                   "(%P|%t) TAO_Client_Connection_Handler::send_request: "
+                                   "Failed to release the lock.\n"),
+                                  -1);
 	      
-    	        // the following variables are safe, because we are not registered with 
-	            // the reactor any more.
-	            this->input_available_ = 0;
-	            this->expecting_response_ = 0;
-	            this->calling_thread_ = 0;
-	            return 0;
+              // the following variables are safe, because we are not registered with 
+              // the reactor any more.
+              this->input_available_ = 0;
+              this->expecting_response_ = 0;
+              this->calling_thread_ = 0;
+              return 0;
             }
         }
       
@@ -736,10 +736,10 @@ TAO_Client_Connection_Handler::send_request (TAO_OutputCDR &stream,
       // this might increase the recount of the leader
       
       if (orb_Core_ptr->leader_follower_lock ().release () == -1)
-	      ACE_ERROR_RETURN ((LM_ERROR,
-			                     "(%P|%t) TAO_Client_Connection_Handler::send_request: "
-			                     "Failed to release the lock.\n"),
-			                    -1);
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "(%P|%t) TAO_Client_Connection_Handler::send_request: "
+                           "Failed to release the lock.\n"),
+                          -1);
       
       ACE_Reactor *r = orb_Core_ptr->reactor ();
       r->owner (ACE_Thread::self ());
@@ -747,13 +747,13 @@ TAO_Client_Connection_Handler::send_request (TAO_OutputCDR &stream,
       int ret = 0;
       
       while (ret != -1 && !this->input_available_)
-	      ret = r->handle_events ();
+        ret = r->handle_events ();
       
       if (ret == -1)
-	      ACE_ERROR_RETURN ((LM_ERROR,
-			                     "(%P|%t) TAO_Client_Connection_Handler::send_request: "
-			                     "handle_events failed.\n"),
-			                    -1);
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "(%P|%t) TAO_Client_Connection_Handler::send_request: "
+                           "handle_events failed.\n"),
+                          -1);
       
       
       // wake up the next leader, we cannot do that in handle_input,
@@ -761,10 +761,10 @@ TAO_Client_Connection_Handler::send_request (TAO_OutputCDR &stream,
       // which is at the time in handle_input still occupied.
       
       if (orb_Core_ptr->unset_leader_wake_up_follower () == -1) 
-	      ACE_ERROR_RETURN ((LM_ERROR,
-			                     "(%P|%t) TAO_Client_Connection_Handler::send_request: "
-			                     "Failed to unset the leader and wake up a new follower.\n"),
-			                    -1);
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "(%P|%t) TAO_Client_Connection_Handler::send_request: "
+                           "Failed to unset the leader and wake up a new follower.\n"),
+                          -1);
       
       // Make use reusable
       this->input_available_ = 0;
@@ -792,10 +792,10 @@ TAO_Client_Connection_Handler::handle_input (ACE_HANDLE)
       // @@ wake up an other thread, we are lost
       
       if (orb_Core_ptr->leader_follower_lock ().release () == -1)
-	      ACE_ERROR_RETURN ((LM_ERROR,
-			                     "(%P|%t) TAO_Client_Connection_Handler::handle_input: "
-			                     "Failed to release the lock.\n"),
-			                    -1);
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "(%P|%t) TAO_Client_Connection_Handler::handle_input: "
+                           "Failed to release the lock.\n"),
+                          -1);
       
       // We're a client, so we're not expecting to see input.  Still
       // we better check what it is!
@@ -843,14 +843,14 @@ TAO_Client_Connection_Handler::handle_input (ACE_HANDLE)
       this->input_available_ = 1;
       
       if (orb_Core_ptr->leader_follower_lock ().release () == -1)
-	      ACE_ERROR_RETURN ((LM_ERROR,
+        ACE_ERROR_RETURN ((LM_ERROR,
                            "(%P|%t) TAO_Client_Connection_Handler::handle_input: "
                            "Failed to release the lock.\n"),
-		                      -1);
+                          -1);
       
       orb_Core_ptr->reactor ()->suspend_handler (this);
       // resume_handler is called in TAO_GIOP_Invocation::invoke
-             return 0;
+      return 0;
     }
   else 
     {
@@ -864,11 +864,11 @@ TAO_Client_Connection_Handler::handle_input (ACE_HANDLE)
       
       if (orb_Core_ptr->leader_follower_lock ().release () == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
-  	                       "(%P|%t) TAO_Client_Connection_Handler::handle_input: "
-		                       "Failed to release the lock.\n"),
-			                      -1);
+                           "(%P|%t) TAO_Client_Connection_Handler::handle_input: "
+                           "Failed to release the lock.\n"),
+                          -1);
       
-        orb_Core_ptr->reactor ()->suspend_handler (this);
+      orb_Core_ptr->reactor ()->suspend_handler (this);
       // We should wake suspend the thread before we wake him up.
       // resume_handler is called in TAO_GIOP_Invocation::invoke
       
@@ -877,20 +877,20 @@ TAO_Client_Connection_Handler::handle_input (ACE_HANDLE)
       // if a race condition would occur.
 
       if (orb_Core_ptr->leader_follower_lock ().acquire () == -1)
-	      ACE_ERROR_RETURN ((LM_ERROR,
-			                    "(%P|%t) TAO_Client_Connection_Handler::handle_input: "
-			                     "Failed to acquire the lock.\n"),
-			                    -1);
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "(%P|%t) TAO_Client_Connection_Handler::handle_input: "
+                           "Failed to acquire the lock.\n"),
+                          -1);
       // the thread was already selected to become a leader,
       // so we will be called again.
       this->input_available_ = 1;
       this->cond_response_available_->signal ();
       
       if (orb_Core_ptr->leader_follower_lock ().release () == -1)
-	      ACE_ERROR_RETURN ((LM_ERROR,
-			                     "(%P|%t) TAO_Client_Connection_Handler::handle_input: "
-			                     "Failed to release the lock.\n"),
-		    	                -1);     
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "(%P|%t) TAO_Client_Connection_Handler::handle_input: "
+                           "Failed to release the lock.\n"),
+                          -1);     
       return 0;
     }
 }
