@@ -4,6 +4,7 @@
 #include "EC_Timeout_Generator.h"
 #include "EC_Event_Channel.h"
 #include "orbsvcs/Time_Utilities.h"
+#include "orbsvcs/Event_Service_Constants.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "EC_Timeout_Filter.i"
@@ -40,7 +41,8 @@ TAO_EC_Timeout_Filter::TAO_EC_Timeout_Filter (
     {
       this->id_ =
         tg->schedule_timer (this,
-                            tv_delta);
+                            tv_delta,
+                            ACE_Time_Value::zero);
     }
 
   //  ACE_DEBUG ((LM_DEBUG,
