@@ -1,3 +1,11 @@
+Fri Jul 23 12:09:18 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/OS.i: Fixed some mismatched ifdef/endif comments.
+
+	* ace/ACE.cpp (execname): Fixed some misuses of ACE_HAS_WIN32
+	  macros where they should have been ACE_WIN32.  Thanks to Andy
+	  for noticing this.
+
 Fri Jul 23 11:28:17 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Memory_Pool.cpp (init_acquire): shmat() returns -1 on
