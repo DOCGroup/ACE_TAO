@@ -1,3 +1,10 @@
+Tue Jan 28 22:21:15 1997  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
+
+	* tests/test_config.h (ACE_INIT_LOG): Made this UNICODE safe.
+
+	* tests/Pipe_Test.cpp (main): Added an iteration count to control
+	  the number of children created by the main process.
+
 Tue Jan 28 21:57:45 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/OS.{h,cpp}:  added ACE_OS::set_sched_params ().  It permits

@@ -23,13 +23,14 @@
 
 static int close_pipe = 1;
 static int child_process = 0;
+static int iterations = ACE_MAX_ITERATIONS;
 
 // Explain usage and exit.
 static void 
 print_usage_and_die (void)
 {
   ACE_DEBUG ((LM_DEBUG, 
-	      "usage: %n [-d (don't close pipes)] [-c (child process)] \n"));
+	      "usage: %n [-d (don't close pipes)] [-c (child process)] [-i (iterations)] \n"));
   ACE_OS::exit (1);
 }
 
@@ -37,7 +38,7 @@ print_usage_and_die (void)
 static void
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, "dc");
+  ACE_Get_Opt get_opt (argc, argv, "dci:");
 
   int c; 
 
@@ -49,6 +50,9 @@ parse_args (int argc, char *argv[])
       break;
     case 'c':
       child_process = 1;
+      break;
+    case 'i':
+      iterations = atoi (get_opt.optarg);
       break;
     default:
       print_usage_and_die ();
@@ -100,7 +104,7 @@ main (int argc, char *argv[])
 	s_argv[2] = 0;
       s_argv[3] = 0;
       
-      for (int i = 0; i < ACE_MAX_ITERATIONS; i++)
+      for (int i = 0; i < ::iterations; i++)
 	{
 	  ACE_Process server;
 
