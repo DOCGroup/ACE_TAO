@@ -1,3 +1,11 @@
+Mon Apr 28 09:21:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-cygwin32-common.h:
+          Added ACE_HAS_STRPTIME because cygwin supports it.
+
+        * ace/config-doxygen.h:
+          Added ACE_HAS_STRPTIME to generate documentation.
+
 Sun Apr 27 14:39:00 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/MEM_IO.h:
