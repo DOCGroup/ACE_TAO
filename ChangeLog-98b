@@ -1,3 +1,8 @@
+Mon Oct 05 10:02:37 1998  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/config-chorus.h: added ACE_LACKS_TRUNCATE.  Thanks 
+          to Steve Kay <slk1@icore.ih.lucent.com> for reporting this.
+
 Sun Oct 05 03:49:09 PDT 1998  James Hu <jxh@entera.com>
 
         * ace/Asynch_Accept.*
