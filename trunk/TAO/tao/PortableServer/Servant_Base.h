@@ -92,7 +92,14 @@ protected:
   virtual void synchronous_upcall_dispatch (TAO_ServerRequest &req,
                                             void *servant_upcall,
                                             void *derived_this
+                                            // CORBA::Environment &ACE_TRY_ENV);
                                             TAO_ENV_ARG_DECL);
+  
+  virtual void asynchronous_upcall_dispatch (TAO_ServerRequest &req,
+                                             void *servant_upcall,
+                                             void *derived_this
+                                             TAO_ENV_ARG_DECL);
+                                             //CORBA::Environment &ACE_TRY_ENV);
 
   virtual int _find (const char *opname,
                      TAO_Skeleton &skelfunc,
