@@ -673,27 +673,8 @@ TAO_GIOP_Twoway_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
 
   // Get the reply status.
 
-  // @@ Alex: I botched last time, we also need to obtain the
-  //    ServiceContextList and other fields from the wait_for_reply()
-  //    call.
+  // Wait for the reply.
 
-  //    I am reading all reply context, reply status etc and putting
-  //    them in the Reply Dispatcher object, so that Invocation class
-  //    can read it later. (Alex).
-
-  // @@ Alex: How did we choose the wait_strategy?  The problem is to
-  //    do it in such a way that does *not* require a dynamic memory
-  //    allocation for the critical path [this *IS* the critical]
-  //    I would like to obtain the object from the stack, but I don't
-  //    know how.
-
-  //    Right now, I have hard coded this in the Consructor of the
-  //    Transport class. We can get this from the
-  //    Client_Strategy_Factory or something later. (Alex).
-
-  // Wait for the reply. We should wait till we receive the reply
-  // fully.
-  // @@ Check for return value -1 here !!! (Alex).
   int reply_error = this->transport_->wait_for_reply ();
 
   if (reply_error == -1)
@@ -803,9 +784,8 @@ TAO_GIOP_Locate_Request_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
   //    received? But what about oneways?
   this->stub_->set_valid_profile ();
 
-  // Wait for the reply. We should wait till we receive the reply
-  // fully.
-  // @@ Check for return value -1 here !!! (Alex).
+  // Wait for the reply.
+
   int reply_error = this->transport_->wait_for_reply ();
 
   if (reply_error == -1)
