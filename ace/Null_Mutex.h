@@ -116,7 +116,6 @@ private:
 template <class ACE_LOCK>
 class ACE_Guard;
 
-ACE_TEMPLATE_SPECIALIZATION
 /**
  * @class ACE_Guard<ACE_Null_Mutex>
  *
@@ -126,6 +125,7 @@ ACE_TEMPLATE_SPECIALIZATION
  * This specialization is useful since it helps to speedup
  * performance of the "Null_Mutex" considerably.
  */
+template<>
 class ACE_Guard<ACE_Null_Mutex>
 {
 public:
@@ -154,11 +154,11 @@ private:
 template <class ACE_LOCK>
 class ACE_Write_Guard;
 
-ACE_TEMPLATE_SPECIALIZATION
 /**
  * @class ACE_Write_Guard<ACE_Null_Mutex>
  *
  */
+template<>
 class ACE_Write_Guard<ACE_Null_Mutex> : public ACE_Guard<ACE_Null_Mutex>
 {
 public:
@@ -177,11 +177,11 @@ public:
 template <class ACE_LOCK>
 class ACE_Read_Guard;
 
-ACE_TEMPLATE_SPECIALIZATION
 /**
  * @class ACE_Read_Guard<ACE_Null_Mutex>
  *
  */
+template<>
 class ACE_Read_Guard<ACE_Null_Mutex> : public ACE_Guard<ACE_Null_Mutex>
 {
 public:
@@ -199,11 +199,11 @@ public:
 
 template <class T> class ACE_Malloc_Lock_Adapter_T;
 
-ACE_TEMPLATE_SPECIALIZATION
 /**
  * @class ACE_Malloc_Lock_Adapter_T<ACE_Null_Mutex>
  *
  */
+template<>
 class ACE_Malloc_Lock_Adapter_T<ACE_Null_Mutex>
 {
 public:

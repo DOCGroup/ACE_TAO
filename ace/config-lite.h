@@ -101,17 +101,8 @@
  *             deprecated.  Use standard C++ template specialization
  *             syntax instead.
  */
-# if defined (ACE_HAS_STD_TEMPLATE_SPECIALIZATION)
-#   define ACE_TEMPLATE_SPECIALIZATION template<>
-# else
-#   define ACE_TEMPLATE_SPECIALIZATION
-# endif /* ACE_HAS_STD_TEMPLATE_SPECIALIZATION */
-
-# if defined (ACE_HAS_STD_TEMPLATE_CLASS_MEMBER_SPECIALIZATION)
-#   define ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
-# else
-#   define ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION template<>
-# endif /* ACE_HAS_STD_TEMPLATE_CLASS_MEMBER_SPECIALIZATION */
+# define ACE_TEMPLATE_SPECIALIZATION template<>
+# define ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 #endif /* !ACE_LACKS_DEPRECATED_MACROS */
 
 // =========================================================================

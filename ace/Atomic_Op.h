@@ -44,7 +44,6 @@
 #endif /* ACE_HAS_THREADS */
 
 #if defined (ACE_HAS_BUILTIN_ATOMIC_OP)
-ACE_TEMPLATE_SPECIALIZATION
 /**
  * @class ACE_Atomic_Op<ACE_Thread_Mutex, long>
  *
@@ -54,6 +53,7 @@ ACE_TEMPLATE_SPECIALIZATION
  * Specialization of ACE_Atomic_Op for platforms that support atomic
  * integer operations.
  */
+template<>
 class ACE_Export ACE_Atomic_Op<ACE_Thread_Mutex, long>
 {
 public:
