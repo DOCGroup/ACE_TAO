@@ -28,8 +28,8 @@ Tue Mar 11 14:30:12 1997  David L. Levine  <levine@cs.wustl.edu>
 	  size_t to avoid signed/unsigned comparison.  Thanks to Matthias
 	  Kerkhoff <make@cs.tu-berlin.de> for pointing this out.
 
-	* ace/Timer_Heap.cpp (ctor, grow_heap): changed type of loop
-	  index from size_t to int to avoid signed/unsigned comparison.
+	* ace/Timer_Heap.cpp (ctor, grow_heap): cast unsigned value
+	  (i + 1) to int before negating to avoid compiler warning.
 	  Thanks to Matthias Kerkhoff <make@cs.tu-berlin.de> for pointing
 	  this out.
 
