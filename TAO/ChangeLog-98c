@@ -1,3 +1,11 @@
+Tue Dec 23 02:07:14 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* examples/POA/Explicit_Activation/Makefile:
+	* examples/POA/On_Demand_Activation/Makefile:
+	* examples/POA/On_Demand_Loading/Makefile:
+
+	  Removed dependency on libserver.a from all the above Makefiles.
+	 	
 Tue Dec 22 13:43:35 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_array/array_ch.cpp (visit_array): We
