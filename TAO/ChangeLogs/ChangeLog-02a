@@ -1,3 +1,24 @@
+Thu Dec  6 14:56:14 2001  Justin Michel  <michel_j@ociweb.com>
+
+        * TAO/tests/TAO_Tests.dsw
+        * TAO/tests/ORB_init/makefile.bor
+        * TAO/tests/ORB_init/Portspan/README
+        * TAO/tests/ORB_init/Portspan/run_test.pl
+        * TAO/tests/ior_corbaloc/IOR CorbaLoc Client.dsp
+        * TAO/tests/ior_corbaloc/IOR CorbaLoc Server.dsp
+        * TAO/tests/ior_corbaloc/IOR CorbaName Client.dsp
+        * TAO/tests/ior_corbaloc/ior_corbaloc_client.dsp
+        * TAO/tests/ior_corbaloc/ior_corbaloc_server.dsp
+        * TAO/tests/ior_corbaloc/ior_corbaname_client.dsp
+
+        Removed spaces from the filenames for the corbaloc tests.
+        Updated the readme file and fixed a few typos in the
+        portspan test.
+        Tried to update the borland project to recurse into the
+        portspan test directory. 
+        Note : The portspan test is not set up to run nightly, but
+        it will at least build. 
+
 Thu Dec  6 11:05:14 2001  Justin Michel  <michel_j@ociweb.com>
 
         * TAO/tests/TAO_Tests.dsw
