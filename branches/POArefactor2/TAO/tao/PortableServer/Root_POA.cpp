@@ -201,21 +201,20 @@ TAO_Root_POA::set_obj_ref_factory (
 }
 
 TAO_Root_POA::TAO_Root_POA (const TAO_Root_POA::String &name,
-                  TAO_POA_Manager &poa_manager,
-                  const TAO_POA_Policy_Set &policies,
-                  TAO_Root_POA *parent,
-                  ACE_Lock &lock,
-                  TAO_SYNCH_MUTEX &thread_lock,
-                  TAO_ORB_Core &orb_core,
-                  TAO_Object_Adapter *object_adapter
-                  ACE_ENV_ARG_DECL)
+                            TAO_POA_Manager &poa_manager,
+                            const TAO_POA_Policy_Set &policies,
+                            TAO_Root_POA *parent,
+                            ACE_Lock &lock,
+                            TAO_SYNCH_MUTEX &thread_lock,
+                            TAO_ORB_Core &orb_core,
+                            TAO_Object_Adapter *object_adapter
+                            ACE_ENV_ARG_DECL)
   : name_ (name),
     poa_manager_ (poa_manager),
     tagged_component_ (),
     tagged_component_id_ (),
     profile_id_array_ (0),
     policies_ (policies),
-    parent_ (parent),
     ort_adapter_ (0),
     adapter_state_ (PortableInterceptor::HOLDING),
 
@@ -268,7 +267,7 @@ TAO_Root_POA::TAO_Root_POA (const TAO_Root_POA::String &name,
   ACE_CHECK;
 
   // Set the folded name of this POA.
-  this->set_folded_name ();
+  this->set_folded_name (parent);
 
   // Register self with manager.
   int result = this->poa_manager_.register_poa (this);
@@ -443,14 +442,14 @@ TAO_Root_POA::create_POA_i (const char *adapter_name,
 
 TAO_Root_POA *
 TAO_Root_POA::new_POA (const String &name,
-                  TAO_POA_Manager &poa_manager,
-                  const TAO_POA_Policy_Set &policies,
-                  TAO_Root_POA *parent,
-                  ACE_Lock &lock,
-                  TAO_SYNCH_MUTEX &thread_lock,
-                  TAO_ORB_Core &orb_core,
-                  TAO_Object_Adapter *object_adapter
-                  ACE_ENV_ARG_DECL)
+                       TAO_POA_Manager &poa_manager,
+                       const TAO_POA_Policy_Set &policies,
+                       TAO_Root_POA *parent,
+                       ACE_Lock &lock,
+                       TAO_SYNCH_MUTEX &thread_lock,
+                       TAO_ORB_Core &orb_core,
+                       TAO_Object_Adapter *object_adapter
+                       ACE_ENV_ARG_DECL)
 {
   TAO_Regular_POA *poa = 0;
 
@@ -809,11 +808,16 @@ TAO_Root_POA::destroy (CORBA::Boolean etherealize_objects,
   ACE_CHECK;
 }
 
+void
+TAO_Root_POA::remove_from_parent_i (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+{
+  // The root poa has no parent, so this is a noop
+}
 
 void
 TAO_Root_POA::destroy_i (CORBA::Boolean etherealize_objects,
-                    CORBA::Boolean wait_for_completion
-                    ACE_ENV_ARG_DECL)
+                         CORBA::Boolean wait_for_completion
+                         ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->cleanup_in_progress_)
@@ -834,14 +838,8 @@ TAO_Root_POA::destroy_i (CORBA::Boolean etherealize_objects,
   // re-creation of its associated POA in the same process.)
 
   // Remove POA from the parent
-  if (this->parent_ != 0)
-    {
-      int result = this->parent_->delete_child (this->name_);
-      if (result != 0)
-        {
-          ACE_THROW (CORBA::OBJ_ADAPTER ());
-        }
-    }
+  this->remove_from_parent_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
 
   TAO::ORT_Array array_obj_ref_template;
 
@@ -1943,14 +1941,14 @@ TAO_Root_POA::is_poa_generated_id (const PortableServer::ObjectId &id)
 }
 
 void
-TAO_Root_POA::set_folded_name (void)
+TAO_Root_POA::set_folded_name (TAO_Root_POA *parent)
 {
   size_t length = 0;
   size_t parent_length = 0;
 
-  if (this->parent_ != 0)
+  if (parent != 0)
     {
-      parent_length = this->parent_->folded_name ().length ();
+      parent_length = parent->folded_name ().length ();
       length += parent_length;
     }
 
@@ -1960,10 +1958,10 @@ TAO_Root_POA::set_folded_name (void)
   this->folded_name_.length (static_cast <CORBA::ULong> (length));
   CORBA::Octet *folded_name_buffer = this->folded_name_.get_buffer ();
 
-  if (this->parent_ != 0)
+  if (parent != 0)
     {
       ACE_OS::memcpy (folded_name_buffer,
-                      this->parent_->folded_name ().get_buffer (),
+                      parent->folded_name ().get_buffer (),
                       parent_length);
     }
 
@@ -2787,6 +2785,12 @@ TAO_Root_POA::validate_lifespan (
 {
   return this->active_policy_strategies_.lifespan_strategy()->
     validate (is_persistent, creation_time);
+}
+
+CORBA::Boolean
+TAO_Root_POA::root (void) const
+{
+  return true;
 }
 
 TAO::ORT_Adapter *

@@ -27,10 +27,7 @@ ACE_INLINE PortableServer::POA_ptr
 TAO_Root_POA::the_parent (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  if (this->parent_ != 0)
-    return PortableServer::POA::_duplicate (this->parent_);
-  else
-    return PortableServer::POA::_nil ();
+  return PortableServer::POA::_nil ();
 }
 
 ACE_INLINE PortableInterceptor::AdapterName *
@@ -79,12 +76,6 @@ ACE_INLINE CORBA::Boolean
 TAO_Root_POA::system_id (void)
 {
   return (this->cached_policies_.id_assignment () == PortableServer::SYSTEM_ID);
-}
-
-ACE_INLINE CORBA::Boolean
-TAO_Root_POA::root (void)
-{
-  return this->parent_ == 0;
 }
 
 ACE_INLINE CORBA::Boolean
@@ -181,10 +172,7 @@ TAO_Root_POA::non_root_key_char (void)
 ACE_INLINE char
 TAO_Root_POA::root_key_type (void)
 {
-  if (this->root ())
-    return TAO_Root_POA::root_key_char ();
-  else
-    return TAO_Root_POA::non_root_key_char ();
+  return TAO_Root_POA::root_key_char ();
 }
 
 ACE_INLINE CORBA::ULong

@@ -374,14 +374,14 @@ public:
     );
 
   TAO_Root_POA (const String &name,
-           TAO_POA_Manager &poa_manager,
-           const TAO_POA_Policy_Set &policies,
-           TAO_Root_POA *parent,
-           ACE_Lock &lock,
-           TAO_SYNCH_MUTEX &thread_lock,
-           TAO_ORB_Core &orb_core,
-           TAO_Object_Adapter *object_adapter
-           ACE_ENV_ARG_DECL);
+                TAO_POA_Manager &poa_manager,
+                const TAO_POA_Policy_Set &policies,
+                TAO_Root_POA *parent,
+                ACE_Lock &lock,
+                TAO_SYNCH_MUTEX &thread_lock,
+                TAO_ORB_Core &orb_core,
+                TAO_Object_Adapter *object_adapter
+                ACE_ENV_ARG_DECL);
 
   virtual ~TAO_Root_POA (void);
 
@@ -556,6 +556,8 @@ public:
   /// Check the state of this POA
   void check_state (ACE_ENV_SINGLE_ARG_DECL);
 
+  int delete_child (const String &child);
+
 protected:
 
 #if (TAO_HAS_MINIMUM_POA == 0)
@@ -670,6 +672,8 @@ protected:
                      PortableServer::POA::ObjectAlreadyActive,
                      PortableServer::POA::WrongPolicy));
 
+  virtual void remove_from_parent_i (ACE_ENV_SINGLE_ARG_DECL);
+
   void deactivate_all_objects_i (CORBA::Boolean etherealize_objects
                                  ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
@@ -735,9 +739,7 @@ protected:
   void components_established (PortableInterceptor::IORInfo_ptr info
                                ACE_ENV_ARG_DECL);
 
-  int delete_child (const String &child);
-
-  void set_folded_name (void);
+  void set_folded_name (TAO_Root_POA *parent);
 
   void set_id (void);
 
@@ -818,9 +820,9 @@ protected:
 
   static CORBA::ULong system_id_key_type_length (void);
 
-  CORBA::Boolean root (void);
+  virtual CORBA::Boolean root (void) const;
 
-  char root_key_type (void);
+  virtual char root_key_type (void);
 
   static char root_key_char (void);
 
@@ -846,9 +848,6 @@ protected:
   ACE_Array_Base <IOP::ProfileId> profile_id_array_;
 
   TAO_POA_Policy_Set policies_;
-
-  /// The parent of this POA, zero in case this is the Root POA
-  TAO_Root_POA *parent_;
 
   TAO_Object_Adapter::poa_name folded_name_;
 
