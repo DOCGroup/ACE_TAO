@@ -1,3 +1,11 @@
+Mon Nov  6 13:03:51 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/DynamicInterface/ExceptionList.cpp:
+
+	  Removed explicit instantiation of
+	  ACE_Unbounded_Queue<CORBA::TypeCode_ptr> and related
+	  types, since they already exist in tao/Exception.cpp.
+
 Mon Nov  6 12:28:41 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_union.cpp:
