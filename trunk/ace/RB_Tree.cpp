@@ -573,7 +573,7 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::find_i (const EXT_ID &k,
     {
       // Found a match
       if (!find_exact || result == EXACT)
-      	entry = current;  // Assign the entry for any match.
+        entry = current;  // Assign the entry for any match.
       return (result == EXACT ? 0 : -1);
     }
   else
@@ -609,14 +609,14 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::insert_i (const EXT_ID &k, 
       else if (result == LEFT)
         {
           if (current->right ())
-	    {
+            {
               // If there is already a right subtree, complain.
               ACE_ERROR_RETURN ((LM_ERROR,
                                  ACE_LIB_TEXT ("%p\n"),
                                  ACE_LIB_TEXT ("\nright subtree already present in ")
                                  ACE_LIB_TEXT ("ACE_RB_Tree<EXT_ID, INT_ID>::insert_i\n")),
                                 0);
-	    }
+            }
           else
             {
               // The right subtree is empty: insert new node there.
@@ -922,18 +922,18 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::test_invariant_recurse (ACE
       ++measured_black_height;
 
       if (expected_black_height == -1)
-	{
+        {
           expected_black_height = measured_black_height;
-	}
+        }
       else if (expected_black_height != measured_black_height)
-	{
+        {
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_LIB_TEXT ("\nexpected_black_height = %d but ")
                              ACE_LIB_TEXT ("\nmeasured_black_height = %d in ")
                              ACE_LIB_TEXT ("ACE_RB_Tree<EXT_ID, INT_ID>::test_invariant_recurse\n"),
                              expected_black_height, measured_black_height),
                             -1);
-	}
+        }
 
       return 0;
     }
@@ -942,22 +942,22 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::test_invariant_recurse (ACE
   if (x->color () == ACE_RB_Tree_Node_Base::RED)
     {
       if (x->left () && x->left ()->color () == ACE_RB_Tree_Node_Base::RED)
-	{
+        {
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_LIB_TEXT ("%p\n"),
                              ACE_LIB_TEXT ("\nRED parent has RED left child in ")
                              ACE_LIB_TEXT ("ACE_RB_Tree<EXT_ID, INT_ID>::test_invariant_recurse\n")),
                             -1);
-	}
+        }
 
       if (x->right () && x->right ()->color () == ACE_RB_Tree_Node_Base::RED)
-	{
+        {
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_LIB_TEXT ("%p\n"),
                              ACE_LIB_TEXT ("\nRED parent has RED right child in ")
                              ACE_LIB_TEXT ("ACE_RB_Tree<EXT_ID, INT_ID>::test_invariant_recurse\n")),
                             -1);
-	}
+        }
     }
   else
     {
