@@ -83,11 +83,11 @@ order_offer (CosTrading::OfferId offer_id,
       TAO_Literal_Constraint return_value;	  
       TAO_Expression_Type expr_type = this->root_->expr_type ();
       if (evaluator.evaluate_preference (this->root_, return_value) == 0)
-	this->offers_.insert (return_value, make_pair (offer_id, offer));
+	this->offers_.insert (make_pair (return_value, make_pair (offer_id, offer)));
       else
 	{
 	  TAO_Literal_Constraint end ((CORBA::Double) TRADER_MAX_DOUBLE);
-	  this->offers_.insert (end, make_pair (offer_id, offer));      
+	  this->offers_.insert (make_pair (end, make_pair (offer_id, offer)));
 	}
     }
 }
