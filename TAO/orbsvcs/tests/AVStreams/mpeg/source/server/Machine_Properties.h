@@ -56,7 +56,7 @@ public:
                               CORBA::TypeCode_ptr returned_type,
                               const CORBA::Any& extra_info,
                               CORBA::Environment& _env)
-    TAO_THROW_SPEC ((CosTradingDynamic::DPEvalFailure));
+    ACE_THROW_SPEC ((CosTradingDynamic::DPEvalFailure));
   // Return the value of a machine performance property whose name is
   // contained in <extra_info>, which in essence is another
   // demultiplexing key.

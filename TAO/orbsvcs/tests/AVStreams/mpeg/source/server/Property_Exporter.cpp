@@ -23,8 +23,8 @@ public:
   virtual CORBA::Any* evalDP (const char* name,
                               CORBA::TypeCode_ptr returned_type,
                               const CORBA::Any& extra_info,
-                              CORBA::Environment& TAO_IN_ENV)
-    TAO_THROW_SPEC ((CosTradingDynamic::DPEvalFailure));
+                              CORBA::Environment& ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CosTradingDynamic::DPEvalFailure));
   // Call back to the Property Service interface. The Property
   // Service reference is contained in the extra_info -- an
   // Asynchronous Completion Token.
@@ -50,25 +50,24 @@ CORBA::Any*
 DP_Adapter::evalDP (const char* name,
                     CORBA::TypeCode_ptr returned_type,
                     const CORBA::Any& extra_info,
-                    CORBA::Environment& TAO_IN_ENV)
-  TAO_THROW_SPEC ((CosTradingDynamic::DPEvalFailure))
+                    CORBA::Environment& ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CosTradingDynamic::DPEvalFailure))
 {
-  TAO_TRY
+  ACE_TRY
     {
       CORBA::Any* return_value =
         this->prop_set_->get_property_value (this->prop_name_,
-                                             TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+                                             ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       return return_value;
     }
-  TAO_CATCHANY
+  ACE_CATCHANY
     {
-      TAO_THROW_RETURN (CosTradingDynamic::DPEvalFailure
-                        (this->prop_name_, returned_type, extra_info),
-                        0);
+      ACE_THROW(CosTradingDynamic::DPEvalFailure
+                        (this->prop_name_, returned_type, extra_info));
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
 }
 
 // *************************************************************
@@ -188,8 +187,8 @@ add_dynamic_property (const char* name,
 CosTrading::OfferId
 TAO_Property_Exporter::_cxx_export (const CORBA::Object_ptr object_ref,
                                     const CosTrading::ServiceTypeName type,
-                                    CORBA::Environment& TAO_IN_ENV)
-  TAO_THROW_SPEC ((CORBA::SystemException,
+                                    CORBA::Environment& ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException,
                    CosTrading::Register::InvalidObjectRef,
                    CosTrading::IllegalServiceType,
                    CosTrading::UnknownServiceType,
@@ -200,18 +199,18 @@ TAO_Property_Exporter::_cxx_export (const CORBA::Object_ptr object_ref,
                    CosTrading::MissingMandatoryProperty,
                    CosTrading::DuplicatePropertyName))
 {
-  CosTrading::Register_var reg = this->lookup_->register_if (TAO_IN_ENV);
-  TAO_CHECK_ENV_RETURN (TAO_IN_ENV, 0);
+  CosTrading::Register_var reg = this->lookup_->register_if (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
 
   // Export the offer to the trader under the given type.
   CosTrading::OfferId offer_id = 0;
   this->tprops_.length (this->tcount_);
-  offer_id = reg->_cxx_export (object_ref, type, this->tprops_, TAO_IN_ENV);
-  TAO_CHECK_ENV_RETURN (TAO_IN_ENV, 0);
+  offer_id = reg->_cxx_export (object_ref, type, this->tprops_, ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
 
   this->pprops_.length (this->pcount_);
-  this->prop_set_->define_properties (this->pprops_, TAO_IN_ENV);
-  TAO_CHECK_ENV_RETURN (TAO_IN_ENV, offer_id);
+  this->prop_set_->define_properties (this->pprops_, ACE_TRY_ENV);
+  ACE_CHECK_RETURN (offer_id);
 
   return offer_id;
 }
@@ -221,8 +220,8 @@ TAO_Property_Exporter::_cxx_export (const CORBA::Object_ptr object_ref,
                                     const CosTrading::ServiceTypeName type,
                                     const TRADING_REPOS::PropStructSeq& props,
                                     const TRADING_REPOS::ServiceTypeNameSeq& stypes,
-                                    CORBA::Environment& TAO_IN_ENV)
-  TAO_THROW_SPEC ((CORBA::SystemException,
+                                    CORBA::Environment& ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException,
                    CosTrading::IllegalServiceType,
                    TRADING_REPOS::ServiceTypeExists,
                    TRADING_REPOS::InterfaceTypeMismatch,
@@ -239,14 +238,14 @@ TAO_Property_Exporter::_cxx_export (const CORBA::Object_ptr object_ref,
   CosTrading::Register_var reg;
   CosTrading::OfferId offer_id = 0;
 
-  TAO_TRY
+  ACE_TRY
     {
-      reg = this->lookup_->register_if (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+      reg = this->lookup_->register_if (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       this->pprops_.length (this->pcount_);
-      this->prop_set_->define_properties (this->pprops_, TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+      this->prop_set_->define_properties (this->pprops_, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
 
 
@@ -257,7 +256,7 @@ TAO_Property_Exporter::_cxx_export (const CORBA::Object_ptr object_ref,
       CosTradingRepos::ServiceTypeRepository_var str =
 
         CosTradingRepos::ServiceTypeRepository::_narrow (obj, _env);
-      TAO_CHECK_ENV_RETURN (_env, 0);
+      ACE_CHECK_RETURN (0);
 
        str->add_type (type,
 
@@ -266,7 +265,7 @@ TAO_Property_Exporter::_cxx_export (const CORBA::Object_ptr object_ref,
                      stypes,
 
                      _env);
-      TAO_CHECK_ENV_RETURN (_env, 0);
+      ACE_CHECK_RETURN (0);
       ***************** UTTER HACK: REMOVE WHEN EXCEPTIONS WORK! ****/
 
 
@@ -276,21 +275,21 @@ TAO_Property_Exporter::_cxx_export (const CORBA::Object_ptr object_ref,
       offer_id = reg->_cxx_export (object_ref,
                                    type,
                                    this->tprops_,
-                                   TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+                                   ACE_TRY_ENV);
+      ACE_TRY_CHECK;
     }
-  TAO_CATCH (CosTrading::UnknownServiceType, excp)
+  ACE_CATCH (CosTrading::UnknownServiceType, excp)
     {
 
 
       cout<<"Within the UnknownServiceType exception"<<endl;
-      CosTrading::TypeRepository_ptr obj = this->lookup_->type_repos (TAO_IN_ENV);
-      TAO_CHECK_ENV_RETURN (TAO_IN_ENV, 0);
+      CosTrading::TypeRepository_ptr obj = this->lookup_->type_repos (ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
 
       ACE_DEBUG ((LM_DEBUG, "Export failed. Attempting add_type.\n"));
       CosTradingRepos::ServiceTypeRepository_var str =
-        CosTradingRepos::ServiceTypeRepository::_narrow (obj, TAO_IN_ENV);
-      TAO_CHECK_ENV_RETURN (TAO_IN_ENV, 0);
+        CosTradingRepos::ServiceTypeRepository::_narrow (obj, ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
 
       // If the ServiceTypeName wasn't found, we'll have to add the
       // type to the Service Type repository ourselves.
@@ -298,8 +297,8 @@ TAO_Property_Exporter::_cxx_export (const CORBA::Object_ptr object_ref,
                      object_ref->_interface_repository_id (),
                      props,
                      stypes,
-                     TAO_IN_ENV);
-      TAO_CHECK_ENV_RETURN (TAO_IN_ENV, 0);
+                     ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
 
       // Now we'll try again to register the offer.
       ACE_DEBUG ((LM_DEBUG, "Attempting export again.\n"));
@@ -308,19 +307,19 @@ TAO_Property_Exporter::_cxx_export (const CORBA::Object_ptr object_ref,
       offer_id = reg->_cxx_export (object_ref,
                                    type,
                                    this->tprops_,
-                                   TAO_IN_ENV);
-      TAO_CHECK_ENV_RETURN (TAO_IN_ENV, 0);
+                                   ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
       cout<<"It reached here"<<endl;
 
     }
   /*
-  TAO_CATCHANY
+  ACE_CATCHANY
     {
       // Sigh, all our efforts were for naight.
-      TAO_RETHROW_RETURN (0);
+      ACE_RETHROW;
     }
   */
-  TAO_ENDTRY;
+  ACE_ENDTRY;
 
   return offer_id;
 }
@@ -389,8 +388,8 @@ TAO_Property_Modifier::modify_property (const char* name, const CORBA::Any& valu
 
 void
 TAO_Property_Modifier::commit (CosTrading::OfferId id,
-                               CORBA::Environment& TAO_IN_ENV)
-  TAO_THROW_SPEC ((CORBA::SystemException,
+                               CORBA::Environment& ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException,
                    CosPropertyService::MultipleExceptions,
                    CosTrading::NotImplemented,
                    CosTrading::IllegalOfferId,
@@ -409,15 +408,15 @@ TAO_Property_Modifier::commit (CosTrading::OfferId id,
   this->pdelete_.length (this->pdcount_);
   this->pmodify_.length (this->pmcount_);
 
-  CosTrading::Register_var reg = this->lookup_->register_if (TAO_IN_ENV);
-  TAO_CHECK_ENV_RETURN (TAO_IN_ENV,);
+  CosTrading::Register_var reg = this->lookup_->register_if (ACE_TRY_ENV);
+  ACE_CHECK;
 
-  reg->modify (id, this->tdelete_, this->tmodify_, TAO_IN_ENV);
-  TAO_CHECK_ENV_RETURN (TAO_IN_ENV,);
+  reg->modify (id, this->tdelete_, this->tmodify_, ACE_TRY_ENV);
+  ACE_CHECK;
 
-  this->prop_set_->define_properties (this->pmodify_, TAO_IN_ENV);
-  TAO_CHECK_ENV_RETURN (TAO_IN_ENV,);
+  this->prop_set_->define_properties (this->pmodify_, ACE_TRY_ENV);
+  ACE_CHECK;
 
-  this->prop_set_->delete_properties (this->pdelete_, TAO_IN_ENV);
-  TAO_CHECK_ENV_RETURN (TAO_IN_ENV,);
+  this->prop_set_->delete_properties (this->pdelete_, ACE_TRY_ENV);
+  ACE_CHECK;
 }
