@@ -10,6 +10,9 @@ Sat Oct 18 07:43:29 1997  David L. Levine  <levine@cs.wustl.edu>
 	* Makefile (release): oops, removed "echo" that was used to
 	  disable CVS commit, for testing.
 
+	* ace/Thread_Manager.{h,cpp},Object_Manager.{h,cpp}: moved
+	  ace_thread_exit_lock_ to Object_Manager.
+
 	* include/makeinclude/rules.local.GNU: added $(TEMPLATE_REPOSITORY)
 	  to OBJDIRS, so that individual platforms can add template
 	  repository directories for creation.
