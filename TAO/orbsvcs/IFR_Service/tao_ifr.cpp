@@ -24,14 +24,69 @@ gen_init (void)
   return g;
 }
 
+void
+DRV_save_orb_args (ACE_CString &arg_holder,
+                   int argc,
+                   char *argv[])
+{
+  int i = 1;
+
+  while (i < argc)
+    {
+      if (ACE_OS::strncmp (argv[i], "-ORB", 4) == 0)
+        {
+          arg_holder += ACE_CString (argv[i]);
+          arg_holder += " ";
+
+          // Could be another -ORBxxx arg or an IDL compiler arg.
+          if (*argv[i + 1] == '-')
+            {
+              ++i;
+              continue;
+            }
+
+          // No-copy constructor.
+          ACE_CString tmp (argv[i + 1],
+                           0,
+                           0);
+
+          // If the arg ends with either .idl or .pidl, we're done.
+
+          int len = tmp.length ();
+          int pos = tmp.find (".idl");
+
+          if (len - pos == 4)
+            {
+              return;
+            }
+
+          pos = tmp.find (".pidl");
+
+          if (len - pos == 5)
+            {
+              return;
+            }
+
+          // If we're here, the next arg goes with the preceding -ORBxxx.
+          arg_holder += tmp;
+          arg_holder += " ";
+          i += 2;
+        }
+      else
+        {
+          ++i;
+        }
+    }
+}
+
 // Fork off a process, wait for it to die.
 void
-DRV_fork (void)
+DRV_fork (ACE_CString &arg_string)
 {
-  // This will not work on NT, but I can hardly think of some way to
-  // make it work.  The idea is to make it compile, and always use the
-  // compiler with just one file. That works because then there is no
-  // fork involved.
+  // Append the IDL command line args to the -ORBxxx args
+  // in arg_string.
+  arg_string += idl_global->idl_flags ();
+
   for (DRV_file_index = 0;
        DRV_file_index < DRV_nfiles;
        ++DRV_file_index)
@@ -41,7 +96,7 @@ DRV_fork (void)
       options.creation_flags (ACE_Process_Options::NO_EXEC);
       options.command_line ("%s %s %s", 
                             idl_global->prog_name (), 
-                            idl_global->idl_flags (), 
+                            arg_string.c_str (),
                             DRV_files[DRV_file_index]);
       ACE_Process manager;
       pid_t child_pid = manager.spawn (options);
@@ -211,6 +266,16 @@ main (int argc, char *argv[])
   // Initialize driver and global variables.
   DRV_init ();
 
+  // We don't know yet if we're going to fork, but if so,
+  // we need to save the -ORBxxx args before they're
+  // stripped away by BE_ifr_init (which calls ORB_init),
+  // so they can be passed through DRV_fork to the child
+  // process(es).
+  ACE_CString orb_args;
+  DRV_save_orb_args (orb_args,
+                     argc,
+                     argv);
+
   // Initialize our ORB and resolve the Interface Repository.
   // Since CORBA::ORB_init strips any -ORBxxx xxx arguments
   // it finds, we must do this first. DRV_parse_args cannot
@@ -239,7 +304,7 @@ main (int argc, char *argv[])
   if (DRV_nfiles > 1)
     {
       // DRV_fork never returns.
-      DRV_fork ();
+      DRV_fork (orb_args);
     }
   else
     {
