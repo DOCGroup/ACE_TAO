@@ -128,7 +128,7 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (Cubit_Client_Timeprobe_Description,
         TAO_ENABLE_CUBIT_ONE_WAY
 
 // Constructor.
-Cubit_Client::Cubit_Client (int testing_collocation, int shutdown)
+Cubit_Client::Cubit_Client (int shutdown)
   : cubit_factory_key_ (0),
     loop_count_ (250),
     shutdown_ (shutdown),
@@ -139,8 +139,7 @@ Cubit_Client::Cubit_Client (int testing_collocation, int shutdown)
     f_handle_ (ACE_INVALID_HANDLE),
     bytes_in_octet_sequence_ (0),
     test_enable_bitset_ (0),
-    test_disable_bitset_ (0),
-    testing_collocation_ (testing_collocation)
+    test_disable_bitset_ (0)
 {
 }
 
@@ -373,7 +372,7 @@ Cubit_Client::cube_union (CORBA::Environment &ACE_TRY_ENV)
       {
         ACE_FUNCTION_TIMEPROBE (CUBIT_CLIENT_CUBE_UNION_START);
 
-        r = this->cubit_->cube_union (u, 
+        r = this->cubit_->cube_union (u,
                                       ACE_TRY_ENV);
       }
 
@@ -401,7 +400,7 @@ Cubit_Client::cube_union (CORBA::Environment &ACE_TRY_ENV)
       {
         ACE_FUNCTION_TIMEPROBE (CUBIT_CLIENT_CUBE_UNION_START);
 
-        r = this->cubit_->cube_union (u, 
+        r = this->cubit_->cube_union (u,
                                       ACE_TRY_ENV);
       }
 
@@ -446,7 +445,7 @@ Cubit_Client::cube_short (int i,
       {
         ACE_FUNCTION_TIMEPROBE (CUBIT_CLIENT_CUBE_SHORT_START);
 
-        ret_short = cubit_->cube_short (arg_short, 
+        ret_short = cubit_->cube_short (arg_short,
                                         ACE_TRY_ENV);
       }
 
@@ -551,7 +550,7 @@ Cubit_Client::cube_octet (int i,
       {
         ACE_FUNCTION_TIMEPROBE (CUBIT_CLIENT_CUBE_OCTET_START);
 
-        ret_octet = this->cubit_->cube_octet (arg_octet, 
+        ret_octet = this->cubit_->cube_octet (arg_octet,
                                               ACE_TRY_ENV);
       }
 
@@ -568,7 +567,7 @@ Cubit_Client::cube_octet (int i,
 
       arg_octet = arg_octet * arg_octet * arg_octet;
 
-      if (arg_octet != ret_octet) 
+      if (arg_octet != ret_octet)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "** cube_octet (%d) ERROR (--> %d)\n",
@@ -603,7 +602,7 @@ Cubit_Client::cube_long (int i,
       {
         ACE_FUNCTION_TIMEPROBE (CUBIT_CLIENT_CUBE_LONG_START);
 
-        ret_long = this->cubit_->cube_long (arg_long, 
+        ret_long = this->cubit_->cube_long (arg_long,
                                             ACE_TRY_ENV);
       }
 
@@ -662,7 +661,7 @@ Cubit_Client::cube_struct (int i,
       {
         ACE_FUNCTION_TIMEPROBE (CUBIT_CLIENT_CUBE_STRUCT_START);
 
-        ret_struct = this->cubit_->cube_struct (arg_struct, 
+        ret_struct = this->cubit_->cube_struct (arg_struct,
                                                 ACE_TRY_ENV);
       }
 
@@ -700,7 +699,7 @@ Cubit_Client::cube_struct (int i,
 // Cube the numbers in a sequence
 
 void
-Cubit_Client::cube_long_sequence (int, 
+Cubit_Client::cube_long_sequence (int,
                                   int l,
                                   CORBA::Environment &ACE_TRY_ENV)
 {
@@ -723,8 +722,8 @@ Cubit_Client::cube_long_sequence (int,
       {
         ACE_FUNCTION_TIMEPROBE (CUBIT_CLIENT_CUBE_LONG_SEQUENCE_START);
 
-        this->cubit_->cube_long_sequence (input, 
-                                          vout, 
+        this->cubit_->cube_long_sequence (input,
+                                          vout,
                                           ACE_TRY_ENV);
       }
 
@@ -732,7 +731,7 @@ Cubit_Client::cube_long_sequence (int,
 
       if (output->length () != input.length ())
         {
-          ACE_ERROR ((LM_ERROR, 
+          ACE_ERROR ((LM_ERROR,
                       "** cube sequence, wrong length\n"));
 
           this->error_count_++;
@@ -751,7 +750,7 @@ Cubit_Client::cube_long_sequence (int,
 
       if (x * x *x != output[0])
         {
-          ACE_ERROR ((LM_ERROR, 
+          ACE_ERROR ((LM_ERROR,
                       "** cube_long_sequence ERROR\n"));
 
           this->error_count_++;
@@ -768,7 +767,7 @@ Cubit_Client::cube_long_sequence (int,
 }
 
 void
-Cubit_Client::cube_octet_sequence (int, 
+Cubit_Client::cube_octet_sequence (int,
                                    int l,
                                    CORBA::Environment &ACE_TRY_ENV)
 {
@@ -792,8 +791,8 @@ Cubit_Client::cube_octet_sequence (int,
       {
         ACE_FUNCTION_TIMEPROBE (CUBIT_CLIENT_CUBE_OCTET_SEQUENCE_START);
 
-        this->cubit_->cube_octet_sequence (input, 
-                                           vout, 
+        this->cubit_->cube_octet_sequence (input,
+                                           vout,
                                            ACE_TRY_ENV);
       }
 
@@ -801,7 +800,7 @@ Cubit_Client::cube_octet_sequence (int,
 
       if (output->length () != input.length ())
         {
-          ACE_ERROR ((LM_ERROR, 
+          ACE_ERROR ((LM_ERROR,
                       "** cube octet, wrong length\n"));
 
           this->error_count_++;
@@ -819,7 +818,7 @@ Cubit_Client::cube_octet_sequence (int,
 
       if (x * x *x != output[0])
         {
-          ACE_ERROR ((LM_ERROR, 
+          ACE_ERROR ((LM_ERROR,
                       "** cube_octet ERROR\n"));
 
           this->error_count_++;
@@ -838,7 +837,7 @@ Cubit_Client::cube_octet_sequence (int,
 // Cube the many in a sequence
 
 void
-Cubit_Client::cube_many_sequence (int, 
+Cubit_Client::cube_many_sequence (int,
                                   int l,
                                   CORBA::Environment &ACE_TRY_ENV)
 {
@@ -864,8 +863,8 @@ Cubit_Client::cube_many_sequence (int,
       {
         ACE_FUNCTION_TIMEPROBE (CUBIT_CLIENT_CUBE_MANY_SEQUENCE_START);
 
-        this->cubit_->cube_many_sequence (input, 
-                                          vout, 
+        this->cubit_->cube_many_sequence (input,
+                                          vout,
                                           ACE_TRY_ENV);
       }
 
@@ -873,7 +872,7 @@ Cubit_Client::cube_many_sequence (int,
 
       if (output->length () != input.length ())
         {
-          ACE_ERROR ((LM_ERROR, 
+          ACE_ERROR ((LM_ERROR,
                       "** cube sequence, wrong length\n"));
 
           this->error_count_++;
@@ -895,7 +894,7 @@ Cubit_Client::cube_many_sequence (int,
           ret_in.s * ret_in.s * ret_in.s != out.s ||
           ret_in.o * ret_in.o * ret_in.o != out.o)
         {
-          ACE_ERROR ((LM_ERROR, 
+          ACE_ERROR ((LM_ERROR,
                       "** cube_long_sequence ERROR\n"));
 
           this->error_count_++;
@@ -963,7 +962,7 @@ Cubit_Client::cube_rti_data (int,
       // Cube the sequence
       if (TAO_debug_level > 0)
         {
-          ACE_DEBUG ((LM_DEBUG, 
+          ACE_DEBUG ((LM_DEBUG,
                       "Input: \n"));
 
           print_RtiPacket (input);
@@ -972,8 +971,8 @@ Cubit_Client::cube_rti_data (int,
       {
         ACE_FUNCTION_TIMEPROBE (CUBIT_CLIENT_CUBE_RTI_DATA_START);
 
-        this->cubit_->cube_rti_data (input, 
-                                     vout, 
+        this->cubit_->cube_rti_data (input,
+                                     vout,
                                      ACE_TRY_ENV);
       }
 
@@ -982,7 +981,7 @@ Cubit_Client::cube_rti_data (int,
       if (TAO_debug_level > 0)
 
         {
-          ACE_DEBUG ((LM_DEBUG, 
+          ACE_DEBUG ((LM_DEBUG,
                       "Output: \n"));
 
           print_RtiPacket (*vout.ptr ());
@@ -1073,14 +1072,14 @@ Cubit_Client::run ()
 
       for (i = 0; i < this->loop_count_; ++i)
         {
-          this->cube_void (i, 
+          this->cube_void (i,
                            ACE_TRY_ENV);
         }
 
       timer.stop ();
       timer.elapsed_time (elapsed_time);
 
-      this->print_stats ("cube_void", 
+      this->print_stats ("cube_void",
                          elapsed_time);
     }
 
@@ -1093,14 +1092,14 @@ Cubit_Client::run ()
 
       for (i = 0; i < this->loop_count_; ++i)
         {
-          this->cube_short (i, 
+          this->cube_short (i,
                             ACE_TRY_ENV);
         }
 
       timer.stop ();
       timer.elapsed_time (elapsed_time);
 
-      this->print_stats ("cube_short", 
+      this->print_stats ("cube_short",
                          elapsed_time);
     }
 
@@ -1113,14 +1112,14 @@ Cubit_Client::run ()
 
       for (i = 0; i < this->loop_count_; ++i)
         {
-          this->cube_octet (i, 
+          this->cube_octet (i,
                             ACE_TRY_ENV);
         }
 
       timer.stop ();
       timer.elapsed_time (elapsed_time);
 
-      this->print_stats ("cube_octet", 
+      this->print_stats ("cube_octet",
                          elapsed_time);
     }
 
@@ -1133,13 +1132,13 @@ Cubit_Client::run ()
 
       for (i = 0; i < this->loop_count_; ++i)
         {
-          this->cube_long (i, 
+          this->cube_long (i,
                            ACE_TRY_ENV);
         }
 
       timer.stop ();
       timer.elapsed_time (elapsed_time);
-      this->print_stats ("cube_long", 
+      this->print_stats ("cube_long",
                          elapsed_time);
     }
 
@@ -1152,14 +1151,14 @@ Cubit_Client::run ()
 
       for (i = 0; i < this->loop_count_; ++i)
         {
-          this->cube_struct (i, 
+          this->cube_struct (i,
                              ACE_TRY_ENV);
         }
 
       timer.stop ();
       timer.elapsed_time (elapsed_time);
 
-      this->print_stats ("cube_struct", 
+      this->print_stats ("cube_struct",
                          elapsed_time);
     }
 
@@ -1178,7 +1177,7 @@ Cubit_Client::run ()
       timer.stop ();
       timer.elapsed_time (elapsed_time);
 
-      this->print_stats ("cube_union_stub call", 
+      this->print_stats ("cube_union_stub call",
                          elapsed_time);
     }
 
@@ -1191,15 +1190,15 @@ Cubit_Client::run ()
 
       for (i = 0; i < this->loop_count_; ++i)
         {
-          this->cube_long_sequence (this->loop_count_, 
-                                    4, 
+          this->cube_long_sequence (this->loop_count_,
+                                    4,
                                     ACE_TRY_ENV);
         }
 
       timer.stop ();
       timer.elapsed_time (elapsed_time);
 
-      this->print_stats ("cube_small_sequence<long>", 
+      this->print_stats ("cube_small_sequence<long>",
                          elapsed_time);
     }
 
@@ -1212,15 +1211,15 @@ Cubit_Client::run ()
 
       for (i = 0; i < this->loop_count_; ++i)
         {
-          this->cube_long_sequence (this->loop_count_, 
-                                    1024, 
+          this->cube_long_sequence (this->loop_count_,
+                                    1024,
                                     ACE_TRY_ENV);
         }
 
       timer.stop ();
       timer.elapsed_time (elapsed_time);
 
-      this->print_stats ("cube_large_sequence<long>", 
+      this->print_stats ("cube_large_sequence<long>",
                          elapsed_time);
     }
 
@@ -1238,8 +1237,8 @@ Cubit_Client::run ()
                       "in the sequence.\n", bytes_in_octet_sequence_));
           for (i = 0; i < this->loop_count_; ++i)
             {
-              this->cube_octet_sequence (this->loop_count_, 
-                                         bytes_in_octet_sequence_, 
+              this->cube_octet_sequence (this->loop_count_,
+                                         bytes_in_octet_sequence_,
                                          ACE_TRY_ENV);
             }
         }
@@ -1247,8 +1246,8 @@ Cubit_Client::run ()
         {
           for (i = 0; i < this->loop_count_; ++i)
             {
-              this->cube_octet_sequence (this->loop_count_, 
-                                         16, 
+              this->cube_octet_sequence (this->loop_count_,
+                                         16,
                                          ACE_TRY_ENV);
             }
         }
@@ -1256,7 +1255,7 @@ Cubit_Client::run ()
       timer.stop ();
       timer.elapsed_time (elapsed_time);
 
-      this->print_stats ("cube_small_sequence<octet>", 
+      this->print_stats ("cube_small_sequence<octet>",
                          elapsed_time);
     }
 
@@ -1269,15 +1268,15 @@ Cubit_Client::run ()
 
       for (i = 0; i < this->loop_count_; ++i)
         {
-          this->cube_octet_sequence (this->loop_count_, 
-                                     4096, 
+          this->cube_octet_sequence (this->loop_count_,
+                                     4096,
                                      ACE_TRY_ENV);
         }
 
       timer.stop ();
       timer.elapsed_time (elapsed_time);
 
-      this->print_stats ("cube_large_sequence<octet>", 
+      this->print_stats ("cube_large_sequence<octet>",
                          elapsed_time);
     }
 
@@ -1290,8 +1289,8 @@ Cubit_Client::run ()
 
       for (i = 0; i < this->loop_count_; ++i)
         {
-          this->cube_many_sequence (this->loop_count_, 
-                                    4, 
+          this->cube_many_sequence (this->loop_count_,
+                                    4,
                                     ACE_TRY_ENV);
         }
 
@@ -1319,7 +1318,7 @@ Cubit_Client::run ()
       timer.stop ();
       timer.elapsed_time (elapsed_time);
 
-      this->print_stats ("cube_large_sequence<many>", 
+      this->print_stats ("cube_large_sequence<many>",
                          elapsed_time);
     }
 
@@ -1332,17 +1331,17 @@ Cubit_Client::run ()
 
       for (i = 0; i < this->loop_count_; ++i)
         {
-          this->cube_short (i, 
+          this->cube_short (i,
                             ACE_TRY_ENV);
-          this->cube_octet (i, 
+          this->cube_octet (i,
                             ACE_TRY_ENV);
-          this->cube_long (i, 
+          this->cube_long (i,
                            ACE_TRY_ENV);
         }
 
       timer.stop ();
       timer.elapsed_time (elapsed_time);
-      this->print_stats ("cube mixin (short/octet/long)", 
+      this->print_stats ("cube mixin (short/octet/long)",
                          elapsed_time);
     }
 
@@ -1355,16 +1354,16 @@ Cubit_Client::run ()
 
       for (i = 0; i < this->loop_count_; ++i)
         {
-          this->cube_rti_data (this->loop_count_, 
-                               2, 
-                               5, 
+          this->cube_rti_data (this->loop_count_,
+                               2,
+                               5,
                                ACE_TRY_ENV);
         }
 
       timer.stop ();
       timer.elapsed_time (elapsed_time);
 
-      this->print_stats ("cube_rti_data", 
+      this->print_stats ("cube_rti_data",
                          elapsed_time);
     }
 
@@ -1377,14 +1376,14 @@ Cubit_Client::run ()
 
       for (i = 0; i < this->loop_count_; ++i)
         {
-          this->cube_oneway (i, 
+          this->cube_oneway (i,
                              ACE_TRY_ENV);
         }
 
       timer.stop ();
       timer.elapsed_time (elapsed_time);
 
-      this->print_stats ("cube_oneway", 
+      this->print_stats ("cube_oneway",
                          elapsed_time);
     }
 
@@ -1398,62 +1397,9 @@ int
 Cubit_Client::shutdown_server (int do_shutdown,
                                CORBA::Environment &ACE_TRY_ENV)
 {
-  if (this->testing_collocation_)
+  if (do_shutdown)
     {
-      this->orb_->_optimize_collocation_objects (0);
-      // Make sure we call the following method "remotely" so
-      // the right ORB could be used.
-
-      ACE_TRY
-        {
-          if (this->cubit_factory_key_ == 0)
-            {
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "%s: no cubit factory key specified\n",
-                                 this->argv_[0]),
-                                -1);
-            }
-
-          CORBA::Object_var factory_object =
-            this->orb_->string_to_object (this->cubit_factory_key_,
-                                          ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-
-          this->factory_ =
-            Cubit_Factory::_narrow (factory_object.in(),
-                                    ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-
-          if (CORBA::is_nil (this->factory_.in ()))
-            {
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "invalid factory key <%s>\n",
-                                 this->cubit_factory_key_),
-                                -1);
-            }
-
-          this->cubit_ =
-            this->factory_->make_cubit (ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-
-          this->cubit_->shutdown (ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-
-          ACE_DEBUG ((LM_DEBUG, 
-                      "shutdown on shutdown object\n"));
-        }
-      ACE_CATCHANY
-        {
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                               "Cubit::shutdown_server");
-          return -1;
-        }
-      ACE_ENDTRY;
-
-    }
-  else if (do_shutdown)
-    {
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
                   "shutdown on cubit object\n"));
 
       ACE_TRY_EX(NOT_COLLOCATED)
@@ -1500,7 +1446,7 @@ Cubit_Client::~Cubit_Client (void)
 
 
 int
-Cubit_Client::init (int argc, char **argv, const char *collocation_test_ior)
+Cubit_Client::init (int argc, char **argv)
 {
   this->argc_ = argc;
   this->argv_ = argv;
@@ -1513,12 +1459,6 @@ Cubit_Client::init (int argc, char **argv, const char *collocation_test_ior)
                                     "internet",
                                     ACE_TRY_ENV);
       ACE_TRY_CHECK;
-
-      if (this->testing_collocation_ == 0)
-        {
-          // turn off collocation if directed to do so.
-          this->orb_->_optimize_collocation_objects (0);
-        }
 
       // Parse command line and verify parameters.
       if (this->parse_args () == -1)
@@ -1536,11 +1476,6 @@ Cubit_Client::init (int argc, char **argv, const char *collocation_test_ior)
             this->test_enable_bitset_ &= ~this->test_disable_bitset_;
         }
 
-
-      if (collocation_test_ior != 0)
-        {
-          this->read_ior (collocation_test_ior);
-        }
 
       if (this->cubit_factory_key_ == 0)
         {
