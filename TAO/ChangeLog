@@ -1,10 +1,19 @@
+Sat Nov 15 16:18:29 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/DynamicAny/DynEnum_i.cpp:
+        * tao/DynamicAny/DynUnion_i.cpp:
+
+          Added checks for 0 ACE_Message_Block return value from call to 
+          _tao_get_cdr() on an Any, and alternate method of extraction
+          if the message block is 0. This closes [BUGID:1645].
+
 Sat Nov 15 14:33:39 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_constant/constant_ch.cpp:
 
           Replaced a generated 'extern' with 'TAO_NAMESPACE_STORAGE_CLASS'
           to automatically include the export macro, if any. Thanks to
-          Mike Hupburn <mike@anvil.com> for rerorting the problem.
+          Mike Hepburn <mike@anvil.com> for rerorting the problem.
 
 Fri Nov 14 15:04:53 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 

@@ -49,6 +49,15 @@ TAO_DynEnum_i::init (const CORBA::Any &any
 
   ACE_Message_Block *mb = any._tao_get_cdr ();
 
+  if (mb == 0)
+    {
+      ACE_NEW (mb,
+               ACE_Message_Block);
+      TAO_OutputCDR out;
+      any.impl ()->marshal_value (out);
+      ACE_CDR::consolidate (mb, out.begin ());
+    }
+
   TAO_InputCDR cdr (mb,
                     any._tao_byte_order ());
 
@@ -265,6 +274,16 @@ TAO_DynEnum_i::equal (DynamicAny::DynAny_ptr rhs
   ACE_CHECK_RETURN (0);
 
   ACE_Message_Block *mb = any->_tao_get_cdr ();
+
+  if (mb == 0)
+    {
+      ACE_NEW_RETURN (mb,
+                      ACE_Message_Block,
+                      0);
+      TAO_OutputCDR out;
+      any->impl ()->marshal_value (out);
+      ACE_CDR::consolidate (mb, out.begin ());
+    }
 
   TAO_InputCDR cdr (mb,
                     any->_tao_byte_order ());

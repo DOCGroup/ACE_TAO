@@ -1050,6 +1050,17 @@ TAO_DynUnion_i::label_match (const CORBA::Any &my_any,
         CORBA::ULong my_val;
         CORBA::ULong other_val;
         ACE_Message_Block *mb = my_any._tao_get_cdr ();
+
+        if (mb == 0)
+          {
+            ACE_NEW_RETURN (mb,
+                            ACE_Message_Block,
+                            0);
+            TAO_OutputCDR out;
+            my_any.impl ()->marshal_value (out);
+            ACE_CDR::consolidate (mb, out.begin ());
+          }
+
         TAO_InputCDR my_cdr (mb,
                              my_any._tao_byte_order ());
         my_cdr.read_ulong (my_val);
