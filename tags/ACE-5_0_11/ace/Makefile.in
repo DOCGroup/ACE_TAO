@@ -1,0 +1,745 @@
+# Makefile.in generated automatically by automake 1.4 from Makefile.am
+
+# Copyright (C) 1994, 1995-8, 1999 Free Software Foundation, Inc.
+# This Makefile.in is free software; the Free Software Foundation
+# gives unlimited permission to copy and/or distribute it,
+# with or without modifications, as long as this notice is preserved.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY, to the extent permitted by law; without
+# even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+# PARTICULAR PURPOSE.
+
+
+SHELL = @SHELL@
+
+srcdir = @srcdir@
+top_srcdir = @top_srcdir@
+VPATH = @srcdir@
+prefix = @prefix@
+exec_prefix = @exec_prefix@
+
+bindir = @bindir@
+sbindir = @sbindir@
+libexecdir = @libexecdir@
+datadir = @datadir@
+sysconfdir = @sysconfdir@
+sharedstatedir = @sharedstatedir@
+localstatedir = @localstatedir@
+libdir = @libdir@
+infodir = @infodir@
+mandir = @mandir@
+includedir = @includedir@
+oldincludedir = /usr/include
+
+DESTDIR =
+
+pkgdatadir = $(datadir)/@PACKAGE@
+pkglibdir = $(libdir)/@PACKAGE@
+pkgincludedir = $(includedir)/@PACKAGE@
+
+top_builddir = ..
+
+ACLOCAL = @ACLOCAL@
+AUTOCONF = @AUTOCONF@
+AUTOMAKE = @AUTOMAKE@
+AUTOHEADER = @AUTOHEADER@
+
+INSTALL = @INSTALL@
+INSTALL_PROGRAM = @INSTALL_PROGRAM@ $(AM_INSTALL_PROGRAM_FLAGS)
+INSTALL_DATA = @INSTALL_DATA@
+INSTALL_SCRIPT = @INSTALL_SCRIPT@
+transform = @program_transform_name@
+
+NORMAL_INSTALL = :
+PRE_INSTALL = :
+POST_INSTALL = :
+NORMAL_UNINSTALL = :
+PRE_UNINSTALL = :
+POST_UNINSTALL = :
+build_alias = @build_alias@
+build_triplet = @build@
+host_alias = @host_alias@
+host_triplet = @host@
+target_alias = @target_alias@
+target_triplet = @target@
+ACE_AGE = @ACE_AGE@
+ACE_CURRENT = @ACE_CURRENT@
+ACE_INCLUDEDIR = @ACE_INCLUDEDIR@
+ACE_LIBDIR = @ACE_LIBDIR@
+ACE_LIBS = @ACE_LIBS@
+ACE_REVISION = @ACE_REVISION@
+AS = @AS@
+AWK = @AWK@
+CC = @CC@
+CPP = @CPP@
+CXX = @CXX@
+CXXCPP = @CXXCPP@
+CXXFLAGS = @CXXFLAGS@
+DLLTOOL = @DLLTOOL@
+EXEEXT = @EXEEXT@
+GPERF = @GPERF@
+LEX = @LEX@
+LIBTOOL = @LIBTOOL@
+LN_S = @LN_S@
+MAINT = @MAINT@
+MAKEINFO = @MAKEINFO@
+OBJDUMP = @OBJDUMP@
+OBJEXT = @OBJEXT@
+PACKAGE = @PACKAGE@
+PROF = @PROF@
+PURIFY = @PURIFY@
+QUANTIFY = @QUANTIFY@
+RANLIB = @RANLIB@
+STRIP = @STRIP@
+VERSION = @VERSION@
+XTREACTOR_TEST_XLIBS = @XTREACTOR_TEST_XLIBS@
+YACC = @YACC@
+
+AUTOMAKE_OPTIONS = 1.4
+
+INCLUDES = -I$(top_builddir) -I$(top_srcdir)
+
+# Define any X libraries that ACE needs, if any.
+ACE_XLIBS = @ACE_XLIBS@
+@ACE_ON_PENTIUM_TRUE@ACE_GETHRTIME_CPP = gethrtime.cpp
+@ACE_ON_PENTIUM_FALSE@ACE_GETHRTIME_CPP = 
+@BUILD_OS_FILES_TRUE@LIBACE_OS = libACE_OS.la
+@BUILD_OS_FILES_FALSE@LIBACE_OS = 
+@BUILD_UTILS_FILES_TRUE@LIBACE_UTILS = libACE_Utils.la
+@BUILD_UTILS_FILES_FALSE@LIBACE_UTILS = 
+@BUILD_LOGGING_FILES_TRUE@LIBACE_LOGGING = libACE_Logging.la
+@BUILD_LOGGING_FILES_FALSE@LIBACE_LOGGING = 
+@BUILD_THREADS_FILES_TRUE@LIBACE_THREADS = libACE_Threads.la
+@BUILD_THREADS_FILES_FALSE@LIBACE_THREADS = 
+@BUILD_DEMUX_FILES_TRUE@LIBACE_DEMUX = libACE_Demux.la
+@BUILD_DEMUX_FILES_FALSE@LIBACE_DEMUX = 
+@BUILD_CONNECTION_FILES_TRUE@LIBACE_CONNECTION = libACE_Connection.la
+@BUILD_CONNECTION_FILES_FALSE@LIBACE_CONNECTION = 
+@BUILD_SOCKETS_FILES_TRUE@LIBACE_SOCKETS = libACE_Sockets.la
+@BUILD_SOCKETS_FILES_FALSE@LIBACE_SOCKETS = 
+@BUILD_IPC_FILES_TRUE@LIBACE_IPC = libACE_IPC.la
+@BUILD_IPC_FILES_FALSE@LIBACE_IPC = 
+@BUILD_SVCCONF_FILES_TRUE@LIBACE_SVCCONF = libACE_Svcconf.la
+@BUILD_SVCCONF_FILES_FALSE@LIBACE_SVCCONF = 
+@BUILD_STREAMS_FILES_TRUE@LIBACE_STREAMS = libACE_Streams.la
+@BUILD_STREAMS_FILES_FALSE@LIBACE_STREAMS = 
+@BUILD_MEMORY_FILES_TRUE@LIBACE_MEMORY = libACE_Memory.la
+@BUILD_MEMORY_FILES_FALSE@LIBACE_MEMORY = 
+@BUILD_TOKEN_FILES_TRUE@LIBACE_TOKEN = libACE_Token.la
+@BUILD_TOKEN_FILES_FALSE@LIBACE_TOKEN = 
+@BUILD_OTHER_FILES_TRUE@LIBACE_OTHER = libACE_Other.la
+@BUILD_OTHER_FILES_FALSE@LIBACE_OTHER = 
+@BUILD_FULL_LIBRARY_TRUE@LIBACE = libACE.la
+@BUILD_FULL_LIBRARY_FALSE@LIBACE = 
+
+# Build a libtool library, libACE.la for installation in libdir.
+lib_LTLIBRARIES =    $(LIBACE)   $(LIBACE_OS)   $(LIBACE_UTILS)   $(LIBACE_LOGGING)   $(LIBACE_THREADS)   $(LIBACE_DEMUX)   $(LIBACE_CONNECTION)   $(LIBACE_SOCKETS)   $(LIBACE_IPC)   $(LIBACE_SVCCONF)   $(LIBACE_STREAMS)   $(LIBACE_MEMORY)   $(LIBACE_TOKEN)   $(LIBACE_OTHER)
+
+
+libACE_OS_la_SOURCES =    Basic_Types.cpp   OS.cpp   Sched_Params.cpp
+
+
+libACE_Utils_la_SOURCES =    ACE.cpp   Active_Map_Manager.cpp   Arg_Shifter.cpp   ARGV.cpp   Capabilities.cpp   Configuration.cpp   Containers.cpp   Dirent.cpp   Dynamic.cpp   Filecache.cpp   Functor.cpp   Get_Opt.cpp   Hash_Map_Manager.cpp   High_Res_Timer.cpp   Method_Request.cpp   Object_Manager.cpp   Profile_Timer.cpp   Registry.cpp   SString.cpp   Stats.cpp   System_Time.cpp   Time_Request_Reply.cpp   Timeprobe.cpp   Timer_Hash.cpp   Timer_Heap.cpp   Timer_List.cpp   Timer_Queue.cpp   Timer_Wheel.cpp   $(ACE_GETHRTIME_CPP)
+
+
+# We only want `gethrtime.cpp' if building on Pentium(tm) so we need
+# to let Automake know that `gethrtime.cpp' is conditionally built.
+EXTRA_libACE_Utils_la_SOURCES = gethrtime.cpp
+
+libACE_Logging_la_SOURCES =    Dump.cpp   Log_Msg.cpp   Log_Record.cpp   Trace.cpp
+
+
+libACE_Threads_la_SOURCES =    Activation_Queue.cpp   Process.cpp   Process_Manager.cpp   Synch.cpp   Synch_Options.cpp   Thread.cpp   Thread_Manager.cpp   Token.cpp
+
+
+libACE_Demux_la_SOURCES =    Event_Handler.cpp   FlReactor.cpp   Handle_Set.cpp   Msg_WFMO_Reactor.cpp   POSIX_Proactor.cpp   Priority_Reactor.cpp   Proactor.cpp   Reactor.cpp   Select_Reactor.cpp   Select_Reactor_Base.cpp   TP_Reactor.cpp   TkReactor.cpp   WFMO_Reactor.cpp   XtReactor.cpp
+
+
+libACE_Connection_la_SOURCES =    Asynch_IO.cpp   Asynch_IO_Impl.cpp   POSIX_Asynch_IO.cpp   Strategies.cpp
+
+
+libACE_Sockets_la_SOURCES =    IPC_SAP.cpp   LSOCK.cpp   LSOCK_Acceptor.cpp   LSOCK_CODgram.cpp   LSOCK_Connector.cpp   LSOCK_Dgram.cpp   LSOCK_Stream.cpp   SOCK.cpp   SOCK_Acceptor.cpp   SOCK_CODgram.cpp   SOCK_Connector.cpp   SOCK_Dgram.cpp   SOCK_Dgram_Bcast.cpp   SOCK_Dgram_Mcast.cpp   SOCK_IO.cpp   SOCK_Stream.cpp
+
+
+libACE_IPC_la_SOURCES =    Addr.cpp   ATM_Addr.cpp   ATM_Acceptor.cpp   ATM_Connector.cpp   ATM_Params.cpp   ATM_QoS.cpp   ATM_Stream.cpp   DEV.cpp   DEV_Addr.cpp   DEV_Connector.cpp   DEV_IO.cpp   FIFO.cpp   FIFO_Recv.cpp   FIFO_Recv_Msg.cpp   FIFO_Send.cpp   FIFO_Send_Msg.cpp   FILE_Addr.cpp   FILE.cpp   FILE_Connector.cpp   FILE_IO.cpp   INET_Addr.cpp   IO_SAP.cpp   IOStream.cpp   Pipe.cpp   Signal.cpp   SPIPE_Addr.cpp   SPIPE.cpp   SPIPE_Acceptor.cpp   SPIPE_Connector.cpp   SPIPE_Stream.cpp   SV_Message.cpp   SV_Message_Queue.cpp   SV_Semaphore_Complex.cpp   SV_Semaphore_Simple.cpp   SV_Shared_Memory.cpp   TLI.cpp   TLI_Acceptor.cpp   TLI_Connector.cpp   TLI_Stream.cpp   TTY_IO.cpp   UNIX_Addr.cpp   UPIPE_Acceptor.cpp   UPIPE_Connector.cpp   UPIPE_Stream.cpp   XTI_ATM_Mcast.cpp
+
+
+libACE_Svcconf_la_SOURCES =    DLL.cpp   Parse_Node.cpp   Service_Config.cpp   Service_Manager.cpp   Service_Object.cpp   Service_Repository.cpp   Service_Types.cpp   Shared_Object.cpp   Svc_Conf_l.cpp   Svc_Conf_y.cpp
+
+
+libACE_Streams_la_SOURCES =    CDR_Stream.cpp   Codeset_IBM1047.cpp   Message_Block.cpp   Message_Queue.cpp   Task.cpp
+
+
+libACE_Memory_la_SOURCES =    Based_Pointer_Repository.cpp   Malloc.cpp   Mem_Map.cpp   Memory_Pool.cpp   Obstack.cpp   Read_Buffer.cpp   Shared_Memory.cpp   Shared_Memory_MM.cpp   Shared_Memory_SV.cpp
+
+
+libACE_Token_la_SOURCES =    Local_Tokens.cpp   Remote_Tokens.cpp   Token_Collection.cpp   Token_Invariants.cpp   Token_Manager.cpp   Token_Request_Reply.cpp
+
+
+libACE_Other_la_SOURCES =    CORBA_Handler.cpp   CORBA_Ref.cpp   Local_Name_Space.cpp   Name_Proxy.cpp   Name_Request_Reply.cpp   Name_Space.cpp   Naming_Context.cpp   Registry_Name_Space.cpp   Remote_Name_Space.cpp
+
+
+libACE_la_SOURCES =    $(libACE_OS_la_SOURCES)   $(libACE_Utils_la_SOURCES)   $(libACE_Logging_la_SOURCES)   $(libACE_Threads_la_SOURCES)   $(libACE_Demux_la_SOURCES)   $(libACE_Connection_la_SOURCES)   $(libACE_Sockets_la_SOURCES)   $(libACE_IPC_la_SOURCES)   $(libACE_Svcconf_la_SOURCES)   $(libACE_Streams_la_SOURCES)   $(libACE_Memory_la_SOURCES)   $(libACE_Token_la_SOURCES)   $(libACE_Other_la_SOURCES)
+
+
+# We only want `gethrtime.cpp' if building on Pentium(tm) so we need
+# to let Automake know that `gethrtime.cpp' is conditionally built.
+EXTRA_libACE_la_SOURCES = gethrtime.cpp
+
+libACE_la_LDFLAGS = $(X_LIBS)   -version-info @ACE_CURRENT@:@ACE_REVISION@:@ACE_AGE@
+
+
+# We also add any X libraries to the list.
+libACE_la_LIBADD = $(X_PRE_LIBS) $(ACE_XLIBS) $(X_EXTRA_LIBS)
+
+TEMPLATE_FILES =    Acceptor.cpp   Active_Map_Manager_T.cpp   Asynch_Acceptor.cpp   Auto_IncDec_T.cpp   Auto_Ptr.cpp   Based_Pointer_T.cpp   Connector.cpp   Containers_T.cpp   Cache_Map_Manager_T.cpp   Cached_Connect_Strategy_T.cpp   Caching_Strategies_T.cpp   Caching_Utility_T.cpp   Cleanup_Strategies_T.cpp   Dump_T.cpp   Dynamic_Service.cpp   Env_Value_T.cpp   Event_Handler_T.cpp   Free_List.cpp   Functor_T.cpp   Future.cpp   Future_Set.cpp   Hash_Map_Manager_T.cpp   Hash_Cache_Map_Manager_T.cpp   IOStream_T.cpp   LOCK_SOCK_Acceptor.cpp   Local_Name_Space_T.cpp   Malloc_T.cpp   Managed_Object.cpp   Map_Manager.cpp   Map_T.cpp   Message_Block_T.cpp   Message_Queue_T.cpp   Module.cpp   Pair_T.cpp   RB_Tree.cpp   Select_Reactor_T.cpp   Singleton.cpp   Strategies_T.cpp   Stream.cpp   Stream_Modules.cpp   Svc_Handler.cpp   Synch_T.cpp   Task_T.cpp   Template_Instantiations.cpp   Timeprobe_T.cpp   Timer_Hash_T.cpp   Timer_Heap_T.cpp   Timer_List_T.cpp   Timer_Queue_Adapters.cpp   Timer_Queue_T.cpp   Timer_Wheel_T.cpp   Typed_SV_Message.cpp   Typed_SV_Message_Queue.cpp
+
+
+HEADER_FILES =    ACE.h   ARGV.h   ATM_Acceptor.h   ATM_Addr.h   ATM_Connector.h   ATM_Params.h   ATM_QoS.h   ATM_Stream.h   Acceptor.h   Activation_Queue.h   Active_Map_Manager.h   Active_Map_Manager_T.h   Addr.h   Arg_Shifter.h   Array.h   Asynch_Acceptor.h   Asynch_IO.h   Asynch_IO_Impl.h   Auto_IncDec_T.h   Auto_Ptr.h   Based_Pointer_Repository.h   Based_Pointer_T.h   Basic_Types.h   CDR_Stream.h   CORBA_Handler.h   CORBA_Ref.h   CORBA_macros.h   Cache_Map_Manager_T.h   Cached_Connect_Strategy_T.h   Caching_Strategies_T.h   Caching_Utility_T.h   Capabilities.h   Cleanup_Strategies_T.h   Codeset_IBM1047.h   Configuration.h   Connector.h   Containers.h   Containers_T.h   DEV.h   DEV_Addr.h   DEV_Connector.h   DEV_IO.h   DLL.h   Date_Time.h   Dirent.h   Dump.h   Dump_T.h   Dynamic.h   Dynamic_Service.h   Env_Value_T.h   Event_Handler.h   Event_Handler_T.h   FIFO.h   FIFO_Recv.h   FIFO_Recv_Msg.h   FIFO_Send.h   FIFO_Send_Msg.h   FILE.h   FILE_Addr.h   FILE_Connector.h   FILE_IO.h   Filecache.h   FlReactor.h   Free_List.h   Functor.h   Functor_T.h   Future.h   Future_Set.h   Get_Opt.h   Handle_Gobbler.h   Handle_Set.h   Hash_Cache_Map_Manager_T.h   Hash_Map_Manager.h   Hash_Map_Manager_T.h   Hash_Map_With_Allocator_T.h   High_Res_Timer.h   INET_Addr.h   IOStream.h   IOStream_T.h   IO_Cntl_Msg.h   IO_SAP.h   IPC_SAP.h   LOCK_SOCK_Acceptor.h   LSOCK.h   LSOCK_Acceptor.h   LSOCK_CODgram.h   LSOCK_Connector.h   LSOCK_Dgram.h   LSOCK_Stream.h   Local_Name_Space.h   Local_Name_Space_T.h   Local_Tokens.h   Log_Msg.h   Log_Priority.h   Log_Record.h   Malloc.h   Malloc_Base.h   Malloc_T.h   Managed_Object.h   Map.h   Map_Manager.h   Map_T.h   Mem_Map.h   Memory_Pool.h   Message_Block.h   Message_Block_T.h   Message_Queue.h   Message_Queue_T.h   Method_Object.h   Method_Request.h   Module.h   Msg_WFMO_Reactor.h   Multiplexor.h   NT_Service.h   Name_Proxy.h   Name_Request_Reply.h   Name_Space.h   Naming_Context.h   OS.h   Object_Manager.h   Obstack.h   POSIX_Asynch_IO.h   POSIX_Proactor.h   Pair.h   Pair_T.h   Parse_Node.h   Pipe.h   Priority_Reactor.h   Proactor.h   Proactor_Impl.h   Process.h   Process_Manager.h   Profile_Timer.h   QtReactor.h   RB_Tree.h   Reactor.h   Reactor_Impl.h   Read_Buffer.h   Registry.h   Registry_Name_Space.h   Remote_Name_Space.h   Remote_Tokens.h   SOCK.h   SOCK_Acceptor.h   SOCK_CODgram.h   SOCK_Connector.h   SOCK_Dgram.h   SOCK_Dgram_Bcast.h   SOCK_Dgram_Mcast.h   SOCK_IO.h   SOCK_Stream.h   SPIPE.h   SPIPE_Acceptor.h   SPIPE_Addr.h   SPIPE_Connector.h   SPIPE_Stream.h   SString.h   SV_Message.h   SV_Message_Queue.h   SV_Semaphore_Complex.h   SV_Semaphore_Simple.h   SV_Shared_Memory.h   Sched_Params.h   Select_Reactor.h   Select_Reactor_Base.h   Select_Reactor_T.h   Service_Config.h   Service_Manager.h   Service_Object.h   Service_Repository.h   Service_Types.h   Shared_Memory.h   Shared_Memory_MM.h   Shared_Memory_SV.h   Shared_Object.h   Signal.h   Singleton.h   Stats.h   Strategies.h   Strategies_T.h   Stream.h   Stream_Modules.h   Svc_Conf.h   Svc_Conf_Tokens.h   Svc_Handler.h   Synch.h   Synch_Options.h   Synch_T.h   System_Time.h   TLI.h   TLI_Acceptor.h   TLI_Connector.h   TLI_Stream.h   TP_Reactor.h   TTY_IO.h   Task.h   Task_T.h   Thread.h   Thread_Manager.h   Time_Request_Reply.h   Time_Value.h   Timeprobe.h   Timeprobe_T.h   Timer_Hash.h   Timer_Hash_T.h   Timer_Heap.h   Timer_Heap_T.h   Timer_List.h   Timer_List_T.h   Timer_Queue.h   Timer_Queue_Adapters.h   Timer_Queue_T.h   Timer_Wheel.h   Timer_Wheel_T.h   TkReactor.h   Token.h   Token_Collection.h   Token_Invariants.h   Token_Manager.h   Token_Request_Reply.h   Trace.h   Typed_SV_Message.h   Typed_SV_Message_Queue.h   UNIX_Addr.h   UPIPE_Acceptor.h   UPIPE_Addr.h   UPIPE_Connector.h   UPIPE_Stream.h   Version.h   WFMO_Reactor.h   WIN32_Asynch_IO.h   WIN32_Proactor.h   XTI_ATM_Mcast.h   XtReactor.h   config.h   inc_user_config.h   iosfwd.h   streams.h   ws2tcpip.h
+
+
+INLINE_FILES =    ACE.i   ARGV.i   ATM_Acceptor.i   ATM_Addr.i   ATM_Connector.i   ATM_Params.i   ATM_QoS.i   ATM_Stream.i   Acceptor.i   Activation_Queue.i   Active_Map_Manager.i   Active_Map_Manager_T.i   Addr.i   Asynch_Acceptor.i   Asynch_IO.i   Asynch_IO_Impl.i   Atomic_Op.i   Auto_IncDec_T.i   Auto_Ptr.i   Based_Pointer_T.i   Basic_Types.i   CDR_Stream.i   CORBA_Handler.i   CORBA_Ref.i   Cache_Map_Manager_T.i   Cached_Connect_Strategy_T.i   Caching_Strategies_T.i   Caching_Utility_T.i   Capabilities.i   Cleanup_Strategies_T.i   Configuration.i   Connector.i   Containers.i   Containers_T.i   DEV.i   DEV_Addr.i   DEV_Connector.i   DEV_IO.i   Date_Time.i   Dirent.i   Dynamic.i   Dynamic_Service.i   Env_Value_T.i   Event_Handler.i   Event_Handler_T.i   FIFO.i   FIFO_Recv.i   FIFO_Recv_Msg.i   FIFO_Send.i   FIFO_Send_Msg.i   FILE.i   FILE_Addr.i   FILE_Connector.i   FILE_IO.i   FlReactor.i   Free_List.i   Functor.i   Functor_T.i   Get_Opt.i   Handle_Gobbler.i   Handle_Set.i   Hash_Cache_Map_Manager_T.i   Hash_Map_Manager.i   Hash_Map_Manager_T.i   Hash_Map_With_Allocator_T.i   High_Res_Timer.i   INET_Addr.i   IOStream_T.i   IO_Cntl_Msg.i   IO_SAP.i   IPC_SAP.i   LSOCK.i   LSOCK_Acceptor.i   LSOCK_CODgram.i   LSOCK_Connector.i   LSOCK_Dgram.i   LSOCK_Stream.i   Local_Tokens.i   Log_Msg.i   Log_Record.i   Malloc.i   Malloc_T.i   Managed_Object.i   Map.i   Map_Manager.i   Map_T.i   Mem_Map.i   Memory_Pool.i   Message_Block.i   Message_Block_T.i   Message_Queue.i   Message_Queue_T.i   Module.i   Msg_WFMO_Reactor.i   Multiplexor.i   NT_Service.i   OS.i   Object_Manager.i   Obstack.i   POSIX_Asynch_IO.i   POSIX_Proactor.i   Pair.i   Pair_T.i   Parse_Node.i   Pipe.i   Priority_Reactor.i   Proactor.i   Process.i   Process_Manager.i   Profile_Timer.i   RB_Tree.i   Reactor.i   Read_Buffer.i   Remote_Tokens.i   SOCK.i   SOCK_Acceptor.i   SOCK_CODgram.i   SOCK_Connector.i   SOCK_Dgram.i   SOCK_Dgram_Bcast.i   SOCK_Dgram_Mcast.i   SOCK_IO.i   SOCK_Stream.i   SPIPE.i   SPIPE_Acceptor.i   SPIPE_Addr.i   SPIPE_Connector.i   SPIPE_Stream.i   SString.i   SV_Message.i   SV_Message_Queue.i   SV_Semaphore_Complex.i   SV_Semaphore_Simple.i   SV_Shared_Memory.i   Sched_Params.i   Select_Reactor.i   Select_Reactor_Base.i   Select_Reactor_T.i   Service_Config.i   Service_Manager.i   Service_Object.i   Service_Repository.i   Service_Types.i   Shared_Memory_MM.i   Shared_Memory_SV.i   Shared_Object.i   Signal.i   Singleton.i   Stats.i   Strategies.i   Strategies_T.i   Stream.i   Stream_Modules.i   Svc_Handler.i   Synch.i   Synch_Options.i   Synch_T.i   TLI.i   TLI_Acceptor.i   TLI_Connector.i   TLI_Stream.i   TP_Reactor.i   Task.i   Task_T.i   Thread.i   Thread_Manager.i   Timeprobe.i   Timer_Queue_Adapters.i   Timer_Queue_T.i   Token.i   Token_Collection.i   Token_Invariants.i   Token_Manager.i   Token_Request_Reply.i   Trace.i   Typed_SV_Message.i   Typed_SV_Message_Queue.i   UNIX_Addr.i   UPIPE_Acceptor.i   UPIPE_Connector.i   UPIPE_Stream.i   WFMO_Reactor.i   WIN32_Asynch_IO.i   WIN32_Proactor.i   XTI_ATM_Mcast.i
+
+
+pkginclude_HEADERS =    $(HEADER_FILES)   $(INLINE_FILES)   $(TEMPLATE_FILES)
+
+mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
+CONFIG_HEADER = config.h
+CONFIG_CLEAN_FILES = 
+LTLIBRARIES =  $(lib_LTLIBRARIES)
+
+
+DEFS = @DEFS@ -I. -I$(srcdir) -I.
+CPPFLAGS = @CPPFLAGS@
+LDFLAGS = @LDFLAGS@
+LIBS = @LIBS@
+X_CFLAGS = @X_CFLAGS@
+X_LIBS = @X_LIBS@
+X_EXTRA_LIBS = @X_EXTRA_LIBS@
+X_PRE_LIBS = @X_PRE_LIBS@
+libACE_la_DEPENDENCIES = 
+@ACE_ON_PENTIUM_FALSE@libACE_la_OBJECTS =  Basic_Types.lo OS.lo \
+@ACE_ON_PENTIUM_FALSE@Sched_Params.lo ACE.lo Active_Map_Manager.lo \
+@ACE_ON_PENTIUM_FALSE@Arg_Shifter.lo ARGV.lo Capabilities.lo \
+@ACE_ON_PENTIUM_FALSE@Configuration.lo Containers.lo Dirent.lo \
+@ACE_ON_PENTIUM_FALSE@Dynamic.lo Filecache.lo Functor.lo Get_Opt.lo \
+@ACE_ON_PENTIUM_FALSE@Hash_Map_Manager.lo High_Res_Timer.lo \
+@ACE_ON_PENTIUM_FALSE@Method_Request.lo Object_Manager.lo \
+@ACE_ON_PENTIUM_FALSE@Profile_Timer.lo Registry.lo SString.lo Stats.lo \
+@ACE_ON_PENTIUM_FALSE@System_Time.lo Time_Request_Reply.lo Timeprobe.lo \
+@ACE_ON_PENTIUM_FALSE@Timer_Hash.lo Timer_Heap.lo Timer_List.lo \
+@ACE_ON_PENTIUM_FALSE@Timer_Queue.lo Timer_Wheel.lo Dump.lo Log_Msg.lo \
+@ACE_ON_PENTIUM_FALSE@Log_Record.lo Trace.lo Activation_Queue.lo \
+@ACE_ON_PENTIUM_FALSE@Process.lo Process_Manager.lo Synch.lo \
+@ACE_ON_PENTIUM_FALSE@Synch_Options.lo Thread.lo Thread_Manager.lo \
+@ACE_ON_PENTIUM_FALSE@Token.lo Event_Handler.lo FlReactor.lo \
+@ACE_ON_PENTIUM_FALSE@Handle_Set.lo Msg_WFMO_Reactor.lo \
+@ACE_ON_PENTIUM_FALSE@POSIX_Proactor.lo Priority_Reactor.lo Proactor.lo \
+@ACE_ON_PENTIUM_FALSE@Reactor.lo Select_Reactor.lo \
+@ACE_ON_PENTIUM_FALSE@Select_Reactor_Base.lo TP_Reactor.lo TkReactor.lo \
+@ACE_ON_PENTIUM_FALSE@WFMO_Reactor.lo XtReactor.lo Asynch_IO.lo \
+@ACE_ON_PENTIUM_FALSE@Asynch_IO_Impl.lo POSIX_Asynch_IO.lo \
+@ACE_ON_PENTIUM_FALSE@Strategies.lo IPC_SAP.lo LSOCK.lo \
+@ACE_ON_PENTIUM_FALSE@LSOCK_Acceptor.lo LSOCK_CODgram.lo \
+@ACE_ON_PENTIUM_FALSE@LSOCK_Connector.lo LSOCK_Dgram.lo LSOCK_Stream.lo \
+@ACE_ON_PENTIUM_FALSE@SOCK.lo SOCK_Acceptor.lo SOCK_CODgram.lo \
+@ACE_ON_PENTIUM_FALSE@SOCK_Connector.lo SOCK_Dgram.lo \
+@ACE_ON_PENTIUM_FALSE@SOCK_Dgram_Bcast.lo SOCK_Dgram_Mcast.lo \
+@ACE_ON_PENTIUM_FALSE@SOCK_IO.lo SOCK_Stream.lo Addr.lo ATM_Addr.lo \
+@ACE_ON_PENTIUM_FALSE@ATM_Acceptor.lo ATM_Connector.lo ATM_Params.lo \
+@ACE_ON_PENTIUM_FALSE@ATM_QoS.lo ATM_Stream.lo DEV.lo DEV_Addr.lo \
+@ACE_ON_PENTIUM_FALSE@DEV_Connector.lo DEV_IO.lo FIFO.lo FIFO_Recv.lo \
+@ACE_ON_PENTIUM_FALSE@FIFO_Recv_Msg.lo FIFO_Send.lo FIFO_Send_Msg.lo \
+@ACE_ON_PENTIUM_FALSE@FILE_Addr.lo FILE.lo FILE_Connector.lo FILE_IO.lo \
+@ACE_ON_PENTIUM_FALSE@INET_Addr.lo IO_SAP.lo IOStream.lo Pipe.lo \
+@ACE_ON_PENTIUM_FALSE@Signal.lo SPIPE_Addr.lo SPIPE.lo \
+@ACE_ON_PENTIUM_FALSE@SPIPE_Acceptor.lo SPIPE_Connector.lo \
+@ACE_ON_PENTIUM_FALSE@SPIPE_Stream.lo SV_Message.lo SV_Message_Queue.lo \
+@ACE_ON_PENTIUM_FALSE@SV_Semaphore_Complex.lo SV_Semaphore_Simple.lo \
+@ACE_ON_PENTIUM_FALSE@SV_Shared_Memory.lo TLI.lo TLI_Acceptor.lo \
+@ACE_ON_PENTIUM_FALSE@TLI_Connector.lo TLI_Stream.lo TTY_IO.lo \
+@ACE_ON_PENTIUM_FALSE@UNIX_Addr.lo UPIPE_Acceptor.lo UPIPE_Connector.lo \
+@ACE_ON_PENTIUM_FALSE@UPIPE_Stream.lo XTI_ATM_Mcast.lo DLL.lo \
+@ACE_ON_PENTIUM_FALSE@Parse_Node.lo Service_Config.lo \
+@ACE_ON_PENTIUM_FALSE@Service_Manager.lo Service_Object.lo \
+@ACE_ON_PENTIUM_FALSE@Service_Repository.lo Service_Types.lo \
+@ACE_ON_PENTIUM_FALSE@Shared_Object.lo Svc_Conf_l.lo Svc_Conf_y.lo \
+@ACE_ON_PENTIUM_FALSE@CDR_Stream.lo Codeset_IBM1047.lo Message_Block.lo \
+@ACE_ON_PENTIUM_FALSE@Message_Queue.lo Task.lo \
+@ACE_ON_PENTIUM_FALSE@Based_Pointer_Repository.lo Malloc.lo Mem_Map.lo \
+@ACE_ON_PENTIUM_FALSE@Memory_Pool.lo Obstack.lo Read_Buffer.lo \
+@ACE_ON_PENTIUM_FALSE@Shared_Memory.lo Shared_Memory_MM.lo \
+@ACE_ON_PENTIUM_FALSE@Shared_Memory_SV.lo Local_Tokens.lo \
+@ACE_ON_PENTIUM_FALSE@Remote_Tokens.lo Token_Collection.lo \
+@ACE_ON_PENTIUM_FALSE@Token_Invariants.lo Token_Manager.lo \
+@ACE_ON_PENTIUM_FALSE@Token_Request_Reply.lo CORBA_Handler.lo \
+@ACE_ON_PENTIUM_FALSE@CORBA_Ref.lo Local_Name_Space.lo Name_Proxy.lo \
+@ACE_ON_PENTIUM_FALSE@Name_Request_Reply.lo Name_Space.lo \
+@ACE_ON_PENTIUM_FALSE@Naming_Context.lo Registry_Name_Space.lo \
+@ACE_ON_PENTIUM_FALSE@Remote_Name_Space.lo
+@ACE_ON_PENTIUM_TRUE@libACE_la_OBJECTS =  Basic_Types.lo OS.lo \
+@ACE_ON_PENTIUM_TRUE@Sched_Params.lo ACE.lo Active_Map_Manager.lo \
+@ACE_ON_PENTIUM_TRUE@Arg_Shifter.lo ARGV.lo Capabilities.lo \
+@ACE_ON_PENTIUM_TRUE@Configuration.lo Containers.lo Dirent.lo \
+@ACE_ON_PENTIUM_TRUE@Dynamic.lo Filecache.lo Functor.lo Get_Opt.lo \
+@ACE_ON_PENTIUM_TRUE@Hash_Map_Manager.lo High_Res_Timer.lo \
+@ACE_ON_PENTIUM_TRUE@Method_Request.lo Object_Manager.lo \
+@ACE_ON_PENTIUM_TRUE@Profile_Timer.lo Registry.lo SString.lo Stats.lo \
+@ACE_ON_PENTIUM_TRUE@System_Time.lo Time_Request_Reply.lo Timeprobe.lo \
+@ACE_ON_PENTIUM_TRUE@Timer_Hash.lo Timer_Heap.lo Timer_List.lo \
+@ACE_ON_PENTIUM_TRUE@Timer_Queue.lo Timer_Wheel.lo gethrtime.lo Dump.lo \
+@ACE_ON_PENTIUM_TRUE@Log_Msg.lo Log_Record.lo Trace.lo \
+@ACE_ON_PENTIUM_TRUE@Activation_Queue.lo Process.lo Process_Manager.lo \
+@ACE_ON_PENTIUM_TRUE@Synch.lo Synch_Options.lo Thread.lo \
+@ACE_ON_PENTIUM_TRUE@Thread_Manager.lo Token.lo Event_Handler.lo \
+@ACE_ON_PENTIUM_TRUE@FlReactor.lo Handle_Set.lo Msg_WFMO_Reactor.lo \
+@ACE_ON_PENTIUM_TRUE@POSIX_Proactor.lo Priority_Reactor.lo Proactor.lo \
+@ACE_ON_PENTIUM_TRUE@Reactor.lo Select_Reactor.lo \
+@ACE_ON_PENTIUM_TRUE@Select_Reactor_Base.lo TP_Reactor.lo TkReactor.lo \
+@ACE_ON_PENTIUM_TRUE@WFMO_Reactor.lo XtReactor.lo Asynch_IO.lo \
+@ACE_ON_PENTIUM_TRUE@Asynch_IO_Impl.lo POSIX_Asynch_IO.lo Strategies.lo \
+@ACE_ON_PENTIUM_TRUE@IPC_SAP.lo LSOCK.lo LSOCK_Acceptor.lo \
+@ACE_ON_PENTIUM_TRUE@LSOCK_CODgram.lo LSOCK_Connector.lo LSOCK_Dgram.lo \
+@ACE_ON_PENTIUM_TRUE@LSOCK_Stream.lo SOCK.lo SOCK_Acceptor.lo \
+@ACE_ON_PENTIUM_TRUE@SOCK_CODgram.lo SOCK_Connector.lo SOCK_Dgram.lo \
+@ACE_ON_PENTIUM_TRUE@SOCK_Dgram_Bcast.lo SOCK_Dgram_Mcast.lo SOCK_IO.lo \
+@ACE_ON_PENTIUM_TRUE@SOCK_Stream.lo Addr.lo ATM_Addr.lo ATM_Acceptor.lo \
+@ACE_ON_PENTIUM_TRUE@ATM_Connector.lo ATM_Params.lo ATM_QoS.lo \
+@ACE_ON_PENTIUM_TRUE@ATM_Stream.lo DEV.lo DEV_Addr.lo DEV_Connector.lo \
+@ACE_ON_PENTIUM_TRUE@DEV_IO.lo FIFO.lo FIFO_Recv.lo FIFO_Recv_Msg.lo \
+@ACE_ON_PENTIUM_TRUE@FIFO_Send.lo FIFO_Send_Msg.lo FILE_Addr.lo FILE.lo \
+@ACE_ON_PENTIUM_TRUE@FILE_Connector.lo FILE_IO.lo INET_Addr.lo \
+@ACE_ON_PENTIUM_TRUE@IO_SAP.lo IOStream.lo Pipe.lo Signal.lo \
+@ACE_ON_PENTIUM_TRUE@SPIPE_Addr.lo SPIPE.lo SPIPE_Acceptor.lo \
+@ACE_ON_PENTIUM_TRUE@SPIPE_Connector.lo SPIPE_Stream.lo SV_Message.lo \
+@ACE_ON_PENTIUM_TRUE@SV_Message_Queue.lo SV_Semaphore_Complex.lo \
+@ACE_ON_PENTIUM_TRUE@SV_Semaphore_Simple.lo SV_Shared_Memory.lo TLI.lo \
+@ACE_ON_PENTIUM_TRUE@TLI_Acceptor.lo TLI_Connector.lo TLI_Stream.lo \
+@ACE_ON_PENTIUM_TRUE@TTY_IO.lo UNIX_Addr.lo UPIPE_Acceptor.lo \
+@ACE_ON_PENTIUM_TRUE@UPIPE_Connector.lo UPIPE_Stream.lo \
+@ACE_ON_PENTIUM_TRUE@XTI_ATM_Mcast.lo DLL.lo Parse_Node.lo \
+@ACE_ON_PENTIUM_TRUE@Service_Config.lo Service_Manager.lo \
+@ACE_ON_PENTIUM_TRUE@Service_Object.lo Service_Repository.lo \
+@ACE_ON_PENTIUM_TRUE@Service_Types.lo Shared_Object.lo Svc_Conf_l.lo \
+@ACE_ON_PENTIUM_TRUE@Svc_Conf_y.lo CDR_Stream.lo Codeset_IBM1047.lo \
+@ACE_ON_PENTIUM_TRUE@Message_Block.lo Message_Queue.lo Task.lo \
+@ACE_ON_PENTIUM_TRUE@Based_Pointer_Repository.lo Malloc.lo Mem_Map.lo \
+@ACE_ON_PENTIUM_TRUE@Memory_Pool.lo Obstack.lo Read_Buffer.lo \
+@ACE_ON_PENTIUM_TRUE@Shared_Memory.lo Shared_Memory_MM.lo \
+@ACE_ON_PENTIUM_TRUE@Shared_Memory_SV.lo Local_Tokens.lo \
+@ACE_ON_PENTIUM_TRUE@Remote_Tokens.lo Token_Collection.lo \
+@ACE_ON_PENTIUM_TRUE@Token_Invariants.lo Token_Manager.lo \
+@ACE_ON_PENTIUM_TRUE@Token_Request_Reply.lo CORBA_Handler.lo \
+@ACE_ON_PENTIUM_TRUE@CORBA_Ref.lo Local_Name_Space.lo Name_Proxy.lo \
+@ACE_ON_PENTIUM_TRUE@Name_Request_Reply.lo Name_Space.lo \
+@ACE_ON_PENTIUM_TRUE@Naming_Context.lo Registry_Name_Space.lo \
+@ACE_ON_PENTIUM_TRUE@Remote_Name_Space.lo
+libACE_OS_la_LDFLAGS = 
+libACE_OS_la_LIBADD = 
+libACE_OS_la_OBJECTS =  Basic_Types.lo OS.lo Sched_Params.lo
+libACE_Utils_la_LDFLAGS = 
+libACE_Utils_la_LIBADD = 
+@ACE_ON_PENTIUM_FALSE@libACE_Utils_la_OBJECTS =  ACE.lo \
+@ACE_ON_PENTIUM_FALSE@Active_Map_Manager.lo Arg_Shifter.lo ARGV.lo \
+@ACE_ON_PENTIUM_FALSE@Capabilities.lo Configuration.lo Containers.lo \
+@ACE_ON_PENTIUM_FALSE@Dirent.lo Dynamic.lo Filecache.lo Functor.lo \
+@ACE_ON_PENTIUM_FALSE@Get_Opt.lo Hash_Map_Manager.lo High_Res_Timer.lo \
+@ACE_ON_PENTIUM_FALSE@Method_Request.lo Object_Manager.lo \
+@ACE_ON_PENTIUM_FALSE@Profile_Timer.lo Registry.lo SString.lo Stats.lo \
+@ACE_ON_PENTIUM_FALSE@System_Time.lo Time_Request_Reply.lo Timeprobe.lo \
+@ACE_ON_PENTIUM_FALSE@Timer_Hash.lo Timer_Heap.lo Timer_List.lo \
+@ACE_ON_PENTIUM_FALSE@Timer_Queue.lo Timer_Wheel.lo
+@ACE_ON_PENTIUM_TRUE@libACE_Utils_la_OBJECTS =  ACE.lo \
+@ACE_ON_PENTIUM_TRUE@Active_Map_Manager.lo Arg_Shifter.lo ARGV.lo \
+@ACE_ON_PENTIUM_TRUE@Capabilities.lo Configuration.lo Containers.lo \
+@ACE_ON_PENTIUM_TRUE@Dirent.lo Dynamic.lo Filecache.lo Functor.lo \
+@ACE_ON_PENTIUM_TRUE@Get_Opt.lo Hash_Map_Manager.lo High_Res_Timer.lo \
+@ACE_ON_PENTIUM_TRUE@Method_Request.lo Object_Manager.lo \
+@ACE_ON_PENTIUM_TRUE@Profile_Timer.lo Registry.lo SString.lo Stats.lo \
+@ACE_ON_PENTIUM_TRUE@System_Time.lo Time_Request_Reply.lo Timeprobe.lo \
+@ACE_ON_PENTIUM_TRUE@Timer_Hash.lo Timer_Heap.lo Timer_List.lo \
+@ACE_ON_PENTIUM_TRUE@Timer_Queue.lo Timer_Wheel.lo gethrtime.lo
+libACE_Logging_la_LDFLAGS = 
+libACE_Logging_la_LIBADD = 
+libACE_Logging_la_OBJECTS =  Dump.lo Log_Msg.lo Log_Record.lo Trace.lo
+libACE_Threads_la_LDFLAGS = 
+libACE_Threads_la_LIBADD = 
+libACE_Threads_la_OBJECTS =  Activation_Queue.lo Process.lo \
+Process_Manager.lo Synch.lo Synch_Options.lo Thread.lo \
+Thread_Manager.lo Token.lo
+libACE_Demux_la_LDFLAGS = 
+libACE_Demux_la_LIBADD = 
+libACE_Demux_la_OBJECTS =  Event_Handler.lo FlReactor.lo Handle_Set.lo \
+Msg_WFMO_Reactor.lo POSIX_Proactor.lo Priority_Reactor.lo Proactor.lo \
+Reactor.lo Select_Reactor.lo Select_Reactor_Base.lo TP_Reactor.lo \
+TkReactor.lo WFMO_Reactor.lo XtReactor.lo
+libACE_Connection_la_LDFLAGS = 
+libACE_Connection_la_LIBADD = 
+libACE_Connection_la_OBJECTS =  Asynch_IO.lo Asynch_IO_Impl.lo \
+POSIX_Asynch_IO.lo Strategies.lo
+libACE_Sockets_la_LDFLAGS = 
+libACE_Sockets_la_LIBADD = 
+libACE_Sockets_la_OBJECTS =  IPC_SAP.lo LSOCK.lo LSOCK_Acceptor.lo \
+LSOCK_CODgram.lo LSOCK_Connector.lo LSOCK_Dgram.lo LSOCK_Stream.lo \
+SOCK.lo SOCK_Acceptor.lo SOCK_CODgram.lo SOCK_Connector.lo \
+SOCK_Dgram.lo SOCK_Dgram_Bcast.lo SOCK_Dgram_Mcast.lo SOCK_IO.lo \
+SOCK_Stream.lo
+libACE_IPC_la_LDFLAGS = 
+libACE_IPC_la_LIBADD = 
+libACE_IPC_la_OBJECTS =  Addr.lo ATM_Addr.lo ATM_Acceptor.lo \
+ATM_Connector.lo ATM_Params.lo ATM_QoS.lo ATM_Stream.lo DEV.lo \
+DEV_Addr.lo DEV_Connector.lo DEV_IO.lo FIFO.lo FIFO_Recv.lo \
+FIFO_Recv_Msg.lo FIFO_Send.lo FIFO_Send_Msg.lo FILE_Addr.lo FILE.lo \
+FILE_Connector.lo FILE_IO.lo INET_Addr.lo IO_SAP.lo IOStream.lo Pipe.lo \
+Signal.lo SPIPE_Addr.lo SPIPE.lo SPIPE_Acceptor.lo SPIPE_Connector.lo \
+SPIPE_Stream.lo SV_Message.lo SV_Message_Queue.lo \
+SV_Semaphore_Complex.lo SV_Semaphore_Simple.lo SV_Shared_Memory.lo \
+TLI.lo TLI_Acceptor.lo TLI_Connector.lo TLI_Stream.lo TTY_IO.lo \
+UNIX_Addr.lo UPIPE_Acceptor.lo UPIPE_Connector.lo UPIPE_Stream.lo \
+XTI_ATM_Mcast.lo
+libACE_Svcconf_la_LDFLAGS = 
+libACE_Svcconf_la_LIBADD = 
+libACE_Svcconf_la_OBJECTS =  DLL.lo Parse_Node.lo Service_Config.lo \
+Service_Manager.lo Service_Object.lo Service_Repository.lo \
+Service_Types.lo Shared_Object.lo Svc_Conf_l.lo Svc_Conf_y.lo
+libACE_Streams_la_LDFLAGS = 
+libACE_Streams_la_LIBADD = 
+libACE_Streams_la_OBJECTS =  CDR_Stream.lo Codeset_IBM1047.lo \
+Message_Block.lo Message_Queue.lo Task.lo
+libACE_Memory_la_LDFLAGS = 
+libACE_Memory_la_LIBADD = 
+libACE_Memory_la_OBJECTS =  Based_Pointer_Repository.lo Malloc.lo \
+Mem_Map.lo Memory_Pool.lo Obstack.lo Read_Buffer.lo Shared_Memory.lo \
+Shared_Memory_MM.lo Shared_Memory_SV.lo
+libACE_Token_la_LDFLAGS = 
+libACE_Token_la_LIBADD = 
+libACE_Token_la_OBJECTS =  Local_Tokens.lo Remote_Tokens.lo \
+Token_Collection.lo Token_Invariants.lo Token_Manager.lo \
+Token_Request_Reply.lo
+libACE_Other_la_LDFLAGS = 
+libACE_Other_la_LIBADD = 
+libACE_Other_la_OBJECTS =  CORBA_Handler.lo CORBA_Ref.lo \
+Local_Name_Space.lo Name_Proxy.lo Name_Request_Reply.lo Name_Space.lo \
+Naming_Context.lo Registry_Name_Space.lo Remote_Name_Space.lo
+CXXCOMPILE = $(CXX) $(DEFS) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
+LTCXXCOMPILE = $(LIBTOOL) --mode=compile $(CXX) $(DEFS) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
+CXXLD = $(CXX)
+CXXLINK = $(LIBTOOL) --mode=link $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) $(LDFLAGS) -o $@
+HEADERS =  $(pkginclude_HEADERS)
+
+DIST_COMMON =  README ./stamp-h.in Makefile.am Makefile.in config.h.in
+
+
+DISTFILES = $(DIST_COMMON) $(SOURCES) $(HEADERS) $(TEXINFOS) $(EXTRA_DIST)
+
+TAR = tar
+GZIP_ENV = --best
+SOURCES = $(libACE_la_SOURCES) $(EXTRA_libACE_la_SOURCES) $(libACE_OS_la_SOURCES) $(libACE_Utils_la_SOURCES) $(EXTRA_libACE_Utils_la_SOURCES) $(libACE_Logging_la_SOURCES) $(libACE_Threads_la_SOURCES) $(libACE_Demux_la_SOURCES) $(libACE_Connection_la_SOURCES) $(libACE_Sockets_la_SOURCES) $(libACE_IPC_la_SOURCES) $(libACE_Svcconf_la_SOURCES) $(libACE_Streams_la_SOURCES) $(libACE_Memory_la_SOURCES) $(libACE_Token_la_SOURCES) $(libACE_Other_la_SOURCES)
+OBJECTS = $(libACE_la_OBJECTS) $(libACE_OS_la_OBJECTS) $(libACE_Utils_la_OBJECTS) $(libACE_Logging_la_OBJECTS) $(libACE_Threads_la_OBJECTS) $(libACE_Demux_la_OBJECTS) $(libACE_Connection_la_OBJECTS) $(libACE_Sockets_la_OBJECTS) $(libACE_IPC_la_OBJECTS) $(libACE_Svcconf_la_OBJECTS) $(libACE_Streams_la_OBJECTS) $(libACE_Memory_la_OBJECTS) $(libACE_Token_la_OBJECTS) $(libACE_Other_la_OBJECTS)
+
+all: all-redirect
+.SUFFIXES:
+.SUFFIXES: .S .c .cpp .lo .o .obj .s
+$(srcdir)/Makefile.in: @MAINTAINER_MODE_TRUE@ Makefile.am $(top_srcdir)/configure.in $(ACLOCAL_M4) 
+	cd $(top_srcdir) && $(AUTOMAKE) --gnu --include-deps ace/Makefile
+
+Makefile: $(srcdir)/Makefile.in  $(top_builddir)/config.status
+	cd $(top_builddir) \
+	  && CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= $(SHELL) ./config.status
+
+
+config.h: stamp-h
+	@if test ! -f $@; then \
+		rm -f stamp-h; \
+		$(MAKE) stamp-h; \
+	else :; fi
+stamp-h: $(srcdir)/config.h.in $(top_builddir)/config.status
+	cd $(top_builddir) \
+	  && CONFIG_FILES= CONFIG_HEADERS=ace/config.h \
+	     $(SHELL) ./config.status
+	@echo timestamp > stamp-h 2> /dev/null
+$(srcdir)/config.h.in: @MAINTAINER_MODE_TRUE@$(srcdir)/stamp-h.in
+	@if test ! -f $@; then \
+		rm -f $(srcdir)/stamp-h.in; \
+		$(MAKE) $(srcdir)/stamp-h.in; \
+	else :; fi
+$(srcdir)/stamp-h.in: $(top_srcdir)/configure.in $(ACLOCAL_M4) 
+	cd $(top_srcdir) && $(AUTOHEADER)
+	@echo timestamp > $(srcdir)/stamp-h.in 2> /dev/null
+
+mostlyclean-hdr:
+
+clean-hdr:
+
+distclean-hdr:
+	-rm -f config.h
+
+maintainer-clean-hdr:
+
+mostlyclean-libLTLIBRARIES:
+
+clean-libLTLIBRARIES:
+	-test -z "$(lib_LTLIBRARIES)" || rm -f $(lib_LTLIBRARIES)
+
+distclean-libLTLIBRARIES:
+
+maintainer-clean-libLTLIBRARIES:
+
+install-libLTLIBRARIES: $(lib_LTLIBRARIES)
+	@$(NORMAL_INSTALL)
+	$(mkinstalldirs) $(DESTDIR)$(libdir)
+	@list='$(lib_LTLIBRARIES)'; for p in $$list; do \
+	  if test -f $$p; then \
+	    echo "$(LIBTOOL)  --mode=install $(INSTALL) $$p $(DESTDIR)$(libdir)/$$p"; \
+	    $(LIBTOOL)  --mode=install $(INSTALL) $$p $(DESTDIR)$(libdir)/$$p; \
+	  else :; fi; \
+	done
+
+uninstall-libLTLIBRARIES:
+	@$(NORMAL_UNINSTALL)
+	list='$(lib_LTLIBRARIES)'; for p in $$list; do \
+	  $(LIBTOOL)  --mode=uninstall rm -f $(DESTDIR)$(libdir)/$$p; \
+	done
+
+.c.o:
+	$(COMPILE) -c $<
+
+# FIXME: We should only use cygpath when building on Windows,
+# and only if it is available.
+.c.obj:
+	$(COMPILE) -c `cygpath -w $<`
+
+.s.o:
+	$(COMPILE) -c $<
+
+.S.o:
+	$(COMPILE) -c $<
+
+mostlyclean-compile:
+	-rm -f *.o core *.core
+	-rm -f *.$(OBJEXT)
+
+clean-compile:
+
+distclean-compile:
+	-rm -f *.tab.c
+
+maintainer-clean-compile:
+
+.c.lo:
+	$(LIBTOOL) --mode=compile $(COMPILE) -c $<
+
+.s.lo:
+	$(LIBTOOL) --mode=compile $(COMPILE) -c $<
+
+.S.lo:
+	$(LIBTOOL) --mode=compile $(COMPILE) -c $<
+
+mostlyclean-libtool:
+	-rm -f *.lo
+
+clean-libtool:
+	-rm -rf .libs _libs
+
+distclean-libtool:
+
+maintainer-clean-libtool:
+
+libACE.la: $(libACE_la_OBJECTS) $(libACE_la_DEPENDENCIES)
+	$(CXXLINK) -rpath $(libdir) $(libACE_la_LDFLAGS) $(libACE_la_OBJECTS) $(libACE_la_LIBADD) $(LIBS)
+
+libACE_OS.la: $(libACE_OS_la_OBJECTS) $(libACE_OS_la_DEPENDENCIES)
+	$(CXXLINK) -rpath $(libdir) $(libACE_OS_la_LDFLAGS) $(libACE_OS_la_OBJECTS) $(libACE_OS_la_LIBADD) $(LIBS)
+
+libACE_Utils.la: $(libACE_Utils_la_OBJECTS) $(libACE_Utils_la_DEPENDENCIES)
+	$(CXXLINK) -rpath $(libdir) $(libACE_Utils_la_LDFLAGS) $(libACE_Utils_la_OBJECTS) $(libACE_Utils_la_LIBADD) $(LIBS)
+
+libACE_Logging.la: $(libACE_Logging_la_OBJECTS) $(libACE_Logging_la_DEPENDENCIES)
+	$(CXXLINK) -rpath $(libdir) $(libACE_Logging_la_LDFLAGS) $(libACE_Logging_la_OBJECTS) $(libACE_Logging_la_LIBADD) $(LIBS)
+
+libACE_Threads.la: $(libACE_Threads_la_OBJECTS) $(libACE_Threads_la_DEPENDENCIES)
+	$(CXXLINK) -rpath $(libdir) $(libACE_Threads_la_LDFLAGS) $(libACE_Threads_la_OBJECTS) $(libACE_Threads_la_LIBADD) $(LIBS)
+
+libACE_Demux.la: $(libACE_Demux_la_OBJECTS) $(libACE_Demux_la_DEPENDENCIES)
+	$(CXXLINK) -rpath $(libdir) $(libACE_Demux_la_LDFLAGS) $(libACE_Demux_la_OBJECTS) $(libACE_Demux_la_LIBADD) $(LIBS)
+
+libACE_Connection.la: $(libACE_Connection_la_OBJECTS) $(libACE_Connection_la_DEPENDENCIES)
+	$(CXXLINK) -rpath $(libdir) $(libACE_Connection_la_LDFLAGS) $(libACE_Connection_la_OBJECTS) $(libACE_Connection_la_LIBADD) $(LIBS)
+
+libACE_Sockets.la: $(libACE_Sockets_la_OBJECTS) $(libACE_Sockets_la_DEPENDENCIES)
+	$(CXXLINK) -rpath $(libdir) $(libACE_Sockets_la_LDFLAGS) $(libACE_Sockets_la_OBJECTS) $(libACE_Sockets_la_LIBADD) $(LIBS)
+
+libACE_IPC.la: $(libACE_IPC_la_OBJECTS) $(libACE_IPC_la_DEPENDENCIES)
+	$(CXXLINK) -rpath $(libdir) $(libACE_IPC_la_LDFLAGS) $(libACE_IPC_la_OBJECTS) $(libACE_IPC_la_LIBADD) $(LIBS)
+
+libACE_Svcconf.la: $(libACE_Svcconf_la_OBJECTS) $(libACE_Svcconf_la_DEPENDENCIES)
+	$(CXXLINK) -rpath $(libdir) $(libACE_Svcconf_la_LDFLAGS) $(libACE_Svcconf_la_OBJECTS) $(libACE_Svcconf_la_LIBADD) $(LIBS)
+
+libACE_Streams.la: $(libACE_Streams_la_OBJECTS) $(libACE_Streams_la_DEPENDENCIES)
+	$(CXXLINK) -rpath $(libdir) $(libACE_Streams_la_LDFLAGS) $(libACE_Streams_la_OBJECTS) $(libACE_Streams_la_LIBADD) $(LIBS)
+
+libACE_Memory.la: $(libACE_Memory_la_OBJECTS) $(libACE_Memory_la_DEPENDENCIES)
+	$(CXXLINK) -rpath $(libdir) $(libACE_Memory_la_LDFLAGS) $(libACE_Memory_la_OBJECTS) $(libACE_Memory_la_LIBADD) $(LIBS)
+
+libACE_Token.la: $(libACE_Token_la_OBJECTS) $(libACE_Token_la_DEPENDENCIES)
+	$(CXXLINK) -rpath $(libdir) $(libACE_Token_la_LDFLAGS) $(libACE_Token_la_OBJECTS) $(libACE_Token_la_LIBADD) $(LIBS)
+
+libACE_Other.la: $(libACE_Other_la_OBJECTS) $(libACE_Other_la_DEPENDENCIES)
+	$(CXXLINK) -rpath $(libdir) $(libACE_Other_la_LDFLAGS) $(libACE_Other_la_OBJECTS) $(libACE_Other_la_LIBADD) $(LIBS)
+.cpp.o:
+	$(CXXCOMPILE) -c $<
+.cpp.obj:
+	$(CXXCOMPILE) -c `cygpath -w $<`
+.cpp.lo:
+	$(LTCXXCOMPILE) -c $<
+
+install-pkgincludeHEADERS: $(pkginclude_HEADERS)
+	@$(NORMAL_INSTALL)
+	$(mkinstalldirs) $(DESTDIR)$(pkgincludedir)
+	@list='$(pkginclude_HEADERS)'; for p in $$list; do \
+	  if test -f "$$p"; then d= ; else d="$(srcdir)/"; fi; \
+	  echo " $(INSTALL_DATA) $$d$$p $(DESTDIR)$(pkgincludedir)/$$p"; \
+	  $(INSTALL_DATA) $$d$$p $(DESTDIR)$(pkgincludedir)/$$p; \
+	done
+
+uninstall-pkgincludeHEADERS:
+	@$(NORMAL_UNINSTALL)
+	list='$(pkginclude_HEADERS)'; for p in $$list; do \
+	  rm -f $(DESTDIR)$(pkgincludedir)/$$p; \
+	done
+
+tags: TAGS
+
+ID: $(HEADERS) $(SOURCES) $(LISP)
+	list='$(SOURCES) $(HEADERS)'; \
+	unique=`for i in $$list; do echo $$i; done | \
+	  awk '    { files[$$0] = 1; } \
+	       END { for (i in files) print i; }'`; \
+	here=`pwd` && cd $(srcdir) \
+	  && mkid -f$$here/ID $$unique $(LISP)
+
+TAGS:  $(HEADERS) $(SOURCES) config.h.in $(TAGS_DEPENDENCIES) $(LISP)
+	tags=; \
+	here=`pwd`; \
+	list='$(SOURCES) $(HEADERS)'; \
+	unique=`for i in $$list; do echo $$i; done | \
+	  awk '    { files[$$0] = 1; } \
+	       END { for (i in files) print i; }'`; \
+	test -z "$(ETAGS_ARGS)config.h.in$$unique$(LISP)$$tags" \
+	  || (cd $(srcdir) && etags $(ETAGS_ARGS) $$tags config.h.in $$unique $(LISP) -o $$here/TAGS)
+
+mostlyclean-tags:
+
+clean-tags:
+
+distclean-tags:
+	-rm -f TAGS ID
+
+maintainer-clean-tags:
+
+distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
+
+subdir = ace
+
+distdir: $(DISTFILES)
+	@for file in $(DISTFILES); do \
+	  d=$(srcdir); \
+	  if test -d $$d/$$file; then \
+	    cp -pr $$d/$$file $(distdir)/$$file; \
+	  else \
+	    test -f $(distdir)/$$file \
+	    || ln $$d/$$file $(distdir)/$$file 2> /dev/null \
+	    || cp -p $$d/$$file $(distdir)/$$file || :; \
+	  fi; \
+	done
+info-am:
+info: info-am
+dvi-am:
+dvi: dvi-am
+check-am: all-am
+check: check-am
+installcheck-am:
+installcheck: installcheck-am
+all-recursive-am: config.h
+	$(MAKE) $(AM_MAKEFLAGS) all-recursive
+
+install-exec-am: install-libLTLIBRARIES
+install-exec: install-exec-am
+
+install-data-am: install-pkgincludeHEADERS
+install-data: install-data-am
+
+install-am: all-am
+	@$(MAKE) $(AM_MAKEFLAGS) install-exec-am install-data-am
+install: install-am
+uninstall-am: uninstall-libLTLIBRARIES uninstall-pkgincludeHEADERS
+uninstall: uninstall-am
+all-am: Makefile $(LTLIBRARIES) $(HEADERS) config.h
+all-redirect: all-am
+install-strip:
+	$(MAKE) $(AM_MAKEFLAGS) AM_INSTALL_PROGRAM_FLAGS=-s install
+installdirs:
+	$(mkinstalldirs)  $(DESTDIR)$(libdir) $(DESTDIR)$(pkgincludedir)
+
+
+mostlyclean-generic:
+
+clean-generic:
+
+distclean-generic:
+	-rm -f Makefile $(CONFIG_CLEAN_FILES)
+	-rm -f config.cache config.log stamp-h stamp-h[0-9]*
+
+maintainer-clean-generic:
+mostlyclean-am:  mostlyclean-hdr mostlyclean-libLTLIBRARIES \
+		mostlyclean-compile mostlyclean-libtool \
+		mostlyclean-tags mostlyclean-generic
+
+mostlyclean: mostlyclean-am
+
+clean-am:  clean-hdr clean-libLTLIBRARIES clean-compile clean-libtool \
+		clean-tags clean-generic mostlyclean-am clean-local
+
+clean: clean-am
+
+distclean-am:  distclean-hdr distclean-libLTLIBRARIES distclean-compile \
+		distclean-libtool distclean-tags distclean-generic \
+		clean-am
+	-rm -f libtool
+
+distclean: distclean-am
+
+maintainer-clean-am:  maintainer-clean-hdr \
+		maintainer-clean-libLTLIBRARIES \
+		maintainer-clean-compile maintainer-clean-libtool \
+		maintainer-clean-tags maintainer-clean-generic \
+		distclean-am
+	@echo "This command is intended for maintainers to use;"
+	@echo "it deletes files that may require special tools to rebuild."
+
+maintainer-clean: maintainer-clean-am
+
+.PHONY: mostlyclean-hdr distclean-hdr clean-hdr maintainer-clean-hdr \
+mostlyclean-libLTLIBRARIES distclean-libLTLIBRARIES \
+clean-libLTLIBRARIES maintainer-clean-libLTLIBRARIES \
+uninstall-libLTLIBRARIES install-libLTLIBRARIES mostlyclean-compile \
+distclean-compile clean-compile maintainer-clean-compile \
+mostlyclean-libtool distclean-libtool clean-libtool \
+maintainer-clean-libtool uninstall-pkgincludeHEADERS \
+install-pkgincludeHEADERS tags mostlyclean-tags distclean-tags \
+clean-tags maintainer-clean-tags distdir info-am info dvi-am dvi check \
+check-am installcheck-am installcheck all-recursive-am install-exec-am \
+install-exec install-data-am install-data install-am install \
+uninstall-am uninstall all-redirect all-am all installdirs \
+mostlyclean-generic distclean-generic clean-generic \
+maintainer-clean-generic clean mostlyclean distclean maintainer-clean
+
+
+clean-local:
+	-rm -f *.bak *.rpo *.sym lib*.*_pure_* Makefile.old core
+	-rm -rf ptrepository Templates.DB gcctemp.c gcctemp so_locations
+
+# Tell versions [3.59,3.63) of GNU make to not export all variables.
+# Otherwise a system limit (for SysV at least) may be exceeded.
+.NOEXPORT:
