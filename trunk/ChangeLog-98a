@@ -1,3 +1,7 @@
+Thu Feb 12 14:33:12 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/OS.i (mktemp): I missed this one in Win32 section.
+
 Fri Feb 13 09:04:13 1998  Oliver Kellogg <Oliver.Kellogg@vs.dasa.de>
 
         * ace/config-osf1-4.0.h: added Rational RCC support.
