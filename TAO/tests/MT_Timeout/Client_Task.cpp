@@ -3,6 +3,9 @@
 //
 
 #include "Client_Task.h"
+#include "tao/TimeBaseC.h"
+#include "tao/MessagingC.h"
+
 
 ACE_RCSID(MT_Timeout, Client_Task, "$Id$")
 
