@@ -4,7 +4,8 @@ Sun Apr 09 00:04:25 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 	  <malloc_stats_>.  It is a member of Control_Block and does not
 	  require explicit initialization/destruction.  This was causing
 	  ACE not to compile when ACE_HAS_MALLOC_STATS was defined.
-	  Thanks to <jsmyder@salient.com> for reporting the problem.
+	  Thanks to John Smyder <jsmyder@salient.com> for reporting the
+	  problem.
 
 	* ace/Malloc_T.cpp (open): Removed invocation of contructor to
 	  <malloc_stats_> for the same reason.
@@ -31,6 +32,17 @@ Tue Apr  4 23:50:02 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/ACE.cpp (sock_error): Changed "int error" to "ssize_t error"
 	  to be consistent...
+
+Tue Apr  4 20:19:36 2000  <schmidt@rumba.ece.uci.edu>
+
+	* ace/Acceptor.cpp: Modified the implementation of
+	  ACE_Acceptor::open() and ACE_Acceptor::accept_svc_handler() so
+	  that the peer acceptor's handle is set into non-blocking mode.
+	  This is a safe-guard against the race condition that can
+	  otherwise occur between the time when <select> indicates that a
+	  passive-mode socket handle is "ready" and when we call <accept>.
+	  During this interval, the client can shutdown the connection, in
+	  which case, the <accept> call can hang!
 
 Mon Apr  3 11:09:26 2000  Vishal Kachroo  <vishal@cs.wustl.edu>
 
