@@ -1,3 +1,9 @@
+Fri Jun 18 11:08:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-lite.h:
+          Removed setting ASYS_INLINE, we don't use it anymore, instead we
+          use ACE_INLINE
+
 Fri Jun 18 10:31:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-openvms.h:
