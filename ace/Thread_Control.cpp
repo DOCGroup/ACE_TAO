@@ -71,8 +71,8 @@ ACE_Thread_Control::~ACE_Thread_Control (void)
 
 // Exit from thread (but clean up first).
 
-void *
-ACE_Thread_Control::exit (void *exit_status, int do_thr_exit)
+ACE_THR_FUNC_RETURN
+ACE_Thread_Control::exit (ACE_THR_FUNC_RETURN exit_status, int do_thr_exit)
 {
   ACE_OS_TRACE ("ACE_Thread_Control::exit");
 

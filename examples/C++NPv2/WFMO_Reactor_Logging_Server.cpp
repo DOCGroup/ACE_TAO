@@ -105,7 +105,7 @@ protected:
 };
 
 
-static void *event_loop (void *arg) {
+static ACE_THR_FUNC_RETURN event_loop (void *arg) {
   ACE_Reactor *reactor = ACE_static_cast (ACE_Reactor *, arg);
 
   reactor->owner (ACE_OS::thr_self ());

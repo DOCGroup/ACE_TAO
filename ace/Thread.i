@@ -57,7 +57,7 @@ ACE_Thread::self (void)
 }
 
 ACE_INLINE void
-ACE_Thread::exit (void *status)
+ACE_Thread::exit (ACE_THR_FUNC_RETURN status)
 {
   ACE_TRACE ("ACE_Thread::exit");
   ACE_OS::thr_exit (status);
@@ -118,7 +118,7 @@ ACE_Thread::kill (ACE_thread_t t_id, int signum)
 ACE_INLINE int
 ACE_Thread::join (ACE_thread_t wait_for,
 		  ACE_thread_t *departed,
-		  void **status)
+		  ACE_THR_FUNC_RETURN *status)
 {
   ACE_TRACE ("ACE_Thread::join");
   return ACE_OS::thr_join (wait_for, departed, status);
@@ -126,7 +126,7 @@ ACE_Thread::join (ACE_thread_t wait_for,
 
 ACE_INLINE int
 ACE_Thread::join (ACE_hthread_t wait_for,
-		  void **status)
+		  ACE_THR_FUNC_RETURN *status)
 {
   ACE_TRACE ("ACE_Thread::join");
   return ACE_OS::thr_join (wait_for, status);

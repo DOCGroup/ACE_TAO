@@ -101,7 +101,7 @@ ace_thread_adapter (unsigned long args)
   thread_args->invoke ();
 }
 #else /* ! defined (ACE_PSOS) */
-extern "C" void * 
+extern "C" ACE_THR_FUNC_RETURN
 ace_thread_adapter (void *args)
 {
   ACE_OS_TRACE ("ace_thread_adapter");
@@ -118,7 +118,7 @@ ace_thread_adapter (void *args)
     ACE_static_cast (ACE_Base_Thread_Adapter *, args);
 
   // Invoke the user-supplied function with the args.
-  void *status = thread_args->invoke ();
+  ACE_THR_FUNC_RETURN status = thread_args->invoke ();
 
   return status;
 }

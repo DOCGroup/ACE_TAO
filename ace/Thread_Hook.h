@@ -37,12 +37,12 @@ public:
    * This method can be overridden in a subclass to customize this
    * pre-function call "hook" invocation that can perform
    * initialization processing before the thread entry point <func>
-   * method is called back.  The <func> and <arg> passed into the
+   * method is called back.  The @a func and @a arg passed into the
    * start hook are the same as those passed by the application that
    * spawned the thread.
    */
-  virtual void *start (ACE_THR_FUNC func,
-                       void *arg);
+  virtual ACE_THR_FUNC_RETURN start (ACE_THR_FUNC func,
+                                     void *arg);
 
   /// sets the system wide thread hook, returns the previous thread
   /// hook or 0 if none is set.

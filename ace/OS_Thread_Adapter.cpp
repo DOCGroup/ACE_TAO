@@ -35,7 +35,7 @@ ACE_OS_Thread_Adapter::~ACE_OS_Thread_Adapter (void)
 {
 }
 
-void *
+ACE_THR_FUNC_RETURN
 ACE_OS_Thread_Adapter::invoke (void)
 {
   // Inherit the logging features if the parent thread has an
@@ -68,7 +68,7 @@ ACE_OS_Thread_Adapter::invoke (void)
 
 #endif /* ACE_NEEDS_LWP_PRIO_SET */
 
-  void *status = 0;
+  ACE_THR_FUNC_RETURN status = 0;
 
   ACE_SEH_TRY
     {
@@ -88,14 +88,11 @@ ACE_OS_Thread_Adapter::invoke (void)
               // Call thread entry point.
 #if defined (ACE_PSOS)
               (*func) (arg);
+              status = 0;
 #else /* ! ACE_PSOS */
-              status = ACE_reinterpret_cast (void *, (*func) (arg));
+              status = (*func) (arg);
 #endif /* ACE_PSOS */
             }
-#if defined (ACE_PSOS)
-          // pSOS task functions do not return a value.
-          status = 0;
-#endif /* ACE_PSOS */
         }
 
 #if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
@@ -147,7 +144,7 @@ ACE_OS_Thread_Adapter::invoke (void)
       if (!pThread || pThread->m_nThreadID != ACE_OS::thr_self ())
         ACE_ENDTHREADEX (status);
       else
-        ::AfxEndThread ((DWORD)status);
+        ::AfxEndThread (status);
 #   else
       ACE_ENDTHREADEX (status);
 #   endif /* ACE_HAS_MFC && ACE_HAS_MFS != 0*/

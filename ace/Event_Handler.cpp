@@ -183,7 +183,7 @@ ACE_Event_Handler::reactor (void) const
 // handler returns <ACE_INVALID_HANDLE> we default to reading from
 // ACE_STDIN.
 
-void *
+ACE_THR_FUNC_RETURN
 ACE_Event_Handler::read_adapter (void *args)
 {
   ACE_Event_Handler *this_ptr = (ACE_Event_Handler *) args;

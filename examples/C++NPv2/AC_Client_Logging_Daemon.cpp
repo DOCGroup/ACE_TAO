@@ -175,7 +175,7 @@ public:
 
 int AC_Output_Handler::open (void *connector) {
   connector_ =
-    ACE_reinterpret_cast (AC_CLD_Connector *, connector);
+    ACE_static_cast (AC_CLD_Connector *, connector);
   int bufsiz = ACE_DEFAULT_MAX_SOCKET_BUFSIZ;
   peer ().set_option (SOL_SOCKET, SO_SNDBUF,
                       &bufsiz, sizeof bufsiz);

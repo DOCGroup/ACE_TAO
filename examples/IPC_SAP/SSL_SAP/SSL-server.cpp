@@ -36,7 +36,7 @@ run_server (ACE_THR_FUNC server,
 
 // Function entry point into the twoway server task.
 
-static void *
+static ACE_THR_FUNC_RETURN
 twoway_server (void *arg)
 {
   ACE_INET_Addr cli_addr;
@@ -149,7 +149,7 @@ twoway_server (void *arg)
 
 // Function entry point into the oneway server task.
 
-static void *
+static ACE_THR_FUNC_RETURN
 oneway_server (void *arg)
 {
   ACE_INET_Addr cli_addr;

@@ -46,7 +46,7 @@ main (int, char*[])
 static char THIS_FILE[] = __FILE__;
 #endif
 
-static void * wait_and_kill_dialog (void *pBox);
+static ACE_THR_FUNC_RETURN wait_and_kill_dialog (void *pBox);
 
 /////////////////////////////////////////////////////////////////////////////
 // CACE_Init_TestApp
@@ -115,7 +115,7 @@ BOOL CACE_Init_TestApp::InitInstance()
 // This function runs in a separate thread - it will wait a couple of
 // seconds and then programatically dismiss the dialog box.  If ACE is
 // not properly initialized, we will have crashed before getting here.
-static void *
+static ACE_THR_FUNC_RETURN
 wait_and_kill_dialog (void *pBox)
 {
   CACE_Init_TestDlg *pDialog = ACE_reinterpret_cast (CACE_Init_TestDlg *,

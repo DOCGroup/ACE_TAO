@@ -43,7 +43,7 @@ ACE_Thread_Adapter::~ACE_Thread_Adapter (void)
 {
 }
 
-void *
+ACE_THR_FUNC_RETURN
 ACE_Thread_Adapter::invoke (void)
 {
   // Inherit the logging features if the parent thread has an
@@ -93,7 +93,7 @@ ACE_Thread_Adapter::invoke (void)
   return this->invoke_i ();
 }
 
-void *
+ACE_THR_FUNC_RETURN
 ACE_Thread_Adapter::invoke_i (void)
 {
   // Extract the arguments.
@@ -126,7 +126,7 @@ ACE_Thread_Adapter::invoke_i (void)
 
 #endif /* ACE_NEEDS_LWP_PRIO_SET */
 
-  void *status = 0;
+  ACE_THR_FUNC_RETURN status = 0;
 
   ACE_SEH_TRY
     {
@@ -139,21 +139,17 @@ ACE_Thread_Adapter::invoke_i (void)
             // Invoke the start hook to give the user a chance to
             // perform some initialization processing before the
             // <func> is invoked.
-            status = hook->start (ACE_reinterpret_cast (ACE_THR_FUNC, func),
-                                  arg);
+            status = hook->start (func, arg);
           else
             {
               // Call thread entry point.
 #if defined (ACE_PSOS)
+              status = 0;
               (*func) (arg);
 #else /* ! ACE_PSOS */
-              status = ACE_reinterpret_cast (void *, (*func) (arg));
+              status = (*func) (arg);
 #endif /* ACE_PSOS */
             }
-#if defined (ACE_PSOS)
-          // pSOS task functions do not return a value.
-          status = 0;
-#endif /* ACE_PSOS */
         }
 
 #if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)

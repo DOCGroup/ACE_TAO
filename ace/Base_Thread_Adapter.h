@@ -25,7 +25,7 @@
 #if defined (ACE_PSOS)
 extern "C" void ace_thread_adapter (unsigned long args);
 #else /* ! defined (ACE_PSOS) */
-extern "C" ACE_OS_Export void *ace_thread_adapter (void *args);
+extern "C" ACE_OS_Export ACE_THR_FUNC_RETURN ace_thread_adapter (void *args);
 #endif /* ACE_PSOS */
 
 /**
@@ -60,16 +60,16 @@ protected:
  *
  * @brief Base class for all the Thread_Adapters.
  *
- * Converts a C++ function into a function <ace_thread_adapter>
- * function that can be called from a thread creation routine
- * (e.g., <pthread_create> or <_beginthreadex>) that expects an
+ * Converts a C++ function into a function that can be
+ * called from a thread creation routine
+ * (e.g., pthread_create() or _beginthreadex()) that expects an
  * extern "C" entry point.  This class also makes it possible to
  * transparently provide hooks to register a thread with an
- * <ACE_Thread_Manager>.
- * This class is used in <ACE_OS::thr_create>.  In general, the
+ * ACE_Thread_Manager.
+ * This class is used in ACE_OS::thr_create().  In general, the
  * thread that creates an object of this class is different from
- * the thread that calls <invoke> on this object.  Therefore,
- * the <invoke> method is responsible for deleting itself.
+ * the thread that calls @c invoke() on this object.  Therefore,
+ * the @c invoke() method is responsible for deleting itself.
  */
 class ACE_OS_Export ACE_Base_Thread_Adapter
 {
@@ -86,7 +86,7 @@ public:
                       );
 
   /// Virtual method invoked by the thread entry point.
-  virtual void *invoke (void) = 0;
+  virtual ACE_THR_FUNC_RETURN invoke (void) = 0;
 
   /// Accessor for the C entry point function to the OS thread creation
   /// routine.
