@@ -1,380 +1,380 @@
 Fri Oct  2 08:18:28 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
-	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
-	 
-	  There was a local variable that got removed by mistake while
-	  removing all unused locals. It has been reincluded.
+        * TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
+
+          There was a local variable that got removed by mistake while
+          removing all unused locals. It has been reincluded.
 
 Thu Oct  1 23:31:34 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* Updated the dependencies in all the Makefiles due to the DynAny
-	  changes.
+        * Updated the dependencies in all the Makefiles due to the DynAny
+          changes.
 
 Thu Oct  1 22:05:39 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
-	* tao/DynAny.pidl:
-	* tao/InconsistentTypeCode.pidl:
-	* tao/DynAnyC.{h,i,cpp}:
-	* tao/DynAnyS.cpp:
-	* tao/DynAny_i.{h,cpp}:
-	* tao/DynArray_i.{h,cpp}:
-	* tao/DynEnum_i.{h,cpp}:
-	* tao/DynSequence_i.{h,cpp}:
-	* tao/DynStruct_i.{h,cpp}:
-	* tao/DynUnion_i.{h,cpp}:
-	* tao/DynUnion_i_T.{h,cpp}:
-	* tao/InconsistentTypeCode.{h,cpp}:
-	* tao/corba.h:
-	* tao/ORB.{h,i,cpp}:
-	* tao/POA_CORBA.h:
-	* tao/Makefile:
-	* tao/TAO.dsp:
-	  All the DynAny stuff, plus the necessary additions to
-	  other TAO files, plus mods to Unix Makefile and VC
-	  project file. Builds were successful using VC5, Sun cc
-	  and GNU g++.
+        * tao/DynAny.pidl:
+        * tao/InconsistentTypeCode.pidl:
+        * tao/DynAnyC.{h,i,cpp}:
+        * tao/DynAnyS.cpp:
+        * tao/DynAny_i.{h,cpp}:
+        * tao/DynArray_i.{h,cpp}:
+        * tao/DynEnum_i.{h,cpp}:
+        * tao/DynSequence_i.{h,cpp}:
+        * tao/DynStruct_i.{h,cpp}:
+        * tao/DynUnion_i.{h,cpp}:
+        * tao/DynUnion_i_T.{h,cpp}:
+        * tao/InconsistentTypeCode.{h,cpp}:
+        * tao/corba.h:
+        * tao/ORB.{h,i,cpp}:
+        * tao/POA_CORBA.h:
+        * tao/Makefile:
+        * tao/TAO.dsp:
+          All the DynAny stuff, plus the necessary additions to
+          other TAO files, plus mods to Unix Makefile and VC
+          project file. Builds were successful using VC5, Sun cc
+          and GNU g++.
 
 Thu Oct 01 21:21:19 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp
-	  (gen_raise_exception): 
-	  (gen_check_exception): 
-	  (gen_demarshal_params): Removed unused local variable(s) to
-	  avoid warnings from VC5.
+        * TAO_IDL/be/be_visitor_operation/operation_ss.cpp
+          (gen_raise_exception):
+          (gen_check_exception):
+          (gen_demarshal_params): Removed unused local variable(s) to
+          avoid warnings from VC5.
 
 Thu Oct  1 20:51:39 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_interface/cdr_op_cs.cpp: Added trailing
-	  return statements to supress warnings from g++.
+        * TAO_IDL/be/be_visitor_interface/cdr_op_cs.cpp: Added trailing
+          return statements to supress warnings from g++.
 
 Thu Oct  1 16:03:55 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-	* performance-tests/Cubit/TAO/IDL_Cubit/client.dsp:
-	* performance-tests/Cubit/TAO/IDL_Cubit/server.dsp:
-	* performance-tests/Cubit/TAO/IDL_Cubit/collocation_test.dsp:
-	  Removed orbsvcs reference.
+        * performance-tests/Cubit/TAO/IDL_Cubit/client.dsp:
+        * performance-tests/Cubit/TAO/IDL_Cubit/server.dsp:
+        * performance-tests/Cubit/TAO/IDL_Cubit/collocation_test.dsp:
+          Removed orbsvcs reference.
 
 Thu Oct 01 14:22:35 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/CDR.i (operator<<): Changed to use TAO_CHECK_ENV for Any,
-	  Object and TypeCode operations and added trailing return
-	  statement to avoid warnings from MSVC.
+        * tao/CDR.i (operator<<): Changed to use TAO_CHECK_ENV for Any,
+          Object and TypeCode operations and added trailing return
+          statement to avoid warnings from MSVC.
 
-	* TAO/TAO_IDL/tao_idl.dsp:
-	* TAO/TAO_IDL/tao_idl_static.dsp: Updated project based on Andy's
-	  changes.  (by Darrell.)
+        * TAO/TAO_IDL/tao_idl.dsp:
+        * TAO/TAO_IDL/tao_idl_static.dsp: Updated project based on Andy's
+          changes.  (by Darrell.)
 
-	* TAO/TAO_IDL/be/be_visitor_array/any_op_cs.cpp:
-	* TAO/TAO_IDL/be/be_visitor_enum/any_op_cs.cpp:
-	* TAO/TAO_IDL/be/be_visitor_exception/any_op_cs.cpp:
-	* TAO/TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp:
-	* TAO/TAO_IDL/be/be_visitor_structure/any_op_cs.cpp:
-	* TAO/TAO_IDL/be/be_visitor_union/any_op_cs.cpp:  Added trailing
-	  "return 0;" for generated code for operator>>= of these to avoid
-	  MSVC warnings.
+        * TAO/TAO_IDL/be/be_visitor_array/any_op_cs.cpp:
+        * TAO/TAO_IDL/be/be_visitor_enum/any_op_cs.cpp:
+        * TAO/TAO_IDL/be/be_visitor_exception/any_op_cs.cpp:
+        * TAO/TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp:
+        * TAO/TAO_IDL/be/be_visitor_structure/any_op_cs.cpp:
+        * TAO/TAO_IDL/be/be_visitor_union/any_op_cs.cpp:  Added trailing
+          "return 0;" for generated code for operator>>= of these to avoid
+          MSVC warnings.
 
 Thu Oct  1 12:42:58 EDT 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
-	* TAO_IDL/be/be_factory.cpp
-		 /be_include/be_factory.h
-		 /be_stream
-
-	  Renamed to be_factory.{h, cpp} to be_stream_factory.{h, cpp},
-	  respectively. We removed the visitor factory related classes and
-	  code from these files and created new files.
-
-	* TAO_IDL/be/be_interpretive.cpp
-	         /be_include/be_interpretive.h:
-
-	  Removed. Instead we now have the be_visitor_factor.{h, cpp} file
-	described next.
-
-	* TAO_IDL/be/be_visitor_factory.cpp
-	         /be_include/be_visitor_factory.h:
-
-	  Added the abstract base class visitor factory called
-	  "TAO_Visitor_Factory" that provides the "make_visitor" factory
-	  method. Special concrete visitor factories called
-	  "TAO_Interpreted_Visitor_Factory",
-	  "TAO_Compiled_Visitor_Factory", and "TAO_Common_Visitor_Factory"
-	  are now available as Singleton concrete factories.
-
-	  The TAO_Common_Visitor_Factory is never used directly by the
-	  client (i.e., the tao_cg object). There are several visitors
-	  that are common to both the interpretive as well as the compiled
-	  approaches e.g., interface code generation, any operators,
-	  etc. Thus, the two primary factories (interpretive or compiled)
-	  will internally delegate code generation to the common factory
-	  based on the state.
-
-	* TAO_IDL/be/be_codegen.cpp
-	         /be_include/be_codegen.h:
-
-	  Removed a large number of unused enumerations for the
-	  CG_STATE. Also, renamed all the *DOCALL* states to *INVOKE*
-	  states to make it look generic and applicable to both
-	  interpretive as well as compiled marshaling.
-
-	  Added a new method called "config_visitor_factory (void)". This
-	  allows the TAO_CODEGEN Singleton object to be strategized with
-	  the desired visitor factory which can be either the interpretive
-	  or the compiled visitor factory, but never the common
-	  factory. The common factory gets invoked internally by the other
-	  two factories as described before. This strategy is fixed based on
-	  the command line option provided to the compiler.
-
-	  We no longer create a new factory and own it. Instead, as
-	  described before, we simply hold a pointer to the abstract base
-	  factory. This is initialized to either the interpretive or
-	  compiled factory objects using the config_visitor_factory
-	  method.
-
-	* TAO_IDL/be_include/be.h:
-
-	  Made the necessary changes due to the addition and renaming of
-	  files described above.
-
-	* TAO_IDL/be/be_produce.cpp:
-
-	  We call the config_visitor_factory method on our TAO_CODEGEN
-	  singleton, strategy object. It will configure itself with the
-	  right visitor factory.
-
-	* TAO_IDL/be/be_visitor_argument.cpp
-	         /be_include/be_visitor_argument.h:
-
-	  Added new include *.{h, cpp} files described next.
-
-	* TAO_IDL/be/be_visitor_argument/compiled_marshal_cs.cpp
-	                                /compiled_marshal_ss.cpp
-	                                /pre_invoke_cs.cpp
-	         /be_include/be_visitor_argument/compiled_marshal_cs.h
-	                                        /compiled_marshal_ss.h
-	                                        /pre_invoke_cs.h:
-
-	  New files with new visitors added for compiled marshaling
-	  support. The compiled_marshal_{cs,ss}.{h,cpp} has visitors that
-	  generates the code for marshaling and demarshaling parameters
-	  using the CDR <<, >> operators. The pre_invoke_cs is a visitor
-	  that inherits from the pre_docall_cs. Its sole purpose is to
-	  override  the visit_interface and visit_interface_fwd
-	  methods. The reason we need to do this is because for compiled
-	  marshaling, we do not need to deal with the base
-	  CORBA_Object_ptr types and do the necessary _narrow inside the
-	  stub/skel.  This is all done in the code for the <<, >>
-	  operators.
-
-	* TAO_IDL/be/be_visitor_argument/docall_cs.cpp
-					/pre_docall_cs.cpp
-					/marshal_ss.cpp
-					/post_upcall_ss.cpp
-					/upcall_ss.cpp:
-
-	  For all the variable sized types, especially the out parameters,
-	  we were declaring the _var, _out, and the ptr type for the
-	  parameter. We no londer need to instantiate so many
-	  variables. We can deal with just the _var types. All actions
-	  including memory allocation, passing it to the do_static_call or
-	  the upcall, is handled using the _var parameter. This reducs
-	  code size as well as the activation record size since the number
-	  of local variables is significantly reduced.
-
-	* TAO_IDL/be/be_visitor_argument/vardecl_ss.cpp
-		 /be_include/be_visitor_argument/vardecl_ss.h:
-
-	  We define an addition class called
-	  be_compiled_visitor_args_vardecl_ss that inherits from the base
-	  be_visitor_args_vardecl_ss. Its only purpose is to override the
-	  base class's visit_interface methods. The overridden methods
-	  avoid the generation of the extra local variables of the
-	  CORBA::Object_ptr type.
-
-	* TAO_IDL/be/be_visitor_array/any_op_cs.cpp:
-	  TAO_IDL/be/be_visitor_enum/any_op_cs.cpp:
-	  TAO_IDL/be/be_visitor_structure/any_op_cs.cpp:
-
-	  The code for <<=, and >>= now uses the TAO_TRY macros so that
-	  they can work with real C++ exceptions also.
-
-	  This is not yet done for all types since this is under testing.
-
-	* TAO_IDL/{be, be_include}/be_visitor_enum/enum_ch.{h, cpp}
-	  TAO_IDL/{be, be_include}/be_visitor_exception/cdr_op_cs.{h, cpp}
-	  TAO_IDL/{be, be_include}/be_visitor_exception/exception_ctor.{h, cpp}
-	  TAO_IDL/{be, be_include}/be_visitor_interface/cdr_op_cs.{h, cpp}:
-	  TAO_IDL/{be, be_include}/be_visitor_operation/argument.{h, cpp}:
-	  TAO_IDL/{be, be_include}/be_visitor_union/cdr_op_cs.{h, cpp}:
-
-	  Modifications were necessary due to the change in the
-	  "post_process" signature and semantics.
-
-	* TAO_IDL/be/be_visitor_interface/interface.cpp:
-
-	  Removed some commented-out code.
-
-	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
-
-	  The skeleton code now uses the TAO_TRY macros for seamless exception
-	  support between the real C++ exceptions and the alternate mapping.
-
-	* TAO_IDL/be/be_visitor_operation.cpp
-	         /be_include/be_visitor_operation.h:
+        * TAO_IDL/be/be_factory.cpp
+                 /be_include/be_factory.h
+                 /be_stream
+
+          Renamed to be_factory.{h, cpp} to be_stream_factory.{h, cpp},
+          respectively. We removed the visitor factory related classes and
+          code from these files and created new files.
+
+        * TAO_IDL/be/be_interpretive.cpp
+                 /be_include/be_interpretive.h:
+
+          Removed. Instead we now have the be_visitor_factor.{h, cpp} file
+        described next.
+
+        * TAO_IDL/be/be_visitor_factory.cpp
+                 /be_include/be_visitor_factory.h:
+
+          Added the abstract base class visitor factory called
+          "TAO_Visitor_Factory" that provides the "make_visitor" factory
+          method. Special concrete visitor factories called
+          "TAO_Interpreted_Visitor_Factory",
+          "TAO_Compiled_Visitor_Factory", and "TAO_Common_Visitor_Factory"
+          are now available as Singleton concrete factories.
+
+          The TAO_Common_Visitor_Factory is never used directly by the
+          client (i.e., the tao_cg object). There are several visitors
+          that are common to both the interpretive as well as the compiled
+          approaches e.g., interface code generation, any operators,
+          etc. Thus, the two primary factories (interpretive or compiled)
+          will internally delegate code generation to the common factory
+          based on the state.
+
+        * TAO_IDL/be/be_codegen.cpp
+                 /be_include/be_codegen.h:
+
+          Removed a large number of unused enumerations for the
+          CG_STATE. Also, renamed all the *DOCALL* states to *INVOKE*
+          states to make it look generic and applicable to both
+          interpretive as well as compiled marshaling.
+
+          Added a new method called "config_visitor_factory (void)". This
+          allows the TAO_CODEGEN Singleton object to be strategized with
+          the desired visitor factory which can be either the interpretive
+          or the compiled visitor factory, but never the common
+          factory. The common factory gets invoked internally by the other
+          two factories as described before. This strategy is fixed based on
+          the command line option provided to the compiler.
+
+          We no longer create a new factory and own it. Instead, as
+          described before, we simply hold a pointer to the abstract base
+          factory. This is initialized to either the interpretive or
+          compiled factory objects using the config_visitor_factory
+          method.
+
+        * TAO_IDL/be_include/be.h:
+
+          Made the necessary changes due to the addition and renaming of
+          files described above.
+
+        * TAO_IDL/be/be_produce.cpp:
+
+          We call the config_visitor_factory method on our TAO_CODEGEN
+          singleton, strategy object. It will configure itself with the
+          right visitor factory.
+
+        * TAO_IDL/be/be_visitor_argument.cpp
+                 /be_include/be_visitor_argument.h:
+
+          Added new include *.{h, cpp} files described next.
+
+        * TAO_IDL/be/be_visitor_argument/compiled_marshal_cs.cpp
+                                        /compiled_marshal_ss.cpp
+                                        /pre_invoke_cs.cpp
+                 /be_include/be_visitor_argument/compiled_marshal_cs.h
+                                                /compiled_marshal_ss.h
+                                                /pre_invoke_cs.h:
+
+          New files with new visitors added for compiled marshaling
+          support. The compiled_marshal_{cs,ss}.{h,cpp} has visitors that
+          generates the code for marshaling and demarshaling parameters
+          using the CDR <<, >> operators. The pre_invoke_cs is a visitor
+          that inherits from the pre_docall_cs. Its sole purpose is to
+          override  the visit_interface and visit_interface_fwd
+          methods. The reason we need to do this is because for compiled
+          marshaling, we do not need to deal with the base
+          CORBA_Object_ptr types and do the necessary _narrow inside the
+          stub/skel.  This is all done in the code for the <<, >>
+          operators.
+
+        * TAO_IDL/be/be_visitor_argument/docall_cs.cpp
+                                        /pre_docall_cs.cpp
+                                        /marshal_ss.cpp
+                                        /post_upcall_ss.cpp
+                                        /upcall_ss.cpp:
+
+          For all the variable sized types, especially the out parameters,
+          we were declaring the _var, _out, and the ptr type for the
+          parameter. We no londer need to instantiate so many
+          variables. We can deal with just the _var types. All actions
+          including memory allocation, passing it to the do_static_call or
+          the upcall, is handled using the _var parameter. This reducs
+          code size as well as the activation record size since the number
+          of local variables is significantly reduced.
+
+        * TAO_IDL/be/be_visitor_argument/vardecl_ss.cpp
+                 /be_include/be_visitor_argument/vardecl_ss.h:
+
+          We define an addition class called
+          be_compiled_visitor_args_vardecl_ss that inherits from the base
+          be_visitor_args_vardecl_ss. Its only purpose is to override the
+          base class's visit_interface methods. The overridden methods
+          avoid the generation of the extra local variables of the
+          CORBA::Object_ptr type.
+
+        * TAO_IDL/be/be_visitor_array/any_op_cs.cpp:
+          TAO_IDL/be/be_visitor_enum/any_op_cs.cpp:
+          TAO_IDL/be/be_visitor_structure/any_op_cs.cpp:
+
+          The code for <<=, and >>= now uses the TAO_TRY macros so that
+          they can work with real C++ exceptions also.
+
+          This is not yet done for all types since this is under testing.
+
+        * TAO_IDL/{be, be_include}/be_visitor_enum/enum_ch.{h, cpp}
+          TAO_IDL/{be, be_include}/be_visitor_exception/cdr_op_cs.{h, cpp}
+          TAO_IDL/{be, be_include}/be_visitor_exception/exception_ctor.{h, cpp}
+          TAO_IDL/{be, be_include}/be_visitor_interface/cdr_op_cs.{h, cpp}:
+          TAO_IDL/{be, be_include}/be_visitor_operation/argument.{h, cpp}:
+          TAO_IDL/{be, be_include}/be_visitor_union/cdr_op_cs.{h, cpp}:
+
+          Modifications were necessary due to the change in the
+          "post_process" signature and semantics.
+
+        * TAO_IDL/be/be_visitor_interface/interface.cpp:
+
+          Removed some commented-out code.
+
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+
+          The skeleton code now uses the TAO_TRY macros for seamless exception
+          support between the real C++ exceptions and the alternate mapping.
+
+        * TAO_IDL/be/be_visitor_operation.cpp
+                 /be_include/be_visitor_operation.h:
 
-	  Added new include *.{h, cpp} files described below.
+          Added new include *.{h, cpp} files described below.
 
-	* TAO_IDL/be/be_visitor_operation/operation.cpp
-	  TAO_IDL/be/be_visitor_operation/argument_invoke.cpp
-	  TAO_IDL/be/be_visitor_operation/argument_marshal.cpp
-	  TAO_IDL/be/be_visitor_operation/compiled_marshal.cpp
-	  TAO_IDL/be/be_visitor_operation/rettype_preinvoke_cs.cpp
-	  TAO_IDL/be/be_visitor_operation/rettype_return_cs.cpp
-	  TAO_IDL/be/be_visitor_operation/rettype_marshal_ss.cpp
-	  TAO_IDL/be_include/be_visitor_operation/operation.h
-	  TAO_IDL/be_include/be_visitor_operation/argument_invoke.h
-	  TAO_IDL/be_include/be_visitor_operation/argument_marshal.h
-	  TAO_IDL/be_include/be_visitor_operation/compiled_marshal.h
-	  TAO_IDL/be_include/be_visitor_operation/rettype_preinvoke_cs.h:
+        * TAO_IDL/be/be_visitor_operation/operation.cpp
+          TAO_IDL/be/be_visitor_operation/argument_invoke.cpp
+          TAO_IDL/be/be_visitor_operation/argument_marshal.cpp
+          TAO_IDL/be/be_visitor_operation/compiled_marshal.cpp
+          TAO_IDL/be/be_visitor_operation/rettype_preinvoke_cs.cpp
+          TAO_IDL/be/be_visitor_operation/rettype_return_cs.cpp
+          TAO_IDL/be/be_visitor_operation/rettype_marshal_ss.cpp
+          TAO_IDL/be_include/be_visitor_operation/operation.h
+          TAO_IDL/be_include/be_visitor_operation/argument_invoke.h
+          TAO_IDL/be_include/be_visitor_operation/argument_marshal.h
+          TAO_IDL/be_include/be_visitor_operation/compiled_marshal.h
+          TAO_IDL/be_include/be_visitor_operation/rettype_preinvoke_cs.h:
 
-	  For all the variable sized return types we were declaring the
-	  _var, _out, and the ptr type for the parameter. We no londer
-	  need to instantiate so many variables. We can deal with just the
-	  _var types. All actions including memory allocation, passing it
-	  to the do_static_call is handled using the _var parameter. This
-	  reduces code size as well as the activation record size since
-	  the number of local variables is significantly reduced.
+          For all the variable sized return types we were declaring the
+          _var, _out, and the ptr type for the parameter. We no londer
+          need to instantiate so many variables. We can deal with just the
+          _var types. All actions including memory allocation, passing it
+          to the do_static_call is handled using the _var parameter. This
+          reduces code size as well as the activation record size since
+          the number of local variables is significantly reduced.
 
-	  Some other visitors such as the asrgument_invoke and
-	  argument_marshal are needed to generate the right number of &&
-	  operator at the right place in the large "if" statement that is
-	  generated for marshaling or unmarshaling parameters. This is
-	  useful only for the compiled approach.
+          Some other visitors such as the asrgument_invoke and
+          argument_marshal are needed to generate the right number of &&
+          operator at the right place in the large "if" statement that is
+          generated for marshaling or unmarshaling parameters. This is
+          useful only for the compiled approach.
 
-	  The base class operation visitor was added to the operation.{h,
-	  cpp} files. It provides a number of helper classes used commonly
-	  by inherited visitors.
+          The base class operation visitor was added to the operation.{h,
+          cpp} files. It provides a number of helper classes used commonly
+          by inherited visitors.
 
-	* TAO_IDL/be/be_visitor_operation/rettype_vardecl_ss.cpp:
-	  TAO_IDL/be_include/be_visitor_operation/rettype_vardecl_ss.h:
+        * TAO_IDL/be/be_visitor_operation/rettype_vardecl_ss.cpp:
+          TAO_IDL/be_include/be_visitor_operation/rettype_vardecl_ss.h:
 
-	  Define a new class for compiled marshaling approach that
-	  overrides the visit_interface method over its base class. This
-	  way we avoid generation of extra variables.
+          Define a new class for compiled marshaling approach that
+          overrides the visit_interface method over its base class. This
+          way we avoid generation of extra variables.
 
-	* TAO_IDL/{be, be_include}/be_visitor_operation/operation_ch.{h,cpp}
-	  TAO_IDL/{be, be_include}/be_visitor_operation/operation_cs.{h,cpp}
-	  TAO_IDL/{be, be_include}/be_visitor_operation/operation_sh.{h,cpp}
-	  TAO_IDL/{be, be_include}/be_visitor_operation/operation_ss.{h,cpp}:
+        * TAO_IDL/{be, be_include}/be_visitor_operation/operation_ch.{h,cpp}
+          TAO_IDL/{be, be_include}/be_visitor_operation/operation_cs.{h,cpp}
+          TAO_IDL/{be, be_include}/be_visitor_operation/operation_sh.{h,cpp}
+          TAO_IDL/{be, be_include}/be_visitor_operation/operation_ss.{h,cpp}:
 
-	  All these now inherit from the base operation visitor.
+          All these now inherit from the base operation visitor.
 
-	  For the client side stubs (operation_cs.{h, cpp}) and server
-	  side skeletons (operation_ss.{h, cpp}), we now factor out all
-	  the code that is common to both the interpreted and compiled
-	  stubs/skels. Thus, the visit_operation method is now a template
-	  method. It calls operations  that are implemented only by
-	  derived classes. These methods e.g., gen_pre_stub_info,
-	  gen_marshal_and_invoke, and others will generate the code that
-	  is different for the interpreted vs compiled approaches..
+          For the client side stubs (operation_cs.{h, cpp}) and server
+          side skeletons (operation_ss.{h, cpp}), we now factor out all
+          the code that is common to both the interpreted and compiled
+          stubs/skels. Thus, the visit_operation method is now a template
+          method. It calls operations  that are implemented only by
+          derived classes. These methods e.g., gen_pre_stub_info,
+          gen_marshal_and_invoke, and others will generate the code that
+          is different for the interpreted vs compiled approaches..
 
-	  We define derived classes called
-	  "be_interpretive_visitor_operation_cs" and
-	  "be_compiled_visitor_operation_cs" (similarly for the skeletons)
-	  that provide the implementation for the pure virtual methods
-	  called by the template method "visit_operation".
+          We define derived classes called
+          "be_interpretive_visitor_operation_cs" and
+          "be_compiled_visitor_operation_cs" (similarly for the skeletons)
+          that provide the implementation for the pure virtual methods
+          called by the template method "visit_operation".
 
-	* TAO_IDL/be/be_visitor_scope.cpp
-	         /be_include/be_visitor_scope.cpp:
+        * TAO_IDL/be/be_visitor_scope.cpp
+                 /be_include/be_visitor_scope.cpp:
 
-	  Added a new "pre_process" method. Both the pre_process and
-	  post_process methods now take the "be_decl *" as an
-	  argument. This was the change made to the post_process.
+          Added a new "pre_process" method. Both the pre_process and
+          post_process methods now take the "be_decl *" as an
+          argument. This was the change made to the post_process.
 
-	  In addition, post_process is always invoked irrespective of the
-	  node being the last one in the scope or not.
+          In addition, post_process is always invoked irrespective of the
+          node being the last one in the scope or not.
 
-	  To test if the node being processed is the last one, we have
-	  added a new method called "last_node" returning a boolean
-	  value. Similarly, we have added "next_elem" method that gives us
-	  our successor and the "elem_number" that gives us our number in
-	  the list.
+          To test if the node being processed is the last one, we have
+          added a new method called "last_node" returning a boolean
+          value. Similarly, we have added "next_elem" method that gives us
+          our successor and the "elem_number" that gives us our number in
+          the list.
 
-	* TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
 
-	  For bounded vs unbounded strings, we generate different code for
-	  the CDR operators.
+          For bounded vs unbounded strings, we generate different code for
+          the CDR operators.
 
-	  I need to check if this policy is strictly followed for all
-	  aggregate types that can have a string member.
+          I need to check if this policy is strictly followed for all
+          aggregate types that can have a string member.
 
-	* TAO_IDL/be/be_visitor_sequence/gen_unbounded_sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_unbounded_sequence_ch.cpp:
 
-	  For sequences of arrays, there were some weird problems using
-	  the ACE_reinterpret_cast which is now fixed.
+          For sequences of arrays, there were some weird problems using
+          the ACE_reinterpret_cast which is now fixed.
 
-	* TAO_IDL/be/be_visitor_typedef/typedef.cpp:
+        * TAO_IDL/be/be_visitor_typedef/typedef.cpp:
 
-	  Removed lots of cases in the switch statement since we removed
-	  those enumerations from the CG_STATE of the TAO_CODEGEN object.
+          Removed lots of cases in the switch statement since we removed
+          those enumerations from the CG_STATE of the TAO_CODEGEN object.
 
-	* TAO_IDL/Makefile:
+        * TAO_IDL/Makefile:
 
-	  ran make depend.
+          ran make depend.
 
-	* TAO_IDL/driver/drv_args.cpp:
+        * TAO_IDL/driver/drv_args.cpp:
 
-	  ACEified the code.
+          ACEified the code.
 
-	  Updated the usage_error message with new command line options.
+          Updated the usage_error message with new command line options.
 
-	  Handled the new options.
+          Handled the new options.
 
-	  -Gc - generate compiled marshaled code
-	  -Ge - enable C++ exception support (unimplemented)
-	  -Gt - generate optimized typecodes (unimplemented)
-	  -Sa - suppress any operators
-	  -St - suppress typecode generation
+          -Gc - generate compiled marshaled code
+          -Ge - enable C++ exception support (unimplemented)
+          -Gt - generate optimized typecodes (unimplemented)
+          -Sa - suppress any operators
+          -St - suppress typecode generation
 
-	  The default is to always generate all the Any operators,
-	  TypeCodes and to use the Interpretive marshaling.
+          The default is to always generate all the Any operators,
+          TypeCodes and to use the Interpretive marshaling.
 
-	* TAO_IDL/include/idl_global.h
-	         /utils/utl_global.cpp:
+        * TAO_IDL/include/idl_global.h
+                 /utils/utl_global.cpp:
 
-	  Added a number of mutator and accesor methods for the newly
-	  added command line options.
+          Added a number of mutator and accesor methods for the newly
+          added command line options.
 
-	* performance_tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp:
+        * performance_tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp:
 
-	  Commented out the RTI and the Union tests since the CDR
-	  operators are not yet done for the unions.
+          Commented out the RTI and the Union tests since the CDR
+          operators are not yet done for the unions.
 
-	* tao/Any.{h, i}
-	  tao/ORB.{h, i}
-	  tao/Object.{h, i}
-	  tao/Typecode.{h, i}:
+        * tao/Any.{h, i}
+          tao/ORB.{h, i}
+          tao/Object.{h, i}
+          tao/Typecode.{h, i}:
 
-	  The parameter to the copy ctor and assignment operator of the
-	  _out class is now "const". This resolves the weird warnings we
-	  were getting about a temporary being created. We were also
-	  required to instantiate the _out type explicitly to overcome
-	  this. However, we no londer need to write this non-compliant
-	  code.
+          The parameter to the copy ctor and assignment operator of the
+          _out class is now "const". This resolves the weird warnings we
+          were getting about a temporary being created. We were also
+          required to instantiate the _out type explicitly to overcome
+          this. However, we no londer need to write this non-compliant
+          code.
 
-	* tao/CDR.i:
+        * tao/CDR.i:
 
-	  Code for <<, >> operators for objref, typecode, and Anys had a
-	  bug.
+          Code for <<, >> operators for objref, typecode, and Anys had a
+          bug.
 
-	* tao/corba.h:
+        * tao/corba.h:
 
-	  Moved the inclusion of the try_macros.h before the CDR.h since
-	  we us the macros in the code
+          Moved the inclusion of the try_macros.h before the CDR.h since
+          we us the macros in the code
 
 Thu Oct  1 11:18:35 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* examples/Simple/bank/AccountManager_i.cpp: Removed the unneeded
- 	  ';' at the end of the #pragmas.  Thanks to Margherita Vittone
- 	  Wiersma <vittone@fndaub.fnal.gov> for reporting this.
+        * examples/Simple/bank/AccountManager_i.cpp: Removed the unneeded
+          ';' at the end of the #pragmas.  Thanks to Margherita Vittone
+          Wiersma <vittone@fndaub.fnal.gov> for reporting this.
 
 Thu Oct 01 10:39:44 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -2713,6 +2713,12 @@ Tue Sep  1 16:29:30 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * tao/Makefile:
           Updated dependencies.
+
+Tue Sep  1 10:43:24 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+        * utils/catior/catior.cpp: Replaced the use of
+          CORBA::B_{TRUE,FALSE} with 1 and 0 to be compatible with the
+          CORBA spec.
 
 Tue Sep  1 09:37:01 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
@@ -6704,6 +6710,12 @@ Tue Jul 28 15:07:32 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
         * tests/Cubit/Hardpack/IDL_Cubit/cubit_impl.{h,cpp}:
         * tests/Cubit/Hardpack/IDL_Cubit/client_i.{h,cpp}:
                 Added implementation code for cube_oneway and cube_void.
+
+Tue Jul 28 14:49:52 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+        * TAO-INSTALL.html (HREF): The paragraph "A note on Make" was
+          duplicated.  Thanks to Jeff McDaniel <jsmcdani@gte.net>
+          for reporting this.
 
 Tue Jul 28 13:49:01 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
