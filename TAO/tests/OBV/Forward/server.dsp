@@ -169,7 +169,7 @@ InputPath=.\TreeBase.idl
 InputName=TreeBase
 
 BuildCmds= \
-	..\..\..\..\bin\Release\tao_idl -Gv -Ge 1 $(InputName).idl
+	..\..\..\..\bin\Release\tao_idl -Ge 1 $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -208,7 +208,7 @@ InputPath=.\TreeBase.idl
 InputName=TreeBase
 
 BuildCmds= \
-	..\..\..\..\bin\tao_idl -Gv -Ge 1 $(InputName).idl
+	..\..\..\..\bin\tao_idl -Ge 1 $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -252,7 +252,7 @@ InputPath=.\TreeController.idl
 InputName=TreeController
 
 BuildCmds= \
-	..\..\..\..\bin\Release\tao_idl -Gv -Ge 1 $(InputName).idl
+	..\..\..\..\bin\Release\tao_idl -Ge 1 $(InputName).idl
 
 "f$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -291,7 +291,7 @@ InputPath=.\TreeController.idl
 InputName=TreeController
 
 BuildCmds= \
-	..\..\..\..\bin\tao_idl -Gv -Ge 1 $(InputName).idl
+	..\..\..\..\bin\tao_idl -Ge 1 $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -335,7 +335,7 @@ InputPath=.\TreeNode.idl
 InputName=TreeNode
 
 BuildCmds= \
-	..\..\..\..\bin\Release\tao_idl -Gv -Ge 1 $(InputName).idl
+	..\..\..\..\bin\Release\tao_idl -Ge 1 $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -374,7 +374,7 @@ InputPath=.\TreeNode.idl
 InputName=TreeNode
 
 BuildCmds= \
-	..\..\..\..\bin\tao_idl -Gv -Ge 1 $(InputName).idl
+	..\..\..\..\bin\tao_idl -Ge 1 $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)

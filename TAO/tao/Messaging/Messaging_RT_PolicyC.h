@@ -26,14 +26,13 @@
 #define _TAO_IDL_ORIG_MESSAGING_RT_POLICYC_H_
 
 #include "ace/pre.h"
-#include "tao/corbafwd.h"
+#include "tao/PolicyC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "messaging_export.h"
-#include "tao/PolicyC.h"
 #include "tao/TimeBaseC.h"
 
 #if defined (TAO_EXPORT_MACRO)
@@ -66,7 +65,7 @@ TAO_NAMESPACE  Messaging
 {
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typedef/typedef_ch.cpp:334
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typedef/typedef_ch.cpp:333
   
   typedef TimeBase::TimeT Timeout;
   typedef TimeBase::TimeT_out Timeout_out;
@@ -79,93 +78,56 @@ TAO_NAMESPACE  Messaging
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
   
-  const CORBA::ULong RELATIVE_RT_TIMEOUT_POLICY_TYPE = 32U;
+  const CORBA::PolicyType RELATIVE_RT_TIMEOUT_POLICY_TYPE = 32U;
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:52
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:567
 
-#if !defined (_MESSAGING_RELATIVEROUNDTRIPTIMEOUTPOLICY___PTR_CH_)
-#define _MESSAGING_RELATIVEROUNDTRIPTIMEOUTPOLICY___PTR_CH_
+#if !defined (_MESSAGING_RELATIVEROUNDTRIPTIMEOUTPOLICY__ODDS_N_ENDS_CH_)
+#define _MESSAGING_RELATIVEROUNDTRIPTIMEOUTPOLICY__ODDS_N_ENDS_CH_
   
   class RelativeRoundtripTimeoutPolicy;
   typedef RelativeRoundtripTimeoutPolicy *RelativeRoundtripTimeoutPolicy_ptr;
-
-#endif /* end #if !defined */
-
-#if !defined (_MESSAGING_RELATIVEROUNDTRIPTIMEOUTPOLICY___VAR_CH_)
-#define _MESSAGING_RELATIVEROUNDTRIPTIMEOUTPOLICY___VAR_CH_
+  struct tao_RelativeRoundtripTimeoutPolicy_life;
   
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:571
+  typedef
+    TAO_Objref_Var_T<
+        RelativeRoundtripTimeoutPolicy,
+        tao_RelativeRoundtripTimeoutPolicy_life
+      >
+    RelativeRoundtripTimeoutPolicy_var;
   
-  class TAO_Messaging_Export RelativeRoundtripTimeoutPolicy_var : public TAO_Base_var
+  typedef
+    TAO_Objref_Out_T<
+        RelativeRoundtripTimeoutPolicy,
+        tao_RelativeRoundtripTimeoutPolicy_life
+      >
+    RelativeRoundtripTimeoutPolicy_out;
+  
+  struct TAO_Messaging_Export tao_RelativeRoundtripTimeoutPolicy_life
   {
-  public:
-    RelativeRoundtripTimeoutPolicy_var (void); // default constructor
-    RelativeRoundtripTimeoutPolicy_var (RelativeRoundtripTimeoutPolicy_ptr p) : ptr_ (p) {} 
-    RelativeRoundtripTimeoutPolicy_var (const RelativeRoundtripTimeoutPolicy_var &); // copy constructor
-    ~RelativeRoundtripTimeoutPolicy_var (void); // destructor
-    
-    RelativeRoundtripTimeoutPolicy_var &operator= (RelativeRoundtripTimeoutPolicy_ptr);
-    RelativeRoundtripTimeoutPolicy_var &operator= (const RelativeRoundtripTimeoutPolicy_var &);
-    RelativeRoundtripTimeoutPolicy_ptr operator-> (void) const;
-    
-    operator const RelativeRoundtripTimeoutPolicy_ptr &() const;
-    operator RelativeRoundtripTimeoutPolicy_ptr &();
-    // in, inout, out, _retn 
-    RelativeRoundtripTimeoutPolicy_ptr in (void) const;
-    RelativeRoundtripTimeoutPolicy_ptr &inout (void);
-    RelativeRoundtripTimeoutPolicy_ptr &out (void);
-    RelativeRoundtripTimeoutPolicy_ptr _retn (void);
-    RelativeRoundtripTimeoutPolicy_ptr ptr (void) const;
-    
-    // Hooks used by template sequence and object manager classes
-    // for non-defined forward declared interfaces.
     static RelativeRoundtripTimeoutPolicy_ptr tao_duplicate (RelativeRoundtripTimeoutPolicy_ptr);
     static void tao_release (RelativeRoundtripTimeoutPolicy_ptr);
     static RelativeRoundtripTimeoutPolicy_ptr tao_nil (void);
-    static RelativeRoundtripTimeoutPolicy_ptr tao_narrow (
-        CORBA::Object *
-        ACE_ENV_ARG_DECL_NOT_USED
+    static CORBA::Boolean tao_marshal (
+        RelativeRoundtripTimeoutPolicy_ptr,
+        TAO_OutputCDR &
       );
-    static CORBA::Object * tao_upcast (void *);
-  
-  private:
-    RelativeRoundtripTimeoutPolicy_ptr ptr_;
-    // Unimplemented - prevents widening assignment.
-    RelativeRoundtripTimeoutPolicy_var (const TAO_Base_var &rhs);
-    RelativeRoundtripTimeoutPolicy_var &operator= (const TAO_Base_var &rhs);
   };
-
-#endif /* end #if !defined */
-
-#if !defined (_MESSAGING_RELATIVEROUNDTRIPTIMEOUTPOLICY___OUT_CH_)
-#define _MESSAGING_RELATIVEROUNDTRIPTIMEOUTPOLICY___OUT_CH_
   
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:946
-  
-  class TAO_Messaging_Export RelativeRoundtripTimeoutPolicy_out
+  struct TAO_Messaging_Export tao_RelativeRoundtripTimeoutPolicy_cast
   {
-  public:
-    RelativeRoundtripTimeoutPolicy_out (RelativeRoundtripTimeoutPolicy_ptr &);
-    RelativeRoundtripTimeoutPolicy_out (RelativeRoundtripTimeoutPolicy_var &);
-    RelativeRoundtripTimeoutPolicy_out (const RelativeRoundtripTimeoutPolicy_out &);
-    RelativeRoundtripTimeoutPolicy_out &operator= (const RelativeRoundtripTimeoutPolicy_out &);
-    RelativeRoundtripTimeoutPolicy_out &operator= (const RelativeRoundtripTimeoutPolicy_var &);
-    RelativeRoundtripTimeoutPolicy_out &operator= (RelativeRoundtripTimeoutPolicy_ptr);
-    operator RelativeRoundtripTimeoutPolicy_ptr &();
-    RelativeRoundtripTimeoutPolicy_ptr &ptr (void);
-    RelativeRoundtripTimeoutPolicy_ptr operator-> (void);
-  
-  private:
-    RelativeRoundtripTimeoutPolicy_ptr &ptr_;
+    static RelativeRoundtripTimeoutPolicy_ptr tao_narrow (
+        CORBA::Object_ptr
+        ACE_ENV_ARG_DECL
+      );
+    static CORBA::Object_ptr tao_upcast (void *);
   };
 
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:110
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_MESSAGING_RELATIVEROUNDTRIPTIMEOUTPOLICY_CH_)
 #define _MESSAGING_RELATIVEROUNDTRIPTIMEOUTPOLICY_CH_
@@ -209,7 +171,7 @@ TAO_NAMESPACE  Messaging
       )) = 0;
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:267
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:211
     
     virtual void *_tao_QueryInterface (ptr_arith_t type);
     
@@ -219,10 +181,6 @@ TAO_NAMESPACE  Messaging
   protected:
     RelativeRoundtripTimeoutPolicy (void);
     virtual ~RelativeRoundtripTimeoutPolicy (void);
-    
-    friend class _TAO_RelativeRoundtripTimeoutPolicy_Remote_Proxy_Impl;
-    friend class _TAO_RelativeRoundtripTimeoutPolicy_ThruPOA_Proxy_Impl;
-    friend class _TAO_RelativeRoundtripTimeoutPolicy_Direct_Proxy_Impl;
   
   private:
     RelativeRoundtripTimeoutPolicy (const RelativeRoundtripTimeoutPolicy &);
@@ -260,7 +218,7 @@ TAO_Messaging_Export CORBA::Boolean operator>>= (const CORBA::Any &, Messaging::
 #endif /* __ACE_INLINE__ */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1009
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1018
 
 #if defined (__ACE_INLINE__)
 #include "Messaging_RT_PolicyC.i"

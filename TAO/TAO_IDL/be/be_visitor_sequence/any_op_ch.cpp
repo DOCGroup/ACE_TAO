@@ -66,7 +66,7 @@ be_visitor_sequence_any_op_ch::visit_sequence (be_sequence *node)
   *os << " CORBA::Boolean"
       << " operator>>= (const CORBA::Any &, ";
   *os << node->name ();
-  *os << " *&); // deprecated\n";
+  *os << " *&); // deprecated" << be_nl;
   *os << be_global->stub_export_macro ();
   *os << " CORBA::Boolean"
       << " operator>>= (const CORBA::Any &, const ";

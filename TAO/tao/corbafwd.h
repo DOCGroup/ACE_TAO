@@ -150,8 +150,6 @@ namespace CORBA
   // CORBA::TypeCode typedefs.
   class TypeCode;
   typedef TypeCode * TypeCode_ptr;
-  class TypeCode_var;
-  class TypeCode_out;
 
   /**
    * @name CORBA String Memory Management
@@ -182,23 +180,13 @@ namespace CORBA
   class WString_out;
 
   class StringSeq;
-  class StringSeq_var;
-  class StringSeq_out;
   extern TAO_Export TypeCode_ptr _tc_StringSeq;
 
   class WStringSeq;
-  class WStringSeq_var;
-  class WStringSeq_out;
   extern TAO_Export TypeCode_ptr _tc_WStringSeq;
 
   class OctetSeq;
-  class OctetSeq_var;
-  class OctetSeq_out;
   extern TAO_Export TypeCode_ptr _tc_OctetSeq;
-
-//   typedef TAO_Unbounded_Sequence<Octet> OctetSeq;
-//   typedef TAO_Unbounded_Sequence<Octet> OctetSeq_var;
-//   typedef TAO_Unbounded_Sequence<Octet> OctetSeq_out;
 
   class Any;
   class Any_var;
@@ -206,8 +194,6 @@ namespace CORBA
   typedef Any * Any_ptr;
 
   class Environment;
-  class Environment_var;
-  class Environment_out;
   typedef Environment * Environment_ptr;
 
   class Exception;
@@ -217,54 +203,35 @@ namespace CORBA
 
   class Request;
   typedef Request * Request_ptr;
-  class Request_var;
-  class Request_out;
 
   class NamedValue;
   typedef NamedValue * NamedValue_ptr;
-  class NamedValue_var;
-  class NamedValue_out;
 
   class NVList;
   typedef NVList * NVList_ptr;
-  class NVList_var;
-  class NVList_out;
 
   class Context;
   typedef Context * Context_ptr;
-  class Context_var;
-  class Context_out;
 
   class ContextList;
   typedef ContextList *ContextList_ptr;
-  class ContextList_var;
-  class ContextList_out;
 
   class Object;
   typedef Object *Object_ptr;
-  class Object_var;
-  class Object_out;
 
   class LocalObject;
   typedef LocalObject *LocalObject_ptr;
-  class LocalObject_var;
-  class LocalObject_out;
 
   class Principal;
   typedef Principal *Principal_ptr;
-  class Principal_var;
-  class Principal_out;
 
   class ORB;
   typedef ORB *ORB_ptr;
-  class ORB_var;
-  class ORB_out;
 
   class ServerRequest;
   typedef ServerRequest *ServerRequest_ptr;
 
   class ExceptionList;
-  class ExceptionList_var;
   typedef ExceptionList *ExceptionList_ptr;
 
   class ImplementationDef;
@@ -272,22 +239,13 @@ namespace CORBA
 
   class Current;
   typedef Current *Current_ptr;
-  class Current_var;
-  class Current_out;
 
   class TypeCodeFactory;
   typedef TypeCodeFactory *TypeCodeFactory_ptr;
-  class TypeCodeFactory_out;
-  class TypeCodeFactory_var;
 
   class ValueBase;
-  typedef ValueBase *ValueBase_ptr;
-  class ValueBase_var;
-  class ValueBase_out;
   class ValueFactoryBase;
-  class ValueFactoryBase_var;
   typedef ValueFactoryBase *ValueFactory;
-  typedef ValueFactoryBase_var ValueFactory_var;
   class DefaultValueRefCountBase;
 
   typedef CORBA::Short Visibility;
@@ -308,8 +266,6 @@ namespace CORBA
 
   class AbstractBase;
   typedef AbstractBase * AbstractBase_ptr;
-  class AbstractBase_var;
-  class AbstractBase_out;
 
   enum CompletionStatus
   {
@@ -392,10 +348,10 @@ namespace CORBA
   TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (TypeCode_ptr);
   TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (ORB_ptr);
   TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (Principal_ptr);
-  extern TAO_Export Boolean is_nil (Request_ptr);
-  extern TAO_Export Boolean is_nil (ServerRequest_ptr req);
   TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (NamedValue_ptr);
   TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (NVList_ptr);
+  extern TAO_Export Boolean is_nil (Request_ptr);
+  extern TAO_Export Boolean is_nil (ServerRequest_ptr);
   extern TAO_Export Boolean is_nil (Context_ptr);
   //@}
 
@@ -411,10 +367,10 @@ namespace CORBA
   TAO_NAMESPACE_INLINE_FUNCTION void release (Principal_ptr);
   TAO_NAMESPACE_INLINE_FUNCTION void release (TypeCode_ptr);
   TAO_NAMESPACE_INLINE_FUNCTION void release (ORB_ptr);
-  extern TAO_Export void release (Request_ptr);
-  extern TAO_Export void release (ServerRequest_ptr req);
   TAO_NAMESPACE_INLINE_FUNCTION void release (NamedValue_ptr);
   TAO_NAMESPACE_INLINE_FUNCTION void release (NVList_ptr);
+  extern TAO_Export void release (Request_ptr);
+  extern TAO_Export void release (ServerRequest_ptr);
   extern TAO_Export void release (Context_ptr);
   //@}
 
@@ -597,14 +553,10 @@ namespace CORBA
   extern TAO_Export  CORBA::TypeCode_ptr _tc_ServiceDetailType;
 
   struct ServiceDetail;
-  class ServiceDetail_var;
-  class ServiceDetail_out;
   typedef ServiceDetail * ServiceDetail_ptr;
   extern TAO_Export CORBA::TypeCode_ptr _tc_ServiceDetail;
 
   struct ServiceInformation;
-  class ServiceInformation_var;
-  class ServiceInformation_out;
   typedef ServiceInformation * ServiceInformation_ptr;
   extern TAO_Export CORBA::TypeCode_ptr _tc_ServiceInformation;
 

@@ -35,7 +35,6 @@
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
 
-
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
 #endif /* __BORLANDC__ */
@@ -66,20 +65,20 @@ static const CORBA::Long _oc_RTCORBA_NativePriority[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   39,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x5254434f), 
-  ACE_NTOHL (0x5242412f), 
-  ACE_NTOHL (0x4e617469), 
-  ACE_NTOHL (0x76655072), 
-  ACE_NTOHL (0x696f7269), 
-  ACE_NTOHL (0x74793a31), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x5254434f),
+  ACE_NTOHL (0x5242412f),
+  ACE_NTOHL (0x4e617469),
+  ACE_NTOHL (0x76655072),
+  ACE_NTOHL (0x696f7269),
+  ACE_NTOHL (0x74793a31),
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/RTCORBA/NativePriority:1.0
     15,
-  ACE_NTOHL (0x4e617469), 
-  ACE_NTOHL (0x76655072), 
-  ACE_NTOHL (0x696f7269), 
+  ACE_NTOHL (0x4e617469),
+  ACE_NTOHL (0x76655072),
+  ACE_NTOHL (0x696f7269),
   ACE_NTOHL (0x74790000),  // name = NativePriority
     CORBA::tk_short,
 
@@ -109,18 +108,18 @@ static const CORBA::Long _oc_RTCORBA_Priority[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   33,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x5254434f), 
-  ACE_NTOHL (0x5242412f), 
-  ACE_NTOHL (0x5072696f), 
-  ACE_NTOHL (0x72697479), 
-  ACE_NTOHL (0x3a312e30), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x5254434f),
+  ACE_NTOHL (0x5242412f),
+  ACE_NTOHL (0x5072696f),
+  ACE_NTOHL (0x72697479),
+  ACE_NTOHL (0x3a312e30),
   ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/RTCORBA/Priority:1.0
     9,
-  ACE_NTOHL (0x5072696f), 
-  ACE_NTOHL (0x72697479), 
+  ACE_NTOHL (0x5072696f),
+  ACE_NTOHL (0x72697479),
   ACE_NTOHL (0x0),  // name = Priority
     CORBA::tk_short,
 
@@ -150,20 +149,20 @@ static const CORBA::Long _oc_RTCORBA_NetworkPriority[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   40,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x5254434f), 
-  ACE_NTOHL (0x5242412f), 
-  ACE_NTOHL (0x4e657477), 
-  ACE_NTOHL (0x6f726b50), 
-  ACE_NTOHL (0x72696f72), 
-  ACE_NTOHL (0x6974793a), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x5254434f),
+  ACE_NTOHL (0x5242412f),
+  ACE_NTOHL (0x4e657477),
+  ACE_NTOHL (0x6f726b50),
+  ACE_NTOHL (0x72696f72),
+  ACE_NTOHL (0x6974793a),
   ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/RTCORBA/NetworkPriority:1.0
     16,
-  ACE_NTOHL (0x4e657477), 
-  ACE_NTOHL (0x6f726b50), 
-  ACE_NTOHL (0x72696f72), 
+  ACE_NTOHL (0x4e657477),
+  ACE_NTOHL (0x6f726b50),
+  ACE_NTOHL (0x72696f72),
   ACE_NTOHL (0x69747900),  // name = NetworkPriority
     CORBA::tk_long,
 
@@ -193,20 +192,20 @@ static const CORBA::Long _oc_RTCORBA_ThreadpoolId[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   37,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x5254434f), 
-  ACE_NTOHL (0x5242412f), 
-  ACE_NTOHL (0x54687265), 
-  ACE_NTOHL (0x6164706f), 
-  ACE_NTOHL (0x6f6c4964), 
-  ACE_NTOHL (0x3a312e30), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x5254434f),
+  ACE_NTOHL (0x5242412f),
+  ACE_NTOHL (0x54687265),
+  ACE_NTOHL (0x6164706f),
+  ACE_NTOHL (0x6f6c4964),
+  ACE_NTOHL (0x3a312e30),
   ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/RTCORBA/ThreadpoolId:1.0
     13,
-  ACE_NTOHL (0x54687265), 
-  ACE_NTOHL (0x6164706f), 
-  ACE_NTOHL (0x6f6c4964), 
+  ACE_NTOHL (0x54687265),
+  ACE_NTOHL (0x6164706f),
+  ACE_NTOHL (0x6f6c4964),
   ACE_NTOHL (0x0),  // name = ThreadpoolId
     CORBA::tk_ulong,
 
@@ -236,58 +235,58 @@ static const CORBA::Long _oc_RTCORBA_ThreadpoolLane[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   39,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x5254434f), 
-  ACE_NTOHL (0x5242412f), 
-  ACE_NTOHL (0x54687265), 
-  ACE_NTOHL (0x6164706f), 
-  ACE_NTOHL (0x6f6c4c61), 
-  ACE_NTOHL (0x6e653a31), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x5254434f),
+  ACE_NTOHL (0x5242412f),
+  ACE_NTOHL (0x54687265),
+  ACE_NTOHL (0x6164706f),
+  ACE_NTOHL (0x6f6c4c61),
+  ACE_NTOHL (0x6e653a31),
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/RTCORBA/ThreadpoolLane:1.0
     15,
-  ACE_NTOHL (0x54687265), 
-  ACE_NTOHL (0x6164706f), 
-  ACE_NTOHL (0x6f6c4c61), 
+  ACE_NTOHL (0x54687265),
+  ACE_NTOHL (0x6164706f),
+  ACE_NTOHL (0x6f6c4c61),
   ACE_NTOHL (0x6e650000),  // name = ThreadpoolLane
   3, // member count
     14,
-  ACE_NTOHL (0x6c616e65), 
-  ACE_NTOHL (0x5f707269), 
-  ACE_NTOHL (0x6f726974), 
+  ACE_NTOHL (0x6c616e65),
+  ACE_NTOHL (0x5f707269),
+  ACE_NTOHL (0x6f726974),
   ACE_NTOHL (0x79000000),  // name = lane_priority
     CORBA::tk_alias, // typecode kind for typedefs
   64, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     33,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x5254434f), 
-    ACE_NTOHL (0x5242412f), 
-    ACE_NTOHL (0x5072696f), 
-    ACE_NTOHL (0x72697479), 
-    ACE_NTOHL (0x3a312e30), 
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x5254434f),
+    ACE_NTOHL (0x5242412f),
+    ACE_NTOHL (0x5072696f),
+    ACE_NTOHL (0x72697479),
+    ACE_NTOHL (0x3a312e30),
     ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/RTCORBA/Priority:1.0
         9,
-    ACE_NTOHL (0x5072696f), 
-    ACE_NTOHL (0x72697479), 
+    ACE_NTOHL (0x5072696f),
+    ACE_NTOHL (0x72697479),
     ACE_NTOHL (0x0),  // name = Priority
         CORBA::tk_short,
 
 
   15,
-  ACE_NTOHL (0x73746174), 
-  ACE_NTOHL (0x69635f74), 
-  ACE_NTOHL (0x68726561), 
+  ACE_NTOHL (0x73746174),
+  ACE_NTOHL (0x69635f74),
+  ACE_NTOHL (0x68726561),
   ACE_NTOHL (0x64730000),  // name = static_threads
     CORBA::tk_ulong,
 
   16,
-  ACE_NTOHL (0x64796e61), 
-  ACE_NTOHL (0x6d69635f), 
-  ACE_NTOHL (0x74687265), 
+  ACE_NTOHL (0x64796e61),
+  ACE_NTOHL (0x6d69635f),
+  ACE_NTOHL (0x74687265),
   ACE_NTOHL (0x61647300),  // name = dynamic_threads
     CORBA::tk_ulong,
 
@@ -310,8 +309,8 @@ TAO_NAMESPACE_DEFINE (
   )
 TAO_NAMESPACE_END
 
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_cs.cpp:67
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_cs.cpp:66
 
 void RTCORBA::ThreadpoolLane::_tao_any_destructor (void *_tao_void_pointer)
 {
@@ -319,117 +318,58 @@ void RTCORBA::ThreadpoolLane::_tao_any_destructor (void *_tao_void_pointer)
   delete tmp;
 }
 
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/gen_unbounded_sequence_cs.cpp:101
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_type.cpp:274
 
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-#if !defined (__TAO_UNBOUNDED_SEQUENCE_RTCORBA_THREADPOOLLANES_CS_)
-#define __TAO_UNBOUNDED_SEQUENCE_RTCORBA_THREADPOOLLANES_CS_
+template class
+  TAO_Fixed_Var_T<
+      ThreadpoolLane
+    >;
 
-void
-RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes::_allocate_buffer (CORBA::ULong length)
-{
-  RTCORBA::ThreadpoolLane* tmp = 0;
-  tmp = _TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes::allocbuf (length);
-  
-  if (this->buffer_ != 0)
-    {
-      RTCORBA::ThreadpoolLane *old =
-        ACE_reinterpret_cast (RTCORBA::ThreadpoolLane *, this->buffer_);
-      
-      for (CORBA::ULong i = 0; i < this->length_; ++i)
-        {
-          tmp[i] = old[i];
-        }
-      
-      if (this->release_)
-        {
-          _TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes::freebuf (old);
-        }
-    }
-  
-  this->buffer_ = tmp;
-}
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-void
-RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes::_deallocate_buffer (void)
-{
-  if (this->buffer_ == 0 || this->release_ == 0)
-    {
-      return;
-    }
-  
-  RTCORBA::ThreadpoolLane *tmp =
-    ACE_reinterpret_cast (RTCORBA::ThreadpoolLane *, this->buffer_);
-  _TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes::freebuf (tmp);
-  this->buffer_ = 0;
-} 
+# pragma instantiate \
+  TAO_Fixed_Var_T< \
+      ThreadpoolLane \
+    >
 
-RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes::~_TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes (void)
-{
-  this->_deallocate_buffer ();
-}
-
-#endif /* end #if !defined */
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
-
-#if !defined (_RTCORBA_THREADPOOLLANES_CS_)
-#define _RTCORBA_THREADPOOLLANES_CS_
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_cs.cpp:250
-
-// *************************************************************
-// RTCORBA::ThreadpoolLanes
-// *************************************************************
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_cs.cpp:49
 
 RTCORBA::ThreadpoolLanes::ThreadpoolLanes (void)
 {}
 
 RTCORBA::ThreadpoolLanes::ThreadpoolLanes (CORBA::ULong max)
-  : 
-
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-_TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes
-#else /* TAO_USE_SEQUENCE_TEMPLATES */
-TAO_Unbounded_Sequence<RTCORBA::ThreadpoolLane>
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
- (max)
+  : TAO_Unbounded_Sequence<
+        RTCORBA::ThreadpoolLane
+      >
+    (max)
 {}
 
 RTCORBA::ThreadpoolLanes::ThreadpoolLanes (
     CORBA::ULong max,
     CORBA::ULong length,
-    RTCORBA::ThreadpoolLane *buffer,
+    RTCORBA::ThreadpoolLane* buffer,
     CORBA::Boolean release
   )
-  : 
-
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-_TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes
-#else /* TAO_USE_SEQUENCE_TEMPLATES */
-TAO_Unbounded_Sequence<RTCORBA::ThreadpoolLane>
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
- (max, length, buffer, release)
+  : TAO_Unbounded_Sequence<
+        RTCORBA::ThreadpoolLane
+      >
+    (max, length, buffer, release)
 {}
 
 RTCORBA::ThreadpoolLanes::ThreadpoolLanes (const ThreadpoolLanes &seq)
-  : 
-
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-_TAO_Unbounded_Sequence_RTCORBA_ThreadpoolLanes
-#else /* TAO_USE_SEQUENCE_TEMPLATES */
-TAO_Unbounded_Sequence<RTCORBA::ThreadpoolLane>
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
- (seq)
+  : TAO_Unbounded_Sequence<
+        RTCORBA::ThreadpoolLane
+      >
+    (seq)
 {}
 
-RTCORBA::ThreadpoolLanes::~ThreadpoolLanes (void) // dtor
+RTCORBA::ThreadpoolLanes::~ThreadpoolLanes (void)
 {}
 
 void RTCORBA::ThreadpoolLanes::_tao_any_destructor (void *_tao_void_pointer)
@@ -438,7 +378,37 @@ void RTCORBA::ThreadpoolLanes::_tao_any_destructor (void *_tao_void_pointer)
   delete tmp;
 }
 
-#endif /* end #if !defined */
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+template class
+  TAO_FixedSeq_Var_T<
+      ThreadpoolLanes,
+      RTCORBA::ThreadpoolLane
+    >;
+
+template class
+  TAO_Seq_Out_T<
+      ThreadpoolLanes,
+      ThreadpoolLanes_var,
+      RTCORBA::ThreadpoolLane
+    >;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+# pragma instantiate \
+  TAO_FixedSeq_Var_T< \
+      ThreadpoolLanes, \
+      RTCORBA::ThreadpoolLane \
+    >
+
+# pragma instantiate \
+  TAO_Seq_Out_T< \
+      ThreadpoolLanes, \
+      ThreadpoolLanes_var, \
+      RTCORBA::ThreadpoolLane \
+    >
+
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
@@ -447,20 +417,20 @@ static const CORBA::Long _oc_RTCORBA_ThreadpoolLanes[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   40,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x5254434f), 
-  ACE_NTOHL (0x5242412f), 
-  ACE_NTOHL (0x54687265), 
-  ACE_NTOHL (0x6164706f), 
-  ACE_NTOHL (0x6f6c4c61), 
-  ACE_NTOHL (0x6e65733a), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x5254434f),
+  ACE_NTOHL (0x5242412f),
+  ACE_NTOHL (0x54687265),
+  ACE_NTOHL (0x6164706f),
+  ACE_NTOHL (0x6f6c4c61),
+  ACE_NTOHL (0x6e65733a),
   ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/RTCORBA/ThreadpoolLanes:1.0
     16,
-  ACE_NTOHL (0x54687265), 
-  ACE_NTOHL (0x6164706f), 
-  ACE_NTOHL (0x6f6c4c61), 
+  ACE_NTOHL (0x54687265),
+  ACE_NTOHL (0x6164706f),
+  ACE_NTOHL (0x6f6c4c61),
   ACE_NTOHL (0x6e657300),  // name = ThreadpoolLanes
     CORBA::tk_sequence, // typecode kind
   228, // encapsulation length
@@ -469,58 +439,58 @@ static const CORBA::Long _oc_RTCORBA_ThreadpoolLanes[] =
     212, // encapsulation length
       TAO_ENCAP_BYTE_ORDER, // byte order
       39,
-      ACE_NTOHL (0x49444c3a), 
-      ACE_NTOHL (0x6f6d672e), 
-      ACE_NTOHL (0x6f72672f), 
-      ACE_NTOHL (0x5254434f), 
-      ACE_NTOHL (0x5242412f), 
-      ACE_NTOHL (0x54687265), 
-      ACE_NTOHL (0x6164706f), 
-      ACE_NTOHL (0x6f6c4c61), 
-      ACE_NTOHL (0x6e653a31), 
+      ACE_NTOHL (0x49444c3a),
+      ACE_NTOHL (0x6f6d672e),
+      ACE_NTOHL (0x6f72672f),
+      ACE_NTOHL (0x5254434f),
+      ACE_NTOHL (0x5242412f),
+      ACE_NTOHL (0x54687265),
+      ACE_NTOHL (0x6164706f),
+      ACE_NTOHL (0x6f6c4c61),
+      ACE_NTOHL (0x6e653a31),
       ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/RTCORBA/ThreadpoolLane:1.0
             15,
-      ACE_NTOHL (0x54687265), 
-      ACE_NTOHL (0x6164706f), 
-      ACE_NTOHL (0x6f6c4c61), 
+      ACE_NTOHL (0x54687265),
+      ACE_NTOHL (0x6164706f),
+      ACE_NTOHL (0x6f6c4c61),
       ACE_NTOHL (0x6e650000),  // name = ThreadpoolLane
       3, // member count
             14,
-      ACE_NTOHL (0x6c616e65), 
-      ACE_NTOHL (0x5f707269), 
-      ACE_NTOHL (0x6f726974), 
+      ACE_NTOHL (0x6c616e65),
+      ACE_NTOHL (0x5f707269),
+      ACE_NTOHL (0x6f726974),
       ACE_NTOHL (0x79000000),  // name = lane_priority
             CORBA::tk_alias, // typecode kind for typedefs
       64, // encapsulation length
         TAO_ENCAP_BYTE_ORDER, // byte order
         33,
-        ACE_NTOHL (0x49444c3a), 
-        ACE_NTOHL (0x6f6d672e), 
-        ACE_NTOHL (0x6f72672f), 
-        ACE_NTOHL (0x5254434f), 
-        ACE_NTOHL (0x5242412f), 
-        ACE_NTOHL (0x5072696f), 
-        ACE_NTOHL (0x72697479), 
-        ACE_NTOHL (0x3a312e30), 
+        ACE_NTOHL (0x49444c3a),
+        ACE_NTOHL (0x6f6d672e),
+        ACE_NTOHL (0x6f72672f),
+        ACE_NTOHL (0x5254434f),
+        ACE_NTOHL (0x5242412f),
+        ACE_NTOHL (0x5072696f),
+        ACE_NTOHL (0x72697479),
+        ACE_NTOHL (0x3a312e30),
         ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/RTCORBA/Priority:1.0
                 9,
-        ACE_NTOHL (0x5072696f), 
-        ACE_NTOHL (0x72697479), 
+        ACE_NTOHL (0x5072696f),
+        ACE_NTOHL (0x72697479),
         ACE_NTOHL (0x0),  // name = Priority
                 CORBA::tk_short,
 
 
       15,
-      ACE_NTOHL (0x73746174), 
-      ACE_NTOHL (0x69635f74), 
-      ACE_NTOHL (0x68726561), 
+      ACE_NTOHL (0x73746174),
+      ACE_NTOHL (0x69635f74),
+      ACE_NTOHL (0x68726561),
       ACE_NTOHL (0x64730000),  // name = static_threads
             CORBA::tk_ulong,
 
       16,
-      ACE_NTOHL (0x64796e61), 
-      ACE_NTOHL (0x6d69635f), 
-      ACE_NTOHL (0x74687265), 
+      ACE_NTOHL (0x64796e61),
+      ACE_NTOHL (0x6d69635f),
+      ACE_NTOHL (0x74687265),
       ACE_NTOHL (0x61647300),  // name = dynamic_threads
             CORBA::tk_ulong,
 
@@ -553,32 +523,32 @@ static const CORBA::Long _oc_RTCORBA_PriorityModel[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   38,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x5254434f), 
-  ACE_NTOHL (0x5242412f), 
-  ACE_NTOHL (0x5072696f), 
-  ACE_NTOHL (0x72697479), 
-  ACE_NTOHL (0x4d6f6465), 
-  ACE_NTOHL (0x6c3a312e), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x5254434f),
+  ACE_NTOHL (0x5242412f),
+  ACE_NTOHL (0x5072696f),
+  ACE_NTOHL (0x72697479),
+  ACE_NTOHL (0x4d6f6465),
+  ACE_NTOHL (0x6c3a312e),
   ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/RTCORBA/PriorityModel:1.0
   14,
-  ACE_NTOHL (0x5072696f), 
-  ACE_NTOHL (0x72697479), 
-  ACE_NTOHL (0x4d6f6465), 
+  ACE_NTOHL (0x5072696f),
+  ACE_NTOHL (0x72697479),
+  ACE_NTOHL (0x4d6f6465),
   ACE_NTOHL (0x6c000000),  // name = PriorityModel
   2, // member count
   18,
-  ACE_NTOHL (0x434c4945), 
-  ACE_NTOHL (0x4e545f50), 
-  ACE_NTOHL (0x524f5041), 
-  ACE_NTOHL (0x47415445), 
+  ACE_NTOHL (0x434c4945),
+  ACE_NTOHL (0x4e545f50),
+  ACE_NTOHL (0x524f5041),
+  ACE_NTOHL (0x47415445),
   ACE_NTOHL (0x44000000),  // name = CLIENT_PROPAGATED
   16,
-  ACE_NTOHL (0x53455256), 
-  ACE_NTOHL (0x45525f44), 
-  ACE_NTOHL (0x45434c41), 
+  ACE_NTOHL (0x53455256),
+  ACE_NTOHL (0x45525f44),
+  ACE_NTOHL (0x45434c41),
   ACE_NTOHL (0x52454400),  // name = SERVER_DECLARED
   };
 
@@ -605,7 +575,7 @@ TAO_NAMESPACE_END
 int RTCORBA::PriorityModelPolicy::_tao_class_id = 0;
 
 RTCORBA::PriorityModelPolicy_ptr
-tao_RTCORBA_PriorityModelPolicy_duplicate (
+RTCORBA::tao_PriorityModelPolicy_life::tao_duplicate (
     RTCORBA::PriorityModelPolicy_ptr p
   )
 {
@@ -613,7 +583,7 @@ tao_RTCORBA_PriorityModelPolicy_duplicate (
 }
 
 void
-tao_RTCORBA_PriorityModelPolicy_release (
+RTCORBA::tao_PriorityModelPolicy_life::tao_release (
     RTCORBA::PriorityModelPolicy_ptr p
   )
 {
@@ -621,15 +591,24 @@ tao_RTCORBA_PriorityModelPolicy_release (
 }
 
 RTCORBA::PriorityModelPolicy_ptr
-tao_RTCORBA_PriorityModelPolicy_nil (
+RTCORBA::tao_PriorityModelPolicy_life::tao_nil (
     void
   )
 {
   return RTCORBA::PriorityModelPolicy::_nil ();
 }
 
+CORBA::Boolean
+RTCORBA::tao_PriorityModelPolicy_life::tao_marshal (
+    RTCORBA::PriorityModelPolicy_ptr p,
+    TAO_OutputCDR &cdr
+  )
+{
+  return p->marshal (cdr);
+}
+
 RTCORBA::PriorityModelPolicy_ptr
-tao_RTCORBA_PriorityModelPolicy_narrow (
+RTCORBA::tao_PriorityModelPolicy_cast::tao_narrow (
     CORBA::Object *p
     ACE_ENV_ARG_DECL
   )
@@ -638,7 +617,7 @@ tao_RTCORBA_PriorityModelPolicy_narrow (
 }
 
 CORBA::Object *
-tao_RTCORBA_PriorityModelPolicy_upcast (
+RTCORBA::tao_PriorityModelPolicy_cast::tao_upcast (
     void *src
   )
 {
@@ -647,205 +626,32 @@ tao_RTCORBA_PriorityModelPolicy_upcast (
   return *tmp;
 }
 
-CORBA::Boolean
-tao_RTCORBA_PriorityModelPolicy_marshal (
-    RTCORBA::PriorityModelPolicy_ptr p,
-    TAO_OutputCDR &strm
-  )
-{
-  return p->marshal (strm);
-}
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+  template class
+    TAO_Objref_Var_T<
+        RTCORBA::PriorityModelPolicy,
+        RTCORBA::tao_PriorityModelPolicy_life
+      >;
+  template class
+    TAO_Objref_Out_T<
+        RTCORBA::PriorityModelPolicy,
+        RTCORBA::tao_PriorityModelPolicy_life
+      >;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate \
+    TAO_Objref_Var_T< \
+        RTCORBA::PriorityModelPolicy, \
+        RTCORBA::tao_PriorityModelPolicy_life \
+      >
+# pragma instantiate \
+    TAO_Objref_Out_T< \
+        RTCORBA::PriorityModelPolicy, \
+        RTCORBA::tao_PriorityModelPolicy_life \
+      >
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:721
-
-// *************************************************************
-// RTCORBA::PriorityModelPolicy_var
-// *************************************************************
-
-RTCORBA::PriorityModelPolicy_var::PriorityModelPolicy_var (void)
-  : ptr_ (PriorityModelPolicy::_nil ())
-{}
-
-::RTCORBA::PriorityModelPolicy_ptr
-RTCORBA::PriorityModelPolicy_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-RTCORBA::PriorityModelPolicy_var::PriorityModelPolicy_var (const ::RTCORBA::PriorityModelPolicy_var &p)
-  : TAO_Base_var (),
-    ptr_ (PriorityModelPolicy::_duplicate (p.ptr ()))
-{}
-
-RTCORBA::PriorityModelPolicy_var::~PriorityModelPolicy_var (void)
-{
-  CORBA::release (this->ptr_);
-}
-
-RTCORBA::PriorityModelPolicy_var &
-RTCORBA::PriorityModelPolicy_var::operator= (PriorityModelPolicy_ptr p)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = p;
-  return *this;
-}
-
-RTCORBA::PriorityModelPolicy_var &
-RTCORBA::PriorityModelPolicy_var::operator= (const ::RTCORBA::PriorityModelPolicy_var &p)
-{
-  if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = ::RTCORBA::PriorityModelPolicy::_duplicate (p.ptr ());
-  }
-  return *this;
-}
-
-RTCORBA::PriorityModelPolicy_var::operator const ::RTCORBA::PriorityModelPolicy_ptr &() const // cast
-{
-  return this->ptr_;
-}
-
-RTCORBA::PriorityModelPolicy_var::operator ::RTCORBA::PriorityModelPolicy_ptr &() // cast 
-{
-  return this->ptr_;
-}
-
-::RTCORBA::PriorityModelPolicy_ptr
-RTCORBA::PriorityModelPolicy_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-::RTCORBA::PriorityModelPolicy_ptr
-RTCORBA::PriorityModelPolicy_var::in (void) const
-{
-  return this->ptr_;
-}
-
-::RTCORBA::PriorityModelPolicy_ptr &
-RTCORBA::PriorityModelPolicy_var::inout (void)
-{
-  return this->ptr_;
-}
-
-::RTCORBA::PriorityModelPolicy_ptr &
-RTCORBA::PriorityModelPolicy_var::out (void)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::RTCORBA::PriorityModelPolicy::_nil ();
-  return this->ptr_;
-}
-
-::RTCORBA::PriorityModelPolicy_ptr
-RTCORBA::PriorityModelPolicy_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  ::RTCORBA::PriorityModelPolicy_ptr val = this->ptr_;
-  this->ptr_ = ::RTCORBA::PriorityModelPolicy::_nil ();
-  return val;
-}
-
-::RTCORBA::PriorityModelPolicy_ptr
-RTCORBA::PriorityModelPolicy_var::tao_duplicate (PriorityModelPolicy_ptr p)
-{
-  return ::RTCORBA::PriorityModelPolicy::_duplicate (p);
-}
-
-void
-RTCORBA::PriorityModelPolicy_var::tao_release (PriorityModelPolicy_ptr p)
-{
-  CORBA::release (p);
-}
-
-::RTCORBA::PriorityModelPolicy_ptr
-RTCORBA::PriorityModelPolicy_var::tao_nil (void)
-{
-  return ::RTCORBA::PriorityModelPolicy::_nil ();
-}
-
-::RTCORBA::PriorityModelPolicy_ptr
-RTCORBA::PriorityModelPolicy_var::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return ::RTCORBA::PriorityModelPolicy::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-RTCORBA::PriorityModelPolicy_var::tao_upcast (void *src)
-{
-  PriorityModelPolicy **tmp =
-    ACE_static_cast (PriorityModelPolicy **, src);
-  return *tmp;
-}
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1030
-
-// *************************************************************
-// RTCORBA::PriorityModelPolicy_out
-// *************************************************************
-
-RTCORBA::PriorityModelPolicy_out::PriorityModelPolicy_out (PriorityModelPolicy_ptr &p)
-  : ptr_ (p)
-{
-  this->ptr_ = ::RTCORBA::PriorityModelPolicy::_nil ();
-}
-
-RTCORBA::PriorityModelPolicy_out::PriorityModelPolicy_out (PriorityModelPolicy_var &p)
-  : ptr_ (p.out ())
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::RTCORBA::PriorityModelPolicy::_nil ();
-}
-
-RTCORBA::PriorityModelPolicy_out::PriorityModelPolicy_out (const ::RTCORBA::PriorityModelPolicy_out &p)
-  : ptr_ (ACE_const_cast (PriorityModelPolicy_out &, p).ptr_)
-{}
-
-::RTCORBA::PriorityModelPolicy_out &
-RTCORBA::PriorityModelPolicy_out::operator= (const ::RTCORBA::PriorityModelPolicy_out &p)
-{
-  this->ptr_ = ACE_const_cast (PriorityModelPolicy_out&, p).ptr_;
-  return *this;
-}
-
-RTCORBA::PriorityModelPolicy_out &
-RTCORBA::PriorityModelPolicy_out::operator= (const ::RTCORBA::PriorityModelPolicy_var &p)
-{
-  this->ptr_ = ::RTCORBA::PriorityModelPolicy::_duplicate (p.ptr ());
-  return *this;
-}
-
-RTCORBA::PriorityModelPolicy_out &
-RTCORBA::PriorityModelPolicy_out::operator= (PriorityModelPolicy_ptr p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-RTCORBA::PriorityModelPolicy_out::operator ::RTCORBA::PriorityModelPolicy_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-::RTCORBA::PriorityModelPolicy_ptr &
-RTCORBA::PriorityModelPolicy_out::ptr (void)
-{
-  return this->ptr_;
-}
-
-::RTCORBA::PriorityModelPolicy_ptr
-RTCORBA::PriorityModelPolicy_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:235
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:232
 
 RTCORBA::PriorityModelPolicy::PriorityModelPolicy (void)
 {}
@@ -853,7 +659,7 @@ RTCORBA::PriorityModelPolicy::PriorityModelPolicy (void)
 RTCORBA::PriorityModelPolicy::~PriorityModelPolicy (void)
 {}
 
-void 
+void
 RTCORBA::PriorityModelPolicy::_tao_any_destructor (void *_tao_void_pointer)
 {
   PriorityModelPolicy *tmp = ACE_static_cast (PriorityModelPolicy *, _tao_void_pointer);
@@ -869,7 +675,7 @@ RTCORBA::PriorityModelPolicy::_narrow (
   return PriorityModelPolicy::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
 }
 
-RTCORBA::PriorityModelPolicy_ptr 
+RTCORBA::PriorityModelPolicy_ptr
 RTCORBA::PriorityModelPolicy::_unchecked_narrow (
     CORBA::Object_ptr obj
     ACE_ENV_ARG_DECL_NOT_USED
@@ -879,7 +685,7 @@ RTCORBA::PriorityModelPolicy::_unchecked_narrow (
     {
       return PriorityModelPolicy::_nil ();
     }
-  
+
   return
       ACE_reinterpret_cast (
           PriorityModelPolicy_ptr,
@@ -899,14 +705,14 @@ RTCORBA::PriorityModelPolicy::_duplicate (PriorityModelPolicy_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 void *RTCORBA::PriorityModelPolicy::_tao_QueryInterface (ptr_arith_t type)
 {
   void *retv = 0;
-  
+
   if (type == ACE_reinterpret_cast (
               ptr_arith_t,
               &ACE_NESTED_CLASS (::RTCORBA, PriorityModelPolicy)::_tao_class_id)
@@ -939,18 +745,24 @@ void *RTCORBA::PriorityModelPolicy::_tao_QueryInterface (ptr_arith_t type)
             ACE_static_cast (CORBA::Object_ptr, this)
           );
     }
-  
+
   if (retv != 0)
     {
       this->_add_ref ();
     }
-  
+
   return retv;
 }
 
 const char* RTCORBA::PriorityModelPolicy::_interface_repository_id (void) const
 {
   return "IDL:omg.org/RTCORBA/PriorityModelPolicy:1.0";
+}
+
+CORBA::Boolean
+RTCORBA::PriorityModelPolicy::marshal (TAO_OutputCDR &)
+{
+  return 0;
 }
 
 // TAO_IDL - Generated from
@@ -960,22 +772,22 @@ static const CORBA::Long _oc_RTCORBA_PriorityModelPolicy[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   44,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x5254434f), 
-  ACE_NTOHL (0x5242412f), 
-  ACE_NTOHL (0x5072696f), 
-  ACE_NTOHL (0x72697479), 
-  ACE_NTOHL (0x4d6f6465), 
-  ACE_NTOHL (0x6c506f6c), 
-  ACE_NTOHL (0x6963793a), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x5254434f),
+  ACE_NTOHL (0x5242412f),
+  ACE_NTOHL (0x5072696f),
+  ACE_NTOHL (0x72697479),
+  ACE_NTOHL (0x4d6f6465),
+  ACE_NTOHL (0x6c506f6c),
+  ACE_NTOHL (0x6963793a),
   ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/RTCORBA/PriorityModelPolicy:1.0
     20,
-  ACE_NTOHL (0x5072696f), 
-  ACE_NTOHL (0x72697479), 
-  ACE_NTOHL (0x4d6f6465), 
-  ACE_NTOHL (0x6c506f6c), 
+  ACE_NTOHL (0x5072696f),
+  ACE_NTOHL (0x72697479),
+  ACE_NTOHL (0x4d6f6465),
+  ACE_NTOHL (0x6c506f6c),
   ACE_NTOHL (0x69637900),  // name = PriorityModelPolicy
   };
 
@@ -1002,7 +814,7 @@ TAO_NAMESPACE_END
 int RTCORBA::ThreadpoolPolicy::_tao_class_id = 0;
 
 RTCORBA::ThreadpoolPolicy_ptr
-tao_RTCORBA_ThreadpoolPolicy_duplicate (
+RTCORBA::tao_ThreadpoolPolicy_life::tao_duplicate (
     RTCORBA::ThreadpoolPolicy_ptr p
   )
 {
@@ -1010,7 +822,7 @@ tao_RTCORBA_ThreadpoolPolicy_duplicate (
 }
 
 void
-tao_RTCORBA_ThreadpoolPolicy_release (
+RTCORBA::tao_ThreadpoolPolicy_life::tao_release (
     RTCORBA::ThreadpoolPolicy_ptr p
   )
 {
@@ -1018,15 +830,24 @@ tao_RTCORBA_ThreadpoolPolicy_release (
 }
 
 RTCORBA::ThreadpoolPolicy_ptr
-tao_RTCORBA_ThreadpoolPolicy_nil (
+RTCORBA::tao_ThreadpoolPolicy_life::tao_nil (
     void
   )
 {
   return RTCORBA::ThreadpoolPolicy::_nil ();
 }
 
+CORBA::Boolean
+RTCORBA::tao_ThreadpoolPolicy_life::tao_marshal (
+    RTCORBA::ThreadpoolPolicy_ptr p,
+    TAO_OutputCDR &cdr
+  )
+{
+  return p->marshal (cdr);
+}
+
 RTCORBA::ThreadpoolPolicy_ptr
-tao_RTCORBA_ThreadpoolPolicy_narrow (
+RTCORBA::tao_ThreadpoolPolicy_cast::tao_narrow (
     CORBA::Object *p
     ACE_ENV_ARG_DECL
   )
@@ -1035,7 +856,7 @@ tao_RTCORBA_ThreadpoolPolicy_narrow (
 }
 
 CORBA::Object *
-tao_RTCORBA_ThreadpoolPolicy_upcast (
+RTCORBA::tao_ThreadpoolPolicy_cast::tao_upcast (
     void *src
   )
 {
@@ -1044,205 +865,32 @@ tao_RTCORBA_ThreadpoolPolicy_upcast (
   return *tmp;
 }
 
-CORBA::Boolean
-tao_RTCORBA_ThreadpoolPolicy_marshal (
-    RTCORBA::ThreadpoolPolicy_ptr p,
-    TAO_OutputCDR &strm
-  )
-{
-  return p->marshal (strm);
-}
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+  template class
+    TAO_Objref_Var_T<
+        RTCORBA::ThreadpoolPolicy,
+        RTCORBA::tao_ThreadpoolPolicy_life
+      >;
+  template class
+    TAO_Objref_Out_T<
+        RTCORBA::ThreadpoolPolicy,
+        RTCORBA::tao_ThreadpoolPolicy_life
+      >;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate \
+    TAO_Objref_Var_T< \
+        RTCORBA::ThreadpoolPolicy, \
+        RTCORBA::tao_ThreadpoolPolicy_life \
+      >
+# pragma instantiate \
+    TAO_Objref_Out_T< \
+        RTCORBA::ThreadpoolPolicy, \
+        RTCORBA::tao_ThreadpoolPolicy_life \
+      >
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:721
-
-// *************************************************************
-// RTCORBA::ThreadpoolPolicy_var
-// *************************************************************
-
-RTCORBA::ThreadpoolPolicy_var::ThreadpoolPolicy_var (void)
-  : ptr_ (ThreadpoolPolicy::_nil ())
-{}
-
-::RTCORBA::ThreadpoolPolicy_ptr
-RTCORBA::ThreadpoolPolicy_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-RTCORBA::ThreadpoolPolicy_var::ThreadpoolPolicy_var (const ::RTCORBA::ThreadpoolPolicy_var &p)
-  : TAO_Base_var (),
-    ptr_ (ThreadpoolPolicy::_duplicate (p.ptr ()))
-{}
-
-RTCORBA::ThreadpoolPolicy_var::~ThreadpoolPolicy_var (void)
-{
-  CORBA::release (this->ptr_);
-}
-
-RTCORBA::ThreadpoolPolicy_var &
-RTCORBA::ThreadpoolPolicy_var::operator= (ThreadpoolPolicy_ptr p)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = p;
-  return *this;
-}
-
-RTCORBA::ThreadpoolPolicy_var &
-RTCORBA::ThreadpoolPolicy_var::operator= (const ::RTCORBA::ThreadpoolPolicy_var &p)
-{
-  if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = ::RTCORBA::ThreadpoolPolicy::_duplicate (p.ptr ());
-  }
-  return *this;
-}
-
-RTCORBA::ThreadpoolPolicy_var::operator const ::RTCORBA::ThreadpoolPolicy_ptr &() const // cast
-{
-  return this->ptr_;
-}
-
-RTCORBA::ThreadpoolPolicy_var::operator ::RTCORBA::ThreadpoolPolicy_ptr &() // cast 
-{
-  return this->ptr_;
-}
-
-::RTCORBA::ThreadpoolPolicy_ptr
-RTCORBA::ThreadpoolPolicy_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-::RTCORBA::ThreadpoolPolicy_ptr
-RTCORBA::ThreadpoolPolicy_var::in (void) const
-{
-  return this->ptr_;
-}
-
-::RTCORBA::ThreadpoolPolicy_ptr &
-RTCORBA::ThreadpoolPolicy_var::inout (void)
-{
-  return this->ptr_;
-}
-
-::RTCORBA::ThreadpoolPolicy_ptr &
-RTCORBA::ThreadpoolPolicy_var::out (void)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::RTCORBA::ThreadpoolPolicy::_nil ();
-  return this->ptr_;
-}
-
-::RTCORBA::ThreadpoolPolicy_ptr
-RTCORBA::ThreadpoolPolicy_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  ::RTCORBA::ThreadpoolPolicy_ptr val = this->ptr_;
-  this->ptr_ = ::RTCORBA::ThreadpoolPolicy::_nil ();
-  return val;
-}
-
-::RTCORBA::ThreadpoolPolicy_ptr
-RTCORBA::ThreadpoolPolicy_var::tao_duplicate (ThreadpoolPolicy_ptr p)
-{
-  return ::RTCORBA::ThreadpoolPolicy::_duplicate (p);
-}
-
-void
-RTCORBA::ThreadpoolPolicy_var::tao_release (ThreadpoolPolicy_ptr p)
-{
-  CORBA::release (p);
-}
-
-::RTCORBA::ThreadpoolPolicy_ptr
-RTCORBA::ThreadpoolPolicy_var::tao_nil (void)
-{
-  return ::RTCORBA::ThreadpoolPolicy::_nil ();
-}
-
-::RTCORBA::ThreadpoolPolicy_ptr
-RTCORBA::ThreadpoolPolicy_var::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return ::RTCORBA::ThreadpoolPolicy::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-RTCORBA::ThreadpoolPolicy_var::tao_upcast (void *src)
-{
-  ThreadpoolPolicy **tmp =
-    ACE_static_cast (ThreadpoolPolicy **, src);
-  return *tmp;
-}
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1030
-
-// *************************************************************
-// RTCORBA::ThreadpoolPolicy_out
-// *************************************************************
-
-RTCORBA::ThreadpoolPolicy_out::ThreadpoolPolicy_out (ThreadpoolPolicy_ptr &p)
-  : ptr_ (p)
-{
-  this->ptr_ = ::RTCORBA::ThreadpoolPolicy::_nil ();
-}
-
-RTCORBA::ThreadpoolPolicy_out::ThreadpoolPolicy_out (ThreadpoolPolicy_var &p)
-  : ptr_ (p.out ())
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::RTCORBA::ThreadpoolPolicy::_nil ();
-}
-
-RTCORBA::ThreadpoolPolicy_out::ThreadpoolPolicy_out (const ::RTCORBA::ThreadpoolPolicy_out &p)
-  : ptr_ (ACE_const_cast (ThreadpoolPolicy_out &, p).ptr_)
-{}
-
-::RTCORBA::ThreadpoolPolicy_out &
-RTCORBA::ThreadpoolPolicy_out::operator= (const ::RTCORBA::ThreadpoolPolicy_out &p)
-{
-  this->ptr_ = ACE_const_cast (ThreadpoolPolicy_out&, p).ptr_;
-  return *this;
-}
-
-RTCORBA::ThreadpoolPolicy_out &
-RTCORBA::ThreadpoolPolicy_out::operator= (const ::RTCORBA::ThreadpoolPolicy_var &p)
-{
-  this->ptr_ = ::RTCORBA::ThreadpoolPolicy::_duplicate (p.ptr ());
-  return *this;
-}
-
-RTCORBA::ThreadpoolPolicy_out &
-RTCORBA::ThreadpoolPolicy_out::operator= (ThreadpoolPolicy_ptr p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-RTCORBA::ThreadpoolPolicy_out::operator ::RTCORBA::ThreadpoolPolicy_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-::RTCORBA::ThreadpoolPolicy_ptr &
-RTCORBA::ThreadpoolPolicy_out::ptr (void)
-{
-  return this->ptr_;
-}
-
-::RTCORBA::ThreadpoolPolicy_ptr
-RTCORBA::ThreadpoolPolicy_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:235
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:232
 
 RTCORBA::ThreadpoolPolicy::ThreadpoolPolicy (void)
 {}
@@ -1250,7 +898,7 @@ RTCORBA::ThreadpoolPolicy::ThreadpoolPolicy (void)
 RTCORBA::ThreadpoolPolicy::~ThreadpoolPolicy (void)
 {}
 
-void 
+void
 RTCORBA::ThreadpoolPolicy::_tao_any_destructor (void *_tao_void_pointer)
 {
   ThreadpoolPolicy *tmp = ACE_static_cast (ThreadpoolPolicy *, _tao_void_pointer);
@@ -1266,7 +914,7 @@ RTCORBA::ThreadpoolPolicy::_narrow (
   return ThreadpoolPolicy::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
 }
 
-RTCORBA::ThreadpoolPolicy_ptr 
+RTCORBA::ThreadpoolPolicy_ptr
 RTCORBA::ThreadpoolPolicy::_unchecked_narrow (
     CORBA::Object_ptr obj
     ACE_ENV_ARG_DECL_NOT_USED
@@ -1276,7 +924,7 @@ RTCORBA::ThreadpoolPolicy::_unchecked_narrow (
     {
       return ThreadpoolPolicy::_nil ();
     }
-  
+
   return
       ACE_reinterpret_cast (
           ThreadpoolPolicy_ptr,
@@ -1296,14 +944,14 @@ RTCORBA::ThreadpoolPolicy::_duplicate (ThreadpoolPolicy_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 void *RTCORBA::ThreadpoolPolicy::_tao_QueryInterface (ptr_arith_t type)
 {
   void *retv = 0;
-  
+
   if (type == ACE_reinterpret_cast (
               ptr_arith_t,
               &ACE_NESTED_CLASS (::RTCORBA, ThreadpoolPolicy)::_tao_class_id)
@@ -1336,18 +984,24 @@ void *RTCORBA::ThreadpoolPolicy::_tao_QueryInterface (ptr_arith_t type)
             ACE_static_cast (CORBA::Object_ptr, this)
           );
     }
-  
+
   if (retv != 0)
     {
       this->_add_ref ();
     }
-  
+
   return retv;
 }
 
 const char* RTCORBA::ThreadpoolPolicy::_interface_repository_id (void) const
 {
   return "IDL:omg.org/RTCORBA/ThreadpoolPolicy:1.0";
+}
+
+CORBA::Boolean
+RTCORBA::ThreadpoolPolicy::marshal (TAO_OutputCDR &)
+{
+  return 0;
 }
 
 // TAO_IDL - Generated from
@@ -1357,22 +1011,22 @@ static const CORBA::Long _oc_RTCORBA_ThreadpoolPolicy[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   41,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x5254434f), 
-  ACE_NTOHL (0x5242412f), 
-  ACE_NTOHL (0x54687265), 
-  ACE_NTOHL (0x6164706f), 
-  ACE_NTOHL (0x6f6c506f), 
-  ACE_NTOHL (0x6c696379), 
-  ACE_NTOHL (0x3a312e30), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x5254434f),
+  ACE_NTOHL (0x5242412f),
+  ACE_NTOHL (0x54687265),
+  ACE_NTOHL (0x6164706f),
+  ACE_NTOHL (0x6f6c506f),
+  ACE_NTOHL (0x6c696379),
+  ACE_NTOHL (0x3a312e30),
   ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/RTCORBA/ThreadpoolPolicy:1.0
     17,
-  ACE_NTOHL (0x54687265), 
-  ACE_NTOHL (0x6164706f), 
-  ACE_NTOHL (0x6f6c506f), 
-  ACE_NTOHL (0x6c696379), 
+  ACE_NTOHL (0x54687265),
+  ACE_NTOHL (0x6164706f),
+  ACE_NTOHL (0x6f6c506f),
+  ACE_NTOHL (0x6c696379),
   ACE_NTOHL (0x0),  // name = ThreadpoolPolicy
   };
 
@@ -1399,7 +1053,7 @@ TAO_NAMESPACE_END
 int RTCORBA::ProtocolProperties::_tao_class_id = 0;
 
 RTCORBA::ProtocolProperties_ptr
-tao_RTCORBA_ProtocolProperties_duplicate (
+RTCORBA::tao_ProtocolProperties_life::tao_duplicate (
     RTCORBA::ProtocolProperties_ptr p
   )
 {
@@ -1407,7 +1061,7 @@ tao_RTCORBA_ProtocolProperties_duplicate (
 }
 
 void
-tao_RTCORBA_ProtocolProperties_release (
+RTCORBA::tao_ProtocolProperties_life::tao_release (
     RTCORBA::ProtocolProperties_ptr p
   )
 {
@@ -1415,15 +1069,24 @@ tao_RTCORBA_ProtocolProperties_release (
 }
 
 RTCORBA::ProtocolProperties_ptr
-tao_RTCORBA_ProtocolProperties_nil (
+RTCORBA::tao_ProtocolProperties_life::tao_nil (
     void
   )
 {
   return RTCORBA::ProtocolProperties::_nil ();
 }
 
+CORBA::Boolean
+RTCORBA::tao_ProtocolProperties_life::tao_marshal (
+    RTCORBA::ProtocolProperties_ptr p,
+    TAO_OutputCDR &cdr
+  )
+{
+  return p->marshal (cdr);
+}
+
 RTCORBA::ProtocolProperties_ptr
-tao_RTCORBA_ProtocolProperties_narrow (
+RTCORBA::tao_ProtocolProperties_cast::tao_narrow (
     CORBA::Object *p
     ACE_ENV_ARG_DECL
   )
@@ -1432,7 +1095,7 @@ tao_RTCORBA_ProtocolProperties_narrow (
 }
 
 CORBA::Object *
-tao_RTCORBA_ProtocolProperties_upcast (
+RTCORBA::tao_ProtocolProperties_cast::tao_upcast (
     void *src
   )
 {
@@ -1441,205 +1104,32 @@ tao_RTCORBA_ProtocolProperties_upcast (
   return *tmp;
 }
 
-CORBA::Boolean
-tao_RTCORBA_ProtocolProperties_marshal (
-    RTCORBA::ProtocolProperties_ptr p,
-    TAO_OutputCDR &strm
-  )
-{
-  return p->marshal (strm);
-}
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+  template class
+    TAO_Objref_Var_T<
+        RTCORBA::ProtocolProperties,
+        RTCORBA::tao_ProtocolProperties_life
+      >;
+  template class
+    TAO_Objref_Out_T<
+        RTCORBA::ProtocolProperties,
+        RTCORBA::tao_ProtocolProperties_life
+      >;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate \
+    TAO_Objref_Var_T< \
+        RTCORBA::ProtocolProperties, \
+        RTCORBA::tao_ProtocolProperties_life \
+      >
+# pragma instantiate \
+    TAO_Objref_Out_T< \
+        RTCORBA::ProtocolProperties, \
+        RTCORBA::tao_ProtocolProperties_life \
+      >
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:721
-
-// *************************************************************
-// RTCORBA::ProtocolProperties_var
-// *************************************************************
-
-RTCORBA::ProtocolProperties_var::ProtocolProperties_var (void)
-  : ptr_ (ProtocolProperties::_nil ())
-{}
-
-::RTCORBA::ProtocolProperties_ptr
-RTCORBA::ProtocolProperties_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-RTCORBA::ProtocolProperties_var::ProtocolProperties_var (const ::RTCORBA::ProtocolProperties_var &p)
-  : TAO_Base_var (),
-    ptr_ (ProtocolProperties::_duplicate (p.ptr ()))
-{}
-
-RTCORBA::ProtocolProperties_var::~ProtocolProperties_var (void)
-{
-  CORBA::release (this->ptr_);
-}
-
-RTCORBA::ProtocolProperties_var &
-RTCORBA::ProtocolProperties_var::operator= (ProtocolProperties_ptr p)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = p;
-  return *this;
-}
-
-RTCORBA::ProtocolProperties_var &
-RTCORBA::ProtocolProperties_var::operator= (const ::RTCORBA::ProtocolProperties_var &p)
-{
-  if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = ::RTCORBA::ProtocolProperties::_duplicate (p.ptr ());
-  }
-  return *this;
-}
-
-RTCORBA::ProtocolProperties_var::operator const ::RTCORBA::ProtocolProperties_ptr &() const // cast
-{
-  return this->ptr_;
-}
-
-RTCORBA::ProtocolProperties_var::operator ::RTCORBA::ProtocolProperties_ptr &() // cast 
-{
-  return this->ptr_;
-}
-
-::RTCORBA::ProtocolProperties_ptr
-RTCORBA::ProtocolProperties_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-::RTCORBA::ProtocolProperties_ptr
-RTCORBA::ProtocolProperties_var::in (void) const
-{
-  return this->ptr_;
-}
-
-::RTCORBA::ProtocolProperties_ptr &
-RTCORBA::ProtocolProperties_var::inout (void)
-{
-  return this->ptr_;
-}
-
-::RTCORBA::ProtocolProperties_ptr &
-RTCORBA::ProtocolProperties_var::out (void)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::RTCORBA::ProtocolProperties::_nil ();
-  return this->ptr_;
-}
-
-::RTCORBA::ProtocolProperties_ptr
-RTCORBA::ProtocolProperties_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  ::RTCORBA::ProtocolProperties_ptr val = this->ptr_;
-  this->ptr_ = ::RTCORBA::ProtocolProperties::_nil ();
-  return val;
-}
-
-::RTCORBA::ProtocolProperties_ptr
-RTCORBA::ProtocolProperties_var::tao_duplicate (ProtocolProperties_ptr p)
-{
-  return ::RTCORBA::ProtocolProperties::_duplicate (p);
-}
-
-void
-RTCORBA::ProtocolProperties_var::tao_release (ProtocolProperties_ptr p)
-{
-  CORBA::release (p);
-}
-
-::RTCORBA::ProtocolProperties_ptr
-RTCORBA::ProtocolProperties_var::tao_nil (void)
-{
-  return ::RTCORBA::ProtocolProperties::_nil ();
-}
-
-::RTCORBA::ProtocolProperties_ptr
-RTCORBA::ProtocolProperties_var::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return ::RTCORBA::ProtocolProperties::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-RTCORBA::ProtocolProperties_var::tao_upcast (void *src)
-{
-  ProtocolProperties **tmp =
-    ACE_static_cast (ProtocolProperties **, src);
-  return *tmp;
-}
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1030
-
-// *************************************************************
-// RTCORBA::ProtocolProperties_out
-// *************************************************************
-
-RTCORBA::ProtocolProperties_out::ProtocolProperties_out (ProtocolProperties_ptr &p)
-  : ptr_ (p)
-{
-  this->ptr_ = ::RTCORBA::ProtocolProperties::_nil ();
-}
-
-RTCORBA::ProtocolProperties_out::ProtocolProperties_out (ProtocolProperties_var &p)
-  : ptr_ (p.out ())
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::RTCORBA::ProtocolProperties::_nil ();
-}
-
-RTCORBA::ProtocolProperties_out::ProtocolProperties_out (const ::RTCORBA::ProtocolProperties_out &p)
-  : ptr_ (ACE_const_cast (ProtocolProperties_out &, p).ptr_)
-{}
-
-::RTCORBA::ProtocolProperties_out &
-RTCORBA::ProtocolProperties_out::operator= (const ::RTCORBA::ProtocolProperties_out &p)
-{
-  this->ptr_ = ACE_const_cast (ProtocolProperties_out&, p).ptr_;
-  return *this;
-}
-
-RTCORBA::ProtocolProperties_out &
-RTCORBA::ProtocolProperties_out::operator= (const ::RTCORBA::ProtocolProperties_var &p)
-{
-  this->ptr_ = ::RTCORBA::ProtocolProperties::_duplicate (p.ptr ());
-  return *this;
-}
-
-RTCORBA::ProtocolProperties_out &
-RTCORBA::ProtocolProperties_out::operator= (ProtocolProperties_ptr p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-RTCORBA::ProtocolProperties_out::operator ::RTCORBA::ProtocolProperties_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-::RTCORBA::ProtocolProperties_ptr &
-RTCORBA::ProtocolProperties_out::ptr (void)
-{
-  return this->ptr_;
-}
-
-::RTCORBA::ProtocolProperties_ptr
-RTCORBA::ProtocolProperties_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:235
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:232
 
 RTCORBA::ProtocolProperties::ProtocolProperties (void)
 {}
@@ -1647,7 +1137,7 @@ RTCORBA::ProtocolProperties::ProtocolProperties (void)
 RTCORBA::ProtocolProperties::~ProtocolProperties (void)
 {}
 
-void 
+void
 RTCORBA::ProtocolProperties::_tao_any_destructor (void *_tao_void_pointer)
 {
   ProtocolProperties *tmp = ACE_static_cast (ProtocolProperties *, _tao_void_pointer);
@@ -1663,7 +1153,7 @@ RTCORBA::ProtocolProperties::_narrow (
   return ProtocolProperties::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
 }
 
-RTCORBA::ProtocolProperties_ptr 
+RTCORBA::ProtocolProperties_ptr
 RTCORBA::ProtocolProperties::_unchecked_narrow (
     CORBA::Object_ptr obj
     ACE_ENV_ARG_DECL_NOT_USED
@@ -1673,7 +1163,7 @@ RTCORBA::ProtocolProperties::_unchecked_narrow (
     {
       return ProtocolProperties::_nil ();
     }
-  
+
   return
       ACE_reinterpret_cast (
           ProtocolProperties_ptr,
@@ -1693,14 +1183,14 @@ RTCORBA::ProtocolProperties::_duplicate (ProtocolProperties_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 void *RTCORBA::ProtocolProperties::_tao_QueryInterface (ptr_arith_t type)
 {
   void *retv = 0;
-  
+
   if (type == ACE_reinterpret_cast (
               ptr_arith_t,
               &ACE_NESTED_CLASS (::RTCORBA, ProtocolProperties)::_tao_class_id)
@@ -1719,18 +1209,24 @@ void *RTCORBA::ProtocolProperties::_tao_QueryInterface (ptr_arith_t type)
             ACE_static_cast (CORBA::Object_ptr, this)
           );
     }
-  
+
   if (retv != 0)
     {
       this->_add_ref ();
     }
-  
+
   return retv;
 }
 
 const char* RTCORBA::ProtocolProperties::_interface_repository_id (void) const
 {
   return "IDL:omg.org/RTCORBA/ProtocolProperties:1.0";
+}
+
+CORBA::Boolean
+RTCORBA::ProtocolProperties::marshal (TAO_OutputCDR &)
+{
+  return 0;
 }
 
 // TAO_IDL - Generated from
@@ -1740,22 +1236,22 @@ static const CORBA::Long _oc_RTCORBA_ProtocolProperties[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   43,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x5254434f), 
-  ACE_NTOHL (0x5242412f), 
-  ACE_NTOHL (0x50726f74), 
-  ACE_NTOHL (0x6f636f6c), 
-  ACE_NTOHL (0x50726f70), 
-  ACE_NTOHL (0x65727469), 
-  ACE_NTOHL (0x65733a31), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x5254434f),
+  ACE_NTOHL (0x5242412f),
+  ACE_NTOHL (0x50726f74),
+  ACE_NTOHL (0x6f636f6c),
+  ACE_NTOHL (0x50726f70),
+  ACE_NTOHL (0x65727469),
+  ACE_NTOHL (0x65733a31),
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/RTCORBA/ProtocolProperties:1.0
     19,
-  ACE_NTOHL (0x50726f74), 
-  ACE_NTOHL (0x6f636f6c), 
-  ACE_NTOHL (0x50726f70), 
-  ACE_NTOHL (0x65727469), 
+  ACE_NTOHL (0x50726f74),
+  ACE_NTOHL (0x6f636f6c),
+  ACE_NTOHL (0x50726f70),
+  ACE_NTOHL (0x65727469),
   ACE_NTOHL (0x65730000),  // name = ProtocolProperties
   };
 
@@ -1783,81 +1279,81 @@ static const CORBA::Long _oc_RTCORBA_Protocol[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   33,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x5254434f), 
-  ACE_NTOHL (0x5242412f), 
-  ACE_NTOHL (0x50726f74), 
-  ACE_NTOHL (0x6f636f6c), 
-  ACE_NTOHL (0x3a312e30), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x5254434f),
+  ACE_NTOHL (0x5242412f),
+  ACE_NTOHL (0x50726f74),
+  ACE_NTOHL (0x6f636f6c),
+  ACE_NTOHL (0x3a312e30),
   ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/RTCORBA/Protocol:1.0
     9,
-  ACE_NTOHL (0x50726f74), 
-  ACE_NTOHL (0x6f636f6c), 
+  ACE_NTOHL (0x50726f74),
+  ACE_NTOHL (0x6f636f6c),
   ACE_NTOHL (0x0),  // name = Protocol
   3, // member count
     14,
-  ACE_NTOHL (0x70726f74), 
-  ACE_NTOHL (0x6f636f6c), 
-  ACE_NTOHL (0x5f747970), 
+  ACE_NTOHL (0x70726f74),
+  ACE_NTOHL (0x6f636f6c),
+  ACE_NTOHL (0x5f747970),
   ACE_NTOHL (0x65000000),  // name = protocol_type
     CORBA::tk_alias, // typecode kind for typedefs
   60, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     30,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x494f502f), 
-    ACE_NTOHL (0x50726f66), 
-    ACE_NTOHL (0x696c6549), 
-    ACE_NTOHL (0x643a312e), 
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x494f502f),
+    ACE_NTOHL (0x50726f66),
+    ACE_NTOHL (0x696c6549),
+    ACE_NTOHL (0x643a312e),
     ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/IOP/ProfileId:1.0
         10,
-    ACE_NTOHL (0x50726f66), 
-    ACE_NTOHL (0x696c6549), 
+    ACE_NTOHL (0x50726f66),
+    ACE_NTOHL (0x696c6549),
     ACE_NTOHL (0x64000000),  // name = ProfileId
         CORBA::tk_ulong,
 
 
   24,
-  ACE_NTOHL (0x6f72625f), 
-  ACE_NTOHL (0x70726f74), 
-  ACE_NTOHL (0x6f636f6c), 
-  ACE_NTOHL (0x5f70726f), 
-  ACE_NTOHL (0x70657274), 
+  ACE_NTOHL (0x6f72625f),
+  ACE_NTOHL (0x70726f74),
+  ACE_NTOHL (0x6f636f6c),
+  ACE_NTOHL (0x5f70726f),
+  ACE_NTOHL (0x70657274),
   ACE_NTOHL (0x69657300),  // name = orb_protocol_properties
     CORBA::tk_objref, // typecode kind
   76, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     43,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x5254434f), 
-    ACE_NTOHL (0x5242412f), 
-    ACE_NTOHL (0x50726f74), 
-    ACE_NTOHL (0x6f636f6c), 
-    ACE_NTOHL (0x50726f70), 
-    ACE_NTOHL (0x65727469), 
-    ACE_NTOHL (0x65733a31), 
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x5254434f),
+    ACE_NTOHL (0x5242412f),
+    ACE_NTOHL (0x50726f74),
+    ACE_NTOHL (0x6f636f6c),
+    ACE_NTOHL (0x50726f70),
+    ACE_NTOHL (0x65727469),
+    ACE_NTOHL (0x65733a31),
     ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/RTCORBA/ProtocolProperties:1.0
         19,
-    ACE_NTOHL (0x50726f74), 
-    ACE_NTOHL (0x6f636f6c), 
-    ACE_NTOHL (0x50726f70), 
-    ACE_NTOHL (0x65727469), 
+    ACE_NTOHL (0x50726f74),
+    ACE_NTOHL (0x6f636f6c),
+    ACE_NTOHL (0x50726f70),
+    ACE_NTOHL (0x65727469),
     ACE_NTOHL (0x65730000),  // name = ProtocolProperties
-    
+
   30,
-  ACE_NTOHL (0x7472616e), 
-  ACE_NTOHL (0x73706f72), 
-  ACE_NTOHL (0x745f7072), 
-  ACE_NTOHL (0x6f746f63), 
-  ACE_NTOHL (0x6f6c5f70), 
-  ACE_NTOHL (0x726f7065), 
-  ACE_NTOHL (0x72746965), 
+  ACE_NTOHL (0x7472616e),
+  ACE_NTOHL (0x73706f72),
+  ACE_NTOHL (0x745f7072),
+  ACE_NTOHL (0x6f746f63),
+  ACE_NTOHL (0x6f6c5f70),
+  ACE_NTOHL (0x726f7065),
+  ACE_NTOHL (0x72746965),
   ACE_NTOHL (0x73000000),  // name = transport_protocol_properties
     0xffffffff, // indirection
   0xffffff84, // negative offset (-124)
@@ -1880,8 +1376,8 @@ TAO_NAMESPACE_DEFINE (
   )
 TAO_NAMESPACE_END
 
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_cs.cpp:67
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_cs.cpp:66
 
 void RTCORBA::Protocol::_tao_any_destructor (void *_tao_void_pointer)
 {
@@ -1889,117 +1385,70 @@ void RTCORBA::Protocol::_tao_any_destructor (void *_tao_void_pointer)
   delete tmp;
 }
 
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/gen_unbounded_sequence_cs.cpp:101
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_type.cpp:274
 
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-#if !defined (__TAO_UNBOUNDED_SEQUENCE_RTCORBA_PROTOCOLLIST_CS_)
-#define __TAO_UNBOUNDED_SEQUENCE_RTCORBA_PROTOCOLLIST_CS_
+template class
+  TAO_Var_Var_T<
+      Protocol
+    >;
 
-void
-RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_ProtocolList::_allocate_buffer (CORBA::ULong length)
-{
-  RTCORBA::Protocol* tmp = 0;
-  tmp = _TAO_Unbounded_Sequence_RTCORBA_ProtocolList::allocbuf (length);
-  
-  if (this->buffer_ != 0)
-    {
-      RTCORBA::Protocol *old =
-        ACE_reinterpret_cast (RTCORBA::Protocol *, this->buffer_);
-      
-      for (CORBA::ULong i = 0; i < this->length_; ++i)
-        {
-          tmp[i] = old[i];
-        }
-      
-      if (this->release_)
-        {
-          _TAO_Unbounded_Sequence_RTCORBA_ProtocolList::freebuf (old);
-        }
-    }
-  
-  this->buffer_ = tmp;
-}
+template class
+  TAO_Out_T<
+      Protocol,
+      Protocol_var
+    >;
 
-void
-RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_ProtocolList::_deallocate_buffer (void)
-{
-  if (this->buffer_ == 0 || this->release_ == 0)
-    {
-      return;
-    }
-  
-  RTCORBA::Protocol *tmp =
-    ACE_reinterpret_cast (RTCORBA::Protocol *, this->buffer_);
-  _TAO_Unbounded_Sequence_RTCORBA_ProtocolList::freebuf (tmp);
-  this->buffer_ = 0;
-} 
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_ProtocolList::~_TAO_Unbounded_Sequence_RTCORBA_ProtocolList (void)
-{
-  this->_deallocate_buffer ();
-}
+# pragma instantiate \
+  TAO_Var_Var_T< \
+      Protocol \
+    >
 
-#endif /* end #if !defined */
+# pragma instantiate \
+  TAO_Out_T< \
+      Protocol, \
+      Protocol_var \
+    >
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
-
-#if !defined (_RTCORBA_PROTOCOLLIST_CS_)
-#define _RTCORBA_PROTOCOLLIST_CS_
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_cs.cpp:250
-
-// *************************************************************
-// RTCORBA::ProtocolList
-// *************************************************************
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_cs.cpp:49
 
 RTCORBA::ProtocolList::ProtocolList (void)
 {}
 
 RTCORBA::ProtocolList::ProtocolList (CORBA::ULong max)
-  : 
-
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-_TAO_Unbounded_Sequence_RTCORBA_ProtocolList
-#else /* TAO_USE_SEQUENCE_TEMPLATES */
-TAO_Unbounded_Sequence<RTCORBA::Protocol>
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
- (max)
+  : TAO_Unbounded_Sequence<
+        RTCORBA::Protocol
+      >
+    (max)
 {}
 
 RTCORBA::ProtocolList::ProtocolList (
     CORBA::ULong max,
     CORBA::ULong length,
-    RTCORBA::Protocol *buffer,
+    RTCORBA::Protocol* buffer,
     CORBA::Boolean release
   )
-  : 
-
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-_TAO_Unbounded_Sequence_RTCORBA_ProtocolList
-#else /* TAO_USE_SEQUENCE_TEMPLATES */
-TAO_Unbounded_Sequence<RTCORBA::Protocol>
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
- (max, length, buffer, release)
+  : TAO_Unbounded_Sequence<
+        RTCORBA::Protocol
+      >
+    (max, length, buffer, release)
 {}
 
 RTCORBA::ProtocolList::ProtocolList (const ProtocolList &seq)
-  : 
-
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-_TAO_Unbounded_Sequence_RTCORBA_ProtocolList
-#else /* TAO_USE_SEQUENCE_TEMPLATES */
-TAO_Unbounded_Sequence<RTCORBA::Protocol>
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
- (seq)
+  : TAO_Unbounded_Sequence<
+        RTCORBA::Protocol
+      >
+    (seq)
 {}
 
-RTCORBA::ProtocolList::~ProtocolList (void) // dtor
+RTCORBA::ProtocolList::~ProtocolList (void)
 {}
 
 void RTCORBA::ProtocolList::_tao_any_destructor (void *_tao_void_pointer)
@@ -2008,7 +1457,37 @@ void RTCORBA::ProtocolList::_tao_any_destructor (void *_tao_void_pointer)
   delete tmp;
 }
 
-#endif /* end #if !defined */
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+template class
+  TAO_VarSeq_Var_T<
+      ProtocolList,
+      RTCORBA::Protocol
+    >;
+
+template class
+  TAO_Seq_Out_T<
+      ProtocolList,
+      ProtocolList_var,
+      RTCORBA::Protocol
+    >;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+# pragma instantiate \
+  TAO_VarSeq_Var_T< \
+      ProtocolList, \
+      RTCORBA::Protocol \
+    >
+
+# pragma instantiate \
+  TAO_Seq_Out_T< \
+      ProtocolList, \
+      ProtocolList_var, \
+      RTCORBA::Protocol \
+    >
+
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
@@ -2017,20 +1496,20 @@ static const CORBA::Long _oc_RTCORBA_ProtocolList[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   37,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x5254434f), 
-  ACE_NTOHL (0x5242412f), 
-  ACE_NTOHL (0x50726f74), 
-  ACE_NTOHL (0x6f636f6c), 
-  ACE_NTOHL (0x4c697374), 
-  ACE_NTOHL (0x3a312e30), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x5254434f),
+  ACE_NTOHL (0x5242412f),
+  ACE_NTOHL (0x50726f74),
+  ACE_NTOHL (0x6f636f6c),
+  ACE_NTOHL (0x4c697374),
+  ACE_NTOHL (0x3a312e30),
   ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/RTCORBA/ProtocolList:1.0
     13,
-  ACE_NTOHL (0x50726f74), 
-  ACE_NTOHL (0x6f636f6c), 
-  ACE_NTOHL (0x4c697374), 
+  ACE_NTOHL (0x50726f74),
+  ACE_NTOHL (0x6f636f6c),
+  ACE_NTOHL (0x4c697374),
   ACE_NTOHL (0x0),  // name = ProtocolList
     CORBA::tk_sequence, // typecode kind
   324, // encapsulation length
@@ -2039,81 +1518,81 @@ static const CORBA::Long _oc_RTCORBA_ProtocolList[] =
     308, // encapsulation length
       TAO_ENCAP_BYTE_ORDER, // byte order
       33,
-      ACE_NTOHL (0x49444c3a), 
-      ACE_NTOHL (0x6f6d672e), 
-      ACE_NTOHL (0x6f72672f), 
-      ACE_NTOHL (0x5254434f), 
-      ACE_NTOHL (0x5242412f), 
-      ACE_NTOHL (0x50726f74), 
-      ACE_NTOHL (0x6f636f6c), 
-      ACE_NTOHL (0x3a312e30), 
+      ACE_NTOHL (0x49444c3a),
+      ACE_NTOHL (0x6f6d672e),
+      ACE_NTOHL (0x6f72672f),
+      ACE_NTOHL (0x5254434f),
+      ACE_NTOHL (0x5242412f),
+      ACE_NTOHL (0x50726f74),
+      ACE_NTOHL (0x6f636f6c),
+      ACE_NTOHL (0x3a312e30),
       ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/RTCORBA/Protocol:1.0
             9,
-      ACE_NTOHL (0x50726f74), 
-      ACE_NTOHL (0x6f636f6c), 
+      ACE_NTOHL (0x50726f74),
+      ACE_NTOHL (0x6f636f6c),
       ACE_NTOHL (0x0),  // name = Protocol
       3, // member count
             14,
-      ACE_NTOHL (0x70726f74), 
-      ACE_NTOHL (0x6f636f6c), 
-      ACE_NTOHL (0x5f747970), 
+      ACE_NTOHL (0x70726f74),
+      ACE_NTOHL (0x6f636f6c),
+      ACE_NTOHL (0x5f747970),
       ACE_NTOHL (0x65000000),  // name = protocol_type
             CORBA::tk_alias, // typecode kind for typedefs
       60, // encapsulation length
         TAO_ENCAP_BYTE_ORDER, // byte order
         30,
-        ACE_NTOHL (0x49444c3a), 
-        ACE_NTOHL (0x6f6d672e), 
-        ACE_NTOHL (0x6f72672f), 
-        ACE_NTOHL (0x494f502f), 
-        ACE_NTOHL (0x50726f66), 
-        ACE_NTOHL (0x696c6549), 
-        ACE_NTOHL (0x643a312e), 
+        ACE_NTOHL (0x49444c3a),
+        ACE_NTOHL (0x6f6d672e),
+        ACE_NTOHL (0x6f72672f),
+        ACE_NTOHL (0x494f502f),
+        ACE_NTOHL (0x50726f66),
+        ACE_NTOHL (0x696c6549),
+        ACE_NTOHL (0x643a312e),
         ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/IOP/ProfileId:1.0
                 10,
-        ACE_NTOHL (0x50726f66), 
-        ACE_NTOHL (0x696c6549), 
+        ACE_NTOHL (0x50726f66),
+        ACE_NTOHL (0x696c6549),
         ACE_NTOHL (0x64000000),  // name = ProfileId
                 CORBA::tk_ulong,
 
 
       24,
-      ACE_NTOHL (0x6f72625f), 
-      ACE_NTOHL (0x70726f74), 
-      ACE_NTOHL (0x6f636f6c), 
-      ACE_NTOHL (0x5f70726f), 
-      ACE_NTOHL (0x70657274), 
+      ACE_NTOHL (0x6f72625f),
+      ACE_NTOHL (0x70726f74),
+      ACE_NTOHL (0x6f636f6c),
+      ACE_NTOHL (0x5f70726f),
+      ACE_NTOHL (0x70657274),
       ACE_NTOHL (0x69657300),  // name = orb_protocol_properties
             CORBA::tk_objref, // typecode kind
       76, // encapsulation length
         TAO_ENCAP_BYTE_ORDER, // byte order
         43,
-        ACE_NTOHL (0x49444c3a), 
-        ACE_NTOHL (0x6f6d672e), 
-        ACE_NTOHL (0x6f72672f), 
-        ACE_NTOHL (0x5254434f), 
-        ACE_NTOHL (0x5242412f), 
-        ACE_NTOHL (0x50726f74), 
-        ACE_NTOHL (0x6f636f6c), 
-        ACE_NTOHL (0x50726f70), 
-        ACE_NTOHL (0x65727469), 
-        ACE_NTOHL (0x65733a31), 
+        ACE_NTOHL (0x49444c3a),
+        ACE_NTOHL (0x6f6d672e),
+        ACE_NTOHL (0x6f72672f),
+        ACE_NTOHL (0x5254434f),
+        ACE_NTOHL (0x5242412f),
+        ACE_NTOHL (0x50726f74),
+        ACE_NTOHL (0x6f636f6c),
+        ACE_NTOHL (0x50726f70),
+        ACE_NTOHL (0x65727469),
+        ACE_NTOHL (0x65733a31),
         ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/RTCORBA/ProtocolProperties:1.0
                 19,
-        ACE_NTOHL (0x50726f74), 
-        ACE_NTOHL (0x6f636f6c), 
-        ACE_NTOHL (0x50726f70), 
-        ACE_NTOHL (0x65727469), 
+        ACE_NTOHL (0x50726f74),
+        ACE_NTOHL (0x6f636f6c),
+        ACE_NTOHL (0x50726f70),
+        ACE_NTOHL (0x65727469),
         ACE_NTOHL (0x65730000),  // name = ProtocolProperties
-        
+
       30,
-      ACE_NTOHL (0x7472616e), 
-      ACE_NTOHL (0x73706f72), 
-      ACE_NTOHL (0x745f7072), 
-      ACE_NTOHL (0x6f746f63), 
-      ACE_NTOHL (0x6f6c5f70), 
-      ACE_NTOHL (0x726f7065), 
-      ACE_NTOHL (0x72746965), 
+      ACE_NTOHL (0x7472616e),
+      ACE_NTOHL (0x73706f72),
+      ACE_NTOHL (0x745f7072),
+      ACE_NTOHL (0x6f746f63),
+      ACE_NTOHL (0x6f6c5f70),
+      ACE_NTOHL (0x726f7065),
+      ACE_NTOHL (0x72746965),
       ACE_NTOHL (0x73000000),  // name = transport_protocol_properties
             0xffffffff, // indirection
       0xffffff84, // negative offset (-124)
@@ -2145,7 +1624,7 @@ TAO_NAMESPACE_END
 int RTCORBA::ServerProtocolPolicy::_tao_class_id = 0;
 
 RTCORBA::ServerProtocolPolicy_ptr
-tao_RTCORBA_ServerProtocolPolicy_duplicate (
+RTCORBA::tao_ServerProtocolPolicy_life::tao_duplicate (
     RTCORBA::ServerProtocolPolicy_ptr p
   )
 {
@@ -2153,7 +1632,7 @@ tao_RTCORBA_ServerProtocolPolicy_duplicate (
 }
 
 void
-tao_RTCORBA_ServerProtocolPolicy_release (
+RTCORBA::tao_ServerProtocolPolicy_life::tao_release (
     RTCORBA::ServerProtocolPolicy_ptr p
   )
 {
@@ -2161,15 +1640,24 @@ tao_RTCORBA_ServerProtocolPolicy_release (
 }
 
 RTCORBA::ServerProtocolPolicy_ptr
-tao_RTCORBA_ServerProtocolPolicy_nil (
+RTCORBA::tao_ServerProtocolPolicy_life::tao_nil (
     void
   )
 {
   return RTCORBA::ServerProtocolPolicy::_nil ();
 }
 
+CORBA::Boolean
+RTCORBA::tao_ServerProtocolPolicy_life::tao_marshal (
+    RTCORBA::ServerProtocolPolicy_ptr p,
+    TAO_OutputCDR &cdr
+  )
+{
+  return p->marshal (cdr);
+}
+
 RTCORBA::ServerProtocolPolicy_ptr
-tao_RTCORBA_ServerProtocolPolicy_narrow (
+RTCORBA::tao_ServerProtocolPolicy_cast::tao_narrow (
     CORBA::Object *p
     ACE_ENV_ARG_DECL
   )
@@ -2178,7 +1666,7 @@ tao_RTCORBA_ServerProtocolPolicy_narrow (
 }
 
 CORBA::Object *
-tao_RTCORBA_ServerProtocolPolicy_upcast (
+RTCORBA::tao_ServerProtocolPolicy_cast::tao_upcast (
     void *src
   )
 {
@@ -2187,205 +1675,32 @@ tao_RTCORBA_ServerProtocolPolicy_upcast (
   return *tmp;
 }
 
-CORBA::Boolean
-tao_RTCORBA_ServerProtocolPolicy_marshal (
-    RTCORBA::ServerProtocolPolicy_ptr p,
-    TAO_OutputCDR &strm
-  )
-{
-  return p->marshal (strm);
-}
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+  template class
+    TAO_Objref_Var_T<
+        RTCORBA::ServerProtocolPolicy,
+        RTCORBA::tao_ServerProtocolPolicy_life
+      >;
+  template class
+    TAO_Objref_Out_T<
+        RTCORBA::ServerProtocolPolicy,
+        RTCORBA::tao_ServerProtocolPolicy_life
+      >;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate \
+    TAO_Objref_Var_T< \
+        RTCORBA::ServerProtocolPolicy, \
+        RTCORBA::tao_ServerProtocolPolicy_life \
+      >
+# pragma instantiate \
+    TAO_Objref_Out_T< \
+        RTCORBA::ServerProtocolPolicy, \
+        RTCORBA::tao_ServerProtocolPolicy_life \
+      >
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:721
-
-// *************************************************************
-// RTCORBA::ServerProtocolPolicy_var
-// *************************************************************
-
-RTCORBA::ServerProtocolPolicy_var::ServerProtocolPolicy_var (void)
-  : ptr_ (ServerProtocolPolicy::_nil ())
-{}
-
-::RTCORBA::ServerProtocolPolicy_ptr
-RTCORBA::ServerProtocolPolicy_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-RTCORBA::ServerProtocolPolicy_var::ServerProtocolPolicy_var (const ::RTCORBA::ServerProtocolPolicy_var &p)
-  : TAO_Base_var (),
-    ptr_ (ServerProtocolPolicy::_duplicate (p.ptr ()))
-{}
-
-RTCORBA::ServerProtocolPolicy_var::~ServerProtocolPolicy_var (void)
-{
-  CORBA::release (this->ptr_);
-}
-
-RTCORBA::ServerProtocolPolicy_var &
-RTCORBA::ServerProtocolPolicy_var::operator= (ServerProtocolPolicy_ptr p)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = p;
-  return *this;
-}
-
-RTCORBA::ServerProtocolPolicy_var &
-RTCORBA::ServerProtocolPolicy_var::operator= (const ::RTCORBA::ServerProtocolPolicy_var &p)
-{
-  if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = ::RTCORBA::ServerProtocolPolicy::_duplicate (p.ptr ());
-  }
-  return *this;
-}
-
-RTCORBA::ServerProtocolPolicy_var::operator const ::RTCORBA::ServerProtocolPolicy_ptr &() const // cast
-{
-  return this->ptr_;
-}
-
-RTCORBA::ServerProtocolPolicy_var::operator ::RTCORBA::ServerProtocolPolicy_ptr &() // cast 
-{
-  return this->ptr_;
-}
-
-::RTCORBA::ServerProtocolPolicy_ptr
-RTCORBA::ServerProtocolPolicy_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-::RTCORBA::ServerProtocolPolicy_ptr
-RTCORBA::ServerProtocolPolicy_var::in (void) const
-{
-  return this->ptr_;
-}
-
-::RTCORBA::ServerProtocolPolicy_ptr &
-RTCORBA::ServerProtocolPolicy_var::inout (void)
-{
-  return this->ptr_;
-}
-
-::RTCORBA::ServerProtocolPolicy_ptr &
-RTCORBA::ServerProtocolPolicy_var::out (void)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::RTCORBA::ServerProtocolPolicy::_nil ();
-  return this->ptr_;
-}
-
-::RTCORBA::ServerProtocolPolicy_ptr
-RTCORBA::ServerProtocolPolicy_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  ::RTCORBA::ServerProtocolPolicy_ptr val = this->ptr_;
-  this->ptr_ = ::RTCORBA::ServerProtocolPolicy::_nil ();
-  return val;
-}
-
-::RTCORBA::ServerProtocolPolicy_ptr
-RTCORBA::ServerProtocolPolicy_var::tao_duplicate (ServerProtocolPolicy_ptr p)
-{
-  return ::RTCORBA::ServerProtocolPolicy::_duplicate (p);
-}
-
-void
-RTCORBA::ServerProtocolPolicy_var::tao_release (ServerProtocolPolicy_ptr p)
-{
-  CORBA::release (p);
-}
-
-::RTCORBA::ServerProtocolPolicy_ptr
-RTCORBA::ServerProtocolPolicy_var::tao_nil (void)
-{
-  return ::RTCORBA::ServerProtocolPolicy::_nil ();
-}
-
-::RTCORBA::ServerProtocolPolicy_ptr
-RTCORBA::ServerProtocolPolicy_var::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return ::RTCORBA::ServerProtocolPolicy::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-RTCORBA::ServerProtocolPolicy_var::tao_upcast (void *src)
-{
-  ServerProtocolPolicy **tmp =
-    ACE_static_cast (ServerProtocolPolicy **, src);
-  return *tmp;
-}
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1030
-
-// *************************************************************
-// RTCORBA::ServerProtocolPolicy_out
-// *************************************************************
-
-RTCORBA::ServerProtocolPolicy_out::ServerProtocolPolicy_out (ServerProtocolPolicy_ptr &p)
-  : ptr_ (p)
-{
-  this->ptr_ = ::RTCORBA::ServerProtocolPolicy::_nil ();
-}
-
-RTCORBA::ServerProtocolPolicy_out::ServerProtocolPolicy_out (ServerProtocolPolicy_var &p)
-  : ptr_ (p.out ())
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::RTCORBA::ServerProtocolPolicy::_nil ();
-}
-
-RTCORBA::ServerProtocolPolicy_out::ServerProtocolPolicy_out (const ::RTCORBA::ServerProtocolPolicy_out &p)
-  : ptr_ (ACE_const_cast (ServerProtocolPolicy_out &, p).ptr_)
-{}
-
-::RTCORBA::ServerProtocolPolicy_out &
-RTCORBA::ServerProtocolPolicy_out::operator= (const ::RTCORBA::ServerProtocolPolicy_out &p)
-{
-  this->ptr_ = ACE_const_cast (ServerProtocolPolicy_out&, p).ptr_;
-  return *this;
-}
-
-RTCORBA::ServerProtocolPolicy_out &
-RTCORBA::ServerProtocolPolicy_out::operator= (const ::RTCORBA::ServerProtocolPolicy_var &p)
-{
-  this->ptr_ = ::RTCORBA::ServerProtocolPolicy::_duplicate (p.ptr ());
-  return *this;
-}
-
-RTCORBA::ServerProtocolPolicy_out &
-RTCORBA::ServerProtocolPolicy_out::operator= (ServerProtocolPolicy_ptr p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-RTCORBA::ServerProtocolPolicy_out::operator ::RTCORBA::ServerProtocolPolicy_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-::RTCORBA::ServerProtocolPolicy_ptr &
-RTCORBA::ServerProtocolPolicy_out::ptr (void)
-{
-  return this->ptr_;
-}
-
-::RTCORBA::ServerProtocolPolicy_ptr
-RTCORBA::ServerProtocolPolicy_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:235
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:232
 
 RTCORBA::ServerProtocolPolicy::ServerProtocolPolicy (void)
 {}
@@ -2393,7 +1708,7 @@ RTCORBA::ServerProtocolPolicy::ServerProtocolPolicy (void)
 RTCORBA::ServerProtocolPolicy::~ServerProtocolPolicy (void)
 {}
 
-void 
+void
 RTCORBA::ServerProtocolPolicy::_tao_any_destructor (void *_tao_void_pointer)
 {
   ServerProtocolPolicy *tmp = ACE_static_cast (ServerProtocolPolicy *, _tao_void_pointer);
@@ -2409,7 +1724,7 @@ RTCORBA::ServerProtocolPolicy::_narrow (
   return ServerProtocolPolicy::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
 }
 
-RTCORBA::ServerProtocolPolicy_ptr 
+RTCORBA::ServerProtocolPolicy_ptr
 RTCORBA::ServerProtocolPolicy::_unchecked_narrow (
     CORBA::Object_ptr obj
     ACE_ENV_ARG_DECL_NOT_USED
@@ -2419,7 +1734,7 @@ RTCORBA::ServerProtocolPolicy::_unchecked_narrow (
     {
       return ServerProtocolPolicy::_nil ();
     }
-  
+
   return
       ACE_reinterpret_cast (
           ServerProtocolPolicy_ptr,
@@ -2439,14 +1754,14 @@ RTCORBA::ServerProtocolPolicy::_duplicate (ServerProtocolPolicy_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 void *RTCORBA::ServerProtocolPolicy::_tao_QueryInterface (ptr_arith_t type)
 {
   void *retv = 0;
-  
+
   if (type == ACE_reinterpret_cast (
               ptr_arith_t,
               &ACE_NESTED_CLASS (::RTCORBA, ServerProtocolPolicy)::_tao_class_id)
@@ -2479,18 +1794,24 @@ void *RTCORBA::ServerProtocolPolicy::_tao_QueryInterface (ptr_arith_t type)
             ACE_static_cast (CORBA::Object_ptr, this)
           );
     }
-  
+
   if (retv != 0)
     {
       this->_add_ref ();
     }
-  
+
   return retv;
 }
 
 const char* RTCORBA::ServerProtocolPolicy::_interface_repository_id (void) const
 {
   return "IDL:omg.org/RTCORBA/ServerProtocolPolicy:1.0";
+}
+
+CORBA::Boolean
+RTCORBA::ServerProtocolPolicy::marshal (TAO_OutputCDR &)
+{
+  return 0;
 }
 
 // TAO_IDL - Generated from
@@ -2500,24 +1821,24 @@ static const CORBA::Long _oc_RTCORBA_ServerProtocolPolicy[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   45,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x5254434f), 
-  ACE_NTOHL (0x5242412f), 
-  ACE_NTOHL (0x53657276), 
-  ACE_NTOHL (0x65725072), 
-  ACE_NTOHL (0x6f746f63), 
-  ACE_NTOHL (0x6f6c506f), 
-  ACE_NTOHL (0x6c696379), 
-  ACE_NTOHL (0x3a312e30), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x5254434f),
+  ACE_NTOHL (0x5242412f),
+  ACE_NTOHL (0x53657276),
+  ACE_NTOHL (0x65725072),
+  ACE_NTOHL (0x6f746f63),
+  ACE_NTOHL (0x6f6c506f),
+  ACE_NTOHL (0x6c696379),
+  ACE_NTOHL (0x3a312e30),
   ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/RTCORBA/ServerProtocolPolicy:1.0
     21,
-  ACE_NTOHL (0x53657276), 
-  ACE_NTOHL (0x65725072), 
-  ACE_NTOHL (0x6f746f63), 
-  ACE_NTOHL (0x6f6c506f), 
-  ACE_NTOHL (0x6c696379), 
+  ACE_NTOHL (0x53657276),
+  ACE_NTOHL (0x65725072),
+  ACE_NTOHL (0x6f746f63),
+  ACE_NTOHL (0x6f6c506f),
+  ACE_NTOHL (0x6c696379),
   ACE_NTOHL (0x0),  // name = ServerProtocolPolicy
   };
 
@@ -2544,7 +1865,7 @@ TAO_NAMESPACE_END
 int RTCORBA::ClientProtocolPolicy::_tao_class_id = 0;
 
 RTCORBA::ClientProtocolPolicy_ptr
-tao_RTCORBA_ClientProtocolPolicy_duplicate (
+RTCORBA::tao_ClientProtocolPolicy_life::tao_duplicate (
     RTCORBA::ClientProtocolPolicy_ptr p
   )
 {
@@ -2552,7 +1873,7 @@ tao_RTCORBA_ClientProtocolPolicy_duplicate (
 }
 
 void
-tao_RTCORBA_ClientProtocolPolicy_release (
+RTCORBA::tao_ClientProtocolPolicy_life::tao_release (
     RTCORBA::ClientProtocolPolicy_ptr p
   )
 {
@@ -2560,15 +1881,24 @@ tao_RTCORBA_ClientProtocolPolicy_release (
 }
 
 RTCORBA::ClientProtocolPolicy_ptr
-tao_RTCORBA_ClientProtocolPolicy_nil (
+RTCORBA::tao_ClientProtocolPolicy_life::tao_nil (
     void
   )
 {
   return RTCORBA::ClientProtocolPolicy::_nil ();
 }
 
+CORBA::Boolean
+RTCORBA::tao_ClientProtocolPolicy_life::tao_marshal (
+    RTCORBA::ClientProtocolPolicy_ptr p,
+    TAO_OutputCDR &cdr
+  )
+{
+  return p->marshal (cdr);
+}
+
 RTCORBA::ClientProtocolPolicy_ptr
-tao_RTCORBA_ClientProtocolPolicy_narrow (
+RTCORBA::tao_ClientProtocolPolicy_cast::tao_narrow (
     CORBA::Object *p
     ACE_ENV_ARG_DECL
   )
@@ -2577,7 +1907,7 @@ tao_RTCORBA_ClientProtocolPolicy_narrow (
 }
 
 CORBA::Object *
-tao_RTCORBA_ClientProtocolPolicy_upcast (
+RTCORBA::tao_ClientProtocolPolicy_cast::tao_upcast (
     void *src
   )
 {
@@ -2586,205 +1916,32 @@ tao_RTCORBA_ClientProtocolPolicy_upcast (
   return *tmp;
 }
 
-CORBA::Boolean
-tao_RTCORBA_ClientProtocolPolicy_marshal (
-    RTCORBA::ClientProtocolPolicy_ptr p,
-    TAO_OutputCDR &strm
-  )
-{
-  return p->marshal (strm);
-}
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+  template class
+    TAO_Objref_Var_T<
+        RTCORBA::ClientProtocolPolicy,
+        RTCORBA::tao_ClientProtocolPolicy_life
+      >;
+  template class
+    TAO_Objref_Out_T<
+        RTCORBA::ClientProtocolPolicy,
+        RTCORBA::tao_ClientProtocolPolicy_life
+      >;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate \
+    TAO_Objref_Var_T< \
+        RTCORBA::ClientProtocolPolicy, \
+        RTCORBA::tao_ClientProtocolPolicy_life \
+      >
+# pragma instantiate \
+    TAO_Objref_Out_T< \
+        RTCORBA::ClientProtocolPolicy, \
+        RTCORBA::tao_ClientProtocolPolicy_life \
+      >
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:721
-
-// *************************************************************
-// RTCORBA::ClientProtocolPolicy_var
-// *************************************************************
-
-RTCORBA::ClientProtocolPolicy_var::ClientProtocolPolicy_var (void)
-  : ptr_ (ClientProtocolPolicy::_nil ())
-{}
-
-::RTCORBA::ClientProtocolPolicy_ptr
-RTCORBA::ClientProtocolPolicy_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-RTCORBA::ClientProtocolPolicy_var::ClientProtocolPolicy_var (const ::RTCORBA::ClientProtocolPolicy_var &p)
-  : TAO_Base_var (),
-    ptr_ (ClientProtocolPolicy::_duplicate (p.ptr ()))
-{}
-
-RTCORBA::ClientProtocolPolicy_var::~ClientProtocolPolicy_var (void)
-{
-  CORBA::release (this->ptr_);
-}
-
-RTCORBA::ClientProtocolPolicy_var &
-RTCORBA::ClientProtocolPolicy_var::operator= (ClientProtocolPolicy_ptr p)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = p;
-  return *this;
-}
-
-RTCORBA::ClientProtocolPolicy_var &
-RTCORBA::ClientProtocolPolicy_var::operator= (const ::RTCORBA::ClientProtocolPolicy_var &p)
-{
-  if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = ::RTCORBA::ClientProtocolPolicy::_duplicate (p.ptr ());
-  }
-  return *this;
-}
-
-RTCORBA::ClientProtocolPolicy_var::operator const ::RTCORBA::ClientProtocolPolicy_ptr &() const // cast
-{
-  return this->ptr_;
-}
-
-RTCORBA::ClientProtocolPolicy_var::operator ::RTCORBA::ClientProtocolPolicy_ptr &() // cast 
-{
-  return this->ptr_;
-}
-
-::RTCORBA::ClientProtocolPolicy_ptr
-RTCORBA::ClientProtocolPolicy_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-::RTCORBA::ClientProtocolPolicy_ptr
-RTCORBA::ClientProtocolPolicy_var::in (void) const
-{
-  return this->ptr_;
-}
-
-::RTCORBA::ClientProtocolPolicy_ptr &
-RTCORBA::ClientProtocolPolicy_var::inout (void)
-{
-  return this->ptr_;
-}
-
-::RTCORBA::ClientProtocolPolicy_ptr &
-RTCORBA::ClientProtocolPolicy_var::out (void)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::RTCORBA::ClientProtocolPolicy::_nil ();
-  return this->ptr_;
-}
-
-::RTCORBA::ClientProtocolPolicy_ptr
-RTCORBA::ClientProtocolPolicy_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  ::RTCORBA::ClientProtocolPolicy_ptr val = this->ptr_;
-  this->ptr_ = ::RTCORBA::ClientProtocolPolicy::_nil ();
-  return val;
-}
-
-::RTCORBA::ClientProtocolPolicy_ptr
-RTCORBA::ClientProtocolPolicy_var::tao_duplicate (ClientProtocolPolicy_ptr p)
-{
-  return ::RTCORBA::ClientProtocolPolicy::_duplicate (p);
-}
-
-void
-RTCORBA::ClientProtocolPolicy_var::tao_release (ClientProtocolPolicy_ptr p)
-{
-  CORBA::release (p);
-}
-
-::RTCORBA::ClientProtocolPolicy_ptr
-RTCORBA::ClientProtocolPolicy_var::tao_nil (void)
-{
-  return ::RTCORBA::ClientProtocolPolicy::_nil ();
-}
-
-::RTCORBA::ClientProtocolPolicy_ptr
-RTCORBA::ClientProtocolPolicy_var::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return ::RTCORBA::ClientProtocolPolicy::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-RTCORBA::ClientProtocolPolicy_var::tao_upcast (void *src)
-{
-  ClientProtocolPolicy **tmp =
-    ACE_static_cast (ClientProtocolPolicy **, src);
-  return *tmp;
-}
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1030
-
-// *************************************************************
-// RTCORBA::ClientProtocolPolicy_out
-// *************************************************************
-
-RTCORBA::ClientProtocolPolicy_out::ClientProtocolPolicy_out (ClientProtocolPolicy_ptr &p)
-  : ptr_ (p)
-{
-  this->ptr_ = ::RTCORBA::ClientProtocolPolicy::_nil ();
-}
-
-RTCORBA::ClientProtocolPolicy_out::ClientProtocolPolicy_out (ClientProtocolPolicy_var &p)
-  : ptr_ (p.out ())
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::RTCORBA::ClientProtocolPolicy::_nil ();
-}
-
-RTCORBA::ClientProtocolPolicy_out::ClientProtocolPolicy_out (const ::RTCORBA::ClientProtocolPolicy_out &p)
-  : ptr_ (ACE_const_cast (ClientProtocolPolicy_out &, p).ptr_)
-{}
-
-::RTCORBA::ClientProtocolPolicy_out &
-RTCORBA::ClientProtocolPolicy_out::operator= (const ::RTCORBA::ClientProtocolPolicy_out &p)
-{
-  this->ptr_ = ACE_const_cast (ClientProtocolPolicy_out&, p).ptr_;
-  return *this;
-}
-
-RTCORBA::ClientProtocolPolicy_out &
-RTCORBA::ClientProtocolPolicy_out::operator= (const ::RTCORBA::ClientProtocolPolicy_var &p)
-{
-  this->ptr_ = ::RTCORBA::ClientProtocolPolicy::_duplicate (p.ptr ());
-  return *this;
-}
-
-RTCORBA::ClientProtocolPolicy_out &
-RTCORBA::ClientProtocolPolicy_out::operator= (ClientProtocolPolicy_ptr p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-RTCORBA::ClientProtocolPolicy_out::operator ::RTCORBA::ClientProtocolPolicy_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-::RTCORBA::ClientProtocolPolicy_ptr &
-RTCORBA::ClientProtocolPolicy_out::ptr (void)
-{
-  return this->ptr_;
-}
-
-::RTCORBA::ClientProtocolPolicy_ptr
-RTCORBA::ClientProtocolPolicy_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:235
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:232
 
 RTCORBA::ClientProtocolPolicy::ClientProtocolPolicy (void)
 {}
@@ -2792,7 +1949,7 @@ RTCORBA::ClientProtocolPolicy::ClientProtocolPolicy (void)
 RTCORBA::ClientProtocolPolicy::~ClientProtocolPolicy (void)
 {}
 
-void 
+void
 RTCORBA::ClientProtocolPolicy::_tao_any_destructor (void *_tao_void_pointer)
 {
   ClientProtocolPolicy *tmp = ACE_static_cast (ClientProtocolPolicy *, _tao_void_pointer);
@@ -2808,7 +1965,7 @@ RTCORBA::ClientProtocolPolicy::_narrow (
   return ClientProtocolPolicy::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
 }
 
-RTCORBA::ClientProtocolPolicy_ptr 
+RTCORBA::ClientProtocolPolicy_ptr
 RTCORBA::ClientProtocolPolicy::_unchecked_narrow (
     CORBA::Object_ptr obj
     ACE_ENV_ARG_DECL_NOT_USED
@@ -2818,7 +1975,7 @@ RTCORBA::ClientProtocolPolicy::_unchecked_narrow (
     {
       return ClientProtocolPolicy::_nil ();
     }
-  
+
   return
       ACE_reinterpret_cast (
           ClientProtocolPolicy_ptr,
@@ -2838,14 +1995,14 @@ RTCORBA::ClientProtocolPolicy::_duplicate (ClientProtocolPolicy_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 void *RTCORBA::ClientProtocolPolicy::_tao_QueryInterface (ptr_arith_t type)
 {
   void *retv = 0;
-  
+
   if (type == ACE_reinterpret_cast (
               ptr_arith_t,
               &ACE_NESTED_CLASS (::RTCORBA, ClientProtocolPolicy)::_tao_class_id)
@@ -2878,18 +2035,24 @@ void *RTCORBA::ClientProtocolPolicy::_tao_QueryInterface (ptr_arith_t type)
             ACE_static_cast (CORBA::Object_ptr, this)
           );
     }
-  
+
   if (retv != 0)
     {
       this->_add_ref ();
     }
-  
+
   return retv;
 }
 
 const char* RTCORBA::ClientProtocolPolicy::_interface_repository_id (void) const
 {
   return "IDL:omg.org/RTCORBA/ClientProtocolPolicy:1.0";
+}
+
+CORBA::Boolean
+RTCORBA::ClientProtocolPolicy::marshal (TAO_OutputCDR &)
+{
+  return 0;
 }
 
 // TAO_IDL - Generated from
@@ -2899,24 +2062,24 @@ static const CORBA::Long _oc_RTCORBA_ClientProtocolPolicy[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   45,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x5254434f), 
-  ACE_NTOHL (0x5242412f), 
-  ACE_NTOHL (0x436c6965), 
-  ACE_NTOHL (0x6e745072), 
-  ACE_NTOHL (0x6f746f63), 
-  ACE_NTOHL (0x6f6c506f), 
-  ACE_NTOHL (0x6c696379), 
-  ACE_NTOHL (0x3a312e30), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x5254434f),
+  ACE_NTOHL (0x5242412f),
+  ACE_NTOHL (0x436c6965),
+  ACE_NTOHL (0x6e745072),
+  ACE_NTOHL (0x6f746f63),
+  ACE_NTOHL (0x6f6c506f),
+  ACE_NTOHL (0x6c696379),
+  ACE_NTOHL (0x3a312e30),
   ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/RTCORBA/ClientProtocolPolicy:1.0
     21,
-  ACE_NTOHL (0x436c6965), 
-  ACE_NTOHL (0x6e745072), 
-  ACE_NTOHL (0x6f746f63), 
-  ACE_NTOHL (0x6f6c506f), 
-  ACE_NTOHL (0x6c696379), 
+  ACE_NTOHL (0x436c6965),
+  ACE_NTOHL (0x6e745072),
+  ACE_NTOHL (0x6f746f63),
+  ACE_NTOHL (0x6f6c506f),
+  ACE_NTOHL (0x6c696379),
   ACE_NTOHL (0x0),  // name = ClientProtocolPolicy
   };
 
@@ -2943,7 +2106,7 @@ TAO_NAMESPACE_END
 int RTCORBA::PrivateConnectionPolicy::_tao_class_id = 0;
 
 RTCORBA::PrivateConnectionPolicy_ptr
-tao_RTCORBA_PrivateConnectionPolicy_duplicate (
+RTCORBA::tao_PrivateConnectionPolicy_life::tao_duplicate (
     RTCORBA::PrivateConnectionPolicy_ptr p
   )
 {
@@ -2951,7 +2114,7 @@ tao_RTCORBA_PrivateConnectionPolicy_duplicate (
 }
 
 void
-tao_RTCORBA_PrivateConnectionPolicy_release (
+RTCORBA::tao_PrivateConnectionPolicy_life::tao_release (
     RTCORBA::PrivateConnectionPolicy_ptr p
   )
 {
@@ -2959,15 +2122,24 @@ tao_RTCORBA_PrivateConnectionPolicy_release (
 }
 
 RTCORBA::PrivateConnectionPolicy_ptr
-tao_RTCORBA_PrivateConnectionPolicy_nil (
+RTCORBA::tao_PrivateConnectionPolicy_life::tao_nil (
     void
   )
 {
   return RTCORBA::PrivateConnectionPolicy::_nil ();
 }
 
+CORBA::Boolean
+RTCORBA::tao_PrivateConnectionPolicy_life::tao_marshal (
+    RTCORBA::PrivateConnectionPolicy_ptr p,
+    TAO_OutputCDR &cdr
+  )
+{
+  return p->marshal (cdr);
+}
+
 RTCORBA::PrivateConnectionPolicy_ptr
-tao_RTCORBA_PrivateConnectionPolicy_narrow (
+RTCORBA::tao_PrivateConnectionPolicy_cast::tao_narrow (
     CORBA::Object *p
     ACE_ENV_ARG_DECL
   )
@@ -2976,7 +2148,7 @@ tao_RTCORBA_PrivateConnectionPolicy_narrow (
 }
 
 CORBA::Object *
-tao_RTCORBA_PrivateConnectionPolicy_upcast (
+RTCORBA::tao_PrivateConnectionPolicy_cast::tao_upcast (
     void *src
   )
 {
@@ -2985,205 +2157,32 @@ tao_RTCORBA_PrivateConnectionPolicy_upcast (
   return *tmp;
 }
 
-CORBA::Boolean
-tao_RTCORBA_PrivateConnectionPolicy_marshal (
-    RTCORBA::PrivateConnectionPolicy_ptr p,
-    TAO_OutputCDR &strm
-  )
-{
-  return p->marshal (strm);
-}
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+  template class
+    TAO_Objref_Var_T<
+        RTCORBA::PrivateConnectionPolicy,
+        RTCORBA::tao_PrivateConnectionPolicy_life
+      >;
+  template class
+    TAO_Objref_Out_T<
+        RTCORBA::PrivateConnectionPolicy,
+        RTCORBA::tao_PrivateConnectionPolicy_life
+      >;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate \
+    TAO_Objref_Var_T< \
+        RTCORBA::PrivateConnectionPolicy, \
+        RTCORBA::tao_PrivateConnectionPolicy_life \
+      >
+# pragma instantiate \
+    TAO_Objref_Out_T< \
+        RTCORBA::PrivateConnectionPolicy, \
+        RTCORBA::tao_PrivateConnectionPolicy_life \
+      >
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:721
-
-// *************************************************************
-// RTCORBA::PrivateConnectionPolicy_var
-// *************************************************************
-
-RTCORBA::PrivateConnectionPolicy_var::PrivateConnectionPolicy_var (void)
-  : ptr_ (PrivateConnectionPolicy::_nil ())
-{}
-
-::RTCORBA::PrivateConnectionPolicy_ptr
-RTCORBA::PrivateConnectionPolicy_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-RTCORBA::PrivateConnectionPolicy_var::PrivateConnectionPolicy_var (const ::RTCORBA::PrivateConnectionPolicy_var &p)
-  : TAO_Base_var (),
-    ptr_ (PrivateConnectionPolicy::_duplicate (p.ptr ()))
-{}
-
-RTCORBA::PrivateConnectionPolicy_var::~PrivateConnectionPolicy_var (void)
-{
-  CORBA::release (this->ptr_);
-}
-
-RTCORBA::PrivateConnectionPolicy_var &
-RTCORBA::PrivateConnectionPolicy_var::operator= (PrivateConnectionPolicy_ptr p)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = p;
-  return *this;
-}
-
-RTCORBA::PrivateConnectionPolicy_var &
-RTCORBA::PrivateConnectionPolicy_var::operator= (const ::RTCORBA::PrivateConnectionPolicy_var &p)
-{
-  if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = ::RTCORBA::PrivateConnectionPolicy::_duplicate (p.ptr ());
-  }
-  return *this;
-}
-
-RTCORBA::PrivateConnectionPolicy_var::operator const ::RTCORBA::PrivateConnectionPolicy_ptr &() const // cast
-{
-  return this->ptr_;
-}
-
-RTCORBA::PrivateConnectionPolicy_var::operator ::RTCORBA::PrivateConnectionPolicy_ptr &() // cast 
-{
-  return this->ptr_;
-}
-
-::RTCORBA::PrivateConnectionPolicy_ptr
-RTCORBA::PrivateConnectionPolicy_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-::RTCORBA::PrivateConnectionPolicy_ptr
-RTCORBA::PrivateConnectionPolicy_var::in (void) const
-{
-  return this->ptr_;
-}
-
-::RTCORBA::PrivateConnectionPolicy_ptr &
-RTCORBA::PrivateConnectionPolicy_var::inout (void)
-{
-  return this->ptr_;
-}
-
-::RTCORBA::PrivateConnectionPolicy_ptr &
-RTCORBA::PrivateConnectionPolicy_var::out (void)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::RTCORBA::PrivateConnectionPolicy::_nil ();
-  return this->ptr_;
-}
-
-::RTCORBA::PrivateConnectionPolicy_ptr
-RTCORBA::PrivateConnectionPolicy_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  ::RTCORBA::PrivateConnectionPolicy_ptr val = this->ptr_;
-  this->ptr_ = ::RTCORBA::PrivateConnectionPolicy::_nil ();
-  return val;
-}
-
-::RTCORBA::PrivateConnectionPolicy_ptr
-RTCORBA::PrivateConnectionPolicy_var::tao_duplicate (PrivateConnectionPolicy_ptr p)
-{
-  return ::RTCORBA::PrivateConnectionPolicy::_duplicate (p);
-}
-
-void
-RTCORBA::PrivateConnectionPolicy_var::tao_release (PrivateConnectionPolicy_ptr p)
-{
-  CORBA::release (p);
-}
-
-::RTCORBA::PrivateConnectionPolicy_ptr
-RTCORBA::PrivateConnectionPolicy_var::tao_nil (void)
-{
-  return ::RTCORBA::PrivateConnectionPolicy::_nil ();
-}
-
-::RTCORBA::PrivateConnectionPolicy_ptr
-RTCORBA::PrivateConnectionPolicy_var::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return ::RTCORBA::PrivateConnectionPolicy::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-RTCORBA::PrivateConnectionPolicy_var::tao_upcast (void *src)
-{
-  PrivateConnectionPolicy **tmp =
-    ACE_static_cast (PrivateConnectionPolicy **, src);
-  return *tmp;
-}
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1030
-
-// *************************************************************
-// RTCORBA::PrivateConnectionPolicy_out
-// *************************************************************
-
-RTCORBA::PrivateConnectionPolicy_out::PrivateConnectionPolicy_out (PrivateConnectionPolicy_ptr &p)
-  : ptr_ (p)
-{
-  this->ptr_ = ::RTCORBA::PrivateConnectionPolicy::_nil ();
-}
-
-RTCORBA::PrivateConnectionPolicy_out::PrivateConnectionPolicy_out (PrivateConnectionPolicy_var &p)
-  : ptr_ (p.out ())
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::RTCORBA::PrivateConnectionPolicy::_nil ();
-}
-
-RTCORBA::PrivateConnectionPolicy_out::PrivateConnectionPolicy_out (const ::RTCORBA::PrivateConnectionPolicy_out &p)
-  : ptr_ (ACE_const_cast (PrivateConnectionPolicy_out &, p).ptr_)
-{}
-
-::RTCORBA::PrivateConnectionPolicy_out &
-RTCORBA::PrivateConnectionPolicy_out::operator= (const ::RTCORBA::PrivateConnectionPolicy_out &p)
-{
-  this->ptr_ = ACE_const_cast (PrivateConnectionPolicy_out&, p).ptr_;
-  return *this;
-}
-
-RTCORBA::PrivateConnectionPolicy_out &
-RTCORBA::PrivateConnectionPolicy_out::operator= (const ::RTCORBA::PrivateConnectionPolicy_var &p)
-{
-  this->ptr_ = ::RTCORBA::PrivateConnectionPolicy::_duplicate (p.ptr ());
-  return *this;
-}
-
-RTCORBA::PrivateConnectionPolicy_out &
-RTCORBA::PrivateConnectionPolicy_out::operator= (PrivateConnectionPolicy_ptr p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-RTCORBA::PrivateConnectionPolicy_out::operator ::RTCORBA::PrivateConnectionPolicy_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-::RTCORBA::PrivateConnectionPolicy_ptr &
-RTCORBA::PrivateConnectionPolicy_out::ptr (void)
-{
-  return this->ptr_;
-}
-
-::RTCORBA::PrivateConnectionPolicy_ptr
-RTCORBA::PrivateConnectionPolicy_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:235
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:232
 
 RTCORBA::PrivateConnectionPolicy::PrivateConnectionPolicy (void)
 {}
@@ -3191,7 +2190,7 @@ RTCORBA::PrivateConnectionPolicy::PrivateConnectionPolicy (void)
 RTCORBA::PrivateConnectionPolicy::~PrivateConnectionPolicy (void)
 {}
 
-void 
+void
 RTCORBA::PrivateConnectionPolicy::_tao_any_destructor (void *_tao_void_pointer)
 {
   PrivateConnectionPolicy *tmp = ACE_static_cast (PrivateConnectionPolicy *, _tao_void_pointer);
@@ -3207,7 +2206,7 @@ RTCORBA::PrivateConnectionPolicy::_narrow (
   return PrivateConnectionPolicy::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
 }
 
-RTCORBA::PrivateConnectionPolicy_ptr 
+RTCORBA::PrivateConnectionPolicy_ptr
 RTCORBA::PrivateConnectionPolicy::_unchecked_narrow (
     CORBA::Object_ptr obj
     ACE_ENV_ARG_DECL_NOT_USED
@@ -3217,7 +2216,7 @@ RTCORBA::PrivateConnectionPolicy::_unchecked_narrow (
     {
       return PrivateConnectionPolicy::_nil ();
     }
-  
+
   return
       ACE_reinterpret_cast (
           PrivateConnectionPolicy_ptr,
@@ -3237,14 +2236,14 @@ RTCORBA::PrivateConnectionPolicy::_duplicate (PrivateConnectionPolicy_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 void *RTCORBA::PrivateConnectionPolicy::_tao_QueryInterface (ptr_arith_t type)
 {
   void *retv = 0;
-  
+
   if (type == ACE_reinterpret_cast (
               ptr_arith_t,
               &ACE_NESTED_CLASS (::RTCORBA, PrivateConnectionPolicy)::_tao_class_id)
@@ -3277,18 +2276,24 @@ void *RTCORBA::PrivateConnectionPolicy::_tao_QueryInterface (ptr_arith_t type)
             ACE_static_cast (CORBA::Object_ptr, this)
           );
     }
-  
+
   if (retv != 0)
     {
       this->_add_ref ();
     }
-  
+
   return retv;
 }
 
 const char* RTCORBA::PrivateConnectionPolicy::_interface_repository_id (void) const
 {
   return "IDL:omg.org/RTCORBA/PrivateConnectionPolicy:1.0";
+}
+
+CORBA::Boolean
+RTCORBA::PrivateConnectionPolicy::marshal (TAO_OutputCDR &)
+{
+  return 0;
 }
 
 // TAO_IDL - Generated from
@@ -3298,24 +2303,24 @@ static const CORBA::Long _oc_RTCORBA_PrivateConnectionPolicy[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   48,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x5254434f), 
-  ACE_NTOHL (0x5242412f), 
-  ACE_NTOHL (0x50726976), 
-  ACE_NTOHL (0x61746543), 
-  ACE_NTOHL (0x6f6e6e65), 
-  ACE_NTOHL (0x6374696f), 
-  ACE_NTOHL (0x6e506f6c), 
-  ACE_NTOHL (0x6963793a), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x5254434f),
+  ACE_NTOHL (0x5242412f),
+  ACE_NTOHL (0x50726976),
+  ACE_NTOHL (0x61746543),
+  ACE_NTOHL (0x6f6e6e65),
+  ACE_NTOHL (0x6374696f),
+  ACE_NTOHL (0x6e506f6c),
+  ACE_NTOHL (0x6963793a),
   ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/RTCORBA/PrivateConnectionPolicy:1.0
     24,
-  ACE_NTOHL (0x50726976), 
-  ACE_NTOHL (0x61746543), 
-  ACE_NTOHL (0x6f6e6e65), 
-  ACE_NTOHL (0x6374696f), 
-  ACE_NTOHL (0x6e506f6c), 
+  ACE_NTOHL (0x50726976),
+  ACE_NTOHL (0x61746543),
+  ACE_NTOHL (0x6f6e6e65),
+  ACE_NTOHL (0x6374696f),
+  ACE_NTOHL (0x6e506f6c),
   ACE_NTOHL (0x69637900),  // name = PrivateConnectionPolicy
   };
 
@@ -3342,7 +2347,7 @@ TAO_NAMESPACE_END
 int RTCORBA::TCPProtocolProperties::_tao_class_id = 0;
 
 RTCORBA::TCPProtocolProperties_ptr
-tao_RTCORBA_TCPProtocolProperties_duplicate (
+RTCORBA::tao_TCPProtocolProperties_life::tao_duplicate (
     RTCORBA::TCPProtocolProperties_ptr p
   )
 {
@@ -3350,7 +2355,7 @@ tao_RTCORBA_TCPProtocolProperties_duplicate (
 }
 
 void
-tao_RTCORBA_TCPProtocolProperties_release (
+RTCORBA::tao_TCPProtocolProperties_life::tao_release (
     RTCORBA::TCPProtocolProperties_ptr p
   )
 {
@@ -3358,15 +2363,24 @@ tao_RTCORBA_TCPProtocolProperties_release (
 }
 
 RTCORBA::TCPProtocolProperties_ptr
-tao_RTCORBA_TCPProtocolProperties_nil (
+RTCORBA::tao_TCPProtocolProperties_life::tao_nil (
     void
   )
 {
   return RTCORBA::TCPProtocolProperties::_nil ();
 }
 
+CORBA::Boolean
+RTCORBA::tao_TCPProtocolProperties_life::tao_marshal (
+    RTCORBA::TCPProtocolProperties_ptr p,
+    TAO_OutputCDR &cdr
+  )
+{
+  return p->marshal (cdr);
+}
+
 RTCORBA::TCPProtocolProperties_ptr
-tao_RTCORBA_TCPProtocolProperties_narrow (
+RTCORBA::tao_TCPProtocolProperties_cast::tao_narrow (
     CORBA::Object *p
     ACE_ENV_ARG_DECL
   )
@@ -3375,7 +2389,7 @@ tao_RTCORBA_TCPProtocolProperties_narrow (
 }
 
 CORBA::Object *
-tao_RTCORBA_TCPProtocolProperties_upcast (
+RTCORBA::tao_TCPProtocolProperties_cast::tao_upcast (
     void *src
   )
 {
@@ -3384,205 +2398,32 @@ tao_RTCORBA_TCPProtocolProperties_upcast (
   return *tmp;
 }
 
-CORBA::Boolean
-tao_RTCORBA_TCPProtocolProperties_marshal (
-    RTCORBA::TCPProtocolProperties_ptr p,
-    TAO_OutputCDR &strm
-  )
-{
-  return p->marshal (strm);
-}
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+  template class
+    TAO_Objref_Var_T<
+        RTCORBA::TCPProtocolProperties,
+        RTCORBA::tao_TCPProtocolProperties_life
+      >;
+  template class
+    TAO_Objref_Out_T<
+        RTCORBA::TCPProtocolProperties,
+        RTCORBA::tao_TCPProtocolProperties_life
+      >;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate \
+    TAO_Objref_Var_T< \
+        RTCORBA::TCPProtocolProperties, \
+        RTCORBA::tao_TCPProtocolProperties_life \
+      >
+# pragma instantiate \
+    TAO_Objref_Out_T< \
+        RTCORBA::TCPProtocolProperties, \
+        RTCORBA::tao_TCPProtocolProperties_life \
+      >
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:721
-
-// *************************************************************
-// RTCORBA::TCPProtocolProperties_var
-// *************************************************************
-
-RTCORBA::TCPProtocolProperties_var::TCPProtocolProperties_var (void)
-  : ptr_ (TCPProtocolProperties::_nil ())
-{}
-
-::RTCORBA::TCPProtocolProperties_ptr
-RTCORBA::TCPProtocolProperties_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-RTCORBA::TCPProtocolProperties_var::TCPProtocolProperties_var (const ::RTCORBA::TCPProtocolProperties_var &p)
-  : TAO_Base_var (),
-    ptr_ (TCPProtocolProperties::_duplicate (p.ptr ()))
-{}
-
-RTCORBA::TCPProtocolProperties_var::~TCPProtocolProperties_var (void)
-{
-  CORBA::release (this->ptr_);
-}
-
-RTCORBA::TCPProtocolProperties_var &
-RTCORBA::TCPProtocolProperties_var::operator= (TCPProtocolProperties_ptr p)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = p;
-  return *this;
-}
-
-RTCORBA::TCPProtocolProperties_var &
-RTCORBA::TCPProtocolProperties_var::operator= (const ::RTCORBA::TCPProtocolProperties_var &p)
-{
-  if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = ::RTCORBA::TCPProtocolProperties::_duplicate (p.ptr ());
-  }
-  return *this;
-}
-
-RTCORBA::TCPProtocolProperties_var::operator const ::RTCORBA::TCPProtocolProperties_ptr &() const // cast
-{
-  return this->ptr_;
-}
-
-RTCORBA::TCPProtocolProperties_var::operator ::RTCORBA::TCPProtocolProperties_ptr &() // cast 
-{
-  return this->ptr_;
-}
-
-::RTCORBA::TCPProtocolProperties_ptr
-RTCORBA::TCPProtocolProperties_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-::RTCORBA::TCPProtocolProperties_ptr
-RTCORBA::TCPProtocolProperties_var::in (void) const
-{
-  return this->ptr_;
-}
-
-::RTCORBA::TCPProtocolProperties_ptr &
-RTCORBA::TCPProtocolProperties_var::inout (void)
-{
-  return this->ptr_;
-}
-
-::RTCORBA::TCPProtocolProperties_ptr &
-RTCORBA::TCPProtocolProperties_var::out (void)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::RTCORBA::TCPProtocolProperties::_nil ();
-  return this->ptr_;
-}
-
-::RTCORBA::TCPProtocolProperties_ptr
-RTCORBA::TCPProtocolProperties_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  ::RTCORBA::TCPProtocolProperties_ptr val = this->ptr_;
-  this->ptr_ = ::RTCORBA::TCPProtocolProperties::_nil ();
-  return val;
-}
-
-::RTCORBA::TCPProtocolProperties_ptr
-RTCORBA::TCPProtocolProperties_var::tao_duplicate (TCPProtocolProperties_ptr p)
-{
-  return ::RTCORBA::TCPProtocolProperties::_duplicate (p);
-}
-
-void
-RTCORBA::TCPProtocolProperties_var::tao_release (TCPProtocolProperties_ptr p)
-{
-  CORBA::release (p);
-}
-
-::RTCORBA::TCPProtocolProperties_ptr
-RTCORBA::TCPProtocolProperties_var::tao_nil (void)
-{
-  return ::RTCORBA::TCPProtocolProperties::_nil ();
-}
-
-::RTCORBA::TCPProtocolProperties_ptr
-RTCORBA::TCPProtocolProperties_var::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return ::RTCORBA::TCPProtocolProperties::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-RTCORBA::TCPProtocolProperties_var::tao_upcast (void *src)
-{
-  TCPProtocolProperties **tmp =
-    ACE_static_cast (TCPProtocolProperties **, src);
-  return *tmp;
-}
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1030
-
-// *************************************************************
-// RTCORBA::TCPProtocolProperties_out
-// *************************************************************
-
-RTCORBA::TCPProtocolProperties_out::TCPProtocolProperties_out (TCPProtocolProperties_ptr &p)
-  : ptr_ (p)
-{
-  this->ptr_ = ::RTCORBA::TCPProtocolProperties::_nil ();
-}
-
-RTCORBA::TCPProtocolProperties_out::TCPProtocolProperties_out (TCPProtocolProperties_var &p)
-  : ptr_ (p.out ())
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::RTCORBA::TCPProtocolProperties::_nil ();
-}
-
-RTCORBA::TCPProtocolProperties_out::TCPProtocolProperties_out (const ::RTCORBA::TCPProtocolProperties_out &p)
-  : ptr_ (ACE_const_cast (TCPProtocolProperties_out &, p).ptr_)
-{}
-
-::RTCORBA::TCPProtocolProperties_out &
-RTCORBA::TCPProtocolProperties_out::operator= (const ::RTCORBA::TCPProtocolProperties_out &p)
-{
-  this->ptr_ = ACE_const_cast (TCPProtocolProperties_out&, p).ptr_;
-  return *this;
-}
-
-RTCORBA::TCPProtocolProperties_out &
-RTCORBA::TCPProtocolProperties_out::operator= (const ::RTCORBA::TCPProtocolProperties_var &p)
-{
-  this->ptr_ = ::RTCORBA::TCPProtocolProperties::_duplicate (p.ptr ());
-  return *this;
-}
-
-RTCORBA::TCPProtocolProperties_out &
-RTCORBA::TCPProtocolProperties_out::operator= (TCPProtocolProperties_ptr p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-RTCORBA::TCPProtocolProperties_out::operator ::RTCORBA::TCPProtocolProperties_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-::RTCORBA::TCPProtocolProperties_ptr &
-RTCORBA::TCPProtocolProperties_out::ptr (void)
-{
-  return this->ptr_;
-}
-
-::RTCORBA::TCPProtocolProperties_ptr
-RTCORBA::TCPProtocolProperties_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:235
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:232
 
 RTCORBA::TCPProtocolProperties::TCPProtocolProperties (void)
 {}
@@ -3590,7 +2431,7 @@ RTCORBA::TCPProtocolProperties::TCPProtocolProperties (void)
 RTCORBA::TCPProtocolProperties::~TCPProtocolProperties (void)
 {}
 
-void 
+void
 RTCORBA::TCPProtocolProperties::_tao_any_destructor (void *_tao_void_pointer)
 {
   TCPProtocolProperties *tmp = ACE_static_cast (TCPProtocolProperties *, _tao_void_pointer);
@@ -3606,7 +2447,7 @@ RTCORBA::TCPProtocolProperties::_narrow (
   return TCPProtocolProperties::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
 }
 
-RTCORBA::TCPProtocolProperties_ptr 
+RTCORBA::TCPProtocolProperties_ptr
 RTCORBA::TCPProtocolProperties::_unchecked_narrow (
     CORBA::Object_ptr obj
     ACE_ENV_ARG_DECL_NOT_USED
@@ -3616,7 +2457,7 @@ RTCORBA::TCPProtocolProperties::_unchecked_narrow (
     {
       return TCPProtocolProperties::_nil ();
     }
-  
+
   return
       ACE_reinterpret_cast (
           TCPProtocolProperties_ptr,
@@ -3636,14 +2477,14 @@ RTCORBA::TCPProtocolProperties::_duplicate (TCPProtocolProperties_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 void *RTCORBA::TCPProtocolProperties::_tao_QueryInterface (ptr_arith_t type)
 {
   void *retv = 0;
-  
+
   if (type == ACE_reinterpret_cast (
               ptr_arith_t,
               &ACE_NESTED_CLASS (::RTCORBA, TCPProtocolProperties)::_tao_class_id)
@@ -3676,18 +2517,24 @@ void *RTCORBA::TCPProtocolProperties::_tao_QueryInterface (ptr_arith_t type)
             ACE_static_cast (CORBA::Object_ptr, this)
           );
     }
-  
+
   if (retv != 0)
     {
       this->_add_ref ();
     }
-  
+
   return retv;
 }
 
 const char* RTCORBA::TCPProtocolProperties::_interface_repository_id (void) const
 {
   return "IDL:omg.org/RTCORBA/TCPProtocolProperties:1.0";
+}
+
+CORBA::Boolean
+RTCORBA::TCPProtocolProperties::marshal (TAO_OutputCDR &)
+{
+  return 0;
 }
 
 // TAO_IDL - Generated from
@@ -3697,24 +2544,24 @@ static const CORBA::Long _oc_RTCORBA_TCPProtocolProperties[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   46,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x5254434f), 
-  ACE_NTOHL (0x5242412f), 
-  ACE_NTOHL (0x54435050), 
-  ACE_NTOHL (0x726f746f), 
-  ACE_NTOHL (0x636f6c50), 
-  ACE_NTOHL (0x726f7065), 
-  ACE_NTOHL (0x72746965), 
-  ACE_NTOHL (0x733a312e), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x5254434f),
+  ACE_NTOHL (0x5242412f),
+  ACE_NTOHL (0x54435050),
+  ACE_NTOHL (0x726f746f),
+  ACE_NTOHL (0x636f6c50),
+  ACE_NTOHL (0x726f7065),
+  ACE_NTOHL (0x72746965),
+  ACE_NTOHL (0x733a312e),
   ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/RTCORBA/TCPProtocolProperties:1.0
     22,
-  ACE_NTOHL (0x54435050), 
-  ACE_NTOHL (0x726f746f), 
-  ACE_NTOHL (0x636f6c50), 
-  ACE_NTOHL (0x726f7065), 
-  ACE_NTOHL (0x72746965), 
+  ACE_NTOHL (0x54435050),
+  ACE_NTOHL (0x726f746f),
+  ACE_NTOHL (0x636f6c50),
+  ACE_NTOHL (0x726f7065),
+  ACE_NTOHL (0x72746965),
   ACE_NTOHL (0x73000000),  // name = TCPProtocolProperties
   };
 
@@ -3741,7 +2588,7 @@ TAO_NAMESPACE_END
 int RTCORBA::GIOPProtocolProperties::_tao_class_id = 0;
 
 RTCORBA::GIOPProtocolProperties_ptr
-tao_RTCORBA_GIOPProtocolProperties_duplicate (
+RTCORBA::tao_GIOPProtocolProperties_life::tao_duplicate (
     RTCORBA::GIOPProtocolProperties_ptr p
   )
 {
@@ -3749,7 +2596,7 @@ tao_RTCORBA_GIOPProtocolProperties_duplicate (
 }
 
 void
-tao_RTCORBA_GIOPProtocolProperties_release (
+RTCORBA::tao_GIOPProtocolProperties_life::tao_release (
     RTCORBA::GIOPProtocolProperties_ptr p
   )
 {
@@ -3757,15 +2604,24 @@ tao_RTCORBA_GIOPProtocolProperties_release (
 }
 
 RTCORBA::GIOPProtocolProperties_ptr
-tao_RTCORBA_GIOPProtocolProperties_nil (
+RTCORBA::tao_GIOPProtocolProperties_life::tao_nil (
     void
   )
 {
   return RTCORBA::GIOPProtocolProperties::_nil ();
 }
 
+CORBA::Boolean
+RTCORBA::tao_GIOPProtocolProperties_life::tao_marshal (
+    RTCORBA::GIOPProtocolProperties_ptr p,
+    TAO_OutputCDR &cdr
+  )
+{
+  return p->marshal (cdr);
+}
+
 RTCORBA::GIOPProtocolProperties_ptr
-tao_RTCORBA_GIOPProtocolProperties_narrow (
+RTCORBA::tao_GIOPProtocolProperties_cast::tao_narrow (
     CORBA::Object *p
     ACE_ENV_ARG_DECL
   )
@@ -3774,7 +2630,7 @@ tao_RTCORBA_GIOPProtocolProperties_narrow (
 }
 
 CORBA::Object *
-tao_RTCORBA_GIOPProtocolProperties_upcast (
+RTCORBA::tao_GIOPProtocolProperties_cast::tao_upcast (
     void *src
   )
 {
@@ -3783,205 +2639,32 @@ tao_RTCORBA_GIOPProtocolProperties_upcast (
   return *tmp;
 }
 
-CORBA::Boolean
-tao_RTCORBA_GIOPProtocolProperties_marshal (
-    RTCORBA::GIOPProtocolProperties_ptr p,
-    TAO_OutputCDR &strm
-  )
-{
-  return p->marshal (strm);
-}
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+  template class
+    TAO_Objref_Var_T<
+        RTCORBA::GIOPProtocolProperties,
+        RTCORBA::tao_GIOPProtocolProperties_life
+      >;
+  template class
+    TAO_Objref_Out_T<
+        RTCORBA::GIOPProtocolProperties,
+        RTCORBA::tao_GIOPProtocolProperties_life
+      >;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate \
+    TAO_Objref_Var_T< \
+        RTCORBA::GIOPProtocolProperties, \
+        RTCORBA::tao_GIOPProtocolProperties_life \
+      >
+# pragma instantiate \
+    TAO_Objref_Out_T< \
+        RTCORBA::GIOPProtocolProperties, \
+        RTCORBA::tao_GIOPProtocolProperties_life \
+      >
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:721
-
-// *************************************************************
-// RTCORBA::GIOPProtocolProperties_var
-// *************************************************************
-
-RTCORBA::GIOPProtocolProperties_var::GIOPProtocolProperties_var (void)
-  : ptr_ (GIOPProtocolProperties::_nil ())
-{}
-
-::RTCORBA::GIOPProtocolProperties_ptr
-RTCORBA::GIOPProtocolProperties_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-RTCORBA::GIOPProtocolProperties_var::GIOPProtocolProperties_var (const ::RTCORBA::GIOPProtocolProperties_var &p)
-  : TAO_Base_var (),
-    ptr_ (GIOPProtocolProperties::_duplicate (p.ptr ()))
-{}
-
-RTCORBA::GIOPProtocolProperties_var::~GIOPProtocolProperties_var (void)
-{
-  CORBA::release (this->ptr_);
-}
-
-RTCORBA::GIOPProtocolProperties_var &
-RTCORBA::GIOPProtocolProperties_var::operator= (GIOPProtocolProperties_ptr p)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = p;
-  return *this;
-}
-
-RTCORBA::GIOPProtocolProperties_var &
-RTCORBA::GIOPProtocolProperties_var::operator= (const ::RTCORBA::GIOPProtocolProperties_var &p)
-{
-  if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = ::RTCORBA::GIOPProtocolProperties::_duplicate (p.ptr ());
-  }
-  return *this;
-}
-
-RTCORBA::GIOPProtocolProperties_var::operator const ::RTCORBA::GIOPProtocolProperties_ptr &() const // cast
-{
-  return this->ptr_;
-}
-
-RTCORBA::GIOPProtocolProperties_var::operator ::RTCORBA::GIOPProtocolProperties_ptr &() // cast 
-{
-  return this->ptr_;
-}
-
-::RTCORBA::GIOPProtocolProperties_ptr
-RTCORBA::GIOPProtocolProperties_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-::RTCORBA::GIOPProtocolProperties_ptr
-RTCORBA::GIOPProtocolProperties_var::in (void) const
-{
-  return this->ptr_;
-}
-
-::RTCORBA::GIOPProtocolProperties_ptr &
-RTCORBA::GIOPProtocolProperties_var::inout (void)
-{
-  return this->ptr_;
-}
-
-::RTCORBA::GIOPProtocolProperties_ptr &
-RTCORBA::GIOPProtocolProperties_var::out (void)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::RTCORBA::GIOPProtocolProperties::_nil ();
-  return this->ptr_;
-}
-
-::RTCORBA::GIOPProtocolProperties_ptr
-RTCORBA::GIOPProtocolProperties_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  ::RTCORBA::GIOPProtocolProperties_ptr val = this->ptr_;
-  this->ptr_ = ::RTCORBA::GIOPProtocolProperties::_nil ();
-  return val;
-}
-
-::RTCORBA::GIOPProtocolProperties_ptr
-RTCORBA::GIOPProtocolProperties_var::tao_duplicate (GIOPProtocolProperties_ptr p)
-{
-  return ::RTCORBA::GIOPProtocolProperties::_duplicate (p);
-}
-
-void
-RTCORBA::GIOPProtocolProperties_var::tao_release (GIOPProtocolProperties_ptr p)
-{
-  CORBA::release (p);
-}
-
-::RTCORBA::GIOPProtocolProperties_ptr
-RTCORBA::GIOPProtocolProperties_var::tao_nil (void)
-{
-  return ::RTCORBA::GIOPProtocolProperties::_nil ();
-}
-
-::RTCORBA::GIOPProtocolProperties_ptr
-RTCORBA::GIOPProtocolProperties_var::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return ::RTCORBA::GIOPProtocolProperties::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-RTCORBA::GIOPProtocolProperties_var::tao_upcast (void *src)
-{
-  GIOPProtocolProperties **tmp =
-    ACE_static_cast (GIOPProtocolProperties **, src);
-  return *tmp;
-}
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1030
-
-// *************************************************************
-// RTCORBA::GIOPProtocolProperties_out
-// *************************************************************
-
-RTCORBA::GIOPProtocolProperties_out::GIOPProtocolProperties_out (GIOPProtocolProperties_ptr &p)
-  : ptr_ (p)
-{
-  this->ptr_ = ::RTCORBA::GIOPProtocolProperties::_nil ();
-}
-
-RTCORBA::GIOPProtocolProperties_out::GIOPProtocolProperties_out (GIOPProtocolProperties_var &p)
-  : ptr_ (p.out ())
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::RTCORBA::GIOPProtocolProperties::_nil ();
-}
-
-RTCORBA::GIOPProtocolProperties_out::GIOPProtocolProperties_out (const ::RTCORBA::GIOPProtocolProperties_out &p)
-  : ptr_ (ACE_const_cast (GIOPProtocolProperties_out &, p).ptr_)
-{}
-
-::RTCORBA::GIOPProtocolProperties_out &
-RTCORBA::GIOPProtocolProperties_out::operator= (const ::RTCORBA::GIOPProtocolProperties_out &p)
-{
-  this->ptr_ = ACE_const_cast (GIOPProtocolProperties_out&, p).ptr_;
-  return *this;
-}
-
-RTCORBA::GIOPProtocolProperties_out &
-RTCORBA::GIOPProtocolProperties_out::operator= (const ::RTCORBA::GIOPProtocolProperties_var &p)
-{
-  this->ptr_ = ::RTCORBA::GIOPProtocolProperties::_duplicate (p.ptr ());
-  return *this;
-}
-
-RTCORBA::GIOPProtocolProperties_out &
-RTCORBA::GIOPProtocolProperties_out::operator= (GIOPProtocolProperties_ptr p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-RTCORBA::GIOPProtocolProperties_out::operator ::RTCORBA::GIOPProtocolProperties_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-::RTCORBA::GIOPProtocolProperties_ptr &
-RTCORBA::GIOPProtocolProperties_out::ptr (void)
-{
-  return this->ptr_;
-}
-
-::RTCORBA::GIOPProtocolProperties_ptr
-RTCORBA::GIOPProtocolProperties_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:235
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:232
 
 RTCORBA::GIOPProtocolProperties::GIOPProtocolProperties (void)
 {}
@@ -3989,7 +2672,7 @@ RTCORBA::GIOPProtocolProperties::GIOPProtocolProperties (void)
 RTCORBA::GIOPProtocolProperties::~GIOPProtocolProperties (void)
 {}
 
-void 
+void
 RTCORBA::GIOPProtocolProperties::_tao_any_destructor (void *_tao_void_pointer)
 {
   GIOPProtocolProperties *tmp = ACE_static_cast (GIOPProtocolProperties *, _tao_void_pointer);
@@ -4005,7 +2688,7 @@ RTCORBA::GIOPProtocolProperties::_narrow (
   return GIOPProtocolProperties::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
 }
 
-RTCORBA::GIOPProtocolProperties_ptr 
+RTCORBA::GIOPProtocolProperties_ptr
 RTCORBA::GIOPProtocolProperties::_unchecked_narrow (
     CORBA::Object_ptr obj
     ACE_ENV_ARG_DECL_NOT_USED
@@ -4015,7 +2698,7 @@ RTCORBA::GIOPProtocolProperties::_unchecked_narrow (
     {
       return GIOPProtocolProperties::_nil ();
     }
-  
+
   return
       ACE_reinterpret_cast (
           GIOPProtocolProperties_ptr,
@@ -4035,14 +2718,14 @@ RTCORBA::GIOPProtocolProperties::_duplicate (GIOPProtocolProperties_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 void *RTCORBA::GIOPProtocolProperties::_tao_QueryInterface (ptr_arith_t type)
 {
   void *retv = 0;
-  
+
   if (type == ACE_reinterpret_cast (
               ptr_arith_t,
               &ACE_NESTED_CLASS (::RTCORBA, GIOPProtocolProperties)::_tao_class_id)
@@ -4075,18 +2758,24 @@ void *RTCORBA::GIOPProtocolProperties::_tao_QueryInterface (ptr_arith_t type)
             ACE_static_cast (CORBA::Object_ptr, this)
           );
     }
-  
+
   if (retv != 0)
     {
       this->_add_ref ();
     }
-  
+
   return retv;
 }
 
 const char* RTCORBA::GIOPProtocolProperties::_interface_repository_id (void) const
 {
   return "IDL:omg.org/RTCORBA/GIOPProtocolProperties:1.0";
+}
+
+CORBA::Boolean
+RTCORBA::GIOPProtocolProperties::marshal (TAO_OutputCDR &)
+{
+  return 0;
 }
 
 // TAO_IDL - Generated from
@@ -4096,24 +2785,24 @@ static const CORBA::Long _oc_RTCORBA_GIOPProtocolProperties[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   47,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x5254434f), 
-  ACE_NTOHL (0x5242412f), 
-  ACE_NTOHL (0x47494f50), 
-  ACE_NTOHL (0x50726f74), 
-  ACE_NTOHL (0x6f636f6c), 
-  ACE_NTOHL (0x50726f70), 
-  ACE_NTOHL (0x65727469), 
-  ACE_NTOHL (0x65733a31), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x5254434f),
+  ACE_NTOHL (0x5242412f),
+  ACE_NTOHL (0x47494f50),
+  ACE_NTOHL (0x50726f74),
+  ACE_NTOHL (0x6f636f6c),
+  ACE_NTOHL (0x50726f70),
+  ACE_NTOHL (0x65727469),
+  ACE_NTOHL (0x65733a31),
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/RTCORBA/GIOPProtocolProperties:1.0
     23,
-  ACE_NTOHL (0x47494f50), 
-  ACE_NTOHL (0x50726f74), 
-  ACE_NTOHL (0x6f636f6c), 
-  ACE_NTOHL (0x50726f70), 
-  ACE_NTOHL (0x65727469), 
+  ACE_NTOHL (0x47494f50),
+  ACE_NTOHL (0x50726f74),
+  ACE_NTOHL (0x6f636f6c),
+  ACE_NTOHL (0x50726f70),
+  ACE_NTOHL (0x65727469),
   ACE_NTOHL (0x65730000),  // name = GIOPProtocolProperties
   };
 
@@ -4140,7 +2829,7 @@ TAO_NAMESPACE_END
 int RTCORBA::UnixDomainProtocolProperties::_tao_class_id = 0;
 
 RTCORBA::UnixDomainProtocolProperties_ptr
-tao_RTCORBA_UnixDomainProtocolProperties_duplicate (
+RTCORBA::tao_UnixDomainProtocolProperties_life::tao_duplicate (
     RTCORBA::UnixDomainProtocolProperties_ptr p
   )
 {
@@ -4148,7 +2837,7 @@ tao_RTCORBA_UnixDomainProtocolProperties_duplicate (
 }
 
 void
-tao_RTCORBA_UnixDomainProtocolProperties_release (
+RTCORBA::tao_UnixDomainProtocolProperties_life::tao_release (
     RTCORBA::UnixDomainProtocolProperties_ptr p
   )
 {
@@ -4156,15 +2845,24 @@ tao_RTCORBA_UnixDomainProtocolProperties_release (
 }
 
 RTCORBA::UnixDomainProtocolProperties_ptr
-tao_RTCORBA_UnixDomainProtocolProperties_nil (
+RTCORBA::tao_UnixDomainProtocolProperties_life::tao_nil (
     void
   )
 {
   return RTCORBA::UnixDomainProtocolProperties::_nil ();
 }
 
+CORBA::Boolean
+RTCORBA::tao_UnixDomainProtocolProperties_life::tao_marshal (
+    RTCORBA::UnixDomainProtocolProperties_ptr p,
+    TAO_OutputCDR &cdr
+  )
+{
+  return p->marshal (cdr);
+}
+
 RTCORBA::UnixDomainProtocolProperties_ptr
-tao_RTCORBA_UnixDomainProtocolProperties_narrow (
+RTCORBA::tao_UnixDomainProtocolProperties_cast::tao_narrow (
     CORBA::Object *p
     ACE_ENV_ARG_DECL
   )
@@ -4173,7 +2871,7 @@ tao_RTCORBA_UnixDomainProtocolProperties_narrow (
 }
 
 CORBA::Object *
-tao_RTCORBA_UnixDomainProtocolProperties_upcast (
+RTCORBA::tao_UnixDomainProtocolProperties_cast::tao_upcast (
     void *src
   )
 {
@@ -4182,205 +2880,32 @@ tao_RTCORBA_UnixDomainProtocolProperties_upcast (
   return *tmp;
 }
 
-CORBA::Boolean
-tao_RTCORBA_UnixDomainProtocolProperties_marshal (
-    RTCORBA::UnixDomainProtocolProperties_ptr p,
-    TAO_OutputCDR &strm
-  )
-{
-  return p->marshal (strm);
-}
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+  template class
+    TAO_Objref_Var_T<
+        RTCORBA::UnixDomainProtocolProperties,
+        RTCORBA::tao_UnixDomainProtocolProperties_life
+      >;
+  template class
+    TAO_Objref_Out_T<
+        RTCORBA::UnixDomainProtocolProperties,
+        RTCORBA::tao_UnixDomainProtocolProperties_life
+      >;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate \
+    TAO_Objref_Var_T< \
+        RTCORBA::UnixDomainProtocolProperties, \
+        RTCORBA::tao_UnixDomainProtocolProperties_life \
+      >
+# pragma instantiate \
+    TAO_Objref_Out_T< \
+        RTCORBA::UnixDomainProtocolProperties, \
+        RTCORBA::tao_UnixDomainProtocolProperties_life \
+      >
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:721
-
-// *************************************************************
-// RTCORBA::UnixDomainProtocolProperties_var
-// *************************************************************
-
-RTCORBA::UnixDomainProtocolProperties_var::UnixDomainProtocolProperties_var (void)
-  : ptr_ (UnixDomainProtocolProperties::_nil ())
-{}
-
-::RTCORBA::UnixDomainProtocolProperties_ptr
-RTCORBA::UnixDomainProtocolProperties_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-RTCORBA::UnixDomainProtocolProperties_var::UnixDomainProtocolProperties_var (const ::RTCORBA::UnixDomainProtocolProperties_var &p)
-  : TAO_Base_var (),
-    ptr_ (UnixDomainProtocolProperties::_duplicate (p.ptr ()))
-{}
-
-RTCORBA::UnixDomainProtocolProperties_var::~UnixDomainProtocolProperties_var (void)
-{
-  CORBA::release (this->ptr_);
-}
-
-RTCORBA::UnixDomainProtocolProperties_var &
-RTCORBA::UnixDomainProtocolProperties_var::operator= (UnixDomainProtocolProperties_ptr p)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = p;
-  return *this;
-}
-
-RTCORBA::UnixDomainProtocolProperties_var &
-RTCORBA::UnixDomainProtocolProperties_var::operator= (const ::RTCORBA::UnixDomainProtocolProperties_var &p)
-{
-  if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = ::RTCORBA::UnixDomainProtocolProperties::_duplicate (p.ptr ());
-  }
-  return *this;
-}
-
-RTCORBA::UnixDomainProtocolProperties_var::operator const ::RTCORBA::UnixDomainProtocolProperties_ptr &() const // cast
-{
-  return this->ptr_;
-}
-
-RTCORBA::UnixDomainProtocolProperties_var::operator ::RTCORBA::UnixDomainProtocolProperties_ptr &() // cast 
-{
-  return this->ptr_;
-}
-
-::RTCORBA::UnixDomainProtocolProperties_ptr
-RTCORBA::UnixDomainProtocolProperties_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-::RTCORBA::UnixDomainProtocolProperties_ptr
-RTCORBA::UnixDomainProtocolProperties_var::in (void) const
-{
-  return this->ptr_;
-}
-
-::RTCORBA::UnixDomainProtocolProperties_ptr &
-RTCORBA::UnixDomainProtocolProperties_var::inout (void)
-{
-  return this->ptr_;
-}
-
-::RTCORBA::UnixDomainProtocolProperties_ptr &
-RTCORBA::UnixDomainProtocolProperties_var::out (void)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::RTCORBA::UnixDomainProtocolProperties::_nil ();
-  return this->ptr_;
-}
-
-::RTCORBA::UnixDomainProtocolProperties_ptr
-RTCORBA::UnixDomainProtocolProperties_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  ::RTCORBA::UnixDomainProtocolProperties_ptr val = this->ptr_;
-  this->ptr_ = ::RTCORBA::UnixDomainProtocolProperties::_nil ();
-  return val;
-}
-
-::RTCORBA::UnixDomainProtocolProperties_ptr
-RTCORBA::UnixDomainProtocolProperties_var::tao_duplicate (UnixDomainProtocolProperties_ptr p)
-{
-  return ::RTCORBA::UnixDomainProtocolProperties::_duplicate (p);
-}
-
-void
-RTCORBA::UnixDomainProtocolProperties_var::tao_release (UnixDomainProtocolProperties_ptr p)
-{
-  CORBA::release (p);
-}
-
-::RTCORBA::UnixDomainProtocolProperties_ptr
-RTCORBA::UnixDomainProtocolProperties_var::tao_nil (void)
-{
-  return ::RTCORBA::UnixDomainProtocolProperties::_nil ();
-}
-
-::RTCORBA::UnixDomainProtocolProperties_ptr
-RTCORBA::UnixDomainProtocolProperties_var::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return ::RTCORBA::UnixDomainProtocolProperties::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-RTCORBA::UnixDomainProtocolProperties_var::tao_upcast (void *src)
-{
-  UnixDomainProtocolProperties **tmp =
-    ACE_static_cast (UnixDomainProtocolProperties **, src);
-  return *tmp;
-}
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1030
-
-// *************************************************************
-// RTCORBA::UnixDomainProtocolProperties_out
-// *************************************************************
-
-RTCORBA::UnixDomainProtocolProperties_out::UnixDomainProtocolProperties_out (UnixDomainProtocolProperties_ptr &p)
-  : ptr_ (p)
-{
-  this->ptr_ = ::RTCORBA::UnixDomainProtocolProperties::_nil ();
-}
-
-RTCORBA::UnixDomainProtocolProperties_out::UnixDomainProtocolProperties_out (UnixDomainProtocolProperties_var &p)
-  : ptr_ (p.out ())
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::RTCORBA::UnixDomainProtocolProperties::_nil ();
-}
-
-RTCORBA::UnixDomainProtocolProperties_out::UnixDomainProtocolProperties_out (const ::RTCORBA::UnixDomainProtocolProperties_out &p)
-  : ptr_ (ACE_const_cast (UnixDomainProtocolProperties_out &, p).ptr_)
-{}
-
-::RTCORBA::UnixDomainProtocolProperties_out &
-RTCORBA::UnixDomainProtocolProperties_out::operator= (const ::RTCORBA::UnixDomainProtocolProperties_out &p)
-{
-  this->ptr_ = ACE_const_cast (UnixDomainProtocolProperties_out&, p).ptr_;
-  return *this;
-}
-
-RTCORBA::UnixDomainProtocolProperties_out &
-RTCORBA::UnixDomainProtocolProperties_out::operator= (const ::RTCORBA::UnixDomainProtocolProperties_var &p)
-{
-  this->ptr_ = ::RTCORBA::UnixDomainProtocolProperties::_duplicate (p.ptr ());
-  return *this;
-}
-
-RTCORBA::UnixDomainProtocolProperties_out &
-RTCORBA::UnixDomainProtocolProperties_out::operator= (UnixDomainProtocolProperties_ptr p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-RTCORBA::UnixDomainProtocolProperties_out::operator ::RTCORBA::UnixDomainProtocolProperties_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-::RTCORBA::UnixDomainProtocolProperties_ptr &
-RTCORBA::UnixDomainProtocolProperties_out::ptr (void)
-{
-  return this->ptr_;
-}
-
-::RTCORBA::UnixDomainProtocolProperties_ptr
-RTCORBA::UnixDomainProtocolProperties_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:235
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:232
 
 RTCORBA::UnixDomainProtocolProperties::UnixDomainProtocolProperties (void)
 {}
@@ -4388,7 +2913,7 @@ RTCORBA::UnixDomainProtocolProperties::UnixDomainProtocolProperties (void)
 RTCORBA::UnixDomainProtocolProperties::~UnixDomainProtocolProperties (void)
 {}
 
-void 
+void
 RTCORBA::UnixDomainProtocolProperties::_tao_any_destructor (void *_tao_void_pointer)
 {
   UnixDomainProtocolProperties *tmp = ACE_static_cast (UnixDomainProtocolProperties *, _tao_void_pointer);
@@ -4404,7 +2929,7 @@ RTCORBA::UnixDomainProtocolProperties::_narrow (
   return UnixDomainProtocolProperties::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
 }
 
-RTCORBA::UnixDomainProtocolProperties_ptr 
+RTCORBA::UnixDomainProtocolProperties_ptr
 RTCORBA::UnixDomainProtocolProperties::_unchecked_narrow (
     CORBA::Object_ptr obj
     ACE_ENV_ARG_DECL_NOT_USED
@@ -4414,7 +2939,7 @@ RTCORBA::UnixDomainProtocolProperties::_unchecked_narrow (
     {
       return UnixDomainProtocolProperties::_nil ();
     }
-  
+
   return
       ACE_reinterpret_cast (
           UnixDomainProtocolProperties_ptr,
@@ -4434,14 +2959,14 @@ RTCORBA::UnixDomainProtocolProperties::_duplicate (UnixDomainProtocolProperties_
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 void *RTCORBA::UnixDomainProtocolProperties::_tao_QueryInterface (ptr_arith_t type)
 {
   void *retv = 0;
-  
+
   if (type == ACE_reinterpret_cast (
               ptr_arith_t,
               &ACE_NESTED_CLASS (::RTCORBA, UnixDomainProtocolProperties)::_tao_class_id)
@@ -4474,18 +2999,24 @@ void *RTCORBA::UnixDomainProtocolProperties::_tao_QueryInterface (ptr_arith_t ty
             ACE_static_cast (CORBA::Object_ptr, this)
           );
     }
-  
+
   if (retv != 0)
     {
       this->_add_ref ();
     }
-  
+
   return retv;
 }
 
 const char* RTCORBA::UnixDomainProtocolProperties::_interface_repository_id (void) const
 {
   return "IDL:omg.org/RTCORBA/UnixDomainProtocolProperties:1.0";
+}
+
+CORBA::Boolean
+RTCORBA::UnixDomainProtocolProperties::marshal (TAO_OutputCDR &)
+{
+  return 0;
 }
 
 // TAO_IDL - Generated from
@@ -4495,28 +3026,28 @@ static const CORBA::Long _oc_RTCORBA_UnixDomainProtocolProperties[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   53,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x5254434f), 
-  ACE_NTOHL (0x5242412f), 
-  ACE_NTOHL (0x556e6978), 
-  ACE_NTOHL (0x446f6d61), 
-  ACE_NTOHL (0x696e5072), 
-  ACE_NTOHL (0x6f746f63), 
-  ACE_NTOHL (0x6f6c5072), 
-  ACE_NTOHL (0x6f706572), 
-  ACE_NTOHL (0x74696573), 
-  ACE_NTOHL (0x3a312e30), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x5254434f),
+  ACE_NTOHL (0x5242412f),
+  ACE_NTOHL (0x556e6978),
+  ACE_NTOHL (0x446f6d61),
+  ACE_NTOHL (0x696e5072),
+  ACE_NTOHL (0x6f746f63),
+  ACE_NTOHL (0x6f6c5072),
+  ACE_NTOHL (0x6f706572),
+  ACE_NTOHL (0x74696573),
+  ACE_NTOHL (0x3a312e30),
   ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/RTCORBA/UnixDomainProtocolProperties:1.0
     29,
-  ACE_NTOHL (0x556e6978), 
-  ACE_NTOHL (0x446f6d61), 
-  ACE_NTOHL (0x696e5072), 
-  ACE_NTOHL (0x6f746f63), 
-  ACE_NTOHL (0x6f6c5072), 
-  ACE_NTOHL (0x6f706572), 
-  ACE_NTOHL (0x74696573), 
+  ACE_NTOHL (0x556e6978),
+  ACE_NTOHL (0x446f6d61),
+  ACE_NTOHL (0x696e5072),
+  ACE_NTOHL (0x6f746f63),
+  ACE_NTOHL (0x6f6c5072),
+  ACE_NTOHL (0x6f706572),
+  ACE_NTOHL (0x74696573),
   ACE_NTOHL (0x0),  // name = UnixDomainProtocolProperties
   };
 
@@ -4543,7 +3074,7 @@ TAO_NAMESPACE_END
 int RTCORBA::SharedMemoryProtocolProperties::_tao_class_id = 0;
 
 RTCORBA::SharedMemoryProtocolProperties_ptr
-tao_RTCORBA_SharedMemoryProtocolProperties_duplicate (
+RTCORBA::tao_SharedMemoryProtocolProperties_life::tao_duplicate (
     RTCORBA::SharedMemoryProtocolProperties_ptr p
   )
 {
@@ -4551,7 +3082,7 @@ tao_RTCORBA_SharedMemoryProtocolProperties_duplicate (
 }
 
 void
-tao_RTCORBA_SharedMemoryProtocolProperties_release (
+RTCORBA::tao_SharedMemoryProtocolProperties_life::tao_release (
     RTCORBA::SharedMemoryProtocolProperties_ptr p
   )
 {
@@ -4559,15 +3090,24 @@ tao_RTCORBA_SharedMemoryProtocolProperties_release (
 }
 
 RTCORBA::SharedMemoryProtocolProperties_ptr
-tao_RTCORBA_SharedMemoryProtocolProperties_nil (
+RTCORBA::tao_SharedMemoryProtocolProperties_life::tao_nil (
     void
   )
 {
   return RTCORBA::SharedMemoryProtocolProperties::_nil ();
 }
 
+CORBA::Boolean
+RTCORBA::tao_SharedMemoryProtocolProperties_life::tao_marshal (
+    RTCORBA::SharedMemoryProtocolProperties_ptr p,
+    TAO_OutputCDR &cdr
+  )
+{
+  return p->marshal (cdr);
+}
+
 RTCORBA::SharedMemoryProtocolProperties_ptr
-tao_RTCORBA_SharedMemoryProtocolProperties_narrow (
+RTCORBA::tao_SharedMemoryProtocolProperties_cast::tao_narrow (
     CORBA::Object *p
     ACE_ENV_ARG_DECL
   )
@@ -4576,7 +3116,7 @@ tao_RTCORBA_SharedMemoryProtocolProperties_narrow (
 }
 
 CORBA::Object *
-tao_RTCORBA_SharedMemoryProtocolProperties_upcast (
+RTCORBA::tao_SharedMemoryProtocolProperties_cast::tao_upcast (
     void *src
   )
 {
@@ -4585,205 +3125,32 @@ tao_RTCORBA_SharedMemoryProtocolProperties_upcast (
   return *tmp;
 }
 
-CORBA::Boolean
-tao_RTCORBA_SharedMemoryProtocolProperties_marshal (
-    RTCORBA::SharedMemoryProtocolProperties_ptr p,
-    TAO_OutputCDR &strm
-  )
-{
-  return p->marshal (strm);
-}
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+  template class
+    TAO_Objref_Var_T<
+        RTCORBA::SharedMemoryProtocolProperties,
+        RTCORBA::tao_SharedMemoryProtocolProperties_life
+      >;
+  template class
+    TAO_Objref_Out_T<
+        RTCORBA::SharedMemoryProtocolProperties,
+        RTCORBA::tao_SharedMemoryProtocolProperties_life
+      >;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate \
+    TAO_Objref_Var_T< \
+        RTCORBA::SharedMemoryProtocolProperties, \
+        RTCORBA::tao_SharedMemoryProtocolProperties_life \
+      >
+# pragma instantiate \
+    TAO_Objref_Out_T< \
+        RTCORBA::SharedMemoryProtocolProperties, \
+        RTCORBA::tao_SharedMemoryProtocolProperties_life \
+      >
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:721
-
-// *************************************************************
-// RTCORBA::SharedMemoryProtocolProperties_var
-// *************************************************************
-
-RTCORBA::SharedMemoryProtocolProperties_var::SharedMemoryProtocolProperties_var (void)
-  : ptr_ (SharedMemoryProtocolProperties::_nil ())
-{}
-
-::RTCORBA::SharedMemoryProtocolProperties_ptr
-RTCORBA::SharedMemoryProtocolProperties_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-RTCORBA::SharedMemoryProtocolProperties_var::SharedMemoryProtocolProperties_var (const ::RTCORBA::SharedMemoryProtocolProperties_var &p)
-  : TAO_Base_var (),
-    ptr_ (SharedMemoryProtocolProperties::_duplicate (p.ptr ()))
-{}
-
-RTCORBA::SharedMemoryProtocolProperties_var::~SharedMemoryProtocolProperties_var (void)
-{
-  CORBA::release (this->ptr_);
-}
-
-RTCORBA::SharedMemoryProtocolProperties_var &
-RTCORBA::SharedMemoryProtocolProperties_var::operator= (SharedMemoryProtocolProperties_ptr p)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = p;
-  return *this;
-}
-
-RTCORBA::SharedMemoryProtocolProperties_var &
-RTCORBA::SharedMemoryProtocolProperties_var::operator= (const ::RTCORBA::SharedMemoryProtocolProperties_var &p)
-{
-  if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = ::RTCORBA::SharedMemoryProtocolProperties::_duplicate (p.ptr ());
-  }
-  return *this;
-}
-
-RTCORBA::SharedMemoryProtocolProperties_var::operator const ::RTCORBA::SharedMemoryProtocolProperties_ptr &() const // cast
-{
-  return this->ptr_;
-}
-
-RTCORBA::SharedMemoryProtocolProperties_var::operator ::RTCORBA::SharedMemoryProtocolProperties_ptr &() // cast 
-{
-  return this->ptr_;
-}
-
-::RTCORBA::SharedMemoryProtocolProperties_ptr
-RTCORBA::SharedMemoryProtocolProperties_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-::RTCORBA::SharedMemoryProtocolProperties_ptr
-RTCORBA::SharedMemoryProtocolProperties_var::in (void) const
-{
-  return this->ptr_;
-}
-
-::RTCORBA::SharedMemoryProtocolProperties_ptr &
-RTCORBA::SharedMemoryProtocolProperties_var::inout (void)
-{
-  return this->ptr_;
-}
-
-::RTCORBA::SharedMemoryProtocolProperties_ptr &
-RTCORBA::SharedMemoryProtocolProperties_var::out (void)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::RTCORBA::SharedMemoryProtocolProperties::_nil ();
-  return this->ptr_;
-}
-
-::RTCORBA::SharedMemoryProtocolProperties_ptr
-RTCORBA::SharedMemoryProtocolProperties_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  ::RTCORBA::SharedMemoryProtocolProperties_ptr val = this->ptr_;
-  this->ptr_ = ::RTCORBA::SharedMemoryProtocolProperties::_nil ();
-  return val;
-}
-
-::RTCORBA::SharedMemoryProtocolProperties_ptr
-RTCORBA::SharedMemoryProtocolProperties_var::tao_duplicate (SharedMemoryProtocolProperties_ptr p)
-{
-  return ::RTCORBA::SharedMemoryProtocolProperties::_duplicate (p);
-}
-
-void
-RTCORBA::SharedMemoryProtocolProperties_var::tao_release (SharedMemoryProtocolProperties_ptr p)
-{
-  CORBA::release (p);
-}
-
-::RTCORBA::SharedMemoryProtocolProperties_ptr
-RTCORBA::SharedMemoryProtocolProperties_var::tao_nil (void)
-{
-  return ::RTCORBA::SharedMemoryProtocolProperties::_nil ();
-}
-
-::RTCORBA::SharedMemoryProtocolProperties_ptr
-RTCORBA::SharedMemoryProtocolProperties_var::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return ::RTCORBA::SharedMemoryProtocolProperties::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-RTCORBA::SharedMemoryProtocolProperties_var::tao_upcast (void *src)
-{
-  SharedMemoryProtocolProperties **tmp =
-    ACE_static_cast (SharedMemoryProtocolProperties **, src);
-  return *tmp;
-}
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1030
-
-// *************************************************************
-// RTCORBA::SharedMemoryProtocolProperties_out
-// *************************************************************
-
-RTCORBA::SharedMemoryProtocolProperties_out::SharedMemoryProtocolProperties_out (SharedMemoryProtocolProperties_ptr &p)
-  : ptr_ (p)
-{
-  this->ptr_ = ::RTCORBA::SharedMemoryProtocolProperties::_nil ();
-}
-
-RTCORBA::SharedMemoryProtocolProperties_out::SharedMemoryProtocolProperties_out (SharedMemoryProtocolProperties_var &p)
-  : ptr_ (p.out ())
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::RTCORBA::SharedMemoryProtocolProperties::_nil ();
-}
-
-RTCORBA::SharedMemoryProtocolProperties_out::SharedMemoryProtocolProperties_out (const ::RTCORBA::SharedMemoryProtocolProperties_out &p)
-  : ptr_ (ACE_const_cast (SharedMemoryProtocolProperties_out &, p).ptr_)
-{}
-
-::RTCORBA::SharedMemoryProtocolProperties_out &
-RTCORBA::SharedMemoryProtocolProperties_out::operator= (const ::RTCORBA::SharedMemoryProtocolProperties_out &p)
-{
-  this->ptr_ = ACE_const_cast (SharedMemoryProtocolProperties_out&, p).ptr_;
-  return *this;
-}
-
-RTCORBA::SharedMemoryProtocolProperties_out &
-RTCORBA::SharedMemoryProtocolProperties_out::operator= (const ::RTCORBA::SharedMemoryProtocolProperties_var &p)
-{
-  this->ptr_ = ::RTCORBA::SharedMemoryProtocolProperties::_duplicate (p.ptr ());
-  return *this;
-}
-
-RTCORBA::SharedMemoryProtocolProperties_out &
-RTCORBA::SharedMemoryProtocolProperties_out::operator= (SharedMemoryProtocolProperties_ptr p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-RTCORBA::SharedMemoryProtocolProperties_out::operator ::RTCORBA::SharedMemoryProtocolProperties_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-::RTCORBA::SharedMemoryProtocolProperties_ptr &
-RTCORBA::SharedMemoryProtocolProperties_out::ptr (void)
-{
-  return this->ptr_;
-}
-
-::RTCORBA::SharedMemoryProtocolProperties_ptr
-RTCORBA::SharedMemoryProtocolProperties_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:235
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:232
 
 RTCORBA::SharedMemoryProtocolProperties::SharedMemoryProtocolProperties (void)
 {}
@@ -4791,7 +3158,7 @@ RTCORBA::SharedMemoryProtocolProperties::SharedMemoryProtocolProperties (void)
 RTCORBA::SharedMemoryProtocolProperties::~SharedMemoryProtocolProperties (void)
 {}
 
-void 
+void
 RTCORBA::SharedMemoryProtocolProperties::_tao_any_destructor (void *_tao_void_pointer)
 {
   SharedMemoryProtocolProperties *tmp = ACE_static_cast (SharedMemoryProtocolProperties *, _tao_void_pointer);
@@ -4807,7 +3174,7 @@ RTCORBA::SharedMemoryProtocolProperties::_narrow (
   return SharedMemoryProtocolProperties::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
 }
 
-RTCORBA::SharedMemoryProtocolProperties_ptr 
+RTCORBA::SharedMemoryProtocolProperties_ptr
 RTCORBA::SharedMemoryProtocolProperties::_unchecked_narrow (
     CORBA::Object_ptr obj
     ACE_ENV_ARG_DECL_NOT_USED
@@ -4817,7 +3184,7 @@ RTCORBA::SharedMemoryProtocolProperties::_unchecked_narrow (
     {
       return SharedMemoryProtocolProperties::_nil ();
     }
-  
+
   return
       ACE_reinterpret_cast (
           SharedMemoryProtocolProperties_ptr,
@@ -4837,14 +3204,14 @@ RTCORBA::SharedMemoryProtocolProperties::_duplicate (SharedMemoryProtocolPropert
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 void *RTCORBA::SharedMemoryProtocolProperties::_tao_QueryInterface (ptr_arith_t type)
 {
   void *retv = 0;
-  
+
   if (type == ACE_reinterpret_cast (
               ptr_arith_t,
               &ACE_NESTED_CLASS (::RTCORBA, SharedMemoryProtocolProperties)::_tao_class_id)
@@ -4877,18 +3244,24 @@ void *RTCORBA::SharedMemoryProtocolProperties::_tao_QueryInterface (ptr_arith_t 
             ACE_static_cast (CORBA::Object_ptr, this)
           );
     }
-  
+
   if (retv != 0)
     {
       this->_add_ref ();
     }
-  
+
   return retv;
 }
 
 const char* RTCORBA::SharedMemoryProtocolProperties::_interface_repository_id (void) const
 {
   return "IDL:omg.org/RTCORBA/SharedMemoryProtocolProperties:1.0";
+}
+
+CORBA::Boolean
+RTCORBA::SharedMemoryProtocolProperties::marshal (TAO_OutputCDR &)
+{
+  return 0;
 }
 
 // TAO_IDL - Generated from
@@ -4898,28 +3271,28 @@ static const CORBA::Long _oc_RTCORBA_SharedMemoryProtocolProperties[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   55,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x5254434f), 
-  ACE_NTOHL (0x5242412f), 
-  ACE_NTOHL (0x53686172), 
-  ACE_NTOHL (0x65644d65), 
-  ACE_NTOHL (0x6d6f7279), 
-  ACE_NTOHL (0x50726f74), 
-  ACE_NTOHL (0x6f636f6c), 
-  ACE_NTOHL (0x50726f70), 
-  ACE_NTOHL (0x65727469), 
-  ACE_NTOHL (0x65733a31), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x5254434f),
+  ACE_NTOHL (0x5242412f),
+  ACE_NTOHL (0x53686172),
+  ACE_NTOHL (0x65644d65),
+  ACE_NTOHL (0x6d6f7279),
+  ACE_NTOHL (0x50726f74),
+  ACE_NTOHL (0x6f636f6c),
+  ACE_NTOHL (0x50726f70),
+  ACE_NTOHL (0x65727469),
+  ACE_NTOHL (0x65733a31),
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/RTCORBA/SharedMemoryProtocolProperties:1.0
     31,
-  ACE_NTOHL (0x53686172), 
-  ACE_NTOHL (0x65644d65), 
-  ACE_NTOHL (0x6d6f7279), 
-  ACE_NTOHL (0x50726f74), 
-  ACE_NTOHL (0x6f636f6c), 
-  ACE_NTOHL (0x50726f70), 
-  ACE_NTOHL (0x65727469), 
+  ACE_NTOHL (0x53686172),
+  ACE_NTOHL (0x65644d65),
+  ACE_NTOHL (0x6d6f7279),
+  ACE_NTOHL (0x50726f74),
+  ACE_NTOHL (0x6f636f6c),
+  ACE_NTOHL (0x50726f70),
+  ACE_NTOHL (0x65727469),
   ACE_NTOHL (0x65730000),  // name = SharedMemoryProtocolProperties
   };
 
@@ -4947,20 +3320,20 @@ static const CORBA::Long _oc_RTCORBA_PriorityBand[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   37,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x5254434f), 
-  ACE_NTOHL (0x5242412f), 
-  ACE_NTOHL (0x5072696f), 
-  ACE_NTOHL (0x72697479), 
-  ACE_NTOHL (0x42616e64), 
-  ACE_NTOHL (0x3a312e30), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x5254434f),
+  ACE_NTOHL (0x5242412f),
+  ACE_NTOHL (0x5072696f),
+  ACE_NTOHL (0x72697479),
+  ACE_NTOHL (0x42616e64),
+  ACE_NTOHL (0x3a312e30),
   ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/RTCORBA/PriorityBand:1.0
     13,
-  ACE_NTOHL (0x5072696f), 
-  ACE_NTOHL (0x72697479), 
-  ACE_NTOHL (0x42616e64), 
+  ACE_NTOHL (0x5072696f),
+  ACE_NTOHL (0x72697479),
+  ACE_NTOHL (0x42616e64),
   ACE_NTOHL (0x0),  // name = PriorityBand
   2, // member count
     4,
@@ -4969,24 +3342,24 @@ static const CORBA::Long _oc_RTCORBA_PriorityBand[] =
   64, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     33,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x5254434f), 
-    ACE_NTOHL (0x5242412f), 
-    ACE_NTOHL (0x5072696f), 
-    ACE_NTOHL (0x72697479), 
-    ACE_NTOHL (0x3a312e30), 
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x5254434f),
+    ACE_NTOHL (0x5242412f),
+    ACE_NTOHL (0x5072696f),
+    ACE_NTOHL (0x72697479),
+    ACE_NTOHL (0x3a312e30),
     ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/RTCORBA/Priority:1.0
         9,
-    ACE_NTOHL (0x5072696f), 
-    ACE_NTOHL (0x72697479), 
+    ACE_NTOHL (0x5072696f),
+    ACE_NTOHL (0x72697479),
     ACE_NTOHL (0x0),  // name = Priority
         CORBA::tk_short,
 
 
   5,
-  ACE_NTOHL (0x68696768), 
+  ACE_NTOHL (0x68696768),
   ACE_NTOHL (0x0),  // name = high
     0xffffffff, // indirection
   0xffffffa8, // negative offset (-88)
@@ -5009,8 +3382,8 @@ TAO_NAMESPACE_DEFINE (
   )
 TAO_NAMESPACE_END
 
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_cs.cpp:67
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_cs.cpp:66
 
 void RTCORBA::PriorityBand::_tao_any_destructor (void *_tao_void_pointer)
 {
@@ -5018,117 +3391,58 @@ void RTCORBA::PriorityBand::_tao_any_destructor (void *_tao_void_pointer)
   delete tmp;
 }
 
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/gen_unbounded_sequence_cs.cpp:101
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_type.cpp:274
 
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-#if !defined (__TAO_UNBOUNDED_SEQUENCE_RTCORBA_PRIORITYBANDS_CS_)
-#define __TAO_UNBOUNDED_SEQUENCE_RTCORBA_PRIORITYBANDS_CS_
+template class
+  TAO_Fixed_Var_T<
+      PriorityBand
+    >;
 
-void
-RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_PriorityBands::_allocate_buffer (CORBA::ULong length)
-{
-  RTCORBA::PriorityBand* tmp = 0;
-  tmp = _TAO_Unbounded_Sequence_RTCORBA_PriorityBands::allocbuf (length);
-  
-  if (this->buffer_ != 0)
-    {
-      RTCORBA::PriorityBand *old =
-        ACE_reinterpret_cast (RTCORBA::PriorityBand *, this->buffer_);
-      
-      for (CORBA::ULong i = 0; i < this->length_; ++i)
-        {
-          tmp[i] = old[i];
-        }
-      
-      if (this->release_)
-        {
-          _TAO_Unbounded_Sequence_RTCORBA_PriorityBands::freebuf (old);
-        }
-    }
-  
-  this->buffer_ = tmp;
-}
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-void
-RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_PriorityBands::_deallocate_buffer (void)
-{
-  if (this->buffer_ == 0 || this->release_ == 0)
-    {
-      return;
-    }
-  
-  RTCORBA::PriorityBand *tmp =
-    ACE_reinterpret_cast (RTCORBA::PriorityBand *, this->buffer_);
-  _TAO_Unbounded_Sequence_RTCORBA_PriorityBands::freebuf (tmp);
-  this->buffer_ = 0;
-} 
+# pragma instantiate \
+  TAO_Fixed_Var_T< \
+      PriorityBand \
+    >
 
-RTCORBA::_TAO_Unbounded_Sequence_RTCORBA_PriorityBands::~_TAO_Unbounded_Sequence_RTCORBA_PriorityBands (void)
-{
-  this->_deallocate_buffer ();
-}
-
-#endif /* end #if !defined */
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
-
-#if !defined (_RTCORBA_PRIORITYBANDS_CS_)
-#define _RTCORBA_PRIORITYBANDS_CS_
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_cs.cpp:250
-
-// *************************************************************
-// RTCORBA::PriorityBands
-// *************************************************************
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_cs.cpp:49
 
 RTCORBA::PriorityBands::PriorityBands (void)
 {}
 
 RTCORBA::PriorityBands::PriorityBands (CORBA::ULong max)
-  : 
-
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-_TAO_Unbounded_Sequence_RTCORBA_PriorityBands
-#else /* TAO_USE_SEQUENCE_TEMPLATES */
-TAO_Unbounded_Sequence<RTCORBA::PriorityBand>
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
- (max)
+  : TAO_Unbounded_Sequence<
+        RTCORBA::PriorityBand
+      >
+    (max)
 {}
 
 RTCORBA::PriorityBands::PriorityBands (
     CORBA::ULong max,
     CORBA::ULong length,
-    RTCORBA::PriorityBand *buffer,
+    RTCORBA::PriorityBand* buffer,
     CORBA::Boolean release
   )
-  : 
-
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-_TAO_Unbounded_Sequence_RTCORBA_PriorityBands
-#else /* TAO_USE_SEQUENCE_TEMPLATES */
-TAO_Unbounded_Sequence<RTCORBA::PriorityBand>
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
- (max, length, buffer, release)
+  : TAO_Unbounded_Sequence<
+        RTCORBA::PriorityBand
+      >
+    (max, length, buffer, release)
 {}
 
 RTCORBA::PriorityBands::PriorityBands (const PriorityBands &seq)
-  : 
-
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-_TAO_Unbounded_Sequence_RTCORBA_PriorityBands
-#else /* TAO_USE_SEQUENCE_TEMPLATES */
-TAO_Unbounded_Sequence<RTCORBA::PriorityBand>
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
- (seq)
+  : TAO_Unbounded_Sequence<
+        RTCORBA::PriorityBand
+      >
+    (seq)
 {}
 
-RTCORBA::PriorityBands::~PriorityBands (void) // dtor
+RTCORBA::PriorityBands::~PriorityBands (void)
 {}
 
 void RTCORBA::PriorityBands::_tao_any_destructor (void *_tao_void_pointer)
@@ -5137,7 +3451,37 @@ void RTCORBA::PriorityBands::_tao_any_destructor (void *_tao_void_pointer)
   delete tmp;
 }
 
-#endif /* end #if !defined */
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+template class
+  TAO_FixedSeq_Var_T<
+      PriorityBands,
+      RTCORBA::PriorityBand
+    >;
+
+template class
+  TAO_Seq_Out_T<
+      PriorityBands,
+      PriorityBands_var,
+      RTCORBA::PriorityBand
+    >;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+# pragma instantiate \
+  TAO_FixedSeq_Var_T< \
+      PriorityBands, \
+      RTCORBA::PriorityBand \
+    >
+
+# pragma instantiate \
+  TAO_Seq_Out_T< \
+      PriorityBands, \
+      PriorityBands_var, \
+      RTCORBA::PriorityBand \
+    >
+
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
@@ -5146,20 +3490,20 @@ static const CORBA::Long _oc_RTCORBA_PriorityBands[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   38,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x5254434f), 
-  ACE_NTOHL (0x5242412f), 
-  ACE_NTOHL (0x5072696f), 
-  ACE_NTOHL (0x72697479), 
-  ACE_NTOHL (0x42616e64), 
-  ACE_NTOHL (0x733a312e), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x5254434f),
+  ACE_NTOHL (0x5242412f),
+  ACE_NTOHL (0x5072696f),
+  ACE_NTOHL (0x72697479),
+  ACE_NTOHL (0x42616e64),
+  ACE_NTOHL (0x733a312e),
   ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/RTCORBA/PriorityBands:1.0
     14,
-  ACE_NTOHL (0x5072696f), 
-  ACE_NTOHL (0x72697479), 
-  ACE_NTOHL (0x42616e64), 
+  ACE_NTOHL (0x5072696f),
+  ACE_NTOHL (0x72697479),
+  ACE_NTOHL (0x42616e64),
   ACE_NTOHL (0x73000000),  // name = PriorityBands
     CORBA::tk_sequence, // typecode kind
   188, // encapsulation length
@@ -5168,20 +3512,20 @@ static const CORBA::Long _oc_RTCORBA_PriorityBands[] =
     172, // encapsulation length
       TAO_ENCAP_BYTE_ORDER, // byte order
       37,
-      ACE_NTOHL (0x49444c3a), 
-      ACE_NTOHL (0x6f6d672e), 
-      ACE_NTOHL (0x6f72672f), 
-      ACE_NTOHL (0x5254434f), 
-      ACE_NTOHL (0x5242412f), 
-      ACE_NTOHL (0x5072696f), 
-      ACE_NTOHL (0x72697479), 
-      ACE_NTOHL (0x42616e64), 
-      ACE_NTOHL (0x3a312e30), 
+      ACE_NTOHL (0x49444c3a),
+      ACE_NTOHL (0x6f6d672e),
+      ACE_NTOHL (0x6f72672f),
+      ACE_NTOHL (0x5254434f),
+      ACE_NTOHL (0x5242412f),
+      ACE_NTOHL (0x5072696f),
+      ACE_NTOHL (0x72697479),
+      ACE_NTOHL (0x42616e64),
+      ACE_NTOHL (0x3a312e30),
       ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/RTCORBA/PriorityBand:1.0
             13,
-      ACE_NTOHL (0x5072696f), 
-      ACE_NTOHL (0x72697479), 
-      ACE_NTOHL (0x42616e64), 
+      ACE_NTOHL (0x5072696f),
+      ACE_NTOHL (0x72697479),
+      ACE_NTOHL (0x42616e64),
       ACE_NTOHL (0x0),  // name = PriorityBand
       2, // member count
             4,
@@ -5190,24 +3534,24 @@ static const CORBA::Long _oc_RTCORBA_PriorityBands[] =
       64, // encapsulation length
         TAO_ENCAP_BYTE_ORDER, // byte order
         33,
-        ACE_NTOHL (0x49444c3a), 
-        ACE_NTOHL (0x6f6d672e), 
-        ACE_NTOHL (0x6f72672f), 
-        ACE_NTOHL (0x5254434f), 
-        ACE_NTOHL (0x5242412f), 
-        ACE_NTOHL (0x5072696f), 
-        ACE_NTOHL (0x72697479), 
-        ACE_NTOHL (0x3a312e30), 
+        ACE_NTOHL (0x49444c3a),
+        ACE_NTOHL (0x6f6d672e),
+        ACE_NTOHL (0x6f72672f),
+        ACE_NTOHL (0x5254434f),
+        ACE_NTOHL (0x5242412f),
+        ACE_NTOHL (0x5072696f),
+        ACE_NTOHL (0x72697479),
+        ACE_NTOHL (0x3a312e30),
         ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/RTCORBA/Priority:1.0
                 9,
-        ACE_NTOHL (0x5072696f), 
-        ACE_NTOHL (0x72697479), 
+        ACE_NTOHL (0x5072696f),
+        ACE_NTOHL (0x72697479),
         ACE_NTOHL (0x0),  // name = Priority
                 CORBA::tk_short,
 
 
       5,
-      ACE_NTOHL (0x68696768), 
+      ACE_NTOHL (0x68696768),
       ACE_NTOHL (0x0),  // name = high
             0xffffffff, // indirection
       0xffffffa8, // negative offset (-88)
@@ -5239,7 +3583,7 @@ TAO_NAMESPACE_END
 int RTCORBA::PriorityBandedConnectionPolicy::_tao_class_id = 0;
 
 RTCORBA::PriorityBandedConnectionPolicy_ptr
-tao_RTCORBA_PriorityBandedConnectionPolicy_duplicate (
+RTCORBA::tao_PriorityBandedConnectionPolicy_life::tao_duplicate (
     RTCORBA::PriorityBandedConnectionPolicy_ptr p
   )
 {
@@ -5247,7 +3591,7 @@ tao_RTCORBA_PriorityBandedConnectionPolicy_duplicate (
 }
 
 void
-tao_RTCORBA_PriorityBandedConnectionPolicy_release (
+RTCORBA::tao_PriorityBandedConnectionPolicy_life::tao_release (
     RTCORBA::PriorityBandedConnectionPolicy_ptr p
   )
 {
@@ -5255,15 +3599,24 @@ tao_RTCORBA_PriorityBandedConnectionPolicy_release (
 }
 
 RTCORBA::PriorityBandedConnectionPolicy_ptr
-tao_RTCORBA_PriorityBandedConnectionPolicy_nil (
+RTCORBA::tao_PriorityBandedConnectionPolicy_life::tao_nil (
     void
   )
 {
   return RTCORBA::PriorityBandedConnectionPolicy::_nil ();
 }
 
+CORBA::Boolean
+RTCORBA::tao_PriorityBandedConnectionPolicy_life::tao_marshal (
+    RTCORBA::PriorityBandedConnectionPolicy_ptr p,
+    TAO_OutputCDR &cdr
+  )
+{
+  return p->marshal (cdr);
+}
+
 RTCORBA::PriorityBandedConnectionPolicy_ptr
-tao_RTCORBA_PriorityBandedConnectionPolicy_narrow (
+RTCORBA::tao_PriorityBandedConnectionPolicy_cast::tao_narrow (
     CORBA::Object *p
     ACE_ENV_ARG_DECL
   )
@@ -5272,7 +3625,7 @@ tao_RTCORBA_PriorityBandedConnectionPolicy_narrow (
 }
 
 CORBA::Object *
-tao_RTCORBA_PriorityBandedConnectionPolicy_upcast (
+RTCORBA::tao_PriorityBandedConnectionPolicy_cast::tao_upcast (
     void *src
   )
 {
@@ -5281,205 +3634,32 @@ tao_RTCORBA_PriorityBandedConnectionPolicy_upcast (
   return *tmp;
 }
 
-CORBA::Boolean
-tao_RTCORBA_PriorityBandedConnectionPolicy_marshal (
-    RTCORBA::PriorityBandedConnectionPolicy_ptr p,
-    TAO_OutputCDR &strm
-  )
-{
-  return p->marshal (strm);
-}
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+  template class
+    TAO_Objref_Var_T<
+        RTCORBA::PriorityBandedConnectionPolicy,
+        RTCORBA::tao_PriorityBandedConnectionPolicy_life
+      >;
+  template class
+    TAO_Objref_Out_T<
+        RTCORBA::PriorityBandedConnectionPolicy,
+        RTCORBA::tao_PriorityBandedConnectionPolicy_life
+      >;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate \
+    TAO_Objref_Var_T< \
+        RTCORBA::PriorityBandedConnectionPolicy, \
+        RTCORBA::tao_PriorityBandedConnectionPolicy_life \
+      >
+# pragma instantiate \
+    TAO_Objref_Out_T< \
+        RTCORBA::PriorityBandedConnectionPolicy, \
+        RTCORBA::tao_PriorityBandedConnectionPolicy_life \
+      >
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:721
-
-// *************************************************************
-// RTCORBA::PriorityBandedConnectionPolicy_var
-// *************************************************************
-
-RTCORBA::PriorityBandedConnectionPolicy_var::PriorityBandedConnectionPolicy_var (void)
-  : ptr_ (PriorityBandedConnectionPolicy::_nil ())
-{}
-
-::RTCORBA::PriorityBandedConnectionPolicy_ptr
-RTCORBA::PriorityBandedConnectionPolicy_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-RTCORBA::PriorityBandedConnectionPolicy_var::PriorityBandedConnectionPolicy_var (const ::RTCORBA::PriorityBandedConnectionPolicy_var &p)
-  : TAO_Base_var (),
-    ptr_ (PriorityBandedConnectionPolicy::_duplicate (p.ptr ()))
-{}
-
-RTCORBA::PriorityBandedConnectionPolicy_var::~PriorityBandedConnectionPolicy_var (void)
-{
-  CORBA::release (this->ptr_);
-}
-
-RTCORBA::PriorityBandedConnectionPolicy_var &
-RTCORBA::PriorityBandedConnectionPolicy_var::operator= (PriorityBandedConnectionPolicy_ptr p)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = p;
-  return *this;
-}
-
-RTCORBA::PriorityBandedConnectionPolicy_var &
-RTCORBA::PriorityBandedConnectionPolicy_var::operator= (const ::RTCORBA::PriorityBandedConnectionPolicy_var &p)
-{
-  if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = ::RTCORBA::PriorityBandedConnectionPolicy::_duplicate (p.ptr ());
-  }
-  return *this;
-}
-
-RTCORBA::PriorityBandedConnectionPolicy_var::operator const ::RTCORBA::PriorityBandedConnectionPolicy_ptr &() const // cast
-{
-  return this->ptr_;
-}
-
-RTCORBA::PriorityBandedConnectionPolicy_var::operator ::RTCORBA::PriorityBandedConnectionPolicy_ptr &() // cast 
-{
-  return this->ptr_;
-}
-
-::RTCORBA::PriorityBandedConnectionPolicy_ptr
-RTCORBA::PriorityBandedConnectionPolicy_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-::RTCORBA::PriorityBandedConnectionPolicy_ptr
-RTCORBA::PriorityBandedConnectionPolicy_var::in (void) const
-{
-  return this->ptr_;
-}
-
-::RTCORBA::PriorityBandedConnectionPolicy_ptr &
-RTCORBA::PriorityBandedConnectionPolicy_var::inout (void)
-{
-  return this->ptr_;
-}
-
-::RTCORBA::PriorityBandedConnectionPolicy_ptr &
-RTCORBA::PriorityBandedConnectionPolicy_var::out (void)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::RTCORBA::PriorityBandedConnectionPolicy::_nil ();
-  return this->ptr_;
-}
-
-::RTCORBA::PriorityBandedConnectionPolicy_ptr
-RTCORBA::PriorityBandedConnectionPolicy_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  ::RTCORBA::PriorityBandedConnectionPolicy_ptr val = this->ptr_;
-  this->ptr_ = ::RTCORBA::PriorityBandedConnectionPolicy::_nil ();
-  return val;
-}
-
-::RTCORBA::PriorityBandedConnectionPolicy_ptr
-RTCORBA::PriorityBandedConnectionPolicy_var::tao_duplicate (PriorityBandedConnectionPolicy_ptr p)
-{
-  return ::RTCORBA::PriorityBandedConnectionPolicy::_duplicate (p);
-}
-
-void
-RTCORBA::PriorityBandedConnectionPolicy_var::tao_release (PriorityBandedConnectionPolicy_ptr p)
-{
-  CORBA::release (p);
-}
-
-::RTCORBA::PriorityBandedConnectionPolicy_ptr
-RTCORBA::PriorityBandedConnectionPolicy_var::tao_nil (void)
-{
-  return ::RTCORBA::PriorityBandedConnectionPolicy::_nil ();
-}
-
-::RTCORBA::PriorityBandedConnectionPolicy_ptr
-RTCORBA::PriorityBandedConnectionPolicy_var::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return ::RTCORBA::PriorityBandedConnectionPolicy::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-RTCORBA::PriorityBandedConnectionPolicy_var::tao_upcast (void *src)
-{
-  PriorityBandedConnectionPolicy **tmp =
-    ACE_static_cast (PriorityBandedConnectionPolicy **, src);
-  return *tmp;
-}
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1030
-
-// *************************************************************
-// RTCORBA::PriorityBandedConnectionPolicy_out
-// *************************************************************
-
-RTCORBA::PriorityBandedConnectionPolicy_out::PriorityBandedConnectionPolicy_out (PriorityBandedConnectionPolicy_ptr &p)
-  : ptr_ (p)
-{
-  this->ptr_ = ::RTCORBA::PriorityBandedConnectionPolicy::_nil ();
-}
-
-RTCORBA::PriorityBandedConnectionPolicy_out::PriorityBandedConnectionPolicy_out (PriorityBandedConnectionPolicy_var &p)
-  : ptr_ (p.out ())
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::RTCORBA::PriorityBandedConnectionPolicy::_nil ();
-}
-
-RTCORBA::PriorityBandedConnectionPolicy_out::PriorityBandedConnectionPolicy_out (const ::RTCORBA::PriorityBandedConnectionPolicy_out &p)
-  : ptr_ (ACE_const_cast (PriorityBandedConnectionPolicy_out &, p).ptr_)
-{}
-
-::RTCORBA::PriorityBandedConnectionPolicy_out &
-RTCORBA::PriorityBandedConnectionPolicy_out::operator= (const ::RTCORBA::PriorityBandedConnectionPolicy_out &p)
-{
-  this->ptr_ = ACE_const_cast (PriorityBandedConnectionPolicy_out&, p).ptr_;
-  return *this;
-}
-
-RTCORBA::PriorityBandedConnectionPolicy_out &
-RTCORBA::PriorityBandedConnectionPolicy_out::operator= (const ::RTCORBA::PriorityBandedConnectionPolicy_var &p)
-{
-  this->ptr_ = ::RTCORBA::PriorityBandedConnectionPolicy::_duplicate (p.ptr ());
-  return *this;
-}
-
-RTCORBA::PriorityBandedConnectionPolicy_out &
-RTCORBA::PriorityBandedConnectionPolicy_out::operator= (PriorityBandedConnectionPolicy_ptr p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-RTCORBA::PriorityBandedConnectionPolicy_out::operator ::RTCORBA::PriorityBandedConnectionPolicy_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-::RTCORBA::PriorityBandedConnectionPolicy_ptr &
-RTCORBA::PriorityBandedConnectionPolicy_out::ptr (void)
-{
-  return this->ptr_;
-}
-
-::RTCORBA::PriorityBandedConnectionPolicy_ptr
-RTCORBA::PriorityBandedConnectionPolicy_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:235
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:232
 
 RTCORBA::PriorityBandedConnectionPolicy::PriorityBandedConnectionPolicy (void)
 {}
@@ -5487,7 +3667,7 @@ RTCORBA::PriorityBandedConnectionPolicy::PriorityBandedConnectionPolicy (void)
 RTCORBA::PriorityBandedConnectionPolicy::~PriorityBandedConnectionPolicy (void)
 {}
 
-void 
+void
 RTCORBA::PriorityBandedConnectionPolicy::_tao_any_destructor (void *_tao_void_pointer)
 {
   PriorityBandedConnectionPolicy *tmp = ACE_static_cast (PriorityBandedConnectionPolicy *, _tao_void_pointer);
@@ -5503,7 +3683,7 @@ RTCORBA::PriorityBandedConnectionPolicy::_narrow (
   return PriorityBandedConnectionPolicy::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
 }
 
-RTCORBA::PriorityBandedConnectionPolicy_ptr 
+RTCORBA::PriorityBandedConnectionPolicy_ptr
 RTCORBA::PriorityBandedConnectionPolicy::_unchecked_narrow (
     CORBA::Object_ptr obj
     ACE_ENV_ARG_DECL_NOT_USED
@@ -5513,7 +3693,7 @@ RTCORBA::PriorityBandedConnectionPolicy::_unchecked_narrow (
     {
       return PriorityBandedConnectionPolicy::_nil ();
     }
-  
+
   return
       ACE_reinterpret_cast (
           PriorityBandedConnectionPolicy_ptr,
@@ -5533,14 +3713,14 @@ RTCORBA::PriorityBandedConnectionPolicy::_duplicate (PriorityBandedConnectionPol
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 void *RTCORBA::PriorityBandedConnectionPolicy::_tao_QueryInterface (ptr_arith_t type)
 {
   void *retv = 0;
-  
+
   if (type == ACE_reinterpret_cast (
               ptr_arith_t,
               &ACE_NESTED_CLASS (::RTCORBA, PriorityBandedConnectionPolicy)::_tao_class_id)
@@ -5573,18 +3753,24 @@ void *RTCORBA::PriorityBandedConnectionPolicy::_tao_QueryInterface (ptr_arith_t 
             ACE_static_cast (CORBA::Object_ptr, this)
           );
     }
-  
+
   if (retv != 0)
     {
       this->_add_ref ();
     }
-  
+
   return retv;
 }
 
 const char* RTCORBA::PriorityBandedConnectionPolicy::_interface_repository_id (void) const
 {
   return "IDL:omg.org/RTCORBA/PriorityBandedConnectionPolicy:1.0";
+}
+
+CORBA::Boolean
+RTCORBA::PriorityBandedConnectionPolicy::marshal (TAO_OutputCDR &)
+{
+  return 0;
 }
 
 // TAO_IDL - Generated from
@@ -5594,28 +3780,28 @@ static const CORBA::Long _oc_RTCORBA_PriorityBandedConnectionPolicy[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   55,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x5254434f), 
-  ACE_NTOHL (0x5242412f), 
-  ACE_NTOHL (0x5072696f), 
-  ACE_NTOHL (0x72697479), 
-  ACE_NTOHL (0x42616e64), 
-  ACE_NTOHL (0x6564436f), 
-  ACE_NTOHL (0x6e6e6563), 
-  ACE_NTOHL (0x74696f6e), 
-  ACE_NTOHL (0x506f6c69), 
-  ACE_NTOHL (0x63793a31), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x5254434f),
+  ACE_NTOHL (0x5242412f),
+  ACE_NTOHL (0x5072696f),
+  ACE_NTOHL (0x72697479),
+  ACE_NTOHL (0x42616e64),
+  ACE_NTOHL (0x6564436f),
+  ACE_NTOHL (0x6e6e6563),
+  ACE_NTOHL (0x74696f6e),
+  ACE_NTOHL (0x506f6c69),
+  ACE_NTOHL (0x63793a31),
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/RTCORBA/PriorityBandedConnectionPolicy:1.0
     31,
-  ACE_NTOHL (0x5072696f), 
-  ACE_NTOHL (0x72697479), 
-  ACE_NTOHL (0x42616e64), 
-  ACE_NTOHL (0x6564436f), 
-  ACE_NTOHL (0x6e6e6563), 
-  ACE_NTOHL (0x74696f6e), 
-  ACE_NTOHL (0x506f6c69), 
+  ACE_NTOHL (0x5072696f),
+  ACE_NTOHL (0x72697479),
+  ACE_NTOHL (0x42616e64),
+  ACE_NTOHL (0x6564436f),
+  ACE_NTOHL (0x6e6e6563),
+  ACE_NTOHL (0x74696f6e),
+  ACE_NTOHL (0x506f6c69),
   ACE_NTOHL (0x63790000),  // name = PriorityBandedConnectionPolicy
   };
 
@@ -5642,7 +3828,7 @@ TAO_NAMESPACE_END
 int RTCORBA::Current::_tao_class_id = 0;
 
 RTCORBA::Current_ptr
-tao_RTCORBA_Current_duplicate (
+RTCORBA::tao_Current_life::tao_duplicate (
     RTCORBA::Current_ptr p
   )
 {
@@ -5650,7 +3836,7 @@ tao_RTCORBA_Current_duplicate (
 }
 
 void
-tao_RTCORBA_Current_release (
+RTCORBA::tao_Current_life::tao_release (
     RTCORBA::Current_ptr p
   )
 {
@@ -5658,15 +3844,24 @@ tao_RTCORBA_Current_release (
 }
 
 RTCORBA::Current_ptr
-tao_RTCORBA_Current_nil (
+RTCORBA::tao_Current_life::tao_nil (
     void
   )
 {
   return RTCORBA::Current::_nil ();
 }
 
+CORBA::Boolean
+RTCORBA::tao_Current_life::tao_marshal (
+    RTCORBA::Current_ptr p,
+    TAO_OutputCDR &cdr
+  )
+{
+  return p->marshal (cdr);
+}
+
 RTCORBA::Current_ptr
-tao_RTCORBA_Current_narrow (
+RTCORBA::tao_Current_cast::tao_narrow (
     CORBA::Object *p
     ACE_ENV_ARG_DECL
   )
@@ -5675,7 +3870,7 @@ tao_RTCORBA_Current_narrow (
 }
 
 CORBA::Object *
-tao_RTCORBA_Current_upcast (
+RTCORBA::tao_Current_cast::tao_upcast (
     void *src
   )
 {
@@ -5684,205 +3879,32 @@ tao_RTCORBA_Current_upcast (
   return *tmp;
 }
 
-CORBA::Boolean
-tao_RTCORBA_Current_marshal (
-    RTCORBA::Current_ptr p,
-    TAO_OutputCDR &strm
-  )
-{
-  return p->marshal (strm);
-}
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+  template class
+    TAO_Objref_Var_T<
+        RTCORBA::Current,
+        RTCORBA::tao_Current_life
+      >;
+  template class
+    TAO_Objref_Out_T<
+        RTCORBA::Current,
+        RTCORBA::tao_Current_life
+      >;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate \
+    TAO_Objref_Var_T< \
+        RTCORBA::Current, \
+        RTCORBA::tao_Current_life \
+      >
+# pragma instantiate \
+    TAO_Objref_Out_T< \
+        RTCORBA::Current, \
+        RTCORBA::tao_Current_life \
+      >
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:721
-
-// *************************************************************
-// RTCORBA::Current_var
-// *************************************************************
-
-RTCORBA::Current_var::Current_var (void)
-  : ptr_ (Current::_nil ())
-{}
-
-::RTCORBA::Current_ptr
-RTCORBA::Current_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-RTCORBA::Current_var::Current_var (const ::RTCORBA::Current_var &p)
-  : TAO_Base_var (),
-    ptr_ (Current::_duplicate (p.ptr ()))
-{}
-
-RTCORBA::Current_var::~Current_var (void)
-{
-  CORBA::release (this->ptr_);
-}
-
-RTCORBA::Current_var &
-RTCORBA::Current_var::operator= (Current_ptr p)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = p;
-  return *this;
-}
-
-RTCORBA::Current_var &
-RTCORBA::Current_var::operator= (const ::RTCORBA::Current_var &p)
-{
-  if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = ::RTCORBA::Current::_duplicate (p.ptr ());
-  }
-  return *this;
-}
-
-RTCORBA::Current_var::operator const ::RTCORBA::Current_ptr &() const // cast
-{
-  return this->ptr_;
-}
-
-RTCORBA::Current_var::operator ::RTCORBA::Current_ptr &() // cast 
-{
-  return this->ptr_;
-}
-
-::RTCORBA::Current_ptr
-RTCORBA::Current_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-::RTCORBA::Current_ptr
-RTCORBA::Current_var::in (void) const
-{
-  return this->ptr_;
-}
-
-::RTCORBA::Current_ptr &
-RTCORBA::Current_var::inout (void)
-{
-  return this->ptr_;
-}
-
-::RTCORBA::Current_ptr &
-RTCORBA::Current_var::out (void)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::RTCORBA::Current::_nil ();
-  return this->ptr_;
-}
-
-::RTCORBA::Current_ptr
-RTCORBA::Current_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  ::RTCORBA::Current_ptr val = this->ptr_;
-  this->ptr_ = ::RTCORBA::Current::_nil ();
-  return val;
-}
-
-::RTCORBA::Current_ptr
-RTCORBA::Current_var::tao_duplicate (Current_ptr p)
-{
-  return ::RTCORBA::Current::_duplicate (p);
-}
-
-void
-RTCORBA::Current_var::tao_release (Current_ptr p)
-{
-  CORBA::release (p);
-}
-
-::RTCORBA::Current_ptr
-RTCORBA::Current_var::tao_nil (void)
-{
-  return ::RTCORBA::Current::_nil ();
-}
-
-::RTCORBA::Current_ptr
-RTCORBA::Current_var::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return ::RTCORBA::Current::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-RTCORBA::Current_var::tao_upcast (void *src)
-{
-  Current **tmp =
-    ACE_static_cast (Current **, src);
-  return *tmp;
-}
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1030
-
-// *************************************************************
-// RTCORBA::Current_out
-// *************************************************************
-
-RTCORBA::Current_out::Current_out (Current_ptr &p)
-  : ptr_ (p)
-{
-  this->ptr_ = ::RTCORBA::Current::_nil ();
-}
-
-RTCORBA::Current_out::Current_out (Current_var &p)
-  : ptr_ (p.out ())
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::RTCORBA::Current::_nil ();
-}
-
-RTCORBA::Current_out::Current_out (const ::RTCORBA::Current_out &p)
-  : ptr_ (ACE_const_cast (Current_out &, p).ptr_)
-{}
-
-::RTCORBA::Current_out &
-RTCORBA::Current_out::operator= (const ::RTCORBA::Current_out &p)
-{
-  this->ptr_ = ACE_const_cast (Current_out&, p).ptr_;
-  return *this;
-}
-
-RTCORBA::Current_out &
-RTCORBA::Current_out::operator= (const ::RTCORBA::Current_var &p)
-{
-  this->ptr_ = ::RTCORBA::Current::_duplicate (p.ptr ());
-  return *this;
-}
-
-RTCORBA::Current_out &
-RTCORBA::Current_out::operator= (Current_ptr p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-RTCORBA::Current_out::operator ::RTCORBA::Current_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-::RTCORBA::Current_ptr &
-RTCORBA::Current_out::ptr (void)
-{
-  return this->ptr_;
-}
-
-::RTCORBA::Current_ptr
-RTCORBA::Current_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:235
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:232
 
 RTCORBA::Current::Current (void)
 {}
@@ -5890,7 +3912,7 @@ RTCORBA::Current::Current (void)
 RTCORBA::Current::~Current (void)
 {}
 
-void 
+void
 RTCORBA::Current::_tao_any_destructor (void *_tao_void_pointer)
 {
   Current *tmp = ACE_static_cast (Current *, _tao_void_pointer);
@@ -5906,7 +3928,7 @@ RTCORBA::Current::_narrow (
   return Current::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
 }
 
-RTCORBA::Current_ptr 
+RTCORBA::Current_ptr
 RTCORBA::Current::_unchecked_narrow (
     CORBA::Object_ptr obj
     ACE_ENV_ARG_DECL_NOT_USED
@@ -5916,7 +3938,7 @@ RTCORBA::Current::_unchecked_narrow (
     {
       return Current::_nil ();
     }
-  
+
   return
       ACE_reinterpret_cast (
           Current_ptr,
@@ -5936,14 +3958,14 @@ RTCORBA::Current::_duplicate (Current_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 void *RTCORBA::Current::_tao_QueryInterface (ptr_arith_t type)
 {
   void *retv = 0;
-  
+
   if (type == ACE_reinterpret_cast (
               ptr_arith_t,
               &ACE_NESTED_CLASS (::RTCORBA, Current)::_tao_class_id)
@@ -5976,18 +3998,24 @@ void *RTCORBA::Current::_tao_QueryInterface (ptr_arith_t type)
             ACE_static_cast (CORBA::Object_ptr, this)
           );
     }
-  
+
   if (retv != 0)
     {
       this->_add_ref ();
     }
-  
+
   return retv;
 }
 
 const char* RTCORBA::Current::_interface_repository_id (void) const
 {
   return "IDL:omg.org/RTCORBA/Current:1.0";
+}
+
+CORBA::Boolean
+RTCORBA::Current::marshal (TAO_OutputCDR &)
+{
+  return 0;
 }
 
 // TAO_IDL - Generated from
@@ -5997,16 +4025,16 @@ static const CORBA::Long _oc_RTCORBA_Current[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   32,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x5254434f), 
-  ACE_NTOHL (0x5242412f), 
-  ACE_NTOHL (0x43757272), 
-  ACE_NTOHL (0x656e743a), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x5254434f),
+  ACE_NTOHL (0x5242412f),
+  ACE_NTOHL (0x43757272),
+  ACE_NTOHL (0x656e743a),
   ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/RTCORBA/Current:1.0
     8,
-  ACE_NTOHL (0x43757272), 
+  ACE_NTOHL (0x43757272),
   ACE_NTOHL (0x656e7400),  // name = Current
   };
 
@@ -6033,7 +4061,7 @@ TAO_NAMESPACE_END
 int RTCORBA::Mutex::_tao_class_id = 0;
 
 RTCORBA::Mutex_ptr
-tao_RTCORBA_Mutex_duplicate (
+RTCORBA::tao_Mutex_life::tao_duplicate (
     RTCORBA::Mutex_ptr p
   )
 {
@@ -6041,7 +4069,7 @@ tao_RTCORBA_Mutex_duplicate (
 }
 
 void
-tao_RTCORBA_Mutex_release (
+RTCORBA::tao_Mutex_life::tao_release (
     RTCORBA::Mutex_ptr p
   )
 {
@@ -6049,15 +4077,24 @@ tao_RTCORBA_Mutex_release (
 }
 
 RTCORBA::Mutex_ptr
-tao_RTCORBA_Mutex_nil (
+RTCORBA::tao_Mutex_life::tao_nil (
     void
   )
 {
   return RTCORBA::Mutex::_nil ();
 }
 
+CORBA::Boolean
+RTCORBA::tao_Mutex_life::tao_marshal (
+    RTCORBA::Mutex_ptr p,
+    TAO_OutputCDR &cdr
+  )
+{
+  return p->marshal (cdr);
+}
+
 RTCORBA::Mutex_ptr
-tao_RTCORBA_Mutex_narrow (
+RTCORBA::tao_Mutex_cast::tao_narrow (
     CORBA::Object *p
     ACE_ENV_ARG_DECL
   )
@@ -6066,7 +4103,7 @@ tao_RTCORBA_Mutex_narrow (
 }
 
 CORBA::Object *
-tao_RTCORBA_Mutex_upcast (
+RTCORBA::tao_Mutex_cast::tao_upcast (
     void *src
   )
 {
@@ -6075,205 +4112,32 @@ tao_RTCORBA_Mutex_upcast (
   return *tmp;
 }
 
-CORBA::Boolean
-tao_RTCORBA_Mutex_marshal (
-    RTCORBA::Mutex_ptr p,
-    TAO_OutputCDR &strm
-  )
-{
-  return p->marshal (strm);
-}
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+  template class
+    TAO_Objref_Var_T<
+        RTCORBA::Mutex,
+        RTCORBA::tao_Mutex_life
+      >;
+  template class
+    TAO_Objref_Out_T<
+        RTCORBA::Mutex,
+        RTCORBA::tao_Mutex_life
+      >;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate \
+    TAO_Objref_Var_T< \
+        RTCORBA::Mutex, \
+        RTCORBA::tao_Mutex_life \
+      >
+# pragma instantiate \
+    TAO_Objref_Out_T< \
+        RTCORBA::Mutex, \
+        RTCORBA::tao_Mutex_life \
+      >
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:721
-
-// *************************************************************
-// RTCORBA::Mutex_var
-// *************************************************************
-
-RTCORBA::Mutex_var::Mutex_var (void)
-  : ptr_ (Mutex::_nil ())
-{}
-
-::RTCORBA::Mutex_ptr
-RTCORBA::Mutex_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-RTCORBA::Mutex_var::Mutex_var (const ::RTCORBA::Mutex_var &p)
-  : TAO_Base_var (),
-    ptr_ (Mutex::_duplicate (p.ptr ()))
-{}
-
-RTCORBA::Mutex_var::~Mutex_var (void)
-{
-  CORBA::release (this->ptr_);
-}
-
-RTCORBA::Mutex_var &
-RTCORBA::Mutex_var::operator= (Mutex_ptr p)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = p;
-  return *this;
-}
-
-RTCORBA::Mutex_var &
-RTCORBA::Mutex_var::operator= (const ::RTCORBA::Mutex_var &p)
-{
-  if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = ::RTCORBA::Mutex::_duplicate (p.ptr ());
-  }
-  return *this;
-}
-
-RTCORBA::Mutex_var::operator const ::RTCORBA::Mutex_ptr &() const // cast
-{
-  return this->ptr_;
-}
-
-RTCORBA::Mutex_var::operator ::RTCORBA::Mutex_ptr &() // cast 
-{
-  return this->ptr_;
-}
-
-::RTCORBA::Mutex_ptr
-RTCORBA::Mutex_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-::RTCORBA::Mutex_ptr
-RTCORBA::Mutex_var::in (void) const
-{
-  return this->ptr_;
-}
-
-::RTCORBA::Mutex_ptr &
-RTCORBA::Mutex_var::inout (void)
-{
-  return this->ptr_;
-}
-
-::RTCORBA::Mutex_ptr &
-RTCORBA::Mutex_var::out (void)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::RTCORBA::Mutex::_nil ();
-  return this->ptr_;
-}
-
-::RTCORBA::Mutex_ptr
-RTCORBA::Mutex_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  ::RTCORBA::Mutex_ptr val = this->ptr_;
-  this->ptr_ = ::RTCORBA::Mutex::_nil ();
-  return val;
-}
-
-::RTCORBA::Mutex_ptr
-RTCORBA::Mutex_var::tao_duplicate (Mutex_ptr p)
-{
-  return ::RTCORBA::Mutex::_duplicate (p);
-}
-
-void
-RTCORBA::Mutex_var::tao_release (Mutex_ptr p)
-{
-  CORBA::release (p);
-}
-
-::RTCORBA::Mutex_ptr
-RTCORBA::Mutex_var::tao_nil (void)
-{
-  return ::RTCORBA::Mutex::_nil ();
-}
-
-::RTCORBA::Mutex_ptr
-RTCORBA::Mutex_var::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return ::RTCORBA::Mutex::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-RTCORBA::Mutex_var::tao_upcast (void *src)
-{
-  Mutex **tmp =
-    ACE_static_cast (Mutex **, src);
-  return *tmp;
-}
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1030
-
-// *************************************************************
-// RTCORBA::Mutex_out
-// *************************************************************
-
-RTCORBA::Mutex_out::Mutex_out (Mutex_ptr &p)
-  : ptr_ (p)
-{
-  this->ptr_ = ::RTCORBA::Mutex::_nil ();
-}
-
-RTCORBA::Mutex_out::Mutex_out (Mutex_var &p)
-  : ptr_ (p.out ())
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::RTCORBA::Mutex::_nil ();
-}
-
-RTCORBA::Mutex_out::Mutex_out (const ::RTCORBA::Mutex_out &p)
-  : ptr_ (ACE_const_cast (Mutex_out &, p).ptr_)
-{}
-
-::RTCORBA::Mutex_out &
-RTCORBA::Mutex_out::operator= (const ::RTCORBA::Mutex_out &p)
-{
-  this->ptr_ = ACE_const_cast (Mutex_out&, p).ptr_;
-  return *this;
-}
-
-RTCORBA::Mutex_out &
-RTCORBA::Mutex_out::operator= (const ::RTCORBA::Mutex_var &p)
-{
-  this->ptr_ = ::RTCORBA::Mutex::_duplicate (p.ptr ());
-  return *this;
-}
-
-RTCORBA::Mutex_out &
-RTCORBA::Mutex_out::operator= (Mutex_ptr p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-RTCORBA::Mutex_out::operator ::RTCORBA::Mutex_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-::RTCORBA::Mutex_ptr &
-RTCORBA::Mutex_out::ptr (void)
-{
-  return this->ptr_;
-}
-
-::RTCORBA::Mutex_ptr
-RTCORBA::Mutex_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:235
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:232
 
 RTCORBA::Mutex::Mutex (void)
 {}
@@ -6281,7 +4145,7 @@ RTCORBA::Mutex::Mutex (void)
 RTCORBA::Mutex::~Mutex (void)
 {}
 
-void 
+void
 RTCORBA::Mutex::_tao_any_destructor (void *_tao_void_pointer)
 {
   Mutex *tmp = ACE_static_cast (Mutex *, _tao_void_pointer);
@@ -6297,7 +4161,7 @@ RTCORBA::Mutex::_narrow (
   return Mutex::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
 }
 
-RTCORBA::Mutex_ptr 
+RTCORBA::Mutex_ptr
 RTCORBA::Mutex::_unchecked_narrow (
     CORBA::Object_ptr obj
     ACE_ENV_ARG_DECL_NOT_USED
@@ -6307,7 +4171,7 @@ RTCORBA::Mutex::_unchecked_narrow (
     {
       return Mutex::_nil ();
     }
-  
+
   return
       ACE_reinterpret_cast (
           Mutex_ptr,
@@ -6327,14 +4191,14 @@ RTCORBA::Mutex::_duplicate (Mutex_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 void *RTCORBA::Mutex::_tao_QueryInterface (ptr_arith_t type)
 {
   void *retv = 0;
-  
+
   if (type == ACE_reinterpret_cast (
               ptr_arith_t,
               &ACE_NESTED_CLASS (::RTCORBA, Mutex)::_tao_class_id)
@@ -6353,18 +4217,24 @@ void *RTCORBA::Mutex::_tao_QueryInterface (ptr_arith_t type)
             ACE_static_cast (CORBA::Object_ptr, this)
           );
     }
-  
+
   if (retv != 0)
     {
       this->_add_ref ();
     }
-  
+
   return retv;
 }
 
 const char* RTCORBA::Mutex::_interface_repository_id (void) const
 {
   return "IDL:omg.org/RTCORBA/Mutex:1.0";
+}
+
+CORBA::Boolean
+RTCORBA::Mutex::marshal (TAO_OutputCDR &)
+{
+  return 0;
 }
 
 // TAO_IDL - Generated from
@@ -6374,16 +4244,16 @@ static const CORBA::Long _oc_RTCORBA_Mutex[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   30,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x5254434f), 
-  ACE_NTOHL (0x5242412f), 
-  ACE_NTOHL (0x4d757465), 
-  ACE_NTOHL (0x783a312e), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x5254434f),
+  ACE_NTOHL (0x5242412f),
+  ACE_NTOHL (0x4d757465),
+  ACE_NTOHL (0x783a312e),
   ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/RTCORBA/Mutex:1.0
     6,
-  ACE_NTOHL (0x4d757465), 
+  ACE_NTOHL (0x4d757465),
   ACE_NTOHL (0x78000000),  // name = Mutex
   };
 
@@ -6410,7 +4280,7 @@ TAO_NAMESPACE_END
 int RTCORBA::RTORB::_tao_class_id = 0;
 
 RTCORBA::RTORB_ptr
-tao_RTCORBA_RTORB_duplicate (
+RTCORBA::tao_RTORB_life::tao_duplicate (
     RTCORBA::RTORB_ptr p
   )
 {
@@ -6418,7 +4288,7 @@ tao_RTCORBA_RTORB_duplicate (
 }
 
 void
-tao_RTCORBA_RTORB_release (
+RTCORBA::tao_RTORB_life::tao_release (
     RTCORBA::RTORB_ptr p
   )
 {
@@ -6426,15 +4296,24 @@ tao_RTCORBA_RTORB_release (
 }
 
 RTCORBA::RTORB_ptr
-tao_RTCORBA_RTORB_nil (
+RTCORBA::tao_RTORB_life::tao_nil (
     void
   )
 {
   return RTCORBA::RTORB::_nil ();
 }
 
+CORBA::Boolean
+RTCORBA::tao_RTORB_life::tao_marshal (
+    RTCORBA::RTORB_ptr p,
+    TAO_OutputCDR &cdr
+  )
+{
+  return p->marshal (cdr);
+}
+
 RTCORBA::RTORB_ptr
-tao_RTCORBA_RTORB_narrow (
+RTCORBA::tao_RTORB_cast::tao_narrow (
     CORBA::Object *p
     ACE_ENV_ARG_DECL
   )
@@ -6443,7 +4322,7 @@ tao_RTCORBA_RTORB_narrow (
 }
 
 CORBA::Object *
-tao_RTCORBA_RTORB_upcast (
+RTCORBA::tao_RTORB_cast::tao_upcast (
     void *src
   )
 {
@@ -6452,205 +4331,32 @@ tao_RTCORBA_RTORB_upcast (
   return *tmp;
 }
 
-CORBA::Boolean
-tao_RTCORBA_RTORB_marshal (
-    RTCORBA::RTORB_ptr p,
-    TAO_OutputCDR &strm
-  )
-{
-  return p->marshal (strm);
-}
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+  template class
+    TAO_Objref_Var_T<
+        RTCORBA::RTORB,
+        RTCORBA::tao_RTORB_life
+      >;
+  template class
+    TAO_Objref_Out_T<
+        RTCORBA::RTORB,
+        RTCORBA::tao_RTORB_life
+      >;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate \
+    TAO_Objref_Var_T< \
+        RTCORBA::RTORB, \
+        RTCORBA::tao_RTORB_life \
+      >
+# pragma instantiate \
+    TAO_Objref_Out_T< \
+        RTCORBA::RTORB, \
+        RTCORBA::tao_RTORB_life \
+      >
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:721
-
-// *************************************************************
-// RTCORBA::RTORB_var
-// *************************************************************
-
-RTCORBA::RTORB_var::RTORB_var (void)
-  : ptr_ (RTORB::_nil ())
-{}
-
-::RTCORBA::RTORB_ptr
-RTCORBA::RTORB_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-RTCORBA::RTORB_var::RTORB_var (const ::RTCORBA::RTORB_var &p)
-  : TAO_Base_var (),
-    ptr_ (RTORB::_duplicate (p.ptr ()))
-{}
-
-RTCORBA::RTORB_var::~RTORB_var (void)
-{
-  CORBA::release (this->ptr_);
-}
-
-RTCORBA::RTORB_var &
-RTCORBA::RTORB_var::operator= (RTORB_ptr p)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = p;
-  return *this;
-}
-
-RTCORBA::RTORB_var &
-RTCORBA::RTORB_var::operator= (const ::RTCORBA::RTORB_var &p)
-{
-  if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = ::RTCORBA::RTORB::_duplicate (p.ptr ());
-  }
-  return *this;
-}
-
-RTCORBA::RTORB_var::operator const ::RTCORBA::RTORB_ptr &() const // cast
-{
-  return this->ptr_;
-}
-
-RTCORBA::RTORB_var::operator ::RTCORBA::RTORB_ptr &() // cast 
-{
-  return this->ptr_;
-}
-
-::RTCORBA::RTORB_ptr
-RTCORBA::RTORB_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-::RTCORBA::RTORB_ptr
-RTCORBA::RTORB_var::in (void) const
-{
-  return this->ptr_;
-}
-
-::RTCORBA::RTORB_ptr &
-RTCORBA::RTORB_var::inout (void)
-{
-  return this->ptr_;
-}
-
-::RTCORBA::RTORB_ptr &
-RTCORBA::RTORB_var::out (void)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::RTCORBA::RTORB::_nil ();
-  return this->ptr_;
-}
-
-::RTCORBA::RTORB_ptr
-RTCORBA::RTORB_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  ::RTCORBA::RTORB_ptr val = this->ptr_;
-  this->ptr_ = ::RTCORBA::RTORB::_nil ();
-  return val;
-}
-
-::RTCORBA::RTORB_ptr
-RTCORBA::RTORB_var::tao_duplicate (RTORB_ptr p)
-{
-  return ::RTCORBA::RTORB::_duplicate (p);
-}
-
-void
-RTCORBA::RTORB_var::tao_release (RTORB_ptr p)
-{
-  CORBA::release (p);
-}
-
-::RTCORBA::RTORB_ptr
-RTCORBA::RTORB_var::tao_nil (void)
-{
-  return ::RTCORBA::RTORB::_nil ();
-}
-
-::RTCORBA::RTORB_ptr
-RTCORBA::RTORB_var::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return ::RTCORBA::RTORB::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-RTCORBA::RTORB_var::tao_upcast (void *src)
-{
-  RTORB **tmp =
-    ACE_static_cast (RTORB **, src);
-  return *tmp;
-}
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1030
-
-// *************************************************************
-// RTCORBA::RTORB_out
-// *************************************************************
-
-RTCORBA::RTORB_out::RTORB_out (RTORB_ptr &p)
-  : ptr_ (p)
-{
-  this->ptr_ = ::RTCORBA::RTORB::_nil ();
-}
-
-RTCORBA::RTORB_out::RTORB_out (RTORB_var &p)
-  : ptr_ (p.out ())
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::RTCORBA::RTORB::_nil ();
-}
-
-RTCORBA::RTORB_out::RTORB_out (const ::RTCORBA::RTORB_out &p)
-  : ptr_ (ACE_const_cast (RTORB_out &, p).ptr_)
-{}
-
-::RTCORBA::RTORB_out &
-RTCORBA::RTORB_out::operator= (const ::RTCORBA::RTORB_out &p)
-{
-  this->ptr_ = ACE_const_cast (RTORB_out&, p).ptr_;
-  return *this;
-}
-
-RTCORBA::RTORB_out &
-RTCORBA::RTORB_out::operator= (const ::RTCORBA::RTORB_var &p)
-{
-  this->ptr_ = ::RTCORBA::RTORB::_duplicate (p.ptr ());
-  return *this;
-}
-
-RTCORBA::RTORB_out &
-RTCORBA::RTORB_out::operator= (RTORB_ptr p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-RTCORBA::RTORB_out::operator ::RTCORBA::RTORB_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-::RTCORBA::RTORB_ptr &
-RTCORBA::RTORB_out::ptr (void)
-{
-  return this->ptr_;
-}
-
-::RTCORBA::RTORB_ptr
-RTCORBA::RTORB_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:235
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:232
 
 RTCORBA::RTORB::RTORB (void)
 {}
@@ -6658,7 +4364,7 @@ RTCORBA::RTORB::RTORB (void)
 RTCORBA::RTORB::~RTORB (void)
 {}
 
-void 
+void
 RTCORBA::RTORB::_tao_any_destructor (void *_tao_void_pointer)
 {
   RTORB *tmp = ACE_static_cast (RTORB *, _tao_void_pointer);
@@ -6674,7 +4380,7 @@ RTCORBA::RTORB::_narrow (
   return RTORB::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
 }
 
-RTCORBA::RTORB_ptr 
+RTCORBA::RTORB_ptr
 RTCORBA::RTORB::_unchecked_narrow (
     CORBA::Object_ptr obj
     ACE_ENV_ARG_DECL_NOT_USED
@@ -6684,7 +4390,7 @@ RTCORBA::RTORB::_unchecked_narrow (
     {
       return RTORB::_nil ();
     }
-  
+
   return
       ACE_reinterpret_cast (
           RTORB_ptr,
@@ -6704,14 +4410,14 @@ RTCORBA::RTORB::_duplicate (RTORB_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 void *RTCORBA::RTORB::_tao_QueryInterface (ptr_arith_t type)
 {
   void *retv = 0;
-  
+
   if (type == ACE_reinterpret_cast (
               ptr_arith_t,
               &ACE_NESTED_CLASS (::RTCORBA, RTORB)::_tao_class_id)
@@ -6730,12 +4436,12 @@ void *RTCORBA::RTORB::_tao_QueryInterface (ptr_arith_t type)
             ACE_static_cast (CORBA::Object_ptr, this)
           );
     }
-  
+
   if (retv != 0)
     {
       this->_add_ref ();
     }
-  
+
   return retv;
 }
 
@@ -6744,7 +4450,13 @@ const char* RTCORBA::RTORB::_interface_repository_id (void) const
   return "IDL:omg.org/RTCORBA/RTORB:1.0";
 }
 
-// TAO_IDL - Generated from 
+CORBA::Boolean
+RTCORBA::RTORB::marshal (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+// TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/exception_cs.cpp:63
 
 RTCORBA::RTORB::MutexNotFound::MutexNotFound (void)
@@ -6770,7 +4482,7 @@ RTCORBA::RTORB::MutexNotFound::MutexNotFound (const ::RTCORBA::RTORB::MutexNotFo
 RTCORBA::RTORB::MutexNotFound&
 RTCORBA::RTORB::MutexNotFound::operator= (const ::RTCORBA::RTORB::MutexNotFound &_tao_excp)
 {
- this->ACE_NESTED_CLASS (CORBA, UserException)::operator= (_tao_excp);
+  this->ACE_NESTED_CLASS (CORBA, UserException)::operator= (_tao_excp);
   return *this;
 }
 
@@ -6846,21 +4558,21 @@ static const CORBA::Long _oc_RTCORBA_RTORB_MutexNotFound[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   44,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x5254434f), 
-  ACE_NTOHL (0x5242412f), 
-  ACE_NTOHL (0x52544f52), 
-  ACE_NTOHL (0x422f4d75), 
-  ACE_NTOHL (0x7465784e), 
-  ACE_NTOHL (0x6f74466f), 
-  ACE_NTOHL (0x756e643a), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x5254434f),
+  ACE_NTOHL (0x5242412f),
+  ACE_NTOHL (0x52544f52),
+  ACE_NTOHL (0x422f4d75),
+  ACE_NTOHL (0x7465784e),
+  ACE_NTOHL (0x6f74466f),
+  ACE_NTOHL (0x756e643a),
   ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/RTCORBA/RTORB/MutexNotFound:1.0
     14,
-  ACE_NTOHL (0x4d757465), 
-  ACE_NTOHL (0x784e6f74), 
-  ACE_NTOHL (0x466f756e), 
+  ACE_NTOHL (0x4d757465),
+  ACE_NTOHL (0x784e6f74),
+  ACE_NTOHL (0x466f756e),
   ACE_NTOHL (0x64000000),  // name = MutexNotFound
   0, // member count
   };
@@ -6876,7 +4588,7 @@ static CORBA::TypeCode _tc_TAO_tc_RTCORBA_RTORB_MutexNotFound (
 ::CORBA::TypeCode_ptr RTCORBA::RTORB::_tc_MutexNotFound =
   &_tc_TAO_tc_RTCORBA_RTORB_MutexNotFound;
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/exception_cs.cpp:63
 
 RTCORBA::RTORB::InvalidThreadpool::InvalidThreadpool (void)
@@ -6978,23 +4690,23 @@ static const CORBA::Long _oc_RTCORBA_RTORB_InvalidThreadpool[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   48,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x5254434f), 
-  ACE_NTOHL (0x5242412f), 
-  ACE_NTOHL (0x52544f52), 
-  ACE_NTOHL (0x422f496e), 
-  ACE_NTOHL (0x76616c69), 
-  ACE_NTOHL (0x64546872), 
-  ACE_NTOHL (0x65616470), 
-  ACE_NTOHL (0x6f6f6c3a), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x5254434f),
+  ACE_NTOHL (0x5242412f),
+  ACE_NTOHL (0x52544f52),
+  ACE_NTOHL (0x422f496e),
+  ACE_NTOHL (0x76616c69),
+  ACE_NTOHL (0x64546872),
+  ACE_NTOHL (0x65616470),
+  ACE_NTOHL (0x6f6f6c3a),
   ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/RTCORBA/RTORB/InvalidThreadpool:1.0
     18,
-  ACE_NTOHL (0x496e7661), 
-  ACE_NTOHL (0x6c696454), 
-  ACE_NTOHL (0x68726561), 
-  ACE_NTOHL (0x64706f6f), 
+  ACE_NTOHL (0x496e7661),
+  ACE_NTOHL (0x6c696454),
+  ACE_NTOHL (0x68726561),
+  ACE_NTOHL (0x64706f6f),
   ACE_NTOHL (0x6c000000),  // name = InvalidThreadpool
   0, // member count
   };
@@ -7017,16 +4729,16 @@ static const CORBA::Long _oc_RTCORBA_RTORB[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   30,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x5254434f), 
-  ACE_NTOHL (0x5242412f), 
-  ACE_NTOHL (0x52544f52), 
-  ACE_NTOHL (0x423a312e), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x5254434f),
+  ACE_NTOHL (0x5242412f),
+  ACE_NTOHL (0x52544f52),
+  ACE_NTOHL (0x423a312e),
   ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/RTCORBA/RTORB:1.0
     6,
-  ACE_NTOHL (0x52544f52), 
+  ACE_NTOHL (0x52544f52),
   ACE_NTOHL (0x42000000),  // name = RTORB
   };
 
@@ -7047,7 +4759,7 @@ TAO_NAMESPACE_DEFINE (
   )
 TAO_NAMESPACE_END
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
@@ -7112,7 +4824,7 @@ CORBA::Boolean operator>>= (
 # pragma instantiate TAO::Any_Dual_Impl_T<RTCORBA::ThreadpoolLane>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/any_op_cs.cpp:54
 
 // Copying insertion.
@@ -7201,7 +4913,7 @@ CORBA::Boolean operator>>= (
     TAO::Any_Basic_Impl_T<RTCORBA::PriorityModel>::extract (
         _tao_any,
         RTCORBA::_tc_PriorityModel,
-        _tao_elem 
+        _tao_elem
       );
 }
 
@@ -7209,7 +4921,7 @@ CORBA::Boolean operator>>= (
     defined (ACE_HAS_GNU_REPO)
   template class TAO::Any_Basic_Impl_T<RTCORBA::PriorityModel>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO::Any_Basic_Impl_T<RTCORBA::PriorityModel>
+# pragma instantiate TAO::Any_Basic_Impl_T<RTCORBA::PriorityModel \>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 // TAO_IDL - Generated from
@@ -7375,7 +5087,7 @@ operator>>= (
 # pragma instantiate TAO::Any_Impl_T<RTCORBA::ProtocolProperties>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
@@ -7440,7 +5152,7 @@ CORBA::Boolean operator>>= (
 # pragma instantiate TAO::Any_Dual_Impl_T<RTCORBA::Protocol>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/any_op_cs.cpp:54
 
 // Copying insertion.
@@ -7883,7 +5595,7 @@ operator>>= (
 # pragma instantiate TAO::Any_Impl_T<RTCORBA::SharedMemoryProtocolProperties>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
@@ -7948,7 +5660,7 @@ CORBA::Boolean operator>>= (
 # pragma instantiate TAO::Any_Dual_Impl_T<RTCORBA::PriorityBand>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/any_op_cs.cpp:54
 
 // Copying insertion.
@@ -8230,7 +5942,7 @@ operator>>= (
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:125
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:93
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
@@ -8238,20 +5950,20 @@ CORBA::Boolean operator<< (
   )
 {
   CORBA::ULong _tao_seq_len = _tao_sequence.length ();
-  
+
   if (strm << _tao_seq_len)
     {
       // Encode all elements.
       CORBA::Boolean _tao_marshal_flag = 1;
-      
+
       for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
         {
           _tao_marshal_flag = (strm << _tao_sequence[i]);
         }
-      
+
       return _tao_marshal_flag;
     }
-  
+
   return 0;
 }
 
@@ -8261,7 +5973,7 @@ CORBA::Boolean operator>> (
   )
 {
   CORBA::ULong _tao_seq_len;
-  
+
   if (strm >> _tao_seq_len)
     {
       // Add a check to the length of the sequence
@@ -8271,32 +5983,32 @@ CORBA::Boolean operator>> (
         {
           return 0;
         }
-      
+
       // Set the length of the sequence.
       _tao_sequence.length (_tao_seq_len);
-      
+
       // If length is 0 we return true.
-      if (0 >= _tao_seq_len) 
+      if (0 >= _tao_seq_len)
         {
           return 1;
         }
-      
+
       // Retrieve all the elements.
       CORBA::Boolean _tao_marshal_flag = 1;
-      
+
       for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
         {
           _tao_marshal_flag = (strm >> _tao_sequence[i]);
         }
-      
+
       return _tao_marshal_flag;
     }
-  
+
   return 0;
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:125
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:93
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
@@ -8304,20 +6016,20 @@ CORBA::Boolean operator<< (
   )
 {
   CORBA::ULong _tao_seq_len = _tao_sequence.length ();
-  
+
   if (strm << _tao_seq_len)
     {
       // Encode all elements.
       CORBA::Boolean _tao_marshal_flag = 1;
-      
+
       for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
         {
           _tao_marshal_flag = (strm << _tao_sequence[i]);
         }
-      
+
       return _tao_marshal_flag;
     }
-  
+
   return 0;
 }
 
@@ -8327,7 +6039,7 @@ CORBA::Boolean operator>> (
   )
 {
   CORBA::ULong _tao_seq_len;
-  
+
   if (strm >> _tao_seq_len)
     {
       // Add a check to the length of the sequence
@@ -8337,27 +6049,26 @@ CORBA::Boolean operator>> (
         {
           return 0;
         }
-      
+
       // Set the length of the sequence.
       _tao_sequence.length (_tao_seq_len);
-      
+
       // If length is 0 we return true.
-      if (0 >= _tao_seq_len) 
+      if (0 >= _tao_seq_len)
         {
           return 1;
         }
-      
+
       // Retrieve all the elements.
       CORBA::Boolean _tao_marshal_flag = 1;
-      
+
       for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
         {
           _tao_marshal_flag = (strm >> _tao_sequence[i]);
         }
-      
+
       return _tao_marshal_flag;
     }
-  
+
   return 0;
 }
-

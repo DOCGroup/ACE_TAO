@@ -129,7 +129,7 @@ InputPath=.\Factory.idl
 InputName=Factory
 
 BuildCmds= \
-	..\..\..\..\bin\Release\tao_idl -Gv -Ge 1 $(InputName).idl
+	..\..\..\..\bin\Release\tao_idl -Ge 1 $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -167,7 +167,7 @@ InputPath=.\Factory.idl
 InputName=Factory
 
 BuildCmds= \
-	..\..\..\..\bin\tao_idl -Gv -Ge 1 $(InputName).idl
+	..\..\..\..\bin\tao_idl -Ge 1 $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)

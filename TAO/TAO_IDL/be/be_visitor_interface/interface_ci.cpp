@@ -1,7 +1,3 @@
-//
-// $Id$
-//
-
 // ============================================================================
 //
 // = LIBRARY
@@ -181,7 +177,7 @@ be_visitor_interface_ci::visit_interface (be_interface *node)
           << ")" << be_nl;
       *os << ": ACE_NESTED_CLASS (CORBA, Object) (ior, oc)";
 
-      *os << be_uidt_nl 
+      *os << be_uidt_nl
           << "{" << be_nl
           << "}" ;
     }

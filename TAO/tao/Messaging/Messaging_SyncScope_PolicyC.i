@@ -25,14 +25,6 @@
 
 #if !defined (_MESSAGING_SYNCSCOPEPOLICY___CI_)
 #define _MESSAGING_SYNCSCOPEPOLICY___CI_
-
-ACE_INLINE
-CORBA::Boolean
-Messaging::SyncScopePolicy::marshal (TAO_OutputCDR &)
-{
-  return 0;
-}
-
 template<>
 ACE_INLINE
 CORBA::Boolean
@@ -61,4 +53,3 @@ TAO::Any_Impl_T<Messaging::SyncScopePolicy>::demarshal_value (TAO_InputCDR &)
 }
 
 #endif /* end #if !defined */
-

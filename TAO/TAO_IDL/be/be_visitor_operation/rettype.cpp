@@ -173,6 +173,7 @@ be_visitor_operation_rettype::visit_predefined_type (be_predefined_type *node)
 
       break;
     case AST_PredefinedType::PT_any:
+    case AST_PredefinedType::PT_value:
       {
         *os << bt->name () << " *";
 

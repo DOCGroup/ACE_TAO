@@ -34,8 +34,10 @@
 #include "be_valuetype_fwd.h"
 #include "be_helper.h"
 #include "be_extern.h"
+#include "ast_root.h"
 #include "utl_identifier.h"
 #include "nr_extern.h"
+#include "global_extern.h"
 
 #include "be_visitor_sequence.h"
 #include "be_visitor_context.h"

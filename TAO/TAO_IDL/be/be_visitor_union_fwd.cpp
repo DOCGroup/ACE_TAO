@@ -19,6 +19,7 @@
 // ============================================================================
 
 #include "be_union_fwd.h"
+#include "be_union.h"
 
 #include "be_visitor_union_fwd.h"
 #include "be_visitor_context.h"

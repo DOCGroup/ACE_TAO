@@ -15,18 +15,31 @@
 //       Irvine, CA
 //       USA
 //       http://doc.ece.uci.edu/
+// and
+//       Institute for Software Integrated Systems
+//       Vanderbilt University
+//       Nashville, TN
+//       USA
+//       http://www.isis.vanderbilt.edu/
 //
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:314
+// be/be_codegen.cpp:314
 
 
 #include "Object_KeyC.h"
-#include "tao/Typecode.h"
-#include "tao/CDR.h"
-#include "tao/ORB_Core.h"
+#include "tao/Stub.h"
+#include "tao/Invocation.h"
+#include "tao/PortableInterceptor.h"
+
+#if TAO_HAS_INTERCEPTORS == 1
+#include "tao/RequestInfo_Util.h"
+#include "tao/ClientRequestInfo_i.h"
+#include "tao/ClientInterceptorAdapter.h"
+#endif  /* TAO_HAS_INTERCEPTORS == 1 */
+
 
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
@@ -39,7 +52,163 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
+// be/be_visitor_sequence/sequence_cs.cpp:56
+
+TAO::ObjectKey::ObjectKey (void)
+{}
+
+TAO::ObjectKey::ObjectKey (CORBA::ULong max)
+  : TAO_Unbounded_Sequence<
+        CORBA::Octet
+      >
+    (max)
+{}
+
+TAO::ObjectKey::ObjectKey (
+    CORBA::ULong max,
+    CORBA::ULong length,
+    CORBA::Octet* buffer,
+    CORBA::Boolean release
+  )
+  : TAO_Unbounded_Sequence<
+        CORBA::Octet
+      >
+    (max, length, buffer, release)
+{}
+
+TAO::ObjectKey::ObjectKey (const ObjectKey &seq)
+  : TAO_Unbounded_Sequence<
+        CORBA::Octet
+      >
+    (seq)
+{}
+
+TAO::ObjectKey::~ObjectKey (void)
+{}
+
+void TAO::ObjectKey::_tao_any_destructor (void *_tao_void_pointer)
+{
+  ObjectKey *tmp = ACE_static_cast (ObjectKey*, _tao_void_pointer);
+  delete tmp;
+}
+
+void
+TAO::ObjectKey::encode_sequence_to_string (char * &str,
+                                           const TAO_Unbounded_Sequence<CORBA::Octet> &seq)
+{
+  // We must allocate a buffer which is (gag) 3 times the length
+  // of the sequence, which is the length required in the worst-case
+  // scenario of all non-printable characters.
+  //
+  // There are two strategies here...we could allocate all that space here,
+  // fill it up, then copy-allocate new space of just the right length.
+  // OR, we could just return this space.  The classic time-space tradeoff,
+  // and for now we'll let time win out, which means that we only do the
+  // allocation once.
+  u_int len = 3 * seq.length (); /* space for zero termination not needed */;
+  str = CORBA::string_alloc (len);
+
+  char *cp = str;
+
+  for (u_int i = 0;
+       cp < (cp + len) && i < seq.length();
+       ++i)
+    {
+      // Some platforms define 'byte' as a macro, solve the problem
+      // here.
+#undef byte
+      u_char byte = seq[i];
+      if (isprint (byte) && byte != '\\')
+        {
+          *cp++ = (char) byte;
+          continue;
+        }
+
+      *cp++ = '\\';
+      *cp++ = ACE::nibble2hex ((byte >> 4) & 0x0f);
+      *cp++ = ACE::nibble2hex (byte & 0x0f);
+    }
+  // Zero terminate
+  *cp = '\0';
+}
+
+void
+TAO::ObjectKey::decode_string_to_sequence (TAO_Unbounded_Sequence<CORBA::Octet> &seq,
+                                           const char *str)
+{
+  if (str == 0)
+    {
+      seq.length (0);
+      return;
+    }
+
+  u_int length = ACE_OS::strlen (str);
+  const char *eos = str + length;
+  const char *cp = str;
+
+  // Set the length of the sequence to be as long as
+  // we'll possibly need...we'll reset it to the actual
+  // length later.
+  seq.length (length);
+
+  u_int i = 0;
+  for (;
+       cp < eos && i < seq.length ();
+       i++)
+    {
+      if (*cp == '\\')
+        {
+          // This is an escaped non-printable,
+          // so we decode the hex values into
+          // the sequence's octet
+          seq[i] = (u_char) (ACE::hex2byte (cp[1]) << 4);
+          seq[i] |= (u_char) ACE::hex2byte (cp[2]);
+          cp += 3;
+        }
+      else
+        // Copy it in
+        seq[i] = *cp++;
+    }
+
+  // Set the length appropriately
+  seq.length (i);
+}
+
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+template class
+  TAO_FixedSeq_Var_T<
+      ObjectKey,
+      CORBA::Octet
+    >;
+
+template class
+  TAO_Seq_Out_T<
+      ObjectKey,
+      ObjectKey_var,
+      CORBA::Octet
+    >;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+# pragma instantiate \
+  TAO_FixedSeq_Var_T< \
+      ObjectKey, \
+      CORBA::Octet \
+    >
+
+# pragma instantiate \
+  TAO_Seq_Out_T< \
+      ObjectKey, \
+      ObjectKey_var, \
+      CORBA::Octet \
+    >
+
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+// TAO_IDL - Generated from
+// be/be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_TAO_ObjectKey[] =
 {
@@ -82,7 +251,72 @@ TAO_NAMESPACE_DEFINE (
 TAO_NAMESPACE_END
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:125
+// be/be_visitor_sequence/any_op_cs.cpp:54
+
+// Copying insertion.
+void operator<<= (
+    CORBA::Any &_tao_any,
+    const TAO::ObjectKey &_tao_elem
+  )
+{
+  TAO::Any_Dual_Impl_T<TAO::ObjectKey>::insert_copy (
+      _tao_any,
+      TAO::ObjectKey::_tao_any_destructor,
+      TAO::_tc_ObjectKey,
+      _tao_elem
+    );
+}
+
+// Non-copying insertion.
+void operator<<= (
+    CORBA::Any &_tao_any,
+    TAO::ObjectKey *_tao_elem
+  )
+{
+  TAO::Any_Dual_Impl_T<TAO::ObjectKey>::insert (
+      _tao_any,
+      TAO::ObjectKey::_tao_any_destructor,
+      TAO::_tc_ObjectKey,
+      _tao_elem
+    );
+}
+
+// Extraction to non-const pointer (deprecated).
+CORBA::Boolean operator>>= (
+    const CORBA::Any &_tao_any,
+    TAO::ObjectKey *&_tao_elem
+  )
+{
+  return _tao_any >>= ACE_const_cast (
+      const TAO::ObjectKey *&,
+      _tao_elem
+    );
+}
+
+// Extraction to const pointer.
+CORBA::Boolean operator>>= (
+    const CORBA::Any &_tao_any,
+    const TAO::ObjectKey *&_tao_elem
+  )
+{
+  return
+    TAO::Any_Dual_Impl_T<TAO::ObjectKey>::extract (
+        _tao_any,
+        TAO::ObjectKey::_tao_any_destructor,
+        TAO::_tc_ObjectKey,
+        _tao_elem
+      );
+}
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
+    defined (ACE_HAS_GNU_REPO)
+  template class TAO::Any_Dual_Impl_T<TAO::ObjectKey>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate TAO::Any_Dual_Impl_T<TAO::ObjectKey>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+// TAO_IDL - Generated from
+// be/be_visitor_sequence/cdr_op_cs.cpp:98
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
@@ -168,89 +402,3 @@ CORBA::Boolean operator>> (
 
   return 0;
 }
-
-// ****************************************************************
-
-void
-TAO::ObjectKey::encode_sequence_to_string (char * &str,
-                                           const TAO_Unbounded_Sequence<CORBA::Octet> &seq)
-{
-  // We must allocate a buffer which is (gag) 3 times the length
-  // of the sequence, which is the length required in the worst-case
-  // scenario of all non-printable characters.
-  //
-  // There are two strategies here...we could allocate all that space here,
-  // fill it up, then copy-allocate new space of just the right length.
-  // OR, we could just return this space.  The classic time-space tradeoff,
-  // and for now we'll let time win out, which means that we only do the
-  // allocation once.
-  u_int len = 3 * seq.length (); /* space for zero termination not needed */;
-  str = CORBA::string_alloc (len);
-
-  char *cp = str;
-
-  for (u_int i = 0;
-       cp < (cp + len) && i < seq.length();
-       ++i)
-    {
-      // Some platforms define 'byte' as a macro, solve the problem
-      // here.
-#undef byte
-      u_char byte = seq[i];
-      if (isprint (byte) && byte != '\\')
-        {
-          *cp++ = (char) byte;
-          continue;
-        }
-
-      *cp++ = '\\';
-      *cp++ = ACE::nibble2hex ((byte >> 4) & 0x0f);
-      *cp++ = ACE::nibble2hex (byte & 0x0f);
-    }
-  // Zero terminate
-  *cp = '\0';
-}
-
-void
-TAO::ObjectKey::decode_string_to_sequence (TAO_Unbounded_Sequence<CORBA::Octet> &seq,
-                                           const char *str)
-{
-  if (str == 0)
-    {
-      seq.length (0);
-      return;
-    }
-
-  u_int length = ACE_OS::strlen (str);
-  const char *eos = str + length;
-  const char *cp = str;
-
-  // Set the length of the sequence to be as long as
-  // we'll possibly need...we'll reset it to the actual
-  // length later.
-  seq.length (length);
-
-  u_int i = 0;
-  for (;
-       cp < eos && i < seq.length ();
-       i++)
-    {
-      if (*cp == '\\')
-        {
-          // This is an escaped non-printable,
-          // so we decode the hex values into
-          // the sequence's octet
-          seq[i] = (u_char) (ACE::hex2byte (cp[1]) << 4);
-          seq[i] |= (u_char) ACE::hex2byte (cp[2]);
-          cp += 3;
-        }
-      else
-        // Copy it in
-        seq[i] = *cp++;
-    }
-
-  // Set the length appropriately
-  seq.length (i);
-}
-
-// ****************************************************************

@@ -42,10 +42,23 @@ int
 be_visitor_sequence_cdr_op_ch::visit_sequence (be_sequence *node)
 {
   if (node->cli_hdr_cdr_op_gen ()
-      || node->imported ()
-      || node->is_local ())
+      || node->imported ())
     {
       return 0;
+    }
+
+  be_type *base_type = be_type::narrow_from_decl (node->base_type ());
+
+  // If our base type is an anonymous sequence, generate code for it here.
+  if (base_type->node_type () == AST_Decl::NT_sequence)
+    {
+      if (base_type->accept (this) != 0)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "be_visitor_sequence_cdr_op_ch::visit_sequence -"
+                             "codegen for nested anonymous sequence failed\n"),
+                            -1);
+        }
     }
 
   TAO_OutStream *os = this->ctx_->stream ();
@@ -61,8 +74,8 @@ be_visitor_sequence_cdr_op_ch::visit_sequence (be_sequence *node)
   if (!tdef)
     {
       *os << "\n\n#if !defined _TAO_CDR_OP_"
-          << node->flat_name () << "_H_" << be_nl
-          << "#define _TAO_CDR_OP_" << node->flat_name () << "_H_";
+          << node->flat_name () << "_H_"
+          << "\n#define _TAO_CDR_OP_" << node->flat_name () << "_H_";
     }
 
   *os << be_nl << be_nl 
@@ -79,8 +92,7 @@ be_visitor_sequence_cdr_op_ch::visit_sequence (be_sequence *node)
 
   if (!tdef)
     {
-      *os << be_nl << be_nl
-          << "#endif /* _TAO_CDR_OP_"
+      *os << "\n\n#endif /* _TAO_CDR_OP_"
           << node->flat_name () << "_H_ */";
     }
 

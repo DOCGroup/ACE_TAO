@@ -49,6 +49,15 @@ be_predefined_type::be_predefined_type (AST_PredefinedType::PredefinedType t,
 
   // Compute the flattened fully scoped name.
   this->AST_Decl::compute_flat_name ();
+
+  if (t == AST_PredefinedType::PT_object)
+    {
+      this->fwd_helper_name_ = "CORBA::tao_Object";
+    }
+  else if (t == AST_PredefinedType::PT_value)
+    {
+      this->fwd_helper_name_ = "CORBA::tao_ValueBase";
+    }
 }
 
 // Overriden method.
@@ -132,6 +141,10 @@ be_predefined_type::compute_tc_name (void)
     case AST_PredefinedType::PT_object:
       ACE_NEW (id,
                Identifier ("_tc_Object"));
+    break;
+    case AST_PredefinedType::PT_value:
+      ACE_NEW (id,
+               Identifier ("_tc_ValueBase"));
     break;
     case AST_PredefinedType::PT_pseudo:
       {
