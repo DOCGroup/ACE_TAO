@@ -74,7 +74,6 @@ test_set_servant_manager (PortableServer::POA_ptr poa)
     {
     }
   ACE_ENDTRY;
-  ACE_CHECK;
 
   if (!succeed)
   {
@@ -105,7 +104,6 @@ test_get_servant_with_no_set (PortableServer::POA_ptr poa)
     {
     }
   ACE_ENDTRY;
-  ACE_CHECK;
 
   if (!succeed)
   {
