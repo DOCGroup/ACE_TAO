@@ -22,9 +22,9 @@
 // constructor
 
 CosNaming_Client::CosNaming_Client (void)
-  : exit_later_ (0),
-    argc_ (0),
-    argv_ (0)
+  : argc_ (0),
+    argv_ (0),
+    exit_later_ (0)
 {
 }
 

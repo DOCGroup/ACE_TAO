@@ -1,5 +1,4 @@
 /* -*- C++ -*- */
-
 // $Id$
 
 // ============================================================================
@@ -55,5 +54,5 @@ private:
   // arguments from command line.
 
   int exit_later_;
-  // Flag to tell server to not exit immediately
+  // Flag to tell server to not exit immediately.
 };
