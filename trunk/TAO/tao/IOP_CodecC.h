@@ -672,5 +672,6 @@ TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IOP::Encoding &);
 #pragma option pop
 #endif /* __BORLANDC__ */
 
+#include "ace/post.h"
 #endif /* ifndef */
 
