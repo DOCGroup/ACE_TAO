@@ -105,6 +105,15 @@ ACE_High_Res_Timer::gettime (const ACE_OS::ACE_HRTimer_Op op)
   return ACE_OS::gethrtime (op);
 }
 
+ACE_INLINE ACE_hrtime_t
+ACE_High_Res_Timer::elapsed_hrtime (const ACE_hrtime_t end,
+                                    const ACE_hrtime_t start)
+{
+  if (end > start)
+    return end - start;
+  return (~start + 1 + end);     // Wrapped-around counter diff
+}
+
 ACE_INLINE
 ACE_High_Res_Timer::~ACE_High_Res_Timer (void)
 {
@@ -135,26 +144,25 @@ ACE_INLINE void
 ACE_High_Res_Timer::stop_incr (const ACE_OS::ACE_HRTimer_Op op)
 {
   ACE_TRACE ("ACE_High_Res_Timer::stop_incr");
-  this->total_ += ACE_High_Res_Timer::gettime (op) - this->start_incr_;
+  this->total_ +=
+    ACE_High_Res_Timer::elapsed_hrtime (ACE_High_Res_Timer::gettime (op),
+                                        this->start_incr_);
 }
 
 ACE_INLINE void
 ACE_High_Res_Timer::elapsed_microseconds (ACE_hrtime_t &usecs) const
 {
+  ACE_hrtime_t elapsed = ACE_High_Res_Timer::elapsed_hrtime (this->end_,
+                                                             this->start_);
 #if defined (ACE_WIN32)
   // Win32 scale factor is in msec
   // This could give overflow when measuring a long time with a
   // big global_scale_factor() (> 48 days with a 4Ghz tick freq.)
   // To be looked after in the future.
-  usecs = (ACE_hrtime_t) (((this->end_ - this->start_) * 1000) /
-                          global_scale_factor ());
+  usecs = (ACE_hrtime_t) ((elapsed * 1000) / global_scale_factor ());
 #else
-  usecs =
-    (ACE_hrtime_t) ((this->end_ - this->start_) / global_scale_factor ());
+  usecs = (ACE_hrtime_t) (elapsed / global_scale_factor ());
 #endif
-
-
-
 }
 
 ACE_INLINE void
