@@ -1,3 +1,8 @@
+Mon Nov 18 07:32:10 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/Notify/Event.h: Work around for a weird BCB6
+	  compiler bug. Thanks to Chris Kohlhoff for helping me with this.
+
 Mon Nov 18 07:28:16 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tests/Portable_Interceptors/AMI/Makefile: Prevent the contents
