@@ -16,7 +16,7 @@ MAKEFILE=Makefile.IFR_Service
 
 LDLIBS = -lTAO_IFRService \
          -lTAO_TypeCodeFactory -lTAO_Svc_Utils -lTAO_IFR_Client \
-         -lTAO_IORTable -lTAO_PortableServer -lTAO
+         -lTAO_IORTable $(TAO_SRVR_LIBS)
 
 PROG_SRCS = \
 	IFR_Server.cpp \

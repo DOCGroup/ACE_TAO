@@ -24,7 +24,7 @@ ifeq (Event,$(findstring Event,$(TAO_ORBSVCS)))
 endif # Event
 
 PSRC= Service.cpp Supplier.cpp Consumer.cpp
-LDLIBS = -lTAO_RTOLDEvent -lTAO_RTEvent -lTAO_RTSched -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable -lTAO_Messaging -lTAO_PortableServer -lTAO
+LDLIBS = -lTAO_RTOLDEvent -lTAO_RTEvent -lTAO_RTSched -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable -lTAO_Messaging $(TAO_SRVR_LIBS)
 
 # The complete path to orbsvcs/orbsvcs/Sched is required for DU/CXX
 # automatic template instantiation magic.
