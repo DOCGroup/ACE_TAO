@@ -4429,7 +4429,7 @@ private:
   // destructor and has no friends.
 };
 
-qqclass ACE_Export ACE_Thread_Control
+class ACE_Export ACE_Thread_Control
 {
   // = TITLE
   //     Used to keep track of a thread's activities within its entry
