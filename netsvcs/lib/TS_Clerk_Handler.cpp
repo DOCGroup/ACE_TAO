@@ -102,7 +102,7 @@ ACE_TS_Clerk_Handler::open (void *)
   if (ACE_Reactor::instance ()->register_handler (SIGPIPE, this) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%n: %p\n",
 		       "register_handler (SIGPIPE)"), -1);
-#endif
+#endif /* ACE_WIN32 */
 
   // Register ourselves with the reactor to receive input
   if (ACE_Reactor::instance ()->register_handler (this->get_handle (),
