@@ -1511,7 +1511,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::check_handles (void)
         {
           result = 1;
           this->remove_handler_i (h, ACE_Event_Handler::ALL_EVENTS_MASK);
-          this->state_changed = 1;
+          this->state_changed_ = 1;
         }
       rd_mask.clr_bit (h);
 #else /* !ACE_WIN32 && !MVS && !ACE_PSOS */

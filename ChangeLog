@@ -1,3 +1,25 @@
+Tue Apr 13 08:44:22 2004  Steve Huston  <shuston@riverace.com>
+
+	* ace/Select_Reactor_T.cpp (check_handles): Fixed typo.
+
+Wed Apr  7 12:27:19 2004  Steve Huston  <shuston@riverace.com>
+
+	* ASNMP/asnmp/target.cpp (operator==): Removed the lhs==rhs check at
+	  the top. This is a nice-to-have optimization, but MSVC7.1 reports
+	  all control paths are recursive.
+
+	* ASNMP/tests/Integer_Test.cpp: Changed 'si' from short to unsigned
+	  short. It's initialized with 32768, which doesn't fit in 16 bits,
+	  and the comments on its use inside the test itself say it's
+	  unsigned short. There are not other comments to explain what this
+	  is trying to do, so I may have this wrong... Anyone with more info
+	  on this, please feel free to contact me.
+
+	* examples/Log_Msg/Log_Msg_MFC/MFC_Log.h: Formatting adjustment.
+
+	* examples/TMCast/Member/member.cpp: static_cast ACE_UINT64 to
+	  unsigned long to avert a VC7.1 compiler warning about truncation.
+
 Tue Apr 13 00:47:43 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/Global_Macros.h (ACE_NEW_MALLOC_RETURN, ACE_NEW_MALLOC):
