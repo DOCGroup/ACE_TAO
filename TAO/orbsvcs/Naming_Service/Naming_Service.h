@@ -39,13 +39,13 @@ public:
   TAO_Naming_Service (int argc, char *argv[]);
   // Constructor taking the command-line arguments.
 
-  int init (int argc, char *argv[]);
+  virtual int init (int argc, char *argv[]);
   // Initialize the Naming Service with the arguments.
 
   int run (CORBA_Environment& ACE_TRY_ENV);
   // Run the TAO_Naming_Service.
 
-  ~TAO_Naming_Service (void);
+  virtual ~TAO_Naming_Service (void);
   // Destructor.
 
 protected:
