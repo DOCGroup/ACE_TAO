@@ -85,7 +85,7 @@ module FT
    */
   local interface RequestDurationPolicy : CORBA::Policy
     {
-      readonly attribute TimeBase::TimeT request_duration_value;
+      readonly attribute TimeBase::TimeT request_duration_policy_value;
     };
 
   /// Policy types for HeartBeats
