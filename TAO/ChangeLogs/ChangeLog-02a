@@ -1,3 +1,52 @@
+Tue Jan 15 13:30:07 2002  Mayur Deshpande  <mayur@ics.uci.edu>
+
+	* TAO_IDL/be_include/be_visitor_amh_pre_proc.h: 
+	* TAO_IDL/be_include/be_visitor_operation.h: 
+	* TAO_IDL/be_include/be_visitor_operation/amh_sh.h: 
+	* TAO_IDL/be_include/be_visitor_operation/amh_ss.h: 
+	* TAO_IDL/be_include/be_visitor_operation/amh_rh_sh.h: 
+	* TAO_IDL/be_include/be_visitor_operation/amh_rh_ss.h: 
+	* TAO_IDL/be_include/be_visitor_interface.h: 
+	* TAO_IDL/be_include/be_visitor_interface/amh_ch.cpp: 
+	* TAO_IDL/be_include/be_visitor_interface/amh_sh.cpp: 
+	* TAO_IDL/be_include/be_visitor_interface/amh_ss.cpp: 
+	* TAO_IDL/be_include/be_visitor_interface/amh_rh_sh.cpp: 
+	* TAO_IDL/be_include/be_visitor_interface/amh_rh_ss.cpp: 
+	* TAO_IDL/be/be_visitor_amh_pre_proc.cpp: 
+	* TAO_IDL/be/be_visitor_factory.cpp: 
+	* TAO_IDL/be/be_visitor_operation.cpp: 
+	* TAO_IDL/be/be_visitor_operation/amh_sh.cpp: 
+	* TAO_IDL/be/be_visitor_operation/amh_ss.cpp: 
+	* TAO_IDL/be/be_visitor_operation/amh_rh_sh.cpp: 
+	* TAO_IDL/be/be_visitor_operation/amh_rh_ss.cpp: 
+	* TAO_IDL/be/be_visitor_interface.cpp: 
+	* TAO_IDL/be/be_visitor_interface/interface.cpp: 
+	* TAO_IDL/be/be_visitor_interface/amh_ch.cpp: 
+	* TAO_IDL/be/be_visitor_interface/amh_sh.cpp: 
+	* TAO_IDL/be/be_visitor_interface/amh_ss.cpp: 
+	* TAO_IDL/be/be_visitor_interface/amh_rh_sh.cpp: 
+	* TAO_IDL/be/be_visitor_interface/amh_rh_ss.cpp: 
+	* TAO_IDL/be/be_visitor_interface/interface_ch.cpp: 
+	* TAO_IDL/be/be_visitor_interface/interface_sh.cpp: 
+	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp: 
+	  This is a snap-shot of the changes to facilitate parallel
+	  working on AMH.  The new files and changes to old ones is 
+	  part of a new approach to generate AMh code from the IDL-compiler.
+	  In the new approach, only one new implied-idl node is added to the 
+	  main AST i.e. the ResponseHandler (RH) node.  With this node, code is 
+	  generated in the following files:
+		- The Client Header (Base abstract RH class)
+		- The Skeleton Header (implementation RH class declaration)
+		- The Skeleton Source (implementation RH class definition)
+	  In this snapshot, the code for the above is in place and there are no
+	  compilation errors.  The implementation is yet to be tested, though.
+	  Also, in keeping with the new approach, AMH-skeleton code is generated
+	  'on the fly'.  In the interface_{ch/sh/ss} files, AMH_skeleton
+	  code is generated if the be_global->generate_amh_classes () is set.
+	  Currently, this code is commented out and the amh_{ch/sh/ss} files are 
+	  not included in the compiltation of TAO_IDL but once the code is in 
+	  place  amd working, the IDL compiler will include these visitors.
+
 Tue Jan 15 13:35:07 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* tao/PortableInterceptorS.h: 
@@ -1303,7 +1352,7 @@ Sat Jan  5 18:15:34 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
 	  Removed all the code from the visit_interface that generates
 	  code for the this_method and put it into a seperate method called
-	  this_method.  This method alre4ady existed but for some reason a
+	  this_method.  This method already existed but for some reason a
 	  part of the code was left in the visit_interface method.  With
 	  this in place, the AMH class can now implement all the changes that
 	  are needed in the _this () method.
