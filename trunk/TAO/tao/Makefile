@@ -111,10 +111,6 @@ ifeq ($(fakesvcconf),1)
   CPPFLAGS += -DTAO_PLATFORM_SVC_CONF_FILE_NOTSUP
 endif
 
-ifeq ($(probe),1)
-    CCFLAGS += -DACE_ENABLE_TIMEPROBES
-endif # probe
-
 #RLDFLAGS := $(subst -L,-Wl\,-rpath ,$(LDFLAGS))
 LDFLAGS += $(RLDFLAGS)
 
