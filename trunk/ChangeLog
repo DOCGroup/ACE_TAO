@@ -1,3 +1,10 @@
+Wed Apr 23 13:54:27 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/Parser.pm:
+
+          Include '.' in the search path when looking for base projects and
+          templates.
+
 Wed Apr 23 12:54:09 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/templates/make.mpd:
