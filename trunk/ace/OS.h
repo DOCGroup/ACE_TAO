@@ -817,10 +817,6 @@ typedef struct
 #     define MAXNAMLEN   255
 #   endif /* MAXNAMLEN */
 
-#   if ! defined(MAXHOSTNAMELEN)
-#     define MAXHOSTNAMELEN  256
-#   endif /* MAXHOSTNAMELEN */
-
 #   if defined (ACE_LACKS_MMAP)
 #     define PROT_READ 0
 #     define PROT_WRITE 0
@@ -2866,8 +2862,6 @@ PAGE_NOCACHE  */
 #     include "ace/ws2tcpip.h"
 #   endif /* ACE_HAS_WINSOCK2 */
 
-#   define MAXHOSTNAMELEN  256
-
 // error code mapping
 #   define ETIME                   ERROR_SEM_TIMEOUT
 #   define EWOULDBLOCK             WSAEWOULDBLOCK
@@ -3679,6 +3673,10 @@ typedef fd_set ACE_FD_SET_TYPE;
 #     define MAXNAMELEN 256
 #   endif /* FILENAME_MAX */
 # endif /* MAXNAMELEN */
+
+# if !defined(MAXHOSTNAMELEN)
+#   define MAXHOSTNAMELEN  256
+# endif /* MAXHOSTNAMELEN */
 
 # if defined (ACE_LACKS_SIGSET)
 typedef u_int sigset_t;
