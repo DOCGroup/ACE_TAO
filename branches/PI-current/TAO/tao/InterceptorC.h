@@ -10,13 +10,13 @@
 #ifndef _TAO_IDL_INTERCEPTORC_H_
 #define _TAO_IDL_INTERCEPTORC_H_
 
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-# pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
-
 #include "tao/orbconf.h"
 #include "tao/IOPC.h"
 #include "tao/Any.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
