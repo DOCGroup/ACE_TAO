@@ -4,7 +4,7 @@
 #if !defined (ACE_WIN32)
 // Win32 versions in .cpp file
 
-DIR *
+ACE_INLINE DIR *
 ACE_OS_Dirent::opendir (const ACE_TCHAR *filename)
 {
 #if defined (ACE_HAS_DIRENT)
