@@ -1,22 +1,27 @@
+Mon Aug 24 15:18:46 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/run_tests.sh: run Message_Queue_Notifications_Test
+          instead of Message_Queue_Notifications_Test.cpp.
+
 Mon Aug 24 13:05:03 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/config-{chorus,WinCE,vxworks5.x}.h: Added
- 	  ACE_HAS_STRDUP_EMULATION.  Thanks to Chuck Gehr for this
- 	  suggestion.
+        * ace/config-{chorus,WinCE,vxworks5.x}.h: Added
+          ACE_HAS_STRDUP_EMULATION.  Thanks to Chuck Gehr for this
+          suggestion.
 
-	* ace/OS.i (strdup): Removed complicated #ifdef and replaced it
-	  with ACE_HAS_STRDUP_EMULATION.
+        * ace/OS.i (strdup): Removed complicated #ifdef and replaced it
+          with ACE_HAS_STRDUP_EMULATION.
 
 Mon Aug 24 10:41:07 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* ace/OS.h: Provided null defitions for all the <wstat> wait
-		status macros for ACE_WIN32 platform. 
+        * ace/OS.h: Provided null defitions for all the <wstat> wait
+                status macros for ACE_WIN32 platform.
 
 Mon Aug 24 00:11:00 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* examples/Reactor/Misc/pingpong.cpp (run_svc): Fixed a subtle
-	  potential "order of destruction" bug with this test.  Thanks to
-	  Hans Rohnert for reporting this.
+        * examples/Reactor/Misc/pingpong.cpp (run_svc): Fixed a subtle
+          potential "order of destruction" bug with this test.  Thanks to
+          Hans Rohnert for reporting this.
 
 Sun Aug 23 21:09:55 1998  Arturo Montes  <mitosys@colomsat.net.co>
 
