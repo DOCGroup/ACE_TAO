@@ -30,6 +30,13 @@ Sat Aug 15 08:19:26 1998  David L. Levine  <levine@cs.wustl.edu>
         * orbsvcs/tests/Trading/Makefile: added LIBS, for use when
           building libTTest.
 
+        * orbsvcs/orbsvcs/Event_Utilities.h,Scheduler_Utilities.h,
+          Time_Utilities.h,Event/EC_Gateway.h,Event/EC_Gateway_UDP.h,
+          Trader/Trader.h:
+          added #include "orbsvcs/orbsvcs_export.h".  Thanks to
+          Joseph E. LaPrade <laprade@engw.ana.bna.boeing.com> for
+          reporting this.
+
 Fri Aug 14 22:09:41 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/tests/Logger/Logging_Test_i.cpp (init_naming_service):
