@@ -10,7 +10,7 @@
 #include "Property_Handler.h"
 #include "Requirement_Handler.h"
 #include "CPR_Handler.h"
-#include "CPD_Handler.h"
+#include "CompPkgDesc_Handler.h"
 #include "PC_Handler.h"
 
 #include <iostream>
