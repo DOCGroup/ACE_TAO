@@ -10,7 +10,7 @@
 
 BIN 	= tao
 LIB     = libtao.a
-SHLIB   = libtao.so
+SHLIB   = libtao.$(SOEXT)
 
 FILES   = tao \
 	  gen \

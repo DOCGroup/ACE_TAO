@@ -29,8 +29,13 @@ include $(ACE_ROOT)/include/makeinclude/rules.nolocal.GNU
 #----------------------------------------------------------------------------
 
 all:
-	cp ./driver/libdrv.so ./fe/libfe.so ./ast/libast.so ./util/libutil.so \
-	./narrow/libnarrow.so ./be/libbe.so /project/mambo/gokhale/lib
+	cp ./driver/libdrv.$(SOEXT) \
+		./fe/libfe.$(SOEXT) \
+		./ast/libast.$(SOEXT) \
+		./util/libutil.$(SOEXT) \
+		./narrow/libnarrow.$(SOEXT) \
+		./be/libbe.$(SOEXT) \
+		 /project/mambo/gokhale/lib
 	$(CXX) -g -o tao $(TAOLIBS) $(LIBS) -lthread
 
 tags:
