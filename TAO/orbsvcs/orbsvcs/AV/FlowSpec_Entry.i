@@ -57,6 +57,13 @@ TAO_FlowSpec_Entry::flow_protocol_str (void)
 }
 
 ACE_INLINE
+void
+TAO_FlowSpec_Entry::flow_protocol_str (const char *str)
+{
+  this->flow_protocol_ = CORBA::string_dup (str);
+}
+
+ACE_INLINE
 TAO_AV_Core::Protocol
 TAO_FlowSpec_Entry::carrier_protocol (void)
 {
@@ -191,4 +198,11 @@ int
 TAO_FlowSpec_Entry::is_multicast (void)
 {
   return this->is_multicast_;
+}
+
+ACE_INLINE
+void
+TAO_FlowSpec_Entry::role (TAO_FlowSpec_Entry::Role role)
+{
+  this->role_ = role;
 }

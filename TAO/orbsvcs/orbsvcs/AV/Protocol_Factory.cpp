@@ -110,13 +110,13 @@ TAO_AV_Protocol_Object::stop (void)
 }
 
 int
-TAO_AV_Protocol_Object::set_policies (const PolicyList &policy_list)
+TAO_AV_Protocol_Object::set_policies (const TAO_AV_PolicyList &policy_list)
 {
   this->policy_list_ = policy_list;
   return 0;
 }
 
-PolicyList
+TAO_AV_PolicyList
 TAO_AV_Protocol_Object::get_policies (void)
 {
   return this->policy_list_;

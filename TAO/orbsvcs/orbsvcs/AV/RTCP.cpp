@@ -664,7 +664,7 @@ TAO_AV_RTCP_Object::destroy (void)
 }
 
 int
-TAO_AV_RTCP_Object::set_policies (const PolicyList &policy_list)
+TAO_AV_RTCP_Object::set_policies (const TAO_AV_PolicyList &policy_list)
 {
   return -1;
 }

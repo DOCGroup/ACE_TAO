@@ -79,6 +79,7 @@ public:
   CORBA::Boolean more_fragments_;
   ACE_Message_Block *frame_block_;
   // boolean flags indicating that there are more fragments.
+  ACE_Message_Block static_frame_;
   TAO_SFP_Fragment_Table_Map fragment_table_map_;
 };
 
@@ -190,6 +191,7 @@ protected:
   // dumps the buffer to the screen.
 };
 
+// Beware the SFP_Base code relies on the Singleton being initialized.
 typedef ACE_Singleton <TAO_SFP_Base,ACE_SYNCH_MUTEX> TAO_SFP_BASE;
 
 class TAO_ORBSVCS_Export TAO_SFP_Object  : public TAO_AV_Protocol_Object
@@ -197,6 +199,7 @@ class TAO_ORBSVCS_Export TAO_SFP_Object  : public TAO_AV_Protocol_Object
 public:
   TAO_SFP_Object (TAO_AV_Callback *callback,
                   TAO_AV_Transport *transport);
+  // We should add a sfp options parameter.
 
   virtual ~TAO_SFP_Object (void);
   // Dtor
@@ -210,6 +213,8 @@ public:
                           TAO_AV_frame_info *frame_info = 0);
 
   virtual int destroy (void);
+  virtual int set_policies (const TAO_AV_PolicyList &policies);
+
 protected:
   ACE_Message_Block *get_fragment (ACE_Message_Block *&frame,
                                    size_t initial_len,
@@ -226,7 +231,8 @@ class TAO_ORBSVCS_Export TAO_SFP_Producer_Object : public TAO_SFP_Object
 {
 public:
   TAO_SFP_Producer_Object (TAO_AV_Callback *callback,
-                           TAO_AV_Transport *transport);
+                           TAO_AV_Transport *transport,
+                           char *&flow_options);
   virtual int handle_input (void);
 protected:
   CORBA::ULong credit_sequence_num_;
@@ -236,7 +242,8 @@ class TAO_ORBSVCS_Export TAO_SFP_Consumer_Object : public TAO_SFP_Object
 {
 public:
   TAO_SFP_Consumer_Object (TAO_AV_Callback *callback,
-                           TAO_AV_Transport *transport);
+                           TAO_AV_Transport *transport,
+                           char *&flow_options);
   virtual int handle_input (void);
 };
 

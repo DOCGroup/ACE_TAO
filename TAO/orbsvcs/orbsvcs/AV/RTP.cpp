@@ -236,7 +236,7 @@ TAO_AV_RTP_Object::destroy (void)
 }
 
 int
-TAO_AV_RTP_Object::set_policies (const PolicyList &policy_list)
+TAO_AV_RTP_Object::set_policies (const TAO_AV_PolicyList &policy_list)
 {
   this->policy_list_ = policy_list;
   u_int num_policies = this->policy_list_.length ();
@@ -246,7 +246,7 @@ TAO_AV_RTP_Object::set_policies (const PolicyList &policy_list)
       policy = this->policy_list_ [i];
       switch (policy->type ())
         {
-        case TAO_AV_Policy::TAO_AV_PAYLOAD_TYPE_POLICY:
+        case TAO_AV_PAYLOAD_TYPE_POLICY:
           {
             TAO_AV_Payload_Type_Policy *payload_policy =
               ACE_static_cast (TAO_AV_Payload_Type_Policy *,policy);
@@ -255,7 +255,7 @@ TAO_AV_RTP_Object::set_policies (const PolicyList &policy_list)
             this->format_ = payload_policy->value ();
           }
           break;
-        case TAO_AV_Policy::TAO_AV_SSRC_POLICY:
+        case TAO_AV_SSRC_POLICY:
           {
             TAO_AV_SSRC_Policy *ssrc_policy =
               ACE_static_cast (TAO_AV_SSRC_Policy *,policy);

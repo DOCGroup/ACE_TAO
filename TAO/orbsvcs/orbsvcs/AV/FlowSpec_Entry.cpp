@@ -26,7 +26,8 @@ TAO_FlowSpec_Entry::TAO_FlowSpec_Entry (void)
    transport_ (0),
    handler_ (0),
    protocol_object_ (0),
-   is_multicast_ (0)
+   is_multicast_ (0),
+   role_ (TAO_AV_INVALID_ROLE)
 {
 }
 
@@ -51,7 +52,8 @@ TAO_FlowSpec_Entry::TAO_FlowSpec_Entry (const char *flowname,
    transport_ (0),
    handler_ (0),
    protocol_object_ (0),
-   is_multicast_ (0)
+   is_multicast_ (0),
+   role_ (TAO_AV_INVALID_ROLE)
 {
   this->set_protocol ();
   this->set_direction (this->direction_str_);
@@ -77,7 +79,8 @@ TAO_FlowSpec_Entry::TAO_FlowSpec_Entry (const char *flowname,
    transport_ (0),
    handler_ (0),
    protocol_object_ (0),
-   is_multicast_ (0)
+   is_multicast_ (0),
+   role_ (TAO_AV_INVALID_ROLE)
 {
   ACE_CString cstring(this->address_str_,0,0);
   int colon_pos = cstring.find (':');
@@ -319,6 +322,9 @@ TAO_Forward_FlowSpec_Entry::parse (const char *flowSpec_entry)
 TAO_FlowSpec_Entry::Role
 TAO_Forward_FlowSpec_Entry::role (void)
 {
+  if (this->role_ != TAO_AV_INVALID_ROLE)
+    return this->role_;
+
   switch (this->direction_)
     {
     case TAO_AV_DIR_IN:
@@ -429,6 +435,8 @@ TAO_Reverse_FlowSpec_Entry::TAO_Reverse_FlowSpec_Entry (const char *flowname,
 TAO_FlowSpec_Entry::Role
 TAO_Reverse_FlowSpec_Entry::role (void)
 {
+  if (this->role_ != TAO_AV_INVALID_ROLE)
+    return this->role_;
   switch (this->direction_)
     {
     case TAO_AV_DIR_IN:

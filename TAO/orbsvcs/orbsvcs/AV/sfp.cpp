@@ -202,16 +202,19 @@ TAO_SFP_Base::read_frame (TAO_AV_Transport *transport,
       int byte_order = frame_header.flags & 0x1;
       int message_len = frame_header.message_size;
 
-      ACE_NEW_RETURN (message_block,
-                      ACE_Message_Block (message_len),
-                      0);
-      int n = transport->recv (message_block->wr_ptr (),message_len);
+//       ACE_NEW_RETURN (message_block,
+//                       ACE_Message_Block (message_len),
+//                       0);
+      state.static_frame_.rd_ptr (state.static_frame_.base ());
+      state.static_frame_.wr_ptr (state.static_frame_.base ());
+      int n = transport->recv (state.static_frame_.rd_ptr (),message_len);
       if (n == -1)
         ACE_ERROR_RETURN ((LM_ERROR,"SFP::handle_input -peek"),0);
       else if (n==0)
         ACE_ERROR_RETURN ((LM_ERROR,"SFP::handle_input -peek"),0);
       else if (n != message_len)
         ACE_ERROR_RETURN ((LM_ERROR,"SFP::read_simple_frame:message truncated\n"),0);
+      message_block = &state.static_frame_;
       // print the buffer.
       //      this->dump_buf (message,n);
       // skip over the frame header.
@@ -252,7 +255,7 @@ TAO_SFP_Base::read_frame (TAO_AV_Transport *transport,
               }
             case flowProtocol::SimpleFrame_Msg:
               {
-                data = message_block;
+                data = message_block->clone ();
                 break;
               }
             case flowProtocol::SequencedFrame_Msg:
@@ -996,9 +999,11 @@ TAO_SFP_Object::TAO_SFP_Object (TAO_AV_Callback *callback,
                                 TAO_AV_Transport *transport)
   :TAO_AV_Protocol_Object (callback,transport),
    source_id_ (10),
-   max_credit_ (20)
-
+   max_credit_ (-1),
+   current_credit_ (-1)
 {
+  TAO_SFP_BASE::instance ();
+  this->state_.static_frame_.size (2* this->transport_->mtu ());
 }
 
 TAO_SFP_Object::~TAO_SFP_Object (void)
@@ -1020,6 +1025,7 @@ TAO_SFP_Object::destroy (void)
                                        out_stream);
   if (result < 0)
     return result;
+  this->callback_->handle_destroy ();
   return 0;
 }
 
@@ -1033,7 +1039,7 @@ TAO_SFP_Object::send_frame (ACE_Message_Block *frame,
   CORBA::Octet flags = TAO_ENCAP_BYTE_ORDER;
   if (this->transport_ == 0)
     ACE_ERROR_RETURN ((LM_ERROR,"TAO_SFP_Object::send_frame: transport is null\n"),-1);
-   if (this->current_credit_ > 0)
+   if (this->current_credit_ != 0)
     {
       // if we have enough credit then we send.
       int total_length = 0;
@@ -1167,7 +1173,8 @@ TAO_SFP_Object::send_frame (ACE_Message_Block *frame,
           // Increment the sequence_num after sending the message.
           this->sequence_num_++;
           // Also reduce the number of credits.
-          this->current_credit_--;
+          if (this->max_credit_ > 0)
+            this->current_credit_--;
         }
     }
   else
@@ -1230,11 +1237,48 @@ TAO_SFP_Object::get_fragment (ACE_Message_Block *&mb,
   return fragment_mb;
 }
 
+int
+TAO_SFP_Object::set_policies (const TAO_AV_PolicyList& policies)
+{
+        TAO_AV_Policy *policy = 0;
+  for (u_int i=0;i<policies.length ();i++)
+    {
+      policy = policies[i];
+      switch (policies[i]->type ())
+        {
+
+        case TAO_AV_SFP_CREDIT_POLICY:
+          {
+            TAO_AV_SFP_Credit_Policy *credit_policy = 
+              ACE_dynamic_cast (TAO_AV_SFP_Credit_Policy*,policy);
+            this->max_credit_ = credit_policy->value ();
+          }
+        default:
+          break;
+        }
+    }
+  return 0;
+}
+
 // TAO_SFP_Consumer_Object
 TAO_SFP_Consumer_Object::TAO_SFP_Consumer_Object (TAO_AV_Callback *callback,
-                                                  TAO_AV_Transport *transport)
+                                                  TAO_AV_Transport *transport,
+                                                  char *&sfp_options)
   :TAO_SFP_Object (callback,transport)
 {
+  TAO_AV_PolicyList policies = callback->get_policies ();
+  if (policies.length () == 0)
+    return;
+  this->set_policies (policies);
+  if (this->max_credit_ > 0)
+    {
+      ACE_NEW (sfp_options,
+               char [BUFSIZ]);
+
+      ACE_OS::sprintf (sfp_options,
+                       "sfp:1.0:credit=%d",
+                       max_credit_);
+    }
 }
 
 int
@@ -1254,17 +1298,37 @@ TAO_SFP_Consumer_Object::handle_input (void)
     {
       this->callback_->receive_frame (this->state_.frame_block_,
                                       frame_info);
+      // Now release the memory for the frame.
+      if (this->state_.frame_block_ != &this->state_.static_frame_)
+        {
+          ACE_Message_Block *temp = 0;
+          for (temp = this->state_.frame_block_;
+               temp != 0;
+               temp = temp->cont ())
+            {
+              temp->release ();
+              delete temp;
+            }
+        }
       this->state_.reset ();
     }
   return 0;
 }
 
 TAO_SFP_Producer_Object::TAO_SFP_Producer_Object (TAO_AV_Callback *callback,
-                                                  TAO_AV_Transport *transport)
+                                                  TAO_AV_Transport *transport,
+                                                  char *&sfp_options)
   :TAO_SFP_Object (callback,transport),
    credit_sequence_num_ (0)
    
 {
+  TAO_Tokenizer flow_string (sfp_options,':');
+  if (flow_string [2] != 0)
+    {
+      TAO_Tokenizer options (flow_string[2],'=');
+      if (options [1] != 0)
+        this->max_credit_ = ACE_OS::atoi (options[1]);
+    }
 }
 
 int
@@ -1347,13 +1411,15 @@ TAO_AV_SFP_Factory::make_protocol_object (TAO_FlowSpec_Entry *entry,
   TAO_AV_Callback *callback = 0;
   endpoint->get_callback (entry->flowname (),
                        callback);
+  char *flow_string = entry->flow_protocol_str ();
   switch (entry->role ())
     {
     case TAO_FlowSpec_Entry::TAO_AV_PRODUCER:
       {
         ACE_NEW_RETURN (object,
                         TAO_SFP_Producer_Object (callback,
-                                                 transport),
+                                                 transport,
+                                                 flow_string),
                         0);
       }
       break;
@@ -1361,7 +1427,8 @@ TAO_AV_SFP_Factory::make_protocol_object (TAO_FlowSpec_Entry *entry,
       {
         ACE_NEW_RETURN (object,
                         TAO_SFP_Consumer_Object (callback,
-                                                 transport),
+                                                 transport,
+                                                 flow_string),
                         0);
       }
       break;

@@ -101,11 +101,15 @@ public:
   // accessor to the direction.
 
   virtual Role role (void) = 0;
+  void role (Role role);
   char * direction_str (void);
   // string version of direction .
 
   char *flow_protocol_str (void);
   // accesor to the flow protocol string.
+
+  void flow_protocol_str (const char *flow_protocol_str);
+  // set the flow protocol string.
 
   ACE_Addr *address (void);
   // Address of the carrier protocol.
@@ -195,6 +199,7 @@ protected:
   TAO_AV_Transport *transport_;
   TAO_AV_Flow_Handler *handler_;
   TAO_AV_Protocol_Object *protocol_object_;
+  Role role_;
 };
 
 class TAO_ORBSVCS_Export TAO_Forward_FlowSpec_Entry

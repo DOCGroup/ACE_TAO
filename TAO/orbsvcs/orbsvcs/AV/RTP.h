@@ -265,7 +265,7 @@ public:
                           TAO_AV_frame_info *frame_info = 0);
 
   virtual int destroy (void);
-  virtual int set_policies (const PolicyList &policy_list);
+  virtual int set_policies (const TAO_AV_PolicyList &policy_list);
   virtual void control_object (TAO_AV_Protocol_Object *object);
 protected:
   ACE_UINT16 sequence_num_;

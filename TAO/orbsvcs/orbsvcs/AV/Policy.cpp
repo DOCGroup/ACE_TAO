@@ -3,74 +3,38 @@
 #include "Policy.h"
 #include "FlowSpec_Entry.h"
 
-TAO_AV_Policy::TAO_AV_Policy (TAO_AV_Policy::PolicyType type)
+TAO_AV_Policy::TAO_AV_Policy (CORBA::ULong type)
   :type_ (type)
 {
 }
 
 
 TAO_AV_SSRC_Policy::TAO_AV_SSRC_Policy (CORBA::ULong ssrc)
-  :TAO_AV_Policy (TAO_AV_Policy::TAO_AV_SSRC_POLICY),
+  :TAO_AV_Policy (TAO_AV_SSRC_POLICY),
    ssrc_ (ssrc)
 {
 }
 
 
 TAO_AV_Payload_Type_Policy::TAO_AV_Payload_Type_Policy (int payload_type)
-  :TAO_AV_Policy (TAO_AV_Policy::TAO_AV_PAYLOAD_TYPE_POLICY),
+  :TAO_AV_Policy (TAO_AV_PAYLOAD_TYPE_POLICY),
    payload_type_ (payload_type)
 {
 }
 
 // TAO_AV_RTP_Sdes_Policy
 TAO_AV_RTCP_Sdes_Policy::TAO_AV_RTCP_Sdes_Policy (void)
-  :TAO_AV_Policy (TAO_AV_Policy::TAO_AV_RTCP_SDES_POLICY)
+  :TAO_AV_Policy (TAO_AV_RTCP_SDES_POLICY)
 {
 }
 
-// TAO_AV_Timestamp_Policy
-TAO_AV_Timestamp_Policy::TAO_AV_Timestamp_Policy (void)
-  :TAO_AV_Policy (TAO_AV_Policy::TAO_AV_TIMESTAMP_POLICY)
+TAO_AV_SFP_Credit_Policy::TAO_AV_SFP_Credit_Policy (void)
+  :TAO_AV_Policy (TAO_AV_SFP_CREDIT_POLICY)
 {
-}
-
-TAO_AV_Policy *
-TAO_AV_Policy_Manager::create_policy (TAO_AV_Policy::PolicyType type,
-                                      void *value)
-{
-  TAO_AV_Policy *policy = 0;
-  switch (type)
-    {
-    case TAO_AV_Policy::TAO_AV_PAYLOAD_TYPE_POLICY:
-      {
-        int *payload_type = ACE_static_cast (int *,value);
-        if (payload_type == 0)
-          ACE_ERROR_RETURN ((LM_ERROR,"TAO_AV_Policy_Manager::create_policy:Invalid value\n"),0);
-        ACE_NEW_RETURN (policy,
-                        TAO_AV_Payload_Type_Policy (*payload_type),
-                        0);
-      }
-      break;
-    case TAO_AV_Policy::TAO_AV_SSRC_POLICY:
-      {
-        CORBA::ULong *ssrc = ACE_static_cast (CORBA::ULong *,value);
-        if (ssrc == 0)
-          ACE_ERROR_RETURN ((LM_ERROR,"TAO_AV_Policy_Manager::create_policy:Invalid value\n"),0);
-        ACE_NEW_RETURN (policy,
-                        TAO_AV_SSRC_Policy (*ssrc),
-                        0);
-      }
-      break;
-    default:
-      break;
-    }
-  return policy;
 }
 
 // TAO_AV_Callback
-
 TAO_AV_Callback::TAO_AV_Callback (void)
-  //  :transport_ (0),
    :protocol_object_ (0)
 {
 }
@@ -134,6 +98,13 @@ TAO_AV_Callback::handle_timeout (void *arg)
 {
   if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_AV_Callback::handle_timeout\n"));
   return 0;
+}
+
+TAO_AV_PolicyList
+TAO_AV_Callback::get_policies (void)
+{
+  TAO_AV_PolicyList list;
+  return list;
 }
 
 // TAO_AV_Transport*
