@@ -69,6 +69,7 @@ DIRS  = CDR \
 	Big_Twoways \
 	Big_Reply \
 	Big_Request_Muxing \
+	Oneways_Invoking_Twoways \
 	AMI_Buffering
 
 ifndef TAO_ROOT
