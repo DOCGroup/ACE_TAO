@@ -1,12 +1,42 @@
+Mon Mar 12 01:01:57 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/AV/AV_Core.h (TAO_AV_Core): deactivate_servant()
+	  and get_flowname() were global.  Moved them to the TAO_AV_Core
+	  namespace.
+
+	* orbsvcs/tests/AVStreams: Added the following files to enable
+	  builds on Win32:
+	  
+	  - AVStreams.dsw
+  	  - Full_Profile/Full_Profile.dsw
+	  - Full_Profile/ftp.dsp
+	  - Full_Profile/server.dsp
+	  - Latency/Latency.dsw
+	  - Latency/control.dsp
+	  - Latency/ping.dsp
+	  - Latency/pong.dsp
+	  - Multicast/Multicast.dsw
+	  - Multicast/ftp.dsp
+	  - Multicast/server.dsp
+	  - Multicast_Full_Profile/Multicast_Full_Profile.dsw
+	  - Multicast_Full_Profile/ftp.dsp
+	  - Multicast_Full_Profile/server.dsp
+	  - Pluggable/Pluggable.dsw
+	  - Pluggable/ftp.dsp
+	  - Pluggable/server.dsp
+	  - Simple/run_test.pl
+
 Mon Mar 12 10:00:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
 	* tao/Wait_On_Leader_Follower.cpp:
 	  
-	  When timeouts were specified and the connection was closed before the timer
-	  expired or the reply arrived we returned no error, thereby letting the client
-	  believe that the request was actually sucessful. This fixes the problem
-	  by returning -1 in  TAO_Wait_On_Leader_Follower::wait () in such cases.
-	  Thanks to Jeffrey J. Persch <hyperslug@yahoo.com> for sending us this patch.
+	  When timeouts were specified and the connection was closed
+	  before the timer expired or the reply arrived we returned no
+	  error, thereby letting the client believe that the request was
+	  actually sucessful. This fixes the problem by returning -1 in
+	  TAO_Wait_On_Leader_Follower::wait () in such cases.  Thanks to
+	  Jeffrey J. Persch <hyperslug@yahoo.com> for sending us this
+	  patch.
 
 Sun Mar 11 16:33:53 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
