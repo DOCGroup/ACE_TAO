@@ -1,3 +1,44 @@
+Tue Jun 06 01:20:37 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/POA.cpp (client_exposed_policies): Some of the client
+	  exposed policies in the POA are fixed at creation time (protocol
+	  policies).  Other are more "dynamic" since they depend on the
+	  object in question (priority policy).  Therefore, the client
+	  exposed policies were split into fixed and dynamic policies.
+
+	  Also added accessors and set methods for priority model and
+	  server priority in the POA policies.
+
+	* tao/Active_Object_Map: Added the ability to fish out the
+	  priority of the object while looking it up.  Changes occured in:
+
+	  - find_system_id_using_servant ()
+	  - find_servant_and_system_id_using_user_id ()
+
+	  Also, made the POA current keep track of the priority of the
+	  current upcall.  This is useful in creating the object
+	  reference for the target upcall.
+
+	* tao/ORB:
+	* tao/ORB_Core:
+
+	  Changed the following interfaces to improve memory management of
+	  the policy list that is being passed around:
+
+	  - CORBA_ORB::key_to_object ()
+	  - CORBA_ORB::create_stub_object ()
+	  - CORBA_ORB_Core::create_stub_object ()
+
+	* tao/Servant_Base.cpp (_create_stub): Accessed the client exposed
+	  policies from the POA so that the object reference can be made
+	  properly.
+
+	* tao/corbafwd.h (TAO_DEFAULT_PRIORITY): Added new #define so that
+	  it is easy to find default priorities.
+
+	* tao/GIOP_Server_Request.cpp (objref): Further fixed/hacked the
+	  hack - this method should be removed soon.
+
 Mon Jun  5 15:48:35 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * orbsvcs/tests/ImplRepo/NameService/Makefile: (added)

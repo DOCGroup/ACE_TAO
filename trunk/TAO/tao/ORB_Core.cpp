@@ -1566,7 +1566,7 @@ TAO_ORB_Core::leader_follower_condition_variable (void)
 TAO_Stub *
 TAO_ORB_Core::create_stub_object (const TAO_ObjectKey &key,
                                   const char *type_id,
-                                  const CORBA::PolicyList& policy_list,
+                                  CORBA::PolicyList *policy_list,
                                   CORBA::Environment &ACE_TRY_ENV)
 {
   (void) this->open (ACE_TRY_ENV);
@@ -1604,16 +1604,16 @@ TAO_ORB_Core::create_stub_object (const TAO_ObjectKey &key,
   //  is a responsability of the CORBA::Profile class.
   //  (See orbos\98-05-05.pdf Section 5.4)
 
-  if (policy_list.length() != 0)
+  if (policy_list->length () != 0)
   {
     // Set the "iterator" to the beginning of MProfile.
     mp.rewind();
     TAO_Profile * profile;
-    for (unsigned int i = 0; i < mp.profile_count(); ++i)
+    for (CORBA::ULong i = 0; i < mp.profile_count (); ++i)
     {
       // Get the ith profile
-      profile = mp.get_next();
-      profile->set_policies(&policy_list);
+      profile = mp.get_next ();
+      profile->set_policies (policy_list);
     }
 
   }

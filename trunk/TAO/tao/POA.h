@@ -233,6 +233,12 @@ class TAO_Export TAO_POA_Policies
 {
 public:
 
+  enum PriorityModel
+  {
+    CLIENT_PROPAGATED,
+    SERVER_DECLARED
+  };
+
   TAO_POA_Policies (TAO_ORB_Core &orb_core,
                     CORBA::Environment &ACE_TRY_ENV);
 
@@ -257,14 +263,16 @@ public:
   PortableServer::RequestProcessingPolicyValue request_processing (void) const;
   void request_processing (PortableServer::RequestProcessingPolicyValue value);
 
+  PriorityModel priority_model (void) const;
+  void priority_model (PriorityModel value);
+
+  CORBA::Short server_priority (void) const;
+  void server_priority (CORBA::Short value);
+
   void parse_policies (const CORBA::PolicyList &policies,
                        CORBA_Environment &ACE_TRY_ENV);
 
-  enum PriorityModel
-  {
-    CLIENT_PROPAGATED,
-    SERVER_DECLARED
-  };
+  CORBA::PolicyList &client_exposed_fixed_policies (void);
 
 protected:
 
@@ -290,6 +298,8 @@ protected:
   PriorityModel priority_model_;
 
   CORBA::Short server_priority_;
+
+  CORBA::PolicyList client_exposed_fixed_policies_;
 };
 
 class TAO_Temporary_Creation_Time;
@@ -495,7 +505,8 @@ public:
 
 #endif /* TAO_HAS_RT_CORBA == 1 */
 
-  const CORBA::PolicyList &client_exposed_policies (void);
+  CORBA::PolicyList *client_exposed_policies (CORBA::Short object_priority,
+                                              CORBA_Environment &ACE_TRY_ENV);
   // This method gives the policies that are exposed to the client.
   // These policies are shipped within the IOR.
 
@@ -616,10 +627,10 @@ protected:
 
   CORBA::Object_ptr key_to_object (const TAO_ObjectKey &key,
                                    const char *type_id,
-                                   TAO_ServantBase *servant = 0,
-                                   CORBA::Boolean collocated = 1,
-                                   CORBA_Environment &ACE_TRY_ENV =
-                                       TAO_default_environment ());
+                                   TAO_ServantBase *servant,
+                                   CORBA::Boolean collocated,
+                                   CORBA::Short priority,
+                                   CORBA_Environment &ACE_TRY_ENV);
   // Wrapper for the ORB's key_to_object that will alter the object pointer
   // if the ImplRepo is used.
 
@@ -669,9 +680,11 @@ protected:
                                              CORBA_Environment &ACE_TRY_ENV);
 
   PortableServer::ObjectId *servant_to_system_id (PortableServer::Servant p_servant,
+                                                  CORBA::Short &priority,
                                                   CORBA_Environment &ACE_TRY_ENV);
 
   PortableServer::ObjectId *servant_to_system_id_i (PortableServer::Servant p_servant,
+                                                    CORBA::Short &priority,
                                                     CORBA_Environment &ACE_TRY_ENV);
 
   PortableServer::Servant id_to_servant_i (const PortableServer::ObjectId &oid,
@@ -845,9 +858,6 @@ protected:
   ACE_SYNCH_CONDITION servant_deactivation_condition_;
 
   CORBA::ULong waiting_servant_deactivation_;
-
-  CORBA::PolicyList client_exposed_policies_;
-  // Client exposed policies List.
 };
 
 
