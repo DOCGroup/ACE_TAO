@@ -27,4 +27,7 @@ project(PortableGroup) : orbsvcslib, core, naming, iormanip, messaging, minimum_
       PortableGroup
     }
   }
+
+  Template_Files {
+  }
 }

@@ -45,4 +45,7 @@ project : orbsvcslib, core, naming, iormanip, portablegroup, ami, minimum_corba,
       LoadBalancing/LB_CPU_Load_Average_Monitor.cpp
     }
   }
+
+  Template_Files {
+  }
 }

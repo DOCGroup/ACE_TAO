@@ -20,4 +20,7 @@ project(Svc_Utils) : orbsvcslib, core, portableserver {
     Time_Utilities.cpp
     IOR_Multicast.cpp
   }
+
+  Template_Files {
+  }
 }

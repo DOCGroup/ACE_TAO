@@ -20,4 +20,7 @@ project(RT_Notification) : orbsvcslib, core, rtcorba, notification_serv {
       Notify/Structured/RT_StructuredProxyPushSupplier.cpp
     }
   }
+
+  Template_Files {
+  }
 }

@@ -22,4 +22,7 @@ project(CosLifeCycle) : orbsvcslib, core, naming, portableserver {
       LifeCycleServiceS.cpp
     }
   }
+
+  Template_Files {
+  }
 }
