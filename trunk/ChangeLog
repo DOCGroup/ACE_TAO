@@ -1,3 +1,14 @@
+Tue Sep  7 15:45:00 UTC 2004  Simon Massey  <simon.massey@prismtechnologies.com>
+
+        * examples/IOStream/server/iostream_server.cpp
+          getpid() from ace/OS_NS_unistd.h actually used in both halves of
+          #ifdef #else #endif guard so the conditional arround the #include
+          is actually wrong and so has been removed.
+
+        * tests/IOStream_Test.cpp
+          isspace() used without #include ace/OS_NS_ctype.h, added this to
+          the guarded section where it is used.
+
 Tue Sep  7 07:08:26 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/BorlandProjectCreator.pm:
