@@ -562,26 +562,6 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &,TAO_IOP::TAO_IOR_Manipulati
   return 1;
 }
 
-#if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
-
-ACE_INLINE
-ostream & operator<< (ostream &os, const TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList &_tao_aggregate)
-{
-  CORBA::TypeCode_ptr tc = _tao_aggregate._type ();
-  if (tc)
-    {
-      os << tc->name () << " (";
-    }
-  os << _tao_aggregate._id ();
-  if (tc)
-    {
-      os << ")";
-    }
-  return os;
-}
-
-#endif /* ACE_LACKS_IOSTREAM_TOTALLY */
-
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const TAO_IOP::TAO_IOR_Manipulation::NotFound &_tao_aggregate)
 {
   // first marshal the repository ID
@@ -595,26 +575,6 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &,TAO_IOP::TAO_IOR_Manipulati
 {
   return 1;
 }
-
-#if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
-
-ACE_INLINE
-ostream & operator<< (ostream &os, const TAO_IOP::TAO_IOR_Manipulation::NotFound &_tao_aggregate)
-{
-  CORBA::TypeCode_ptr tc = _tao_aggregate._type ();
-  if (tc)
-    {
-      os << tc->name () << " (";
-    }
-  os << _tao_aggregate._id ();
-  if (tc)
-    {
-      os << ")";
-    }
-  return os;
-}
-
-#endif /* ACE_LACKS_IOSTREAM_TOTALLY */
 
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const TAO_IOP::TAO_IOR_Manipulation::Duplicate &_tao_aggregate)
 {
@@ -630,26 +590,6 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &,TAO_IOP::TAO_IOR_Manipulati
   return 1;
 }
 
-#if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
-
-ACE_INLINE
-ostream & operator<< (ostream &os, const TAO_IOP::TAO_IOR_Manipulation::Duplicate &_tao_aggregate)
-{
-  CORBA::TypeCode_ptr tc = _tao_aggregate._type ();
-  if (tc)
-    {
-      os << tc->name () << " (";
-    }
-  os << _tao_aggregate._id ();
-  if (tc)
-    {
-      os << ")";
-    }
-  return os;
-}
-
-#endif /* ACE_LACKS_IOSTREAM_TOTALLY */
-
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR &_tao_aggregate)
 {
   // first marshal the repository ID
@@ -663,27 +603,6 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &,TAO_IOP::TAO_IOR_Manipulati
 {
   return 1;
 }
-
-#if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
-
-ACE_INLINE
-ostream & operator<< (ostream &os, const TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR &_tao_aggregate)
-{
-  CORBA::TypeCode_ptr tc = _tao_aggregate._type ();
-  if (tc)
-    {
-      os << tc->name () << " (";
-    }
-  os << _tao_aggregate._id ();
-  if (tc)
-    {
-      os << ")";
-    }
-  return os;
-}
-
-#endif /* ACE_LACKS_IOSTREAM_TOTALLY */
-
 
 #if !defined _TAO_CDR_OP_TAO_IOP_TAO_IOR_Manipulation_IORList_I_
 #define _TAO_CDR_OP_TAO_IOP_TAO_IOR_Manipulation_IORList_I_
