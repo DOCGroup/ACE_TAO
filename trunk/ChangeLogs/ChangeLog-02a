@@ -1,3 +1,12 @@
+Wed Sep 20 17:25:37 2000  Steve Huston  <shuston@riverace.com>
+
+        * performance-tests/UDP/udp_test.cpp: Use ACE_High_Res_Timer instead
+          of ACE_hrtime_t for calculating elapsed times. ACE_hrtime_t right
+          from ACE_OS::gethrtime is not always in nanoseconds, particularly on
+          Win32.
+
+        * performance-tests/UDP/udp_test.{dsw dsp}: New MSVC workspace/project.
+
 Wed Sep 20 12:57:52 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * ace/ace_dll.dsp:
