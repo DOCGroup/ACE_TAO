@@ -27,7 +27,7 @@ Initiator_Server::Initiator_Server (void)
     object_B_key_ (0),
     object_A_var_ (0),
     object_B_var_ (0),
-    initiator_Impl_ptr_ (0)
+    initiator_i_ptr_ (0)
 {
 }
 
@@ -205,14 +205,14 @@ Initiator_Server::init (int argc,
   TAO_ENDTRY;
 
 
-  ACE_NEW_RETURN (this->initiator_Impl_ptr_, 
-                  Initiator_Impl(this->object_A_var_.in(),
+  ACE_NEW_RETURN (this->initiator_i_ptr_, 
+                  Initiator_i(this->object_A_var_.in(),
                                  this->object_B_var_.in()),
                   -1);
 
   CORBA::String_var str  =
     this->orb_manager_.activate_under_child_poa ("initiator",
-                                                 this->initiator_Impl_ptr_,
+                                                 this->initiator_i_ptr_,
                                                  env);
   ACE_DEBUG ((LM_DEBUG,
               "The IOR is: <%s>\n",
@@ -231,7 +231,7 @@ Initiator_Server::run (CORBA::Environment& env)
     ACE_DEBUG ((LM_DEBUG,
               "Initiator_Server::run: Trying to invoke foo on Object A\n"));
 
-    this->object_A_var_->foo (this->initiator_Impl_ptr_->_this(TAO_TRY_ENV), 
+    this->object_A_var_->foo (this->initiator_i_ptr_->_this(TAO_TRY_ENV), 
                               TAO_TRY_ENV);
     TAO_CHECK_ENV;
     ACE_DEBUG ((LM_DEBUG,
@@ -260,8 +260,8 @@ Initiator_Server::~Initiator_Server (void)
     ACE_OS::free (this->object_A_key_);
   if (this->object_B_key_ != 0)
     ACE_OS::free (this->object_B_key_);
-  if (this->initiator_Impl_ptr_ != 0)
-    delete initiator_Impl_ptr_;
+  if (this->initiator_i_ptr_ != 0)
+    delete initiator_i_ptr_;
 }
 
 int

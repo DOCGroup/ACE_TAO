@@ -19,7 +19,7 @@ ACE_RCSID(Quoter, server, "$Id$")
 
 Quoter_Server::Quoter_Server (void)
   : num_of_objs_ (1),
-    quoter_Factory_Impl_ptr_ (0)
+    quoter_Factory_i_ptr_ (0)
 {
 }
 
@@ -102,8 +102,8 @@ Quoter_Server::init (int argc,
       return -1;
     }
 
-  ACE_NEW_RETURN (quoter_Factory_Impl_ptr_, 
-                  Quoter_Factory_Impl(this->num_of_objs_, 
+  ACE_NEW_RETURN (quoter_Factory_i_ptr_, 
+                  Quoter_Factory_i(this->num_of_objs_, 
                                       root_poa.in()),
                   0);
 
@@ -111,11 +111,11 @@ Quoter_Server::init (int argc,
     PortableServer::string_to_ObjectId ("Quoter_Factory");
 
   root_poa->activate_object_with_id (quoter_Factory_oid.in (),
-                                     quoter_Factory_Impl_ptr_,
+                                     quoter_Factory_i_ptr_,
                                      env);
 
   // Get Object reference for first_foo_impl object.
-  Stock::Quoter_Factory_var quoter_Factory_var = quoter_Factory_Impl_ptr_->_this (env);
+  Stock::Quoter_Factory_var quoter_Factory_var = quoter_Factory_i_ptr_->_this (env);
   if (env.exception () != 0)
     {
       env.print_exception ("Quoter_Factory::_this");
@@ -184,7 +184,7 @@ Quoter_Server::init_naming_service (CORBA::Environment& env)
     quoterFactoryContextName.length (1);
     quoterFactoryContextName[0].id = CORBA::string_dup ("Quoter_Factory");
     quoterNameContext->bind (quoterFactoryContextName,
-                             quoter_Factory_Impl_ptr_->_this(env),
+                             quoter_Factory_i_ptr_->_this(env),
                              env);
     TAO_CHECK_ENV_RETURN (env, -1);
 

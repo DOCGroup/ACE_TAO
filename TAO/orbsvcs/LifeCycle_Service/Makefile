@@ -20,15 +20,15 @@ BUILD = $(BIN)
 
 
 LIFE_CYCLE_SERVICE_SRCS = \
-	Life_Cycle_Service.cpp Life_Cycle_Service_Impl.cpp \
+	Life_Cycle_Service.cpp Life_Cycle_Service_i.cpp \
 	Factory_Trader.cpp Criteria_Evaluator.cpp
 
 
 LSRC= \
-	Life_Cycle_Service.cpp Life_Cycle_Service_Impl.cpp \
+	Life_Cycle_Service.cpp Life_Cycle_Service_i.cpp \
 	Factory_Trader.cpp Criteria_Evaluator.cpp
 
-LIFE_CYCLE_SERVICE_OBJS = Life_Cycle_Service.o Life_Cycle_Service_Impl.o \
+LIFE_CYCLE_SERVICE_OBJS = Life_Cycle_Service.o Life_Cycle_Service_i.o \
 		Factory_Trader.o Criteria_Evaluator.o
 
 LDLIBS = -lorbsvcs -lTAO
@@ -152,7 +152,7 @@ Life_Cycle_Service: $(addprefix $(VDIR),$(LIFE_CYCLE_SERVICE_OBJS))
  $(ACE_ROOT)/ace/Timer_Queue_T.i \
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Reactor_i.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/Time_Value.h \
@@ -293,7 +293,7 @@ Life_Cycle_Service: $(addprefix $(VDIR),$(LIFE_CYCLE_SERVICE_OBJS))
  $(TAO_ROOT)/tao/singletons.h \
  Life_Cycle_Service.h \
  $(TAO_ROOT)/tao/TAO.h \
- Life_Cycle_Service_Impl.h \
+ Life_Cycle_Service_i.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/LifeCycleServiceS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
@@ -327,7 +327,7 @@ Life_Cycle_Service: $(addprefix $(VDIR),$(LIFE_CYCLE_SERVICE_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/Service_Type_Repository.h \
  Criteria_Evaluator.h
-.obj/Life_Cycle_Service_Impl.o .obj/Life_Cycle_Service_Impl.so .shobj/Life_Cycle_Service_Impl.o .shobj/Life_Cycle_Service_Impl.so: Life_Cycle_Service_Impl.cpp \
+.obj/Life_Cycle_Service_i.o .obj/Life_Cycle_Service_i.so .shobj/Life_Cycle_Service_i.o .shobj/Life_Cycle_Service_i.so: Life_Cycle_Service_i.cpp \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -415,7 +415,7 @@ Life_Cycle_Service: $(addprefix $(VDIR),$(LIFE_CYCLE_SERVICE_OBJS))
  $(ACE_ROOT)/ace/Timer_Queue_T.i \
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Reactor_i.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/Time_Value.h \
@@ -561,7 +561,7 @@ Life_Cycle_Service: $(addprefix $(VDIR),$(LIFE_CYCLE_SERVICE_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/LifeCycleServiceC.i \
- Life_Cycle_Service_Impl.h \
+ Life_Cycle_Service_i.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/LifeCycleServiceS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.h \
@@ -676,7 +676,7 @@ Life_Cycle_Service: $(addprefix $(VDIR),$(LIFE_CYCLE_SERVICE_OBJS))
  $(ACE_ROOT)/ace/Timer_Queue_T.i \
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Reactor_i.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/Time_Value.h \
@@ -918,7 +918,7 @@ Life_Cycle_Service: $(addprefix $(VDIR),$(LIFE_CYCLE_SERVICE_OBJS))
  $(ACE_ROOT)/ace/Timer_Queue_T.i \
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Reactor_i.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/Time_Value.h \

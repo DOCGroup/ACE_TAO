@@ -16,15 +16,15 @@ LDLIBS = -lTAO
 
 IDL_SRC = MT_Client_TestC.cpp MT_Client_TestS.cpp
 PROG_SRCS = $(IDL_SRC) server.cpp client.cpp \
-	local_server.cpp MT_Object_Impl.cpp
+	local_server.cpp MT_Object_i.cpp
 
 SRC = $(PROG_SRCS)
 
 CLIENT_OBJS = MT_Client_TestS.o MT_Client_TestC.o \
-	MT_Object_Impl.o local_server.o client.o
+	MT_Object_i.o local_server.o client.o
 
 SERVER_OBJS = MT_Client_TestS.o MT_Client_TestC.o server.o \
-	MT_Object_Impl.o
+	MT_Object_i.o
 
 BIN = client server
 BUILD = $(BIN)
@@ -154,7 +154,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Timer_Queue_T.i \
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Reactor_i.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/Time_Value.h \
@@ -384,7 +384,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Timer_Queue_T.i \
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Reactor_i.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/Time_Value.h \
@@ -614,7 +614,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Timer_Queue_T.i \
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Reactor_i.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/Time_Value.h \
@@ -753,7 +753,7 @@ realclean: clean
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/singletons.h \
- MT_Object_Impl.h MT_Client_TestS.h MT_Client_TestC.h \
+ MT_Object_i.h MT_Client_TestS.h MT_Client_TestC.h \
  MT_Client_TestC.i MT_Client_TestS_T.h MT_Client_TestS_T.i \
  MT_Client_TestS_T.cpp MT_Client_TestS.i
 .obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp \
@@ -844,7 +844,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Timer_Queue_T.i \
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Reactor_i.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Synch_Options.h \
  $(ACE_ROOT)/ace/Synch_Options.i \
@@ -987,7 +987,7 @@ realclean: clean
  $(TAO_ROOT)/tao/singletons.h \
  MT_Client_TestC.h MT_Client_TestC.i local_server.h \
  $(TAO_ROOT)/tao/TAO.h \
- MT_Object_Impl.h MT_Client_TestS.h MT_Client_TestS_T.h \
+ MT_Object_i.h MT_Client_TestS.h MT_Client_TestS_T.h \
  MT_Client_TestS_T.i MT_Client_TestS_T.cpp MT_Client_TestS.i
 .obj/local_server.o .obj/local_server.so .shobj/local_server.o .shobj/local_server.so: local_server.cpp \
  $(ACE_ROOT)/ace/Read_Buffer.h \
@@ -1081,7 +1081,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Timer_Queue_T.i \
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Reactor_i.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/Time_Value.h \
@@ -1220,10 +1220,10 @@ realclean: clean
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/singletons.h \
- MT_Object_Impl.h MT_Client_TestS.h MT_Client_TestC.h \
+ MT_Object_i.h MT_Client_TestS.h MT_Client_TestC.h \
  MT_Client_TestC.i MT_Client_TestS_T.h MT_Client_TestS_T.i \
  MT_Client_TestS_T.cpp MT_Client_TestS.i
-.obj/MT_Object_Impl.o .obj/MT_Object_Impl.so .shobj/MT_Object_Impl.o .shobj/MT_Object_Impl.so: MT_Object_Impl.cpp \
+.obj/MT_Object_i.o .obj/MT_Object_i.so .shobj/MT_Object_i.o .shobj/MT_Object_i.so: MT_Object_i.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -1311,7 +1311,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Timer_Queue_T.i \
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Reactor_i.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/Time_Value.h \
@@ -1450,7 +1450,7 @@ realclean: clean
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/singletons.h \
- MT_Object_Impl.h MT_Client_TestS.h MT_Client_TestC.h \
+ MT_Object_i.h MT_Client_TestS.h MT_Client_TestC.h \
  MT_Client_TestC.i MT_Client_TestS_T.h MT_Client_TestS_T.i \
  MT_Client_TestS_T.cpp MT_Client_TestS.i
 

@@ -81,7 +81,7 @@ Object_A_Server::init (int argc,
 
   CORBA::String_var str  =
     this->orb_manager_.activate_under_child_poa ("object_A",
-                                                 &this->object_A_Impl_,
+                                                 &this->object_A_i_,
                                                  env);
   ACE_DEBUG ((LM_DEBUG,
               "The IOR is: <%s>\n",

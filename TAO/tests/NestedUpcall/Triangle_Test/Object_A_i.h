@@ -7,10 +7,10 @@
 //    TAO/tests/NestedUpCalls/Triangle_Test
 //
 // = FILENAME
-//    Object_B_Impl.h
+//    Object_A_i.h
 //
 // = DESCRIPTION
-//    This class implements the Object B of the 
+//    This class implements the Object A of the 
 //    Nested Upcalls - Triangle test.
 //
 // = AUTHORS
@@ -23,19 +23,23 @@
 
 #include "Triangle_TestS.h"
 
-class Object_B_Impl : public POA_Object_B
+class Object_A_i : public POA_Object_A
 {
   // = TITLE
-  //     Implement the <Object_B> IDL interface.
+  //     Implement the <Object_A> IDL interface.
 public:
-  Object_B_Impl (void);
+  Object_A_i (void);
   // Constructor.
 
-  virtual ~Object_B_Impl (void);
+  virtual ~Object_A_i (void);
   // Destructor.
 
-  virtual void foo(Object_A_ptr object_A_ptr,
-                   CORBA::Environment &env);
+  virtual void foo (Initiator_ptr initiator_ptr,
+                    CORBA::Environment &env);
+
+  virtual void finish (CORBA::Environment &env);
+
+  unsigned long finish_two_way_call_;
 };
 
 #endif /* OBJECT_B_IMPL_H */

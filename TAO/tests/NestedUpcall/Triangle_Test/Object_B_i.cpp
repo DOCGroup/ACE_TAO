@@ -6,7 +6,7 @@
 //    TAO/tests/NestedUpCalls/Triangle_Test
 //
 // = FILENAME
-//    Object_B_Impl.cpp
+//    Object_B_i.cpp
 //
 // = DESCRIPTION
 //    This class implements the Object B  of the 
@@ -18,34 +18,34 @@
 // ============================================================================
 
 #include "tao/corba.h"
-#include "Object_B_Impl.h"
+#include "Object_B_i.h"
 
-ACE_RCSID(Triangle_Test, Object_B_Impl, "$Id$")
+ACE_RCSID(Triangle_Test, Object_B_i, "$Id$")
 
 // CTOR
-Object_B_Impl::Object_B_Impl (void)
+Object_B_i::Object_B_i (void)
 {
 }
 
 // DTOR
-Object_B_Impl::~Object_B_Impl (void)
+Object_B_i::~Object_B_i (void)
 {
 }
 
 
 
 void
-Object_B_Impl::foo (Object_A_ptr object_A_ptr,
+Object_B_i::foo (Object_A_ptr object_A_ptr,
                     CORBA::Environment &env)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) BEGIN Object_B_Impl::foo ()\n"));
+              "(%P|%t) BEGIN Object_B_i::foo ()\n"));
 
   TAO_TRY
     {
       
       ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) BEGIN Object_B_Impl::foo: Trying to call Object A\n"));
+                  "(%P|%t) BEGIN Object_B_i::foo: Trying to call Object A\n"));
 
       object_A_ptr->finish (TAO_TRY_ENV);
       TAO_CHECK_ENV;
@@ -65,6 +65,6 @@ Object_B_Impl::foo (Object_A_ptr object_A_ptr,
   TAO_ENDTRY;
 
   ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) END Object_B_Impl::foo ()\n"));
+              "(%P|%t) END Object_B_i::foo ()\n"));
 }
 

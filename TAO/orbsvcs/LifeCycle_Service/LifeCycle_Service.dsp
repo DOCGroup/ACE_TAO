@@ -100,7 +100,7 @@ SOURCE=.\Life_Cycle_Service.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Life_Cycle_Service_Impl.cpp
+SOURCE=.\Life_Cycle_Service_i.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -120,7 +120,7 @@ SOURCE=.\Life_Cycle_Service.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Life_Cycle_Service_Impl.h
+SOURCE=.\Life_Cycle_Service_i.h
 # End Source File
 # End Group
 # Begin Group "Inline Files"

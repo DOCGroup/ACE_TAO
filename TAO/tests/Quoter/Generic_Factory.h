@@ -15,7 +15,7 @@
 
 #include "ace/Get_Opt.h"
 #include "tao/TAO.h"
-#include "Generic_Factory_Impl.h"
+#include "Generic_Factory_i.h"
 
 #if !defined (GENERIC_FACTORY_H)
 #define GENERIC_FACTORY_H
@@ -47,7 +47,7 @@ private:
   TAO_ORB_Manager orb_manager_;
   // instance of the ORB Manager
 
-  Quoter_Generic_Factory_Impl *quoter_Generic_Factory_Impl_ptr_;
+  Quoter_Generic_Factory_i *quoter_Generic_Factory_i_ptr_;
   // Instance of the Quoter Generic Factory.
   
   CosNaming::NamingContext_var quoterNamingContext_var_;

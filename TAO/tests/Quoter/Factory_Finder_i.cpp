@@ -3,7 +3,7 @@
 // ============================================================================
 //
 // = FILENAME
-//    FactoryFinder_Impl.cpp
+//    FactoryFinder_i.cpp
 //
 // = DESCRIPTION
 //    A Factory Finder for the Quoter example. This example conforms
@@ -16,24 +16,24 @@
 
 #include "ace/Get_Opt.h"
 #include "tao/corba.h"
-#include "Factory_Finder_Impl.h"
+#include "Factory_Finder_i.h"
 #include "QuoterC.h"
 
-ACE_RCSID(Quoter, Factory_Finder_Impl, "$Id$")
+ACE_RCSID(Quoter, Factory_Finder_i, "$Id$")
 
 // Constructor
-Quoter_Factory_Finder_Impl::Quoter_Factory_Finder_Impl (void)
+Quoter_Factory_Finder_i::Quoter_Factory_Finder_i (void)
 {
 }
 
 // Destructor.
-Quoter_Factory_Finder_Impl::~Quoter_Factory_Finder_Impl (void)
+Quoter_Factory_Finder_i::~Quoter_Factory_Finder_i (void)
 {
 }
 
 
 CosLifeCycle::Factories *
-Quoter_Factory_Finder_Impl::find_factories (const CosLifeCycle::Key &factory_key,
+Quoter_Factory_Finder_i::find_factories (const CosLifeCycle::Key &factory_key,
                                        CORBA::Environment &_env_there)
 {
   CORBA::Environment env_here;

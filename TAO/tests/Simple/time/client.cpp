@@ -12,7 +12,7 @@ main (int argc, char **argv)
   Client_i client;
 
   ACE_DEBUG ((LM_DEBUG,
-              "\n\ttime and date test\n\n"));
+              "\n\ttime and date client\n\n"));
 
   if (client.init (argc, argv) == -1)
     return -1;
