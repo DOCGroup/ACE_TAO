@@ -61,7 +61,7 @@ sub fill_value {
       my($comps) = $$names{$name};
       foreach my $key (keys %$comps) {
         foreach my $item (@{$$comps{$key}}) {
-          my($dname) = dirname($item);
+          my($dname) = $self->relative(dirname($item));
           if ($dname ne '.' && $dname !~ /^\.\.\//) {
             $vpath{$dname} = 1;
           }
@@ -96,18 +96,12 @@ sub fill_value {
       }
     }
   }
-  elsif ($name eq 'notdirfiles') {
-    $value = '$(notdir $(FILES))';
-    foreach my $name (keys %$names) {
-      my($comps) = $$names{$name};
-      foreach my $key (keys %$comps) {
-        my($arr) = $$comps{$key};
-        foreach my $file (@$arr) {
-          if ($file =~ /^\.\.\//) {
-            $value = '$(FILES)';
-            last;
-          }
-        }
+  elsif ($name eq 'libcheck') {
+    my($libs) = $self->get_assignment('libs');
+    if (defined $libs) {
+      my($libpaths) = $self->get_assignment('libpaths');
+      if (defined $libpaths) {
+        $value = "LIBCHECK = \$(shell for lib in $libs; do for libpath in $libpaths; do full=\"`echo \$\$libpath/lib\$\$lib.* | tr ' ' '\\012' | head -1`\"; if [ -r \$\$full ]; then break; else full=; fi; done; if [ -z \"\$\$full\" ]; then echo \$\$lib; exit; fi; done; echo 1)";
       }
     }
   }

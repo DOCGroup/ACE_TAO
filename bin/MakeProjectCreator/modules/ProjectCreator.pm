@@ -585,7 +585,7 @@ sub parse_components {
     }
   }
 
-  while($_ = $fh->getline()) {
+  while(<$fh>) {
     my($line) = $self->strip_line($_);
 
     if ($line eq '') {
@@ -663,7 +663,7 @@ sub parse_verbatim {
   $self->{'verbatim'}->{$type}->{$loc} = [];
   my($array) = $self->{'verbatim'}->{$type}->{$loc};
 
-  while($_ = $fh->getline()) {
+  while(<$fh>) {
     my($line) = $self->strip_line($_);
 
     if ($line =~ /^}/) {
@@ -716,7 +716,7 @@ sub process_feature {
     ## closing brace for the feature and it appears to the parser
     ## that nothing was defined.
     my($curly) = 1;
-    while($_ = $fh->getline()) {
+    while(<$fh>) {
       my($line) = $self->strip_line($_);
 
       ## This is a very simplistic way of finding the end of
@@ -806,7 +806,7 @@ sub parse_define_custom {
       $self->{'matching_assignments'}->{$tag} = \@keys;
     }
 
-    while($_ = $fh->getline()) {
+    while(<$fh>) {
       my($line) = $self->strip_line($_);
 
       if ($line eq '') {
@@ -1094,7 +1094,7 @@ sub generate_default_target_names {
       my($exename) = undef;
       foreach my $file (@sources) {
         if (open($fh, $file)) {
-          while($_ = $fh->getline()) {
+          while(<$fh>) {
             ## Remove c++ comments (ignore c style comments for now)
             $_ =~ s/\/\/.*//;
 
@@ -2261,10 +2261,8 @@ sub update_project_info {
 sub relative {
   my($self)  = shift;
   my($value) = shift;
-  my($rel)   = $self->get_relative();
-  my(@keys)  = keys %$rel;
 
-  if (defined $value && defined $keys[0]) {
+  if (defined $value) {
     if (UNIVERSAL::isa($value, 'ARRAY')) {
       my(@built) = ();
       foreach my $val (@$value) {
@@ -2273,46 +2271,51 @@ sub relative {
       $value = \@built;
     }
     elsif ($value =~ /\$/) {
-      my($cwd)   = $self->getcwd();
-      my($start) = 0;
+      my($rel)   = $self->get_relative();
+      my(@keys)  = keys %$rel;
 
-      while(substr($value, $start) =~ /(\$\(([^)]+)\))/) {
-        my($whole)  = $1;
-        my($name)   = $2;
-        my($val)    = $$rel{$name};
+      if (defined $keys[0]) {
+        my($cwd)   = $self->getcwd();
+        my($start) = 0;
 
-        if (defined $val) {
-          ## Fix up the value for Windows switch the \\'s to /
-          if ($self->{'convert_slashes'}) {
-            $val =~ s/\\/\//g;
-          }
+        while(substr($value, $start) =~ /(\$\(([^)]+)\))/) {
+          my($whole)  = $1;
+          my($name)   = $2;
+          my($val)    = $$rel{$name};
 
-          ## Lowercase everything if we are running on Windows
-          my($icwd) = ($self->{'convert_slashes'} ? lc($cwd) : $cwd);
-          my($ival) = ($self->{'convert_slashes'} ? lc($val) : $val);
-          if (index($icwd, $ival) == 0) {
-            my($count)   = 0;
-            my($current) = $icwd;
-            substr($current, 0, length($ival)) = '';
-            while($current =~ /^\\/) {
-              $current =~ s/^\///;
-            }
-            my($length) = length($current);
-            for(my $i = 0; $i < $length; ++$i) {
-              if (substr($current, $i, 1) eq '/') {
-                ++$count;
-              }
-            }
-            $ival = '../' x $count;
-            $ival =~ s/\/$//;
+          if (defined $val) {
+            ## Fix up the value for Windows switch the \\'s to /
             if ($self->{'convert_slashes'}) {
-              $ival = $self->slash_to_backslash($ival);
+              $val =~ s/\\/\//g;
             }
-            substr($value, $start) =~ s/\$\([^)]+\)/$ival/;
-            $whole = $ival;
+
+            ## Lowercase everything if we are running on Windows
+            my($icwd) = ($self->{'convert_slashes'} ? lc($cwd) : $cwd);
+            my($ival) = ($self->{'convert_slashes'} ? lc($val) : $val);
+            if (index($icwd, $ival) == 0) {
+              my($count)   = 0;
+              my($current) = $icwd;
+              substr($current, 0, length($ival)) = '';
+              while($current =~ /^\\/) {
+                $current =~ s/^\///;
+              }
+              my($length) = length($current);
+              for(my $i = 0; $i < $length; ++$i) {
+                if (substr($current, $i, 1) eq '/') {
+                  ++$count;
+                }
+              }
+              $ival = '../' x $count;
+              $ival =~ s/\/$//;
+              if ($self->{'convert_slashes'}) {
+                $ival = $self->slash_to_backslash($ival);
+              }
+              substr($value, $start) =~ s/\$\([^)]+\)/$ival/;
+              $whole = $ival;
+            }
           }
+          $start += length($whole);
         }
-        $start += length($whole);
       }
     }
   }
