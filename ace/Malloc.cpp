@@ -28,7 +28,7 @@ ACE_Control_Block::dump (void) const
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   this->name_head_->dump ();
-  ACE_DEBUG ((LM_DEBUG, "freep_ = %x", this->freep_));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT("freep_ = %x"), this->freep_));
 
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
@@ -54,10 +54,10 @@ ACE_Name_Node::dump (void) const
   ACE_TRACE ("ACE_Name_Node");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, "pointer = %x", this->pointer_));
-  ACE_DEBUG ((LM_DEBUG, "\nnext_ = %x", this->next_));
-  ACE_DEBUG ((LM_DEBUG, "\nname_ = %s", this->name_));
-  ACE_DEBUG ((LM_DEBUG, "\n"));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT("pointer = %x"), this->pointer_));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT("\nnext_ = %x"), this->next_));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT("\nname_ = %s"), this->name_));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT("\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
@@ -138,10 +138,10 @@ ACE_Malloc_Stats::dump (void) const
   int ninuse  = this->ninuse_.value ();
   int nchunks = this->nchunks_.value ();
 
-  ACE_DEBUG ((LM_DEBUG, "nblocks = %d", nblocks));
-  ACE_DEBUG ((LM_DEBUG, "\nninuse = %d", ninuse));
-  ACE_DEBUG ((LM_DEBUG, "\nnchunks = %d", nchunks));
-  ACE_DEBUG ((LM_DEBUG, "\n"));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT("nblocks = %d"), nblocks));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT("\nninuse = %d"), ninuse));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT("\nnchunks = %d"), nchunks));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT("\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 

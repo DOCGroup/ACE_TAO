@@ -67,22 +67,22 @@ ACE_Data_Block::dump (void) const
   ACE_TRACE ("ACE_Data_Block::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG,
-	     "-----( Data Block )-----\n"
-	     "type_ = %d\n"
-	     "cur_size_ = %u\n"
-	     "max_size_ = %u\n"
-	     "flags_ = %u\n"
-	     "base_ = %u\n"
-	     "locking_strategy_ = %u\n"
-	     "reference_count_ = %u\n"
-	     "---------------------------\n",
-	     this->type_,
-	     this->cur_size_,
-	     this->max_size_,
-	     this->flags_,
-	     this->base_,
-	     this->locking_strategy_,
-	     this->reference_count_));
+              ASYS_TEXT ("-----( Data Block )-----\n")
+              ASYS_TEXT ("type_ = %d\n")
+              ASYS_TEXT ("cur_size_ = %u\n")
+              ASYS_TEXT ("max_size_ = %u\n")
+              ASYS_TEXT ("flags_ = %u\n")
+              ASYS_TEXT ("base_ = %u\n")
+              ASYS_TEXT ("locking_strategy_ = %u\n")
+              ASYS_TEXT ("reference_count_ = %u\n")
+              ASYS_TEXT ("---------------------------\n"),
+              this->type_,
+              this->cur_size_,
+              this->max_size_,
+              this->flags_,
+              this->base_,
+              this->locking_strategy_,
+              this->reference_count_));
   this->allocator_strategy_->dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
@@ -93,20 +93,20 @@ ACE_Message_Block::dump (void) const
   ACE_TRACE ("ACE_Message_Block::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG,
-	     "-----( Message Block )-----\n"
-	     "priority_ = %d\n"
-	     "next_ = %u\n"
-	     "prev_ = %u\n"
-	     "cont_ = %u\n"
-	     "rd_ptr_ = %u\n"
-	     "wr_ptr_ = %u\n"
-	     "---------------------------\n",
-	     this->priority_,
-	     this->next_,
-	     this->prev_,
-	     this->cont_,
-	     this->rd_ptr_,
-	     this->wr_ptr_));
+              ASYS_TEXT ("-----( Message Block )-----\n")
+              ASYS_TEXT ("priority_ = %d\n")
+              ASYS_TEXT ("next_ = %u\n")
+              ASYS_TEXT ("prev_ = %u\n")
+              ASYS_TEXT ("cont_ = %u\n")
+              ASYS_TEXT ("rd_ptr_ = %u\n")
+              ASYS_TEXT ("wr_ptr_ = %u\n")
+              ASYS_TEXT ("---------------------------\n"),
+              this->priority_,
+              this->next_,
+              this->prev_,
+              this->cont_,
+              this->rd_ptr_,
+              this->wr_ptr_));
   this->data_block ()->dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
@@ -221,7 +221,7 @@ ACE_Message_Block::ACE_Message_Block (const char *data,
 		    ACE_Message_Block::DONT_DELETE, // flags
 		    0, // priority
 		    0) == -1) // data block
-    ACE_ERROR ((LM_ERROR, "ACE_Message_Block"));
+    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("ACE_Message_Block")));
 }
 
 ACE_Message_Block::ACE_Message_Block (void)
@@ -237,7 +237,7 @@ ACE_Message_Block::ACE_Message_Block (void)
 		    ACE_Message_Block::DONT_DELETE, // flags
 		    0, // priority
 		    0) == -1) // data block
-    ACE_ERROR ((LM_ERROR, "ACE_Message_Block"));
+    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("ACE_Message_Block")));
 }
 
 ACE_Message_Block::ACE_Message_Block (size_t size,
@@ -259,7 +259,7 @@ ACE_Message_Block::ACE_Message_Block (size_t size,
 		    msg_data ? ACE_Message_Block::DONT_DELETE : 0,
 		    priority,
 		    0) == -1) // data block
-    ACE_ERROR ((LM_ERROR, "ACE_Message_Block"));
+    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("ACE_Message_Block")));
 }
 
 int
@@ -323,7 +323,7 @@ ACE_Message_Block::ACE_Message_Block (size_t size,
 		    flags,
 		    priority,
 		    db) == -1)
-    ACE_ERROR ((LM_ERROR, "ACE_Message_Block"));
+    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("ACE_Message_Block")));
 }
 
 ACE_Message_Block::ACE_Message_Block (ACE_Data_Block *data_block)
@@ -339,7 +339,7 @@ ACE_Message_Block::ACE_Message_Block (ACE_Data_Block *data_block)
 		    0,         // flags
 		    0,         // priority
 		    data_block) == -1) // data block
-    ACE_ERROR ((LM_ERROR, "ACE_Message_Block"));
+    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("ACE_Message_Block")));
 }
 
 int

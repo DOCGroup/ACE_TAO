@@ -113,7 +113,7 @@ ACE_RW_Mutex::dump (void) const
 // ACE_TRACE ("ACE_RW_Mutex::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, "\n"));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT("\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
@@ -121,7 +121,7 @@ ACE_RW_Mutex::ACE_RW_Mutex (int type, LPCTSTR name, void *arg)
 {
 // ACE_TRACE ("ACE_RW_Mutex::ACE_RW_Mutex");
   if (ACE_OS::rwlock_init (&this->lock_, type, name, arg) != 0)
-    ACE_ERROR ((LM_ERROR, "%p\n", "ACE_RW_Mutex::ACE_RW_Mutex"));
+    ACE_ERROR ((LM_ERROR, ASYS_TEXT("%p\n"), ASYS_TEXT("ACE_RW_Mutex::ACE_RW_Mutex")));
 }
 
 ACE_RW_Mutex::~ACE_RW_Mutex (void)
@@ -138,7 +138,7 @@ ACE_Semaphore::dump (void) const
 // ACE_TRACE ("ACE_Semaphore::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, "\n"));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT("\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
@@ -151,7 +151,7 @@ ACE_Semaphore::ACE_Semaphore (u_int count,
 // ACE_TRACE ("ACE_Semaphore::ACE_Semaphore");
   if (ACE_OS::sema_init (&this->semaphore_, count, type,
                          name, arg, max) != 0)
-    ACE_ERROR ((LM_ERROR, "%p\n", "ACE_Semaphore::ACE_Semaphore"));
+    ACE_ERROR ((LM_ERROR, ASYS_TEXT("%p\n"), ASYS_TEXT("ACE_Semaphore::ACE_Semaphore")));
 }
 
 ACE_Semaphore::~ACE_Semaphore (void)
@@ -174,7 +174,7 @@ ACE_File_Lock::ACE_File_Lock (ACE_HANDLE h)
 {
 // ACE_TRACE ("ACE_File_Lock::ACE_File_Lock");
   if (ACE_OS::flock_init (&this->lock_) == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n", "ACE_File_Lock::ACE_File_Lock"));
+    ACE_ERROR ((LM_ERROR, ASYS_TEXT("%p\n"), ASYS_TEXT("ACE_File_Lock::ACE_File_Lock")));
   this->set_handle (h);
 }
 
@@ -185,7 +185,7 @@ ACE_File_Lock::ACE_File_Lock (LPCTSTR name,
 // ACE_TRACE ("ACE_File_Lock::ACE_File_Lock");
 
   if (this->open (name, flags, perms) == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n", "ACE_File_Lock::ACE_File_Lock"));
+    ACE_ERROR ((LM_ERROR, ASYS_TEXT("%p\n"), ASYS_TEXT("ACE_File_Lock::ACE_File_Lock")));
 }
 
 int
@@ -232,7 +232,7 @@ ACE_Process_Semaphore::~ACE_Process_Semaphore (void)
 {
 // ACE_TRACE ("ACE_Process_Semaphore::~ACE_Process_Semaphore");
   //  if (this->remove () == -1)
-  //    ACE_ERROR ((LM_ERROR, "%p\n", "ACE_Process_Mutex::~ACE_Process_Mutex"));
+  //    ACE_ERROR ((LM_ERROR, ASYS_TEXT("%p\n"), ASYS_TEXT("ACE_Process_Mutex::~ACE_Process_Mutex")));
 }
 
 // Explicitly destroy the semaphore.
@@ -282,7 +282,7 @@ ACE_Mutex::dump (void) const
 // ACE_TRACE ("ACE_Mutex::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, "\n"));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT("\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
@@ -291,7 +291,7 @@ ACE_Mutex::ACE_Mutex (int type, LPCTSTR name, void *arg)
 // ACE_TRACE ("ACE_Mutex::ACE_Mutex");
 
   if (ACE_OS::mutex_init (&this->lock_, type, name, arg) != 0)
-    ACE_ERROR ((LM_ERROR, "%p\n", "ACE_Mutex::ACE_Mutex"));
+    ACE_ERROR ((LM_ERROR, ASYS_TEXT("%p\n"), ASYS_TEXT("ACE_Mutex::ACE_Mutex")));
 }
 
 ACE_Mutex::~ACE_Mutex (void)
@@ -312,7 +312,7 @@ ACE_Event::ACE_Event (int manual_reset,
                           type,
                           name,
                           arg) != 0)
-    ACE_ERROR ((LM_ERROR, "%p\n", "ACE_Event::ACE_Event"));
+    ACE_ERROR ((LM_ERROR, ASYS_TEXT("%p\n"), ASYS_TEXT("ACE_Event::ACE_Event")));
 }
 
 ACE_Event::~ACE_Event (void)
@@ -439,7 +439,7 @@ ACE_Thread_Mutex_Guard::dump (void) const
 // ACE_TRACE ("ACE_Thread_Mutex_Guard::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, "\n"));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT("\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
@@ -591,11 +591,11 @@ ACE_Recursive_Thread_Mutex::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   this->lock_available_.dump ();
   this->nesting_mutex_.dump ();
-  ACE_DEBUG ((LM_DEBUG, "nesting_level_ = %d", this->nesting_level_));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT("nesting_level_ = %d"), this->nesting_level_));
 #if !defined (ACE_HAS_DCETHREADS) && !defined (ACE_HAS_PTHREADS)
-  ACE_DEBUG ((LM_DEBUG, "\nowner_id_ = %u", this->owner_id_));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT("\nowner_id_ = %u"), this->owner_id_));
 #else
-  ACE_DEBUG ((LM_DEBUG, "\n"));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT("\n")));
 #endif /* !ACE_HAS_DCETHREADS */
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
@@ -609,10 +609,10 @@ ACE_Condition_Thread_Mutex::dump (void) const
 // ACE_TRACE ("ACE_Condition_Thread_Mutex::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, "\n"));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT("\n")));
 #if defined (ACE_WIN32)
   ACE_DEBUG ((LM_DEBUG,
-              "waiters = %d\n",
+              ASYS_TEXT ("waiters = %d\n"),
               this->cond_.waiters ()));
 #endif /* ACE_WIN32 */
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
@@ -632,8 +632,8 @@ ACE_Condition_Thread_Mutex::ACE_Condition_Thread_Mutex (const ACE_Thread_Mutex &
 
 // ACE_TRACE ("ACE_Condition_Thread_Mutex::ACE_Condition_Thread_Mutex");
   if (ACE_OS::cond_init (&this->cond_, USYNC_THREAD, name, arg) != 0)
-    ACE_ERROR ((LM_ERROR, "%p\n",
-                "ACE_Condition_Thread_Mutex::ACE_Condition_Thread_Mutex"));
+    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("%p\n"),
+                ASYS_TEXT ("ACE_Condition_Thread_Mutex::ACE_Condition_Thread_Mutex")));
 }
 
 ACE_Condition_Thread_Mutex::~ACE_Condition_Thread_Mutex (void)
@@ -693,8 +693,8 @@ ACE_Sub_Barrier::dump (void) const
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   this->barrier_finished_.dump ();
-  ACE_DEBUG ((LM_DEBUG, "running_threads_ = %d", this->running_threads_));
-  ACE_DEBUG ((LM_DEBUG, "\n"));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT("running_threads_ = %d"), this->running_threads_));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT("\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
@@ -719,8 +719,8 @@ ACE_Barrier::dump (void) const
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   this->lock_.dump ();
-  ACE_DEBUG ((LM_DEBUG, "current_generation_ = %d", this->current_generation_));
-  ACE_DEBUG ((LM_DEBUG, "\ncount_ = %d", this->count_));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT("current_generation_ = %d"), this->current_generation_));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT("\ncount_ = %d"), this->count_));
   this->sub_barrier_1_.dump ();
   this->sub_barrier_2_.dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
@@ -829,7 +829,7 @@ ACE_Thread_Mutex::dump (void) const
 // ACE_TRACE ("ACE_Thread_Mutex::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, "\n"));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT("\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
@@ -844,7 +844,7 @@ ACE_Thread_Mutex::ACE_Thread_Mutex (LPCTSTR name, void *arg)
 //  ACE_TRACE ("ACE_Thread_Mutex::ACE_Thread_Mutex");
 
   if (ACE_OS::thread_mutex_init (&this->lock_, USYNC_THREAD, name, arg) != 0)
-    ACE_ERROR ((LM_ERROR, "%p\n", "ACE_Thread_Mutex::ACE_Thread_Mutex"));
+    ACE_ERROR ((LM_ERROR, ASYS_TEXT("%p\n"), ASYS_TEXT("ACE_Thread_Mutex::ACE_Thread_Mutex")));
 }
 
 ACE_ALLOC_HOOK_DEFINE(ACE_RW_Thread_Mutex)
