@@ -24,7 +24,7 @@ namespace TAO
 {
   /**
    *
-   * @brief Template class specialized for each IDL arg/return type.
+   * @brief Template class specialized for IDL arg/return types.
    *
    */
   template<typename S>

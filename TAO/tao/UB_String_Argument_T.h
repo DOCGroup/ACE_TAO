@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file    String_Argument_T.h
+ *  @file    UB_String_Argument_T.h
  *
  *  $Id$
  *
@@ -196,7 +196,7 @@ namespace TAO
   /**
    * @struct UB_String_Tag
    *
-   * @brief Struct for basic IDL type arguments id tag.
+   * @brief Struct for unbounded (w)string arguments id tag.
    *
    */
   struct TAO_Export UB_String_Tag {};
@@ -204,7 +204,7 @@ namespace TAO
   /**
    * @struct Basic_Arg_Traits_T
    *
-   * @brief Template class for argument traits of basic IDL types.
+   * @brief Template class for argument traits of unbounded (w)strings.
    *
    */
   template<typename T, typename T_out>
