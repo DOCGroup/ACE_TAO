@@ -18,6 +18,9 @@ Mon Feb 02 21:26:30 1998  David L. Levine  <levine@cs.wustl.edu>
           ACE_Sig_Handler to ACE_Test_Sig_Handler to avoid collision
           with ACE_Sig_Handler in ACE library.
 
+        * tests/Env_Value_Test.cpp (main): print out signed instead of
+          unsigned values.
+
 Mon Feb 02 14:40:00 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
         * tests/OrdMultiSet_Test.cpp: added explicit template instantiation
