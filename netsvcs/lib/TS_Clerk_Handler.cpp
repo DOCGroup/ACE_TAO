@@ -346,6 +346,8 @@ ACE_TS_Clerk_Handler::handle_close (ACE_HANDLE,
 				    ACE_Reactor_Mask mask)
 {
   ACE_TRACE ("ACE_TS_Clerk_Handler::handle_close");
+  ACE_UNUSED_ARG (mask);
+
   ACE_DEBUG ((LM_DEBUG, "(%t) shutting down on handle %d\n", this->get_handle ()));
 
   return this->reinitiate_connection ();
@@ -803,6 +805,12 @@ ACE_SVC_FACTORY_DEFINE (ACE_TS_Clerk_Processor)
 
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
 template class ACE_Connector<ACE_TS_Clerk_Handler, ACE_SOCK_CONNECTOR>;
-template class ACE_Svc_Tuple<ACE_TS_Clerk_Handler>;
+template class ACE_Guard<ACE_RW_Mutex>;
+template class ACE_Map_Iterator<int, ACE_Svc_Tuple<ACE_TS_Clerk_Handler> *, ACE_RW_Mutex>;
 template class ACE_Map_Manager<int, ACE_Svc_Tuple<ACE_TS_Clerk_Handler> *, ACE_RW_Mutex>;
+template class ACE_Read_Guard<ACE_RW_Mutex>;
+template class ACE_Svc_Tuple<ACE_TS_Clerk_Handler>;
+template class ACE_Unbounded_Set<ACE_TS_Clerk_Handler *>;
+template class ACE_Unbounded_Set_Iterator<ACE_TS_Clerk_Handler *>;
+template class ACE_Write_Guard<ACE_RW_Mutex>;
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
