@@ -1,17 +1,14 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/orbsvcs/Concurrency_Service
-//
-// = FILENAME
-//    Concurrency_Utils.cpp
-//
-// = AUTHOR
-//    Torben Worm <tworm@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Concurrency_Utils.cpp
+ *
+ *  $Id$
+ *
+ *  @author Torben Worm <tworm@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "ace/streams.h"
 #include "orbsvcs/CosConcurrencyControlC.h"
@@ -24,13 +21,11 @@ ACE_RCSID (Concurrency,
            "$Id$")
 
 // Default constructor
-
 TAO_Concurrency_Server::TAO_Concurrency_Server (void)
 {
 }
 
 // Constructor which takes an ORB and POA.
-
 TAO_Concurrency_Server::TAO_Concurrency_Server (CORBA::ORB_ptr orb,
                                                 PortableServer::POA_ptr poa)
 {
@@ -39,7 +34,6 @@ TAO_Concurrency_Server::TAO_Concurrency_Server (CORBA::ORB_ptr orb,
 
 // Function to initialize the concurrency server object under the
 // passed orb and poa.
-
 CORBA::Object_ptr
 TAO_Concurrency_Server::init (CORBA::ORB_ptr orb,
                               PortableServer::POA_ptr poa)
@@ -75,7 +69,7 @@ TAO_Concurrency_Server::init (CORBA::ORB_ptr orb,
         orb->object_to_string (obj.in ()
                                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      
+
       ACE_DEBUG ((LM_DEBUG,
                   "listening as object <%s>\n",
                   str.in ()));
