@@ -95,7 +95,7 @@ Gateway::parse_args (int argc, char *argv[])
   ACE_OS::strcpy (this->consumer_config_file_, "consumer_config");
   this->debug_ = 0;
 
-  ACE_Get_Opt get_opt (argc, argv, "abC:cdP:pq:t:vw:", 0);
+  ACE_Get_Opt get_opt (argc, argv, "abC:cdP:p:q:t:vw:", 0);
 
   for (int c; (c = get_opt ()) != EOF; )
     {
