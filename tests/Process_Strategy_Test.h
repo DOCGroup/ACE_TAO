@@ -59,6 +59,10 @@ protected:
 
   virtual int handle_input (ACE_HANDLE p = ACE_INVALID_HANDLE);
   // Hook called by the <Reactor> when data arrives from the client.
+
+  virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
+                            ACE_Reactor_Mask = ACE_Event_Handler::ALL_EVENTS_MASK);
+  // Closing down
 };
 
 class Options : public ACE_Event_Handler

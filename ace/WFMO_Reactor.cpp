@@ -643,6 +643,36 @@ ACE_WFMO_Reactor::open (size_t size,
   if (this->open_for_business_)
     return -1;
 
+  // Timer Queue 
+  if (this->delete_timer_queue_)
+    delete this->timer_queue_;
+  
+  if (tq == 0)
+    {
+      ACE_NEW_RETURN (this->timer_queue_, ACE_Timer_Heap, -1);
+      this->delete_timer_queue_ = 1;
+    }
+  else 
+    {
+      this->timer_queue_ = tq;
+      this->delete_timer_queue_ = 0;
+    }
+  
+  // Signal Handler 
+  if (this->delete_signal_handler_)
+    delete this->signal_handler_;
+  
+  if (sh == 0)
+    {
+      ACE_NEW_RETURN (this->signal_handler_, ACE_Sig_Handler, -1);
+      this->delete_signal_handler_ = 1;
+    }
+  else 
+    {
+      this->signal_handler_ = sh;
+      this->delete_signal_handler_ = 0;
+    }
+  
   // Setup the atomic wait array (used later in <handle_events>)
   this->atomic_wait_array_[0] = this->lock_.lock ().proc_mutex_;
   this->atomic_wait_array_[1] = this->ok_to_wait_.handle ();
@@ -660,6 +690,15 @@ ACE_WFMO_Reactor::open (size_t size,
   else
     this->delete_handler_rep_ = 1;
 
+  /* NOTE */
+  // The order of the following two registrations is very important
+
+  // Open the notification handler
+  if (this->notify_handler_.open (*this, this->timer_queue_) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", 
+		       "opening notify handler "), 
+		      -1);
+
   // Register for <wakeup_all_threads> event
   if (this->register_handler (&this->wakeup_all_threads_handler_, 
 			      this->wakeup_all_threads_.handle ()) == -1)
@@ -676,42 +715,6 @@ ACE_WFMO_Reactor::open (size_t size,
       // Turn off <wakeup_all_threads_> since all necessary changes
       // have completed
       this->wakeup_all_threads_.reset ();
-    }
-
-  // Timer Queue 
-  if (this->delete_timer_queue_)
-    delete this->timer_queue_;
-
-  if (tq == 0)
-    {
-      ACE_NEW_RETURN (this->timer_queue_, ACE_Timer_Heap, -1);
-      this->delete_timer_queue_ = 1;
-    }
-  else 
-    {
-      this->timer_queue_ = tq;
-      this->delete_timer_queue_ = 0;
-    }
-
-  // Open the notification handler
-  if (this->notify_handler_.open (*this, this->timer_queue_) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", 
-		       "opening notify handler "), 
-		      -1);
-
-  // Signal Handler 
-  if (this->delete_signal_handler_)
-    delete this->signal_handler_;
-
-  if (sh == 0)
-    {
-      ACE_NEW_RETURN (this->signal_handler_, ACE_Sig_Handler, -1);
-      this->delete_signal_handler_ = 1;
-    }
-  else 
-    {
-      this->signal_handler_ = sh;
-      this->delete_signal_handler_ = 0;
     }
 
   // We are open for business
