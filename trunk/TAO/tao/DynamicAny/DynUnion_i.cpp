@@ -142,7 +142,7 @@ TAO_DynUnion_i::_tao_QueryInterface (ptr_arith_t type)
 // an Any argument.
 void
 TAO_DynUnion_i::set_from_any (const CORBA::Any & any,
-                              CORBA::Boolean from_factory
+                              CORBA::Boolean /* from_factory */
                               ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
       CORBA::SystemException,
