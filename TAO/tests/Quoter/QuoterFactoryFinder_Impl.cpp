@@ -65,7 +65,7 @@ QuoterFactoryFinder_i::QuoterFactoryFinder_i (void)
       quoterFactoryFinderName_[0].id = CORBA::string_dup ("QuoterFactoryFinder");
 
       this->quoterNamingContext_var_->bind (quoterFactoryFinderName_,
-                                            this->_this(),
+                                            this->_this(TAO_TRY_ENV),
                                             TAO_TRY_ENV);
       TAO_CHECK_ENV;
     }
