@@ -1,3 +1,9 @@
+Thu Dec  9 07:33:16 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/tests/InterfaceRepo/Application_Test/ifr_dii_client.cpp:
+
+          Replaced TRUE with true.
+
 Thu Dec  9 12:15:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/RTPortableServer/RTPortableServerC.{h,cpp,i,inl}:
@@ -69,11 +75,11 @@ Wed Dec  8 16:15:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed Dec  8 08:00:35 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.cpp:
-	* orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.cpp:
-	* orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.cpp:
-	  Added #include "ace/OS_NS_stdio.h" and "ace/OS_NS_unistd.h" to
-	  bring declarations into scope for noinline builds.
+        * orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.cpp:
+        * orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.cpp:
+        * orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.cpp:
+          Added #include "ace/OS_NS_stdio.h" and "ace/OS_NS_unistd.h" to
+          bring declarations into scope for noinline builds.
 
 Wed Dec  8 15:53:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -163,16 +169,16 @@ Wed Dec  8 11:04:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue Dec  7 21:55:44 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.cpp:
-	* orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.h:
-	* orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.cpp:
-	* orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.h:
-	* orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.cpp:
-	* orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.h:
+        * orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.cpp:
+        * orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.h:
+        * orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.cpp:
+        * orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.h:
+        * orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.cpp:
+        * orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.h:
 
-	  Added command line options for writing factory IOR to a file;
-	  writing proces ID to a file; whether, and if so, what name to
-	  use to register with the Naming Service.
+          Added command line options for writing factory IOR to a file;
+          writing proces ID to a file; whether, and if so, what name to
+          use to register with the Naming Service.
 
 Tue Dec  7 18:16:14 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
