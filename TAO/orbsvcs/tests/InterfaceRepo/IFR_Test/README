@@ -116,6 +116,10 @@ destroy() call(s) at the end of the function were not exectuted.
 Before running the test again, the Interface Repository process
 should be stopped and restarted to avoid a BAD_PARAM exception.
 
+The IFR server is started in this test with locking enabled. Even
+though the test itself is single-threaded, using this option will
+ensure that future modifications to IFR code dont' cause deadlocks.
+
 More information about the Interface Repository can be found in 
 TAO/docs/releasenotes.index.html.
 
