@@ -1,3 +1,32 @@
+Tue Jan  4 11:46:42 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/Any.h:
+	*tao/Any.cpp:
+	  Added >>= operators to extract to const CORBA::Any *&,
+	  as well as to const char *& and const wchar *&, as outlined in 
+	  the CORBA 2.3.1 C++ mapping.
+
+	* TAO_IDL/be/be_visitor_exception/any_op_ch.cpp:
+	* TAO_IDL/be/be_visitor_exception/any_op_cs.cpp:
+	* TAO_IDL/be/be_visitor_sequence/any_op_ch.cpp:
+	* TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp:
+	* TAO_IDL/be/be_visitor_structure/any_op_ch.cpp:
+	* TAO_IDL/be/be_visitor_structure/any_op_cs.cpp:
+	* TAO_IDL/be/be_visitor_union/any_op_ch.cpp:
+	* TAO_IDL/be/be_visitor_union/any_op_cs.cpp:
+	* TAO_IDL/be/be_visitor_union/any_op_cs.h:
+	  Added code generation for Any extraction operator to
+	  pointer to const whenever extraction to a pointer is called
+	  for. Left the former generated operators (same but without
+	  the 'const') for backward compatibility, but marked them
+	  as 'deprecated' in the generated header file. Also modified
+	  code for both operators to return a null pointer if the
+	  extraction fails. All this is in accordance with CORBA 2.3.1.
+
+	* TAO_IDL/be/be_visitor_interface/any_op_cs.cpp:
+	  Modified Any extraction operator to return a null pointer
+	  if the extraction fails, for the reason given above.
+
 Tue Jan 04 07:30:04 2000  David L. Levine  <levine@cs.wustl.edu>
 
         * TAO version 1.0.11 released.
