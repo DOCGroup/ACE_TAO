@@ -1,3 +1,12 @@
+Fri Nov 28 11:22:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Advanced/ch_12/Advanced_ch_12.mpc:
+        * examples/Advanced/ch_18/Advanced_ch_18.mpc:
+        * examples/Advanced/ch_21/Advanced_ch_21.mpc:
+        * examples/Advanced/ch_3/Advanced_ch_3.mpc:
+        * examples/Advanced/ch_8_and_10/Advanced_ch_8_and_10.mpc:
+          These examples require native C++ exceptions
+
 Fri Nov 28 09:56:01 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Kokyu_dsrt_schedulers/FP_Scheduling.idl:
