@@ -1,3 +1,8 @@
+Thu Jun 26 10:02:47 1997  Aniruddha Gokhale  <gokhale@merengue.cs.wustl.edu>
+
+	* Some more progress. Generates the client and server side files
+	without much contents in it.
+
 Sat May 17 17:18:38 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* First pass at providing a backend to the SunSoft's CORBA IDL

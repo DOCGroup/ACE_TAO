@@ -19,6 +19,7 @@ be_interface::be_interface(UTL_ScopedName *n, AST_Interface **ih, long nih,
 
 void be_interface::gen_client_header()
 {
+#if 0
   if (idl_global->in_main_file())
     {
       // if we are defined in the main file, then generate the code
@@ -40,6 +41,19 @@ void be_interface::gen_client_header()
       idl_global->indent()->skip_to(o);
       o << "}";
     }
+#endif
+}
+
+void be_interface::gen_client_stubs()
+{
+}
+
+void be_interface::gen_server_header()
+{
+}
+
+void be_interface::gen_server_skeletons()
+{
 }
 
 // Narrowing
