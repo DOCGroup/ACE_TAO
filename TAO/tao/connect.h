@@ -66,7 +66,7 @@ public:
 
   // = Template Methods Called by <handle_input>
 
-  virtual int read_message (CDR &msg, CORBA::Environment &env);
+  virtual int recv_request (CDR &msg, CORBA::Environment &env);
   // Extract a message from the stream associated with <peer()> and
   // place it into <msg>.  Return 0 if success, -1 with <errno> and
   // <env> set if problems.
