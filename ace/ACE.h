@@ -156,12 +156,11 @@ namespace ACE
 
 #if defined (ACE_HAS_TLI)
 
-  ACE_NAMESPACE_INLINE_FUNCTION
-  ssize_t t_rcv (ACE_HANDLE handle,
-                 void *buf,
-                 size_t len,
-                 int *flags,
-                 const ACE_Time_Value *timeout = 0);
+  extern ACE_Export ssize_t t_rcv (ACE_HANDLE handle,
+                                   void *buf,
+                                   size_t len,
+                                   int *flags,
+                                   const ACE_Time_Value *timeout = 0);
 
 #endif /* ACE_HAS_TLI */
 
@@ -719,20 +718,18 @@ namespace ACE
 
 #if defined (ACE_HAS_TLI)
 
-  ACE_NAMESPACE_INLINE_FUNCTION
-  ssize_t t_rcv_n_i (ACE_HANDLE handle,
-                     void *buf,
-                     size_t len,
-                     int *flags,
-                     size_t *bytes_transferred);
+  extern ACE_Export ssize_t t_rcv_n_i (ACE_HANDLE handle,
+                                       void *buf,
+                                       size_t len,
+                                       int *flags,
+                                       size_t *bytes_transferred);
 
-  ACE_NAMESPACE_INLINE_FUNCTION
-  ssize_t t_rcv_n_i (ACE_HANDLE handle,
-                     void *buf,
-                     size_t len,
-                     int *flags,
-                     const ACE_Time_Value *timeout,
-                     size_t *bytes_transferred);
+  extern ACE_Export ssize_t t_rcv_n_i (ACE_HANDLE handle,
+                                       void *buf,
+                                       size_t len,
+                                       int *flags,
+                                       const ACE_Time_Value *timeout,
+                                       size_t *bytes_transferred);
 
 #endif /* ACE_HAS_TLI */
 
