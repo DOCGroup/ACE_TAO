@@ -1,3 +1,8 @@
+Wed Jun 11 16:14:40 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/IDL_Test/Makefile: Fixed a minor problem which should
+	  help the daily builds to run this test a lot smoother!
+
 Wed Jun 11 15:58:39 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Transport_Cache_Manager.cpp (make_idle_i): Fixes for BUG

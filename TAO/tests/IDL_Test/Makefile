@@ -72,7 +72,7 @@ include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
 
-ifeq ($(templates),implicit)
+ifneq ($(templates),explicit)
 BUILD += 	namespace_check.cpp   \
 		reopened_modulesC.cpp \
 		reopen_include1C.cpp  \
