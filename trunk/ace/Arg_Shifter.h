@@ -54,24 +54,36 @@ public:
   char* get_current (void) const;
   // Get the current head of the vector.
 
-  char* get_current_parameter (int offset = 0);
-  // After checking for a flag, use this method return the parameter
-  // Safe to call without checking for current argument
+  char* get_the_parameter (const char* flag);
+  // If the <flag> matches the current_arg of arg shifter
+  // this method will attempt to return the associated
+  // parameter value
   //
-  // If offset > 0, returns current argument + offset
-  //     if (offset == 2) ... "value" returns pointer to "lue"
-  //     if (offset == 7) ... "value" returns 0
+  // Safe to call without checking for a current argument
   //
-  // If offset == 0
-  //     consumes current argument
-  //     if (is_parameter_next ()) is true
-  //     then returns a pointer to the new current argument
-  //     else returns 0
+  // A char* to 'value' is returned:
   //
-  // If offset < 0, returns current argument with offset
-  //     but offset counts from the back
-  //     if (offset == -2) ... "value" returns pointer to "ue"
-  //     if (offset == -9) ... "value" returns 0
+  // eg: main -foobar value, main -FooBar value
+  //     main -FOOBARvalue
+  //
+  //     all of the above will all match the <flag> == -FooBar
+  //     and will return a char* to 'value'
+  //
+  //     main -foobar 4 would succeed and return a char* to '4'
+  //     main -foobar -4 wound not succeed (-4 is not a parameter)
+  //          but instead, would return 0
+  //
+  // 0 is returned:
+  //     If the current argument does not match flag
+  //     If there is no parameter found after a 'matched' flag
+  //
+  // If the flag is mateched and the flag and paramter DO NOT RUN
+  // together, the flag is consumed, the parameter is returned,
+  // and the new current argument is the paramter value.
+  // ie '-foobarflag  VALUE
+  //
+  // If the flag is matched and the flag and parameter DO RUN
+  // together '-foobarflagVALUE, the flag is NOT consumed
 
   int cur_arg_strncasecmp (const char* flag);
   // Check if the current argument matches (case insensitive) <flag>
