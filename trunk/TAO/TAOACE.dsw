@@ -15,6 +15,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "ACE_QoS DLL"=..\ace\QoS\ACE_QoS.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "ACE_SSL"=..\ace\SSL\ACE_SSL.dsp - Package Owner=<4>
 
 Package=<5>
