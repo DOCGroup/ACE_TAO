@@ -150,22 +150,13 @@ test_performance (size_t max_handles,
 
 #if defined (ACE_LACKS_FLOATING_POINT)
   ACE_DEBUG ((LM_DEBUG,
-	      "real time = %u secs\n",
+	      "real time = %u usecs\n",
 	      et.real_time));
 
-#if defined (ACE_LACKS_LONGLONG_T)
-  ACE_U_LongLong tmp = et.real_time;
-  tmp *= (ACE_UINT32) 1000000;
   ACE_DEBUG ((LM_DEBUG,
 	      "time per each of the %d calls = %u usecs\n",
 	      count,
-	      tmp / count));
-#else
-  ACE_DEBUG ((LM_DEBUG,
-	      "time per each of the %d calls = %u usecs\n",
-	      count,
-	      et.real_time * 1000000u / count));
-#endif
+	      et.real_time / count));
 #else  /* ! ACE_LACKS_FLOATING_POINT */
   ACE_DEBUG ((LM_DEBUG,
 	      "real time = %f secs, user time = %f secs, system time = %f secs\n",
