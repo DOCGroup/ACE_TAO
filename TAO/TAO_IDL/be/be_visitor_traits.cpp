@@ -286,7 +286,8 @@ be_visitor_traits::visit_array (be_array *node)
       << ");" << be_uidt_nl
       << "static " << node->name () << "_slice * tao_alloc (void);" << be_uidt_nl
       << "};";
-      
+
+  node->cli_traits_gen (I_TRUE);
   return 0;
 }
 
