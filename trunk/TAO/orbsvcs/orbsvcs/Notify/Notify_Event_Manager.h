@@ -28,6 +28,7 @@
 #include "orbsvcs/ESF/ESF_Worker.h"
 #include "Notify_Collection.h"
 #include "notify_export.h"
+#include "Notify_Listeners.h"
 
 class TAO_Notify_EventChannel_i;
 class TAO_Notify_Event;
@@ -36,7 +37,6 @@ class TAO_Notify_Event_Map;
 class TAO_Notify_Update_Dispatcher;
 class TAO_Notify_EventSource;
 class TAO_Notify_EventListener;
-class TAO_Notify_UpdateListener;
 class TAO_Notify_Worker_Task;
 class TAO_Notify_EMO_Factory;
 class TAO_Notify_Event_Processor;
