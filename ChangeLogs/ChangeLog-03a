@@ -1,3 +1,9 @@
+Sun Mar  4 04:46:44 2001  Darrell Brunsch <brunsch@uci.edu>
+
+        * bin/nightlybuilds/builds.lst:
+
+          Added new Windows CE nightly build.
+
 Sun Mar 04 03:12:17 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* bin/generate_export_file.pl: ACE_AS_STATIC_LIBS was incorrectly
