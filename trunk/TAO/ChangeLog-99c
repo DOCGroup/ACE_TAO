@@ -1,3 +1,11 @@
+Sat Feb 06 20:41:00 1999 Chris Gill <cdgill@cs.wustl.edu>
+
+    	* TAO/orbsvcs/tests/Simulator/Event_Supplier/DualEC_Sup.dsp
+    	  TAO/orbsvcs/tests/Simulator/Event_Supplier/Event_Sup.dsw
+    	  TAO/orbsvcs/tests/Simulator/Event_Supplier/Logging_Sup.dsp:
+	  Redid NT project file for DualEC_Sup using MSVC++ 5.0, added
+	  dependencies for .\NavWeap.idl on ..\NavWeap.idl
+
 Sat Feb  6 19:56:27 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/CDR.h: 
@@ -22,7 +30,7 @@ Sat Feb  6 17:50:16 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 	* TAO_IDL/driver/drv_preproc.cpp (DRV_pre_proc): Added an exit(1)
 	  when the preprocessor fails so that tao_idl doesn't hang.
 
-Fri Feb 06 07:55:00 1999 Chris Gill <cdgill@cs.wustl.edu>
+Sat Feb 06 07:55:00 1999 Chris Gill <cdgill@cs.wustl.edu>
 
   (new) * TAO/orbsvcs/tests/Simulator/DOVEBrowser/MTDataHandlerAdapter.java:
  	  Adapts data handler to be an active object that processes events

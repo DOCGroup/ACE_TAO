@@ -17,12 +17,13 @@ CFG=DualEC_Sup - Win32 Debug
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "DualEC_Sup - Win32 Release" (based on "Win32 (x86) Console Application")
-!MESSAGE "DualEC_Sup - Win32 Debug" (based on "Win32 (x86) Console Application")
+!MESSAGE "DualEC_Sup - Win32 Release" (based on\
+ "Win32 (x86) Console Application")
+!MESSAGE "DualEC_Sup - Win32 Debug" (based on\
+ "Win32 (x86) Console Application")
 !MESSAGE 
 
 # Begin Project
-# PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
 CPP=cl.exe
@@ -48,15 +49,15 @@ BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
-# ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
+# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
+# ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
 
 !ELSEIF  "$(CFG)" == "DualEC_Sup - Win32 Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "DualEC_Sup___Win32_Debug"
-# PROP BASE Intermediate_Dir "DualEC_Sup___Win32_Debug"
+# PROP BASE Output_Dir "DualEC_S"
+# PROP BASE Intermediate_Dir "DualEC_S"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
@@ -73,7 +74,7 @@ BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
+# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
 # ADD LINK32 aced.lib TAOd.lib orbsvcsd.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"..\..\..\..\..\ace" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\orbsvcs"
 
 !ENDIF 
@@ -82,9 +83,9 @@ LINK32=link.exe
 
 # Name "DualEC_Sup - Win32 Release"
 # Name "DualEC_Sup - Win32 Debug"
-# Begin Group "Source Files"
+# Begin Group "Source files"
 
-# PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
+# PROP Default_Filter "*.cpp"
 # Begin Source File
 
 SOURCE=.\DOVE_Supplier.cpp
@@ -102,9 +103,9 @@ SOURCE=.\NavWeapC.cpp
 SOURCE=.\NavWeapS.cpp
 # End Source File
 # End Group
-# Begin Group "Header Files"
+# Begin Group "Header files"
 
-# PROP Default_Filter "h;hpp;hxx;hm;inl"
+# PROP Default_Filter "*.h"
 # Begin Source File
 
 SOURCE=.\DOVE_Supplier.h
@@ -124,10 +125,11 @@ SOURCE=.\NavWeapS.h
 # End Group
 # Begin Group "IDL files"
 
-# PROP Default_Filter "idl"
+# PROP Default_Filter "*.idl"
 # Begin Source File
 
 SOURCE=.\NavWeap.idl
+USERDEP__NAVWE="..\$(InputName).idl"	
 
 !IF  "$(CFG)" == "DualEC_Sup - Win32 Release"
 
@@ -139,7 +141,9 @@ InputName=NavWeap
 
 BuildCmds= \
 	xcopy ..\$(InputName).idl \
-	..\..\..\..\..\bin\tao_idl -I ..\..\..\orbsvcs $(InputName).idl \
+	..\..\..\..\..\bin\tao_idl -I ..\..\..\orbsvcs\
+ $(InputName).idl..\..\..\..\..\bin\tao_idl -I ..\..\..\orbsvcs $(InputName).idl\
+ \
 	
 
 "$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
