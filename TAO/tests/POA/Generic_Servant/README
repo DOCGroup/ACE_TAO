@@ -3,24 +3,22 @@
 Generic Servant:
 ===============
 
-	File Name
-	---------
-	
-	Foo.idl			Simple Foo idl interface
-	MyFooServant.h		Servant definition  for the Foo interface
-	MyFooServant.cpp	Servant implementation for the FOO interface
-	client.cpp		A simple Foo client
+File Name
+---------
 
-	Typing
+Foo.idl                 Simple Foo idl interface
+MyFooServant.h          Servant definition  for the Foo interface
+MyFooServant.cpp        Servant implementation for the FOO interface
+client.cpp              A simple Foo client
 
-	% Make
-	
-	 creates an executable client and server library libserver.a.
+Typing
 
-	To run the client , type 
+% Make
 
-	%client [-ORBport port]	-k IOR	
-	
-		where IOR can be got from the server output.
+ creates an executable client and server library libserver.a.
 
-	
+To run the client, type 
+
+% client [-ORBport port] -k IOR
+
+where IOR can be got from the server output.

@@ -1,5 +1,5 @@
 // $Id$
-//
+
 //===============================================================================
 //
 // = LIBRARY
@@ -33,13 +33,12 @@ main (int argc, char **argv)
       return -1;
     }
 
-  // Get Object reference to RootPOA
-
+  // Get Object reference to RootPOA.
   CORBA::Object_var obj = orb->resolve_initial_references ("RootPOA");
 
-  // Narrow Object reference to RootPOA to a POA reference
-
+  // Narrow Object reference to RootPOA to a POA reference.
   PortableServer::POA_var root_poa = PortableServer::POA::_narrow (obj.in(), env);
+
   if (env.exception () != 0)
     {
       env.print_exception ("PortableServer::POA::_narrow");
@@ -47,16 +46,18 @@ main (int argc, char **argv)
     }
 
   // Get a TAO_Adapter_Activator reference
-
   TAO_Adapter_Activator activator_impl;
+
   PortableServer::AdapterActivator_var activator = activator_impl._this (env);
+
   if (env.exception () != 0)
     {
       env.print_exception ("TAO_Adapter_Activator::_this");
       return -1;
     }
 
-  // Register the TAO_Adapter_Activator reference to be the RootPOA's Adapter Activator
+  // Register the TAO_Adapter_Activator reference to be the RootPOA's
+  // Adapter Activator.
 
   root_poa->the_activator (activator.in (), env);
   if (env.exception () != 0)
@@ -66,7 +67,6 @@ main (int argc, char **argv)
     }
 
   // Try to find a childPOA of RootPOA named firstPOA
-
   ACE_CString name = "firstPOA";
   PortableServer::POA_var first_poa = root_poa->find_POA (name.c_str (),
                                                           CORBA::B_TRUE,
@@ -77,8 +77,8 @@ main (int argc, char **argv)
       return -1;
     }
 
-  // Use the TAO_POA name_separator (which is '/') to find a childPOA of
-  // firstPOA named secondPOA
+  // Use the TAO_POA name_separator (which is '/') to find a childPOA
+  // of firstPOA named secondPOA.
 
   name += TAO_POA::name_separator ();
   name += "secondPOA";
@@ -91,9 +91,10 @@ main (int argc, char **argv)
       return -1;
     }
 
-  // Create a hierarchical string of POA names eg. thirdPOA/forthPOA/fifthPOA
-  // thirdPOA being the root of the hierarchy with forthPOA as its child
-  // and fifthPOA as its grandchild.
+  // Create a hierarchical string of POA names
+  // eg. thirdPOA/forthPOA/fifthPOA thirdPOA being the root of the
+  // hierarchy with forthPOA as its child and fifthPOA as its
+  // grandchild.
 
   name = "thirdPOA";
   name += TAO_POA::name_separator ();
