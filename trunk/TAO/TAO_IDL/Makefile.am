@@ -27,16 +27,16 @@ tao_idl_SOURCES = \
 tao_idl_LDADD = \
         $(top_builddir)/TAO_IDL/driver/libdriver.a  \
         $(top_builddir)/TAO_IDL/fe/libfe.a  \
-        $(top_builddir)/TAO_IDL/narrow/libnarrow.a  \
         $(top_builddir)/TAO_IDL/be/libbe.a  \
         $(top_builddir)/TAO_IDL/ast/libast.a  \
-        $(top_builddir)/TAO_IDL/util/libutil.a
+        $(top_builddir)/TAO_IDL/util/libutil.a  \
+        $(top_builddir)/TAO_IDL/narrow/libnarrow.a
 
 IDL_CFE_VERSION = \"1.3.0\"
 
-##        Is the "+=" a portable make feature?
-CXXFLAGS += \
-           -DIDL_CFE_VERSION=$(IDL_CFE_VERSION)
+## Additional C++ preprocessor flags to define for the TAO IDL compiler.
+AM_CPPFLAGS = \
+  -DIDL_CFE_VERSION=$(IDL_CFE_VERSION)
 
 EXTRA_DIST = $(man_MANS)
 
