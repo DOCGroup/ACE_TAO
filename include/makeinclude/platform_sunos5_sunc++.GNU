@@ -214,9 +214,9 @@ endif # ! exceptions
 
 LD              = $(CXX)
 ifeq ($(distrib),0)
-  LDFLAGS       += -R $(ACE_ROOT)/ace -R./
+  LDFLAGS       += -R $(ACE_ROOT)/lib -R./
 endif
-  LIBS          += -lsocket -ldl -lnsl -lgen -lposix4
+  LIBS          += -lsocket -ldl -lnsl -lgen -lposix4 -ladm
 
 LDFLAGS         += -xildoff
 

@@ -1,3 +1,21 @@
+Wed Aug 25 23:31:02 2004  Chris Cleeland  <cleeland_c@ociweb.com>
+
+	* include/makeinclude/platform_linux.GNU:
+
+	  Fixed an error caused by a misplaced newline in Rich's previous
+	  commit.
+	
+	* include/makeinclude/platform_sunos5_sunc++.GNU: 
+
+	  Brought over the following changes from OCITAO 1.3a.
+          Added -ladm to LIBS.  This is needed for SunOS 5.6 for
+          resolving symbols for regular expression processing (e.g.,
+          compile, step), and does not appear to cause a problem on
+          later version of SunOS.
+
+          Change directory that is argument to ld's '-R' to use the new
+          $ACE_ROOT/lib directory rather than $ACE_ROOT/ace.
+
 Wed Aug 25 21:10:37 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* configure.ac:
@@ -16,11 +34,11 @@ Wed Aug 25 16:00:11 2004  Chris Cleeland  <cleeland_c@ociweb.com>
 	* ace/Auto_Ptr.h:
 	* ace/Auto_Ptr.inl:
 
-        Added new ACE_Auto_Ptr which can be used more portably than
-        auto_ptr even with the ACE auto_ptr workarounds. Specifically, this
-        obviates the need for the ACE_AUTO_PTR_RESET macro, and will have
-        better performance than the pre-standard auto_ptr that comes with
-        VC6.
+	  Added new ACE_Auto_Ptr which can be used more portably than
+	  auto_ptr even with the ACE auto_ptr workarounds. Specifically,
+	  this obviates the need for the ACE_AUTO_PTR_RESET macro, and
+	  will have better performance than the pre-standard auto_ptr that
+	  comes with VC6.
 
 Wed Aug 25 14:58:51 2004  Rich Seibel <seibel_r@ociweb.com>
 
