@@ -46,7 +46,7 @@ main (int argc, char *argv[])
 
       // Installing the Echo interceptor
       ACE_NEW_RETURN (interceptor_impl,
-                      Echo_Server_Request_Interceptor,
+                      Echo_Server_Request_Interceptor (orb),
                       -1);
       interceptor = interceptor_impl->_this ();
       orb->_register_server_interceptor (interceptor);

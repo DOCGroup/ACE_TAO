@@ -765,6 +765,7 @@ be_compiled_visitor_operation_cs::gen_marshal_and_invoke (be_operation
   os->indent ();
   *os << "PortableInterceptor::Cookies _tao_cookies;" << be_nl
       << "CORBA::NVList_var _tao_interceptor_args;" << be_nl
+      << "if (_tao_vfr.valid ())" << be_idt_nl << "{" << be_idt_nl
       << "istub->orb_core ()->orb ()->create_list "
       << "(0, _tao_interceptor_args.inout (), ACE_TRY_ENV);\n";
   if (this->gen_check_exception (bt) == -1)
@@ -776,8 +777,9 @@ be_compiled_visitor_operation_cs::gen_marshal_and_invoke (be_operation
                         -1);
 
     }
+  os->decr_indent ();
+  *os << "}\n" << be_uidt_nl;
 
-  os->indent ();
   *os << "ACE_TRY" << be_idt_nl
       << "{\n"
       << "#endif /* TAO_HAS_INTERCEPTORS */\n";

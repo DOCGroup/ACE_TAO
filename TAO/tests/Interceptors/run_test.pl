@@ -16,14 +16,14 @@ $file="test.ior";
 unlink $file;
 
 $SV = Process::Create ($EXEPREFIX."server".$EXE_EXT,
-                       "-o $file");
+                       "-ORBobjrefstyle url -o $file");
 if (ACE::waitforfile_timed ($file, 15) == -1) {
   print STDERR "ERROR: cannot find file <$file>\n";
   $SV->Kill (); $SV->TimedWait (1);
   exit 1;
 }
 
-$CL = Process::Create ($EXEPREFIX."client".$EXE_EXT, "");
+$CL = Process::Create ($EXEPREFIX."client".$EXE_EXT, "-ORBobjrefstyle url");
 
 
 $client = $CL->TimedWait (60);

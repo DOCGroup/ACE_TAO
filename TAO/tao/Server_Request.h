@@ -163,6 +163,10 @@ public:
   virtual unsigned int operation_length (void) const = 0;
   // get the length of the operation name
 
+  virtual CORBA::Object_ptr objref (CORBA_Environment &ACE_TRY_ENV =
+                                      TAO_default_environment ()) = 0;
+  // Return the object reference of the request.
+
   virtual void init_reply (CORBA_Environment &ACE_TRY_ENV =
                                TAO_default_environment ()) = 0;
   // Start a Reply message.
