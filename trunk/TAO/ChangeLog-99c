@@ -1,3 +1,29 @@
+Sun May  2 00:12:40 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/Command_Handler.cpp:
+	  Fixed the code to restart the event loop for Audio Buffer and
+	  Video Buffer process for the java init case when the Java Gui
+	  sends ior to the mpeg client. 
+
+	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_mib/mibButton.cpp: 
+	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_mib/mibLabel.cpp: 
+	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_mib/mibList.cpp: 
+	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_mib/mibToggle.cpp:
+	  Fixed compilation errors for using unsigned char * instead of
+	  XmString on Sun 5.7 CC. Thanks to Bala for helping with this.
+
+	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Globals.h: 
+	  Fixed a redundant redinition warnings for macros nextByte and
+	  computePicSize. 
+
+	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/routine.{h,cpp}:
+	  Fixed void usleep to int usleep to avoid ambiguity errors on
+	  Sun5.7 CC. 
+
+	* orbsvcs/tests/AVStreams/mpeg/source/server/Machine_Properties.cpp: 
+	  Redefined xdr_void to int xdr_void (XDR *,void *) to fix
+	  compilation errors on Sun 5.7 CC.	 
+	
 Sat May  1 23:30:08 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/AV/AVStreams_i.{h,cpp}: 
