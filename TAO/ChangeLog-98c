@@ -1,3 +1,9 @@
+Fri Sep 25 19:02:03 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+	* tao/try_macros.h: Fixed the TAO_THROW_ENV_RETURN macro for
+	  native exceptions.  It was not taking in the RETURN value
+	  argument
+
 Fri Sep 25 15:31:17 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 
         * tests/CDR/run_test.pl: New script to run all three CDR tests and
