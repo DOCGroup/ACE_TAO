@@ -41,6 +41,7 @@ public:
   CORBA::POA_ptr POA_init (int &argc, 
                            char **argv, 
                            const char *boa_identifier = 0);
+
   static CORBA::ORB_ptr _duplicate (CORBA::ORB_ptr orb);
   static CORBA::ORB_ptr _nil (void);
 

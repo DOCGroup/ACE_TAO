@@ -11,18 +11,13 @@
 // = DESCRIPTION
 //     (Early) POA
 //
-//     POA is a stripped down, lean, mean, portable OA.  The work
-//     involved in managing objects is all handled by "higher level"
-//     code, including skeletons, generated either by an IDL compiler
-//     by hand.  POA itself maintains no object-level state.
-//
 // = AUTHOR
 //     Copyright 1994-1995 by Sun Microsystems, Inc.
 // 
 // ============================================================================
 
-#if !defined (TAO_BOA_H)
-#define TAO_BOA_H
+#if !defined (TAO_POA_H)
+#define TAO_POA_H
 
 #if 0
 #include "ace/OS.h"    // WARNING! This MUST come before objbase.h on WIN32!
@@ -158,7 +153,7 @@ public:
   // avoid writing that loop.
 #endif /* 0 */
 
-  static CORBA::POA_ptr get_boa (CORBA::ORB_ptr orb,
+  static CORBA::POA_ptr get_poa (CORBA::ORB_ptr orb,
 				CORBA::Environment &env);
   // Get an "anonymous" POA pseudo-objref ... this is the API that
   // most applications will use.  It returns a POA which is not
@@ -166,9 +161,9 @@ public:
   // 
   // Any given POA (named or otherwise) will create equivalent object
   // references when POA::create () is called with the same object and
-  // type IDs.  This is not true for two different BOAs.
+  // type IDs.  This is not true for two different POAs.
 
-  static CORBA::POA_ptr get_named_boa (CORBA::ORB_ptr orb,
+  static CORBA::POA_ptr get_named_poa (CORBA::ORB_ptr orb,
 				      CORBA::String name,
 				      CORBA::Environment &env);
   // Get a "named" POA ... most applications don't use/need this API.
@@ -295,7 +290,7 @@ struct TAO_Dispatch_Context
   // NOTE!!!  This type MUST match that used for ROA_Handler!
 };
 
-#endif	/* TAO_BOA_H */
+#endif	/* TAO_POA_H */
 
 
 

@@ -145,7 +145,5 @@ main (int argc, char *argv[])
 
   // Handle requests for this object until we're killed, or one of the
   // methods asks us to exit.
-  orb_ptr->run ();
-
-  return 0;
+  return orb_ptr->run ();
 }
