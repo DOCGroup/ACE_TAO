@@ -50,7 +50,7 @@ public:
 };
 
 int
-main ()
+main (int, char *[])
 {
   Event_Handler *handler;
   ACE_NEW_RETURN (handler, Event_Handler, -1);

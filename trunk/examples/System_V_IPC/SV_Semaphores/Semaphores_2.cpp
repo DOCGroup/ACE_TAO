@@ -70,7 +70,7 @@ child (char *shm)
 }
 
 int
-main (void)
+main (int, char *[])
 {
   char *shm = (char *) allocator.malloc (27);
 
@@ -87,7 +87,7 @@ main (void)
     }
 }
 #else
-int main (void)
+int main (int, char *[])
 {
   ACE_ERROR ((LM_ERROR,
 	      "SYSV IPC is not supported on this platform\n"));

@@ -204,7 +204,7 @@ template class ACE_Thread_Strategy<Server_Service>;
 
 #else
 int
-main (void)
+main (int, char *[])
 {
   ACE_ERROR_RETURN ((LM_ERROR, "your platform does not support threads\n"), 1);
 }

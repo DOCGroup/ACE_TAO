@@ -209,7 +209,7 @@ template class ACE_TSS<Errno>;
 
 #else
 int
-main (void)
+main (int, char *[])
 {
   ACE_ERROR_RETURN ((LM_ERROR,
 		     "ACE doesn't support support threads on this platform (yet)\n"),

@@ -1,7 +1,7 @@
 #include "ace/FIFO_Send_Msg.h"
 
 int 
-main (void)
+main (int, char *[])
 {
   char buf[] = "hello world";
   ACE_Str_Buf msg (buf, sizeof buf);

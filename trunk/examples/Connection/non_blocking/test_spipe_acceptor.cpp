@@ -40,7 +40,7 @@ template class Svc_Handler<ACE_SPIPE_STREAM>;
 
 #else
 int
-main (void)
+main (int, char *[])
 {
   ACE_ERROR_RETURN ((LM_ERROR, "This test is not ported to Win32 (yet)\n"), -1);
 }

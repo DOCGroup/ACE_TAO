@@ -4,7 +4,7 @@
 #include "test.h"
 
 int 
-main (void)
+main (int, char *[])
 {
   long          pid = long (ACE_OS::getpid ());
   ACE_SV_Message_Queue msgque (SRV_KEY);

@@ -221,7 +221,7 @@ main (int argc, char *)
 }
 #else
 int
-main (void)
+main (int, char *[])
 {
   ACE_ERROR_RETURN ((LM_ERROR, "The HP C++ compiler is too lame to support this feature\n"), -1);
 }
