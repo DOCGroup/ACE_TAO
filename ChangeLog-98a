@@ -1,16 +1,22 @@
+Mon Apr 13 10:18:59 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/High_Res_Timer.i (hrtime_to_tv): in tv.usec calculation,
+          moved the cast to long to after the division by global_scale_factor_.
+          This is necessary for compatibility with ACE_U_LongLong.
+
 Sun Apr 12 21:11:53 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/OS.h: Prevent using ACE_HAS_MOSTLY_UNICODE_APIS without UNICODE.
+        * ace/OS.h: Prevent using ACE_HAS_MOSTLY_UNICODE_APIS without UNICODE.
 
-	* ace/OS.cpp (thr_create):
-	* ace/Thread_Manager.cpp (spawn_i): Removed directive
-	  ACE_NO_THREAD_ADAPTER and its related code.
+        * ace/OS.cpp (thr_create):
+        * ace/Thread_Manager.cpp (spawn_i): Removed directive
+          ACE_NO_THREAD_ADAPTER and its related code.
 
 Sat Apr 11 22:20:51 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tests/Thread_Manager_Test.cpp (main): Don't check execute result
- 	  of kill_grp statement if we are running on Win32 platforms.
-  	  thr_kill is not supported there.
+        * tests/Thread_Manager_Test.cpp (main): Don't check execute result
+          of kill_grp statement if we are running on Win32 platforms.
+          thr_kill is not supported there.
 
 Sat Apr 11 20:00:12 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -18,15 +24,15 @@ Sat Apr 11 20:00:12 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Sat Apr 11 19:58:56 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* Nanbor removed a bunch of *.MAK files, which were quite large
- 	  and taking up lots of space.
+        * Nanbor removed a bunch of *.MAK files, which were quite large
+          and taking up lots of space.
 
 Sat Apr 11 18:58:24 1998  Steve Huston  <shuston@riverace.com>
 
-	* ace/INET_Addr.cpp: Fixed missing paren.
+        * ace/INET_Addr.cpp: Fixed missing paren.
 
-	* netsvcs/servers/servers4.mdp: Added ..\lib to include directories
-	  for Release build.
+        * netsvcs/servers/servers4.mdp: Added ..\lib to include directories
+          for Release build.
 
 Sat Apr 11 13:28:19 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -34,173 +40,173 @@ Sat Apr 11 13:28:19 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Sat Apr 11 12:46:08 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/config-mvs.h: Added some ACE_SIZEOF_* macros for MVS.
-  	  Thanks to Chuck Gehr <gehr@sweng.stortek.com> for reporting
- 	  this.
+        * ace/config-mvs.h: Added some ACE_SIZEOF_* macros for MVS.
+          Thanks to Chuck Gehr <gehr@sweng.stortek.com> for reporting
+          this.
 
-	* ace/INET_Addr.cpp: Added a newline and a better explanation of
- 	  what went wrong if an error occurs.  Thanks to Luca for
- 	  reporting this.
+        * ace/INET_Addr.cpp: Added a newline and a better explanation of
+          what went wrong if an error occurs.  Thanks to Luca for
+          reporting this.
 
 Fri Apr 10 02:42:35 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Log_Msg.{h,cpp} (log_hexdump):
-	* ace/ACE.{h,cpp} (format_hexdump): The buffer to be hex-dumped should
-	  always be of type (const char *) no matter we have UNICODE
- 	  system strings or not.
+        * ace/Log_Msg.{h,cpp} (log_hexdump):
+        * ace/ACE.{h,cpp} (format_hexdump): The buffer to be hex-dumped should
+          always be of type (const char *) no matter we have UNICODE
+          system strings or not.
 
-	* ace/OS.{h,cpp} (ACE_CE_Bridge): This new class bridges
-	  a text-based ACE programs with a default window that prints out
-	  the default ACE_Log_Msg output.
+        * ace/OS.{h,cpp} (ACE_CE_Bridge): This new class bridges
+          a text-based ACE programs with a default window that prints out
+          the default ACE_Log_Msg output.
 
-	  CE always uses non-static object manager and we replace the
-	  original main function with a well know entry that the main
-	  window program can call back from to invoke the ACE program in a
-	  separate thread.
+          CE always uses non-static object manager and we replace the
+          original main function with a well know entry that the main
+          window program can call back from to invoke the ACE program in a
+          separate thread.
 
-	* ace/Log_Record.{h,cpp}: Added support for passing strings as
-	  windows messages.
+        * ace/Log_Record.{h,cpp}: Added support for passing strings as
+          windows messages.
 
-	* ace/Log_Msg.cpp (log): Specialized CE support.
+        * ace/Log_Msg.cpp (log): Specialized CE support.
 
-	* windoezCE: The template windows program that receives ACE
-	  messages.  See CE-Status or README file for more info.
+        * windoezCE: The template windows program that receives ACE
+          messages.  See CE-Status or README file for more info.
 
 Fri Apr 10 00:41:23 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tests/Reactor_Exception_Test: Tidied the test up a bit.  Thanks
- 	  to Bob Laferriere <laferrie@gsao.med.ge.com> for suggesting
- 	  this.
+        * tests/Reactor_Exception_Test: Tidied the test up a bit.  Thanks
+          to Bob Laferriere <laferrie@gsao.med.ge.com> for suggesting
+          this.
 
-	* tests/test_config.h: Enabled ACE_Log_Msg::VERBOSE since it gives
- 	  more information that can be useful for debugging.
+        * tests/test_config.h: Enabled ACE_Log_Msg::VERBOSE since it gives
+          more information that can be useful for debugging.
 
 Fri Apr 10 00:04:03 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/Proactor.cpp (post_completion): Added a new method to the
- 	  Proactor. It can be used to post a result to the completion port
- 	  of the Proactor.  If errors occur, the result will be deleted by
- 	  this method.  If successful, the result will be deleted by the
- 	  Proactor when the result is removed from the completion port.
-  	  Therefore, the result should have been dynamically allocated and
- 	  should be orphaned by the user once this method is called.
+        * ace/Proactor.cpp (post_completion): Added a new method to the
+          Proactor. It can be used to post a result to the completion port
+          of the Proactor.  If errors occur, the result will be deleted by
+          this method.  If successful, the result will be deleted by the
+          Proactor when the result is removed from the completion port.
+          Therefore, the result should have been dynamically allocated and
+          should be orphaned by the user once this method is called.
 
-	  Changed the timer mechanism to use this new method rather than
- 	  posting to the completion port directly.
+          Changed the timer mechanism to use this new method rather than
+          posting to the completion port directly.
 
-  	  Thanks to Jason Katz <Jason@rtswireless.com> for the
- 	  improvements.
+          Thanks to Jason Katz <Jason@rtswireless.com> for the
+          improvements.
 
 Thu Apr  9 17:31:47 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* Updated all the Makefile dependencies and also added the
- 	  appropriate CVS strings to all Makefiles.
+        * Updated all the Makefile dependencies and also added the
+          appropriate CVS strings to all Makefiles.
 
-	* examples/IPC_SAP/SOCK_SAP: Improved both the CPP-unserver.cpp
- 	  and CPP-inserver.cpp programs so they work identically wrt
- 	  concurrency and logic.
+        * examples/IPC_SAP/SOCK_SAP: Improved both the CPP-unserver.cpp
+          and CPP-inserver.cpp programs so they work identically wrt
+          concurrency and logic.
 
-	* ace/LSOCK_Stream.cpp: Fixed the get_remote_addr() and
- 	  get_local_addr() methods to work correctly.  Apparently,
- 	  getpeername() doesn't work appropriately for UNIX domain
- 	  sockets, so we simply have both methods call getsockname().
-  	  Thanks to Chuck Gehr for pointing out this problem.
+        * ace/LSOCK_Stream.cpp: Fixed the get_remote_addr() and
+          get_local_addr() methods to work correctly.  Apparently,
+          getpeername() doesn't work appropriately for UNIX domain
+          sockets, so we simply have both methods call getsockname().
+          Thanks to Chuck Gehr for pointing out this problem.
 
-	* ace/FILE_IO.cpp (get_local_addr): The RHS has an additional
- 	  field that is the FILE name, which did not get copied.  Added an
- 	  ACE_dynamic_cast() to do the right thing here.  Thanks to Ganesh
- 	  Pai for reporting this.
+        * ace/FILE_IO.cpp (get_local_addr): The RHS has an additional
+          field that is the FILE name, which did not get copied.  Added an
+          ACE_dynamic_cast() to do the right thing here.  Thanks to Ganesh
+          Pai for reporting this.
 
-	* ace/Malloc*: Factored out all the code in ACE_Static_Allocator
- 	  into a new non-templatized base class called
- 	  ACE_Static_Base_Allocator so that we don't trigger multiply
- 	  defined symbols when we use this in TAO.  Thanks to Carlos for
- 	  this very insightful trick!
+        * ace/Malloc*: Factored out all the code in ACE_Static_Allocator
+          into a new non-templatized base class called
+          ACE_Static_Base_Allocator so that we don't trigger multiply
+          defined symbols when we use this in TAO.  Thanks to Carlos for
+          this very insightful trick!
 
-	* tests/Thread_Manager_Test.cpp (main): Added ACE_ASSERT
- 	  statements so that we bailout if things go awry.  Thanks to
- 	  Robert J.  Laferriere <laferrie@gsao.med.ge.com> for reporting
- 	  this.
+        * tests/Thread_Manager_Test.cpp (main): Added ACE_ASSERT
+          statements so that we bailout if things go awry.  Thanks to
+          Robert J.  Laferriere <laferrie@gsao.med.ge.com> for reporting
+          this.
 
 Thu Apr 09 18:06:53 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/High_Res_Timer.i (hrtime_to_tv): Cast the parameter for usec
- 	  to long.  It can be fixed because of Darrell's vigilance.
+        * ace/High_Res_Timer.i (hrtime_to_tv): Cast the parameter for usec
+          to long.  It can be fixed because of Darrell's vigilance.
 
 Thu Apr 09 17:55:21 1998  Steve Huston  <shuston@riverace.com>
 
-	* ace/config-hpux-10.x.h, config-hpux11.h, config-aix-4.2.x.h:
-	  Added ACE_HAS_WILDCARD_BIND.
+        * ace/config-hpux-10.x.h, config-hpux11.h, config-aix-4.2.x.h:
+          Added ACE_HAS_WILDCARD_BIND.
 
 Thu Apr 09 16:43:26 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/ACE.*: Changed *_version() functions to be non-inlined.
-  	  After this change, inclusion of ace/Version.h can be moved into
- 	  ACE.cpp.  This change helps as all of ACE doesn't have to be
- 	  compiled after Version.h changes (Version.h changes every time a
- 	  new beta is produced).
+        * ace/ACE.*: Changed *_version() functions to be non-inlined.
+          After this change, inclusion of ace/Version.h can be moved into
+          ACE.cpp.  This change helps as all of ACE doesn't have to be
+          compiled after Version.h changes (Version.h changes every time a
+          new beta is produced).
 
 Thu Apr  9 12:27:23 1998  Carlos O'Ryan  <coryan@swarm.cs.wustl.edu>
 
-	* tests/Hash_Map_Manager_Test.cpp: POOL_SIZE was simple "const
- 	  POOL_SIZE" I changed that to "const int POOL_SIZE".  Added
- 	  missing template instantiation for Static_Allocator.
+        * tests/Hash_Map_Manager_Test.cpp: POOL_SIZE was simple "const
+          POOL_SIZE" I changed that to "const int POOL_SIZE".  Added
+          missing template instantiation for Static_Allocator.
 
 Thu Apr 09 10:50:18 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/WFMO_Reactor.cpp (dump): Fixed signed/unsigned mismatched
- 	  warnings on NT. Thanks to Darrell for noticing the bug.
+        * ace/WFMO_Reactor.cpp (dump): Fixed signed/unsigned mismatched
+          warnings on NT. Thanks to Darrell for noticing the bug.
 
 Thu Apr  9 09:37:08 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Malloc_T: Moved the ACE_Static_Allocator::dump() method into
- 	  the Malloc_T.cpp file so we'd get a vtable...  Thanks to David
- 	  Levine for reporting this.
+        * ace/Malloc_T: Moved the ACE_Static_Allocator::dump() method into
+          the Malloc_T.cpp file so we'd get a vtable...  Thanks to David
+          Levine for reporting this.
 
-	* tests/Hash_Map_Manager_Test.cpp (run_test): Added a return
-	  value to make G++ and David Levine happy ;-).
+        * tests/Hash_Map_Manager_Test.cpp (run_test): Added a return
+          value to make G++ and David Levine happy ;-).
 
 Thu Apr 09 10:50:18 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/WFMO_Reactor.cpp (dump): Fixed signed/unsigned mismatched
- 	  warnings on NT. Thanks to Darrell for noticing the bug.
+        * ace/WFMO_Reactor.cpp (dump): Fixed signed/unsigned mismatched
+          warnings on NT. Thanks to Darrell for noticing the bug.
 
 Wed Apr 08 17:29:01 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/SOCK_Acceptor.cpp (open): There was a boo-boo in open() as
- 	  we were only calling bind_port() and ignoring the port supplied
- 	  by the user. Call bind_port only if port == 0.
+        * ace/SOCK_Acceptor.cpp (open): There was a boo-boo in open() as
+          we were only calling bind_port() and ignoring the port supplied
+          by the user. Call bind_port only if port == 0.
 
 Wed Apr  8 01:09:52 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Malloc_T: Added a new ACE_Static_Allocator class, which is
- 	  highly optimized for allocations where (1) all the memory size
- 	  is known in advance and (2) no deletions are done.  This class
- 	  will ultimately be used in TAO to improve it's startup
- 	  performance for operation tables initialization.
+        * ace/Malloc_T: Added a new ACE_Static_Allocator class, which is
+          highly optimized for allocations where (1) all the memory size
+          is known in advance and (2) no deletions are done.  This class
+          will ultimately be used in TAO to improve it's startup
+          performance for operation tables initialization.
 
-	* tests/Hash_Map_Manager_Test.cpp: Enhanced the test so that it
- 	  uses the new ACE_Static_Allocator feature.
+        * tests/Hash_Map_Manager_Test.cpp: Enhanced the test so that it
+          uses the new ACE_Static_Allocator feature.
 
-	* ace/OS: Added support for the rename() method.  Thanks to Ganesh
- 	  Pai for suggesting this.
+        * ace/OS: Added support for the rename() method.  Thanks to Ganesh
+          Pai for suggesting this.
 
-	* ace/config-win32-common.h,
-	      config-sunos*.h:
-	      config-irix-6*.h:
+        * ace/config-win32-common.h,
+              config-sunos*.h:
+              config-irix-6*.h:
           Enable the ACE_HAS_WILDCARD_BIND macro.
 
-	* ace/ACE.cpp: Modified the bind_port() method so that it is more
- 	  efficient on platforms that interpret a 0 port to bind() as a
- 	  request for the kernel to select the port.  Thanks to Chris
- 	  Cleeland for pointing this out.
+        * ace/ACE.cpp: Modified the bind_port() method so that it is more
+          efficient on platforms that interpret a 0 port to bind() as a
+          request for the kernel to select the port.  Thanks to Chris
+          Cleeland for pointing this out.
 
-	* ace/Hash_Map_Manager: Made a bunch of minor changes to fix some
- 	  subtle deadlocks with intra-class locking.
+        * ace/Hash_Map_Manager: Made a bunch of minor changes to fix some
+          subtle deadlocks with intra-class locking.
 
-	* tests/Map_Manager_Test.cpp: Restructured the tests so that we
- 	  don't keep recomputing end() and rend() of the map in each loop
- 	  iteration!
+        * tests/Map_Manager_Test.cpp: Restructured the tests so that we
+          don't keep recomputing end() and rend() of the map in each loop
+          iteration!
 
 Wed Apr 08 10:02:16 1998  David L. Levine  <levine@cs.wustl.edu>
 
