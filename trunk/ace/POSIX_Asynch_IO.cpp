@@ -381,6 +381,17 @@ ACE_POSIX_Asynch_Read_Stream::read (ACE_Message_Block &message_block,
                                           int priority,
                                           int signal_number)
 {
+  u_long space = message_block.space ();
+  if ( bytes_to_read > space )
+     bytes_to_read=space;
+
+  if ( bytes_to_read == 0 )
+    ACE_ERROR_RETURN 
+      ((LM_ERROR,
+        ACE_LIB_TEXT ("ACE_POSIX_Asynch_Read_Stream::read:")
+        ACE_LIB_TEXT ("Attempt to read 0 bytes or no space in the message block\n")),
+       -1);
+
   // Create the Asynch_Result.
   ACE_POSIX_Asynch_Read_Stream_Result *result = 0;
   ACE_NEW_RETURN (result,
@@ -587,6 +598,17 @@ ACE_POSIX_Asynch_Write_Stream::write (ACE_Message_Block &message_block,
                                             int priority,
                                             int signal_number)
 {
+  u_long len = message_block.length();
+  if ( bytes_to_write > len )
+     bytes_to_write = len;
+
+  if ( bytes_to_write == 0 )
+    ACE_ERROR_RETURN 
+      ((LM_ERROR,
+        ACE_LIB_TEXT ("ACE_POSIX_Asynch_Write_Stream::write:")
+        ACE_LIB_TEXT ("Attempt to write 0 bytes\n")),
+      -1);
+
   ACE_POSIX_Asynch_Write_Stream_Result *result = 0;
   ACE_NEW_RETURN (result,
                   ACE_POSIX_Asynch_Write_Stream_Result (*this->handler_,
@@ -811,6 +833,17 @@ ACE_POSIX_Asynch_Read_File::read (ACE_Message_Block &message_block,
                                         int priority,
                                         int signal_number)
 {
+  u_long space = message_block.space ();
+  if ( bytes_to_read > space )
+     bytes_to_read=space;
+
+  if ( bytes_to_read == 0 )
+    ACE_ERROR_RETURN 
+      ((LM_ERROR,
+        ACE_LIB_TEXT ("ACE_POSIX_Asynch_Read_File::read:")
+        ACE_LIB_TEXT ("Attempt to read 0 bytes or no space in the message block\n")),
+       -1);
+
   ACE_POSIX_Asynch_Read_File_Result *result = 0;
   ACE_NEW_RETURN (result,
                   ACE_POSIX_Asynch_Read_File_Result (*this->handler_,
@@ -1050,6 +1083,17 @@ ACE_POSIX_Asynch_Write_File::write (ACE_Message_Block &message_block,
                                           int priority,
                                           int signal_number)
 {
+  u_long len = message_block.length();
+  if ( bytes_to_write > len )
+     bytes_to_write = len;
+
+  if ( bytes_to_write == 0 )
+    ACE_ERROR_RETURN 
+      ((LM_ERROR,
+        ACE_LIB_TEXT ("ACE_POSIX_Asynch_Write_File::write:")
+        ACE_LIB_TEXT ("Attempt to write 0 bytes\n")),
+      -1);
+
   ACE_POSIX_Asynch_Write_File_Result *result = 0;
   ACE_NEW_RETURN (result,
                   ACE_POSIX_Asynch_Write_File_Result (*this->handler_,

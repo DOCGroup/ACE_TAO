@@ -1,5 +1,46 @@
-Thu May 30 08:48:19 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+Thu May 30 9:15:19 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+  
+        Thanks to Edan Ayal <edanayal@yahoo.com> and Alex Libman
+	<AlexL@rumblegroup.com> for the following fixes.
+  
+        * ACE_WIN32_Asynch_Read_Stream_Result::complete ()
+	  ACE_WIN32_Asynch_Write_Stream_Result::complete ()
+ 	  ACE_WIN32_Asynch_Write_Dgram_Result::complete
+ 	  ACE_WIN32_Asynch_Read_Dgram_Result::complete improved
+ 	  readability and logic
 
+	* ACE_WIN32_Asynch_Read_File_Result::complete ()
+	  ACE_WIN32_Asynch_Write_File_Result::complete () fixed
+ 	  errors,improved readability and logic
+
+	* ACE_WIN32_Asynch_Read_Stream::read ()
+ 	  ACE_WIN32_Asynch_Read_File::read ()
+	  ACE_POSIX_Asynch_Read_Stream::read ()
+	  ACE_POSIX_Asynch_Read_File::read ()
+	  Added check for enough space in message block 
+	  bytes_to_read <= mb->space()
+
+	* ACE_WIN32_Asynch_Write_Stream::write ()
+	  ACE_WIN32_Asynch_Write_File::write ()
+	  ACE_POSIX_Asynch_Write_Stream::write ()
+	  ACE_POSIX_Asynch_Write_File::write ()
+	  Added check for correct length of message block 
+	  bytes_to_write <= mb->length()
+
+	* ACE_WIN32_Asynch_Read_Stream::readv ()
+	  ACE_WIN32_Asynch_Read_File::readv ()
+ 	  ACE_WIN32_Asynch_Read_Dgram::recv Added checks for: never read
+ 	  more bytes_to_read bytes; correct using of buffers - message
+ 	  blocks
+
+	* ACE_POSIX_Asynch_Write_Stream::writev ()
+	  ACE_POSIX_Asynch_Write_File::writev ()
+ 	  ACE_WIN32_Asynch_Write_Dgram::send Added checks for: never write
+ 	  more bytes_to_write bytes; correct using of buffers - message
+ 	  blocks improved readability and logic
+
+Thu May 30 08:48:19 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+  
 	* ace/Configuration_Import_Export.cpp (squish): 
 	  Replaced (*cp == ' ') || (*cp == '\t') || (*cp == '\n') || (*cp
  	  == '\r')) with isspace (*cp).  Thanks to Gonzalo A. Diethelm
