@@ -37,6 +37,20 @@
 # if !defined (ACE_USES_OLD_IOSTREAMS)  || \
     defined (ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION)
 #   include /**/ <iosfwd>
+# else
+  // NOTE: If these forward declarations don't work (e.g. aren't
+  //       portable), we may have to include "ace/streams.h" as a last
+  //       resort.  Doing so would defeat the purpose of this header,
+  //       unfortunately.
+  class ios;
+  class streambuf;
+  class istream;
+  class ostream;
+  class iostream;
+  class filebuf;
+  class ifstream;
+  class ofstream;
+  class fstream;
 # endif /* ! ACE_USES_OLD_IOSTREAMS  ||  ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION */
 
 # if defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB) && \
@@ -54,24 +68,6 @@
       using std::ofstream;
       using std::fstream;
 #   endif /* ! ACE_USES_OLD_IOSTREAMS */
-
-# elif defined (ACE_USES_OLD_IOSTREAMS) \
-       && !defined (ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION)
-
-// NOTE: If these forward declarations don't work (e.g. aren't
-//       portable), we may have to include "ace/streams.h" as a last
-//       resort.  Doing so would defeat the purpose of this header,
-//       unfortunately.
-
-      class ios;
-      class streambuf;
-      class istream;
-      class ostream;
-      class iostream;
-      class filebuf;
-      class ifstream;
-      class ofstream;
-      class fstream;
 
 # endif /* ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB */
 
