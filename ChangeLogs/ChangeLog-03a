@@ -1,3 +1,8 @@
+Sun Oct 20 21:40:13 2002  Krishnakumar B  <kitty@cse.wustl.edu>
+
+        * ACEXML/common/HttpCharStream.cpp: Handle all the error paths
+          gracefully and don't leak memory/sockets.
+
 Sun Oct 20 14:06:36 2002  Krishnakumar B  <kitty@cse.wustl.edu>
 
         * ACEXML/common/FileCharStream.cpp (peek_i): Fixed more
