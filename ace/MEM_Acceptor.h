@@ -33,7 +33,7 @@ class ACE_Export ACE_MEM_Acceptor : public ACE_SOCK_Acceptor
 {
   // = TITLE
   //     Defines the format and interface for the acceptor side of the
-  //     local mmap stream.  
+  //     local mmap stream.
   //
   // = DESCRIPTION
   //     This class should be modified to prevent user passing a
@@ -109,7 +109,8 @@ public:
   // Declare the dynamic allocation hooks.
 
 protected:
-  // = The following methods should not be accessable externally.
+  // = The following methods should not be accessable externally
+  //   because MEM_Acceptor do not support their semantics.
   int open (const ACE_Addr &local_sap,
             int reuse_addr = 0,
             int protocol_family = PF_INET,
@@ -140,10 +141,12 @@ protected:
 
 private:
   ASYS_TCHAR *mmap_prefix_;
-  // @@ Nanbor, can you please add a comment here?
+  // The filename prefix of the created mmap files.  It should
+  // contains the absolute path name of the file.
 
   ACE_MEM_SAP::MALLOC_OPTIONS malloc_options_;
-  // @@ Nanbor, can you please add a comment here?
+  // A cached MALLOC_OPTIONS.  MEM_Accaptor use it to create the shared
+  // mamory malloc upon every incoming connection.
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)
