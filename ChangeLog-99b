@@ -11,6 +11,12 @@ Tue Nov 30 14:24:31 1999  Ossama Othman  <othman@cs.wustl.edu>
 	  available if the _POSIX_THREAD_PROCESS_SHARED macro is defined
 	  by the platform.  [Bug 304]
 
+	* ace/OS.h:
+
+	  Moved inclusion of ace/Log_Msg.h to immediately before ace/OS.i
+	  instead of immediately after it.  This corrects a problem with
+	  the ACE+autoconf build.
+
 Tue Nov 30 00:22:48 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/Malloc_Test.cpp: Changed to store the mmap allocator in an
