@@ -4741,6 +4741,8 @@ public:
                         const char *s2);
   static const char *strpbrk (const char *s1,
                               const char *s2);
+  static size_t strcspn (const char *s,
+                         const char *reject);
   static size_t strspn(const char *s1,
                        const char *s2);
   static char *strstr (char *s,

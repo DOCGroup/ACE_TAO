@@ -1,12 +1,7 @@
 /* -*- C++ -*- */
 // $Id$
 
-/* This may look like C code, but it is really -*- C++ -*- */
-
-/* Provides high-level routines to manipulate the keyword list
-   structures the code generation output. 
-
-   Copyright (C) 1989 Free Software Foundation, Inc.
+/* Copyright (C) 1989 Free Software Foundation, Inc.
    written by Douglas C. Schmidt (schmidt@ics.uci.edu)
 
 This file is part of GNU GPERF.
@@ -25,8 +20,8 @@ You should have received a copy of the GNU General Public License
 along with GNU GPERF; see the file COPYING.  If not, write to the Free
 Software Foundation, 59 Temple Place - Suite 330, Boston, MA  02111, USA. */
 
-#ifndef gen_perf_h
-#define gen_perf_h 1
+#if !defined (GEN_PERF_H)
+#define GEN_PERF_H 
 
 #include "Options.h"
 #include "Key_List.h"
@@ -34,16 +29,19 @@ Software Foundation, 59 Temple Place - Suite 330, Boston, MA  02111, USA. */
 
 class Gen_Perf
 {
+  // = TITLE
+  //   Provides high-level routines to manipulate the keyword list
+  //   structures the code generation output.  
 public:
   Gen_Perf (void);
   ~Gen_Perf (void);
   int generate (void);
 
 private:
-  void        change (List_Node *prior, List_Node *curr);
-  int         affects_prev (char c, List_Node *curr);
-  static int  hash (List_Node *key_node);
-  static int  compute_disjoint_union (char *set_1, char *set_2, char *set_3);
+  void change (List_Node *prior, List_Node *curr);
+  int affects_prev (char c, List_Node *curr);
+  static int hash (List_Node *key_node);
+  static int compute_disjoint_union (char *set_1, char *set_2, char *set_3);
   static void sort_set (char *union_set, int len);
   
   int max_hash_value;    
@@ -62,4 +60,5 @@ private:
   // List of the keys we're trying to map into a perfect hash
   // function.
 };
-#endif
+
+#endif /* GEN_PERF_H */

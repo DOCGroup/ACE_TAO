@@ -1116,6 +1116,31 @@ ACE_OS::strcat (char *s, const char *t)
 }
 
 ACE_INLINE size_t
+ACE_OS::strcspn (const char *s, const char *reject)
+{
+#if !defined (ACE_HAS_WINCE)
+  // ACE_TRACE ("ACE_OS::strstr");
+  return ::strcspn (s, reject);
+#else
+  const char *scan;
+  const char *rej_scan;
+  int count = 0;
+
+  for (scan = s; *scan; scan++) 
+    {
+
+      for (rej_scan = reject; *rej_scan; rej_scan++)
+        if (*scan == *rej_scan)
+          return count;
+
+      count++;
+    }
+
+  return count;
+#endif /* ACE_HAS_WINCE */
+}
+
+ACE_INLINE size_t
 ACE_OS::strspn (const char *s, const char *t)
 {
 #if !defined (ACE_HAS_WINCE)

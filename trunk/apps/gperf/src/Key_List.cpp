@@ -1,71 +1,76 @@
-/* Routines for building, ordering, and printing the keyword list.
 // $Id$
 
-   Copyright (C) 1989 Free Software Foundation, Inc.
+/* Copyright (C) 1989 Free Software Foundation, Inc.
    written by Douglas C. Schmidt (schmidt@ics.uci.edu)
 
 This file is part of GNU GPERF.
 
-GNU GPERF is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 1, or (at your option)
-any later version.
+GNU GPERF is free software; you can redistribute it and/or modify it
+under the terms of the GNU General Public License as published by the
+Free Software Foundation; either version 1, or (at your option) any
+later version.
 
-GNU GPERF is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+GNU GPERF is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with GNU GPERF; see the file COPYING.  If not, write to the Free
-Software Foundation, 59 Temple Place - Suite 330, Boston, MA 02111, USA.  */
+Software Foundation, 59 Temple Place - Suite 330, Boston, MA 02111,
+USA.  */
 
 #include "ace/Read_Buffer.h"
 #include "Hash_Table.h"
 #include "Vectors.h"
 #include "Key_List.h"
 
-/* Make the hash table 10 times larger than the number of keyword entries. */
+// Make the hash table 10 times larger than the number of keyword entries.
 static const int TABLE_MULTIPLE = 10;
 
-/* Default type for generated code. */
+// Default type for generated code.
 static char *const default_array_type  = "char *";
 
-/* in_word_set return type, by default. */
+// in_word_set return type, by default.
 static char *const default_return_type = "char *";
 
-/* How wide the printed field width must be to contain the maximum hash value. */
+// How wide the printed field width must be to contain the maximum hash value.
 static int field_width = 0;
 
 static int determined[ALPHA_SIZE];
 
-/* Destructor dumps diagnostics during debugging. */
+// Destructor dumps diagnostics during debugging.
 
 Key_List::~Key_List (void) 
 { 
   if (option[DEBUG])
     {
-      fprintf (stderr, "\nDumping key list information:\ntotal non-static linked keywords = %d"
+      fprintf (stderr,
+               "\nDumping key list information:\ntotal non-static linked keywords = %d"
                "\ntotal keywords = %d\ntotal duplicates = %d\nmaximum key length = %d\n",
-               list_len, total_keys, total_duplicates ? total_duplicates + 1 : 0, max_key_len);
+               list_len,
+               total_keys,
+               total_duplicates ? total_duplicates + 1 : 0,
+               max_key_len);
       dump ();
       ACE_ERROR ((LM_ERROR, "End dumping list.\n\n"));
     }
 }
 
-/* Gathers the input stream into a buffer until one of two things occur:
-
-   1. We read a '%' followed by a '%'
-   2. We read a '%' followed by a '}'
-
-   The first symbolizes the beginning of the keyword list proper,
-   The second symbolizes the end of the C source code to be generated
-   verbatim in the output file.
-
-   I assume that the keys are separated from the optional preceding struct
-   declaration by a consecutive % followed by either % or } starting in 
-   the first column. The code below uses an expandible buffer to scan off 
-   and return a pointer to all the code (if any) appearing before the delimiter. */
+// Gathers the input stream into a buffer until one of two things occur:
+//
+// 1. We read a '%' followed by a '%'
+// 2. We read a '%' followed by a '}'
+//
+// The first symbolizes the beginning of the keyword list proper, The
+// second symbolizes the end of the C source code to be generated
+// verbatim in the output file.
+//
+// I assume that the keys are separated from the optional preceding
+// struct declaration by a consecutive % followed by either % or }
+// starting in the first column. The code below uses an expandible
+// buffer to scan off and return a pointer to all the code (if any)
+// appearing before the delimiter. */
 
 char *
 Key_List::get_special_input (char delimiter)
@@ -95,7 +100,7 @@ Key_List::get_special_input (char delimiter)
           else
             buf[i++] = '%';
         }
-      else if (i >= size) /* Yikes, time to grow the buffer! */
+      else if (i >= size) // Yikes, time to grow the buffer!
         { 
           char *temp = new char[size *= 2];
           int j;
@@ -108,11 +113,11 @@ Key_List::get_special_input (char delimiter)
       buf[i] = c;
     }
   
-  return 0;        /* Problem here. */
+  return 0;        // Problem here.
 }
 
-/* Stores any C text that must be included verbatim into the 
-   generated code output. */
+// Stores any C text that must be included verbatim into the generated
+// code output.
 
 char *
 Key_List::save_include_src (void)
@@ -122,15 +127,20 @@ Key_List::save_include_src (void)
   if ((c = getchar ()) != '%')
     ungetc (c, stdin);
   else if ((c = getchar ()) != '{')
-    ACE_ERROR ((LM_ERROR, "internal error, %c != '{' on line %d in file %s%a", c, __LINE__, __FILE__, 1));
+    ACE_ERROR ((LM_ERROR,
+                "internal error, %c != '{' on line %d in file %s%a",
+                c,
+                __LINE__,
+                __FILE__,
+                1));
   else 
     return get_special_input ('}');
   return "";
 }
 
-/* Determines from the input file whether the user wants to build a table
-   from a user-defined struct, or whether the user is content to simply
-   use the default array of keys. */
+// Determines from the input file whether the user wants to build a
+// table from a user-defined struct, or whether the user is content to
+// simply use the default array of keys.
 
 char *
 Key_List::get_array_type (void)
@@ -138,42 +148,19 @@ Key_List::get_array_type (void)
   return get_special_input ('%');
 }  
   
-/* strcspn - find length of initial segment of S consisting entirely
-   ANSI string package, when GNU libc comes out I'll replace this...). */
-
-inline int
-Key_List::strcspn (const char *s, const char *reject)
-{
-  const char *scan;
-  const char *rej_scan;
-  int   count = 0;
-
-  for (scan = s; *scan; scan++) 
-    {
-
-      for (rej_scan = reject; *rej_scan; rej_scan++)
-        if (*scan == *rej_scan)
-          return count;
-
-      count++;
-    }
-
-  return count;
-}
-
-/* Sets up the Return_Type, the Struct_Tag type and the Array_Type
-   based upon various user Options. */
+// Sets up the Return_Type, the Struct_Tag type and the Array_Type
+// based upon various user Options.
 
 void 
 Key_List::set_output_types (void)
 {
   if (option[TYPE] && !(array_type = get_array_type ()))
-    return;                     /* Something's wrong, bug we'll catch it later on.... */
-  else if (option[TYPE])        /* Yow, we've got a user-defined type... */
+    return;                     // Something's wrong, bug we'll catch it later on....
+  else if (option[TYPE])        // Yow, we've got a user-defined type...
     {    
-      int struct_tag_length = strcspn (array_type, "{\n\0");
+      int struct_tag_length = ACE_OS::strcspn (array_type, "{\n\0");
       
-      if (option[POINTER])      /* And it must return a pointer... */
+      if (option[POINTER])      // And it must return a pointer...
         {    
           return_type = new char[struct_tag_length + 2];
           strncpy (return_type, array_type, struct_tag_length);
@@ -185,13 +172,14 @@ Key_List::set_output_types (void)
       strncpy (struct_tag, array_type,  struct_tag_length);
       struct_tag[struct_tag_length] = '\0';
     }  
-  else if (option[POINTER])     /* Return a char *. */
+  else if (option[POINTER])     // Return a char *.
     return_type = default_array_type;
 }
 
-/* Reads in all keys from standard input and creates a linked list pointed
-   to by Head.  This list is then quickly checked for ``links,'' i.e.,
-   unhashable elements possessing identical key sets and lengths. */
+// Reads in all keys from standard input and creates a linked list
+// pointed to by Head.  This list is then quickly checked for
+// ``links,'' i.e., unhashable elements possessing identical key sets
+// and lengths.
 
 void 
 Key_List::read_keys (void)
@@ -208,32 +196,33 @@ Key_List::read_keys (void)
     ACE_ERROR ((LM_ERROR, "No words in input file, did you forget to prepend %s"
                   " or use -t accidentally?\n%a", "%%", 1));
   
-  /* Read in all the keywords from the input file. */
+  // Read in all the keywords from the input file.
   else 
     {                      
       const char *delimiter = option.get_delimiter ();
       List_Node  *temp, *trail = 0;
 
-      head = new List_Node (ptr, strcspn (ptr, delimiter));
+      head = new List_Node (ptr, ACE_OS::strcspn (ptr, delimiter));
       
       for (temp = head;
            (ptr = input.read ('\n')) && strcmp (ptr, "%%");
            temp = temp->next)
         {
-          temp->next = new List_Node (ptr, strcspn (ptr, delimiter));
+          temp->next = new List_Node (ptr, ACE_OS::strcspn (ptr, delimiter));
           total_keys++;
         }
 
-      /* See if any additional source code is included at end of this file. */
+      // See if any additional source code is included at end of this file.
       if (ptr)
         additional_code = 1;
       
-      /* Hash table this number of times larger than keyword number. */
+      // Hash table this number of times larger than keyword number.
       int table_size = (list_len = total_keys) * TABLE_MULTIPLE;
 
-#if LARGE_STACK_ARRAYS
-      /* By allocating the memory here we save on dynamic allocation overhead. 
-         Table must be a power of 2 for the hash function scheme to work. */
+#if defined (LARGE_STACK_ARRAYS)
+      // By allocating the memory here we save on dynamic allocation
+      // overhead.  Table must be a power of 2 for the hash function
+      // scheme to work.
       List_Node *table[ACE_POW (table_size)];
 #else
       // Note: we don't use new, because that invokes a custom operator new.
@@ -242,22 +231,23 @@ Key_List::read_keys (void)
       List_Node **table = (List_Node**)malloc(malloc_size);
       if (table == NULL)
 	abort ();
-#endif
+#endif /* LARGE_STACK_ARRAYS */
 
-      /* Make large hash table for efficiency. */
+      // Make large hash table for efficiency.
       Hash_Table found_link (table, table_size);
 
-      /* Test whether there are any links and also set the maximum length of
+      // Test whether there are any links and also set the maximum length
         an identifier in the keyword list. */
       
       for (temp = head; temp; temp = temp->next)
         {
           List_Node *ptr = found_link (temp, option[NOLENGTH]);
           
-          /* Check for links.  We deal with these by building an equivalence class
-             of all duplicate values (i.e., links) so that only 1 keyword is
-             representative of the entire collection.  This *greatly* simplifies
-             processing during later stages of the program. */
+          // Check for links.  We deal with these by building an
+          // equivalence class of all duplicate values (i.e., links)
+          // so that only 1 keyword is representative of the entire
+          // collection.  This *greatly* simplifies processing during
+          // later stages of the program.
 
           if (ptr)              
             {                   
@@ -267,7 +257,7 @@ Key_List::read_keys (void)
               temp->link  = ptr->link;
               ptr->link   = temp;
 
-              /* Complain if user hasn't enabled the duplicate option. */
+              // Complain if user hasn't enabled the duplicate option.
               if (!option[DUP] || option[DEBUG])
                 ACE_ERROR ((LM_ERROR, "Key link: \"%s\" = \"%s\", with key set \"%s\".\n",
                               temp->key, ptr->key, temp->char_set));
@@ -275,32 +265,36 @@ Key_List::read_keys (void)
           else
             trail = temp;
             
-          /* Update minimum and maximum keyword length, if needed. */
+          // Update minimum and maximum keyword length, if needed.
 	  if (max_key_len < temp->length)
 	    max_key_len = temp->length;
 	  if (min_key_len > temp->length)
 	    min_key_len = temp->length;
         }
 
-#if !LARGE_STACK_ARRAYS
+#if !defined (LARGE_STACK_ARRAYS)
       free (table);
-#endif
+#endif /* LARGE_STACK_ARRAYS */
 
-      /* Exit program if links exists and option[DUP] not set, since we can't continue */
+      // Exit program if links exists and option[DUP] not set, since
+      // we can't continue.
       if (total_duplicates)
-        ACE_ERROR ((LM_ERROR, option[DUP]
-                      ? "%d input keys have identical hash values, examine output carefully...\n"
-                      : "%d input keys have identical hash values,\ntry different key positions or use option -D.\n%a", total_duplicates, 1));
+        ACE_ERROR ((LM_ERROR,
+                    option[DUP]
+                    ? "%d input keys have identical hash values, examine output carefully...\n"
+                    : "%d input keys have identical hash values,\ntry different key positions or use option -D.\n%a",
+                    total_duplicates,
+                    1));
       if (option[ALLCHARS])
         option.set_keysig_size (max_key_len);
     }
 }
 
-/* Recursively merges two sorted lists together to form one sorted list. The
-   ordering criteria is by frequency of occurrence of elements in the key set
-   or by the hash value.  This is a kludge, but permits nice sharing of
-   almost identical code without incurring the overhead of a function
-   call comparison. */
+// Recursively merges two sorted lists together to form one sorted
+// list. The ordering criteria is by frequency of occurrence of
+// elements in the key set or by the hash value.  This is a kludge,
+// but permits nice sharing of almost identical code without incurring
+// the overhead of a function call comparison.
   
 List_Node *
 Key_List::merge (List_Node *list1, List_Node *list2)
@@ -322,8 +316,8 @@ Key_List::merge (List_Node *list1, List_Node *list2)
     }
 }
 
-/* Applies the merge sort algorithm to recursively sort the key list by
-   frequency of occurrence of elements in the key set. */
+// Applies the merge sort algorithm to recursively sort the key list
+// by frequency of occurrence of elements in the key set.
   
 List_Node *
 Key_List::merge_sort (List_Node *a_head)
@@ -343,13 +337,13 @@ Key_List::merge_sort (List_Node *a_head)
             temp = temp->next;
         } 
     
-      temp         = middle->next;
+      temp = middle->next;
       middle->next = 0;
       return merge (merge_sort (a_head), merge_sort (temp));
     }   
 }
 
-/* Returns the frequency of occurrence of elements in the key set. */
+// Returns the frequency of occurrence of elements in the key set.
 
 inline int 
 Key_List::get_occurrence (List_Node *ptr)
@@ -362,8 +356,8 @@ Key_List::get_occurrence (List_Node *ptr)
   return value;
 }
 
-/* Enables the index location of all key set elements that are now 
-   determined. */
+// Enables the index location of all key set elements that are now
+// determined.
   
 inline void 
 Key_List::set_determined (List_Node *ptr)
@@ -372,7 +366,7 @@ Key_List::set_determined (List_Node *ptr)
     determined[*temp] = 1;
 }
 
-/* Returns TRUE if PTR's key set is already completely determined. */
+// Returns TRUE if PTR's key set is already completely determined.
 
 inline int  
 Key_List::already_determined (List_Node *ptr)
@@ -385,11 +379,12 @@ Key_List::already_determined (List_Node *ptr)
   return is_determined;
 }
 
-/* Reorders the table by first sorting the list so that frequently occuring 
-   keys appear first, and then the list is reorded so that keys whose values 
-   are already determined will be placed towards the front of the list.  This
-   helps prune the search time by handling inevitable collisions early in the
-   search process.  See Cichelli's paper from Jan 1980 JACM for details.... */
+// Reorders the table by first sorting the list so that frequently
+// occuring keys appear first, and then the list is reorded so that
+// keys whose values are already determined will be placed towards the
+// front of the list.  This helps prune the search time by handling
+// inevitable collisions early in the search process.  See Cichelli's
+// paper from Jan 1980 JACM for details....
 
 void 
 Key_List::reorder (void)
@@ -399,7 +394,7 @@ Key_List::reorder (void)
   for (ptr = head; ptr; ptr = ptr->next)
     ptr->occurrence = get_occurrence (ptr);
   
-  occurrence_sort = !(hash_sort = 0); /* Pretty gross, eh?! */
+  occurrence_sort = !(hash_sort = 0); // Pretty gross, eh?!
   
   for (ptr = head = merge_sort (head); ptr->next; ptr = ptr->next)
     {
@@ -428,9 +423,9 @@ Key_List::reorder (void)
     }     
 }
 
-/* Outputs the maximum and minimum hash values.  Since the
-   list is already sorted by hash value all we need to do is
-   find the final item! */
+// Outputs the maximum and minimum hash values.  Since the list is
+// already sorted by hash value all we need to do is find the final
+// item!
   
 void
 Key_List::output_min_max ()
@@ -464,25 +459,25 @@ Key_List::output_min_max ()
  	    total_duplicates ? total_duplicates + 1 : 0);
 }
 
-/* Generates the output using a C switch.  This trades increased
-   search time for decreased table space (potentially *much* less
-   space for sparse tables). It the user has specified their own
-   struct in the keyword file *and* they enable the POINTER option we
-   have extra work to do.  The solution here is to maintain a local
-   static array of user defined struct's, as with the
-   Output_Lookup_Function.  Then we use for switch statements to
-   perform either a strcmp or strncmp, returning 0 if the str fails to
-   match, and otherwise returning a pointer to appropriate index
-   location in the local static array. */
+// Generates the output using a C switch.  This trades increased
+// search time for decreased table space (potentially *much* less
+// space for sparse tables). It the user has specified their own
+// struct in the keyword file *and* they enable the POINTER option we
+// have extra work to do.  The solution here is to maintain a local
+// static array of user defined struct's, as with the
+// Output_Lookup_Function.  Then we use for switch statements to
+// perform either a strcmp or strncmp, returning 0 if the str fails to
+// match, and otherwise returning a pointer to appropriate index
+// location in the local static array.
 
 void 
 Key_List::output_switch (void)
 {
   char      *comp_buffer;
-  List_Node *curr                     = head;
-  int        pointer_and_type_enabled = option[POINTER] && option[TYPE];
-  int        total_switches           = option.get_total_switches ();
-  int        switch_size              = keyword_list_length () / total_switches;
+  List_Node *curr = head;
+  int pointer_and_type_enabled = option[POINTER] && option[TYPE];
+  int total_switches = option.get_total_switches ();
+  int switch_size = keyword_list_length () / total_switches;
 
   if (pointer_and_type_enabled)
     {
@@ -521,7 +516,7 @@ Key_List::output_switch (void)
 
   printf ("        {\n");
   
-  /* Properly deal with user's who request multiple switch statements. */
+  // Properly deal with user's who request multiple switch statements.
 
   while (curr)
     {
@@ -529,7 +524,7 @@ Key_List::output_switch (void)
       int        lowest_case_value = curr->hash_value;
       int        number_of_cases   = 0;
 
-      /* Figure out a good cut point to end this switch. */
+      // Figure out a good cut point to end this switch.
 
       for (; temp && ++number_of_cases < switch_size; temp = temp->next)
         if (temp->next && temp->hash_value == temp->next->hash_value)
@@ -541,7 +536,8 @@ Key_List::output_switch (void)
       else
         printf ("            {\n");
 
-      /* Output each keyword as part of a switch statement indexed by hash value. */
+      // Output each keyword as part of a switch statement indexed by
+      // hash value.
       
      if (option[POINTER] || option[DUP])
         {
@@ -566,7 +562,7 @@ Key_List::output_switch (void)
                 printf (" /* hash value = %4d, keyword = \"%s\" */", temp->hash_value, temp->key);
               putchar ('\n');
 
-              /* Handle `natural links,' i.e., those that occur statically. */
+              // Handle `natural links,' i.e., those that occur statically.
 
               if (temp->link)
                 {
@@ -581,9 +577,9 @@ Key_List::output_switch (void)
                       printf ("                  if (%s) return resword;\n", comp_buffer);
                     }
                 }
-              /* Handle unresolved duplicate hash values.  These are guaranteed
-                to be adjacent since we sorted the keyword list by increasing
-                  hash values. */
+              // Handle unresolved duplicate hash values.  These are
+              // guaranteed to be adjacent since we sorted the keyword
+              // list by increasing hash values.
               if (temp->next && temp->hash_value == temp->next->hash_value)
                 {
 
@@ -658,8 +654,8 @@ Key_List::output_switch (void)
   printf ("        }\n    %s\n}\n", option[OPTIMIZE] ? "" : "}\n  return 0;");
 }
 
-/* Prints out a table of keyword lengths, for use with the 
-   comparison code in generated function ``in_word_set.'' */
+// Prints out a table of keyword lengths, for use with the comparison
+// code in generated function ``in_word_set.''
 
 void 
 Key_List::output_keylength_table (void)
@@ -690,8 +686,9 @@ Key_List::output_keylength_table (void)
       printf ("\n%s%s};\n", indent, indent);
     }
 }
-/* Prints out the array containing the key words for the Gen_Perf
-   hash function. */
+
+// Prints out the array containing the key words for the Gen_Perf hash
+// function.
   
 void 
 Key_List::output_keyword_table (void)
@@ -705,7 +702,7 @@ Key_List::output_keyword_table (void)
   printf ("%sstatic %s%swordlist[] =\n%s%s{\n",
           indent, option[CONST] ? "const " : "", struct_tag, indent, indent);
 
-  /* Skip over leading blank entries if there are no duplicates. */
+  // Skip over leading blank entries if there are no duplicates.
 
   if (0 < head->hash_value)
     printf ("      ");
@@ -714,7 +711,7 @@ Key_List::output_keyword_table (void)
   if (0 < head->hash_value && column % 10)
     printf ("\n");
 
-  /* Generate an array of reserved words at appropriate locations. */
+  // Generate an array of reserved words at appropriate locations.
   
   for (temp = head ; temp; temp = temp->next, index++)
     {
@@ -746,7 +743,7 @@ Key_List::output_keyword_table (void)
         printf (" /* hash value = %d, index = %d */", temp->hash_value, temp->index);
       putchar ('\n');
 
-      /* Deal with links specially. */
+      // Deal with links specially.
       if (temp->link)
         for (List_Node *links = temp->link; links; links = links->link)
           {
@@ -760,8 +757,8 @@ Key_List::output_keyword_table (void)
   printf ("%s%s};\n\n", indent, indent);
 }
 
-/* Generates C code for the hash function that returns the
-   proper encoding for each key word. */
+// Generates C code for the hash function that returns the proper
+// encoding for each key word.
 
 void 
 Key_List::output_hash_function (void)
@@ -769,7 +766,7 @@ Key_List::output_hash_function (void)
   const int max_column  = 10;
   int       count       = max_hash_value;
 
-  /* Calculate maximum number of digits required for MAX_HASH_VALUE. */
+  // Calculate maximum number of digits required for MAX_HASH_VALUE.
 
   for (field_width = 2; (count /= 10) > 0; field_width++)
     ;
@@ -799,7 +796,7 @@ Key_List::output_hash_function (void)
 	      Vectors::occurrences[count] ? Vectors::asso_values[count] : max_hash_value + 1);
     }
   
-  /* Optimize special case of ``-k 1,$'' */
+  // Optimize special case of ``-k 1,$''
   if (option[DEFAULTCHARS]) 
     {
       if (option[STRCASECMP])
@@ -815,10 +812,10 @@ Key_List::output_hash_function (void)
 
       option.reset ();
 
-      /* Get first (also highest) key position. */
+      // Get first (also highest) key position.
       key_pos = option.get (); 
       
-      /* We can perform additional optimizations here. */
+      // We can perform additional optimizations here.
       if (!option[ALLCHARS] && key_pos <= min_key_len) 
         { 
           printf ("\n    };\n  return %s", option[NOLENGTH] ? "" : "len + ");
@@ -837,18 +834,18 @@ Key_List::output_hash_function (void)
 		  : "");
         }
 
-      /* We've got to use the correct, but brute force, technique. */
+      // We've got to use the correct, but brute force, technique.
       else 
         {                    
           printf ("\n    };\n  register int hval = %s;\n\n  switch (%s)\n    {\n      default:\n",
                   option[NOLENGTH] ? "0" : "len", option[NOLENGTH] ? "len" : "hval");
           
-          /* User wants *all* characters considered in hash. */
+          // User wants *all* characters considered in hash.
           if (option[ALLCHARS]) 
             { 
               int i;
 
-	      /* Break these options up for speed (gee, is this misplaced efficiency or what?! */
+	      // Break these options up for speed (gee, is this misplaced efficiency or what?!
 	      if (option[STRCASECMP])
 
 		for (i = max_key_len; i > 0; i--)
@@ -861,7 +858,7 @@ Key_List::output_hash_function (void)
               
               printf ("    }\n  return hval;\n}\n\n");
             }
-          else                  /* do the hard part... */
+          else                  // do the hard part...
             {                
               count = key_pos + 1;
               
@@ -887,8 +884,8 @@ Key_List::output_hash_function (void)
     }
 }
 
-/* Generates the large, sparse table that maps hash values into
-   the smaller, contiguous range of the keyword table. */
+// Generates the large, sparse table that maps hash values in the
+// smaller, contiguous range of the keyword table.
 
 void
 Key_List::output_lookup_array (void)
@@ -899,11 +896,11 @@ Key_List::output_lookup_array (void)
 
       struct duplicate_entry
         {
-          int hash_value;       /* Hash value for this particular duplicate set. */
-          int index;            /* Index into the main keyword storage array. */
-          int count;            /* Number of consecutive duplicates at this index. */
+          int hash_value;       // Hash value for this particular duplicate set.
+          int index;            // Index into the main keyword storage array.
+          int count;            // Number of consecutive duplicates at this index.
         };
-#if LARGE_STACK_ARRAYS
+#if defined (LARGE_STACK_ARRAYS)
       duplicate_entry duplicates[total_duplicates];
       int lookup_array[max_hash_value + 1];
 #else
@@ -913,7 +910,7 @@ Key_List::output_lookup_array (void)
       int *lookup_array = (int*)malloc(sizeof(int) * (max_hash_value + 1));
       if (duplicates == NULL || lookup_array == NULL)
 	abort();
-#endif
+#endif /* LARGE_STACK_ARRAYS */
       duplicate_entry *dup_ptr = duplicates;
       int *lookup_ptr = lookup_array + max_hash_value + 1;
 
@@ -929,7 +926,7 @@ Key_List::output_lookup_array (void)
           if (!temp->link &&
               (!temp->next || hash_value != temp->next->hash_value))
             continue;
-#if LARGE_STACK_ARRAYS
+#if defined (LARGE_STACK_ARRAYS)
           *dup_ptr = (duplicate_entry) { hash_value, temp->index, 1 };
 #else
 	  duplicate_entry _dups;
@@ -937,7 +934,7 @@ Key_List::output_lookup_array (void)
 	  _dups.index = temp->index;
 	  _dups.count = 1;
 	  *dup_ptr = _dups;
-#endif
+#endif /* LARGE_STACK_ARRAYS */
           
           for (List_Node *ptr = temp->link; ptr; ptr = ptr->link)
             {
@@ -969,7 +966,8 @@ Key_List::output_lookup_array (void)
             fprintf (stderr, "dup_ptr[%d]: hash_value = %d, index = %d, count = %d\n",
                      dup_ptr - duplicates, dup_ptr->hash_value, dup_ptr->index, dup_ptr->count);
 
-          /* Start searching for available space towards the right part of the lookup array. */
+          // Start searching for available space towards the right
+          // part of the lookup array.
 	  int i;
           for (i = dup_ptr->hash_value; i < max_hash_value; i++)
             if (lookup_array[i] == DEFAULT_VALUE && lookup_array[i + 1] == DEFAULT_VALUE)
@@ -980,7 +978,7 @@ Key_List::output_lookup_array (void)
                 break;
               }
 
-          /* If we didn't find it to the right look to the left instead... */
+          // If we didn't find it to the right look to the left instead...
           if (i == max_hash_value)
             {
 
@@ -993,7 +991,7 @@ Key_List::output_lookup_array (void)
                     break;
                   }
 
-              /* We are in *big* trouble if this happens! */
+              // We are in *big* trouble if this happens!
               assert (i != 0);
             }
         }
@@ -1014,7 +1012,7 @@ Key_List::output_lookup_array (void)
 
       int count = max;
 
-      /* Calculate maximum number of digits required for MAX_HASH_VALUE. */
+      // Calculate maximum number of digits required for MAX_HASH_VALUE.
 
       for (field_width = 2; (count /= 10) > 0; field_width++)
         ;
@@ -1034,7 +1032,8 @@ Key_List::output_lookup_array (void)
 #endif
     }
 }
-/* Generates C code to perform the keyword lookup. */
+
+// Generates C code to perform the keyword lookup.
 
 void 
 Key_List::output_lookup_function (void)
@@ -1118,7 +1117,7 @@ Key_List::output_lookup_function (void)
     }
 }
 
-/* Output the table and the functions that map upper case into lower case! */
+// Output the table and the functions that map upper case into lower case!
 
 void
 Key_List::output_strcasecmp (void)
@@ -1180,15 +1179,15 @@ Key_List::output_strcasecmp (void)
     }
 }
 
-/* Generates the hash function and the key word recognizer function
-   based upon the user's Options. */
+// Generates the hash function and the key word recognizer function
+// based upon the user's Options.
 
 void 
 Key_List::output (void)
 {
   printf ("%s\n", include_src);
   
-  if (option[TYPE] && !option[NOTYPE]) /* Output type declaration now, reference it later on.... */
+  if (option[TYPE] && !option[NOTYPE]) // Output type declaration now, reference it later on....
     printf ("%s;\n", array_type);
   
   output_min_max ();
@@ -1220,7 +1219,7 @@ Key_List::output (void)
 	output_lookup_array ();
       }
   
-  if (option[GNU])		/* Use the inline keyword to remove function overhead. */
+  if (option[GNU])		// Use the inline keyword to remove function overhead.
     printf ("#ifdef __GNUC__\ninline\n#endif\n");
   
   printf ("%s%s\n", option[CONST] ? "const " : "", return_type);
@@ -1244,7 +1243,7 @@ Key_List::output (void)
 	    total_keys, min_key_len, max_key_len, min_hash_value,
 	    max_hash_value, max_hash_value - min_hash_value + 1,
 	    total_duplicates ? total_duplicates + 1 : 0);
-  /* Use the switch in place of lookup table. */
+  // Use the switch in place of lookup table.
   if (option[SWITCH])
     {               
       if (!option[GLOBAL])
@@ -1256,7 +1255,7 @@ Key_List::output (void)
 	}
       output_switch ();
     }
-  /* Use the lookup table, in place of switch. */
+  // Use the lookup table, in place of switch.
   else                
     {           
       if (!option[GLOBAL])
@@ -1286,7 +1285,7 @@ Key_List::output (void)
   fflush (stdout);
 }
 
-/* Sorts the keys by hash value. */
+// Sorts the keys by hash value.
 
 void 
 Key_List::sort (void) 
@@ -1297,7 +1296,7 @@ Key_List::sort (void)
   head = merge_sort (head);
 }
 
-/* Dumps the key list to stderr stream. */
+// Dumps the key list to stderr stream.
 
 void 
 Key_List::dump () 
@@ -1313,7 +1312,7 @@ Key_List::dump ()
              field_width, ptr->char_set, ptr->key);
 }
 
-/* Simple-minded constructor action here... */
+// Simple-minded constructor action here...
 
 Key_List::Key_List (void) 
 {   
@@ -1327,7 +1326,7 @@ Key_List::Key_List (void)
   additional_code  = 0;
 }
 
-/* Returns the length of entire key list. */
+// Returns the length of entire key list.
 
 int 
 Key_List::keyword_list_length (void) 
@@ -1335,7 +1334,7 @@ Key_List::keyword_list_length (void)
   return list_len;
 }
 
-/* Returns length of longest key read. */
+// Returns length of longest key read.
 
 int 
 Key_List::max_key_length (void) 

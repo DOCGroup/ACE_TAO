@@ -69,11 +69,14 @@ Benchmark_Test::run_test (void)
 	     (options.t_flags () & THR_NEW_LWP)  ? "THR_NEW_LWP"  : "No New_LWP",
 	     this->orig_n_lwps_, this->n_lwps_, ACE_Thread::getconcurrency ()));
 
-  int   count = options.count ();
+  int count = options.count ();
   float rate  = count / (float (options.sleep_time ()));
 
-  ACE_DEBUG ((LM_DEBUG, "to count = %d\nrate = %.3f ops/sec, per operation = %.2f usec\n",
-	    count, rate, (1.0e6 / rate) / synch_count));
+  ACE_DEBUG ((LM_DEBUG,
+              "to count = %d\nrate = %.3f ops/sec, per operation = %.2f usec\n",
+              count,
+              rate,
+              (1.0e6 / rate) / synch_count));
   options.print_results ();
 
   // Allow thread(s) to finish up.
