@@ -1,6 +1,15 @@
+Thu Jun 10 18:05:09 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * DnC/Config_Handlers/Process_Element.cpp:
+        * DnC/Config_Handlers/Property_Handler.cpp:
+        * DnC/Config_Handlers/RS_Handler.cpp:
+        * DnC/Config_Handlers/SP_Handler.cpp:
+
+          More memory leaks fixed.
+
 2004-06-10  turkaye  <turkaye@lambada.isis.vanderbilt.edu>
 
-	* DnC/Config_Handlers/CAD_Handler.cpp: 
+	* DnC/Config_Handlers/CAD_Handler.cpp:
 	* DnC/Config_Handlers/CPK_Handler.cpp:
 	* DnC/Config_Handlers/CompImplDesc_Handler.cpp:
 
