@@ -1,3 +1,13 @@
+Fri Feb 21 11:01:22 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/Thread_Priority.cpp: fixed return type of
+	  convert_to_os_priority () for Linux.  Thanks to
+	  James CE Johnson <jcej@lads.com> for pointing this out.
+
+	* examples/Shared_Malloc/test_malloc.cpp,
+	  examples/System_V_IPC/SV_Message_Queues/{T,}MQ_Server.cpp (main):
+	  added ACE_UNUSED_ARG (sa);.
+
 Fri Feb 21 04:12:31 1997    <irfan@TWOSTEP>
 
 	* ace/OS.h: Added ACE_SEH_FINALLY.
