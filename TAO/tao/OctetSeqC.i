@@ -71,10 +71,26 @@ ACE_INLINE CORBA_OctetSeq_var &
 CORBA_OctetSeq_var::operator= (const ::CORBA_OctetSeq_var &p) // deep copy
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::CORBA_OctetSeq (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          CORBA_OctetSeq *deep_copy = new CORBA_OctetSeq (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              CORBA_OctetSeq *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 

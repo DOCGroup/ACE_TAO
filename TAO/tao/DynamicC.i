@@ -60,10 +60,26 @@ ACE_INLINE ::Dynamic::Parameter_var &
 Dynamic::Parameter_var::operator= (const ::Dynamic::Parameter_var &p)
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::Dynamic::Parameter (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          Dynamic::Parameter *deep_copy = new Dynamic::Parameter (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              Dynamic::Parameter *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
@@ -416,10 +432,27 @@ ACE_INLINE Dynamic::ParameterList_var &
 Dynamic::ParameterList_var::operator= (const ::Dynamic::ParameterList_var &p) // deep copy
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::Dynamic::ParameterList (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          Dynamic::ParameterList *deep_copy = 
+            new Dynamic::ParameterList (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              Dynamic::ParameterList *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
@@ -773,10 +806,27 @@ ACE_INLINE Dynamic::ExceptionList_var &
 Dynamic::ExceptionList_var::operator= (const ::Dynamic::ExceptionList_var &p) // deep copy
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::Dynamic::ExceptionList (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          Dynamic::ExceptionList *deep_copy = 
+            new Dynamic::ExceptionList (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              Dynamic::ExceptionList *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 

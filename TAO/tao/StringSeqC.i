@@ -64,10 +64,27 @@ ACE_INLINE CORBA_StringSeq_var &
 CORBA_StringSeq_var::operator= (const ::CORBA_StringSeq_var &p) // deep copy
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::CORBA_StringSeq (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          CORBA_StringSeq *deep_copy = 
+            new CORBA_StringSeq (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              CORBA_StringSeq *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 

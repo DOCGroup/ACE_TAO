@@ -57,10 +57,27 @@ ACE_INLINE ::TAO::PrioritySpecification_var &
 TAO::PrioritySpecification_var::operator= (const ::TAO::PrioritySpecification_var &p)
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::TAO::PrioritySpecification (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          TAO::PrioritySpecification *deep_copy = 
+            new TAO::PrioritySpecification (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              TAO::PrioritySpecification *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
@@ -397,10 +414,27 @@ ACE_INLINE ::TAO::BufferingConstraint_var &
 TAO::BufferingConstraint_var::operator= (const ::TAO::BufferingConstraint_var &p)
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::TAO::BufferingConstraint (*p.ptr_), *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          TAO::BufferingConstraint *deep_copy = 
+            new TAO::BufferingConstraint (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              TAO::BufferingConstraint *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 

@@ -89,12 +89,27 @@ ACE_INLINE TAO_ObjectKey_var &
 TAO_ObjectKey_var::operator= (const TAO_ObjectKey_var &p) // deep copy
 {
   if (this != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, 
-                    TAO_ObjectKey (*p.ptr_), 
-		    *this);
-  }
+    {
+      if (p.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          TAO_ObjectKey *deep_copy = 
+            new TAO_ObjectKey (*p.ptr_);
+          
+          if (deep_copy != 0)
+            {
+              TAO_ObjectKey *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
   return *this;
 }
 
