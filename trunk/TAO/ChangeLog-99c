@@ -1,3 +1,27 @@
+Fri Apr 30 01:56:37 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/corbafwd.h;
+	* tao/Request.{h,cpp}:
+	* tao/ORB.{h,cpp}:
+	  Added the RequestSeq class, inherited from 
+	  TAO_Unbounded_Sequence. Used as an arg in the
+	  (no-op) new ORB functions send_multiple_requests_oneway()
+	  and send_multiple_requests_deferred(), although the 
+	  RequestSeq class itself is fully functional, should any
+	  of this ever really get implemented.
+
+	  Added several spec-required ORB functions:
+	  - create_environment()
+	  - create_exceptions()
+	  - create_context_list()
+	  - create_named_value()
+	  - get_default_context()
+	  - send_multiple_requests_onewasy()
+	  - send_multiple_requests_deferred()
+	  - get_next_response()
+	  - poll_next_response()
+	  All of these are no-ops and just throw CORBA::NO_IMPLEMENT.
+
 Fri Apr 30 00:40:44 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* examples/POA/On_Demand_Loading/Server_Manager.h: 
