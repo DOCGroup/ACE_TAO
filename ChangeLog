@@ -1,3 +1,9 @@
+Wed Dec 17 11:25:43 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/TMCast/Group.cpp:
+          Fixed compile errors in the SunOS Forte8 build caused by the
+          lack of the scope of the exceptions.
+
 Wed Dec 17 11:16:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/TMCast/TMCast.mpc:
