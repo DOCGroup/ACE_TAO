@@ -37,7 +37,7 @@ namespace ConfigFactory {
 class Config_Factory : ACE_Service_Object
 {
 public:
-  virtual ~Config_Factory (void) {}
+  virtual ~Config_Factory (void);
 
   /// Create and destroy the TestConfig module.
   virtual TestConfig::Test_Config* create_testconfig ()       = 0;
