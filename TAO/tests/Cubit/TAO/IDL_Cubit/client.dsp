@@ -13,12 +13,14 @@ CFG=IDL_Cubit Client - Win32 Debug
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "client.mak" CFG="IDL_Cubit Client - Win32 Release"
+!MESSAGE NMAKE /f "client.mak" CFG="IDL_Cubit Client - Win32 Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "IDL_Cubit Client - Win32 Release" (based on "Win32 (x86) Console Application")
-!MESSAGE "IDL_Cubit Client - Win32 Debug" (based on "Win32 (x86) Console Application")
+!MESSAGE "IDL_Cubit Client - Win32 Release" (based on\
+ "Win32 (x86) Console Application")
+!MESSAGE "IDL_Cubit Client - Win32 Debug" (based on\
+ "Win32 (x86) Console Application")
 !MESSAGE 
 
 # Begin Project
@@ -36,12 +38,13 @@ RSC=rc.exe
 # PROP BASE Target_Dir ".\client"
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
-# PROP Output_Dir ""
-# PROP Intermediate_Dir ".\Release"
+# PROP Output_Dir "Release"
+# PROP Intermediate_Dir "Release"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ".\client"
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MD /W3 /GX /O2 /I "..\..\..\..\\" /I "..\..\..\..\..\\" /I "..\..\..\..\orbsvcs" /D "NDEBUG" /D "WIN32" /D "_CONSOLE" /D TAO_ORBSVCS_HAS_DLL=1 /YX /FD /c
+# ADD CPP /nologo /MD /W3 /GX /O2 /I "..\..\..\..\\" /I "..\..\..\..\..\\" /I "..\..\..\..\orbsvcs" /D "NDEBUG" /D "WIN32" /D "_CONSOLE" /D TAO_ORBSVCS_HAS_DLL=1 /FD /c
+# SUBTRACT CPP /YX
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
 BSC32=bscmake.exe
@@ -131,20 +134,39 @@ SOURCE=.\cubit.idl
 
 !IF  "$(CFG)" == "IDL_Cubit Client - Win32 Release"
 
-# Begin Custom Build
+USERDEP__CUBIT="..\..\..\..\tao_idl\Release\tao_idl.exe"	
+# Begin Custom Build - Invoking TAO_IDL compiler
 InputPath=.\cubit.idl
 InputName=cubit
 
 BuildCmds= \
-	..\..\..\..\tao_idl\tao_idl $(InputName).idl
+	..\..\..\..\tao_idl\Release\tao_idl $(InputName).idl
 
-"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
 "$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 # End Custom Build
 
