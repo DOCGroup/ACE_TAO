@@ -12,6 +12,7 @@
 #include "tao/Thread_Lane_Resources.h"
 #include "tao/ORB_Core.h"
 #include "tao/MProfile.h"
+#include "tao/Profile.h"
 
 #include "ace/Auto_Ptr.h"
 

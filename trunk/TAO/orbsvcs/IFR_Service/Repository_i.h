@@ -35,6 +35,7 @@
 
 #include "IFR_macro.h"
 #include "tao/TypeCodeFactory/TypeCodeFactory_Loader.h"
+#include "tao/CORBA_String.h"
 
 class IFR_Servant_Factory;
 
