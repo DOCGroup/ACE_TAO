@@ -4,7 +4,7 @@
 //
 // = LIBRARY
 //    tests
-// 
+//
 // = FILENAME
 //    Thread_Mutex_Test.cpp
 //
@@ -15,12 +15,13 @@
 //
 // = AUTHOR
 //    Prashant Jain and Doug Schmidt
-// 
+//
 // ============================================================================
 
 #include "ace/Thread_Manager.h"
 #include "test_config.h"
 
+#if defined (ACE_HAS_THREADS)
 static void *
 test (void *args)
 {
@@ -44,6 +45,7 @@ test (void *args)
 
   return 0;
 }
+#endif /* ACE_HAS_THREADS */	
 
 static void
 spawn (void)
@@ -61,7 +63,7 @@ spawn (void)
   ACE_Thread_Manager::instance ()->wait ();
 
 #else
-  ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n%"));
+  ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
 #endif /* ACE_HAS_THREADS */	
 }
 
@@ -75,4 +77,3 @@ main (int, char *[])
   ACE_END_TEST;
   return 0;
 }
-
