@@ -30,50 +30,51 @@ void PC_Handler::process_PackageConfiguration(::Deployment::PackageConfiguration
     {
       XStr node_name (node->getNodeName());
 
-      ACE_DEBUG ((LM_DEBUG, " Node Name is %s \n", XMLString::transcode
-        (node_name)));
-
-      if (false);
-      else if
-        (process_string(this->iter_, node_name, "label", pc.label));
-      else if
-        (process_string(this->iter_, node_name, "UUID", pc.UUID));
-        /*
-      else if
-        // TODO: process_PackageConfiguration does not accept a node_iterator
-        (process_sequence_local<Deployment::PackageConfiguration>
-         (this->doc_, this->iter_, node,
-          node_name, "specializedConfig", pc.specializedConfig,
-          this, &PC_Handler::process_PackageConfiguration));
-        */
-      else if
-        // TODO: Which id_map_ should be sent ?
-        (process_sequence_remote<Deployment::ComponentPackageDescription, CompPkgDesc_Handler>
-         (this->doc_, this->iter_, node,
-          node_name, "basePackage", pc.basePackage,
-          &CompPkgDesc_Handler::process_ComponentPackageDescription, this->id_map_));
-      else if
-        (process_sequence_remote<Deployment::ComponentPackageReference, CPR_Handler>
-         (this->doc_, this->iter_, node,
-          node_name, "reference", pc.reference,
-          &CPR_Handler::process_ComponentPackageReference, this->id_map_));
-      else if
-        (process_sequence_common<Deployment::Requirement>(this->doc_, this->iter_, node,
-                                                          node_name, "selectRequirement", pc.selectRequirement,
-                                                          &Requirement_Handler::process_Requirement,
-                                                          this->id_map_));
-      else if
-        (process_sequence_common<Deployment::Property>(this->doc_, this->iter_, node,
-                                                       node_name, "configProperty", pc.configProperty,
-                                                       &Property_Handler::process_Property,
-                                                       this->id_map_));
+      if (false)
+        {
+        }
+      else if (process_string(this->iter_, node_name, "label", pc.label))
+        {
+        }
+      else if (process_string(this->iter_, node_name, "UUID", pc.UUID))
+        {
+        }
+      else if (process_sequence_remote
+                 <Deployment::ComponentPackageDescription,
+                  CompPkgDesc_Handler>
+                     (this->doc_, this->iter_, node,
+                      node_name, "basePackage", pc.basePackage,
+                     &CompPkgDesc_Handler::process_ComponentPackageDescription,
+                      this->id_map_))
+        {
+        }
+      else if (process_sequence_remote
+                <Deployment::ComponentPackageReference, CPR_Handler>
+                   (this->doc_, this->iter_, node,
+                    node_name, "reference", pc.reference,
+                    &CPR_Handler::process_ComponentPackageReference,
+                    this->id_map_))
+        {
+        }
+      else if (process_sequence_common
+             <Deployment::Requirement>
+                (this->doc_, this->iter_, node,
+                 node_name, "selectRequirement", pc.selectRequirement,
+                 &Requirement_Handler::process_Requirement,this->id_map_))
+        {
+        }
+      else if (process_sequence_common<Deployment::Property>
+            (this->doc_, this->iter_, node,
+             node_name, "configProperty", pc.configProperty,
+             &Property_Handler::process_Property, this->id_map_))
+        {
+        }
       else
         {
-          // ??? How did we get here ???
           ACE_THROW (CORBA::INTERNAL());
         }
+      return;
     }
-  return;
 }
 
 END_DEPLOYMENT_NAMESPACE
