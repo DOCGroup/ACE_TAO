@@ -22,7 +22,7 @@
 
 
 #include "pace/sys/types.h"
-#include "pace/stdio.h"
+/*#include "pace/stdio.h"*/
 
 /* Need for NT */
 # define PACE_Export
@@ -77,9 +77,6 @@ typedef char PACE_PROTOENT_DATA[PACE_PROTOENT_DATA_SIZE];
 # endif /* PACE_HAS_STRUCT_NETDB_DATA */
 
 /* PACE_HAS_SIN_LEN */
-
-/* PACE_UNUSED_ARG */
-# define PACE_UNUSED_ARG(X)
 
 /* PACE_FREE */
 /* adjust later to use macros to decide how to free */
