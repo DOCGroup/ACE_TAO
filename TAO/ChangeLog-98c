@@ -4,6 +4,9 @@ Tue Mar 24 07:29:20 1998  David L. Levine  <levine@cs.wustl.edu>
           Stub.{h,i,cpp},Typecode.{h,cpp},corba.h:
           #include the .i file in the .h/.cpp file instead of corba.h
 
+        * tao/ORB.cpp (wscpy): removed, because we now use ACE_OS::wscpy ()
+          instead.
+
 Mon Mar 23 19:44:11 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
         * tao/ORB: CORBA_ORB no longer inherits from IUnknown.
