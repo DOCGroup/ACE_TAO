@@ -1,3 +1,23 @@
+Wed Jun  2 17:35:12 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO_IDL/include/fe_extern.h:
+	  Several functions where declared extern "C" but where actually
+	  regular C++ functions, this was causing problems on MVS.  Thanks
+	  to Jim Rogers <jrogers@viasoft.com> for these MVS patches.
+
+	* TAO_IDL/driver/drv_preproc.cpp:
+	  Pass the "-+" argument to the preprocessor under MVS, otherwise
+	  it does not recognize .cc files as C++.
+
+	* TAO_IDL/driver/drv_args.cpp:
+	  Work around a problem in the access() function for MVS.
+
+	* TAO_IDL/ast/ast_module.cpp:
+	  Generate only a warning if a module is reopened on platforms
+	  without namespaces. It is possible that the user is
+	  cross-compiling the code.  Thanks to Byron Harris
+	  <harris_b@ociweb.com> for pointing this out.
+
 Wed Jun  2 17:27:43 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/Connect.cpp:

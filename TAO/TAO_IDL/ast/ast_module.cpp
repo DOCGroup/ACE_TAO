@@ -95,14 +95,14 @@ AST_Module::AST_Module(UTL_ScopedName *n, UTL_StrList *p)
       !CORBA_module_added)
     {
       AST_PredefinedType *pdt;
-      
+
       pdt = idl_global->gen ()->create_predefined_type (
                                   AST_PredefinedType::PT_pseudo,
                                   new UTL_ScopedName (
-                                    new Identifier ("TypeCode", 
-                                                    1, 
-                                                    0, 
-                                                    I_FALSE), 
+                                    new Identifier ("TypeCode",
+                                                    1,
+                                                    0,
+                                                    I_FALSE),
                                     NULL),
                                   NULL);
 
@@ -114,10 +114,10 @@ AST_Module::AST_Module(UTL_ScopedName *n, UTL_StrList *p)
           pdt = idl_global->gen()->create_predefined_type (
                                      AST_PredefinedType::PT_pseudo,
                                      new UTL_ScopedName (
-                                       new Identifier ("ValueBase", 
-                                                       1, 
-                                                       0, 
-                                                       I_FALSE), 
+                                       new Identifier ("ValueBase",
+                                                       1,
+                                                       0,
+                                                       I_FALSE),
                                        NULL),
                                      NULL);
 
@@ -197,10 +197,17 @@ AST_Module *AST_Module::fe_add_module(AST_Module *t)
     // as an error
 
 #ifndef ACE_HAS_USING_KEYWORD
-    if (referenced(d)) {
-      idl_global->err()->error3(UTL_Error::EIDL_DEF_USE, t, this, d);
-      return NULL;
-    }
+    if (referenced(d))
+      {
+        String *s = t->file_name ();
+        long lineno = t->line ();
+        cerr << idl_global->prog_name ()
+             << ": warning: "
+             << (idl_global->read_from_stdin() ? "standard input" : s->get_string())
+             << ":" << lineno
+             << ": reopening module but platform does not\n"
+             << "      support namespaces, generated code may not compile\n";
+      }
 #endif /* ACE_HAS_USING_KEYWORD */
 
     if (t->has_ancestor(d)) {

@@ -658,8 +658,8 @@ POA_CORBA::_tao_collocated_DynEnum::_tao_collocated_DynEnum (
     TAO_Stub *stub
   )
   : CORBA_DynEnum (),
-    _tao_collocated_DynAny (servant,
-                                       stub),
+    ACE_NESTED_CLASS (POA_CORBA, _tao_collocated_DynAny (servant,
+                                                         stub)),
     CORBA_Object (stub,
                   servant,
                   1),
