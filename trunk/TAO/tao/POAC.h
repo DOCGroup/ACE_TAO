@@ -33,12 +33,15 @@
 #endif /* _MSC_VER */
 
 class TAO_ServantBase;
+class TAO_ServantBase_var;
+class TAO_RefCountServantBase;
 class TAO_Local_ServantBase;
 class TAO_DynamicImplementation;
 
 TAO_NAMESPACE PortableServer{
 
   typedef TAO_ServantBase ServantBase;
+  typedef TAO_ServantBase_var ServantBase_var;
   typedef TAO_RefCountServantBase RefCountServantBase;
   typedef ServantBase *Servant;
 

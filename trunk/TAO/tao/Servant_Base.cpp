@@ -178,6 +178,92 @@ TAO_RefCountServantBase::operator= (const TAO_RefCountServantBase &)
   return *this;
 }
 
+TAO_ServantBase_var::TAO_ServantBase_var (void)
+  : ptr_ (0)
+{
+}
+
+TAO_ServantBase_var::TAO_ServantBase_var (TAO_ServantBase *p)
+  : ptr_ (p)
+{
+}
+
+TAO_ServantBase_var::TAO_ServantBase_var (const TAO_ServantBase_var &b)
+  : ptr_ (b.ptr_)
+{
+  if (this->ptr_ != 0)
+    this->ptr_->_add_ref ();
+}
+
+TAO_ServantBase_var::~TAO_ServantBase_var (void)
+{
+  if (this->ptr_ != 0)
+    this->ptr_->_remove_ref ();
+}
+
+TAO_ServantBase_var &
+TAO_ServantBase_var::operator= (TAO_ServantBase *p)
+{
+  if (this->ptr_ != 0)
+    this->ptr_->_remove_ref ();
+
+  this->ptr_ = p;
+
+  return *this;
+}
+
+TAO_ServantBase_var &
+TAO_ServantBase_var::operator= (const TAO_ServantBase_var &b)
+{
+  if (this->ptr_ != b.ptr_)
+  {
+    if (this->ptr_ != 0)
+      this->ptr_->_remove_ref ();
+
+    if ((this->ptr_ = b.ptr_) != 0)
+      this->ptr_->_add_ref ();
+  }
+
+  return *this;
+}
+
+TAO_ServantBase *
+TAO_ServantBase_var::operator->() const
+{
+  return this->ptr_;
+}
+
+TAO_ServantBase *
+TAO_ServantBase_var::in (void) const
+{
+  return this->ptr_;
+}
+
+TAO_ServantBase *&
+TAO_ServantBase_var::inout (void)
+{
+  return this->ptr_;
+}
+
+TAO_ServantBase *&
+TAO_ServantBase_var::out (void)
+{
+  if (this->ptr_ != 0)
+    this->ptr_->_remove_ref();
+
+  this->ptr_ = 0;
+
+  return this->ptr_;
+}
+
+TAO_ServantBase *
+TAO_ServantBase_var::_retn (void)
+{
+  TAO_ServantBase *retval = this->ptr_;
+  this->ptr_ = 0;
+  return retval;
+}
+
 TAO_Stub *
 TAO_Local_ServantBase::_create_stub (CORBA_Environment &env)
 {

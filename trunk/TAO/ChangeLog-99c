@@ -1,6 +1,9 @@
-Sun Apr 18 03:03:52 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+Sun Apr 18 03:34:33 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/Servant_Base (TAO_RefCountServantBase): Added reference
+	* tao/Servant_Base.h (class ServantBase_var): Added reference
+	  counting servant auto pointer class (as per CORBA spec).
+
+	* tao/Servant_Base (class RefCountServantBase): Added reference
 	  counted mix-in class (as per CORBA spec).
 
 	* tao/Servant_Base.cpp (operator= and TAO_ServantBase):

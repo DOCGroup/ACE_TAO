@@ -25,11 +25,11 @@ class TAO_Operation_Table;
 class TAO_Export TAO_ServantBase
 {
   // = TITLE
-  //   Base class for skeletons and servants.
+  //     Base class for skeletons and servants.
   //
   // = DESCRIPTION
-  //   The POA spec requires that all servants inherit from this
-  //   class.
+  //     The POA spec requires that all servants inherit from this
+  //     class.
 public:
   friend class TAO_POA;
   friend class TAO_Object_Adapter;
@@ -97,28 +97,30 @@ protected:
 class TAO_RefCountServantBase : public virtual TAO_ServantBase
 {
   // = TITLE
-  //   Reference counting mix-in class.
+  //     Reference counting mix-in class.
   //
   // = DESCRIPTION
-  //   The RefCountServantBase mix-in class overrides the inherited
-  //   _add_ref and _remove_ref functions it inherits from
-  //   ServantBase, implementing them to provide true reference
-  //   counting. An instance of a servant class derived from
-  //   RefCountServantBase initially has a reference count of
-  //   one. Invoking _add_ref on the servant instance increases its
-  //   reference count by one. Invoking _remove_ref on the servant
-  //   instance decreases its reference count by one; if the resulting
-  //   reference count equals zero, _remove_ref invokes delete on its
-  //   this pointer in order to destroy the servant. For ORBs that
-  //   operate in multi-threaded environments, the implementations of
-  //   _add_ref and _remove_ref that the RefCountServantBase class
-  //   provides shall be thread-safe.
+  //     The RefCountServantBase mix-in class overrides the inherited
+  //     _add_ref and _remove_ref functions it inherits from
+  //     ServantBase, implementing them to provide true reference
+  //     counting. An instance of a servant class derived from
+  //     RefCountServantBase initially has a reference count of
+  //     one. Invoking _add_ref on the servant instance increases its
+  //     reference count by one. Invoking _remove_ref on the servant
+  //     instance decreases its reference count by one; if the
+  //     resulting reference count equals zero, _remove_ref invokes
+  //     delete on its this pointer in order to destroy the
+  //     servant. For ORBs that operate in multi-threaded
+  //     environments, the implementations of _add_ref and _remove_ref
+  //     that the RefCountServantBase class provides shall be
+  //     thread-safe.
   //
-  //   Like ServantBase, RefCountServantBase supports copy
-  //   construction and the default assignment operation. Copy
-  //   construction always sets the reference count of the new servant
-  //   instance to one. The default assignment implementation merely
-  //   returns *this and does not affect the reference count.
+  //     Like ServantBase, RefCountServantBase supports copy
+  //     construction and the default assignment operation. Copy
+  //     construction always sets the reference count of the new
+  //     servant instance to one. The default assignment
+  //     implementation merely returns *this and does not affect the
+  //     reference count.
 
 public:
 
@@ -150,7 +152,45 @@ private:
 
   ACE_Atomic_Op<ACE_SYNCH_MUTEX, CORBA::ULong> ref_count_;
   // Reference counter.
+};
 
+class TAO_ServantBase_var
+{
+  // = TITLE
+  //     Auto pointer for reference counting servants.
+  //
+  // = DESCRIPTION
+  //     For the convenience of automatically managing servant
+  //     reference counts, the PortableServer namespace also provides
+  //     the ServantBase_var class. This class behaves similarly to
+  //     _var classes for object references (see Section 20.3.1).
+
+public:
+  TAO_ServantBase_var (void);
+
+  TAO_ServantBase_var (TAO_ServantBase *p);
+
+  TAO_ServantBase_var (const TAO_ServantBase_var &b);
+
+  ~TAO_ServantBase_var (void);
+
+  TAO_ServantBase_var &operator= (TAO_ServantBase *p);
+
+  TAO_ServantBase_var &operator= (const TAO_ServantBase_var &b);
+
+  TAO_ServantBase *operator-> () const;
+
+  TAO_ServantBase *in (void) const;
+
+  TAO_ServantBase *&inout (void);
+
+  TAO_ServantBase *&out (void);
+
+  TAO_ServantBase *_retn (void);
+
+private:
+
+  TAO_ServantBase *ptr_;
 };
 
 class TAO_Export TAO_Servant_Hash
