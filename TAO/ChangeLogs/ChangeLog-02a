@@ -1,3 +1,31 @@
+Fri Sep 22 11:32:25 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * orbsvcs/ImplRepo_Service/ImplRepo.dsw:
+        
+          Removed tao_ifr project (it doesn't seem to exist).
+
+        * orbsvcs/FT_Service/FT_CORBA_ServiceC.h:
+        * orbsvcs/FT_Service/FT_CORBA_ServiceS.h:
+        * orbsvcs/orbsvcs/AV/RTCP.h:
+        * orbsvcs/orbsvcs/AV/media-timer.cpp:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Service_Activate.h:
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/vp.cpp:
+        * performance-tests/Cubit/TAO/MT_Cubit/Task_Client.h:
+        * performance-tests/POA/Demux/demux_stats.cpp:
+        * performance-tests/POA/Demux/demux_test_client.h:
+        * tao/DLL_ORB.inl:
+        * tests/Object_Loader/Loader.cpp:
+
+          Made changes to get Fuzz reports to be clean:
+          - Disabled math.h check wherever we included it (since
+            I assumed if we are including it, we have already
+            considered any issues with it)
+          - Changed ASYS_TEXT to ACE_TEXT
+          - Added missing Id string
+          - Added missing ace/post.h includes
+
+          [Bug 630]
+
 Fri Sep 22 12:20:41 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* orbsvcs/tests/ImplRepo/run_test.pl:

@@ -13,6 +13,7 @@
 //
 // ============================================================================
 
+// FUZZ: disable check_for_math_include
 #include <math.h>
 #include <ace/Get_Opt.h>
 #include <tao/corba.h>

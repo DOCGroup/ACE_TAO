@@ -3019,4 +3019,5 @@ TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &,
 
 #endif /*TAO_HAS_FT_CORBA == 1 */
 
+#include "ace/post.h"
 #endif /*TAO_FT_CORBA_SERVICEC_H */
