@@ -1,3 +1,11 @@
+Sun Aug  9 19:08:53 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/ORB_Core.cpp: 
+	  Removed explicit template instantiation for
+	  ACE_Malloc<ACE_LOCAL_MEMPORY_POOL,ACE_Null_Mutex> and the
+	  corresponding ACE_Allocator_Adapter<> because it is already
+	  instantiated in ACE.
+
 Sun Aug  9 18:20:59 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 	* tests/Simple/client_static.dsp:
