@@ -1,3 +1,10 @@
+Tue Jun 29 06:08:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/APG/Naming/Nodelocal.cpp:
+        * examples/APG/Naming/Temperature_Grapher_Options.h:
+        * examples/APG/Naming/Temperature_Monitor_Options.h:
+          Fixed compile errors in unicode build.
+
 Mon Jun 28 16:39:25 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* ace/OS.h:
