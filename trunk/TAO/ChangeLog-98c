@@ -1,3 +1,22 @@
+Sat Feb 21 00:31:20 1998  Chris Cleeland  <cleeland@lambada.cs.wustl.edu>
+
+	* tao/connect.* (send_request): Modified to take an extra arg
+ 	which specifies whether or not the request is a twoway, i.e.,
+ 	whether or not it should enter a sub-event loop looking for a
+ 	reply.
+
+	* tao/giop.cpp (invoke): Changed to match signature of
+ 	send_request.
+
+	* tests/NestedUpcall/Reactor.idl: Added a oneway method to test
+ 	nested upcalls with oneways.
+
+	* tests/NestedUpcall/reactor_i.*: Added the oneway implementation.
+
+	* tests/NestedUpcall/client.cpp: Made oneway invocation to test a
+ 	problem that the nested upcall allowing ORB exhibited.  Thanks to
+ 	Carlos for reporting this!
+
 Fri Feb 20 14:40:28 1998  Chris Cleeland  <cleeland@lambada.cs.wustl.edu>
 
 	* tao/connect.*: Extended TAO_Client_Connection_Handler to be run

@@ -43,7 +43,7 @@ public:
   virtual int open (void *);
   // Initialization hook.
 
-  int send_request (CDR &stream);
+  int send_request (CDR &stream, int is_twoway);
   // Send the request in <stream>.  If it is a twoway invocation, then
   // this re-enters the reactor event loop so that incoming requests
   // can continue to be serviced.  This insures that a nested upcall,

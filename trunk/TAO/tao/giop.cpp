@@ -773,7 +773,8 @@ TAO_GIOP_Invocation::invoke (CORBA::ExceptionList &exceptions,
 {
   // Send Request, return on error or if we're done
 
-  if (this->handler_->send_request (this->stream_) == -1)
+  if (this->handler_->send_request (this->stream_,
+                                    this->do_rsvp_) == -1)
     {
       // send_request () closed the connection; we just set the
       // handler to 0 here.

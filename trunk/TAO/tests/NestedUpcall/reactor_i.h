@@ -25,6 +25,9 @@ public:
   virtual CORBA::Long register_handler(EventHandler_ptr eh,
                                        CORBA::Environment &env);
   // register (with nothing...it's an example!)
+
+  virtual void set_value (CORBA::Environment &env);
+  
 };
 
 #endif /* REACTOR_I_H */

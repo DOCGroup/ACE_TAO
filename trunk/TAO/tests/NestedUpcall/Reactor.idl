@@ -18,4 +18,7 @@ interface Reactor
 {
   Long register_handler (in EventHandler eh);
   // Turns around and queries <eh> for  the peer.
+
+  oneway void set_value ();
+  // do-nothing oneway to check for proper operation
 };
