@@ -1,3 +1,11 @@
+Thu May 24 21:47:00 2001  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.{cpp, h}: replaced
+	  DEPENDENCY_SET_MAP with its full expansion in both the declaration
+	  and definition of TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY,
+	  ACE_LOCK>::map_dependency_i to work around a compiler error
+	  in g++/gcc 2.95.1 for VxWorks cross-compilation build.
+
 Thu May 24 16:57:16 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/LocalObject.h (hash):

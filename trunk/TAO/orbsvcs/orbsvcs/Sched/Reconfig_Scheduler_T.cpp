@@ -1117,7 +1117,11 @@ template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> void
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 map_dependency_i (RtecScheduler::handle_t key,
                   RtecScheduler::handle_t handle,
-                  ACE_TYPENAME TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::DEPENDENCY_SET_MAP &map,
+                  ACE_Hash_Map_Manager_Ex<RtecScheduler::handle_t,
+                                          RtecScheduler::Dependency_Set*,
+                                          ACE_Hash<RtecScheduler::handle_t>,
+                                          ACE_Equal_To<RtecScheduler::handle_t>,
+                                          ACE_LOCK> & map,
                   CORBA::Long number_of_calls,
                   RtecScheduler::Dependency_Type_t dependency_type,
                   CORBA::Environment &ACE_TRY_ENV)
