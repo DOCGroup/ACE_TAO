@@ -1,0 +1,15 @@
+#
+# Makefile for building the TAO POA tests
+#
+
+DIRS = \
+        Object_Reactivation \
+	Excessive_Object_Deactivations \
+	Etherealization \
+        POA_Destruction \
+        Identity \
+        Non_Servant_Upcalls \
+        Single_Threaded_POA \
+        wait_for_completion 
+
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

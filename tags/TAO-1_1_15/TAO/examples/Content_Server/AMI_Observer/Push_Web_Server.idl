@@ -1,0 +1,46 @@
+// $Id$
+
+module Web_Server
+// = TITLE
+//   IDL schema definition for Web server interface.
+{
+  typedef sequence<octet> Chunk_Type;
+
+  interface Callback
+    {
+      // This operation is called back by the server to pass
+      // the next <chunk> of the file starting.  If there are
+      // no more chunks, <last_chunk> is true.
+      void next_chunk (in Chunk_Type chunk,
+                       in boolean last_chunk);
+    };
+
+  exception Error_Result 
+    {
+      // Status of the <register_callback> operation.  These
+      // values should map onto the normal HTTP
+      // status values, e.g., 200 means success, 404
+      // means "file not found," etc.
+      short status;
+    };
+
+  struct Metadata_Type
+  {
+    // Modification date.
+    string modification_date;
+
+    // Type of content.
+    string content_type;
+  };
+
+  interface Iterator_Factory
+    {
+      // This registration method passes a <Callback> that
+      // the Web server uses to ``push'' data associated with
+      // <pathname> one ``chunk'' at a time.  The <metadata>
+      // reports information about the <pathname>.
+      Metadata_Type register_callback (in string pathname,
+                                       in Callback client_callback)
+        raises (Error_Result);
+    };
+};

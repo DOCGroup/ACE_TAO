@@ -1,0 +1,28 @@
+/**
+
+@page Throughput Performance Test README File
+
+	This test tries to estimate the maximum throughput (int bytes
+per second) that the ORB can achieve.  The test sends octet sequences
+of increasing sizes to a remote consumer, and measures both the time
+it takes to receive the data as well as the time required to send it.
+A single twoway operation is used to ensure that the data is properly
+flushed.
+
+	Please do not extend this test to deal with other data types,
+configurations, etc.  If you need to just create a new test.  In the
+past we had multi-purpose tests like that, they were hard to maintain,
+and the results were hard to interpret.  Furthermore, the test is
+purposely simple so its output can be parsed via nightly scripts and
+plotted in a graph.   More importantly, the throughput for raw data
+and the marshaling time are completely different things and should be
+measured with different tools.
+
+	To run the test use the run_test.pl script:
+
+$ ./run_test.pl
+
+	the script returns 0 if the test was successful, and prints
+out the performance numbers.
+
+*/
