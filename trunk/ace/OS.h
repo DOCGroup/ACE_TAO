@@ -573,8 +573,12 @@ typedef struct
 #define ACE_PLATFORM_EXE_SUFFIX_W ""
 #endif /* ACE_HAS_UNICODE */
 
-
 #define ACE_MAX_DEFAULT_PORT 65535
+
+#if !defined (ACE_MAX_DGRAM_SIZE)
+// This is just a guess...
+#define ACE_MAX_DGRAM_SIZE 8196
+#endif /* ACE_MAX_DGRAM_SIZE */
 
 #if ! defined(MAXPATHLEN)
 #define MAXPATHLEN  1024
