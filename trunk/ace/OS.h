@@ -3965,6 +3965,11 @@ public:
   static char *strsplit_r (char *s,
                            const char *token,
                            char *&next_start);
+  // Splits string <s> into pieces separated by the string <token>.
+  // <next_start> is an opaque cookie handed back by the call to store
+  // its state for the next invocation, thus making it re-entrant.
+  // This operates very similar to Perl's <split> function except that
+  // it returns pieces one at a time instead of into an array.
   static long strtol (const char *s,
                       char **ptr,
                       int base);
