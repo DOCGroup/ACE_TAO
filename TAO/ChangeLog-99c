@@ -1,3 +1,13 @@
+Thu Jul 15 17:25:29 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_union/union_cs.cpp (visit_union): Made a
+	  change to the signatures of the generated methods _access and
+	  _reset. These two methods were taking in a Boolean with a
+	  variable name. These variable names were not used. This was
+	  generating warnings on Linux_EGCS. So the variable name was
+	  commented out. Thanks to Mike Moron (mm4@cs.wustl.edu) for
+	  reporting this.
+
 Thu Jul 15 16:51:36 1999  Marina Spivak  <marina@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/IOR_Multicast.cpp
