@@ -1,15 +1,21 @@
+Thu Nov 12 23:21:26 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/orbconf.h: Native exceptions seem to be working fine.  I
+ 	  have restored the TAO_HAS_EXCEPTIONS option in the configuration
+ 	  file.
+
 Thu Nov 12 17:30:00 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Scheduler_Factory.cpp
-	  orbsvcs/tests/EC_Custom_Marshal/ECM_Supplier.cpp
-	  orbsvcs/tests/EC_Mcast/EC_Mcast.{cpp, h}
-	  orbsvcs/tests/EC_Multiple/EC_Multiple.{cpp, h}
-	  orbsvcs/tests/EC_Multiple/Scheduler_Runtime1.h
-	  orbsvcs/tests/EC_Multiple/Scheduler_Runtime2.h
-	  orbsvcs/tests/EC_Multiple/Scheduler_Runtime_Dynamic.h
-	  orbsvcs/tests/EC_Throughput/ECT_Supplier.cpp
-	  orbsvcs/tests/Event_Latency/Event_Latency.cpp: Fixed stray
-          compiler errors caused by RtecSceduler IDL portability changes.
+ 	  orbsvcs/tests/EC_Custom_Marshal/ECM_Supplier.cpp
+ 	  orbsvcs/tests/EC_Mcast/EC_Mcast.{cpp, h}
+ 	  orbsvcs/tests/EC_Multiple/EC_Multiple.{cpp, h}
+ 	  orbsvcs/tests/EC_Multiple/Scheduler_Runtime1.h
+ 	  orbsvcs/tests/EC_Multiple/Scheduler_Runtime2.h
+ 	  orbsvcs/tests/EC_Multiple/Scheduler_Runtime_Dynamic.h
+ 	  orbsvcs/tests/EC_Throughput/ECT_Supplier.cpp
+ 	  orbsvcs/tests/Event_Latency/Event_Latency.cpp: Fixed stray
+ 	  compiler errors caused by RtecSceduler IDL portability changes.
 
 Thu Nov 12 14:21:41 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 
