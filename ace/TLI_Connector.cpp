@@ -56,7 +56,7 @@ ACE_TLI_Connector::connect (ACE_TLI_Stream &new_stream,
       struct t_bind *localaddr;
 
       localaddr = (struct t_bind *) 
-	::t_alloc (new_stream.get_handle (), T_BIND, T_ADDR);
+	ACE_OS::t_alloc (new_stream.get_handle (), T_BIND, T_ADDR);
 
       if (localaddr == 0)
 	result = -1;
@@ -80,9 +80,12 @@ ACE_TLI_Connector::connect (ACE_TLI_Stream &new_stream,
 #endif /* ACE_HAS_FORE_ATM_XTI */
 	    {
 	      // localaddr->glen = 0;
-	      localaddr->addr.maxlen = local_sap.get_size ();
+	      //localaddr->addr.maxlen = local_sap.get_size ();
 	      localaddr->addr.len = local_sap.get_size ();
-	      localaddr->addr.buf = (char *) local_sap.get_addr ();
+              ACE_OS::memcpy(localaddr->addr.buf,
+                             local_sap.get_addr (),
+                             localaddr->addr.len);
+              //localaddr->addr.buf = (char *) local_sap.get_addr ();
 
 	      if (ACE_OS::t_bind (new_stream.get_handle (),
                                   localaddr,
@@ -114,9 +117,12 @@ ACE_TLI_Connector::connect (ACE_TLI_Stream &new_stream,
       new_stream.close ();
       return -1;
     }
-  callptr->addr.maxlen = remote_sap.get_size ();
+  //callptr->addr.maxlen = remote_sap.get_size ();
   callptr->addr.len = remote_sap.get_size ();
-  callptr->addr.buf = (char *) remote_sap.get_addr ();
+  ACE_OS::memcpy(callptr->addr.buf,
+                 remote_sap.get_addr (),
+                 callptr->addr.len);
+  //callptr->addr.buf = (char *) remote_sap.get_addr ();
 
   if (udata != 0)
     ACE_OS::memcpy ((void *) &callptr->udata, (void *) udata, sizeof *udata);
@@ -124,6 +130,11 @@ ACE_TLI_Connector::connect (ACE_TLI_Stream &new_stream,
     ACE_OS::memcpy ((void *) &callptr->opt, (void *) opt, sizeof *opt);
 
   // Connect to remote endpoint.
+#if defined (ACE_HAS_FORE_ATM_XTI)
+  // FORE's XTI/ATM driver has problems with ioctl/fcntl calls so (at least
+  // for now) always have blocking calls.
+  timeout = 0;
+#endif /* ACE_HAS_FORE_ATM_XTI */
 
   if (timeout != 0)   // Enable non-blocking, if required.
     {
