@@ -1,3 +1,16 @@
+Thu Feb 13 21:24:17 1997    <irfan@cha-cha.cs.wustl.edu>
+
+	* ace/OS.i (event_wait): Fixed the missing check for success.
+
+	* ace/Synch: Fixed problems with multiple removal of
+ 	  resources. Thanks to Bert (Bcraytor@aol.com) for pointing this
+ 	  out.
+
+	* examples/Threads/test.{mdp,mak}: Reorganized project so that it
+	  is easier to use. 
+
+	* examples/Threads: Small changes to make tests run faster.	
+
 Thu Feb 13 01:49:38 1997  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
 
 	* ace/OS.i (stat): Added stat() to ACE_OS.
