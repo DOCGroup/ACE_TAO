@@ -96,10 +96,10 @@ public:
    *  Compare two addresses for equality.  The addresses are considered
    *  equal if they contain the same IP address, port number, and path name.
    */
-  int operator == (const ACEXML_URL_Addr &SAP) const;
+  bool operator == (const ACEXML_URL_Addr &SAP) const;
 
   /// Compare two addresses for inequality.
-  int operator != (const ACEXML_URL_Addr &SAP) const;
+  bool operator != (const ACEXML_URL_Addr &SAP) const;
 
   /// Computes and returns hash value.
   virtual u_long hash (void) const;
