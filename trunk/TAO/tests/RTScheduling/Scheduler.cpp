@@ -207,6 +207,14 @@ TAO_Scheduler::send_other (PortableInterceptor::ServerRequestInfo_ptr
 }
 
 void
+TAO_Scheduler::send_poll (PortableInterceptor::ClientRequestInfo_ptr
+                           ACE_ENV_ARG_DECL_NOT_USED)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableInterceptor::ForwardRequest))
+{
+}
+
+void
 TAO_Scheduler::receive_reply (PortableInterceptor::ClientRequestInfo_ptr
                               ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))

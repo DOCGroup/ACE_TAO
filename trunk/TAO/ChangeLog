@@ -1,3 +1,13 @@
+Mon Sep 15 15:50:35 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
+
+	* tao/RTScheduling/RTScheduler.pidl: 
+	* tao/RTScheduling/RTSchedulerC.h: 
+	* tao/RTScheduling/RTSchedulerC.h: 
+	* tests/RTScheduling/Scheduler.cpp: 
+	* tests/RTScheduling/Scheduler.cpp: 	
+	
+	  Added send_poll operation to Scheduler interface.
+
 Mon Sep 15 11:58:35 MST 2003 Trevor Fields <fields_t@ociweb.com>
 
         * orbsvcs/performance-tests/RTEvent/lib/Peer_Base.cpp:
@@ -30,6 +40,9 @@ Mon Sep 15 11:16:51 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 	  In send_reply when the DT is cancelled the method should return
 	  and not continue as it used to before. Also corrected the
 	  updation of previous current in TSS. 
+
+	  Changed the incorrect call to receive_reply on the scheduler in
+	  send_poll to send_poll call on the scheduler.
 	
 Mon Sep 15 07:05:31 2003  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -1478,7 +1491,7 @@ Fri Aug 22 20:10:41 UTC 2003  Justin Michel <michel_j@ociweb.com>
         * orbsvcs/orbsvcs/CosEvent/CEC_SupplierControl.h
         * orbsvcs/orbsvcs/CosEvent/CEC_TypedConsumerAdmin.cpp
         * orbsvcs/orbsvcs/CosEvent/CEC_TypedConsumerAdmin.h
-        * orbsvcs/orbsvcs/CosEvent/CEC_TypedConsumerAdmin.i
+        * orbsvcs/orbsvcgs/CosEvent/CEC_TypedConsumerAdmin.i
         * orbsvcs/orbsvcs/CosEvent/CEC_TypedEvent.cpp
         * orbsvcs/orbsvcs/CosEvent/CEC_TypedEvent.h
         * orbsvcs/orbsvcs/CosEvent/CEC_TypedEvent.i
