@@ -1,3 +1,72 @@
+Wed Jun  2 13:18:38 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Resource_Factory.h:
+	* tao/Server_Strategy_Factory.h:
+	* tao/Client_Strategy_Factory.h:
+	* tao/Client_Strategy_Factory.cpp:
+	* tao/default_client.cpp:
+	* tao/default_client.h:
+	* tao/default_resource.cpp:
+	* tao/default_resource.h:
+	* tao/default_server.h:
+	* tao/params.h:
+	* tao/Invocation.cpp:
+	* tao/ORB.cpp:
+	* tao/ORB_Core.h:
+	* tao/ORB_Core.cpp:
+	* tao/Object.cpp:
+	* tao/Wait_Strategy.cpp:
+	* tao/Connect.h:
+	* tao/Connect.cpp:
+	* tao/IIOP_Connector.h:
+	* tao/IIOP_Connector.cpp:
+	* tao/IIOP_Profile.h:
+	* tao/IIOP_Profile.i:
+	* tao/IIOP_Transport.h:
+	* tao/IIOP_Transport.cpp:
+	* tao/UIOP_Connect.cpp:
+	* tao/UIOP_Connect.h:
+	* tao/UIOP_Connector.cpp:
+	* tao/UIOP_Connector.h:
+	* tao/UIOP_Transport.cpp:
+	* tao/UIOP_Transport.h:
+	  Removed several uses (or abuses?) of TAO_ORB_Core_instance()
+	  The Client_Strategy_Factory does not create the IIOP
+	  Client_Connection_Handlers anymore, it only creates the
+	  Wait_Strategy and its friends.  This was the last thorn in the
+	  PP framework (which could use some polishing, but nothing big).
+	  Renamed the TAO_Client_Connection_Handler to
+	  TAO_IIOP_Client_Connection_Handler, this is more consistent with 
+	  the UIOP protocol (and puts the class in its right place).
+	  Removed several #includes from header files to minimize
+	  cross-dependencies and optimize (re)compilation time
+
+	* orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
+	* orbsvcs/Time_Service/IR_Helper.cpp:
+	* orbsvcs/orbsvcs/AV/sfp.cpp:
+	* orbsvcs/orbsvcs/AV/sfp.h:
+	* orbsvcs/orbsvcs/Log/Logger_i.cpp:
+	* orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp:
+	* orbsvcs/tests/ImplRepo/IR_Helper.cpp:
+	* orbsvcs/tests/Simple_Naming/client.h:
+	* orbsvcs/tests/Trading/Offer_Exporter.cpp:
+	* tests/NestedUpcall/MT_Client_Test/local_server.h:
+	  Some internal header files are not visible in TAO anymore, this
+	  means that some ace header files are not visible either.  I
+	  added them to the few files that actually required those
+	  #include's
+
+	* */Makefile:
+	  Updated dependencies
+
+	* tao/ORB_Strategies_T.cpp:
+	* tao/ORB_Strategies_T.h:
+	* tao/ORB_Strategies_T.i:
+	  Removed this files are not used anymore.
+
+	* tao/Any.cpp:
+	  Minor cosmetic fixes
+
 Wed Jun  2 10:51:48 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Stub.cpp:

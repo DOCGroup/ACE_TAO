@@ -6,6 +6,7 @@
 #include "tao/ORB.h"
 #include "tao/IIOP_Profile.h"
 #include "tao/IIOP_Acceptor.h"
+#include "tao/Acceptor_Registry.h"
 #include "ace/Read_Buffer.h"
 #include "ace/Process.h"
 

@@ -344,7 +344,7 @@ TAO_Wait_On_Leader_Follower::wait (void)
 
   if (orb_core->unset_leader_wake_up_follower () == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "TAO:%N:%l:(%P|%t):TAO_Client_Connection_Handler::send_request: "
+                       "TAO:%N:%l:(%P|%t):TAO_Wait_On_Leader_Follower::send_request: "
                        "Failed to unset the leader and wake up a new follower.\n"),
                       -1);
   if (result == -1)

@@ -10675,7 +10675,8 @@ tags:
  be/be_visitor_interface/cdr_op_ci.cpp \
  be/be_visitor_interface/cdr_op_cs.cpp
 .obj/be_visitor_interface_fwd.o .obj/be_visitor_interface_fwd.so .shobj/be_visitor_interface_fwd.o .shobj/be_visitor_interface_fwd.so: be/be_visitor_interface_fwd.cpp \
- include/idl.h $(ACE_ROOT)/ace/ACE.h \
+ include/idl.h \
+ $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/streams.h \
@@ -10958,7 +10959,8 @@ tags:
  be_include/be_visitor_field/cdr_op_cs.h \
  be/be_visitor_valuetype/obv_module.cpp
 .obj/be_visitor_valuetype_fwd.o .obj/be_visitor_valuetype_fwd.so .shobj/be_visitor_valuetype_fwd.o .shobj/be_visitor_valuetype_fwd.so: be/be_visitor_valuetype_fwd.cpp \
- include/idl.h $(ACE_ROOT)/ace/ACE.h \
+ include/idl.h \
+ $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/streams.h \
@@ -12217,7 +12219,8 @@ tags:
  be/be_visitor_union/any_op_cs.cpp be/be_visitor_union/cdr_op_ch.cpp \
  be/be_visitor_union/cdr_op_ci.cpp be/be_visitor_union/cdr_op_cs.cpp
 .obj/be_visitor_union_branch.o .obj/be_visitor_union_branch.so .shobj/be_visitor_union_branch.o .shobj/be_visitor_union_branch.so: be/be_visitor_union_branch.cpp \
- include/idl.h $(ACE_ROOT)/ace/ACE.h \
+ include/idl.h \
+ $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/streams.h \

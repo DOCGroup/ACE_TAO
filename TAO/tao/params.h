@@ -214,14 +214,6 @@ private:
   // For selecting a address notation
 };
 
-enum TAO_Demux_Strategy
-{
-  TAO_LINEAR,
-  TAO_DYNAMIC_HASH,
-  TAO_ACTIVE_DEMUX,
-  TAO_USER_DEFINED
-};
-
 #if defined (__ACE_INLINE__)
 # include "tao/params.i"
 #endif /* __ACE_INLINE__ */

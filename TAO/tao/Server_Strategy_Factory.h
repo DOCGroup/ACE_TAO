@@ -17,15 +17,22 @@
 #ifndef TAO_SERVER_STRATEGY_FACTORY_H
 #define TAO_SERVER_STRATEGY_FACTORY_H
 
+#include "tao/corbafwd.h"
 #include "ace/Service_Object.h"
-#include "ace/Strategies_T.h"
-#include "tao/params.h"
 
 class TAO_Active_Object_Map_Impl;
 class TAO_Reverse_Active_Object_Map_Impl;
 class TAO_ORB_Core;
 
-class TAO_Server_Strategy_Factory : public ACE_Service_Object
+enum TAO_Demux_Strategy
+{
+  TAO_LINEAR,
+  TAO_DYNAMIC_HASH,
+  TAO_ACTIVE_DEMUX,
+  TAO_USER_DEFINED
+};
+
+class TAO_Export TAO_Server_Strategy_Factory : public ACE_Service_Object
 {
   // = TITLE
   //    Base class for the server's abstract factory that manufactures

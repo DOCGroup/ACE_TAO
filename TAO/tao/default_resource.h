@@ -18,14 +18,19 @@
 #ifndef TAO_DEFAULT_RESOURCE_H
 #define TAO_DEFAULT_RESOURCE_H
 
-#include "ace/Singleton.h"
+#include "tao/Resource_Factory.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Resource_Factory.h"
+#include "tao/Acceptor_Registry.h"
+#include "tao/Connector_Registry.h"
 #include "tao/POA.h"
+#include "ace/Singleton.h"
+#include "ace/Service_Config.h"
+
+class TAO_Object_Adapter;
 
 // ****************************************************************
 

@@ -8,6 +8,7 @@
 #include "tao/Object_KeyC.h"
 #include "tao/debug.h"
 #include "tao/Pluggable.h"
+#include "tao/Connector_Registry.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Invocation.i"
@@ -905,7 +906,6 @@ TAO_GIOP_Locate_Request_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
                                                      1);
 
   this->transport_->resume_connection (this->orb_core_->reactor ());
-  // suspend was called in TAO_Client_Connection_Handler::handle_input
 
   switch (m)
     {

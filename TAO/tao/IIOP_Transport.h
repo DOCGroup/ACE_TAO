@@ -25,7 +25,7 @@
 
 // Forward decls.
 class TAO_IIOP_Handler_Base;
-class TAO_Client_Connection_Handler;
+class TAO_IIOP_Client_Connection_Handler;
 class TAO_Server_Connection_Handler;
 class TAO_ORB_Core;
 
@@ -124,16 +124,16 @@ class TAO_Export TAO_IIOP_Client_Transport : public TAO_IIOP_Transport
   //   side.  Methods related to sending one and two way requests
   //   lives here.
 public:
-  TAO_IIOP_Client_Transport (TAO_Client_Connection_Handler *handler,
+  TAO_IIOP_Client_Transport (TAO_IIOP_Client_Connection_Handler *handler,
                              TAO_ORB_Core *orb_core);
   // Constructor.  Note, TAO_IIOP_Handler_Base is the base class for
-  // both TAO_Client_Connection_Handler and
+  // both TAO_IIOP_Client_Connection_Handler and
   // TAO_Server_Connection_Handler.
 
   ~TAO_IIOP_Client_Transport (void);
   // destructor
 
-  TAO_Client_Connection_Handler *client_handler (void);
+  TAO_IIOP_Client_Connection_Handler *client_handler (void);
   // return a pointer to the client's connection handler.
 
   int send_request (TAO_ORB_Core *orb_core,
@@ -170,7 +170,7 @@ protected:
   // This method checks for unexpected data.
 
 private:
-  TAO_Client_Connection_Handler *client_handler_;
+  TAO_IIOP_Client_Connection_Handler *client_handler_;
   // pointer to the corresponding client side connection handler.
 };
 
@@ -188,7 +188,8 @@ class TAO_Export TAO_IIOP_Server_Transport : public TAO_IIOP_Transport
   //   here.
 public:
 
-  TAO_IIOP_Server_Transport (TAO_Server_Connection_Handler *handler);
+  TAO_IIOP_Server_Transport (TAO_Server_Connection_Handler *handler,
+                             TAO_ORB_Core *orb_core);
   //  Default creator method.
 
   ~TAO_IIOP_Server_Transport (void);

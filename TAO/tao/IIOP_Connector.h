@@ -25,8 +25,34 @@
 #include "tao/Pluggable.h"
 #include "tao/Connect.h"
 
-typedef ACE_Strategy_Connector<TAO_Client_Connection_Handler, TAO_SOCK_CONNECTOR>
+typedef ACE_Strategy_Connector<TAO_IIOP_Client_Connection_Handler, TAO_SOCK_CONNECTOR>
         TAO_IIOP_BASE_CONNECTOR;
+
+// ****************************************************************
+
+class TAO_Export TAO_IIOP_Connect_Creation_Strategy : public ACE_Creation_Strategy<TAO_IIOP_Client_Connection_Handler>
+{
+  // = TITLE
+  //   Helper creation strategy
+  //
+  // = DESCRIPTION
+  //   Creates UIOP_Client_Connection_Handler objects but satisfies
+  //   the interface required by the
+  //   ACE_Creation_Strategy<TAO_IIOP_Client_Connection_Handler>
+  //
+public:
+  TAO_IIOP_Connect_Creation_Strategy (ACE_Thread_Manager * = 0,
+                                      TAO_ORB_Core* orb_core = 0);
+
+  virtual int make_svc_handler (TAO_IIOP_Client_Connection_Handler *&sh);
+  // Makes TAO_IIOP_Client_Connection_Handlers
+
+private:
+  TAO_ORB_Core* orb_core_;
+  // The ORB
+};
+
+// ****************************************************************
 
 class TAO_Export TAO_IIOP_Connector : public TAO_Connector
 {
@@ -49,10 +75,10 @@ public:
   int preconnect (const char *preconnections);
   TAO_Profile *create_profile (TAO_InputCDR& cdr);
 
-  typedef ACE_NOOP_Concurrency_Strategy<TAO_Client_Connection_Handler>
+  typedef ACE_NOOP_Concurrency_Strategy<TAO_IIOP_Client_Connection_Handler>
         TAO_NULL_ACTIVATION_STRATEGY;
 
-  typedef ACE_NOOP_Creation_Strategy<TAO_Client_Connection_Handler>
+  typedef ACE_NOOP_Creation_Strategy<TAO_IIOP_Client_Connection_Handler>
         TAO_NULL_CREATION_STRATEGY;
 
 protected:

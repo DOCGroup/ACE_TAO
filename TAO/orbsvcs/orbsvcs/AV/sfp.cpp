@@ -1,7 +1,7 @@
+// $Id$
+
 #include "orbsvcs/AV/sfp.h"
 #include "ace/ARGV.h"
-
-// $Id$
 
 // default arguments to pass to use for the ORB
 const char *TAO_SFP::TAO_SFP_ORB_ARGUMENTS = "-ORBobjrefstyle URL";
@@ -20,7 +20,7 @@ const unsigned char TAO_SFP::TAO_SFP_MINOR_VERSION = 0;
 // lengths of various SFP headers
 const unsigned char TAO_SFP::TAO_SFP_FRAME_HEADER_LEN = 12;
 
-int 
+int
 operator< (const TAO_SFP_Fragment_Node& left,
            const TAO_SFP_Fragment_Node& right)
 {
@@ -133,7 +133,7 @@ TAO_SFP::start_stream (const char *receiver_addr)
                                     MSG_PEEK,
                                     &this->timeout1_);
       //      ACE_DEBUG ((LM_DEBUG,"n = %d\n",n));
-      if (n == -1) 
+      if (n == -1)
         {
           if (errno == ETIME)
             {
@@ -245,7 +245,7 @@ TAO_SFP::send_frame (ACE_Message_Block *frame)
             total_length += temp->length ();
           ACE_DEBUG ((LM_DEBUG,"total_length of frame=%d\n",total_length));
           if (total_length < (SFP_MAX_PACKET_SIZE -this->frame_header_len_))
-            {  
+            {
               // clear the output cdr.
               this->output_cdr_.reset ();
               // CDR encode the frame header.
@@ -270,7 +270,7 @@ TAO_SFP::send_frame (ACE_Message_Block *frame)
               // from the heap.
               int message_len = this->frame_header_len_;
               iovec iov[TAO_WRITEV_MAX];
-              int iovcnt = 1;// since first iov is for frameHeader. 
+              int iovcnt = 1;// since first iov is for frameHeader.
               flowProtocol::frame frame_info;
               frame_info.timestamp = 10;
               frame_info.synchSource = 10;
@@ -422,7 +422,7 @@ TAO_SFP::send_frame (ACE_Message_Block *frame)
                   iov[0].iov_base = this->output_cdr_.begin ()->rd_ptr ();
                   iov[0].iov_len = this->output_cdr_.begin ()->length ();
                   //   send the fragment now.
-                  // without the sleep the fragments gets lost! 
+                  // without the sleep the fragments gets lost!
                   // probably because the UDP buffer queue on the sender side
                   // is overflown it drops the packets.
                   // XXX: This is a hack.
@@ -437,7 +437,7 @@ TAO_SFP::send_frame (ACE_Message_Block *frame)
         }
       else
         {
-          // flow controlled so wait. 
+          // flow controlled so wait.
         }
     }
   ACE_CATCHANY
@@ -597,7 +597,7 @@ TAO_SFP::handle_timeout (const ACE_Time_Value &tv,
 // Handle_input is called when data arrives on the  dgram
 // socket. Currently both the receiver and sender side input is
 // handled in this same handle_input ().
-int 
+int
 TAO_SFP::handle_input (ACE_HANDLE fd)
 {
   ACE_DEBUG ((LM_DEBUG,"TAO_SFP::handle_input\n"));
@@ -793,7 +793,7 @@ TAO_SFP::end_stream (void)
   ACE_CHECK_RETURN (-1);
   return result;
 }
-                                  
+
 int
 TAO_SFP::register_dgram_handler (void)
 {
@@ -820,9 +820,9 @@ TAO_SFP::read_simple_frame (void)
 
       flowProtocol::frameHeader frame_header;
 
-      int result = 
+      int result =
         this->read_frame_header (frame_header);
-      
+
       if (result < 0)
         return 0;
       int byte_order = frame_header.flags & 0x1;
@@ -867,7 +867,7 @@ TAO_SFP::read_simple_frame (void)
                       frame_info.synchSource,
                       frame_info.sequence_num));
           // The remaining message in the CDR stream is the fragment data for frag.0
-          ACE_Message_Block *data = 
+          ACE_Message_Block *data =
             frame_info_cdr.start ()->clone ();
           ACE_DEBUG ((LM_DEBUG,"Length of 0th fragment= %d\n",data->length ()));
           TAO_SFP_Fragment_Table_Entry *fragment_entry = 0;
@@ -903,7 +903,7 @@ TAO_SFP::read_simple_frame (void)
               result = this->fragment_table_.bind (frame_info.sequence_num,new_entry);
               if (result != 0)
                 ACE_ERROR_RETURN ((LM_ERROR,"fragment table bind failed\n"),0);
-	      return 0;
+              return 0;
             }
         }
     }
@@ -929,9 +929,9 @@ TAO_SFP::read_frame_header (flowProtocol::frameHeader &frame_header)
                       char [this->frame_header_len_+ACE_CDR::MAX_ALIGNMENT],
                       0);
       ssize_t n =this->dgram_.recv (buf,
-				   this->frame_header_len_,
-				   sender,
-				   MSG_PEEK);
+                                   this->frame_header_len_,
+                                   sender,
+                                   MSG_PEEK);
       if (n == -1)
         ACE_ERROR_RETURN ((LM_ERROR,"SFP::read_simple_frame -peek:%p",""),0);
       else if (n==0)
@@ -1020,7 +1020,7 @@ TAO_SFP::read_fragment (void)
       ACE_NEW_RETURN (data,
                       ACE_Message_Block(fragment.frag_sz),
                       0);
-                       
+
       // Read the fragment.
       n = this->dgram_.recv (data->wr_ptr (),fragment.frag_sz,sender);
       if ((n == -1) || (n==0))
@@ -1046,7 +1046,7 @@ TAO_SFP::read_fragment (void)
             ACE_ERROR_RETURN ((LM_ERROR,"insert for %dth node failed\n",fragment.frag_number),0);
           // check if all the fragments have been received.
         }
-      else 
+      else
         {
           ACE_NEW_RETURN (fragment_entry,
                           TAO_SFP_Fragment_Table_Entry,
@@ -1061,7 +1061,7 @@ TAO_SFP::read_fragment (void)
       if (!(fragment.flags & 0x2))
         {
           ACE_DEBUG ((LM_DEBUG,"Last fragment received\n"));
-          // if bit 1 is not set then there are 
+          // if bit 1 is not set then there are
           // no more fragments.
           fragment_entry->last_received_ = 1;
           // since fragment number starts from 0 to n-1 we add 1.
@@ -1088,7 +1088,7 @@ TAO_SFP::check_all_fragments (TAO_SFP_Fragment_Table_Entry *fragment_entry)
     {
       ACE_DEBUG ((LM_DEBUG,"all fragments have been received\n"));
       // all the fragments have been received
-      // we can now chain the ACE_Message_Blocks in the fragment_set_ and then return them 
+      // we can now chain the ACE_Message_Blocks in the fragment_set_ and then return them
       // back.
       ACE_Message_Block *frame = 0,*head = 0;
       FRAGMENT_SET_ITERATOR frag_iterator (fragment_entry->fragment_set_);
@@ -1119,7 +1119,7 @@ TAO_SFP::check_all_fragments (TAO_SFP_Fragment_Table_Entry *fragment_entry)
 }
 
 void
-TAO_SFP::dump_buf(char *buffer,int size) 
+TAO_SFP::dump_buf(char *buffer,int size)
 {
   char *buf = buffer;
   ACE_DEBUG ((LM_DEBUG,"========================================n"));

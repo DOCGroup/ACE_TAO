@@ -63,7 +63,7 @@ TAO_IIOP_Profile::version (TAO_IOP_Version *v)
   return &this->version_;
 }
 
-ACE_INLINE TAO_Client_Connection_Handler *&
+ACE_INLINE TAO_IIOP_Client_Connection_Handler *&
 TAO_IIOP_Profile::hint(void)
 {
   return this->hint_;

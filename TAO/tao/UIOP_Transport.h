@@ -186,7 +186,8 @@ class TAO_Export TAO_UIOP_Server_Transport : public TAO_UIOP_Transport
   //   here.
 public:
 
-  TAO_UIOP_Server_Transport (TAO_UIOP_Server_Connection_Handler *handler);
+  TAO_UIOP_Server_Transport (TAO_UIOP_Server_Connection_Handler *handler,
+                             TAO_ORB_Core* orb_core);
   //  Default creator method.
 
   ~TAO_UIOP_Server_Transport (void);

@@ -15,14 +15,12 @@
 // ============================================================================
 
 #ifndef TAO_DEFAULT_SERVER_FACTORY_H
-#  define TAO_DEFAULT_SERVER_FACTORY_H
+#define TAO_DEFAULT_SERVER_FACTORY_H
 
-#include "tao/corbafwd.h"
 #include "tao/Server_Strategy_Factory.h"
-#include "tao/params.h"
-#include "tao/ORB_Strategies_T.h"
+#include "ace/Service_Config.h"
 
-class TAO_Default_Server_Strategy_Factory : public TAO_Server_Strategy_Factory
+class TAO_Export TAO_Default_Server_Strategy_Factory : public TAO_Server_Strategy_Factory
 {
   // = TITLE
   //   This is the default strategy factory for CORBA servers.  It
@@ -67,22 +65,14 @@ public:
   // it is more efficient to use a Null_Mutex for the variables
   // controlling the event loop (termination). Otherwise a
   // Recursive_Thread_Mutex or Thread_Mutex may be required.
+
   virtual ACE_Lock *create_cached_connector_lock (void);
+  // Created the cached connector lock based on the command line
+  // options.
 
   int parse_args (int argc, char *argv[]);
-  // Arguments are in the form of -ORBxxx.  Valid arguments are:
-  // <-ORBconcurrency> <{which}>
-  //   where <{which}> is one of <reactive> or <thread-per-connection>.
-  // <-ORBtablesize> <{num}>
-  //   to set the table size
-  // <-ORBdemuxstrategy> <{which}>
-  //   where <{which}> is one of <dynamic>, <linear>, or <active>
-  // <-ORBpoalock> <{which}>
-  //   where <{which}> is one of <thread> or <null> (default <thread>)
-  // <-ORBpoamgrlock> <{which}>
-  //   where <{which}> is one of <thread> or <null> (default <thread>)
-  // <-ORBeventlock> <{which}>
-  //   where <{which}> is one of <thread> or <null> (default <null>)
+  // Parse the arguments, check the documentation in
+  // $TAO_ROOT/docs/Options.html for details
 
 protected:
   void tokenize (char *flag_string);

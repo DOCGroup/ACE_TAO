@@ -46,7 +46,8 @@ TAO_UIOP_Server_Connection_Handler::TAO_UIOP_Server_Connection_Handler (ACE_Thre
     orb_core_ (TAO_ORB_Core_instance ()),
     tss_resources_ (TAO_ORB_CORE_TSS_RESOURCES::instance ())
 {
-  uiop_transport_ = new TAO_UIOP_Server_Transport (this);
+  uiop_transport_ = new TAO_UIOP_Server_Transport (this,
+                                                   this->orb_core_);
 }
 
 // @@ For pluggable protocols, added a reference to the
@@ -56,7 +57,8 @@ TAO_UIOP_Server_Connection_Handler::TAO_UIOP_Server_Connection_Handler (TAO_ORB_
     orb_core_ (orb_core),
     tss_resources_ (TAO_ORB_CORE_TSS_RESOURCES::instance ())
 {
-  uiop_transport_ = new TAO_UIOP_Server_Transport (this);
+  uiop_transport_ = new TAO_UIOP_Server_Transport (this,
+                                                   this->orb_core_);
 }
 
 TAO_UIOP_Server_Connection_Handler::~TAO_UIOP_Server_Connection_Handler (void)
@@ -731,10 +733,11 @@ TAO_UIOP_Server_Connection_Handler::handle_input (ACE_HANDLE)
 
 // @@ For pluggable protocols, added a reference to the corresponding
 //    transport obj.
-TAO_UIOP_Client_Connection_Handler::TAO_UIOP_Client_Connection_Handler (ACE_Thread_Manager *t)
-  : TAO_UIOP_Handler_Base (t == 0 ? TAO_ORB_Core_instance ()->thr_mgr () : t)
+TAO_UIOP_Client_Connection_Handler::
+    TAO_UIOP_Client_Connection_Handler (ACE_Thread_Manager *t,
+                                        TAO_ORB_Core* orb_core)
+  : TAO_UIOP_Handler_Base (t)
 {
-  TAO_ORB_Core *orb_core = TAO_ORB_Core_instance ();
   uiop_transport_ = new TAO_UIOP_Client_Transport(this,
                                                   orb_core);
 }
@@ -770,9 +773,9 @@ TAO_UIOP_Client_Connection_Handler::open (void *)
 
 #if !defined (ACE_LACKS_SOCKET_BUFSIZ)
   int sndbufsize =
-    TAO_ORB_Core_instance ()->orb_params ()->sock_sndbuf_size ();
+    this->transport ()->orb_core ()->orb_params ()->sock_sndbuf_size ();
   int rcvbufsize =
-    TAO_ORB_Core_instance ()->orb_params ()->sock_rcvbuf_size ();
+    this->transport ()->orb_core ()->orb_params ()->sock_rcvbuf_size ();
 
   if (this->peer ().set_option (SOL_SOCKET,
                                 SO_SNDBUF,
@@ -782,7 +785,7 @@ TAO_UIOP_Client_Connection_Handler::open (void *)
     return -1;
   else if (this->peer ().set_option (SOL_SOCKET,
                                      SO_RCVBUF,
-                                    ACE_reinterpret_cast (void *, &rcvbufsize),
+                                     ACE_reinterpret_cast (void *, &rcvbufsize),
                                      sizeof (rcvbufsize)) == -1
            && errno != ENOTSUP)
     return -1;

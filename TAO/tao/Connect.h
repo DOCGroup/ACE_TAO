@@ -56,16 +56,17 @@ public:
   // Resume the handler.
 };
 
-class TAO_Export TAO_Client_Connection_Handler : public TAO_IIOP_Handler_Base
+class TAO_Export TAO_IIOP_Client_Connection_Handler : public TAO_IIOP_Handler_Base
 {
   // = TITLE
   //      <Svc_Handler> used on the client side and returned by the
   //      <TAO_CONNECTOR>.
 public:
   // = Intialization method.
-  TAO_Client_Connection_Handler (ACE_Thread_Manager *t = 0);
+  TAO_IIOP_Client_Connection_Handler (ACE_Thread_Manager *t = 0,
+                                      TAO_ORB_Core* orb_core = 0);
 
-  virtual ~TAO_Client_Connection_Handler (void);
+  virtual ~TAO_IIOP_Client_Connection_Handler (void);
 
   // = <Connector> hook.
   virtual int open (void *);

@@ -2,10 +2,13 @@
 
 #include "tao/default_resource.h"
 #include "tao/Client_Strategy_Factory.h"
+#include "tao/Server_Strategy_Factory.h"
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
 #include "tao/IIOP_Factory.h"
 #include "tao/UIOP_Factory.h"
+#include "tao/Acceptor_Registry.h"
+#include "tao/Connector_Registry.h"
 
 #include "ace/Select_Reactor.h"
 #include "ace/XtReactor.h"

@@ -21,15 +21,16 @@
 #ifndef MT_CLIENT_TEST_MT_SERVER_H
 #define MT_CLIENT_TEST_MT_SERVER_H
 
-#include "ace/Get_Opt.h"
+#include "MT_Object_i.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Log_Msg.h"
 #include "tao/TAO.h"
-#include "MT_Object_i.h"
+#include "ace/Get_Opt.h"
+#include "ace/Task.h"
+#include "ace/Log_Msg.h"
 
 class MT_Server
 {
