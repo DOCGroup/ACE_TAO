@@ -11,19 +11,23 @@
  */
 //=============================================================================
 
+
 #ifndef TAO_CORBALOC_PARSER_H
 #define TAO_CORBALOC_PARSER_H
+#include "ace/pre.h"
 
-#include /**/ "ace/pre.h"
-#include "ace/Service_Config.h"
+#include "tao/IOR_Parser.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/IOR_Parser.h"
+#include "ace/Service_Config.h"
+#include "ace/Array.h"
+#include "tao/Profile.h"
 
 class TAO_MProfile;
+
 
 /**
  * @class TAO_CORBALOC_Parser
@@ -51,78 +55,40 @@ public:
   /// Parse the ior-string that is passed.
   virtual CORBA::Object_ptr parse_string (const char *ior,
                                           CORBA::ORB_ptr orb
-                                          ACE_ENV_ARG_DECL_NOT_USED)
+                                          ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
-
-  /// Checks the prefix to see if it is RIR.
-  virtual int check_prefix (const char *endpoint
-                            ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
-  /// Helps count the length of the <obj_addr_list> and the number of
-  /// individual <obj_addr> in the <obj_addr_list>.
-  virtual void parse_string_count_helper (const char * corbaloc_name,
-                                          CORBA::ULong &addr_list_length,
-                                          CORBA::ULong &count_addr
-                                          ACE_ENV_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
-  /**
-   * Creates a MProfile for the endpoint passed and each such mprofile
-   * is added to the big mprofile <mprofile_> from which a pointer to
-   * the Object represented by the key_string is obtained and passed
-   * to the application.
-   */
-  virtual void parse_string_mprofile_helper (const char * end_point,
-                                             CORBA::ORB_ptr orb,
-                                             TAO_MProfile &mprofile
-                                             ACE_ENV_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**
    * Make a stub from the MProfile that is created in
    * parse_string_mprofile_helper. Using this stub, create an object
    * reference which is sent to the application.
    */
-  virtual CORBA::Object_ptr
-    make_stub_from_mprofile (CORBA::ORB_ptr orb,
-                             TAO_MProfile &mprofile
-                             ACE_ENV_ARG_DECL_NOT_USED)
+  CORBA::Object_ptr make_stub_from_mprofile (CORBA::ORB_ptr orb,
+                                             TAO_MProfile &mprofile
+                                             ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Gets the pointer to the key_string when the protocol used is RIR
-  virtual CORBA::Object_ptr
-    parse_string_rir_helper (const char * &corbaloc_name,
-                             CORBA::ORB_ptr orb
-                             ACE_ENV_ARG_DECL_NOT_USED)
+  CORBA::Object_ptr parse_string_rir_helper (const char *corbaloc_name,
+                                             CORBA::ORB_ptr orb
+                                             ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  /// Tokenizes the <obj_addr_list> using "," as the seperator. Assigns
-  /// individual endpoints to the elements of the ACE_Array_Base.
-  virtual void parse_string_assign_helper (
-                                           ACE_CString &key_string,
-                                           ACE_CString &cloc_name,
-                                           CORBA::ORB_ptr orb,
-                                           TAO_MProfile &mprofile
-                                           ACE_ENV_ARG_DECL_NOT_USED)
+  void make_canonical (const char *ior,
+                       size_t ior_len,
+                       ACE_CString &canonical_endpoint
+                       ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  /**
-   * Helps parse_string_assign_helper by assigning in the case when
-   * the protocol name is present and we have to append jsut the key
-   * string.
-   */
-  virtual void
-    assign_key_string(char * &cloc_name_ptr,
-                      ACE_CString &key_string,
-                      CORBA::ULong &addr_list_length,
-                      CORBA::ORB_ptr orb,
-                      TAO_MProfile &mprofile
-                      ACE_ENV_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
+  struct parsed_endpoint {
+    parsed_endpoint () : profile_ (0) {}
+    ~parsed_endpoint () { delete this->profile_; }
+    TAO_Profile *profile_;
+    char obj_key_sep_;
+    ACE_CString prot_addr_;
+  };
 };
 
 #if defined (__ACE_INLINE__)
@@ -132,5 +98,5 @@ private:
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO, TAO_CORBALOC_Parser)
 ACE_FACTORY_DECLARE (TAO, TAO_CORBALOC_Parser)
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /* TAO_CORBALOC_PARSER_H */

@@ -68,8 +68,10 @@
       TAO_SSLIOP_Profile (TAO_ORB_Core * orb_core,
                           const ::SSLIOP::SSL * ssl_component);
 
-      /// Profile constructor, default.
-      TAO_SSLIOP_Profile (TAO_ORB_Core * orb_core);
+      /// Profile constructor. ssl_only != 0 will force secure
+      /// connections, pnly.
+      TAO_SSLIOP_Profile (TAO_ORB_Core * orb_core, int ssl_only = 0);
+
 
       // = Please see Profile.h for the documentation of these methods.
       virtual int decode (TAO_InputCDR& cdr);
@@ -153,6 +155,16 @@
        * rest of the SSL endpoint list is transmitted.
        */
       TAO_SSLIOP_Endpoint ssl_endpoint_;
+      
+      /**
+       * Allways treat this endpoint as secure, even if the constructor
+       * did not explicitely specify a tagged component for SSL.
+       * @par
+       * Most likely the parse_string() will supply a subset of the
+       * attributes - port number, for instance.
+       */
+      int ssl_only_;
+      
     };
 
 //   }  // End SSLIOP namespace.

@@ -1,3 +1,117 @@
+Fri Sep 24 08:58:40 2004  Iliyan Jeliazkov  <jeliazkov_i@ociweb.com>
+
+          Added capability to use INS-style corbaloc references to specify SSLIOP
+          references. This was motivated by a desire to access a naming service
+          exclusively using SSLIOP, but needing to specify its endpoint to clients
+          via a corbaloc-style IOR.
+
+          This change originated in OCITAO 1.3a, and relies (and brings along with
+          it) code from OCITAO that refactored the CORBALOC parser to support
+          corbaloc and corbaname parsing via protocols beyond iiop. Thanks to
+          Phil Mesnier and Jonathan Pollack for contributing this functionality.
+          Their changes are credited accordingly in the text below.
+
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
+
+          Added code to check for the new "ssliop:" protocol prefix and to parse
+          a corbaloc-style URL with ssliop prefix.
+
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.cpp:
+
+          Updated the factory to correctly recognize ssliop: and iiop: protocol
+          prefixes.
+
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.cpp:
+
+          Modified to allow creation of profiles that allways use SSL (when the
+          ssliop: protocol prefix is present). Such profiles will allways create
+          connections with Security::NoProtection disabled.
+
+        * orbsvcs/tests/Security/MT_SSLIOP/MT_SSLIOP.mpc:
+        * orbsvcs/tests/Security/MT_SSLIOP/server.cpp:
+
+          Added a "-i ObjectKey" option to provide an object key in the IORTable for
+          the object reference, so that clients can use corbaloc object
+          references like "corbaloc:ssliop:localhost:12345/ObjectKey". The intent
+          was to use it in testing the working of the corbaloc:ssliop, however it
+          is suiteable for more general use and that is why I left it here.
+
+        * orbsvcs/tests/Security/ssliop_corbaloc/README:
+        * orbsvcs/tests/Security/ssliop_corbaloc/client.conf:
+        * orbsvcs/tests/Security/ssliop_corbaloc/client.h:
+        * orbsvcs/tests/Security/ssliop_corbaloc/client.conf.xml:
+        * orbsvcs/tests/Security/ssliop_corbaloc/client.cpp:
+        * orbsvcs/tests/Security/ssliop_corbaloc/corbaloc_ssliop.mpc:
+        * orbsvcs/tests/Security/ssliop_corbaloc/pvtkey-client.pem:
+        * orbsvcs/tests/Security/ssliop_corbaloc/pvtkey.pem:
+        * orbsvcs/tests/Security/ssliop_corbaloc/run_test.pl:
+        * orbsvcs/tests/Security/ssliop_corbaloc/selfsigncert-client.pem:
+        * orbsvcs/tests/Security/ssliop_corbaloc/selfsigncert.pem:
+        * orbsvcs/tests/Security/ssliop_corbaloc/server.conf:
+        * orbsvcs/tests/Security/ssliop_corbaloc/server.conf.xml:
+        * orbsvcs/tests/Security/ssliop_corbaloc/test_object.idl:
+
+          Added the test to demonstrate the use of corbaloc:ssliop-style
+          object references and exclusive use of secure connection.
+          Introduced client- and server-side configuration file(s) for
+          the SSL-based tests, which I borrowed from
+          $TAO_ROOT/orbsvcs/tests/Security/Security/MT_SSLIOP.
+          Also generated a pair of private keys and the corresponding
+          certificates.
+
+
+        * tao/CORBALOC_Parser.h:
+        * tao/CORBALOC_Parser.cpp:
+
+          Phil Mesnier refactored CORBALOC_Parser. The goal of this effort is to
+          support corbaloc and corbaname style object URLs with protocols other than those
+          shipped with TAO. Now the corbaloc parser works in conjunction
+          with the connector registry to allow the loaded transport
+          connectors to parse out known address strings. This change works
+          in conjunction with the changed TAO_Transport_Connector class,
+          described below. Thanks also to Jonathan Pollack for contributing, and
+          reviewing the final version.
+
+        * tao/Connector_Registry.cpp:
+        * tao/IIOP_Connector.cpp:
+
+          Phil Mesnier added an "" to the list of valid prefixes. This allows the
+          corbaloc parser code to remain clean, while still allowing corbaloc:: to
+          be eqivalent to corbaloc:iiop:.
+
+        * tao/IIOP_Profile.cpp:
+
+          Added a better error message for the case when a port number appears
+          with no host name specified. Originaly this threw and exception, but
+          provided no clues why the object reference would be invalid.
+
+        * tao/Strategies/UIOP_Connector.h:
+        * tao/Strategies/UIOP_Connector.cpp:
+
+          Phil Mesnier overode corbaloc parsing for UIOP, as it is a profile that
+          may contain commas or slashes in the address, therefore it must provide
+          its own implementation of corbaloc_scan method. The UIOP parser scans
+          for a '|' preceeding the comma or slash.
+
+        * tao/Strategies/UIOP_Profile.cpp:
+
+          Phil Mesnier updated the to_string method to output a stringified object
+          reference compatible with the updated corbaloc parser.
+
+        * tao/Transport_Connector.h:
+        * tao/Transport_Connector.cpp:
+
+          Phil Mesnier added a new virtual method, corbaloc_scan, which is called by
+          the corbaloc parser in order to find the end of the address specification,
+          ordinarily a comma or a slash. This method is virtual so that specific
+          protocols that need to have an additional adornment, or may include a comma
+          or slash in a valid endpoint string, may use an alternative method to
+          determine the end of the address. Ensured (in corbaloc_scan) that commas
+          that appear inside object key, following a slash are not counted as
+          separators between addresses.
+
 Fri Sep 24 07:12:12 2004  Carlos O'Ryan  <coryan@atdesk.com>
 
 	* tests/Sequence_Unit_Tests/allocation_traits.hpp:

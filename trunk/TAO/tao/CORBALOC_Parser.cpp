@@ -1,301 +1,40 @@
 #include "CORBALOC_Parser.h"
 #include "ORB_Core.h"
 #include "Stub.h"
+#include "MProfile.h"
 #include "Connector_Registry.h"
-#include "SystemException.h"
+#include "Transport_Connector.h"
+#include "Protocol_Factory.h"
 #include "tao/debug.h"
-#include "ace/OS_NS_strings.h"
-#include "ace/OS_NS_string.h"
+#include "ace/Vector_T.h"
+#include "ace/INET_Addr.h"
 
 #if !defined(__ACE_INLINE__)
 #include "CORBALOC_Parser.i"
 #endif /* __ACE_INLINE__ */
 
-
-ACE_RCSID (tao,
+ACE_RCSID (TAO,
            CORBALOC_Parser,
            "$Id$")
-
 
 TAO_CORBALOC_Parser::~TAO_CORBALOC_Parser (void)
 {
 }
 
-static const char corbaloc_prefix[] = "corbaloc:";
-
-static const char* protocol_prefixes[] = {
-  "iiop",
-  "miop",
-  "rir",
-  "sciop",
-  "shmiop",
-  "uiop"
-};
+static const char prefix[] = "corbaloc:";
+static const size_t prefix_len = sizeof prefix - 1;
+static const char rir_token[] = "rir:/"; // includes key separator
+static const size_t rir_token_len = sizeof rir_token - 1;
+static const char iiop_token[] = "iiop:";
+static const char iiop_token_len = sizeof iiop_token - 1;
 
 int
 TAO_CORBALOC_Parser::match_prefix (const char *ior_string) const
 {
   // Check if the prefix is 'corbaloc:' and return the result.
   return (ACE_OS::strncmp (ior_string,
-                           corbaloc_prefix,
-                           sizeof corbaloc_prefix - 1) == 0);
-}
-
-void
-TAO_CORBALOC_Parser::parse_string_count_helper (const char * s,
-                                                CORBA::ULong &addr_list_length,
-                                                CORBA::ULong &addr_count
-                                                ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  char object_key_delimiter = '/';
-
-  if (ACE_OS::strncmp (s, "uiop", 4) == 0)
-      object_key_delimiter = '|';
-
-  for (const char *i = s; *i != '\0'; ++i)
-    {
-      if (*i == ',')
-        {
-          // Increment the address count
-          ++addr_count;
-        }
-
-      if (*i == ':'
-          && *(i + 1) == '/'
-          && *(i + 2) == '/')
-        {
-          if (TAO_debug_level > 0)
-            ACE_ERROR((LM_ERROR,
-                       ACE_TEXT ("TAO (%P|%t) Invalid Syntax: %s\n"),
-                       ACE_TEXT_CHAR_TO_TCHAR (s)));
-
-          ACE_THROW (CORBA::BAD_PARAM (CORBA::OMGVMCID | 10,
-                                       CORBA::COMPLETED_NO));
-        }
-
-      if (*i == object_key_delimiter
-          && *(i+1) != object_key_delimiter)
-        {
-          // Indication that the next characters are to be
-          // assigned to key_string
-          return;
-        }
-
-      ++addr_list_length;
-    }
-}
-
-void
-TAO_CORBALOC_Parser::assign_key_string (char *& cloc_name_ptr,
-                                        ACE_CString & key_string,
-                                        CORBA::ULong
-                                        &addr_list_length,
-                                        CORBA::ORB_ptr orb,
-                                        TAO_MProfile &mprofile
-                                        ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  CORBA::String_var end_point;
-  const char protocol_prefix[] = ":";
-  const char protocol_suffix_append[] = "://";
-  const char iiop_prefix[] = "iiop";
-  const char uiop_prefix[] = "uiop";
-  const char def_port[] = ":2809";
-
-  // Copy the cloc_name_ptr to cloc_name_cstring.
-  ACE_CString cloc_name_cstring (cloc_name_ptr,
-                                 addr_list_length,
-                                 0,
-                                 1);
-
-  // pos_colon is the position of the ':' in the iiop_id
-  // <iiop_id> = ":" | <iiop_prot_token>":"
-  int pos_colon = cloc_name_cstring.find (':', 0);
-
-  if (ACE_OS::strncmp (cloc_name_ptr,
-                       protocol_prefix,
-                       sizeof (protocol_prefix) - 1) == 0)
-    {
-      // If there is no protocol explicitly specified then default to
-      // "iiop".
-      end_point = CORBA::string_alloc (addr_list_length
-                                       + sizeof (iiop_prefix) - 1
-                                       + 1  // Object key separator
-                                       + 3  // "://"
-                                       + sizeof (def_port) - 1
-                                       + static_cast<CORBA::ULong> (
-                                             key_string.length ()));
-
-      // Copy the default <iiop> prefix.
-      ACE_OS::strcpy (end_point.inout (),
-                      iiop_prefix);
-
-      // Append '://'
-      ACE_OS::strcat (end_point.inout (),
-                      protocol_suffix_append);
-    }
-  else
-    {
-      // The case where the protocol to be used is explicitly
-      // specified.
-
-      // The space allocated for the default IIOP port is not needed
-      // for all protocols, but it is only 5 bytes.  No biggy.
-      end_point = CORBA::string_alloc (addr_list_length
-                                       + 1  // Object key separator
-                                       + 3  // "://"
-                                       + sizeof (def_port) - 1
-                                       + static_cast<CORBA::ULong> (
-                                             key_string.length ()));
-
-      ACE_CString prot_name = cloc_name_cstring.substring (0,
-                                                           pos_colon);
-
-      // Form the endpoint
-
-      // Example:
-      // prot_name.c_str () = iiop
-      ACE_OS::strcpy (end_point.inout (),
-                      prot_name.c_str ());;
-
-
-      // Example:
-      // The endpoint will now be of the form 'iiop'
-
-      ACE_OS::strcat (end_point.inout (),
-                      protocol_suffix_append);
-
-      // The endpoint will now be of the form 'iiop://'
-    }
-
-  ACE_CString addr =
-    cloc_name_cstring.substring (pos_colon + 1, -1);
-
-  ACE_OS::strcat (end_point.inout (),
-                  addr.c_str ());
-
-  // Check for an IIOP corbaloc IOR.  If the port number is not
-  // specified, append the default corbaloc port number (i.e. "2809")
-  if (ACE_OS::strncmp (end_point.in (),
-                       iiop_prefix,
-                       sizeof (iiop_prefix) - 1) == 0
-      && addr.find (':') == ACE_CString::npos)
-    ACE_OS::strcat (end_point.inout (), def_port);
-
-  // Example:
-  // The End_point will now be of the form
-  //    'iiop://1.0@doc.ece.uci.edu:12345'
-
-  if (ACE_OS::strncmp (cloc_name_ptr,
-                       uiop_prefix,
-                       sizeof (uiop_prefix) - 1) == 0)
-    {
-      // The separator for the uiop protocol is '|'. This should
-      // actually be later changed so that the separator is '/' as the
-      // other protocols.
-      ACE_OS::strcat (end_point.inout (), "|");
-    }
-  else
-    {
-      ACE_OS::strcat (end_point.inout (), "/");
-    }
-
-  // Append the key string.
-  ACE_OS::strcat (end_point.inout (),
-                  key_string.c_str ());
-
-  // Example: The End_point will now be of the form:
-  // 'iiop://1.0@doc.ece.uci.edu:12345/object_name'
-
-  // Call the mprofile helper which makes an mprofile for this
-  // endpoint and adds it to the big mprofile.
-  this->parse_string_mprofile_helper (end_point.in (),
-                                      orb,
-                                      mprofile
-                                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-}
-
-void
-TAO_CORBALOC_Parser::parse_string_assign_helper (
-    ACE_CString &key_string,
-    ACE_CString &cloc_name,
-    CORBA::ORB_ptr orb,
-    TAO_MProfile &mprofile
-    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  char *cloc_name_ptr = 0;
-
-  // Tokenize using "," as the seperator
-  char *last_addr = 0;
-
-  cloc_name_ptr =
-    ACE_OS::strtok_r (const_cast<char *> (cloc_name.c_str ()),
-                      ",",
-                      &last_addr);
-
-  CORBA::ULong length;
-  while (cloc_name_ptr != 0)
-    {
-      length = static_cast<CORBA::ULong> (ACE_OS::strlen (cloc_name_ptr));
-      // Forms the endpoint and calls the mprofile_helper.
-      this->assign_key_string (cloc_name_ptr,
-                               key_string,
-                               length,
-                               orb,
-                               mprofile
-                               ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
-
-      // Get the next token.
-      cloc_name_ptr = ACE_OS::strtok_r ((char*)NULL,
-                                        ",",
-                                        &last_addr);
-    }
-}
-
-
-void
-TAO_CORBALOC_Parser::parse_string_mprofile_helper (
-    const char * end_point,
-    CORBA::ORB_ptr orb,
-    TAO_MProfile &mprofile
-    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  TAO_MProfile jth_mprofile;
-
-  TAO_Connector_Registry *conn_reg =
-    orb->orb_core ()->connector_registry (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
-
-  int retv =
-    conn_reg->make_mprofile (end_point,
-                             jth_mprofile
-                             ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-
-  if (retv != 0)
-    {
-      ACE_THROW (CORBA::INV_OBJREF (
-                   CORBA::SystemException::_tao_minor_code (
-                      0,
-                      EINVAL),
-                   CORBA::COMPLETED_NO));
-    }
-
-  TAO_MProfile *jth_mprofile_ptr = &jth_mprofile;
-
-  // Add this profile to the main mprofile.
-  int result = mprofile.add_profiles (jth_mprofile_ptr);
-
-  if (result == -1)
-    {
-      // The profile is not added.  Either way, go to the next
-      // endpoint.
-    }
+                           prefix,
+                           prefix_len) == 0);
 }
 
 CORBA::Object_ptr
@@ -316,98 +55,35 @@ TAO_CORBALOC_Parser::make_stub_from_mprofile (CORBA::ORB_ptr orb,
 
   if (!CORBA::is_nil (obj.in ()))
     {
-      // All is well, so release the stub object from its auto_ptr.
+      /// All is well, so release the stub object from its
+      /// auto_ptr.
       (void) safe_data.release ();
 
-      // Return the object reference to the application.
+      /// Return the object reference to the application.
       return obj._retn ();
     }
 
-  // Shouldn't come here: if so, return nil reference.
+  /// Shouldnt come here: if so, return nil reference.
   return CORBA::Object::_nil ();
 }
 
 CORBA::Object_ptr
-TAO_CORBALOC_Parser::parse_string_rir_helper (const char *& corbaloc_name,
+TAO_CORBALOC_Parser::parse_string_rir_helper (const char * ior,
                                               CORBA::ORB_ptr orb
                                               ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-
-
-  // "rir" protocol. Pass the key string as an
-  // argument to the resolve_initial_references.
-  const char *key_string = corbaloc_name + sizeof ("rir:/") -1;
-
-  if (ACE_OS::strcmp (key_string, "") == 0)
-    {
-      // If the key string is empty, assume the default
-      // "NameService".
-      key_string =  "NameService";
-    }
+  // Pass the key string as an argument to resolve_initial_references.
+  // NameService is the default if an empty key string is supplied.
+  const char *objkey = ior + rir_token_len;
 
   CORBA::Object_var rir_obj =
-    orb->resolve_initial_references (key_string
+    orb->resolve_initial_references (*objkey == '\0' ? "NameService" :
+                                     objkey
                                      ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   return rir_obj._retn ();
-}
-
-int
-TAO_CORBALOC_Parser::check_prefix (const char *end_point
-                                   ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-
-  // This checks if the prefix is "rir:" or not. Returns a -1 if it is
-  // "rir:" else returns a zero;
-  // Check for a valid string
-  if (!end_point || !*end_point)
-    return -1; // Failure
-
-  const char *protocol[] = {"rir:"};
-  size_t slot = ACE_OS::strchr (end_point, '/') - end_point;
-  const char* colon_pos = ACE_OS::strchr (end_point, ':');
-  size_t colon_slot = colon_pos ? colon_pos - end_point : 0;
-  size_t len0 = ACE_OS::strlen (protocol[0]);
-
-  // Lets first check if it is a valid protocol:
-  if (colon_slot != 0)
-  {
-    size_t i;
-    const size_t protocol_prefixes_size =
-      sizeof(protocol_prefixes)/sizeof(protocol_prefixes[0]);
-
-    for (i = 0; i < protocol_prefixes_size ; ++i)
-    {
-      if (ACE_OS::strncmp (end_point,
-                         protocol_prefixes[i],
-                         colon_slot) == 0)
-         break;
-    }
-
-    if (i == protocol_prefixes_size)
-    {
-      if (TAO_debug_level > 0)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("TAO (%P|%t) ")
-                    ACE_TEXT ("no usable transport protocol ")
-                    ACE_TEXT ("was found.\n")));
-
-      ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 10,
-                                          CORBA::COMPLETED_NO),
-                        -1);
-    }
-  }
-
-  // Check for the proper prefix in the IOR.  If the proper prefix
-  // isn't in the IOR then it is not an IOR we can use.
-  if (slot == len0
-      && ACE_OS::strncasecmp (end_point, protocol[0], len0) == 0)
-    return 0;
-
-  return 1;
 }
 
 CORBA::Object_ptr
@@ -416,76 +92,226 @@ TAO_CORBALOC_Parser::parse_string (const char * ior,
                                    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  // MProfile which consists of the profiles for each endpoint.
-  TAO_MProfile mprofile;
+  // The decomposition of a corbaloc string is in Section 13.6.10.
+  //
+  // following the "corbaloc:"
+  //  a comma separated list of <prot_addr> strings
+  //    for each,
+  // Separate out the key, delimited by '/'
+  // Split out the various parts of our corbaloc string, comma-delimited
+  // For each part
+  //   Determine the protocol
+  //     If rir, defer to another function and return the object
+  //     If iiop, make the profile with <endpoint>:<port>/<key>
+  //     If another protocol, use <remainder>/<key>
+  //   Search through the collection of protocols for the correct one
+  //     If not found, throw exception
+  //     If found, make our_connector from it.
+  //     our_connector->make_mprofile_unchecked (...);
+  //     object = this->make_stub_from_mprofile (...);
+  // Return the object
 
   // Skip the prefix.  We know it is there because this method is only
   // called if match_prefix() returns 1.
-  const char *corbaloc_name =
-    ior + sizeof corbaloc_prefix - 1;
+  ior += ACE_OS::strlen(prefix);
+
+  //  First check for rir
+  if (ACE_OS::strncmp (ior,rir_token,rir_token_len) == 0)
+    return this->parse_string_rir_helper (ior,orb
+                                          ACE_ENV_ARG_PARAMETER);
+
+  // set up space for parsed endpoints. there will be at least 1, and
+  // most likely commas will separate endpoints, although they could be
+  // part of an endpoint address for some protocols.
+  size_t max_endpoint_count = 1;
+  for (const char *comma = ACE_OS::strchr (ior,',');
+       comma;
+       comma = ACE_OS::strchr (comma+1,','))
+    max_endpoint_count++;
+
+  ACE_Array<parsed_endpoint> endpoints(max_endpoint_count);
+  endpoints.size (0);
+
+  // Get the Connector Registry from the ORB.
+  TAO_Connector_Registry *conn_reg =
+    orb->orb_core ()->connector_registry(ACE_ENV_SINGLE_ARG_PARAMETER);
+
+  while (1) { // will loop on comma only.
+    size_t len = 0;
+    size_t ndx = endpoints.size();
+    endpoints.size(ndx+1);
+    int uiop_compatible = 0;
+    TAO_ConnectorSetIterator conn_iter = 0;
+    for (conn_iter = conn_reg->begin();
+         conn_iter != conn_reg->end() &&
+           endpoints[ndx].profile_ == 0;
+         conn_iter ++)
+      {
+        endpoints[ndx].profile_ =
+          (*conn_iter)->corbaloc_scan(ior,len
+                                      ACE_ENV_ARG_PARAMETER);
+        ACE_CHECK_RETURN (CORBA::Object::_nil ());
+
+        if (endpoints[ndx].profile_)
+          {
+            endpoints[ndx].obj_key_sep_ =
+              (*conn_iter)->object_key_delimiter();
+            uiop_compatible = (endpoints[ndx].obj_key_sep_ == '|');
+            this->make_canonical (ior,len,endpoints[ndx].prot_addr_
+                                   ACE_ENV_ARG_PARAMETER);
+            ior += len;
+            break;
+          }
+      }
+
+    if (endpoints[ndx].profile_ == 0)
+      {
+        if (TAO_debug_level)
+          ACE_ERROR ((LM_ERROR,
+                      "(%P|%t) TAO_CORBALOC_Parser::parse_string "
+                      "could not parse from %s",ior));
+        ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 10,
+                                            CORBA::COMPLETED_NO),
+                          CORBA::Object::_nil ());
+      }
+    if (*ior == ',') // more endpoints follow
+      {
+        ior++;
+        continue;
+      }
+
+    if (*ior == '/') // found key separator
+      {
+        ior ++;
+        break;
+      }
+
+    if (uiop_compatible && *(ior - 1) == '|')
+      // Assume this is an old uiop style corbaloc. No need to warn here,
+      // the UIOP_Connector::corbaloc_scan already did.
+      break;
+
+    // anything else is a violation.
+    if (TAO_debug_level)
+      ACE_ERROR ((LM_ERROR,
+                  "(%P|%t) TAO_CORBALOC_Parser::parse_string "
+                  "could not parse from %s",ior));
+    ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 10,
+                                        CORBA::COMPLETED_NO),
+                      CORBA::Object::_nil ());
+  } // end of while
+
+  // At this point, ior points at the start of the object key
+  ACE_CString obj_key (*ior ? ior : (const char *)"NameService");
+
+  // now take the collection of endpoints along with the decoded key and
+  // mix them together to get the mprofile.
+  TAO_MProfile mprofile (endpoints.size());
+
+  for (size_t i = 0; i < endpoints.size(); i++)
+    {
+      ACE_CString full_ep = endpoints[i].prot_addr_ +
+        endpoints[i].obj_key_sep_ +
+        obj_key;
+      const char * str = full_ep.c_str();
+      endpoints[i].profile_->parse_string (str
+                                                  ACE_ENV_ARG_PARAMETER);
+      if (mprofile.add_profile(endpoints[i].profile_) != -1)
+        endpoints[i].profile_ = 0;
+    }
 
   CORBA::Object_ptr object = CORBA::Object::_nil ();
-
-  // Number of endpoints
-  CORBA::ULong count_addr = 1;
-
-  // Length of obj_addr_list
-  CORBA::ULong addr_list_length = 0;
-
-  // If the protocol is not "rir:" and also is a valid protocol
-  int check_prefix_result = this->check_prefix (corbaloc_name
-                                                ACE_ENV_ARG_PARAMETER);
+  // Get an object stub out.
+  object = this->make_stub_from_mprofile (orb,
+                                          mprofile
+                                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
-  if (check_prefix_result != 0)
+  return object;
+}
+
+void
+TAO_CORBALOC_Parser::make_canonical (const char *ior,
+                                     size_t prot_addr_len,
+                                     ACE_CString &canonical_endpoint
+                                     ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  const char *separator = ACE_OS::strchr (ior, ':');
+
+  // A special case for handling iiop
+  if (ior[0] != ':' && ACE_OS::strncmp (ior,iiop_token,iiop_token_len) != 0)
     {
-      // Count the length of the obj_addr_list and number of
-      // endpoints in the obj_addr_list
-      this->parse_string_count_helper (corbaloc_name,
-                                       addr_list_length,
-                                       count_addr
-                                       ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CORBA::Object::_nil ());
+      canonical_endpoint.set (separator+1,
+                              prot_addr_len - (separator - ior) - 1,1);
+      return;
+    }
 
-      // Convert corbaloc_name to an ACE_CString
-      ACE_CString corbaloc_name_str (corbaloc_name, 0, 1);
+  const char *addr_base = separator+1;
+  const char *addr_tail = ior + prot_addr_len;
+  // skip past version, if any
+  separator = ACE_OS::strchr (addr_base,'@');
+  if (separator != 0 && separator < addr_tail)
+    {
+      canonical_endpoint.set (addr_base,(separator - addr_base)+1,1);
+      addr_base = separator + 1;
+    }
+  else
+    canonical_endpoint.clear ();
 
-      // Get the key_string which is a substring of corbaloc_name_str
-      ACE_CString key_string =
-        corbaloc_name_str.substring (addr_list_length + 1);
-
-      // Copy the <obj_addr_list> to cloc_name.
-      ACE_CString cloc_name (corbaloc_name,
-                             addr_list_length,
-                             0,
-                             1);
-
-      // Get each endpoint: For each endpoint, make a MProfile and add
-      // it to the main MProfile whose reference is passed to the
-      // application
-      this->parse_string_assign_helper (key_string,
-                                        cloc_name,
-                                        orb,
-                                        mprofile
-                                        ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CORBA::Object::_nil ());
-
-      // Create the stub for the mprofile and get the object reference
-      // to it which is to be returned to the client application.
-      object = this->make_stub_from_mprofile (orb,
-                                              mprofile
-                                              ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CORBA::Object::_nil ());
+  ACE_CString raw_host;
+  ACE_CString raw_port;
+  separator = ACE_OS::strchr (addr_base,':');
+  if (separator != 0 && separator < addr_tail)
+    {
+      // we have a port number
+      if (separator - addr_base > 0)
+        raw_host.set (addr_base, (separator - addr_base),1);
+      raw_port.set (separator, (addr_tail - separator), 1);
     }
   else
     {
-      // RIR case:
-      object = this->parse_string_rir_helper (corbaloc_name,
-                                              orb
-                                              ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CORBA::Object::_nil ());
+      // we must default port #
+      if (addr_base < addr_tail)
+        raw_host.set (addr_base, (addr_tail - addr_base),1);
+      raw_port.set (":2809");
     }
-  return object;
+
+  if (raw_host.length() == 0)
+    {
+      ACE_INET_Addr host_addr;
+
+      char tmp_host [MAXHOSTNAMELEN + 1];
+
+      // If no host is specified: assign the default host, i.e. the
+      // local host.
+      if (host_addr.get_host_name (tmp_host,
+                                   sizeof (tmp_host)) != 0)
+        {
+          // Can't get the IP address since the INET_Addr wasn't
+          // initialized.  Just throw an exception.
+
+          if (TAO_debug_level > 0)
+            ACE_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("TAO (%P|%t) ")
+                        ACE_TEXT ("cannot determine hostname.\n")));
+
+          ACE_THROW (CORBA::INV_OBJREF
+                     (CORBA::SystemException::_tao_minor_code
+                      (0, EINVAL),
+                      CORBA::COMPLETED_NO));
+        }
+      else
+        {
+          canonical_endpoint += tmp_host;
+        }
+    }
+  else
+    {
+      canonical_endpoint += raw_host;
+    }
+
+  canonical_endpoint += raw_port;
 }
 
 ACE_STATIC_SVC_DEFINE (TAO_CORBALOC_Parser,
@@ -499,7 +325,7 @@ ACE_STATIC_SVC_DEFINE (TAO_CORBALOC_Parser,
 ACE_FACTORY_DEFINE (TAO, TAO_CORBALOC_Parser)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Array_Base<char *>;
+template class ACE_Array_Base<TAO_CORBALOC_Parser::parsed_endpoint>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Array_Base<char *>
+#pragma instantiate ACE_Array_Base<TAO_CORBALOC_Parser::parsed_endpoint>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

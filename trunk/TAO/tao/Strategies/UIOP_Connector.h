@@ -72,6 +72,9 @@ public:
 
   virtual int check_prefix (const char *endpoint);
 
+  virtual TAO_Profile *corbaloc_scan (const char *str, size_t &len
+                                      ACE_ENV_ARG_DECL);
+  
   virtual char object_key_delimiter (void) const;
 
   /// Cancel the passed cvs handler from the connector

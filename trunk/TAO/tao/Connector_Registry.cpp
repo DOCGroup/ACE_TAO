@@ -71,18 +71,22 @@ TAO_Connector_Registry::open (TAO_ORB_Core *orb_core)
       TAO_Connector * connector =
         (*factory)->factory ()->make_connector ();
 
-      if (connector && connector->open (orb_core) != 0)
+      if (connector)
         {
-          delete connector;
+         if (connector->open (orb_core) != 0)
+           {
+             delete connector;
 
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("TAO (%P|%t) unable to open connector for ")
-                             ACE_TEXT ("<%s>.\n"),
-                             ACE_TEXT_CHAR_TO_TCHAR((*factory)->protocol_name ().c_str ())),
-                            -1);
+             ACE_ERROR_RETURN ((LM_ERROR,
+                                ACE_LIB_TEXT ("TAO (%P|%t) unable to open connector for ")
+                                ACE_LIB_TEXT ("<%s>.\n"),
+                                ACE_TEXT_CHAR_TO_TCHAR((*factory)->protocol_name ().c_str ())),
+                               -1);
+           }
+         this->connectors_[this->size_++] = connector;
         }
       else
-        this->connectors_[this->size_++] = connector;
+        return -1;
     }
 
   return 0;

@@ -75,11 +75,21 @@ public:
   CORBA::ULong tag (void) const;
 
   /// Parse a string containing a URL style IOR and return an
-  /// MProfile.
+  /// MProfile.  Verify that ior is in the correct format.
   int make_mprofile (
       const char *ior,
       TAO_MProfile &mprofile
       ACE_ENV_ARG_DECL);
+
+  /// Helper function to assist corbaloc parsing. The default simply validates
+  /// the protocol identifyier and scans up to the next comma or slash.
+  /// Any protocol that has a specific need, such as uiop, can override this
+  /// method to  provide a custom scanner.
+  /// The profile returned is either null if this the ior does not match or an
+  /// empty profile of the correct type, obtained from make_profile().
+  virtual TAO_Profile * corbaloc_scan (const char *ior,
+                                       size_t &len
+                                       ACE_ENV_ARG_DECL);
 
   ///  Initialize object and register with reactor.
   virtual int open (
