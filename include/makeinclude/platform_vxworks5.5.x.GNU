@@ -11,8 +11,6 @@
 ####    because it contains identifiers with ".", e.g., ".cpp", in them:
 ####    add a global variable or function to that .cpp file.  See
 ####    ace/IOStream_T.cpp for an explanation and example.
-#### 3) If you're building on a WIN32 host, be sure that $(CC) is on
-####    your PATH (or is a full pathname).
 
 VXWORKS = 1
 CROSS-COMPILE = 1

@@ -1,3 +1,9 @@
+Thu Dec 2 09:11:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
+
+        * include/makeinclude/platform_vxworks5.5.x.GNU:
+          Recommitting because file seemed screwed up when checking out on
+          Windows.
+
 Thu Dec 2 08:32:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
 
         * include/makeinclude/platform_vxworks5.5.x.GNU:
