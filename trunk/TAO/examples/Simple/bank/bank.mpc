@@ -1,0 +1,19 @@
+project: namingexe {
+  Source_Files {
+    Account_i.cpp
+    AccountManager_i.cpp
+    ../Simple_util.cpp
+    server.cpp
+  }
+}
+
+project(client): namingexe {
+  exename = client
+
+  Source_Files {
+    BankC.cpp
+    client.cpp
+    ../Simple_util.cpp
+    Bank_Client_i.cpp
+  }
+}

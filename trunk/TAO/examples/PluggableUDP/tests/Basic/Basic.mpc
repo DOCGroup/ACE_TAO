@@ -1,0 +1,21 @@
+project: server, strategies {
+  idlflags += -Sp -Sd
+
+  Source_Files {
+    UDP_Client_i.cpp
+    server.cpp
+    UDP_i.cpp
+  }
+}
+
+project(client): server, strategies {
+  idlflags += -Sp -Sd
+  exename   = client
+
+  Source_Files {
+    client.cpp
+    UDP_Client_i.cpp
+    UDP_i.cpp
+  }
+}
+

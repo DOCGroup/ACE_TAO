@@ -1,0 +1,10 @@
+project(create_tc): client {
+  exename  = create_tc
+  libs    += TAO_TypeCodeFactory TAO_IFR_Client
+  depends += TypeCodeFactory IFR_Client
+
+  Source_Files {
+    testC.cpp
+    main.cpp
+  }
+}
