@@ -46,6 +46,16 @@ Mon Jul  5 21:20:18 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* tests/Timeout/test_i.i:
 	  A simple test for timeouts.
 
+	* tests/Timeout/client.dsp:
+	* tests/Timeout/server.dsp:
+	* tests/Timeout/Timeout.dsw:
+	* version_test.dsw:
+	* tests/TAO_Tests.dsw:
+	  Added project files for the new Timeout test.
+
+	* performance-tests/Cubit/TAO/IDL_Cubit/run_test.pl:
+	  The test for UIOP required the 'English' module.
+
 	* tao/Typecode_Constants.cpp:
 	  Fixed memory leak, the CORBA::ORB::_tc_InvalidName type code was 
 	  not released.  Thanks to Marina for reporting this problem.
