@@ -28,7 +28,7 @@ ACE_RCSID(Default_Servant, client, "client.cpp,v 1.8 2001/03/26 21:16:52 coryan 
 static const char *iorfile = "ior";
 static const char *filename = "big.txt";
 static const char *message = "POA rules!!";
-static const int NUM_THREADS = 20;
+static const int NUM_THREADS = 10;
 static CORBA::ORB_var orb;
 static int loops=100;
 

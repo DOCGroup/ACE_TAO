@@ -1,3 +1,10 @@
+Fri Aug 24 13:36:19 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/File_IO/run_test.pl:
+	* tests/File_IO/File_i.cpp: Removed some vague debug statements.
+	* tests/File_IO/client.cpp: Reduced teh number of threads to 10,
+	  instead of 20.  
+
 Fri Aug 24 12:44:45 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/File_IO/: New test to our test suite. This test actually
