@@ -1,3 +1,11 @@
+Mon Aug 23 18:57:41 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO/tests/IDL_Test/reopened_modules.idl:
+	  Took long .idl file sent in by 
+	  Duane Binder <dbinder@globalmt.com>, cut it down to
+	  one of 10 lines or so that reproduced the problem,
+	  and added it to our IDL_Test Rogues Gallery.
+
 Mon Aug 23 18:25:30 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO/examples/Load_Balancing/Load_Balancing.dsw:
