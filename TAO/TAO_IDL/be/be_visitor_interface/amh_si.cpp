@@ -133,23 +133,22 @@ be_visitor_amh_interface_si::gen_skel_helper (be_interface *derived,
                   << derived_amh_name << "::"
                   << d->local_name ()
                   << "_skel (" << be_idt << be_idt_nl
-                  << "TAO_ServerRequest &req," << be_nl
-                  << "void *obj," << be_nl
-                  << "void *context" << be_nl
+                  << "TAO_ServerRequest & req," << be_nl
+                  << "void * context," << be_nl
+                  << "void * obj" << be_nl
                   << "ACE_ENV_ARG_DECL" << be_uidt_nl
                   << ")" << be_uidt_nl
                   << "{" << be_idt_nl;
               *os << ancestor_amh_name
-                  << "_ptr impl = ("
+                  << "* const impl = static_cast<"
                   << derived_amh_name
-                  << "_ptr) obj;" << be_nl;
+                  << " *> (obj);" << be_nl;
               *os << ancestor_amh_name
                   << "::" << d->local_name ()
                   << "_skel (" << be_idt << be_idt_nl
                   << "req," << be_nl
-                  << "(" << ancestor_amh_name
-                  << "_ptr) impl," << be_nl
-                  << "context" << be_nl
+                  << "context," << be_nl
+                  << "impl" << be_nl
                   << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
                   << ");" << be_uidt << be_uidt_nl
                   << "}";
@@ -172,23 +171,24 @@ be_visitor_amh_interface_si::gen_skel_helper (be_interface *derived,
                   << derived_amh_name << "::_get_"
                   << d->local_name ()
                   << "_skel (" << be_idt << be_idt_nl
-                  << "TAO_ServerRequest &req," << be_nl
-                  << "void *obj," << be_nl
-                  << "void *context" << be_nl
+                  << "TAO_ServerRequest & req," << be_nl
+                  << "void * context," << be_nl
+                  << "void * obj" << be_nl
                   << "ACE_ENV_ARG_DECL" << be_uidt_nl
                   << ")" << be_uidt_nl
-                  << "{" << be_idt_nl
-                  << ancestor_amh_name
-                  << "_ptr impl = ("
+                  << "{" << be_idt_nl;
+
+              *os << ancestor_amh_name
+                  << "* const impl = static_cast<"
                   << derived_amh_name
-                  << "_ptr) obj;" << be_nl;
+                  << " *> (obj);" << be_nl;
+
               *os << ancestor_amh_name
                   << "::_get_" << d->local_name ()
                   << "_skel (" << be_idt << be_idt_nl
                   << "req," << be_nl
-                  << "(" << ancestor_amh_name
-                  << "_ptr) impl," << be_nl
-                  << "context" << be_nl
+                  << "context," << be_nl
+                  << "impl" << be_nl
                   << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
                   << ");" << be_uidt << be_uidt_nl
                   << "}";
@@ -205,23 +205,24 @@ be_visitor_amh_interface_si::gen_skel_helper (be_interface *derived,
                       << derived_amh_name
                       << "::_set_" << d->local_name ()
                       << "_skel (" << be_idt << be_idt_nl
-                      << "TAO_ServerRequest &req," << be_nl
-                      << "void *obj," << be_nl
-                      << "void *context" << be_nl
+                      << "TAO_ServerRequest & req," << be_nl
+                      << "void * context," << be_nl
+                      << "void * obj" << be_nl
                       << "ACE_ENV_ARG_DECL" << be_uidt_nl
                       << ")" << be_uidt_nl
-                      << "{" << be_idt_nl
-                      << ancestor_amh_name
-                      << "_ptr impl = ("
-                      << derived_amh_name
-                      << "_ptr) obj;" << be_nl;
+                      << "{" << be_idt_nl;
+
+		  *os << ancestor_amh_name
+		      << "* const impl = static_cast<"
+		      << derived_amh_name
+		      << " *> (obj);" << be_nl;
+
                   *os << ancestor_amh_name
                       << "::_set_" << d->local_name ()
                       << "_skel (" << be_idt << be_idt_nl
                       << "req," << be_nl
-                      << "(" << ancestor_amh_name
-                      << "_ptr) impl," << be_nl
-                      << "context" << be_nl
+                      << "context," << be_nl
+                      << "impl" << be_nl
                       << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
                       << ");" << be_uidt << be_uidt_nl
                       << "}";

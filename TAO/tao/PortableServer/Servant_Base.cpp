@@ -300,15 +300,9 @@ void TAO_ServantBase::asynchronous_upcall_dispatch (TAO_ServerRequest & req,
       // the right operation on the skeleton class, and marshal any
       // results.  De/marshaling will only occur in the uncollocated
       // case.
-
-      // @@ Why does AMH have to swap the servant_upcall and
-      //   derived_this arguments relative to synchronous upcall
-      //   argument order?  Inconsistencies for no good reason!
-      //   *sigh*
-      //         -Ossama
       skel (req,
-            derived_this,
-            servant_upcall
+            servant_upcall,
+            derived_this
             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
