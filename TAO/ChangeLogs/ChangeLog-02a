@@ -1,3 +1,8 @@
+Tue Aug 21 22:58:30 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Sequence_T.cpp: Fixed a place where nil () was not made as
+	  tao_nil (). This should fix many of our build problems.
+
 Tue Aug 21 13:55:31 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be_interface.cpp:

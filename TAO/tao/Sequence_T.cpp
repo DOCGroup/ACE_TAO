@@ -664,7 +664,7 @@ TAO_Bounded_Object_Sequence<T, T_var,MAX>::freebuf (T **buffer)
   // complaint and call CORBA::release() on each one.
   for (CORBA::ULong i = 0; i < MAX; ++i)
     {
-      if (buffer[i] != T_var::nil ())
+      if (buffer[i] != T_var::tao_nil ())
         {
           T_var::tao_release (buffer[i]);
           buffer[i] = T_var::tao_nil ();
