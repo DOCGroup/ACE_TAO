@@ -1,3 +1,10 @@
+Fri Sep  3 09:36:17 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* tests/Interceptors/interceptors.cpp (postinvoke): 
+	* tests/Interceptors/interceptors.cpp (preinvoke): 
+
+	  Replaced static casts to reinterpret cast to ward off warnings.
+
 Thu Sep 03 05:00:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
 	* tao/Reply_Dispatcher.cpp:
