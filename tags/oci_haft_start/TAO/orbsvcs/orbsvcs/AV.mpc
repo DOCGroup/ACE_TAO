@@ -1,0 +1,32 @@
+project(AV) : orbsvcslib, core, property, naming, qos {
+  sharedname    = TAO_AV
+  idlflags     += -Wb,export_macro=TAO_AV_Export -Wb,export_include=AV/AV_export.h
+  dynamicflags  = TAO_AV_BUILD_DLL
+  tagchecks     = AV
+
+  IDL_Files {
+    AVStreams.idl
+    Null_MediaCtrl.idl
+    sfp.idl
+  }
+
+  Source_Files(ORBSVCS_COMPONENTS) {
+    AV {
+      AVStreamsC.cpp
+      AVStreamsS.cpp
+      Null_MediaCtrlC.cpp
+      Null_MediaCtrlS.cpp
+      sfpC.cpp
+      sfpS.cpp
+      AV
+    }
+  }
+  Header_Files {
+    Channel_Clients_T.h
+    AV
+  }
+  Template_Files {
+    Channel_Clients_T.cpp
+    AV
+  }
+}

@@ -1,0 +1,38 @@
+// $Id$
+
+Simple codeset translation test.
+
+As delivered, this test works with the IBM1047 - ISO8859 translator which is
+built as part of the library delivered with this test. 
+
+After building the client and server, run one or the other with the supplied
+configuration file. Be sure to supply the configuration file to only one side
+or the other, not both. If you do both, no translation will happen.
+
+If the translators and the framework are working properly you will see the
+client report some text before and after a call. The before and after should be
+identical. The server side should look like garbage. 
+
+In the test call, a string is passed as an IN argument and a copy returned as
+the return value of the call. Also, a different string is inserted into an Any,
+which is passed as an IN argument. An Any is returned as an OUT
+argument which contains a copy of the IN string. The purpose of this second
+set of string args is to test how codeset translators work with Anys, which
+happens when the latter are passed as operation arguments.
+
+The translation will occur on the side that takes the configuration file. If 
+you run either side with -ORBDebuglevel 10, you will see that when the client
+is doing the translation the data in the message content dump is garbled and
+when the server is translating the message content dump is clear.
+
+To run with the client doing translation:
+ ./Server &
+ ./Client -orbsvcconf cs_test.conf
+
+To run with the server doing translation:
+ ./Server -orbsvcconf cs_test.conf
+ ./Client
+
+The server dumps its IOR to a file: server.ior. Use catior -f server.ior  
+(from $TAO_ROOT/utils/catior) to see how the context information is added
+to the profiles.

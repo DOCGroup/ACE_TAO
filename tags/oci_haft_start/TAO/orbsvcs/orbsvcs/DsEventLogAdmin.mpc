@@ -1,0 +1,21 @@
+project(DsEventLogAdmin) : orbsvcslib, core, dslogadmin, event {
+  sharedname   = TAO_DsEventLogAdmin
+  idlflags    += -Wb,export_macro=TAO_EventLog_Export -Wb,export_include=Log/eventlog_export.h
+  dynamicflags = TAO_EVENTLOG_BUILD_DLL
+  tagchecks    = EventLog
+
+  IDL_Files {
+    DsEventLogAdmin.idl
+  }
+
+  Source_Files(ORBSVCS_COMPONENTS) {
+    EventLog {
+      DsEventLogAdminC.cpp
+      DsEventLogAdminS.cpp
+      Log/EventLogFactory_i.cpp
+      Log/EventLog_i.cpp
+      Log/EventLogConsumer.cpp
+      Log/EventLogNotification.cpp
+    }
+  }
+}

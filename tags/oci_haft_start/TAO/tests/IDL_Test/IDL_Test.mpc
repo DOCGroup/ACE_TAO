@@ -1,0 +1,42 @@
+project(*Main): taoserver {
+  exename = main
+
+  Source_Files {
+    anonymousC.cpp
+    anonymousS.cpp
+    arrayC.cpp
+    arrayS.cpp
+    constantsC.cpp
+    constantsS.cpp
+    enum_in_structC.cpp
+    enum_in_structS.cpp
+    fullC.cpp
+    fullS.cpp
+    fwdC.cpp
+    fwdS.cpp
+    generic_objectC.cpp
+    generic_objectS.cpp
+    gperfC.cpp
+    gperfS.cpp
+    includedC.cpp
+    includedS.cpp
+    includingC.cpp
+    includingS.cpp
+    interfaceC.cpp
+    interfaceS.cpp
+    keywordsC.cpp
+    keywordsS.cpp
+    pragmaC.cpp
+    pragmaS.cpp
+    sequenceC.cpp
+    sequenceS.cpp
+    typedefC.cpp
+    typedefS.cpp
+    unionC.cpp
+    unionS.cpp
+    repo_id_modC.cpp
+    repo_id_modS.cpp
+    namespace_check.cpp
+    main.cpp
+  }
+}

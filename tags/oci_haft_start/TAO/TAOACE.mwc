@@ -1,0 +1,17 @@
+workspace {
+  ../ace
+  ../apps/gperf/src
+  ../ACEXML/common
+  ../ACEXML/parser/parser
+  ../ACEXML/apps/svcconf
+  ../Kokyu
+  tao
+  TAO_IDL
+  utils
+  orbsvcs
+  exclude {
+    orbsvcs/tests
+    orbsvcs/performance-tests
+    orbsvcs/examples
+  }  
+}

@@ -1,0 +1,30 @@
+
+#
+# Makefile for building the Event_Comm example
+#
+
+NAME = notifier
+
+OBJFILES = \
+	$(OBJDIR)\Event_CommC.obj \
+	$(OBJDIR)\Event_CommS.obj \
+	$(OBJDIR)\Notifier_Server.obj \
+	$(OBJDIR)\Event_Comm_i.obj \
+	$(OBJDIR)\notifier.obj
+
+IDLFILES = \
+        $(IDLDIR)\Event_Comm.idl
+
+CPPDIR = .;..
+
+IDLDIR = .
+
+!include <$(ACE_ROOT)\include\makeinclude\build_example.bor>
+
+#
+# IDL Build rules
+#
+
+$(IDLDIR)\Event_CommC.cpp $(IDLDIR)\Event_CommS.cpp: $(IDLDIR)\Event_Comm.idl
+	$(TAO_IDL) $**
+

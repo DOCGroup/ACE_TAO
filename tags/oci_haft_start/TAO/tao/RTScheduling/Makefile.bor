@@ -1,0 +1,37 @@
+#
+# Makefile for building the TAO RTCorba library
+#
+
+!ifndef MINIMUM_CORBA
+NAME = TAO_RTScheduler
+!else
+!undef NAME
+!endif
+
+OBJFILES = \
+	$(OBJDIR)\RTScheduler.obj \
+	$(OBJDIR)\RTSchedulerC.obj \
+	$(OBJDIR)\RTScheduler_Loader.obj \
+	$(OBJDIR)\RTScheduler_Initializer.obj \
+	$(OBJDIR)\RTScheduler_Manager.obj \
+	$(OBJDIR)\Current.obj \
+	$(OBJDIR)\Request_Interceptor.obj \
+	$(OBJDIR)\Distributable_Thread.obj
+
+RESOURCE = $(OBJDIR)\TAO_RTScheduler.res
+
+!ifdef STATIC
+CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) $(TAO_RTCORBA_CFLAGS) $(TAO_PORTABLESERVER_CFLAGS) $(TAO_RTSCHEDULER_CFLAGS)
+!else
+CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) $(TAO_RTCORBA_CFLAGS) $(TAO_PORTABLESERVER_CFLAGS) $(TAO_RTSCHEDULER_CFLAGS) \
+	-DTAO_RTSCHEDULER_BUILD_DLL
+!endif
+
+CPPDIR = .
+
+INCDIR_NAME = tao\RTScheduler
+INCLUDES = *.h *.i *.pidl
+
+LIBFILES = $(ACE_LIB) $(TAO_LIB) $(TAO_RTCORBA_LIB) $(TAO_PORTABLESERVER_LIB)
+
+!include <$(ACE_ROOT)\include\makeinclude\build_core_library.bor>

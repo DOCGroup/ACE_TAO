@@ -1,0 +1,5 @@
+project : acelib, taoversion, tao_output {
+  after    += TAO
+  libs     += TAO
+  includes += $(TAO_ROOT) $(TAO_ROOT)/tao
+}

@@ -1,0 +1,195 @@
+<!-- $Id$ -->
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.04 [en] (X11; I; Linux 2.0.32 i486) [Netscape]">
+   <META NAME="Author" CONTENT="James CE Johnson">
+   <META NAME="Description" CONTENT="A first step towards using ACE productively">
+   <TITLE>ACE Tutorial 002</TITLE>
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#000FFF" VLINK="#FF0F0F">
+
+<CENTER><B><FONT SIZE=+2>ACE Tutorial 002</FONT></B></CENTER>
+
+<CENTER><B><FONT SIZE=+2>Creating a Better Server</FONT></B></CENTER>
+
+
+<P>
+<HR WIDTH="100%">
+
+<P>Now lets take a look at the new <A HREF="handler.h">Logging_Handler</A>:
+
+<P>
+<HR WIDTH="100%">
+<PRE>
+<font color=red>// $Id$</font>
+
+<font color=blue>#ifndef</font> <font color=purple>LOGGING_HANDLER_H</font>
+<font color=blue>#define</font> <font color=purple>LOGGING_HANDLER_H</font>
+
+<font color=blue>#include</font> "<A HREF="../../../ace/INET_Addr.h">ace/INET_Addr.h</A>"
+
+<font color=blue>#if !defined</font> (<font color=purple>ACE_LACKS_PRAGMA_ONCE</font>)
+<font color=blue># pragma</font> <font color=purple>once</font>
+<font color=blue>#endif</font> <font color=red>/* ACE_LACKS_PRAGMA_ONCE */</font>
+
+<font color=blue>#include</font> "<A HREF="../../../ace/SOCK_Stream.h">ace/SOCK_Stream.h</A>"
+<font color=blue>#include</font> "<A HREF="../../../ace/Reactor.h">ace/Reactor.h</A>"
+
+<font color=red>/* Since we used the template to create the acceptor, we don't know if
+  there is a way to get to the reactor it uses.  We'll take the easy
+  way out and grab the global pointer.  (There is a way to get back to
+  the acceptor's reactor that we'll see later on.)  */</font>
+extern ACE_Reactor *g_reactor;
+
+<font color=red>/* This time we're deriving from ACE_Svc_Handler instead of
+  ACE_Event_Handler.  The big reason for this is because it already
+  knows how to contain a SOCK_Stream and provides all of the method
+  calls needed by the reactor.  The second template parameter is for
+  some advanced stuff we'll do with later servers.  For now, just use
+  it as is...  */</font>
+class Logging_Handler : public ACE_Svc_Handler &lt;ACE_SOCK_STREAM, ACE_NULL_SYNCH>
+{
+public:
+
+  <font color=red>/* The Acceptor&lt;> template will open() us when there is a new client
+    connection.  */</font>
+  virtual int open (void *)
+  {
+    ACE_INET_Addr addr;
+
+    <font color=red>/* Ask the peer() (held in our baseclass) to tell us the address
+      of the cient which has connected.  There may be valid reasons
+      for this to fail where we wouldn't want to drop the connection
+      but I can't think of one. */</font>
+    if (this->peer ().get_remote_addr (addr) == -1)
+      return -1;
+
+    <font color=red>/* The Acceptor&lt;> won't register us with it's reactor, so we have
+      to do so ourselves.  This is where we have to grab that global
+      pointer.  Notice that we again use the READ_MASK so that
+      handle_input() will be called when the client does something.  */</font>
+    if (g_reactor->register_handler (this,
+                                     <font color=#008888>ACE_Event_Handler::READ_MASK</font>) == -1)
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "<font color=green>(%P|%t) can't register with reactor\n</font>"),
+                        -1);
+
+    <font color=red>/* Here's another new treat.  We schedule a timer event.  This
+      particular one will fire in two seconds and then every three
+      seconds after that.  It doesn't serve any useful purpose in our
+      application other than to show you how it is done.  */</font>
+    else if (g_reactor->schedule_timer (this,
+                                        0,
+                                        ACE_Time_Value (2),
+                                        ACE_Time_Value (3)) == -1)
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "<font color=green>can'(%P|%t) t register with reactor\n</font>"),
+                        -1);
+
+    ACE_DEBUG ((LM_DEBUG,
+                "<font color=green>(%P|%t) connected with %s\n</font>",
+                addr.get_host_name ()));
+
+    return 0;
+  }
+
+  <font color=red>/* This is a matter of style & maybe taste.  Instead of putting all
+    of this stuff into a destructor, we put it here and request that
+    everyone call destroy() instead of 'delete'.  */</font>
+  virtual void destroy (void)
+  {
+    <font color=red>/* Remove ourselves from the reactor */</font>
+    g_reactor->remove_handler
+      (this,
+       <font color=#008888>ACE_Event_Handler::READ_MASK</font> | ACE_Event_Handler::DONT_CALL);
+
+    <font color=red>/* Cancel that timer we scheduled in open() */</font>
+    g_reactor->cancel_timer (this);
+
+    <font color=red>/* Shut down the connection to the client.  */</font>
+    this->peer ().close ();
+
+    <font color=red>/* Free our memory.  */</font>
+    delete this;
+  }
+
+  <font color=red>/* If somebody doesn't like us, they will close() us.  Actually, if
+    our open() method returns -1, the Acceptor&lt;> will invoke close()
+    on us for cleanup.  */</font>
+  virtual int close (u_long flags = 0)
+  {
+    <font color=red>/* The ACE_Svc_Handler baseclass requires the &lt;flags> parameter.
+      We don't use it here though, so we mark it as UNUSED.  You can
+      accomplish the same thing with a signature like handle_input's
+      below.  */</font>
+    ACE_UNUSED_ARG (flags);
+
+    <font color=red>/*
+      Clean up and go away.
+      */</font>
+    this->destroy ();
+    return 0;
+  }
+
+protected:
+
+  <font color=red>/* Respond to input just like Tutorial 1.  */</font>
+  virtual int handle_input (ACE_HANDLE)
+  {
+    char buf[128];
+    <font color=#008888>ACE_OS::memset</font> (buf, 0, sizeof (buf));
+
+    switch (this->peer ().recv (buf,
+                                sizeof buf))
+      {
+      case -1:
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "<font color=green>(%P|%t) %p bad read\n</font>",
+                           "<font color=green>client logger</font>"),
+                          -1);
+      case 0:
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "<font color=green>(%P|%t) closing log daemon (fd = %d)\n</font>",
+                           this->get_handle ()),
+                          -1);
+      default:
+        ACE_DEBUG ((LM_DEBUG,
+                    "<font color=green>(%P|%t) from client: %s</font>",
+                    buf));
+      }
+
+    return 0;
+  }
+
+  <font color=red>/* When the timer expires, handle_timeout() will be called.  The
+    'arg' is the value passed after 'this' in the schedule_timer()
+    call.  You can pass in anything there that you can cast to a
+    void*.  */</font>
+  virtual int handle_timeout (const ACE_Time_Value &tv,
+                              const void *arg)
+  {
+    ACE_UNUSED_ARG(tv);
+    ACE_UNUSED_ARG(arg);
+    ACE_DEBUG ((LM_DEBUG,
+                "<font color=green>(%P|%t) handling timeout from this = %u\n</font>",
+                this));
+    return 0;
+  }
+
+  <font color=red>/*
+    Clean ourselves up when handle_input() (or handle_timer()) returns -1
+    */</font>
+  virtual int handle_close (ACE_HANDLE,
+                            ACE_Reactor_Mask)
+  {
+    this->destroy ();
+    return 0;
+  }
+};
+
+<font color=blue>#endif</font> <font color=red>/* LOGGING_HANDLER_H */</font>
+</PRE>
+<P><HR WIDTH="100%">
+<CENTER>[<A HREF="../online-tutorials.html">Tutorial Index</A>] [<A HREF="page04.html">Continue This Tutorial</A>]</CENTER>
+
