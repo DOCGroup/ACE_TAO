@@ -35,7 +35,7 @@ namespace CIAO
         safe._retn ();
       }
   }
-  
+
   CORBA::Object_ptr
   Servant_Impl_Base::lookup_facet (const char *port_name)
   {

@@ -6,7 +6,8 @@
  * @Brief  This file contains the implementation of
  *         the NodeApplication interface.
  *
- * @auther Tao Lu <lu@dre.vanderbilt.edu>
+ * @author Tao Lu <lu@dre.vanderbilt.edu>
+ * @author Gan Deng <gan.deng@vanderbilt.edu>
  *========================================================*/
 
 #ifndef NODEAPPLICATION_IMPL_H
@@ -202,6 +203,29 @@ namespace CIAO
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Deployment::StartError));
 
+    /*------- CIAO helper functions for building event channel connections ------/*
+     *
+     *---------------------------------------------------------------------------*/
+
+    void build_rtec_connection (const Deployment::Connection & connection
+                                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((Deployment::InvalidConnection,
+                       CORBA::SystemException));
+
+    void build_ec_connection (const Deployment::Connection & connection
+                                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((Deployment::InvalidConnection,
+                       CORBA::SystemException));
+
+    void build_ns_connection (const Deployment::Connection & connection
+                                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((Deployment::InvalidConnection,
+                       CORBA::SystemException));
+
+    /*---------------------- member varialbe definition -------------------------/*
+     *
+    /*---------------------------------------------------------------------------*/
+
     // To store all created CCMHome object
     typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
                                     Components::CCMHome_ptr,
@@ -234,6 +258,9 @@ namespace CIAO
 
     // And a reference to the NodeApplicationManager that created us.
     ::CORBA::Object_var node_app_manager_;
+
+    // Store the connected publishers.
+    ACE_Unbounded_Set<ACE_CString> connected_publishers_;
 
     // Synchronize access to the object set.
     // This will be needed in the case when component/home run in different thread

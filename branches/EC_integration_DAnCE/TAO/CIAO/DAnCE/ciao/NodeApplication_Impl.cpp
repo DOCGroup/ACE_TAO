@@ -48,9 +48,9 @@ CIAO::NodeApplication_Impl::finishLaunch (
               break;
 
             case Deployment::MultiplexReceptacle:
-              comp->connect(providedReference[i].portName.in (),
-                            providedReference[i].endpoint.in ()
-                            ACE_ENV_ARG_PARAMETER);
+              comp->connect (providedReference[i].portName.in (),
+                             providedReference[i].endpoint.in ()
+                             ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
               break;
 
@@ -80,9 +80,9 @@ CIAO::NodeApplication_Impl::finishLaunch (
               ACE_TRY_CHECK;
 
               if (CORBA::is_nil (consumer.in ()))
-				{              
-				  ACE_THROW (Deployment::InvalidConnection ());
-				}
+				      {              
+				        ACE_THROW (Deployment::InvalidConnection ());
+				      }
 
               comp->subscribe (providedReference[i].portName.in (),
                                consumer.in ()
@@ -90,8 +90,15 @@ CIAO::NodeApplication_Impl::finishLaunch (
               ACE_TRY_CHECK;
               break;
 
-            default:
-              ACE_TRY_THROW (Deployment::InvalidConnection ());
+			    case Deployment::rtecEventEmitter:
+          case Deployment::rtecEventPublisher:
+
+					  ACE_DEBUG ((LM_DEBUG, "case CIAO::Assembly_Connection::PUBLISHER_CONSUMER:!!!!\n"));
+			      this->build_rtec_connection (providedReference[i]);
+			      break;
+
+          default:
+            ACE_TRY_THROW (Deployment::InvalidConnection ());
             }
         }
       if (start)
@@ -543,3 +550,133 @@ parse_config_values (const ::Deployment::Properties & properties,
   // the modeling tool will ensure the complete info to presented in the properties.
 }
 */
+
+void 
+CIAO::NodeApplication_Impl::build_rtec_connection (const Deployment::Connection & connection
+                                                   ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+	  ACE_DEBUG ((LM_DEBUG, "CIAO::NodeApplication_Impl::build_rtec_connection ()!!!\n"));
+
+    // Get the consumer port object reference and put into "consumer"
+    Components::EventConsumerBase_var consumer = 
+      Components::EventConsumerBase::_narrow (connection.endpoint.in ()
+                                              ACE_ENV_ARG_PARAMETER);
+    ACE_TRY_CHECK;
+
+    if (CORBA::is_nil (consumer.in ()))
+      {
+        ACE_DEBUG ((LM_DEBUG, "Nil consumer port object reference\n"));
+        ACE_THROW (Deployment::InvalidConnection ());
+      }
+
+    // Get the consumer component object reference.
+    ACE_CString consumer_comp_name = connection.consumerCompName.in ();
+    Components::CCMObject_ptr sink_objref;
+
+    if (this->component_map_.find (consumer_comp_name, sink_objref) != 0)
+      {
+        ACE_DEBUG ((LM_DEBUG, "Nil sink component object reference\n"));
+        ACE_THROW (Deployment::InvalidConnection ());
+      }
+
+    // Get the supplier component object reference.
+    ACE_CString supplier_comp_name = connection.instanceName.in ();
+    Components::CCMObject_ptr source_objref;
+
+    if (this->component_map_.find (supplier_comp_name, source_objref) != 0)
+      {
+        ACE_DEBUG ((LM_DEBUG, "Nil source component object reference\n"));
+        ACE_THROW (Deployment::InvalidConnection ());
+      }
+
+    // Get the container event service
+    CIAO::ContainerEventService_var event_service =
+      this->get_event_service (ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_CHECK;
+
+    if (CORBA::is_nil (event_service.in ()))
+      {
+        ACE_DEBUG ((LM_DEBUG, "Nil event_service\n"));
+        ACE_THROW (Deployment::InvalidConnection ());
+      }
+
+    // Set the event service type.
+    CIAO::EventServiceType type = CIAO::RTEC;    
+    
+    // supplier ID
+    ACE_CString sid = source_objref->component_UUID (ACE_ENV_SINGLE_ARG_DECL);
+    ACE_CHECK;
+
+    sid += "_";
+    sid += connection.portName.in ();
+    sid += "_publisher";
+
+    // consumer ID
+    ACE_CString cid = sink_objref->component_UUID (ACE_ENV_SINGLE_ARG_DECL);
+    ACE_CHECK;
+
+    cid += "_";
+    cid += connection.consumerPortName.in ();
+    cid += "_consumer";
+
+    ACE_DEBUG ((LM_DEBUG, "Publisher: %s\n", sid.c_str ()));
+    ACE_DEBUG ((LM_DEBUG, "Subscriber: %s\n", cid.c_str ()));
+
+    if (this->connected_publishers_.find (sid) == -1)
+      {
+        CIAO::Supplier_Config_var supplier_config =
+          event_service->create_supplier_config (type ACE_ENV_ARG_PARAMETER);
+        ACE_CHECK;
+    
+        supplier_config->supplier_id (sid.c_str () ACE_ENV_ARG_PARAMETER);
+        ACE_CHECK;
+
+        event_service->connect_event_supplier (supplier_config.in () ACE_ENV_ARG_PARAMETER);
+        ACE_CHECK;
+
+        this->connected_publishers_.insert (sid);
+
+        supplier_config->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+        ACE_CHECK;
+      }
+
+    CIAO::Consumer_Config_var consumer_config =
+      event_service->create_consumer_config (type ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+
+    consumer_config->supplier_id (sid.c_str () ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+    consumer_config->consumer_id (cid.c_str () ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+    consumer_config->consumer (consumer.in ()
+                                ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+
+    event_service->connect_event_consumer (consumer_config.in ()
+                                           ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+
+    consumer_config->destroy (ACE_ENV_SINGLE_ARG_DECL);
+    ACE_CHECK;
+
+    ACE_DEBUG ((LM_DEBUG, "CIAO::NodeApplication_Impl::build_rtec_connection () completed!!!!\n"));
+}
+
+void 
+CIAO::NodeApplication_Impl::build_ec_connection (const Deployment::Connection & connection
+                                                 ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((Deployment::InvalidConnection,
+                    CORBA::SystemException))
+{
+
+}
+
+void 
+CIAO::NodeApplication_Impl::build_ns_connection (const Deployment::Connection & connection
+                                                 ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((Deployment::InvalidConnection,
+                    CORBA::SystemException))
+{
+
+}

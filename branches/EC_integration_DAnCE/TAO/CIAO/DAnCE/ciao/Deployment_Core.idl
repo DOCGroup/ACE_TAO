@@ -46,7 +46,16 @@ module Deployment
     MultiplexReceptacle,
     EventEmitter,
     EventPublisher,
-    EventConsumer
+    EventConsumer,
+	  cosEventEmitter,
+    cosEventPublisher,
+    cosEventConsumer,
+    rtecEventEmitter,
+    rtecEventPublisher,
+    rtecEventConsumer,
+    nsEventEmitter,
+    nsEventPublisher,
+    nsEventConsumer
   };
 
   // To avoid the connection info in the plan being passed to the
@@ -56,6 +65,9 @@ module Deployment
     string instanceName;
     string portName;
     CCMComponentPortKind kind;
+
+    string consumerCompName; // CIAO specific extension 
+    string consumerPortName; // CIAO specific extension 
 
     // the endpoints member is change to endpoint.
     // Since we will not have more than 1 objref in there.
