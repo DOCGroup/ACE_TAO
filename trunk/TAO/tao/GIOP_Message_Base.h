@@ -14,6 +14,7 @@
 //
 // = AUTHOR
 //     Copyright 1994-1995 by Sun Microsystems Inc.,
+//     Based on GIOP.cpp and GIOP.h
 //     Balachandran Natarajan <bala@cs.wustl.edu>
 //
 // ============================================================================
