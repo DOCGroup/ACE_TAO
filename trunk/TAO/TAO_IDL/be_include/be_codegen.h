@@ -93,6 +93,9 @@ public:
     TAO_ATTRIBUTE_DIRECT_COLLOCATED_SH,      // in server header for collocated
     TAO_ATTRIBUTE_DIRECT_COLLOCATED_SS,      // in server skeletons for
                                              // collocated
+    TAO_ATTRIBUTE_SMART_PROXY_CH,            // in client header
+    TAO_ATTRIBUTE_SMART_PROXY_CS,            // in client source
+    
     TAO_ATTRIBUTE_TIE_SH,
     TAO_ATTRIBUTE_TIE_SI,
 
@@ -162,6 +165,8 @@ public:
     TAO_INTERFACE_CDR_OP_CS,
     TAO_INTERFACE_TIE_SH,
     TAO_INTERFACE_TIE_SI,
+    TAO_INTERFACE_SMART_PROXY_CH,
+    TAO_INTERFACE_SMART_PROXY_CS,
 
     // emitting code for the interface forward declaration
     TAO_INTERFACE_FWD_CH,
@@ -232,6 +237,10 @@ public:
     TAO_OPERATION_THRU_POA_COLLOCATED_SS,            // in collocated server skel
     TAO_OPERATION_DIRECT_COLLOCATED_SH,            // in collocated server header
     TAO_OPERATION_DIRECT_COLLOCATED_SS,            // in collocated server skel
+
+    TAO_OPERATION_SMART_PROXY_CH,           // in client header   
+    TAO_OPERATION_SMART_PROXY_CS,           // in client stubs
+
     TAO_OPERATION_RETTYPE_CH,                // return type in client header op
                                              // signature
     TAO_OPERATION_RETTYPE_IS,                // return type in client header op
