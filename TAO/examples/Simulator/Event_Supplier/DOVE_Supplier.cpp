@@ -6,7 +6,7 @@
 //    DOVE_Supplier.cpp
 //
 // = DESCRIPTION
-//    A wrapper around the event service initialization and 
+//    A wrapper around the event service initialization and
 //    marshalling
 //
 // = AUTHOR
@@ -19,8 +19,8 @@
 ACE_RCSID(Event_Supplier, DOVE_Supplier, "$Id$")
 
 DOVE_Supplier::DOVE_Supplier ()
-  : MIB_name_ (0),
-    internal_DOVE_Supplier_ptr_ (new Internal_DOVE_Supplier (this))
+  : internal_DOVE_Supplier_ptr_ (new Internal_DOVE_Supplier (this)),
+    MIB_name_ (0)
 {
 }
 
@@ -38,7 +38,7 @@ DOVE_Supplier::connect (const char* MIB_name)
 }
 
 
-void 
+void
 DOVE_Supplier::disconnect ()
 {
 }
@@ -71,7 +71,7 @@ DOVE_Supplier::notify (CORBA::Any &message)
   }
   TAO_CATCHANY
   {
-    ACE_ERROR ((LM_ERROR, 
+    ACE_ERROR ((LM_ERROR,
                 "DOVE_Supplier::notify: "
                 "unexpected exception.\n"));
   }
@@ -97,7 +97,7 @@ DOVE_Supplier::get_EventChannel ()
     // Connect to the RootPOA.
     CORBA::Object_var poaObject_var =
       TAO_ORB_Core_instance()->orb()->resolve_initial_references("RootPOA");
-      
+
     if (CORBA::is_nil (poaObject_var.in ()))
       ACE_ERROR_RETURN ((LM_ERROR,
                         " (%P|%t) Unable to initialize the POA.\n"),
@@ -192,7 +192,7 @@ DOVE_Supplier::connect_Supplier ()
     qos.publications[0].event.source_ = SOURCE_ID;
     qos.publications[0].event.type_ = ACE_ES_EVENT_NOTIFICATION;
     qos.publications[0].event.ttl_ = 1;
-    qos.publications[0].event.creation_time_ = ORBSVCS_Time::zero; 
+    qos.publications[0].event.creation_time_ = ORBSVCS_Time::zero;
     qos.publications[0].event.ec_recv_time_ = ORBSVCS_Time::zero;
     qos.publications[0].event.ec_send_time_ = ORBSVCS_Time::zero;
     qos.publications[0].event.data_.any_value.replace (CORBA::_tc_short,
