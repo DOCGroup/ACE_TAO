@@ -4,7 +4,7 @@
 
 # TARGTYPE "Win32 (x86) Static Library" 0x0104
 
-CFG=IORManip_Static - Win32 Debug
+CFG=IORManip_Static - Win32 Static Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE
@@ -13,12 +13,12 @@ CFG=IORManip_Static - Win32 Debug
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE
-!MESSAGE NMAKE /f "TAO_IORManip_Static.mak" CFG="IORManip_Static - Win32 Debug"
+!MESSAGE NMAKE /f "TAO_IORManip_Static.mak" CFG="IORManip_Static - Win32 Static Debug"
 !MESSAGE
 !MESSAGE Possible choices for configuration are:
 !MESSAGE
-!MESSAGE "IORManip_Static - Win32 Release" (based on "Win32 (x86) Static Library")
-!MESSAGE "IORManip_Static - Win32 Debug" (based on "Win32 (x86) Static Library")
+!MESSAGE "IORManip_Static - Win32 Static Release" (based on "Win32 (x86) Static Library")
+!MESSAGE "IORManip_Static - Win32 Static Debug" (based on "Win32 (x86) Static Library")
 !MESSAGE
 
 # Begin Project
@@ -28,7 +28,7 @@ CFG=IORManip_Static - Win32 Debug
 CPP=cl.exe
 RSC=rc.exe
 
-!IF  "$(CFG)" == "IORManip_Static - Win32 Release"
+!IF  "$(CFG)" == "IORManip_Static - Win32 Static Release"
 
 # PROP BASE Use_MFC 2
 # PROP BASE Use_Debug_Libraries 0
@@ -51,7 +51,7 @@ LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo
 # ADD LIB32 /nologo /out:"TAO_IORManips.lib"
 
-!ELSEIF  "$(CFG)" == "IORManip_Static - Win32 Debug"
+!ELSEIF  "$(CFG)" == "IORManip_Static - Win32 Static Debug"
 
 # PROP BASE Use_MFC 2
 # PROP BASE Use_Debug_Libraries 1
@@ -78,8 +78,8 @@ LIB32=link.exe -lib
 
 # Begin Target
 
-# Name "IORManip_Static - Win32 Release"
-# Name "IORManip_Static - Win32 Debug"
+# Name "IORManip_Static - Win32 Static Release"
+# Name "IORManip_Static - Win32 Static Debug"
 # Begin Group "Source Files"
 
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
