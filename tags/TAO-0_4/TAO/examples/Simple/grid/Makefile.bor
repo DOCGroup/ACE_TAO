@@ -1,0 +1,22 @@
+#
+# Makefile for building the Grid example
+# 
+
+!ifdef DEBUG
+DEBUG_FLAG = -DDEBUG
+!endif
+
+!ifdef STATIC
+STATIC_FLAG = -DSTATIC
+!endif  
+
+!ifdef PASCAL
+PASCAL_FLAG = -DPASCAL
+!endif
+
+FLAGS = $(DEBUG_FLAG) $(STATIC_FLAG) $(PASCAL_FLAG)
+
+all:
+	$(MAKE) -f Grid_Client.bor $(FLAGS)
+	$(MAKE) -f Grid_Server.bor $(FLAGS)
+

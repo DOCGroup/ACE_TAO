@@ -1,0 +1,27 @@
+#
+# Makefile for building the Echo example
+# 
+
+NAME = Echo_Server
+
+OBJFILES = \
+	$(OBJDIR)\EchoC.obj \
+	$(OBJDIR)\EchoS.obj \
+	$(OBJDIR)\Echo_i.obj \
+	$(OBJDIR)\Simple_util.obj \
+	$(OBJDIR)\server.obj
+
+CPPDIR = .;.. 
+BINDIR =.\bor\bin
+BASE_OBJDIR = .\bor\obj
+IDLDIR = .
+
+!include <$(ACE_ROOT)\include\makeinclude\build_example.bor>
+
+#       
+# IDL Build rules
+#
+
+$(IDLDIR)\EchoC.cpp $(IDLDIR)\EchoS.cpp: $(IDLDIR)\Echo.idl
+	$(TAO_IDL) $**
+

@@ -1,0 +1,23 @@
+
+#
+# Makefile for building the Bank example
+# 
+
+!ifdef DEBUG
+DEBUG_FLAG = -DDEBUG
+!endif
+
+!ifdef STATIC
+STATIC_FLAG = -DSTATIC
+!endif  
+
+!ifdef PASCAL
+PASCAL_FLAG = -DPASCAL
+!endif 
+
+FLAGS = $(DEBUG_FLAG) $(STATIC_FLAG) $(PASCAL_FLAG)
+
+all:
+	$(MAKE) -f Bank_Client.bor $(FLAGS)
+	$(MAKE) -f Bank_Server.bor $(FLAGS)
+

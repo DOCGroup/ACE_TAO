@@ -1,0 +1,20 @@
+
+!ifdef DEBUG
+DEBUG_FLAG = -DDEBUG 
+!endif
+      
+!ifdef STATIC
+STATIC_FLAG = -DSTATIC
+!endif
+     
+!ifdef PASCAL
+PASCAL_FLAG = -DPASCAL
+!endif
+     
+FLAGS = $(DEBUG_FLAG) $(STATIC_FLAG) $(PASCAL_FLAG)
+     
+all: 
+	$(MAKE) -f Callback_Quoter_Notifier.bor $(FLAGS)
+	$(MAKE) -f Callback_Quoter_Consumer.bor $(FLAGS)
+	$(MAKE) -f Callback_Quoter_Supplier.bor $(FLAGS)
+

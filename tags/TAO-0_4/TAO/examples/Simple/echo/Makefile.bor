@@ -1,0 +1,23 @@
+
+#
+# Makefile for building the Echo example
+# 
+
+!ifdef DEBUG
+DEBUG_FLAG = -DDEBUG
+!endif
+
+!ifdef STATIC
+STATIC_FLAG = -DSTATIC
+!endif  
+
+!ifdef PASCAL
+PASCAL_FLAG = -DPASCAL
+!endif
+
+FLAGS = $(DEBUG_FLAG) $(STATIC_FLAG) $(PASCAL_FLAG)
+
+all:
+	$(MAKE) -f Echo_Client.bor $(FLAGS)
+	$(MAKE) -f Echo_Server.bor $(FLAGS)
+

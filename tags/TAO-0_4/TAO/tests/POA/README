@@ -1,0 +1,13 @@
+// $Id$
+
+The following TAO applications test and illustate various Portable
+Object Adapter (POA) interfaces and their usage scenarios.
+
+        . Identity
+
+                The example shows the identity between servants, ids,
+                and references.
+
+        . Destruction
+
+                The example tests the destruction of a POA during an upcall.
