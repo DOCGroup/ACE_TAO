@@ -1,3 +1,10 @@
+Mon Dec 29 14:48:30 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* bin/tao_other_tests.lst:
+
+	  Do not run reference counted servant test in the minimum corba
+	  builds.
+
 Mon Dec 29 12:48:22 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* bin/tao_other_tests.lst:

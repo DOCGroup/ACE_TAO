@@ -39,7 +39,7 @@ TAO/examples/POA/Forwarding/run_test.pl: !MINIMUM
 TAO/examples/POA/NewPOA/run_test.pl: !MINIMUM
 TAO/examples/POA/On_Demand_Activation/run_test.pl: !MINIMUM !STATIC
 TAO/examples/POA/On_Demand_Loading/run_test.pl: !MINIMUM !STATIC !KCC_Linux
-TAO/examples/POA/Reference_Counted_Servant/run_test.pl: !SUNCC5_1
+TAO/examples/POA/Reference_Counted_Servant/run_test.pl: !SUNCC5_1 !MINIMUM
 TAO/examples/POA/Loader/run_test.pl: !MINIMUM !STATIC !KCC_Linux
 TAO/examples/POA/RootPOA/run_test.pl
 TAO/examples/Simple/bank/run_test.pl: !NO_MESSAGING
