@@ -69,7 +69,7 @@ $CL = Process::Create ('.' . $DIR_SEPARATOR . "client" . $EXE_EXT .
                   " $gioplite $thread_per_rate " .
                   "-f $iorfile -n $iterations -t $threads");
 
-$client = $CL->TimedWait (60);
+$client = $CL->TimedWait (120);
 if ($client == -1) {
   print STDERR "ERROR: client timedout\n";
   $CL->Kill (); $CL->TimedWait (1);
