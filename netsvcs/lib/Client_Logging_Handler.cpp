@@ -9,6 +9,7 @@
 #include "ace/SPIPE_Acceptor.h"
 #include "Client_Logging_Handler.h"
 #include "ace/Log_Record.h"
+#include "ace/OS_NS_stdio.h"
 
 ACE_RCSID(lib, Client_Logging_Handler, "$Id$")
 
