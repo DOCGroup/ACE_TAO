@@ -160,8 +160,10 @@ sub fill_value {
     }
   }
   elsif ($name eq 'tao') {
-    if ($self->get_assignment('includes') =~ /tao/i ||
-        $self->get_assignment('libpaths') =~ /tao/i) {
+    my($incs) = $self->get_assignment('includes');
+    my($libs) = $self->get_assignment('libpaths');
+    if ((defined $incs && $incs =~ /tao/i) ||
+        (defined $libs && $libs =~ /tao/i)) {
       $value = 1;
     }
   }
