@@ -42,7 +42,7 @@ public:
   // Default constructor.  By default, the <close> operation on the
   // object will be invoked before it is destroyed.
 
-  ACE_DLL (ACE_DL_TYPE dll_name,
+  ACE_DLL (const char *dll_name,
            int open_mode = ACE_DEFAULT_SHLIB_MODE,
            int close_on_destruction = 1);
   // This constructor opens and dynamically links <dll_name>.  The
@@ -53,7 +53,7 @@ public:
   // loaded and <RTLD_GLOBAL>, which makes symbols available for
   // relocation processing of any other DLLs.
 
-  int open (ACE_DL_TYPE dll_name, 
+  int open (const char *dll_name,
             int open_mode = ACE_DEFAULT_SHLIB_MODE,
             int close_on_destruction = 1);
   // This method opens and dynamically links <dll_name>.  The default
@@ -64,7 +64,7 @@ public:
   // <RTLD_GLOBAL>, which makes symbols available for relocation
   // processing of any other DLLs.  Returns -1 on failure and 0 on
   // success.
-  
+
   int close (void);
   // Call to close the DLL object.
 
@@ -73,7 +73,7 @@ public:
   // <close_on_destruction> flag is set in the constructor or <open>
   // method.
 
-  void *symbol (ACE_DL_TYPE symbol_name);
+  void *symbol (const char *symbol_name);
   // If <symbol_name> is in the symbol table of the DLL a pointer to
   // the <symbol_name> is returned.  Otherwise, returns 0.
 
@@ -93,7 +93,7 @@ public:
 private:
   ACE_SHLIB_HANDLE handle_;
   // This is a handle to the DLL.
-  
+
   int close_on_destruction_;
   // This flag keeps track of whether we should close the handle
   // automatically when the destructor runs.
