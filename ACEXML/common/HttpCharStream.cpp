@@ -221,12 +221,12 @@ ACEXML_HttpCharStream::send_request (void)
   ACE_Auto_Basic_Array_Ptr<ACEXML_Char> cmd_ptr (command);
 
   int bytes = ACE_OS::sprintf (command,
-                               "GET %s HTTP/1.0\r\n",
+                               ACE_TEXT("GET %s HTTP/1.0\r\n"),
                                this->url_addr_->get_path_name ());
   bytes += ACE_OS::sprintf (&command[bytes],
-                            "Host: %s\r\n",
+                            ACE_TEXT("Host: %s\r\n"),
                             this->url_addr_->get_host_name());
-  bytes += ACE_OS::sprintf (&command[bytes], "\r\n");
+  bytes += ACE_OS::sprintf (&command[bytes], ACE_TEXT("\r\n"));
 
   ACE_Time_Value tv (ACE_DEFAULT_TIMEOUT);
 

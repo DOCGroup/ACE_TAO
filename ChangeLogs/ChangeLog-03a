@@ -1,3 +1,8 @@
+Sun Jun 23 14:05:12 2002  Johnny Willemsen <jwillemsen@remedy.nl>
+
+	* ACEXML/common/HttpCharStream.cpp:
+	  Fixed BCB Unicode compile errors.
+
 Fri Jun 21 19:18:05 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* bin/nightlybuilds/builds.lst: Move to IA64_Linux_GCC_3.1 and
@@ -47,7 +52,7 @@ Fri Jun 21 00:21:48 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* examples/Timer_Queue/Thread_Timer_Queue_Test.cpp (dump):
 	  Switch from ACE_SYNCH_MUTEX to ACE_SYNCH_RECURSIVE_MUTEX.
- 
+
 Thu Jun 20 14:32:03 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* ace/Synch.cpp (ACE_recursive_mutex_state): Replaced the
@@ -64,8 +69,8 @@ Thu Jun 20 14:32:03 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 	  additional cases for SunC++ 5.2 and 5.3.  Thanks to Carsten
  	  Tonsberg Nielsen <ctn@maerskdatadefence.dk> for reporting this.
 
-	* ace/ATM_Stream.cpp (get_peer_name): 
-	* ace/Log_Msg_UNIX_Syslog.cpp (log): 
+	* ace/ATM_Stream.cpp (get_peer_name):
+	* ace/Log_Msg_UNIX_Syslog.cpp (log):
 	* ace/Logging_Strategy.cpp: Replaced the use of ACE_OS::strtok() with
 	  ACE_OS::strtok_r().  Thanks to Eugene Alterman
  	  <eugalt@myrealbox.com> for motivating this.
