@@ -37,7 +37,7 @@ main (int argc, char **argv)
   TAO_POA_Policies root_poa_policies;
   root_poa_policies.implicit_activation (PortableServer::IMPLICIT_ACTIVATION);
   root_poa_policies.lifespan (PortableServer::PERSISTENT);
-  root_poa_policies.TAO_POA_locking (PortableServer::USE_NULL_LOCK);
+  root_poa_policies.synchronization (PortableServer::NULL_LOCK);
 
   CORBA::Object_var obj = orb->resolve_root_poa ("RootPOA",
                                                  0, 
@@ -59,12 +59,12 @@ main (int argc, char **argv)
 
   // TAO specific threading policy
   policies[0] =
-    root_poa->create_TAO_POA_locking_policy (PortableServer::USE_THREAD_LOCK,
+    root_poa->create_synchronization_policy (PortableServer::THREAD_LOCK,
                                              env);
 
   if (env.exception () != 0)
     {
-      env.print_exception ("create_TAO_POA_locking");
+      env.print_exception ("create_synchronization_policy");
       return -1;
     }
 
@@ -83,11 +83,11 @@ main (int argc, char **argv)
 
   // TAO specific threading policy
   policies[0] =
-    root_poa->create_TAO_POA_locking_policy (PortableServer::USE_NULL_LOCK, env);
+    root_poa->create_synchronization_policy (PortableServer::NULL_LOCK, env);
 
   if (env.exception () != 0)
     {
-      env.print_exception ("create_TAO_POA_locking");
+      env.print_exception ("create_synchronization_policy");
       return -1;
     }
 

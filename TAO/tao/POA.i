@@ -93,16 +93,16 @@ TAO_POA_Policies::request_processing (PortableServer::RequestProcessingPolicyVal
 //
 // **************************************************
 
-ACE_INLINE PortableServer::TAO_POA_LockingPolicyValue
-TAO_POA_Policies::TAO_POA_locking (void) const
+ACE_INLINE PortableServer::SynchronizationPolicyValue
+TAO_POA_Policies::synchronization (void) const
 {
-  return this->TAO_POA_locking_;
+  return this->synchronization_;
 }
 
 ACE_INLINE void
-TAO_POA_Policies::TAO_POA_locking (PortableServer::TAO_POA_LockingPolicyValue value)
+TAO_POA_Policies::synchronization (PortableServer::SynchronizationPolicyValue value)
 {
-  this->TAO_POA_locking_ = value;
+  this->synchronization_ = value;
 }
 
 ACE_INLINE int

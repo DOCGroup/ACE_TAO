@@ -1740,7 +1740,7 @@ PortableServer::RequestProcessingPolicy_out::operator-> (void)
 // **************************************************
 
 ACE_INLINE
-PortableServer::TAO_POA_LockingPolicy::TAO_POA_LockingPolicy(
+PortableServer::SynchronizationPolicy::SynchronizationPolicy(
                                                              STUB_Object *objref,
                                                              TAO_ServantBase *servant,
                                                              CORBA::Boolean collocated
@@ -1749,113 +1749,113 @@ PortableServer::TAO_POA_LockingPolicy::TAO_POA_LockingPolicy(
 {}
 
 ACE_INLINE
-PortableServer::TAO_POA_LockingPolicy::~TAO_POA_LockingPolicy (void) // destructor
+PortableServer::SynchronizationPolicy::~SynchronizationPolicy (void) // destructor
 {}
 
-ACE_INLINE PortableServer::TAO_POA_LockingPolicy_ptr
-PortableServer::TAO_POA_LockingPolicy::_nil (void)
+ACE_INLINE PortableServer::SynchronizationPolicy_ptr
+PortableServer::SynchronizationPolicy::_nil (void)
 {
-  return (PortableServer::TAO_POA_LockingPolicy_ptr)0;
+  return (PortableServer::SynchronizationPolicy_ptr)0;
 }
 
 
-#if !defined (_PORTABLESERVER_TAO_POA_LockingPOLICY___VAR_CI_)
-#define _PORTABLESERVER_TAO_POA_LockingPOLICY___VAR_CI_
+#if !defined (_PORTABLESERVER_SYNCHRONIZATIONPOLICY___VAR_CI_)
+#define _PORTABLESERVER_SYNCHRONIZATIONPOLICY___VAR_CI_
 
 // *************************************************************
-// Inline operations for class PortableServer::TAO_POA_LockingPolicy_var
+// Inline operations for class PortableServer::SynchronizationPolicy_var
 // *************************************************************
 
 ACE_INLINE
-PortableServer::TAO_POA_LockingPolicy_var::TAO_POA_LockingPolicy_var (void) // default constructor
-  : ptr_ (PortableServer::TAO_POA_LockingPolicy::_nil ())
+PortableServer::SynchronizationPolicy_var::SynchronizationPolicy_var (void) // default constructor
+  : ptr_ (PortableServer::SynchronizationPolicy::_nil ())
 {}
 
 ACE_INLINE
-PortableServer::TAO_POA_LockingPolicy_var::TAO_POA_LockingPolicy_var (PortableServer::TAO_POA_LockingPolicy_ptr p)
+PortableServer::SynchronizationPolicy_var::SynchronizationPolicy_var (PortableServer::SynchronizationPolicy_ptr p)
   : ptr_ (p)
 {}
 
-ACE_INLINE PortableServer::TAO_POA_LockingPolicy_ptr
-PortableServer::TAO_POA_LockingPolicy_var::ptr (void) const
+ACE_INLINE PortableServer::SynchronizationPolicy_ptr
+PortableServer::SynchronizationPolicy_var::ptr (void) const
 {
   return this->ptr_;
 }
 
 ACE_INLINE
-PortableServer::TAO_POA_LockingPolicy_var::TAO_POA_LockingPolicy_var (const PortableServer::TAO_POA_LockingPolicy_var &p) // copy constructor
-  : ptr_ (PortableServer::TAO_POA_LockingPolicy::_duplicate (p.ptr ()))
+PortableServer::SynchronizationPolicy_var::SynchronizationPolicy_var (const PortableServer::SynchronizationPolicy_var &p) // copy constructor
+  : ptr_ (PortableServer::SynchronizationPolicy::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE
-PortableServer::TAO_POA_LockingPolicy_var::~TAO_POA_LockingPolicy_var (void) // destructor
+PortableServer::SynchronizationPolicy_var::~SynchronizationPolicy_var (void) // destructor
 {
   CORBA::release (this->ptr_);
 }
 
-ACE_INLINE PortableServer::TAO_POA_LockingPolicy_var &
-PortableServer::TAO_POA_LockingPolicy_var::operator= (PortableServer::TAO_POA_LockingPolicy_ptr p)
+ACE_INLINE PortableServer::SynchronizationPolicy_var &
+PortableServer::SynchronizationPolicy_var::operator= (PortableServer::SynchronizationPolicy_ptr p)
 {
   CORBA::release (this->ptr_);
   this->ptr_ = p;
   return *this;
 }
 
-ACE_INLINE PortableServer::TAO_POA_LockingPolicy_var &
-PortableServer::TAO_POA_LockingPolicy_var::operator= (const PortableServer::TAO_POA_LockingPolicy_var &p)
+ACE_INLINE PortableServer::SynchronizationPolicy_var &
+PortableServer::SynchronizationPolicy_var::operator= (const PortableServer::SynchronizationPolicy_var &p)
 {
   if (this != &p)
     {
       CORBA::release (this->ptr_);
-      this->ptr_ = PortableServer::TAO_POA_LockingPolicy::_duplicate (p.ptr ());
+      this->ptr_ = PortableServer::SynchronizationPolicy::_duplicate (p.ptr ());
     }
   return *this;
 }
 
 ACE_INLINE
-PortableServer::TAO_POA_LockingPolicy_var::operator const PortableServer::TAO_POA_LockingPolicy_ptr &() const // cast
+PortableServer::SynchronizationPolicy_var::operator const PortableServer::SynchronizationPolicy_ptr &() const // cast
 {
   return this->ptr_;
 }
 
 ACE_INLINE
-PortableServer::TAO_POA_LockingPolicy_var::operator PortableServer::TAO_POA_LockingPolicy_ptr &() // cast
+PortableServer::SynchronizationPolicy_var::operator PortableServer::SynchronizationPolicy_ptr &() // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE PortableServer::TAO_POA_LockingPolicy_ptr
-PortableServer::TAO_POA_LockingPolicy_var::operator-> (void) const
+ACE_INLINE PortableServer::SynchronizationPolicy_ptr
+PortableServer::SynchronizationPolicy_var::operator-> (void) const
 {
   return this->ptr_;
 }
 
-ACE_INLINE PortableServer::TAO_POA_LockingPolicy_ptr
-PortableServer::TAO_POA_LockingPolicy_var::in (void) const
+ACE_INLINE PortableServer::SynchronizationPolicy_ptr
+PortableServer::SynchronizationPolicy_var::in (void) const
 {
   return this->ptr_;
 }
 
-ACE_INLINE PortableServer::TAO_POA_LockingPolicy_ptr &
-PortableServer::TAO_POA_LockingPolicy_var::inout (void)
+ACE_INLINE PortableServer::SynchronizationPolicy_ptr &
+PortableServer::SynchronizationPolicy_var::inout (void)
 {
   return this->ptr_;
 }
 
-ACE_INLINE PortableServer::TAO_POA_LockingPolicy_ptr &
-PortableServer::TAO_POA_LockingPolicy_var::out (void)
+ACE_INLINE PortableServer::SynchronizationPolicy_ptr &
+PortableServer::SynchronizationPolicy_var::out (void)
 {
   CORBA::release (this->ptr_);
-  this->ptr_ = PortableServer::TAO_POA_LockingPolicy::_nil ();
+  this->ptr_ = PortableServer::SynchronizationPolicy::_nil ();
   return this->ptr_;
 }
 
-ACE_INLINE PortableServer::TAO_POA_LockingPolicy_ptr
-PortableServer::TAO_POA_LockingPolicy_var::_retn (void)
+ACE_INLINE PortableServer::SynchronizationPolicy_ptr
+PortableServer::SynchronizationPolicy_var::_retn (void)
 {
   // yield ownership of managed obj reference
-  PortableServer::TAO_POA_LockingPolicy_ptr val = this->ptr_;
-  this->ptr_ = PortableServer::TAO_POA_LockingPolicy::_nil ();
+  PortableServer::SynchronizationPolicy_ptr val = this->ptr_;
+  this->ptr_ = PortableServer::SynchronizationPolicy::_nil ();
   return val;
 }
 
@@ -1863,68 +1863,68 @@ PortableServer::TAO_POA_LockingPolicy_var::_retn (void)
 #endif // end #if !defined
 
 
-#if !defined (_PORTABLESERVER_TAO_POA_LockingPOLICY___OUT_CI_)
-#define _PORTABLESERVER_TAO_POA_LockingPOLICY___OUT_CI_
+#if !defined (_PORTABLESERVER_SYNCHRONIZATIONPOLICY___OUT_CI_)
+#define _PORTABLESERVER_SYNCHRONIZATIONPOLICY___OUT_CI_
 
 // *************************************************************
-// Inline operations for class PortableServer::TAO_POA_LockingPolicy_out
+// Inline operations for class PortableServer::SynchronizationPolicy_out
 // *************************************************************
 
 ACE_INLINE
-PortableServer::TAO_POA_LockingPolicy_out::TAO_POA_LockingPolicy_out (PortableServer::TAO_POA_LockingPolicy_ptr &p)
+PortableServer::SynchronizationPolicy_out::SynchronizationPolicy_out (PortableServer::SynchronizationPolicy_ptr &p)
   : ptr_ (p)
 {
-  this->ptr_ = PortableServer::TAO_POA_LockingPolicy::_nil ();
+  this->ptr_ = PortableServer::SynchronizationPolicy::_nil ();
 }
 
 ACE_INLINE
-PortableServer::TAO_POA_LockingPolicy_out::TAO_POA_LockingPolicy_out (PortableServer::TAO_POA_LockingPolicy_var &p) // constructor from _var
+PortableServer::SynchronizationPolicy_out::SynchronizationPolicy_out (PortableServer::SynchronizationPolicy_var &p) // constructor from _var
   : ptr_ (p.out ())
 {
   CORBA::release (this->ptr_);
-  this->ptr_ = PortableServer::TAO_POA_LockingPolicy::_nil ();
+  this->ptr_ = PortableServer::SynchronizationPolicy::_nil ();
 }
 
 ACE_INLINE
-PortableServer::TAO_POA_LockingPolicy_out::TAO_POA_LockingPolicy_out (PortableServer::TAO_POA_LockingPolicy_out &p) // copy constructor
+PortableServer::SynchronizationPolicy_out::SynchronizationPolicy_out (PortableServer::SynchronizationPolicy_out &p) // copy constructor
   : ptr_ (p.ptr_)
 {}
 
-ACE_INLINE PortableServer::TAO_POA_LockingPolicy_out &
-PortableServer::TAO_POA_LockingPolicy_out::operator= (PortableServer::TAO_POA_LockingPolicy_out &p)
+ACE_INLINE PortableServer::SynchronizationPolicy_out &
+PortableServer::SynchronizationPolicy_out::operator= (PortableServer::SynchronizationPolicy_out &p)
 {
   this->ptr_ = p.ptr_;
   return *this;
 }
 
-ACE_INLINE PortableServer::TAO_POA_LockingPolicy_out &
-PortableServer::TAO_POA_LockingPolicy_out::operator= (const PortableServer::TAO_POA_LockingPolicy_var &p)
+ACE_INLINE PortableServer::SynchronizationPolicy_out &
+PortableServer::SynchronizationPolicy_out::operator= (const PortableServer::SynchronizationPolicy_var &p)
 {
-  this->ptr_ = PortableServer::TAO_POA_LockingPolicy::_duplicate (p.ptr ());
+  this->ptr_ = PortableServer::SynchronizationPolicy::_duplicate (p.ptr ());
   return *this;
 }
 
-ACE_INLINE PortableServer::TAO_POA_LockingPolicy_out &
-PortableServer::TAO_POA_LockingPolicy_out::operator= (PortableServer::TAO_POA_LockingPolicy_ptr p)
+ACE_INLINE PortableServer::SynchronizationPolicy_out &
+PortableServer::SynchronizationPolicy_out::operator= (PortableServer::SynchronizationPolicy_ptr p)
 {
   this->ptr_ = p;
   return *this;
 }
 
 ACE_INLINE
-PortableServer::TAO_POA_LockingPolicy_out::operator PortableServer::TAO_POA_LockingPolicy_ptr &() // cast
+PortableServer::SynchronizationPolicy_out::operator PortableServer::SynchronizationPolicy_ptr &() // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE PortableServer::TAO_POA_LockingPolicy_ptr &
-PortableServer::TAO_POA_LockingPolicy_out::ptr (void) // ptr
+ACE_INLINE PortableServer::SynchronizationPolicy_ptr &
+PortableServer::SynchronizationPolicy_out::ptr (void) // ptr
 {
   return this->ptr_;
 }
 
-ACE_INLINE PortableServer::TAO_POA_LockingPolicy_ptr
-PortableServer::TAO_POA_LockingPolicy_out::operator-> (void)
+ACE_INLINE PortableServer::SynchronizationPolicy_ptr
+PortableServer::SynchronizationPolicy_out::operator-> (void)
 {
   return this->ptr_;
 }
