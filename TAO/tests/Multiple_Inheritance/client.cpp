@@ -20,6 +20,7 @@
 #include "ace/Read_Buffer.h"
 #include "Multiple_InheritanceC.h"
 #include "ace/OS_NS_fcntl.h"
+#include "ace/OS_NS_unistd.h"
 
 ACE_RCSID(Multiple_Inheritance, client, "$Id$")
 

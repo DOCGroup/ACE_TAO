@@ -9,6 +9,8 @@
 #include "ace/Sched_Params.h"
 #include "tao/RTCORBA/Priority_Mapping_Manager.h"
 #include "ace/Barrier.h"
+#include "ace/OS_NS_errno.h"
+#include "ace/OS_NS_unistd.h"
 
 ACE_RCSID(Latency, client, "$Id$")
 

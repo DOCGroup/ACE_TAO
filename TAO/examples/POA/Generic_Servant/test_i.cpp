@@ -1,6 +1,7 @@
 // $Id$
 
 #include "test_i.h"
+#include "ace/OS_NS_unistd.h"
 
 ACE_RCSID(Generic_Servant, test_i, "$Id$")
 

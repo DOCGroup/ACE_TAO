@@ -10,6 +10,8 @@
 #include "CEC_Dispatching_Task.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/OS_NS_errno.h"
+
 ACE_RCSID (CosEvent, 
            CEC_Dispatching, 
            "$Id$")

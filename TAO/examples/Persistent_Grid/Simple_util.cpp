@@ -5,6 +5,7 @@
 # include "Simple_util.h"
 # include "tao/debug.h"
 # include "ace/OS_NS_fcntl.h"
+# include "ace/OS_NS_unistd.h"
 
 // Constructor.
 

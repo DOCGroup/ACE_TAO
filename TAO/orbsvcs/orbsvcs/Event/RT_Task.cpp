@@ -13,6 +13,7 @@
 #endif /* __ACE_INLINE__ */
 
 #include "tao/Timeprobe.h"
+#include "ace/OS_NS_errno.h"
 
 ACE_RCSID(Event, RT_Task, "$Id$")
 

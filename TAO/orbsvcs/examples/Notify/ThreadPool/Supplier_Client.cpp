@@ -9,6 +9,7 @@
 #include "Supplier.h"
 #include "orbsvcs/orbsvcs/NotifyExtC.h"
 #include "orbsvcs/orbsvcs/CosNamingC.h"
+#include "ace/OS_NS_errno.h"
 
 ACE_RCSID (Notify, TAO_Notify_ThreadPool_Supplier_Client, "$Id$")
 

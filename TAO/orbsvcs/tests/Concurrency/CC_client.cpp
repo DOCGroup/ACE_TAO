@@ -24,6 +24,7 @@
 
 #include "ace/Read_Buffer.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_unistd.h"
 
 ACE_RCSID(Concurrency, CC_client, "$Id$")
 

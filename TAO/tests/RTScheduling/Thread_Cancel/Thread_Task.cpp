@@ -3,6 +3,8 @@
 #include "Thread_Task.h"
 #include "ace/Atomic_Op.h"
 #include "ace/Lock_Adapter_T.h"
+#include "ace/OS_NS_errno.h"
+#include "ace/OS_NS_unistd.h"
 
 ACE_Atomic_Op<TAO_SYNCH_MUTEX, long> guid_index;
 
