@@ -106,7 +106,6 @@ public:
                   ACE_Sig_Set &sigmask,
                   int flags = 0);
   ACE_Sig_Action (const ACE_Sig_Action &s);
-  ACE_Sig_Action (struct sigaction *);
 
   ~ACE_Sig_Action (void);
   // Default dtor.
