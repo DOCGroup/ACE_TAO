@@ -284,7 +284,7 @@ test_performance (ACE_Timer_Queue *tq,
   ACE_Time_Value now = tq->gettimeofday ();
   
   for (i = 0; i < max_iterations; i++)
-    times[i] = now + ACE_Time_Value (0, ACE_OS::rand () % 1000000);
+    times[i] = now - ACE_Time_Value (0, ACE_OS::rand () % 1000000);
 
   timer.start ();
 
@@ -315,9 +315,6 @@ test_performance (ACE_Timer_Queue *tq,
   // Test the amount of time required to cancel all the timers.
 
   // Make sure everything is ready to be expired
-
-  while (tq->gettimeofday () < now + ACE_Time_Value (1))
-    continue;
 
   timer.start ();
 
