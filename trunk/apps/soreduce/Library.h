@@ -84,7 +84,7 @@ class Library
 {
 public:
 
-  Library (const ACE_TCHAR *name = 0 ); 
+  Library (const char *name = 0 ); 
   /// Constructor is responsible for loading all of the modules related to the
   /// library
   ~Library ();
@@ -102,7 +102,7 @@ public:
   void write_export_list ( int );
 
   // set the path to find the .so files
-  void set_path (const ACE_TCHAR *p );
+  void set_path (const char *p );
 
   // Load the actual .so files from the path.
   void load_modules();

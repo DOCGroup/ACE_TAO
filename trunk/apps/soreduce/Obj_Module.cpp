@@ -90,7 +90,7 @@ Obj_Module::read_line (ACE_HANDLE src, ACE_Message_Block **buf)
 }
 
 void
-Obj_Module::add_source(const ACE_TCHAR *p, int imports_only)
+Obj_Module::add_source(const char *p, int imports_only)
 {
   ACE_Process nmproc;
   ACE_Process_Options nm_opts;

@@ -1,3 +1,13 @@
+Tue May  4 18:16:33 2004  Steve Huston  <shuston@riverace.com>
+
+	* ace/OS_NS_stdio.cpp (checkUnicodeFormat): ACE_OS::fread() returns
+	  size_t, not int.
+
+	* apps/soreduce/Obj_Module.{h cpp} (add_source):
+	* apps/soreduce/Library.{h cpp} (ctor, load_modules, set_path):
+	  Changed path arugment and usage from ACE_TCHAR* to char*. It's
+	  used only with narrow chars throughout the rest of the sources.
+
 Tue May  4 09:51:24 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* bin/make_release:

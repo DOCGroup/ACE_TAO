@@ -40,7 +40,7 @@ public:
   // build the list of imported and exported signatures.  When replacing GNU
   // nm to use a different tool, this method must be modified.  In the future
   // this could be a virtual to allow for specialization based on toolset.
-  void add_source (const ACE_TCHAR *, int = 0);
+  void add_source (const char *, int = 0);
 
   // Get the number of external references to this object module. At the end
   // of processing, if the number of external references is 0, the module is
