@@ -1,3 +1,19 @@
+Sat Jun 26 16:05:29 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* acconfig.h:
+	* configure.in:
+
+	  Added support/test for ACE_HAS_MEMCHR macro.
+	
+	* ace/Makefile.am:
+	* tests/Makefile.am:
+
+	  Synchronized with latest version of ACE.
+	
+	* m4/features.m4:
+
+	  Updated asynchronous IO tests.
+	
 Sat Jun 26 14:41:31 1999  Marina Spivak  <marina@cs.wustl.edu>
 
 	* ace/Event_Handler_T.h
@@ -8,7 +24,8 @@ Sat Jun 26 14:41:31 1999  Marina Spivak  <marina@cs.wustl.edu>
 	  around ACE_Hash_Map_Manager, which is useful when
 	  ACE_Hash_Map_Manager is used with a shared memory (or memory
 	  mapped file) allocator (e.g., ACE Naming Service, and TAO Naming
-	  Service are example use cases).  Please see header file for more details.
+	  Service are example use cases).  Please see header file for more
+	  details.
 
 Sat Jun 26 12:45:26 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
