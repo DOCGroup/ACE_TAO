@@ -1015,7 +1015,11 @@ protected:
 # include "ace/CDR_Stream.i"
 #else /* __ACE_INLINE__ */
 
+// Not used by CORBA or TAO
+extern ACE_Export ACE_CDR::Boolean operator<< (ACE_OutputCDR &os,
+                                               ACE_CDR::Char x);
 // CDR output operators for primitive types
+
 extern ACE_Export ACE_CDR::Boolean operator<< (ACE_OutputCDR &os,
                                                ACE_CDR::Short x);
 extern ACE_Export ACE_CDR::Boolean operator<< (ACE_OutputCDR &os,
@@ -1038,6 +1042,7 @@ extern ACE_Export ACE_CDR::Boolean operator<< (ACE_OutputCDR &os,
                                                const ACE_CString &x);
 
 // CDR output operator from helper classes
+
 extern ACE_Export ACE_CDR::Boolean operator<< (ACE_OutputCDR &os,
                                                ACE_OutputCDR::from_boolean x);
 extern ACE_Export ACE_CDR::Boolean operator<< (ACE_OutputCDR &os,
@@ -1055,7 +1060,11 @@ extern ACE_Export ACE_CDR::Boolean operator<< (ACE_OutputCDR &os,
 extern ACE_Export ACE_CDR::Boolean operator<< (ACE_OutputCDR &os,
                                                const ACE_CDR::WChar* x);
 
+// Not used by CORBA or TAO
+extern ACE_Export ACE_CDR::Boolean operator>> (ACE_InputCDR &is,
+                                               ACE_CDR::Char &x);
 // CDR input operators for primitive types
+
 extern ACE_Export ACE_CDR::Boolean operator>> (ACE_InputCDR &is,
                                                ACE_CDR::Short &x);
 extern ACE_Export ACE_CDR::Boolean operator>> (ACE_InputCDR &is,
@@ -1078,6 +1087,7 @@ extern ACE_Export ACE_CDR::Boolean operator>> (ACE_InputCDR &is,
                                                ACE_CString &x);
 
 // CDR input operator from helper classes
+
 extern ACE_Export ACE_CDR::Boolean operator>> (ACE_InputCDR &is,
                                                ACE_InputCDR::to_boolean x);
 extern ACE_Export ACE_CDR::Boolean operator>> (ACE_InputCDR &is,
