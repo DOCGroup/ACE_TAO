@@ -1,3 +1,10 @@
+Fri Aug 16 11:15:49 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* examples/Reactor/Proactor/test_aiosig_ace.cpp: Added
+	  #include "ace/Log_Msg.h" so things will compile.  Thanks to
+ 	  Victor Poznyak <VPoznyak@Webley.COM> for reporting this and
+ 	  Alexander Libman <alexl@aurema.com> for suggesting the fix.
+
 Thu Aug 15 15:22:49 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/tests.dsw: Re-added Thread_Manager_Test.dsp into this
