@@ -56,6 +56,10 @@ ACE::out_of_handles (int error)
       // ENOSYS (libc_r threads) also.
       error == EOPNOTSUPP ||
       error == ENOSYS ||
+#elif defined (__sgi) // irix
+      error == ENOTSUP ||
+#elif defined (DIGITAL_UNIX) // osf1
+      error == ENOTSUP ||
 #endif /* ACE_WIN32 */
       error == ENFILE)
     return 1;
@@ -3205,7 +3209,7 @@ ACE::strend (const wchar_t *s)
 }
 #endif
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) && (defined (__unix) || defined (__Lynx__) || defined (_AIX))
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) && (defined (__unix) || defined (__unix__) || defined (__Lynx__) || defined (_AIX))
 template class ACE_Auto_Array_Ptr<struct ifreq>;
 template class ACE_Auto_Basic_Array_Ptr<struct ifreq>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)

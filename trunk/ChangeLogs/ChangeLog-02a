@@ -1,3 +1,64 @@
+Wed Mar 21 16:00:56 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+          The followings are contributions from Scott Snyder
+          <snyder@fnal.gov> to make ACE happy on Digital UNIX with KCC
+          3.4d.
+
+        * include/makeinclude/platform_tru64_kcc.GNU:
+        * include/makeinclude/platform_osf1_4.0_kcc.GNU: Added KCCOPTS and
+          support for tru64 unix.
+
+        * ace/OS.h: On this platform, we ran into problems with sigwait
+          being a macro.  The fix that had been added for this was keyed
+          on __DECCXX_VER, so it isn't picked up on this platform.
+
+        * ace/Sock_Connect.cpp: Enum_Interface_Test failed on this
+          platform.  The code in Socket_Connect.cpp that implements this
+          is conditional on `__unix' being defined.  However, with this
+          compiler, we get `unix' and `__unix__' defined, but not
+          `__unix'.  Fixed by testing for `__unix__' too.
+
+        * ace/ACE.cpp:  Cache_Conn_Test was failing.  It looks like the
+          code in ACE::out_of_handles doesn't have a case to handle osf1.
+
+Wed Mar 21 12:08:35 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+          The followings are contributions from Scott Snyder
+          <snyder@fnal.gov> to make ACE happy on IRIX 6.x with KCC 3.4d.
+
+        * include/makeinclude/platform_irix6.x_kcc.GNU:
+          Disable the following warings and separate common options into
+          $(KCCOPTS).
+
+          280: declaration of a member with the same name as its class Get
+          this from <netinet/in.h>.
+
+          608: this pragma must immediately precede a declaration or
+          statement Get this from <ucontext.h>.
+
+        * ace/OS.h: Changed to only request RTLD_GROUP and RTLD_NODELETE
+          if they are actually available.
+
+        * ace/config-irix6.x-kcc.h: Undefined
+          ACE_LACKS_PLACEMENT_OPERATOR_DELETE since KCC actually supports it.
+
+          Config_Test was failing because with the default setup, ace
+          tries to locate the shared memory pool at 0x04000000.  But it
+          turns out that this is the same address at which irix likes to
+          load the KCC shared library, libKCC.so.  So the memory pool ends
+          up blowing away all the library code.  Fixed by shifting the
+          default base address to 0x05000000 for this configuration.
+
+          OS_Test was failing because on irix, kcc 4.0d miscompiles
+          memchr_emulation if +K3 optimization is used.  I worked around
+          this by just using the library version of memchr instead:
+
+        * ace/ACE.cpp:  Cached_Conn_Test was failing because the code in
+          ACE::out_of_handles doesn't have a case to handle irix.
+
+        * tests/DLL_Test.cpp: It died trying to run object dtors. Fixed by
+          turning off the close-on-destruction flag for this test.
+
 Wed Mar 21 13:33:58 2001  Ossama Othman  <ossama@uci.edu>
 
 	* examples/IPC_SAP/SSL_SAP/SSL-server-fancy.cpp:
@@ -101,7 +162,7 @@ Sun Mar 18 08:31:34 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
   	* apps/Gateway/Peer: Added a number of fixes to the Gateway and Peer
 	  applications.  Thanks to Lu Yunhai <luyunhai@huawei.com> for
  	  contributing these.
-  
+
 Sun Mar 18 08:31:34 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
         * examples/IPC_SAP/FILE_SAP/client.cpp (main): Added a couple of
