@@ -18,8 +18,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_interface, 
-           interface_ci, 
+ACE_RCSID (be_visitor_interface,
+           interface_ci,
            "$Id$")
 
 
@@ -73,13 +73,13 @@ be_visitor_interface_ci::visit_interface (be_interface *node)
     {
       *os << be_nl << be_nl
           << "ACE_INLINE" << be_nl
-          << node->name () << "::" << node->local_name () 
+          << node->name () << "::" << node->local_name ()
           << " (void)" << be_idt_nl
           << ": CORBA::AbstractBase ()" << be_uidt_nl
           << "{}" << be_nl << be_nl;
 
       *os << "ACE_INLINE" << be_nl
-          << node->name () << "::" << node->local_name () 
+          << node->name () << "::" << node->local_name ()
           << " (const " << node->local_name () << " &rhs)" << be_idt_nl
           << ": CORBA::AbstractBase (rhs)" << be_uidt_nl
           << "{}" << be_nl << be_nl;
@@ -100,6 +100,20 @@ be_visitor_interface_ci::visit_interface (be_interface *node)
       // Generate the constructor from stub and servant.
       node->gen_stub_ctor (os);
     }
+
+  *os << be_nl << be_nl
+      << "ACE_INLINE" << be_nl;
+  *os << node->name () << "::"
+      << node->local_name () << " ("
+      << be_idt << be_idt_nl
+      << "IOP::IOR *ior," << be_nl
+      << "TAO_ORB_Core *oc" << be_uidt_nl
+      << ")"
+      << be_nl;
+  *os << ": ACE_NESTED_CLASS (CORBA, Object) (ior, oc)";
+
+  *os << be_nl << "{" << be_idt_nl
+      << "}" ;
 
   os->gen_endif ();
   node->cli_inline_gen (I_TRUE);

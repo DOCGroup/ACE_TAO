@@ -249,11 +249,17 @@ be_visitor_component_ch::visit_component (be_component *node)
       << "virtual void " << node->flat_name ()
       << "_setup_collocation (int collocated);";
 
+  *os << node->local_name ()
+      << " (IOP::IOR *ior," << be_idt_nl
+      << be_idt << "TAO_ORB_Core *orb_core = 0);" << be_uidt_nl
+      << be_uidt_nl;
+
   *os << be_nl << be_nl
       << node->local_name ()
       << " (" << be_idt << be_idt_nl << "TAO_Stub *objref, " << be_nl
       << "CORBA::Boolean _tao_collocated = 0," << be_nl
-      << "TAO_Abstract_ServantBase *servant = 0" <<  be_uidt_nl
+      << "TAO_Abstract_ServantBase *servant = 0," << be_nl
+      << "TAO_ORB_Core *oc = 0)" << be_uidt_nl
       << ");" << be_uidt;
 
   // Friends declarations.

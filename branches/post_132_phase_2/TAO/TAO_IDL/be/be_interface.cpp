@@ -491,10 +491,11 @@ be_interface::gen_stub_ctor (TAO_OutStream *os)
           << be_idt << be_idt_nl
           << "TAO_Stub *objref," << be_nl
           << "CORBA::Boolean _tao_collocated," << be_nl
-                << "TAO_Abstract_ServantBase *servant" << be_uidt_nl
+          << "TAO_Abstract_ServantBase *servant," << be_nl
+          << "TAO_ORB_Core *oc" << be_uidt_nl
                 << ")"
                 << be_nl;
-      *os << ": ACE_NESTED_CLASS (CORBA, Object) (objref, _tao_collocated, servant)";
+      *os << ": ACE_NESTED_CLASS (CORBA, Object) (objref, _tao_collocated, servant, oc)";
 
       if (this->has_mixed_parentage_)
         {
@@ -524,7 +525,7 @@ be_interface::gen_stub_ctor (TAO_OutStream *os)
         }
 
       *os << be_nl << "{" << be_idt_nl
-                << "this->" << this->flat_name ()
+          << "this->" << this->flat_name ()
           << "_setup_collocation (_tao_collocated);";
 
       *os << be_uidt_nl
