@@ -1,3 +1,28 @@
+Thu May 09 00:38:22 2002  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/WFMO_Reactor.cpp (event_handling): Added a fix for bug
+	  1161. The problem was described aptly and the fix was applied
+	  exactly as suggested by Lyn Headley <headley@wolve.com>:
+
+	  Problem: "The do-while loop in this function is problematic,
+	  because active threads is incremented once prior to executing
+	  the loop, and then decremented on every iteration of the loop
+	  inside safe dispatch().  Thus on the second iteration of the
+	  loop active threads is decremented to 2^32, which causes the
+	  thread to block on waiting to change state inside update
+	  state(), which is never signaled (because there are no other
+	  active threads)."
+
+	  Solution: "Moving the do clause of the loop up a few statements
+	  to include the increment of active threads (and the acquisition
+	  of the lock) would probably fix the larger bug."
+
+	  Also, thanks to Lyn Headley <headley@wolve.com> and P Mason
+	  <pmason@wolve.com> at Wolverine, and Kobi Cohen Arazi
+	  <kobi@mivzak.com>, Mike Winter (mwinter@sonic.net),
+	  <sturtesm@hotmail.com> who have all suggested fimilar problems
+	  and fixes.
+
 Thu May 09 00:06:47 2002  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* examples/Reactor/WFMO_Reactor: Added the "Static Debug", "Static

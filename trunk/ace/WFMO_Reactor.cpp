@@ -1603,25 +1603,26 @@ ACE_WFMO_Reactor::event_handling (ACE_Time_Value *max_wait_time,
   // called.
   ACE_Countdown_Time countdown (max_wait_time);
 
-  // Check to see if it is ok to enter ::WaitForMultipleObjects
-  // This will acquire <this->lock_> on success
-  // On failure, the lock will not be acquired
-  int result = this->ok_to_wait (max_wait_time, alertable);
-  if (result != 1)
-    return result;
-
-  // Increment the number of active threads
-  this->active_threads_++;
-
-  // Release the <lock_>
-  this->lock_.release ();
-
-  // Update the countdown to reflect time waiting to play with the
-  // mut and event.
-  countdown.update ();
-
+  int result;
   do
     {
+      // Check to see if it is ok to enter ::WaitForMultipleObjects
+      // This will acquire <this->lock_> on success On failure, the
+      // lock will not be acquired
+      result = this->ok_to_wait (max_wait_time, alertable);
+      if (result != 1)
+        return result;
+
+      // Increment the number of active threads
+      this->active_threads_++;
+
+      // Release the <lock_>
+      this->lock_.release ();
+
+      // Update the countdown to reflect time waiting to play with the
+      // mut and event.
+      countdown.update ();
+
       // Calculate timeout
       int timeout = this->calculate_timeout (max_wait_time);
 
