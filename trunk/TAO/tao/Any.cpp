@@ -305,8 +305,8 @@ TAO::Unknown_IDL_Type::Unknown_IDL_Type (
     const ACE_Message_Block *mb,
     int byte_order,
     CORBA::Boolean release_tc,
-    TAO_Codeset_Translator_Factory *ctrans,
-    TAO_Codeset_Translator_Factory *wtrans
+    ACE_Char_Codeset_Translator *ctrans,
+    ACE_WChar_Codeset_Translator *wtrans
   )
   : TAO::Any_Impl (0,
                    tc),
@@ -409,24 +409,9 @@ TAO::Unknown_IDL_Type::_tao_decode (TAO_InputCDR &cdr
                   begin,
                   size);
 
-  // Get character translators, if necessary.
-  if (cdr.char_translator () != 0)
-    {
-      this->char_translator_ =
-        cdr.orb_core ()->resource_factory ()->get_char_translator (
-                             cdr.char_translator ()->ncs (),
-                             cdr.char_translator ()->tcs ()
-                           );
-    }
-
-  if (cdr.wchar_translator () != 0)
-    {
-      this->wchar_translator_ =
-        cdr.orb_core ()->resource_factory ()->get_wchar_translator (
-                             cdr.wchar_translator ()->ncs (),
-                             cdr.wchar_translator ()->tcs ()
-                           );
-    }
+  // Get character translators.
+  this->char_translator_ = cdr.char_translator();
+  this->wchar_translator_ = cdr.wchar_translator();
 }
 
 void
@@ -437,19 +422,11 @@ TAO::Unknown_IDL_Type::assign_translator (CORBA::TCKind kind,
     {
       case CORBA::tk_string:
       case CORBA::tk_char:
-        if (this->char_translator_ != 0)
-          {
-            this->char_translator_->assign (cdr);
-          }
-
+      	cdr->char_translator (this->char_translator_);
         break;
       case CORBA::tk_wstring:
       case CORBA::tk_wchar:
-        if (this->wchar_translator_ != 0)
-          {
-            this->wchar_translator_->assign (cdr);
-          }
-
+      	cdr->wchar_translator(this->wchar_translator_);
         break;
       default:
         break;
