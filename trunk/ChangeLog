@@ -1,3 +1,10 @@
+Sat Jan 29 11:12:58 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* examples/OS/Process/process.cpp:
+
+        Fixed compile errors due to (now) missing includes because of include
+        reductions done to Service_Config.h and Svc_Handler.h.
+
 Sat Jan 29 16:12:37 2005  Martin Corino  <mcorino@remedy.nl>
 
         * apps/Gateway/Gateway/gatewayd.cpp:
