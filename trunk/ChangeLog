@@ -1,3 +1,21 @@
+Fri May 30 14:46:00 2003  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* examples/Threads/auto_event.cpp (writer): Replaced "wait" with "signal"
+	  in a comment (this was a copy and past error!).  Thanks to Kobi for 
+	  reporting this.
+
+	* ace/Containers_T.h (class ACE_Ordered_MultiSet): 
+	* ace/String_Base.h (ACE_String_Base): 
+	* ace/Array_Base.h: Changed all uses of "ACE_Allocator *allocator" to
+	  "ACE_Allocator *the_allocator" to prevent problems when ACE is
+ 	  used with some versions of STL.  Thanks to Kobi Arazi
+ 	  <kcarazi@finjan.com> for reporting this.
+
+	* ace/NT_Service.cpp: Fixed some problems so that the
+	  ACE_NT_Service::insert() methods will self-register correctly if
+ 	  the service executable is located on a path with spaces.  Thanks
+ 	  to Theo Landman <tlandman@justcroft.com> for reporting this.
+
 Fri May 30 13:52:49 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* Makefile: Added a new target 'releaseciao' to include CIAO in

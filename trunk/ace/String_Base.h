@@ -57,7 +57,7 @@ public:
     *  @param alloc ACE_Allocator associated with string
     *  @return Default ACE_String_Base string.
     */
-  ACE_String_Base (ACE_Allocator * alloc = 0);
+  ACE_String_Base (ACE_Allocator *the_allocator = 0);
 
   /**
    * Constructor that copies @a s into dynamically allocated memory.
@@ -71,8 +71,8 @@ public:
    *    freeing memory.
    * @return ACE_String_Base containing const CHAR *s
    */
-  ACE_String_Base (const CHAR * s,
-                   ACE_Allocator * alloc = 0,
+  ACE_String_Base (const CHAR *s,
+                   ACE_Allocator *the_allocator = 0,
                    int release = 1);
 
   /**
@@ -88,9 +88,9 @@ public:
    *    freeing memory.
    * @return ACE_String_Base containing const CHAR *s
    */
-  ACE_String_Base (const CHAR * s,
+  ACE_String_Base (const CHAR *s,
                    size_t len,
-                   ACE_Allocator * alloc = 0,
+                   ACE_Allocator *the_allocator = 0,
                    int release = 1);
 
   /**
@@ -109,7 +109,7 @@ public:
    *  @return ACE_String_Base containing CHAR 'c'
    */
   ACE_String_Base (CHAR c,
-                   ACE_Allocator * alloc = 0);
+                   ACE_Allocator *the_allocator = 0);
 
   /**
    *  Constructor that dynamically allocate @a len long of char array
@@ -122,7 +122,7 @@ public:
    */
   ACE_String_Base (size_t len,
                    CHAR c = 0,
-                   ACE_Allocator * alloc = 0);
+                   ACE_Allocator *the_allocator = 0);
 
   /**
    *  Deletes the memory...
@@ -381,7 +381,7 @@ protected:
   /**
    *  Pointer to a memory allocator.
    */
-  ACE_Allocator * allocator_;
+  ACE_Allocator *allocator_;
 
   /**
    *  Length of the ACE_String_Base data (not counting the trailing '\0').

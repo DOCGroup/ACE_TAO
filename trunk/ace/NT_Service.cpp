@@ -183,15 +183,18 @@ ACE_NT_Service::insert (DWORD start_type,
                         const ACE_TCHAR *account_name,
                         const ACE_TCHAR *password)
 {
-  ACE_TCHAR this_exe[MAXPATHLEN];
+  ACE_TCHAR this_exe[MAXPATHLEN + 2];
 
   // Insure ACE_OS::last_error finds GetLastError unless we set errno.
   errno = 0;
 
   if (exe_path == 0)
     {
-      if (ACE_TEXT_GetModuleFileName (0, this_exe, sizeof this_exe) == 0)
+      if (ACE_TEXT_GetModuleFileName (0, this_exe + 1, MAXPATHLEN) == 0)
         return -1;
+      // Make sure that this_exe is quoted
+      this_exe[0] = ACE_TEXT ('\"');
+      ACE_OS::strcat (this_exe, ACE_TEXT ("\"");
       exe_path = this_exe;
     }
 
