@@ -587,10 +587,10 @@ ACE_Malloc_Iterator<ACE_MEM_POOL_2, LOCK>::next (void *&next_entry,
 {
   ACE_TRACE ("ACE_Malloc_Iterator<ACE_MEM_POOL_2, LOCK>::next");
  
-  if (curr_ != 0)
+  if (this->curr_ != 0)
     {
-      next_entry = curr_->pointer_;
-      name = curr_->name_;
+      next_entry = this->curr_->pointer_;
+      name = this->curr_->name_;
       return 1;
     }
   else
@@ -602,13 +602,21 @@ ACE_Malloc_Iterator<ACE_MEM_POOL_2, LOCK>::next (void *&next_entry)
 {
   ACE_TRACE ("ACE_Malloc_Iterator<ACE_MEM_POOL_2, LOCK>::next");
 
-  if (curr_ != 0)
+  if (this->curr_ != 0)
     {
-      next_entry = curr_->pointer_;
+      next_entry = this->curr_->pointer_;
       return 1;
     }
   else
     return 0;
+}
+
+template <ACE_MEM_POOL_1, class LOCK> int 
+ACE_Malloc_Iterator<ACE_MEM_POOL_2, LOCK>::done (void) const
+{
+  ACE_TRACE ("ACE_Malloc_Iterator<ACE_MEM_POOL_2, LOCK>::done");
+
+  return this->curr_ == 0;
 }
 
 template <ACE_MEM_POOL_1, class LOCK> int
@@ -619,14 +627,13 @@ ACE_Malloc_Iterator<ACE_MEM_POOL_2, LOCK>::advance (void)
   this->curr_ = this->curr_->next_;
 
   if (this->name_ == 0)
-    return 1;
+    return this->curr_ != 0;
 
-  for (;
-       this->curr_ != 0 &&
-       ACE_OS::strcmp (this->name_, this->curr_->name_) != 0;
-       this->curr_ = this->curr_->next_)
-    continue;
-  return 1;
+  while (this->curr_ != 0 
+	 && ACE_OS::strcmp (this->name_, this->curr_->name_) != 0)
+    this->curr_ = this->curr_->next_;
+
+  return this->curr_ != 0;
 }
        
 #endif /* ACE_MALLOC_T_C */

@@ -1,3 +1,44 @@
+Sun May  4 12:34:09 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Set: Removed the get() methods from the ACE_Fixed_Set and
+ 	  ACE_Bounded_Set since they don't make much sense on these
+ 	  abstractions.
+
+	* ace/Set: Changed the new "find" method to be called "get" to
+ 	  correspond to the new "set" method I'm adding.
+
+	* ace/SString.cpp: Added a operator << for ACE_CString in 
+	  order to print it with iostreams.
+
+	* ace/Set.cpp: Added a reset method to the ACE_Unbounded_Set to
+ 	  remove all the nodes without completely destroying the set.
+
+	* ace/SString: Added friend operator+ to both ACE_CString and
+ 	  ACE_WString in order to provide a concatenation operator.
+
+	* ace/SString: Added a compare() method to all the ACE String
+ 	  classes.  This behaves just like the Standard C library strcmp()
+ 	  function.
+
+	* ace/Message_Queue.i: Oddly, there were a bunch of methods
+ 	  defined in this *.i file that didn't have ACE_INLINE in front of
+ 	  them.  I'm surprised this didn't give compile errors on some
+ 	  platforms.  I've fixed this by moving these methods into the
+ 	  *.cpp file.
+
+	* ace/Stream,
+	  ace/Service_Repository,
+	  ace/Reactor,
+	  ace/Message_Queue,
+	  ace/Map_Manager,
+	  ace/Malloc_T,
+	  ace/Hash_Map_Manager,
+	  ace/Set: Added a done() method on all the iterators so that
+ 	  we can check within the iteration itself to see if there are any
+ 	  remaining elements.  In addition, updated the return value of
+	  advance() on all iterators so that it returns 1 if we're not
+	  done and 0 if we're done.
+
 Sun May 04 07:22:49 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/Timer_Heap_T.cpp: changed some more int declarations to longs.
@@ -10,9 +51,9 @@ Sat May  3 17:38:19 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 	  we can make the Timing Wheels trick of casting the
 	  Timer_Node * to long work correctly on machines that have 64
 	  bit pointers, 64 bit longs, and 32 bit ints (e.g,. DEC
-	  ALPHA).  Thanks to Thilo Kielmann <kielmann@informatik.uni-siegen.de> for
-	  pointing this out, even though he finds this solution
-	  distasteful ;-).
+	  ALPHA).  Thanks to Thilo Kielmann
+	  <kielmann@informatik.uni-siegen.de> for pointing this out,
+	  even though he finds this solution distasteful ;-).
 
 	* netsvcs/lib/TS_Clerk_Handler.cpp (initiate_connection): I
  	  believe there was also a bug here -- if schedule_timer() returns
@@ -21,8 +62,6 @@ Sat May  3 17:38:19 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 	* apps/Gateway/Gateway/Proxy_Handler_Connector.cpp
  	  (initiate_connection): I believe there was a bug here -- if
  	  schedule_timer() returns 0 that's not an error!
-
-Sat May  3 12:14:01 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* tests/IOStream_Test.cpp: Added some minor changes for DEC UNIX.
   	  Thanks to James CE Johnson <jjohnson@lads.com> for reporting

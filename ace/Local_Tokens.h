@@ -225,8 +225,10 @@ public:
   // Construction.
 
   int next (ACE_TPQ_Entry *&next_item);
-  // Pass back the <next_item>. Returns 0 when all items have been
-  // seen, else 1.
+  // Pass back the <next_item>. 
+
+  int done (void) const;
+  // Returns 1 when all items have been seen, else 0.
 
   void advance (void);
   // Move forward by one element in the queue.
