@@ -23,7 +23,7 @@ verify_data (Foo::Bar *original, Foo::Bar *extracted)
   if (ACE_OS_String::strcmp (original->A, extracted->A) != 0
       || original->B != extracted->B
       || ACE_OS_String::strcmp (original->C, extracted->C) != 0)
-    -1;
+    return -1;
 
   return 0;
 }
@@ -97,7 +97,7 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       // Extract the data from the octet sequence.
-      decoded_data = codec->decode (encoded_data, ACE_TRY_ENV);
+      decoded_data = codec->decode (encoded_data.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       decoded_data.in() >>= extracted_value;
@@ -123,7 +123,7 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       // Extract the data from the octet sequence.
-      decoded_data = codec->decode_value (encoded_data,
+      decoded_data = codec->decode_value (encoded_data.in (),
                                           Foo::_tc_Bar,
                                           ACE_TRY_ENV);
       ACE_TRY_CHECK;
