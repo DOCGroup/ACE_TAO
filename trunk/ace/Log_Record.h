@@ -21,12 +21,6 @@
 #include "ace/ACE.h"
 #include "ace/Log_Priority.h"
 
-#if defined (ACE_WIN32) && defined (ACE_HAS_STL)
-#include <iostream>
-#else
-#include <iostream.h>
-#endif
-
 class ACE_Export ACE_Log_Record
 {
   // = TITLE
