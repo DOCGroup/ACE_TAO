@@ -162,6 +162,16 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
       *os << "CORBA::ULong _tao_seq_len;" << be_nl << be_nl;
       *os << "if (strm >> _tao_seq_len)" << be_idt_nl
           << "{" << be_idt_nl;
+
+      // Add a sanity check for the length of a sequence.
+      *os << "// Add a check to the length of the sequence" << be_nl;
+      *os << "// to make sure it does not exceed the length" << be_nl;
+      *os << "// of the stream. (See bug 58.)" << be_nl;
+      *os << "if (_tao_seq_len > strm.length ())" << be_idt_nl
+          << "{" << be_idt_nl;
+      *os << "return 0;" << be_uidt_nl
+          << "}" << be_uidt_nl << be_nl;
+
       // Now check if the length does not exceed the maximum. We do this only
       // for bounded sequences
       AST_Expression *expr = node->max_size ();
@@ -202,15 +212,6 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
       *os << "if (0 >= _tao_seq_len) " << be_idt_nl
           << "{" << be_idt_nl;
       *os << "return 1;" << be_uidt_nl
-          << "}" << be_uidt_nl << be_nl;
-
-      // Add a sanity check for the length of a sequence.
-      *os << "// Add a check to the length of the sequence" << be_nl;
-      *os << "// to make sure it does not exceed the length" << be_nl;
-      *os << "// of the stream. (See bug 58.)" << be_nl;
-      *os << "if (_tao_seq_len > strm.length ())" << be_idt_nl
-          << "{" << be_idt_nl;
-      *os << "return 0;" << be_uidt_nl
           << "}" << be_uidt_nl << be_nl;
 
       *os << "// Retrieve all the elements." << be_nl;
