@@ -334,7 +334,7 @@ TAO_IIOP_Connection_Handler::enable_network_priority (void)
 int
 TAO_IIOP_Connection_Handler::set_dscp_codepoint (void)
 {
-  int tos;
+  int tos = 0;
   if (this->enable_network_priority ())
     {
       ACE_DECLARE_NEW_CORBA_ENV;
