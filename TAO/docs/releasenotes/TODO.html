@@ -52,14 +52,6 @@
         </P>
       </LI>
 
-      <LI><P><B>EC:</B> We need to provide simple operations to update
-	  the subscriptions of a consumer, as well as the publications 
-	  of a supplier, the current scheme (disconnecting and
-	  connecting again) is inefficient.
-          <BR>[ASSIGNED TO:] Carlos
-        </P>
-      </LI>
-
       <LI><P>Implement the Interoperable Naming Service spec,
 	  specially the new standard features to bootstrap the initial 
 	  object references in the ORB.
@@ -256,16 +248,63 @@
 
     <H4>New features and Bug fixes</H4>
     <OL>
+      <LI><P><B>EC:</B>The new implementation of the EC does not send
+	  <CODE>disconnect</CODE> messages on shutdown, this has to be 
+	  implemented.
+        </P>
+      </LI>
+      <LI><P><B>EC:</B>The new EC does not update the dependencies in
+	  the scheduling service. We should be able to strategize this 
+	  by the appropiate use of a <CODE>Filter_Builder</CODE> and
+	  decorators for the regular filters.
+        </P>
+      </LI>
+      <LI><P><B>EC:</B>The <CODE>Priority_Dispatching</CODE> strategy
+	  is incomplete.
+        </P>
+      </LI>
+      <LI><P><B>EC:</B>Implement a null filter for consumers that
+	  correctly matches the events, this can be used to do all the 
+	  filtering on the suppliers for applications that do not
+	  require correlation.
+        </P>
+      </LI>
+      <LI><P><B>EC:</B>Several tests must be added to the event
+	  channel testsuite, for example:
+	  <UL>
+	  <LI>A throughput test (move from
+	    <CODE>EC_Throughtput</CODE>).
+	  </LI>
+	  <LI>A latency test (move from
+	    <CODE>Event_Latency</CODE>)
+	  </LI>
+	  <LI>A connection time test
+	  </LI>
+	  <LI>A test to verify filtering and correlation
+	  </LI>
+	  <LI>A test to timeouts
+	  </LI>
+	  <LI>A priority inversion test
+	  </LI>
+	  <LI>A test to measure CPU scalability
+	  </LI>
+	  <LI>A stress test for gateways and observers
+	  </LI>
+	  </UL>
+        </P>
+      </LI>
+      <LI><P><B>EC:</B>Should we provide strategies to enforce the QoS 
+	  publications and subscriptions? This could require
+	  collaborations with the scheduling service and possibly it
+	  is only useful for debugging real-time applications, but it
+	  certainly seems useful.
+        </P>
+      </LI>
+
       <LI><P><B>EC:</B> Optimize the updates to the SupplierFiltering
 	  module, specially when it is a singleton: currently it
 	  receives a <CODE>connected</CODE> call for each supplier,
 	  event though one would be enough.
-        </P>
-      </LI>
-
-      <LI><P><B>EC:</B> The supplier filters could depend on the QoS
-	  data, as consumer filters do. We should provide a factory
-	  for them too.
         </P>
       </LI>
 
@@ -282,7 +321,7 @@
 
       <LI><P><B>EC:</B> Sometimes the Event Channel dead-locks during
           shutdown. According to Ulf Jährig
-	  &lt;jaehrig@desys.com&gt>;, an easy way to reproduce the
+	  &lt;jaehrig@desys.com&gt;, an easy way to reproduce the
 	  problem is to run the EC_Throughput test under windows NT.
 	  <BR>[STATUS] The test in question works perfectly on NT; it
 	  looks like a race condition. Apparently this is only a
@@ -597,15 +636,6 @@ class POA_Foo {
 	<BR>[STATUS] David added a mechanism to compile only the
 	services that we want.
       <P></LI>
-
-      <LI><P><B>EC:</B> Use the Service_Configurator to dynamically load
-	  the EC Module_Factory thus making it really configurable.
-	  The same feature is needed for the new
-	  <CODE>EC_Factory</CODE> class.
-	  <BR>[STATUS] Notice that this is fairly easy to implement,
-	  there doesn't seem to be much demand for it.
-	</P>
-      </LI>
 
       <LI><B>EC:</B> Cleanup the IDL structures for subscriptions,
 	publications, etc. (in the EC).
@@ -1071,6 +1101,33 @@ encapsulation format.
       <H3>Completed Tasks</H3>
 
     <OL>
+      <LI><P><B>EC:</B> Use the Service_Configurator to dynamically load
+	  the EC Module_Factory thus making it really configurable.
+	  The same feature is needed for the new
+	  <CODE>EC_Factory</CODE> class.
+	  <BR>[STATUS] Notice that this is fairly easy to implement,
+	  there doesn't seem to be much demand for it.
+	  <BR>[STATUS] In the new EC it is possible to load the
+	  strategy factory.
+	</P>
+      </LI>
+
+      <LI><P><B>EC:</B> The supplier filters could depend on the QoS
+	  data, as consumer filters do. We should provide a factory
+	  for them too.
+	  <BR>[STATUS] Done
+        </P>
+      </LI>
+
+      <LI><P><B>EC:</B> We need to provide simple operations to update
+	  the subscriptions of a consumer, as well as the publications 
+	  of a supplier, the current scheme (disconnecting and
+	  connecting again) is inefficient.
+          <BR>[ASSIGNED TO:] Carlos
+	  <BR>[STATUS] Done
+        </P>
+      </LI>
+
       <LI><P><B>IDL Compiler:</B> Tom Ziomek
           &lt;tomz@cc.comm.mot.com&gt; reports that the IDL
           compiler does not verify that <CODE>oneway</CODE> operations
