@@ -1,6 +1,6 @@
 Tue Jul  9 09:41:10 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
-        * TAO_IDL/ast/ast_decl.h:
+        * TAO_IDL/include/ast_decl.h:
 
           Added conditional include of ace/streams.h for BCB, needed
           by class AST_Decl and all its descendants. Thanks to 
