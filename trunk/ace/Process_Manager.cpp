@@ -409,7 +409,11 @@ ACE_Process_Manager::spawn (ACE_Process_Options &options)
                   ACE_Managed_Process,
                   ACE_INVALID_PID);
 
-  return spawn (process, options);
+  pid_t pid = spawn (process, options);
+  if (pid == ACE_INVALID_PID || pid == 0)
+    delete process;
+
+  return pid;
 }
 
 // Create a new process.
