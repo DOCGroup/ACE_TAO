@@ -8,20 +8,19 @@
 CFG=Cached_Accept_Conn_Test - Win32 PharLap ETS Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
-!MESSAGE
+!MESSAGE 
 !MESSAGE NMAKE /f "Cached_Accept_Conn_Test.mak".
-!MESSAGE
+!MESSAGE 
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
-!MESSAGE
+!MESSAGE 
 !MESSAGE NMAKE /f "Cached_Accept_Conn_Test.mak" CFG="Cached_Accept_Conn_Test - Win32 PharLap ETS Debug"
-!MESSAGE
+!MESSAGE 
 !MESSAGE Possible choices for configuration are:
-!MESSAGE
+!MESSAGE 
 !MESSAGE "Cached_Accept_Conn_Test - Win32 Debug" (based on "Win32 (x86) Console Application")
 !MESSAGE "Cached_Accept_Conn_Test - Win32 Alpha Debug" (based on "Win32 (ALPHA) Console Application")
-!MESSAGE "Cached_Accept_Conn_Test - Win32 PharLap ETS Debug" (based on "Win32 (x86) Console Application")
-!MESSAGE
+!MESSAGE 
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
@@ -83,43 +82,12 @@ LINK32=link.exe
 # ADD BASE LINK32 aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /debug /machine:ALPHA /libpath:"..\ace"
 # ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:ALPHA /libpath:"..\ace"
 
-!ELSEIF  "$(CFG)" == "Cached_Accept_Conn_Test - Win32 PharLap ETS Debug"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "Cached_Accept_Conn_Test\PharLap ETS Debug"
-# PROP BASE Intermediate_Dir "Cached_Accept_Conn_Test\PharLap ETS Debug"
-# PROP BASE Ignore_Export_Lib 0
-# PROP BASE Target_Dir "Cached_Accept_Conn_Test"
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 1
-# PROP Output_Dir "."
-# PROP Intermediate_Dir ".\ETS_LIB\Debug"
-# PROP Ignore_Export_Lib 0
-# PROP Target_Dir "Cached_Accept_Conn_Test"
-CPP=cl.exe
-# ADD BASE CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\\" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /FD /c
-# SUBTRACT BASE CPP /YX
-# ADD CPP /nologo /MTd /W3 /Gm /GX /Zi /Od /I "..\\" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D ACE_HAS_DLL=0 /FD /c
-# SUBTRACT CPP /YX
-RSC=rc.exe
-# ADD BASE RSC /l 0x409 /d "_DEBUG"
-# ADD RSC /l 0x409 /d "_DEBUG"
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386 /libpath:"..\ace"
-# ADD LINK32 acesd.lib /nologo /subsystem:console /debug /machine:I386 /out:"./Cached_Accept_Conn_Test_ETS.exe" /libpath:"..\ace" /ETS:tests_pharlap_msvc.lnk
-# SUBTRACT LINK32 /pdb:none
-
-!ENDIF
+!ENDIF 
 
 # Begin Target
 
 # Name "Cached_Accept_Conn_Test - Win32 Debug"
 # Name "Cached_Accept_Conn_Test - Win32 Alpha Debug"
-# Name "Cached_Accept_Conn_Test - Win32 PharLap ETS Debug"
 # Begin Group "Source Files"
 
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;hpj;bat;for;f90"
@@ -131,7 +99,7 @@ SOURCE=.\Cached_Accept_Conn_Test.cpp
 
 !ELSEIF  "$(CFG)" == "Cached_Accept_Conn_Test - Win32 Alpha Debug"
 
-DEP_CPP_Cached_Accept_Conn_=\
+DEP_CPP_CACHE=\
 	"..\ace\Acceptor.cpp"\
 	"..\ace\Acceptor.h"\
 	"..\ace\Acceptor.i"\
@@ -146,9 +114,6 @@ DEP_CPP_Cached_Accept_Conn_=\
 	"..\ace\config-win32-common.h"\
 	"..\ace\config-win32.h"\
 	"..\ace\config.h"\
-	"..\ace\Cached_Accept_Connector.cpp"\
-	"..\ace\Cached_Accept_Connector.h"\
-	"..\ace\Cached_Accept_Connector.i"\
 	"..\ace\Containers.cpp"\
 	"..\ace\Containers.h"\
 	"..\ace\Containers.i"\
@@ -218,8 +183,6 @@ DEP_CPP_Cached_Accept_Conn_=\
 	"..\ace\SOCK.i"\
 	"..\ace\SOCK_Acceptor.h"\
 	"..\ace\SOCK_Acceptor.i"\
-	"..\ace\SOCK_Cached_Accept_Connector.h"\
-	"..\ace\SOCK_Cached_Accept_Connector.i"\
 	"..\ace\SOCK_IO.h"\
 	"..\ace\SOCK_IO.i"\
 	"..\ace\SOCK_Stream.h"\
@@ -267,14 +230,17 @@ DEP_CPP_Cached_Accept_Conn_=\
 	"..\ace\ws2tcpip.h"\
 	".\Cached_Accept_Conn_Test.h"\
 	".\test_config.h"\
-
-NODEP_CPP_Cached_Accept_Conn_=\
+	
+NODEP_CPP_CACHE=\
+	"..\ace\Cached_Accept_Connector.cpp"\
+	"..\ace\Cached_Accept_Connector.h"\
+	"..\ace\Cached_Accept_Connector.i"\
+	"..\ace\SOCK_Cached_Accept_Connector.h"\
+	"..\ace\SOCK_Cached_Accept_Connector.i"\
 	"..\ace\stdcpp.h"\
+	
 
-
-!ELSEIF  "$(CFG)" == "Cached_Accept_Conn_Test - Win32 PharLap ETS Debug"
-
-!ENDIF
+!ENDIF 
 
 # End Source File
 # End Group
