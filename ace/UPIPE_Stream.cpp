@@ -21,6 +21,12 @@ ACE_UPIPE_Stream::ACE_UPIPE_Stream (void)
   ACE_TRACE ("ACE_UPIPE_Stream::ACE_UPIPE_STREAM");
 }
 
+ACE_UPIPE_Stream::~ACE_UPIPE_Stream (void)
+{
+  if (this->mb_last_ != 0)
+    this->mb_last_->release ();
+}
+
 int
 ACE_UPIPE_Stream::control (ACE_IO_Cntl_Msg::ACE_IO_Cntl_Cmds cmd, 
 			   void * val)
@@ -52,7 +58,7 @@ ACE_UPIPE_Stream::close (void)
 	this->ACE_SPIPE::close ();
 
       // Close down the ACE_stream.
-      return this->stream_.close (0);
+      return this->stream_.close ();
     }
   return 0;
 }
