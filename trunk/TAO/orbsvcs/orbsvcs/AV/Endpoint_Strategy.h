@@ -135,40 +135,68 @@ class TAO_ORBSVCS_Export TAO_AV_Endpoint_Process_Strategy_B
   virtual int get_stream_endpoint (CORBA::Environment &env);
   
 };  
+// ----------------------------------------------------------------------
+template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
+class TAO_ORBSVCS_Export TAO_AV_Endpoint_Reactive_Strategy
+  : public virtual TAO_AV_Endpoint_Strategy
+// = DESCRIPTION
+//    Reactive strategy
+{
+ protected:
+  TAO_AV_Endpoint_Reactive_Strategy (TAO_ORB_Manager *orb_manager);
+  // Constructor
 
+  virtual int activate (void);
+  
+  virtual int activate_stream_endpoint (void);
+  
+  virtual int activate_vdev (void);
+
+  virtual int activate_mediactrl (void);
+
+  virtual int make_vdev (T_VDev *&vdev);
+  // Bridge method to create a vdev, a la Acceptor. Applications
+  // can override this
+
+  TAO_ORB_Manager *orb_manager_;
+
+};
 // ----------------------------------------------------------------------
 
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
 class TAO_ORBSVCS_Export TAO_AV_Endpoint_Reactive_Strategy_A
-  : public virtual TAO_AV_Endpoint_Strategy
+  : public virtual TAO_AV_Endpoint_Reactive_Strategy<T_StreamEndpoint, T_VDev , T_MediaCtrl>
 // = DESCRIPTION
 //    Reactive strategy
 {
  public:
   TAO_AV_Endpoint_Reactive_Strategy_A (TAO_ORB_Manager *orb_manager);
 
-  virtual int create_A (void);
-  
- private:
-  TAO_ORB_Manager *orb_manager_;
+  virtual int activate_stream_endpoint (void);
 
+  virtual int create_A (AVStreams::StreamEndPoint_A_ptr &stream_endpoint,
+                        AVStreams::VDev_ptr &vdev,
+                        CORBA::Environment &env);
+  // Called by the MMDevice, when it needs to create an A type endpoint
+
+  
 };
 
 // ----------------------------------------------------------------------
 template <class T_StreamEndpoint, class T_Vdev , class T_MediaCtrl>
 class TAO_ORBSVCS_Export TAO_AV_Endpoint_Reactive_Strategy_B
-  : public virtual TAO_AV_Endpoint_Strategy
+  : public virtual TAO_AV_Endpoint_Reactive_Strategy
 // = DESCRIPTION
 //    Reactive strategy
 {
  public:
   TAO_AV_Endpoint_Reactive_Strategy_B (TAO_ORB_Manager *);
 
-  virtual int create_B (void);
-  
- private:
-  TAO_ORB_Manager *orb_manager_;
+  virtual int activate_stream_endpoint (void);
 
+  virtual int create_B (AVStreams::StreamEndPoint_B_ptr &stream_endpoint,
+                        AVStreams::VDev_ptr &vdev,
+                        CORBA::Environment &env);
 };
 
 // ----------------------------------------------------------------------
