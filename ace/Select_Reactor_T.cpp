@@ -1464,19 +1464,27 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::check_handles (void)
   ACE_Handle_Set rd_mask;
 #endif /* ACE_WIN32 || MVS || ACE_PSOS || VXWORKS */
 
-  ACE_Event_Handler *eh = 0;
   int result = 0;
 
-  for (ACE_Select_Reactor_Handler_Repository_Iterator iter (&this->handler_rep_);
-       iter.next (eh) != 0;
-       iter.advance ())
-    {
-      ACE_HANDLE handle = eh->get_handle ();
+  /*
+   * It's easier to run through the handler repository iterator, but that
+   * misses handles that are registered on a handler that doesn't implement
+   * get_handle(). So, build a handle set that's the union of the three
+   * wait_sets (rd, wrt, ex) and run through that. Bad handles get cleared
+   * out of all sets.
+   */
+  ACE_HANDLE h;
+  ACE_Handle_Set check_set (this->wait_set_.rd_mask_);
+  ACE_Handle_Set_Iterator wr_iter (this->wait_set_.wr_mask_);
+  while ((h = wr_iter ()) != ACE_INVALID_HANDLE)
+    check_set.set_bit (h);
+  ACE_Handle_Set_Iterator ex_iter (this->wait_set_.ex_mask_);
+  while ((h = ex_iter ()) != ACE_INVALID_HANDLE)
+    check_set.set_bit (h);
 
-      // Skip back to the beginning of the loop if the HANDLE is
-      // invalid.
-      if (handle == ACE_INVALID_HANDLE)
-        continue;
+  ACE_Handle_Set_Iterator check_iter (check_set);
+  while ((h = check_iter ()) != ACE_INVALID_HANDLE)
+    {
 
 #if defined (ACE_WIN32) || defined (__MVS__) || defined (ACE_PSOS) || defined (VXWORKS)
       // Win32 needs to do the check this way because fstat won't work on
@@ -1486,7 +1494,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::check_handles (void)
       // pSOS needs to do it this way because file handles and socket handles
       // are maintained by separate pieces of the system.  VxWorks needs the select
       // variant since fstat always returns an error on socket FDs.
-      rd_mask.set_bit (handle);
+      rd_mask.set_bit (h);
 
       int select_width;
 #  if defined (ACE_WIN64)
@@ -1494,7 +1502,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::check_handles (void)
       // warnings on 64-bit compiles.
       select_width = 0;
 #  else
-      select_width = int (handle) + 1;
+      select_width = int (h) + 1;
 #  endif /* ACE_WIN64 */
 
       if (ACE_OS::select (select_width,
@@ -1502,18 +1510,18 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::check_handles (void)
                           &time_poll) < 0)
         {
           result = 1;
-          this->remove_handler_i (handle,
-                                  ACE_Event_Handler::ALL_EVENTS_MASK);
+          this->remove_handler_i (h, ACE_Event_Handler::ALL_EVENTS_MASK);
+          this->state_changed = 1;
         }
-      rd_mask.clr_bit (handle);
+      rd_mask.clr_bit (h);
 #else /* !ACE_WIN32 && !MVS && !ACE_PSOS */
       struct stat temp;
 
-      if (ACE_OS::fstat (handle, &temp) == -1)
+      if (ACE_OS::fstat (h, &temp) == -1)
         {
           result = 1;
-          this->remove_handler_i (handle,
-                                  ACE_Event_Handler::ALL_EVENTS_MASK);
+          this->remove_handler_i (h, ACE_Event_Handler::ALL_EVENTS_MASK);
+          this->state_changed_ = 1;
         }
 #endif /* ACE_WIN32 || MVS || ACE_PSOS */
     }
