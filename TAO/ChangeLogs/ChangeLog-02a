@@ -1,3 +1,14 @@
+Fri Aug 18 13:33:42 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_valuetype/valuetype_obv_ch.cpp:
+	* TAO_IDL/be/be_visitor_valuetype/valuetype_obv_cs.cpp:
+
+	  Added check for imported node to generation of OBV
+	  class. A valuetype from one IDL file #included in another
+	  was getting its OBV class generated in each set of
+	  generated files. Thanks to Jean-Christophe Dubois 
+	  <jcd@one.com> for reporting this bug.
+
 Fri Aug 18 10:20:22 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* orbsvcs/tests/Notify/Basic/ConnectDisconnect.cpp:
