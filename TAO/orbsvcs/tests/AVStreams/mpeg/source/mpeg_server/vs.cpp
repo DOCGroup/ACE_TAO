@@ -71,7 +71,7 @@ static void CmdWrite(char *buf, int size)
   }
 }
 
-static int FBread(char * buf, int size)
+int FBread(char * buf, int size)
 { int res;
   while ((res = (VIDEO_SINGLETON::instance ()->conn_tag >= 0 ? wait_read_bytes(VIDEO_SINGLETON::instance ()->videoSocket, buf, size) :
 		 read(VIDEO_SINGLETON::instance ()->videoSocket, buf, size))) == -1)
@@ -91,7 +91,7 @@ static int FBread(char * buf, int size)
 
 /* send a given VIDEO_SINGLETON::instance ()->packet pointed by 'VIDEO_SINGLETON::instance ()->packet' to the network */
 
-static int send_to_network(int timeToUse)
+int send_to_network(int timeToUse)
 {
   int count = 0;
   VideoMessage * msghd = (VideoMessage *)(((char *)VIDEO_SINGLETON::instance ()->packet) - sizeof(VideoMessage));
@@ -380,7 +380,7 @@ static int SendPacket(int shtag, int gop, int frame, int timeToUse)
 }
 
 
-static int SendReferences(int group, int frame)
+int SendReferences(int group, int frame)
 {
   unsigned char orgcmd;
   int i, base;
@@ -432,7 +432,7 @@ static int SendReferences(int group, int frame)
   VIDEO_SINGLETON::instance ()->cmd = orgcmd;
 }
 
-static int SendPicture(int * frame)
+int SendPicture(int * frame)
 {
   int size;
   char * buf = ((char *) VIDEO_SINGLETON::instance ()->packet) + sizeof(VideoPacket);
@@ -1041,7 +1041,7 @@ static int init_MPEG1_video_file(void)
   return 0;
 }
 
-static int INITvideo(void)
+ int INITvideo(void)
 {
   INITvideoPara para;
   int failureType = 0;
@@ -1156,7 +1156,7 @@ static int INITvideo(void)
     CmdWrite((char *)&reply, sizeof(reply));
 
     /* write the first SH, GOP and IFrame to VIDEO_SINGLETON::instance ()->serviceSocket (TCP),
-       using code for SendVIDEO_SINGLETON::Instance ()->Packet() */
+       using code for SendPacket() */
     {
       int tmpSocket = VIDEO_SINGLETON::instance ()->videoSocket;
       
@@ -1214,7 +1214,7 @@ static int INITvideo(void)
   { fprintf(stderr, "VS: %d.VIDEO_SINGLETON::instance ()->nextFrame(%d) out of range (%d).\n", VIDEO_SINGLETON::instance ()->cmd, (pnextFrame), VIDEO_SINGLETON::instance ()->numF); \
     return 0; } }
 
-static int FrameToGroup(int * frame)
+int FrameToGroup(int * frame)
 {
   int f = * frame;
   int i = 0;
@@ -1470,7 +1470,7 @@ static void StopTimer()
   */
 }
 
-static void GetFeedBack()
+void GetFeedBack()
 {
   VideoFeedBackPara para;
   struct itimerval val;
@@ -1622,7 +1622,7 @@ static void FBvideo()
   FastVideoPlay();
 }
 
-static void ComputeFirstSendPattern(float limit)
+void ComputeFirstSendPattern(float limit)
 {
   char * buf = VIDEO_SINGLETON::instance ()->firstSendPattern;
   int len = VIDEO_SINGLETON::instance ()->firstPatternSize;
@@ -1665,7 +1665,7 @@ static void ComputeFirstSendPattern(float limit)
   free(pat);
 }
 
-static int PLAYliveVideo(PLAYpara * para)
+ int PLAYliveVideo(PLAYpara * para)
 {
   int doscale;
   int count;
