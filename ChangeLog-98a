@@ -1,5 +1,7 @@
 Wed Feb 11 09:32:10 1998  David L. Levine  <levine@cs.wustl.edu>
 
+        * ACE-INSTALL.html: updated DU CXX and Linux info.
+
         * ace/Makefile: moved INSTALL= to before include of rules.local.GNU,
           so that the (unused) install command doesn't show up with make -n.
 
