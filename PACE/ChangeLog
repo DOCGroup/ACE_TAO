@@ -1,3 +1,39 @@
+Fri Jun 30 15:05:08 2000  Joe Hoffert  <joeh@cs.wustl.edu>
+
+        * pace/posix/TODO:
+          Added testing with and without PACE_HAS_POSIX_PTHREAD_SEMANTICS
+          defined.
+
+        * pace/win32/setjmp.h:
+        * pace/win32/setjmp.inl: 
+        * pace/posix/setjmp.h:
+        * pace/posix/setjmp.inl:
+          Added pace_setjmp and pace_longjmp functions.
+
+        * pace/posix/time.h:
+        * pace/posix/time.inl:
+        * pace/win32/time.h: 
+        * pace/win32/time.inl: 
+          Cleaned up comments and added functions pace_asctime,
+          pace_ctime, pace_gmtime, pace_localtime, pace_mktime,
+          and pace_strftime.
+          Removed unneeded PACE_HAS_POSIX_PTHREAD_SEMANTICS guards
+          in .inl files.
+
+        * pace/win32/stdlib.h:
+        * pace/win32/stdlib.inl:
+        * pace/posix/stdlib.h:
+        * pace/posix/stdlib.inl: 
+          Added functions pace_abs, pace_atof, pace_bsearch, pace_qsort,
+          pace_rand, and pace_srand.
+          Added "Requires PACE_HAS_REENTRANT" comment for pace_rand_r
+          in header files.
+
+        * pace/Makefile:
+          Added all 18 POSIX Units of Functionality components to
+          be built as separate libaries as specified on the command
+          line (just like ACE).
+
 Fri Jun 30 10:10:53 2000  Joe Hoffert  <joeh@cs.wustl.edu>
 
         * tests/Posix_SP_Test.c:

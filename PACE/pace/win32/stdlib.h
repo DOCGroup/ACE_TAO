@@ -22,13 +22,28 @@
 extern "C" {
 #endif /* PACE_HAS_CPLUSPLUS */
 
+  PACE_INLINE int pace_abs (int val);
+
+  PACE_INLINE double pace_atof (const char * str);
+
   PACE_INLINE int pace_atoi (const char * str);
 
   PACE_INLINE long pace_atol (const char * str);
 
+  PACE_INLINE void * pace_bsearch (const void *key, const void *base,
+                                   size_t nel, size_t size,
+                                   int (*compar)(const void *,const void *));
+
   PACE_INLINE void pace_exit (int status);
 
   PACE_INLINE char * pace_getenv (const char * name);
+
+  PACE_INLINE void pace_qsort (void * base, size_t nel, size_t width,
+                               int (*compar)(const void *, const void *));
+
+  PACE_INLINE int pace_rand ();
+
+  PACE_INLINE void pace_srand (unsigned int seed);
 
   PACE_INLINE int pace_rand_r (unsigned int * seed);
 

@@ -23,6 +23,20 @@ extern "C" {
 #endif /* PACE_HAS_CPLUSPLUS */
 
   /** 
+     PACE's implementation of the POSIX function abs.
+     See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
+     IEEE Std 1003.1, 1996 Edition), Section 8.1.
+   */
+  PACE_INLINE int pace_abs (int val);
+
+  /** 
+     PACE's implementation of the POSIX function atof.
+     See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
+     IEEE Std 1003.1, 1996 Edition), Section 8.1.
+   */
+  PACE_INLINE double pace_atof (const char * str);
+
+  /** 
      PACE's implementation of the POSIX function atoi.
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
@@ -35,6 +49,15 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
    */
   PACE_INLINE long pace_atol (const char * str);
+
+  /** 
+     PACE's implementation of the POSIX function bsearch.
+     See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
+     IEEE Std 1003.1, 1996 Edition), Section 8.1.
+   */
+  PACE_INLINE void * pace_bsearch (const void *key, const void *base,
+                                   size_t nel, size_t size,
+                                   int (*compar)(const void *,const void *));
 
   /** 
      PACE's implementation of the POSIX function exit.
@@ -51,13 +74,36 @@ extern "C" {
   PACE_INLINE char * pace_getenv (const char * name);
 
   /** 
+     PACE's implementation of the POSIX function qsort.
+     See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
+     IEEE Std 1003.1, 1996 Edition), Section 8.1.
+   */
+  PACE_INLINE void pace_qsort (void * base, size_t nel, size_t width,
+                               int (*compar)(const void *, const void *));
+
+  /** 
+     PACE's implementation of the POSIX function rand.
+     See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
+     IEEE Std 1003.1, 1996 Edition), Section 8.1.
+   */
+  PACE_INLINE int pace_rand ();
+
+  /** 
+     PACE's implementation of the POSIX function srand.
+     See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
+     IEEE Std 1003.1, 1996 Edition), Section 8.1.
+   */
+  PACE_INLINE void pace_srand (unsigned int seed);
+
+  /** 
      PACE's implementation of the POSIX function rand_r.
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
      IEEE Std 1003.1, 1996 Edition), Section 8.3.8.
    */
   PACE_INLINE int pace_rand_r (unsigned int * seed);
+  /* Requires PACE_HAS_REENTRANT. */
 
-  /* Memory Management. */
+  /* Memory Management */
 
   /** 
      PACE's implementation of the POSIX function malloc.
