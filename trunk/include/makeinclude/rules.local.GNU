@@ -89,6 +89,8 @@ $(VSHDIR)%.$(OBJEXT): %.cpp
 	$(COMPILE.cc) $(PIC) $(CC_OUTPUT_FLAG) $@ $<
 $(VSHDIR)%.$(OBJEXT): %.cc
 	$(COMPILE.cc) $(PIC) $(CC_OUTPUT_FLAG) $@ $<
+$(VSHDIR)%.$(OBJEXT): %.c
+	$(COMPILE.c) $(PIC) $(CC_OUTPUT_FLAG) $@ $<
 $(VSHDIR)%.$(SOEXT): $(VSHDIR)%.$(OBJEXT)
 	$(SOLINK)
 endif
