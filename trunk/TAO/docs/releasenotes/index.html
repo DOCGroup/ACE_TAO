@@ -1310,9 +1310,30 @@ Point of contact: <a href="mailto:pradeep@cs.wustl.edu">Pradeep Gore</a>
 Features in this release:</h3>
 
 <ul>
-<li>
-The Event Channel (<tt>$TAO_ROOT/orbsvcs/orbsvcs/CosEvent</tt>) supports
-the <tt>push </tt>style event communication.</li>
+      <li><P>There is a new implementation of the COS Event Service
+	  available.
+	  This new implementation supports both the Push and Pull
+	  styles for event communication, and it does not require the
+	  Real-time Event Service to work.
+	</P>
+      </LI>
+
+      <LI><P>A new testsuite for the COS Event Service has been
+	  started, they are available at:
+	  <CODE>$TAO_ROOT/orbsvcs/tests/CosEvent/</CODE>
+	</P>
+      </LI>
+
+      <LI><P>A new example for the COS Event Service is provided in
+	  <CODE>$TAO_ROOT/orbsvcs/examples/CosEC/Simple/</CODE>
+	</P>
+      </LI>
+
+      <LI><P>A new binary to run the native COS Event Service was
+	  added, it is compiled in:
+	  <CODE>$TAO_ROOT/orbsvcs/CosEvent_Service/CosEvent_Service_Native<CODE>
+	</P>
+      </LI>
 
 <li>
 A simple test (<tt>$TAO_ROOT/orbsvcs/tests/CosEC_Basic</tt>) demonstrates
