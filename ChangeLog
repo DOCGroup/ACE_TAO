@@ -1,3 +1,11 @@
+Sat May 01 09:44:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACE-INSTALL.html:
+          Updated Remedy supported platforms, updated Borland build info
+          and added a non supported platforms section where we list the
+          platforms that have been supported in the past, but are now
+          not anymore.
+
 Fri Apr 30 18:11:35 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* PACE:
