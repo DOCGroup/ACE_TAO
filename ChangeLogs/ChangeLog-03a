@@ -1,8 +1,37 @@
+Tue Mar 27 09:48:33 2001  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * include/makeinclude/ace_flags.bor
+        Corrected the smartproxies_cflags
+
+        * examples/IPC_SAP
+        Added new BCB makefiles for these examples
+
+        * ace/Timer_Hash_T.cpp
+        * ace/Timer_Hash_T.h
+        * ace/Timer_Heap_T.cpp
+        * ace/Timer_Heap_T.h
+        * ace/Timer_List_T.cpp
+        * ace/Timer_List_T.h
+        * ace/Timer_Wheel_T.cpp
+        * ace/Timer_Wheel_T.h
+        Made the isdone method on the iterator classes constant
+
+        * ace/Timer_Queue_T.h
+        * ace/Timer_Queue_T.i
+        Several get methods are now const
+        Argument of set_timer_value and set_interval is now passed by const reference
+
+        * ace/Unbounded_Set.h
+        * ace/Unbounded_Set.cpp
+        * tests/Collection_Test.cpp
+        Added the ACE_Unbounded_Set_Const_Iterator which can be used
+        to iterate over an const set
+
 Mon Mar 26 21:02:24 2001  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/Log_Msg_NT_Event_Log.cpp:
 
-          Fixed a compilation problem with RegSetValueEx when 
+          Fixed a compilation problem with RegSetValueEx when
           ACE_USES_WCHAR and UNICODE were defined.  Thanks to Nick
           Pratt <npratt@microstrategy.com> for reporting this.
 
@@ -65,7 +94,7 @@ Mon Mar 26 13:00:37 2001  Carlos O'Ryan  <coryan@uci.edu>
           instead of the full containers class.
 
 Fri Mar 23 12:40:34 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
- 
+
  	* apps/Gateway/Gateway/Event_Forwarding_Discriminator.cpp: Make sure
  	  to delete the Consumer_Dispatch_Set * that we get back from
   	  unbind().  Thanks to the ever vigilant Mike Winter
@@ -73,7 +102,7 @@ Fri Mar 23 12:40:34 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 Thu Mar 22 10:18:24 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/SString.h: Make the various data members protected 
+	* ace/SString.h: Make the various data members protected
 	  rather than private so subclasses can access them.  Thanks to
  	  Martin Krumpolec <krumpo@pobox.sk> for this suggestion.
 
@@ -130,7 +159,7 @@ Thu Mar 22 21:33:37 2001  Chris Cleeland  <cleeland_c@ociweb.com>
 
         * ace/INET_Addr.i (get_host_addr): For VxWorks only, changed this
 	to use the preferred inet_ntoa_b.  This eliminate memory leaks
-	under VxWorks.  Thanks to Erik Johannes <ejohannes@oresis.com> for 
+	under VxWorks.  Thanks to Erik Johannes <ejohannes@oresis.com> for
 	the suggested fix.
 
 Wed Mar 21 19:20:02 2001  Balachandran Natarajan  <bala@cs.wustl.edu>

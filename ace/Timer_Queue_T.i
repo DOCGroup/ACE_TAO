@@ -67,7 +67,7 @@ ACE_Timer_Node_T<TYPE>::get_timer_value (void) const
 }
 
 template <class TYPE> ACE_INLINE void
-ACE_Timer_Node_T<TYPE>::set_timer_value (ACE_Time_Value timer_value)
+ACE_Timer_Node_T<TYPE>::set_timer_value (const ACE_Time_Value &timer_value)
 {
   this->timer_value_ = timer_value;
 }
@@ -79,7 +79,7 @@ ACE_Timer_Node_T<TYPE>::get_interval (void) const
 }
 
 template <class TYPE> ACE_INLINE void
-ACE_Timer_Node_T<TYPE>::set_interval (ACE_Time_Value interval)
+ACE_Timer_Node_T<TYPE>::set_interval (const ACE_Time_Value &interval)
 {
   this->interval_ = interval;
 }
