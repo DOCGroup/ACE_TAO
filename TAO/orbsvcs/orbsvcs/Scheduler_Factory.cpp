@@ -9,8 +9,10 @@
 #include "orbsvcs/Scheduler_Factory.i"
 #endif /* __ACE_INLINE__ */
 
+// initialize static class members
 RtecScheduler::Scheduler_ptr ACE_Scheduler_Factory::server_ = 0;
-
+ACE_Scheduler_Factory::Factory_Status ACE_Scheduler_Factory::status_ = 
+  ACE_Scheduler_Factory::UNINITIALIZED;
 static int entry_count = -1;
 static ACE_Scheduler_Factory::POD_RT_Info* rt_info = 0;
 
@@ -26,6 +28,7 @@ int ACE_Scheduler_Factory::use_runtime (int ec,
 
   entry_count = ec;
   rt_info = rti;
+  status_ = ACE_Scheduler_Factory::RUNTIME;
 
   return 0;
 }
@@ -93,6 +96,8 @@ ACE_Scheduler_Factory::use_config (CosNaming::NamingContext_ptr naming,
                          " exception while resolving server\n"), -1);
     }
   TAO_ENDTRY;
+
+  status_ = ACE_Scheduler_Factory::CONFIG;
   return 0;
 }
 
@@ -138,8 +143,18 @@ static char end_infos[] =
 
 int ACE_Scheduler_Factory::dump_schedule
     (const RtecScheduler::RT_Info_Set& infos,
-     const char* filename)
+     const char* filename, const char* format_string)
 {
+  if (format_string == 0)
+  {
+    format_string = "{ \"%20s\", %10d, {%10d, %10d}, {%10d, %10d}, "
+                    "{%10d, %10d}, %10d, "
+                    "(RtecScheduler::Criticality) %d, "
+                    "(RtecScheduler::Importance) %d, "
+                    "{%10d, %10d}, %10d, %10d, %10d, %10d, "
+                    "(RtecScheduler::Info_Type) %d }";
+  }
+
   FILE* file = stdout;
   if (filename != 0)
     {
@@ -163,9 +178,8 @@ int ACE_Scheduler_Factory::dump_schedule
       // @@ TODO Eventually the TimeT structure will be a 64-bit
       // unsigned int, we will have to change this dump method then.
       ACE_OS::fprintf (file,
-		       "{ \"%s\", %d, {%d, %d}, {%d, %d}, {%d, %d}, %d,\n"
-		       "   %d, %d, {%d, %d}, %d, %d, %d, %d, %d }",
-                       (const char*)info.entry_point,
+                       format_string,
+                       (const char*) info.entry_point,
                        info.handle,
                        info.worst_case_execution_time.low,
                        info.worst_case_execution_time.high,
@@ -191,7 +205,6 @@ int ACE_Scheduler_Factory::dump_schedule
   ACE_OS::fclose (file);
   return 0;
 }
-
 
 
 
