@@ -1405,7 +1405,7 @@ IMR_Adapter_Activator::unknown_adapter (PortableServer::POA_ptr parent,
 
 // Constructor
 IMR_Forwarder::IMR_Forwarder (CORBA::ORB_ptr orb_ptr,
-                              PortableServer::POA_ptr poa_ptr,
+                              PortableServer::POA_ptr /*poa_ptr*/,
                               ImplRepo_i *imr_impl)
   : imr_impl_ (imr_impl),
     orb_var_ (CORBA::ORB::_duplicate (orb_ptr))
@@ -1429,10 +1429,10 @@ IMR_Forwarder::IMR_Forwarder (CORBA::ORB_ptr orb_ptr,
 }
 
 PortableServer::Servant 
-IMR_Forwarder::preinvoke (const PortableServer::ObjectId &oid,
+IMR_Forwarder::preinvoke (const PortableServer::ObjectId & /*oid*/,
                           PortableServer::POA_ptr poa,
-                          const char * operation,
-                          PortableServer::ServantLocator::Cookie &cookie
+                          const char * /*operation*/,
+                          PortableServer::ServantLocator::Cookie & /*cookie*/
                           TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException, PortableServer::ForwardRequest))
 {
