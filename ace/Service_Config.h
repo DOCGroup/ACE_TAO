@@ -307,8 +307,8 @@ protected:
   // Become a daemon.
 
   static int load_static_svcs (void);
-  // Add the default statically-linked services to the <ACE_Service_Repository>.
-
+  // Add the default statically-linked services to the
+  // <ACE_Service_Repository>.
 
 public:
   static void handle_signal (int sig, siginfo_t *, ucontext_t *);
