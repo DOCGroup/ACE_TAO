@@ -82,10 +82,10 @@ TAO_GIOP_Message_Base::init (CORBA::Octet major,
 
 
 void
-TAO_GIOP_Message_Base::reset (int rest_flag)
+TAO_GIOP_Message_Base::reset (int reset_flag)
 {
   // Reset the message state
-  this->message_state_->reset (reset_flag);
+  this->message_state_.reset (reset_flag);
 
   //What else???
 }
@@ -189,7 +189,7 @@ TAO_GIOP_Message_Base::generate_reply_header (
 
 int
 TAO_GIOP_Message_Base::read_message (TAO_Transport *transport,
-                                     int block,
+                                     int /*block */,
                                      ACE_Time_Value *max_wait_time)
 {
   if (this->message_state_.header_received () == 0)
@@ -369,10 +369,10 @@ TAO_GIOP_Message_Base::message_type (void)
     case TAO_GIOP_CANCELREQUEST:
     case TAO_GIOP_MESSAGERROR:
     case TAO_GIOP_FRAGMENT:
-      // Never happens:	why??
+      // Never happens: why??
     default:
-	ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("TAO (%P|%t) %N:%l	message_type : ")
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("TAO (%P|%t) %N:%l        message_type : ")
                     ACE_TEXT ("wrong message.\n")));
         return TAO_PLUGGABLE_MESSAGE_MESSAGERROR;
 

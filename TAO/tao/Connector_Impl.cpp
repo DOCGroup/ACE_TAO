@@ -12,7 +12,7 @@
 #include "tao/Connector_Impl.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(tao, IIOP_Connector, "$Id$")
+ACE_RCSID(tao, Connector_Impl, "$Id$")
 
 
 template <class SVC_HANDLER>

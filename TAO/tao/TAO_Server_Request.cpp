@@ -237,13 +237,13 @@ TAO_ServerRequest::tao_send_reply (void)
 void
 TAO_ServerRequest::tao_send_reply_exception (CORBA::Exception &ex)
 {
-  int result = 0;
+  //  int result = 0;
   if (this->response_expected_)
     {
       // A copy of the reply parameters
       TAO_Pluggable_Reply_Params reply_params;
 
-      reply_params.request_id_ = request_id;
+      reply_params.request_id_ = this->request_id_;
       reply_params.svc_ctx_.length (0);
 
       // Send back the service context we received.  (RTCORBA relies on

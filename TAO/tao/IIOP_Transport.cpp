@@ -38,6 +38,7 @@ TAO_IIOP_Transport::TAO_IIOP_Transport (TAO_IIOP_Connection_Handler *handler,
                GIOP_Message_Lite (orb_core));
     }
     else*/
+  ACE_UNUSED_ARG (flag);
     {
       // Use the normal GIOP object
       ACE_NEW (this->messaging_object_,
@@ -178,7 +179,7 @@ TAO_IIOP_Transport::read_process_message (ACE_Time_Value *max_wait_time,
 //
 int
 TAO_IIOP_Transport::handle_client_input (int /* block */,
-                                         ACE_Time_Value *max_wait_time)
+                                         ACE_Time_Value * /*max_wait_time*/)
 {
 
   // Notice that the message_state is only modified in one thread at a
@@ -369,8 +370,8 @@ TAO_IIOP_Transport::send_message (TAO_OutputCDR &stream,
 void
 TAO_IIOP_Transport::start_request (TAO_ORB_Core * /*orb_core*/,
                                    TAO_Target_Specification & /*spec */,
-                                   TAO_OutputCDR &output,
-                                   CORBA::Environment &ACE_TRY_ENV)
+                                   TAO_OutputCDR & /*output */,
+                                   CORBA::Environment & /*ACE_TRY_ENV*/)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   //  TAO_FUNCTION_PP_TIMEPROBE (TAO_IIOP_CLIENT_TRANSPORT_START_REQUEST_START);
@@ -453,8 +454,8 @@ TAO_IIOP_Transport::process_message (void)
     }
   else if (t == TAO_PLUGGABLE_MESSAGE_REPLY)
     {
-      TAO_Pluggable_Reply_Params param;
-      if (this->messaging_object_->process_reply_message (param)  == -1)
+      TAO_Pluggable_Reply_Params params;
+      if (this->messaging_object_->process_reply_message (params)  == -1)
         {
 
           if (TAO_debug_level > 0)
@@ -467,42 +468,42 @@ TAO_IIOP_Transport::process_message (void)
           return -1;
         }
 
-      result =
+      /*      result =
         this->tms_->dispatch_reply (params.request_id_,
                                     params.reply_status_,
                                     message_state->giop_version,
                                     params.svc_ctx_,
-                                    message_state);
+                                    message_state);*/
 
-  // @@ Somehow it seems dangerous to reset the state *after*
-  //    dispatching the request, what if another threads receives
-  //    another reply in the same connection?
-  //    My guess is that it works as follows:
-  //    - For the exclusive case there can be no such thread.
-  //    - The the muxed case each thread has its own message_state.
-  //    I'm pretty sure this comment is right.  Could somebody else
-  //    please look at it and confirm my guess?
-  if (result == -1)
-    {
-      if (TAO_debug_level > 0)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("TAO (%P|%t) : IIOP_Client_Transport::")
-                    ACE_TEXT ("handle_client_input - ")
-                    ACE_TEXT ("dispatch reply failed\n")));
-      message_state->reset ();
-      this->tms_->connection_closed ();
-      return -1;
-    }
+      // @@ Somehow it seems dangerous to reset the state *after*
+      //    dispatching the request, what if another threads receives
+      //    another reply in the same connection?
+      //    My guess is that it works as follows:
+      //    - For the exclusive case there can be no such thread.
+      //    - The the muxed case each thread has its own message_state.
+      //    I'm pretty sure this comment is right.  Could somebody else
+      //    please look at it and confirm my guess?
+      if (result == -1)
+        {
+          if (TAO_debug_level > 0)
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("TAO (%P|%t) : IIOP_Client_Transport::")
+                        ACE_TEXT ("handle_client_input - ")
+                        ACE_TEXT ("dispatch reply failed\n")));
+          this->messaging_object_->reset ();
+          this->tms_->connection_closed ();
+          return -1;
+        }
 
-  if (result == 0)
-    {
-      message_state->reset ();
-      return 0;
-    }
+      if (result == 0)
+        {
+          this->messaging_object_->reset ();
+          return 0;
+        }
 
-  // This is a NOOP for the Exclusive request case, but it actually
-  // destroys the stream in the muxed case.
-  this->tms_->destroy_message_state (message_state);
+      // This is a NOOP for the Exclusive request case, but it actually
+      // destroys the stream in the muxed case.
+      //this->tms_->destroy_message_state (message_state);
       // @@@@ Need to process replies.....
 
     }

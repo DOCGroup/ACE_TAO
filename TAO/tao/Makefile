@@ -95,13 +95,15 @@ PLUGGABLE_MESSAGING_FILES = \
   Pluggable_Messaging \
   Pluggable_Messaging_Utils \
   GIOP_Message_Base \
-  GIOP_Message_Connectors \
-  GIOP_Message_Acceptors \
-  GIOP_Message_Accept_State \
+  GIOP_Message_Generator_Parser \
+  GIOP_Message_Generator_Parser_10 \
+  GIOP_Message_Generator_Parser_11 \
+  GIOP_Message_Generator_Parser_12 \
+  GIOP_Message_Generator_Parser_Impl\
   GIOP_Utils \
-  GIOP_Message_Headers \
+  GIOP_Message_Locate_Header \
   target_specification \
-  GIOP_Message_Lite \
+  #GIOP_Message_Lite \
   GIOP_Message_State \
   Tagged_Profile
 
@@ -229,6 +231,7 @@ DYNAMIC_ANY_FILES =
 
 TEMPLATE_FILES = \
   Acceptor_Impl \
+  Connector_Impl \
   Connector_Impl \
   CONV_FRAMES_T \
   GIOPS_T \
