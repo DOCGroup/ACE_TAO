@@ -53,8 +53,7 @@ be_visitor_interface_remote_proxy_impl_cs::visit_interface (
 
   // Generate the code for the Remote Proxy Impl.
   // operations
-  *os << "// Remote Implementation of the IDL interface methods"
-      << be_nl << be_nl;
+  *os << "// Remote Implementation of the IDL interface methods";
 
   if (this->visit_scope (node) == -1)
     {
@@ -65,7 +64,7 @@ be_visitor_interface_remote_proxy_impl_cs::visit_interface (
                         -1);
     }
 
-  *os << be_nl
+  *os << be_nl << be_nl
       << "//" << be_nl
       << "//            End  Base & Remote  Proxy Implemeentation. " << be_nl
       << "///////////////////////////////////////////////////////////////////////"
@@ -138,4 +137,12 @@ be_visitor_interface_remote_proxy_impl_cs::gen_abstract_ops_helper (
 
   return 0;
 }
+
+int be_visitor_interface_remote_proxy_impl_cs::visit_component (
+    be_component *node
+  )
+{
+  return this->visit_interface (node);
+}
+
 

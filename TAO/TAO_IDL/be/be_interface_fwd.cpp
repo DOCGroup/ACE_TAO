@@ -21,6 +21,7 @@
 
 #include "be_interface_fwd.h"
 #include "be_visitor.h"
+#include "ast_interface.h"
 
 ACE_RCSID (be, 
            be_interface_fwd, 
@@ -37,7 +38,9 @@ be_interface_fwd::be_interface_fwd (AST_Interface *dummy,
   : AST_InterfaceFwd (dummy,
                       n),
     AST_Decl (AST_Decl::NT_interface_fwd,
-              n)
+              n),
+    COMMON_Base (dummy->is_local (),
+                 dummy->is_abstract ())
 {
   // Always the case.
   this->size_type (AST_Type::VARIABLE);

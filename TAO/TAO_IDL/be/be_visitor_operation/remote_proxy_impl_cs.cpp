@@ -28,7 +28,7 @@ be_visitor_operation_remote_proxy_impl_cs::post_process (be_decl *bd)
 
   if (!this->last_node (bd))
     {
-      *os << ",\n";
+      *os << "," << be_nl;
     }
 
   return 0;
@@ -39,21 +39,16 @@ be_visitor_operation_remote_proxy_impl_cs::visit_operation (
     be_operation *node
   )
 {
-  TAO_OutStream *os = this->ctx_->stream ();
-  be_type *bt;
-  be_visitor_context ctx;
-
-  this->ctx_->node (node);
-
   if (node->is_local ())
     {
       return 0;
     }
 
-  os->indent ();
+  TAO_OutStream *os = this->ctx_->stream ();
+  this->ctx_->node (node);
 
   // Retrieve the operation return type.
-  bt = be_type::narrow_from_decl (node->return_type ());
+  be_type *bt = be_type::narrow_from_decl (node->return_type ());
 
   if (!bt)
     {
@@ -64,8 +59,11 @@ be_visitor_operation_remote_proxy_impl_cs::visit_operation (
                         -1);
     }
 
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+
   // Generate the return type mapping (same as in the header file)
-  ctx = *this->ctx_;
+  be_visitor_context ctx = *this->ctx_;
   ctx.state (TAO_CodeGen::TAO_OPERATION_RETTYPE_OTHERS);
   be_visitor_operation_rettype ort_visitor (&ctx);
 

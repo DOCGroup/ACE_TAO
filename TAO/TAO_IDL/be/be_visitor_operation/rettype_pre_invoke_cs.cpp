@@ -53,7 +53,7 @@ be_visitor_operation_rettype_pre_invoke_cs::visit_array (be_array *node)
       bt = node;
     }
 
-  *os << "{" << be_idt_nl
+  *os << be_nl << "{" << be_idt_nl
       << bt->name () << "_slice *tmp;" << be_nl
       << "ACE_ALLOCATOR_RETURN (tmp, "
       << bt->name () << "_alloc (), _tao_retval._retn ());" << be_nl
@@ -77,6 +77,19 @@ be_visitor_operation_rettype_pre_invoke_cs::visit_interface_fwd (be_interface_fw
 }
 
 int
+be_visitor_operation_rettype_pre_invoke_cs::visit_valuetype (be_valuetype *)
+{
+  // Don't do anything. This is the overriding action.
+  return 0;
+}
+
+int
+be_visitor_operation_rettype_pre_invoke_cs::visit_valuetype_fwd (be_valuetype_fwd *)
+{
+  return 0;
+}
+
+int
 be_visitor_operation_rettype_pre_invoke_cs::
 visit_predefined_type (be_predefined_type *node)
 {
@@ -86,7 +99,7 @@ visit_predefined_type (be_predefined_type *node)
     {
     case AST_PredefinedType::PT_any:
 
-      *os << "{" << be_idt_nl
+      *os << be_nl << "{" << be_idt_nl
           << "CORBA::Any *tmp;" << be_nl
           << "ACE_NEW_RETURN (tmp, CORBA::Any, _tao_retval._retn ());" << be_nl
           << "_tao_retval = tmp;" << be_uidt_nl
@@ -115,9 +128,7 @@ be_visitor_operation_rettype_pre_invoke_cs::visit_sequence (be_sequence *node)
       bt = node;
     }
 
-  os->indent ();
-
-  *os << "{" << be_idt_nl
+  *os << be_nl << "{" << be_idt_nl
       << bt->name () << " *tmp;" << be_nl
       << "ACE_NEW_RETURN (tmp, "
       << bt->name () << ", _tao_retval._retn ());" << be_nl
@@ -144,8 +155,7 @@ be_visitor_operation_rettype_pre_invoke_cs::visit_structure (be_structure *node)
 
   if (node->size_type () == be_type::VARIABLE)
     {
-      os->indent ();
-      *os << "{" << be_idt_nl
+      *os << be_nl << "{" << be_idt_nl
           << bt->name () << " *tmp;" << be_nl
           << "ACE_NEW_RETURN (tmp, "
           << bt->name () << ", _tao_retval._retn ());" << be_nl
@@ -191,9 +201,7 @@ be_visitor_operation_rettype_pre_invoke_cs::visit_union (be_union *node)
 
   if (node->size_type () == be_type::VARIABLE)
     {
-      os->indent ();
-
-      *os << "{" << be_idt_nl
+      *os << be_nl << "{" << be_idt_nl
           << bt->name () << " *tmp;" << be_nl
           << "ACE_NEW_RETURN (tmp, "
           << bt->name () << ", _tao_retval._retn ());" << be_nl
@@ -203,4 +211,42 @@ be_visitor_operation_rettype_pre_invoke_cs::visit_union (be_union *node)
 
   return 0;
 }
+
+int
+be_visitor_operation_rettype_pre_invoke_cs::visit_component (
+    be_component *node
+  )
+{
+  return this->visit_interface (node);
+}
+
+int
+be_visitor_operation_rettype_pre_invoke_cs::visit_component_fwd (
+    be_component_fwd *node
+  )
+{
+  return this->visit_interface_fwd (node);
+}
+
+int
+be_visitor_operation_rettype_pre_invoke_cs::visit_eventtype (be_eventtype *node)
+{
+  return this->visit_valuetype (node);
+}
+
+int
+be_visitor_operation_rettype_pre_invoke_cs::visit_eventtype_fwd (
+    be_eventtype_fwd *node
+  )
+{
+  return this->visit_valuetype_fwd (node);
+}
+
+int
+be_visitor_operation_rettype_pre_invoke_cs::visit_home (be_home *node)
+{
+  return this->visit_interface (node);
+}
+
+
 

@@ -163,3 +163,74 @@ be_visitor_operation_rettype_is::visit_union (be_union *)
 
   return 0;
 }
+
+int
+be_visitor_operation_rettype_is::visit_valuetype (be_valuetype *)
+{
+  TAO_OutStream *os = this->ctx_->stream ();
+
+  *os << "return 0;" << be_nl;
+
+  return 0;
+}
+
+int
+be_visitor_operation_rettype_is::visit_valuetype_fwd (be_valuetype_fwd *)
+{
+  TAO_OutStream *os = this->ctx_->stream ();
+
+  *os << "return 0;" << be_nl;
+
+  return 0;
+}
+
+int
+be_visitor_operation_rettype_is::visit_eventtype (be_eventtype *)
+{
+  TAO_OutStream *os = this->ctx_->stream ();
+
+  *os << "return 0;" << be_nl;
+
+  return 0;
+}
+
+int
+be_visitor_operation_rettype_is::visit_eventtype_fwd (be_eventtype_fwd *)
+{
+  TAO_OutStream *os = this->ctx_->stream ();
+
+  *os << "return 0;" << be_nl;
+
+  return 0;
+}
+
+int
+be_visitor_operation_rettype_is::visit_component (be_component *)
+{
+  TAO_OutStream *os = this->ctx_->stream ();
+
+  *os << "return 0;" << be_nl;
+
+  return 0;
+}
+
+int
+be_visitor_operation_rettype_is::visit_component_fwd (be_component_fwd *)
+{
+  TAO_OutStream *os = this->ctx_->stream ();
+
+  *os << "return 0;" << be_nl;
+
+  return 0;
+}
+
+int
+be_visitor_operation_rettype_is::visit_home (be_home *)
+{
+  TAO_OutStream *os = this->ctx_->stream ();
+
+  *os << "return 0;" << be_nl;
+
+  return 0;
+}
+

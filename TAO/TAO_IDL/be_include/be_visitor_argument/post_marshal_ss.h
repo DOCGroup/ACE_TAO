@@ -46,7 +46,6 @@ public:
 
   virtual int visit_typedef (be_typedef *node);
   // visit the typedef type
-
 };
 
 #endif /* _BE_VISITOR_ARGUMENT_POST_MARSHAL_SS_H */

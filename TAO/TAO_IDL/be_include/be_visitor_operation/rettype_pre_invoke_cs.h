@@ -51,7 +51,13 @@ public:
   // visit an interface node
 
   virtual int visit_interface_fwd (be_interface_fwd *node);
-  // visit an interface node
+  // visit a forward decalred interface node
+
+  virtual int visit_valuetype (be_valuetype *node);
+  // visit a valuetype node
+
+  virtual int visit_valuetype_fwd (be_valuetype_fwd *node);
+  // visit a forward decalred valuetype node
 
   virtual int visit_predefined_type (be_predefined_type *node);
   // visit a predefined type node
@@ -67,6 +73,21 @@ public:
 
   virtual int visit_union (be_union *node);
   // visit a union node
+ 
+  virtual int visit_component (be_component *node);
+  // visit component
+
+  virtual int visit_component_fwd (be_component_fwd *node);
+  // visit component forward
+
+  virtual int visit_eventtype (be_eventtype *node);
+  // visit eventtype
+
+  virtual int visit_eventtype_fwd (be_eventtype_fwd *node);
+  // visit eventtype forward
+
+  virtual int visit_home (be_home *node);
+  // visit component home
 };
 
 #endif /* _BE_VISITOR_OPERATION_RETTYPE_PRE_INVOKE_CS_H_ */

@@ -30,7 +30,9 @@ ACE_RCSID (be_visitor_valuetype,
 // Valuetype visitor for OBV_ class implementation
 // ******************************************************
 
-be_visitor_valuetype_obv_cs::be_visitor_valuetype_obv_cs (be_visitor_context *ctx)
+be_visitor_valuetype_obv_cs::be_visitor_valuetype_obv_cs (
+    be_visitor_context *ctx
+  )
   : be_visitor_scope (ctx)
 {
 }
@@ -52,7 +54,7 @@ be_visitor_valuetype_obv_cs::visit_valuetype (be_valuetype *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << "// TAO_IDL - Generated from" << be_nl
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   // OBV_ class has no accessors or modifiers if we are optimizing
@@ -73,7 +75,7 @@ be_visitor_valuetype_obv_cs::visit_valuetype (be_valuetype *node)
           << " (TAO_InputCDR &strm)" << be_nl
           << "{" << be_idt_nl
           << "return _tao_unmarshal_state (strm);" << be_uidt_nl 
-          << "}" << be_nl;
+          << "}";
 
       if (this->visit_scope (node) == -1)
         {
@@ -102,7 +104,7 @@ be_visitor_valuetype_obv_cs::visit_valuetype (be_valuetype *node)
               << "{" << be_idt_nl
               << "this->CORBA_DefaultValueRefCountBase::_remove_ref ();"
               << be_uidt_nl
-              << "}" << be_nl << be_nl;
+              << "}";
         }
     }
 
@@ -112,11 +114,11 @@ be_visitor_valuetype_obv_cs::visit_valuetype (be_valuetype *node)
 int
 be_visitor_valuetype_obv_cs::visit_field (be_field *node)
 {
-  be_visitor_context *ctx = new be_visitor_context (*this->ctx_);
-  be_visitor_valuetype_field_cs *visitor =
-    new be_visitor_valuetype_field_cs (ctx);
-  visitor->in_obv_space_ = 1;
-  if (visitor->visit_field (node) == -1)
+  be_visitor_context ctx = (*this->ctx_);
+  be_visitor_valuetype_field_cs visitor (&ctx);
+  visitor.in_obv_space_ = 1;
+
+  if (visitor.visit_field (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_obv_cs::"
@@ -124,6 +126,6 @@ be_visitor_valuetype_obv_cs::visit_field (be_field *node)
                          "visit_field failed\n"
                          ), -1);
     }
-  delete visitor;
+ 
   return 0;
 }

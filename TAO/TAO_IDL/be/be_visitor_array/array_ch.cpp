@@ -41,7 +41,7 @@ int be_visitor_array_ch::visit_array (be_array *node)
   be_decl *scope = this->ctx_->scope ();
 
   // Nothing to do if we are imported or code is already generated.
-  if (node->imported () || (node->cli_hdr_gen ()))
+  if (node->imported () || node->cli_hdr_gen ())
     {
       return 0;
     }
@@ -61,9 +61,8 @@ int be_visitor_array_ch::visit_array (be_array *node)
                         -1);
     }
 
-  *os << be_nl << "// TAO_IDL - Generated from " << be_nl
-               << "// " __FILE__ << ":" << __LINE__ 
-               << be_nl << be_nl;
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from " << be_nl
+               << "// " __FILE__ << ":" << __LINE__;
 
   // Generate the ifdefined macro.
   os->gen_ifdef_macro (node->flat_name ());
@@ -130,7 +129,7 @@ int be_visitor_array_ch::visit_array (be_array *node)
         }
     }
 
-  *os << "typedef ";
+  *os << be_nl << be_nl << "typedef ";
 
   if (bt->accept (this) == -1)
     {
@@ -197,7 +196,7 @@ int be_visitor_array_ch::visit_array (be_array *node)
                         -1);
     }
 
-  *os << ";" << be_nl << be_nl;
+  *os << ";";
 
   // No _var or _out class for an anonymous (non-typedef'd) array.
   if (this->ctx_->tdef () != 0)
@@ -226,8 +225,12 @@ int be_visitor_array_ch::visit_array (be_array *node)
         }
       else
         {
-          *os << "typedef " << node->local_name () << " "
-              << node->local_name () << "_out;" << be_nl << be_nl;
+          *os << be_nl << be_nl << "// TAO_IDL - Generated from " << be_nl
+                       << "// " __FILE__ << ":" << __LINE__;
+
+          *os << be_nl << be_nl 
+              << "typedef " << node->local_name () << " "
+              << node->local_name () << "_out;";
         }
     }
 
@@ -239,6 +242,11 @@ int be_visitor_array_ch::visit_array (be_array *node)
                          "forany_defn failed\n"),
                         -1);
     }
+
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from " << be_nl
+               << "// " __FILE__ << ":" << __LINE__;
+
+  *os << be_nl << be_nl;
 
   // The _alloc, _dup, copy, and free methods. If the node is nested, the
   // methods become static
@@ -288,7 +296,7 @@ int be_visitor_array_ch::visit_array (be_array *node)
           << "const ";
       *os << node->nested_type_name (scope, "_slice")
           << " *_tao_from" << be_uidt_nl
-          << ");" << be_uidt_nl;
+          << ");" << be_uidt;
     }
   else
     {
@@ -319,10 +327,8 @@ int be_visitor_array_ch::visit_array (be_array *node)
           << "const ";
       *os << node->nested_type_name (scope, "_slice", "_")
           << " *_tao_from" << be_uidt_nl
-          << ");" << be_uidt_nl;
+          << ");" << be_uidt;
     }
-
-  *os << be_nl;
 
   // Generate the endif macro.
   os->gen_endif ();
@@ -370,7 +376,11 @@ be_visitor_array_ch::gen_var_defn (be_array *node)
   // Depending upon the data type, there are some differences which we account
   // for over here.
 
-  *os << "class " << be_global->stub_export_macro ()
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from " << be_nl
+               << "// " __FILE__ << ":" << __LINE__;
+
+  *os << be_nl << be_nl
+      << "class " << be_global->stub_export_macro ()
       << " " << varnamebuf << be_nl;
   *os << "{" << be_nl;
   *os << "public:" << be_idt_nl;
@@ -443,7 +453,7 @@ be_visitor_array_ch::gen_var_defn (be_array *node)
   // Generate the private section.
   *os << "private:" << be_idt_nl;
   *os << namebuf << "_slice *ptr_;" << be_uidt_nl;
-  *os << "};" << be_nl << be_nl;
+  *os << "};";
 
   return 0;
 }
@@ -483,8 +493,12 @@ be_visitor_array_ch::gen_out_defn (be_array *node)
                        node->local_name ()->get_string ());
     }
 
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from " << be_nl
+               << "// " __FILE__ << ":" << __LINE__;
+
   // Generate the out definition (always in the client header).
-  *os << "class " << be_global->stub_export_macro ()
+  *os << be_nl << be_nl
+      << "class " << be_global->stub_export_macro ()
       << " " << outnamebuf << be_nl;
   *os << "{" << be_nl;
   *os << "public:" << be_idt_nl;
@@ -515,7 +529,7 @@ be_visitor_array_ch::gen_out_defn (be_array *node)
   *os << namebuf << "_slice *&ptr_;" << be_nl;
   *os << "// Assignment from T_var not allowed." << be_nl;
   *os << "void operator= (const " << namebuf << "_var &);" << be_uidt_nl;
-  *os << "};" << be_nl << be_nl;
+  *os << "};";
 
   return 0;
 }
@@ -559,7 +573,11 @@ be_visitor_array_ch::gen_forany_defn (be_array *node)
   // Depending upon the data type, there are some differences which we account
   // for over here.
 
-  *os << "class " << be_global->stub_export_macro ()
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from " << be_nl
+               << "// " __FILE__ << ":" << __LINE__;
+
+  *os << be_nl << be_nl
+      << "class " << be_global->stub_export_macro ()
       << " " << foranyname << be_nl;
   *os << "{" << be_nl;
   *os << "public:" << be_idt_nl;
@@ -577,7 +595,10 @@ be_visitor_array_ch::gen_forany_defn (be_array *node)
   // Destructor.
   *os << "~" << foranyname << " (void);" << be_nl << be_nl;
 
-  *os << "static void _tao_any_destructor (void*);" << be_nl << be_nl;
+  if (be_global->any_support ())
+    {
+      *os << "static void _tao_any_destructor (void*);" << be_nl << be_nl;
+    }
 
   // assignment operator from a pointer to slice
   *os << foranyname << " &operator= (" << namebuf << "_slice *);"
@@ -616,7 +637,7 @@ be_visitor_array_ch::gen_forany_defn (be_array *node)
   *os << "private:" << be_idt_nl;
   *os << namebuf << "_slice *ptr_;" << be_nl;
   *os << "CORBA::Boolean nocopy_;" << be_uidt_nl;
-  *os << "};" << be_nl << be_nl;
+  *os << "};";
 
   return 0;
 }

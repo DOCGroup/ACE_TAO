@@ -81,7 +81,11 @@ be_union::gen_var_defn (char *)
   // Depending upon the data type, there are some differences which we account
   // for over here.
 
-  *ch << "class " << be_global->stub_export_macro ()
+  *ch << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__;
+
+  *ch << be_nl << be_nl
+      << "class " << be_global->stub_export_macro ()
       << " " << namebuf << be_nl;
   *ch << "{" << be_nl;
   *ch << "public:" << be_idt_nl;
@@ -167,7 +171,7 @@ be_union::gen_var_defn (char *)
   // Generate the private section
   *ch << "private:" << be_idt_nl;
   *ch << this->local_name () << " *ptr_;" << be_uidt_nl;
-  *ch << "};" << be_nl << be_nl;
+  *ch << "};";
 
   return 0;
 }
@@ -203,6 +207,9 @@ be_union::gen_var_impl (char *,
 
   ci = tao_cg->client_inline ();
 
+  *ci << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+
   *ci << "// *************************************************************"
       << be_nl;
   *ci << "// Inline operations for class " << fname << be_nl;
@@ -212,7 +219,7 @@ be_union::gen_var_impl (char *,
   // Default constructor.
   *ci << "ACE_INLINE" << be_nl;
   *ci << fname << "::" << lname <<
-    " (void) // default constructor" << be_nl;
+    " (void)" << be_nl;
   *ci << "  " << ": ptr_ (0)" << be_nl;
   *ci << "{}" << be_nl << be_nl;
 
@@ -226,19 +233,23 @@ be_union::gen_var_impl (char *,
   // Copy constructor.
   *ci << "ACE_INLINE" << be_nl;
   *ci << fname << "::" << lname << " (const ::" << fname
-      << " &p) // copy constructor" << be_nl;
+      << " &p)" << be_nl;
   *ci << "{" << be_idt_nl;
-  *ci << "if (p.ptr_)" << be_nl;
-  *ci << "  ACE_NEW (this->ptr_, ::" << this->name ()
-      << " (*p.ptr_));" << be_nl;
-  *ci << "else" << be_nl;
-  *ci << "  this->ptr_ = 0;" << be_uidt_nl;
+  *ci << "if (p.ptr_)" << be_idt_nl
+      << "{" << be_idt_nl;
+  *ci << "ACE_NEW (this->ptr_, ::" << this->name ()
+      << " (*p.ptr_));" << be_uidt_nl
+      << "}" << be_uidt_nl;
+  *ci << "else" << be_idt_nl
+      << "{" << be_idt_nl;
+  *ci << "this->ptr_ = 0;" << be_uidt_nl
+      << "}" << be_uidt << be_uidt_nl;
   *ci << "}" << be_nl << be_nl;
 
   // Fixed-size types only.
   if (this->size_type () == AST_Type::FIXED)
     {
-      *ci << "// fixed-size types only" << be_nl;
+      *ci << "// Fixed-size types only." << be_nl;
       *ci << "ACE_INLINE" << be_nl;
       *ci << fname << "::" << lname << " (const ::"
           << this->name () << " &p)" << be_nl;
@@ -250,13 +261,14 @@ be_union::gen_var_impl (char *,
 
   // Destructor.
   *ci << "ACE_INLINE" << be_nl;
-  *ci << fname << "::~" << lname << " (void) // destructor" << be_nl;
+  *ci << fname << "::~" << lname << " (void)" << be_nl;
   *ci << "{" << be_idt_nl;
   *ci << "delete this->ptr_;" << be_uidt_nl;
   *ci << "}" << be_nl << be_nl;
 
   // Assignment operator from a pointer.
-  *ci << "ACE_INLINE ::" << fname << " &" << be_nl;
+  *ci << "ACE_INLINE" << be_nl
+      << "::" << fname << " &" << be_nl;
   *ci << fname << "::operator= (" << this->local_name ()
       << " *_tao_union_var)" << be_nl;
   *ci << "{" << be_idt_nl;
@@ -266,7 +278,8 @@ be_union::gen_var_impl (char *,
   *ci << "}" << be_nl << be_nl;
 
   // Assignment operator from _var.
-  *ci << "ACE_INLINE ::" << fname << " &" << be_nl
+  *ci << "ACE_INLINE" << be_nl
+      << "::" << fname << " &" << be_nl
       << fname << "::operator= (const ::" << fname
       << " &_tao_union_var)" << be_nl
       << "{" << be_idt_nl
@@ -300,8 +313,9 @@ be_union::gen_var_impl (char *,
   // Fixed-size types only.
   if (this->size_type () == AST_Type::FIXED)
     {
-      *ci << "// fixed-size types only" << be_nl;
-      *ci << "ACE_INLINE ::" << fname << " &" << be_nl;
+      *ci << "// Fixed-size types only." << be_nl;
+      *ci << "ACE_INLINE" << be_nl
+          << "::" << fname << " &" << be_nl;
       *ci << fname << "::operator= (const ::" << this->name ()
           << " &_tao_union_var)" << be_nl;
       *ci << "{" << be_idt_nl;
@@ -319,34 +333,36 @@ be_union::gen_var_impl (char *,
     }
 
   // Two arrow operators.
-  *ci << "ACE_INLINE const ::" << this->name () << " *" << be_nl;
+  *ci << "ACE_INLINE" << be_nl
+      << "const ::" << this->name () << " *" << be_nl;
   *ci << fname << "::operator-> (void) const" << be_nl;
   *ci << "{" << be_idt_nl;
   *ci << "return this->ptr_;" << be_uidt_nl;
   *ci << "}" << be_nl << be_nl;
 
-  *ci << "ACE_INLINE ::" << this->name () << " *" << be_nl;
+  *ci << "ACE_INLINE" << be_nl
+      << "::" << this->name () << " *" << be_nl;
   *ci << fname << "::operator-> (void)" << be_nl;
   *ci << "{" << be_idt_nl;
   *ci << "return this->ptr_;" << be_uidt_nl;
   *ci << "}" << be_nl << be_nl;
 
   // Other extra methods - 3 cast operator ().
-  *ci << "ACE_INLINE " << be_nl;
+  *ci << "ACE_INLINE" << be_nl;
   *ci << fname << "::operator const ::" << this->name ()
       << " &() const // cast" << be_nl;
   *ci << "{" << be_idt_nl;
   *ci << "return *this->ptr_;" << be_uidt_nl;
   *ci << "}" << be_nl << be_nl;
 
-  *ci << "ACE_INLINE " << be_nl;
+  *ci << "ACE_INLINE" << be_nl;
   *ci << fname << "::operator ::" << this->name ()
       << " &() // cast " << be_nl;
   *ci << "{" << be_idt_nl;
   *ci << "return *this->ptr_;" << be_uidt_nl;
   *ci << "}" << be_nl << be_nl;
 
-  *ci << "ACE_INLINE " << be_nl;
+  *ci << "ACE_INLINE" << be_nl;
   *ci << fname << "::operator ::" << this->name ()
       << " &() const// cast " << be_nl;
   *ci << "{" << be_idt_nl;
@@ -356,7 +372,7 @@ be_union::gen_var_impl (char *,
   // Variable-size types only.
   if (this->size_type () == AST_Type::VARIABLE)
     {
-      *ci << "// variable-size types only" << be_nl;
+      *ci << "// Variable-size types only." << be_nl;
       *ci << "ACE_INLINE" << be_nl;
       *ci << fname << "::operator ::" << this->name ()
           << " *&() // cast " << be_nl;
@@ -366,13 +382,15 @@ be_union::gen_var_impl (char *,
     }
 
   // in, inout, out, _retn, and ptr.
-  *ci << "ACE_INLINE const ::" << this->name () << " &" << be_nl;
+  *ci << "ACE_INLINE" << be_nl
+      << "const ::" << this->name () << " &" << be_nl;
   *ci << fname << "::in (void) const" << be_nl;
   *ci << "{" << be_idt_nl;
   *ci << "return *this->ptr_;" << be_uidt_nl;
   *ci << "}" << be_nl << be_nl;
 
-  *ci << "ACE_INLINE ::" << this->name () << " &" << be_nl;
+  *ci << "ACE_INLINE" << be_nl
+      << "::" << this->name () << " &" << be_nl;
   *ci << fname << "::inout (void)" << be_nl;
   *ci << "{" << be_idt_nl;
   *ci << "return *this->ptr_;" << be_uidt_nl;
@@ -381,8 +399,9 @@ be_union::gen_var_impl (char *,
   // The out and _retn are handled differently based on our size type.
   if (this->size_type () == AST_Type::VARIABLE)
     {
-      *ci << "// mapping for variable size " << be_nl;
-      *ci << "ACE_INLINE ::" << this->name () << " *&" << be_nl;
+      *ci << "// Mapping for variable size." << be_nl;
+      *ci << "ACE_INLINE" << be_nl
+          << "::" << this->name () << " *&" << be_nl;
       *ci << fname << "::out (void)" << be_nl;
       *ci << "{" << be_idt_nl;
       *ci << "delete this->ptr_;" << be_nl;
@@ -391,7 +410,8 @@ be_union::gen_var_impl (char *,
       *ci << "}\n\n";
 
       ci->indent ();
-      *ci << "ACE_INLINE ::" << this->name () << " *" << be_nl;
+      *ci << "ACE_INLINE" << be_nl
+          << "::" << this->name () << " *" << be_nl;
       *ci << fname << "::_retn (void)" << be_nl;
       *ci << "{" << be_idt_nl;
       *ci << "::" << this->name () << " *tmp = this->ptr_;" << be_nl;
@@ -402,14 +422,16 @@ be_union::gen_var_impl (char *,
     }
   else
     {
-      *ci << "// mapping for fixed size " << be_nl;
-      *ci << "ACE_INLINE ::" << this->name () << " &" << be_nl;
+      *ci << "// Mapping for fixed size. " << be_nl;
+      *ci << "ACE_INLINE" << be_nl
+          << "::" << this->name () << " &" << be_nl;
       *ci << fname << "::out (void)" << be_nl;
       *ci << "{" << be_idt_nl;
       *ci << "return *this->ptr_;" << be_uidt_nl;
       *ci << "}" << be_nl << be_nl;
 
-      *ci << "ACE_INLINE ::" << this->name () << be_nl;
+      *ci << "ACE_INLINE" << be_nl
+          << "::" << this->name () << be_nl;
       *ci << fname << "::_retn (void)" << be_nl;
       *ci << "{" << be_idt_nl;
       *ci << "return *this->ptr_;" << be_uidt_nl;
@@ -417,11 +439,12 @@ be_union::gen_var_impl (char *,
     }
 
   // The additional ptr () member function.
-  *ci << "ACE_INLINE ::" << this->name () << " *" << be_nl;
+  *ci << "ACE_INLINE" << be_nl
+      << "::" << this->name () << " *" << be_nl;
   *ci << fname << "::ptr (void) const" << be_nl;
   *ci << "{" << be_idt_nl;
   *ci << "return this->ptr_;" << be_uidt_nl;
-  *ci << "}" << be_nl << be_nl;
+  *ci << "}";
 
   return 0;
 }
@@ -448,7 +471,11 @@ be_union::gen_out_defn (char *)
 
   // Generate the out definition (always in the client header).
 
-  *ch << "class " << be_global->stub_export_macro ()
+  *ch << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__;
+
+  *ch << be_nl << be_nl
+      << "class " << be_global->stub_export_macro ()
       << " " << namebuf << be_nl;
   *ch << "{" << be_nl;
   *ch << "public:" << be_idt_nl;
@@ -489,7 +516,7 @@ be_union::gen_out_defn (char *)
   *ch << "// assignment from T_var not allowed." << be_nl;
   *ch << "void operator= (const " << this->local_name ()
       << "_var &);" << be_uidt_nl;
-  *ch << "};" << be_nl << be_nl;
+  *ch << "};";
 
   return 0;
 }
@@ -525,6 +552,9 @@ be_union::gen_out_impl (char *,
 
   // Generate the var implementation in the inline file.
 
+  *ci << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+
   *ci << "// *************************************************************"
       << be_nl;
   *ci << "// Inline operations for class " << fname << be_nl;
@@ -543,7 +573,7 @@ be_union::gen_out_impl (char *,
   // Constructor from _var &.
   *ci << "ACE_INLINE" << be_nl;
   *ci << fname << "::" << lname << " (" << this->local_name ()
-      << "_var &p) // constructor from _var" << be_nl;
+      << "_var &p)" << be_nl;
   *ci << "  : ptr_ (p.out ())" << be_nl;
   *ci << "{" << be_idt_nl;
   *ci << "delete this->ptr_;" << be_nl;
@@ -553,12 +583,13 @@ be_union::gen_out_impl (char *,
   // Copy constructor.
   *ci << "ACE_INLINE" << be_nl;
   *ci << fname << "::" << lname << " (const ::" << fname
-      << " &p) // copy constructor" << be_nl;
+      << " &p)" << be_nl;
   *ci << "  : ptr_ (ACE_const_cast (" << lname << "&, p).ptr_)" << be_nl;
   *ci << "{}" << be_nl << be_nl;
 
   // Assignment operator from _out &.
-  *ci << "ACE_INLINE ::" << fname << " &" << be_nl;
+  *ci << "ACE_INLINE" << be_nl
+      << "::" << fname << " &" << be_nl;
   *ci << fname << "::operator= (const ::" << fname
       << " &p)" << be_nl;
   *ci << "{" << be_idt_nl;
@@ -569,7 +600,8 @@ be_union::gen_out_impl (char *,
   // Assignment from _var is not allowed by a private declaration.
 
   // Assignment operator from pointer.
-  *ci << "ACE_INLINE ::" << fname << " &" << be_nl;
+  *ci << "ACE_INLINE" << be_nl
+      << "::" << fname << " &" << be_nl;
   *ci << fname << "::operator= (" << this->local_name () 
       << " *_tao_union_out)" << be_nl;
   *ci << "{" << be_idt_nl;
@@ -578,7 +610,7 @@ be_union::gen_out_impl (char *,
   *ci << "}" << be_nl << be_nl;
 
   // Other extra methods - cast operator ().
-  *ci << "ACE_INLINE " << be_nl;
+  *ci << "ACE_INLINE" << be_nl;
   *ci << fname << "::operator ::" << this->name ()
       << " *&() // cast" << be_nl;
   *ci << "{" << be_idt_nl;
@@ -586,18 +618,20 @@ be_union::gen_out_impl (char *,
   *ci << "}" << be_nl << be_nl;
 
   // ptr function.
-  *ci << "ACE_INLINE ::" << this->name () << " *&" << be_nl;
+  *ci << "ACE_INLINE" << be_nl
+      << "::" << this->name () << " *&" << be_nl;
   *ci << fname << "::ptr (void) // ptr" << be_nl;
   *ci << "{" << be_idt_nl;
   *ci << "return this->ptr_;" << be_uidt_nl;
   *ci << "}" << be_nl << be_nl;
 
   // operator ->
-  *ci << "ACE_INLINE ::" << this->name () << " *" << be_nl;
+  *ci << "ACE_INLINE" << be_nl
+      << "::" << this->name () << " *" << be_nl;
   *ci << fname << "::operator-> (void)" << be_nl;
   *ci << "{" << be_idt_nl;
   *ci << "return this->ptr_;" << be_uidt_nl;
-  *ci << "}" << be_nl << be_nl;
+  *ci << "}";
 
   return 0;
 }

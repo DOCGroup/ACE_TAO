@@ -84,7 +84,9 @@ typedef union {
   UTL_DeclList                  *dlval;         /* Declaration list     */
   FE_InterfaceHeader            *ihval;         /* Interface header     */
   FE_OBVHeader                  *vhval;         /* Valuetype header     */
+  FE_EventHeader                *ehval;         /* Event header         */
   FE_ComponentHeader            *chval;         /* Component header     */
+  FE_HomeHeader                 *hhval;         /* Home header          */
   AST_Expression                *exval;         /* Expression value     */
   AST_UnionLabel                *ulval;         /* Union label          */
   AST_Field                     *ffval;         /* Field value          */

@@ -20,6 +20,9 @@ int be_visitor_operation_proxy_impl_xh::visit_operation (be_operation *node)
   TAO_OutStream *os = this->ctx_->stream ();
   this->ctx_->node (node);
 
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+
   *os << "virtual ";
 
   // STEP I: generate the return type.

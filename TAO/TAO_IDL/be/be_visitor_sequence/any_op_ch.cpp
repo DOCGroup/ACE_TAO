@@ -48,8 +48,10 @@ be_visitor_sequence_any_op_ch::visit_sequence (be_sequence *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+
   // Generate the Any <<= and >>= operators.
-  os->indent ();
   *os << be_global->stub_export_macro ();
   *os << " void"
       << " operator<<= (CORBA::Any &, const ";
@@ -69,7 +71,7 @@ be_visitor_sequence_any_op_ch::visit_sequence (be_sequence *node)
   *os << " CORBA::Boolean"
       << " operator>>= (const CORBA::Any &, const ";
   *os << node->name ();
-  *os << " *&);\n";
+  *os << " *&);";
 
   node->cli_hdr_any_op_gen (1);
   return 0;

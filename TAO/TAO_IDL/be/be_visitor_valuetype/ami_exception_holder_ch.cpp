@@ -45,7 +45,7 @@ be_visitor_valuetype_ami_exception_holder_ch::visit_valuetype (
   TAO_OutStream *os = this->ctx_->stream ();
 
   // Generate the implemenation of the Messaging aware ORB.
-  *os << be_nl
+  *os << be_nl << be_nl
       << "class _tao_" << node->local_name () << be_idt_nl
       << ": public ";
 
@@ -60,7 +60,7 @@ be_visitor_valuetype_ami_exception_holder_ch::visit_valuetype (
       << "{" << be_nl;
   *os << "public:" << be_idt_nl;
   *os << "_tao_" << node->local_name () << " ();" << be_nl << be_nl;
-  *os << "~_tao_" << node->local_name () << " ();" << be_nl << be_nl;
+  *os << "~_tao_" << node->local_name () << " ();";
 
   if (this->visit_valuetype_scope (node) == -1)
     {
@@ -73,7 +73,7 @@ be_visitor_valuetype_ami_exception_holder_ch::visit_valuetype (
     }
 
   *os << be_uidt_nl
-      << "};" << be_nl << be_nl;
+      << "};";
 
   return 0;
 }

@@ -80,30 +80,35 @@ be_visitor_sequence_cdr_op_ci::visit_sequence (be_sequence *node)
   be_type *bt = be_type::narrow_from_decl (node);
   be_typedef *tdef = be_typedef::narrow_from_decl (bt);
 
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__;
+
   // If we're an anonymous sequence, we must protect against
   // being declared more than once.
   if (!tdef)
     {
-      *os << "\n#if !defined _TAO_CDR_OP_"
+      *os << "\n\n#if !defined _TAO_CDR_OP_"
           << node->flat_name () << "_I_" << be_nl
-          << "#define _TAO_CDR_OP_" << node->flat_name () << "_I_\n\n";
+          << "#define _TAO_CDR_OP_" << node->flat_name () << "_I_";
+
     }
 
-  *os << "CORBA::Boolean " << be_global->stub_export_macro ()
+  *os << be_nl << be_nl
+      << "CORBA::Boolean " << be_global->stub_export_macro ()
       << " operator<< (" << be_idt << be_idt_nl
       << "TAO_OutputCDR &," << be_nl
       << "const " << node->name () << " &" << be_uidt_nl
-      << ");" << be_uidt_nl;
+      << ");" << be_uidt_nl << be_nl;
   *os << "CORBA::Boolean " << be_global->stub_export_macro ()
       << " operator>> (" << be_idt << be_idt_nl
       << "TAO_InputCDR &," << be_nl
       << node->name () << " &" << be_uidt_nl
-      << ");" << be_uidt << "\n\n";
+      << ");" << be_uidt;
 
   if (!tdef)
     {
-      *os << "#endif /* _TAO_CDR_OP_"
-          << node->flat_name () << "_I_ */\n\n";
+      *os << "\n\n" << "#endif /* _TAO_CDR_OP_"
+          << node->flat_name () << "_I_ */";
     }
 
   node->cli_inline_cdr_op_gen (1);

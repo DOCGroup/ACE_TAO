@@ -84,7 +84,7 @@ class AST_Home;
 // FE_component_header
 // Internal class for FE to describe component headers.
 
-class FE_InterfaceHeader
+class TAO_IDL_FE_Export FE_InterfaceHeader
 {
 public:
   FE_InterfaceHeader (UTL_ScopedName *n,
@@ -138,15 +138,15 @@ protected:
                      idl_bool for_valuetype);
 };
 
-
-class FE_OBVHeader : public FE_InterfaceHeader
+class TAO_IDL_FE_Export FE_OBVHeader : public FE_InterfaceHeader
 {
 public:
 
   FE_OBVHeader (UTL_ScopedName *n, 
                 UTL_NameList *inherits, 
                 UTL_NameList *supports,
-                idl_bool truncatable);
+                idl_bool truncatable,
+                idl_bool is_eventtype = I_FALSE);
   virtual ~FE_OBVHeader (void);
 
   // Data Accessors.
@@ -172,11 +172,22 @@ protected:
   idl_bool check_concrete_supported_inheritance (AST_Interface *d);
 };
 
+class TAO_IDL_FE_Export FE_EventHeader : public FE_OBVHeader
+{
+public:
+
+  FE_EventHeader (UTL_ScopedName *n, 
+                  UTL_NameList *inherits, 
+                  UTL_NameList *supports,
+                  idl_bool truncatable);
+  virtual ~FE_EventHeader (void);
+};
+
 // Unlike value types, a component's supported interfaces are simply
 // added to the inheritance list in generated code, so we use the
 // existing base class mechanism for managing the inheritance list 
 // to manage the derived class's supported interface list.
-class FE_ComponentHeader : public FE_InterfaceHeader
+class TAO_IDL_FE_Export FE_ComponentHeader : public FE_InterfaceHeader
 {
 public:
 
@@ -195,10 +206,6 @@ public:
 
 protected:
   AST_Component *pd_base_component;
-
-protected:
-  virtual void compile_inheritance (UTL_NameList *supports,
-                                    idl_bool for_valuetype);
 };
 
 // We use the 'base_component' member of the base class to
@@ -206,7 +213,7 @@ protected:
 // By inheriting from FE_ComponentHeader, we also get the
 // reuse of the mechanism described in the comment above
 // for handling the supported interface list.
-class FE_HomeHeader : public FE_ComponentHeader
+class TAO_IDL_FE_Export FE_HomeHeader : public FE_ComponentHeader
 {
 public:
 

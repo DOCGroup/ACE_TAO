@@ -184,6 +184,7 @@ DRV_prep_be_arg (char *s,
       else
         {
           ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("%s%s%s%s"),
                       idl_global->prog_name (),
                       ACE_TEXT (": invalid or unknown argument <"),
                       arg,
@@ -197,6 +198,7 @@ void
 DRV_usage (void)
 {
   ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("%s%s%s%s"),
               idl_global->prog_name (),
               ACE_TEXT (": usage: "),
               idl_global->prog_name (),
@@ -1233,11 +1235,6 @@ DRV_parse_args (long ac, char **av)
                   // enable OBV (Valuetype) support
                   idl_global->obv_support (1);
                 }
-              else if (av[i][2] == 'm')
-                {
-                  // enable CORBA component support
-                  idl_global->component_support (1);
-                }
               else if (av[i][2] == 'I')
                 {
                   int options = ACE_OS::strlen(av[i]) - 3;
@@ -1406,9 +1403,10 @@ DRV_parse_args (long ac, char **av)
         {
           ACE_ERROR ((
               LM_ERROR,
+              ACE_TEXT ("%s%s%s\n"),
               ACE_TEXT ("Can't access temporary directory ("),
               tmpdir,
-              ACE_TEXT ("), using current directory for temp files.\n")
+              ACE_TEXT ("), using current directory for temp files.")
             ));
 
           ACE_OS::strcpy (tmpdir, ".");
@@ -1422,7 +1420,7 @@ DRV_parse_args (long ac, char **av)
             {
               ACE_ERROR ((LM_ERROR,
                           "%s%s\n",
-                          ACE_TEXT ("Error: Can't access temporary directory ("),
+                          ACE_TEXT ("Error: Can't access temporary directory "),
                           tmpdir));
 
               ACE_OS::exit (99);

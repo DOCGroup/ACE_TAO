@@ -80,7 +80,7 @@ be_visitor_valuetype_init_cs::visit_valuetype (be_valuetype *node)
                    "%s_init", 
                    node->local_name ());
 
-  *os << "// TAO_IDL - Generated from" << be_nl
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   // ctor
@@ -135,8 +135,6 @@ be_visitor_valuetype_init_cs::visit_valuetype (be_valuetype *node)
                 << be_uidt_nl << "}";
           }
     }
-
-  *os << be_nl << be_nl;
 
   return 0;
 }

@@ -8,7 +8,7 @@
 //    TAO IDL
 //
 // = FILENAME
-//    valuetype_ci.h
+//    valuetype_obv_ci.h
 //
 // = DESCRIPTION
 //    Concrete visitor for the Valuetype node.

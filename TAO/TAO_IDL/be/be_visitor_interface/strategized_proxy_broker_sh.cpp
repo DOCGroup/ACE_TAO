@@ -29,7 +29,7 @@ be_visitor_interface_strategized_proxy_broker_sh::visit_interface (
   // Generate the class declaration.
   os->indent ();
 
-  *os << be_nl
+  *os << be_nl << be_nl
       << "///////////////////////////////////////////////////////////////////////" 
       << be_nl
       << "//               Strategized Proxy Broker Declaration " << be_nl
@@ -90,9 +90,9 @@ be_visitor_interface_strategized_proxy_broker_sh::visit_interface (
       << " *the" << node->strategized_proxy_broker_name ()
       << " (void);" << be_uidt_nl;
 
-  *os << "};" << be_nl << be_nl;
+  *os << "};";
 
-  *os << be_nl
+  *os << be_nl << be_nl
       << "//" << be_nl
       << "//            End Strategized Proxy Broker Declaration " << be_nl
       << "///////////////////////////////////////////////////////////////////////"
@@ -100,3 +100,11 @@ be_visitor_interface_strategized_proxy_broker_sh::visit_interface (
 
   return 0;
 }
+
+int be_visitor_interface_strategized_proxy_broker_sh::visit_component (
+    be_component *node
+  )
+{
+  return this->visit_interface (node);
+}
+

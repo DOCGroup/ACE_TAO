@@ -48,7 +48,7 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << "// TAO_IDL - Generated from" << be_nl
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   if (node->is_local ())
@@ -229,7 +229,7 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
 
   *os << node->full_name () << ","
       << node->full_name () << "_var>" << be_uidt_nl
-      << "#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */\n\n";
+      << "#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */";
 
   // All we have to do is to visit the scope and generate code.
   if (!node->is_local ())

@@ -115,6 +115,9 @@ be_visitor_array_cdr_op_ch::visit_array (be_array *node)
         }
     }
 
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+
   // Generate the CDR << and >> operator declarations.
   *os << be_global->stub_export_macro () << " CORBA::Boolean"
       << " operator<< (TAO_OutputCDR &, const ";
@@ -143,11 +146,11 @@ be_visitor_array_cdr_op_ch::visit_array (be_array *node)
 
       *os << parent->full_name ()
           << "::_" << node->local_name ()
-          << "_forany &);" << be_nl;
+          << "_forany &);";
     }
   else
     {
-      *os << node->name () << "_forany &);" << be_nl;
+      *os << node->name () << "_forany &);";
     }
 
   node->cli_hdr_cdr_op_gen (1);

@@ -30,6 +30,8 @@ libbe_la_SOURCES = \
   be_decl.cpp \
   be_enum.cpp \
   be_enum_val.cpp \
+  be_event.cpp \
+  be_Event_fwd.cpp \
   be_exception.cpp \
   be_expression.cpp \
   be_field.cpp \
@@ -67,6 +69,7 @@ libbe_la_SOURCES = \
   be_visitor_argument.cpp \
   be_visitor_array.cpp \
   be_visitor_attribute.cpp \
+  be_visitor_ccm_pre_proc.cpp \
   be_visitor_component.cpp \
   be_visitor_component_fwd.cpp \
   be_visitor_constant.cpp \

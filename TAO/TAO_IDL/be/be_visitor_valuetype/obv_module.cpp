@@ -40,13 +40,19 @@ be_visitor_obv_module::~be_visitor_obv_module (void)
 int
 be_visitor_obv_module::visit_module (be_module *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
+  if (node->imported ())
+    {
+      return 0;
+    }
 
   if (node->has_nested_valuetype ())
     {
+      TAO_OutStream *os = this->ctx_->stream ();
+
       if (this->ctx_->state () == TAO_CodeGen::TAO_MODULE_OBV_CH)
         {
-          os->indent ();
+          *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+              << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
           *os << "TAO_NAMESPACE ";
 
@@ -61,8 +67,7 @@ be_visitor_obv_module::visit_module (be_module *node)
               *os << " " << node->local_name () << be_nl;
             }
 
-          *os << "{" << be_nl
-              << be_idt;
+          *os << "{" << be_idt;
         }
 
       if (this->visit_scope (node) == -1)
@@ -76,14 +81,15 @@ be_visitor_obv_module::visit_module (be_module *node)
 
       if (this->ctx_->state () == TAO_CodeGen::TAO_MODULE_OBV_CH)
         {
-          os->decr_indent ();
-          *os << "}\nTAO_NAMESPACE_CLOSE\n\n";
+          *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+              << "// " << __FILE__ << ":" << __LINE__;
+
+          *os << be_uidt_nl << be_nl << "}TAO_NAMESPACE_CLOSE";
         }
     }
 
   return 0;
 }
-
 
 int
 be_visitor_obv_module::visit_valuetype (be_valuetype *node)
@@ -107,6 +113,112 @@ be_visitor_obv_module::visit_valuetype (be_valuetype *node)
       }
     case TAO_CodeGen::TAO_MODULE_OBV_CS:
       ctx.state (TAO_CodeGen::TAO_VALUETYPE_OBV_CS);
+      break;
+  default:
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "(%N:%l) be_visitor_obv_module::"
+                           "visit_valuetype - "
+                           "Bad context state\n"
+                           ), 
+                          -1);
+      }
+    }
+
+  if (status == 0)
+    {
+      return 0;
+    }
+  else if (status == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_obv_module::"
+                         "visit_valuetype - "
+                         "failed to accept visitor\n"),  
+                        -1);
+    }
+
+  // Change the state depending on the kind of node strategy.
+  ctx.state (node->next_state (ctx.state ()));
+
+  be_visitor *visitor = tao_cg->make_visitor (&ctx);
+
+  if (!visitor)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_obv_module::"
+                         "visit_valuetype - "
+                         "NUL visitor\n"),  
+                        -1);
+    }
+
+  if (node->accept (visitor) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_obv_module::"
+                         "visit_valuetype - "
+                         "failed to accept visitor\n"),  
+                        -1);
+    }
+
+  delete visitor;
+  visitor = 0;
+
+   // Do addtional "extra" code generation if necessary.
+  if (node->has_extra_code_generation (ctx.state ()))
+    {
+      // Change the state depending on the kind of node strategy.
+      ctx.state (node->next_state (ctx.state (), 1));
+
+      visitor = tao_cg->make_visitor (&ctx);
+
+      if (!visitor)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_obv_module::"
+                             "visit_valuetype - "
+                             "NUL visitor\n"),  
+                            -1);
+        }
+
+      if (node->accept (visitor) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_obv_module::"
+                             "visit_valuetype - "
+                             "failed to accept visitor\n"),  
+                            -1);
+        }
+
+      delete visitor;
+      visitor = 0;
+    }
+
+  return 0;
+}
+
+int
+be_visitor_obv_module::visit_eventtype (be_eventtype *node)
+{
+  be_visitor_context ctx (*this->ctx_);
+  ctx.node (node);
+  int status = 1;
+
+  switch (this->ctx_->state ())
+    {
+    case TAO_CodeGen::TAO_MODULE_OBV_CH:
+      ctx.state (TAO_CodeGen::TAO_EVENTTYPE_OBV_CH);
+      break;
+    case TAO_CodeGen::TAO_MODULE_OBV_CI:
+      {
+        // This context state is not involved in any strategies.
+        ctx.state (TAO_CodeGen::TAO_EVENTTYPE_OBV_CI);
+        be_visitor_eventtype_obv_ci visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
+    case TAO_CodeGen::TAO_MODULE_OBV_CS:
+      ctx.state (TAO_CodeGen::TAO_EVENTTYPE_OBV_CS);
       break;
   default:
       {

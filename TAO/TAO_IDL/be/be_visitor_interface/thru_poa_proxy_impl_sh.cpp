@@ -74,7 +74,7 @@ be_visitor_interface_thru_poa_proxy_impl_sh::visit_interface (
 
   // Dtor
   *os << "virtual ~" << node->thru_poa_proxy_impl_name ()
-      << " (void) { }" << be_nl << be_nl;
+      << " (void) {}";
 
   if (this->visit_scope (node) == -1)
     {
@@ -89,8 +89,7 @@ be_visitor_interface_thru_poa_proxy_impl_sh::visit_interface (
   *os << be_nl
       << "//" << be_nl
       << "//                ThruPOA  Proxy Impl. Declaration" << be_nl
-      << "///////////////////////////////////////////////////////////////////////"
-      << be_nl << be_nl;
+      << "///////////////////////////////////////////////////////////////////////";
 
   return 0;
 
@@ -149,4 +148,12 @@ be_visitor_interface_thru_poa_proxy_impl_sh::gen_abstract_ops_helper (
 
   return 0;
 }
+
+int be_visitor_interface_thru_poa_proxy_impl_sh::visit_component (
+    be_component *node
+  )
+{
+  return this->visit_interface (node);
+}
+
 

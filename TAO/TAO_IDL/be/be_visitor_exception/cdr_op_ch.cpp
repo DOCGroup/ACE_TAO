@@ -48,15 +48,16 @@ be_visitor_exception_cdr_op_ch::visit_exception (be_exception *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  // Generate the CDR << and >> operator declarations.
-  os->indent ();
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__;
 
-  *os << be_global->stub_export_macro () << " CORBA::Boolean"
+  *os << be_nl << be_nl
+      << be_global->stub_export_macro () << " CORBA::Boolean"
       << " operator<< (TAO_OutputCDR &, const " << node->name ()
       << " &);" << be_nl;
   *os << be_global->stub_export_macro () << " CORBA::Boolean"
       << " operator>> (TAO_InputCDR &, "
-      << node->name () << " &);\n";
+      << node->name () << " &);";
 
 
   // Set the substate as generating code for the types defined in our scope.
@@ -70,8 +71,6 @@ be_visitor_exception_cdr_op_ch::visit_exception (be_exception *node)
                          "codegen for scope failed\n"), 
                         -1);
     }
-
-  *os << be_nl;
 
   node->cli_hdr_cdr_op_gen (1);
   return 0;

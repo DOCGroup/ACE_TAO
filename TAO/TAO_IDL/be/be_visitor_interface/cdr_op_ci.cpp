@@ -68,7 +68,7 @@ be_visitor_interface_cdr_op_ci::visit_interface (be_interface *node)
       // defined).
       //
 
-      *os << "// TAO_IDL - Generated from" << be_nl
+      *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
           << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
       // Generate the CDR << and >> operator declarations.
@@ -84,7 +84,7 @@ be_visitor_interface_cdr_op_ci::visit_interface (be_interface *node)
           << be_idt << be_idt_nl
           << "TAO_InputCDR &," << be_nl
           << node->full_name () << "_ptr &" << be_uidt_nl
-          << ");" << be_uidt << "\n\n";
+          << ");" << be_uidt;;
 
       node->cli_inline_cdr_decl_gen (1);
     }

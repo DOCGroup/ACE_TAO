@@ -9,7 +9,7 @@
 //    TAO IDL
 //
 // = FILENAME
-//    valuetype_cdr_op_cs.h
+//    cdr_op_cs.h
 //
 // = DESCRIPTION
 //    Concrete visitor for valuetypes.
@@ -31,7 +31,7 @@ class be_visitor_valuetype_cdr_op_cs : public be_visitor_valuetype
   //   be_visitor_valuetype_cdr_op_cs
   //
   // = DESCRIPTION
-  //   This is a concrete visitor for interface that generates the CDR operator
+  //   This is a concrete visitor for valuetype that generates the CDR operator
   //   implementations
   //
 
@@ -44,6 +44,12 @@ public:
 
   virtual int visit_valuetype (be_valuetype *node);
   // visit valuetype
+
+  virtual int visit_field (be_field *node);
+  // visit field
+
+  virtual int visit_sequence (be_sequence *node);
+  // visit sequence
 };
 
 #endif /* _BE_VISITOR_VALUETYPE_CDR_OP_CS_H_ */

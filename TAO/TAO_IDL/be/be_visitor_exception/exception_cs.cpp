@@ -59,11 +59,10 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
                         -1);
     }
 
-  *os << "// TAO_IDL - Generated from " << be_nl
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from " << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   // Default constructor.
-  *os << "// Default constructor." << be_nl;
   *os << node->name () << "::" << node->local_name ()
       << " (void)" << be_idt_nl;
   *os << ": CORBA_UserException (" << be_idt << be_idt << be_idt_nl
@@ -74,15 +73,12 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
   *os << "}" << be_nl << be_nl;
 
   // Destructor.
-  *os << "// Destructor - all members are of self managing types."
-      << be_nl;
   *os << node->name () << "::~" << node->local_name ()
       << " (void)" << be_nl;
   *os << "{" << be_nl;
   *os << "}" << be_nl << be_nl;
 
   // Copy constructor.
-  *os << "// Copy constructor." << be_nl;
   *os << node->name () << "::" << node->local_name () << " (const ::"
       << node->name () << " &_tao_excp)" << be_idt_nl;
   *os << ": CORBA_UserException (" << be_idt << be_idt << be_idt_nl
@@ -115,7 +111,6 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
       << "}" << be_nl << be_nl;
 
   // Assignment operator.
-  *os << "// Assignment operator." << be_nl;
   *os << node->name () << "&" << be_nl;
   *os << node->name () << "::operator= (const ::"
       << node->name () << " &_tao_excp)" << be_nl
@@ -141,14 +136,17 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
       << "return *this;" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
-  *os << "void "
-      << node->name ()
-      << "::_tao_any_destructor (void *_tao_void_pointer)" << be_nl
-      << "{" << be_idt_nl
-      << node->local_name () << " *tmp = ACE_static_cast ("
-      << node->local_name () << "*, _tao_void_pointer);" << be_nl
-      << "delete tmp;" << be_uidt_nl
-      << "}" << be_nl << be_nl;
+  if (be_global->any_support ())
+    {
+      *os << "void "
+          << node->name ()
+          << "::_tao_any_destructor (void *_tao_void_pointer)" << be_nl
+          << "{" << be_idt_nl
+          << node->local_name () << " *tmp = ACE_static_cast ("
+          << node->local_name () << "*, _tao_void_pointer);" << be_nl
+          << "delete tmp;" << be_uidt_nl
+          << "}" << be_nl << be_nl;
+    }
 
   *os << node->name () << " *" << be_nl;
   *os << node->name () << "::_downcast (CORBA::Exception *exc)" << be_nl;
@@ -185,12 +183,12 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
       << "0" << be_uidt_nl
       << ");" << be_uidt_nl
       << "return result;" << be_uidt_nl
-      << "}\n" << be_nl;
+      << "}" << be_nl << be_nl;
   
-  *os << "void " << node->name () << "::_raise ()" << be_nl
+  *os << "void " << node->name () << "::_raise (void)" << be_nl
       << "{" << be_idt_nl
       << "TAO_RAISE (*this);" << be_uidt_nl
-      << "}\n" << be_nl;
+      << "}" << be_nl << be_nl;
 
   *os << "void " << node->name ()
       << "::_tao_encode (" << be_idt << be_idt_nl;
@@ -333,7 +331,7 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
           << "::_type (void) const" << be_nl;
       *os << "{" << be_idt_nl;
       *os << "return ::" << node->tc_name () << ";" << be_uidt_nl;
-      *os << "}" << be_nl;
+      *os << "}";
     }
 
   if (be_global->tc_support ())

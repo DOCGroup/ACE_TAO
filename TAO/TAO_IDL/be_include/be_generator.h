@@ -117,6 +117,21 @@ public:
   virtual AST_ValueTypeFwd *create_valuetype_fwd (UTL_ScopedName *n,
                                                   idl_bool abstract);
 
+  virtual AST_EventType *create_eventtype (UTL_ScopedName *n,
+                                           AST_Interface **inherits,
+                                           long n_inherits,
+                                           AST_ValueType *inherits_concrete,
+                                           AST_Interface **inherits_flat,
+                                           long n_inherits_flat,
+                                           AST_Interface **supports,
+                                           long n_supports,
+                                           AST_Interface *supports_concrete,
+                                           idl_bool abstract,
+                                           idl_bool truncatable);
+
+  virtual AST_EventTypeFwd *create_eventtype_fwd (UTL_ScopedName *n,
+                                                  idl_bool abstract);
+
   virtual AST_Component *create_component (UTL_ScopedName *n,
                                            AST_Component *base_component,
                                            AST_Interface **supports,

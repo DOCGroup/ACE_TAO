@@ -8,7 +8,7 @@
 //    TAO IDL
 //
 // = FILENAME
-//    valuetype_ch.h
+//    valuetype_obv_ch.h
 //
 // = DESCRIPTION
 //    Concrete visitor for the Valuetype node.
@@ -31,7 +31,7 @@ class be_visitor_valuetype_obv_ch : public be_visitor_valuetype
 {
   //
   // = TITLE
-  //   be_visitor_valuetype_ch
+  //   be_visitor_valuetype_obv_ch
   //
   // = DESCRIPTION
   //   This is a concrete visitor to generate the header for valuetype

@@ -52,7 +52,8 @@ be_visitor_operation_ami_handler_reply_stub_operation_ch::visit_operation (
   if (!node->has_native ())
     {
       // Next line.
-      *os << "static void ";
+      *os << be_nl << be_nl 
+          << "static void ";
 
       // Check if we are an attribute node in disguise
       if (this->ctx_->attribute ())
@@ -77,7 +78,7 @@ be_visitor_operation_ami_handler_reply_stub_operation_ch::visit_operation (
 
       *os << be_nl
           << "ACE_ENV_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
-          << ");" << be_uidt_nl << be_nl;
+          << ");" << be_uidt;
     }
 
   return 0;

@@ -43,7 +43,6 @@ public:
   // visit operation.
  protected:
   virtual int gen_exceptlist (be_operation *node);
-
 };
 
 

@@ -82,6 +82,16 @@ int be_visitor::visit_valuetype_fwd (be_valuetype_fwd *)
   return 0;
 }
 
+int be_visitor::visit_eventtype (be_eventtype *)
+{
+  return 0;
+}
+
+int be_visitor::visit_eventtype_fwd (be_eventtype_fwd *)
+{
+  return 0;
+}
+
 int be_visitor::visit_component (be_component *)
 {
   return 0;

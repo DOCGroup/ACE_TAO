@@ -49,15 +49,19 @@ be_visitor_interface_fwd_ch::visit_interface_fwd (be_interface_fwd *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__;
+
   // All we do in this is generate a forward declaration of the class.
-  *os << "class " << node->local_name () << ";" << be_nl;
+  *os << be_nl << be_nl << "class " << node->local_name () << ";";
 
   // Generate the ifdefined macro for the _ptr type.
   os->gen_ifdef_macro (node->flat_name (), "_ptr");
 
   // Generate the _ptr typedef.
-  *os << "typedef " << node->local_name () << " *" << node->local_name ()
-      << "_ptr;" << be_nl;
+  *os << be_nl << be_nl 
+      << "typedef " << node->local_name () << " *" << node->local_name ()
+      << "_ptr;";
 
   os->gen_endif ();
 

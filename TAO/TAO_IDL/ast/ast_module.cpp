@@ -72,6 +72,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_predefined_type.h"
 #include "ast_valuetype.h"
 #include "ast_valuetype_fwd.h"
+#include "ast_eventtype.h"
+#include "ast_eventtype_fwd.h"
 #include "ast_component.h"
 #include "ast_component_fwd.h"
 #include "ast_home.h"
@@ -410,6 +412,93 @@ AST_Module::fe_add_valuetype (AST_ValueType *t)
   return t;
 }
 
+// Add this AST_EventType node (an event type declaration) to this scope.
+AST_EventType *
+AST_Module::fe_add_eventtype (AST_EventType *t)
+{
+  if (t->redef_clash ())
+    {
+      return 0;
+    }
+
+  AST_Decl *predef = 0;
+  AST_EventType *fwd = 0;
+
+  // Already defined?
+  if ((predef = this->lookup_for_add (t, I_FALSE)) != 0)
+    {
+      // Treat fwd declared interfaces specially
+      if (predef->node_type () == AST_Decl::NT_eventtype)
+        {
+          fwd = AST_EventType::narrow_from_decl (predef);
+
+          if (fwd == 0)
+            {
+              return 0;
+            }
+
+          // Forward declared and not defined yet.
+          if (!fwd->is_defined ())
+            {
+              if (fwd->defined_in () != this)
+                {
+                  idl_global->err ()->error3 (UTL_Error::EIDL_SCOPE_CONFLICT,
+                                              fwd,
+                                              t,
+                                              this);
+
+                  return 0;
+                }
+            }
+          // OK, not illegal redef of forward declaration. Now check whether.
+          // it has been referenced already.
+          else if (this->referenced (predef, t->local_name ()))
+            {
+              idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
+                                          t,
+                                          this,
+                                          predef);
+
+              return 0;
+            }
+        }
+      else if (!can_be_redefined (predef))
+        {
+          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
+                                      t,
+                                      this,
+                                      predef);
+
+          return 0;
+        }
+      else if (referenced (predef, t->local_name ()) && !t->is_defined ())
+        {
+          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
+                                      t,
+                                      this,
+                                      predef);
+
+          return 0;
+        }
+      else if (t->has_ancestor (predef))
+        {
+          idl_global->err ()->redefinition_in_scope (t,
+                                                     predef);
+
+          return 0;
+        }
+    }
+
+  // Add it to scope
+  this->add_to_scope (t);
+
+  // Add it to set of locally referenced symbols
+  this->add_to_referenced (t,
+                           I_FALSE,
+                           t->local_name ());
+  return t;
+}
+
 // Add this AST_Component node (a value type declaration) to this scope.
 AST_Component *
 AST_Module::fe_add_component (AST_Component *t)
@@ -535,10 +624,9 @@ AST_Module::fe_add_home (AST_Home *t)
   // Add it to scope.
   this->add_to_scope (t);
 
-  // Add it to set of locally referenced symbols.
-  this->add_to_referenced (t,
-                           I_FALSE,
-                           t->local_name ());
+  // The home's local name is not added to the referenced list, since
+  // the name will later be mangled to allow a creation of an
+  // equivalent interface with the original name.
 
   return t;
 }
@@ -637,6 +725,80 @@ AST_Module::fe_add_valuetype_fwd (AST_ValueTypeFwd *v)
       if (d->node_type () == AST_Decl::NT_valuetype)
         {
           vtf = AST_ValueType::narrow_from_decl (d);
+
+          if (vtf == 0)
+            {
+              return 0;
+            }
+
+          if (v->added () == 0)
+            {
+              v->set_added (1);
+              this->add_to_scope (v);
+            }
+
+          // @@ Redefinition of forward. Type check not implemented.
+          v->set_full_definition (vtf);   // @@ Memory leak.
+          return v;
+        }
+
+      if (!can_be_redefined (d)) {
+
+          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
+                                      v,
+                                      this,
+                                      d);
+          return 0;
+        }
+
+      if (this->referenced (d, v->local_name ()))
+        {
+          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
+                                      v,
+                                      this,
+                                      d);
+          return 0;
+        }
+
+      if (v->has_ancestor (d))
+        {
+          idl_global->err ()->redefinition_in_scope  (v,
+                                                      d);
+          return 0;
+        }
+    }
+
+  // Add it to scope
+  this->add_to_scope (v);
+
+  // Add it to set of locally referenced symbols
+  this->add_to_referenced (v,
+                           I_FALSE,
+                           v->local_name ());
+
+  return v;
+}
+
+// Add this AST_EventTypeFwd node (a forward declaration of an IDL
+// event type) to this scope.
+AST_EventTypeFwd *
+AST_Module::fe_add_eventtype_fwd (AST_EventTypeFwd *v)
+{
+  AST_Decl *d = 0;
+  AST_EventType *vtf = 0;
+
+  // Already defined and cannot be redefined? Or already used?
+  if ((d = this->lookup_for_add (v, I_FALSE)) != 0)
+    {
+      // There used to be another check here ANDed with the one below:
+      // d->defined_in () == this. But lookup_for_add calls only
+      // lookup_by_name_local(), which does not bump up the scope,
+      // and look_in_previous() for modules. If look_in_previous()
+      // finds something, the scopes will NOT be the same pointer
+      // value, but the result is what we want.
+      if (d->node_type () == AST_Decl::NT_eventtype)
+        {
+          vtf = AST_EventType::narrow_from_decl (d);
 
           if (vtf == 0)
             {

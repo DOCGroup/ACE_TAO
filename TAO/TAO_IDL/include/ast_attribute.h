@@ -71,6 +71,9 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_scoped_name.h"
 #include "ace/OS.h"
 
+class UTL_ExceptList;
+class UTL_NameList;
+
 // Representation of attribute declaration:
 // An attribute is a field with a readonly property.
 
@@ -93,7 +96,9 @@ public:
 
   // Data Accessors.
 
-  idl_bool readonly (void);
+  idl_bool readonly (void) const;
+  UTL_ExceptList *get_get_exceptions (void) const;
+  UTL_ExceptList *get_set_exceptions (void) const;
 
   // Narrowing.
   DEF_NARROW_METHODS1(AST_Attribute, AST_Field);
@@ -110,6 +115,17 @@ private:
 
   const idl_bool pd_readonly;
   // Is attribute read-only?
+
+  UTL_ExceptList *pd_get_exceptions;
+  UTL_ExceptList *pd_set_exceptions;
+
+  // Operations.
+
+  // Scope Management Protocol.
+
+  friend int tao_yyparse (void);
+  virtual UTL_NameList *fe_add_get_exceptions (UTL_NameList *e);
+  virtual UTL_NameList *fe_add_set_exceptions (UTL_NameList *e);
 };
 
 #endif           // _AST_ATTRIBUTE_AST_ATTRIBUTE_HH

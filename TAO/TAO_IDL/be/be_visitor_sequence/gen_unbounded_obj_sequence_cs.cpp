@@ -99,15 +99,15 @@ be_visitor_sequence_cs::gen_unbounded_obj_sequence (be_sequence *node)
   ctx.state (TAO_CodeGen::TAO_SEQUENCE_BASE_CS);
   be_visitor_sequence_base visitor (&ctx);
 
-  *os << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl;
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__;
 
   os->gen_ifdef_AHETI();
   os->gen_ifdef_macro (class_name);
-  os->indent ();
 
   // allocate_buffer.
-  *os << "// The Base_Sequence functions, please see tao/Sequence.h"
+  *os << be_nl << be_nl
+      << "// The Base_Sequence functions, please see tao/Sequence.h"
       << be_nl
       << "void" << be_nl
       << full_class_name << "::_allocate_buffer (CORBA::ULong length)"
@@ -119,7 +119,7 @@ be_visitor_sequence_cs::gen_unbounded_obj_sequence (be_sequence *node)
   *os <<" **tmp = 0;" << be_nl
       << "tmp = " << class_name << "::allocbuf (length);" << be_nl
       << be_nl
-      << "if (this->buffer_ != 0)" << be_nl
+      << "if (this->buffer_ != 0)" << be_idt_nl
       << "{" << be_idt_nl;
 
   bt->accept (&visitor);
@@ -128,7 +128,7 @@ be_visitor_sequence_cs::gen_unbounded_obj_sequence (be_sequence *node)
 
   bt->accept (&visitor);
 
-  *os << "**, this->buffer_);" << be_nl
+  *os << "**, this->buffer_);" << be_nl << be_nl
       << "for (CORBA::ULong i = 0; i < this->length_; ++i)" << be_idt_nl
       << "{" << be_idt_nl
       << "if (!this->release_)" << be_idt_nl
@@ -166,17 +166,18 @@ be_visitor_sequence_cs::gen_unbounded_obj_sequence (be_sequence *node)
       << "{" << be_idt_nl
       << "delete [] old;" << be_uidt_nl
       << "}" << be_uidt << be_uidt_nl
-      << "}" << be_nl
+      << "}" << be_uidt_nl << be_nl
       << "this->buffer_ = tmp;" << be_uidt_nl
-      << "}" << be_nl
-      << be_nl;
+      << "}" << be_nl << be_nl;
 
   // deallocate_buffer.
   *os << "void" << be_nl
       << full_class_name << "::_deallocate_buffer (void)" << be_nl
       << "{" << be_idt_nl
       << "if (this->buffer_ == 0 || this->release_ == 0)" << be_idt_nl
-      << "return;" << be_uidt_nl;
+      << "{" << be_idt_nl
+      << "return;" << be_uidt_nl
+      << "}" << be_uidt_nl << be_nl;
 
   bt->accept (&visitor);
 
@@ -327,7 +328,7 @@ be_visitor_sequence_cs::gen_unbounded_obj_sequence (be_sequence *node)
         }
 
       *os << be_uidt_nl
-          << "}" << be_nl;
+          << "}";
     }
 
   os->gen_endif ();

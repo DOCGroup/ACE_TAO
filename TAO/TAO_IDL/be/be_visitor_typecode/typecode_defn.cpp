@@ -250,7 +250,7 @@ be_visitor_typecode_defn::gen_nested_namespace_end (be_module *node)
       if (ACE_OS::strcmp (i.item ()->get_string (), "") != 0)
         {
           // Leave the outermost root scope.
-          *os << "TAO_NAMESPACE_END" << be_nl;
+          *os << "TAO_NAMESPACE_END";
         }
     }
 
@@ -280,7 +280,7 @@ be_visitor_typecode_defn::visit_type (be_type *node)
                         -1);
     }
 
-  *os << be_nl << "// TAO_IDL - Generated from" << be_nl
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   os->indent (); // start from current indentation level
@@ -311,6 +311,7 @@ be_visitor_typecode_defn::visit_type (be_type *node)
                          "codegen for typecode encapsulation failed\n"),
                         -1);
     }
+
   *os << be_uidt << "};" << be_nl << be_nl;
 
   // Type code definition.
@@ -337,6 +338,12 @@ be_visitor_typecode_defn::visit_type (be_type *node)
       break;
     case AST_Decl::NT_valuetype:
       *os << "CORBA::tk_value";
+      break;
+    case AST_Decl::NT_eventtype:
+      *os << "CORBA::tk_event";
+      break;
+    case AST_Decl::NT_component:
+      *os << "CORBA::tk_component";
       break;
     case AST_Decl::NT_sequence:
       *os << "CORBA::tk_sequence";
@@ -411,8 +418,6 @@ be_visitor_typecode_defn::visit_type (be_type *node)
                              "Error parsing nested name\n"),
                             -1);
         }
-
-      *os << be_nl;
     }
   else
     {
@@ -428,7 +433,7 @@ be_visitor_typecode_defn::visit_type (be_type *node)
       // Flat name generation.
       *os <<  node->flat_name ();
 
-      *os << ";" << be_uidt_nl << "\n";
+      *os << ";" << be_uidt;
     }
 
   return 0;
@@ -601,6 +606,12 @@ be_visitor_typecode_defn::visit_interface (be_interface *node)
                      ACE_TEXT ("visit - bad sub state ")
                      ACE_TEXT ("in visitor context\n")),
                     -1);
+}
+
+int
+be_visitor_typecode_defn::visit_component (be_component *node)
+{
+  return this->visit_interface (node);
 }
 
 int
@@ -831,6 +842,12 @@ be_visitor_typecode_defn::visit_valuetype (be_valuetype *node)
                      ACE_TEXT ("visit - bad sub state ")
                      ACE_TEXT ("in visitor context\n")),
                     -1);
+}
+
+int
+be_visitor_typecode_defn::visit_eventtype (be_eventtype *node)
+{
+  return this->visit_valuetype (node);
 }
 
 int

@@ -66,8 +66,9 @@ be_visitor_amh_rh_operation_sh::visit_operation (be_operation *node)
                         -1);
     }
 
-  // Step 1 : Generate return type: always void
-  os->indent ();
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+
   *os << "virtual void ";
 
   // Step 2: Generate the method name
@@ -100,7 +101,7 @@ be_visitor_amh_rh_operation_sh::visit_operation (be_operation *node)
                         -1);
     }
 
-  *os << ";" << be_nl;
+  *os << ";";
 
   return 0;
 }

@@ -43,6 +43,21 @@ be_visitor_interface_remote_proxy_impl_ch::visit_interface (
       << "," << be_idt_nl << "public virtual " 
       << "TAO_Remote_Object_Proxy_Impl";
 
+  if (node->node_type () == AST_Decl::NT_component)
+    {
+      be_component *bc = be_component::narrow_from_decl (node);
+      AST_Component *ac_base = bc->base_component ();
+
+      if (ac_base != 0)
+        {
+          be_component *bc_base = be_component::narrow_from_decl (ac_base);
+
+          *os << "," << be_nl
+              << "public virtual "
+              << bc_base->full_remote_proxy_impl_name ();
+        }
+    }
+
   int nparents = node->n_inherits ();
 
   if (nparents > 0)
@@ -71,8 +86,7 @@ be_visitor_interface_remote_proxy_impl_ch::visit_interface (
       << be_nl  << be_nl;
 
   // Destructor Declaration.
-  *os << "virtual ~" << node->remote_proxy_impl_name () << " (void) { }"
-      << be_nl;
+  *os << "virtual ~" << node->remote_proxy_impl_name () << " (void) {}";
 
   if (this->visit_scope (node) == -1)
     {
@@ -145,5 +159,12 @@ be_visitor_interface_remote_proxy_impl_ch::gen_abstract_ops_helper (
     }
 
   return 0;
+}
+
+int be_visitor_interface_remote_proxy_impl_ch::visit_component (
+    be_component *node
+  )
+{
+  return this->visit_interface (node);
 }
 

@@ -19,10 +19,11 @@ AST_StructureFwd::AST_StructureFwd (void)
 {
 }
 
-AST_StructureFwd::AST_StructureFwd (UTL_ScopedName *n)
+AST_StructureFwd::AST_StructureFwd (AST_Structure *dummy,
+                                    UTL_ScopedName *n)
   : AST_Decl (AST_Decl::NT_struct_fwd,
               n),
-    pd_full_definition (0)
+    pd_full_definition (dummy)
 {
 }
 

@@ -25,6 +25,7 @@
 #include "ast_structure_fwd.h"
 
 class be_visitor;
+class be_structure;
 
 class be_structure_fwd : public virtual AST_StructureFwd,
                          public virtual be_type
@@ -38,7 +39,8 @@ public:
   be_structure_fwd (void);
   // Default constructor.
 
-  be_structure_fwd (UTL_ScopedName *n);
+  be_structure_fwd (AST_Structure *dummy,
+                    UTL_ScopedName *n);
   // Constructor.
 
   virtual ~be_structure_fwd (void);

@@ -44,8 +44,6 @@ be_visitor_operation_tie_sh::visit_operation (be_operation *node)
   TAO_OutStream *os = this->ctx_->stream ();
   this->ctx_->node (node);
 
-  os->indent ();
-
   // STEP I: generate the return type.
   be_type *bt = be_type::narrow_from_decl (node->return_type ());
 
@@ -57,6 +55,9 @@ be_visitor_operation_tie_sh::visit_operation (be_operation *node)
                          "Bad return type\n"),
                         -1);
     }
+
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   be_visitor_context ctx (*this->ctx_);
   ctx.state (TAO_CodeGen::TAO_OPERATION_RETTYPE_OTHERS);

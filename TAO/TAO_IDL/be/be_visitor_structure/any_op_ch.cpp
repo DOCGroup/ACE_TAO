@@ -48,8 +48,8 @@ be_visitor_structure_any_op_ch::visit_structure (be_structure *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  // Generate the Any <<= and >>= operator declarations.
-  os->indent ();
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *os << be_global->stub_export_macro () << " void"
       << " operator<<= (CORBA::Any &, const " << node->name ()
@@ -62,7 +62,7 @@ be_visitor_structure_any_op_ch::visit_structure (be_structure *node)
       << node->name () << " *&); // deprecated\n";
   *os << be_global->stub_export_macro () << " CORBA::Boolean"
       << " operator>>= (const CORBA::Any &, const "
-      << node->name () << " *&);\n";
+      << node->name () << " *&);";
 
 
   // All we have to do is to visit the scope and generate code.

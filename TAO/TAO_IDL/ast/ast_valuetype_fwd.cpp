@@ -1,6 +1,7 @@
 // $Id$
 
 #include "ast_valuetype_fwd.h"
+#include "ast_interface.h"
 #include "ast_visitor.h"
 #include "utl_identifier.h"
 
@@ -21,7 +22,7 @@ AST_ValueTypeFwd::AST_ValueTypeFwd (AST_Interface *dummy,
     AST_Decl (AST_Decl::NT_valuetype_fwd,
               n),
     COMMON_Base (I_FALSE,
-                 I_FALSE)
+                 dummy->is_abstract ())
 {
 }
 

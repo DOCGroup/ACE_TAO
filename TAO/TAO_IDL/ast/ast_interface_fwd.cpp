@@ -89,8 +89,8 @@ AST_InterfaceFwd::AST_InterfaceFwd (AST_Interface *dummy,
               n),
     AST_Decl (AST_Decl::NT_interface_fwd,
               n),
-    COMMON_Base (I_FALSE,
-                 I_FALSE)
+    COMMON_Base (dummy->is_local (),
+                 dummy->is_abstract ())
 {
   // Create a dummy placeholder for the forward declared interface. This
   // interface node is not yet defined (n_inherits < 0), so some operations

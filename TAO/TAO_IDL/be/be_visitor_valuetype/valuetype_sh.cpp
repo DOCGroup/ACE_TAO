@@ -128,7 +128,7 @@ be_visitor_valuetype_sh::visit_valuetype (be_valuetype *node)
   *os << "virtual const char* _interface_repository_id "
       << "(void) const;" << be_uidt_nl;
 
-  *os << "};\n\n";
+  *os << "};" << be_nl << be_nl;
 
   return 0;
 }

@@ -64,9 +64,10 @@ be_visitor_amh_rh_operation_ss::visit_operation (be_operation *node)
   buf = 0;
 
   // Step 1 : Generate return type: always void
-  *os << "// TAO_IDL - Generated from "
-      << __FILE__ << ":" << __LINE__ << be_nl
-      << "void" << be_nl
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from " << be_nl 
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+
+  *os << "void" << be_nl
       << response_handler_implementation_name.c_str () << "::";
 
   // Check if we are an attribute node in disguise
@@ -155,9 +156,7 @@ be_visitor_amh_rh_operation_ss::visit_operation (be_operation *node)
       ACE_ASSERT (idx != ACE_String_Base_Const::npos);
       operation_name[idx] = '\0';
 
-      *os << "{" << be_idt_nl
-          << "// TAO_IDL - Generated from "
-          << __FILE__ << ":" << __LINE__ << be_nl
+      *os << be_nl << "{" << be_idt_nl
           << "ACE_TRY" << be_nl
           << "{" << be_idt_nl
           << "holder->raise_" << operation_name.c_str ()
@@ -166,29 +165,29 @@ be_visitor_amh_rh_operation_ss::visit_operation (be_operation *node)
           << "}" << be_nl
           << "ACE_CATCH (CORBA::Exception, ex)" << be_nl
           << "{" << be_nl
-          << "  this->_tao_rh_send_exception (ex ACE_ENV_ARG_PARAMETER);" << be_nl
+          << "  this->_tao_rh_send_exception (ex ACE_ENV_ARG_PARAMETER);" 
+          << be_nl
           << "  ACE_CHECK;" << be_nl
           << "}" << be_nl
           << "ACE_ENDTRY;" << be_uidt_nl
-          << "}\n" << be_nl;
+          << "}";
     }
   else
     {
       // Step 3: Generate actual code for the method
-      *os << "{" << be_idt_nl
-          << "// TAO_IDL - Generated from "
-          << __FILE__ << ":" << __LINE__ << be_nl
-          << "this->_tao_rh_init_reply (ACE_ENV_SINGLE_ARG_PARAMETER);\n" << be_nl << be_nl;
+      *os << be_nl << "{" << be_idt_nl
+          << "this->_tao_rh_init_reply (ACE_ENV_SINGLE_ARG_PARAMETER);" 
+          << be_nl << be_nl;
 
       this->marshal_params (node);
 
       *os << be_nl
-          << "this->_tao_rh_send_reply (ACE_ENV_SINGLE_ARG_PARAMETER);" << be_uidt_nl
-          << "}\n" << be_nl;
+          << "this->_tao_rh_send_reply (ACE_ENV_SINGLE_ARG_PARAMETER);" 
+          << be_uidt_nl
+          << "}";
     }
 
   return 0;
-
 }
 
 
@@ -204,7 +203,7 @@ be_visitor_amh_rh_operation_ss::marshal_params (be_operation *node)
       this->has_param_type (node, AST_Argument::dir_INOUT))
     {
       // marshal the in and inout arguments
-      *os << "if (!(\n" << be_idt;
+      *os << "if (!(" << be_idt << be_idt_nl;
 
       // Marshal each in and inout argument.
       ctx = *this->ctx_;
@@ -221,7 +220,7 @@ be_visitor_amh_rh_operation_ss::marshal_params (be_operation *node)
                             -1);
         }
 
-      *os << be_nl << "))" << be_idt_nl;
+      *os << be_uidt_nl << "))" << be_nl;
 
       // If marshaling fails, raise exception.
       if (this->gen_raise_exception (0,
@@ -233,7 +232,7 @@ be_visitor_amh_rh_operation_ss::marshal_params (be_operation *node)
                             -1);
         }
 
-      *os << be_uidt << be_uidt;
+      *os << be_uidt_nl;
     }
 
   return 0;

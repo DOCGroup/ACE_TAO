@@ -193,7 +193,7 @@ be_visitor_obv_operation_arglist::visit_operation (be_operation *node)
       /***********************************************************/
       else
         {
-          *os << " = 0;" << be_uidt_nl << be_nl;
+          *os << " = 0;" << be_uidt;
         }
       break;
     case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_IH:
@@ -201,11 +201,11 @@ be_visitor_obv_operation_arglist::visit_operation (be_operation *node)
     case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_IS:
       break;
     case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_IMPL_CH:
-      *os << ";" << be_nl;
+      *os << ";";
       break;
     case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_IMPL_CS:
     default:
-       *os << be_nl;
+       break;
     }
 
   return 0;

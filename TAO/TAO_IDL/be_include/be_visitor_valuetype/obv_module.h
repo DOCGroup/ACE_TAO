@@ -45,6 +45,7 @@ public:
 
   virtual int visit_valuetype (be_valuetype *node);
 
+  virtual int visit_eventtype (be_eventtype *node);
 };
 
 #endif /* _BE_VISITOR_VALUETYPE_OBV_MODULE_H_ */

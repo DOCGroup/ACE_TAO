@@ -164,7 +164,7 @@ AST_Union::AST_Union (AST_ConcreteType *dt,
           break;
         }
     }
-  else if (dt->node_type() == AST_Decl::NT_enum)
+  else if (dt->node_type () == AST_Decl::NT_enum)
     {
       this->pd_udisc_type = AST_Expression::EV_enum;
       this->pd_disc_type = dt;
@@ -188,6 +188,27 @@ AST_Union::~AST_Union (void)
 }
 
 // Public operations.
+
+void
+AST_Union::redefine (AST_Structure *from)
+{
+  AST_Union *u = AST_Union::narrow_from_decl (from);
+
+  if (u == 0)
+    {
+      idl_global->err ()->redef_error (from->local_name ()->get_string (),
+                                       this->local_name ()->get_string ());
+      return;
+    }
+
+  // Copy over all the base class members.
+  this->AST_Structure::redefine (from);
+
+  this->pd_disc_type = u->pd_disc_type;
+  this->pd_udisc_type = u->pd_udisc_type;
+  this->default_index_ = u->default_index_;
+  this->default_value_ = u->default_value_;
+}
 
 // Return the default_index.
 int
@@ -1206,6 +1227,6 @@ AST_Union::udisc_type (void)
 }
 
 // Narrowing.
-IMPL_NARROW_METHODS2(AST_Union, AST_ConcreteType, UTL_Scope)
+IMPL_NARROW_METHODS1(AST_Union, AST_Structure)
 IMPL_NARROW_FROM_DECL(AST_Union)
 IMPL_NARROW_FROM_SCOPE(AST_Union)

@@ -31,6 +31,8 @@ FILES = be/be_array \
         be/be_constant \
         be/be_enum \
         be/be_enum_val \
+	be/be_event \
+	be/be_event_fwd \
         be/be_exception \
         be/be_expression \
         be/be_factory \
@@ -73,6 +75,7 @@ FILES = be/be_array \
         be/be_visitor_argument \
         be/be_visitor_array \
         be/be_visitor_attribute \
+	be/be_visitor_ccm_pre_proc \
         be/be_visitor_component \
         be/be_visitor_component_fwd \
         be/be_visitor_constant \

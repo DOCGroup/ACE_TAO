@@ -105,7 +105,7 @@ UTL_ExceptlistActiveIterator::item (void)
 {
   if (source == 0)
     {
-     return 0;
+      return 0;
     }
 
   return ((UTL_ExceptList *) source)->head ();

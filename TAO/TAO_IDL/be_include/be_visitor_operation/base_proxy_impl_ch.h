@@ -40,7 +40,6 @@ public:
 
   virtual int visit_operation (be_operation *node);
   // visit operation.
-
 };
 
 #endif /* _BE_VISITOR_OPERATION_BASE_PROXY_IMPL_CH_H_ */

@@ -37,17 +37,20 @@ be_visitor_union_fwd_ch::~be_visitor_union_fwd_ch (void)
 int
 be_visitor_union_fwd_ch::visit_union_fwd (be_union_fwd *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
-
   if (node->cli_hdr_gen () || node->imported ())
     {
       return 0;
     }
 
+  TAO_OutStream *os = this->ctx_->stream ();
+
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__;
+
   // Generate a forward declaration of the class.
-  *os << "class " << node->local_name () << ";" << be_nl;
+  *os << be_nl << be_nl
+      << "class " << node->local_name () << ";";
 
   node->cli_hdr_gen (I_TRUE);
-
   return 0;
 }

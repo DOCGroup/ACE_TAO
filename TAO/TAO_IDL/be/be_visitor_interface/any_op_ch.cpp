@@ -48,13 +48,12 @@ be_visitor_interface_any_op_ch::visit_interface (be_interface *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << "// TAO_IDL - Generated from" << be_nl
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   // Generate the Any <<= and >>= operator declarations.
   os->indent ();
 
-  *os << "// Any operators for interface " << node->name () << be_nl;
   *os << be_global->stub_export_macro () << " void"
       << " operator<<= (CORBA::Any &, " << node->name ()
       << "_ptr); // copying" << be_nl;
@@ -63,7 +62,7 @@ be_visitor_interface_any_op_ch::visit_interface (be_interface *node)
       << "_ptr *); // non-copying" << be_nl;
   *os << be_global->stub_export_macro () << " CORBA::Boolean"
       << " operator>>= (const CORBA::Any &, "
-      << node->name () << "_ptr &);\n";
+      << node->name () << "_ptr &);";
 
   // All we have to do is to visit the scope and generate code.
   if (this->visit_scope (node) == -1)
@@ -77,6 +76,5 @@ be_visitor_interface_any_op_ch::visit_interface (be_interface *node)
 
 
   node->cli_hdr_any_op_gen (1);
-
   return 0;
 }

@@ -72,15 +72,11 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_predefined_type.h"
 #include "ast_union_label.h"
 
-class AST_Root;
 class UTL_LabelList;
 class UTL_ExprList;
-class AST_StructureFwd;
-class AST_UnionFwd;
-class AST_ValueTypeFwd;
-class AST_Component;
-class AST_ComponentFwd;
-class AST_Home;
+class AST_Root;
+class AST_EventType;
+class AST_EventTypeFwd;
 
 // Defines base class for node generators.
 
@@ -137,6 +133,27 @@ public:
 
   // Create a node representing a forward declaration of a valuetype.
   virtual AST_ValueTypeFwd *create_valuetype_fwd (
+      UTL_ScopedName *n,
+      idl_bool abstract
+    );
+
+  // Create a node representing an eventtype.
+  virtual AST_EventType *create_eventtype (
+      UTL_ScopedName *n,
+      AST_Interface **inherits,
+      long n_inherits,
+      AST_ValueType *inherits_concrete,
+      AST_Interface **inherits_flat,
+      long n_inherits_flat,
+      AST_Interface **supports,
+      long n_supports,
+      AST_Interface *supports_concrete,
+      idl_bool abstract,
+      idl_bool truncatable
+    );
+
+  // Create a node representing a forward declaration of an eventtype.
+  virtual AST_EventTypeFwd *create_eventtype_fwd (
       UTL_ScopedName *n,
       idl_bool abstract
     );

@@ -36,6 +36,9 @@ public:
   virtual int visit_interface (be_interface *node);
   // visit an interface
 
+  virtual int visit_component (be_component *node);
+  // This will just call the above method - no need to create
+  // another set of visitors for this stuff.
 };
 
 #endif /* BE_PROXY_BROKER_IMPLS_CH_H_ */

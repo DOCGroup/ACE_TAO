@@ -76,15 +76,6 @@ be_visitor_root_sth::visit_scope (be_scope *node)
                             -1);
         }
 
-      AST_Decl::NodeType nt = d->node_type ();
-
-      // These are the only types we're interested in.
-      if (nt != AST_Decl::NT_module
-          && nt != AST_Decl::NT_interface)
-        {
-          continue;
-        }
-
       be_decl *bd = be_decl::narrow_from_decl (d);
 
       // Set the scope node as "node" in which the code is being
@@ -125,10 +116,8 @@ be_visitor_root_sth::visit_module (be_module *node)
     {
       // If the line below is not true, we don't want to
       // see 'TAO_NAMESPACE' or anything in it.
-      *os << "#if defined (ACE_HAS_USING_KEYWORD)\n";
+      *os << "#if defined (ACE_HAS_USING_KEYWORD)" << be_nl;
     }
-
-  os->indent ();
 
   // Now generate the class definition. The prefix POA_ is prepended to our
   // name only if we are the outermost module.
@@ -145,7 +134,7 @@ be_visitor_root_sth::visit_module (be_module *node)
       *os << " POA_" << node->local_name () << be_nl;
     }
 
-  *os << "{\n" << be_idt;
+  *os << "{" << be_idt;
 
   if (this->visit_scope (node) == -1)
     {
@@ -156,13 +145,12 @@ be_visitor_root_sth::visit_module (be_module *node)
                          -1);
     }
 
-  os->decr_indent ();
-  *os << "}" << be_nl << "TAO_NAMESPACE_CLOSE // module "
-      << node->name () << "\n";
+  *os << be_uidt_nl << "}" << be_nl << "TAO_NAMESPACE_CLOSE // module "
+      << node->name ();
 
   if (!node->is_nested ())
     {
-      *os << "#endif /* ACE_HAS_USING_KEYWORD */\n\n";
+      *os << "\n#endif /* ACE_HAS_USING_KEYWORD */";
     }
 
   return 0;
@@ -196,3 +184,10 @@ be_visitor_root_sth::visit_interface (be_interface *node)
 
   return 0;
 }
+
+int
+be_visitor_root_sth::visit_component (be_component *node)
+{
+  return this->visit_interface (node);
+}
+

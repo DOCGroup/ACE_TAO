@@ -42,6 +42,9 @@ public:
   virtual int visit_interface (be_interface *node);
   // set the right context and make a visitor
 
+  virtual int visit_component (be_component *node);
+  // set the right context and make a visitor
+
   static int method_helper (be_interface *,
                             be_interface *,
                             TAO_OutStream *os);

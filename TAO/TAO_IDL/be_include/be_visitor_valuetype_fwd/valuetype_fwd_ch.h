@@ -11,7 +11,7 @@
 //    valuetype_fwd_ch.h
 //
 // = DESCRIPTION
-//    Concrete visitor for the Interface Forward node.
+//    Concrete visitor for the Valuetype Forward node.
 //    This one provides code generation for valuetype forward node.
 //
 // = AUTHOR
@@ -42,7 +42,6 @@ public:
 
   virtual int visit_valuetype_fwd (be_valuetype_fwd *node);
   // visit valuetype_fwd.
-
 };
 
 #endif /* _BE_VISITOR_VALUETYPE_FWD_CH_H_ */

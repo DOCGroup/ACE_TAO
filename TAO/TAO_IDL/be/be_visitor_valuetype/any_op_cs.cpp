@@ -52,7 +52,7 @@ be_visitor_valuetype_any_op_cs::visit_valuetype (be_valuetype *node)
 
   // Generate the Any <<= and >>= operator declarations
 
-  *os << "// TAO_IDL - Generated from" << be_nl
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *os << "// Copying." << be_nl
@@ -166,7 +166,7 @@ be_visitor_valuetype_any_op_cs::visit_valuetype (be_valuetype *node)
       << "#  pragma instantiate TAO_Valuetype_Manager<"
       << node->full_name () << ", "
       << node->full_name () << "_var>" << be_uidt_nl
-      << "#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */\n\n";
+      << "#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */";
 
   node->cli_stub_any_op_gen (1);
   return 0;

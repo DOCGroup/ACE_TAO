@@ -66,13 +66,13 @@ be_visitor_amh_interface_ss::this_method (be_interface *node)
     this->generate_full_skel_name (node);
   const char *full_skel_name = full_skel_name_holder.c_str ();
 
-  *os << "// TAO_IDL - Generated from "
-      << __FILE__ << ":" << __LINE__ << be_nl;
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from " << be_nl 
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *os << non_amh_name.c_str() << "*" << be_nl
       << full_skel_name
       << "::_this (ACE_ENV_SINGLE_ARG_DECL)" << be_nl
-      << "{" << be_idt_nl // idt = 1
+      << "{" << be_idt_nl
       << "TAO_Stub *stub = this->_create_stub (ACE_ENV_SINGLE_ARG_PARAMETER);"
       << be_nl
       << "ACE_CHECK_RETURN (0);" << be_nl << be_nl;
@@ -80,18 +80,18 @@ be_visitor_amh_interface_ss::this_method (be_interface *node)
   *os << "CORBA::Object_ptr tmp = CORBA::Object::_nil ();" << be_nl
       << be_nl
       << "if (stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ())"
-      << be_idt_nl // idt = 2
+      << be_idt_nl
       << "ACE_NEW_RETURN (tmp, CORBA::Object (stub, 1, this), 0);"
-      << be_uidt_nl // idt = 1
+      << be_uidt_nl
       << "else"
-      << be_idt_nl // idt = 2
+      << be_idt_nl
       << "ACE_NEW_RETURN (tmp, CORBA::Object (stub, 0, this), 0);"
-      << be_uidt_nl << be_nl // idt = 1
+      << be_uidt_nl << be_nl
       << "CORBA::Object_var obj = tmp;" << be_nl << be_nl;
 
   *os << "return " << "::" << non_amh_name.c_str() << "::_unchecked_narrow (obj.in ());"
-      << be_uidt_nl // idt = 0
-      << "}" << be_nl;
+      << be_uidt_nl
+      << "}";
 
 }
 
@@ -104,8 +104,9 @@ be_visitor_amh_interface_ss::dispatch_method (be_interface *node)
     this->generate_full_skel_name (node);
   const char *full_skel_name = full_skel_name_holder.c_str ();
 
-  *os << "// TAO_IDL - Generated from "
-      << __FILE__ << ":" << __LINE__ << be_nl;
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from " << be_nl 
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+
   *os << "void" << be_nl
       << full_skel_name << "::_dispatch (" << be_idt << be_idt_nl
       << "TAO_ServerRequest &req," << be_nl
@@ -119,7 +120,7 @@ be_visitor_amh_interface_ss::dispatch_method (be_interface *node)
       << "this" << be_nl
       << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
       << ");" << be_uidt << be_uidt_nl
-      << "}" << be_nl;
+      << "}";
 }
 
 int

@@ -67,6 +67,8 @@ be_visitor_valuetype_init_ch::visit_valuetype (be_valuetype *node)
   // Generate the ifdef macro for the _init class.
   os.gen_ifdef_macro (node->flat_name (), "_init");
 
+  os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   //@@ If I'm generating concrete class I need a RefCounter.
   os << "class " << be_global->stub_export_macro ()
@@ -133,7 +135,7 @@ be_visitor_valuetype_init_ch::visit_valuetype (be_valuetype *node)
       os << node->local_name () << "_init ();";
     }
 
-  os << be_uidt_nl << "};" << be_nl << be_nl;
+  os << be_uidt_nl << "};";
 
   // Generate the endif macro.
   os.gen_endif ();

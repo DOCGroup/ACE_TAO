@@ -41,14 +41,12 @@ be_visitor_module_ch::visit_module (be_module *node)
     {
       TAO_OutStream *os = this->ctx_->stream ();
 
-      *os << "// TAO_IDL - Generated from" << be_nl
+      *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
           << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
-
-      os->indent ();
 
       *os << "TAO_NAMESPACE "
           << " " << node->local_name () << be_nl
-          << "{" << be_idt_nl;
+          << "{" << be_idt;
 
       // Generate code for the module definition by traversing thru the
       // elements of its scope. We depend on the front-end to have made sure
@@ -62,11 +60,11 @@ be_visitor_module_ch::visit_module (be_module *node)
                             -1);
         }
 
-      *os << be_uidt_nl << "// TAO_IDL - Generated from" << be_nl
+      *os << be_uidt_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
           << "// " << __FILE__ << ":" << __LINE__ << be_nl;
 
       *os << be_nl
-          << "}\nTAO_NAMESPACE_CLOSE // module " << node->name () << "\n\n";
+          << "}\nTAO_NAMESPACE_CLOSE // module " << node->name ();
 
     }
 

@@ -46,7 +46,6 @@ public:
 
   virtual int visit_operation (be_operation *node);
   // visit operation.
-
 };
 
 #endif /* _BE_VISITOR_OPERATION_ami_handler_reply_stub_operation_ch_H_ */
