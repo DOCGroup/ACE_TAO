@@ -41,6 +41,7 @@ run()
 
 echo "Starting tests..."
 
+run Atomic_Op_Test	                # uses Atomic_Op
 run TSS_Test			        # uses Task, Mutex, Guard
 run Time_Value_Test
 run SString_Test

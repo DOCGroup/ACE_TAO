@@ -747,10 +747,33 @@ public:
 
 #if defined (__ACE_INLINE__)
 #include "ace/Synch_T.i"
+// On non-Win32 platforms, this code will be inlined
+#if !defined (ACE_WIN32)
+#include "ace/Atomic_Op.i"
+#endif /* !ACE_WIN32 */
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Synch_T.cpp"
+// On Win32 platforms, this code will be included as template source
+// code and will not be inlined. Therefore, we first turn off
+// ACE_INLINE, set it to be nothing, include the code, and then turn
+// ACE_INLINE back to its original setting. All this nonsense is
+// necessary, since the generic template code that needs to be
+// specialized cannot be inlined, else the compiler will ignore the
+// specialization code. Also, the specialization code *must* be
+// inlined or the compiler will ignore the specializations.
+#if defined (ACE_WIN32)
+#undef ACE_INLINE
+#define ACE_INLINE 
+#include "ace/Atomic_Op.i"
+#undef ACE_INLINE
+#if defined (__ACE_INLINE__)
+#define ACE_INLINE inline
+#else
+#define ACE_INLINE 
+#endif /* __ACE_INLINE__ */
+#endif /* ACE_WIN32 */
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

@@ -5,6 +5,7 @@ rem    test
 
 if not "%1" == "" goto runtest
 
+call run_tests Atomic_Op_Test
 call run_tests Barrier_Test
 call run_tests Buffer_Stream_Test
 call run_tests Conn_Test

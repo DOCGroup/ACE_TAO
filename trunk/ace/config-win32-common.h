@@ -312,6 +312,7 @@
 #endif /* _MSC_VER */
 
 #if (_WIN32_WINNT >= 0x0400)
+        #define ACE_HAS_INTERLOCKED_EXCHANGEADD 
 	#define ACE_HAS_WIN32_TRYLOCK
 	#define ACE_HAS_SIGNAL_OBJECT_AND_WAIT
 
