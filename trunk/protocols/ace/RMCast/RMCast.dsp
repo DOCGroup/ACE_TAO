@@ -69,8 +69,8 @@ LINK32=link.exe
 # PROP Intermediate_Dir "DLL\Debug"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /MTd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "RMCAST_EXPORTS" /YX /FD  /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\.." /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "ACE_RMCAST_BUILD_DLL" /FD  /c
+# ADD BASE CPP /nologo /MTd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "RMCAST_EXPORTS" /YX /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\.." /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "ACE_RMCAST_BUILD_DLL" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
@@ -130,6 +130,10 @@ SOURCE=.\RMCast_Reassembly.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\RMCast_Reordering.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\RMCast_Retransmission.cpp
 # End Source File
 # Begin Source File
@@ -186,6 +190,10 @@ SOURCE=.\RMCast_Reassembly.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\RMCast_Reordering.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\RMCast_Retransmission.h
 # End Source File
 # Begin Source File
@@ -235,6 +243,10 @@ SOURCE=.\RMCast_Proxy.i
 # Begin Source File
 
 SOURCE=.\RMCast_Reassembly.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\RMCast_Reordering.i
 # End Source File
 # Begin Source File
 
