@@ -135,7 +135,7 @@ public:
     };
 
   ACE_Profile_Timer (void);
-  ~ACE_Profile_Timer (void) {}
+  ~ACE_Profile_Timer (void);
   int start (void);
   int stop (void);
   int elapsed_time (ACE_Elapsed_Time &et);

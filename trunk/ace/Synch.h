@@ -606,14 +606,14 @@ class ACE_Null_Barrier
 public:
   ACE_Null_Barrier (u_int,
 		    const char * = 0,
-		    void * = 0) {}
+		    void * = 0);
   // Initialize the barrier to synchronize <count> threads.
 
-  int wait (void) { return 0; }
+  int wait (void);
   // Block the caller until all <count> threads have called <wait> and
   // then allow all the caller threads to continue in parallel.
 
-  void dump (void) const {}
+  void dump (void) const;
   // Dump the state of an object.
 
   ACE_ALLOC_HOOK_DECLARE;
@@ -631,19 +631,19 @@ class ACE_Export ACE_Null_Mutex
   //     Implement a do nothing <ACE_Mutex>, i.e., all the methods are
   //     no ops.
 public:
-  ACE_Null_Mutex (LPCTSTR = 0) {}
-  ~ACE_Null_Mutex (void) {}
-  int remove (void) { return 0; }
+  ACE_Null_Mutex (LPCTSTR = 0);
+  ~ACE_Null_Mutex (void);
+  int remove (void);
 
-  int acquire (void) { return 0; }
-  int tryacquire (void) { return 0; }
-  int release (void) { return 0; }
-  int acquire_write (void) { return 0; }
-  int tryacquire_write (void) { return 0; }
-  int acquire_read (void) { return 0; }
-  int tryacquire_read (void) { return 0; }
+  int acquire (void);
+  int tryacquire (void);
+  int release (void);
+  int acquire_write (void);
+  int tryacquire_write (void);
+  int acquire_read (void);
+  int tryacquire_read (void);
 
-  void dump (void) const { }
+  void dump (void) const;
   // Dump the state of an object.
 
   ACE_ALLOC_HOOK_DECLARE;
@@ -658,15 +658,15 @@ class ACE_Export ACE_Null_Condition
   //     C++ compilers are *very* lame...
 public:
   ACE_Null_Condition (ACE_Null_Mutex &m, int = 0,
-			    LPCTSTR = 0, void * = 0): mutex_ (m) {}
-  ~ACE_Null_Condition (void) {}
-  int remove (void) { return 0; }
-  int wait (ACE_Time_Value * = 0) { errno = ETIME; return -1; }
-  int signal (void) { return 0; }
-  int broadcast (void) { return 0; }
-  ACE_Null_Mutex &mutex (void) { return this->mutex_; }
+			    LPCTSTR = 0, void * = 0);
+  ~ACE_Null_Condition (void);
+  int remove (void);
+  int wait (ACE_Time_Value * = 0);
+  int signal (void);
+  int broadcast (void);
+  ACE_Null_Mutex &mutex (void);
 
-  void dump (void) const {}
+  void dump (void) const;
   // Dump the state of an object.
 
   // ACE_ALLOC_HOOK_DECLARE;
@@ -692,14 +692,14 @@ class ACE_Export ACE_Null_Mutex_Guard
   //     This should be a specialization of ACE_Guard, but compiler
   //     bugs preclude this...
 public:
-  ACE_Null_Mutex_Guard (ACE_Null_Mutex &) {}
-  ~ACE_Null_Mutex_Guard (void) {}
-  int remove (void) { return 0; }
-  int locked (void) { return 1; }
-  int acquire (void) { return 0; }
-  int tryacquire (void) { return 0; }
-  int release (void) { return 0; }
-  void dump (void) const { }
+  ACE_Null_Mutex_Guard (ACE_Null_Mutex &);
+  ~ACE_Null_Mutex_Guard (void);
+  int remove (void);
+  int locked (void);
+  int acquire (void);
+  int tryacquire (void);
+  int release (void);
+  void dump (void) const;
 
 private:
   // = Prevent assignment and initialization.

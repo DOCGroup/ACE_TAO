@@ -64,3 +64,8 @@ ACE_Profile_Timer::stop (void)
 }
 
 #endif /* defined (ACE_HAS_PRUSAGE_T) || defined (ACE_HAS_GETRUSAGE) */
+
+ACE_INLINE
+ACE_Profile_Timer::~ACE_Profile_Timer (void)
+{
+}

@@ -707,3 +707,170 @@ ACE_RW_Process_Mutex::lock (void) const
 // ACE_TRACE ("ACE_RW_Process_Mutex::lock");
   return this->lock_;
 }
+
+ACE_INLINE
+ACE_Null_Barrier::ACE_Null_Barrier (u_int,
+                                    const char *,
+                                    void *)
+{
+}
+
+ACE_INLINE int
+ACE_Null_Barrier::wait (void)
+{
+  return 0;
+}
+
+ACE_INLINE void
+ACE_Null_Barrier::dump (void) const
+{
+}
+
+ACE_INLINE
+ACE_Null_Mutex::ACE_Null_Mutex (LPCTSTR)
+{
+}
+
+ACE_INLINE
+ACE_Null_Mutex::~ACE_Null_Mutex (void)
+{
+}
+
+ACE_INLINE int
+ACE_Null_Mutex::remove (void)
+{
+  return 0;
+}
+
+ACE_INLINE int
+ACE_Null_Mutex::acquire (void)
+{
+  return 0;
+}
+
+ACE_INLINE int
+ACE_Null_Mutex::tryacquire (void)
+{
+  return 0;
+}
+
+ACE_INLINE int
+ACE_Null_Mutex::release (void)
+{
+  return 0;
+}
+
+ACE_INLINE int
+ACE_Null_Mutex::acquire_write (void)
+{
+  return 0;
+}
+
+ACE_INLINE int
+ACE_Null_Mutex::tryacquire_write (void)
+{
+  return 0;
+}
+
+ACE_INLINE int
+ACE_Null_Mutex::acquire_read (void)
+{
+  return 0;
+}
+
+ACE_INLINE int
+ACE_Null_Mutex::tryacquire_read (void)
+{
+  return 0;
+}
+
+ACE_INLINE void
+ACE_Null_Mutex::dump (void) const
+{
+}
+
+ACE_INLINE
+ACE_Null_Condition::ACE_Null_Condition (ACE_Null_Mutex &m, int,
+                                        LPCTSTR, void*)
+  : mutex_ (m)
+{
+}
+
+ACE_INLINE ACE_Null_Condition::~ACE_Null_Condition (void)
+{
+}
+
+ACE_INLINE int ACE_Null_Condition::remove (void)
+{
+  return 0;
+}
+
+ACE_INLINE int
+ACE_Null_Condition::wait (ACE_Time_Value *)
+{
+  errno = ETIME;
+  return -1;
+}
+
+ACE_INLINE int
+ACE_Null_Condition::signal (void)
+{
+  return 0;
+}
+
+ACE_INLINE int
+ACE_Null_Condition::broadcast (void)
+{
+  return 0;
+}
+
+ACE_INLINE ACE_Null_Mutex &
+ACE_Null_Condition::mutex (void)
+{
+  return this->mutex_;
+}
+
+ACE_INLINE void
+ACE_Null_Condition::dump (void) const
+{
+}
+
+ACE_INLINE
+ACE_Null_Mutex_Guard::ACE_Null_Mutex_Guard (ACE_Null_Mutex &)
+{
+}
+
+ACE_INLINE
+ACE_Null_Mutex_Guard::~ACE_Null_Mutex_Guard (void)
+{
+}
+
+ACE_INLINE int
+ACE_Null_Mutex_Guard::remove (void)
+{
+  return 0;
+}
+
+ACE_INLINE int ACE_Null_Mutex_Guard::locked (void)
+{
+  return 1;
+}
+
+ACE_INLINE int ACE_Null_Mutex_Guard::acquire (void)
+{
+  return 0;
+}
+
+ACE_INLINE int ACE_Null_Mutex_Guard::tryacquire (void)
+{
+  return 0;
+}
+
+ACE_INLINE int ACE_Null_Mutex_Guard::release (void)
+{
+  return 0;
+}
+
+ACE_INLINE void ACE_Null_Mutex_Guard::dump (void) const
+{
+}
