@@ -3,11 +3,22 @@ Wed May 07 16:05:39 1997  David L. Levine  <levine@cs.wustl.edu>
 	* ace/Makefile: added Timer_Wheel to FILES.  Thanks to Thilo
 	  Kielmann <kielmann@informatik.uni-siegen.de> for reporting this.
 
-	* ace/Map_Manager.h: updated comments to indicate that find functions return a
-	  non-negative integer if the item is found.
+	* include/makeinclude/platform_irix6.2_sgic++.GNU: enabled CPPFLAGS
+	  to instantiate all templates so that gatewayd will build.
+	  Thanks to Nathan N. Vuong <nvuong@mail08.mitre.org> for reporting
+	  this problem and Eric Dean Russell <edrusse@somnet.sandia.gov>
+	  for supplying and the fix.
 
-	* ace/Map_Manager.cpp (find_i (const EXT_ID &, INT_ID &)): return index instead of 0 if
-	  the item is found, to be consistent with find_i (const EXT_ID &).
+	* ace/Map_Manager.h: updated comments to indicate that find
+	  functions return a non-negative integer if the item is found.
+
+	* ace/Map_Manager.cpp (find_i (const EXT_ID &, INT_ID &)): return
+	  index instead of 0 if the item is found, to be consistent with
+	  find_i (const EXT_ID &).
+
+	* ace/IOStream.cpp (ACE_Streambuf_T ctor): added initializations of
+	  eback_saved_ and pbase_saved_ to avoid unitialized memory read
+	  reports from Purify.
 
 Tue May  6 07:39:25 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
