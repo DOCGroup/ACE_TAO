@@ -2,7 +2,7 @@
 
 #include "RepositoryManager_Impl.h"
 #include "DeploymentC.h"
-#include "ExecutionManager/ExecutionManagerC.h"
+//#include "ExecutionManager/ExecutionManagerC.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/streams.h"
 
@@ -105,8 +105,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                                 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      CIAO::ExecutionManagerDaemon_var exec_mgr =
-        CIAO::ExecutionManagerDaemon::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
+      //CIAO::ExecutionManagerDaemon_var exec_mgr =
+      //  CIAO::ExecutionManagerDaemon::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
+      Deployment::ExecutionManager_var exec_mgr =
+        Deployment::ExecutionManager::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (exec_mgr.in ()))
@@ -162,8 +164,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "Executor: destroy the manager....."));
       exec_mgr->destroyManager (dapp_mgr.in ());
-      exec_mgr->shutdown ();
       ACE_DEBUG ((LM_DEBUG, "[success]\n"));
+
+      //ACE_DEBUG ((LM_DEBUG, "Executor: shutdown execution manager....."));
+      //exec_mgr->shutdown ();
+      //ACE_DEBUG ((LM_DEBUG, "[success]\n"));
 
       orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
