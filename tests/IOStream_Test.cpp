@@ -28,8 +28,6 @@
 typedef ACE_IOStream<ACE_SOCK_Stream> ACE_SOCK_IOStream;
 
 static short PORT = ACE_DEFAULT_SERVER_PORT;
-static u_long error_at_server = 0;
-static u_long error_at_client = 0;
 
 /* The biggest drawback to an iostream is that it generally
    eats up whitespace when performing a get (>>) operation.
@@ -153,6 +151,7 @@ static void *
 client (void *arg)
 {
   ACE_NEW_THREAD;
+  ACE_UNUSED_ARG (arg);
 
 #if defined (ACE_HAS_THREADS)
   ACE_Thread_Control thread_control (ACE_Service_Config::thr_mgr ());
@@ -163,7 +162,10 @@ client (void *arg)
   ACE_SOCK_Connector connector;
 
   if (connector.connect (server, addr) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "Failed to connect to server thread"), -1);
+    {
+      ACE_ERROR ((LM_ERROR, "(%t) %p\n", "Failed to connect to server thread"));
+      return (void *) -1;
+    }
 
   // Send a string to the server which it can interpret as a qchar[]
   char *str = "\"This is a test     string.\"";
@@ -224,7 +226,7 @@ client (void *arg)
 // Test the server's ability to receive data from the client and then
 // begin a two-way conversation.
 
-void *
+static void *
 server (void *)
 {
   ACE_NEW_THREAD;
@@ -240,7 +242,10 @@ server (void *)
   if (ACE_Service_Config::thr_mgr ()->spawn (ACE_THR_FUNC (client), 
 					     0,
 					     THR_NEW_LWP | THR_DETACHED) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n","spawing client thread"), 1);
+    {
+      ACE_ERROR ((LM_ERROR, "(%t) %p\n", "spawing client thread"));
+      return (void *) -1;
+    }
 
   if (acceptor.accept (client_handler) == -1)
     ACE_DEBUG ((LM_ERROR, "(%P|%t) Failed to accept new client_handler"));
@@ -268,7 +273,7 @@ server (void *)
   while (buf[ACE_OS::strlen (buf) - 1] != '"')
     {
       client_handler >> buf;
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) %s ", buf));
+      ACE_DEBUG ((LM_DEBUG, "%s ", buf));
     }
 
   ACE_DEBUG ((LM_DEBUG, ")\n"));
@@ -308,14 +313,17 @@ server (void *)
   return 0;
 }
 
-static int
+static void
 spawn (void)
 {
 #if defined (ACE_HAS_THREADS)
   if (ACE_Service_Config::thr_mgr ()->spawn (ACE_THR_FUNC (server),
 					     0,
 					     THR_NEW_LWP | THR_DETACHED) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n","spawing server thread"), 1);
+    {
+      ACE_ERROR ((LM_ERROR, "%p\n","spawning server thread"));
+      return;
+    }
 
   // Wait for the client and server thread to exit.
   ACE_Service_Config::thr_mgr ()->wait ();
@@ -345,6 +353,7 @@ spawn (void)
 	      "threads *and* processes not supported on this platform\n%"));
 #endif /* ACE_HAS_THREADS */	
 }
+
 int
 main (int argc, char *argv[])
 {
