@@ -1,5 +1,17 @@
 Tue Dec  2 03:12:50 1997  Sergio Flores  <sergio@tango.cs.wustl.edu>
 
+	* tao/orbobj.cpp (resolve_name_service): Check for errors when
+ 	resolving using the "NameService" environment variable.
+
+	* orbsvcs/bin/Naming_Service/CosNaming_i.cpp (NS_NamingContext): 		
+	* orbsvcs/bin/Naming_Service/CosNaming_i.h (NS_NamingContext):
+ 	- Added constructor that takes a key to initialize the object,
+ 	instead of using the default name generation.  	
+	- Enabled some exceptions that are already supported.
+
+	* orbsvcs/bin/Naming_Service/svr.cpp (main): Create first naming
+ 	context with key "NamingContext".  And minor changes.
+
 	* tests/Cubit/CORBAplus/IDL_Cubit/Makefile: 
 	* tests/Cubit/CORBAplus/IDL_Cubit/README: 
 	* tests/Cubit/CORBAplus/IDL_Cubit/clnt.cpp: 

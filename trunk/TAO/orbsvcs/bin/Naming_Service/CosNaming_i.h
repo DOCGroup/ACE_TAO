@@ -42,6 +42,9 @@ class NS_NamingContext : public POA_CosNaming::NamingContext
   NS_NamingContext (void);
   // default constructor.
 
+  NS_NamingContext (const char *key);
+  // constructor
+
   ~NS_NamingContext (void);
   // destructor.
 
@@ -81,20 +84,20 @@ class NS_NamingContext : public POA_CosNaming::NamingContext
 
  protected:
   // = These are the helper methods used by other methods.
-
+  
   CosNaming::NamingContext_ptr get_context (const CosNaming::Name &name);
   // This is used by methods that need to resolve a compound name to
   // get the reference to the target context before performing the
   // actual operation (e.g. bind, unbind, etc.)  Takes a full name
   // (including the last component that doesn't need to be resolved)
   // Returns a pointer to the target context.
-
+  
  private:    
   
   HASH_MAP context_;
   // This implementation of NamingContext uses ACE thread-safe Hash
   // Map for storage and manipulation of name-object bindings.
-
+  
   CosNaming::NamingContext_ptr tie_ref_;
   // Stores CORBA object reference to the TIE object this object
   // implements.  This is needed to implement the <destroy> method.
@@ -132,42 +135,5 @@ class NS_BindingIterator : public POA_CosNaming::BindingIterator
   NS_NamingContext::HASH_MAP::ITERATOR *hash_iter_;
   // A pointer to the hash map iterator.
 }; 
-
-
-
-
-// ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-
-#if 0
-class CosNaming_i : public POA_CosNaming
-  // = TITLE
-  //    Integrates the naming service with the
-  //    generated skeleton.
-  // = DESCRIPTION
-  //    Implementation of the naming service at the servant side.
-{
- public:
-  CosNaming_i (void);
-  // constructor
- 
-  ~CosNaming_i (void);
-  // destructor
-  
-  static CosNaming::NamingContext_ptr _bind (const char *host, 
-					     CORBA::ULong port, 
-					     const char *key, 
-					     CORBA::Environment &env);
-
-  NamingContext & naming_context (void)
-    {
-      return nc;
-    }
-
- private:
-    NS_NamingContext nc;
-    // not sure about this.  
-};
-#endif
-
 
 #endif /* COSNAMING_I_H */

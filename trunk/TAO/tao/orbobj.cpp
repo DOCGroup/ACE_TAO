@@ -337,6 +337,8 @@ CORBA_ORB::resolve_poa (void)
 CORBA_Object_ptr
 CORBA_ORB::resolve_name_service (void)
 {
+  CORBA::Environment env;
+
   // First check to see if we've already initialized this.
   if (this->name_service_ != CORBA_Object::_nil ())
     // @@ Someone please double-check this ;-)
@@ -353,10 +355,15 @@ CORBA_ORB::resolve_name_service (void)
 
   if (name_service_ior != 0)
     {
-      CORBA::Environment env;
       this->name_service_ =
         this->string_to_object (name_service_ior, env);
-      return this->name_service_;
+
+      // check for errors
+      if (env.exception () != 0)
+	this->name_service_ = CORBA_Object::_nil ();
+
+      // Return ior.
+      return CORBA_Object::_duplicate (this->name_service_);
     }
 
   // Fourth, use UDP multicast to locate the naming service.
@@ -400,7 +407,6 @@ CORBA_ORB::resolve_name_service (void)
           return CORBA_Object::_nil ();
         }
       
-
       if (response.get_local_addr (response_addr) == -1)
         {
           ACE_ERROR ((LM_ERROR, "get_local_addr failed.\n"));
@@ -414,6 +420,8 @@ CORBA_ORB::resolve_name_service (void)
       // Send multicast of one byte, enough to wake up server.
       ssize_t n_bytes = multicast.send ((char *) &reply_port,
                                         sizeof reply_port);
+      
+      // check for errors
       if (n_bytes == -1)
 	return CORBA_Object::_nil ();
 
@@ -426,6 +434,7 @@ CORBA_ORB::resolve_name_service (void)
       // Wait for response until TAO_DEFAULT_NAME_SERVER_TIMEOUT.
       ACE_Time_Value timeout (TAO_DEFAULT_NAME_SERVER_TIMEOUT);
 
+      // receive response message
       n_bytes = response.recv (buf,
 			       BUFSIZ,
 			       remote_addr,
@@ -435,6 +444,7 @@ CORBA_ORB::resolve_name_service (void)
       // Close endpoint for response.
       int retval = response.close ();
 
+      // check for errors
       if (n_bytes == -1 || retval == -1)
         return CORBA_Object::_nil ();
 
@@ -446,7 +456,6 @@ CORBA_ORB::resolve_name_service (void)
                   buf));
 
       // convert ior to an object reference
-      CORBA::Environment env;
       this->name_service_ =
 	this->string_to_object ((CORBA::String) buf, env);
 
