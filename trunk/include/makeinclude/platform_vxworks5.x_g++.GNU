@@ -73,9 +73,7 @@ PRELIB	= (echo "main() { }" > gcctemp.c && \
                                 -L$(GCCLIB_DIR) -lgcc $(LIBS); \
 	  status=$$?; rm -f gcctemp.* a.out; exit $$status)
 PRELINK		= nm$(TOOLENV) .obj/$@.o $(WRAPPER_ROOT)/ace/libACE.a | munch | egrep -v '\.cpp' > __ctordtor.c; $(COMPILE.c) -traditional -o .obj/__ctordtor.o __ctordtor.c; /bin/rm __ctordtor.c;
-COMPILE.cc	= $(CXX) $(CCFLAGS) $(CPPFLAGS) $(PTDIRS) -c
-LINK.cc		= $(PRELINK) $(LD) $(CCFLAGS) $(CPPFLAGS) $(LDFLAGS) $(PTDIRS)
+
 
 #### don't build shared objects:
 BUILD           = $(VOBJS) $(VLIB) $(VBIN)
-
