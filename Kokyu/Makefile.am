@@ -9,6 +9,7 @@
 ## ./bin/mwc.pl -include /home/jtc/ACE/ACE-config3/MPC/config -include /home/jtc/ACE/ACE-config3/MPC/templates -type automake ACE.mwc
 
 includedir = @includedir@/Kokyu
+pkgconfigdatadir = ${prefix}/lib/pkgconfig
 
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
@@ -62,6 +63,11 @@ nobase_include_HEADERS = \
   DSRT_Dispatcher_Impl_T.cpp \
   DSRT_Sched_Queue_T.cpp \
   Kokyu_dsrt.cpp
+
+pkgconfigdata_DATA = Kokyu.pc
+
+Kokyu.pc: ${top_builddir}/config.status ${srcdir}/Kokyu.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/Kokyu.pc.in
 
 ## Clean up template repositories, etc.
 clean-local:

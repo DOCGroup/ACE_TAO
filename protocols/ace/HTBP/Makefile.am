@@ -9,6 +9,7 @@
 ## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -exclude build,Kokyu
 
 includedir = @includedir@/ace/HTBP
+pkgconfigdatadir = ${prefix}/lib/pkgconfig
 
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
@@ -61,6 +62,11 @@ nobase_include_HEADERS = \
   HTBP_Outside_Squid_Filter.inl \
   HTBP_Session.inl \
   HTBP_Stream.inl
+
+pkgconfigdata_DATA = ACE_HTBP.pc
+
+ACE_HTBP.pc: ${top_builddir}/config.status ${srcdir}/ACE_HTBP.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/ACE_HTBP.pc.in
 
 ## Clean up template repositories, etc.
 clean-local:
