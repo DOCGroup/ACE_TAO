@@ -1,6 +1,7 @@
 // $Id$
 
 #include "distributer.h"
+#include "tao/debug.h"
 #include "ace/Get_Opt.h"
 #include "orbsvcs/AV/Protocol_Factory.h"
 #include "orbsvcs/AV/FlowSpec_Entry.h"
