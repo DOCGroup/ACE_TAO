@@ -10,7 +10,7 @@
 //   SSL_Context.h
 //
 // = AUTHOR
-//   Carlos O'Ryan <coryan@cs.wustl.edu>
+//   Carlos O'Ryan <coryan@ece.uci.edu>
 //
 // ============================================================================
 
@@ -31,6 +31,22 @@
 #include <openssl/ssl.h>
 
 #include "SSL_Export.h"
+
+#ifdef ACE_HAS_THREADS
+extern "C"
+{
+  void ACE_SSL_locking_callback (int mode,
+                                 int type,
+                                 const char * file,
+                                 int line);
+  // Mutex locking/unlocking callback for OpenSSL multithread support.
+
+  unsigned long ACE_SSL_thread_id (void);
+  // Return the current thread ID.  OpenSSL uses this on platforms
+  // that need it.
+}
+#endif  /* ACE_HAS_THREADS */
+
 
 class ACE_SSL_Export ACE_SSL_Data_File
 {
@@ -62,6 +78,8 @@ private:
 
 class ACE_SSL_Export ACE_SSL_Context
 {
+  friend void ACE_SSL_locking_callback (int, int, const char *, int); 
+
   // = TITLE
   //   A wrapper for the ACE_SSL_Context class.
   //
@@ -175,8 +193,19 @@ private:
   // The default verify mode.
 
   static int library_init_count_;
+  // Reference count of the number of times the ACE_SSL_Context was
+  // initialized.
+
   // @@ This should also be done with a singleton, otherwise it is not
-  // thread safe and/or portable to some weird platforms...
+  //    thread safe and/or portable to some weird platforms...
+
+#ifdef ACE_HAS_THREADS
+  static ACE_mutex_t * lock_;
+  // Array of mutexes used internally by OpenSSL when the SSL
+  // application is multithreaded.
+
+  // @@ This should also be managed by a singleton.
+#endif
 };
 
 #if defined(__ACE_INLINE__)

@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 // $Id$
 
 // ============================================================================
@@ -11,8 +11,8 @@
 //
 // = AUTHOR
 //    Chris Zimman
-//    Carlos O'Ryan <coryan@cs.wustl.edu>
-//    Ossama Othman <othman@cs.wustl.edu>
+//    Carlos O'Ryan <coryan@ece.uciedu>
+//    Ossama Othman <ossama@ece.uci.du>
 //
 // ============================================================================
 
@@ -30,6 +30,19 @@
 
 #include <openssl/x509.h>
 #include <openssl/err.h>
+#include <openssl/rand.h>
+
+
+#ifdef ACE_HAS_THREADS
+ACE_mutex_t * ACE_SSL_Context::lock_ = 0;
+#endif  /* ACE_HAS_THREADS */
+
+// @@ We really need a better seed value.  A seed value based on the
+//    date and time, in combination with some other strings, may
+//    suffice.
+//      -Ossama
+static const char rnd_seed[] = "string to make the random number
+ generator think it has entropy";
 
 int ACE_SSL_Context::library_init_count_ = 0;
 
@@ -63,6 +76,37 @@ ACE_SSL_Context::ssl_library_init ()
       ::SSL_library_init ();
       ::SSL_load_error_strings ();
       ::SSLeay_add_ssl_algorithms ();
+
+      // Seed the random number generator
+      // @@ TODO: Need to pick a better seed value.
+      ::RAND_seed (rnd_seed,
+                   sizeof rnd_seed);
+
+#ifdef ACE_HAS_THREADS
+      int num_locks = ::CRYPTO_num_locks ();
+
+      ACE_NEW (ACE_SSL_Context::lock_,
+               ACE_mutex_t[num_locks]);
+
+      for (int i = 0; i < num_locks; ++i)
+        {
+          // rwlock_init(&(ACE_SSL_Context::lock_[i]), USYNC_THREAD,
+          // 0);
+          if (ACE_OS::mutex_init(&(ACE_SSL_Context::lock_[i]),
+                                 USYNC_THREAD,
+                                 0) != 0)
+            ACE_ERROR ((LM_ERROR,
+                        "(%P|%t) ACE_SSL_Context::ssl_library_init - %p\n",
+                        "mutex_init"));
+        }
+
+# if !defined (WIN32)
+      // This call isn't necessary on some platforms.  See the CRYPTO
+      // library's threads(3) man page for details.
+      ::CRYPTO_set_id_callback (ACE_SSL_thread_id);
+# endif  /* WIN32 */
+      ::CRYPTO_set_locking_callback (ACE_SSL_locking_callback);
+#endif  /* ACE_HAS_THREADS */
     }
   ACE_SSL_Context::library_init_count_++;
 }
@@ -77,7 +121,15 @@ ACE_SSL_Context::ssl_library_fini ()
   ACE_SSL_Context::library_init_count_--;
   if (ACE_SSL_Context::library_init_count_ == 0)
     {
-      // @@ What should we do here???
+#ifdef ACE_HAS_THREADS
+      int num_locks = ::CRYPTO_num_locks ();
+
+      ::CRYPTO_set_locking_callback (0);
+      for (int i = 0; i < num_locks; ++i)
+        ACE_OS::mutex_destroy (&(ACE_SSL_Context::lock_[i]));
+
+      delete [] ACE_SSL_Context::lock_;
+#endif  /* ACE_HAS_THREADS */
     }
 }
 
@@ -231,6 +283,43 @@ ACE_SSL_Context::certificate (const char *file_name,
 }
 
 // ****************************************************************
+
+#ifdef ACE_HAS_THREADS
+
+void
+ACE_SSL_locking_callback (int mode,
+                          int type,
+                          const char * /* file */,
+                          int /* line */)
+{
+  // #ifdef undef
+  //   fprintf(stderr,"thread=%4d mode=%s lock=%s %s:%d\n",
+  //           CRYPTO_thread_id(),
+  //           (mode&CRYPTO_LOCK)?"l":"u",
+  //           (type&CRYPTO_READ)?"r":"w",file,line);
+  // #endif
+  //   /*
+  //     if (CRYPTO_LOCK_SSL_CERT == type)
+  //     fprintf(stderr,"(t,m,f,l) %ld %d %s %d\n",
+  //     CRYPTO_thread_id(),
+  //     mode,file,line);
+  //   */
+  if (mode & CRYPTO_LOCK)
+    ACE_OS::mutex_lock (&(ACE_SSL_Context::lock_[type]));
+  else
+    ACE_OS::mutex_unlock (&(ACE_SSL_Context::lock_[type]));
+}
+
+unsigned long
+ACE_SSL_thread_id (void)
+{
+  return (unsigned long) ACE_OS::thr_self ();
+}
+#endif  /* ACE_HAS_THREADS */
+
+// ****************************************************************
+
+
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
