@@ -10,12 +10,17 @@
 //    Thread_Bounded_Packet_Relay.h
 //
 // = DESCRIPTION
-//   @@ Chris, please update these comments.
-//    This code exercises the <ACE_Thread_Timer_Queue_Adapter> using
-//    an <ACE_Timer_Heap_T>.
+//    This code provides a thread based implementation
+//    of the bounded packet relay example.
 //
 // = AUTHORS
-//    Carlos O'Ryan <coryan@cs.wustl.edu> and
+//    Chris Gill           <cdgill@cs.wustl.edu>  and			
+//    Douglas C. Schmidt   <schmidt@cs.wustl.edu>
+//
+//    Based on the Timer Queue Test example written by
+//
+//    Carlos O'Ryan        <coryan@cs.wustl.edu>  and
+//    Douglas C. Schmidt   <schmidt@cs.wustl.edu> and
 //    Sergio Flores-Gaitan <sergio@cs.wustl.edu>
 //
 // ============================================================================
@@ -70,10 +75,10 @@ public:
 
 private:
   RECEIVER &receiver_;
-  // object where the method resides.
+  // Object where the method resides.
 
   ACTION action_;
-  // method that is going to be invoked.
+  // Method that is going to be invoked.
 };
 
 class Text_Input_Device_Wrapper : public Input_Device_Wrapper_Base
@@ -99,11 +104,10 @@ public:
   Text_Input_Device_Wrapper (ACE_Thread_Manager *input_task_mgr,
                              size_t read_length, 
                              const char* text);
-  // @@ Chris, please spell out these names as "constructor" and
-  // "destructor."  ctor
+  // Constructor.
 
   ~Text_Input_Device_Wrapper (void);
-  // dtor
+  // Destructor.
 
 protected:
   virtual ACE_Message_Block *create_input_message (void);
@@ -112,16 +116,13 @@ protected:
 
 private:
   size_t read_length_;
-  // @@ Chris, make sure that you capitalize the first character of
-  // all comments and that you put a period at the end of each one.
-  // length of the buffer into which to "read".  Please do this for
-  // all your comments in *.h files.
+  // Length of the buffer into which to "read".
 
   const char *text_;
-  // text to "read" into the buffer
+  // Text to "read" into the buffer.
 
   size_t index_;
-  // index into the string
+  // Index into the string.
 };
 
 class Text_Output_Driver_Wrapper : public Output_Device_Wrapper_Base
@@ -133,22 +134,23 @@ class Text_Output_Driver_Wrapper : public Output_Device_Wrapper_Base
   //    Data from the passed output message is printed to the standard
   //    output stream, if logging is turned on.
 public:
+
   Text_Output_Driver_Wrapper (int logging = 0);
-  // default ctor
+  // Default constructor.
 
   // = Command Accessible Entry Points
 
   virtual int write_output_message (void *message);
-  // consume and possibly print out the passed message
+  // Consumes and possibly prints out the passed message.
 
   virtual int modify_device_settings (void *logging);
-  // modifies device settings based on passed pointer to a u_long
-  // turns logging on if u_long is non-zero, off if u_long is zero,
+  // Modifies device settings based on passed pointer to a u_long.
+  // Turns logging on if u_long is non-zero, off if u_long is zero,
   // and does nothing if the pointer is null.
 
 private:
   int logging_;
-  // 0 if logging is turned off, non-zero otherwise
+  // This value is 0 if logging is turned off, non-zero otherwise
 };
 
 class User_Input_Task : public ACE_Task_Base
@@ -157,16 +159,16 @@ class User_Input_Task : public ACE_Task_Base
   //   Read user actions on the Timer_Queue from stdin.
   //
   // = DESCRIPTION
-  //   This class reads user input from stdin; those commands permit
+  //   This class reads user input from stdin. The commands allow
   //   the control of a Timer_Queue, which is dispatched by another
   //   thread.
 public:
   typedef int (User_Input_Task::*ACTION) (void *);
-  // trait for command accessible entry points
+  // Trait for command accessible entry points.
 
   User_Input_Task (Thread_Timer_Queue *queue,
 	           Thread_Bounded_Packet_Relay_Driver &timer_queue_driver);
-  // ctor
+  // Constructor.
 
   virtual int svc (void);
   // This method runs the event loop in the new thread.
@@ -174,42 +176,42 @@ public:
   // = Some helper methods.
 
   int set_packet_count (void *);
-  // set the number of packets for the next transmission.
+  // Sets the number of packets for the next transmission.
 
   int set_arrival_period (void *);
-  // sets the input device packet arrival period (usecs) for the next
+  // Sets the input device packet arrival period (usecs) for the next
   // transmission.
 
   int set_send_period (void *);
-  // sets the period between output device sends (usecs) for the next
+  // Sets the period between output device sends (usecs) for the next
   // transmission.
 
   int set_duration_limit (void *);
-  // sets a limit on the transmission duration (usecs)
+  // Sets a limit on the transmission duration (usecs).
 
   int set_logging_level (void *);
-  // sets logging level (0 or 1) for output device for the next
-  // transmission
+  // Sets logging level (0 or 1) for output device for the next
+  // transmission.
 
   int run_transmission (void *);
-  // runs the next transmission (if one is not in progress)
+  // Runs the next transmission (if one is not in progress).
 
   int end_transmission (void *);
-  // ends the current transmission (if one is in progress)
+  // Ends the current transmission (if one is in progress).
 
   int report_stats (void *);
-  // reports statistics for the previous transmission (if one is not
-  // in progress)
+  // Reports statistics for the previous transmission (if one is not
+  // in progress).
 
   int shutdown (void *);
-  // Shutdown task.
+  // Shuts down the task.
 
 private:
   const int usecs_;
   // How many microseconds are in a second.
 
   Bounded_Packet_Relay<ACE_Thread_Mutex> *relay_;
-  // the bounded packet relay
+  // The bounded packet relay.
 
   Thread_Timer_Queue *queue_;
   // The timer queue implementation.
@@ -218,19 +220,19 @@ private:
   // The thread timer queue test driver.
 
   u_long packet_count_;
-  // count of packets to send in a transmission
+  // Count of packets to send in a transmission.
 
   u_long arrival_period_;
-  // rate at which input packets are to arrive
+  // Rate at which input packets are to arrive.
 
   u_long send_period_;
-  // rate at which packets are to be relayed (usec)
+  // Rate at which packets are to be relayed (usec).
 
   u_long duration_limit_;
-  // limit on the duration of the transmission (usec)
+  // Limit on the duration of the transmission (usec).
 
   u_long logging_level_;
-  // logging level
+  // Logging level.
 
 };
 
@@ -250,17 +252,17 @@ public:
                 const ACE_Time_Value &duration,
                 Bounded_Packet_Relay<ACE_Thread_Mutex> &relay,
                 Thread_Timer_Queue &queue);
-  // ctor
+  // Constructor.
 
   ~Send_Handler (void);
-  // dtor
+  // Destructor.
 
   virtual int handle_timeout (const ACE_Time_Value &current_time,
 			      const void *arg);
   // Call back hook.
 
   virtual int cancelled (void);
-  // Cancellation hook
+  // Cancellation hook.
 
 private:
   u_long send_count_;
@@ -268,16 +270,16 @@ private:
   // relay object to the output device object.
 
   ACE_Time_Value duration_;
-  // Store the expected duration until expiration, it is used to 
+  // Stores the expected duration until expiration, and is used to 
   // re-register the handler if there are still sends to perform.
 
   Bounded_Packet_Relay<ACE_Thread_Mutex> &relay_;
-  // Store a reference to the relay object on which to invoke
-  // the appropritate calls when the timer expires
+  // Stores a reference to the relay object on which to invoke
+  // the appropritate calls when the timer expires.
 
   Thread_Timer_Queue &queue_;
-  // Store a reference to the timer queue, in which we'll re-register
-  // ourselves if there are still sends to perform
+  // Store a reference to the timer queue, in which to re-register
+  // the send timer and handler if there are still sends to perform.
 };
 
 class Termination_Handler : public ACE_Event_Handler
@@ -291,25 +293,25 @@ class Termination_Handler : public ACE_Event_Handler
 public:
   Termination_Handler (Bounded_Packet_Relay<ACE_Thread_Mutex> &relay,
                        Thread_Timer_Queue &queue);
-  // ctor
+  // Constructor.
 
   ~Termination_Handler (void);
-  // dtor
+  // Destructor.
 
   virtual int handle_timeout (const ACE_Time_Value &current_time,
 			      const void *arg);
   // Call back hook.
 
   virtual int cancelled (void);
-  // Cancellation hook
+  // Cancellation hook.
 
 private:
   Bounded_Packet_Relay<ACE_Thread_Mutex> &relay_;
-  // Store a reference to the relay object on which to invoke the end
-  // transmission call when the timer expires
+  // Stores a reference to the relay object on which to invoke
+  // the end transmission call when the timer expires.
 
   Thread_Timer_Queue &queue_;
-  // Store a reference to the timer queue, which we'll clear of all
+  // Stores a reference to the timer queue, which we'll clear of all
   // timers when this one expires.
 };
 
@@ -325,25 +327,28 @@ class Thread_Bounded_Packet_Relay_Driver : public Bounded_Packet_Relay_Driver <T
   //    called from the base class to print a menu specific to the
   //    thread implementation of the timer queue.
 public:
+
   // = Initialization and termination methods.
+
   Thread_Bounded_Packet_Relay_Driver (void);
-  // ctor
+  // Constructor.
 
   ~Thread_Bounded_Packet_Relay_Driver (void);
-  // dtor
+  // Destructor.
 
   virtual int display_menu (void);
-  // display the user menu 
+  // Displays the user menu.
 
   virtual int init (void);
-  // initialize the driver
+  // Initializes the driver.
 
   virtual int run (void);
-  // run the driver
+  // Run the driver.
 
 private:
+
   User_Input_Task input_task_;
-  // Subclassed from ACE_Task.
+  // User input task, subclassed from ACE_Task.
 };
 
 #endif /* _THREAD_BOUNDED_PACKET_RELAY_H_ */

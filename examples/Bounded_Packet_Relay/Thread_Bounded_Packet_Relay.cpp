@@ -12,12 +12,14 @@
 //    Method definitions for the threaded-bounded packet relay class.
 //
 // = AUTHORS
-//    Chris Gill          <cdgill@cs.wustl.edu>
+//    Chris Gill           <cdgill@cs.wustl.edu>  and
+//    Douglas C. Schmidt   <schmidt@cs.wustl.edu>
 //
-//    Based on the threaded timer queue driver by
+//    Based on the Timer Queue Test example written by
 //
-//    Carlos O'Ryan       <coryan@cs.wustl.edu>
-//    Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+//    Carlos O'Ryan        <coryan@cs.wustl.edu>  and
+//    Douglas C. Schmidt   <schmidt@cs.wustl.edu> and
+//    Sergio Flores-Gaitan <sergio@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -28,7 +30,7 @@
 
 ACE_RCSID(Bounded_Packet_Relay, Thread_Bounded_Packet_Relay, "$Id$")
 
-// constructor
+// Constructor.
 
 template <class RECEIVER, class ACTION>
 Command<RECEIVER, ACTION>::Command (RECEIVER &recvr,
@@ -38,7 +40,7 @@ Command<RECEIVER, ACTION>::Command (RECEIVER &recvr,
 {
 }
 
-// invokes an operation.
+// Invokes an operation.
 
 template <class RECEIVER, class ACTION> int
 Command<RECEIVER, ACTION>::execute (void *arg)
@@ -46,47 +48,43 @@ Command<RECEIVER, ACTION>::execute (void *arg)
   return (receiver_.*action_) (arg);
 }
 
+// Constructor.
+
 Text_Input_Device_Wrapper::Text_Input_Device_Wrapper (ACE_Thread_Manager *input_task_mgr,
                                                       size_t read_length, 
                                                       const char* text)
-  : Input_Device_Wrapper_Base (input_task_mgr)
-  // @@ Chris, your coding style here is not consistent with the rest of ACE.  this
-  // should be 
-  // : Input_Device.... (....),
-  //   read_length_ (....),
-  //   text_ (....), 
-  //   index_ (0)
-  // Please be follow this in the future.
-  , read_length_ (read_length)
-  , text_ (text)
-  , index_ (0)
+  : Input_Device_Wrapper_Base (input_task_mgr),
+    read_length_ (read_length),
+    text_ (text),
+    index_ (0)
 {
 }
-  // ctor
+
+// Destructor.
 
 Text_Input_Device_Wrapper::~Text_Input_Device_Wrapper (void)
 {
 }
-  // dtor
+
+// Creates a new message block, carrying data
+// read from the underlying input device.
 
 ACE_Message_Block *
 Text_Input_Device_Wrapper::create_input_message (void)
 {
-  // @@ Chris, make sure to use the proper capitalization and
-  // punctuation for these and all comments...
 
-  // construct a new message block to send
+  // Construct a new message block to send.
   ACE_Message_Block *mb;
   ACE_NEW_RETURN (mb, 
                   ACE_Message_Block (read_length_), 
                   0);
 
-  // zero out a "read" buffer to hold data
+  // Zero out a "read" buffer to hold data.
   char read_buf [BUFSIZ];
   ACE_OS::memset (read_buf, 0, BUFSIZ);
 
-  // loop through the text, filling in data to copy into
-  // the read buffer (leaving room for a terminating zero)
+  // Loop through the text, filling in data to copy into
+  // the read buffer (leaving room for a terminating zero).
   for (size_t i = 0; i < read_length_ - 1; ++i)
     {
       read_buf [i] = text_ [index_];
@@ -105,22 +103,40 @@ Text_Input_Device_Wrapper::create_input_message (void)
   return mb;
 }
 
-// creates a new message block, carrying data
-// read from the underlying input device  
+// Constructor.
 
 Text_Output_Driver_Wrapper::Text_Output_Driver_Wrapper (int logging)
   : logging_ (logging)
 {
 }
-  // default ctor
+
+// Consume and possibly print out the passed message.
 
 int 
 Text_Output_Driver_Wrapper::write_output_message (void *message)
 {
+  if (message)
+  {
+    if (logging_)
+    {
+// CDG - TBD - print (also fix other printfs to use ACE_DEBUG, ACE_ERROR)
+//      ACE_DEBUG ();
+    }
+
+    delete ACE_static_cast (ACE_Message_Block *, message);
+  }
+
+  ACE_ERROR_RETURN ((LM_ERROR,
+                     "Text_Output_Driver_Wrapper::"
+                     "write_output_message: null argument"), -1);
+
   return 0;
 }
 
-// consume and possibly print out the passed message
+
+// Modifies device settings based on passed pointer to a u_long
+// turns logging on if u_long is non-zero, off if u_long is zero,
+// and does nothing if the pointer is null.
 
 int 
 Text_Output_Driver_Wrapper::modify_device_settings (void *logging)
@@ -141,15 +157,7 @@ Text_Output_Driver_Wrapper::modify_device_settings (void *logging)
   }
 }
 
-// @@ Chris, you are not intenting your comments correctly.  The
-// comments before each method should be flush against the left column
-// and there should be only one blank line between the comments and
-// the method.
-
-  // modifies device settings based on passed pointer to a u_long
-  // turns logging on if u_long is non-zero, off if u_long is zero,
-  // and does nothing if the pointer is null.
-
+// Constructor.
 
 User_Input_Task::User_Input_Task (Thread_Timer_Queue *queue,
                                   Thread_Bounded_Packet_Relay_Driver &tbprd)
@@ -160,29 +168,26 @@ User_Input_Task::User_Input_Task (Thread_Timer_Queue *queue,
 {
 }
 
-  // ctor
+// Runs the main event loop.
 
 int 
 User_Input_Task::svc (void)
 {
   for (;;)
-    // call back to the driver's implementation on how to read and
-    // parse input.
+    // Call back to the driver's implementation
+    // of how to read and parse input.
     if (this->driver_.get_next_request () == -1)
       break;
 
-  // we are done.
+  // We are done.
   this->relay_->end_transmission (Bounded_Packet_Relay_Base::CANCELLED);
   this->queue_->deactivate ();
   ACE_DEBUG ((LM_DEBUG,
               "terminating input thread\n"));
   return 0;
-} // @@ Chris, you are putting the comments in the wrong place...
- // They should go BEFORE the method, not after it...  It's only in
- // the header file that they must go after the method...
-  // This method runs the event loop in the new thread.
+} 
 
-  // = Some helper methods.
+// Sets the number of packets for the next transmission.
 
 int 
 User_Input_Task::set_packet_count (void *argument)
@@ -197,7 +202,9 @@ User_Input_Task::set_packet_count (void *argument)
                      "User_Input_Task::set_packet_count: null argument"), 
                     -1);
 }
-  // set the number of packets for the next transmission.
+
+// Sets the input device packet arrival period (usecs)
+// for the next transmission.
 
 int 
 User_Input_Task::set_arrival_period (void *argument)
@@ -212,8 +219,9 @@ User_Input_Task::set_arrival_period (void *argument)
                      "User_Input_Task::set_arrival_period: null argument"), 
                     -1);
 }
-  // sets the input device packet arrival period (usecs)
-  // for the next transmission.
+
+// Sets the period between output device sends (usecs)
+// for the next transmission.
 
 int 
 User_Input_Task::set_send_period (void *argument)
@@ -228,8 +236,8 @@ User_Input_Task::set_send_period (void *argument)
                      "User_Input_Task::set_send_period: null argument"), 
                     -1);
 }
-  // sets the period between output device sends (usecs)
-  // for the next transmission.
+
+// Sets a limit on the transmission duration (usecs).
 
 int 
 User_Input_Task::set_duration_limit (void *argument)
@@ -244,7 +252,9 @@ User_Input_Task::set_duration_limit (void *argument)
                      "User_Input_Task::set_duration_limit: null argument"), 
                     -1);
 }
-  // sets a limit on the transmission duration (usecs)
+
+// Sets logging level (0 or 1) for output device
+// for the next transmission.
 
 int 
 User_Input_Task::set_logging_level (void *argument)
@@ -259,8 +269,8 @@ User_Input_Task::set_logging_level (void *argument)
                      "User_Input_Task::set_logging_level: null argument"), 
                     -1);
 }
-  // sets logging level (0 or 1) for output device
-  // for the next transmission
+
+// Runs the next transmission (if one is not in progress).
 
 int 
 User_Input_Task::run_transmission (void *argument)
@@ -341,7 +351,8 @@ User_Input_Task::run_transmission (void *argument)
                      "relay not instantiated"), 
                     -1);
 }
-  // runs the next transmission (if one is not in progress)
+
+// Ends the current transmission (if one is in progress).
 
 int 
 User_Input_Task::end_transmission (void *argument)
@@ -369,7 +380,7 @@ User_Input_Task::end_transmission (void *argument)
            /* not reached */
 
         case 0: 
-          // cancel any remaining timers
+          // Cancel any remaining timers.
 
           for (ACE_Timer_Node_T <ACE_Event_Handler *> *node;
                (node = queue_->timer_queue ().get_first ()) != 0;
@@ -396,7 +407,9 @@ User_Input_Task::end_transmission (void *argument)
                      "relay not instantiated"), 
                     -1);
 }
-  // ends the current transmission (if one is in progress)
+
+// Reports statistics for the previous transmission 
+// (if one is not in progress).
 
 int 
 User_Input_Task::report_stats (void *argument)
@@ -429,8 +442,9 @@ User_Input_Task::report_stats (void *argument)
                      "relay not instantiated"), 
                     -1);
 }
-  // reports statistics for the previous transmission 
-  // (if one is not in progress)
+
+
+// Shut down the task.
 
 int 
 User_Input_Task::shutdown (void *argument)
@@ -449,25 +463,28 @@ User_Input_Task::shutdown (void *argument)
   // -1 indicates we are shutting down the application.
   return -1;
 }
-  // Shutdown task.
+
+
+// Constructor.
 
 Send_Handler::Send_Handler (u_long send_count, 
                             const ACE_Time_Value &duration,
                             Bounded_Packet_Relay<ACE_Thread_Mutex> &relay,
                             Thread_Timer_Queue &queue)
-  // @@ Chris, please fix the formatting here...
-  : send_count_ (send_count)
-  , duration_ (duration)
-  , relay_ (relay)
-  , queue_ (queue)
+  : send_count_ (send_count),
+    duration_ (duration),
+    relay_ (relay),
+    queue_ (queue)
 {
 }
-  // ctor
+
+// Destructor.
 
 Send_Handler::~Send_Handler (void)
 {
 }
-  // dtor
+
+// Call back hook.
 
 int 
 Send_Handler::handle_timeout (const ACE_Time_Value &current_time,
@@ -476,13 +493,13 @@ Send_Handler::handle_timeout (const ACE_Time_Value &current_time,
   switch (relay_->send_input ())
     {
     case 0:
-      // decrement count of packets to relay
+      // Decrement count of packets to relay.
       --send_count_;
-      /* fall through to next case */
+      /* Fall through to next case. */
     case 1:
       if (send_count_ > 0)
         {
-          // re-register the handler for a new timeout
+          // Re-register the handler for a new timeout.
           if (queue_->schedule (this, 0, 
                                 duration_ + ACE_OS::gettimeofday ()) < 0)
             ACE_ERROR_RETURN ((LM_ERROR, 
@@ -497,8 +514,8 @@ Send_Handler::handle_timeout (const ACE_Time_Value &current_time,
           // Can you please abstract it out into a helper method and
           // call it, rather than writing it redundantly?
 
-          // all packets are sent, time to cancel any other
-          // timers, end the transmission, and go away
+          // All packets are sent, time to cancel any other
+          // timers, end the transmission, and go away.
           for (ACE_Timer_Node_T <ACE_Event_Handler *> *node;
                (node = queue_->timer_queue ().get_first ()) != 0;
                )
@@ -508,12 +525,14 @@ Send_Handler::handle_timeout (const ACE_Time_Value &current_time,
           delete this;
           return 0;
         }
+
       /* NOT REACHED */
     default:
       return -1;
     }
 }
-  // Call back hook.
+
+// Cancellation hook.
 
 int 
 Send_Handler::cancelled (void)
@@ -521,27 +540,30 @@ Send_Handler::cancelled (void)
   delete this;
   return 0;
 }
-  // Cancellation hook
+
+// Constructor.
 
 Termination_Handler::Termination_Handler (Bounded_Packet_Relay<ACE_Thread_Mutex> &relay,
                                           Thread_Timer_Queue &queue)
-  : relay_ (relay)
-  , queue_ (queue)
+  : relay_ (relay),
+    queue_ (queue)
 {
 }
-  // ctor
+
+// Destructor.
 
 Termination_Handler::~Termination_Handler (void)
 {
 }
-  // dtor
+
+// Call back hook.
 
 int 
 Termination_Handler::handle_timeout (const ACE_Time_Value &current_time,
                                      const void *arg)
 {
-  // transmission timed out, cancel any other
-  // timers, end the transmission, and go away
+  // Transmission timed out, so cancel any other
+  // timers, end the transmission, and go away.
   for (ACE_Timer_Node_T <ACE_Event_Handler *> *node;
        (node = queue_->timer_queue ().get_first ()) != 0;
        )
@@ -551,7 +573,9 @@ Termination_Handler::handle_timeout (const ACE_Time_Value &current_time,
   delete this;
   return 0;
 }
-  // Call back hook.
+
+
+// Cancellation hook
 
 int 
 Termination_Handler::cancelled (void)
@@ -559,18 +583,21 @@ Termination_Handler::cancelled (void)
   delete this;
   return 0;
 }
-  // Cancellation hook
+
+// Constructor.
 
 Thread_Bounded_Packet_Relay_Driver::Thread_Bounded_Packet_Relay_Driver (void)
   : input_task_ (&timer_queue_, *this)
 {
 }
-// ctor
+
+// Destructor.
 
 Thread_Bounded_Packet_Relay_Driver::~Thread_Bounded_Packet_Relay_Driver (void)
 {
 }
-// dtor
+
+// Display the user menu.
 
 int 
 Thread_Bounded_Packet_Relay_Driver::display_menu (void)
@@ -598,7 +625,8 @@ Thread_Bounded_Packet_Relay_Driver::display_menu (void)
 
   return 0;
 }
-// display the user menu
+
+// Initialize the driver.
 
 int 
 Thread_Bounded_Packet_Relay_Driver::init (void);
@@ -607,8 +635,8 @@ Thread_Bounded_Packet_Relay_Driver::init (void);
   // compilers.  Can you please move it to outside of the method?
   typedef Command<Input_Task, Input_Task::ACTION> CMD;
 
-  // initialize the <Command> objects with their corresponding
-  // methods from <Input_Task>
+  // Initialize the <Command> objects with their corresponding
+  // methods from <User_Input_Task>.
   ACE_NEW_RETURN (packet_count_cmd_,
                   CMD (input_task_,
                        &User_Input_Task::set_packet_count),
@@ -659,7 +687,8 @@ Thread_Bounded_Packet_Relay_Driver::init (void);
                       -1);
   return 0;
 }
-// initialize the driver
+
+// Run the driver
 
 int 
 Thread_Bounded_Packet_Relay_Driver::run (void)
@@ -667,7 +696,6 @@ Thread_Bounded_Packet_Relay_Driver::run (void)
   this->init ();
   return 0;
 }
-// run the driver
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Thread_Timer_Queue_Adapter<Timer_Heap>;
