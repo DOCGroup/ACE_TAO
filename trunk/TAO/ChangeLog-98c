@@ -7,6 +7,9 @@ Mon Dec 14 08:35:11 1998  David L. Levine  <levine@cs.wustl.edu>
           dangerous because it overwrote the measured usecs with a hard-coded
           value of 2000.
 
+        * performance-tests/Cubit/TAO/MT_Cubit/client.cpp (print_util_stats):
+          fixed printout to reflect whether -l option had been used or not.
+
 Mon Dec 14 08:08:32 EST 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
         * TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ci.cpp:
