@@ -14,29 +14,29 @@ Sat Mar 14 06:43:32 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Sat Mar 14 00:13:22 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Task.h (ACE_Task_Base): Give a default value of 0 for the
- 	  Thread Manager so we can use this as a base class.
+        * ace/Task.h (ACE_Task_Base): Give a default value of 0 for the
+          Thread Manager so we can use this as a base class.
 
-	* tests/Future_Test.cpp: Since the Scheduler provides its own
- 	  activation queue it doesn't make sense to inherit from ACE_Task
- 	  (which provides its own queue) but instead ACE_Task_Base
-	  (which doesn't define its own queue).  Thanks to Loren Rittle
- 	  <rittle@comm.mot.com> for reporting this.
+        * tests/Future_Test.cpp: Since the Scheduler provides its own
+          activation queue it doesn't make sense to inherit from ACE_Task
+          (which provides its own queue) but instead ACE_Task_Base
+          (which doesn't define its own queue).  Thanks to Loren Rittle
+          <rittle@comm.mot.com> for reporting this.
 
-	* examples/Threads/future[12].cpp: Since the Scheduler provides
- 	  its own activation queue it doesn't make sense to inherit from
- 	  ACE_Task (which provides its own queue) but instead
- 	  ACE_Task_Base (which doesn't define its own queue).  Thanks to
- 	  Loren Rittle <rittle@comm.mot.com> for reporting this.
+        * examples/Threads/future[12].cpp: Since the Scheduler provides
+          its own activation queue it doesn't make sense to inherit from
+          ACE_Task (which provides its own queue) but instead
+          ACE_Task_Base (which doesn't define its own queue).  Thanks to
+          Loren Rittle <rittle@comm.mot.com> for reporting this.
 
-	* examples/Threads/future[12].cpp: Removed the explicit call to
- 	  scheduler_->close() to avoid closing the scheduler down twice.
-  	  Thanks to Loren Rittle <rittle@comm.mot.com> for reporting this.
+        * examples/Threads/future[12].cpp: Removed the explicit call to
+          scheduler_->close() to avoid closing the scheduler down twice.
+          Thanks to Loren Rittle <rittle@comm.mot.com> for reporting this.
 
 Fri Mar 13 23:41:44 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Process.cpp (ACE_Process_Options): Moved column out of
-	  ifdef'ed area.
+        * ace/Process.cpp (ACE_Process_Options): Moved column out of
+          ifdef'ed area.
 
 Fri Mar 13 21:17:51 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -45,15 +45,15 @@ Fri Mar 13 21:17:51 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Fri Mar 13 17:30:16 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Process.{h,i,cpp}: As CE's CreateProcess is basically
-	  broken, you can only start a new process using ACE_Process.  You
-	  cannot set any of environment, process attributes, thread
-	  attributes, current directory, stratup info, and security
-	  attributes. I have modified these files so that most attribute
-	  access functions just do nothing.  Some of "do nothing"
-	  functions were defined as ACE_INLINE on CE.
+        * ace/Process.{h,i,cpp}: As CE's CreateProcess is basically
+          broken, you can only start a new process using ACE_Process.  You
+          cannot set any of environment, process attributes, thread
+          attributes, current directory, stratup info, and security
+          attributes. I have modified these files so that most attribute
+          access functions just do nothing.  Some of "do nothing"
+          functions were defined as ACE_INLINE on CE.
 
-	* ace/Memory_Pool.cpp:  Regular CE stuff.
+        * ace/Memory_Pool.cpp:  Regular CE stuff.
 
 Fri Mar 13 09:09:08 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -66,90 +66,90 @@ Fri Mar 13 09:09:08 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Fri Mar 13 01:10:36 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/WFMO_Reactor: The following changes were made to make the
- 	  registration and removal of event_handlers from WFMO_Reactor
- 	  more robust. Thanks to Jonathan Biggar <jon@floorboard.com> for
- 	  helping out.
+        * ace/WFMO_Reactor: The following changes were made to make the
+          registration and removal of event_handlers from WFMO_Reactor
+          more robust. Thanks to Jonathan Biggar <jon@floorboard.com> for
+          helping out.
 
-	  - ACE_WFMO_Reactor_Handler_Repository::Common_Info now contains
- 	    the delete_entry_ and close_masks_ fields as these were now
- 	    common to all three structures.
+          - ACE_WFMO_Reactor_Handler_Repository::Common_Info now contains
+            the delete_entry_ and close_masks_ fields as these were now
+            common to all three structures.
 
-	  - handle_additions() and handle_deletions() were changed to
- 	    make_changes_in_current_infos(),
- 	    make_changes_in_suspension_infos(), and
- 	    make_changes_in_to_be_added_infos()
+          - handle_additions() and handle_deletions() were changed to
+            make_changes_in_current_infos(),
+            make_changes_in_suspension_infos(), and
+            make_changes_in_to_be_added_infos()
 
-	  - Correct range for suspend_handlers() is 0 to max_handlep1_
- 	    rather than (max_handlep1_ - 1)
+          - Correct range for suspend_handlers() is 0 to max_handlep1_
+            rather than (max_handlep1_ - 1)
 
-	  - suspend_handlers(),
-	    resume_handlers(),
-	    add_network_events_i(),
-	    unbind_i(),
-	    suspend_handler_i(),
-	    resume_handler_i(),
-	    unbind_all(),
+          - suspend_handlers(),
+            resume_handlers(),
+            add_network_events_i(),
+            unbind_i(),
+            suspend_handler_i(),
+            resume_handler_i(),
+            unbind_all(),
 
-	    now go through the to_be_add_info_ array when making changes.
+            now go through the to_be_add_info_ array when making changes.
 
-	* examples/Reactor/ReactorEx/test_prerun_state_changes.cpp: New
- 	  test added to check the Reactor's ability to handle state
- 	  changes before getting a chance to run.
+        * examples/Reactor/ReactorEx/test_prerun_state_changes.cpp: New
+          test added to check the Reactor's ability to handle state
+          changes before getting a chance to run.
 
-	* examples/Reactor/ReactorEx/test_talker.cpp (main): Remove the
- 	  Procator from the Reactor so that the Proactor is not called
- 	  after it has been destroyed.
+        * examples/Reactor/ReactorEx/test_talker.cpp (main): Remove the
+          Procator from the Reactor so that the Proactor is not called
+          after it has been destroyed.
 
 Thu Mar 12 19:36:43 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ACE-INSTALL.html: Tidied up a bunch of things in this file.
-  	  Also, created a new $ACE_ROOT/os-patches/ directory and moved
- 	  the patches for Linux and LynxOS into this in order to
- 	  consolidate the patches into one location.
+        * ACE-INSTALL.html: Tidied up a bunch of things in this file.
+          Also, created a new $ACE_ROOT/os-patches/ directory and moved
+          the patches for Linux and LynxOS into this in order to
+          consolidate the patches into one location.
 
-	* ace/WFMO_Reactor.cpp (upcall): Cleaned up a bunch of code to (1)
- 	  avoid a nasty "dangling else" bug and (2) simplify a bunch of
- 	  if/if statements.  Thanks to Jonathan Biggar
- 	  <jon@floorboard.com> for pointing this out.
+        * ace/WFMO_Reactor.cpp (upcall): Cleaned up a bunch of code to (1)
+          avoid a nasty "dangling else" bug and (2) simplify a bunch of
+          if/if statements.  Thanks to Jonathan Biggar
+          <jon@floorboard.com> for pointing this out.
 
 Thu Mar 12 18:21:15 1998  James C Hu  <jxh@cs.wustl.edu>
 
-	* ace/config-linux-common.h: Incorporated changes that were
-	  suggested by Robert Hanzlik <robi@codalan.cz> to get ACE to
-	  compile on Linux using glibc 2.1 and libg++/gcc 2.8.
+        * ace/config-linux-common.h: Incorporated changes that were
+          suggested by Robert Hanzlik <robi@codalan.cz> to get ACE to
+          compile on Linux using glibc 2.1 and libg++/gcc 2.8.
 
 Thu Mar 12 17:25:28 1998  James C Hu  <jxh@cs.wustl.edu>
 
-	* ACE-INSTALL.html: Added a table to Supported Platforms and
-	  Compilers.
+        * ACE-INSTALL.html: Added a table to Supported Platforms and
+          Compilers.
 
 Thu Mar 12 16:28:32 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* Apply regular string manipulation for CE to following files:
-	  ACE.cpp ARGV.cpp Acceptor.cpp Activation_Queue.cpp
-	  Asynch_Acceptor.cpp Asynch_IO.cpp CORBA_Handler.cpp
-	  Connector.cpp Containers.cpp DEV_Addr.cpp Dynamic_Service.cpp
-	  FIFO.cpp FIFO_Recv.cpp FIFO_Recv_Msg.cpp FIFO_Send.cpp
-	  FIFO_Send_Msg.cpp FILE_Addr.cpp FILE_Connector.cpp Filecache.cpp
-	  Future.cpp Get_Opt.cpp Hash_Map_Manager.cpp LSOCK.cpp
-	  LSOCK_CODgram.cpp LSOCK_Connector.cpp LSOCK_Dgram.cpp
-	  Local_Name_Space_T.cpp Local_Tokens.cpp Local_Tokens.i
-	  Malloc_T.cpp Map_Manager.cpp Mem_Map.cpp Memory_Pool.cpp
-	  Message_Queue.cpp Module.cpp Name_Proxy.cpp
-	  Name_Request_Reply.cpp Naming_Context.cpp Obstack.cpp
-	  Parse_Node.cpp Pipe.cpp Priority_Reactor.cpp Proactor.cpp
-	  Process_Manager.cpp Read_Buffer.cpp Registry_Name_Space.cpp
-	  Remote_Name_Space.cpp Remote_Tokens.cpp SPIPE_Acceptor.cpp
-	  SV_Semaphore_Complex.cpp SV_Semaphore_Simple.cpp
-	  Select_Reactor.cpp Service_Config.cpp Service_Main.cpp
-	  Service_Manager.cpp Service_Repository.cpp Service_Types.cpp
-	  Singleton.cpp Strategies_T.cpp Stream.cpp Svc_Handler.cpp
-	  TLI.cpp TLI_Acceptor.cpp TLI_Connector.i Task_T.cpp
-	  Time_Request_Reply.cpp Timer_Queue_Adapters.cpp
-	  Token_Collection.cpp Token_Invariants.cpp Token_Manager.cpp
-	  Token_Request_Reply.cpp WFMO_Reactor.cpp WFMO_Reactor.i
-	  XtReactor.cpp.
+        * Apply regular string manipulation for CE to following files:
+          ACE.cpp ARGV.cpp Acceptor.cpp Activation_Queue.cpp
+          Asynch_Acceptor.cpp Asynch_IO.cpp CORBA_Handler.cpp
+          Connector.cpp Containers.cpp DEV_Addr.cpp Dynamic_Service.cpp
+          FIFO.cpp FIFO_Recv.cpp FIFO_Recv_Msg.cpp FIFO_Send.cpp
+          FIFO_Send_Msg.cpp FILE_Addr.cpp FILE_Connector.cpp Filecache.cpp
+          Future.cpp Get_Opt.cpp Hash_Map_Manager.cpp LSOCK.cpp
+          LSOCK_CODgram.cpp LSOCK_Connector.cpp LSOCK_Dgram.cpp
+          Local_Name_Space_T.cpp Local_Tokens.cpp Local_Tokens.i
+          Malloc_T.cpp Map_Manager.cpp Mem_Map.cpp Memory_Pool.cpp
+          Message_Queue.cpp Module.cpp Name_Proxy.cpp
+          Name_Request_Reply.cpp Naming_Context.cpp Obstack.cpp
+          Parse_Node.cpp Pipe.cpp Priority_Reactor.cpp Proactor.cpp
+          Process_Manager.cpp Read_Buffer.cpp Registry_Name_Space.cpp
+          Remote_Name_Space.cpp Remote_Tokens.cpp SPIPE_Acceptor.cpp
+          SV_Semaphore_Complex.cpp SV_Semaphore_Simple.cpp
+          Select_Reactor.cpp Service_Config.cpp Service_Main.cpp
+          Service_Manager.cpp Service_Repository.cpp Service_Types.cpp
+          Singleton.cpp Strategies_T.cpp Stream.cpp Svc_Handler.cpp
+          TLI.cpp TLI_Acceptor.cpp TLI_Connector.i Task_T.cpp
+          Time_Request_Reply.cpp Timer_Queue_Adapters.cpp
+          Token_Collection.cpp Token_Invariants.cpp Token_Manager.cpp
+          Token_Request_Reply.cpp WFMO_Reactor.cpp WFMO_Reactor.i
+          XtReactor.cpp.
 
 Thu Mar 12 15:37:14 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -159,105 +159,105 @@ Thu Mar 12 15:37:14 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Thu Mar 12 02:19:53 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/WFMO_Reactor.cpp (upcall): In the Select_Reactor, when it
- 	  upcalls to an event_handler which returns a -1, the
- 	  Select_Reactor only clears the specific mask bit for the
- 	  handler.  For example, for a call to
- 	  Event_Handler::handle_input() which returns -1, the
- 	  Select_Reactor clears the READ_MASK bit.
+        * ace/WFMO_Reactor.cpp (upcall): In the Select_Reactor, when it
+          upcalls to an event_handler which returns a -1, the
+          Select_Reactor only clears the specific mask bit for the
+          handler.  For example, for a call to
+          Event_Handler::handle_input() which returns -1, the
+          Select_Reactor clears the READ_MASK bit.
 
-	  In the WFMO_Reactor, if any handler returns a -1, then it clears
- 	  ALL of the mask bits for the event handler.
+          In the WFMO_Reactor, if any handler returns a -1, then it clears
+          ALL of the mask bits for the event handler.
 
-	  So, fixed WFMO_Reactor so that it works like Select_Reactor in
- 	  this regard.
+          So, fixed WFMO_Reactor so that it works like Select_Reactor in
+          this regard.
 
-	  Thanks to Jonathan Biggar <jon@floorboard.com> for pointing this
- 	  discrepancy out.
+          Thanks to Jonathan Biggar <jon@floorboard.com> for pointing this
+          discrepancy out.
 
-	* ace/WFMO_Reactor.cpp (dispatch_handles): The correct range check is
+        * ace/WFMO_Reactor.cpp (dispatch_handles): The correct range check is
           {WAIT_OBJECT_0,WAIT_OBJECT_0 + this->handler_rep_.max_handlep1 () - index}
           and not
-	  {WAIT_OBJECT_0,WAIT_OBJECT_0 + this->handler_rep_.max_handlep1 ()}
+          {WAIT_OBJECT_0,WAIT_OBJECT_0 + this->handler_rep_.max_handlep1 ()}
 
-	  Thanks to Evgeny Beskrovny evgeny_beskrovny@icomverse.com for
- 	  pointing this out.
+          Thanks to Evgeny Beskrovny evgeny_beskrovny@icomverse.com for
+          pointing this out.
 
 Wed Mar 11 15:20:09 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/OS.i (thr_getspecific): Added comments to the code to
- 	  explain the unusual step of saving errno across calls to
- 	  TlsGetValue() on Win32.  Thanks to Tim Harrison for clarifying
- 	  this.
+        * ace/OS.i (thr_getspecific): Added comments to the code to
+          explain the unusual step of saving errno across calls to
+          TlsGetValue() on Win32.  Thanks to Tim Harrison for clarifying
+          this.
 
 Wed Mar 11 00:39:29 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* CE-status: A temporary file to trace the progress of the CE
-	  port.
+        * CE-status: A temporary file to trace the progress of the CE
+          port.
 
-	* ace/ace_ce_dll.dsp: Added more .cpp files.
+        * ace/ace_ce_dll.dsp: Added more .cpp files.
 
-	* ace/High_Res_Timer.{h,cpp}: Undefined functions print_ave and
-	  print_total.  These two function use STDOUT which is not
-	  supported on CE.  We should probably modify the functions so
-	  they write results to Log_Msg.
-	  (get_register_scale_factor): This function always returns 1 on
-	  CE to prevent the use of High_Res_Timer.
-	  (get_env_global_scale_factor): Always returns -1 on CE because
-	  environment variables are not supported.
+        * ace/High_Res_Timer.{h,cpp}: Undefined functions print_ave and
+          print_total.  These two function use STDOUT which is not
+          supported on CE.  We should probably modify the functions so
+          they write results to Log_Msg.
+          (get_register_scale_factor): This function always returns 1 on
+          CE to prevent the use of High_Res_Timer.
+          (get_env_global_scale_factor): Always returns -1 on CE because
+          environment variables are not supported.
 
-	* ace/Thread_Manager.cpp (spawn_i): WinCE doesn't support
-	  DuplicateHandle, therefore the best we can do now is just pass
-	  back the handle to the spawned thread.  Notice that you *can't*
-	  close the handle by yourself under CE.  Perhaps we shouldn't
-	  even try to pass this info back. ???
-	  Applied regular CE porting tricks.
+        * ace/Thread_Manager.cpp (spawn_i): WinCE doesn't support
+          DuplicateHandle, therefore the best we can do now is just pass
+          back the handle to the spawned thread.  Notice that you *can't*
+          close the handle by yourself under CE.  Perhaps we shouldn't
+          even try to pass this info back. ???
+          Applied regular CE porting tricks.
 
-	* ace/SOCK_Dgram_Mcast.{h,cpp}:
-	* ace/SOCK_Dgram_Bcast.{h,cpp}: Changed some function signatures
-	  to use wchar on CE.  Applied regular CE porting tricks.
+        * ace/SOCK_Dgram_Mcast.{h,cpp}:
+        * ace/SOCK_Dgram_Bcast.{h,cpp}: Changed some function signatures
+          to use wchar on CE.  Applied regular CE porting tricks.
 
-	* ace/IO_SAP.cpp:
-	* ace/SOCK_CODgram.cpp:
-	* ace/SOCK_Dgram.cpp:
-	* ace/Select_Reactor.cpp:
-	* ace/Timer_{Hash,Heap,List,Queue,Wheel}_T.cpp: Applied regular CE
-	  porting tricks.  Erm, I'm running out of tricks.
+        * ace/IO_SAP.cpp:
+        * ace/SOCK_CODgram.cpp:
+        * ace/SOCK_Dgram.cpp:
+        * ace/Select_Reactor.cpp:
+        * ace/Timer_{Hash,Heap,List,Queue,Wheel}_T.cpp: Applied regular CE
+          porting tricks.  Erm, I'm running out of tricks.
 
 Tue Mar 10 20:27:57 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Reactor.h (reset_event_loop): Made the signature match with
- 	  its definition in .cpp file.
+        * ace/Reactor.h (reset_event_loop): Made the signature match with
+          its definition in .cpp file.
 
 Tue Mar 10 15:07:00 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Svc_Handler.cpp,
-	  ace/Module.cpp:
-	  Fixed some problems where Svc_Handlers in Modules were being
- 	  deleted prematurely.  Thanks to Steve Coy <stevec@magna.com.au>
- 	  for reporting this.
+        * ace/Svc_Handler.cpp,
+          ace/Module.cpp:
+          Fixed some problems where Svc_Handlers in Modules were being
+          deleted prematurely.  Thanks to Steve Coy <stevec@magna.com.au>
+          for reporting this.
 
-	* ace/Reactor.h (ACE_Reactor): Added a "reset_event_loop" method
- 	  so that it's possible to reset the loop again once the
- 	  end_event_loop() method is called.  Thanks to Eric Hopper
- 	  <ehopper@globalmt.com> for reporting this.
+        * ace/Reactor.h (ACE_Reactor): Added a "reset_event_loop" method
+          so that it's possible to reset the loop again once the
+          end_event_loop() method is called.  Thanks to Eric Hopper
+          <ehopper@globalmt.com> for reporting this.
 
-	* ace/IOStream_T.cpp (ACE_IOStream): Moved some code to work
- 	  around some bugs with MSVC++ 5.0.  Thanks to James CE Johnson
- 	  <ace-users@lads.com> for reporting this.
+        * ace/IOStream_T.cpp (ACE_IOStream): Moved some code to work
+          around some bugs with MSVC++ 5.0.  Thanks to James CE Johnson
+          <ace-users@lads.com> for reporting this.
 
 Tue Mar 10 15:57:54 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Handle_Set.cpp (dump):  Cast mask_.fd_count to size_t.
-	  Depend on whether you are using standard C++ library, the type
-	  of fd_count count be size_t or ssize_t.  Thanks to Darrell for
-	  discovering this.
+        * ace/Handle_Set.cpp (dump):  Cast mask_.fd_count to size_t.
+          Depend on whether you are using standard C++ library, the type
+          of fd_count count be size_t or ssize_t.  Thanks to Darrell for
+          discovering this.
 
 Tue Mar 10 13:22:24 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/Asynch_IO.cpp (cancel): CancelIo is not supported on Win95.
+        * ace/Asynch_IO.cpp (cancel): CancelIo is not supported on Win95.
 
-	* ace/SString.cpp (set): Use ACE_WString::wstrlen().
+        * ace/SString.cpp (set): Use ACE_WString::wstrlen().
 
 Tue Mar 10 06:59:42 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -273,13 +273,13 @@ Tue Mar 10 06:59:42 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Mon Mar 09 22:15:43 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/SString.cpp (ACE_CString::operator=): Special cases have to
- 	  considered carefully so that memory is managed properly.  This
- 	  is specially true when the ACE_CString::NULL_CString_ is used.
+        * ace/SString.cpp (ACE_CString::operator=): Special cases have to
+          considered carefully so that memory is managed properly.  This
+          is specially true when the ACE_CString::NULL_CString_ is used.
 
-	* ace/SString.h (ACE_CString and ACE_WString): Added set methods
- 	  that allows the user to set the strings without having to use
- 	  the assignment operator.
+        * ace/SString.h (ACE_CString and ACE_WString): Added set methods
+          that allows the user to set the strings without having to use
+          the assignment operator.
 
 Mon Mar 09 16:11:16 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -292,64 +292,64 @@ Mon Mar 09 16:11:16 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Mon Mar  9 14:59:20 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* include/makeinclude/platform_irix6.x-sgic++.GNU:
-	  Added the definition for MATHLIB.
+        * include/makeinclude/platform_irix6.x-sgic++.GNU:
+          Added the definition for MATHLIB.
 
 Mon Mar 09 01:23:49 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/ace_ce.dsw:
-	* ace/ace_ce_dll.dsp: New project/workspace files for WinCE.  This
-	  is a temporary workspace only and should be merged into ACE mail
-	  Win32 project/workspace when the port is stable enough.
+        * ace/ace_ce.dsw:
+        * ace/ace_ce_dll.dsp: New project/workspace files for WinCE.  This
+          is a temporary workspace only and should be merged into ACE mail
+          Win32 project/workspace when the port is stable enough.
 
-	* ace/config-WinCE.h: Added ACE_LACKS_GETS.
+        * ace/config-WinCE.h: Added ACE_LACKS_GETS.
 
-	* ace/Synch.i (get_nesting_level): Defined it as not supported on
-	  CE.  CE's CriticalSections don't have RecursionCount defined.
-	  We should be able to simulate this, however.
+        * ace/Synch.i (get_nesting_level): Defined it as not supported on
+          CE.  CE's CriticalSections don't have RecursionCount defined.
+          We should be able to simulate this, however.
 
-	* ace/Process.{h,cpp}:
-	* ace/SString.{h,cpp}: Moved class ACE_Tokenizer from Process.* to
-	  SString.*.  Although ACE_Tokenizer is used in
-	  ACE_Process[_Options], it really is a more general utility
-	  class.
-	  (operator<<): Conditionally compile these functions only when we
-	  are not running ACE on CE.
+        * ace/Process.{h,cpp}:
+        * ace/SString.{h,cpp}: Moved class ACE_Tokenizer from Process.* to
+          SString.*.  Although ACE_Tokenizer is used in
+          ACE_Process[_Options], it really is a more general utility
+          class.
+          (operator<<): Conditionally compile these functions only when we
+          are not running ACE on CE.
 
-	* ace/OS.i (atoi): Added inline implementation for wchar version.
-	  (gets): Remove condition !defined (ACE_HAS_WINCE).  This should
-	  be taken care of by ACE_LACKS_GETS.
+        * ace/OS.i (atoi): Added inline implementation for wchar version.
+          (gets): Remove condition !defined (ACE_HAS_WINCE).  This should
+          be taken care of by ACE_LACKS_GETS.
 
-	* ace/OS.h (atoi): Added wchar version of this function.
-	  (ASYS_WIDE_STRING): This macro converts char strings to
-	  wchar strings when ACE_HAS_MOSTLY_UNICODE_APIS is defined.
-	  (ASYS_MULTIBYTE_STRING): This macro converts wchar strings back
-	  to char strings *only* when ACE_HAS_MOSTLY_UNICODE_APIS is
-	  defined.
+        * ace/OS.h (atoi): Added wchar version of this function.
+          (ASYS_WIDE_STRING): This macro converts char strings to
+          wchar strings when ACE_HAS_MOSTLY_UNICODE_APIS is defined.
+          (ASYS_MULTIBYTE_STRING): This macro converts wchar strings back
+          to char strings *only* when ACE_HAS_MOSTLY_UNICODE_APIS is
+          defined.
 
-	* ace/INET_Addr.{h,cpp}: Redefined interface signatures on WinCE
-	  using ASYS_* macros.  The principle here is to pass wide char
-	  strings in and get char strings out.  That's because we will use
-	  mostly wchar strings in CE but most winsock APIs return (or uses
-	  char strings.)  Doing so should reduce conversion between them
-	  to minimum.
-	  Converting debug messages with ASYS_TEXT.
+        * ace/INET_Addr.{h,cpp}: Redefined interface signatures on WinCE
+          using ASYS_* macros.  The principle here is to pass wide char
+          strings in and get char strings out.  That's because we will use
+          mostly wchar strings in CE but most winsock APIs return (or uses
+          char strings.)  Doing so should reduce conversion between them
+          to minimum.
+          Converting debug messages with ASYS_TEXT.
 
-	* ace/Log_Msg.cpp (open):
-	* ace/ACE.cpp (get_ip_interfaces): Only convert the wide character
-	  string to a char string when ACE_HAS_MOSTLY_UNICODE_APIS flag is
-	  not set using the ASYS_MULTIBYTE_STRING macro.
+        * ace/Log_Msg.cpp (open):
+        * ace/ACE.cpp (get_ip_interfaces): Only convert the wide character
+          string to a char string when ACE_HAS_MOSTLY_UNICODE_APIS flag is
+          not set using the ASYS_MULTIBYTE_STRING macro.
 
-	* ace/SOCK.cpp:
-	* ace/SOCK_Acceptor.cpp:
-	* ace/Malloc.cpp:
-	* ace/Malloc_T.cpp:
-	* ace/Synch.cpp:
-	* ace/Message_Block.cpp:
-	* ace/IPC_SAP.cpp:
-	* ace/Handle_Set.cpp:
-	* ace/Addr.cpp: Converting debugging messages to wchar strings for
-	  CE using the ASYS_TEXT macro.
+        * ace/SOCK.cpp:
+        * ace/SOCK_Acceptor.cpp:
+        * ace/Malloc.cpp:
+        * ace/Malloc_T.cpp:
+        * ace/Synch.cpp:
+        * ace/Message_Block.cpp:
+        * ace/IPC_SAP.cpp:
+        * ace/Handle_Set.cpp:
+        * ace/Addr.cpp: Converting debugging messages to wchar strings for
+          CE using the ASYS_TEXT macro.
 
 Sun Mar 08 14:29:30 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -406,7 +406,7 @@ Fri Mar 06 08:37:44 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Thu Mar 05 12:36:52 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/OS.h (ACE_TRACE): Added a missing right paren.
+        * ace/OS.h (ACE_TRACE): Added a missing right paren.
 
 Thu Mar 05 10:04:06 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -415,38 +415,38 @@ Thu Mar 05 10:04:06 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Thu Mar 05 01:33:08 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/config-WinCE.h: Added more CE stuff.  Ostream is now
-	  redefined as FILE on CE.
+        * ace/config-WinCE.h: Added more CE stuff.  Ostream is now
+          redefined as FILE on CE.
 
-	* ace/OS.{i,cpp}:
-	* ace/Synch_T.cpp
-	* ace/Message_Queue.cpp:
-	* ace/SOCK_Connector.i: Added ASYS_TEXT to numerous
-	  ACE_DEBUG/ACE_ERROR macros.  We must use wide char strings in
-	  CE.
+        * ace/OS.{i,cpp}:
+        * ace/Synch_T.cpp
+        * ace/Message_Queue.cpp:
+        * ace/SOCK_Connector.i: Added ASYS_TEXT to numerous
+          ACE_DEBUG/ACE_ERROR macros.  We must use wide char strings in
+          CE.
 
-	* ace/ACE.{h,cpp}: Redefined sock_error to return wchar string on
-	  CE.  Added ASYS_TEXT to debugging messages.
+        * ace/ACE.{h,cpp}: Redefined sock_error to return wchar string on
+          CE.  Added ASYS_TEXT to debugging messages.
 
-	* ace/Trace.{h,cpp}:
-	* ace/Log_Msg.{h,cpp}:  Made it UNICODE compatible.
+        * ace/Trace.{h,cpp}:
+        * ace/Log_Msg.{h,cpp}:  Made it UNICODE compatible.
 
-	* ace/Log_Record.cpp: Changed how ostream is used on CE.  Although
-	  the code here become some how platform dependent, fortunately,
-	  it can be shielded out from the users thru various macros.
-	  Added ASYS_TEXT.
+        * ace/Log_Record.cpp: Changed how ostream is used on CE.  Although
+          the code here become some how platform dependent, fortunately,
+          it can be shielded out from the users thru various macros.
+          Added ASYS_TEXT.
 
-	* ace/SString.h: Undefined friend relations of ACE_?String with
-	  ostream on CE.  CE doesn't support <iostream>.
+        * ace/SString.h: Undefined friend relations of ACE_?String with
+          ostream on CE.  CE doesn't support <iostream>.
 
-	* ace/OS.h: Changed the definition of ASYS_TEXT to use _TEXT.
-	  This macro can be used with other compiler defined macros
-	  (e.g. __FILE__.)  Added ASYS_TEXT to adorn parameters of
-	  ACE_TRACE so we don't need to modify our codes to make it
-	  portable to CE.
+        * ace/OS.h: Changed the definition of ASYS_TEXT to use _TEXT.
+          This macro can be used with other compiler defined macros
+          (e.g. __FILE__.)  Added ASYS_TEXT to adorn parameters of
+          ACE_TRACE so we don't need to modify our codes to make it
+          portable to CE.
 
-	* ace/Log_Msg.cpp: Removed macro definition of ACE_WSPRINTF.  It
-	  didn't appear to be used anywhere.
+        * ace/Log_Msg.cpp: Removed macro definition of ACE_WSPRINTF.  It
+          didn't appear to be used anywhere.
 
 Wed Mar 04 09:32:32 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -486,20 +486,20 @@ Wed Mar 04 09:32:32 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Tue Mar 03 22:15:16 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Remote_Name_Space.cpp: Replaced a bunch of usages of
-	  ACE_WString::rep ().  They were passed to ACE_Name_Request which
-	  creates another copy for itself and nobody ever cleans up these
-	  memories.  Thanks to John Mulhern <9107@MN3.LAWSON.lawson.com>
-	  for reporting this.
+        * ace/Remote_Name_Space.cpp: Replaced a bunch of usages of
+          ACE_WString::rep ().  They were passed to ACE_Name_Request which
+          creates another copy for itself and nobody ever cleans up these
+          memories.  Thanks to John Mulhern <9107@MN3.LAWSON.lawson.com>
+          for reporting this.
 
-	* ace/OS.h (THR_DETACHED): Defined this macro so that we can
-	  simulate detached threads on NT (Hi Irfan! ;-).  Thanks to Andre
-	  Arpin <arpin@adan.kingston.net> for prividing the use case of
-	  detached threads.
+        * ace/OS.h (THR_DETACHED): Defined this macro so that we can
+          simulate detached threads on NT (Hi Irfan! ;-).  Thanks to Andre
+          Arpin <arpin@adan.kingston.net> for prividing the use case of
+          detached threads.
 
-	* ace/Thread_Manager.cpp (exit): Added detached threads
-	  manipulating codes here.  We now can simulate behaviros of UNIX
-	  detached threads on NT (no one cares about their return status.)
+        * ace/Thread_Manager.cpp (exit): Added detached threads
+          manipulating codes here.  We now can simulate behaviros of UNIX
+          detached threads on NT (no one cares about their return status.)
 
 Tue Mar 03 15:05:42 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -511,13 +511,13 @@ Tue Mar 03 15:05:42 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Mon Mar  2 19:21:36 1998  Douglas C. Schmidt  <schmidt@waltz.cs.wustl.edu>
 
-	* ace/OS.h: Changed all uses of "/localname" and "/globalname" to
- 	  "localname" and "globalname" to avoid problems on UNIX.  Thanks
- 	  to John Mulhern <9107@MN3.LAWSON.lawson.com> for reporting this.
+        * ace/OS.h: Changed all uses of "/localname" and "/globalname" to
+          "localname" and "globalname" to avoid problems on UNIX.  Thanks
+          to John Mulhern <9107@MN3.LAWSON.lawson.com> for reporting this.
 
-	* ace/OS.h: Changed "C:\\temp\\" to "C:\\temp" to avoid some minor
- 	  problems on NT.  Thanks to John Mulhern
- 	  <9107@MN3.LAWSON.lawson.com> for reporting this.
+        * ace/OS.h: Changed "C:\\temp\\" to "C:\\temp" to avoid some minor
+          problems on NT.  Thanks to John Mulhern
+          <9107@MN3.LAWSON.lawson.com> for reporting this.
 
         * netsvcs/lib/Log_Message_Receiver.cpp
           (Log_Message_Receiver_Impl): Removed some stray inline keywords.
@@ -541,26 +541,26 @@ Mon Mar  2 19:21:36 1998  Douglas C. Schmidt  <schmidt@waltz.cs.wustl.edu>
 
 Mon Mar 02 17:06:46 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Thread_Manager.cpp (exit): Added Win32 thread exit
-	  functionality. When a thread function falls out of scope, this
-	  functions is called by ACE_Thread_Control::exit and it will not
-	  call ACE_OS::thr_exit from here.  Under this scenario, the
-	  ACE_Thread_Manager::exit simply falls thru the end.  If a user
-	  call this function directly, this function will delete
-	  ACE_Thread_Exit::instance() first, which simulate the cleanup
-	  routine executed when a thread fall out of end by calling
-	  ACE_Thread_Manager::exit recursively.  After this is done
-	  (returned from the second call,) this function will then call
-	  ACE_OS::exit, which clean up the TSS objects and then really
-	  exit the thread.  Thanks to Gordon Watts <gwatts@FNAL.GOV> for
-	  pointing this out.
+        * ace/Thread_Manager.cpp (exit): Added Win32 thread exit
+          functionality. When a thread function falls out of scope, this
+          functions is called by ACE_Thread_Control::exit and it will not
+          call ACE_OS::thr_exit from here.  Under this scenario, the
+          ACE_Thread_Manager::exit simply falls thru the end.  If a user
+          call this function directly, this function will delete
+          ACE_Thread_Exit::instance() first, which simulate the cleanup
+          routine executed when a thread fall out of end by calling
+          ACE_Thread_Manager::exit recursively.  After this is done
+          (returned from the second call,) this function will then call
+          ACE_OS::exit, which clean up the TSS objects and then really
+          exit the thread.  Thanks to Gordon Watts <gwatts@FNAL.GOV> for
+          pointing this out.
 
-	* ace/OS.cpp (thr_exit): Added Win32 thread exit functionality.
-	  ACE_OS::thr_exit now will try to clean up TSS objects by calling
-	  ACE_OS::cleanup_tss.  You really should _not_ calling this
-	  function directly.  Esp. from the main thread because I don't
-	  know how to tell if you are calling it from main thread thread
-	  or not and thus memory leak might occur.
+        * ace/OS.cpp (thr_exit): Added Win32 thread exit functionality.
+          ACE_OS::thr_exit now will try to clean up TSS objects by calling
+          ACE_OS::cleanup_tss.  You really should _not_ calling this
+          function directly.  Esp. from the main thread because I don't
+          know how to tell if you are calling it from main thread thread
+          or not and thus memory leak might occur.
 
 Mon Mar 02 09:13:26 1998  David L. Levine  <levine@cs.wustl.edu>
 
