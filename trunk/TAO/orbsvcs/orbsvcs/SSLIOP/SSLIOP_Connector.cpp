@@ -10,7 +10,6 @@
 #include "tao/Environment.h"
 #include "tao/Base_Transport_Property.h"
 #include "tao/Transport_Cache_Manager.h"
-#include "tao/Invocation.h"
 #include "tao/Thread_Lane_Resources.h"
 #include "tao/Stub.h"
 #include "tao/Transport_Connector.h"

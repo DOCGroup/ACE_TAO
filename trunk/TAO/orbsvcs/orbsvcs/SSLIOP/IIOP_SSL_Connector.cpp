@@ -11,7 +11,6 @@
 #include "tao/Environment.h"
 #include "tao/IIOP_Endpoint.h"
 #include "tao/Transport_Cache_Manager.h"
-#include "tao/Invocation.h"
 #include "tao/Thread_Lane_Resources.h"
 #include "tao/Connect_Strategy.h"
 #include "tao/Wait_Strategy.h"
