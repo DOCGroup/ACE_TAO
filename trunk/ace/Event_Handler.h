@@ -104,9 +104,12 @@ public:
   virtual int handle_exception (ACE_HANDLE fd = ACE_INVALID_HANDLE);
   // Called when execption events occur (e.g., SIGURG).
 
-  virtual int handle_timeout (const ACE_Time_Value &tv,
-                              const void *arg = 0);
-  // Called when timer expires.
+  virtual int handle_timeout (const ACE_Time_Value &current_time,
+                              const void *act = 0);
+  // Called when timer expires.  <current_time> represents the current
+  // time that the <Event_Handler> was selected for timeout
+  // dispatching and <act> is the asynchronous completion token that
+  // was passed in when <schedule_timer> was invoked.
 
   virtual int handle_exit (ACE_Process *);
   // Called when a process exits.

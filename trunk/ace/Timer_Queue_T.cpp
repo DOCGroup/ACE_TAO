@@ -281,7 +281,7 @@ ACE_Event_Handler_Handle_Timeout_Upcall<ACE_LOCK>::timeout (ACE_Timer_Queue_T<AC
                                                             const void *act,
                                                             const ACE_Time_Value &cur_time)
 {
-  // Upcall to the <handler>s handle_timeout method
+  // Upcall to the <handler>s handle_timeout method.
   if (handler->handle_timeout (cur_time, act) == -1)
     timer_queue.cancel (handler, 0); // 0 means "call handle_close()".
 
