@@ -83,7 +83,8 @@ be_visitor_component_sh::visit_component (be_component *node)
       class_name +=  node->local_name ();
     }
 
-  *os << "// TAO_IDL - Generated from" << be_nl
+  *os << be_nl << be_nl
+      << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   // Generate the skeleton class name.

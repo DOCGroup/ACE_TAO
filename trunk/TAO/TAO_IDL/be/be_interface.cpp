@@ -1472,10 +1472,8 @@ be_interface::traverse_inheritance_graph (
                                                abstract_paths_only);
                 }
             }
-          else
-            {
-              (void) this->insert_non_dup (be_global->ccmobject ());
-            }
+
+          (void) this->insert_non_dup (be_global->ccmobject ());
         }
 
       (void) this->insert_non_dup (intf, abstract_paths_only);

@@ -107,6 +107,8 @@ be_visitor_arg_traits::visit_interface (be_interface *node)
   if (node->seen_in_operation ())
     {
       TAO_OutStream *os = this->ctx_->stream ();
+      idl_bool stub = (this->ctx_->state () == TAO_CodeGen::TAO_ROOT_CS);
+      BE_GlobalData *b = be_global;
 
       // This should be generated even for imported nodes. The ifdef guard prevents
       // multiple declarations.
@@ -114,8 +116,9 @@ be_visitor_arg_traits::visit_interface (be_interface *node)
 
       *os << be_nl << be_nl
           << "ACE_TEMPLATE_SPECIALIZATION" << be_nl
-          << "class " << be_global->stub_export_macro () << " "
-          << this->S_ << "Arg_Traits<"
+          << "class "
+          << (stub ? b->stub_export_macro () : b->skel_export_macro ())
+          << " " << this->S_ << "Arg_Traits<"
           << node->name () << ">" << be_idt_nl
           << ": public" << be_idt << be_idt_nl
           << "Object_" << this->S_ << "Arg_Traits_T<" << be_idt << be_idt_nl
