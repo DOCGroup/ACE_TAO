@@ -205,6 +205,11 @@ public:
   virtual ~TAO_PriorityBandedConnectionPolicy (void);
   // Destructor.
 
+  RTCORBA::PriorityBands &priority_bands_rep (void);
+  // Accessor to the underlying priority bands of the policy (does not
+  // make a copy like the idl accessor <priority_bands> implementation
+  // below.)
+
   virtual RTCORBA::PriorityBands * priority_bands (CORBA::Environment
                                                    &ACE_TRY_ENV =
                                                    TAO_default_environment ())
@@ -318,6 +323,11 @@ public:
 
   virtual ~TAO_ClientProtocolPolicy (void);
   // Destructor.
+
+  RTCORBA::ProtocolList & protocols_rep (void);
+  // Accessor to the underlying protocols list of the policy (does not
+  // make a copy like the idl accessor <protocols> implementation
+  // below.)
 
   virtual RTCORBA::ProtocolList * protocols (CORBA::Environment
                                              &ACE_TRY_ENV =

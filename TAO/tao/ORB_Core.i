@@ -196,6 +196,12 @@ TAO_ORB_Core::default_buffering_constraint (void) const
 
 #if (TAO_HAS_RT_CORBA == 1)
 
+ACE_INLINE TAO_ThreadpoolPolicy *
+TAO_ORB_Core::default_threadpool (void) const
+{
+  return this->default_policies_->threadpool ();
+}
+
 ACE_INLINE TAO_PriorityModelPolicy *
 TAO_ORB_Core::default_priority_model (void) const
 {
@@ -206,6 +212,24 @@ ACE_INLINE TAO_ServerProtocolPolicy *
 TAO_ORB_Core::default_server_protocol (void) const
 {
   return this->default_policies_->server_protocol ();
+}
+
+ACE_INLINE TAO_ClientProtocolPolicy *
+TAO_ORB_Core::default_client_protocol (void) const
+{
+  return this->default_policies_->client_protocol ();
+}
+
+ACE_INLINE TAO_PrivateConnectionPolicy *
+TAO_ORB_Core::default_private_connection (void) const
+{
+  return this->default_policies_->private_connection ();
+}
+
+ACE_INLINE TAO_PriorityBandedConnectionPolicy *
+TAO_ORB_Core::default_priority_banded_connection (void) const
+{
+  return this->default_policies_->priority_banded_connection ();
 }
 
 #endif /* TAO_HAS_RT_CORBA == 1 */
