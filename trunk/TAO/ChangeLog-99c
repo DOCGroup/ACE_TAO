@@ -1,3 +1,17 @@
+Sun Apr  4 01:59:48 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/AV/sfp.h: Defined new classes for sfp
+	  fragmentation and reassembly.
+
+	* orbsvcs/orbsvcs/AV/sfp.cpp: Removed the unnecessary connect on
+	  the ACE_SOCK_Dgram which prevented the code from working on
+	  Windows because calling sendto on a connected socket is wrong.
+	  Thanks to David Hooker <DHooker@uniview.net> for reporting this.
+
+	  Added code to do reassembly of fragmented SFP packets. The code
+	  is now cleaner as it uses the interpretive marshalling to
+	  marshal/demarshal sfp headers.
+
 Sun Apr  4 00:33:20 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* examples/POA/Forwarding/client.cpp (do_calls): 
