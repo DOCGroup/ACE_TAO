@@ -387,7 +387,7 @@ TAO_DynUnion_i::to_any (CORBA::Environment& ACE_TRY_ENV)
 CORBA::TypeCode_ptr
 TAO_DynUnion_i::type (CORBA::Environment &)
 {
-  return this->type_.in ();
+  return CORBA::TypeCode::_duplicate (this->type_.in ());
 }
 
 CORBA_DynAny_ptr
