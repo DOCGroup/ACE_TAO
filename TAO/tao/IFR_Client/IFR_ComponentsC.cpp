@@ -25,7 +25,7 @@
 
 #if TAO_HAS_INTERCEPTORS == 1
 #include "tao/RequestInfo_Util.h"
-#include "tao/ClientRequestInfo.h"
+#include "tao/ClientRequestInfo_i.h"
 #include "tao/ClientInterceptorAdapter.h"
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
@@ -2259,7 +2259,7 @@ IR::ComponentRepository_out::operator-> (void)
 
 
 #if (TAO_HAS_INTERCEPTORS == 1)
-class TAO_ClientRequestInfo_IR_ComponentRepository_create_component : public TAO_ClientRequestInfo
+class TAO_ClientRequestInfo_IR_ComponentRepository_create_component : public TAO_ClientRequestInfo_i
 {
 public:
   TAO_ClientRequestInfo_IR_ComponentRepository_create_component (
@@ -2312,7 +2312,7 @@ TAO_ClientRequestInfo_IR_ComponentRepository_create_component::TAO_ClientRequest
     const CORBA_InterfaceDefSeq & supports_interfaces
     TAO_ENV_ARG_DECL_NOT_USED
   )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
+  : TAO_ClientRequestInfo_i (_tao_invocation, _tao_target),
     id_ (id),
     name_ (name),
     version_ (version),
@@ -2389,7 +2389,7 @@ TAO_ClientRequestInfo_IR_ComponentRepository_create_component::result (IR::Compo
   this->_result = result;
 }
 
-class TAO_ClientRequestInfo_IR_ComponentRepository_create_home : public TAO_ClientRequestInfo
+class TAO_ClientRequestInfo_IR_ComponentRepository_create_home : public TAO_ClientRequestInfo_i
 {
 public:
   TAO_ClientRequestInfo_IR_ComponentRepository_create_home (
@@ -2445,7 +2445,7 @@ TAO_ClientRequestInfo_IR_ComponentRepository_create_home::TAO_ClientRequestInfo_
     CORBA_ValueDef_ptr primary_key
     TAO_ENV_ARG_DECL_NOT_USED
   )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
+  : TAO_ClientRequestInfo_i (_tao_invocation, _tao_target),
     id_ (id),
     name_ (name),
     version_ (version),
@@ -3471,7 +3471,7 @@ IR::ProvidesDef_out::operator-> (void)
 
 
 #if (TAO_HAS_INTERCEPTORS == 1)
-class TAO_ClientRequestInfo_IR_ProvidesDef_interface_type_get : public TAO_ClientRequestInfo
+class TAO_ClientRequestInfo_IR_ProvidesDef_interface_type_get : public TAO_ClientRequestInfo_i
 {
 public:
   TAO_ClientRequestInfo_IR_ProvidesDef_interface_type_get (
@@ -3509,7 +3509,7 @@ TAO_ClientRequestInfo_IR_ProvidesDef_interface_type_get::TAO_ClientRequestInfo_I
     CORBA::Object_ptr _tao_target
     TAO_ENV_ARG_DECL_NOT_USED
   )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target)
+  : TAO_ClientRequestInfo_i (_tao_invocation, _tao_target)
 {}
 
 Dynamic::ParameterList *
@@ -4388,7 +4388,7 @@ IR::UsesDef_out::operator-> (void)
 
 
 #if (TAO_HAS_INTERCEPTORS == 1)
-class TAO_ClientRequestInfo_IR_UsesDef_interface_type_get : public TAO_ClientRequestInfo
+class TAO_ClientRequestInfo_IR_UsesDef_interface_type_get : public TAO_ClientRequestInfo_i
 {
 public:
   TAO_ClientRequestInfo_IR_UsesDef_interface_type_get (
@@ -4426,7 +4426,7 @@ TAO_ClientRequestInfo_IR_UsesDef_interface_type_get::TAO_ClientRequestInfo_IR_Us
     CORBA::Object_ptr _tao_target
     TAO_ENV_ARG_DECL_NOT_USED
   )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target)
+  : TAO_ClientRequestInfo_i (_tao_invocation, _tao_target)
 {}
 
 Dynamic::ParameterList *
@@ -4477,7 +4477,7 @@ TAO_ClientRequestInfo_IR_UsesDef_interface_type_get::result (CORBA_InterfaceDef_
   this->_result = result;
 }
 
-class TAO_ClientRequestInfo_IR_UsesDef_is_multiple_get : public TAO_ClientRequestInfo
+class TAO_ClientRequestInfo_IR_UsesDef_is_multiple_get : public TAO_ClientRequestInfo_i
 {
 public:
   TAO_ClientRequestInfo_IR_UsesDef_is_multiple_get (
@@ -4515,7 +4515,7 @@ TAO_ClientRequestInfo_IR_UsesDef_is_multiple_get::TAO_ClientRequestInfo_IR_UsesD
     CORBA::Object_ptr _tao_target
     TAO_ENV_ARG_DECL_NOT_USED
   )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target)
+  : TAO_ClientRequestInfo_i (_tao_invocation, _tao_target)
 {}
 
 Dynamic::ParameterList *
@@ -6121,7 +6121,7 @@ IR::EventDef_out::operator-> (void)
 
 
 #if (TAO_HAS_INTERCEPTORS == 1)
-class TAO_ClientRequestInfo_IR_EventDef_is_a : public TAO_ClientRequestInfo
+class TAO_ClientRequestInfo_IR_EventDef_is_a : public TAO_ClientRequestInfo_i
 {
 public:
   TAO_ClientRequestInfo_IR_EventDef_is_a (
@@ -6162,7 +6162,7 @@ TAO_ClientRequestInfo_IR_EventDef_is_a::TAO_ClientRequestInfo_IR_EventDef_is_a (
     const char * event_id
     TAO_ENV_ARG_DECL_NOT_USED
   )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
+  : TAO_ClientRequestInfo_i (_tao_invocation, _tao_target),
     event_id_ (event_id)
 {}
 
@@ -6223,7 +6223,7 @@ TAO_ClientRequestInfo_IR_EventDef_is_a::result (CORBA::Boolean result)
   this->_result = result;
 }
 
-class TAO_ClientRequestInfo_IR_EventDef_event_get : public TAO_ClientRequestInfo
+class TAO_ClientRequestInfo_IR_EventDef_event_get : public TAO_ClientRequestInfo_i
 {
 public:
   TAO_ClientRequestInfo_IR_EventDef_event_get (
@@ -6261,7 +6261,7 @@ TAO_ClientRequestInfo_IR_EventDef_event_get::TAO_ClientRequestInfo_IR_EventDef_e
     CORBA::Object_ptr _tao_target
     TAO_ENV_ARG_DECL_NOT_USED
   )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target)
+  : TAO_ClientRequestInfo_i (_tao_invocation, _tao_target)
 {}
 
 Dynamic::ParameterList *
@@ -8830,7 +8830,7 @@ IR::ComponentDef_out::operator-> (void)
 
 
 #if (TAO_HAS_INTERCEPTORS == 1)
-class TAO_ClientRequestInfo_IR_ComponentDef_supported_interfaces_get : public TAO_ClientRequestInfo
+class TAO_ClientRequestInfo_IR_ComponentDef_supported_interfaces_get : public TAO_ClientRequestInfo_i
 {
 public:
   TAO_ClientRequestInfo_IR_ComponentDef_supported_interfaces_get (
@@ -8868,7 +8868,7 @@ TAO_ClientRequestInfo_IR_ComponentDef_supported_interfaces_get::TAO_ClientReques
     CORBA::Object_ptr _tao_target
     TAO_ENV_ARG_DECL_NOT_USED
   )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target)
+  : TAO_ClientRequestInfo_i (_tao_invocation, _tao_target)
 {}
 
 Dynamic::ParameterList *
@@ -8919,7 +8919,7 @@ TAO_ClientRequestInfo_IR_ComponentDef_supported_interfaces_get::result (CORBA_In
   this->_result = result;
 }
 
-class TAO_ClientRequestInfo_IR_ComponentDef_supported_interfaces_set : public TAO_ClientRequestInfo
+class TAO_ClientRequestInfo_IR_ComponentDef_supported_interfaces_set : public TAO_ClientRequestInfo_i
 {
 public:
   TAO_ClientRequestInfo_IR_ComponentDef_supported_interfaces_set (
@@ -8958,7 +8958,7 @@ TAO_ClientRequestInfo_IR_ComponentDef_supported_interfaces_set::TAO_ClientReques
     const CORBA_InterfaceDefSeq & supported_interfaces
     TAO_ENV_ARG_DECL_NOT_USED
   )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
+  : TAO_ClientRequestInfo_i (_tao_invocation, _tao_target),
     supported_interfaces_ (supported_interfaces)
 {}
 
@@ -9009,7 +9009,7 @@ TAO_ClientRequestInfo_IR_ComponentDef_supported_interfaces_set::result (TAO_ENV_
   return result_any;
 }
 
-class TAO_ClientRequestInfo_IR_ComponentDef_base_component_get : public TAO_ClientRequestInfo
+class TAO_ClientRequestInfo_IR_ComponentDef_base_component_get : public TAO_ClientRequestInfo_i
 {
 public:
   TAO_ClientRequestInfo_IR_ComponentDef_base_component_get (
@@ -9047,7 +9047,7 @@ TAO_ClientRequestInfo_IR_ComponentDef_base_component_get::TAO_ClientRequestInfo_
     CORBA::Object_ptr _tao_target
     TAO_ENV_ARG_DECL_NOT_USED
   )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target)
+  : TAO_ClientRequestInfo_i (_tao_invocation, _tao_target)
 {}
 
 Dynamic::ParameterList *
@@ -9098,7 +9098,7 @@ TAO_ClientRequestInfo_IR_ComponentDef_base_component_get::result (IR::ComponentD
   this->_result = result;
 }
 
-class TAO_ClientRequestInfo_IR_ComponentDef_provides_interfaces_get : public TAO_ClientRequestInfo
+class TAO_ClientRequestInfo_IR_ComponentDef_provides_interfaces_get : public TAO_ClientRequestInfo_i
 {
 public:
   TAO_ClientRequestInfo_IR_ComponentDef_provides_interfaces_get (
@@ -9136,7 +9136,7 @@ TAO_ClientRequestInfo_IR_ComponentDef_provides_interfaces_get::TAO_ClientRequest
     CORBA::Object_ptr _tao_target
     TAO_ENV_ARG_DECL_NOT_USED
   )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target)
+  : TAO_ClientRequestInfo_i (_tao_invocation, _tao_target)
 {}
 
 Dynamic::ParameterList *
@@ -9187,7 +9187,7 @@ TAO_ClientRequestInfo_IR_ComponentDef_provides_interfaces_get::result (IR::Provi
   this->_result = result;
 }
 
-class TAO_ClientRequestInfo_IR_ComponentDef_uses_interfaces_get : public TAO_ClientRequestInfo
+class TAO_ClientRequestInfo_IR_ComponentDef_uses_interfaces_get : public TAO_ClientRequestInfo_i
 {
 public:
   TAO_ClientRequestInfo_IR_ComponentDef_uses_interfaces_get (
@@ -9225,7 +9225,7 @@ TAO_ClientRequestInfo_IR_ComponentDef_uses_interfaces_get::TAO_ClientRequestInfo
     CORBA::Object_ptr _tao_target
     TAO_ENV_ARG_DECL_NOT_USED
   )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target)
+  : TAO_ClientRequestInfo_i (_tao_invocation, _tao_target)
 {}
 
 Dynamic::ParameterList *
@@ -9276,7 +9276,7 @@ TAO_ClientRequestInfo_IR_ComponentDef_uses_interfaces_get::result (IR::UsesDefSe
   this->_result = result;
 }
 
-class TAO_ClientRequestInfo_IR_ComponentDef_emits_events_get : public TAO_ClientRequestInfo
+class TAO_ClientRequestInfo_IR_ComponentDef_emits_events_get : public TAO_ClientRequestInfo_i
 {
 public:
   TAO_ClientRequestInfo_IR_ComponentDef_emits_events_get (
@@ -9314,7 +9314,7 @@ TAO_ClientRequestInfo_IR_ComponentDef_emits_events_get::TAO_ClientRequestInfo_IR
     CORBA::Object_ptr _tao_target
     TAO_ENV_ARG_DECL_NOT_USED
   )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target)
+  : TAO_ClientRequestInfo_i (_tao_invocation, _tao_target)
 {}
 
 Dynamic::ParameterList *
@@ -9365,7 +9365,7 @@ TAO_ClientRequestInfo_IR_ComponentDef_emits_events_get::result (IR::EmitsDefSeq 
   this->_result = result;
 }
 
-class TAO_ClientRequestInfo_IR_ComponentDef_publishes_events_get : public TAO_ClientRequestInfo
+class TAO_ClientRequestInfo_IR_ComponentDef_publishes_events_get : public TAO_ClientRequestInfo_i
 {
 public:
   TAO_ClientRequestInfo_IR_ComponentDef_publishes_events_get (
@@ -9403,7 +9403,7 @@ TAO_ClientRequestInfo_IR_ComponentDef_publishes_events_get::TAO_ClientRequestInf
     CORBA::Object_ptr _tao_target
     TAO_ENV_ARG_DECL_NOT_USED
   )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target)
+  : TAO_ClientRequestInfo_i (_tao_invocation, _tao_target)
 {}
 
 Dynamic::ParameterList *
@@ -9454,7 +9454,7 @@ TAO_ClientRequestInfo_IR_ComponentDef_publishes_events_get::result (IR::Publishe
   this->_result = result;
 }
 
-class TAO_ClientRequestInfo_IR_ComponentDef_consumes_events_get : public TAO_ClientRequestInfo
+class TAO_ClientRequestInfo_IR_ComponentDef_consumes_events_get : public TAO_ClientRequestInfo_i
 {
 public:
   TAO_ClientRequestInfo_IR_ComponentDef_consumes_events_get (
@@ -9492,7 +9492,7 @@ TAO_ClientRequestInfo_IR_ComponentDef_consumes_events_get::TAO_ClientRequestInfo
     CORBA::Object_ptr _tao_target
     TAO_ENV_ARG_DECL_NOT_USED
   )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target)
+  : TAO_ClientRequestInfo_i (_tao_invocation, _tao_target)
 {}
 
 Dynamic::ParameterList *
@@ -9543,7 +9543,7 @@ TAO_ClientRequestInfo_IR_ComponentDef_consumes_events_get::result (IR::ConsumesD
   this->_result = result;
 }
 
-class TAO_ClientRequestInfo_IR_ComponentDef_is_basic_get : public TAO_ClientRequestInfo
+class TAO_ClientRequestInfo_IR_ComponentDef_is_basic_get : public TAO_ClientRequestInfo_i
 {
 public:
   TAO_ClientRequestInfo_IR_ComponentDef_is_basic_get (
@@ -9581,7 +9581,7 @@ TAO_ClientRequestInfo_IR_ComponentDef_is_basic_get::TAO_ClientRequestInfo_IR_Com
     CORBA::Object_ptr _tao_target
     TAO_ENV_ARG_DECL_NOT_USED
   )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target)
+  : TAO_ClientRequestInfo_i (_tao_invocation, _tao_target)
 {}
 
 Dynamic::ParameterList *
@@ -9632,7 +9632,7 @@ TAO_ClientRequestInfo_IR_ComponentDef_is_basic_get::result (CORBA::Boolean resul
   this->_result = result;
 }
 
-class TAO_ClientRequestInfo_IR_ComponentDef_create_provides : public TAO_ClientRequestInfo
+class TAO_ClientRequestInfo_IR_ComponentDef_create_provides : public TAO_ClientRequestInfo_i
 {
 public:
   TAO_ClientRequestInfo_IR_ComponentDef_create_provides (
@@ -9682,7 +9682,7 @@ TAO_ClientRequestInfo_IR_ComponentDef_create_provides::TAO_ClientRequestInfo_IR_
     CORBA_InterfaceDef_ptr interface_type
     TAO_ENV_ARG_DECL_NOT_USED
   )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
+  : TAO_ClientRequestInfo_i (_tao_invocation, _tao_target),
     id_ (id),
     name_ (name),
     version_ (version),
@@ -9755,7 +9755,7 @@ TAO_ClientRequestInfo_IR_ComponentDef_create_provides::result (IR::ProvidesDef_p
   this->_result = result;
 }
 
-class TAO_ClientRequestInfo_IR_ComponentDef_create_uses : public TAO_ClientRequestInfo
+class TAO_ClientRequestInfo_IR_ComponentDef_create_uses : public TAO_ClientRequestInfo_i
 {
 public:
   TAO_ClientRequestInfo_IR_ComponentDef_create_uses (
@@ -9808,7 +9808,7 @@ TAO_ClientRequestInfo_IR_ComponentDef_create_uses::TAO_ClientRequestInfo_IR_Comp
     const CORBA::Boolean & is_multiple
     TAO_ENV_ARG_DECL_NOT_USED
   )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
+  : TAO_ClientRequestInfo_i (_tao_invocation, _tao_target),
     id_ (id),
     name_ (name),
     version_ (version),
@@ -9885,7 +9885,7 @@ TAO_ClientRequestInfo_IR_ComponentDef_create_uses::result (IR::UsesDef_ptr resul
   this->_result = result;
 }
 
-class TAO_ClientRequestInfo_IR_ComponentDef_create_emits : public TAO_ClientRequestInfo
+class TAO_ClientRequestInfo_IR_ComponentDef_create_emits : public TAO_ClientRequestInfo_i
 {
 public:
   TAO_ClientRequestInfo_IR_ComponentDef_create_emits (
@@ -9935,7 +9935,7 @@ TAO_ClientRequestInfo_IR_ComponentDef_create_emits::TAO_ClientRequestInfo_IR_Com
     CORBA_ValueDef_ptr value
     TAO_ENV_ARG_DECL_NOT_USED
   )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
+  : TAO_ClientRequestInfo_i (_tao_invocation, _tao_target),
     id_ (id),
     name_ (name),
     version_ (version),
@@ -10008,7 +10008,7 @@ TAO_ClientRequestInfo_IR_ComponentDef_create_emits::result (IR::EmitsDef_ptr res
   this->_result = result;
 }
 
-class TAO_ClientRequestInfo_IR_ComponentDef_create_publishes : public TAO_ClientRequestInfo
+class TAO_ClientRequestInfo_IR_ComponentDef_create_publishes : public TAO_ClientRequestInfo_i
 {
 public:
   TAO_ClientRequestInfo_IR_ComponentDef_create_publishes (
@@ -10058,7 +10058,7 @@ TAO_ClientRequestInfo_IR_ComponentDef_create_publishes::TAO_ClientRequestInfo_IR
     CORBA_ValueDef_ptr value
     TAO_ENV_ARG_DECL_NOT_USED
   )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
+  : TAO_ClientRequestInfo_i (_tao_invocation, _tao_target),
     id_ (id),
     name_ (name),
     version_ (version),
@@ -10131,7 +10131,7 @@ TAO_ClientRequestInfo_IR_ComponentDef_create_publishes::result (IR::PublishesDef
   this->_result = result;
 }
 
-class TAO_ClientRequestInfo_IR_ComponentDef_create_consumes : public TAO_ClientRequestInfo
+class TAO_ClientRequestInfo_IR_ComponentDef_create_consumes : public TAO_ClientRequestInfo_i
 {
 public:
   TAO_ClientRequestInfo_IR_ComponentDef_create_consumes (
@@ -10181,7 +10181,7 @@ TAO_ClientRequestInfo_IR_ComponentDef_create_consumes::TAO_ClientRequestInfo_IR_
     CORBA_ValueDef_ptr value
     TAO_ENV_ARG_DECL_NOT_USED
   )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
+  : TAO_ClientRequestInfo_i (_tao_invocation, _tao_target),
     id_ (id),
     name_ (name),
     version_ (version),
@@ -14450,7 +14450,7 @@ IR::PrimaryKeyDef_out::operator-> (void)
 
 
 #if (TAO_HAS_INTERCEPTORS == 1)
-class TAO_ClientRequestInfo_IR_PrimaryKeyDef_is_a : public TAO_ClientRequestInfo
+class TAO_ClientRequestInfo_IR_PrimaryKeyDef_is_a : public TAO_ClientRequestInfo_i
 {
 public:
   TAO_ClientRequestInfo_IR_PrimaryKeyDef_is_a (
@@ -14491,7 +14491,7 @@ TAO_ClientRequestInfo_IR_PrimaryKeyDef_is_a::TAO_ClientRequestInfo_IR_PrimaryKey
     const char * primary_key_id
     TAO_ENV_ARG_DECL_NOT_USED
   )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
+  : TAO_ClientRequestInfo_i (_tao_invocation, _tao_target),
     primary_key_id_ (primary_key_id)
 {}
 
@@ -14552,7 +14552,7 @@ TAO_ClientRequestInfo_IR_PrimaryKeyDef_is_a::result (CORBA::Boolean result)
   this->_result = result;
 }
 
-class TAO_ClientRequestInfo_IR_PrimaryKeyDef_primary_key_get : public TAO_ClientRequestInfo
+class TAO_ClientRequestInfo_IR_PrimaryKeyDef_primary_key_get : public TAO_ClientRequestInfo_i
 {
 public:
   TAO_ClientRequestInfo_IR_PrimaryKeyDef_primary_key_get (
@@ -14590,7 +14590,7 @@ TAO_ClientRequestInfo_IR_PrimaryKeyDef_primary_key_get::TAO_ClientRequestInfo_IR
     CORBA::Object_ptr _tao_target
     TAO_ENV_ARG_DECL_NOT_USED
   )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target)
+  : TAO_ClientRequestInfo_i (_tao_invocation, _tao_target)
 {}
 
 Dynamic::ParameterList *
@@ -16666,7 +16666,7 @@ IR::HomeDef_out::operator-> (void)
 
 
 #if (TAO_HAS_INTERCEPTORS == 1)
-class TAO_ClientRequestInfo_IR_HomeDef_base_home_get : public TAO_ClientRequestInfo
+class TAO_ClientRequestInfo_IR_HomeDef_base_home_get : public TAO_ClientRequestInfo_i
 {
 public:
   TAO_ClientRequestInfo_IR_HomeDef_base_home_get (
@@ -16704,7 +16704,7 @@ TAO_ClientRequestInfo_IR_HomeDef_base_home_get::TAO_ClientRequestInfo_IR_HomeDef
     CORBA::Object_ptr _tao_target
     TAO_ENV_ARG_DECL_NOT_USED
   )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target)
+  : TAO_ClientRequestInfo_i (_tao_invocation, _tao_target)
 {}
 
 Dynamic::ParameterList *
@@ -16755,7 +16755,7 @@ TAO_ClientRequestInfo_IR_HomeDef_base_home_get::result (IR::HomeDef_ptr result)
   this->_result = result;
 }
 
-class TAO_ClientRequestInfo_IR_HomeDef_managed_component_get : public TAO_ClientRequestInfo
+class TAO_ClientRequestInfo_IR_HomeDef_managed_component_get : public TAO_ClientRequestInfo_i
 {
 public:
   TAO_ClientRequestInfo_IR_HomeDef_managed_component_get (
@@ -16793,7 +16793,7 @@ TAO_ClientRequestInfo_IR_HomeDef_managed_component_get::TAO_ClientRequestInfo_IR
     CORBA::Object_ptr _tao_target
     TAO_ENV_ARG_DECL_NOT_USED
   )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target)
+  : TAO_ClientRequestInfo_i (_tao_invocation, _tao_target)
 {}
 
 Dynamic::ParameterList *
@@ -16844,7 +16844,7 @@ TAO_ClientRequestInfo_IR_HomeDef_managed_component_get::result (IR::ComponentDef
   this->_result = result;
 }
 
-class TAO_ClientRequestInfo_IR_HomeDef_primary_key_get : public TAO_ClientRequestInfo
+class TAO_ClientRequestInfo_IR_HomeDef_primary_key_get : public TAO_ClientRequestInfo_i
 {
 public:
   TAO_ClientRequestInfo_IR_HomeDef_primary_key_get (
@@ -16882,7 +16882,7 @@ TAO_ClientRequestInfo_IR_HomeDef_primary_key_get::TAO_ClientRequestInfo_IR_HomeD
     CORBA::Object_ptr _tao_target
     TAO_ENV_ARG_DECL_NOT_USED
   )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target)
+  : TAO_ClientRequestInfo_i (_tao_invocation, _tao_target)
 {}
 
 Dynamic::ParameterList *
@@ -16933,7 +16933,7 @@ TAO_ClientRequestInfo_IR_HomeDef_primary_key_get::result (IR::PrimaryKeyDef_ptr 
   this->_result = result;
 }
 
-class TAO_ClientRequestInfo_IR_HomeDef_factories_get : public TAO_ClientRequestInfo
+class TAO_ClientRequestInfo_IR_HomeDef_factories_get : public TAO_ClientRequestInfo_i
 {
 public:
   TAO_ClientRequestInfo_IR_HomeDef_factories_get (
@@ -16971,7 +16971,7 @@ TAO_ClientRequestInfo_IR_HomeDef_factories_get::TAO_ClientRequestInfo_IR_HomeDef
     CORBA::Object_ptr _tao_target
     TAO_ENV_ARG_DECL_NOT_USED
   )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target)
+  : TAO_ClientRequestInfo_i (_tao_invocation, _tao_target)
 {}
 
 Dynamic::ParameterList *
@@ -17022,7 +17022,7 @@ TAO_ClientRequestInfo_IR_HomeDef_factories_get::result (IR::FactoryDefSeq * resu
   this->_result = result;
 }
 
-class TAO_ClientRequestInfo_IR_HomeDef_finders_get : public TAO_ClientRequestInfo
+class TAO_ClientRequestInfo_IR_HomeDef_finders_get : public TAO_ClientRequestInfo_i
 {
 public:
   TAO_ClientRequestInfo_IR_HomeDef_finders_get (
@@ -17060,7 +17060,7 @@ TAO_ClientRequestInfo_IR_HomeDef_finders_get::TAO_ClientRequestInfo_IR_HomeDef_f
     CORBA::Object_ptr _tao_target
     TAO_ENV_ARG_DECL_NOT_USED
   )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target)
+  : TAO_ClientRequestInfo_i (_tao_invocation, _tao_target)
 {}
 
 Dynamic::ParameterList *
@@ -17111,7 +17111,7 @@ TAO_ClientRequestInfo_IR_HomeDef_finders_get::result (IR::FinderDefSeq * result)
   this->_result = result;
 }
 
-class TAO_ClientRequestInfo_IR_HomeDef_is_basic_get : public TAO_ClientRequestInfo
+class TAO_ClientRequestInfo_IR_HomeDef_is_basic_get : public TAO_ClientRequestInfo_i
 {
 public:
   TAO_ClientRequestInfo_IR_HomeDef_is_basic_get (
@@ -17149,7 +17149,7 @@ TAO_ClientRequestInfo_IR_HomeDef_is_basic_get::TAO_ClientRequestInfo_IR_HomeDef_
     CORBA::Object_ptr _tao_target
     TAO_ENV_ARG_DECL_NOT_USED
   )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target)
+  : TAO_ClientRequestInfo_i (_tao_invocation, _tao_target)
 {}
 
 Dynamic::ParameterList *
@@ -17200,7 +17200,7 @@ TAO_ClientRequestInfo_IR_HomeDef_is_basic_get::result (CORBA::Boolean result)
   this->_result = result;
 }
 
-class TAO_ClientRequestInfo_IR_HomeDef_create_primary_key : public TAO_ClientRequestInfo
+class TAO_ClientRequestInfo_IR_HomeDef_create_primary_key : public TAO_ClientRequestInfo_i
 {
 public:
   TAO_ClientRequestInfo_IR_HomeDef_create_primary_key (
@@ -17250,7 +17250,7 @@ TAO_ClientRequestInfo_IR_HomeDef_create_primary_key::TAO_ClientRequestInfo_IR_Ho
     CORBA_ValueDef_ptr primary_key
     TAO_ENV_ARG_DECL_NOT_USED
   )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
+  : TAO_ClientRequestInfo_i (_tao_invocation, _tao_target),
     id_ (id),
     name_ (name),
     version_ (version),
@@ -17323,7 +17323,7 @@ TAO_ClientRequestInfo_IR_HomeDef_create_primary_key::result (IR::PrimaryKeyDef_p
   this->_result = result;
 }
 
-class TAO_ClientRequestInfo_IR_HomeDef_create_factory : public TAO_ClientRequestInfo
+class TAO_ClientRequestInfo_IR_HomeDef_create_factory : public TAO_ClientRequestInfo_i
 {
 public:
   TAO_ClientRequestInfo_IR_HomeDef_create_factory (
@@ -17376,7 +17376,7 @@ TAO_ClientRequestInfo_IR_HomeDef_create_factory::TAO_ClientRequestInfo_IR_HomeDe
     const CORBA_ExceptionDefSeq & exceptions
     TAO_ENV_ARG_DECL_NOT_USED
   )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
+  : TAO_ClientRequestInfo_i (_tao_invocation, _tao_target),
     id_ (id),
     name_ (name),
     version_ (version),
@@ -17453,7 +17453,7 @@ TAO_ClientRequestInfo_IR_HomeDef_create_factory::result (IR::FactoryDef_ptr resu
   this->_result = result;
 }
 
-class TAO_ClientRequestInfo_IR_HomeDef_create_finder : public TAO_ClientRequestInfo
+class TAO_ClientRequestInfo_IR_HomeDef_create_finder : public TAO_ClientRequestInfo_i
 {
 public:
   TAO_ClientRequestInfo_IR_HomeDef_create_finder (
@@ -17506,7 +17506,7 @@ TAO_ClientRequestInfo_IR_HomeDef_create_finder::TAO_ClientRequestInfo_IR_HomeDef
     const CORBA_ExceptionDefSeq & exceptions
     TAO_ENV_ARG_DECL_NOT_USED
   )
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
+  : TAO_ClientRequestInfo_i (_tao_invocation, _tao_target),
     id_ (id),
     name_ (name),
     version_ (version),
