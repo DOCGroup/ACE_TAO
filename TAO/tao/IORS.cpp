@@ -32,12 +32,12 @@ POA_TAO_IOP::TAO_IOR_Manipulation::~TAO_IOR_Manipulation (void)
 
 CORBA::Boolean POA_TAO_IOP::TAO_IOR_Manipulation::_is_a (
     const char* value,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Environment &
   )
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:TAO_IOP/TAO_IOR_Manipulation:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (ACE_TRY_ENV))))
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Object:1.0")))
       return 1;
     else
       return 0;
@@ -49,7 +49,7 @@ void* POA_TAO_IOP::TAO_IOR_Manipulation::_downcast (
 {
   if (ACE_OS::strcmp (logical_type_id, "IDL:TAO_IOP/TAO_IOR_Manipulation:1.0") == 0)
     return ACE_static_cast (POA_TAO_IOP::TAO_IOR_Manipulation_ptr, this);
-  if (ACE_OS::strcmp (logical_type_id, "IDL:CORBA/Object:1.0") == 0)
+  if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/Object:1.0") == 0)
     return ACE_static_cast(PortableServer::Servant, this);
   return 0;
 }

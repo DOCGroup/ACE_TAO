@@ -1,3 +1,13 @@
+Mon Jun 28 19:16:18 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tests/Makefile:
+	  Added the new IORManipulation directory to the top-level
+	  Makefile.
+
+	* tao/IORC.cpp:
+	* tao/IORS.cpp:
+	  More exception handling fixes
+
 Mon Jun 28 18:35:19 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/append.cpp:
