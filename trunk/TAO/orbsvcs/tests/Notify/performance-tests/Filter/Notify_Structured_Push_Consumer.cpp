@@ -43,10 +43,11 @@ Notify_Structured_Push_Consumer::_connect (
   ACE_CHECK;
 
   proxy_->connect_structured_push_consumer (objref.in ()
-                                                     ACE_ENV_ARG_PARAMETER);
+                                            ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  this->_remove_ref ();
+  this->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
 }
 
 
