@@ -1,3 +1,25 @@
+Fri Jul 16 12:21:58 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
+
+          Fixed a CORBA::TRANSIENT exception thrown by an _narrow () by 
+	  adding activate_poa_manager () in init () of the following:
+	* orbsvcs/Time_Service/Server_i.cpp.
+
+	  Added a parameter to fine tune the clerk's synchronization
+	  period in microseconds.
+
+	* orbsvcs/Time_Service/Clerk_i.cpp.
+	* orbsvcs/Time_Service/Clerk_i.h.
+	* orbsvcs/orbsvcs/Time/TAO_Time_Service_Clerk.cpp.
+	* orbsvcs/orbsvcs/Time/TAO_Time_Service_Clerk.h.
+
+	  Added the MAGIC OFFSET to make the base time as 15th October
+	  1582 instead of 1st Jan 1970. Thanks to Carsten Zerbst
+	  <zerbst@tu-harburg.de> for pointing this out and Mark
+	  Laffoon<mark.laffoon@centraxcorp.com> for contributing the magic
+	  offset.
+	
+	* orbsvcs/orbsvcs/Time/TAO_Time_Service_Server.cpp.
+
 Fri Jul 16 10:08:22 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be_visitor_union/union_cs.cpp:
