@@ -126,13 +126,12 @@ iter_lookup_by_name_local (AST_Decl *d,
                            UTL_ScopedName *e,
                            long index)
 {
-  AST_Typedef *td = 0;
+  AST_Typedef *td = AST_Typedef::narrow_from_decl (d);
+  AST_Decl *result = 0;
 
   // Remove all the layers of typedefs.
   while (d != NULL && d->node_type () == AST_Decl::NT_typedef) 
     {
-      td = AST_Typedef::narrow_from_decl (d);
-
       if (td == 0)
         {
           return 0;
@@ -154,9 +153,17 @@ iter_lookup_by_name_local (AST_Decl *d,
       return 0;
     }
 
-  // Look up the first component of the scoped name.
-  AST_Decl *result = sc->lookup_by_name_local (e->head (), 
-                                               index);
+  if (index < ACE_static_cast (long, sc->nmembers ()))
+    {
+      // Look up the first component of the scoped name.
+      result = sc->lookup_by_name_local (e->head (), 
+                                         index);
+    }
+  else
+    {
+      return 0;
+    }
+
  
   if (result == 0)
     {
