@@ -1,3 +1,12 @@
+Tue Aug 31 20:35:56 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* orbsvcs/tests/AVStreams/sfp:
+	  Removed the files in this drectory as this test is superseded by
+	  the new set of tests under the Pluggable directory.
+
+	* orbsvcs/tests/AVStreams/Makefile:
+	  Updated the Makefile to include the new AV tests.
+		
 Tue Aug 31 18:07:35 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/AV/:
