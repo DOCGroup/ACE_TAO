@@ -1,3 +1,11 @@
+Thu Sep 30 16:25:15 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/ORB.cpp:
+	* tao/ORB.h: Added two more methods within the CORBA::ORB
+	  class. The methods are create_alias_tc () &
+	  create_struct_tc(). These were requested by Jarek Tomasewzki
+	  <jarek-tomasewski@vertel.de>. 
+
 Thu Sep 30 14:58:38 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_valuetype/field_ch.cpp:
