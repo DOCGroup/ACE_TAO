@@ -363,7 +363,9 @@ ACE_Location_Node::open_handle (void)
 
   // Transform the pathname into the appropriate dynamic link library
   // by searching the ACE_LD_SEARCH_PATH.
-  ACE::ldfind (this->pathname (), dl_pathname, sizeof dl_pathname);
+  ACE::ldfind (this->pathname (), 
+	       dl_pathname, 
+	       (sizeof dl_pathname / sizeof char));
   
   this->handle (ACE_OS::dlopen (dl_pathname, RTLD_LAZY));
 

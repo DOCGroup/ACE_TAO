@@ -210,13 +210,13 @@ public:
   ACE_Overlapped_File (const ACE_Overlapped_File &file);
   // Copy <file>.
 
-  ACE_Overlapped_File (const char *file_name, int mode, int perms = 0);
+  ACE_Overlapped_File (LPCTSTR file_name, int mode, int perms = 0);
   // Construction of an ACE_Overlapped_File.  Calls open.
 
   ~ACE_Overlapped_File (void);
   // Destruction.  Calls close.
 
-  int open (const char *file_name,
+  int open (LPCTSTR file_name,
 	    int access = GENERIC_READ,
 	    int share = FILE_SHARE_READ,
 	    LPSECURITY_ATTRIBUTES security = 0,

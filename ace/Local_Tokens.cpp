@@ -82,7 +82,7 @@ ACE_TPQ_Entry::ACE_TPQ_Entry (const ACE_Token_Proxy *new_proxy,
     {
       // Just make sure we have enough space.
       char host_name[MAXHOSTNAMELEN];
-      char name[sizeof host_name + 256];
+      char name[(sizeof host_name / sizeof char) + 256];
       ACE_OS::hostname (host_name, sizeof host_name);
 
       ACE_OS::sprintf (name,

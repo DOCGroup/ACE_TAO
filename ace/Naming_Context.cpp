@@ -57,7 +57,8 @@ int
 ACE_Naming_Context::open (Context_Scope_Type scope_in, int lite)
 {
   ACE_TRACE ("ACE_Naming_Context::open");
-  ACE_OS::hostname (this->hostname_, sizeof this->hostname_);
+  ACE_OS::hostname (this->hostname_, 
+		    (sizeof this->hostname_ / sizeof char));
 
   this->netnameserver_host_ = this->name_options_->nameserver_host ();
   this->netnameserver_port_ = this->name_options_->nameserver_port ();
@@ -65,7 +66,7 @@ ACE_Naming_Context::open (Context_Scope_Type scope_in, int lite)
   // Perform factory operation to select appropriate type of
   // Name_Space subclass.
 
-#if (defined (ACE_WIN32) && (defined (UNICODE)))
+#if (defined (ACE_WIN32) && defined (UNICODE))
 // This only works on Win32 platforms when UNICODE is turned on
   
   if (this->name_options_->use_registry ())
@@ -100,11 +101,14 @@ ACE_Naming_Context::close (void)
   ACE_TRACE ("ACE_Naming_Context::close");
 
   delete this->name_space_;
+  this->name_space_ = 0;
 
   return 0;
 }
 
 ACE_Naming_Context::ACE_Naming_Context (void)
+  : name_space_ (0),
+    name_options_ (0)
 {
   ACE_TRACE ("ACE_Naming_Context::ACE_Naming_Context");
   ACE_NEW (this->name_options_, ACE_Name_Options);
@@ -112,6 +116,8 @@ ACE_Naming_Context::ACE_Naming_Context (void)
 
 ACE_Naming_Context::ACE_Naming_Context (Context_Scope_Type scope_in,
 					int lite)
+  : name_space_ (0),
+    name_options_ (0)
 {
   ACE_TRACE ("ACE_Naming_Context::ACE_Naming_Context");
 
@@ -315,6 +321,7 @@ ACE_Naming_Context::~ACE_Naming_Context (void)
 {
   ACE_TRACE ("ACE_Naming_Context::~ACE_Naming_Context");
   delete this->name_space_;
+  delete this->name_options_;
 }
 
 void
@@ -336,7 +343,6 @@ int
 ACE_Naming_Context::fini (void)
 {
   ACE_DEBUG ((LM_DEBUG, "ACE_Naming_Context::fini\n"));
-  delete this->name_options_;
   return 0;
 }
 
