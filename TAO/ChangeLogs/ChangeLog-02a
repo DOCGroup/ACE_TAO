@@ -1,15 +1,28 @@
+Mon Jan 31 20:15:25 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Event/EC_Concrete_Proxy_Set.h:
+	* orbsvcs/orbsvcs/Event/EC_Basic_Factory.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Null_Factory.cpp:
+	  Had to expand several typedefs to workaround problems with SunCC
+	  4.2 apparently the compiler cannot deal with nested typedefs
+	  inside templates very well.
+
+	* orbsvcs/orbsvcs/Event/EC_Proxy_Collection.h:
+	  Fixed a comment.
+
 Mon Jan 31 20:13:58 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 	* orbsvcs/orbsvcs/Event/EC_Concrete_Proxy_Set.h:
 	  Added missing ACE_TYPENAME macros, only HP/aCC seems to detect
-	  the problem.  
+	  the problem.
 
 	* orbsvcs/orbsvcs/Event/EC_QOS_Info.h:
 	* orbsvcs/orbsvcs/Event/EC_QOS_Info.i:
 	  Workaround a bug in the HP/aCC compiler, unless the copy
 	  constructor is explicitly defined the compiler crashes when
 	  trying to generate the code for it.
-	
+
 Mon Jan 31 13:21:48 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * orbsvcs/tests/ImplRepo/run_test.pl:
@@ -20,7 +33,7 @@ Mon Jan 31 13:21:48 2000  Darrell Brunsch <brunsch@uci.edu>
           Noticed that servers using the IMR were not shutting down properly
           on non-Win32 platforms.  This happened because the code was grabbing
           locks twice, so it deadlocked when the default lock wasn't a thread
-          mutex.  It now calls the equivalent *_i methods.  
+          mutex.  It now calls the equivalent *_i methods.
 
 Mon Jan 31 14:54:14 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
