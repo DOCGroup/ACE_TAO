@@ -816,10 +816,6 @@ private:
   // through the auxillary thread  in the deregister fun. So let us
   // mutex it.
 
-  ACE_Asynch_Accept_Handler (void);
-  // Default constructor shouldn't be called. Without a reactor, this
-  // class wont make sense.
-
   ACE_Proactor* proactor_;
   // Proactor used by the Asynch_Accept class.
 };
