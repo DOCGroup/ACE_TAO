@@ -1,3 +1,9 @@
+Thu Dec  9 14:57:16 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* performance-tests/RTCorba/Oneway/Reliable/run_test.pl:
+	  Added invocation of client's server shutdown option on the
+	  last iteration.
+
 Thu Dec 09 14:23:16 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/tests/start_services:  added -s option to start
