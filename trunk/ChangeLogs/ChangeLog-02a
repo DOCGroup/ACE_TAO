@@ -1,3 +1,12 @@
+Wed Jan 24 16:13:10 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/OS_Dirent.cpp: Fixed a bug in the readdir_emulation() method.
+	  Thanks to Yung Trinh <ytrinh@email.com> for reporting this.
+
+	* ace/Connector.{h,cpp}: Added a new connector() accessor to
+	  return the underlying ACE_PEER_CONNECTOR.  Thanks to Pedro
+ 	  Brandao <pbrandao@inescn.pt> for suggesting this.	
+  
 Wed Jan 24 10:17:03 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 	* ace/Makefile:

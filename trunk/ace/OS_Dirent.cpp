@@ -89,7 +89,7 @@ ACE_OS_Dirent::readdir_emulation (DIR *d)
         {
           // Skip "." and ".."
           int retval = 1;
-          while (*(d->fdata_.cFileName) == '.'
+          while (*d->fdata_.cFileName == '.'
                  && retval
                  && d->fdata_.dwFileAttributes == FILE_ATTRIBUTE_DIRECTORY)
             {
@@ -107,13 +107,17 @@ ACE_OS_Dirent::readdir_emulation (DIR *d)
       int retval = ACE_TEXT_FindNextFile (d->current_handle_,
                                           &(d->fdata_));
       if (retval == 0)
-        d->current_handle_ = INVALID_HANDLE_VALUE;
+        {
+          // Make sure to close the handle explicitly to avoid a leak!
+          ::FindClose (d->current_handle_);
+          d->current_handle_ = INVALID_HANDLE_VALUE;
+        }
     }
 
   if (d->current_handle_ != INVALID_HANDLE_VALUE)
     {
       d->dirent_.d_name = d->fdata_.cFileName;
-      return &(d->dirent_);
+      return &d->dirent_;
     }
   else
     return 0;
