@@ -110,7 +110,7 @@ Point of contact: <A HREF="mailto:gokhale@research.bell-labs.com">Aniruddha Gokh
      Compile problems with sequence of forward declared interfaces is
      fixed. In addition, problems with sequence of CORBA::Objects is
      fixed. In this specific case, we were not generating the
-     _downcast and _upcase methods.
+     _downcast and _upcast methods.
      </LI>
 
      <LI>
@@ -141,7 +141,8 @@ Point of contact: <A HREF="mailto:gokhale@research.bell-labs.com">Aniruddha Gokh
           for the IDL-generated stubs, skeletons and the various
           header files. Please refer to the <A
           HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/docs/compiler.html">IDL compiler options</A> for details.
-          </LI>
+      </LI>
+
       <LI>Added partial native C++ exception support:
 	<UL>
 	  <LI>The ORB can be configured to catch native C++ exceptions
@@ -248,6 +249,7 @@ properly and sequences were based on templates. The generated source code
 is mainly contained in the generated header file directly in the class
 declaration.</LI>
 </UL>
+
 Known bugs/unimplemented constructs:
 <UL>
 <LI>
