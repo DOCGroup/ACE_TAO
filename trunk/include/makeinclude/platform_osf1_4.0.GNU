@@ -34,14 +34,14 @@ CCFLAGS         += $(CFLAGS) -ptr ptrepository $(WARNING_FLAGS) #### -nortti
 DCFLAGS         += -g -O0
 DLD             = $(CXX)
 LD              = $(CXX)
-#### -lm is needed for TAO MT_Cubit client
-LIBS            += $(CFLAGS) -ptr ptrepository -ltli -lrt -lm
+LIBS            += $(CFLAGS) -ptr ptrepository -ltli -lrt
+MATHLIB         = -lm
 OCFLAGS         += -O4
 PIC             =
 ARFLAGS         = cruvZ
 # When libraries are archived, a hash index is automatically created
 # so there is no need for ranlib
-RANLIB          = /usr/bin/true
+RANLIB          = @true
 SOFLAGS         = -shared -use_ld_input $(ACELIB)
 SOBUILD         = /bin/rm -f $@; $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.o $< && \
                   ln $(VSHDIR)$*.o $@
