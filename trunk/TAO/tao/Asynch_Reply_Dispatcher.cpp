@@ -66,8 +66,8 @@ TAO_Asynch_Reply_Dispatcher_Base::reply_timed_out (void)
 }
 
 long
-TAO_Asynch_Reply_Dispatcher_Base::schedule_timer (CORBA::ULong request_id,
-                                                  const ACE_Time_Value &max_wait_time)
+TAO_Asynch_Reply_Dispatcher_Base::schedule_timer (CORBA::ULong /*request_id */,
+                                                  const ACE_Time_Value & /*max_wait_time*/)
 {
   return 0;
 }

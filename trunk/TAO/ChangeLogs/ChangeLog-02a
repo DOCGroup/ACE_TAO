@@ -1,3 +1,8 @@
+Thu Mar  8 21:34:35 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Asynch_Reply_Dispatcher.cpp (schedule_timer): Fixed a
+	  warning with g++.  
+
 Thu Mar  8 19:02:52 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/IFR_Client/Interface.pidl:
