@@ -1,16 +1,37 @@
+Tue Oct 20 19:40:41 1998  Steve Huston  <shuston@riverace.com>
+
+        * include/makeinclude/platform_hpux_aCC.GNU: Added
+          -DACE_LACKS_PRAGMA_ONCE - aCC on both 10.20 and 11.00 complain about
+          #pragma once.  Added it here rather than in config.h because (1) it
+          can be set in one file, not two, (2) in case a #pragma gets in before
+          config.h is included somehow.
+
+        * include/makeinclude/platform_aix4.2.GNU: Revised flags passed to
+          xlC_r - remove -qextchk because it's the cause of the mismatched
+          type errors building netsvcs/lib (IBM reports this is fixed in
+          compiler version 3.6.4).  Removed -M - it's not needed and wastes
+          disk space.  Moved -qcheck to DCFLAGS and added -qinitauto=5F to
+          DCFLAGS.
+
+        * include/makeinclude/rules.local.GNU: Added SHLIBA to the files that
+          get 'realclean'ed - this covers libACEshr.a on AIX.
+
+        * netsvcs/lib/Makefile:
+        * netsvcs/clients/Naming/Client/Makefile: Added ACELIB to LIBS to
+          insure libACE is linked in.
+
 Tue Oct 20 19:37:42 1998  James CE Johnson  <jcej@chiroptera.tragus.org>
 
-	* docs/tutorials/014/*.html:
-	* docs/tutorials/014/Makefile:
-	* docs/tutorials/014/combine.shar:
-	Colorized using the new and improved 'combine' script.  Also
-	modified the Makefile so that the HTML sources won't get destroyed 
-	if the shar operation failed.
+        * docs/tutorials/014/*.html:
+        * docs/tutorials/014/Makefile:
+        * docs/tutorials/014/combine.shar:
+          Colorized using the new and improved 'combine' script.  Also
+          modified the Makefile so that the HTML sources won't get destroyed 
+          if the shar operation failed.
 
-	* docs/tutorials/015/Makefile:
-	Added the same Makefile modification to prevent loss of HTML sources
+       * docs/tutorials/015/Makefile:
+          Added the same Makefile modification to prevent loss of HTML sources
 	
-
 Tue Oct 20 16:28:12 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ACE-INSTALL.html: added recommended DU CXX version info.
