@@ -1,3 +1,21 @@
+Mon Apr  9 15:45:00 2001  Michael Kircher <Michael.Kircher@mchp.siemens.de>
+
+        * tao/GIOP_Message_Base.h:
+        * tao/GIOP_Message_Base.cpp:
+        * tao/GIOP_Message_Lite.h:
+        * tao/GIOP_Message_Lite.cpp:
+        * tao/GIOP_Message_Handler.h:
+        * tao/GIOP_Message_Handler.cpp:
+
+          Added a new parameter to the constructor. This parameter can
+          be used to set the underlying input CDR stream buffer size.
+          As the transport instantiates these classes, the input CDR
+          buffer size can be controlled this way. The parameter
+          has a default value of ACE_CDR::DEFAULT_BUFSIZE.
+          GIOP_Message_Base forwards this parameter to GIOP_Message_Handler,
+          which is reponsible for the input CDR strream, this triggered
+          the change in GIOP_Message_Handler.
+
 Mon Apr  9 14:52:07 2001  Paul Calabrese <calabrese_p@ociweb.com>
 
         * orbsvcs/orbsvcs/Event/EC_Basic_Filter_Builder.h:
