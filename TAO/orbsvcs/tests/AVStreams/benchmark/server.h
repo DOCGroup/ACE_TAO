@@ -74,6 +74,11 @@ public:
 
   ~Server (void);
 private:
+
+  enum strategy {PROCESS_STRATEGY=0,REACTIVE_STRATEGY=1};
+  int parse_args (int argc, char **argv);
+  // parses the arguments.
+
   TAO_ORB_Manager orb_manager_;
   // the TAO ORB manager.
 
@@ -88,7 +93,7 @@ private:
   ACE_Process_Options process_options_;
   // The process options for the process to be spawned by the process strategy
 
-  //  TAO_AV_Endpoint_Process_Strategy_B process_strategy_;
+  TAO_AV_Endpoint_Process_Strategy_B process_strategy_;
   // The proces strategy for the video.
 
   TAO_AV_Endpoint_Reactive_Strategy_B <Bench_Server_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl> reactive_strategy_;
@@ -96,6 +101,9 @@ private:
 
   TAO_MMDevice *mmdevice_;
   // The video server multimedia device
+
+  strategy strategy_;
+  // flag indicating strategy.
 };
 
 #endif /* TAO_AV_BENCH_SERVER_H */

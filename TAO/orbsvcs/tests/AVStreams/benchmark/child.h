@@ -31,7 +31,7 @@ class ttcp_Stream_Handler : public virtual ACE_Event_Handler
   //   the current state which is implemented using the state pattern.
 public:
 
-  ttcp_Stream_Handler (int ttcp_Stream_fd);
+  ttcp_Stream_Handler (ACE_HANDLE ttcp_Stream_fd);
   // Construct this handler with a control (TCP) fd
   // %% use sock stream instead of fd
 
