@@ -161,18 +161,17 @@
 // get stuck with the default size of 8k.
 #define ACE_DEFAULT_MAX_SOCKET_BUFSIZ 65535
 
-//
 // It seems like Win32 does not have a limit on the number of buffers
 // that can be transferred by the scatter/gather type of I/O
-// functions, e.g., WSASend and WSARecv.  We are arbitrarily setting
-// this to be 1k for now.  The typically use case is to create an I/O
-// vector array of size ACE_IOV_MAX on the stack and then filled in.  Note
-// that we probably don't want too big a value for ACE_IOV_MAX since it
-// may mostly go to waste or the size of the activation record may
-// become excessively large.
-//
+// functions, e.g., WSASend and WSARecv.  We are setting this to be 64
+// for now.  The typically use case is to create an I/O vector array
+// of size ACE_IOV_MAX on the stack and then filled in.  Note that we
+// probably don't want too big a value for ACE_IOV_MAX since it may
+// mostly go to waste or the size of the activation record may become
+// excessively large.
+
 #if !defined (ACE_IOV_MAX)
-# define ACE_IOV_MAX 1024
+# define ACE_IOV_MAX 64
 #endif /* ACE_IOV_MAX */
 
 #if !defined (ACE_HAS_WINCE)
