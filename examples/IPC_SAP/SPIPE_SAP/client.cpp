@@ -22,7 +22,7 @@ main (int argc, char *argv[])
   if (con.connect (cli_stream, ACE_SPIPE_Addr (rendezvous)) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", rendezvous), 1);
 
-  size_t len = ACE_OS::strlen (argv[1]) + 1;
+  ssize_t len = ACE_OS::strlen (argv[1]) + 1;
 
   if (cli_stream.send (argv[1], len) != len)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "send"), 1);
