@@ -4,9 +4,12 @@
 #define ACE_SERVER_LOGGING_HANDLERT_C
 
 #define ACE_BUILD_SVC_DLL
+
+#include <string.h>
 #include "ace/Get_Opt.h"
 #include "Server_Logging_Handler_T.h"
-#include <string.h>
+
+ACE_RCSID(lib, Server_Logging_Handler_T, "$Id$")
 
 #if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
 // Track number of requests.

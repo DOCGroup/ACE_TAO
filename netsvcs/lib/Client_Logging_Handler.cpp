@@ -1,14 +1,15 @@
 // $Id$
 
-// Client_Logging_Handler.cpp
-
 #define ACE_BUILD_SVC_DLL
+
 #include "ace/Get_Opt.h"
 #include "ace/Acceptor.h"
 #include "ace/SOCK_Connector.h"
 #include "ace/SOCK_Acceptor.h"
 #include "ace/SPIPE_Acceptor.h"
 #include "Client_Logging_Handler.h"
+
+ACE_RCSID(lib, Client_Logging_Handler, "$Id$")
 
 ACE_Client_Logging_Handler::ACE_Client_Logging_Handler (ACE_HANDLE output_handle)
   : logging_output_ (output_handle)

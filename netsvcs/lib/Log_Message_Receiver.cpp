@@ -7,6 +7,8 @@
 #include "ace/Synch_T.h"
 #include "Log_Message_Receiver.h"
 
+ACE_RCSID(lib, Log_Message_Receiver, "$Id$")
+
 // Type based log message receiver
 template<ACE_SYNCH_DECL> void
 Static_Log_Message_Receiver<ACE_SYNCH_USE>::log_record (char const *hostname,

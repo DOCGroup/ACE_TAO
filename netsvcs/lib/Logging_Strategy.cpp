@@ -1,10 +1,12 @@
-// Logging_Strategy.cpp
 // $Id$
 
 #define ACE_BUILD_SVC_DLL
+
 #include "ace/Get_Opt.h"
 #include "ace/streams.h"
 #include "Logging_Strategy.h"
+
+ACE_RCSID(lib, Logging_Strategy, "$Id$")
 
 // Parse the string containing all the flags and set the flags accordingly
 void

@@ -1,10 +1,11 @@
 // $Id$
 
-// TS_Clerk_Handler.cpp
-
 #define ACE_BUILD_SVC_DLL
+
 #include "ace/Get_Opt.h"
 #include "TS_Clerk_Handler.h"
+
+ACE_RCSID(lib, TS_Clerk_Handler, "$Id$")
 
 ACE_TS_Clerk_Handler::ACE_TS_Clerk_Handler (ACE_TS_Clerk_Processor *processor,
 					    ACE_INET_Addr &addr)

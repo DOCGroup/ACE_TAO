@@ -18,12 +18,13 @@
 // ============================================================================
 
 #include "ace/OS.h"
-
 #include "ace/Get_Opt.h"
 #include "ace/Local_Tokens.h"
 #include "ace/Remote_Tokens.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Token_Invariants.h"
+
+ACE_RCSID(rw_lock, rw_locks, "$Id$")
 
 #if defined (ACE_HAS_THREADS)
 

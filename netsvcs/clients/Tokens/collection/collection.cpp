@@ -20,13 +20,14 @@
 // ============================================================================
 
 #include "ace/OS.h"
-
 #include "ace/Get_Opt.h"
 #include "ace/Local_Tokens.h"
 #include "ace/Token_Collection.h"
 #include "ace/Remote_Tokens.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Service_Config.h"
+
+ACE_RCSID(collection, collection, "$Id$")
 
 #if defined (ACE_HAS_THREADS)
 

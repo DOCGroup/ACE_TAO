@@ -2,6 +2,9 @@
 
 #include <stdio.h>
 #include <string.h>
+#include "ace/ACE.h"
+
+ACE_RCSID(Dump_Restore, createfile, "$Id$")
 
 int 
 main (int argc, char **argv)

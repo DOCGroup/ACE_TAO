@@ -1,10 +1,12 @@
-// Test the client-side of the ACE Name Server...
 // $Id$
 
+// Test the client-side of the ACE Name Server...
 
 #include "ace/Service_Config.h"
 #include "ace/Naming_Context.h"
 #include "Client_Test.h"
+
+ACE_RCSID(Client, main, "$Id$")
 
 int 
 main (int argc, char *argv[])

@@ -7,6 +7,8 @@
 
 #include "ace/OS.h"
 
+ACE_RCSID(Logger, indirect_logging, "$Id$")
+
 int 
 main (int argc, char *argv[])
 {

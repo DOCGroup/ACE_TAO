@@ -16,11 +16,12 @@
 // ============================================================================
 
 #include "ace/OS.h"
-
 #include "ace/Get_Opt.h"
 #include "ace/Singleton.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Token_Invariants.h"
+
+ACE_RCSID(invariant, invariant, "$Id$")
 
 #if defined (ACE_HAS_THREADS)
 
