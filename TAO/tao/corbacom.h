@@ -1,5 +1,4 @@
 // This may look like C, but it's really -*- C++ -*-
-
 // $Id$
 
 // ============================================================================
@@ -144,10 +143,10 @@ class TAO_ServantBase;
 // enum values defined in nvlist.h, bitwise ORed.
 typedef u_int CORBA_Flags;
 
-#  if	SIZEOF_BOOL != 0
-  typedef bool			CORBA_Boolean;
-#  else	/* "bool" not builtin to this compiler */
-  typedef int			CORBA_Boolean;
+#  if SIZEOF_BOOL != 0
+  typedef bool CORBA_Boolean;
+#  else /* "bool" not builtin to this compiler */
+  typedef int CORBA_Boolean;
 #  endif /* "bool" not builtin */
 
 // forward declare sequences.
@@ -193,10 +192,10 @@ public:
   // typedef void Status; // g++ doesn't like this
   // return status of operations in a number of standard CORBA classes.
 
-#  if	SIZEOF_BOOL != 0
+#  if SIZEOF_BOOL != 0
 #    define B_FALSE false
 #    define B_TRUE true
-#  else	/* "bool" not builtin to this compiler */
+#  else /* "bool" not builtin to this compiler */
   enum { B_FALSE = 0, B_TRUE = 1 };
 #  endif /* "bool" not builtin */
 
@@ -227,34 +226,33 @@ public:
   // NOTE:  those are IDL extensions, not yet standard.
 
   typedef ACE_UINT64 ULongLong;
-#  if   SIZEOF_LONG_LONG == 8
-#    if defined (sun)
-       // sun #defines u_longlong_t, maybe other platforms do also.
-       // Use it, at least with g++, so that its -pedantic doesn't
-       // complain about no ANSI C++ long long.
-       typedef longlong_t LongLong;
-#    else
-       // LynxOS 2.5.0 and Linux don't have u_longlong_t.
-       typedef long long LongLong;
-#    endif /* sun */
-#  elif SIZEOF_LONG == 8
-  typedef long LongLong;
-#  elif defined (_MSC_VER) && _MSC_VER >= 900
-  typedef __int64 LongLong;
-#  else
+# if defined (_MSC_VER) && _MSC_VER >= 900
+    typedef __int64 LongLong;
+# elif SIZEOF_LONG == 8
+    typedef long LongLong;
+# elif SIZEOF_LONG_LONG == 8 && !defined (ACE_LACKS_LONGLONG_T)
+#   if defined (sun)
+      // sun #defines u_longlong_t, maybe other platforms do also.
+      // Use it, at least with g++, so that its -pedantic doesn't
+      // complain about no ANSI C++ long long.
+      typedef longlong_t LongLong;
+#   else
+      // LynxOS 2.5.0 and Linux don't have u_longlong_t.
+      typedef long long LongLong;
+#   endif /* sun */
+# else  /* no native 64 bit integer type */
 
-  // If "long long" isn't native, programs can't use these data types
-  // in normal arithmetic expressions.  If any particular application
-  // can cope with the loss of range it can define conversion
-  // operators itself.
-
-#    define     NONNATIVE_LONGLONG
-#    if defined (TAO_WORDS_BIGENDIAN)
-  struct LongLong { Long h, l; };
-#    else
-  struct LongLong { Long l, h; };
-#    endif /* !TAO_WORDS_BIGENDIAN */
-#  endif /* no native 64 bit integer type */
+    // If "long long" isn't native, programs can't use these data
+    // types in normal arithmetic expressions.  If any particular
+    // application can cope with the loss of range, it can define
+    // conversion operators itself.
+#   define NONNATIVE_LONGLONG
+#   if defined (TAO_WORDS_BIGENDIAN)
+      struct LongLong { Long h, l; };
+#   else
+      struct LongLong { Long l, h; };
+#   endif /* !TAO_WORDS_BIGENDIAN */
+# endif /* no native 64 bit integer type */
 
   typedef LongLong &LongLong_out;  // out type for long long
   typedef ULongLong &ULongLong_out; // out type for unsigned long long
