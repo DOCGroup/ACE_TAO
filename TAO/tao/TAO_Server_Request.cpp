@@ -127,7 +127,7 @@ void
 TAO_ServerRequest::init_reply (void)
 {
   // Construct our reply generator.
-  TAO_Pluggable_Reply_Params reply_params (this->orb_core_);
+  TAO_Pluggable_Reply_Params_Base reply_params;
 
   // We put all the info that we have in to this <reply_params> and
   // call the <write_reply_header> in the
@@ -185,7 +185,7 @@ void
 TAO_ServerRequest::send_no_exception_reply (void)
 {
   // Construct our reply generator.
-  TAO_Pluggable_Reply_Params reply_params (this->orb_core_);
+  TAO_Pluggable_Reply_Params_Base reply_params;
   reply_params.request_id_ = this->request_id_;
   reply_params.is_dsi_ = this->is_dsi_;
   reply_params.dsi_nvlist_align_ = this->dsi_nvlist_align_;
@@ -249,7 +249,7 @@ TAO_ServerRequest::tao_send_reply_exception (CORBA::Exception &ex)
   if (this->response_expected_)
     {
       // A copy of the reply parameters
-      TAO_Pluggable_Reply_Params reply_params (this->orb_core_);
+      TAO_Pluggable_Reply_Params_Base reply_params;
 
       reply_params.request_id_ = this->request_id_;
       reply_params.svc_ctx_.length (0);
