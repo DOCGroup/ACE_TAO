@@ -58,6 +58,9 @@ public:
   const ACE_Time_Value &startup_timeout (void) const;
   // Returns the timeout value for program starting.
 
+  const ACE_Time_Value &ping_interval (void) const;
+  // Returns the timeout value for program starting.
+
 private:
   unsigned int debug_;
   // Debug information
@@ -69,7 +72,10 @@ private:
   // The persistent configuration object.
 
   ACE_Time_Value startup_timeout_;
-  // The amount of time to wait for a program to respons after starting it up.
+  // The amount of time to wait for a program to response after starting it up.
+
+  ACE_Time_Value ping_interval_;
+  // The amount of time between successive pings to a server.
 };
 
 // Typedef an Options Singleton. 
