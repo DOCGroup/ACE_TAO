@@ -394,7 +394,6 @@ Sender::pace_data (ACE_ENV_SINGLE_ARG_DECL)
                                "Sender::pace_data send\n"),
                               -1);
 
-	  if (TAO_debug_level > 0)
 	    ACE_DEBUG ((LM_DEBUG,
 			"Sender::pace_data frame %d was sent succesfully %d\n",
 			++this->frame_count_,
