@@ -1,3 +1,8 @@
+Sun Jun  4 13:33:43 2000  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
+
+	* orbsvcs/tests/Notify/Basic/Updates.cpp:
+	  renamed #defines to fix compile errors on Compaq Tru64 UNIX.
+
 Sat Jun  3 20:56:46 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * orbsvcs/orbsvcs/AV/MCast.cpp:
@@ -44,7 +49,7 @@ Sat Jun 03 11:55:23 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 	* tao/Profile.i
 
 	- Modified constructor of Profile class.
-	 
+
 
 Sat Jun 03 04:17:38 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
