@@ -78,23 +78,27 @@ endif # RANLIB
 
 # Note that if you don't want to build shared libraries, just remove the
 # $(VSHOBJS)
+#
+# The AIX shr.o build is out here to keep it away from the SOVERSION stuff.
+# The SOVERSION transform is applied after building the library file.
+ifeq (1,$(aix_build))
+shr.o: $(VSHOBJS1)
+	$(SHR_FILTER) $(SOLINK.cc) $(SO_OUTPUT_FLAG) $@ $(VSHOBJS1) $(LDFLAGS) $(ACE_SHLIBS) $(LIBS)
+
+.INTERMEDIATE: shr.o
+endif # aix_build
+
+ifeq (1,$(aix_build))
+$(VSHLIB): shr.o
+	$(AR) $(ARFLAGS) $@$(SOVERSION) $?
+ifneq (,$(RANLIB))
+	-$(RANLIB) $@$(SOVERSION)
+endif # RANLIB
+else
 ifdef SHLIBBUILD
 $(VSHLIB): $(VSHOBJS)
 else
-ifeq (1,$(aix_build))
-$(VSHLIB): shr.o
-	$(AR) $(ARFLAGS) $@ $?
-	-chmod a+rx $@
-ifneq (,$(RANLIB))
-	-$(RANLIB) $@
-endif # RANLIB
-
-.INTERMEDIATE: shr.o
-
-shr.o: $(VSHOBJS1)
-else
 $(VSHLIB): $(VSHOBJS1)
-endif  # aix_build
 endif  # SHLIBBUILD
 ifdef PRELIB
 	$(PRELIB)
@@ -131,12 +135,13 @@ ifeq ($(split),1)
 	$(SHR_FILTER) $(SOLINK.cc) $(SO_OUTPUT_FLAG) $@$(SOVERSION) $(VSHDIR)/*.$(OBJEXT) $(LDFLAGS) $(ACE_SHLIBS) $(LIBS)
 else
 	$(SHR_FILTER) $(SOLINK.cc) $(SO_OUTPUT_FLAG) $@$(SOVERSION) $(VSHOBJS1) $(LDFLAGS) $(ACE_SHLIBS) $(LIBS)
-endif
-endif
-endif
+endif  # split
+endif  # kylix
+endif  # ibmcxx_build
+endif  # SHLIBBUILD
+endif  # aix_build
 ifneq ($(SOVERSION),)
 	-$(RM) $@
 	-$(LN_S) $@$(SOVERSION) $@
 endif
 	-chmod a+rx $@$(SOVERSION)
-endif
