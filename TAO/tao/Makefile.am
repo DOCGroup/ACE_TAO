@@ -1282,9 +1282,6 @@ nobase_include_HEADERS += \
   Valuetype/AbstractBase.inl \
   Valuetype/Sequence_T.inl \
   Valuetype/ValueBase.inl \
-  Valuetype/ValueFactory.inl \
-  Valuetype/ValueFactory_Map.inl \
-  Valuetype/Value_VarOut_T.inl \
   Valuetype/AbstractBase_T.cpp \
   Valuetype/Sequence_T.cpp \
   Valuetype/Value_VarOut_T.cpp

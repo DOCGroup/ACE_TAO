@@ -91,11 +91,6 @@ TAO_VALUETYPE_SINGLETON_DECLARE (TAO_Singleton,
                                  TAO_ValueFactory_Map,
                                  TAO_SYNCH_MUTEX)
 
-
-#if defined (__ACE_INLINE__)
-# include "ValueFactory_Map.inl"
-#endif /* __ACE_INLINE__) */
-
 #include /**/ "ace/post.h"
 
 #endif /* TAO_VALUEFACTORY_MAP_H */

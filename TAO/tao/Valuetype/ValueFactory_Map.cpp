@@ -2,11 +2,7 @@
 #include "ValueFactory.h"
 #include "tao/CORBA_String.h"
 
-#if !defined (__ACE_INLINE__)
-# include "ValueFactory_Map.inl"
-#endif /* ! __ACE_INLINE__ */
-
-ACE_RCSID (tao,
+ACE_RCSID (Valuetype,
            ValueFactory_Map,
            "$Id$")
 
