@@ -3,12 +3,13 @@
 #define TEST_H
 #include "ace/pre.h"
 
-#include "Thread_Task.h"
+
 #include "FP_Scheduler.h"
 #include "ace/Sched_Params.h"
 #include "tao/ORB_Core.h"
 #include "ace/Synch.h"
-#include "DT_Creator.h"
+#include "FP_DT_Creator.h"
+
 
 class DT_Test 
 {
@@ -24,13 +25,11 @@ class DT_Test
   void run (int argc, char *argv [] 
 	  ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
-  void dt_creator (DT_Creator* dt_creator);
+  void dt_creator (FP_DT_Creator* dt_creator);
 
   Fixed_Priority_Scheduler* scheduler (void);
   
-  RTScheduling::Current_ptr current (void); 
-
-  CORBA::ORB_ptr orb (void);
+  
  private:
   /// = Policies
   long thr_sched_policy_;
@@ -40,7 +39,7 @@ class DT_Test
   int max_priority_;
   int min_priority_;
   RTScheduling::Current_var current_; 
-  DT_Creator* dt_creator_;
+  FP_DT_Creator* dt_creator_;
   Fixed_Priority_Scheduler* scheduler_;
 };
 

@@ -4,14 +4,12 @@
 #include "tao/RTScheduling/RTScheduler_Manager.h"
 #include "tao/ORB_Core.h"
 #include "ace/Arg_Shifter.h"
-
-DT_Test* dt_test;
+#include "FP_DT_Creator.h"
+#include "../Thread_Task.h"
 
 DT_Test::DT_Test (void)
 {
-  dt_test = this;
-}
-
+}	
 
 void
 DT_Test::check_supported_priorities (void)
@@ -25,7 +23,7 @@ DT_Test::check_supported_priorities (void)
   if (thr_sched_policy_ == THR_SCHED_RR)
     {
       //if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG, "Sched policy = THR_SCHED_RR\n"));
+      ACE_DEBUG ((LM_DEBUG, "Sched policy = THR_SCHED_RR\n"));
 
       sched_policy_ = ACE_SCHED_RR;
     }
@@ -37,15 +35,13 @@ DT_Test::check_supported_priorities (void)
 
       sched_policy_ = ACE_SCHED_FIFO;
     }
-  
   else
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG, "Sched policy = THR_SCHED_OTHER\n"));
-
+      
       sched_policy_ = ACE_SCHED_OTHER;
     }
-
 
   max_priority_ = ACE_Sched_Params::priority_max (sched_policy_);
   min_priority_ = ACE_Sched_Params::priority_min (sched_policy_);
@@ -125,7 +121,9 @@ DT_Test::run (int argc, char* argv []
 	ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   
-  dt_creator_->create_distributable_threads (ACE_ENV_ARG_PARAMETER);
+  dt_creator_->create_distributable_threads (orb_,
+											 current_
+											ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   
   orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -133,10 +131,11 @@ DT_Test::run (int argc, char* argv []
 }
 
 void
-DT_Test::dt_creator (DT_Creator* dt_creator)
+DT_Test::dt_creator (FP_DT_Creator* dt_creator)
 {
   this->dt_creator_ = dt_creator;
 }
+
 
 Fixed_Priority_Scheduler* 
 DT_Test::scheduler (void)
@@ -144,24 +143,13 @@ DT_Test::scheduler (void)
   return this->scheduler_;
 }
 
-RTScheduling::Current_ptr 
-DT_Test::current (void)
-{
-  return current_.in ();
-}
-
-CORBA::ORB_ptr
-DT_Test::orb (void)
-{
-  return orb_.in ();
-}
 
 int
 main (int argc, char* argv [])
 {
   ACE_TRY_NEW_ENV
     {
-      ACE_Service_Config::static_svcs ()->insert (&ace_svc_desc_DT_Creator);
+      ACE_Service_Config::static_svcs ()->insert (&ace_svc_desc_FP_DT_Creator);
       
       DT_TEST::instance ()->run (argc, argv
 								  ACE_ENV_ARG_PARAMETER);
