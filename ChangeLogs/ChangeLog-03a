@@ -1,5 +1,10 @@
 Sat Jul 28 14:58:30 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
+	* ace/Svc_Conf_l.cpp:
+  	* ace/Svc_Conf_y.cpp: Reran BYACC and FLEX on the Svc_Conf.l and 
+	  Svc_Conf.y files to regenerate them.  Thanks to Bala for 
+	  motivating this.
+
 	* netsvcs/clients/Tokens/collection/Makefile,
 	  netsvcs/clients/Tokens/deadlock/Makefile,
 	  netsvcs/clients/Tokens/invariant/Makefile,
