@@ -15,11 +15,12 @@ endif # ! TAO_ROOT
 LDLIBS = -lTAO
 
 IDLFILES = testC testS
-BIN = client server
+BIN = client server orb_creation
 
 SRC = $(addsuffix .cpp, $(BIN) $(IDLFILES) test_i)
 
 CLIENT_OBJS = client.o $(addsuffix .o, $(IDLFILES))
+ORB_CREATION_OBJS = orb_creation.o $(addsuffix .o, $(IDLFILES))
 SERVER_OBJS = server.o test_i.o $(addsuffix .o, $(IDLFILES))
 
 BUILD = $(BIN)
@@ -50,6 +51,9 @@ server: $(addprefix $(VDIR),$(SERVER_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 client: $(addprefix $(VDIR),$(CLIENT_OBJS))
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
+
+orb_creation: $(addprefix $(VDIR),$(ORB_CREATION_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 realclean: clean

@@ -458,9 +458,6 @@ TAO_App_Allocated_Resources::~TAO_App_Allocated_Resources (void)
     this->output_cdr_buffer_allocator_->remove ();
   delete this->output_cdr_buffer_allocator_;
 
-  if (this->r_ != 0)
-    delete this->r_;
-
   if (this->object_adapter_ != 0)
     delete this->object_adapter_;
 
@@ -470,6 +467,9 @@ TAO_App_Allocated_Resources::~TAO_App_Allocated_Resources (void)
       delete this->cached_connect_strategy_->creation_strategy ();
       delete this->cached_connect_strategy_;
     }
+
+  if (this->r_ != 0)
+    delete this->r_;
 }
 
 // ****************************************************************
