@@ -20,13 +20,23 @@ CIAO::NodeApplication_Impl::init (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 CORBA::Long
-CIAO::NodeApplication_Impl::init_containers (ACE_ENV_SINGLE_ARG_DECL)
+CIAO::NodeApplication_Impl::init_containers (
+  const ::Deployment::NodeImplementationInfo & node_impl_info
+  ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  //@@TODO We need to create all the containers in this stage
-  // Which properties should be passed in?
-  this->create_container (this->properties_);
-  this->create_container (this->properties_);
+  // Create all the containers here based on the input node_impl_info.
+  const CORBA::ULong len = node_impl_info.length ();
+  for (CORBA::ULong i = 0; i < len; ++i)
+  {
+    // The factory method <create_container> will intialize the container 
+    // servant with properties, so we don't need to call <init> on the
+    // container object reference.
+    // Also, the factory method will add the container object reference
+    // to the set for us.
+    ::Deployment::Container_var cref =
+      this->create_container (node_impl_info[i].container_config);
+  }
   return 0;
 }
 
@@ -174,9 +184,8 @@ CIAO::NodeApplication_Impl::install (
 
       CORBA::ULong num_containers = node_impl_info.length ();
 
-      //@@TODO:In my opinition, this is a good place to call init() to
-      // create the necessary containers and pass their properties..
-      this->init_containers ();
+      // Call init_containers to create all the necessary containers..
+      this->init_containers (node_impl_info);
 
       // For each container, invoke <install> operation, this will return
       // the ComponentInfo for components installed in each container.
@@ -222,6 +231,7 @@ CIAO::NodeApplication_Impl::remove (ACE_ENV_SINGLE_ARG_DECL)
     }
 
   // Remove all containers
+  // Maybe we should also deactivate container object reference.
   this->container_set_.remove_all ();
 
   if (CIAO::debug_level () > 1)
@@ -300,6 +310,28 @@ CIAO::NodeApplication_Impl::remove_container (::Deployment::Container_ptr cref
                   ::Components::RemoveFailure))
 {
   ACE_DEBUG ((LM_DEBUG, "ENTERING: NodeApplication_Impl::remove_container()\n"));
+  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
+
+  if (this->container_set_.object_in_set (cref) == 0)
+    ACE_THROW (Components::RemoveFailure());
+
+  cref->remove (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+
+  // @@ Deactivate object.
+  PortableServer::ObjectId_var oid
+    = this->poa_->reference_to_id (cref
+                                   ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  this->poa_->deactivate_object (oid.in ()
+                                 ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  // Should we remove the server still, even if the previous call failed.
+
+  if (this->container_set_.remove (cref) == -1)
+    ACE_THROW (::Components::RemoveFailure ());
   ACE_DEBUG ((LM_DEBUG, "LEAVING: NodeApplication_Impl::remove_container()\n"));
 }
 
