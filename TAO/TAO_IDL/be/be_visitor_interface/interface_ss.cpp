@@ -491,10 +491,6 @@ be_visitor_interface_ss::gen_abstract_ops_helper (be_interface *node,
           new_op.set_name (base);
           be_visitor_operation_ss op_visitor (&ctx);
           op_visitor.visit_operation (&new_op);
-
-          base->destroy ();
-          delete base;
-          base = 0;
         }
       else if (d->node_type () == AST_Decl::NT_attr)
         {
@@ -512,6 +508,10 @@ be_visitor_interface_ss::gen_abstract_ops_helper (be_interface *node,
           attr_visitor.visit_attribute (&new_attr);
           ctx.attribute (0);
         }
+
+      base->destroy ();
+      delete base;
+      base = 0;
     }
 
   return 0;
