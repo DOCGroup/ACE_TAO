@@ -1,21 +1,27 @@
+Sun Jun 28 21:33:48 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/GIOP.cpp: replaced ACE_SYNCH_RW_MUTEX with
+          ACE_SYNCH_MUTEX so that it will compile with g++
+          (and be correct :-).
+
 Sun Jun 28 16:10:00 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
         * tests/NestedUpcalls/Triangle_Test/Makefile: Added
-	  this Makefile for use on Unix machines.
+          this Makefile for use on Unix machines.
 
 Sun Jun 28 15:30:00 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
-	* tao/GIOP.cpp: In method location_forwarding, removed
-	  the explicit release of the IIOP_Object. It is implicitly
-	  released by the release of the CORBA::OBject pointer.
+        * tao/GIOP.cpp: In method location_forwarding, removed
+          the explicit release of the IIOP_Object. It is implicitly
+          released by the release of the CORBA::OBject pointer.
 
-	* tests/Quoter/Generic_Factory_Impl.{h,cpp}: Splitted
-	  the create_object method into two parts.
+        * tests/Quoter/Generic_Factory_Impl.{h,cpp}: Splitted
+          the create_object method into two parts.
 
 Sat Jun 27 18:13:05 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* TAO/tests/POA/Explicit_Activation/server.cpp (main): Changed
- 	  #include "ace/Timeprobes.h" to #include "tao/Timeprobes.h".
+        * TAO/tests/POA/Explicit_Activation/server.cpp (main): Changed
+          #include "ace/Timeprobes.h" to #include "tao/Timeprobes.h".
 
 Sat Jun 27 11:38:27 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -23,12 +29,12 @@ Sat Jun 27 11:38:27 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Sat Jun 27 10:32:46 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Log/Logger_i.cpp (log): Must use a u_short cast
- 	  rather than an int cast to avoid ambiguity.  Thanks to David
- 	  Levine for detecting this.
+        * orbsvcs/orbsvcs/Log/Logger_i.cpp (log): Must use a u_short cast
+          rather than an int cast to avoid ambiguity.  Thanks to David
+          Levine for detecting this.
 
-	* orbsvcs/orbsvcs/Log/Logger_i.cpp: Fixed some minor problems with
- 	  constness.  Thanks to David Levine for reporting this.
+        * orbsvcs/orbsvcs/Log/Logger_i.cpp: Fixed some minor problems with
+          constness.  Thanks to David Levine for reporting this.
 
 Sat Jun 27 07:15:49 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -40,37 +46,37 @@ Sat Jun 27 07:15:49 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Sat Jun 27 00:27:29 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Event/{RT_Task.cpp, Event_Channel.cpp,
- 	  ReactorTask.cpp, Dispatching_Modules.cpp}: Moved the
- 	  ACE_TIMEPROBE_EVENT_DESCRIPTIONS use inside 
-	  #if defined (ACE_ENABLE_TIMEPROBES). This will help prevent
-	  compiler warnings when time probes are not used. Also, added a
-	  semi-colon at the end of the ACE_TIMEPROBE_EVENT_DESCRIPTIONS line.
+        * orbsvcs/orbsvcs/Event/{RT_Task.cpp, Event_Channel.cpp,
+          ReactorTask.cpp, Dispatching_Modules.cpp}: Moved the
+          ACE_TIMEPROBE_EVENT_DESCRIPTIONS use inside
+          #if defined (ACE_ENABLE_TIMEPROBES). This will help prevent
+          compiler warnings when time probes are not used. Also, added a
+          semi-colon at the end of the ACE_TIMEPROBE_EVENT_DESCRIPTIONS line.
 
-	* orbsvcs/tests/EC_Multiple/EC_Multiple.cpp, 
-	  orbsvcs/tests/Simulator/DOVEMIB/DOVEMIB.cpp,
-	  orbsvcs/tests/Simulator/Event_Supplier/Event_Con.cpp,
-	  orbsvcs/tests/Simulator/Event_Supplier/Event_Sup.cpp: 
+        * orbsvcs/tests/EC_Multiple/EC_Multiple.cpp,
+          orbsvcs/tests/Simulator/DOVEMIB/DOVEMIB.cpp,
+          orbsvcs/tests/Simulator/Event_Supplier/Event_Con.cpp,
+          orbsvcs/tests/Simulator/Event_Supplier/Event_Sup.cpp:
 
-	  Removed extra include of Timeprobe.h
+          Removed extra include of Timeprobe.h
 
-	* Added the following comment to all uses of enums for time
-	  probes. This way it should be easy (relatively) to find a unique
-	  starting key for the next set of descriptions.
+        * Added the following comment to all uses of enums for time
+          probes. This way it should be easy (relatively) to find a unique
+          starting key for the next set of descriptions.
 
-	  // Timeprobe description table start key
-	
+          // Timeprobe description table start key
+
 Sat Jun 27 01:06:24 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Log/Logger_i.cpp (log): Commented out unused.
-  	  Cast the 0 passed to ACE_INET_Addr to int explicitly.
-  	  (Otherwise, the compiler can't tell whether it's a NULL ptr or
- 	  int 0.)
+        * orbsvcs/orbsvcs/Log/Logger_i.cpp (log): Commented out unused.
+          Cast the 0 passed to ACE_INET_Addr to int explicitly.
+          (Otherwise, the compiler can't tell whether it's a NULL ptr or
+          int 0.)
 
 Fri Jun 26 21:24:58 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tests/Cubit/TAO/Makefile: Removed DII_Cubit for now until
-	  Jeff fixes it.
+        * tests/Cubit/TAO/Makefile: Removed DII_Cubit for now until
+          Jeff fixes it.
 
         * orbsvcs/tests/Logger: Rename clnt.{cpp,h} and svc.cpp to
           client.{cpp,h} and server.cpp to be more consistent with other
