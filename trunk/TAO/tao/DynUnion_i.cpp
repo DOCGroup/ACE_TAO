@@ -1293,16 +1293,17 @@ TAO_DynUnion_i::get_extractor (CORBA::TCKind kind,
                               0);
         return retval;
 
-// For Chorus and VxWorks
+// For platforms without native 64-bit ints . . .
 #if !defined (ACE_LACKS_LONGLONG_T)
       case CORBA::tk_longlong:
         ACE_NEW_THROW_RETURN (retval,
                               ::DU_Extractor<CORBA::LongLong>,
                               CORBA::NO_MEMORY (CORBA::COMPLETED_NO),
                               0);
-#endif /* ACE_LACKS_LONGLONG_T */
 
         return retval;
+#endif /* ACE_LACKS_LONGLONG_T */
+
       case CORBA::tk_ulonglong:
         ACE_NEW_THROW_RETURN (retval,
                               ::DU_Extractor<CORBA::ULongLong>,
@@ -1410,7 +1411,7 @@ template class DU_Extractor<CORBA::ULong>;
 template class DU_Extractor<CORBA::Boolean>;
 template class DU_Extractor<CORBA::Char>;
 
-// For Chorus and VxWorks
+// For platforms without native 64-bit ints . . .
 #if !defined (ACE_LACKS_LONGLONG_T)
 template class DU_Extractor<CORBA::LongLong>;
 #endif /* ACE_LACKS_LONGLONG_T */
@@ -1424,11 +1425,10 @@ template class DU_Extractor<CORBA::ULongLong>;
 #pragma instantiate DU_Extractor<CORBA::Boolean>
 #pragma instantiate DU_Extractor<CORBA::Char>
 
-// For Chorus and VxWorks
+// For platforms without native 64-bit ints . . .
 #if !defined (ACE_LACKS_LONGLONG_T)
 #pragma instantiate DU_Extractor<CORBA::LongLong>
 #endif /* ACE_LACKS_LONGLONG_T */
 
 #pragma instantiate DU_Extractor<CORBA::ULongLong>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
