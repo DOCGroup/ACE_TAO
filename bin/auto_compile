@@ -57,9 +57,14 @@ $MODULE='ACE_wrappers';
       'TAO/tests/Param_Test , run_test.pl',
       'TAO/tests/Param_Test , run_test.pl -i dii',
       'TAO/performance-tests/Cubit/TAO/IDL_Cubit , run_test.pl',
-      'TAO/orbsvcs/tests/Event/Basic , run_test.pl',
-      'TAO/orbsvcs/tests/Event/Performance , run_test.pl',
-      'TAO/orbsvcs/tests/Simple_Naming , run_test.pl',
+      'TAO/tests/OctetSeq , run_test.pl',
+      'TAO/tests/Multiple_Inheritance , run_test.pl',
+      'TAO/tests/MT_Client , run_test.pl',
+      'TAO/tests/MT_Server , run_test.pl',
+      'TAO/tests/NestedUpcall/Reactor , run_test.pl',
+      'TAO/tests/NestedUpcall/MT_Client_Test , run_test.pl',
+      'TAO/tests/POA/Identity , run_test.pl',
+      'TAO/tests/POA/Destruction , run_test.pl',
       'TAO/examples/POA/Adapter_Activator , run_test.pl',
       'TAO/examples/POA/DSI , run_test.pl',
       'TAO/examples/POA/Default_Servant , run_test.pl',
@@ -72,13 +77,22 @@ $MODULE='ACE_wrappers';
       'TAO/examples/POA/Reference_Counted_Servant , run_test.pl',
       'TAO/examples/POA/Loader , run_test.pl',
       'TAO/examples/POA/RootPOA , run_test.pl',
-      'TAO/examples/POA/Identity , run_test.pl',
       'TAO/examples/POA/Adapter_Activator , run_test.pl',
-      'TAO/tests/MT_Client , run_test.pl',
-      'TAO/tests/MT_Server , run_test.pl',
-      'TAO/tests/OctetSeq , run_test.pl',
-      'TAO/tests/Multiple_Inheritance , run_test.pl',
-      'TAO/tests/NestedUpcall/Reactor , run_test.pl',
+      'TAO/examples/Simple/bank , run_test.pl',
+      'TAO/examples/Simple/grid , run_test.pl',
+      'TAO/examples/Simple/time-date , run_test.pl',
+      'TAO/examples/Simple/time , run_test.pl',
+      'TAO/orbsvcs/tests/Simple_Naming , run_test.pl',
+      'TAO/orbsvcs/tests/Event/Basic , run_test.pl',
+      'TAO/orbsvcs/tests/Event/Performance , run_test.pl',
+      'TAO/orbsvcs/tests/EC_Basic , run_test.pl',
+      'TAO/orbsvcs/tests/EC_Custom_Marshal , run_test.pl',
+      'TAO/orbsvcs/tests/EC_Throughput , run_test.pl',
+#      'TAO/orbsvcs/tests/EC_Mcast , run_test.pl',
+#      'TAO/orbsvcs/tests/EC_Multiple , run_test.pl',
+#      'TAO/orbsvcs/tests/Event_Latency , run_test.pl',
+#      'TAO/examples/Simple/echo , run_test.pl',
+#      'TAO/examples/Simple/chat , run_test.pl',
       'TAO/performance-tests/Cubit/TAO/MT_Cubit , run_test.pl -n 100',
       'TAO/performance-tests/POA/Object_Creation_And_Registration , run_test.pl'
 #      'TAO/orbsvcs/tests/ImplRepo , run_test.pl airplane',
@@ -211,7 +225,6 @@ $ENV{'ACE_ROOT'} = $CHECKOUT . '/' . $MODULE . '/build/' . $BUILD;
 $ENV{'TAO_ROOT'} = $CHECKOUT . '/' . $MODULE . '/build/' . $BUILD . '/TAO';
 
 @failures = ();
-@warnings = ();
 $MAKEFLAGS .= " shared_libs_only=1";
 foreach $i (@BUILD_LIST) {
     $date = localtime;
@@ -222,7 +235,6 @@ foreach $i (@BUILD_LIST) {
 
     local $current_dir = $i;
     local $last_error = "";
-    local $last_warning = "";
     while (<MAKE>) {
 	print LOG $_;
 	chop;
@@ -238,9 +250,9 @@ foreach $i (@BUILD_LIST) {
 	    }
 	}
 	if (m/Warning:/ || m/warning:/) {
-	  if ($last_warning ne $current_dir) {
-	    push @warnings, "Warning while compiling in $current_dir\n";
-	    $last_warning = $current_dir;
+	  if ($last_error ne $current_dir) {
+	    push @failures, "Warning while compiling in $current_dir\n";
+	    $last_error = $current_dir;
 	  }
 	}
     }
@@ -291,10 +303,6 @@ foreach $i (@RUN_LIST) {
 
 if ($#failures >= 0) {
     mydie @failures;
-}
-
-if ($#warnings >= 0) {
-  mywarn @warnings;
 }
 
 close(LOG)
