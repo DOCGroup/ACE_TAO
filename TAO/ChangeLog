@@ -1,3 +1,13 @@
+Thu Apr 10 10:39:02 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/IFRService/ComponentDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ComponentDef_i.h:
+
+          Moved template specializations to the top of the source file
+          and removed the declarations in the header file. Thanks to
+          Johnny Willemsen <jwillemsen@remedy.nl> for his help with
+          fixing this BCB problem.
+
 Thu Apr 10 10:30:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/default_client.cpp:
