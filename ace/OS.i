@@ -9167,3 +9167,20 @@ putchar (int c)
   return c;
 }
 #endif /* ACE_HAS_WINCE */
+
+ACE_INLINE 
+ACE_Cleanup::ACE_Cleanup (void)
+{
+}
+
+ACE_INLINE 
+ACE_Cleanup::~ACE_Cleanup (void)
+{
+}
+
+ACE_INLINE void
+ACE_Cleanup::cleanup (void *)
+{
+  delete this;
+}
+
