@@ -439,15 +439,15 @@ TAO_GIOP_Invocation::location_forward (TAO_InputCDR &inp_stream,
 
   CORBA::Object_ptr object_ptr = 0;
 
-  TAO_TRY_SYS
+  TAO_TRY_VAR (env)
     {
       inp_stream.decode (CORBA::_tc_Object,
                          &(object_ptr),
                          0,
                          env);
-      TAO_CHECK_ENV_SYS;
+      TAO_CHECK_ENV;
     }
-  TAO_CATCH_SYS (CORBA_SystemException, ex)
+  TAO_CATCH (CORBA_SystemException, ex)
     {
       // Handle the exception for this level here and throw it out again.
       dexc (env, "invoke, location forward (decode)");
@@ -721,18 +721,18 @@ TAO_GIOP_Twoway_Invocation::invoke (CORBA::ExceptionList &exceptions,
 	      {
                 CORBA::TypeCode_ptr tcp = 0;
                 int loop_continue = 0;
-                TAO_TRY_SYS
+                TAO_TRY
                   {
                     tcp = exceptions.item (i, env);
-                    TAO_CHECK_ENV_SYS;
+                    TAO_CHECK_ENV;
 
                     const char *xid = tcp->id (env);
-                    TAO_CHECK_ENV_SYS;
+                    TAO_CHECK_ENV;
 
                     if (ACE_OS::strcmp (buf, xid) != 0)
                       loop_continue = 1;
                   }
-                TAO_CATCH_SYS (CORBA_SystemException, ex)
+                TAO_CATCH (CORBA_SystemException, ex)
                   {
                     this->data_->handler ()->handle_close ();
                     TAO_RETHROW_RETURN_SYS (TAO_GIOP_SYSTEM_EXCEPTION);
@@ -992,11 +992,11 @@ TAO_GIOP_Twoway_Invocation::invoke (TAO_Exception_Data *excepts,
                  i++)
               {
                 int loop_continue = 0;
-                TAO_TRY_SYS
+                TAO_TRY
                   {
                     tcp = excepts[i].tc;
                     const char *xid = tcp->id (env);
-                    TAO_CHECK_ENV_SYS;
+                    TAO_CHECK_ENV;
 
                     if (ACE_OS::strcmp (buf, (char *)xid) != 0)
                       loop_continue = 1;
@@ -1008,10 +1008,10 @@ TAO_GIOP_Twoway_Invocation::invoke (TAO_Exception_Data *excepts,
                         this->inp_stream_.decode (exception->_type (),
                                                   exception, 0,
                                                   env);
-                        TAO_CHECK_ENV_SYS;
+                        TAO_CHECK_ENV;
                       }
                   }
-                TAO_CATCH_SYS (CORBA_SystemException, ex)
+                TAO_CATCH (CORBA_SystemException, ex)
                   {
                     this->data_->handler ()->handle_close ();
                     TAO_RETHROW_RETURN_SYS (TAO_GIOP_SYSTEM_EXCEPTION);
