@@ -6,7 +6,7 @@ ACE_INLINE
 Dispatcher_Task::Dispatcher_Task (const ConfigInfo& config_info,
                                   ACE_Thread_Manager* thr_manager)
   :  ACE_Task<ACE_SYNCH> (thr_manager),
-     allocator_ (0),
+     allocator_ (ACE_Allocator::instance ()),
      curr_config_info_ (config_info),
         deadline_msg_strategy_ (0, 0, 0x7FFFFFFFUL, 0x08000000UL ),
         //bits for static priority = 0
@@ -48,8 +48,11 @@ Dispatch_Queue_Item::Dispatch_Queue_Item (
         const Dispatch_Command* cmd,
         const QoSDescriptor& qos_info,
         ACE_Data_Block *data_block,
+        int flags,
         ACE_Allocator* mb_allocator)
- : ACE_Message_Block (data_block, 0, mb_allocator),
+ : ACE_Message_Block (data_block, 
+        flags, 
+        mb_allocator),
    command_ (cmd), qos_info_ (qos_info)
 
 {

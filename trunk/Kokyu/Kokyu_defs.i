@@ -5,8 +5,10 @@ namespace Kokyu
 {
 
 ACE_INLINE
-Dispatch_Command::Dispatch_Command (int dont_delete)
-        :dont_delete_ (dont_delete)
+Dispatch_Command::Dispatch_Command (int dont_delete, 
+        ACE_Allocator *allocator)
+        :dont_delete_ (dont_delete),
+        allocator_ (allocator)
 {
 }
 
@@ -19,9 +21,14 @@ int Dispatch_Command::can_be_deleted (void) const
 ACE_INLINE
 void Dispatch_Command::destroy (void)
 {
-  //@@what if it was allocated thru an allocator?
-  //may be this should be left as a  pure virtual
-  delete this;
+  if (allocator_)
+  {
+    allocator_->free (this);
+  }
+  else
+  {
+    delete this;
+  } 
 }
 
 }

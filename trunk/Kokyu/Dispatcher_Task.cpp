@@ -73,7 +73,7 @@ Dispatcher_Task::svc (void)
                           -1);
       }
 
-    ACE_DEBUG ((LM_DEBUG, "(%t) Dispatcher Thread started prio=%d\n", prio));
+    //ACE_DEBUG ((LM_DEBUG, "(%t) Dispatcher Thread started prio=%d\n", prio));
 
   while (!done)
     {
@@ -84,6 +84,8 @@ Dispatcher_Task::svc (void)
         else
           ACE_ERROR ((LM_ERROR,
                       "EC (%P|%t) getq error in Dispatching Queue\n"));
+
+      //ACE_DEBUG ((LM_DEBUG, "(%t) : next command got from queue\n"));
 
       Dispatch_Queue_Item *qitem =
         ACE_dynamic_cast(Dispatch_Queue_Item*, mb);
@@ -125,11 +127,12 @@ Dispatcher_Task::enqueue (const Dispatch_Command* cmd,
   ACE_Message_Block *mb =
     new (buf) Dispatch_Queue_Item (cmd,
                                    qos_info,
-                                   this->data_block_.duplicate (),
+                                   &(this->data_block_),
+                                   ACE_Message_Block::DONT_DELETE,
                                    this->allocator_);
 
   this->putq (mb);
-
+  
   return 0;
 }
 

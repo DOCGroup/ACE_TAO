@@ -81,7 +81,10 @@ int main (int,char**)
   disp->dispatch (&cmd2, qos2);
   disp->dispatch (&cmd3, qos3);
 
-  while(1){}
+  disp->activate ();
 
+  disp->shutdown ();
+
+  ACE_DEBUG ((LM_DEBUG, "after shutdown\n"));
   return 0;
 }
