@@ -1,3 +1,14 @@
+Fri Dec 19 00:46:23 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/Null_Mutex.h:
+          Added template specialization of ACE_Malloc_Lock_Adapter.
+
+        * ace/Process_Mutex.cpp:
+        * ace/RW_Process_Mutex.cpp:
+        * ace/Thread_Mutex.cpp:
+          Added explicit template instantiations for
+          ACE_Malloc_Lock_Adapter.
+
 Thu Dec 18 22:43:09 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/Malloc_T.{h,cpp}:
