@@ -53,8 +53,13 @@ DIRS += Concurrency \
   Security \
   Miop \
   LoadBalancing \
-  Log \
-  RTCosScheduling
+  Log 
+
+ifeq ($(rt_corba),1)
+  ifeq ($(interceptors),1)
+     DIRS += RTCosScheduling
+  endif #interceptors
+endif #rt_corba
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
