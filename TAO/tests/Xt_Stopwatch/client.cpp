@@ -23,7 +23,7 @@ main (int argc, char *argv[])
                                      NULL,
                                      0);
 
-  TAO_XT_Resource_Factory::set_context (app);
+  TAO_XtResource_Loader xt_loader (app);
 
   Control control (toplevel);
 
