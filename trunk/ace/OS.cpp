@@ -2,7 +2,6 @@
 
 #define ACE_BUILD_DLL
 #include "ace/OS.h"
-#include "ace/SString.h"
 #include "ace/Sched_Params.h"
 
 // Perhaps we should *always* include ace/OS.i in order to make sure
@@ -14,7 +13,6 @@
 #include "ace/Task.h"
 #include "ace/Synch_T.h"
 #include "ace/Containers.h"
-
 #include "ace/streams.h"
 
 ACE_RCSID(ace, OS, "$Id$")
