@@ -1,3 +1,26 @@
+Tue Apr  8 23:10:43 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * CIDLC/parser_examples/README:
+        * CIDLC/parser_examples/parser_examples.sln:
+        * CIDLC/parser_examples/cidl/cidl.cpp:
+        * CIDLC/parser_examples/cidl/cidl.vcproj:
+        * CIDLC/parser_examples/cidl/cidl_grammar.cpp:
+        * CIDLC/parser_examples/cidl/cidl_grammar.h:
+        * CIDLC/parser_examples/cidl/hello.cidl:
+        * CIDLC/parser_examples/idl2/idl2.cpp:
+        * CIDLC/parser_examples/idl2/idl2.vcproj:
+        * CIDLC/parser_examples/idl2/idl2_grammar.cpp:
+        * CIDLC/parser_examples/idl2/idl2_grammar.h:
+        * CIDLC/parser_examples/idl2/test_idl2.idl:
+        * CIDLC/parser_examples/idl3/idl3.cpp:
+        * CIDLC/parser_examples/idl3/idl3.vcproj:
+        * CIDLC/parser_examples/idl3/idl3_grammar.cpp:
+        * CIDLC/parser_examples/idl3/idl3_grammar.h:
+        * CIDLC/parser_examples/idl3/test_idl3.idl:
+
+          Added parser examples (IDL2, IDL3, and CIDL) using the Spirit
+          parser.
+
 Tue Apr 08 19:42:16 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* examples/handcrafted/Display/GPS/GPS_tracing_exec.h: Fixed
