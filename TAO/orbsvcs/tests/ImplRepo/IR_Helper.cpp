@@ -18,14 +18,14 @@ class ServerObject_i: public POA_ImplementationRepository::ServerObject
 public:
   ServerObject_i (CORBA::ORB_ptr orb, int debug = 0) : orb_ (orb), debug_ (debug) {}
 
-  virtual void ping (CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+  virtual void ping (CORBA::Environment &/*ACE_TRY_ENV = TAO_default_environment ()*/)
     ACE_THROW_SPEC (())
     {
       if (this->debug_)
         ACE_DEBUG ((LM_DEBUG, "Pong!\n"));
     }
 
-  virtual void shutdown (CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+  virtual void shutdown (CORBA::Environment &/*ACE_TRY_ENV = TAO_default_environment ()*/)
     ACE_THROW_SPEC (())
     {
       if (this->debug_)
@@ -47,8 +47,8 @@ IR_Helper::IR_Helper (char *server_name,
     ir_addr_ (0),
     server_object_ (new ServerObject_i (orb, debug)),
     implrepo_ (0),
-    poa_ (PortableServer::POA::_duplicate (poa)),
     orb_ (CORBA::ORB::_duplicate (orb)),
+    poa_ (PortableServer::POA::_duplicate (poa)),
     debug_ (debug)
 {
   const char *exception_message = "Null Message";
@@ -110,7 +110,7 @@ IR_Helper::~IR_Helper ()
 
 int
 IR_Helper::register_server (const char *comm_line,
-                            const char *environment,
+                            const char */*environment*/,
                             const char *working_dir,
                             CORBA_Environment &ACE_TRY_ENV)
 {
