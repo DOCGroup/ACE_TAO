@@ -6,15 +6,15 @@
 //    cos
 //
 // = FILENAME
-//   Shared_Hash_Map.h
+//   Shared_Hash_Map_T.h
 //
 // = AUTHOR
 //    Marina Spivak <marina@cs.wustl.edu>
 //
 // ============================================================================
 
-#ifndef ACE_SHARED_HASH_MAP_H
-#define ACE_SHARED_HASH_MAP_H
+#ifndef ACE_SHARED_HASH_MAP_T_H
+#define ACE_SHARED_HASH_MAP_T_H
 
 #include "ace/Hash_Map_Manager.h"
 
@@ -64,4 +64,14 @@ public:
 
   int close (ACE_Allocator *alloc);
 };
-#endif /* ACE_SHARED_HASH_MAP_H */
+
+#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
+#include "Shared_Hash_Map_T.cpp"
+#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
+
+#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
+#pragma implementation ("Shared_Hash_Map_T.cpp")
+#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
+
+
+#endif /* ACE_SHARED_HASH_MAP_T_H */
