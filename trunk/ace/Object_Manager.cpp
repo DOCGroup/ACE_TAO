@@ -510,11 +510,6 @@ ACE_Object_Manager::~ACE_Object_Manager (void)
   // Close the ACE_Allocator.
   ACE_Allocator::close_singleton ();
 
-#if defined (ACE_HAS_TSS_EMULATION)
-  // Close the thread's local TS storage.
-  ACE_TSS_Emulation::tss_close (ts_storage_);
-#endif /* ACE_HAS_TSS_EMULATION */
-
 #if ! defined (ACE_HAS_STATIC_PREALLOCATION)
   // Hooks for deletion of preallocated objects and arrays provided by
   // application.

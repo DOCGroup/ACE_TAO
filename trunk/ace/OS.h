@@ -4306,15 +4306,10 @@ public:
   // Accesses the object referenced by key in the current thread's TSS array.
   // Does _not_ check for a valid key.
 
-  static void *tss_open (void *ts_storage[ACE_TSS_THREAD_KEYS_MAX] = 0);
-  // Setup an array to be used for local TSS.  If the argument is 0,
-  // an array is allocated off the heap.  Returns the array address,
-  // or 0 if allocation is attempted and fails, or if local TSS had
-  // already been setup for this thread.
-
-  static void tss_close (void *ts_storage[ACE_TSS_THREAD_KEYS_MAX] = 0);
-  // Finish using an array for local TSS.  If the argument is 0,
-  // then the array this is currently be used is deleted from heap storage.
+  static void *tss_open (void *ts_storage[ACE_TSS_THREAD_KEYS_MAX]);
+  // Setup an array to be used for local TSS.  Returns the array address on
+  // success.  Returns 0 if local TSS had already been setup for this thread.
+  // There is no corresponding tss_close () because it is not needed.
 
 private:
   // Global TSS structures.
