@@ -24,7 +24,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/Log_Msg.h"
 #include "tao/Timeprobe.h"
-#include "tao/PortableServer/ORB_Manager.h"
+#include "tao/PortableServer/PortableServer.h"
 #include "orbsvcs/Naming/Naming_Client.h"
 
 #include "demux_test_i.h"

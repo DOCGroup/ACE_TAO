@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*server): taoexe, portableserver {
+project(*server): taoexe, utils, portableserver {
   Source_Files {
     PP_Test_Server.cpp
     PP_Test_i.cpp

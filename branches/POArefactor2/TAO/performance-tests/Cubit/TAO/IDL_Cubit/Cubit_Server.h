@@ -28,7 +28,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Log_Msg.h"
-#include "tao/PortableServer/ORB_Manager.h"
+#include "tao/Utils/ORB_Manager.h"
 #include "Cubit_Client.h"
 #include "Cubit_i.h"
 
