@@ -1,3 +1,11 @@
+Thu Mar 31 09:58:48 2005  Boris Kolpackov  <boris@kolpackov.net>
+
+	* protocols/ace/RMCast/Acknowledge.cpp:
+	* protocols/ace/RMCast/Link.cpp:
+	* protocols/ace/RMCast/Retransmit.cpp:
+
+	Updated to work with explicit ctor in ACE_Refcounted_Auto_Ptr.
+
 Tue Mar 29 18:44:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* ace/Refcounted_Auto_Ptr.h:
