@@ -825,9 +825,7 @@ TAO::FT_ReplicationManager::groups_at_location (
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ( (CORBA::SystemException))
 {
-  TODO
-  ACE_UNUSED_ARG (the_location);
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+  return this->group_factory_.groups_at_location (the_location ACE_ENV_ARG_PARAMETER);
 }
 
 PortableGroup::ObjectGroupId

@@ -275,12 +275,21 @@ namespace TAO
     void minimum_populate (ACE_ENV_SINGLE_ARG_DECL);
 
 
+    /**
+     * @@TODO DOC
+     */
+    int has_member_at (const PortableGroup::Location & location );
+
     /////////////////////////
     // Implementation methods
   private:
 
     int increment_version ();
+
     void distribute_iogr (ACE_ENV_ARG_DECL);
+
+    PortableGroup::ObjectGroup_ptr add_member_to_iogr(CORBA::Object_ptr member ACE_ENV_ARG_DECL);
+
 
     void create_members (size_t count ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((

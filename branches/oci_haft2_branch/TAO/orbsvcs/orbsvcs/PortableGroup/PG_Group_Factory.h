@@ -102,6 +102,13 @@ namespace TAO
       ACE_THROW_SPEC ((CORBA::SystemException,
                        PortableGroup::ObjectNotFound));
 
+    PortableGroup::ObjectGroups *
+    groups_at_location (
+        const PortableGroup::Location & the_location
+        ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ( (CORBA::SystemException));
+
+
 
     /**
      * insert existing group.  Take ownership

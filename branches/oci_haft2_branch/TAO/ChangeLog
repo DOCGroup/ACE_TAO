@@ -1,3 +1,20 @@
+Mon Dec  1 16:52:25 2003  Dale Wilson  <wilson_d@ociweb.com>
+
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.cpp:
+          Implement (by delegation) groups_at_location
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Group_Factory.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Group_Factory.cpp:
+          Implement groups_at_location
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.cpp:
+          New method: has_member_at to support groups_at_location.
+          New method: add_member_to_iogr refactor support for updating IOGR
+          Complete implementations of add_member, create_member, 
+          and *populate methods.
+          
+
 Mon Dec  1 15:24:27 2003  Dale Wilson  <wilson_d@ociweb.com>
 
         * orbsvcs/orbsvcs/PortableGroup/PG_Group_Factory.h:
