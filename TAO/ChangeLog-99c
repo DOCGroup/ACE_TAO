@@ -1,18 +1,25 @@
+Fri Apr 16 09:36:14 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/default_resource.cpp: removed ACE_*Guard instantiation
+          pragmas.  There were no corresponding template class
+          instantiation directives, and the pragmas duplicated those
+          in ORB_Core.cpp.
+
 Fri Apr 16 08:24:58 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/MT_Client/Makefile:
-	* tests/MT_Client/orb_creation.cpp:
-	  Added new test to check if the simultaneous creation of multiple 
-	  ORB works and to check for memory leaks in the ORB
-	  lifecycle.
+        * tests/MT_Client/Makefile:
+        * tests/MT_Client/orb_creation.cpp:
+          Added new test to check if the simultaneous creation of multiple
+          ORB works and to check for memory leaks in the ORB
+          lifecycle.
 
-	* tests/MT_Client/client.cpp: 
-	  Minor cosmetic fix.
+        * tests/MT_Client/client.cpp:
+          Minor cosmetic fix.
 
-	* tao/default_resource.cpp:
-	  Re-order the destruction of objects in the
-	  TAO_App_Allocated_Resources class, otherwise we get seg faults
-	  on shutdown. Thanks to Irfan for reporting this problem.
+        * tao/default_resource.cpp:
+          Re-order the destruction of objects in the
+          TAO_App_Allocated_Resources class, otherwise we get seg faults
+          on shutdown. Thanks to Irfan for reporting this problem.
 
 Fri Apr 16 07:25:25 1999  David L. Levine  <levine@cs.wustl.edu>
 
