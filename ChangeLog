@@ -1,17 +1,25 @@
-Sun Feb 5 20:53:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+Mon Feb 7 10:34:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_other_tests.lst:
+          Don't run the AMI Sequence_Latency performance-test under Windows,
+          it causes the system to crash. We will sort out this problem later but
+          we first need to get the other tests running on Windows to keep an
+          eye on the test results.
+
+Sun Feb 6 20:53:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ACE-INSTALL.html:
           Added SuSE Linux to the list of platforms supported by
           Remedy IT
 
-Sun Feb 5 10:33:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+Sun Feb 6 10:33:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Service_Object.cpp:
         * ace/LSOCK_Stream.cpp:
         * ace/Event_Handler.cpp:
           Replaced c-style casts with C++ casts
 
-Sat Feb 4 20:12:37 2005  Martin Corino  <mcorino@remedy.nl>
+Sat Feb 5 20:12:37 2005  Martin Corino  <mcorino@remedy.nl>
 
 	* ace/OS_NS_Thread.cpp:
 	* ace/OS_NS_Thread.h:
@@ -20,7 +28,7 @@ Sat Feb 4 20:12:37 2005  Martin Corino  <mcorino@remedy.nl>
 	  Fixed some flaws in TSS_Emulation tests for TSS key validity introduced
 	  some 3 years ago when key reuse was enabled for TSS_Emulation.
 
-Sat Feb 4 15:17:37 2005  Martin Corino  <mcorino@remedy.nl>
+Sat Feb 5 15:17:37 2005  Martin Corino  <mcorino@remedy.nl>
 
         * tests/run_test.pl:
 
@@ -32,7 +40,7 @@ Sat Feb 4 15:17:37 2005  Martin Corino  <mcorino@remedy.nl>
 	  Scaled down testparameters for VxWorks because otherwise the tests take too
 	  long and are killed before having a chance to finish.
 
-Sat Feb 4 11:38:37 2005  Martin Corino  <mcorino@remedy.nl>
+Sat Feb 5 11:38:37 2005  Martin Corino  <mcorino@remedy.nl>
 
         * tests/run_test.pl:
 
