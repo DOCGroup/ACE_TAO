@@ -7,6 +7,7 @@
 
 debug = 1
 optimize = 1
+versioned_so = 1
 
 CC              = gcc
 CXX		= g++
@@ -14,7 +15,7 @@ CFLAGS          += -w -fno-strict-prototypes
 CCFLAGS         += $(CFLAGS) -fno-implicit-templates
 DCFLAGS         += -g
 DLD             = ld
-LD		= $(CXX) 
+LD		= $(CXX)
 LIBS            += -lstdc++ -lcompat
 OCFLAGS         += -O2
 PIC             = -fpic -DPIC

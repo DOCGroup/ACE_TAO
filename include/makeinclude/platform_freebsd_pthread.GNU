@@ -15,6 +15,7 @@ optimize = 1
 # of 2/9/1997 to take advantage of the latest feature of pthread library.
 
 debug = 1
+versioned_so = 1
 
 CC              = gcc
 CXX		= g++
@@ -22,7 +23,7 @@ CFLAGS          += -w -fno-strict-prototypes -D_POSIX_THREADS
 CCFLAGS         += $(CFLAGS) -fno-implicit-templates
 DCFLAGS         += -g
 DLD             = ld
-LD		= $(CXX) 
+LD		= $(CXX)
 LIBS            += -lc_r -lstdc++ -lcompat
 OCFLAGS         += -O2
 PIC             = -fpic -DPIC
