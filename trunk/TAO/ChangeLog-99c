@@ -1,3 +1,11 @@
+Thu Feb 11 20:11:33 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* examples/Simple/grid/Grid_Client_i.cpp:
+	* examples/Simple/grid/Grid_Client_i.h:
+	* examples/Simple/grid/client.cpp:
+	Made changes to accomodate changes that were 
+	put in to Simple_util for Naming service.
+
 Thu Feb 11 18:01:42 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
         * TAO/performance-tests/cubit/tao/idl_cubit/Cubit_Client.cpp:
