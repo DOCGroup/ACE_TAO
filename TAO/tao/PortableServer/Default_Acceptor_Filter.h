@@ -49,7 +49,7 @@ class TAO_PortableServer_Export TAO_Default_Acceptor_Filter : public TAO_Accepto
 public:
   TAO_Default_Acceptor_Filter (void);
 
-  /// Populate <mprofile> with all available endpoints.
+  /// Populate @a mprofile with all available endpoints.
   int fill_profile (const TAO::ObjectKey &object_key,
                     TAO_MProfile &mprofile,
                     TAO_Acceptor **acceptors_begin,

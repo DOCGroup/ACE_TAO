@@ -79,7 +79,7 @@ public:
 
 protected:
 
-  /// Sets up the various paramters in anticipation of returning a reply
+  /// Sets up the various parameters in anticipation of returning a reply
   /// to the client. return/OUT/INOUT arguments are marshalled into the
   /// Output stream after this method has been called.
   void _tao_rh_init_reply (ACE_ENV_SINGLE_ARG_DECL);
