@@ -1,3 +1,12 @@
+Tue May 20 18:56:03 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * tests/tests.mpc:
+        * tests/RMCast/tests.mpc:
+        * tests/SSL/tests.mpc:
+          Changed name of "Test Output" project to "Test_Output" and made
+          it a dependency of all the other test projects.  Thanks to
+          Nanbor Wang <nanbor@cse.wustl.edu> for this suggestion.
+
 Tue May 20 12:53:59 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* ace/TP_Reactor.h:
