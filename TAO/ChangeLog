@@ -1,3 +1,11 @@
+Sat Jan 22 12:34:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Shutdown_Utilities.{h,cpp}:
+          Moved implementation of Shutdown_Functor from header file
+          to cpp file to fix link errors with Cygwin. Thanks to
+          to Mike McGahan <mcgahan at sparta dot com> for reporting this.
+          This fixes bugzilla id [2036].
+
 Fri Jan 21 17:10:31 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/TAO_FTORB_Utils.pc.in:
