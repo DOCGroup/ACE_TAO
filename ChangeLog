@@ -1,6 +1,29 @@
+Wed Apr 14 14:09:19 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/os_include/os_unistd.h (ACE_DEFAULT_TIMERS, _SC_TIMER_MAX):
+
+	  #define ACE_DEFAULT_TIMERS to _POSIX_TIMER_MAX, not
+	  _SC_TIMER_MAX.  The latter is a parameter meant to be passed to
+	  the sysconf() C library function.  It does not represent the
+	  maximum number of concurrent timers per process.  The fact that
+	  its value is close to the value for _POSIX_TIMER_MAX is a
+	  coincidence  (e.g. _SC_TIMER_MAX on Linux/glibc is 35 and
+	  _POSIX_TIMER_MAX is 32).  This addresses potential problems
+	  where the default number of timers is more than the platform
+	  allows.
+
+	  In addition to addressing the above issue, this change also
+	  fixes a warning regarding an undefined "_SC_TIMER_MAX" macro on
+	  Linux/glibc.  On that platform "_SC_TIMER_MAX" is actually
+	  defined in an enumeration.
+
+	  (_SC_AIO_MAX):
+
+	  Removed this macro definition.  It served no useful purpose.
+
 Wed Apr 14 16:18:10 2004  Irfan Pyarali  <irfan@oomworks.com>
 
-	* ace\Cached_Connect_Strategy_T.cpp: 
+	* ace/Cached_Connect_Strategy_T.cpp:
 
 	  In ACE_Cached_Connect_Strategy_Ex::connect_svc_handler_i(), the
 	  reference counter of the entry in the hashtable
@@ -20,22 +43,22 @@ Wed Apr 14 16:14:59 2004  Steve Huston  <shuston@riverace.com>
 Wed Apr 14 21:07:35 2004  Marek Brudka  <mbrudka@elka.pw.edu.pl>
 
 	* ACE-INSTALL.html: updated documentation in QNX section.
-	* include/makeinclude/platform_qnx_rtp_gcc.GNU: several changes 
+	* include/makeinclude/platform_qnx_rtp_gcc.GNU: several changes
 	  related to compilation under QNX RTP v.6.2.0.
-	* ace/Mutex.inl: Fixed bugs for pthread::process_mutex placed in 
+	* ace/Mutex.inl: Fixed bugs for pthread::process_mutex placed in
 	  shared memory
-	* ace/Process_Mutex.h: Explained in doxygen documentation the 
-	  difference between SYSV semaphores and pthreads based process 
+	* ace/Process_Mutex.h: Explained in doxygen documentation the
+	  difference between SYSV semaphores and pthreads based process
 	  mutexes.
 	* ace/RW_Process_Mutex.h: Added \todo section in doxygen doc.
-	* ace/Dev_Addr.h: 
-	* ace/Dev_Addr.i: 
+	* ace/Dev_Addr.h:
+	* ace/Dev_Addr.i:
 	* ace/File_Addr.h:
-	* ace/Module.h: 
+	* ace/Module.h:
 	* ace/Module.i:
-	* ace/SPIPE_Addr.h: MAXNAMLEN replaced by MAXPATHLEN to prevent 
+	* ace/SPIPE_Addr.h: MAXNAMLEN replaced by MAXPATHLEN to prevent
 	  filename truncation
-	* ace/Time_Value.cpp: Removed warning for QNX RTP related with 
+	* ace/Time_Value.cpp: Removed warning for QNX RTP related with
 	  unsigned tv_sec
 	* ace/config-qnx-rtp-62x.h:
 	* ace/config-qnx-rtp-pre62x.h:
