@@ -1,3 +1,15 @@
+Mon Jul 16 11:20:40 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tao/TAO_DynamicInterface.dsp:
+        * tao/TAO_IORTable.dsp:
+        * tao/TAO_IORManip.dsp:
+        * orbsvcs/orbsvcs/LoadBalancing.dsp:
+        * orbsvcs/orbsvcs/CosNotification.dsp:
+
+          Fixed MFC settings for these projects. Thanks to 
+          truename <shi_bing@netease.com> for reporting the
+          problems.
+
 Mon Jul 16 9:17:43 2001  Christopher Kohlhoff <chris@kohlhoff.com>
 
         * performance-tests/Throughput/client.bor:
