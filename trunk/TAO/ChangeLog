@@ -1,30 +1,48 @@
+Mon Apr 12 16:22:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Messaging/Messaging_No_Impl.pidl:
+        * tao/Messaging/Messaging_RT_Policy.pidl:
+        * tao/Messaging/Messaging_SyncScope_Policy.pidl:
+        * tao/Messaging/TAO_Ext.pidl:
+          Updated regeneration message
+
+        * tao/Messaging/Messaging_No_ImplC.{h,cpp,i}:
+        * tao/Messaging/Messaging_RT_PolicyC.{h,cpp,i}:
+        * tao/Messaging/Messaging_SyncScope_PolicyC.{h,cpp,i}:
+        * tao/Messaging/MessagingS.{h,cpp,i}:
+        * tao/Messaging/MessagingC.{h,cpp,i}:
+        * tao/Messaging/MessagingS_T.{h,cpp,i}:
+        * tao/Messaging/TAO_ExtC.{h,cpp,i}:
+          Regenerated these files with the latest version of the IDL compiler.
+          More updated will follow.
+
 Mon Apr 12 11:08:25 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* TAO_IDL/be/be_visitor_field/field_ci.cpp:
 	* TAO_IDL/be/be_visitor_valuetype/field_ci.cpp:
 
-	  Fixed wrabings (and an errror) in the daily builds. 
+	  Fixed wrabings (and an errror) in the daily builds.
 
 Mon Apr 12 10:50:51 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/IFRService/Container_i.cpp (destroy_i):
-        
-          Added temporary caching and restoring for the current 
+
+          Added temporary caching and restoring for the current
           ACE_Configuration_Section_Key, while we are calling
           destroy_i() on the containers contents. If the container
           is a module that contains another module, the destroy_i()
           we are in will be called recursively so the state must
           be preserved. Thanks to Ramiro Penataro <ramiro.penataro@iac.es>
           for reporting the problem.
-          
+
         * orbsvcs/tests/InterfaceRepo/IFR_Test/Admin_Client.cpp:
-        
+
           Added missing destroy() call to an object returned from an
           IFR query.
-          
+
         * orbsvcs/orbsvcs/Log/Log_i.cpp:
         * orbsvcs/orbsvcs/Time/Timer_Helper.cpp:
-        
+
           Added some explicit casts to eliminate converstion warnings
           from MSVC.
 
@@ -33,14 +51,14 @@ Mon Apr 12 10:46:26 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tao/TODO:
 
 	  Removed this from the repo. Thanks to Johnny for pointing this
-	  out. 
+	  out.
 
 Mon Apr 12 10:43:19 2004  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils.{h,cpp}: Added a new
 	  comparison function comp_tuple_finish_times which can compare
-	  RT_Info_Tuple structures. 
-	
+	  RT_Info_Tuple structures.
+
 	* orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.cpp: Used the above
 	  comparison function instead of comp_entry_finish_times which was
 	  causing a segfault.
