@@ -1,3 +1,11 @@
+Tue Sep 10 14:02:04 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/LoadBalancer/LoadManager_Static.dsp:
+	* orbsvcs/LoadBalancer/LoadMonitor_Static.dsp:
+
+	  Added Messaging library directory path the input library path.
+	  Fixes a link-time error.
+
 Tue Sep 10 12:17:26 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* orbsvcs/tests/Makefile:
