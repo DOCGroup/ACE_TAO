@@ -3,6 +3,7 @@
 // This file has been manually modified to add a second component implementation.
 
 project(BasicSP_EC_BMClosedED_stub): ciao_client {
+  requires += dummy
   after += BasicSP_EC_stub
   sharedname = BMClosedED_stub
   libpaths += ..,..\..\..\..\..\..\lib,..\..\..\..\..\tao\IFR_Client,..\..\..\..\..\tao\Valuetype,..\..\..\..\..\tao,..\..\..\..\..\..\ace,..\..\..\..\..\orbsvcs\orbsvcs,..\..\..\..\..\tao\PortableServer,..\..\..\..\..\tao\IORInterceptor,..\..\..\..\..\tao\ObjRefTemplate,..\..\..\..\..\..\ACEXML\parser\parser,..\..\..\..\..\..\ACEXML\common,..\..\..\..\..\tao\IORTable
@@ -20,6 +21,7 @@ project(BasicSP_EC_BMClosedED_stub): ciao_client {
 }
 
 project(BasicSP_EC_BMClosedED_svnt) : ciao_servant {
+  requires += dummy
   after += BasicSP_EC_svnt BasicSP_EC_BMClosedED_stub
   sharedname  = BMClosedED_svnt
   libs    += BMClosedED_stub BasicSP_stub BasicSP_svnt TAO_RTEvent
@@ -44,6 +46,7 @@ project(BasicSP_EC_BMClosedED_svnt) : ciao_servant {
 
 
 project(BasicSP_EC_BMClosedED_exec) : ciao_component {
+  requires += dummy
   after   += BasicSP_EC_BMClosedED_svnt
   sharedname = BMClosedED_exec
   libs      += BMClosedED_stub BMClosedED_svnt BasicSP_stub BasicSP_svnt TAO_RTEvent
