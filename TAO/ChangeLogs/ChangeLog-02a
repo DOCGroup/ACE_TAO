@@ -1,3 +1,21 @@
+Tue Oct 10 08:50:07 2000  Ossama Othman  <ossama@uci.edu>
+
+	* tao/Exception.h:
+	* tao/Exception.cpp:
+
+	  Reverted changes that remove <ace/SString.h> header dependency.
+	  They introduced a memory access violation.  To be revisted in
+	  the near future.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.cpp (create_rt_mprofile):
+
+	  Corrected typo that prevented SSLIOP::SSL tagged component from
+	  being embedded in current profile.
+
+	* docs/ORBEndpoint.html:
+
+	  Corrected SHMIOP endpoint syntax.
+
 Tue Oct 10 16:59:18 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* TAOACE_Static.dsw: Updated some project dependencies.

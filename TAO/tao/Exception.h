@@ -1,5 +1,4 @@
 // This may look like C, but it's really -*- C++ -*-
-//
 // $Id$
 
 // ============================================================================
@@ -28,6 +27,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/SString.h"
 
 // This is used in the implementation of the _raise methods
 #if defined (TAO_HAS_EXCEPTIONS)
@@ -35,7 +35,6 @@
 #else
 #define TAO_RAISE(EXCEPTION)
 #endif /* TAO_HAS_EXCEPTIONS */
-
 
 class CORBA_Any;
 class TAO_OutputCDR;
@@ -88,7 +87,7 @@ public:
   // Print the exception <ex> to output determined by <f>.  This
   // function is not CORBA compliant.
 
-  const char *_info (void) const;
+  ACE_CString _info (void) const;
   // Returns a string containing information about the exception. This
   // function is not CORBA compliant.
 
@@ -210,7 +209,7 @@ public:
   // Print the system exception <ex> to output determined by f.  This
   // function is not CORBA compliant.
 
-  const char *_info (void) const;
+  ACE_CString _info (void) const;
   // Returns a string containing information about the exception. This
   // function is not CORBA compliant.
 
