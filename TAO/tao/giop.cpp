@@ -1,5 +1,5 @@
 // $Id$
-//
+
 // @(#)giop.cpp 1.10 95/09/21
 // Copyright 1994-1995 by Sun Microsystems Inc.
 // All Rights Reserved
@@ -66,7 +66,9 @@ dump_msg (const char *label,
   if (TAO_debug_level >= 2)
     {
       ACE_DEBUG ((LM_DEBUG, "%s GIOP v%c.%c msg, %d data bytes, %s endian, %s\n",
-                  label, digits[ptr[4]], digits[ptr[5]],
+                  label,
+                  digits[ptr[4]],
+                  digits[ptr[5]],
                   len - TAO_GIOP_HEADER_LEN,
                   (ptr[6] == TAO_ENCAP_BYTE_ORDER) ? "my" : "other",
                   (ptr[7] <= TAO_GIOP_MessageError) ? names [ptr[7]] : "UNKNOWN TYPE"));
@@ -98,7 +100,7 @@ TAO_GIOP::send_request (TAO_SVC_HANDLER *handler,
   // networking infrastructure (e.g. IPSEC).
 
   *(CORBA::Long *) (buf + 8) =
-      (CORBA::Long) (buflen - TAO_GIOP_HEADER_LEN);
+    (CORBA::Long) (buflen - TAO_GIOP_HEADER_LEN);
 
   // Strictly speaking, should not need to loop here because the
   // socket never gets set to a nonblocking mode ... some Linux
@@ -261,6 +263,7 @@ read_buffer (ACE_SOCK_Stream &peer,
 {
   int bytes_read = 0;
   bytes_read = peer.recv_n (buf, len);
+
   if (bytes_read == -1 && errno == ECONNRESET)
     {
       // We got a connection reset (TCP RSET) from the other side,

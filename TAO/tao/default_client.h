@@ -1,4 +1,5 @@
 // This may look like C, but it's really -*- C++ -*-
+// $Id$
 
 // ============================================================================
 //
@@ -11,8 +12,6 @@
 // = AUTHOR
 //     Chris Cleeland
 //
-// = VERSION
-//     $Id$
 // ============================================================================
 
 #if !defined (TAO_DEFAULT_CLIENT_H)
@@ -21,12 +20,12 @@
 #include "tao/corba.h"
 
 class TAO_Default_Client_Strategy_Factory : public TAO_Client_Strategy_Factory
+{
   // = TITLE
   //   This is the "default" client strategy factor for TAO.  It
   //   includes strategies that are configured through command-line
   //   options so that everything operates as if there were no
   //   dynamically-linkable strategies.
-{
 public:
   // = Initialization and termination methods.
   TAO_Default_Client_Strategy_Factory (void);

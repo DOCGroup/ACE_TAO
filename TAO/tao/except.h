@@ -20,6 +20,7 @@
 #  define TAO_EXCEPT_H
 
 class TAO_Export CORBA_Exception
+{
   // = TITLE
   //   CORBA2-specified exception hierarchy.
   //
@@ -29,18 +30,14 @@ class TAO_Export CORBA_Exception
   //   OMG-IDL compiler and available through the Interface
   //   Repositories.  Think of it as a "globally scoped" name
   //   distinguishing each exception.
-{
  public:
   CORBA_Exception (const CORBA_Exception &src);
   CORBA_Exception &operator = (const CORBA_Exception &src);
 
-  // Inlined here for efficiency and simplicity
-  void *operator new (size_t, const void *p)
-  { return (void *) p; }
-  void *operator new (size_t s)
-  { return ::operator new (s); }
-  void operator delete (void *p)
-  { ::operator delete (p); }
+  // = Memory allocators.
+  void *operator new (size_t, const void *p);
+  void *operator new (size_t s);
+  void operator delete (void *p);
 
   const char *_id (void) const;
   TAO_CONST CORBA::TypeCode_ptr _type (void) const;
@@ -48,10 +45,9 @@ class TAO_Export CORBA_Exception
   // = To implement the narrow method.
   virtual int _is_a (const char* repository_id) const;
 
-  // = Methods required for COM IUnknown support
-
-  CORBA::ULong  AddRef (void);
-  CORBA::ULong  Release (void);
+  // = Methods required for memory management support.
+  CORBA::ULong AddRef (void);
+  CORBA::ULong Release (void);
 
   CORBA_Exception (CORBA::TypeCode_ptr type);
   virtual ~CORBA_Exception (void);
@@ -66,29 +62,29 @@ private:
 };
 
 class TAO_Export CORBA_UserException : public CORBA_Exception
+{
   // = TITLE
   //   User exceptions are those defined by application developers
   //   using OMG-IDL.
-{
 public:
   CORBA_UserException (CORBA::TypeCode_ptr tc);
   ~CORBA_UserException (void);
 
-  virtual int _is_a (const char* interface_id) const;
-  static CORBA_UserException* _narrow (CORBA_Exception* exception);
+  virtual int _is_a (const char *interface_id) const;
+  static CORBA_UserException *_narrow (CORBA_Exception *exception);
 
 protected:
   // Copy and assignment operators.
+  // @@ Andy, should these be added here?
 };
 
 class TAO_Export CORBA_SystemException : public CORBA_Exception
+{
   // = TITLE
   //   System exceptions are those defined in the CORBA spec; OMG-IDL
   //   defines these.
-{
 public:
-  // 94-9-14 also sez:  public copy constructor
-  // and assignment operator.
+  // = 94-9-14 sez: public copy constructor and assignment operator.
 
   CORBA_SystemException (CORBA::TypeCode_ptr tc,
 			 CORBA::ULong code,
@@ -96,16 +92,15 @@ public:
 
   ~CORBA_SystemException (void);
 
-  CORBA::ULong minor (void) const { return _minor; }
-  void minor (CORBA::ULong m) { _minor = m; }
+  CORBA::ULong minor (void) const;
+  void minor (CORBA::ULong m);
 
-  CORBA::CompletionStatus completion (void) const { return _completed; }
+  CORBA::CompletionStatus completion (void) const;
 
-  void completion (CORBA::CompletionStatus c)
-  { _completed = c; }
+  void completion (CORBA::CompletionStatus c);
 
-  virtual int _is_a (const char* type_id) const;
-  static CORBA_SystemException * _narrow (CORBA_Exception* exception);
+  virtual int _is_a (const char *type_id) const;
+  static CORBA_SystemException *_narrow (CORBA_Exception* exception);
 
 private:
   CORBA::ULong _minor;
@@ -155,45 +150,32 @@ TAO_SYSTEM_EXCEPTION(BAD_CONTEXT);
 TAO_SYSTEM_EXCEPTION(OBJ_ADAPTER);
 TAO_SYSTEM_EXCEPTION(DATA_CONVERSION);
 
-#undef	TAO_SYSTEM_EXCEPTION
+#undef TAO_SYSTEM_EXCEPTION
 
 class TAO_Export CORBA_Environment
-{
   // = TITLE
   // A CORBA_Environment is a way to automagically ensure that
   // exception data is freed -- the "var" class for Exceptions.  It
   // adds just a bit of convenience function support, helping classify
   // exceptions as well as reducing memory leakage.
+{
 public:
-  CORBA_Environment (void) : _exception (0) { }
-  ~CORBA_Environment (void) { clear (); }
+  // = Initialization and termination methods.
+  CORBA_Environment (void);
+  ~CORBA_Environment (void);
 
-  CORBA::Exception_ptr exception (void) const { return _exception; }
+  CORBA::Exception_ptr exception (void) const;
   // Return the exception.  Caller must call AddRef() in order to keep
   // the ptr.
 
-  void exception (CORBA::Exception *ex)
-    // Set the exception to <ex>, taking a reference on it.
-  {
-    if (ex != _exception)
-      {
-        clear ();
-        _exception = ex;
-        _exception->AddRef ();
-      }
-  }
+  void exception (CORBA::Exception *ex);
+  // Set the exception to <ex>, taking a reference on it.
 
   CORBA::ExceptionType exception_type (void) const;
   TAO_CONST CORBA::String exception_id (void) const;
 
-  void clear (void)
-  {
-    if (_exception)
-      {
-	_exception->Release ();
-	_exception = 0;	// XXX
-      }
-  }
+  void clear (void);
+  // Clear the exception.
 
   void print_exception (const char *info,
                         FILE *f=stdout) const;
@@ -201,10 +183,15 @@ public:
 
 private:
   CORBA::Exception_ptr _exception;
+  // Pointer to the exception object contained in the environment.
 
   // = These are not provided.
   CORBA_Environment (const CORBA_Environment &src);
   CORBA_Environment &operator = (const CORBA_Environment &src);
 };
+
+#if defined (__ACE_INLINE__)
+#include "Except.i"
+#endif /* __ACE_INLINE__ */
 
 #endif /* TAO_EXCEPT_H */
