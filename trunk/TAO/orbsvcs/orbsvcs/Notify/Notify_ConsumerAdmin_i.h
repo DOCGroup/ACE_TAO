@@ -78,6 +78,9 @@ class TAO_Notify_Export TAO_Notify_ConsumerAdmin_i : public POA_CosNotifyChannel
   void unregister_listener (TAO_Notify_Event_Listener *listener, CORBA::Environment &ACE_TRY_ENV);
   // Unregister with parent for subscription updates.
 
+  void proxy_pushsupplier_destroyed (CosNotifyChannelAdmin::ProxyID proxyID);
+  // This id is no longer in use.It can be reused by <proxy_pushsupplier_ids_>
+
   // = Interface methods
   virtual CosNotifyChannelAdmin::AdminID MyID (
     CORBA::Environment &ACE_TRY_ENV

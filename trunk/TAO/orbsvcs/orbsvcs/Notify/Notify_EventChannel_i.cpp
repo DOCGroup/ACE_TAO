@@ -22,7 +22,7 @@ TAO_Notify_EventChannel_i::TAO_Notify_EventChannel_i (CosNotifyChannelAdmin::Eve
 // Implementation skeleton destructor
 TAO_Notify_EventChannel_i::~TAO_Notify_EventChannel_i (void)
 {
-  if (is_destroyed_ == 0)
+  if (this->is_destroyed_ == 0)
     this->cleanup_i ();
 }
 
@@ -92,6 +92,18 @@ TAO_Notify_EventChannel_i::get_event_manager (void)
   return this->event_manager_;
 }
 
+void
+TAO_Notify_EventChannel_i::consumer_admin_destroyed (CosNotifyChannelAdmin::AdminID CA_ID)
+{
+  consumer_admin_ids_.put (CA_ID);
+}
+
+void
+TAO_Notify_EventChannel_i::supplier_admin_destroyed (CosNotifyChannelAdmin::AdminID SA_ID)
+{
+  supplier_admin_ids_.put (SA_ID);
+}
+
 CosNotifyChannelAdmin::EventChannel_ptr
 TAO_Notify_EventChannel_i::get_ref (CORBA::Environment &ACE_TRY_ENV)
 {
@@ -132,10 +144,9 @@ TAO_Notify_EventChannel_i::destroy (CORBA::Environment &ACE_TRY_ENV)
   this->is_destroyed_ = 1;
 
   // Deactivate ourselves.
-  this->resource_manager_->
-    deactivate_object (this,
-                       this->my_POA_.in (),
-                       ACE_TRY_ENV);
+  this->resource_manager_->deactivate_object (this,
+                                              this->my_POA_.in (),
+                                              ACE_TRY_ENV);
   this->cleanup_i (ACE_TRY_ENV);
 }
 

@@ -22,11 +22,8 @@ TAO_Notify_ProxySupplier<SERVANT_TYPE>::~TAO_Notify_ProxySupplier (void)
 {
   if (!is_destroyed_)
     this->cleanup_i ();
-}
 
-template <class SERVANT_TYPE> void
-TAO_Notify_ProxySupplier<SERVANT_TYPE>::init (CORBA::Environment& /*ACE_TRY_ENV*/)
-{
+  this->myadmin_->proxy_pushsupplier_destroyed (this->myID_);
 }
 
 template <class SERVANT_TYPE> void

@@ -73,6 +73,12 @@ class TAO_Notify_Export TAO_Notify_EventChannel_i : public virtual POA_CosNotify
   TAO_Notify_Event_Manager* get_event_manager (void);
   // Get the event manager.
 
+  void consumer_admin_destroyed (CosNotifyChannelAdmin::AdminID CA_ID);
+  // This id is no longer in use.It can be reused by <consumer_admin_ids_>.
+
+  void supplier_admin_destroyed (CosNotifyChannelAdmin::AdminID SA_ID);
+  // This id is no longer in use.It can be reused by <supplier_admin_ids_>.
+
   // = Interface methods
   virtual CosNotifyChannelAdmin::EventChannelFactory_ptr MyFactory (
     CORBA::Environment &ACE_TRY_ENV

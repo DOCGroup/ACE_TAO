@@ -55,8 +55,8 @@ public:
   virtual ~TAO_Notify_Proxy (void);
   // Destructor
 
-  void init (CORBA::Environment &ACE_TRY_ENV);
-  // Init
+  void init (CosNotifyChannelAdmin::ProxyID myID, CORBA::Environment &ACE_TRY_ENV);
+  // Init the Proxy.
 
   // = Notify_Update_Listener methods
   virtual void dispatch_update (EVENTTYPE_LIST& added_list, EVENTTYPE_LIST& removed_list, CORBA::Environment &ACE_TRY_ENV);
@@ -176,6 +176,9 @@ virtual void remove_all_filters (
 
  TAO_Notify_FilterAdmin_i filter_admin_;
  // Handles the Filter admin methods.
+
+ CosNotifyChannelAdmin::ProxyID myID_;
+ // The ID assigned to the Proxy.
 };
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
