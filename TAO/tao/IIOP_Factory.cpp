@@ -22,13 +22,8 @@ TAO_IIOP_Protocol_Factory::~TAO_IIOP_Protocol_Factory (void)
 int
 TAO_IIOP_Protocol_Factory::match_prefix (const ACE_CString &prefix)
 {
-  const char *protocol[] = { "iiop", "iioploc" };
-  // This is valid for any protocol beginning with `iiop' or `iioploc'.
-
-  // Check for the proper prefix in the IOR.  If the proper prefix isn't
-  // in the IOR then it is not an IOR we can use.
-  return (ACE_OS::strcasecmp (prefix.c_str (), protocol[0]) == 0 ||
-          ACE_OS::strcasecmp (prefix.c_str (), protocol[1]) == 0);
+  // Check for the proper prefix for this protocol.
+  return (ACE_OS::strcasecmp (prefix.c_str (), ::prefix_) == 0);
 }
 
 const char *
