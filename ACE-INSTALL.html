@@ -91,8 +91,8 @@ For information on TAO's platform coverage and support, please also see
     <th>DOC Group</th>
     <td><A HREF="http://ringil.ece.uci.edu/scoreboard/">Tested</A> and used
         daily by the DOC group:
-        Solaris 2.5, 2.6, 7 and 8 (many compilers excluding SunC++ 4.x)<BR>
-        Windows NT 4.0 and Windows 2000 (MSVC++ 5.x, 6.x, and 7.x, and
+        Solaris 2.6, 7 and 8 (many compilers excluding SunC++ 4.x)<BR>
+        Windows NT 4.0, 2000, XP (MSVC++ 6.x, and 7.x, and
         Borland C++ Builder 5.0)<BR>
         Linux/Intel (many compilers), Linux/IA64 (GCC).
     </td>
@@ -103,7 +103,7 @@ For information on TAO's platform coverage and support, please also see
   <tr>
     <th>Riverace</th>
     <td>Offers support services for many platforms including those
-        above, HP-UX, and AIX.
+        above, HP-UX, AIX, and Windows CE.
     </td>
     <td>Riverace's <A HREF="http://www.riverace.com/">web site</A></td>
   </tr>
@@ -120,7 +120,7 @@ For information on TAO's platform coverage and support, please also see
     <td>Responsible for continued maintenance and testing of platforms
         to which ACE has been ported, but aren't supported by the
         above groups. These include
-        Windows 95/98/CE using Borland C++ Builder 4.0 and later, IBM VisualAge C++,
+        Windows 95/98 using Borland C++ Builder 4.0 and later,
         and GNU g++ on MinGW;
         Digital UNIX (Compaq Tru64) 4.0 and 5.0;
         IRIX 6.x; UnixWare 7.1.0; SunOS 4.x and Solaris with SunC++ 4.x;
@@ -182,14 +182,14 @@ supported by the DOC group, Riverace, or OCI. <P>
       Take a look at (<a href="docs/CE-status.txt">CE-status.txt</a>) for
       up-to-date information about ACE on CE.  <P>
 
-  <LI><B> SunOS 4.x, Solaris 2.x, 7 and 8 using Sun
-      Sun C++ 4.2 and 5.x, Forte 6, Centerline C++ 2.x, GNU gcc 2.7.x
+  <LI><B> Solaris 2.6, 7, 8, and 9 using Sun
+      Sun 5.x, Forte 6 and 7, Centerline C++ 2.x, GNU gcc 2.7.x
       and later (except 2.8.x), and KAI C++ 3.3/3.4.</B><P>
 
       All the source code and tests should build and run without any
-      problems on Solaris 2.5.1, 2.6, 7, and 8 platforms using the Sun C++
-      compilers.  For Sun C++ 4.2, we recomend using this patch version
-      at a minimum:<p> <pre>
+      problems on Solaris 2.6, 7, 8, and 9 platforms using the Sun C++
+      compilers.  If you need to work with Sun C++ 4.2, we recomend
+      using this patch version at a minimum:<p> <pre>
       CC: WorkShop Compilers 4.2 21 Apr 1997 C++ 4.2 patch 104631-02
       </pre><p>
 
@@ -271,41 +271,8 @@ supported by the DOC group, Riverace, or OCI. <P>
 
   <LI><B>AIX</B><P>
 
-      The ACE port to AIX assumes that the user has installed the AIX
-      patch containing the dl*() APIs.  To use these APIs, IBM has
-      created a separate product (free to AIX licensees) called shared
-      library hookable symbols (or slhs/6000).  If you don't have this
-      patch, the sv* commands for compiling and linking will not be
-      present on the system.<P>
-
-      If you are using AIX 4.2.1 or later, this patch isn't needed;
-      the dynamic library APIs are included in the base operating
-      system.<p>
-
-      However, another patch may be needed.  Thanks to
-      Susan Liebeskind &lt;shl@janis.gtri.gatech.edu&gt; for submitting
-      the following useful information:<p>
-
-      When building on AIX 4.2.1, using the xlC V3.1 compilers, you may
-      get the following error when building the ACE shared library.<p>
-      <pre>
-makeC++SharedLib_r -p 0 -o libACE.so  -bI:/lib/pse.exp  -L/usr/local/src/ACE_wra
-ppers/ace -L./ -ltli_r -ldl libACE.a
-ld: 0711-317 ERROR: Undefined symbol: .__CurrentException
-ld: 0711-345 Use the -bloadmap or -bnoquiet option to obtain more information.
-make: *** [libACE.so] Error 8
-      </pre>
-
-      To fix this error, you need a patch to the supporting xlC
-      related libraries.  To obtain this patch, go to the <a
-      href="http://service.software.ibm.com/support/rs6000">IBM public
-      patch website</a>, and retrieve the patch PTF U453697, or its
-      successor, for xlC.<p>
-
-      You may wish to retrieve this patch with the fixdist tool, also
-      available at the website.  Installation of this patch will
-      install patched versions of the C++ libraries, which correctly
-      define this symbol.<p>
+      ACE has been ported to AIX 4.3 and higher using the IBM C/C++
+      Compiler 3.6.6, Visual Age C++ 5 and 6, and g++ 3.2.<p>
 
       To build ACE on AIX with Visual Age C++ 5 in incremental mode
       (i.e. with the IDE), use the
@@ -314,8 +281,8 @@ make: *** [libACE.so] Error 8
       version-specific config files set the version number macros and
       include the general config-aix-4.x.h file which has support for all
       of the OS versions and compilers supported on AIX. Using the general
-      config file is the recommended practice for egcs, C Set++, IBM
-      C/C++, and Visual Age C++ 5 batch mode compilers.<p>
+      config file is the recommended practice for g++, IBM
+      C/C++, and Visual Age C++ batch mode compilers.<p>
 
       Visual Age C++ 4 has also been supported on ACE 5.1, but is no longer
       supported. If you are still using this compiler, please use the
@@ -435,20 +402,20 @@ make: *** [libACE.so] Error 8
       appear to fail with the O32 ABI.  Please check the config files
       for the details.<P>
 
-  <LI><B> HP-UX 9.x, 10.x, and 11.00 </B> <P>
+  <LI><B> HP-UX 10.x and 11.x </B> <P>
 
-      HP sells 2 C++ compilers for HP-UX 10.x and 11.00.  If you are
-      using 9.x, there's only the first one.
+      HP sells 2 C++ compilers for HP-UX 10.x and 11.00:
 
       <UL>
         <LI>HP C++ - this is CC, HP's cfront-based compiler.  As of ACE 4.4, it
             can be used, but some people have problems with templates.
             Caveat emptor.  It's been said that you should run version 10.24,
-            if not later.
+            if not later. ACE hasn't been tested with this compiler since
+            the ACE 5.0 timeframe.
 
         <LI>HP aC++ - this is aCC, HP's new, ANSI compiler.  It handles ACE
             very well.  You should use version A.01.27 (or higher) on
-            HP-UX 10.x and version A.03.27 (or higher) on HP-UX 11.00.
+            HP-UX 10.x and version A.03.37 (or higher) on HP-UX 11.
 
       </UL>
       <P>
@@ -1245,9 +1212,9 @@ create an
       <BR>
       <CODE>#include "ace/config-win32.h"</CODE><BR>
       <BR>
-      If you are building for Windows NT or Windows 2K then you can start
-      without any more changes.  If you are building on Windows 9x/Me,
-      then you should add the line <BR>
+      If you are building for Windows NT 4, Windows 2000, or Windows XP,
+      then you can start without any more changes.  If you are building
+      on Windows 9x/Me, then you should add the line <BR>
       <BR>
       <CODE>#define ACE_HAS_WINNT4 0</CODE><BR>
       <BR>
