@@ -1,3 +1,11 @@
+Mon Jun 21 22:31:45 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* ace/config-freebsd.h:
+	* ace/config-netbsd.h:
+	* ace/config-openbsd.h:
+	  Changed to define ACE_HAS_TIMEZONE_GETTIMEOFDAY instead of
+	  ACE_HAS_SUNOS4_GETTIMEOFDAY.
+
 Mon Jun 21 13:49:22 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/OS_NS_macros.h:
