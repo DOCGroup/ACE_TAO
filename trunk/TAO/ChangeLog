@@ -1,3 +1,12 @@
+Wed Feb  5 08:51:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/PSS/PSDL_Node_Visitor.cpp:
+        * orbsvcs/PSS/PSDL_Scope_Visitor.cpp:
+          Renamed the argument of the visit_interface() method from
+          interface to interf. The MingW compiler has a macro defined
+          interface and this causes problems, so renamed the argument
+          name to fix compile errors with MingW.
+
 Tue Feb  4 13:23:51 2003  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * tao/Makefile: Fix the Makefile to use the SUBDIR_MAKEFILE
