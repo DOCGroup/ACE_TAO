@@ -177,6 +177,7 @@ sub new {
   $self->{'sort_files'}            = $self->sort_files();
   $self->{'source_callback'}       = undef;
   $self->{'dollar_special'}        = $self->dollar_special();
+  $self->{'exclude'}               = $exclude;
   $self->reset_generating_types();
 
   return $self;
@@ -1339,7 +1340,9 @@ sub generate_default_components {
               my(@built) = ();
               foreach my $file (@$array) {
                 if (-d $file) {
-                  my(@gen) = $self->generate_default_file_list($file);
+                  my(@gen) = $self->generate_default_file_list(
+                                                        $file,
+                                                        $self->{'exclude'});
                   $self->sift_files(\@gen, $exts, $pchh, $pchc, $tag, \@built);
                 }
                 else {
@@ -1674,7 +1677,7 @@ sub generate_defaults {
   }
 
   ## Generate the default pch file names (if needed)
-  my(@files) = $self->generate_default_file_list();
+  my(@files) = $self->generate_default_file_list('.', $self->{'exclude'});
   $self->generate_default_pch_filenames(\@files);
 
   ## If the pch file names are empty strings then we need to fix that
@@ -2376,9 +2379,11 @@ sub get_verbatim {
 
 
 sub generate_recursive_input_list {
-  my($self) = shift;
-  my($dir)  = shift;
+  my($self)    = shift;
+  my($dir)     = shift;
+  my($exclude) = shift;
   return $self->extension_recursive_input_list($dir,
+                                               $exclude,
                                                $ProjectCreatorExtension);
 }
 
