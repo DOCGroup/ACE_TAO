@@ -36,14 +36,6 @@ POA_CORBA::Policy::Policy (void)
 POA_CORBA::Policy::~Policy (void)
 {
 }
-static const TAO_Param_Data_Skel _get_CORBA_Policy_policy_type_paramdata [] =
-{
-  {CORBA::_tc_PolicyType, 0, 0}
-}; // CORBA_Policy_policy_type_paramdata
-
-static const TAO_Call_Data_Skel _get_CORBA_Policy_policy_type_calldata =
-{"_get_policy_type", 1, 1, _get_CORBA_Policy_policy_type_paramdata};
-
 void POA_CORBA::Policy::_get_policy_type_skel (
     CORBA::ServerRequest &_tao_server_request,
     void *_tao_object_reference,
@@ -51,6 +43,14 @@ void POA_CORBA::Policy::_get_policy_type_skel (
     CORBA::Environment &_tao_environment
 )
 {
+  static const TAO_Param_Data_Skel _get_CORBA_Policy_policy_type_paramdata [] =
+  {
+    {CORBA::_tc_PolicyType, 0, 0}
+  }; // CORBA_Policy_policy_type_paramdata
+
+  static const TAO_Call_Data_Skel _get_CORBA_Policy_policy_type_calldata =
+  {"_get_policy_type", 1, 1, _get_CORBA_Policy_policy_type_paramdata};
+
   POA_CORBA::Policy *_tao_impl = (POA_CORBA::Policy *)_tao_object_reference;
   CORBA::PolicyType _tao_retval = 0;
   _tao_server_request.demarshal (
@@ -69,14 +69,6 @@ void POA_CORBA::Policy::_get_policy_type_skel (
   );
 }
 
-static const TAO_Param_Data_Skel CORBA_Policy_copy_paramdata [] =
-{
-  {CORBA::_tc_Policy, 0, 0}
-}; // CORBA_Policy_copy_paramdata
-
-static const TAO_Call_Data_Skel CORBA_Policy_copy_calldata =
-{"copy", 1, 1, CORBA_Policy_copy_paramdata};
-
 void POA_CORBA::Policy::copy_skel (
     CORBA::ServerRequest &_tao_server_request,
     void *_tao_object_reference,
@@ -84,6 +76,14 @@ void POA_CORBA::Policy::copy_skel (
     CORBA::Environment &_tao_environment
 )
 {
+  static const TAO_Param_Data_Skel CORBA_Policy_copy_paramdata [] =
+  {
+    {CORBA::_tc_Policy, 0, 0}
+  }; // CORBA_Policy_copy_paramdata
+
+  static const TAO_Call_Data_Skel CORBA_Policy_copy_calldata =
+  {"copy", 1, 1, CORBA_Policy_copy_paramdata};
+
   POA_CORBA::Policy *_tao_impl = (POA_CORBA::Policy *)_tao_object_reference;
   CORBA::Object_ptr _tao_retval = CORBA::Object::_nil ();
   _tao_server_request.demarshal (
@@ -102,14 +102,6 @@ void POA_CORBA::Policy::copy_skel (
   );
 }
 
-static const TAO_Param_Data_Skel CORBA_Policy_destroy_paramdata [] =
-{
-  {CORBA::_tc_void, 0, 0}
-}; // CORBA_Policy_destroy_paramdata
-
-static const TAO_Call_Data_Skel CORBA_Policy_destroy_calldata =
-{"destroy", 1, 1, CORBA_Policy_destroy_paramdata};
-
 void POA_CORBA::Policy::destroy_skel (
     CORBA::ServerRequest &_tao_server_request,
     void *_tao_object_reference,
@@ -117,6 +109,14 @@ void POA_CORBA::Policy::destroy_skel (
     CORBA::Environment &_tao_environment
 )
 {
+  static const TAO_Param_Data_Skel CORBA_Policy_destroy_paramdata [] =
+  {
+    {CORBA::_tc_void, 0, 0}
+  }; // CORBA_Policy_destroy_paramdata
+
+  static const TAO_Call_Data_Skel CORBA_Policy_destroy_calldata =
+  {"destroy", 1, 1, CORBA_Policy_destroy_paramdata};
+
   POA_CORBA::Policy *_tao_impl = (POA_CORBA::Policy *)_tao_object_reference;
   _tao_server_request.demarshal (
     _tao_environment,
@@ -134,13 +134,6 @@ void POA_CORBA::Policy::destroy_skel (
   );
 }
 
-static const TAO_Param_Data_Skel CORBA_Policy_is_a_paramdata [] =
-{
-  {CORBA::_tc_boolean, 0, 0},
-  {CORBA::_tc_string, CORBA::ARG_IN, 0}
-};
-static const TAO_Call_Data_Skel CORBA_Policy_is_a_calldata =
-{"_is_a", 1, 2, CORBA_Policy_is_a_paramdata};
 void POA_CORBA::Policy::_is_a_skel (
     CORBA::ServerRequest &_tao_server_request,
     void * _tao_object_reference,
@@ -148,6 +141,13 @@ void POA_CORBA::Policy::_is_a_skel (
     CORBA::Environment &_tao_environment
   )
 {
+  static const TAO_Param_Data_Skel CORBA_Policy_is_a_paramdata [] =
+  {
+    {CORBA::_tc_boolean, 0, 0},
+    {CORBA::_tc_string, CORBA::ARG_IN, 0}
+  };
+  static const TAO_Call_Data_Skel CORBA_Policy_is_a_calldata =
+  {"_is_a", 1, 2, CORBA_Policy_is_a_paramdata};
   POA_CORBA::Policy_ptr  _tao_impl = (POA_CORBA::Policy_ptr) _tao_object_reference;
   CORBA::Boolean _tao_retval;
   char *_tao_value = 0;
