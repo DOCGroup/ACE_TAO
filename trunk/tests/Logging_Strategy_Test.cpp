@@ -86,7 +86,6 @@ void print_till_death (void)
 {
   ACE_DEBUG ((LM_DEBUG,
               "\n-> start generating messages... \n"));
-  ACE_LOG_MSG->clr_flags (ACE_Log_Msg::STDERR);
 
   for (int i = 0; i < 1000; i++)
     {
@@ -103,7 +102,6 @@ void print_till_death (void)
     }
   ACE_Reactor::instance ()->end_event_loop ();
 
-  ACE_LOG_MSG->set_flags (ACE_Log_Msg::STDERR);
   ACE_DEBUG ((LM_DEBUG,
               "-< generating messages finished \n\n"));
 }
@@ -289,7 +287,7 @@ remove_files (void)
 }
 
 static int 
-parse_args (int argc, char* argv [])
+parse_args (int argc, char *argv[])
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Specifications:\n")));
@@ -305,40 +303,34 @@ parse_args (int argc, char* argv [])
           ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("File name: %s\n"),
                       file_name));
           break;
-
         case 'i':
           interval_time = atoi (get_opt.optarg);
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("Interval time (s): %d\n"),
                       interval_time));
           break;
-
         case 'm':
           max_size_files = atoi (get_opt.optarg);
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("Maximum size (KB): %d\n"),
                       max_size_files));
           break;
-
         case 'f':
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("Modes: %s\n"),
                       get_opt.optarg));
           break;
-
         case 'n':
           max_num_files = atoi (get_opt.optarg);
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("Maximum files number: %d\n"),
                       max_num_files));
           break;
-
         case 'o':
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("Ordering files activated\n")));
           order_state = 1;
           break;
-
         default:
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("usage: [-s]<file_name>")
@@ -369,23 +361,39 @@ int main (int argc, char *argv[])
   // Implement the dynamic entries via main arguments
   ACE_LOG_MSG->open (argv[0]);
 
-  if (parse_args (argc, argv) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Invalid command-line parameters.\n"),
-                      1);
+  ACE_TCHAR *l_argv[4];
+
+  if (argc > 1)
+    {
+      if (parse_args (argc, argv) == -1)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Invalid command-line parameters.\n"),
+                          1);
+    }
+  else
+    {
+      l_argv[0] = argv[0];
+      l_argv[1] = (char *) ACE_TEXT ("-sfoo");
+      l_argv[2] = (char *) ACE_TEXT ("-o");
+      l_argv[3] = 0;
+
+      if (parse_args (3, l_argv) == -1)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Invalid command-line parameters.\n"),
+                          1);
+      argv = l_argv;
+      argc = 3;
+    }
 
   ACE_TCHAR arg_str[250];
   sprintf (arg_str, 
            "dynamic Logger Service_Object *ACE:_make_ACE_Logging_Strategy() \"");
 
-  if (argc > 1)
-    for (int i = 1; i < argc; i++)
-      {
-        ACE_OS_String::strcat (arg_str, argv[i]);
-        ACE_OS_String::strcat (arg_str, " ");
-      }
-  else
-    ACE_OS_String::strcat (arg_str, ACE_TEXT ("-sfoo -o"));
+  for (int i = 1; i < argc; i++)
+    {
+      ACE_OS_String::strcat (arg_str, argv[i]);
+      ACE_OS_String::strcat (arg_str, " ");
+    }
 
   ACE_OS_String::ACE_OS_String::strcat (arg_str, "\"");
 
@@ -400,16 +408,16 @@ int main (int argc, char *argv[])
                        "Spawning Reactor.\n"),
                       1);
 
-  // remove the existent files
+  // Remove the existent files
   remove_files ();
 
-  // function to print the message
+  // Function to print the message
   print_till_death ();
 
-  // counts the generated files
+  // Counts the generated files
   count_files ();
 
-  // get the file order
+  // Get the file order
   order ();
 
   if (ACE_Reactor::instance ()->end_event_loop ())
@@ -424,5 +432,3 @@ int main (int argc, char *argv[])
   ACE_END_TEST;
   return 0;
 }
-
-
