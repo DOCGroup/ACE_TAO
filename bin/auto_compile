@@ -44,7 +44,7 @@ $dont_update = 0;
 $dont_run = 0;
 $pre_realclean = 0;
 $post_realclean = 0;
-$report_success = 0;
+$report_success = 1;
 $debug = 0;
 @BUILD_LIST= ();
 
@@ -160,7 +160,7 @@ sub report_errors {
     || mydie "Cannot open mail pipe for: $_\n";
 
   print MAIL 'The following message is brought to you by: ', "\n";
-  print MAIL $CMD, ' [', $REVISION, "] for $BUILD on $CHECKOUT\n";
+  print MAIL $CMD, ' [', $REVISION, "] for $BUILD on $CHECKOUT\n\n";
 
   local $m;
   foreach $m (@_) {
@@ -195,28 +195,11 @@ sub report_errors {
 
 ### MAIN FUNCTION
 
-open(HIST, '>>' . $histfile)
-    # Do not use 'mydie' to report the problem, it tries to use HIST....
-    || die "cannot open history file \"$histfile\"\n";
-
-$date = localtime;
-
-print HIST $CMD, ': running at ', $date, ' ';
-
 if (-f $disable_file) {
-  print HIST "DISABLED\n";
+  print 'The following message is brought to you by: ', "\n";
+  print $CMD, ' [', $REVISION, "] for $BUILD on $CHECKOUT\n";
 
-  local $to = $ENV{'LOGNAME'};
-  open (MAIL, "|".$MAIL.' -s [AUTO_COMPILE] '.$to)
-    || die "Cannot open mail pipe for DISABLED error\n";
-
-  print MAIL 'The following message is brought to you by: ', "\n";
-  print MAIL $CMD, ' [', $REVISION, "] for $BUILD on $CHECKOUT\n";
-
-  print MAIL "DISABLED\n";
-
-  close (MAIL)
-    || die "Cannot send mail for DISABLED execution\n";
+  print "DISABLED\n";
 
   exit 0;
 }
@@ -226,6 +209,15 @@ open (DISABLE, '>' . $disable_file)
 print DISABLE "auto_compile <$date> is running\n";
 close (DISABLE)
     || die "cannot close disable file";
+
+open(HIST, '>>' . $histfile)
+    # Do not use 'mydie' to report the problem, it tries to remove the
+    # disable file  
+    || mydie "cannot open history file \"$histfile\"\n";
+
+$date = localtime;
+
+print HIST $CMD, ': running at ', $date, ' ';
 
 open(LOG, '>' . $LOGFILE)
     || mydie "cannot open log file";
@@ -266,6 +258,20 @@ if ($dont_update == 0) {
 
 chdir($MODULE)
     || mydie "cannot chdir to $MODULE";
+
+open (CHLOG, "ChangeLog")
+  ||  mydie "cannot open Changelog";
+$_ = <CHLOG>;
+chop;
+print LOG "ACE ChangeLogTag:", $_, "\n";
+close (CHLOG);
+
+open (CHLOG, "TAO/ChangeLog")
+  ||  mydie "cannot open TAO/Changelog";
+$_ = <CHLOG>;
+chop;
+print LOG "TAO ChangeLogTag:", $_, "\n";
+close (CHLOG);
 
 $date = localtime;
 print LOG "$CMD: starting clone at ", $date, "\n";
