@@ -1732,6 +1732,7 @@ ACE_TSS_Emulation::tss_base (void* ts_storage[])
 {
   // TSS Singleton implementation.
 
+  // Create the one native TSS key, if necessary.
   if (key_created_ == 0)
     {
       ACE_Recursive_Thread_Mutex *lock =
@@ -1760,18 +1761,30 @@ ACE_TSS_Emulation::tss_base (void* ts_storage[])
     return 0; // This should not happen!
 
   // Check to see if this is the first time in for this thread.
+  // This block can also be entered after a fork () in the child process,
+  // at least on Pthreads Draft 4 platforms.
   if (old_ts_storage == 0)
     {
-      // Use the ts_storage passed as argument, is possible that this has
-      // been implemented in the stack. At the moment, this is unknown.
-      // The cleanup must not do nothing.
+      // Use the ts_storage passed as argument, if non-zero.  It is
+      // possible that this has been implemented in the stack. At the
+      // moment, this is unknown.  The cleanup must not do nothing.
+      // If ts_storage is zero, allocate (and eventually leak) the
+      // storage array.
       if (ts_storage == 0)
       {
         ACE_NO_HEAP_CHECK;
 
-        ACE_NEW_RETURN(ts_storage, void*[ACE_TSS_THREAD_KEYS_MAX], 0);
+        ACE_NEW_RETURN (ts_storage, void*[ACE_TSS_THREAD_KEYS_MAX], 0);
 
+        // Zero the entire TSS array.  Do it manually instead of using
+        // memset, for optimum speed.  Though, memset may be faster :-)
+        void **tss_base_p = ts_storage;
+        for (u_int i = 0; i < ACE_TSS_THREAD_KEYS_MAX; ++i, ++tss_base_p)
+          {
+            *tss_base_p = 0;
+          }
       }
+
      // Store the pointer in thread-specific storage.  It gets deleted
      // via the ACE_TSS_Emulation_cleanup function when the thread
      // terminates.
@@ -1812,11 +1825,9 @@ ACE_TSS_Emulation::tss_open (void *ts_storage[ACE_TSS_THREAD_KEYS_MAX])
   if (tss_base (ts_storage) == 0)
     {
 #     else  /* ! ACE_HAS_THREAD_SPECIFIC_STORAGE */
-  ACE_UNUSED_ARG (ts_storage);
-#     endif /* ! ACE_HAS_THREAD_SPECIFI_STORAGE */
-#     if !defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
-        tss_base() = ts_storage;
+      tss_base () = ts_storage;
 #     endif
+
       // Zero the entire TSS array.  Do it manually instead of using
       // memset, for optimum speed.  Though, memset may be faster :-)
       void **tss_base_p = tss_base ();
