@@ -687,7 +687,15 @@ ACE_OS::chdir (const char *path)
   // ACE_TRACE ("ACE_OS::chdir");
   ACE_OSCALL_RETURN (::_chdir (path), int, -1);
 }
-#endif /* ACE_HAS_UNICODE_ONLY */
+
+#if !defined (ACE_LACKS_MKTEMP)
+ACE_INLINE char *
+ACE_OS::mktemp (char *s)
+{
+  return ::mktemp (s);
+}
+#endif /* !ACE_LACKS_MKTEMP */
+#endif /* !ACE_HAS_UNICODE_ONLY */
 
 ACE_INLINE int
 ACE_OS::fcntl (ACE_HANDLE handle, int cmd, int value)
