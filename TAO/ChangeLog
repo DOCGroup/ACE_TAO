@@ -1,3 +1,14 @@
+Thu Oct 30 11:47:34 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/Portable_Interceptors/Bug_1559/Client_ORBInitializer.h:
+	* tests/Portable_Interceptors/Bug_1559/Makefile:
+	* tests/Portable_Interceptors/Bug_1559/Server_ORBInitializer.h:
+	* tests/Portable_Interceptors/Bug_1559/client.cpp:
+	* tests/Portable_Interceptors/Bug_1559/interceptors.cpp:
+	* tests/Portable_Interceptors/Bug_1559/server.cpp:
+
+	  Get the above files compiling on g++.
+
 Thu Oct 30 10:21:19 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/DynamicInterface/Request.h:
