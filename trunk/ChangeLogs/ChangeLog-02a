@@ -1,3 +1,12 @@
+Mon Aug 07 07:31:23 2000  Peter Fischer <fischer@softec.de>
+
+        * ace/OS.cpp (cond_timedwait): on VxWorks, handle
+          S_objLib_OBJ_UNAVAILABLE by setting error to ETIME
+          if msec_timeout is 0.  This allows Message_Queue_Test
+          to succeed.
+
+        * tests/run_tests.vxworks:  re-enabled Message_Queue_Test.
+
 Sun Aug  6 21:40:42 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/OS.i:
@@ -25,10 +34,10 @@ Sun Aug  6 21:40:42 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Sun Aug  6 17:03:29 2000  Ossama Othman  <ossama@uci.edu>
 
-	* include/makeinclude/wrapper_macros.GNU (CPPFLAGS):
+        * include/makeinclude/wrapper_macros.GNU (CPPFLAGS):
 
-	  Define ACE_HAS_SSL=1 instead of just defining ACE_HAS_SSL
-	  without an explicit value.
+          Define ACE_HAS_SSL=1 instead of just defining ACE_HAS_SSL
+          without an explicit value.
 
 Sat Aug  5 21:49:12 2000  Darrell Brunsch <brunsch@uci.edu>
 
@@ -38,8 +47,8 @@ Sat Aug  5 21:49:12 2000  Darrell Brunsch <brunsch@uci.edu>
         * ace/config-win32-borland.h:
 
           Chris Kohlhoff pointed out to me that Borland does have itoa,
-          but the signature is slightly different (itoa, not _itoa).  
-          Added it back in for Borland and added some preprocessor 
+          but the signature is slightly different (itoa, not _itoa).
+          Added it back in for Borland and added some preprocessor
           commands that will keep the emulation code from being included
           unless it is needed.
 
@@ -53,11 +62,11 @@ Sat Aug  5 11:19:23 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Sat Aug 05 11:26:08 2000  Ossama Othman  <ossama@uci.edu>
 
-	* bin/generate_export_file.pl:
+        * bin/generate_export_file.pl:
 
-	  Changed "#if !defined (...)" include guard to "#ifndef ..."
-	  since some preprocessors enable "process once" optimizations if
-	  the latter form is used.
+          Changed "#if !defined (...)" include guard to "#ifndef ..."
+          since some preprocessors enable "process once" optimizations if
+          the latter form is used.
 
 Sat Aug  5 01:13:01 2000  Darrell Brunsch <brunsch@uci.edu>
 

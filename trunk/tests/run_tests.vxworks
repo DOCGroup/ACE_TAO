@@ -35,11 +35,6 @@
 
 memShow
 
-#### Message_Queue_Test sometimes never finishes on VxWorks.
-#### ld < Message_Queue_Test
-#### write 2, "Message_Queue_Test ", 19
-#### ace_main; unld "Message_Queue_Test"
-
 ld < Basic_Types_Test
 write 2, "Basic_Types_Test ", 17
 ace_main; unld "Basic_Types_Test"
@@ -54,7 +49,7 @@ ace_main; unld "CDR_Array_Test"
 
 ##
 ## @@ I'm not sure if File_Test can run on vxworks.
-##    
+##
 ## ld < CDR_File_Test
 ## write 2, "CDR_File_Test ", 9
 ## ace_main; unld "CDR_File_Test"
@@ -237,6 +232,10 @@ ace_main; unld "Cache_Map_Manager_Test"
 ld < Map_Test
 write 2, "Map_Test ", 9
 ace_main; unld "Map_Test"
+
+ld < Message_Queue_Test
+write 2, "Message_Queue_Test ", 19
+ace_main; unld "Message_Queue_Test"
 
 ld < Message_Queue_Notifications_Test
 write 2, "Message_Queue_Notifications_Test ", 33
