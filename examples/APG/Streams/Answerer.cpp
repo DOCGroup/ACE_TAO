@@ -401,13 +401,3 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   return 0;
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_IOStream<FILE_IO_Adaptor>
-;
-template class ACE_Streambuf_T<FILE_IO_Adaptor>
-;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate class ACE_IOStream<FILE_IO_Adaptor>;
-#pragma instantiate class ACE_Streambuf_T<FILE_IO_Adaptor>;
-#endif

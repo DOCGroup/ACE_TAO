@@ -1,3 +1,12 @@
+Fri Jan  9 16:27:33 2004  Steve Huston  <shuston@riverace.com>
+
+	* examples/APG/Streams/Answerer.cpp: Removed unnecessary template
+	  instantiations.
+
+	* examples/APG/ThreadPools/Futures.cpp:
+	* examples/APG/ThreadPools/ThreadPool.cpp: Fixed memory leak. Thanks
+	  to Andy Harvey <agh@cisco.com> for reporting these.
+
 Fri Jan  9 15:24:30 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* include/makeinclude/wrapper_macros.GNU:
