@@ -1,3 +1,8 @@
+Wed Apr 17 17:30:02 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Connector.cpp:
+	* tao/GIOP_Message_Base.cpp: Fixed warnings with g++ builds. 
+	
 Wed Apr 17 15:25:08 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tests/Makefile (DIRS):
