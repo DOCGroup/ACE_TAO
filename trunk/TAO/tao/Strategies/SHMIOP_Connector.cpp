@@ -160,7 +160,8 @@ TAO_SHMIOP_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
 
 int
 TAO_SHMIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
-                                       TAO_Transport_Descriptor_Interface *desc)
+                                       TAO_Transport_Descriptor_Interface *desc,
+                                       ACE_Time_Value *max_wait_time)
 {
   if (TAO_debug_level > 0)
       ACE_DEBUG ((LM_DEBUG,
@@ -183,10 +184,6 @@ TAO_SHMIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("(%P|%t) SHMIOP_Connector::connect ")
                 ACE_TEXT ("making a new connection \n")));
-
-  ACE_Time_Value *max_wait_time =
-    invocation->max_wait_time ();
-
 
   // Get the right synch options
   ACE_Synch_Options synch_options;

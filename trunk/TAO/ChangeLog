@@ -1,3 +1,50 @@
+Thu Oct 31 14:48:39 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	This is a fix for BUGID 1284. Please see 
+
+	http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1284 for more
+	details. This fix does the following
+
+	- The invation class selects a timeout from the two options that
+	  it has access to, viz. a user defined timeouts for connection
+	  establishment or the roundtrip timeout defined by the user.
+
+	- If the user defined connection timeout policy is used and if the
+	  call to TAO_Transport::connect () returns an errno of ETIME, the
+	  invocation class tries the next endpoint in the profile.
+
+	- If the roundtrip timeout is used, we raise a CORBA::TIMEOUT
+	  exception. 
+
+	The connection timeout policy if set, overrides the roundtrip
+	timeout policy value. To get the semantics right, the following
+	changes were performed:  
+	
+	* tao/Transport_Connector.cpp:
+	* tao/Transport_Connector.h: Added another connect () method with
+	  a timeout value. Both the connect methods are not pure virtual
+	  methods. 
+	
+	* tao/IIOP_Connector.cpp:
+	* tao/IIOP_Connector.h: Added a timeout argument to the
+	  make_connect () method. This method gets called from
+	  TAO_Connector::connect () method which has a timeout. The
+	  implementation is now changed to just use the timeout value that
+	  is passed instead of selecting a timeout value.
+	  
+	* tao/Invocation.cpp: Selects a timeout from the two possible
+	  alternatives and passes one of the values to the connect ()
+	  call. Based on the timeout value used and the return value
+	  handles errors as explained above.
+
+	* tao/Strategies/DIOP_Connector.cpp:
+	* tao/Strategies/DIOP_Connector.h:
+	* tao/Strategies/SHMIOP_Connector.cpp:
+	* tao/Strategies/SHMIOP_Connector.h:
+	* tao/Strategies/UIOP_Connector.cpp:
+	* tao/Strategies/UIOP_Connector.h: Changes to the protocols within
+	  TAO. Changes to other protocols will follow.
+
 Thu Oct 31 13:59:50 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tao/GIOP_Message_Base.cpp: Fixed a typo in the comments.
