@@ -553,7 +553,7 @@ CORBA_Any::operator<<= (from_string s)
       _oc_string [1] = s.bound_;
       ACE_NEW (tc, CORBA::TypeCode (CORBA::tk_string,
                                     sizeof _oc_string,
-                                    (u_char *) &_oc_string,
+                                    (char *) &_oc_string,
                                     CORBA::B_TRUE));
     }
   else

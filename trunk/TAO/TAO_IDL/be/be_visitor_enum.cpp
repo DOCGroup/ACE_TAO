@@ -148,7 +148,7 @@ be_visitor_enum_cs::visit_enum (be_enum *node)
 
       *os << "static CORBA::TypeCode _tc__tc_" << node->flatname ()
           << " (CORBA::tk_enum, sizeof (_oc_" <<  node->flatname ()
-          << "), (unsigned char *) &_oc_" << node->flatname ()
+          << "), (char *) &_oc_" << node->flatname ()
           << ", CORBA::B_FALSE);" << be_nl;
       *os << "CORBA::TypeCode_ptr " << node->tc_name () << " = &_tc__tc_"
           <<  node->flatname () << ";\n\n";

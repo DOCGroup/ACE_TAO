@@ -272,7 +272,7 @@ int be_visitor_structure_cs::visit_structure (be_structure *node)
 
       *os << "static CORBA::TypeCode _tc__tc_" << node->flatname () <<
         " (CORBA::tk_struct, sizeof (_oc_" <<  node->flatname () <<
-        "), (unsigned char *) &_oc_" << node->flatname () <<
+        "), (char *) &_oc_" << node->flatname () <<
         ", CORBA::B_FALSE);" << be_nl;
       *os << "CORBA::TypeCode_ptr " << node->tc_name () << " = &_tc__tc_" <<
         node->flatname () << ";\n\n";

@@ -1139,7 +1139,7 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
 
   *os << "static CORBA::TypeCode _tc__tc_" << node->flatname ()
       << "_seq (CORBA::tk_sequence, sizeof (_oc_" <<  node->flatname ()
-      << "_seq), (unsigned char *) &_oc_" << node->flatname ()
+      << "_seq), (char *) &_oc_" << node->flatname ()
       << "_seq, CORBA::B_FALSE);" << be_nl;
   *os << "CORBA::TypeCode_ptr " << node->tc_name () << "_seq = &_tc__tc_"
       << node->flatname () << "_seq;\n\n";

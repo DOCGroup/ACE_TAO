@@ -37,6 +37,8 @@ public:
   be_type (AST_Decl::NodeType nt, UTL_ScopedName *n, UTL_StrList *p);
   // constructor
 
+  virtual ~be_type (void);
+
   virtual int gen_client_header (void) = 0;
   // Generates the client-side header information for the type
 
@@ -112,6 +114,9 @@ protected:
 
   char *type_name_;
   // type name (this uses the ACE NESTED macro)
+
+  char *nested_type_name_;
+  // for the corresponding method.
 };
 
 #endif // end of if !defined

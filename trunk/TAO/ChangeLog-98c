@@ -1,3 +1,73 @@
+Mon Mar 16 10:47:08 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/cdr.h: 
+	* tao/cdr.i: 
+	* tao/cdr.cpp: 
+	  The CDR stream class exposed its implementation completely, this
+	  change is the first attempt to close that interface and make it
+	  safer.  The internal representation was changed to a
+	  Message_Block, so CDR could eventually create chains of
+	  Message_Blocks (minimizing buffer copies and using writev() for
+	  output).
+	  The next step is to split the class in an input and output
+	  interface, following the Java IDL model.
+
+	* TAO_IDL/Makefile: 
+	* TAO_IDL/be/be_array.cpp: 
+	* TAO_IDL/be/be_enum.cpp: 
+	* TAO_IDL/be/be_exception.cpp: 
+	* TAO_IDL/be/be_interface.cpp: 
+	* TAO_IDL/be/be_sequence.cpp: 
+	* TAO_IDL/be/be_structure.cpp: 
+	* TAO_IDL/be/be_typedef.cpp: 
+	* TAO_IDL/be/be_union.cpp: 
+	* TAO_IDL/be/be_visitor_enum.cpp: 
+	* TAO_IDL/be/be_visitor_exception.cpp: 
+	* TAO_IDL/be/be_visitor_interface.cpp: 
+	* TAO_IDL/be/be_visitor_sequence.cpp: 
+	* TAO_IDL/be/be_visitor_structure.cpp: 
+	* TAO_IDL/be/be_visitor_typedef.cpp: 
+	* TAO_IDL/be/be_visitor_union.cpp: 
+	* tao/any.cpp: 
+	* tao/connect.cpp: 
+	* tao/decode.cpp: 
+	* tao/except.cpp: 
+	* tao/giop.h: 
+	* tao/giop.cpp: 
+	* tao/iioporb.cpp: 
+	* tao/interp.cpp: 
+	* tao/objkeyC.cpp: 
+	* tao/poaC.cpp: 
+	* tao/tc_const.cpp: 
+	* tao/typecode.h: 
+	* tao/typecode.cpp: 
+	  This files were modified to use (or generate, in the case of the
+	  IDL compiler) the new CDR stream class interface.
+
+	* TAO_IDL/be_include/be_type.h: 
+	* TAO_IDL/be/be_type.cpp: 
+	  It used a static buffer to evaluate be_type::nested_type_name(),
+	  it was changed for a per-class buffer, but the real solution is
+	  to allocate a buffer on the fly and return it to the user, maybe
+	  using UTL_String will solve the problem.
+
+	* tests/Makefile: 
+	* tests/CDR/Makefile: 
+	* tests/CDR/basic_types.cpp: 
+	* tests/CDR/tc.cpp: 
+	  Added some simple tests to verify that CDR streams work
+	  correctly.
+
+	* taoconfig.mk: 
+	  The clean target is defined in ACE config files.
+
+	* docs/orbsvcs.html: 
+	  Included documentation on the collocation services.
+
+	* docs/releasenotes/ec.html: 
+	  Moved some of the changes from "new in this release" to "changes
+	  in previous releases".
+
 Sun Mar 15 22:36:08 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Trader/Admin.*
