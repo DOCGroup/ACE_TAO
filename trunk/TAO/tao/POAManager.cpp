@@ -15,12 +15,10 @@ TAO_POA_Manager::TAO_POA_Manager (TAO_Object_Adapter &object_adapter)
     poa_collection_ (),
     object_adapter_ (object_adapter)
 {
-  this->object_adapter_.poa_manager_set_.insert (this);
 }
 
 TAO_POA_Manager::~TAO_POA_Manager (void)
 {
-  this->object_adapter_.poa_manager_set_.remove (this);
 }
 
 void

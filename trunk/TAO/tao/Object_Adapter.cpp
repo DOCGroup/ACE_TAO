@@ -217,31 +217,6 @@ TAO_Object_Adapter::create_lock (int enable_locking,
   return the_lock;
 }
 
-
-void
-TAO_Object_Adapter::deactivate_i (CORBA::Boolean wait_for_completion,
-                                  CORBA::Environment &ACE_TRY_ENV)
-{
-  // If the ORB::shutdown operation is called, it makes a call on
-  // deactivate with a TRUE etherealize_objects parameter for each POA
-  // manager known in the process; the wait_for_completion parameter
-  // to deactivate will be the same as the similarly named parameter
-  // of ORB::shutdown.
-
-  poa_manager_set::iterator end = this->poa_manager_set_.end ();
-
-  for (poa_manager_set::iterator iterator = this->poa_manager_set_.begin ();
-       iterator != end;
-       ++iterator)
-    {
-      TAO_POA_Manager *poa_manager = *iterator;
-      poa_manager->deactivate_i (1,
-                                 wait_for_completion,
-                                 ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-}
-
 void
 TAO_Object_Adapter::dispatch_servant (const TAO_ObjectKey &key,
                                       CORBA::ServerRequest &req,

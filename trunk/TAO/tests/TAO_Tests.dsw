@@ -75,6 +75,30 @@ Package=<4>
 
 ###############################################################################
 
+Project: "ORB_init"=.\ORB_init\ORB_init.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "ORB_destroy"=.\ORB_destroy\ORB_destroy.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "MT_Client Client"=.\MT_Client\client.dsp - Package Owner=<4>
 
 Package=<5>
