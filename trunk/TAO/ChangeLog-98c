@@ -1,3 +1,9 @@
+Sun Dec 20 04:34:58 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* examples/Simple/chat/Client_i.cpp: Couple of minor changes.
+
+	* examples/Simple/chat: Added NT makefiles.
+
 Sat Dec 19 20:12:36 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/Any.cpp (operator<<=): Added a missing "const" keyword.

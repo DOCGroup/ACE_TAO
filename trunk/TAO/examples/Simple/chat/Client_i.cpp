@@ -24,7 +24,7 @@
 
 Client_i::Client_i ()
   : ior_file_name_ ("chat.ior"),
-  nickname_ ("noname")
+    nickname_ ("noname")
 {
 }
 
@@ -43,7 +43,6 @@ int
 Client_i::parse_args (int argc, char *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, "n:f:");
-  int specified_options = 0; // Flag to check if the user specified any options.
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -51,29 +50,27 @@ Client_i::parse_args (int argc, char *argv[])
       {
       case 'n':  // get the users nickname
 	this->nickname_ = get_opts.optarg;
-	specified_options = 1;
 	break;
 
       case 'f':  // get the file name to write to
         this->ior_file_name_ = get_opts.optarg;
-	specified_options = 1;
 	break;
 
       default: // display help for use of the serve
       case '?':  // display help for use of the server.
 	ACE_ERROR_RETURN ((LM_ERROR,
 			   "usage:  %s"
-			   " [-n] <your_nick_name>"
-			   " [-f] <ior_input_file>"
+			   " [-n <your_nick_name>]"
+			   " [-f <ior_input_file>]"
 			   "\n",
 			   argv [0]),
 			  -1);
       }
-  if (specified_options == 0)
-    ACE_DEBUG ((LM_DEBUG,
-		"\nusing defaults. nickname = %s, filename = %s\n",
-		this->nickname_,
-		this->ior_file_name_));
+
+  ACE_DEBUG ((LM_DEBUG,
+              "\nusing nickname = %s, filename = %s\n",
+              this->nickname_,
+              this->ior_file_name_));
   return 0;
 }
 
