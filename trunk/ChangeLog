@@ -1,11 +1,16 @@
+Thu Aug 26 06:47:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Auto_Ptr.h:
+          Readded disappeared include of post.h
+
 Wed Aug 25 23:31:02 2004  Chris Cleeland  <cleeland_c@ociweb.com>
 
 	* include/makeinclude/platform_linux.GNU:
 
 	  Fixed an error caused by a misplaced newline in Rich's previous
 	  commit.
-	
-	* include/makeinclude/platform_sunos5_sunc++.GNU: 
+
+	* include/makeinclude/platform_sunos5_sunc++.GNU:
 
 	  Brought over the following changes from OCITAO 1.3a.
           Added -ladm to LIBS.  This is needed for SunOS 5.6 for
@@ -22,7 +27,7 @@ Wed Aug 25 21:10:37 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	  Fixed tipo introduced by:
 	  Mon Aug 23 23:23:18 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
-	
+
 Wed Aug 25 17:33:47 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* ace/config-netbsd.h:
