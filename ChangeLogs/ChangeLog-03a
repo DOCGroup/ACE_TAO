@@ -1,21 +1,28 @@
+Fri Jan  3 07:49:09 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/aix_shr:
+
+          Changed the name of the AIX template instantiation macro and
+          commented on why it's needed.
+
 Thu Jan  2 17:44:29 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* ace/config-cygwin32-common.h: Set the custom export
-	  macro's. These will be used when building dynamically with the
-	  cygwin compiler. 
+        * ace/config-cygwin32-common.h: Set the custom export
+          macro's. These will be used when building dynamically with the
+          cygwin compiler.
 
-	* bin/MakeProjectCreator/templates/gnu.mpd: Generate dllflags and
-	  libflags into the GNU makefiles. These are important for the
-	  Cygwin/MingW and Kylix compiler. 
+        * bin/MakeProjectCreator/templates/gnu.mpd: Generate dllflags and
+          libflags into the GNU makefiles. These are important for the
+          Cygwin/MingW and Kylix compiler.
 
 Thu Jan  2 16:11:38 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* ace/config-freebsd.h: Fix use of macros for FreeBSD 4.6:
+        * ace/config-freebsd.h: Fix use of macros for FreeBSD 4.6:
           ACE_LACKS_RWLOCK_T, ACE_LACKS_READDIR_R, ACE_LACKS_SETSCHED,
           ACE_LACKS_PTHREAD_THR_SIGSETMASK. Do not define SCHED_RR,
-	  SCHED_IO, SCHED_FIFO, SCHED_OTHER for FreeBSD >= 4.0, since they
-	  are defined in sched.h. Thanks to Craig Rodrigues for providng
-	  the patch.
+          SCHED_IO, SCHED_FIFO, SCHED_OTHER for FreeBSD >= 4.0, since they
+          are defined in sched.h. Thanks to Craig Rodrigues for providng
+          the patch.
 
 Thu Jan  2 13:33:01 2003  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -24,36 +31,36 @@ Thu Jan  2 13:33:01 2003  Chad Elliott  <elliott_c@ociweb.com>
           Added #include of ace/Log_Msg.h for ACE_ASSERT.
 
         * bin/aix_shr:
-                      
+
           Added -DTAO_INSTANTIATING_TEMPLATES to the link command line.
 
 Thu Jan  2 12:38:55 2003  Johnny Willemsen <jwillemsen@remedy.nl>
 
-	* ace/Makefile.ace: Set the dllflags in Makefile. This makes it
-	  possible to do __declspec (dllexport) for the symbols in the
-	  dll. This is needed for the Cygwin/MingW and Kylix compiler. 
+        * ace/Makefile.ace: Set the dllflags in Makefile. This makes it
+          possible to do __declspec (dllexport) for the symbols in the
+          dll. This is needed for the Cygwin/MingW and Kylix compiler.
 
-	  Thid change takes care of the static and dynamic library cases.  
+          Thid change takes care of the static and dynamic library cases.
 
 Thu Jan  2 08:57:26 2003  Johnny Willemsen <jwillemsen@remedy.nl>
 
-	* include/makeinclude/platform_cygwin32.GNU:  Add
-	  --enable-auto-import to the linker flags. This will result in
-	  the linker doing auto-import without giving warnings about
-	  it. 
+        * include/makeinclude/platform_cygwin32.GNU:  Add
+          --enable-auto-import to the linker flags. This will result in
+          the linker doing auto-import without giving warnings about
+          it.
 
 Wed Jan  1 14:26:09 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* bin/topinfo_stats.sh: Forgot that we run this scripts in cron
-	  environment. Set the path and other details that would help to
-	  ease things.
+        * bin/topinfo_stats.sh: Forgot that we run this scripts in cron
+          environment. Set the path and other details that would help to
+          ease things.
 
 Tue Dec 31 21:21:26 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* bin/generate_topinfo_charts.sh:
-	* bin/topinfo_stats.sh: Scripts to track the memory usage and plot
-	  them. At present it works only for the simple test in
-	  $TAO_ROOT/performance-tests/Memory/Single_Threaded. 
+        * bin/generate_topinfo_charts.sh:
+        * bin/topinfo_stats.sh: Scripts to track the memory usage and plot
+          them. At present it works only for the simple test in
+          $TAO_ROOT/performance-tests/Memory/Single_Threaded.
 
 Tue Dec 31 17:57:19 2002  Steve Huston  <shuston@riverace.com>
 
@@ -142,42 +149,42 @@ Mon Dec 30 17:38:31 2002  Steve Huston  <shuston@riverace.com>
 
 Mon Dec 30 15:25:26 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ACEXML/common/StrCharStream.cpp (open):
-	* ACEXML/common/FileCharStream.cpp (open): Changed to allow open
-	  to succeed if automatic determination of encoding fails.  This
-	  allows the "Simple parsing" feature of ACEXML to work.  Thanks
-	  to Michael F"olsl <michael.foelsl@gmx.net> for reporting the
-	  problem.
+        * ACEXML/common/StrCharStream.cpp (open):
+        * ACEXML/common/FileCharStream.cpp (open): Changed to allow open
+          to succeed if automatic determination of encoding fails.  This
+          allows the "Simple parsing" feature of ACEXML to work.  Thanks
+          to Michael F"olsl <michael.foelsl@gmx.net> for reporting the
+          problem.
 
-	* ACEXML/examples/SAXPrint/main.cpp: Added a new option to test
-	  out ACEXML's simpling parsing feature.
+        * ACEXML/examples/SAXPrint/main.cpp: Added a new option to test
+          out ACEXML's simpling parsing feature.
 
-	* ACEXML/examples/SAXPrint/simple.svcconf.xml: Added this new
-	  "simple" XML document to test out the "Simple" parsing feature
-	  in ACEXML.
+        * ACEXML/examples/SAXPrint/simple.svcconf.xml: Added this new
+          "simple" XML document to test out the "Simple" parsing feature
+          in ACEXML.
 
 Mon Dec 30 12:21:33 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* bin/MakeProjectCreator/config/taoversion.mpb: Fixed the version
-	  information. This should automatically get updated during the
-	  next beta/release.
+        * bin/MakeProjectCreator/config/taoversion.mpb: Fixed the version
+          information. This should automatically get updated during the
+          next beta/release.
 
 Sun Dec 29 18:27:38 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* bin/auto_run_tests.lst: Prevented BiDirGIOP tests from running
-	  in GIOP 10 builds.
+        * bin/auto_run_tests.lst: Prevented BiDirGIOP tests from running
+          in GIOP 10 builds.
 
 Sun Dec 29 16:43:03 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ACEXML/common/FileCharStream.cpp (close): Changed to reset the
-	  file pointer, filename_ and encoding_ strings after they are
-	  release.  Thanks to Andrew Marlow <apm35@student.open.ac.uk> for
-	  suggesting the change.
+        * ACEXML/common/FileCharStream.cpp (close): Changed to reset the
+          file pointer, filename_ and encoding_ strings after they are
+          release.  Thanks to Andrew Marlow <apm35@student.open.ac.uk> for
+          suggesting the change.
 
 Sun Dec 29 00:47:58 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* bin/auto_run_tests.lst: Security tests using SSLIOP will not be
-	  run in static builds.
+        * bin/auto_run_tests.lst: Security tests using SSLIOP will not be
+          run in static builds.
 
 Sat Dec 28 23:05:51 2002  Steve Huston  <shuston@riverace.com>
 
@@ -186,42 +193,42 @@ Sat Dec 28 23:05:51 2002  Steve Huston  <shuston@riverace.com>
 
 Sat Dec 28 13:16:24 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/MEM_IO.cpp (recv_buf): Reverted my previous hack in:
+        * ace/MEM_IO.cpp (recv_buf): Reverted my previous hack in:
 
-	  Fri Dec 27 08:38:29 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+          Fri Dec 27 08:38:29 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	  and make the connection close handling more robust.
+          and make the connection close handling more robust.
 
-	* tests/MEM_Stream_Test.cpp: Reverted my previous change in:
+        * tests/MEM_Stream_Test.cpp: Reverted my previous change in:
 
-	  Sat Dec 28 11:04:38 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+          Sat Dec 28 11:04:38 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	  It was not necessary.  Added debug information for close
-	  connection.
+          It was not necessary.  Added debug information for close
+          connection.
 
 Sat Dec 28 11:04:38 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tests/MEM_Stream_Test.cpp: Made sure this test ignore the EIO
-	  error from the following change when a connection was closed.
+        * tests/MEM_Stream_Test.cpp: Made sure this test ignore the EIO
+          error from the following change when a connection was closed.
 
-	  Fri Dec 27 08:38:29 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+          Fri Dec 27 08:38:29 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 Fri Dec 27 20:06:39 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Malloc_T.h:
-	* ace/Malloc_T.i:
-	* ace/Malloc_T.cpp: Added a new ACE_Malloc_T::bad () method to
-	  query whether a Malloc_T object was constructed successfully.
-	  This approach, IMO, is sub-optimal compared to using an explicit
-	  init method approach.  The existing constructor signatures,
-	  however, prevent us from doing so without breaking backward
-	  compatibility.
+        * ace/Malloc_T.h:
+        * ace/Malloc_T.i:
+        * ace/Malloc_T.cpp: Added a new ACE_Malloc_T::bad () method to
+          query whether a Malloc_T object was constructed successfully.
+          This approach, IMO, is sub-optimal compared to using an explicit
+          init method approach.  The existing constructor signatures,
+          however, prevent us from doing so without breaking backward
+          compatibility.
 
-	* ace/MEM_SAP.cpp:  Now that there's a way to check whether the
-	  underlying Malloc is functioning or not.  Changed MEM_SAP to
-	  check for proper initialization of underlying Malloc object and
-	  clean up OS resources if the Malloc object is defected.  This
-	  change makes MEM_Stream transport mechanism more robust.
+        * ace/MEM_SAP.cpp:  Now that there's a way to check whether the
+          underlying Malloc is functioning or not.  Changed MEM_SAP to
+          check for proper initialization of underlying Malloc object and
+          clean up OS resources if the Malloc object is defected.  This
+          change makes MEM_Stream transport mechanism more robust.
 
 Fri Dec 27 19:46:31 2002  Steve Huston  <shuston@riverace.com>
 
@@ -245,46 +252,46 @@ Fri Dec 27 17:43:29 2002  Steve Huston  <shuston@riverace.com>
 
 Fri Dec 27 08:38:29 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/MEM_IO.cpp (recv_buf): Changed to return error (-1) and set
-	  the errno to EIO when we receive 0 byte off the signaling socket
-	  as this should never happen under normal circumstance.  However,
-	  on Win32 and Solaris, when one end of a connection closes the
-	  socket while the other end is still reading the socket, the
-	  active end will continuously receive several 0 bytes messages.
-	  This confuses the hack of the MEM_IO mechanism and causes the
-	  memory management routine to fall into a tight spinning
-	  deadlock.
+        * ace/MEM_IO.cpp (recv_buf): Changed to return error (-1) and set
+          the errno to EIO when we receive 0 byte off the signaling socket
+          as this should never happen under normal circumstance.  However,
+          on Win32 and Solaris, when one end of a connection closes the
+          socket while the other end is still reading the socket, the
+          active end will continuously receive several 0 bytes messages.
+          This confuses the hack of the MEM_IO mechanism and causes the
+          memory management routine to fall into a tight spinning
+          deadlock.
 
 Fri Dec 27 07:49:28 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
-	* ace/config-macosx.h: Remove temporary hacks for buggy
+        * ace/config-macosx.h: Remove temporary hacks for buggy
           gcc 3.1 compiler.  Thanks to John Zorko for reminding me about
-	  this.
+          this.
 
-	* examples/Service_Configurator/IPC-tests/server/Makefile:
-	* examples/Service_Configurator/Misc/Makefile:
-	* examples/Timer_Queue/Makefile:
-	  Add ACELIBS to ACE_SHLIBS to fix MacOS X linking problem.
+        * examples/Service_Configurator/IPC-tests/server/Makefile:
+        * examples/Service_Configurator/Misc/Makefile:
+        * examples/Timer_Queue/Makefile:
+          Add ACELIBS to ACE_SHLIBS to fix MacOS X linking problem.
 
 Thu Dec 26 17:11:54 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* bin/make_release: Fixed the following problems in the release
-	  script which caused problems during the beta cutting process:
+        * bin/make_release: Fixed the following problems in the release
+          script which caused problems during the beta cutting process:
 
-	   - cvs commits of TAO/Changelog TAO/VERSION etc. failed. The
-  	     failure was because we were also commiting taoversion.mpb but
-	     from $TAO_ROOT as "cvs commit ChangeLog VERSION
-	     other_files ../bin/Makeyada". Using ../ to indicate files in
-	     higher directories is an unpardonable mistake for cvs
-	     1.10.x. It used to work 1.9.x. But with 1.10* versions the
-	     protocol changed disallowing the ../
+           - cvs commits of TAO/Changelog TAO/VERSION etc. failed. The
+             failure was because we were also commiting taoversion.mpb but
+             from $TAO_ROOT as "cvs commit ChangeLog VERSION
+             other_files ../bin/Makeyada". Using ../ to indicate files in
+             higher directories is an unpardonable mistake for cvs
+             1.10.x. It used to work 1.9.x. But with 1.10* versions the
+             protocol changed disallowing the ../
 
-	   - we didnt set the file permissions on the generated files
-	     properly
+           - we didnt set the file permissions on the generated files
+             properly
 
-	   - the generated files from mpc were not added to the list of
-	     files for which LF->CRLF conversions are supposed to be
-	     masked during zip!
+           - the generated files from mpc were not added to the list of
+             files for which LF->CRLF conversions are supposed to be
+             masked during zip!
 
 Thu Dec 26 16:17:41 2002  Steve Huston  <shuston@riverace.com>
 
@@ -293,19 +300,19 @@ Thu Dec 26 16:17:41 2002  Steve Huston  <shuston@riverace.com>
 
 Thu Dec 26 09:14:38 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* Makefile: Removed configure.in from the list of controlled files.
+        * Makefile: Removed configure.in from the list of controlled files.
 
 Thu Dec 26 07:36:10 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
         * include/makeinclude/platform_freebsd_pthread.GNU: Removed for
-	  sure now. This should have been removed in this "Thu Nov 14
-	  22:47:45 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>"
-	  checkin. Again, thanks to Craig for catching this.
+          sure now. This should have been removed in this "Thu Nov 14
+          22:47:45 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>"
+          checkin. Again, thanks to Craig for catching this.
 
 Thu Dec 26 07:31:42 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* apps/Gateway/Gateway/Makefile: Fixed a ttypo. Thanks to Craig
-	  Rodrigues for catching this.
+        * apps/Gateway/Gateway/Makefile: Fixed a ttypo. Thanks to Craig
+          Rodrigues for catching this.
 
 Wed Dec 25 17:47:12 2002  Bala  <bala@cs.wustl.edu>
 
@@ -313,34 +320,34 @@ Wed Dec 25 17:47:12 2002  Bala  <bala@cs.wustl.edu>
 
 Wed Dec 25 17:39:05 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* bin/make_release: Fixed problems with generation of vcproj etc.
+        * bin/make_release: Fixed problems with generation of vcproj etc.
 
 Wed Dec 25 06:14:17 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* Merry Christmas to all.  May we have peace and justice for all in 2003.
+        * Merry Christmas to all.  May we have peace and justice for all in 2003.
 
 Tue Dec 24 17:29:11 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* docs/ACE-subsets.html: Documented the compiler options that
-	  Steve Vranyes experimented and tested with to get a good
-	  footprint reduction on Solaris.
+        * docs/ACE-subsets.html: Documented the compiler options that
+          Steve Vranyes experimented and tested with to get a good
+          footprint reduction on Solaris.
 
 Tue Dec 24 07:31:54 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* ace/Argv_Type_Converter.h:
-	* ace/Argv_Type_Converter.cpp: Reverted the following changes "Mon
-	  Dec 23 17:26:42 2002  Steve Huston  <shuston@riverace.com>" and
-	  "Mon Dec 23 22:57:18 2002  Balachandran Natarajan
-	  <bala@isis-server.isis.vanderbilt.edu>". The argument parsing in
-	  TAO gets busted due to these changes and most of tests in our
-	  daily builds fail.
+        * ace/Argv_Type_Converter.h:
+        * ace/Argv_Type_Converter.cpp: Reverted the following changes "Mon
+          Dec 23 17:26:42 2002  Steve Huston  <shuston@riverace.com>" and
+          "Mon Dec 23 22:57:18 2002  Balachandran Natarajan
+          <bala@isis-server.isis.vanderbilt.edu>". The argument parsing in
+          TAO gets busted due to these changes and most of tests in our
+          daily builds fail.
 
 Mon Dec 23 22:57:18 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* ace/Argv_Type_Converter.h: Changed saved_argc_ to be of type int
-	  as opposed to int &. This seems to be necessitated by the change
-	  "Mon Dec 23 17:26:42 2002  Steve Huston  <shuston@riverace.com>"
-	  which gives compile errors on all platforms.
+        * ace/Argv_Type_Converter.h: Changed saved_argc_ to be of type int
+          as opposed to int &. This seems to be necessitated by the change
+          "Mon Dec 23 17:26:42 2002  Steve Huston  <shuston@riverace.com>"
+          which gives compile errors on all platforms.
 
 Mon Dec 23 21:07:20 2002  Steve Huston  <shuston@riverace.com>
 
@@ -374,12 +381,12 @@ Mon Dec 23 17:26:42 2002  Steve Huston  <shuston@riverace.com>
 
 Mon Dec 23 16:16:05 2002  Boris S Kolpackov  <boris@isis-server.isis.vanderbilt.edu>
 
-	* bin/auto_run_tests.lst: Added
-	  TAO/orbsvcs/tests/Security/Crash_Test to the list of tests.
+        * bin/auto_run_tests.lst: Added
+          TAO/orbsvcs/tests/Security/Crash_Test to the list of tests.
 
 Mon Dec 23 17:08:17 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* THANKS: Changed Boris's information in the Hall of Fame.
+        * THANKS: Changed Boris's information in the Hall of Fame.
 
 Mon Dec 23 12:13:51 2002  Steve Huston  <shuston@riverace.com>
 
@@ -435,46 +442,46 @@ Mon Dec 23 12:02:33 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sun Dec 22 11:41:56 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* ace/Connector.cpp: Fixed fuzz errors.
+        * ace/Connector.cpp: Fixed fuzz errors.
 
 Sun Dec 22 11:37:44 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* THANKS: Added Daniel White to the hall of fame!
+        * THANKS: Added Daniel White to the hall of fame!
 
 Sun Dec 22 11:31:53 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
-	* apps/Gateway/Gateway/Makefile:
-	* apps/Gateway/Peer/Makefile: Add $(ACELIB) to $(ACE_SHLIBS) so
-	  that -lACE is added to the linkline when a shared library is
-	  built. Solves linking problem MacOS X. Thanks to John Zorko and
-	  Daniel white <ygor@comcast.net> for pointing this out.
+        * apps/Gateway/Gateway/Makefile:
+        * apps/Gateway/Peer/Makefile: Add $(ACELIB) to $(ACE_SHLIBS) so
+          that -lACE is added to the linkline when a shared library is
+          built. Solves linking problem MacOS X. Thanks to John Zorko and
+          Daniel white <ygor@comcast.net> for pointing this out.
 
 Sun Dec 22 10:25:35 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* ace/Connector.cpp: Fixed a warning with g++.
+        * ace/Connector.cpp: Fixed a warning with g++.
 
 Sun Dec 22 09:18:00 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-       	* ace/Connector.cpp:
-	* ace/Connector.h: Added a lock to the ACE_Connector class to
-	  make the following atomic
+        * ace/Connector.cpp:
+        * ace/Connector.h: Added a lock to the ACE_Connector class to
+          make the following atomic
 
-	  . Registration of AST with the handler_map_
-	  . Registration of the ACE_Connector with the Reactor
-	  . and the registration of timers with the Reactor's timer
-	    queue.
+          . Registration of AST with the handler_map_
+          . Registration of the ACE_Connector with the Reactor
+          . and the registration of timers with the Reactor's timer
+            queue.
 
-	  If they are not atomic, it throws open race conditions such as
-	  the ones documented in BUG 1405. This is not complete fix for
-	  BUG 1405, since it taxes applications using only one thread with a
-	  lock. This is a short-term fix to prevent the race condition
-	  from occuring.
+          If they are not atomic, it throws open race conditions such as
+          the ones documented in BUG 1405. This is not complete fix for
+          BUG 1405, since it taxes applications using only one thread with a
+          lock. This is a short-term fix to prevent the race condition
+          from occuring.
 
-	  Other relevant changes include
+          Other relevant changes include
 
-	  . the AST is now refcounted
-	  . the AST cannot be deleted directly. The lifetime of the AST
-	    can only be manipulated using the refcount on the AST.
+          . the AST is now refcounted
+          . the AST cannot be deleted directly. The lifetime of the AST
+            can only be manipulated using the refcount on the AST.
 
 Sat Dec 21 18:27:42 2002  Steve Huston  <shuston@riverace.com>
 
@@ -674,10 +681,10 @@ Thu Dec 19 18:47:29 2002  Steve Huston  <shuston@riverace.com>
 
 Thu Dec 19 16:47:17 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/SOCK_Dgram.h:
-	  ace/SOCK_CODgram.h: Added metatype information for
- 	  ACE_SOCK_Dgram and ACE_SOCK_CODgram.  Thanks to Sankaranarayanan
- 	  K V <sankar@migv.mot.com> for reporting this.
+        * ace/SOCK_Dgram.h:
+          ace/SOCK_CODgram.h: Added metatype information for
+          ACE_SOCK_Dgram and ACE_SOCK_CODgram.  Thanks to Sankaranarayanan
+          K V <sankar@migv.mot.com> for reporting this.
 
 Thu Dec 19 10:02:56 2002  Rich Seibel <seibel_r@ociweb.com>
 
@@ -903,39 +910,39 @@ Mon Dec 16 13:14:34 2002  Phil Mesnier  <mesnier_p@ociweb.com>
         * ace/CDR_Stream.h:
         * ace/CDR_Stream.i:
           Preparing for codeset negotiation. The ACE input/output CDR
-	  streams' support for wide character IO is enhanced by adding a
-	  flag to allow or disallow wchar i/o regardless of whether a
-	  translator is present. There are times when wchar is not
-	  allowed, such as GIOP 1.0, or when a native codeset for wchar
-	  was not specified. In CORBA, a native wchar codeset must be
-	  specified, it may not be defaulted. Within the ACE CDR streams,
-	  wchar i/o is allowed by default, to ensure backwards
-	  compatibility.
+          streams' support for wide character IO is enhanced by adding a
+          flag to allow or disallow wchar i/o regardless of whether a
+          translator is present. There are times when wchar is not
+          allowed, such as GIOP 1.0, or when a native codeset for wchar
+          was not specified. In CORBA, a native wchar codeset must be
+          specified, it may not be defaulted. Within the ACE CDR streams,
+          wchar i/o is allowed by default, to ensure backwards
+          compatibility.
 
-	  I fixed a few of the reading and writing methods to ensure that
-	  the good_bit_ flag is cleared if an error occurs. This was not
-	  happening in all cases, leading to errors elsewhere.
+          I fixed a few of the reading and writing methods to ensure that
+          the good_bit_ flag is cleared if an error occurs. This was not
+          happening in all cases, leading to errors elsewhere.
 
-	  I have extended the definition of the
-	  ACE_[W]Char_Codeset_Translator classes to make them reference
-	  counted objects. There are some codesets that support shifting
-	  and may be stateful. By using reference counting, the CDR
-	  streams don't have to worry about ownership of stateful
-	  translators.
+          I have extended the definition of the
+          ACE_[W]Char_Codeset_Translator classes to make them reference
+          counted objects. There are some codesets that support shifting
+          and may be stateful. By using reference counting, the CDR
+          streams don't have to worry about ownership of stateful
+          translators.
 
           Finally, the translators now have pure virtual methods that
-	  return the native and translated codeset ID values. These values
-	  refer to entries in the DCE Code and Character Set Registry,
-	  which is the reference for CORBA codeset ids. Anyone
-	  implementing a char or wchar codeset will have to supply a
-	  numeric value for the native codeset (ncs) and the translated
-	  codeset (tcs). NCS refers to the codeset of the text on the
-	  application side of the stream, and TCS refers to the codset of
-	  the text on the "wire" side of the stream.
+          return the native and translated codeset ID values. These values
+          refer to entries in the DCE Code and Character Set Registry,
+          which is the reference for CORBA codeset ids. Anyone
+          implementing a char or wchar codeset will have to supply a
+          numeric value for the native codeset (ncs) and the translated
+          codeset (tcs). NCS refers to the codeset of the text on the
+          application side of the stream, and TCS refers to the codset of
+          the text on the "wire" side of the stream.
 
           These changes are not everything that is required to support
-	  codeset negotiation, but it is all the changes required to the
-	  CDR streams.
+          codeset negotiation, but it is all the changes required to the
+          CDR streams.
 
 Sat Dec 14 08:56:23 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
@@ -1240,14 +1247,14 @@ Sun Dec 08 01:17:26 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 Thu Dec  5 20:30:56 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
         * ace/Event_Handler.cpp: Updated the implementation of
-	  ACE_Event_Handler::read_adapter() so that the code is consistent
-	  with the stated semantics.  Thanks to Ron Muck <rlm@sdiusa.com>
-	  for the fix.
+          ACE_Event_Handler::read_adapter() so that the code is consistent
+          with the stated semantics.  Thanks to Ron Muck <rlm@sdiusa.com>
+          for the fix.
 
         * ace/OS_Dirent.inl (readdir_r): Enhanced the
-	  ACE_OS_Directn::readdir_r() wrapper facade so that it returns 1
-	  (i.e., "done") when an error occurs.  Thanks to Abhay Kulkarni
-	  <Abhay.Kulkarni@veritas.com> for reporting this.
+          ACE_OS_Directn::readdir_r() wrapper facade so that it returns 1
+          (i.e., "done") when an error occurs.  Thanks to Abhay Kulkarni
+          <Abhay.Kulkarni@veritas.com> for reporting this.
 
 Sat Dec  7 19:54:12 2002  Steve Huston  <shuston@riverace.com>
 
@@ -1635,7 +1642,7 @@ Sat Nov 23 18:12:37 2002  Steve Huston  <shuston@riverace.com>
         on AIX with g++. Without this, the compiler and linker don't get
         things done right and static data members in templates don't get
         instantiated correctly.  Thanks to Max F. Bilyk <mbilyk@europe.com>
-	for reporting this problem.
+        for reporting this problem.
 
         * ace/SSL/Makefile: Set LIBS = $(ACELIB). Else it won't link on
           AIX, g++.
