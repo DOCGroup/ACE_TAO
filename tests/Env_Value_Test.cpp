@@ -10,7 +10,7 @@
 //      working correctly.
 //
 // = AUTHOR
-//    Chris Cleeland
+//    Chris Cleeland <cleeland@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -101,8 +101,8 @@ main (int argc, LPTSTR [], LPTSTR envp[])
       TEST_THIS (short, "TEST_VALUE_NEGATIVE", 0, -10);
       TEST_THIS (unsigned short, "TEST_VALUE_NEGATIVE", 0, (unsigned short) -10);
 
-      char *defstr = "Sarah Cleeland is Two!";
-      ACE_Env_Value<char *> sval ("This_Shouldnt_Be_Set_Hopefully",
+      const char *defstr = "Sarah Cleeland is Two!";
+      ACE_Env_Value<const char *> sval ("This_Shouldnt_Be_Set_Hopefully",
                                   defstr);
       ACE_ASSERT (ACE_OS::strcmp (sval, defstr) == 0);
       ACE_END_TEST;
@@ -110,7 +110,7 @@ main (int argc, LPTSTR [], LPTSTR envp[])
   return 0;
 }
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  template class ACE_Env_Value<char*>;
+  template class ACE_Env_Value<const char*>;
 # if !defined (ACE_LACKS_FLOATING_POINT)
     template class ACE_Env_Value<double>;
 # endif /* ! ACE_LACKS_FLOATING_POINT */
@@ -120,7 +120,7 @@ main (int argc, LPTSTR [], LPTSTR envp[])
   template class ACE_Env_Value<unsigned short>;
   template class ACE_Env_Value<unsigned long>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate  ACE_Env_Value<char*>
+# pragma instantiate  ACE_Env_Value<const char*>
 # if !defined (ACE_LACKS_FLOATING_POINT)
 #   pragma instantiate  ACE_Env_Value<double>
 # endif /* ! ACE_LACKS_FLOATING_POINT */
