@@ -1,3 +1,8 @@
+Mon Aug 24 14:00:43 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
+
+	* orbsvcs/tests/Property/run_test.pl: New file. Script to execute
+	  the test (Naming_Service + server + client).   
+
 Mon Aug 24 10:53:17 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tests/Cubit/TAO/IDL_Cubit/RTI_IO.cpp (operator<<): Only
