@@ -521,9 +521,28 @@ ACE_Process_Options::~ACE_Process_Options (void)
 int
 ACE_Process_Options::command_line (LPTSTR argv[])
 {
-  int i;
+  int i = 0;
 
-  if (argv[i = 0])
+  if (argv[i])
+    {
+      ACE_OS::strcat (command_line_buf_, argv[i]);
+      while (argv[++i])
+        {
+          ACE_OS::strcat (command_line_buf_, ACE_TEXT (" "));
+          ACE_OS::strcat (command_line_buf_, argv[i]);
+        }
+    }
+
+  return 0; // Success.
+}
+
+int
+ACE_Process_Options::command_line (LPCTSTR argv[])
+{
+  // @@ Factor out the code between this 
+  int i = 0;
+
+  if (argv[i])
     {
       ACE_OS::strcat (command_line_buf_, argv[i]);
       while (argv[++i])
