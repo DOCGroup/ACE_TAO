@@ -486,6 +486,7 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, LOCK>::reschedule (ACE_Timer_Node_T<TYPE> *expi
 template <class TYPE, class FUNCTOR, class LOCK> ACE_Timer_Queue_Iterator_T<TYPE, FUNCTOR, LOCK> &
 ACE_Timer_Wheel_T<TYPE, FUNCTOR, LOCK>::iter (void)
 {
+  this->iterator_->first ();
   return *this->iterator_;
 }
 

@@ -181,6 +181,7 @@ ACE_Timer_Hash_Iterator_T<TYPE, FUNCTOR, LOCK, BUCKET>::item (void)
 template <class TYPE, class FUNCTOR, class LOCK, class BUCKET> ACE_Timer_Queue_Iterator_T<TYPE, FUNCTOR, LOCK> &
 ACE_Timer_Hash_T<TYPE, FUNCTOR, LOCK, BUCKET>::iter (void)
 {
+  this->iterator_->first ();
   return *this->iterator_;
 }
 
