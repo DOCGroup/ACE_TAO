@@ -1,3 +1,9 @@
+Tue Feb 10 17:06:13 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* tests/OBV/Forward/OBV_Forward.mpc:
+	  Add IDL_Files so that the order in which the IDL files are used
+	  is set. This fixes the errors in the SuSE 9 build.
+
 Tue Feb 10 08:37:09 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/Smart_Proxies/On_Demand/Makefile:
@@ -13,23 +19,23 @@ Mon Feb  9 16:35:04 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/be/be_visitor_operation/operation_is.cpp:
         * TAO_IDL/be_include/be_global.h:
         * TAO_IDL/driver/drv_args.cpp:
-        
+
           Added command line option (-GId) to generate debug (IDL compiler
           source file/line#) info to implementation files, and added checks
           to the appropriate visitors so that this debug info generation
           is off by default.
-          
+
         * docs/compiler.html:
-        
+
           Added documentation for the new command line option above.
 
 Mon Feb  9 20:25:09 UTC 2004  Craig Rodrigues  <crodrigu@bbn.com>
 
-	* tao/Strategies/SCIOP_Endpoint.cpp: 
+	* tao/Strategies/SCIOP_Endpoint.cpp:
 	  Add include of <ace/OS_NS_string.h> to
 	  fix build errors when TAO is configured with:
 	  inline=0 and sctp=lksctp
-	  
+
 Mon Feb  9 17:49:33 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* tests/ICMG_Any_Bug/Hello.mpc:
