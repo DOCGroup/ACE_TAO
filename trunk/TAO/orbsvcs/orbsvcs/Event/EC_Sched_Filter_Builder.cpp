@@ -124,17 +124,20 @@ TAO_EC_Sched_Filter_Builder:: recursive_build (
         scheduler->create (name.c_str (), ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
 
-      // Provide dummy values the scheduler will compute them based on the
-      // dependencies and the fact that this is a DISJUNCTION.
+      // Convert the time to the proper units....
+      RtecScheduler::Period_t period =
+        ACE_static_cast (RtecScheduler::Period_t,
+                         e.header.creation_time / 10);
+
       scheduler->set (qos_info.rt_info,
                       RtecScheduler::VERY_LOW_CRITICALITY,
                       0, // worst_cast_execution_time
                       0, // typical_cast_execution_time
                       0, // cached_cast_execution_time
-                      e.header.creation_time, // period
+                      period,
                       RtecScheduler::VERY_LOW_IMPORTANCE,
                       0, // quantum
-                      0, // threads
+                      1, // threads
                       RtecScheduler::OPERATION,
                       ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
