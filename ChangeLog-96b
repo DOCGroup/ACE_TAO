@@ -3,6 +3,11 @@ Mon Dec 16 12:56:43 1996  David L. Levine  <levine@cs.wustl.edu>
 	* ace/OS.i: removed spurious "*/" after an #endif.  Thanks to Harry
 	  Gunnarsson for pointing this out.
 
+	* ace/Svc_Conf_l.cpp: #ifdef'ed out ace_yyunput () and
+	  ace_yy_{push,pop,top}_state () because they're not used,
+	  and commented out a few "break"s after "return"s in switch
+	  statements to prevent compiler warnings.
+
 	* examples/Threads/Makefile, performance-tests/Misc/Makefile,
 	  tests/Makefile, include/makeinclude/platform_*.GNU (except for
 	  platform_vxworks*.GNU):
