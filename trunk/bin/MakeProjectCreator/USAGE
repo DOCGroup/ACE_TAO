@@ -15,12 +15,16 @@ Usage: mwc.pl [-global <file>] [-include <directory>] [-recurse]
               [-noreldefs] [-notoplevel] [-static] [-static_only]
               [-value_template <NAME+=VAL | NAME=VAL | NAME-=VAL>]
               [-value_project <NAME+=VAL | NAME=VAL | NAME-=VAL>]
+              [-feature_file <file name>]
               [-type <borland | em3 | ghs | gnuace | make | nmake |
                       va4 | vc6 | vc7 | vc71>]
               [files]
 
        -base           Add <project> as a base project to each generated
                        project file.
+       -feature_file   Specifies the feature file to read before processing.
+                       The default feature file is default.features under the
+                       config directory.
        -global         Specifies the global input file.  Values stored
                        within this file are applied to all projects.
        -include        Specifies a directory to search when looking for base
@@ -95,6 +99,12 @@ generate projects of different types per mpc file.  The default type is
 always gnuace.  NOTE: The -ti option overrides the template input file for all
 types specified.
 
+The -feature_file specifies a file to be read that enables or disables
+features.  These feature names can be anything, but they should correspond
+to values used for the 'requires' and 'avoids' keywords.  If a feature is
+required and is not enable then the project will not be created.  If a
+feature is to be avoided and it is enabled then the project will not be
+created.
 
 Running only the Project Generator
 ----------------------------------
@@ -111,12 +121,16 @@ Usage: mpc.pl [-global <file>] [-include <directory>] [-recurse]
               [-noreldefs] [-notoplevel] [-static] [-static_only]
               [-value_template <NAME+=VAL | NAME=VAL | NAME-=VAL>]
               [-value_project <NAME+=VAL | NAME=VAL | NAME-=VAL>]
+              [-feature_file <file name>]
               [-type <borland | em3 | ghs | gnuace | make | nmake |
                       va4 | vc6 | vc7 | vc71>]
               [files]
 
        -base           Add <project> as a base project to each generated
                        project file.
+       -feature_file   Specifies the feature file to read before processing.
+                       The default feature file is default.features under the
+                       config directory.
        -global         Specifies the global input file.  Values stored
                        within this file are applied to all projects.
        -include        Specifies a directory to search when looking for base

@@ -28,7 +28,7 @@ sub completion_command {
   my($types) = shift;
   my($str)   = "complete $name " .
                "'c/-/(global include type template relative " .
-               "ti static noreldefs notoplevel " .
+               "ti static noreldefs notoplevel feature_file" .
                "value_template value_project)/' " .
                "'c/dll:/f/' 'c/dll_exe:/f/' 'c/lib_exe:/f/' 'c/lib:/f/' " .
                "'n/-ti/(dll lib dll_exe lib_exe)/:' 'n/-type/(";
@@ -61,6 +61,7 @@ sub options {
   my(%addproj)    = ();
   my($global)     = undef;
   my($template)   = undef;
+  my($feature_f)  = undef;
   my($dynamic)    = ($defaults ? 1 : undef);
   my($reldefs)    = ($defaults ? 1 : undef);
   my($toplevel)   = ($defaults ? 1 : undef);
@@ -106,6 +107,13 @@ sub options {
         else {
           $self->optionError("Invalid type: $args[$i]");
         }
+      }
+    }
+    elsif ($arg eq '-feature_file') {
+      $i++;
+      $feature_f = $args[$i];
+      if (!defined $feature_f) {
+        $self->optionError('-feature_file requires a file name argument');
       }
     }
     elsif ($arg eq '-global') {
@@ -250,21 +258,22 @@ sub options {
     }
   }
 
-  my(%options) = ('global'     => $global,
-                  'include'    => \@include,
-                  'input'      => \@input,
-                  'generators' => \@generators,
-                  'baseprojs'  => \@baseprojs,
-                  'template'   => $template,
-                  'ti'         => \%ti,
-                  'dynamic'    => $dynamic,
-                  'static'     => $static,
-                  'relative'   => \%relative,
-                  'reldefs'    => $reldefs,
-                  'toplevel'   => $toplevel,
-                  'recurse'    => $recurse,
-                  'addtemp'    => \%addtemp,
-                  'addproj'    => \%addproj,
+  my(%options) = ('global'       => $global,
+                  'feature_file' => $feature_f,
+                  'include'      => \@include,
+                  'input'        => \@input,
+                  'generators'   => \@generators,
+                  'baseprojs'    => \@baseprojs,
+                  'template'     => $template,
+                  'ti'           => \%ti,
+                  'dynamic'      => $dynamic,
+                  'static'       => $static,
+                  'relative'     => \%relative,
+                  'reldefs'      => $reldefs,
+                  'toplevel'     => $toplevel,
+                  'recurse'      => $recurse,
+                  'addtemp'      => \%addtemp,
+                  'addproj'      => \%addproj,
                  );
 
   return \%options;

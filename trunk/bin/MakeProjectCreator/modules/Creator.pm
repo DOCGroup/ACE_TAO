@@ -26,6 +26,7 @@ use vars qw(@ISA);
 my(@statekeys) = ('global', 'include', 'template', 'ti',
                   'dynamic', 'static', 'relative', 'addtemp',
                   'addproj', 'progress', 'toplevel', 'baseprojs',
+                  'feature_file',
                  );
 
 my(%all_written) = ();
@@ -48,6 +49,7 @@ sub new {
   my($progress)  = shift;
   my($toplevel)  = shift;
   my($baseprojs) = shift;
+  my($feature)   = shift;
   my($type)      = shift;
   my($self)      = Parser::new($class, $inc);
 
@@ -70,6 +72,7 @@ sub new {
   $self->{'baseprojs'}      = $baseprojs;
   $self->{'dynamic'}        = $dynamic;
   $self->{'static'}         = $static;
+  $self->{'feature_file'}   = $feature;
 
   return $self;
 }
