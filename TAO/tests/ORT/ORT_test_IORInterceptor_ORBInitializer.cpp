@@ -22,8 +22,6 @@ ORT_test_IORInterceptor_ORBInitializer::post_init (
     TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_ENV_ARG_DEFN;
-
   PortableInterceptor::IORInterceptor_ptr ort_test_interceptor;
   ACE_NEW_THROW_EX (ort_test_interceptor,
                     ORT_test_IORInterceptor (),
@@ -38,7 +36,7 @@ ORT_test_IORInterceptor_ORBInitializer::post_init (
     ort_test_interceptor;
 
   info->add_ior_interceptor (ior_interceptor.in ()
-                             TAO_ENV_ARG_DECL);
+                             TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
 }
