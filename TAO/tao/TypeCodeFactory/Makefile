@@ -15,7 +15,7 @@ endif # ! TAO_ROOT
 LDLIBS = -lTAO_IFR_Client -lTAO -lACE
 ACE_SHLIBS += -lTAO_IFR_Client -lTAO -lACE
 
-LIBNAME = libTypeCodeFactory_DLL
+LIBNAME = libTAO_TypeCodeFactory
 LIB = $(LIBNAME).a
 SHLIB = $(LIBNAME).$(SOEXT)
 
