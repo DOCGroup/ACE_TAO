@@ -496,33 +496,9 @@ public:
              size_t stack_size = 0);
 
   /**
-   * Spawn N new threads, which execute <func> with argument <arg>.
-   * If <thread_ids> != 0 the thread_ids of successfully spawned
-   * threads will be placed into the <thread_ids> buffer (which must
-   * be the same size as <n>).  If <stack> != 0 it is assumed to be an
-   * array of <n> pointers to the base of the stacks to use for the
-   * threads being spawned.  If <stack_size> != 0 it is assumed to be
-   * an array of <n> values indicating how big each of the
-   * corresponding <stack>s are.  If <thread_handles> != 0 it is
-   * assumed to be an array of <n> thread_handles that will be
-   * assigned the values of the thread handles being spawned.
-   *
-   * Threads in Thread_Manager can be maniputated in groups based on
-   * <grp_id> or <task> using functions such as kill_grp() or
-   * cancel_task().
-   *
-   * If <grp_id> is assigned, the newly spawned threads are added into
-   * the group.  Otherwise, the Thread_Manager assigns these <n>
-   * threads with a grp_id.  You should choose either assigning
-   * <grp_id> everytime, or let the Thread_Manager handles it for
-   * you consistently.
-   *
-   * The argument <task> is usually assigned by
-   * <ACE_Task_Base::activate>.  It associates the newly spawned
-   * threads with an ACE_Task instance, which defaults to <this>.
-   *
-   * @retval -1 on failure (<errno> will explain...), otherwise returns the
-   * group id of the threads.
+   * Create N new threads, all of which execute <func>.
+   * Returns: on success a unique group id that can be used to control
+   * all of the threads in the same group.  On failure, returns -1.
    */
   int spawn_n (size_t n,
                ACE_THR_FUNC func,
@@ -558,11 +534,12 @@ public:
    * you consistently.
    *
    * The argument <task> is usually assigned by
-   * <ACE_Task_Base::activate>.  It associates the newly spawned
-   * threads with an ACE_Task instance, which defaults to <this>.
+   * ACE_Task_Base::activate.  It associate the newly spawned threads
+   * with an ACE_Task instance.
    *
    * @retval -1 on failure (<errno> will explain...), otherwise returns the
-   * group id of the threads.  */
+   * group id of the threads.
+   */
   int spawn_n (ACE_thread_t thread_ids[],
                size_t n,
                ACE_THR_FUNC func,
