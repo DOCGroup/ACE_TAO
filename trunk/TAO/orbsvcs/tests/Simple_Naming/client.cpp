@@ -862,6 +862,16 @@ Exceptions_Test::already_bound_test (TAO_Naming_Client &root_context,
       My_Test_Object impl;
       Test_Object_var obj = impl._this (ACE_TRY_ENV);
       ACE_TRY_CHECK;
+      // Now, unregister our servant from POA.
+      PortableServer::POA_var poa = impl._default_POA ();
+      PortableServer::ObjectId_var id =
+        poa->servant_to_id (&impl,
+                            ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      poa->deactivate_object (id.in (),
+                              ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
       root_context->bind (test_name,
                           obj.in (),
                           ACE_TRY_ENV);
@@ -897,6 +907,16 @@ Exceptions_Test::already_bound_test2 (TAO_Naming_Client &root_context,
       My_Test_Object impl;
       Test_Object_var obj = impl._this (ACE_TRY_ENV);
       ACE_TRY_CHECK;
+      // Now, unregister our servant from POA before exiting.
+      PortableServer::POA_var poa = impl._default_POA ();
+      PortableServer::ObjectId_var id =
+        poa->servant_to_id (&impl,
+                            ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      poa->deactivate_object (id.in (),
+                              ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
       root_context->bind (test_name,
                           obj.in (),
                           ACE_TRY_ENV);
