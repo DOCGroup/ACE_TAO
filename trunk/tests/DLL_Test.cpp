@@ -17,7 +17,6 @@
 // ============================================================================
 
 #define ACE_BUILD_SVC_DLL
-#define ACE_HAS_SVR4_DYNAMIC_LINKING
 
 #include "test_config.h" 
 #include "ace/DLL.h"
@@ -41,6 +40,7 @@ USELIB("..\ace\aced.lib");
 // symbols dynamically at runtime.
 
 #if defined (ACE_WIN32)
+#define ACE_HAS_SVR4_DYNAMIC_LINKING
 #  define OBJ_SUFFIX ".exe"
 #  define OBJ_PREFIX ""
 #else
