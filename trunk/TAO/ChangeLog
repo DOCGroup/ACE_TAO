@@ -1,3 +1,19 @@
+Fri Sep 17 19:33:42 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/CosEvent.mpc:
+	* orbsvcs/orbsvcs/CosNaming.mpc:
+	* orbsvcs/orbsvcs/CosNotification.mpc:
+	* orbsvcs/orbsvcs/CosTrading.mpc:
+	* orbsvcs/orbsvcs/DsEventLogAdmin.mpc:
+	* orbsvcs/orbsvcs/DsLogAdmin.mpc:
+	* orbsvcs/orbsvcs/DsNotifyLogAdmin.mpc:
+	* orbsvcs/orbsvcs/ec_typed_events_skel.mpb:
+
+	  Changed *_Skel projects to include generated template files in
+	  Header_Files, Inline_Files, and Template_Files.  MPC currently
+	  adds them to the client library, and we'll need them here when
+	  MPC (or the *.mpc files, whichever is wrong) is fixed.
+
 Fri Sep 17 15:47:14 2004  Dale Wilson  <wilson_d@ociweb.com>
 
         * orbsvcs/orbsvcs/FTRT_GroupManager.idl:
@@ -11,7 +27,7 @@ Fri Sep 17 10:24:13 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/ast/ast_operation.cpp:
         * TAO_IDL/fe/idl.yy:
         * TAO_IDL/fe/y.tab.cpp:
- 
+
           Added code to case-compare declaration identifiers against
           references in the same scope, using the first component
           of the scoped name used in the reference. Specifically,
@@ -241,7 +257,7 @@ Tue Sep 14 17:12:41 2004  J.T. Conklin  <jtc@acorntoolworks.com>
         * orbsvcs/orbsvcs/Svc_Utils.mpc:
 
           Added empty Inline_Files and Template_Files sections so that
-          doesn't decide to add unrelated files.
+          MPC doesn't decide to add unrelated files.
 
 Tue Sep 14 13:03:54 2004  Dale Wilson  <wilson_d@ociweb.com>
 

@@ -12,10 +12,21 @@ feature(ec_typed_events) {
   Header_Files {
     CosTypedEventCommS.h
     CosTypedEventChannelAdminS.h
+
+    CosTypedEventCommS_T.h
+    CosTypedEventChannelAdminS_T.h
   }
 
   Inline_Files {
     CosTypedEventCommS.inl
     CosTypedEventChannelAdminS.inl
+
+    CosTypedEventCommS_T.inl
+    CosTypedEventChannelAdminS_T.inl
+  }
+
+  Template_Files {
+    CosTypedEventCommS_T.cpp
+    CosTypedEventChannelAdminS_T.cpp
   }
 }

@@ -51,14 +51,22 @@ project (CosEvent_Skel) : orbsvcslib, core, minimum_corba, event, portableserver
   Header_Files {
     CosEventCommS.h
     CosEventChannelAdminS.h
+
+    CosEventCommS_T.h
+    CosEventChannelAdminS_T.h
   }
 
   Inline_Files {
     CosEventCommS.inl
     CosEventChannelAdminS.inl
+
+    CosEventCommS_T.inl
+    CosEventChannelAdminS_T.inl
   }
 
   Template_Files {
+    CosEventCommS_T.cpp
+    CosEventChannelAdminS_T.cpp
   }
 }
 
