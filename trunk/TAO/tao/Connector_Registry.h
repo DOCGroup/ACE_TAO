@@ -72,7 +72,8 @@ public:
   int close_all (void);
   // Close all open connectors.
 
-  int preconnect (TAO_EndpointSet &preconnections);
+  int preconnect (TAO_ORB_Core *orb_core,
+                  TAO_PreconnectSet &preconnections);
   // For this list of preconnections call the connector specific
   // preconnect method for each preconnection.
 
@@ -96,6 +97,12 @@ public:
   char object_key_delimiter (const char *ior);
   // Obtain the object key delimiter used by the protocol specified in
   // the provided URL style IOR.
+
+private:
+  int preprocess_preconnects (TAO_ORB_Core *orb_core,
+                              TAO_PreconnectSet &preconnects);
+  // Put the preconnects in a form that makes it simple for protocol 
+  // implementers to parse.
 
 private:
   TAO_ConnectorSet connectors_;
