@@ -447,6 +447,7 @@ ACE_INLINE int
 ACE_Thread_Mutex_Guard::remove (void) 
 { 
 // ACE_TRACE ("ACE_Thread_Mutex_Guard::remove");
+  this->owner_ = -1;
   return this->release ();
 }
 

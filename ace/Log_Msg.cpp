@@ -23,6 +23,7 @@
 
 #include "ace/Thread.h"
 #include "ace/Synch.h"
+#include "ace/Signal.h"
 
 #if defined (ACE_HAS_UNICODE)
 #define ACE_WSPRINTF(BUF,VALUE) ::wsprintf (BUF, "%S", VALUE)
@@ -45,7 +46,7 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Log_Msg)
 
 #if defined (ACE_MT_SAFE)
 // Synchronize output operations.
-static ACE_Recursive_Thread_Mutex *lock_ = 0;
+static ACE_Thread_Mutex *lock_ = 0;
 
 #if !defined(VXWORKS)
 static ACE_thread_key_t key_;
@@ -84,7 +85,7 @@ ACE_Log_Msg::instance (void)
     {
       // Initialize the static recursive lock here.  Note that we
       // can't rely on the constructor being called at this point.
-      ACE_NEW_RETURN_I (lock_, ACE_Recursive_Thread_Mutex, 0);
+      ACE_NEW_RETURN_I (lock_, ACE_Thread_Mutex, 0);
       once_ = 1;
     }  
 
@@ -124,7 +125,7 @@ ACE_Log_Msg::instance (void)
 	{
 	  // Initialize the static recursive lock here.  Note that we
 	  // can't rely on the constructor being called at this point.
-	  ACE_NEW_RETURN_I (lock_, ACE_Recursive_Thread_Mutex, 0);
+	  ACE_NEW_RETURN_I (lock_, ACE_Thread_Mutex, 0);
 
 	  if (ACE_OS::thr_keycreate (&key_,
 				     &ACE_TSS_cleanup) != 0)
@@ -207,7 +208,7 @@ ACE_Log_Msg::flags (void)
 {
   ACE_TRACE ("ACE_Log_Msg::flags");
   u_long result;
-  ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, *lock_, 0));
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *lock_, 0));
 
   result = ACE_Log_Msg::flags_;
   return result;
@@ -217,7 +218,7 @@ void
 ACE_Log_Msg::set_flags (u_long flgs)
 {
   ACE_TRACE ("ACE_Log_Msg::set_flags");
-  ACE_MT (ACE_GUARD (ACE_Recursive_Thread_Mutex, ace_mon, *lock_));
+  ACE_MT (ACE_GUARD (ACE_Thread_Mutex, ace_mon, *lock_));
 
   ACE_SET_BITS (ACE_Log_Msg::flags_, flgs);
 }
@@ -226,7 +227,7 @@ void
 ACE_Log_Msg::clr_flags (u_long flgs)
 {
   ACE_TRACE ("ACE_Log_Msg::clr_flags");
-  ACE_MT (ACE_GUARD (ACE_Recursive_Thread_Mutex, ace_mon, *lock_));
+  ACE_MT (ACE_GUARD (ACE_Thread_Mutex, ace_mon, *lock_));
 
   ACE_CLR_BITS (ACE_Log_Msg::flags_, flgs);
 }
@@ -302,7 +303,7 @@ ACE_Log_Msg::open (const char *prog_name,
 		   LPCTSTR logger_key)
 {
   ACE_TRACE ("ACE_Log_Msg::open");
-  ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, *lock_, -1));
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *lock_, -1));
 
   if (prog_name)
     ACE_Log_Msg::program_name_ = ACE_OS::strdup (prog_name);
@@ -653,8 +654,11 @@ ACE_Log_Msg::log (const char *format_str,
       log_record.msg_data (this->msg ());
       this->stop_tracing ();
 
-      // Make sure that the lock is help during all this.
-      ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, *lock_, -1));
+      // Make this block signal safe.
+      ACE_Sig_Guard sb;
+
+      // Make sure that the lock is held during all this.
+      ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *lock_, -1));
 
       if (ACE_BIT_ENABLED (ACE_Log_Msg::flags_, ACE_Log_Msg::STDERR) 
 	  && abort_prog == 0) // We'll get this further down.
@@ -963,6 +967,6 @@ ACE_Log_Msg::getpid (void) const
   return ACE_Log_Msg::pid_;
 }
 
-#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
-ACE_MT (template class ACE_Guard<ACE_Recursive_Thread_Mutex>);
-#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+// #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+// ACE_MT (template class ACE_Guard<ACE_Thread_Mutex>);
+// #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */

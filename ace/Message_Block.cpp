@@ -20,7 +20,6 @@ ACE_Message_Block::data_block (ACE_Data_Block *db)
     this->data_block_->release ();
 
   this->data_block_ = db;
-  // Should we increment the reference count of <db>?
 
   // Set the read and write pointers in the <Message_Block> to point
   // to the buffer in the <ACE_Data_Block>.
@@ -163,8 +162,8 @@ ACE_Message_Block::size (size_t length)
       // ... and use them to initialize the new deltas.
       this->rd_ptr_ = this->data_block ()->base () + r_delta;
       this->wr_ptr_ = this->data_block ()->base () + w_delta;
-      return 0;
     }
+  return 0;
 }
 
 ACE_Data_Block::~ACE_Data_Block (void)
@@ -206,6 +205,20 @@ ACE_Message_Block::~ACE_Message_Block (void)
   this->next_ = 0;
 }
 
+ACE_Data_Block::ACE_Data_Block (void)
+  : type (ACE_Message_Block::MB_DATA),
+    cur_size_ (0),
+    max_size_ (0),
+    flags_ (ACE_Message_Block::DONT_DELETE),
+    base_ (0),
+    allocator_strategy_ (0),
+    delete_allocator_strategy_ (0),
+    locking_strategy_ (0),
+    reference_count_ (1)
+{
+  ACE_TRACE ("ACE_Data_Block::ACE_Data_Block");
+}
+
 ACE_Data_Block::ACE_Data_Block (size_t size,
 				ACE_Message_Block::ACE_Message_Type msg_type,
 				const char *msg_data, 
@@ -222,7 +235,7 @@ ACE_Data_Block::ACE_Data_Block (size_t size,
     locking_strategy_ (locking_strategy),
     reference_count_ (1)
 {
-  ACE_TRACE ("ACE_Data_Block::~ACE_Data_Block");
+  ACE_TRACE ("ACE_Data_Block::ACE_Data_Block");
 
   if (this->allocator_strategy_ == 0)
     {
@@ -243,7 +256,7 @@ ACE_Message_Block::ACE_Message_Block (const char *data,
   ACE_TRACE ("ACE_Message_Block::ACE_Message_Block");
 
   if (this->init_i (size, 
-		    MB_NORMAL, 
+		    MB_DATA, 
 		    0, 
 		    data, 
 		    0, 
@@ -258,7 +271,7 @@ ACE_Message_Block::ACE_Message_Block (void)
   ACE_TRACE ("ACE_Message_Block::ACE_Message_Block");
 
   if (this->init_i (0, 
-		    MB_NORMAL, 
+		    MB_DATA, 
 		    0, 
 		    0, 
 		    0, 
@@ -318,7 +331,7 @@ ACE_Message_Block::init (const char *data,
   // Should we also initialize all the other fields, as well?
 
   return this->init_i (size, 
-		       MB_NORMAL, 
+		       MB_DATA,
 		       0, 
 		       data, 
 		       0, 
@@ -338,8 +351,6 @@ ACE_Message_Block::ACE_Message_Block (size_t size,
 {
   ACE_TRACE ("ACE_Message_Block::ACE_Message_Block");
 
-  ACE_TRACE ("ACE_Message_Block::ACE_Message_Block");
-
   if (this->init_i (size, 
 		    msg_type, 
 		    msg_cont, 
@@ -351,6 +362,22 @@ ACE_Message_Block::ACE_Message_Block (size_t size,
     ACE_ERROR ((LM_ERROR, "ACE_Message_Block"));
 }
 
+ACE_Message_Block::ACE_Message_Block (ACE_Data_Block *data_block)
+{
+  ACE_TRACE ("ACE_Message_Block::ACE_Message_Block");
+  
+  if (this->init_i (0,
+		    MB_NORMAL,
+		    0,
+		    0,
+		    0,
+		    0,
+		    0,
+		    0,
+		    data_block) == -1)
+    ACE_ERROR ((LM_ERROR, "ACE_Message_Block"));
+}
+
 int
 ACE_Message_Block::init_i (size_t size, 
 			   ACE_Message_Type msg_type, 
@@ -359,7 +386,8 @@ ACE_Message_Block::init_i (size_t size,
 			   ACE_Allocator *allocator_strategy,
 			   ACE_Lock *locking_strategy,
 			   Message_Flags flags,
-			   u_long priority)
+			   u_long priority,
+			   ACE_Data_Block *db)
 {
   ACE_TRACE ("ACE_Message_Block::init_i");
 
@@ -368,21 +396,20 @@ ACE_Message_Block::init_i (size_t size,
   this->next_ = 0;
   this->prev_ = 0;
 
-  // Allocate the <ACE_Data_Block> portion, which is reference
-  // counted.
-  ACE_NEW_RETURN (this->data_block_, 
-		  ACE_Data_Block (size,
-				  msg_type,
-				  msg_data,
-				  allocator_strategy,
-				  locking_strategy,
-				  flags),
-		  -1);
+  if (db == 0)
+    // Allocate the <ACE_Data_Block> portion, which is reference
+    // counted.
+    ACE_NEW_RETURN (db,
+		    ACE_Data_Block (size,
+				    msg_type,
+				    msg_data,
+				    allocator_strategy,
+				    locking_strategy,
+				    flags),
+		    -1);
 
-  // Set the read and write pointers in the new <Message_Block> to
-  // point to the buffer in the <ACE_Data_Block>.
-  this->rd_ptr (this->data_block ()->base ());
-  this->wr_ptr (this->data_block ()->base ());
+  // Reset the data_block_ pointer.
+  this->data_block (db);
   return 0;
 }
 

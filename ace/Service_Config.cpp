@@ -757,7 +757,10 @@ ACE_Service_Config::end_reactor_event_loop (void)
   ACE_TRACE ("ACE_Service_Config::end_reactor_event_loop");
   ACE_Service_Config::end_reactor_event_loop_ = 1;
 
-  return ACE_Service_Config::reactor ()->notify ();
+  // Send a notification, but don't block if there's no one to receive
+  // it.
+  return ACE_Service_Config::reactor ()->notify 
+    (0, ACE_Event_Handler::NULL_MASK, &ACE_Time_Value::zero);
 }
 
 /* static */

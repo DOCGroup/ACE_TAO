@@ -342,6 +342,7 @@ ACE_ReactorEx::wait_for_multiple_events (ACE_ReactorEx_Handle_Set &wait_set,
 int
 ACE_ReactorEx::dispatch (int wait_status,
 			 int wait_all,
+			 ACE_Event_Handler *wait_all_callback,
 			 ACE_ReactorEx_Handle_Set &dispatch_set)
 {
   // Expire all pending timers.
@@ -370,7 +371,7 @@ ACE_ReactorEx::dispatch_callbacks (ACE_Event_Handler *wait_all_callback)
 {
   if (wait_all_callback != 0)
     {
-      siginfo_t handles (this->handler_rep.handles ());
+      siginfo_t handles (this->handler_rep_.handles ());
 
       if (wait_all_callback->handle_signal (0, &handles) == -1)
 	{
@@ -383,7 +384,7 @@ ACE_ReactorEx::dispatch_callbacks (ACE_Event_Handler *wait_all_callback)
     {
       int result = 0;
 
-      for (int i = 0; i < this->max_handlep1_; i++)
+      for (int i = 0; i < this->handler_rep_.max_handlep1 (); i++)
 	if (this->dispatch_handler (i) == -1)
 	  result--;
 
@@ -453,7 +454,7 @@ ACE_ReactorEx::dispatch_handler (int index)
   // Dispatch the handler.
   if (this->handler_rep_.find (index)->handle_signal (0, &sig) == -1)
     {
-      this->handler_rep_.unbind (handle);
+      this->handler_rep_.unbind (handle, ACE_Event_Handler::NULL_MASK);
       return -1;
     }
   else
