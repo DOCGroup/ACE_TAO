@@ -447,7 +447,16 @@ NS_NamingContext::unbind (const CosNaming::Name& n,
 CosNaming::NamingContext_ptr 
 NS_NamingContext::new_context (CORBA::Environment &_env) 
 {
-  NS_NamingContext *c = new NS_NamingContext;
+  NS_NamingContext * c = 0;
+
+  // if allocation fails, the environment must be set to indicate error.
+  _env.clear ();
+  _env.exception (new CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
+  ACE_NEW_RETURN (c, NS_NamingContext, CosNaming::NamingContext::_nil ());
+  
+  // clear the environment.
+  _env.clear ();
+
   // (1) do we have to duplicate () the object reference???!
   // (2) Also, how about memory leaks?
   return c->_this (_env);
@@ -457,7 +466,15 @@ CosNaming::NamingContext_ptr
 NS_NamingContext::bind_new_context (const CosNaming::Name& n, 
 				    CORBA::Environment &_env) 
 {
-  NS_NamingContext *c = new NS_NamingContext;
+  NS_NamingContext * c = 0;
+
+  // if allocation fails, the environment must be set to indicate error.
+  _env.clear ();
+  _env.exception (new CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
+  ACE_NEW_RETURN (c, NS_NamingContext, CosNaming::NamingContext::_nil ());
+  
+  // clear the environment.
+  _env.clear ();
 
   bind_context (n, c->_this (_env), _env);
   
@@ -515,18 +532,14 @@ NS_NamingContext::list (CORBA::ULong how_many,
      {
        NS_BindingIterator *bind_iter;
        
-       bind_iter = new NS_BindingIterator (hash_iter, this->lock_);
+       // if allocation fails, the environment must be set to indicate error.
+       _env.clear ();
+       _env.exception (new CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
+       ACE_NEW (bind_iter, NS_BindingIterator (hash_iter, this->lock_));
        
-       // Allocation error, this is handled as in ACE_NEW.  We don't use it to
-       //   be able to set the environment exception variable.
-       if (bind_iter == 0)
-	 {
-	   errno = ENOMEM;
-	   _env.clear ();
-	   _env.exception (new CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
-	   return;
-	 }
-
+       // clear the environment.
+       _env.clear ();
+       
        bi = bind_iter->_this (_env);
 
        CosNaming::BindingIterator::_duplicate (bi);
@@ -560,9 +573,15 @@ NS_NamingContext::list (CORBA::ULong how_many,
 	CORBA::string_dup (hash_entry->ext_id_.kind_.fast_rep ());
     }
 
-  // @@ Marina, please add check for memory failure.
+  // check for memory failure.
+  // if allocation fails, the environment must be set to indicate error.
+  _env.clear ();
+  _env.exception (new CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
   ACE_NEW (bl, CosNaming::BindingList (bindings));
-
+  
+  // clear the environment.
+  _env.clear ();
+  
   // If did not allocate BindingIterator, deallocate hash map
   // iterator.
   if (context_.current_size () <= how_many)
@@ -596,13 +615,29 @@ NS_BindingIterator::next_one (CosNaming::Binding_out b,
     {
       // @@ Marina, why would we want to allocate a binding when the 
       //    iteration is done?
-      b = new CosNaming::Binding;
+
+      // check for memory failure.
+      // if allocation fails, the environment must be set to indicate error.
+      _env.clear ();
+      _env.exception (new CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
+      ACE_NEW_RETURN (b, CosNaming::Binding, 0);
+      
+      // clear the environment.
+      _env.clear ();
+      
       return 0;
     }
   else
     {
-      b = new CosNaming::Binding;
-
+      // check for memory failure.
+      // if allocation fails, the environment must be set to indicate error.
+      _env.clear ();
+      _env.exception (new CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
+      ACE_NEW_RETURN (b, CosNaming::Binding, 0);
+      
+      // clear the environment.
+      _env.clear ();
+      
       NS_NamingContext::HASH_MAP::ENTRY *hash_entry;
       hash_iter_->next (hash_entry);
       hash_iter_->advance ();
@@ -633,7 +668,15 @@ NS_BindingIterator::next_n (CORBA::ULong how_many,
 
   if (hash_iter_->done ()) 
     {
-      bl = new CosNaming::BindingList;
+      // check for memory failure.
+      // if allocation fails, the environment must be set to indicate error.
+      _env.clear ();
+      _env.exception (new CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
+      ACE_NEW_RETURN (bl, CosNaming::BindingList, 0);
+      
+      // clear the environment.
+      _env.clear ();
+      
       return 0;
     }
   else
