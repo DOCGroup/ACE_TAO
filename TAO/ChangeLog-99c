@@ -1,3 +1,9 @@
+Fri Mar  5 16:43:06 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Event/EC_Timeout_Generator.cpp: 
+	  Fixed const correctness problem, Sun/CC didn't even give a
+	  warning for this one!
+
 Fri Mar  5 15:12:00 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Event/EC_Null_Factory.h:
