@@ -1471,7 +1471,7 @@ TAO_POA::servant_to_id_i (PortableServer::Servant servant,
       // object map.
       PortableServer::ObjectId_var user_id;
       if (this->active_object_map ().bind_using_system_id_returning_user_id (servant,
-                                                                             TAO_DEFAULT_PRIORITY,
+                                                                             TAO_INVALID_PRIORITY,
                                                                              user_id.out ()) != 0)
         {
           ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
@@ -1986,23 +1986,6 @@ void
 TAO_POA::validate_priority_and_policies (RTCORBA::Priority priority,
                                          CORBA::Environment &ACE_TRY_ENV)
 {
-  // If the priority parameter of any of the above operations is not a
-  // valid CORBA priority or if it fails to match the priority
-  // configuration for resources assigned to the POA, then the ORB
-  // shall raise a BAD_PARAM system exception.
-  if (!this->valid_priority (priority))
-    {
-      ACE_THROW (PortableServer::POA::ObjectNotActive ());
-    }
-
-  // For each of the above operations, if the POA does not support the
-  // SERVER_DECLARED option for the PriorityModelPolicy then the ORB
-  // shall raise a WrongPolicy user exception.
-  if (0 /*this->policies ().priority_model () != RTCORBA::SERVER_DECLARED */)
-    {
-      ACE_THROW (PortableServer::POA::WrongPolicy ());
-    }
-
   // For each of the above operations, if the POA supports the
   // IMPLICIT_ACTIVATION option for the ImplicitActivationPolicy then
   // the ORB shall raise a WrongPolicy user exception. This relieves
@@ -2012,6 +1995,23 @@ TAO_POA::validate_priority_and_policies (RTCORBA::Priority priority,
   if (this->policies ().implicit_activation () == PortableServer::IMPLICIT_ACTIVATION)
     {
       ACE_THROW (PortableServer::POA::WrongPolicy ());
+    }
+
+  // For each of the above operations, if the POA does not support the
+  // SERVER_DECLARED option for the PriorityModelPolicy then the ORB
+  // shall raise a WrongPolicy user exception.
+  if (this->policies ().priority_model () != TAO_POA_Policies::SERVER_DECLARED)
+    {
+      ACE_THROW (PortableServer::POA::WrongPolicy ());
+    }
+
+  // If the priority parameter of any of the above operations is not a
+  // valid CORBA priority or if it fails to match the priority
+  // configuration for resources assigned to the POA, then the ORB
+  // shall raise a BAD_PARAM system exception.
+  if (!this->valid_priority (priority))
+    {
+      ACE_THROW (PortableServer::POA::ObjectNotActive ());
     }
 
   // In all other respects the semantics of the corresponding
@@ -2051,7 +2051,7 @@ TAO_POA::forward_object_i (const PortableServer::ObjectId &oid,
   // Register the forwarding servant with the same object Id.
   this->activate_object_with_id_i (oid,
                                    forwarding_servant,
-                                   TAO_DEFAULT_PRIORITY,
+                                   TAO_INVALID_PRIORITY,
                                    ACE_TRY_ENV);
   ACE_CHECK;
 
@@ -3647,7 +3647,7 @@ TAO_POA_Policies::TAO_POA_Policies (TAO_ORB_Core &orb_core,
      servant_retention_ (PortableServer::RETAIN),
      request_processing_ (PortableServer::USE_ACTIVE_OBJECT_MAP_ONLY),
      priority_model_ (TAO_POA_Policies::CLIENT_PROPAGATED),
-     server_priority_ (TAO_DEFAULT_PRIORITY),
+     server_priority_ (TAO_INVALID_PRIORITY),
      client_exposed_fixed_policies_ ()
 {
 
@@ -3669,6 +3669,11 @@ TAO_POA_Policies::TAO_POA_Policies (TAO_ORB_Core &orb_core,
         priority_model->server_priority (ACE_TRY_ENV);
       ACE_CHECK;
     }
+
+#else
+
+  ACE_UNUSED_ARG (orb_core);
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
 
 #endif /* TAO_HAS_RT_CORBA == 1 */
 
@@ -3739,6 +3744,16 @@ TAO_POA_Policies::validity_check (void)
         this->id_assignment_ != PortableServer::SYSTEM_ID)
       return -1;
 
+  int result = this->validate_priority_model ();
+  if (result != 0)
+    return result;
+
+  return 0;
+}
+
+int
+TAO_POA_Policies::validate_priority_model (void)
+{
   return 0;
 }
 
@@ -4053,17 +4068,17 @@ TAO_POA::client_exposed_policies (CORBA::Short object_priority,
   CORBA::Short poa_priority =
     this->policies ().server_priority ();
 
-  TAO_POA_Policies::PriorityModel priority_model =
-    this->policies ().priority_model ();
-
-  if (poa_priority != TAO_DEFAULT_PRIORITY)
+  if (poa_priority != TAO_INVALID_PRIORITY)
     {
+      TAO_POA_Policies::PriorityModel priority_model =
+        this->policies ().priority_model ();
+
       CORBA::Short priority;
       if (priority_model == TAO_POA_Policies::CLIENT_PROPAGATED)
         priority = poa_priority;
       else
         {
-          if (object_priority != TAO_DEFAULT_PRIORITY)
+          if (object_priority != TAO_INVALID_PRIORITY)
             priority = poa_priority;
           else
             priority = object_priority;
@@ -4116,7 +4131,7 @@ TAO_POA::imr_notify_startup (CORBA_Environment &ACE_TRY_ENV)
 
   this->activate_object_with_id_i (id.in (),
                                    this->server_object_,
-                                   TAO_DEFAULT_PRIORITY,
+                                   TAO_INVALID_PRIORITY,
                                    ACE_TRY_ENV);
   ACE_CHECK;
 

@@ -1,3 +1,20 @@
+Tue Jun 06 22:20:31 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/POA.cpp:
+
+	  - validate_priority_and_policies(): Now that we have the
+	  priority model policy in place, the policy check can be enabled.
+
+	  - TAO_POA_Policies::TAO_POA_Policies(): Added ACE_UNUSED_ARG for
+	  <orb_core> and <ACE_TRY_ENV>.
+
+	  - TAO_POA_Policies::validity_check(): Added a place holder for
+	  checking the validity of the priority model policy.  Eventually
+	  this will check with the thread pool configuration.
+
+	* tao/corbafwd.h: Changed TAO_DEFAULT_PRIORITY to
+	  TAO_INVALID_PRIORITY.
+
 Tue Jun 06 22:12:39 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/Server_Request.h:
