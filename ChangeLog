@@ -1,3 +1,8 @@
+Tue Mar 25 10:44:23 CET 2003  Oliver Kellogg  <oliver.kellogg@sysde.eads.net>
+
+	* ace/Unbounded_Set.{h,cpp}: Removed the `const' at the
+	  ACE_Unbounded_Set::iterator_leave() method declaration.
+
 Mon Mar 24 22:05:56 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* ace/Default_Constants.h: Added a const value for the connector's

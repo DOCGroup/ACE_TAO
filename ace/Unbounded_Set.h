@@ -196,26 +196,26 @@ public:
   /// Constructor.  Use user specified allocation strategy
   /// if specified.
   /**
-   * Initialize an empty set using the allocation strategy of the user if 
-   * provided. 
+   * Initialize an empty set using the allocation strategy of the user if
+   * provided.
    */
   ACE_Unbounded_Set (ACE_Allocator *alloc = 0);
 
   /// Copy constructor.
   /**
-   * Initialize this set to be an exact copy of the set provided. 
+   * Initialize this set to be an exact copy of the set provided.
    */
   ACE_Unbounded_Set (const ACE_Unbounded_Set<T> &);
 
   /// Assignment operator.
   /**
-   * Perform a deep copy of the rhs into the lhs. 
+   * Perform a deep copy of the rhs into the lhs.
    */
   void operator= (const ACE_Unbounded_Set<T> &);
 
   /// Destructor.
   /**
-   * Destroy the nodes of the set. 
+   * Destroy the nodes of the set.
    */
   ~ACE_Unbounded_Set (void);
 
@@ -223,19 +223,19 @@ public:
 
   /// Returns 1 if the container is empty, otherwise returns 0.
   /**
-   * Constant time is_empty check. 
+   * Constant time is_empty check.
    */
   int is_empty (void) const;
 
   /// Returns 0.
-  /** 
-   * Always returns 0 since the set can never fill up. 
+  /**
+   * Always returns 0 since the set can never fill up.
    */
   int is_full (void) const;
 
   // = Classic unordered set operations.
 
-  ///Linear insertion of an item. 
+  ///Linear insertion of an item.
   /**
    * Insert <new_item> into the set (doesn't allow duplicates).
    * Returns -1 if failures occur, 1 if item is already present, else
@@ -246,11 +246,11 @@ public:
   /// Insert <item> at the tail of the set (doesn't check for
   /// duplicates).
   /**
-   * Constant time insert at the end of the set. 
+   * Constant time insert at the end of the set.
    */
   int insert_tail (const T &item);
 
-  ///Linear remove operation. 
+  ///Linear remove operation.
   /**
    * Remove first occurrence of <item> from the set.  Returns 0 if
    * it removes the item, -1 if it can't find the item, and -1 if a
@@ -261,13 +261,13 @@ public:
   /// Finds if <item> occurs in the set.  Returns 0 if find succeeds,
   /// else -1.
   /**
-   * Performs a linear find operation. 
+   * Performs a linear find operation.
    */
   int find (const T &item) const;
 
   /// Size of the set.
   /**
-   * Access the size of the set. 
+   * Access the size of the set.
    */
   size_t size (void) const;
 
@@ -276,7 +276,7 @@ public:
 
   /// Reset the <ACE_Unbounded_Set> to be empty.
   /**
-   * Delete the nodes of the set. 
+   * Delete the nodes of the set.
    */
   void reset (void);
 
@@ -287,7 +287,7 @@ public:
   /// An Iterator has to register itself here.
   void iterator_add () const;
   /// A non-const Iterator has to unregister itself here.
-  void iterator_leave () const;
+  void iterator_leave ();
   /// A Const_Iterator has to unregister itself here.
   void const_iterator_leave () const;
 
@@ -312,7 +312,7 @@ private:
 
   /// Allocation strategy of the set.
   ACE_Allocator *allocator_;
-  
+
   /// Number of iterators working on this set.
   mutable int number_of_iterators_;
 };
