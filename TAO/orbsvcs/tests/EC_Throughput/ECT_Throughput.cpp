@@ -242,9 +242,11 @@ ECT_Throughput::run (int argc, char* argv[])
         {
           TAO_EC_Event_Channel_Attributes attr (root_poa.in (),
                                                 root_poa.in ());
+          attr.busy_hwm = this->ec_concurrency_hwm_;
+          attr.max_write_delay = this->ec_concurrency_hwm_;
+
           TAO_EC_Event_Channel *ec =
             new TAO_EC_Event_Channel (attr);
-          ec->consumer_admin ()->busy_hwm (this->ec_concurrency_hwm_);
 
           ec->activate (TAO_TRY_ENV);
           TAO_CHECK_ENV;
