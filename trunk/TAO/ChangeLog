@@ -1,3 +1,11 @@
+Wed Nov 27 22:31:34 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tests/Bug_1361_Regression/Server_Thread_Pool.h:
+	* tests/Bug_1361_Regression/Server_Thread_Pool.cpp: Converted the
+	  usage of ACE_SYNCH_MUTEX to ACE_SYNCH. Missed that
+	  Message_Queue needs a condition variable in addition to the
+	  mutex. 
+
 Wed Nov 27 18:58:25 2002  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/CosNotification_Static.dsp:
