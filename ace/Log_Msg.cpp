@@ -49,10 +49,10 @@ static ACE_FIFO_Send_Msg message_queue_;
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Log_Msg)
 
-#if !defined (VXWORKS) && defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-static int key_created_ = 0;
-static ACE_thread_key_t key_;
-#endif /* !VXWORKS && ACE_MT_SAFE */
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
+static int ACE_Log_Msg_key_created_ = 0;
+static ACE_thread_key_t ACE_Log_Msg_key_;
+#endif /* ACE_MT_SAFE */
 
 // This is only needed here because we can't afford to call
 // ACE_LOG_MSG->instance() from within ACE_Log_Msg::instance() or else
@@ -77,15 +77,7 @@ class ACE_Log_Msg_Manager
 public:
   static ACE_Thread_Mutex *get_lock (void);
 
-#if defined (VXWORKS)
-  // For keeping track of the number of tasks, so we know when to
-  // add or delete the task delete hook.
-  static u_int task_count_;
-
-  static void close (WIND_TCB *);
-#else
   static void close (void);
-#endif /* VXWORKS */
 
 private:
   static ACE_Thread_Mutex *lock_;
@@ -106,47 +98,15 @@ ACE_Log_Msg_Manager::get_lock (void)
   return ACE_Log_Msg_Manager::lock_;
 }
 
-#if defined (VXWORKS)
-u_int ACE_Log_Msg_Manager::task_count_ = 0;
-
-void
-ACE_Log_Msg_Manager::close (WIND_TCB *tcb)
-{
-  // The task is exiting, so delete its ACE_Log_Msg instance.
-  delete (ACE_Log_Msg *) tcb->spare1;
-
-  // If this is the last task to exit from the program, then delete the task
-  // delete hook. Also, delete the global lock_.
-  if (--task_count_ == 0)
-    {
-      ::taskDeleteHookDelete ((FUNCPTR) ACE_Log_Msg_Manager::close);
-
-      // Ugly, ugly, but don't know a better way.
-      delete ACE_Log_Msg_Manager::lock_;
-      ACE_Log_Msg_Manager::lock_ = 0;
-    }
-}
-#else
-
 void
 ACE_Log_Msg_Manager::close (void)
 {
-  // Delete the main thread's Log_Msg.
-  ACE_Log_Msg *tss_log_msg = 0;
-  if (ACE_OS::thr_getspecific (key_,
-			       (void **) &tss_log_msg) != -1)
-    {
-      delete tss_log_msg;
-      tss_log_msg = 0;
-    }
-
-  ACE_OS::thr_keyfree (key_);
+  ACE_OS::thr_keyfree (ACE_Log_Msg_key_);
 
   // Ugly, ugly, but don't know a better way.
   delete ACE_Log_Msg_Manager::lock_;
   ACE_Log_Msg_Manager::lock_ = 0;
 }
-#endif /* ! VXWORKS */
 
 /* static */
 #if defined (ACE_HAS_THR_C_FUNC)
@@ -164,29 +124,16 @@ int
 ACE_Log_Msg::exists (void)
 {
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-#if defined (VXWORKS)
-  // Get the tss_log_msg from thread-specific storage, using one of
-  // the "spare" fields in the task control block.  Note that no locks
-  // are required here since this is within our thread context.  This
-  // assumes that the sizeof the spare1 field is the same size as a
-  // pointer; it is (it's an int) in VxWorks 5.2-5.3.
-  ACE_Log_Msg *&tss_log_msg = (ACE_Log_Msg *&) taskIdCurrent->spare1;
-
-  // Check to see if this is the first time in for this thread.  This
-  // assumes that the spare1 field in the task control block is
-  // initialized to 0, which holds true for VxWorks 5.2-5.3.
-  return (tss_log_msg == 0);
-#elif !defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
-#error "Platform must support thread-specific storage if threads are used..."
-#else
+# if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION)
   ACE_Log_Msg *tss_log_msg = 0;
 
   // Get the tss_log_msg from thread-specific storage.
-  return key_created_
-    && ACE_OS::thr_getspecific (key_, (void **) &tss_log_msg) != -1
+  return ACE_Log_Msg_key_created_
+    && ACE_OS::thr_getspecific (ACE_Log_Msg_key_, (void **) &tss_log_msg) != -1
     && tss_log_msg;
-
-#endif /* VXWORKS || ACE_HAS_THREAD_SPECIFIC_STORAGE */
+# else
+#   error "Platform must support thread-specific storage if threads are used..."
+# endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE || ACE_HAS_TSS_EMULATION */
 #else
   return 1;
 #endif /* defined (ACE_MT_SAFE) */
@@ -196,39 +143,10 @@ ACE_Log_Msg *
 ACE_Log_Msg::instance (void)
 {
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-#if defined (VXWORKS)
-  // Get the tss_log_msg from thread-specific storage, using one of
-  // the "spare" fields in the task control block.  Note that no locks
-  // are required here since this is within our thread context.  This
-  // assumes that the sizeof the spare1 field is the same size as a
-  // pointer; it is (it's an int) in VxWorks 5.2-5.3.
-  ACE_Log_Msg *&tss_log_msg = (ACE_Log_Msg *&) taskIdCurrent->spare1;
-
-  // Check to see if this is the first time in for this thread.  This
-  // assumes that the spare1 field in the task control block is
-  // initialized to 0, which holds true for VxWorks 5.2-5.3.
-  if (tss_log_msg == 0)
-    {
-      // Allocate the Singleton lock.  Note that this isn't
-      // thread-safe.
-      ACE_Log_Msg_Manager::get_lock ();
-
-      if (ACE_Log_Msg_Manager::task_count_++ == 0)
-	// Register cleanup handler, just once, for all tasks.
-	::taskDeleteHookAdd ((FUNCPTR) ACE_Log_Msg_Manager::close);
-
-      // Allocate memory off the heap and store it in a pointer in
-      // thread-specific storage, i.e., in the task control block.
-      ACE_NEW_RETURN_I (tss_log_msg, ACE_Log_Msg, 0);
-    }
-
-  return tss_log_msg;
-#elif !defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
-#error "Platform must support thread-specific storage if threads are used..."
-#else
+# if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION)
   // TSS Singleton implementation.
 
-  if (key_created_ == 0)
+  if (ACE_Log_Msg_key_created_ == 0)
     {
       // Synchronize Singleton creation (note that this may lose big
       // if the compiler doesn't perform thread-safe initialization of
@@ -238,14 +156,14 @@ ACE_Log_Msg::instance (void)
 
       ACE_OS::thread_mutex_lock (&lock);
 
-      if (key_created_ == 0)
+      if (ACE_Log_Msg_key_created_ == 0)
 	{
 	  // Allocate the Singleton lock.
 	  ACE_Log_Msg_Manager::get_lock ();
 
 	  {
 	    ACE_NO_HEAP_CHECK;
-	    if (ACE_OS::thr_keycreate (&key_,
+	    if (ACE_OS::thr_keycreate (&ACE_Log_Msg_key_,
 				       &ACE_TSS_cleanup) != 0)
 	      {
 	        ACE_OS::thread_mutex_unlock (&lock);
@@ -253,7 +171,7 @@ ACE_Log_Msg::instance (void)
 	      }
 	  }
 
-	  key_created_ = 1;
+	  ACE_Log_Msg_key_created_ = 1;
 	}
       ACE_OS::thread_mutex_unlock (&lock);
     }
@@ -261,7 +179,7 @@ ACE_Log_Msg::instance (void)
   ACE_Log_Msg *tss_log_msg = 0;
 
   // Get the tss_log_msg from thread-specific storage.
-  if (ACE_OS::thr_getspecific (key_,
+  if (ACE_OS::thr_getspecific (ACE_Log_Msg_key_,
 			       (void **) &tss_log_msg) == -1)
     return 0; // This should not happen!
 
@@ -282,13 +200,16 @@ ACE_Log_Msg::instance (void)
 	// storage.  It gets deleted via the ACE_TSS_cleanup function
 	// when the thread terminates.
 
-	if (ACE_OS::thr_setspecific (key_, (void *) tss_log_msg) != 0)
+	if (ACE_OS::thr_setspecific (ACE_Log_Msg_key_,
+                                     (void *) tss_log_msg) != 0)
 	  return 0; // Major problems, this should *never* happen!
       }
     }
 
   return tss_log_msg;
-#endif /* VXWORKS || ACE_HAS_THREAD_SPECIFIC_STORAGE */
+# else
+#  error "Platform must support thread-specific storage if threads are used..."
+# endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE || ACE_HAS_TSS_EMULATION */
 #else
   // Singleton implementation.
   static ACE_Log_Msg log_msg;
@@ -319,7 +240,6 @@ int ACE_Log_Msg::msg_off_ = 0;
 void
 ACE_Log_Msg::close (void)
 {
-#if !defined (VXWORKS)
   // Please note that this will be called by a statement that is
   // harded coded into the ACE_Object_Manager's shutdown sequence,
   // in its destructor.
@@ -327,7 +247,6 @@ ACE_Log_Msg::close (void)
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   ACE_Log_Msg_Manager::close ();
 #endif /* (ACE_MT_SAFE) && (ACE_MT_SAFE != 0) */
-#endif /* ! VXWORKS */
 }
 
 void
@@ -335,11 +254,6 @@ ACE_Log_Msg::sync (const char *prog_name)
 {
   ACE_TRACE ("ACE_Log_Msg::sync");
 
-#if defined (VXWORKS)
-  // To avoid memory leak, don't copy the input string.  It had better
-  // be in the text segment!
-  ACE_Log_Msg::program_name_ = prog_name;
-#else
   if (prog_name)
     {
       // Must free if already allocated!!!
@@ -354,7 +268,6 @@ ACE_Log_Msg::sync (const char *prog_name)
 	ACE_Log_Msg::program_name_ = ACE_OS::strdup (prog_name);
       }
     }
-#endif /* VXWORKS */
 
   ACE_Log_Msg::pid_ = ACE_OS::getpid ();
   ACE_Log_Msg::msg_off_ = 0;
@@ -450,21 +363,20 @@ ACE_Log_Msg::ACE_Log_Msg (void)
 		    | LM_EMERGENCY)
 {
   // ACE_TRACE ("ACE_Log_Msg::ACE_Log_Msg");
+
   ++instance_count_;
 }
 
 ACE_Log_Msg::~ACE_Log_Msg (void)
 {
-  // On VxWorks, there is no static Log_Msg_Set.  And, the
-  // <program_name_> and <local_host_> strings weren't duplicated, in
-  // order to avoid memory leaks, because this destructor can't tell
-  // when the last thread in the program exits.
-#if !defined (VXWORKS) && defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   ACE_MT (ACE_GUARD (ACE_Thread_Mutex, ace_mon, *ACE_Log_Msg_Manager::get_lock ()));
 
   // If this is the last instance then cleanup.
   if (--instance_count_ == 0)
     {
+      ACE_Log_Msg_Manager::close ();
+
       if (ACE_Log_Msg::program_name_)
 	{
 	  ACE_OS::free ((void *) ACE_Log_Msg::program_name_);
@@ -477,7 +389,7 @@ ACE_Log_Msg::~ACE_Log_Msg (void)
 	  ACE_Log_Msg::local_host_ = 0;
 	}
     }
-#endif /* !VXWORKS && ACE_MT_SAFE */
+#endif /* ACE_MT_SAFE */
 }
 
 // Open the sender-side of the Message ACE_Queue.
@@ -489,11 +401,6 @@ ACE_Log_Msg::open (const char *prog_name,
   ACE_TRACE ("ACE_Log_Msg::open");
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *ACE_Log_Msg_Manager::get_lock (), -1));
 
-#if defined (VXWORKS)
-  // To avoid memory leak, don't copy the input string.  It had better
-  // be in the text segment!
-  ACE_Log_Msg::program_name_ = prog_name;
-#else
   if (prog_name)
     {
       ACE_OS::free ((void *) ACE_Log_Msg::program_name_);
@@ -505,7 +412,6 @@ ACE_Log_Msg::open (const char *prog_name,
 	ACE_Log_Msg::program_name_ = ACE_OS::strdup (prog_name);
       }
     }
-#endif /* VXWORKS */
 
   int status = 0;
 
@@ -1221,11 +1127,6 @@ ACE_Log_Msg::msg_ostream (ostream *m)
 void
 ACE_Log_Msg::local_host (const char *s)
 {
-#if defined (VXWORKS)
-  // To avoid memory leak, don't copy the input string.  It had better
-  // be in the text segment!
-  ACE_Log_Msg::local_host_ = s;
-#else
   if (s)
     {
       ACE_OS::free ((void *) ACE_Log_Msg::local_host_);
@@ -1235,7 +1136,6 @@ ACE_Log_Msg::local_host (const char *s)
 	      ACE_Log_Msg::local_host_ = ACE_OS::strdup (s);
 	  }
     }
-#endif /* VXWORKS */
 }
 
 const char *
