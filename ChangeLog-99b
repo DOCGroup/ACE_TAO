@@ -9,6 +9,8 @@ Wed Jul 14 10:22:29 1999  David L. Levine  <levine@cs.wustl.edu>
           the instance after it is no longer needed (if it wants to
           avoid memory leaks, at least).  The close () static member
           function must be used to explicitly destroy the Singleton.
+          Thanks to Valery Arkhangorodsky <valerya@servicesoft.com>
+          for suggesting this and providing the code.
 
 Wed Jul 14 10:01:47 1999  David L. Levine  <levine@cs.wustl.edu>
 
