@@ -2561,12 +2561,33 @@ sub relative {
             ## Lowercase everything if we are running on Windows
             my($icwd) = ($self->{'convert_slashes'} ? lc($cwd) : $cwd);
             my($ival) = ($self->{'convert_slashes'} ? lc($val) : $val);
+
+            ## If the relative value contains the current working
+            ## directory plus additional subdirectories, we must pull
+            ## off the additional directories into a temporary where
+            ## it can be put back after the relative replacement is done.
+            my($append) = undef;
+            if (index($ival, $icwd) == 0) {
+              my($iclen) = length($icwd);
+              $append = substr($ival, $iclen);
+              substr($ival, $iclen, length($append)) = '';
+            }
+
             if (index($icwd, $ival) == 0) {
               my($current) = $icwd;
               substr($current, 0, length($ival)) = '';
 
-              $ival = '../' x ($current =~ tr/\///);
-              $ival =~ s/\/$//;
+              my($dircount) = ($current =~ tr/\///);
+              if ($dircount == 0) {
+                $ival = '.';
+              }
+              else {
+                $ival = '../' x $dircount;
+                $ival =~ s/\/$//;
+              }
+              if (defined $append) {
+                $ival .= $append;
+              }
               if ($self->{'convert_slashes'}) {
                 $ival = $self->slash_to_backslash($ival);
               }
