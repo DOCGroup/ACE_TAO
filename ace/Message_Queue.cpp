@@ -419,7 +419,7 @@ template <ACE_SYNCH_1> int
 ACE_Message_Queue<ACE_SYNCH_2>::enqueue_prio (ACE_Message_Block *new_item, 
 					      ACE_Time_Value *tv)
 {
-  ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_2>::enqueue");
+  ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_2>::enqueue_prio");
 
   int queue_count;
 
@@ -458,6 +458,14 @@ ACE_Message_Queue<ACE_SYNCH_2>::enqueue_prio (ACE_Message_Block *new_item,
       this->notify ();
       return queue_count;
     }
+}
+
+template <ACE_SYNCH_1> int 
+ACE_Message_Queue<ACE_SYNCH_2>::enqueue (ACE_Message_Block *new_item, 
+					 ACE_Time_Value *tv)
+{
+  ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_2>::enqueue");
+  return this->enqueue_prio (new_item, tv);
 }
 
 // Block indefinitely waiting for an item to arrive,

@@ -851,6 +851,7 @@ struct ACE_rwlock_t
 #define THR_BOUND       0       // ?? ignore in most places
 #define THR_NEW_LWP     0       // ?? ignore in most places
 #define THR_SUSPENDED   CREATE_SUSPENDED
+#endif /* ACE_HAS_DCETHREADS || ACE_HAS_PTHREADS */
 #else /* !ACE_HAS_THREADS, i.e., the OS/platform doesn't support threading. */
 // Give these things some reasonable value...
 #define THR_CANCEL_DISABLE      0
@@ -874,7 +875,6 @@ typedef int ACE_rwlock_t;
 typedef int ACE_thread_t;
 typedef int ACE_hthread_t;
 typedef int ACE_thread_key_t;
-#endif /* ACE_HAS_DCETHREADS || ACE_HAS_PTHREADS */
 #endif /* ACE_HAS_THREADS */
 
 #include /**/ <sys/types.h>
@@ -1062,6 +1062,7 @@ typedef void (*ACE_SignalHandlerV)(...);
 #define ACE_LD_SEARCH_PATH_SEPARATOR_STR ";"
 #define ACE_LOGGER_KEY __TEXT ("\\temp\\server_daemon")
 #define ACE_DLL_SUFFIX ".dll"
+#define ACE_DLL_PREFIX ""
 
 // This will help until we figure out everything:
 #define NFDBITS 32 // only used in unused functions...
@@ -1289,6 +1290,7 @@ typedef char TCHAR;
 #define ACE_LD_SEARCH_PATH_SEPARATOR_STR ":"
 #define ACE_LOGGER_KEY "/tmp/server_daemon"
 #define ACE_DLL_SUFFIX ".so"
+#define ACE_DLL_PREFIX "lib"
 
 // Wrapper for NT events on UNIX.
 struct ACE_event_t
@@ -2182,6 +2184,8 @@ public:
                          *optval, int *optlen);
   static long inet_addr (const char *name);
   static char *inet_ntoa (const struct in_addr addr);
+  static int inet_aton (const char *strptr, struct in_addr *addr);
+
   static int listen (ACE_HANDLE handle, int backlog);
   static int recv (ACE_HANDLE handle, char *buf, int len, int flags = 0);
   static int recvfrom (ACE_HANDLE handle, char *buf, int len, int flags,

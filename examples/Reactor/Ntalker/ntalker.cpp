@@ -8,6 +8,7 @@
 #include "ace/INET_Addr.h"
 #include "ace/SOCK_Dgram_Mcast.h"
 #include "ace/Reactor.h"
+#include "ace/Get_Opt.h"
 
 #if defined (ACE_HAS_IP_MULTICAST)
 // network interface to subscribe to
@@ -132,13 +133,15 @@ Handle_Events::Handle_Events (u_short udp_port,
 static void
 parse_args (int argc, char *argv[])
 {
+  ACE_Get_Opt get_opt (argc, argv, "i:u");
+
   int c;
 
-  while ((c = ACE_OS::getopt (argc, argv, "i:u")) != -1)
+  while ((c = get_opt ()) != -1)
     switch (c)
       {
       case 'i':
-	INTERFACE = optarg;
+	INTERFACE = get_opt.optarg;
 	break;
       case 'u':
 	// Usage fallthrough.

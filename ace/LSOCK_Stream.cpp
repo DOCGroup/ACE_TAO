@@ -8,6 +8,13 @@
 
 ACE_ALLOC_HOOK_DEFINE(ACE_LSOCK_Stream)
 
+int
+ACE_LSOCK_Stream::get_remote_addr (ACE_Addr &a) const
+{
+  ACE_TRACE ("ACE_LSOCK_Stream::get_remote_addr");
+  return this->get_local_addr (a);
+}
+
 void
 ACE_LSOCK_Stream::dump (void) const
 {

@@ -95,6 +95,11 @@ public:
   // inserted consecutively.  Returns -1 on failure, else the number
   // of items still on the queue.
 
+  int enqueue (ACE_Message_Block *new_item, ACE_Time_Value *tv = 0);
+  // This is an alias for <enqueue_prio>.  It's only here for
+  // backwards compatibility and will go away in a subsequent release.
+  // Please use <enqueue_prio> instead.
+
   int enqueue_tail (ACE_Message_Block *new_item, ACE_Time_Value *tv = 0);
   // Enqueue an <ACE_Message_Block *> at the end of the queue.
   // Returns -1 on failure, else the number of items still on the

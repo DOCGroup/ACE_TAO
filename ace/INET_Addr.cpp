@@ -181,9 +181,7 @@ ACE_INET_Addr::set (u_short port_number,
       errno = EINVAL;
       return -1;
     }
-  else if ((addr = ACE_OS::inet_addr (host_name)) != (ACE_UINT32) -1
-	   // Broadcast addresses are weird...
-	   || ACE_OS::strcmp (host_name, "255.255.255.255") == 0) 
+  else if (ACE_OS::inet_aton (host_name, (struct in_addr *) &addr) == 1)
     return this->set (port_number, encode ? ntohl (addr) : addr, encode);
 
   else 

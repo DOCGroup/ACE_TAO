@@ -37,6 +37,7 @@ public:
 
   ACE_HANDLE get_handle (void) const;
   // Get handle.
+
   void set_handle (ACE_HANDLE fd); 
   // Overrides set_handle from the base classes.
 
@@ -46,9 +47,9 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
 
-private:
   int get_remote_addr (ACE_Addr &) const; 
-  // Do not allow this function to percolate up to this interface...
+  // This method simply returns the "local" addr (since they are the
+  // same for UNIX domain sockets).
 };
 
 #include "ace/LSOCK_Stream.i"
