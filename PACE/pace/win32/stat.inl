@@ -49,7 +49,7 @@ PACE_INLINE
 int
 pace_mkdir (const char * path, pace_mode_t mode)
 {
-  return win32_mkdir (path, mode);
+  return pace_win32_mkdir (path, mode);
 }
 #endif /* PACE_HAS_POSIX_FS_UOF */
 
