@@ -59,7 +59,7 @@ TAO_EC_Conjunction_Filter::all_received (void) const
       if (*i != ACE_static_cast(Word,~0))
         return 0;
     }
-  return 0;
+  return 1;
 }
 
 TAO_EC_Filter::ChildrenIterator
@@ -108,7 +108,7 @@ TAO_EC_Conjunction_Filter::filter_nocopy (RtecEventComm::EventSet& event,
        i != end;
        ++i)
     {
-      int n = (*i)->filter (event, qos_info, ACE_TRY_ENV);
+      int n = (*i)->filter_nocopy (event, qos_info, ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
       if (n != 0)
         return n;
@@ -164,7 +164,7 @@ TAO_EC_Conjunction_Filter::clear (void)
       *j = 0;
     }
   int b = this->n_ % bits_per_word;
-  Word last = ~(~0 << b);
+  Word last = ~0 << b;
   *j = last;
 
   this->event_.length (0);
