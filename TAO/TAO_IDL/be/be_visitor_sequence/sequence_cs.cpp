@@ -218,23 +218,28 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
           nt = td->base_node_type ();
         }
 
-      // Explicit instantiations for unbounded sequences with elements of
-      // basic IDL types are in TAO. Sequences of (w)strings in TAO are
-      // specializations and so are not template classes.
-      if (nt != AST_Decl::NT_pre_defined
-          && nt != AST_Decl::NT_string
-          && nt != AST_Decl::NT_wstring)
+      
+      if (! bt->seen_in_sequence ())
         {
-          if (this->gen_base_class_tmplinst (node, bt) == -1)
+          // basic IDL types are in TAO. Sequences of (w)strings in TAO are
+          // specializations and so are not template classes.
+          if (nt != AST_Decl::NT_pre_defined
+              && nt != AST_Decl::NT_string
+              && nt != AST_Decl::NT_wstring)
             {
-              return -1;
+              if (this->gen_base_class_tmplinst (node, bt) == -1)
+                {
+                  return -1;
+                }
             }
+
+          bt->seen_in_sequence (I_TRUE);
         }
     }
 
   os->gen_endif ();
 
-  node->cli_stub_gen (1);
+  node->cli_stub_gen (I_TRUE);
   return 0;
 }
 
@@ -621,7 +626,7 @@ be_visitor_sequence_cs::gen_varout_tmplinst (be_sequence *node,
             << bt->name () << "_var, \\" << be_nl
             << bt->fwd_helper_name () << "_life \\" << be_uidt_nl
             << "> \\" << be_uidt << be_uidt_nl
-            << ">" << be_uidt << be_uidt;
+            << ">" << be_uidt << be_uidt << be_uidt;
 
         break;
       case be_sequence::MNG_ABSTRACT:
@@ -816,7 +821,7 @@ be_visitor_sequence_cs::gen_varout_tmplinst (be_sequence *node,
 
 int
 be_visitor_sequence_cs::gen_base_class_tmplinst (be_sequence *node,
-                                                 be_type * /*elem*/)
+                                                 be_type *elem)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
