@@ -1,3 +1,17 @@
+Wed Sep 30 02:44:59 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao: Removed some cases of explicit template instantiation of
+ 	  ACE_Hash_Addr from TAO since it is no longer used inside the
+ 	  cached connector. It is still necessary since it is used inside
+	  the collocation table.
+
+	* tao/ORB_Core: Changed return type of ACE_Hash_Addr::hash_i() to
+ 	  u_long.  Also added template specialization for
+ 	  ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>::hash_i().
+	
+	* tao/POA.cpp (dispatch_servant_i): Reduced access to
+	  TAO_ORB_Core_instance() inside the POA.
+
 Wed Sep 30 02:18:36 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* performance-tests/Cubit/TAO/IDL_Cubit/README: 
