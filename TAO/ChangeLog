@@ -1,3 +1,17 @@
+Wed Oct 15 16:15:14 UTC 2003 Kevin Bryan  <bryank@cs.uri.edu>
+        * orbsvcs/orbsvcs/Makefile.RTCosScheduling:
+        * orbsvcs/orbsvcs/orbsvcs.dsw:
+        * orbsvcs/orbsvcs/RTCosScheduling.mpc:
+        * orbsvcs/tests/Makefile:
+        * orbsvcs/tests/Makefile.am:
+        * orbsvcs/tests/Makefile.bor:
+        * orbsvcs/tests/tests.dsw:
+          Enable building the RTCosScheduling directory.
+          Added RTCosScheduling.dsp to the orbsvcs.dsw file to get Windows to compile it.
+          The RTCosScheduling{S,C} files weren't being put in the lib (.mpc change)
+          The libTAO_RTCosScheduling.so was being put in lib instead of
+          ace, even for non mpc builds.
+
 Wed Oct 15 11:23:43 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/RTCosScheduling_Static.dsp:

@@ -11,6 +11,8 @@ project : orbsvcslib, rtportableserver {
   Source_Files(ORBSVCS_COMPONENTS) {
     RTCosScheduling {
         RTCosScheduling
+        RTCosSchedulingC.cpp
+        RTCosSchedulingS.cpp
     }
   }
   Template_Files {

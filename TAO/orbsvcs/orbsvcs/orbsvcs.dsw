@@ -279,6 +279,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "RTCosScheduling"=.\RTCosScheduling.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "RTEvent"=.\RTEvent.dsp - Package Owner=<4>
 
 Package=<5>
