@@ -1,93 +1,99 @@
+Fri Aug 06 10:39:36 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * performance-tests/Cubit/TAO/MT_Cubit/Globals.cpp (get_low_priority):
+          added some ACE_UNUSED_ARGS when ACE_HAS_THREADS isn't #defined.
+          Thanks to Carlos for reporting this, automatically.
+
 Thu Aug  5 19:13:36 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/tests/EC_Basic/EC_Basic.cpp:
-	  Fixed the test, it was crashing because the disconnect() call
-	  was effectively disabling any chance of reconnecting the
-	  suppliers. This fixes [BUGID:209]
+        * orbsvcs/tests/EC_Basic/EC_Basic.cpp:
+          Fixed the test, it was crashing because the disconnect() call
+          was effectively disabling any chance of reconnecting the
+          suppliers. This fixes [BUGID:209]
 
 Thu Aug  5 17:19:43 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/Xt_Stopwatch/README: Updated the file to add some info
-	  about the svc.conf file and the resources that needs to be set.
-  	  Thanks to Arno Pernozzoli <pernozzoli@bigfoot.com> for
- 	  suggesting this.
+        * tests/Xt_Stopwatch/README: Updated the file to add some info
+          about the svc.conf file and the resources that needs to be set.
+          Thanks to Arno Pernozzoli <pernozzoli@bigfoot.com> for
+          suggesting this.
 
 Thu Aug  5 16:36:18 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* Benchmark/benchmark/Makefile:
-	* examples/POA/Generic_Servant/Makefile:
-	* examples/Simple/time-date/Makefile:
-	* orbsvcs/orbsvcs/Makefile:
-	* orbsvcs/tests/Event/lib/Makefile:
-	* orbsvcs/tests/Trading/Makefile:
-	* tao/Makefile:
-	  Changed to use the new ACE_SHLIBS macro, this should let TAO
-	  compile under AIX, fixing [BUGID:171]
+        * Benchmark/benchmark/Makefile:
+        * examples/POA/Generic_Servant/Makefile:
+        * examples/Simple/time-date/Makefile:
+        * orbsvcs/orbsvcs/Makefile:
+        * orbsvcs/tests/Event/lib/Makefile:
+        * orbsvcs/tests/Trading/Makefile:
+        * tao/Makefile:
+          Changed to use the new ACE_SHLIBS macro, this should let TAO
+          compile under AIX, fixing [BUGID:171]
 
 Thu Aug  5 16:04:04 1999  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
 
-	* tests/XtStopwatch: Updated this test to make the code 
-	  conform to the TAO programming style.
+        * tests/XtStopwatch: Updated this test to make the code
+          conform to the TAO programming style.
 
 Thu Aug  5 15:46:38 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Event/EC_Type_Filter.cpp:
-	  Fixed the wildcard matching routines, wildcards on the producers 
-	  where not matched properly. This fixes [BUGID:96]
+        * orbsvcs/orbsvcs/Event/EC_Type_Filter.cpp:
+          Fixed the wildcard matching routines, wildcards on the producers
+          where not matched properly. This fixes [BUGID:96]
 
-	* orbsvcs/tests/Event/Basic/Makefile:
-	* orbsvcs/tests/Event/Basic/run_test.pl:
-	* orbsvcs/tests/Event/Basic/Wildcard.h:
-	* orbsvcs/tests/Event/Basic/Wildcard.cpp:
-	  Added a new test to verify that the wildcard features in the
-	  event channel do work. Thanks to Paul Calabrese for pointing out 
-	  these problems.
+        * orbsvcs/tests/Event/Basic/Makefile:
+        * orbsvcs/tests/Event/Basic/run_test.pl:
+        * orbsvcs/tests/Event/Basic/Wildcard.h:
+        * orbsvcs/tests/Event/Basic/Wildcard.cpp:
+          Added a new test to verify that the wildcard features in the
+          event channel do work. Thanks to Paul Calabrese for pointing out
+          these problems.
 
 Thu Aug 05 15:29:16 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* performance-tests/Cubit/TAO/IDL_Cubit/collocation_test.cpp
-	  (main): Unlink the ior file when we are done.
+        * performance-tests/Cubit/TAO/IDL_Cubit/collocation_test.cpp
+          (main): Unlink the ior file when we are done.
 
 Thu Aug 05 14:57:00 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tests/Collocation/Coll_Test_Skels.dsp:
-	* tests/Collocation/skel_export.h:
-	  Replaced these two files with Diamond.dsp and diamond_export.h.
+        * tests/Collocation/Coll_Test_Skels.dsp:
+        * tests/Collocation/skel_export.h:
+          Replaced these two files with Diamond.dsp and diamond_export.h.
 
-	* tests/Collocation/Diamond.dsp:
-	* tests/Collocation/diamond_export.h: The new Diamond library
-	  contains not only the skeletons but also the implementations for
-	  Diamond objects.
+        * tests/Collocation/Diamond.dsp:
+        * tests/Collocation/diamond_export.h: The new Diamond library
+          contains not only the skeletons but also the implementations for
+          Diamond objects.
 
-	* tests/Collocation/Diamond_i.h: Added Diamond_Export to all
-	  classes.
+        * tests/Collocation/Diamond_i.h: Added Diamond_Export to all
+          classes.
 
-	* tests/Collocation/Coll_Test_Stubs.dsp: Updated the IDL custom
-	  build settings.
+        * tests/Collocation/Coll_Test_Stubs.dsp: Updated the IDL custom
+          build settings.
 
-	* tests/Collocation/Collocation.dsp: Removed Diamond.idl from the
-	  project.  It no longer depends on it.  Change the use of skel
-	  library to Diamond library.
+        * tests/Collocation/Collocation.dsp: Removed Diamond.idl from the
+          project.  It no longer depends on it.  Change the use of skel
+          library to Diamond library.
 
-	* tests/Collocation/Collocation.dsw:
-	* tests/Collocation/README: Adapt the above changes.
+        * tests/Collocation/Collocation.dsw:
+        * tests/Collocation/README: Adapt the above changes.
 
-	  Thanks to Francois Bernier <fbernier@gel.ulaval.ca> for
-	  motivating the change.
+          Thanks to Francois Bernier <fbernier@gel.ulaval.ca> for
+          motivating the change.
 
 Thu Aug 05 14:38:48 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* TAO_IDL/be_include/be_interface.cpp (be_interface_type_strategy):
-	* TAO_IDL/be/be_interface.cpp (be_interface_type_strategy,
-	  compute_coll_names,full_coll_name,local_coll_name): Some fixes
-	  to the collocation name computations got erased during recent
-	  AMI merge.
+        * TAO_IDL/be_include/be_interface.cpp (be_interface_type_strategy):
+        * TAO_IDL/be/be_interface.cpp (be_interface_type_strategy,
+          compute_coll_names,full_coll_name,local_coll_name): Some fixes
+          to the collocation name computations got erased during recent
+          AMI merge.
 
 Thu Aug  5 12:46:15 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* TAO_IDL/driver/drv_args.cpp (DRV_usage): Improved the IDL compiler
-	  documentation for the -Ge option.  Thanks to Paul Calabrese
- 	  <calabrese_p@ociweb.com> for suggesting this.
+        * TAO_IDL/driver/drv_args.cpp (DRV_usage): Improved the IDL compiler
+          documentation for the -Ge option.  Thanks to Paul Calabrese
+          <calabrese_p@ociweb.com> for suggesting this.
 
 Thu Aug  5 12:47:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
@@ -99,7 +105,7 @@ Thu Aug  5 11:46:01 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
         * rules.tao.GNU: Moved  the definition of interface_repo from
           $ACE_ROOT/include/makeinclude/wrapper_macros.GNU here as per
- 	  Dr.Levine's suggestions
+          Dr.Levine's suggestions
 
         * tao/InterfaceC.h: Added #incude "tao/varout.h" to fix an error
           with SunCC4.2. This #include should bring in the definition of
