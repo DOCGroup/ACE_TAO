@@ -27,8 +27,8 @@ ace_main; unld "Hash_Map_Manager_Test"
 
 #### ld < Mem_Map_Test; ace_main; unld "Mem_Map_Test"
 
-ld < SV_Shared_Memory_Test
-ace_main; unld "SV_Shared_Memory_Test"
+#### SV_Shared_Memory not supported:
+#### ld < SV_Shared_Memory_Test
 
 #### ld < MM_Shared_Memory_Test; ace_main; unld "MM_Shared_Memory_Test"
 
@@ -54,8 +54,8 @@ ace_main; unld "Future_Test"
 
 #### ld < Reactors_Test; ace_main; unld "Reactors_Test"
 
-ld < Reactor_Exceptions_Test
-ace_main; unld "Reactor_Exceptions_Test"
+#### exceptions not supported:
+#### ld < Reactor_Exceptions_Test
 
 #### ld < Reactor_Notify_Test; ace_main; unld "Reactor_Notify_Test"
 
@@ -70,11 +70,11 @@ ace_main; unld "SOCK_Test"
 
 #### ld < Conn_Test; ace_main; unld "Conn_Test"
 
-ld < SPIPE_Test
-ace_main; unld "SPIPE_Test"
+#### SPIPE not supported:
+#### ld < SPIPE_Test
 
-ld < UPIPE_SAP_Test
-ace_main; unld "UPIPE_SAP_Test"
+#### UPIPE not supported:
+#### ld < UPIPE_SAP_Test
 
 ld < Barrier_Test
 ace_main; unld "Barrier_Test"
