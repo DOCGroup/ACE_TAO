@@ -4,6 +4,10 @@ Mon Jan 26 13:20:58 1998  David L. Levine  <levine@cs.wustl.edu>
           prof_ace_os_thread): changed type of local j to int to avoid
           signed/unsigned comparison.
 
+        * tests/Reactors_Test (Test_Task): changed type of member
+          handled_ from int to size_t to avoid signed/unsigned comparison
+          in Test_Task::handle_input ().
+
 Mon Jan 26 11:35:54 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* bin/auto_compile:
