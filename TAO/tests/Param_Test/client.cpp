@@ -52,7 +52,7 @@ Param_Test_Client<T>::run_sii_test (void)
   CORBA::Environment env; // to track errors
   Options *opt = OPTIONS::instance (); // get the options
   const char *opname = this->test_object_->opname (); // operation
-  
+
   ACE_DEBUG ((LM_DEBUG,
               "********** %s SII *********\n",
               opname));
@@ -192,7 +192,7 @@ Param_Test_Client<T>::run_dii_test (void)
 
       // create the request
       CORBA::Request_var req;
-      CORBA::NamedValue_ptr result = 
+      CORBA::NamedValue_ptr result =
 	CORBA::NamedValue::_duplicate (retval->item (0, env));
       this->param_test_->_create_request (opname,
                                           nvlist,
@@ -209,13 +209,18 @@ Param_Test_Client<T>::run_dii_test (void)
         ACE_DEBUG ((LM_DEBUG, "\n****** Before call values *****\n"));
 
       // Make the invocation, verify the result.
-      req->invoke ();
-      if (req->env ()->exception () != 0)
+      TAO_TRY_VAR (*req->env ())
+        {
+          this->test_object_->dii_req_invoke (req);
+          TAO_CHECK_ENV;
+        }
+      TAO_CATCHANY
         {
           this->results_.error_count (this->results_.error_count () + 1);
           req->env ()->print_exception (opname);
           continue;
         }
+      TAO_ENDTRY;
 
       if (opt->debug ())
         {

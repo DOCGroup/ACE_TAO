@@ -42,6 +42,12 @@ Test_Short::opname (void) const
   return this->opname_;
 }
 
+void
+Test_Short::dii_req_invoke (CORBA::Request *req)
+{
+  req->invoke ();
+}
+
 int
 Test_Short::init_parameters (Param_Test_ptr objref,
                              CORBA::Environment &env)
@@ -153,5 +159,3 @@ Test_Short::print_values (void)
               this->out_,
               this->ret_));
 }
-
-

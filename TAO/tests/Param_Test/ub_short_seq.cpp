@@ -46,6 +46,12 @@ Test_Short_Sequence::opname (void) const
   return this->opname_;
 }
 
+void
+Test_Short_Sequence::dii_req_invoke (CORBA::Request *req)
+{
+  req->invoke ();
+}
+
 int
 Test_Short_Sequence::init_parameters (Param_Test_ptr objref,
                                       CORBA::Environment &env)
@@ -105,7 +111,7 @@ Test_Short_Sequence::add_args (CORBA::NVList_ptr param_list,
   CORBA::Any inout_arg (Param_Test::_tc_Short_Seq,
                         &this->inout_.inout (),
                         0);
- 
+
   CORBA::Any out_arg (Param_Test::_tc_Short_Seq,
                       &this->out_.inout (), // .out () causes crash
                       0);
@@ -213,4 +219,3 @@ Test_Short_Sequence::print_values (void)
     ACE_DEBUG ((LM_DEBUG, "\nin sequence is NUL\n"));
   ACE_DEBUG ((LM_DEBUG, "\n*=*=*=*=*=*=*=*=*=*=\n"));
 }
-

@@ -48,6 +48,12 @@ Test_AnySeq::opname (void) const
   return this->opname_;
 }
 
+void
+Test_AnySeq::dii_req_invoke (CORBA::Request *req)
+{
+  req->invoke ();
+}
+
 int
 Test_AnySeq::init_parameters (Param_Test_ptr objref,
                               CORBA::Environment &env)
@@ -98,7 +104,7 @@ Test_AnySeq::init_parameters (Param_Test_ptr objref,
             TAO_CATCH (CORBA::SystemException, sysex)
               {
                 ACE_UNUSED_ARG (sysex);
-                TAO_TRY_ENV.print_exception 
+                TAO_TRY_ENV.print_exception
 		  ("System Exception doing make_coffee");
                 return -1;
               }
@@ -184,15 +190,15 @@ Test_AnySeq::add_args (CORBA::NVList_ptr param_list,
                        CORBA::NVList_ptr retval,
                        CORBA::Environment &env)
 {
-  CORBA::Any in_arg (Param_Test::_tc_AnySeq, 
-                     (void *) &this->in_.in (), 
+  CORBA::Any in_arg (Param_Test::_tc_AnySeq,
+                     (void *) &this->in_.in (),
                      0);
 
-  CORBA::Any inout_arg (Param_Test::_tc_AnySeq, 
-                        &this->inout_.inout (), 
+  CORBA::Any inout_arg (Param_Test::_tc_AnySeq,
+                        &this->inout_.inout (),
                         0);
-  
-  CORBA::Any out_arg (Param_Test::_tc_AnySeq, 
+
+  CORBA::Any out_arg (Param_Test::_tc_AnySeq,
                       &this->out_.inout (), // .out () causes crash
                       0);
 
@@ -215,7 +221,7 @@ Test_AnySeq::add_args (CORBA::NVList_ptr param_list,
   // add return value type
   retval->item (0, env)->value ()->replace (Param_Test::_tc_AnySeq,
 					    // see above
-					    &this->ret_.inout (), 
+					    &this->ret_.inout (),
 					     // does not own
                                             0, env);
   return 0;

@@ -54,6 +54,12 @@ Test_Bounded_String::opname (void) const
   return this->opname_;
 }
 
+void
+Test_Bounded_String::dii_req_invoke (CORBA::Request *req)
+{
+  req->invoke ();
+}
+
 int
 Test_Bounded_String::init_parameters (Param_Test_ptr objref,
 				      CORBA::Environment &env)
@@ -184,4 +190,3 @@ Test_Bounded_String::print_values (void)
               (this->ret_ ? ACE_OS::strlen (this->ret_):0),
               (this->ret_ ? this->ret_:"<nul string>")));
 }
-
