@@ -2,33 +2,37 @@ PLANNED MAJOR CHANGES TARGETED FOR DAnCE-0.4.3
 ====================================================
 
  . Convert C++ datastructures generated from XSC to IDL data types
-   defined in D+C. 
+   defined in D+C. (Boris, Jules, Kitty)
      
- . Change spec defined IDL's for adding policies
+ . Change spec defined IDL's for adding policies (Depends on last)
 
- . Attribute configuration, atleast the basic types
+ . Attribute configuration, atleast the basic types. (Jules, Bala)
 
- . Support homeless component deployment
+ . Support homeless component deployment (Low priority)
 
- . Allow colocated and non-collocated decisions within the schema
-
- . Add binding to the NameService
+ . Allow colocated and non-colocated decisions within the schema
+   (Arvind)
+  
+ . Add binding to the NameService (Gan Deng)
 
  . Connections to supported interfaces. 
 
  . Split the current NodeApplication entity into
    ComponentServer(still bearing the name "NodeApplication" though)
-   and  Container. 
+   and  Container. (Tao)
 
  . NodeApplication will be responsible for creating Containers for an
    assembly. Atleast 1 per node application will be created to start
-   off. 
+   off.  (Tao)
 
- . Have more than one NodeApplicationManager within the NodeManager
+ . Have more than one NodeApplicationManager within the NodeManager (Tao)
 
- . Event Channel Integration
+ . Event Channel Integration (Amogh Kavimandan)
 
- . Tools for dynamic replacement of components
+ . Tools for dynamic replacement of components (Dr. Schmidt)
 
- . Thread pools and the like. 
- 
+ . Thread pools and the like. (Bala and Nanbor).
+
+ . Dependencies during deployment.
+
+ . Static Configuration for DAnCE (??) 

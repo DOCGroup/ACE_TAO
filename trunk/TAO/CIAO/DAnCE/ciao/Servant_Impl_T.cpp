@@ -26,6 +26,25 @@ namespace CIAO
             typename CONTEXT>
   Servant_Impl<BASE_SKEL, EXEC, EXEC_VAR, CONTEXT>::~Servant_Impl (void)
   {
+    ACE_TRY_NEW_ENV
+    {
+      ::Components::SessionComponent_var scom =
+      ::Components::SessionComponent::_narrow (
+      this->executor_.in ()
+      ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      if (! ::CORBA::is_nil (scom.in ()))
+      {
+        scom->ccm_remove (ACE_ENV_SINGLE_ARG_PARAMETER);
+      }
+    }
+    ACE_CATCHANY
+    {
+    }
+    ACE_ENDTRY;
+
+    this->context_->_remove_ref ();
   }
 
   template <typename BASE_SKEL,
@@ -88,6 +107,35 @@ namespace CIAO
       }
 
     return retval._retn ();
+  }
+
+  template <typename BASE_SKEL,
+            typename EXEC,
+            typename EXEC_VAR,
+            typename CONTEXT>
+  CORBA::Boolean
+  Servant_Impl<BASE_SKEL, EXEC, EXEC_VAR, CONTEXT>::same_component (
+      CORBA::Object_ptr object_ref
+      ACE_ENV_ARG_DECL
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException))
+  {
+    if (::CORBA::is_nil (object_ref))
+    {
+      ACE_THROW_RETURN (::CORBA::BAD_PARAM (), 0);
+    }
+
+    ::CORBA::Object_var the_other =
+    object_ref->_get_component (ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_CHECK_RETURN (0);
+
+    ::CORBA::Object_var me =
+    this->context_->get_CCM_object (ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_CHECK_RETURN (0);
+
+    return me->_is_equivalent (
+    the_other.in ()
+    ACE_ENV_ARG_PARAMETER);
   }
 }
 
