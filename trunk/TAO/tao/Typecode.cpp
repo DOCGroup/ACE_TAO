@@ -2161,3 +2161,13 @@ CORBA::TypeCode::private_alignment (CORBA::Environment &ACE_TRY_ENV)
   private_state_->tc_alignment_ = alignment;
   return alignment;
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+template class TAO_Pseudo_Object_Manager<CORBA_TypeCode,CORBA_TypeCode_var>;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate TAO_Pseudo_Object_Manager<CORBA_TypeCode,CORBA_TypeCode_var>
+
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
