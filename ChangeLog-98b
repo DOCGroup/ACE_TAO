@@ -1,3 +1,13 @@
+Thu Oct  8 12:11:08 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* examples/IPC_SAP/SOCK_SAP/run_test: 
+	* examples/IPC_SAP/SOCK_SAP/summarize:
+		
+        Added these scripts to run the test and summarize the
+        results. These scripts are modelled similar to the
+        $TAO_ROOT/performance-tests/Cubit/TAO/MT_Cubit scripts.
+        Thanks to David for the scripts.
+
 Thu Oct 08 08:23:09 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/High_Res_Timer.cpp (get_registry_scale_factor):
