@@ -9,6 +9,9 @@ Wed Jan 28 09:14:30 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	  Fixed order for libraries, -lserver uses -lTAO so it must go
 	  first.
 
+	* orbsvcs/orbsvcs/Makefile: 
+	  Another case of misplaced includes.
+
 Tue Jan 27 17:29:11 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tests/Cubit/TAO/IDL_Cubit/Makefile: 
