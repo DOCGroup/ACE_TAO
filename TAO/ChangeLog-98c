@@ -1,3 +1,9 @@
+Fri Oct 23 16:31:50 1998  Jeff Parsons <jp4@cs.wustl.edu>
+
+        * TAO/tests/DynAny_Test/da_tests.idl:
+          Removed da_tests.pidl and added above (same
+          file). My mistake.
+
 Fri Oct 23 15:54:13 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
         * TAO/tests/DynAny_Test/data.{h,cpp};
