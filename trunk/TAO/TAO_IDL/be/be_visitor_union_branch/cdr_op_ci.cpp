@@ -220,7 +220,7 @@ be_visitor_union_branch_cdr_op_ci::visit_enum (be_enum *node)
       return 0;
 
     case TAO_CodeGen::TAO_CDR_OUTPUT:
-      *os << "strm << _tao_union." << f->local_name () << " ();";
+      *os << "result = strm << _tao_union." << f->local_name () << " ();";
       return 0;
 
     case TAO_CodeGen::TAO_CDR_SCOPE:
