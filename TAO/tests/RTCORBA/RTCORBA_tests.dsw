@@ -99,6 +99,30 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Private_Connection Client"=.\Private_Connection\client.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Private_Connection Server"=.\Private_Connection\server.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Server_Declared Client"=.\Server_Declared\client.dsp - Package Owner=<4>
 
 Package=<5>

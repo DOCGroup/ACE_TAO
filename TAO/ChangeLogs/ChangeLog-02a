@@ -1,3 +1,22 @@
+Mon Nov 20 05:04:01 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* tests/RTCORBA/RTCORBA_tests.dsw
+	* tests/RTCORBA/Makefile.bor
+	* tests/RTCORBA/Makefile
+	* tests/RTCORBA/Private_Connection/Makefile.bor
+	* tests/RTCORBA/Private_Connection/Private_Connection.dsw
+	* tests/RTCORBA/Private_Connection/README
+	* tests/RTCORBA/Private_Connection/client.bor
+	* tests/RTCORBA/Private_Connection/client.cpp
+	* tests/RTCORBA/Private_Connection/client.dsp
+	* tests/RTCORBA/Private_Connection/run_test.pl
+	* tests/RTCORBA/Private_Connection/server.bor
+	* tests/RTCORBA/Private_Connection/server.cpp
+	* tests/RTCORBA/Private_Connection/server.dsp
+	* tests/RTCORBA/Private_Connection/test.idl:
+
+	  Added a test for RTCORBA::PrivateConnectionPolicy.
+
 Mon Nov 20 01:16:38 2000  Ossama Othman  <ossama@uci.edu>
 
 	* docs/interceptors.html:
