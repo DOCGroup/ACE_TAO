@@ -172,4 +172,3 @@ TAO_EC_ProxyPushConsumer::_remove_ref (CORBA::Environment &)
 {
   this->_decr_refcnt ();
 }
-

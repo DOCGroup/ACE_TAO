@@ -98,6 +98,9 @@ private:
   PortableServer::POA_var default_POA_;
   // Store the default POA.
 
+  ACE_Lock* lock_;
+  // The locking strategy
+
   ConsumerSet all_consumers_;
   // The set of consumers...
 };

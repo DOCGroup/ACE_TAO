@@ -107,3 +107,27 @@ TAO_EC_Event_Channel::destroy_supplier_lock (ACE_Lock* x)
 {
   this->factory_->destroy_supplier_lock (x);
 }
+
+ACE_INLINE ACE_Lock*
+TAO_EC_Event_Channel::create_consumer_admin_lock (void)
+{
+  return this->factory_->create_consumer_admin_lock ();
+}
+
+ACE_INLINE void
+TAO_EC_Event_Channel::destroy_consumer_admin_lock (ACE_Lock* x)
+{
+  this->factory_->destroy_consumer_admin_lock (x);
+}
+
+ACE_INLINE ACE_Lock*
+TAO_EC_Event_Channel::create_supplier_admin_lock (void)
+{
+  return this->factory_->create_supplier_admin_lock ();
+}
+
+ACE_INLINE void
+TAO_EC_Event_Channel::destroy_supplier_admin_lock (ACE_Lock* x)
+{
+  this->factory_->destroy_supplier_admin_lock (x);
+}

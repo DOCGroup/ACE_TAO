@@ -133,26 +133,74 @@ TAO_EC_Basic_ObserverStrategy::remove_observer (
 
 void
 TAO_EC_Basic_ObserverStrategy::connected (TAO_EC_ProxyPushConsumer*,
-                                         CORBA::Environment &)
+                                          CORBA::Environment &ACE_TRY_ENV)
 {
+  RtecEventChannelAdmin::ConsumerQOS c_qos;
+  this->fill_qos (c_qos, ACE_TRY_ENV);
+  ACE_CHECK;
+
+  for (Observer_Map_Iterator i  = this->observers_.begin ();
+       i != this->observers_.end ();
+       ++i)
+    {
+      Observer_Entry& entry = (*i).int_id_;
+      entry.observer->update_consumer (c_qos, ACE_TRY_ENV);
+      ACE_CHECK;
+    }
 }
 
 void
 TAO_EC_Basic_ObserverStrategy::disconnected (TAO_EC_ProxyPushConsumer*,
-                                            CORBA::Environment &)
+                                            CORBA::Environment &ACE_TRY_ENV)
 {
+  RtecEventChannelAdmin::ConsumerQOS c_qos;
+  this->fill_qos (c_qos, ACE_TRY_ENV);
+  ACE_CHECK;
+
+  for (Observer_Map_Iterator i  = this->observers_.begin ();
+       i != this->observers_.end ();
+       ++i)
+    {
+      Observer_Entry& entry = (*i).int_id_;
+      entry.observer->update_consumer (c_qos, ACE_TRY_ENV);
+      ACE_CHECK;
+    }
 }
 
 void
 TAO_EC_Basic_ObserverStrategy::connected (TAO_EC_ProxyPushSupplier*,
-                                         CORBA::Environment &)
+                                         CORBA::Environment &ACE_TRY_ENV)
 {
+  RtecEventChannelAdmin::SupplierQOS s_qos;
+  this->fill_qos (s_qos, ACE_TRY_ENV);
+  ACE_CHECK;
+
+  for (Observer_Map_Iterator i  = this->observers_.begin ();
+       i != this->observers_.end ();
+       ++i)
+    {
+      Observer_Entry& entry = (*i).int_id_;
+      entry.observer->update_supplier (s_qos, ACE_TRY_ENV);
+      ACE_CHECK;
+    }
 }
 
 void
 TAO_EC_Basic_ObserverStrategy::disconnected (TAO_EC_ProxyPushSupplier*,
-                                            CORBA::Environment &)
+                                            CORBA::Environment &ACE_TRY_ENV)
 {
+  RtecEventChannelAdmin::SupplierQOS s_qos;
+  this->fill_qos (s_qos, ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+
+  for (Observer_Map_Iterator i  = this->observers_.begin ();
+       i != this->observers_.end ();
+       ++i)
+    {
+      Observer_Entry& entry = (*i).int_id_;
+      entry.observer->update_supplier (s_qos, ACE_TRY_ENV);
+      ACE_CHECK;
+    }
 }
 
 void
@@ -202,7 +250,7 @@ TAO_EC_Basic_ObserverStrategy::fill_qos (
 
   RtecEventChannelAdmin::DependencySet& dep = qos.dependencies;
 
-  dep.length (count + 1);
+  dep.length (count);
 
   dep[0].event.header.type = ACE_ES_DISJUNCTION_DESIGNATOR;
   dep[0].event.header.source = 0;

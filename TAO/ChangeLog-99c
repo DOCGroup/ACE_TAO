@@ -1,3 +1,40 @@
+Tue May  4 09:47:04 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Event/EC_ObserverStrategy.cpp:
+	  Completed implementation of the EC_Basic_ObserverStrategy.
+	  Fixed computation of the consumers subscription list.
+	  Thanks to J. Russell Noseworthy <rnosewor@objectsciences.com>
+	  for helping out with this.
+
+	* orbsvcs/orbsvcs/Event/EC_Event_Channel.h:
+	* orbsvcs/orbsvcs/Event/EC_Event_Channel.i:
+	* orbsvcs/orbsvcs/Event/EC_SupplierAdmin.h:
+	* orbsvcs/orbsvcs/Event/EC_SupplierAdmin.cpp:
+	  Added locking on the SupplierAdmin object, the ConsumerAdmin
+	  does not need it since the locking is handled by its
+	  SupplierSet.
+
+	* orbsvcs/orbsvcs/Event/EC_Gateway.cpp:
+	  Cleaned up publication list computation, thanks to J. Russell
+	  Noseworthy <rnosewor@objectsciences.com> for helping out with
+	  this.
+
+	* orbsvcs/Event_Service/svc.conf:
+	  Added locks for the ConsumerAdmin and SupplierAdmin modules.
+
+	* orbsvcs/orbsvcs/Event/EC_ProxyConsumer.cpp:
+	* orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp: 
+	  Minor cosmetic fixes.
+
+	* orbsvcs/tests/EC_Mcast/svc.conf:
+	  Added the right configuration options for the new EC.
+
+	* orbsvcs/tests/EC_Mcast/EC_Mcast.cpp:
+	  Added initialization of the EC_Default_Factory.
+	  Workaround what appears to be a bug in glibc2 implementation of
+	  rand_r(), it returns negative values but it should only return
+	  numbers in the range [0,RAND_MAX)
+
 Mon May  3 23:46:31 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/driver/drv_preproc.cpp:
