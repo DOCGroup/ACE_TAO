@@ -35,6 +35,7 @@
 
 #include "tao/IFR_Client/IFR_BasicC.h"
 #include "IFR_BaseS.h"
+#include "tao/ParameterModeS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -66,7 +67,6 @@ namespace POA_CORBA
   class Repository;
   typedef Repository *Repository_ptr;
   
-  class _TAO_Repository_ThruPOA_Proxy_Impl;
   class _TAO_Repository_Strategized_Proxy_Broker;
   
   class  Repository
@@ -89,41 +89,37 @@ namespace POA_CORBA
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
     
-    virtual void* _downcast (
-        const char* logical_type_id
-      );
-    
     static void _is_a_skel (
-        TAO_ServerRequest &req,
-        void *servant,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     static void _non_existent_skel (
-        TAO_ServerRequest &req,
-        void *servant,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     static void _interface_skel (
-        TAO_ServerRequest &req,
-        void *servant,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     static void _component_skel (
-        TAO_ServerRequest &req,
-        void *obj,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     virtual void _dispatch (
-        TAO_ServerRequest &req,
-        void *_servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall
         ACE_ENV_ARG_DECL
       );
     
@@ -145,9 +141,9 @@ namespace POA_CORBA
       )) = 0;
     
     static void lookup_id_skel (
-        TAO_ServerRequest &_tao_req,
-        void *_tao_servant,
-        void *_tao_servant_upcall
+        TAO_ServerRequest & server_request,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
@@ -163,9 +159,9 @@ namespace POA_CORBA
       )) = 0;
     
     static void get_canonical_typecode_skel (
-        TAO_ServerRequest &_tao_req,
-        void *_tao_servant,
-        void *_tao_servant_upcall
+        TAO_ServerRequest & server_request,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
@@ -181,9 +177,9 @@ namespace POA_CORBA
       )) = 0;
     
     static void get_primitive_skel (
-        TAO_ServerRequest &_tao_req,
-        void *_tao_servant,
-        void *_tao_servant_upcall
+        TAO_ServerRequest & server_request,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
@@ -199,9 +195,9 @@ namespace POA_CORBA
       )) = 0;
     
     static void create_string_skel (
-        TAO_ServerRequest &_tao_req,
-        void *_tao_servant,
-        void *_tao_servant_upcall
+        TAO_ServerRequest & server_request,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
@@ -217,9 +213,9 @@ namespace POA_CORBA
       )) = 0;
     
     static void create_wstring_skel (
-        TAO_ServerRequest &_tao_req,
-        void *_tao_servant,
-        void *_tao_servant_upcall
+        TAO_ServerRequest & server_request,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
@@ -236,9 +232,9 @@ namespace POA_CORBA
       )) = 0;
     
     static void create_sequence_skel (
-        TAO_ServerRequest &_tao_req,
-        void *_tao_servant,
-        void *_tao_servant_upcall
+        TAO_ServerRequest & server_request,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
@@ -255,9 +251,9 @@ namespace POA_CORBA
       )) = 0;
     
     static void create_array_skel (
-        TAO_ServerRequest &_tao_req,
-        void *_tao_servant,
-        void *_tao_servant_upcall
+        TAO_ServerRequest & server_request,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
@@ -274,9 +270,9 @@ namespace POA_CORBA
       )) = 0;
     
     static void create_fixed_skel (
-        TAO_ServerRequest &_tao_req,
-        void *_tao_servant,
-        void *_tao_servant_upcall
+        TAO_ServerRequest & server_request,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
@@ -289,7 +285,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     destroy_skel (
@@ -300,7 +296,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     lookup_skel (
@@ -311,7 +307,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     contents_skel (
@@ -322,7 +318,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     lookup_name_skel (
@@ -333,7 +329,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     describe_contents_skel (
@@ -344,7 +340,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_module_skel (
@@ -355,7 +351,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_constant_skel (
@@ -366,7 +362,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_struct_skel (
@@ -377,7 +373,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_union_skel (
@@ -388,7 +384,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_enum_skel (
@@ -399,7 +395,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_alias_skel (
@@ -410,7 +406,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_interface_skel (
@@ -421,7 +417,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_value_skel (
@@ -432,7 +428,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_value_box_skel (
@@ -443,7 +439,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_exception_skel (
@@ -454,7 +450,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_native_skel (
@@ -465,7 +461,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_abstract_interface_skel (
@@ -476,7 +472,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_local_interface_skel (
@@ -487,7 +483,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_ext_value_skel (
@@ -542,412 +538,6 @@ namespace POA_CORBA
   ///////////////////////////////////////////////////////////////////////
   
   
-  ///////////////////////////////////////////////////////////////////////
-  //                    ThruPOA Proxy Impl. Declaration
-  //
-  
-  // TAO_IDL - Generated from
-  // be\be_visitor_interface/thru_poa_proxy_impl_sh.cpp:37
-  
-  class  _TAO_Repository_ThruPOA_Proxy_Impl
-    : public virtual ::POA_CORBA::_TAO_Container_ThruPOA_Proxy_Impl
-  {
-  public:
-    _TAO_Repository_ThruPOA_Proxy_Impl (void);
-    
-    virtual ~_TAO_Repository_ThruPOA_Proxy_Impl (void) {}
-    
-    // TAO_IDL - Generated from
-    // be\be_visitor_operation/proxy_impl_xh.cpp:24
-    
-    static void
-    lookup_id (
-        TAO_Abstract_ServantBase *servant,
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_visitor_operation/proxy_impl_xh.cpp:24
-    
-    static void
-    get_canonical_typecode (
-        TAO_Abstract_ServantBase *servant,
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_visitor_operation/proxy_impl_xh.cpp:24
-    
-    static void
-    get_primitive (
-        TAO_Abstract_ServantBase *servant,
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_visitor_operation/proxy_impl_xh.cpp:24
-    
-    static void
-    create_string (
-        TAO_Abstract_ServantBase *servant,
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_visitor_operation/proxy_impl_xh.cpp:24
-    
-    static void
-    create_wstring (
-        TAO_Abstract_ServantBase *servant,
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_visitor_operation/proxy_impl_xh.cpp:24
-    
-    static void
-    create_sequence (
-        TAO_Abstract_ServantBase *servant,
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_visitor_operation/proxy_impl_xh.cpp:24
-    
-    static void
-    create_array (
-        TAO_Abstract_ServantBase *servant,
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_visitor_operation/proxy_impl_xh.cpp:24
-    
-    static void
-    create_fixed (
-        TAO_Abstract_ServantBase *servant,
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_def_kind (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    destroy (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    lookup (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    contents (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    lookup_name (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    describe_contents (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_module (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_constant (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_struct (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_union (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_enum (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_alias (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_interface (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_value (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_value_box (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_exception (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_native (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_abstract_interface (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_local_interface (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_ext_value (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-  };
-  
-  //
-  //                ThruPOA  Proxy Impl. Declaration
-  ///////////////////////////////////////////////////////////////////////
   
   // TAO_IDL - Generated from
   // be\be_visitor_interface/interface_sh.cpp:87
@@ -955,7 +545,6 @@ namespace POA_CORBA
   class ModuleDef;
   typedef ModuleDef *ModuleDef_ptr;
   
-  class _TAO_ModuleDef_ThruPOA_Proxy_Impl;
   class _TAO_ModuleDef_Strategized_Proxy_Broker;
   
   class  ModuleDef
@@ -979,41 +568,37 @@ namespace POA_CORBA
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
     
-    virtual void* _downcast (
-        const char* logical_type_id
-      );
-    
     static void _is_a_skel (
-        TAO_ServerRequest &req,
-        void *servant,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     static void _non_existent_skel (
-        TAO_ServerRequest &req,
-        void *servant,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     static void _interface_skel (
-        TAO_ServerRequest &req,
-        void *servant,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     static void _component_skel (
-        TAO_ServerRequest &req,
-        void *obj,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     virtual void _dispatch (
-        TAO_ServerRequest &req,
-        void *_servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall
         ACE_ENV_ARG_DECL
       );
     
@@ -1032,7 +617,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     destroy_skel (
@@ -1043,7 +628,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     lookup_skel (
@@ -1054,7 +639,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     contents_skel (
@@ -1065,7 +650,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     lookup_name_skel (
@@ -1076,7 +661,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     describe_contents_skel (
@@ -1087,7 +672,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_module_skel (
@@ -1098,7 +683,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_constant_skel (
@@ -1109,7 +694,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_struct_skel (
@@ -1120,7 +705,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_union_skel (
@@ -1131,7 +716,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_enum_skel (
@@ -1142,7 +727,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_alias_skel (
@@ -1153,7 +738,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_interface_skel (
@@ -1164,7 +749,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_value_skel (
@@ -1175,7 +760,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_value_box_skel (
@@ -1186,7 +771,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_exception_skel (
@@ -1197,7 +782,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_native_skel (
@@ -1208,7 +793,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_abstract_interface_skel (
@@ -1219,7 +804,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_local_interface_skel (
@@ -1230,7 +815,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_ext_value_skel (
@@ -1313,7 +898,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     describe_skel (
@@ -1324,7 +909,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     move_skel (
@@ -1379,416 +964,6 @@ namespace POA_CORBA
   ///////////////////////////////////////////////////////////////////////
   
   
-  ///////////////////////////////////////////////////////////////////////
-  //                    ThruPOA Proxy Impl. Declaration
-  //
-  
-  // TAO_IDL - Generated from
-  // be\be_visitor_interface/thru_poa_proxy_impl_sh.cpp:37
-  
-  class  _TAO_ModuleDef_ThruPOA_Proxy_Impl
-    : public virtual ::POA_CORBA::_TAO_Container_ThruPOA_Proxy_Impl,
-      public virtual ::POA_CORBA::_TAO_Contained_ThruPOA_Proxy_Impl
-  {
-  public:
-    _TAO_ModuleDef_ThruPOA_Proxy_Impl (void);
-    
-    virtual ~_TAO_ModuleDef_ThruPOA_Proxy_Impl (void) {}static void
-    _get_def_kind (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    destroy (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    lookup (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    contents (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    lookup_name (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    describe_contents (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_module (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_constant (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_struct (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_union (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_enum (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_alias (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_interface (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_value (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_value_box (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_exception (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_native (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_abstract_interface (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_local_interface (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_ext_value (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_id (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    static void
-    _set_id (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_name (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    static void
-    _set_name (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_version (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    static void
-    _set_version (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_defined_in (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_absolute_name (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_containing_repository (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    describe (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    move (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-  };
-  
-  //
-  //                ThruPOA  Proxy Impl. Declaration
-  ///////////////////////////////////////////////////////////////////////
   
   // TAO_IDL - Generated from
   // be\be_visitor_interface/interface_sh.cpp:87
@@ -1796,7 +971,6 @@ namespace POA_CORBA
   class ConstantDef;
   typedef ConstantDef *ConstantDef_ptr;
   
-  class _TAO_ConstantDef_ThruPOA_Proxy_Impl;
   class _TAO_ConstantDef_Strategized_Proxy_Broker;
   
   class  ConstantDef
@@ -1819,41 +993,37 @@ namespace POA_CORBA
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
     
-    virtual void* _downcast (
-        const char* logical_type_id
-      );
-    
     static void _is_a_skel (
-        TAO_ServerRequest &req,
-        void *servant,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     static void _non_existent_skel (
-        TAO_ServerRequest &req,
-        void *servant,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     static void _interface_skel (
-        TAO_ServerRequest &req,
-        void *servant,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     static void _component_skel (
-        TAO_ServerRequest &req,
-        void *obj,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     virtual void _dispatch (
-        TAO_ServerRequest &req,
-        void *_servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall
         ACE_ENV_ARG_DECL
       );
     
@@ -1874,9 +1044,9 @@ namespace POA_CORBA
       )) = 0;
     
     static void _get_type_skel (
-        TAO_ServerRequest &_tao_req,
-        void *_tao_servant,
-        void *_tao_servant_upcall
+        TAO_ServerRequest & server_request,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
@@ -1891,9 +1061,9 @@ namespace POA_CORBA
       )) = 0;
     
     static void _get_type_def_skel (
-        TAO_ServerRequest &_tao_req,
-        void *_tao_servant,
-        void *_tao_servant_upcall
+        TAO_ServerRequest & server_request,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
@@ -1909,9 +1079,9 @@ namespace POA_CORBA
       )) = 0;
     
     static void _set_type_def_skel (
-        TAO_ServerRequest &_tao_req,
-        void *_tao_servant,
-        void *_tao_servant_upcall
+        TAO_ServerRequest & server_request,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
@@ -1926,9 +1096,9 @@ namespace POA_CORBA
       )) = 0;
     
     static void _get_value_skel (
-        TAO_ServerRequest &_tao_req,
-        void *_tao_servant,
-        void *_tao_servant_upcall
+        TAO_ServerRequest & server_request,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
@@ -1944,9 +1114,9 @@ namespace POA_CORBA
       )) = 0;
     
     static void _set_value_skel (
-        TAO_ServerRequest &_tao_req,
-        void *_tao_servant,
-        void *_tao_servant_upcall
+        TAO_ServerRequest & server_request,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
@@ -1959,7 +1129,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     destroy_skel (
@@ -2042,7 +1212,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     describe_skel (
@@ -2053,7 +1223,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     move_skel (
@@ -2108,233 +1278,6 @@ namespace POA_CORBA
   ///////////////////////////////////////////////////////////////////////
   
   
-  ///////////////////////////////////////////////////////////////////////
-  //                    ThruPOA Proxy Impl. Declaration
-  //
-  
-  // TAO_IDL - Generated from
-  // be\be_visitor_interface/thru_poa_proxy_impl_sh.cpp:37
-  
-  class  _TAO_ConstantDef_ThruPOA_Proxy_Impl
-    : public virtual ::POA_CORBA::_TAO_Contained_ThruPOA_Proxy_Impl
-  {
-  public:
-    _TAO_ConstantDef_ThruPOA_Proxy_Impl (void);
-    
-    virtual ~_TAO_ConstantDef_ThruPOA_Proxy_Impl (void) {}
-    
-    // TAO_IDL - Generated from
-    // be\be_visitor_operation/proxy_impl_xh.cpp:24
-    
-    static void
-    _get_type (
-        TAO_Abstract_ServantBase *servant,
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_visitor_operation/proxy_impl_xh.cpp:24
-    
-    static void
-    _get_type_def (
-        TAO_Abstract_ServantBase *servant,
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_visitor_operation/proxy_impl_xh.cpp:24
-    
-    static void
-    _set_type_def (
-        TAO_Abstract_ServantBase *servant,
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_visitor_operation/proxy_impl_xh.cpp:24
-    
-    static void
-    _get_value (
-        TAO_Abstract_ServantBase *servant,
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_visitor_operation/proxy_impl_xh.cpp:24
-    
-    static void
-    _set_value (
-        TAO_Abstract_ServantBase *servant,
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_def_kind (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    destroy (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_id (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    static void
-    _set_id (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_name (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    static void
-    _set_name (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_version (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    static void
-    _set_version (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_defined_in (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_absolute_name (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_containing_repository (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    describe (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    move (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-  };
-  
-  //
-  //                ThruPOA  Proxy Impl. Declaration
-  ///////////////////////////////////////////////////////////////////////
   
   // TAO_IDL - Generated from
   // be\be_visitor_interface/interface_sh.cpp:87
@@ -2342,7 +1285,6 @@ namespace POA_CORBA
   class StructDef;
   typedef StructDef *StructDef_ptr;
   
-  class _TAO_StructDef_ThruPOA_Proxy_Impl;
   class _TAO_StructDef_Strategized_Proxy_Broker;
   
   class  StructDef
@@ -2366,41 +1308,37 @@ namespace POA_CORBA
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
     
-    virtual void* _downcast (
-        const char* logical_type_id
-      );
-    
     static void _is_a_skel (
-        TAO_ServerRequest &req,
-        void *servant,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     static void _non_existent_skel (
-        TAO_ServerRequest &req,
-        void *servant,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     static void _interface_skel (
-        TAO_ServerRequest &req,
-        void *servant,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     static void _component_skel (
-        TAO_ServerRequest &req,
-        void *obj,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     virtual void _dispatch (
-        TAO_ServerRequest &req,
-        void *_servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall
         ACE_ENV_ARG_DECL
       );
     
@@ -2421,9 +1359,9 @@ namespace POA_CORBA
       )) = 0;
     
     static void _get_members_skel (
-        TAO_ServerRequest &_tao_req,
-        void *_tao_servant,
-        void *_tao_servant_upcall
+        TAO_ServerRequest & server_request,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
@@ -2439,9 +1377,9 @@ namespace POA_CORBA
       )) = 0;
     
     static void _set_members_skel (
-        TAO_ServerRequest &_tao_req,
-        void *_tao_servant,
-        void *_tao_servant_upcall
+        TAO_ServerRequest & server_request,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
@@ -2454,7 +1392,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     destroy_skel (
@@ -2537,7 +1475,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     describe_skel (
@@ -2548,7 +1486,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     move_skel (
@@ -2567,7 +1505,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     lookup_skel (
@@ -2578,7 +1516,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     contents_skel (
@@ -2589,7 +1527,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     lookup_name_skel (
@@ -2600,7 +1538,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     describe_contents_skel (
@@ -2611,7 +1549,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_module_skel (
@@ -2622,7 +1560,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_constant_skel (
@@ -2633,7 +1571,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_struct_skel (
@@ -2644,7 +1582,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_union_skel (
@@ -2655,7 +1593,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_enum_skel (
@@ -2666,7 +1604,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_alias_skel (
@@ -2677,7 +1615,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_interface_skel (
@@ -2688,7 +1626,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_value_skel (
@@ -2699,7 +1637,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_value_box_skel (
@@ -2710,7 +1648,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_exception_skel (
@@ -2721,7 +1659,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_native_skel (
@@ -2732,7 +1670,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_abstract_interface_skel (
@@ -2743,7 +1681,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_local_interface_skel (
@@ -2754,7 +1692,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_ext_value_skel (
@@ -2809,453 +1747,6 @@ namespace POA_CORBA
   ///////////////////////////////////////////////////////////////////////
   
   
-  ///////////////////////////////////////////////////////////////////////
-  //                    ThruPOA Proxy Impl. Declaration
-  //
-  
-  // TAO_IDL - Generated from
-  // be\be_visitor_interface/thru_poa_proxy_impl_sh.cpp:37
-  
-  class  _TAO_StructDef_ThruPOA_Proxy_Impl
-    : public virtual ::POA_CORBA::_TAO_TypedefDef_ThruPOA_Proxy_Impl,
-      public virtual ::POA_CORBA::_TAO_Container_ThruPOA_Proxy_Impl
-  {
-  public:
-    _TAO_StructDef_ThruPOA_Proxy_Impl (void);
-    
-    virtual ~_TAO_StructDef_ThruPOA_Proxy_Impl (void) {}
-    
-    // TAO_IDL - Generated from
-    // be\be_visitor_operation/proxy_impl_xh.cpp:24
-    
-    static void
-    _get_members (
-        TAO_Abstract_ServantBase *servant,
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_visitor_operation/proxy_impl_xh.cpp:24
-    
-    static void
-    _set_members (
-        TAO_Abstract_ServantBase *servant,
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_def_kind (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    destroy (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_id (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    static void
-    _set_id (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_name (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    static void
-    _set_name (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_version (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    static void
-    _set_version (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_defined_in (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_absolute_name (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_containing_repository (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    describe (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    move (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_type (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    lookup (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    contents (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    lookup_name (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    describe_contents (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_module (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_constant (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_struct (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_union (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_enum (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_alias (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_interface (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_value (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_value_box (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_exception (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_native (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_abstract_interface (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_local_interface (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_ext_value (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-  };
-  
-  //
-  //                ThruPOA  Proxy Impl. Declaration
-  ///////////////////////////////////////////////////////////////////////
   
   // TAO_IDL - Generated from
   // be\be_visitor_interface/interface_sh.cpp:87
@@ -3263,7 +1754,6 @@ namespace POA_CORBA
   class UnionDef;
   typedef UnionDef *UnionDef_ptr;
   
-  class _TAO_UnionDef_ThruPOA_Proxy_Impl;
   class _TAO_UnionDef_Strategized_Proxy_Broker;
   
   class  UnionDef
@@ -3287,41 +1777,37 @@ namespace POA_CORBA
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
     
-    virtual void* _downcast (
-        const char* logical_type_id
-      );
-    
     static void _is_a_skel (
-        TAO_ServerRequest &req,
-        void *servant,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     static void _non_existent_skel (
-        TAO_ServerRequest &req,
-        void *servant,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     static void _interface_skel (
-        TAO_ServerRequest &req,
-        void *servant,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     static void _component_skel (
-        TAO_ServerRequest &req,
-        void *obj,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     virtual void _dispatch (
-        TAO_ServerRequest &req,
-        void *_servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall
         ACE_ENV_ARG_DECL
       );
     
@@ -3342,9 +1828,9 @@ namespace POA_CORBA
       )) = 0;
     
     static void _get_discriminator_type_skel (
-        TAO_ServerRequest &_tao_req,
-        void *_tao_servant,
-        void *_tao_servant_upcall
+        TAO_ServerRequest & server_request,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
@@ -3359,9 +1845,9 @@ namespace POA_CORBA
       )) = 0;
     
     static void _get_discriminator_type_def_skel (
-        TAO_ServerRequest &_tao_req,
-        void *_tao_servant,
-        void *_tao_servant_upcall
+        TAO_ServerRequest & server_request,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
@@ -3377,9 +1863,9 @@ namespace POA_CORBA
       )) = 0;
     
     static void _set_discriminator_type_def_skel (
-        TAO_ServerRequest &_tao_req,
-        void *_tao_servant,
-        void *_tao_servant_upcall
+        TAO_ServerRequest & server_request,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
@@ -3394,9 +1880,9 @@ namespace POA_CORBA
       )) = 0;
     
     static void _get_members_skel (
-        TAO_ServerRequest &_tao_req,
-        void *_tao_servant,
-        void *_tao_servant_upcall
+        TAO_ServerRequest & server_request,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
@@ -3412,9 +1898,9 @@ namespace POA_CORBA
       )) = 0;
     
     static void _set_members_skel (
-        TAO_ServerRequest &_tao_req,
-        void *_tao_servant,
-        void *_tao_servant_upcall
+        TAO_ServerRequest & server_request,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
@@ -3427,7 +1913,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     destroy_skel (
@@ -3510,7 +1996,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     describe_skel (
@@ -3521,7 +2007,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     move_skel (
@@ -3540,7 +2026,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     lookup_skel (
@@ -3551,7 +2037,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     contents_skel (
@@ -3562,7 +2048,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     lookup_name_skel (
@@ -3573,7 +2059,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     describe_contents_skel (
@@ -3584,7 +2070,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_module_skel (
@@ -3595,7 +2081,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_constant_skel (
@@ -3606,7 +2092,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_struct_skel (
@@ -3617,7 +2103,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_union_skel (
@@ -3628,7 +2114,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_enum_skel (
@@ -3639,7 +2125,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_alias_skel (
@@ -3650,7 +2136,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_interface_skel (
@@ -3661,7 +2147,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_value_skel (
@@ -3672,7 +2158,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_value_box_skel (
@@ -3683,7 +2169,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_exception_skel (
@@ -3694,7 +2180,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_native_skel (
@@ -3705,7 +2191,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_abstract_interface_skel (
@@ -3716,7 +2202,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_local_interface_skel (
@@ -3727,7 +2213,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_ext_value_skel (
@@ -3782,495 +2268,6 @@ namespace POA_CORBA
   ///////////////////////////////////////////////////////////////////////
   
   
-  ///////////////////////////////////////////////////////////////////////
-  //                    ThruPOA Proxy Impl. Declaration
-  //
-  
-  // TAO_IDL - Generated from
-  // be\be_visitor_interface/thru_poa_proxy_impl_sh.cpp:37
-  
-  class  _TAO_UnionDef_ThruPOA_Proxy_Impl
-    : public virtual ::POA_CORBA::_TAO_TypedefDef_ThruPOA_Proxy_Impl,
-      public virtual ::POA_CORBA::_TAO_Container_ThruPOA_Proxy_Impl
-  {
-  public:
-    _TAO_UnionDef_ThruPOA_Proxy_Impl (void);
-    
-    virtual ~_TAO_UnionDef_ThruPOA_Proxy_Impl (void) {}
-    
-    // TAO_IDL - Generated from
-    // be\be_visitor_operation/proxy_impl_xh.cpp:24
-    
-    static void
-    _get_discriminator_type (
-        TAO_Abstract_ServantBase *servant,
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_visitor_operation/proxy_impl_xh.cpp:24
-    
-    static void
-    _get_discriminator_type_def (
-        TAO_Abstract_ServantBase *servant,
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_visitor_operation/proxy_impl_xh.cpp:24
-    
-    static void
-    _set_discriminator_type_def (
-        TAO_Abstract_ServantBase *servant,
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_visitor_operation/proxy_impl_xh.cpp:24
-    
-    static void
-    _get_members (
-        TAO_Abstract_ServantBase *servant,
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_visitor_operation/proxy_impl_xh.cpp:24
-    
-    static void
-    _set_members (
-        TAO_Abstract_ServantBase *servant,
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_def_kind (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    destroy (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_id (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    static void
-    _set_id (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_name (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    static void
-    _set_name (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_version (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    static void
-    _set_version (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_defined_in (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_absolute_name (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_containing_repository (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    describe (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    move (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_type (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    lookup (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    contents (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    lookup_name (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    describe_contents (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_module (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_constant (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_struct (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_union (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_enum (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_alias (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_interface (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_value (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_value_box (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_exception (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_native (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_abstract_interface (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_local_interface (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_ext_value (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-  };
-  
-  //
-  //                ThruPOA  Proxy Impl. Declaration
-  ///////////////////////////////////////////////////////////////////////
   
   // TAO_IDL - Generated from
   // be\be_visitor_interface/interface_sh.cpp:87
@@ -4278,7 +2275,6 @@ namespace POA_CORBA
   class EnumDef;
   typedef EnumDef *EnumDef_ptr;
   
-  class _TAO_EnumDef_ThruPOA_Proxy_Impl;
   class _TAO_EnumDef_Strategized_Proxy_Broker;
   
   class  EnumDef
@@ -4301,41 +2297,37 @@ namespace POA_CORBA
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
     
-    virtual void* _downcast (
-        const char* logical_type_id
-      );
-    
     static void _is_a_skel (
-        TAO_ServerRequest &req,
-        void *servant,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     static void _non_existent_skel (
-        TAO_ServerRequest &req,
-        void *servant,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     static void _interface_skel (
-        TAO_ServerRequest &req,
-        void *servant,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     static void _component_skel (
-        TAO_ServerRequest &req,
-        void *obj,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     virtual void _dispatch (
-        TAO_ServerRequest &req,
-        void *_servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall
         ACE_ENV_ARG_DECL
       );
     
@@ -4356,9 +2348,9 @@ namespace POA_CORBA
       )) = 0;
     
     static void _get_members_skel (
-        TAO_ServerRequest &_tao_req,
-        void *_tao_servant,
-        void *_tao_servant_upcall
+        TAO_ServerRequest & server_request,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
@@ -4374,9 +2366,9 @@ namespace POA_CORBA
       )) = 0;
     
     static void _set_members_skel (
-        TAO_ServerRequest &_tao_req,
-        void *_tao_servant,
-        void *_tao_servant_upcall
+        TAO_ServerRequest & server_request,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
@@ -4389,7 +2381,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     destroy_skel (
@@ -4472,7 +2464,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     describe_skel (
@@ -4483,7 +2475,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     move_skel (
@@ -4546,200 +2538,6 @@ namespace POA_CORBA
   ///////////////////////////////////////////////////////////////////////
   
   
-  ///////////////////////////////////////////////////////////////////////
-  //                    ThruPOA Proxy Impl. Declaration
-  //
-  
-  // TAO_IDL - Generated from
-  // be\be_visitor_interface/thru_poa_proxy_impl_sh.cpp:37
-  
-  class  _TAO_EnumDef_ThruPOA_Proxy_Impl
-    : public virtual ::POA_CORBA::_TAO_TypedefDef_ThruPOA_Proxy_Impl
-  {
-  public:
-    _TAO_EnumDef_ThruPOA_Proxy_Impl (void);
-    
-    virtual ~_TAO_EnumDef_ThruPOA_Proxy_Impl (void) {}
-    
-    // TAO_IDL - Generated from
-    // be\be_visitor_operation/proxy_impl_xh.cpp:24
-    
-    static void
-    _get_members (
-        TAO_Abstract_ServantBase *servant,
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_visitor_operation/proxy_impl_xh.cpp:24
-    
-    static void
-    _set_members (
-        TAO_Abstract_ServantBase *servant,
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_def_kind (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    destroy (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_id (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    static void
-    _set_id (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_name (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    static void
-    _set_name (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_version (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    static void
-    _set_version (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_defined_in (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_absolute_name (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_containing_repository (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    describe (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    move (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_type (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-  };
-  
-  //
-  //                ThruPOA  Proxy Impl. Declaration
-  ///////////////////////////////////////////////////////////////////////
   
   // TAO_IDL - Generated from
   // be\be_visitor_interface/interface_sh.cpp:87
@@ -4747,7 +2545,6 @@ namespace POA_CORBA
   class AliasDef;
   typedef AliasDef *AliasDef_ptr;
   
-  class _TAO_AliasDef_ThruPOA_Proxy_Impl;
   class _TAO_AliasDef_Strategized_Proxy_Broker;
   
   class  AliasDef
@@ -4770,41 +2567,37 @@ namespace POA_CORBA
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
     
-    virtual void* _downcast (
-        const char* logical_type_id
-      );
-    
     static void _is_a_skel (
-        TAO_ServerRequest &req,
-        void *servant,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     static void _non_existent_skel (
-        TAO_ServerRequest &req,
-        void *servant,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     static void _interface_skel (
-        TAO_ServerRequest &req,
-        void *servant,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     static void _component_skel (
-        TAO_ServerRequest &req,
-        void *obj,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     virtual void _dispatch (
-        TAO_ServerRequest &req,
-        void *_servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall
         ACE_ENV_ARG_DECL
       );
     
@@ -4825,9 +2618,9 @@ namespace POA_CORBA
       )) = 0;
     
     static void _get_original_type_def_skel (
-        TAO_ServerRequest &_tao_req,
-        void *_tao_servant,
-        void *_tao_servant_upcall
+        TAO_ServerRequest & server_request,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
@@ -4843,9 +2636,9 @@ namespace POA_CORBA
       )) = 0;
     
     static void _set_original_type_def_skel (
-        TAO_ServerRequest &_tao_req,
-        void *_tao_servant,
-        void *_tao_servant_upcall
+        TAO_ServerRequest & server_request,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
@@ -4858,7 +2651,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     destroy_skel (
@@ -4941,7 +2734,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     describe_skel (
@@ -4952,7 +2745,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     move_skel (
@@ -5015,200 +2808,6 @@ namespace POA_CORBA
   ///////////////////////////////////////////////////////////////////////
   
   
-  ///////////////////////////////////////////////////////////////////////
-  //                    ThruPOA Proxy Impl. Declaration
-  //
-  
-  // TAO_IDL - Generated from
-  // be\be_visitor_interface/thru_poa_proxy_impl_sh.cpp:37
-  
-  class  _TAO_AliasDef_ThruPOA_Proxy_Impl
-    : public virtual ::POA_CORBA::_TAO_TypedefDef_ThruPOA_Proxy_Impl
-  {
-  public:
-    _TAO_AliasDef_ThruPOA_Proxy_Impl (void);
-    
-    virtual ~_TAO_AliasDef_ThruPOA_Proxy_Impl (void) {}
-    
-    // TAO_IDL - Generated from
-    // be\be_visitor_operation/proxy_impl_xh.cpp:24
-    
-    static void
-    _get_original_type_def (
-        TAO_Abstract_ServantBase *servant,
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_visitor_operation/proxy_impl_xh.cpp:24
-    
-    static void
-    _set_original_type_def (
-        TAO_Abstract_ServantBase *servant,
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_def_kind (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    destroy (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_id (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    static void
-    _set_id (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_name (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    static void
-    _set_name (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_version (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    static void
-    _set_version (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_defined_in (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_absolute_name (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_containing_repository (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    describe (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    move (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_type (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-  };
-  
-  //
-  //                ThruPOA  Proxy Impl. Declaration
-  ///////////////////////////////////////////////////////////////////////
   
   // TAO_IDL - Generated from
   // be\be_visitor_interface/interface_sh.cpp:87
@@ -5216,7 +2815,6 @@ namespace POA_CORBA
   class NativeDef;
   typedef NativeDef *NativeDef_ptr;
   
-  class _TAO_NativeDef_ThruPOA_Proxy_Impl;
   class _TAO_NativeDef_Strategized_Proxy_Broker;
   
   class  NativeDef
@@ -5239,41 +2837,37 @@ namespace POA_CORBA
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
     
-    virtual void* _downcast (
-        const char* logical_type_id
-      );
-    
     static void _is_a_skel (
-        TAO_ServerRequest &req,
-        void *servant,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     static void _non_existent_skel (
-        TAO_ServerRequest &req,
-        void *servant,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     static void _interface_skel (
-        TAO_ServerRequest &req,
-        void *servant,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     static void _component_skel (
-        TAO_ServerRequest &req,
-        void *obj,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     virtual void _dispatch (
-        TAO_ServerRequest &req,
-        void *_servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall
         ACE_ENV_ARG_DECL
       );
     
@@ -5292,7 +2886,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     destroy_skel (
@@ -5375,7 +2969,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     describe_skel (
@@ -5386,7 +2980,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     move_skel (
@@ -5449,172 +3043,6 @@ namespace POA_CORBA
   ///////////////////////////////////////////////////////////////////////
   
   
-  ///////////////////////////////////////////////////////////////////////
-  //                    ThruPOA Proxy Impl. Declaration
-  //
-  
-  // TAO_IDL - Generated from
-  // be\be_visitor_interface/thru_poa_proxy_impl_sh.cpp:37
-  
-  class  _TAO_NativeDef_ThruPOA_Proxy_Impl
-    : public virtual ::POA_CORBA::_TAO_TypedefDef_ThruPOA_Proxy_Impl
-  {
-  public:
-    _TAO_NativeDef_ThruPOA_Proxy_Impl (void);
-    
-    virtual ~_TAO_NativeDef_ThruPOA_Proxy_Impl (void) {}static void
-    _get_def_kind (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    destroy (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_id (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    static void
-    _set_id (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_name (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    static void
-    _set_name (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_version (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    static void
-    _set_version (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_defined_in (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_absolute_name (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_containing_repository (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    describe (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    move (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_type (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-  };
-  
-  //
-  //                ThruPOA  Proxy Impl. Declaration
-  ///////////////////////////////////////////////////////////////////////
   
   // TAO_IDL - Generated from
   // be\be_visitor_interface/interface_sh.cpp:87
@@ -5622,7 +3050,6 @@ namespace POA_CORBA
   class PrimitiveDef;
   typedef PrimitiveDef *PrimitiveDef_ptr;
   
-  class _TAO_PrimitiveDef_ThruPOA_Proxy_Impl;
   class _TAO_PrimitiveDef_Strategized_Proxy_Broker;
   
   class  PrimitiveDef
@@ -5645,41 +3072,37 @@ namespace POA_CORBA
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
     
-    virtual void* _downcast (
-        const char* logical_type_id
-      );
-    
     static void _is_a_skel (
-        TAO_ServerRequest &req,
-        void *servant,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     static void _non_existent_skel (
-        TAO_ServerRequest &req,
-        void *servant,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     static void _interface_skel (
-        TAO_ServerRequest &req,
-        void *servant,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     static void _component_skel (
-        TAO_ServerRequest &req,
-        void *obj,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     virtual void _dispatch (
-        TAO_ServerRequest &req,
-        void *_servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall
         ACE_ENV_ARG_DECL
       );
     
@@ -5700,9 +3123,9 @@ namespace POA_CORBA
       )) = 0;
     
     static void _get_kind_skel (
-        TAO_ServerRequest &_tao_req,
-        void *_tao_servant,
-        void *_tao_servant_upcall
+        TAO_ServerRequest & server_request,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
@@ -5715,7 +3138,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     destroy_skel (
@@ -5778,71 +3201,6 @@ namespace POA_CORBA
   ///////////////////////////////////////////////////////////////////////
   
   
-  ///////////////////////////////////////////////////////////////////////
-  //                    ThruPOA Proxy Impl. Declaration
-  //
-  
-  // TAO_IDL - Generated from
-  // be\be_visitor_interface/thru_poa_proxy_impl_sh.cpp:37
-  
-  class  _TAO_PrimitiveDef_ThruPOA_Proxy_Impl
-    : public virtual ::POA_CORBA::_TAO_IDLType_ThruPOA_Proxy_Impl
-  {
-  public:
-    _TAO_PrimitiveDef_ThruPOA_Proxy_Impl (void);
-    
-    virtual ~_TAO_PrimitiveDef_ThruPOA_Proxy_Impl (void) {}
-    
-    // TAO_IDL - Generated from
-    // be\be_visitor_operation/proxy_impl_xh.cpp:24
-    
-    static void
-    _get_kind (
-        TAO_Abstract_ServantBase *servant,
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_def_kind (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    destroy (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_type (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-  };
-  
-  //
-  //                ThruPOA  Proxy Impl. Declaration
-  ///////////////////////////////////////////////////////////////////////
   
   // TAO_IDL - Generated from
   // be\be_visitor_interface/interface_sh.cpp:87
@@ -5850,7 +3208,6 @@ namespace POA_CORBA
   class StringDef;
   typedef StringDef *StringDef_ptr;
   
-  class _TAO_StringDef_ThruPOA_Proxy_Impl;
   class _TAO_StringDef_Strategized_Proxy_Broker;
   
   class  StringDef
@@ -5873,41 +3230,37 @@ namespace POA_CORBA
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
     
-    virtual void* _downcast (
-        const char* logical_type_id
-      );
-    
     static void _is_a_skel (
-        TAO_ServerRequest &req,
-        void *servant,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     static void _non_existent_skel (
-        TAO_ServerRequest &req,
-        void *servant,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     static void _interface_skel (
-        TAO_ServerRequest &req,
-        void *servant,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     static void _component_skel (
-        TAO_ServerRequest &req,
-        void *obj,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     virtual void _dispatch (
-        TAO_ServerRequest &req,
-        void *_servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall
         ACE_ENV_ARG_DECL
       );
     
@@ -5928,9 +3281,9 @@ namespace POA_CORBA
       )) = 0;
     
     static void _get_bound_skel (
-        TAO_ServerRequest &_tao_req,
-        void *_tao_servant,
-        void *_tao_servant_upcall
+        TAO_ServerRequest & server_request,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
@@ -5946,9 +3299,9 @@ namespace POA_CORBA
       )) = 0;
     
     static void _set_bound_skel (
-        TAO_ServerRequest &_tao_req,
-        void *_tao_servant,
-        void *_tao_servant_upcall
+        TAO_ServerRequest & server_request,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
@@ -5961,7 +3314,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     destroy_skel (
@@ -6024,85 +3377,6 @@ namespace POA_CORBA
   ///////////////////////////////////////////////////////////////////////
   
   
-  ///////////////////////////////////////////////////////////////////////
-  //                    ThruPOA Proxy Impl. Declaration
-  //
-  
-  // TAO_IDL - Generated from
-  // be\be_visitor_interface/thru_poa_proxy_impl_sh.cpp:37
-  
-  class  _TAO_StringDef_ThruPOA_Proxy_Impl
-    : public virtual ::POA_CORBA::_TAO_IDLType_ThruPOA_Proxy_Impl
-  {
-  public:
-    _TAO_StringDef_ThruPOA_Proxy_Impl (void);
-    
-    virtual ~_TAO_StringDef_ThruPOA_Proxy_Impl (void) {}
-    
-    // TAO_IDL - Generated from
-    // be\be_visitor_operation/proxy_impl_xh.cpp:24
-    
-    static void
-    _get_bound (
-        TAO_Abstract_ServantBase *servant,
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_visitor_operation/proxy_impl_xh.cpp:24
-    
-    static void
-    _set_bound (
-        TAO_Abstract_ServantBase *servant,
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_def_kind (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    destroy (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_type (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-  };
-  
-  //
-  //                ThruPOA  Proxy Impl. Declaration
-  ///////////////////////////////////////////////////////////////////////
   
   // TAO_IDL - Generated from
   // be\be_visitor_interface/interface_sh.cpp:87
@@ -6110,7 +3384,6 @@ namespace POA_CORBA
   class WstringDef;
   typedef WstringDef *WstringDef_ptr;
   
-  class _TAO_WstringDef_ThruPOA_Proxy_Impl;
   class _TAO_WstringDef_Strategized_Proxy_Broker;
   
   class  WstringDef
@@ -6133,41 +3406,37 @@ namespace POA_CORBA
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
     
-    virtual void* _downcast (
-        const char* logical_type_id
-      );
-    
     static void _is_a_skel (
-        TAO_ServerRequest &req,
-        void *servant,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     static void _non_existent_skel (
-        TAO_ServerRequest &req,
-        void *servant,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     static void _interface_skel (
-        TAO_ServerRequest &req,
-        void *servant,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     static void _component_skel (
-        TAO_ServerRequest &req,
-        void *obj,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     virtual void _dispatch (
-        TAO_ServerRequest &req,
-        void *_servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall
         ACE_ENV_ARG_DECL
       );
     
@@ -6188,9 +3457,9 @@ namespace POA_CORBA
       )) = 0;
     
     static void _get_bound_skel (
-        TAO_ServerRequest &_tao_req,
-        void *_tao_servant,
-        void *_tao_servant_upcall
+        TAO_ServerRequest & server_request,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
@@ -6206,9 +3475,9 @@ namespace POA_CORBA
       )) = 0;
     
     static void _set_bound_skel (
-        TAO_ServerRequest &_tao_req,
-        void *_tao_servant,
-        void *_tao_servant_upcall
+        TAO_ServerRequest & server_request,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
@@ -6221,7 +3490,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     destroy_skel (
@@ -6284,85 +3553,6 @@ namespace POA_CORBA
   ///////////////////////////////////////////////////////////////////////
   
   
-  ///////////////////////////////////////////////////////////////////////
-  //                    ThruPOA Proxy Impl. Declaration
-  //
-  
-  // TAO_IDL - Generated from
-  // be\be_visitor_interface/thru_poa_proxy_impl_sh.cpp:37
-  
-  class  _TAO_WstringDef_ThruPOA_Proxy_Impl
-    : public virtual ::POA_CORBA::_TAO_IDLType_ThruPOA_Proxy_Impl
-  {
-  public:
-    _TAO_WstringDef_ThruPOA_Proxy_Impl (void);
-    
-    virtual ~_TAO_WstringDef_ThruPOA_Proxy_Impl (void) {}
-    
-    // TAO_IDL - Generated from
-    // be\be_visitor_operation/proxy_impl_xh.cpp:24
-    
-    static void
-    _get_bound (
-        TAO_Abstract_ServantBase *servant,
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_visitor_operation/proxy_impl_xh.cpp:24
-    
-    static void
-    _set_bound (
-        TAO_Abstract_ServantBase *servant,
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_def_kind (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    destroy (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_type (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-  };
-  
-  //
-  //                ThruPOA  Proxy Impl. Declaration
-  ///////////////////////////////////////////////////////////////////////
   
   // TAO_IDL - Generated from
   // be\be_visitor_interface/interface_sh.cpp:87
@@ -6370,7 +3560,6 @@ namespace POA_CORBA
   class SequenceDef;
   typedef SequenceDef *SequenceDef_ptr;
   
-  class _TAO_SequenceDef_ThruPOA_Proxy_Impl;
   class _TAO_SequenceDef_Strategized_Proxy_Broker;
   
   class  SequenceDef
@@ -6393,41 +3582,37 @@ namespace POA_CORBA
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
     
-    virtual void* _downcast (
-        const char* logical_type_id
-      );
-    
     static void _is_a_skel (
-        TAO_ServerRequest &req,
-        void *servant,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     static void _non_existent_skel (
-        TAO_ServerRequest &req,
-        void *servant,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     static void _interface_skel (
-        TAO_ServerRequest &req,
-        void *servant,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     static void _component_skel (
-        TAO_ServerRequest &req,
-        void *obj,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     virtual void _dispatch (
-        TAO_ServerRequest &req,
-        void *_servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall
         ACE_ENV_ARG_DECL
       );
     
@@ -6448,9 +3633,9 @@ namespace POA_CORBA
       )) = 0;
     
     static void _get_bound_skel (
-        TAO_ServerRequest &_tao_req,
-        void *_tao_servant,
-        void *_tao_servant_upcall
+        TAO_ServerRequest & server_request,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
@@ -6466,9 +3651,9 @@ namespace POA_CORBA
       )) = 0;
     
     static void _set_bound_skel (
-        TAO_ServerRequest &_tao_req,
-        void *_tao_servant,
-        void *_tao_servant_upcall
+        TAO_ServerRequest & server_request,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
@@ -6483,9 +3668,9 @@ namespace POA_CORBA
       )) = 0;
     
     static void _get_element_type_skel (
-        TAO_ServerRequest &_tao_req,
-        void *_tao_servant,
-        void *_tao_servant_upcall
+        TAO_ServerRequest & server_request,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
@@ -6500,9 +3685,9 @@ namespace POA_CORBA
       )) = 0;
     
     static void _get_element_type_def_skel (
-        TAO_ServerRequest &_tao_req,
-        void *_tao_servant,
-        void *_tao_servant_upcall
+        TAO_ServerRequest & server_request,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
@@ -6518,9 +3703,9 @@ namespace POA_CORBA
       )) = 0;
     
     static void _set_element_type_def_skel (
-        TAO_ServerRequest &_tao_req,
-        void *_tao_servant,
-        void *_tao_servant_upcall
+        TAO_ServerRequest & server_request,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
@@ -6533,7 +3718,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     destroy_skel (
@@ -6596,127 +3781,6 @@ namespace POA_CORBA
   ///////////////////////////////////////////////////////////////////////
   
   
-  ///////////////////////////////////////////////////////////////////////
-  //                    ThruPOA Proxy Impl. Declaration
-  //
-  
-  // TAO_IDL - Generated from
-  // be\be_visitor_interface/thru_poa_proxy_impl_sh.cpp:37
-  
-  class  _TAO_SequenceDef_ThruPOA_Proxy_Impl
-    : public virtual ::POA_CORBA::_TAO_IDLType_ThruPOA_Proxy_Impl
-  {
-  public:
-    _TAO_SequenceDef_ThruPOA_Proxy_Impl (void);
-    
-    virtual ~_TAO_SequenceDef_ThruPOA_Proxy_Impl (void) {}
-    
-    // TAO_IDL - Generated from
-    // be\be_visitor_operation/proxy_impl_xh.cpp:24
-    
-    static void
-    _get_bound (
-        TAO_Abstract_ServantBase *servant,
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_visitor_operation/proxy_impl_xh.cpp:24
-    
-    static void
-    _set_bound (
-        TAO_Abstract_ServantBase *servant,
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_visitor_operation/proxy_impl_xh.cpp:24
-    
-    static void
-    _get_element_type (
-        TAO_Abstract_ServantBase *servant,
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_visitor_operation/proxy_impl_xh.cpp:24
-    
-    static void
-    _get_element_type_def (
-        TAO_Abstract_ServantBase *servant,
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_visitor_operation/proxy_impl_xh.cpp:24
-    
-    static void
-    _set_element_type_def (
-        TAO_Abstract_ServantBase *servant,
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_def_kind (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    destroy (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_type (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-  };
-  
-  //
-  //                ThruPOA  Proxy Impl. Declaration
-  ///////////////////////////////////////////////////////////////////////
   
   // TAO_IDL - Generated from
   // be\be_visitor_interface/interface_sh.cpp:87
@@ -6724,7 +3788,6 @@ namespace POA_CORBA
   class ArrayDef;
   typedef ArrayDef *ArrayDef_ptr;
   
-  class _TAO_ArrayDef_ThruPOA_Proxy_Impl;
   class _TAO_ArrayDef_Strategized_Proxy_Broker;
   
   class  ArrayDef
@@ -6747,41 +3810,37 @@ namespace POA_CORBA
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
     
-    virtual void* _downcast (
-        const char* logical_type_id
-      );
-    
     static void _is_a_skel (
-        TAO_ServerRequest &req,
-        void *servant,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     static void _non_existent_skel (
-        TAO_ServerRequest &req,
-        void *servant,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     static void _interface_skel (
-        TAO_ServerRequest &req,
-        void *servant,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     static void _component_skel (
-        TAO_ServerRequest &req,
-        void *obj,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     virtual void _dispatch (
-        TAO_ServerRequest &req,
-        void *_servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall
         ACE_ENV_ARG_DECL
       );
     
@@ -6802,9 +3861,9 @@ namespace POA_CORBA
       )) = 0;
     
     static void _get_length_skel (
-        TAO_ServerRequest &_tao_req,
-        void *_tao_servant,
-        void *_tao_servant_upcall
+        TAO_ServerRequest & server_request,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
@@ -6820,9 +3879,9 @@ namespace POA_CORBA
       )) = 0;
     
     static void _set_length_skel (
-        TAO_ServerRequest &_tao_req,
-        void *_tao_servant,
-        void *_tao_servant_upcall
+        TAO_ServerRequest & server_request,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
@@ -6837,9 +3896,9 @@ namespace POA_CORBA
       )) = 0;
     
     static void _get_element_type_skel (
-        TAO_ServerRequest &_tao_req,
-        void *_tao_servant,
-        void *_tao_servant_upcall
+        TAO_ServerRequest & server_request,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
@@ -6854,9 +3913,9 @@ namespace POA_CORBA
       )) = 0;
     
     static void _get_element_type_def_skel (
-        TAO_ServerRequest &_tao_req,
-        void *_tao_servant,
-        void *_tao_servant_upcall
+        TAO_ServerRequest & server_request,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
@@ -6872,9 +3931,9 @@ namespace POA_CORBA
       )) = 0;
     
     static void _set_element_type_def_skel (
-        TAO_ServerRequest &_tao_req,
-        void *_tao_servant,
-        void *_tao_servant_upcall
+        TAO_ServerRequest & server_request,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
@@ -6887,7 +3946,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     destroy_skel (
@@ -6950,127 +4009,6 @@ namespace POA_CORBA
   ///////////////////////////////////////////////////////////////////////
   
   
-  ///////////////////////////////////////////////////////////////////////
-  //                    ThruPOA Proxy Impl. Declaration
-  //
-  
-  // TAO_IDL - Generated from
-  // be\be_visitor_interface/thru_poa_proxy_impl_sh.cpp:37
-  
-  class  _TAO_ArrayDef_ThruPOA_Proxy_Impl
-    : public virtual ::POA_CORBA::_TAO_IDLType_ThruPOA_Proxy_Impl
-  {
-  public:
-    _TAO_ArrayDef_ThruPOA_Proxy_Impl (void);
-    
-    virtual ~_TAO_ArrayDef_ThruPOA_Proxy_Impl (void) {}
-    
-    // TAO_IDL - Generated from
-    // be\be_visitor_operation/proxy_impl_xh.cpp:24
-    
-    static void
-    _get_length (
-        TAO_Abstract_ServantBase *servant,
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_visitor_operation/proxy_impl_xh.cpp:24
-    
-    static void
-    _set_length (
-        TAO_Abstract_ServantBase *servant,
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_visitor_operation/proxy_impl_xh.cpp:24
-    
-    static void
-    _get_element_type (
-        TAO_Abstract_ServantBase *servant,
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_visitor_operation/proxy_impl_xh.cpp:24
-    
-    static void
-    _get_element_type_def (
-        TAO_Abstract_ServantBase *servant,
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_visitor_operation/proxy_impl_xh.cpp:24
-    
-    static void
-    _set_element_type_def (
-        TAO_Abstract_ServantBase *servant,
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_def_kind (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    destroy (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_type (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-  };
-  
-  //
-  //                ThruPOA  Proxy Impl. Declaration
-  ///////////////////////////////////////////////////////////////////////
   
   // TAO_IDL - Generated from
   // be\be_visitor_interface/interface_sh.cpp:87
@@ -7078,7 +4016,6 @@ namespace POA_CORBA
   class ExceptionDef;
   typedef ExceptionDef *ExceptionDef_ptr;
   
-  class _TAO_ExceptionDef_ThruPOA_Proxy_Impl;
   class _TAO_ExceptionDef_Strategized_Proxy_Broker;
   
   class  ExceptionDef
@@ -7102,41 +4039,37 @@ namespace POA_CORBA
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
     
-    virtual void* _downcast (
-        const char* logical_type_id
-      );
-    
     static void _is_a_skel (
-        TAO_ServerRequest &req,
-        void *servant,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     static void _non_existent_skel (
-        TAO_ServerRequest &req,
-        void *servant,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     static void _interface_skel (
-        TAO_ServerRequest &req,
-        void *servant,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     static void _component_skel (
-        TAO_ServerRequest &req,
-        void *obj,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     virtual void _dispatch (
-        TAO_ServerRequest &req,
-        void *_servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall
         ACE_ENV_ARG_DECL
       );
     
@@ -7157,9 +4090,9 @@ namespace POA_CORBA
       )) = 0;
     
     static void _get_type_skel (
-        TAO_ServerRequest &_tao_req,
-        void *_tao_servant,
-        void *_tao_servant_upcall
+        TAO_ServerRequest & server_request,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
@@ -7174,9 +4107,9 @@ namespace POA_CORBA
       )) = 0;
     
     static void _get_members_skel (
-        TAO_ServerRequest &_tao_req,
-        void *_tao_servant,
-        void *_tao_servant_upcall
+        TAO_ServerRequest & server_request,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
@@ -7192,9 +4125,9 @@ namespace POA_CORBA
       )) = 0;
     
     static void _set_members_skel (
-        TAO_ServerRequest &_tao_req,
-        void *_tao_servant,
-        void *_tao_servant_upcall
+        TAO_ServerRequest & server_request,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
@@ -7207,7 +4140,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     destroy_skel (
@@ -7290,7 +4223,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     describe_skel (
@@ -7301,7 +4234,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     move_skel (
@@ -7312,7 +4245,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     lookup_skel (
@@ -7323,7 +4256,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     contents_skel (
@@ -7334,7 +4267,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     lookup_name_skel (
@@ -7345,7 +4278,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     describe_contents_skel (
@@ -7356,7 +4289,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_module_skel (
@@ -7367,7 +4300,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_constant_skel (
@@ -7378,7 +4311,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_struct_skel (
@@ -7389,7 +4322,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_union_skel (
@@ -7400,7 +4333,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_enum_skel (
@@ -7411,7 +4344,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_alias_skel (
@@ -7422,7 +4355,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_interface_skel (
@@ -7433,7 +4366,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_value_skel (
@@ -7444,7 +4377,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_value_box_skel (
@@ -7455,7 +4388,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_exception_skel (
@@ -7466,7 +4399,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_native_skel (
@@ -7477,7 +4410,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_abstract_interface_skel (
@@ -7488,7 +4421,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_local_interface_skel (
@@ -7499,7 +4432,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_ext_value_skel (
@@ -7554,458 +4487,6 @@ namespace POA_CORBA
   ///////////////////////////////////////////////////////////////////////
   
   
-  ///////////////////////////////////////////////////////////////////////
-  //                    ThruPOA Proxy Impl. Declaration
-  //
-  
-  // TAO_IDL - Generated from
-  // be\be_visitor_interface/thru_poa_proxy_impl_sh.cpp:37
-  
-  class  _TAO_ExceptionDef_ThruPOA_Proxy_Impl
-    : public virtual ::POA_CORBA::_TAO_Contained_ThruPOA_Proxy_Impl,
-      public virtual ::POA_CORBA::_TAO_Container_ThruPOA_Proxy_Impl
-  {
-  public:
-    _TAO_ExceptionDef_ThruPOA_Proxy_Impl (void);
-    
-    virtual ~_TAO_ExceptionDef_ThruPOA_Proxy_Impl (void) {}
-    
-    // TAO_IDL - Generated from
-    // be\be_visitor_operation/proxy_impl_xh.cpp:24
-    
-    static void
-    _get_type (
-        TAO_Abstract_ServantBase *servant,
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_visitor_operation/proxy_impl_xh.cpp:24
-    
-    static void
-    _get_members (
-        TAO_Abstract_ServantBase *servant,
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_visitor_operation/proxy_impl_xh.cpp:24
-    
-    static void
-    _set_members (
-        TAO_Abstract_ServantBase *servant,
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_def_kind (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    destroy (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_id (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    static void
-    _set_id (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_name (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    static void
-    _set_name (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_version (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    static void
-    _set_version (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_defined_in (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_absolute_name (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_containing_repository (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    describe (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    move (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    lookup (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    contents (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    lookup_name (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    describe_contents (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_module (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_constant (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_struct (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_union (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_enum (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_alias (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_interface (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_value (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_value_box (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_exception (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_native (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_abstract_interface (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_local_interface (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_ext_value (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-  };
-  
-  //
-  //                ThruPOA  Proxy Impl. Declaration
-  ///////////////////////////////////////////////////////////////////////
   
   // TAO_IDL - Generated from
   // be\be_visitor_interface/interface_sh.cpp:87
@@ -8013,7 +4494,6 @@ namespace POA_CORBA
   class AttributeDef;
   typedef AttributeDef *AttributeDef_ptr;
   
-  class _TAO_AttributeDef_ThruPOA_Proxy_Impl;
   class _TAO_AttributeDef_Strategized_Proxy_Broker;
   
   class  AttributeDef
@@ -8036,41 +4516,37 @@ namespace POA_CORBA
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
     
-    virtual void* _downcast (
-        const char* logical_type_id
-      );
-    
     static void _is_a_skel (
-        TAO_ServerRequest &req,
-        void *servant,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     static void _non_existent_skel (
-        TAO_ServerRequest &req,
-        void *servant,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     static void _interface_skel (
-        TAO_ServerRequest &req,
-        void *servant,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     static void _component_skel (
-        TAO_ServerRequest &req,
-        void *obj,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     virtual void _dispatch (
-        TAO_ServerRequest &req,
-        void *_servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall
         ACE_ENV_ARG_DECL
       );
     
@@ -8091,9 +4567,9 @@ namespace POA_CORBA
       )) = 0;
     
     static void _get_type_skel (
-        TAO_ServerRequest &_tao_req,
-        void *_tao_servant,
-        void *_tao_servant_upcall
+        TAO_ServerRequest & server_request,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
@@ -8108,9 +4584,9 @@ namespace POA_CORBA
       )) = 0;
     
     static void _get_type_def_skel (
-        TAO_ServerRequest &_tao_req,
-        void *_tao_servant,
-        void *_tao_servant_upcall
+        TAO_ServerRequest & server_request,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
@@ -8126,9 +4602,9 @@ namespace POA_CORBA
       )) = 0;
     
     static void _set_type_def_skel (
-        TAO_ServerRequest &_tao_req,
-        void *_tao_servant,
-        void *_tao_servant_upcall
+        TAO_ServerRequest & server_request,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
@@ -8143,9 +4619,9 @@ namespace POA_CORBA
       )) = 0;
     
     static void _get_mode_skel (
-        TAO_ServerRequest &_tao_req,
-        void *_tao_servant,
-        void *_tao_servant_upcall
+        TAO_ServerRequest & server_request,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
@@ -8161,9 +4637,9 @@ namespace POA_CORBA
       )) = 0;
     
     static void _set_mode_skel (
-        TAO_ServerRequest &_tao_req,
-        void *_tao_servant,
-        void *_tao_servant_upcall
+        TAO_ServerRequest & server_request,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
@@ -8176,7 +4652,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     destroy_skel (
@@ -8259,7 +4735,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     describe_skel (
@@ -8270,7 +4746,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     move_skel (
@@ -8325,233 +4801,6 @@ namespace POA_CORBA
   ///////////////////////////////////////////////////////////////////////
   
   
-  ///////////////////////////////////////////////////////////////////////
-  //                    ThruPOA Proxy Impl. Declaration
-  //
-  
-  // TAO_IDL - Generated from
-  // be\be_visitor_interface/thru_poa_proxy_impl_sh.cpp:37
-  
-  class  _TAO_AttributeDef_ThruPOA_Proxy_Impl
-    : public virtual ::POA_CORBA::_TAO_Contained_ThruPOA_Proxy_Impl
-  {
-  public:
-    _TAO_AttributeDef_ThruPOA_Proxy_Impl (void);
-    
-    virtual ~_TAO_AttributeDef_ThruPOA_Proxy_Impl (void) {}
-    
-    // TAO_IDL - Generated from
-    // be\be_visitor_operation/proxy_impl_xh.cpp:24
-    
-    static void
-    _get_type (
-        TAO_Abstract_ServantBase *servant,
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_visitor_operation/proxy_impl_xh.cpp:24
-    
-    static void
-    _get_type_def (
-        TAO_Abstract_ServantBase *servant,
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_visitor_operation/proxy_impl_xh.cpp:24
-    
-    static void
-    _set_type_def (
-        TAO_Abstract_ServantBase *servant,
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_visitor_operation/proxy_impl_xh.cpp:24
-    
-    static void
-    _get_mode (
-        TAO_Abstract_ServantBase *servant,
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_visitor_operation/proxy_impl_xh.cpp:24
-    
-    static void
-    _set_mode (
-        TAO_Abstract_ServantBase *servant,
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_def_kind (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    destroy (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_id (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    static void
-    _set_id (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_name (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    static void
-    _set_name (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_version (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    static void
-    _set_version (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_defined_in (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_absolute_name (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_containing_repository (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    describe (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    move (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-  };
-  
-  //
-  //                ThruPOA  Proxy Impl. Declaration
-  ///////////////////////////////////////////////////////////////////////
   
   // TAO_IDL - Generated from
   // be\be_visitor_interface/interface_sh.cpp:87
@@ -8559,7 +4808,6 @@ namespace POA_CORBA
   class ExtAttributeDef;
   typedef ExtAttributeDef *ExtAttributeDef_ptr;
   
-  class _TAO_ExtAttributeDef_ThruPOA_Proxy_Impl;
   class _TAO_ExtAttributeDef_Strategized_Proxy_Broker;
   
   class  ExtAttributeDef
@@ -8582,41 +4830,37 @@ namespace POA_CORBA
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
     
-    virtual void* _downcast (
-        const char* logical_type_id
-      );
-    
     static void _is_a_skel (
-        TAO_ServerRequest &req,
-        void *servant,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     static void _non_existent_skel (
-        TAO_ServerRequest &req,
-        void *servant,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     static void _interface_skel (
-        TAO_ServerRequest &req,
-        void *servant,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     static void _component_skel (
-        TAO_ServerRequest &req,
-        void *obj,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     virtual void _dispatch (
-        TAO_ServerRequest &req,
-        void *_servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall
         ACE_ENV_ARG_DECL
       );
     
@@ -8637,9 +4881,9 @@ namespace POA_CORBA
       )) = 0;
     
     static void _get_get_exceptions_skel (
-        TAO_ServerRequest &_tao_req,
-        void *_tao_servant,
-        void *_tao_servant_upcall
+        TAO_ServerRequest & server_request,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
@@ -8655,9 +4899,9 @@ namespace POA_CORBA
       )) = 0;
     
     static void _set_get_exceptions_skel (
-        TAO_ServerRequest &_tao_req,
-        void *_tao_servant,
-        void *_tao_servant_upcall
+        TAO_ServerRequest & server_request,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
@@ -8672,9 +4916,9 @@ namespace POA_CORBA
       )) = 0;
     
     static void _get_set_exceptions_skel (
-        TAO_ServerRequest &_tao_req,
-        void *_tao_servant,
-        void *_tao_servant_upcall
+        TAO_ServerRequest & server_request,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
@@ -8690,9 +4934,9 @@ namespace POA_CORBA
       )) = 0;
     
     static void _set_set_exceptions_skel (
-        TAO_ServerRequest &_tao_req,
-        void *_tao_servant,
-        void *_tao_servant_upcall
+        TAO_ServerRequest & server_request,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
@@ -8707,9 +4951,9 @@ namespace POA_CORBA
       )) = 0;
     
     static void describe_attribute_skel (
-        TAO_ServerRequest &_tao_req,
-        void *_tao_servant,
-        void *_tao_servant_upcall
+        TAO_ServerRequest & server_request,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
@@ -8722,7 +4966,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     destroy_skel (
@@ -8805,7 +5049,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     describe_skel (
@@ -8816,7 +5060,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     move_skel (
@@ -8911,282 +5155,6 @@ namespace POA_CORBA
   ///////////////////////////////////////////////////////////////////////
   
   
-  ///////////////////////////////////////////////////////////////////////
-  //                    ThruPOA Proxy Impl. Declaration
-  //
-  
-  // TAO_IDL - Generated from
-  // be\be_visitor_interface/thru_poa_proxy_impl_sh.cpp:37
-  
-  class  _TAO_ExtAttributeDef_ThruPOA_Proxy_Impl
-    : public virtual ::POA_CORBA::_TAO_AttributeDef_ThruPOA_Proxy_Impl
-  {
-  public:
-    _TAO_ExtAttributeDef_ThruPOA_Proxy_Impl (void);
-    
-    virtual ~_TAO_ExtAttributeDef_ThruPOA_Proxy_Impl (void) {}
-    
-    // TAO_IDL - Generated from
-    // be\be_visitor_operation/proxy_impl_xh.cpp:24
-    
-    static void
-    _get_get_exceptions (
-        TAO_Abstract_ServantBase *servant,
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_visitor_operation/proxy_impl_xh.cpp:24
-    
-    static void
-    _set_get_exceptions (
-        TAO_Abstract_ServantBase *servant,
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_visitor_operation/proxy_impl_xh.cpp:24
-    
-    static void
-    _get_set_exceptions (
-        TAO_Abstract_ServantBase *servant,
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_visitor_operation/proxy_impl_xh.cpp:24
-    
-    static void
-    _set_set_exceptions (
-        TAO_Abstract_ServantBase *servant,
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_visitor_operation/proxy_impl_xh.cpp:24
-    
-    static void
-    describe_attribute (
-        TAO_Abstract_ServantBase *servant,
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_def_kind (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    destroy (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_id (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    static void
-    _set_id (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_name (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    static void
-    _set_name (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_version (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    static void
-    _set_version (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_defined_in (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_absolute_name (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_containing_repository (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    describe (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    move (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_type (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_type_def (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    static void
-    _set_type_def (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_mode (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    static void
-    _set_mode (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-  };
-  
-  //
-  //                ThruPOA  Proxy Impl. Declaration
-  ///////////////////////////////////////////////////////////////////////
   
   // TAO_IDL - Generated from
   // be\be_visitor_interface/interface_sh.cpp:87
@@ -9194,7 +5162,6 @@ namespace POA_CORBA
   class OperationDef;
   typedef OperationDef *OperationDef_ptr;
   
-  class _TAO_OperationDef_ThruPOA_Proxy_Impl;
   class _TAO_OperationDef_Strategized_Proxy_Broker;
   
   class  OperationDef
@@ -9217,41 +5184,37 @@ namespace POA_CORBA
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
     
-    virtual void* _downcast (
-        const char* logical_type_id
-      );
-    
     static void _is_a_skel (
-        TAO_ServerRequest &req,
-        void *servant,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     static void _non_existent_skel (
-        TAO_ServerRequest &req,
-        void *servant,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     static void _interface_skel (
-        TAO_ServerRequest &req,
-        void *servant,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     static void _component_skel (
-        TAO_ServerRequest &req,
-        void *obj,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     virtual void _dispatch (
-        TAO_ServerRequest &req,
-        void *_servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall
         ACE_ENV_ARG_DECL
       );
     
@@ -9272,9 +5235,9 @@ namespace POA_CORBA
       )) = 0;
     
     static void _get_result_skel (
-        TAO_ServerRequest &_tao_req,
-        void *_tao_servant,
-        void *_tao_servant_upcall
+        TAO_ServerRequest & server_request,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
@@ -9289,9 +5252,9 @@ namespace POA_CORBA
       )) = 0;
     
     static void _get_result_def_skel (
-        TAO_ServerRequest &_tao_req,
-        void *_tao_servant,
-        void *_tao_servant_upcall
+        TAO_ServerRequest & server_request,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
@@ -9307,9 +5270,9 @@ namespace POA_CORBA
       )) = 0;
     
     static void _set_result_def_skel (
-        TAO_ServerRequest &_tao_req,
-        void *_tao_servant,
-        void *_tao_servant_upcall
+        TAO_ServerRequest & server_request,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
@@ -9324,9 +5287,9 @@ namespace POA_CORBA
       )) = 0;
     
     static void _get_params_skel (
-        TAO_ServerRequest &_tao_req,
-        void *_tao_servant,
-        void *_tao_servant_upcall
+        TAO_ServerRequest & server_request,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
@@ -9342,9 +5305,9 @@ namespace POA_CORBA
       )) = 0;
     
     static void _set_params_skel (
-        TAO_ServerRequest &_tao_req,
-        void *_tao_servant,
-        void *_tao_servant_upcall
+        TAO_ServerRequest & server_request,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
@@ -9359,9 +5322,9 @@ namespace POA_CORBA
       )) = 0;
     
     static void _get_mode_skel (
-        TAO_ServerRequest &_tao_req,
-        void *_tao_servant,
-        void *_tao_servant_upcall
+        TAO_ServerRequest & server_request,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
@@ -9377,9 +5340,9 @@ namespace POA_CORBA
       )) = 0;
     
     static void _set_mode_skel (
-        TAO_ServerRequest &_tao_req,
-        void *_tao_servant,
-        void *_tao_servant_upcall
+        TAO_ServerRequest & server_request,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
@@ -9394,9 +5357,9 @@ namespace POA_CORBA
       )) = 0;
     
     static void _get_contexts_skel (
-        TAO_ServerRequest &_tao_req,
-        void *_tao_servant,
-        void *_tao_servant_upcall
+        TAO_ServerRequest & server_request,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
@@ -9412,9 +5375,9 @@ namespace POA_CORBA
       )) = 0;
     
     static void _set_contexts_skel (
-        TAO_ServerRequest &_tao_req,
-        void *_tao_servant,
-        void *_tao_servant_upcall
+        TAO_ServerRequest & server_request,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
@@ -9429,9 +5392,9 @@ namespace POA_CORBA
       )) = 0;
     
     static void _get_exceptions_skel (
-        TAO_ServerRequest &_tao_req,
-        void *_tao_servant,
-        void *_tao_servant_upcall
+        TAO_ServerRequest & server_request,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
@@ -9447,9 +5410,9 @@ namespace POA_CORBA
       )) = 0;
     
     static void _set_exceptions_skel (
-        TAO_ServerRequest &_tao_req,
-        void *_tao_servant,
-        void *_tao_servant_upcall
+        TAO_ServerRequest & server_request,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
@@ -9462,7 +5425,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     destroy_skel (
@@ -9545,7 +5508,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     describe_skel (
@@ -9556,7 +5519,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     move_skel (
@@ -9611,317 +5574,6 @@ namespace POA_CORBA
   ///////////////////////////////////////////////////////////////////////
   
   
-  ///////////////////////////////////////////////////////////////////////
-  //                    ThruPOA Proxy Impl. Declaration
-  //
-  
-  // TAO_IDL - Generated from
-  // be\be_visitor_interface/thru_poa_proxy_impl_sh.cpp:37
-  
-  class  _TAO_OperationDef_ThruPOA_Proxy_Impl
-    : public virtual ::POA_CORBA::_TAO_Contained_ThruPOA_Proxy_Impl
-  {
-  public:
-    _TAO_OperationDef_ThruPOA_Proxy_Impl (void);
-    
-    virtual ~_TAO_OperationDef_ThruPOA_Proxy_Impl (void) {}
-    
-    // TAO_IDL - Generated from
-    // be\be_visitor_operation/proxy_impl_xh.cpp:24
-    
-    static void
-    _get_result (
-        TAO_Abstract_ServantBase *servant,
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_visitor_operation/proxy_impl_xh.cpp:24
-    
-    static void
-    _get_result_def (
-        TAO_Abstract_ServantBase *servant,
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_visitor_operation/proxy_impl_xh.cpp:24
-    
-    static void
-    _set_result_def (
-        TAO_Abstract_ServantBase *servant,
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_visitor_operation/proxy_impl_xh.cpp:24
-    
-    static void
-    _get_params (
-        TAO_Abstract_ServantBase *servant,
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_visitor_operation/proxy_impl_xh.cpp:24
-    
-    static void
-    _set_params (
-        TAO_Abstract_ServantBase *servant,
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_visitor_operation/proxy_impl_xh.cpp:24
-    
-    static void
-    _get_mode (
-        TAO_Abstract_ServantBase *servant,
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_visitor_operation/proxy_impl_xh.cpp:24
-    
-    static void
-    _set_mode (
-        TAO_Abstract_ServantBase *servant,
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_visitor_operation/proxy_impl_xh.cpp:24
-    
-    static void
-    _get_contexts (
-        TAO_Abstract_ServantBase *servant,
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_visitor_operation/proxy_impl_xh.cpp:24
-    
-    static void
-    _set_contexts (
-        TAO_Abstract_ServantBase *servant,
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_visitor_operation/proxy_impl_xh.cpp:24
-    
-    static void
-    _get_exceptions (
-        TAO_Abstract_ServantBase *servant,
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_visitor_operation/proxy_impl_xh.cpp:24
-    
-    static void
-    _set_exceptions (
-        TAO_Abstract_ServantBase *servant,
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_def_kind (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    destroy (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_id (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    static void
-    _set_id (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_name (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    static void
-    _set_name (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_version (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    static void
-    _set_version (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_defined_in (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_absolute_name (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_containing_repository (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    describe (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    move (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-  };
-  
-  //
-  //                ThruPOA  Proxy Impl. Declaration
-  ///////////////////////////////////////////////////////////////////////
   
   // TAO_IDL - Generated from
   // be\be_visitor_interface/interface_sh.cpp:87
@@ -9929,7 +5581,6 @@ namespace POA_CORBA
   class InterfaceDef;
   typedef InterfaceDef *InterfaceDef_ptr;
   
-  class _TAO_InterfaceDef_ThruPOA_Proxy_Impl;
   class _TAO_InterfaceDef_Strategized_Proxy_Broker;
   
   class  InterfaceDef
@@ -9954,41 +5605,37 @@ namespace POA_CORBA
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
     
-    virtual void* _downcast (
-        const char* logical_type_id
-      );
-    
     static void _is_a_skel (
-        TAO_ServerRequest &req,
-        void *servant,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     static void _non_existent_skel (
-        TAO_ServerRequest &req,
-        void *servant,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     static void _interface_skel (
-        TAO_ServerRequest &req,
-        void *servant,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     static void _component_skel (
-        TAO_ServerRequest &req,
-        void *obj,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     virtual void _dispatch (
-        TAO_ServerRequest &req,
-        void *_servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall
         ACE_ENV_ARG_DECL
       );
     
@@ -10009,9 +5656,9 @@ namespace POA_CORBA
       )) = 0;
     
     static void _get_base_interfaces_skel (
-        TAO_ServerRequest &_tao_req,
-        void *_tao_servant,
-        void *_tao_servant_upcall
+        TAO_ServerRequest & server_request,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
@@ -10027,9 +5674,9 @@ namespace POA_CORBA
       )) = 0;
     
     static void _set_base_interfaces_skel (
-        TAO_ServerRequest &_tao_req,
-        void *_tao_servant,
-        void *_tao_servant_upcall
+        TAO_ServerRequest & server_request,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
@@ -10045,9 +5692,9 @@ namespace POA_CORBA
       )) = 0;
     
     static void is_a_skel (
-        TAO_ServerRequest &_tao_req,
-        void *_tao_servant,
-        void *_tao_servant_upcall
+        TAO_ServerRequest & server_request,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
@@ -10062,9 +5709,9 @@ namespace POA_CORBA
       )) = 0;
     
     static void describe_interface_skel (
-        TAO_ServerRequest &_tao_req,
-        void *_tao_servant,
-        void *_tao_servant_upcall
+        TAO_ServerRequest & server_request,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
@@ -10084,9 +5731,9 @@ namespace POA_CORBA
       )) = 0;
     
     static void create_attribute_skel (
-        TAO_ServerRequest &_tao_req,
-        void *_tao_servant,
-        void *_tao_servant_upcall
+        TAO_ServerRequest & server_request,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
@@ -10109,9 +5756,9 @@ namespace POA_CORBA
       )) = 0;
     
     static void create_operation_skel (
-        TAO_ServerRequest &_tao_req,
-        void *_tao_servant,
-        void *_tao_servant_upcall
+        TAO_ServerRequest & server_request,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
@@ -10124,7 +5771,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     destroy_skel (
@@ -10135,7 +5782,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     lookup_skel (
@@ -10146,7 +5793,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     contents_skel (
@@ -10157,7 +5804,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     lookup_name_skel (
@@ -10168,7 +5815,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     describe_contents_skel (
@@ -10179,7 +5826,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_module_skel (
@@ -10190,7 +5837,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_constant_skel (
@@ -10201,7 +5848,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_struct_skel (
@@ -10212,7 +5859,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_union_skel (
@@ -10223,7 +5870,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_enum_skel (
@@ -10234,7 +5881,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_alias_skel (
@@ -10245,7 +5892,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_interface_skel (
@@ -10256,7 +5903,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_value_skel (
@@ -10267,7 +5914,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_value_box_skel (
@@ -10278,7 +5925,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_exception_skel (
@@ -10289,7 +5936,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_native_skel (
@@ -10300,7 +5947,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_abstract_interface_skel (
@@ -10311,7 +5958,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_local_interface_skel (
@@ -10322,7 +5969,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_ext_value_skel (
@@ -10405,7 +6052,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     describe_skel (
@@ -10416,7 +6063,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     move_skel (
@@ -10479,510 +6126,6 @@ namespace POA_CORBA
   ///////////////////////////////////////////////////////////////////////
   
   
-  ///////////////////////////////////////////////////////////////////////
-  //                    ThruPOA Proxy Impl. Declaration
-  //
-  
-  // TAO_IDL - Generated from
-  // be\be_visitor_interface/thru_poa_proxy_impl_sh.cpp:37
-  
-  class  _TAO_InterfaceDef_ThruPOA_Proxy_Impl
-    : public virtual ::POA_CORBA::_TAO_Container_ThruPOA_Proxy_Impl,
-      public virtual ::POA_CORBA::_TAO_Contained_ThruPOA_Proxy_Impl,
-      public virtual ::POA_CORBA::_TAO_IDLType_ThruPOA_Proxy_Impl
-  {
-  public:
-    _TAO_InterfaceDef_ThruPOA_Proxy_Impl (void);
-    
-    virtual ~_TAO_InterfaceDef_ThruPOA_Proxy_Impl (void) {}
-    
-    // TAO_IDL - Generated from
-    // be\be_visitor_operation/proxy_impl_xh.cpp:24
-    
-    static void
-    _get_base_interfaces (
-        TAO_Abstract_ServantBase *servant,
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_visitor_operation/proxy_impl_xh.cpp:24
-    
-    static void
-    _set_base_interfaces (
-        TAO_Abstract_ServantBase *servant,
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_visitor_operation/proxy_impl_xh.cpp:24
-    
-    static void
-    is_a (
-        TAO_Abstract_ServantBase *servant,
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_visitor_operation/proxy_impl_xh.cpp:24
-    
-    static void
-    describe_interface (
-        TAO_Abstract_ServantBase *servant,
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_visitor_operation/proxy_impl_xh.cpp:24
-    
-    static void
-    create_attribute (
-        TAO_Abstract_ServantBase *servant,
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_visitor_operation/proxy_impl_xh.cpp:24
-    
-    static void
-    create_operation (
-        TAO_Abstract_ServantBase *servant,
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_def_kind (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    destroy (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    lookup (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    contents (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    lookup_name (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    describe_contents (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_module (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_constant (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_struct (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_union (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_enum (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_alias (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_interface (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_value (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_value_box (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_exception (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_native (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_abstract_interface (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_local_interface (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_ext_value (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_id (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    static void
-    _set_id (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_name (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    static void
-    _set_name (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_version (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    static void
-    _set_version (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_defined_in (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_absolute_name (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_containing_repository (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    describe (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    move (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_type (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-  };
-  
-  //
-  //                ThruPOA  Proxy Impl. Declaration
-  ///////////////////////////////////////////////////////////////////////
   
   // TAO_IDL - Generated from
   // be\be_visitor_interface/interface_sh.cpp:87
@@ -10990,7 +6133,6 @@ namespace POA_CORBA
   class InterfaceAttrExtension;
   typedef InterfaceAttrExtension *InterfaceAttrExtension_ptr;
   
-  class _TAO_InterfaceAttrExtension_ThruPOA_Proxy_Impl;
   class _TAO_InterfaceAttrExtension_Strategized_Proxy_Broker;
   
   class  InterfaceAttrExtension
@@ -11013,41 +6155,37 @@ namespace POA_CORBA
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
     
-    virtual void* _downcast (
-        const char* logical_type_id
-      );
-    
     static void _is_a_skel (
-        TAO_ServerRequest &req,
-        void *servant,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     static void _non_existent_skel (
-        TAO_ServerRequest &req,
-        void *servant,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     static void _interface_skel (
-        TAO_ServerRequest &req,
-        void *servant,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     static void _component_skel (
-        TAO_ServerRequest &req,
-        void *obj,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     virtual void _dispatch (
-        TAO_ServerRequest &req,
-        void *_servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall
         ACE_ENV_ARG_DECL
       );
     
@@ -11068,9 +6206,9 @@ namespace POA_CORBA
       )) = 0;
     
     static void describe_ext_interface_skel (
-        TAO_ServerRequest &_tao_req,
-        void *_tao_servant,
-        void *_tao_servant_upcall
+        TAO_ServerRequest & server_request,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
@@ -11092,9 +6230,9 @@ namespace POA_CORBA
       )) = 0;
     
     static void create_ext_attribute_skel (
-        TAO_ServerRequest &_tao_req,
-        void *_tao_servant,
-        void *_tao_servant_upcall
+        TAO_ServerRequest & server_request,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
   };
@@ -11143,52 +6281,6 @@ namespace POA_CORBA
   ///////////////////////////////////////////////////////////////////////
   
   
-  ///////////////////////////////////////////////////////////////////////
-  //                    ThruPOA Proxy Impl. Declaration
-  //
-  
-  // TAO_IDL - Generated from
-  // be\be_visitor_interface/thru_poa_proxy_impl_sh.cpp:37
-  
-  class  _TAO_InterfaceAttrExtension_ThruPOA_Proxy_Impl
-  {
-  public:
-    _TAO_InterfaceAttrExtension_ThruPOA_Proxy_Impl (void);
-    
-    virtual ~_TAO_InterfaceAttrExtension_ThruPOA_Proxy_Impl (void) {}
-    
-    // TAO_IDL - Generated from
-    // be\be_visitor_operation/proxy_impl_xh.cpp:24
-    
-    static void
-    describe_ext_interface (
-        TAO_Abstract_ServantBase *servant,
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_visitor_operation/proxy_impl_xh.cpp:24
-    
-    static void
-    create_ext_attribute (
-        TAO_Abstract_ServantBase *servant,
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-  };
-  
-  //
-  //                ThruPOA  Proxy Impl. Declaration
-  ///////////////////////////////////////////////////////////////////////
   
   // TAO_IDL - Generated from
   // be\be_visitor_interface/interface_sh.cpp:87
@@ -11196,7 +6288,6 @@ namespace POA_CORBA
   class ExtInterfaceDef;
   typedef ExtInterfaceDef *ExtInterfaceDef_ptr;
   
-  class _TAO_ExtInterfaceDef_ThruPOA_Proxy_Impl;
   class _TAO_ExtInterfaceDef_Strategized_Proxy_Broker;
   
   class  ExtInterfaceDef
@@ -11220,41 +6311,37 @@ namespace POA_CORBA
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
     
-    virtual void* _downcast (
-        const char* logical_type_id
-      );
-    
     static void _is_a_skel (
-        TAO_ServerRequest &req,
-        void *servant,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     static void _non_existent_skel (
-        TAO_ServerRequest &req,
-        void *servant,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     static void _interface_skel (
-        TAO_ServerRequest &req,
-        void *servant,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     static void _component_skel (
-        TAO_ServerRequest &req,
-        void *obj,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     virtual void _dispatch (
-        TAO_ServerRequest &req,
-        void *_servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall
         ACE_ENV_ARG_DECL
       );
     
@@ -11273,7 +6360,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     destroy_skel (
@@ -11284,7 +6371,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     lookup_skel (
@@ -11295,7 +6382,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     contents_skel (
@@ -11306,7 +6393,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     lookup_name_skel (
@@ -11317,7 +6404,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     describe_contents_skel (
@@ -11328,7 +6415,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_module_skel (
@@ -11339,7 +6426,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_constant_skel (
@@ -11350,7 +6437,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_struct_skel (
@@ -11361,7 +6448,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_union_skel (
@@ -11372,7 +6459,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_enum_skel (
@@ -11383,7 +6470,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_alias_skel (
@@ -11394,7 +6481,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_interface_skel (
@@ -11405,7 +6492,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_value_skel (
@@ -11416,7 +6503,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_value_box_skel (
@@ -11427,7 +6514,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_exception_skel (
@@ -11438,7 +6525,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_native_skel (
@@ -11449,7 +6536,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_abstract_interface_skel (
@@ -11460,7 +6547,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_local_interface_skel (
@@ -11471,7 +6558,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_ext_value_skel (
@@ -11554,7 +6641,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     describe_skel (
@@ -11565,7 +6652,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     move_skel (
@@ -11600,7 +6687,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     is_a_skel (
@@ -11611,7 +6698,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     describe_interface_skel (
@@ -11622,7 +6709,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_attribute_skel (
@@ -11633,7 +6720,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_operation_skel (
@@ -11644,7 +6731,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     describe_ext_interface_skel (
@@ -11655,7 +6742,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_ext_attribute_skel (
@@ -11710,529 +6797,6 @@ namespace POA_CORBA
   ///////////////////////////////////////////////////////////////////////
   
   
-  ///////////////////////////////////////////////////////////////////////
-  //                    ThruPOA Proxy Impl. Declaration
-  //
-  
-  // TAO_IDL - Generated from
-  // be\be_visitor_interface/thru_poa_proxy_impl_sh.cpp:37
-  
-  class  _TAO_ExtInterfaceDef_ThruPOA_Proxy_Impl
-    : public virtual ::POA_CORBA::_TAO_InterfaceDef_ThruPOA_Proxy_Impl,
-      public virtual ::POA_CORBA::_TAO_InterfaceAttrExtension_ThruPOA_Proxy_Impl
-  {
-  public:
-    _TAO_ExtInterfaceDef_ThruPOA_Proxy_Impl (void);
-    
-    virtual ~_TAO_ExtInterfaceDef_ThruPOA_Proxy_Impl (void) {}static void
-    _get_def_kind (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    destroy (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    lookup (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    contents (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    lookup_name (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    describe_contents (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_module (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_constant (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_struct (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_union (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_enum (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_alias (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_interface (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_value (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_value_box (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_exception (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_native (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_abstract_interface (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_local_interface (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_ext_value (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_id (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    static void
-    _set_id (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_name (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    static void
-    _set_name (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_version (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    static void
-    _set_version (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_defined_in (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_absolute_name (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_containing_repository (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    describe (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    move (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_type (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_base_interfaces (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    static void
-    _set_base_interfaces (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    is_a (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    describe_interface (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_attribute (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_operation (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    describe_ext_interface (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_ext_attribute (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-  };
-  
-  //
-  //                ThruPOA  Proxy Impl. Declaration
-  ///////////////////////////////////////////////////////////////////////
   
   // TAO_IDL - Generated from
   // be\be_visitor_interface/interface_sh.cpp:87
@@ -12240,7 +6804,6 @@ namespace POA_CORBA
   class AbstractInterfaceDef;
   typedef AbstractInterfaceDef *AbstractInterfaceDef_ptr;
   
-  class _TAO_AbstractInterfaceDef_ThruPOA_Proxy_Impl;
   class _TAO_AbstractInterfaceDef_Strategized_Proxy_Broker;
   
   class  AbstractInterfaceDef
@@ -12263,41 +6826,37 @@ namespace POA_CORBA
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
     
-    virtual void* _downcast (
-        const char* logical_type_id
-      );
-    
     static void _is_a_skel (
-        TAO_ServerRequest &req,
-        void *servant,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     static void _non_existent_skel (
-        TAO_ServerRequest &req,
-        void *servant,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     static void _interface_skel (
-        TAO_ServerRequest &req,
-        void *servant,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     static void _component_skel (
-        TAO_ServerRequest &req,
-        void *obj,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     virtual void _dispatch (
-        TAO_ServerRequest &req,
-        void *_servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall
         ACE_ENV_ARG_DECL
       );
     
@@ -12316,7 +6875,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     destroy_skel (
@@ -12327,7 +6886,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     lookup_skel (
@@ -12338,7 +6897,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     contents_skel (
@@ -12349,7 +6908,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     lookup_name_skel (
@@ -12360,7 +6919,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     describe_contents_skel (
@@ -12371,7 +6930,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_module_skel (
@@ -12382,7 +6941,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_constant_skel (
@@ -12393,7 +6952,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_struct_skel (
@@ -12404,7 +6963,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_union_skel (
@@ -12415,7 +6974,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_enum_skel (
@@ -12426,7 +6985,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_alias_skel (
@@ -12437,7 +6996,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_interface_skel (
@@ -12448,7 +7007,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_value_skel (
@@ -12459,7 +7018,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_value_box_skel (
@@ -12470,7 +7029,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_exception_skel (
@@ -12481,7 +7040,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_native_skel (
@@ -12492,7 +7051,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_abstract_interface_skel (
@@ -12503,7 +7062,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_local_interface_skel (
@@ -12514,7 +7073,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_ext_value_skel (
@@ -12597,7 +7156,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     describe_skel (
@@ -12608,7 +7167,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     move_skel (
@@ -12643,7 +7202,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     is_a_skel (
@@ -12654,7 +7213,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     describe_interface_skel (
@@ -12665,7 +7224,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_attribute_skel (
@@ -12676,7 +7235,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_operation_skel (
@@ -12731,500 +7290,6 @@ namespace POA_CORBA
   ///////////////////////////////////////////////////////////////////////
   
   
-  ///////////////////////////////////////////////////////////////////////
-  //                    ThruPOA Proxy Impl. Declaration
-  //
-  
-  // TAO_IDL - Generated from
-  // be\be_visitor_interface/thru_poa_proxy_impl_sh.cpp:37
-  
-  class  _TAO_AbstractInterfaceDef_ThruPOA_Proxy_Impl
-    : public virtual ::POA_CORBA::_TAO_InterfaceDef_ThruPOA_Proxy_Impl
-  {
-  public:
-    _TAO_AbstractInterfaceDef_ThruPOA_Proxy_Impl (void);
-    
-    virtual ~_TAO_AbstractInterfaceDef_ThruPOA_Proxy_Impl (void) {}static void
-    _get_def_kind (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    destroy (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    lookup (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    contents (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    lookup_name (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    describe_contents (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_module (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_constant (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_struct (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_union (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_enum (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_alias (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_interface (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_value (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_value_box (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_exception (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_native (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_abstract_interface (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_local_interface (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_ext_value (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_id (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    static void
-    _set_id (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_name (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    static void
-    _set_name (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_version (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    static void
-    _set_version (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_defined_in (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_absolute_name (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_containing_repository (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    describe (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    move (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_type (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_base_interfaces (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    static void
-    _set_base_interfaces (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    is_a (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    describe_interface (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_attribute (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_operation (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-  };
-  
-  //
-  //                ThruPOA  Proxy Impl. Declaration
-  ///////////////////////////////////////////////////////////////////////
   
   // TAO_IDL - Generated from
   // be\be_visitor_interface/interface_sh.cpp:87
@@ -13232,7 +7297,6 @@ namespace POA_CORBA
   class ExtAbstractInterfaceDef;
   typedef ExtAbstractInterfaceDef *ExtAbstractInterfaceDef_ptr;
   
-  class _TAO_ExtAbstractInterfaceDef_ThruPOA_Proxy_Impl;
   class _TAO_ExtAbstractInterfaceDef_Strategized_Proxy_Broker;
   
   class  ExtAbstractInterfaceDef
@@ -13256,41 +7320,37 @@ namespace POA_CORBA
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
     
-    virtual void* _downcast (
-        const char* logical_type_id
-      );
-    
     static void _is_a_skel (
-        TAO_ServerRequest &req,
-        void *servant,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     static void _non_existent_skel (
-        TAO_ServerRequest &req,
-        void *servant,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     static void _interface_skel (
-        TAO_ServerRequest &req,
-        void *servant,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     static void _component_skel (
-        TAO_ServerRequest &req,
-        void *obj,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     virtual void _dispatch (
-        TAO_ServerRequest &req,
-        void *_servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall
         ACE_ENV_ARG_DECL
       );
     
@@ -13309,7 +7369,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     destroy_skel (
@@ -13320,7 +7380,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     lookup_skel (
@@ -13331,7 +7391,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     contents_skel (
@@ -13342,7 +7402,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     lookup_name_skel (
@@ -13353,7 +7413,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     describe_contents_skel (
@@ -13364,7 +7424,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_module_skel (
@@ -13375,7 +7435,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_constant_skel (
@@ -13386,7 +7446,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_struct_skel (
@@ -13397,7 +7457,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_union_skel (
@@ -13408,7 +7468,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_enum_skel (
@@ -13419,7 +7479,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_alias_skel (
@@ -13430,7 +7490,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_interface_skel (
@@ -13441,7 +7501,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_value_skel (
@@ -13452,7 +7512,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_value_box_skel (
@@ -13463,7 +7523,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_exception_skel (
@@ -13474,7 +7534,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_native_skel (
@@ -13485,7 +7545,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_abstract_interface_skel (
@@ -13496,7 +7556,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_local_interface_skel (
@@ -13507,7 +7567,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_ext_value_skel (
@@ -13590,7 +7650,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     describe_skel (
@@ -13601,7 +7661,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     move_skel (
@@ -13636,7 +7696,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     is_a_skel (
@@ -13647,7 +7707,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     describe_interface_skel (
@@ -13658,7 +7718,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_attribute_skel (
@@ -13669,7 +7729,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_operation_skel (
@@ -13680,7 +7740,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     describe_ext_interface_skel (
@@ -13691,7 +7751,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_ext_attribute_skel (
@@ -13746,529 +7806,6 @@ namespace POA_CORBA
   ///////////////////////////////////////////////////////////////////////
   
   
-  ///////////////////////////////////////////////////////////////////////
-  //                    ThruPOA Proxy Impl. Declaration
-  //
-  
-  // TAO_IDL - Generated from
-  // be\be_visitor_interface/thru_poa_proxy_impl_sh.cpp:37
-  
-  class  _TAO_ExtAbstractInterfaceDef_ThruPOA_Proxy_Impl
-    : public virtual ::POA_CORBA::_TAO_AbstractInterfaceDef_ThruPOA_Proxy_Impl,
-      public virtual ::POA_CORBA::_TAO_InterfaceAttrExtension_ThruPOA_Proxy_Impl
-  {
-  public:
-    _TAO_ExtAbstractInterfaceDef_ThruPOA_Proxy_Impl (void);
-    
-    virtual ~_TAO_ExtAbstractInterfaceDef_ThruPOA_Proxy_Impl (void) {}static void
-    _get_def_kind (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    destroy (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    lookup (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    contents (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    lookup_name (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    describe_contents (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_module (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_constant (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_struct (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_union (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_enum (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_alias (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_interface (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_value (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_value_box (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_exception (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_native (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_abstract_interface (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_local_interface (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_ext_value (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_id (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    static void
-    _set_id (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_name (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    static void
-    _set_name (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_version (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    static void
-    _set_version (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_defined_in (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_absolute_name (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_containing_repository (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    describe (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    move (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_type (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_base_interfaces (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    static void
-    _set_base_interfaces (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    is_a (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    describe_interface (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_attribute (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_operation (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    describe_ext_interface (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_ext_attribute (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-  };
-  
-  //
-  //                ThruPOA  Proxy Impl. Declaration
-  ///////////////////////////////////////////////////////////////////////
   
   // TAO_IDL - Generated from
   // be\be_visitor_interface/interface_sh.cpp:87
@@ -14276,7 +7813,6 @@ namespace POA_CORBA
   class LocalInterfaceDef;
   typedef LocalInterfaceDef *LocalInterfaceDef_ptr;
   
-  class _TAO_LocalInterfaceDef_ThruPOA_Proxy_Impl;
   class _TAO_LocalInterfaceDef_Strategized_Proxy_Broker;
   
   class  LocalInterfaceDef
@@ -14299,41 +7835,37 @@ namespace POA_CORBA
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
     
-    virtual void* _downcast (
-        const char* logical_type_id
-      );
-    
     static void _is_a_skel (
-        TAO_ServerRequest &req,
-        void *servant,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     static void _non_existent_skel (
-        TAO_ServerRequest &req,
-        void *servant,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     static void _interface_skel (
-        TAO_ServerRequest &req,
-        void *servant,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     static void _component_skel (
-        TAO_ServerRequest &req,
-        void *obj,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     virtual void _dispatch (
-        TAO_ServerRequest &req,
-        void *_servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall
         ACE_ENV_ARG_DECL
       );
     
@@ -14352,7 +7884,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     destroy_skel (
@@ -14363,7 +7895,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     lookup_skel (
@@ -14374,7 +7906,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     contents_skel (
@@ -14385,7 +7917,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     lookup_name_skel (
@@ -14396,7 +7928,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     describe_contents_skel (
@@ -14407,7 +7939,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_module_skel (
@@ -14418,7 +7950,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_constant_skel (
@@ -14429,7 +7961,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_struct_skel (
@@ -14440,7 +7972,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_union_skel (
@@ -14451,7 +7983,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_enum_skel (
@@ -14462,7 +7994,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_alias_skel (
@@ -14473,7 +8005,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_interface_skel (
@@ -14484,7 +8016,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_value_skel (
@@ -14495,7 +8027,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_value_box_skel (
@@ -14506,7 +8038,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_exception_skel (
@@ -14517,7 +8049,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_native_skel (
@@ -14528,7 +8060,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_abstract_interface_skel (
@@ -14539,7 +8071,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_local_interface_skel (
@@ -14550,7 +8082,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_ext_value_skel (
@@ -14633,7 +8165,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     describe_skel (
@@ -14644,7 +8176,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     move_skel (
@@ -14679,7 +8211,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     is_a_skel (
@@ -14690,7 +8222,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     describe_interface_skel (
@@ -14701,7 +8233,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_attribute_skel (
@@ -14712,7 +8244,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_operation_skel (
@@ -14767,500 +8299,6 @@ namespace POA_CORBA
   ///////////////////////////////////////////////////////////////////////
   
   
-  ///////////////////////////////////////////////////////////////////////
-  //                    ThruPOA Proxy Impl. Declaration
-  //
-  
-  // TAO_IDL - Generated from
-  // be\be_visitor_interface/thru_poa_proxy_impl_sh.cpp:37
-  
-  class  _TAO_LocalInterfaceDef_ThruPOA_Proxy_Impl
-    : public virtual ::POA_CORBA::_TAO_InterfaceDef_ThruPOA_Proxy_Impl
-  {
-  public:
-    _TAO_LocalInterfaceDef_ThruPOA_Proxy_Impl (void);
-    
-    virtual ~_TAO_LocalInterfaceDef_ThruPOA_Proxy_Impl (void) {}static void
-    _get_def_kind (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    destroy (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    lookup (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    contents (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    lookup_name (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    describe_contents (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_module (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_constant (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_struct (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_union (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_enum (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_alias (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_interface (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_value (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_value_box (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_exception (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_native (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_abstract_interface (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_local_interface (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_ext_value (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_id (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    static void
-    _set_id (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_name (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    static void
-    _set_name (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_version (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    static void
-    _set_version (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_defined_in (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_absolute_name (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_containing_repository (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    describe (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    move (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_type (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_base_interfaces (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    static void
-    _set_base_interfaces (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    is_a (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    describe_interface (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_attribute (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_operation (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-  };
-  
-  //
-  //                ThruPOA  Proxy Impl. Declaration
-  ///////////////////////////////////////////////////////////////////////
   
   // TAO_IDL - Generated from
   // be\be_visitor_interface/interface_sh.cpp:87
@@ -15268,7 +8306,6 @@ namespace POA_CORBA
   class ExtLocalInterfaceDef;
   typedef ExtLocalInterfaceDef *ExtLocalInterfaceDef_ptr;
   
-  class _TAO_ExtLocalInterfaceDef_ThruPOA_Proxy_Impl;
   class _TAO_ExtLocalInterfaceDef_Strategized_Proxy_Broker;
   
   class  ExtLocalInterfaceDef
@@ -15292,41 +8329,37 @@ namespace POA_CORBA
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
     
-    virtual void* _downcast (
-        const char* logical_type_id
-      );
-    
     static void _is_a_skel (
-        TAO_ServerRequest &req,
-        void *servant,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     static void _non_existent_skel (
-        TAO_ServerRequest &req,
-        void *servant,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     static void _interface_skel (
-        TAO_ServerRequest &req,
-        void *servant,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     static void _component_skel (
-        TAO_ServerRequest &req,
-        void *obj,
-        void *servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
         ACE_ENV_ARG_DECL
       );
     
     virtual void _dispatch (
-        TAO_ServerRequest &req,
-        void *_servant_upcall
+        TAO_ServerRequest & req,
+        void * servant_upcall
         ACE_ENV_ARG_DECL
       );
     
@@ -15345,7 +8378,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     destroy_skel (
@@ -15356,7 +8389,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     lookup_skel (
@@ -15367,7 +8400,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     contents_skel (
@@ -15378,7 +8411,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     lookup_name_skel (
@@ -15389,7 +8422,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     describe_contents_skel (
@@ -15400,7 +8433,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_module_skel (
@@ -15411,7 +8444,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_constant_skel (
@@ -15422,7 +8455,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_struct_skel (
@@ -15433,7 +8466,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_union_skel (
@@ -15444,7 +8477,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_enum_skel (
@@ -15455,7 +8488,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_alias_skel (
@@ -15466,7 +8499,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_interface_skel (
@@ -15477,7 +8510,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_value_skel (
@@ -15488,7 +8521,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_value_box_skel (
@@ -15499,7 +8532,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_exception_skel (
@@ -15510,7 +8543,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_native_skel (
@@ -15521,7 +8554,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_abstract_interface_skel (
@@ -15532,7 +8565,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_local_interface_skel (
@@ -15543,7 +8576,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_ext_value_skel (
@@ -15626,7 +8659,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     describe_skel (
@@ -15637,7 +8670,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     move_skel (
@@ -15672,7 +8705,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     is_a_skel (
@@ -15683,7 +8716,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     describe_interface_skel (
@@ -15694,7 +8727,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_attribute_skel (
@@ -15705,7 +8738,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_operation_skel (
@@ -15716,7 +8749,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     describe_ext_interface_skel (
@@ -15727,7 +8760,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:2026
+    // be\be_interface.cpp:1939
     
     static void
     create_ext_attribute_skel (
@@ -15782,529 +8815,6 @@ namespace POA_CORBA
   ///////////////////////////////////////////////////////////////////////
   
   
-  ///////////////////////////////////////////////////////////////////////
-  //                    ThruPOA Proxy Impl. Declaration
-  //
-  
-  // TAO_IDL - Generated from
-  // be\be_visitor_interface/thru_poa_proxy_impl_sh.cpp:37
-  
-  class  _TAO_ExtLocalInterfaceDef_ThruPOA_Proxy_Impl
-    : public virtual ::POA_CORBA::_TAO_LocalInterfaceDef_ThruPOA_Proxy_Impl,
-      public virtual ::POA_CORBA::_TAO_InterfaceAttrExtension_ThruPOA_Proxy_Impl
-  {
-  public:
-    _TAO_ExtLocalInterfaceDef_ThruPOA_Proxy_Impl (void);
-    
-    virtual ~_TAO_ExtLocalInterfaceDef_ThruPOA_Proxy_Impl (void) {}static void
-    _get_def_kind (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    destroy (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    lookup (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    contents (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    lookup_name (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    describe_contents (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_module (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_constant (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_struct (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_union (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_enum (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_alias (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_interface (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_value (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_value_box (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_exception (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_native (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_abstract_interface (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_local_interface (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_ext_value (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_id (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    static void
-    _set_id (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_name (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    static void
-    _set_name (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_version (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    static void
-    _set_version (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_defined_in (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_absolute_name (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_containing_repository (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    describe (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    move (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_type (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));static void
-    _get_base_interfaces (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    static void
-    _set_base_interfaces (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    is_a (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    describe_interface (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_attribute (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_operation (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    describe_ext_interface (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-    
-    // TAO_IDL - Generated from
-    // be\be_interface.cpp:2214
-    
-    static void
-    create_ext_attribute (
-        TAO_Abstract_ServantBase *servant, 
-        TAO::Argument ** args,
-        int num_args
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-  };
-  
-  //
-  //                ThruPOA  Proxy Impl. Declaration
-  ///////////////////////////////////////////////////////////////////////
 
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_sh.cpp:80

@@ -1,3 +1,25 @@
+Tue Feb 22 13:35:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/*C.{h,cpp,inl}:
+        * tao/*A.cpp:
+        * tao/PortableServer/*C.{h,cpp,inl}:
+        * tao/PortableServer/*A.cpp:
+        * tao/ObjRefTemplate/*C.{h,cpp,inl}:
+        * tao/ObjRefTemplate/*A.cpp:
+        * tao/RTCORBA/RTCORBAC.{h,cpp,inl}:
+        * tao/RTCORBA/RTCORBAA.cpp:
+        * tao/BiDir_GIOP/BiDirPolicyC.{h,cpp,inl}:
+        * orbsvcs/orbsvcs/IFRService/*S.{h,cpp,inl}:
+        * orbsvcs/orbsvcs/IFRService/*S_T.{h,cpp,inl}:
+          Regenerated
+
+        * tao/PortableServer/Upcall_Wrapper.h:
+          Added forward declaration of CORBA::Environment to fix compile
+          problems in emulated exception builds
+
+        * tao/ObjRefTemplate/diffs/ObjectReferenceTemplate.diff:
+          New diff file
+
 Tue Feb 22 12:45:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Domain/DomainS.{h,cpp,inl}:
