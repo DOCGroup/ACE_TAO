@@ -78,5 +78,5 @@
 -V	Exits silently with a value of 0.
 -Z	Allow user to specify name of generated C++ class.  Default
 	name is `Perfect_Hash.'
-Usage: gperf [-acCdDef[num]gGhH<hashname>i<init>IjJk<keys>K<keyname>lL<language>mMnN<function name>oOprs<size>S<switches>tTvVZ<class name>].
-(type gperf -h for help)
+Usage: ../src/gperf [-acCdDef[num]gGhH<hashname>i<init>IjJk<keys>K<keyname>lL<language>mMnN<function name>oOprs<size>S<switches>tTvVZ<class name>].
+(type ../src/gperf -h for help)
