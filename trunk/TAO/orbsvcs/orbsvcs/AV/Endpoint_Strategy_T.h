@@ -126,6 +126,8 @@ public:
   // Service, so the parent can pick the IOR's and
   // return them to the client
 
+  int unbind_names (void);
+  // Removes the vdev and streamendpoint names from the naming service.
 
   int bind_to_naming_service (CORBA::Environment &env);
   // Binds to the naming service
