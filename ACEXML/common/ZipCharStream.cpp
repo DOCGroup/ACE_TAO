@@ -1,6 +1,6 @@
 // $Id$
 
-#ifdef ACEXML_HAS_ZZIPLIB
+#ifdef USE_ZZIP
 
 #include "ACEXML/common/ZipCharStream.h"
 #include "ace/ACE.h"
@@ -252,4 +252,4 @@ ACEXML_ZipCharStream::peek_i (void)
 static int shut_up_aCC = 0;
 #endif /* __HP_aCC */
 
-#endif /* ACEXML_HAS_ZZIPLIB */
+#endif /* USE_ZZIP */

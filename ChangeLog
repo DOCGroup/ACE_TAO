@@ -1,3 +1,18 @@
+Tue Oct 26 13:55:20 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ACEXML/common/StreamFactory.cpp:
+        * ACEXML/common/ZipCharStream.h:
+        * ACEXML/common/ZipCharStream.cpp:
+        * ACEXML/examples/SAXPrint/main.cpp:
+
+          Switch to using the zzip base project found in MPC which means
+          switch from macro ACEXML_HAS_ZZIPLIB to USE_ZZIP.
+
+        * bin/MakeProjectCreator/config/zzip.mpb:
+
+          Removed this file.  It is a duplicate of the one contained in
+          MPC/config except for the trigger macro.
+
 Fri Oct 26 11:18:21 PDT 2004  Dave Craig <dwc@qualcomm.com>
 
         * ace/SOCK_SEQPACK_Association.h:
@@ -13,7 +28,7 @@ Fri Oct 26 11:18:21 PDT 2004  Dave Craig <dwc@qualcomm.com>
         be doing.  It took a while to exercise all of the different #define's,
         but the results should come out fine w/+w/o ACE_HAS_IPV6, w/+w/o
         ACE_HAS_SCTP, and w/+w/o ACE_LACKS_FORK.  TAO with LKSCTP did not
-	compile, so it was not regressed.
+        compile, so it was not regressed.
 
 Tue Oct 26 13:05:28 2004  Chad Elliott  <elliott_c@ociweb.com>
 

@@ -13,7 +13,7 @@
 #ifndef _ACEXML_ZIPCHARSTREAM_H_
 #define _ACEXML_ZIPCHARSTREAM_H_
 
-#ifdef ACEXML_HAS_ZZIPLIB
+#ifdef USE_ZZIP
 
 #include /**/ "ace/pre.h"
 #include "ACEXML/common/ACEXML_Export.h"
@@ -139,6 +139,6 @@ private:
 
 #include /**/ "ace/post.h"
 
-#endif /* ACEXML_HAS_ZZIPLIB */
+#endif /* USE_ZZIP */
 
 #endif /* _ACEXML_ZIPCHARSTREAM_H_ */
