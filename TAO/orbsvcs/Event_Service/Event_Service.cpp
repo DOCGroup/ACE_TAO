@@ -33,7 +33,7 @@ Event_Service::Event_Service (void)
     service_name_ (0),
     ior_file_name_ (0),
     pid_file_name_ (0),
-    event_service_type_ (ES_OLD_MT),
+    event_service_type_ (ES_NEW),
     global_scheduler_ (0)
 {
 }
@@ -74,6 +74,9 @@ Event_Service::run (int argc, char* argv[])
 
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      poa_manager->activate (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       CORBA::Object_var naming_obj =
@@ -189,9 +192,6 @@ Event_Service::run (int argc, char* argv[])
       channel_name.length (1);
       channel_name[0].id = CORBA::string_dup (this->service_name_);
       naming_context->rebind (channel_name, ec.in (), ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      poa_manager->activate (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "%s; running event service\n", __FILE__));

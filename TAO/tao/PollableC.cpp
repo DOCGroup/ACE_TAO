@@ -36,7 +36,7 @@ CORBA_Pollable_ptr CORBA_Pollable::_narrow (
 {
   if (CORBA::is_nil (obj))
     return CORBA_Pollable::_nil ();
-  if (!obj->_is_a ("IDL:omg.org/CORBA/Pollable:1.0", env))
+  if (!obj->_is_a ("IDL:omg.org/CORBA/Pollable:1.0", ACE_TRY_ENV))
     return CORBA_Pollable::_nil ();
   TAO_Stub* stub = obj->_stubobj ();
   stub->_incr_refcnt ();
@@ -174,14 +174,14 @@ CORBA_PollableSet_ptr CORBA_Pollable::create_pollable_set (
   return _tao_retval;
 }
 
-CORBA::Boolean CORBA_Pollable::_is_a (const CORBA::Char *value, CORBA::Environment &env)
+CORBA::Boolean CORBA_Pollable::_is_a (const CORBA::Char *value, CORBA::Environment &ACE_TRY_ENV)
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Pollable:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (env))))
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Object:1.0")))
   return 1; // success using local knowledge
   else
-    return this->CORBA_Object::_is_a (value, env); // remote call
+    return this->CORBA_Object::_is_a (value, ACE_TRY_ENV); // remote call
 }
 
 const char* CORBA_Pollable::_interface_repository_id (void) const
@@ -196,7 +196,7 @@ CORBA::DIIPollable_ptr CORBA::DIIPollable::_narrow (
 {
   if (CORBA::is_nil (obj))
     return CORBA::DIIPollable::_nil ();
-  if (!obj->_is_a ("IDL:omg.org/CORBA/DIIPollable:1.0", env))
+  if (!obj->_is_a ("IDL:omg.org/CORBA/DIIPollable:1.0", ACE_TRY_ENV))
     return CORBA::DIIPollable::_nil ();
   TAO_Stub* stub = obj->_stubobj ();
   stub->_incr_refcnt ();
@@ -231,15 +231,15 @@ CORBA::DIIPollable_ptr CORBA::DIIPollable::_unchecked_narrow (
     );
 }
 
-CORBA::Boolean CORBA::DIIPollable::_is_a (const CORBA::Char *value, CORBA::Environment &env)
+CORBA::Boolean CORBA::DIIPollable::_is_a (const CORBA::Char *value, CORBA::Environment &ACE_TRY_ENV)
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/DIIPollable:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Pollable:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (env))))
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Object:1.0")))
   return 1; // success using local knowledge
   else
-    return this->CORBA_Object::_is_a (value, env); // remote call
+    return this->CORBA_Object::_is_a (value, ACE_TRY_ENV); // remote call
 }
 
 const char* CORBA::DIIPollable::_interface_repository_id (void) const
@@ -254,7 +254,7 @@ CORBA_PollableSet_ptr CORBA_PollableSet::_narrow (
 {
   if (CORBA::is_nil (obj))
     return CORBA_PollableSet::_nil ();
-  if (!obj->_is_a ("IDL:omg.org/CORBA/PollableSet:1.0", env))
+  if (!obj->_is_a ("IDL:omg.org/CORBA/PollableSet:1.0", ACE_TRY_ENV))
     return CORBA_PollableSet::_nil ();
   TAO_Stub* stub = obj->_stubobj ();
   stub->_incr_refcnt ();
@@ -664,14 +664,14 @@ CORBA::UShort CORBA_PollableSet::number_left (
   return _tao_retval;
 }
 
-CORBA::Boolean CORBA_PollableSet::_is_a (const CORBA::Char *value, CORBA::Environment &env)
+CORBA::Boolean CORBA_PollableSet::_is_a (const CORBA::Char *value, CORBA::Environment &ACE_TRY_ENV)
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/PollableSet:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (env))))
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Object:1.0")))
   return 1; // success using local knowledge
   else
-    return this->CORBA_Object::_is_a (value, env); // remote call
+    return this->CORBA_Object::_is_a (value, ACE_TRY_ENV); // remote call
 }
 
 const char* CORBA_PollableSet::_interface_repository_id (void) const
