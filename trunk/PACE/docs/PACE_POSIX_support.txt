@@ -125,3 +125,9 @@ FILE                    linux   lynxos  sunos   win32
  sem_unlink()                                   X
  sem_wait()                                     X
 .............................................................
+<setjmp.h>
+ setjmp()                                       N
+ longjmp()                                      N
+ sigsetjmp()                                    X
+ siglongjmp()                                   X
+.............................................................
