@@ -1,15 +1,30 @@
-// -*- C++ -*-  $Id$
+// -*- C++ -*-
+
+//=============================================================================
+/**
+ *  @file    CharStream.h
+ *
+ *  $Id$
+ *
+ *  @author Nanbor Wang <nanbor@cs.wustl.edu>
+ */
+//=============================================================================
 
 #ifndef _ACEXML_CHARSTREAM_H_
 #define _ACEXML_CHARSTREAM_H_
 
 #include "common/XML_Types.h"
 
+/**
+ * @class ACEXML_CharStream CharStream.h "common/CharStream.h"
+ *
+ * ACEXML_CharStream is an abstract class (interface) which defines
+ * the basic opertions a parser could use to retrieve XML charater
+ * sequence.  The sequence can be read from a file or a character
+ * buffer.
+ */
 class ACEXML_Export ACEXML_CharStream
 {
-  // ACEXML_InputStream defines the basic opertion the parser
-  // could use to retrieve XML charater sequence.  The sequence
-  // can be read from a file or a character buffer.
 public:
 
   /**

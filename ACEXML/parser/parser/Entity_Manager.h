@@ -1,4 +1,14 @@
-// -*- C++ -*-  $Id$
+// -*- C++ -*-
+
+//=============================================================================
+/**
+ *  @file    Entity_Manager.h
+ *
+ *  $Id$
+ *
+ *  @author Nanbor Wang <nanbor@cs.wustl.edu>
+ */
+//=============================================================================
 
 #ifndef ACEXML_ENTITY_MANAGER_H
 #define ACEXML_ENTITY_MANAGER_H
@@ -31,7 +41,11 @@ typedef ACE_Hash_Map_Reverse_Iterator_Ex<ACEXML_String,
                                          ACE_Null_Mutex> ACEXML_ENTITIES_MANAGER_REVERSE_ITER;
 
 /**
- * Class to manager and resolve entity references.
+ * @class ACEXML_Entity_Manager Entity_Manager.h "parser/parser/Entity_Manager.h"
+ *
+ * @brief Class to manage and resolve entity references.
+ *
+ * @todo Fill in details for this class.
  */
 class ACEXML_PARSER_Export ACEXML_Entity_Manager
 {

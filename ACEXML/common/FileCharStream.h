@@ -1,4 +1,14 @@
-// -*- C++ -*-  $Id$
+// -*- C++ -*-
+
+//=============================================================================
+/**
+ *  @file    FileCharStream.h
+ *
+ *  $Id$
+ *
+ *  @author Nanbor Wang <nanbor@cs.wustl.edu>
+ */
+//=============================================================================
 
 #ifndef _ACEXML_FILECHARSTREAM_H_
 #define _ACEXML_FILECHARSTREAM_H_
@@ -7,11 +17,10 @@
 #include "ace/streams.h"
 
 /**
+ * @class ACEXML_FileCharStream FileCharStream.h "common/FileCharStream.h"
+ *
  * An implementation of ACEXML_CharStream for reading
  * input from a file.
- * defines the basic opertion the parser
- * could use to retrieve XML charater sequence.  The sequence
- * can be read from a file or a character buffer.
  */
 class ACEXML_Export ACEXML_FileCharStream : public ACEXML_CharStream
 {

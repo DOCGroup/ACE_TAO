@@ -1,6 +1,17 @@
-// -*- C++ -*-   $Id$
-// This file collects the type definitions for data types
-// used in ACE XML parser.
+// -*- C++ -*-
+
+//=============================================================================
+/**
+ *  @file    XML_Types.h
+ *
+ * This file collects the type definitions for data types
+ * used in ACE XML parser.
+ *
+ *  $Id$
+ *
+ *  @author Nanbor Wang <nanbor@cs.wustl.edu>
+ */
+//=============================================================================
 
 #ifndef _ACEXML_XML_TYPES_H_
 #define _ACEXML_XML_TYPES_H_
