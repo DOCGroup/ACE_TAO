@@ -503,7 +503,7 @@ namespace Deployment
     dump (plan.realizes);
     dump_sequence ("implementation", plan.implementation);
     dump_sequence ("instance", plan.instance);
-    dump_sequence ("connection", plan.connection);
+    //dump_sequence ("connection", plan.connection);
     dump_sequence ("externalProperty", plan.externalProperty);
     dump_sequence ("dependsOn", plan.dependsOn);
     dump_sequence ("artifact", plan.artifact);
