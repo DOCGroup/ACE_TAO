@@ -1,3 +1,9 @@
+Sun Oct 15 19:14:13 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* bin/auto_run_tests.lst:
+	  Excluded tests/RTCORBA/Client_Propagated from running in
+	  Exceptions build since it's a linux build.
+
 Sat Oct 14 15:04:16 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * ace/OS.h:
