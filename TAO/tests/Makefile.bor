@@ -35,6 +35,7 @@ DIRS = \
         POA \
 	Policies \
         Portable_Interceptors \
+        QtTests \
 	RTCORBA \
         Single_Read \
         Strategies \
