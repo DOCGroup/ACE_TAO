@@ -99,7 +99,7 @@ ifr_adding_visitor_exception::visit_structure (AST_Structure *node)
   IR_Contained_var prev_def = 
     be_global->repository ()->lookup_id (node->repoID (),
                                          this->env_);
-  ACE_CHECK_RETURN (-1);
+  TAO_IFR_CHECK_RETURN (-1);
 
   // If not, create a new entry.
   if (CORBA::is_nil (prev_def.in ()))
@@ -118,7 +118,7 @@ ifr_adding_visitor_exception::visit_structure (AST_Structure *node)
           IR_Contained_ptr tmp = 
             IR_Contained::_narrow (visitor.ir_current (),
                                    this->env_);
-          ACE_CHECK_RETURN (-1);
+          TAO_IFR_CHECK_RETURN (-1);
 
           // Since the enclosing ExceptionDef hasn't been created
           // yet, we don't have a scope, so this nested StructDef
@@ -136,7 +136,7 @@ ifr_adding_visitor_exception::visit_structure (AST_Structure *node)
       this->ir_current_ =
         IR_IDLType::_narrow (prev_def.in (),
                              this->env_);
-      ACE_CHECK_RETURN (-1);
+      TAO_IFR_CHECK_RETURN (-1);
 
       // Nothing prevents this struct's repo id from already being
       // in the repository as another type, if it came from another
@@ -168,14 +168,14 @@ ifr_adding_visitor_exception::visit_exception (AST_Exception *node)
   IR_Contained_var prev_def =
     be_global->repository ()->lookup_id (node->repoID (),
                                          this->env_);
-  ACE_CHECK_RETURN (-1);
+  TAO_IFR_CHECK_RETURN (-1);
 
   if (!CORBA::is_nil (prev_def.in ()))
     {
       IR_ExceptionDef_var except_def =
         IR_ExceptionDef::_narrow (prev_def.in (),
                                   this->env_);
-      ACE_CHECK_RETURN (-1);
+      TAO_IFR_CHECK_RETURN (-1);
 
       // Nothing prevents this exception's repo id from already being
       // in the repository as another type, if it came from another
@@ -230,7 +230,7 @@ ifr_adding_visitor_exception::visit_exception (AST_Exception *node)
                                      this->members_,
                                      this->env_);
 
-  ACE_CHECK_RETURN (-1);
+  TAO_IFR_CHECK_RETURN (-1);
 
   size_t size = this->move_queue_.size ();
 
@@ -241,23 +241,23 @@ ifr_adding_visitor_exception::visit_exception (AST_Exception *node)
       IR_Container_var new_container =
         IR_Container::_narrow (new_def.in (),
                                this->env_);
-      ACE_CHECK_RETURN (-1);
+      TAO_IFR_CHECK_RETURN (-1);
 
       for (size_t i = 0; i < size; ++i)
         {
           this->move_queue_.dequeue_head (traveller);
 
           CORBA::String_var name = traveller->name (this->env_);
-          ACE_CHECK_RETURN (-1);
+          TAO_IFR_CHECK_RETURN (-1);
 
           CORBA::String_var version = traveller->version (this->env_);
-          ACE_CHECK_RETURN (-1);
+          TAO_IFR_CHECK_RETURN (-1);
 
           traveller->move (new_container.in (),
                            name.in (),
                            version.in (),
                            this->env_);
-          ACE_CHECK_RETURN (-1);
+          TAO_IFR_CHECK_RETURN (-1);
         }
     }
 
@@ -271,7 +271,7 @@ ifr_adding_visitor_exception::visit_enum (AST_Enum *node)
   IR_Contained_var prev_def =
     be_global->repository ()->lookup_id (node->repoID (),
                                          this->env_);
-  ACE_CHECK_RETURN (-1);
+  TAO_IFR_CHECK_RETURN (-1);
 
   // If not, create a new entry.
   if (CORBA::is_nil (prev_def.in ()))
@@ -301,12 +301,12 @@ ifr_adding_visitor_exception::visit_enum (AST_Enum *node)
                                       members,
                                       this->env_
                                     );
-      ACE_CHECK_RETURN (-1);
+      TAO_IFR_CHECK_RETURN (-1);
 
       IR_Contained_ptr tmp = 
         IR_Contained::_narrow (this->ir_current_.in (),
                                this->env_);
-      ACE_CHECK_RETURN (-1);
+      TAO_IFR_CHECK_RETURN (-1);
 
       this->move_queue_.enqueue_tail (tmp);
     }
@@ -317,7 +317,7 @@ ifr_adding_visitor_exception::visit_enum (AST_Enum *node)
       this->ir_current_ = 
         IR_IDLType::_narrow (prev_def.in (),
                              this->env_);
-      ACE_CHECK_RETURN (-1);
+      TAO_IFR_CHECK_RETURN (-1);
 
       // Nothing prevents this enum's repo id from already being
       // in the repository as another type, if it came from another
@@ -350,7 +350,7 @@ ifr_adding_visitor_exception::visit_union (AST_Union *node)
   IR_Contained_var prev_def = 
     be_global->repository ()->lookup_id (node->repoID (),
                                          this->env_);
-  ACE_CHECK_RETURN (-1);
+  TAO_IFR_CHECK_RETURN (-1);
 
   // If not, create a new entry.
   if (CORBA::is_nil (prev_def.in ()))
@@ -369,7 +369,7 @@ ifr_adding_visitor_exception::visit_union (AST_Union *node)
           IR_Contained_ptr tmp = 
             IR_Contained::_narrow (visitor.ir_current (),
                                    this->env_);
-          ACE_CHECK_RETURN (-1);
+          TAO_IFR_CHECK_RETURN (-1);
 
           // Since the enclosing ExceptionDef hasn't been created
           // yet, we don't have a scope, so this nested UnionDef
@@ -387,7 +387,7 @@ ifr_adding_visitor_exception::visit_union (AST_Union *node)
       this->ir_current_ =
         IR_IDLType::_narrow (prev_def.in (),
                              this->env_);
-      ACE_CHECK_RETURN (-1);
+      TAO_IFR_CHECK_RETURN (-1);
 
       // Nothing prevents this union's repo id from already being
       // in the repository as another type, if it came from another

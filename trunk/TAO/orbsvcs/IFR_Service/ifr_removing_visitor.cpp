@@ -53,7 +53,7 @@ ifr_removing_visitor::visit_scope (UTL_Scope *node)
           IR_Contained_var top_level = 
             be_global->repository ()->lookup_id (d->repoID (),
                                                  this->env_);
-          ACE_CHECK_RETURN (-1);
+          TAO_IFR_CHECK_RETURN (-1);
 
           if (!CORBA::is_nil (top_level.in ()))
             {
@@ -61,7 +61,7 @@ ifr_removing_visitor::visit_scope (UTL_Scope *node)
               // in the global scope, because destroy() works on all
               // the contents recursively.
               top_level->destroy (this->env_);
-              ACE_CHECK_RETURN (-1);
+              TAO_IFR_CHECK_RETURN (-1);
             }
 
           si.next ();

@@ -20,5 +20,13 @@
                               CORBA::COMPLETED_NO)); \
   ACE_TRY_CHECK
 
+#define TAO_IFR_CHECK \
+  if (this->env_.exception () != 0) \
+    return
+
+#define TAO_IFR_CHECK_RETURN(RETV) \
+  if (this->env_.exception () != 0) \
+    return RETV
+
 #include "ace/post.h"
 #endif /* TAO_IFR_VISITOR_MACRO_H */
