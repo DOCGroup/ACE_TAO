@@ -4214,6 +4214,10 @@ SOURCE=.\OS_Dirent.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\OS_String.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Pair.h
 # End Source File
 # Begin Source File
