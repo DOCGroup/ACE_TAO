@@ -1,122 +1,130 @@
+Mon Dec 27 11:29:20 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/config-cxx-common.h: on Linux, #define
+          ACE_HAS_CPLUSPLUS_HEADERS instead of ACE_LACKS_ACE_IOSTREAM.
+
+        * include/makeinclude/platform_linux_cxx.GNU: removed
+          -I/usr/include/g++.  It's not needed with ACE_HAS_CPLUSPLUS_HEADERS.
+
 Mon Dec 27 09:28:40 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* QoS_Session_Impl.h: Fixed a warning in g++.
+        * QoS_Session_Impl.h: Fixed a warning in g++.
 
 Sun Dec 26 23:45:44 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 
-	* QoS_Session.h: Provided a definition for the virtual destructor 
-	  of ACE_QoS_Session.
-	
-	* QoS_Session_Impl.{cpp,h}: Replaced the
-	  ACE_LACKS_INLINE_FUNCTIONS macro with __ACE_INLINE__.
+        * QoS_Session.h: Provided a definition for the virtual destructor
+          of ACE_QoS_Session.
 
-	* ace/ace_dll.dsp: Added the new QoS files to the NT DLL project.
+        * QoS_Session_Impl.{cpp,h}: Replaced the
+          ACE_LACKS_INLINE_FUNCTIONS macro with __ACE_INLINE__.
+
+        * ace/ace_dll.dsp: Added the new QoS files to the NT DLL project.
 
 Sun Dec 26 21:50:46 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 
-	  The following existing files were changed for the ACE QoS API.
-	
-	* SOCK.h:
-	* SOCK.cpp: 
-	  Added a QoS session set to the ACE_SOCK. Also methods to join 
-	  a new QoS session.
+          The following existing files were changed for the ACE QoS API.
 
-	* SOCK_Dgram_Mcast.h:
-	* SOCK_Dgram_Mcast.cpp:
-	  The QoS subscribe method was changed to accommodate QoS.
+        * SOCK.h:
+        * SOCK.cpp:
+          Added a QoS session set to the ACE_SOCK. Also methods to join
+          a new QoS session.
 
-	  The following new files were added.
+        * SOCK_Dgram_Mcast.h:
+        * SOCK_Dgram_Mcast.cpp:
+          The QoS subscribe method was changed to accommodate QoS.
 
-	* QoS_Session.h: Has the abstract base class for concrete QoS 
-	  implementations.
+          The following new files were added.
 
-	* QoS_Session_Factory.{h,cpp}: Concrete Factory for QoS 
-	  implementations. Currently two implementations are 
-	  supported, RAPI and GQoS.
+        * QoS_Session.h: Has the abstract base class for concrete QoS
+          implementations.
 
-	* QoS_Session_Impl.{h,cpp,i}: Has the QoS implementation classes.
-	  RAPI and GQoS are supported.
+        * QoS_Session_Factory.{h,cpp}: Concrete Factory for QoS
+          implementations. Currently two implementations are
+          supported, RAPI and GQoS.
 
-	* ace/Makefile: Added the new QoS classes.
+        * QoS_Session_Impl.{h,cpp,i}: Has the QoS implementation classes.
+          RAPI and GQoS are supported.
 
-	* include/makeinclude/wrapper_macros.GNU (): Added the
-	  ACE_HAS_RAPI flag. For ACE to have RAPI support it should be 
-	  built with "make rapi=1". The platform_macros.GNU should have
-	  
-	  PLATFORM_RAPI_CPPFLAGS=
-	  PLATFORM_RAPI_LIBS=-lrsvp
-	  PLATFORM_RAPI_LDFLAGS=
+        * ace/Makefile: Added the new QoS classes.
+
+        * include/makeinclude/wrapper_macros.GNU (): Added the
+          ACE_HAS_RAPI flag. For ACE to have RAPI support it should be
+          built with "make rapi=1". The platform_macros.GNU should have
+
+          PLATFORM_RAPI_CPPFLAGS=
+          PLATFORM_RAPI_LIBS=-lrsvp
+          PLATFORM_RAPI_LDFLAGS=
 
 Sun Dec 26 16:43:16 1999  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* ace/OS.i: 
-	  Replaced malloc with ACE_NEW_RETURN
+        * ace/OS.i:
+          Replaced malloc with ACE_NEW_RETURN
 
 Fri Dec 24 16:33:48 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* acconfig.h:
+        * acconfig.h:
 
-	  Added ACE_HAS_RECURSIVE_MUTEXES to list of macros.
+          Added ACE_HAS_RECURSIVE_MUTEXES to list of macros.
 
-	* configure.in:
+        * configure.in:
 
-	  Fixed ACE_LACKS_SETSCHED test.  It previously didn't check that
-	  sched_setscheduler() existed.  Both sched_setscheduler() and
-	  either pthread_attr_setschedpolicy() or pthread_attr_setsched()
-	  must be defined.  This was an AIX related fix.
+          Fixed ACE_LACKS_SETSCHED test.  It previously didn't check that
+          sched_setscheduler() existed.  Both sched_setscheduler() and
+          either pthread_attr_setschedpolicy() or pthread_attr_setsched()
+          must be defined.  This was an AIX related fix.
 
-	  Initialized variables in all compile-time tests.  This fixes
-	  compile-time test warnings on AIX.
+          Initialized variables in all compile-time tests.  This fixes
+          compile-time test warnings on AIX.
 
 Fri Dec 24 13:06:59 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	The following fixes were motivated by problems discovered in a
-	configure script log file (config.log) that was generated on AIX,
-	and sent in by Mike Winter <Mike.Winter@Schwab.com>.
+        The following fixes were motivated by problems discovered in a
+        configure script log file (config.log) that was generated on AIX,
+        and sent in by Mike Winter <Mike.Winter@Schwab.com>.
 
-	* THANKS:
+        * THANKS:
 
-	  Added my Mike Winter to the THANKS list.
+          Added my Mike Winter to the THANKS list.
 
-	* acconfig.h:
+        * acconfig.h:
 
-	  Removed an extraneous comment.
+          Removed an extraneous comment.
 
-	* configure.in:
+        * configure.in:
 
-	  Added tests for ACE_HAS_BROKEN_XTI_MACROS and
-	  ACE_HAS_BROKEN_T_ERROR.
+          Added tests for ACE_HAS_BROKEN_XTI_MACROS and
+          ACE_HAS_BROKEN_T_ERROR.
 
-	  Updated TLI/XTI preprocessor directives in TLI/XTI related
-	  tests.
+          Updated TLI/XTI preprocessor directives in TLI/XTI related
+          tests.
 
-	  Fixed pthread_rwlock_t and pthread_rwlockattr_t structure
-	  tests.  Previously the tests were missing the header files to
-	  search in.
+          Fixed pthread_rwlock_t and pthread_rwlockattr_t structure
+          tests.  Previously the tests were missing the header files to
+          search in.
 
-	  AIX defines _THREAD_SAFE in <pthread.h>.  Check if it is defined
-	  after including <pthread.h>.
+          AIX defines _THREAD_SAFE in <pthread.h>.  Check if it is defined
+          after including <pthread.h>.
 
-	* ltcf-cxx.sh:
+        * ltcf-cxx.sh:
 
-	  Added Digital/Compaq C++ libtool support.
+          Added Digital/Compaq C++ libtool support.
 
-	  Minor Sun C++ updates.
+          Minor Sun C++ updates.
 
-	* ace/OS.h:
+        * ace/OS.h:
 
-	  AIX defines TCP_NODELAY and TCP_MAXSEG in tiuser.h so undefine
-	  them if ACE_HAS_BROKEN_XTI_MACROS is defined before including
-	  tiuser.h.
+          AIX defines TCP_NODELAY and TCP_MAXSEG in tiuser.h so undefine
+          them if ACE_HAS_BROKEN_XTI_MACROS is defined before including
+          tiuser.h.
 
-	  Simplified TLI/XTI related macros.
+          Simplified TLI/XTI related macros.
 
 Fri Dec 24 08:04:58 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace:
-	  tests: Moved ace/Auto_IncDec_T.cpp to
- 	  tests/Auto_IncDec_Test.cpp, which is where it belongs.  Thanks
- 	  to David for reporting this.
+        * ace:
+          tests: Moved ace/Auto_IncDec_T.cpp to
+          tests/Auto_IncDec_Test.cpp, which is where it belongs.  Thanks
+          to David for reporting this.
 
 Thu Dec 23 13:57:04 1999  David L. Levine  <levine@cs.wustl.edu>
 
