@@ -5810,4 +5810,18 @@ typedef ACE_TRANSMIT_FILE_BUFFERS* ACE_LPTRANSMIT_FILE_BUFFERS;
 #define ACE_FALSE 0
 #endif /* ACE_WIN32 */
 
+// Byte swapping macros to deal with differences between little endian and big
+// endian machines.
+#define ACE_SWAP_LONG(L) ((SWAP_WORD ((L) & 0xFFFF) << 16) \
+                          | SWAP_WORD(((L) >> 16) & 0xFFFF))
+#define ACE_SWAP_WORD(L) ((((L) & 0x00FF) << 8) | (((L) & 0xFF00) >> 8))
+
+#if defined (ACE_LITTLE_ENDIAN)
+#define ACE_HTONL(X) ACE_SWAP_LONG (X)
+#define ACE_NTOHL(X) ACE_SWAP_LONG (X)
+#else
+#define ACE_HTONL(X) X
+#define ACE_NTOHL(X) X
+#endif /* ACE_LITTLE_ENDIAN */
+
 #endif  /* ACE_OS_H */

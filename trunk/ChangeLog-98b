@@ -1,3 +1,9 @@
+Fri Jun 12 16:31:13 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* ace/OS.h: (ACE_NTOHL, ACE_HTONL): Added macros for conversion
+	between network and host byte order. Thanks to James Hu for
+	contributing these.
+
 Fri Jun 12 14:29:40 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/OS.i (sema_wait): Changed the code so that it always treats
@@ -6,7 +12,7 @@ Fri Jun 12 14:29:40 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 Fri Jun 12 14:12:25 1998  Carlos O'Ryan  <coryan@swarm.cs.wustl.edu>
 
-	* include/makeinclude/wrapper_macros.GNU: 
+	* include/makeinclude/wrapper_macros.GNU:
 	  The inclusion of the XtReactor is controlled on the
 	  platform_macros file (or the command line).
 	  Users simply type make xt_reactor=1 to enable this feature, or
@@ -17,18 +23,18 @@ Fri Jun 12 14:12:25 1998  Carlos O'Ryan  <coryan@swarm.cs.wustl.edu>
 	  The platforms that already had XtReactor compiled by default
 	  still do.
 
-	* ace/config-irix6.x-sgic++-nothreads.h: 
-	* include/makeinclude/platform_irix6.x-sgic++.GNU: 
+	* ace/config-irix6.x-sgic++-nothreads.h:
+	* include/makeinclude/platform_irix6.x-sgic++.GNU:
 	  Now the XtReactor configuration is controlled on the platform
 	  file.
-	  
-	* ACE-INSTALL.html: 
+
+	* ACE-INSTALL.html:
 	  Updated documentation for make flags.
 
-	* tests/XtReactor_Test.cpp: 
+	* tests/XtReactor_Test.cpp:
 	  Fixed a few typos.
 
-	* tests/Conn_Test.cpp: 
+	* tests/Conn_Test.cpp:
 	  Fixed some template instantiation pragmas.
 
 Thu Jun 11 22:05:31 1998  David L. Levine  <levine@cs.wustl.edu>
