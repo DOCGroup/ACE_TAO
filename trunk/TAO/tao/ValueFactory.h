@@ -35,9 +35,6 @@ public:
   CORBA_ValueFactoryBase ();
   virtual ~CORBA_ValueFactoryBase ();
 
-  // non-standard
-  virtual const char* tao_repository_id () = 0;
-
   // non-virtual is non-standard
   void _add_ref (void);
   void _remove_ref (void);
@@ -78,11 +75,11 @@ private:
 // to the newly created one. (A new reference could be obtained with
 // orb->lookup_value_factory (char * repo_id) .)
 
-#define TAO_OBV_REGISTER_FACTORY(FACTORY) \
+#define TAO_OBV_REGISTER_FACTORY(FACTORY,VALUETYPE) \
   { CORBA_ValueFactory_ptr factory = new FACTORY; \
     CORBA_ValueFactory_ptr prev_factory = \
     TAO_ORB_Core_instance ()->orb ()->register_value_factory (\
-                                   factory->tao_repository_id (),\
+                                   VALUETYPE::_tao_obv_static_repository_id (),\
                                    factory); \
     if (prev_factory) prev_factory->_remove_ref (); \
     factory->_remove_ref (); }

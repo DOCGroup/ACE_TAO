@@ -1,3 +1,27 @@
+Wed Jan 02 15:25:53 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/ValueFactory.h: Removed the non-standard tao extension
+	  repository_id().  According to the spec, for valuetypes without
+	  a factory method, the developer supplied ValueFactory class
+	  should inherit from CORBA::ValueFactoryBase directly.
+	  Therefore, we can no longer generate this repository_id() method
+	  in the IDL compiler.
+
+	  Changed the TAO_OBV_REGISTER_FACTORY to take the type of
+	  valuetype it handles as an extra parameter.  The macro will
+	  simply use the non-standard TAO extension to stick in the
+	  repository_id for the valuetype.  This may not be the correct
+	  way to get the repository_id for a valuetype as it is not clear
+	  to me how one can get it.
+
+	* examples/OBV/Typed_Events/Event_Types_impl.h: Changed to inherit
+	  valuetype factories from CORBA::ValueFactoryBase.
+
+	* examples/OBV/Typed_Events/Server_i.cpp:
+	* examples/OBV/Typed_Events/Client_i.cpp: Added type of valuetype
+	  when registering factory with the TAO_OBV_REGISTER_FACTORY
+	  macro.
+
 Wed Jan  2 15:27:57 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be_valuetype.cpp:
@@ -17,10 +41,10 @@ Wed Jan  2 10:22:59 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_typedef/typedef_ci.cpp (visit_array):
 
-          Made changes that were overlooked in 
+          Made changes that were overlooked in
 
           Fri Dec 28 15:41:18 2001  Jeff Parsons <parsons@cs.wustl.edu>
- 
+
           that correspond to changes made in typedef_ch.cpp.
 
         * TAO_IDL/be/be_visitor_typedef/typedef_ch.cpp (visit_array):

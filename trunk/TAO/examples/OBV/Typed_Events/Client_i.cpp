@@ -28,11 +28,11 @@ Checkpoint_Client_i::run (const char *name,
       // TAO_OBV_REGISTER_FACTORY (Event_factory);
       // This one not (see header file)
 
-      TAO_OBV_REGISTER_FACTORY (Temperature_factory);
-      TAO_OBV_REGISTER_FACTORY (Position_factory);
-      TAO_OBV_REGISTER_FACTORY (Log_Msg_factory);
-      TAO_OBV_REGISTER_FACTORY (Event_List_factory);
-      TAO_OBV_REGISTER_FACTORY (Event_List_Link_factory);
+      TAO_OBV_REGISTER_FACTORY (Temperature_factory, Temperature);
+      TAO_OBV_REGISTER_FACTORY (Position_factory, Position);
+      TAO_OBV_REGISTER_FACTORY (Log_Msg_factory, Log_Msg);
+      TAO_OBV_REGISTER_FACTORY (Event_List_factory, Event_List);
+      TAO_OBV_REGISTER_FACTORY (Event_List_Link_factory, Event_List_Link);
 
       ACE_DEBUG ((LM_DEBUG, "Send some random events:\n"));
 
