@@ -107,12 +107,11 @@ ACE_SV_Semaphore_Simple::ACE_SV_Semaphore_Simple (key_t k,
 }
 
 // Convert name to key.  This function is used internally to create keys
-// for the semaphores.  A valid name contains letters and digits
-// only and MUST start with a letter.
+// for the semaphores.
 //
-// The method for generating names is not very sophisticated, so
-// caller should not pass strings which match each other for the first
-// LUSED characters when he wants to get a different key.  
+// The method for generating names is a 32 bit CRC, but still we
+// measured close to collition ratio of nearly 0.1% for
+// ACE::unique_name()-like strings.
 
 key_t 
 ACE_SV_Semaphore_Simple::name_2_key (const char *name)
@@ -124,21 +123,11 @@ ACE_SV_Semaphore_Simple::name_2_key (const char *name)
       errno = EINVAL;
       return ACE_INVALID_SEM_KEY;
     }
-  else
-    {
-      // Basically "hash" the values in the <name>.  This won't
-      // necessarily guarantee uniqueness of all keys.
 
-      u_long proto = 0;
-
-      for (int i = 0; name[i] != '\0'; ++i)
-	{
-	  proto <<= 8;
-	  proto |= *name++ & 0xff;
-	}
-
-      return (key_t) proto;
-    }
+  // Basically "hash" the values in the <name>.  This won't
+  // necessarily guarantee uniqueness of all keys.
+  // But (IMHO) CRC32 is good enough for most purposes (Carlos)
+  return ACE::crc32 (name);
 }
 
 // Open or create a ACE_SV_Semaphore.  We return 1 if all is OK, else
@@ -201,3 +190,4 @@ ACE_SV_Semaphore_Simple::remove (void) const
   ((ACE_SV_Semaphore_Simple *) this)->init ();
   return result;
 }
+
