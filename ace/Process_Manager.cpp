@@ -52,6 +52,10 @@ ACE_Process_Manager::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
+ACE_Process_Descriptor::~ACE_Process_Descriptor (void)
+{
+}
+
 ACE_Process_Descriptor::ACE_Process_Descriptor (void)
   : delete_process_ (0),
 	process_ (0),
