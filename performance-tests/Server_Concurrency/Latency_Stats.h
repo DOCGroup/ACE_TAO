@@ -5,8 +5,8 @@ class Latency_Stats
 public:
   Latency_Stats (void);
 
-  void dump_results (const char* test_name,
-                     const char* sub_test);
+  void dump_results (const ACE_TCHAR* test_name,
+                     const ACE_TCHAR* sub_test);
 
   void sample (ACE_hrtime_t sample);
 
@@ -54,8 +54,8 @@ Latency_Stats::sample (ACE_hrtime_t sample)
 }
 
 inline void
-Latency_Stats::dump_results (const char *test_name,
-                             const char *sub_test)
+Latency_Stats::dump_results (const ACE_TCHAR *test_name,
+                             const ACE_TCHAR *sub_test)
 {
   if (this->n_ < 1)
     return;
@@ -111,8 +111,8 @@ class Throughput_Stats
 public:
   Throughput_Stats (void);
 
-  void dump_results (const char* test_name,
-                     const char* sub_test);
+  void dump_results (const ACE_TCHAR* test_name,
+                     const ACE_TCHAR* sub_test);
 
   void sample (void);
   // An event has been received
@@ -150,8 +150,8 @@ Throughput_Stats::accumulate (const Throughput_Stats& rhs)
 }
 
 inline void
-Throughput_Stats::dump_results (const char *test_name,
-                                           const char *subtest)
+Throughput_Stats::dump_results (const ACE_TCHAR *test_name,
+                                const ACE_TCHAR *subtest)
 {
   if (this->n_ == 0)
     {
