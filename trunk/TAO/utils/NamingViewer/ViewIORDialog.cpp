@@ -1,6 +1,4 @@
 // $Id$
-// ViewIORDialog.cpp : implementation file
-//
 
 #include "stdafx.h"
 #include "NamingViewer.h"
@@ -76,7 +74,7 @@ void ViewIORDialog::OnApply()
   }
   catch(CORBA::Exception& ex)
   {
-    MessageBox(ex._id(), "CORBA::Exception");
+    MessageBox(ex._rep_id(), "CORBA::Exception");
   }
 }
 
@@ -108,52 +106,38 @@ void ViewIORDialog::DecodeIOR()
     HTREEITEM hProfile;
     switch(pProfile->tag())
     {
-    case 0://IOP::TAG_INTERNET_IOP: 
+    case 0: //IOP::TAG_INTERNET_IOP: 
       {
         TAO_IIOP_Profile* pIIOPProfile = (TAO_IIOP_Profile*)pProfile;
+        CString ProfileString;
+        ProfileString.Format("IIOP %d.%d", 
+          pIIOPProfile->version().major, 
+          pIIOPProfile->version().minor);
+        hProfile = m_Profiles.InsertItem(ProfileString);
         TAO_IIOP_Endpoint* pIIOPEndpoint =
           (TAO_IIOP_Endpoint*)pIIOPProfile->endpoint ();
-        CString ProfileString;
-        ProfileString.Format("IOP %d.%d@%s:%d", 
-          pIIOPProfile->version().major, 
-          pIIOPProfile->version().minor,
-          pIIOPEndpoint->host(), 
-          pIIOPEndpoint->port());
-        hProfile = m_Profiles.InsertItem(ProfileString);
+        while(pIIOPEndpoint)
+        {
+          CString EndpointString;
+          EndpointString.Format("%s:%d",
+            pIIOPEndpoint->host(), 
+            pIIOPEndpoint->port());
+          HTREEITEM hItem = m_Profiles.InsertItem(EndpointString, hProfile);
+          m_Profiles.EnsureVisible(hItem);
+          pIIOPEndpoint = (TAO_IIOP_Endpoint*)pIIOPEndpoint->next();
+        }
+      
       }
       break;
     default:
       {
         CString ProfileString;
-        ProfileString.Format("Unknown %X", pProfile->tag());
+        char* pToString = ((TAO_Profile*)pProfile)->to_string();
+        ProfileString.Format("Unknown Profile (Tag=%d) %s", pProfile->tag(), pToString);
+        delete pToString;
         hProfile = m_Profiles.InsertItem(ProfileString);
       }
       break;
     }
-
-    // XXX Add in the components
-    //const TAO_Tagged_Components& Compoents = pProfile->tagged_components();
-
   }
-/*
-  TAO_ObjectKey* pKey = pIIOPP->_key();
-  if(pKey)
-  {
-    m_TextKey.resize(pKey->length() + 1);
-    for(int i=0; i < pKey->length(); i++)
-    {
-      if(isprint((*pKey)[i]))
-      {
-        m_TextKey[i] = (*pKey)[i];
-      }
-      else
-      {
-        m_TextKey[i] = '.';
-      }
-      char Digit[4];
-      sprintf(Digit, "%02X ", (*pKey)[i]);
-      m_HexKey += Digit;
-    }
-  }  
-*/
 }

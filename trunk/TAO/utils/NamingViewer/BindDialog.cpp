@@ -1,5 +1,4 @@
 // $Id$
-// BindDialog.cpp : implementation file
 
 #include "stdafx.h"
 #include "NamingViewer.h"
@@ -59,7 +58,7 @@ void CBindDialog::OnViewior()
   }
   catch(CORBA::Exception& ex)
   {
-    MessageBox(ex._id(), "CORBA::Exception");
+    MessageBox(ex._rep_id(), "CORBA::Exception");
     return;
   }
   ViewIORDialog Dialog(m_pORB, m_Object);
@@ -96,7 +95,7 @@ void CBindDialog::OnOK()
   }
   catch(CORBA::Exception& ex)
   {
-    MessageBox(ex._id(), "Invalid IOR");
+    MessageBox(ex._rep_id(), "Invalid IOR");
     return;
   }
   CDialog::OnOK();
