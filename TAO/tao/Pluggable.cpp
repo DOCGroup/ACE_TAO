@@ -336,7 +336,7 @@ TAO_Connector::make_mprofile (const char *string,
   // The delimiter used to seperate inidividual addresses.
 
   // Count the number of endpoints in the IOR.  This will be the number
-  // of entries in the Mprofile.
+  // of entries in the MProfile.
 
   CORBA::ULong profile_count = 1;
   // Number of endpoints in the IOR  (initialized to 1)
@@ -358,13 +358,14 @@ TAO_Connector::make_mprofile (const char *string,
   // The idea behind the following loop is to split the IOR into several
   // strings that can be parsed by each profile.
   // For example,
-  //    `//1.3@moo,shu,1.1chicken/arf'
+  //    `1.3@moo,shu,1.1@chicken/arf'
   // will be parsed into:
-  //    `//1.3@moo/arf'
-  //    `//shu/arf'
-  //    `//1.1chicken/arf'
+  //    `1.3@moo/arf'
+  //    `shu/arf'
+  //    `1.1@chicken/arf'
 
-  int objkey_index = ior.find (this->object_key_delimiter (), ior_index);
+  int objkey_index =
+    ior.find (this->object_key_delimiter (), ior_index) + ior_index;
   // Find the object key
 
   if (objkey_index == 0 || objkey_index == ACE_CString::npos)
@@ -389,14 +390,13 @@ TAO_Connector::make_mprofile (const char *string,
       if (end < ACE_static_cast (int, ior.length ()) && end != ior.npos)
         {
           ACE_CString endpoint = ior.substring (begin, end);
-
           endpoint += ior.substring (objkey_index);
           // Add the object key to the string.
 
           // The endpoint should now be of the form:
-          //    `//N.n@endpoint/object_key'
+          //    `N.n@endpoint/object_key'
           // or
-          //    `//endpoint/object_key'
+          //    `endpoint/object_key'
 
           TAO_Profile *profile = 0;
           // Must initialize since pointer is passed as a reference!
@@ -412,7 +412,7 @@ TAO_Connector::make_mprofile (const char *string,
           // Create a Profile using the individual endpoint string
 
           // Give up ownership of the profile.
-          if (mprofile.give_profile (profile) != 0)
+          if (mprofile.give_profile (profile) == -1)
             {
               ACE_THROW_RETURN (CORBA::INITIALIZE (), -1);
               // Failure presumably only occurs when MProfile is full!
