@@ -87,7 +87,7 @@ TAO_Unbounded_Sequence<T>::_allocate_buffer (CORBA::ULong length)
 template<class T> void
 TAO_Unbounded_Sequence<T>::_deallocate_buffer (void)
 {
-  if (this->buffer_ == 0 || this->release_ == 0)
+  if (this->release_ == 0)
     return;
 
   T *tmp = ACE_reinterpret_cast (T *,
@@ -180,8 +180,9 @@ TAO_Bounded_Sequence<T, MAX>::_allocate_buffer (CORBA::ULong)
 template<class T, size_t MAX> void
 TAO_Bounded_Sequence<T, MAX>::_deallocate_buffer (void)
 {
-  if (this->buffer_ == 0 || this->release_ == 0)
+  if (this->release_ == 0)
     return;
+
   T *tmp = ACE_reinterpret_cast (T *,
                                  this->buffer_);
   TAO_Bounded_Sequence<T, MAX>::freebuf (tmp);
@@ -414,6 +415,8 @@ TAO_Unbounded_Object_Sequence<T,T_var>::_downcast (void* target,
   T **tmp = ACE_static_cast (T**, target);
 
   *tmp = T::_narrow (src, ACE_TRY_ENV);
+
+  ACE_CHECK;
 }
 
 template <class T, class T_var> CORBA_Object*
@@ -522,7 +525,7 @@ TAO_Bounded_Object_Sequence<T, T_var,MAX>::_allocate_buffer (CORBA::ULong length
 template<class T, class T_var, size_t MAX> void
 TAO_Bounded_Object_Sequence<T,T_var,MAX>::_deallocate_buffer (void)
 {
-  if (this->buffer_ == 0 || this->release_ == 0)
+  if (this->release_ == 0)
     return;
   T **tmp = ACE_reinterpret_cast (T **, this->buffer_);
   TAO_Bounded_Object_Sequence<T,T_var,MAX>::freebuf (tmp);
@@ -550,6 +553,8 @@ TAO_Bounded_Object_Sequence<T, T_var,MAX>::_downcast (void* target,
   T **tmp = ACE_static_cast (T**, target);
 
   *tmp = T::_narrow (src, ACE_TRY_ENV);
+
+  ACE_CHECK;
 }
 
 template <class T, class T_var, size_t MAX> CORBA_Object*
@@ -818,7 +823,7 @@ TAO_Bounded_Pseudo_Sequence<T, T_var,MAX>::_allocate_buffer (CORBA::ULong length
 template<class T, class T_var, size_t MAX> void
 TAO_Bounded_Pseudo_Sequence<T, T_var,MAX>::_deallocate_buffer (void)
 {
-  if (this->buffer_ == 0 || this->release_ == 0)
+  if (this->release_ == 0)
     return;
   T **tmp = ACE_reinterpret_cast (T **, this->buffer_);
   TAO_Bounded_Pseudo_Sequence<T, T_var, MAX>::freebuf (tmp);
@@ -954,7 +959,7 @@ TAO_Bounded_String_Sequence<MAX>::_allocate_buffer (CORBA::ULong /* length */)
 template<size_t MAX> void
 TAO_Bounded_String_Sequence<MAX>::_deallocate_buffer (void)
 {
-  if (this->buffer_ == 0 || this->release_ == 0)
+  if (this->release_ == 0)
     return;
   char **tmp = ACE_reinterpret_cast (char **, this->buffer_);
   TAO_Bounded_String_Sequence<MAX>::freebuf (tmp);
