@@ -1,3 +1,14 @@
+Mon Aug 30 15:55:10 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* ace/Message_Queue_T.inl (is_full_i): Reverted the change
+  
+          Sat Aug 28 11:15:02 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+	  
+	  since it seemed to break some regression tests.  If Rick
+ 	  Robinson can figure out how to fix things so the tests don't
+ 	  break we'll try again later.  Thanks to Chris Cleeland for
+	  reporting this.
+
 Mon Aug 30 17:38:22 2004  Steve Huston  <shuston@riverace.com>
 
 	Changes that get PocketPC/WinCE back into a state where they build.
