@@ -1,3 +1,10 @@
+Wed Aug  4 15:48:06 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_global.cpp (destroy):
+	* TAO_IDL/driver/drv_preproc.cpp (DRV_cpp_init):
+
+	  Fixed memory leaks.
+
 Wed Aug  4 14:10:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Security/MT_IIOP_SSL/run_test.pl:
@@ -394,11 +401,10 @@ Sun Aug  1 09:10:39 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	  Moved the contents to the new directory.
 
-Sat Jul 31 11:14:00 2004  Ossama  <ossama@dre.vanderbilt.edu>
+Sat Jul 31 11:14:00 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
         * TAO version 1.4.2 released.
 
 Local Variables:
 add-log-time-format: current-time-string
 End:
-
