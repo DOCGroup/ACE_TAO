@@ -1,3 +1,19 @@
+Fri Dec 26 11:46:17 1997    <nw1@CHA-CHA>
+
+	* ace/Proactor.cpp (ACE_Proactor): Reenabled Proactor's thread
+	  manager to wait on its Timer_Handler thread.
+
+	* ace/Thread_Manager.cpp (close_singleton): Removed Win32 specific
+	  codes.  This is no longer necessary with above changes.
+	  (wait): Close down thread handles when removing detached
+	  threads.  Avoid performing wait when the program is shutting
+	  down. 
+	  (close): Changed to use the new remove_thr_all function.
+
+	* ace/Proactor.cpp (handle_events): Changed the magic number 258
+ 	  to WAIT_TIMEOUT.  Thanks to Mark Rabotnikov
+ 	  <mark@netmanage.co.il> for pointing this out.
+
 Tue Dec 02 14:13:15 1997  Steve Huston  <shuston@riverace.com>
 
 	* include/makeinclude/platform_hpux_aCC.GNU: Moved some compile options
