@@ -1,3 +1,7 @@
+Fri Jan 23 01:12:28 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/poaS.cpp: Added ACE_NESTED_CLASS macro to constructors.
+
 Thu Jan 22 23:57:31 1998  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
 
 	* tao/poa.cpp (wstring_to_ObjectId): Stuck the CORBA::WChar type
