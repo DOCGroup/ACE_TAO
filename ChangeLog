@@ -1,3 +1,10 @@
+Mon Jun  2 11:24:10 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* bin/generate_rel_manpages: Added some debugging
+	  statements. Looks like this script has a quite a bit of code
+	  duplicated from make_release scripts. We will fix this for the
+	  next beta.
+
 Mon Jun  2 00:10:14 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* bin/make_release:Fixed some apparent bugs. Left some debugging
