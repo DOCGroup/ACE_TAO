@@ -212,24 +212,53 @@ Thread_Per_Request_Task::close (u_long)
   return 0;
 }
 
+// Understanding the code below requires understanding of the
+// WindowsNT asynchronous completion notification mechanism.
+
+// (1) The application submits an asynchronous I/O request to the
+//     operating system and a special handle with it (Asynchronous
+//     Completion Token).
+// (2) The operating system commits to performing the I/O request,
+//     while application does its own thing.
+// (3) Operating system finishes the I/O request and places ACT onto
+//     the I/O Completion Port, which is a queue of finished
+//     asynchronous requests.
+// (4) The application eventually checks to see if the I/O request
+//     is done by checking the I/O Completion Port, and retrieves the
+//     ACT.
 
 int
 HTTP_Server::asynch_thread_pool (void)
 {  
 // This only works on Win32
 #if defined (ACE_WIN32)
+  // Create the appropriate acceptor for this concurrency strategy
+  // and an appropriate handler for this I/O strategy
   ACE_Asynch_Acceptor<Asynch_HTTP_Handler_Factory> acceptor;
+
+  // Tell the acceptor to listen on this->port_, which makes an
+  // asynchronous I/O request to the OS
   if (acceptor.open (ACE_INET_Addr (this->port_),
 		     HTTP_Handler::MAX_REQUEST_SIZE + 1) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_Asynch_Acceptor::open"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n",
+                       "ACE_Asynch_Acceptor::open"), -1);
   
+  // Create the thread pool
   for (int i = 0; i < this->threads_; i++) 
     {
+      // Register threads with the proactor and thread manager
       Asynch_Thread_Pool_Task *t;
-      ACE_NEW_RETURN (t, Asynch_Thread_Pool_Task (*ACE_Service_Config::proactor (), this->tm_), -1);
+      ACE_NEW_RETURN
+        (t, Asynch_Thread_Pool_Task (*ACE_Service_Config::proactor (),
+                                     this->tm_),
+         -1);
       if (t->open () != 0) 
-	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "Thread_Pool_Task::open"), -1);
+	ACE_ERROR_RETURN ((LM_ERROR, "%p\n",
+                           "Thread_Pool_Task::open"), -1);
+      // The proactor threads are waiting on the I/O Completion Port
     }   
+
+  // wait for the threads to finish
   return this->tm_.wait ();
 #endif /* ACE_WIN32 */
   return -1;
