@@ -1,3 +1,8 @@
+Sun Aug  4 16:01:28 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* bin/auto_run_tests.lst: Do not the Stack_Recursion tests in
+	  single threaded  builds.
+
 Sat Aug 03 17:57:33 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/ace_dll.dsp: Removed the Hash_Map_Manager_rt.cpp from the
