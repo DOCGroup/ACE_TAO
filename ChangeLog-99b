@@ -1,10 +1,18 @@
+Tue Dec 28 08:55:23 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * include/makeinclude/platform_linux_cxx.GNU:
+          added -D__USE_STD_IOSTREAM.
+
+        * ace/config-cxx-common.h,ace/config-linux-common.h:
+          added support for __USE_STD_IOSTREAM.
+
 Tue Dec 28 02:03:11 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Container_T.i (remove): Changed to call the <remove> method
-	  using the <list_> in ACE_DLList[_Reverse]_Iterator, otherwise,
-	  the <remove> in the ACE_Double_Linked_List got called which
-	  incurred memory leaks.  Thanks to Lorin Hochstein
-	  <lmh@xiphos.ca> for reporting the bug.
+        * ace/Container_T.i (remove): Changed to call the <remove> method
+          using the <list_> in ACE_DLList[_Reverse]_Iterator, otherwise,
+          the <remove> in the ACE_Double_Linked_List got called which
+          incurred memory leaks.  Thanks to Lorin Hochstein
+          <lmh@xiphos.ca> for reporting the bug.
 
 Mon Dec 27 21:29:25 1999  David L. Levine  <levine@cs.wustl.edu>
 
