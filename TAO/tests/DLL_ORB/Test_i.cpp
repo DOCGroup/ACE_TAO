@@ -27,7 +27,7 @@ Test_i::shutdown (CORBA::Environment &ACE_TRY_ENV)
               "Server is shutting down.\n"));
 
   if (!CORBA::is_nil (this->orb_.in ()))
-    this->orb_->shutdown (1, ACE_TRY_ENV);
+    this->orb_->shutdown (0, ACE_TRY_ENV);
 }
 
 void
