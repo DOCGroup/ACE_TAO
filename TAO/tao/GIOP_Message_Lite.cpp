@@ -653,10 +653,9 @@ TAO_GIOP_Message_Lite::process_request (TAO_Transport *transport,
                               ACE_TEXT ("TAO: (%P|%t|%N|%l) %p: ")
                               ACE_TEXT ("cannot send exception\n"),
                               ACE_TEXT ("process_connector_request ()")));
+                  ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                                       "TAO: ");
                 }
-
-              ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                                   "TAO: ");
             }
 
         }
@@ -713,9 +712,8 @@ TAO_GIOP_Message_Lite::process_request (TAO_Transport *transport,
                               ACE_TEXT ("TAO: (%P|%t|%N|%l) %p: ")
                               ACE_TEXT ("cannot send exception\n"),
                               ACE_TEXT ("process_connector_request ()")));
+                  ACE_PRINT_EXCEPTION (exception, "TAO: ");
                 }
-
-              ACE_PRINT_EXCEPTION (exception, "TAO: ");
             }
         }
       else if (TAO_debug_level > 0)
