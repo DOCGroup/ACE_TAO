@@ -293,11 +293,9 @@ public:
   ACE_Map_Entry<EXT_ID, INT_ID>& operator* (void);
   // Returns a reference to the interal element <this> is pointing to.
 
-#if 0
-  int operator== (ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK> &);
-  int operator!= (ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK> &);
+  int operator== (ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK> &);
+  int operator!= (ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK> &);
   // Check if two iterators point to the same position
-#endif /* 0 */
 
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
