@@ -92,7 +92,7 @@ the client will show that the IOR actually points to the ImplRepo_Service.
 
    When a client sends a request to the ImplRepoService, the request
 will come to ImplRepo_Service which will send the request to the actual
-ImR_Activator.   
+ImR_Activator.
 
 @subsection AMH Use AMH Features
 
@@ -133,7 +133,7 @@ Nothing yet.
 Nothing yet.
 
 @subsection XML Database Support
-  
+
   As of now, the support is only to be able to have the information
 about a registered server written to an XML file. Have to support
 retrieving information from the XML file to be able to do any actions
@@ -174,7 +174,7 @@ ImR_Activators that are registered with it. Its job is to act as
 a mediator between the application and the actual ImR_Activator that does
 the real work. As of now, we only support one ImplRepo_Service to be running at
 any time. ImplRepo_Service can be reached through the usual methods of
--ORBInitRef and -ORBDefaultInitRef and multicast. 
+-ORBInitRef and -ORBDefaultInitRef and multicast.
 
 Commandline Arguments that can be passed to ImplRepo_Service
 
@@ -199,7 +199,7 @@ with the ImplRepo_Service, it passes the hostname where it is being run and
 its IOR to the ImplRepo_Service. And, the ImplRepo_Service reaches it using the
 same information.
 
-The Commandline paramters that are valid for ImR_Activator are 
+The Commandline paramters that are valid for ImR_Activator are
 
 -c:	     Run the Service command.
 -d:number    Debug Information
@@ -234,7 +234,7 @@ the information to the file. To do this, we have to pass the '-p' option.
 @subsection work So how does the whole thing work?
 
 	The first thing to do is to have an ImplRepo_Service running. Once
-the ImplRepo_Service is running, we can instantiate one or more ImR_Activators 
+the ImplRepo_Service is running, we can instantiate one or more ImR_Activators
 as needed per the application. As mentioned already, the
 ImR_Activators, upon instantiation, register with the ImplRepo_Service to
 be able to receive requests.
@@ -242,7 +242,7 @@ be able to receive requests.
 	When a new server has to be added or any change has to the
 done to an existing server, a request is to be sent to the ImplRepo_Service
 via the tao_imr utility. Startup commands, the working directory, the
-host where the server should be started up and such other information 
+host where the server should be started up and such other information
 are passed to the ImplRepo_Service via the TAO_ImR commandline arguments.
 
 	If the host where the server should be started up is passed
@@ -265,7 +265,7 @@ and updates its database to reflect the new state of the server.
   <li>First run the <b>ImplRepo_Service</b>
     <em>Example:<code> </code> </em><code> ImplRepo_Service -o locator.ior<br></code>
   <li>Run the <b>Activator</b>
-    <em>Example:<code> </code> </em><code ImR_Activator -ORBInitRef ImplRepo_Service=file://locator.ior<br></code>
+    <em>Example:<code> </code> </em><code> ImR_Activator -ORBInitRef ImplRepo_Service=file://locator.ior<br></code>
 
 @subsection use How is the ImR used?
 
