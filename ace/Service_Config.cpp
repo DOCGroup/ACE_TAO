@@ -492,6 +492,44 @@ ACE_Service_Config::process_commandline_directives (void)
   return result;
 }
 
+int
+ACE_Service_Config::process_directive (const ACE_Static_Svc_Descriptor &ssd,
+                                       int force_replace)
+{
+  if (!force_replace)
+    {
+      if (ACE_Service_Repository::instance ()->find (ssd.name_,
+                                                     0, 0) >= 0)
+        {
+          // The service is already there, just return
+          return 0;
+        }
+    }
+
+  ACE_Service_Object_Exterminator gobbler;
+  void *sym = (ssd.alloc_)(&gobbler);
+
+  ACE_Service_Type_Impl *stp =
+    ace_create_service_type (ssd.name_,
+                             ssd.type_,
+                             sym,
+                             ssd.flags_,
+                             gobbler);
+  if (stp == 0)
+    return 0;
+
+
+  ACE_Service_Type *service_type;
+  ACE_NEW_RETURN (service_type,
+                  ACE_Service_Type (ssd.name_,
+                                    stp,
+                                    0,
+                                    ssd.active_),
+                  -1);
+
+  return ACE_Service_Repository::instance ()->insert (service_type);
+}
+
 // Add the default statically-linked services to the Service
 // Repository.
 
@@ -509,27 +547,7 @@ ACE_Service_Config::load_static_svcs (void)
     {
       ACE_Static_Svc_Descriptor *ssd = *ssdp;
 
-      ACE_Service_Object_Exterminator gobbler;
-      void *sym = (*ssd->alloc_)(&gobbler);
-
-      ACE_Service_Type_Impl *stp =
-        ace_create_service_type (ssd->name_,
-                                 ssd->type_,
-                                 sym,
-                                 ssd->flags_,
-                                 gobbler);
-      if (stp == 0)
-        continue;
-
-      ACE_Service_Type *sr;
-
-      ACE_NEW_RETURN (sr,
-                      ACE_Service_Type (ssd->name_,
-                                        stp,
-                                        0,
-                                        ssd->active_),
-                      -1);
-      if (ACE_Service_Repository::instance ()->insert (sr) == -1)
+      if (ACE_Service_Config::process_directive (*ssd, 1) == -1)
         return -1;
     }
   return 0;
