@@ -1,8 +1,9 @@
+/* $Id$ */
 /* -*- C++ -*- */
 /**
  *  @file   Kokyu_defs.h
  *
- *  $Id$
+ *  Kokyu_defs.h,v 1.12 2003/10/12 02:56:16 venkita Exp
  *
  *  @author Venkita Subramonian (venkita@cs.wustl.edu)
  *
@@ -90,8 +91,6 @@ namespace Kokyu
     ACE_Allocator *allocator_;
 
     Reordering_Queue_Attributes reordering_flags_;
-
-    ConfigInfo ();
   };
 
   typedef ACE_Array<ConfigInfo> ConfigInfoSet;
@@ -157,6 +156,7 @@ namespace Kokyu
     {
       DSRT_FP,
       DSRT_MUF,
+      DSRT_EDF,
       DSRT_MIF
     };
 

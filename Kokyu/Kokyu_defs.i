@@ -1,4 +1,5 @@
-// $Id$
+/* $Id$ */
+// Kokyu_defs.i,v 1.7 2003/10/14 08:53:07 venkita Exp
 
 
 namespace Kokyu
@@ -62,15 +63,6 @@ void Dispatch_Command::destroy (void)
   {
     delete this;
   } 
-}
-
-ACE_INLINE 
-ConfigInfo::ConfigInfo ()
-  :preemption_priority_ (0),
-   thread_priority_ (0),
-   dispatching_type_ (FIFO_DISPATCHING),
-   allocator_ (0)
-{
 }
 
 }

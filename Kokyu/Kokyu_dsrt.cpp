@@ -1,4 +1,5 @@
-// $Id$
+/* $Id$ */
+// Kokyu_dsrt.cpp,v 1.3 2003/10/08 02:23:39 venkita Exp
 
 #include "Kokyu_dsrt.h"
 
@@ -10,7 +11,7 @@
 #include "Kokyu_dsrt.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Kokyu, Kokyu, "$Id$")
+ACE_RCSID(Kokyu, Kokyu, "Kokyu_dsrt.cpp,v 1.3 2003/10/08 02:23:39 venkita Exp")
 
 namespace Kokyu
 {
@@ -132,6 +133,27 @@ operator ()(const QoSDescriptor_t& qos1,
       return 1;
     }
   else if (laxity1 == laxity2)
+    {
+      return 0;
+    }
+  else
+    {
+      return -1;
+    }
+}
+
+template <class QoSDescriptor_t>
+int EDF_Comparator<QoSDescriptor_t>::
+operator ()(const QoSDescriptor_t& qos1,
+            const QoSDescriptor_t& qos2)
+{
+  Time_t deadline1 = qos1.deadline_;
+  Time_t deadline2 = qos2.deadline_;
+  if (deadline1 < deadline2)
+    {
+      return 1;
+    }
+  else if (deadline1 == deadline2)
     {
       return 0;
     }
