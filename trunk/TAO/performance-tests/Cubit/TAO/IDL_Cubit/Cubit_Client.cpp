@@ -330,7 +330,7 @@ Cubit_Client::cube_short (int i)
 // Oneway test.
 
 void
-Cubit_Client::cube_oneway (int i)
+Cubit_Client::cube_oneway (int)
 {
   {
     ACE_FUNCTION_TIMEPROBE (CUBIT_CLIENT_CUBE_ONEWAY_START);
@@ -348,7 +348,7 @@ Cubit_Client::cube_oneway (int i)
 }
 
 void
-Cubit_Client::cube_void (int i)
+Cubit_Client::cube_void (int)
 {
   {
     ACE_FUNCTION_TIMEPROBE (CUBIT_CLIENT_CUBE_VOID_START);
@@ -368,7 +368,7 @@ Cubit_Client::cube_void (int i)
 // Cube an octet
 
 void
-Cubit_Client::cube_octet (int i)
+Cubit_Client::cube_octet (int)
 {
   CORBA::Octet arg_octet = this->func (i);
 
@@ -494,7 +494,7 @@ Cubit_Client::cube_struct (int i)
 // Cube the numbers in a sequence
 
 void
-Cubit_Client::cube_long_sequence (int i, int l)
+Cubit_Client::cube_long_sequence (int, int l)
 {
   this->call_count_++;
 
@@ -564,7 +564,7 @@ Cubit_Client::cube_long_sequence (int i, int l)
 }
 
 void
-Cubit_Client::cube_octet_sequence (int i, int l)
+Cubit_Client::cube_octet_sequence (int, int l)
 {
   this->call_count_++;
 
@@ -636,7 +636,7 @@ Cubit_Client::cube_octet_sequence (int i, int l)
 // Cube the many in a sequence
 
 void
-Cubit_Client::cube_many_sequence (int i, int l)
+Cubit_Client::cube_many_sequence (int, int l)
 {
   this->call_count_++;
 
@@ -719,7 +719,7 @@ Cubit_Client::cube_many_sequence (int i, int l)
 }
 
 void
-Cubit_Client::cube_rti_data (int i, int numUpdates, int numAttrs)
+Cubit_Client::cube_rti_data (int, int numUpdates, int numAttrs)
 {
   this->call_count_++;
 

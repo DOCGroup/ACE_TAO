@@ -1,3 +1,9 @@
+Thu Feb 11 15:02:44 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+        * TAO/performance-tests/Cubit/tao/idl_cubit/Cubit_Client.cpp
+          Fixed the g++ unused arg warnings.
+
+
 Thu Feb 11 14:59:52 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* orbsvcs/tests/Property/client.cpp:
