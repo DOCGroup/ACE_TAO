@@ -3,10 +3,6 @@
 
 #include "ace/LSOCK_Acceptor.h"
 
-#if !defined (__ACE_INLINE__)
-#include "ace/LSOCK_Acceptor.i"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID(ace, LSOCK_Acceptor, "$Id$")
 
 #if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)

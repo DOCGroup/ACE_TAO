@@ -14,10 +14,6 @@ ACE_RCSID(ace, Trace, "$Id$")
 
 #include "ace/Trace.h"
 
-#if !defined (__ACE_INLINE__)
-#include "ace/Trace.i"
-#endif /* __ACE_INLINE__ */
-
 // = Static initialization.
 
 // Keeps track of how far to indent per trace call.

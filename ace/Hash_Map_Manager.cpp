@@ -17,7 +17,3 @@
 
 ACE_RCSID(ace, Hash_Map_Manager, "$Id$")
 
-#if !defined (__ACE_INLINE__)
-#include "ace/Hash_Map_Manager.i"
-#endif /* __ACE_INLINE__ */
-
