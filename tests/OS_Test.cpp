@@ -199,7 +199,6 @@ string_emulation_test (void)
     char strtok_r1[] = "A string of tokens";
     char *strtok_r2;
 
-
     ACE_ASSERT (ACE_OS_String::strcmp (ACE_OS_String::strtok_r (strtok_r1,
                                                                 " ",
                                                                 &strtok_r2),
