@@ -1,3 +1,10 @@
+Tue May 23 20:52:29 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * CM_Server.cpp (receive): one last time.  Use
+          ACE_OS::recvfrom instead of the direct system call,
+          so it hides the native socklen_t or whatever the OS
+          uses.
+
 Tue May 23 07:11:53 2000  David L. Levine  <levine@cs.wustl.edu>
 
         * CM_Server.cpp (receive): changed type of local sin_len
