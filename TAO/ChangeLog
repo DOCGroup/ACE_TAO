@@ -1,8 +1,25 @@
+Mon Nov  8 11:30:24 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/FTORB.mpc:
+        * orbsvcs/orbsvcs/FtRtEvent.mpc:
+        * orbsvcs/orbsvcs/PortableGroup.mpc:
+        * orbsvcs/orbsvcs/PortableGroup_Simple_export.h:
+
+          The FT_ClientORB library requires CDR insertion operators that are
+          generated as part of the PortableGroup_Simple_DS.idl generation.
+          In order for Windows to be able to find these symbols, they must
+          be exported.  Now, the idl file is generated with an export macro
+          (for use within the PortableGroup library).  But for the
+          FTORB_Utils and FTRT_EventChannel libraries we do not want to
+          export any of the PortableGroup_Simple_DS symbols, so we explicitly
+          set the TAO_PORTABLEGROUP_SIMPLE_HAS_DLL macro to zero.  Thus, the
+          symbols are exported from the PortableGroup library and no other.
+
 Sat Nov  6 06:54:16 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * tao/DynamicInterface/DII_Arguments.cpp:
 
-          Changed ACE_TRY_NEW_ENV to ACE_DECLARE_NEW_CORBA_ENV and ACE_TRY. 
+          Changed ACE_TRY_NEW_ENV to ACE_DECLARE_NEW_CORBA_ENV and ACE_TRY.
           The CORBA environment is used outside the scope of the try/catch.
 
 Fri Nov  5 13:33:36 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
