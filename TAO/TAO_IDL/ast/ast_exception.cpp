@@ -87,6 +87,10 @@ AST_Exception::AST_Exception(UTL_ScopedName *n,
                    p, 
                    local, 
                    abstract),
+    UTL_Scope (AST_Decl::NT_except),
+    AST_Decl (AST_Decl::NT_except, 
+              n, 
+              p),
     COMMON_Base (local, 
                  abstract)
 {
