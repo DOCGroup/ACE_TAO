@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -13,9 +13,14 @@
 
 #ifndef TAO_SEQUENCE_T_H
 #define TAO_SEQUENCE_T_H
+
 #include "ace/pre.h"
 
 #include "tao/Sequence.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 /**
  * @class TAO_Unbounded_Sequence
@@ -1385,4 +1390,5 @@ public:
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include "ace/post.h"
+
 #endif /* TAO_SEQUENCE_T_H */
