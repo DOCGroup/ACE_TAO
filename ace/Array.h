@@ -19,6 +19,9 @@
 
 #include "ace/ACE.h"
 
+// Forward declaration.
+template <class T> class ACE_Array_Iterator;
+
 template <class T>
 class ACE_Array
 {
@@ -103,6 +106,48 @@ private:
 
   T *array_;
   // Pointer to the array's storage buffer.
+
+  friend class ACE_Array_Iterator<T>;
+};
+
+template <class T>
+class ACE_Array_Iterator
+  // = TITLE
+  //     Implement an iterator over an ACE_Array.  This iterator is
+  //     safe in the face of array element deletions.  But it is NOT
+  //     safe if the array is resized (via the ACE_Array assignment
+  //     operator) during iteration.  That would be very odd, and
+  //     dangerous.
+{
+public:
+  // = Initialization method.
+  ACE_Array_Iterator (ACE_Array<T> &);
+
+  // = Iteration methods.
+
+  int next (T *&next_item);
+  // Pass back the <next_item> that hasn't been seen in the Array.
+  // Returns 0 when all items have been seen, else 1.
+
+  int advance (void);
+  // Move forward by one element in the Array.  Returns 0 when all the
+  // items in the Array have been seen, else 1.
+
+  int done (void) const;
+  // Returns 1 when all items have been seen, else 0.
+
+  void dump (void) const;
+  // Dump the state of an object.
+
+  ACE_ALLOC_HOOK_DECLARE;
+  // Declare the dynamic allocation hooks.
+
+private:
+  u_int current_;
+  // Pointer to the current item in the iteration.
+
+  ACE_Array<T> &array_;
+  // Pointer to the Array we're iterating over.
 };
 
 #if defined (__ACE_INLINE__)
