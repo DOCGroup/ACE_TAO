@@ -11,12 +11,6 @@ CORBA::release (CORBA::Context_ptr ctx)
     ctx->_decr_refcnt ();
 }
 
-ACE_INLINE CORBA::Boolean
-CORBA::is_nil (CORBA::Context_ptr req)
-{
-  return (CORBA::Boolean) (req == 0);
-}
-
 ACE_INLINE CORBA_Context*
 CORBA_Context::_duplicate (CORBA_Context* x)
 {
