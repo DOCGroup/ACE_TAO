@@ -1252,6 +1252,10 @@ private:
 #define ACE_UPIPE_CONNECTOR ACE_UPIPE_Connector
 #define ACE_UPIPE_STREAM ACE_UPIPE_Stream
 
+// Handle ACE_FILE_*
+#define ACE_FILE_CONNECTOR ACE_FILE_Connector
+#define ACE_FILE_STREAM ACE_FILE_Stream
+
 // Handle ACE_*_Memory_Pool.
 #define ACE_MMAP_MEMORY_POOL ACE_MMAP_Memory_Pool
 #define ACE_LITE_MMAP_MEMORY_POOL ACE_Lite_MMAP_Memory_Pool
@@ -1322,6 +1326,10 @@ private:
 #define ACE_UPIPE_ACCEPTOR ACE_UPIPE_Acceptor, ACE_SPIPE_Addr
 #define ACE_UPIPE_CONNECTOR ACE_UPIPE_Connector, ACE_SPIPE_Addr
 #define ACE_UPIPE_STREAM ACE_UPIPE_Stream, ACE_SPIPE_Addr
+
+// Handle ACE_FILE_*
+#define ACE_FILE_CONNECTOR ACE_FILE_Connector, ACE_FILE_Addr
+#define ACE_FILE_STREAM ACE_FILE_IO, ACE_FILE_Addr
 
 // Handle ACE_*_Memory_Pool.
 #define ACE_MMAP_MEMORY_POOL ACE_MMAP_Memory_Pool, ACE_MMAP_Memory_Pool_Options
