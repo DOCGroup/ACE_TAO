@@ -23,6 +23,10 @@ Tue Feb 10 09:34:27 1998  David L. Levine  <levine@cs.wustl.edu>
         * include/platform_linux{,_lxpthread}.GNU: removed
           -fno-strict-prototypes from CFLAGS because it is no longer needed.
 
+        * include/makeinclude/platform_sunos5_g++.GNU: added -lposix4, to
+          be consistent with the Sun C++ platform file.  Some of the TAO
+          tests need it.
+
 Mon Feb 09 18:10:37 1998  Chris Gill <cdgill@cs.wustl.edu>
 
         * ace/Containers.{cpp,h} : made next () a const member function in
@@ -44,14 +48,14 @@ Mon Feb 09 14:52:25 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Sun Feb  8 15:33:33 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* include/makeinclude/wrapper_macros.GNU:
-	* include/makeinclude/rules.lib.GNU:
-	* include/makeinclude/rules.local.GNU: Rename
-	  ACE_LDSO_Major_Minor_Version_Number to ACE_LDSO_Version_Number.
+        * include/makeinclude/wrapper_macros.GNU:
+        * include/makeinclude/rules.lib.GNU:
+        * include/makeinclude/rules.local.GNU: Rename
+          ACE_LDSO_Major_Minor_Version_Number to ACE_LDSO_Version_Number.
 
-	* include/makeinclude/rules.local.GNU: Put back checking of
-	  current directory into library installation rules but with an
-	  extra check for null ACE_LDSO_Version_Number.
+        * include/makeinclude/rules.local.GNU: Put back checking of
+          current directory into library installation rules but with an
+          extra check for null ACE_LDSO_Version_Number.
 
 Sun Feb 08 12:06:30 1998  David L. Levine  <levine@cs.wustl.edu>
 
