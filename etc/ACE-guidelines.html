@@ -95,6 +95,11 @@ to Graham for providing the OSE tools!<p>
 
   <li><strong>Preprocessor</strong><p>
   <ul>
+    <li>Never #include standard headers directly, except in a few
+        specific ACE files, <em>e.g.</em>, OS.h and stdcpp.h.  Let
+        those files #include the correct headers.  If you don't do
+        this, your code will not compile with the Standard C++ Library.<p>
+
     <li>Always follow a preprocessor <strong><code>#endif</code></strong>
         with a <strong><code>/*  */</code></strong> C-style comment.  It
         should correspond to the condition in the matching
@@ -180,7 +185,7 @@ to Graham for providing the OSE tools!<p>
     <li>Never use <strong><code>delete</code></strong> to deallocate
         memory that was allocated with <strong><code>malloc</code></strong>.
         Similarly, never associate <strong><code>free</code></strong> with
-        <strong><code>new</code></strong>.  Ideally,
+        <strong><code>new</code></strong>.
         <strong><code>ACE_NEW</code></strong> or
         <strong><code>ACE_NEW_RETURN</code></strong> should be used to
         allocate memory, and <strong><code>delete</code></strong> should
@@ -188,6 +193,11 @@ to Graham for providing the OSE tools!<p>
         <strong><code>delete</code></strong> or
         <strong><code>delete []</code></strong> to correspond to the
         allocation.<p>
+
+    <li>Always use <strong><code>ACE_NEW</code></strong> or
+        <strong><code>ACE_NEW_RETURN</code></strong> to allocate memory,
+        because they check for successful allocation and set errno
+        appropriately if it fails.<p>
 
     <li>Never compare or assign a pointer value with <strong>NULL</strong>;
         use <strong>0</strong> instead.  The language allows any pointer to
@@ -261,7 +271,7 @@ to Graham for providing the OSE tools!<p>
 <h3><a href="http://www.cs.wustl.edu/~levine/CVS.html">ACE</a>
   Design Rules</h3>
 <ul>
-  <li>>If you are parameterizing a searchable container template class
+  <li>If you are parameterizing a searchable container template class
       with readers/writer locks, do not use sentinels.<p>
 </ul><p>
 
