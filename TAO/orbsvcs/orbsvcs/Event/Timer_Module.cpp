@@ -86,7 +86,7 @@ TAO_EC_ST_Timer_Module::cancel_timer (RtecScheduler::Preemption_Priority_t,
 {
   const void *vp;
 
-  int result = 
+  int result =
     this->reactor_->cancel_timer (id, &vp);
   if (result == 0)
     {
@@ -95,7 +95,8 @@ TAO_EC_ST_Timer_Module::cancel_timer (RtecScheduler::Preemption_Priority_t,
       act = 0;
     }
   else
-    act = ACE_static_cast (ACE_Command_Base *, vp);
+    act = ACE_reinterpret_cast (ACE_Command_Base *,
+                                ACE_const_cast (void *, vp));
 
   return result;
 }
@@ -130,10 +131,10 @@ TAO_EC_RPT_Timer_Module::~TAO_EC_RPT_Timer_Module (void)
   for (int i = 0; i < ACE_Scheduler_MAX_PRIORITIES; ++i)
     {
       if (this->reactorTasks[i] != 0)
-	{
-	  delete this->reactorTasks[i];
-	  this->reactorTasks[i] = 0;
-	}
+        {
+          delete this->reactorTasks[i];
+          this->reactorTasks[i] = 0;
+        }
     }
 }
 
@@ -142,7 +143,7 @@ void TAO_EC_RPT_Timer_Module::activate (void)
   for (int i = 0; i < ACE_Scheduler_MAX_PRIORITIES; ++i)
     {
       if (this->reactorTasks[i] != 0)
-	continue;
+        continue;
 
       // Convert ACE_Scheduler_Rate (it's really a period, not a rate!)
       // to a form we can easily work with.
@@ -155,14 +156,14 @@ void TAO_EC_RPT_Timer_Module::activate (void)
       ACE_NEW (this->reactorTasks[i], ReactorTask);
 
       if (!this->shutdown_)
-	{
-	  this->reactorTasks[i]->thr_mgr (this->ThrMgr ());
-	  if (this->reactorTasks[i]->open_reactor (period) == -1)
-	    {
-	      ACE_ERROR ((LM_ERROR, "%p\n",
-			  "EC (%t) Timer_Module - open reactor"));
-	    }
-	}
+        {
+          this->reactorTasks[i]->thr_mgr (this->ThrMgr ());
+          if (this->reactorTasks[i]->open_reactor (period) == -1)
+            {
+              ACE_ERROR ((LM_ERROR, "%p\n",
+                          "EC (%t) Timer_Module - open reactor"));
+            }
+        }
     }
 }
 
@@ -176,7 +177,7 @@ TAO_EC_RPT_Timer_Module::shutdown (void)
   for (int i = 0; i < ACE_Scheduler_MAX_PRIORITIES; ++i)
     {
       if (this->reactorTasks[i] != 0)
-	this->reactorTasks[i]->shutdown_task ();
+        this->reactorTasks[i]->shutdown_task ();
       this->reactorTasks[i]->get_reactor ().cancel_timer (&this->timeout_handler_);
     }
 
@@ -210,7 +211,7 @@ TAO_EC_RPT_Timer_Module::cancel_timer (RtecScheduler::Preemption_Priority_t prio
   const void* vp;
   ACE_Reactor& reactor = this->GetReactorTask (priority)->get_reactor ();
 
-  int result = 
+  int result =
     reactor.cancel_timer (id, &vp);
   if (result == 0)
     {
@@ -219,7 +220,8 @@ TAO_EC_RPT_Timer_Module::cancel_timer (RtecScheduler::Preemption_Priority_t prio
       act = 0;
     }
   else
-    act = ACE_static_cast (ACE_Command_Base *, vp);
+    act = ACE_reinterpret_cast (ACE_Command_Base *,
+                                ACE_const_cast (void *, vp));
 
   return result;
 }
@@ -242,7 +244,7 @@ TAO_EC_RPT_Timer_Module::reactor (RtecScheduler::Preemption_Priority_t priority)
 
 int
 TAO_EC_Timeout_Handler::handle_timeout (const ACE_Time_Value &,
-					const void *vp)
+                                        const void *vp)
 {
   ACE_Command_Base *act = ACE_static_cast(ACE_Command_Base*,
                                           ACE_const_cast(void*,vp));
@@ -259,4 +261,3 @@ TAO_EC_Timeout_Handler::handle_timeout (const ACE_Time_Value &,
 
   return 0;
 }
-
