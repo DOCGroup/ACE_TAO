@@ -1,3 +1,27 @@
+Thu Mar 18 13:50:21 2004  Steve Huston  <shuston@riverace.com>
+
+	* ace/Asynch_IO.{h cpp}: The change in
+	  Thu Mar 11 14:35:41 2004  Steve Huston  <shuston@riverace.com>
+	  didn't go far enough... the problem exists in all derivatives of
+	  ACE_Asynch_Operation_Impl. Only ACE_Asynch_Operation deleted the
+	  implementation_ pointer in its constructor. However, since each
+	  derivative of ACE_Asynch_Operation was declaring its own
+	  implementation_ (in addition to the one in ACE_Asynch_Operation),
+	  no implementation was ever, in fact, being deleted. Hence:
+	    1. The ACE_Asynch_Operation::implementation_ member is removed,
+	       along with the void implementation(ACE_Asynch_Operation_Impl*)
+	       method that set it.
+	    2. The ACE_Asynch_Operation_Impl* implementation() method is now
+	       pure virtual in ACE_Asynch_Operation and must be implemented
+	       in each operation class.
+	    3. Each operation class needs to maintain its own appropriately
+	       typed implementation pointer, and delete it when necessary.
+	    4. The implementation(ACE_*_Impl*) methods are all removed, as
+	       none are necessary, and none are used any longer.
+	  The operation classes already were creating their own implementation
+	  objects, so that is the same now. However, they all now delete the
+	  implementation at destructor time.
+
 Thu Mar 18 08:59:40 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/templates/make.mpd:

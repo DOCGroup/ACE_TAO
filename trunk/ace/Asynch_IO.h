@@ -255,17 +255,11 @@ protected:
   ACE_Asynch_Operation (void);
 
   /// Return the underlying implementation class.
-  ACE_Asynch_Operation_Impl *implementation (void) const;
-
-  /// Set the implementation class.
-  void implementation (ACE_Asynch_Operation_Impl *implementation);
+  virtual ACE_Asynch_Operation_Impl *implementation (void) const = 0;
 
   /// Get a proactor for/from the user
   ACE_Proactor *get_proactor (ACE_Proactor *user_proactor,
                               ACE_Handler &handler) const;
-
-  /// Implementation class.
-  ACE_Asynch_Operation_Impl *implementation_;
 };
 
 // Forward declarations
@@ -339,12 +333,10 @@ public:
 #endif /* (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE) && (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) */
 
   /// Return the underlying implementation class.
-  ACE_Asynch_Read_Stream_Impl *implementation (void) const;
+  //  (this should be protected...)
+  virtual ACE_Asynch_Operation_Impl *implementation (void) const;
 
 protected:
-  /// Set the implementation class.
-  void implementation (ACE_Asynch_Read_Stream_Impl *implementation);
-
   /// Implementation class that all methods will be forwarded to.
   ACE_Asynch_Read_Stream_Impl *implementation_;
 
@@ -465,12 +457,10 @@ public:
 #endif /* (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) */
 
   /// Return the underlying implementation class.
-  ACE_Asynch_Write_Stream_Impl *implementation (void) const;
+  //  (this should be protected...)
+  virtual ACE_Asynch_Operation_Impl *implementation (void) const;
 
 protected:
-  /// Set the implementation class.
-  void implementation (ACE_Asynch_Write_Stream_Impl *implementation);
-
   /// Implementation class that all methods will be forwarded to.
   ACE_Asynch_Write_Stream_Impl *implementation_;
 
@@ -598,12 +588,10 @@ public:
 #endif /* (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) */
 
   /// Return the underlying implementation class.
-  ACE_Asynch_Read_File_Impl *implementation (void) const;
+  //  (this should be protected...)
+  virtual ACE_Asynch_Operation_Impl *implementation (void) const;
 
 protected:
-  /// Set the implementation class.
-  void implementation (ACE_Asynch_Read_File_Impl *implementation);
-
   /// Delegation/implementation class that all methods will be
   /// forwarded to.
   ACE_Asynch_Read_File_Impl *implementation_;
@@ -734,12 +722,10 @@ public:
 #endif /* (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) */
 
   /// Return the underlying implementation class.
-  ACE_Asynch_Write_File_Impl *implementation (void) const;
+  //  (this should be protected...)
+  virtual ACE_Asynch_Operation_Impl *implementation (void) const;
 
 protected:
-  /// Set the implementation.
-  void implementation (ACE_Asynch_Write_File_Impl *implementation);
-
   /// Implementation object.
   ACE_Asynch_Write_File_Impl *implementation_;
 
@@ -855,12 +841,10 @@ public:
               int signal_number = ACE_SIGRTMIN);
 
   /// Return the underlying implementation class.
-  ACE_Asynch_Accept_Impl *implementation (void) const;
+  //  (this should be protected...)
+  virtual ACE_Asynch_Operation_Impl *implementation (void) const;
 
 protected:
-  /// Set the implementation class.
-  void implementation (ACE_Asynch_Accept_Impl *implementation);
-
   /// Delegation/implementation class that all methods will be
   /// forwarded to.
   ACE_Asynch_Accept_Impl *implementation_;
@@ -960,12 +944,10 @@ public:
                int signal_number = ACE_SIGRTMIN);
 
   /// Return the underlying implementation class.
-  ACE_Asynch_Connect_Impl *implementation (void) const;
+  //  (this should be protected...)
+  virtual ACE_Asynch_Operation_Impl *implementation (void) const;
 
 protected:
-  /// Set the implementation class.
-  void implementation (ACE_Asynch_Connect_Impl *implementation);
-
   /// Delegation/implementation class that all methods will be
   /// forwarded to.
   ACE_Asynch_Connect_Impl *implementation_;
@@ -1086,12 +1068,10 @@ public:
                      int signal_number = ACE_SIGRTMIN);
 
   /// Return the underlying implementation class.
-  ACE_Asynch_Transmit_File_Impl *implementation (void) const;
+  //  (this should be protected...)
+  virtual ACE_Asynch_Operation_Impl *implementation (void) const;
 
 protected:
-  /// Set the implementation.
-  void implementation (ACE_Asynch_Transmit_File_Impl *);
-
   /// The implementation class.
   ACE_Asynch_Transmit_File_Impl *implementation_;
 
@@ -1297,12 +1277,10 @@ public:
                 int signal_number = ACE_SIGRTMIN);
 
   /// Return the underlying implementation class.
-  ACE_Asynch_Read_Dgram_Impl *implementation (void) const;
+  //  (this should be protected...)
+  virtual ACE_Asynch_Operation_Impl *implementation (void) const;
 
 protected:
-  /// Set the implementation class.
-  void implementation (ACE_Asynch_Read_Dgram_Impl *implementation);
-
   /// Implementation class that all methods will be forwarded to.
   ACE_Asynch_Read_Dgram_Impl *implementation_;
 
@@ -1432,12 +1410,10 @@ public:
                 int signal_number = ACE_SIGRTMIN);
 
   /// Return the underlying implementation class.
-  ACE_Asynch_Write_Dgram_Impl *implementation (void) const;
+  //  (this should be protected...)
+  virtual ACE_Asynch_Operation_Impl *implementation (void) const;
 
 protected:
-  /// Set the implementation class.
-  void implementation (ACE_Asynch_Write_Dgram_Impl *implementation);
-
   /// Implementation class that all methods will be forwarded to.
   ACE_Asynch_Write_Dgram_Impl *implementation_;
 
