@@ -87,7 +87,7 @@ ifeq (Other,$(findstring Other,$(ACE_BUILD_COMPONENTS)))
          Thread_Pool_Reactor_Test \
          XtReactor_Test
 endif # ! Other
-ifeq (Token,$(findstring Token,$(ACE_COMPONENTS)))
+ifeq (Token,$(findstring Token,$(ACE_BUILD_COMPONENTS)))
   BIN += Tokens_Test
 endif # ! Token
 
