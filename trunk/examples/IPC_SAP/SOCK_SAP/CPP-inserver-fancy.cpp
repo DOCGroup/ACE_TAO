@@ -7,6 +7,7 @@
 
 #include "ace/SOCK_Acceptor.h"
 #include "ace/Svc_Handler.h"
+#include "ace/Singleton.h"
 #include "ace/Profile_Timer.h"
 #include "ace/Get_Opt.h"
 
@@ -30,31 +31,23 @@ public:
   // Run the main event loop.
 
 private:
-  int parse_args (int argc, char *argv[]);
-  // Parse the command-line arguments.
-
   int init_acceptors (void);
   // Initialize the acceptors.
 
   int create_handler (ACE_SOCK_Acceptor &acceptor,
-                      Handler *(*handler_factory) (ACE_HANDLE, int),
+                      Handler *(*handler_factory) (ACE_HANDLE),
                       const char *handler_type);
   // Factory that creates the right kind of <Handler>.
 
   // = Factory functions.
-  static Handler *make_twoway_handler (ACE_HANDLE,
-                                       int verbose);
+  static Handler *make_twoway_handler (ACE_HANDLE);
   // Create a twoway handler.
 
-  static Handler *make_oneway_handler (ACE_HANDLE,
-                                       int verbose);
+  static Handler *make_oneway_handler (ACE_HANDLE);
   // Create a oneway handler.
 
   u_short port_;
   // Port number we're listening on.
-
-  int verbose_;
-  // Are we running in verbose mode?
 
   ACE_SOCK_Acceptor twoway_acceptor_;
   // Twoway acceptor factory.
@@ -75,7 +68,7 @@ public:
   // Close down and delete this.
 
 protected:
-  Handler (ACE_HANDLE handle, int verbose = 0);
+  Handler (ACE_HANDLE handle);
   // Constructor.
 
   int parse_header_and_allocate_buffer (char *&buf,
@@ -94,9 +87,6 @@ protected:
   virtual void print_results (void);
   // Print the results.
 
-  int verbose_;
-  // Are we running verbosely?
-
   size_t total_bytes_;
   // Total number of bytes received.
 
@@ -112,7 +102,7 @@ class Twoway_Handler : public Handler
   // = TITLE
   //   Performs the twoway protocol.
 public:
-  Twoway_Handler (ACE_HANDLE handle, int verbose = 0);
+  Twoway_Handler (ACE_HANDLE handle);
   // Constructor.
 
 private:
@@ -124,7 +114,7 @@ class Oneway_Handler : public Handler
 {
   // = TITLE
 public:
-  Oneway_Handler (ACE_HANDLE handle, int verbose = 0);
+  Oneway_Handler (ACE_HANDLE handle);
   // Constructor.
 
 private:
@@ -135,10 +125,93 @@ private:
   // Print the results.
 };
 
-Handler::Handler (ACE_HANDLE handle,
-                  int verbose)
-  : verbose_ (verbose),
-    total_bytes_ (0),
+class Options
+  // = TITLE
+  //   Define the options for this test.
+{
+public:
+  Options (void);
+  // Constructor.
+
+  int parse_args (int argc, char *argv[]);
+  // Parse the command-line arguments.
+
+  int verbose (void) const;
+  // Are we running in verbose mode?
+
+  u_short port (void) const;
+  // Port number that we are listening at.
+
+  int reply_message_len (void) const;
+  // Size of the reply message.
+
+private:
+  int verbose_;
+  // Are we running in verbose mode?
+
+  u_short port_;
+  // Port number we listen at.
+  
+  size_t reply_message_len_;
+  // Size of the reply message.
+};
+
+u_short
+Options::port (void) const
+{
+  return this->port_;
+}
+
+int
+Options::verbose (void) const
+{
+  return this->verbose_;
+}
+
+int
+Options::reply_message_len (void) const
+{
+  return this->reply_message_len_;
+}
+
+Options::Options (void)
+  : verbose_ (0),
+    port_ (ACE_DEFAULT_SERVER_PORT),
+    reply_message_len_ (24) // Default to the approximate size of an
+                            // GIOP reply message.
+{
+}
+
+int
+Options::parse_args (int argc, char *argv[])
+{
+  ACE_Get_Opt getopt (argc, argv, "p:r:v", 1);
+
+  for (int c; (c = getopt ()) != -1; )
+    switch (c)
+      {
+      case 'p':
+        this->port_ = ACE_OS::atoi (getopt.optarg);
+        break;
+      case 'r':
+        this->reply_message_len_ = ACE_OS::atoi (getopt.optarg);
+        break;
+      case 'v':
+        this->verbose_ = 1;
+        break;
+      default:
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "(%P|%t) usage: %n [-p <port>] [-v]"),
+                          -1);
+      }
+  return 0;
+}
+
+// Options Singleton.
+typedef ACE_Singleton<Options, ACE_SYNCH_RECURSIVE_MUTEX> OPTIONS;
+
+Handler::Handler (ACE_HANDLE handle)
+  : total_bytes_ (0),
     message_count_ (0)
 {
   this->peer ().set_handle (handle);
@@ -223,9 +296,8 @@ Handler::print_results (void)
 {
 }
 
-Twoway_Handler::Twoway_Handler (ACE_HANDLE handle,
-                                int verbose)
-  : Handler (handle, verbose)
+Twoway_Handler::Twoway_Handler (ACE_HANDLE handle)
+  : Handler (handle)
 {
 }
 
@@ -262,18 +334,27 @@ Twoway_Handler::run (void)
                       "(%P|%t) reached end of input, connection closed by client\n"));
           break;
         }
-      else if (this->verbose_ 
+      else if (OPTIONS::instance ()->verbose ()
                && ACE::write_n (ACE_STDOUT,
                                 request,
                                 r_bytes) != r_bytes)
         ACE_ERROR ((LM_ERROR,
                     "%p\n",
                     "ACE::write_n"));
-      else if (this->peer ().send_n (request,
-                                     r_bytes) != r_bytes)
-        ACE_ERROR ((LM_ERROR,
-                    "%p\n",
-                    "send_n"));
+      else
+        {
+          size_t s_bytes = OPTIONS::instance ()->reply_message_len ();
+
+          // Don't try to send more than is in the request buffer!
+          if (s_bytes > r_bytes)
+            s_bytes = r_bytes;
+
+          if (this->peer ().send_n (request,
+                                    s_bytes) != s_bytes)
+            ACE_ERROR ((LM_ERROR,
+                        "%p\n",
+                        "send_n"));
+        }
       this->total_bytes_ += size_t (r_bytes);
       this->message_count_++;
     }
@@ -281,9 +362,8 @@ Twoway_Handler::run (void)
   return 0;
 }
 
-Oneway_Handler::Oneway_Handler (ACE_HANDLE handle,
-                                int verbose)
-  : Handler (handle, verbose)
+Oneway_Handler::Oneway_Handler (ACE_HANDLE handle)
+  : Handler (handle)
 {
 }
 
@@ -340,7 +420,7 @@ Oneway_Handler::run (void)
                       "(%P|%t) reached end of input, connection closed by client\n"));
           break;
         }
-      else if (this->verbose_ 
+      else if (OPTIONS::instance ()->verbose ()
                && ACE::write_n (ACE_STDOUT,
                                 request,
                                 r_bytes) != r_bytes)
@@ -357,27 +437,25 @@ Oneway_Handler::run (void)
 // Create a twoway handler.
 
 Handler *
-Handler_Factory::make_twoway_handler (ACE_HANDLE handle,
-                                      int verbose)
+Handler_Factory::make_twoway_handler (ACE_HANDLE handle)
 {
-  return new Twoway_Handler (handle, verbose);
+  return new Twoway_Handler (handle);
 }
 
 // Create a oneway handler.
 
 Handler *
-Handler_Factory::make_oneway_handler (ACE_HANDLE handle,
-                                      int verbose)
+Handler_Factory::make_oneway_handler (ACE_HANDLE handle)
 {
-  return new Oneway_Handler (handle, verbose);
+  return new Oneway_Handler (handle);
 }
 
 int
 Handler_Factory::init_acceptors (void)
 {
   // Create the oneway and twoway server addresses.
-  ACE_INET_Addr twoway_server_addr (this->port_);
-  ACE_INET_Addr oneway_server_addr (this->port_ + 1);
+  ACE_INET_Addr twoway_server_addr (OPTIONS::instance ()->port ());
+  ACE_INET_Addr oneway_server_addr (OPTIONS::instance ()->port () + 1);
 
   // Create acceptors, reuse the address.
   if (this->twoway_acceptor_.open (twoway_server_addr, 1) == -1
@@ -415,8 +493,7 @@ Handler_Factory::create_handler (ACE_SOCK_Acceptor &acceptor,
   Handler *handler;
   
   ACE_ALLOCATOR_RETURN (handler,
-                        (*handler_factory) (new_stream.get_handle (),
-                                            this->verbose_),
+                        (*handler_factory) (new_stream.get_handle ()),
                         -1);
 
   ACE_DEBUG ((LM_DEBUG,
@@ -436,31 +513,7 @@ Handler_Factory::create_handler (ACE_SOCK_Acceptor &acceptor,
 #endif /* ACE_HAS_THREADS */
 }
 
-int
-Handler_Factory::parse_args (int argc, char *argv[])
-{
-  ACE_Get_Opt getopt (argc, argv, "p:v", 1);
-
-  for (int c; (c = getopt ()) != -1; )
-    switch (c)
-      {
-      case 'p':
-        this->port_ = ACE_OS::atoi (getopt.optarg);
-        break;
-      case 'v':
-        this->verbose_ = 1;
-        break;
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "(%P|%t) usage: %n [-p <port>] [-v]"),
-                          -1);
-      }
-  return 0;
-}
-
-Handler_Factory::Handler_Factory (int argc, char *argv[])
-  : port_ (ACE_DEFAULT_SERVER_PORT),
-    verbose_ (0)
+Handler_Factory::Handler_Factory (void)
 {
 }
 
@@ -527,7 +580,9 @@ Handler_Factory::handle_events (void)
 int
 main (int argc, char *argv[])
 {
-  Handler_Factory server (argc, argv);
+  OPTIONS::instance ()->parse_args (argc, argv);
+
+  Handler_Factory server (void);
 
   return server.handle_events ();
 }
