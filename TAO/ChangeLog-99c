@@ -1,3 +1,11 @@
+Tue Jun 28 17:22:20 1999  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Makefile
+          orbsvcs/orbsvcs/Sched/Makefile.am
+          orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils.{cpp, h},
+          orbsvcs/orbsvcs/Sched/Reconfig_Scheduler.{cpp, h}: Reconfig
+	  Scheduler compiles on Solaris using egcs.
+
 Tue Jun 29 13:44:41 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/TAO_Tests.dsw:
