@@ -54,7 +54,7 @@ ACE_MEM_SAP::set_buf_len (void *buf, size_t n)
   if (*lptr >= n)
     *lptr = n;
 
-  return ((char *) lptr - (char *) this->shm_malloc_->memory_pool ().base_addr ());
+  return ((char *) lptr - (char *) this->shm_malloc_->base_addr ());
 }
 
 ASYS_INLINE ssize_t
@@ -71,7 +71,7 @@ ACE_MEM_SAP::get_buf_len (const off_t off, void *&buf)
 
   ACE_SEH_TRY
     {
-      size_t *lptr = (size_t*) ((char *) this->shm_malloc_->memory_pool ().base_addr () + off);
+      size_t *lptr = (size_t*) ((char *) this->shm_malloc_->base_addr () + off);
       buf = lptr + 1;
       retv = *lptr;
     }

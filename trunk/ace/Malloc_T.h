@@ -468,6 +468,9 @@ public:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
+  /// Return cb_ptr value.
+  void *base_addr (void);
+
 private:
   /// Initialize the Malloc pool.
   int open (void);

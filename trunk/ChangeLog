@@ -1,3 +1,30 @@
+Sun Dec 17 19:32:58 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Malloc_T.cpp (shared_malloc): After a win32 structural
+	  exception occurs, we need to re-execution the expression that
+	  causes the exception.  Thanks to Roger Beck
+	  <roger_beck@royalsun.com.au> for reporting this.
+
+	* ace/MEM_IO.i (fetch_recv_buf, recv): Differentiate the
+	  cases of end of message and errors.
+
+	* ace/Malloc_T.h:
+	* ace/Malloc_T.i: Added a base_addr method to return the base
+	  address of the ACE_Malloc so we don't have to depend on MMAP's
+	  base_addr method.
+
+	* ace/MEM_SAP.i (set_buf_len,get_buf_len): Changed to computer
+	  buffer location using the base_addr method in ACE_Malloc as the
+	  one in Memory_Pool only indicates the fixed based addr.
+
+	* ace/MEM_Acceptor.i:
+	* ace/MEM_Acceptor.h: Added a method to set the prefix of MMAP
+	  filename.
+
+	* ace/MEM_Acceptor.cpp (ACE_MEM_Acceptor):
+	* ace/MEM_Connector.cpp (ACE_MEM_Connector): Changed to MMAP
+	  Options to allow MMAP files to be mapped at any address.
+
 Sun Dec 17 18:42:13 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/Refcounted_Auto_Ptr.h: Need to add "ace/Auto_Ptr.h" here to
@@ -6,12 +33,12 @@ Sun Dec 17 18:42:13 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 	* tests: Added the Refcounted_Auto_Ptr_Test.cpp, which tests
 	  the new ACE_Refcounted_Auto_Ptr class.  Thanks to Johnny Tucker
  	  <JTucker@infoglide.com> for contributing this.
-  
+
         * tests/Refcounted_Auto_Ptr_Test.dsp,
 	  tests/Refcounted_Auto_Ptr_Test.dsw
 	  tests/Refcounted_Auto_Ptr_Test.icc: Added the projects to
 	  compile the Refcounted_Auto_Ptr_Test.cpp.
-  
+
         * tests/Makefile,
 	* tests/run_test.lst,
 	* tests/run_tests.lst: Added the Refcounted_Auto_Ptr_Test.

@@ -93,7 +93,7 @@ public:
    * /tmp/mmapfile.
    */
   const ACE_TCHAR *mmap_prefix (void) const;
-  void mmap_prefix (ACE_TCHAR *prefix);
+  void mmap_prefix (const ACE_TCHAR *prefix);
 
   /// Return the local endpoint address in the referenced <ACE_Addr>.
   /// Returns 0 if successful, else -1.

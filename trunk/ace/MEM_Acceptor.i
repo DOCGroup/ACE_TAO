@@ -58,7 +58,7 @@ ACE_MEM_Acceptor::mmap_prefix (void) const
 }
 
 ASYS_INLINE void
-ACE_MEM_Acceptor::mmap_prefix (ACE_TCHAR *prefix)
+ACE_MEM_Acceptor::mmap_prefix (const ACE_TCHAR *prefix)
 {
   this->mmap_prefix_ = ACE::strnew (prefix);
 }
