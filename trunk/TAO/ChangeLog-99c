@@ -1,3 +1,9 @@
+Tue Feb 23 19:44:20 1999  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_root/root.cpp: 
+	Added context state
+	Tahnks to Mason Taube
+
 Tue Feb 23 18:11:11 1999 Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 	
 	* examples/Callback_Quoter/Callback_Quoter.dsw:
