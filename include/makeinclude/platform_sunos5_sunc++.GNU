@@ -12,8 +12,11 @@
 #     fast=1
 #     include $(ACE_ROOT)/include/makeinclude/platform_sunos5_sunc++.GNU
 #     CCFLAGS += -xtarget=ultra2 -xarch=v9a #### CPU specific!
+#     SOFLAGS += -xtarget=ultra2 -xarch=v9a
+#     LDFLAGS += -L/opt/SUNWspro/SC5.0/lib/v9 -L/usr/lib/sparcv9
 # Please note that the xtarget and xarch settings are specific to
-# the target CPU.
+# the target CPU.  The /opt/SUNWspro/ Sun C++ installation directory
+# is site-specific.
 #
 # With slight modification, this file could be used with Sun C++ 4.1.
 # However, it's likely that you won't be able to build all of ACE
