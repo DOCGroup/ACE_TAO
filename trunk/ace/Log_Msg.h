@@ -36,12 +36,12 @@
 #endif  /* ACE_NDEBUG */
 
 #if defined (ACE_NLOGGING)
-#define ACE_HEX_DUMP(X)
+#define ACE_HEX_DUMP(X) do {} while (0)
 #define ACE_RETURN(Y) do { return (Y); } while (0)
 #define ACE_ERROR_RETURN(X, Y) return (Y)
 #define ACE_ERROR_BREAK(X) { break; }
-#define ACE_ERROR(X)
-#define ACE_DEBUG(X)
+#define ACE_ERROR(X) do {} while (0)
+#define ACE_DEBUG(X) do {} while (0)
 #define ACE_ERROR_INIT(VALUE, FLAGS)
 #else
 #define ACE_HEX_DUMP(X) \
