@@ -63,7 +63,12 @@ ACE_MEM_Connector::connect (ACE_MEM_Stream &new_stream,
   ACE_TRACE ("ACE_MEM_Connector::connect");
 
   if (!this->address_.same_host (remote_sap))
-    return -1;
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ASYS_TEXT ("(%P|%t) MEM_Connector can't connect ")
+                       ASYS_TEXT ("to %s:%d which is not a local endpoint"),
+                       remote_sap.get_host_name (),
+                       remote_sap.get_port_number ()),
+                      -1);
   else
     this->address_.set_port_number (remote_sap.get_port_number ());
 
