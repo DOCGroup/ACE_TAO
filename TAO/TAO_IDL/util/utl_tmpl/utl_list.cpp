@@ -50,8 +50,6 @@
  *======================================================================
  */
 
-#pragma ident "%@(#)utl_list.cc	1.34% %92/06/10% Sun Microsystems"
-
 // utl_list.cc
 //
 // Implementation of generic single-linked lists

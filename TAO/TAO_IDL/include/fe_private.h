@@ -65,8 +65,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _FE_FE_HH
 #define _FE_FE_HH
 
-#pragma ident "%@(#)fe.h	1.47% %92/06/10% Sun Microsystems"
-
 // fe_private.hh - Defines data which is private to the FE but
 //		   which must be accessible throughout the FE
 

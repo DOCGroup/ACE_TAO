@@ -62,8 +62,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
  */
 
-#pragma ident "%@(#)fe_global.cc	1.22% %92/06/10% Sun Microsystems"
-
 /*
  * fe_private.cc - Declare global data which are private to the FE
  *		   part

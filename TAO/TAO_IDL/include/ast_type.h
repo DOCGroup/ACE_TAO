@@ -65,8 +65,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _AST_TYPE_AST_TYPE_HH
 #define _AST_TYPE_AST_TYPE_HH
 
-#pragma ident "%@(#)AST_Type.h	1.37% %92/06/10% Sun Microsystems"
-
 // Class for all IDL types
 //
 // This is useful wherever any IDL type defining construct can appear

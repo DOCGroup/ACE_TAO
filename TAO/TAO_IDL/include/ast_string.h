@@ -65,8 +65,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _AST_STRING_AST_STRING_HH
 #define _AST_STRING_AST_STRING_HH
 
-#pragma ident "%@(#)AST_String.h	1.37% %92/06/10% Sun Microsystems"
-
 // Representation of string declaration
 //
 // A string type is represented by a maximum size

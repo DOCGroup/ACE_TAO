@@ -62,8 +62,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
  */
 
-#pragma ident "%@(#)be_args.cc	1.14% %92/06/10% Sun Microsystems"
-
 // be_args.cc - Collect command line arguments for the BE
 
 #include	"idl.h"

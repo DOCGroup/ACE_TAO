@@ -65,8 +65,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _AST_MODULE_AST_MODULE_HH
 #define _AST_MODULE_AST_MODULE_HH
 
-#pragma ident "%@(#)AST_Module.h	1.37% %92/06/10% Sun Microsystems"
-
 // Representation of module
 //
 // NOTE: add(AST_EnumValue *) is defined here because enums can

@@ -65,8 +65,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _IDL_FWD_IDL_FWD_HH
 #define _IDL_FWD_IDL_FWD_HH
 
-#pragma ident "%@(#)idl_fwd.hh	1.18% %92/06/10% Sun Microsystems"
-
 // idl_fwd.hh
 //
 // Forward declaration of all class names in CFE-BEs contract

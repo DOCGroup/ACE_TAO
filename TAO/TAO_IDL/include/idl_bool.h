@@ -65,8 +65,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _IDL_BOOL_IDL_BOOL_HH
 #define _IDL_BOOL_IDL_BOOL_HH
 
-#pragma ident "%@(#)idl_bool.hh	1.43% %92/06/10% Sun Microsystems"
-
 /*
  * idl_bool.hh - Boolean definitions for IDL CFE
  *

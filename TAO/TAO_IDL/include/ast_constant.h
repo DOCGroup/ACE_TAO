@@ -65,8 +65,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _AST_CONSTANT_AST_CONSTANT_HH
 #define _AST_CONSTANT_AST_CONSTANT_HH
 
-#pragma ident "%@(#)AST_Constant.h	1.37% %92/06/10% Sun Microsystems"
-
 // Representation of constant declaration:
 //
 // NOTE: Part of the job of the constructor is to convert

@@ -175,6 +175,7 @@ be_constant::exprtype_to_string (void)
     case AST_Expression::EV_none:
       return "none";
     }
+  return NULL;
 }
 
 // Narrowing

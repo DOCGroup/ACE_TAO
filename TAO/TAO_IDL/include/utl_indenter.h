@@ -65,8 +65,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _UTL_INDENTER_UTL_INDENTER_HH
 #define _UTL_INDENTER_UTL_INDENTER_HH
 
-#pragma ident "%@(#)utl_indenter.hh	1.10% %92/06/10% Sun Microsystems"
-
 // UTL indenter:
 //
 // Utility class for control of indentation level during dumping

@@ -65,8 +65,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _AST_UNION_LABEL_AST_UNION_LABEL_HH
 #define _AST_UNION_LABEL_AST_UNION_LABEL_HH
 
-#pragma ident "%@(#)AST_UnionLabel.h	1.25% %92/06/10% Sun Microsystems"
-
 // AST_UnionLabel.h
 //
 // Defines labels for unions

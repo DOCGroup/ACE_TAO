@@ -62,8 +62,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
  */
 
-#pragma ident "%@(#)ast_interface_fwd.cc	1.44% %92/06/11% Sun Microsystems"
-
 /*
  * ast_interface_fwd.cc - Implementation of class AST_InterfaceFwd
  *

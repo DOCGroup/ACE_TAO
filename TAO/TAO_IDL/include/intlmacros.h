@@ -65,8 +65,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef	_IDL_INTLMACROS_HH
 #define _IDL_INTLMACROS_HH
 
-#pragma ident "%@(#)intlmacros.hh 1.18% %92/06/10% Sun Microsystems"
-
 // intlmacros.hh
 //
 // Define macros which conditionalize string internationalization

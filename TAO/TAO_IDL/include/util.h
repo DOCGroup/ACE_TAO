@@ -65,8 +65,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _UTIL_UTIL_HH
 #define _UTIL_UTIL_HH
 
-#pragma ident "%@(#)util.hh	1.20% %92/06/10% Sun Microsystems"
-
 // util.hh - Includes commonly used things defined in the util directory
 
 #include	"utl_stack.h"		// class fe_stack

@@ -65,8 +65,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _UTL_EXCEPTLIST_UTL_EXCEPTLIST_HH
 #define _UTL_EXCEPTLIST_UTL_EXCEPTLIST_HH
 
-#pragma ident "%@(#)utl_exceptlist.hh	1.33% %92/06/10% Sun Microsystems"
-
 // utl_exceptlist.hh
 //
 // List of AST_Exception nodes

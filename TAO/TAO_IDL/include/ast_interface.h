@@ -65,8 +65,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _AST_INTERFACE_AST_INTERFACE_HH
 #define _AST_INTERFACE_AST_INTERFACE_HH
 
-#pragma ident "%@(#)AST_Interface.h	1.37% %92/06/10% Sun Microsystems"
-
 // Representation of interface:
 //
 // NOTE: add(AST_EnumValue *) is defined here because enums can
