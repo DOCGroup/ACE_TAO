@@ -490,8 +490,8 @@ int FTClientMain::next_replica (ACE_ENV_SINGLE_ARG_DECL)
     this->replica_pos_ += 1;
     CORBA::Object_var rep_obj = this->orb_->string_to_object (this->replica_name_ ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (0)
-    replica_ = FT_TEST::TestReplica::_narrow (rep_obj);
-    if (! CORBA::is_nil (replica_))
+    replica_ = FT_TEST::TestReplica::_narrow (rep_obj.in ());
+    if (! CORBA::is_nil (replica_.in ()))
     {
       result = 1;
     }
@@ -527,7 +527,7 @@ int FTClientMain::run ()
     {
       std::cout << "FT Client: Initial counter " << counter << std::endl;
     }
-    if (ACE_OS::isatty(stdin))
+    if (ACE_OS::isatty(fileno(stdin)))
     {
       std::cout << "FT Client: Commands(? for help):" << std::endl;
     }
