@@ -48,7 +48,6 @@ private:
   };
 
   long timer_id_[TIMER_SLOTS];
-  int step_;
   ACE_Reactor my_reactor_;
 };
 
@@ -59,6 +58,10 @@ class Dispatch_Count_Handler : public ACE_Event_Handler
   //   dispatches correctly.
 public:
   Dispatch_Count_Handler (void);
+
+  int handle_close (ACE_HANDLE h,
+                    ACE_Reactor_Mask m);
+  // Clean up resources from the Reactor.
 
   virtual int handle_timeout (const ACE_Time_Value &tv,
                               const void *arg);

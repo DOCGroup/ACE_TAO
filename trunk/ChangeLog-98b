@@ -1,5 +1,10 @@
 Wed Oct 14 12:36:00 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* tests/run_tests.sh: Added the MT_Reactor_Timer_Test.
+
+	* tests/MT_Reactor_Timer_Test.cpp: Fixed a number of bugs with
+ 	  this test.  It seems to work fine on Solaris now.
+
 	* tests/MT_Reactor_Timer_Test.cpp (main): Added a test to make
  	  sure that the ACE_Reactor::handle_events() method properly
  	  counts the number of expired timers.

@@ -97,6 +97,7 @@ test $chorus || run MM_Shared_Memory_Test # tests ACE_Shared_Memory_MM
 run Sigset_Ops_Test                     # tests ACE_sigset*() functions
 
 test $LynxOS || run Timer_Queue_Test    # tests ACE_Event_Handler, ACE_Timer_Queue
+run MT_Reactor_Timer_Test               # tests ACE_Reactor's timer mechanism.
 
 run SOCK_Connector_Test                 # tests ACE_SOCK_Connector
 
