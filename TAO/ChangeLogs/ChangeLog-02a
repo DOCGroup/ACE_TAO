@@ -1,3 +1,16 @@
+Mon Nov 20 19:54:03 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tests/RTCORBA/Banded_Connections/Makefile: 
+	  Updated to link TAO_Strategies.
+	
+	* tests/RTCORBA/Banded_Connections/client.conf: 
+	* tests/RTCORBA/Banded_Connections/server.conf: 
+	  Updated to statically load the Advanced_Resource_Factory
+	
+	* tests/RTCORBA/Banded_Connections/server.cpp: 
+	* tests/RTCORBA/Banded_Connections/client.cpp: 
+	  Included "tao/Strategies/advanced_resource.h"
+	
 Mon Nov 20 19:51:06 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Connection_Handler.cpp:
