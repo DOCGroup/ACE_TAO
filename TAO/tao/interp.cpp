@@ -1,4 +1,6 @@
-// @(#)interp.cpp	1.4 95/11/04
+// $Id$
+//
+// @(#)interp.cpp       1.4 95/11/04
 // Copyright 1994-1995 by Sun Microsystems Inc.
 // All Rights Reserved
 //
@@ -74,8 +76,8 @@
 // from the CDR stream when these calculator routines get called.
 
 typedef size_t attribute_calculator (CDR *stream,
-				     size_t &alignment,
-				     CORBA::Environment	&env);
+                                     size_t &alignment,
+                                     CORBA::Environment &env);
 
 static attribute_calculator calc_struct_attributes;
 static attribute_calculator calc_exception_attributes;
@@ -97,7 +99,7 @@ skip_encapsulation (CDR *stream)
 static CORBA::Boolean
 skip_long (CDR *stream)
 {
-  CORBA::ULong	scratch;
+  CORBA::ULong  scratch;
 
   return stream->get_ulong (scratch);
 }
@@ -132,39 +134,39 @@ struct table_element
 
 static table_element table [CORBA::TC_KIND_COUNT] =
 {
-  { 0, 1, 0 },				// CORBA::tk_null
-  { 0, 1, 0 },				// CORBA::tk_void
+  { 0, 1, 0 },                          // CORBA::tk_null
+  { 0, 1, 0 },                          // CORBA::tk_void
 
-  { 0, 1, 0, 0 },				// CORBA::tk_short
-  { 0, 1, 0, 0 },				// CORBA::tk_long
-  { 0, 1, 0, 0 },				// CORBA::tk_ushort
-  { 0, 1, 0, 0 },				// CORBA::tk_ulong
+  { 0, 1, 0, 0 },                               // CORBA::tk_short
+  { 0, 1, 0, 0 },                               // CORBA::tk_long
+  { 0, 1, 0, 0 },                               // CORBA::tk_ushort
+  { 0, 1, 0, 0 },                               // CORBA::tk_ulong
 
-  { 0, 1, 0, 0 },				// CORBA::tk_float
-  { 0, 1, 0, 0 },				// CORBA::tk_double
+  { 0, 1, 0, 0 },                               // CORBA::tk_float
+  { 0, 1, 0, 0 },                               // CORBA::tk_double
 
-  { 0, 1, 0, 0 },				// CORBA::tk_boolean
-  { 0, 1, 0, 0 },				// CORBA::tk_char
-  { 0, 1, 0, 0 },				// CORBA::tk_octet
-  { 0, 1, 0, 0 },				// CORBA::tk_any
+  { 0, 1, 0, 0 },                               // CORBA::tk_boolean
+  { 0, 1, 0, 0 },                               // CORBA::tk_char
+  { 0, 1, 0, 0 },                               // CORBA::tk_octet
+  { 0, 1, 0, 0 },                               // CORBA::tk_any
 
-  { 0, 1, 0, 0 },				// CORBA::tk_TypeCode
-  { 0, 1, 0, 0 },				// CORBA::tk_Principal
-  { 0, 1, 0, skip_encapsulation },		// CORBA::tk_objref
+  { 0, 1, 0, 0 },                               // CORBA::tk_TypeCode
+  { 0, 1, 0, 0 },                               // CORBA::tk_Principal
+  { 0, 1, 0, skip_encapsulation },              // CORBA::tk_objref
 
-  { 0, 1, calc_struct_attributes, 0 },	// CORBA::tk_struct
-  { 0, 1, calc_union_attributes, 0 },		// CORBA::tk_union
+  { 0, 1, calc_struct_attributes, 0 },  // CORBA::tk_struct
+  { 0, 1, calc_union_attributes, 0 },           // CORBA::tk_union
 
-  { 0, 1, 0, skip_encapsulation },		// CORBA::tk_enum
-  { 0, 1, 0, skip_long },			// CORBA::tk_string
-  { 0, 1, 0, skip_encapsulation },		// CORBA::tk_sequence
-  { 0, 1, calc_array_attributes, 0 },		// CORBA::tk_array
+  { 0, 1, 0, skip_encapsulation },              // CORBA::tk_enum
+  { 0, 1, 0, skip_long },                       // CORBA::tk_string
+  { 0, 1, 0, skip_encapsulation },              // CORBA::tk_sequence
+  { 0, 1, calc_array_attributes, 0 },           // CORBA::tk_array
 
   //
   // Two TCKind values added in 94-11-7
   //
-  { 0, 1, calc_alias_attributes, 0 },		// CORBA::tk_alias
-  { 0, 1, calc_exception_attributes, 0 },	// CORBA::tk_except
+  { 0, 1, calc_alias_attributes, 0 },           // CORBA::tk_alias
+  { 0, 1, calc_exception_attributes, 0 },       // CORBA::tk_except
 
   //
   // Five extended IDL data types, defined in Appendix A of 94-9-32
@@ -172,11 +174,11 @@ static table_element table [CORBA::TC_KIND_COUNT] =
   // represent extensions to CORBA (specifically, to IDL) which are
   // not yet standardized.
   //
-  { 0, 1, 0, 0 },				// CORBA::tk_longlong
-  { 0, 1, 0, 0 },				// CORBA::tk_ulonglong
-  { 0, 1, 0, 0 },				// CORBA::tk_longdouble
-  { 0, 1, 0, 0 },				// CORBA::tk_wchar
-  { 0, 1, 0, skip_long }			// CORBA::tk_wstring
+  { 0, 1, 0, 0 },                               // CORBA::tk_longlong
+  { 0, 1, 0, 0 },                               // CORBA::tk_ulonglong
+  { 0, 1, 0, 0 },                               // CORBA::tk_longdouble
+  { 0, 1, 0, 0 },                               // CORBA::tk_wchar
+  { 0, 1, 0, skip_long }                        // CORBA::tk_wstring
 };
 
 // Runtime initialization of the table above; note that this compiles
@@ -245,27 +247,27 @@ static table_element table [CORBA::TC_KIND_COUNT] =
 
 #if defined (unix) || defined (VXWORKS) || defined (ACE_WIN32)
 #define declare_entry(x,t) \
-    	struct align_struct_ ## t { \
-    	    x one; \
-      	    char dummy [TAO_ALIGNMENT_MAGIC_NUMBER + 1 - sizeof(x)]; \
-    	    x two; \
-    	}
+        struct align_struct_ ## t { \
+            x one; \
+            char dummy [TAO_ALIGNMENT_MAGIC_NUMBER + 1 - sizeof(x)]; \
+            x two; \
+        }
 
 #define setup_entry(x,t) \
     { \
-	align_struct_ ## t	 align; \
-	table [t].size = sizeof (x); \
-	table [t].alignment = \
-		(char *) &align.two - (char *) &align.one - TAO_ALIGNMENT_MAGIC_NUMBER; \
+        align_struct_ ## t       align; \
+        table [t].size = sizeof (x); \
+        table [t].alignment = \
+                (char *) &align.two - (char *) &align.one - TAO_ALIGNMENT_MAGIC_NUMBER; \
     }
 
-#else	// "Fixed" byte alignment
+#else   // "Fixed" byte alignment
 // Have a bogus one
 #define declare_entry(x,t) struct align_struct_ ## t { }
 #define setup_entry(x,t) \
     { \
-	table [t].size = sizeof (x); \
-	table [t].alignment = 1; \
+        table [t].size = sizeof (x); \
+        table [t].alignment = 1; \
     }
 
 #endif /* defined (unix) || defined (VXWORKS) || defined (ACE_WIN32) */
@@ -335,7 +337,7 @@ __TC_init_table (void)
   setup_entry (CORBA::WString, tk_wstring);
 }
 
-#undef	setup
+#undef  setup
 
 // For a given typecode, figure out its size and alignment needs.
 // This version is used mostly when traversing other typecodes, and
@@ -358,9 +360,9 @@ __TC_init_table (void)
 
 static size_t
 calc_nested_size_and_alignment (CORBA::TypeCode_ptr tc,
-				CDR *original_stream,
-				size_t &alignment,
-				CORBA::Environment &env)
+                                CDR *original_stream,
+                                size_t &alignment,
+                                CORBA::Environment &env)
 {
   // Get the "kind" ... if this is an indirection, this is a guess
   // which will soon be updated.
@@ -394,13 +396,13 @@ calc_nested_size_and_alignment (CORBA::TypeCode_ptr tc,
       // stream's length.  ULONG_MAX is too much!
 
       if (!original_stream->get_long (offset)
-	  || offset >= -8
-	  || ((-offset) & 0x03) != 0)
-	{
-	  env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
-	  return 0;
-	}
-      //      offset -= 4;		// correct for get_long update
+          || offset >= -8
+          || ((-offset) & 0x03) != 0)
+        {
+          env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
+          return 0;
+        }
+      //      offset -= 4;              // correct for get_long update
 
       indirected_stream.next = original_stream->next + (ptr_arith_t) offset;
       indirected_stream.remaining = (size_t) ULONG_MAX;
@@ -408,16 +410,16 @@ calc_nested_size_and_alignment (CORBA::TypeCode_ptr tc,
 
       // Fetch indirected-to TCKind, deducing byte order.
 
-      if (*indirected_stream.next == 0)		// big-endian?
-	indirected_stream.do_byteswap = (TAO_ENCAP_BYTE_ORDER != 0);
+      if (*indirected_stream.next == 0)         // big-endian?
+        indirected_stream.do_byteswap = (TAO_ENCAP_BYTE_ORDER != 0);
       else
-	indirected_stream.do_byteswap = (TAO_ENCAP_BYTE_ORDER == 0);
+        indirected_stream.do_byteswap = (TAO_ENCAP_BYTE_ORDER == 0);
 
       if (!indirected_stream.get_ulong (temp))
-	{
-	  env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
-	  return 0;
-	}
+        {
+          env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
+          return 0;
+        }
       kind = (CORBA::TCKind) temp;
 
     }
@@ -428,7 +430,7 @@ calc_nested_size_and_alignment (CORBA::TypeCode_ptr tc,
   // represent data values that can't be nested.  (Some can't even
   // exist freestanding!)
 
-  if (kind >= TC_KIND_COUNT
+  if (kind >= CORBA::TC_KIND_COUNT
       || kind <= CORBA::tk_void
       || kind == CORBA::tk_except)
     {
@@ -447,18 +449,18 @@ calc_nested_size_and_alignment (CORBA::TypeCode_ptr tc,
 
       // Pull encapsulation length out of the stream.
       if (stream->get_ulong (temp) == CORBA::B_FALSE)
-	{
-	  env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
-	  return 0;
-	}
+        {
+          env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
+          return 0;
+        }
 
       // Initialize the TypeCode if requested
       if (tc)
-	{
-	  tc->kind_ = kind;
-	  tc->buffer_ = stream->next;
-	  tc->length_ = temp;
-	}
+        {
+          tc->kind_ = kind;
+          tc->buffer_ = stream->next;
+          tc->length_ = temp;
+        }
 
       // Set up a separate stream for the parameters; it may easily
       // have a different byte order, and this is as simple a way as
@@ -477,13 +479,13 @@ calc_nested_size_and_alignment (CORBA::TypeCode_ptr tc,
 
       stream->skip_bytes ((unsigned) temp);
       if (stream->next != sub_encapsulation.next)
-	{
-	  env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
-	  return 0;
-	}
+        {
+          env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
+          return 0;
+        }
       return size;
     }
-  assert (table [kind].size != 0);		// fixed size data type
+  assert (table [kind].size != 0);              // fixed size data type
 
   // Reinitialize the TypeCode if requested; this consumes any
   // TypeCode parameters in the stream.  They only exist for TCKind
@@ -497,42 +499,42 @@ calc_nested_size_and_alignment (CORBA::TypeCode_ptr tc,
 
       tc->kind_ = kind;
       switch (kind)
-	{
-	default:
-	  assert (table [kind].skipper == 0);
-	  break;
+        {
+        default:
+          assert (table [kind].skipper == 0);
+          break;
 
-	case CORBA::tk_string:
-	case CORBA::tk_wstring:
-	  if (stream->get_ulong (len) == CORBA::B_FALSE)
-	    {
-	      env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
-	      return 0;
-	    }
-	  tc->length_ = len;
-	  break;
+        case CORBA::tk_string:
+        case CORBA::tk_wstring:
+          if (stream->get_ulong (len) == CORBA::B_FALSE)
+            {
+              env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
+              return 0;
+            }
+          tc->length_ = len;
+          break;
 
-	case CORBA::tk_enum:
-	case CORBA::tk_objref:
-	case CORBA::tk_sequence:
-	  if (stream->get_ulong (len) == CORBA::B_FALSE)
-	    {
-	      env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
-	      return 0;
-	    }
-	  tc->length_ = len;
+        case CORBA::tk_enum:
+        case CORBA::tk_objref:
+        case CORBA::tk_sequence:
+          if (stream->get_ulong (len) == CORBA::B_FALSE)
+            {
+              env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
+              return 0;
+            }
+          tc->length_ = len;
 
-	  assert (len < UINT_MAX);
-	  tc->buffer_ = stream->next;
-	  stream->skip_bytes ((unsigned) len);
-	  break;
-	}
+          assert (len < UINT_MAX);
+          tc->buffer_ = stream->next;
+          stream->skip_bytes ((unsigned) len);
+          break;
+        }
 
       // Otherwise, consume any parameters without stuffing them into
       // a temporary TypeCode.
     }
   else if (table [kind].skipper != 0
-	   && table [kind].skipper (stream) == CORBA::B_FALSE)
+           && table [kind].skipper (stream) == CORBA::B_FALSE)
     {
       env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
       return 0;
@@ -560,11 +562,11 @@ calc_nested_size_and_alignment (CORBA::TypeCode_ptr tc,
 
 static size_t
 calc_struct_and_except_attributes (CDR *stream,
-				   size_t &alignment,
-				   CORBA::Boolean is_exception,
-				   CORBA::Environment &env)
+                                   size_t &alignment,
+                                   CORBA::Boolean is_exception,
+                                   CORBA::Environment &env)
 {
-  CORBA::ULong	members;
+  CORBA::ULong  members;
   size_t size;
 
   // Exceptions are like structs, with key additions (all of which
@@ -609,17 +611,17 @@ calc_struct_and_except_attributes (CDR *stream,
     // Skip name of the member.
     if (!stream->skip_string ())
       {
-	env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
-	return 0;
+        env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
+        return 0;
       }
 
     // Get size and alignment of the member, accounting for
     // indirection and the various kinds of parameter encoding.
 
     member_size = calc_nested_size_and_alignment (0,
-						  stream,
-						  member_alignment,
-						  env);
+                                                  stream,
+                                                  member_alignment,
+                                                  env);
     if (env.exception () != 0)
       return 0;
 
@@ -646,26 +648,26 @@ calc_struct_and_except_attributes (CDR *stream,
 
 static size_t
 calc_struct_attributes (CDR *stream,
-			size_t &alignment,
-			CORBA::Environment &env)
+                        size_t &alignment,
+                        CORBA::Environment &env)
 {
   return calc_struct_and_except_attributes (stream,
-					    alignment,
-					    CORBA::B_FALSE,
-					    env);
+                                            alignment,
+                                            CORBA::B_FALSE,
+                                            env);
 }
 
 // Calculate size and alignment for an exception.
 
 static size_t
 calc_exception_attributes (CDR *stream,
-			   size_t &alignment,
-			   CORBA::Environment &env)
+                           size_t &alignment,
+                           CORBA::Environment &env)
 {
   return calc_struct_and_except_attributes (stream,
-					    alignment,
-					    CORBA::B_TRUE,
-					    env);
+                                            alignment,
+                                            CORBA::B_TRUE,
+                                            env);
 }
 
 // Calculate and return sizes for both parts of a union, as needed by
@@ -677,9 +679,9 @@ calc_exception_attributes (CDR *stream,
 
 size_t
 calc_key_union_attributes (CDR *stream,
-			   size_t &overall_alignment,
-			   size_t &discrim_size_with_pad,
-			   CORBA::Environment &env)
+                           size_t &overall_alignment,
+                           size_t &discrim_size_with_pad,
+                           CORBA::Environment &env)
 {
   CORBA::ULong members;
   CORBA::ULong temp;
@@ -692,9 +694,9 @@ calc_key_union_attributes (CDR *stream,
 
   // Skip initial optional members (type ID and name).
 
-  if (!stream->skip_string ()			// type ID
+  if (!stream->skip_string ()                   // type ID
       || !stream->skip_string ())
-    {	// typedef name
+    {   // typedef name
       env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
       return 0;
     }
@@ -706,17 +708,17 @@ calc_key_union_attributes (CDR *stream,
   CORBA::TypeCode discrim_tc (CORBA::tk_void);
 
   discrim_size = calc_nested_size_and_alignment (&discrim_tc,
-						 stream,
-						 overall_alignment,
-						 env);
+                                                 stream,
+                                                 overall_alignment,
+                                                 env);
   if (env.exception () != 0)
     return 0;
 
   // skip "default used" indicator, and save "member count"
 
-  if (!stream->get_ulong (temp)           	// default used
+  if (!stream->get_ulong (temp)                 // default used
       || !stream->get_ulong (members))
-    {	// member count
+    {   // member count
       env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
       return 0;
     }
@@ -740,63 +742,63 @@ calc_key_union_attributes (CDR *stream,
       case CORBA::tk_short:
       case CORBA::tk_ushort:
       case CORBA::tk_wchar:
-	{
-	  CORBA::Short s;
+        {
+          CORBA::Short s;
 
-	  if (!stream->get_short (s))
-	    {
-	      env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
-	      return 0;
-	    }
-	}
+          if (!stream->get_short (s))
+            {
+              env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
+              return 0;
+            }
+        }
       break;
 
       case CORBA::tk_long:
       case CORBA::tk_ulong:
       case CORBA::tk_enum:
-	{
-	  CORBA::Long	l;
+        {
+          CORBA::Long   l;
 
-	  if (!stream->get_long (l))
-	    {
-	      env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
-	      return 0;
-	    }
-	}
+          if (!stream->get_long (l))
+            {
+              env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
+              return 0;
+            }
+        }
       break;
 
       case CORBA::tk_boolean:
       case CORBA::tk_char:
-	{
-	  char		c;
+        {
+          char          c;
 
-	  if (!stream->get_byte (c))
-	    {
-	      env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
-	      return 0;
-	    }
-	}
+          if (!stream->get_byte (c))
+            {
+              env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
+              return 0;
+            }
+        }
       break;
 
       default:
-	env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
-	return 0;
+        env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
+        return 0;
       }
 
     // We also don't care about any member name.
 
     if (!stream->skip_string ())
       {
-	env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
-	return 0;
+        env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
+        return 0;
       }
 
     // Get the member size and alignment.
 
     member_size = calc_nested_size_and_alignment (0,
-						  stream,
-						  member_alignment,
-						  env);
+                                                  stream,
+                                                  member_alignment,
+                                                  env);
     if (env.exception () != 0)
       return 0;
 
@@ -812,7 +814,7 @@ calc_key_union_attributes (CDR *stream,
   // Round up the discriminator's size to include padding it needs in
   // order to be followed by the value.
   discrim_size_with_pad = (size_t) align_binary (discrim_size,
-						 value_alignment);
+                                                 value_alignment);
 
   // Now calculate the overall size of the structure, which is the
   // discriminator, inter-element padding, value, and tail padding.
@@ -824,7 +826,7 @@ calc_key_union_attributes (CDR *stream,
     overall_alignment = value_alignment;
 
   return (size_t) align_binary (discrim_size_with_pad + value_size,
-				overall_alignment);
+                                overall_alignment);
 }
 
 // Calculate size and alignment for a CORBA discriminated union.
@@ -837,8 +839,8 @@ calc_key_union_attributes (CDR *stream,
 
 static size_t
 calc_union_attributes (CDR *stream,
-		       size_t &alignment,
-		       CORBA::Environment &env)
+                       size_t &alignment,
+                       CORBA::Environment &env)
 {
   size_t scratch;
 
@@ -849,13 +851,13 @@ calc_union_attributes (CDR *stream,
 
 static size_t
 calc_alias_attributes (CDR *stream,
-		       size_t &alignment,
-		       CORBA::Environment &env)
+                       size_t &alignment,
+                       CORBA::Environment &env)
 {
   // Skip type ID and name in the parameter stream
 
-  if (!stream->skip_string ()			// type ID
-      || !stream->skip_string ())		// typedef name
+  if (!stream->skip_string ()                   // type ID
+      || !stream->skip_string ())               // typedef name
     {
       env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
       return 0;
@@ -872,8 +874,8 @@ calc_alias_attributes (CDR *stream,
 
 static size_t
 calc_array_attributes (CDR *stream,
-		       size_t &alignment,
-		       CORBA::Environment &env)
+                       size_t &alignment,
+                       CORBA::Environment &env)
 {
   size_t member_size;
   CORBA::ULong member_count;
@@ -901,23 +903,23 @@ calc_array_attributes (CDR *stream,
 
 static CORBA::TypeCode::traverse_status
 struct_traverse (CDR *stream,
-		 const void *value1,
-		 const void *value2,
-		 CORBA::TypeCode::traverse_status (_FAR *visit)
-		 (CORBA::TypeCode_ptr tc,
-		  const void *value1,
-		  const void *value2,
-		  void *context,
-		  CORBA::Environment &env),
-		 void *context,
-		 CORBA::Environment &env)
+                 const void *value1,
+                 const void *value2,
+                 CORBA::TypeCode::traverse_status (_FAR *visit)
+                 (CORBA::TypeCode_ptr tc,
+                  const void *value1,
+                  const void *value2,
+                  void *context,
+                  CORBA::Environment &env),
+                 void *context,
+                 CORBA::Environment &env)
 {
   // Skip over the type ID and type name in the parameters, then get
   // the number of members.
   CORBA::ULong members;
 
-  if (!stream->skip_string ()			// type ID
-      || !stream->skip_string ()		// type name
+  if (!stream->skip_string ()                   // type ID
+      || !stream->skip_string ()                // type name
       || !stream->get_ulong (members))
     {
       env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
@@ -946,10 +948,10 @@ struct_traverse (CDR *stream,
       // Skip the member's name in the parameter list.
 
       if (!stream->skip_string ())
-	{
-	  env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
-	  return CORBA::TypeCode::TRAVERSE_STOP;
-	}
+        {
+          env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
+          return CORBA::TypeCode::TRAVERSE_STOP;
+        }
 
       // Get the member's size, alignment, and a temporary TypeCode,
       // skipping that TypeCode in the stream as we do so.
@@ -959,11 +961,11 @@ struct_traverse (CDR *stream,
       // nested exceptions, and indirected typecodes.
 
       size = calc_nested_size_and_alignment (&member_tc,
-					     stream,
-					     alignment,
-					     env);
+                                             stream,
+                                             alignment,
+                                             env);
       if (env.exception () != 0)
-	return CORBA::TypeCode::TRAVERSE_STOP;
+        return CORBA::TypeCode::TRAVERSE_STOP;
 
       // Pad the value pointers to account for the alignment
       // requirements of this member, then visit.
@@ -979,7 +981,7 @@ struct_traverse (CDR *stream,
       value2 = size + (char *)value2;
 
       if (env.exception () != 0)
-	retval = CORBA::TypeCode::TRAVERSE_STOP;
+        retval = CORBA::TypeCode::TRAVERSE_STOP;
     }
 
   return retval;
@@ -989,9 +991,9 @@ struct_traverse (CDR *stream,
 
 static CORBA::Boolean
 match_value (CORBA::TCKind      kind,
-	     CDR *tc_stream,
-	     const void *value,
-	     CORBA::Environment &env)
+             CDR *tc_stream,
+             const void *value,
+             CORBA::Environment &env)
 {
   CORBA::Boolean retval = CORBA::B_FALSE;
 
@@ -1000,68 +1002,68 @@ match_value (CORBA::TCKind      kind,
     case CORBA::tk_short:
     case CORBA::tk_ushort:
       {
-	CORBA::UShort discrim;
+        CORBA::UShort discrim;
 
-	if (tc_stream->get_ushort (discrim) != CORBA::B_FALSE)
-	  retval = (discrim == *(CORBA::UShort *)value);
-	else
-	  env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
+        if (tc_stream->get_ushort (discrim) != CORBA::B_FALSE)
+          retval = (discrim == *(CORBA::UShort *)value);
+        else
+          env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
       }
     break;
 
     case CORBA::tk_long:
     case CORBA::tk_ulong:
       {
-	CORBA::ULong discrim;
+        CORBA::ULong discrim;
 
-	if (tc_stream->get_ulong (discrim) != CORBA::B_FALSE)
-	  retval = (discrim == *(CORBA::ULong *)value);
-	else
-	  env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
+        if (tc_stream->get_ulong (discrim) != CORBA::B_FALSE)
+          retval = (discrim == *(CORBA::ULong *)value);
+        else
+          env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
       }
     break;
 
     case CORBA::tk_enum:
       {
-	CORBA::ULong discrim;
+        CORBA::ULong discrim;
 
-	if (tc_stream->get_ulong (discrim) != CORBA::B_FALSE)
-	  retval = (discrim == *(unsigned *)value);
-	else
-	  env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
+        if (tc_stream->get_ulong (discrim) != CORBA::B_FALSE)
+          retval = (discrim == *(unsigned *)value);
+        else
+          env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
       }
     break;
 
     case CORBA::tk_boolean:
       {
-	CORBA::Boolean discrim;
+        CORBA::Boolean discrim;
 
-	if (tc_stream->get_boolean (discrim) != CORBA::B_FALSE)
-	  retval = (discrim == *(CORBA::Boolean *)value);
-	else
-	  env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
+        if (tc_stream->get_boolean (discrim) != CORBA::B_FALSE)
+          retval = (discrim == *(CORBA::Boolean *)value);
+        else
+          env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
       }
     break;
 
     case CORBA::tk_char:
       {
-	CORBA::Char discrim;
+        CORBA::Char discrim;
 
-	if (tc_stream->get_char (discrim) != CORBA::B_FALSE)
-	  retval = (discrim == *(CORBA::Char *)value);
-	else
-	  env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
+        if (tc_stream->get_char (discrim) != CORBA::B_FALSE)
+          retval = (discrim == *(CORBA::Char *)value);
+        else
+          env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
       }
     break;
 
     case CORBA::tk_wchar:
       {
-	CORBA::WChar discrim;
+        CORBA::WChar discrim;
 
-	if (tc_stream->get_wchar (discrim) != CORBA::B_FALSE)
-	  retval = (discrim == *(CORBA::WChar *)value);
-	else
-	  env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
+        if (tc_stream->get_wchar (discrim) != CORBA::B_FALSE)
+          retval = (discrim == *(CORBA::WChar *)value);
+        else
+          env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
       }
     break;
 
@@ -1077,16 +1079,16 @@ match_value (CORBA::TCKind      kind,
 
 static CORBA::TypeCode::traverse_status
 union_traverse (CDR *stream,
-		const void *value1,
-		const void *value2,
-		CORBA::TypeCode::traverse_status (_FAR *visit)
-		(CORBA::TypeCode_ptr tc,
-		 const void *value1,
-		 const void *value2,
-		 void *context,
-		 CORBA::Environment &env),
-		void *context,
-		CORBA::Environment &env)
+                const void *value1,
+                const void *value2,
+                CORBA::TypeCode::traverse_status (_FAR *visit)
+                (CORBA::TypeCode_ptr tc,
+                 const void *value1,
+                 const void *value2,
+                 void *context,
+                 CORBA::Environment &env),
+                void *context,
+                CORBA::Environment &env)
 {
   size_t discrim_size_with_pad;
 
@@ -1104,17 +1106,17 @@ union_traverse (CDR *stream,
     temp_cdr.do_free = 0;
 
     (void) calc_key_union_attributes (&temp_cdr,
-				      scratch,
-				      discrim_size_with_pad,
-				      env);
+                                      scratch,
+                                      discrim_size_with_pad,
+                                      env);
   }
   if (env.exception() != 0)
     return CORBA::TypeCode::TRAVERSE_STOP;
 
   // Skip the optional type ID and type name.
-  if (!stream->skip_string ()			// type ID, hidden
+  if (!stream->skip_string ()                   // type ID, hidden
       || !stream->skip_string ())
-    {	// typedef name
+    {   // typedef name
       env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
       return CORBA::TypeCode::TRAVERSE_STOP;
     }
@@ -1132,16 +1134,16 @@ union_traverse (CDR *stream,
     size_t scratch;
 
     (void) calc_nested_size_and_alignment (&discrim_tc,
-					   stream,
-					   scratch,
-					   env);
+                                           stream,
+                                           scratch,
+                                           env);
   }
 
   if (visit (&discrim_tc,
-	     value1,
-	     value2,
-	     context,
-	     env) == CORBA::TypeCode::TRAVERSE_STOP)
+             value1,
+             value2,
+             context,
+             env) == CORBA::TypeCode::TRAVERSE_STOP)
     return CORBA::TypeCode::TRAVERSE_STOP;
 
   // Adjust the pointers to point to the other member of the union;
@@ -1191,28 +1193,28 @@ union_traverse (CDR *stream,
       CORBA::Boolean discrim_matched;
 
       discrim_matched = match_value (discrim_tc.kind_,
-				     stream,
-				     discrim_ptr,
-				     env);
+                                     stream,
+                                     discrim_ptr,
+                                     env);
       if (env.exception () != 0)
-	return CORBA::TypeCode::TRAVERSE_STOP;
+        return CORBA::TypeCode::TRAVERSE_STOP;
 
       // Skip the name of the member; we never care about it.
 
       if (!stream->skip_string ())
-	{
-	  env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
-	  return CORBA::TypeCode::TRAVERSE_STOP;
-	}
+        {
+          env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
+          return CORBA::TypeCode::TRAVERSE_STOP;
+        }
 
       // If this is the default member, remember where its typecode
       // data is stored; we'll use it later.
 
       if (default_used >= 0 && default_used-- == 0)
-	{
-	  default_tc_ptr = stream->next;
-	  default_tc_len = stream->remaining;
-	}
+        {
+          default_tc_ptr = stream->next;
+          default_tc_len = stream->remaining;
+        }
 
       // Get the TypeCode for this member.
       //
@@ -1224,11 +1226,11 @@ union_traverse (CDR *stream,
 
       (void) calc_nested_size_and_alignment (&tc, stream, scratch, env);
       if (env.exception () != 0)
-	return CORBA::TypeCode::TRAVERSE_STOP;
+        return CORBA::TypeCode::TRAVERSE_STOP;
 
       // If we matched, visit the member and return.
       if (discrim_matched)
-	return visit (&tc, value1, value2, context, env);
+        return visit (&tc, value1, value2, context, env);
     }
 
   // If we get here, it means any default arm should be used.  We know
@@ -1266,15 +1268,15 @@ union_traverse (CDR *stream,
 
 CORBA::TypeCode::traverse_status
 CORBA::TypeCode::traverse (const void *value1,
-			  const void *value2,
-			  CORBA::TypeCode::traverse_status (_FAR *visit)
-			  (CORBA::TypeCode_ptr tc,
-			   const void *value1,
-			   const void *value2,
-			   void *context,
-			   CORBA::Environment &env),
-			  void *context,
-			  CORBA::Environment &env)
+                          const void *value2,
+                          CORBA::TypeCode::traverse_status (_FAR *visit)
+                          (CORBA::TypeCode_ptr tc,
+                           const void *value1,
+                           const void *value2,
+                           void *context,
+                           CORBA::Environment &env),
+                          void *context,
+                          CORBA::Environment &env)
 {
   env.clear ();
 
@@ -1309,19 +1311,19 @@ CORBA::TypeCode::traverse (const void *value1,
 
     case CORBA::tk_alias:
       {
-	CORBA::TypeCode_ptr tcp;
-	CORBA::Environment env2;
+        CORBA::TypeCode_ptr tcp;
+        CORBA::Environment env2;
 
-	// XXX rework for efficiency, this doesn't need to allocate
-	// memory during the traversal!
+        // XXX rework for efficiency, this doesn't need to allocate
+        // memory during the traversal!
 
-	tcp = typecode_param (2, env);
-	if (env.exception () != 0)
-	  return TRAVERSE_STOP;
+        tcp = typecode_param (2, env);
+        if (env.exception () != 0)
+          return TRAVERSE_STOP;
 
-	retval = tcp->traverse (value1, value2, visit, context, env);
+        retval = tcp->traverse (value1, value2, visit, context, env);
 
-	tcp->Release ();
+        tcp->Release ();
       }
     return retval;
 
@@ -1349,27 +1351,27 @@ CORBA::TypeCode::traverse (const void *value1,
       // and structs to inherit IUnknown, hence we'll need to be
       // skipping the vtable pointer ...
       {
-	// Create the sub-encapsulation stream that holds the
-	// parameters for the typecode.
+        // Create the sub-encapsulation stream that holds the
+        // parameters for the typecode.
 
-	CDR stream;
+        CDR stream;
 
-	stream.setup_encapsulation (buffer_, (size_t) length_);
+        stream.setup_encapsulation (buffer_, (size_t) length_);
 
-	return struct_traverse (&stream, value1, value2,
-				visit, context, env);
+        return struct_traverse (&stream, value1, value2,
+                                visit, context, env);
       }
 
     case CORBA::tk_union:
       {
-	// visit the discriminant, then search the typecode for the
-	// relevant union member and then visit that member.
-	CDR stream;
+        // visit the discriminant, then search the typecode for the
+        // relevant union member and then visit that member.
+        CDR stream;
 
-	stream.setup_encapsulation (buffer_, (size_t) length_);
+        stream.setup_encapsulation (buffer_, (size_t) length_);
 
-	return union_traverse (&stream, value1, value2,
-			       visit, context, env);
+        return union_traverse (&stream, value1, value2,
+                               visit, context, env);
       }
 
       // Sequences are just arrays with bound determined at runtime,
@@ -1377,63 +1379,63 @@ CORBA::TypeCode::traverse (const void *value1,
       // C-style: the leftmost dimension in the IDL definition is
       // "outermost", etc.
       {
-	CORBA::TypeCode_ptr tc2;
-	size_t size;
-	CORBA::ULong bounds;
-	CORBA::OctetSeq *seq;
+        CORBA::TypeCode_ptr tc2;
+        size_t size;
+        CORBA::ULong bounds;
+        CORBA::OctetSeq *seq;
 
       case CORBA::tk_sequence:
-	// Find out how many elements there are, and adjust the data
-	// pointers to point to those elements rather than to the
-	// sequence itself.
-	seq = (CORBA::OctetSeq *)value1;
+        // Find out how many elements there are, and adjust the data
+        // pointers to point to those elements rather than to the
+        // sequence itself.
+        seq = (CORBA::OctetSeq *)value1;
 
-	bounds = seq->length;
-	value1 = seq->buffer;
+        bounds = seq->length;
+        value1 = seq->buffer;
 
-	if (value2)
-	  {
-	    seq = (CORBA::OctetSeq *)value2;
-	    value2 = seq->buffer;
-	  }
-	goto shared_seq_array_code;
+        if (value2)
+          {
+            seq = (CORBA::OctetSeq *)value2;
+            value2 = seq->buffer;
+          }
+        goto shared_seq_array_code;
 
       case CORBA::tk_array:
-	// Array bounds are in the typecode itself.
-	bounds = ulong_param (1, env);
-	if (env.exception () != 0)
-	  return TRAVERSE_STOP;
+        // Array bounds are in the typecode itself.
+        bounds = ulong_param (1, env);
+        if (env.exception () != 0)
+          return TRAVERSE_STOP;
 
       shared_seq_array_code:
-	// Find element's type, and size ...
-	tc2 = typecode_param (0, env);
-	if (env.exception () != 0)
-	  return TRAVERSE_STOP;
+        // Find element's type, and size ...
+        tc2 = typecode_param (0, env);
+        if (env.exception () != 0)
+          return TRAVERSE_STOP;
 
-	size = tc2->size (env);
-	if (env.exception () != 0)
-	  return TRAVERSE_STOP;
+        size = tc2->size (env);
+        if (env.exception () != 0)
+          return TRAVERSE_STOP;
 
-	// ... then visit the elements in order.
-	//
-	// NOTE: for last element, could turn visit() call into
-	// something subject to compiler's tail call optimization and
-	// thus save a stack frame
-	while (bounds--)
-	  {
-	    if (visit (tc2, value1, value2, context, env) == TRAVERSE_STOP)
-	      return TRAVERSE_STOP;
+        // ... then visit the elements in order.
+        //
+        // NOTE: for last element, could turn visit() call into
+        // something subject to compiler's tail call optimization and
+        // thus save a stack frame
+        while (bounds--)
+          {
+            if (visit (tc2, value1, value2, context, env) == TRAVERSE_STOP)
+              return TRAVERSE_STOP;
 
-	    value1 = size + (char *) value1;
-	    value2 = size + (char *) value2;
-	  }
-	CORBA::release (tc2);
-	env.clear ();
+            value1 = size + (char *) value1;
+            value2 = size + (char *) value2;
+          }
+        CORBA::release (tc2);
+        env.clear ();
       }
       return TRAVERSE_CONTINUE;
 
-      // case ~0:			// indirection, illegal at top level
-    default:				// invalid/illegal
+      // case ~0:                       // indirection, illegal at top level
+    default:                            // invalid/illegal
       break;
     } // end switch on typecode "kind"
 
@@ -1447,7 +1449,7 @@ CORBA::TypeCode::traverse (const void *value1,
 size_t
 CORBA::TypeCode::private_size (CORBA::Environment &env)
 {
-  if (kind_ >= TC_KIND_COUNT)
+  if (kind_ >= CORBA::TC_KIND_COUNT)
     {
       env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
       return 0;
@@ -1478,7 +1480,7 @@ CORBA::TypeCode::private_size (CORBA::Environment &env)
 size_t
 CORBA::TypeCode::private_alignment (CORBA::Environment &env)
 {
-  if (kind_ >= TC_KIND_COUNT)
+  if (kind_ >= CORBA::TC_KIND_COUNT)
     {
       env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
       return 0;
@@ -1489,7 +1491,7 @@ CORBA::TypeCode::private_alignment (CORBA::Environment &env)
     {
         private_state_->tc_alignment_known_ = CORBA::B_TRUE;
         private_state_->tc_alignment_ = table [kind_].alignment;
-	return private_state_->tc_alignment_;
+        return private_state_->tc_alignment_;
     }
 
   size_t alignment;
