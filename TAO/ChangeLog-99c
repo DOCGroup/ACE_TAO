@@ -1,3 +1,8 @@
+Fri Jul  9 21:50:00 1999  Michael Kircher  <mk1@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_argument/ami_handler_vardecl_cs.cpp:
+	  Fixed a not reachable switch statement.
+
 Fri Jul  9 20:40:54 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/include/utl_scope.h:
