@@ -43,12 +43,11 @@ static int setup_signal_delivery (void);
 static int test_aio_calls (void);
 #endif /* ACE_HAS_AIO_CALLS */
 
-static int
-do_sysconf (void)
-{
 #if !defined (VXWORKS)
+static int do_sysconf (void)
+{
   // Call sysconf to find out runtime values.
-
+  
   errno = 0;
 #if defined (_SC_LISTIO_AIO_MAX)
   ACE_DEBUG ((LM_DEBUG,
@@ -121,11 +120,9 @@ do_sysconf (void)
   ACE_ERROR ((LM_ERROR,
               "_SC_SIGQUEUE_MAX does not exist on this platform\n"));
 #endif /*  _SC_SIGQUEUE_MAX */
-
-#endif /* ! VXWORKS */
-
   return 0;
 }
+#endif /* !VXWORKS */
 
 #if defined (ACE_HAS_AIO_CALLS)
 static int
