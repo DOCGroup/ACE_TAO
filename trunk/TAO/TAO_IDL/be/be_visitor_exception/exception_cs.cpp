@@ -64,10 +64,8 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
       *os << "// default constructor" << be_nl;
       *os << node->name () << "::" << node->local_name () << " (void)" << be_nl;
       if (!node->is_local ())
-        *os << "  : CORBA_UserException ("
-            << "::" << node->tc_name () << ")\n";
-//        *os << "  : CORBA_UserException (\""
-//            << node->repoID () << "\")\n";
+        *os << "  : CORBA_UserException (\""
+            << node->repoID () << "\")\n";
       *os << "{" << be_nl;
       *os << "}\n\n";
 
@@ -95,8 +93,7 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
       *os << node->name () << "::" << node->local_name () << " (const ::"
           << node->name () << " &_tao_excp)" << be_nl;
       *os << "  : CORBA_UserException ("
-          << "_tao_excp._type ())" << be_nl;          
-//          << "_tao_excp._id ())" << be_nl;
+          << "_tao_excp._id ())" << be_nl;
       *os << "{\n";
 
       be_visitor_context ctx (*this->ctx_);
@@ -265,10 +262,8 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
 
           if (!node->is_local ())
             *os << "  : CORBA_UserException "
-                << " (CORBA::TypeCode::_duplicate (" << node->tc_name ()
-                << "))" << be_nl;                
-//                << " (CORBA::string_dup (\"" << node->repoID ()
-//                << "\"))" << be_nl;
+                << " (CORBA::string_dup (\"" << node->repoID ()
+                << "\"))" << be_nl;
           *os << "{\n";
           os->incr_indent ();
           // assign each individual member. We need yet another state
@@ -310,21 +305,15 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
             }
         }
 
-      *os << "\n// TAO extension - the virtual _type method" << be_nl;
-      *os << "CORBA::TypeCode_ptr " << node->name ()
-          << "::_type (void) const" << be_nl;
-      *os << "{" << be_idt_nl;
-
       if (!node->is_local () && idl_global->tc_support ())
         {
+          *os << "\n// TAO extension - the virtual _type method" << be_nl;
+          *os << "CORBA::TypeCode_ptr " << node->name ()
+              << "::_type (void) const" << be_nl;
+          *os << "{" << be_idt_nl;
           *os << "return ::" << node->tc_name () << ";" << be_uidt_nl;
+          *os << "}" << be_nl << be_nl;
         }
-      else
-        {
-          *os << "return CORBA::TypeCode::_nil ();" << be_uidt_nl;
-        }
-
-      *os << "}" << be_nl << be_nl;
 
       node->cli_stub_gen (I_TRUE);
     }

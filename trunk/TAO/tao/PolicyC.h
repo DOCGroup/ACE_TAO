@@ -80,6 +80,7 @@ CORBA_PolicyError (
 
 // = TAO extension
 static CORBA::Exception *_alloc (void);
+virtual CORBA::TypeCode_ptr _type (void) const;
 
 }; // exception CORBA_PolicyError
 
@@ -275,6 +276,7 @@ private:
 
   // = TAO extension
   static CORBA::Exception *_alloc (void);
+  virtual CORBA::TypeCode_ptr _type (void) const;
 
 }; // exception CORBA_InvalidPolicies
 

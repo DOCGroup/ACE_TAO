@@ -81,7 +81,7 @@ CORBA_DynAny_ptr CORBA_DynAny::_nil (void)
 
 // default constructor
 CORBA_DynAny::Invalid::Invalid (void)
-  : CORBA_UserException (CORBA_DynAny::_tc_Invalid)
+  : CORBA_UserException ("IDL:/CORBA_DynAny/Invalid:1.0")
 {
 }
 
@@ -92,9 +92,9 @@ CORBA_DynAny::Invalid::~Invalid (void)
 
 // copy constructor
 CORBA_DynAny::Invalid::Invalid (const CORBA_DynAny::Invalid &_tao_excp)
-  : CORBA_UserException (_tao_excp._type ())
+  : CORBA_UserException (_tao_excp._id ())
 {
-  }
+}
 
 // assignment operator
 CORBA_DynAny::Invalid&
@@ -176,7 +176,7 @@ CORBA::TypeCode_ptr CORBA_DynAny::_tc_Invalid =
 
 // default constructor
 CORBA_DynAny::InvalidValue::InvalidValue (void)
-  : CORBA_UserException (CORBA_DynAny::_tc_InvalidValue)
+  : CORBA_UserException ("IDL:/CORBA_DynAny/InvalidValue:1.0")
 {
 }
 
@@ -189,7 +189,7 @@ CORBA_DynAny::InvalidValue::~InvalidValue (void)
 CORBA_DynAny::InvalidValue::InvalidValue (
     const CORBA_DynAny::InvalidValue &_tao_excp
   )
-  : CORBA_UserException (_tao_excp._type ())
+  : CORBA_UserException (_tao_excp._id ())
 {
 }
 
@@ -279,7 +279,7 @@ CORBA::TypeCode_ptr CORBA_DynAny::_tc_InvalidValue =
 
 // default constructor
 CORBA_DynAny::TypeMismatch::TypeMismatch (void)
-  : CORBA_UserException (CORBA_DynAny::_tc_TypeMismatch)
+  : CORBA_UserException ("IDL:/CORBA_DynAny/TypeMismatch:1.0")
 {
 }
 
@@ -292,7 +292,7 @@ CORBA_DynAny::TypeMismatch::~TypeMismatch (void)
 CORBA_DynAny::TypeMismatch::TypeMismatch (
     const CORBA_DynAny::TypeMismatch &_tao_excp
   )
-  : CORBA_UserException (_tao_excp._type ())
+  : CORBA_UserException (_tao_excp._id ())
 {
 }
 
@@ -381,7 +381,7 @@ CORBA::TypeCode_ptr CORBA_DynAny::_tc_TypeMismatch =
 
 // default constructor
 CORBA_DynAny::InvalidSeq::InvalidSeq (void)
-  : CORBA_UserException (CORBA_DynAny::_tc_InvalidSeq)
+  : CORBA_UserException ("IDL:/CORBA_DynAny/InvalidSeq:1.0")
 {
 }
 
@@ -394,7 +394,7 @@ CORBA_DynAny::InvalidSeq::~InvalidSeq (void)
 CORBA_DynAny::InvalidSeq::InvalidSeq (
     const CORBA_DynAny::InvalidSeq &_tao_excp
   )
-  : CORBA_UserException (_tao_excp._type ())
+  : CORBA_UserException (_tao_excp._id ())
 {
 }
 

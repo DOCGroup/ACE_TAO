@@ -72,9 +72,9 @@ TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList::~EmptyProfileList (void)
 
 // copy constructor
 TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList::EmptyProfileList (const ::TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList &_tao_excp)
-  : CORBA_UserException (_tao_excp._type ())
+  : CORBA_UserException (_tao_excp._id ())
 {
-  }
+}
 
 // assignment operator
 TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList&
@@ -137,9 +137,9 @@ TAO_IOP::TAO_IOR_Manipulation::NotFound::~NotFound (void)
 
 // copy constructor
 TAO_IOP::TAO_IOR_Manipulation::NotFound::NotFound (const ::TAO_IOP::TAO_IOR_Manipulation::NotFound &_tao_excp)
-  : CORBA_UserException (_tao_excp._type ())
+  : CORBA_UserException (_tao_excp._id ())
 {
-  }
+}
 
 // assignment operator
 TAO_IOP::TAO_IOR_Manipulation::NotFound&
@@ -202,9 +202,9 @@ TAO_IOP::TAO_IOR_Manipulation::Duplicate::~Duplicate (void)
 
 // copy constructor
 TAO_IOP::TAO_IOR_Manipulation::Duplicate::Duplicate (const ::TAO_IOP::TAO_IOR_Manipulation::Duplicate &_tao_excp)
-  : CORBA_UserException (_tao_excp._type ())
+  : CORBA_UserException (_tao_excp._id ())
 {
-  }
+}
 
 // assignment operator
 TAO_IOP::TAO_IOR_Manipulation::Duplicate&
@@ -267,9 +267,9 @@ TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR::~Invalid_IOR (void)
 
 // copy constructor
 TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR::Invalid_IOR (const ::TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR &_tao_excp)
-  : CORBA_UserException (_tao_excp._type ())
+  : CORBA_UserException (_tao_excp._id ())
 {
-  }
+}
 
 // assignment operator
 TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR&

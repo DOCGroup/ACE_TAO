@@ -548,6 +548,7 @@ CORBA_Any::operator<<= (CORBA::TypeCode_ptr tc)
                       stream.begin ());
 }
 
+// Insertion of CORBA::Exception - copying
 void
 CORBA_Any::operator<<= (const CORBA_Exception &exception)
 {
@@ -573,8 +574,36 @@ CORBA_Any::operator<<= (const CORBA_Exception &exception)
   ACE_CHECK;
 }
 
-// Insertion of CORBA object - copying.
+// Insertion of CORBA::Exception - non-copying
+void
+CORBA_Any::operator<<= (CORBA_Exception *exception)
+{
+  ACE_DECLARE_NEW_CORBA_ENV;
 
+  ACE_TRY
+    {
+      TAO_OutputCDR stream;
+      exception->_tao_encode (stream, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      this->_tao_replace (exception->_type (),
+                          TAO_ENCAP_BYTE_ORDER,
+                          stream.begin (),
+                          1,
+                          exception,
+                          CORBA_Exception::_tao_any_destructor);
+    }
+  ACE_CATCHANY
+    {
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("Exception in CORBA::Exception insertion\n")));
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
+}
+
+// Insertion of CORBA object - copying.
 void
 CORBA::Any::operator<<= (const CORBA::Object_ptr obj)
 {
