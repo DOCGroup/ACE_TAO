@@ -84,6 +84,21 @@ Echo_Client_Request_Interceptor::receive_reply (PortableInterceptor::ClientReque
                   "the arg is %d\n",
                   param));
     }
+  if (ACE_OS::strcmp (ri->operation (), "calculate") == 0)
+    {
+      Dynamic::ParameterList paramlist = *(ri->arguments ());
+      CORBA::Long param1, param2, result;
+      (paramlist)[0].argument >>= param1;
+      (paramlist)[1].argument >>= param2;
+      CORBA_Any result_any = *(ri->result ());
+      result_any >>= result;
+      
+      ACE_DEBUG ((LM_DEBUG, 
+                  "the result of calculate  is %d of %d + %d\n",
+                  result,
+                  param1,
+                  param2));
+    }
 
 }
 
@@ -150,7 +165,7 @@ Echo_Server_Request_Interceptor::name (CORBA::Environment &)
   
 void 
 Echo_Server_Request_Interceptor::receive_request (PortableInterceptor::ServerRequestInfo_ptr ri,
-                                                  CORBA::Environment &ACE_TRY_ENV)
+                                                  CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
@@ -169,12 +184,13 @@ Echo_Server_Request_Interceptor::receive_request (PortableInterceptor::ServerReq
                   param));
   
      }
+
    
 }
 
 void 
 Echo_Server_Request_Interceptor::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri,
-                                             CORBA::Environment &ACE_TRY_ENV)
+                                             CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
@@ -190,6 +206,23 @@ Echo_Server_Request_Interceptor::send_reply (PortableInterceptor::ServerRequestI
       ACE_DEBUG ((LM_DEBUG, 
                   "the arg is %d\n",
                   param));
+    }
+
+  if (ACE_OS::strcmp (ri->operation (), "calculate") == 0)
+    {
+      Dynamic::ParameterList paramlist = *(ri->arguments ());
+      CORBA::Long param1, param2, result;
+      (paramlist)[0].argument >>= param1;
+      (paramlist)[1].argument >>= param2;
+
+      CORBA_Any result_any = *(ri->result ());
+      result_any >>= result;
+
+      ACE_DEBUG ((LM_DEBUG, 
+                  "the result of calculate  is %d of %d + %d\n",
+                  result,
+                  param1,
+                  param2));
     }
 }
 

@@ -18,11 +18,14 @@ Visual_i::normal (CORBA::Long arg,
   ACE_DEBUG ((LM_DEBUG, "Visual::normal called with %d\n", arg));
 }
 
-void
-Visual_i::nothing (CORBA::Environment&)
+CORBA::Long
+Visual_i::calculate (CORBA::Long one,
+                     CORBA::Long two,
+                     CORBA::Environment&)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_DEBUG ((LM_DEBUG, "Visual::nothing\n"));
+  ACE_DEBUG ((LM_DEBUG, "Visual::calculate\n"));
+  return (one + two);
 }
 
 void
