@@ -2066,7 +2066,7 @@ namespace
         Traversal::ConsumerData::belongs (c, belongs_);
 
         os << "::_downcast (ev);" << endl
-           << "if (ev_type != 0)" << endl
+           << "if (ev_type.in () != 0)" << endl
            << "{"
            << "this->push_";
 
