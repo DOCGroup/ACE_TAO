@@ -18,8 +18,15 @@ namespace TAO
   Any_Basic_Impl::Any_Basic_Impl (CORBA::TypeCode_ptr tc,
                                   void *value)
     : Any_Impl (0, tc),
-      kind_ (tc ? tc->kind_ : CORBA::tk_null)
+      kind_ (CORBA::tk_null)
   {
+    if (!CORBA::is_nil (tc))
+      {
+        ACE_DECLARE_NEW_CORBA_ENV;
+        this->kind_ = tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
+        ACE_CHECK;
+      }
+
     CORBA::TCKind const tckind = static_cast<CORBA::TCKind> (this->kind_);
 
     switch (tckind)
@@ -138,8 +145,8 @@ namespace TAO
         // aliased  type if there are any. Passing the aliased kind
         // will not help.
         CORBA::TCKind tck =
-          tc->kind ();
-
+          tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
+        ACE_TRY_CHECK;
 
         CORBA::Boolean result =
           replacement->demarshal_value (cdr,
@@ -262,7 +269,10 @@ namespace TAO
   Any_Basic_Impl *
   Any_Basic_Impl::create_empty (CORBA::TypeCode_ptr tc)
   {
-    CORBA::TCKind const kind = static_cast<CORBA::TCKind> (tc->kind_);
+    ACE_DECLARE_NEW_CORBA_ENV;
+    CORBA::TCKind const kind = tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_CHECK_RETURN (0);
+
     TAO::Any_Basic_Impl * retval = 0;
 
     switch (kind)

@@ -28,10 +28,14 @@
 #include "tao/UserException.h"
 #include "tao/Basic_Types.h"
 #include "tao/OBV_Constants.h"
-
+#include "tao/CORBA_methods.h"
+#include "tao/Pseudo_VarOut_T.h"
 
 namespace CORBA
 {
+   typedef TAO_Pseudo_Var_T<TypeCode> TypeCode_var;
+   typedef TAO_Pseudo_Out_T<TypeCode, TypeCode_var> TypeCode_out;
+
 
   /**
    * @enum TCKind
@@ -93,7 +97,7 @@ namespace CORBA
     // dispatch based on TCKind values, and lets many important ones
     // just be table lookups.  It must always be the last enum value!!
 
-    TC_KIND_COUNT
+    TAO_TC_KIND_COUNT
   };
 
   typedef TCKind & TCKind_out;
@@ -463,6 +467,9 @@ namespace CORBA
     /// Decrease the reference count on this object.
     virtual void tao_release (void) = 0;
 
+    /// Destruction callback for Anys.
+    static void CORBA::TypeCode::_tao_any_destructor (void * x);
+
   protected:
 
     /// Constructor.
@@ -531,10 +538,23 @@ namespace TAO
 {
   extern TAO_Export bool operator<< (TAO_OutputCDR & cdr,
                                      CORBA::TypeCode const * x);
+  extern TAO_Export bool operator>> (TAO_InputCDR& cdr,
+                                     CORBA::TypeCode *&x);
+
+  /// Return the unaliased content @c TypeCode of the given
+  /// @c TypeCode.
+  CORBA::TypeCode_ptr unaliased_typecode (CORBA::TypeCode_ptr tc
+                                          ACE_ENV_ARG_DECL);
 
   /// Return the unaliased @c TCKind of the given @c TypeCode.
+  /**
+   * @note This is a convenience function that simply calls @c kind()
+   *       on the unaliased @c TypeCode returned from
+   *       @c unaliased_typecode().
+   */
   CORBA::TCKind unaliased_kind (CORBA::TypeCode_ptr tc
                                 ACE_ENV_ARG_DECL);
+
 }
 
 

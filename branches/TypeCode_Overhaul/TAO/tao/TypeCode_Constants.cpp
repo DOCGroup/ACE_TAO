@@ -1,21 +1,20 @@
 // $Id$
 
 
-//#include "TypeCode_Constants.h"
-#include "Null_RefCount_Policy.h"
+#include "TypeCode_Constants.h"
+
 
 ACE_RCSID (tao,
            TypeCode_Constants,
            "$Id$")
 
 
-
+#include "Null_RefCount_Policy.h"
 #include "Empty_Param_TypeCode.h"
 #include "Objref_TypeCode.h"
 #include "String_TypeCode.h"
 #include "Value_TypeCode.h"
 
-#include "tao/TC_Constants_Forward.h"
 
 namespace TAO
 {

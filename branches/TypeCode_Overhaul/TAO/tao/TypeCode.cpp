@@ -185,40 +185,38 @@ TAO::operator<< (TAO_OutputCDR & cdr,
   return (cdr << kind) && tc->tao_marshal (cdr);
 }
 
-CORBA::TCKind
-TAO::unaliased_kind (CORBA::TypeCode_ptr tc
-                     ACE_ENV_ARG_DECL)
+CORBA::TypeCode_ptr
+TAO::unaliased_typecode (CORBA::TypeCode_ptr tc
+                         ACE_ENV_ARG_DECL)
 {
-  CORBA::TCKind tc_kind = 0;
-
   if (CORBA::is_nil (tc))
     {
       ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 13,
                                           CORBA::COMPLETED_NO),
-                        tc_kind);
+                        tc);
     }
 
-  tc_kind = tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::TCKind tc_kind = tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (tc_kind);
 
   if (tc_kind == CORBA::tk_alias)
     {
-      CORBA::TypeCode_var tc_content =
-        tc->content_type (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (tc_kind);
+      CORBA::TypeCode_var tc_content;
 
       // Iterate until we get to the actual unaliased type.
       do
         {
           tc_content =
             tc_content->content_type (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK_RETURN (tc_kind);
+          ACE_CHECK_RETURN (tc);
 
           tc_kind = tc_content->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK_RETURN (tc_kind);
+          ACE_CHECK_RETURN (tc);
         }
       while (tc_kind == CORBA::tk_alias);
+
+      return tc_content._retn ();
     }
 
-  return tc_kind;
+  return CORBA::TypeCode::_duplicate (tc);
 }
