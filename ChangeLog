@@ -1,3 +1,9 @@
+Fri Jul 23 13:32:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/SOCK_Connector_Test.cpp:
+          Fixed incorrect Id tag, the $ around was missing, therefor it wasn't
+          updated by cvs anymore
+
 Thu Jul 22 14:11:24 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* examples/Log_Msg/Log_Msg_MFC/MFC_Log.cpp (log):
