@@ -2491,7 +2491,7 @@ ACE_OS::sema_wait (ACE_sema_t *s)
 
   if (result != -1)
     ACE_OS::mutex_unlock (&s->lock_);
-  ACE_PTHREAD_CLEANUP_POP (1);
+  ACE_PTHREAD_CLEANUP_POP (0);
   return result < 0 ? -1 : result;
 
 #elif defined (ACE_HAS_WTHREADS)
@@ -2607,7 +2607,7 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
 
   if (result != -1)
     ACE_OS::mutex_unlock (&s->lock_);
-  ACE_PTHREAD_CLEANUP_POP (1);
+  ACE_PTHREAD_CLEANUP_POP (0);
   errno = error;
   return result < 0 ? -1 : result;
 #elif defined (ACE_HAS_WTHREADS)
