@@ -8,6 +8,10 @@ Mon May 24 16:43:17 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	  namespace. Thanks to Irfan for reporting this
 	  problem.
 
+	* TAO/tests/DynAny_Test/da_tests.idl:
+	  Commented out a typecode-inside-union case until
+	  it can be fixed in the IDL compiler.
+
 Mon May 24 16:20:39 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO/tests/Param_Test/recursive_struct.h:
