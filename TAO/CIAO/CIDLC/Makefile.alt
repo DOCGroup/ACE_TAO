@@ -1,0 +1,43 @@
+# file      : CIDLC/Makefile.alt
+# author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
+# cvs-id    : $Id$
+
+root = ../CCF
+
+include $(root)/Bootstrap.rules
+
+$(call include, $(root)/Config.rules)
+
+$(call include, $(UTILITY_ROOT)/BuildRules/Executable.pre.rules)
+
+cxx_translation_units := DescriptorGenerator.cpp      \
+                         ExecutorMappingGenerator.cpp \
+                         RepositoryIdGenerator.cpp    \
+			 SizeTypeCalculator.cpp       \
+                         ServantGenerator.cpp         \
+                         ServantHeaderGenerator.cpp   \
+                         ServantSourceGenerator.cpp   \
+                         TypeNameEmitter.cpp          \
+                         cidlc.cpp
+
+module_base           := cidlc
+module_prefix         :=
+module_suffix         :=
+
+CXX_PREPROCESS_FLAGS  += -I$(root) -I$(UTILITY_ROOT) -I$(BOOST_ROOT)
+
+CXX_LINK_LIBS         += -L$(root)/CCF/IDL2              \
+                         -lIDL2                          \
+                         -L$(root)/CCF/IDL3              \
+                         -lIDL3                          \
+                         -L$(root)/CCF/CIDL              \
+                         -lCIDL                          \
+                         -L$(root)/CCF/CodeGenerationKit \
+                         -lCodeGenerationKit             \
+                         -L$(root)/CCF/CompilerElements  \
+                         -lCompilerElements              \
+                         -L$(BOOST_ROOT)/lib             \
+                         -lboost_regex                   \
+                         -lboost_filesystem
+
+$(call include, $(UTILITY_ROOT)/BuildRules/Executable.post.rules)
