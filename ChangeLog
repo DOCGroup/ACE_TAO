@@ -1,3 +1,10 @@
+Mon Sep 25 16:00:30 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Synch.h: Clarify that the ACE_Auto_Event and ACE_Manual_Event
+	  classes only support USYNC_PROCESS on Win32.  Thanks to Andreas
+ 	  Schuelke <Andreas.Schuelke@med.siemens.de> for motivating this
+ 	  change.
+
 Mon Sep 25 23:03:11 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 	* bin/run_all_list.pm:
