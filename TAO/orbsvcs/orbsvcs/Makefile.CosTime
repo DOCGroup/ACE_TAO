@@ -763,8 +763,7 @@ realclean: clean
  TimeServiceS_T.cpp \
  TimeServiceS.i \
  Time/Timer_Helper.h Time/time_export.h Time/TAO_TIO.h \
- $(TAO_ROOT)/tao/TAO.h \
- Time/TAO_UTO.h
+ $(TAO_ROOT)/tao/TAO.h Time/TAO_UTO.h
 
 .obj/TAO_UTO.o .obj/TAO_UTO.so .shobj/TAO_UTO.o .shobj/TAO_UTO.so: Time/TAO_UTO.cpp Time/TAO_UTO.h \
  $(ACE_ROOT)/ace/pre.h \
@@ -1899,8 +1898,7 @@ realclean: clean
  $(TAO_ROOT)/tao/TimeBaseS_T.h \
  $(TAO_ROOT)/tao/TimeBaseS_T.i \
  $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
- $(TAO_ROOT)/tao/TimeBaseS.i \
- TimeBaseC.h \
+ $(TAO_ROOT)/tao/TimeBaseS.i TimeBaseC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/IOR_LookupTable.h \
