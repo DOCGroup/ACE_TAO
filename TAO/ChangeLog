@@ -1,3 +1,8 @@
+Wed Mar 30 19:01:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* orbsvcs/orbsvcs/IFRService/*S.cpp:
+	  Regenerated
+
 Wed Mar 30 18:52:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* tao/IFR_Client/IFR_BaseS.h:
