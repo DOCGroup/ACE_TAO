@@ -105,6 +105,7 @@ ACE_SOCK_Acceptor::shared_accept (ACE_Addr *remote_addr,
   int *len_ptr = 0;
   int len;
   ACE_HANDLE new_handle;
+  ACE_HANDLE handle = this->get_handle ();
 
   if (remote_addr != 0)
     {
@@ -114,29 +115,54 @@ ACE_SOCK_Acceptor::shared_accept (ACE_Addr *remote_addr,
     }
 
   // Handle the timeout case.
-  if (timeout != 0 && ACE::handle_timed_accept (this->get_handle (), timeout, restart) == -1)
-    return ACE_INVALID_HANDLE;
+  if (timeout != 0)
+    {
+      if (ACE::handle_timed_accept (handle, timeout, restart) == -1)
+	return ACE_INVALID_HANDLE;
+      else
+	{
+	  int val = ACE::get_flags (handle);
+
+	  // Set the handle into non-blocking mode if it's not
+	  // already in it.
+	  if (ACE_BIT_DISABLED (val, ACE_NONBLOCK)
+	      && ACE::set_flags (handle, ACE_NONBLOCK) == -1)
+	    return ACE_INVALID_HANDLE;
+
+	  new_handle = ACE_OS::accept (handle, addr, len_ptr);
+
+	  if (ACE_BIT_DISABLED (val, ACE_NONBLOCK))
+	    {
+	      // We need to stash errno here because ACE::clr_flags() may
+	      // reset it.
+	      int error = errno;
+
+	      // Only disable ACE_NONBLOCK if we weren't in non-blocking mode
+	      // originally.
+	      ACE::clr_flags (handle, ACE_NONBLOCK);
+	      errno = error;
+	    }
+	}
+    }
   else
     {
       // Perform a blocking accept.
-
+    
       do
-	new_handle = ACE_OS::accept (this->get_handle (), addr, len_ptr);
+	new_handle = ACE_OS::accept (handle, addr, len_ptr);
       while (new_handle == ACE_INVALID_HANDLE && restart && errno == EINTR);
-      
+    }
+
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
-      if (reset_new_handle)
-        // Reset the event association inherited by the new handle
-        ::WSAEventSelect ((SOCKET) new_handle,
-                          NULL,
-                          0);      
+  if (reset_new_handle)
+    // Reset the event association inherited by the new handle.
+    ::WSAEventSelect ((SOCKET) new_handle, NULL, 0);      
 #endif /* ACE_WIN32 */
 
-      // Reset the size of the addr (really only necessary for the
-      // UNIX domain sockets).
-      if (new_handle != ACE_INVALID_HANDLE && remote_addr != 0)
-	remote_addr->set_size (*len_ptr);
-
-      return new_handle;
-    }
+  // Reset the size of the addr (really only necessary for the
+  // UNIX domain sockets).
+  if (new_handle != ACE_INVALID_HANDLE && remote_addr != 0)
+    remote_addr->set_size (*len_ptr);
+  
+  return new_handle;
 }

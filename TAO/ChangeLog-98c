@@ -1,5 +1,7 @@
 Fri Oct 24 19:18:22 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* tao: Changed remaining uses of BOA to POA.
+
 	* cubit_i.cpp (please_exit): Replaced the call to
  	please_shutdown() on the POA (which no longer exists) with the
  	shutdown() call on the ORB.

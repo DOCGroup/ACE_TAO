@@ -40,7 +40,7 @@ class ACE_Svc_Export CORBA_ORB : public IUnknown
 public:
   CORBA::POA_ptr POA_init (int &argc, 
                            char **argv, 
-                           const char *boa_identifier = 0);
+                           const char *poa_identifier = 0);
 
   static CORBA::ORB_ptr _duplicate (CORBA::ORB_ptr orb);
   static CORBA::ORB_ptr _nil (void);
