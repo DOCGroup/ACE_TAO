@@ -1,6 +1,7 @@
 Tue Apr 23 07:35:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Base_Thread_Adapter.h:
+        * ace/Future.h:
         * ace/Naming_Context.h:
         * ace/Malloc.h:
         * ace/Malloc_Base.h:
