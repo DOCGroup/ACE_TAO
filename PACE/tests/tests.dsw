@@ -27,30 +27,6 @@ Package=<4>
 
 ###############################################################################
 
-Project: "test_mqueue"=.\test_mqueue.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "test_process"=.\test_process.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
 Project: "test_stdio"=.\test_stdio.dsp - Package Owner=<4>
 
 Package=<5>
