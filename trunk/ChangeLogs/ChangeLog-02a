@@ -1,3 +1,8 @@
+Tue May 28 15:02:01 UTC 2002  Don Hinton <dhinton@ieee.org>
+
+	* tests/tests.dsw:
+	* tests/Framework_Component_DLL.dsp: Added new dsp.
+
 Tue May 28 09:35:17 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * ace/ace_dll.dsp:
