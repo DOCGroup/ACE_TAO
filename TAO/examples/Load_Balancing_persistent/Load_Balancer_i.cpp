@@ -1015,6 +1015,9 @@ template class ACE_Hash_Map_Entry<char *, char *>;
 template class ACE_Hash_Map_With_Allocator<char *, char *>;
 template class ACE_Hash_Map_Manager<char *, char *, ACE_Null_Mutex>;
 template class ACE_DLList<char *>;
+template class ACE_DLList_Iterator<char*>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<char*,char*,ACE_Hash<char*>,ACE_Equal_To<char*>,ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Ex<char*,char*,ACE_Hash<char*>,ACE_Equal_To<char*>,ACE_Null_Mutex>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
@@ -1024,5 +1027,8 @@ pragma instantiate ACE_Hash_Map_Entry<char *, char *>
 pragma instantiate ACE_Hash_Map_With_Allocator<char *, char *>
 pragma instantiate ACE_Hash_Map_Manager<char *, char *, ACE_Null_Mutex>
 pragma instantiate ACE_DLList<char *>
+pragma instantiate ACE_DLList_Iterator<char*>
+pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<char*,char*,ACE_Hash<char*>,ACE_Equal_To<char*>,ACE_Null_Mutex>
+template class ACE_Hash_Map_Iterator_Ex<char*,char*,ACE_Hash<char*>,ACE_Equal_To<char*>,ACE_Null_Mutex>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
