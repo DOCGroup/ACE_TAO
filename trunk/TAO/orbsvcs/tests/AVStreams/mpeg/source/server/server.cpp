@@ -411,6 +411,7 @@ AV_Server::AV_Server ()
   this->signal_handler_ = new AV_Server_Sig_Handler ;
   this->orb_manager_ = new TAO_ORB_Manager ;
   this->video_control_ = new Video_Control_i;
+  this->naming_server_ = new TAO_Naming_Server;
 }
 
 // %% move to the destructor or sig handler
@@ -494,6 +495,8 @@ AV_Server::init (int argc,
                                                 this->video_control_,
                                                 env);
   TAO_CHECK_ENV_RETURN (env,-1);
+  
+  // Initialize the Naming Server
   
   result = this->parse_args (argc, argv);
   if (result < 0)
