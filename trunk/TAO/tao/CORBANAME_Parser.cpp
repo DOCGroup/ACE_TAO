@@ -3,6 +3,7 @@
 #include "CORBANAME_Parser.h"
 #include "Invocation.h"
 #include "Stub.h"
+#include "debug.h"
 
 #if !defined(__ACE_INLINE__)
 #include "CORBANAME_Parser.i"
@@ -207,7 +208,10 @@ TAO_CORBANAME_Parser::parse_string (const char *ior,
     }
   ACE_CATCH (CORBA::SystemException, ex)
     {
-      ACE_PRINT_EXCEPTION (ex, "CORBANAME_Parser");
+      if (TAO_debug_level >= 4)
+        {
+          ACE_PRINT_EXCEPTION (ex, "CORBANAME_Parser");
+        }
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (CORBA::Object::_nil	());
