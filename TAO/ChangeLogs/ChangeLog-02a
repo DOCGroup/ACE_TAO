@@ -1,3 +1,16 @@
+Thu Jun  1 18:42:29 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/Interface.pidl:
+	* tao/InterfaceC.h:
+	* tao/InterfaceC.cpp:
+	  Fixed a typo in the OMG IDL listing for Interface
+	  Repository (in Components vol. III). The operation
+	  Container::create_interface is missing a parameter.
+
+	* tao/TAO.dsp:
+	* tao/TAO_Static.dsp:
+	  Added IORC.i to these project files.
+
 Thu Jun 01 03:04:20 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tests/POA/Identity/run_test.pl: Added -ORBobjrefstyle url to
