@@ -50,14 +50,23 @@ public:
   virtual CORBA::RepositoryId _primary_interface (
       const PortableServer::ObjectId &oid,
       PortableServer::POA_ptr poa
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS) = 0;
-
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+    ) = 0;
   // The _primary_interface() method receives an ObjectId value and a
   // POA_ptr as input parameters and returns a valid RepositoryId
   // representing the most-derived interface for that oid.
 
+  virtual CORBA::Boolean _is_a (const char *logical_type_id
+                                ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+  // Local implementation of the CORBA::Object::_is_a method.
+
   CORBA::Object_ptr _this (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
   // Returns a CORBA::Object_ptr for the target object.
+
+  virtual CORBA_InterfaceDef_ptr _get_interface (
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+    );
+  // Query the Interface Repository for the interface definition.
 
 protected:
 
@@ -74,6 +83,12 @@ protected:
                           void *context
                           ACE_ENV_ARG_DECL_WITH_DEFAULTS);
   // Turns around and calls invoke.
+
+private:
+  CORBA::RepositoryId get_id_from_primary_interface (
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+    );
+  // Encapsulates code common to _is_a(), _get_interface() and _create_stub().
 };
 
 #include "ace/post.h"
