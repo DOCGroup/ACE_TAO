@@ -207,7 +207,6 @@ TAO_Common_Visitor_Factory::make_visitor (be_visitor_context *ctx)
       return new be_visitor_interface_cdr_op_cs (new_ctx);
 
     case TAO_CodeGen::TAO_INTERFACE_FWD_CH:
-    //case TAO_CodeGen::TAO_AMI_HANDLER_FWD_CH:
       return new be_visitor_interface_fwd_ch (new_ctx);
 
     case TAO_CodeGen::TAO_INTERFACE_FWD_CI:
@@ -438,6 +437,8 @@ TAO_Common_Visitor_Factory::make_visitor (be_visitor_context *ctx)
     case TAO_CodeGen::TAO_AMI_HANDLER_ATTRIBUTE_THRU_POA_COLLOCATED_SS:
     case TAO_CodeGen::TAO_AMI_HANDLER_ATTRIBUTE_DIRECT_COLLOCATED_SH:
     case TAO_CodeGen::TAO_AMI_HANDLER_ATTRIBUTE_DIRECT_COLLOCATED_SS:
+    case TAO_CodeGen::TAO_AMI_EXCEPTION_HOLDER_ATTRIBUTE_CH:
+    case TAO_CodeGen::TAO_AMI_EXCEPTION_HOLDER_ATTRIBUTE_CS:
       return new be_visitor_attribute (new_ctx);
 
     case TAO_CodeGen::TAO_EXCEPTION_CH:
@@ -485,8 +486,8 @@ TAO_Common_Visitor_Factory::make_visitor (be_visitor_context *ctx)
       return new be_visitor_decl (new_ctx);
 
     // @@ Michael: With the strategy we can use the default one.
-    case TAO_CodeGen::TAO_AMI_HANDLER_INTERFACE_FWD_CH:
-          return new be_visitor_interface_ami_handler_fwd_ch (new_ctx);
+    //case TAO_CodeGen::TAO_AMI_HANDLER_INTERFACE_FWD_CH:
+    //      return new be_visitor_interface_ami_handler_fwd_ch (new_ctx);
 
     case TAO_CodeGen::TAO_AMI_HANDLER_INTERFACE_FWD_CI:
       return new be_visitor_interface_ami_handler_fwd_ci (new_ctx);
@@ -515,6 +516,21 @@ TAO_Common_Visitor_Factory::make_visitor (be_visitor_context *ctx)
 
     case TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_THRU_POA_COLLOCATED_SS:
       return new be_visitor_operation_ami_handler_thru_poa_collocated_ss(new_ctx);
+
+    case TAO_CodeGen::TAO_AMI_EXCEPTION_HOLDER_INTERFACE_CH:
+      return new be_visitor_interface_ami_exception_holder_ch (new_ctx);
+
+    case TAO_CodeGen::TAO_AMI_EXCEPTION_HOLDER_INTERFACE_CI:
+      return new be_visitor_interface_ami_exception_holder_ci (new_ctx);
+
+    case TAO_CodeGen::TAO_AMI_EXCEPTION_HOLDER_INTERFACE_CS:
+      return new be_visitor_interface_ami_exception_holder_cs (new_ctx);
+
+    case TAO_CodeGen::TAO_AMI_EXCEPTION_HOLDER_OPERATION_CH:
+      return new be_visitor_operation_ami_exception_holder_operation_ch (new_ctx);
+
+    case TAO_CodeGen::TAO_AMI_EXCEPTION_HOLDER_OPERATION_CS:
+      return new be_visitor_operation_ami_exception_holder_operation_cs (new_ctx);
 
     default:
       // an error

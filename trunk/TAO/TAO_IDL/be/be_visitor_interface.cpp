@@ -47,5 +47,8 @@
 #include "be_visitor_interface/ami_handler_fwd_ci.cpp"
 #include "be_visitor_interface/ami_handler_stub_ch.cpp"
 #include "be_visitor_interface/ami_handler_stub_cs.cpp"
+#include "be_visitor_interface/ami_exception_holder_ch.cpp"
+#include "be_visitor_interface/ami_exception_holder_ci.cpp"
+#include "be_visitor_interface/ami_exception_holder_cs.cpp"
 
 ACE_RCSID(be, be_visitor_interface, "$Id$")
