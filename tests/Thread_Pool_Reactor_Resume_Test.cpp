@@ -119,37 +119,47 @@ parse_arg (int argc, ACE_TCHAR *argv[])
 
 Request_Handler::Request_Handler (ACE_Thread_Manager *thr_mgr)
   : ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_MT_SYNCH> (thr_mgr),
-    nr_msgs_rcvd_(0),
-    ref_count_ (1),
-    refcount_lock_ (0)
+    nr_msgs_rcvd_(0)
 {
+  // Enable reference counting.
+  this->reference_counting_policy ().value
+    (ACE_Event_Handler::Reference_Counting_Policy::ENABLED);
+
   // Make sure we use TP_Reactor with this class (that's the whole
   // point, right?)
   this->reactor (ACE_Reactor::instance ());
+}
 
-  // Create the lock
-  ACE_NEW (refcount_lock_,
-           ACE_Lock_Adapter<ACE_SYNCH_MUTEX>);
+int
+Request_Handler::open (void *arg)
+{
+  // Open base class.
+  int result =
+    ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_MT_SYNCH>::open (arg);
+
+  // Return on error.
+  if (result == -1)
+    return -1;
+
+  // Else we have successfully registered with the Reactor.  Give our
+  // ownership to the Reactor.
+  this->remove_reference ();
+
+  // Return result.
+  return result;
 }
 
 Request_Handler::~Request_Handler (void)
 {
-  delete this->refcount_lock_;
 }
-
 
 int
 Request_Handler::resume_handler (void)
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) resume_handler () called \n")));
-  this->_decr_ref_count ();
-
-  if (this->ref_count_ == 0)
-    this->destroy ();
   return 1;
 }
-
 
 int
 Request_Handler::handle_input (ACE_HANDLE fd)
@@ -158,13 +168,11 @@ Request_Handler::handle_input (ACE_HANDLE fd)
   ACE_TCHAR len = 0;
   ssize_t result = this->peer ().recv (&len, sizeof (ACE_TCHAR));
 
-
   if (result > 0
       && this->peer ().recv_n (buffer, len * sizeof (ACE_TCHAR))
           == ACE_static_cast (ssize_t, len * sizeof (ACE_TCHAR)))
     {
       ++this->nr_msgs_rcvd_;
-
 
       // Now the handle_input method has done what it can do, namely
       // read the data from the socket we can just resume the handler
@@ -176,13 +184,11 @@ Request_Handler::handle_input (ACE_HANDLE fd)
       if (ACE_OS::strcmp (buffer, ACE_TEXT ("shutdown")) == 0)
           ACE_Reactor::end_event_loop ();
 
-      this->_incr_ref_count ();
       this->reactor ()->resume_handler (fd);
       return 0;
     }
   else
     {
-
       ACE_DEBUG ((LM_DEBUG,
                   "(%t) Errno is %d  and result is %d\n",
                   errno, result));
@@ -206,25 +212,8 @@ Request_Handler::handle_close (ACE_HANDLE fd, ACE_Reactor_Mask)
                this,
                cli_req_no,
                this->nr_msgs_rcvd_));
-  this->_decr_ref_count ();
 
-  if (this->ref_count_ == 0)
-    this->destroy ();
   return 0;
-}
-
-void
-Request_Handler::_incr_ref_count (void)
-{
-  ACE_MT (ACE_GUARD (ACE_Lock, guard, *this->refcount_lock_));
-  ++this->ref_count_;
-}
-
-void
-Request_Handler::_decr_ref_count (void)
-{
-  ACE_MT (ACE_GUARD (ACE_Lock, guard, *this->refcount_lock_));
-  --this->ref_count_;
 }
 
 static int

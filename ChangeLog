@@ -1,3 +1,10 @@
+Wed Jul 09 22:48:48 2003  Irfan Pyarali  <irfan@oomworks.com>
+
+	* tests\Thread_Pool_Reactor_Resume_Test: 
+
+	  Removed the lame reference counting scheme in this test and
+	  replaced it with the new and proper reference counting.
+
 Wed Jul 09 21:37:52 2003  Irfan Pyarali  <irfan@oomworks.com>
 
 	* tests\MT_Reactor_Timer_Test.cpp (handle_close): 
