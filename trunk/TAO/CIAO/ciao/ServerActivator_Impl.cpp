@@ -249,7 +249,7 @@ CIAO::ServerActivator_Impl::parse_config_value (const Components::ConfigValues &
 
           exc->name = CORBA::string_dup (options[l]->name ());
           exc->reason = Components::InvalidConfigValueType;
-#if defined (TAO_HAS_EXCEPTIONS)
+#if defined (ACE_HAS_EXCEPTIONS)
           auto_ptr<Components::InvalidConfiguration> safety (exception);
 
           // Direct throw because we don't have the ACE_TRY_ENV.
