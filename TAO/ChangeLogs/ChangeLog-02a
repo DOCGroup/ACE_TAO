@@ -1,3 +1,7 @@
+Sat Aug 26 16:02:45 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* Updated dependencies of the Makefiles in $TAO_ROOT/tests.
+
 Sat Aug 26 15:14:39 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/Makefile.EXE:
