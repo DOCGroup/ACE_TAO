@@ -13,18 +13,19 @@ Hello::Hello (CORBA::ORB_ptr orb, PortableServer::POA_ptr poa)
 }
 
 Test::HelloWorld_ptr
-Hello::get_helloworld (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Hello::get_helloworld (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   HelloWorld *hello_world;
   ACE_NEW_THROW_EX (hello_world,
-		    HelloWorld (),
+          HelloWorld,
 		    CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (Test::HelloWorld::_nil ());
 
   PortableServer::ObjectId_var oid =
     poa_->activate_object (hello_world
                            ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  ACE_CHECK_RETURN (Test::HelloWorld::_nil ());
 
   Test::HelloWorld_var hw = hello_world->_this ();
   return hw._retn ();
@@ -35,5 +36,5 @@ Hello::shutdown (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  ACE_CHECK;
 }
