@@ -22,13 +22,13 @@ TAO_Incoming_Message_Queue::~TAO_Incoming_Message_Queue (void)
   // Need to delete all the unused data-blocks
 }
 
-void
+size_t
 TAO_Incoming_Message_Queue::copy_message (ACE_Message_Block &block)
 {
+  size_t n = 0;
+
   if (this->size_ > 0)
     {
-      size_t n = 0;
-
       if ((CORBA::Long)block.length () <= this->queued_data_->missing_data_)
         {
           n = block.length ();
@@ -40,8 +40,11 @@ TAO_Incoming_Message_Queue::copy_message (ACE_Message_Block &block)
 
       this->queued_data_->msg_block_->copy (block.rd_ptr (),
                                             n);
+
       this->queued_data_->missing_data_ -= n;
     }
+
+  return n;
 }
 
 TAO_Queued_Data *

@@ -46,7 +46,7 @@ public:
                    ssize_t missing_data,
                    CORBA::Octet byte_order);*/
 
-  void copy_message (ACE_Message_Block &block);
+  size_t copy_message (ACE_Message_Block &block);
 
   CORBA::ULong queue_length (void);
 
