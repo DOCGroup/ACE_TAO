@@ -1,3 +1,10 @@
+Sun Sep 27 09:35:04 1998  James CE Johnson  <jcej@chiroptera.tragus.org>
+
+	*  docs/tutorials/013/*
+	   Completed Tutorial 013!  The code is up to date and compilable on
+	   RedHat Linux with egcs 1.1.  It may need some template help on other
+	   platforms.  The HTML is done and in synch with the code.
+
 Sun Sep 27 01:52:36 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* ace/INET_Addr.cpp: 
