@@ -1,82 +1,91 @@
+Sun May 02 08:15:50 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/Context.cpp: removed ACE_Unbounded_Queue<char *>
+          explicit instantiations, because they're in ace/ARGV.cpp
+          (except ACE_HAS_MOSTLY_UNICODE_APIS, which we only use on
+          WIN CE).
+
 Sun May  2 00:12:40 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/Command_Handler.cpp:
-	  Fixed the code to restart the event loop for Audio Buffer and
-	  Video Buffer process for the java init case when the Java Gui
-	  sends ior to the mpeg client. 
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/Command_Handler.cpp:
+          Fixed the code to restart the event loop for Audio Buffer and
+          Video Buffer process for the java init case when the Java Gui
+          sends ior to the mpeg client.
 
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_mib/mibButton.cpp: 
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_mib/mibLabel.cpp: 
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_mib/mibList.cpp: 
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_mib/mibToggle.cpp:
-	  Fixed compilation errors for using unsigned char * instead of
-	  XmString on Sun 5.7 CC. Thanks to Bala for helping with this.
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_mib/mibButton.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_mib/mibLabel.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_mib/mibList.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_mib/mibToggle.cpp:
+          Fixed compilation errors for using unsigned char * instead of
+          XmString on Sun 5.7 CC. Thanks to Bala for helping with this.
 
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Globals.h: 
-	  Fixed a redundant redinition warnings for macros nextByte and
-	  computePicSize. 
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Globals.h:
+          Fixed a redundant redinition warnings for macros nextByte and
+          computePicSize.
 
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/routine.{h,cpp}:
-	  Fixed void usleep to int usleep to avoid ambiguity errors on
-	  Sun5.7 CC. 
+        * orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/routine.{h,cpp}:
+          Fixed void usleep to int usleep to avoid ambiguity errors on
+          Sun5.7 CC.
 
-	* orbsvcs/tests/AVStreams/mpeg/source/server/Machine_Properties.cpp: 
-	  Redefined xdr_void to int xdr_void (XDR *,void *) to fix
-	  compilation errors on Sun 5.7 CC.	 
-	
+        * orbsvcs/tests/AVStreams/mpeg/source/server/Machine_Properties.cpp:
+          Redefined xdr_void to int xdr_void (XDR *,void *) to fix
+          compilation errors on Sun 5.7 CC.
+
 Sat May  1 23:30:08 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/AV/AVStreams_i.{h,cpp}: 
-	* orbsvcs/orbsvcs/AV/AVStreams_i_T.{h,cpp}:
-	* orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp:
-	  Added the correct implementation of destroy method according to
- 	  Irfan's suggestion.  Also corrected some TAO_ macros used for
- 	  exceptions.
+        * orbsvcs/orbsvcs/AV/AVStreams_i.{h,cpp}:
+        * orbsvcs/orbsvcs/AV/AVStreams_i_T.{h,cpp}:
+        * orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp:
+          Added the correct implementation of destroy method according to
+          Irfan's suggestion.  Also corrected some TAO_ macros used for
+          exceptions.
 
 Sat May  1 22:01:41 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
-	* orbsvcs/CosEvent_Service/CosEvent_Service.h:
-	  added virtual destructors.
+        * orbsvcs/CosEvent_Service/CosEvent_Service.h:
+          added virtual destructors.
 
 Sat May  1 21:01:40 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_argument/compiled_marshal_cs.cpp: Stub
- 	  code generation was not checking inout args for the char, wchar,
- 	  boolean and octet cases, where the Any::to_* structs must be
- 	  used when demarshaling. Result was 'ambiguous >> operator' error
- 	  in compilation. Added the switch statement, checks and code
- 	  generation. Thanks to englishmalc@my-dejanew.com for reporting
- 	  this bug.
+        * TAO_IDL/be/be_visitor_argument/compiled_marshal_cs.cpp: Stub
+          code generation was not checking inout args for the char, wchar,
+          boolean and octet cases, where the Any::to_* structs must be
+          used when demarshaling. Result was 'ambiguous >> operator' error
+          in compilation. Added the switch statement, checks and code
+          generation. Thanks to englishmalc@my-dejanew.com for reporting
+          this bug.
 
 Sat May  1 17:44:34 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tao/ORB.cpp (multicast_query): Make sure we close down the
- 	  ACE_SOCK_Acceptor so we don't leak handles.  Thanks to Vishal
- 	  and James Johnson for tracking this down.
+        * tao/ORB.cpp (multicast_query): Make sure we close down the
+          ACE_SOCK_Acceptor so we don't leak handles.  Thanks to Vishal
+          and James Johnson for tracking this down.
 
 1999-05-01  Vishal Kachroo  <vishal@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Time_Utilities.i: Fixed the precision error.
-	  Used 64-bit precision for 64bit*32bit operation.
+        * orbsvcs/orbsvcs/Time_Utilities.i: Fixed the precision error.
+          Use 64-bit precision for 64bit*32bit operation.  Thanks to
+          Tom Venturella <Thomas.Venturella@MW.Boeing.com> for reporting
+          that is had been using only 32-bit precision.
 
 Sat May  1 15:06:40 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* tao/Typecode.cpp (parameter): Changed the variable env to
-	  ACE_TRY_ENV in CORBA_TypeCode::parameter method.
+        * tao/Typecode.cpp (parameter): Changed the variable env to
+          ACE_TRY_ENV in CORBA_TypeCode::parameter method.
 
 Sat May  1 13:32:13 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp : Fixed the
-	g++ warnings.
+        * orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp : Fixed the
+        g++ warnings.
 
 1999-05-01  Vishal Kachroo  <vishal@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/IOR_Multicast.cpp (handle_input):
-	  Added stream.close () after stream.send_n () to explicitly
-	  close the socket.
+        * orbsvcs/orbsvcs/IOR_Multicast.cpp (handle_input):
+          Added stream.close () after stream.send_n () to explicitly
+          close the socket.
 
-	  Thanks to James Johnson <jcej@lads.com> for finding this bug
-	  and suggesting the fix.
+          Thanks to James Johnson <jcej@lads.com> for finding this bug
+          and suggesting the fix.
 
 Sat May 01 08:22:12 1999  David L. Levine  <levine@cs.wustl.edu>
 
@@ -168,7 +177,7 @@ Fri Apr 30 18:46:10 1999  Jeff Parsons  <parsons@cs.wustl.edu>
           that eliminated the IDL compiler error messages
           produced from one of the test IDL files in the OMG tests.
           I don't think all of the IDL compiler tests have been run
-	  yet, so there may remain more to be done.
+          yet, so there may remain more to be done.
 
 Fri Apr 30 17:41:31 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
