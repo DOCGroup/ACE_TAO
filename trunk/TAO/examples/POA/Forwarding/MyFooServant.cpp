@@ -117,7 +117,7 @@ MyFirstFooServant::handle_input (ACE_HANDLE)
     {
       PortableServer::ObjectId_var oid =
         this->poa_->servant_to_id (this, ACE_TRY_ENV);
-      ACE_CHECK;
+      ACE_TRY_CHECK;
 
       PortableServer::Servant servant = this->poa_->_servant ();
       ACE_ASSERT (servant != 0);
@@ -129,7 +129,7 @@ MyFirstFooServant::handle_input (ACE_HANDLE)
       tao_poa->forward_object (oid.in (),
                                this->forward_to_var_.in (),
                                ACE_TRY_ENV);
-      ACE_CHECK;
+      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {

@@ -1,3 +1,9 @@
+Wed Jun 16 15:10:17 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* examples/POA/Forwarding/MyFooServant.cpp (handle_input): Changed
+	  ACE_CHECK to ACE_TRY_CHECK.  Thanks to Carlos for reporting this
+	  warning.
+
 Wed Jun 16 14:57:09 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/DynUnion_i.h:
@@ -16,19 +22,19 @@ Wed Jun 16 14:00:53 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 Wed Jun 16 13:47:54 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp: 
+	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
 	* orbsvcs/orbsvcs/AV/sfp.cpp: Fixed the THROW_SPEC warnings on
  	  HP-UX. Thanks to Steve Huston for reporting these.
 
 Wed Jun 16 13:23:57 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 
-	* orbsvcs/Time_Service/IR_Helper.cpp: 
+	* orbsvcs/Time_Service/IR_Helper.cpp:
 	  Fixed ACE_THROW_SPEC
 
 	* tests/InterOp-Naming/INS_i.cpp,
-	* tests/InterOp-Naming/INS_i.h: 
+	* tests/InterOp-Naming/INS_i.h:
 	  Fixed ACE_THROW_SPEC.
-	
+
 Wed Jun 16 12:30:21 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/Makefile:
@@ -90,14 +96,14 @@ Wed Jun 16 01:12:55 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 Tue Jun 15 22:16:57 1999  Matthew J Braun  <mjb2@cs.wustl.edu>
 
-	* orbsvcs/tests/Concurrency/CC_command.cpp 
-	* orbsvcs/tests/Concurrency/CC_test_utils.cpp 
-	* orbsvcs/tests/Concurrency/CC_tests.cpp 
+	* orbsvcs/tests/Concurrency/CC_command.cpp
+	* orbsvcs/tests/Concurrency/CC_test_utils.cpp
+	* orbsvcs/tests/Concurrency/CC_tests.cpp
 	* orbsvcs/Logging_Service/Logging_Service_i.h,cpp: Added
  	  ACE_const_cast statements. Those should have been checked in a
  	  while ago, but I screwed up. Also, I migrated the TAO_THROW
  	  macros to ACE_THROW macros in the Concurrency files.
-	
+
 Tue Jun 15 20:19:43 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Any.cpp: Removed a comment to me that I had left after
