@@ -350,10 +350,10 @@ Library::write_export_list (int show_ref_counts)
             countfile << sig->used_count() << " " << sig->name() << endl;
           }
         countfile << "\nImported symbols:" << endl;
-        for (const Signature *sig = modules_[i]->imports().first();
+        for (const Signature *n_sig = modules_[i]->imports().first();
              modules_[i]->imports().hasmore();
-             sig = modules_[i]->imports().next())
-          countfile << sig->name() << endl;
+             n_sig = modules_[i]->imports().next())
+          countfile << n_sig->name() << endl;
       }
       makefile_->write_file(modules_[i]->name().substring(0,modules_[i]->name().length()-2));
     } else {
