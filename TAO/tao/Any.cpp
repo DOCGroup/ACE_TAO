@@ -1114,6 +1114,20 @@ TAO::Any_Dual_Impl_T<CORBA::Exception>::demarshal_value (TAO_InputCDR &cdr)
   return 0;
 }
 
+// This should never get called since we don't have extraction operators
+// for CORBA::Exception, but it is here to sidestep the constructor call
+// in the unspecialized version that causes a problem with compilers that
+// require explicit instantiation
+template<>
+CORBA::Boolean
+TAO::Any_Dual_Impl_T<CORBA::Exception>::extract (const CORBA::Any &,
+                                                 _tao_destructor,
+                                                 CORBA::TypeCode_ptr,
+                                                 const T *&)
+{
+  return 0;
+}
+
 // =======================================================================
 
 TAO::Any_Any_Impl::Any_Any_Impl (void)
