@@ -467,40 +467,6 @@ public:
   CORBA::Boolean poll_next_response (CORBA_Environment &ACE_TRY_ENV =
                                      TAO_default_environment ());
 
-  // Typecode for the above exception.
-  static CORBA::TypeCode_ptr _tc_InconsistentTypeCode;
-
-  // Dynamic Any factory functions.
-
-  CORBA_DynAny_ptr       create_dyn_any       (const CORBA_Any& any,
-                                               CORBA::Environment &ACE_TRY_ENV
-                                               = TAO_default_environment ());
-
-  CORBA_DynAny_ptr       create_basic_dyn_any (CORBA_TypeCode_ptr tc,
-                                               CORBA::Environment &ACE_TRY_ENV
-                                               = TAO_default_environment ());
-
-  CORBA_DynStruct_ptr    create_dyn_struct    (CORBA_TypeCode_ptr tc,
-                                               CORBA::Environment &ACE_TRY_ENV
-                                               = TAO_default_environment ());
-
-  CORBA_DynSequence_ptr  create_dyn_sequence  (CORBA_TypeCode_ptr tc,
-                                               CORBA::Environment &ACE_TRY_ENV
-                                               = TAO_default_environment ());
-
-  CORBA_DynArray_ptr     create_dyn_array     (CORBA_TypeCode_ptr tc,
-                                               CORBA::Environment &ACE_TRY_ENV
-                                               = TAO_default_environment ());
-
-  CORBA_DynUnion_ptr     create_dyn_union     (CORBA_TypeCode_ptr tc,
-                                               CORBA::Environment &ACE_TRY_ENV
-                                               = TAO_default_environment ());
-
-  CORBA_DynEnum_ptr      create_dyn_enum      (CORBA_TypeCode_ptr tc,
-                                               CORBA::Environment &ACE_TRY_ENV
-                                               = TAO_default_environment ());
-
-
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
   // = ORB event loop methods.

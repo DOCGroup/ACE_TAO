@@ -19,6 +19,7 @@
 #include "test_dynunion.h"
 #include "da_testsC.h"
 #include "data.h"
+#include "tao/DynamicAny/DynamicAny.h"
 
 Test_DynUnion::Test_DynUnion (CORBA::ORB_var orb)
   : orb_ (orb),
@@ -55,16 +56,31 @@ Test_DynUnion::run_test (void)
       ACE_DEBUG ((LM_DEBUG,
                  "testing: constructor(Any)/insert/get\n"));
 
+      CORBA::Object_var factory_obj =
+        this->orb_->resolve_initial_references ("DynAnyFactory",
+                                                ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      DynamicAny::DynAnyFactory_var dynany_factory =
+        DynamicAny::DynAnyFactory::_narrow (factory_obj.in (),
+                                            ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      if (CORBA::is_nil (dynany_factory.in ()))
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Nil dynamic any factory after narrow\n"),
+                          -1);
+
       tu._d(DynAnyTests::TE_SECOND);
       tu.tc (data.m_typecode2);
       CORBA_Any in_any1;
       in_any1 <<= tu;
-      CORBA_DynAny_var dp1 =
-        this->orb_->create_dyn_any (in_any1,
-                                    ACE_TRY_ENV);
+      DynamicAny::DynAny_var dp1 =
+        dynany_factory->create_dyn_any (in_any1,
+                                        ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      CORBA_DynUnion_var fa1 = CORBA_DynUnion::_narrow (dp1.in (),
-                                                        ACE_TRY_ENV);
+      DynamicAny::DynUnion_var fa1 =
+        DynamicAny::DynUnion::_narrow (dp1.in (),
+                                       ACE_TRY_ENV);
       ACE_TRY_CHECK;
       fa1->insert_typecode (data.m_typecode1,
                             ACE_TRY_ENV);
@@ -82,10 +98,21 @@ Test_DynUnion::run_test (void)
 
       CORBA_Any_var out_any1 = fa1->to_any (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      CORBA_DynUnion_var ftc1 =
-        this->orb_->create_dyn_union (DynAnyTests::_tc_test_union,
-                                      ACE_TRY_ENV);
+      DynamicAny::DynAny_var ftc1_base =
+        dynany_factory->create_dyn_any_from_type_code (DynAnyTests::_tc_test_union,
+                                                       ACE_TRY_ENV);
       ACE_TRY_CHECK;
+
+      DynamicAny::DynUnion_var ftc1 =
+        DynamicAny::DynUnion::_narrow (ftc1_base.in (),
+                                          ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      if (CORBA::is_nil (ftc1.in ()))
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "DynUnion::_narrow() returned nil\n"),
+                          -1);
+
       ftc1->from_any (out_any1.in (),
                       ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -100,21 +127,18 @@ Test_DynUnion::run_test (void)
       ACE_DEBUG ((LM_DEBUG,
                  "testing: set_as_default\n"));
 
-      if (!ftc1->set_as_default (ACE_TRY_ENV))
-        ACE_DEBUG ((LM_DEBUG,
-                   "++ OK ++\n"));
-      else
-        ++this->error_count_;
-
+      ftc1->set_to_default_member (ACE_TRY_ENV);
       ACE_TRY_CHECK;
+      ACE_DEBUG ((LM_DEBUG,
+                  "++ OK ++\n"));
 
       ACE_DEBUG ((LM_DEBUG,
                  "testing:discriminator/discriminator_kind\n"));
 
-      CORBA_DynAny_var dp2 = ftc1->discriminator (ACE_TRY_ENV);
+      DynamicAny::DynAny_var dp2 = ftc1->get_discriminator (ACE_TRY_ENV);
       ACE_TRY_CHECK;
       if (dp2->type (ACE_TRY_ENV)->kind ()
-            == ftc1->discriminator_kind (ACE_TRY_ENV))
+          == ftc1->discriminator_kind (ACE_TRY_ENV))
         ACE_DEBUG ((LM_DEBUG,
                    "++ OK ++\n"));
       else
@@ -125,7 +149,7 @@ Test_DynUnion::run_test (void)
       ACE_DEBUG ((LM_DEBUG,
                  "testing:member/member_kind/member_name\n"));
 
-      CORBA_DynAny_var dp3 = ftc1->member (ACE_TRY_ENV);
+      DynamicAny::DynAny_var dp3 = ftc1->member (ACE_TRY_ENV);
       ACE_TRY_CHECK;
       CORBA::String_var m_nm = ftc1->member_name (ACE_TRY_ENV);
       ACE_TRY_CHECK;

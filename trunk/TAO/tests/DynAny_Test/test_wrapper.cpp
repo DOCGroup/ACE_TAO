@@ -52,7 +52,7 @@ Test_Wrapper<T>::run_test (void)
                   "(%N:%l) test_wrapper.cpp - run_test:"
                   "run_test exception in %s",
                   test_name));
-      
+
       return -1;
     }
 

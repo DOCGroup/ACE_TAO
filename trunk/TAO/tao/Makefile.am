@@ -167,17 +167,6 @@ ORB_CORE_FILES = \
   TAO_Singleton_Manager.cpp \
   DLL_ORB.cpp
 
-DYNAMIC_ANY_FILES = \
-  DynAnyC.cpp \
-  DynAnyS.cpp \
-  DynAny_i.cpp \
-  DynArray_i.cpp \
-  DynEnum_i.cpp \
-  DynSequence_i.cpp \
-  DynStruct_i.cpp \
-  DynUnion_i.cpp \
-  InconsistentTypeCodeC.cpp
-
 # Build a libtool library, libTAO.la for installation in libdir.
 lib_LTLIBRARIES = libTAO.la
 libTAO_la_SOURCES = \
@@ -186,8 +175,7 @@ libTAO_la_SOURCES = \
   $(DEFAULT_RESOURCES_FILES) \
   $(INTERPRETIVE_MARSHALING_FILES) \
   $(IDL_COMPILER_FILES) \
-  $(ORB_CORE_FILES) \
-  $(DYNAMIC_ANY_FILES)
+  $(ORB_CORE_FILES)
 
 ## The following is an excerpt from the "libtool" manual, written by
 ## Gordon Matzigkeit:

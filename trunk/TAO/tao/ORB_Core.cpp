@@ -34,6 +34,8 @@
 
 #include "tao/Sync_Strategies.h"
 
+#include "tao/Object_Loader.h"
+
 #if defined(ACE_MVS)
 #include "ace/Codeset_IBM1047.h"
 #endif /* ACE_MVS */
@@ -62,6 +64,7 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     implrepo_service_ (CORBA::Object::_nil ()),
     use_implrepo_ (0),
     typecode_factory_ (CORBA::Object::_nil ()),
+    dynany_factory_ (CORBA::Object::_nil ()),
     orb_ (),
     root_poa_ (0),
     orb_params_ (),
@@ -1269,6 +1272,8 @@ TAO_ORB_Core::fini (void)
 
   CORBA::release (this->typecode_factory_);
 
+  CORBA::release (this->dynany_factory_);
+
   if (TAO_debug_level >= 3)
     {
       ACE_DEBUG ((LM_DEBUG,
@@ -1992,6 +1997,29 @@ TAO_ORB_Core::set_default_policies (void)
 #endif /* TAO_HAS_RT_CORBA == 1 */
 
   return 0;
+}
+
+void
+TAO_ORB_Core::resolve_dynanyfactory_i (CORBA::Environment &ACE_TRY_ENV)
+{
+  TAO_Object_Loader *loader =
+    ACE_Dynamic_Service<TAO_Object_Loader>::instance ("DynamicAny_Loader");
+  if (loader == 0)
+    {
+      // The Loader has not been statically configured, try to
+      // dynamically load it...
+      ACE_Service_Config::process_directive (
+        "dynamic DynamicAny_Loader Service_Object *"
+        "TAO_DynamicAny:_make_TAO_DynamicAny_Loader()"
+      );
+
+      loader =
+        ACE_Dynamic_Service<TAO_Object_Loader>::instance ("DynamicAny_Loader");
+      if (loader == 0)
+        ACE_THROW (CORBA::ORB::InvalidName ());
+    }
+  this->dynany_factory_ =
+    loader->create_object (this->orb_.in (), 0, 0, ACE_TRY_ENV);
 }
 
 // ****************************************************************

@@ -480,6 +480,9 @@ public:
   void typecode_factory (const CORBA::Object_ptr tf);
   // Get/Set the IOR of the TypeCodeFactory DLL.
 
+  CORBA::Object_ptr resolve_dynanyfactory (CORBA::Environment &ACE_TRY_ENV);
+  // Resolve the Dynamic Any Factory
+
   CORBA::ULong _incr_refcnt (void);
   CORBA::ULong _decr_refcnt (void);
   // Reference counting...
@@ -529,6 +532,9 @@ protected:
   int set_default_policies (void);
   // Set ORB-level policy defaults for this ORB.
 
+  void resolve_dynanyfactory_i (CORBA::Environment &ACE_TRY_ENV);
+  // Obtain and cache the dynamic any factory object reference
+
 private:
   // The ORB Core should not be copied
   ACE_UNIMPLEMENTED_FUNC (TAO_ORB_Core(const TAO_ORB_Core&))
@@ -560,6 +566,9 @@ protected:
 
   CORBA::Object_ptr typecode_factory_;
   // The cached IOR for the TypeCodeFactory DLL.
+
+  CORBA::Object_ptr dynany_factory_;
+  // The cached object reference for the DynAnyFactory.
 
   CORBA::ORB_var orb_;
   // @@ Should we keep a single ORB pointer? This is good because

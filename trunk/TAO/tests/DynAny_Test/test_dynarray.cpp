@@ -19,6 +19,7 @@
 #include "test_dynarray.h"
 #include "da_testsC.h"
 #include "data.h"
+#include "tao/DynamicAny/DynamicAny.h"
 
 Test_DynArray::Test_DynArray (CORBA::ORB_var orb)
   : orb_ (orb),
@@ -35,7 +36,7 @@ Test_DynArray::~Test_DynArray (void)
 
 const char*
 Test_DynArray::test_name (void) const
-{ 
+{
   return this->test_name_;
 }
 
@@ -55,12 +56,27 @@ Test_DynArray::run_test (void)
       ACE_DEBUG ((LM_DEBUG,
                  "testing: constructor(Any)/insert/get/seek/rewind/current_component\n"));
 
+      CORBA::Object_var factory_obj =
+        this->orb_->resolve_initial_references ("DynAnyFactory",
+                                                ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      DynamicAny::DynAnyFactory_var dynany_factory =
+        DynamicAny::DynAnyFactory::_narrow (factory_obj.in (),
+                                            ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      if (CORBA::is_nil (dynany_factory.in ()))
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Nil dynamic any factory after narrow\n"),
+                          -1);
+
       CORBA::Any in_any1;
       in_any1 <<= ta;
-      CORBA_DynAny_var dp1 = this->orb_->create_dyn_any (in_any1,
-                                                         ACE_TRY_ENV);
+      DynamicAny::DynAny_var dp1 =
+        dynany_factory->create_dyn_any (in_any1,
+                                        ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      CORBA_DynArray_var fa1 = CORBA_DynArray::_narrow (dp1.in (),
+      DynamicAny::DynArray_var fa1 = DynamicAny::DynArray::_narrow (dp1.in (),
                                                         ACE_TRY_ENV);
       ACE_TRY_CHECK;
       fa1->seek (1,
@@ -80,16 +96,27 @@ Test_DynArray::run_test (void)
       if (l_out1 == data.m_long1)
         ACE_DEBUG ((LM_DEBUG,
                    "++ OK ++\n"));
-      else 
+      else
         ++this->error_count_;
 
       ACE_DEBUG ((LM_DEBUG,
                  "testing: constructor(TypeCode)/from_any/to_any\n"));
 
-      CORBA_DynArray_var ftc1 = 
-        this->orb_->create_dyn_array (DynAnyTests::_tc_test_array,
-                                      ACE_TRY_ENV);
+      DynamicAny::DynAny_var ftc1_base =
+        dynany_factory->create_dyn_any_from_type_code (DynAnyTests::_tc_test_array,
+                                                       ACE_TRY_ENV);
       ACE_TRY_CHECK;
+
+      DynamicAny::DynArray_var ftc1 =
+        DynamicAny::DynArray::_narrow (ftc1_base.in (),
+                                       ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      if (CORBA::is_nil (ftc1.in ()))
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "DynArray::_narrow() returned nil\n"),
+                          -1);
+
       ta[1] = data.m_long1;
       CORBA::Any in_any2;
       in_any2 <<= ta;
@@ -99,18 +126,18 @@ Test_DynArray::run_test (void)
       CORBA::Any_var out_any1 = ftc1->to_any (ACE_TRY_ENV);
       ACE_TRY_CHECK;
       DynAnyTests::test_array_forany ta_out;
-      out_any1.in () >>= ta_out; 
-      
+      out_any1.in () >>= ta_out;
+
       if (ta_out[(CORBA::ULong) 1] == data.m_long1)
         ACE_DEBUG ((LM_DEBUG,
                    "++ OK ++\n"));
-      else 
+      else
         ++this->error_count_;
 
       ACE_DEBUG ((LM_DEBUG,
                  "testing: set_elements/get_elements\n"));
 
-      CORBA::AnySeq as_in (2);
+      DynamicAny::AnySeq as_in (2);
       as_in.length (2);
       CORBA::Any in_any3;
       in_any3 <<= data.m_long1;
@@ -119,7 +146,7 @@ Test_DynArray::run_test (void)
       ftc1->set_elements (as_in,
                           ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      CORBA::AnySeq* as_out = ftc1->get_elements (ACE_TRY_ENV);
+      DynamicAny::AnySeq* as_out = ftc1->get_elements (ACE_TRY_ENV);
       ACE_TRY_CHECK;
       CORBA_Any out_any2 = (*as_out)[1];
       CORBA::Long l_out2;
@@ -127,7 +154,7 @@ Test_DynArray::run_test (void)
       if (l_out2 == data.m_long1)
         ACE_DEBUG ((LM_DEBUG,
                    "++ OK ++\n"));
-      else 
+      else
         ++this->error_count_;
 
       // Created with NEW
@@ -152,4 +179,3 @@ Test_DynArray::run_test (void)
 
   return 0;
 }
-

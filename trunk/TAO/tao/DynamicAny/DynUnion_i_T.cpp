@@ -16,7 +16,7 @@
 #ifndef TAO_DYNUNION_I_T_C
 #define TAO_DYNUNION_I_T_C
 
-#include "tao/DynUnion_i_T.h"
+#include "DynUnion_i_T.h"
 #include "tao/Any.h"
 
 // Method of template class that serves as a functor for all that
