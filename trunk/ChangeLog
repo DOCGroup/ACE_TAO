@@ -1,3 +1,8 @@
+Mon Oct 16 14:05:13 2000  David L. Levine <levine@cs.wustl.edu>
+
+        * ACE-INSTALL.html: removed spurious 3D characters from
+          VxWorks section.
+
 Mon Oct 16 11:17:08 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * ace/Makefile.am:
