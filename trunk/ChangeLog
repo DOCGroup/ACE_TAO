@@ -1,3 +1,8 @@
+Thu Oct 28 11:50:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/dsp2dsp.pl:
+          Removed this file, dsp's are now generated with MPC
+
 Thu Oct 28 06:21:40 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/HTBP/HTBP_Session.cpp:
