@@ -6,6 +6,7 @@
 DIRS = \
         AVStreams \
         Concurrency \
+        CosEvent \
 	FaultTolerance \
 	Event \
 	EC_Throughput \
