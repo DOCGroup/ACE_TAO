@@ -34,7 +34,7 @@ ACE_TEXT ("main") ACE_PLATFORM_EXE_SUFFIX \
 ACE_TEXT (" -f ") ACE_PLATFORM
 
 int
-ACE_TMAIN (int, ACE_TCHAR *[])
+run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Time_Service_Test"));
 

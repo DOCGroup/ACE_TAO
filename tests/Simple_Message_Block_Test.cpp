@@ -26,7 +26,7 @@
 ACE_RCSID(tests, Simple_Message_Block_Test, "$Id$")
 
 int
-ACE_TMAIN (int, ACE_TCHAR *[])
+run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Simple_Message_Block_Test"));
 

@@ -30,7 +30,7 @@ ACE_RCSID (tests,
 
 #if !defined (ACE_HAS_TK)
 
-int ACE_TMAIN (int, ACE_TCHAR*[])
+int run_main (int, ACE_TCHAR*[])
 {
   ACE_START_TEST (ACE_TEXT ("TkReactor_Test"));
 
@@ -256,7 +256,7 @@ init (Tcl_Interp *interp)
 }
 
 int
-ACE_TMAIN (int, ACE_TCHAR *[])
+run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("TkReactor_Test"));
 

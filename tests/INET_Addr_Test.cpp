@@ -29,7 +29,7 @@ int check_type_consistency (const ACE_INET_Addr &addr)
 {
   int family = -1;
 
-  if (addr.get_type () == AF_INET) 
+  if (addr.get_type () == AF_INET)
     {
       struct sockaddr_in *sa4 = (struct sockaddr_in *)addr.get_addr();
       family = sa4->sin_family;
@@ -49,13 +49,13 @@ int check_type_consistency (const ACE_INET_Addr &addr)
 		  ACE_TEXT ("and the sockaddr family (%d)\n"),
 		  addr.get_type (),
 		  family));
-      return 1;		    
+      return 1;
     }
   return 0;
 }
 
 
-int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+int run_main (int argc, ACE_TCHAR *argv[])
 {
   ACE_UNUSED_ARG (argc);
   ACE_UNUSED_ARG (argv);
@@ -64,7 +64,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   int status = 0;     // Innocent until proven guilty
 
-  const char *ipv4_addresses[] = 
+  const char *ipv4_addresses[] =
   {
     "127.0.0.1", "138.38.180.251", "64.219.54.121", "192.0.0.1", "10.0.0.1", 0
   };
@@ -72,7 +72,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_INET_Addr addr;
   status |= check_type_consistency (addr);
 
-  for (int i=0; ipv4_addresses[i] != 0; i++) 
+  for (int i=0; ipv4_addresses[i] != 0; i++)
     {
       struct in_addr addrv4;
       ACE_UINT32 addr32;
@@ -144,8 +144,8 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       addr.set (0, ACE_UINT32 (1), 1);
       addr.set_addr (&sa4, sizeof(sa4));
       status |= check_type_consistency (addr);
-    
-      if (addr.get_port_number () != 8080) 
+
+      if (addr.get_port_number () != 8080)
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("ACE_INET_Addr::set_addr() ")

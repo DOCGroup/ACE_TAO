@@ -10,11 +10,10 @@
 //    <ACE_Get_Opt>, and demonstrates how to use it.
 //
 // = AUTHOR
-//    Don Hinton <dhinton@gmx.net>
+//    Don Hinton <dhinton@dresystems.com>
 //
 // ============================================================================
 
-#include "ace/OS.h"
 #include "ace/Get_Opt.h"
 #include "ace/ARGV.h"
 #include "ace/SString.h"
@@ -328,7 +327,7 @@ run_test (int& test_number, int ordering)
 }
 
 int
-ACE_TMAIN (int, ACE_TCHAR *argv[])
+run_main (int, ACE_TCHAR *argv[])
 {
   ACE_START_TEST (ACE_TEXT ("Get_Opt_Test"));
   ACE_UNUSED_ARG (argv);

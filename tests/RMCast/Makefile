@@ -16,7 +16,8 @@ BIN =   RMCast_Fragment_Test \
 	RMCast_Reordering_Test
 
 PSRC=$(addsuffix .cpp,$(BIN))
-LDLIBS = -lACE_RMCast
+LDLIBS = -lACE_RMCast -lTest_Output
+
 CPPFLAGS += -I..
 
 #----------------------------------------------------------------------------
@@ -49,12 +50,18 @@ endif
 
 
 .obj/RMCast_Fragment_Test.o .obj/RMCast_Fragment_Test.so .shobj/RMCast_Fragment_Test.o .shobj/RMCast_Fragment_Test.so: RMCast_Fragment_Test.cpp ../test_config.h \
+  $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
+  $(ACE_ROOT)/ace/streams.h \
+  $(ACE_ROOT)/ace/Log_Msg.h \
+  $(ACE_ROOT)/ace/Global_Macros.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/Default_Constants.h \
+  $(ACE_ROOT)/ace/Log_Priority.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
-  $(ACE_ROOT)/ace/OS_Export.h \
   $(ACE_ROOT)/ace/OS_Errno.h \
   $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -69,35 +76,11 @@ endif
   $(ACE_ROOT)/ace/OS_TLI.inl \
   $(ACE_ROOT)/ace/Time_Value.h \
   $(ACE_ROOT)/ace/Time_Value.inl \
-  $(ACE_ROOT)/ace/Default_Constants.h \
-  $(ACE_ROOT)/ace/Global_Macros.h \
   $(ACE_ROOT)/ace/Min_Max.h \
-  $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
-  $(ACE_ROOT)/ace/Singleton.h \
-  $(ACE_ROOT)/ace/Synch.h $(ACE_ROOT)/ace/Synch.i \
-  $(ACE_ROOT)/ace/Synch_T.h \
-  $(ACE_ROOT)/ace/Synch_T.i \
-  $(ACE_ROOT)/ace/Thread.h \
-  $(ACE_ROOT)/ace/Thread_Adapter.h \
-  $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+  $(ACE_ROOT)/ace/Trace.h \
+  $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
-  $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
-  $(ACE_ROOT)/ace/Thread_Adapter.inl \
-  $(ACE_ROOT)/ace/Thread.i \
-  $(ACE_ROOT)/ace/Synch_T.cpp \
-  $(ACE_ROOT)/ace/Log_Msg.h \
-  $(ACE_ROOT)/ace/Log_Priority.h \
-  $(ACE_ROOT)/ace/Singleton.i \
-  $(ACE_ROOT)/ace/Singleton.cpp \
-  $(ACE_ROOT)/ace/Object_Manager.h \
-  $(ACE_ROOT)/ace/Object_Manager.i \
-  $(ACE_ROOT)/ace/Managed_Object.h \
-  $(ACE_ROOT)/ace/Managed_Object.i \
-  $(ACE_ROOT)/ace/Managed_Object.cpp \
-  $(ACE_ROOT)/ace/Framework_Component.h \
-  $(ACE_ROOT)/ace/Framework_Component.inl \
   $(ACE_ROOT)/ace/ACE.h \
   $(ACE_ROOT)/ace/Flag_Manip.h \
   $(ACE_ROOT)/ace/Flag_Manip.i \
@@ -110,9 +93,6 @@ endif
   $(ACE_ROOT)/ace/Sock_Connect.h \
   $(ACE_ROOT)/ace/Sock_Connect.i \
   $(ACE_ROOT)/ace/ACE.i \
-  $(ACE_ROOT)/ace/Framework_Component_T.h \
-  $(ACE_ROOT)/ace/Framework_Component_T.inl \
-  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
   $(ACE_ROOT)/ace/Message_Block.h \
   $(ACE_ROOT)/ace/Message_Block.i \
   $(ACE_ROOT)/ace/Message_Block_T.h \
@@ -129,11 +109,23 @@ endif
   $(ACE_ROOT)/ace/DLL.h \
   $(ACE_ROOT)/ace/Service_Object.i \
   $(ACE_ROOT)/ace/Thread_Manager.h \
+  $(ACE_ROOT)/ace/Thread.h \
+  $(ACE_ROOT)/ace/Thread_Adapter.h \
+  $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+  $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+  $(ACE_ROOT)/ace/Thread_Adapter.inl \
+  $(ACE_ROOT)/ace/Thread.i \
   $(ACE_ROOT)/ace/Thread_Exit.h \
   $(ACE_ROOT)/ace/Thread_Control.h \
   $(ACE_ROOT)/ace/Thread_Control.inl \
+  $(ACE_ROOT)/ace/Synch.h \
+  $(ACE_ROOT)/ace/Synch.i \
+  $(ACE_ROOT)/ace/Synch_T.h \
+  $(ACE_ROOT)/ace/Synch_T.i \
+  $(ACE_ROOT)/ace/Synch_T.cpp \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
-  $(ACE_ROOT)/ace/Node.h $(ACE_ROOT)/ace/Node.cpp \
+  $(ACE_ROOT)/ace/Node.h \
+  $(ACE_ROOT)/ace/Node.cpp \
   $(ACE_ROOT)/ace/Unbounded_Queue.inl \
   $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
   $(ACE_ROOT)/ace/Containers.h \
@@ -150,8 +142,22 @@ endif
   $(ACE_ROOT)/ace/Free_List.h \
   $(ACE_ROOT)/ace/Free_List.i \
   $(ACE_ROOT)/ace/Free_List.cpp \
+  $(ACE_ROOT)/ace/Singleton.h \
+  $(ACE_ROOT)/ace/Singleton.i \
+  $(ACE_ROOT)/ace/Singleton.cpp \
+  $(ACE_ROOT)/ace/Object_Manager.h \
+  $(ACE_ROOT)/ace/Object_Manager.i \
+  $(ACE_ROOT)/ace/Managed_Object.h \
+  $(ACE_ROOT)/ace/Managed_Object.i \
+  $(ACE_ROOT)/ace/Managed_Object.cpp \
+  $(ACE_ROOT)/ace/Framework_Component.h \
+  $(ACE_ROOT)/ace/Framework_Component.inl \
+  $(ACE_ROOT)/ace/Framework_Component_T.h \
+  $(ACE_ROOT)/ace/Framework_Component_T.inl \
+  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
   $(ACE_ROOT)/ace/Thread_Manager.i \
-  $(ACE_ROOT)/ace/Task.i $(ACE_ROOT)/ace/Task_T.h \
+  $(ACE_ROOT)/ace/Task.i \
+  $(ACE_ROOT)/ace/Task_T.h \
   $(ACE_ROOT)/ace/Message_Queue.h \
   $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
   $(ACE_ROOT)/ace/Message_Queue_T.h \
@@ -176,12 +182,18 @@ endif
   $(ACE_ROOT)/ace/RMCast/RMCast_Fragment.i
 
 .obj/RMCast_Reassembly_Test.o .obj/RMCast_Reassembly_Test.so .shobj/RMCast_Reassembly_Test.o .shobj/RMCast_Reassembly_Test.so: RMCast_Reassembly_Test.cpp ../test_config.h \
+  $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
+  $(ACE_ROOT)/ace/streams.h \
+  $(ACE_ROOT)/ace/Log_Msg.h \
+  $(ACE_ROOT)/ace/Global_Macros.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/Default_Constants.h \
+  $(ACE_ROOT)/ace/Log_Priority.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
-  $(ACE_ROOT)/ace/OS_Export.h \
   $(ACE_ROOT)/ace/OS_Errno.h \
   $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -196,26 +208,56 @@ endif
   $(ACE_ROOT)/ace/OS_TLI.inl \
   $(ACE_ROOT)/ace/Time_Value.h \
   $(ACE_ROOT)/ace/Time_Value.inl \
-  $(ACE_ROOT)/ace/Default_Constants.h \
-  $(ACE_ROOT)/ace/Global_Macros.h \
   $(ACE_ROOT)/ace/Min_Max.h \
-  $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
-  $(ACE_ROOT)/ace/Singleton.h \
-  $(ACE_ROOT)/ace/Synch.h $(ACE_ROOT)/ace/Synch.i \
-  $(ACE_ROOT)/ace/Synch_T.h \
-  $(ACE_ROOT)/ace/Synch_T.i \
+  $(ACE_ROOT)/ace/Trace.h \
+  $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
+  $(ACE_ROOT)/ace/Task.h \
+  $(ACE_ROOT)/ace/Service_Object.h \
+  $(ACE_ROOT)/ace/Shared_Object.h \
+  $(ACE_ROOT)/ace/Shared_Object.i \
+  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+  $(ACE_ROOT)/ace/Event_Handler.h \
+  $(ACE_ROOT)/ace/Event_Handler.i \
+  $(ACE_ROOT)/ace/DLL.h \
+  $(ACE_ROOT)/ace/Service_Object.i \
+  $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread.h \
   $(ACE_ROOT)/ace/Thread_Adapter.h \
   $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
-  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
-  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
   $(ACE_ROOT)/ace/Thread_Adapter.inl \
   $(ACE_ROOT)/ace/Thread.i \
+  $(ACE_ROOT)/ace/Thread_Exit.h \
+  $(ACE_ROOT)/ace/Thread_Control.h \
+  $(ACE_ROOT)/ace/Thread_Control.inl \
+  $(ACE_ROOT)/ace/Synch.h \
+  $(ACE_ROOT)/ace/Synch.i \
+  $(ACE_ROOT)/ace/Synch_T.h \
+  $(ACE_ROOT)/ace/Synch_T.i \
   $(ACE_ROOT)/ace/Synch_T.cpp \
-  $(ACE_ROOT)/ace/Log_Msg.h \
-  $(ACE_ROOT)/ace/Log_Priority.h \
+  $(ACE_ROOT)/ace/Unbounded_Queue.h \
+  $(ACE_ROOT)/ace/Node.h \
+  $(ACE_ROOT)/ace/Node.cpp \
+  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
+  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
+  $(ACE_ROOT)/ace/Malloc_Base.h \
+  $(ACE_ROOT)/ace/Containers.h \
+  $(ACE_ROOT)/ace/Containers.i \
+  $(ACE_ROOT)/ace/Containers_T.h \
+  $(ACE_ROOT)/ace/Array_Base.h \
+  $(ACE_ROOT)/ace/Array_Base.inl \
+  $(ACE_ROOT)/ace/Array_Base.cpp \
+  $(ACE_ROOT)/ace/Unbounded_Set.h \
+  $(ACE_ROOT)/ace/Unbounded_Set.inl \
+  $(ACE_ROOT)/ace/Unbounded_Set.cpp \
+  $(ACE_ROOT)/ace/Containers_T.i \
+  $(ACE_ROOT)/ace/Containers_T.cpp \
+  $(ACE_ROOT)/ace/Free_List.h \
+  $(ACE_ROOT)/ace/Free_List.i \
+  $(ACE_ROOT)/ace/Free_List.cpp \
+  $(ACE_ROOT)/ace/Singleton.h \
   $(ACE_ROOT)/ace/Singleton.i \
   $(ACE_ROOT)/ace/Singleton.cpp \
   $(ACE_ROOT)/ace/Object_Manager.h \
@@ -240,40 +282,9 @@ endif
   $(ACE_ROOT)/ace/Framework_Component_T.h \
   $(ACE_ROOT)/ace/Framework_Component_T.inl \
   $(ACE_ROOT)/ace/Framework_Component_T.cpp \
-  $(ACE_ROOT)/ace/Task.h \
-  $(ACE_ROOT)/ace/Service_Object.h \
-  $(ACE_ROOT)/ace/Shared_Object.h \
-  $(ACE_ROOT)/ace/Shared_Object.i \
-  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
-  $(ACE_ROOT)/ace/Event_Handler.h \
-  $(ACE_ROOT)/ace/Event_Handler.i \
-  $(ACE_ROOT)/ace/DLL.h \
-  $(ACE_ROOT)/ace/Service_Object.i \
-  $(ACE_ROOT)/ace/Thread_Manager.h \
-  $(ACE_ROOT)/ace/Thread_Exit.h \
-  $(ACE_ROOT)/ace/Thread_Control.h \
-  $(ACE_ROOT)/ace/Thread_Control.inl \
-  $(ACE_ROOT)/ace/Unbounded_Queue.h \
-  $(ACE_ROOT)/ace/Node.h $(ACE_ROOT)/ace/Node.cpp \
-  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
-  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
-  $(ACE_ROOT)/ace/Malloc_Base.h \
-  $(ACE_ROOT)/ace/Containers.h \
-  $(ACE_ROOT)/ace/Containers.i \
-  $(ACE_ROOT)/ace/Containers_T.h \
-  $(ACE_ROOT)/ace/Array_Base.h \
-  $(ACE_ROOT)/ace/Array_Base.inl \
-  $(ACE_ROOT)/ace/Array_Base.cpp \
-  $(ACE_ROOT)/ace/Unbounded_Set.h \
-  $(ACE_ROOT)/ace/Unbounded_Set.inl \
-  $(ACE_ROOT)/ace/Unbounded_Set.cpp \
-  $(ACE_ROOT)/ace/Containers_T.i \
-  $(ACE_ROOT)/ace/Containers_T.cpp \
-  $(ACE_ROOT)/ace/Free_List.h \
-  $(ACE_ROOT)/ace/Free_List.i \
-  $(ACE_ROOT)/ace/Free_List.cpp \
   $(ACE_ROOT)/ace/Thread_Manager.i \
-  $(ACE_ROOT)/ace/Task.i $(ACE_ROOT)/ace/Task_T.h \
+  $(ACE_ROOT)/ace/Task.i \
+  $(ACE_ROOT)/ace/Task_T.h \
   $(ACE_ROOT)/ace/Message_Queue.h \
   $(ACE_ROOT)/ace/Message_Block.h \
   $(ACE_ROOT)/ace/Message_Block.i \
@@ -311,6 +322,7 @@ endif
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
   $(ACE_ROOT)/ace/Service_Config.h \
   $(ACE_ROOT)/ace/SString.h \
+  $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/String_Base.h \
   $(ACE_ROOT)/ace/String_Base_Const.h \
   $(ACE_ROOT)/ace/String_Base.i \
@@ -353,12 +365,19 @@ endif
   $(ACE_ROOT)/ace/RMCast/RMCast_Reassembly.i
 
 .obj/RMCast_UDP_Best_Effort_Test.o .obj/RMCast_UDP_Best_Effort_Test.so .shobj/RMCast_UDP_Best_Effort_Test.o .shobj/RMCast_UDP_Best_Effort_Test.so: RMCast_UDP_Best_Effort_Test.cpp \
+  ../test_config.h \
+  $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
+  $(ACE_ROOT)/ace/streams.h \
+  $(ACE_ROOT)/ace/Log_Msg.h \
+  $(ACE_ROOT)/ace/Global_Macros.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/Default_Constants.h \
+  $(ACE_ROOT)/ace/Log_Priority.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
-  $(ACE_ROOT)/ace/OS_Export.h \
   $(ACE_ROOT)/ace/OS_Errno.h \
   $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -373,50 +392,11 @@ endif
   $(ACE_ROOT)/ace/OS_TLI.inl \
   $(ACE_ROOT)/ace/Time_Value.h \
   $(ACE_ROOT)/ace/Time_Value.inl \
-  $(ACE_ROOT)/ace/Default_Constants.h \
-  $(ACE_ROOT)/ace/Global_Macros.h \
   $(ACE_ROOT)/ace/Min_Max.h \
-  $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
-  $(ACE_ROOT)/ace/Singleton.h \
-  $(ACE_ROOT)/ace/Synch.h $(ACE_ROOT)/ace/Synch.i \
-  $(ACE_ROOT)/ace/Synch_T.h \
-  $(ACE_ROOT)/ace/Synch_T.i \
-  $(ACE_ROOT)/ace/Thread.h \
-  $(ACE_ROOT)/ace/Thread_Adapter.h \
-  $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+  $(ACE_ROOT)/ace/Trace.h \
+  $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
-  $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
-  $(ACE_ROOT)/ace/Thread_Adapter.inl \
-  $(ACE_ROOT)/ace/Thread.i \
-  $(ACE_ROOT)/ace/Synch_T.cpp \
-  $(ACE_ROOT)/ace/Log_Msg.h \
-  $(ACE_ROOT)/ace/Log_Priority.h \
-  $(ACE_ROOT)/ace/Singleton.i \
-  $(ACE_ROOT)/ace/Singleton.cpp \
-  $(ACE_ROOT)/ace/Object_Manager.h \
-  $(ACE_ROOT)/ace/Object_Manager.i \
-  $(ACE_ROOT)/ace/Managed_Object.h \
-  $(ACE_ROOT)/ace/Managed_Object.i \
-  $(ACE_ROOT)/ace/Managed_Object.cpp \
-  $(ACE_ROOT)/ace/Framework_Component.h \
-  $(ACE_ROOT)/ace/Framework_Component.inl \
-  $(ACE_ROOT)/ace/ACE.h \
-  $(ACE_ROOT)/ace/Flag_Manip.h \
-  $(ACE_ROOT)/ace/Flag_Manip.i \
-  $(ACE_ROOT)/ace/Handle_Ops.h \
-  $(ACE_ROOT)/ace/Handle_Ops.i \
-  $(ACE_ROOT)/ace/Lib_Find.h \
-  $(ACE_ROOT)/ace/Lib_Find.i \
-  $(ACE_ROOT)/ace/Init_ACE.h \
-  $(ACE_ROOT)/ace/Init_ACE.i \
-  $(ACE_ROOT)/ace/Sock_Connect.h \
-  $(ACE_ROOT)/ace/Sock_Connect.i \
-  $(ACE_ROOT)/ace/ACE.i \
-  $(ACE_ROOT)/ace/Framework_Component_T.h \
-  $(ACE_ROOT)/ace/Framework_Component_T.inl \
-  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
   $(ACE_ROOT)/ace/RMCast/RMCast_IO_UDP.h \
   $(ACE_ROOT)/ace/RMCast/RMCast_Module.h \
   $(ACE_ROOT)/ace/RMCast/RMCast.h \
@@ -425,27 +405,52 @@ endif
   $(ACE_ROOT)/ace/RMCast/RMCast_Module.i \
   $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.h \
   $(ACE_ROOT)/ace/SOCK_Dgram.h \
-  $(ACE_ROOT)/ace/SOCK.h $(ACE_ROOT)/ace/Addr.h \
+  $(ACE_ROOT)/ace/SOCK.h \
+  $(ACE_ROOT)/ace/Addr.h \
   $(ACE_ROOT)/ace/Addr.i \
   $(ACE_ROOT)/ace/IPC_SAP.h \
+  $(ACE_ROOT)/ace/Flag_Manip.h \
+  $(ACE_ROOT)/ace/Flag_Manip.i \
   $(ACE_ROOT)/ace/IPC_SAP.i \
   $(ACE_ROOT)/ace/SOCK.i \
   $(ACE_ROOT)/ace/INET_Addr.h \
+  $(ACE_ROOT)/ace/Sock_Connect.h \
+  $(ACE_ROOT)/ace/Sock_Connect.i \
   $(ACE_ROOT)/ace/INET_Addr.i \
   $(ACE_ROOT)/ace/SOCK_Dgram.i \
   $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
   $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/ACE.h \
+  $(ACE_ROOT)/ace/Handle_Ops.h \
+  $(ACE_ROOT)/ace/Handle_Ops.i \
+  $(ACE_ROOT)/ace/Lib_Find.h \
+  $(ACE_ROOT)/ace/Lib_Find.i \
+  $(ACE_ROOT)/ace/Init_ACE.h \
+  $(ACE_ROOT)/ace/Init_ACE.i \
+  $(ACE_ROOT)/ace/ACE.i \
   $(ACE_ROOT)/ace/Functor.i \
   $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
+  $(ACE_ROOT)/ace/Synch.h \
+  $(ACE_ROOT)/ace/Synch.i \
+  $(ACE_ROOT)/ace/Synch_T.h \
+  $(ACE_ROOT)/ace/Synch_T.i \
+  $(ACE_ROOT)/ace/Thread.h \
+  $(ACE_ROOT)/ace/Thread_Adapter.h \
+  $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+  $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+  $(ACE_ROOT)/ace/Thread_Adapter.inl \
+  $(ACE_ROOT)/ace/Thread.i \
+  $(ACE_ROOT)/ace/Synch_T.cpp \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
   $(ACE_ROOT)/ace/Service_Config.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
-  $(ACE_ROOT)/ace/Node.h $(ACE_ROOT)/ace/Node.cpp \
+  $(ACE_ROOT)/ace/Node.h \
+  $(ACE_ROOT)/ace/Node.cpp \
   $(ACE_ROOT)/ace/Unbounded_Queue.inl \
   $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
   $(ACE_ROOT)/ace/Malloc_Base.h \
@@ -453,6 +458,7 @@ endif
   $(ACE_ROOT)/ace/Unbounded_Set.inl \
   $(ACE_ROOT)/ace/Unbounded_Set.cpp \
   $(ACE_ROOT)/ace/SString.h \
+  $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/String_Base.h \
   $(ACE_ROOT)/ace/String_Base_Const.h \
   $(ACE_ROOT)/ace/String_Base.i \
@@ -527,8 +533,22 @@ endif
   $(ACE_ROOT)/ace/Array_Base.cpp \
   $(ACE_ROOT)/ace/Containers_T.i \
   $(ACE_ROOT)/ace/Containers_T.cpp \
+  $(ACE_ROOT)/ace/Singleton.h \
+  $(ACE_ROOT)/ace/Singleton.i \
+  $(ACE_ROOT)/ace/Singleton.cpp \
+  $(ACE_ROOT)/ace/Object_Manager.h \
+  $(ACE_ROOT)/ace/Object_Manager.i \
+  $(ACE_ROOT)/ace/Managed_Object.h \
+  $(ACE_ROOT)/ace/Managed_Object.i \
+  $(ACE_ROOT)/ace/Managed_Object.cpp \
+  $(ACE_ROOT)/ace/Framework_Component.h \
+  $(ACE_ROOT)/ace/Framework_Component.inl \
+  $(ACE_ROOT)/ace/Framework_Component_T.h \
+  $(ACE_ROOT)/ace/Framework_Component_T.inl \
+  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
   $(ACE_ROOT)/ace/Thread_Manager.i \
-  $(ACE_ROOT)/ace/Task.i $(ACE_ROOT)/ace/Task_T.h \
+  $(ACE_ROOT)/ace/Task.i \
+  $(ACE_ROOT)/ace/Task_T.h \
   $(ACE_ROOT)/ace/Message_Queue.h \
   $(ACE_ROOT)/ace/Message_Block.h \
   $(ACE_ROOT)/ace/Message_Block.i \
@@ -551,12 +571,18 @@ endif
   $(ACE_ROOT)/ace/Stream_Modules.cpp
 
 .obj/RMCast_Membership_Test.o .obj/RMCast_Membership_Test.so .shobj/RMCast_Membership_Test.o .shobj/RMCast_Membership_Test.so: RMCast_Membership_Test.cpp ../test_config.h \
+  $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
+  $(ACE_ROOT)/ace/streams.h \
+  $(ACE_ROOT)/ace/Log_Msg.h \
+  $(ACE_ROOT)/ace/Global_Macros.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/Default_Constants.h \
+  $(ACE_ROOT)/ace/Log_Priority.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
-  $(ACE_ROOT)/ace/OS_Export.h \
   $(ACE_ROOT)/ace/OS_Errno.h \
   $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -571,50 +597,11 @@ endif
   $(ACE_ROOT)/ace/OS_TLI.inl \
   $(ACE_ROOT)/ace/Time_Value.h \
   $(ACE_ROOT)/ace/Time_Value.inl \
-  $(ACE_ROOT)/ace/Default_Constants.h \
-  $(ACE_ROOT)/ace/Global_Macros.h \
   $(ACE_ROOT)/ace/Min_Max.h \
-  $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
-  $(ACE_ROOT)/ace/Singleton.h \
-  $(ACE_ROOT)/ace/Synch.h $(ACE_ROOT)/ace/Synch.i \
-  $(ACE_ROOT)/ace/Synch_T.h \
-  $(ACE_ROOT)/ace/Synch_T.i \
-  $(ACE_ROOT)/ace/Thread.h \
-  $(ACE_ROOT)/ace/Thread_Adapter.h \
-  $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+  $(ACE_ROOT)/ace/Trace.h \
+  $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
-  $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
-  $(ACE_ROOT)/ace/Thread_Adapter.inl \
-  $(ACE_ROOT)/ace/Thread.i \
-  $(ACE_ROOT)/ace/Synch_T.cpp \
-  $(ACE_ROOT)/ace/Log_Msg.h \
-  $(ACE_ROOT)/ace/Log_Priority.h \
-  $(ACE_ROOT)/ace/Singleton.i \
-  $(ACE_ROOT)/ace/Singleton.cpp \
-  $(ACE_ROOT)/ace/Object_Manager.h \
-  $(ACE_ROOT)/ace/Object_Manager.i \
-  $(ACE_ROOT)/ace/Managed_Object.h \
-  $(ACE_ROOT)/ace/Managed_Object.i \
-  $(ACE_ROOT)/ace/Managed_Object.cpp \
-  $(ACE_ROOT)/ace/Framework_Component.h \
-  $(ACE_ROOT)/ace/Framework_Component.inl \
-  $(ACE_ROOT)/ace/ACE.h \
-  $(ACE_ROOT)/ace/Flag_Manip.h \
-  $(ACE_ROOT)/ace/Flag_Manip.i \
-  $(ACE_ROOT)/ace/Handle_Ops.h \
-  $(ACE_ROOT)/ace/Handle_Ops.i \
-  $(ACE_ROOT)/ace/Lib_Find.h \
-  $(ACE_ROOT)/ace/Lib_Find.i \
-  $(ACE_ROOT)/ace/Init_ACE.h \
-  $(ACE_ROOT)/ace/Init_ACE.i \
-  $(ACE_ROOT)/ace/Sock_Connect.h \
-  $(ACE_ROOT)/ace/Sock_Connect.i \
-  $(ACE_ROOT)/ace/ACE.i \
-  $(ACE_ROOT)/ace/Framework_Component_T.h \
-  $(ACE_ROOT)/ace/Framework_Component_T.inl \
-  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
   $(ACE_ROOT)/ace/RMCast/RMCast_Proxy.h \
   $(ACE_ROOT)/ace/RMCast/RMCast_Module.h \
   $(ACE_ROOT)/ace/RMCast/RMCast.h \
@@ -626,7 +613,8 @@ endif
   $(ACE_ROOT)/ace/Containers.h \
   $(ACE_ROOT)/ace/Containers.i \
   $(ACE_ROOT)/ace/Containers_T.h \
-  $(ACE_ROOT)/ace/Node.h $(ACE_ROOT)/ace/Node.cpp \
+  $(ACE_ROOT)/ace/Node.h \
+  $(ACE_ROOT)/ace/Node.cpp \
   $(ACE_ROOT)/ace/Array_Base.h \
   $(ACE_ROOT)/ace/Malloc_Base.h \
   $(ACE_ROOT)/ace/Array_Base.inl \
@@ -639,7 +627,30 @@ endif
   $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
   $(ACE_ROOT)/ace/Containers_T.i \
   $(ACE_ROOT)/ace/Containers_T.cpp \
+  $(ACE_ROOT)/ace/Synch.h \
+  $(ACE_ROOT)/ace/Synch.i \
+  $(ACE_ROOT)/ace/Synch_T.h \
+  $(ACE_ROOT)/ace/Synch_T.i \
+  $(ACE_ROOT)/ace/Thread.h \
+  $(ACE_ROOT)/ace/Thread_Adapter.h \
+  $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+  $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+  $(ACE_ROOT)/ace/Thread_Adapter.inl \
+  $(ACE_ROOT)/ace/Thread.i \
+  $(ACE_ROOT)/ace/Synch_T.cpp \
   $(ACE_ROOT)/ace/RMCast/RMCast_Membership.i \
+  $(ACE_ROOT)/ace/ACE.h \
+  $(ACE_ROOT)/ace/Flag_Manip.h \
+  $(ACE_ROOT)/ace/Flag_Manip.i \
+  $(ACE_ROOT)/ace/Handle_Ops.h \
+  $(ACE_ROOT)/ace/Handle_Ops.i \
+  $(ACE_ROOT)/ace/Lib_Find.h \
+  $(ACE_ROOT)/ace/Lib_Find.i \
+  $(ACE_ROOT)/ace/Init_ACE.h \
+  $(ACE_ROOT)/ace/Init_ACE.i \
+  $(ACE_ROOT)/ace/Sock_Connect.h \
+  $(ACE_ROOT)/ace/Sock_Connect.i \
+  $(ACE_ROOT)/ace/ACE.i \
   $(ACE_ROOT)/ace/Task.h \
   $(ACE_ROOT)/ace/Service_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.h \
@@ -656,8 +667,22 @@ endif
   $(ACE_ROOT)/ace/Free_List.h \
   $(ACE_ROOT)/ace/Free_List.i \
   $(ACE_ROOT)/ace/Free_List.cpp \
+  $(ACE_ROOT)/ace/Singleton.h \
+  $(ACE_ROOT)/ace/Singleton.i \
+  $(ACE_ROOT)/ace/Singleton.cpp \
+  $(ACE_ROOT)/ace/Object_Manager.h \
+  $(ACE_ROOT)/ace/Object_Manager.i \
+  $(ACE_ROOT)/ace/Managed_Object.h \
+  $(ACE_ROOT)/ace/Managed_Object.i \
+  $(ACE_ROOT)/ace/Managed_Object.cpp \
+  $(ACE_ROOT)/ace/Framework_Component.h \
+  $(ACE_ROOT)/ace/Framework_Component.inl \
+  $(ACE_ROOT)/ace/Framework_Component_T.h \
+  $(ACE_ROOT)/ace/Framework_Component_T.inl \
+  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
   $(ACE_ROOT)/ace/Thread_Manager.i \
-  $(ACE_ROOT)/ace/Task.i $(ACE_ROOT)/ace/Task_T.h \
+  $(ACE_ROOT)/ace/Task.i \
+  $(ACE_ROOT)/ace/Task_T.h \
   $(ACE_ROOT)/ace/Message_Queue.h \
   $(ACE_ROOT)/ace/Message_Block.h \
   $(ACE_ROOT)/ace/Message_Block.i \
@@ -680,12 +705,19 @@ endif
   $(ACE_ROOT)/ace/Stream_Modules.cpp
 
 .obj/RMCast_Retransmission_Test.o .obj/RMCast_Retransmission_Test.so .shobj/RMCast_Retransmission_Test.o .shobj/RMCast_Retransmission_Test.so: RMCast_Retransmission_Test.cpp \
+  ../test_config.h \
+  $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
+  $(ACE_ROOT)/ace/streams.h \
+  $(ACE_ROOT)/ace/Log_Msg.h \
+  $(ACE_ROOT)/ace/Global_Macros.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/Default_Constants.h \
+  $(ACE_ROOT)/ace/Log_Priority.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
-  $(ACE_ROOT)/ace/OS_Export.h \
   $(ACE_ROOT)/ace/OS_Errno.h \
   $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -700,50 +732,11 @@ endif
   $(ACE_ROOT)/ace/OS_TLI.inl \
   $(ACE_ROOT)/ace/Time_Value.h \
   $(ACE_ROOT)/ace/Time_Value.inl \
-  $(ACE_ROOT)/ace/Default_Constants.h \
-  $(ACE_ROOT)/ace/Global_Macros.h \
   $(ACE_ROOT)/ace/Min_Max.h \
-  $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
-  $(ACE_ROOT)/ace/Singleton.h \
-  $(ACE_ROOT)/ace/Synch.h $(ACE_ROOT)/ace/Synch.i \
-  $(ACE_ROOT)/ace/Synch_T.h \
-  $(ACE_ROOT)/ace/Synch_T.i \
-  $(ACE_ROOT)/ace/Thread.h \
-  $(ACE_ROOT)/ace/Thread_Adapter.h \
-  $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+  $(ACE_ROOT)/ace/Trace.h \
+  $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
-  $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
-  $(ACE_ROOT)/ace/Thread_Adapter.inl \
-  $(ACE_ROOT)/ace/Thread.i \
-  $(ACE_ROOT)/ace/Synch_T.cpp \
-  $(ACE_ROOT)/ace/Log_Msg.h \
-  $(ACE_ROOT)/ace/Log_Priority.h \
-  $(ACE_ROOT)/ace/Singleton.i \
-  $(ACE_ROOT)/ace/Singleton.cpp \
-  $(ACE_ROOT)/ace/Object_Manager.h \
-  $(ACE_ROOT)/ace/Object_Manager.i \
-  $(ACE_ROOT)/ace/Managed_Object.h \
-  $(ACE_ROOT)/ace/Managed_Object.i \
-  $(ACE_ROOT)/ace/Managed_Object.cpp \
-  $(ACE_ROOT)/ace/Framework_Component.h \
-  $(ACE_ROOT)/ace/Framework_Component.inl \
-  $(ACE_ROOT)/ace/ACE.h \
-  $(ACE_ROOT)/ace/Flag_Manip.h \
-  $(ACE_ROOT)/ace/Flag_Manip.i \
-  $(ACE_ROOT)/ace/Handle_Ops.h \
-  $(ACE_ROOT)/ace/Handle_Ops.i \
-  $(ACE_ROOT)/ace/Lib_Find.h \
-  $(ACE_ROOT)/ace/Lib_Find.i \
-  $(ACE_ROOT)/ace/Init_ACE.h \
-  $(ACE_ROOT)/ace/Init_ACE.i \
-  $(ACE_ROOT)/ace/Sock_Connect.h \
-  $(ACE_ROOT)/ace/Sock_Connect.i \
-  $(ACE_ROOT)/ace/ACE.i \
-  $(ACE_ROOT)/ace/Framework_Component_T.h \
-  $(ACE_ROOT)/ace/Framework_Component_T.inl \
-  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
   $(ACE_ROOT)/ace/RMCast/RMCast_Proxy.h \
   $(ACE_ROOT)/ace/RMCast/RMCast_Module.h \
   $(ACE_ROOT)/ace/RMCast/RMCast.h \
@@ -756,10 +749,33 @@ endif
   $(ACE_ROOT)/ace/RMCast/RMCast_Worker.h \
   $(ACE_ROOT)/ace/RMCast/RMCast_Worker.i \
   $(ACE_ROOT)/ace/RMCast/RMCast_Worker.cpp \
+  $(ACE_ROOT)/ace/Synch.h \
+  $(ACE_ROOT)/ace/Synch.i \
+  $(ACE_ROOT)/ace/Synch_T.h \
+  $(ACE_ROOT)/ace/Synch_T.i \
+  $(ACE_ROOT)/ace/Thread.h \
+  $(ACE_ROOT)/ace/Thread_Adapter.h \
+  $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+  $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+  $(ACE_ROOT)/ace/Thread_Adapter.inl \
+  $(ACE_ROOT)/ace/Thread.i \
+  $(ACE_ROOT)/ace/Synch_T.cpp \
   $(ACE_ROOT)/ace/RMCast/RMCast_Copy_On_Write.i \
   $(ACE_ROOT)/ace/RMCast/RMCast_Copy_On_Write.cpp \
   $(ACE_ROOT)/ace/RB_Tree.h \
   $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/ACE.h \
+  $(ACE_ROOT)/ace/Flag_Manip.h \
+  $(ACE_ROOT)/ace/Flag_Manip.i \
+  $(ACE_ROOT)/ace/Handle_Ops.h \
+  $(ACE_ROOT)/ace/Handle_Ops.i \
+  $(ACE_ROOT)/ace/Lib_Find.h \
+  $(ACE_ROOT)/ace/Lib_Find.i \
+  $(ACE_ROOT)/ace/Init_ACE.h \
+  $(ACE_ROOT)/ace/Init_ACE.i \
+  $(ACE_ROOT)/ace/Sock_Connect.h \
+  $(ACE_ROOT)/ace/Sock_Connect.i \
+  $(ACE_ROOT)/ace/ACE.i \
   $(ACE_ROOT)/ace/Functor.i \
   $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor_T.i \
@@ -788,12 +804,14 @@ endif
   $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
   $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
   $(ACE_ROOT)/ace/Unbounded_Set.h \
-  $(ACE_ROOT)/ace/Node.h $(ACE_ROOT)/ace/Node.cpp \
+  $(ACE_ROOT)/ace/Node.h \
+  $(ACE_ROOT)/ace/Node.cpp \
   $(ACE_ROOT)/ace/Unbounded_Set.inl \
   $(ACE_ROOT)/ace/Unbounded_Set.cpp \
   $(ACE_ROOT)/ace/Memory_Pool.i \
   $(ACE_ROOT)/ace/RB_Tree.cpp \
   $(ACE_ROOT)/ace/SString.h \
+  $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/String_Base.h \
   $(ACE_ROOT)/ace/String_Base_Const.h \
   $(ACE_ROOT)/ace/String_Base.i \
@@ -825,8 +843,22 @@ endif
   $(ACE_ROOT)/ace/Array_Base.cpp \
   $(ACE_ROOT)/ace/Containers_T.i \
   $(ACE_ROOT)/ace/Containers_T.cpp \
+  $(ACE_ROOT)/ace/Singleton.h \
+  $(ACE_ROOT)/ace/Singleton.i \
+  $(ACE_ROOT)/ace/Singleton.cpp \
+  $(ACE_ROOT)/ace/Object_Manager.h \
+  $(ACE_ROOT)/ace/Object_Manager.i \
+  $(ACE_ROOT)/ace/Managed_Object.h \
+  $(ACE_ROOT)/ace/Managed_Object.i \
+  $(ACE_ROOT)/ace/Managed_Object.cpp \
+  $(ACE_ROOT)/ace/Framework_Component.h \
+  $(ACE_ROOT)/ace/Framework_Component.inl \
+  $(ACE_ROOT)/ace/Framework_Component_T.h \
+  $(ACE_ROOT)/ace/Framework_Component_T.inl \
+  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
   $(ACE_ROOT)/ace/Thread_Manager.i \
-  $(ACE_ROOT)/ace/Task.i $(ACE_ROOT)/ace/Task_T.h \
+  $(ACE_ROOT)/ace/Task.i \
+  $(ACE_ROOT)/ace/Task_T.h \
   $(ACE_ROOT)/ace/Message_Queue.h \
   $(ACE_ROOT)/ace/Message_Block.h \
   $(ACE_ROOT)/ace/Message_Block.i \
@@ -849,12 +881,18 @@ endif
   $(ACE_ROOT)/ace/Stream_Modules.cpp
 
 .obj/RMCast_Reordering_Test.o .obj/RMCast_Reordering_Test.so .shobj/RMCast_Reordering_Test.o .shobj/RMCast_Reordering_Test.so: RMCast_Reordering_Test.cpp ../test_config.h \
+  $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
+  $(ACE_ROOT)/ace/streams.h \
+  $(ACE_ROOT)/ace/Log_Msg.h \
+  $(ACE_ROOT)/ace/Global_Macros.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
+  $(ACE_ROOT)/ace/Default_Constants.h \
+  $(ACE_ROOT)/ace/Log_Priority.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
-  $(ACE_ROOT)/ace/OS_Export.h \
   $(ACE_ROOT)/ace/OS_Errno.h \
   $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -869,35 +907,21 @@ endif
   $(ACE_ROOT)/ace/OS_TLI.inl \
   $(ACE_ROOT)/ace/Time_Value.h \
   $(ACE_ROOT)/ace/Time_Value.inl \
-  $(ACE_ROOT)/ace/Default_Constants.h \
-  $(ACE_ROOT)/ace/Global_Macros.h \
   $(ACE_ROOT)/ace/Min_Max.h \
-  $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
-  $(ACE_ROOT)/ace/Singleton.h \
-  $(ACE_ROOT)/ace/Synch.h $(ACE_ROOT)/ace/Synch.i \
-  $(ACE_ROOT)/ace/Synch_T.h \
-  $(ACE_ROOT)/ace/Synch_T.i \
-  $(ACE_ROOT)/ace/Thread.h \
-  $(ACE_ROOT)/ace/Thread_Adapter.h \
-  $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+  $(ACE_ROOT)/ace/Trace.h \
+  $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
-  $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
-  $(ACE_ROOT)/ace/Thread_Adapter.inl \
-  $(ACE_ROOT)/ace/Thread.i \
-  $(ACE_ROOT)/ace/Synch_T.cpp \
-  $(ACE_ROOT)/ace/Log_Msg.h \
-  $(ACE_ROOT)/ace/Log_Priority.h \
-  $(ACE_ROOT)/ace/Singleton.i \
-  $(ACE_ROOT)/ace/Singleton.cpp \
-  $(ACE_ROOT)/ace/Object_Manager.h \
-  $(ACE_ROOT)/ace/Object_Manager.i \
-  $(ACE_ROOT)/ace/Managed_Object.h \
-  $(ACE_ROOT)/ace/Managed_Object.i \
-  $(ACE_ROOT)/ace/Managed_Object.cpp \
-  $(ACE_ROOT)/ace/Framework_Component.h \
-  $(ACE_ROOT)/ace/Framework_Component.inl \
+  $(ACE_ROOT)/ace/RMCast/RMCast_Proxy.h \
+  $(ACE_ROOT)/ace/RMCast/RMCast_Module.h \
+  $(ACE_ROOT)/ace/RMCast/RMCast.h \
+  $(ACE_ROOT)/ace/RMCast/RMCast_Export.h \
+  $(ACE_ROOT)/ace/RMCast/RMCast.i \
+  $(ACE_ROOT)/ace/RMCast/RMCast_Module.i \
+  $(ACE_ROOT)/ace/RMCast/RMCast_Proxy.i \
+  $(ACE_ROOT)/ace/RMCast/RMCast_Reordering.h \
+  $(ACE_ROOT)/ace/RB_Tree.h \
+  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/ACE.h \
   $(ACE_ROOT)/ace/Flag_Manip.h \
   $(ACE_ROOT)/ace/Flag_Manip.i \
@@ -910,24 +934,22 @@ endif
   $(ACE_ROOT)/ace/Sock_Connect.h \
   $(ACE_ROOT)/ace/Sock_Connect.i \
   $(ACE_ROOT)/ace/ACE.i \
-  $(ACE_ROOT)/ace/Framework_Component_T.h \
-  $(ACE_ROOT)/ace/Framework_Component_T.inl \
-  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
-  $(ACE_ROOT)/ace/RMCast/RMCast_Proxy.h \
-  $(ACE_ROOT)/ace/RMCast/RMCast_Module.h \
-  $(ACE_ROOT)/ace/RMCast/RMCast.h \
-  $(ACE_ROOT)/ace/RMCast/RMCast_Export.h \
-  $(ACE_ROOT)/ace/RMCast/RMCast.i \
-  $(ACE_ROOT)/ace/RMCast/RMCast_Module.i \
-  $(ACE_ROOT)/ace/RMCast/RMCast_Proxy.i \
-  $(ACE_ROOT)/ace/RMCast/RMCast_Reordering.h \
-  $(ACE_ROOT)/ace/RB_Tree.h \
-  $(ACE_ROOT)/ace/Functor.h \
   $(ACE_ROOT)/ace/Functor.i \
   $(ACE_ROOT)/ace/Functor_T.h \
   $(ACE_ROOT)/ace/Functor_T.i \
   $(ACE_ROOT)/ace/Functor_T.cpp \
   $(ACE_ROOT)/ace/RB_Tree.i \
+  $(ACE_ROOT)/ace/Synch.h \
+  $(ACE_ROOT)/ace/Synch.i \
+  $(ACE_ROOT)/ace/Synch_T.h \
+  $(ACE_ROOT)/ace/Synch_T.i \
+  $(ACE_ROOT)/ace/Thread.h \
+  $(ACE_ROOT)/ace/Thread_Adapter.h \
+  $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+  $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+  $(ACE_ROOT)/ace/Thread_Adapter.inl \
+  $(ACE_ROOT)/ace/Thread.i \
+  $(ACE_ROOT)/ace/Synch_T.cpp \
   $(ACE_ROOT)/ace/Malloc.h \
   $(ACE_ROOT)/ace/Malloc.i \
   $(ACE_ROOT)/ace/Malloc_T.h \
@@ -951,12 +973,14 @@ endif
   $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
   $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
   $(ACE_ROOT)/ace/Unbounded_Set.h \
-  $(ACE_ROOT)/ace/Node.h $(ACE_ROOT)/ace/Node.cpp \
+  $(ACE_ROOT)/ace/Node.h \
+  $(ACE_ROOT)/ace/Node.cpp \
   $(ACE_ROOT)/ace/Unbounded_Set.inl \
   $(ACE_ROOT)/ace/Unbounded_Set.cpp \
   $(ACE_ROOT)/ace/Memory_Pool.i \
   $(ACE_ROOT)/ace/RB_Tree.cpp \
   $(ACE_ROOT)/ace/SString.h \
+  $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/String_Base.h \
   $(ACE_ROOT)/ace/String_Base_Const.h \
   $(ACE_ROOT)/ace/String_Base.i \
@@ -988,8 +1012,22 @@ endif
   $(ACE_ROOT)/ace/Array_Base.cpp \
   $(ACE_ROOT)/ace/Containers_T.i \
   $(ACE_ROOT)/ace/Containers_T.cpp \
+  $(ACE_ROOT)/ace/Singleton.h \
+  $(ACE_ROOT)/ace/Singleton.i \
+  $(ACE_ROOT)/ace/Singleton.cpp \
+  $(ACE_ROOT)/ace/Object_Manager.h \
+  $(ACE_ROOT)/ace/Object_Manager.i \
+  $(ACE_ROOT)/ace/Managed_Object.h \
+  $(ACE_ROOT)/ace/Managed_Object.i \
+  $(ACE_ROOT)/ace/Managed_Object.cpp \
+  $(ACE_ROOT)/ace/Framework_Component.h \
+  $(ACE_ROOT)/ace/Framework_Component.inl \
+  $(ACE_ROOT)/ace/Framework_Component_T.h \
+  $(ACE_ROOT)/ace/Framework_Component_T.inl \
+  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
   $(ACE_ROOT)/ace/Thread_Manager.i \
-  $(ACE_ROOT)/ace/Task.i $(ACE_ROOT)/ace/Task_T.h \
+  $(ACE_ROOT)/ace/Task.i \
+  $(ACE_ROOT)/ace/Task_T.h \
   $(ACE_ROOT)/ace/Message_Queue.h \
   $(ACE_ROOT)/ace/Message_Block.h \
   $(ACE_ROOT)/ace/Message_Block.i \

@@ -138,7 +138,7 @@ stdspeed_test (ACE_UINT32 loops)
 }
 
 int
-ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+run_main (int argc, ACE_TCHAR *argv[])
 {
   ACE_START_TEST (ACE_TEXT ("Cached_Allocator_Test"));
 

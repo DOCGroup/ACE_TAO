@@ -11,10 +11,10 @@
 // = DESCRIPTION
 //      This is a simple test that illustrates the timer mechanism of
 //      the <ACE_Proactor>.  Scheduling timers, handling expired timers and
-//      cancelling scheduled timers are all exercised in this test. 
+//      cancelling scheduled timers are all exercised in this test.
 //
 // = AUTHOR
-//    Prashant Jain <pjain@cs.wustl.edu>, 
+//    Prashant Jain <pjain@cs.wustl.edu>,
 //    Douglas C. Schmidt <schmidt@cs.wustl.edu>, and
 //    Miljenko Norsic <Miljenko.Norsic@etk.ericsson.se>
 //
@@ -109,8 +109,8 @@ Time_Handler::timer_id (long t)
 static void
 test_registering_all_handlers (void)
 {
-  ACE_Trace t (ACE_TEXT ("test_registering_all_handler"), 
-               __LINE__, 
+  ACE_Trace t (ACE_TEXT ("test_registering_all_handler"),
+               __LINE__,
                ACE_TEXT_CHAR_TO_TCHAR (__FILE__));
   Time_Handler rt[ACE_MAX_TIMERS];
   long t_id[ACE_MAX_TIMERS];
@@ -135,8 +135,8 @@ test_registering_all_handlers (void)
 static void
 test_registering_one_handler (void)
 {
-  ACE_Trace t (ACE_TEXT ("test_registering_one_handler"), 
-               __LINE__, 
+  ACE_Trace t (ACE_TEXT ("test_registering_one_handler"),
+               __LINE__,
                ACE_TEXT_CHAR_TO_TCHAR (__FILE__));
   Time_Handler rt[ACE_MAX_TIMERS];
   long t_id[ACE_MAX_TIMERS];
@@ -163,8 +163,8 @@ test_registering_one_handler (void)
 static void
 test_canceling_odd_timers (void)
 {
-  ACE_Trace t (ACE_TEXT ("test_canceling_odd_timers"), 
-               __LINE__, 
+  ACE_Trace t (ACE_TEXT ("test_canceling_odd_timers"),
+               __LINE__,
                ACE_TEXT_CHAR_TO_TCHAR (__FILE__));
   Time_Handler rt[ACE_MAX_TIMERS];
   long t_id[ACE_MAX_TIMERS];
@@ -200,7 +200,7 @@ test_canceling_odd_timers (void)
 // If any command line arg is given, run the test with high res timer
 // queue. Else run it normally.
 int
-ACE_TMAIN (int argc, ACE_TCHAR *[])
+run_main (int argc, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Proactor_Timer_Test"));
 
@@ -230,7 +230,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *[])
 #else
 
 int
-ACE_TMAIN (int, ACE_TCHAR *[])
+run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Proactor_Timer_Test"));
 

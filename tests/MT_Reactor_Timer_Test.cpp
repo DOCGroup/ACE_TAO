@@ -21,6 +21,7 @@
 
 #include "test_config.h"
 #include "MT_Reactor_Timer_Test.h"
+#include "ace/ACE.h"
 
 ACE_RCSID(tests, MT_Reactor_Timer_Test, "$Id$")
 
@@ -266,7 +267,7 @@ Dispatch_Count_Handler::verify_results (void)
 }
 
 int
-ACE_TMAIN (int, ACE_TCHAR *[])
+run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("MT_Reactor_Timer_Test"));
 
@@ -308,7 +309,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   // All <ACE_MAX_TIMERS> + 2 I/O dispatches (one for <handle_input>
   // and the other for <handle_exception>) should be counted in
   // events.
-  if (events < ACE_MAX_TIMERS + 2) 
+  if (events < ACE_MAX_TIMERS + 2)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("expected %d events, got %d instead\n"),
@@ -318,7 +319,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
     }
 
   status = callback.verify_results ();
-  if (status != 0) 
+  if (status != 0)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("Dispatch counting test failed.\n")));

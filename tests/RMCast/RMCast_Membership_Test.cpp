@@ -13,6 +13,7 @@
 #include "../test_config.h"
 #include "ace/RMCast/RMCast_Proxy.h"
 #include "ace/RMCast/RMCast_Membership.h"
+#include "ace/ACE.h"
 
 #include "ace/Task.h"
 

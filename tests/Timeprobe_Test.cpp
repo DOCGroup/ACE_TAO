@@ -22,6 +22,7 @@
 
 #include "tests/test_config.h"
 #include "ace/Timeprobe.h"
+#include "ace/Singleton.h"
 
 ACE_RCSID(tests, Timeprobe_Test, "$Id$")
 
@@ -96,7 +97,7 @@ int static_singleton_creator = create_singleton ();
 #endif /* ! ACE_HAS_PURIFY */
 
 int
-ACE_TMAIN (int, ACE_TCHAR *[])
+run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Timeprobe_Test"));
 

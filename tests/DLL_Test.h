@@ -27,7 +27,7 @@ class Hello
 {
 public:
   /// Destructor
-  virtual ~Hello (void) 
+  virtual ~Hello (void)
     {
       ACE_TRACE ("Hello::~Hello");
     }

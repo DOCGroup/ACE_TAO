@@ -19,6 +19,7 @@
 #include "ace/pre.h"
 
 #include "ace/Basic_Types.h"
+#include "ace/Global_Macros.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

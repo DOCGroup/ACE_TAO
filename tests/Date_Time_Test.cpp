@@ -19,7 +19,7 @@
 ACE_RCSID(tests, Date_Time_Test, "$Id$")
 
 int
-ACE_TMAIN (int, ACE_TCHAR *[])
+run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Date_Time_Test"));
 

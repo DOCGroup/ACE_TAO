@@ -79,7 +79,7 @@ int basic_test (ACE_DLL &dll)
     {
       ACE_TCHAR *dll_error = dll.error ();
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("Error in DLL Open: %s\n"), 
+                         ACE_TEXT ("Error in DLL Open: %s\n"),
                          dll_error ? dll_error : ACE_TEXT ("unknown error")),
                         -1);
     }
@@ -120,7 +120,7 @@ int basic_test (ACE_DLL &dll)
 }
 
 int
-ACE_TMAIN (int, ACE_TCHAR *[])
+run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("DLL_Test"));
 
