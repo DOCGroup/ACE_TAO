@@ -153,7 +153,7 @@ int be_visitor_array_cs::visit_array (be_array *node)
   *os << fname << "_copy (" << fname << "_slice * _tao_to, "
       << "const " << fname << "_slice *_tao_from)" << be_nl;
   *os << "{" << be_idt_nl;
-  *os << "// copy each individual elements" << be_nl;
+  *os << "// copy each individual element" << be_nl;
 
   // generate nested loops for as many dimensions as there are
   for (i = 0; i < node->n_dims (); i++)
@@ -188,22 +188,32 @@ int be_visitor_array_cs::visit_array (be_array *node)
   // now generate code such that every element of the array gets assigned
   // inside the innermost level of the  nested loops generated above
   be_array *primitive_type = 0;
+
   if (bt->node_type () == AST_Decl::NT_typedef)
     {
-      // base type of the array node is a typedef. We need to make sure that
+      // Base type of the array node is a typedef. We need to make sure that
       // this typedef is not to another array type. If it is, then we cannot
       // assign an array to another. We will have to invoke the underlying
       // array type's copy method for every array dimension.
-      be_typedef *tdef = be_typedef::narrow_from_decl (bt);
-      // check if the base type of the typedef node is an Array node
-      primitive_type = be_array::narrow_from_decl (tdef->base_type ());
+
+      // There may be more than one level of typedef.
+      be_type *tmp = bt;
+
+      while (tmp->node_type () == AST_Decl::NT_typedef)
+        {
+          be_typedef *tdef = be_typedef::narrow_from_decl (tmp);
+          tmp = be_type::narrow_from_decl (tdef->base_type ());
+        }
+
+      primitive_type = be_array::narrow_from_decl (tmp);
     }
+
   if (primitive_type)
     {
-      // the base type is not a typedef to a possibly another array type. In
-      // such a case, assign each element.
-
+      // The base type is a typedef to another array type, so
+      // we use the base type's copy method.
       *os << "// call the underlying _copy" << be_nl;
+
       if (bt->accept (this) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -228,7 +238,7 @@ int be_visitor_array_cs::visit_array (be_array *node)
     }
   else
     {
-      // the base type is not a typedef to a possibly another array type. In
+      // the base type is not a typedef to possibly another array type. In
       // such a case, assign each element.
 
       *os << "_tao_to"; // generate the lvalue
