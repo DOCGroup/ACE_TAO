@@ -1,3 +1,15 @@
+Fri Jun 22 00:26:34 2001  Krishnakumar B  <kitty@cs.wustl.edu>
+
+	* examples/Log_Msg/test_ostream.cpp (main):
+
+	  Changed the type of flags to ios::openmode from int to fix
+	  errors under gcc-3.0.
+
+	* examples/IOStream/client:
+	* examples/IOStream/server:
+
+	  Added ACE_UNUSED_ARG to fix a couple of warnings.
+
 Thu Jun 21 13:57:09 2001  Chad Elliott  <elliott_c@ociweb.com>
 
         * apps/JAWS/clients/Caching/http_handler.h:
