@@ -112,5 +112,4 @@ namespace CIAO
     return
       PortableServer::POA::_duplicate (container_->_ciao_the_POA ());
   }
-
 }
