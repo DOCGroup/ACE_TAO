@@ -1,3 +1,11 @@
+Tue May 27 14:43:09 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/DynamicAny/DynCommon.cpp:
+
+          Added initialization for a CORBA::ULongLong return value in
+          get_ulonglong(). Thanks to Terry Lacy <terry.lacy@thomson.net>
+          for reporting the oversight.
+
 Mon May 26 17:04:02 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/ORB.cpp (register_value_factory): Changed to make sure we
