@@ -65,10 +65,137 @@ private:
 
 // ****************************************************************
 
+class ECB_Test
+{
+  // = TITLE
+  //   The base class for all the tests.
+  //
+  // = DESCRIPTION
+  //   All the tests inherit from this class, it is used by the
+  //   consumer and suppliers as callbacks.
+  //
+public:
+  virtual ~ECB_Test (void);
+  // Destructor
+
+  virtual void push (int consumer_number,
+                     const RtecEventComm::EventSet& events,
+                     CORBA::Environment &_env) = 0;
+  // The callback from the Consumer....
+};
+
+class ECB_Consumer : public POA_RtecEventComm::PushConsumer
+{
+public:
+  // = TITLE
+  //   The consumers for all the tests.
+  //
+  // = DESCRIPTION
+  //   To simplify each test implementation a generic consumer class
+  //   is provided.
+  //   It dispatches the events back to a Base_Test.
+  //
+  ECB_Consumer (ECB_Test* test,
+                int consumer_id);
+
+  void open (const char* name,
+             RtecEventChannelAdmin::EventChannel_ptr event_channel,
+             RtecScheduler::Scheduler_ptr scheduler,
+             CORBA::Environment& _env);
+  // This method connects the consumer to the EC.
+
+  void close (CORBA::Environment &_env);
+  // Disconnect from the EC.
+
+  RtecScheduler::handle_t rt_info (void) const;
+  // The RT_Info for this object
+
+  void connect (const RtecEventChannelAdmin::ConsumerQOS& qos,
+                CORBA::Environment &_env);
+  void disconnect (CORBA::Environment &_env);
+  // Disconnect from the supplier, but do not forget about it or close
+  // it.
+
+  // = The POA_RtecEventComm::PushComsumer methods.
+  virtual void push (const RtecEventComm::EventSet& events,
+                     CORBA::Environment &_env);
+  virtual void disconnect_push_consumer (CORBA::Environment &);
+  
+private:
+  ECB_Test* test_;
+  // To callback.
+
+  int consumer_id_;
+  // So we can give our identity back to the test.
+
+  RtecScheduler::handle_t rt_info_;
+  // The handle for our RT_Info description.
+
+  RtecEventChannelAdmin::ProxyPushSupplier_var supplier_proxy_;
+  // We talk to the EC using this proxy.
+
+  RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin_;
+  // We talk to the EC using this proxy.
+};
+
+class ECB_Supplier : public POA_RtecEventComm::PushSupplier
+{
+public:
+  // = TITLE
+  //   Implement one of the consumers in this test.
+  //
+  ECB_Supplier (ECB_Test* test,
+                int supplier_id);
+  // We generate an id based on the name....
+
+  void open (const char* name,
+             RtecEventChannelAdmin::EventChannel_ptr event_channel,
+             RtecScheduler::Scheduler_ptr scheduler,
+             CORBA::Environment& _env);
+  // This method connects the supplier to the EC.
+
+  void close (CORBA::Environment &_env);
+  // Disconnect from the EC.
+
+  RtecScheduler::handle_t rt_info (void) const;
+  // The RT_Info for this object
+
+  void connect (const RtecEventChannelAdmin::SupplierQOS& qos,
+                CORBA::Environment &_env);
+  void disconnect (CORBA::Environment &_env);
+  // Disconnect from the EC, but do not forget about it or close
+  // it.
+
+  void send_event (RtecEventComm::EventSet& events,
+                   CORBA::Environment &_env);
+  // Send one event, the supplier provides the SourceID
+
+  // = The POA_RtecEventComm::PushSupplier methods.
+  virtual void disconnect_push_supplier (CORBA::Environment &);
+
+private:
+  ECB_Test* test_;
+  // To callback.
+
+  int supplier_id_;
+  // This is NOT the supplier ID for the EC, just a number for the 
+
+  RtecScheduler::handle_t rt_info_;
+  // The handle for our RT_Info description.
+
+  RtecEventChannelAdmin::ProxyPushConsumer_var consumer_proxy_;
+  // We talk to the EC using this proxy.
+
+  RtecEventChannelAdmin::SupplierAdmin_var supplier_admin_;
+  // We talk to the EC using this proxy.
+};
+
+// ****************************************************************
+
 // @@ TODO WE may need to split each test to its own file, but only
 // once the number of tests justifies that change.
 
-class ECB_SupplierID_Test
+class ECB_SupplierID_Test : public ECB_Test
 {
   //
   // = TITLE
@@ -116,110 +243,19 @@ public:
   int dump_results (void);
   // Print out the results, returns -1 if an error was detected.
 
-  void push (int consumer_id,
-             const RtecEventComm::EventSet& events,
-             CORBA::Environment &_env);
+  virtual void push (int consumer_id,
+                     const RtecEventComm::EventSet& events,
+                     CORBA::Environment &_env);
   // The callback from the Consumer....
 
-  class Consumer : public POA_RtecEventComm::PushConsumer
-  {
-  public:
-    // = TITLE
-    //   Implement one of the consumers in this test.
-    //
-    Consumer (ECB_SupplierID_Test* test,
-              int consumer_id);
-
-    void open (const char* name,
-               RtecEventChannelAdmin::EventChannel_ptr event_channel,
-               RtecScheduler::Scheduler_ptr scheduler,
-               CORBA::Environment& _env);
-    // This method connects the consumer to the EC.
-
-    void close (CORBA::Environment &_env);
-    // Disconnect from the EC.
-
-    void connect (CORBA::Environment &_env);
-    void disconnect (CORBA::Environment &_env);
-    // Disconnect from the supplier, but do not forget about it or close
-    // it.
-
-    // = The POA_RtecEventComm::PushComsumer methods.
-    virtual void push (const RtecEventComm::EventSet& events,
-                       CORBA::Environment &_env);
-    virtual void disconnect_push_consumer (CORBA::Environment &);
-
-  private:
-    ECB_SupplierID_Test* test_;
-    // To callback.
-
-    int consumer_id_;
-    // So we can give our identity back to the test.
-
-    RtecScheduler::handle_t rt_info_;
-    // The handle for our RT_Info description.
-
-    RtecEventChannelAdmin::ProxyPushSupplier_var supplier_proxy_;
-    // We talk to the EC using this proxy.
-
-    RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin_;
-    // We talk to the EC using this proxy.
-  };
-  
-  class Supplier : public POA_RtecEventComm::PushSupplier
-  {
-  public:
-    // = TITLE
-    //   Implement one of the consumers in this test.
-    //
-    Supplier (ECB_SupplierID_Test* test,
-              int supplier_id);
-    // We generate an id based on the name....
-
-    void open (const char* name,
-               RtecEventChannelAdmin::EventChannel_ptr event_channel,
-               RtecScheduler::Scheduler_ptr scheduler,
-               CORBA::Environment& _env);
-    // This method connects the supplier to the EC.
-
-    void close (CORBA::Environment &_env);
-    // Disconnect from the EC.
-
-    void connect (CORBA::Environment &_env);
-    void disconnect (CORBA::Environment &_env);
-    // Disconnect from the consumer, but do not forget about it or close
-    // it.
-
-    void send_event (CORBA::Environment &_env);
-    // Send one event.
-
-    // = The POA_RtecEventComm::PushSupplier methods.
-    virtual void disconnect_push_supplier (CORBA::Environment &);
-
-  private:
-    ECB_SupplierID_Test* test_;
-    // To callback.
-
-    int supplier_id_;
-    // This is NOT the supplier ID for the EC, just a number for the 
-
-    RtecScheduler::handle_t rt_info_;
-    // The handle for our RT_Info description.
-
-    RtecEventChannelAdmin::ProxyPushConsumer_var consumer_proxy_;
-    // We talk to the EC using this proxy.
-
-    RtecEventChannelAdmin::SupplierAdmin_var supplier_admin_;
-    // We talk to the EC using this proxy.
-  };
   
 private:
-  Consumer consumer0_;
-  Consumer consumer1_;
+  ECB_Consumer consumer0_;
+  ECB_Consumer consumer1_;
   // The consumers...
 
-  Supplier supplier0_;
-  Supplier supplier1_;
+  ECB_Supplier supplier0_;
+  ECB_Supplier supplier1_;
   // The suppliers...
 
   CORBA::ULong event_count_[ECB_SupplierID_Test::PHASE_END + 1];
@@ -231,6 +267,80 @@ private:
   int phase_;
   // Keep track of the test we are running...
 };
+
+// ****************************************************************
+
+class ECB_Correlation_Test : public ECB_Test
+{
+  //
+  // = TITLE
+  //   Verifies that correlation works.
+  //
+  // = DESCRIPTION
+  //   This class creates one consumers and two suppliers, the
+  //   consumer subscribe for several event correlations.
+  //   The correlations are satisfied in several different ways by
+  //   both suppliers (see below).by:
+  //
+  // = TODO
+  //
+public:
+  ECB_Correlation_Test (void);
+
+  enum
+  {
+    PHASE_0, // One supplier sends A the other sends B
+    PHASE_1, // Both suppliers send event A and B (in a single event)
+    PHASE_2, // Both suppliers alternate A and B
+    PHASE_3, // One supplier sends A the other sends A and B (in a
+             // single event)
+    PHASE_4, // One supplier sends A the other alternates A and B
+    PHASE_5, // Both suppliers send A
+    PHASE_END // To check that no events are received after the test ends.
+  };
+
+  enum
+  {
+    EVENTS_SENT = 10, // How many events we send on each test
+    EVENT_A = 100, // The event "A"
+    EVENT_B = 200, // The event "B"
+    SUPPLIER_ID_0 = 100, // The supplier ID for supplier0
+    SUPPLIER_ID_1 = 200  // The supplier ID for supplier1
+  };
+
+  void run (CORBA::ORB_ptr orb,
+            RtecEventChannelAdmin::EventChannel_ptr event_channel,
+            RtecScheduler::Scheduler_ptr scheduler,
+            CORBA::Environment& _env);
+  // Start the test.
+
+  int dump_results (void);
+  // Print out the results, returns -1 if an error was detected.
+
+  virtual void push (int consumer_id,
+                     const RtecEventComm::EventSet& events,
+                     CORBA::Environment &_env);
+  // The callback from the Consumer....
+  
+private:
+  ECB_Consumer consumer_;
+  // The consumer...
+
+  ECB_Supplier supplier0_;
+  ECB_Supplier supplier1_;
+  // The suppliers...
+
+  CORBA::ULong event_count_[ECB_Correlation_Test::PHASE_END + 1];
+  // Count the correctly received events.
+
+  CORBA::ULong error_count_[ECB_Correlation_Test::PHASE_END + 1];
+  // Store the number of errors for each phase.
+
+  int phase_;
+  // Keep track of the test we are running...
+};
+
+// ****************************************************************
 
 #if defined (__ACE_INLINE__)
 #include "EC_Basic.i"

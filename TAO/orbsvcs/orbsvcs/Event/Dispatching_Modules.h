@@ -24,8 +24,9 @@
 #define ACE_DISPATCHING_MODULES_H
 
 #include "tao/Timeprobe.h"
-#include "ReactorTask.h"
-#include "Event_Channel.h"
+#include "orbsvcs/Event/ReactorTask.h"
+#include "orbsvcs/Event/Event_Manip.h"
+#include "orbsvcs/Event/Event_Channel.h"
 
 // ************************************************************
 
@@ -129,8 +130,6 @@ class TAO_ORBSVCS_Export ACE_ES_Dispatch_Request : public ACE_RT_Task_Command
 //    for request dispatching.
 {
 public:
-  typedef ACE_CORBA_Sequence<ACE_ES_Event_Container_var> Event_Set;
-
   ACE_ES_Dispatch_Request (void);
   // Default construction.
   
@@ -143,7 +142,7 @@ public:
   // event_set.
 
   ACE_ES_Dispatch_Request (ACE_Push_Consumer_Proxy *consumer, 
-			   const Event_Set &event_set,
+			   const TAO_EC_Event_Array &event_set,
 			   RtecScheduler::handle_t rt_info);
   // Set consumer_ to <consumer> and copy <event_set> to event_set_.
   // <rt_info> describes the method receiving this dispatch.
@@ -157,7 +156,7 @@ public:
   // receiving this dispatch.
 
   ACE_ES_Dispatch_Request (ACE_Push_Consumer_Proxy *consumer,
-			   ACE_ES_Event_Container *event,
+			   const TAO_EC_Event &event,
 			   RtecScheduler::handle_t rt_info);
   // Sets consumer_ and the first slot of event_set_.  We use the
   // event_set_ instead of the single_event_ so that we can just carry
@@ -179,17 +178,21 @@ public:
   ACE_Push_Consumer_Proxy *consumer (void) const;
   // Consumer accessor.
 
-  const Event_Set &event_set (void) const;
+  const TAO_EC_Event_Array &event_set (void) const;
   // If accessed, make_copy will use event_set_.
 
-  Event_Set &event_set (void);
+  TAO_EC_Event_Array &event_set (void);
   // If accessed, make_copy will use event_set_.
+
+  void append_event (const TAO_EC_Event& event);
+  // Append an event to the list of events in the Request.
 
   CORBA::ULong number_of_events (void) const;
   // Returns 1 if we're using single_event, or event_set_.size ().
 
   void make_copy (RtecEventComm::EventSet &dest) const;
   // Copy single_event or event_set into <dest>.
+  // @@ Change the name to something more meaningful...
 
   virtual int execute (u_long &command_action);
   // Calls dispatching_module_->dispatch_event.
@@ -226,10 +229,10 @@ protected:
   ACE_Push_Consumer_Proxy *consumer_;
   // The final destination for single_event_ or event_set_.
 
-  ACE_ES_Event_Container single_event_;
+  TAO_EC_Event single_event_;
   // This is used for single event dispatches.
 
-  Event_Set event_set_;
+  TAO_EC_Event_Array event_set_;
   // This is used for event sets that need to be dispatched.
 };
 

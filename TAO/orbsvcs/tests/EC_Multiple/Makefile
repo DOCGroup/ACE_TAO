@@ -323,9 +323,6 @@ include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Local_ESTypes.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/CORBA_Utils_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/CORBA_Utils_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/CORBA_Utils_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Timer_Module.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/RT_Task.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/RT_Task.i \
@@ -349,6 +346,8 @@ include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
  $(ACE_ROOT)/ace/Timer_List.h \
  $(ACE_ROOT)/ace/Timer_List_T.h \
  $(ACE_ROOT)/ace/Timer_List_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Event_Manip.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Event_Manip.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Event_Channel.i \
  EC_Multiple.h \
  $(ACE_ROOT)/ace/High_Res_Timer.h \

@@ -169,6 +169,14 @@
 	  a single *big* CDR stream can be kept.
 	</P>
       </LI>
+
+      <LI><P>In the collocated case the generated
+          <CODE>_narrow()</CODE> method calls the
+          <CODE>_create_stub()</CODE> method that allocates several
+          temporary objects.
+        </P>
+      </LI>
+           
     </OL>
 
     <H4>New features and Bug fixes</H4>
@@ -435,12 +443,6 @@ class POA_Foo {
 	ACE_DEBUG output destination in all TAO applications
       <P></LI>
       
-      <LI><B>EC:</B> Purify, purify, purify the EC
-      <P></LI>
-
-      <LI><B>EC:</B> Quantify the EC.
-      <P></LI>
-
       <LI>Support several calls to ORB_init() on the same thread.
       <P></LI>
 
@@ -456,11 +458,6 @@ class POA_Foo {
       <LI><B>EC:</B> Extend the Concurrency Service (or create a new
 	one) that allow us to have global "barriers" to synchronize EC
 	startup/shutdown.
-      <P></LI>
-
-      <LI><B>EC:</B> Correlation in the EC has a bug [?]
-	Build regression tests for the EC features (filtering,
-	correlation, timers, etc).
       <P></LI>
 
       <LI><B>EC:</B> Build a COS Event Channel on top of the RTEC
@@ -806,6 +803,12 @@ class POA_Foo {
       <H3>Completed Tasks</H3>
 
     <OL>
+      <LI><B>EC:</B> Correlation in the EC has a bug [?]
+        <BR>[DONE] Added a correlation test into the EC_Basic test,
+        this does not mean that all bugs have been removed, but we
+        don't know of any remaining bugs.
+      <P></LI>
+
       <LI><P>The methods in <CODE>CORBA::TypeCode</CODE> should be
 	  <CODE>const</CODE>.
 	</P>
