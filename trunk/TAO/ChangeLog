@@ -1,56 +1,63 @@
+Wed Feb 26 09:16:38 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/RTOLDEvent.mpc:
+
+          The RTOLDEvent resource file does not match the name of the
+          project, so we explicitly add it to the mpc file.
+
 Tue Feb 25 11:17:47 2003  Ossama Othman  <ossama@uci.edu>
 
-	* tao/IFR_Client/IFR_BaseC.cpp:
-	* tao/IFR_Client/IFR_BaseC.h:
-	* tao/IFR_Client/IFR_BaseC.i:
-	* tao/IFR_Client/IFR_BasicC.cpp:
-	* tao/IFR_Client/IFR_BasicC.h:
-	* tao/IFR_Client/IFR_BasicC.i:
-	* tao/IFR_Client/IFR_ComponentsC.cpp:
-	* tao/IFR_Client/IFR_ComponentsC.h:
-	* tao/IFR_Client/IFR_ComponentsC.i:
-	* tao/IFR_Client/IFR_ExtendedC.cpp:
-	* tao/IFR_Client/IFR_ExtendedC.h:
-	* tao/IFR_Client/IFR_ExtendedC.i:
-	* orbsvcs/orbsvcs/IFR_Service/IFR_BaseS.cpp:
-	* orbsvcs/orbsvcs/IFR_Service/IFR_BaseS.h:
-	* orbsvcs/orbsvcs/IFR_Service/IFR_BaseS.i:
-	* orbsvcs/orbsvcs/IFR_Service/IFR_BaseS_T.cpp:
-	* orbsvcs/orbsvcs/IFR_Service/IFR_BaseS_T.h:
-	* orbsvcs/orbsvcs/IFR_Service/IFR_BaseS_T.i:
-	* orbsvcs/orbsvcs/IFR_Service/IFR_BasicS.cpp:
-	* orbsvcs/orbsvcs/IFR_Service/IFR_BasicS.h:
-	* orbsvcs/orbsvcs/IFR_Service/IFR_BasicS.i:
-	* orbsvcs/orbsvcs/IFR_Service/IFR_BasicS_T.cpp:
-	* orbsvcs/orbsvcs/IFR_Service/IFR_BasicS_T.h:
-	* orbsvcs/orbsvcs/IFR_Service/IFR_BasicS_T.i:
-	* orbsvcs/orbsvcs/IFR_Service/IFR_ComponentsS.cpp:
-	* orbsvcs/orbsvcs/IFR_Service/IFR_ComponentsS.h:
-	* orbsvcs/orbsvcs/IFR_Service/IFR_ComponentsS.i:
-	* orbsvcs/orbsvcs/IFR_Service/IFR_ComponentsS_T.cpp:
-	* orbsvcs/orbsvcs/IFR_Service/IFR_ComponentsS_T.h:
-	* orbsvcs/orbsvcs/IFR_Service/IFR_ComponentsS_T.i:
-	* orbsvcs/orbsvcs/IFR_Service/IFR_ExtendedS.cpp:
-	* orbsvcs/orbsvcs/IFR_Service/IFR_ExtendedS.h:
-	* orbsvcs/orbsvcs/IFR_Service/IFR_ExtendedS.i:
-	* orbsvcs/orbsvcs/IFR_Service/IFR_ExtendedS_T.cpp:
-	* orbsvcs/orbsvcs/IFR_Service/IFR_ExtendedS_T.h:
-	* orbsvcs/orbsvcs/IFR_Service/IFR_ExtendedS_T.i:
-	* tao/TypeCodeFactory/TypeCodeFactoryC.cpp:
-	* tao/TypeCodeFactory/TypeCodeFactoryC.h:
-	* tao/TypeCodeFactory/TypeCodeFactoryC.inl:
+        * tao/IFR_Client/IFR_BaseC.cpp:
+        * tao/IFR_Client/IFR_BaseC.h:
+        * tao/IFR_Client/IFR_BaseC.i:
+        * tao/IFR_Client/IFR_BasicC.cpp:
+        * tao/IFR_Client/IFR_BasicC.h:
+        * tao/IFR_Client/IFR_BasicC.i:
+        * tao/IFR_Client/IFR_ComponentsC.cpp:
+        * tao/IFR_Client/IFR_ComponentsC.h:
+        * tao/IFR_Client/IFR_ComponentsC.i:
+        * tao/IFR_Client/IFR_ExtendedC.cpp:
+        * tao/IFR_Client/IFR_ExtendedC.h:
+        * tao/IFR_Client/IFR_ExtendedC.i:
+        * orbsvcs/orbsvcs/IFR_Service/IFR_BaseS.cpp:
+        * orbsvcs/orbsvcs/IFR_Service/IFR_BaseS.h:
+        * orbsvcs/orbsvcs/IFR_Service/IFR_BaseS.i:
+        * orbsvcs/orbsvcs/IFR_Service/IFR_BaseS_T.cpp:
+        * orbsvcs/orbsvcs/IFR_Service/IFR_BaseS_T.h:
+        * orbsvcs/orbsvcs/IFR_Service/IFR_BaseS_T.i:
+        * orbsvcs/orbsvcs/IFR_Service/IFR_BasicS.cpp:
+        * orbsvcs/orbsvcs/IFR_Service/IFR_BasicS.h:
+        * orbsvcs/orbsvcs/IFR_Service/IFR_BasicS.i:
+        * orbsvcs/orbsvcs/IFR_Service/IFR_BasicS_T.cpp:
+        * orbsvcs/orbsvcs/IFR_Service/IFR_BasicS_T.h:
+        * orbsvcs/orbsvcs/IFR_Service/IFR_BasicS_T.i:
+        * orbsvcs/orbsvcs/IFR_Service/IFR_ComponentsS.cpp:
+        * orbsvcs/orbsvcs/IFR_Service/IFR_ComponentsS.h:
+        * orbsvcs/orbsvcs/IFR_Service/IFR_ComponentsS.i:
+        * orbsvcs/orbsvcs/IFR_Service/IFR_ComponentsS_T.cpp:
+        * orbsvcs/orbsvcs/IFR_Service/IFR_ComponentsS_T.h:
+        * orbsvcs/orbsvcs/IFR_Service/IFR_ComponentsS_T.i:
+        * orbsvcs/orbsvcs/IFR_Service/IFR_ExtendedS.cpp:
+        * orbsvcs/orbsvcs/IFR_Service/IFR_ExtendedS.h:
+        * orbsvcs/orbsvcs/IFR_Service/IFR_ExtendedS.i:
+        * orbsvcs/orbsvcs/IFR_Service/IFR_ExtendedS_T.cpp:
+        * orbsvcs/orbsvcs/IFR_Service/IFR_ExtendedS_T.h:
+        * orbsvcs/orbsvcs/IFR_Service/IFR_ExtendedS_T.i:
+        * tao/TypeCodeFactory/TypeCodeFactoryC.cpp:
+        * tao/TypeCodeFactory/TypeCodeFactoryC.h:
+        * tao/TypeCodeFactory/TypeCodeFactoryC.inl:
 
-	  Regenerated these stubs to pull in the latest CORBA namespace
-	  fixes.
+          Regenerated these stubs to pull in the latest CORBA namespace
+          fixes.
 
-	* tao/IFR_Client/IFR_Client_Adapter_Impl.cpp:
-	* tao/IFR_Client/IFR_Client_Adapter_Impl.h:
-	* tao/TypeCodeFactory/TypeCodeFactory_Adapter_Impl.cpp:
-	* tao/TypeCodeFactory/TypeCodeFactory_Adapter_Impl.h:
-	* tao/TypeCodeFactory/TypeCodeFactory_i.cpp:
-	* tao/TypeCodeFactory/TypeCodeFactory_i.h:
+        * tao/IFR_Client/IFR_Client_Adapter_Impl.cpp:
+        * tao/IFR_Client/IFR_Client_Adapter_Impl.h:
+        * tao/TypeCodeFactory/TypeCodeFactory_Adapter_Impl.cpp:
+        * tao/TypeCodeFactory/TypeCodeFactory_Adapter_Impl.h:
+        * tao/TypeCodeFactory/TypeCodeFactory_i.cpp:
+        * tao/TypeCodeFactory/TypeCodeFactory_i.h:
 
-	  "CORBA_" -> "CORBA::".
+          "CORBA_" -> "CORBA::".
 
 Tue Feb 25 08:02:36 2003  Chad Elliott  <elliott_c@ociweb.com>
 
