@@ -1,3 +1,11 @@
+Thu Feb  5 12:24:24 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * performance-tests/Sequence_Latency/AMI/ami.mpc:
+
+          Added taoexe to the inheritance list for both projects in this mpc
+          file.  They were relying on valuetype to bring in taoidldefaults,
+          which has changed.
+
 Thu Feb  5 10:29:37 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/orbsvcs/Time_Utilities.h:
