@@ -1,3 +1,8 @@
+Sun Feb  3 11:16:12 2002  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * tests/TP_Reactor_Test.cpp:
+          Fixed compile error in BCB unicode build
+
 Sat Feb  2 07:45:51 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* tests/run_test.lst:
@@ -15,7 +20,7 @@ Sat Feb  2 07:45:51 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 	* ace/Select_Reactor_T.cpp: Fixed work_pending() so that it takes
 	  into account pending timers that need to be expired.  Thanks to
  	  Russ Noseworthy for reporting this.
-	
+
 	* ace/Select_Reactor_T.cpp: Simplified the logic for calculating
 	  timeouts in wait_for_multiple_events().
 
@@ -27,17 +32,17 @@ Sat Feb  2 07:45:51 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
  	  and to use the execve () call instead of execvp () if
  	  inherit_environment is false.  Thanks to James Risinger
  	  <jrisinger@SignalSoftCorp.com> for contributing this fix.
-  
+
 	* ace/Process.{h,i}: Added "const" to the various accessor methods.
 
 Sat Feb  2 00:01:36 2002  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* ace/config-sunos5.6.h: 
+	* ace/config-sunos5.6.h:
 	  Added missing #endif.
 
 Fri Feb  1 23:42:03 2002  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* ace/config-all.h: 
+	* ace/config-all.h:
 	  Removed extra ).
 
 Fri Feb  1 21:08:37 2002  Steve Huston  <shuston@riverace.com>
