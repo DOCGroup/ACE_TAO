@@ -7,6 +7,7 @@
 #define ACE_BUILD_DLL
 #include "ace/Singleton.h"
 #include "ace/Synch_T.h"
+#include "ace/Object_Manager.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Singleton.i"
@@ -66,7 +67,12 @@ ACE_Singleton<TYPE, LOCK>::instance (void)
       ACE_GUARD_RETURN (LOCK, ace_mon, (ACE_Singleton<TYPE, LOCK>::singleton_lock_i ()), 0);
 
       if (singleton == 0)
+      {
 	ACE_NEW_RETURN (singleton, TYPE, 0);
+
+        // Register for destruction with ACE_Object_Manager.
+        ACE_Object_Manager::at_exit (singleton, cleanup, 0);
+      }
     }
 
   return singleton;
@@ -85,6 +91,16 @@ ACE_Singleton<TYPE, LOCK>::instance (TYPE *new_instance)
 
   return old_instance;
 }
+
+template <class TYPE, class LOCK> void
+ACE_Singleton<TYPE, LOCK>::cleanup (void *object, void *)
+{
+  ACE_TRACE ("ACE_Singleton::cleanup");
+
+  delete (TYPE *) object;
+  object = 0;
+}
+      ::atexit (ACE_Static_Object_Lock::atexit);
 
 #if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
 // Pointer to the Singleton instance.
@@ -129,10 +145,12 @@ ACE_TSS_Singleton<TYPE, LOCK>::instance (void)
 
       if (instance_ == 0)
 	{
-	  instance_ = new ACE_TSS<TYPE>;
+          ACE_NEW_RETURN (instance_, ACE_TSS<TYPE>, 0);
 
-	  if (instance_ == 0)
-   	    return 0;
+#if 0  /* ACE_Object_Manager::at_thread_exit () is not implemented yet. */
+          // Register for destruction with ACE_Object_Manager.
+          ACE_Object_Manager::at_thread_exit (instance_, cleanup, 0);
+#endif /* 0 */
 	}
     }
 
@@ -146,16 +164,32 @@ ACE_TSS_Singleton<TYPE, LOCK>::instance (void)
 
       if (ACE_TSS_Singleton<TYPE, LOCK>::instance_ == 0)             
 	{
-          ACE_TSS_Singleton<TYPE, LOCK>::instance_ = new ACE_TSS<TYPE>;
+          ACE_NEW_RETURN (ACE_TSS_Singleton<TYPE, LOCK>::instance_,
+                          ACE_TSS<TYPE>,
+                          0);
 
-          if (ACE_TSS_Singleton<TYPE, LOCK>::instance_ == 0)
-	    return 0;
+#if 0  /* ACE_Object_Manager::at_thread_exit () is not implemented yet. */
+          // Register for destruction with ACE_Object_Manager.
+          ACE_Object_Manager::at_thread_exit (
+            ACE_TSS_Singleton<TYPE, LOCK>::instance_,
+            cleanup,
+            0);
+#endif /* 0 */
 	}
     }
 
   return ACE_TSS_GET ((ACE_TSS_Singleton<TYPE, LOCK>::instance_), TYPE);
 
 #endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
+}
+
+template <class TYPE, class LOCK> void
+ACE_TSS_Singleton<TYPE, LOCK>::cleanup (void *object, void *)
+{
+  ACE_TRACE ("ACE_TSS_Singleton::cleanup");
+
+  delete (TYPE *) object;
+  object = 0;
 }
 
 #if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
