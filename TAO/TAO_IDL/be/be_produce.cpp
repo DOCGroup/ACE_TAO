@@ -163,6 +163,29 @@ BE_produce (void)
         }
     }
 
+  // Initialize the anyop streams here, if the option is set.
+  // It has to be done after the filename is set (for this iteration,
+  // if there are multiple IDL files) and before stub file generation,
+  // since #includes of Any-related files may be redirected to a
+  // separate file, if the option below is set.
+  if (be_global->gen_anyop_files ())
+    {
+      int status = 0;
+
+      status =
+        tao_cg->start_anyop_source (
+                  be_global->be_get_anyop_source_fname ()
+                );
+
+      if (status == -1)
+        {
+          ACE_ERROR ((LM_ERROR,
+                            "(%N:%l) TAO_CodeGen::"
+                            "TAO_CodeGen - "
+                            "Error opening anyop source file\n"));
+        }
+    }
+
   // (1) Generate client header,
   // instantiate a visitor context, and set the codegen state
   ctx.state (TAO_CodeGen::TAO_ROOT_CH);
