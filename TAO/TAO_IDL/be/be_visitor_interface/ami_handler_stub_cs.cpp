@@ -168,7 +168,7 @@ be_visitor_interface_ami_handler_stub_cs::visit_interface (be_interface *node)
       << "return obj;" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
-  // generate code for the elements of the interface
+  // Generate code for the elements of the interface.
   if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
