@@ -1,3 +1,8 @@
+Thu Sep 17 21:22:42 1998  Jeff Parsons <jp4@cs.wustl.edu>
+
+	* TAO/tests/DynAny_Test/README.txt
+	  Updated and edited file.
+
 Thu Sep 17 18:52:14 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp: 
