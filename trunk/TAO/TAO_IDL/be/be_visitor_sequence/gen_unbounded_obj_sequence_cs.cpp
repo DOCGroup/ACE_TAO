@@ -184,7 +184,8 @@ be_visitor_sequence_cs::gen_unbounded_obj_sequence (be_sequence *node)
       *os << "**, target);" << be_nl
 	        << "*tmp = ";
       bt->accept (visitor);
-      *os << "::_narrow (src, ACE_TRY_ENV);" << be_uidt_nl
+      *os << "::_narrow (src, ACE_TRY_ENV);" << be_nl
+          << "ACE_CHECK;" << be_uidt_nl
 	        << "}\n" << be_nl;
 
       *os << "CORBA_Object*" << be_nl

@@ -148,29 +148,30 @@ be_visitor_sequence_cs::gen_bounded_obj_sequence (be_sequence *node)
       // Pseudo objects do not require this methods.
       *os << "void" << be_nl
           << full_class_name << "::_downcast (" << be_idt << be_idt_nl
-	  << "void* target," << be_nl
-	  << "CORBA_Object *src," << be_nl
-	  << "CORBA::Environment &ACE_TRY_ENV" << be_uidt_nl
-	  << ")" << be_uidt_nl
-	  << "{" << be_idt_nl;
+	        << "void* target," << be_nl
+	        << "CORBA_Object *src," << be_nl
+	        << "CORBA::Environment &ACE_TRY_ENV" << be_uidt_nl
+	        << ")" << be_uidt_nl
+	        << "{" << be_idt_nl;
       bt->accept (visitor);
       *os << " **tmp = ACE_static_cast (";
       bt->accept (visitor);
       *os << "**, target);" << be_nl
-	  << "*tmp = ";
+	        << "*tmp = ";
       bt->accept (visitor);
-      *os << "::_narrow (src, ACE_TRY_ENV);" << be_uidt_nl
-	  << "}\n" << be_nl;
+      *os << "::_narrow (src, ACE_TRY_ENV);" << be_nl
+          << "ACE_CHECK;" << be_uidt_nl
+	        << "}\n" << be_nl;
 
       *os << "CORBA_Object*" << be_nl
           << full_class_name << "::_upcast (void *src) const" <<  be_nl
-	  << "{" << be_idt_nl;
+	        << "{" << be_idt_nl;
       bt->accept (visitor);
       *os << " **tmp = ACE_static_cast (";
       bt->accept (visitor);
       *os << "**, src);" << be_nl
-	  << "return *tmp;" << be_uidt_nl
-	  << "}" << be_nl;
+	        << "return *tmp;" << be_uidt_nl
+	        << "}" << be_nl;
     }
 
   os->gen_endif ();

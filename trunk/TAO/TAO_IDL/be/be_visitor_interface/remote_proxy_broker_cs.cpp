@@ -76,11 +76,9 @@ be_visitor_interface_remote_proxy_broker_cs::visit_interface (be_interface *node
   *os << node->full_base_proxy_impl_name () << "&" << be_nl
       <<node->full_remote_proxy_broker_name () << "::"
       << "select_proxy (" << be_idt_nl
-      << "::" << node->full_name () << " *object," << be_nl
-      << "CORBA::Environment &ACE_TRY_ENV" << be_uidt_nl << ")"
+      << "::" << node->full_name () << " *," << be_nl
+      << "CORBA::Environment &" << be_uidt_nl << ")"
       << be_uidt_nl << "{" << be_idt_nl // idt = 1
-      << "ACE_UNUSED_ARG (object);" << be_nl
-      << "ACE_UNUSED_ARG (ACE_TRY_ENV);" << be_nl
       << "return remote_proxy_impl_;"
       << be_uidt_nl << "}" << be_nl << be_nl;
 
