@@ -1,7 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-
 // ============================================================================
 //
 // = LIBRARY
@@ -94,7 +93,7 @@ public:
   // Called when object is signaled by OS (either via UNIX signals or
   // when a Win32 object becomes signaled).
 
-  // = Proactor callbacks.
+  // = <ACE_Proactor> callbacks.
   //     Win32 specific.  An Event_Handler can be given to a Proactor
   //     with a {RECV,SEND}_MASK.  The Proactor calls back
   //     <get_message> and <get_handle> to perform the correct
@@ -106,33 +105,33 @@ public:
 
   virtual int handle_input_complete (ACE_Message_Block *message,
 				     long bytes_transferred);
-  // Called back by the Proactor when an asynchronous input operation
-  // is complete.  If this method returns > 0 the Proactor will
-  // initiate another asynchronous receive; if a 0 is returned the
-  // Proactor will not reinitiate a receive; and if a -1 is returned,
-  // then no receive is reinitiated and <handle_close> is called.  If
-  // <bytes_transferred> >= 0, then the I/O operation completed
-  // successfully.  If <bytes_transferred> == -1, then the I/O
-  // operation failed.  Check <message> for total bytes received and
-  // errno for reason.
+  // Called back by the <ACE_Proactor> when an asynchronous input
+  // operation is complete.  If this method returns > 0 the Proactor
+  // will initiate another asynchronous receive; if a 0 is returned
+  // the Proactor will not reinitiate a receive; and if a -1 is
+  // returned, then no receive is reinitiated and <handle_close> is
+  // called.  If <bytes_transferred> >= 0, then the I/O operation
+  // completed successfully.  If <bytes_transferred> == -1, then the
+  // I/O operation failed.  Check <message> for total bytes received
+  // and <errno> for reason.
 
   virtual int handle_output_complete (ACE_Message_Block *message, 
 				      long bytes_transferred);
-  // Called back by the Proactor when an asynchronous output operation
-  // is complete.  If this method returns > 0 the Proactor will
-  // initiate another asynchronous send; if a 0 is returned the
+  // Called back by the <ACE_Proactor> when an asynchronous output
+  // operation is complete.  If this method returns > 0 the Proactor
+  // will initiate another asynchronous send; if a 0 is returned the
   // Proactor will not reinitiate a send; and if a -1 is returned,
   // then no send is reinitiated and <handle_close> is called.  If
   // <bytes_transferred> >= 0, then the I/O operation completed
   // successfully.  If <bytes_transferred> == -1, then the I/O
   // operation failed.  Check <message> for total bytes received and
-  // errno for reason.
+  // <errno> for reason.
 
   virtual ACE_Message_Block *get_message (void);
   // Factory that creates an <ACE_Message_Block> that is used by the
   // Proactor to send or receive a message asynchronously.  When the
   // asynchronous call completes, this message is returned to the
-  // <IO_Handler> with its contents filled in.  By default,
+  // <Event_Handler> with its contents filled in.  By default,
   // get_message dynamically creates a new ACE_Message_Block.
 
 protected:
