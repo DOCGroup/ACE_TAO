@@ -1,6 +1,10 @@
 Fri Jan 17 16:33:25 1997  David L. Levine  <levine@cs.wustl.edu>
 
-	* ace/High_Res_Timer.*: added elapsed_time () and get_time ()
+	* ace/High_Res_Timer.*: added elapsed_time () and get_time ().
+
+	* netsvcs/clients/Tokens/collection/collection.cpp, rw_locks.cpp:
+	  commented out unused variables to avoid compiler warnings; and
+	  return 0 from main ().
 
 Fri Jan 17 11:45:28 1997  David L. Levine  <levine@cs.wustl.edu>
 
