@@ -567,7 +567,7 @@ double
 TAO_AV_RTCP::fmod (double dividend, double divisor)
 {
   //Method to calculate the fmod (x,y)
-  int quotient = dividend / divisor;
+  int quotient = ACE_static_cast (int, (dividend / divisor));
   double product = quotient * divisor;
   double remainder = dividend - product;
   return remainder;

@@ -186,7 +186,6 @@ public:
 
   static ACE_UINT32 alloc_srcid (ACE_UINT32 addr);
 
-protected:  
   static double fmod (double dividend, double divisor);
 };
 
