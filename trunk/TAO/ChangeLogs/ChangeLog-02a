@@ -1,3 +1,9 @@
+Wed Jan 17 10:21:46 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/GIOP_Message_Base.cpp:
+          This change should fix the annoying warnings under RedHat
+          Linux.
+
 Wed Jan 17 09:08:25 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/AMI/run_test.pl:
@@ -7,13 +13,13 @@ Wed Jan 17 09:08:25 2001  Carlos O'Ryan  <coryan@uci.edu>
 Tue Jan 16 22:35:03 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
         * tests/Single_Read/Makefile: Forgot to checkin the Makefile this
-          morning. 
+          morning.
 
         * tests/Makefile: Added the above Makefile to the list.
 
 Tue Jan 16 18:57:27 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-        * orbsvcs/tests/ior_corbaname/Makefile: 
+        * orbsvcs/tests/ior_corbaname/Makefile:
           Updated dependencies.
 
 Tue Jan 16 20:43:46 2001  Jeff Parsons <parsons@cs.wustl.edu>
@@ -34,7 +40,7 @@ Tue Jan 16 20:43:46 2001  Jeff Parsons <parsons@cs.wustl.edu>
           from the heap allocation or from the constructor call,
           and of leaving the state of the _var unchanged if there
           is any problem. Added benefits are thanks to Carlos and
-          thanks to Sathish Tiptur <Sathish.Tiptur@geind.ge.com> 
+          thanks to Sathish Tiptur <Sathish.Tiptur@geind.ge.com>
           for reporting this bug.
 
         * tao/CONV_FRAMEC.i:
