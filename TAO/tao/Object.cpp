@@ -279,15 +279,15 @@ CORBA_Object::_create_request (CORBA::Context_ptr ctx,
 }
 
 void
-CORBA_Object::_create_request2 (CORBA::Context_ptr ctx,
-                                const CORBA::Char *operation,
-                                CORBA::NVList_ptr arg_list,
-                                CORBA::NamedValue_ptr result,
-                                CORBA::ExceptionList_ptr,
-                                CORBA::ContextList_ptr,
-                                CORBA::Request_ptr &request,
-                                CORBA::Flags req_flags,
-                                CORBA::Environment &TAO_IN_ENV)
+CORBA_Object::_create_request (CORBA::Context_ptr ctx,
+                               const CORBA::Char *operation,
+                               CORBA::NVList_ptr arg_list,
+                               CORBA::NamedValue_ptr result,
+                               CORBA::ExceptionList_ptr,
+                               CORBA::ContextList_ptr,
+                               CORBA::Request_ptr &request,
+                               CORBA::Flags req_flags,
+                               CORBA::Environment &TAO_IN_ENV)
 {
   // Since we don't really support Context, anything but a null pointer
   // is a no-no.
