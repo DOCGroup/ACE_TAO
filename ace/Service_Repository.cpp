@@ -212,7 +212,6 @@ ACE_Service_Repository::remove (const char name[])
     return -1;
   else
     {
-      const void *handle = this->service_vector_[i]->handle ();
       delete (ACE_Service_Record *) this->service_vector_[i];
 
       if (--this->current_size_ >= 1)
