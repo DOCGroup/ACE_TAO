@@ -1,12 +1,37 @@
+Thu Dec 31 16:28:27 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* TAO_IDL/tao_idl.dsp:
+	* TAO_IDL/tao_idl_static.dsp: Also write the executables to
+	  $ACE_ROOT/bin.
+
+	* orbsvcs/Naming_Service/Naming_Service.dsp: Dependency update.
+
+	* orbsvcs/orbsvcs/orbsvcs.dsp: Added Corlos' new files for Event
+	  Channel into the project.  Cleaned up IDL configurations.
+
+	* orbsvcs/orbsvcs/CosEvent/ConsumerAdmin_i.cpp:
+	* orbsvcs/orbsvcs/CosEvent/ProxyPushConsumer_i.cpp:
+	* orbsvcs/orbsvcs/CosEvent/ProxyPushSupplier_i.cpp:
+	* orbsvcs/orbsvcs/CosEvent/SupplierAdmin_i.cpp: Don't need to
+	  specify relative path for header files reside in the same
+	  directory.
+
+	* orbsvcs/orbsvcs/CosEvent/ProxyPushConsumer_i.h:
+	* orbsvcs/orbsvcs/CosEvent/ConsumerAdmin_i.h:
+	* orbsvcs/orbsvcs/CosEvent/EventChannel_i.h:
+	* orbsvcs/orbsvcs/CosEvent/ProxyPushSupplier_i.h:
+	* orbsvcs/orbsvcs/CosEvent/SupplierAdmin_i.h: Added
+	  TAO_ORBSVCS_export decls.
+
 Thu Dec 31 15:28:49 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Event/EC_Event_Channel.h: 
-	* orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.h: 
-	* orbsvcs/orbsvcs/Event/EC_Dispatching.h: 
-	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.h: 
-	* orbsvcs/orbsvcs/Event/EC_ProxyConsumer.h: 
-	* orbsvcs/orbsvcs/Event/EC_Filter.h: 
-	* orbsvcs/orbsvcs/Event/EC_Filter_Builder.h: 
+	* orbsvcs/orbsvcs/Event/EC_Event_Channel.h:
+	* orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.h:
+	* orbsvcs/orbsvcs/Event/EC_Dispatching.h:
+	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.h:
+	* orbsvcs/orbsvcs/Event/EC_ProxyConsumer.h:
+	* orbsvcs/orbsvcs/Event/EC_Filter.h:
+	* orbsvcs/orbsvcs/Event/EC_Filter_Builder.h:
 	  I'm prototyping a new version of the real-time Event Channel,
 	  this version will be more efficient, more configurable and
 	  (hopefully) easier to maintain.  This initial commit is just for
@@ -15,17 +40,17 @@ Thu Dec 31 15:28:49 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 Thu Dec 31 15:34:47 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/CosEvent/ProxyPushConsumer_i.cpp: 
+	* orbsvcs/orbsvcs/CosEvent/ProxyPushConsumer_i.cpp:
 	  Removed temporary reference called _env, it is not needed
 	  because we can use TAO_THROW_ENV() instead of TAO_THROW.
 
 Thu Dec 31 15:04:57 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Makefile: 
+	* orbsvcs/orbsvcs/Makefile:
 	  Added the CosEC files to the Makefile; it compiles with both
 	  Sun/CC and egcs.
 
-	* orbsvcs/orbsvcs/Time/Timer_Helper.cpp: 
+	* orbsvcs/orbsvcs/Time/Timer_Helper.cpp:
 	  Removed template instantiations, they are in
 	  orbsvcs-tmplinst.cpp already.
 
